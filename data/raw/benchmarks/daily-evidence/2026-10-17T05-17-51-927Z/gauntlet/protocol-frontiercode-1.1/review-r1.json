@@ -1,0 +1,17 @@
+{
+  "artifact_id": "protocol-frontiercode-1.1",
+  "artifact_sha256": "c69cd55c446e86f9b8da168ccf5e1d713e081b2ebcd71d7e5b0086202daddd51",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": ["frontiercode::1.1", "c1", "c2"],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Hash verification, transport and qualification checks are executed by the owner; I could not recompute row sha256 eb438683cd2babb82749f31d74f04ece8e50d553f8d2ecf82773373c1c18ef93 or artifact sha256 and rely on the supplied bindings.",
+    "The served-value scale summary (136 values, low 8, high 54.64) is admissible only for unit/range agreement; it confirms percent scale and bounds [0,100] but not metric meaning or version provenance, which I judged from Sources 1/4/7.",
+    "SOURCE 8 data.json contains no score values; version_guard items (key v1_1, subsets.main == 100) verified directly, but the guard's page-text condition was verified from SOURCE 1 text 'FrontierCode 1.1', not from executing the guard.",
+    "Board serves 'new_score' field per Source 10; the row's metric claims the 'Score' metric (weighted aggregate, zero on blocker failure), consistent with protocol text in Sources 4/6/7; the payload excerpt itself does not restate the scoring rule, so that mapping rests on protocol text only."
+  ],
+  "missing_evidence": []
+}

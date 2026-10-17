@@ -1,0 +1,81 @@
+{
+  "started_at": "2026-10-17T05:52:38.524Z",
+  "mode": "oneshot",
+  "requested_model": "deepseek/deepseek-v4-flash-0731",
+  "producers": [],
+  "qualification": {
+    "id": "deepseek/deepseek-v4-flash-0731",
+    "family": "deepseek",
+    "free": false,
+    "input_per_1m": 0.0199,
+    "output_per_1m": 0.9653,
+    "context": 1048576,
+    "aa_intelligence_index": 34.3,
+    "aa_source": "exact_id_and_variants",
+    "matched_model_ids": [
+      "deepseek-v4-flash-0731::max"
+    ],
+    "aa_variant_scores": [
+      {
+        "id": "deepseek-v4-flash-0731::max",
+        "index": 34.3
+      }
+    ]
+  },
+  "input_sha256": "6079e092b35eb0a326cd1cd43ca54a7be9f1da39be4ea0592014f435ecff37cc",
+  "route": "openrouter",
+  "attempt": 1,
+  "free_route_role": "critic",
+  "free_routes_offered": [],
+  "excluded_models": [
+    "z-ai/glm-5.3-flash"
+  ],
+  "hard_excluded_models": [],
+  "catalog": {
+    "source": "run-cache",
+    "fetched_at": "2026-10-17T05:30:26.733Z"
+  },
+  "request_limits": {
+    "max_tokens": 16384,
+    "timeout_seconds": 600,
+    "input_bytes": 23656
+  },
+  "reasoning": {
+    "effort": "low",
+    "exclude": true
+  },
+  "ignored_providers": [],
+  "response_format_mode": "json_object",
+  "response_schema_sha256": "376bde7986cc2f8fd182f04e745c607933760bea7c306ea6e8e992b7f70be25a",
+  "images": [],
+  "actual_model": "deepseek/deepseek-v4-flash-0731",
+  "usage": {
+    "prompt_tokens": 8686,
+    "completion_tokens": 1593,
+    "total_tokens": 10279,
+    "cost": 0.001684869417,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.0017018883,
+      "upstream_inference_prompt_cost": 0.0001641654,
+      "upstream_inference_completions_cost": 0.0015377229
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 1545,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "provider": "Relace",
+  "finish_reason": "stop",
+  "price_context": "OpenRouter catalog reference prices; usage.cost records the actual charge when returned.",
+  "session_id": null,
+  "finished_at": "2026-10-17T05:52:48.606Z",
+  "output_sha256": "85ec7e036bb89ff3b89a8f050b1a42a9a0a20e350fb5ca4872d7251a9f693715"
+}

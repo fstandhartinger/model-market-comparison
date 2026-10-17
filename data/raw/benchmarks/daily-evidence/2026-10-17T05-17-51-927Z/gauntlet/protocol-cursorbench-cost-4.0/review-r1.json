@@ -1,0 +1,17 @@
+{
+  "artifact_id": "protocol-cursorbench-cost-4.0",
+  "artifact_sha256": "ad0c6b1e79a26ba05eb731a81b1a25da5025dfa1dc1d90d15305b30615eb8bb9",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": ["cursorbench-cost::4.0", "c1", "c2"],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Row hash a1ae0e48185c175444ca14eaa1d9f0f45846a6576f134d2c2785f2a7b98ed4ec is owner-computed; I cannot recompute SHA-256 or fetch URLs, so binding and freshness rely on the packet's own receipts.",
+    "Version guard requires heading 'CursorBench 4.0', which the page shows twice; continuity of the task set is further supported by the Sep 10, 2026 changelog entry introducing 4.0 tasks, but I cannot verify the page content beyond the supplied excerpt.",
+    "The activity summary (9 added values) supports status 'active' only; it cannot establish methodology or task-set identity, per the criteria."
+  ],
+  "missing_evidence": [],
+  "notes": "Row cursorbench-cost::4.0: version 4.0 matches page heading 'CursorBench 4.0'; metric 'Cost per task', unit USD, range [0,null] with higher_better false matches the served scale (77 values, 0.03 to 17.28, Source 4) and the page cost table; description aligns with the page's stated cost computation. status 'active' is supported by the page still publishing 77 rows and 9 newly added values (Source 3); version_status 'published' is supported by the maintainer's release identifier 'CursorBench 4.0' which the row's version copies; superseded_by null is consistent since no successor is named (4.0 is the latest changelog entry)."
+}

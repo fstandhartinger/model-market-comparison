@@ -1,0 +1,41 @@
+{
+  "artifact_id": "protocol-weirdml-2",
+  "artifact_sha256": "6bd60c5766dad9d19f8ad87594eec4ade45889654f1ab0b2516e23568e5c4ae7",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": ["weirdml::2", "c1", "c2"],
+  "errors_found": 3,
+  "findings": [
+    {
+      "id": "f1",
+      "severity": "major",
+      "location": "weirdml::2 / c1 — version, metric, description",
+      "evidence": "The only protocol page in the packet (SOURCE 1, htihle.github.io/weirdml.html) is titled 'WeirdML v3', describes 11 tasks and an 80/20 normalized-area-under-curve scoring rule, and lists 'Previous versions: WeirdML v2 · WeirdML v1'. The row claims version '2' with a metric of 'mean over runs of the maximum test accuracy across the 5 iterations per run, averaged over all 17 tasks' and a 17-task description. No excerpt of the v2 protocol page is supplied, so the v2 identity, task count, metric, units and description cannot be verified against primary text; the v3 page establishes continuity only that a v2 existed.",
+      "repair": "Supply the captured WeirdML v2 protocol page excerpt and re-verify the row's version, metric, unit, and description against it; correct any field the v2 page contradicts."
+    },
+    {
+      "id": "f2",
+      "severity": "major",
+      "location": "weirdml::2 / c2 — superseded_by",
+      "evidence": "SOURCE 1 presents WeirdML v3 as the current benchmark on the maintainer's main WeirdML page and relegates v2 to 'Previous versions: WeirdML v2', indicating v2 is replaced going forward. The row states superseded_by: null. Per c2, superseded_by is a mismatch when the protocol names a successor board; the protocol names the successor (WeirdML v3).",
+      "repair": "Set superseded_by to our registry id for the WeirdML v3 board (e.g. weirdml::3); the successor's version is settled by v3's own registry entry, not required here."
+    },
+    {
+      "id": "f3",
+      "severity": "minor",
+      "location": "weirdml::2 / c2 — version_status 'published'",
+      "evidence": "SOURCE 1 shows versioned release labeling ('WeirdML v3') and a link to a distinct v2 page, but contains no release identifier for the v2 board itself, so the packet cannot confirm that the maintainer publishes a release identifier for v2 that the row's version '2' copies.",
+      "repair": "Confirm from the v2 protocol page (see f1) that it publishes a release identifier matching '2'; if it publishes none, version_status must be 'snapshot' with version snapshot-<date>."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "Cannot recompute row or source hashes; owner executes hash and transport checks, which is a limitation, not missing evidence.",
+    "SOURCE 2 activity summary (2 model rows changed in 'avg_acc' today) is affirmative evidence for status: 'active'; retained neither contradicts it nor is established by it. Status 'active' itself is not flagged as a mismatch.",
+    "SOURCE 3 scale summary (162 values, 1.729411764705882 to 93.57264705882352) is consistent with the row's unit 'percent' and range [0,100], so unit/range pass on that point per c1; the summary settles nothing about metric meaning, computation, task set, harness, judges or version.",
+    "Whether the maintainer's 'avg_acc' field corresponds to the row's claimed metric is settled by the missing v2 protocol page, not by the summaries."
+  ],
+  "missing_evidence": [
+    "Captured WeirdML v2 protocol page excerpt (the 'Previous versions: WeirdML v2' target linked from SOURCE 1) establishing the v2 board's release identifier, task set, scoring metric, units and description, needed to verify the row's claimed fields."
+  ]
+}

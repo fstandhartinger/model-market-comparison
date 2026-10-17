@@ -1,0 +1,22 @@
+[
+  {
+    "id": "gso::opt1-102",
+    "version": "opt1-102",
+    "version_guard": "leaderboard.json must still state metadata.total_tasks 102, and every row must name a model, scaffold, setting and run date with a setting in the known set (Opt@1, Opt@10). Only Opt@1 rows are this identity; Opt@10 is another protocol and is not ingested. A new task count is a new identity.",
+    "status": "active",
+    "version_status": "published",
+    "superseded_by": null,
+    "scoring": {
+      "metric": "Opt@1: share of tasks where a single attempt reaches at least 95 % of the human speedup and passes the correctness tests",
+      "unit": "percent",
+      "range": [
+        0,
+        100
+      ],
+      "higher_better": true,
+      "notes": "Run by the GSO maintainers with the OpenHands scaffold unless a row names another. The Hack-Adjusted score (after the maintainers' hack detector) and the run date stay in each observation's protocol; runs from 2026-04-27 use a larger iteration budget and runs from 2026-07-12 network-isolated tasks, as the page's changelog states."
+    },
+    "description": "An agent gets a real codebase and a performance test and must make the code as fast as an expert developer's optimization; 102 tasks across 10 codebases and 5 languages.",
+    "maintainer": "GSO team (UC Berkeley)"
+  }
+]

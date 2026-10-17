@@ -1,0 +1,166 @@
+[
+  {
+    "id": "public:23f285dffd26d045c885f543",
+    "benchmark_id": "frontiercode::1.1",
+    "subject": {
+      "source_id": "Mistral Large 4 (Preview)|high",
+      "name": "Mistral Large 4 (Preview) · high",
+      "model_id": null,
+      "variant": null,
+      "harness": "chisel"
+    },
+    "value": 39.43,
+    "unit": "percent",
+    "basis": "derived",
+    "source": {
+      "url": "https://cognition.com/data/frontiercode-leaderboard/data.json",
+      "retrieved_at": "2026-10-17T05:20:08.542553+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-10-17T05-17-51-927Z/ff0040778b7bdf69c705.gz",
+      "sha256": "ff0040778b7bdf69c705ad7474f771fb5e53cfaf5cf8573b3a4614153543d75f",
+      "locator": "effort_runs_json; source row 132; Mistral Large 4 (Preview)|high; field new_score"
+    },
+    "protocol": "FrontierCode 1.1 Main (100 tasks); Score = weighted aggregate of rubric items, blocking-criteria failures receive 0, unfair internet use zeroed; one row per model and published reasoning effort with the source harness.; source row: {\"model\":\"Mistral Large 4 (Preview)\",\"effort\":\"high\",\"subset\":\"main\",\"harness\":\"chisel\",\"new_score\":0.3943,\"correct\":0.435,\"flagged_rate\":0.02,\"cost\":4.1341,\"tokens\":96846.0}",
+    "comparison_key": null,
+    "source_basis": "self_reported",
+    "derivation": {
+      "formula": "Source value × 100 to registry units",
+      "inputs": [
+        0.3943
+      ]
+    },
+    "supporting_sources": [
+      {
+        "url": "https://cognition.com/frontiercode",
+        "file": "data/raw/benchmarks/daily-evidence/2026-10-17T05-17-51-927Z/75c1d3da9503893e1511.gz",
+        "sha256": "75c1d3da9503893e15110679079afc468b2a837dbebffb9e59cc8bb16d408ea0",
+        "retrieved_at": "2026-10-17T05:19:17.303771+00:00",
+        "published_at": null,
+        "locator": "method_source"
+      }
+    ]
+  },
+  {
+    "id": "public:98884dede89793d6c2885e26",
+    "benchmark_id": "frontiercode::1.1",
+    "subject": {
+      "source_id": "Gemini 4 Argon|low",
+      "name": "Gemini 4 Argon · low",
+      "model_id": null,
+      "variant": null,
+      "harness": "chisel"
+    },
+    "value": 47.199999999999996,
+    "unit": "percent",
+    "basis": "derived",
+    "source": {
+      "url": "https://cognition.com/data/frontiercode-leaderboard/data.json",
+      "retrieved_at": "2026-10-17T05:20:08.542553+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-10-17T05-17-51-927Z/ff0040778b7bdf69c705.gz",
+      "sha256": "ff0040778b7bdf69c705ad7474f771fb5e53cfaf5cf8573b3a4614153543d75f",
+      "locator": "effort_runs_json; source row 133; Gemini 4 Argon|low; field new_score"
+    },
+    "protocol": "FrontierCode 1.1 Main (100 tasks); Score = weighted aggregate of rubric items, blocking-criteria failures receive 0, unfair internet use zeroed; one row per model and published reasoning effort with the source harness.; source row: {\"model\":\"Gemini 4 Argon\",\"effort\":\"low\",\"subset\":\"main\",\"harness\":\"chisel\",\"new_score\":0.472,\"correct\":0.5225,\"flagged_rate\":0.0304,\"cost\":7.3973,\"tokens\":52027}",
+    "comparison_key": null,
+    "source_basis": "self_reported",
+    "derivation": {
+      "formula": "Source value × 100 to registry units",
+      "inputs": [
+        0.472
+      ]
+    },
+    "supporting_sources": [
+      {
+        "url": "https://cognition.com/frontiercode",
+        "file": "data/raw/benchmarks/daily-evidence/2026-10-17T05-17-51-927Z/75c1d3da9503893e1511.gz",
+        "sha256": "75c1d3da9503893e15110679079afc468b2a837dbebffb9e59cc8bb16d408ea0",
+        "retrieved_at": "2026-10-17T05:19:17.303771+00:00",
+        "published_at": null,
+        "locator": "method_source"
+      }
+    ]
+  },
+  {
+    "id": "public:4cc08a3c8f1925ad907d9999",
+    "benchmark_id": "frontiercode::1.1",
+    "subject": {
+      "source_id": "Gemini 4 Argon|medium",
+      "name": "Gemini 4 Argon · medium",
+      "model_id": null,
+      "variant": null,
+      "harness": "chisel"
+    },
+    "value": 47.55,
+    "unit": "percent",
+    "basis": "derived",
+    "source": {
+      "url": "https://cognition.com/data/frontiercode-leaderboard/data.json",
+      "retrieved_at": "2026-10-17T05:20:08.542553+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-10-17T05-17-51-927Z/ff0040778b7bdf69c705.gz",
+      "sha256": "ff0040778b7bdf69c705ad7474f771fb5e53cfaf5cf8573b3a4614153543d75f",
+      "locator": "effort_runs_json; source row 134; Gemini 4 Argon|medium; field new_score"
+    },
+    "protocol": "FrontierCode 1.1 Main (100 tasks); Score = weighted aggregate of rubric items, blocking-criteria failures receive 0, unfair internet use zeroed; one row per model and published reasoning effort with the source harness.; source row: {\"model\":\"Gemini 4 Argon\",\"effort\":\"medium\",\"subset\":\"main\",\"harness\":\"chisel\",\"new_score\":0.4755,\"correct\":0.528,\"flagged_rate\":0.0121,\"cost\":6.7425,\"tokens\":50333}",
+    "comparison_key": null,
+    "source_basis": "self_reported",
+    "derivation": {
+      "formula": "Source value × 100 to registry units",
+      "inputs": [
+        0.4755
+      ]
+    },
+    "supporting_sources": [
+      {
+        "url": "https://cognition.com/frontiercode",
+        "file": "data/raw/benchmarks/daily-evidence/2026-10-17T05-17-51-927Z/75c1d3da9503893e1511.gz",
+        "sha256": "75c1d3da9503893e15110679079afc468b2a837dbebffb9e59cc8bb16d408ea0",
+        "retrieved_at": "2026-10-17T05:19:17.303771+00:00",
+        "published_at": null,
+        "locator": "method_source"
+      }
+    ]
+  },
+  {
+    "id": "public:e86cc524509d3b50294728dc",
+    "benchmark_id": "frontiercode::1.1",
+    "subject": {
+      "source_id": "Gemini 4 Argon|high",
+      "name": "Gemini 4 Argon · high",
+      "model_id": null,
+      "variant": null,
+      "harness": "chisel"
+    },
+    "value": 45.87,
+    "unit": "percent",
+    "basis": "derived",
+    "source": {
+      "url": "https://cognition.com/data/frontiercode-leaderboard/data.json",
+      "retrieved_at": "2026-10-17T05:20:08.542553+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-10-17T05-17-51-927Z/ff0040778b7bdf69c705.gz",
+      "sha256": "ff0040778b7bdf69c705ad7474f771fb5e53cfaf5cf8573b3a4614153543d75f",
+      "locator": "effort_runs_json; source row 135; Gemini 4 Argon|high; field new_score"
+    },
+    "protocol": "FrontierCode 1.1 Main (100 tasks); Score = weighted aggregate of rubric items, blocking-criteria failures receive 0, unfair internet use zeroed; one row per model and published reasoning effort with the source harness.; source row: {\"model\":\"Gemini 4 Argon\",\"effort\":\"high\",\"subset\":\"main\",\"harness\":\"chisel\",\"new_score\":0.4587,\"correct\":0.5085,\"flagged_rate\":0.0103,\"cost\":11.1068,\"tokens\":100524}",
+    "comparison_key": null,
+    "source_basis": "self_reported",
+    "derivation": {
+      "formula": "Source value × 100 to registry units",
+      "inputs": [
+        0.4587
+      ]
+    },
+    "supporting_sources": [
+      {
+        "url": "https://cognition.com/frontiercode",
+        "file": "data/raw/benchmarks/daily-evidence/2026-10-17T05-17-51-927Z/75c1d3da9503893e1511.gz",
+        "sha256": "75c1d3da9503893e15110679079afc468b2a837dbebffb9e59cc8bb16d408ea0",
+        "retrieved_at": "2026-10-17T05:19:17.303771+00:00",
+        "published_at": null,
+        "locator": "method_source"
+      }
+    ]
+  }
+]

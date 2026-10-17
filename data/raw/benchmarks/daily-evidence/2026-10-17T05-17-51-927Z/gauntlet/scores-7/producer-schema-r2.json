@@ -1,0 +1,83 @@
+{
+  "type": "object",
+  "properties": {
+    "rows": {
+      "type": "object",
+      "properties": {
+        "public:d241e4d734e9c93a259d5c2b": {
+          "type": "object",
+          "properties": {
+            "status": {
+              "type": "string",
+              "enum": [
+                "match",
+                "mismatch",
+                "missing_evidence"
+              ]
+            },
+            "note": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "status",
+            "note"
+          ],
+          "additionalProperties": false
+        },
+        "public:5b98abf865e7364e1bcd285f": {
+          "type": "object",
+          "properties": {
+            "status": {
+              "type": "string",
+              "enum": [
+                "match",
+                "mismatch",
+                "missing_evidence"
+              ]
+            },
+            "note": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "status",
+            "note"
+          ],
+          "additionalProperties": false
+        },
+        "public:3b937df93f1c241397e189ea": {
+          "type": "object",
+          "properties": {
+            "status": {
+              "type": "string",
+              "enum": [
+                "match",
+                "mismatch",
+                "missing_evidence"
+              ]
+            },
+            "note": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "status",
+            "note"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "public:d241e4d734e9c93a259d5c2b",
+        "public:5b98abf865e7364e1bcd285f",
+        "public:3b937df93f1c241397e189ea"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "rows"
+  ],
+  "additionalProperties": false
+}
