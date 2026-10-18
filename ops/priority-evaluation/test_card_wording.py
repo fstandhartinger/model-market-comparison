@@ -140,6 +140,32 @@ class CardWording(unittest.TestCase):
             notify.validate_format(short, 'now', ask_minutes=960)
             self.assertEqual(notify.card_lint(short), [])
 
+    @unittest.skipUnless(Path('/home/flori/bin/notify').is_file(), 'installed Sandy notifier is unavailable')
+    def test_long_model_name_cards_pass_notify(self):
+        # Urgent card q1792346705: an 83-character model name kept the context line at 222 characters even
+        # with the short link, so the change-request approval card never reached Florian.
+        loader = importlib.machinery.SourceFileLoader('actual_notify_long_name', '/home/flori/bin/notify')
+        nspec = importlib.util.spec_from_loader(loader.name, loader)
+        notify = importlib.util.module_from_spec(nspec)
+        loader.exec_module(notify)
+        long_name = 'HS1 0.1.2 (Hyland, Gemma-4-26B-A4B-it + LoRA, option-letter logprob readout, FP8)'
+        for row in (dict(ROW, customer_name=None, email='gabriel.keith@example-company.com', model_link='',
+                         model_name=long_name),
+                    dict(ROW, customer_name=None, email='x' * 120 + '@example.com', model_name='Model ' * 60)):
+            cards = [c.refusal_approval.approval_caption(row, 'refusal'),
+                     c.refusal_approval.approval_caption(row, 'change_request')]
+            for card in cards:
+                self.assertLessEqual(len(card.splitlines()[1].split(': ', 1)[1]), 220)
+                notify.validate_format(card, 'now', ask_minutes=960)
+                self.assertEqual(notify.card_lint(card), [])
+            for reason in c.HOLD_REASON_LABELS:
+                card = c.rescue_card(row, reason)
+                self.assertLessEqual(len(card.splitlines()[1].split(': ', 1)[1]), 220)
+                notify.validate_format(card, 'urgent')
+        self.assertIn('model HS1 0.1.2,', c.refusal_approval.approval_caption(
+            dict(ROW, customer_name=None, email='gabriel.keith@example-company.com', model_link='',
+                 model_name=long_name), 'change_request'))
+
     def test_email_fallback_and_unsafe_link(self):
         row = dict(ROW, customer_name=None, model_link='https://host.invalid/model?token=secret')
         card = c.rescue_card(row, 'gpu_pod_capacity')

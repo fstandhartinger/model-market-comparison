@@ -1695,12 +1695,36 @@ SHORT_HOLD_LABELS = {
 }
 
 
+CONTEXT_MAX_CHARS = 220  # notify rejects a longer "Worum geht's:" line
+
+
+def short_model_label(model: str, budget: int) -> str:
+    """Shorten a long model name for the card line: drop trailing detail in brackets, then cut at a word."""
+    if len(model) <= budget:
+        return model
+    base = re.sub(r"\s*[\(\[][^\)\]]*[\)\]]\s*$", "", model).strip()
+    if base and len(base) <= budget:
+        return base
+    base = base or model
+    cut = base[:max(budget - 1, 1)].rsplit(" ", 1)[0].rstrip(" ,;:-(") or base[:max(budget - 1, 1)]
+    return cut + "…"
+
+
 def card_context_line(row: dict[str, Any], status: str) -> str:
     customer, model, link = card_identity(row)
     about = f"Fast-lane for {customer}, model {model}, {status}. {link}"
-    if len(about) > 220:
-        # Use a complete shorter public landing page, never a clipped model name or URL.
-        about = f"Fast-lane for {customer}, model {model}, {status}. {SITE}/submit"
+    if len(about) > CONTEXT_MAX_CHARS:
+        # Use a complete shorter public landing page, never a clipped URL.
+        link = f"{SITE}/submit"
+        about = f"Fast-lane for {customer}, model {model}, {status}. {link}"
+    if len(about) > CONTEXT_MAX_CHARS:
+        # A very long model name (or email) still overflows: shorten the model label; the card body keeps the full name.
+        fixed = len(f"Fast-lane for {customer}, model , {status}. {link}")
+        if CONTEXT_MAX_CHARS - fixed < 12:
+            customer = "the customer"
+            fixed = len(f"Fast-lane for {customer}, model , {status}. {link}")
+        model = short_model_label(model, max(CONTEXT_MAX_CHARS - fixed, 12))
+        about = f"Fast-lane for {customer}, model {model}, {status}. {link}"
     return "Worum geht's: " + about
 
 
