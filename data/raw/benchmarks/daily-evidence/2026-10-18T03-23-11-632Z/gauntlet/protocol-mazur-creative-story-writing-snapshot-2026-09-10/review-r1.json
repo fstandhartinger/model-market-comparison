@@ -1,0 +1,15 @@
+{
+  "artifact_id": "protocol-mazur-creative-story-writing-snapshot-2026-09-10",
+  "artifact_sha256": "d0bedc67f03020a1918d640a6c576ae6937e5130eb4cf9579a6d457ab8fc7a3e",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": ["mazur-creative-story-writing::snapshot-2026-09-10", "c1", "c2"],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "As a read-only critic I could not recompute row or source hashes or re-fetch the live URL; owner-side hash/transport/qualification checks were taken as separately executed.",
+    "The row's unit 'points' is not literally stated in the protocol page, but criterion c1 permits the row's unit/range to agree with the served-value scale even when the protocol text does not state it; the served scale summary shows finite values between -5.089 and 3.756, and the row states range [null,null], so no mismatch is present."
+  ],
+  "missing_evidence": []
+}

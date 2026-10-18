@@ -1,0 +1,23 @@
+{
+  "artifact_id": "protocol-gso-opt1-102",
+  "artifact_sha256": "eedef18bb298a4ecee13a356eb383d9eb5c33428b80c95017bb7ef88b2383f9f",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": ["gso::opt1-102", "c1", "c2"],
+  "errors_found": 1,
+  "findings": [
+    {
+      "id": "gso::opt1-102-version_status",
+      "severity": "blocker",
+      "location": "row gso::opt1-102, version_status (and version)",
+      "evidence": "Source 1 protocol text and Source 2 leaderboard.json contain no release identifier for this board; leaderboard.json metadata has only last_updated and total_tasks. The row claims version_status 'published', which requires a maintainer-published release identifier that version copies, but no such identifier is present.",
+      "repair": "Set version_status to 'snapshot' and version to 'snapshot-2026-10-18' (the capture date) per criterion c2, or cite a source-visible release identifier to justify 'published'."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "Hash verification and transport qualification are owner-executed and not independently verifiable in this read-only review.",
+    "The maintainer affiliation 'UC Berkeley' is not visible in captured sources, but this field is outside the c1/c2 scope and was not checked."
+  ],
+  "missing_evidence": []
+}

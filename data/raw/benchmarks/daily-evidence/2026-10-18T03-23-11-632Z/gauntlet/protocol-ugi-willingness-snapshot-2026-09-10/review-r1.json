@@ -1,0 +1,18 @@
+{
+  "artifact_id": "protocol-ugi-willingness-snapshot-2026-09-10",
+  "artifact_sha256": "dd8b7592b887476b21e04b4a80eb36754917b755174bdacd4ef8bab75a83274c",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": ["ugi-willingness::snapshot-2026-09-10", "c1", "c2"],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Could not independently verify owner-provided SHA-256 hashes or transport/qualification checks; these are owner-side executed per instructions.",
+    "The protocol text does not publish a release identifier for this board, supporting version_status 'snapshot'.",
+    "The row's scoring notes (private questions, W/10 composition) align with source protocol text describing W/10-Direct and W/10-Adherence and private test questions.",
+    "No successor board is named in source, consistent with superseded_by null.",
+    "The generated activity summary (3 added values) affirmatively supports status active for this board."
+  ],
+  "missing_evidence": []
+}

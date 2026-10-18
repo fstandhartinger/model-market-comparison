@@ -1,0 +1,151 @@
+{
+  "artifact_id": "protocol-kernelbench-cuda-glm52-fused-moe-rtx-pro-6000",
+  "rounds_used": 1,
+  "rows": {
+    "total": 1,
+    "accepted": [],
+    "quarantined": [
+      "kernelbench-cuda-glm52-fused-moe::rtx-pro-6000"
+    ]
+  },
+  "producer_flagged": [],
+  "second_opinion": null,
+  "criteria": [
+    "c1",
+    "c2"
+  ],
+  "coverage": {
+    "producer": null,
+    "critic": [
+      {
+        "round": 1,
+        "verdict": "revise",
+        "coverage_complete": true,
+        "missing_rows": [],
+        "missing_criteria": []
+      }
+    ],
+    "final": {
+      "rows_covered": 0,
+      "criteria_covered": 0,
+      "complete": false
+    }
+  },
+  "receipts": [
+    {
+      "round": 1,
+      "role": "producer",
+      "reused_from_round": null,
+      "requested_model": "z-ai/glm-5.3-flash",
+      "model": "z-ai/glm-5.3-flash",
+      "route": "openrouter",
+      "attempt": 1,
+      "cost_usd": 0.0016628832,
+      "out": "data/raw/benchmarks/daily-evidence/2026-10-18T03-23-11-632Z/gauntlet/protocol-kernelbench-cuda-glm52-fused-moe-rtx-pro-6000/producer-r1.json",
+      "output_sha256": "61fc2b4fa0b300b210b858f9ec7ce9ed3f8b1530b60665adc0ef5f739eaf423d",
+      "qualification": {
+        "id": "z-ai/glm-5.3-flash",
+        "family": "z-ai",
+        "free": false,
+        "input_per_1m": 0.048,
+        "output_per_1m": 0.19999999999999998,
+        "context": 1048576,
+        "aa_intelligence_index": 41.8,
+        "aa_source": "exact_id_and_variants",
+        "matched_model_ids": [
+          "glm-5.3-flash::default"
+        ],
+        "aa_variant_scores": [
+          {
+            "id": "glm-5.3-flash::default",
+            "index": 41.8
+          }
+        ]
+      },
+      "usage": {
+        "prompt_tokens": 23110,
+        "completion_tokens": 2852,
+        "total_tokens": 25962,
+        "cost": 0.0016628832,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "audio_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.00167968,
+          "upstream_inference_prompt_cost": 0.00110928,
+          "upstream_inference_completions_cost": 0.0005704
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 2583,
+          "image_tokens": 0,
+          "audio_tokens": 0
+        }
+      },
+      "reasoning": {
+        "effort": "low",
+        "exclude": true
+      }
+    },
+    {
+      "round": 1,
+      "role": "critic",
+      "requested_model": "deepseek/deepseek-v4-flash-0731",
+      "model": "deepseek/deepseek-v4-flash-0731",
+      "route": "openrouter",
+      "attempt": 1,
+      "cost_usd": 0.010915270245,
+      "out": "data/raw/benchmarks/daily-evidence/2026-10-18T03-23-11-632Z/gauntlet/protocol-kernelbench-cuda-glm52-fused-moe-rtx-pro-6000/review-r1.json",
+      "output_sha256": "cfcd64352faa8fdb122c475681df1c9884b3c2383f8fa36d09e7ec6c1ee1004d",
+      "qualification": {
+        "id": "deepseek/deepseek-v4-flash-0731",
+        "family": "deepseek",
+        "free": false,
+        "input_per_1m": 0.09999999999999999,
+        "output_per_1m": 0.3,
+        "context": 1048576,
+        "aa_intelligence_index": 34.3,
+        "aa_source": "exact_id_and_variants",
+        "matched_model_ids": [
+          "deepseek-v4-flash-0731::max"
+        ],
+        "aa_variant_scores": [
+          {
+            "id": "deepseek-v4-flash-0731::max",
+            "index": 34.3
+          }
+        ]
+      },
+      "usage": {
+        "prompt_tokens": 23767,
+        "completion_tokens": 8493,
+        "total_tokens": 32260,
+        "cost": 0.010915270245,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "audio_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.0110255255,
+          "upstream_inference_prompt_cost": 0.0001544855,
+          "upstream_inference_completions_cost": 0.01087104
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 7352,
+          "image_tokens": 0,
+          "audio_tokens": 0
+        }
+      },
+      "reasoning": {
+        "effort": "low",
+        "exclude": true
+      }
+    }
+  ]
+}

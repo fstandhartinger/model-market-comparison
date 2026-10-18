@@ -1,0 +1,16 @@
+{
+  "artifact_id": "protocol-ugi-snapshot-2026-09-10",
+  "artifact_sha256": "cb5f335a12b0dc44746d36113a8843c9e3b8fc406c7b3d0f88a9a4a17abb19b9",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": ["ugi::snapshot-2026-09-10", "c1", "c2"],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "I am a read-only critic and cannot independently recompute owner hashes or re-run network retrieval; I rely on the provided source excerpts and owner-computed row hashes as primary evidence, per instructions.",
+    "Sources 3 and 4 are this run's own generated summaries, used only for the narrow judgements the criteria allow (served scale for unit/range, and affirmative activity evidence for status). They were not used to establish metric meaning, version, or task set.",
+    "The protocol text publishes no release identifier for the board, so the snapshot version and version_status 'snapshot' are supported; the exact date snapshot-2026-09-10 is our own frozen identity and need not be stated by the maintainer."
+  ],
+  "missing_evidence": []
+}

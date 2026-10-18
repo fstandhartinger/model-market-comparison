@@ -1,0 +1,38 @@
+{
+  "artifact_id": "protocol-weirdml-2",
+  "artifact_sha256": "6bd60c5766dad9d19f8ad87594eec4ade45889654f1ab0b2516e23568e5c4ae7",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": ["weirdml::2", "c1", "c2"],
+  "errors_found": 3,
+  "findings": [
+    {
+      "id": "c1-version",
+      "severity": "blocker",
+      "location": "row weirdml::2 -> version/version_guard",
+      "evidence": "SOURCE 1 identifies current board as \"WeirdML v3\" and lists \"WeirdML v2\" only under \"Previous versions: WeirdML v2 · WeirdML v1\". Row declares version 2 and version_guard \"Verify the published version 2 before reading results.\" This continuity is contradicted by the protocol, which now publishes v3.",
+      "repair": "Align version/version_guard and identity with WeirdML v3, or represent v2 explicitly as a retained/previous board with appropriate lifecycle fields."
+    },
+    {
+      "id": "c1-metric",
+      "severity": "blocker",
+      "location": "row weirdml::2 -> scoring.metric",
+      "evidence": "Row metric: \"Average Max Accuracy: per task, mean over runs of the maximum test accuracy across the 5 iterations per run, averaged over all 17 tasks.\" SOURCE 1 defines the official score as \"80% normalized area under its line... plus 20% of its final value\" across 11 tasks and 15 configurations, and says effective scores \"are not raw accuracy\". No mention of 5 iterations or 17 tasks. SOURCE 3 only supports the percent/[0,100] scale, not the metric definition.",
+      "repair": "Replace scoring.metric with the protocol's official score definition (normalized area under best-so-far effective score over 500k\u201350M tokens, 11 tasks) or provide evidence for the claimed max-accuracy formula."
+    },
+    {
+      "id": "c2-lifecycle",
+      "severity": "blocker",
+      "location": "row weirdml::2 -> status/version_status/superseded_by",
+      "evidence": "SOURCE 1 shows v3 is the maintained current board and v2 is a previous version. The row sets status=\"active\", version_status=\"published\", and superseded_by=null, but the protocol indicates v2 is replaced/retired and names successor WeirdML v3. Source 2's activity summary concerns today's payload for the current board (WeirdML v3/v3-era data), not v2, so it cannot establish v2 as active.",
+      "repair": "Set status=\"retained\", version_status=\"retained\", and set superseded_by to the successor board's registry id (likely the WeirdML v3 entry); do not claim current publication."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "Owner-executed SHA-256, transport and qualification checks were not independently reproduced; this is a read-only limitation, not missing numeric source evidence.",
+    "The exact successor registry id for WeirdML v3 is not included in the packet, so the repair cannot state the precise superseded_by value; this does not change the mismatch finding.",
+    "The source-2 activity and source-3 value-scale summaries are this run's generated reads; they were used only for the status and unit/range checks as permitted, not to validate metric meaning."
+  ],
+  "missing_evidence": []
+}

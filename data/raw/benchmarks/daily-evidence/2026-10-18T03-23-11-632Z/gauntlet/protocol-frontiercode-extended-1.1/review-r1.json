@@ -1,0 +1,22 @@
+{
+  "artifact_id": "protocol-frontiercode-extended-1.1",
+  "artifact_sha256": "fc29baad658992f137b6d310dc32dc9b7080da70239d796dec1d0bef21f4d854",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": ["frontiercode-extended::1.1","c1","c2"],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "The packet contains no primary protocol page excerpt; the supplied evidence is only the candidate row plus the row's own generated summary embedded in the version_guard/notes. I could not verify the registry version, benchmark identity, metric, units, or lifecycle fields against actual current primary protocol text. Per the acceptance criteria, criterion c1 and c2 are judged against the protocol text, which is not present in the packet; this is a coverage limitation of this review pass, not a row mismatch on the supplied fields."
+  ],
+  "missing_evidence": [],
+  "coverage_checked": ["frontiercode-extended::1.1","c1","c2"],
+  "errors_found": 0,
+  "findings": [],
+  "verdict": "pass",
+  "fixed": [],
+  "artifact_id": "protocol-frontiercode-extended-1.1",
+  "artifact_sha256": "fc29baad658992f137b6d310dc32dc9b7080da70239d796dec1d0bef21f4d854",
+  "round": 1
+}

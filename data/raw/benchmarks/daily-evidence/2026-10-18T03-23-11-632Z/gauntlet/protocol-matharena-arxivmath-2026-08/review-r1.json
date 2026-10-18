@@ -1,0 +1,20 @@
+{
+  "artifact_id": "protocol-matharena-arxivmath-2026-08",
+  "artifact_sha256": "8233ce3906321b4665fc21479e364cfa1672bbd075101baf71ff57993a3cbc61",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "matharena-arxivmath::2026-08",
+    "c1",
+    "c2"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "I cannot recompute or independently execute the owner's hash and transport/qualification checks; row hashes are taken as supplied and bound to rows as stated.",
+    "Version '2026-08' is treated as a faithful normalized copy of the maintainer's release identifier '08/2026' shown for this edition; no contradictory publication of a release identifier was found.",
+    "The generated value-scale summary (lowest 24.56, highest 96.49) is used only to confirm the row's unit/range ([0,100] percent), as permitted by criterion c1."
+  ],
+  "missing_evidence": []
+}

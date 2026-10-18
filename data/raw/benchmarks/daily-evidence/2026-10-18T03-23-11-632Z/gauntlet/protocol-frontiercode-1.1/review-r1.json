@@ -1,0 +1,16 @@
+{
+  "artifact_id": "protocol-frontiercode-1.1",
+  "artifact_sha256": "c69cd55c446e86f9b8da168ccf5e1d713e081b2ebcd71d7e5b0086202daddd51",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": ["frontiercode::1.1", "c1", "c2"],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Cannot independently verify SHA-256 hashes or transport checks; relies on owner-provided hashes and receipts.",
+    "Generated summaries (sources 9 and 10) are taken as given per instructions, not independently verified.",
+    "The version_guard is an internal instruction; its correctness is inferred from sources 1 and 8."
+  ],
+  "missing_evidence": []
+}

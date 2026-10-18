@@ -1,0 +1,15 @@
+{
+  "artifact_id": "protocol-matharena-brokenarxiv-2026-08",
+  "artifact_sha256": "9b60473e1d9efbf3b3e613c17052dda58560573c0301c1faf10fa2ca146987f4",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": ["matharena-brokenarxiv::2026-08", "c1", "c2"],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Owner-executed hash verification and transport/qualification checks cannot be reproduced in this read-only review; only the supplied excerpts were used.",
+    "The generated value-scale summary (16 values, 11.31–86.31) is taken as supplied evidence and used solely to confirm the row's unit/range, per the criteria."
+  ],
+  "missing_evidence": []
+}

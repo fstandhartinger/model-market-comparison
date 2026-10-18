@@ -1,0 +1,20 @@
+{
+  "artifact_id": "protocol-matharena-arxivmath-2026-06",
+  "artifact_sha256": "653cc34734e8044952544da6af3e4c2a92a1ed3a6f8ab7bff19e27c82d8137d5",
+  "round": 3,
+  "verdict": "pass",
+  "coverage_checked": [
+    "matharena-arxivmath::2026-06",
+    "c1",
+    "c2"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Row version '2026-06' is a normalized form of the maintainer's release identifier '06/2026' shown in SOURCE 1; treated as copying a published identifier since the page publishes monthly-edition identifiers.",
+    "'higher_better': true is not explicitly stated in the protocol, but accuracy-as-percent with served values 4.17-94.44 gives no contrary evidence; consistency only, not an independent source claim.",
+    "I cannot execute hashes, transport, or qualification checks; owner-side checks are out of scope for this review."
+  ],
+  "missing_evidence": []
+}

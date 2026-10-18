@@ -1,0 +1,39 @@
+{
+  "artifact_id": "protocol-kernelbench-cuda-deepseek-nsa-rtx-pro-6000",
+  "artifact_sha256": "106e3ed5770f2399032cd76ef25ac0ad13ad843f58eaa616992a43c991185a9c",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": ["kernelbench-cuda-deepseek-nsa::rtx-pro-6000", "c1", "c2"],
+  "errors_found": 3,
+  "findings": [
+    {
+      "id": "f1",
+      "severity": "major",
+      "location": "kernelbench-cuda-deepseek-nsa::rtx-pro-6000 / version_status",
+      "evidence": "Criterion c2: 'published' requires the maintainer to publish a release identifier for this board that the version copies. Extracted protocol (SPEC.md SOURCE 3, leaderboard.json SOURCE 2, published_runs.json SOURCE 5, cuda page SOURCE 4) shows no release identifier for the RTX PRO 6000 board — only schema_version 1 (structure), a 'Last updated' date, and an internal 'tag':'v2' build tag. Row version 'rtx-pro-6000' is the hardware board name, not a copied release identifier. Absence of any published release identifier supports 'snapshot', contradicting the row's 'published'.",
+      "repair": "Set version_status to 'snapshot' (with a dated snapshot version) or supply evidence of a published release identifier for this board; do not claim 'published' without it."
+    },
+    {
+      "id": "f2",
+      "severity": "major",
+      "location": "kernelbench-cuda-deepseek-nsa::rtx-pro-6000 / notes (ranked-list cross-check, 04)",
+      "evidence": "SOURCE 2 per_problem 04_grid_mingru_sps ranked_passes has 19 entries and omits muse/muse-spark-1.3 [ultra]; that model's 04 result is correct:false, peak_fraction null, annotation_verdict 'bug'. The value 0.2056 cited in the note appears nowhere in the captured payload (04 ranked values run 1.961…0.002; muse 04 is null). The note's assertion that the ranked list 'still holds' the muse bug cell on 04 at 0.2056 contradicts the evidence and also contradicts its own statement that correct:false cells are absent from the ranked list.",
+      "repair": "Correct the note to state that muse/muse-spark-1.3 [ultra] on 04 is excluded and absent from the ranked list (correct:false, peak_fraction null, bug), and remove the unsupported 0.2056 value."
+    },
+    {
+      "id": "f3",
+      "severity": "minor",
+      "location": "kernelbench-cuda-deepseek-nsa::rtx-pro-6000 / scoring.unit and value-scale summary",
+      "evidence": "SOURCE 7 (same sha256 d73bea83 as SOURCE 2) reports the served peak_fraction scale as lowest 2.51 / highest 136.19, but the captured leaderboard.json (SOURCE 2) stores 02_deepseek_nsa peak_fraction as raw fractions 0.0251–1.3619. The row's 'percent of roofline' unit and 'published values are peak_fraction × 100' claim are consistent with the summary only via a ×100 transformation not present in the raw payload, so the two pieces of evidence disagree about the actually served scale.",
+      "repair": "Reconcile the generated scale summary with the captured payload values, or explicitly document the ×100 served-value transformation so the unit/range judgement rests on a single consistent basis."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "I cannot recompute SHA-256 hashes or perform transport/qualification checks; the owner executes those separately. This is a limitation, not missing numeric evidence.",
+    "The version_status judgement rests on the bounded excerpts showing no published release identifier; if the maintainer publishes one outside these excerpts, finding f1 would need re-evaluation.",
+    "SOURCE 7's 2.51/136.19 scale versus SOURCE 2's raw 0.0251/1.3619 cannot be resolved from the packet alone; the row's own notes assert the ×100 mapping, which is consistent with both readings but with only one payload visible.",
+    "Per criterion c1 the generated scale summary nominally supports unit 'percent of roofline' and range [0,null]; finding f3 records the underlying payload inconsistency rather than a unit mismatch."
+  ],
+  "missing_evidence": []
+}
