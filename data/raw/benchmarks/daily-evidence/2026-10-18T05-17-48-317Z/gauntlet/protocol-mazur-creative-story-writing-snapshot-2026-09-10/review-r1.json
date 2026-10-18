@@ -1,0 +1,20 @@
+{
+  "artifact_id": "protocol-mazur-creative-story-writing-snapshot-2026-09-10",
+  "artifact_sha256": "d0bedc67f03020a1918d640a6c576ae6937e5130eb4cf9579a6d457ab8fc7a3e",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "mazur-creative-story-writing::snapshot-2026-09-10",
+    "c1",
+    "c2"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Unit 'points' is not spelled out in the protocol excerpt; it is inferred from the numeric comparison-score scale. The row's unbounded range (null, null) is not contradicted by the served values (-5.089 to 3.756).",
+    "Retrieval date (2026-10-18) differs from the snapshot date in the identity (2026-09-10); the protocol page publishes no release identifier, so the snapshot dating is our registry convention and no contradiction is shown.",
+    "Owner hash verification, transport and qualification checks are outside read-only review scope; row binding SHA-256 and packet hashes were accepted as given."
+  ],
+  "missing_evidence": []
+}

@@ -1,0 +1,20 @@
+{
+  "artifact_id": "protocol-programbench-1",
+  "artifact_sha256": "ee34657643bde05d004d0d13cf33b294ef9dfecc554b187cfd4aa3e7f9ab7fdd",
+  "round": 1,
+  "verdict": "blocked",
+  "coverage_checked": ["programbench::1", "c1", "c2"],
+  "errors_found": 2,
+  "findings": [
+    {
+      "id": "programbench::1-c1",
+      "severity": "blocker",
+      "location": "row programbench::1, criteria c1 (registry version, identity, metric, units, range)",
+      "evidence": "The packet's primary evidence for the actual current primary protocol and the served board values is absent. No raw API catalog, captured payload, or protocol excerpt for board programbench is supplied, so there is no source text to verify the version '1', the benchmark identity (ProgramBench rebuild-from-binary task, 200 tasks, mini-SWE-agent), metric description, or the scale the board is served on. The row carries a version_guard string asserting identity phrases (ProgramBench, rebuild-from-binary task statement, 200 tasks, mini-SWE-agent, update stamp, one results literal, ten-field schema, unique model per row, descending scores within 0..1, listed providers, README and 200-instance macro-average) and a claim that a changed task count, a second agent, a dropped board row or a recomputed metric fails closed, but no primary protocol excerpt, page text, or captured payload is included for comparison. No `unit`/`range` fields appear in the row, so no served-values summary can be checked against them. Without primary text, c1's continuity cannot be settled from this packet and remains missing evidence.",
+"unit":"rate","range":"[0,1]","description":"Fraction of test programs restored correctly by the rebuild-from-binary task, macro-averaged over 200 tasks.","superseded_by":null,"source":"https://raw.githubusercontent.com/ProgramBench/ProgramBench/main/README.md","source_sha256":"00131bdcbfd5f8cf379173a28753d9f5c1c8f77fefd64ef80cc9e71a78d1c40e","result_count":"1","results":[{"version":"1","metric":"programbench","results":[{"value":0.5,"evidence":"2024-07-11T09:01:11Z;1;ProgramBench;false;4000;;;false;false;false;false;false","basis":"maintainer-published primary","relation":"equal","location":"results[0]","scope":"assertion"}]}]}
+]
+  ,
+"retained_context": {"artifact_id":"protocol-programbench-1","round":1,"source":"local protocol snapshot","sha256":"ee34657643bde05d004d0d13cf33b294ef9dfecc554b187cfd4aa3e7f9ab7fdd","rows":1,"sources":["https://programbench.vercel.app/","https://programbench.vercel.app/"],"row_ids":["programbench::1"],"field_metric":"0.921","field_metric_note":"Witnessing full 200-instance validation is observation-level; our final answer is the evaluation-construction procedure detailed in the methodology note: per-test-fraction/200 aggregation under the mini-SWE-agent scaffold, with 0.921 the highest recorded value, and the same aggregation at an updated stamp (which, for the other 200-problem benchmarks we refreshed today, is the value we publish in the frozen payload snapshot).","row_metric":"0.921","metric_lowest":0.4,"metric_highest":0.921,"row_count":28,"updated_note":"changed 0, added 0","sum_diff":"0"}
+
+                     
+  }

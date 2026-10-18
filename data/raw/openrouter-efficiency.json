@@ -1,5 +1,5 @@
 {
-  "collected_at": "2026-10-18T03:36:18.721Z",
+  "collected_at": "2026-10-18T05:30:07.638Z",
   "models": {
     "moonshotai/kimi-k3": {
       "or_model_id": "moonshotai/kimi-k3",
@@ -12376,9 +12376,9 @@
           "cache_hit_rate": 0.18202985310233658,
           "cache_status": "available",
           "cache_note": "OpenRouter reported cacheHitRate as a fraction. Underlying numerator/denominator and exact summary interval are not published in this response.",
+          "total_tokens": 405069,
           "source_provider_name": "OpenAI (2)",
-          "source_provider_slug": "openai",
-          "total_tokens": 405069
+          "source_provider_slug": "openai"
         },
         {
           "or_model_id": "openai/gpt-6-astra-pro",
@@ -12390,9 +12390,9 @@
           "cache_hit_rate": 0.8606329937625454,
           "cache_status": "available",
           "cache_note": "OpenRouter reported cacheHitRate as a fraction. Underlying numerator/denominator and exact summary interval are not published in this response.",
+          "total_tokens": 364431213,
           "source_provider_name": "Azure (1)",
-          "source_provider_slug": "azure",
-          "total_tokens": 364431213
+          "source_provider_slug": "azure"
         },
         {
           "or_model_id": "openai/gpt-6-astra-pro",
@@ -12404,9 +12404,9 @@
           "cache_hit_rate": 0.7598247957280533,
           "cache_status": "available",
           "cache_note": "OpenRouter reported cacheHitRate as a fraction. Underlying numerator/denominator and exact summary interval are not published in this response.",
+          "total_tokens": 464676676,
           "source_provider_name": "OpenAI (4)",
-          "source_provider_slug": "openai",
-          "total_tokens": 464676676
+          "source_provider_slug": "openai"
         },
         {
           "or_model_id": "openai/gpt-6-astra-pro",
@@ -12418,9 +12418,9 @@
           "cache_hit_rate": 0.21256021377566067,
           "cache_status": "available",
           "cache_note": "OpenRouter reported cacheHitRate as a fraction. Underlying numerator/denominator and exact summary interval are not published in this response.",
+          "total_tokens": 152898,
           "source_provider_name": "Azure (2)",
-          "source_provider_slug": "azure",
-          "total_tokens": 152898
+          "source_provider_slug": "azure"
         },
         {
           "or_model_id": "openai/gpt-6-astra-pro",
@@ -12432,9 +12432,9 @@
           "cache_hit_rate": 0.24212872244057929,
           "cache_status": "available",
           "cache_note": "OpenRouter reported cacheHitRate as a fraction. Underlying numerator/denominator and exact summary interval are not published in this response.",
+          "total_tokens": 330633,
           "source_provider_name": "OpenAI (1)",
-          "source_provider_slug": "openai",
-          "total_tokens": 330633
+          "source_provider_slug": "openai"
         },
         {
           "or_model_id": "openai/gpt-6-astra-pro",
@@ -12446,14 +12446,38 @@
           "cache_hit_rate": 0.19173949511620986,
           "cache_status": "available",
           "cache_note": "OpenRouter reported cacheHitRate as a fraction. Underlying numerator/denominator and exact summary interval are not published in this response.",
+          "total_tokens": 103658,
           "source_provider_name": "OpenAI (3)",
-          "source_provider_slug": "openai",
-          "total_tokens": 103658
+          "source_provider_slug": "openai"
         }
       ],
       "usage": {
         "status": "available",
         "daily": [
+          {
+            "date": "2026-10-17",
+            "total_prompt_tokens": 2395662389,
+            "total_completion_tokens": 69792252,
+            "count": 20946
+          },
+          {
+            "date": "2026-10-16",
+            "total_prompt_tokens": 2997187153,
+            "total_completion_tokens": 50859532,
+            "count": 24991
+          },
+          {
+            "date": "2026-10-15",
+            "total_prompt_tokens": 2691582286,
+            "total_completion_tokens": 58412168,
+            "count": 27937
+          },
+          {
+            "date": "2026-10-14",
+            "total_prompt_tokens": 3295414247,
+            "total_completion_tokens": 71902388,
+            "count": 35795
+          },
           {
             "date": "2026-10-13",
             "total_prompt_tokens": 3511663582,
@@ -12471,49 +12495,32 @@
             "total_prompt_tokens": 30313838520,
             "total_completion_tokens": 676134929,
             "count": 170003
-          },
-          {
-            "date": "2026-10-10",
-            "total_prompt_tokens": 7095853690,
-            "total_completion_tokens": 158531982,
-            "count": 48740
-          },
-          {
-            "date": "2026-10-09",
-            "total_prompt_tokens": 2352794155,
-            "total_completion_tokens": 38870793,
-            "count": 21700
-          },
-          {
-            "date": "2026-10-08",
-            "total_prompt_tokens": 3184755386,
-            "total_completion_tokens": 51860974,
-            "count": 40787
-          },
-          {
-            "date": "2026-10-07",
-            "total_prompt_tokens": 2702256664,
-            "total_completion_tokens": 80607759,
-            "count": 39924
           }
         ],
-        "total_prompt_tokens": 73309230412,
-        "total_completion_tokens": 1549142525,
-        "total_requests": 485675,
-        "input_output_ratio": 47.322456926292176
+        "total_prompt_tokens": 69353416592,
+        "total_completion_tokens": 1470237357,
+        "total_requests": 444193,
+        "input_output_ratio": 47.17157829094666
       },
-      "source_updated_at": "2026-10-14T04:23:19.099Z",
+      "source_updated_at": "2026-10-18T05:29:27.260Z",
       "window": {
-        "start_date": "2026-10-07",
-        "end_date": "2026-10-13"
+        "start_date": "2026-10-11",
+        "end_date": "2026-10-17"
       },
       "provenance": {
         "source": "OpenRouter model-page usage",
         "url": "https://openrouter.ai/openai/gpt-6-astra-pro",
-        "collected_at": "2026-10-14T04:24:31.847Z",
+        "collected_at": "2026-10-18T05:30:09.999Z",
         "basis": "measured"
       },
-      "response_sha256": "454776d03f76a5b23617369ad8675df892650bbaa9f7eb8549bb414bb40c6b9b",
+      "response_sha256": "5741702f6ae137339d989df232c6583c89561bfd343ef7a07e6cdabffce90c85",
+      "cache_attempt": {
+        "source": "OpenRouter effective pricing statistics",
+        "status": "fetch_or_parse_failed",
+        "reason": "Partial cache summary: 1 previous endpoint rates absent; retaining dated cache observation",
+        "url": "https://openrouter.ai/api/frontend/v1/stats/effective-pricing?permaslug=openai%2Fgpt-6-astra-pro-20260903&variant=standard&shape=v7",
+        "collected_at": "2026-10-18T05:30:12.279Z"
+      },
       "cache": {
         "unjoined": [],
         "returned_summaries": 6,
@@ -12528,14 +12535,8 @@
           "collected_at": "2026-10-14T04:24:33.909Z",
           "basis": "measured"
         },
-        "response_sha256": "97754e8ac27d0f152fa2eb44062b9cb48f403f9d1a96cee1977a8bc9941bf31a"
-      },
-      "cache_attempt": {
-        "source": "OpenRouter effective pricing statistics",
-        "url": "https://openrouter.ai/api/frontend/v1/stats/effective-pricing?permaslug=openai%2Fgpt-6-astra-pro-20260903&variant=standard&shape=v7",
-        "collected_at": "2026-10-14T04:24:33.909Z",
-        "basis": "measured",
-        "status": "available"
+        "response_sha256": "97754e8ac27d0f152fa2eb44062b9cb48f403f9d1a96cee1977a8bc9941bf31a",
+        "retained_after_failure": true
       }
     },
     "anthropic/claude-sonnet-5.5": {
@@ -19704,6 +19705,411 @@
         "basis": "measured",
         "status": "available"
       }
+    },
+    "mistralai/mistral-large-4-0": {
+      "or_model_id": "mistralai/mistral-large-4-0",
+      "model_permaslug": "mistralai/mistral-large-4-0-20261006",
+      "variant": "standard",
+      "endpoints": [
+        {
+          "or_model_id": "mistralai/mistral-large-4-0",
+          "endpoint_tag": "mistral/zdr",
+          "provider": "Mistral",
+          "endpoint_id": "540e63db-cc7c-4556-bb67-d449579bcf1a",
+          "cache_read_per_1m": 0.07,
+          "cache_write_per_1m": null,
+          "cache_hit_rate": 0.9538361636103707,
+          "cache_status": "available",
+          "cache_note": "OpenRouter reported cacheHitRate as a fraction. Underlying numerator/denominator and exact summary interval are not published in this response.",
+          "source_provider_name": "Mistral (2)",
+          "source_provider_slug": "mistral",
+          "total_tokens": 3153949073
+        },
+        {
+          "or_model_id": "mistralai/mistral-large-4-0",
+          "endpoint_tag": "mistral",
+          "provider": "Mistral",
+          "endpoint_id": "19b3b5d7-23f6-4b63-8109-64a6cc37d996",
+          "cache_read_per_1m": 0.07,
+          "cache_write_per_1m": null,
+          "cache_hit_rate": 0.8600358556410959,
+          "cache_status": "available",
+          "cache_note": "OpenRouter reported cacheHitRate as a fraction. Underlying numerator/denominator and exact summary interval are not published in this response.",
+          "source_provider_name": "Mistral (1)",
+          "source_provider_slug": "mistral",
+          "total_tokens": 566317217
+        },
+        {
+          "or_model_id": "mistralai/mistral-large-4-0",
+          "endpoint_tag": "mistral/eu",
+          "provider": "Mistral",
+          "endpoint_id": "844b115f-0b70-4262-a75f-4b8ae3e6ba2b",
+          "cache_read_per_1m": 0.077,
+          "cache_write_per_1m": null,
+          "cache_hit_rate": 0.11299224212792204,
+          "cache_status": "available",
+          "cache_note": "OpenRouter reported cacheHitRate as a fraction. Underlying numerator/denominator and exact summary interval are not published in this response.",
+          "source_provider_name": "Mistral (3)",
+          "source_provider_slug": "mistral",
+          "total_tokens": 9465453
+        }
+      ],
+      "usage": {
+        "status": "available",
+        "daily": [
+          {
+            "date": "2026-10-17",
+            "total_prompt_tokens": 12380461835,
+            "total_completion_tokens": 364986060,
+            "count": 266892
+          },
+          {
+            "date": "2026-10-16",
+            "total_prompt_tokens": 19230570945,
+            "total_completion_tokens": 924512617,
+            "count": 430462
+          },
+          {
+            "date": "2026-10-15",
+            "total_prompt_tokens": 15374298594,
+            "total_completion_tokens": 803254307,
+            "count": 436801
+          },
+          {
+            "date": "2026-10-14",
+            "total_prompt_tokens": 31688074986,
+            "total_completion_tokens": 590373508,
+            "count": 368800
+          },
+          {
+            "date": "2026-10-13",
+            "total_prompt_tokens": 43471218873,
+            "total_completion_tokens": 507354717,
+            "count": 437369
+          },
+          {
+            "date": "2026-10-12",
+            "total_prompt_tokens": 57508649573,
+            "total_completion_tokens": 858558347,
+            "count": 692581
+          },
+          {
+            "date": "2026-10-11",
+            "total_prompt_tokens": 13902343071,
+            "total_completion_tokens": 417747325,
+            "count": 256089
+          }
+        ],
+        "total_prompt_tokens": 193555617877,
+        "total_completion_tokens": 4466786881,
+        "total_requests": 2888994,
+        "input_output_ratio": 43.33218105844974
+      },
+      "source_updated_at": "2026-10-18T05:29:33.069Z",
+      "window": {
+        "start_date": "2026-10-11",
+        "end_date": "2026-10-17"
+      },
+      "provenance": {
+        "source": "OpenRouter model-page usage",
+        "url": "https://openrouter.ai/mistralai/mistral-large-4-0",
+        "collected_at": "2026-10-18T05:30:14.286Z",
+        "basis": "measured"
+      },
+      "response_sha256": "898ecad910bbdc581cf3ac7a636499ba606886d08ea84d79476310362c5620f5",
+      "cache": {
+        "unjoined": [],
+        "returned_summaries": 3,
+        "summary_window": null,
+        "chart_date_range": {
+          "first": "2026-10-11 00:00:00",
+          "last": "2026-10-18 00:00:00"
+        },
+        "provenance": {
+          "source": "OpenRouter effective pricing statistics",
+          "url": "https://openrouter.ai/api/frontend/v1/stats/effective-pricing?permaslug=mistralai%2Fmistral-large-4-0-20261006&variant=standard&shape=v7",
+          "collected_at": "2026-10-18T05:30:16.230Z",
+          "basis": "measured"
+        },
+        "response_sha256": "c112ada95c14540c0580ab401872114fbd47d95dc5ae4a112cf863ca941c91c3"
+      },
+      "cache_attempt": {
+        "source": "OpenRouter effective pricing statistics",
+        "url": "https://openrouter.ai/api/frontend/v1/stats/effective-pricing?permaslug=mistralai%2Fmistral-large-4-0-20261006&variant=standard&shape=v7",
+        "collected_at": "2026-10-18T05:30:16.230Z",
+        "basis": "measured",
+        "status": "available"
+      }
+    },
+    "mistralai/mistral-medium-3": {
+      "or_model_id": "mistralai/mistral-medium-3",
+      "model_permaslug": "mistralai/mistral-medium-3",
+      "variant": "standard",
+      "endpoints": [
+        {
+          "or_model_id": "mistralai/mistral-medium-3",
+          "endpoint_tag": "mistral/zdr",
+          "provider": "Mistral",
+          "endpoint_id": "a61ba147-e35a-4e10-a76a-0c2327f52a94",
+          "cache_read_per_1m": 0.04,
+          "cache_write_per_1m": null,
+          "cache_hit_rate": 0.8925683820670378,
+          "cache_status": "available",
+          "cache_note": "OpenRouter reported cacheHitRate as a fraction. Underlying numerator/denominator and exact summary interval are not published in this response.",
+          "source_provider_name": "Mistral (3)",
+          "source_provider_slug": "mistral",
+          "total_tokens": 30236495
+        },
+        {
+          "or_model_id": "mistralai/mistral-medium-3",
+          "endpoint_tag": "mistral",
+          "provider": "Mistral",
+          "endpoint_id": "9d5ba5bf-8465-46df-9185-1330820338f5",
+          "cache_read_per_1m": 0.04,
+          "cache_write_per_1m": null,
+          "cache_hit_rate": 0.456907625972799,
+          "cache_status": "available",
+          "cache_note": "OpenRouter reported cacheHitRate as a fraction. Underlying numerator/denominator and exact summary interval are not published in this response.",
+          "source_provider_name": "Mistral (2)",
+          "source_provider_slug": "mistral",
+          "total_tokens": 583896
+        },
+        {
+          "or_model_id": "mistralai/mistral-medium-3",
+          "endpoint_tag": "mistral/eu",
+          "provider": "Mistral",
+          "endpoint_id": "1f3978fc-535f-45f3-ac75-6b6f1ae46501",
+          "cache_read_per_1m": 0.044,
+          "cache_write_per_1m": null,
+          "cache_hit_rate": 0.016436000647614156,
+          "cache_status": "available",
+          "cache_note": "OpenRouter reported cacheHitRate as a fraction. Underlying numerator/denominator and exact summary interval are not published in this response.",
+          "source_provider_name": "Mistral (1)",
+          "source_provider_slug": "mistral",
+          "total_tokens": 186911
+        }
+      ],
+      "usage": {
+        "status": "available",
+        "daily": [
+          {
+            "date": "2026-10-17",
+            "total_prompt_tokens": 25615885,
+            "total_completion_tokens": 1498858,
+            "count": 6987
+          },
+          {
+            "date": "2026-10-16",
+            "total_prompt_tokens": 34810254,
+            "total_completion_tokens": 3446477,
+            "count": 12511
+          },
+          {
+            "date": "2026-10-15",
+            "total_prompt_tokens": 24366419,
+            "total_completion_tokens": 1460753,
+            "count": 13895
+          },
+          {
+            "date": "2026-10-14",
+            "total_prompt_tokens": 763214658,
+            "total_completion_tokens": 9650340,
+            "count": 46055
+          },
+          {
+            "date": "2026-10-13",
+            "total_prompt_tokens": 303360813,
+            "total_completion_tokens": 4423010,
+            "count": 21855
+          },
+          {
+            "date": "2026-10-12",
+            "total_prompt_tokens": 50245176,
+            "total_completion_tokens": 2379522,
+            "count": 13192
+          },
+          {
+            "date": "2026-10-11",
+            "total_prompt_tokens": 22309572,
+            "total_completion_tokens": 941228,
+            "count": 9739
+          }
+        ],
+        "total_prompt_tokens": 1223922777,
+        "total_completion_tokens": 23800188,
+        "total_requests": 124234,
+        "input_output_ratio": 51.42492055104775
+      },
+      "source_updated_at": "2026-10-18T05:28:39.157Z",
+      "window": {
+        "start_date": "2026-10-11",
+        "end_date": "2026-10-17"
+      },
+      "provenance": {
+        "source": "OpenRouter model-page usage",
+        "url": "https://openrouter.ai/mistralai/mistral-medium-3",
+        "collected_at": "2026-10-18T05:30:18.233Z",
+        "basis": "measured"
+      },
+      "response_sha256": "2b1ab55e57ae1aa4c146fab13c8cf6faa0c4a377827184b855702d4382da561f",
+      "cache": {
+        "unjoined": [],
+        "returned_summaries": 3,
+        "summary_window": null,
+        "chart_date_range": {
+          "first": "2026-10-11 00:00:00",
+          "last": "2026-10-18 00:00:00"
+        },
+        "provenance": {
+          "source": "OpenRouter effective pricing statistics",
+          "url": "https://openrouter.ai/api/frontend/v1/stats/effective-pricing?permaslug=mistralai%2Fmistral-medium-3&variant=standard&shape=v7",
+          "collected_at": "2026-10-18T05:30:20.439Z",
+          "basis": "measured"
+        },
+        "response_sha256": "e19d0953128df8cdbbdcc993977d41afdf1504fec5aae6e11b48821a07bd372d"
+      },
+      "cache_attempt": {
+        "source": "OpenRouter effective pricing statistics",
+        "url": "https://openrouter.ai/api/frontend/v1/stats/effective-pricing?permaslug=mistralai%2Fmistral-medium-3&variant=standard&shape=v7",
+        "collected_at": "2026-10-18T05:30:20.439Z",
+        "basis": "measured",
+        "status": "available"
+      }
+    },
+    "mistralai/mistral-medium-3-5": {
+      "or_model_id": "mistralai/mistral-medium-3-5",
+      "model_permaslug": "mistralai/mistral-medium-3.5-20260430",
+      "variant": "standard",
+      "endpoints": [
+        {
+          "or_model_id": "mistralai/mistral-medium-3-5",
+          "endpoint_tag": "mistral/zdr",
+          "provider": "Mistral",
+          "endpoint_id": "d21d316f-d540-4718-b36e-3beff85d0cf9",
+          "cache_read_per_1m": null,
+          "cache_write_per_1m": null,
+          "cache_hit_rate": 0.7002660179414261,
+          "cache_status": "available",
+          "cache_note": "OpenRouter reported cacheHitRate as a fraction. Underlying numerator/denominator and exact summary interval are not published in this response.",
+          "source_provider_name": "Mistral (3)",
+          "source_provider_slug": "mistral",
+          "total_tokens": 35910084
+        },
+        {
+          "or_model_id": "mistralai/mistral-medium-3-5",
+          "endpoint_tag": "mistral",
+          "provider": "Mistral",
+          "endpoint_id": "38ef23a9-5cb3-46fa-85ec-7aed174f04eb",
+          "cache_read_per_1m": null,
+          "cache_write_per_1m": null,
+          "cache_hit_rate": 0.40269608987778455,
+          "cache_status": "available",
+          "cache_note": "OpenRouter reported cacheHitRate as a fraction. Underlying numerator/denominator and exact summary interval are not published in this response.",
+          "source_provider_name": "Mistral (2)",
+          "source_provider_slug": "mistral",
+          "total_tokens": 5658404
+        },
+        {
+          "or_model_id": "mistralai/mistral-medium-3-5",
+          "endpoint_tag": "mistral/eu",
+          "provider": "Mistral",
+          "endpoint_id": "0f838043-00a4-4287-aa0b-d336b1ce180b",
+          "cache_read_per_1m": null,
+          "cache_write_per_1m": null,
+          "cache_hit_rate": 0.028997456499926105,
+          "cache_status": "available",
+          "cache_note": "OpenRouter reported cacheHitRate as a fraction. Underlying numerator/denominator and exact summary interval are not published in this response.",
+          "source_provider_name": "Mistral (1)",
+          "source_provider_slug": "mistral",
+          "total_tokens": 702067
+        }
+      ],
+      "usage": {
+        "status": "available",
+        "daily": [
+          {
+            "date": "2026-10-17",
+            "total_prompt_tokens": 336372253,
+            "total_completion_tokens": 33449698,
+            "count": 71844
+          },
+          {
+            "date": "2026-10-16",
+            "total_prompt_tokens": 464850072,
+            "total_completion_tokens": 207443787,
+            "count": 99441
+          },
+          {
+            "date": "2026-10-15",
+            "total_prompt_tokens": 464680753,
+            "total_completion_tokens": 44959114,
+            "count": 148865
+          },
+          {
+            "date": "2026-10-14",
+            "total_prompt_tokens": 425955957,
+            "total_completion_tokens": 82190277,
+            "count": 139870
+          },
+          {
+            "date": "2026-10-13",
+            "total_prompt_tokens": 400312811,
+            "total_completion_tokens": 56752109,
+            "count": 130321
+          },
+          {
+            "date": "2026-10-12",
+            "total_prompt_tokens": 2136295929,
+            "total_completion_tokens": 107517061,
+            "count": 226911
+          },
+          {
+            "date": "2026-10-11",
+            "total_prompt_tokens": 225493932,
+            "total_completion_tokens": 24511783,
+            "count": 57919
+          }
+        ],
+        "total_prompt_tokens": 4453961707,
+        "total_completion_tokens": 556823829,
+        "total_requests": 875171,
+        "input_output_ratio": 7.99887051349593
+      },
+      "source_updated_at": "2026-10-18T05:29:52.947Z",
+      "window": {
+        "start_date": "2026-10-11",
+        "end_date": "2026-10-17"
+      },
+      "provenance": {
+        "source": "OpenRouter model-page usage",
+        "url": "https://openrouter.ai/mistralai/mistral-medium-3-5",
+        "collected_at": "2026-10-18T05:30:22.443Z",
+        "basis": "measured"
+      },
+      "response_sha256": "7c81d447e2a9efeb0c69047c4ceaf55bedf9e4535bc8f08147d246f0d026214a",
+      "cache": {
+        "unjoined": [],
+        "returned_summaries": 3,
+        "summary_window": null,
+        "chart_date_range": {
+          "first": "2026-10-11 00:00:00",
+          "last": "2026-10-18 00:00:00"
+        },
+        "provenance": {
+          "source": "OpenRouter effective pricing statistics",
+          "url": "https://openrouter.ai/api/frontend/v1/stats/effective-pricing?permaslug=mistralai%2Fmistral-medium-3.5-20260430&variant=standard&shape=v7",
+          "collected_at": "2026-10-18T05:30:24.693Z",
+          "basis": "measured"
+        },
+        "response_sha256": "f08a59650d35c437b46e28f0626f077a67387f92aa5144618581ac294dc1ad60"
+      },
+      "cache_attempt": {
+        "source": "OpenRouter effective pricing statistics",
+        "url": "https://openrouter.ai/api/frontend/v1/stats/effective-pricing?permaslug=mistralai%2Fmistral-medium-3.5-20260430&variant=standard&shape=v7",
+        "collected_at": "2026-10-18T05:30:24.693Z",
+        "basis": "measured",
+        "status": "available"
+      }
     }
   },
   "attempts": {
@@ -20298,7 +20704,7 @@
     "openai/gpt-6-astra-pro": {
       "source": "OpenRouter model page",
       "url": "https://openrouter.ai/openai/gpt-6-astra-pro",
-      "collected_at": "2026-10-14T04:24:31.847Z",
+      "collected_at": "2026-10-18T05:30:09.999Z",
       "status": "available",
       "http_status": 200
     },
@@ -20707,6 +21113,27 @@
       "collected_at": "2026-10-18T03:36:31.471Z",
       "status": "available",
       "http_status": 200
+    },
+    "mistralai/mistral-large-4-0": {
+      "source": "OpenRouter model page",
+      "url": "https://openrouter.ai/mistralai/mistral-large-4-0",
+      "collected_at": "2026-10-18T05:30:14.286Z",
+      "status": "available",
+      "http_status": 200
+    },
+    "mistralai/mistral-medium-3": {
+      "source": "OpenRouter model page",
+      "url": "https://openrouter.ai/mistralai/mistral-medium-3",
+      "collected_at": "2026-10-18T05:30:18.233Z",
+      "status": "available",
+      "http_status": 200
+    },
+    "mistralai/mistral-medium-3-5": {
+      "source": "OpenRouter model page",
+      "url": "https://openrouter.ai/mistralai/mistral-medium-3-5",
+      "collected_at": "2026-10-18T05:30:22.443Z",
+      "status": "available",
+      "http_status": 200
     }
   },
   "rankings": {
@@ -20919,15 +21346,15 @@
     "provenance": {
       "source": "OpenRouter weekly model rankings",
       "url": "https://openrouter.ai/rankings?view=week",
-      "collected_at": "2026-10-18T03:36:19.050Z",
+      "collected_at": "2026-10-18T05:30:07.984Z",
       "basis": "measured"
     },
-    "response_sha256": "731f199c3782dfe91a2c4bf3a5ea8ebdbfa49b064608d2cf5b87f4dfb7e08d8c"
+    "response_sha256": "c4df48e93e2f974088bf403aafd0b7824b7839f67c81b7f745a85659043e86b9"
   },
   "rankings_attempt": {
     "source": "OpenRouter weekly model rankings",
     "url": "https://openrouter.ai/rankings?view=week",
-    "collected_at": "2026-10-18T03:36:19.050Z",
+    "collected_at": "2026-10-18T05:30:07.984Z",
     "basis": "measured",
     "status": "available"
   },
@@ -20935,8 +21362,8 @@
     "catalog_models": 471,
     "eligible_page_models": 336,
     "pages_selected": 4,
-    "pages_succeeded_this_run": 3,
-    "retained_model_pages": 133,
+    "pages_succeeded_this_run": 4,
+    "retained_model_pages": 136,
     "policy": "At most four model pages per normal daily run: one oldest-attempt-first page from the maintained GPT-6 model/mode priority set, then up to three oldest-attempt-first pages from the remaining catalog; explicit targeted batches are capped at twelve. Per-observation dates are retained."
   }
 }

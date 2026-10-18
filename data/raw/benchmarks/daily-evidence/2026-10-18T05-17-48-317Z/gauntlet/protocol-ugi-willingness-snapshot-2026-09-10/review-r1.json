@@ -1,0 +1,20 @@
+{
+  "artifact_id": "protocol-ugi-willingness-snapshot-2026-09-10",
+  "artifact_sha256": "dd8b7592b887476b21e04b4a80eb36754917b755174bdacd4ef8bab75a83274c",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "ugi-willingness::snapshot-2026-09-10",
+    "c1",
+    "c2"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Owner hash/transport/qualification checks cannot be executed in this read-only review; row-level canonical hash ade7f44270b0ee5f05f32c3979fe99818677b2e5d00b4b7e09efc0919344ba68 is taken as binding.",
+    "The protocol publishes no release identifier for this board, so version_status snapshot and version snapshot-2026-09-10 are accepted; exact methodology continuity from 2026-09-10 to the 2026-10-18 capture is not independently evidenced, but the current protocol content matches the row identity and the version_guard flags later imports.",
+    "higher_better true and unit 'score' are not stated verbatim in the protocol; they are inferred from the W/10 description and its descending numeric sort, and are not contradicted by the protocol or the served-scale summary."
+  ],
+  "missing_evidence": []
+}

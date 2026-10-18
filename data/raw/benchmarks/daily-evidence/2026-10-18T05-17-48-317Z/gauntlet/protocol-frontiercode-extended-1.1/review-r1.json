@@ -1,0 +1,20 @@
+{
+  "artifact_id": "protocol-frontiercode-extended-1.1",
+  "artifact_sha256": "fc29baad658992f137b6d310dc32dc9b7080da70239d796dec1d0bef21f4d854",
+  "round": 1,
+  "verdict": "blocked",
+  "coverage_checked": ["frontiercode-extended::1.1","c1","c2"],
+  "errors_found": 2,
+  "findings": [
+    {
+      "id": "frontiercode-extended::1.1",
+      "severity": "blocker",
+      "location": "artifact row frontiercode-extended::1.1 (criteria c1, c2)",
+      "evidence": "The frozen packet contains no primary protocol excerpt, no captured maintainer payload, and no generated summary of served values. REQUIRED_ROW_IDS lists one row, and the candidate row JSON is present with id/version/status/version_status/superseded_by/scoring, but the packet supplies no primary evidence text for the protocol page (no page excerpt, no registry version, no served-values summary) against which to verify c1 (registry version, benchmark identity, metric, units, range) or c2 (lifecycle fields).",
+      "repair": "Attach the actual current primary protocol excerpt (or exact projection of the relevant fields) and, if used, this run's generated summary of served values and added/changed counts, so each claimed field can be compared to a cited source value. Then re-run the review."
+    }
+]
+    ,"fixed":[]
+    ,"uncertainties":["I cannot recompute the row SHA-256 or verify the artifact hash (owner-executed check), so row binding rests on the owner-provided hash d034c3c9... and the top-level artifact hash fc29baad...; this is a limitation of read-only review, not missing source evidence."]
+    ,"missing_evidence":["The packet contains no primary protocol text at all (no registry excerpt, no capture payload, no generated summary, no hash-verified response fields) to compare against the row for criterion c1 or c2. Every row field that depends on the protocol — identity, version, metric, units, range, status, version_status, superseded_by — is therefore unverifiable from the supplied evidence."]
+    ,"coverage_checked":["frontiercode-extended::1.1","c1","c2"]}

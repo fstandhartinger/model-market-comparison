@@ -1,0 +1,17 @@
+{
+  "artifact_id": "protocol-matharena-brokenarxiv-2026-08",
+  "artifact_sha256": "9b60473e1d9efbf3b3e613c17052dda58560573c0301c1faf10fa2ca146987f4",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": ["matharena-brokenarxiv::2026-08", "c1", "c2"],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "I cannot execute owner-side hashes or transport checks; row binding rests on stated owner sha256 values.",
+    "Sources 5 and 6 are generated summaries; I could not inspect all 16 served accuracy values directly, but lowest 11.31 and highest 86.31 lie within the row's [0,100] range.",
+    "The source edition label is '08/2026' while the row version is '2026-08'; I treated this as the same published edition identifier.",
+    "Grading-scale discrepancy (edition-specific 0–3 vs general /brokenarxiv 0–2) is acknowledged in the row and supported by the August 2026 competition card note; I found no mismatch."
+  ],
+  "missing_evidence": []
+}

@@ -1,0 +1,21 @@
+{
+  "artifact_id": "protocol-matharena-arxivmath-2026-06",
+  "artifact_sha256": "653cc34734e8044952544da6af3e4c2a92a1ed3a6f8ab7bff19e27c82d8137d5",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "matharena-arxivmath::2026-06",
+    "c1",
+    "c2"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "I cannot recompute per-row SHA-256 hashes or execute transport/qualification checks; the owner's receipt and row hashes are taken as binding, and this is a limitation, not missing numeric evidence.",
+    "SOURCE 8 and SOURCE 9 are generated summaries of this run's own capture comparison and scale read; they are not independently verifiable from the excerpts but are admissible for the limited purposes of c1 scale and c2 activity, and nothing else.",
+    "version_status 'published' is supported by the maintainer publishing edition identifiers (e.g., '06/2026') on the competitions page; this judgment relies on treating those edition labels as release identifiers.",
+    "I checked all supplied primary fields against the row; the row's 'version_guard' statement about 12 columns and 48 problems matches SOURCE 1 and SOURCE 2 content."
+  ],
+  "missing_evidence": []
+}

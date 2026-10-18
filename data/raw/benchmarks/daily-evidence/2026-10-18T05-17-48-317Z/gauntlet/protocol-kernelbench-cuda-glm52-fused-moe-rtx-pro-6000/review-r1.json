@@ -1,0 +1,29 @@
+{
+  "artifact_id": "protocol-kernelbench-cuda-glm52-fused-moe-rtx-pro-6000",
+  "artifact_sha256": "6aafe8f39bf09b836a09a197e283d2d81bad768a70baedba626ed70633514b9",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": [
+    "kernelbench-cuda-glm52-fused-moe::rtx-pro-6000",
+    "c1",
+    "c2"
+  ],
+  "errors_found": 1,
+  "findings": [
+    {
+      "id": "kernelbench-cuda-glm52-fused-moe::rtx-pro-6000",
+      "severity": "blocker",
+      "location": "scoring.notes — description of per_problem ranked list content",
+      "evidence": "Note claims the published per_problem ranked list 'still holds ... the `bug` muse/muse-spark-1.3 [ultra] cell on 04 (peak_fraction 0.2056)'. The captured leaderboard.json shows muse/muse-spark-1.3 [ultra] 04_grid_mingru_sps: correct=false, peak_fraction=null, annotation_verdict=\"bug\", and the 04 ranked_passes list (19 entries) contains no muse-spark-1.3 entry. The value 0.2056 appears nowhere in the captured payload. The claim is contradicted by primary evidence and internally inconsistent with the note's own statement that cells marked correct:false are absent from the ranked list.",
+      "repair": "Remove or reword the muse-spark-1.3 [ultra] cell claim: that cell is correct:false with peak_fraction null and is absent from the 04 ranked list, so it cannot be cited as a ranked-list-held excluded cell at 0.2056. Keep only the supported example (kinetic-claude/kinetic-0715[1m] on 03, peak_fraction 0.0622, annotation suspect, present in ranked_passes)."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "Cannot recompute artifact or row hashes; owner executes hash/transport/qualification checks (limitation, not missing evidence).",
+    "version_status \"published\": the row's version \"rtx-pro-6000\" reproduces the published hardware.name; whether that counts as the maintainer's release identifier vs. no release identifier (which would support \"snapshot\") is not fully settled by the excerpt, though the board is hardware-keyed on the live /cuda page.",
+    "Notes' model descriptors (256+shared experts, top-8) and 'one unlimited agent session' are partly confirmed by SPEC (256+shared, top-8; kbh run harness) but 'unlimited' is not stated in the protocol text.",
+    "The peak-fraction value-scale summary (22 served values, lowest 4.11, highest 11.3) was not independently recomputed, but it is consistent with the captured leaderboard.json percentages and was used only to confirm the row's unit/range."
+  ],
+  "missing_evidence": []
+}

@@ -1,0 +1,24 @@
+{
+  "artifact_id": "protocol-kernelbench-cuda-deepseek-nsa-rtx-pro-6000",
+  "artifact_sha256": "106e3ed5770f2399032cd76ef25ac0ad13ad843f58eaa616992a43c991185a9c",
+  "round": 1,
+  "verdict": "blocked",
+  "coverage_checked": ["kernelbench-cuda-deepseek-nsa::rtx-pro-6000","c1","c2"],
+  "errors_found": 2,
+  "findings": [
+    {
+      "id": "kernelbench-cuda-deepseek-nsa::rtx-pro-6000-c1",
+      "severity": "blocker",
+      "location": "row kernelbench-cuda-deepseek-nsa::rtx-pro-6000, criterion c1",
+      "evidence": "The candidate row id kernelbench-cuda-deepseek-nsa::rtx-pro-6000 carries version ",
+      "repair": "Obtain the current primary protocol page for kernelbench-cuda-deepseek-nsa and transcribe the registry version, benchmark identity, metric, units and description, plus the served value summary, and re-check c1 against it."
+    },
+    {
+      "id": "kernelbench-cuda-deepseek-nsa::rtx-pro-6000",
+      "severity": "blocker",
+      "location": "criterion c2 lifecycle fields",
+      "evidence": "No primary protocol text for kernelbench-cuda-deepseek-nsa::rtx-pro-6000 was supplied in the packet. No maintainer page text exists here at all — no status sentence, no supersession note, no release identifier, no added/changed summary. Therefore the lifecycle fields status, version_status, superseded_by cannot be checked against protocol evidence.",
+      "repair": "Supply the primary protocol excerpt for kernelbench-cuda-deepseek-nsa::rtx-pro-6000, or explicitly record these fields as unverified/missing evidence in the review packet."
+}
+]
+    ,"coverage_checked":[],"fixed":[],"uncertainties":[],"missing_evidence":[]}

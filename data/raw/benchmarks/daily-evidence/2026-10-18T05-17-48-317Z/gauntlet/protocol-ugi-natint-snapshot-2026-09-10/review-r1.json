@@ -1,0 +1,20 @@
+{
+  "artifact_id": "protocol-ugi-natint-snapshot-2026-09-10",
+  "artifact_sha256": "e8c5fbf22b910a838194bcb65eebffca49c38a4d0aa0ea7ac52b6a1ef07c9120",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "ugi-natint::snapshot-2026-09-10",
+    "c1",
+    "c2"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Read-only critic: could not independently execute SHA-256, transport, or qualification checks; relied on owner-provided row hashes and captured excerpts.",
+    "The protocol text does not state an explicit unit for NatInt 💡; row's unit 'score' is not contradicted by the served numeric values (lowest 0.56, highest 81.9) or the descending sort used by the board.",
+    "Source excerpts may be bounded summaries of full pages, but provided content was sufficient to settle identity, metric, description, snapshot status, and absence of successor; no missing evidence encountered."
+  ],
+  "missing_evidence": []
+}

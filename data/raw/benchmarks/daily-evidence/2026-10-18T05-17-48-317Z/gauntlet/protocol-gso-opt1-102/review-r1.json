@@ -1,0 +1,23 @@
+{
+  "artifact_id": "protocol-gso-opt1-102",
+  "artifact_sha256": "eedef18bb298a4ecee13a356eb383d9eb5c33428b80c95017bb7ef88b2383f9f",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": ["gso::opt1-102", "c1", "c2"],
+  "errors_found": 1,
+  "findings": [
+    {
+      "id": "gso::opt1-102-version_status",
+      "severity": "major",
+      "location": "row gso::opt1-102, field version_status (and associated version)",
+      "evidence": "Primary sources (gso-bench.github.io page and leaderboard.json) publish no release/version identifier for the board: leaderboard.json metadata has only last_updated and total_tasks, model rows carry setting Opt@1, and the string \"opt1-102\" appears nowhere in the captured source. Criterion c2 requires version_status \"published\" to mean the maintainer publishes a release identifier that the row's version copies; without one, \"snapshot\" is the supported status.",
+      "repair": "Set version_status to \"snapshot\" and make version a dated snapshot identity (e.g., based on captured metadata.last_updated or retrieval date), or add primary evidence of a maintainer-published release identifier that opt1-102 copies; then re-review."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "I could not execute SHA-256, transport, or qualification checks; owner-computed hashes and captured payloads were taken as given.",
+    "Version_status judgement depends on treating absence of an explicit maintainer release/version string as no release identifier; if Opt@1 plus metadata.total_tasks 102 is considered a published release identifier, the finding would not apply."
+  ],
+  "missing_evidence": []
+}

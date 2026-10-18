@@ -1,0 +1,16 @@
+{
+  "artifact_id": "protocol-cursorbench-4.0",
+  "artifact_sha256": "1328684356acbf9f2d86257f5f33f387cfcba3d6b65c94fd66258fd2170b1544",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": ["cursorbench::4.0", "c1", "c2"],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Owner separately executes hash verification and transport/qualification checks; I cannot recompute row or source hashes, which is a limitation, not missing numeric evidence.",
+    "version_status 'published' rests on my reading that the page heading 'CursorBench 4.0' and the changelog entry 'CursorBench 4.0' constitute a published release identifier that the 'version: 4.0' copies; the page does not use the word 'published'.",
+    "Scale check relies on the generated value-scale summary (77 values, lowest 16, highest 57.8), which is admissible only for judging unit/range fit and settles nothing about metric meaning."
+  ],
+  "missing_evidence": []
+}
