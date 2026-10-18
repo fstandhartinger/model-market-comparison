@@ -1,6 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
+import { isDeepStrictEqual } from 'node:util';
+import { collapseDuplicateEndpoints } from '../lib/openrouter-endpoints.mjs';
 import {
   normalizeOpenRouterPriceOverrides,
   matchesOpenRouterPriceOverride,
@@ -61,16 +63,39 @@ test('overlapping OpenRouter schedule and prompt conditions fail closed', () => 
 });
 
 test('rebuilt endpoint overrides remain attached to their exact OpenRouter provider route', async () => {
+  // Expectations come from the collected OpenRouter source itself, not from one pinned model slug:
+  // OpenRouter moves first-party routes between dated slugs (18 Oct 2026: DeepSeek's own endpoint left
+  // deepseek/deepseek-v4.1-flash for deepseek/deepseek-v4.1-flash-1017), and a correct rebuild must follow.
   const dataset = JSON.parse(await readFile(new URL('../data/dataset.json', import.meta.url), 'utf8'));
-  const model = dataset.models.find((row) => row.offers.some((offer) => offer.or_model_id === 'deepseek/deepseek-v4.1-flash'));
-  assert.ok(model, 'the current source model is represented in the built dataset');
-  const routes = model.offers.filter((offer) => offer.or_model_id === 'deepseek/deepseek-v4.1-flash');
-  const deepseek = routes.find((offer) => offer.platform === 'OpenRouter' && offer.provider === 'DeepSeek' && offer.endpoint_tag === 'deepseek');
-  const alibaba = routes.find((offer) => offer.platform === 'OpenRouter' && offer.provider === 'Alibaba' && offer.endpoint_tag === 'alibaba');
-  assert.ok(deepseek?.price_overrides?.length);
-  assert.ok(alibaba?.price_overrides?.length);
-  assert.notDeepEqual(deepseek.price_overrides, alibaba.price_overrides);
-  assert.equal(deepseek.price_overrides[0].input_per_1m, 0.15);
-  assert.equal(alibaba.price_overrides[1].input_per_1m, 0.15);
-  assert.equal(routes.filter((offer) => offer.platform !== 'OpenRouter').some((offer) => offer.price_overrides?.length), false);
+  const source = JSON.parse(await readFile(new URL('../data/raw/openrouter.json', import.meta.url), 'utf8'));
+  const expected = new Map();
+  for (const m of source.models || []) {
+    const priced = (m.endpoints || []).filter((e) => e.pricing?.prompt != null || e.pricing?.completion != null);
+    for (const { endpoint: e } of collapseDuplicateEndpoints(priced)) {
+      const key = `${m.id}::${e.provider_name || 'Unknown'}::${e.tag || null}`;
+      if (!expected.has(key)) expected.set(key, []);
+      expected.get(key).push(normalizeOpenRouterPriceOverrides(e.pricing?.overrides));
+    }
+  }
+  const routes = dataset.models.flatMap((row) => row.offers).filter((offer) => offer.platform === 'OpenRouter' && offer.or_model_id);
+  const scheduled = routes.filter((offer) => offer.price_overrides?.length);
+  assert.ok(scheduled.length, 'at least one built OpenRouter route carries a source price schedule');
+  let checked = 0;
+  for (const offer of routes) {
+    const key = `${offer.or_model_id}::${offer.provider}::${offer.endpoint_tag}`;
+    const candidates = expected.get(key);
+    // Routes outside this collection (e.g. curated stealth rows) may not invent a schedule.
+    if (!candidates) { assert.equal(offer.price_overrides?.length ?? 0, 0, `${key} has no source schedule`); continue; }
+    checked += 1;
+    assert.ok(candidates.some((overrides) => isDeepStrictEqual(offer.price_overrides ?? [], overrides)),
+      `${key} carries exactly its own source schedule`);
+  }
+  assert.ok(checked > scheduled.length, 'routes with and without a schedule were both compared with the source');
+  // Sibling routes of one model keep different schedules apart instead of sharing one.
+  assert.ok(scheduled.some((route) => routes.some((offer) => offer.or_model_id === route.or_model_id
+    && !isDeepStrictEqual(offer.price_overrides ?? [], route.price_overrides))),
+  'some model has sibling routes with a different schedule, so cross-wiring would be detected');
+  const orIds = new Set(routes.map((offer) => offer.or_model_id));
+  assert.equal(dataset.models.flatMap((row) => row.offers)
+    .some((offer) => offer.platform !== 'OpenRouter' && orIds.has(offer.or_model_id) && offer.price_overrides?.length), false);
 });
