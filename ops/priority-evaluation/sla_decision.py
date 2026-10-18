@@ -114,8 +114,9 @@ def _send_card(state: dict, path: Path, text: str, now: float) -> None:
     ra.preview_passed(state)
     state.update(notification="attempted", created_at=int(now), expires_at=int(now) + WINDOW)
     ra.atomic(path, state)  # an unknown outcome is held, never blindly resent
+    # notify's own Telegram uploads may take up to 180 s; a shorter kill leaves an unsent card "unknown".
     result = subprocess.run(command, input=text, text=True, capture_output=True,
-                            timeout=45, env=env, check=False)
+                            timeout=180, env=env, check=False)
     match = re.search(r"MESSAGE_ID=(\d+)", result.stdout)
     if result.returncode or not match:
         state["notification"] = "unknown"
