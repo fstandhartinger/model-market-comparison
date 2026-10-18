@@ -19,8 +19,8 @@ test('feed carries board and open-board rank next to the unchanged combined rank
   // CR-338 adds decisio and René to the open board, and the merged live board adds the cohort rows (16 Oct 2026), shifting these older rows below the new entrants.
   assert.equal(get(feed, 'h2o-lightning-4b').capability.open_board_rank, 10);
   assert.equal(get(feed, 'surogate-rune-26b-a4b-v3-v16').capability.open_board_rank, 12);
-  assert.equal(get(feed, 'xor-26b-a4b').capability.open_board_rank, 14);
-  assert.equal(get(feed, 'torchcast-decision-12b').capability.open_board_rank, 16);
+  assert.equal(get(feed, 'xor-26b-a4b').capability.open_board_rank, 15);
+  assert.equal(get(feed, 'torchcast-decision-12b').capability.open_board_rank, 17);
   // v1.6.24 (16 Oct 2026): the paid hosted kettei-fat (#1) and kettei-chub join the combined Capability ranking above it (22 -> 24);
   // they are API rows, so its open-board rank (15 at the time) did not move. v1.6.25: the paid hosted Celeris-1 Decision (Capability 73.6)
   // joins above it as well (24 -> 25); the StartLux rows are over the cost cap and take no capped Capability rank.
@@ -28,7 +28,8 @@ test('feed carries board and open-board rank next to the unchanged combined rank
   // Batch BCD rows above it by Capability (nagi-enormous) are over the cap. v1.6.27: the hosted Jev 1.14.0 (Capability 75.0,
   // inside both caps) joins above it (26 -> 27); Verdin-4B (59.5) sits below it. v1.6.28: the self-hosted basal-omni-1.0-ultra
   // (Capability 82.5, inside both caps) joins above it (27 -> 28); the unranked PurpleMIST-Flash-1.0 takes no rank.
-  assert.equal(get(feed, 'torchcast-decision-12b').capability.rank, 28);
+  assert.equal(get(feed, 'torchcast-decision-12b').capability.rank, 29);
+  // v1.6.29: paid Torchcast Decision 4B v1.2 (Capability 72.6) joins above these rows; Vega-U is below the latency cap cutoff.
   const ranks = feed.systems.map((s) => s.capability.open_board_rank).filter((r) => r != null).sort((a, b) => a - b);
   assert.equal(get(feed, 'basal-omni-1.0-ultra').capability.open_board_rank, 1);
   assert.deepEqual(ranks, ranks.map((_, i) => i + 1));
