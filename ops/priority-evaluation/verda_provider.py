@@ -38,8 +38,11 @@ CREATE_WAIT_S = 900
 
 
 def _stop_deadman(instance_id):
-    subprocess.run(['systemctl', '--user', 'stop', 'verda-deadman-' + instance_id[:8] + '.timer'],
-                   capture_output=True, text=True, timeout=60)
+    try:
+        subprocess.run(['systemctl', '--user', 'stop', 'verda-deadman-' + instance_id[:8] + '.timer'],
+                       capture_output=True, text=True, timeout=60)
+    except (OSError, subprocess.TimeoutExpired):
+        pass  # a leftover timer only re-deletes an instance that is already gone
 
 
 class VerdaProvider(pod_runner.Provider):
@@ -135,6 +138,9 @@ class VerdaProvider(pod_runner.Provider):
                 except RuntimeError:
                     time.sleep(20)
             else:
+                raise measurement_dispatch.OperationalHold('gpu_pod_cleanup_uncertain')
+            if not rows:
+                # The listing may lag a lost POST: an empty answer is not proof that nothing exists.
                 raise measurement_dispatch.OperationalHold('gpu_pod_cleanup_uncertain')
             for row in rows:
                 if not delete_and_confirm(row['id']):
