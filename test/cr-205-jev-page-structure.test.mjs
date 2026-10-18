@@ -612,6 +612,25 @@ test('CR-205: fail-closed v1.6.28 same-draw addition uses the shared board, its 
   assert.match(route, /All data/);
 });
 
+test('CR-205: fail-closed v1.6.29 same-draw addition uses the shared board, its own method notes and the full history', async () => {
+  const route = await read('../app/jev-models/v1.6.29/page.tsx');
+  assert.match(route, /readOptionalJevbenchV1629Release\(\)/);
+  assert.match(route, /if \(!release\) notFound\(\)/);
+  ordered(route, ['<JevBenchV16Board', 'data-bh-jev1629-method', 'data-bh-jev1629-measurement-notes', '<JevHistoryLazy'], 'v1.6.29 page');
+  assert.match(route, /historicalCatalogue\(historical.artifact, historical.carry\)/);
+  // the caveats that decide how the two new rows may be read are on the page itself
+  assert.match(route, /Torchcast Decision 4B v1\.2/);
+  assert.match(route, /Vega-U/);
+  assert.match(route, /Both answered all 1,500 items and are ranked/);
+  assert.match(route, /right-truncated/);
+  assert.match(route, /Speed is not strictly comparable with v1\.1/);
+  assert.match(route, /answered, not refused/);
+  assert.match(route, /noncausal_full_attention/);
+  assert.match(route, /not directly comparable/);
+  assert.match(route, /#18761/);
+  assert.match(route, /All data/);
+});
+
 test('CR-205: every versioned JevBench route is covered by this test', async () => {
   const entries = await readdir(new URL('../app/jev-models', import.meta.url), { withFileTypes: true });
   const versionDirs = entries.filter((e) => e.isDirectory() && /^v[\d.]+$/.test(e.name)).map((e) => e.name).sort();
@@ -620,7 +639,7 @@ test('CR-205: every versioned JevBench route is covered by this test', async () 
   assert.match(alias, /import \{ permanentRedirect \} from 'next\/navigation'/);
   assert.match(alias, /permanentRedirect\('\/jev-models\/v1\.6\.0'\)/);
   // A new versioned page must be added to the structure assertions above — not silently reduced.
-  assert.deepEqual(versionDirs, ['v1', 'v1.4', 'v1.4.1', 'v1.4.2', 'v1.4.2.1', 'v1.4.2.2', 'v1.5.0', 'v1.5.1', 'v1.5.2', 'v1.5.3', 'v1.5.4', 'v1.5.5', 'v1.5.6', 'v1.5.7', 'v1.6', 'v1.6.0', 'v1.6.1', 'v1.6.2', 'v1.6.3', 'v1.6.4', 'v1.6.5', 'v1.6.6', 'v1.6.7', 'v1.6.8', 'v1.6.9', 'v1.6.10', 'v1.6.11', 'v1.6.12', 'v1.6.13', 'v1.6.14', 'v1.6.15', 'v1.6.16', 'v1.6.17', 'v1.6.18', 'v1.6.20', 'v1.6.21', 'v1.6.22', 'v1.6.23', 'v1.6.24', 'v1.6.25', 'v1.6.26', 'v1.6.27', 'v1.6.28'].sort());
+  assert.deepEqual(versionDirs, ['v1', 'v1.4', 'v1.4.1', 'v1.4.2', 'v1.4.2.1', 'v1.4.2.2', 'v1.5.0', 'v1.5.1', 'v1.5.2', 'v1.5.3', 'v1.5.4', 'v1.5.5', 'v1.5.6', 'v1.5.7', 'v1.6', 'v1.6.0', 'v1.6.1', 'v1.6.2', 'v1.6.3', 'v1.6.4', 'v1.6.5', 'v1.6.6', 'v1.6.7', 'v1.6.8', 'v1.6.9', 'v1.6.10', 'v1.6.11', 'v1.6.12', 'v1.6.13', 'v1.6.14', 'v1.6.15', 'v1.6.16', 'v1.6.17', 'v1.6.18', 'v1.6.20', 'v1.6.21', 'v1.6.22', 'v1.6.23', 'v1.6.24', 'v1.6.25', 'v1.6.26', 'v1.6.27', 'v1.6.28', 'v1.6.29'].sort());
 });
 
 test('CR-205: the board sections are fed by the pinned v1.5 release artifact', async () => {

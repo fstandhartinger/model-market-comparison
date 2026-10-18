@@ -6127,6 +6127,36 @@
             "fact": "Pinned config: architectures [\"Qwen3_5TextModel\"], model_type \"qwen3_5_text\", 32 hidden layers, hidden size 4096, bfloat16."
           }
         ]
+      },
+      "torchcast-decision-4b-v1.2": {
+        "arch": "open-llm-decoder",
+        "badges": {
+          "derivation": "fine-tune",
+          "params": "4B",
+          "quant": null
+        },
+        "evidence": [
+          {
+            "url": "https://huggingface.co/torchcast-ai/torchcast-decision-4b/blob/d54b248f2643df847979ca15638ee502ec79b788/README.md",
+            "kind": "model-card",
+            "fact": "Pinned v1.2 card: Qwen/Qwen3.5-4B fine-tune, option-letter readout without generation, Apache-2.0 weights; noncausal_full_attention as trained."
+          }
+        ]
+      },
+      "vega-u-qwen3.5-0.8b": {
+        "arch": "open-llm-decoder",
+        "badges": {
+          "derivation": "adapter",
+          "params": "0.8B",
+          "quant": null
+        },
+        "evidence": [
+          {
+            "url": "https://huggingface.co/nandakishorm/vega-U/blob/b3e7383e463ef3b78324408cd82f4ab0d8f2e75a/README.md",
+            "kind": "model-card",
+            "fact": "Pinned card: Vega-U 14.3M decision engine on a frozen Qwen3.5-0.8B reader; no text generation; Apache-2.0 checkpoint. Same author as vegaml-0.8b and vegaml-4b."
+          }
+        ]
       }
     },
     "imagejevbench": {
