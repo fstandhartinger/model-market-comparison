@@ -6,74 +6,40 @@ for one pay-as-you-go Verda VM per attempt, so the unchanged pod_runner lifecycl
 build, sha-verified weights, `--network none` run container, receipts, exact-ID teardown) applies as on Lium.
 
 - Accounting: gpu-pod-guard reserve/attach/release with `--provider verda` (same fields as Lium).
-- Create: exact instance type per GPU name, first location that lists it, the documented Docker image, our
-  registered ssh key only; waits for `running` + ssh, then checks the GPU and the docker nvidia runtime.
-- Dead-man: right after create a transient user timer deletes this exact instance id at TTL + 15 min, in case the
-  host process dies; `rm` deletes by exact id and stops that timer.
+- Create: exact instance type per GPU name (1-GPU types with the memory pod_runner.GPU_PREFERENCE assumes), the
+  first location that lists it, the documented Docker image, our registered ssh key only, a unique hostname. A create
+  without a definitive answer is resolved by hostname and deleted. Right after the id is known a transient user timer
+  (verda_deadman.py, standalone) is armed to delete exactly that instance and its OS volume at TTL + 15 min; if it
+  cannot be armed, the instance is deleted at once. An instance that never becomes usable is deleted and confirmed gone
+  before create raises.
+- Teardown deletes the instance with its OS volume permanently and only counts once Verda shows both gone.
 - No credential reaches the VM: the API secret stays host-side (~/.config/verda.env); the VM only has our public key.
 """
-import json
 import shlex
 import subprocess
 import sys
+import tempfile
 import time
-import urllib.error
-import urllib.request
 from pathlib import Path
 
+import measurement_dispatch
 import pod_runner
+import verda_deadman
+from verda_deadman import api, delete_and_confirm, valid_id
 
-API = 'https://api.verda.com/v1'
-ENV_FILE = Path.home() / '.config/verda.env'
 SSH_KEY = Path.home() / '.ssh/reax_node_ed25519'
 SSH_KEY_ID = 'e1097703-a557-408c-9061-ae2904817d88'  # "reax-node", registered on the Verda account
 IMAGE = '24.04.cuda12.9.docker'
 OS_VOLUME_GB = 200
+# Verda instance-types listing (18 Oct 2026): H100 SXM5 80 GB, A100 SXM4 80 GB, L40S 48 GB, RTX 6000 Ada 48 GB.
 INSTANCE_TYPES = {'H100': '1H100.80S.30V', 'A100': '1A100.22V', 'L40S': '1L40S.20V', 'RTX6000': '1RTX6000ADA.10V'}
 DEADMAN_GRACE_S = 900
 CREATE_WAIT_S = 900
 
 
-def _env():
-    values = {}
-    for line in ENV_FILE.read_text().splitlines():
-        line = line.strip().removeprefix('export ')
-        if '=' in line and not line.startswith('#'):
-            key, value = line.split('=', 1)
-            values[key.strip()] = value.strip().strip('"\'')
-    return values
-
-
-def _request(method, path, body=None, token=None):
-    headers = {'Content-Type': 'application/json', 'Accept': 'application/json', 'User-Agent': 'jevbench-fastlane/1.0'}
-    if token:
-        headers['Authorization'] = 'Bearer ' + token
-    data = json.dumps(body).encode() if body is not None else None
-    request = urllib.request.Request(API + path, method=method, headers=headers, data=data)
-    try:
-        with urllib.request.urlopen(request, timeout=60) as response:
-            text = response.read().decode()
-            try:
-                return response.status, json.loads(text)
-            except ValueError:
-                return response.status, text
-    except urllib.error.HTTPError as error:
-        return error.code, error.read().decode()[:500]
-
-
-def api(method, path, body=None):
-    env = _env()
-    status, token = _request('POST', '/oauth2/token', {'grant_type': 'client_credentials',
-                                                        'client_id': env['VERDA_CLIENT_ID'],
-                                                        'client_secret': env['VERDA_CLIENT_SECRET']})
-    if status != 200 or not isinstance(token, dict):
-        raise pod_runner.PodRunError('verda auth failed')
-    return _request(method, path, body, token['access_token'])
-
-
-def delete_instance(instance_id):
-    status, _ = api('PUT', '/instances', {'action': 'delete', 'id': instance_id, 'delete_permanently': True})
-    return 200 <= status < 300
+def _stop_deadman(instance_id):
+    subprocess.run(['systemctl', '--user', 'stop', 'verda-deadman-' + instance_id[:8] + '.timer'],
+                   capture_output=True, text=True, timeout=60)
 
 
 class VerdaProvider(pod_runner.Provider):
@@ -83,7 +49,8 @@ class VerdaProvider(pod_runner.Provider):
         self._order_id = order_id
         self._label = label  # hostname prefix, e.g. fastlane-8a93f2a0
         self._hosts = {}
-        self._known_hosts = Path.home() / '.local/state/priority-evaluation/verda_known_hosts'
+        self._known = {}
+        self._tmp = tempfile.TemporaryDirectory(prefix='verda-known-hosts-')
 
     # -- accounting (identical fields to LiumProvider, provider verda) --
     def reserve(self, job, name, hourly, cost_cap, hours):
@@ -115,32 +82,39 @@ class VerdaProvider(pod_runner.Provider):
             raise pod_runner.PodRunError('guard release failed')
 
     # -- lifecycle --
-    def _price(self, instance_type):
-        status, body = api('GET', '/instance-types')
-        if status != 200 or not isinstance(body, list):
-            raise pod_runner.PodRunError('verda instance-types unavailable')
-        for item in body:
-            if item.get('instance_type') == instance_type:
-                return float(item['price_per_hour'])
-        raise pod_runner.PodCapacityError('verda instance type not listed')
+    def _quote(self, instance_type):
+        """(hourly USD, location or None). Nothing exists yet, so any API trouble is a capacity miss."""
+        status, types = api('GET', '/instance-types')
+        if status != 200 or not isinstance(types, list):
+            raise pod_runner.PodCapacityError('verda instance-types unavailable')
+        price = next((item.get('price_per_hour') for item in types
+                      if isinstance(item, dict) and item.get('instance_type') == instance_type), None)
+        try:
+            hourly = float(price)
+        except (TypeError, ValueError):
+            raise pod_runner.PodCapacityError('verda price unavailable') from None
+        status, places = api('GET', '/instance-availability')
+        if status != 200 or not isinstance(places, list):
+            raise pod_runner.PodCapacityError('verda availability unavailable')
+        location = next((item.get('location_code') for item in places
+                         if isinstance(item, dict) and instance_type in (item.get('availabilities') or [])), None)
+        return hourly, location
 
-    def _location(self, instance_type):
-        status, body = api('GET', '/instance-availability')
-        if status != 200 or not isinstance(body, list):
-            raise pod_runner.PodRunError('verda availability unavailable')
-        for item in body:
-            if instance_type in item.get('availabilities', []):
-                return item['location_code']
-        return None
+    def _cleanup_or_hold(self, instance_id, reason):
+        if not delete_and_confirm(instance_id):
+            raise measurement_dispatch.OperationalHold('gpu_pod_cleanup_uncertain') from None
+        _stop_deadman(instance_id)
+        raise pod_runner.PodCapacityError(f'{reason}; deleted by exact id and confirmed gone')
 
     def create(self, gpu, ttl_hours, budget, max_hourly=pod_runner.MAX_HOURLY_USD):
+        if type(max_hourly) not in (int, float) or not 0 < max_hourly <= pod_runner.MAX_HOURLY_USD:
+            raise pod_runner.PodRunError('invalid provider price ceiling')
         instance_type = INSTANCE_TYPES.get(gpu)
         if instance_type is None:
             raise pod_runner.PodCapacityError('no Verda instance type for ' + gpu)
-        hourly = self._price(instance_type)
-        if not 0 < hourly <= min(max_hourly, pod_runner.MAX_HOURLY_USD):
+        hourly, location = self._quote(instance_type)
+        if not 0 < hourly <= max_hourly:
             raise pod_runner.PodCapacityError('Verda price above the cap')
-        location = self._location(instance_type)
         if location is None:
             raise pod_runner.PodCapacityError('Verda has no ' + instance_type + ' now')
         hostname = f'{self._label}-{int(time.time())}'
@@ -148,23 +122,30 @@ class VerdaProvider(pod_runner.Provider):
             'instance_type': instance_type, 'image': IMAGE, 'ssh_key_ids': [SSH_KEY_ID], 'location_code': location,
             'hostname': hostname, 'description': f'JevBench fast-lane {self._order_id[:8]} measurement (sealed-capable host, keyless)',
             'os_volume': {'name': hostname + '-os', 'size': OS_VOLUME_GB}, 'is_spot': False, 'contract': 'PAY_AS_YOU_GO'})
-        if status not in (200, 201, 202) or not isinstance(body, str) or len(body) != 36:
-            if status in (400, 409, 503):
-                raise pod_runner.PodCapacityError(f'Verda create refused ({status})')
-            raise pod_runner.PodRunError(f'Verda create failed ({status})')
-        instance_id = body
-        self._deadman(instance_id, ttl_hours)
+        if 200 <= status < 300 and isinstance(body, str) and valid_id(body):
+            instance_id = body
+        elif status in (400, 409, 503):
+            raise pod_runner.PodCapacityError(f'Verda create refused ({status})')
+        else:
+            # No definitive answer: an instance may exist anyway. Find it by its unique hostname and remove it.
+            for _ in range(6):
+                try:
+                    rows = verda_deadman.find_by_hostname(hostname)
+                    break
+                except RuntimeError:
+                    time.sleep(20)
+            else:
+                raise measurement_dispatch.OperationalHold('gpu_pod_cleanup_uncertain')
+            for row in rows:
+                if not delete_and_confirm(row['id']):
+                    raise measurement_dispatch.OperationalHold('gpu_pod_cleanup_uncertain')
+            raise pod_runner.PodCapacityError(f'Verda create unclear ({status}); {len(rows)} instance(s) removed')
+        if not self._arm_deadman(instance_id, ttl_hours):
+            self._cleanup_or_hold(instance_id, 'dead-man timer could not be armed')
         try:
             ip = self._ready(instance_id)
-        except Exception as exc:
-            # pod_runner only learns the id from a successful create: remove this exact instance here. Nothing was
-            # uploaded yet, so a confirmed delete makes this an ordinary capacity miss (reservation released).
-            if not delete_instance(instance_id):
-                import measurement_dispatch
-                raise measurement_dispatch.OperationalHold('gpu_pod_cleanup_uncertain') from None
-            subprocess.run(['systemctl', '--user', 'stop', 'verda-deadman-' + instance_id[:8] + '.timer'],
-                           capture_output=True, text=True, timeout=60)
-            raise pod_runner.PodCapacityError(f'Verda instance unusable ({exc}); deleted by exact id') from exc
+        except Exception as exc:  # noqa: BLE001  nothing was uploaded yet
+            self._cleanup_or_hold(instance_id, f'Verda instance unusable ({type(exc).__name__}: {str(exc)[:120]})')
         return {'pod_id': instance_id, 'huid': hostname, 'gpu': gpu, 'gpu_count': 1, 'hourly_usd': hourly,
                 'host_ip': ip, 'location': location, 'instance_type': instance_type, 'metadata_invalid': False}
 
@@ -172,9 +153,12 @@ class VerdaProvider(pod_runner.Provider):
         deadline = time.time() + CREATE_WAIT_S
         ip = None
         while time.time() < deadline:
-            status, info = api('GET', '/instances/' + instance_id)
-            if status == 200 and isinstance(info, dict) and info.get('status') == 'running' and info.get('ip'):
-                ip = info['ip']
+            try:
+                row = verda_deadman.instance(instance_id)
+            except RuntimeError:
+                row = None
+            if row and row.get('status') == 'running' and row.get('ip'):
+                ip = row['ip']
                 break
             time.sleep(15)
         if ip is None:
@@ -192,57 +176,66 @@ class VerdaProvider(pod_runner.Provider):
             raise pod_runner.PodRunError('Verda instance lacks GPU or docker nvidia runtime')
         return ip
 
-    def _deadman(self, instance_id, ttl_hours):
+    def _arm_deadman(self, instance_id, ttl_hours):
         seconds = int(ttl_hours * 3600) + DEADMAN_GRACE_S
-        subprocess.run(['systemd-run', '--user', '--unit', 'verda-deadman-' + instance_id[:8],
-                        f'--on-active={seconds}', sys.executable, str(Path(__file__).resolve()), 'delete', instance_id],
-                       capture_output=True, text=True, timeout=60)
+        try:
+            result = subprocess.run(['systemd-run', '--user', '--unit', 'verda-deadman-' + instance_id[:8],
+                                     f'--on-active={seconds}', sys.executable, '-I',
+                                     str(Path(verda_deadman.__file__).resolve()), 'delete', instance_id],
+                                    capture_output=True, text=True, timeout=60)
+        except (OSError, subprocess.TimeoutExpired):
+            return False
+        return result.returncode == 0
 
     def _ip(self, pod_id):
         if pod_id not in self._hosts:
-            status, info = api('GET', '/instances/' + pod_id)
-            if status != 200 or not isinstance(info, dict) or not info.get('ip'):
+            try:
+                row = verda_deadman.instance(pod_id)
+            except RuntimeError:
+                row = None
+            if not row or not row.get('ip'):
                 raise pod_runner.PodRunError('Verda instance unknown')
-            self._hosts[pod_id] = info['ip']
+            self._hosts[pod_id] = row['ip']
         return self._hosts[pod_id]
 
-    def _ssh_base(self):
-        self._known_hosts.parent.mkdir(parents=True, exist_ok=True, mode=0o700)
-        return ['-i', str(SSH_KEY), '-o', 'IdentitiesOnly=yes', '-o', 'BatchMode=yes',
-                '-o', 'StrictHostKeyChecking=accept-new', '-o', f'UserKnownHostsFile={self._known_hosts}',
-                '-o', 'ConnectTimeout=20', '-o', 'ServerAliveInterval=30']
+    def _ssh_base(self, pod_id):
+        # A fresh known_hosts per instance: trust on first use for this VM only; a reused IP never collides.
+        known = self._known.setdefault(pod_id, str(Path(self._tmp.name) / (pod_id + '.known_hosts')))
+        return ['-F', '/dev/null', '-i', str(SSH_KEY), '-o', 'IdentitiesOnly=yes', '-o', 'BatchMode=yes',
+                '-o', 'PasswordAuthentication=no', '-o', 'ForwardAgent=no', '-o', 'ForwardX11=no',
+                '-o', 'ClearAllForwardings=yes', '-o', 'StrictHostKeyChecking=accept-new',
+                '-o', f'UserKnownHostsFile={known}', '-o', 'ConnectTimeout=20', '-o', 'ServerAliveInterval=30']
 
     def exec(self, pod_id, command, timeout=600):
-        argv = ['ssh', *self._ssh_base(), 'root@' + self._ip(pod_id), shlex.join(command)]
+        argv = ['ssh', *self._ssh_base(pod_id), 'root@' + self._ip(pod_id), shlex.join(command)]
         try:
             return subprocess.run(argv, capture_output=True, text=True, timeout=timeout + 60)
         except subprocess.TimeoutExpired:
             return subprocess.CompletedProcess(argv, 124, '', 'ssh exec timeout')
 
+    def _scp(self, argv, timeout):
+        try:
+            return subprocess.run(argv, capture_output=True, text=True, timeout=timeout).returncode == 0
+        except subprocess.TimeoutExpired:
+            return False
+
     def scp_to(self, pod_id, local, remote, timeout=900):
-        argv = ['scp', '-q', *self._ssh_base(), local, f'root@{self._ip(pod_id)}:{remote}']
-        if subprocess.run(argv, capture_output=True, text=True, timeout=timeout).returncode:
+        if not self._scp(['scp', '-q', *self._ssh_base(pod_id), '--', local, f'root@{self._ip(pod_id)}:{remote}'], timeout):
             raise pod_runner.PodRunError('scp upload failed')
 
     def scp_from(self, pod_id, remote, local):
-        argv = ['scp', '-q', '-r', *self._ssh_base(), f'root@{self._ip(pod_id)}:{remote}', local]
-        if subprocess.run(argv, capture_output=True, text=True, timeout=900).returncode:
+        if not self._scp(['scp', '-q', *self._ssh_base(pod_id), '--', f'root@{self._ip(pod_id)}:{remote}', local], 900):
             raise pod_runner.PodRunError('scp download failed')
 
     def rm(self, pod_id):
-        if not delete_instance(pod_id):
+        # Also succeeds when the dead-man already removed it: success means confirmed gone.
+        if not delete_and_confirm(pod_id):
             raise pod_runner.PodRunError('provider removal failed')
-        subprocess.run(['systemctl', '--user', 'stop', 'verda-deadman-' + pod_id[:8] + '.timer'],
-                       capture_output=True, text=True, timeout=60)
+        _stop_deadman(pod_id)
 
     def ps_ids(self):
         status, body = api('GET', '/instances')
         if status != 200 or not isinstance(body, list):
             raise pod_runner.PodRunError('provider listing failed')
-        return {str(item['id']) for item in body if item.get('status') not in ('deleted', 'deleting', 'discontinued')}
-
-
-if __name__ == '__main__':
-    # Dead-man entry point: delete exactly the given instance id.
-    if len(sys.argv) == 3 and sys.argv[1] == 'delete' and len(sys.argv[2]) == 36:
-        print('verda dead-man delete', sys.argv[2], 'ok' if delete_instance(sys.argv[2]) else 'FAILED', flush=True)
+        return {str(item.get('id')) for item in body
+                if isinstance(item, dict) and str(item.get('status')).lower() not in ('discontinued', 'notfound')}
