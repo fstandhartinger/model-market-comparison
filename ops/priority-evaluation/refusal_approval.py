@@ -290,6 +290,9 @@ def approval_caption(row, kind):
             "  Time: 1 minute. Buttons expire in 12 hours. A text reply does not authorize sending.")
 
 
+SEND_TIMEOUT = 180
+
+
 def notify_card(state, path, now, kind="refusal", row=None):
     # Freshness evidence immediately before asking; data is never executed as instructions.
     if state.get("freshness_hold"):
@@ -328,8 +331,9 @@ def notify_card(state, path, now, kind="refusal", row=None):
     preview_passed(state)
     state.update(notification="attempted", created_at=int(now), expires_at=int(now) + WINDOW)
     atomic(path, state)  # unknown outcome is held, never blindly resent
+    # notify's own Telegram uploads may take up to 180 s; a shorter kill leaves an unsent card "unknown" forever.
     result = subprocess.run(command, input=caption, text=True, capture_output=True,
-                            timeout=45, env=env, check=False)
+                            timeout=SEND_TIMEOUT, env=env, check=False)
     match = re.search(r"MESSAGE_ID=(\d+)", result.stdout)
     if result.returncode or not match:
         state["notification"] = "unknown"

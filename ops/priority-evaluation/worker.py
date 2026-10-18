@@ -191,6 +191,26 @@ def notify_florian(message: str) -> bool:
     return result.returncode == 0
 
 
+CONTEXT_MAX_CHARS = 220  # notify rejects a longer "Worum geht's:" line
+
+
+def notification_context(model: str, email: str, payment_link: str) -> str:
+    """Keep the context line under the notify limit; the card body still carries the full model name and email."""
+    def line(name: str, who: str) -> str:
+        return f"the Benchmark Heaven fast-lane order for {name}{f' ({who})' if who else ''} is paid. {payment_link}"
+    about = line(model, email)
+    if len(about) <= CONTEXT_MAX_CHARS:
+        return about
+    model = re.sub(r"\s*[\(\[][^\)\]]*[\)\]]\s*$", "", model).strip() or model
+    for who in (email, ""):
+        about = line(model, who)
+        if len(about) <= CONTEXT_MAX_CHARS:
+            return about
+    budget = max(CONTEXT_MAX_CHARS - len(line("", "")) - 1, 12)
+    cut = model[:budget].rsplit(" ", 1)[0].rstrip(" ,;:-(") or model[:budget]
+    return line(cut + "…", "")
+
+
 def process_notification() -> bool:
     row = claim_notification()
     if not row:
@@ -204,7 +224,7 @@ def process_notification() -> bool:
     model = str(row.get("model_name", "")).strip() or "unnamed model"
     message = (
         "✅ ERLEDIGT\n"
-        f"Worum geht's: the Benchmark Heaven fast-lane order for {model} ({row.get('email', '')}) is paid. {payment_link}\n\n"
+        f"Worum geht's: {notification_context(model, str(row.get('email', '')), payment_link)}\n\n"
         f"New {mode} priority evaluation payment\n"
         f"From: {row.get('email', '')}\n"
         f"Model: {row.get('model_name', '')}\n"

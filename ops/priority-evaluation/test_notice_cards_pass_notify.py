@@ -44,6 +44,21 @@ class NoticeCardsPassNotify(unittest.TestCase):
         result = dry_run([str(NOTIFY), "now", "--requested", "--text-stdin"], sent[0])
         self.assertEqual(result.returncode, 0, result.stderr)
 
+    def test_long_model_name_payment_notice_passes_notify(self):
+        # Urgent card q1792346705: an 83-character model name pushed the context line past 220 characters.
+        row = {"id": "00000000-0000-4000-8000-000000000000", "stripe_mode": "live",
+               "payment_intent_id": "pi_3TestAbcdefghijklmnopqr", "amount_total": 9900, "benchmarks": ["jevbench"],
+               "email": "gabriel.keith@example-company.com", "visibility": "public",
+               "model_name": "HS1 0.1.2 (Hyland, Gemma-4-26B-A4B-it + LoRA, option-letter logprob readout, FP8)"}
+        sent = []
+        with patch.object(worker, "claim_notification", return_value=row), \
+                patch.object(worker, "notify_florian", side_effect=lambda m: sent.append(m) or True), \
+                patch.object(worker, "sql"):
+            worker.process_notification()
+        self.assertIn("Model: " + row["model_name"], sent[0])
+        result = dry_run([str(NOTIFY), "now", "--requested", "--text-stdin"], sent[0])
+        self.assertEqual(result.returncode, 0, result.stderr)
+
     def test_customer_mail_notice_passes_notify(self):
         event = {"gmail_message_id": "m1", "request_id": "00000000-0000-4000-8000-000000000000",
                  "body_file": "/tmp/body.txt", "summary": "", "owner": "fastlane-eval-00000000"}
