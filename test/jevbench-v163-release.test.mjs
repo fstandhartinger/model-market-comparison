@@ -139,7 +139,7 @@ async function diskBundle(t, edit = () => {}, includeRyo = true) {
 // ---- Actual repository: only an independently validated bundle becomes available; default stays unchanged.
 test('actual repository availability follows its validated bundle and preserves the default', async () => {
   const release = await readOptionalJevbenchV163Release(); // malformed or incomplete manifest must throw
-  const present = (await readdir(BASE_DIR)).filter(f => f.includes('1.6.3')).sort();
+  const present = (await readdir(BASE_DIR)).filter(f => /1\.6\.3(?!\d)/.test(f)).sort();
   if (release) {
     assert.deepEqual(present, [...Object.values(V163_FILES), V163_MANIFEST].map(p => p.slice(BASE_DIR.length)).sort());
     assert.equal(release.manifest.review.verdict, 'PASS');
@@ -390,11 +390,11 @@ test('release history shows v1.6.3 only for a validated publication and keeps ol
   assert.match(renderToStaticMarkup(await hist.JevReleaseHistory()), /href="\/jev-models\/v1.6.3"/);
   await writeFile(path('proof'), '{broken');
   const html = renderToStaticMarkup(await hist.JevReleaseHistory());
-  assert.ok(!html.includes('/jev-models/v1.6.3')); assert.match(html, /href="\/jev-models\/v1.6.2"/); assert.equal(logs.length, 1);
+  assert.ok(!html.includes('/jev-models/v1.6.3"')); assert.match(html, /href="\/jev-models\/v1.6.2"/); assert.equal(logs.length, 1);
 });
 test('actual release history follows validated publication and keeps v1.6.2', async () => {
   const release = await readOptionalJevbenchV163Release();
   const hist = await compiled('../components/JevReleaseHistory.tsx', {});
   const html = renderToStaticMarkup(await hist.JevReleaseHistory());
-  assert.equal(html.includes('/jev-models/v1.6.3'), Boolean(release)); assert.match(html, /href="\/jev-models\/v1.6.2"/);
+  assert.equal(html.includes('/jev-models/v1.6.3"'), Boolean(release)); assert.match(html, /href="\/jev-models\/v1.6.2"/);
 });

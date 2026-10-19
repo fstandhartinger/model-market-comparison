@@ -35,7 +35,7 @@ export default async function JevAlternativesPage() {
       <ApiBoardNote rows={data.apiRows}/>
     </section>
     <section className="bh-panel mt-6 p-5"><h2 className="text-xl font-semibold">Open-weight Jev-class alternatives</h2>
-      <p className="bh-muted mt-2">Only current-release measurements are shown; Jev 1.13.0 is the reference row. Rows outside the caps have no Capability rank. Read the licence and recorded setup before self-hosting.</p>
+      <p className="bh-muted mt-2">Only current-release measurements are shown; Jev 1.13.0 is the reference row (it defines the Jev-class caps); Jev 1.14.0, TypeSafe&apos;s current version, is shown on the open-weights board as a second unranked reference and is ranked on the API leaderboard. Rows outside the caps have no Capability rank. Read the licence and recorded setup before self-hosting.</p>
       <JevBenchRankingTable rows={[data.reference, ...data.openWeightAlternatives]}/>
       <ul className="mt-4 space-y-2">{data.openWeightAlternatives.map((r) => <li key={r.key}><Link href={jevSystemPath(r.key)} className="text-accent underline">{r.display}</Link>: {r.licence} · {r.speed?.hardware ?? r.endpoint_condition ?? r.speed?.measured_where ?? 'setup not stated'}{r.repo && <> · <a href={r.repo} className="text-accent underline">Published source or weights</a></>}</li>)}</ul>
     </section>

@@ -19,7 +19,7 @@ import { JevLatencyValue, JevLatencyLegend } from './JevLatency';
 import { BaseModelDisplay, BaseModelFootnotes, type BaseModelBenchmark } from './BaseModelDisplay';
 import { baseModelFootnotes } from '../lib/jev-base-model.mjs';
 import { useJevV15VisibleKeys } from './useJevV15VisibleKeys';
-import { JEV_INTERLEAVED_LISTINGS, jevPartialLabel } from '../lib/jevbench-scope.mjs';
+import { JEV_INTERLEAVED_LISTINGS, jevFoldWithPinned, jevPartialLabel } from '../lib/jevbench-scope.mjs';
 
 // CR-151 (Florian 25 Sep 2026): the score chart and the axes table become readable in more than one way. Axis cells are
 // shaded by their standing within the column, both views sort and filter, and a "View by" switch above the chart says
@@ -233,7 +233,7 @@ const GENERAL_LLM = 'llm-baseline';
 
 export type JevFairness = { leadName: string; topName: string; leadInt: number; topInt: number; leadsOn: string[] } | null;
 
-export function JevScoreChart({ revision, rows: officialRows, newLabel, fairness, approvedNote = null, tieNote = null, capabilityHref, presets = [], compactMobile = false, scoreKind = 'v14', methodLink, benchName = 'JevBench', scoreLabel, costHref = '#jev-costs', systemAnchorPrefix, benchmark = 'jevbench', capabilityLabel = 'Capability ↑', headline = false }: { capabilityLabel?: string; headline?: boolean; revision: string; rows: JevBoardViewRow[]; rankedCount: number; newLabel: string | null; fairness: JevFairness; approvedNote?: string | null; tieNote?: string | null; capabilityHref: string | null; presets?: JevPreset[]; compactMobile?: boolean; scoreKind?: 'v14' | 'v15'; methodLink?: { href: string; label: string }; benchName?: string; scoreLabel?: string; costHref?: string; systemAnchorPrefix?: string; benchmark?: BaseModelBenchmark }) {
+export function JevScoreChart({ revision, rows: officialRows, newLabel, fairness, approvedNote = null, tieNote = null, capabilityHref, presets = [], compactMobile = false, scoreKind = 'v14', methodLink, benchName = 'JevBench', scoreLabel, costHref = '#jev-costs', systemAnchorPrefix, benchmark = 'jevbench', capabilityLabel = 'Capability ↑', headline = false, pinnedKeys }: { pinnedKeys?: readonly string[]; capabilityLabel?: string; headline?: boolean; revision: string; rows: JevBoardViewRow[]; rankedCount: number; newLabel: string | null; fairness: JevFairness; approvedNote?: string | null; tieNote?: string | null; capabilityHref: string | null; presets?: JevPreset[]; compactMobile?: boolean; scoreKind?: 'v14' | 'v15'; methodLink?: { href: string; label: string }; benchName?: string; scoreLabel?: string; costHref?: string; systemAnchorPrefix?: string; benchmark?: BaseModelBenchmark }) {
   // Florian 25 Sep 2026: weight sliders. Equal weights are the official score; any other mix re-scores every row with
   // the same formula and re-sorts by it, clearly marked as not the official ranking.
   // CR-205: scoreKind 'v15' re-scores with the v1.5 composite — its low-axis gates apply even at weight 0.
@@ -313,8 +313,8 @@ export function JevScoreChart({ revision, rows: officialRows, newLabel, fairness
   // below, numbered in the order the rows are shown (filters, sort and the API toggle renumber them).
   const baseNotes = useMemo(() => baseModelFootnotes(benchmark, shown.map((r) => r.key)), [benchmark, shown]);
   const baseNames = useMemo(() => new Map(rows.map((r) => [r.key, shortName(r.display)])), [rows]);
-  const top = shown.slice(0, CHART_TOP);
-  const rest = shown.slice(CHART_TOP);
+  // Open board: the unranked reference rows (Jev 1.13.0 and Jev 1.14.0) never fall behind the fold and do not count toward its row limit.
+  const { head: top, rest } = jevFoldWithPinned(shown, CHART_TOP, (r) => !r.ranked && Boolean(pinnedKeys?.includes(r.key)));
   // Two configurations can share a short name (GPT-6 Luna and its low-effort setting); those rows keep the full name.
   const collide = useMemo(() => { const seen = new Map<string, number>(); for (const r of rows) seen.set(shortName(r.display), (seen.get(shortName(r.display)) ?? 0) + 1); return seen; }, [rows]);
   // F-223 (Fable pass 42): one ranking, one figure. The official score's 95% interval is drawn here — on the official

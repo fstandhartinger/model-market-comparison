@@ -3,6 +3,8 @@ export type JevRowScope = 'open' | 'api' | 'reference';
 type ScopeRow = { key: string; v16?: { lane?: string } | null; api_flag?: boolean | null; endpoint_kind?: string | null };
 export type JevApiClassifier = (row: ScopeRow) => boolean;
 export const JEV_REFERENCE_KEY: string;
+export const JEV_OPEN_REFERENCE_KEYS: string[];
+export function jevFoldWithPinned<T>(items: readonly T[], limit: number, isPinned: (item: T) => boolean): { head: T[]; rest: T[] };
 export const JEV_SCOPES: JevScope[];
 export const JEV_SCOPE_LISTING: { reference: string; api: string };
 export function isJevApiOffering(row: ScopeRow | null | undefined): boolean;

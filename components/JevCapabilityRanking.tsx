@@ -1,7 +1,7 @@
 'use client';
 import { jevLatencyView, latencySeconds, JEV_LATENCY_LABEL, type JevSpeedLike } from '../lib/jev-latency.mjs';
 import { jevRowArch } from './jevTypes';
-import { JEV_SCOPE_LISTING } from '../lib/jevbench-scope.mjs';
+import { JEV_SCOPE_LISTING, jevFoldWithPinned } from '../lib/jevbench-scope.mjs';
 
 import { useEffect, useId, useMemo, useState, type CSSProperties, type ReactNode } from 'react';
 import { DEFAULT_CAP, clampCap, formatCap, isOfficialCaps, parseCaps, serialiseCaps, type ClassCaps } from '../lib/jevbench-class-caps.mjs';
@@ -73,9 +73,11 @@ function basePriceCheck(row: JevV14System, reference: JevClassResult['reference'
   return { short, detail, fits, ratio };
 }
 
-function RankingRow({ item, rank, reference, costFactor, latencyFactor, referenceLabel, classLabel, note, costCap, benchmark = 'jevbench' }: {
+function RankingRow({ item, rank, reference, costFactor, latencyFactor, referenceLabel, classLabel, note, costCap, benchmark = 'jevbench', compactName = false }: {
   item: JevClassRow; rank: string; reference: JevClassResult['reference']; costFactor: number; latencyFactor: number;
   referenceLabel: string; classLabel: string; note?: string; costCap: number; benchmark?: BaseModelBenchmark;
+  /** Pinned reference rows drop the draw chip so the full name fits the name column; the draw stays in the name's tooltip. */
+  compactName?: boolean;
 }) {
   const { row, capability, cost, latency } = item;
   const basePrice = basePriceCheck(row, reference, costCap, referenceLabel);
@@ -106,15 +108,17 @@ function RankingRow({ item, rank, reference, costFactor, latencyFactor, referenc
   </dl>;
   const style = { '--jev-t': `var(${jevTypeVarName(jevRowArch(row))})` } as CSSProperties;
   const link = benchmark === 'imagejevbench' ? imageJevSourceUrl(row.key, row.repo) : jevSourceUrl(row.key, row.repo);
+  const drawTag = (row as unknown as { draw?: JevDrawTagData | null }).draw;
+  const nameTitle = compactName && drawTag ? `${row.display} · measured on the ${drawTag.label} (${drawTag.release}), ${drawTag.measured_on}` : row.display;
   return <li className={`group relative ${grid} min-h-[43px] items-center text-[11px] sm:text-sm`} style={style}
     data-bh-jev14-capability-row={row.key} data-bh-jev14-capability-value={capability.toFixed(3)} data-bh-jev14-cost={cost ?? ''}>
     <span className="bh-muted tabular col-start-1 row-start-1 text-right">{rank || '–'}</span>
-    <span className="col-start-2 row-start-1 flex min-w-0 items-center sm:justify-end" title={row.display}>
+    <span className="col-start-2 row-start-1 flex min-w-0 items-center sm:justify-end" title={nameTitle}>
       <span className="min-w-0 truncate">{link ? <a href={link} target="_blank" rel="noopener noreferrer" className="underline decoration-[rgb(var(--line))] underline-offset-2 hover:text-accent" data-bh-jev-source={row.key}>{name}</a> : name}</span>
       {/* The ⓘ sits outside the truncated name so long names keep their tap target. */}
       <JevCapabilityTip label={`Details for ${row.display}`} title={tipTitle}>{tipBody}</JevCapabilityTip>
       {row.api_flag && <span className="bh-thin-tag bh-flag-tag ml-1 shrink-0 align-middle" data-bh-jev-capability-api={row.key} title={row.api_exposure_note ?? apiExplanation}>API</span>}
-      <JevDrawTag tag={(row as unknown as { draw?: JevDrawTagData | null }).draw} rowKey={row.key} className="ml-1 shrink-0 align-middle" />
+      {!compactName && <JevDrawTag tag={drawTag} rowKey={row.key} className="ml-1 shrink-0 align-middle" />}
       <UseModelEntry row={row} name={name} benchmark={benchmark} className="max-sm:!hidden" />
     </span>
     <span className="col-start-2 col-end-7 row-start-2 mt-0.5 flex min-w-0 flex-col justify-center gap-[3px] sm:col-start-3 sm:col-end-4 sm:row-start-1 sm:mt-0">
@@ -151,7 +155,7 @@ export function unrankedNote(listing: string, benchName: string, preliminary?: {
   return `Not ranked in the official ${benchName} Score (${listing.replace(/_/g, ' ')})`;
 }
 
-export function JevCapabilityRanking({ systems, eligibilitySystems = systems, revision, officialHref, benchName = 'JevBench', classLabel = 'Jev-class', referenceLabel = 'Jev', eligibilityNote, correlationReason, benchmark = 'jevbench', onCapsChange, scopeLabel, outsideOpen = false, headline = true, ...options }: {
+export function JevCapabilityRanking({ systems, eligibilitySystems = systems, revision, officialHref, benchName = 'JevBench', classLabel = 'Jev-class', referenceLabel = 'Jev', eligibilityNote, correlationReason, benchmark = 'jevbench', onCapsChange, scopeLabel, outsideOpen = false, headline = true, pinnedKeys, ...options }: {
   /** v1.7.1: false on the API board, where the Composite is the headline. */
   headline?: boolean;
   systems: JevV14System[]; revision: string; officialHref: string; benchName?: string; classLabel?: string;
@@ -159,6 +163,8 @@ export function JevCapabilityRanking({ systems, eligibilitySystems = systems, re
   scopeLabel?: string;
   /** v1.7.1: the API board opens the rows outside the caps, so no offering is hidden behind a fold. */
   outsideOpen?: boolean;
+  /** Open board: the unranked reference rows with these keys stay above the fold (display only, ranks unchanged). */
+  pinnedKeys?: readonly string[];
   onCapsChange?: (view: ClassCaps & { costLimit: number; latencyLimit: number }) => void;
   /** Include disclosure rows for filter status while keeping the headline chart's published row set unchanged. */
   eligibilitySystems?: JevV14System[];
@@ -226,8 +232,10 @@ export function JevCapabilityRanking({ systems, eligibilitySystems = systems, re
   let n = 0;
   const numbered = inside.map((r) => ({ r, label: r.row.ranked ? String(++n) : '–' }));
   const lead = numbered.find((x) => x.r.row.ranked) ?? numbered[0];
-  const bar = ({ r, label }: { r: JevClassRow; label: string }) => <RankingRow key={r.row.key} item={r} rank={label} reference={reference} costFactor={costFactor} latencyFactor={latencyFactor} referenceLabel={referenceLabel} classLabel={classLabel} costCap={limits.cost} benchmark={benchmark}
-    note={r.isReference ? `Reference system for the ${classLabel} limits` : !r.row.ranked ? unrankedNote(r.row.listing, benchName, (r.row as { preliminary?: { label?: string | null } | null }).preliminary) : undefined} />;
+  const isPinned = ({ r }: { r: JevClassRow }) => !r.row.ranked && Boolean(pinnedKeys?.includes(r.row.key));
+  const { head, rest } = jevFoldWithPinned(numbered, HEADLINE_TOP, isPinned);
+  const bar = (item: { r: JevClassRow; label: string }) => { const { r, label } = item; return <RankingRow key={r.row.key} compactName={isPinned(item)} item={r} rank={label} reference={reference} costFactor={costFactor} latencyFactor={latencyFactor} referenceLabel={referenceLabel} classLabel={classLabel} costCap={limits.cost} benchmark={benchmark}
+    note={r.isReference ? `Reference system for the ${classLabel} limits` : !r.row.ranked ? unrankedNote(r.row.listing, benchName, (r.row as { preliminary?: { label?: string | null } | null }).preliminary) : undefined} />; };
   const outsideBar = (r: JevClassRow) => <RankingRow key={r.row.key} item={r} rank="" reference={reference} costFactor={costFactor} latencyFactor={latencyFactor} referenceLabel={referenceLabel} classLabel={classLabel} costCap={limits.cost} benchmark={benchmark} note={`Outside: ${r.reasons.join(', ')}`} />;
   const types = jevLegendTypes(filteredRows.map((r) => jevRowArch(r.row)));
 
@@ -279,10 +287,10 @@ export function JevCapabilityRanking({ systems, eligibilitySystems = systems, re
         <span className="bh-muted text-right" title="Capability Score"><span className="sm:hidden">Cap.</span><span className="hidden sm:inline">Capability<br />Score</span></span>
         <span className="bh-muted text-right" title="US dollars per 1,000 decisions"><span className="sm:hidden">$/1k</span><span className="hidden sm:inline">$/1k decisions</span></span>
       </div>
-      <ol className="mt-2 space-y-2.5 sm:mt-1" data-bh-jev-class-list>{numbered.slice(0, HEADLINE_TOP).map(bar)}</ol>
-      {numbered.length > HEADLINE_TOP && <details className="mt-2.5" data-bh-jev-class-more>
-        <summary className="cursor-pointer text-sm font-semibold text-accent">Show all {numbered.length} {classLabel} systems ({numbered.length - HEADLINE_TOP} more)</summary>
-        <ol className="mt-2.5 space-y-2.5">{numbered.slice(HEADLINE_TOP).map(bar)}</ol>
+      <ol className="mt-2 space-y-2.5 sm:mt-1" data-bh-jev-class-list>{head.map(bar)}</ol>
+      {rest.length > 0 && <details className="mt-2.5" data-bh-jev-class-more>
+        <summary className="cursor-pointer text-sm font-semibold text-accent">Show all {numbered.length} {classLabel} systems ({rest.length} more)</summary>
+        <ol className="mt-2.5 space-y-2.5">{rest.map(bar)}</ol>
       </details>}
       <p className="bh-muted mt-2 text-[11.5px] leading-snug">Wide coloured bar = Capability Score (0–100). Thin bars: cost above, median latency below; shared log ratio scale 0.25× … 64× {referenceLabel}, {official ? <>ticks at 1× and {limits.factor}× (cap).</> : <>ticks at 1×{costFactor !== Infinity && costFactor !== 1 ? ` and ${formatCap(costFactor)} (cost cap)` : ''}{latencyFactor !== Infinity && latencyFactor !== 1 ? ` and ${formatCap(latencyFactor)} (latency cap)` : ''}; cost {formatCap(costFactor)}, latency {formatCap(latencyFactor)}. An uncapped axis never turns red.</>} Shorter is cheaper or faster. * = est. (estimated cost). # counts ranked {classLabel} systems; “–” marks unranked or outside systems. Tap ⓘ or hover a row or thin bar for details.</p>
       <p className="bh-muted mt-1 text-[11.5px] leading-snug" data-bh-cost-latency-correlation>{costLatencySpearman != null && Math.abs(costLatencySpearman) < 0.2 ? 'Cost and latency are shown separately because they are nearly independent across systems' : costLatencySpearman == null ? 'Cost and latency are shown separately' : 'Cost and latency correlate here'} (Spearman ρ = {costLatencySpearman == null ? 'unavailable' : costLatencySpearman.toFixed(2)}, n = {pairedCount}){correlationReason && costLatencySpearman != null && Math.abs(costLatencySpearman) >= 0.2 ? `, ${correlationReason}` : ''}.</p>
