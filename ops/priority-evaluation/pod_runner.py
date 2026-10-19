@@ -1010,6 +1010,13 @@ def _lifecycle(provider, job, recipe, staging_path, output, state, gpu_choice, t
                 state['runtime_supplement'] = jeva_runtime_supplement.build(provider, pod_id)
                 image = state['runtime_supplement']['effective_image']
                 save_state()
+            import chon_runtime_supplement
+            if chon_runtime_supplement.active(job_dir or job, recipe):
+                # Fixed-order offline build of Chon-1.0-12B's documented torch 2.9.1/transformers 5.20/peft 0.18.1
+                # /fastapi stack for the customer's own chon.serve.
+                state['runtime_supplement'] = chon_runtime_supplement.build(provider, pod_id)
+                image = state['runtime_supplement']['effective_image']
+                save_state()
         if runtime_preflight is not None:
             state['runtime_preflight'] = runtime_preflight(provider, pod_id)
             save_state()
@@ -1115,7 +1122,13 @@ def _lifecycle(provider, job, recipe, staging_path, output, state, gpu_choice, t
             state["host_staging"]["run_container"]["env_names"] = _env_names_checked(
                 _exec(provider, pod_id, ["docker", "inspect", "jev-pod-run", "--format", "{{json .Config.Env}}"]).stdout)
             save_state()
-        wait = _exec(provider, pod_id, ["docker", "wait", "jev-pod-run"], timeout=3600)
+        wait_s = 3600
+        import chon_runtime_supplement
+        if chon_runtime_supplement.active(job_dir or job, recipe):
+            # Chon's think-when-unsure pass makes a 1,500-row run longer than the default hour; this order may use
+            # the rest of its attempt TTL minus a teardown margin (the TTL and cost caps are unchanged).
+            wait_s = chon_runtime_supplement.run_wait_seconds(state.get('attempt_started_at'), ttl)
+        wait = _exec(provider, pod_id, ["docker", "wait", "jev-pod-run"], timeout=wait_s)
         rc = wait.stdout.strip().splitlines()[-1] if wait.stdout.strip() else ""
         logs = _exec(provider, pod_id, ["docker", "logs", "--tail", "20000", "jev-pod-run"], timeout=120)
         (output / "pod-driver.log").write_bytes((logs.stdout + logs.stderr).encode(errors="replace"))
