@@ -61,6 +61,9 @@ CONTEXT_LIMIT = 536870912
 REMOTE_ROOT = '/runtime-supplement/chon'
 BUILD_TIMEOUT_S = 1800
 SCP_TIMEOUT_S = 1800
+# Deputy exception (requested #11 12:00Z, CR-514): Verda had no H100; one A100 attempt may run up to 4 h (A100 ≈ 13 tok/s think pass, ≈ 3.1 h
+# expected). The budget-derived TTL (USD 20 / USD 5 per hour) is 4 h anyway, so the order cap is unchanged.
+TTL_CAP_HOURS = 4.0
 DEFAULT_RUN_WAIT_S = 3600
 RUN_WAIT_MARGIN_S = 900  # logs, raw download, receipts and exact-ID teardown before the attempt TTL ends
 

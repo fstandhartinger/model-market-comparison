@@ -158,6 +158,14 @@ class Tests(unittest.TestCase):
         self.assertIn('wait_s = chon_runtime_supplement.run_wait_seconds(state.get(\'attempt_started_at\'), ttl)', source)
         self.assertIn('["docker", "wait", "jev-pod-run"], timeout=wait_s)', source)
 
+    def test_ttl_cap_exception_is_scoped_to_this_order(self):
+        job = '/home/flori/jobs/fastlane-evaluations/' + S.ORDER
+        self.assertEqual(pod_runner._order_ttl_cap(job, recipe()), S.TTL_CAP_HOURS)
+        self.assertLessEqual(S.TTL_CAP_HOURS, 4.0)
+        self.assertEqual(pod_runner._order_ttl_cap('/jobs/other-order', recipe()), pod_runner.TTL_CAP_HOURS)
+        self.assertEqual(pod_runner._order_ttl_cap(job, recipe(kind='python_inprocess')), pod_runner.TTL_CAP_HOURS)
+        self.assertEqual(pod_runner.TTL_CAP_HOURS, 3.0)
+
     @unittest.skipUnless(LOCAL_CONTEXT.is_file(), 'host-only build context not present')
     def test_real_context_matches_every_pin(self):
         S.check_context(LOCAL_CONTEXT)
