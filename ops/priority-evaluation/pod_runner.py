@@ -74,6 +74,14 @@ def _utcnow():
     return datetime.now(timezone.utc)
 
 
+def _order_ttl_cap(job, recipe):
+    """Attempt TTL cap in hours: TTL_CAP_HOURS, except one exact order with a recorded deputy exception."""
+    import chon_runtime_supplement
+    if chon_runtime_supplement.active(job, recipe):
+        return chon_runtime_supplement.TTL_CAP_HOURS
+    return TTL_CAP_HOURS
+
+
 def _attempt_rate(recipe):
     """USD/h used for the per-attempt TTL and upper-bound charge.
 
@@ -1345,7 +1353,8 @@ def run(rid: str, job_dir: Path, recipe: dict, output: Path, expected_pins: dict
         budget = min(budget, allocation_gate.max_new_usd)
     if budget <= 0:
         raise measurement_dispatch.OperationalHold("gpu_pod_budget_exhausted")
-    ttl = min(TTL_CAP_HOURS, budget / _attempt_rate(recipe))
+    ttl_cap = _order_ttl_cap(job_dir, recipe)
+    ttl = min(ttl_cap, budget / _attempt_rate(recipe))
     import aplomb_5090_preflight
     try:
         exact_candidates = aplomb_5090_preflight.candidates(rid, recipe, benchmarks, host_binding)
@@ -1369,8 +1378,8 @@ def run(rid: str, job_dir: Path, recipe: dict, output: Path, expected_pins: dict
             remaining = min(budget - run_spend, cap - state.get('spent_upper_bound_usd', 0.0))
             if remaining <= 0:
                 raise measurement_dispatch.OperationalHold('gpu_pod_budget_exhausted')
-            ttl = min(TTL_CAP_HOURS, remaining / _attempt_rate(recipe),
-                      allocation_gate.max_ttl_hours if allocation_gate is not None else TTL_CAP_HOURS)
+            ttl = min(ttl_cap, remaining / _attempt_rate(recipe),
+                      allocation_gate.max_ttl_hours if allocation_gate is not None else ttl_cap)
             try:
                 state = _lifecycle(provider, job, recipe, staging_path, output, state,
                                    gpu_choice, ttl, remaining, alert, save_state, benchmarks, quote_budget,
