@@ -61,9 +61,11 @@ CONTEXT_LIMIT = 536870912
 REMOTE_ROOT = '/runtime-supplement/chon'
 BUILD_TIMEOUT_S = 1800
 SCP_TIMEOUT_S = 1800
-# Deputy exception (requested #11 12:00Z, CR-515): Verda had no H100; one A100 attempt may run up to 4 h (A100 ≈ 13 tok/s think pass, ≈ 3.1 h
-# expected). The budget-derived TTL (USD 20 / USD 5 per hour) is 4 h anyway, so the order cap is unchanged.
-TTL_CAP_HOURS = 4.0
+# Deputy exceptions (#21673/#21755, CR-515; RTX 6000 Ada fallback CR-516, ruling pending on #11): Verda had no single H100 and the A100's
+# think pass ran at 8.9 tok/s (≈7.3 h for 1,500 rows). One RTX 6000 Ada 48GB attempt (15.4 tok/s measured, ≈4.2 h
+# expected) may run up to 6.5 h, accounted and created at a pinned USD 1.40/h ceiling (≤ USD 9.10 per attempt).
+TTL_CAP_HOURS = 6.5
+ATTEMPT_RATE_USD = 1.40
 DEFAULT_RUN_WAIT_S = 3600
 RUN_WAIT_MARGIN_S = 900  # logs, raw download, receipts and exact-ID teardown before the attempt TTL ends
 
