@@ -6157,6 +6157,36 @@
             "fact": "Pinned card: Vega-U 14.3M decision engine on a frozen Qwen3.5-0.8B reader; no text generation; Apache-2.0 checkpoint. Same author as vegaml-0.8b and vegaml-4b."
           }
         ]
+      },
+      "pplx-decider-flash-v1.2": {
+        "arch": "open-llm-decoder",
+        "badges": {
+          "derivation": "fine-tune",
+          "params": "4B",
+          "quant": null
+        },
+        "evidence": [
+          {
+            "url": "https://huggingface.co/perplexity-ai/pplx-decider-flash-v1.2/blob/6d771ad7b5ecff5e93b8fc7b90d4c5ccc341954d/README.md",
+            "kind": "model-card",
+            "fact": "Pinned card: Qwen3.5-4B full fine-tune, marker readout without generation; author training-splits statement and 32k training-length caveat."
+          }
+        ]
+      },
+      "vllm-sr-d3-turbo": {
+        "arch": "open-llm-decoder",
+        "badges": {
+          "derivation": "fine-tune",
+          "params": "27B",
+          "quant": null
+        },
+        "evidence": [
+          {
+            "url": "https://huggingface.co/vllm-sr/d3-turbo/blob/689b3af198baaf6f11110be38a9daa7188dfd8ad/README.md",
+            "kind": "model-card",
+            "fact": "Pinned card: Qwen3.8-27B, native probability readout, Apache-2.0, author-default 32768-token context cap; optional long_context mode not used."
+          }
+        ]
       }
     },
     "imagejevbench": {
