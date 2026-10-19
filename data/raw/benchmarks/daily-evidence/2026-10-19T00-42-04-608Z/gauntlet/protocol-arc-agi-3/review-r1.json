@@ -1,0 +1,43 @@
+{
+  "artifact": "arc-agi::3",
+  "row_sha256": "c77722bf683c125fe160393c71ef74f48c404efe196bfd1e4f090ea6576b4f02",
+  "criteria_review": {
+    "c1_identity_and_scoring": {
+      "checked": true,
+      "result": "missing_evidence",
+      "detail": "The packet contains no primary protocol excerpt or captured page for the ARC-AGI board. Therefore the row's claimed version '3', scoring metric ('Semi-private interactive game action efficiency relative to the human baseline'), unit ('percent'), bounds [0, null], and higher_better semantics cannot be compared against the current maintainer specification. No contradiction was found, but continuity cannot be established as required by the criterion."
+    },
+    "c2_lifecycle": {
+      "checked": true,
+      "result": "missing_evidence",
+      "detail": "The packet contains no primary protocol text describing lifecycle fields. Consequently the row's status 'active', version_status 'published', and superseded_by null cannot be confirmed or contradicted. No added/changed summary was supplied that could independently support 'active'."
+    }
+  },
+  "field_notes": {
+    "version": "3 — unverifiable; no protocol page to confirm the maintainer currently publishes this version.",
+    "version_status": "published — unverifiable; the row asserts the maintainer publishes release identifier '3', but no page text supports this.",
+    "status": "active — unverifiable; no protocol text and no added/changed summary present to corroborate.",
+    "superseded_by": "null — unverifiable; no protocol text on whether a successor board is named.",
+    "scoring_metric": "unverifiable; no protocol text confirms the metric, unit, or bound semantics.",
+    "scoring_notes": "unverifiable; the note about median human actions and 115% per-level cap is the artifact's own claim, not protocol text in this packet.",
+    "version_guard": "instructional text only; provides no evidence about the maintainer's actual page."
+  },
+  "missing_evidence": [
+    "Primary protocol excerpt/page for the ARC-AGI board (needed for c1: version continuity, scoring metric, unit, bounds, higher_better semantics, and identity continuity)",
+    "Protocol statement on lifecycle for c2: whether status is 'active', whether the maintainer publishes a release identifier (supporting version_status 'published'), and whether any successor board is named (supporting superseded_by null)",
+    "Optional run summaries (served-value summary, added/changed counts) — absent here; these are auxiliary and would only support or refute the fields, not replace the protocol text"
+  ],
+  "field_notes": {
+    "version": "3 — claimed by the artifact; no protocol page present to confirm",
+    "version_status": "published — asserted, but no protocol text confirms the maintainer publishes release identifier '3'",
+    "status": "active — asserted, but no protocol page and no added/changed summary are present to support it",
+    "superseded_by": "null — asserted; no protocol text available to confirm no successor board is named",
+    "scoring": "Metric, unit, and cap notes are the artifact's own claims; no protocol text is available to confirm them. The note that the 115% per-level cap does not imply a final aggregate bound is unverifiable here."
+  },
+  "missing_evidence": [
+    "Primary protocol excerpt/page for the ARC-AGI board (required for c1: version, metric, unit, bounds, higher_better, and protocol identity continuity)",
+    "Protocol lifecycle evidence for c2 (to confirm status 'active', version_status 'published', and absence of a named successor board)",
+    "Optional generated summaries (served-values summary, added/changed counts) — not present, and their absence itself is not a failure, but they would have aided verification"
+  ],
+  "verdict": "UNVERIFIED — no primary protocol evidence was supplied in the packet. The row is internally well-formed and shows no self-contradiction, but neither c1 continuity nor c2 lifecycle claims can be confirmed against the current primary protocol. Both criteria therefore report missing evidence rather than a confirmed match or a confirmed mismatch."  
+}

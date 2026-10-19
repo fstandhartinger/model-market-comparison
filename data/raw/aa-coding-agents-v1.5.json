@@ -1,7 +1,7 @@
 {
   "source": "ArtificialAnalysis Coding Agent Index",
   "version": "1.5",
-  "collected_at": "2026-10-18",
+  "collected_at": "2026-10-19",
   "endpoint": "https://artificialanalysis.ai/agents/coding-agents",
   "methodology_url": "https://artificialanalysis.ai/methodology/coding-agents-benchmarking",
   "method": "Decode Flight JSON and resolve benchmarkRows references on the full coding-agents page; validate version, row count, identities, components and index arithmetic before atomic replacement.",
@@ -10,6 +10,188 @@
   "count": 42,
   "completeness_note": "Complete v1.5 benchmarkRows only. v1.4 remains a separate dated snapshot for the unchanged Composite; versions must never be combined.",
   "rows": [
+    {
+      "source_id": "4aee8aa2d4a0bad6068644f40edae235",
+      "model_name": "GPT-6.1 Sol (high)",
+      "harness": "Codex",
+      "score": 0.6014923716179784,
+      "eval_count": 3,
+      "index_component_count": 3,
+      "complete": true,
+      "components": [
+        {
+          "id": "deep-swe-v1.1",
+          "score": 0.705014749262537,
+          "weight": 0.333333333333333
+        },
+        {
+          "id": "swe-atlas-qna",
+          "score": 0.599462365591398,
+          "weight": 0.333333333333333
+        },
+        {
+          "id": "terminal-bench-v4",
+          "score": 0.5,
+          "weight": 0.333333333333333
+        }
+      ]
+    },
+    {
+      "source_id": "f927d9c41b5c3021996eb14c3dd1341e",
+      "model_name": "Grok 4.7 (xhigh)",
+      "harness": "Grok Build",
+      "score": 0.5626764360706693,
+      "eval_count": 3,
+      "index_component_count": 3,
+      "complete": true,
+      "components": [
+        {
+          "id": "deep-swe-v1.1",
+          "score": 0.725663716814159,
+          "weight": 0.333333333333333
+        },
+        {
+          "id": "swe-atlas-qna",
+          "score": 0.629032258064516,
+          "weight": 0.333333333333333
+        },
+        {
+          "id": "terminal-bench-v4",
+          "score": 0.333333333333333,
+          "weight": 0.333333333333333
+        }
+      ]
+    },
+    {
+      "source_id": "28ef65135f08f035dc93a97d324fea73",
+      "model_name": "DeepSeek V4 Flash 0731 (max)",
+      "harness": "Codex",
+      "score": 0.3874247758775307,
+      "eval_count": 3,
+      "index_component_count": 3,
+      "complete": true,
+      "components": [
+        {
+          "id": "deep-swe-v1.1",
+          "score": 0.542772861356932,
+          "weight": 0.333333333333333
+        },
+        {
+          "id": "swe-atlas-qna",
+          "score": 0.513440860215054,
+          "weight": 0.333333333333333
+        },
+        {
+          "id": "terminal-bench-v4",
+          "score": 0.106060606060606,
+          "weight": 0.333333333333333
+        }
+      ]
+    },
+    {
+      "source_id": "33e80f383dc644527161435b076798ad",
+      "model_name": "Sonnet 5.5 (high)",
+      "harness": "Claude Code",
+      "score": 0.5501249049636148,
+      "eval_count": 3,
+      "index_component_count": 3,
+      "complete": true,
+      "components": [
+        {
+          "id": "deep-swe-v1.1",
+          "score": 0.666666666666667,
+          "weight": 0.333333333333333
+        },
+        {
+          "id": "swe-atlas-qna",
+          "score": 0.564516129032258,
+          "weight": 0.333333333333333
+        },
+        {
+          "id": "terminal-bench-v4",
+          "score": 0.419191919191919,
+          "weight": 0.333333333333333
+        }
+      ]
+    },
+    {
+      "source_id": "f2de07373c3626f1b9269a6ecad7804c",
+      "model_name": "Muse Spark 1.3 (max)",
+      "harness": "Muse Code",
+      "score": 0.5430273329930766,
+      "eval_count": 3,
+      "index_component_count": 3,
+      "complete": true,
+      "components": [
+        {
+          "id": "deep-swe-v1.1",
+          "score": 0.716814159292036,
+          "weight": 0.333333333333333
+        },
+        {
+          "id": "swe-atlas-qna",
+          "score": 0.594086021505376,
+          "weight": 0.333333333333333
+        },
+        {
+          "id": "terminal-bench-v4",
+          "score": 0.318181818181818,
+          "weight": 0.333333333333333
+        }
+      ]
+    },
+    {
+      "source_id": "666605c66ad569c503ce53c01682e285",
+      "model_name": "Sonnet 5.5 (xhigh)",
+      "harness": "Claude Code",
+      "score": 0.628713868151493,
+      "eval_count": 3,
+      "index_component_count": 3,
+      "complete": true,
+      "components": [
+        {
+          "id": "deep-swe-v1.1",
+          "score": 0.684365781710914,
+          "weight": 0.333333333333333
+        },
+        {
+          "id": "swe-atlas-qna",
+          "score": 0.620967741935484,
+          "weight": 0.333333333333333
+        },
+        {
+          "id": "terminal-bench-v4",
+          "score": 0.580808080808081,
+          "weight": 0.333333333333333
+        }
+      ]
+    },
+    {
+      "source_id": "ac8276cd5d15ac2daacb9956ad44c132",
+      "model_name": "GPT-6 Luna (max)",
+      "harness": "Codex",
+      "score": 0.4107438934016153,
+      "eval_count": 3,
+      "index_component_count": 3,
+      "complete": true,
+      "components": [
+        {
+          "id": "deep-swe-v1.1",
+          "score": 0.63716814159292,
+          "weight": 0.333333333333333
+        },
+        {
+          "id": "swe-atlas-qna",
+          "score": 0.443548387096774,
+          "weight": 0.333333333333333
+        },
+        {
+          "id": "terminal-bench-v4",
+          "score": 0.151515151515152,
+          "weight": 0.333333333333333
+        }
+      ]
+    },
     {
       "source_id": "d1003684d8f29b95a3b14d2a7722221a",
       "model_name": "Gemini 3.8 Flash (high)",
@@ -32,6 +214,32 @@
         {
           "id": "terminal-bench-v4",
           "score": 0.146464646464646,
+          "weight": 0.333333333333333
+        }
+      ]
+    },
+    {
+      "source_id": "cd60470c35fd626a116af80fd5915dfa",
+      "model_name": "Muse Spark 1.3 (xhigh)",
+      "harness": "Muse Code 1.0.2 RC",
+      "score": 0.482993172759088,
+      "eval_count": 3,
+      "index_component_count": 3,
+      "complete": true,
+      "components": [
+        {
+          "id": "deep-swe-v1.1",
+          "score": 0.731563421828909,
+          "weight": 0.333333333333333
+        },
+        {
+          "id": "swe-atlas-qna",
+          "score": 0.545698924731183,
+          "weight": 0.333333333333333
+        },
+        {
+          "id": "terminal-bench-v4",
+          "score": 0.171717171717172,
           "weight": 0.333333333333333
         }
       ]
@@ -609,240 +817,6 @@
       ]
     },
     {
-      "source_id": "9e810ff3c6cce5ebaaff7c744c687a47",
-      "model_name": "GPT-6 Astra (max)",
-      "harness": "Codex",
-      "score": 0.6164504498789397,
-      "eval_count": 3,
-      "index_component_count": 3,
-      "complete": true,
-      "components": [
-        {
-          "id": "deep-swe-v1.1",
-          "score": 0.675516224188791,
-          "weight": 0.333333333333333
-        },
-        {
-          "id": "swe-atlas-qna",
-          "score": 0.618279569892473,
-          "weight": 0.333333333333333
-        },
-        {
-          "id": "terminal-bench-v4",
-          "score": 0.555555555555555,
-          "weight": 0.333333333333333
-        }
-      ]
-    },
-    {
-      "source_id": "ac8276cd5d15ac2daacb9956ad44c132",
-      "model_name": "GPT-6 Luna (max)",
-      "harness": "Codex",
-      "score": 0.4107438934016153,
-      "eval_count": 3,
-      "index_component_count": 3,
-      "complete": true,
-      "components": [
-        {
-          "id": "deep-swe-v1.1",
-          "score": 0.63716814159292,
-          "weight": 0.333333333333333
-        },
-        {
-          "id": "swe-atlas-qna",
-          "score": 0.443548387096774,
-          "weight": 0.333333333333333
-        },
-        {
-          "id": "terminal-bench-v4",
-          "score": 0.151515151515152,
-          "weight": 0.333333333333333
-        }
-      ]
-    },
-    {
-      "source_id": "cd60470c35fd626a116af80fd5915dfa",
-      "model_name": "Muse Spark 1.3 (xhigh)",
-      "harness": "Muse Code 1.0.2 RC",
-      "score": 0.482993172759088,
-      "eval_count": 3,
-      "index_component_count": 3,
-      "complete": true,
-      "components": [
-        {
-          "id": "deep-swe-v1.1",
-          "score": 0.731563421828909,
-          "weight": 0.333333333333333
-        },
-        {
-          "id": "swe-atlas-qna",
-          "score": 0.545698924731183,
-          "weight": 0.333333333333333
-        },
-        {
-          "id": "terminal-bench-v4",
-          "score": 0.171717171717172,
-          "weight": 0.333333333333333
-        }
-      ]
-    },
-    {
-      "source_id": "666605c66ad569c503ce53c01682e285",
-      "model_name": "Sonnet 5.5 (xhigh)",
-      "harness": "Claude Code",
-      "score": 0.628713868151493,
-      "eval_count": 3,
-      "index_component_count": 3,
-      "complete": true,
-      "components": [
-        {
-          "id": "deep-swe-v1.1",
-          "score": 0.684365781710914,
-          "weight": 0.333333333333333
-        },
-        {
-          "id": "swe-atlas-qna",
-          "score": 0.620967741935484,
-          "weight": 0.333333333333333
-        },
-        {
-          "id": "terminal-bench-v4",
-          "score": 0.580808080808081,
-          "weight": 0.333333333333333
-        }
-      ]
-    },
-    {
-      "source_id": "f2de07373c3626f1b9269a6ecad7804c",
-      "model_name": "Muse Spark 1.3 (max)",
-      "harness": "Muse Code",
-      "score": 0.5430273329930766,
-      "eval_count": 3,
-      "index_component_count": 3,
-      "complete": true,
-      "components": [
-        {
-          "id": "deep-swe-v1.1",
-          "score": 0.716814159292036,
-          "weight": 0.333333333333333
-        },
-        {
-          "id": "swe-atlas-qna",
-          "score": 0.594086021505376,
-          "weight": 0.333333333333333
-        },
-        {
-          "id": "terminal-bench-v4",
-          "score": 0.318181818181818,
-          "weight": 0.333333333333333
-        }
-      ]
-    },
-    {
-      "source_id": "33e80f383dc644527161435b076798ad",
-      "model_name": "Sonnet 5.5 (high)",
-      "harness": "Claude Code",
-      "score": 0.5501249049636148,
-      "eval_count": 3,
-      "index_component_count": 3,
-      "complete": true,
-      "components": [
-        {
-          "id": "deep-swe-v1.1",
-          "score": 0.666666666666667,
-          "weight": 0.333333333333333
-        },
-        {
-          "id": "swe-atlas-qna",
-          "score": 0.564516129032258,
-          "weight": 0.333333333333333
-        },
-        {
-          "id": "terminal-bench-v4",
-          "score": 0.419191919191919,
-          "weight": 0.333333333333333
-        }
-      ]
-    },
-    {
-      "source_id": "28ef65135f08f035dc93a97d324fea73",
-      "model_name": "DeepSeek V4 Flash 0731 (max)",
-      "harness": "Codex",
-      "score": 0.3874247758775307,
-      "eval_count": 3,
-      "index_component_count": 3,
-      "complete": true,
-      "components": [
-        {
-          "id": "deep-swe-v1.1",
-          "score": 0.542772861356932,
-          "weight": 0.333333333333333
-        },
-        {
-          "id": "swe-atlas-qna",
-          "score": 0.513440860215054,
-          "weight": 0.333333333333333
-        },
-        {
-          "id": "terminal-bench-v4",
-          "score": 0.106060606060606,
-          "weight": 0.333333333333333
-        }
-      ]
-    },
-    {
-      "source_id": "f927d9c41b5c3021996eb14c3dd1341e",
-      "model_name": "Grok 4.7 (xhigh)",
-      "harness": "Grok Build",
-      "score": 0.5626764360706693,
-      "eval_count": 3,
-      "index_component_count": 3,
-      "complete": true,
-      "components": [
-        {
-          "id": "deep-swe-v1.1",
-          "score": 0.725663716814159,
-          "weight": 0.333333333333333
-        },
-        {
-          "id": "swe-atlas-qna",
-          "score": 0.629032258064516,
-          "weight": 0.333333333333333
-        },
-        {
-          "id": "terminal-bench-v4",
-          "score": 0.333333333333333,
-          "weight": 0.333333333333333
-        }
-      ]
-    },
-    {
-      "source_id": "4aee8aa2d4a0bad6068644f40edae235",
-      "model_name": "GPT-6.1 Sol (high)",
-      "harness": "Codex",
-      "score": 0.6014923716179784,
-      "eval_count": 3,
-      "index_component_count": 3,
-      "complete": true,
-      "components": [
-        {
-          "id": "deep-swe-v1.1",
-          "score": 0.705014749262537,
-          "weight": 0.333333333333333
-        },
-        {
-          "id": "swe-atlas-qna",
-          "score": 0.599462365591398,
-          "weight": 0.333333333333333
-        },
-        {
-          "id": "terminal-bench-v4",
-          "score": 0.5,
-          "weight": 0.333333333333333
-        }
-      ]
-    },
-    {
       "source_id": "b4a228ec941f485bc4e96489bb773dea",
       "model_name": "Haiku 5.5 (low)",
       "harness": "Claude Code",
@@ -864,6 +838,32 @@
         {
           "id": "terminal-bench-v4",
           "score": 0.0606060606060606,
+          "weight": 0.333333333333333
+        }
+      ]
+    },
+    {
+      "source_id": "9e810ff3c6cce5ebaaff7c744c687a47",
+      "model_name": "GPT-6 Astra (max)",
+      "harness": "Codex",
+      "score": 0.6164504498789397,
+      "eval_count": 3,
+      "index_component_count": 3,
+      "complete": true,
+      "components": [
+        {
+          "id": "deep-swe-v1.1",
+          "score": 0.675516224188791,
+          "weight": 0.333333333333333
+        },
+        {
+          "id": "swe-atlas-qna",
+          "score": 0.618279569892473,
+          "weight": 0.333333333333333
+        },
+        {
+          "id": "terminal-bench-v4",
+          "score": 0.555555555555555,
           "weight": 0.333333333333333
         }
       ]
