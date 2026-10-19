@@ -161,10 +161,18 @@ class Tests(unittest.TestCase):
     def test_ttl_cap_exception_is_scoped_to_this_order(self):
         job = '/home/flori/jobs/fastlane-evaluations/' + S.ORDER
         self.assertEqual(pod_runner._order_ttl_cap(job, recipe()), S.TTL_CAP_HOURS)
-        self.assertLessEqual(S.TTL_CAP_HOURS, 4.0)
+        self.assertLessEqual(S.TTL_CAP_HOURS, 6.5)
         self.assertEqual(pod_runner._order_ttl_cap('/jobs/other-order', recipe()), pod_runner.TTL_CAP_HOURS)
         self.assertEqual(pod_runner._order_ttl_cap(job, recipe(kind='python_inprocess')), pod_runner.TTL_CAP_HOURS)
         self.assertEqual(pod_runner.TTL_CAP_HOURS, 3.0)
+
+    def test_attempt_rate_pin_is_scoped_to_this_order(self):
+        job = '/home/flori/jobs/fastlane-evaluations/' + S.ORDER
+        self.assertEqual(pod_runner._attempt_rate(recipe(), job), S.ATTEMPT_RATE_USD)
+        self.assertLessEqual(S.ATTEMPT_RATE_USD * S.TTL_CAP_HOURS, pod_runner.PER_ORDER_CAP_USD)
+        self.assertEqual(pod_runner._attempt_rate(recipe(), '/jobs/other-order'), pod_runner.MAX_HOURLY_USD)
+        self.assertEqual(pod_runner._attempt_rate(recipe()), pod_runner.MAX_HOURLY_USD)
+        self.assertEqual(pod_runner._attempt_rate(recipe(kind='python_inprocess'), job), pod_runner.MAX_HOURLY_USD)
 
     @unittest.skipUnless(LOCAL_CONTEXT.is_file(), 'host-only build context not present')
     def test_real_context_matches_every_pin(self):

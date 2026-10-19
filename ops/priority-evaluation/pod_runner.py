@@ -82,12 +82,18 @@ def _order_ttl_cap(job, recipe):
     return TTL_CAP_HOURS
 
 
-def _attempt_rate(recipe):
+def _attempt_rate(recipe, job=None):
     """USD/h used for the per-attempt TTL and upper-bound charge.
 
     Host-staged native recipes pin the exact hourly price (validated 0 < price <= MAX_HOURLY_USD, compared with the live
     pod price right after creation, hold if the live price exceeds the pin), so the original caps (<= USD 5/h, USD 20/order, 3 h TTL,
     2 creations) are accounted at that pinned price. All other routes keep the USD 5/h ceiling."""
+    if job is not None:
+        import chon_runtime_supplement
+        if chon_runtime_supplement.active(job, recipe):
+            # One exact order with a recorded deputy exception: its attempts are accounted (and created) at a
+            # pinned provider-side price ceiling instead of the USD 5/h route ceiling.
+            return chon_runtime_supplement.ATTEMPT_RATE_USD
     if "host_staging" in recipe and type(recipe.get("hourly_usd")) in (int, float) and 0 < recipe["hourly_usd"] <= MAX_HOURLY_USD:
         return float(recipe["hourly_usd"])
     return MAX_HOURLY_USD
@@ -902,10 +908,10 @@ def _lifecycle(provider, job, recipe, staging_path, output, state, gpu_choice, t
         state.pop('torn_down_at', None)
         state['cleanup_uncertain'] = True
         state['attempt_ttl_hours'] = ttl
-        state['attempt_reserved_upper_bound_usd'] = ttl * _attempt_rate(recipe)
+        state['attempt_reserved_upper_bound_usd'] = ttl * _attempt_rate(recipe, job_dir or job)
         extra = allocation_gate.contingency_usd if allocation_gate is not None else 0
         state['attempt_contingency_usd'] = extra
-        state['spent_upper_bound_usd'] = state.get('spent_upper_bound_usd', 0.0) + ttl * _attempt_rate(recipe) + extra
+        state['spent_upper_bound_usd'] = state.get('spent_upper_bound_usd', 0.0) + ttl * _attempt_rate(recipe, job_dir or job) + extra
         state['reservation_id'] = reservation
         state['input_dispatched'] = False
         state['execution_started'] = False
@@ -924,10 +930,10 @@ def _lifecycle(provider, job, recipe, staging_path, output, state, gpu_choice, t
                     state['torn_down_at'] = datetime.now(timezone.utc).isoformat()
                     save_state()
                     raise
-            if "host_staging" in recipe:
+            if "host_staging" in recipe or _attempt_rate(recipe, job_dir or job) != MAX_HOURLY_USD:
                 # Provider-side price ceiling = the pinned price the charge is accounted at, so the recorded
                 # upper bound holds even for an unclear create or a failed teardown.
-                pod = provider.create(gpu_choice[0], ttl, budget, max_hourly=_attempt_rate(recipe))
+                pod = provider.create(gpu_choice[0], ttl, budget, max_hourly=_attempt_rate(recipe, job_dir or job))
             else:
                 pod = provider.create(gpu_choice[0], ttl, budget)
         except PodCapacityError as exc:
@@ -1354,7 +1360,7 @@ def run(rid: str, job_dir: Path, recipe: dict, output: Path, expected_pins: dict
     if budget <= 0:
         raise measurement_dispatch.OperationalHold("gpu_pod_budget_exhausted")
     ttl_cap = _order_ttl_cap(job_dir, recipe)
-    ttl = min(ttl_cap, budget / _attempt_rate(recipe))
+    ttl = min(ttl_cap, budget / _attempt_rate(recipe, job_dir))
     import aplomb_5090_preflight
     try:
         exact_candidates = aplomb_5090_preflight.candidates(rid, recipe, benchmarks, host_binding)
@@ -1378,7 +1384,7 @@ def run(rid: str, job_dir: Path, recipe: dict, output: Path, expected_pins: dict
             remaining = min(budget - run_spend, cap - state.get('spent_upper_bound_usd', 0.0))
             if remaining <= 0:
                 raise measurement_dispatch.OperationalHold('gpu_pod_budget_exhausted')
-            ttl = min(ttl_cap, remaining / _attempt_rate(recipe),
+            ttl = min(ttl_cap, remaining / _attempt_rate(recipe, job_dir),
                       allocation_gate.max_ttl_hours if allocation_gate is not None else ttl_cap)
             try:
                 state = _lifecycle(provider, job, recipe, staging_path, output, state,
