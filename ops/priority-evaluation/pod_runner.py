@@ -1010,6 +1010,13 @@ def _lifecycle(provider, job, recipe, staging_path, output, state, gpu_choice, t
                 state['runtime_supplement'] = jeva_runtime_supplement.build(provider, pod_id)
                 image = state['runtime_supplement']['effective_image']
                 save_state()
+            import chon_runtime_supplement
+            if chon_runtime_supplement.active(job_dir or job, recipe):
+                # Fixed-order offline build of Chon-1.0-12B's documented torch 2.9.1/transformers 5.20/peft 0.18.1
+                # /fastapi stack for the customer's own chon.serve.
+                state['runtime_supplement'] = chon_runtime_supplement.build(provider, pod_id)
+                image = state['runtime_supplement']['effective_image']
+                save_state()
         if runtime_preflight is not None:
             state['runtime_preflight'] = runtime_preflight(provider, pod_id)
             save_state()
