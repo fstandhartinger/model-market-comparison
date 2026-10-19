@@ -13,6 +13,7 @@ runner; this host module imports no model stack and executes no customer code.
 import hashlib
 import re
 import tarfile
+from datetime import datetime, timezone
 from pathlib import Path
 
 import measurement_dispatch
@@ -60,6 +61,8 @@ CONTEXT_LIMIT = 536870912
 REMOTE_ROOT = '/runtime-supplement/chon'
 BUILD_TIMEOUT_S = 1800
 SCP_TIMEOUT_S = 1800
+DEFAULT_RUN_WAIT_S = 3600
+RUN_WAIT_MARGIN_S = 900  # logs, raw download, receipts and exact-ID teardown before the attempt TTL ends
 
 def _sha256_stream(stream):
     digest = hashlib.sha256()
@@ -129,3 +132,17 @@ def build(provider, pod_id, context=CONTEXT):
     if inspected.stdout.strip() != image:
         raise pod_runner.PodRunError('runtime supplement image identity differs')
     return dict(evidence, effective_image=image)
+
+
+def run_wait_seconds(attempt_started_at, ttl_hours, now=None):
+    """Run-container wait for this order: what is left of the attempt TTL minus the teardown margin, at least the
+    default hour. A missing or unreadable start time keeps the default."""
+    try:
+        started = datetime.fromisoformat(attempt_started_at)
+        if started.tzinfo is None:
+            raise ValueError
+        elapsed = ((now or datetime.now(timezone.utc)) - started).total_seconds()
+        left = float(ttl_hours) * 3600 - max(elapsed, 0.0) - RUN_WAIT_MARGIN_S
+    except (TypeError, ValueError):
+        return DEFAULT_RUN_WAIT_S
+    return int(max(DEFAULT_RUN_WAIT_S, left))

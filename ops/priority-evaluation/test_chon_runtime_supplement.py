@@ -143,6 +143,21 @@ class Tests(unittest.TestCase):
                     self.assertRaises(pod_runner.PodRunError):
                 S.build(provider, 'pod-1', path)
 
+    def test_run_wait_uses_rest_of_attempt_ttl(self):
+        from datetime import datetime, timedelta, timezone
+        now = datetime(2026, 10, 19, 6, 0, tzinfo=timezone.utc)
+        started = (now - timedelta(minutes=12)).isoformat()
+        self.assertEqual(S.run_wait_seconds(started, 3.0, now), 3 * 3600 - 12 * 60 - S.RUN_WAIT_MARGIN_S)
+        late = (now - timedelta(hours=2, minutes=50)).isoformat()
+        self.assertEqual(S.run_wait_seconds(late, 3.0, now), S.DEFAULT_RUN_WAIT_S)
+        for bad in (None, '', 'not-a-time', '2026-10-19T06:00:00'):
+            self.assertEqual(S.run_wait_seconds(bad, 3.0, now), S.DEFAULT_RUN_WAIT_S)
+
+    def test_pod_runner_wait_hook_is_scoped_to_this_order(self):
+        source = Path(pod_runner.__file__).read_text()
+        self.assertIn('wait_s = chon_runtime_supplement.run_wait_seconds(state.get(\'attempt_started_at\'), ttl)', source)
+        self.assertIn('["docker", "wait", "jev-pod-run"], timeout=wait_s)', source)
+
     @unittest.skipUnless(LOCAL_CONTEXT.is_file(), 'host-only build context not present')
     def test_real_context_matches_every_pin(self):
         S.check_context(LOCAL_CONTEXT)
