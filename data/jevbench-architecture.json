@@ -6232,6 +6232,21 @@
             "fact": "Pinned card: Vega-U 14.3M universal decision engine, Qwen3.5-4B/ subfolder with its own port and fitted calibration on a frozen Qwen3.5-4B reader; no text generation; Apache-2.0 checkpoint. Same author as the 0.8B reader sibling."
           }
         ]
+      },
+      "pplx-decider-v1.2": {
+        "arch": "open-llm-decoder",
+        "badges": {
+          "derivation": "fine-tune",
+          "params": "27B",
+          "quant": null
+        },
+        "evidence": [
+          {
+            "url": "https://huggingface.co/perplexity-ai/pplx-decider-v1.2/blob/225c913ddc8761a8264f04f64548e1f97e443eb3/README.md",
+            "kind": "model-card",
+            "fact": "Pinned Perplexity Decider v1.2 card: Qwen3.8-27B full fine-tune, native marker readout; same family and author as Flash v1.2 and Decider v1.1 27B."
+          }
+        ]
       }
     },
     "imagejevbench": {
