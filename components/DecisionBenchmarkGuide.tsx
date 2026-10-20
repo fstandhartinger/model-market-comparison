@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react';
 import { readDecisionBenchmarkManifest } from '../lib/decision-benchmark-manifest.mjs';
+import { JEVBENCH_COST_RULE, JEVBENCH_COST_RULE_HISTORY } from '../lib/jevbench-cost-rule.mjs';
 
 export function DecisionGuide({ title, intro, children, date = '2026-10-09' }: { title: string; intro: string; children: ReactNode; date?: string }) {
   return <article className="mx-auto max-w-4xl space-y-6 pb-10">
@@ -34,6 +35,7 @@ export async function DecisionMethodology({ version = null }: { version?: string
       <p><b>Composite:</b> {s.composite.definition}</p>
       <p>Official option {m.option} uses weights {weights}; Intelligence floor {s.composite.intelligence_floor}. A zero axis gives zero Composite; a missing axis gives no score.</p>
       <p className="bh-panel break-words p-4 font-mono text-sm">H = Σw / Σ(w / axis). Composite = H × min(1, I / {s.composite.intelligence_floor})² × min(1, Speed / 50)² × min(1, Cost / 50)².</p>
+      <p data-bh-jev-cost-rule><b>Cost basis:</b> {JEVBENCH_COST_RULE} {JEVBENCH_COST_RULE_HISTORY}</p>
       <p>Intelligence is chance-corrected decision accuracy, with tier weighting and a public/sealed gap adjustment. Calibration evaluates probability distributions; it is not simply accuracy among confident answers. Noul handling, per-type normalization and equating are versioned in the scorer. The four normalized axes are on a 0–100 scale; actual seconds and USD remain separate values.</p>
     </section>
     <section className="space-y-3" id="latency" data-bh-jev-latency-method-section><h2 className="text-2xl font-semibold">Latency: what is measured and what is estimated</h2>

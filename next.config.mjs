@@ -5,6 +5,11 @@ const nextConfig = {
   reactStrictMode: true,
   // This app lives inside a monorepo with sibling lockfiles; pin the tracing root.
   outputFileTracingRoot: import.meta.dirname,
+  // CR-518: the JevBench board pages are heavy; on the shared 12-core build host under load (~40) the default worker
+  // count made /jev-models/api, /all and release pages pass even 180 s per page (20 Oct 2026). Fewer build workers
+  // (NEXT_BUILD_CPUS overrides) give each page more CPU; the API board needed ~160 s in a warm dev render, so 900 s per page.
+  staticPageGenerationTimeout: 900,
+  experimental: { cpus: Number(process.env.NEXT_BUILD_CPUS) || 4 },
   // Bundle the committed dataset.json as a runtime fallback when no DB is set.
   outputFileTracingIncludes: {
     "/**": ["./data/dataset.json"],

@@ -22,7 +22,7 @@ async function llmsTxt(): Promise<string> {
     `- [Sources and methodology](${u("/about")}): where the data comes from and how cost is modeled`,
     "",
     "## JevBench (AI decision models, including Jev-compatible systems)",
-    `- [JevBench leaderboard](${u("/jev-models")}): open-weights Jev-compatible decision models by intelligence, calibration, speed and cost, with Jev as the reference row`,
+    `- [JevBench leaderboard](${u("/jev-models")}): open-weights Jev-compatible decision models by intelligence, calibration, speed and cost, with two unranked Jev reference rows: the Jev version that defines the Jev-class caps, and TypeSafe's current Jev version (ranked on the API board)`,
     `- [JevBench API leaderboard](${u("/jev-models/api")}): hosted decision APIs (Jev, wity, Sage, Fastino and more) ranked on the same scores`,
     `- [ImageJevBench leaderboard](${u("/image-jev-bench")}): image decision systems by intelligence, calibration, speed and cost, inside the same cost and latency budget as JevBench`,
     `- [AudioJevBench](${u("/audio-jev-bench")}): audio models that make typed voice-agent decisions (intent, sentiment, urgency, speaker verification, sound events) straight from audio`,

@@ -87,9 +87,9 @@ test('pages: /jev-models keeps its canonical and renders the open scope; /jev-mo
   assert.match(readFileSync('components/JevBenchV16Board.tsx', 'utf8'), /v1\.7\.0/);
 });
 
-test('CR-292: the main board says in one line that Jev is the only API model kept, as the reference (#10601)', () => {
+test('CR-292 (v1.6.30 display change): the main board says the only API models kept are two unranked Jev reference rows (#10601, #21825)', () => {
   const route = readFileSync('components/JevBenchV16ReleaseRoute.tsx', 'utf8');
-  assert.match(route, /Jev 1\.13\.0<\/b> \(TypeSafe\) is the only API model kept on this board, as the unranked reference row/);
+  assert.match(route, /The only API models kept on this board are two unranked reference rows from TypeSafe: <b>Jev 1\.13\.0<\/b>, the reference that defines the Jev-class caps, and <b>Jev 1\.14\.0<\/b>/);
 });
 
 test('CR-292: the API toggle pill never shrinks on narrow screens', () => {

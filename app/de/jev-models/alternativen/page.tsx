@@ -44,7 +44,7 @@ export default async function JevAlternativenPage() {
       <ApiBoardNote rows={data.apiRows} locale="de"/>
     </section>
     <section className="bh-panel mt-6 p-5"><h2 className="text-xl font-semibold">Open-Weight-Alternativen der Jev-Klasse</h2>
-      <p className="bh-muted mt-2">Gezeigt werden nur Messungen der aktuellen Version; Jev 1.13.0 ist die Referenzzeile. Zeilen außerhalb der Grenzen erhalten keinen Capability-Rang. Prüfen Sie vor dem Self-Hosting die Lizenz und das dokumentierte Setup.</p>
+      <p className="bh-muted mt-2">Gezeigt werden nur Messungen der aktuellen Version; Jev 1.13.0 ist die Referenzzeile (sie legt die Jev-Class-Grenzen fest); Jev 1.14.0, die aktuelle Version von TypeSafe, wird auf dem Open-Weights-Board als zweite ungerankte Referenz gezeigt und ist auf dem API-Leaderboard gerankt. Zeilen außerhalb der Grenzen erhalten keinen Capability-Rang. Prüfen Sie vor dem Self-Hosting die Lizenz und das dokumentierte Setup.</p>
       <JevBenchRankingTable rows={[data.reference, ...data.openWeightAlternatives]} locale="de"/>
       <ul className="mt-4 space-y-2">{data.openWeightAlternatives.map((r) => <li key={r.key}><Link href={jevSystemPath(r.key)} className="text-accent underline">{r.display}</Link>: {r.licence} · {r.speed?.hardware ?? r.endpoint_condition ?? r.speed?.measured_where ?? 'Setup nicht angegeben'}{r.repo && <> · <a href={r.repo} className="text-accent underline">Veröffentlichter Code bzw. Gewichte</a></>}</li>)}</ul>
     </section>
