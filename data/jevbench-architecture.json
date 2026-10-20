@@ -6187,6 +6187,51 @@
             "fact": "Pinned card: Qwen3.8-27B, native probability readout, Apache-2.0, author-default 32768-token context cap; optional long_context mode not used."
           }
         ]
+      },
+      "chon-1.0-12b": {
+        "arch": "open-llm-decoder",
+        "badges": {
+          "derivation": "fine-tune",
+          "params": "12B",
+          "quant": null
+        },
+        "evidence": [
+          {
+            "url": "https://huggingface.co/ninhnv/chon-1.0-12b/blob/cf3c0d3d5aa3230cbd36959cc4ed257b41000c5e/README.md",
+            "kind": "model-card",
+            "fact": "Pinned Chon family card: Gemma base with LoRA adapter, author chon.serve native probability readout; both siblings are by ninhnv / xoai."
+          }
+        ]
+      },
+      "chon-1.0-e4b": {
+        "arch": "open-llm-decoder",
+        "badges": {
+          "derivation": "fine-tune",
+          "params": "4B",
+          "quant": null
+        },
+        "evidence": [
+          {
+            "url": "https://huggingface.co/ninhnv/chon-1.0-e4b/blob/b7b9ecdaa25d83696fb1c82c3b0acaff2923137a/README.md",
+            "kind": "model-card",
+            "fact": "Pinned Chon family card: Gemma base with LoRA adapter, author chon.serve native probability readout; both siblings are by ninhnv / xoai."
+          }
+        ]
+      },
+      "vega-u-qwen3.5-4b": {
+        "arch": "open-llm-decoder",
+        "badges": {
+          "derivation": "adapter",
+          "params": "4B",
+          "quant": null
+        },
+        "evidence": [
+          {
+            "url": "https://huggingface.co/nandakishorm/vega-U/blob/b3e7383e463ef3b78324408cd82f4ab0d8f2e75a/README.md",
+            "kind": "model-card",
+            "fact": "Pinned card: Vega-U 14.3M universal decision engine, Qwen3.5-4B/ subfolder with its own port and fitted calibration on a frozen Qwen3.5-4B reader; no text generation; Apache-2.0 checkpoint. Same author as the 0.8B reader sibling."
+          }
+        ]
       }
     },
     "imagejevbench": {
