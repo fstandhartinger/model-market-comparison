@@ -4162,18 +4162,18 @@
       },
       "seb-9b": {
         "arch": "open-llm-decoder",
+        "badges": {
+          "derivation": "fine-tune",
+          "params": "9B",
+          "quant": "bf16"
+        },
         "evidence": [
           {
-            "url": "https://huggingface.co/ironbcc/seb-9b/blob/ac57b36bbe978762032d0ad7197778b4bc4a0209/config.json",
-            "kind": "config.json",
-            "fact": "architectures Qwen3_5ForConditionalGeneration; model_type qwen3_5. Exact source checkpoint undisclosed in model-card metadata."
+            "url": "https://huggingface.co/ironbcc/seb-9b/blob/4ae564d62fb69a86d5624c9176c6e271c539485f/README.md",
+            "kind": "model-card",
+            "fact": "Pinned Seb-9B card declares Qwen/Qwen3.5-9B base and 32,768-token serving context; weights unchanged from the 7 Oct measurement."
           }
-        ],
-        "badges": {
-          "derivation": null,
-          "params": "9B",
-          "quant": null
-        }
+        ]
       },
       "spx-cd-omni": {
         "arch": "open-llm-decoder",

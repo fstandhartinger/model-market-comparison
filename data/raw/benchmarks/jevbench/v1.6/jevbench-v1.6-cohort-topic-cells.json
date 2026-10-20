@@ -114,8 +114,8 @@
    },
    "labelling": "Subject topics and use cases: each of this draw's 1,500 items was labelled after its release with one subject topic (v1.2 list) and one TypeSafe use case by Winnow-12B Q8 on our own GPU pod, with the same model, questions, taxonomy and T1-T3/U1/U2 item-group rules as the v1.6.4 and v1.6.9 draws; where a uc1 item was written for a use case, that authoring use case is used. Sealed items stayed on our own infrastructure. On 75 public items checked by hand afterwards, topic agreement is 71/75 = 94.7 % (68/75 = 90.7 % counting three borderline items as misses); policy-style routing items are filed under the subject of the request, as in the earlier draws, and no rule was added.",
    "labels_sha256": "be5a5209ad63c1f6a2ad39c4f71ea44d2dd4cc647489cc020e54a57ccfd9f99a",
-   "release": "v1.6.34",
-   "results_sha256": "c3d773d304ddaa357ff5a28bcad7190547daeea4626ce3b3e0f3cdcb26952e1e",
+   "release": "v1.6.35",
+   "results_sha256": "b34103823085f65ec411a2c47f566366f3a44ae26501f27832f5dfd8843a0b18",
    "row_note": "Subject topics and use cases come from this draw's own item labels, added after its release with the same labelling recipe as the earlier draws (hand check 71/75).",
    "scorer_sha256": "02132271117653e6302c509232a581d0094f0e78eac8b1bfc67596fd5d5097e9",
    "systems": {
@@ -5701,6 +5701,120 @@
       },
       "search_retrieval": {
        "competence": 97.5,
+       "n": 24
+      }
+     }
+    },
+    "seb-9b": {
+     "topics": {
+      "coding": {
+       "competence": 60.86,
+       "n": 198
+      },
+      "everyday_language": {
+       "competence": 2.32,
+       "n": 66
+      },
+      "finance_commerce": {
+       "competence": 48.09,
+       "n": 76
+      },
+      "law_policy": {
+       "competence": 39.49,
+       "n": 718
+      },
+      "math": {
+       "competence": 10.28,
+       "n": 289
+      },
+      "safety_security": {
+       "competence": 39.72,
+       "n": 48
+      },
+      "support_ops": {
+       "competence": 36.3,
+       "n": 105
+      }
+     },
+     "usecases": {
+      "advertising": {
+       "competence": 0.0,
+       "n": 22
+      },
+      "code_linting": {
+       "competence": 13.33,
+       "n": 24
+      },
+      "customer_support": {
+       "competence": 27.41,
+       "n": 157
+      },
+      "demand_forecasting": {
+       "competence": 0.0,
+       "n": 17
+      },
+      "ecommerce_marketplaces": {
+       "competence": 22.24,
+       "n": 55
+      },
+      "feature_extraction": {
+       "competence": 0.0,
+       "n": 19
+      },
+      "financial_crime": {
+       "competence": 0.0,
+       "n": 55
+      },
+      "gaming": {
+       "competence": 0.0,
+       "n": 23
+      },
+      "insurance_claims": {
+       "competence": 44.94,
+       "n": 27
+      },
+      "knowledge_graphs": {
+       "competence": 26.36,
+       "n": 22
+      },
+      "lead_generation": {
+       "competence": 49.56,
+       "n": 30
+      },
+      "legal_compliance": {
+       "competence": 47.68,
+       "n": 327
+      },
+      "llm_guardrails": {
+       "competence": 31.69,
+       "n": 27
+      },
+      "model_routing": {
+       "competence": 60.83,
+       "n": 325
+      },
+      "moderation_trust_safety": {
+       "competence": 41.4,
+       "n": 32
+      },
+      "other": {
+       "competence": 4.1,
+       "n": 216
+      },
+      "recruiting": {
+       "competence": 59.01,
+       "n": 19
+      },
+      "risk_assessment": {
+       "competence": 26.43,
+       "n": 56
+      },
+      "scientific_discovery": {
+       "competence": 10.84,
+       "n": 23
+      },
+      "search_retrieval": {
+       "competence": 98.6,
        "n": 24
       }
      }

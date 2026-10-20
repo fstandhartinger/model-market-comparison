@@ -230,7 +230,7 @@ test('the text about this draw\'s 15 items names who refused them and where the 
 });
 
 test('Delta 3 (display only): Jev 1.14.0 is a second unranked reference row on the open board without the toggle; every ranking and rank is unchanged', async () => {
-  const frozen = JSON.parse(await readFile(`${root}/test/fixtures/jevbench-v1634-ranks.json`, 'utf8'));
+  const frozen = JSON.parse(await readFile(`${root}/test/fixtures/jevbench-v1635-ranks.json`, 'utf8'));
   const [release, prev, apiA4] = await Promise.all([readJevbenchV161Release(), readJevbenchV157Release(), readFile(`${root}/data/jevbench-api-a4-equated.json`, 'utf8').then(JSON.parse)]);
   const { published, publishedCarry } = await assembleJevBoard({ release, previous: prev, live: true, apiA4 });
   const isApi = jevScopeClassifier(published.systems, publishedCarry.rows, prev.artifact.systems, prev.artifact.not_measured);
