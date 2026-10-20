@@ -21,7 +21,9 @@ const nextConfig = {
   // CR-439: /submit is the single submission flow; the old priority-request form redirects there (query string kept).
   // The /success and /cancel pages stay for Stripe sessions created before the merge.
   async redirects() {
-    return [...JEV_SYSTEM_SLUG_REDIRECTS, { source: "/jev-models/request-evaluation", destination: "/submit", permanent: true }, { source: "/image-jev-bench/v0.1.4", destination: "/image-jev-bench", permanent: false }];
+    return [...JEV_SYSTEM_SLUG_REDIRECTS, { source: "/jev-models/request-evaluation", destination: "/submit", permanent: true }, { source: "/image-jev-bench/v0.1.4", destination: "/image-jev-bench", permanent: false },
+      // CR-519 (v1.6.35): Seb-9B's 7 Oct v1.6.1 row is superseded by its re-measurement; its model URL points to that release.
+      { source: "/jev-models/seb-9b", destination: "/jev-models/v1.6.35", permanent: false }];
   },
   async headers() {
     return [
