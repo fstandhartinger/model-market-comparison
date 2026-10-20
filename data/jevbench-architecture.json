@@ -6247,6 +6247,21 @@
             "fact": "Pinned Perplexity Decider v1.2 card: Qwen3.8-27B full fine-tune, native marker readout; same family and author as Flash v1.2 and Decider v1.1 27B."
           }
         ]
+      },
+      "arcbright-elf-1-12b": {
+        "arch": "open-llm-decoder",
+        "badges": {
+          "derivation": "fine-tune",
+          "params": "12B",
+          "quant": "bf16"
+        },
+        "evidence": [
+          {
+            "url": "https://huggingface.co/arcbright/elf-1-12b/blob/da29a170016f3a179821296bcc8221ac222a44c6/README.md",
+            "kind": "model-card",
+            "fact": "Pinned Arcbright Elf 1 12B card: Gemma 4 12B merged LoRA, bf16, 11,959,730,224 parameters; author elf_serve with native marker logits."
+          }
+        ]
       }
     },
     "imagejevbench": {
