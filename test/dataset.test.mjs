@@ -347,7 +347,23 @@ test("current Copilot token catalog and legacy request table stay distinct", () 
     [2, 10],
   );
   assert.equal(model("claude-sonnet-5")?.copilot?.current?.standard_pricing_from, null);
-  assert.equal(model("gpt-5.4")?.copilot?.multiplier, 6);
+  // Legacy multipliers follow GitHub's annual-plan table, which drops retired models (GPT-5.4 6x,
+  // retired 2026-10-19). Every listed multiplier reaches exactly one family; a retired model carries none.
+  const legacyRow = (name) => copilot.models.find((row) => row.model_name === name);
+  const familyCopilot = new Map(ds.models.filter((row) => row.copilot).map((row) => [row.family_key, row.copilot]));
+  const pairs = (rows) => rows.map((row) => `${row[0]}@${row[1]}`).sort();
+  assert.deepEqual(
+    pairs([...familyCopilot.values()].filter((c) => c.multiplier != null).map((c) => [c.multiplier, c.usd_per_request])),
+    pairs(copilot.models.map((row) => [row.premium_request_multiplier, row.effective_usd_per_request])),
+  );
+  assert.equal(model("claude-opus-4.8")?.copilot?.multiplier, legacyRow("Claude Opus 4.8")?.premium_request_multiplier);
+  if (legacyRow("GPT-5.4")) {
+    assert.equal(model("gpt-5.4")?.copilot?.multiplier, 6);
+  } else {
+    const retired = copilot.retirement_history.find((row) => row.name === "GPT-5.4");
+    assert.ok(retired && retired.retirement_date <= copilot.collected_at, "GPT-5.4 left the legacy table without a retirement");
+    assert.equal(model("gpt-5.4")?.copilot?.multiplier ?? null, null);
+  }
   assert.deepEqual(
     [model("claude-opus-4.8")?.copilot?.current?.input_per_1m, model("claude-opus-4.8")?.copilot?.current?.output_per_1m],
     [5, 25],
