@@ -1,0 +1,15 @@
+{
+  "artifact_id": "protocol-terminal-bench-4.0",
+  "artifact_sha256": "0bfce44f6bf34ef729d65953412db0eb357464e80f1c92a021b1a13d667071b4",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": ["terminal-bench::4.0", "c1", "c2"],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Hash verification, transport and qualification checks are performed by the owner; I cannot execute them, which is a limitation not a missing source value.",
+    "The protocol excerpt does not explicitly state the unit 'percent', but the metrics schema bounds accuracy to 0–100 and the served value scale (11.21–64.85) agrees with the row's unit and range, matching criterion c1's admissible judgement."
+  ],
+  "missing_evidence": []
+}

@@ -1,0 +1,33 @@
+{
+  "artifact_id": "scores-2",
+  "artifact_sha256": "5d3cd68691504e961f6f6bf91ae9b2d23f907be5b97ffe9a54cd9cd951756f6b",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "public:c952aa752b04b09113b4f701",
+    "public:41d017f82e1b9c652bb62a94",
+    "public:3b919cd6b7e9b55bc6337f83",
+    "public:63638e5977e6ece5878f80df",
+    "public:89a50c05f3ba56eab51320ae",
+    "public:27e1fff8f3bc0f42a178b905",
+    "public:a16f6f0e7dcfcc3e63f43b02",
+    "public:e469b094a4fa63223ee3df43",
+    "public:8c12c7194e03b43a15050bda",
+    "public:00b88412c597707ae24b2442",
+    "public:6b18184297b1b301eb5979ae",
+    "public:110b90039bd12486bfd34e94",
+    "public:f6eb52cbfb04fa0f6473d4b4",
+    "public:00d0e3a35943911bf24ff8da",
+    "public:b50b12162eef25f627bff60b",
+    "c1"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "The source README does not explicitly label each value as 'measured'; the basis field in rows is inferred from the benchmark methodology and is not contradicted by primary evidence, but it is not independently stated.",
+    "Row public:b50b12162eef25f627bff60b includes a model_id 'kimi-k2.6::default' that is not directly published in the captured README; the row notes it is an exact display name and unique default catalog configuration, so no alias inference was made, but this configuration is not directly evidenced in the primary source.",
+    "Owner-specified SHA-256 hashes for the artifact and rows are provided but cannot be recomputed by this reviewer; the review relies on the supplied hash evidence."
+  ],
+  "missing_evidence": []
+}

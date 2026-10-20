@@ -1,0 +1,32 @@
+{
+  "artifact_id": "scores-18",
+  "artifact_sha256": "2cd0d584b8759834df35a93ce2e59344aec236b12fa2df18db57f060eea16ba4",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "public:cddd64360bb21d4efa988183",
+    "public:e95fdd839682030ff9702b01",
+    "public:76b62463bb9dfcf00572bcb8",
+    "public:8ec61a3db2943414934755fe",
+    "public:b1e9917f86e513c18cae7121",
+    "public:680e8219ee24fe4ae976364f",
+    "public:659199da25747c9d28dc9385",
+    "public:86155bfbda28191f36c7dabd",
+    "public:65a96f19e814c925a7b3bb80",
+    "public:19255c7beec38f9b9b0c9b94",
+    "public:f83c4cdb7336b150e40e0b9e",
+    "public:182571f29e3ce97dcbf67861",
+    "c1"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "I cannot execute SHA-256 recomputation, transport, or qualification checks; per packet the owner performs these and I bound rows via the supplied owner-computed hashes.",
+    "All rows set published_at=null; the board page provides no explicit per-board publication date (only changelog update notes), so retrieved_at 2026-10-20T05:18:49.769450+00:00 is the only source timestamp; this is a source property, not missing evidence.",
+    "basis=self_reported is consistent with direct transcription of the maintainer-published cost strings ($ 0.03 to $ 2.31 for these rows), though the page notes the maintainer itself computes cost from published per-token pricing; Benchmark Heaven performs no derivation, matching the protocol statement.",
+    "SOURCE 4 (generated summary) reports 9 model rows newly valued today while the artifact contains 12 rows; all 12 rows share today's capture hash and retrieved_at and each matches its named SOURCE 1/6-16 projection, so no conflict was identified.",
+    "Row source.file timestamp (2026-10-20T05-17-42-197Z) differs from retrieved_at (05:18:49); consistent with batch capture naming, but I cannot verify the .gz contents."
+  ],
+  "missing_evidence": []
+}

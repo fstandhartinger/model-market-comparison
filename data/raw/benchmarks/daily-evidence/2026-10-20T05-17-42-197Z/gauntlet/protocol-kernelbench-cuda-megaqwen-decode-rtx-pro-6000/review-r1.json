@@ -1,0 +1,35 @@
+{
+  "artifact_id": "protocol-kernelbench-cuda-megaqwen-decode-rtx-pro-6000",
+  "artifact_sha256": "281df10e55b53ee8409b58c066527c9940e0dcc645df63602f73a2c4c8533ee0",
+  "round": 1,
+  "verdict": "blocked",
+  "coverage_checked": [
+    "kernelbench-cuda-megaqwen-decode::rtx-pro-6000",
+    "c1",
+    "c2"
+  ],
+  "errors_found": 2,
+  "findings": [
+    {
+      "id": "f1",
+      "severity": "blocker",
+      "location": "row kernelbench-cuda-megaqwen-decode::rtx-pro-6000, fields version and version_status (criterion c2)",
+      "evidence": "SOURCES 2/3/4 expose no release identifier for this board: leaderboard.json has only schema_version:1, environment:'v2_containerized', hardware name, and problems; SPEC.md and the site page publish no board release/version identifier. The row's version is 'rtx-pro-6000', which is the hardware name, not a copy of a published release identifier, and version_status='published' is therefore unsupported. Per c2, when the maintainer publishes no release identifier the field must be 'snapshot' with version 'snapshot-<date>'.",
+      "repair": "Set version_status to 'snapshot' and version to 'snapshot-2026-10-20' (capture date), or supply primary evidence of a board release identifier that 'rtx-pro-6000' copies."
+    },
+    {
+      "id": "f2",
+      "severity": "major",
+      "location": "row kernelbench-cuda-megaqwen-decode::rtx-pro-6000, notes field (muse bug-cell claim)",
+      "evidence": "SOURCE 2 leaderboard.json shows muse/muse-spark-1.3 results['04_grid_mingru_sps'] = {correct:false, has_solution:true, peak_fraction:null, annotation_verdict:'bug'}; the per_problem '04_grid_mingru_sps' ranked_passes list contains no muse entry and no value 0.2056 appears anywhere in the captured payload. The row's note asserting 'the bug muse/muse-spark-1.3 [ultra] cell on 04 (0.2056)' is contradicted by the primary evidence.",
+      "repair": "Correct or remove the claim that muse/muse-spark-1.3 has a published peak_fraction 0.2056 on 04; state the actual null value and bug verdict."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "I cannot recompute the owner-provided SHA-256 hashes; I rely on the packet's stated hashes to bind sources.",
+    "SOURCE 7's served peak_fraction scale (0.97..8.12) appears to be a percentage-scaled read of the same payload as SOURCE 2's raw fractions (0.0097..0.0812); I treated them as consistent after ×100, which is my interpretation rather than a verified conversion.",
+    "Interpretation of whether schema_version constitutes a 'release identifier' is uncertain; if the maintainer considers it one, the row's version still does not copy it, so the version_status mismatch stands under either reading."
+  ],
+  "missing_evidence": []
+}

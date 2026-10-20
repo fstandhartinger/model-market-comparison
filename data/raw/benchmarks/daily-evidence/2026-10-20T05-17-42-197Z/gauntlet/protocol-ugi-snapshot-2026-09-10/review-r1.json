@@ -1,0 +1,15 @@
+{
+  "artifact_id": "protocol-ugi-snapshot-2026-09-10",
+  "artifact_sha256": "cb5f335a12b0dc44746d36113a8843c9e3b8fc406c7b3d0f88a9a4a17abb19b9",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": ["ugi::snapshot-2026-09-10", "c1", "c2"],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "无法执行哈希或实时校验；基于提供的来源评估。",
+    "值摘要（来源3和4）是生成摘要，仅用于评估单位/范围以及状态，而非方法论。"
+  ],
+  "missing_evidence": []
+}

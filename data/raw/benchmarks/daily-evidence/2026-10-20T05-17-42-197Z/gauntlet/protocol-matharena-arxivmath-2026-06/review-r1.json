@@ -1,0 +1,15 @@
+{
+  "artifact_id": "protocol-matharena-arxivmath-2026-06",
+  "artifact_sha256": "653cc34734e8044952544da6af3e4c2a92a1ed3a6f8ab7bff19e27c82d8137d5",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": ["matharena-arxivmath::2026-06", "c1", "c2"],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "I cannot independently recompute hashes or execute transport/qualification checks; review relies on the supplied frozen excerpts and owner-provided canonical hashes.",
+    "The source page states the leaderboard header without an explicit unit for accuracy, but the run's generated served-value summary (4.17–94.44) and the protocol's 60% accuracy example are consistent with percent and range [0,100] as claimed."
+  ],
+  "missing_evidence": []
+}

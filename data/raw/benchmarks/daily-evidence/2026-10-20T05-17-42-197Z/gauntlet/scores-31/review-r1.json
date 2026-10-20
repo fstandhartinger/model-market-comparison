@@ -1,0 +1,29 @@
+{
+  "artifact_id": "scores-31",
+  "artifact_sha256": "d59872854144949c484cc1e6a9f5d1fc6afd07eb3694f5db0ae92a76a2e70009",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": [
+    "vendor:DeepSeek-V3:aider-polyglot::snapshot-2026-09-10",
+    "c1"
+  ],
+  "errors_found": 1,
+  "findings": [
+    {
+      "id": "F1",
+      "severity": "major",
+      "location": "row vendor:DeepSeek-V3:aider-polyglot::snapshot-2026-09-10, field benchmark_id",
+      "evidence": "Primary source Table 6 lists 'Aider-Polyglot (Acc.)' with no version or snapshot identifier. The row asserts benchmark_id 'aider-polyglot::snapshot-2026-09-10', which is absent from the source. The source only contains the paper and the row's locator text.",
+      "repair": "Replace benchmark_id with a version directly supported by the source, or set the benchmark version to unknown/null. Do not invent a snapshot identifier that is not present in the primary evidence."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "Cannot recompute SHA-256 hashes; owner-side hash and qualification checks are outside this read-only review.",
+    "The source does not explicitly call the model 'Dec ’24'; that label is inferred from the arXiv identifier 2412.19437.",
+    "Self-reported basis is consistent with the source being the provider's own technical report."
+  ],
+  "missing_evidence": [
+    "Explicit published benchmark version or snapshot identifier for Aider-Polyglot in the primary source"
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "artifact_id": "scores-11",
+  "artifact_sha256": "b352f478f2783d82bb44e9dcd5fb9a1b25f80310796492d59a27812c3cd96692",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "public:59eef30d266381024d7da809",
+    "public:bebf4d01f889628d4a406af1",
+    "public:2571bc2234bcc1be8aebdcea",
+    "public:d463e2ebd7a35df3d811836e",
+    "public:a6735cc6f0ba4edca0a89aa9",
+    "public:f676c888c998aefaafcd4b01",
+    "public:64b143158aa4a982598d7a00",
+    "public:4d5fbe601bf3a31018b1cf01",
+    "public:eb425a3454d7924371d572f0",
+    "public:21b5386ebd47d43c83bbfd1e",
+    "public:9c03ea0c5d0bf27cbcd1b1b8",
+    "public:0e9d08ed1a7c0fcd0a4db7c6",
+    "public:34da203d51c614ade0dde45d",
+    "public:ca3b0ae47fd611803fc42c68",
+    "public:0c1005d6e5e02a5216a7d251",
+    "c1"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Unable to independently recompute source-row SHA-256 hashes or verify transport/robots.txt compliance; relied on owner-provided hashes and captured payloads.",
+    "Small differences in source sha256 strings (e.g., trailing hex) could not be machine-verified; all displayed sha256 values matched the supplied primary evidence excerpts for each row.",
+    "Robots.txt and footer text were treated as context only; no benchmark observation values were drawn from them."
+  ],
+  "missing_evidence": []
+}

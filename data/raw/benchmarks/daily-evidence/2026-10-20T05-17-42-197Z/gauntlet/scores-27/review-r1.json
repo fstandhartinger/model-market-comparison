@@ -1,0 +1,32 @@
+{
+  "artifact_id": "scores-27",
+  "artifact_sha256": "80fd36af6e0645879852b8006a43a5c4bf296c04e7985e7ca8f57d6eb53067ea",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "public:90d3c29ddb3e0d90c2d01d43",
+    "public:c7d7e426703d3e2d68dc2127",
+    "public:e0c271d9cb9d25cee97c0553",
+    "public:2ec57384bc7db44dfc215fc4",
+    "public:5b80ade626946c65a7bab1f9",
+    "public:18b0a89f975b2b89f81bb3c2",
+    "public:b51d5ea9e20335f8a7f67917",
+    "public:88d72b6223a6d5d78f48d8a6",
+    "public:b760c4805379ef0a64a2d400",
+    "public:2b5898d4547d38fc64b6a292",
+    "public:253c985dca6d7e0c58e06f25",
+    "public:c032f7316a10cdbbf88c5167",
+    "public:32775edf74eacbb3290bb153",
+    "public:673acdfd002dcae0b3b93154",
+    "public:139b269dda196c665d374158",
+    "c1"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "The packet includes a page-text excerpt (SOURCE 2) that lists scores for some models that differ from the structured source rows (e.g., Fable 5.1 high shown as 92.20 vs structured 99.1, GLM-5.3 shown as 84.30 vs 95.6). I treated the structured source rows as the authoritative per-row primary evidence because the locators point to those rows, but the discrepancy is a potential data-integrity caveat.",
+    "I cannot recompute SHA-256 hashes or execute transport/qualification checks; I rely on the owner-provided hashes and captured source rows."
+  ],
+  "missing_evidence": []
+}

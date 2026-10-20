@@ -1,0 +1,31 @@
+{
+  "artifact_id": "scores-20",
+  "artifact_sha256": "16100ce31f1d891291d6813c769bb7c3276107a8d0a98fe682ae1b775c47bbf5",
+  "round": 2,
+  "verdict": "revise",
+  "coverage_checked": [
+    "public:23f285dffd26d045c885f543",
+    "public:98884dede89793d6c2885e26",
+    "public:4cc08a3c8f1925ad907d9999",
+    "public:e86cc524509d3b50294728dc",
+    "c1"
+  ],
+  "errors_found": 1,
+  "findings": [
+    {
+      "id": "public:98884dede89793d6c2885e26",
+      "severity": "blocker",
+      "location": "row public:98884dede89793d6c2885e26, value field and derivation",
+      "evidence": "SOURCE 12 (url=https://cognition.com/data/frontiercode-leaderboard/data.json, locator=effort_runs_json; source row 133; Gemini 4 Argon|low) has no captured content in the packet; no evidence is provided for the asserted new_score=0.472 for Gemini 4 Argon|low. All other rows have direct source captures (SOURCE 1 for row 132, SOURCE 13 for row 134, SOURCE 14 for row 135).",
+      "repair": "Provide the captured source row 133 content for Gemini 4 Argon|low (including new_score) as primary evidence, or remove/revise the row if it cannot be verified."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "The packet's SOURCE 12 header is present but its body is empty, so no comparison is possible for that row.",
+    "I cannot independently recompute SHA-256 hashes or re-fetch sources; this is a known limitation."
+  ],
+  "missing_evidence": [
+    "Gemini 4 Argon|low new_score value from source row 133 (cognition.com/data/frontiercode-leaderboard/data.json)"
+  ]
+}

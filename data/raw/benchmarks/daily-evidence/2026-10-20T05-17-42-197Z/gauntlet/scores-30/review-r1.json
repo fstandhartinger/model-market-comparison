@@ -1,0 +1,29 @@
+{
+  "artifact_id": "scores-30",
+  "artifact_sha256": "6739bb5804adf567d3bb58ee57fe926317fd74d21caad5817bfa02428f7cd1b6",
+  "round": 1,
+  "verdict": "blocked",
+  "coverage_checked": [
+    "vendor:DeepSeek-V3:swe-bench-verified::snapshot-2026-09-10",
+    "c1"
+  ],
+  "errors_found": 1,
+  "findings": [
+    {
+      "id": "F1",
+      "severity": "blocker",
+      "location": "row vendor:DeepSeek-V3:swe-bench-verified::snapshot-2026-09-10 -> benchmark_id/row id and source.version",
+      "evidence": "Primary evidence (arXiv 2412.19437v2, Table 6, PDF page 31) shows 'SWE Verified (Resolved)' value 42.0 for DeepSeek V3, but contains no version token such as 'snapshot-2026-09-10'. The artifact's benchmark_id and row id include this unsupported version, so c1's benchmark-version verification fails.",
+      "repair": "Remove the unsupported snapshot suffix from benchmark_id and row id, or clearly mark it as an internal unverified label; document that the source provides no explicit benchmark version and set comparison_key accordingly (already null)."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "Value 42.0 percent correctly matches Table 6's DeepSeek V3 column; harness (agentless framework), 8K output limit, and <1000-sample retest protocol match source text.",
+    "The model variant 'default' and model_id 'deepseek-v3-dec-24::default' are internal constructs not explicitly in source; they do not affect the primary value but are not independently verified.",
+    "Publication date is not explicit; artifact uses arXiv ID to infer December 2024, which is reasonable but not fully self-evident from supplied text."
+  ],
+  "missing_evidence": [
+    "SWE-bench Verified benchmark version (snapshot-2026-09-10) is absent from the primary evidence; no version string is given in arXiv 2412.19437v2 Table 6 or surrounding text."
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "artifact_id": "scores-20",
+  "artifact_sha256": "2d8f67a630ed11752397ef51b078c8263d2c8e389661e071b53e332218375edd",
+  "round": 3,
+  "verdict": "pass",
+  "coverage_checked": [
+    "public:23f285dffd26d045c885f543",
+    "public:4cc08a3c8f1925ad907d9999",
+    "public:e86cc524509d3b50294728dc",
+    "c1"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Cannot independently recompute SHA-256 hashes or verify transport/fetch details; relied on owner-supplied hashes and compared declared sha256 values against source packet metadata, which matched for all rows."
+  ],
+  "missing_evidence": []
+}

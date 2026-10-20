@@ -1,0 +1,81 @@
+{
+  "started_at": "2026-10-20T05:50:04.039Z",
+  "mode": "critic",
+  "requested_model": "deepseek/deepseek-v4-flash-0731",
+  "producers": [
+    "z-ai/glm-5.3-flash"
+  ],
+  "qualification": {
+    "id": "deepseek/deepseek-v4-flash-0731",
+    "family": "deepseek",
+    "free": false,
+    "input_per_1m": 0.44,
+    "output_per_1m": 1.32,
+    "context": 1048576,
+    "aa_intelligence_index": 34.3,
+    "aa_source": "exact_id_and_variants",
+    "matched_model_ids": [
+      "deepseek-v4-flash-0731::max"
+    ],
+    "aa_variant_scores": [
+      {
+        "id": "deepseek-v4-flash-0731::max",
+        "index": 34.3
+      }
+    ]
+  },
+  "input_sha256": "88c2332c6848f6f593c5b4f447f9bd223c16e49754b7f6f1a04c27db1383bd60",
+  "route": "openrouter",
+  "attempt": 1,
+  "free_route_role": "critic",
+  "free_routes_offered": [],
+  "excluded_models": [],
+  "hard_excluded_models": [],
+  "catalog": {
+    "source": "run-cache",
+    "fetched_at": "2026-10-20T05:32:04.998Z"
+  },
+  "request_limits": {
+    "max_tokens": 32768,
+    "timeout_seconds": 600,
+    "input_bytes": 59313
+  },
+  "reasoning": {
+    "effort": "low",
+    "exclude": true
+  },
+  "ignored_providers": [],
+  "response_format_mode": "json_object",
+  "response_schema_sha256": "376bde7986cc2f8fd182f04e745c607933760bea7c306ea6e8e992b7f70be25a",
+  "images": [],
+  "actual_model": "deepseek/deepseek-v4-flash-0731",
+  "usage": {
+    "prompt_tokens": 18757,
+    "completion_tokens": 25545,
+    "total_tokens": 44302,
+    "cost": 0.008180420094,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 512,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.0082630506,
+      "upstream_inference_prompt_cost": 0.0021833406,
+      "upstream_inference_completions_cost": 0.00607971
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 24977,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "provider": "DigitalOcean",
+  "finish_reason": "stop",
+  "price_context": "OpenRouter catalog reference prices; usage.cost records the actual charge when returned.",
+  "session_id": null,
+  "finished_at": "2026-10-20T05:58:36.397Z",
+  "output_sha256": "19f545022d4cf274963b7aa4e0b2de43de8ee994bb0d5bab09f1d3178af246ef"
+}

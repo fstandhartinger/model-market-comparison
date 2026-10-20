@@ -1,0 +1,15 @@
+{
+  "artifact_id": "protocol-cursorbench-4.0",
+  "artifact_sha256": "1328684356acbf9f2d86257f5f33f387cfcba3d6b65c94fd66258fd2170b1544",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": ["cursorbench::4.0", "c1", "c2"],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "SOURCE 3 and SOURCE 4 are generated summaries of the captured payload, not maintainer text; they were used only for the permissible judgements (activity for status and served value scale for unit/range) as allowed by the criteria.",
+    "I cannot recompute hashes or perform transport/qualification checks; owner-executed verification is assumed."
+  ],
+  "missing_evidence": []
+}

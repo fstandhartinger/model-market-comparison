@@ -1,0 +1,24 @@
+{
+  "artifact_id": "scores-8",
+  "artifact_sha256": "caead4fb889bb2ecf46dae04d31b2d202508b47fe12f01f39cdc0c5412ebd652",
+  "round": 1,
+  "verdict": "blocked",
+  "coverage_checked": ["public:4f4e2fef318cf43ecae51936","public:3bd0673125088fba0d0c261e","public:0fac0f950b7f45e74355c595","c1"],
+  "errors_found": 1,
+  "findings": [
+    {
+      "id": "public:3bd0673125088fba0d0c261e",
+      "severity": "blocker",
+      "location": "row value and source fields",
+      "evidence": "No primary source excerpt for google/gemini-4-argon (thinking_level=medium) at source row 1327 is present in the packet. The only row 1327 content (SOURCE 6) is mislabeled and actually contains the high model with value 49.92cars. The claimed value 33.33, basis, and protocol fields for the medium row cannot be verified against any supplied source.",
+      "repair": "Provide the actual CSV row for google/gemini-4-argon (thinking_level=medium) from the source file, or otherwise supply primary evidence that verifies the claimed value and fields for this row."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "SOURCE 6 locator declares 'source row 1327; google/gemini-4-argon (thinking_level=medium)' but its content is for high (row 1328) with value 49.92, causing ambiguity in the packet."
+  ],
+  "missing_evidence": [
+    "Primary CSV row value for UGI 🏆 for google/gemini-4-argon (thinking_level=medium) at source row 1327"
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "artifact_id": "scores-10",
+  "artifact_sha256": "579b0a0f26cfeb6dd3c6e16adb3cb6c89892d6d748ac0d4c14b5cb3ab06321b0",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "public:2be3e4846aa4c2e51f1eb838",
+    "public:4a37cab273925e26030bc174",
+    "public:07bbe0053620069f5760b743",
+    "public:56de16a7aaf60a33bfe159a6",
+    "public:cd6dbdb6ec7e555c80ca1aae",
+    "public:c8b515f6e407d37d3f028257",
+    "public:69df299e2d56a9a23e36736f",
+    "public:66464aa2c76084f507ddb142",
+    "public:66d3363994029c5d70d6abdc",
+    "public:403e11d5d30e5dc26318c627",
+    "public:07f91d2ab26e2b6aced889ec",
+    "public:ee3b1bb23970d4813a1c8711",
+    "public:f9ffc8d26676baf220850d93",
+    "public:d8d53baa5292f51c2263e79a",
+    "public:7a19f5772bb0ccbe0832075b",
+    "c1"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Reviewer is read-only and cannot execute SHA-256 hash recomputation or transport/qualification checks; owner-provided row hashes and source hashes were used as binding.",
+    "Each row's protocol field includes an appended source-row traceability JSON not present in the maintainer-published protocol text; it repeats the same observed value and does not alter the protocol meaning.",
+    "Basis 'self_reported' is inferred from the maintainer publishing its own benchmark score page; no explicit self-report label exists in the source text."
+  ],
+  "missing_evidence": []
+}

@@ -1,7 +1,7 @@
 {
   "source": "GitHub Copilot (current usage-based billing plus annual-plan legacy request billing)",
-  "collected_at": "2026-10-19",
-  "method": "scripts/fetch-github-copilot-catalog.mjs (2026-10-19): current_models[] = the intersection of the supported-models catalog table (https://docs.github.com/en/copilot/reference/ai-models/supported-models) and the per-token pricing tables (https://docs.github.com/en/copilot/reference/copilot-billing/models-and-pricing), matched by exact name after footnote markers are removed; Default and Long context tiers are folded into one row (long_context carries the threshold and higher price); promotion end dates come from the pricing footnotes. models[] = the legacy annual-plan multiplier table (https://docs.github.com/en/copilot/reference/copilot-billing/request-based-billing-legacy/model-multipliers-for-annual-plans) with effective USD per request = multiplier × per_premium_request_usd; the page's \"subject to change\" list sets the note. Plan allowances (plans[]) are documented on separate billing pages and keep plans_checked_at. See github-copilot.method.md.",
+  "collected_at": "2026-10-20",
+  "method": "scripts/fetch-github-copilot-catalog.mjs (2026-10-20): current_models[] = the intersection of the supported-models catalog table (https://docs.github.com/en/copilot/reference/ai-models/supported-models) and the per-token pricing tables (https://docs.github.com/en/copilot/reference/copilot-billing/models-and-pricing), matched by exact name after footnote markers are removed; Default and Long context tiers are folded into one row (long_context carries the threshold and higher price); promotion end dates come from the pricing footnotes. models[] = the legacy annual-plan multiplier table (https://docs.github.com/en/copilot/reference/copilot-billing/request-based-billing-legacy/model-multipliers-for-annual-plans) with effective USD per request = multiplier × per_premium_request_usd; the page's \"subject to change\" list sets the note. Plan allowances (plans[]) are documented on separate billing pages and keep plans_checked_at. See github-copilot.method.md.",
   "pricing_model": "ai_credits_per_token_with_legacy_per_premium_request",
   "ai_credit_usd": 0.01,
   "per_premium_request_usd": 0.04,
@@ -58,15 +58,6 @@
   ],
   "current_models": [
     {
-      "model_name": "GPT-5 mini",
-      "provider_org": "OpenAI",
-      "release_status": "GA",
-      "category": "Lightweight",
-      "input_per_1m_usd": 0.25,
-      "cached_input_per_1m_usd": 0.025,
-      "output_per_1m_usd": 2
-    },
-    {
       "model_name": "GPT-5.3-Codex",
       "provider_org": "OpenAI",
       "release_status": "GA",
@@ -76,30 +67,6 @@
       "output_per_1m_usd": 14
     },
     {
-      "model_name": "GPT-5.4",
-      "provider_org": "OpenAI",
-      "release_status": "GA",
-      "category": "Versatile",
-      "input_per_1m_usd": 2.5,
-      "cached_input_per_1m_usd": 0.25,
-      "output_per_1m_usd": 15,
-      "long_context": {
-        "input_per_1m_usd": 5,
-        "cached_input_per_1m_usd": 0.5,
-        "output_per_1m_usd": 22.5,
-        "threshold_input_tokens_gt": 272000
-      }
-    },
-    {
-      "model_name": "GPT-5.4 mini",
-      "provider_org": "OpenAI",
-      "release_status": "GA",
-      "category": "Lightweight",
-      "input_per_1m_usd": 0.75,
-      "cached_input_per_1m_usd": 0.075,
-      "output_per_1m_usd": 4.5
-    },
-    {
       "model_name": "GPT-5.4 nano",
       "provider_org": "OpenAI",
       "release_status": "GA",
@@ -107,21 +74,6 @@
       "input_per_1m_usd": 0.2,
       "cached_input_per_1m_usd": 0.02,
       "output_per_1m_usd": 1.25
-    },
-    {
-      "model_name": "GPT-5.5",
-      "provider_org": "OpenAI",
-      "release_status": "GA",
-      "category": "Powerful",
-      "input_per_1m_usd": 5,
-      "cached_input_per_1m_usd": 0.5,
-      "output_per_1m_usd": 30,
-      "long_context": {
-        "input_per_1m_usd": 10,
-        "cached_input_per_1m_usd": 1,
-        "output_per_1m_usd": 45,
-        "threshold_input_tokens_gt": 272000
-      }
     },
     {
       "model_name": "GPT-5.6 Luna",
@@ -367,17 +319,6 @@
       "mapping": "derived"
     },
     {
-      "model_name": "Gemini 3.7 Flash",
-      "provider_org": "Google",
-      "release_status": "GA",
-      "category": "Versatile",
-      "input_per_1m_usd": 0.75,
-      "cached_input_per_1m_usd": 0.075,
-      "output_per_1m_usd": 3.75,
-      "promotion_ends_at": "2026-12-31",
-      "notes": "Official promotional token rates through December 31, 2026; no post-promotion rate inferred."
-    },
-    {
       "model_name": "Gemini 3.8 Flash",
       "provider_org": "Google",
       "release_status": "GA",
@@ -544,34 +485,6 @@
       "notes": "Legacy annual-plan multiplier."
     },
     {
-      "model_name": "GPT-5.4",
-      "provider_org": "OpenAI",
-      "premium_request_multiplier": 6,
-      "effective_usd_per_request": 0.24,
-      "notes": "Legacy annual-plan multiplier."
-    },
-    {
-      "model_name": "GPT-5.4 mini",
-      "provider_org": "OpenAI",
-      "premium_request_multiplier": 6,
-      "effective_usd_per_request": 0.24,
-      "notes": "GitHub marks this multiplier as subject to change."
-    },
-    {
-      "model_name": "GPT-5.5",
-      "provider_org": "OpenAI",
-      "premium_request_multiplier": 57,
-      "effective_usd_per_request": 2.28,
-      "notes": "Legacy annual-plan multiplier."
-    },
-    {
-      "model_name": "GPT-5 mini",
-      "provider_org": "OpenAI",
-      "premium_request_multiplier": 0.33,
-      "effective_usd_per_request": 0.0132,
-      "notes": "Legacy annual-plan multiplier."
-    },
-    {
       "model_name": "MAI-Code-1.1-Flash",
       "provider_org": "Microsoft",
       "notes": "Official legacy annual-plan multiplier; not current token pricing.",
@@ -589,6 +502,31 @@
   ],
   "plans_checked_at": "2026-09-24",
   "retirement_history": [
+    {
+      "name": "Gemini 3.7 Flash",
+      "retirement_date": "2026-10-19",
+      "alternative": "Latest Gemini Flash model"
+    },
+    {
+      "name": "GPT-5 mini",
+      "retirement_date": "2026-10-19",
+      "alternative": "Latest GPT Luna model"
+    },
+    {
+      "name": "GPT-5.4",
+      "retirement_date": "2026-10-19",
+      "alternative": "Latest GPT Sol model"
+    },
+    {
+      "name": "GPT-5.4 mini",
+      "retirement_date": "2026-10-19",
+      "alternative": "Latest GPT Luna model"
+    },
+    {
+      "name": "GPT-5.5",
+      "retirement_date": "2026-10-19",
+      "alternative": "Latest GPT Sol model"
+    },
     {
       "name": "Claude Opus 4.7",
       "retirement_date": "2026-10-02",
@@ -778,16 +716,27 @@
     "Claude Sonnet 4.6 (2026-09-01)"
   ],
   "response_sha256": {
-    "supported": "f3edd6c9ecfe762115186b664e091e76c9b59faf190865ef96101ebcc852c0ba",
-    "pricing": "74ddd89c0495d5025b75afe29fe9a60f9bcac46d40d827ecd0c7d4cca32ad85b",
-    "multipliers": "c665d6bacb68a7ce934d471a961c79bfbfa2e7daa58d88ab6a2e7edc938a4bd1"
+    "supported": "a4bedfdf6c29dba513b4e79dbfc0e53ebcc468c622d0acac65d5de45e6035fd4",
+    "pricing": "b96df27ddfc371d85d18f88cc4f03ea96c5bfbe9530ce8e58908a3023a24165b",
+    "multipliers": "6f0bf1e041b6f6de4098dee55f684281668dcbbb8938c7a0394af1122e8815fa"
   },
   "diff": {
     "current_added": [],
-    "current_removed": [],
+    "current_removed": [
+      "GPT-5 mini",
+      "GPT-5.4",
+      "GPT-5.4 mini",
+      "GPT-5.5",
+      "Gemini 3.7 Flash"
+    ],
     "current_price_changed": [],
     "legacy_added": [],
-    "legacy_removed": [],
+    "legacy_removed": [
+      "GPT-5.4",
+      "GPT-5.4 mini",
+      "GPT-5.5",
+      "GPT-5 mini"
+    ],
     "legacy_multiplier_changed": []
   },
   "plans_source_url": "https://github.com/features/copilot/plans",

@@ -1,0 +1,26 @@
+[
+  {
+    "id": "public:a8bee5afad8bc50e0575961b",
+    "benchmark_id": "matharena-arxivmath::2026-06",
+    "subject": {
+      "source_id": "Qwen3.5-2B",
+      "name": "Qwen3.5-2B",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 4.17,
+    "unit": "percent",
+    "basis": "measured",
+    "source": {
+      "url": "https://matharena.ai/competition_tables/arxiv--june",
+      "retrieved_at": "2026-10-20T05:21:34.778820+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-10-20T05-17-42-197Z/6832faff9be7e16a6c64.gz",
+      "sha256": "6832faff9be7e16a6c646c59017e30a2caedebe8cf02caf617a5ed9d8fb03bab",
+      "locator": "matharena_table; source row 31; Qwen3.5-2B; field accuracy"
+    },
+    "protocol": "ArXivMath 06/2026 (MathArena): 48 problems from arXiv papers submitted in June 2026; accuracy in percent as published by MathArena (point estimate; the 95% CI is kept in the source row); a model flagged as released after the competition may have seen the problems; not a Composite input.; source row: {\"rank\":\"31\",\"model\":\"Qwen3.5-2B\",\"provider\":\"Qwen\",\"accuracy\":\"4.17% ± 3.26%\",\"cost\":\"N/A\",\"output_tokens\":\"120860\",\"released_after_competition\":false,\"open_weights\":\"✔️\"}",
+    "comparison_key": null
+  }
+]

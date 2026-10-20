@@ -1,0 +1,22 @@
+{
+  "artifact_id": "scores-28",
+  "artifact_sha256": "a342f3c0ce55306342cef274edbadc2c630892d8f4da26c29a4afc8598bbf8fc",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/retail",
+    "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/airline",
+    "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/telecom",
+    "c1"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "As a read-only critic I cannot independently recompute the row or source SHA-256 hashes or verify HTTP retrieval/transport; those are owner-executed checks and absent from my execution scope.",
+    "The primary evidence contains two variants of the Qwen README (e.g., different tables for Knowledge/Reasoning sections) but the TAU2 values for Retail (71.9), Airline (58.0), and Telecom (45.6) for Qwen3-235B-A22B-Thinking-2507 are consistent across the provided captures.",
+    "The protocol fields (temperature 0.6, TopP 0.95, TopK 20, MinP 0, output lengths) are taken from the model card's Best Practices section rather than a benchmark-specific harness description; this is a reasonable mapping from the source and not a mis-statement.",
+    "The benchmark_id 'tau2-bench::2' and model_id 'qwen3-235b-a22b-thinking-2507::reasoning' are derived identifiers from the source's TAU2 naming and model title; no contrary explicit naming is present in the source."
+  ],
+  "missing_evidence": []
+}

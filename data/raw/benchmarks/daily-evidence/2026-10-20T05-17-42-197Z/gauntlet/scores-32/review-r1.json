@@ -1,0 +1,29 @@
+{
+  "artifact_id": "scores-32",
+  "artifact_sha256": "8029b13475160e576e218ac75a51c99c79660de05bc578d4fe8e63ad9adde41c",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": [
+    "vendor:DeepSeek-V3:longbench::2",
+    "c1"
+  ],
+  "errors_found": 1,
+  "findings": [
+    {
+      "id": "row-vendor:DeepSeek-V3:longbench::2-source-date",
+      "severity": "major",
+      "location": "source.published_at",
+      "evidence": "Criterion c1 requires verification of source date. The row sets source.published_at to null and the primary evidence contains no publication date for arXiv 2412.19437v2 (only retrieved_at is provided). Thus the source date cannot be verified from the packet.",
+      "repair": "Provide and verify the publication date of the source (e.g., the arXiv v2 release date) in source.published_at, or update the row to explicitly state that the source date is unavailable and adjust the criterion interpretation if applicable."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "Owner-performed hash verification and transport/qualification checks are not executable by the reviewer; accepted per instructions.",
+    "The locator string spacing appears to match exactly, but exact character-level comparison is limited by the rendered text.",
+    "The file path in source.file contains a truncated sha256 prefix; this is not a mismatch with the provided source.sha256 field."
+  ],
+  "missing_evidence": [
+    "published_at (source date) for arXiv paper 2412.19437v2"
+  ]
+}

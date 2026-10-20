@@ -1,0 +1,32 @@
+{
+  "artifact_id": "scores-9",
+  "artifact_sha256": "1c7d4781ba5df2d2cbc89c6622530abdd044b3c3b579a92258426ebaebb0e8db",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "public:98124a6c429aed77b7a772f4",
+    "public:95a1d63f0e1bdc9adea7df89",
+    "public:9928685d5d56175e6200947d",
+    "public:a6733a51ed77c54d4c74c4b0",
+    "public:a1d27d0337abe6eb7a933096",
+    "public:6d4d1897260a2826743d9813",
+    "public:63b100e81593dbd265cbb6cb",
+    "public:4fe377e371d67303d1a8bd72",
+    "public:ab90d7e27aca63cde56ecee7",
+    "public:702eb0176a14fa2a41fcdda0",
+    "public:24a28615e1ccb2a224a1c97e",
+    "public:5bfca3ae2c5d093a56d18f8d",
+    "public:306e88668761e354c467ad79",
+    "public:48972a190cbff72a08a7a2e7",
+    "public:eb8ccf515c6cdc80577fafc4",
+    "c1"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Owner-performed hash and transport qualification checks were not independently executed; this is a limitation of the read-only review.",
+    "The source 'file' field paths in candidate rows are not present in the primary evidence excerpts and could not be independently verified, though they appear consistent across rows."
+  ],
+  "missing_evidence": []
+}

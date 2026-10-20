@@ -1,0 +1,46 @@
+{
+  "artifact_id": "protocol-weirdml-2",
+  "artifact_sha256": "6bd60c5766dad9d19f8ad87594eec4ade45889654f1ab0b2516e23568e5c4ae7",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": ["weirdml::2", "c1", "c2"],
+  "errors_found": 4,
+  "findings": [
+    {
+      "id": "F1",
+      "severity": "blocker",
+      "location": "weirdml::2 version and version_guard",
+      "evidence": "Row version is \"2\" with version_guard \"Verify the published version 2 before reading results.\" Source 1 page is titled \"WeirdML v3\" and says \"Previous versions: WeirdML v2 · WeirdML v1.\" The current published protocol is v3, not v2.",
+      "repair": "Update version to \"3\" and version_guard to reflect v3, and align the rest of the row to the v3 protocol; if the row is intentionally the v2 entry, set lifecycle fields to retained/superseded instead of claiming current active v2."
+    },
+    {
+      "id": "F2",
+      "severity": "blocker",
+      "location": "weirdml::2 scoring.metric",
+      "evidence": "Row metric says \"Average Max Accuracy: per task, mean over runs of the maximum test accuracy across the 5 iterations per run, averaged over all 17 tasks\". Source 1 says v3 official score is \"80% normalized area under its line on a logarithmic token axis, plus 20% of its final value\", \"weights each of the 11 tasks equally\", and \"Effective scores include normalization and hint penalties; they are not raw accuracy.\" No 17 tasks, no 5 iterations, no maximum-test-accuracy definition.",
+      "repair": "Replace the metric text with the v3 scoring description from Source 1 (area under best-so-far token-axis curve, 11 equally weighted tasks, effective normalized scores), and correct any task-count references from 17 to 11."
+    },
+    {
+      "id": "F3",
+      "severity": "major",
+      "location": "weirdml::2 description",
+      "evidence": "Row description says \"write, run, and iteratively improve PyTorch code under fixed compute and time limits\". Source 1 describes v3 as an \"agentic benchmark\" with \"11 complex hand-made tasks\" challenging the model to \"explore and understand unfamiliar data, develop machine learning and data analysis pipelines\" under \"limited data, unspecified goals and/or very limited feedback\"; PyTorch and fixed compute/time limits are not in the excerpt.",
+      "repair": "Align the description to the source excerpt, removing unsupported PyTorch and fixed compute/time claims."
+    },
+    {
+      "id": "F4",
+      "severity": "blocker",
+      "location": "weirdml::2 status and superseded_by",
+      "evidence": "Row status is \"active\" and superseded_by is null. Source 1 presents the current page as WeirdML v3 with \"Previous versions: WeirdML v2 · WeirdML v1\", so v2 is a previous/superseded release, not a currently reported one. The generated activity summary describes changes to the current served data payload, which reflects v3, not v2.",
+      "repair": "If this row represents v2, set status to \"retained\" and superseded_by to the v3 successor registry id (the exact id is not supplied in the packet); if it is meant to be the current board, change version and metric to v3 and keep active only after those corrections."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "I could not recompute hashes or perform transport/qualification checks; I relied on the owner-provided row and source hashes.",
+    "The exact successor registry id for WeirdML v3 is not present in the packet, so I cannot fill the precise superseded_by value, only confirm that null is inconsistent with the protocol naming v3.",
+    "Source 1 does not state units in percent, but Source 3's served-value summary (162 values, min 1.729411764705882, max 93.57264705882352) supports the row's unit percent and range [0,100]; I did not flag unit/range.",
+    "The source excerpt may be truncated from a longer page, but it is sufficient to establish that the current published version is v3 and v2 is previous."
+  ],
+  "missing_evidence": []
+}

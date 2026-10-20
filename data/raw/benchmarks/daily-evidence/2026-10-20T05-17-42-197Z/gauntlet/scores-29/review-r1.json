@@ -1,0 +1,35 @@
+{
+  "artifact_id": "scores-29",
+  "artifact_sha256": "0b96b78dfb20973434dd0e5ae6acc185a29ab45ee59a75b46c52c3ef5dfa2c6c",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": [
+    "vendor:mistralai/Devstral-2-123B-Instruct-2512:swe-bench-verified::snapshot-2026-09-10",
+    "vendor:mistralai/Devstral-Small-2-24B-Instruct-2512:swe-bench-verified::snapshot-2026-09-10",
+    "c1"
+  ],
+  "errors_found": 2,
+  "findings": [
+    {
+      "id": "pubdate-row1",
+      "severity": "major",
+      "location": "vendor:mistralai/Devstral-2-123B-Instruct-2512:swe-bench-verified::snapshot-2026-09-10 | source.published_at",
+      "evidence": "Primary source (url https://mistral.ai/news/devstral-2-vibe-cli/, sha256 de8dd0f13b8a80cc2f6c8020f5d8a375d9ce964c61acbe93921311c3d324554f) article header displays 'December 9, 2025' as the publication date; the row records published_at:null. Criterion c1 explicitly requires verifying the source date.",
+      "repair": "Transcribe the article publication date (2025-12-09) into source.published_at from the captured page, or document a justified reason for retaining null."
+    },
+    {
+      "id": "pubdate-row2",
+      "severity": "major",
+      "location": "vendor:mistralai/Devstral-Small-2-24B-Instruct-2512:swe-bench-verified::snapshot-2026-09-10 | source.published_at",
+      "evidence": "Primary source (same URL/sha256) article header displays 'December 9, 2025' as the publication date; the row records published_at:null. Criterion c1 explicitly requires verifying the source date.",
+      "repair": "Transcribe the article publication date (2025-12-09) into source.published_at from the captured page, or document a justified reason for retaining null."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "Benchmark identifier suffix 'snapshot-2026-09-10' is not stated in the primary source (source only says 'SWE-bench Verified'); treated as a fixed identity from REQUIRED_ROW_IDS and not independently verifiable from this evidence.",
+    "Evaluation harness/effort for the 72.2%/68.0% SWE-bench Verified figures is not published in the source; rows correctly note this and keep comparison_key null, consistent with criterion c1.",
+    "Owner-executed canonical hashes and transport/qualification checks were not independently executed by this reviewer; artifact and row SHA-256 values were taken as given per instructions."
+  ],
+  "missing_evidence": []
+}

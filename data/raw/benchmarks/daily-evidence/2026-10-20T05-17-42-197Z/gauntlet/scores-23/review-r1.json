@@ -1,0 +1,43 @@
+{
+  "artifact_id": "scores-23",
+  "artifact_sha256": "31a5e1be0aff69b88e96a9011b8c8037906cb90db0ac5243a342ce816c1d8754",
+  "round": 1,
+  "verdict": "blocked",
+  "coverage_checked": [
+    "public:05a87f286416de276be7a054",
+    "public:50ee704b13efe765f8c28b58",
+    "public:089936697ef1aaafa2efb78b",
+    "public:44dcf32a30e5301c153b0ec5",
+    "public:0703667977cb787c9e1ce1d3",
+    "public:ea823ac8eeca3265a7ac70be",
+    "public:8977e402e49d69f6e092f07a",
+    "public:d23d70b836c5b8876d30a87f",
+    "public:5ef56984064ab99345a404dc",
+    "public:6efa1cb7fdf6e9f9f808cf8b",
+    "public:104ed8b9637a62036d2fa074",
+    "public:b6d8e12a5747a3b5346de454",
+    "public:2a3e7af1d8b903ba3206859f",
+    "public:e38adaeae94a8286561eb8bc",
+    "public:921788e88135c9c165d94b95",
+    "c1"
+  ],
+  "errors_found": 1,
+  "findings": [
+    {
+      "id": "public:50ee704b13efe765f8c28b58",
+      "severity": "blocker",
+      "location": "row public:50ee704b13efe765f8c28b58",
+      "evidence": "The candidate row claims value 41.67 percent, subject Claude-Opus-4.8 (max), model_id claude-opus-4.8::max, and source locator 'matharena_table; source row 17; Claude-Opus-4.8 (max); field accuracy', but the review packet provides no primary evidence source for this row (no SOURCE 8 or any other source row 17 capture). All other 14 rows have a corresponding primary SOURCE excerpt; this one is absent, so the claimed fields cannot be verified against actual captured content.",
+      "repair": "Provide the primary evidence source for source row 17 (Claude-Opus-4.8 max accuracy) or explicitly mark this row as unverified. Without that evidence the row cannot pass criterion c1."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "I cannot recompute SHA-256 hashes or perform transport/qualification checks; these are performed by the owner separately.",
+    "All rows except public:50ee704b13efe765f8c28b58 matched their corresponding primary SOURCE excerpts for the value, model name, provider, unit (percent), basis (measured), and protocol text.",
+    "The missing evidence for row public:50ee704b13efe765f8c28b58 prevents full verification of that row and thus blocks a pass."
+  ],
+  "missing_evidence": [
+    "matharena_table source row 17; Claude-Opus-4.8 (max); field accuracy (primary evidence capture not present in packet)"
+  ]
+}

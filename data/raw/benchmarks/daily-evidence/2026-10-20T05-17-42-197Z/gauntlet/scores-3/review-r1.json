@@ -1,0 +1,48 @@
+{
+  "artifact_id": "scores-3",
+  "artifact_sha256": "0f6150fe180ebb5dbd30bf1fe9e035d6501fc4b64c64be5f75bf23970a822f59",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": [
+    "public:f737ba4a8404b528d42a4147",
+    "public:bda1d85b21ce37948959f4cf",
+    "public:d77f4c6957d212e43ca5ff2e",
+    "public:3ec1c745af62663368a60f7b",
+    "public:52749b8727d4af4a4616d499",
+    "public:98153fb029f942527d28f2b1",
+    "public:eae8fa0d798f3ecc05259e83",
+    "public:36263bef9333b157243b7eee",
+    "public:1886a947e7cf7a626a792487",
+    "public:fdc944d2d74b46fe012482a8",
+    "public:42ecda9abe849332c4b1dfac",
+    "public:020a940540cd5b47f2d9b59e",
+    "public:34f8f75fd9ff572a90c73a44",
+    "public:7a9a03b79cb5d7d94814b155",
+    "public:4367fada59cd5b70f31f6c69",
+    "c1"
+  ],
+  "errors_found": 2,
+  "findings": [
+    {
+      "id": "finding-1-row-bda1d85b21ce37948959f4cf",
+      "severity": "major",
+      "location": "public:bda1d85b21ce37948959f4cf subject.model_id",
+      "evidence": "Primary source SOURCE 5 (MiniMax-M3, source row 50) provides only the display name and value; no catalog mapping for model_id 'minimax-m3::default' is present in the packet. The candidate asserts a model_id not supported by provided evidence, contrary to the requirement that subject identity be verified and no alias inference be permitted.",
+      "repair": "Remove the model_id field for this row or supply catalog evidence that maps the source display name 'MiniMax-M3' to 'minimax-m3::default'."
+    },
+    {
+      "id": "finding-2-row-d77f4c6957d212e43ca5ff2e",
+      "severity": "major",
+      "location": "public:d77f4c6957d212e43ca5ff2e subject.model_id",
+      "evidence": "Primary source SOURCE 6 (Mistral Medium 3.1, source row 51) provides only the display name and value; no catalog mapping for model_id 'mistral-medium-3.1::default' is present. The candidate asserts a model_id not supported by evidence, violating the no-alias-inference requirement.",
+      "repair": "Remove the model_id field for this row or provide catalog evidence that maps the source display name 'Mistral Medium 3.1' to 'mistral-medium-3.1::default'."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "The owner separately executes hash verification and transport checks; as a read-only critic I cannot recompute row hashes or execute retrieval and therefore cannot independently confirm those bindings.",
+    "The primary evidence does not include a catalog mapping for the model_id fields in rows bda1d85b21ce37948959f4cf and d77f4c6957d212e43ca5ff2e; absent such evidence, the asserted model_id cannot be verified and is the basis of the findings.",
+    "The basis 'measured' is inferred from the protocol string (pairwise LLM evaluator judgments); the source does not explicitly label the basis, but this is not considered a discrepancy."
+  ],
+  "missing_evidence": []
+}

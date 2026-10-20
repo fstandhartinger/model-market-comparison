@@ -1,0 +1,23 @@
+{
+  "artifact_id": "protocol-kernelbench-cuda-glm52-fused-moe-rtx-pro-6000",
+  "artifact_sha256": "6aafe8f39bf09b836a09a197e283d2d81bad768a70baedba626edb70633514b9",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "kernelbench-cuda-glm52-fused-moe::rtx-pro-6000",
+    "c1",
+    "c2"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Unable to execute transport/hash/qualification checks myself; owner-side verification is outside my read-only scope and assumed.",
+    "Full leaderboard.json not fully shown in the excerpt, but all row-relevant fields are present in the captured payload; no missing numeric evidence for the reviewed row.",
+    "Source transcription contains minor naming inconsistencies (e.g., peak_fraction values order, 'grid_mingru_sps' vs 'grid_mingru_sps') that do not affect the row's identity, version, metric, unit, or lifecycle fields.",
+    "Generated summary SOURCE 6/SOURCE 7 show the server reports 23 finite peak_fraction values with range [4.1099, 11.3]; the row's unit 'percent of roofline' and range [0,null] are consistent with that served scale.",
+    "Protocol SPEC.md does not name a successor board for the RTX PRO 6000, so 'superseded_by: null' is not contradicted.",
+    "'status: active' is affirmatively supported by the nonzero count of added/changed values in the maintainer's payload (SOURCE 6)."
+  ],
+  "missing_evidence": []
+}

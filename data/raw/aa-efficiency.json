@@ -3,7 +3,7 @@
   "basis": "measured",
   "interpretation": "benchmark_proxy",
   "caveat": "AA Intelligence Index benchmark token accounting. Ratios are BENCHMARK PROXIES, never typical user I/O usage; usage ratios must come from OpenRouter/Chutes sources.",
-  "collected_at": "2026-10-19T00:53:27.569Z",
+  "collected_at": "2026-10-20T05:29:00.378Z",
   "source_url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
   "data_fields": {
     "tokens_per_task": "intelligenceIndexOutputTokensPerTask {reasoning, answer, output} (measured)",
@@ -13,18 +13,18 @@
   "attempts": [
     {
       "url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
-      "fetched_at": "2026-10-19T00:53:27.377Z",
+      "fetched_at": "2026-10-20T05:28:59.920Z",
       "http_status": 200,
-      "bytes": 4237538,
-      "sha256": "df6468141e048e0280ca92283e91e1f2dae811a8ec6c8296230f7ac40c50c548"
+      "bytes": 4357211,
+      "sha256": "42cd33958c54768a976dfdf1ffcbddccfe4d73e042838f6d312e060d3c2341ed"
     }
   ],
   "coverage": {
-    "published_rows": 216,
-    "scored_denominator": 694,
+    "published_rows": 218,
+    "scored_denominator": 696,
     "denominator_source": "Leaderboard rows carrying a finite intelligenceIndex inside the same model-page Flight payload"
   },
-  "count": 216,
+  "count": 218,
   "rows": [
     {
       "source_id": "8215372b-66ff-457b-855e-e8abeafc9571",
@@ -970,6 +970,28 @@
         "basis": "derived",
         "input_output_ratio": 36.568106012465016,
         "reasoning_output_share": 0.7075390436517544
+      }
+    },
+    {
+      "source_id": "f151fd0b-2139-40cf-a3ec-995e8cedc592",
+      "slug": "deepseek-v4-1-flash-1017",
+      "name": "DeepSeek V4.1 Flash 1017 (Max)",
+      "variant": "max",
+      "tokens_per_task": {
+        "reasoning": 59243.01214714186,
+        "answer": 30252.040082076124,
+        "output": 89495.05222921798
+      },
+      "canonical_token_counts": {
+        "input": 10279801278,
+        "output": 210859766,
+        "answer": 40137502,
+        "reasoning": 170722264
+      },
+      "derived": {
+        "basis": "derived",
+        "input_output_ratio": 48.751838593997114,
+        "reasoning_output_share": 0.6619696918596852
       }
     },
     {
@@ -3610,6 +3632,28 @@
         "basis": "derived",
         "input_output_ratio": 45.045702145996216,
         "reasoning_output_share": 0.4527355203794363
+      }
+    },
+    {
+      "source_id": "d49c8680-e29b-400e-9511-824f7ddebe07",
+      "slug": "minimax-m3-1-flash",
+      "name": "MiniMax-M3.1-Flash",
+      "variant": null,
+      "tokens_per_task": {
+        "reasoning": 54667.62530318885,
+        "answer": 23944.667116681252,
+        "output": 78612.2924198701
+      },
+      "canonical_token_counts": {
+        "input": 8003057663,
+        "output": 182566559,
+        "answer": 31807987,
+        "reasoning": 150758572
+      },
+      "derived": {
+        "basis": "derived",
+        "input_output_ratio": 43.83638332691586,
+        "reasoning_output_share": 0.695408105022657
       }
     },
     {

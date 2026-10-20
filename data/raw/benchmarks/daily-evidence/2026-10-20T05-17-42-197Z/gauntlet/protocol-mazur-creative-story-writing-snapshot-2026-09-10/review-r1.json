@@ -1,0 +1,19 @@
+{
+  "artifact_id": "protocol-mazur-creative-story-writing-snapshot-2026-09-10",
+  "artifact_sha256": "d0bedc67f03020a1918d640a6c576ae6937e5130eb4cf9579a6d457ab8fc7a3e",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "mazur-creative-story-writing::snapshot-2026-09-10",
+    "c1",
+    "c2"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Unit 'points' is not explicitly stated in the protocol text; it is inferred from the numeric scale and the source description of relative scores. No contradiction with the served values (min -5.089, max 3.756) or with the row's null range bounds, so accepted.",
+    "The row's snapshot date (2026-09-10) predates the retrieval date of the primary evidence (2026-10-20). This is consistent with a snapshot identity created earlier and later verified against the current page; the activity summary confirms ongoing value changes without indicating a methodology change requiring a new identity."
+  ],
+  "missing_evidence": []
+}

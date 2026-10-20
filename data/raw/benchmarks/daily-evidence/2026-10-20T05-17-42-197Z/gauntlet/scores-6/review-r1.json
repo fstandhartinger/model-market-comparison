@@ -1,0 +1,21 @@
+{
+  "artifact_id": "scores-6",
+  "artifact_sha256": "4dae86dced35aa3016790e23c1f70a652586aaa0a32887b106a36c9359c466e8",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "public:e54e499bda19930d1efd4171",
+    "public:1462fabcaad6c9e5baa0f963",
+    "public:a8acc106177f959935b054fa",
+    "c1"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "The basis field 'measured' is inferred from the board's published composite score; the source data does not explicitly label basis, but the protocol text 'published composite' is consistent with a board-measured benchmark result.",
+    "The registry notes state that the NatInt weighting was not independently verified; this is acknowledged in the artifact's protocol and does not constitute a discrepancy.",
+    "I cannot independently recompute hashes or execute transport/qualification checks; I rely on the owner-provided hashes and retrieval data as authoritative."
+  ],
+  "missing_evidence": []
+}

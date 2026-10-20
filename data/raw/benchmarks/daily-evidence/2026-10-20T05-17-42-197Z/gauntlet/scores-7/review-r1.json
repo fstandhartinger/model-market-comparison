@@ -1,0 +1,21 @@
+{
+  "artifact_id": "scores-7",
+  "artifact_sha256": "fc3e54756b2f9e4721180c24513a03983f9f55bda1f864d6ef00be3bb314f5a0",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "public:d241e4d734e9c93a259d5c2b",
+    "public:5b98abf865e7364e1bcd285f",
+    "public:3b937df93f1c241397e189ea",
+    "c1"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Cannot independently recompute hashes or verify transport/qualification checks; these are owner-executed and out of scope for this read-only review.",
+    "The maintainer states all test questions are private, so the task set cannot be inspected; this does not affect verification of the transmitted field values against the supplied source rows.",
+    "W/10 👍 weighting is not verified by the packet; the registry notes it as a published composite, which is consistent with the evidence."
+  ],
+  "missing_evidence": []
+}

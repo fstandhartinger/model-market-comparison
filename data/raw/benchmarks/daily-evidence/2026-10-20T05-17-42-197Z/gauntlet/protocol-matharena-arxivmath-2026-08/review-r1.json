@@ -1,0 +1,16 @@
+{
+  "artifact_id": "protocol-matharena-arxivmath-2026-08",
+  "artifact_sha256": "8233ce3906321b4665fc21479e364cfa1672bbd075101baf71ff57993a3cbc61",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": ["matharena-arxivmath::2026-08", "c1", "c2"],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "I could not recompute hashes or execute network/transport checks; these are owner-side responsibilities and not independently verifiable here.",
+    "The served-value scale for 'accuracy' (24.56–96.49) relies on the provided generated summary (SOURCE 9), not a direct reading of the payload; the row's unit/range (percent, [0,100]) agree with that scale.",
+    "The 'higher_better: true' field is not explicitly stated in the supplied protocol excerpts; it is a standard interpretation of an accuracy metric but not directly evidenced."
+  ],
+  "missing_evidence": []
+}

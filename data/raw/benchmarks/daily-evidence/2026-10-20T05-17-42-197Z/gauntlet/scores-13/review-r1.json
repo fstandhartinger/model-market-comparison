@@ -1,0 +1,28 @@
+{
+  "artifact_id": "scores-13",
+  "artifact_sha256": "6dc7657c81da5adb9fd6b14632c597cd8a85fcbd778def9d85815ddbd2cefa94",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "public:f1c8354305071d7a957932e5",
+    "public:64ec147eb5ffe2e08bee3051",
+    "public:cf39fecd0171ce90446bdd4c",
+    "public:a25379b2f3f231dd590d3532",
+    "public:faab3b240bc0ed8ea528faaa",
+    "public:6928be3fa8cd777dc7c2dea8",
+    "public:99a40920e5ea73460d9a0dbc",
+    "public:99dd554d23b5241cbd3a0e9a",
+    "public:4663ac6a22aa05da61dbea82",
+    "public:d1ab68ef753235cc7ce29b27",
+    "public:ed2bfd02e514848b88146b8d",
+    "public:30ac7d4eb95df34e209e5377",
+    "c1"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Independent recomputation of row and source SHA-256 hashes and transport/qualification checks were not executable by this read-only QA critic; hashes and retrieval metadata are taken from the owner-provided packet."
+  ],
+  "missing_evidence": []
+}

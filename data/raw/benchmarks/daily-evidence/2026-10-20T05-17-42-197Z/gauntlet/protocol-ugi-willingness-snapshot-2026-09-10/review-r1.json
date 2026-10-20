@@ -1,0 +1,20 @@
+{
+  "artifact_id": "protocol-ugi-willingness-snapshot-2026-09-10",
+  "artifact_sha256": "dd8b7592b887476b21e04b4a80eb36754917b755174bdacd4ef8bab75a83274c",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "ugi-willingness::snapshot-2026-09-10",
+    "c1",
+    "c2"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "W/10 metric is not explicitly described as 'score' unit in the protocol text, but the observed served values (0-10) and the metric name strongly imply a score; unit 'score' is not contradicted by evidence.",
+    "The row's description of 'private-question evaluation' is supported by the protocol text stating test questions are kept private.",
+    "Cannot independently verify hashes or execute transport/qualification checks; rely on provided owner-computed hashes and locators."
+  ],
+  "missing_evidence": []
+}

@@ -1,0 +1,20 @@
+{
+  "artifact_id": "protocol-cursorbench-cost-4.0",
+  "artifact_sha256": "ad0c6b1e79a26ba05eb731a81b1a25da5025dfa1dc1d90d15305b30615eb8bb9",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "cursorbench-cost::4.0",
+    "c1",
+    "c2"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Cannot independently recompute hashes or execute retrieval/transport/qualification checks; owner-verified hashes and receipt are taken as given.",
+    "The range [0,null] is judged against the generated value-scale summary (lowest 0.03, highest 17.28); this summary is this run's own read of the payloadula, not maintainer text, and cannot establish metric meaning, but it does support the claimed scale.",
+    "The row does not carry any individual cost values, so no per-cell numeric comparison was required; identity, metric, unit, and lifecycle fields were checked against the primary protocol excerpt."
+  ],
+  "missing_evidence": []
+}
