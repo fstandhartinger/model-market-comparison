@@ -2941,6 +2941,8 @@ class PodDispatchIntegrationTests(DatabaseTestCase):
         state["source_review_gate"] = gate
         ap.save_state(state)
 
+    @unittest.skip("legacy JevBench v1.5 pod dispatch is retired (urgent-autofix-394): dispatch_measurement now holds "
+                   "JevBench orders without a v1.6 admission; see test_retired_method_guard.py")
     def test_gpu_pod_dispatch_measures_and_scores(self):
         rid = insert_order()
         fx = FakeEffects()

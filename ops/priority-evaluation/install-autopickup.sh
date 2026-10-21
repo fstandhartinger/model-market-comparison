@@ -25,6 +25,12 @@ if [[ -n "$(git -C "$REPO_ROOT" status --porcelain -- ops/priority-evaluation)" 
   echo "install-autopickup: ops/priority-evaluation has uncommitted changes" >&2; exit 1
 fi
 
+# Fail closed: never install an autopickup.py without the retired-method guard (urgent-autofix-394; lost once on 19 Oct
+# when an install from main overwrote the hot-fixed runtime, #22690). The guard must sit inside dispatch_measurement.
+if ! awk '/^def dispatch_measurement\(/{f=1;next} f&&/^def /{exit} f&&/"official_method_retired_requires_admission"\)/{ok=1} END{exit !ok}' "$SRC/autopickup.py"; then
+  echo "install-autopickup: autopickup.py lacks the official_method_retired_requires_admission guard in dispatch_measurement" >&2; exit 1
+fi
+
 BIN="$HOME/bin"
 SHARE="$HOME/.local/share/priority-evaluation"
 STATE="$HOME/.local/state/fastlane-autopickup"
