@@ -1,0 +1,47 @@
+{
+ "calls": {
+  "drex-max": {
+   "effective_price": [
+    null,
+    null
+   ],
+   "reference_call": "reference('drex-max', {'base_model': None}, catalog_rates())",
+   "reference_result": null
+  },
+  "iota-decide-4b": {
+   "canonical_reference_call": "reference('iota-decide-4b', {'base_model':'Qwen/Qwen3.5-4B'}, catalog_rates())",
+   "canonical_reference_result": [
+    "deepinfra:Qwen/Qwen3.5-4B",
+    [
+     0.030000000000000002,
+     0.15
+    ]
+   ],
+   "effective_price": [
+    0.030000000000000002,
+    0.15
+   ],
+   "reference_call": "reference('iota-decide-4b', {'base_model': 'Qwen/Qwen3.5-4B-Base'}, catalog_rates())",
+   "reference_result": [
+    "deepinfra:Qwen/Qwen3.5-4B",
+    [
+     0.030000000000000002,
+     0.15
+    ]
+   ]
+  },
+  "launchables-myles-g-12b": {
+   "effective_price": [
+    0.05,
+    0.15
+   ],
+   "precedent_cost_basis": "ESTIMATE (*est.), nearest-listed-sibling reference: declared base google/gemma-4-12B-it has no market listing (UNLISTED in the frozen pricing_v15 module, sha256 6202ef78a2c83cbffc9389cf1f37df70fe0c85ed03f4dd5c5f997f3d31aae13a), priced through the frozen catalog's nearest listed sibling of the same family and size class: google/gemma-3-12b-it USD 0.05/M input, USD 0.15/M output (the fixed Gemma-4-12B precedent, same basis as the published metask_jev_rain_12b_trained row). Estimated, not charged, not a quote from the author or any host. USD per 1,000 decisions on the denominator of the release basis (the same-items cost rule for this draw prices the common item set without the 15 very long items the author's server refuses, for every row alike). Tokens as reported by the author's own server usage block (input_tokens = tokens of the rendered chat prompt incl. system prompt, options and the answer prefill; output_tokens = 1, exactly one vLLM forward pass per answered single-question row - nothing is generated, the option-code logits are read in that one pass). The offline count through the author's own render.py and the pinned tokenizer predicted the server's numbers EXACTLY, item by item: 777,809 input tokens over the 1,485 answered items, and 15 HTTP 422 refusals at the pre-registered ids and positions.",
+   "reference_call": "reference('launchables-myles-g-12b', {'base_model': 'google/gemma-4-12B-it'}, catalog_rates())",
+   "reference_result": null
+  }
+ },
+ "drex_I1_refreeze_pending": true,
+ "drex_variant": "B",
+ "module_sha256": "1f4d1f7b1ce97ab27b938043444b9c2757e4a9dbecc799a803122588401f5bf1",
+ "ten_second_rule_applied": false
+}

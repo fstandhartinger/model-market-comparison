@@ -1,0 +1,9 @@
+- Worker slice complete: three paid public v1.6.38 rows, default priced Drex A plus --drex-unpriced B.
+- Both full frozen-scorer field runs complete; all 72 predecessor public rows retained byte-identically except placement.
+- A 22/40 top-five changes solely Drex; B 0/40. All three raws zero decisions over 10 seconds; no 10-second rule applied.
+- Both variants: TypeScript, release/targeted tests, 538-page build, full 3552 tests (3551 passed, 1 skipped, 0 failed), loader/authority/refusal/repro/sanity/browser gates PASS.
+- Real independent release review PENDING. Lead owns separate Drex I-1 pricing re-freeze/install/re-pin. No seal/push/PR/deploy/messages.
+- Shared git config changed externally/unknown during run; no git config or push commands used; before/after retained honestly.
+- Removed own disposable pass and pass-A repos (~7.4 GB) and bytecode; final artifacts/receipts retained, sealed data untouched.
+- One local commit follows; commit id in worker RESULT.md outside worktree.
+- FINAL DONE

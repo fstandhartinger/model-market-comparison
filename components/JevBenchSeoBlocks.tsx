@@ -17,6 +17,7 @@ export type SeoRow = {
   key: string;
   display: string;
   rank: number | null;
+  ranked?: boolean;
   board?: 'open' | 'api' | 'reference' | string;
   capability?: number | null;
   capability_eligible?: boolean;
@@ -36,9 +37,10 @@ export type SeoRow = {
 };
 
 // Review 6 Oct 2026: /jev-models ranks open weights only. `rank` is that board's rank; the Jev 1.13.0 reference and hosted API rows have none.
-export function boardRankText(row: Pick<SeoRow, 'rank' | 'board'>, locale: 'en' | 'de' = 'en'): string {
+export function boardRankText(row: Pick<SeoRow, 'rank' | 'board' | 'ranked'>, locale: 'en' | 'de' = 'en'): string {
   const de = locale === 'de';
   if (row.board === 'reference') return de ? 'Referenz, nicht gerankt' : 'Reference, not ranked';
+  if (row.board === 'api' && row.ranked === false) return de ? 'API-Angebot, gelistet, nicht gerankt' : 'API offering, listed but not ranked';
   if (row.board === 'api') return de ? 'API-Angebot, gerankt auf dem API-Leaderboard' : 'API offering, ranked on the API leaderboard';
   if (row.rank == null) return de ? 'Ohne Rang (außerhalb der Grenzen)' : 'Outside the caps, no rank';
   return de ? `Rang ${row.rank} (Open-Weights-Board)` : `Rank #${row.rank} (open-weights board)`;

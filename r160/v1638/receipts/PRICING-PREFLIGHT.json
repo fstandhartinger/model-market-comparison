@@ -1,0 +1,94 @@
+{
+  "base_revision": "50c8b2c4f41f58cb9781f205ca678f58998e58c1",
+  "pricing_module_sha256": "1f4d1f7b1ce97ab27b938043444b9c2757e4a9dbecc799a803122588401f5bf1",
+  "rows": {
+    "drex-max": {
+      "base_explicitly_unlisted": false,
+      "entry_for_frozen_pricing": {
+        "base_model": null,
+        "price_in_per_m": 0.06,
+        "price_out_per_m": 0.0,
+        "source": "api"
+      },
+      "handoff_latency_s": {
+        "max": 1.618225606973283,
+        "over_10s": 0,
+        "p50": 0.2538178130052984,
+        "p95": 0.42847306898329407
+      },
+      "input_tokens": 1942633,
+      "ok_rows": 1498,
+      "output_tokens": 264615,
+      "raw_path": "/home/flori/jevbench-sealed/v1.6-run/v1.6-regular-20261012/runs/api-full/drex-max.jsonl",
+      "raw_sha256": "c0de81123e846e3a583aef52534e15f6ca9ba1b9c515209dbed002d8e7277fe1",
+      "reference_call": "reference('drex-max', {'base_model': None, 'source': 'api', 'price_in_per_m': 0.06, 'price_out_per_m': 0.0}, catalog_rates())",
+      "reference_result": null,
+      "resolve_result": {
+        "counting_list_price": false,
+        "deepinfra_snapshot_sha256": "84eb7926acd4e93b71d695be24898e2ca999b20011d1b66cc0348ce7c6c3546f",
+        "key": "drex-max",
+        "market_rates_per_m": null,
+        "market_reference": null,
+        "note": "no eligible 30-day list price or base-model estimate",
+        "rankable": false,
+        "snapshot_sha256": "f5d0cd8e0f7d2d6514748c99bfcaeacc09775bac7aa7eecf765af4ba04b0dcd5",
+        "tokens": {
+          "decisions": 1500,
+          "input": 1942633,
+          "output": 264615
+        },
+        "usd_per_1000": null
+      },
+      "rows": 1500,
+      "status_counts": {
+        "200": 1498,
+        "529": 2
+      }
+    },
+    "launchables-myles-g-12b": {
+      "base_explicitly_unlisted": true,
+      "entry_for_frozen_pricing": {
+        "base_model": "google/gemma-4-12B-it",
+        "price_in_per_m": 0.00200202,
+        "price_out_per_m": 0.0,
+        "source": "api"
+      },
+      "handoff_latency_s": {
+        "max": 5.78009281901177,
+        "over_10s": 0,
+        "p50": 0.48403177701402456,
+        "p95": 0.6110634990036488
+      },
+      "input_tokens": 989607,
+      "ok_rows": 1500,
+      "output_tokens": 1500,
+      "raw_path": "/home/flori/jevbench-sealed/v1.6-run/v1.6-regular-20261012/runs/api-full/launchables-myles-g-12b.jsonl",
+      "raw_sha256": "3f0929728f39bd41cfff6c404d6ed8793e8202f393b68264d3b1fc449d6a54ab",
+      "reference_call": "reference('launchables-myles-g-12b', {'base_model': 'google/gemma-4-12B-it', 'source': 'api', 'price_in_per_m': 0.00200202, 'price_out_per_m': 0.0}, catalog_rates())",
+      "reference_result": null,
+      "resolve_result": {
+        "counting_list_price": false,
+        "deepinfra_snapshot_sha256": "84eb7926acd4e93b71d695be24898e2ca999b20011d1b66cc0348ce7c6c3546f",
+        "key": "launchables-myles-g-12b",
+        "market_rates_per_m": null,
+        "market_reference": null,
+        "note": "no eligible 30-day list price or base-model estimate",
+        "rankable": false,
+        "snapshot_sha256": "f5d0cd8e0f7d2d6514748c99bfcaeacc09775bac7aa7eecf765af4ba04b0dcd5",
+        "tokens": {
+          "decisions": 1500,
+          "input": 989607,
+          "output": 1500
+        },
+        "usd_per_1000": null
+      },
+      "rows": 1500,
+      "status_counts": {
+        "200": 1500
+      }
+    }
+  },
+  "scorer_sha256": "02132271117653e6302c509232a581d0094f0e78eac8b1bfc67596fd5d5097e9",
+  "status": "BLOCKED: frozen pricing supplies neither eligible list price nor base reference",
+  "ten_second_rule_applied": false
+}

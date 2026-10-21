@@ -1,0 +1,118 @@
+{
+ "carried_rows_preserved_except_ranks": 72,
+ "carried_scorer_point_estimates_reproduced": 69,
+ "files": {
+  "categories": {
+   "path": "data/raw/benchmarks/jevbench/v1.6/jevbench-v1.6.38-categories.json",
+   "sha256": "b99c29c3f3475dc58bc174f770420923122437a698193906da5479ad117e529a"
+  },
+  "history": {
+   "path": "data/raw/benchmarks/jevbench/v1.6/jevbench-v1.6.38-history.json",
+   "sha256": "5cd8c1332226ea9c179883d2285c0d8b8cc593ae38f2645197364a7ddd9c83c1"
+  },
+  "history-carry": {
+   "path": "data/raw/benchmarks/jevbench/v1.6/jevbench-v1.6.38-history-carry.json",
+   "sha256": "334e851944e92383ab3071e52b3012040c7023d0fe236395953169ebee8f0459"
+  },
+  "proof": {
+   "path": "data/raw/benchmarks/jevbench/v1.6/jevbench-v1.6.38-proof.json",
+   "sha256": "95f9a11d1c42aff59470f4c96a860d7e36795dffe2a1f13d081d0dc477bb1d91"
+  },
+  "results": {
+   "path": "data/raw/benchmarks/jevbench/v1.6/jevbench-v1.6.38-results.json",
+   "sha256": "07dc2b455cf36e780fc6e8d1731dae2178d27fab3b0c0c991b49939ba234a5e7"
+  }
+ },
+ "new_rows": {
+  "drex-max": {
+   "axes": {
+    "calibration": 89.56795021085651,
+    "cost": null,
+    "intelligence": 78.89021516142793,
+    "speed": 89.80651018227358
+   },
+   "capability": 84.22908268614222,
+   "cost": {
+    "basis": "UNPRICED: no eligible 30-day list price or base-model estimate; no cost axis, composite or rank. Listed as measured, like nagi-huge, pending pricing admission.",
+    "common_basis": null,
+    "kind": "unpriced",
+    "usage_estimated_rows": 0,
+    "usd_per_1000": null
+   },
+   "ranks": {
+    "A": null,
+    "B": null,
+    "C": null,
+    "capability": null
+   },
+   "scores": {
+    "A": null,
+    "B": null,
+    "C": null
+   }
+  },
+  "iota-decide-4b": {
+   "axes": {
+    "calibration": 84.8346261602328,
+    "cost": 62.97034212213745,
+    "intelligence": 29.414053145614563,
+    "speed": 87.4670144658746
+   },
+   "capability": 57.12433965292368,
+   "cost": {
+    "basis": "ESTIMATE (*est.), base-model market reference through the frozen pricing_v15 module (sha256 1f4d1f7b1ce97ab27b938043444b9c2757e4a9dbecc799a803122588401f5bf1): base Qwen/Qwen3.5-4B-Base priced as Qwen/Qwen3.5-4B -> deepinfra:Qwen/Qwen3.5-4B USD 0.030000000000000002/M input, USD 0.15/M output. Estimated, not charged, not a quote from the author or any host. Tokens as reported by the server usage block: 1,094,798 input on 1,500 answered items, 0 output tokens (one forward pass, joint-head readout, no generation). COMMON COST BASIS (v1.6.30): common 1,485 items, excluding the 15 longest for every row; 849,038 input / 0 output tokens. All-item usage 1,094,798 input / 0 output over 1,500 items.",
+    "common_basis": {
+     "n_items": 1485,
+     "rule": "common",
+     "usd_per_1000_all_items": 0.021895960000000003
+    },
+    "kind": "estimate",
+    "usage_estimated_rows": 0,
+    "usd_per_1000": 0.017152282828282833
+   },
+   "ranks": {
+    "A": 44,
+    "B": 45,
+    "C": 44,
+    "capability": 46
+   },
+   "scores": {
+    "A": 18.937474020302744,
+    "B": 16.15725640426057,
+    "C": 13.151023625210243
+   }
+  },
+  "launchables-myles-g-12b": {
+   "axes": {
+    "calibration": 84.04872871623093,
+    "cost": 57.35738348807602,
+    "intelligence": 57.25409127121432,
+    "speed": 85.64932567577961
+   },
+   "capability": 70.65140999372262,
+   "cost": {
+    "basis": "ESTIMATE, nearest-listed-sibling reference: declared base google/gemma-4-12B-it is UNLISTED in frozen pricing_v15 (sha256 1f4d1f7b1ce97ab27b938043444b9c2757e4a9dbecc799a803122588401f5bf1); no exact base reference exists. Same-base published precedents arcbright-elf-1-12b, chon-1.0-12b and metask_jev_rain_12b_trained use google/gemma-3-12b-it, USD 0.05/M input and 0.15/M output. This row uses that same sibling ESTIMATE, not a vendor bill or quote. Launchables list price GBP 0.0015 per million input tokens, output free, is shown for information and is not used for the Cost axis. Applied to provider-reported usage. COMMON COST BASIS (v1.6.30): common 1,485 items, excluding the 15 longest for every row; 779,294 input / 1,485 output tokens. All-item usage 989,607 input / 1,500 output over 1,500 items.",
+    "common_basis": {
+     "n_items": 1485,
+     "rule": "common",
+     "usd_per_1000_all_items": 0.033136900000000004
+    },
+    "kind": "estimate",
+    "usage_estimated_rows": 0,
+    "usd_per_1000": 0.02638885521885522
+   },
+   "ranks": {
+    "A": 14,
+    "B": 19,
+    "C": 18,
+    "capability": 24
+   },
+   "scores": {
+    "A": 68.40656153142275,
+    "B": 65.84152005408374,
+    "C": 62.28856307389066
+   }
+  }
+ },
+ "variant": "B"
+}

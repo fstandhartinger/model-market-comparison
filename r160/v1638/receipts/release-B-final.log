@@ -1,0 +1,46 @@
+✔ v1.6.38 candidate requires independent PASS (6198.067679ms)
+✔ v1.6.38 three paid rows, carried scores/intervals, full category coverage (0.923763ms)
+✔ v1.6.38 rejects carried interval (98.885142ms)
+✔ v1.6.38 rejects new cost (125.305122ms)
+✔ v1.6.38 rejects strip truncation disclosure (108.238108ms)
+✔ v1.6.38 rejects rank swap (103.430678ms)
+✔ v1.6.38 rejects strip categories (111.907011ms)
+✔ v1.6.38 rejects manifest path (70.589188ms)
+✔ v1.6.38 rejects invent approval (130.80116ms)
+✔ v1.6.38 rejects item leakage (51.917495ms)
+✔ v1.6.38 rejects unprice ranked row (83.846822ms)
+✖ v1.6.38 archive comparison has measured topic and use-case cells for every ranked row (6038.78833ms)
+ℹ tests 12
+ℹ suites 0
+ℹ pass 11
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 19896.438115
+
+✖ failing tests:
+
+test at test/jevbench-v1638-release.test.mjs:40:1
+✖ v1.6.38 archive comparison has measured topic and use-case cells for every ranked row (6038.78833ms)
+  AssertionError [ERR_ASSERTION]: Got unwanted exception.
+  Actual message: "JevBench category artifact: amos-1-large.usecases.other: cell"
+      at TestContext.<anonymous> (file:///home/flori/jobs/jevbench-add-requests-20260919/workers/r160-v1638-build2/wt/r160/v1638/pass/test/jevbench-v1638-release.test.mjs:40:331)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: Error: JevBench category artifact: amos-1-large.usecases.other: cell
+        at fail (file:///home/flori/jobs/jevbench-add-requests-20260919/workers/r160-v1638-build2/wt/r160/v1638/pass/lib/jevbench-categories.mjs:36:41)
+        at validateCategoryArtifact (file:///home/flori/jobs/jevbench-add-requests-20260919/workers/r160-v1638-build2/wt/r160/v1638/pass/lib/jevbench-categories.mjs:60:189)
+        at jevbenchCategoryView (file:///home/flori/jobs/jevbench-add-requests-20260919/workers/r160-v1638-build2/wt/r160/v1638/pass/lib/jevbench-categories.mjs:194:5)
+        at file:///home/flori/jobs/jevbench-add-requests-20260919/workers/r160-v1638-build2/wt/r160/v1638/pass/test/jevbench-v1638-release.test.mjs:40:348
+        at getActual (node:assert:580:5)
+        at strict.doesNotThrow (node:assert:748:32)
+        at TestContext.<anonymous> (file:///home/flori/jobs/jevbench-add-requests-20260919/workers/r160-v1638-build2/wt/r160/v1638/pass/test/jevbench-v1638-release.test.mjs:40:331)
+        at async Test.run (node:internal/test_runner/test:1409:7)
+        at async Test.processPendingSubtests (node:internal/test_runner/test:974:7),
+    expected: undefined,
+    operator: 'doesNotThrow',
+    diff: 'simple'
+  }
