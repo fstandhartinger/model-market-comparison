@@ -49,7 +49,7 @@ export function JevLatencyMethodNote({ className = 'bh-muted mt-1 text-sm' }: { 
     our own hardware over loopback (on-GPU, no network), so their measured value is not directly comparable with API latency.
     The ranking and the latency cap use the same estimate for every self-hosted row: 2 × measured p50 + 150 ms
     ({JEV_LATENCY_LABEL}). Tables show the measured value first, tagged “on-GPU, no network”, and the estimate second. A model author can provide a hosted endpoint; we then time it exactly like an API, network
-    included, with no assumption (on request: info@productivity-boost.com, or note it in your <a className="text-accent underline" href="/submit">submission</a>).
+    included, with no assumption (on request: info@productivity-boost.com, or note it in your <a className="text-accent underline" href="/submit">submission</a>). From JevBench v1.7.0 (not before 24 October 2026), a decision that takes longer than 10 seconds counts as failed.
   </p>;
 }
 

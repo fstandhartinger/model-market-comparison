@@ -4,6 +4,10 @@ For downstream consumers (forks, apps syncing data from this repo or the live AP
 the **data locations have not moved**. What changed recently is the hosting URL and
 some app internals — details per release below.
 
+## 2026-10-21 — JevBench v1.7.0 announced (board note v1.7.47)
+
+Announcement only: JevBench v1.7.0 (not before 24 October 2026) adds a 10-second limit per decision; decisions over 10 seconds count as failed, and Speed uses all decisions. No score or rank changed in this revision.
+
 ## 2026-10-10 — Needle 3 cells; corrected Needle failure description (CR-426, board note v1.7.41)
 
 `needle-3` (historical row, v1.5 headline kept) now has language and category cells: all L1/L2/L3 supplement items plus 281

@@ -44,6 +44,7 @@ export async function JevReleaseHistory() {
   return <section className="mt-10 max-w-4xl" id="jev-release-history" aria-labelledby="jev-release-history-title" data-bh-jev-release-history>
     <h2 id="jev-release-history-title" className="text-2xl font-bold">Release history</h2>
     <p className="bh-muted mt-1 text-sm">The board above is always the current merged board: every system with its latest measurement. Each release stays readable as published.</p>
+    <p className="bh-muted mt-1 text-sm" data-bh-jev-upcoming>Upcoming in v1.7.0 (not before 24 October 2026): decisions that take longer than 10 seconds count as failed, and Speed uses the times of all decisions. Every row is recomputed from its recorded per-decision times; the earlier values stay visible next to the new ones.</p>
     <ul className="mt-2 space-y-1 text-sm">{releases.map((r) => <li key={r.version} data-bh-jev-release={r.version}>
       <a className="text-accent font-semibold underline" href={r.href}>JevBench {r.version}</a> <span className="bh-muted">· {r.date} · {r.text}</span>
     </li>)}</ul>
