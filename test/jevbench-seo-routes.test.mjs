@@ -1,4 +1,4 @@
-import {jevSystemPath} from '../lib/jev-system-slug.mjs';
+import {jevSystemPath,isRedirectedJevPath} from '../lib/jev-system-slug.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {existsSync,readFileSync,readdirSync} from 'node:fs';
@@ -51,7 +51,7 @@ test('current model page renders SoftwareApplication/Breadcrumb and sanitized pu
 test('sitemap URL helper covers all current models, comparisons and guides, excludes private and llms-full',async()=>{
  const {urls,date}=await readJevbenchSeoUrls();assert.equal(date,data.date);
  for(const pair of data.comparisons)assert.ok(urls.includes(`/jev-models/${pair.slug}`));
- for(const row of data.systems)assert.ok(urls.includes(jevSystemPath(row.key)));
+ for(const row of data.systems)assert.ok(urls.includes(jevSystemPath(row.key))||isRedirectedJevPath(jevSystemPath(row.key)));
  assert.ok(!urls.some(u=>u.includes('djev')||u.includes('llms-full')));
 });
 test('IndexNow key and script are prepared without sending a ping',()=>{

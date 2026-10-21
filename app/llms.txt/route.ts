@@ -1,4 +1,4 @@
-import { readJevbenchComparisonLinks } from '../../lib/jevbench-seo.mjs';
+import { readJevbenchSeoData, readJevbenchComparisonLinks } from '../../lib/jevbench-seo.mjs';
 import { SITE_URL, BRAND_CLAIM, BRAND_LINE } from "../../lib/seo";
 
 // CR-171 (seo-router-sites, 26 Sep 2026): an llms.txt index (llmstxt.org) so an agent finds the pages and the
@@ -8,6 +8,7 @@ export const revalidate = 300;
 
 async function llmsTxt(): Promise<string> {
   const comparisons = await readJevbenchComparisonLinks();
+  const { artifact } = await readJevbenchSeoData();
   const u = (path: string) => `${SITE_URL}${path}`;
   return [
     "# Benchmark Heaven",
@@ -43,7 +44,8 @@ async function llmsTxt(): Promise<string> {
     "",
     "## Data and API",
     `- [Public API reference](https://github.com/fstandhartinger/model-market-comparison/blob/main/API.md)`,
-    `- [Authoritative JevBench release manifest](${u("/api/jevbench/manifest")}): published version, scoring definitions, weights and source hashes`,
+    `- Current JevBench release: ${artifact.revision} (always read the live value from the feed below, field latest_release)`,
+    `- [JevBench base-release manifest](${u("/api/jevbench/manifest")}): the base release (${artifact.base_revision}) the live board is built on, with scoring definitions, weights and source hashes; for the current release use ${u("/api/jevbench/latest")} (field latest_release)`,
     `- [Current JevBench leaderboard, JSON](${u("/api/jevbench/latest")}): revision, weights, systems with keys, sources, axes, Capability eligibility/rank, Composite score/rank, listing flags and price basis`,
     `- [Models, JSON](${u("/api/models")})`,
     "",
