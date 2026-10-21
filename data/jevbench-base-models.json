@@ -1996,6 +1996,44 @@
           }
         ],
         "note": "Base model disclosed by Microsoft; the Decision-1 endpoint is evaluated as a hosted API offering."
+      },
+      "launchables-myles-g-31b": {
+        "label": "google/gemma-4-31B-it",
+        "status": "self-reported",
+        "sources": [],
+        "note": "Customer statement (order notes, 21 Oct 2026): a merged LoRA adapter on google/gemma-4-31B-it. Not publicly documented by the vendor and not independently verified.",
+        "checked_utc": "2026-10-21T00:00:00Z"
+      },
+      "hyland-hs1": {
+        "label": "google/gemma-4-26B-A4B-it",
+        "status": "self-reported",
+        "sources": [],
+        "note": "Customer statement (order notes, 21 Oct 2026): a LoRA fine-tune of Gemma-4-26B-A4B-it served in FP8. Not publicly documented and not independently verified.",
+        "checked_utc": "2026-10-21T00:00:00Z"
+      },
+      "goddragon-arbiter-4b": {
+        "label": "Qwen/Qwen3.5-4B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/Goddragon/Arbiter-4B/blob/8fd20568f359f4156de55f016027efdc841d690a/backbone/config.json",
+            "title": "Pinned repository backbone config",
+            "evidence": "The repository's own modification notice states the language-model weights were fine-tuned from Qwen/Qwen3.5-4B; the card's base_model names the intermediate TokenRhythm/NeoHorse-Jev-4B. Author statements, not independently verified."
+          }
+        ],
+        "checked_utc": "2026-10-21T00:00:00Z"
+      },
+      "roudone-decider-4b": {
+        "label": "Qwen/Qwen3.5-4B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/roudone/Decider-4B/blob/a9a6a7924f9a6300c43b873df56414c087666083/backbone/config.json",
+            "title": "Pinned repository backbone config",
+            "evidence": "The repository's own modification notice states the language-model weights were fine-tuned from Qwen/Qwen3.5-4B; the card's base_model names the intermediate TokenRhythm/NeoHorse-1-4B. Author statements, not independently verified."
+          }
+        ],
+        "checked_utc": "2026-10-21T00:00:00Z"
       }
     },
     "imagejevbench": {

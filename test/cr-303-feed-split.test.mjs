@@ -32,7 +32,8 @@ test('feed carries board and open-board rank next to the unchanged combined rank
   // v1.6.29: paid Torchcast Decision 4B v1.2 (Capability 72.6) joins above these rows (28 -> 29); Vega-U is below the latency cap cutoff.
   // v1.6.30: the common cost basis puts subq-snap-preview (Capability 81.5) inside the official cost cap, above these rows (29 -> 30);
   // amos-1-medium also moves inside the cap but sits below them by Capability.
-  assert.equal(get(feed, 'torchcast-decision-12b').capability.rank, 31);
+  // v1.6.36: the paid hosted Myles-G 31B (Capability 78.8, API row, inside both caps) joins above it (31 -> 32); HS1 (65.0) and the two NeoHorse rows sit below it.
+  assert.equal(get(feed, 'torchcast-decision-12b').capability.rank, 32);
   const ranks = feed.systems.map((s) => s.capability.open_board_rank).filter((r) => r != null).sort((a, b) => a - b);
   assert.equal(get(feed, 'basal-omni-1.0-ultra').capability.open_board_rank, 2);
   assert.deepEqual(ranks, ranks.map((_, i) => i + 1));
