@@ -1,8 +1,9 @@
 # TrustedTokens — collection method (CR-27.1)
 
-**Source:** `https://trustedtokens.eu/api/service/models` — the unauthenticated JSON endpoint the
+**Source:** `https://trustedtokens.eu/api/public/models` — the unauthenticated JSON endpoint the
 public ModelsIsland at `https://trustedtokens.eu/models/` itself loads (checked in the page's own
-`/_astro/models.*.js` module, 2026-09-15). One GET plus the ECB daily EUR/USD reference rate.
+`/_astro/models.*.js` module; the 2026-10 site rebuild moved it from `/api/service/models`,
+verified 2026-10-21). One GET plus the ECB daily EUR/USD reference rate.
 `https://trustedtokens.eu/robots.txt` allows all paths (`Allow: /`). No account, no login, no
 bot-protection circumvention — this is the page's own data request, the preferred collection
 method in E3.
