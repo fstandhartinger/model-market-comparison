@@ -72,8 +72,14 @@ and the ECB daily reference rates. robots.txt of docs.stackit.cloud and stackit.
   "Full Name" line, and `Category`, `Status` and `Context length` come from the section's Facts table. An
   unknown category fails the run instead of guessing a price. The docs "Last updated on" date is stored
   as `docs_last_updated`.
-- Prices: the product page's SKU table rows `Model Serving-llm-{standard,plus,premium}-{input,output}-EU01`
-  (Germany South, EUR per million tokens). All six must be present and unambiguous.
+- Prices: the product page's "STACKIT AI Model Serving price table" (one row per model: type, EU01
+  region, input/output EUR per 1M tokens, billing SKUs). SKU stems map to the billing category
+  (`llm-standard-input/output-EU01` → LLM-Standard, `llm-standard-plus-EU01` → LLM-Plus,
+  `llm-standard-premium-EU01` → LLM-Premium); every docs-listed chat model must appear in the table
+  with a matching SKU category, and all three tiers must be priced unambiguously.
+- 2026-10-21: the stackit.com relaunch replaced the old six-row `Model Serving-llm-*-{input,output}-EU01`
+  SKU table with the per-model price table; the collector now reads it and cross-checks each model's
+  docs category against its billing SKU (fails closed on unknown SKUs, conflicts, or a missing row).
 - USD = EUR × ECB EUR/USD reference rate, four decimal places (`usd_normalization` records rate and date).
 - Curated rows are matched by `model_id` and keep their names and notes; new ids are `mapping: derived`.
   Fewer than 50 % of the previous ids still listed fails the run.

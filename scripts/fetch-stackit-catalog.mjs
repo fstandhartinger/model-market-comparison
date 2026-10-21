@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 // R9.1: refresh data/raw/stackit.json from STACKIT's first-party "Available Shared Models" docs page
-// (model list, billing category, status), the STACKIT AI Model Serving product page (EU01 SKU token
-// prices per category, EUR) and the ECB daily EUR/USD reference rate. Three unauthenticated GETs;
-// robots.txt of docs.stackit.cloud and stackit.com allows these paths. Fails closed: on a layout
-// change, an unknown billing category, a missing tier price, an implausible FX rate or a large model
-// loss the previous snapshot stays untouched.
+// (model list, billing category, status), the STACKIT AI Model Serving product page (per-model EU01
+// token prices and billing SKUs, EUR) and the ECB daily EUR/USD reference rate. Three
+// unauthenticated GETs; robots.txt of docs.stackit.cloud and stackit.com allows these paths. Fails
+// closed: on a layout change, an unknown billing category or SKU, a missing tier or model price,
+// an implausible FX rate or a large model loss the previous snapshot stays untouched.
 import { readFile } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 import { createHash } from "node:crypto";
@@ -41,7 +41,7 @@ try {
     collected_at,
     listing_url: docsUrl,
     pricing_url: productUrl,
-    method: `scripts/fetch-stackit-catalog.mjs (${collected_at}): model list from the first-party Available Shared Models documentation (page last updated ${docs_updated ?? "unknown"}; Type Chat rows under Text Models, embedding models excluded), each model's billing category and status from its Facts table. Token prices from the EU01 (Germany South) SKU table on the STACKIT AI Model Serving product page: ${tierText} per 1M input/output tokens, mapped via each model's billing category. USD = EUR x ${fx.rate} (ECB euro reference rate of ${fx.date}, latest available on ${collected_at}), four decimal places. See stackit.method.md.`,
+    method: `scripts/fetch-stackit-catalog.mjs (${collected_at}): model list from the first-party Available Shared Models documentation (page last updated ${docs_updated ?? "unknown"}; Type Chat rows under Text Models, embedding models excluded), each model's billing category and status from its Facts table. Token prices from the EU01 per-model price table on the STACKIT AI Model Serving product page: ${tierText} per 1M input/output tokens, mapped via each model's billing category and cross-checked against the row's own billing SKU. USD = EUR x ${fx.rate} (ECB euro reference rate of ${fx.date}, latest available on ${collected_at}), four decimal places. See stackit.method.md.`,
     fx_eur_usd: fx.rate,
     usd_normalization: { status: "applied", eur_to_usd: fx.rate, fx_rate_date: fx.date, source: ecbUrl, rounding: "4 decimal places" },
     docs_last_updated: docs_updated,
