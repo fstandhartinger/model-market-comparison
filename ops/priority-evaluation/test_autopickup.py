@@ -231,6 +231,27 @@ def stripe_event_for(rid: str, *, created: int | None = None, **overrides) -> di
 
 
 @unittest.skipIf(PG_BIN is None, "PostgreSQL server binaries are not installed")
+class SystemdLastSuccessTests(unittest.TestCase):
+    class _Units:
+        def __init__(self, states):
+            self.states = list(states)
+
+        def unit_state(self, unit):
+            return self.states.pop(0) if len(self.states) > 1 else self.states[0]
+
+    def test_waits_for_run_in_progress_instead_of_reporting_stale(self):
+        running = {"ActiveState": "activating", "Result": "success", "ExecMainStatus": "0", "ExecMainExitTimestamp": ""}
+        done = {"ActiveState": "inactive", "Result": "success", "ExecMainStatus": "0",
+                "ExecMainExitTimestamp": "Fri 2026-10-16 00:05:11 UTC"}
+        units = self._Units([running, running, done])
+        last = ap.systemd_last_success(units, "x.service", wait_seconds=5, poll_seconds=0)
+        self.assertEqual(last, datetime(2026, 10, 16, 0, 5, 11, tzinfo=timezone.utc))
+
+    def test_without_wait_a_run_in_progress_has_no_success(self):
+        running = {"ActiveState": "activating", "Result": "success", "ExecMainStatus": "0", "ExecMainExitTimestamp": ""}
+        self.assertIsNone(ap.systemd_last_success(self._Units([running]), "x.service"))
+
+
 class DatabaseTestCase(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:

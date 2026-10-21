@@ -4017,8 +4017,17 @@ def cycle(effects: Effects, synthetic_id: str | None = None, job_root: Path | No
     return counts
 
 
-def systemd_last_success(effects: Effects, unit: str) -> datetime | None:
+UNIT_BUSY_STATES = ("activating", "deactivating", "reloading")
+
+
+def systemd_last_success(effects: Effects, unit: str, wait_seconds: float = 0.0,
+                         poll_seconds: float = 5.0) -> datetime | None:
     values = effects.unit_state(unit)
+    # A oneshot run in progress clears ExecMainExitTimestamp; let it finish before judging.
+    deadline = time.monotonic() + wait_seconds
+    while values.get("ActiveState") in UNIT_BUSY_STATES and time.monotonic() < deadline:
+        time.sleep(poll_seconds)
+        values = effects.unit_state(unit)
     if values.get("Result") != "success" or values.get("ExecMainStatus") not in ("0", None):
         return None
     stamp = values.get("ExecMainExitTimestamp") or ""
@@ -4038,9 +4047,9 @@ def health(effects: Effects) -> dict[str, Any]:
         result = subprocess.run(["systemctl", "--user", "is-active", timer], text=True, capture_output=True, timeout=15, check=False)
         if result.stdout.strip() != "active":
             problems.append((f"timer:{timer}", f"{timer} is not active"))
-    for unit, limit in ((WORKER_UNIT, timedelta(minutes=20)), (MAIL_WATCH_UNIT, timedelta(hours=1))):
-        last = systemd_last_success(effects, unit)
-        if last is None or now - last > limit:
+    for unit, limit, wait in ((WORKER_UNIT, timedelta(minutes=20), 420), (MAIL_WATCH_UNIT, timedelta(hours=1), 150)):
+        last = systemd_last_success(effects, unit, wait_seconds=wait)
+        if last is None or utcnow() - last > limit:
             problems.append((f"stale:{unit}", f"{unit} has not succeeded within {int(limit.total_seconds() // 60)} minutes"))
     predicate = managed_predicate("r", None, JOB_ROOT)
     for row in sql_rows(f"""
