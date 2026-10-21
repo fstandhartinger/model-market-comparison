@@ -6262,6 +6262,76 @@
             "fact": "Pinned Arcbright Elf 1 12B card: Gemma 4 12B merged LoRA, bf16, 11,959,730,224 parameters; author elf_serve with native marker logits."
           }
         ]
+      },
+      "launchables-myles-g-31b": {
+        "arch": "closed-api",
+        "badges": {
+          "derivation": null,
+          "params": null,
+          "quant": null
+        },
+        "evidence": [
+          {
+            "url": "https://www.launchables.ai/licensing",
+            "kind": "provider-docs",
+            "fact": "Launchables publishes a hosted list price for Myles-G 31B (GBP 0.005 per million input tokens, output free) and no weights release; the endpoint context is 16,384 tokens. The base google/gemma-4-31B-it and the merged LoRA launchables/myles-g-31b are customer statements and were not independently inspected."
+          }
+        ]
+      },
+      "hyland-hs1": {
+        "arch": "closed-api",
+        "badges": {
+          "derivation": null,
+          "params": null,
+          "quant": null
+        },
+        "evidence": [
+          {
+            "url": "https://raw.githubusercontent.com/fstandhartinger/model-market-comparison/main/data/raw/benchmarks/jevbench/v1.6/jevbench-v1.6.36-results.json",
+            "kind": "artifact",
+            "fact": "Artifact key hyland-hs1 records a Hyland vendor-hosted API with no public weights or serving code; the customer states a Gemma-4-26B-A4B-it LoRA fine-tune served in FP8, not independently inspected."
+          }
+        ]
+      },
+      "goddragon-arbiter-4b": {
+        "arch": "open-llm-decoder",
+        "badges": {
+          "derivation": "fine-tune",
+          "params": "4B",
+          "quant": "bf16"
+        },
+        "evidence": [
+          {
+            "url": "https://huggingface.co/Goddragon/Arbiter-4B/blob/8fd20568f359f4156de55f016027efdc841d690a/README.md",
+            "kind": "model-card",
+            "fact": "Pinned Arbiter-4B card: base_model TokenRhythm/NeoHorse-Jev-4B (finetune), Apache-2.0, LoRA fine-tune with temperature calibration, non-generative structured decisions."
+          },
+          {
+            "url": "https://huggingface.co/Goddragon/Arbiter-4B/blob/8fd20568f359f4156de55f016027efdc841d690a/backbone/config.json",
+            "kind": "config.json",
+            "fact": "Pinned backbone config: model_type qwen3_5, bfloat16; the modification notice states the language-model weights were fine-tuned from Qwen/Qwen3.5-4B (author statement, unverified)."
+          }
+        ]
+      },
+      "roudone-decider-4b": {
+        "arch": "open-llm-decoder",
+        "badges": {
+          "derivation": "fine-tune",
+          "params": "4B",
+          "quant": "bf16"
+        },
+        "evidence": [
+          {
+            "url": "https://huggingface.co/roudone/Decider-4B/blob/a9a6a7924f9a6300c43b873df56414c087666083/README.md",
+            "kind": "model-card",
+            "fact": "Pinned Decider-4B card: base_model TokenRhythm/NeoHorse-1-4B, Apache-2.0, structured decision model fine-tuned on typed-decisions train and other collected decision datasets."
+          },
+          {
+            "url": "https://huggingface.co/roudone/Decider-4B/blob/a9a6a7924f9a6300c43b873df56414c087666083/backbone/config.json",
+            "kind": "config.json",
+            "fact": "Pinned backbone config: model_type qwen3_5_text, bfloat16; the modification notice states the language-model weights were fine-tuned from Qwen/Qwen3.5-4B (author statement, unverified)."
+          }
+        ]
       }
     },
     "imagejevbench": {
