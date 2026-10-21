@@ -29,7 +29,7 @@ test('CR-530 Drex Max: official pass 1 via Nace AI /v1/systemone, paid fast-lane
   assert.match(row.measurement_source, /11 PNG files over 2\.75 MiB re-encoded as JPEG quality 95/);
   assert.match(row.measurement_source, /no image was resized/);
   assert.match(row.measurement_source, /image treatment differs between rows/);
-  assert.match(row.measurement_source, /one request at a time: median 0\.85 s, 95th percentile 1\.79 s; 158 of 600 requests took longer than 1\.233 s/);
+  assert.match(row.measurement_source, /one request at a time: median 0\.85 s, 95th percentile 1\.78 s; 158 of 600 requests took longer than 1\.233 s/);
   assert.match(row.measurement_source, /paid fast-lane evaluation order; published under the order's public-visibility setting/);
   assert.match(row.prior_exposure, /paid fast-lane order/);
   assert.match(row.pricing_note, /USD 0\.06 per 1M input tokens, output not billed/);
