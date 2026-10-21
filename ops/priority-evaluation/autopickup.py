@@ -2033,6 +2033,12 @@ def dispatch_measurement(rid: str, job_dir: Path) -> None:
     review = validate_review_gate(job_dir)
     row = load_row(rid)
     state = load_state(rid)
+    # urgent-autofix-394 (17 Oct), restored 21 Oct (#22690/#22751): the legacy JevBench v1.5 profile is retired. A JevBench
+    # order without a host-recorded v1.6 profile admission must hold, never fall back to the retired set
+    # (attest 07d13315, mixlayer 27387658). ImageJevBench-only orders are unaffected; v1.6-admitted orders take
+    # evaluate_v16_generation() before this function is reached.
+    if "jevbench" in (row or {}).get("benchmarks", []) and "v16_profile_admission" not in state:
+        raise measurement_dispatch.OperationalHold("official_method_retired_requires_admission")
     runtimes = load_json_file(job_dir / "trusted-runner/RUNTIME.json", 100_000)
     metadata = load_json_file(job_dir / "trusted-runner/MEASUREMENT-META.json", 100_000)
     if not isinstance(runtimes, dict) or set(runtimes) != set(row["benchmarks"]):
