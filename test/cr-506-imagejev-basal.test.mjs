@@ -42,7 +42,7 @@ test('CR-506 basal-omni-1.0-ultra: self-hosted official pass 1, engine, zero-sho
   assert.equal(row.tracks.core.cost.source, 'measured GPU seconds x $1.19/GPU-hour');
   assert.equal(row.measurement_date_basis, 'Run timestamps: 17 Oct 2026, image run 09:31-09:38 UTC; pod 08:33-09:39 UTC.');
   assert.equal(row.ranked, true);
-  assert.equal(row.rank, 8);
+  assert.equal(row.rank, 9); // #8 when added (CR-506); CR-530 (drex-max) enters at #6
   assert.equal(row.release_ready, true);
   assert.deepEqual(row.holds, []);
 });
@@ -52,14 +52,14 @@ test('CR-506 basal-omni-1.0-ultra scores are the reviewed ones and the knock-on 
   const core = row.tracks.core, cu = row.tracks['computer-use'];
   near(core.capability, 60.55); near(core.axes.intelligence, 51.47); near(core.axes.calibration, 69.64); near(core.axes.speed, 82.94);
   near(row.score, 40.91); near(core.cost.usd_per_1000, 0.0846, 0.00005);
-  near(cu.capability_raw, 84.91); near(cu.composite.score, 50.25);
-  assert.equal(release.ranking.filter((r) => r.ranked).length, 61);
+  near(cu.capability_raw, 85.06); near(cu.composite.score, 50.29); // CR-530 (drex): +0.15 pp / +0.04 from the equating knock-on (84.91 / 50.25 at CR-506)
+  assert.equal(release.ranking.filter((r) => r.ranked).length, 62); // CR-530 (drex)
   const byRank = release.ranking.filter((r) => r.ranked).sort((a, b) => a.rank - b.rank);
-  assert.deepEqual(byRank.slice(6, 9).map((r) => r.key), ['kushal_gemma4_31b_it_autoloops', KEY, 'celeris_1_decision']);
+  assert.deepEqual(byRank.slice(7, 10).map((r) => r.key), ['kushal_gemma4_31b_it_autoloops', KEY, 'celeris_1_decision']); // CR-530 (drex): Drex Max enters at #6
   // the two rows that swap places because of the equating knock-on
   const rank = (k) => release.ranking.find((r) => r.key === k).rank;
-  assert.equal(rank('cua_s1_4b'), 32);
-  assert.equal(rank('bonsai_2_27b_pq2_0'), 33);
+  assert.equal(rank('cua_s1_4b'), 34); // 32 at CR-506; CR-530 (drex): falls two places below Bonsai-2-27B
+  assert.equal(rank('bonsai_2_27b_pq2_0'), 33); // 33 at CR-506 and CR-530 (drex)
 });
 
 test('CR-506 neither top five changes; basal-omni-1.0-ultra is inside both caps (cost 0.0846 vs cap 0.318) and #11 of 52 in the Capability headline', () => {
@@ -69,9 +69,9 @@ test('CR-506 neither top five changes; basal-omni-1.0-ultra is inside both caps 
     ['kettei_fat', 'wity_1', 'imajev_4b', 'kettei_chub', 'sage_1_4_images']);
   const inCap = (r) => r.tracks.core.cost.usd_per_1000 <= e.cost_usd_per_1000_cap && r.tracks.core.speed.adjusted_p50_s <= e.latency_p50_s_cap;
   const capped = R.filter(inCap).sort((a, b) => b.tracks.core.capability - a.tracks.core.capability);
-  assert.deepEqual(capped.slice(0, 5).map((r) => r.key), ['kettei_fat', 'sage_1_4_images', 'jev_1_13_images', 'kushal_gemma4_31b_it_autoloops', 'imajev_4b']);
-  assert.equal(capped.length, 52);
-  assert.equal(capped.findIndex((r) => r.key === KEY) + 1, 11);
+  assert.deepEqual(capped.slice(0, 5).map((r) => r.key), ['kettei_fat', 'sage_1_4_images', 'drex_max', 'jev_1_13_images', 'kushal_gemma4_31b_it_autoloops']); // CR-530 (drex): Drex Max enters at #3 (the Capability top five changes there), Imajev-4B leaves
+  assert.equal(capped.length, 53); // 52 at CR-506; CR-530 (drex)
+  assert.equal(capped.findIndex((r) => r.key === KEY) + 1, 12); // #11 at CR-506; CR-530 (drex) enters above
   const cu = R.filter((r) => r.tracks['computer-use']?.axes);
   assert.deepEqual([...cu].sort((a, b) => b.tracks['computer-use'].composite.score - a.tracks['computer-use'].composite.score).slice(0, 5).map((r) => r.key),
     ['kettei_fat', 'kettei_chub', 'wity_1', 'wity_1_off', 'imajev_4b']);
