@@ -46,7 +46,7 @@ import { readJevbenchSeoData } from '../lib/jevbench-seo.mjs';
 import { readJevbenchAgentFeed, readJevbenchReleaseFeed, readJevbenchSeoFeed } from '../lib/jevbench-agent-feed.mjs';
 import { baseModelFor } from '../lib/jev-base-model.mjs';
 import { jevbenchLlmsFull } from '../lib/jevbench-llms-full.mjs';
-test('live boards and feed resolve one new Seb; SEO omits it and archive keeps the old row',async()=>{
+test('live boards, feed and SEO resolve one new Seb; the base projection omits it and archive keeps the old row',async()=>{
  const {artifact}=await readCurrentJevbench(),old=artifact.systems.find(s=>s.key===k);
  assert.equal(baseModelFor('jevbench',k).label,'Qwen/Qwen3.5-9B');assert.equal(baseModelFor('jevbench',k).status,'disclosed');
  assert.equal(old.ranked,false);assert.equal(old.supersedes_base_row,undefined);
@@ -54,12 +54,12 @@ test('live boards and feed resolve one new Seb; SEO omits it and archive keeps t
  assert.equal(rows.length,1);assert.equal(rows[0].ranked,true);assert.equal(rows[0].draw.id,'v1.6-regular-20261012');assert.equal(rows[0].draw.release,'v1.6.36');
  for(const b of Object.values(m.board))assert.equal(b.order.filter(key=>key===k).length,1);
  const {feed}=await readJevbenchAgentFeed();assert.equal(feed.systems.filter(s=>s.key===k).length,1);
- const seo=await readJevbenchSeoData();assert.equal(seo.systems.filter(s=>s.key===k).length,0);assert.equal(seo.artifact.revision,'v1.6.1');
+ const seo=await readJevbenchSeoData(),seoRows=seo.systems.filter(s=>s.key===k);assert.equal(seoRows.length,1);assert.equal(seoRows[0].measurement_revision,feed.systems.find(s=>s.key===k).measured_in);assert.equal(seo.artifact.base_revision,'v1.6.1');
  const projected=await readJevbenchSeoFeed();
  const main=await readJevbenchReleaseFeed();
  assert.deepEqual(projected.feed.systems.map(s=>s.key),main.feed.systems.filter(s=>s.key!==k).map(s=>s.key),'main base-release key set minus superseded Seb');
  assert.deepEqual(projected.feed.systems,main.feed.systems.filter(s=>s.key!==k),'all other base projection rows unchanged');
- const llms=await jevbenchLlmsFull();assert.equal(llms.split('\n').filter(l=>l.includes('| seb-9b |')).length,0);
+ const llms=await jevbenchLlmsFull();assert.equal(llms.split('\n').filter(l=>l.includes('| seb-9b |')).length,1);
  const archive=await readJevbenchReleaseFeed();assert.equal(archive.feed.systems.find(s=>s.key===k).listing,old.listing);
  const bytes=await readFile('data/raw/benchmarks/jevbench/v1.6/jevbench-v1.6.1-results.json');assert.equal(createHash('sha256').update(bytes).digest('hex'),'5cd8c1332226ea9c179883d2285c0d8b8cc593ae38f2645197364a7ddd9c83c1');
 });

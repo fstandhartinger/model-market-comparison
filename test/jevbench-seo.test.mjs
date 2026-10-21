@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readCurrentJevbench} from '../lib/jevbench-current.mjs';
-import {readJevbenchReleaseFeed} from '../lib/jevbench-agent-feed.mjs';
+import {readJevbenchAgentFeed} from '../lib/jevbench-agent-feed.mjs';
 import {readJevbenchSeoData,currentComparisonPairs,JEV_LEGACY_COMPARISONS,isOpenWeightJevRow} from '../lib/jevbench-seo.mjs';
 import {jevbenchLlmsFull} from '../lib/jevbench-llms-full.mjs';
 import {isJevbenchV16ExcludedKey} from '../lib/jevbench-v16-public-scope.mjs';
@@ -9,8 +9,9 @@ import {importSeoModule,renderSeo,parseJsonLd} from './jevbench-seo-render.mjs';
 
 const data = await readJevbenchSeoData();
 test('SEO headline ranks match the open-weights board in the current public feed, not artifact-wide ranks',async()=>{
- const {feed}=await readJevbenchReleaseFeed();const {artifact}=await readCurrentJevbench();
- assert.equal(data.artifact.revision,artifact.revision);
+ // 21 Oct 2026: the SEO pages follow the merged live board (/jev-models, /api/jevbench/latest) built on the current base release.
+ const {feed}=await readJevbenchAgentFeed();const {artifact}=await readCurrentJevbench();
+ assert.equal(data.artifact.revision,feed.latest_release);assert.equal(data.artifact.base_revision,artifact.revision);
  assert.deepEqual(data.ranked.map(r=>[r.key,r.rank,r.capability]),feed.systems.filter(r=>r.capability.open_board_rank!=null).sort((a,b)=>a.capability.open_board_rank-b.capability.open_board_rank).map(r=>[r.key,r.capability.open_board_rank,r.capability.score]));
  assert.ok(data.systems.some(r=>r.key==='jev-1.13.0'));
  assert.ok(Number.isFinite(Date.parse(data.date)));
@@ -27,7 +28,8 @@ test('picks and open-weight classification use current measured evidence',()=>{
  assert.equal(data.winners.mostAccurate.key,[...data.ranked].sort((a,b)=>b.axes.intelligence-a.axes.intelligence)[0].key);
  assert.equal(data.winners.fastest.key,[...data.ranked].sort((a,b)=>b.axes.speed-a.axes.speed)[0].key);
  assert.equal(data.winners.cheapest.key,[...data.ranked].filter(r=>Number.isFinite(r.cost?.usd_per_1000)).sort((a,b)=>a.cost.usd_per_1000-b.cost.usd_per_1000)[0].key);
- assert.deepEqual(data.openWeightAlternatives.map(r=>r.key).sort(),data.systems.filter(isOpenWeightJevRow).map(r=>r.key).sort());
+ // Open-weight systems ranked on the API board stay off the open-weights alternatives list (v1.7 scope rule).
+ assert.deepEqual(data.openWeightAlternatives.map(r=>r.key).sort(),data.systems.filter(r=>isOpenWeightJevRow(r)&&r.board!=='api').map(r=>r.key).sort());
 });
 test('main server JSON-LD renders valid Dataset, Breadcrumb and visible matching FAQ',async()=>{
  const component=await importSeoModule('components/JevBenchJsonLd.tsx');
