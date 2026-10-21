@@ -7,6 +7,9 @@ COPY . .
 RUN npm run build
 
 FROM node:20-slim AS run
+# eMudhra CA distrust (Oct 2026): current CA bundle, and make Node trust it instead of its bundled root list
+RUN apt-get update && apt-get install -y --no-install-recommends ca-certificates && rm -rf /var/lib/apt/lists/*
+ENV NODE_OPTIONS="--use-openssl-ca"
 WORKDIR /app
 ARG SOURCE_COMMIT=unknown
 # Coolify injects SOURCE_COMMIT for every deployed container. Local/non-Coolify
