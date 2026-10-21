@@ -1,7 +1,7 @@
 import {jevSystemPath} from '../lib/jev-system-slug.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {readFileSync,readdirSync} from 'node:fs';
+import {existsSync,readFileSync,readdirSync} from 'node:fs';
 import {readJevbenchSeoData,readJevbenchSeoUrls} from '../lib/jevbench-seo.mjs';
 import {importSeoModule,renderSeo,parseJsonLd} from './jevbench-seo-render.mjs';
 const read=(p)=>readFileSync(new URL(`../${p}`,import.meta.url),'utf8');
@@ -16,9 +16,11 @@ test('the system page resolves the current release before any older reader',()=>
 });
 test('every comparison route renders current reference and valid matching FAQ/Breadcrumb',async()=>{
  for(const pair of data.comparisons){
-  const page=await importSeoModule(`app/jev-models/${pair.slug}/page.tsx`);
+  // Pairs without their own route file (new top-eight rivals) are served by the dynamic [system] route.
+  const own=existsSync(new URL(`../app/jev-models/${pair.slug}/page.tsx`,import.meta.url));
+  const page=await importSeoModule(own?`app/jev-models/${pair.slug}/page.tsx`:'app/jev-models/[system]/page.tsx');
   // React does not await nested server functions outside Next; invoke the actual shared server component.
-  const element=page.default();const html=renderSeo(await element.type(element.props));
+  const element=own?page.default():await page.default({params:Promise.resolve({system:pair.slug})});const html=renderSeo(await element.type(element.props));
   assert.ok(html.includes(data.artifact.revision));assert.ok(html.includes(pair.label));
   if(!pair.inCurrentRelease){assert.match(html,/Not in the current release/);assert.ok(html.includes(pair.rival.last_measured_on));}
   const graph=parseJsonLd(html)[0]['@graph'];assert.ok(graph.some(g=>g['@type']==='BreadcrumbList'));

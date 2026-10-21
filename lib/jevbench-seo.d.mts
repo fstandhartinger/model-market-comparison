@@ -9,9 +9,9 @@ export type SeoSystem = Omit<JevV15System,'open'|'speed'|'licence'> & {
 };
 export type SeoComparison = {key:string;slug:string;label:string;jev:SeoSystem;rival:SeoSystem;inCurrentRelease:boolean};
 export type SeoData = {
- artifact: JevV15Artifact & {generated_utc:string;score_one_liner:string}; sha256:string;
+ artifact: JevV15Artifact & {generated_utc:string;score_one_liner:string;base_revision:string}; sha256:string;
  feed: {capability_policy:{definition:string;cost_cap_usd_per_1000:number;median_latency_cap_s:number;factor:number}};
- releasePage:string;date:string;month:string;systems:SeoSystem[];reference:SeoSystem;ranked:SeoSystem[];openRanked:SeoSystem[];apiRows:SeoSystem[];openQualifying:number;topFive:SeoSystem[];
+ releasePage:string;basePage:string;date:string;month:string;systems:SeoSystem[];reference:SeoSystem;ranked:SeoSystem[];openRanked:SeoSystem[];apiRows:SeoSystem[];openQualifying:number;topFive:SeoSystem[];
  comparisons:SeoComparison[];historical:SeoSystem[];modelKeys:string[];
  winners:{mostAccurate:SeoSystem|null;fastest:SeoSystem|null;cheapest:SeoSystem|null};selfHostable:SeoSystem[];openWeightAlternatives:SeoSystem[];
 };
