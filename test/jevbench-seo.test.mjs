@@ -38,7 +38,7 @@ test('main server JSON-LD renders valid Dataset, Breadcrumb and visible matching
  assert.equal(json['@graph'][0].name,'JevBench');assert.equal(json['@graph'][0].dateModified,data.date);
  assert.ok(json['@graph'][0].distribution.contentUrl.endsWith('/api/jevbench/latest'));
  for(const q of json['@graph'][2].mainEntity){assert.ok(html.includes(q.name.replace(/&/g,'&amp;')));assert.ok(q.acceptedAnswer.text);}
- assert.equal(json['@graph'][2].mainEntity.length,4);
+ assert.equal(json['@graph'][2].mainEntity.length,5);
 });
 test('static model params include every current and historical public system; private keys never escape',async()=>{
  const page=await importSeoModule('app/jev-models/[system]/page.tsx');const params=await page.generateStaticParams();
