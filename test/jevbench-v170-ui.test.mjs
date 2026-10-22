@@ -134,6 +134,10 @@ test('model-page panel: v1.6 values labelled v1.6; pending row says so; limit bl
   assert.match(ok, /data-bh-jev-v16-previous="rescored"/);
   assert.match(ok, /JevBench v1\.6\.37 values \(method v1\.6, before the 10 s rule\)/);
   assert.match(ok, /Composite 78\.90/);
+  assert.match(ok, /re-scored under the 10 s rule from the recorded per-decision times/);
+  const remeasured = html(h(panel.JevPreviousValuesPanel, { row: { ...slow, remeasured_in: 'v1.7.0' } }));
+  assert.match(remeasured, /come from a new GPU measurement on the same items and replace them/);
+  assert.doesNotMatch(remeasured, /re-scored under the 10 s rule from the recorded/);
   const pend = html(h(panel.JevPreviousValuesPanel, { row: pending }));
   assert.match(pend, /data-bh-jev-v16-previous="pending"/);
   assert.match(pend, /Re-measure pending under the 10 s rule/);

@@ -1,5 +1,5 @@
-// Fake JevBench v1.7.0 board for the S5 UI tests and the local screenshot page (never shipped; no production data).
-// Built from r160/v170/ROW-SHAPE.md. Five rows: re-scored GPU, re-scored API equated A4, pending CPU, a row with many
+// Fake JevBench v1.7.0 board for the UI tests and the local screenshot page (never shipped; no production data).
+// Five rows: re-scored GPU, re-scored API equated A4, pending CPU, a row with many
 // decisions over 10 s, and a dated-carry row (separate list). v1.6 values sit only under `previous`.
 
 const prev = (over = {}) => ({

@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import { readOptionalJevbenchV170Release, readJevbenchV170ForBoard, hasPublishedJevbenchV170Release, validateJevbenchV170Bundle, withV170Restatement, V170_ROW_SPEC, V170_PENDING_KEYS, V170_BASE_RELEASE,
-         V170_PENDING_WHY, V170_CARRY_LABEL, V170_NEW_KEYS, V170_HELD_BACK_KEYS, V170_REMEASURED_KEYS, V170_PRICING_MODULE_SHA256, V170_PREDECESSOR_PRICING_MODULE_SHA256 } from '../lib/jevbench-v170-release.mjs';
+         V170_PENDING_WHY, V170_CARRY_LABEL, V170_NEW_KEYS, V170_REMEASURED_KEYS, V170_PRICING_MODULE_SHA256, V170_PRICING_ADDED_KEYS, V170_PREDECESSOR_PRICING_MODULE_SHA256 } from '../lib/jevbench-v170-release.mjs';
 import { readJevbenchV161Release } from '../lib/jevbench-v16-release.mjs';
 import { readJevbenchV157Release } from '../lib/jevbench-v15-release.mjs';
 import { assembleJevBoard, readChainLatestRelease, readLatestJevbenchRelease } from '../lib/jevbench-live-board.mjs';
@@ -67,11 +67,11 @@ if (!reviewed) {
     assert.equal(r.artifact.restates.board_release, V170_BASE_RELEASE);
     assert.deepEqual(r.artifact.method, { label: 'v1.7', decision_limit_s: 10, rule: 'latency_s > 10.000 s -> failed', treatment: 'share' });
     assert.equal(r.carry.label, V170_CARRY_LABEL);
-    assert.equal(r.proof.pricing_module_sha256, 'a8a05890ddab2d39d1a1bd543f2b5c83842bdc70aa54766788bc89b7a8a448d7');
+    assert.equal(r.proof.pricing_module_sha256, '81e3578ff652f4eb05829f2068ee7810a0d13a227a9eaf3683aef6d07ba25524');
     assert.equal(r.proof.pricing_module_sha256, V170_PRICING_MODULE_SHA256);
-    assert.ok(['1f4d1f7b1ce97ab27b938043444b9c2757e4a9dbecc799a803122588401f5bf1', V170_PRICING_MODULE_SHA256].includes(r.proof.predecessor_pricing_module_sha256));
+    assert.ok(['a8a05890ddab2d39d1a1bd543f2b5c83842bdc70aa54766788bc89b7a8a448d7', V170_PRICING_MODULE_SHA256].includes(r.proof.predecessor_pricing_module_sha256));
     assert.equal(r.proof.predecessor_pricing_module_sha256, V170_PREDECESSOR_PRICING_MODULE_SHA256);
-    assert.deepEqual(r.proof.pricing_change.added_keys, V170_PREDECESSOR_PRICING_MODULE_SHA256 === V170_PRICING_MODULE_SHA256 ? [] : ['drex-max']); assert.equal(r.proof.pricing_change.rows_whose_price_changes, 0);
+    assert.deepEqual(r.proof.pricing_change.added_keys, V170_PREDECESSOR_PRICING_MODULE_SHA256 === V170_PRICING_MODULE_SHA256 ? [] : [...V170_PRICING_ADDED_KEYS]); assert.equal(r.proof.pricing_change.rows_whose_price_changes, 0);
   });
   test('every re-scored row shows its v1.6 values next to the v1.7 values and the time-limit evidence', () => {
     for (const s of rescored) {
@@ -140,7 +140,7 @@ if (!reviewed) {
     rejects((b) => { b.proof.predecessor_pricing_module_sha256 = '0'.repeat(64); }, /pricing module/);
     rejects((b) => { b.proof.pricing_change.rows_whose_price_changes = 1; }, /pricing change record/);
     rejects((b) => { b.proof.pricing_change.added_keys = ['drex-max', 'other']; }, /pricing change record/);
-    rejects((b) => { b.proof.pricing_change.added_keys = V170_PREDECESSOR_PRICING_MODULE_SHA256 === V170_PRICING_MODULE_SHA256 ? ['drex-max'] : []; }, /pricing change record/);
+    rejects((b) => { b.proof.pricing_change.added_keys = V170_PREDECESSOR_PRICING_MODULE_SHA256 === V170_PRICING_MODULE_SHA256 ? [...V170_PRICING_ADDED_KEYS] : []; }, /pricing change record/);
     rejects((b) => { b.proof.scorers.score_v17 = '0'.repeat(64); }, /scorer pins/);
     rejects((b) => { b.proof.publication_approval.top_five_preview.card_id = '12345'; }, /preview approval card/);
     rejects((b) => { b.proof.publication_approval.top_five_preview.selection = 'PLACEHOLDER-SELECTION'; }, /placeholder not filled/);
@@ -180,12 +180,19 @@ if (!reviewed) {
   });
 
 
-  test('the Singularity Super Decider rows are held back (price-first rule): not in the artifact, rejected unless the build has the switch', { skip: !newKey }, () => {
-    assert.deepEqual([...V170_HELD_BACK_KEYS].sort(), ['singularity-super-decider', 'singularity-super-decider-thinking']);
-    assert.ok(V170_ROW_SPEC.include_singularity === false || V170_ROW_SPEC.include_singularity === true);
-    if (V170_ROW_SPEC.include_singularity === false) assert.ok(!r.artifact.systems.some((s) => V170_HELD_BACK_KEYS.includes(s.key)));
-    for (const k of V170_HELD_BACK_KEYS) {
-      rejects((b) => { const x = structuredClone(row(b, newKey)); x.key = k; b.artifact.systems.push(x); b.artifact.roster_count += 1; }, /held-back row/);
+  test('the two Super Decider rows are ranked, priced at the launch list price of the provider\'s public product page, and say where the price comes from', () => {
+    const sd = r.artifact.systems.filter((s) => s.key.startsWith('singularity-super-decider'));
+    assert.deepEqual(sd.map((s) => s.key).sort(), ['singularity-super-decider', 'singularity-super-decider-thinking']);
+    assert.deepEqual([...V170_PRICING_ADDED_KEYS].sort(), sd.map((s) => s.key).sort());
+    const usd = { 'singularity-super-decider': 0.03919652, 'singularity-super-decider-thinking': 0.0520983 };
+    for (const s of sd) {
+      assert.ok(s.ranked && s.listing === 'ranked' && Number.isFinite(s.scores.A) && Number.isFinite(s.axes.cost), s.key);
+      assert.equal(s.cost.kind, 'listed');
+      assert.ok(Math.abs(s.cost.common_basis.usd_per_1000_all_items - usd[s.key]) < 1e-9, `${s.key}: all-items cost from the launch list price`);
+      assert.match(s.cost.basis, /singularitycompute\.com\/super-decider, fetched 22 Oct 2026: USD 0\.03 per 1M input tokens, output tokens free/);
+      assert.match(s.cost.basis, /ASI:Cloud catalogue itself was not reachable/);
+      assert.doesNotMatch(s.cost.basis, /I-1|I-3|interpretation/);
+      assert.match(s.underlying, /MANDATORY DISCLOSURE/); assert.equal(s.paid_fast_lane, true);
     }
   });
   test('a re-measured row (GPU, same items) replaces its CPU row in full: GPU scores and times, the CPU row as previous, disclosure on the row', () => {
