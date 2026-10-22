@@ -42,7 +42,7 @@ test('CR-530 Drex Max: official pass 1 via Nace AI /v1/systemone, paid fast-lane
   assert.deepEqual(row.holds, []);
 });
 
-test('CR-530 Drex Max has aggregate-only category and answered-coverage cells; TypeSafe-20 gap is a recorded temporary exception', async () => {
+test('CR-530 Drex Max has aggregate-only category and answered-coverage cells; TypeSafe-20 cells were added by CR-531 and the temporary exception is gone', async () => {
   const cells = release.categories.systems[KEY];
   assert.equal(Object.keys(cells.capabilities).length, 14);
   assert.equal(Object.keys(cells.usecases).length, 5);
@@ -50,9 +50,10 @@ test('CR-530 Drex Max has aggregate-only category and answered-coverage cells; T
   const coverage = JSON.parse(await read('../data/raw/benchmarks/jevbench/multimodal-preview/answered-coverage-v0.3.json'));
   assert.equal(coverage.systems[KEY].source.public_score_sha256, row.source_sha256);
   const ts20 = JSON.parse(await read('../data/imagejev-ts20-categories.json'));
-  assert.equal(ts20.systems[KEY], undefined);
+  assert.equal(Object.keys(ts20.systems[KEY].typesafe).length, 20);
+  assert.deepEqual(ts20.summary[KEY], { rows: 600, errors: 0 });
   const exceptions = JSON.parse(await read('../data/jevbench-breakdown-exceptions.json'));
-  assert.ok(exceptions.entries.some((e) => e.board === 'imagejevbench' && e.key === KEY && e.dims.join() === 'typesafe'));
+  assert.ok(!exceptions.entries.some((e) => e.key === KEY));
 });
 
 test('CR-530 Drex Max scores: Capability, composite rank and the top-five effect', () => {
@@ -69,5 +70,5 @@ test('CR-530 revision history records the Drex Max addendum with the Capability 
   assert.match(page, /paid fast-lane evaluation order, published under the order’s public-visibility setting/);
   assert.match(page, /The composite top five does not change: Drex Max ranks #6 by composite \(44\.6\)/);
   assert.match(page, /The Capability headline \(53 of 64 rows\) top five changes: Drex Max enters at #3/);
-  assert.match(page, /TypeSafe-20 cells for this row have not been measured/);
+  assert.match(page, /TypeSafe-20 cells for this row were measured on 21 Oct 2026 on the 600 sealed items with 0 errors; the TypeSafe-20 bank had previously been exposed to 16 other API providers/);
 });
