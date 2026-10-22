@@ -51,7 +51,7 @@ test('live boards, feed and SEO resolve one new Seb; the base projection omits i
  assert.equal(baseModelFor('jevbench',k).label,'Qwen/Qwen3.5-9B');assert.equal(baseModelFor('jevbench',k).status,'disclosed');
  assert.equal(old.ranked,false);assert.equal(old.supersedes_base_row,undefined);
  const m=jevWithCohortRows(artifact,await readCohortRows()),rows=m.systems.filter(s=>s.key===k);
- assert.equal(rows.length,1);assert.equal(rows[0].ranked,true);assert.equal(rows[0].draw.id,'v1.6-regular-20261012');assert.equal(rows[0].draw.release,'v1.6.39');
+ assert.equal(rows.length,1);assert.equal(rows[0].ranked,true);assert.equal(rows[0].draw.id,'v1.6-regular-20261012');assert.equal(rows[0].draw.release,'v1.6.40');
  for(const b of Object.values(m.board))assert.equal(b.order.filter(key=>key===k).length,1);
  const {feed}=await readJevbenchAgentFeed();assert.equal(feed.systems.filter(s=>s.key===k).length,1);
  const seo=await readJevbenchSeoData(),seoRows=seo.systems.filter(s=>s.key===k);assert.equal(seoRows.length,1);assert.equal(seoRows[0].measurement_revision,feed.systems.find(s=>s.key===k).measured_in);assert.equal(seo.artifact.base_revision,'v1.6.1');

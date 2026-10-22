@@ -54,7 +54,7 @@ test('v1.6.38 reader accepts a v1.6.39 topic supplement only with unchanged carr
  assert.equal(mut(c=>{assert.ok(bump(c.systems[roster.find(k=>c.systems[k])]))}),false);
  assert.equal(mut(c=>{c.extra_rows={}}),false);
  assert.equal(mut(c=>{delete c.systems[roster.find(k=>c.systems[k])]}),false);
- assert.equal(mut(c=>{c.release='v1.6.40'}),false);
+ assert.equal(mut(c=>{c.release='v1.6.41'}),false);
  assert.equal(mut(c=>{c.release='v1.6.38';c.results_sha256='y'}),false);
  assert.equal(v1638TopicSupplementBinds(null,'x',roster),false);
 });

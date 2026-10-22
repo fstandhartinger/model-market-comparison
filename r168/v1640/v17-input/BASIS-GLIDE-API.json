@@ -1,0 +1,39 @@
+{
+ "key": "fastino-glide-api",
+ "latency": {
+  "decisions_over_10s": 2,
+  "max_s": 76.42,
+  "note": "answered rows at 21.15 s and 76.42 s; the two 502 rows took 7.73 s and 2.56 s"
+ },
+ "price_basis": "operator tariff USD 0.04/M input, output free (I-1 launch-list key in LAUNCH_LIST_PRICE_API)",
+ "pricing_module_sha256": "aa2afcd5a58d0c4cc0e3d6867d590c70b6ac58e971410c27faf9628f97bcf8b7",
+ "raw_sha256": "5b818aef392079ea9f55dcf7091edec2a1e0f50709ca12e3c50e1a3934102cec",
+ "scoring": {
+  "derived_gold_sha256": "9f1f8200d0a1b4384f43ffc0a91f3f36e4790fc3dbcef7486bf233b0142baa47",
+  "excluded_items": 3,
+  "exclusion_list_sha256": "31b47af58dce134a70e5cbf60aad40db0000dd398f26649070fb7c9dfd1deeb3",
+  "frozen_gold_sha256": "fcb94f49d933e8df6acf26120c24264454095125f77735eb8eb7d2ad41b2f7a4",
+  "n": 1497,
+  "note": "v1.7 builder: score with the unmodified scorer on the derived gold (make_gold_1497.py), then merge"
+ },
+ "status": {
+  "http": {
+   "200": 1480,
+   "400": 15,
+   "502": 2
+  },
+  "ok": 1480,
+  "rows": 1497
+ },
+ "tokens": {
+  "all_input_ok_rows": 723504,
+  "all_output": 0,
+  "ceiling_tokens": 65536,
+  "common_input_incl_estimates": 854576,
+  "common_output": 0,
+  "failed_rows_priced_at_ceiling": 17
+ },
+ "usd_per_1000_all_1497": 0.0491012959251837,
+ "usd_per_1000_common_basis_1482": 0.023065479082321188,
+ "v16_result": "see data/raw/benchmarks/jevbench/v1.6/jevbench-v1.6.40-results.json (this commit)"
+}

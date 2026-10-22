@@ -1,0 +1,27 @@
+{
+ "fastino-glide-api": {
+  "api_subset": "S",
+  "author": "Fastino",
+  "base_model": null,
+  "code_revision": "Vendor-hosted API (POST api.fastino.ai/v1/systemone, model fastino/GLiDE) through the unchanged TypeSafe adapter with one added request field, store:false; no vendor code ran locally.",
+  "cost_basis": "Operator's own published standard usage tariff: USD 0.04 per 1M INPUT tokens, output not billed (docs.fastino.ai/pricing, GLiDE row; page read 22 Oct 2026 20:34 UTC, saved copy sha256 22c0758f). Counted under interpretation I-1 (a manufacturer's standard, non-promotional list price counts from day 1) by the frozen pricing module pricing_v15 (sha256 aa2afcd5a58d0c4cc0e3d6867d590c70b6ac58e971410c27faf9628f97bcf8b7), which carries one added launch-list-price key for this row and nothing else. Applied to this row's own provider-reported input tokens on the answered rows; the 17 requests that returned an error are priced at the API's 65,536-token prompt ceiling, the documented context estimate. COMMON COST BASIS (v1.6.30): cost per 1,000 decisions is computed on the common items of this draw, leaving out the 15 very long items that count for no row; this row scored 1,497 items, so the basis here is 1,482 items. This row: USD 0.023065 per 1,000 decisions (0.357x the official cost cap USD 0.064595), against USD 0.049101 over all 1,497 scored items. The older measurement of this vendor's GLiDE on 6 Oct 2026 (key fastino-glide) was priced at the then tariff of USD 0.15 per 1M input tokens and is unchanged.",
+  "cost_kind": "estimate",
+  "disclosure": "SCORED ON 1,497 OF THE DRAW'S 1,500 ITEMS: 3 items Fastino had already seen through its hosted GLiNER-2.5-Decide on 8 Oct were never sent (custody rule: an item a provider has seen is never scored for that provider). The row is scored with the unmodified frozen scorer on the draw's gold without those 3 items (a second invocation of the same scorer; the other rows of this board are scored on all 1,500 items). PROVIDER-HOSTED: Fastino's API serves the model as `glide_v2` (every answered response reported it); the weights and serving were not inspected, and this is not the open-weights GLiDE 1.2 release, which is a separate pending measurement. RETENTION: Fastino's default is to retain API inputs; every request carried store:false and every answered response returned the header x-fastino-data-retention: not-stored (checked on all 1,480 answered requests, and on one non-item request before the first item was sent). NOT ANSWERED, counted wrong: 15 items exceed the API's 65,536-token prompt limit (HTTP 400 'prompt exceeds the maximum context length'), counted wrong; and 2 gateway errors (HTTP 502) from Fastino's API, not retried (one pass), counted wrong. PRICE CHANGED SINCE THE FIRST MEASUREMENT: on 6 Oct 2026 this vendor's GLiDE was listed at USD 0.15 per 1M input tokens with a 40,000-token prompt limit and scored on 600 items (key fastino-glide, Capability 77.0, outside the cost cap); today's tariff is USD 0.04 per 1M input tokens with a 65,536-token limit, and this row is a new measurement on the full draw. The older row stays as history. Latency was measured from Sandy (Germany) with no API adjustment, while the evaluation host was busy with other work; 2 answered decisions took more than 10 seconds (21.15 s and 76.42 s); v1.6 applies no 10-second rule. Native probabilities on all three question types, no generated tokens; the customer-side statements about the model are the vendor's and are not independently verified. SEALED ITEMS SENT TO THE VENDOR: the API sees the 1,197 sealed items it was sent; acceptable because every sealed item of this draw was already retired from scoring.",
+  "display": "Fastino GLiDE (hosted API, 22 Oct 2026)",
+  "endpoint_condition": "Vendor-hosted api.fastino.ai /v1/systemone API, model `fastino/GLiDE` (responses report glide_v2), evaluator key, every request with store:false; latency measured from Sandy (Germany) on every item without API adjustment. Full S+P draw of v1.6-regular-20261012 minus the 3 custody-excluded items (1,497 requests, one pass, no retries) through the unchanged run_api_full_v161.py; the full-set exposure gate logged the 1,197 sealed items to the provider before the first request. Measured 22 Oct 2026 by the evaluator; the vendor did not take part in the run.",
+  "endpoint_kind": "api",
+  "lane": "api",
+  "licence": "Proprietary hosted API (no weights release)",
+  "price_in_per_m": 0.04,
+  "price_kind": "estimate",
+  "price_out_per_m": 0.0,
+  "ranked": true,
+  "repo": "https://fastino.ai",
+  "revision": null,
+  "support": {
+   "choice": "native",
+   "noul": "native",
+   "score": "native"
+  }
+ }
+}

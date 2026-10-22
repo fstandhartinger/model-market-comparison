@@ -6397,6 +6397,21 @@
             "fact": "architectures: [\"Gemma4ForConditionalGeneration\"]; model_type: \"gemma4\"."
           }
         ]
+      },
+      "fastino-glide-api": {
+        "arch": "closed-api",
+        "badges": {
+          "derivation": null,
+          "params": null,
+          "quant": null
+        },
+        "evidence": [
+          {
+            "url": "https://docs.fastino.ai/pricing.md",
+            "kind": "provider-docs",
+            "fact": "Fastino documents GLiDE behind POST /v1/systemone (model fastino/GLiDE) at USD 0.04 per 1M input tokens and no output charge; the API serves it as glide_v2; no evaluated weights are published."
+          }
+        ]
       }
     },
     "imagejevbench": {

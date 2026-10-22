@@ -1,0 +1,125 @@
+TAP version 13
+# Subtest: v1.6.40 candidate requires independent PASS
+ok 1 - v1.6.40 candidate requires independent PASS
+  ---
+  duration_ms: 6088.18534
+  ...
+# Subtest: v1.6.40 hosted-API row, carried scores/intervals, full category coverage
+ok 2 - v1.6.40 hosted-API row, carried scores/intervals, full category coverage
+  ---
+  duration_ms: 0.52302
+  ...
+# Subtest: v1.6.40 rejects carried interval
+ok 3 - v1.6.40 rejects carried interval
+  ---
+  duration_ms: 87.825363
+  ...
+# Subtest: v1.6.40 rejects new cost
+ok 4 - v1.6.40 rejects new cost
+  ---
+  duration_ms: 119.327575
+  ...
+# Subtest: v1.6.40 rejects strip disclosure
+ok 5 - v1.6.40 rejects strip disclosure
+  ---
+  duration_ms: 127.704976
+  ...
+# Subtest: v1.6.40 rejects rank swap
+ok 6 - v1.6.40 rejects rank swap
+  ---
+  duration_ms: 125.723793
+  ...
+# Subtest: v1.6.40 rejects strip categories
+ok 7 - v1.6.40 rejects strip categories
+  ---
+  duration_ms: 127.964741
+  ...
+# Subtest: v1.6.40 rejects manifest path
+ok 8 - v1.6.40 rejects manifest path
+  ---
+  duration_ms: 66.695244
+  ...
+# Subtest: v1.6.40 rejects approval card claimed
+ok 9 - v1.6.40 rejects approval card claimed
+  ---
+  duration_ms: 143.32246
+  ...
+# Subtest: v1.6.40 rejects approval button claimed
+ok 10 - v1.6.40 rejects approval button claimed
+  ---
+  duration_ms: 151.234859
+  ...
+# Subtest: v1.6.40 rejects approval authority text
+ok 11 - v1.6.40 rejects approval authority text
+  ---
+  duration_ms: 142.302319
+  ...
+# Subtest: v1.6.40 rejects custody exclusion removed
+ok 12 - v1.6.40 rejects custody exclusion removed
+  ---
+  duration_ms: 67.689385
+  ...
+# Subtest: v1.6.40 rejects custody exclusion wrong count
+ok 13 - v1.6.40 rejects custody exclusion wrong count
+  ---
+  duration_ms: 82.679831
+  ...
+# Subtest: v1.6.40 rejects custody exclusion wrong derived-gold hash
+ok 14 - v1.6.40 rejects custody exclusion wrong derived-gold hash
+  ---
+  duration_ms: 96.108535
+  ...
+# Subtest: v1.6.40 rejects custody exclusion wrong exclusion-list hash
+ok 15 - v1.6.40 rejects custody exclusion wrong exclusion-list hash
+  ---
+  duration_ms: 66.953719
+  ...
+# Subtest: v1.6.40 rejects release GO removed
+ok 16 - v1.6.40 rejects release GO removed
+  ---
+  duration_ms: 121.394406
+  ...
+# Subtest: v1.6.40 rejects approval removed effect
+ok 17 - v1.6.40 rejects approval removed effect
+  ---
+  duration_ms: 135.460919
+  ...
+# Subtest: v1.6.40 rejects approval placeholder
+ok 18 - v1.6.40 rejects approval placeholder
+  ---
+  duration_ms: 119.754557
+  ...
+# Subtest: v1.6.40 rejects approval public note
+ok 19 - v1.6.40 rejects approval public note
+  ---
+  duration_ms: 143.614604
+  ...
+# Subtest: v1.6.40 rejects item leakage
+ok 20 - v1.6.40 rejects item leakage
+  ---
+  duration_ms: 64.035624
+  ...
+# Subtest: v1.6.40 rejects unprice ranked row
+ok 21 - v1.6.40 rejects unprice ranked row
+  ---
+  duration_ms: 72.643792
+  ...
+# Subtest: v1.6.40 archive comparison has measured topic and use-case cells for every ranked row
+ok 22 - v1.6.40 archive comparison has measured topic and use-case cells for every ranked row # SKIP
+  ---
+  duration_ms: 0.082118
+  ...
+# Subtest: v1.6.39 reader accepts a v1.6.40 topic supplement only with unchanged carried cells
+ok 23 - v1.6.39 reader accepts a v1.6.40 topic supplement only with unchanged carried cells
+  ---
+  duration_ms: 23.649402
+  ...
+1..23
+# tests 23
+# suites 0
+# pass 22
+# fail 0
+# cancelled 0
+# skipped 1
+# todo 0
+# duration_ms 14575.680805

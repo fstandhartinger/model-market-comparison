@@ -76,7 +76,7 @@ import { readCurrentJevbench } from '../lib/jevbench-current.mjs';
 import { readJevbenchAgentFeed } from '../lib/jevbench-agent-feed.mjs';
 test('live boards and the agent feed resolve each new row exactly once; Seb stays a single superseding row',async()=>{
  const {artifact}=await readCurrentJevbench();const m=jevWithCohortRows(artifact,await readCohortRows());
- for(const k of NEW){const rows=m.systems.filter(s=>s.key===k);assert.equal(rows.length,1,k);assert.equal(rows[0].ranked,true);assert.equal(rows[0].draw.id,'v1.6-regular-20261012');assert.equal(rows[0].draw.release,'v1.6.39');for(const b of Object.values(m.board))assert.equal(b.order.filter(x=>x===k).length,1,k);}
+ for(const k of NEW){const rows=m.systems.filter(s=>s.key===k);assert.equal(rows.length,1,k);assert.equal(rows[0].ranked,true);assert.equal(rows[0].draw.id,'v1.6-regular-20261012');assert.equal(rows[0].draw.release,'v1.6.40');for(const b of Object.values(m.board))assert.equal(b.order.filter(x=>x===k).length,1,k);}
  assert.equal(m.systems.filter(s=>s.key==='seb-9b').length,1);
  const {feed}=await readJevbenchAgentFeed();for(const k of NEW)assert.equal(feed.systems.filter(s=>s.key===k).length,1,k);
 });

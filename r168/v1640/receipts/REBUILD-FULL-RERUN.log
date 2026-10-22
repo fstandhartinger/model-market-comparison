@@ -1,0 +1,187 @@
+{
+ "fastino-glide-api": {
+  "raw_sha256": "5b818aef392079ea9f55dcf7091edec2a1e0f50709ca12e3c50e1a3934102cec",
+  "rows": 1497,
+  "status_counts": {
+   "200": 1480,
+   "400": 15,
+   "502": 2
+  },
+  "ok": 1480,
+  "input_tokens": 723504,
+  "output_tokens": 0,
+  "common_input_tokens": 854576,
+  "common_output_tokens": 0,
+  "over_10s": 2,
+  "max_latency_s": 76.42,
+  "usd_common": 0.023065479082321188,
+  "usd_all_items": 0.0491012959251837,
+  "common_basis_items": 1482,
+  "failed_estimated_rows": 17,
+  "http400_in_common_exclusion": 15,
+  "derived_gold_sha256": "9f1f8200d0a1b4384f43ffc0a91f3f36e4790fc3dbcef7486bf233b0142baa47",
+  "frozen_gold_sha256": "fcb94f49d933e8df6acf26120c24264454095125f77735eb8eb7d2ad41b2f7a4",
+  "exclusion_file_sha256": "31b47af58dce134a70e5cbf60aad40db0000dd398f26649070fb7c9dfd1deeb3",
+  "labels_frozen_sha256": "be5a5209ad63c1f6a2ad39c4f71ea44d2dd4cc647489cc020e54a57ccfd9f99a",
+  "labels_derived_sha256": "aee4480b10e39c6ef92760209ee5dfc8bc0fda9aa887029a52ce8135d2b415a5"
+ }
+}
+PASS: 73 carried registry entries/raw hashes unchanged, 1 new raw verified; 15 HTTP-400 rows inside the 15 common-basis exclusions: 15
+pricing sha OK
+scorer sha OK 02132271117653e6302c509232a581d0094f0e78eac8b1bfc67596fd5d5097e9
+{"G_med": 9.839526770355711, "G_med_api_basis": null, "offsets": null, "systems": 1, "ranked": 1, "out": "/home/flori/jobs/jevbench-add-requests-20260919/workers/r168-v1640-build2/wt/r168/v1640/batch/out-v1640/jevbench-v1.6.0-results.json", "sha256": "e5c02d454278aef2b5549b3b455e2a9bf0f7e7659d75a1ebf5b4db4ac46fe007"}
+/home/flori/jobs/jevbench-add-requests-20260919/workers/r168-v1640-build2/wt/r168/v1640/batch/out-v1640/categories.json 1 systems; {'families': 13, 'usecases': 19, 'languages': 23}
+fastino-glide-api {'supported': True, 'n': 373, 'valid': 371, 'decisive': 320, 'decisive_rate': 0.863, 'acc_among_decisive': 0.975}
+f87abcec1eb1fec2b6e41378540e70b0c07e86cbe6d8ed0483418cddbf7ca2c8  /home/flori/jobs/jevbench-add-requests-20260919/workers/r168-v1640-build2/wt/r168/v1640/batch/out-v1640/categories.json
+bea7de2afa420fded90cc78c54be0ca55e88b95f1dba83bc5634e35b7d2b06b8  /home/flori/jobs/jevbench-add-requests-20260919/workers/r168-v1640-build2/wt/r168/v1640/batch/out-v1640/fastino-glide-api.json
+e5c02d454278aef2b5549b3b455e2a9bf0f7e7659d75a1ebf5b4db4ac46fe007  /home/flori/jobs/jevbench-add-requests-20260919/workers/r168-v1640-build2/wt/r168/v1640/batch/out-v1640/jevbench-v1.6.0-results.json
+e59c7fce9ee009bfa14b9a1d20d32d4ae86d0553de7a8b7be60f733b52f35b02  /home/flori/jobs/jevbench-add-requests-20260919/workers/r168-v1640-build2/wt/r168/v1640/batch/out-v1640/noul-decisive.json
+{"G_med": 9.839526770355711, "G_med_api_basis": 8.5949815619838, "offsets": {"I": -0.37949892601479895, "C": 2.2795019746594676}, "systems": 73, "ranked": 63, "out": "/home/flori/jobs/jevbench-add-requests-20260919/workers/r168-v1640-build2/wt/r168/v1640/batch/out-field-v1640/jevbench-v1.6.0-results.json", "sha256": "c3d81ac462c7644f5aeb50e0361f4ead88e55469f036cce399ff85cc692ce541"}
+/home/flori/jobs/jevbench-add-requests-20260919/workers/r168-v1640-build2/wt/r168/v1640/batch/out-field-v1640/categories.json 73 systems; {'families': 13, 'usecases': 19, 'languages': 23}
+amos-1-large {'supported': True, 'n': 375, 'valid': 375, 'decisive': 318, 'decisive_rate': 0.848, 'acc_among_decisive': 0.965}
+amos-1-medium {'supported': True, 'n': 375, 'valid': 375, 'decisive': 210, 'decisive_rate': 0.56, 'acc_among_decisive': 0.971}
+arcbright-elf-1-12b {'supported': True, 'n': 375, 'valid': 373, 'decisive': 236, 'decisive_rate': 0.633, 'acc_among_decisive': 0.966}
+arsenelupin-v1.1 {'supported': True, 'n': 375, 'valid': 373, 'decisive': 156, 'decisive_rate': 0.418, 'acc_among_decisive': 0.942}
+attest-31b-v1.0 {'supported': True, 'n': 375, 'valid': 373, 'decisive': 363, 'decisive_rate': 0.973, 'acc_among_decisive': 0.879}
+basal-omni-1.0-ultra {'supported': True, 'n': 375, 'valid': 373, 'decisive': 344, 'decisive_rate': 0.922, 'acc_among_decisive': 0.939}
+blink-4b {'supported': True, 'n': 375, 'valid': 375, 'decisive': 224, 'decisive_rate': 0.597, 'acc_among_decisive': 0.902}
+bongard-mini {'supported': True, 'n': 375, 'valid': 373, 'decisive': 96, 'decisive_rate': 0.257, 'acc_among_decisive': 0.938}
+celeris-1-decision {'supported': True, 'n': 375, 'valid': 375, 'decisive': 295, 'decisive_rate': 0.787, 'acc_among_decisive': 0.925}
+chon-1.0-12b {'supported': True, 'n': 375, 'valid': 375, 'decisive': 375, 'decisive_rate': 1.0, 'acc_among_decisive': 0.901}
+chon-1.0-e4b {'supported': True, 'n': 375, 'valid': 375, 'decisive': 375, 'decisive_rate': 1.0, 'acc_among_decisive': 0.795}
+compass-0.2.0 {'supported': True, 'n': 375, 'valid': 375, 'decisive': 95, 'decisive_rate': 0.253, 'acc_among_decisive': 0.968}
+decision2-lux-9b {'supported': True, 'n': 375, 'valid': 373, 'decisive': 199, 'decisive_rate': 0.534, 'acc_among_decisive': 0.945}
+drex-max {'supported': True, 'n': 375, 'valid': 374, 'decisive': 349, 'decisive_rate': 0.933, 'acc_among_decisive': 0.943}
+goddragon-arbiter-4b {'supported': True, 'n': 375, 'valid': 373, 'decisive': 242, 'decisive_rate': 0.649, 'acc_among_decisive': 0.843}
+h2o-lightning-31b {'supported': True, 'n': 375, 'valid': 375, 'decisive': 375, 'decisive_rate': 1.0, 'acc_among_decisive': 0.915}
+hyland-hs1 {'supported': True, 'n': 375, 'valid': 375, 'decisive': 312, 'decisive_rate': 0.832, 'acc_among_decisive': 0.881}
+imajev-2b {'supported': True, 'n': 375, 'valid': 373, 'decisive': 140, 'decisive_rate': 0.375, 'acc_among_decisive': 0.843}
+imajev-9b {'supported': True, 'n': 375, 'valid': 373, 'decisive': 202, 'decisive_rate': 0.542, 'acc_among_decisive': 0.926}
+iota-decide-4b {'supported': True, 'n': 375, 'valid': 375, 'decisive': 225, 'decisive_rate': 0.6, 'acc_among_decisive': 0.84}
+jeb-35b-a3b {'supported': True, 'n': 375, 'valid': 373, 'decisive': 202, 'decisive_rate': 0.542, 'acc_among_decisive': 0.936}
+jebadiah-9b-v2 {'supported': True, 'n': 375, 'valid': 373, 'decisive': 193, 'decisive_rate': 0.517, 'acc_among_decisive': 0.933}
+jebadiah-9b-v2-1 {'supported': True, 'n': 375, 'valid': 373, 'decisive': 222, 'decisive_rate': 0.595, 'acc_among_decisive': 0.928}
+jev-1.14.0 {'supported': True, 'n': 375, 'valid': 373, 'decisive': 283, 'decisive_rate': 0.759, 'acc_among_decisive': 0.954}
+jevora-9b-v1 {'supported': True, 'n': 375, 'valid': 366, 'decisive': 320, 'decisive_rate': 0.874, 'acc_among_decisive': 0.728}
+jpt-4b {'supported': True, 'n': 375, 'valid': 373, 'decisive': 248, 'decisive_rate': 0.665, 'acc_among_decisive': 0.899}
+julia-1 {'supported': True, 'n': 375, 'valid': 372, 'decisive': 270, 'decisive_rate': 0.726, 'acc_among_decisive': 0.456}
+kettei-chub {'supported': True, 'n': 375, 'valid': 373, 'decisive': 323, 'decisive_rate': 0.866, 'acc_among_decisive': 0.938}
+kettei-fat {'supported': True, 'n': 375, 'valid': 373, 'decisive': 356, 'decisive_rate': 0.954, 'acc_among_decisive': 0.963}
+kev-9b-v2 {'supported': True, 'n': 375, 'valid': 373, 'decisive': 216, 'decisive_rate': 0.579, 'acc_among_decisive': 0.889}
+krino-2b {'supported': True, 'n': 375, 'valid': 375, 'decisive': 313, 'decisive_rate': 0.835, 'acc_among_decisive': 0.712}
+launchables-myles-g-12b {'supported': True, 'n': 375, 'valid': 375, 'decisive': 375, 'decisive_rate': 1.0, 'acc_among_decisive': 0.795}
+launchables-myles-g-31b {'supported': True, 'n': 375, 'valid': 375, 'decisive': 375, 'decisive_rate': 1.0, 'acc_among_decisive': 0.893}
+liquid-d1-ultra {'supported': True, 'n': 375, 'valid': 373, 'decisive': 319, 'decisive_rate': 0.855, 'acc_among_decisive': 0.937}
+messier-one-v0.4 {'supported': True, 'n': 375, 'valid': 375, 'decisive': 375, 'decisive_rate': 1.0, 'acc_among_decisive': 0.779}
+metask_jev_rain_12b_trained {'supported': True, 'n': 375, 'valid': 375, 'decisive': 375, 'decisive_rate': 1.0, 'acc_among_decisive': 0.856}
+metask_jev_rain_31b_trained {'supported': True, 'n': 375, 'valid': 375, 'decisive': 375, 'decisive_rate': 1.0, 'acc_among_decisive': 0.877}
+metask_jev_rain_31b_trained_v3 {'supported': True, 'n': 375, 'valid': 375, 'decisive': 375, 'decisive_rate': 1.0, 'acc_among_decisive': 0.885}
+nagi-enormous {'supported': True, 'n': 375, 'valid': 373, 'decisive': 315, 'decisive_rate': 0.845, 'acc_among_decisive': 0.914}
+nagi-huge {'supported': True, 'n': 375, 'valid': 373, 'decisive': 320, 'decisive_rate': 0.858, 'acc_among_decisive': 0.878}
+nemotron-deciffusion-8b-v2 {'supported': True, 'n': 375, 'valid': 375, 'decisive': 261, 'decisive_rate': 0.696, 'acc_among_decisive': 0.95}
+nev-2b {'supported': True, 'n': 375, 'valid': 373, 'decisive': 191, 'decisive_rate': 0.512, 'acc_among_decisive': 0.832}
+nimble-v4 {'supported': True, 'n': 375, 'valid': 375, 'decisive': 215, 'decisive_rate': 0.573, 'acc_among_decisive': 0.963}
+nimble-v4-max {'supported': True, 'n': 375, 'valid': 375, 'decisive': 294, 'decisive_rate': 0.784, 'acc_among_decisive': 0.98}
+noma {'supported': True, 'n': 375, 'valid': 375, 'decisive': 191, 'decisive_rate': 0.509, 'acc_among_decisive': 0.885}
+phocinae-largha-150m-v1 {'supported': True, 'n': 375, 'valid': 375, 'decisive': 11, 'decisive_rate': 0.029, 'acc_among_decisive': 0.545}
+pjev-2b {'supported': True, 'n': 375, 'valid': 373, 'decisive': 224, 'decisive_rate': 0.601, 'acc_among_decisive': 0.879}
+pplx-decider-flash-v1.2 {'supported': True, 'n': 375, 'valid': 375, 'decisive': 295, 'decisive_rate': 0.787, 'acc_among_decisive': 0.868}
+pplx-decider-v1.2 {'supported': True, 'n': 375, 'valid': 375, 'decisive': 314, 'decisive_rate': 0.837, 'acc_among_decisive': 0.965}
+purplemist-flash-1.0 {'supported': True, 'n': 375, 'valid': 373, 'decisive': 235, 'decisive_rate': 0.63, 'acc_among_decisive': 0.885}
+purplemist-mini-1.0 {'supported': True, 'n': 375, 'valid': 373, 'decisive': 32, 'decisive_rate': 0.086, 'acc_among_decisive': 0.875}
+reflex-instinct-0.6b {'supported': True, 'n': 375, 'valid': 375, 'decisive': 7, 'decisive_rate': 0.019, 'acc_among_decisive': 0.857}
+respan-span-02 {'supported': True, 'n': 375, 'valid': 373, 'decisive': 334, 'decisive_rate': 0.895, 'acc_among_decisive': 0.868}
+roudone-decider-4b {'supported': True, 'n': 375, 'valid': 373, 'decisive': 200, 'decisive_rate': 0.536, 'acc_among_decisive': 0.895}
+ryotide-gemma {'supported': True, 'n': 375, 'valid': 375, 'decisive': 275, 'decisive_rate': 0.733, 'acc_among_decisive': 0.811}
+ryotide-qwen {'supported': True, 'n': 375, 'valid': 375, 'decisive': 212, 'decisive_rate': 0.565, 'acc_among_decisive': 0.892}
+sage-1.4.0 {'supported': True, 'n': 375, 'valid': 373, 'decisive': 340, 'decisive_rate': 0.912, 'acc_among_decisive': 0.906}
+seb-9b {'supported': True, 'n': 375, 'valid': 373, 'decisive': 214, 'decisive_rate': 0.574, 'acc_among_decisive': 0.939}
+shisa-de-1 {'supported': True, 'n': 375, 'valid': 373, 'decisive': 283, 'decisive_rate': 0.759, 'acc_among_decisive': 0.901}
+standard_one_3b_sh {'supported': True, 'n': 375, 'valid': 373, 'decisive': 234, 'decisive_rate': 0.627, 'acc_among_decisive': 0.842}
+startlux-decision-v1.1-27b-autothink {'supported': True, 'n': 375, 'valid': 373, 'decisive': 288, 'decisive_rate': 0.772, 'acc_among_decisive': 0.969}
+startlux-decision-v1.1-27b-instant {'supported': True, 'n': 375, 'valid': 373, 'decisive': 306, 'decisive_rate': 0.82, 'acc_among_decisive': 0.993}
+subq-snap-preview {'supported': True, 'n': 375, 'valid': 375, 'decisive': 321, 'decisive_rate': 0.856, 'acc_among_decisive': 0.953}
+tde-general-large {'supported': True, 'n': 375, 'valid': 375, 'decisive': 173, 'decisive_rate': 0.461, 'acc_among_decisive': 0.572}
+torchcast-decision-4b-v1.1 {'supported': True, 'n': 375, 'valid': 375, 'decisive': 375, 'decisive_rate': 1.0, 'acc_among_decisive': 0.784}
+torchcast-decision-4b-v1.2 {'supported': True, 'n': 375, 'valid': 375, 'decisive': 375, 'decisive_rate': 1.0, 'acc_among_decisive': 0.837}
+trio-spark-v1.3 {'supported': True, 'n': 375, 'valid': 366, 'decisive': 223, 'decisive_rate': 0.609, 'acc_among_decisive': 0.906}
+uniphore-4b-decider {'supported': True, 'n': 375, 'valid': 373, 'decisive': 268, 'decisive_rate': 0.718, 'acc_among_decisive': 0.825}
+vega-u-qwen3.5-0.8b {'supported': True, 'n': 375, 'valid': 375, 'decisive': 73, 'decisive_rate': 0.195, 'acc_among_decisive': 0.534}
+vega-u-qwen3.5-4b {'supported': True, 'n': 375, 'valid': 375, 'decisive': 123, 'decisive_rate': 0.328, 'acc_among_decisive': 0.756}
+verdin-4b {'supported': True, 'n': 375, 'valid': 373, 'decisive': 243, 'decisive_rate': 0.651, 'acc_among_decisive': 0.868}
+vllm-sr-d3 {'supported': True, 'n': 375, 'valid': 375, 'decisive': 320, 'decisive_rate': 0.853, 'acc_among_decisive': 0.963}
+vllm-sr-d3-turbo {'supported': True, 'n': 375, 'valid': 373, 'decisive': 323, 'decisive_rate': 0.866, 'acc_among_decisive': 0.963}
+{"G_med": 9.839526770355711, "G_med_api_basis": null, "offsets": null, "systems": 17, "ranked": 16, "out": "/home/flori/jobs/jevbench-add-requests-20260919/workers/r168-v1640-build2/wt/r168/v1640/batch/out-api-alone-v1640/jevbench-v1.6.0-results.json", "sha256": "dd57b72a8e53855609461241eb61475fb673f523e484ac2050ab4cd19a21e8e5"}
+/home/flori/jobs/jevbench-add-requests-20260919/workers/r168-v1640-build2/wt/r168/v1640/batch/topics-v1640/categories-with-topics.json 1 systems; {'topics': 7, 'usecases': 20, 'families': 13, 'languages': 23}
+built v1.6.40 roster 77 ranked 66
+{
+ "fastino-glide-api": {
+  "axes": {
+   "calibration": 93.01106628088438,
+   "cost": 59.111125613009825,
+   "intelligence": 76.39198423827783,
+   "speed": 87.30503336667806
+  },
+  "scores": {
+   "A": 76.60902426459442,
+   "B": 76.56551765292035,
+   "C": 76.60902426459442
+  },
+  "capability": 84.7015252595811,
+  "ranks": {
+   "A": 2,
+   "B": 2,
+   "C": 2,
+   "capability": 4
+  }
+ }
+}
+wired v1.6.40
+Board effect: the hosted-API row was compared on the merged-board top fives before/after v1.6.40 over all 36 mixed, open-weights and API variants (including 7x/10x cost caps with no latency cap) plus 4 release-board lists: 22 of 40 top-five lists change. Top-five changes caused by: fastino-glide-api (Florian release GO glide-api-release-go). 
+ CHANGED all composites/A ['kettei-fat', 'liquid-d1-ultra', 'nimble-v4-max', 'drex-max', 'subq-snap-preview'] -> ['kettei-fat', 'fastino-glide-api', 'liquid-d1-ultra', 'nimble-v4-max', 'drex-max']
+ CHANGED all composites/B ['kettei-fat', 'drex-max', 'liquid-d1-ultra', 'h2o-lightning-31b', 'subq-snap-preview'] -> ['kettei-fat', 'fastino-glide-api', 'drex-max', 'liquid-d1-ultra', 'h2o-lightning-31b']
+ CHANGED all composites/C ['kettei-fat', 'liquid-d1-ultra', 'nimble-v4-max', 'drex-max', 'subq-snap-preview'] -> ['kettei-fat', 'fastino-glide-api', 'liquid-d1-ultra', 'nimble-v4-max', 'drex-max']
+ CHANGED all capability/official_caps ['kettei-fat', 'chon-1.0-12b', 'h2o-lightning-31b', 'drex-max', 'basal-omni-1.0-ultra'] -> ['kettei-fat', 'chon-1.0-12b', 'h2o-lightning-31b', 'fastino-glide-api', 'drex-max']
+ CHANGED all capability/cost_off_latency_2x ['kettei-fat', 'chon-1.0-12b', 'h2o-lightning-31b', 'drex-max', 'vllm-sr-d3'] -> ['kettei-fat', 'chon-1.0-12b', 'h2o-lightning-31b', 'fastino-glide-api', 'drex-max']
+ CHANGED all capability/latency_none ['kettei-fat', 'chon-1.0-12b', 'h2o-lightning-31b', 'drex-max', 'basal-omni-1.0-ultra'] -> ['kettei-fat', 'chon-1.0-12b', 'h2o-lightning-31b', 'fastino-glide-api', 'drex-max']
+ CHANGED all extra_capability/cost_7x ['kettei-fat', 'chon-1.0-12b', 'h2o-lightning-31b', 'drex-max', 'vllm-sr-d3'] -> ['kettei-fat', 'chon-1.0-12b', 'h2o-lightning-31b', 'fastino-glide-api', 'drex-max']
+ CHANGED all extra_capability/cost_10x ['kettei-fat', 'chon-1.0-12b', 'h2o-lightning-31b', 'drex-max', 'vllm-sr-d3'] -> ['kettei-fat', 'chon-1.0-12b', 'h2o-lightning-31b', 'fastino-glide-api', 'drex-max']
+ CHANGED api composites/A ['kettei-fat', 'liquid-d1-ultra', 'nimble-v4-max', 'drex-max', 'subq-snap-preview'] -> ['kettei-fat', 'fastino-glide-api', 'liquid-d1-ultra', 'nimble-v4-max', 'drex-max']
+ CHANGED api composites/B ['kettei-fat', 'drex-max', 'liquid-d1-ultra', 'subq-snap-preview', 'nimble-v4-max'] -> ['kettei-fat', 'fastino-glide-api', 'drex-max', 'liquid-d1-ultra', 'subq-snap-preview']
+ CHANGED api composites/C ['kettei-fat', 'liquid-d1-ultra', 'nimble-v4-max', 'drex-max', 'subq-snap-preview'] -> ['kettei-fat', 'fastino-glide-api', 'liquid-d1-ultra', 'nimble-v4-max', 'drex-max']
+ CHANGED api capability/official_caps ['kettei-fat', 'drex-max', 'subq-snap-preview', 'liquid-d1-ultra', 'nimble-v4-max'] -> ['kettei-fat', 'fastino-glide-api', 'drex-max', 'subq-snap-preview', 'liquid-d1-ultra']
+ CHANGED api capability/cost_off_latency_2x ['kettei-fat', 'drex-max', 'subq-snap-preview', 'liquid-d1-ultra', 'nimble-v4-max'] -> ['kettei-fat', 'fastino-glide-api', 'drex-max', 'subq-snap-preview', 'liquid-d1-ultra']
+ CHANGED api capability/latency_none ['kettei-fat', 'drex-max', 'subq-snap-preview', 'liquid-d1-ultra', 'nimble-v4-max'] -> ['kettei-fat', 'fastino-glide-api', 'drex-max', 'subq-snap-preview', 'liquid-d1-ultra']
+ CHANGED api extra_capability/cost_7x ['kettei-fat', 'drex-max', 'subq-snap-preview', 'liquid-d1-ultra', 'nimble-v4-max'] -> ['kettei-fat', 'fastino-glide-api', 'drex-max', 'subq-snap-preview', 'liquid-d1-ultra']
+ CHANGED api extra_capability/cost_10x ['kettei-fat', 'drex-max', 'subq-snap-preview', 'liquid-d1-ultra', 'nimble-v4-max'] -> ['kettei-fat', 'fastino-glide-api', 'drex-max', 'subq-snap-preview', 'liquid-d1-ultra']
+ CHANGED api extra_capability/cost_7x_latency_none ['gpt-6-luna', 'gpt-6-luna-low', 'gpt-5.6-luna', 'kettei-fat', 'drex-max'] -> ['gpt-6-luna', 'gpt-6-luna-low', 'gpt-5.6-luna', 'kettei-fat', 'fastino-glide-api']
+ CHANGED api extra_capability/cost_10x_latency_none ['gpt-6-luna', 'gpt-6-luna-low', 'gpt-5.6-luna', 'kettei-fat', 'drex-max'] -> ['gpt-6-luna', 'gpt-6-luna-low', 'gpt-5.6-luna', 'kettei-fat', 'fastino-glide-api']
+ CHANGED release A ['kettei-fat', 'liquid-d1-ultra', 'nimble-v4-max', 'drex-max', 'subq-snap-preview'] -> ['kettei-fat', 'fastino-glide-api', 'liquid-d1-ultra', 'nimble-v4-max', 'drex-max']
+ CHANGED release B ['kettei-fat', 'drex-max', 'liquid-d1-ultra', 'h2o-lightning-31b', 'subq-snap-preview'] -> ['kettei-fat', 'fastino-glide-api', 'drex-max', 'liquid-d1-ultra', 'h2o-lightning-31b']
+ CHANGED release C ['kettei-fat', 'liquid-d1-ultra', 'nimble-v4-max', 'drex-max', 'subq-snap-preview'] -> ['kettei-fat', 'fastino-glide-api', 'liquid-d1-ultra', 'nimble-v4-max', 'drex-max']
+ CHANGED release capability ['kettei-fat', 'chon-1.0-12b', 'h2o-lightning-31b', 'drex-max', 'vllm-sr-d3'] -> ['kettei-fat', 'chon-1.0-12b', 'h2o-lightning-31b', 'fastino-glide-api', 'drex-max']
+built v1.6.40 roster 77 ranked 66
+{
+ "fastino-glide-api": {
+  "axes": {
+   "calibration": 93.01106628088438,
+   "cost": 59.111125613009825,
+   "intelligence": 76.39198423827783,
+   "speed": 87.30503336667806
+  },
+  "scores": {
+   "A": 76.60902426459442,
+   "B": 76.56551765292035,
+   "C": 76.60902426459442
+  },
+  "capability": 84.7015252595811,
+  "ranks": {
+   "A": 2,
+   "B": 2,
+   "C": 2,
+   "capability": 4
+  }
+ }
+}
+PASS: deterministic rebuild, all release, topic-supplement and validator bytes identical
+PASS: 77 rows; 76 carried rows byte-identical except placement; source hashes, row proof, common cost basis, PENDING review and public aggregate-only artifacts verified

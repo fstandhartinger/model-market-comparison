@@ -1,0 +1,1354 @@
+{
+  "any_top5_change": true,
+  "entrants_all": [
+    "fastino-glide-api"
+  ],
+  "by_row": {
+    "fastino-glide-api": [
+      "all/composites/A",
+      "all/composites/B",
+      "all/composites/C",
+      "all/capability/official_caps",
+      "all/capability/cost_off_latency_2x",
+      "all/capability/latency_none",
+      "all/extra_capability/cost_7x",
+      "all/extra_capability/cost_10x",
+      "api/composites/A",
+      "api/composites/B",
+      "api/composites/C",
+      "api/capability/official_caps",
+      "api/capability/cost_off_latency_2x",
+      "api/capability/latency_none",
+      "api/extra_capability/cost_7x",
+      "api/extra_capability/cost_10x",
+      "api/extra_capability/cost_7x_latency_none",
+      "api/extra_capability/cost_10x_latency_none",
+      "release/A",
+      "release/B",
+      "release/C",
+      "release/capability"
+    ]
+  },
+  "rows": [
+    {
+      "view": "all",
+      "metric": "composites/A",
+      "before": [
+        "kettei-fat",
+        "liquid-d1-ultra",
+        "nimble-v4-max",
+        "drex-max",
+        "subq-snap-preview"
+      ],
+      "after": [
+        "kettei-fat",
+        "fastino-glide-api",
+        "liquid-d1-ultra",
+        "nimble-v4-max",
+        "drex-max"
+      ],
+      "changed": true,
+      "entrants": [
+        "fastino-glide-api"
+      ],
+      "dropped": [
+        "subq-snap-preview"
+      ],
+      "causes": [
+        "fastino-glide-api"
+      ],
+      "positions_before": {
+        "fastino-glide-api": null
+      },
+      "positions": {
+        "fastino-glide-api": 2
+      },
+      "field": 240
+    },
+    {
+      "view": "all",
+      "metric": "composites/B",
+      "before": [
+        "kettei-fat",
+        "drex-max",
+        "liquid-d1-ultra",
+        "h2o-lightning-31b",
+        "subq-snap-preview"
+      ],
+      "after": [
+        "kettei-fat",
+        "fastino-glide-api",
+        "drex-max",
+        "liquid-d1-ultra",
+        "h2o-lightning-31b"
+      ],
+      "changed": true,
+      "entrants": [
+        "fastino-glide-api"
+      ],
+      "dropped": [
+        "subq-snap-preview"
+      ],
+      "causes": [
+        "fastino-glide-api"
+      ],
+      "positions_before": {
+        "fastino-glide-api": null
+      },
+      "positions": {
+        "fastino-glide-api": 2
+      },
+      "field": 240
+    },
+    {
+      "view": "all",
+      "metric": "composites/C",
+      "before": [
+        "kettei-fat",
+        "liquid-d1-ultra",
+        "nimble-v4-max",
+        "drex-max",
+        "subq-snap-preview"
+      ],
+      "after": [
+        "kettei-fat",
+        "fastino-glide-api",
+        "liquid-d1-ultra",
+        "nimble-v4-max",
+        "drex-max"
+      ],
+      "changed": true,
+      "entrants": [
+        "fastino-glide-api"
+      ],
+      "dropped": [
+        "subq-snap-preview"
+      ],
+      "causes": [
+        "fastino-glide-api"
+      ],
+      "positions_before": {
+        "fastino-glide-api": null
+      },
+      "positions": {
+        "fastino-glide-api": 2
+      },
+      "field": 240
+    },
+    {
+      "view": "all",
+      "metric": "capability/official_caps",
+      "before": [
+        "kettei-fat",
+        "chon-1.0-12b",
+        "h2o-lightning-31b",
+        "drex-max",
+        "basal-omni-1.0-ultra"
+      ],
+      "after": [
+        "kettei-fat",
+        "chon-1.0-12b",
+        "h2o-lightning-31b",
+        "fastino-glide-api",
+        "drex-max"
+      ],
+      "changed": true,
+      "entrants": [
+        "fastino-glide-api"
+      ],
+      "dropped": [
+        "basal-omni-1.0-ultra"
+      ],
+      "causes": [
+        "fastino-glide-api"
+      ],
+      "positions_before": {
+        "fastino-glide-api": null
+      },
+      "positions": {
+        "fastino-glide-api": 4
+      },
+      "field": 168
+    },
+    {
+      "view": "all",
+      "metric": "capability/no_caps",
+      "before": [
+        "gpt-6-luna",
+        "qwen3.8-27b",
+        "gpt-6-luna-low",
+        "deepseek-flash",
+        "gpt-5.6-luna"
+      ],
+      "after": [
+        "gpt-6-luna",
+        "qwen3.8-27b",
+        "gpt-6-luna-low",
+        "deepseek-flash",
+        "gpt-5.6-luna"
+      ],
+      "changed": false,
+      "entrants": [],
+      "dropped": [],
+      "causes": [],
+      "positions_before": {
+        "fastino-glide-api": null
+      },
+      "positions": {
+        "fastino-glide-api": 9
+      },
+      "field": 240
+    },
+    {
+      "view": "all",
+      "metric": "capability/cost_off_latency_2x",
+      "before": [
+        "kettei-fat",
+        "chon-1.0-12b",
+        "h2o-lightning-31b",
+        "drex-max",
+        "vllm-sr-d3"
+      ],
+      "after": [
+        "kettei-fat",
+        "chon-1.0-12b",
+        "h2o-lightning-31b",
+        "fastino-glide-api",
+        "drex-max"
+      ],
+      "changed": true,
+      "entrants": [
+        "fastino-glide-api"
+      ],
+      "dropped": [
+        "vllm-sr-d3"
+      ],
+      "causes": [
+        "fastino-glide-api"
+      ],
+      "positions_before": {
+        "fastino-glide-api": null
+      },
+      "positions": {
+        "fastino-glide-api": 4
+      },
+      "field": 209
+    },
+    {
+      "view": "all",
+      "metric": "capability/latency_none",
+      "before": [
+        "kettei-fat",
+        "chon-1.0-12b",
+        "h2o-lightning-31b",
+        "drex-max",
+        "basal-omni-1.0-ultra"
+      ],
+      "after": [
+        "kettei-fat",
+        "chon-1.0-12b",
+        "h2o-lightning-31b",
+        "fastino-glide-api",
+        "drex-max"
+      ],
+      "changed": true,
+      "entrants": [
+        "fastino-glide-api"
+      ],
+      "dropped": [
+        "basal-omni-1.0-ultra"
+      ],
+      "causes": [
+        "fastino-glide-api"
+      ],
+      "positions_before": {
+        "fastino-glide-api": null
+      },
+      "positions": {
+        "fastino-glide-api": 4
+      },
+      "field": 186
+    },
+    {
+      "view": "all",
+      "metric": "extra_capability/cost_7x",
+      "before": [
+        "kettei-fat",
+        "chon-1.0-12b",
+        "h2o-lightning-31b",
+        "drex-max",
+        "vllm-sr-d3"
+      ],
+      "after": [
+        "kettei-fat",
+        "chon-1.0-12b",
+        "h2o-lightning-31b",
+        "fastino-glide-api",
+        "drex-max"
+      ],
+      "changed": true,
+      "entrants": [
+        "fastino-glide-api"
+      ],
+      "dropped": [
+        "vllm-sr-d3"
+      ],
+      "causes": [
+        "fastino-glide-api"
+      ],
+      "positions_before": {
+        "fastino-glide-api": null
+      },
+      "positions": {
+        "fastino-glide-api": 4
+      },
+      "field": 200
+    },
+    {
+      "view": "all",
+      "metric": "extra_capability/cost_10x",
+      "before": [
+        "kettei-fat",
+        "chon-1.0-12b",
+        "h2o-lightning-31b",
+        "drex-max",
+        "vllm-sr-d3"
+      ],
+      "after": [
+        "kettei-fat",
+        "chon-1.0-12b",
+        "h2o-lightning-31b",
+        "fastino-glide-api",
+        "drex-max"
+      ],
+      "changed": true,
+      "entrants": [
+        "fastino-glide-api"
+      ],
+      "dropped": [
+        "vllm-sr-d3"
+      ],
+      "causes": [
+        "fastino-glide-api"
+      ],
+      "positions_before": {
+        "fastino-glide-api": null
+      },
+      "positions": {
+        "fastino-glide-api": 4
+      },
+      "field": 206
+    },
+    {
+      "view": "all",
+      "metric": "extra_capability/rank_field",
+      "before": [
+        "gpt-6-luna",
+        "qwen3.8-27b",
+        "gpt-6-luna-low",
+        "deepseek-flash",
+        "gpt-5.6-luna"
+      ],
+      "after": [
+        "gpt-6-luna",
+        "qwen3.8-27b",
+        "gpt-6-luna-low",
+        "deepseek-flash",
+        "gpt-5.6-luna"
+      ],
+      "changed": false,
+      "entrants": [],
+      "dropped": [],
+      "causes": [],
+      "positions_before": {
+        "fastino-glide-api": null
+      },
+      "positions": {
+        "fastino-glide-api": 9
+      },
+      "field": 240
+    },
+    {
+      "view": "all",
+      "metric": "extra_capability/cost_7x_latency_none",
+      "before": [
+        "gpt-6-luna",
+        "gpt-6-luna-low",
+        "gpt-5.6-luna",
+        "kettei-fat",
+        "chon-1.0-12b"
+      ],
+      "after": [
+        "gpt-6-luna",
+        "gpt-6-luna-low",
+        "gpt-5.6-luna",
+        "kettei-fat",
+        "chon-1.0-12b"
+      ],
+      "changed": false,
+      "entrants": [],
+      "dropped": [],
+      "causes": [],
+      "positions_before": {
+        "fastino-glide-api": null
+      },
+      "positions": {
+        "fastino-glide-api": 7
+      },
+      "field": 224
+    },
+    {
+      "view": "all",
+      "metric": "extra_capability/cost_10x_latency_none",
+      "before": [
+        "gpt-6-luna",
+        "gpt-6-luna-low",
+        "gpt-5.6-luna",
+        "kettei-fat",
+        "chon-1.0-12b"
+      ],
+      "after": [
+        "gpt-6-luna",
+        "gpt-6-luna-low",
+        "gpt-5.6-luna",
+        "kettei-fat",
+        "chon-1.0-12b"
+      ],
+      "changed": false,
+      "entrants": [],
+      "dropped": [],
+      "causes": [],
+      "positions_before": {
+        "fastino-glide-api": null
+      },
+      "positions": {
+        "fastino-glide-api": 7
+      },
+      "field": 233
+    },
+    {
+      "view": "open",
+      "metric": "composites/A",
+      "before": [
+        "h2o-lightning-4b",
+        "h2o-lightning-31b",
+        "torchcast-decision-4b-v1.2",
+        "decisio-gemma-4-31b-v080",
+        "basal-omni-1.0-ultra"
+      ],
+      "after": [
+        "h2o-lightning-4b",
+        "h2o-lightning-31b",
+        "torchcast-decision-4b-v1.2",
+        "decisio-gemma-4-31b-v080",
+        "basal-omni-1.0-ultra"
+      ],
+      "changed": false,
+      "entrants": [],
+      "dropped": [],
+      "causes": [],
+      "positions_before": {
+        "fastino-glide-api": null
+      },
+      "positions": {
+        "fastino-glide-api": null
+      },
+      "field": 196
+    },
+    {
+      "view": "open",
+      "metric": "composites/B",
+      "before": [
+        "h2o-lightning-31b",
+        "basal-omni-1.0-ultra",
+        "quyet-1-0-large",
+        "decisio-gemma-4-31b-v080",
+        "h2o-lightning-4b"
+      ],
+      "after": [
+        "h2o-lightning-31b",
+        "basal-omni-1.0-ultra",
+        "quyet-1-0-large",
+        "decisio-gemma-4-31b-v080",
+        "h2o-lightning-4b"
+      ],
+      "changed": false,
+      "entrants": [],
+      "dropped": [],
+      "causes": [],
+      "positions_before": {
+        "fastino-glide-api": null
+      },
+      "positions": {
+        "fastino-glide-api": null
+      },
+      "field": 196
+    },
+    {
+      "view": "open",
+      "metric": "composites/C",
+      "before": [
+        "h2o-lightning-4b",
+        "h2o-lightning-31b",
+        "torchcast-decision-4b-v1.2",
+        "decisio-gemma-4-31b-v080",
+        "basal-omni-1.0-ultra"
+      ],
+      "after": [
+        "h2o-lightning-4b",
+        "h2o-lightning-31b",
+        "torchcast-decision-4b-v1.2",
+        "decisio-gemma-4-31b-v080",
+        "basal-omni-1.0-ultra"
+      ],
+      "changed": false,
+      "entrants": [],
+      "dropped": [],
+      "causes": [],
+      "positions_before": {
+        "fastino-glide-api": null
+      },
+      "positions": {
+        "fastino-glide-api": null
+      },
+      "field": 196
+    },
+    {
+      "view": "open",
+      "metric": "capability/official_caps",
+      "before": [
+        "chon-1.0-12b",
+        "h2o-lightning-31b",
+        "basal-omni-1.0-ultra",
+        "quyet-1-0-large",
+        "jeff_1_0_large"
+      ],
+      "after": [
+        "chon-1.0-12b",
+        "h2o-lightning-31b",
+        "basal-omni-1.0-ultra",
+        "quyet-1-0-large",
+        "jeff_1_0_large"
+      ],
+      "changed": false,
+      "entrants": [],
+      "dropped": [],
+      "causes": [],
+      "positions_before": {
+        "fastino-glide-api": null
+      },
+      "positions": {
+        "fastino-glide-api": null
+      },
+      "field": 139
+    },
+    {
+      "view": "open",
+      "metric": "capability/no_caps",
+      "before": [
+        "chon-1.0-12b",
+        "h2o-lightning-31b",
+        "vllm-sr-d3",
+        "pplx-decider-v1-1-27b",
+        "vllm-sr-d3-turbo"
+      ],
+      "after": [
+        "chon-1.0-12b",
+        "h2o-lightning-31b",
+        "vllm-sr-d3",
+        "pplx-decider-v1-1-27b",
+        "vllm-sr-d3-turbo"
+      ],
+      "changed": false,
+      "entrants": [],
+      "dropped": [],
+      "causes": [],
+      "positions_before": {
+        "fastino-glide-api": null
+      },
+      "positions": {
+        "fastino-glide-api": null
+      },
+      "field": 196
+    },
+    {
+      "view": "open",
+      "metric": "capability/cost_off_latency_2x",
+      "before": [
+        "chon-1.0-12b",
+        "h2o-lightning-31b",
+        "vllm-sr-d3",
+        "pplx-decider-v1-1-27b",
+        "vllm-sr-d3-turbo"
+      ],
+      "after": [
+        "chon-1.0-12b",
+        "h2o-lightning-31b",
+        "vllm-sr-d3",
+        "pplx-decider-v1-1-27b",
+        "vllm-sr-d3-turbo"
+      ],
+      "changed": false,
+      "entrants": [],
+      "dropped": [],
+      "causes": [],
+      "positions_before": {
+        "fastino-glide-api": null
+      },
+      "positions": {
+        "fastino-glide-api": null
+      },
+      "field": 174
+    },
+    {
+      "view": "open",
+      "metric": "capability/latency_none",
+      "before": [
+        "chon-1.0-12b",
+        "h2o-lightning-31b",
+        "basal-omni-1.0-ultra",
+        "quyet-1-0-large",
+        "jeff_1_0_large"
+      ],
+      "after": [
+        "chon-1.0-12b",
+        "h2o-lightning-31b",
+        "basal-omni-1.0-ultra",
+        "quyet-1-0-large",
+        "jeff_1_0_large"
+      ],
+      "changed": false,
+      "entrants": [],
+      "dropped": [],
+      "causes": [],
+      "positions_before": {
+        "fastino-glide-api": null
+      },
+      "positions": {
+        "fastino-glide-api": null
+      },
+      "field": 155
+    },
+    {
+      "view": "open",
+      "metric": "extra_capability/cost_7x",
+      "before": [
+        "chon-1.0-12b",
+        "h2o-lightning-31b",
+        "vllm-sr-d3",
+        "pplx-decider-v1-1-27b",
+        "vllm-sr-d3-turbo"
+      ],
+      "after": [
+        "chon-1.0-12b",
+        "h2o-lightning-31b",
+        "vllm-sr-d3",
+        "pplx-decider-v1-1-27b",
+        "vllm-sr-d3-turbo"
+      ],
+      "changed": false,
+      "entrants": [],
+      "dropped": [],
+      "causes": [],
+      "positions_before": {
+        "fastino-glide-api": null
+      },
+      "positions": {
+        "fastino-glide-api": null
+      },
+      "field": 167
+    },
+    {
+      "view": "open",
+      "metric": "extra_capability/cost_10x",
+      "before": [
+        "chon-1.0-12b",
+        "h2o-lightning-31b",
+        "vllm-sr-d3",
+        "pplx-decider-v1-1-27b",
+        "vllm-sr-d3-turbo"
+      ],
+      "after": [
+        "chon-1.0-12b",
+        "h2o-lightning-31b",
+        "vllm-sr-d3",
+        "pplx-decider-v1-1-27b",
+        "vllm-sr-d3-turbo"
+      ],
+      "changed": false,
+      "entrants": [],
+      "dropped": [],
+      "causes": [],
+      "positions_before": {
+        "fastino-glide-api": null
+      },
+      "positions": {
+        "fastino-glide-api": null
+      },
+      "field": 172
+    },
+    {
+      "view": "open",
+      "metric": "extra_capability/rank_field",
+      "before": [
+        "chon-1.0-12b",
+        "h2o-lightning-31b",
+        "vllm-sr-d3",
+        "pplx-decider-v1-1-27b",
+        "vllm-sr-d3-turbo"
+      ],
+      "after": [
+        "chon-1.0-12b",
+        "h2o-lightning-31b",
+        "vllm-sr-d3",
+        "pplx-decider-v1-1-27b",
+        "vllm-sr-d3-turbo"
+      ],
+      "changed": false,
+      "entrants": [],
+      "dropped": [],
+      "causes": [],
+      "positions_before": {
+        "fastino-glide-api": null
+      },
+      "positions": {
+        "fastino-glide-api": null
+      },
+      "field": 196
+    },
+    {
+      "view": "open",
+      "metric": "extra_capability/cost_7x_latency_none",
+      "before": [
+        "chon-1.0-12b",
+        "h2o-lightning-31b",
+        "vllm-sr-d3",
+        "pplx-decider-v1-1-27b",
+        "vllm-sr-d3-turbo"
+      ],
+      "after": [
+        "chon-1.0-12b",
+        "h2o-lightning-31b",
+        "vllm-sr-d3",
+        "pplx-decider-v1-1-27b",
+        "vllm-sr-d3-turbo"
+      ],
+      "changed": false,
+      "entrants": [],
+      "dropped": [],
+      "causes": [],
+      "positions_before": {
+        "fastino-glide-api": null
+      },
+      "positions": {
+        "fastino-glide-api": null
+      },
+      "field": 184
+    },
+    {
+      "view": "open",
+      "metric": "extra_capability/cost_10x_latency_none",
+      "before": [
+        "chon-1.0-12b",
+        "h2o-lightning-31b",
+        "vllm-sr-d3",
+        "pplx-decider-v1-1-27b",
+        "vllm-sr-d3-turbo"
+      ],
+      "after": [
+        "chon-1.0-12b",
+        "h2o-lightning-31b",
+        "vllm-sr-d3",
+        "pplx-decider-v1-1-27b",
+        "vllm-sr-d3-turbo"
+      ],
+      "changed": false,
+      "entrants": [],
+      "dropped": [],
+      "causes": [],
+      "positions_before": {
+        "fastino-glide-api": null
+      },
+      "positions": {
+        "fastino-glide-api": null
+      },
+      "field": 192
+    },
+    {
+      "view": "api",
+      "metric": "composites/A",
+      "before": [
+        "kettei-fat",
+        "liquid-d1-ultra",
+        "nimble-v4-max",
+        "drex-max",
+        "subq-snap-preview"
+      ],
+      "after": [
+        "kettei-fat",
+        "fastino-glide-api",
+        "liquid-d1-ultra",
+        "nimble-v4-max",
+        "drex-max"
+      ],
+      "changed": true,
+      "entrants": [
+        "fastino-glide-api"
+      ],
+      "dropped": [
+        "subq-snap-preview"
+      ],
+      "causes": [
+        "fastino-glide-api"
+      ],
+      "positions_before": {
+        "fastino-glide-api": null
+      },
+      "positions": {
+        "fastino-glide-api": 2
+      },
+      "field": 44
+    },
+    {
+      "view": "api",
+      "metric": "composites/B",
+      "before": [
+        "kettei-fat",
+        "drex-max",
+        "liquid-d1-ultra",
+        "subq-snap-preview",
+        "nimble-v4-max"
+      ],
+      "after": [
+        "kettei-fat",
+        "fastino-glide-api",
+        "drex-max",
+        "liquid-d1-ultra",
+        "subq-snap-preview"
+      ],
+      "changed": true,
+      "entrants": [
+        "fastino-glide-api"
+      ],
+      "dropped": [
+        "nimble-v4-max"
+      ],
+      "causes": [
+        "fastino-glide-api"
+      ],
+      "positions_before": {
+        "fastino-glide-api": null
+      },
+      "positions": {
+        "fastino-glide-api": 2
+      },
+      "field": 44
+    },
+    {
+      "view": "api",
+      "metric": "composites/C",
+      "before": [
+        "kettei-fat",
+        "liquid-d1-ultra",
+        "nimble-v4-max",
+        "drex-max",
+        "subq-snap-preview"
+      ],
+      "after": [
+        "kettei-fat",
+        "fastino-glide-api",
+        "liquid-d1-ultra",
+        "nimble-v4-max",
+        "drex-max"
+      ],
+      "changed": true,
+      "entrants": [
+        "fastino-glide-api"
+      ],
+      "dropped": [
+        "subq-snap-preview"
+      ],
+      "causes": [
+        "fastino-glide-api"
+      ],
+      "positions_before": {
+        "fastino-glide-api": null
+      },
+      "positions": {
+        "fastino-glide-api": 2
+      },
+      "field": 44
+    },
+    {
+      "view": "api",
+      "metric": "capability/official_caps",
+      "before": [
+        "kettei-fat",
+        "drex-max",
+        "subq-snap-preview",
+        "liquid-d1-ultra",
+        "nimble-v4-max"
+      ],
+      "after": [
+        "kettei-fat",
+        "fastino-glide-api",
+        "drex-max",
+        "subq-snap-preview",
+        "liquid-d1-ultra"
+      ],
+      "changed": true,
+      "entrants": [
+        "fastino-glide-api"
+      ],
+      "dropped": [
+        "nimble-v4-max"
+      ],
+      "causes": [
+        "fastino-glide-api"
+      ],
+      "positions_before": {
+        "fastino-glide-api": null
+      },
+      "positions": {
+        "fastino-glide-api": 2
+      },
+      "field": 29
+    },
+    {
+      "view": "api",
+      "metric": "capability/no_caps",
+      "before": [
+        "gpt-6-luna",
+        "qwen3.8-27b",
+        "gpt-6-luna-low",
+        "deepseek-flash",
+        "gpt-5.6-luna"
+      ],
+      "after": [
+        "gpt-6-luna",
+        "qwen3.8-27b",
+        "gpt-6-luna-low",
+        "deepseek-flash",
+        "gpt-5.6-luna"
+      ],
+      "changed": false,
+      "entrants": [],
+      "dropped": [],
+      "causes": [],
+      "positions_before": {
+        "fastino-glide-api": null
+      },
+      "positions": {
+        "fastino-glide-api": 7
+      },
+      "field": 44
+    },
+    {
+      "view": "api",
+      "metric": "capability/cost_off_latency_2x",
+      "before": [
+        "kettei-fat",
+        "drex-max",
+        "subq-snap-preview",
+        "liquid-d1-ultra",
+        "nimble-v4-max"
+      ],
+      "after": [
+        "kettei-fat",
+        "fastino-glide-api",
+        "drex-max",
+        "subq-snap-preview",
+        "liquid-d1-ultra"
+      ],
+      "changed": true,
+      "entrants": [
+        "fastino-glide-api"
+      ],
+      "dropped": [
+        "nimble-v4-max"
+      ],
+      "causes": [
+        "fastino-glide-api"
+      ],
+      "positions_before": {
+        "fastino-glide-api": null
+      },
+      "positions": {
+        "fastino-glide-api": 2
+      },
+      "field": 35
+    },
+    {
+      "view": "api",
+      "metric": "capability/latency_none",
+      "before": [
+        "kettei-fat",
+        "drex-max",
+        "subq-snap-preview",
+        "liquid-d1-ultra",
+        "nimble-v4-max"
+      ],
+      "after": [
+        "kettei-fat",
+        "fastino-glide-api",
+        "drex-max",
+        "subq-snap-preview",
+        "liquid-d1-ultra"
+      ],
+      "changed": true,
+      "entrants": [
+        "fastino-glide-api"
+      ],
+      "dropped": [
+        "nimble-v4-max"
+      ],
+      "causes": [
+        "fastino-glide-api"
+      ],
+      "positions_before": {
+        "fastino-glide-api": null
+      },
+      "positions": {
+        "fastino-glide-api": 2
+      },
+      "field": 31
+    },
+    {
+      "view": "api",
+      "metric": "extra_capability/cost_7x",
+      "before": [
+        "kettei-fat",
+        "drex-max",
+        "subq-snap-preview",
+        "liquid-d1-ultra",
+        "nimble-v4-max"
+      ],
+      "after": [
+        "kettei-fat",
+        "fastino-glide-api",
+        "drex-max",
+        "subq-snap-preview",
+        "liquid-d1-ultra"
+      ],
+      "changed": true,
+      "entrants": [
+        "fastino-glide-api"
+      ],
+      "dropped": [
+        "nimble-v4-max"
+      ],
+      "causes": [
+        "fastino-glide-api"
+      ],
+      "positions_before": {
+        "fastino-glide-api": null
+      },
+      "positions": {
+        "fastino-glide-api": 2
+      },
+      "field": 33
+    },
+    {
+      "view": "api",
+      "metric": "extra_capability/cost_10x",
+      "before": [
+        "kettei-fat",
+        "drex-max",
+        "subq-snap-preview",
+        "liquid-d1-ultra",
+        "nimble-v4-max"
+      ],
+      "after": [
+        "kettei-fat",
+        "fastino-glide-api",
+        "drex-max",
+        "subq-snap-preview",
+        "liquid-d1-ultra"
+      ],
+      "changed": true,
+      "entrants": [
+        "fastino-glide-api"
+      ],
+      "dropped": [
+        "nimble-v4-max"
+      ],
+      "causes": [
+        "fastino-glide-api"
+      ],
+      "positions_before": {
+        "fastino-glide-api": null
+      },
+      "positions": {
+        "fastino-glide-api": 2
+      },
+      "field": 34
+    },
+    {
+      "view": "api",
+      "metric": "extra_capability/rank_field",
+      "before": [
+        "gpt-6-luna",
+        "qwen3.8-27b",
+        "gpt-6-luna-low",
+        "deepseek-flash",
+        "gpt-5.6-luna"
+      ],
+      "after": [
+        "gpt-6-luna",
+        "qwen3.8-27b",
+        "gpt-6-luna-low",
+        "deepseek-flash",
+        "gpt-5.6-luna"
+      ],
+      "changed": false,
+      "entrants": [],
+      "dropped": [],
+      "causes": [],
+      "positions_before": {
+        "fastino-glide-api": null
+      },
+      "positions": {
+        "fastino-glide-api": 7
+      },
+      "field": 44
+    },
+    {
+      "view": "api",
+      "metric": "extra_capability/cost_7x_latency_none",
+      "before": [
+        "gpt-6-luna",
+        "gpt-6-luna-low",
+        "gpt-5.6-luna",
+        "kettei-fat",
+        "drex-max"
+      ],
+      "after": [
+        "gpt-6-luna",
+        "gpt-6-luna-low",
+        "gpt-5.6-luna",
+        "kettei-fat",
+        "fastino-glide-api"
+      ],
+      "changed": true,
+      "entrants": [
+        "fastino-glide-api"
+      ],
+      "dropped": [
+        "drex-max"
+      ],
+      "causes": [
+        "fastino-glide-api"
+      ],
+      "positions_before": {
+        "fastino-glide-api": null
+      },
+      "positions": {
+        "fastino-glide-api": 5
+      },
+      "field": 40
+    },
+    {
+      "view": "api",
+      "metric": "extra_capability/cost_10x_latency_none",
+      "before": [
+        "gpt-6-luna",
+        "gpt-6-luna-low",
+        "gpt-5.6-luna",
+        "kettei-fat",
+        "drex-max"
+      ],
+      "after": [
+        "gpt-6-luna",
+        "gpt-6-luna-low",
+        "gpt-5.6-luna",
+        "kettei-fat",
+        "fastino-glide-api"
+      ],
+      "changed": true,
+      "entrants": [
+        "fastino-glide-api"
+      ],
+      "dropped": [
+        "drex-max"
+      ],
+      "causes": [
+        "fastino-glide-api"
+      ],
+      "positions_before": {
+        "fastino-glide-api": null
+      },
+      "positions": {
+        "fastino-glide-api": 5
+      },
+      "field": 41
+    },
+    {
+      "view": "release",
+      "metric": "A",
+      "before": [
+        "kettei-fat",
+        "liquid-d1-ultra",
+        "nimble-v4-max",
+        "drex-max",
+        "subq-snap-preview"
+      ],
+      "after": [
+        "kettei-fat",
+        "fastino-glide-api",
+        "liquid-d1-ultra",
+        "nimble-v4-max",
+        "drex-max"
+      ],
+      "changed": true,
+      "entrants": [
+        "fastino-glide-api"
+      ],
+      "dropped": [
+        "subq-snap-preview"
+      ],
+      "causes": [
+        "fastino-glide-api"
+      ],
+      "positions_before": {
+        "fastino-glide-api": null
+      },
+      "positions": {
+        "fastino-glide-api": 2
+      },
+      "field": 66
+    },
+    {
+      "view": "release",
+      "metric": "B",
+      "before": [
+        "kettei-fat",
+        "drex-max",
+        "liquid-d1-ultra",
+        "h2o-lightning-31b",
+        "subq-snap-preview"
+      ],
+      "after": [
+        "kettei-fat",
+        "fastino-glide-api",
+        "drex-max",
+        "liquid-d1-ultra",
+        "h2o-lightning-31b"
+      ],
+      "changed": true,
+      "entrants": [
+        "fastino-glide-api"
+      ],
+      "dropped": [
+        "subq-snap-preview"
+      ],
+      "causes": [
+        "fastino-glide-api"
+      ],
+      "positions_before": {
+        "fastino-glide-api": null
+      },
+      "positions": {
+        "fastino-glide-api": 2
+      },
+      "field": 66
+    },
+    {
+      "view": "release",
+      "metric": "C",
+      "before": [
+        "kettei-fat",
+        "liquid-d1-ultra",
+        "nimble-v4-max",
+        "drex-max",
+        "subq-snap-preview"
+      ],
+      "after": [
+        "kettei-fat",
+        "fastino-glide-api",
+        "liquid-d1-ultra",
+        "nimble-v4-max",
+        "drex-max"
+      ],
+      "changed": true,
+      "entrants": [
+        "fastino-glide-api"
+      ],
+      "dropped": [
+        "subq-snap-preview"
+      ],
+      "causes": [
+        "fastino-glide-api"
+      ],
+      "positions_before": {
+        "fastino-glide-api": null
+      },
+      "positions": {
+        "fastino-glide-api": 2
+      },
+      "field": 66
+    },
+    {
+      "view": "release",
+      "metric": "capability",
+      "before": [
+        "kettei-fat",
+        "chon-1.0-12b",
+        "h2o-lightning-31b",
+        "drex-max",
+        "vllm-sr-d3"
+      ],
+      "after": [
+        "kettei-fat",
+        "chon-1.0-12b",
+        "h2o-lightning-31b",
+        "fastino-glide-api",
+        "drex-max"
+      ],
+      "changed": true,
+      "entrants": [
+        "fastino-glide-api"
+      ],
+      "dropped": [
+        "vllm-sr-d3"
+      ],
+      "causes": [
+        "fastino-glide-api"
+      ],
+      "positions_before": {
+        "fastino-glide-api": null
+      },
+      "positions": {
+        "fastino-glide-api": 4
+      },
+      "field": 66
+    }
+  ],
+  "note": "Board effect: the hosted-API row was compared on the merged-board top fives before/after v1.6.40 over all 36 mixed, open-weights and API variants (including 7x/10x cost caps with no latency cap) plus 4 release-board lists: 22 of 40 top-five lists change. Top-five changes caused by: fastino-glide-api (Florian's release instruction, 22 Oct 2026). ",
+  "merged_variants": 36,
+  "release_lists": 4,
+  "changed_lists": 22,
+  "changed_labels": [
+    "all/composites/A",
+    "all/composites/B",
+    "all/composites/C",
+    "all/capability/official_caps",
+    "all/capability/cost_off_latency_2x",
+    "all/capability/latency_none",
+    "all/extra_capability/cost_7x",
+    "all/extra_capability/cost_10x",
+    "api/composites/A",
+    "api/composites/B",
+    "api/composites/C",
+    "api/capability/official_caps",
+    "api/capability/cost_off_latency_2x",
+    "api/capability/latency_none",
+    "api/extra_capability/cost_7x",
+    "api/extra_capability/cost_10x",
+    "api/extra_capability/cost_7x_latency_none",
+    "api/extra_capability/cost_10x_latency_none",
+    "release/A",
+    "release/B",
+    "release/C",
+    "release/capability"
+  ]
+}

@@ -1,0 +1,60 @@
+{
+ "carried_rows_preserved_except_ranks": 76,
+ "carried_scorer_point_estimates_reproduced": 73,
+ "files": {
+  "categories": {
+   "path": "data/raw/benchmarks/jevbench/v1.6/jevbench-v1.6.40-categories.json",
+   "sha256": "4af3ba24bd40434c17eece32dcdc19c7e5648a99de897cd4c9df4d0f0dd358d8"
+  },
+  "history": {
+   "path": "data/raw/benchmarks/jevbench/v1.6/jevbench-v1.6.40-history.json",
+   "sha256": "5cd8c1332226ea9c179883d2285c0d8b8cc593ae38f2645197364a7ddd9c83c1"
+  },
+  "history-carry": {
+   "path": "data/raw/benchmarks/jevbench/v1.6/jevbench-v1.6.40-history-carry.json",
+   "sha256": "334e851944e92383ab3071e52b3012040c7023d0fe236395953169ebee8f0459"
+  },
+  "proof": {
+   "path": "data/raw/benchmarks/jevbench/v1.6/jevbench-v1.6.40-proof.json",
+   "sha256": "d969f9454c25392ba7dc8a20859c0fac93c7e094bcf00a163aeec3188b39dcce"
+  },
+  "results": {
+   "path": "data/raw/benchmarks/jevbench/v1.6/jevbench-v1.6.40-results.json",
+   "sha256": "8095b8c9fdf3c5d543ea2f007946094ce7dcb4184db5f610499d26f52afb8eb7"
+  }
+ },
+ "new_rows": {
+  "fastino-glide-api": {
+   "axes": {
+    "calibration": 93.01106628088438,
+    "cost": 59.111125613009825,
+    "intelligence": 76.39198423827783,
+    "speed": 87.30503336667806
+   },
+   "capability": 84.7015252595811,
+   "cost": {
+    "basis": "Operator's own published standard usage tariff: USD 0.04 per 1M INPUT tokens, output not billed (docs.fastino.ai/pricing, GLiDE row; page read 22 Oct 2026 20:34 UTC, saved copy sha256 22c0758f). Counted under interpretation I-1 (a manufacturer's standard, non-promotional list price counts from day 1) by the frozen pricing module pricing_v15 (sha256 aa2afcd5a58d0c4cc0e3d6867d590c70b6ac58e971410c27faf9628f97bcf8b7), which carries one added launch-list-price key for this row and nothing else. Applied to this row's own provider-reported input tokens on the answered rows; the 17 requests that returned an error are priced at the API's 65,536-token prompt ceiling, the documented context estimate. COMMON COST BASIS (v1.6.30): cost per 1,000 decisions is computed on the common items of this draw, leaving out the 15 very long items that count for no row; this row scored 1,497 items, so the basis here is 1,482 items. This row: USD 0.023065 per 1,000 decisions (0.357x the official cost cap USD 0.064595), against USD 0.049101 over all 1,497 scored items. The older measurement of this vendor's GLiDE on 6 Oct 2026 (key fastino-glide) was priced at the then tariff of USD 0.15 per 1M input tokens and is unchanged.",
+    "common_basis": {
+     "n_items": 1482,
+     "rule": "common",
+     "usd_per_1000_all_items": 0.0491012959251837
+    },
+    "kind": "mixed",
+    "usage_estimated_rows": 17,
+    "usd_per_1000": 0.023065479082321188
+   },
+   "ranks": {
+    "A": 2,
+    "B": 2,
+    "C": 2,
+    "capability": 4
+   },
+   "scores": {
+    "A": 76.60902426459442,
+    "B": 76.56551765292035,
+    "C": 76.60902426459442
+   }
+  }
+ },
+ "variant": "single-row"
+}
