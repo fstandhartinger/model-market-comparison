@@ -1,0 +1,75 @@
+/home/flori/jobs/jevbench-add-requests-20260919/workers/r168-v1640-build2/wt/r168/v1640/batch/topics-v1640/categories-with-topics.json 1 systems; {'topics': 7, 'usecases': 20, 'families': 13, 'languages': 23}
+built v1.6.40 roster 77 ranked 66
+{
+ "fastino-glide-api": {
+  "axes": {
+   "calibration": 93.01106628088438,
+   "cost": 59.111125613009825,
+   "intelligence": 76.39198423827783,
+   "speed": 87.30503336667806
+  },
+  "scores": {
+   "A": 76.60902426459442,
+   "B": 76.56551765292035,
+   "C": 76.60902426459442
+  },
+  "capability": 84.7015252595811,
+  "ranks": {
+   "A": 2,
+   "B": 2,
+   "C": 2,
+   "capability": 4
+  }
+ }
+}
+wired v1.6.40
+Board effect: the hosted-API row was compared on the merged-board top fives before/after v1.6.40 over all 36 mixed, open-weights and API variants (including 7x/10x cost caps with no latency cap) plus 4 release-board lists: 22 of 40 top-five lists change. Top-five changes caused by: fastino-glide-api (Florian release GO glide-api-release-go). 
+ CHANGED all composites/A ['kettei-fat', 'liquid-d1-ultra', 'nimble-v4-max', 'drex-max', 'subq-snap-preview'] -> ['kettei-fat', 'fastino-glide-api', 'liquid-d1-ultra', 'nimble-v4-max', 'drex-max']
+ CHANGED all composites/B ['kettei-fat', 'drex-max', 'liquid-d1-ultra', 'h2o-lightning-31b', 'subq-snap-preview'] -> ['kettei-fat', 'fastino-glide-api', 'drex-max', 'liquid-d1-ultra', 'h2o-lightning-31b']
+ CHANGED all composites/C ['kettei-fat', 'liquid-d1-ultra', 'nimble-v4-max', 'drex-max', 'subq-snap-preview'] -> ['kettei-fat', 'fastino-glide-api', 'liquid-d1-ultra', 'nimble-v4-max', 'drex-max']
+ CHANGED all capability/official_caps ['kettei-fat', 'chon-1.0-12b', 'h2o-lightning-31b', 'drex-max', 'basal-omni-1.0-ultra'] -> ['kettei-fat', 'chon-1.0-12b', 'h2o-lightning-31b', 'fastino-glide-api', 'drex-max']
+ CHANGED all capability/cost_off_latency_2x ['kettei-fat', 'chon-1.0-12b', 'h2o-lightning-31b', 'drex-max', 'vllm-sr-d3'] -> ['kettei-fat', 'chon-1.0-12b', 'h2o-lightning-31b', 'fastino-glide-api', 'drex-max']
+ CHANGED all capability/latency_none ['kettei-fat', 'chon-1.0-12b', 'h2o-lightning-31b', 'drex-max', 'basal-omni-1.0-ultra'] -> ['kettei-fat', 'chon-1.0-12b', 'h2o-lightning-31b', 'fastino-glide-api', 'drex-max']
+ CHANGED all extra_capability/cost_7x ['kettei-fat', 'chon-1.0-12b', 'h2o-lightning-31b', 'drex-max', 'vllm-sr-d3'] -> ['kettei-fat', 'chon-1.0-12b', 'h2o-lightning-31b', 'fastino-glide-api', 'drex-max']
+ CHANGED all extra_capability/cost_10x ['kettei-fat', 'chon-1.0-12b', 'h2o-lightning-31b', 'drex-max', 'vllm-sr-d3'] -> ['kettei-fat', 'chon-1.0-12b', 'h2o-lightning-31b', 'fastino-glide-api', 'drex-max']
+ CHANGED api composites/A ['kettei-fat', 'liquid-d1-ultra', 'nimble-v4-max', 'drex-max', 'subq-snap-preview'] -> ['kettei-fat', 'fastino-glide-api', 'liquid-d1-ultra', 'nimble-v4-max', 'drex-max']
+ CHANGED api composites/B ['kettei-fat', 'drex-max', 'liquid-d1-ultra', 'subq-snap-preview', 'nimble-v4-max'] -> ['kettei-fat', 'fastino-glide-api', 'drex-max', 'liquid-d1-ultra', 'subq-snap-preview']
+ CHANGED api composites/C ['kettei-fat', 'liquid-d1-ultra', 'nimble-v4-max', 'drex-max', 'subq-snap-preview'] -> ['kettei-fat', 'fastino-glide-api', 'liquid-d1-ultra', 'nimble-v4-max', 'drex-max']
+ CHANGED api capability/official_caps ['kettei-fat', 'drex-max', 'subq-snap-preview', 'liquid-d1-ultra', 'nimble-v4-max'] -> ['kettei-fat', 'fastino-glide-api', 'drex-max', 'subq-snap-preview', 'liquid-d1-ultra']
+ CHANGED api capability/cost_off_latency_2x ['kettei-fat', 'drex-max', 'subq-snap-preview', 'liquid-d1-ultra', 'nimble-v4-max'] -> ['kettei-fat', 'fastino-glide-api', 'drex-max', 'subq-snap-preview', 'liquid-d1-ultra']
+ CHANGED api capability/latency_none ['kettei-fat', 'drex-max', 'subq-snap-preview', 'liquid-d1-ultra', 'nimble-v4-max'] -> ['kettei-fat', 'fastino-glide-api', 'drex-max', 'subq-snap-preview', 'liquid-d1-ultra']
+ CHANGED api extra_capability/cost_7x ['kettei-fat', 'drex-max', 'subq-snap-preview', 'liquid-d1-ultra', 'nimble-v4-max'] -> ['kettei-fat', 'fastino-glide-api', 'drex-max', 'subq-snap-preview', 'liquid-d1-ultra']
+ CHANGED api extra_capability/cost_10x ['kettei-fat', 'drex-max', 'subq-snap-preview', 'liquid-d1-ultra', 'nimble-v4-max'] -> ['kettei-fat', 'fastino-glide-api', 'drex-max', 'subq-snap-preview', 'liquid-d1-ultra']
+ CHANGED api extra_capability/cost_7x_latency_none ['gpt-6-luna', 'gpt-6-luna-low', 'gpt-5.6-luna', 'kettei-fat', 'drex-max'] -> ['gpt-6-luna', 'gpt-6-luna-low', 'gpt-5.6-luna', 'kettei-fat', 'fastino-glide-api']
+ CHANGED api extra_capability/cost_10x_latency_none ['gpt-6-luna', 'gpt-6-luna-low', 'gpt-5.6-luna', 'kettei-fat', 'drex-max'] -> ['gpt-6-luna', 'gpt-6-luna-low', 'gpt-5.6-luna', 'kettei-fat', 'fastino-glide-api']
+ CHANGED release A ['kettei-fat', 'liquid-d1-ultra', 'nimble-v4-max', 'drex-max', 'subq-snap-preview'] -> ['kettei-fat', 'fastino-glide-api', 'liquid-d1-ultra', 'nimble-v4-max', 'drex-max']
+ CHANGED release B ['kettei-fat', 'drex-max', 'liquid-d1-ultra', 'h2o-lightning-31b', 'subq-snap-preview'] -> ['kettei-fat', 'fastino-glide-api', 'drex-max', 'liquid-d1-ultra', 'h2o-lightning-31b']
+ CHANGED release C ['kettei-fat', 'liquid-d1-ultra', 'nimble-v4-max', 'drex-max', 'subq-snap-preview'] -> ['kettei-fat', 'fastino-glide-api', 'liquid-d1-ultra', 'nimble-v4-max', 'drex-max']
+ CHANGED release capability ['kettei-fat', 'chon-1.0-12b', 'h2o-lightning-31b', 'drex-max', 'vllm-sr-d3'] -> ['kettei-fat', 'chon-1.0-12b', 'h2o-lightning-31b', 'fastino-glide-api', 'drex-max']
+built v1.6.40 roster 77 ranked 66
+{
+ "fastino-glide-api": {
+  "axes": {
+   "calibration": 93.01106628088438,
+   "cost": 59.111125613009825,
+   "intelligence": 76.39198423827783,
+   "speed": 87.30503336667806
+  },
+  "scores": {
+   "A": 76.60902426459442,
+   "B": 76.56551765292035,
+   "C": 76.60902426459442
+  },
+  "capability": 84.7015252595811,
+  "ranks": {
+   "A": 2,
+   "B": 2,
+   "C": 2,
+   "capability": 4
+  }
+ }
+}
+
+real	0m21.632s
+user	0m11.228s
+sys	0m2.240s

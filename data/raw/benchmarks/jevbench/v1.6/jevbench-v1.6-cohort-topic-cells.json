@@ -2,6 +2,13 @@
  "draws": {
   "v1.6-regular-20261012": {
    "builder_sha256": "ec04ab598162bfc4340ffa7916a06573eb1222132c61e47ab772045bc67ced78",
+   "derived_label_rows": {
+    "fastino-glide-api": {
+     "items": 1497,
+     "labels_sha256": "aee4480b10e39c6ef92760209ee5dfc8bc0fda9aa887029a52ce8135d2b415a5",
+     "note": "ruled labels without the 3 custody-excluded items"
+    }
+   },
    "extra_rows": {
     "microsoft-decision-1-a2-20261012": {
      "coverage": "A2+P (draw v1.6-regular-20261012)",
@@ -114,8 +121,8 @@
    },
    "labelling": "Subject topics and use cases: each of this draw's 1,500 items was labelled after its release with one subject topic (v1.2 list) and one TypeSafe use case by Winnow-12B Q8 on our own GPU pod, with the same model, questions, taxonomy and T1-T3/U1/U2 item-group rules as the v1.6.4 and v1.6.9 draws; where a uc1 item was written for a use case, that authoring use case is used. Sealed items stayed on our own infrastructure. On 75 public items checked by hand afterwards, topic agreement is 71/75 = 94.7 % (68/75 = 90.7 % counting three borderline items as misses); policy-style routing items are filed under the subject of the request, as in the earlier draws, and no rule was added.",
    "labels_sha256": "be5a5209ad63c1f6a2ad39c4f71ea44d2dd4cc647489cc020e54a57ccfd9f99a",
-   "release": "v1.6.39",
-   "results_sha256": "8ce14f0406eb039e826e2ba4c991b880408892a567a4e992ca33c5ed866c5b4c",
+   "release": "v1.6.40",
+   "results_sha256": "db7c7d59167b6b38c76819237309056e6f7c0ec13160fd2ea11ca3d8a099c353",
    "row_note": "Subject topics and use cases come from this draw's own item labels, added after its release with the same labelling recipe as the earlier draws (hand check 71/75).",
    "scorer_sha256": "02132271117653e6302c509232a581d0094f0e78eac8b1bfc67596fd5d5097e9",
    "systems": {
@@ -1711,6 +1718,120 @@
       },
       "search_retrieval": {
        "competence": 99.98,
+       "n": 24
+      }
+     }
+    },
+    "fastino-glide-api": {
+     "topics": {
+      "coding": {
+       "competence": 86.73,
+       "n": 198
+      },
+      "everyday_language": {
+       "competence": 47.41,
+       "n": 65
+      },
+      "finance_commerce": {
+       "competence": 75.59,
+       "n": 76
+      },
+      "law_policy": {
+       "competence": 81.37,
+       "n": 717
+      },
+      "math": {
+       "competence": 54.53,
+       "n": 289
+      },
+      "safety_security": {
+       "competence": 65.05,
+       "n": 48
+      },
+      "support_ops": {
+       "competence": 74.61,
+       "n": 104
+      }
+     },
+     "usecases": {
+      "advertising": {
+       "competence": 28.28,
+       "n": 22
+      },
+      "code_linting": {
+       "competence": 93.29,
+       "n": 24
+      },
+      "customer_support": {
+       "competence": 61.69,
+       "n": 157
+      },
+      "demand_forecasting": {
+       "competence": 0.0,
+       "n": 17
+      },
+      "ecommerce_marketplaces": {
+       "competence": 84.75,
+       "n": 54
+      },
+      "feature_extraction": {
+       "competence": 56.88,
+       "n": 19
+      },
+      "financial_crime": {
+       "competence": 51.0,
+       "n": 55
+      },
+      "gaming": {
+       "competence": 52.69,
+       "n": 23
+      },
+      "insurance_claims": {
+       "competence": 67.41,
+       "n": 26
+      },
+      "knowledge_graphs": {
+       "competence": 90.66,
+       "n": 22
+      },
+      "lead_generation": {
+       "competence": 70.12,
+       "n": 30
+      },
+      "legal_compliance": {
+       "competence": 83.79,
+       "n": 327
+      },
+      "llm_guardrails": {
+       "competence": 80.95,
+       "n": 27
+      },
+      "model_routing": {
+       "competence": 87.77,
+       "n": 324
+      },
+      "moderation_trust_safety": {
+       "competence": 76.84,
+       "n": 32
+      },
+      "other": {
+       "competence": 53.02,
+       "n": 216
+      },
+      "recruiting": {
+       "competence": 67.57,
+       "n": 19
+      },
+      "risk_assessment": {
+       "competence": 61.31,
+       "n": 56
+      },
+      "scientific_discovery": {
+       "competence": 56.08,
+       "n": 23
+      },
+      "search_retrieval": {
+       "competence": 99.92,
        "n": 24
       }
      }

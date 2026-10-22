@@ -1,0 +1,1333 @@
+{
+ "fastino-glide-api": {
+  "addendum": null,
+  "api_flag": true,
+  "api_subset": false,
+  "author": "Fastino",
+  "axes": {
+   "calibration": 93.01106628088438,
+   "cost": 59.111125613009825,
+   "intelligence": 76.39198423827783,
+   "speed": 87.30503336667806
+  },
+  "calibration": {
+   "parts": {
+    "choice": {
+     "ece_hard": 0.04346043152131592,
+     "ece_score": 91.30791369573681,
+     "mean_tvd": null,
+     "n": 738,
+     "n_ece_hard": 304,
+     "n_tvd": 0,
+     "score": 91.30791369573681
+    },
+    "noul": {
+     "abstention_rate": 0.13746630727762799,
+     "brier": 0.0529066276825842,
+     "ece": 0.03815484610642815,
+     "n": 371,
+     "score": 92.36903077871436
+    },
+    "score": {
+     "interval90_coverage": 0.9892183288409704,
+     "interval90_width": 0.21428571428571425,
+     "n": 371,
+     "nrps": 0.0377969402276481,
+     "score": 95.35625436820196,
+     "top_ece": 0.02753898620415633
+    }
+   },
+   "score": 93.01106628088438
+  },
+  "capability": 84.7015252595811,
+  "composite_ci95": {
+   "A": [
+    75.0560545503276,
+    77.30340620880787
+   ],
+   "B": [
+    74.53280727316283,
+    77.76808823284206
+   ],
+   "C": [
+    75.0560545503276,
+    77.30340620880787
+   ]
+  },
+  "cost": {
+   "basis": "Operator's own published standard usage tariff: USD 0.04 per 1M INPUT tokens, output not billed (docs.fastino.ai/pricing, GLiDE row; page read 22 Oct 2026 20:34 UTC, saved copy sha256 22c0758f). Counted under interpretation I-1 (a manufacturer's standard, non-promotional list price counts from day 1) by the frozen pricing module pricing_v15 (sha256 aa2afcd5a58d0c4cc0e3d6867d590c70b6ac58e971410c27faf9628f97bcf8b7), which carries one added launch-list-price key for this row and nothing else. Applied to this row's own provider-reported input tokens on the answered rows; the 17 requests that returned an error are priced at the API's 65,536-token prompt ceiling, the documented context estimate. COMMON COST BASIS (v1.6.30): cost per 1,000 decisions is computed on the common items of this draw, leaving out the 15 very long items that count for no row; this row scored 1,497 items, so the basis here is 1,482 items. This row: USD 0.023065 per 1,000 decisions (0.357x the official cost cap USD 0.064595), against USD 0.049101 over all 1,497 scored items. The older measurement of this vendor's GLiDE on 6 Oct 2026 (key fastino-glide) was priced at the then tariff of USD 0.15 per 1M input tokens and is unchanged.",
+   "common_basis": {
+    "n_items": 1482,
+    "rule": "common",
+    "usd_per_1000_all_items": 0.0491012959251837
+   },
+   "kind": "mixed",
+   "usage_estimated_rows": 17,
+   "usd_per_1000": 0.023065479082321188
+  },
+  "custody_exclusion": {
+   "derived_gold_sha256": "9f1f8200d0a1b4384f43ffc0a91f3f36e4790fc3dbcef7486bf233b0142baa47",
+   "exclusion_list_sha256": "31b47af58dce134a70e5cbf60aad40db0000dd398f26649070fb7c9dfd1deeb3",
+   "items": 3,
+   "rule": "an item a provider has already seen is never scored for that provider; the 3 items were never sent and are not in this row's gold",
+   "scored_items": 1497
+  },
+  "display": "Fastino GLiDE (hosted API, 22 Oct 2026)",
+  "endpoint_condition": "Vendor-hosted api.fastino.ai /v1/systemone API, model `fastino/GLiDE` (responses report glide_v2), evaluator key, every request with store:false; latency measured from Sandy (Germany) on every item without API adjustment. Full S+P draw of v1.6-regular-20261012 minus the 3 custody-excluded items (1,497 requests, one pass, no retries) through the unchanged run_api_full_v161.py; the full-set exposure gate logged the 1,197 sealed items to the provider before the first request. Measured 22 Oct 2026 by the evaluator; the vendor did not take part in the run.",
+  "endpoint_kind": "api",
+  "full_coverage": true,
+  "intelligence": {
+   "I_open": 79.78345749455909,
+   "I_sealed": 73.00051098199657,
+   "base": 76.39198423827783,
+   "excess": -3.0565802577931933,
+   "gap": 6.782946512562518,
+   "penalty": 1.0,
+   "per_type_split": {
+    "open|choice": {
+     "cc": 90.51495356571994,
+     "n": {
+      "easy": 33,
+      "hard": 68,
+      "judge": 32,
+      "standard": 17
+     },
+     "tiers": {
+      "easy": 100.00000000000001,
+      "hard": 86.78829820698331,
+      "judge": 96.044825313118,
+      "standard": 84.93093344495604
+     }
+    },
+    "open|noul": {
+     "cc": 75.94824016563147,
+     "n": {
+      "easy": 14,
+      "hard": 23,
+      "judge": 20,
+      "standard": 18
+     },
+     "tiers": {
+      "easy": 85.71428571428572,
+      "hard": 82.6086956521739,
+      "judge": 70.0,
+      "standard": 66.66666666666667
+     }
+    },
+    "open|score": {
+     "cc": 72.88717875232587,
+     "n": {
+      "easy": 9,
+      "hard": 29,
+      "judge": 21,
+      "standard": 16
+     },
+     "tiers": {
+      "easy": 71.7719731384208,
+      "hard": 72.51880498670339,
+      "judge": 82.85006684010338,
+      "standard": 59.2371969588571
+     }
+    },
+    "sealed|choice": {
+     "cc": 86.92305256837759,
+     "n": {
+      "easy": 70,
+      "hard": 247,
+      "judge": 146,
+      "standard": 137
+     },
+     "tiers": {
+      "easy": 98.09402795425667,
+      "hard": 81.78559037816582,
+      "judge": 87.65915768854063,
+      "standard": 90.50833157561695
+     }
+    },
+    "sealed|noul": {
+     "cc": 63.1141990537663,
+     "n": {
+      "easy": 58,
+      "hard": 109,
+      "judge": 64,
+      "standard": 67
+     },
+     "tiers": {
+      "easy": 82.75862068965519,
+      "hard": 50.458715596330286,
+      "judge": 68.75,
+      "standard": 70.1492537313433
+     }
+    },
+    "sealed|score": {
+     "cc": 68.96428132384584,
+     "n": {
+      "easy": 35,
+      "hard": 123,
+      "judge": 66,
+      "standard": 75
+     },
+     "tiers": {
+      "easy": 86.59605824557663,
+      "hard": 65.05619871877177,
+      "judge": 68.82118654512506,
+      "standard": 68.17920024120974
+     }
+    }
+   }
+  },
+  "jevbench_score": 76.60902426459442,
+  "key": "fastino-glide-api",
+  "last_measured_on": "2026-10-22",
+  "licence": "Proprietary hosted API (no weights release)",
+  "listing": "ranked",
+  "measured_in": "v1.6.40",
+  "measurement_date_status": "measured",
+  "model_pin": "hosted-api:https://fastino.ai#fastino-glide-api",
+  "noul_decisive": {
+   "acc_among_decisive": 0.975,
+   "decisive": 320,
+   "decisive_rate": 0.862533692722372,
+   "n": 373,
+   "supported": true,
+   "valid": 371
+  },
+  "planned_weight_denominator": 1.0,
+  "rank": 2,
+  "ranked": true,
+  "ranks": {
+   "A": 2,
+   "B": 2,
+   "C": 2,
+   "capability": 4
+  },
+  "repo": "https://fastino.ai",
+  "scores": {
+   "A": 76.60902426459442,
+   "B": 76.56551765292035,
+   "C": 76.60902426459442
+  },
+  "speed": {
+   "adjustment": "none (API)",
+   "n": 124,
+   "p50_s_adjusted": 0.3601445150561631,
+   "p50_s_raw": 0.3601445150561631,
+   "p95_s_adjusted": 0.5164399832952765,
+   "p95_s_raw": 0.5164399832952765
+  },
+  "status": {
+   "answered_ok": 1480,
+   "missing": 0,
+   "rows": 1497,
+   "status": "complete"
+  },
+  "support": {
+   "choice": "native",
+   "noul": "native",
+   "score": "native"
+  },
+  "underlying": "Vendor-hosted API (POST api.fastino.ai/v1/systemone, model fastino/GLiDE) through the unchanged TypeSafe adapter with one added request field, store:false; no vendor code ran locally. SCORED ON 1,497 OF THE DRAW'S 1,500 ITEMS: 3 items Fastino had already seen through its hosted GLiNER-2.5-Decide on 8 Oct were never sent (custody rule: an item a provider has seen is never scored for that provider). The row is scored with the unmodified frozen scorer on the draw's gold without those 3 items (a second invocation of the same scorer; the other rows of this board are scored on all 1,500 items). PROVIDER-HOSTED: Fastino's API serves the model as `glide_v2` (every answered response reported it); the weights and serving were not inspected, and this is not the open-weights GLiDE 1.2 release, which is a separate pending measurement. RETENTION: Fastino's default is to retain API inputs; every request carried store:false and every answered response returned the header x-fastino-data-retention: not-stored (checked on all 1,480 answered requests, and on one non-item request before the first item was sent). NOT ANSWERED, counted wrong: 15 items exceed the API's 65,536-token prompt limit (HTTP 400 'prompt exceeds the maximum context length'), counted wrong; and 2 gateway errors (HTTP 502) from Fastino's API, not retried (one pass), counted wrong. PRICE CHANGED SINCE THE FIRST MEASUREMENT: on 6 Oct 2026 this vendor's GLiDE was listed at USD 0.15 per 1M input tokens with a 40,000-token prompt limit and scored on 600 items (key fastino-glide, Capability 77.0, outside the cost cap); today's tariff is USD 0.04 per 1M input tokens with a 65,536-token limit, and this row is a new measurement on the full draw. The older row stays as history. Latency was measured from Sandy (Germany) with no API adjustment, while the evaluation host was busy with other work; 2 answered decisions took more than 10 seconds (21.15 s and 76.42 s); v1.6 applies no 10-second rule. Native probabilities on all three question types, no generated tokens; the customer-side statements about the model are the vendor's and are not independently verified. SEALED ITEMS SENT TO THE VENDOR: the API sees the 1,197 sealed items it was sent; acceptable because every sealed item of this draw was already retired from scoring.",
+  "v16": {
+   "api_subset": false,
+   "api_subset_tag": null,
+   "breakdowns": {
+    "family": {
+     "calibration": {
+      "accuracy": 0.9545454545454546,
+      "cc": 93.02805833955307,
+      "cc_by_type": {
+       "choice": 91.66666666666667,
+       "noul": 100.0,
+       "score": 87.41750835199254
+      },
+      "low_n": true,
+      "n": 22,
+      "n_by_type": {
+       "choice": 16,
+       "noul": 4,
+       "score": 2
+      },
+      "score": 93.02805833955307
+     },
+     "calibration_gen": {
+      "accuracy": 0.7920792079207921,
+      "cc": 61.30216821922519,
+      "cc_by_type": {
+       "choice": 74.54931071049842,
+       "noul": 43.99999999999999,
+       "score": 65.35719394717714
+      },
+      "low_n": false,
+      "n": 101,
+      "n_by_type": {
+       "choice": 41,
+       "noul": 25,
+       "score": 35
+      },
+      "score": 61.30216821922519
+     },
+     "composite_gen": {
+      "accuracy": 0.9207920792079208,
+      "cc": 88.14805726991943,
+      "cc_by_type": {
+       "choice": 96.7479674796748,
+       "noul": 92.59259259259258,
+       "score": 75.10361173749092
+      },
+      "low_n": false,
+      "n": 101,
+      "n_by_type": {
+       "choice": 41,
+       "noul": 27,
+       "score": 33
+      },
+      "score": 88.14805726991943
+     },
+     "fairness": {
+      "accuracy": 0.9375,
+      "cc": 86.29471891787144,
+      "cc_by_type": {
+       "choice": 100.0,
+       "noul": 60.00000000000001,
+       "score": 98.88415675361429
+      },
+      "low_n": false,
+      "n": 48,
+      "n_by_type": {
+       "choice": 15,
+       "noul": 15,
+       "score": 18
+      },
+      "score": 86.29471891787144
+     },
+     "jaggedness": {
+      "accuracy": 0.7944444444444444,
+      "cc": 58.69250954076001,
+      "cc_by_type": {
+       "choice": 79.78825794032724,
+       "noul": 18.918918918918926,
+       "score": 77.37035176303387
+      },
+      "low_n": false,
+      "n": 180,
+      "n_by_type": {
+       "choice": 94,
+       "noul": 37,
+       "score": 49
+      },
+      "score": 58.69250954076001
+     },
+     "llm_router": {
+      "accuracy": 0.952076677316294,
+      "cc": 88.04795205712485,
+      "cc_by_type": {
+       "choice": 96.83014880690322,
+       "noul": 100.0,
+       "score": 67.31370736447127
+      },
+      "low_n": false,
+      "n": 313,
+      "n_by_type": {
+       "choice": 152,
+       "noul": 97,
+       "score": 64
+      },
+      "score": 88.04795205712485
+     },
+     "long_state": {
+      "accuracy": 0.0,
+      "cc": -143.01075268817203,
+      "cc_by_type": {
+       "choice": -29.032258064516128,
+       "noul": -100.0,
+       "score": -300.0
+      },
+      "low_n": true,
+      "n": 15,
+      "n_by_type": {
+       "choice": 10,
+       "noul": 2,
+       "score": 3
+      },
+      "score": 0.0
+     },
+     "ml_usecase": {
+      "accuracy": 0.7916666666666666,
+      "cc": 52.713148360991475,
+      "cc_by_type": {
+       "choice": 75.2577319587629,
+       "noul": 33.33333333333333,
+       "score": 49.548379790878194
+      },
+      "low_n": true,
+      "n": 24,
+      "n_by_type": {
+       "choice": 11,
+       "noul": 6,
+       "score": 7
+      },
+      "score": 52.713148360991475
+     },
+     "multilingual": {
+      "accuracy": 0.8218181818181818,
+      "cc": 69.62686351470224,
+      "cc_by_type": {
+       "choice": 85.32768177372026,
+       "noul": 55.55555555555556,
+       "score": 67.99735321483094
+      },
+      "low_n": false,
+      "n": 275,
+      "n_by_type": {
+       "choice": 134,
+       "noul": 72,
+       "score": 69
+      },
+      "score": 69.62686351470224
+     },
+     "negation_pair_gen": {
+      "accuracy": 0.8953488372093024,
+      "cc": 74.54014406808,
+      "cc_by_type": {
+       "choice": 100.0,
+       "noul": 73.33333333333334,
+       "score": 50.28709887090663
+      },
+      "low_n": false,
+      "n": 86,
+      "n_by_type": {
+       "choice": 40,
+       "noul": 30,
+       "score": 16
+      },
+      "score": 74.54014406808
+     },
+     "option_order": {
+      "accuracy": 0.9583333333333334,
+      "cc": 94.67376830892145,
+      "cc_by_type": {
+       "choice": 94.67376830892145
+      },
+      "low_n": false,
+      "n": 48,
+      "n_by_type": {
+       "choice": 48
+      },
+      "score": 94.67376830892145
+     },
+     "perturb_pair": {
+      "accuracy": 0.890625,
+      "cc": 81.53200714105311,
+      "cc_by_type": {
+       "choice": 84.98498498498498,
+       "noul": 80.0,
+       "score": 79.6110364381744
+      },
+      "low_n": false,
+      "n": 64,
+      "n_by_type": {
+       "choice": 44,
+       "noul": 10,
+       "score": 10
+      },
+      "score": 81.53200714105311
+     },
+     "usecase": {
+      "accuracy": 0.8636363636363636,
+      "cc": 74.04969523790491,
+      "cc_by_type": {
+       "choice": 90.19607843137256,
+       "noul": 58.33333333333333,
+       "score": 73.61967394900884
+      },
+      "low_n": false,
+      "n": 220,
+      "n_by_type": {
+       "choice": 104,
+       "noul": 48,
+       "score": 68
+      },
+      "score": 74.04969523790491
+     }
+    },
+    "lang": {
+     "ar": {
+      "accuracy": 0.75,
+      "cc": 49.28337524952835,
+      "cc_by_type": {
+       "choice": 80.95238095238095,
+       "noul": 50.0,
+       "score": 16.897744796204094
+      },
+      "low_n": true,
+      "n": 16,
+      "n_by_type": {
+       "choice": 7,
+       "noul": 4,
+       "score": 5
+      },
+      "score": 49.28337524952835
+     },
+     "cs": {
+      "accuracy": 0.8571428571428571,
+      "cc": 89.47368421052632,
+      "cc_by_type": {
+       "choice": 78.94736842105263,
+       "noul": 100.0
+      },
+      "low_n": true,
+      "n": 7,
+      "n_by_type": {
+       "choice": 6,
+       "noul": 1
+      },
+      "score": 89.47368421052632
+     },
+     "da": {
+      "accuracy": 0.7692307692307693,
+      "cc": 55.50357736254705,
+      "cc_by_type": {
+       "choice": 100.0,
+       "noul": 33.33333333333333,
+       "score": 33.17739875430783
+      },
+      "low_n": true,
+      "n": 13,
+      "n_by_type": {
+       "choice": 6,
+       "noul": 3,
+       "score": 4
+      },
+      "score": 55.50357736254705
+     },
+     "de": {
+      "accuracy": 0.9375,
+      "cc": 93.40496888083449,
+      "cc_by_type": {
+       "choice": 92.03539823008849,
+       "noul": 100.0,
+       "score": 88.17950841241498
+      },
+      "low_n": false,
+      "n": 32,
+      "n_by_type": {
+       "choice": 16,
+       "noul": 8,
+       "score": 8
+      },
+      "score": 93.40496888083449
+     },
+     "el": {
+      "accuracy": 0.9333333333333333,
+      "cc": 94.3834224733954,
+      "cc_by_type": {
+       "choice": 83.24022346368716,
+       "noul": 100.0,
+       "score": 99.91004395649901
+      },
+      "low_n": true,
+      "n": 15,
+      "n_by_type": {
+       "choice": 8,
+       "noul": 6,
+       "score": 1
+      },
+      "score": 94.3834224733954
+     },
+     "en": {
+      "accuracy": 0.8757602085143353,
+      "cc": 76.67398437250607,
+      "cc_by_type": {
+       "choice": 88.57714697160152,
+       "noul": 69.06474820143885,
+       "score": 72.38005794447783
+      },
+      "low_n": false,
+      "n": 1151,
+      "n_by_type": {
+       "choice": 588,
+       "noul": 278,
+       "score": 285
+      },
+      "score": 76.67398437250607
+     },
+     "es": {
+      "accuracy": 0.8709677419354839,
+      "cc": 74.21236753974422,
+      "cc_by_type": {
+       "choice": 90.2120717781403,
+       "noul": 100.0,
+       "score": 32.425030841092365
+      },
+      "low_n": false,
+      "n": 31,
+      "n_by_type": {
+       "choice": 13,
+       "noul": 8,
+       "score": 10
+      },
+      "score": 74.21236753974422
+     },
+     "fi": {
+      "accuracy": 0.875,
+      "cc": 77.72593685668032,
+      "cc_by_type": {
+       "choice": 100.0,
+       "noul": 33.33333333333333,
+       "score": 99.84447723670762
+      },
+      "low_n": true,
+      "n": 8,
+      "n_by_type": {
+       "choice": 4,
+       "noul": 3,
+       "score": 1
+      },
+      "score": 77.72593685668032
+     },
+     "fr": {
+      "accuracy": 0.9285714285714286,
+      "cc": 92.06735412018907,
+      "cc_by_type": {
+       "choice": 78.82352941176471,
+       "noul": 100.0,
+       "score": 97.37853294880247
+      },
+      "low_n": true,
+      "n": 14,
+      "n_by_type": {
+       "choice": 6,
+       "noul": 2,
+       "score": 6
+      },
+      "score": 92.06735412018907
+     },
+     "hi": {
+      "accuracy": 0.8888888888888888,
+      "cc": 70.34650149976363,
+      "cc_by_type": {
+       "choice": 99.99999999999999,
+       "noul": 66.66666666666667,
+       "score": 44.37283783262424
+      },
+      "low_n": true,
+      "n": 18,
+      "n_by_type": {
+       "choice": 8,
+       "noul": 6,
+       "score": 4
+      },
+      "score": 70.34650149976363
+     },
+     "id": {
+      "accuracy": 0.75,
+      "cc": 0.0,
+      "cc_by_type": {
+       "choice": 100.0,
+       "noul": -100.0
+      },
+      "low_n": true,
+      "n": 4,
+      "n_by_type": {
+       "choice": 3,
+       "noul": 1
+      },
+      "score": 0.0
+     },
+     "it": {
+      "accuracy": 0.8666666666666667,
+      "cc": 66.41366853069502,
+      "cc_by_type": {
+       "choice": 85.97038191738113,
+       "noul": 100.0,
+       "score": 13.27062367470393
+      },
+      "low_n": true,
+      "n": 15,
+      "n_by_type": {
+       "choice": 9,
+       "noul": 3,
+       "score": 3
+      },
+      "score": 66.41366853069502
+     },
+     "ja": {
+      "accuracy": 0.68,
+      "cc": 47.24100841291983,
+      "cc_by_type": {
+       "choice": 85.70293884034949,
+       "noul": 19.999999999999996,
+       "score": 36.020086398410015
+      },
+      "low_n": true,
+      "n": 25,
+      "n_by_type": {
+       "choice": 9,
+       "noul": 10,
+       "score": 6
+      },
+      "score": 47.24100841291983
+     },
+     "ko": {
+      "accuracy": 0.6,
+      "cc": 18.987371364068355,
+      "cc_by_type": {
+       "choice": 100.0,
+       "noul": -100.0,
+       "score": 56.96211409220508
+      },
+      "low_n": true,
+      "n": 10,
+      "n_by_type": {
+       "choice": 3,
+       "noul": 2,
+       "score": 5
+      },
+      "score": 18.987371364068355
+     },
+     "mixed": {
+      "accuracy": 1.0,
+      "cc": 99.96955130238082,
+      "cc_by_type": {
+       "choice": 100.0,
+       "noul": 100.0,
+       "score": 99.9086539071425
+      },
+      "low_n": true,
+      "n": 14,
+      "n_by_type": {
+       "choice": 8,
+       "noul": 3,
+       "score": 3
+      },
+      "score": 99.96955130238082
+     },
+     "nl": {
+      "accuracy": 0.6,
+      "cc": 1.7442176532610603,
+      "cc_by_type": {
+       "choice": 74.02597402597404,
+       "noul": -33.333333333333336,
+       "score": -35.45998773285752
+      },
+      "low_n": true,
+      "n": 10,
+      "n_by_type": {
+       "choice": 5,
+       "noul": 3,
+       "score": 2
+      },
+      "score": 1.7442176532610603
+     },
+     "no": {
+      "accuracy": 0.5,
+      "cc": 17.741935483870968,
+      "cc_by_type": {
+       "choice": 35.483870967741936,
+       "noul": 0.0
+      },
+      "low_n": true,
+      "n": 6,
+      "n_by_type": {
+       "choice": 2,
+       "noul": 4
+      },
+      "score": 17.741935483870968
+     },
+     "pl": {
+      "accuracy": 0.8461538461538461,
+      "cc": 78.64726523260191,
+      "cc_by_type": {
+       "choice": 84.76512907321202,
+       "noul": 80.0,
+       "score": 71.17666662459372
+      },
+      "low_n": false,
+      "n": 39,
+      "n_by_type": {
+       "choice": 17,
+       "noul": 10,
+       "score": 12
+      },
+      "score": 78.64726523260191
+     },
+     "pt": {
+      "accuracy": 0.7857142857142857,
+      "cc": 78.0409563759746,
+      "cc_by_type": {
+       "choice": 68.1791396582204,
+       "noul": 100.0,
+       "score": 65.9437294697034
+      },
+      "low_n": true,
+      "n": 28,
+      "n_by_type": {
+       "choice": 12,
+       "noul": 5,
+       "score": 11
+      },
+      "score": 78.0409563759746
+     },
+     "sv": {
+      "accuracy": 0.7272727272727273,
+      "cc": 59.78378036796139,
+      "cc_by_type": {
+       "choice": 74.46808510638299,
+       "noul": 60.00000000000001,
+       "score": 44.8832559975012
+      },
+      "low_n": true,
+      "n": 11,
+      "n_by_type": {
+       "choice": 5,
+       "noul": 5,
+       "score": 1
+      },
+      "score": 59.78378036796139
+     },
+     "tr": {
+      "accuracy": 0.9230769230769231,
+      "cc": 85.72572454543065,
+      "cc_by_type": {
+       "choice": 78.26086956521739,
+       "noul": 100.0,
+       "score": 78.91630407107458
+      },
+      "low_n": true,
+      "n": 13,
+      "n_by_type": {
+       "choice": 6,
+       "noul": 4,
+       "score": 3
+      },
+      "score": 85.72572454543065
+     },
+     "uk": {
+      "accuracy": 0.8571428571428571,
+      "cc": 83.93118510075651,
+      "cc_by_type": {
+       "choice": 67.74193548387096,
+       "noul": 100.0,
+       "score": 84.05161981839854
+      },
+      "low_n": true,
+      "n": 7,
+      "n_by_type": {
+       "choice": 4,
+       "noul": 1,
+       "score": 2
+      },
+      "score": 83.93118510075651
+     },
+     "zh": {
+      "accuracy": 0.9,
+      "cc": 65.20564880948768,
+      "cc_by_type": {
+       "choice": 100.0,
+       "noul": 33.33333333333333,
+       "score": 62.28361309512973
+      },
+      "low_n": true,
+      "n": 10,
+      "n_by_type": {
+       "choice": 5,
+       "noul": 3,
+       "score": 2
+      },
+      "score": 65.20564880948768
+     }
+    },
+    "type": {
+     "choice": {
+      "accuracy": 0.9066666666666666,
+      "cc": 87.9446602499091,
+      "cc_by_type": {
+       "choice": 87.9446602499091
+      },
+      "low_n": false,
+      "n": 750,
+      "n_by_type": {
+       "choice": 750
+      },
+      "score": 87.9446602499091
+     },
+     "noul": {
+      "accuracy": 0.8364611260053619,
+      "cc": 67.29222520107238,
+      "cc_by_type": {
+       "noul": 67.29222520107238
+      },
+      "low_n": false,
+      "n": 373,
+      "n_by_type": {
+       "noul": 373
+      },
+      "score": 67.29222520107238
+     },
+     "score": {
+      "accuracy": 0.8101604278074866,
+      "cc": 70.28066455279091,
+      "cc_by_type": {
+       "score": 70.28066455279091
+      },
+      "low_n": false,
+      "n": 374,
+      "n_by_type": {
+       "score": 374
+      },
+      "score": 70.28066455279091
+     }
+    },
+    "usecase": {
+     "advertising": {
+      "accuracy": 0.5909090909090909,
+      "cc": 28.27943132511149,
+      "cc_by_type": {
+       "choice": 68.0,
+       "noul": -25.0,
+       "score": 41.83829397533446
+      },
+      "low_n": true,
+      "n": 22,
+      "n_by_type": {
+       "choice": 8,
+       "noul": 8,
+       "score": 6
+      },
+      "score": 28.27943132511149
+     },
+     "code_linting": {
+      "accuracy": 1.0,
+      "cc": 93.28648102165937,
+      "cc_by_type": {
+       "choice": 100.0,
+       "noul": 100.0,
+       "score": 79.8594430649781
+      },
+      "low_n": true,
+      "n": 24,
+      "n_by_type": {
+       "choice": 7,
+       "noul": 9,
+       "score": 8
+      },
+      "score": 93.28648102165937
+     },
+     "customer_support": {
+      "accuracy": 0.7857142857142857,
+      "cc": 64.14435699593669,
+      "cc_by_type": {
+       "choice": 67.47967479674797,
+       "noul": 100.0,
+       "score": 24.953396191062115
+      },
+      "low_n": true,
+      "n": 14,
+      "n_by_type": {
+       "choice": 8,
+       "noul": 4,
+       "score": 2
+      },
+      "score": 64.14435699593669
+     },
+     "demand_forecasting": {
+      "accuracy": 0.47058823529411764,
+      "cc": -4.4326718070937305,
+      "cc_by_type": {
+       "choice": 41.5204678362573,
+       "noul": 33.33333333333333,
+       "score": -88.15181659087183
+      },
+      "low_n": true,
+      "n": 17,
+      "n_by_type": {
+       "choice": 11,
+       "noul": 3,
+       "score": 3
+      },
+      "score": 0.0
+     },
+     "ecommerce_marketplaces": {
+      "accuracy": 0.875,
+      "cc": 68.1764684457371,
+      "cc_by_type": {
+       "choice": 85.50724637681158,
+       "noul": 33.33333333333333,
+       "score": 85.68882562706641
+      },
+      "low_n": true,
+      "n": 16,
+      "n_by_type": {
+       "choice": 9,
+       "noul": 3,
+       "score": 4
+      },
+      "score": 68.1764684457371
+     },
+     "feature_extraction": {
+      "accuracy": 0.8421052631578947,
+      "cc": 56.88352721922263,
+      "cc_by_type": {
+       "choice": 87.42138364779873,
+       "noul": 33.33333333333333,
+       "score": 49.89586467653584
+      },
+      "low_n": true,
+      "n": 19,
+      "n_by_type": {
+       "choice": 10,
+       "noul": 6,
+       "score": 3
+      },
+      "score": 56.88352721922263
+     },
+     "financial_crime": {
+      "accuracy": 0.7666666666666667,
+      "cc": 51.09999092184478,
+      "cc_by_type": {
+       "choice": 100.00000000000001,
+       "noul": -14.28571428571429,
+       "score": 67.58568705124861
+      },
+      "low_n": false,
+      "n": 30,
+      "n_by_type": {
+       "choice": 13,
+       "noul": 7,
+       "score": 10
+      },
+      "score": 51.09999092184478
+     },
+     "gaming": {
+      "accuracy": 0.7727272727272727,
+      "cc": 52.69076696339014,
+      "cc_by_type": {
+       "choice": 100.0,
+       "noul": 0.0,
+       "score": 58.07230089017044
+      },
+      "low_n": true,
+      "n": 22,
+      "n_by_type": {
+       "choice": 12,
+       "noul": 4,
+       "score": 6
+      },
+      "score": 52.69076696339014
+     },
+     "insurance_claims": {
+      "accuracy": 0.6428571428571429,
+      "cc": 62.65779285636237,
+      "cc_by_type": {
+       "choice": 79.16666666666667,
+       "noul": 50.0,
+       "score": 58.80671190242044
+      },
+      "low_n": true,
+      "n": 14,
+      "n_by_type": {
+       "choice": 6,
+       "noul": 4,
+       "score": 4
+      },
+      "score": 62.65779285636237
+     },
+     "knowledge_graphs": {
+      "accuracy": 0.9545454545454546,
+      "cc": 90.65854177937764,
+      "cc_by_type": {
+       "choice": 100.0,
+       "noul": 100.0,
+       "score": 71.97562533813296
+      },
+      "low_n": true,
+      "n": 22,
+      "n_by_type": {
+       "choice": 10,
+       "noul": 6,
+       "score": 6
+      },
+      "score": 90.65854177937764
+     },
+     "lead_generation": {
+      "accuracy": 0.8,
+      "cc": 67.60857584215633,
+      "cc_by_type": {
+       "choice": 88.3720930232558,
+       "noul": 55.55555555555556,
+       "score": 58.89807894765766
+      },
+      "low_n": true,
+      "n": 25,
+      "n_by_type": {
+       "choice": 11,
+       "noul": 9,
+       "score": 5
+      },
+      "score": 67.60857584215633
+     },
+     "legal_compliance": {
+      "accuracy": 0.7,
+      "cc": 45.5354720458297,
+      "cc_by_type": {
+       "choice": 35.483870967741936,
+       "noul": 33.33333333333333,
+       "score": 67.78921183641384
+      },
+      "low_n": true,
+      "n": 10,
+      "n_by_type": {
+       "choice": 4,
+       "noul": 3,
+       "score": 3
+      },
+      "score": 45.5354720458297
+     },
+     "llm_guardrails": {
+      "accuracy": 0.9629629629629629,
+      "cc": 80.95439830812018,
+      "cc_by_type": {
+       "choice": 100.00000000000001,
+       "noul": 60.00000000000001,
+       "score": 82.8631949243605
+      },
+      "low_n": true,
+      "n": 27,
+      "n_by_type": {
+       "choice": 11,
+       "noul": 5,
+       "score": 11
+      },
+      "score": 80.95439830812018
+     },
+     "model_routing": {
+      "accuracy": 0.9351851851851852,
+      "cc": 84.8410274166256,
+      "cc_by_type": {
+       "choice": 96.49350649350649,
+       "noul": 100.0,
+       "score": 58.02957575637029
+      },
+      "low_n": false,
+      "n": 216,
+      "n_by_type": {
+       "choice": 101,
+       "noul": 65,
+       "score": 50
+      },
+      "score": 84.8410274166256
+     },
+     "moderation_trust_safety": {
+      "accuracy": 0.8333333333333334,
+      "cc": 55.15593532195087,
+      "cc_by_type": {
+       "choice": 76.96737044145875,
+       "noul": 0.0,
+       "score": 88.50043552439388
+      },
+      "low_n": true,
+      "n": 18,
+      "n_by_type": {
+       "choice": 11,
+       "noul": 2,
+       "score": 5
+      },
+      "score": 55.15593532195087
+     },
+     "recruiting": {
+      "accuracy": 0.8333333333333334,
+      "cc": 67.57303995857968,
+      "cc_by_type": {
+       "choice": 100.0,
+       "noul": 33.33333333333333,
+       "score": 69.38578654240574
+      },
+      "low_n": true,
+      "n": 18,
+      "n_by_type": {
+       "choice": 8,
+       "noul": 3,
+       "score": 7
+      },
+      "score": 67.57303995857968
+     },
+     "risk_assessment": {
+      "accuracy": 0.7777777777777778,
+      "cc": 62.24567525530753,
+      "cc_by_type": {
+       "choice": 100.0,
+       "noul": 50.0,
+       "score": 36.7370257659226
+      },
+      "low_n": true,
+      "n": 18,
+      "n_by_type": {
+       "choice": 9,
+       "noul": 4,
+       "score": 5
+      },
+      "score": 62.24567525530753
+     },
+     "scientific_discovery": {
+      "accuracy": 0.7391304347826086,
+      "cc": 56.083255830130874,
+      "cc_by_type": {
+       "choice": 71.01449275362319,
+       "noul": 33.33333333333333,
+       "score": 63.901941403436105
+      },
+      "low_n": true,
+      "n": 23,
+      "n_by_type": {
+       "choice": 9,
+       "noul": 6,
+       "score": 8
+      },
+      "score": 56.083255830130874
+     },
+     "search_retrieval": {
+      "accuracy": 1.0,
+      "cc": 99.92021847495123,
+      "cc_by_type": {
+       "choice": 100.0,
+       "noul": 100.0,
+       "score": 99.76065542485364
+      },
+      "low_n": true,
+      "n": 24,
+      "n_by_type": {
+       "choice": 12,
+       "noul": 4,
+       "score": 8
+      },
+      "score": 99.92021847495123
+     }
+    }
+   },
+   "breakdowns_equated": false,
+   "ci95": {
+    "B": 1000,
+    "C": [
+     89.00335946789814,
+     93.23376370693532
+    ],
+    "I": [
+     72.31374819744293,
+     79.95869542373069
+    ],
+    "capability": [
+     81.26208332298674,
+     86.0489532740491
+    ],
+    "composite": {
+     "A": [
+      75.0560545503276,
+      77.30340620880787
+     ],
+     "B": [
+      74.53280727316283,
+      77.76808823284206
+     ],
+     "C": [
+      75.0560545503276,
+      77.30340620880787
+     ]
+    },
+    "seed": 16
+   },
+   "ci95_n": 1197,
+   "complete": true,
+   "equated": null,
+   "equating_flag": null,
+   "equating_offset": null,
+   "full_set_api": true,
+   "g_med_used": 9.839526770355711,
+   "lane": "api",
+   "metric_basis": "S u P (full set, API lane, v1.6.1 amendment; not equated)",
+   "n_items": 1497,
+   "n_public": 300,
+   "n_sealed_side": 1197,
+   "on_S": {
+    "calibration": 93.01106628088438,
+    "capability": 84.7015252595811,
+    "intelligence": 76.39198423827783
+   },
+   "per_type": {
+    "choice": {
+     "accuracy": 0.9066666666666666,
+     "calibration": 91.30791369573681,
+     "cc": 87.9446602499091,
+     "cc_by_type": {
+      "choice": 87.9446602499091
+     },
+     "cc_tiered": 88.71900306704876,
+     "cc_tiered_open": 90.51495356571994,
+     "cc_tiered_sealed": 86.92305256837759,
+     "low_n": false,
+     "n": 750,
+     "n_by_type": {
+      "choice": 750
+     },
+     "score": 87.9446602499091
+    },
+    "noul": {
+     "accuracy": 0.8364611260053619,
+     "calibration": 92.36903077871436,
+     "cc": 67.29222520107238,
+     "cc_by_type": {
+      "noul": 67.29222520107238
+     },
+     "cc_tiered": 69.5312196096989,
+     "cc_tiered_open": 75.94824016563147,
+     "cc_tiered_sealed": 63.1141990537663,
+     "low_n": false,
+     "n": 373,
+     "n_by_type": {
+      "noul": 373
+     },
+     "score": 67.29222520107238
+    },
+    "score": {
+     "accuracy": 0.8101604278074866,
+     "calibration": 95.35625436820196,
+     "cc": 70.28066455279091,
+     "cc_by_type": {
+      "score": 70.28066455279091
+     },
+     "cc_tiered": 70.92573003808585,
+     "cc_tiered_open": 72.88717875232587,
+     "cc_tiered_sealed": 68.96428132384584,
+     "low_n": false,
+     "n": 374,
+     "n_by_type": {
+      "score": 374
+     },
+     "score": 70.28066455279091
+    }
+   },
+   "raw_on_A": null,
+   "set": "S+P"
+  },
+  "validity": {
+   "choice": {
+    "invalid_rate": 0.016000000000000014,
+    "n": 750
+   },
+   "noul": {
+    "invalid_rate": 0.00536193029490617,
+    "n": 373
+   },
+   "score": {
+    "invalid_rate": 0.008021390374331583,
+    "n": 374
+   }
+  },
+  "views": {
+   "Balanced 33:33:33": 72.35582674096251,
+   "Emphasis on Accuracy 60:20:20": 73.91800482728986,
+   "Emphasis on Cost 20:20:60": 66.40429071449509,
+   "Emphasis on Speed 20:60:20": 77.67599908573227,
+   "Intelligence only": 76.39198423827783
+  }
+ }
+}
