@@ -42,13 +42,13 @@ test('CR-482 cost reference is Jev with images; both top fives are the reviewed 
   assert.equal(e.anchor, 'jev-1.13.0');
   for (const key of KEYS) assert.ok(row(key).tracks.core.cost.usd_per_1000 <= e.cost_usd_per_1000_cap, `${key} is inside the cost cap it defines`);
   const composite = release.ranking.filter((r) => r.ranked).sort((a, b) => a.rank - b.rank).slice(0, 5).map((r) => r.key);
-  assert.deepEqual(composite, ['kettei_fat', 'wity_1', 'imajev_4b', 'kettei_chub', 'sage_1_4_images']); // CR-497 (kettei): kettei-fat #1 on the billed cost basis (#5 on the tokens-read basis; disclosed in the row note and addendum)
+  assert.deepEqual(composite, ['kettei_fat', 'wity_1', 'imajev_4b', 'kettei_chub', 'h2o_lightning_31b_image']); // CR-536: H2O-Lightning-31B added; field equating and ranks refreshed.
   const inCap = (r) => r.ranked && r.tracks.core.cost.usd_per_1000 != null && r.tracks.core.cost.usd_per_1000 <= e.cost_usd_per_1000_cap
     && r.tracks.core.speed.adjusted_p50_s <= e.latency_p50_s_cap;
   const capped = release.ranking.filter(inCap).sort((a, b) => b.tracks.core.capability - a.tracks.core.capability);
   assert.deepEqual(capped.slice(0, 5).map((r) => r.key),
-    ['kettei_fat', 'sage_1_4_images', 'drex_max', 'jev_1_13_images', 'kushal_gemma4_31b_it_autoloops']); // CR-530 (drex): Drex Max enters at #3 (0.03 pp ahead of Jev 1.13.0 + images), Imajev-4B leaves the top five; CR-497 (kettei): kettei-fat enters at #1, 0.1 pp ahead of Sage 1.4 + images (Sage would be #7 if its 80 abstentions were scored wrong; disclosed in the row note)
-  assert.equal(capped.length, 53); // CR-530 (drex): + Drex Max (#3); CR-497 (kettei): + kettei-fat, kettei-chub; CR-500 (celeris): + Celeris-1 Decision (#15); CR-506 (basal): + basal-omni-1.0-ultra (#11)
+    ['h2o_lightning_31b_image', 'kettei_fat', 'sage_1_4_images', 'drex_max', 'jev_1_13_images']); // CR-536: H2O-Lightning-31B added; field equating and ranks refreshed.
+  assert.equal(capped.length, 54); // CR-536: H2O-Lightning-31B added; field equating and ranks refreshed.
   // Wity-1 and the GPT Lunas stay out on latency, not cost
   for (const key of ['wity_1', 'gpt6_luna', 'gpt56_luna']) assert.ok(row(key).tracks.core.speed.adjusted_p50_s > e.latency_p50_s_cap, key);
   assert.match(e.rationale, /Jev would otherwise be excluded from its own headline/);
@@ -83,5 +83,5 @@ test('CR-482 System1 s1-vision is no longer an ImageJevBench row anywhere in the
   assert.equal(ts20.systems['s1-vision'], undefined);
   assert.equal(ts20.summary['s1-vision'], undefined);
   assert.ok(!/s1-vision|System1 s1|Blink/.test(JSON.stringify(release)), 'no mention of the removed row in the published data');
-  assert.equal(release.ranking.length, 64); // CR-530 (drex): + Drex Max; CR-506 (basal): + basal-omni-1.0-ultra; CR-500 (celeris): + Celeris-1 Decision; CR-497 (kettei): + kettei-fat, kettei-chub; CR-496: + Sage 1.4 + images
+  assert.equal(release.ranking.length, 65); // CR-536: H2O-Lightning-31B added; field equating and ranks refreshed.
 });

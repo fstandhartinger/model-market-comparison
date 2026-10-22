@@ -29,7 +29,7 @@ test('CR-496 Sage 1.4 + images: official pass 1 via Levanto /decide, beta image 
   assert.match(r.pricing_note, /about 1,410 image tokens, about 1,550 billed input tokens per item/); // critic S2: 845,964 image / 929,931 billed input over 600 items
   assert.match(r.tracks.core.cost.source, /^Levanto list price/);
   assert.equal(r.ranked, true);
-  assert.equal(r.rank, 5); // CR-497 (kettei): kettei-fat and kettei-chub rank above
+  assert.equal(r.rank, 6); // CR-536: H2O-Lightning-31B enters above Sage at #5.
 });
 
 test('CR-496 Sage 1.4 + images has aggregate-only category, answered-coverage and TypeSafe-20 cells', async () => {

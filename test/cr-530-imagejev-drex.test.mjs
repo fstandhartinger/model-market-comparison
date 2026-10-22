@@ -37,7 +37,7 @@ test('CR-530 Drex Max: official pass 1 via Nace AI /v1/systemone, paid fast-lane
   for (const t of ['core', 'all', 'computer-use']) assert.match(row.tracks[t].cost.source, /^Nace AI list price USD 0\.06 per 1M input tokens/);
   assert.equal(row.measurement_date_basis, 'Run timestamps: 21 Oct 2026, 21:03-21:18 UTC.');
   assert.equal(row.ranked, true);
-  assert.equal(row.rank, 6);
+  assert.equal(row.rank, 7);
   assert.equal(row.release_ready, true);
   assert.deepEqual(row.holds, []);
 });

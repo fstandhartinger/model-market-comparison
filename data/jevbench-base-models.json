@@ -2611,6 +2611,17 @@
         "status": "undisclosed",
         "sources": [],
         "note": "Historical Imajev checkpoint; no revision-specific base-model source verified. Kept distinct from current Imajev."
+      },
+      "h2o_lightning_31b_image": {
+        "label": "google/gemma-4-31B-it",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/h2oai/h2o-lightning-31b/blob/ca6e6f6e8e08e2d21c8c9f45261e05444626647a/README.md",
+            "title": "Author model card (evaluated revision)",
+            "evidence": "The evaluated model card explicitly names google/gemma-4-31B-it in its base_model metadata."
+          }
+        ]
       }
     }
   }
