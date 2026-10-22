@@ -6,12 +6,14 @@ import { JevHistoryLazy } from '../../../components/JevHistoryLazy';
 import { historicalCatalogue } from '../../../lib/jevbench-v162-release.mjs';
 import { withPublicAdapterIds } from '../../../lib/jevbench-v15-release.mjs';
 import { JEVBENCH_COST_RULE, JEVBENCH_COST_RULE_HISTORY } from '../../../lib/jevbench-cost-rule.mjs';
-export const metadata = {title: 'JevBench v1.6.32 · Chon siblings and Vega-U 4B', alternates:{canonical:'/jev-models/v1.6.32'}};
+import { seoTitle } from '../../../lib/seo';
+import { PageJsonLd } from '../../../components/PageJsonLd';
+export const metadata = {title: seoTitle('JevBench v1.6.32 · Chon siblings and Vega-U 4B'), alternates:{canonical:'/jev-models/v1.6.32'}};
 export default async function JevModelsV1632Page() {
  const release=await readOptionalJevbenchV1632Release();if(!release) notFound();
  const board=v1632BoardInput(release);
  const notes=(release.artifact as unknown as {measurement_notes:string[]}).measurement_notes;
- return <><JevBenchReleaseVersionNav active="v1.6.32" />
+ return <><PageJsonLd meta={metadata} /><JevBenchReleaseVersionNav active="v1.6.32" />
  <header className="bh-page-head" data-bh-jev16-release-header><div className="bh-eyebrow">JevBench v1.6.32 · same-draw addendum</div>
  <h1 className="mt-1 text-3xl font-bold">Chon-1.0-12B, Chon-1.0-E4B and Vega-U 4B join the regular draw</h1>
  <p className="mt-3 max-w-3xl">Three new ranked rows on the same draw and common cost basis as v1.6.31. All 59 carried full-draw rows keep their point estimates. The 12B sibling is a paid fast-lane evaluation; E4B was measured in the author’s documented CPU mode. Vega-U uses the frozen Qwen3.5-4B reader on a shared CPU, with load and truncation disclosed.</p>

@@ -6,8 +6,10 @@ import { JevBenchV16Board } from '../../../components/JevBenchV16Board';
 import { JevBenchReleaseVersionNav } from '../../../components/JevBenchReleaseVersionNav';
 import { JevHistoryLazy } from '../../../components/JevHistoryLazy';
 import { withPublicAdapterIds } from '../../../lib/jevbench-v15-release.mjs';
+import { seoTitle } from '../../../lib/seo';
+import { PageJsonLd } from '../../../components/PageJsonLd';
 
-export const metadata = { title: 'JevBench v1.6.30 · common cost basis on the regular draw', alternates: { canonical: '/jev-models/v1.6.30' } };
+export const metadata = { title: seoTitle('JevBench v1.6.30 · common cost basis on the regular draw'), alternates: { canonical: '/jev-models/v1.6.30' } };
 
 type Row = { key: string; display: string; ranked: boolean; ranks?: { A: number | null; capability: number | null };
   cost?: { usd_per_1000?: number | null; common_basis?: { usd_per_1000_all_items?: number } | null } };
@@ -24,7 +26,7 @@ export default async function JevModelsV1630Page() {
   const priced = artifact.systems.filter(r => r.cost?.common_basis).sort((a, b) => a.display.localeCompare(b.display));
   const usd = (v?: number | null) => v != null ? v.toFixed(6) : '–';
   return <>
-    <JevBenchReleaseVersionNav active="v1.6.30" />
+    <PageJsonLd meta={metadata} /><JevBenchReleaseVersionNav active="v1.6.30" />
     <header className="bh-page-head" data-bh-jev16-release-header>
       <div className="bh-eyebrow">JevBench v1.6.30 · common cost basis · no row added</div>
       <h1 className="mt-1 text-3xl font-bold tracking-tight">The common cost basis now applies to the regular draw</h1>

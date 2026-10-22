@@ -4,6 +4,7 @@ import { BenchmarkCompareLoader } from '../../components/deferred/BenchmarkCompa
 import { pageDataVersion } from '../../lib/page-data';
 import { previewMetadata, SHARE_IMAGE } from "../../lib/seo";
 import { compareDescription, compareHeadline, resolveCompareRequest } from "../../lib/compare-meta";
+import { PageJsonLd } from "../../components/PageJsonLd";
 
 const BASE = { path: "/compare", documentTitle: "Compare", title: "Compare AI models — Benchmark Heaven",
   description: "Up to four models, every benchmark, the evidence beside each score — plus what each model actually costs per task." };
@@ -35,6 +36,7 @@ export default async function ComparePage({ searchParams }: { searchParams: Prom
       </header>
       <BenchmarkCompareLoader version={await pageDataVersion()} />
       <ComparePricePanel />
+      <PageJsonLd meta={await generateMetadata({ searchParams })} />
     </div>
   );
 }

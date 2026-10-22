@@ -6,12 +6,14 @@ import { JevHistoryLazy } from '../../../components/JevHistoryLazy';
 import { historicalCatalogue } from '../../../lib/jevbench-v162-release.mjs';
 import { withPublicAdapterIds } from '../../../lib/jevbench-v15-release.mjs';
 import { JEVBENCH_COST_RULE, JEVBENCH_COST_RULE_HISTORY } from '../../../lib/jevbench-cost-rule.mjs';
-export const metadata = {title: 'JevBench v1.6.35 · Seb-9B', alternates:{canonical:'/jev-models/v1.6.35'}};
+import { seoTitle } from '../../../lib/seo';
+import { PageJsonLd } from '../../../components/PageJsonLd';
+export const metadata = {title: seoTitle('JevBench v1.6.35 · Seb-9B'), alternates:{canonical:'/jev-models/v1.6.35'}};
 export default async function JevModelsV1635Page() {
  const release=await readOptionalJevbenchV1635Release();if(!release) notFound();
  const board=v1635BoardInput(release);
  const notes=(release.artifact as unknown as {measurement_notes:string[]}).measurement_notes;
- return <><JevBenchReleaseVersionNav active="v1.6.35" />
+ return <><PageJsonLd meta={metadata} /><JevBenchReleaseVersionNav active="v1.6.35" />
  <header className="bh-page-head" data-bh-jev16-release-header><div className="bh-eyebrow">JevBench v1.6.35 · same-draw addendum</div>
  <h1 className="mt-1 text-3xl font-bold">Seb-9B re-measured at its corrected context</h1>
  <p className="mt-3 max-w-3xl">Seb-9B is re-measured at the author’s corrected 32,768-token context on the same draw and common cost basis as v1.6.34. All 64 carried full-draw rows keep their point estimates. Stock vLLM and our unchanged shim ran on a Verda A100 80 GB in the EU. The 15 items beyond the context limit were refused and scored wrong. The author now declares base Qwen/Qwen3.5-9B; the weights are unchanged. This measurement supersedes the 7 Oct v1.6.1 row on live boards; the frozen v1.6.1 archive keeps the old row as published.</p>

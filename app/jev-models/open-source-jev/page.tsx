@@ -14,6 +14,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return jevIntentMetadata({
     path: PATH,
     title: `${TITLE} (${data.month}): ${data.systems.length} models measured`,
+    documentTitle: `Is Jev open source? (${data.month})`,
     description: `${DESCRIPTION} Data: ${data.artifact.revision}, ${data.month}.`,
     keywords: ['jev open source', 'is jev open source', 'open source jev', 'open weight jev model', 'self-hosted jev', 'JevBench by Benchmark Heaven'],
   });

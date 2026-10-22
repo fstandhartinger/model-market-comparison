@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { readCurrentJevbench } from '../../../lib/jevbench-current.mjs';
 import { JevBenchV16ReleaseRoute } from '../../../components/JevBenchV16ReleaseRoute';
 import { JevHistoryLazy } from '../../../components/JevHistoryLazy';
+import { seoTitle } from '../../../lib/seo';
 
 // JevBench v1.7.0 (Florian, 5 Oct 2026): the API-provider leaderboard. Same release data as /jev-models; only the
 // ranked set differs (hosted API offerings plus Jev, ranked among themselves).
@@ -10,7 +11,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const description = 'Compare hosted decision APIs on typed decision accuracy, probability calibration, measured latency and modeled list-price cost. JevBench by Benchmark Heaven.';
   const image = 'https://benchmarkheaven.com/jev-models/api/opengraph-image?v=og1';
   return {
-    title, description,
+    title: seoTitle('JevBench API leaderboard: decision API benchmark'), description,
     alternates: { canonical: '/jev-models/api' },
     openGraph: { type: 'website', siteName: 'Benchmark Heaven', locale: 'en_US', url: '/jev-models/api', title, description,
       images: [{ url: image, type: 'image/png', width: 1200, height: 630, alt: 'JevBench API leaderboard by Benchmark Heaven' }] },

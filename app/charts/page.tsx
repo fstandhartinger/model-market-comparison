@@ -1,6 +1,7 @@
 import { ChartsBoardLoader } from "../../components/deferred/ChartsBoardLoader";
 import { pageDataVersion } from "../../lib/page-data";
 import { previewMetadata } from "../../lib/seo";
+import { PageJsonLd } from "../../components/PageJsonLd";
 
 
 export const metadata = previewMetadata({ path: "/charts", documentTitle: "Charts", title: "AI model charts — Benchmark Heaven",
@@ -16,6 +17,7 @@ export default async function ChartsPage() {
         <a href="/scatter" className="text-accent">score against cost</a> — all under your current filters.
       </p>
       <ChartsBoardLoader version={version} />
+      <PageJsonLd meta={metadata} />
     </div>
   );
 }

@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 import { readJevbenchV14, jevbenchV14View } from '../../../lib/jevbench-v14.mjs';
 import { JevModelsV14Board } from '../../../components/JevModelsV14';
+import { PageJsonLd } from '../../../components/PageJsonLd';
+import { seoTitle } from '../../../lib/seo';
 
 const short = (display: string) => display.split(' (')[0].split(', formerly')[0];
 const one = (score: number | null) => score === null ? '—' : score.toFixed(1);
@@ -20,7 +22,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const image = 'https://benchmarkheaven.com/jev-models/opengraph-image?v=og4';
   const imageAlt = 'JevBench by Benchmark Heaven: a benchmark for Jev-class decision models across intelligence, calibration, speed, and cost.';
   return {
-    title,
+    title: seoTitle(title),
     description,
     alternates: { canonical },
     openGraph: {
@@ -52,5 +54,6 @@ export default async function JevModelsV14Page() {
       </p>
     </header>
     <JevModelsV14Board artifact={view.artifact} sha256={view.sha256} />
+    <PageJsonLd meta={await generateMetadata()} />
   </>;
 }

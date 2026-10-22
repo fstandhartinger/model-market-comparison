@@ -12,6 +12,7 @@ const EN_PATH = '/jev-models/alternatives';
 export async function generateMetadata(): Promise<Metadata> {
   const data = await readJevbenchSeoData();
   return jevIntentMetadata({path: PATH, title: `Jev-Alternativen im Vergleich (${monthDe(data.date)}): ${data.systems.length} Modelle auf JevBench gemessen`,
+    documentTitle: `Jev-Alternativen (${monthDe(data.date)})`,
     description: `${data.systems.length} gemessene Jev-kompatible Modelle im Vergleich (${monthDe(data.date)}): Capability, Intelligenz, Kalibrierung, Preis, Latenz und Open-Weight-Belege.`,
     keywords: ['Jev Alternative', 'Jev Alternativen', 'Jev Open Source', 'Jev Benchmark Deutsch', 'Jev Alternative DSGVO', 'JevBench'],
     languages: {en: EN_PATH, de: PATH, 'x-default': EN_PATH}, locale: 'de_DE'});

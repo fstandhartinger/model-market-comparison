@@ -234,7 +234,7 @@ export async function generateMetadata({ params }: { params: Promise<{ system: s
   if (!row) return { title: 'System not found' };
   const title = `${short(row.display)} — JevBench by Benchmark Heaven`;
   const description = `Explore the ${short(row.display)} configuration evaluated across intelligence, calibration, speed, and cost.`;
-  return previewMetadata({ path: jevSystemPath(row.key), documentTitle: title, title, description });
+  return previewMetadata({ path: jevSystemPath(row.key), documentTitle: `${short(row.display)} — JevBench`, title, description });
 }
 
 export default async function JevSystemPage({ params }: { params: Promise<{ system: string }> }) {

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
+import { PageJsonLd } from "../../components/PageJsonLd";
 
-export const metadata: Metadata = { title: "Impressum" };
+export const metadata: Metadata = { title: "Impressum", alternates: { canonical: "/impressum" } };
 
 // CR-5.5: the operator is the same legal entity that publishes Florian's other ventures (e.g. postial.co/impressum).
 export default function ImpressumPage() {
@@ -26,5 +27,6 @@ export default function ImpressumPage() {
 
     <h2 className="mt-6 mb-2 font-semibold">Verbraucherstreitbeilegung</h2>
     <p>Wir sind weder verpflichtet noch bereit, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.</p>
+    <PageJsonLd meta={metadata} />
   </article>;
 }

@@ -17,6 +17,7 @@ import { JevBoardIntentLinks } from '../../../components/JevBenchSeoBlocks';
 import { withFieldNames } from '../../../components/jevFieldNames';
 import { JevContextLazy } from '../../../components/JevContextLazy';
 import { JevHistoryLazy } from '../../../components/JevHistoryLazy';
+import { seoTitle } from '../../../lib/seo';
 
 const OG_ART_REVISION = 'og4'; // The live board URL changes; its share card stays evergreen.
 
@@ -28,7 +29,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const imageAlt = 'JevBench by Benchmark Heaven: a benchmark for Jev-class decision models across intelligence, calibration, speed, and cost.';
   const image = `https://benchmarkheaven.com/jev-models/opengraph-image?v=${OG_ART_REVISION}`;
   return {
-    title,
+    title: seoTitle(title),
     description,
     alternates: { canonical: '/jev-models/v1.4.2.2' },
     openGraph: {

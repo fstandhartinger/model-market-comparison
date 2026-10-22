@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { readJevbenchV152Release } from '../../../lib/jevbench-v15-release.mjs';
 import { JevBenchV15ReleasePage } from '../../../components/JevBenchV15ReleasePage';
 import { JevHistoryLazy } from '../../../components/JevHistoryLazy';
+import { seoTitle } from '../../../lib/seo';
 
 async function currentRelease() {
   return readJevbenchV152Release();
@@ -13,7 +14,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const title = `JevBench ${artifact.revision} — official Jev alternatives ranking`;
   const description = `${leaderNames.join(' and ')} are the statistical co-leaders in JevBench ${artifact.revision}, measured across ${artifact.sample.total.toLocaleString('en-US')} decisions per system.`;
   return {
-    title,
+    title: seoTitle(title),
     description,
     alternates: { canonical: '/jev-models/v1.5.2' },
     openGraph: { type: 'website', siteName: 'Benchmark Heaven', locale: 'en_US', url: '/jev-models/v1.5.2', title, description,

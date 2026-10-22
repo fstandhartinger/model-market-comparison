@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { PageJsonLd } from "../../components/PageJsonLd";
 
-export const metadata: Metadata = { title: "Privacy policy" };
+export const metadata: Metadata = { title: "Privacy policy", alternates: { canonical: "/privacy" } };
 
 // CR-5.5: written for what the site actually does — no advertising, optional Google sign-in.
 // CR-67.7: aggregate server-side visitor statistics (lib/visit-stats.mjs; decision record CR-67.5-CONSENT-DECISION.md).
@@ -115,5 +116,6 @@ export default function PrivacyPage() {
     <p>You have the right to access, rectify and erase your data, to restrict or object to its processing, and to data
       portability. You may also lodge a complaint with a data protection supervisory authority, for example the Bavarian
       Data Protection Authority (BayLDA).</p>
+    <PageJsonLd meta={metadata} />
   </article>;
 }

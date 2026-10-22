@@ -1,9 +1,10 @@
 import { getDataset } from "../../lib/data";
 import { ProvidersViewLoader } from "../../components/deferred/ProvidersViewLoader";
 import { pageDataVersion } from "../../lib/page-data";
+import { PageJsonLd } from "../../components/PageJsonLd";
 
 
-export const metadata = { title: "Providers per model" };
+export const metadata = { title: "Providers per model", alternates: { canonical: "/providers" } };
 
 export default async function ProvidersPage() {
   const ds = await getDataset();
@@ -30,6 +31,7 @@ export default async function ProvidersPage() {
       </div>
 
       <ProvidersViewLoader version={await pageDataVersion()} />
+      <PageJsonLd meta={metadata} />
     </div>
   );
 }

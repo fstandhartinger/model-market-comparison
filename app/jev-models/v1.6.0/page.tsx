@@ -2,6 +2,8 @@ import type { Metadata } from 'next';
 import { readJevbenchV16Release } from '../../../lib/jevbench-v16-release.mjs';
 import { JevBenchV16ReleaseRoute } from '../../../components/JevBenchV16ReleaseRoute';
 import { JevHistoryLazy } from '../../../components/JevHistoryLazy';
+import { PageJsonLd } from '../../../components/PageJsonLd';
+import { seoTitle } from '../../../lib/seo';
 
 export async function generateMetadata(): Promise<Metadata> {
   const { artifact } = await readJevbenchV16Release();
@@ -9,7 +11,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const description = `Official JevBench ${artifact.revision} release: Capability Score, Composite, measured speed and cost, category radars, language results and dated carries.`;
   const image = 'https://benchmarkheaven.com/jev-models/opengraph-image?v=og4';
   return {
-    title, description,
+    title: seoTitle(title), description,
     alternates: { canonical: '/jev-models/v1.6.0' },
     openGraph: { type: 'website', siteName: 'Benchmark Heaven', locale: 'en_US', url: '/jev-models/v1.6.0', title, description,
       images: [{ url: image, type: 'image/png', width: 1200, height: 630, alt: 'JevBench v1.6.0 by Benchmark Heaven' }] },
@@ -22,5 +24,6 @@ export default async function JevModelsV160Page() {
   return <>
     <JevBenchV16ReleaseRoute release={release} />
     <JevHistoryLazy />
+    <PageJsonLd meta={await generateMetadata()} />
   </>;
 }

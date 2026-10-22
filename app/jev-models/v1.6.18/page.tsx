@@ -5,8 +5,10 @@ import { JevBenchV16Board } from '../../../components/JevBenchV16Board';
 import { JevBenchReleaseVersionNav } from '../../../components/JevBenchReleaseVersionNav';
 import { JevHistoryLazy } from '../../../components/JevHistoryLazy';
 import { withPublicAdapterIds } from '../../../lib/jevbench-v15-release.mjs';
+import { seoTitle } from '../../../lib/seo';
+import { PageJsonLd } from '../../../components/PageJsonLd';
 
-export const metadata = { title: 'JevBench v1.6.18 · Respan Span-02 ranked; Nimble rows listed', alternates: { canonical: '/jev-models/v1.6.18' } };
+export const metadata = { title: seoTitle('JevBench v1.6.18 · Respan Span-02 ranked; Nimble rows listed'), alternates: { canonical: '/jev-models/v1.6.18' } };
 
 type Row = { key: string; display: string; ranked: boolean; measured_in?: string; capability?: number };
 const short = (d: string) => (d.length <= 45 ? d : d.split(' (')[0]);
@@ -28,7 +30,7 @@ export default async function JevModelsV1618Page() {
   const rowOf = (key: string) => artifact.systems.find(row => row.key === key) as (Row & { capability: number }) | undefined;
   const capOf = (key: string) => (rowOf(key)?.capability ?? 0).toFixed(3);
   return <>
-    <JevBenchReleaseVersionNav active="v1.6.18" />
+    <PageJsonLd meta={metadata} /><JevBenchReleaseVersionNav active="v1.6.18" />
     <header className="bh-page-head" data-bh-jev16-release-header>
       <div className="bh-eyebrow">JevBench v1.6.18 · {added.length} rows added</div>
       <h1 className="mt-1 text-3xl font-bold tracking-tight">JevBench · {added.length} systems join the regular draw</h1>

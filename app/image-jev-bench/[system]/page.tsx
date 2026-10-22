@@ -10,6 +10,7 @@ import { readMultimodalPreview, readImageJevV03 } from '../../../lib/jevbench-mu
 import { imageJevBoardSystems } from '../../../lib/imagejev-board.mjs';
 import { imageJevSystemPath, imageJevSourceUrl } from '../../../lib/imagejev-system-links.mjs';
 import { previewMetadata } from '../../../lib/seo';
+import { PageJsonLd } from '../../../components/PageJsonLd';
 
 // CR-254: all current ImageJevBench details use only the published aggregate and cited metadata.
 const AXES = ['intelligence', 'calibration', 'speed', 'cost'] as const;
@@ -93,5 +94,6 @@ export default async function ImageJevSystemPage({ params }: { params: Promise<{
       </dl>
       <p className="bh-muted mt-4 text-sm">Published {String(artifact.built_utc).slice(0, 10)}. Scores and ranks can change in a later release. See the <Link href={artifact.revision === 'v0.3.0' ? '/image-jev-bench#v03-method' : '/image-jev-bench#method-heading'} className="text-accent underline">method notes</Link>.</p>
     </section>
+    <PageJsonLd meta={await generateMetadata({ params })} />
   </>;
 }

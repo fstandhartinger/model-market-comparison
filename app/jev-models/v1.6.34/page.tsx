@@ -6,12 +6,14 @@ import { JevHistoryLazy } from '../../../components/JevHistoryLazy';
 import { historicalCatalogue } from '../../../lib/jevbench-v162-release.mjs';
 import { withPublicAdapterIds } from '../../../lib/jevbench-v15-release.mjs';
 import { JEVBENCH_COST_RULE, JEVBENCH_COST_RULE_HISTORY } from '../../../lib/jevbench-cost-rule.mjs';
-export const metadata = {title: 'JevBench v1.6.34 · Arcbright Elf 1 12B', alternates:{canonical:'/jev-models/v1.6.34'}};
+import { seoTitle } from '../../../lib/seo';
+import { PageJsonLd } from '../../../components/PageJsonLd';
+export const metadata = {title: seoTitle('JevBench v1.6.34 · Arcbright Elf 1 12B'), alternates:{canonical:'/jev-models/v1.6.34'}};
 export default async function JevModelsV1634Page() {
  const release=await readOptionalJevbenchV1634Release();if(!release) notFound();
  const board=v1634BoardInput(release);
  const notes=(release.artifact as unknown as {measurement_notes:string[]}).measurement_notes;
- return <><JevBenchReleaseVersionNav active="v1.6.34" />
+ return <><PageJsonLd meta={metadata} /><JevBenchReleaseVersionNav active="v1.6.34" />
  <header className="bh-page-head" data-bh-jev16-release-header><div className="bh-eyebrow">JevBench v1.6.34 · same-draw addendum</div>
  <h1 className="mt-1 text-3xl font-bold">Arcbright Elf 1 12B joins the regular draw</h1>
  <p className="mt-3 max-w-3xl">One new ranked row on the same draw and common cost basis as v1.6.33. All 63 carried full-draw rows keep their point estimates. Arcbright Elf 1 12B ran on one RTX PRO 6000 Blackwell 96 GB in the EU, using the author’s pinned server. Its 40,960-token context cap refused 15 items, scored wrong. Cost is a labelled estimate from the nearest listed sibling, Gemma 3 12B, inside the official cap. The audited server patterns and author training claims are disclosed below.</p>
