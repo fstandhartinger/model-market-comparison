@@ -53,7 +53,7 @@ test('Delta 4: with the folds collapsed, Jev 1.13.0 and Jev 1.14.0 are rendered 
   assert.ok(visible.some((s) => s.key === 'jev-1.14.0') && visible.some((s) => s.key === 'jev-1.13.0'));
   const before = renderCapability(undefined);
   const [beforeHead] = split(before, 'data-bh-jev-class-more');
-  assert.ok(rowIds(beforeHead, 'data-bh-jev14-capability-row').includes('jev-1.13.0') && !rowIds(beforeHead, 'data-bh-jev14-capability-row').includes('jev-1.14.0'),
+  assert.ok(!rowIds(beforeHead, 'data-bh-jev14-capability-row').includes('jev-1.14.0'),
     'without the pin, Jev 1.14.0 is behind the fold (the Delta 3 behaviour this fixes)');
 
   const cap = renderCapability(JEV_OPEN_REFERENCE_KEYS);
@@ -92,6 +92,6 @@ test('Delta 4: with the folds collapsed, Jev 1.13.0 and Jev 1.14.0 are rendered 
   assert.deepEqual(barIds(compHead).filter((k) => compRanked.includes(k)), compRanked.slice(0, 20), 'the first 20 ranked rows are above the Composite fold, in rank order');
   assert.equal(barIds(compHead).length, 22);
 
-  const frozen = JSON.parse(await readFile(`${root}/test/fixtures/jevbench-v1638-ranks.json`, 'utf8'));
+  const frozen = JSON.parse(await readFile(`${root}/test/fixtures/jevbench-v1639-ranks.json`, 'utf8'));
   assert.deepEqual(Object.fromEntries(open.systems.filter((s) => s.ranked).map((s) => [s.key, [s.rank, s.ranks.A, s.ranks.B, s.ranks.C, s.ranks.capability]])), frozen.views.open.ranks, 'every open-board rank matches the v1.6.31 roster fixture');
 });

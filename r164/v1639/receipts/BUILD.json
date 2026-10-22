@@ -1,0 +1,60 @@
+{
+ "carried_rows_preserved_except_ranks": 75,
+ "carried_scorer_point_estimates_reproduced": 72,
+ "files": {
+  "categories": {
+   "path": "data/raw/benchmarks/jevbench/v1.6/jevbench-v1.6.39-categories.json",
+   "sha256": "8bc2eb1646f98c600184b47a83ee487c82050d54a7167f2c7c6bae42f492e2da"
+  },
+  "history": {
+   "path": "data/raw/benchmarks/jevbench/v1.6/jevbench-v1.6.39-history.json",
+   "sha256": "5cd8c1332226ea9c179883d2285c0d8b8cc593ae38f2645197364a7ddd9c83c1"
+  },
+  "history-carry": {
+   "path": "data/raw/benchmarks/jevbench/v1.6/jevbench-v1.6.39-history-carry.json",
+   "sha256": "334e851944e92383ab3071e52b3012040c7023d0fe236395953169ebee8f0459"
+  },
+  "proof": {
+   "path": "data/raw/benchmarks/jevbench/v1.6/jevbench-v1.6.39-proof.json",
+   "sha256": "e78f0588ad4bf2f3c9414c3a6eec502864fd60ada49533453f5ad5ac5eb12617"
+  },
+  "results": {
+   "path": "data/raw/benchmarks/jevbench/v1.6/jevbench-v1.6.39-results.json",
+   "sha256": "8ce14f0406eb039e826e2ba4c991b880408892a567a4e992ca33c5ed866c5b4c"
+  }
+ },
+ "new_rows": {
+  "h2o-lightning-31b": {
+   "axes": {
+    "calibration": 90.18882631775024,
+    "cost": 50.57266115000792,
+    "intelligence": 80.15012041049178,
+    "speed": 89.8424830803211
+   },
+   "capability": 85.16947336412102,
+   "cost": {
+    "basis": "ESTIMATE (*est.), base-model market reference through the frozen pricing_v15 module (sha256 a8a05890ddab2d39d1a1bd543f2b5c83842bdc70aa54766788bc89b7a8a448d7): declared base google/gemma-4-31B-it -> reference() -> google/gemma-4-31b-it, USD 0.09 per million input tokens, USD 0.34 per million output tokens (frozen price cut-off snapshot), the same reference as the other Gemma-4-31B-it rows of this board. The customer asked for the cost of the base model. Estimated, not charged, not a quote from the author or any host. Tokens as reported by the author's server usage block (the full record, 1 output token per decision for the readout). Over all 1,500 items the frozen resolve() gives USD 0.115415 per 1,000 decisions; the official cost axis uses the common 1,485-item basis (below), where the row is under the official cost cap. COMMON COST BASIS (v1.6.30): common 1,485 items, excluding the 15 longest for every row; 727,319 input / 1,485 output tokens. All-item usage 1,917,924 input / 1,500 output over 1,500 items; the 15 longest items, which this row answered in full, count for no row's cost.",
+    "common_basis": {
+     "n_items": 1485,
+     "rule": "common",
+     "usd_per_1000_all_items": 0.11541544000000001
+    },
+    "kind": "estimate",
+    "usage_estimated_rows": 0,
+    "usd_per_1000": 0.044419939393939394
+   },
+   "ranks": {
+    "A": 8,
+    "B": 4,
+    "C": 8,
+    "capability": 3
+   },
+   "scores": {
+    "A": 73.43686411111796,
+    "B": 74.68801579994582,
+    "C": 73.43686411111796
+   }
+  }
+ },
+ "variant": "single-row"
+}

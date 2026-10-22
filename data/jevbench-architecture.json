@@ -6377,6 +6377,26 @@
             "fact": "Macrocosmos Clef joint-head 4B on Qwen/Qwen3.5-4B-Base; one forward pass, no generated tokens; measured on Verda A100 80 GB through a first-party bridge."
           }
         ]
+      },
+      "h2o-lightning-31b": {
+        "arch": "open-llm-decoder",
+        "badges": {
+          "derivation": "fine-tune",
+          "params": "31B",
+          "quant": null
+        },
+        "evidence": [
+          {
+            "url": "https://huggingface.co/h2oai/h2o-lightning-31b/blob/ca6e6f6e8e08e2d21c8c9f45261e05444626647a/README.md",
+            "kind": "model-card",
+            "fact": "Pinned model card: H2O.ai decision model, card metadata base_model google/gemma-4-31B-it (finetune), pipeline image-text-to-text; served by the author's documented one-engine profile on vLLM 0.30.0 with the h2oai/vllm overlay, FP8 weights (vLLM online FP8 of the bf16 checkpoint), two-way reading by default; H2O Model Non-Commercial Licence v1.1."
+          },
+          {
+            "url": "https://huggingface.co/h2oai/h2o-lightning-31b/blob/ca6e6f6e8e08e2d21c8c9f45261e05444626647a/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Gemma4ForConditionalGeneration\"]; model_type: \"gemma4\"."
+          }
+        ]
       }
     },
     "imagejevbench": {

@@ -1,0 +1,1338 @@
+{
+  "any_top5_change": true,
+  "entrants_all": [
+    "h2o-lightning-31b"
+  ],
+  "by_row": {
+    "h2o-lightning-31b": [
+      "all/composites/B",
+      "all/capability/official_caps",
+      "all/capability/cost_off_latency_2x",
+      "all/capability/latency_none",
+      "all/extra_capability/cost_7x",
+      "all/extra_capability/cost_10x",
+      "open/composites/A",
+      "open/composites/B",
+      "open/composites/C",
+      "open/capability/official_caps",
+      "open/capability/no_caps",
+      "open/capability/cost_off_latency_2x",
+      "open/capability/latency_none",
+      "open/extra_capability/cost_7x",
+      "open/extra_capability/cost_10x",
+      "open/extra_capability/rank_field",
+      "open/extra_capability/cost_7x_latency_none",
+      "open/extra_capability/cost_10x_latency_none",
+      "release/B",
+      "release/capability"
+    ]
+  },
+  "rows": [
+    {
+      "view": "all",
+      "metric": "composites/A",
+      "before": [
+        "kettei-fat",
+        "liquid-d1-ultra",
+        "nimble-v4-max",
+        "drex-max",
+        "subq-snap-preview"
+      ],
+      "after": [
+        "kettei-fat",
+        "liquid-d1-ultra",
+        "nimble-v4-max",
+        "drex-max",
+        "subq-snap-preview"
+      ],
+      "changed": false,
+      "entrants": [],
+      "dropped": [],
+      "causes": [],
+      "positions_before": {
+        "h2o-lightning-31b": null
+      },
+      "positions": {
+        "h2o-lightning-31b": 9
+      },
+      "field": 239
+    },
+    {
+      "view": "all",
+      "metric": "composites/B",
+      "before": [
+        "kettei-fat",
+        "drex-max",
+        "liquid-d1-ultra",
+        "subq-snap-preview",
+        "nimble-v4-max"
+      ],
+      "after": [
+        "kettei-fat",
+        "drex-max",
+        "liquid-d1-ultra",
+        "h2o-lightning-31b",
+        "subq-snap-preview"
+      ],
+      "changed": true,
+      "entrants": [
+        "h2o-lightning-31b"
+      ],
+      "dropped": [
+        "nimble-v4-max"
+      ],
+      "causes": [
+        "h2o-lightning-31b"
+      ],
+      "positions_before": {
+        "h2o-lightning-31b": null
+      },
+      "positions": {
+        "h2o-lightning-31b": 4
+      },
+      "field": 239
+    },
+    {
+      "view": "all",
+      "metric": "composites/C",
+      "before": [
+        "kettei-fat",
+        "liquid-d1-ultra",
+        "nimble-v4-max",
+        "drex-max",
+        "subq-snap-preview"
+      ],
+      "after": [
+        "kettei-fat",
+        "liquid-d1-ultra",
+        "nimble-v4-max",
+        "drex-max",
+        "subq-snap-preview"
+      ],
+      "changed": false,
+      "entrants": [],
+      "dropped": [],
+      "causes": [],
+      "positions_before": {
+        "h2o-lightning-31b": null
+      },
+      "positions": {
+        "h2o-lightning-31b": 9
+      },
+      "field": 239
+    },
+    {
+      "view": "all",
+      "metric": "capability/official_caps",
+      "before": [
+        "kettei-fat",
+        "chon-1.0-12b",
+        "drex-max",
+        "basal-omni-1.0-ultra",
+        "quyet-1-0-large"
+      ],
+      "after": [
+        "kettei-fat",
+        "chon-1.0-12b",
+        "h2o-lightning-31b",
+        "drex-max",
+        "basal-omni-1.0-ultra"
+      ],
+      "changed": true,
+      "entrants": [
+        "h2o-lightning-31b"
+      ],
+      "dropped": [
+        "quyet-1-0-large"
+      ],
+      "causes": [
+        "h2o-lightning-31b"
+      ],
+      "positions_before": {
+        "h2o-lightning-31b": null
+      },
+      "positions": {
+        "h2o-lightning-31b": 3
+      },
+      "field": 167
+    },
+    {
+      "view": "all",
+      "metric": "capability/no_caps",
+      "before": [
+        "gpt-6-luna",
+        "qwen3.8-27b",
+        "gpt-6-luna-low",
+        "deepseek-flash",
+        "gpt-5.6-luna"
+      ],
+      "after": [
+        "gpt-6-luna",
+        "qwen3.8-27b",
+        "gpt-6-luna-low",
+        "deepseek-flash",
+        "gpt-5.6-luna"
+      ],
+      "changed": false,
+      "entrants": [],
+      "dropped": [],
+      "causes": [],
+      "positions_before": {
+        "h2o-lightning-31b": null
+      },
+      "positions": {
+        "h2o-lightning-31b": 8
+      },
+      "field": 239
+    },
+    {
+      "view": "all",
+      "metric": "capability/cost_off_latency_2x",
+      "before": [
+        "kettei-fat",
+        "chon-1.0-12b",
+        "drex-max",
+        "vllm-sr-d3",
+        "pplx-decider-v1-1-27b"
+      ],
+      "after": [
+        "kettei-fat",
+        "chon-1.0-12b",
+        "h2o-lightning-31b",
+        "drex-max",
+        "vllm-sr-d3"
+      ],
+      "changed": true,
+      "entrants": [
+        "h2o-lightning-31b"
+      ],
+      "dropped": [
+        "pplx-decider-v1-1-27b"
+      ],
+      "causes": [
+        "h2o-lightning-31b"
+      ],
+      "positions_before": {
+        "h2o-lightning-31b": null
+      },
+      "positions": {
+        "h2o-lightning-31b": 3
+      },
+      "field": 208
+    },
+    {
+      "view": "all",
+      "metric": "capability/latency_none",
+      "before": [
+        "kettei-fat",
+        "chon-1.0-12b",
+        "drex-max",
+        "basal-omni-1.0-ultra",
+        "quyet-1-0-large"
+      ],
+      "after": [
+        "kettei-fat",
+        "chon-1.0-12b",
+        "h2o-lightning-31b",
+        "drex-max",
+        "basal-omni-1.0-ultra"
+      ],
+      "changed": true,
+      "entrants": [
+        "h2o-lightning-31b"
+      ],
+      "dropped": [
+        "quyet-1-0-large"
+      ],
+      "causes": [
+        "h2o-lightning-31b"
+      ],
+      "positions_before": {
+        "h2o-lightning-31b": null
+      },
+      "positions": {
+        "h2o-lightning-31b": 3
+      },
+      "field": 185
+    },
+    {
+      "view": "all",
+      "metric": "extra_capability/cost_7x",
+      "before": [
+        "kettei-fat",
+        "chon-1.0-12b",
+        "drex-max",
+        "vllm-sr-d3",
+        "pplx-decider-v1-1-27b"
+      ],
+      "after": [
+        "kettei-fat",
+        "chon-1.0-12b",
+        "h2o-lightning-31b",
+        "drex-max",
+        "vllm-sr-d3"
+      ],
+      "changed": true,
+      "entrants": [
+        "h2o-lightning-31b"
+      ],
+      "dropped": [
+        "pplx-decider-v1-1-27b"
+      ],
+      "causes": [
+        "h2o-lightning-31b"
+      ],
+      "positions_before": {
+        "h2o-lightning-31b": null
+      },
+      "positions": {
+        "h2o-lightning-31b": 3
+      },
+      "field": 199
+    },
+    {
+      "view": "all",
+      "metric": "extra_capability/cost_10x",
+      "before": [
+        "kettei-fat",
+        "chon-1.0-12b",
+        "drex-max",
+        "vllm-sr-d3",
+        "pplx-decider-v1-1-27b"
+      ],
+      "after": [
+        "kettei-fat",
+        "chon-1.0-12b",
+        "h2o-lightning-31b",
+        "drex-max",
+        "vllm-sr-d3"
+      ],
+      "changed": true,
+      "entrants": [
+        "h2o-lightning-31b"
+      ],
+      "dropped": [
+        "pplx-decider-v1-1-27b"
+      ],
+      "causes": [
+        "h2o-lightning-31b"
+      ],
+      "positions_before": {
+        "h2o-lightning-31b": null
+      },
+      "positions": {
+        "h2o-lightning-31b": 3
+      },
+      "field": 205
+    },
+    {
+      "view": "all",
+      "metric": "extra_capability/rank_field",
+      "before": [
+        "gpt-6-luna",
+        "qwen3.8-27b",
+        "gpt-6-luna-low",
+        "deepseek-flash",
+        "gpt-5.6-luna"
+      ],
+      "after": [
+        "gpt-6-luna",
+        "qwen3.8-27b",
+        "gpt-6-luna-low",
+        "deepseek-flash",
+        "gpt-5.6-luna"
+      ],
+      "changed": false,
+      "entrants": [],
+      "dropped": [],
+      "causes": [],
+      "positions_before": {
+        "h2o-lightning-31b": null
+      },
+      "positions": {
+        "h2o-lightning-31b": 8
+      },
+      "field": 239
+    },
+    {
+      "view": "all",
+      "metric": "extra_capability/cost_7x_latency_none",
+      "before": [
+        "gpt-6-luna",
+        "gpt-6-luna-low",
+        "gpt-5.6-luna",
+        "kettei-fat",
+        "chon-1.0-12b"
+      ],
+      "after": [
+        "gpt-6-luna",
+        "gpt-6-luna-low",
+        "gpt-5.6-luna",
+        "kettei-fat",
+        "chon-1.0-12b"
+      ],
+      "changed": false,
+      "entrants": [],
+      "dropped": [],
+      "causes": [],
+      "positions_before": {
+        "h2o-lightning-31b": null
+      },
+      "positions": {
+        "h2o-lightning-31b": 6
+      },
+      "field": 223
+    },
+    {
+      "view": "all",
+      "metric": "extra_capability/cost_10x_latency_none",
+      "before": [
+        "gpt-6-luna",
+        "gpt-6-luna-low",
+        "gpt-5.6-luna",
+        "kettei-fat",
+        "chon-1.0-12b"
+      ],
+      "after": [
+        "gpt-6-luna",
+        "gpt-6-luna-low",
+        "gpt-5.6-luna",
+        "kettei-fat",
+        "chon-1.0-12b"
+      ],
+      "changed": false,
+      "entrants": [],
+      "dropped": [],
+      "causes": [],
+      "positions_before": {
+        "h2o-lightning-31b": null
+      },
+      "positions": {
+        "h2o-lightning-31b": 6
+      },
+      "field": 232
+    },
+    {
+      "view": "open",
+      "metric": "composites/A",
+      "before": [
+        "h2o-lightning-4b",
+        "torchcast-decision-4b-v1.2",
+        "decisio-gemma-4-31b-v080",
+        "basal-omni-1.0-ultra",
+        "quyet-1-0-large"
+      ],
+      "after": [
+        "h2o-lightning-4b",
+        "h2o-lightning-31b",
+        "torchcast-decision-4b-v1.2",
+        "decisio-gemma-4-31b-v080",
+        "basal-omni-1.0-ultra"
+      ],
+      "changed": true,
+      "entrants": [
+        "h2o-lightning-31b"
+      ],
+      "dropped": [
+        "quyet-1-0-large"
+      ],
+      "causes": [
+        "h2o-lightning-31b"
+      ],
+      "positions_before": {
+        "h2o-lightning-31b": null
+      },
+      "positions": {
+        "h2o-lightning-31b": 2
+      },
+      "field": 196
+    },
+    {
+      "view": "open",
+      "metric": "composites/B",
+      "before": [
+        "basal-omni-1.0-ultra",
+        "quyet-1-0-large",
+        "decisio-gemma-4-31b-v080",
+        "h2o-lightning-4b",
+        "torchcast-decision-4b-v1.2"
+      ],
+      "after": [
+        "h2o-lightning-31b",
+        "basal-omni-1.0-ultra",
+        "quyet-1-0-large",
+        "decisio-gemma-4-31b-v080",
+        "h2o-lightning-4b"
+      ],
+      "changed": true,
+      "entrants": [
+        "h2o-lightning-31b"
+      ],
+      "dropped": [
+        "torchcast-decision-4b-v1.2"
+      ],
+      "causes": [
+        "h2o-lightning-31b"
+      ],
+      "positions_before": {
+        "h2o-lightning-31b": null
+      },
+      "positions": {
+        "h2o-lightning-31b": 1
+      },
+      "field": 196
+    },
+    {
+      "view": "open",
+      "metric": "composites/C",
+      "before": [
+        "h2o-lightning-4b",
+        "torchcast-decision-4b-v1.2",
+        "decisio-gemma-4-31b-v080",
+        "basal-omni-1.0-ultra",
+        "quyet-1-0-large"
+      ],
+      "after": [
+        "h2o-lightning-4b",
+        "h2o-lightning-31b",
+        "torchcast-decision-4b-v1.2",
+        "decisio-gemma-4-31b-v080",
+        "basal-omni-1.0-ultra"
+      ],
+      "changed": true,
+      "entrants": [
+        "h2o-lightning-31b"
+      ],
+      "dropped": [
+        "quyet-1-0-large"
+      ],
+      "causes": [
+        "h2o-lightning-31b"
+      ],
+      "positions_before": {
+        "h2o-lightning-31b": null
+      },
+      "positions": {
+        "h2o-lightning-31b": 2
+      },
+      "field": 196
+    },
+    {
+      "view": "open",
+      "metric": "capability/official_caps",
+      "before": [
+        "chon-1.0-12b",
+        "basal-omni-1.0-ultra",
+        "quyet-1-0-large",
+        "jeff_1_0_large",
+        "metask_jev_rain_31b_trained_v3"
+      ],
+      "after": [
+        "chon-1.0-12b",
+        "h2o-lightning-31b",
+        "basal-omni-1.0-ultra",
+        "quyet-1-0-large",
+        "jeff_1_0_large"
+      ],
+      "changed": true,
+      "entrants": [
+        "h2o-lightning-31b"
+      ],
+      "dropped": [
+        "metask_jev_rain_31b_trained_v3"
+      ],
+      "causes": [
+        "h2o-lightning-31b"
+      ],
+      "positions_before": {
+        "h2o-lightning-31b": null
+      },
+      "positions": {
+        "h2o-lightning-31b": 2
+      },
+      "field": 139
+    },
+    {
+      "view": "open",
+      "metric": "capability/no_caps",
+      "before": [
+        "chon-1.0-12b",
+        "vllm-sr-d3",
+        "pplx-decider-v1-1-27b",
+        "vllm-sr-d3-turbo",
+        "startlux-decision-v1.1-27b-instant"
+      ],
+      "after": [
+        "chon-1.0-12b",
+        "h2o-lightning-31b",
+        "vllm-sr-d3",
+        "pplx-decider-v1-1-27b",
+        "vllm-sr-d3-turbo"
+      ],
+      "changed": true,
+      "entrants": [
+        "h2o-lightning-31b"
+      ],
+      "dropped": [
+        "startlux-decision-v1.1-27b-instant"
+      ],
+      "causes": [
+        "h2o-lightning-31b"
+      ],
+      "positions_before": {
+        "h2o-lightning-31b": null
+      },
+      "positions": {
+        "h2o-lightning-31b": 2
+      },
+      "field": 196
+    },
+    {
+      "view": "open",
+      "metric": "capability/cost_off_latency_2x",
+      "before": [
+        "chon-1.0-12b",
+        "vllm-sr-d3",
+        "pplx-decider-v1-1-27b",
+        "vllm-sr-d3-turbo",
+        "startlux-decision-v1.1-27b-instant"
+      ],
+      "after": [
+        "chon-1.0-12b",
+        "h2o-lightning-31b",
+        "vllm-sr-d3",
+        "pplx-decider-v1-1-27b",
+        "vllm-sr-d3-turbo"
+      ],
+      "changed": true,
+      "entrants": [
+        "h2o-lightning-31b"
+      ],
+      "dropped": [
+        "startlux-decision-v1.1-27b-instant"
+      ],
+      "causes": [
+        "h2o-lightning-31b"
+      ],
+      "positions_before": {
+        "h2o-lightning-31b": null
+      },
+      "positions": {
+        "h2o-lightning-31b": 2
+      },
+      "field": 174
+    },
+    {
+      "view": "open",
+      "metric": "capability/latency_none",
+      "before": [
+        "chon-1.0-12b",
+        "basal-omni-1.0-ultra",
+        "quyet-1-0-large",
+        "jeff_1_0_large",
+        "metask_jev_rain_31b_trained_v3"
+      ],
+      "after": [
+        "chon-1.0-12b",
+        "h2o-lightning-31b",
+        "basal-omni-1.0-ultra",
+        "quyet-1-0-large",
+        "jeff_1_0_large"
+      ],
+      "changed": true,
+      "entrants": [
+        "h2o-lightning-31b"
+      ],
+      "dropped": [
+        "metask_jev_rain_31b_trained_v3"
+      ],
+      "causes": [
+        "h2o-lightning-31b"
+      ],
+      "positions_before": {
+        "h2o-lightning-31b": null
+      },
+      "positions": {
+        "h2o-lightning-31b": 2
+      },
+      "field": 155
+    },
+    {
+      "view": "open",
+      "metric": "extra_capability/cost_7x",
+      "before": [
+        "chon-1.0-12b",
+        "vllm-sr-d3",
+        "pplx-decider-v1-1-27b",
+        "vllm-sr-d3-turbo",
+        "startlux-decision-v1.1-27b-instant"
+      ],
+      "after": [
+        "chon-1.0-12b",
+        "h2o-lightning-31b",
+        "vllm-sr-d3",
+        "pplx-decider-v1-1-27b",
+        "vllm-sr-d3-turbo"
+      ],
+      "changed": true,
+      "entrants": [
+        "h2o-lightning-31b"
+      ],
+      "dropped": [
+        "startlux-decision-v1.1-27b-instant"
+      ],
+      "causes": [
+        "h2o-lightning-31b"
+      ],
+      "positions_before": {
+        "h2o-lightning-31b": null
+      },
+      "positions": {
+        "h2o-lightning-31b": 2
+      },
+      "field": 167
+    },
+    {
+      "view": "open",
+      "metric": "extra_capability/cost_10x",
+      "before": [
+        "chon-1.0-12b",
+        "vllm-sr-d3",
+        "pplx-decider-v1-1-27b",
+        "vllm-sr-d3-turbo",
+        "startlux-decision-v1.1-27b-instant"
+      ],
+      "after": [
+        "chon-1.0-12b",
+        "h2o-lightning-31b",
+        "vllm-sr-d3",
+        "pplx-decider-v1-1-27b",
+        "vllm-sr-d3-turbo"
+      ],
+      "changed": true,
+      "entrants": [
+        "h2o-lightning-31b"
+      ],
+      "dropped": [
+        "startlux-decision-v1.1-27b-instant"
+      ],
+      "causes": [
+        "h2o-lightning-31b"
+      ],
+      "positions_before": {
+        "h2o-lightning-31b": null
+      },
+      "positions": {
+        "h2o-lightning-31b": 2
+      },
+      "field": 172
+    },
+    {
+      "view": "open",
+      "metric": "extra_capability/rank_field",
+      "before": [
+        "chon-1.0-12b",
+        "vllm-sr-d3",
+        "pplx-decider-v1-1-27b",
+        "vllm-sr-d3-turbo",
+        "startlux-decision-v1.1-27b-instant"
+      ],
+      "after": [
+        "chon-1.0-12b",
+        "h2o-lightning-31b",
+        "vllm-sr-d3",
+        "pplx-decider-v1-1-27b",
+        "vllm-sr-d3-turbo"
+      ],
+      "changed": true,
+      "entrants": [
+        "h2o-lightning-31b"
+      ],
+      "dropped": [
+        "startlux-decision-v1.1-27b-instant"
+      ],
+      "causes": [
+        "h2o-lightning-31b"
+      ],
+      "positions_before": {
+        "h2o-lightning-31b": null
+      },
+      "positions": {
+        "h2o-lightning-31b": 2
+      },
+      "field": 196
+    },
+    {
+      "view": "open",
+      "metric": "extra_capability/cost_7x_latency_none",
+      "before": [
+        "chon-1.0-12b",
+        "vllm-sr-d3",
+        "pplx-decider-v1-1-27b",
+        "vllm-sr-d3-turbo",
+        "startlux-decision-v1.1-27b-instant"
+      ],
+      "after": [
+        "chon-1.0-12b",
+        "h2o-lightning-31b",
+        "vllm-sr-d3",
+        "pplx-decider-v1-1-27b",
+        "vllm-sr-d3-turbo"
+      ],
+      "changed": true,
+      "entrants": [
+        "h2o-lightning-31b"
+      ],
+      "dropped": [
+        "startlux-decision-v1.1-27b-instant"
+      ],
+      "causes": [
+        "h2o-lightning-31b"
+      ],
+      "positions_before": {
+        "h2o-lightning-31b": null
+      },
+      "positions": {
+        "h2o-lightning-31b": 2
+      },
+      "field": 184
+    },
+    {
+      "view": "open",
+      "metric": "extra_capability/cost_10x_latency_none",
+      "before": [
+        "chon-1.0-12b",
+        "vllm-sr-d3",
+        "pplx-decider-v1-1-27b",
+        "vllm-sr-d3-turbo",
+        "startlux-decision-v1.1-27b-instant"
+      ],
+      "after": [
+        "chon-1.0-12b",
+        "h2o-lightning-31b",
+        "vllm-sr-d3",
+        "pplx-decider-v1-1-27b",
+        "vllm-sr-d3-turbo"
+      ],
+      "changed": true,
+      "entrants": [
+        "h2o-lightning-31b"
+      ],
+      "dropped": [
+        "startlux-decision-v1.1-27b-instant"
+      ],
+      "causes": [
+        "h2o-lightning-31b"
+      ],
+      "positions_before": {
+        "h2o-lightning-31b": null
+      },
+      "positions": {
+        "h2o-lightning-31b": 2
+      },
+      "field": 192
+    },
+    {
+      "view": "api",
+      "metric": "composites/A",
+      "before": [
+        "kettei-fat",
+        "liquid-d1-ultra",
+        "nimble-v4-max",
+        "drex-max",
+        "subq-snap-preview"
+      ],
+      "after": [
+        "kettei-fat",
+        "liquid-d1-ultra",
+        "nimble-v4-max",
+        "drex-max",
+        "subq-snap-preview"
+      ],
+      "changed": false,
+      "entrants": [],
+      "dropped": [],
+      "causes": [],
+      "positions_before": {
+        "h2o-lightning-31b": null
+      },
+      "positions": {
+        "h2o-lightning-31b": null
+      },
+      "field": 43
+    },
+    {
+      "view": "api",
+      "metric": "composites/B",
+      "before": [
+        "kettei-fat",
+        "drex-max",
+        "liquid-d1-ultra",
+        "subq-snap-preview",
+        "nimble-v4-max"
+      ],
+      "after": [
+        "kettei-fat",
+        "drex-max",
+        "liquid-d1-ultra",
+        "subq-snap-preview",
+        "nimble-v4-max"
+      ],
+      "changed": false,
+      "entrants": [],
+      "dropped": [],
+      "causes": [],
+      "positions_before": {
+        "h2o-lightning-31b": null
+      },
+      "positions": {
+        "h2o-lightning-31b": null
+      },
+      "field": 43
+    },
+    {
+      "view": "api",
+      "metric": "composites/C",
+      "before": [
+        "kettei-fat",
+        "liquid-d1-ultra",
+        "nimble-v4-max",
+        "drex-max",
+        "subq-snap-preview"
+      ],
+      "after": [
+        "kettei-fat",
+        "liquid-d1-ultra",
+        "nimble-v4-max",
+        "drex-max",
+        "subq-snap-preview"
+      ],
+      "changed": false,
+      "entrants": [],
+      "dropped": [],
+      "causes": [],
+      "positions_before": {
+        "h2o-lightning-31b": null
+      },
+      "positions": {
+        "h2o-lightning-31b": null
+      },
+      "field": 43
+    },
+    {
+      "view": "api",
+      "metric": "capability/official_caps",
+      "before": [
+        "kettei-fat",
+        "drex-max",
+        "subq-snap-preview",
+        "liquid-d1-ultra",
+        "nimble-v4-max"
+      ],
+      "after": [
+        "kettei-fat",
+        "drex-max",
+        "subq-snap-preview",
+        "liquid-d1-ultra",
+        "nimble-v4-max"
+      ],
+      "changed": false,
+      "entrants": [],
+      "dropped": [],
+      "causes": [],
+      "positions_before": {
+        "h2o-lightning-31b": null
+      },
+      "positions": {
+        "h2o-lightning-31b": null
+      },
+      "field": 28
+    },
+    {
+      "view": "api",
+      "metric": "capability/no_caps",
+      "before": [
+        "gpt-6-luna",
+        "qwen3.8-27b",
+        "gpt-6-luna-low",
+        "deepseek-flash",
+        "gpt-5.6-luna"
+      ],
+      "after": [
+        "gpt-6-luna",
+        "qwen3.8-27b",
+        "gpt-6-luna-low",
+        "deepseek-flash",
+        "gpt-5.6-luna"
+      ],
+      "changed": false,
+      "entrants": [],
+      "dropped": [],
+      "causes": [],
+      "positions_before": {
+        "h2o-lightning-31b": null
+      },
+      "positions": {
+        "h2o-lightning-31b": null
+      },
+      "field": 43
+    },
+    {
+      "view": "api",
+      "metric": "capability/cost_off_latency_2x",
+      "before": [
+        "kettei-fat",
+        "drex-max",
+        "subq-snap-preview",
+        "liquid-d1-ultra",
+        "nimble-v4-max"
+      ],
+      "after": [
+        "kettei-fat",
+        "drex-max",
+        "subq-snap-preview",
+        "liquid-d1-ultra",
+        "nimble-v4-max"
+      ],
+      "changed": false,
+      "entrants": [],
+      "dropped": [],
+      "causes": [],
+      "positions_before": {
+        "h2o-lightning-31b": null
+      },
+      "positions": {
+        "h2o-lightning-31b": null
+      },
+      "field": 34
+    },
+    {
+      "view": "api",
+      "metric": "capability/latency_none",
+      "before": [
+        "kettei-fat",
+        "drex-max",
+        "subq-snap-preview",
+        "liquid-d1-ultra",
+        "nimble-v4-max"
+      ],
+      "after": [
+        "kettei-fat",
+        "drex-max",
+        "subq-snap-preview",
+        "liquid-d1-ultra",
+        "nimble-v4-max"
+      ],
+      "changed": false,
+      "entrants": [],
+      "dropped": [],
+      "causes": [],
+      "positions_before": {
+        "h2o-lightning-31b": null
+      },
+      "positions": {
+        "h2o-lightning-31b": null
+      },
+      "field": 30
+    },
+    {
+      "view": "api",
+      "metric": "extra_capability/cost_7x",
+      "before": [
+        "kettei-fat",
+        "drex-max",
+        "subq-snap-preview",
+        "liquid-d1-ultra",
+        "nimble-v4-max"
+      ],
+      "after": [
+        "kettei-fat",
+        "drex-max",
+        "subq-snap-preview",
+        "liquid-d1-ultra",
+        "nimble-v4-max"
+      ],
+      "changed": false,
+      "entrants": [],
+      "dropped": [],
+      "causes": [],
+      "positions_before": {
+        "h2o-lightning-31b": null
+      },
+      "positions": {
+        "h2o-lightning-31b": null
+      },
+      "field": 32
+    },
+    {
+      "view": "api",
+      "metric": "extra_capability/cost_10x",
+      "before": [
+        "kettei-fat",
+        "drex-max",
+        "subq-snap-preview",
+        "liquid-d1-ultra",
+        "nimble-v4-max"
+      ],
+      "after": [
+        "kettei-fat",
+        "drex-max",
+        "subq-snap-preview",
+        "liquid-d1-ultra",
+        "nimble-v4-max"
+      ],
+      "changed": false,
+      "entrants": [],
+      "dropped": [],
+      "causes": [],
+      "positions_before": {
+        "h2o-lightning-31b": null
+      },
+      "positions": {
+        "h2o-lightning-31b": null
+      },
+      "field": 33
+    },
+    {
+      "view": "api",
+      "metric": "extra_capability/rank_field",
+      "before": [
+        "gpt-6-luna",
+        "qwen3.8-27b",
+        "gpt-6-luna-low",
+        "deepseek-flash",
+        "gpt-5.6-luna"
+      ],
+      "after": [
+        "gpt-6-luna",
+        "qwen3.8-27b",
+        "gpt-6-luna-low",
+        "deepseek-flash",
+        "gpt-5.6-luna"
+      ],
+      "changed": false,
+      "entrants": [],
+      "dropped": [],
+      "causes": [],
+      "positions_before": {
+        "h2o-lightning-31b": null
+      },
+      "positions": {
+        "h2o-lightning-31b": null
+      },
+      "field": 43
+    },
+    {
+      "view": "api",
+      "metric": "extra_capability/cost_7x_latency_none",
+      "before": [
+        "gpt-6-luna",
+        "gpt-6-luna-low",
+        "gpt-5.6-luna",
+        "kettei-fat",
+        "drex-max"
+      ],
+      "after": [
+        "gpt-6-luna",
+        "gpt-6-luna-low",
+        "gpt-5.6-luna",
+        "kettei-fat",
+        "drex-max"
+      ],
+      "changed": false,
+      "entrants": [],
+      "dropped": [],
+      "causes": [],
+      "positions_before": {
+        "h2o-lightning-31b": null
+      },
+      "positions": {
+        "h2o-lightning-31b": null
+      },
+      "field": 39
+    },
+    {
+      "view": "api",
+      "metric": "extra_capability/cost_10x_latency_none",
+      "before": [
+        "gpt-6-luna",
+        "gpt-6-luna-low",
+        "gpt-5.6-luna",
+        "kettei-fat",
+        "drex-max"
+      ],
+      "after": [
+        "gpt-6-luna",
+        "gpt-6-luna-low",
+        "gpt-5.6-luna",
+        "kettei-fat",
+        "drex-max"
+      ],
+      "changed": false,
+      "entrants": [],
+      "dropped": [],
+      "causes": [],
+      "positions_before": {
+        "h2o-lightning-31b": null
+      },
+      "positions": {
+        "h2o-lightning-31b": null
+      },
+      "field": 40
+    },
+    {
+      "view": "release",
+      "metric": "A",
+      "before": [
+        "kettei-fat",
+        "liquid-d1-ultra",
+        "nimble-v4-max",
+        "drex-max",
+        "subq-snap-preview"
+      ],
+      "after": [
+        "kettei-fat",
+        "liquid-d1-ultra",
+        "nimble-v4-max",
+        "drex-max",
+        "subq-snap-preview"
+      ],
+      "changed": false,
+      "entrants": [],
+      "dropped": [],
+      "causes": [],
+      "positions_before": {
+        "h2o-lightning-31b": null
+      },
+      "positions": {
+        "h2o-lightning-31b": 8
+      },
+      "field": 65
+    },
+    {
+      "view": "release",
+      "metric": "B",
+      "before": [
+        "kettei-fat",
+        "drex-max",
+        "liquid-d1-ultra",
+        "subq-snap-preview",
+        "nimble-v4-max"
+      ],
+      "after": [
+        "kettei-fat",
+        "drex-max",
+        "liquid-d1-ultra",
+        "h2o-lightning-31b",
+        "subq-snap-preview"
+      ],
+      "changed": true,
+      "entrants": [
+        "h2o-lightning-31b"
+      ],
+      "dropped": [
+        "nimble-v4-max"
+      ],
+      "causes": [
+        "h2o-lightning-31b"
+      ],
+      "positions_before": {
+        "h2o-lightning-31b": null
+      },
+      "positions": {
+        "h2o-lightning-31b": 4
+      },
+      "field": 65
+    },
+    {
+      "view": "release",
+      "metric": "C",
+      "before": [
+        "kettei-fat",
+        "liquid-d1-ultra",
+        "nimble-v4-max",
+        "drex-max",
+        "subq-snap-preview"
+      ],
+      "after": [
+        "kettei-fat",
+        "liquid-d1-ultra",
+        "nimble-v4-max",
+        "drex-max",
+        "subq-snap-preview"
+      ],
+      "changed": false,
+      "entrants": [],
+      "dropped": [],
+      "causes": [],
+      "positions_before": {
+        "h2o-lightning-31b": null
+      },
+      "positions": {
+        "h2o-lightning-31b": 8
+      },
+      "field": 65
+    },
+    {
+      "view": "release",
+      "metric": "capability",
+      "before": [
+        "kettei-fat",
+        "chon-1.0-12b",
+        "drex-max",
+        "vllm-sr-d3",
+        "vllm-sr-d3-turbo"
+      ],
+      "after": [
+        "kettei-fat",
+        "chon-1.0-12b",
+        "h2o-lightning-31b",
+        "drex-max",
+        "vllm-sr-d3"
+      ],
+      "changed": true,
+      "entrants": [
+        "h2o-lightning-31b"
+      ],
+      "dropped": [
+        "vllm-sr-d3-turbo"
+      ],
+      "causes": [
+        "h2o-lightning-31b"
+      ],
+      "positions_before": {
+        "h2o-lightning-31b": null
+      },
+      "positions": {
+        "h2o-lightning-31b": 3
+      },
+      "field": 65
+    }
+  ],
+  "note": "Board effect: the paid fast-lane row was compared on the merged-board top fives before/after v1.6.39 over all 36 mixed, open-weights and API variants (including 7x/10x cost caps with no latency cap) plus 4 release-board lists: 20 of 40 top-five lists change. Top-five changes caused by: h2o-lightning-31b (paid fast-lane publication exception). ",
+  "merged_variants": 36,
+  "release_lists": 4,
+  "changed_lists": 20,
+  "changed_labels": [
+    "all/composites/B",
+    "all/capability/official_caps",
+    "all/capability/cost_off_latency_2x",
+    "all/capability/latency_none",
+    "all/extra_capability/cost_7x",
+    "all/extra_capability/cost_10x",
+    "open/composites/A",
+    "open/composites/B",
+    "open/composites/C",
+    "open/capability/official_caps",
+    "open/capability/no_caps",
+    "open/capability/cost_off_latency_2x",
+    "open/capability/latency_none",
+    "open/extra_capability/cost_7x",
+    "open/extra_capability/cost_10x",
+    "open/extra_capability/rank_field",
+    "open/extra_capability/cost_7x_latency_none",
+    "open/extra_capability/cost_10x_latency_none",
+    "release/B",
+    "release/capability"
+  ]
+}
