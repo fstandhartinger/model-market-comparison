@@ -1,0 +1,73 @@
+/home/flori/jobs/jevbench-add-requests-20260919/workers/r164-v1639-build/wt/r164/v1639/batch/topics-v1639/categories-with-topics.json 73 systems; {'topics': 7, 'usecases': 20, 'families': 13, 'languages': 23}
+built v1.6.39 roster 76 ranked 65
+{
+ "h2o-lightning-31b": {
+  "axes": {
+   "calibration": 90.18882631775024,
+   "cost": 50.57266115000792,
+   "intelligence": 80.15012041049178,
+   "speed": 89.8424830803211
+  },
+  "scores": {
+   "A": 73.43686411111796,
+   "B": 74.68801579994582,
+   "C": 73.43686411111796
+  },
+  "capability": 85.16947336412102,
+  "ranks": {
+   "A": 8,
+   "B": 4,
+   "C": 8,
+   "capability": 3
+  }
+ }
+}
+wired v1.6.39
+Board effect: the paid fast-lane row was compared on the merged-board top fives before/after v1.6.39 over all 36 mixed, open-weights and API variants (including 7x/10x cost caps with no latency cap) plus 4 release-board lists: 20 of 40 top-five lists change. Top-five changes caused by: h2o-lightning-31b (paid fast-lane publication exception). 
+ CHANGED all composites/B ['kettei-fat', 'drex-max', 'liquid-d1-ultra', 'subq-snap-preview', 'nimble-v4-max'] -> ['kettei-fat', 'drex-max', 'liquid-d1-ultra', 'h2o-lightning-31b', 'subq-snap-preview']
+ CHANGED all capability/official_caps ['kettei-fat', 'chon-1.0-12b', 'drex-max', 'basal-omni-1.0-ultra', 'quyet-1-0-large'] -> ['kettei-fat', 'chon-1.0-12b', 'h2o-lightning-31b', 'drex-max', 'basal-omni-1.0-ultra']
+ CHANGED all capability/cost_off_latency_2x ['kettei-fat', 'chon-1.0-12b', 'drex-max', 'vllm-sr-d3', 'pplx-decider-v1-1-27b'] -> ['kettei-fat', 'chon-1.0-12b', 'h2o-lightning-31b', 'drex-max', 'vllm-sr-d3']
+ CHANGED all capability/latency_none ['kettei-fat', 'chon-1.0-12b', 'drex-max', 'basal-omni-1.0-ultra', 'quyet-1-0-large'] -> ['kettei-fat', 'chon-1.0-12b', 'h2o-lightning-31b', 'drex-max', 'basal-omni-1.0-ultra']
+ CHANGED all extra_capability/cost_7x ['kettei-fat', 'chon-1.0-12b', 'drex-max', 'vllm-sr-d3', 'pplx-decider-v1-1-27b'] -> ['kettei-fat', 'chon-1.0-12b', 'h2o-lightning-31b', 'drex-max', 'vllm-sr-d3']
+ CHANGED all extra_capability/cost_10x ['kettei-fat', 'chon-1.0-12b', 'drex-max', 'vllm-sr-d3', 'pplx-decider-v1-1-27b'] -> ['kettei-fat', 'chon-1.0-12b', 'h2o-lightning-31b', 'drex-max', 'vllm-sr-d3']
+ CHANGED open composites/A ['h2o-lightning-4b', 'torchcast-decision-4b-v1.2', 'decisio-gemma-4-31b-v080', 'basal-omni-1.0-ultra', 'quyet-1-0-large'] -> ['h2o-lightning-4b', 'h2o-lightning-31b', 'torchcast-decision-4b-v1.2', 'decisio-gemma-4-31b-v080', 'basal-omni-1.0-ultra']
+ CHANGED open composites/B ['basal-omni-1.0-ultra', 'quyet-1-0-large', 'decisio-gemma-4-31b-v080', 'h2o-lightning-4b', 'torchcast-decision-4b-v1.2'] -> ['h2o-lightning-31b', 'basal-omni-1.0-ultra', 'quyet-1-0-large', 'decisio-gemma-4-31b-v080', 'h2o-lightning-4b']
+ CHANGED open composites/C ['h2o-lightning-4b', 'torchcast-decision-4b-v1.2', 'decisio-gemma-4-31b-v080', 'basal-omni-1.0-ultra', 'quyet-1-0-large'] -> ['h2o-lightning-4b', 'h2o-lightning-31b', 'torchcast-decision-4b-v1.2', 'decisio-gemma-4-31b-v080', 'basal-omni-1.0-ultra']
+ CHANGED open capability/official_caps ['chon-1.0-12b', 'basal-omni-1.0-ultra', 'quyet-1-0-large', 'jeff_1_0_large', 'metask_jev_rain_31b_trained_v3'] -> ['chon-1.0-12b', 'h2o-lightning-31b', 'basal-omni-1.0-ultra', 'quyet-1-0-large', 'jeff_1_0_large']
+ CHANGED open capability/no_caps ['chon-1.0-12b', 'vllm-sr-d3', 'pplx-decider-v1-1-27b', 'vllm-sr-d3-turbo', 'startlux-decision-v1.1-27b-instant'] -> ['chon-1.0-12b', 'h2o-lightning-31b', 'vllm-sr-d3', 'pplx-decider-v1-1-27b', 'vllm-sr-d3-turbo']
+ CHANGED open capability/cost_off_latency_2x ['chon-1.0-12b', 'vllm-sr-d3', 'pplx-decider-v1-1-27b', 'vllm-sr-d3-turbo', 'startlux-decision-v1.1-27b-instant'] -> ['chon-1.0-12b', 'h2o-lightning-31b', 'vllm-sr-d3', 'pplx-decider-v1-1-27b', 'vllm-sr-d3-turbo']
+ CHANGED open capability/latency_none ['chon-1.0-12b', 'basal-omni-1.0-ultra', 'quyet-1-0-large', 'jeff_1_0_large', 'metask_jev_rain_31b_trained_v3'] -> ['chon-1.0-12b', 'h2o-lightning-31b', 'basal-omni-1.0-ultra', 'quyet-1-0-large', 'jeff_1_0_large']
+ CHANGED open extra_capability/cost_7x ['chon-1.0-12b', 'vllm-sr-d3', 'pplx-decider-v1-1-27b', 'vllm-sr-d3-turbo', 'startlux-decision-v1.1-27b-instant'] -> ['chon-1.0-12b', 'h2o-lightning-31b', 'vllm-sr-d3', 'pplx-decider-v1-1-27b', 'vllm-sr-d3-turbo']
+ CHANGED open extra_capability/cost_10x ['chon-1.0-12b', 'vllm-sr-d3', 'pplx-decider-v1-1-27b', 'vllm-sr-d3-turbo', 'startlux-decision-v1.1-27b-instant'] -> ['chon-1.0-12b', 'h2o-lightning-31b', 'vllm-sr-d3', 'pplx-decider-v1-1-27b', 'vllm-sr-d3-turbo']
+ CHANGED open extra_capability/rank_field ['chon-1.0-12b', 'vllm-sr-d3', 'pplx-decider-v1-1-27b', 'vllm-sr-d3-turbo', 'startlux-decision-v1.1-27b-instant'] -> ['chon-1.0-12b', 'h2o-lightning-31b', 'vllm-sr-d3', 'pplx-decider-v1-1-27b', 'vllm-sr-d3-turbo']
+ CHANGED open extra_capability/cost_7x_latency_none ['chon-1.0-12b', 'vllm-sr-d3', 'pplx-decider-v1-1-27b', 'vllm-sr-d3-turbo', 'startlux-decision-v1.1-27b-instant'] -> ['chon-1.0-12b', 'h2o-lightning-31b', 'vllm-sr-d3', 'pplx-decider-v1-1-27b', 'vllm-sr-d3-turbo']
+ CHANGED open extra_capability/cost_10x_latency_none ['chon-1.0-12b', 'vllm-sr-d3', 'pplx-decider-v1-1-27b', 'vllm-sr-d3-turbo', 'startlux-decision-v1.1-27b-instant'] -> ['chon-1.0-12b', 'h2o-lightning-31b', 'vllm-sr-d3', 'pplx-decider-v1-1-27b', 'vllm-sr-d3-turbo']
+ CHANGED release B ['kettei-fat', 'drex-max', 'liquid-d1-ultra', 'subq-snap-preview', 'nimble-v4-max'] -> ['kettei-fat', 'drex-max', 'liquid-d1-ultra', 'h2o-lightning-31b', 'subq-snap-preview']
+ CHANGED release capability ['kettei-fat', 'chon-1.0-12b', 'drex-max', 'vllm-sr-d3', 'vllm-sr-d3-turbo'] -> ['kettei-fat', 'chon-1.0-12b', 'h2o-lightning-31b', 'drex-max', 'vllm-sr-d3']
+built v1.6.39 roster 76 ranked 65
+{
+ "h2o-lightning-31b": {
+  "axes": {
+   "calibration": 90.18882631775024,
+   "cost": 50.57266115000792,
+   "intelligence": 80.15012041049178,
+   "speed": 89.8424830803211
+  },
+  "scores": {
+   "A": 73.43686411111796,
+   "B": 74.68801579994582,
+   "C": 73.43686411111796
+  },
+  "capability": 85.16947336412102,
+  "ranks": {
+   "A": 8,
+   "B": 4,
+   "C": 8,
+   "capability": 3
+  }
+ }
+}
+
+real	0m14.560s
+user	0m12.726s
+sys	0m1.986s

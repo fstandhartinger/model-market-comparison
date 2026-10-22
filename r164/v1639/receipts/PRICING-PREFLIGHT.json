@@ -1,0 +1,51 @@
+{
+  "calls": {
+    "google/gemma-4-31B-it": {
+      "base_explicitly_unlisted": false,
+      "reference_call": "reference('h2o-lightning-31b', {'base_model': 'google/gemma-4-31B-it', 'source': 'selfhosted', 'price_in_per_m': None, 'price_out_per_m': None}, catalog_rates())",
+      "reference_result": [
+        "google/gemma-4-31b-it",
+        [
+          0.09,
+          0.33999999999999997
+        ]
+      ],
+      "resolve_result": {
+        "candidate_usd_per_1000": null,
+        "counting_list_price": false,
+        "deepinfra_snapshot_sha256": "84eb7926acd4e93b71d695be24898e2ca999b20011d1b66cc0348ce7c6c3546f",
+        "floor_binds": false,
+        "floor_usd_per_1000": 0.11541544000000001,
+        "key": "h2o-lightning-31b",
+        "market_rates_per_m": [
+          0.09,
+          0.33999999999999997
+        ],
+        "market_reference": "google/gemma-4-31b-it",
+        "note": "ESTIMATE: exact base-model market reference (operator tariff excluded by 30-day rule)",
+        "rankable": true,
+        "snapshot_sha256": "f5d0cd8e0f7d2d6514748c99bfcaeacc09775bac7aa7eecf765af4ba04b0dcd5",
+        "tokens": {
+          "decisions": 1500,
+          "input": 1917924,
+          "output": 1500
+        },
+        "usd_per_1000": 0.11541544000000001
+      }
+    },
+    "google/gemma-4-31b-it": {
+      "base_explicitly_unlisted": false,
+      "reference_call": "reference('h2o-lightning-31b', {'base_model': 'google/gemma-4-31b-it', 'source': 'selfhosted', 'price_in_per_m': None, 'price_out_per_m': None}, catalog_rates())",
+      "reference_result": "raises ValueError: base model lacks an explicit market-listing decision: google/gemma-4-31b-it",
+      "resolve_result": "raises ValueError: base model lacks an explicit market-listing decision: google/gemma-4-31b-it"
+    }
+  },
+  "common_input_tokens": 727319,
+  "common_output_tokens": 1485,
+  "over_official_cap_ratio": 0.6876720570049526,
+  "pricing_module_sha256": "a8a05890ddab2d39d1a1bd543f2b5c83842bdc70aa54766788bc89b7a8a448d7",
+  "raw_sha256": "93f00824bdadcbab56d4eb03c6f03df3dd97e749a80f375135e737b0eaf7b24a",
+  "scorer_sha256": "02132271117653e6302c509232a581d0094f0e78eac8b1bfc67596fd5d5097e9",
+  "usd_per_1000_all_items": 0.11541544000000001,
+  "usd_per_1000_common": 0.044419939393939394
+}

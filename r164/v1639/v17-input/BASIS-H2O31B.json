@@ -1,0 +1,36 @@
+{
+ "cost_cap_ratio_common_basis": 0.6876720570049526,
+ "hardware": "Verda 1RTXPRO6000.30V FIN-03, 1x RTX PRO 6000 Blackwell Server Edition 96 GB, USD 2.535/h, serial, network none",
+ "key": "h2o-lightning-31b",
+ "latency": {
+  "decisions_over_10s": 15,
+  "note": "All 15 slow decisions are the 15 longest records (76,497-81,692 input tokens), read whole one-way (author profile); every other decision is <= 0.26 s. A v1.7 10-second rule therefore hits exactly the 15 excluded items.",
+  "over_10s_are_exactly_the_15_common_basis_excluded_longest_items": true,
+  "over_10s_range_s": [
+   34.89,
+   39.08
+  ],
+  "raw_max_s": 39.08,
+  "raw_p50_s": 0.0645,
+  "raw_p95_s": 0.1258
+ },
+ "price_basis": "ESTIMATE, exact base-model market reference: reference() on the live-row spelling google/gemma-4-31B-it -> google/gemma-4-31b-it, USD 0.09/M input, 0.34/M output (frozen cut-off snapshot); the lowercase spelling raises in the frozen module (no explicit listing decision), so the capital-B spelling is the one to use",
+ "pricing_module_sha256": "a8a05890ddab2d39d1a1bd543f2b5c83842bdc70aa54766788bc89b7a8a448d7",
+ "serving": "author README run_default.sh one-engine profile: vLLM 0.30.0 + h2oai/vllm overlay 6bc6d5a8, FP8 online, two-way reading by default",
+ "status": {
+  "http": {
+   "200": 1500
+  },
+  "ok": 1500,
+  "rows": 1500
+ },
+ "tokens": {
+  "all_input": 1917924,
+  "all_output": 1500,
+  "common_input": 727319,
+  "common_output": 1485
+ },
+ "usd_per_1000_all_1500_items_resolve": 0.11541544000000001,
+ "usd_per_1000_common_basis_1485": 0.044419939393939394,
+ "v16_result": "see r164/v1639/BUILD-REPORT.md and data/raw/benchmarks/jevbench/v1.6/jevbench-v1.6.39-results.json (when published)"
+}

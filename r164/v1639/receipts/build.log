@@ -1,0 +1,277 @@
+
+> benchmark-heaven@1.0.0 prebuild
+> node scripts/validate-benchmark-scores.mjs
+
+Benchmark source/build guard: {
+  observations: 20156,
+  source_files: 280,
+  self_reported_verified: 2093
+}
+
+> benchmark-heaven@1.0.0 build
+> next build
+
+   ▲ Next.js 15.5.25
+   - Experiments (use with caution):
+     · cpus: 3
+
+   Creating an optimized production build ...
+ ✓ Compiled successfully in 32.4s
+   Linting and checking validity of types ...
+   Collecting page data ...
+   Generating static pages (0/542) ...
+   Generating static pages (135/542) 
+   Generating static pages (270/542) 
+   Generating static pages (321/542) 
+   Generating static pages (406/542) 
+   Generating static pages (457/542) 
+   Generating static pages (489/542) 
+   Generating static pages (505/542) 
+ ✓ Generating static pages (542/542)
+   Finalizing page optimization ...
+   Collecting build traces ...
+
+Route (app)                                                  Size  First Load JS  Revalidate  Expire
+┌ ○ /                                                     33.3 kB         308 kB
+├ ○ /_not-found                                             398 B         104 kB
+├ ○ /about                                                  398 B         104 kB
+├ ○ /account                                              2.23 kB         127 kB
+├ ƒ /admin/submissions                                      194 B         107 kB
+├ ƒ /api/account                                            398 B         104 kB
+├ ƒ /api/analytics/visits                                   398 B         104 kB
+├ ƒ /api/auth/[...nextauth]                                 398 B         104 kB
+├ ƒ /api/benchmark-matrix                                   398 B         104 kB
+├ ƒ /api/benchmark-scores                                   398 B         104 kB
+├ ƒ /api/benchmark-view                                     398 B         104 kB
+├ ƒ /api/benchmarks                                         398 B         104 kB
+├ ƒ /api/benchmaxxing                                       398 B         104 kB
+├ ƒ /api/dataset                                            398 B         104 kB
+├ ƒ /api/decision-results/[benchmark]/[version]/[format]    398 B         104 kB
+├ ƒ /api/fastlane-banner-event                              398 B         104 kB
+├ ƒ /api/health                                             398 B         104 kB
+├ ○ /api/jevbench                                           398 B         104 kB
+├ ƒ /api/jevbench/api-addenda                               398 B         104 kB
+├ ○ /api/jevbench/base-models                               398 B         104 kB
+├ ○ /api/jevbench/latest                                    398 B         104 kB
+├ ƒ /api/jevbench/manifest                                  398 B         104 kB
+├ ○ /api/jevbench/v1.1                                      398 B         104 kB
+├ ○ /api/jevbench/v1.2                                      398 B         104 kB
+├ ○ /api/jevbench/v1.3/history                              398 B         104 kB
+├ ○ /api/jevbench/v1.4                                      398 B         104 kB
+├ ○ /api/jevbench/v1.4.1                                    398 B         104 kB
+├ ○ /api/jevbench/v1.4.2                                    398 B         104 kB
+├ ○ /api/jevbench/v1.4.2.1                                  398 B         104 kB
+├ ○ /api/jevbench/v1.4.2.1/families                         398 B         104 kB
+├ ○ /api/jevbench/v1.4.2.2                                  398 B         104 kB
+├ ○ /api/jevbench/v1.4.2.2/families                         398 B         104 kB
+├ ○ /api/jevbench/v1.4.2/families                           398 B         104 kB
+├ ○ /api/jevbench/v1.5-supplement                           398 B         104 kB
+├ ○ /api/jevbench/v1.5.0                                    398 B         104 kB
+├ ○ /api/jevbench/v1.5.1                                    398 B         104 kB
+├ ○ /api/jevbench/v1.5.2                                    398 B         104 kB
+├ ○ /api/jevbench/v1.5.3                                    398 B         104 kB
+├ ○ /api/jevbench/v1.5.4                                    398 B         104 kB
+├ ○ /api/jevbench/v1.5.5                                    398 B         104 kB
+├ ○ /api/jevbench/v1.5.6                                    398 B         104 kB
+├ ○ /api/jevbench/v1.5.7                                    398 B         104 kB
+├ ○ /api/jevbench/v1.6.0                                    398 B         104 kB
+├ ○ /api/jevbench/v1.6.1                                    398 B         104 kB
+├ ○ /api/jevbench/v1.6.10                                   398 B         104 kB
+├ ○ /api/jevbench/v1.6.11                                   398 B         104 kB
+├ ○ /api/jevbench/v1.6.12                                   398 B         104 kB
+├ ○ /api/jevbench/v1.6.13                                   398 B         104 kB
+├ ○ /api/jevbench/v1.6.14                                   398 B         104 kB
+├ ○ /api/jevbench/v1.6.15                                   398 B         104 kB
+├ ○ /api/jevbench/v1.6.16                                   398 B         104 kB
+├ ○ /api/jevbench/v1.6.17                                   398 B         104 kB
+├ ○ /api/jevbench/v1.6.18                                   398 B         104 kB
+├ ○ /api/jevbench/v1.6.2                                    398 B         104 kB
+├ ○ /api/jevbench/v1.6.20                                   398 B         104 kB
+├ ○ /api/jevbench/v1.6.21                                   398 B         104 kB
+├ ○ /api/jevbench/v1.6.22                                   398 B         104 kB
+├ ○ /api/jevbench/v1.6.23                                   398 B         104 kB
+├ ○ /api/jevbench/v1.6.24                                   398 B         104 kB
+├ ○ /api/jevbench/v1.6.25                                   398 B         104 kB
+├ ○ /api/jevbench/v1.6.26                                   398 B         104 kB
+├ ○ /api/jevbench/v1.6.27                                   398 B         104 kB
+├ ○ /api/jevbench/v1.6.28                                   398 B         104 kB
+├ ○ /api/jevbench/v1.6.29                                   398 B         104 kB
+├ ○ /api/jevbench/v1.6.3                                    398 B         104 kB
+├ ○ /api/jevbench/v1.6.30                                   398 B         104 kB
+├ ○ /api/jevbench/v1.6.31                                   398 B         104 kB
+├ ○ /api/jevbench/v1.6.32                                   398 B         104 kB
+├ ○ /api/jevbench/v1.6.33                                   398 B         104 kB
+├ ○ /api/jevbench/v1.6.34                                   398 B         104 kB
+├ ○ /api/jevbench/v1.6.35                                   398 B         104 kB
+├ ○ /api/jevbench/v1.6.36                                   398 B         104 kB
+├ ○ /api/jevbench/v1.6.37                                   398 B         104 kB
+├ ○ /api/jevbench/v1.6.38                                   398 B         104 kB
+├ ○ /api/jevbench/v1.6.39                                   398 B         104 kB
+├ ○ /api/jevbench/v1.6.4                                    398 B         104 kB
+├ ○ /api/jevbench/v1.6.5                                    398 B         104 kB
+├ ○ /api/jevbench/v1.6.6                                    398 B         104 kB
+├ ○ /api/jevbench/v1.6.7                                    398 B         104 kB
+├ ○ /api/jevbench/v1.6.8                                    398 B         104 kB
+├ ○ /api/jevbench/v1.6.9                                    398 B         104 kB
+├ ƒ /api/mcp                                                398 B         104 kB
+├ ƒ /api/meta                                               398 B         104 kB
+├ ƒ /api/models                                             398 B         104 kB
+├ ƒ /api/models/[id]                                        398 B         104 kB
+├ ƒ /api/og/compare                                         398 B         104 kB
+├ ƒ /api/operator-status                                    398 B         104 kB
+├ ƒ /api/operator/visits                                    398 B         104 kB
+├ ƒ /api/page-data/[key]                                    398 B         104 kB
+├ ƒ /api/page-view                                          398 B         104 kB
+├ ƒ /api/price-comparison                                   398 B         104 kB
+├ ƒ /api/priority-evaluation/checkout                       398 B         104 kB
+├ ƒ /api/priority-evaluation/webhook                        398 B         104 kB
+├ ƒ /api/providers                                          398 B         104 kB
+├ ƒ /api/submissions                                        398 B         104 kB
+├ ƒ /api/submissions/without-fast-lane                      398 B         104 kB
+├ ƒ /api/use-model-event                                    398 B         104 kB
+├ ○ /apple-icon.png                                           0 B            0 B
+├ ○ /audio-jev-bench                                      7.85 kB         120 kB
+├ ○ /audio-jev-bench/opengraph-image                        398 B         104 kB
+├ ƒ /benchmarks                                             17 kB         158 kB
+├ ƒ /benchmarks/result                                      194 B         107 kB
+├ ○ /benchmaxxing                                         9.66 kB         135 kB
+├ ○ /charts                                                8.7 kB         255 kB
+├ ƒ /compare                                              1.87 kB         154 kB
+├ ○ /de/jev-models/alternativen                             672 B         107 kB
+├ ○ /decision-model-benchmarks                              398 B         104 kB
+├ ○ /eu                                                   2.49 kB         126 kB
+├ ○ /gateways                                             1.61 kB         105 kB
+├ ○ /icon.svg                                                 0 B            0 B
+├ ○ /image-jev-bench                                        535 B         241 kB
+├ ● /image-jev-bench/[system]                               194 B         107 kB
+├   ├ /image-jev-bench/kettei_fat
+├   ├ /image-jev-bench/wity_1
+├   ├ /image-jev-bench/imajev_4b
+├   └ [+63 more paths]
+├ ○ /image-jev-bench/opengraph-image                        398 B         104 kB
+├ ○ /impressum                                              398 B         104 kB
+├ ○ /jev-models                                             775 B         265 kB
+├ ● /jev-models/[system]                                    690 B         169 kB
+├   ├ /jev-models/sage-1.3.0
+├   ├ /jev-models/mercury-decide
+├   ├ /jev-models/decisio-gemma-4-31b-v080
+├   └ [+296 more paths]
+├ ○ /jev-models/all                                         370 B         264 kB
+├ ○ /jev-models/alternatives                                672 B         107 kB
+├ ○ /jev-models/api                                         370 B         264 kB
+├ ○ /jev-models/api/opengraph-image                         398 B         104 kB
+├ ○ /jev-models/calibration-reliability                     398 B         104 kB
+├ ○ /jev-models/custom-evaluation                           398 B         104 kB
+├ ○ /jev-models/data                                        398 B         104 kB
+├ ○ /jev-models/evaluate-alternatives                       398 B         104 kB
+├ ○ /jev-models/how-to-choose                               672 B         107 kB
+├ ○ /jev-models/jev-vs-cygnet                               744 B         169 kB
+├ ○ /jev-models/jev-vs-decider-4b-v2                        744 B         169 kB
+├ ○ /jev-models/jev-vs-decisio-gemma-4-31b-v080             744 B         169 kB
+├ ○ /jev-models/jev-vs-deck31b                              744 B         169 kB
+├ ○ /jev-models/jev-vs-h2o-lightning-4b                     744 B         169 kB
+├ ○ /jev-models/jev-vs-hopper                               744 B         169 kB
+├ ○ /jev-models/jev-vs-imajev                               744 B         169 kB
+├ ○ /jev-models/jev-vs-jev-omni                             744 B         169 kB
+├ ○ /jev-models/jev-vs-jevk5                                744 B         169 kB
+├ ○ /jev-models/jev-vs-laya                                 744 B         169 kB
+├ ○ /jev-models/jev-vs-plumb                                744 B         169 kB
+├ ○ /jev-models/jev-vs-quyet-1-0-large                      744 B         169 kB
+├ ○ /jev-models/jev-vs-reflex-4b                            744 B         169 kB
+├ ○ /jev-models/jev-vs-rene-1-31b-fp8                       744 B         169 kB
+├ ○ /jev-models/jev-vs-sage-1.3.0                           744 B         169 kB
+├ ○ /jev-models/jev-vs-spx-cd-flash                         744 B         169 kB
+├ ○ /jev-models/jev-vs-surogate-rune-26b-a4b-v3-v16         744 B         169 kB
+├ ○ /jev-models/jev-vs-torchcast-decision-12b               744 B         169 kB
+├ ○ /jev-models/jev-vs-winnow-12b-q8                        744 B         169 kB
+├ ○ /jev-models/jev-vs-xor-26b-a4b                          744 B         169 kB
+├ ○ /jev-models/methodology                                 398 B         104 kB
+├ ○ /jev-models/methodology/v1.6.1                          398 B         104 kB
+├ ○ /jev-models/multimodal-preview                          238 B         241 kB
+├ ○ /jev-models/open-source-jev                             672 B         107 kB
+├ ○ /jev-models/opengraph-image                             398 B         104 kB
+├ ○ /jev-models/request-evaluation/cancel                   194 B         107 kB
+├ ○ /jev-models/request-evaluation/success                  194 B         107 kB
+├ ○ /jev-models/v1                                        6.65 kB         110 kB
+├ ○ /jev-models/v1.4                                        196 B         198 kB
+├ ○ /jev-models/v1.4.1                                      523 B         207 kB
+├ ○ /jev-models/v1.4.2                                      523 B         207 kB
+├ ○ /jev-models/v1.4.2.1                                    523 B         207 kB
+├ ○ /jev-models/v1.4.2.2                                  3.74 kB         232 kB
+├ ○ /jev-models/v1.5.0                                    2.02 kB         255 kB
+├ ○ /jev-models/v1.5.1                                    2.02 kB         255 kB
+├ ○ /jev-models/v1.5.2                                    2.02 kB         255 kB
+├ ○ /jev-models/v1.5.3                                    2.02 kB         255 kB
+├ ○ /jev-models/v1.5.4                                    2.02 kB         255 kB
+├ ○ /jev-models/v1.5.5                                    2.02 kB         255 kB
+├ ○ /jev-models/v1.5.6                                    2.02 kB         255 kB
+├ ○ /jev-models/v1.5.7                                    3.75 kB         256 kB
+├ ○ /jev-models/v1.6                                        398 B         104 kB
+├ ○ /jev-models/v1.6.0                                      370 B         264 kB
+├ ○ /jev-models/v1.6.1                                      370 B         264 kB
+├ ○ /jev-models/v1.6.10                                     370 B         264 kB
+├ ○ /jev-models/v1.6.11                                     370 B         264 kB
+├ ○ /jev-models/v1.6.12                                     370 B         264 kB
+├ ○ /jev-models/v1.6.13                                     370 B         264 kB
+├ ○ /jev-models/v1.6.14                                     370 B         264 kB
+├ ○ /jev-models/v1.6.15                                     370 B         264 kB
+├ ○ /jev-models/v1.6.16                                     370 B         264 kB
+├ ○ /jev-models/v1.6.17                                     370 B         264 kB
+├ ○ /jev-models/v1.6.18                                     370 B         264 kB
+├ ○ /jev-models/v1.6.2                                      370 B         264 kB
+├ ○ /jev-models/v1.6.20                                     370 B         264 kB
+├ ○ /jev-models/v1.6.21                                     370 B         264 kB
+├ ○ /jev-models/v1.6.22                                     370 B         264 kB
+├ ○ /jev-models/v1.6.23                                     370 B         264 kB
+├ ○ /jev-models/v1.6.24                                     370 B         264 kB
+├ ○ /jev-models/v1.6.25                                     370 B         264 kB
+├ ○ /jev-models/v1.6.26                                     370 B         264 kB
+├ ○ /jev-models/v1.6.27                                     370 B         264 kB
+├ ○ /jev-models/v1.6.28                                     370 B         264 kB
+├ ○ /jev-models/v1.6.29                                     370 B         264 kB
+├ ○ /jev-models/v1.6.3                                      370 B         264 kB
+├ ○ /jev-models/v1.6.30                                     370 B         264 kB
+├ ○ /jev-models/v1.6.31                                     370 B         264 kB
+├ ○ /jev-models/v1.6.32                                     370 B         264 kB
+├ ○ /jev-models/v1.6.33                                     370 B         264 kB
+├ ○ /jev-models/v1.6.34                                     370 B         264 kB
+├ ○ /jev-models/v1.6.35                                     370 B         264 kB
+├ ○ /jev-models/v1.6.36                                     370 B         264 kB
+├ ○ /jev-models/v1.6.37                                     370 B         264 kB
+├ ○ /jev-models/v1.6.38                                     370 B         264 kB
+├ ○ /jev-models/v1.6.39                                     370 B         264 kB
+├ ○ /jev-models/v1.6.4                                      370 B         264 kB
+├ ○ /jev-models/v1.6.5                                      370 B         264 kB
+├ ○ /jev-models/v1.6.6                                      370 B         264 kB
+├ ○ /jev-models/v1.6.7                                      370 B         264 kB
+├ ○ /jev-models/v1.6.8                                      370 B         264 kB
+├ ○ /jev-models/v1.6.9                                      370 B         264 kB
+├ ○ /llms-full.txt                                          398 B         104 kB          5m      1y
+├ ○ /llms.txt                                               398 B         104 kB          5m      1y
+├ ○ /manifest.webmanifest                                   398 B         104 kB
+├ ƒ /models/[id]                                          9.37 kB         135 kB
+├ ○ /privacy                                                194 B         107 kB
+├ ○ /provider-explorer                                    5.96 kB         126 kB
+├ ○ /providers                                            6.36 kB         126 kB
+├ ○ /radar                                                  195 B         153 kB
+├ ○ /robots.txt                                             398 B         104 kB
+├ ○ /scatter                                              1.15 kB         243 kB
+├ ○ /sitemap.xml                                            398 B         104 kB
+├ ƒ /submit                                               4.44 kB         111 kB
+├ ƒ /submit/cancel                                          760 B         107 kB
+├ ƒ /submit/success                                         194 B         107 kB
+├ ○ /terms                                                  194 B         107 kB
+├ ○ /wip-33gyqg9xwm5y/audio-jev                             398 B         104 kB
+├ ○ /wip-imagejev-v02-9e2d4a                                398 B         104 kB
+├ ○ /wip-oiifi41ouv1f/image-jev                             398 B         104 kB
+└ ○ /wip-oiifi41ouv1f/jevbench-v15                          398 B         104 kB
++ First Load JS shared by all                              103 kB
+  ├ chunks/3892-bb5452e8585942c0.js                       46.7 kB
+  ├ chunks/6be45f2c-a946f1bc18652b6d.js                   54.2 kB
+  └ other shared chunks (total)                           2.21 kB
+
+
+○  (Static)   prerendered as static content
+●  (SSG)      prerendered as static HTML (uses generateStaticParams)
+ƒ  (Dynamic)  server-rendered on demand
+
