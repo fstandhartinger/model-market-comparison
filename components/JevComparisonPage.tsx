@@ -8,6 +8,7 @@ import { jevV15CompareRow } from '../lib/jevbench-v15-board.mjs';
 import { jevbenchCategoryView } from '../lib/jevbench-categories.mjs';
 import { boardRankText, costBasisLabel, DatasetFaqJsonLd, JevFaq, JevReleaseStamp, one, usdPerThousand } from './JevBenchSeoBlocks';
 import { jevSystemPath } from '../lib/jev-system-slug.mjs';
+import { jevDecisionLimitText, jevMethodView, jevPreviousTitle } from '../lib/jev-decision-limit.mjs';
 
 export async function JevComparisonPage({rivalKey,path,label}: {rivalKey:string;path:string;label:string}) {
   const data = await readJevbenchSeoData();
@@ -17,6 +18,7 @@ export async function JevComparisonPage({rivalKey,path,label}: {rivalKey:string;
   const status = pair.inCurrentRelease ? `${rival.board === 'api' ? boardRankText(rival) : rival.rank == null ? 'Outside the Capability caps' : `Rank #${rival.rank} on the open-weights board`} in ${data.artifact.revision}` : `Not in the current release ranking; last published measurement: ${rival.measurement_revision}, ${rival.last_measured_on ?? 'date not published'}`;
   const faq = [
     {question: `What does JevBench show for Jev and ${label}?`, answer: `Jev 1.13.0 has Capability ${one(jev.capability)} and is the unranked reference (the open-weights board ranks ${data.ranked.length} open-weights systems; hosted API offerings are ranked on the API leaderboard). ${rival.display} has Capability ${one(rival.capability)}. ${status}. Historical scores use their original method and are not ranked against the current release.`},
+    ...((jev.decision_limit || rival.decision_limit) ? [{question: 'Is there a time limit per decision?', answer: 'Yes, from JevBench v1.7.0 (method v1.7): a decision that takes longer than 10 seconds (measured time) counts as a wrong answer and as zero calibration for that item. Each row shows its p95 and how many decisions were over the limit; the v1.6 values stay visible.'}] : []),
     {question: 'How does Capability differ from Composite?', answer: 'Capability is the mean of Intelligence and Calibration; headline ranks require both official cost and median-latency caps. Composite additionally scores Speed and Cost and is secondary.'},
     {question: 'Can I compare the prices as actual bills?', answer: `${jev.display}: ${costBasisLabel(jev.cost?.kind)}, ${usdPerThousand(jev.cost?.usd_per_1000)}. ${rival.display}: ${costBasisLabel(rival.cost?.kind)}, ${usdPerThousand(rival.cost?.usd_per_1000)}. Estimates and self-reported vendor prices are not measured charges.`},
     {question: `Is ${label} open source?`, answer: `The published licence note for ${rival.display} is ${rival.licence || 'not stated'}. Jev 1.13.0 is listed as ${jev.licence || 'not stated'}. Check the linked sources for terms.`},
@@ -28,6 +30,10 @@ export async function JevComparisonPage({rivalKey,path,label}: {rivalKey:string;
     ...(['intelligence','calibration','speed','cost'] as const).map((axis) => [axis,one(jev.axes[axis]),one(rival.axes[axis])]),
     ['USD per 1,000 decisions',usdPerThousand(jev.cost?.usd_per_1000),usdPerThousand(rival.cost?.usd_per_1000)],
     ['p50 latency (seconds)',jevLatencyText(jev.speed,one(jev.speed?.p50_s_adjusted ?? jev.speed?.p50_s_raw),{unit:false,kind:(jev as {endpoint_kind?: string | null}).endpoint_kind}),jevLatencyText(rival.speed,one(rival.speed?.p50_s_adjusted ?? rival.speed?.p50_s_raw),{unit:false,kind:(rival as {endpoint_kind?: string | null}).endpoint_kind})],
+    ...((jev.decision_limit || rival.decision_limit || jev.method || rival.method) ? [
+      ['Method',jevMethodView(jev)?.text ?? 'not stated',jevMethodView(rival)?.text ?? 'not stated'],
+      ['p95 (measured) · decisions over 10 s',jevDecisionLimitText(jev) || '—',jevDecisionLimitText(rival) || '—'],
+      ['Before the 10 s rule (v1.6)',jevPreviousTitle(jev) ?? '—',jevPreviousTitle(rival) ?? '—']] : []),
     ['Last measured',jev.last_measured_on ?? 'unknown',rival.last_measured_on ?? 'unknown'],
   ];
   return <>

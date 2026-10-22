@@ -1,14 +1,15 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
-import { mkdtemp, mkdir, symlink, writeFile, rm } from 'node:fs/promises';
+import { mkdtemp, writeFile, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
-import { readApiFullAddenda, withApiFullAddenda } from '../lib/jevbench-api-full-addenda.mjs';
+import { readApiFullAddenda } from '../lib/jevbench-api-full-addenda.mjs';
+import { assembleJevBoard } from '../lib/jevbench-live-board.mjs';
+import { mirrorDataRoot } from './fixtures/mirror-data-root.mjs';
 import { readJevbenchV161Release } from '../lib/jevbench-v16-release.mjs';
 import { readJevbenchV157Release } from '../lib/jevbench-v15-release.mjs';
-import { jevWithApiA4Rows, jevbenchScopeArtifact, jevScopeClassifier } from '../lib/jevbench-scope.mjs';
-import { withApiRerunSplits } from '../lib/jevbench-api-rerun-cells.mjs';
+import { jevbenchScopeArtifact, jevScopeClassifier } from '../lib/jevbench-scope.mjs';
 import { jevClassRows, JEV_V16_CLASS_OPTIONS } from '../lib/jevbench-jev-class.mjs';
 import { readJevbenchA4ModelPages } from '../lib/jevbench-a4-model-pages.mjs';
 
@@ -19,10 +20,10 @@ test('every A4 key gets a model page with the API-board ranks', async () => {
   const livePages = await readJevbenchA4ModelPages();
   const addenda = await readApiFullAddenda();
   assert.deepEqual([...livePages.keys()].sort(), [...a4.rows, ...(a4.a5_rows ?? []), ...(a4.full_rows ?? []), ...addenda.entries.map(e => e.row)].map(r => r.key).sort());
-  const [{ artifact: release, carry }, previous] = await Promise.all([readJevbenchV161Release(), readJevbenchV157Release()]);
-  const meta = new Map([...previous.artifact.systems, ...carry.rows].map(r => [r.key, r]));
-  const merged = withApiFullAddenda(jevWithApiA4Rows(release, withApiRerunSplits(a4), meta), addenda);
-  const api = jevbenchScopeArtifact(merged, 'api', jevScopeClassifier(merged.systems, carry.rows, previous.artifact.systems, previous.artifact.not_measured));
+  // v1.7.0: the pages follow the assembled live board (cohort rows, and the restated rows once v1.7.0 is published), not a private v1.6.1 + A4 rebuild.
+  const [{ artifact: release, categories, carry }, previous] = await Promise.all([readJevbenchV161Release(), readJevbenchV157Release()]);
+  const live = await assembleJevBoard({ release: { artifact: release, categories, carry }, previous, live: true, apiA4: a4 });
+  const api = jevbenchScopeArtifact(live.published, 'api', jevScopeClassifier(live.published.systems, live.publishedCarry.rows, previous.artifact.systems, previous.artifact.not_measured));
   const capRows = jevClassRows(api.systems.filter(r => r.ranked), JEV_V16_CLASS_OPTIONS).rows.filter(r => r.inClass);
   for (const [key, page] of livePages) {
     const row = api.systems.find(r => r.key === key);
@@ -33,22 +34,23 @@ test('every A4 key gets a model page with the API-board ranks', async () => {
   // Preserve the original historical expectations with an isolated empty-addendum registry.
   const root = await mkdtemp(path.join(tmpdir(), 'bh-cr308-history-'));
   try {
-  await mkdir(path.join(root, 'data'));
-  await symlink(path.resolve('data/raw'), path.join(root, 'data/raw'), 'dir');
-  await symlink(path.resolve('data/jevbench-api-a4-equated.json'), path.join(root, 'data/jevbench-api-a4-equated.json'));
+  // The live board needs the whole data/ tree (draw equating, cohort files, ...): mirror it with symlinks, leave out only the addenda registry and the
+  // v1.7 folder, so the expectations below stay the pre-v1.7.0 live board with an empty addendum registry in both the PENDING and the PASS state.
+  await mirrorDataRoot(path.resolve('data'), path.join(root, 'data'), [['jevbench-api-full-addenda.json'], ['raw', 'benchmarks', 'jevbench', 'v1.7']]);
   await writeFile(path.join(root, 'data/jevbench-api-full-addenda.json'), JSON.stringify({ schema_version: 1, kind: 'jevbench-api-full-addenda', entries: [] }));
   const pages = await readJevbenchA4ModelPages(root);
   assert.deepEqual([...pages.keys()].sort(), [...a4.rows, ...(a4.a5_rows ?? []), ...(a4.full_rows ?? [])].map((r) => r.key).sort());
   assert.equal(pages.get('liquid-d1').full, true);
   assert.equal(pages.get('liquid-d1').nItems, 1500);
-  assert.equal(pages.get('fastino-glide').compositeRank, 14); // CR-338 adds Mercury Decide and SPX-CD to the API board
-  assert.equal(pages.get('instinct').compositeRank, 8);
-  assert.equal(pages.get('instinct').capabilityRank, 7);
+  // The pages now follow the assembled live board (v1.7.0 slice), so the ranks include the cohort rows that joined the API board after CR-338 and the two API rows of v1.6.38 (14 -> 29, 8 -> 20, 7 -> 17, 13 -> 27).
+  assert.equal(pages.get('fastino-glide').compositeRank, 29);
+  assert.equal(pages.get('instinct').compositeRank, 20);
+  assert.equal(pages.get('instinct').capabilityRank, 17);
   assert.equal(pages.get('openai-decisions').subset, 'A5');
   assert.equal(pages.get('openai-decisions').round, 'score-a5-1');
   assert.equal(pages.get('instinct').row.jevbench_score, 62.24);
   assert.equal(pages.get('classifier-dev-fast').compositeRank, null);
-  assert.equal(pages.get('gpt-6-luna').compositeRank, 13);
+  assert.equal(pages.get('gpt-6-luna').compositeRank, 27);
   assert.ok(pages.get('gpt-6-luna').capabilityOutside);
   } finally { await rm(root, { recursive: true, force: true }); }
 });

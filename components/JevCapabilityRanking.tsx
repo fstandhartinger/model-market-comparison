@@ -1,6 +1,8 @@
 'use client';
 import { jevLatencyView, latencySeconds, JEV_LATENCY_LABEL, type JevSpeedLike } from '../lib/jev-latency.mjs';
 import { jevRowArch } from './jevTypes';
+import { JevMethodTag } from './JevMethodTag';
+import { JEV_REMEASURE_PENDING, JEV_REMEASURE_PENDING_LABEL } from '../lib/jev-decision-limit.mjs';
 import { JEV_SCOPE_LISTING, jevFoldWithPinned } from '../lib/jevbench-scope.mjs';
 
 import { useEffect, useId, useMemo, useState, type CSSProperties, type ReactNode } from 'react';
@@ -119,6 +121,7 @@ function RankingRow({ item, rank, reference, costFactor, latencyFactor, referenc
       <JevCapabilityTip label={`Details for ${row.display}`} title={tipTitle}>{tipBody}</JevCapabilityTip>
       {row.api_flag && <span className="bh-thin-tag bh-flag-tag ml-1 shrink-0 align-middle" data-bh-jev-capability-api={row.key} title={row.api_exposure_note ?? apiExplanation}>API</span>}
       {!compactName && <JevDrawTag tag={drawTag} rowKey={row.key} className="ml-1 shrink-0 align-middle" />}
+      {!compactName && <JevMethodTag row={row as unknown as Parameters<typeof JevMethodTag>[0]['row']} className="ml-1 shrink-0 align-middle" />}
       <UseModelEntry row={row} name={name} benchmark={benchmark} className="max-sm:!hidden" />
     </span>
     <span className="col-start-2 col-end-7 row-start-2 mt-0.5 flex min-w-0 flex-col justify-center gap-[3px] sm:col-start-3 sm:col-end-4 sm:row-start-1 sm:mt-0">
@@ -152,6 +155,8 @@ export function unrankedNote(listing: string, benchName: string, preliminary?: {
   // v1.6.14: a measurement that discloses its own preliminary scope shows that label; legacy P300 rows keep the exact text.
   if (listing === 'preliminary') return preliminary?.label ?? 'Preliminary · public set (300 items) · full sealed run pending';
   if (listing === 'pending') return 'Pending · no v1.6 figure yet';
+  // v1.7.0: the row keeps its v1.6 values, labelled as v1.6, and has no v1.7 value or rank.
+  if (listing === JEV_REMEASURE_PENDING) return `Not ranked: ${JEV_REMEASURE_PENDING_LABEL}. Shown with its v1.6 values until it is measured again`;
   return `Not ranked in the official ${benchName} Score (${listing.replace(/_/g, ' ')})`;
 }
 

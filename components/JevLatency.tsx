@@ -43,13 +43,13 @@ export function JevLatencyLegend({ className = 'bh-muted mt-1 text-xs', locale =
 }
 
 /** Method-note paragraph for the board and the methodology page. */
-export function JevLatencyMethodNote({ className = 'bh-muted mt-1 text-sm' }: { className?: string }) {
+export function JevLatencyMethodNote({ className = 'bh-muted mt-1 text-sm', inForce = false }: { className?: string; inForce?: boolean }) {
   return <p className={className} data-bh-jev-latency-method>
     <b>Latency.</b> API models are timed end to end from our measuring host, network included. Self-hosted models are timed on
     our own hardware over loopback (on-GPU, no network), so their measured value is not directly comparable with API latency.
     The ranking and the latency cap use the same estimate for every self-hosted row: 2 × measured p50 + 150 ms
     ({JEV_LATENCY_LABEL}). Tables show the measured value first, tagged “on-GPU, no network”, and the estimate second. A model author can provide a hosted endpoint; we then time it exactly like an API, network
-    included, with no assumption (on request: info@productivity-boost.com, or note it in your <a className="text-accent underline" href="/submit">submission</a>). From JevBench v1.7.0 (not before 24 October 2026), a decision that takes longer than 10 seconds counts as failed.
+    included, with no assumption (on request: info@productivity-boost.com, or note it in your <a className="text-accent underline" href="/submit">submission</a>). {inForce ? 'From JevBench v1.7.0 (method v1.7), a decision that takes longer than 10 seconds (measured time, not the estimate) counts as a wrong answer and as zero calibration for that item; tables show the measured p95 and how many decisions were over 10 s.' : 'From JevBench v1.7.0 (not before 24 October 2026), a decision that takes longer than 10 seconds counts as failed.'}
   </p>;
 }
 

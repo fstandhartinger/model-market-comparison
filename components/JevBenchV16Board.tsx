@@ -1,4 +1,6 @@
 import { hasApiFullAddendumCategories } from '../lib/jevbench-api-full-addenda.mjs';
+import { JevMethodTag } from './JevMethodTag';
+import { JEV_REMEASURE_PENDING } from '../lib/jev-decision-limit.mjs';
 import { JEVBENCH_COST_RULE, JEVBENCH_COST_RULE_HISTORY } from '../lib/jevbench-cost-rule.mjs';
 import { COMPOSITE_DEFINITION } from '../lib/decision-benchmark-manifest.mjs';
 import spokeExceptions from '../data/jevbench-radar-spoke-exceptions.json';
@@ -191,13 +193,14 @@ function DatedCarry({ carry, hiddenApi, showExceptions }: { carry: JevV16Carry; 
   return <section className="bh-panel mt-10 p-5" aria-labelledby="jev16-carry" data-bh-jev16-dated-carry>
     <h2 id="jev16-carry" className="text-2xl font-bold">Not yet measured on v1.6 · {shownByDefault < carry.rows.length ? `${shownByDefault} open-weights systems` : `${carry.rows.length} systems`} with a dated carried score</h2>
     {shownByDefault < carry.rows.length && <p className="bh-muted mt-1 text-xs">A further {carry.rows.length - shownByDefault} carried rows are hosted API offerings; they appear here when “Show API offerings” is on and are listed on the <a className="text-accent underline" href="/jev-models/api#jev16-carry">API leaderboard</a>.</p>}
+    {(carry as { label?: string }).label && <p className="mt-1 max-w-4xl text-sm" data-bh-jev-carry-label><JevMethodTag row={{}} carry carryLabel={(carry as { label?: string }).label} className="mr-1 align-middle" /> These rows were {(carry as { label?: string }).label}: their scores are not comparable with the re-scored rows above.</p>}
     <p className="bh-muted mt-1 max-w-4xl text-sm">{carry.rule} {carry.method}</p>
     <p className="bh-muted mt-1 text-xs">Dates: {byRelease.map((r) => `${r.revision} published ${r.published_on} (${r.n})`).join(' · ')}{shownByDefault < carry.rows.length ? ` · plus ${carry.rows.length - shownByDefault} hosted API rows when shown` : ''}. The date is the publication day of the release that first published the measurement, not a per-model measurement timestamp.</p>
     <div className="mt-3 max-h-[40rem] overflow-auto"><table className="w-full text-left text-sm tabular">
       <caption className="sr-only">Carried JevBench v1.5.x results, not ranked with v1.6 measurements</caption>
       <thead><tr>{['System', 'Measured on', 'Capability (v1.5 scale)', 'v1.5 Composite', 'Cost / 1,000', 'Median latency'].map((h) => <th key={h} scope="col" className="p-2">{h}</th>)}</tr></thead>
       <tbody>{carry.rows.map((r) => <tr key={r.key} className="border-t border-line" data-bh-jev16-carry-row={r.key} {...apiRowProps(r.key, hiddenApi)}>
-        <th scope="row" className="p-2 font-normal"><a className="text-accent underline" href={r.source_url ?? r.repo ?? undefined}>{r.display}</a>{hiddenApi.has(r.key) && <span className="bh-thin-tag bh-flag-tag ml-1">API</span>}{showExceptions && spokeReason(r.key) && <span className="bh-muted block text-xs" data-bh-radar-spoke-exception={r.key}>{spokeReason(r.key)}</span>}{r.note && <span className="bh-muted block text-xs">{r.note}</span>}</th>
+        <th scope="row" className="p-2 font-normal"><a className="text-accent underline" href={r.source_url ?? r.repo ?? undefined}>{r.display}</a>{(carry as { label?: string }).label && <JevMethodTag row={{ key: r.key }} carry carryLabel={(carry as { label?: string }).label} />}{hiddenApi.has(r.key) && <span className="bh-thin-tag bh-flag-tag ml-1">API</span>}{showExceptions && spokeReason(r.key) && <span className="bh-muted block text-xs" data-bh-radar-spoke-exception={r.key}>{spokeReason(r.key)}</span>}{r.note && <span className="bh-muted block text-xs">{r.note}</span>}</th>
         <td className="p-2 whitespace-nowrap">{r.measured_label}</td>
         <td className="p-2">{one(r.capability)}</td>
         <td className="p-2">{one(r.composite_v15)}{r.v156_rank != null && <span className="bh-muted"> · was #{r.v156_rank} on {r.carried_from}</span>}</td>
@@ -211,6 +214,7 @@ function DatedCarry({ carry, hiddenApi, showExceptions }: { carry: JevV16Carry; 
 
 // v1.7.0 (Florian, 5 Oct 2026): open-weights board on /jev-models, API-provider board on /jev-models/api.
 export const JEV_BOARD_REVISIONS: { version: string; date: string; text: string }[] = [
+  { version: 'v1.7.48', date: '2026-10-22', text: 'Method v1.7 (JevBench v1.7.0): a decision over 10 seconds counts as a wrong answer and as zero calibration for that item (measured time); Speed uses all decisions; every row shows its measured p95 and how many decisions were over 10 s. All rows were re-scored from their recorded per-decision times; rows recorded on a loaded CPU host are listed as re-measure pending with their v1.6 values. The v1.6 values stay visible on every row.' },
   { version: 'v1.7.47', date: '2026-10-21', text: 'Announcement only: JevBench v1.7.0 (not before 24 October 2026) adds a 10-second limit per decision; decisions over 10 seconds count as failed, and Speed uses all decisions. No score or rank changed in this revision.' },
   { version: 'v1.7.46', date: '2026-10-11', text: 'Display: the measured value of self-hosted rows is now tagged “on-GPU, no network” (or CPU) and marked as not directly comparable with API latency, which is timed end to end from our measuring host. The method notes describe a planned calibration of the 2× + 150 ms assumption against real end-to-end timings. No score or rank changed.' },
   { version: 'v1.7.45', date: '2026-10-11', text: 'Display: self-hosted rows now show the measured p50 next to the network-including estimate (2× measured + 150 ms), which the ranking continues to use. No score or rank changed.' },
@@ -331,7 +335,7 @@ function MethodBody({ categories, a, sha256, categoriesSha256, carrySha256, scop
     <p className="mt-2">The public-versus-sealed gap reference is the median of this completed native cohort: {one(a.G_med)} points. Historical scores are shown separately with their original dates and do not enter this cohort’s median or ranking. No API equating is applied.</p>
     {a.revision === 'v1.6.4' && <p className="mt-2">This same-draw six-model addendum adds the measured RYOTIDE wrapper to v1.6.3. The five prior measurements, point scores and four-native field median are retained. The standard scorer recalculates confidence intervals for the expanded roster. Wrappers remain listed below ranking and excluded from the median.</p>}
     {a.revision === 'v1.6.3' && <p className="mt-2">This same-draw addendum rescores the whole completed field, including the original four systems, together. The original measurements are retained, but the v1.6.3 scores, ranks and native-field median restate and supersede v1.6.2; normalized values are not comparable one-to-one across these releases. Wrappers remain excluded from the median.</p>}
-    <JevLatencyMethodNote />
+    <JevLatencyMethodNote inForce={Boolean((a as { method?: unknown }).method)} />
     {String(a.revision) === 'v1.6.30' && <p className="mt-2" data-bh-jev-cost-rule>{JEVBENCH_COST_RULE} {JEVBENCH_COST_RULE_HISTORY} On this draw 1,485 of the 1,500 items count for cost, the 15 very long items do not. They are the 15 items the Jev reference refused with max_tokens_exceeded, which the other rows that did not answer them refused or failed on (each at least 76,358 input tokens as counted by the rows that answered them).</p>}
     <p className="mt-2">Costs use each row’s documented price reference and measured usage on this draw. Subject-topic and use-case radars come from stored per-item results; only aggregates are published.</p>
     <p className="mt-2">Sliders, presets and What-If change your view; they do not change the official result. Wrappers and subsidised systems are listed below the ranking.</p>
@@ -392,7 +396,7 @@ function MethodBody({ categories, a, sha256, categoriesSha256, carrySha256, scop
     {!v161 && <p className="bh-muted mt-1 text-sm">{a.v16.equating.rule.charAt(0).toUpperCase() + a.v16.equating.rule.slice(1)}. Offsets in this run: Intelligence {off.I >= 0 ? '+' : ''}{off.I.toFixed(2)}, Calibration {off.C >= 0 ? '+' : ''}{off.C.toFixed(2)}. {a.v16.equating.pool_note} Category and language values stay raw and unequated.</p>}
     <h3 className="mt-4 text-lg font-semibold">Headline and Composite</h3>
     <p className="bh-muted mt-1 text-sm">Capability = mean(Intelligence, Calibration) for systems within twice the Jev 1.13.0 cost and median latency (the official caps; the sliders change only your view). {scope === 'all' ? `The Composite (option ${a.headline}) is the equal-weight harmonic mean of Intelligence, Calibration, Speed and Cost with the v1.5 low-axis gates; it remains secondary.` : `Composite (option ${a.headline}): ${COMPOSITE_DEFINITION} It leads the API board and is secondary on open weights.`} Request types Choice, Noul and Score weigh equally; tiers weigh easy {a.tier_weights.easy}, standard {a.tier_weights.standard}, hard {a.tier_weights.hard}, judge {a.tier_weights.judge}.</p>
-    <JevLatencyMethodNote />
+    <JevLatencyMethodNote inForce={Boolean((a as { method?: unknown }).method)} />
     <p className="bh-muted mt-1 text-sm" data-bh-jev16-class-reference>Jev-class caps use a fixed reference: Jev 1.13.0 as measured in v1.5 (p50 0.62 s, USD 0.0323 per 1,000 decisions); caps = 2x (1.23 s, USD 0.0646). Jev&apos;s own v1.6 p50 is 0.24 s.</p>
     <p id={live ? 'jev16-costs-note' : 'jev-costs'} className="bh-muted mt-1 text-sm">Costs of v1.6-measured systems carry each system&apos;s published v1.5.4 cost per 1,000 decisions (pricing rules unchanged; v1.6 item lengths differ) unless the row says otherwise; Fastino&apos;s is an estimate from its published tariff and measured tokens.</p>
     {a.noul_method?.applied === 'O1S' && <>
@@ -628,7 +632,10 @@ export function JevBenchV16Board({ artifact: a, sha256, categories, categoriesSh
   const measuredKeys = new Set(a.systems.map((s) => s.key));
   const extra = scope === 'api' ? apiChartExtras(carry, measuredKeys) : [];
   const preliminary = apiChartExtras(carry, measuredKeys).length > 0;
-  const ranked = scope === 'all' ? jevScopeDisplayOrder(a.systems.filter((s) => s.ranked || s.listing === JEV_PRELIMINARY_LISTING)) : jevScopeDisplayOrder([...a.systems.filter(listedRow), ...(extra as typeof a.systems)]);
+  // v1.7.0 (10 s rule): rows waiting for a re-measure stay on the board, inline, unranked, with their v1.6 values labelled v1.6.
+  // They never enter the compare view, the GPU calculator, the cost views or the context views (no v1.7 value to show).
+  const remeasure = (s: { listing?: string }) => s.listing === JEV_REMEASURE_PENDING;
+  const ranked = scope === 'all' ? jevScopeDisplayOrder(a.systems.filter((s) => s.ranked || s.listing === JEV_PRELIMINARY_LISTING || remeasure(s))) : jevScopeDisplayOrder([...a.systems.filter((s) => listedRow(s) || remeasure(s)), ...(extra as typeof a.systems)]);
   const hiddenApi: ReadonlySet<string> = new Set(scope === 'open' ? apiKeys : []);
   const chartSystems = ranked.map((s) => jevV15BoardSystem(s) as JevV14System);
   const allChartSystems = [...a.systems, ...(extra as typeof a.systems)].map((s) => jevV15BoardSystem(s) as JevV14System);
@@ -658,7 +665,7 @@ export function JevBenchV16Board({ artifact: a, sha256, categories, categoriesSh
   const previous = new Set(previousKeys);
   const viewRows = ranked.map((s) => jevV15BoardRow(s, { isNew: previous.size > 0 && !previous.has(s.key), headline: a.headline }));
   const compareSources = ['v1.6.3', 'v1.6.4'].includes(a.revision) ? freshJevbenchCategoryRows(a.systems) : ranked;
-  const compareRows = compareSources.filter((s) => s.listing !== JEV_PRELIMINARY_LISTING && s.listing !== JEV_PENDING_LISTING).map(jevV15CompareRow);
+  const compareRows = compareSources.filter((s) => s.listing !== JEV_PRELIMINARY_LISTING && s.listing !== JEV_PENDING_LISTING && !remeasure(s)).map(jevV15CompareRow);
   const named = new Map(a.systems.map((s) => [s.key, short(s.display)]));
   const leader = jevV15LeaderSentence(v15.board[a.headline], (key) => named.get(key) ?? key);
   // v1.7.1 (Florian 6 Oct 2026): ranking headings name the board; the API board leads with the Composite.
@@ -690,13 +697,13 @@ export function JevBenchV16Board({ artifact: a, sha256, categories, categoriesSh
         metadata={{ families: baseModelFamilies('jevbench', a.systems) }}
         links={{ method: '#jev16-method', pricing: live ? '#jev-costs' : '#jev16-method', revisionNotes: '#jev16-method', addenda: {} }}
       />
-      {scope === 'open' && <div className="mt-10"><JevGpuCostCalculator systems={ranked.filter((s) => s.v16.lane !== 'api').map((s) => ({
+      {scope === 'open' && <div className="mt-10"><JevGpuCostCalculator systems={ranked.filter((s) => s.v16.lane !== 'api' && !remeasure(s)).map((s) => ({
         key: s.key, display: short(s.display), gpu: (s as { gpu?: string | null }).gpu ?? null, p50_s_raw: s.speed?.p50_s_raw ?? null,
         officialUsdPer1000: s.cost?.usd_per_1000 ?? null, ranked: !!s.ranked }))} /></div>}
-      {live && <DecisionCosts scope={scope} rows={ranked.filter((s) => s.listing !== JEV_PRELIMINARY_LISTING && s.listing !== JEV_PENDING_LISTING && !hiddenApi.has(s.key))} />}
+      {live && <DecisionCosts scope={scope} rows={ranked.filter((s) => s.listing !== JEV_PRELIMINARY_LISTING && s.listing !== JEV_PENDING_LISTING && !remeasure(s) && !hiddenApi.has(s.key))} />}
       {/* Florian 16 Oct 2026: the context-length views (lost with v1.6.0) return on the live boards, on this board's roster and ranks. */}
       {live && <JevContextLazy board={{ scope, label: scopeLabel ?? 'all groups', rows: ranked
-        .filter((s) => s.listing !== JEV_PRELIMINARY_LISTING && s.listing !== JEV_PENDING_LISTING && !hiddenApi.has(s.key))
+        .filter((s) => s.listing !== JEV_PRELIMINARY_LISTING && s.listing !== JEV_PENDING_LISTING && !remeasure(s) && !hiddenApi.has(s.key))
         .map((s) => ({ key: s.key, system: s.display, rank: s.ranked ? s.rank ?? null : null })) }} />}
       {(!fresh || carry.rows.length > 0) && <DatedCarry carry={carry} hiddenApi={hiddenApi} showExceptions={Boolean(categories.supplement)} />}
       <Method categories={categories} a={a} sha256={sha256} categoriesSha256={categoriesSha256} carrySha256={carrySha256} scope={scope} hiddenApi={hiddenApi} preliminary={preliminary} live={live} />

@@ -47,21 +47,22 @@ test('rank insertion preserves old relative order and immutable source; refuses 
   assert.throws(() => withApiFullAddenda(out, a), /overridden/);
 });
 test('published addendum model page uses the same scoped board ranks and full-set metadata', async () => {
-  const { mkdtemp, mkdir, symlink, writeFile, rm } = await import('node:fs/promises');
+  const { mkdtemp, writeFile, rm } = await import('node:fs/promises');
+  const { mirrorDataRoot } = await import('./fixtures/mirror-data-root.mjs');
+  const { assembleJevBoard } = await import('../lib/jevbench-live-board.mjs');
   const { tmpdir } = await import('node:os');
   const path = await import('node:path');
   const { readJevbenchA4ModelPages } = await import('../lib/jevbench-a4-model-pages.mjs');
   const { readJevbenchV161Release } = await import('../lib/jevbench-v16-release.mjs');
   const { readJevbenchV157Release } = await import('../lib/jevbench-v15-release.mjs');
   const { readFile } = await import('node:fs/promises');
-  const { jevWithApiA4Rows, jevScopeClassifier, jevbenchScopeArtifact } = await import('../lib/jevbench-scope.mjs');
-  const { withApiRerunSplits } = await import('../lib/jevbench-api-rerun-cells.mjs');
+  const { jevScopeClassifier, jevbenchScopeArtifact } = await import('../lib/jevbench-scope.mjs');
   const { jevClassRows, JEV_V16_CLASS_OPTIONS } = await import('../lib/jevbench-jev-class.mjs');
   const root = await mkdtemp(path.join(tmpdir(), 'bh-cr401-model-page-'));
   try {
-    await mkdir(path.join(root, 'data'));
-    await symlink(path.resolve('data/raw'), path.join(root, 'data/raw'), 'dir');
-    await symlink(path.resolve('data/jevbench-api-a4-equated.json'), path.join(root, 'data/jevbench-api-a4-equated.json'));
+    // The pages follow the assembled live board, which needs the whole data/ tree: mirror it, replace only the addenda registry, and leave out the v1.7 folder
+    // so the isolated root is the pre-v1.7.0 board in both the PENDING and the PASS state.
+    await mirrorDataRoot(path.resolve('data'), path.join(root, 'data'), [['jevbench-api-full-addenda.json'], ['raw', 'benchmarks', 'jevbench', 'v1.7']]);
     const registry = fixture(), entry = registry.entries[0];
     const { jevbenchCategoryView, JEVBENCH_LANGUAGE_CELLS_ARTIFACT } = await import('../lib/jevbench-categories.mjs');
     const taxonomy = jevbenchCategoryView('v1.6.1', [], { supplement: true });
@@ -72,14 +73,13 @@ test('published addendum model page uses the same scoped board ranks and full-se
     }
     entry.row.capability = 99; entry.row.scores = { A: 99, B: 99, C: 99 };
     await writeFile(path.join(root, 'data/jevbench-api-full-addenda.json'), JSON.stringify(registry));
-    const [{ artifact: release, carry }, previous, a4, pages, originalPages] = await Promise.all([
+    const [{ artifact: release, categories, carry }, previous, a4, pages, originalPages] = await Promise.all([
       readJevbenchV161Release(root), readJevbenchV157Release(root),
       readFile(path.join(root, 'data/jevbench-api-a4-equated.json'), 'utf8').then(JSON.parse),
       readJevbenchA4ModelPages(root), readJevbenchA4ModelPages(),
     ]);
-    const meta = new Map([...previous.artifact.systems, ...carry.rows].map(r => [r.key, r]));
-    const merged = withApiFullAddenda(jevWithApiA4Rows(release, withApiRerunSplits(a4), meta), registry);
-    const board = jevbenchScopeArtifact(merged, 'api', jevScopeClassifier(merged.systems, carry.rows, previous.artifact.systems, previous.artifact.not_measured));
+    const liveWith = await assembleJevBoard({ release: { artifact: release, categories, carry }, previous, live: true, apiA4: a4, root });
+    const board = jevbenchScopeArtifact(liveWith.published, 'api', jevScopeClassifier(liveWith.published.systems, liveWith.publishedCarry.rows, previous.artifact.systems, previous.artifact.not_measured));
     const expected = board.systems.find(r => r.key === entry.key);
     const classRows = jevClassRows(board.systems.filter(r => r.ranked), JEV_V16_CLASS_OPTIONS).rows.filter(r => r.inClass);
     const page = pages.get(entry.key);
@@ -93,8 +93,12 @@ test('published addendum model page uses the same scoped board ranks and full-se
     assert.equal(page.full, true); assert.equal(page.nItems, 1500);
     assert.equal(page.measuredOn, entry.published_at);
     assert.equal(page.round, entry.provenance.parent); assert.equal(page.offsets, null);
-    const baselineArtifact = jevWithApiA4Rows(release, withApiRerunSplits(a4), meta);
-    const baselineBoard = jevbenchScopeArtifact(baselineArtifact, 'api', jevScopeClassifier(baselineArtifact.systems, carry.rows, previous.artifact.systems, previous.artifact.not_measured));
+    // Baseline: the same isolated live board with an empty addenda registry (the isolated historical baseline), independent of the synthetic and the real registry.
+    const emptyRoot = path.join(root, 'empty');
+    await mirrorDataRoot(path.resolve('data'), path.join(emptyRoot, 'data'), [['jevbench-api-full-addenda.json'], ['raw', 'benchmarks', 'jevbench', 'v1.7']]);
+    await writeFile(path.join(emptyRoot, 'data/jevbench-api-full-addenda.json'), JSON.stringify({ schema_version: 1, kind: 'jevbench-api-full-addenda', entries: [] }));
+    const liveWithout = await assembleJevBoard({ release: { artifact: release, categories, carry }, previous, live: true, apiA4: a4, root: emptyRoot });
+    const baselineBoard = jevbenchScopeArtifact(liveWithout.published, 'api', jevScopeClassifier(liveWithout.published.systems, liveWithout.publishedCarry.rows, previous.artifact.systems, previous.artifact.not_measured));
     assert.equal(pages.get('instinct').compositeRank, baselineBoard.systems.find(r => r.key === 'instinct').rank + 1, 'fixture inserts above the isolated historical baseline, independently of the real registry');
     assert.equal(originalPages.has(entry.key), false, 'synthetic fixture never enters the real registry');
   } finally { await rm(root, { recursive: true, force: true }); }

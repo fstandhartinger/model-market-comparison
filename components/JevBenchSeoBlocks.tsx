@@ -3,6 +3,7 @@ import type { ReactNode } from 'react';
 import { SITE_URL } from '../lib/seo';
 import { readJevbenchComparisonLinks } from '../lib/jevbench-seo.mjs';
 import { JevBoardGuides } from './JevBoardGuides';
+import { jevMethodView } from '../lib/jev-decision-limit.mjs';
 
 type Faq = { question: string; answer: string };
 type Artifact = {
@@ -201,6 +202,15 @@ export function breadcrumbJsonLd(path: string, name: string) {
     { '@type': 'ListItem', position: 3, name, item: `${SITE_URL}${path}` },
   ] };
 }
-export function JevReleaseStamp({ data }: { data: { artifact: {revision: string}; date: string; releasePage: string } }) {
-  return <p className="bh-muted mt-2 text-sm">Data: JevBench {data.artifact.revision}, published <Link className="text-accent underline" href={data.releasePage}>{data.date.slice(0,10)}</Link></p>;
+type StampRow = { key?: string; listing?: string; method?: string | null; rescored_in?: string | null; new_in?: string | null; remeasured_in?: string | null };
+/** Release line of a page. With `row` (model pages) the method note follows the row: re-scored, measured under the rule, or re-measure pending with its v1.6 values. */
+export function JevReleaseStamp({ data, row }: { data: { artifact: {revision: string}; date: string; releasePage: string; feed?: { method?: { label?: string } | null } }; row?: StampRow }) {
+  const view = row ? jevMethodView(row) : null;
+  const note = !data.feed?.method ? null
+    : !row ? 'method v1.7 (10 s rule), re-scored from the recorded per-decision times'
+    : view?.kind === 'v1.6-pending' ? 're-measure pending under the 10 s rule (v1.6 values)'
+    : view?.kind !== 'v1.7' ? null
+    : row.new_in || row.remeasured_in ? 'method v1.7 (10 s rule), measured under the rule'
+    : 'method v1.7 (10 s rule), re-scored from the recorded per-decision times';
+  return <p className="bh-muted mt-2 text-sm">Data: JevBench {data.artifact.revision}, published <Link className="text-accent underline" href={data.releasePage}>{data.date.slice(0,10)}</Link>{note && <> · <span data-bh-jev-method-stamp>{note}</span></>}</p>;
 }

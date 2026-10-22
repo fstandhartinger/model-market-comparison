@@ -10,6 +10,7 @@ import { jevSystemPath } from '../lib/jev-system-slug.mjs';
 import { BaseModelDisplay, type BaseModelBenchmark } from './BaseModelDisplay';
 import type { JevGate, JevGatePenalty } from '../lib/jevbench-axis-weights.mjs';
 import { UseModelEntry } from './UseModelButton';
+import { JEV_REMEASURE_PENDING_LABEL } from '../lib/jev-decision-limit.mjs';
 
 // CR-151 (Florian 25 Sep 2026): the pieces the score chart and the axes table share. This module has no Node imports and
 // no client directive, so both the server board and the interactive client views can use it.
@@ -22,7 +23,11 @@ export type JevBoardRow = {
   axes: { intelligence: number | null; calibration: number | null; speed: number | null; cost: number | null };
   public_accuracy: number | null; sealed_accuracy: number | null; public_minus_sealed_gap_pp: number | null;
   cost: { kind: string; usd_per_1000: number | null; basis: string };
-  speed: { p50_s_raw: number | null; p50_s_adjusted?: number | null; adjustment?: string };
+  speed: { p50_s_raw: number | null; p50_s_adjusted?: number | null; adjustment?: string; p95_s_raw?: number | null; p95_s_adjusted?: number | null; n?: number | null };
+  // v1.7.0 (10 s rule): present on rows of a v1.7 board only.
+  method?: string | null; rescored_in?: string | null; new_in?: string | null; remeasured_in?: string | null; remeasure?: any; measured_in?: string | null;
+  decision_limit?: { limit_s: number; n_over_limit: number | null; n_over_limit_answered_ok?: number | null; speed_n?: number | null } | null;
+  previous?: { board_release?: string; method?: string; jevbench_score?: number | null; capability?: number | null; rank?: number | null; axes?: Record<string, number | null> } | null;
   canonical_system_key?: string;
   preliminary?: { label?: string };
   endpoint_kind?: string; endpoint_condition?: string;
@@ -49,7 +54,9 @@ export const NOT_RANKED: Record<string, string> = { honorable_mention: 'honorabl
   // v1.7.5: API board public-set rows before the full sealed re-run.
   preliminary: 'preliminary', pending: 'pending',
   // v1.7.7: listed wrappers that serve Jev (classifier.dev).
-  wrapper: 'wrapper (serves Jev)' };
+  wrapper: 'wrapper (serves Jev)',
+  // v1.7.0: loaded-CPU rows wait for a re-measure; they keep their v1.6 values and are not ranked.
+  'remeasure-pending': JEV_REMEASURE_PENDING_LABEL };
 
 // ---- Heat shading: each column shaded by where a value sits between the column's weakest and strongest system ----
 

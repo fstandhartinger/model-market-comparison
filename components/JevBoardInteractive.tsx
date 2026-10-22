@@ -16,6 +16,9 @@ import { jevSourceUrl } from './jevSystemLinks';
 import { jevSystemPath } from '../lib/jev-system-slug.mjs';
 import { jevLatencyView } from '../lib/jev-latency.mjs';
 import { JevLatencyValue, JevLatencyLegend } from './JevLatency';
+import { JevMethodTag } from './JevMethodTag';
+import { JevDecisionLimitCell } from './JevDecisionLimitCell';
+import { jevPreviousTitle, jevDecisionLimitView, isRemeasurePending, JEV_REMEASURE_PENDING, JEV_REMEASURE_PENDING_LABEL, JEV_LIMIT_RAW_NOTE } from '../lib/jev-decision-limit.mjs';
 import { BaseModelDisplay, BaseModelFootnotes, type BaseModelBenchmark } from './BaseModelDisplay';
 import { baseModelFootnotes } from '../lib/jev-base-model.mjs';
 import { useJevV15VisibleKeys } from './useJevV15VisibleKeys';
@@ -80,11 +83,11 @@ function FilterBar({ rows, filters, setFilters, shown, newLabel, idPrefix }: { r
 
 // ---- Sorting ----
 
-type SortKey = 'rank' | 'name' | 'score' | 'intelligence' | 'calibration' | 'speed' | 'cost' | 'usd' | 'public' | 'sealed' | 'gap' | 'latency' | 'endpoint';
+type SortKey = 'rank' | 'name' | 'score' | 'intelligence' | 'calibration' | 'speed' | 'cost' | 'usd' | 'public' | 'sealed' | 'gap' | 'latency' | 'over10' | 'endpoint';
 type Sort = { key: SortKey; dir: 'asc' | 'desc' };
-const SORT_LABEL: Record<SortKey, string> = { rank: 'official rank', name: 'name', score: 'JevBench Score', intelligence: 'Intelligence', calibration: 'Calibration', speed: 'Speed', cost: 'Cost axis', usd: '$ per 1,000 decisions', public: 'public accuracy', sealed: 'sealed accuracy', gap: 'public − sealed gap', latency: 'p50 latency', endpoint: 'endpoint' };
+const SORT_LABEL: Record<SortKey, string> = { rank: 'official rank', name: 'name', score: 'JevBench Score', intelligence: 'Intelligence', calibration: 'Calibration', speed: 'Speed', cost: 'Cost axis', usd: '$ per 1,000 decisions', public: 'public accuracy', sealed: 'sealed accuracy', gap: 'public − sealed gap', latency: 'p50 latency', over10: 'decisions over 10 s', endpoint: 'endpoint' };
 // First click sorts best-first: highest axis/accuracy, cheapest price, fastest latency, smallest gap, A→Z.
-const FIRST_DIR: Record<SortKey, Sort['dir']> = { rank: 'asc', name: 'asc', score: 'desc', intelligence: 'desc', calibration: 'desc', speed: 'desc', cost: 'desc', usd: 'asc', public: 'desc', sealed: 'desc', gap: 'asc', latency: 'asc', endpoint: 'asc' };
+const FIRST_DIR: Record<SortKey, Sort['dir']> = { rank: 'asc', name: 'asc', score: 'desc', intelligence: 'desc', calibration: 'desc', speed: 'desc', cost: 'desc', usd: 'asc', public: 'desc', sealed: 'desc', gap: 'asc', latency: 'asc', over10: 'asc', endpoint: 'asc' };
 const OFFICIAL: Sort = { key: 'rank', dir: 'asc' };
 
 const sortValue = (row: JevBoardViewRow, key: SortKey): number | string | null => {
@@ -97,6 +100,7 @@ const sortValue = (row: JevBoardViewRow, key: SortKey): number | string | null =
     case 'sealed': return row.sealed_accuracy;
     case 'gap': return row.public_minus_sealed_gap_pp;
     case 'latency': return row.speed?.p50_s_raw ?? null;
+    case 'over10': return jevDecisionLimitView(row)?.nOver ?? null;
     case 'endpoint': return endpointLabel(row.endpoint_kind).toLowerCase();
     default: return row.axes?.[key] ?? null;
   }
@@ -108,7 +112,7 @@ function sortRows(rows: JevBoardViewRow[], sort: Sort, official: Map<string, num
   const byOfficial = (a: JevBoardViewRow, b: JevBoardViewRow) => (official.get(a.key) ?? 0) - (official.get(b.key) ?? 0);
   // Reversing the official order keeps the unranked rows last: they have no rank to reverse. v1.7.3: the Jev reference
   // and API offerings on a scoped board keep their score position (the official map already interleaves them).
-  const placed = (r: JevBoardViewRow) => r.ranked || JEV_INTERLEAVED_LISTINGS.has(r.listing);
+  const placed = (r: JevBoardViewRow) => r.ranked || JEV_INTERLEAVED_LISTINGS.has(r.listing) || r.listing === JEV_REMEASURE_PENDING;
   if (sort.key === 'rank') return [...rows].sort((a, b) => placed(a) !== placed(b) ? (placed(a) ? -1 : 1) : sort.dir === 'asc' || !placed(a) ? byOfficial(a, b) : byOfficial(b, a));
   const sign = sort.dir === 'asc' ? 1 : -1;
   return [...rows].sort((a, b) => {
@@ -123,6 +127,7 @@ const dirWords = (sort: Sort) => sort.key === 'name' || sort.key === 'endpoint' 
   : sort.key === 'rank' ? (sort.dir === 'asc' ? '#1 first' : 'last rank first')
   : sort.key === 'usd' ? (sort.dir === 'asc' ? 'cheapest first' : 'most expensive first')
   : sort.key === 'latency' ? (sort.dir === 'asc' ? 'fastest first' : 'slowest first')
+  : sort.key === 'over10' ? (sort.dir === 'asc' ? 'fewest over 10 s first' : 'most over 10 s first')
   : sort.key === 'gap' ? (sort.dir === 'asc' ? 'smallest gap first' : 'largest gap first')
   : sort.dir === 'desc' ? 'highest first' : 'lowest first';
 
@@ -438,6 +443,7 @@ function SystemName({ row, benchmark = 'jevbench' }: { row: JevBoardViewRow; ben
     {row.priority_run === true && <span className="bh-thin-tag ml-2 align-middle" data-bh-jev14-priority-run={row.key}>priority run</span>}
     {row.api_flag && <span className="bh-thin-tag bh-flag-tag ml-2 align-middle" data-bh-jev14-api-flag={row.key} title={row.api_exposure_note ?? apiExplanation} aria-label={apiExplanation}>API</span>}
     <JevDrawTag tag={(row as unknown as { draw_tag?: JevDrawTagData | null }).draw_tag} rowKey={row.key} />
+    <JevMethodTag row={row} />
     {row.isNew && <span className="bh-new-tag ml-2 align-middle" data-bh-jev14-new={row.key}>new</span>}
     <span className="bh-muted block text-[11px] leading-tight">by {row.author}{variant ? ` · ${variant}` : ''}{href !== page && <> · <Link href={page} className="underline decoration-[rgb(var(--line))] underline-offset-2 hover:text-accent" data-bh-jev-details={row.key}>details</Link></>}</span>
     {/* CR-254 (2026-10-01): the cited base-model overlay, presentation only; every row keeps it, ranked or not. */}
@@ -463,17 +469,18 @@ function HeatTd({ heat, column, row, children, className = '' }: { heat: HeatSca
 }
 
 // v1.7.5: preliminary public-set rows and pending rows on the API board carry their own label.
-export const partialLabel = jevPartialLabel;
+export const partialLabel = (listing: string, preliminary?: Parameters<typeof jevPartialLabel>[1]) => listing === JEV_REMEASURE_PENDING ? JEV_REMEASURE_PENDING_LABEL : jevPartialLabel(listing, preliminary);
 
 const endpointLabel = (kind: string | undefined) => kind === 'api' ? 'API' : kind === 'gpu' ? 'RunPod GPU' : kind === 'demo' ? 'author demo' : kind === 'cpu' ? 'CPU' : kind ?? '—';
 
-function Row({ row, heat, benchmark = 'jevbench' }: { row: JevBoardViewRow; heat: HeatScales; benchmark?: BaseModelBenchmark }) {
+function Row({ row, heat, benchmark = 'jevbench', showLimit = false }: { row: JevBoardViewRow; heat: HeatScales; benchmark?: BaseModelBenchmark; showLimit?: boolean }) {
+  const pending = isRemeasurePending(row);
   return <tr id={`jev14-row-${row.key}`} data-bh-jev14-row={row.key} data-bh-jev14-ranked={row.ranked ? '1' : '0'} className={row.ranked ? '' : 'bh-jev11-partial'}>
     <td className="bh-muted tabular">{row.rank ?? '—'}</td>
     <th scope="row" className="bh-jev-sticky text-left font-normal"><SystemName row={row} benchmark={benchmark} />
       {!row.ranked && <span className="bh-thin-tag bh-partial-tag mt-1 inline-block" title={row.not_ranked_because ?? undefined} data-bh-jev14-partial={row.key}>{partialLabel(row.listing, row.preliminary)}</span>}
     </th>
-    <HeatTd heat={heat} column="score" row={row}><b className="text-lg" data-bh-jev14-score>{one(row.jevbench_score)}</b></HeatTd>
+    <HeatTd heat={heat} column="score" row={row}><b className="text-lg" data-bh-jev14-score title={pending ? undefined : jevPreviousTitle(row) ?? undefined}>{one(row.jevbench_score)}</b>{pending && <span className="bh-muted block text-xs" data-bh-jev-v16-value={row.key}>v1.6</span>}</HeatTd>
     <HeatTd heat={heat} column="intelligence" row={row}>{one(row.axes?.intelligence)}</HeatTd>
     <HeatTd heat={heat} column="calibration" row={row}>{one(row.axes?.calibration)}</HeatTd>
     <HeatTd heat={heat} column="speed" row={row}>{one(row.axes?.speed)}</HeatTd>
@@ -484,6 +491,7 @@ function Row({ row, heat, benchmark = 'jevbench' }: { row: JevBoardViewRow; heat
     {/* CR-176.5: no green heat on the $/1k column. */}
     <td className="tabular whitespace-nowrap text-right" data-bh-jev14-usd><CostValue row={row} /></td>
     <HeatTd heat={heat} column="latency" row={row} className="whitespace-nowrap">{jevLatencyView(row.speed).adjusted ? <JevLatencyValue speed={row.speed} kind={row.endpoint_kind} /> : <span title={row.speed?.adjustment ?? undefined}>{seconds(row.speed?.p50_s_raw)}</span>}</HeatTd>
+    {showLimit && <td className="tabular" data-bh-jev-limit-td><JevDecisionLimitCell row={row} /></td>}
     <td className="text-[12px]" title={row.endpoint_condition}>{endpointLabel(row.endpoint_kind)}</td>
   </tr>;
 }
@@ -502,10 +510,13 @@ export function JevAxesTable({ rows, publicDecisions, sealedDecisions, newLabel,
   const { sort, toggle } = useSort(OFFICIAL);
   const shown = useMemo(() => sortRows(applyFilters(rows, filters), sort, official), [rows, filters, sort, official]);
   const captionId = useId();
+  // v1.7.0: the p95 / over-10 s column exists only on a board whose rows carry the 10 s rule or wait for a re-measure.
+  const showLimit = useMemo(() => rows.some((r) => r.decision_limit || isRemeasurePending(r)), [rows]);
   return <>
     <FilterBar rows={rows} filters={filters} setFilters={setFilters} shown={shown.length} newLabel={newLabel} idPrefix="table" />
     <p className="bh-muted mt-2 text-xs"><HeatLegend latency /> Badges: <span className="bh-thin-tag bh-flag-tag">API</span> sealed text went to the operator&apos;s endpoint · <span className="bh-thin-tag bh-est-tag">est.</span> estimated price · <span className="bh-thin-tag">ann.</span> announced price not yet bookable · <span className="bh-thin-tag bh-partial-tag">not ranked</span> partial run or honorable mention{newLabel ? <> · <span className="bh-new-tag">new</span> first listed in {newLabel}</> : null}.</p>
     <JevLatencyLegend className="bh-muted mt-1 text-xs" />
+    {showLimit && <p className="bh-muted mt-1 text-xs" data-bh-jev-limit-legend><JevMethodTag row={{ method: 'v1.7' }} className="mr-1 align-middle" /> Method v1.7: a decision over 10 s counts as a wrong answer and zero calibration for that item. The p95 and the count use the measured time. {JEV_LIMIT_RAW_NOTE} Hover a score for the v1.6 value; rows marked <JevMethodTag row={{ listing: JEV_REMEASURE_PENDING }} className="mx-1 align-middle" /> show v1.6 values and are not ranked.</p>}
     <div className="bh-table-wrap mt-3">
       <table className="bh-table bh-jev-table" data-bh-jev14-table aria-describedby={captionId}>
         <thead><tr>
@@ -513,9 +524,9 @@ export function JevAxesTable({ rows, publicDecisions, sealedDecisions, newLabel,
           <Th k="intelligence" sort={sort} toggle={toggle}>Intelligence</Th><Th k="calibration" sort={sort} toggle={toggle}>Calibration</Th><Th k="speed" sort={sort} toggle={toggle}>Speed</Th><Th k="cost" sort={sort} toggle={toggle}>Cost axis</Th>
           <Th k="public" sort={sort} toggle={toggle}><>Public accuracy<br /><span className="bh-muted text-[11px]">n = {publicDecisions}</span></></Th>
           <Th k="sealed" sort={sort} toggle={toggle}><>Sealed accuracy<br /><span className="bh-muted text-[11px]">n = {sealedDecisions}</span></></Th>
-          <Th k="gap" sort={sort} toggle={toggle}>Public − sealed gap</Th><Th k="usd" sort={sort} toggle={toggle}>$/1k decisions</Th><Th k="latency" sort={sort} toggle={toggle}>p50 latency</Th><Th k="endpoint" sort={sort} toggle={toggle}>Endpoint</Th>
+          <Th k="gap" sort={sort} toggle={toggle}>Public − sealed gap</Th><Th k="usd" sort={sort} toggle={toggle}>$/1k decisions</Th><Th k="latency" sort={sort} toggle={toggle}>p50 latency</Th>{showLimit && <Th k="over10" sort={sort} toggle={toggle}><>p95 (measured)<br /><span className="bh-muted text-[11px]">decisions over 10 s</span></></Th>}<Th k="endpoint" sort={sort} toggle={toggle}>Endpoint</Th>
         </tr></thead>
-        <tbody>{shown.map((row) => <Row key={row.key} row={row} heat={heat} benchmark={benchmark} />)}</tbody>
+        <tbody>{shown.map((row) => <Row key={row.key} row={row} heat={heat} benchmark={benchmark} showLimit={showLimit} />)}</tbody>
       </table>
       {shown.length === 0 && <p className="bh-muted p-4 text-sm">No system matches these filters.</p>}
     </div>
