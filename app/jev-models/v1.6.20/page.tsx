@@ -5,8 +5,10 @@ import { JevBenchV16Board } from '../../../components/JevBenchV16Board';
 import { JevBenchReleaseVersionNav } from '../../../components/JevBenchReleaseVersionNav';
 import { JevHistoryLazy } from '../../../components/JevHistoryLazy';
 import { withPublicAdapterIds } from '../../../lib/jevbench-v15-release.mjs';
+import { seoTitle } from '../../../lib/seo';
+import { PageJsonLd } from '../../../components/PageJsonLd';
 
-export const metadata = { title: 'JevBench v1.6.20 · SubQ Snap same-draw price addendum', alternates: { canonical: '/jev-models/v1.6.20' } };
+export const metadata = { title: seoTitle('JevBench v1.6.20 · SubQ Snap same-draw price addendum'), alternates: { canonical: '/jev-models/v1.6.20' } };
 
 type Row = { key: string; display: string; ranked: boolean; measured_in?: string; repriced_in?: string; capability?: number; cost?: { basis?: string; usd_per_1000?: number } };
 
@@ -23,7 +25,7 @@ export default async function JevModelsV1620Page() {
   const subq = artifact.systems.find(row => row.key === 'subq-snap-preview');
   const cap = (subq?.cost?.usd_per_1000 ?? 0.06479016666666666) / 0.06459465517241379;
   return <>
-    <JevBenchReleaseVersionNav active="v1.6.20" />
+    <PageJsonLd meta={metadata} /><JevBenchReleaseVersionNav active="v1.6.20" />
     <header className="bh-page-head" data-bh-jev16-release-header>
       <div className="bh-eyebrow">JevBench v1.6.20 · same-draw price addendum</div>
       <h1 className="mt-1 text-3xl font-bold tracking-tight">SubQ Snap’s published tariff is now scored</h1>

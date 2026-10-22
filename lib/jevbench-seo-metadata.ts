@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { SITE_URL, X_HANDLE } from './seo';
+import { SITE_URL, X_HANDLE, seoTitle } from './seo';
 
 const IMAGE_ALT = 'JevBench by Benchmark Heaven compares Jev-class decision models across intelligence, calibration, speed, and cost.';
 const IMAGE_URL = `${SITE_URL}/jev-models/opengraph-image?v=og4`;
@@ -7,6 +7,7 @@ const IMAGE_URL = `${SITE_URL}/jev-models/opengraph-image?v=og4`;
 export function jevIntentMetadata({
   path,
   title,
+  documentTitle,
   description,
   keywords,
   languages,
@@ -14,6 +15,8 @@ export function jevIntentMetadata({
 }: {
   path: string;
   title: string;
+  /** The <title> when it differs from the link-preview title; either way it goes through seoTitle. */
+  documentTitle?: string;
   description: string;
   keywords: string[];
   languages?: Record<string, string>;
@@ -21,7 +24,8 @@ export function jevIntentMetadata({
 }): Metadata {
   const canonical = new URL(path, SITE_URL).toString();
   return {
-    title,
+    // The brand is already in the layout's title suffix, so a trailing "— JevBench by Benchmark Heaven" shortens to "— JevBench".
+    title: seoTitle(documentTitle ?? title.replace(/ — JevBench by Benchmark Heaven$/, ' — JevBench')),
     description,
     keywords,
     alternates: { canonical, ...(languages ? { languages: Object.fromEntries(Object.entries(languages).map(([k, v]) => [k, new URL(v, SITE_URL).toString()])) } : {}) },

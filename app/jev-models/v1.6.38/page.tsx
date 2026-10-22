@@ -6,12 +6,14 @@ import { JevHistoryLazy } from '../../../components/JevHistoryLazy';
 import { historicalCatalogue } from '../../../lib/jevbench-v162-release.mjs';
 import { withPublicAdapterIds } from '../../../lib/jevbench-v15-release.mjs';
 import { JEVBENCH_COST_RULE, JEVBENCH_COST_RULE_HISTORY } from '../../../lib/jevbench-cost-rule.mjs';
-export const metadata = {title: 'JevBench v1.6.38 · Drex Max, Myles-G 12B and iota-decide-4b', alternates:{canonical:'/jev-models/v1.6.38'}};
+import { seoTitle } from '../../../lib/seo';
+import { PageJsonLd } from '../../../components/PageJsonLd';
+export const metadata = {title: seoTitle('JevBench v1.6.38 · Drex Max, Myles-G 12B and iota-decide-4b'), alternates:{canonical:'/jev-models/v1.6.38'}};
 export default async function JevModelsV1638Page() {
  const release=await readOptionalJevbenchV1638Release();if(!release) notFound();
  const board=v1638BoardInput(release);
  const notes=(release.artifact as unknown as {measurement_notes:string[]}).measurement_notes;
- return <><JevBenchReleaseVersionNav active="v1.6.38" />
+ return <><PageJsonLd meta={metadata} /><JevBenchReleaseVersionNav active="v1.6.38" />
  <header className="bh-page-head" data-bh-jev16-release-header><div className="bh-eyebrow">JevBench v1.6.38 · three paid fast-lane additions</div>
  <h1 className="mt-1 text-3xl font-bold">Drex Max, Myles-G 12B and iota-decide-4b added</h1>
  <p className="mt-3 max-w-3xl">Three paid public fast-lane additions on the same draw and common cost basis. Drex Max retains two provider-overloaded failures. Myles-G 12B and iota-decide-4b answered 15 truncated states, scored as answered. All carried rows retain every score and confidence interval; only placement changes. Pricing, hosting and provenance are disclosed below.</p>

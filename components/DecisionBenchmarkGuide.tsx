@@ -2,7 +2,10 @@ import type { ReactNode } from 'react';
 import { readDecisionBenchmarkManifest } from '../lib/decision-benchmark-manifest.mjs';
 import { JEVBENCH_COST_RULE, JEVBENCH_COST_RULE_HISTORY } from '../lib/jevbench-cost-rule.mjs';
 
-export function DecisionGuide({ title, intro, children, date = '2026-10-09' }: { title: string; intro: string; children: ReactNode; date?: string }) {
+// The "Reviewed" date every guide prints; the methodology TechArticle JSON-LD reuses it as dateModified.
+export const GUIDE_REVIEWED = '2026-10-09';
+
+export function DecisionGuide({ title, intro, children, date = GUIDE_REVIEWED }: { title: string; intro: string; children: ReactNode; date?: string }) {
   return <article className="mx-auto max-w-4xl space-y-6 pb-10">
     <header className="bh-page-head"><p className="bh-eyebrow">JevBench by Benchmark Heaven · Decision model evaluation</p>
       <h1 className="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">{title}</h1>

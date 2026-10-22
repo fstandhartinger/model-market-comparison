@@ -4,6 +4,7 @@ import { BenchmarkRankingLoader } from '../../components/deferred/BenchmarkRanki
 import { BenchmarkMatrixLoader } from '../../components/deferred/BenchmarkMatrixLoader';
 import { pageDataVersion } from '../../lib/page-data';
 import { previewMetadata } from "../../lib/seo";
+import { PageJsonLd } from '../../components/PageJsonLd';
 
 // CR-1.1: the tab opens on the release-style comparison. The single-benchmark ranking stays one
 // click away and keeps its `?benchmark=` deep links. F-27: one sentence under the heading.
@@ -30,5 +31,6 @@ export default async function BenchmarksPage({ searchParams }: { searchParams: P
     {tabs}
     {/* CR-1.11: the shared-URL selection is part of the table's first render, so it does not re-layout once it mounts. */}
     <BenchmarkMatrixLoader version={version} initial={{ models: typeof params.models === 'string' ? params.models : null, set: typeof params.set === 'string' ? params.set : null, rows: typeof params.rows === 'string' ? params.rows : null }} />
+    <PageJsonLd meta={metadata} />
   </div>;
 }

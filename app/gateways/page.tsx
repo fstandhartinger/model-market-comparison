@@ -1,7 +1,8 @@
 import { GatewaysView } from "../../components/GatewaysView";
 import gw from "../../data/gateways.json";
+import { PageJsonLd } from "../../components/PageJsonLd";
 
-export const metadata = { title: "LLM Gateways" };
+export const metadata = { title: "LLM Gateways", alternates: { canonical: "/gateways" } };
 
 export default function GatewaysPage() {
   return (
@@ -15,6 +16,7 @@ export default function GatewaysPage() {
         model inference. The <b>EU routing</b> column captures the real capability.
       </p>
       <GatewaysView gateways={gw.gateways} collectedAt={gw.collected_at} note={gw.note} />
+      <PageJsonLd meta={metadata} />
     </div>
   );
 }

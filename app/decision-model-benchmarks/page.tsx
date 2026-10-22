@@ -1,5 +1,6 @@
 import { previewMetadata } from '../../lib/seo';
 import { DecisionGuide } from '../../components/DecisionBenchmarkGuide';
+import { PageJsonLd } from '../../components/PageJsonLd';
 export const metadata = previewMetadata({ path: '/decision-model-benchmarks', title: 'Best benchmarks for AI decision models (2026)', documentTitle: 'Best benchmarks for AI decision models (2026)', description: 'Choose benchmarks by workload: JevBench, DecisionBench, RewardBench 2, ForecastBench, tau-bench and metamorphic coherence testing. Methods, sources and limitations.' });
 
 const rows = [
@@ -21,5 +22,6 @@ export default function BenchmarkComparison() {
     </section>
     <section className="space-y-3"><h2 className="text-2xl font-semibold">When to use JevBench</h2><p>Use JevBench to shortlist decision models when structured answers, calibrated probabilities and serving budgets all matter. Read the <a className="text-accent underline" href="/jev-models">open-weights board</a> for Capability within its fixed envelope and the <a className="text-accent underline" href="/jev-models/api">API board</a> for hosted endpoint comparisons. Pair that shortlist with a held-out test from your actual workflow.</p><p>JevBench does not establish a universally best model. It does not replace domain-specific error costs, abstention tests, out-of-distribution evaluation or end-to-end agent success. Published aggregates support score recalculation; sealed inputs prevent a complete independent rerun from the public download.</p></section>
     <section className="space-y-3"><h2 className="text-2xl font-semibold">Reproducibility and name disambiguation</h2><p>Our canonical benchmark is <a className="text-accent underline" href="/jev-models">JevBench by Benchmark Heaven</a>. The coherence-testing JevBench at jevbench.github.io is independent and measures a complementary property. Always cite the organization, release version, method and stable result URL.</p><p><a className="text-accent underline" href="/jev-models/methodology">Methodology, scorer and limitations</a> · <a className="text-accent underline" href="/jev-models/data">Own measurements and dataset card</a> · <a className="text-accent underline" href="https://www.forecastbench.org/docs/">ForecastBench scoring documentation</a>.</p></section>
+    <PageJsonLd meta={metadata} />
   </DecisionGuide>;
 }

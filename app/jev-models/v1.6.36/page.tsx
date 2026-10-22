@@ -6,12 +6,14 @@ import { JevHistoryLazy } from '../../../components/JevHistoryLazy';
 import { historicalCatalogue } from '../../../lib/jevbench-v162-release.mjs';
 import { withPublicAdapterIds } from '../../../lib/jevbench-v15-release.mjs';
 import { JEVBENCH_COST_RULE, JEVBENCH_COST_RULE_HISTORY } from '../../../lib/jevbench-cost-rule.mjs';
-export const metadata = {title: 'JevBench v1.6.36 · Myles-G 31B, HS1, Arbiter-4B, Decider-4B', alternates:{canonical:'/jev-models/v1.6.36'}};
+import { seoTitle } from '../../../lib/seo';
+import { PageJsonLd } from '../../../components/PageJsonLd';
+export const metadata = {title: seoTitle('JevBench v1.6.36 · Myles-G 31B, HS1, Arbiter-4B, Decider-4B'), alternates:{canonical:'/jev-models/v1.6.36'}};
 export default async function JevModelsV1636Page() {
  const release=await readOptionalJevbenchV1636Release();if(!release) notFound();
  const board=v1636BoardInput(release);
  const notes=(release.artifact as unknown as {measurement_notes:string[]}).measurement_notes;
- return <><JevBenchReleaseVersionNav active="v1.6.36" />
+ return <><PageJsonLd meta={metadata} /><JevBenchReleaseVersionNav active="v1.6.36" />
  <header className="bh-page-head" data-bh-jev16-release-header><div className="bh-eyebrow">JevBench v1.6.36 · same-draw addendum</div>
  <h1 className="mt-1 text-3xl font-bold">Myles-G 31B, HS1, Arbiter-4B and Decider-4B added</h1>
  <p className="mt-3 max-w-3xl">Four rows are added on the same draw and the same common cost basis as v1.6.35: two paid fast-lane vendor-hosted APIs (Myles-G 31B from Launchables and HS1 from Hyland) and two free-queue self-hosted models (Arbiter-4B and Decider-4B). All 65 carried full-draw rows keep their point estimates. All four are priced as base-model estimates, as for attest-31B-v1.0; the vendor and customer tariffs are shown in the row notes and do not count. Myles-G 31B answered the 15 longest items on silently truncated input; they are scored as answered and the accuracy split is disclosed. HS1 was asked 64 items twice by an operator error; the first answer is scored. The Arbiter-4B and Decider-4B author servers refuse the 15 longest items, which are scored as wrong.</p>

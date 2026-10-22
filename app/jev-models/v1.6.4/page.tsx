@@ -5,8 +5,10 @@ import { JevBenchV16Board } from '../../../components/JevBenchV16Board';
 import { JevBenchReleaseVersionNav } from '../../../components/JevBenchReleaseVersionNav';
 import { JevHistoryLazy } from '../../../components/JevHistoryLazy';
 import { withPublicAdapterIds } from '../../../lib/jevbench-v15-release.mjs';
+import { seoTitle } from '../../../lib/seo';
+import { PageJsonLd } from '../../../components/PageJsonLd';
 
-export const metadata = { title: 'JevBench v1.6.4 · completed fresh native cohort', alternates: { canonical: '/jev-models/v1.6.4' } };
+export const metadata = { title: seoTitle('JevBench v1.6.4 · completed fresh native cohort'), alternates: { canonical: '/jev-models/v1.6.4' } };
 export default async function JevModelsV164Page() {
   const release = await readOptionalJevbenchV164Release();
   if (!release) notFound();
@@ -18,7 +20,7 @@ export default async function JevModelsV164Page() {
   // The shared JevV15System listing union predates wrappers; compare the stored string as the Board does.
   const wrapperRows = release.artifact.systems.filter(row => !row.ranked && (row.listing as string) === 'wrapper');
   return <>
-    <JevBenchReleaseVersionNav active="v1.6.4" fresh fresh163 fresh164 />
+    <PageJsonLd meta={metadata} /><JevBenchReleaseVersionNav active="v1.6.4" fresh fresh163 fresh164 />
     <header className="bh-page-head" data-bh-jev16-release-header>
       <div className="bh-eyebrow">Official JevBench v1.6.4</div>
       <h1 className="mt-1 text-3xl font-bold tracking-tight">JevBench · completed fresh native cohort</h1>

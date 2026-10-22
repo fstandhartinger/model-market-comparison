@@ -6,12 +6,14 @@ import { JevHistoryLazy } from '../../../components/JevHistoryLazy';
 import { historicalCatalogue } from '../../../lib/jevbench-v162-release.mjs';
 import { withPublicAdapterIds } from '../../../lib/jevbench-v15-release.mjs';
 import { JEVBENCH_COST_RULE, JEVBENCH_COST_RULE_HISTORY } from '../../../lib/jevbench-cost-rule.mjs';
-export const metadata = {title: 'JevBench v1.6.31 · Flash v1.2 and d3-turbo', alternates:{canonical:'/jev-models/v1.6.31'}};
+import { seoTitle } from '../../../lib/seo';
+import { PageJsonLd } from '../../../components/PageJsonLd';
+export const metadata = {title: seoTitle('JevBench v1.6.31 · Flash v1.2 and d3-turbo'), alternates:{canonical:'/jev-models/v1.6.31'}};
 export default async function JevModelsV1631Page() {
  const release=await readOptionalJevbenchV1631Release();if(!release) notFound();
  const board=v1631BoardInput(release);
  const notes=(release.artifact as unknown as {measurement_notes:string[]}).measurement_notes;
- return <><JevBenchReleaseVersionNav active="v1.6.31" />
+ return <><PageJsonLd meta={metadata} /><JevBenchReleaseVersionNav active="v1.6.31" />
  <header className="bh-page-head" data-bh-jev16-release-header><div className="bh-eyebrow">JevBench v1.6.31 · same-draw addendum</div>
  <h1 className="mt-1 text-3xl font-bold">Perplexity Decider Flash v1.2 and vLLM-SR d3-turbo join the regular draw</h1>
  <p className="mt-3 max-w-3xl">Two new ranked rows on the same draw and common cost basis as v1.6.30. All 57 carried full-draw rows keep their point estimates. d3-turbo changes Capability top fives with relaxed cost caps; official boards and composite top fives are unchanged.</p>

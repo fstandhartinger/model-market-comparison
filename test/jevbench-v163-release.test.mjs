@@ -316,6 +316,8 @@ async function pageModule(root, read = loaderFor(root)) {
     '../../../components/JevBenchV16Board': { JevBenchV16Board: props => React.createElement('div', { 'data-fixture-board': true, 'data-cohort-rows': props.artifact.systems.length, 'data-category-revision': props.categories.revision, 'data-carry-rows': props.carry.rows.length }) },
     '../../../components/JevBenchReleaseVersionNav': { JevBenchReleaseVersionNav: props => React.createElement('nav', { 'data-active': props.active }, 'version navigation') },
     '../../../components/JevHistoryLazy': { JevHistoryLazy: () => React.createElement('div', { 'data-history-lazy': true }) },
+    '../../../lib/seo': { seoTitle: (t) => t },
+    '../../../components/PageJsonLd': { PageJsonLd: () => null },
   });
 }
 test('actual repository: API and page follow the genuine validated bundle', async () => {

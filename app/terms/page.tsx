@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { PageJsonLd } from "../../components/PageJsonLd";
 
-export const metadata: Metadata = { title: "Terms of use" };
+export const metadata: Metadata = { title: "Terms of use", alternates: { canonical: "/terms" } };
 
 // CR-5.5: plain terms for a free, read-only comparison site with optional accounts.
 export default function TermsPage() {
@@ -53,5 +54,6 @@ export default function TermsPage() {
 
     <h2 className="mt-6 mb-2 font-semibold">Law</h2>
     <p>German law applies. Mandatory consumer protection rules of your country of residence remain unaffected.</p>
+    <PageJsonLd meta={metadata} />
   </article>;
 }

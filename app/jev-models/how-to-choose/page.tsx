@@ -13,6 +13,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return jevIntentMetadata({
     path: PATH,
     title: `${TITLE} (${data.month}): ${data.systems.length} models measured`,
+    documentTitle: `Choose a Jev-class model (${data.month})`,
     description: `${DESCRIPTION} Data: ${data.artifact.revision}, ${data.month}.`,
     keywords: ['how to choose a Jev-class model', 'best Jev alternative', 'Jev model speed', 'self-hosted Jev model'],
   });

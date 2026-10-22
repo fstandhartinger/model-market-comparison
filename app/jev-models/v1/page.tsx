@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { readJevbench, jevbenchView, JEVBENCH_REPO } from '../../../lib/jevbench.mjs';
 import { JevModelsBoard } from '../../../components/JevModels';
 import { previewMetadata } from '../../../lib/seo';
+import { PageJsonLd } from '../../../components/PageJsonLd';
 
 // CR-84 (Florian 2026-09-18): "we need a Jev benchmark - to see which of the Jevs is actually good => smart + cheap + fast +
 // reliable + ideally open". JevBench v1 is our own measurement; every number here comes from the committed artifact
@@ -81,5 +82,6 @@ export default async function JevModelsPage() {
         <p>Authors: if we tested the wrong configuration, tell us and we will rerun it. New entrants become v1.1 rather than silently changing v1&apos;s cohort.</p>
       </div>
     </details>
+    <PageJsonLd meta={metadata} />
   </>;
 }

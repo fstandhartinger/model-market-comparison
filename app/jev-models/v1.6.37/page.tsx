@@ -6,12 +6,14 @@ import { JevHistoryLazy } from '../../../components/JevHistoryLazy';
 import { historicalCatalogue } from '../../../lib/jevbench-v162-release.mjs';
 import { withPublicAdapterIds } from '../../../lib/jevbench-v15-release.mjs';
 import { JEVBENCH_COST_RULE, JEVBENCH_COST_RULE_HISTORY } from '../../../lib/jevbench-cost-rule.mjs';
-export const metadata = {title: 'JevBench v1.6.37 · cost of H2O-Lightning-4B and Kahn1 corrected', alternates:{canonical:'/jev-models/v1.6.37'}};
+import { seoTitle } from '../../../lib/seo';
+import { PageJsonLd } from '../../../components/PageJsonLd';
+export const metadata = {title: seoTitle('JevBench v1.6.37 · cost of H2O-Lightning-4B and Kahn1 corrected'), alternates:{canonical:'/jev-models/v1.6.37'}};
 export default async function JevModelsV1637Page() {
  const release=await readOptionalJevbenchV1637Release();if(!release) notFound();
  const board=v1637BoardInput(release);
  const notes=(release.artifact as unknown as {measurement_notes:string[]}).measurement_notes;
- return <><JevBenchReleaseVersionNav active="v1.6.37" />
+ return <><PageJsonLd meta={metadata} /><JevBenchReleaseVersionNav active="v1.6.37" />
  <header className="bh-page-head" data-bh-jev16-release-header><div className="bh-eyebrow">JevBench v1.6.37 · cost correction, no new measurement</div>
  <h1 className="mt-1 text-3xl font-bold">Cost of H2O-Lightning-4B and Kahn1 corrected</h1>
  <p className="mt-3 max-w-3xl">The earlier cost of H2O-Lightning-4B v1.1 and of Kahn1 4B used USD 0.04 per 1M input tokens. The frozen reference for Qwen/Qwen3.5-4B is USD 0.03 per 1M input and USD 0.15 per 1M output (DeepInfra, 25 Sep 2026 snapshot), so both costs are corrected in v1.6.37. No model was run again: Intelligence, Calibration, Capability and Speed of both rows are unchanged, and only their Cost axis, composites and composite intervals move. The corrected rows supersede the 7 Oct v1.6.1 rows on the live boards; the frozen v1.6.1 archive keeps them as published. All 69 carried full-draw rows keep every point estimate.</p>

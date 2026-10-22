@@ -1,8 +1,9 @@
 import { ScatterLoader } from "../../components/deferred/ScatterLoader";
 import { pageDataVersion } from "../../lib/page-data";
+import { PageJsonLd } from "../../components/PageJsonLd";
 
 
-export const metadata = { title: "Cost vs capability" };
+export const metadata = { title: "Cost vs capability", alternates: { canonical: "/scatter" } };
 
 export default async function ScatterPage() {
   const version = await pageDataVersion();
@@ -14,6 +15,7 @@ export default async function ScatterPage() {
         value; the green line is the Pareto frontier.
       </p>
       <ScatterLoader version={version} />
+      <PageJsonLd meta={metadata} />
     </div>
   );
 }

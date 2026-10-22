@@ -1,6 +1,7 @@
 import { EuSotaTableLoader } from "../../components/deferred/EuSotaTableLoader";
 import { pageDataVersion } from "../../lib/page-data";
 import { previewMetadata } from "../../lib/seo";
+import { PageJsonLd } from "../../components/PageJsonLd";
 
 
 // The SOTA open models that are genuinely competitive with the leading US closed
@@ -162,6 +163,7 @@ export default async function EuPage() {
         restrict the interactive comparison views and linked model details to matching offers. Full research with sources lives in
         {" "}<code>data/research/</code> in the repository.
       </p>
+      <PageJsonLd meta={metadata} />
     </div>
   );
 }

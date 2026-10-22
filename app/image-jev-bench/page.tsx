@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { ImageJevV03Page } from '../../components/ImageJevV03Page';
 import release from '../../data/imagejev-v03.json';
+import { seoTitle } from '../../lib/seo';
 
 // Review 6 Oct 2026: version and system count come from the released artifact so they cannot go stale.
 const version = release.revision;
@@ -12,7 +13,7 @@ const description = `Compare image decision models on accuracy, probability cali
 const image = 'https://benchmarkheaven.com/image-jev-bench/opengraph-image';
 
 export const metadata: Metadata = {
-  title,
+  title: seoTitle(title),
   description,
   alternates: { canonical: '/image-jev-bench' },
   openGraph: {
