@@ -161,14 +161,7 @@ p = WT / "data/jevbench-base-models.json"
 d = json.loads(p.read_text())
 d["benchmarks"]["jevbench"].update(base)
 p.write_text(json.dumps(d, indent=2) + "\n")
-# The v1.6.38 archive reader binds the shared topic supplement to v1.6.38's results hash. Once the supplement is re-bound to v1.6.39
-# (which the v1.6.39 reader checks strictly), the v1.6.38 reader must still work: accept the stacked successor's binding (the
-# carried rows' cells are asserted identical by the v1.6.39 build) and keep its own strict check while it is the newest release.
-p = WT / "lib/jevbench-v1638-release.mjs"
-t = p.read_text()
-old = "if(t?.release!=='v1.6.38'||t.results_sha256!==b.results.sha256)fail('comparison topic/results binding');"
-new = "if(!(t?.release==='v1.6.38'&&t.results_sha256===b.results.sha256)&&t?.release!=='v1.6.39')fail('comparison topic/results binding');"
-if new not in t:
-    assert t.count(old) == 1
-    t = t.replace(old, new)
-p.write_text(t)
+# The v1.6.38 archive reader's topic-supplement binding is hardened in lib/jevbench-v1638-release.mjs by hand (v1638TopicSupplementBinds:
+# a v1.6.39-bound supplement is accepted only if the carried cells equal v1.6.38's pinned hash); here only assert it is in place.
+t = (WT / "lib/jevbench-v1638-release.mjs").read_text()
+assert "v1638TopicSupplementBinds(t,b.results.sha256" in t
