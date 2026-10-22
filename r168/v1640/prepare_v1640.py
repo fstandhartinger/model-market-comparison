@@ -140,7 +140,7 @@ e["disclosure"] = (
     "SCORED ON 1,497 OF THE DRAW'S 1,500 ITEMS: 3 items Fastino had already seen through its hosted GLiNER-2.5-Decide on 8 Oct were never sent (custody rule: an item a provider has seen is never scored for that provider). "
     "The row is scored with the unmodified frozen scorer on the draw's gold without those 3 items (a second invocation of the same scorer; the other rows of this board are scored on all 1,500 items). "
     "PROVIDER-HOSTED: Fastino's API serves the model as `glide_v2` (every answered response reported it); the weights and serving were not inspected, and this is not the open-weights GLiDE 1.2 release, which is a separate pending measurement. "
-    "RETENTION: Fastino's default is to retain API inputs; every request carried store:false and every answered response returned the header x-fastino-data-retention: not-stored (checked on all 1,480 answered requests, and on one non-item request before the first item was sent). "
+    "RETENTION: Fastino's default is to retain API inputs; store:false on every request; the vendor's not-stored response header was enforced on every answered request by the run harness (error responses carry no such header by the vendor's documentation). "
     "NOT ANSWERED, counted wrong: 15 items exceed the API's 65,536-token prompt limit (HTTP 400 'prompt exceeds the maximum context length'), counted wrong; and 2 gateway errors (HTTP 502) from Fastino's API, not retried (one pass), counted wrong. "
     "PRICE CHANGED SINCE THE FIRST MEASUREMENT: on 6 Oct 2026 this vendor's GLiDE was listed at USD 0.15 per 1M input tokens with a 40,000-token prompt limit and scored on 600 items (key fastino-glide, Capability 77.0, outside the cost cap); today's tariff is USD 0.04 per 1M input tokens with a 65,536-token limit, and this row is a new measurement on the full draw. The older row stays as history. "
     "Latency was measured from Sandy (Germany) with no API adjustment, while the evaluation host was busy with other work; 2 answered decisions took more than 10 seconds (21.15 s and 76.42 s); v1.6 applies no 10-second rule. "
@@ -159,7 +159,7 @@ dst = B / "runs" / f"{KEY}.jsonl"
 if dst.is_symlink():
     dst.unlink()
 dst.symlink_to(RAW)
-entries = {KEY: dict(raw_sha256=RAW_SHA, custody="admitted by the item-reserve custody gate (one hosted-API use of the open draw, single-use admission consumed)", handoff="run receipt on file", pre_score_review=None)}
+entries = {KEY: dict(raw_sha256=RAW_SHA, custody="admitted by the evaluator exposure gate (single-use admission consumed)", handoff="run receipt on file", pre_score_review=None)}
 rows = {KEY: dict(
     raw_sha256=RAW_SHA, rows=1497, status_counts=status, ok=len(ok), input_tokens=tin, output_tokens=tout,
     common_input_tokens=ci, common_output_tokens=0, over_10s=over10, max_latency_s=round(max(lat), 2), usd_common=usd_common,

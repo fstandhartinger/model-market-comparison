@@ -19,7 +19,7 @@ PRICING_SHA = "aa2afcd5a58d0c4cc0e3d6867d590c70b6ac58e971410c27faf9628f97bcf8b7"
 PREV_PRICING_SHA = "a8a05890ddab2d39d1a1bd543f2b5c83842bdc70aa54766788bc89b7a8a448d7"
 NEW = ["fastino-glide-api"]
 RELEASE_GO = {
-    "fastino-glide-api": "Florian release GO glide-api-release-go (22 Oct 2026); custody admission consumed; scored on 1,497 items (3 custody exclusions)",
+    "fastino-glide-api": "Florian release instruction (22 Oct 2026); custody admission consumed; scored on 1,497 items (3 custody exclusions)",
 }
 sha = lambda p: hashlib.sha256(Path(p).read_bytes()).hexdigest()
 V16 = W / "data/raw/benchmarks/jevbench/v1.6"
@@ -59,7 +59,7 @@ assert old["pricing_module_sha256"] == PREV_PRICING_SHA
 pa = proof["publication_approval"]
 assert pa["top_five_preview"] is None and pa["button_tap"] is False
 assert pa["top_five_effect"] in ("changes", "none") and (pa["top_five_effect"] == "none" or pa["top_five_changed_by"] == ["fastino-glide-api"])
-assert pa["release_go"]["decision"] == "glide-api-release-go"
+assert pa["release_go"]["decision"] == "Florian's release instruction, 22 Oct 2026"
 a = dict(old)
 a.update({
     "release": "v1.6.40", "draw": "v1.6-regular-20261012",

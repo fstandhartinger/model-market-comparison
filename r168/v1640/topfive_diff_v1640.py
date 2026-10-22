@@ -31,7 +31,7 @@ assert all(r['causes'] for r in changed), 'a changed list without a restated row
 by_row = {k: [f"{r['view']}/{r['metric']}" for r in changed if k in r['causes']] for k in causes}
 note = (f'Board effect: the hosted-API row was compared on the merged-board top fives before/after v1.6.40 over all 36 mixed, open-weights and API variants '
         f'(including 7x/10x cost caps with no latency cap) plus 4 release-board lists: {len(changed)} of 40 top-five lists change. ')
-note += ('Top-five changes caused by: ' + ', '.join(causes) + ' (Florian release GO glide-api-release-go). ' if changed else 'No top-five changes; the standing GO applies. ')
+note += ('Top-five changes caused by: ' + ', '.join(causes) + " (Florian's release instruction, 22 Oct 2026). " if changed else 'No top-five changes; the standing GO applies. ')
 d = dict(any_top5_change=bool(changed), entrants_all=causes, by_row=by_row, rows=rows, note=note, merged_variants=36, release_lists=4, changed_lists=len(changed),
          changed_labels=[f"{r['view']}/{r['metric']}" for r in changed])
 (R / 'topfive-diff.json').write_text(json.dumps(d, indent=2) + '\n')

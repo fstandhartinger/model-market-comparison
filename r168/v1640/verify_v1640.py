@@ -67,9 +67,9 @@ for k in NEW:
         )
 _ap = p["publication_approval"]
 assert _ap["top_five_preview"] is None and _ap["button_tap"] is False and "PLACEHOLDER" not in json.dumps([p, r])
-assert _ap["release_go"]["decision"] == "glide-api-release-go"
+assert _ap["release_go"]["decision"] == "Florian's release instruction, 22 Oct 2026"
 if _ap["top_five_effect"] == "changes":
-    assert _ap["top_five_changed_by"] == ["fastino-glide-api"] and _ap["top_five_authority"].startswith("Florian's release GO glide-api-release-go")
+    assert _ap["top_five_changed_by"] == ["fastino-glide-api"] and _ap["top_five_authority"].startswith("Florian's release instruction (22 Oct 2026)")
 else:
     assert _ap["top_five_effect"] == "none" and "top_five_changed_by" not in _ap
 for f in paths:

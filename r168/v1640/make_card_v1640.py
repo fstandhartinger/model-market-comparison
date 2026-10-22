@@ -27,7 +27,7 @@ body{{margin:0;background:#101724;color:#f2f5fa;font:30px/1.25 system-ui,sans-se
 .s{{color:#a5b2c9;font-size:28px;margin-bottom:22px}}.k{{display:flex;gap:16px;margin:10px 0 26px}}.k div{{background:#18253d;border-radius:14px;padding:14px 18px;flex:1}}.k b{{font-size:40px;color:#42d4e8}}
 .r{{background:#18253d;border-radius:14px;padding:12px 18px;margin:12px 0}}.h{{color:#ffb15b;font-size:27px;margin-bottom:4px}}.a span{{display:inline-block;margin-right:16px;font-size:27px}}.n{{color:#42d4e8;font-weight:700}}</style>
 <div class=w><h1>Fastino GLiDE (hosted) enters {d['changed_lists']} of 40 top fives</h1>
-<div class=s>v1.6.40, scored on 1,497 of 1,500 items (3 already-seen items never sent). API + combined boards only; no open-weights list changes. Release GO: glide-api-release-go.</div>
+<div class=s>v1.6.40, scored on 1,497 of 1,500 items (3 already-seen items never sent). API + combined boards only; no open-weights list changes. Release instruction: Florian, 22 Oct 2026.</div>
 <div class=k><div>Composite A<br><b>{f2(n['scores']['A'])}</b></div><div>Capability<br><b>{f2(n['capability'])}</b></div><div>Cost / 1k<br><b>${n['cost']['usd_per_1000']:.4f}</b></div><div>Rank A<br><b>#{n['ranks']['A']}</b></div></div>{rows}</div>"""
 async def main():
     async with async_playwright() as pw:

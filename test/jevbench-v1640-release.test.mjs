@@ -28,7 +28,7 @@ test('v1.6.40 hosted-API row, carried scores/intervals, full category coverage',
  assert.equal(n.derived_gold_sha256,proof.extra_invocations['fastino-glide-api'].derived_gold_sha256);
  assert.equal(proof.extra_invocations['fastino-glide-api'].scorer_sha256,'02132271117653e6302c509232a581d0094f0e78eac8b1bfc67596fd5d5097e9');
  assert.equal(proof.extra_invocations['fastino-glide-api'].scorer_modified,false);
- assert.equal(proof.publication_approval.release_go.decision,'glide-api-release-go');
+ assert.equal(proof.publication_approval.release_go.decision,"Florian's release instruction, 22 Oct 2026");
 });
 for(const [label,mutate] of [
  ['carried interval',b=>{b.artifact.systems.find(s=>s.key==='jev-1.14.0').composite_ci95.A[0]+=1}],
@@ -42,6 +42,8 @@ for(const [label,mutate] of [
  ['approval authority text',b=>{b.proof.publication_approval.top_five_authority='Florian GO'}],
  ['custody exclusion removed',b=>{delete b.artifact.systems.find(s=>s.key==='fastino-glide-api').custody_exclusion}],
  ['custody exclusion wrong count',b=>{b.artifact.systems.find(s=>s.key==='fastino-glide-api').custody_exclusion.items=2}],
+ ['custody exclusion wrong derived-gold hash',b=>{b.artifact.systems.find(s=>s.key==='fastino-glide-api').custody_exclusion.derived_gold_sha256='a'.repeat(64)}],
+ ['custody exclusion wrong exclusion-list hash',b=>{b.artifact.systems.find(s=>s.key==='fastino-glide-api').custody_exclusion.exclusion_list_sha256='b'.repeat(64)}],
  ['release GO removed',b=>{delete b.proof.publication_approval.release_go}],
  ['approval removed effect',b=>{b.proof.publication_approval.top_five_effect='none';delete b.proof.publication_approval.top_five_changed_by;delete b.proof.publication_approval.top_five_authority}],
  ['approval placeholder',b=>{b.proof.publication_approval.top_five_authority='PLACEHOLDER'}],

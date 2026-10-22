@@ -29,9 +29,9 @@ proof = load(V / "jevbench-v1.6.40-proof.json")
 pa = proof["publication_approval"]
 assert pa["top_five_preview"] is None and pa["button_tap"] is False
 assert pa["top_five_effect"] == ("changes" if td["any_top5_change"] else "none")
-assert pa["release_go"]["decision"] == "glide-api-release-go"
+assert pa["release_go"]["decision"] == "Florian's release instruction, 22 Oct 2026"
 if td["any_top5_change"]:
-    assert pa["top_five_changed_by"] == ["fastino-glide-api"] and pa["top_five_authority"].startswith("Florian's release GO glide-api-release-go")
+    assert pa["top_five_changed_by"] == ["fastino-glide-api"] and pa["top_five_authority"].startswith("Florian's release instruction (22 Oct 2026)")
 assert "PLACEHOLDER" not in json.dumps(proof) and "PLACEHOLDER" not in (V / "jevbench-v1.6.40-results.json").read_text()
 assert proof["pricing_module_sha256"].startswith("aa2afcd5") and proof["predecessor_pricing_module_sha256"].startswith("a8a05890")
 res = load(V / "jevbench-v1.6.40-results.json")

@@ -46,7 +46,7 @@ export function validateJevbenchV1640Bundle({manifest,artifact,categories,proof,
  if(proof.revision!=='v1.6.40')fail('proof revision');
  if(proof.pricing_module_sha256!==V1640_PRICING_MODULE_SHA256)fail('pricing module pin');
  for(const k of V1640_NEW_KEYS){const p=proof.new_rows[k];const s=by.get(k);if(p.raw_sha256!==proof.raw_sha256[k]||p.usd_per_1000!==s.cost.usd_per_1000||p.ranked!==s.ranked||p.hosted_api!==true||p.scored_items!==1497||p.rows!==1497)fail('proof row '+k)}
- const a=proof.publication_approval;if(a.release_go?.decision!=='glide-api-release-go'||a.release_go.date!=='2026-10-22')fail('release GO authority');
+ const a=proof.publication_approval;if(a.release_go?.decision!=="Florian's release instruction, 22 Oct 2026"||a.release_go.date!=='2026-10-22')fail('release GO authority');
  if(JSON.stringify(proof).includes('PLACEHOLDER')||JSON.stringify(artifact).includes('PLACEHOLDER'))fail('approval placeholder not filled');
  if(typeof proof.authority!=='string'||!proof.authority.startsWith(previous.proof.authority+' NEW in v1.6.40:'))fail('inherited authority unchanged');
  const newAuthority=proof.authority.slice(previous.proof.authority.length);
@@ -57,7 +57,7 @@ export function validateJevbenchV1640Bundle({manifest,artifact,categories,proof,
   if('top_five_changed_by' in a||'top_five_authority' in a||!note.includes('no top-five list changes'))fail('no-card approval provenance');
  }else{
   const ch=a.top_five_changed_by;if(a.top_five_effect!=='changes'||!Array.isArray(ch)||!ch.length||!ch.every(k=>V1640_NEW_KEYS.includes(k)))fail('approval and top-five effect disagree');
-  if(a.top_five_authority!=="Florian's release GO glide-api-release-go (22 Oct 2026) covers any top-five move; no top-five preview card sent, none claimed"||!note.includes("Florian's release instruction for this row (22 Oct 2026) covers any top-five move")||!newAuthority.includes('Publication authority: Florian\'s release GO for the hosted GLiDE row (glide-api-release-go, 22 Oct 2026) covers any top-five move; no Telegram preview card was sent'))fail('release GO binding');
+  if(a.top_five_authority!=="Florian's release instruction (22 Oct 2026) covers any top-five move; no top-five preview card sent, none claimed"||!note.includes("Florian's release instruction for this row (22 Oct 2026) covers any top-five move")||!newAuthority.includes('Publication authority: Florian\'s release instruction for the hosted GLiDE row (22 Oct 2026) covers any top-five move; no Telegram preview card was sent'))fail('release GO binding');
  }
  same(Object.keys(a.asks).sort(),V1640_NEW_KEYS,'release asks');
  return {manifest,artifact,categories,proof};

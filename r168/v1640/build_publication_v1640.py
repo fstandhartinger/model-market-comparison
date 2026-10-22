@@ -141,7 +141,7 @@ tf = (
     else None
 )
 GO = {
-    "decision": "glide-api-release-go",
+    "decision": "Florian's release instruction, 22 Oct 2026",
     "date": "2026-10-22",
     "quote": "also release it on JevBench right away",
     "scope": "this hosted GLiDE row, including any top-five move",
@@ -155,7 +155,7 @@ approval = {
     "asks": {
         k: dict(
             key=k,
-            relay="Florian's release instruction for the hosted GLiDE row (glide-api-release-go)",
+            relay="Florian's release instruction for the hosted GLiDE row (22 Oct 2026)",
             handoff=ent[k]["handoff"],
             admission=ent[k]["custody"],
         )
@@ -168,8 +168,8 @@ approval = {
 if tf and tf["any_top5_change"]:
     assert set(tf["entrants_all"]) <= set(newkeys)
     approval["top_five_changed_by"] = sorted(tf["entrants_all"])
-    approval["top_five_authority"] = "Florian's release GO glide-api-release-go (22 Oct 2026) covers any top-five move; no top-five preview card sent, none claimed"
-approval_marker = "Publication authority: Florian's release GO for the hosted GLiDE row (glide-api-release-go, 22 Oct 2026) covers any top-five move; no Telegram preview card was sent and no button was pressed."
+    approval["top_five_authority"] = "Florian's release instruction (22 Oct 2026) covers any top-five move; no top-five preview card sent, none claimed"
+approval_marker = "Publication authority: Florian's release instruction for the hosted GLiDE row (22 Oct 2026) covers any top-five move; no Telegram preview card was sent and no button was pressed."
 notes = [
     "v1.6.40 adds one hosted-API row: Fastino's GLiDE, measured on 22 Oct 2026 (key fastino-glide-api). It is scored on 1,497 of the draw's 1,500 items: 3 items Fastino had already seen through its hosted GLiNER-2.5-Decide on 8 Oct were never sent (custody rule), and the row is scored on the draw's gold without them. All carried rows retain every field except rank/ranks, including published confidence intervals. This release uses the v1.6 method; the 10-second rule does not apply. "
     + "Fastino GLiDE is priced from the operator's published standard tariff, USD 0.04/M input tokens and no output charge (interpretation I-1). It is a new measurement, not a replacement: the 6 Oct 2026 measurement of this vendor's GLiDE (key fastino-glide, tariff then USD 0.15/M input, 40,000-token prompt limit, 600 items) stays on the board as history.",
@@ -322,7 +322,7 @@ proof["predecessor_seal_sha256"] = sha(
 proof[
     "authority"
 ] += (
-    " NEW in v1.6.40: one hosted-API addition (Fastino GLiDE, scored on 1,497 of 1,500 items); Florian's release GO glide-api-release-go"
+    " NEW in v1.6.40: one hosted-API addition (Fastino GLiDE, scored on 1,497 of 1,500 items); Florian's release instruction (22 Oct 2026)"
 + ("; top-five lists change. " + approval_marker if tf and tf["any_top5_change"] else "; no top-five list changes, no preview card, no button tap.")
 )
 put(V / f"jevbench-{REV}-proof.json", proof)

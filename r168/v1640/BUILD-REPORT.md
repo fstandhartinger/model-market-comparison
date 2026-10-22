@@ -1,6 +1,6 @@
 # JevBench v1.6.40 — one hosted-API row: Fastino GLiDE (`fastino-glide-api`), scored on 1,497 of 1,500 items
 
-Base: origin/main 3859fdfc (v1.6.39 sealed + CR-538). ONE local commit, review PENDING (independent review not yet run), no approval placeholder: Florian's release GO `glide-api-release-go` (DECISIONS 22 Oct 2026 ~20:4xZ, covers any top-five move) is recorded in the proof; no preview card is claimed.
+Base: origin/main 3859fdfc (v1.6.39 sealed + CR-538). ONE local commit, review PENDING (independent review not yet run), no approval placeholder: Florian's release GO `Florian's release instruction, 22 Oct 2026` (DECISIONS 22 Oct 2026 ~20:4xZ, covers any top-five move) is recorded in the proof; no preview card is claimed.
 Pricing module `pricing_v15.py` sha256 aa2afcd5a58d0c4cc0e3d6867d590c70b6ac58e971410c27faf9628f97bcf8b7 (live; every v1.6.39-derived script re-pinned from a8a05890: prepare, score, build_publication, verify, final_sanity, freeze (new + predecessor sha), lib template, pricing_preflight (kept for history, not run), freeze seal note). Frozen scorer sha256 02132271… unmodified.
 
 ## Row
