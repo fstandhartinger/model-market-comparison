@@ -231,7 +231,7 @@ notes = [
         if tf and tf["any_top5_change"]
         else "Publication of v1.6.38: paid fast-lane rows (29 Sep 2026 paid publication exception); no top-five list changes, so no top-five preview card was sent and none is claimed; no Telegram button was pressed."
     )
-    + " Independent review remains PENDING.",
+    ,
 ]
 for k in newkeys:
     s = out[k]
@@ -350,7 +350,6 @@ proof[
 ] += (
     " NEW in v1.6.38: " + NW + " paid public fast-lane additions; paid publication exception"
 + (" plus Florian's top-five preview approval. " + approval_marker if tf and tf["any_top5_change"] else "; no top-five list changes, no preview card, no button tap.")
-+ " Independent review PENDING."
 )
 put(V / f"jevbench-{REV}-proof.json", proof)
 pub = cp(old["publication"])
