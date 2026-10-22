@@ -7,8 +7,8 @@ if [ ! -d "$DEST/.git" ]; then
   git -C "$DEST" init -q
   mkdir -p "$DEST/.git/objects/info"
   git -C "$WT" rev-parse --path-format=absolute --git-common-dir | sed 's|$|/objects|' > "$DEST/.git/objects/info/alternates"
-  git -C "$DEST" read-tree 86e8505b
-  git -C "$DEST" update-ref HEAD 86e8505b
+  git -C "$DEST" read-tree cfb2c604
+  git -C "$DEST" update-ref HEAD cfb2c604
 fi
 ln -sfn /opt/model-market-comparison/node_modules "$DEST/node_modules"
 python3 - "$DEST" <<'PY'
