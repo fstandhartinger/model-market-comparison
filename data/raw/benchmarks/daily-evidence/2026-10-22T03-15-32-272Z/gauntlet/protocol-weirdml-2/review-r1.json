@@ -1,0 +1,46 @@
+{
+  "artifact_id": "protocol-weirdml-2",
+  "artifact_sha256": "6bd60c5766dad9d19f8ad87594eec4ade45889654f1ab0b2516e23568e5c4ae7",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": ["weirdml::2", "c1", "c2"],
+  "errors_found": 4,
+  "findings": [
+    {
+      "id": "weirdml::2-version-mismatch",
+      "severity": "blocker",
+      "location": "row weirdml::2, fields version and version_guard",
+      "evidence": "Row version='2' and version_guard='Verify the published version 2 before reading results.' SOURCE 1 (httihle.github.io/weirdml.html) states 'WeirdML v3' and lists 'Previous versions: WeirdML v2 · WeirdML v1', so the current published version is 3, not 2.",
+      "repair": "Update version to 3 and version_guard accordingly, or convert the row to retained for the v2 board; do not claim version 2 as the current published protocol."
+    },
+    {
+      "id": "weirdml::2-metric-mismatch",
+      "severity": "blocker",
+      "location": "row weirdml::2, scoring.metric and description task count",
+      "evidence": "Row scoring.metric says 'Average Max Accuracy ... maximum test accuracy across the 5 iterations per run, averaged over all 17 tasks'. SOURCE 1 scoring says 'official score is 80% normalized area under its line on a logarithmic token axis, plus 20% of its final value' with '11 complex hand-made tasks' and 15 configurations. The stated metric and task count therefore do not match the protocol.",
+      "repair": "Replace scoring.metric with the protocol's scoring rule (80% normalized area under the best-so-far curve plus 20% final value, equally weighted across 11 tasks) and correct the task count to 11; align description with the v3 protocol text."
+    },
+    {
+      "id": "weirdml::2-lifecycle-mismatch",
+      "severity": "blocker",
+      "location": "row weirdml::2, fields status and superseded_by",
+      "evidence": "Row status='active' and superseded_by=null. SOURCE 1 identifies 'WeirdML v3' as current and labels v2 as a previous version, indicating that the v2 board has been replaced/superseded by v3.",
+      "repair": "Set status='retained' and superseded_by to the registry id for WeirdML v3 (e.g., weirdml::3 if that id exists), or provide distinct evidence that the v2 board is still independently reported."
+    },
+    {
+      "id": "weirdml::2-version_status-mismatch",
+      "severity": "major",
+      "location": "row weirdml::2, field version_status",
+      "evidence": "version_status='published' asserts the row's version copies a current published release identifier, but the row version '2' does not match the current page's published 'WeirdML v3'.",
+      "repair": "Set version_status='retained' for the superseded v2 board with version frozen, unless evidence shows v2 is still separately published and refreshed."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "The generated value-scale summary (162 finite values, lowest 1.729411764705882, highest 93.57264705882352) supports unit='percent' and range=[0,100] for the served scale, so I do not flag unit/range despite SOURCE 1 not stating the scale.",
+    "The generated activity summary says 2 model rows changed today, which would affirm status 'active' for the board it summarizes; however SOURCE 1 identifies the current board as WeirdML v3 while the row is weirdml::2, so the summary cannot establish that the v2 board is still reported.",
+    "I cannot recompute SHA-256 hashes or execute transport/qualification checks; owner-side hash and qualification verification was not independently executed in this review.",
+    "The successor registry id for WeirdML v3 is our own registry value and is not expected to appear verbatim in the protocol text; I did not treat its absence as missing evidence."
+  ],
+  "missing_evidence": []
+}

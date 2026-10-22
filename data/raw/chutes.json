@@ -1,6 +1,6 @@
 {
   "source": "Chutes — llm.chutes.ai/v1/models (first-party, public catalog)",
-  "collected_at": "2026-10-20",
+  "collected_at": "2026-10-22",
   "method": "scripts/fetch-chutes-catalog.mjs: one GET of the public catalog; prices are price.{input,output,input_cache_read}.usd per 1M tokens; curated model_name/provider_org carried over by exact tee_model_id; new ids marked mapping=derived. See chutes.method.md.",
   "models": [
     {
@@ -66,6 +66,16 @@
       "tee_model_id": "zai-org/GLM-5.1-TEE"
     },
     {
+      "model_name": "Qwen3.5-397B-A17B",
+      "provider_org": "Alibaba",
+      "input_per_1m_usd": 0.45,
+      "output_per_1m_usd": 3,
+      "cache_read_per_1m_usd": 0.045,
+      "context_length": 262144,
+      "confidential_compute": true,
+      "tee_model_id": "Qwen/Qwen3.5-397B-A17B-TEE"
+    },
+    {
       "model_name": "DeepSeek V4 Flash 0731",
       "provider_org": "DeepSeek",
       "input_per_1m_usd": 0.44,
@@ -75,16 +85,6 @@
       "context_length": 1048576,
       "tee_model_id": "deepseek-ai/DeepSeek-V4-Flash-0731-TEE",
       "notes": "Added 2026-08-26 from llm.chutes.ai"
-    },
-    {
-      "model_name": "Qwen3.5-397B-A17B",
-      "provider_org": "Alibaba",
-      "input_per_1m_usd": 0.45,
-      "output_per_1m_usd": 3,
-      "cache_read_per_1m_usd": 0.045,
-      "context_length": 262144,
-      "confidential_compute": true,
-      "tee_model_id": "Qwen/Qwen3.5-397B-A17B-TEE"
     },
     {
       "model_name": "GLM-5.2",
@@ -129,6 +129,16 @@
       "tee_model_id": "unsloth/Mistral-Nemo-Instruct-2407-TEE"
     },
     {
+      "model_name": "Qwen3-235B-A22B",
+      "provider_org": "Alibaba",
+      "input_per_1m_usd": 0.2989,
+      "output_per_1m_usd": 1.1957,
+      "cache_read_per_1m_usd": 0.02989,
+      "context_length": 262144,
+      "confidential_compute": true,
+      "tee_model_id": "Qwen/Qwen3-235B-A22B-Thinking-2507-TEE"
+    },
+    {
       "model_name": "Nemotron-3-Nano-Omni-30B",
       "provider_org": "NVIDIA",
       "input_per_1m_usd": 0.0245,
@@ -138,19 +148,9 @@
       "confidential_compute": true,
       "tee_model_id": "Nemotron-3-Nano-Omni-30B-TEE",
       "notes": "Added 2026-08-26 from llm.chutes.ai (root nvidia/Nemotron-3-Nano-Omni-30B-A3B-Reasoning-BF16)"
-    },
-    {
-      "model_name": "Qwen3-235B-A22B",
-      "provider_org": "Alibaba",
-      "input_per_1m_usd": 0.2989,
-      "output_per_1m_usd": 1.1957,
-      "cache_read_per_1m_usd": 0.02989,
-      "context_length": 262144,
-      "confidential_compute": true,
-      "tee_model_id": "Qwen/Qwen3-235B-A22B-Thinking-2507-TEE"
     }
   ],
-  "response_sha256": "564902bb64809c51bf837d425819fbd8862c720f8c7dd34303cfaf1ed3fb4f06",
+  "response_sha256": "a94c349780477116231378505638454db6794ad391ddff993274aa1296d5bd07",
   "diff": {
     "added": [],
     "removed": [],

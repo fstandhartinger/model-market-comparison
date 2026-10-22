@@ -1,10 +1,10 @@
 {
   "source": "STACKIT AI Model Serving",
   "region": "eu01 (Germany South)",
-  "collected_at": "2026-10-14",
+  "collected_at": "2026-10-22",
   "listing_url": "https://docs.stackit.cloud/products/data-and-ai/ai-model-serving/basics/available-shared-models/",
   "pricing_url": "https://stackit.com/en/products/data-ai/stackit-ai-model-serving",
-  "method": "scripts/fetch-stackit-catalog.mjs (2026-10-14): model list from the first-party Available Shared Models documentation (page last updated 2026-09-08; Type Chat rows under Text Models, embedding models excluded), each model's billing category and status from its Facts table. Token prices from the EU01 (Germany South) SKU table on the STACKIT AI Model Serving product page: LLM-Standard 0.15/0.25 EUR, LLM-Premium 1.5/1.75 EUR, LLM-Plus 0.45/0.65 EUR per 1M input/output tokens, mapped via each model's billing category. USD = EUR x 1.1188 (ECB euro reference rate of 2026-10-13, latest available on 2026-10-14), four decimal places. See stackit.method.md.",
+  "method": "scripts/fetch-stackit-catalog.mjs (2026-10-22): model list from the first-party Available Shared Models documentation (page last updated 2026-10-15; Type Chat rows under Text Models, embedding models excluded), each model's billing category and status from its Facts table. Token prices from the EU01 per-model price table on the STACKIT AI Model Serving product page: LLM-Plus 0.45/0.65 EUR, LLM-Standard 0.15/0.25 EUR, LLM-Premium 1.5/1.75 EUR per 1M input/output tokens, mapped via each model's billing category and cross-checked against the row's own billing SKU. USD = EUR x 1.1234 (ECB euro reference rate of 2026-10-21, latest available on 2026-10-22), four decimal places. See stackit.method.md.",
   "models": [
     {
       "model_name": "Qwen3 VL 235B A22B Instruct",
@@ -13,8 +13,8 @@
       "billing_category": "LLM-Premium",
       "input_per_1m_eur": 1.5,
       "output_per_1m_eur": 1.75,
-      "input_per_1m_usd": 1.6782,
-      "output_per_1m_usd": 1.9579,
+      "input_per_1m_usd": 1.6851,
+      "output_per_1m_usd": 1.966,
       "region": "eu01",
       "server_location": "Germany South",
       "eu_hosted": true,
@@ -29,8 +29,8 @@
       "billing_category": "LLM-Plus",
       "input_per_1m_eur": 0.45,
       "output_per_1m_eur": 0.65,
-      "input_per_1m_usd": 0.5035,
-      "output_per_1m_usd": 0.7272,
+      "input_per_1m_usd": 0.5055,
+      "output_per_1m_usd": 0.7302,
       "region": "eu01",
       "server_location": "Germany South",
       "eu_hosted": true,
@@ -46,8 +46,8 @@
       "billing_category": "LLM-Plus",
       "input_per_1m_eur": 0.45,
       "output_per_1m_eur": 0.65,
-      "input_per_1m_usd": 0.5035,
-      "output_per_1m_usd": 0.7272,
+      "input_per_1m_usd": 0.5055,
+      "output_per_1m_usd": 0.7302,
       "region": "eu01",
       "server_location": "Germany South",
       "eu_hosted": true,
@@ -62,8 +62,8 @@
       "billing_category": "LLM-Plus",
       "input_per_1m_eur": 0.45,
       "output_per_1m_eur": 0.65,
-      "input_per_1m_usd": 0.5035,
-      "output_per_1m_usd": 0.7272,
+      "input_per_1m_usd": 0.5055,
+      "output_per_1m_usd": 0.7302,
       "region": "eu01",
       "server_location": "Germany South",
       "eu_hosted": true,
@@ -78,8 +78,8 @@
       "billing_category": "LLM-Plus",
       "input_per_1m_eur": 0.45,
       "output_per_1m_eur": 0.65,
-      "input_per_1m_usd": 0.5035,
-      "output_per_1m_usd": 0.7272,
+      "input_per_1m_usd": 0.5055,
+      "output_per_1m_usd": 0.7302,
       "region": "eu01",
       "server_location": "Germany South",
       "eu_hosted": true,
@@ -88,30 +88,14 @@
       "notes": "Text input/output; tool calling and reasoning; MXFP4."
     },
     {
-      "model_name": "Gemma 3 27B",
-      "model_id": "google/gemma-3-27b-it",
-      "provider_org": "Google",
-      "billing_category": "LLM-Plus",
-      "input_per_1m_eur": 0.45,
-      "output_per_1m_eur": 0.65,
-      "input_per_1m_usd": 0.5035,
-      "output_per_1m_usd": 0.7272,
-      "region": "eu01",
-      "server_location": "Germany South",
-      "eu_hosted": true,
-      "status": "deprecated",
-      "context_length_label": "131K",
-      "notes": "Text+image input, text output; BF16. Status changed to Deprecated in the 2026-08-24 docs update (still listed and served)."
-    },
-    {
       "model_name": "Gemma 4 31B",
       "model_id": "google/gemma-4-31B-it",
       "provider_org": "Google",
       "billing_category": "LLM-Plus",
       "input_per_1m_eur": 0.45,
       "output_per_1m_eur": 0.65,
-      "input_per_1m_usd": 0.5035,
-      "output_per_1m_usd": 0.7272,
+      "input_per_1m_usd": 0.5055,
+      "output_per_1m_usd": 0.7302,
       "region": "eu01",
       "server_location": "Germany South",
       "eu_hosted": true,
@@ -126,8 +110,8 @@
       "billing_category": "LLM-Standard",
       "input_per_1m_eur": 0.15,
       "output_per_1m_eur": 0.25,
-      "input_per_1m_usd": 0.1678,
-      "output_per_1m_usd": 0.2797,
+      "input_per_1m_usd": 0.1685,
+      "output_per_1m_usd": 0.2809,
       "region": "eu01",
       "server_location": "Germany South",
       "eu_hosted": true,
@@ -136,22 +120,24 @@
       "notes": "Text input/output; tool calling and reasoning; MXFP4."
     }
   ],
-  "fx_eur_usd": 1.1188,
+  "fx_eur_usd": 1.1234,
   "usd_normalization": {
     "status": "applied",
-    "eur_to_usd": 1.1188,
-    "fx_rate_date": "2026-10-13",
+    "eur_to_usd": 1.1234,
+    "fx_rate_date": "2026-10-21",
     "source": "https://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml",
     "rounding": "4 decimal places"
   },
-  "docs_last_updated": "2026-09-08",
+  "docs_last_updated": "2026-10-15",
   "response_sha256": {
-    "docs": "bcd9a4f07b07baa03a3f22a222be5e7adedd9a843d6a9eb035d7fd24a847e661",
-    "product": "9de4e90c24a21a97ab05edb1e4207bc10b8729ccd5e3091f380e8fa57580ef56"
+    "docs": "1d1e778e824c6744b82fcb821d9b76a8692082a8508b56ca6f89846c14eed5dd",
+    "product": "fbef1bd2805fcdfde59b028c48895d78c2f4d932507406d0065c6bc38072ddb2"
   },
   "diff": {
     "added": [],
-    "removed": [],
+    "removed": [
+      "google/gemma-3-27b-it"
+    ],
     "category_or_status_changed": [],
     "eur_price_changed": []
   }

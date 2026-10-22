@@ -1,0 +1,16 @@
+{
+  "artifact_id": "scores-4",
+  "artifact_sha256": "6ad675e1f658010596e8f6d5def067e021cd625b882f444c45997736deb27a09",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": ["public:4f4e2fef318cf43ecae51936", "public:3bd0673125088fba0d0c261e", "public:0fac0f950b7f45e74355c595", "c1"],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Owner separately executes hash/transport/qualification checks; I cannot recompute hashes or re-fetch sources, so those checks are not independently verified by me.",
+    "The UGI metric's internal weighting and task set are not published by the maintainer (test questions kept private); the artifact correctly does not assert any derivation beyond the published composite and leaves comparison_key null.",
+    "Three board rows showed value changes today per SOURCE 4 (new values on previously empty rows); the two equal 33.33 values are distinct rows (1326 low vs 1327 medium) and remain as published."
+  ],
+  "missing_evidence": []
+}

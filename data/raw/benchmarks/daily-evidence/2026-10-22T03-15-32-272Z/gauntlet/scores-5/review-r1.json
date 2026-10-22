@@ -1,0 +1,18 @@
+{
+  "artifact_id": "scores-5",
+  "artifact_sha256": "0348b4194573a98ab494608a6a9f939a97d27e81a65d659797fad0543891906f",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": ["public:98884dede89793d6c2885e26", "c1"],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Cannot independently recompute artifact sha256 or row sha256 (owner-run hash/transport checks); accepted the provided bindings per instructions.",
+    "SOURCE 11 scale summary states the new_score field serves 136 values with lowest 8 and highest 54.64, which is inconsistent with this row's hash-verified source new_score=0.472 (SOURCE 1, source_index 133). The summary is tool-generated extrapolation; the captured source row is authoritative. Resolution outside my scope.",
+    "published_at is null in the row and no maintainer publication timestamp is present in either source; retrieved_at is presented as the source date.",
+    "The maintainer serves new_score=0.472 (fraction-scale per this row) while the scale summary implies percent-scale publication; the derive-by-100 telling is internally consistent within SOURCE 1 but the field's native unit cannot be independently confirmed from the sources.",
+    "SOURCE 10 reports 1 new_score value appeared today (1 row with none before), consistent with a newly published Gemini 4 Argon low score; activity summary is tool-generated, not maintainer text."
+  ],
+  "missing_evidence": []
+}

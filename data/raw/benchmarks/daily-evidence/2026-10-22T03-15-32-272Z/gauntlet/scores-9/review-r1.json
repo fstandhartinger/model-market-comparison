@@ -1,0 +1,37 @@
+{
+  "artifact_id": "scores-9",
+  "artifact_sha256": "9cb5a45a910311cdafebd7f1d281e06e990e1f54c43ddd21dfe62cbefd1c36c0",
+  "round": 1,
+  "verdict": "blocked",
+  "coverage_checked": [
+    "vendor:mistralai/Devstral-2-123B-Instruct-2512:swe-bench-verified::snapshot-2026-09-10",
+    "vendor:mistralai/Devstral-Small-2-24B-Instruct-2512:swe-bench-verified::snapshot-2026-09-10",
+    "c1"
+  ],
+  "errors_found": 2,
+  "findings": [
+    {
+      "id": "c1-benchmark-version",
+      "severity": "blocker",
+      "location": "benchmark_id in both rows",
+      "evidence": "Primary source text states only 'SWE-bench Verified' with no version/snapshot indicator; row benchmark_id includes 'snapshot-2026-09-10' which is absent from the captured source content.",
+      "repair": "Remove the unsupported 'snapshot-2026-09-10' from benchmark_id or obtain primary evidence that specifies that snapshot version."
+    },
+    {
+      "id": "c1-published-date",
+      "severity": "major",
+      "location": "source.published_at and source.retrieved_at in both rows",
+      "evidence": "Source content includes the blog post date 'December 9, 2025'; rows set published_at=null while only retrieved_at is populated, so the required source date is not faithfully transcribed.",
+      "repair": "Set published_at to the date shown in the source content (e.g., '2025-12-09' or equivalent ISO-8601 with timezone) for both rows."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "Cannot execute hash verification or transport checks; the owner-provided sha256 values are assumed correct.",
+    "The subject model_id fields (e.g., 'devstral-2-123b::default', 'devstral-small-2::default') are internal canonical identifiers not present in the source text; mapping to vendor names is plausible but not independently verifiable from the packet.",
+    "The required row identity includes the snapshot date; if that is fixed by the packet, the source still lacks the snapshot, leaving an unresolved conflict between acceptance criterion c1 and the required identity."
+  ],
+  "missing_evidence": [
+    "Benchmark snapshot/version for SWE-bench Verified (source only says 'SWE-bench Verified' without any version or snapshot identifier)"
+  ]
+}

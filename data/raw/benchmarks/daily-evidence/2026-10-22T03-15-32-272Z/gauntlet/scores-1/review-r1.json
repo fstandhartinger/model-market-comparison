@@ -1,0 +1,28 @@
+{
+  "artifact_id": "scores-1",
+  "artifact_sha256": "c1c8f2e2830653f6387c6e7b8f132e55cac9b35469e30d65f0d7c5f61e15c4e1",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "public:9647c42134ff6236c7542849",
+    "public:9c10225279ba53430097fc99",
+    "public:1629381ae209ee92a651c57d",
+    "public:8d1ac0dbc9ec976a1f24557f",
+    "public:2aeddc2c36df2d1afc0c2c09",
+    "public:f6389ef5dde114f3d82f69de",
+    "public:8b18f9ce1b3b42c8d747988a",
+    "public:7c2a3b3cc02951a9000d8a11",
+    "c1"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Hashes (per-row source binding and artifact sha256) were not independently recomputed; owner executes these.",
+    "The protocol string is a registry/board attribution, not a claim of fresh measurement; retained source context accepted as-is.",
+    "Comparison_key left null per rules; human-alias inference not applied.",
+    "Published blog and leaderboard pages were only excerpted; verification limited to quoted excerpts.",
+    "ModelReleaseDate, provider, cost and harness labels are transcribed from source context fields, not separately re-verified."
+  ],
+  "missing_evidence": []
+}

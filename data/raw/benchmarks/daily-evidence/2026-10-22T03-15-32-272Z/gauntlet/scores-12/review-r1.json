@@ -1,0 +1,16 @@
+{
+  "artifact_id": "scores-12",
+  "artifact_sha256": "e9cb29bb8f744425bfd1a7aca1a83bdad6c5b27b9d11ef599bc3c5b1914671f5",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": ["vendor:DeepSeek-V3:longbench::2", "c1"],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Primary evidence does not state a separate publication date; source date is inferred from arXiv ID 2412 and the source_id string rather than an explicit date field.",
+    "The variant label 'default' is not explicitly named in the source; however comparison_key is null, so no unknown configuration key is created.",
+    "The source.file basename appears shorter than the source sha256, but this is internal storage metadata outside the required primary observation fields and not treated as a discrepancy."
+  ],
+  "missing_evidence": []
+}

@@ -1,0 +1,25 @@
+{
+  "artifact_id": "protocol-programbench-1",
+  "artifact_sha256": "ee34657643bde05d004d0d13cf33b294ef9dfecc554b187cfd4aa3e7f9ab7fdd",
+  "round": 2,
+  "verdict": "revise",
+  "coverage_checked": ["programbench::1", "c1", "c2"],
+  "errors_found": 1,
+  "findings": [
+    {
+      "id": "programbench::1-version_status",
+      "severity": "major",
+      "location": "programbench::1 fields version_status / version",
+      "evidence": "None of SOURCES 1-8 publishes a release/version identifier for the ProgramBench board: programbench.com and /extended/ carry only an update stamp (\"Updated Sep. 28, 2026\") and task count (\"200 tasks\"); the registry README, main README, submission.py and ignored_tests.json contain no version. Under criterion c2, \"published\" requires the maintainer to publish a release identifier that the row's `version` copies; since none is published the row should be \"snapshot\" with version \"snapshot-<date>\". The row instead declares version \"1\" and version_status \"published\", which asserts a maintainer release identifier that the captured protocol does not provide.",
+      "repair": "Change version_status to \"snapshot\" and version to \"snapshot-<date>\" reflecting the captured methodology date; or, if a maintainer-published release identifier genuinely exists, document it and keep \"published\". status \"active\" and superseded_by null remain correct per criteria."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "I could not recompute row/owner hashes or execute transport/qualification checks (read-only critic); I rely on the supplied sha256 bindings (row f0cbecfb…, owner ab9ee134…).",
+    "Unit \"percent\" and range [0,100] agree with the served mean_score values (lowest 16, highest 74.7 per SOURCE 10), and the protocol need not state the scale, so no finding there.",
+    "Several version_guard phrases (exact ten-field schema, unique model per row, providers) are consistent with SOURCE 2 but not all are independently countable from the excerpt; not treated as failures for c1/c2.",
+    "Maintainer field includes \"Princeton University & Meta\"; Meta appears via the page copyright, while Princeton is not explicit in the provided excerpts (paper bib lists authors only); treated as descriptive rather than a criterion field."
+  ],
+  "missing_evidence": []
+}

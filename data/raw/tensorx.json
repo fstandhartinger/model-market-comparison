@@ -1,7 +1,7 @@
 {
   "source": "TensorX — tensorx.ai/pricing (first-party, public)",
   "region": "eu (Ireland)",
-  "collected_at": "2026-10-20",
+  "collected_at": "2026-10-22",
   "listing_url": "https://tensorx.ai/pricing/",
   "method": "scripts/fetch-tensorx-catalog.mjs: one GET of the server-rendered pricing table; columns located by header (Model Name, Context, Input Price, Cache Read, Output Price), native USD per 1M tokens; rows without both token prices (embeddings) omitted; curated names kept by api_model_id or normalized slug tail; new slugs mapping=derived; rows no longer listed are dropped. EU-sovereign (Dublin HQ, EU regions, zero data retention). See tensorx.method.md.",
   "models": [
@@ -138,7 +138,7 @@
       "api_model_id": "moonshotai/kimi-k2.7-code"
     }
   ],
-  "response_sha256": "52c4d17f4df58d61ef4f7199dfbabcdd26e9b5dee8be0dc0375e6567e232dc5d",
+  "response_sha256": "f5b411593de23dc0109a024cb7b10d2fa736f5520ccf301f677a940880697d56",
   "skipped": [
     "qwen/qwen3-embedding-8b"
   ],
