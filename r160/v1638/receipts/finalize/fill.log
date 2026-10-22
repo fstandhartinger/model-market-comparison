@@ -1,0 +1,367 @@
+{
+ "drex-max": {
+  "raw_sha256": "c0de81123e846e3a583aef52534e15f6ca9ba1b9c515209dbed002d8e7277fe1",
+  "rows": 1500,
+  "status_counts": {
+   "200": 1498,
+   "529": 2
+  },
+  "ok": 1498,
+  "input_tokens": 1942633,
+  "output_tokens": 264615,
+  "common_input_tokens": 762693,
+  "common_output_tokens": 262045,
+  "over_10s": 0,
+  "usd_common": 0.030815878787878788
+ },
+ "launchables-myles-g-12b": {
+  "raw_sha256": "3f0929728f39bd41cfff6c404d6ed8793e8202f393b68264d3b1fc449d6a54ab",
+  "rows": 1500,
+  "status_counts": {
+   "200": 1500
+  },
+  "ok": 1500,
+  "input_tokens": 989607,
+  "output_tokens": 1500,
+  "common_input_tokens": 779294,
+  "common_output_tokens": 1485,
+  "over_10s": 0,
+  "usd_common": 0.02638885521885522
+ },
+ "iota-decide-4b": {
+  "raw_sha256": "2850e17ddcc3c2ef3a44592b6b377581562ad453ae1561e9d641184ff7ffd1c0",
+  "rows": 1500,
+  "status_counts": {
+   "200": 1500
+  },
+  "ok": 1500,
+  "input_tokens": 1094798,
+  "output_tokens": 0,
+  "common_input_tokens": 849038,
+  "common_output_tokens": 0,
+  "over_10s": 0,
+  "usd_common": 0.017152282828282833
+ }
+}
+PASS: 69 carried registry entries/raw hashes unchanged, 3 new raws verified
+pricing sha OK
+scorer sha OK 02132271117653e6302c509232a581d0094f0e78eac8b1bfc67596fd5d5097e9
+{"G_med": 9.839526770355711, "G_med_api_basis": 8.75444335383563, "offsets": {"I": -0.39100938743243674, "C": 2.1576142101967832}, "systems": 72, "ranked": 62, "out": "/home/flori/jobs/jevbench-add-requests-20260919/workers/r160-v1638-build2/wt/r160/v1638/batch/out-v1638/jevbench-v1.6.0-results.json", "sha256": "b1b1c3bcd88c9be73227043e6fb0e88f9d39c847b3eb45b482ca016b7efad770"}
+/home/flori/jobs/jevbench-add-requests-20260919/workers/r160-v1638-build2/wt/r160/v1638/batch/out-v1638/categories.json 72 systems; {'families': 13, 'usecases': 19, 'languages': 23}
+amos-1-large {'supported': True, 'n': 375, 'valid': 375, 'decisive': 318, 'decisive_rate': 0.848, 'acc_among_decisive': 0.965}
+amos-1-medium {'supported': True, 'n': 375, 'valid': 375, 'decisive': 210, 'decisive_rate': 0.56, 'acc_among_decisive': 0.971}
+arcbright-elf-1-12b {'supported': True, 'n': 375, 'valid': 373, 'decisive': 236, 'decisive_rate': 0.633, 'acc_among_decisive': 0.966}
+arsenelupin-v1.1 {'supported': True, 'n': 375, 'valid': 373, 'decisive': 156, 'decisive_rate': 0.418, 'acc_among_decisive': 0.942}
+attest-31b-v1.0 {'supported': True, 'n': 375, 'valid': 373, 'decisive': 363, 'decisive_rate': 0.973, 'acc_among_decisive': 0.879}
+basal-omni-1.0-ultra {'supported': True, 'n': 375, 'valid': 373, 'decisive': 344, 'decisive_rate': 0.922, 'acc_among_decisive': 0.939}
+blink-4b {'supported': True, 'n': 375, 'valid': 375, 'decisive': 224, 'decisive_rate': 0.597, 'acc_among_decisive': 0.902}
+bongard-mini {'supported': True, 'n': 375, 'valid': 373, 'decisive': 96, 'decisive_rate': 0.257, 'acc_among_decisive': 0.938}
+celeris-1-decision {'supported': True, 'n': 375, 'valid': 375, 'decisive': 295, 'decisive_rate': 0.787, 'acc_among_decisive': 0.925}
+chon-1.0-12b {'supported': True, 'n': 375, 'valid': 375, 'decisive': 375, 'decisive_rate': 1.0, 'acc_among_decisive': 0.901}
+chon-1.0-e4b {'supported': True, 'n': 375, 'valid': 375, 'decisive': 375, 'decisive_rate': 1.0, 'acc_among_decisive': 0.795}
+compass-0.2.0 {'supported': True, 'n': 375, 'valid': 375, 'decisive': 95, 'decisive_rate': 0.253, 'acc_among_decisive': 0.968}
+decision2-lux-9b {'supported': True, 'n': 375, 'valid': 373, 'decisive': 199, 'decisive_rate': 0.534, 'acc_among_decisive': 0.945}
+drex-max {'supported': True, 'n': 375, 'valid': 374, 'decisive': 349, 'decisive_rate': 0.933, 'acc_among_decisive': 0.943}
+goddragon-arbiter-4b {'supported': True, 'n': 375, 'valid': 373, 'decisive': 242, 'decisive_rate': 0.649, 'acc_among_decisive': 0.843}
+hyland-hs1 {'supported': True, 'n': 375, 'valid': 375, 'decisive': 312, 'decisive_rate': 0.832, 'acc_among_decisive': 0.881}
+imajev-2b {'supported': True, 'n': 375, 'valid': 373, 'decisive': 140, 'decisive_rate': 0.375, 'acc_among_decisive': 0.843}
+imajev-9b {'supported': True, 'n': 375, 'valid': 373, 'decisive': 202, 'decisive_rate': 0.542, 'acc_among_decisive': 0.926}
+iota-decide-4b {'supported': True, 'n': 375, 'valid': 375, 'decisive': 225, 'decisive_rate': 0.6, 'acc_among_decisive': 0.84}
+jeb-35b-a3b {'supported': True, 'n': 375, 'valid': 373, 'decisive': 202, 'decisive_rate': 0.542, 'acc_among_decisive': 0.936}
+jebadiah-9b-v2 {'supported': True, 'n': 375, 'valid': 373, 'decisive': 193, 'decisive_rate': 0.517, 'acc_among_decisive': 0.933}
+jebadiah-9b-v2-1 {'supported': True, 'n': 375, 'valid': 373, 'decisive': 222, 'decisive_rate': 0.595, 'acc_among_decisive': 0.928}
+jev-1.14.0 {'supported': True, 'n': 375, 'valid': 373, 'decisive': 283, 'decisive_rate': 0.759, 'acc_among_decisive': 0.954}
+jevora-9b-v1 {'supported': True, 'n': 375, 'valid': 366, 'decisive': 320, 'decisive_rate': 0.874, 'acc_among_decisive': 0.728}
+jpt-4b {'supported': True, 'n': 375, 'valid': 373, 'decisive': 248, 'decisive_rate': 0.665, 'acc_among_decisive': 0.899}
+julia-1 {'supported': True, 'n': 375, 'valid': 372, 'decisive': 270, 'decisive_rate': 0.726, 'acc_among_decisive': 0.456}
+kettei-chub {'supported': True, 'n': 375, 'valid': 373, 'decisive': 323, 'decisive_rate': 0.866, 'acc_among_decisive': 0.938}
+kettei-fat {'supported': True, 'n': 375, 'valid': 373, 'decisive': 356, 'decisive_rate': 0.954, 'acc_among_decisive': 0.963}
+kev-9b-v2 {'supported': True, 'n': 375, 'valid': 373, 'decisive': 216, 'decisive_rate': 0.579, 'acc_among_decisive': 0.889}
+krino-2b {'supported': True, 'n': 375, 'valid': 375, 'decisive': 313, 'decisive_rate': 0.835, 'acc_among_decisive': 0.712}
+launchables-myles-g-12b {'supported': True, 'n': 375, 'valid': 375, 'decisive': 375, 'decisive_rate': 1.0, 'acc_among_decisive': 0.795}
+launchables-myles-g-31b {'supported': True, 'n': 375, 'valid': 375, 'decisive': 375, 'decisive_rate': 1.0, 'acc_among_decisive': 0.893}
+liquid-d1-ultra {'supported': True, 'n': 375, 'valid': 373, 'decisive': 319, 'decisive_rate': 0.855, 'acc_among_decisive': 0.937}
+messier-one-v0.4 {'supported': True, 'n': 375, 'valid': 375, 'decisive': 375, 'decisive_rate': 1.0, 'acc_among_decisive': 0.779}
+metask_jev_rain_12b_trained {'supported': True, 'n': 375, 'valid': 375, 'decisive': 375, 'decisive_rate': 1.0, 'acc_among_decisive': 0.856}
+metask_jev_rain_31b_trained {'supported': True, 'n': 375, 'valid': 375, 'decisive': 375, 'decisive_rate': 1.0, 'acc_among_decisive': 0.877}
+metask_jev_rain_31b_trained_v3 {'supported': True, 'n': 375, 'valid': 375, 'decisive': 375, 'decisive_rate': 1.0, 'acc_among_decisive': 0.885}
+nagi-enormous {'supported': True, 'n': 375, 'valid': 373, 'decisive': 315, 'decisive_rate': 0.845, 'acc_among_decisive': 0.914}
+nagi-huge {'supported': True, 'n': 375, 'valid': 373, 'decisive': 320, 'decisive_rate': 0.858, 'acc_among_decisive': 0.878}
+nemotron-deciffusion-8b-v2 {'supported': True, 'n': 375, 'valid': 375, 'decisive': 261, 'decisive_rate': 0.696, 'acc_among_decisive': 0.95}
+nev-2b {'supported': True, 'n': 375, 'valid': 373, 'decisive': 191, 'decisive_rate': 0.512, 'acc_among_decisive': 0.832}
+nimble-v4 {'supported': True, 'n': 375, 'valid': 375, 'decisive': 215, 'decisive_rate': 0.573, 'acc_among_decisive': 0.963}
+nimble-v4-max {'supported': True, 'n': 375, 'valid': 375, 'decisive': 294, 'decisive_rate': 0.784, 'acc_among_decisive': 0.98}
+noma {'supported': True, 'n': 375, 'valid': 375, 'decisive': 191, 'decisive_rate': 0.509, 'acc_among_decisive': 0.885}
+phocinae-largha-150m-v1 {'supported': True, 'n': 375, 'valid': 375, 'decisive': 11, 'decisive_rate': 0.029, 'acc_among_decisive': 0.545}
+pjev-2b {'supported': True, 'n': 375, 'valid': 373, 'decisive': 224, 'decisive_rate': 0.601, 'acc_among_decisive': 0.879}
+pplx-decider-flash-v1.2 {'supported': True, 'n': 375, 'valid': 375, 'decisive': 295, 'decisive_rate': 0.787, 'acc_among_decisive': 0.868}
+pplx-decider-v1.2 {'supported': True, 'n': 375, 'valid': 375, 'decisive': 314, 'decisive_rate': 0.837, 'acc_among_decisive': 0.965}
+purplemist-flash-1.0 {'supported': True, 'n': 375, 'valid': 373, 'decisive': 235, 'decisive_rate': 0.63, 'acc_among_decisive': 0.885}
+purplemist-mini-1.0 {'supported': True, 'n': 375, 'valid': 373, 'decisive': 32, 'decisive_rate': 0.086, 'acc_among_decisive': 0.875}
+reflex-instinct-0.6b {'supported': True, 'n': 375, 'valid': 375, 'decisive': 7, 'decisive_rate': 0.019, 'acc_among_decisive': 0.857}
+respan-span-02 {'supported': True, 'n': 375, 'valid': 373, 'decisive': 334, 'decisive_rate': 0.895, 'acc_among_decisive': 0.868}
+roudone-decider-4b {'supported': True, 'n': 375, 'valid': 373, 'decisive': 200, 'decisive_rate': 0.536, 'acc_among_decisive': 0.895}
+ryotide-gemma {'supported': True, 'n': 375, 'valid': 375, 'decisive': 275, 'decisive_rate': 0.733, 'acc_among_decisive': 0.811}
+ryotide-qwen {'supported': True, 'n': 375, 'valid': 375, 'decisive': 212, 'decisive_rate': 0.565, 'acc_among_decisive': 0.892}
+sage-1.4.0 {'supported': True, 'n': 375, 'valid': 373, 'decisive': 340, 'decisive_rate': 0.912, 'acc_among_decisive': 0.906}
+seb-9b {'supported': True, 'n': 375, 'valid': 373, 'decisive': 214, 'decisive_rate': 0.574, 'acc_among_decisive': 0.939}
+shisa-de-1 {'supported': True, 'n': 375, 'valid': 373, 'decisive': 283, 'decisive_rate': 0.759, 'acc_among_decisive': 0.901}
+standard_one_3b_sh {'supported': True, 'n': 375, 'valid': 373, 'decisive': 234, 'decisive_rate': 0.627, 'acc_among_decisive': 0.842}
+startlux-decision-v1.1-27b-autothink {'supported': True, 'n': 375, 'valid': 373, 'decisive': 288, 'decisive_rate': 0.772, 'acc_among_decisive': 0.969}
+startlux-decision-v1.1-27b-instant {'supported': True, 'n': 375, 'valid': 373, 'decisive': 306, 'decisive_rate': 0.82, 'acc_among_decisive': 0.993}
+subq-snap-preview {'supported': True, 'n': 375, 'valid': 375, 'decisive': 321, 'decisive_rate': 0.856, 'acc_among_decisive': 0.953}
+tde-general-large {'supported': True, 'n': 375, 'valid': 375, 'decisive': 173, 'decisive_rate': 0.461, 'acc_among_decisive': 0.572}
+torchcast-decision-4b-v1.1 {'supported': True, 'n': 375, 'valid': 375, 'decisive': 375, 'decisive_rate': 1.0, 'acc_among_decisive': 0.784}
+torchcast-decision-4b-v1.2 {'supported': True, 'n': 375, 'valid': 375, 'decisive': 375, 'decisive_rate': 1.0, 'acc_among_decisive': 0.837}
+trio-spark-v1.3 {'supported': True, 'n': 375, 'valid': 366, 'decisive': 223, 'decisive_rate': 0.609, 'acc_among_decisive': 0.906}
+uniphore-4b-decider {'supported': True, 'n': 375, 'valid': 373, 'decisive': 268, 'decisive_rate': 0.718, 'acc_among_decisive': 0.825}
+vega-u-qwen3.5-0.8b {'supported': True, 'n': 375, 'valid': 375, 'decisive': 73, 'decisive_rate': 0.195, 'acc_among_decisive': 0.534}
+vega-u-qwen3.5-4b {'supported': True, 'n': 375, 'valid': 375, 'decisive': 123, 'decisive_rate': 0.328, 'acc_among_decisive': 0.756}
+verdin-4b {'supported': True, 'n': 375, 'valid': 373, 'decisive': 243, 'decisive_rate': 0.651, 'acc_among_decisive': 0.868}
+vllm-sr-d3 {'supported': True, 'n': 375, 'valid': 375, 'decisive': 320, 'decisive_rate': 0.853, 'acc_among_decisive': 0.963}
+vllm-sr-d3-turbo {'supported': True, 'n': 375, 'valid': 373, 'decisive': 323, 'decisive_rate': 0.866, 'acc_among_decisive': 0.963}
+c822a0eb69a901ed8da985ad9ece91034731b21da1561d67ffd8d15909e386b4  /home/flori/jobs/jevbench-add-requests-20260919/workers/r160-v1638-build2/wt/r160/v1638/batch/out-v1638/amos-1-large.json
+ccdf7a3f5bcba949cf9058b7d74f17c95c230356bb1897e0ec9383281e88b96c  /home/flori/jobs/jevbench-add-requests-20260919/workers/r160-v1638-build2/wt/r160/v1638/batch/out-v1638/amos-1-medium.json
+c8e83b62e08a95868582068c4ac8794b86f270f82e768b8d8f300ad52f337ccb  /home/flori/jobs/jevbench-add-requests-20260919/workers/r160-v1638-build2/wt/r160/v1638/batch/out-v1638/arcbright-elf-1-12b.json
+497357e1fab4cf6b80f217aa2b08bd3c5258fd960fbd348305f77699b471cbb8  /home/flori/jobs/jevbench-add-requests-20260919/workers/r160-v1638-build2/wt/r160/v1638/batch/out-v1638/arsenelupin-v1.1.json
+6b6c496f06c4764391489f05d00dc022253b7848171f80e1eb0141909aa88b2c  /home/flori/jobs/jevbench-add-requests-20260919/workers/r160-v1638-build2/wt/r160/v1638/batch/out-v1638/attest-31b-v1.0.json
+e146fa35fd583d2cb3d0cedff9bdd1296e9d3f35f2ca9c51365de321bb3f4dff  /home/flori/jobs/jevbench-add-requests-20260919/workers/r160-v1638-build2/wt/r160/v1638/batch/out-v1638/basal-omni-1.0-ultra.json
+2e4548dc43bae8f0b12db0011779a8ae54fcd393d7819f49af715aac07a21fb4  /home/flori/jobs/jevbench-add-requests-20260919/workers/r160-v1638-build2/wt/r160/v1638/batch/out-v1638/blink-4b.json
+5755968acf68e1be84624004a07201318ba10827cba7664b4b9ebc1266dc973a  /home/flori/jobs/jevbench-add-requests-20260919/workers/r160-v1638-build2/wt/r160/v1638/batch/out-v1638/bongard-mini.json
+5dc74859544f4bb5c95e7426cadebb71cf9510ac972f724338b61b1f7ddc2341  /home/flori/jobs/jevbench-add-requests-20260919/workers/r160-v1638-build2/wt/r160/v1638/batch/out-v1638/categories.json
+c53e096c9b83801a636faa847e4835167c4e9a676ff9808612d9e19bda541956  /home/flori/jobs/jevbench-add-requests-20260919/workers/r160-v1638-build2/wt/r160/v1638/batch/out-v1638/celeris-1-decision.json
+0f84386d9c538e761643d9916cd3c0b5f417b177da4a7ac4419ca958db92b334  /home/flori/jobs/jevbench-add-requests-20260919/workers/r160-v1638-build2/wt/r160/v1638/batch/out-v1638/chon-1.0-12b.json
+5f50fbbb48a5f001dd8b969c17cf6aee5049da553ed0527b2f3286cc4db934f4  /home/flori/jobs/jevbench-add-requests-20260919/workers/r160-v1638-build2/wt/r160/v1638/batch/out-v1638/chon-1.0-e4b.json
+c15d8ed3a71528aab0b4ccb34f96cf2a1c30df99ff174a2d4ad15daf9aeccd6e  /home/flori/jobs/jevbench-add-requests-20260919/workers/r160-v1638-build2/wt/r160/v1638/batch/out-v1638/compass-0.2.0.json
+78ba6efa75251909ba1553b8be1805ad16f8faaf52ece3056a59bf1fb787de2a  /home/flori/jobs/jevbench-add-requests-20260919/workers/r160-v1638-build2/wt/r160/v1638/batch/out-v1638/decision2-lux-9b.json
+299e8c24125954e2b3d2f9c96847dc1876ec75e08855d67d8355b5e59f27a0f7  /home/flori/jobs/jevbench-add-requests-20260919/workers/r160-v1638-build2/wt/r160/v1638/batch/out-v1638/drex-max.json
+5f1cef28dce9e3f76f7fdd43fc7ab62d89b0950fb5ba1c5000f4bcebb3504b13  /home/flori/jobs/jevbench-add-requests-20260919/workers/r160-v1638-build2/wt/r160/v1638/batch/out-v1638/goddragon-arbiter-4b.json
+6933a6ec18a38de74864f754a59a92acf6b788a7925d9ad733a020f9b79b28bd  /home/flori/jobs/jevbench-add-requests-20260919/workers/r160-v1638-build2/wt/r160/v1638/batch/out-v1638/hyland-hs1.json
+949e1dd1ab121368bf1108fdab577133fd7edaee9cf3ba0ef4b312f78ab2363d  /home/flori/jobs/jevbench-add-requests-20260919/workers/r160-v1638-build2/wt/r160/v1638/batch/out-v1638/imajev-2b.json
+6c2e27720e451b5f67100d4209324119bdd815165edd15aafe980da468333ef2  /home/flori/jobs/jevbench-add-requests-20260919/workers/r160-v1638-build2/wt/r160/v1638/batch/out-v1638/imajev-9b.json
+97b1e3a0bd430d1dc7dcd5ca2f62c7c5ff7bc685ef85be0152ec06c673f31d55  /home/flori/jobs/jevbench-add-requests-20260919/workers/r160-v1638-build2/wt/r160/v1638/batch/out-v1638/iota-decide-4b.json
+b82463ba00326755767be932a5ec14786c13eacdaba4132ce19daa90c8b4fcab  /home/flori/jobs/jevbench-add-requests-20260919/workers/r160-v1638-build2/wt/r160/v1638/batch/out-v1638/jeb-35b-a3b.json
+7c5ce58978d2c33875827f82b22c4816fe2db4e0642db13708a8efe96713ab63  /home/flori/jobs/jevbench-add-requests-20260919/workers/r160-v1638-build2/wt/r160/v1638/batch/out-v1638/jebadiah-9b-v2-1.json
+a29c5460529729da7f3dd5fcf71d97ca5a007b6ae5e7f33b39947afac119d3aa  /home/flori/jobs/jevbench-add-requests-20260919/workers/r160-v1638-build2/wt/r160/v1638/batch/out-v1638/jebadiah-9b-v2.json
+abf0d0c6d8c40e7538a4dfc399c69f02f5ba175fbb65e4378dc48272203ac600  /home/flori/jobs/jevbench-add-requests-20260919/workers/r160-v1638-build2/wt/r160/v1638/batch/out-v1638/jev-1.14.0.json
+b1b1c3bcd88c9be73227043e6fb0e88f9d39c847b3eb45b482ca016b7efad770  /home/flori/jobs/jevbench-add-requests-20260919/workers/r160-v1638-build2/wt/r160/v1638/batch/out-v1638/jevbench-v1.6.0-results.json
+9a735d811f2090fcbe23d7fc5ebba3470906ac3359bd22ea1beb5fb68f1d4137  /home/flori/jobs/jevbench-add-requests-20260919/workers/r160-v1638-build2/wt/r160/v1638/batch/out-v1638/jevora-9b-v1.json
+d2c54a378d4cb306ff2afe58402b26b8c363b28639ea4a2d16e83e6779d18f43  /home/flori/jobs/jevbench-add-requests-20260919/workers/r160-v1638-build2/wt/r160/v1638/batch/out-v1638/jpt-4b.json
+2795ecbfc80d04c61633cccd7dc899ac908b47c8a38d65a89ca9f34221591a98  /home/flori/jobs/jevbench-add-requests-20260919/workers/r160-v1638-build2/wt/r160/v1638/batch/out-v1638/julia-1.json
+5ece6047d7bb1a7efddb936a9661b97ac499dc5b6e53a2b11fd8e38140d71d5e  /home/flori/jobs/jevbench-add-requests-20260919/workers/r160-v1638-build2/wt/r160/v1638/batch/out-v1638/kettei-chub.json
+ff4457b96f0d9c4c210e3a2011170ef43d484cb8707f110dbd57af6cce4d6fd4  /home/flori/jobs/jevbench-add-requests-20260919/workers/r160-v1638-build2/wt/r160/v1638/batch/out-v1638/kettei-fat.json
+b8355d79ebc0595b8593fdbca0a63a5f1aa311fe1dac83df4b39205114504809  /home/flori/jobs/jevbench-add-requests-20260919/workers/r160-v1638-build2/wt/r160/v1638/batch/out-v1638/kev-9b-v2.json
+a40315327bc5ad413d889bfe35f30e058b42646d5ece12813409695c43accef0  /home/flori/jobs/jevbench-add-requests-20260919/workers/r160-v1638-build2/wt/r160/v1638/batch/out-v1638/krino-2b.json
+34722ebc92e264c0a807888ec04c36cb09374a20142ad228ef7227f053499b12  /home/flori/jobs/jevbench-add-requests-20260919/workers/r160-v1638-build2/wt/r160/v1638/batch/out-v1638/launchables-myles-g-12b.json
+ddf9624318ae44067506c6ab23b6df27eeb20668049364a671eca78fb0594e22  /home/flori/jobs/jevbench-add-requests-20260919/workers/r160-v1638-build2/wt/r160/v1638/batch/out-v1638/launchables-myles-g-31b.json
+e55ddf410516cf78b8b7d74299769090dedd35e0e8cc3c586dceee30c3c4854c  /home/flori/jobs/jevbench-add-requests-20260919/workers/r160-v1638-build2/wt/r160/v1638/batch/out-v1638/liquid-d1-ultra.json
+fa2822683e408280218cbe5b417ec2f893b5280f6a44bf87944fb99801627074  /home/flori/jobs/jevbench-add-requests-20260919/workers/r160-v1638-build2/wt/r160/v1638/batch/out-v1638/messier-one-v0.4.json
+026a13dbf4a2fe50fe2064364048fc60c0e16bec13e461d360a44969793e48d8  /home/flori/jobs/jevbench-add-requests-20260919/workers/r160-v1638-build2/wt/r160/v1638/batch/out-v1638/metask_jev_rain_12b_trained.json
+0d8bc06fccb2f0661cb479fa232bf37c8d641e47d54837964ffee538ac0ed070  /home/flori/jobs/jevbench-add-requests-20260919/workers/r160-v1638-build2/wt/r160/v1638/batch/out-v1638/metask_jev_rain_31b_trained.json
+370ae955c61c2dd1f1861c569b72499c9e3fd2fa1c76c72b54dfce96607fcdf6  /home/flori/jobs/jevbench-add-requests-20260919/workers/r160-v1638-build2/wt/r160/v1638/batch/out-v1638/metask_jev_rain_31b_trained_v3.json
+b3c2a6b99985ddc8af571de10ef600c9b76cf887699dc949ec86f573af2e0b52  /home/flori/jobs/jevbench-add-requests-20260919/workers/r160-v1638-build2/wt/r160/v1638/batch/out-v1638/nagi-enormous.json
+cdf0c9e73b293c393b028800532f8f511986e328d9124da48f0c27b3f0790c04  /home/flori/jobs/jevbench-add-requests-20260919/workers/r160-v1638-build2/wt/r160/v1638/batch/out-v1638/nagi-huge.json
+192ace1ad3c587f5652d47311bfe863f82ec882408366feecf91910f11b76e37  /home/flori/jobs/jevbench-add-requests-20260919/workers/r160-v1638-build2/wt/r160/v1638/batch/out-v1638/nemotron-deciffusion-8b-v2.json
+ad10ebfe7ccfccc89b921fb7526fc21e5099925ab2371124bba9bfc059c2a3e4  /home/flori/jobs/jevbench-add-requests-20260919/workers/r160-v1638-build2/wt/r160/v1638/batch/out-v1638/nev-2b.json
+b8cf0e48f640d2388c9358b3374776abd2bdb0972f30ee6ba605b5ab69d79125  /home/flori/jobs/jevbench-add-requests-20260919/workers/r160-v1638-build2/wt/r160/v1638/batch/out-v1638/nimble-v4.json
+1b6a369a167dec4b2effd812e07f000a8be54ebd099d829c5ee763bba524d5d9  /home/flori/jobs/jevbench-add-requests-20260919/workers/r160-v1638-build2/wt/r160/v1638/batch/out-v1638/nimble-v4-max.json
+437a42a4079dbf9e2771b3b8bc10153ba2d340cc8b8ba8a08b76526fc2e9bf1d  /home/flori/jobs/jevbench-add-requests-20260919/workers/r160-v1638-build2/wt/r160/v1638/batch/out-v1638/noma.json
+7eb4e6826e853aac54743c33d31b75fb3e5bbea9be32ebccb52aa90dccefc6f7  /home/flori/jobs/jevbench-add-requests-20260919/workers/r160-v1638-build2/wt/r160/v1638/batch/out-v1638/noul-decisive.json
+a446bacbc4c38d13ca39646bfeef2b76bbefe38c64b85747f792b0fb8ea76af5  /home/flori/jobs/jevbench-add-requests-20260919/workers/r160-v1638-build2/wt/r160/v1638/batch/out-v1638/phocinae-largha-150m-v1.json
+488701966cd9d996e8ab071b373e85dc6175e432ea4544431b2fef55134fde24  /home/flori/jobs/jevbench-add-requests-20260919/workers/r160-v1638-build2/wt/r160/v1638/batch/out-v1638/pjev-2b.json
+5100b019c16ccfdbeb288fc2304f6b77c93a1278c7b193f94496c82ec6e55c7f  /home/flori/jobs/jevbench-add-requests-20260919/workers/r160-v1638-build2/wt/r160/v1638/batch/out-v1638/pplx-decider-flash-v1.2.json
+c77d45acc5d9e2ab53c6d62e8b2b97052c69d31cb269116426a81a568b02adc2  /home/flori/jobs/jevbench-add-requests-20260919/workers/r160-v1638-build2/wt/r160/v1638/batch/out-v1638/pplx-decider-v1.2.json
+b0310fb586b17ca00464cc069c5789767f6ed8828a3a110b5fc88aca196ca514  /home/flori/jobs/jevbench-add-requests-20260919/workers/r160-v1638-build2/wt/r160/v1638/batch/out-v1638/purplemist-flash-1.0.json
+e7f220e402cca8b9308a3b0343231d5db4826cc6ea7289afed12f81172f72a02  /home/flori/jobs/jevbench-add-requests-20260919/workers/r160-v1638-build2/wt/r160/v1638/batch/out-v1638/purplemist-mini-1.0.json
+f33e0ea15e945c173eee38a83f428bfa7d077ae25595b1e343159eca35ec1465  /home/flori/jobs/jevbench-add-requests-20260919/workers/r160-v1638-build2/wt/r160/v1638/batch/out-v1638/reflex-instinct-0.6b.json
+a548dbe9c29d22ab63d33c83aff81330c5e32d24a5da0d0fe726860b41606274  /home/flori/jobs/jevbench-add-requests-20260919/workers/r160-v1638-build2/wt/r160/v1638/batch/out-v1638/respan-span-02.json
+0f5d230828f8fdbd36a4ef3f3610fa489dd7066df9bdb539d3b2815df9622ebc  /home/flori/jobs/jevbench-add-requests-20260919/workers/r160-v1638-build2/wt/r160/v1638/batch/out-v1638/roudone-decider-4b.json
+f543ec0614363b2fb93d40a3ab7b07d36b849f900355e49d96f43c2a73de6033  /home/flori/jobs/jevbench-add-requests-20260919/workers/r160-v1638-build2/wt/r160/v1638/batch/out-v1638/ryotide-gemma.json
+e8d69896f919a6277c833e2a976f4df08a254e84a97f4c4e29bf4caef7560d07  /home/flori/jobs/jevbench-add-requests-20260919/workers/r160-v1638-build2/wt/r160/v1638/batch/out-v1638/ryotide-qwen.json
+1026d9360f11f56f754e260c8145675daf221afc7dd72047bead1a5f96e07df6  /home/flori/jobs/jevbench-add-requests-20260919/workers/r160-v1638-build2/wt/r160/v1638/batch/out-v1638/sage-1.4.0.json
+19fba27d765233871b68a54f113af9177d34079ab074e92444b0c4ff1484a904  /home/flori/jobs/jevbench-add-requests-20260919/workers/r160-v1638-build2/wt/r160/v1638/batch/out-v1638/seb-9b.json
+94a624c37e9d96540af52f78a9122c98071c72f8543759333b3f6100abea05c3  /home/flori/jobs/jevbench-add-requests-20260919/workers/r160-v1638-build2/wt/r160/v1638/batch/out-v1638/shisa-de-1.json
+b61b368bc0c7e46233b67fabd9a88dd4930ba8c9ce9ba456c68c1422347b2a5d  /home/flori/jobs/jevbench-add-requests-20260919/workers/r160-v1638-build2/wt/r160/v1638/batch/out-v1638/standard_one_3b_sh.json
+d7a70a7f113725e49c313c82c9458d1ebfcb8471a2f7318f874636fe5f33d296  /home/flori/jobs/jevbench-add-requests-20260919/workers/r160-v1638-build2/wt/r160/v1638/batch/out-v1638/startlux-decision-v1.1-27b-autothink.json
+4f342efb48a214401b529fb836ecaa935a8675e116a1ed1d9e7dfc7ea949828e  /home/flori/jobs/jevbench-add-requests-20260919/workers/r160-v1638-build2/wt/r160/v1638/batch/out-v1638/startlux-decision-v1.1-27b-instant.json
+4804dad6911f0f5382ab7a7a056cca421c700546b0fb2aaea86ba36200eea95a  /home/flori/jobs/jevbench-add-requests-20260919/workers/r160-v1638-build2/wt/r160/v1638/batch/out-v1638/subq-snap-preview.json
+bde49fbde100075155d1697d7f15dd5c591dff5ac89d5a0b257a576dccf5503b  /home/flori/jobs/jevbench-add-requests-20260919/workers/r160-v1638-build2/wt/r160/v1638/batch/out-v1638/tde-general-large.json
+bd5836824afa3b75e449e329055b8c9dc463f1b5473f542d33481467651b9ad7  /home/flori/jobs/jevbench-add-requests-20260919/workers/r160-v1638-build2/wt/r160/v1638/batch/out-v1638/torchcast-decision-4b-v1.1.json
+4f035b0b4e422d675593eb87085638b89c1f8e6300e1d7ad79673dec6b32e719  /home/flori/jobs/jevbench-add-requests-20260919/workers/r160-v1638-build2/wt/r160/v1638/batch/out-v1638/torchcast-decision-4b-v1.2.json
+c73b426f4a22bcab1453b15bfdb14e6c0eb026b736dcaa95cd3524c00694f04d  /home/flori/jobs/jevbench-add-requests-20260919/workers/r160-v1638-build2/wt/r160/v1638/batch/out-v1638/trio-spark-v1.3.json
+c8d4d2c4397f4d7c00660eaea80785bd65d7f81908d58a936ebf6e64062f3f8e  /home/flori/jobs/jevbench-add-requests-20260919/workers/r160-v1638-build2/wt/r160/v1638/batch/out-v1638/uniphore-4b-decider.json
+0a045e593581ec41e5651126cae9d90dbb1f69e2b0078d89759466e2fc8dba10  /home/flori/jobs/jevbench-add-requests-20260919/workers/r160-v1638-build2/wt/r160/v1638/batch/out-v1638/vega-u-qwen3.5-0.8b.json
+72f80c7c90e162c3c60cd135efbe1383e42139dcfca510f476c1c2996ee69d1a  /home/flori/jobs/jevbench-add-requests-20260919/workers/r160-v1638-build2/wt/r160/v1638/batch/out-v1638/vega-u-qwen3.5-4b.json
+a883b6dac0a1bf27cfd04b00c79969102d34d061be4d88e77dc8ebbecbb4be97  /home/flori/jobs/jevbench-add-requests-20260919/workers/r160-v1638-build2/wt/r160/v1638/batch/out-v1638/verdin-4b.json
+d62bc34912b55c7d76af93029a17b51a06b3ae9fcf0d4fbb3ca42419a16feb1f  /home/flori/jobs/jevbench-add-requests-20260919/workers/r160-v1638-build2/wt/r160/v1638/batch/out-v1638/vllm-sr-d3.json
+f8a650e2c9ab9bb72424e0b7df23ddd11abf556edef905a7c8e6f4a990c26bad  /home/flori/jobs/jevbench-add-requests-20260919/workers/r160-v1638-build2/wt/r160/v1638/batch/out-v1638/vllm-sr-d3-turbo.json
+/home/flori/jobs/jevbench-add-requests-20260919/workers/r160-v1638-build2/wt/r160/v1638/batch/topics-v1638/categories-with-topics.json 72 systems; {'topics': 7, 'usecases': 20, 'families': 13, 'languages': 23}
+built v1.6.38 roster 75 ranked 64
+{
+ "drex-max": {
+  "axes": {
+   "calibration": 89.56795021085651,
+   "cost": 55.336763284582396,
+   "intelligence": 78.89021516142793,
+   "speed": 89.80651018227358
+  },
+  "scores": {
+   "A": 75.40515618514833,
+   "B": 76.0773154141038,
+   "C": 75.40515618514833
+  },
+  "capability": 84.22908268614222,
+  "ranks": {
+   "A": 4,
+   "B": 2,
+   "C": 4,
+   "capability": 3
+  }
+ },
+ "iota-decide-4b": {
+  "axes": {
+   "calibration": 84.8346261602328,
+   "cost": 62.97034212213745,
+   "intelligence": 29.414053145614563,
+   "speed": 87.4670144658746
+  },
+  "scores": {
+   "A": 18.937474020302744,
+   "B": 16.15725640426057,
+   "C": 13.151023625210243
+  },
+  "capability": 57.12433965292368,
+  "ranks": {
+   "A": 45,
+   "B": 46,
+   "C": 45,
+   "capability": 47
+  }
+ },
+ "launchables-myles-g-12b": {
+  "axes": {
+   "calibration": 84.04872871623093,
+   "cost": 57.35738348807602,
+   "intelligence": 57.25409127121432,
+   "speed": 85.64932567577961
+  },
+  "scores": {
+   "A": 68.40656153142275,
+   "B": 65.84152005408374,
+   "C": 62.28856307389066
+  },
+  "capability": 70.65140999372262,
+  "ranks": {
+   "A": 15,
+   "B": 20,
+   "C": 19,
+   "capability": 25
+  }
+ }
+}
+wired v1.6.38
+Board effect: the three paid fast-lane rows were compared on the merged-board top fives before/after v1.6.38 over all 36 mixed, open-weights and API variants (including 7x/10x cost caps with no latency cap) plus 4 release-board lists: 22 of 40 top-five lists change. Top-five changes caused by: drex-max (paid fast-lane publication exception). 
+ CHANGED all composites/A ['kettei-fat', 'liquid-d1-ultra', 'nimble-v4-max', 'subq-snap-preview', 'sage-1.3.0'] -> ['kettei-fat', 'liquid-d1-ultra', 'nimble-v4-max', 'drex-max', 'subq-snap-preview']
+ CHANGED all composites/B ['kettei-fat', 'liquid-d1-ultra', 'subq-snap-preview', 'nimble-v4-max', 'sage-1.3.0'] -> ['kettei-fat', 'drex-max', 'liquid-d1-ultra', 'subq-snap-preview', 'nimble-v4-max']
+ CHANGED all composites/C ['kettei-fat', 'liquid-d1-ultra', 'nimble-v4-max', 'subq-snap-preview', 'sage-1.3.0'] -> ['kettei-fat', 'liquid-d1-ultra', 'nimble-v4-max', 'drex-max', 'subq-snap-preview']
+ CHANGED all capability/official_caps ['kettei-fat', 'chon-1.0-12b', 'basal-omni-1.0-ultra', 'quyet-1-0-large', 'jeff_1_0_large'] -> ['kettei-fat', 'chon-1.0-12b', 'drex-max', 'basal-omni-1.0-ultra', 'quyet-1-0-large']
+ CHANGED all capability/cost_off_latency_2x ['kettei-fat', 'chon-1.0-12b', 'vllm-sr-d3', 'pplx-decider-v1-1-27b', 'vllm-sr-d3-turbo'] -> ['kettei-fat', 'chon-1.0-12b', 'drex-max', 'vllm-sr-d3', 'pplx-decider-v1-1-27b']
+ CHANGED all capability/latency_none ['kettei-fat', 'chon-1.0-12b', 'basal-omni-1.0-ultra', 'quyet-1-0-large', 'jeff_1_0_large'] -> ['kettei-fat', 'chon-1.0-12b', 'drex-max', 'basal-omni-1.0-ultra', 'quyet-1-0-large']
+ CHANGED all extra_capability/cost_7x ['kettei-fat', 'chon-1.0-12b', 'vllm-sr-d3', 'pplx-decider-v1-1-27b', 'vllm-sr-d3-turbo'] -> ['kettei-fat', 'chon-1.0-12b', 'drex-max', 'vllm-sr-d3', 'pplx-decider-v1-1-27b']
+ CHANGED all extra_capability/cost_10x ['kettei-fat', 'chon-1.0-12b', 'vllm-sr-d3', 'pplx-decider-v1-1-27b', 'vllm-sr-d3-turbo'] -> ['kettei-fat', 'chon-1.0-12b', 'drex-max', 'vllm-sr-d3', 'pplx-decider-v1-1-27b']
+ CHANGED api composites/A ['kettei-fat', 'liquid-d1-ultra', 'nimble-v4-max', 'subq-snap-preview', 'sage-1.3.0'] -> ['kettei-fat', 'liquid-d1-ultra', 'nimble-v4-max', 'drex-max', 'subq-snap-preview']
+ CHANGED api composites/B ['kettei-fat', 'liquid-d1-ultra', 'subq-snap-preview', 'nimble-v4-max', 'sage-1.3.0'] -> ['kettei-fat', 'drex-max', 'liquid-d1-ultra', 'subq-snap-preview', 'nimble-v4-max']
+ CHANGED api composites/C ['kettei-fat', 'liquid-d1-ultra', 'nimble-v4-max', 'subq-snap-preview', 'sage-1.3.0'] -> ['kettei-fat', 'liquid-d1-ultra', 'nimble-v4-max', 'drex-max', 'subq-snap-preview']
+ CHANGED api capability/official_caps ['kettei-fat', 'subq-snap-preview', 'liquid-d1-ultra', 'nimble-v4-max', 'launchables-myles-g-31b'] -> ['kettei-fat', 'drex-max', 'subq-snap-preview', 'liquid-d1-ultra', 'nimble-v4-max']
+ CHANGED api capability/cost_off_latency_2x ['kettei-fat', 'subq-snap-preview', 'liquid-d1-ultra', 'nimble-v4-max', 'amos-1-large'] -> ['kettei-fat', 'drex-max', 'subq-snap-preview', 'liquid-d1-ultra', 'nimble-v4-max']
+ CHANGED api capability/latency_none ['kettei-fat', 'subq-snap-preview', 'liquid-d1-ultra', 'nimble-v4-max', 'wity-1'] -> ['kettei-fat', 'drex-max', 'subq-snap-preview', 'liquid-d1-ultra', 'nimble-v4-max']
+ CHANGED api extra_capability/cost_7x ['kettei-fat', 'subq-snap-preview', 'liquid-d1-ultra', 'nimble-v4-max', 'amos-1-large'] -> ['kettei-fat', 'drex-max', 'subq-snap-preview', 'liquid-d1-ultra', 'nimble-v4-max']
+ CHANGED api extra_capability/cost_10x ['kettei-fat', 'subq-snap-preview', 'liquid-d1-ultra', 'nimble-v4-max', 'amos-1-large'] -> ['kettei-fat', 'drex-max', 'subq-snap-preview', 'liquid-d1-ultra', 'nimble-v4-max']
+ CHANGED api extra_capability/cost_7x_latency_none ['gpt-6-luna', 'gpt-6-luna-low', 'gpt-5.6-luna', 'kettei-fat', 'subq-snap-preview'] -> ['gpt-6-luna', 'gpt-6-luna-low', 'gpt-5.6-luna', 'kettei-fat', 'drex-max']
+ CHANGED api extra_capability/cost_10x_latency_none ['gpt-6-luna', 'gpt-6-luna-low', 'gpt-5.6-luna', 'kettei-fat', 'subq-snap-preview'] -> ['gpt-6-luna', 'gpt-6-luna-low', 'gpt-5.6-luna', 'kettei-fat', 'drex-max']
+ CHANGED release A ['kettei-fat', 'liquid-d1-ultra', 'nimble-v4-max', 'subq-snap-preview', 'h2o-lightning-4b'] -> ['kettei-fat', 'liquid-d1-ultra', 'nimble-v4-max', 'drex-max', 'subq-snap-preview']
+ CHANGED release B ['kettei-fat', 'liquid-d1-ultra', 'subq-snap-preview', 'nimble-v4-max', 'basal-omni-1.0-ultra'] -> ['kettei-fat', 'drex-max', 'liquid-d1-ultra', 'subq-snap-preview', 'nimble-v4-max']
+ CHANGED release C ['kettei-fat', 'liquid-d1-ultra', 'nimble-v4-max', 'subq-snap-preview', 'h2o-lightning-4b'] -> ['kettei-fat', 'liquid-d1-ultra', 'nimble-v4-max', 'drex-max', 'subq-snap-preview']
+ CHANGED release capability ['kettei-fat', 'chon-1.0-12b', 'vllm-sr-d3', 'vllm-sr-d3-turbo', 'startlux-decision-v1.1-27b-instant'] -> ['kettei-fat', 'chon-1.0-12b', 'drex-max', 'vllm-sr-d3', 'vllm-sr-d3-turbo']
+built v1.6.38 roster 75 ranked 64
+{
+ "drex-max": {
+  "axes": {
+   "calibration": 89.56795021085651,
+   "cost": 55.336763284582396,
+   "intelligence": 78.89021516142793,
+   "speed": 89.80651018227358
+  },
+  "scores": {
+   "A": 75.40515618514833,
+   "B": 76.0773154141038,
+   "C": 75.40515618514833
+  },
+  "capability": 84.22908268614222,
+  "ranks": {
+   "A": 4,
+   "B": 2,
+   "C": 4,
+   "capability": 3
+  }
+ },
+ "iota-decide-4b": {
+  "axes": {
+   "calibration": 84.8346261602328,
+   "cost": 62.97034212213745,
+   "intelligence": 29.414053145614563,
+   "speed": 87.4670144658746
+  },
+  "scores": {
+   "A": 18.937474020302744,
+   "B": 16.15725640426057,
+   "C": 13.151023625210243
+  },
+  "capability": 57.12433965292368,
+  "ranks": {
+   "A": 45,
+   "B": 46,
+   "C": 45,
+   "capability": 47
+  }
+ },
+ "launchables-myles-g-12b": {
+  "axes": {
+   "calibration": 84.04872871623093,
+   "cost": 57.35738348807602,
+   "intelligence": 57.25409127121432,
+   "speed": 85.64932567577961
+  },
+  "scores": {
+   "A": 68.40656153142275,
+   "B": 65.84152005408374,
+   "C": 62.28856307389066
+  },
+  "capability": 70.65140999372262,
+  "ranks": {
+   "A": 15,
+   "B": 20,
+   "C": 19,
+   "capability": 25
+  }
+ }
+}
+PASS: deterministic rebuild, all release, topic-supplement and validator bytes identical
+PASS: 75 rows; 72 carried rows byte-identical except placement; source hashes, row proof, common cost basis, PENDING review and public aggregate-only artifacts verified
+ M ../../data/raw/benchmarks/jevbench/v1.6/jevbench-v1.6-cohort-topic-cells.json
+ M ../../data/raw/benchmarks/jevbench/v1.6/jevbench-v1.6.38-categories.json
+ M ../../data/raw/benchmarks/jevbench/v1.6/jevbench-v1.6.38-proof.json
+ M ../../data/raw/benchmarks/jevbench/v1.6/jevbench-v1.6.38-publication.json
+ M ../../data/raw/benchmarks/jevbench/v1.6/jevbench-v1.6.38-results.json
+ M ../../lib/jevbench-v1638-release.mjs
+ M build_publication_v1638.py
+ M lib-v1638.template.mjs
+ M preview/preview-full-ranking.html
+ M receipts/BUILD.json
+?? approval-v1638.json
+?? fill_approval_v1638.sh
+approval filled; review the diff, commit, then run the critic on these bytes
+
+real	2m57.936s
+user	7m18.940s
+sys	0m13.640s

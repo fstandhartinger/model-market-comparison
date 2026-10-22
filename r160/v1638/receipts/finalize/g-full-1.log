@@ -1,0 +1,4142 @@
+TAP version 13
+# Subtest: CR-99 offer timing, persistence and accessibility stay explicit
+ok 1 - CR-99 offer timing, persistence and accessibility stay explicit
+  ---
+  duration_ms: 1.662288
+  ...
+# Subtest: CR-106 keeps the toast calm, token-based and opaque in both themes
+ok 2 - CR-106 keeps the toast calm, token-based and opaque in both themes
+  ---
+  duration_ms: 3.559013
+  ...
+# Subtest: CR-102 keeps the phone badge beside the eyebrow and makes the toast land legibly
+ok 3 - CR-102 keeps the phone badge beside the eyebrow and makes the toast land legibly
+  ---
+  duration_ms: 0.380613
+  ...
+# Subtest: CR-104 uses both responsive offer labels with one accessible name
+ok 4 - CR-104 uses both responsive offer labels with one accessible name
+  ---
+  duration_ms: 0.459162
+  ...
+# Subtest: CR-102 page states the deliverable, self-run route, data treatment and contact without prices
+ok 5 - CR-102 page states the deliverable, self-run route, data treatment and contact without prices
+  ---
+  duration_ms: 0.771605
+  ...
+# Subtest: unrankedNote prefers the row preliminary label and keeps the legacy P300 text as the default
+ok 6 - unrankedNote prefers the row preliminary label and keeps the legacy P300 text as the default
+  ---
+  duration_ms: 1.194708
+  ...
+# Subtest: the A2 row carries its own label in the v1.6.14 artifact
+ok 7 - the A2 row carries its own label in the v1.6.14 artifact
+  ---
+  duration_ms: 7.5134
+  ...
+# Subtest: D174: the gauntlet fingerprints a reviewed-join row in the form the ingest approves
+ok 8 - D174: the gauntlet fingerprints a reviewed-join row in the form the ingest approves
+  ---
+  duration_ms: 3.086643
+  ...
+# Subtest: D174: the joined fingerprint is what the daily refused; the approved form is accepted
+ok 9 - D174: the joined fingerprint is what the daily refused; the approved form is accepted
+  ---
+  duration_ms: 32.798167
+  ...
+# Subtest: D174: a re-captured row still needs a fresh approval — the fix does not widen the guard
+ok 10 - D174: a re-captured row still needs a fresh approval — the fix does not widen the guard
+  ---
+  duration_ms: 7.738915
+  ...
+# Subtest: D174: the gauntlet reviews and fingerprints the same rows it normalised
+ok 11 - D174: the gauntlet reviews and fingerprints the same rows it normalised
+  ---
+  duration_ms: 2.630481
+  ...
+# Subtest: no benchmark identity publishes two different measured values for one model configuration
+ok 12 - no benchmark identity publishes two different measured values for one model configuration
+  ---
+  duration_ms: 869.487335
+  ...
+# Subtest: the withdrawn Epoch ECI rows are recorded, reasoned, and not published
+ok 13 - the withdrawn Epoch ECI rows are recorded, reasoned, and not published
+  ---
+  duration_ms: 331.233276
+  ...
+# Subtest: the withdrawn values do not come back as historical estimates
+ok 14 - the withdrawn values do not come back as historical estimates
+  ---
+  duration_ms: 509.559093
+  ...
+# Subtest: a withheld locator suppresses the estimate a retained state would otherwise produce
+ok 15 - a withheld locator suppresses the estimate a retained state would otherwise produce
+  ---
+  duration_ms: 3.515155
+  ...
+# Subtest: the four Epoch identities still say which statistic they carry
+ok 16 - the four Epoch identities still say which statistic they carry
+  ---
+  duration_ms: 57.240459
+  ...
+# Subtest: the restatement record names a published row and carries both captures
+ok 17 - the restatement record names a published row and carries both captures
+  ---
+  duration_ms: 174.086045
+  ...
+# Subtest: the two captures differ in exactly one field of one row, and it is the label
+ok 18 - the two captures differ in exactly one field of one row, and it is the label
+  ---
+  duration_ms: 249.325569
+  ...
+# Subtest: the previous label is withheld, so the history bridge cannot republish the measurement
+ok 19 - the previous label is withheld, so the history bridge cannot republish the measurement
+  ---
+  duration_ms: 1326.586947
+  ...
+# Subtest: the six withdrawn KernelBench rows are the ones the board retracted
+ok 20 - the six withdrawn KernelBench rows are the ones the board retracted
+  ---
+  duration_ms: 412.778593
+  ...
+# Subtest: a retracted value is neither published nor bridged back as an estimate
+ok 21 - a retracted value is neither published nor bridged back as an estimate
+  ---
+  duration_ms: 1280.612986
+  ...
+# Subtest: a withheld board-scoped locator holds on its board only; a source-row locator reaches the cost twin
+ok 22 - a withheld board-scoped locator holds on its board only; a source-row locator reaches the cost twin
+  ---
+  duration_ms: 15.328373
+  ...
+# Subtest: D188: VulcanBench notes name every protocol revision the board actually publishes
+ok 23 - D188: VulcanBench notes name every protocol revision the board actually publishes
+  ---
+  duration_ms: 2.424075
+  ...
+# Subtest: D223: the VulcanBench guard admits exactly the revisions the notes review
+ok 24 - D223: the VulcanBench guard admits exactly the revisions the notes review
+  ---
+  duration_ms: 0.282324
+  ...
+# Subtest: D223: every reviewed VulcanBench revision really is the same protocol, judges and task set
+ok 25 - D223: every reviewed VulcanBench revision really is the same protocol, judges and task set
+  ---
+  duration_ms: 48.419835
+  ...
+# Subtest: D188: every date the VulcanBench guard annotates is a date the board has printed in a capture we hold
+ok 26 - D188: every date the VulcanBench guard annotates is a date the board has printed in a capture we hold
+  ---
+  duration_ms: 872.065135
+  ...
+# Subtest: D188: the Terminal-Bench range is the one its own metrics schema declares
+ok 27 - D188: the Terminal-Bench range is the one its own metrics schema declares
+  ---
+  duration_ms: 66.36757
+  ...
+# Subtest: D188: the Terminal-Bench maintainer is the attribution its own page prints
+ok 28 - D188: the Terminal-Bench maintainer is the attribution its own page prints
+  ---
+  duration_ms: 55.1013
+  ...
+# Subtest: D188: the LiveBench notes describe the files the release really publishes
+ok 29 - D188: the LiveBench notes describe the files the release really publishes
+  ---
+  duration_ms: 10.732559
+  ...
+# Subtest: every function reading `manual.` declares its own `const manual` first
+ok 30 - every function reading `manual.` declares its own `const manual` first
+  ---
+  duration_ms: 7.175345
+  ...
+# Subtest: refreshBenchmarks retains manual-refresh entries as retained_manual_snapshot after declaring the set
+ok 31 - refreshBenchmarks retains manual-refresh entries as retained_manual_snapshot after declaring the set
+  ---
+  duration_ms: 2.447664
+  ...
+# Subtest: D192: the public board is selected by the page's own key, and the private one is never read
+ok 32 - D192: the public board is selected by the page's own key, and the private one is never read
+  ---
+  duration_ms: 919.295132
+  ...
+# Subtest: D192: every way of losing the public board still fails closed
+ok 33 - D192: every way of losing the public board still fails closed
+  ---
+  duration_ms: 138.684357
+  ...
+# Subtest: D193.2: every reviewed reference of the five entries resolves and quotes its own source
+ok 34 - D193.2: every reviewed reference of the five entries resolves and quotes its own source
+  ---
+  duration_ms: 5.746723
+  ...
+# Subtest: D193.2: the LisanBench pin states the configuration and leaves the model count out of it
+ok 35 - D193.2: the LisanBench pin states the configuration and leaves the model count out of it
+  ---
+  duration_ms: 0.405063
+  ...
+# Subtest: D193.2: the MathArena accuracy column really is in all four captures, tooltip and all
+ok 36 - D193.2: the MathArena accuracy column really is in all four captures, tooltip and all
+  ---
+  duration_ms: 2.495433
+  ...
+# Subtest: D193.2: the value payloads stay out of the review packet and name a real field
+ok 37 - D193.2: the value payloads stay out of the review packet and name a real field
+  ---
+  duration_ms: 11.312849
+  ...
+# Subtest: D193.2: each Deprecated badge pin quotes the page and agrees with the plan's problem count
+ok 38 - D193.2: each Deprecated badge pin quotes the page and agrees with the plan's problem count
+  ---
+  duration_ms: 1.006672
+  ...
+# Subtest: D193.2: reformatting, a changed dictionary and a dropped column all still fail closed
+ok 39 - D193.2: reformatting, a changed dictionary and a dropped column all still fail closed
+  ---
+  duration_ms: 1.912604
+  ...
+# Subtest: D193.2: the three newly examined references quote their own source
+ok 40 - D193.2: the three newly examined references quote their own source
+  ---
+  duration_ms: 16.231537
+  ...
+# Subtest: D193.2: none of the three broken excerpts was hiding a changed source
+ok 41 - D193.2: none of the three broken excerpts was hiding a changed source
+  ---
+  duration_ms: 0.405343
+  ...
+# Subtest: D193.2: the ProgramBench pin leaves out what moves with every new evaluation
+ok 42 - D193.2: the ProgramBench pin leaves out what moves with every new evaluation
+  ---
+  duration_ms: 0.413432
+  ...
+# Subtest: D193.2: the ResearchClawBench scoring function is pinned verbatim and occurs once
+ok 43 - D193.2: the ResearchClawBench scoring function is pinned verbatim and occurs once
+  ---
+  duration_ms: 4.185771
+  ...
+# Subtest: D193.2: the ResearchClawBench payload is a field locator, and it was hiding nothing
+ok 44 - D193.2: the ResearchClawBench payload is a field locator, and it was hiding nothing
+  ---
+  duration_ms: 0.627179
+  ...
+# Subtest: D193.2: the AA composition table is pinned verbatim for all three entries, identically
+ok 45 - D193.2: the AA composition table is pinned verbatim for all three entries, identically
+  ---
+  duration_ms: 18.360396
+  ...
+# Subtest: D193.2: what changed in the AA table is a new column, not the index composition
+ok 46 - D193.2: what changed in the AA table is a new column, not the index composition
+  ---
+  duration_ms: 0.55643
+  ...
+# Subtest: D193.2: the older AA capture is what the old pin quoted, and it is the column that moved
+ok 47 - D193.2: the older AA capture is what the old pin quoted, and it is the column that moved
+  ---
+  duration_ms: 113.575637
+  ...
+# Subtest: D193.2/D193.3: both JevBench artifacts are pinned verbatim on contiguous blocks
+ok 48 - D193.2/D193.3: both JevBench artifacts are pinned verbatim on contiguous blocks
+  ---
+  duration_ms: 10.66901
+  ...
+# Subtest: D193.3: the registry metric is the one the pinned v1.1.2 artifact publishes
+ok 49 - D193.3: the registry metric is the one the pinned v1.1.2 artifact publishes
+  ---
+  duration_ms: 2.103171
+  ...
+# Subtest: D193.3: no published value was relabelled by the metric correction
+ok 50 - D193.3: no published value was relabelled by the metric correction
+  ---
+  duration_ms: 267.683605
+  ...
+# Subtest: D196: the seven system-card references quote the card, header row and all
+ok 51 - D196: the seven system-card references quote the card, header row and all
+  ---
+  duration_ms: 75.643476
+  ...
+# Subtest: D196: none of the seven was hiding a revised system card
+ok 52 - D196: none of the seven was hiding a revised system card
+  ---
+  duration_ms: 23.585668
+  ...
+# Subtest: D193: every reviewed reference of the six entries resolves against the run's own capture
+ok 53 - D193: every reviewed reference of the six entries resolves against the run's own capture
+  ---
+  duration_ms: 100.864324
+  ...
+# Subtest: D193: the excerpt of every reviewed reference is verbatim, so the 60,000-byte bound is not what carries it
+ok 54 - D193: the excerpt of every reviewed reference is verbatim, so the 60,000-byte bound is not what carries it
+  ---
+  duration_ms: 107.811475
+  ...
+# Subtest: D193: app.py is close enough to the review bound that the excerpt path is the live one
+ok 55 - D193: app.py is close enough to the review bound that the excerpt path is the live one
+  ---
+  duration_ms: 0.371113
+  ...
+# Subtest: D193: the two value payloads stay out of the review packet and name a real field
+ok 56 - D193: the two value payloads stay out of the review packet and name a real field
+  ---
+  duration_ms: 2.001623
+  ...
+# Subtest: D193: a rewritten passage, a removed passage and a locator note all still fail closed
+ok 57 - D193: a rewritten passage, a removed passage and a locator note all still fail closed
+  ---
+  duration_ms: 6.054566
+  ...
+# Subtest: D197: every published self-reported row is the row its input file defines
+ok 58 - D197: every published self-reported row is the row its input file defines
+  ---
+  duration_ms: 525.748841
+  ...
+# Subtest: D197: the check sees the drift that stopped the 2026-09-25 run
+ok 59 - D197: the check sees the drift that stopped the 2026-09-25 run
+  ---
+  duration_ms: 0.490911
+  ...
+# Subtest: D198: the critic is told its three binding values in its own instructions
+ok 60 - D198: the critic is told its three binding values in its own instructions
+  ---
+  duration_ms: 1.231647
+  ...
+# Subtest: D198: a critic that reads its binding only from the instructions is now accepted
+ok 61 - D198: a critic that reads its binding only from the instructions is now accepted
+  ---
+  duration_ms: 20.894739
+  ...
+# Subtest: D198: stating the round does not soften the check that discarded the reviews
+ok 62 - D198: stating the round does not soften the check that discarded the reviews
+  ---
+  duration_ms: 0.751286
+  ...
+# Subtest: D199: three content strikes harden a route; transport strikes never do
+ok 63 - D199: three content strikes harden a route; transport strikes never do
+  ---
+  duration_ms: 3.048613
+  ...
+# run receipts pruned; policy covered by the fixtures above
+# Subtest: D199: the real 2026-09-25 record stream hardens exactly the route that answered 58 times
+ok 64 - D199: the real 2026-09-25 record stream hardens exactly the route that answered 58 times
+  ---
+  duration_ms: 5.730653
+  ...
+# Subtest: D199: the last-resort retry re-offers a soft-excluded critic and not a hardened one
+ok 65 - D199: the last-resort retry re-offers a soft-excluded critic and not a hardened one
+  ---
+  duration_ms: 16.205057
+  ...
+# Subtest: D199: the reasons and the bound travel together from the gauntlet to the runner
+ok 66 - D199: the reasons and the bound travel together from the gauntlet to the runner
+  ---
+  duration_ms: 5.31042
+  ...
+# Subtest: D200: each UGI note describes its own board, not a sibling
+ok 67 - D200: each UGI note describes its own board, not a sibling
+  ---
+  duration_ms: 2.938805
+  ...
+# Subtest: D200: what a UGI note attributes to the board is in the captured protocol text
+ok 68 - D200: what a UGI note attributes to the board is in the captured protocol text
+  ---
+  duration_ms: 6.060626
+  ...
+# Subtest: every registry entry that declares a PDF document is routed away from the 12MB capturer
+ok 69 - every registry entry that declares a PDF document is routed away from the 12MB capturer
+  ---
+  duration_ms: 1.683809
+  ...
+# Subtest: a published row whose evidence is a PDF text layer has its source routed to the document capturer
+ok 70 - a published row whose evidence is a PDF text layer has its source routed to the document capturer
+  ---
+  duration_ms: 40.361286
+  ...
+# Subtest: the routing rule reads the recipe, not the URL
+ok 71 - the routing rule reads the recipe, not the URL
+  ---
+  duration_ms: 0.925703
+  ...
+# Subtest: the run queues no declared-PDF document to the 12MB capturer
+ok 72 - the run queues no declared-PDF document to the 12MB capturer
+  ---
+  duration_ms: 6.771004
+  ...
+# Subtest: routing a document removes that one URL from the generic queue and nothing else
+ok 73 - routing a document removes that one URL from the generic queue and nothing else
+  ---
+  duration_ms: 16.399054
+  ...
+# Subtest: a routed document is larger than the generic bound, which is why it is routed
+ok 74 - a routed document is larger than the generic bound, which is why it is routed
+  ---
+  duration_ms: 2.877085
+  ...
+# Subtest: a document receipt is the shape the run keys and reads health from
+ok 75 - a document receipt is the shape the run keys and reads health from
+  ---
+  duration_ms: 7.00239
+  ...
+# Subtest: the entries that declare browser-only access are the eight that share the refusing launch post
+ok 76 - the entries that declare browser-only access are the eight that share the refusing launch post
+  ---
+  duration_ms: 2.315766
+  ...
+# Subtest: a browser-only URL is queued to neither capturer
+ok 77 - a browser-only URL is queued to neither capturer
+  ---
+  duration_ms: 10.517333
+  ...
+# Subtest: one entry cannot drop a URL another entry still needs
+ok 78 - one entry cannot drop a URL another entry still needs
+  ---
+  duration_ms: 0.354823
+  ...
+# Subtest: an undeclared entry is untouched
+ok 79 - an undeclared entry is untouched
+  ---
+  duration_ms: 4.964798
+  ...
+# Subtest: an incomplete access declaration fails the registry validation
+ok 80 - an incomplete access declaration fails the registry validation
+  ---
+  duration_ms: 64.124411
+  ...
+# Subtest: D203: a conflicted startup pull is aborted, not handed to the agent
+ok 81 - D203: a conflicted startup pull is aborted, not handed to the agent
+  ---
+  duration_ms: 313.540458
+  ...
+# Subtest: D203: a clean startup pull still fast-forwards and warns about nothing
+ok 82 - D203: a clean startup pull still fast-forwards and warns about nothing
+  ---
+  duration_ms: 293.725298
+  ...
+# Subtest: D203: an unreachable remote is reported as a failed pull, not a false abort
+ok 83 - D203: an unreachable remote is reported as a failed pull, not a false abort
+  ---
+  duration_ms: 317.243418
+  ...
+# Subtest: D203: the startup-pull outcome is interpolated into the agent prompt
+ok 84 - D203: the startup-pull outcome is interpolated into the agent prompt
+  ---
+  duration_ms: 0.478942
+  ...
+# Subtest: D204: quarantined rows are counted from the structured field
+ok 85 - D204: quarantined rows are counted from the structured field
+  ---
+  duration_ms: 1.746607
+  ...
+# Subtest: D204: a run written before the field is still counted, from the reason fail() wrote
+ok 86 - D204: a run written before the field is still counted, from the reason fail() wrote
+  ---
+  duration_ms: 0.274825
+  ...
+# Subtest: D204: a batch whose count cannot be established is named, never counted as zero
+ok 87 - D204: a batch whose count cannot be established is named, never counted as zero
+  ---
+  duration_ms: 0.314564
+  ...
+# Subtest: D204: only failing score batches count
+ok 88 - D204: only failing score batches count
+  ---
+  duration_ms: 0.242246
+  ...
+# Subtest: D204: the batches stay out of the source table but their rows reach the report
+ok 89 - D204: the batches stay out of the source table but their rows reach the report
+  ---
+  duration_ms: 13.073996
+  ...
+# Subtest: D204: the quarantine line is absent when nothing was quarantined
+ok 90 - D204: the quarantine line is absent when nothing was quarantined
+  ---
+  duration_ms: 0.320924
+  ...
+# Subtest: D204: an unknown batch is named in the markdown rather than rounding the total down quietly
+ok 91 - D204: an unknown batch is named in the markdown rather than rounding the total down quietly
+  ---
+  duration_ms: 0.408003
+  ...
+# Subtest: D204: writeSourceHealth puts the count in the json daily.mjs opens
+ok 92 - D204: writeSourceHealth puts the count in the json daily.mjs opens
+  ---
+  duration_ms: 20.205492
+  ...
+# Subtest: D204: daily.mjs reads that field and prints it in the run summary
+ok 93 - D204: daily.mjs reads that field and prints it in the run summary
+  ---
+  duration_ms: 8.332324
+  ...
+# Cloning into '/tmp/d217-FHTbLh/work'...
+# warning: You appear to have cloned an empty repository.
+# done.
+# To /tmp/d217-FHTbLh/origin.git
+#  * [new branch]      main -> main
+# Everything up-to-date
+# Subtest: the credential is proved before the run collects anything, and can never wait on a terminal
+ok 94 - the credential is proved before the run collects anything, and can never wait on a terminal
+  ---
+  duration_ms: 1.5815
+  ...
+# Subtest: a no-op --dry-run push of the base sha moves no ref
+ok 95 - a no-op --dry-run push of the base sha moves no ref
+  ---
+  duration_ms: 113.285162
+  ...
+# Subtest: D218.1: a 402 is an account condition, so it does not strike the model off
+ok 96 - D218.1: a 402 is an account condition, so it does not strike the model off
+  ---
+  duration_ms: 2.410555
+  ...
+# Subtest: D218.1: the runner does not write an exclusion record for an account-level status
+ok 97 - D218.1: the runner does not write an exclusion record for an account-level status
+  ---
+  duration_ms: 7.141006
+  ...
+# Subtest: D218.2: a non-OK completion reports the provider’s own reason, bounded to one line
+ok 98 - D218.2: a non-OK completion reports the provider’s own reason, bounded to one line
+  ---
+  duration_ms: 0.893463
+  ...
+# Subtest: D218.3: the balance is judged, and the day it ran out would have been an alert
+ok 99 - D218.3: the balance is judged, and the day it ran out would have been an alert
+  ---
+  duration_ms: 0.455411
+  ...
+# Subtest: D218.3: the check is fail-soft, reads the documented field, and never leaks the key
+ok 100 - D218.3: the check is fail-soft, reads the documented field, and never leaks the key
+  ---
+  duration_ms: 1.782317
+  ...
+# Subtest: D219.1: a setting-less EQ-Bench slug joins only a single-default catalog family
+ok 101 - D219.1: a setting-less EQ-Bench slug joins only a single-default catalog family
+  ---
+  duration_ms: 2.372475
+  ...
+# Subtest: D219.1: a label naming a retained Hugging Face repository is left to the exact-checkpoint route
+ok 102 - D219.1: a label naming a retained Hugging Face repository is left to the exact-checkpoint route
+  ---
+  duration_ms: 0.301334
+  ...
+# Subtest: D219.1: the frontier rows are refused because no setting-less configuration exists
+ok 103 - D219.1: the frontier rows are refused because no setting-less configuration exists
+  ---
+  duration_ms: 0.472611
+  ...
+# Subtest: D219.1: thinking markers, provider suffixes, dated checkpoints and unknown slugs are refused
+ok 104 - D219.1: thinking markers, provider suffixes, dated checkpoints and unknown slugs are refused
+  ---
+  duration_ms: 0.469241
+  ...
+# Subtest: D219.1: the documented normalisation reads a dashed version, and two labels reaching one configuration join neither
+ok 105 - D219.1: the documented normalisation reads a dashed version, and two labels reaching one configuration join neither
+  ---
+  duration_ms: 0.954372
+  ...
+# Subtest: D219.1: the shipped identity map and scores carry the reviewed EQ-Bench joins and only default variants
+ok 106 - D219.1: the shipped identity map and scores carry the reviewed EQ-Bench joins and only default variants
+  ---
+  duration_ms: 904.622095
+  ...
+# Subtest: the declared display badges are stripped per source, confirmed where the row states its own name, and fail closed
+ok 107 - the declared display badges are stripped per source, confirmed where the row states its own name, and fail closed
+  ---
+  duration_ms: 238.835894
+  ...
+# Subtest: each board declares its badge in the plan, with the page's own words for each marker
+ok 108 - each board declares its badge in the plan, with the page's own words for each marker
+  ---
+  duration_ms: 2.303617
+  ...
+# Subtest: eqbench's own renderer strips the declared markers, in the very file the rows cite
+ok 109 - eqbench's own renderer strips the declared markers, in the very file the rows cite
+  ---
+  duration_ms: 21.094275
+  ...
+# Subtest: Andon Labs states the model name badge-free in the row's own logo alt attribute
+ok 110 - Andon Labs states the model name badge-free in the row's own logo alt attribute
+  ---
+  duration_ms: 0.756846
+  ...
+# Subtest: every correction names a published row under a plain name it really strips to
+ok 111 - every correction names a published row under a plain name it really strips to
+  ---
+  duration_ms: 243.728173
+  ...
+# Subtest: no badged spelling is published anywhere, and each is withheld with its old locator
+ok 112 - no badged spelling is published anywhere, and each is withheld with its old locator
+  ---
+  duration_ms: 8.237416
+  ...
+# Subtest: the retained states do not bring a corrected badge back as a "no longer published" estimate
+ok 113 - the retained states do not bring a corrected badge back as a "no longer published" estimate
+  ---
+  duration_ms: 32216.761811
+  ...
+# Subtest: every observation-less map entry is a row a recorded withdrawal explains
+ok 114 - every observation-less map entry is a row a recorded withdrawal explains
+  ---
+  duration_ms: 354.000202
+  ...
+# Subtest: the retracted KernelBench and MathArena rows still hold their reviewed join
+ok 115 - the retracted KernelBench and MathArena rows still hold their reviewed join
+  ---
+  duration_ms: 16.098829
+  ...
+# Subtest: the builder carries withdrawn joins over and fails closed on any other loss
+ok 116 - the builder carries withdrawn joins over and fails closed on any other loss
+  ---
+  duration_ms: 2.056251
+  ...
+# Subtest: the reviewed protocol set is read out of the registry, and only where the guard states one
+ok 117 - the reviewed protocol set is read out of the registry, and only where the guard states one
+  ---
+  duration_ms: 2.550402
+  ...
+# Subtest: the collector and the daily read the same guard sentence
+ok 118 - the collector and the daily read the same guard sentence
+  ---
+  duration_ms: 131.56837
+  ...
+# Subtest: an unreviewed revision quarantines its own arm; a reviewed one collects
+ok 119 - an unreviewed revision quarantines its own arm; a reviewed one collects
+  ---
+  duration_ms: 395.260899
+  ...
+# Subtest: D256: a column appended to the reviewed header quarantines the arm; any other header change fails
+ok 120 - D256: a column appended to the reviewed header quarantines the arm; any other header change fails
+  ---
+  duration_ms: 758.596485
+  ...
+# Subtest: D256: the generic reviewed-header guard quarantines an appended column too
+ok 121 - D256: the generic reviewed-header guard quarantines an appended column too
+  ---
+  duration_ms: 277.303675
+  ...
+# Subtest: a caller with no registry entry keeps the original family floor
+ok 122 - a caller with no registry entry keeps the original family floor
+  ---
+  duration_ms: 182.41997
+  ...
+# Subtest: any other collector failure is still a failing arm, not a quarantine
+ok 123 - any other collector failure is still a failing arm, not a quarantine
+  ---
+  duration_ms: 0.377313
+  ...
+# Subtest: a quarantined arm is `attention` in source health, and only when it carries the structured field
+ok 124 - a quarantined arm is `attention` in source health, and only when it carries the structured field
+  ---
+  duration_ms: 0.212856
+  ...
+# Subtest: the quarantine streak is counted per arm and escalates on the third consecutive run
+ok 125 - the quarantine streak is counted per arm and escalates on the third consecutive run
+  ---
+  duration_ms: 15.669397
+  ...
+# Subtest: the human todo appears on the third run, in the format ~/bin/notify accepts, once per revision set
+ok 126 - the human todo appears on the third run, in the format ~/bin/notify accepts, once per revision set
+  ---
+  duration_ms: 1.66088
+  ...
+# Subtest: a quarantined capture is retained but not read as accepted evidence
+ok 127 - a quarantined capture is retained but not read as accepted evidence
+  ---
+  duration_ms: 21.92652
+  ...
+# Subtest: CR-287: a parser or review failure withholds fresh captures while shared accepted sources remain usable
+ok 128 - CR-287: a parser or review failure withholds fresh captures while shared accepted sources remain usable
+  ---
+  duration_ms: 0.847654
+  ...
+# Subtest: D226: both boards are reviewed against the policy and their own version page, not the leaderboard alone
+ok 129 - D226: both boards are reviewed against the policy and their own version page, not the leaderboard alone
+  ---
+  duration_ms: 2.473934
+  ...
+# Subtest: D226: every reviewed reference resolves against its retained capture
+ok 130 - D226: every reviewed reference resolves against its retained capture
+  ---
+  duration_ms: 0.51152
+  ...
+# Subtest: D226: the added references quote their own source verbatim, so the 60,000-byte bound is not what carries them
+ok 131 - D226: the added references quote their own source verbatim, so the 60,000-byte bound is not what carries them
+  ---
+  duration_ms: 1.491192
+  ...
+# Subtest: D226: every load-bearing word of the scoring row is in the packet the reviewer reads
+ok 132 - D226: every load-bearing word of the scoring row is in the packet the reviewer reads
+  ---
+  duration_ms: 2.447434
+  ...
+# Subtest: D226: the supersession chain names a real board and the protocol names it too
+ok 133 - D226: the supersession chain names a real board and the protocol names it too
+  ---
+  duration_ms: 3.135811
+  ...
+# Subtest: D226: a rewritten or removed passage still fails closed
+ok 134 - D226: a rewritten or removed passage still fails closed
+  ---
+  duration_ms: 4.536265
+  ...
+# Subtest: D226: the /leaderboard capture is the one the failing daily run read
+ok 135 - D226: the /leaderboard capture is the one the failing daily run read
+  ---
+  duration_ms: 0.916672
+  ...
+# Subtest: D227: AIME 2025 records a retired version, not a published one
+ok 136 - D227: AIME 2025 records a retired version, not a published one
+  ---
+  duration_ms: 1.598551
+  ...
+# Subtest: D227: the retirement is the source's own sentence in the capture the failing run read
+ok 137 - D227: the retirement is the source's own sentence in the capture the failing run read
+  ---
+  duration_ms: 257.535264
+  ...
+# Subtest: D227: no board whose own note opens with a retirement still calls its version published
+ok 138 - D227: no board whose own note opens with a retirement still calls its version published
+  ---
+  duration_ms: 1.506032
+  ...
+# Subtest: D227: the field change moves no value, because the family has nothing to bridge
+ok 139 - D227: the field change moves no value, because the family has nothing to bridge
+  ---
+  duration_ms: 298.680215
+  ...
+# Subtest: the cost column reference declares the page, the marker, and nothing else to follow
+ok 140 - the cost column reference declares the page, the marker, and nothing else to follow
+  ---
+  duration_ms: 1.794356
+  ...
+# Subtest: the capture receipt shows the whole declared set searched and exactly one match
+ok 141 - the capture receipt shows the whole declared set searched and exactly one match
+  ---
+  duration_ms: 3.211099
+  ...
+# Subtest: a marker that selects nothing leaves the page captured and the arm without a source
+ok 142 - a marker that selects nothing leaves the page captured and the arm without a source
+  ---
+  duration_ms: 0.210046
+  ...
+# Subtest: a marker follow is only satisfied by a receipt carrying that marker
+ok 143 - a marker follow is only satisfied by a receipt carrying that marker
+  ---
+  duration_ms: 0.184967
+  ...
+# Subtest: the excerpt is verbatim in the retained chunk, and the review is the excerpt path
+ok 144 - the excerpt is verbatim in the retained chunk, and the review is the excerpt path
+  ---
+  duration_ms: 4.326229
+  ...
+# Subtest: a plain primary_url for the same page never cancels the follow request
+ok 145 - a plain primary_url for the same page never cancels the follow request
+  ---
+  duration_ms: 7.018758
+  ...
+# Subtest: an inline badge stays on its link's line, and the next group heading starts its own
+ok 146 - an inline badge stays on its link's line, and the next group heading starts its own
+  ---
+  duration_ms: 70.251376
+  ...
+# Subtest: block boundaries still break lines
+ok 147 - block boundaries still break lines
+  ---
+  duration_ms: 39.627779
+  ...
+# Subtest: every inline boundary keeps one separator character, so the normalised text cannot move
+ok 148 - every inline boundary keeps one separator character, so the normalised text cannot move
+  ---
+  duration_ms: 47.978343
+  ...
+# Subtest: scripts and styles are still dropped, and the badge rule does not reach into them
+ok 149 - scripts and styles are still dropped, and the badge rule does not reach into them
+  ---
+  duration_ms: 45.436701
+  ...
+# Subtest: a plan protocol that quotes its registry metric verbatim keeps quoting it
+ok 150 - a plan protocol that quotes its registry metric verbatim keeps quoting it
+  ---
+  duration_ms: 1.56907
+  ...
+# Subtest: the list names every twin there is, so a new one cannot be added unnoticed
+ok 151 - the list names every twin there is, so a new one cannot be added unnoticed
+  ---
+  duration_ms: 0.837494
+  ...
+# Subtest: Vending-Bench 2 states only the average its source labels, in both copies
+ok 152 - Vending-Bench 2 states only the average its source labels, in both copies
+  ---
+  duration_ms: 0.403662
+  ...
+# Subtest: a plan guard that matches its reviewed registry guard keeps matching it
+ok 153 - a plan guard that matches its reviewed registry guard keeps matching it
+  ---
+  duration_ms: 2.546013
+  ...
+# Subtest: the plan's own two copies of a guard stay one text
+ok 154 - the plan's own two copies of a guard stay one text
+  ---
+  duration_ms: 0.322594
+  ...
+# Subtest: D223: all three of VulcanBench Frontier v4's guards name the reviewed revision set
+ok 155 - D223: all three of VulcanBench Frontier v4's guards name the reviewed revision set
+  ---
+  duration_ms: 0.507781
+  ...
+# Subtest: the guard does not claim the board withholds what the board ranks
+ok 156 - the guard does not claim the board withholds what the board ranks
+  ---
+  duration_ms: 0.306924
+  ...
+# Subtest: the policy note is stripped from the reviewed row and kept in the published notes
+ok 157 - the policy note is stripped from the reviewed row and kept in the published notes
+  ---
+  duration_ms: 2.158989
+  ...
+# Subtest: nothing hides behind the marker that a protocol page would have to settle
+ok 158 - nothing hides behind the marker that a protocol page would have to settle
+  ---
+  duration_ms: 0.769175
+  ...
+# Subtest: the Vals family states only what its page states
+ok 159 - the Vals family states only what its page states
+  ---
+  duration_ms: 0.777156
+  ...
+# Subtest: both halves of the Harvey LAB-AA / Vals HLAB clause are registered
+ok 160 - both halves of the Harvey LAB-AA / Vals HLAB clause are registered
+  ---
+  duration_ms: 0.370913
+  ...
+# Subtest: the unmarked Composite policy is an inventory that may only shrink
+ok 161 - the unmarked Composite policy is an inventory that may only shrink
+  ---
+  duration_ms: 0.813835
+  ...
+# Subtest: the shortfall clause is derived from the published integers alone
+ok 162 - the shortfall clause is derived from the published integers alone
+  ---
+  duration_ms: 1.682459
+  ...
+# Subtest: every v1.4 release row that answered fewer than all sealed decisions prints the count exactly once
+ok 163 - every v1.4 release row that answered fewer than all sealed decisions prints the count exactly once
+  ---
+  duration_ms: 110.328196
+  ...
+# Subtest: the rows whose prose already carried the count keep the wording they published
+ok 164 - the rows whose prose already carried the count keep the wording they published
+  ---
+  duration_ms: 19.2689
+  ...
+# Subtest: D246: a publisher's remainder survives the shared sealed-exposure sentence
+ok 165 - D246: a publisher's remainder survives the shared sealed-exposure sentence
+  ---
+  duration_ms: 9.12812
+  ...
+# Subtest: D243: a setting-less name joins only a family whose single configuration is the default
+ok 166 - D243: a setting-less name joins only a family whose single configuration is the default
+  ---
+  duration_ms: 1.426003
+  ...
+# Subtest: D243: `non-reasoning` is a setting, not the absence of one — a lone non-reasoning config never joins
+ok 167 - D243: `non-reasoning` is a setting, not the absence of one — a lone non-reasoning config never joins
+  ---
+  duration_ms: 0.302885
+  ...
+# Subtest: D243: several configurations never join, whether or not one of them is the default
+ok 168 - D243: several configurations never join, whether or not one of them is the default
+  ---
+  duration_ms: 0.238896
+  ...
+# Subtest: D243: a name no catalog family carries is reported as an identity question, not an effort one
+ok 169 - D243: a name no catalog family carries is reported as an identity question, not an effort one
+  ---
+  duration_ms: 0.207336
+  ...
+# Subtest: D243: the predicate agrees with the exact-join rule shipped in lib/board-identity.mjs
+ok 170 - D243: the predicate agrees with the exact-join rule shipped in lib/board-identity.mjs
+  ---
+  duration_ms: 0.941902
+  ...
+# Subtest: added, changed and removed values are counted on the reconciled row id
+ok 171 - added, changed and removed values are counted on the reconciled row id
+  ---
+  duration_ms: 2.165519
+  ...
+# Subtest: a row whose value is unchanged is not activity however much of its context moved
+ok 172 - a row whose value is unchanged is not activity however much of its context moved
+  ---
+  duration_ms: 0.217336
+  ...
+# Subtest: a row the board stopped publishing is a removal, and never affirmative
+ok 173 - a row the board stopped publishing is a removal, and never affirmative
+  ---
+  duration_ms: 0.367113
+  ...
+# Subtest: a withdrawn row already counted in place is not counted twice
+ok 174 - a withdrawn row already counted in place is not counted twice
+  ---
+  duration_ms: 0.158227
+  ...
+# Subtest: the summary names the maintainer, its own field and the capture it compared — and no value
+ok 175 - the summary names the maintainer, its own field and the capture it compared — and no value
+  ---
+  duration_ms: 0.471011
+  ...
+# Subtest: an unknown maintainer still describes the payload truthfully
+ok 176 - an unknown maintainer still describes the payload truthfully
+  ---
+  duration_ms: 0.142647
+  ...
+# Subtest: a day with nothing added or changed produces no affirmative evidence to attach
+ok 177 - a day with nothing added or changed produces no affirmative evidence to attach
+  ---
+  duration_ms: 0.163257
+  ...
+# Subtest: the withheld arms are exactly the multi-capture and non-active ones
+ok 178 - the withheld arms are exactly the multi-capture and non-active ones
+  ---
+  duration_ms: 31.278455
+  ...
+# Subtest: every collected public arm has the value_field the summary names
+ok 179 - every collected public arm has the value_field the summary names
+  ---
+  duration_ms: 7.586568
+  ...
+# Subtest: daily replay selects the newest matching capture made after that run started
+ok 180 - daily replay selects the newest matching capture made after that run started
+  ---
+  duration_ms: 21.974559
+  ...
+# Subtest: daily replay refuses a source with only stale or absent receipts
+ok 181 - daily replay refuses a source with only stale or absent receipts
+  ---
+  duration_ms: 5.494447
+  ...
+# Subtest: a serving-precision suffix is not part of the model identity
+ok 182 - a serving-precision suffix is not part of the model identity
+  ---
+  duration_ms: 1.811686
+  ...
+# Subtest: dropping the precision suffix collapses exactly one pair in the live catalog
+ok 183 - dropping the precision suffix collapses exactly one pair in the live catalog
+  ---
+  duration_ms: 2.448644
+  ...
+# Subtest: D248: the two HuggingFace-caused routing rows are gone and their prices moved to the benchmarked row
+ok 184 - D248: the two HuggingFace-caused routing rows are gone and their prices moved to the benchmarked row
+  ---
+  duration_ms: 0.479361
+  ...
+# Subtest: D248: every OpenRouter route of the two repaired families is still reachable
+ok 185 - D248: every OpenRouter route of the two repaired families is still reachable
+  ---
+  duration_ms: 0.234376
+  ...
+# Subtest: D248: any family holding a routing row beside another row is a split; an effort split alone is not
+ok 186 - D248: any family holding a routing row beside another row is a split; an effort split alone is not
+  ---
+  duration_ms: 16.035769
+  ...
+# Subtest: D248: the benchmark count reads the benchmarks map, not an array length
+ok 187 - D248: the benchmark count reads the benchmarks map, not an array length
+  ---
+  duration_ms: 0.328514
+  ...
+# Subtest: D248: a stale AA OpenRouter slug beside the live one is reported as the reason for the split
+ok 188 - D248: a stale AA OpenRouter slug beside the live one is reported as the reason for the split
+  ---
+  duration_ms: 1.481393
+  ...
+# Subtest: D248: identical slugs on both rows are not reported as a mismatch
+ok 189 - D248: identical slugs on both rows are not reported as a mismatch
+  ---
+  duration_ms: 0.48564
+  ...
+# Subtest: control: the mechanism this replaces leaves the step's worker running after the kill
+ok 190 - control: the mechanism this replaces leaves the step's worker running after the kill
+  ---
+  duration_ms: 1638.498023
+  ...
+# Subtest: a timed-out step takes its workers with it
+ok 191 - a timed-out step takes its workers with it
+  ---
+  duration_ms: 1666.94088
+  ...
+# Subtest: a timed-out step also kills a worker that ignores SIGTERM after the step exits
+ok 192 - a timed-out step also kills a worker that ignores SIGTERM after the step exits
+  ---
+  duration_ms: 1715.02147
+  ...
+# Subtest: a timed-out step rejects with the error shape every reader already expects
+ok 193 - a timed-out step rejects with the error shape every reader already expects
+  ---
+  duration_ms: 780.079003
+  ...
+# Subtest: a timed-out step that handles SIGTERM with exit zero still rejects as killed
+ok 194 - a timed-out step that handles SIGTERM with exit zero still rejects as killed
+  ---
+  duration_ms: 1295.350587
+  ...
+# Subtest: a step that ignores the signal is SIGKILLed one grace period later
+ok 195 - a step that ignores the signal is SIGKILLed one grace period later
+  ---
+  duration_ms: 992.45496
+  ...
+# Subtest: an ordinary step resolves with its output, and a failing one rejects with its exit code
+ok 196 - an ordinary step resolves with its output, and a failing one rejects with its exit code
+  ---
+  duration_ms: 85.53851
+  ...
+# Subtest: a step that cannot be spawned rejects with the spawn error, not a timeout
+ok 197 - a step that cannot be spawned rejects with the spawn error, not a timeout
+  ---
+  duration_ms: 2.423005
+  ...
+# Subtest: maxBuffer is enforced and the overrunning step is killed
+ok 198 - maxBuffer is enforced and the overrunning step is killed
+  ---
+  duration_ms: 45.705095
+  ...
+# Subtest: a step gets a closed stdin, so a tool that would prompt fails instead of hanging
+ok 199 - a step gets a closed stdin, so a tool that would prompt fails instead of hanging
+  ---
+  duration_ms: 54.759837
+  ...
+# Subtest: the parent's own death clears the step groups it detached
+ok 200 - the parent's own death clears the step groups it detached
+  ---
+  duration_ms: 1235.086372
+  ...
+# Subtest: daily.mjs runs its steps through runStep, not through execFile
+ok 201 - daily.mjs runs its steps through runStep, not through execFile
+  ---
+  duration_ms: 0.422632
+  ...
+# Subtest: a timed-out publish-gate stage takes the build and test processes with it
+ok 202 - a timed-out publish-gate stage takes the build and test processes with it
+  ---
+  duration_ms: 1684.547896
+  ...
+# Subtest: publish-gate runs its stage through runStep and keeps execFile only for reading bytes
+ok 203 - publish-gate runs its stage through runStep and keeps execFile only for reading bytes
+  ---
+  duration_ms: 0.413283
+  ...
+# Subtest: every exclusion names one model, one provider and the measurement behind it
+ok 204 - every exclusion names one model, one provider and the measurement behind it
+  ---
+  duration_ms: 1.60449
+  ...
+# Subtest: an exclusion applies to the model it was measured on and to no other
+ok 205 - an exclusion applies to the model it was measured on and to no other
+  ---
+  duration_ms: 0.899513
+  ...
+# Subtest: a malformed list throws; a missing one is simply empty
+ok 206 - a malformed list throws; a missing one is simply empty
+  ---
+  duration_ms: 7.118077
+  ...
+# Subtest: the runner sends the exclusions as provider.ignore and records them on the receipt
+ok 207 - the runner sends the exclusions as provider.ignore and records them on the receipt
+  ---
+  duration_ms: 0.577419
+  ...
+# Subtest: D249.6: the receipt names the endpoint before the completion is judged
+ok 208 - D249.6: the receipt names the endpoint before the completion is judged
+  ---
+  duration_ms: 0.296644
+  ...
+# Subtest: the deadline sits exactly one reserve before the hard timeout
+ok 209 - the deadline sits exactly one reserve before the hard timeout
+  ---
+  duration_ms: 1.544281
+  ...
+# Subtest: a claim past the deadline throws the one error shape, and names what was skipped
+ok 210 - a claim past the deadline throws the one error shape, and names what was skipped
+  ---
+  duration_ms: 1.115909
+  ...
+# Subtest: isBudgetExhausted is false for every ordinary review failure
+ok 211 - isBudgetExhausted is false for every ordinary review failure
+  ---
+  duration_ms: 1.62593
+  ...
+# Subtest: the unlimited budget never claims, and reports that no budget was applied
+ok 212 - the unlimited budget never claims, and reports that no budget was applied
+  ---
+  duration_ms: 0.263065
+  ...
+# Subtest: an unusable budget configuration fails closed instead of guessing
+ok 213 - an unusable budget configuration fails closed instead of guessing
+  ---
+  duration_ms: 0.484641
+  ...
+# Subtest: the step budget defaults to the daily timeout less the reserve, and both are overridable
+ok 214 - the step budget defaults to the daily timeout less the reserve, and both are overridable
+  ---
+  duration_ms: 0.179426
+  ...
+# Subtest: the reserve covers a worker call that was already in flight, plus the step tail
+ok 215 - the reserve covers a worker call that was already in flight, plus the step tail
+  ---
+  duration_ms: 0.195867
+  ...
+# Subtest: the hard timeout has one definition: daily.mjs imports it rather than repeating it
+ok 216 - the hard timeout has one definition: daily.mjs imports it rather than repeating it
+  ---
+  duration_ms: 0.363613
+  ...
+# Subtest: phase-step gives the benchmarks step a real budget, timed from its own start
+ok 217 - phase-step gives the benchmarks step a real budget, timed from its own start
+  ---
+  duration_ms: 0.324834
+  ...
+# Subtest: every LLM review in refresh-benchmarks claims the budget before it starts
+ok 218 - every LLM review in refresh-benchmarks claims the budget before it starts
+  ---
+  duration_ms: 0.414842
+  ...
+# Subtest: a budget-skipped score batch is retained; every other rejection still fails the run
+ok 219 - a budget-skipped score batch is retained; every other rejection still fails the run
+  ---
+  duration_ms: 0.212486
+  ...
+# Subtest: fail() gives a budget skip its own status and keeps the line profile-run.mjs parses
+ok 220 - fail() gives a budget skip its own status and keeps the line profile-run.mjs parses
+  ---
+  duration_ms: 0.297364
+  ...
+# Subtest: the step reports what the clock cost, and a run with no budget says so distinctly
+ok 221 - the step reports what the clock cost, and a run with no budget says so distinctly
+  ---
+  duration_ms: 0.209466
+  ...
+# Subtest: source health calls a budget skip attention, not a failing source
+ok 222 - source health calls a budget skip attention, not a failing source
+  ---
+  duration_ms: 0.208256
+  ...
+# Subtest: budgetTotals counts the skipped batches and rows the per-source table leaves out
+ok 223 - budgetTotals counts the skipped batches and rows the per-source table leaves out
+  ---
+  duration_ms: 0.452172
+  ...
+# Subtest: daily.mjs records a timeout as a timeout, at the end of the tail every reader clips
+ok 224 - daily.mjs records a timeout as a timeout, at the end of the tail every reader clips
+  ---
+  duration_ms: 0.305425
+  ...
+# Subtest: a synchronous claim inside a concurrency worker is isolated, not a thrown phase
+ok 225 - a synchronous claim inside a concurrency worker is isolated, not a thrown phase
+  ---
+  duration_ms: 0.625088
+  ...
+# Subtest: a budget already spent before the first unit fails the step instead of reporting a green no-op
+ok 226 - a budget already spent before the first unit fails the step instead of reporting a green no-op
+  ---
+  duration_ms: 0.387063
+  ...
+# Subtest: D250: every board the judge screen names is classified or has a written reason
+ok 227 - D250: every board the judge screen names is classified or has a written reason
+  ---
+  duration_ms: 4.290499
+  ...
+# Subtest: D250: nothing is classified both ways, and every classification names a real family
+ok 228 - D250: nothing is classified both ways, and every classification names a real family
+  ---
+  duration_ms: 0.52997
+  ...
+# Subtest: D250: the four boards registered on 2026-09-28 stay registered
+ok 229 - D250: the four boards registered on 2026-09-28 stay registered
+  ---
+  duration_ms: 0.223916
+  ...
+# Subtest: D253: every identity of GDP.pdf is classified judged
+ok 230 - D253: every identity of GDP.pdf is classified judged
+  ---
+  duration_ms: 0.233546
+  ...
+# Subtest: D250.3: the GDP.pdf boards the review flagged are still on the record
+ok 231 - D250.3: the GDP.pdf boards the review flagged are still on the record
+  ---
+  duration_ms: 0.308754
+  ...
+# Subtest: D250: no category anchor is a judged board, and every category keeps its minimum
+ok 232 - D250: no category anchor is a judged board, and every category keeps its minimum
+  ---
+  duration_ms: 0.481451
+  ...
+# Subtest: the registered capture really holds both key shapes the old guard excluded
+ok 233 - the registered capture really holds both key shapes the old guard excluded
+  ---
+  duration_ms: 2.838957
+  ...
+# Subtest: the version_guard prose describes that board, in all three places that carry it
+ok 234 - the version_guard prose describes that board, in all three places that carry it
+  ---
+  duration_ms: 0.400383
+  ...
+# Subtest: aaFieldScale reads the full dotted path over every served row
+ok 235 - aaFieldScale reads the full dotted path over every served row
+  ---
+  duration_ms: 1.940243
+  ...
+# Subtest: a structured field is read at its leaf, never at its root object
+ok 236 - a structured field is read at its leaf, never at its root object
+  ---
+  duration_ms: 0.182736
+  ...
+# Subtest: nulls, missing keys and non-numbers are not values; no value at all yields no summary
+ok 237 - nulls, missing keys and non-numbers are not values; no value at all yields no summary
+  ---
+  duration_ms: 0.152497
+  ...
+# Subtest: the summary rides the capture receipt, names itself generated and states its own limit
+ok 238 - the summary rides the capture receipt, names itself generated and states its own limit
+  ---
+  duration_ms: 0.399833
+  ...
+# Subtest: a summary without its payload description is an error, not an AA claim
+ok 239 - a summary without its payload description is an error, not an AA claim
+  ---
+  duration_ms: 0.354633
+  ...
+# Subtest: criterion c1 admits the served scale for the unit and range question only
+ok 240 - criterion c1 admits the served scale for the unit and range question only
+  ---
+  duration_ms: 0.142747
+  ...
+# Subtest: publicValueScale reads the published values of this board and nothing else
+ok 241 - publicValueScale reads the published values of this board and nothing else
+  ---
+  duration_ms: 0.349083
+  ...
+# Subtest: the public scale summary names the maintainer and rides its own receipt
+ok 242 - the public scale summary names the maintainer and rides its own receipt
+  ---
+  duration_ms: 0.215346
+  ...
+# Subtest: c2 states what each version_status value claims, in our vocabulary
+ok 243 - c2 states what each version_status value claims, in our vocabulary
+  ---
+  duration_ms: 1.784246
+  ...
+# Subtest: absence of a published version is the evidence for snapshot, not the absence of evidence
+ok 244 - absence of a published version is the evidence for snapshot, not the absence of evidence
+  ---
+  duration_ms: 0.214816
+  ...
+# Subtest: a null supersession is the row declining to name a successor, like a null range bound
+ok 245 - a null supersession is the row declining to name a successor, like a null range bound
+  ---
+  duration_ms: 0.211766
+  ...
+# Subtest: both clauses stay falsifiable — a page that does publish contradicts the row
+ok 246 - both clauses stay falsifiable — a page that does publish contradicts the row
+  ---
+  duration_ms: 0.200346
+  ...
+# Subtest: the registry keeps the shape the criterion describes to the reviewer
+ok 247 - the registry keeps the shape the criterion describes to the reviewer
+  ---
+  duration_ms: 0.927682
+  ...
+# Subtest: D252: every anchor of every offered category still clears the coverage bar
+ok 248 - D252: every anchor of every offered category still clears the coverage bar
+  ---
+  duration_ms: 10.574342
+  ...
+# Subtest: D252: each anchor records the coverage it was last measured at, and the file says what it withdrew
+ok 249 - D252: each anchor records the coverage it was last measured at, and the file says what it withdrew
+  ---
+  duration_ms: 0.312214
+  ...
+# Subtest: D252: the score pickers offer exactly the category composites the dataset publishes
+ok 250 - D252: the score pickers offer exactly the category composites the dataset publishes
+  ---
+  duration_ms: 10.15705
+  ...
+# Subtest: D252: withdrawing a category score keeps its benchmarks and its table group
+ok 251 - D252: withdrawing a category score keeps its benchmarks and its table group
+  ---
+  duration_ms: 0.683768
+  ...
+# Subtest: the rounds of a retained arm are read in order, whatever ended them
+ok 252 - the rounds of a retained arm are read in order, whatever ended them
+  ---
+  duration_ms: 3.475515
+  ...
+# Subtest: an arm is reviewless only when every one of its rounds ended at worker selection
+ok 253 - an arm is reviewless only when every one of its rounds ended at worker selection
+  ---
+  duration_ms: 0.494841
+  ...
+# Subtest: a run whose reviews all ran reports no lost capacity
+ok 254 - a run whose reviews all ran reports no lost capacity
+  ---
+  duration_ms: 0.461531
+  ...
+# Subtest: the health view carries the count and the markdown says the review did not run
+ok 255 - the health view carries the count and the markdown says the review did not run
+  ---
+  duration_ms: 16.553951
+  ...
+# Subtest: every free router route that is not offered says why, in the catalog
+ok 256 - every free router route that is not offered says why, in the catalog
+  ---
+  duration_ms: 8.486761
+  ...
+# Subtest: D254: the two messages about the model's own answer are content; every other worker failure is transport
+ok 257 - D254: the two messages about the model's own answer are content; every other worker failure is transport
+  ---
+  duration_ms: 1.820226
+  ...
+# Subtest: D254: three length answers harden a route, and a timeout still does not
+ok 258 - D254: three length answers harden a route, and a timeout still does not
+  ---
+  duration_ms: 1.219287
+  ...
+# run receipts pruned; policy covered by the fixtures above
+# Subtest: D254: the real 2026-09-28 11:23 record stream hardens glm after its third own answer
+ok 259 - D254: the real 2026-09-28 11:23 record stream hardens glm after its third own answer
+  ---
+  duration_ms: 6.568607
+  ...
+# Subtest: a withheld board is accepted only after the capture itself shows the contradiction
+ok 260 - a withheld board is accepted only after the capture itself shows the contradiction
+  ---
+  duration_ms: 10.569593
+  ...
+# Subtest: with no determination the withheld path is not taken at all
+ok 261 - with no determination the withheld path is not taken at all
+  ---
+  duration_ms: 2.964895
+  ...
+# Subtest: a determination for another source or another finding is ignored
+ok 262 - a determination for another source or another finding is ignored
+  ---
+  duration_ms: 12.352619
+  ...
+# Subtest: an absence the registry corroborates is a withdrawal and still fails closed
+ok 263 - an absence the registry corroborates is a withdrawal and still fails closed
+  ---
+  duration_ms: 21.577706
+  ...
+# Subtest: a withheld board that differs from the published snapshot by one value fails closed
+ok 264 - a withheld board that differs from the published snapshot by one value fails closed
+  ---
+  duration_ms: 9.561451
+  ...
+# Subtest: a withheld board redated to this run's day fails closed
+ok 265 - a withheld board redated to this run's day fails closed
+  ---
+  duration_ms: 3.20643
+  ...
+# Subtest: a determination that names an identity the capture still shows fails closed
+ok 266 - a determination that names an identity the capture still shows fails closed
+  ---
+  duration_ms: 16.716258
+  ...
+# Subtest: a board with absences that the determination does not name fails closed
+ok 267 - a board with absences that the determination does not name fails closed
+  ---
+  duration_ms: 7.361703
+  ...
+# Subtest: a determination naming a board whose capture is complete fails closed
+ok 268 - a determination naming a board whose capture is complete fails closed
+  ---
+  duration_ms: 6.344281
+  ...
+# Subtest: the review names the withholding in its report, retained block and limitations
+ok 269 - the review names the withholding in its report, retained block and limitations
+  ---
+  duration_ms: 0.793945
+  ...
+# Subtest: an absent row is classified against the source registry, not guessed
+ok 270 - an absent row is classified against the source registry, not guessed
+  ---
+  duration_ms: 2.739579
+  ...
+# Subtest: a board contradicting the source registry is withheld with a sidecar, and the published board is untouched
+ok 271 - a board contradicting the source registry is withheld with a sidecar, and the published board is untouched
+  ---
+  duration_ms: 385.832195
+  ...
+# Subtest: a withdrawal the registry corroborates still fails closed with no sidecar
+ok 272 - a withdrawal the registry corroborates still fails closed with no sidecar
+  ---
+  duration_ms: 386.547292
+  ...
+# Subtest: one corroborated withdrawal beside a contradicted one keeps the whole capture on the review path
+ok 273 - one corroborated withdrawal beside a contradicted one keeps the whole capture on the review path
+  ---
+  duration_ms: 347.733948
+  ...
+# Subtest: an unchanged board still publishes normally
+ok 274 - an unchanged board still publishes normally
+  ---
+  duration_ms: 349.541954
+  ...
+# Subtest: the daily withholds only on the marker, its own sidecar, and an unchanged board file
+ok 275 - the daily withholds only on the marker, its own sidecar, and an unchanged board file
+  ---
+  duration_ms: 4.527456
+  ...
+# Subtest: capture-only persists guarded receipts before reviews, reuses once, and rejects changed handoffs
+    # Subtest: different collection inputs cannot inherit captures
+    ok 1 - different collection inputs cannot inherit captures
+      ---
+      duration_ms: 3.160181
+      ...
+    # Subtest: a copied receipt cannot be reused by a different transaction
+    ok 2 - a copied receipt cannot be reused by a different transaction
+      ---
+      duration_ms: 5.789072
+      ...
+    # Subtest: modified compressed bytes fail closed instead of fetching again
+    ok 3 - modified compressed bytes fail closed instead of fetching again
+      ---
+      duration_ms: 3.522794
+      ...
+    1..3
+ok 276 - capture-only persists guarded receipts before reviews, reuses once, and rejects changed handoffs
+  ---
+  duration_ms: 43.774362
+  ...
+# Subtest: publication is independent of the writer-owned primary checkout
+ok 277 - publication is independent of the writer-owned primary checkout
+  ---
+  duration_ms: 4.930418
+  ...
+# Subtest: the supervisor's dated brief backups can never make the checkout dirty again
+ok 278 - the supervisor's dated brief backups can never make the checkout dirty again
+  ---
+  duration_ms: 130.372523
+  ...
+# Subtest: a collector failing 3+ days is one digest line; benchmark sources are not collector lines
+ok 279 - a collector failing 3+ days is one digest line; benchmark sources are not collector lines
+  ---
+  duration_ms: 2.055512
+  ...
+# Subtest: from 7 days a collector becomes one human-action card per failure episode, in the shape notify accepts
+ok 280 - from 7 days a collector becomes one human-action card per failure episode, in the shape notify accepts
+  ---
+  duration_ms: 11.800249
+  ...
+# Subtest: retired collectors are dropped by name; a collector a partial run skipped keeps its failure history
+ok 281 - retired collectors are dropped by name; a collector a partial run skipped keeps its failure history
+  ---
+  duration_ms: 0.51383
+  ...
+# notify: plan send collector-stale [collector-stale:fetch-mistral-catalog@2026-09-23]
+# notify: skip top5-entrant (baseline-seeded)
+# notify: sent collector-stale [collector-stale:fetch-mistral-catalog@2026-09-23]
+# Subtest: a human-action card goes out as an ask owned by a reply job; stale pending cards are not replayed
+ok 282 - a human-action card goes out as an ask owned by a reply job; stale pending cards are not replayed
+  ---
+  duration_ms: 44.810002
+  ...
+# Subtest: two cards the same day get separate reply jobs, and a retry keeps an appended reply
+ok 283 - two cards the same day get separate reply jobs, and a retry keeps an appended reply
+  ---
+  duration_ms: 23.886433
+  ...
+# Subtest: only verified publication removes duplicate staging; exact audit datasets and source evidence survive
+ok 284 - only verified publication removes duplicate staging; exact audit datasets and source evidence survive
+  ---
+  duration_ms: 29.696105
+  ...
+# Subtest: the critic prompt says what missing_evidence is for, and what it is not for
+ok 285 - the critic prompt says what missing_evidence is for, and what it is not for
+  ---
+  duration_ms: 5.423848
+  ...
+# Subtest: short caveats remain valid, oversized narrative is a hold even with exact binding
+ok 286 - short caveats remain valid, oversized narrative is a hold even with exact binding
+  ---
+  duration_ms: 3.21419
+  ...
+# Subtest: a formally passing oversized critic cannot mint fingerprints or become unavailable
+ok 287 - a formally passing oversized critic cannot mint fingerprints or become unavailable
+  ---
+  duration_ms: 17.921335
+  ...
+# Subtest: an AA rename keeps the published family key (DeepSeek V4 Pro → "DeepSeek V4 Pro 0424")
+ok 288 - an AA rename keeps the published family key (DeepSeek V4 Pro → "DeepSeek V4 Pro 0424")
+  ---
+  duration_ms: 1.425623
+  ...
+# Subtest: a genuine split is not treated as a rename: another model that now derives the published id keeps it
+ok 289 - a genuine split is not treated as a rename: another model that now derives the published id keeps it
+  ---
+  duration_ms: 0.163937
+  ...
+# Subtest: score rows under a renamed catalog id are re-keyed by AA UUID; unresolvable rows are withheld, not fatal
+ok 290 - score rows under a renamed catalog id are re-keyed by AA UUID; unresolvable rows are withheld, not fatal
+  ---
+  duration_ms: 1.160269
+  ...
+# Subtest: nothing to reconcile returns the snapshot itself
+ok 291 - nothing to reconcile returns the snapshot itself
+  ---
+  duration_ms: 0.198846
+  ...
+# Subtest: a freeze holds after the renamed name itself is published
+ok 292 - a freeze holds after the renamed name itself is published
+  ---
+  duration_ms: 0.308535
+  ...
+# Subtest: the first build after a rename freezes, and an unrenamed model never does
+ok 293 - the first build after a rename freezes, and an unrenamed model never does
+  ---
+  duration_ms: 0.151597
+  ...
+# Subtest: a critic pass quarantines producer disagreement without retrying or blacklisting a careful producer
+ok 294 - a critic pass quarantines producer disagreement without retrying or blacklisting a careful producer
+  ---
+  duration_ms: 18.933236
+  ...
+# Subtest: malformed rows are not an accepted empty artifact
+ok 295 - malformed rows are not an accepted empty artifact
+  ---
+  duration_ms: 1.463323
+  ...
+# Subtest: one disputed source row is dropped while independently checked neighbors can be accepted
+ok 296 - one disputed source row is dropped while independently checked neighbors can be accepted
+  ---
+  duration_ms: 26.144332
+  ...
+# Subtest: same-family critic and below-gate receipt cannot produce an acceptance fingerprint
+ok 297 - same-family critic and below-gate receipt cannot produce an acceptance fingerprint
+  ---
+  duration_ms: 16.529401
+  ...
+# Subtest: an oversized source is refused instead of silently truncated into a passing review
+ok 298 - an oversized source is refused instead of silently truncated into a passing review
+  ---
+  duration_ms: 2.984564
+  ...
+# Subtest: a critic transport retry reuses an unchanged, hash-verified producer audit without another production charge
+ok 299 - a critic transport retry reuses an unchanged, hash-verified producer audit without another production charge
+  ---
+  duration_ms: 18.656352
+  ...
+# Subtest: CR-66.8: a critic PASS with an unbound finding retries the round with another critic instead of aborting
+ok 300 - CR-66.8: a critic PASS with an unbound finding retries the round with another critic instead of aborting
+  ---
+  duration_ms: 47.147998
+  ...
+# Subtest: CR-67.3: one malformed answer from a paid worker earns one retry; timeouts, repeats and free routes stay excluded
+ok 301 - CR-67.3: one malformed answer from a paid worker earns one retry; timeouts, repeats and free routes stay excluded
+  ---
+  duration_ms: 0.689167
+  ...
+# Subtest: a dropped connection costs the call, not the review round
+ok 302 - a dropped connection costs the call, not the review round
+  ---
+  duration_ms: 19.322368
+  ...
+# Subtest: a producer cut off at the cap is asked again with the runner's maximum, once
+ok 303 - a producer cut off at the cap is asked again with the runner's maximum, once
+  ---
+  duration_ms: 8.785336
+  ...
+# Subtest: a critic cut off at the ceiling is not repeated: the retry would buy the same room twice
+ok 304 - a critic cut off at the ceiling is not repeated: the retry would buy the same room twice
+  ---
+  duration_ms: 9.464884
+  ...
+# Subtest: a second cut at the ceiling is a real failure, not an endless retry
+ok 305 - a second cut at the ceiling is a real failure, not an endless retry
+  ---
+  duration_ms: 5.424518
+  ...
+# Subtest: a producer error that is not a cap cut is not retried: the extra call would be paid for nothing
+ok 306 - a producer error that is not a cap cut is not retried: the extra call would be paid for nothing
+  ---
+  duration_ms: 5.054976
+  ...
+# Subtest: a second drop is a real failure, not an endless retry
+ok 307 - a second drop is a real failure, not an endless retry
+  ---
+  duration_ms: 61.428121
+  ...
+# Subtest: D188: a refused single-row artifact says every row is disputed and quotes the critic repair
+ok 308 - D188: a refused single-row artifact says every row is disputed and quotes the critic repair
+  ---
+  duration_ms: 55.427203
+  ...
+# Subtest: a producer false flag under a clean critic is rescued by a different-family producer and a fresh critic
+ok 309 - a producer false flag under a clean critic is rescued by a different-family producer and a fresh critic
+  ---
+  duration_ms: 26.531725
+  ...
+# Subtest: a second flag keeps the rejection; without secondOpinion the old rule is unchanged
+ok 310 - a second flag keeps the rejection; without secondOpinion the old rule is unchanged
+  ---
+  duration_ms: 22.841993
+  ...
+# Subtest: a second-opinion producer of the flagging family is refused
+ok 311 - a second-opinion producer of the flagging family is refused
+  ---
+  duration_ms: 15.419011
+  ...
+# Subtest: worker selection honours avoidFamilies
+ok 312 - worker selection honours avoidFamilies
+  ---
+  duration_ms: 13.744653
+  ...
+# Subtest: regression (review of \#203): an objecting second-opinion critic is terminal, never retried into acceptance
+ok 313 - regression (review of \#203): an objecting second-opinion critic is terminal, never retried into acceptance
+  ---
+  duration_ms: 40.972144
+  ...
+# Subtest: regression (review of \#203): only round 1 can start a second opinion
+ok 314 - regression (review of \#203): only round 1 can start a second opinion
+  ---
+  duration_ms: 26.405736
+  ...
+# Subtest: regression (2026-10-15 01:32 run, da): a second-opinion match without a note is a pass; a flag without a note stays malformed
+ok 315 - regression (2026-10-15 01:32 run, da): a second-opinion match without a note is a pass; a flag without a note stays malformed
+  ---
+  duration_ms: 20.730302
+  ...
+# Subtest: CR-67.1: the producer claim was an arithmetic mix-up — both staged scores equal their own component means
+ok 316 - CR-67.1: the producer claim was an arithmetic mix-up — both staged scores equal their own component means
+  ---
+  duration_ms: 1.0519
+  ...
+# Subtest: CR-67.1/67.2: the dispute still rejects the contract, and the run withholds only that dataset
+ok 317 - CR-67.1/67.2: the dispute still rejects the contract, and the run withholds only that dataset
+  ---
+  duration_ms: 24.0939
+  ...
+# Subtest: CR-67.2: core contracts still fail the run closed; every retainable contract may be withheld (17 Sep)
+ok 318 - CR-67.2: core contracts still fail the run closed; every retainable contract may be withheld (17 Sep)
+  ---
+  duration_ms: 0.454091
+  ...
+# Subtest: 17 Sep: reviewer models that only return malformed output fall back to the deterministic verification
+ok 319 - 17 Sep: reviewer models that only return malformed output fall back to the deterministic verification
+  ---
+  duration_ms: 10.643861
+  ...
+# Subtest: 17 Sep: a substantive objection is never treated as an unavailable reviewer
+ok 320 - 17 Sep: a substantive objection is never treated as an unavailable reviewer
+  ---
+  duration_ms: 16.272045
+  ...
+# Subtest: real notification plan recognizes a top-five family entrant and first run is quiet
+ok 321 - real notification plan recognizes a top-five family entrant and first run is quiet
+  ---
+  duration_ms: 2.292557
+  ...
+# Subtest: failed publication does not advance the successful top-five baseline
+ok 322 - failed publication does not advance the successful top-five baseline
+  ---
+  duration_ms: 0.736937
+  ...
+# Subtest: actual benchmark divergence output converts fractions to percentage points and excludes generic points
+ok 323 - actual benchmark divergence output converts fractions to percentage points and excludes generic points
+  ---
+  duration_ms: 0.673337
+  ...
+# Subtest: one new major family with several reasoning variants creates one notable entry
+ok 324 - one new major family with several reasoning variants creates one notable entry
+  ---
+  duration_ms: 0.350424
+  ...
+# notify: plan send top5-entrant [top5:entrant]
+# notify: NOT SENT top5-entrant [top5:entrant]: notify_failed:Command failed: /tmp/bh-notify-retry-SQ7eEo/notify now 🏆 Benchmark Heaven: Neu in den Top 5 (Composite): Entrant (61)
+# 1. Entrant — 61
+# https://benchmarkheaven.com
+# notify: plan send top5-entrant [top5:entrant] (retry)
+# notify: sent top5-entrant [top5:entrant]
+# notify: skip top5-entrant [top5:entrant] (duplicate)
+# Subtest: an eligible event whose notify send fails is still delivered after the next snapshot becomes the baseline
+ok 325 - an eligible event whose notify send fails is still delivered after the next snapshot becomes the baseline
+  ---
+  duration_ms: 113.303751
+  ...
+# Subtest: CR-66.6: no direct Telegram request remains in ops/daily; a missing notify binary is a failed send, not a crash
+ok 326 - CR-66.6: no direct Telegram request remains in ops/daily; a missing notify binary is a failed send, not a crash
+  ---
+  duration_ms: 24.08393
+  ...
+# notify: skip failure [failure:2027-01-15] (reported by the publish gate finalize)
+# notify: skip failure [failure:2027-01-16] (reported by the publish gate finalize)
+# notify: skip failure [failure:2027-01-17] (reported by the publish gate finalize)
+# ESCALATION REQUESTED: 3 consecutive failures — run ops/daily/escalate.sh --operator
+# Subtest: failures send nothing from the daily notifier (the publish gate alerts) but three failures still request escalation
+ok 327 - failures send nothing from the daily notifier (the publish gate alerts) but three failures still request escalation
+  ---
+  duration_ms: 30.403711
+  ...
+# notify: skip failure [failure:2027-01-15] (reported by the publish gate finalize)
+# notify: skip top5-entrant (baseline-seeded)
+# Subtest: recovery resets the failure streak without a message
+ok 328 - recovery resets the failure streak without a message
+  ---
+  duration_ms: 5.927409
+  ...
+# Subtest: CR-66.7: scope names are checked
+ok 329 - CR-66.7: scope names are checked
+  ---
+  duration_ms: 2.15126
+  ...
+# Subtest: CR-66.7: a prices run needs today's OpenRouter and leaves every benchmark and efficiency source date as it was
+ok 330 - CR-66.7: a prices run needs today's OpenRouter and leaves every benchmark and efficiency source date as it was
+  ---
+  duration_ms: 0.812265
+  ...
+# Subtest: CR-66.7: a prices run may publish price files only
+ok 331 - CR-66.7: a prices run may publish price files only
+  ---
+  duration_ms: 0.375483
+  ...
+# Benchmark Heaven daily 2026-10-22T08:55:21.470Z: /tmp/bh-daily-prices-PXhlQ7/home/runs/2026-10-22T08-55-21-470Z-2844208 (dry run) (scope prices)
+# OK primary-status
+# OK fetch-main
+# OK base
+# OK push-credential
+# OK clone
+# OK detach-stage
+# OK fetch-or
+# WARN fetch-data-policy: keeping the previous snapshot
+# WARN check-provider-meta: see the step log
+# WARN fetch-chutes-catalog: keeping the previous snapshot
+# WARN fetch-nebius-catalog: keeping the previous snapshot
+# WARN fetch-mistral-catalog: keeping the previous snapshot
+# WARN fetch-scaleway-catalog: keeping the previous snapshot
+# WARN fetch-tensorx-catalog: keeping the previous snapshot
+# WARN fetch-t-systems-catalog: keeping the previous snapshot
+# WARN fetch-trustedtokens-catalog: keeping the previous snapshot
+# WARN fetch-ovhcloud-catalog: keeping the previous snapshot
+# WARN fetch-ionos-catalog: keeping the previous snapshot
+# WARN fetch-stackit-catalog: keeping the previous snapshot
+# WARN fetch-inceptron-catalog: keeping the previous snapshot
+# WARN fetch-azure-foundry-catalog: keeping the previous snapshot
+# WARN fetch-aws-bedrock-catalog: keeping the previous snapshot
+# WARN fetch-google-vertex-catalog: keeping the previous snapshot
+# WARN fetch-claude-api-catalog: keeping the previous snapshot
+# WARN fetch-github-copilot-catalog: keeping the previous snapshot
+# DAILY FAILED: build-dataset FAILED: file:///tmp/bh-daily-prices-PXhlQ7/home/runs/2026-10-22T08-55-21-470Z-2844208/work/scripts/build-dataset.mjs:1
+# throw new Error('synthetic stop after collection');
+#       ^
+# Error: synthetic stop after collection
+#     at file:///tmp/bh-daily-prices-PXhlQ7/home/runs/2026-10-22T08-55-21-470Z-2844208/work/scripts/build-dataset.mjs:1:7
+#     at ModuleJob.run (node:internal/modules/esm/module_job:263:25)
+#     at async ModuleLoader.import (node:internal/modules/esm/loader:540:24)
+#     at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5)
+# Node.js v20.19.4
+# Command failed: /usr/bin/node scripts/build-dataset.mjs
+# file:///tmp/bh-daily-prices-PXhlQ7/home/runs/2026-10-22T08-55-21-470Z-2844208/work/scripts/build-dataset.mjs:1
+# throw new Error('synthetic stop after collection');
+#       ^
+# Error: synthetic stop after collection
+#     at file:///tmp/bh-daily-prices-PXhlQ7/home/runs/2026-10-22T08-55-21-470Z-2844208/work/scripts/build-dataset.mjs:1:7
+#     at ModuleJob.run (node:internal/modules/esm/module_job:263:25)
+#     at async ModuleLoader.import (node:internal/modules/esm/loader:540:24)
+#     at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5)
+# Node.js v20.19.4
+# notify: skip failure [failure:2026-10-22] (reported by the publish gate finalize)
+# notify: --dry-run — no sends, no state writes
+# STATUS: problem
+# Benchmark Heaven 2026-10-22 — nur Preise (OpenRouter, Anbieterkataloge) — vollstaendiger Testlauf ohne Push/Telegram
+# Lauf: /tmp/bh-daily-prices-PXhlQ7/home/runs/2026-10-22T08-55-21-470Z-2844208
+# Keine Worker (Preislauf).
+# Modelle mit Abschluss: keine; gemeldete Kosten: $0.0000 (0 Aufrufe ohne Kostenangabe).
+# Schritte: 7 erfolgreich; 19 fehlgeschlagen.
+# Publikation: Testlauf; Live-Pruefung: nicht erfolgt.
+# FEHLER: Node.js v20.19.4
+# Subtest: CR-66.7: runDaily --scope prices collects OpenRouter without efficiency and runs no worker, benchmark or review step
+ok 332 - CR-66.7: runDaily --scope prices collects OpenRouter without efficiency and runs no worker, benchmark or review step
+  ---
+  duration_ms: 971.263529
+  ...
+# Subtest: the staging bulk of an old finished run is pruned; its evidence is not part of the decision
+ok 333 - the staging bulk of an old finished run is pruned; its evidence is not part of the decision
+  ---
+  duration_ms: 2.535792
+  ...
+# Subtest: a run that may still be executing is never touched, however it is dated
+ok 334 - a run that may still be executing is never touched, however it is dated
+  ---
+  duration_ms: 0.377863
+  ...
+# Subtest: recency is read from the run report, and from file activity only when there is none
+ok 335 - recency is read from the run report, and from file activity only when there is none
+  ---
+  duration_ms: 0.257275
+  ...
+# Subtest: the newest staging trees survive any age, so a quiet pipeline still leaves one to investigate
+ok 336 - the newest staging trees survive any age, so a quiet pipeline still leaves one to investigate
+  ---
+  duration_ms: 0.353163
+  ...
+# Subtest: an already compacted run is not counted against the investigation window
+ok 337 - an already compacted run is not counted against the investigation window
+  ---
+  duration_ms: 0.223495
+  ...
+# Subtest: the boundary is the documented one: RETAIN_STAGING_DAYS is kept, a minute past it is not
+ok 338 - the boundary is the documented one: RETAIN_STAGING_DAYS is kept, a minute past it is not
+  ---
+  duration_ms: 0.282725
+  ...
+# Subtest: pruneStaleRuns removes only the staging bulk and only from the runs the plan names
+ok 339 - pruneStaleRuns removes only the staging bulk and only from the runs the plan names
+  ---
+  duration_ms: 86.60834
+  ...
+# Subtest: a missing runs directory is reported, not thrown
+ok 340 - a missing runs directory is reported, not thrown
+  ---
+  duration_ms: 0.860544
+  ...
+# Subtest: insertion and reorder preserve unique identities while retaining exact changed values and evidence
+ok 341 - insertion and reorder preserve unique identities while retaining exact changed values and evidence
+  ---
+  duration_ms: 3.326018
+  ...
+# Subtest: variant and harness remain separate exact identities
+ok 342 - variant and harness remain separate exact identities
+  ---
+  duration_ms: 0.441082
+  ...
+# Subtest: ambiguous identities require unchanged exact-ID semantics and missing rows fail
+ok 343 - ambiguous identities require unchanged exact-ID semantics and missing rows fail
+  ---
+  duration_ms: 1.09068
+  ...
+# Subtest: a reviewed withdrawal drops exactly its absent row; every other disappearance still fails
+ok 344 - a reviewed withdrawal drops exactly its absent row; every other disappearance still fails
+  ---
+  duration_ms: 0.717217
+  ...
+# Subtest: CR-66.2: gate fail → no push, publication refused
+ok 345 - CR-66.2: gate fail → no push, publication refused
+  ---
+  duration_ms: 194.405414
+  ...
+# Subtest: CR-66.2: gate missing → no push, publication refused
+ok 346 - CR-66.2: gate missing → no push, publication refused
+  ---
+  duration_ms: 185.249076
+  ...
+# Subtest: CR-66.2: gate wrong-hash → no push, publication refused
+ok 347 - CR-66.2: gate wrong-hash → no push, publication refused
+  ---
+  duration_ms: 218.570963
+  ...
+# Subtest: CR-66.2: gate fail-stage1 → no push, publication refused
+ok 348 - CR-66.2: gate fail-stage1 → no push, publication refused
+  ---
+  duration_ms: 144.267413
+  ...
+# Subtest: CR-66.2: gate PASS bound to the committed dataset publishes, and the verdict is recorded
+ok 349 - CR-66.2: gate PASS bound to the committed dataset publishes, and the verdict is recorded
+  ---
+  duration_ms: 232.035242
+  ...
+# Subtest: CR-66.2: a gate that hangs is stopped by its own timeout and refuses publication
+ok 350 - CR-66.2: a gate that hangs is stopped by its own timeout and refuses publication
+  ---
+  duration_ms: 1666.028816
+  ...
+# Subtest: CR-66.2: BH_GATE_REQUIRED=1 without an installed gate refuses; no gate and not required publishes as before
+ok 351 - CR-66.2: BH_GATE_REQUIRED=1 without an installed gate refuses; no gate and not required publishes as before
+  ---
+  duration_ms: 111.960927
+  ...
+# Subtest: CR-66.2: verdict assessment binds hash and commit
+ok 352 - CR-66.2: verdict assessment binds hash and commit
+  ---
+  duration_ms: 0.455541
+  ...
+# Subtest: CR-66.2: daily.mjs publishes only through gatedPublish
+ok 353 - CR-66.2: daily.mjs publishes only through gatedPublish
+  ---
+  duration_ms: 1.287736
+  ...
+# Subtest: CR-66.4: build, test, typecheck and prerender steps run without the production evidence/state directories
+ok 354 - CR-66.4: build, test, typecheck and prerender steps run without the production evidence/state directories
+  ---
+  duration_ms: 1.829406
+  ...
+# Subtest: Push retry: a concurrent writer that pushes first is reconciled by fetch + rebase, not a failed run
+ok 355 - Push retry: a concurrent writer that pushes first is reconciled by fetch + rebase, not a failed run
+  ---
+  duration_ms: 247.641829
+  ...
+# Subtest: Push retry: a real content conflict aborts the rebase and fails the run instead of guessing a resolution
+ok 356 - Push retry: a real content conflict aborts the rebase and fails the run instead of guessing a resolution
+  ---
+  duration_ms: 270.829395
+  ...
+# Subtest: Push retry: a clean rebase that silently absorbed a concurrent dataset.json edit is refused, not published
+ok 357 - Push retry: a clean rebase that silently absorbed a concurrent dataset.json edit is refused, not published
+  ---
+  duration_ms: 206.479179
+  ...
+# Subtest: retained dates cannot claim the current run or a future measurement
+ok 358 - retained dates cannot claim the current run or a future measurement
+  ---
+  duration_ms: 1.681968
+  ...
+# Subtest: CR-287: captured AA verification rejects a retained value when its source publishes the field again
+ok 359 - CR-287: captured AA verification rejects a retained value when its source publishes the field again
+  ---
+  duration_ms: 34.79151
+  ...
+# Subtest: retained measured cache requires marker, original date and exact prior values
+ok 360 - retained measured cache requires marker, original date and exact prior values
+  ---
+  duration_ms: 0.442922
+  ...
+# Subtest: CR-285: AA metadata may be retained only while the current leaderboard omits the field
+ok 361 - CR-285: AA metadata may be retained only while the current leaderboard omits the field
+  ---
+  duration_ms: 0.55225
+  ...
+# Subtest: CR-444: a retained OpenRouter cache label without a hit rate matches the collector output exactly
+ok 362 - CR-444: a retained OpenRouter cache label without a hit rate matches the collector output exactly
+  ---
+  duration_ms: 0.449162
+  ...
+# Subtest: daily review requests JSON and explicit producer coverage (complete)
+ok 363 - daily review requests JSON and explicit producer coverage (complete)
+  ---
+  duration_ms: 28.485257
+  ...
+# Subtest: daily review requests JSON and explicit producer coverage (missing-row)
+ok 364 - daily review requests JSON and explicit producer coverage (missing-row)
+  ---
+  duration_ms: 9.786467
+  ...
+# Subtest: daily review requests JSON and explicit producer coverage (wrong-hash)
+ok 365 - daily review requests JSON and explicit producer coverage (wrong-hash)
+  ---
+  duration_ms: 15.48536
+  ...
+# Subtest: daily review requests JSON and explicit producer coverage (missing-coverage)
+ok 366 - daily review requests JSON and explicit producer coverage (missing-coverage)
+  ---
+  duration_ms: 12.429268
+  ...
+# Subtest: real Git excludes the controlled dry-run dependency symlink while data-only scope stays enforced
+ok 367 - real Git excludes the controlled dry-run dependency symlink while data-only scope stays enforced
+  ---
+  duration_ms: 42.975327
+  ...
+# Benchmark Heaven daily 2026-10-22T08:55:22.234Z: /tmp/bh-daily-transaction-BC3Wn5/home/runs/2026-10-22T08-55-22-234Z-2844534 (dry run)
+# OK primary-status
+# OK fetch-main
+# OK base
+# OK push-credential
+# OK clone
+# OK detach-stage
+# OK capture-benchmarks
+# OK worker-catalog
+# DAILY FAILED: fetch-aa FAILED: file:///tmp/bh-daily-transaction-BC3Wn5/home/runs/2026-10-22T08-55-22-234Z-2844534/work/scripts/fetch-live.mjs:1
+# import {writeFileSync} from 'node:fs';writeFileSync('data/raw/artificialanalysis.json','PARTIAL_STAGED_FIXTURE');throw new Error('synthetic incomplete collection');
+#                                                                                                                        ^
+# Error: synthetic incomplete collection
+#     at file:///tmp/bh-daily-transaction-BC3Wn5/home/runs/2026-10-22T08-55-22-234Z-2844534/work/scripts/fetch-live.mjs:1:120
+#     at ModuleJob.run (node:internal/modules/esm/module_job:263:25)
+#     at async ModuleLoader.import (node:internal/modules/esm/loader:540:24)
+#     at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5)
+# Node.js v20.19.4
+# Command failed: /usr/bin/node scripts/fetch-live.mjs aa
+# file:///tmp/bh-daily-transaction-BC3Wn5/home/runs/2026-10-22T08-55-22-234Z-2844534/work/scripts/fetch-live.mjs:1
+# import {writeFileSync} from 'node:fs';writeFileSync('data/raw/artificialanalysis.json','PARTIAL_STAGED_FIXTURE');throw new Error('synthetic incomplete collection');
+#                                                                                                                        ^
+# Error: synthetic incomplete collection
+#     at file:///tmp/bh-daily-transaction-BC3Wn5/home/runs/2026-10-22T08-55-22-234Z-2844534/work/scripts/fetch-live.mjs:1:120
+#     at ModuleJob.run (node:internal/modules/esm/module_job:263:25)
+#     at async ModuleLoader.import (node:internal/modules/esm/loader:540:24)
+#     at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5)
+# Node.js v20.19.4
+# notify: skip failure [failure:2026-10-22] (reported by the publish gate finalize)
+# notify: --dry-run — no sends, no state writes
+# STATUS: problem
+# Benchmark Heaven 2026-10-22 — vollstaendiger Testlauf ohne Push/Telegram
+# Lauf: /tmp/bh-daily-transaction-BC3Wn5/home/runs/2026-10-22T08-55-22-234Z-2844534
+# Erste Auswahl: deepseek/fixture; Kritiker: z-ai/fixture
+# Modelle mit Abschluss: keine; gemeldete Kosten: $0.0000 (0 Aufrufe ohne Kostenangabe).
+# Schritte: 8 erfolgreich; 1 fehlgeschlagen.
+# Publikation: Testlauf; Live-Pruefung: nicht erfolgt.
+# FEHLER: Node.js v20.19.4
+# Subtest: actual isolated daily transaction cannot alter main or remote after a partial collector writes then fails
+ok 368 - actual isolated daily transaction cannot alter main or remote after a partial collector writes then fails
+  ---
+  duration_ms: 341.232049
+  ...
+# Subtest: deployment equality permits the API runtime marker but rejects any changed source date, value or extra field
+ok 369 - deployment equality permits the API runtime marker but rejects any changed source date, value or extra field
+  ---
+  duration_ms: 0.454331
+  ...
+# Subtest: unattended worker calls get the 600 s budget the passing runs used
+ok 370 - unattended worker calls get the 600 s budget the passing runs used
+  ---
+  duration_ms: 5.077385
+  ...
+# Subtest: DB-backed requests opt out of prerender even on an in-process dataset cache hit
+ok 371 - DB-backed requests opt out of prerender even on an in-process dataset cache hit
+  ---
+  duration_ms: 1.798106
+  ...
+# Subtest: DB load preserves additive dataset metadata and rejects old seeds without efficiency or benchmark results
+ok 372 - DB load preserves additive dataset metadata and rejects old seeds without efficiency or benchmark results
+  ---
+  duration_ms: 15.49392
+  ...
+# Subtest: dataset has models, families and offers
+ok 373 - dataset has models, families and offers
+  ---
+  duration_ms: 1.469193
+  ...
+# Subtest: Epoch ECI source is complete and attached conservatively
+ok 374 - Epoch ECI source is complete and attached conservatively
+  ---
+  duration_ms: 0.55611
+  ...
+# Subtest: every published source snapshot is current for this refresh
+ok 375 - every published source snapshot is current for this refresh
+  ---
+  duration_ms: 0.211746
+  ...
+# Subtest: all brief-required model families are present
+ok 376 - all brief-required model families are present
+  ---
+  duration_ms: 0.449232
+  ...
+# Subtest: product names are not mistaken for reasoning-effort variants
+ok 377 - product names are not mistaken for reasoning-effort variants
+  ---
+  duration_ms: 0.52259
+  ...
+# Subtest: moving aliases and safe provider prefixes do not split model families
+ok 378 - moving aliases and safe provider prefixes do not split model families
+  ---
+  duration_ms: 0.627219
+  ...
+# Subtest: open-weights filter metadata excludes audited proprietary families
+ok 379 - open-weights filter metadata excludes audited proprietary families
+  ---
+  duration_ms: 1.881874
+  ...
+# Subtest: OpenRouter aliases merge free tiers and exclude router/music pseudo-models
+ok 380 - OpenRouter aliases merge free tiers and exclude router/music pseudo-models
+  ---
+  duration_ms: 0.56745
+  ...
+# Subtest: featured set is the AA Intelligence top 20 plus the explicit pins
+ok 381 - featured set is the AA Intelligence top 20 plus the explicit pins
+  ---
+  duration_ms: 11.596833
+  ...
+# Subtest: featured models are current, scored and explicitly named where Florian asked
+ok 382 - featured models are current, scored and explicitly named where Florian asked
+  ---
+  duration_ms: 1.332645
+  ...
+# Subtest: benchmarks never silently coerce null to 0
+ok 383 - benchmarks never silently coerce null to 0
+  ---
+  duration_ms: 0.287785
+  ...
+# Subtest: offers carry numeric per-1M pricing or are explicitly null
+ok 384 - offers carry numeric per-1M pricing or are explicitly null
+  ---
+  duration_ms: 3.653922
+  ...
+# Subtest: every offer carries audited residency and provider-origin flags
+ok 385 - every offer carries audited residency and provider-origin flags
+  ---
+  duration_ms: 2.724039
+  ...
+# Subtest: EU residency is specific to the model offer, not inherited from the provider
+ok 386 - EU residency is specific to the model offer, not inherited from the provider
+  ---
+  duration_ms: 0.830714
+  ...
+# Subtest: only the two approved Azure Direct Global offers receive the EU policy equivalence
+ok 387 - only the two approved Azure Direct Global offers receive the EU policy equivalence
+  ---
+  duration_ms: 1.925214
+  ...
+# Subtest: global and EU routes from one provider are both retained
+ok 388 - global and EU routes from one provider are both retained
+  ---
+  duration_ms: 0.316194
+  ...
+# Subtest: mixed-region OpenRouter providers never inherit an EU flag from company metadata
+ok 389 - mixed-region OpenRouter providers never inherit an EU flag from company metadata
+  ---
+  duration_ms: 1.366215
+  ...
+# Subtest: EU-capable gateway providers mark only their explicitly European OpenRouter routes
+ok 390 - EU-capable gateway providers mark only their explicitly European OpenRouter routes
+  ---
+  duration_ms: 1.810127
+  ...
+# Subtest: context-price tiers and distinct managed routes survive dataset deduplication
+ok 391 - context-price tiers and distinct managed routes survive dataset deduplication
+  ---
+  duration_ms: 1.515361
+  ...
+# Subtest: audited July provider prices survive the merged dataset
+ok 392 - audited July provider prices survive the merged dataset
+  ---
+  duration_ms: 0.492071
+  ...
+# Subtest: privacy routing is not mislabeled as trusted execution
+ok 393 - privacy routing is not mislabeled as trusted execution
+  ---
+  duration_ms: 3.21401
+  ...
+# Subtest: current Copilot token catalog and legacy request table stay distinct
+ok 394 - current Copilot token catalog and legacy request table stay distinct
+  ---
+  duration_ms: 0.658948
+  ...
+# Subtest: confirmed non-US provider metadata reaches the provider directory
+ok 395 - confirmed non-US provider metadata reaches the provider directory
+  ---
+  duration_ms: 0.145687
+  ...
+# Subtest: Claude first-party snapshot contains every currently callable model
+ok 396 - Claude first-party snapshot contains every currently callable model
+  ---
+  duration_ms: 0.296234
+  ...
+# Subtest: Coding Agent snapshot is fresh and internally consistent
+ok 397 - Coding Agent snapshot is fresh and internally consistent
+  ---
+  duration_ms: 0.122168
+  ...
+# Subtest: Coding Agent source rows retain their exact effort variants
+ok 398 - Coding Agent source rows retain their exact effort variants
+  ---
+  duration_ms: 0.487821
+  ...
+# Subtest: freshly built dataset attaches Coding Agent scores only to exact variants
+ok 399 - freshly built dataset attaches Coding Agent scores only to exact variants
+  ---
+  duration_ms: 0.675378
+  ...
+# Subtest: GLM-5.2 keeps all qualified source evidence on the reasoning max row
+ok 400 - GLM-5.2 keeps all qualified source evidence on the reasoning max row
+  ---
+  duration_ms: 0.314844
+  ...
+# Subtest: family-scoped Intelligence.ai evidence attaches once to deterministic Overview representatives
+ok 401 - family-scoped Intelligence.ai evidence attaches once to deterministic Overview representatives
+  ---
+  duration_ms: 2.536803
+  ...
+# Subtest: DeepSeek V4 Pro DesignArena rows mirror the source and sit on the max representative only
+ok 402 - DeepSeek V4 Pro DesignArena rows mirror the source and sit on the max representative only
+  ---
+  duration_ms: 0.361733
+  ...
+# Subtest: Intelligence.ai registry display names resolve opaque and revisioned leaderboard ids
+ok 403 - Intelligence.ai registry display names resolve opaque and revisioned leaderboard ids
+  ---
+  duration_ms: 0.618438
+  ...
+# Subtest: all Artificial Analysis rows and official weight flags survive exactly once
+ok 404 - all Artificial Analysis rows and official weight flags survive exactly once
+  ---
+  duration_ms: 1.136169
+  ...
+# Subtest: audited upstream repository corrections preserve source provenance
+ok 405 - audited upstream repository corrections preserve source provenance
+  ---
+  duration_ms: 0.397683
+  ...
+# Subtest: audited provider checkpoint aliases join their benchmark families
+ok 406 - audited provider checkpoint aliases join their benchmark families
+  ---
+  duration_ms: 0.876764
+  ...
+# Subtest: canonical organizations are consistent across source aliases
+ok 407 - canonical organizations are consistent across source aliases
+  ---
+  duration_ms: 0.345864
+  ...
+# Subtest: every COMPLETE Coding Agent harness result is retained and the summary is its median
+ok 408 - every COMPLETE Coding Agent harness result is retained and the summary is its median
+  ---
+  duration_ms: 0.449852
+  ...
+# Subtest: DesignArena board rows attach once and never clone across effort siblings
+ok 409 - DesignArena board rows attach once and never clone across effort siblings
+  ---
+  duration_ms: 0.729916
+  ...
+# Subtest: every current OpenRouter text SKU remains represented after free-tier deduplication
+ok 410 - every current OpenRouter text SKU remains represented after free-tier deduplication
+  ---
+  duration_ms: 4.110503
+  ...
+# Subtest: AA rows receive only their exact OpenRouter SKU or a repository-verified replacement for a stale alias
+ok 411 - AA rows receive only their exact OpenRouter SKU or a repository-verified replacement for a stale alias
+  ---
+  duration_ms: 1.744748
+  ...
+# Subtest: all published providers have metadata and no generated normalization ghosts remain
+ok 412 - all published providers have metadata and no generated normalization ghosts remain
+  ---
+  duration_ms: 2.16315
+  ...
+# Subtest: September frontier additions retain prices, exact efforts and conservative metadata
+ok 413 - September frontier additions retain prices, exact efforts and conservative metadata
+  ---
+  duration_ms: 0.51419
+  ...
+# Subtest: Decisio 31B breakdown evidence preserves headline, rank, Composite and price scope
+ok 414 - Decisio 31B breakdown evidence preserves headline, rank, Composite and price scope
+  ---
+  duration_ms: 1.444453
+  ...
+# Subtest: Decisio 31B cells copy the sanitized aggregate exactly, including small-n and all-failure families
+ok 415 - Decisio 31B cells copy the sanitized aggregate exactly, including small-n and all-failure families
+  ---
+  duration_ms: 21.165854
+  ...
+# Subtest: All 23 languages reach 60 and all 7 topics and 20 use cases reach 30 on actual completed counts
+ok 416 - All 23 languages reach 60 and all 7 topics and 20 use cases reach 30 on actual completed counts
+  ---
+  duration_ms: 3.005014
+  ...
+# Subtest: P300 is carried once by stable identity and the original 23 HTTP 500s stay unimputed operational failures
+ok 417 - P300 is carried once by stable identity and the original 23 HTTP 500s stay unimputed operational failures
+  ---
+  duration_ms: 0.335704
+  ...
+# Subtest: Decisio 31B discloses its S+P+L1+L2+L3 pools and meets the listed-row radar gate
+ok 418 - Decisio 31B discloses its S+P+L1+L2+L3 pools and meets the listed-row radar gate
+  ---
+  duration_ms: 60.119046
+  ...
+# Subtest: The coverage note keeps P300 carry, the 23 HTTP 500s and the L3 OpenAI review exposure visible, in public terms
+ok 419 - The coverage note keeps P300 carry, the 23 HTTP 500s and the L3 OpenAI review exposure visible, in public terms
+  ---
+  duration_ms: 7.953992
+  ...
+# Subtest: Public handoff contains only aggregates and no local paths
+ok 420 - Public handoff contains only aggregates and no local paths
+  ---
+  duration_ms: 0.56657
+  ...
+# Subtest: every DeepSeek-V4.1-Flash card claim is visibly self-reported, approved and its own identity
+ok 421 - every DeepSeek-V4.1-Flash card claim is visibly self-reported, approved and its own identity
+  ---
+  duration_ms: 50.887729
+  ...
+# Subtest: an unversioned card claim keeps the card's own date, a versioned one keeps its version
+ok 422 - an unversioned card claim keeps the card's own date, a versioned one keeps its version
+  ---
+  duration_ms: 5.978638
+  ...
+# Subtest: every card value re-derives from the retained capture, in the DS-V4.1-Flash column
+ok 423 - every card value re-derives from the retained capture, in the DS-V4.1-Flash column
+  ---
+  duration_ms: 17.66393
+  ...
+# Subtest: the card's base-model table, its scaffold breakdown and other labs' columns stay out
+ok 424 - the card's base-model table, its scaffold breakdown and other labs' columns stay out
+  ---
+  duration_ms: 426.099002
+  ...
+# Subtest: the vendor claims raise V4.1 Flash coverage without entering the Composite
+ok 425 - the vendor claims raise V4.1 Flash coverage without entering the Composite
+  ---
+  duration_ms: 520.599035
+  ...
+# Subtest: the card's boards cannot move the Benchmaxxing signal
+ok 426 - the card's boards cannot move the Benchmaxxing signal
+  ---
+  duration_ms: 7411.369932
+  ...
+# Subtest: a provider error on the runner's own line is a failure
+ok 427 - a provider error on the runner's own line is a failure
+  ---
+  duration_ms: 11.898138
+  ...
+# Subtest: the task's own output mentioning a rate limit is not a failure
+ok 428 - the task's own output mentioning a rate limit is not a failure
+  ---
+  duration_ms: 6.43064
+  ...
+# Subtest: an HTTP status in the task output is not a failure either
+ok 429 - an HTTP status in the task output is not a failure either
+  ---
+  duration_ms: 7.411522
+  ...
+# Subtest: no output at all is a failure
+ok 430 - no output at all is a failure
+  ---
+  duration_ms: 5.817231
+  ...
+# Subtest: a failing fallback may not overwrite the primary answer
+ok 431 - a failing fallback may not overwrite the primary answer
+  ---
+  duration_ms: 1.197267
+  ...
+# Subtest: four terms use USD/million units, and equivalent has explicit own-token denominator
+ok 432 - four terms use USD/million units, and equivalent has explicit own-token denominator
+  ---
+  duration_ms: 2.041231
+  ...
+# Subtest: twice the output/task doubles workload cost, while per-million equivalent stays unchanged
+ok 433 - twice the output/task doubles workload cost, while per-million equivalent stays unchanged
+  ---
+  duration_ms: 1.469412
+  ...
+# Subtest: unknown statistics earn no caching discount and every missing dimension is flagged
+ok 434 - unknown statistics earn no caching discount and every missing dimension is flagged
+  ---
+  duration_ms: 0.249256
+  ...
+# Subtest: missing read price charges full input even with 100% cache hits
+ok 435 - missing read price charges full input even with 100% cache hits
+  ---
+  duration_ms: 0.380053
+  ...
+# Subtest: missing write price substitutes input price if explicit write tokens exist
+ok 436 - missing write price substitutes input price if explicit write tokens exist
+  ---
+  duration_ms: 0.194096
+  ...
+# Subtest: partial list price fallback is explicit; entirely unknown never ranks as free
+ok 437 - partial list price fallback is explicit; entirely unknown never ranks as free
+  ---
+  duration_ms: 0.225955
+  ...
+# Subtest: free prices, zero prompt ratio, and real zero cache statistics are retained
+ok 438 - free prices, zero prompt ratio, and real zero cache statistics are retained
+  ---
+  duration_ms: 0.360404
+  ...
+# Subtest: invalid rates, quantities and nonnumeric data fall back, never clamp or coerce silently
+ok 439 - invalid rates, quantities and nonnumeric data fall back, never clamp or coerce silently
+  ---
+  duration_ms: 0.323954
+  ...
+# Subtest: all fixed blends calculate independently of task/cache data and preserve fallback and zero
+ok 440 - all fixed blends calculate independently of task/cache data and preserve fallback and zero
+  ---
+  duration_ms: 0.593249
+  ...
+# Subtest: 2026-09-15 cache baseline: median of fresh measured endpoints that bill cache reads
+ok 441 - 2026-09-15 cache baseline: median of fresh measured endpoints that bill cache reads
+  ---
+  duration_ms: 0.877463
+  ...
+# Subtest: 2026-09-15 cache baseline: a thin sample sets no norm
+ok 442 - 2026-09-15 cache baseline: a thin sample sets no norm
+  ---
+  duration_ms: 0.230596
+  ...
+# Subtest: CR-65.9: cache-read prices outside the provider band are flagged; documented exceptions carry their citation
+ok 443 - CR-65.9: cache-read prices outside the provider band are flagged; documented exceptions carry their citation
+  ---
+  duration_ms: 9.303056
+  ...
+# Subtest: CR-65.9 live: the committed dataset records its cache-read outliers, exceptions marked as documented
+ok 444 - CR-65.9 live: the committed dataset records its cache-read outliers, exceptions marked as documented
+  ---
+  duration_ms: 373.685723
+  ...
+# Subtest: efficiency joins an exact workload SKU; sibling/ambiguous rows use labelled Chutes fallback
+ok 445 - efficiency joins an exact workload SKU; sibling/ambiguous rows use labelled Chutes fallback
+  ---
+  duration_ms: 57.309697
+  ...
+# Subtest: stale workload observations fall back without changing retained source dates
+ok 446 - stale workload observations fall back without changing retained source dates
+  ---
+  duration_ms: 51.999979
+  ...
+# Subtest: duplicate endpoint tags and mismatched provider identities never receive a cache rate
+ok 447 - duplicate endpoint tags and mismatched provider identities never receive a cache rate
+  ---
+  duration_ms: 56.453894
+  ...
+# Subtest: built efficiency observations match dated raw identities, exact values and explicit coverage
+ok 448 - built efficiency observations match dated raw identities, exact values and explicit coverage
+  ---
+  duration_ms: 550.172122
+  ...
+# Subtest: CR-54.2: the collector reproduces the committed observations from the committed evidence alone
+ok 449 - CR-54.2: the collector reproduces the committed observations from the committed evidence alone
+  ---
+  duration_ms: 268.278354
+  ...
+# Subtest: CR-54.2: registry provenance — manual snapshots, fractions, categories, CC BY attribution
+ok 450 - CR-54.2: registry provenance — manual snapshots, fractions, categories, CC BY attribution
+  ---
+  duration_ms: 13.253983
+  ...
+# Subtest: CR-54.2: the two exclusions and all six inclusions are recorded with reasons
+ok 451 - CR-54.2: the two exclusions and all six inclusions are recorded with reasons
+  ---
+  duration_ms: 12.83545
+  ...
+# Subtest: CR-54.2: Benchmaxxing tiers are deliberate
+ok 452 - CR-54.2: Benchmaxxing tiers are deliberate
+  ---
+  duration_ms: 0.349753
+  ...
+# Subtest: CR-54.2: every join re-derives from the slug and lands on an existing configuration
+ok 453 - CR-54.2: every join re-derives from the slug and lands on an existing configuration
+  ---
+  duration_ms: 668.467801
+  ...
+# Subtest: an Epoch ECI history estimate for a dropped model does not create a board
+ok 454 - an Epoch ECI history estimate for a dropped model does not create a board
+  ---
+  duration_ms: 573.910718
+  ...
+# Subtest: spaced Qwen names in Epoch ECI join their catalog family
+ok 455 - spaced Qwen names in Epoch ECI join their catalog family
+  ---
+  duration_ms: 1.855325
+  ...
+# Subtest: Epoch CSV parser preserves quoted commas and newlines
+ok 456 - Epoch CSV parser preserves quoted commas and newlines
+  ---
+  duration_ms: 1.713148
+  ...
+# Subtest: Epoch ECI refit is bounded, finite, and exact for a synthetic sigmoid
+ok 457 - Epoch ECI refit is bounded, finite, and exact for a synthetic sigmoid
+  ---
+  duration_ms: 0.734276
+  ...
+# Subtest: Epoch snapshot keeps every general row and only refits models with two software benchmarks
+ok 458 - Epoch snapshot keeps every general row and only refits models with two software benchmarks
+  ---
+  duration_ms: 2.538322
+  ...
+# Subtest: the Epoch benchmark catalog chunk is rediscovered when its build hash changes
+ok 459 - the Epoch benchmark catalog chunk is rediscovered when its build hash changes
+  ---
+  duration_ms: 1.558921
+  ...
+# Subtest: iteration 134: a dropped connection is retried, an answer is not
+ok 460 - iteration 134: a dropped connection is retried, an answer is not
+  ---
+  duration_ms: 0.706586
+  ...
+# Subtest: iteration 134: the pinned catalog chunk is the one the site currently serves
+ok 461 - iteration 134: the pinned catalog chunk is the one the site currently serves
+  ---
+  duration_ms: 0.339943
+  ...
+# Subtest: Epoch hub runs: the collector reproduces the committed observations from the committed evidence alone
+ok 462 - Epoch hub runs: the collector reproduces the committed observations from the committed evidence alone
+  ---
+  duration_ms: 255.727488
+  ...
+# Subtest: Epoch hub runs: manual snapshots with CC BY attribution and exact slug joins only
+ok 463 - Epoch hub runs: manual snapshots with CC BY attribution and exact slug joins only
+  ---
+  duration_ms: 498.502309
+  ...
+# Subtest: CR-17.1: Claude Sonnet 5 and Opus 5 pass via AWS Bedrock's EU geo profile; Fable 5 / 5.1 on Bedrock do not (US/Global only)
+ok 464 - CR-17.1: Claude Sonnet 5 and Opus 5 pass via AWS Bedrock's EU geo profile; Fable 5 / 5.1 on Bedrock do not (US/Global only)
+  ---
+  duration_ms: 1.698578
+  ...
+# Subtest: CR-17.2: Azure AI Foundry EU Data Zone — GPT-5.6 and DeepSeek-V4 Flash pass; GPT-6 Astra (Data Zone US only) does not
+ok 465 - CR-17.2: Azure AI Foundry EU Data Zone — GPT-5.6 and DeepSeek-V4 Flash pass; GPT-6 Astra (Data Zone US only) does not
+  ---
+  duration_ms: 0.605968
+  ...
+# Subtest: CR-17.3: a Global route passes only via an audited all-EU OpenRouter provider or one of the two documented Azure company-policy equivalents
+ok 466 - CR-17.3: a Global route passes only via an audited all-EU OpenRouter provider or one of the two documented Azure company-policy equivalents
+  ---
+  duration_ms: 6.589447
+  ...
+# Subtest: every /eu SOTA family is current, open-weight and in the catalog
+ok 467 - every /eu SOTA family is current, open-weight and in the catalog
+  ---
+  duration_ms: 2.318996
+  ...
+# Subtest: the EU table does not apply the global Featured shortlist and offers a reset when empty
+ok 468 - the EU table does not apply the global Featured shortlist and offers a reset when empty
+  ---
+  duration_ms: 0.385823
+  ...
+# Subtest: a hash is a pin; a numeric, semantic, dated or snapshot version is not
+ok 469 - a hash is a pin; a numeric, semantic, dated or snapshot version is not
+  ---
+  duration_ms: 1.282046
+  ...
+# Subtest: the table row prints no "Version" for a pin; the result page names the revision once
+ok 470 - the table row prints no "Version" for a pin; the result page names the revision once
+  ---
+  duration_ms: 0.269605
+  ...
+# Subtest: named release identities are not given a fabricated v prefix
+ok 471 - named release identities are not given a fabricated v prefix
+  ---
+  duration_ms: 0.308694
+  ...
+# Subtest: the result page drops the org line when it only repeats the model name
+ok 472 - the result page drops the org line when it only repeats the model name
+  ---
+  duration_ms: 2.211789
+  ...
+# Subtest: the version heading keeps a word that starts with v
+ok 473 - the version heading keeps a word that starts with v
+  ---
+  duration_ms: 0.425862
+  ...
+# Subtest: the default cohort produces no sub-line
+ok 474 - the default cohort produces no sub-line
+  ---
+  duration_ms: 1.468513
+  ...
+# Subtest: a cohort that names something keeps its reader-facing label
+ok 475 - a cohort that names something keeps its reader-facing label
+  ---
+  duration_ms: 0.233206
+  ...
+# Subtest: the matrix re-exports the same rule, so the surfaces cannot drift apart
+ok 476 - the matrix re-exports the same rule, so the surfaces cannot drift apart
+  ---
+  duration_ms: 0.279975
+  ...
+# Subtest: a row with no harness, no configuration and no named runner still lands on the default cohort
+ok 477 - a row with no harness, no configuration and no named runner still lands on the default cohort
+  ---
+  duration_ms: 0.324274
+  ...
+# Subtest: F-165(a): a vendor launch row names its runner instead of sharing the default
+ok 478 - F-165(a): a vendor launch row names its runner instead of sharing the default
+  ---
+  duration_ms: 0.213836
+  ...
+# Subtest: the ranking page uses the same rule for its visible benchmark sub-line
+ok 479 - the ranking page uses the same rule for its visible benchmark sub-line
+  ---
+  duration_ms: 0.860214
+  ...
+# Subtest: the rule selects launch posts only, never board submissions
+ok 480 - the rule selects launch posts only, never board submissions
+  ---
+  duration_ms: 4.099964
+  ...
+# Subtest: a launch row says who produced it, and keeps whatever else its protocol stated
+ok 481 - a launch row says who produced it, and keeps whatever else its protocol stated
+  ---
+  duration_ms: 0.986011
+  ...
+# Subtest: an independent board row is untouched by the rule
+ok 482 - an independent board row is untouched by the rule
+  ---
+  duration_ms: 38.734365
+  ...
+# Subtest: no two axes in one category read the same to a reader
+ok 483 - no two axes in one category read the same to a reader
+  ---
+  duration_ms: 11.919047
+  ...
+# Subtest: axis ids stay stable for everything the rule does not touch
+ok 484 - axis ids stay stable for everything the rule does not touch
+  ---
+  duration_ms: 0.55243
+  ...
+# Subtest: a vendor row the board's own maintainer ran, at the same number, is superseded
+ok 485 - a vendor row the board's own maintainer ran, at the same number, is superseded
+  ---
+  duration_ms: 1.931004
+  ...
+# Subtest: a measured counterpart alone does not supersede: a different runner is a second result
+ok 486 - a measured counterpart alone does not supersede: a different runner is a second result
+  ---
+  duration_ms: 0.298594
+  ...
+# Subtest: the same runner but a different number is two results, not one
+ok 487 - the same runner but a different number is two results, not one
+  ---
+  duration_ms: 1.413904
+  ...
+# Subtest: a self-reported counterpart is not an independently measured result
+ok 488 - a self-reported counterpart is not an independently measured result
+  ---
+  duration_ms: 0.193746
+  ...
+# Subtest: a counterpart measurement of a different model configuration does not supersede
+ok 489 - a counterpart measurement of a different model configuration does not supersede
+  ---
+  duration_ms: 0.209527
+  ...
+# Subtest: the vendor's printed precision decides what counts as the same number
+ok 490 - the vendor's printed precision decides what counts as the same number
+  ---
+  duration_ms: 0.169616
+  ...
+# Subtest: the published dataset decides every vendor launch row, and the decision holds
+ok 491 - the published dataset decides every vendor launch row, and the decision holds
+  ---
+  duration_ms: 861.025428
+  ...
+# Subtest: an approved vendor score cannot be moved between boards without a review
+ok 492 - an approved vendor score cannot be moved between boards without a review
+  ---
+  duration_ms: 0.445731
+  ...
+# Subtest: D189: F-176(b) is scoped to an element the capability chart actually renders
+ok 493 - D189: F-176(b) is scoped to an element the capability chart actually renders
+  ---
+  duration_ms: 1.549681
+  ...
+# Subtest: D189: an absent container fails F-176(b) instead of passing it
+ok 494 - D189: an absent container fails F-176(b) instead of passing it
+  ---
+  duration_ms: 0.242896
+  ...
+# Subtest: D189: every page-evaluate text helper survives an SVG node
+ok 495 - D189: every page-evaluate text helper survives an SVG node
+  ---
+  duration_ms: 0.404213
+  ...
+# Subtest: D189: ONLY skips the other groups’ page work, not just their checks
+ok 496 - D189: ONLY skips the other groups’ page work, not just their checks
+  ---
+  duration_ms: 1.06977
+  ...
+# Subtest: F-179 keeps the historical board and data out of the initial page component
+ok 497 - F-179 keeps the historical board and data out of the initial page component
+  ---
+  duration_ms: 1.289386
+  ...
+# Subtest: F-179 fetches and mounts history only when the disclosure opens
+ok 498 - F-179 fetches and mounts history only when the disclosure opens
+  ---
+  duration_ms: 0.238455
+  ...
+# Subtest: F-179 still answers a link that names a view inside the disclosure
+ok 499 - F-179 still answers a link that names a view inside the disclosure
+  ---
+  duration_ms: 0.162947
+  ...
+# Subtest: F-149: the two actions sit under the header lead, mail primary, GitHub secondary
+ok 500 - F-149: the two actions sit under the header lead, mail primary, GitHub secondary
+  ---
+  duration_ms: 1.782067
+  ...
+# Subtest: F-149: the email-section closing sentence is the short form; the code block wraps
+ok 501 - F-149: the email-section closing sentence is the short form; the code block wraps
+  ---
+  duration_ms: 0.286465
+  ...
+# Subtest: F-150: the sort column is min-w-[10.5rem] so the head fits the pass-22 budget at both widths
+ok 502 - F-150: the sort column is min-w-[10.5rem] so the head fits the pass-22 budget at both widths
+  ---
+  duration_ms: 0.196446
+  ...
+# Subtest: F-151: the four scope buttons are a 2 × 2 grid below sm, one row at sm+
+ok 503 - F-151: the four scope buttons are a 2 × 2 grid below sm, one row at sm+
+  ---
+  duration_ms: 0.243395
+  ...
+# Subtest: F-108 (e): the Benchmaxxing radar copy says what the signal measures, with both caveats
+ok 504 - F-108 (e): the Benchmaxxing radar copy says what the signal measures, with both caveats
+  ---
+  duration_ms: 7.304893
+  ...
+# Subtest: F-108 (a–c): zero ring, ring labels and a dashed average ring in TopicRadar
+ok 505 - F-108 (a–c): zero ring, ring labels and a dashed average ring in TopicRadar
+  ---
+  duration_ms: 1.371724
+  ...
+# Subtest: F-113: ring labels leave the 12-o'clock spoke and the unit word leaves the SVG
+ok 506 - F-113: ring labels leave the 12-o'clock spoke and the unit word leaves the SVG
+  ---
+  duration_ms: 1.909964
+  ...
+# Subtest: F-109: the Overview legend is a collapsed disclosure with one row per mark
+ok 507 - F-109: the Overview legend is a collapsed disclosure with one row per mark
+  ---
+  duration_ms: 1.811016
+  ...
+# Subtest: F-110: the group count joins the basis line below 640 px
+ok 508 - F-110: the group count joins the basis line below 640 px
+  ---
+  duration_ms: 1.60495
+  ...
+# Subtest: F-111: every (i) shares one frame-coalesced media-query subscription
+ok 509 - F-111: every (i) shares one frame-coalesced media-query subscription
+  ---
+  duration_ms: 3.794109
+  ...
+# Subtest: CR-65.11: every label of the pinned Coding Agent value names v1.4
+ok 510 - CR-65.11: every label of the pinned Coding Agent value names v1.4
+  ---
+  duration_ms: 64.307227
+  ...
+# Subtest: F-112: the domain spans the signed catalog and always contains zero
+ok 511 - F-112: the domain spans the signed catalog and always contains zero
+  ---
+  duration_ms: 1.628749
+  ...
+# Subtest: F-112: a degenerate or empty catalog draws nothing rather than dividing by zero
+ok 512 - F-112: a degenerate or empty catalog draws nothing rather than dividing by zero
+  ---
+  duration_ms: 0.357383
+  ...
+# Subtest: F-112: every non-zero score draws a bar, on the side its sign says
+ok 513 - F-112: every non-zero score draws a bar, on the side its sign says
+  ---
+  duration_ms: 0.244745
+  ...
+# Subtest: F-112: the scale does not depend on the visible list
+ok 514 - F-112: the scale does not depend on the visible list
+  ---
+  duration_ms: 2.12272
+  ...
+# Subtest: F-112: the table renders the diverging bar and a zero line, not a 0 → max fill
+ok 515 - F-112: the table renders the diverging bar and a zero line, not a 0 → max fill
+  ---
+  duration_ms: 8.781446
+  ...
+# Subtest: F-114: the Benchmaxxing card holds one instruction line, not a second explainer
+ok 516 - F-114: the Benchmaxxing card holds one instruction line, not a second explainer
+  ---
+  duration_ms: 0.987961
+  ...
+# Subtest: F-114: one status line carries the counts, the levels and the rule, in that order
+ok 517 - F-114: one status line carries the counts, the levels and the rule, in that order
+  ---
+  duration_ms: 1.038551
+  ...
+# Subtest: CR-63.4(b)/F-114: the page intro is one short paragraph, with the detail left to Advanced method
+ok 518 - CR-63.4(b)/F-114: the page intro is one short paragraph, with the detail left to Advanced method
+  ---
+  duration_ms: 0.835225
+  ...
+# Subtest: F-136: ring labels sit at the half-step between spoke 0 and 1, inside the ring, with the F-70 halo
+ok 519 - F-136: ring labels sit at the half-step between spoke 0 and 1, inside the ring, with the F-70 halo
+  ---
+  duration_ms: 4.493567
+  ...
+# Subtest: F-137: the topic figcaption shows at most two sentences; the tier mix and the method are in the notes disclosure
+ok 520 - F-137: the topic figcaption shows at most two sentences; the tier mix and the method are in the notes disclosure
+  ---
+  duration_ms: 0.438272
+  ...
+# Subtest: F-138: the Swap button is right-aligned and content-wide below sm, in the row at sm+
+ok 521 - F-138: the Swap button is right-aligned and content-wide below sm, in the row at sm+
+  ---
+  duration_ms: 0.165847
+  ...
+# Subtest: F-147: the eyebrow carries the current JevBench version and the pill text is never smaller than 10 px
+ok 522 - F-147: the eyebrow carries the current JevBench version and the pill text is never smaller than 10 px
+  ---
+  duration_ms: 1.226487
+  ...
+# Subtest: F-148: the runner-disagreement footnote is two short sentences; each runner name carries its harness as a title
+ok 523 - F-148: the runner-disagreement footnote is two short sentences; each runner name carries its harness as a title
+  ---
+  duration_ms: 0.256225
+  ...
+# Subtest: F-146 follow-up: a vendor row says developer's claim where a measured row shows its percentile — once, not beside 'no percentile'
+ok 524 - F-146 follow-up: a vendor row says developer's claim where a measured row shows its percentile — once, not beside 'no percentile'
+  ---
+  duration_ms: 0.258315
+  ...
+# Subtest: F-142 follow-up: the full cost-unit note does not say "one decision is a whole question" twice
+ok 525 - F-142 follow-up: the full cost-unit note does not say "one decision is a whole question" twice
+  ---
+  duration_ms: 0.166497
+  ...
+# Subtest: F-141 follow-up: the table honorable-mention row carries the first sentence of the rule only
+ok 526 - F-141 follow-up: the table honorable-mention row carries the first sentence of the rule only
+  ---
+  duration_ms: 0.133127
+  ...
+# Subtest: F-152: the table notes are one closed <details>; a row's † links to its entry and opens the disclosure; its first sentence is the title
+ok 527 - F-152: the table notes are one closed <details>; a row's † links to its entry and opens the disclosure; its first sentence is the title
+  ---
+  duration_ms: 2.481463
+  ...
+# Subtest: F-153: the custom-evaluation page's email action is the solid primary button; GitHub stays secondary
+ok 528 - F-153: the custom-evaluation page's email action is the solid primary button; GitHub stays secondary
+  ---
+  duration_ms: 0.296375
+  ...
+# Subtest: F-154: nothing is set below the 10 px type floor in the shortlist columns or the Advanced route badges
+ok 529 - F-154: nothing is set below the 10 px type floor in the shortlist columns or the Advanced route badges
+  ---
+  duration_ms: 0.54122
+  ...
+# Subtest: F-155: in RowTags the revealed chips precede the "+N / less" toggle
+ok 530 - F-155: in RowTags the revealed chips precede the "+N / less" toggle
+  ---
+  duration_ms: 1.114489
+  ...
+# Subtest: F-156: a partly matched board states its published-row count and the checkbox carries the hidden count
+ok 531 - F-156: a partly matched board states its published-row count and the checkbox carries the hidden count
+  ---
+  duration_ms: 0.154897
+  ...
+# Subtest: F-157: the CR-118.4 note is rendered inside the board, after the ranking chart, with its wording intact
+ok 532 - F-157: the CR-118.4 note is rendered inside the board, after the ranking chart, with its wording intact
+  ---
+  duration_ms: 1.572731
+  ...
+# Subtest: F-158: the released image page labels measured axes and the legacy preview remains noindex
+ok 533 - F-158: the released image page labels measured axes and the legacy preview remains noindex
+  ---
+  duration_ms: 0.242296
+  ...
+# Subtest: F-159: the candidate rankings show public and sealed aggregates and receipt coverage folded into the row
+ok 534 - F-159: the candidate rankings show public and sealed aggregates and receipt coverage folded into the row
+  ---
+  duration_ms: 0.197876
+  ...
+# Subtest: F-160: the JevBench eyebrow that hosts CustomEvaluationOffer is a <div>, not a <p> (the offer mounts a <div> toast inside it)
+ok 535 - F-160: the JevBench eyebrow that hosts CustomEvaluationOffer is a <div>, not a <p> (the offer mounts a <div> toast inside it)
+  ---
+  duration_ms: 0.239276
+  ...
+# Subtest: F-164: a clause per model, in the sheet’s wording, with the repeated basis elided
+ok 536 - F-164: a clause per model, in the sheet’s wording, with the repeated basis elided
+  ---
+  duration_ms: 1.58112
+  ...
+# Subtest: F-164: a preliminary model reads in the sheet’s ‡ wording; a measured-only model is not mentioned
+ok 537 - F-164: a preliminary model reads in the sheet’s ‡ wording; a measured-only model is not mentioned
+  ---
+  duration_ms: 0.184057
+  ...
+# Subtest: F-164: one value is never printed as "1 … values are" (D173)
+ok 538 - F-164: one value is never printed as "1 … values are" (D173)
+  ---
+  duration_ms: 0.140777
+  ...
+# Subtest: F-164: a model with both bases states both counts against one total
+ok 539 - F-164: a model with both bases states both counts against one total
+  ---
+  duration_ms: 0.137117
+  ...
+# Subtest: F-163: the notice names the models and says what their values are
+ok 540 - F-163: the notice names the models and says what their values are
+  ---
+  duration_ms: 0.298134
+  ...
+# Subtest: F-163: a model with nothing listed is never described by another model’s claims
+ok 541 - F-163: a model with nothing listed is never described by another model’s claims
+  ---
+  duration_ms: 0.265805
+  ...
+# Subtest: F-163: measured rows that no peer range places are not called claims
+ok 542 - F-163: measured rows that no peer range places are not called claims
+  ---
+  duration_ms: 0.159017
+  ...
+# Subtest: the counts come from the rows the table renders, for the real launch-day selection
+ok 543 - the counts come from the rows the table renders, for the real launch-day selection
+  ---
+  duration_ms: 17.314906
+  ...
+# Subtest: the notice covers exactly the models the cards would have listed with no average
+ok 544 - the notice covers exactly the models the cards would have listed with no average
+  ---
+  duration_ms: 15.716825
+  ...
+# Subtest: a model page’s sheet line and the Compare clause count the same values
+ok 545 - a model page’s sheet line and the Compare clause count the same values
+  ---
+  duration_ms: 71.857936
+  ...
+# Subtest: the component renders both surfaces and no longer draws a bar without a value
+ok 546 - the component renders both surfaces and no longer draws a bar without a value
+  ---
+  duration_ms: 0.330233
+  ...
+# Subtest: F-164: the live region states the totals and says nothing when everything is measured
+ok 547 - F-164: the live region states the totals and says nothing when everything is measured
+  ---
+  duration_ms: 0.553239
+  ...
+# Subtest: CR-139.4: the model page uses exact evidence to qualify the score
+ok 548 - CR-139.4: the model page uses exact evidence to qualify the score
+  ---
+  duration_ms: 1.112929
+  ...
+# Subtest: CR-139.4: attached-only evidence does not qualify a model-specific Composite score
+ok 549 - CR-139.4: attached-only evidence does not qualify a model-specific Composite score
+  ---
+  duration_ms: 0.247005
+  ...
+# Subtest: F-161: a thin Composite carries the Overview's tag beside the number, outside the value element
+ok 550 - F-161: a thin Composite carries the Overview's tag beside the number, outside the value element
+  ---
+  duration_ms: 0.158008
+  ...
+# Subtest: F-162: the offers card never counts to zero and drops the filter line with the count
+ok 551 - F-162: the offers card never counts to zero and drops the filter line with the count
+  ---
+  duration_ms: 0.156327
+  ...
+# Subtest: F-166: the "not measured yet" panel is two sentences that the head does not already say; id and org live in the chip title
+ok 552 - F-166: the "not measured yet" panel is two sentences that the head does not already say; id and org live in the chip title
+  ---
+  duration_ms: 0.320924
+  ...
+# Subtest: F-170(a): a version the name already says as words prints no suffix
+ok 553 - F-170(a): a version the name already says as words prints no suffix
+  ---
+  duration_ms: 2.209229
+  ...
+# Subtest: F-170(a): a version with a token the name lacks still prints, and pins/snapshots are unchanged
+ok 554 - F-170(a): a version with a token the name lacks still prints, and pins/snapshots are unchanged
+  ---
+  duration_ms: 0.57775
+  ...
+# Subtest: F-170(a): every suffix the registry still prints says something the name does not
+ok 555 - F-170(a): every suffix the registry still prints says something the name does not
+  ---
+  duration_ms: 6.807542
+  ...
+# Subtest: F-170(b): the unparsed-protocol marker is never a sub-line, and the real part survives
+ok 556 - F-170(b): the unparsed-protocol marker is never a sub-line, and the real part survives
+  ---
+  duration_ms: 0.860624
+  ...
+# Subtest: F-170(b): a retained source note no longer splits one board into two axes
+ok 557 - F-170(b): a retained source note no longer splits one board into two axes
+  ---
+  duration_ms: 1.286557
+  ...
+# Subtest: F-170(c): the sheet's benchmark name cell wraps at every width and keeps the full name in a title
+ok 558 - F-170(c): the sheet's benchmark name cell wraps at every width and keeps the full name in a title
+  ---
+  duration_ms: 11.526564
+  ...
+# Subtest: F-168: the type sub-line prints a label from the same map the hub radar uses, never the raw class key
+ok 559 - F-168: the type sub-line prints a label from the same map the hub radar uses, never the raw class key
+  ---
+  duration_ms: 1.109539
+  ...
+# Subtest: F-168: the not-ranked status is one sentence with the reason once, and no "Listed as a <key>" tail
+ok 560 - F-168: the not-ranked status is one sentence with the reason once, and no "Listed as a <key>" tail
+  ---
+  duration_ms: 0.173507
+  ...
+# Subtest: F-168: only a ranked system is compared with Jev 1.13.0 (page and metadata description alike)
+ok 561 - F-168: only a ranked system is compared with Jev 1.13.0 (page and metadata description alike)
+  ---
+  duration_ms: 0.173687
+  ...
+# Subtest: F-168: a null calibration reads "none (label only)" with the artifact's note as title
+ok 562 - F-168: a null calibration reads "none (label only)" with the artifact's note as title
+  ---
+  duration_ms: 0.195446
+  ...
+# Subtest: F-176(a): the 3D view has no "ready" announcement
+ok 563 - F-176(a): the 3D view has no "ready" announcement
+  ---
+  duration_ms: 1.400114
+  ...
+# Subtest: F-176(b): the licence sentence is in Credit, not beside the chart
+ok 564 - F-176(b): the licence sentence is in Credit, not beside the chart
+  ---
+  duration_ms: 1.531451
+  ...
+# Subtest: F-181: no 9 px tick label on the cost or context axis
+ok 565 - F-181: no 9 px tick label on the cost or context axis
+  ---
+  duration_ms: 0.278285
+  ...
+# Subtest: F-186: a source note in the cost modal may break inside a long locator
+ok 566 - F-186: a source note in the cost modal may break inside a long locator
+  ---
+  duration_ms: 0.235605
+  ...
+# Subtest: F-191: one referenceFor() feeds the strip, the points sentence, the radar pair and its heading
+ok 567 - F-191: one referenceFor() feeds the strip, the points sentence, the radar pair and its heading
+  ---
+  duration_ms: 1.548861
+  ...
+# Subtest: F-183: the head is the board sub-line, the release sentence closes Availability, no provenance note as copy
+ok 568 - F-183: the head is the board sub-line, the release sentence closes Availability, no provenance note as copy
+  ---
+  duration_ms: 0.230536
+  ...
+# Subtest: F-194: while the banner is visible the toast sits above the banner height, not under it
+ok 569 - F-194: while the banner is visible the toast sits above the banner height, not under it
+  ---
+  duration_ms: 1.0996
+  ...
+# Subtest: F-195: no SVG text in the bubble charts is set below the 10 px floor
+ok 570 - F-195: no SVG text in the bubble charts is set below the 10 px floor
+  ---
+  duration_ms: 0.312634
+  ...
+# Subtest: F-196: the weight-slider group labels only the custom state
+ok 571 - F-196: the weight-slider group labels only the custom state
+  ---
+  duration_ms: 0.206646
+  ...
+# Subtest: F-201: every child of the 3D label layer is absolutely positioned (transform-only placement)
+ok 572 - F-201: every child of the 3D label layer is absolutely positioned (transform-only placement)
+  ---
+  duration_ms: 1.211058
+  ...
+# Subtest: F-202: the bubble separator label and its direction hints are 10 px at every width
+ok 573 - F-202: the bubble separator label and its direction hints are 10 px at every width
+  ---
+  duration_ms: 0.303384
+  ...
+# Subtest: F-203: the input-length bucket ticks are 10 px, and the chart never renders below its own scale
+ok 574 - F-203: the input-length bucket ticks are 10 px, and the chart never renders below its own scale
+  ---
+  duration_ms: 0.218996
+  ...
+# Subtest: F-204: one name per axis, "decisions" as the unit, one arrow per direction
+ok 575 - F-204: one name per axis, "decisions" as the unit, one arrow per direction
+  ---
+  duration_ms: 0.381143
+  ...
+# Subtest: F-205: under 640 px the five labels are one column with leaders that do not cross
+ok 576 - F-205: under 640 px the five labels are one column with leaders that do not cross
+  ---
+  duration_ms: 0.261796
+  ...
+# Subtest: D216: both 3D render paths push a label clear of one it would print on top of
+ok 577 - D216: both 3D render paths push a label clear of one it would print on top of
+  ---
+  duration_ms: 0.167607
+  ...
+# Subtest: F-207(a): the DOM top-five label has a translucent panel-colour plate
+ok 578 - F-207(a): the DOM top-five label has a translucent panel-colour plate
+  ---
+  duration_ms: 1.228997
+  ...
+# Subtest: F-207(a): the class marker is a bar, not a disc
+ok 579 - F-207(a): the class marker is a bar, not a disc
+  ---
+  duration_ms: 0.215616
+  ...
+# Subtest: F-208: the input-length chart draws at its wrapper's pixel width, so one SVG unit is one CSS pixel
+ok 580 - F-208: the input-length chart draws at its wrapper's pixel width, so one SVG unit is one CSS pixel
+  ---
+  duration_ms: 0.487781
+  ...
+# Subtest: F-207(b): each labelled sphere wears a halo, and a pushed plate is joined to it by a leader
+ok 581 - F-207(b): each labelled sphere wears a halo, and a pushed plate is joined to it by a leader
+  ---
+  duration_ms: 1.181018
+  ...
+# Subtest: F-206(d): the leader element renders the built sentence, never the artifact's bare leader_wording
+ok 582 - F-206(d): the leader element renders the built sentence, never the artifact's bare leader_wording
+  ---
+  duration_ms: 1.236886
+  ...
+# Subtest: pass 39: a listing pill is a word, never a key, and an addendum row wears one pill
+ok 583 - pass 39: a listing pill is a word, never a key, and an addendum row wears one pill
+  ---
+  duration_ms: 0.174587
+  ...
+# Subtest: F-210: the roster addendum renders a table, not a list of paragraphs
+ok 584 - F-210: the roster addendum renders a table, not a list of paragraphs
+  ---
+  duration_ms: 0.644148
+  ...
+# Subtest: F-210: the caveat is said once in the intro, and never inside a row
+ok 585 - F-210: the caveat is said once in the intro, and never inside a row
+  ---
+  duration_ms: 0.285884
+  ...
+# Subtest: F-213: sealedFamilyShares returns numbers for both artifact shapes and null for a missing share
+ok 586 - F-213: sealedFamilyShares returns numbers for both artifact shapes and null for a missing share
+  ---
+  duration_ms: 1.700929
+  ...
+# Subtest: F-213: every v1.4.2.2 row with a sealed breakdown yields finite shares — Imajev-4B included
+ok 587 - F-213: every v1.4.2.2 row with a sealed breakdown yields finite shares — Imajev-4B included
+  ---
+  duration_ms: 23.098218
+  ...
+# Subtest: F-213: the three compare readers use the helper, not a raw by_family read
+ok 588 - F-213: the three compare readers use the helper, not a raw by_family read
+  ---
+  duration_ms: 0.766526
+  ...
+# Subtest: F-212: the dataset record and the leaf class title name the release the page renders
+ok 589 - F-212: the dataset record and the leaf class title name the release the page renders
+  ---
+  duration_ms: 0.304214
+  ...
+# Subtest: F-214: current comparison pages do not borrow a historical top-five story
+ok 590 - F-214: current comparison pages do not borrow a historical top-five story
+  ---
+  duration_ms: 0.245106
+  ...
+# Subtest: F-215: the pooled family sentence separates an unpublished breakdown (ranked row) from a partial run (unranked row)
+ok 591 - F-215: the pooled family sentence separates an unpublished breakdown (ranked row) from a partial run (unranked row)
+  ---
+  duration_ms: 0.243756
+  ...
+# Subtest: F-216 (refined by CR-290): a radar spoke prints its separator only between two printed slots; a missing value is "n/a"
+ok 592 - F-216 (refined by CR-290): a radar spoke prints its separator only between two printed slots; a missing value is "n/a"
+  ---
+  duration_ms: 0.798985
+  ...
+# Subtest: F-218: independent live verifier covers desktop and mobile in both themes
+ok 593 - F-218: independent live verifier covers desktop and mobile in both themes
+  ---
+  duration_ms: 1.508791
+  ...
+# Subtest: F-218: no 64-hex literal lives in the preview component — every hash comes from the artifact
+ok 594 - F-218: no 64-hex literal lives in the preview component — every hash comes from the artifact
+  ---
+  duration_ms: 0.775915
+  ...
+# Subtest: F-218: the four prose hashes render through Sha (prefix + title); the provenance line keeps the two full values
+ok 595 - F-218: the four prose hashes render through Sha (prefix + title); the provenance line keeps the two full values
+  ---
+  duration_ms: 0.355903
+  ...
+# Subtest: F-223: a board row carries the headline option interval, ordered low-high, and none without a headline
+ok 596 - F-223: a board row carries the headline option interval, ordered low-high, and none without a headline
+  ---
+  duration_ms: 3.14992
+  ...
+# Subtest: F-223: the interval is drawn only under the official weights and the Overall view
+ok 597 - F-223: the interval is drawn only under the official weights and the Overall view
+  ---
+  duration_ms: 0.320294
+  ...
+# Subtest: F-223: the whisker-and-tie sentence is one string, under the chart leader sentence and in the folded order
+ok 598 - F-223: the whisker-and-tie sentence is one string, under the chart leader sentence and in the folded order
+  ---
+  duration_ms: 0.311995
+  ...
+# Subtest: F-223: the two static repeats of the official ranking fold, and every marker stays
+ok 599 - F-223: the two static repeats of the official ranking fold, and every marker stays
+  ---
+  duration_ms: 0.51832
+  ...
+# Subtest: F-224: the per-system table is two views of what is compared, Axes first
+ok 600 - F-224: the per-system table is two views of what is compared, Axes first
+  ---
+  duration_ms: 0.54384
+  ...
+# Subtest: F-225: the phone label column picks the emptier side and never sits on the attractive-quadrant plate with a labelled point
+ok 601 - F-225: the phone label column picks the emptier side and never sits on the attractive-quadrant plate with a labelled point
+  ---
+  duration_ms: 0.219006
+  ...
+# Subtest: F-225: a tick never reads under the limit caption, and the caption clears a left-hand label column
+ok 602 - F-225: a tick never reads under the limit caption, and the caption clears a left-hand label column
+  ---
+  duration_ms: 0.211287
+  ...
+# Subtest: F-221: the release header prints the data hash through Sha (12-char prefix, full value in the title), never break-all
+ok 603 - F-221: the release header prints the data hash through Sha (12-char prefix, full value in the title), never break-all
+  ---
+  duration_ms: 1.724298
+  ...
+# Subtest: F-222: the live hub says what JevBench is first; the release facts sit on the small meta line; the release notes are not the hero
+ok 604 - F-222: the live hub says what JevBench is first; the release facts sit on the small meta line; the release notes are not the hero
+  ---
+  duration_ms: 0.5352
+  ...
+# Subtest: CR-292: every legacy class resolves to a canonical architecture label
+ok 605 - CR-292: every legacy class resolves to a canonical architecture label
+  ---
+  duration_ms: 0.188677
+  ...
+# Subtest: family-scope fill: a sibling column of the measured family shows the family value
+ok 606 - family-scope fill: a sibling column of the measured family shows the family value
+  ---
+  duration_ms: 3.75038
+  ...
+# Subtest: family-scope fill: disagreeing holders without a representative value share nothing
+ok 607 - family-scope fill: disagreeing holders without a representative value share nothing
+  ---
+  duration_ms: 0.707577
+  ...
+# Subtest: family-scope fill: a deprecated donor is not shared with a current sibling, keeps its own value
+ok 608 - family-scope fill: a deprecated donor is not shared with a current sibling, keeps its own value
+  ---
+  duration_ms: 0.375463
+  ...
+# Subtest: model-field rows (Epoch ECI) fill at family scope too
+ok 609 - model-field rows (Epoch ECI) fill at family scope too
+  ---
+  duration_ms: 0.493221
+  ...
+# Subtest: saturation and ordering count own measurements only, never fills
+ok 610 - saturation and ordering count own measurements only, never fills
+  ---
+  duration_ms: 1.732197
+  ...
+# Subtest: the family-scope axis keys stay the documented set (plus the two model-field ECI rows)
+ok 611 - the family-scope axis keys stay the documented set (plus the two model-field ECI rows)
+  ---
+  duration_ms: 0.176557
+  ...
+# Subtest: CR-167.2/D207: the collapsed phone banner is short enough to clear the first result row
+ok 612 - CR-167.2/D207: the collapsed phone banner is short enough to clear the first result row
+  ---
+  duration_ms: 2.990055
+  ...
+# Subtest: CR-167.2/D207: the phone banner starts collapsed and the teaser discloses the full offer
+ok 613 - CR-167.2/D207: the phone banner starts collapsed and the teaser discloses the full offer
+  ---
+  duration_ms: 0.224556
+  ...
+# Subtest: CR-167.2/D207: the collapsed bar keeps Florian's copy and both controls one tap away
+ok 614 - CR-167.2/D207: the collapsed bar keeps Florian's copy and both controls one tap away
+  ---
+  duration_ms: 0.240945
+  ...
+# Subtest: CR-167.2/D207: the collapsed height cannot grow with the browser text scale
+ok 615 - CR-167.2/D207: the collapsed height cannot grow with the browser text scale
+  ---
+  duration_ms: 0.599979
+  ...
+# Subtest: CR-168.1/CR-174: banner events use the shared allowlist for all public hosts
+ok 616 - CR-168.1/CR-174: banner events use the shared allowlist for all public hosts
+  ---
+  duration_ms: 26.996985
+  ...
+# Subtest: FrontierSWE v2 parser reads the front-page flight payload, cross-checks the Epoch relay and fails closed on identity, row set, harness and relay drift
+ok 617 - FrontierSWE v2 parser reads the front-page flight payload, cross-checks the Epoch relay and fails closed on identity, row set, harness and relay drift
+  ---
+  duration_ms: 279.437125
+  ...
+# Subtest: FrontierSWE v2 joins: relay-covered labels join exact catalog configurations; uncovered labels refuse
+ok 618 - FrontierSWE v2 joins: relay-covered labels join exact catalog configurations; uncovered labels refuse
+  ---
+  duration_ms: 12.061554
+  ...
+# Subtest: PostTrainBench v1.1 parser scores only aggregated agents from scores.js, excludes baselines and fails closed on weights, cells, effort and scaffold
+ok 619 - PostTrainBench v1.1 parser scores only aggregated agents from scores.js, excludes baselines and fails closed on weights, cells, effort and scaffold
+  ---
+  duration_ms: 66.564235
+  ...
+# Subtest: PostTrainBench v1.1 joins: config-stated settings join exact catalog configurations; unstated or unconfigured settings refuse
+ok 620 - PostTrainBench v1.1 joins: config-stated settings join exact catalog configurations; unstated or unconfigured settings refuse
+  ---
+  duration_ms: 14.424321
+  ...
+# Subtest: Registry, plan and identity-map are mutually consistent for the two new boards
+ok 621 - Registry, plan and identity-map are mutually consistent for the two new boards
+  ---
+  duration_ms: 269.5519
+  ...
+# Subtest: unchanged bytes produce a daily check without changing observation provenance
+ok 622 - unchanged bytes produce a daily check without changing observation provenance
+  ---
+  duration_ms: 4.79005
+  ...
+# Subtest: changed bytes, unavailable sources, and corrupt original evidence remain distinct holds
+ok 623 - changed bytes, unavailable sources, and corrupt original evidence remain distinct holds
+  ---
+  duration_ms: 2.1077
+  ...
+# Subtest: Vite claims compare the discovered module, never the landing HTML
+ok 624 - Vite claims compare the discovered module, never the landing HTML
+  ---
+  duration_ms: 2.059591
+  ...
+# Subtest: existing score adapters and reviewed browser-only holds retain their ownership
+ok 625 - existing score adapters and reviewed browser-only holds retain their ownership
+  ---
+  duration_ms: 1.098369
+  ...
+# Subtest: all 93 current frozen vendor entries bind every published claim to readable original bytes
+ok 626 - all 93 current frozen vendor entries bind every published claim to readable original bytes
+  ---
+  duration_ms: 373.892988
+  ...
+# Subtest: reads the catalog without footnote markers, tiers, cache writes, thresholds and promotions
+ok 627 - reads the catalog without footnote markers, tiers, cache writes, thresholds and promotions
+  ---
+  duration_ms: 5.259901
+  ...
+# Subtest: reads legacy multipliers with the subject-to-change list and the auto discount
+ok 628 - reads legacy multipliers with the subject-to-change list and the auto discount
+  ---
+  duration_ms: 0.708717
+  ...
+# Subtest: intersects catalog and prices, drops retired rows, keeps curated fields, reports both gaps
+ok 629 - intersects catalog and prices, drops retired rows, keeps curated fields, reports both gaps
+  ---
+  duration_ms: 2.069452
+  ...
+# Subtest: fails closed when most previous rows disappear
+ok 630 - fails closed when most previous rows disappear
+  ---
+  duration_ms: 1.358994
+  ...
+# Subtest: readVertexTables: sections, panes from tab buttons, carried labels, Priority tables skipped, odd cells tolerated
+ok 631 - readVertexTables: sections, panes from tab buttons, carried labels, Priority tables skipped, odd cells tolerated
+  ---
+  duration_ms: 7.117307
+  ...
+# Subtest: lookupPriceRef: region column, panes, cache from column or Cache Hit row, missing and unreadable rows
+ok 632 - lookupPriceRef: region column, panes, cache from column or Cache Hit row, missing and unreadable rows
+  ---
+  duration_ms: 3.582873
+  ...
+# Subtest: parseVertexCatalog: re-prices by price_ref, keeps unconfirmed rows with their old check date, fails closed
+ok 633 - parseVertexCatalog: re-prices by price_ref, keeps unconfirmed rows with their old check date, fails closed
+  ---
+  duration_ms: 3.977815
+  ...
+# Subtest: committed snapshot: every row names its place on the pricing page
+ok 634 - committed snapshot: every row names its place on the pricing page
+  ---
+  duration_ms: 1.702308
+  ...
+# Subtest: CR-126.1: OpenAI's own runs keep their own registry identities and printed versions
+ok 635 - CR-126.1: OpenAI's own runs keep their own registry identities and printed versions
+  ---
+  duration_ms: 2.459234
+  ...
+# Subtest: CR-126.2: exactly the six printed values are ingested, all self-reported and sourced
+ok 636 - CR-126.2: exactly the six printed values are ingested, all self-reported and sourced
+  ---
+  duration_ms: 0.271704
+  ...
+# Subtest: CR-126.1: every claim sits on the effort configuration OpenAI names, never on a neighbouring one
+ok 637 - CR-126.1: every claim sits on the effort configuration OpenAI names, never on a neighbouring one
+  ---
+  duration_ms: 0.663488
+  ...
+# Subtest: CR-126.2: the two launch models carry OpenAI's published release date and price
+ok 638 - CR-126.2: the two launch models carry OpenAI's published release date and price
+  ---
+  duration_ms: 0.340684
+  ...
+# Subtest: CR-126.3: the competitor cells of the same post stay refused as secondary quotes
+ok 639 - CR-126.3: the competitor cells of the same post stay refused as secondary quotes
+  ---
+  duration_ms: 0.576689
+  ...
+# Subtest: CR-173: every GPT-6 chart-dataset point is ingested once, on its own effort, with its scaling recorded
+ok 640 - CR-173: every GPT-6 chart-dataset point is ingested once, on its own effort, with its scaling recorded
+  ---
+  duration_ms: 1.155658
+  ...
+# Subtest: headline source snapshots become stable, provenance-bearing history observations
+ok 641 - headline source snapshots become stable, provenance-bearing history observations
+  ---
+  duration_ms: 3.061353
+  ...
+# Subtest: headline values use the same dated bridge policy as registry benchmarks
+ok 642 - headline values use the same dated bridge policy as registry benchmarks
+  ---
+  duration_ms: 12.684273
+  ...
+# Subtest: history-only headline IDs attach to the current dated presentation axis
+ok 643 - history-only headline IDs attach to the current dated presentation axis
+  ---
+  duration_ms: 1.794937
+  ...
+# Subtest: a fully deprecated family off every DesignArena board disappears
+ok 644 - a fully deprecated family off every DesignArena board disappears
+  ---
+  duration_ms: 2.12262
+  ...
+# Subtest: a live family keeps its best-measured row even when that row is deprecated (GPT-5.4 case)
+ok 645 - a live family keeps its best-measured row even when that row is deprecated (GPT-5.4 case)
+  ---
+  duration_ms: 0.480961
+  ...
+# Subtest: deprecated effort variants of a live family do not show as separate rows
+ok 646 - deprecated effort variants of a live family do not show as separate rows
+  ---
+  duration_ms: 0.225806
+  ...
+# Subtest: a deprecated model kept alive by a DesignArena board keeps one row
+ok 647 - a deprecated model kept alive by a DesignArena board keeps one row
+  ---
+  duration_ms: 0.271185
+  ...
+# Subtest: toggle off shows every row
+ok 648 - toggle off shows every row
+  ---
+  duration_ms: 0.180636
+  ...
+# Subtest: top-models applies family_alive and then the row rule
+ok 649 - top-models applies family_alive and then the row rule
+  ---
+  duration_ms: 0.563829
+  ...
+# Subtest: retiredFamilies names only families with every configuration retired and no DesignArena board
+ok 650 - retiredFamilies names only families with every configuration retired and no DesignArena board
+  ---
+  duration_ms: 0.392173
+  ...
+# Subtest: live dataset: the toggle removes rows and leaves no retired family behind
+ok 651 - live dataset: the toggle removes rows and leaves no retired family behind
+  ---
+  duration_ms: 450.19284
+  ...
+# Subtest: identity-map review dates are attached to individual joins
+ok 652 - identity-map review dates are attached to individual joins
+  ---
+  duration_ms: 2.614021
+  ...
+# Subtest: ingestion reads the per-entry date rather than only the legacy map date
+ok 653 - ingestion reads the per-entry date rather than only the legacy map date
+  ---
+  duration_ms: 233.585471
+  ...
+# Subtest: ImageJevBench examples use the audited public-only selection
+ok 654 - ImageJevBench examples use the audited public-only selection
+  ---
+  duration_ms: 2.15392
+  ...
+# Subtest: published example images match the public-only manifest and are downscaled
+ok 655 - published example images match the public-only manifest and are downscaled
+  ---
+  duration_ms: 2.14633
+  ...
+# Subtest: source labels disambiguate benchmark IDs from upstream row IDs and point to license evidence
+ok 656 - source labels disambiguate benchmark IDs from upstream row IDs and point to license evidence
+  ---
+  duration_ms: 0.232046
+  ...
+# Subtest: legacy preview stays noindex and the unlisted route redirects to the public page
+ok 657 - legacy preview stays noindex and the unlisted route redirects to the public page
+  ---
+  duration_ms: 0.438132
+  ...
+# Subtest: the preview presents a bar ranking before the detail table and keeps identity visible on narrow screens
+ok 658 - the preview presents a bar ranking before the detail table and keeps identity visible on narrow screens
+  ---
+  duration_ms: 1.316335
+  ...
+# Subtest: ImageJevBench production page keeps the shared section order, full roster, pricing and site menu
+ok 659 - ImageJevBench production page keeps the shared section order, full roster, pricing and site menu
+  ---
+  duration_ms: 15734.30568
+  ...
+# Subtest: TypeSafe-20 artifact: 20 use cases x 30 items, aggregates only, every cell [value, n, completed]
+ok 660 - TypeSafe-20 artifact: 20 use cases x 30 items, aggregates only, every cell [value, n, completed]
+  ---
+  duration_ms: 6.523018
+  ...
+# Subtest: every measured system exists on the page (or is the Jev reference); unmeasured rows stay gaps
+ok 661 - every measured system exists on the page (or is the Jev reference); unmeasured rows stay gaps
+  ---
+  duration_ms: 0.822594
+  ...
+# Subtest: the Jev reference row is unranked, has no v0.3 axes and only exists when it was measured
+ok 662 - the Jev reference row is unranked, has no v0.3 axes and only exists when it was measured
+  ---
+  duration_ms: 0.385563
+  ...
+# Subtest: the image page passes the merged categories and the method note discloses the bank
+ok 663 - the image page passes the merged categories and the method note discloses the bank
+  ---
+  duration_ms: 0.346404
+  ...
+# Subtest: ImageJevBench v0.1.5 prices Wity-1 at its API tariff and preserves all other numeric aggregates
+ok 664 - ImageJevBench v0.1.5 prices Wity-1 at its API tariff and preserves all other numeric aggregates
+  ---
+  duration_ms: 110.233799
+  ...
+# Subtest: ImageJevBench adapter maps v0.1.5 board, comparison, presets and frozen capability limits
+ok 665 - ImageJevBench adapter maps v0.1.5 board, comparison, presets and frozen capability limits
+  ---
+  duration_ms: 67.431429
+  ...
+# Subtest: ImageJevBench systems meet capability limits using explicit frozen caps
+ok 666 - ImageJevBench systems meet capability limits using explicit frozen caps
+  ---
+  duration_ms: 57.700262
+  ...
+# Subtest: ImageJevBench adapter accepts the read-only v0.2 core-headline artifact
+ok 667 - ImageJevBench adapter accepts the read-only v0.2 core-headline artifact
+  ---
+  duration_ms: 14.487929
+  ...
+# Subtest: hidden image preview has complete ordered sections and noindex
+ok 668 - hidden image preview has complete ordered sections and noindex
+  ---
+  duration_ms: 3.604353
+  ...
+# Subtest: preview keeps historical scores separate and does not contain sealed item fields
+ok 669 - preview keeps historical scores separate and does not contain sealed item fields
+  ---
+  duration_ms: 4.468897
+  ...
+# Subtest: all displayed axes and row memberships are valid aggregates
+ok 670 - all displayed axes and row memberships are valid aggregates
+  ---
+  duration_ms: 0.559759
+  ...
+# Subtest: preview is unlinked from sitemap and route sends crawler headers
+ok 671 - preview is unlinked from sitemap and route sends crawler headers
+  ---
+  duration_ms: 7.732116
+  ...
+# Subtest: all five fresh models and their three tracks match the downloadable measurement record
+ok 672 - all five fresh models and their three tracks match the downloadable measurement record
+  ---
+  duration_ms: 0.780745
+  ...
+# Subtest: ImageJevBench v0.3.0 release data keeps the reviewed roster and top five
+ok 673 - ImageJevBench v0.3.0 release data keeps the reviewed roster and top five
+  ---
+  duration_ms: 16.813746
+  ...
+# Subtest: ImageJevBench v0.3.0 page carries no preview-only hooks
+ok 674 - ImageJevBench v0.3.0 page carries no preview-only hooks
+  ---
+  duration_ms: 1.61644
+  ...
+# Subtest: CR-325 dated carry rows link to the system homepage, not an in-page anchor, when one is known
+ok 675 - CR-325 dated carry rows link to the system homepage, not an in-page anchor, when one is known
+  ---
+  duration_ms: 15.623738
+  ...
+# Subtest: CR-333 dated-carry re-run (7 Oct 2026): re-measured carries disclose method; unavailable sources stay carried with a dated note
+ok 676 - CR-333 dated-carry re-run (7 Oct 2026): re-measured carries disclose method; unavailable sources stay carried with a dated note
+  ---
+  duration_ms: 15.717886
+  ...
+# Subtest: ImageJevBench links wity-1 to the author homepage, never to a base model
+ok 677 - ImageJevBench links wity-1 to the author homepage, never to a base model
+  ---
+  duration_ms: 1.830846
+  ...
+# Subtest: converts per-token USD to per-1M with four decimals, keeps curated notes, derives new ids
+ok 678 - converts per-token USD to per-1M with four decimals, keeps curated notes, derives new ids
+  ---
+  duration_ms: 17.756838
+  ...
+# Subtest: fails closed on shape changes, unreadable prices, duplicates and large loss
+ok 679 - fails closed on shape changes, unreadable prices, duplicates and large loss
+  ---
+  duration_ms: 0.587499
+  ...
+# Subtest: parses the published list page, collapsing Framer's per-breakpoint duplicates
+ok 680 - parses the published list page, collapsing Framer's per-breakpoint duplicates
+  ---
+  duration_ms: 1.749338
+  ...
+# Subtest: direct price = list price with provenance; the OpenRouter-feed API price is never copied; unlisted = n/a
+ok 681 - direct price = list price with provenance; the OpenRouter-feed API price is never copied; unlisted = n/a
+  ---
+  duration_ms: 0.479852
+  ...
+# Subtest: Interfaze SOB: table 0 gives Overall and Value Accuracy per model, and the page guards fail closed
+ok 682 - Interfaze SOB: table 0 gives Overall and Value Accuracy per model, and the page guards fail closed
+  ---
+  duration_ms: 148.508773
+  ...
+# Subtest: Interfaze SOB joins: board-wide "no reasoning" joins only exact non-reasoning configurations
+ok 683 - Interfaze SOB joins: board-wide "no reasoning" joins only exact non-reasoning configurations
+  ---
+  duration_ms: 12.046795
+  ...
+# Subtest: reads two-token-price tables with section, badge-free names and both number formats
+ok 684 - reads two-token-price tables with section, badge-free names and both number formats
+  ---
+  duration_ms: 4.711912
+  ...
+# Subtest: keeps curated names and note tails, refreshes EUR labels, derives new rows, reports missing EUR
+ok 685 - keeps curated names and note tails, refreshes EUR labels, derives new rows, reports missing EUR
+  ---
+  duration_ms: 2.778078
+  ...
+# Subtest: fails closed when most previous models disappear
+ok 686 - fails closed when most previous models disappear
+  ---
+  duration_ms: 0.715866
+  ...
+# Subtest: JevBench: aria-controls is gated on the conditionally rendered panel
+ok 687 - JevBench: aria-controls is gated on the conditionally rendered panel
+  ---
+  duration_ms: 6.95347
+  ...
+# Subtest: JevBench: Jev-class reference paragraph is not repeated in the overnight notes
+ok 688 - JevBench: Jev-class reference paragraph is not repeated in the overnight notes
+  ---
+  duration_ms: 14.912141
+  ...
+# Subtest: baseline hashes ignore rank fields and key order only
+ok 689 - baseline hashes ignore rank fields and key order only
+  ---
+  duration_ms: 2.218478
+  ...
+# Subtest: every addendum keeps the published rows and cells unchanged and is complete for its new keys
+ok 690 - every addendum keeps the published rows and cells unchanged and is complete for its new keys
+  ---
+  duration_ms: 198.879561
+  ...
+# Subtest: counts, ranks and board orders cover the enlarged field
+ok 691 - counts, ranks and board orders cover the enlarged field
+  ---
+  duration_ms: 1.237407
+  ...
+# Subtest: actual registry satisfies the admitted aggregate release contract
+ok 692 - actual registry satisfies the admitted aggregate release contract
+  ---
+  duration_ms: 8.58122
+  ...
+# Subtest: full provenance required; unpublished/incomplete/equated/private bundles refuse
+ok 693 - full provenance required; unpublished/incomplete/equated/private bundles refuse
+  ---
+  duration_ms: 5.739632
+  ...
+# Subtest: inventory retains 50 cells; suppressed cells never enter numeric category view
+ok 694 - inventory retains 50 cells; suppressed cells never enter numeric category view
+  ---
+  duration_ms: 1.884945
+  ...
+# Subtest: rank insertion preserves old relative order and immutable source; refuses overrides
+ok 695 - rank insertion preserves old relative order and immutable source; refuses overrides
+  ---
+  duration_ms: 1.497072
+  ...
+# Subtest: published addendum model page uses the same scoped board ranks and full-set metadata
+ok 696 - published addendum model page uses the same scoped board ranks and full-set metadata
+  ---
+  duration_ms: 685.142806
+  ...
+# Subtest: nested row aggregates reject arbitrary item fields and scalar-object substitutions
+ok 697 - nested row aggregates reject arbitrary item fields and scalar-object substitutions
+  ---
+  duration_ms: 4.043014
+  ...
+# Subtest: n15 table denominator includes terminal failures; radar still needs 30 completed
+ok 698 - n15 table denominator includes terminal failures; radar still needs 30 completed
+  ---
+  duration_ms: 0.55925
+  ...
+# Subtest: accepted refusal coverage is separate from valid answers and scored failures
+ok 699 - accepted refusal coverage is separate from valid answers and scored failures
+  ---
+  duration_ms: 2.351696
+  ...
+# Subtest: stock below-chance category competence remains negative, headline axes remain bounded
+ok 700 - stock below-chance category competence remains negative, headline axes remain bounded
+  ---
+  duration_ms: 3.297808
+  ...
+# Subtest: approved staged release uses authorization and preparation time without claiming live publication
+ok 701 - approved staged release uses authorization and preparation time without claiming live publication
+  ---
+  duration_ms: 2.13504
+  ...
+# Subtest: addon rows publish per-type support and Noul decisiveness as aggregates
+ok 702 - addon rows publish per-type support and Noul decisiveness as aggregates
+  ---
+  duration_ms: 8.603879
+  ...
+# Subtest: architecture schema, evidence and badges are valid for every entry
+ok 703 - architecture schema, evidence and badges are valid for every entry
+  ---
+  duration_ms: 9.544022
+  ...
+# Subtest: all historical and current JevBench and ImageJevBench artifact keys are covered
+ok 704 - all historical and current JevBench and ImageJevBench artifact keys are covered
+  ---
+  duration_ms: 1378.747335
+  ...
+# Subtest: wity entries preserve the author-requested model-family non-disclosure
+ok 705 - wity entries preserve the author-requested model-family non-disclosure
+  ---
+  duration_ms: 0.863874
+  ...
+# Subtest: encoder, diffusion, reranker, reference and single-backbone corrections remain explicit
+ok 706 - encoder, diffusion, reranker, reference and single-backbone corrections remain explicit
+  ---
+  duration_ms: 0.233065
+  ...
+# Subtest: dark architecture palette: contrast and CVD distance
+ok 707 - dark architecture palette: contrast and CVD distance
+  ---
+  duration_ms: 4.705092
+  ...
+# dark deuteranopia minimum CIE76 7.772 (open-diffusion-lm/base-control)
+# dark protanopia minimum CIE76 17.366 (open-diffusion-lm/base-control)
+# Subtest: light architecture palette: contrast and CVD distance
+ok 708 - light architecture palette: contrast and CVD distance
+  ---
+  duration_ms: 1.555271
+  ...
+# light deuteranopia minimum CIE76 6.730 (open-llm-decoder/base-control)
+# light protanopia minimum CIE76 11.454 (open-diffusion-lm/open-reranker)
+# Subtest: canonical architecture classes and deterministic fallback rules
+ok 709 - canonical architecture classes and deterministic fallback rules
+  ---
+  duration_ms: 1.829435
+  ...
+# Subtest: cited overlay takes precedence over legacy flags
+ok 710 - cited overlay takes precedence over legacy flags
+  ---
+  duration_ms: 6.250122
+  ...
+# Subtest: badge text omits absent fields
+ok 711 - badge text omits absent fields
+  ---
+  duration_ms: 0.254115
+  ...
+# Subtest: v1.6.0 presentation mappings preserve every rank, score, axis and artifact class
+ok 712 - v1.6.0 presentation mappings preserve every rank, score, axis and artifact class
+  ---
+  duration_ms: 46.893993
+  ...
+# Subtest: legends merge legacy classes, keep canonical order and use one palette
+ok 713 - legends merge legacy classes, keep canonical order and use one palette
+  ---
+  duration_ms: 0.478111
+  ...
+# Subtest: chart renderers colour rows by architecture, never by the legacy artifact class
+ok 714 - chart renderers colour rows by architecture, never by the legacy artifact class
+  ---
+  duration_ms: 54.777855
+  ...
+# Subtest: fallback never paints a non-Jev or hosted row in the Jev reference colour
+ok 715 - fallback never paints a non-Jev or hosted row in the Jev reference colour
+  ---
+  duration_ms: 0.210586
+  ...
+# Subtest: gate: no listed row lacks topic, use-case or language cells without a recorded exception
+ok 716 - gate: no listed row lacks topic, use-case or language cells without a recorded exception
+  ---
+  duration_ms: 23.4997
+  ...
+# Subtest: gate catches a future fresh-draw row whose release ships no category cells
+ok 717 - gate catches a future fresh-draw row whose release ships no category cells
+  ---
+  duration_ms: 14.090626
+  ...
+# Subtest: gate catches an added API row and a carry row without language cells
+ok 718 - gate catches an added API row and a carry row without language cells
+  ---
+  duration_ms: 4.862299
+  ...
+# Subtest: exceptions need a reason and a decision reference
+ok 719 - exceptions need a reason and a decision reference
+  ---
+  duration_ms: 0.639028
+  ...
+# Subtest: fresh-draw rows carry their own draw cells, tagged with the draw; no row of the base is overridden
+ok 720 - fresh-draw rows carry their own draw cells, tagged with the draw; no row of the base is overridden
+  ---
+  duration_ms: 17.735798
+  ...
+# Subtest: cohort topic supplement is aggregate-only and validated
+ok 721 - cohort topic supplement is aggregate-only and validated
+  ---
+  duration_ms: 10.662471
+  ...
+# Subtest: gate (ImageJevBench v0.3): every ranking row has image-type, use-case and TypeSafe-20 cells or a recorded exception
+ok 722 - gate (ImageJevBench v0.3): every ranking row has image-type, use-case and TypeSafe-20 cells or a recorded exception
+  ---
+  duration_ms: 15.02123
+  ...
+# Subtest: Capability is the arithmetic mean of Intelligence and Calibration
+ok 723 - Capability is the arithmetic mean of Intelligence and Calibration
+  ---
+  duration_ms: 1.509412
+  ...
+# Subtest: Capability chart rows sort by mean and use stable names for ties
+ok 724 - Capability chart rows sort by mean and use stable names for ties
+  ---
+  duration_ms: 13.585606
+  ...
+# Subtest: Capability excludes placeholders without both axis values and does not reorder the source rows
+ok 725 - Capability excludes placeholders without both axis values and does not reorder the source rows
+  ---
+  duration_ms: 0.253205
+  ...
+# Subtest: Capability keeps valid zero-valued axes as a measured score
+ok 726 - Capability keeps valid zero-valued axes as a measured score
+  ---
+  duration_ms: 0.223816
+  ...
+# Subtest: Capability views define the measure, use twenty expandable bars, and follow the ranking table
+ok 727 - Capability views define the measure, use twenty expandable bars, and follow the ranking table
+  ---
+  duration_ms: 2.303867
+  ...
+# Subtest: Three.js is pinned locally, integrity checked, and loaded after the section enters view
+ok 728 - Three.js is pinned locally, integrity checked, and loaded after the section enters view
+  ---
+  duration_ms: 3.431105
+  ...
+# Subtest: CR-169 / D207: the ⓘ trigger is a small inline glyph that does not stretch the ranking row
+ok 729 - CR-169 / D207: the ⓘ trigger is a small inline glyph that does not stretch the ranking row
+  ---
+  duration_ms: 0.338184
+  ...
+# Subtest: CR-169 follow-up: long truncated names keep their ⓘ trigger visible
+ok 730 - CR-169 follow-up: long truncated names keep their ⓘ trigger visible
+  ---
+  duration_ms: 0.50654
+  ...
+# Subtest: F-200 (pass 36): the Capability ⓘ panel is a definition list and the row carries no 300-char title
+ok 731 - F-200 (pass 36): the Capability ⓘ panel is a definition list and the row carries no 300-char title
+  ---
+  duration_ms: 0.54832
+  ...
+# Subtest: CR-176.6: the 3D capability view labels all three axes and pins the top five permanently
+ok 732 - CR-176.6: the 3D capability view labels all three axes and pins the top five permanently
+  ---
+  duration_ms: 0.646318
+  ...
+# Subtest: CR-176.6 DOM: the fallback 3D view renders permanent axis names and top-five labels
+ok 733 - CR-176.6 DOM: the fallback 3D view renders permanent axis names and top-five labels
+  ---
+  duration_ms: 4.567984
+  ...
+# Subtest: F-184 (Fable pass 34): the capability rows share one height and the header names the value columns
+ok 734 - F-184 (Fable pass 34): the capability rows share one height and the header names the value columns
+  ---
+  duration_ms: 0.814084
+  ...
+# Subtest: dated carry additions: Drex v1.5 joins the live carry unranked and without private access details
+ok 735 - dated carry additions: Drex v1.5 joins the live carry unranked and without private access details
+  ---
+  duration_ms: 189.825449
+  ...
+# Subtest: dated carry additions: a key that is already carried or measured is never replaced; unknown release fails closed
+ok 736 - dated carry additions: a key that is already carried or measured is never replaced; unknown release fails closed
+  ---
+  duration_ms: 118.277587
+  ...
+# Subtest: duplicate key without an opt-in or with the wrong revision leaves the base unchanged
+ok 737 - duplicate key without an opt-in or with the wrong revision leaves the base unchanged
+  ---
+  duration_ms: 1.814826
+  ...
+# Subtest: matching opt-in replaces the base once, preserves other rows and does not mutate the archive
+ok 738 - matching opt-in replaces the base once, preserves other rows and does not mutate the archive
+  ---
+  duration_ms: 1.218458
+  ...
+# Subtest: a ranked base replacement removes every old board occurrence and adjusts n_ranked
+ok 739 - a ranked base replacement removes every old board occurrence and adjusts n_ranked
+  ---
+  duration_ms: 0.229015
+  ...
+# Subtest: feed key set equals the merged live board and the page shares the assembly
+ok 740 - feed key set equals the merged live board and the page shares the assembly
+  ---
+  duration_ms: 4.483776
+  ...
+# Subtest: latest_release is the newest release of the draw table, not a hard-coded list
+ok 741 - latest_release is the newest release of the draw table, not a hard-coded list
+  ---
+  duration_ms: 9.512502
+  ...
+# Subtest: feed ranks equal the ranks of the open and API Capability default views
+ok 742 - feed ranks equal the ranks of the open and API Capability default views
+  ---
+  duration_ms: 7.090547
+  ...
+# Subtest: rows carry their draw so agents can tell which draw a row was measured on
+ok 743 - rows carry their draw so agents can tell which draw a row was measured on
+  ---
+  duration_ms: 0.248766
+  ...
+# Subtest: CR-269: URL round trips preserve every field and unrelated parameters
+ok 744 - CR-269: URL round trips preserve every field and unrelated parameters
+  ---
+  duration_ms: 4.562535
+  ...
+# Subtest: CR-269: malformed URL values are dropped, never coerced or swapped
+ok 745 - CR-269: malformed URL values are dropped, never coerced or swapped
+  ---
+  duration_ms: 1.208367
+  ...
+# Subtest: CR-269: missing row values stay missing and never match active filters
+ok 746 - CR-269: missing row values stay missing and never match active filters
+  ---
+  duration_ms: 0.831814
+  ...
+# Subtest: CR-269: model kinds derive from open status and the API flag; OR within kinds
+ok 747 - CR-269: model kinds derive from open status and the API flag; OR within kinds
+  ---
+  duration_ms: 1.809477
+  ...
+# Subtest: CR-269: filters combine with AND across fields
+ok 748 - CR-269: filters combine with AND across fields
+  ---
+  duration_ms: 0.871743
+  ...
+# Subtest: CR-269: numeric ranges are inclusive and exclude missing values
+ok 749 - CR-269: numeric ranges are inclusive and exclude missing values
+  ---
+  duration_ms: 10.922815
+  ...
+# Subtest: CR-269: reset clears only the JevBench filter keys and preserves unrelated parameters
+ok 750 - CR-269: reset clears only the JevBench filter keys and preserves unrelated parameters
+  ---
+  duration_ms: 16.961823
+  ...
+# Subtest: CR-269: v1.5.5 release maps into the filter API with parameters disabled and base price on some rows
+ok 751 - CR-269: v1.5.5 release maps into the filter API with parameters disabled and base price on some rows
+  ---
+  duration_ms: 15.4501
+  ...
+# Subtest: CR-269: client provider and panel expose the documented API with URL-driven state
+ok 752 - CR-269: client provider and panel expose the documented API with URL-driven state
+  ---
+  duration_ms: 1.014221
+  ...
+# Subtest: own cost amortises hardware and constant power per useful hour
+ok 753 - own cost amortises hardware and constant power per useful hour
+  ---
+  duration_ms: 1.378424
+  ...
+# Subtest: rental modes include paid idle hours and ignore own-hardware inputs
+ok 754 - rental modes include paid idle hours and ignore own-hardware inputs
+  ---
+  duration_ms: 0.228366
+  ...
+# Subtest: throughput uses measured latency and linear streams from 1 to 32
+ok 755 - throughput uses measured latency and linear streams from 1 to 32
+  ---
+  duration_ms: 0.220995
+  ...
+# Subtest: invalid and missing inputs never yield NaN or Infinity
+ok 756 - invalid and missing inputs never yield NaN or Infinity
+  ---
+  duration_ms: 1.568461
+  ...
+# Subtest: normalises all known hardware and keeps unknowns explicit
+ok 757 - normalises all known hardware and keeps unknowns explicit
+  ---
+  duration_ms: 0.763126
+  ...
+# Subtest: rows sort costs ascending, nulls last, preserving ties and unranked systems
+ok 758 - rows sort costs ascending, nulls last, preserving ties and unranked systems
+  ---
+  duration_ms: 0.893973
+  ...
+# Subtest: overrides and per-preset edits compute all modes without changing measured inputs
+ok 759 - overrides and per-preset edits compute all modes without changing measured inputs
+  ---
+  duration_ms: 0.313454
+  ...
+# Subtest: missing/zero official prices have no ratio, invalid mode/override has no cost
+ok 760 - missing/zero official prices have no ratio, invalid mode/override has no cost
+  ---
+  duration_ms: 0.467852
+  ...
+# Subtest: hard held-out diagnostic recomputes from frozen answers and totals
+ok 761 - hard held-out diagnostic recomputes from frozen answers and totals
+  ---
+  duration_ms: 6.42402
+  ...
+# Subtest: page keeps the diagnostic out of the main table and uses neutral wording
+ok 762 - page keeps the diagnostic out of the main table and uses neutral wording
+  ---
+  duration_ms: 22.904242
+  ...
+# Subtest: CR-116: the published diagnostic (current pinned artifact) carries both Open-Jev (Zefan Cai) rows
+ok 763 - CR-116: the published diagnostic (current pinned artifact) carries both Open-Jev (Zefan Cai) rows
+  ---
+  duration_ms: 18.559873
+  ...
+# Subtest: /home/flori/jobs/jevbench-add-requests-20260919/workers/r160-v1638-finalize/pass-A/test/jevbench-language-roster.test.mjs
+ok 149 - /home/flori/jobs/jevbench-add-requests-20260919/workers/r160-v1638-finalize/pass-A/test/jevbench-language-roster.test.mjs
+  ---
+  duration_ms: 275.840331
+  ...
+# Subtest: board order restores index order
+ok 765 - board order restores index order
+  ---
+  duration_ms: 1.469212
+  ...
+# Subtest: numeric sort puts missing last in both directions, ties by board order
+ok 766 - numeric sort puts missing last in both directions, ties by board order
+  ---
+  duration_ms: 0.244875
+  ...
+# Subtest: average ignores missing cells; all-missing is null and last
+ok 767 - average ignores missing cells; all-missing is null and last
+  ---
+  duration_ms: 12.389428
+  ...
+# Subtest: name sort is case-insensitive
+ok 768 - name sort is case-insensitive
+  ---
+  duration_ms: 12.8636
+  ...
+# Subtest: filter ANDs name query and group
+ok 769 - filter ANDs name query and group
+  ---
+  duration_ms: 1.787856
+  ...
+# Subtest: header click toggles and aria-sort follows
+ok 770 - header click toggles and aria-sort follows
+  ---
+  duration_ms: 0.858864
+  ...
+# Subtest: POST /api/mcp speaks MCP over Streamable HTTP and serves the /api/jevbench/latest data
+ok 771 - POST /api/mcp speaks MCP over Streamable HTTP and serves the /api/jevbench/latest data
+  ---
+  duration_ms: 21923.989231
+  ...
+# Subtest: list_models: default Capability sort, missing scores last, key tie-break, paging and filters
+ok 772 - list_models: default Capability sort, missing scores last, key tie-break, paging and filters
+  ---
+  duration_ms: 27.699682
+  ...
+# Subtest: list rows carry the published values unchanged
+ok 773 - list rows carry the published values unchanged
+  ---
+  duration_ms: 1.371204
+  ...
+# Subtest: get_model returns the exact feed row; unknown key is a structured error
+ok 774 - get_model returns the exact feed row; unknown key is a structured error
+  ---
+  duration_ms: 0.52114
+  ...
+# Subtest: compare_models: both rows, first-minus-second differences, nulls for missing axes, encoded compare URL
+ok 775 - compare_models: both rows, first-minus-second differences, nulls for missing axes, encoded compare URL
+  ---
+  duration_ms: 1.393634
+  ...
+# Subtest: strict inputs: unknown fields, wrong types, bounds, duplicates
+ok 776 - strict inputs: unknown fields, wrong types, bounds, duplicates
+  ---
+  duration_ms: 0.492071
+  ...
+# Subtest: feed failure is a structured unavailable error, never partial data
+ok 777 - feed failure is a structured unavailable error, never partial data
+  ---
+  duration_ms: 0.56553
+  ...
+# Subtest: JSON-RPC: initialize, ping, tools/list, tools/call, notifications and errors
+ok 778 - JSON-RPC: initialize, ping, tools/list, tools/call, notifications and errors
+  ---
+  duration_ms: 0.838654
+  ...
+# Subtest: route, middleware and browser registration stay read-only and single
+ok 779 - route, middleware and browser registration stay read-only and single
+  ---
+  duration_ms: 8.171607
+  ...
+# Subtest: every cohort system joins once, from its latest release, with its draw
+ok 780 - every cohort system joins once, from its latest release, with its draw
+  ---
+  duration_ms: 9204.258446
+  ...
+# Subtest: the composite port reproduces the published scores
+ok 781 - the composite port reproduces the published scores
+  ---
+  duration_ms: 100.197505
+  ...
+# Subtest: pending draws show the published numbers unchanged; an offset moves the axes and recomputes
+ok 782 - pending draws show the published numbers unchanged; an offset moves the axes and recomputes
+  ---
+  duration_ms: 7783.51388
+  ...
+# Subtest: merged board slots ranked cohort rows by score and keeps published rows in order
+ok 783 - merged board slots ranked cohort rows by score and keeps published rows in order
+  ---
+  duration_ms: 16219.063645
+  ...
+# Subtest: live pages: filter presets, no version tabs, release history; archived pages keep their URLs
+ok 784 - live pages: filter presets, no version tabs, release history; archived pages keep their URLs
+  ---
+  duration_ms: 1.149029
+  ...
+# Subtest: listing corrections: only presentation fields, the published release row is never mutated
+ok 785 - listing corrections: only presentation fields, the published release row is never mutated
+  ---
+  duration_ms: 0.320154
+  ...
+# Subtest: score correction: decisor-4b cost re-estimate applies on the live merged board only, every other stored field unchanged
+ok 786 - score correction: decisor-4b cost re-estimate applies on the live merged board only, every other stored field unchanged
+  ---
+  duration_ms: 16171.44645
+  ...
+# Subtest: score correction: refuses to apply on any mismatch and shows the published row
+ok 787 - score correction: refuses to apply on any mismatch and shows the published row
+  ---
+  duration_ms: 342.3502
+  ...
+# Subtest: score correction: reader rejects unknown fields and an altered receipt disables the correction
+ok 788 - score correction: reader rejects unknown fields and an altered receipt disables the correction
+  ---
+  duration_ms: 322.537179
+  ...
+# Subtest: score correction: archived release pages and published files never read it
+ok 789 - score correction: archived release pages and published files never read it
+  ---
+  duration_ms: 42.324347
+  ...
+# Subtest: Image JevBench v0.1.4 preserves the frozen method and prices Wity-1 at its base-model estimate
+ok 790 - Image JevBench v0.1.4 preserves the frozen method and prices Wity-1 at its base-model estimate
+  ---
+  duration_ms: 47.436293
+  ...
+# Subtest: Image JevBench v0.1.4 archive is byte-pinned separately from the live preview
+ok 791 - Image JevBench v0.1.4 archive is byte-pinned separately from the live preview
+  ---
+  duration_ms: 6.810812
+  ...
+# Subtest: Image JevBench v0.1.1 is preserved as the exact parent release artifact
+ok 792 - Image JevBench v0.1.1 is preserved as the exact parent release artifact
+  ---
+  duration_ms: 5.918749
+  ...
+# Subtest: Image JevBench v0.1.2 is preserved as the exact parent release artifact
+ok 793 - Image JevBench v0.1.2 is preserved as the exact parent release artifact
+  ---
+  duration_ms: 5.33368
+  ...
+# Subtest: Image JevBench v0.1.3 is preserved as the exact parent release artifact
+ok 794 - Image JevBench v0.1.3 is preserved as the exact parent release artifact
+  ---
+  duration_ms: 5.776142
+  ...
+# Subtest: preview tracks validator rejects missing or changed counts
+ok 795 - preview tracks validator rejects missing or changed counts
+  ---
+  duration_ms: 111.580133
+  ...
+# Subtest: matched gap formatting removes negative zero
+ok 796 - matched gap formatting removes negative zero
+  ---
+  duration_ms: 0.281305
+  ...
+# Subtest: public Image JevBench route leads with the ranking and preserves aggregate-only data
+ok 797 - public Image JevBench route leads with the ranking and preserves aggregate-only data
+  ---
+  duration_ms: 20.83824
+  ...
+# Subtest: API.md pins the current JevBench and Image JevBench artifact hashes
+ok 798 - API.md pins the current JevBench and Image JevBench artifact hashes
+  ---
+  duration_ms: 4.29671
+  ...
+# Subtest: page payloads carry no local directory in adapter ids; the read artifact stays raw
+ok 799 - page payloads carry no local directory in adapter ids; the read artifact stays raw
+  ---
+  duration_ms: 259.598593
+  ...
+1..799
+# tests 802
+# suites 0
+# pass 802
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 78356.857627

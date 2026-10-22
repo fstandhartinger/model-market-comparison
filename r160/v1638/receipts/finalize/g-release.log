@@ -1,0 +1,100 @@
+TAP version 13
+# Subtest: v1.6.38 candidate requires independent PASS
+ok 1 - v1.6.38 candidate requires independent PASS
+  ---
+  duration_ms: 6407.07195
+  ...
+# Subtest: v1.6.38 paid rows, carried scores/intervals, full category coverage
+ok 2 - v1.6.38 paid rows, carried scores/intervals, full category coverage
+  ---
+  duration_ms: 0.894514
+  ...
+# Subtest: v1.6.38 rejects carried interval
+ok 3 - v1.6.38 rejects carried interval
+  ---
+  duration_ms: 93.558997
+  ...
+# Subtest: v1.6.38 rejects new cost
+ok 4 - v1.6.38 rejects new cost
+  ---
+  duration_ms: 124.187256
+  ...
+# Subtest: v1.6.38 rejects strip truncation disclosure
+ok 5 - v1.6.38 rejects strip truncation disclosure
+  ---
+  duration_ms: 148.572415
+  ...
+# Subtest: v1.6.38 rejects rank swap
+ok 6 - v1.6.38 rejects rank swap
+  ---
+  duration_ms: 137.399557
+  ...
+# Subtest: v1.6.38 rejects strip categories
+ok 7 - v1.6.38 rejects strip categories
+  ---
+  duration_ms: 166.183241
+  ...
+# Subtest: v1.6.38 rejects manifest path
+ok 8 - v1.6.38 rejects manifest path
+  ---
+  duration_ms: 76.616628
+  ...
+# Subtest: v1.6.38 rejects approval button flag
+ok 9 - v1.6.38 rejects approval button flag
+  ---
+  duration_ms: 135.415784
+  ...
+# Subtest: v1.6.38 rejects approval card flag
+ok 10 - v1.6.38 rejects approval card flag
+  ---
+  duration_ms: 147.172721
+  ...
+# Subtest: v1.6.38 rejects approval stale card
+ok 11 - v1.6.38 rejects approval stale card
+  ---
+  duration_ms: 138.076054
+  ...
+# Subtest: v1.6.38 rejects approval png
+ok 12 - v1.6.38 rejects approval png
+  ---
+  duration_ms: 162.731257
+  ...
+# Subtest: v1.6.38 rejects approval removed
+ok 13 - v1.6.38 rejects approval removed
+  ---
+  duration_ms: 178.032836
+  ...
+# Subtest: v1.6.38 rejects approval placeholder
+ok 14 - v1.6.38 rejects approval placeholder
+  ---
+  duration_ms: 129.32651
+  ...
+# Subtest: v1.6.38 rejects approval public note
+ok 15 - v1.6.38 rejects approval public note
+  ---
+  duration_ms: 148.583395
+  ...
+# Subtest: v1.6.38 rejects item leakage
+ok 16 - v1.6.38 rejects item leakage
+  ---
+  duration_ms: 66.701767
+  ...
+# Subtest: v1.6.38 rejects unprice ranked row
+ok 17 - v1.6.38 rejects unprice ranked row
+  ---
+  duration_ms: 70.637451
+  ...
+# Subtest: v1.6.38 archive comparison has measured topic and use-case cells for every ranked row
+ok 18 - v1.6.38 archive comparison has measured topic and use-case cells for every ranked row
+  ---
+  duration_ms: 5892.504768
+  ...
+1..18
+# tests 18
+# suites 0
+# pass 18
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 20272.866333
