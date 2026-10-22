@@ -1,0 +1,70 @@
+TAP version 13
+# Subtest: v1.6.38 candidate requires independent PASS
+ok 1 - v1.6.38 candidate requires independent PASS
+  ---
+  duration_ms: 5916.948359
+  ...
+# Subtest: v1.6.38 paid rows, carried scores/intervals, full category coverage
+ok 2 - v1.6.38 paid rows, carried scores/intervals, full category coverage
+  ---
+  duration_ms: 0.646928
+  ...
+# Subtest: v1.6.38 rejects carried interval
+ok 3 - v1.6.38 rejects carried interval
+  ---
+  duration_ms: 87.822026
+  ...
+# Subtest: v1.6.38 rejects new cost
+ok 4 - v1.6.38 rejects new cost
+  ---
+  duration_ms: 142.103262
+  ...
+# Subtest: v1.6.38 rejects strip truncation disclosure
+ok 5 - v1.6.38 rejects strip truncation disclosure
+  ---
+  duration_ms: 117.145597
+  ...
+# Subtest: v1.6.38 rejects rank swap
+ok 6 - v1.6.38 rejects rank swap
+  ---
+  duration_ms: 114.022127
+  ...
+# Subtest: v1.6.38 rejects strip categories
+ok 7 - v1.6.38 rejects strip categories
+  ---
+  duration_ms: 112.907628
+  ...
+# Subtest: v1.6.38 rejects manifest path
+ok 8 - v1.6.38 rejects manifest path
+  ---
+  duration_ms: 60.615704
+  ...
+# Subtest: v1.6.38 rejects invent approval
+ok 9 - v1.6.38 rejects invent approval
+  ---
+  duration_ms: 116.271644
+  ...
+# Subtest: v1.6.38 rejects item leakage
+ok 10 - v1.6.38 rejects item leakage
+  ---
+  duration_ms: 78.170381
+  ...
+# Subtest: v1.6.38 rejects unprice ranked row
+ok 11 - v1.6.38 rejects unprice ranked row
+  ---
+  duration_ms: 70.977897
+  ...
+# Subtest: v1.6.38 archive comparison has measured topic and use-case cells for every ranked row
+ok 12 - v1.6.38 archive comparison has measured topic and use-case cells for every ranked row
+  ---
+  duration_ms: 5963.67633
+  ...
+1..12
+# tests 12
+# suites 0
+# pass 12
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 19092.810269

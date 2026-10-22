@@ -4,6 +4,11 @@ draw table. Idempotent; every replacement is asserted. Usage: wire_v1638.py <wor
 import pathlib, json, sys
 
 WT = pathlib.Path(sys.argv[1])
+_ROWS = json.loads((pathlib.Path(__file__).resolve().parent / "batch/ROWS.json").read_text())
+DREX = "drex-max" in _ROWS
+NWL = "three" if DREX else "two"
+NWU = NWL.capitalize()
+LABEL = "Drex Max, Myles-G 12B and iota-decide-4b" if DREX else "Myles-G 12B and iota-decide-4b"
 REV = "v1.6.38"
 PREV = "v1.6.37"
 # ---- route ----------------------------------------------------------------------------------------
@@ -31,15 +36,15 @@ import { JevHistoryLazy } from '../../../components/JevHistoryLazy';
 import { historicalCatalogue } from '../../../lib/jevbench-v162-release.mjs';
 import { withPublicAdapterIds } from '../../../lib/jevbench-v15-release.mjs';
 import { JEVBENCH_COST_RULE, JEVBENCH_COST_RULE_HISTORY } from '../../../lib/jevbench-cost-rule.mjs';
-export const metadata = {title: 'JevBench v1.6.38 · Drex Max, Myles-G 12B and iota-decide-4b', alternates:{canonical:'/jev-models/v1.6.38'}};
+export const metadata = {title: 'JevBench v1.6.38 · """+LABEL+"""', alternates:{canonical:'/jev-models/v1.6.38'}};
 export default async function JevModelsV1638Page() {
  const release=await readOptionalJevbenchV1638Release();if(!release) notFound();
  const board=v1638BoardInput(release);
  const notes=(release.artifact as unknown as {measurement_notes:string[]}).measurement_notes;
  return <><JevBenchReleaseVersionNav active="v1.6.38" />
- <header className="bh-page-head" data-bh-jev16-release-header><div className="bh-eyebrow">JevBench v1.6.38 · three paid fast-lane additions</div>
- <h1 className="mt-1 text-3xl font-bold">Drex Max, Myles-G 12B and iota-decide-4b added</h1>
- <p className="mt-3 max-w-3xl">Three paid public fast-lane additions on the same draw and common cost basis. Drex Max retains two provider-overloaded failures. Myles-G 12B and iota-decide-4b answered 15 truncated states, scored as answered. All carried rows retain every score and confidence interval; only placement changes. Pricing, hosting and provenance are disclosed below.</p>
+ <header className="bh-page-head" data-bh-jev16-release-header><div className="bh-eyebrow">JevBench v1.6.38 · """+NWL+""" paid fast-lane additions</div>
+ <h1 className="mt-1 text-3xl font-bold">"""+LABEL+""" added</h1>
+ <p className="mt-3 max-w-3xl">"""+NWU+""" paid public fast-lane additions on the same draw and common cost basis. """+("Drex Max retains two provider-overloaded failures. " if DREX else "")+"""Myles-G 12B and iota-decide-4b answered 15 truncated states, scored as answered. All carried rows retain every score and confidence interval; only placement changes. Pricing, hosting and provenance are disclosed below.</p>
  <p className="bh-muted mt-2 text-xs break-all"><a href="/api/jevbench/v1.6.38">Aggregate results JSON</a> · SHA-256 {release.sha256} · <a href="/jev-models/v1.6.37">Previous v1.6.37</a></p></header>
  <JevBenchV16Board artifact={withPublicAdapterIds(board.artifact)} sha256={release.sha256} categories={board.categories} categoriesSha256={board.categoriesSha256}
  carry={{...release.historical.carry,rows:[]}} carrySha256={release.historical.carrySha256} previousKeys={historicalCatalogue(release.historical.artifact, release.historical.carry).map(row => row.key)} scope="all" />
@@ -52,7 +57,7 @@ export default async function JevModelsV1638Page() {
 p = WT / "lib/jevbench-releases.mjs"
 s = p.read_text()
 s = "".join(l for l in s.splitlines(keepends=True) if "version: 'v1.6.38'" not in l)
-entry = "  { version: 'v1.6.38', date: '2026-10-21', href: '/jev-models/v1.6.38', text: 'Three paid public fast-lane additions: Drex Max (Nace AI), Myles-G 12B (Launchables), and iota-decide-4b (Macrocosmos). Same draw and common cost basis; all carried scores and intervals retained. Two Drex overloaded failures retained; Myles and Iota answered 15 truncated states, scored as answered.' },\n"
+entry = "  { version: 'v1.6.38', date: '2026-10-21', href: '/jev-models/v1.6.38', text: '" + NWU + " paid public fast-lane additions: " + ("Drex Max (Nace AI), " if DREX else "") + "Myles-G 12B (Launchables), and iota-decide-4b (Macrocosmos). Same draw and common cost basis; all carried scores and intervals retained. " + ("Two Drex overloaded failures retained; " if DREX else "") + "Myles and Iota answered 15 truncated states, scored as answered.' },\n"
 assert s.count("  { version: 'v1.6.37'") == 1
 p.write_text(s.replace("  { version: 'v1.6.37'", entry + "  { version: 'v1.6.37'", 1))
 # ---- revision lists, nav, history availability, cohort reader, equating ----------------------------
@@ -167,6 +172,8 @@ arch = {
         ],
     },
 }
+if not DREX:
+    arch.pop("drex-max")
 p = WT / "data/jevbench-architecture.json"
 d = json.loads(p.read_text())
 d["benchmarks"]["jevbench"].update(arch)
@@ -200,6 +207,8 @@ base = {
         "checked_utc": "2026-10-21T00:00:00Z",
     },
 }
+if not DREX:
+    base.pop("drex-max")
 p = WT / "data/jevbench-base-models.json"
 d = json.loads(p.read_text())
 d["benchmarks"]["jevbench"].update(base)

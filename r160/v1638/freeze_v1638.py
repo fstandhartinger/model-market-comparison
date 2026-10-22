@@ -33,7 +33,7 @@ print(
             "review": m["review"],
             "new_rows": {
                 k: p["raw_sha256"][k]
-                for k in ["drex-max", "iota-decide-4b", "launchables-myles-g-12b"]
+                for k in sorted(p["new_rows"])
             },
             "writes": False,
         },

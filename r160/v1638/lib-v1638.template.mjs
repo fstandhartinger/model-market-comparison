@@ -7,11 +7,11 @@ import { readCohortTopicCells, withCohortCategoryCells } from './jevbench-cohort
 import { readOptionalJevbenchV1637Release } from './jevbench-v1637-release.mjs';
 export const V1638_ROOT = 'data/raw/benchmarks/jevbench/v1.6';
 export const V1638_MANIFEST = `${V1638_ROOT}/jevbench-v1.6.38-publication.json`;
-export const V1638_NEW_KEYS = ['drex-max','iota-decide-4b','launchables-myles-g-12b'];
+export const V1638_NEW_KEYS = /*KEYS*/;
 export const V1638_FILE_KEYS = ['results','categories','proof','history','history-carry'];
 export const V1638_EXPECTED_HASHES = /*HASHES*/;
 export const V1638_ROW_SPEC = /*ROWS*/;
-export const V1638_PRICING_MODULE_SHA256 = '1f4d1f7b1ce97ab27b938043444b9c2757e4a9dbecc799a803122588401f5bf1';
+export const V1638_PRICING_MODULE_SHA256 = 'a8a05890ddab2d39d1a1bd543f2b5c83842bdc70aa54766788bc89b7a8a448d7';
 export const V1638_FIXED_G_MED = 9.839526770355711;
 export const V1638_COST_CAP = 0.06459465517241379;
 export const V1638_RANKED_NEW_KEYS = V1638_NEW_KEYS.filter(k=>V1638_ROW_SPEC[k].ranked);
@@ -44,6 +44,7 @@ export function validateJevbenchV1638Bundle({manifest,artifact,categories,proof,
  validateCategoryArtifact(categories,['families','usecases','languages']);
  same(Object.keys(categories.systems).sort(),[...Object.keys(previous.categories.systems),...V1638_NEW_KEYS].sort(),'category coverage');
  if(proof.revision!=='v1.6.38')fail('proof revision');
+ if(proof.pricing_module_sha256!==V1638_PRICING_MODULE_SHA256)fail('pricing module pin');
  for(const k of V1638_NEW_KEYS){const p=proof.new_rows[k];const s=by.get(k);if(p.raw_sha256!==proof.raw_sha256[k]||p.usd_per_1000!==s.cost.usd_per_1000||p.ranked!==s.ranked||p.paid_fast_lane!==true||p.over_10s!==0)fail('proof row '+k)}
  const a=proof.publication_approval;if(a.paid_fast_lane?.rule!=='paid fast-lane publication exception'||a.top_five_preview!==null||a.button_tap!==false)fail('paid publication authority');
  same(Object.keys(a.paid_fast_lane.orders).sort(),V1638_NEW_KEYS,'paid orders');

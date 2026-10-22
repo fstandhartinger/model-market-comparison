@@ -5,7 +5,7 @@
 # differently and the carried cells move). Run after score_v1638.sh.
 set -euo pipefail
 export PYTHONDONTWRITEBYTECODE=1
-B=${V1638_BATCH:-/home/flori/jobs/jevbench-add-requests-20260919/workers/r160-v1638-build2/wt/r160/v1638/batch}
+B=${V1638_BATCH:-$(cd "$(dirname "$0")" && pwd)/batch}
 H=/home/flori/jobs/jevbench-v16-run-20261001/harness
 [ "$(sha256sum < $H/build_topics_v16.py | cut -c1-8)" = ec04ab59 ] || { echo "topic builder changed"; exit 2; }
 mkdir -p $B/topics-v1638

@@ -17,6 +17,8 @@ put = lambda p, v: pathlib.Path(p).write_text(
     json.dumps(v, indent=1, sort_keys=True, ensure_ascii=False) + "\n"
 )
 sha = lambda p: hashlib.sha256(pathlib.Path(p).read_bytes()).hexdigest()
+PRICING_SHA = sha("/home/flori/jobs/jevbench-v15-measure-20260925/harness/pricing_v15.py")
+assert PRICING_SHA == "a8a05890ddab2d39d1a1bd543f2b5c83842bdc70aa54766788bc89b7a8a448d7"
 cp = copy.deepcopy
 old = {
     n: load(V / f"jevbench-{PREV}-{n}.json")
@@ -27,6 +29,11 @@ info = load(B / "ROWS.json")
 ent = load(B / "ENTRIES.json")
 sc = load(B / "out-v1638/jevbench-v1.6.0-results.json")
 newkeys = sorted(info)
+NW = {2: "Two", 3: "Three"}[len(newkeys)]
+NWL = NW.lower()
+DREX = "drex-max" in newkeys
+LABEL = "Drex Max, Myles-G 12B and iota-decide-4b" if DREX else "Myles-G 12B and iota-decide-4b"
+NAMES = {"drex-max": "Drex Max", "launchables-myles-g-12b": "Myles-G 12B", "iota-decide-4b": "iota-decide-4b"}
 dec = load(B / "out-v1638/noul-decisive.json")
 newsc = {s["key"]: s for s in sc["systems"]}
 prev = {s["key"]: s for s in old["results"]["systems"]}
@@ -110,12 +117,12 @@ for k in prev:
 res = cp(old["results"])
 res.update(
     revision=REV,
-    label="JevBench v1.6.38: Drex Max, Myles-G 12B and iota-decide-4b",
+    label="JevBench v1.6.38: " + LABEL,
     systems=sorted(out.values(), key=lambda s: s["key"]),
     n_ranked=sum(s["ranked"] for s in out.values()),
     roster_count=len(out),
     source_sha256=sha(B / "out-v1638/jevbench-v1.6.0-results.json"),
-    source_note="Three paid public fast-lane additions on v1.6-regular-20261012. Unmodified frozen score_v16.py (02132271), O1S, B=1000, seed 16, fixed G_med 9.839526770355711, unchanged v1.6.30 common 1,485-item cost basis. All 69 carried same-draw point estimates reproduce; all 72 carried published rows are byte-identical except rank/ranks, including published intervals and diagnostics. New-row intervals use their sorted full-field seeds. H2O-Lightning and Kahn1 retain their v1.6.37 restatement of v1.6.1. This is v1.6 method; no 10-second rule.",
+    source_note=NW + " paid public fast-lane additions on v1.6-regular-20261012. Unmodified frozen score_v16.py (02132271), O1S, B=1000, seed 16, fixed G_med 9.839526770355711, unchanged v1.6.30 common 1,485-item cost basis. All 69 carried same-draw point estimates reproduce; all 72 carried published rows are byte-identical except rank/ranks, including published intervals and diagnostics. New-row intervals use their sorted full-field seeds. H2O-Lightning and Kahn1 retain their v1.6.37 restatement of v1.6.1. This is v1.6 method; no 10-second rule.",
 )
 for m in orders:
     res["board"][m]["order"] = orders[m]
@@ -128,9 +135,8 @@ paid = cp(
     load(V / "jevbench-v1.6.36-proof.json")["publication_approval"]["paid_fast_lane"]
 )
 paid["orders"] = {
-    "drex-max": "55dae0fd",
-    "launchables-myles-g-12b": "157488bd",
-    "iota-decide-4b": "d831408e",
+    k: {"drex-max": "55dae0fd", "launchables-myles-g-12b": "157488bd", "iota-decide-4b": "d831408e"}[k]
+    for k in newkeys
 }
 approval = {
     "go": old["proof"]["publication_approval"]["go"],
@@ -154,11 +160,13 @@ if tf and tf["any_top5_change"]:
     assert set(tf["entrants_all"]) <= set(newkeys)
     approval["top_five_changed_by"] = tf["entrants_all"]
 notes = [
-    "v1.6.38 adds three paid public fast-lane rows. All carried rows retain every field except rank/ranks, including published confidence intervals. New rows use their full-field bootstrap seeds. This release uses the v1.6 method; the 10-second rule does not apply. "
+    "v1.6.38 adds " + NWL + " paid public fast-lane rows. All carried rows retain every field except rank/ranks, including published confidence intervals. New rows use their full-field bootstrap seeds. This release uses the v1.6 method; the 10-second rule does not apply. "
     + (
-        "Drex Max is UNPRICED and listed but not ranked."
+        "Myles-G 12B uses the published same-base sibling estimate; iota-decide-4b uses the Qwen 4B frozen estimate."
+        if not DREX
+        else "Drex Max is UNPRICED and listed but not ranked."
         if not out["drex-max"]["ranked"]
-        else "Drex Max uses the I-1 launch list price; Myles-G 12B uses the published same-base sibling estimate; iota-decide-4b uses the Qwen 4B frozen estimate."
+        else "Drex Max uses its published launch list price; Myles-G 12B uses the published same-base sibling estimate; iota-decide-4b uses the Qwen 4B frozen estimate."
     ),
     tf["note"] if tf else "Board effect provisional: 40-list comparison pending.",
     "Publication of v1.6.38: paid_fast_lane, 29 Sep 2026 automatic paid publication rule including top-five changes; no preview card; no button tap. Independent review remains PENDING.",
@@ -192,7 +200,7 @@ cats.update(
 )
 cats[
     "lane_note"
-] += " Three paid full-draw rows added in v1.6.38; stored per-item cells. H2O and Kahn1 retain their original draw cells."
+] += " " + NW + " paid full-draw rows added in v1.6.38; stored per-item cells. H2O and Kahn1 retain their original draw cells."
 put(V / f"jevbench-{REV}-categories.json", cats)
 for f in ["history", "history-carry"]:
     shutil.copyfile(V / f"jevbench-{PREV}-{f}.json", V / f"jevbench-{REV}-{f}.json")
@@ -218,6 +226,7 @@ proof.update(
     registry_sha256=sha(B / "REGISTRY-PUBLIC.json"),
     publication_approval=approval,
     predecessor_pricing_module_sha256=old["proof"]["pricing_module_sha256"],
+    pricing_module_sha256=PRICING_SHA,
 )
 for k in newkeys:
     s = out[k]
@@ -276,7 +285,7 @@ proof["predecessor_seal_sha256"] = sha(
 )
 proof[
     "authority"
-] += " Three paid public fast-lane additions; automatic paid publication exception, independent review PENDING."
+] += " " + NW + " paid public fast-lane additions; automatic paid publication exception, independent review PENDING."
 put(V / f"jevbench-{REV}-proof.json", proof)
 pub = cp(old["publication"])
 pub.update(
@@ -300,7 +309,7 @@ put(J / "receipts/NEW-ROW-SPEC.json", {k: out[k] for k in newkeys})
 put(
     J / "receipts/BUILD.json",
     {
-        "variant": "B" if not out["drex-max"]["ranked"] else "A",
+        "variant": "C" if not DREX else ("B" if not out["drex-max"]["ranked"] else "A"),
         "carried_rows_preserved_except_ranks": 72,
         "carried_scorer_point_estimates_reproduced": len(checks),
         "new_rows": {

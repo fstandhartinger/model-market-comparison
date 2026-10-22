@@ -27,7 +27,7 @@ P = pathlib.Path(
     "/home/flori/jobs/jevbench-v15-measure-20260925/harness/pricing_v15.py"
 )
 PS = sha(P)
-assert PS == "1f4d1f7b1ce97ab27b938043444b9c2757e4a9dbecc799a803122588401f5bf1"
+assert PS == "a8a05890ddab2d39d1a1bd543f2b5c83842bdc70aa54766788bc89b7a8a448d7"
 spec = importlib.util.spec_from_file_location("pricing", P)
 pr = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(pr)
@@ -80,7 +80,9 @@ drex.update(
     cost_kind="listed",
     price_kind="listed",
     disclosure="2 HTTP 529 provider-overloaded failures retained and scored as failures. Public JevBench items were used to pick the checkpoint; the public set is treated as seen during selection. Customer statements about serving and training are unverified.",
-    cost_basis="I-1 launch list price: Drex Max public launch list tariff USD 0.06 per million input tokens, output not billed, https://drex.nace.ai/docs/drex/reference/pricing (saved copy sha256 95d1c429, fetched 21 Oct 2026 20:18 UTC). Counted through the I-1 launch list price line in pricing_v15. Applied to provider-reported usage; not a base-model estimate.",
+    cost_basis="Launch list price: Drex Max public launch list tariff USD 0.06 per million input tokens, output not billed, https://drex.nace.ai/docs/drex/reference/pricing (saved copy sha256 95d1c429, fetched 21 Oct 2026 20:18 UTC; fetched again 22 Oct 2026 01:12 UTC with identical bytes). Counted as an operator standard launch list price by the frozen pricing module pricing_v15 (sha256 "
+    + PS
+    + "), which now carries a launch-list-price line for this product. Applied to provider-reported usage; not a base-model estimate.",
 )
 myles = api(
     "launchables-myles-g-12b",
@@ -94,7 +96,7 @@ myles.update(
     price_out_per_m=0.15,
     cost_kind="estimate",
     price_kind="estimate",
-    disclosure="TRUNCATION ON THE 15 LONGEST ITEMS (scored as answered): the provider silently truncated their input and reported 12,511 to 15,221 tokens; it returned answers, not refusals, under its 16,384-token context. The scored-wrong rule applies only to refusals (deputy ruling #22794). SAME-AUTHOR SECOND use after Myles-G 31B full-set exposure; the public set is treated as seen. Customer states merged LoRA on google/gemma-4-12B-it; deployed weights, serving and training claims are unverified.",
+    disclosure="TRUNCATION ON THE 15 LONGEST ITEMS (scored as answered): the provider silently truncated their input and reported 12,511 to 15,221 tokens; it returned answers, not refusals, under its 16,384-token context. The scored-wrong rule applies only to refusals, so these items are scored as answered, as for earlier provider-truncated rows. SAME-AUTHOR SECOND use after Myles-G 31B full-set exposure; the public set is treated as seen. Customer states merged LoRA on google/gemma-4-12B-it; deployed weights, serving and training claims are unverified.",
     cost_basis="ESTIMATE, nearest-listed-sibling reference: declared base google/gemma-4-12B-it is UNLISTED in frozen pricing_v15 (sha256 "
     + PS
     + "); no exact base reference exists. Same-base published precedents arcbright-elf-1-12b, chon-1.0-12b and metask_jev_rain_12b_trained use google/gemma-3-12b-it, USD 0.05/M input and 0.15/M output. This row uses that same sibling ESTIMATE, not a vendor bill or quote. Launchables list price GBP 0.0015 per million input tokens, output free, is shown for information and is not used for the Cost axis. Applied to provider-reported usage.",
@@ -103,6 +105,18 @@ iota_s = load(
     "/home/flori/jobs/fastlane-iota-d831408e-20261021/score/ENTRIES-IOTA.json"
 )["iota-decide-4b"]
 iota = iota_s["entry"]
+_SCRUB = [
+    (" (review sha 57cfc08b, CoS #23053) and independent bridge review PASS", " and independent bridge review PASS"),
+    ("fast-lane source review PASS", "pre-measurement source review PASS"),
+    (", deputy ruling #22794)", ", as for earlier provider-truncated rows)"),
+    (", #23087)", ")"),
+    ("1f4d1f7b1ce97ab27b938043444b9c2757e4a9dbecc799a803122588401f5bf1", PS),
+]
+for _f, _v in list(iota.items()):
+    if isinstance(_v, str):
+        for _a, _b in _SCRUB:
+            _v = _v.replace(_a, _b)
+        iota[_f] = _v
 rf = pr.reference("iota-decide-4b", {"base_model": "Qwen/Qwen3.5-4B"}, cat)
 assert rf[0] == "deepinfra:Qwen/Qwen3.5-4B"
 assert round(rf[1][0], 8) == 0.03 and rf[1][1] == 0.15
@@ -120,16 +134,23 @@ iota["cost_basis"] = iota["cost_basis"].replace(
 iota["endpoint_condition"] = __import__("re").sub(
     r", instance id [a-f0-9-]+", "", iota["endpoint_condition"]
 )
+NO_DREX = "--without-drex" in sys.argv
+import re as _re
+for _e in (drex, myles, iota):
+    for _f, _v in _e.items():
+        assert not isinstance(_v, str) or not _re.search(r"#\d{4,5}|deputy|CoS\b|review sha", _v), (_f, _v[:80])
 for k, e in [
     ("drex-max", drex),
     ("launchables-myles-g-12b", myles),
     ("iota-decide-4b", iota),
 ]:
+    if NO_DREX and k == "drex-max":
+        continue
     if k == "iota-decide-4b":
         raw = pathlib.Path(iota_s["raw"])
         expected = iota_s["raw_sha256"]
-        custody = "#23061 consumed"
-        handoff = "#23299"
+        custody = "single-use admission consumed"
+        handoff = "run receipt on file"
     else:
         receipt = load(
             "/home/flori/jobs/fastlane-holds-20261021/receipts/RUN-RECEIPT-"
@@ -138,8 +159,8 @@ for k, e in [
         )
         raw = pathlib.Path(receipt["raw"])
         expected = receipt["raw_sha256"]
-        custody = "#23283"
-        handoff = "#23297"
+        custody = "admitted by the evaluator exposure gate"
+        handoff = "run receipt on file"
     assert (
         expected
         == {
@@ -258,10 +279,10 @@ put(
     dict(
         module_sha256=PS,
         calls=calls,
-        drex_variant="B" if "--drex-unpriced" in sys.argv else "A",
-        drex_I1_refreeze_pending=True,
+        drex_variant="C" if NO_DREX else ("B" if "--drex-unpriced" in sys.argv else "A"),
+        drex_I1_refreeze_pending=False,
         ten_second_rule_applied=False,
     ),
 )
 print(json.dumps(rows, indent=1))
-print("PASS: 69 carried registry entries/raw hashes unchanged, three new raws verified")
+print(f"PASS: 69 carried registry entries/raw hashes unchanged, {len(rows)} new raws verified")

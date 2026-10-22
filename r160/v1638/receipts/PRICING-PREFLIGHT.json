@@ -1,9 +1,11 @@
 {
   "base_revision": "50c8b2c4f41f58cb9781f205ca678f58998e58c1",
-  "pricing_module_sha256": "1f4d1f7b1ce97ab27b938043444b9c2757e4a9dbecc799a803122588401f5bf1",
+  "pricing_module_sha256": "a8a05890ddab2d39d1a1bd543f2b5c83842bdc70aa54766788bc89b7a8a448d7",
   "rows": {
     "drex-max": {
       "base_explicitly_unlisted": false,
+      "common_input_tokens": 762693,
+      "common_output_tokens": 262045,
       "entry_for_frozen_pricing": {
         "base_model": null,
         "price_in_per_m": 0.06,
@@ -24,29 +26,47 @@
       "reference_call": "reference('drex-max', {'base_model': None, 'source': 'api', 'price_in_per_m': 0.06, 'price_out_per_m': 0.0}, catalog_rates())",
       "reference_result": null,
       "resolve_result": {
-        "counting_list_price": false,
+        "candidate_usd_per_1000": 0.07770532,
+        "counting_list_price": true,
         "deepinfra_snapshot_sha256": "84eb7926acd4e93b71d695be24898e2ca999b20011d1b66cc0348ce7c6c3546f",
+        "floor_binds": false,
+        "floor_usd_per_1000": null,
         "key": "drex-max",
         "market_rates_per_m": null,
         "market_reference": null,
-        "note": "no eligible 30-day list price or base-model estimate",
-        "rankable": false,
+        "note": "operator standard launch list price (interpretation I-1); no exact base-model floor applies",
+        "rankable": true,
         "snapshot_sha256": "f5d0cd8e0f7d2d6514748c99bfcaeacc09775bac7aa7eecf765af4ba04b0dcd5",
         "tokens": {
           "decisions": 1500,
           "input": 1942633,
           "output": 264615
         },
-        "usd_per_1000": null
+        "usd_per_1000": 0.07770532
       },
       "rows": 1500,
       "status_counts": {
         "200": 1498,
         "529": 2
-      }
+      },
+      "usd_per_1000_common_basis": 0.030815878787878788,
+      "verdict": "list price (I-1), rankable"
+    },
+    "iota-decide-4b": {
+      "reference_call": "reference('iota-decide-4b', {'base_model': 'Qwen/Qwen3.5-4B'}, catalog_rates())",
+      "reference_result": [
+        "deepinfra:Qwen/Qwen3.5-4B",
+        [
+          0.030000000000000002,
+          0.15
+        ]
+      ],
+      "verdict": "frozen Qwen3.5-4B reference 0.03/0.15 (estimate)"
     },
     "launchables-myles-g-12b": {
       "base_explicitly_unlisted": true,
+      "common_input_tokens": 779294,
+      "common_output_tokens": 1485,
       "entry_for_frozen_pricing": {
         "base_model": "google/gemma-4-12B-it",
         "price_in_per_m": 0.00200202,
@@ -85,10 +105,11 @@
       "rows": 1500,
       "status_counts": {
         "200": 1500
-      }
+      },
+      "verdict": "unlisted base: unrankable under the module itself; build uses the published same-base sibling estimate"
     }
   },
   "scorer_sha256": "02132271117653e6302c509232a581d0094f0e78eac8b1bfc67596fd5d5097e9",
-  "status": "BLOCKED: frozen pricing supplies neither eligible list price nor base reference",
+  "status": "PASS: drex-max resolves as a rankable launch list price; Myles-G 12B and iota resolve as before",
   "ten_second_rule_applied": false
 }

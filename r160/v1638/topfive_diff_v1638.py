@@ -3,10 +3,10 @@ J = pathlib.Path(__file__).parent; R = J / 'receipts'; load = lambda p: json.loa
 b = load(R / 'topfive-before.json'); a = load(R / 'topfive-after.json')
 V = pathlib.Path(sys.argv[1]) / 'data/raw/benchmarks/jevbench/v1.6'
 old = load(V / 'jevbench-v1.6.37-results.json'); new = load(V / 'jevbench-v1.6.38-results.json')
-KEYS = ['drex-max','iota-decide-4b','launchables-myles-g-12b']
+KEYS = sorted(load(J / 'batch/ROWS.json'))
 assert not a['cohort_log'] and not b['cohort_log']
 assert 'v1.6.38' in a['cohort_releases'] and 'v1.6.37' in b['cohort_releases'] and 'v1.6.38' not in b['cohort_releases']
-assert a['merged_rows'] == b['merged_rows'] + 3, (a['merged_rows'], b['merged_rows'])   # restated rows replace base rows: no row added to the live boards
+assert a['merged_rows'] == b['merged_rows'] + len(KEYS), (a['merged_rows'], b['merged_rows'])   # restated rows replace base rows: no row added to the live boards
 at = lambda lst, k: lst.index(k) + 1 if k in lst else None
 rows = []
 for view, groups in a['full_rankings'].items():
@@ -29,7 +29,7 @@ changed = [r for r in rows if r['changed']]; causes = sorted({k for r in changed
 assert set(causes) <= set(KEYS)
 assert all(r['causes'] for r in changed), 'a changed list without a restated row among its movers'
 by_row = {k: [f"{r['view']}/{r['metric']}" for r in changed if k in r['causes']] for k in causes}
-note = ('Board effect: the three paid fast-lane rows were compared on the merged-board top fives before/after v1.6.38 over all 36 mixed, open-weights and API variants '
+note = (f'Board effect: the {[None, None, "two", "three"][len(KEYS)]} paid fast-lane rows were compared on the merged-board top fives before/after v1.6.38 over all 36 mixed, open-weights and API variants '
         f'(including 7x/10x cost caps with no latency cap) plus 4 release-board lists: {len(changed)} of 40 top-five lists change. ')
 note += ('Top-five changes caused by: ' + ', '.join(causes) + ' (paid fast-lane publication exception). ' if changed else 'No top-five changes; the standing GO applies. ')
 d = dict(any_top5_change=bool(changed), entrants_all=causes, by_row=by_row, rows=rows, note=note, merged_variants=36, release_lists=4, changed_lists=len(changed),

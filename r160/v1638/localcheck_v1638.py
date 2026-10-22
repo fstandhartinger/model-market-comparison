@@ -7,7 +7,8 @@ BASE = "http://127.0.0.1:3638"
 V = W / "data/raw/benchmarks/jevbench/v1.6"
 res = json.loads((V / "jevbench-v1.6.38-results.json").read_text())
 by = {s["key"]: s for s in res["systems"]}
-variant = "A" if by["drex-max"]["ranked"] else "B"
+NEW = sorted(json.loads((J / "batch/ROWS.json").read_text()))
+variant = "C" if "drex-max" not in NEW else ("A" if by["drex-max"]["ranked"] else "B")
 shots = J / "shots" / variant
 shots.mkdir(parents=True, exist_ok=True)
 out = {}
@@ -21,17 +22,17 @@ async def main():
             r.status == 200
             and d["revision"] == "v1.6.38"
             and d["n_ranked"] == res["n_ranked"]
-            and len(d["systems"]) == 75
+            and len(d["systems"]) == 72 + len(NEW)
         )
         assert hashlib.sha256(b).hexdigest() == r.headers["X-Content-SHA256"]
         out["api"] = {"status": 200, "sha256": hashlib.sha256(b).hexdigest()}
-        for k in ["drex-max", "iota-decide-4b", "launchables-myles-g-12b"]:
+        for k in NEW:
             assert next(s for s in d["systems"] if s["key"] == k) == by[k]
     with urllib.request.urlopen(BASE + "/api/jevbench/latest") as r:
         d = json.loads(r.read())
         out["latest_feed"] = {
             k: sum(s["key"] == k for s in d["systems"])
-            for k in ["drex-max", "iota-decide-4b", "launchables-myles-g-12b"]
+            for k in NEW
         }
         assert all(n == 1 for n in out["latest_feed"].values()), out["latest_feed"]
     async with async_playwright() as p:
@@ -43,7 +44,7 @@ async def main():
             ("/jev-models/all", "all"),
             ("/jev-models/v1.6.38", "release"),
             ("/jev-models/iota-decide-4b", "system-iota"),
-            ("/jev-models/drex-max", "system-drex"),
+            *([("/jev-models/drex-max", "system-drex")] if "drex-max" in NEW else []),
             ("/jev-models/launchables-myles-g-12b", "system-myles"),
             ("/jev-models/v1.6.37", "archive-v1637"),
         ]
@@ -82,7 +83,7 @@ async def main():
                         k: k.lower() in text.lower()
                         for k in by
                         if k
-                        in ["drex-max", "iota-decide-4b", "launchables-myles-g-12b"]
+                        in NEW
                     },
                 }
                 if name == "system-drex" and variant == "B":
@@ -98,7 +99,7 @@ async def main():
                     assert "Use cases (TypeSafe categories)" in text
                 if name == "release":
                     assert all(
-                        k in text for k in ["Drex Max", "Myles-G 12B", "iota-decide-4b"]
+                        k in text for k in ["Drex Max", "Myles-G 12B", "iota-decide-4b"][-len(NEW):]
                     )
             finally:
                 await page.close()

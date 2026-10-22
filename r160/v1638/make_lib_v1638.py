@@ -12,6 +12,7 @@ s = (
         "/*HASHES*/",
         json.dumps({k: v["sha256"] for k, v in p["files"].items()}, sort_keys=True),
     )
+    .replace("/*KEYS*/", json.dumps(sorted(rows)).replace('"', "'").replace(",", ","))
     .replace("/*ROWS*/", json.dumps(rows, sort_keys=True, ensure_ascii=False))
 )
 (W / "lib/jevbench-v1638-release.mjs").write_text(s)

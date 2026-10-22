@@ -44,8 +44,9 @@ for old in prev["systems"]:
         v.pop("rank", None)
         v.pop("ranks", None)
     assert new == o, old["key"]
-assert len(r["systems"]) == 75 and r["n_ranked"] in [63, 64]
-for k in ["drex-max", "launchables-myles-g-12b", "iota-decide-4b"]:
+NEW = sorted(load(J / "batch/ROWS.json"))
+assert len(r["systems"]) == 72 + len(NEW) and r["n_ranked"] == 61 + len(NEW)
+for k in NEW:
     s = by[k]
     q = p["new_rows"][k]
     assert (
@@ -80,8 +81,8 @@ assert (
 )
 assert (
     sha("/home/flori/jobs/jevbench-v15-measure-20260925/harness/pricing_v15.py")
-    == "1f4d1f7b1ce97ab27b938043444b9c2757e4a9dbecc799a803122588401f5bf1"
+    == "a8a05890ddab2d39d1a1bd543f2b5c83842bdc70aa54766788bc89b7a8a448d7"
 )
 print(
-    "PASS: 75 rows; 72 carried rows byte-identical except placement; source hashes, row proof, common cost basis, PENDING review and public aggregate-only artifacts verified"
+    "PASS: " + str(72 + len(NEW)) + " rows; 72 carried rows byte-identical except placement; source hashes, row proof, common cost basis, PENDING review and public aggregate-only artifacts verified"
 )

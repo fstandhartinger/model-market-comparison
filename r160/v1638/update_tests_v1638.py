@@ -1,5 +1,6 @@
 """Update only latest-live expectations and create a separate merged rank fixture."""
 
+import json
 from pathlib import Path
 
 J = Path(__file__).resolve().parent
@@ -15,9 +16,10 @@ s = p.read_text().replace(
 p.write_text(s)
 p = W / "test/jevbench-merged-board.test.mjs"
 s = p.read_text()
+N_ADDED = len(json.loads((J / "batch/ROWS.json").read_text()))
 if "const V1638_ADDED" not in s:
     s = s.replace(
-        "const COHORT_ROWS =", "const V1638_ADDED = 3;\nconst COHORT_ROWS ="
+        "const COHORT_ROWS =", f"const V1638_ADDED = {N_ADDED};\nconst COHORT_ROWS ="
     ).replace("+ V1637_RESTATED;", "+ V1637_RESTATED + V1638_ADDED;")
 s = s.replace("draw.release, 'v1.6.37')", "draw.release, 'v1.6.38')").replace(
     "['v1.6.37', 'v1.6.4', 'v1.6.9']", "['v1.6.38', 'v1.6.4', 'v1.6.9']"

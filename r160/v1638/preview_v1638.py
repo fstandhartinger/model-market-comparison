@@ -21,6 +21,9 @@ for key, cells in cats["systems"].items():
     cells.update(topic["systems"][key])
 
 by = {s["key"]: s for s in res["systems"]}
+NEW = sorted(load(J / "batch/ROWS.json"))
+NWU = {2: "Two", 3: "Three"}[len(NEW)]
+FIRST = "drex-max" if "drex-max" in NEW else "iota-decide-4b"
 for groups in after["full_rankings"].values():
     for metrics in groups.values():
         for rows in metrics.values():
@@ -32,7 +35,7 @@ payload = json.dumps(
 ).replace("</", "<\/")
 esc = html.escape
 out = [
-    '<!doctype html><meta charset="utf-8"><title>JevBench v1.6.38 review</title><style>body{background:#101724;color:#eee;font:16px system-ui;max-width:1200px;margin:32px auto}table{border-collapse:collapse;width:100%}td,th{text-align:left;padding:8px;border-bottom:1px solid #43516d}select,button{padding:8px}svg{background:#18253d;margin:12px}details{margin:16px 0}</style><h1>JevBench v1.6.38 local review</h1><p>Three paid public fast-lane additions. Independent release review PENDING. Both Drex pricing treatments are rebuildable.</p><p>'
+    '<!doctype html><meta charset="utf-8"><title>JevBench v1.6.38 review</title><style>body{background:#101724;color:#eee;font:16px system-ui;max-width:1200px;margin:32px auto}table{border-collapse:collapse;width:100%}td,th{text-align:left;padding:8px;border-bottom:1px solid #43516d}select,button{padding:8px}svg{background:#18253d;margin:12px}details{margin:16px 0}</style><h1>JevBench v1.6.38 local review</h1><p>' + NWU + ' paid public fast-lane additions. Independent release review PENDING.</p><p>'
     + esc(diff["note"])
     + '</p><h2>Head-to-head comparisons</h2><select id="left"></select> <select id="right"></select><div id="radars"></div><h2>All 40 top-five comparisons</h2><table><tr><th>Scope / list</th><th>Before</th><th>After</th></tr>'
 ]
@@ -70,7 +73,7 @@ for view, groups in after["full_rankings"].items():
 out.append(
     "<script>const D="
     + payload
-    + """;const by=Object.fromEntries(D.systems.map(s=>[s.key,s]));for(const id of ['left','right'])for(const s of D.systems)document.getElementById(id).add(new Option(s.display,s.key));left.value='drex-max';right.value='launchables-myles-g-12b';function radar(title,labels,aa,bb){
+    + """;const by=Object.fromEntries(D.systems.map(s=>[s.key,s]));for(const id of ['left','right'])for(const s of D.systems)document.getElementById(id).add(new Option(s.display,s.key));left.value='""" + FIRST + """';right.value='launchables-myles-g-12b';function radar(title,labels,aa,bb){
  const dense=labels.length>12,w=dense?1000:520,h=dense?700:430,cx=w/2,cy=dense?350:220,r=dense?200:140;
  const lo=Math.floor(Math.min(0,...aa,...bb)/25)*25,hi=100,n=labels.length;
  const clean=v=>String(v).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;');
@@ -87,5 +90,6 @@ function draw(){let a=by[left.value],b=by[right.value],keys=['intelligence','cal
 (P / "TOPFIVE-PREVIEW.md").write_text(
     "# v1.6.38 local review\n\n"
     + diff["note"]
-    + "\n\nInteractive rankings, 40 lists and head-to-head axis, capability-topic and TypeSafe-use-case radars: [preview](preview-full-ranking.html).\n\n[Unpriced Drex preview](preview-drex-unpriced.html).\n"
+    + "\n\nInteractive rankings, 40 lists and head-to-head axis, capability-topic and TypeSafe-use-case radars: [preview](preview-full-ranking.html).\n"
+
 )

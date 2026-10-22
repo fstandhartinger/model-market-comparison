@@ -615,11 +615,11 @@
    "common_input_tokens": 762693,
    "common_output_tokens": 262045,
    "cost_cap_ratio": 0.47706545852170157,
-   "custody": "#23283",
+   "custody": "admitted by the evaluator exposure gate",
    "disclosure": "2 HTTP 529 provider-overloaded failures retained and scored as failures. Public JevBench items were used to pick the checkpoint; the public set is treated as seen during selection. Customer statements about serving and training are unverified.",
    "endpoint_condition": "Paid public fast-lane; full S1200+P300 draw v1.6-regular-20261012, unchanged evaluator API runner from Sandy, customer API key; full-set exposure gate logged all sealed items before the first scored request. Native probabilities; latency has no API adjustment.",
    "endpoint_kind": "api",
-   "handoff": "#23297",
+   "handoff": "run receipt on file",
    "input_tokens": 1942633,
    "lane": "api",
    "measured_in": "v1.6.38",
@@ -877,11 +877,11 @@
    "common_input_tokens": 849038,
    "common_output_tokens": 0,
    "cost_cap_ratio": 0.2655371838815543,
-   "custody": "#23061 consumed",
-   "disclosure": "FIRST MEASUREMENT (paid fast-lane order d831408e). CONTEXT: states longer than 16,384 tokens are truncated by the model to 16,384 tokens and answered (15 items on this draw; scored as answered, deputy ruling #22794). BRIDGE: served through a first-party host-authored bridge around the author's documented entry points, not an author server. REPO: published as macrocosm-os/iota-sys1-4b, renamed to macrocosm-os/iota-decide-4b; measured revision bd88855a (weights/code/config identical at HEAD 745ccae4, #23087). PROVENANCE, author statements (unverified): LoRA fine-tune of Qwen/Qwen3.5-4B-Base distilled on Cloudflare Clef teacher probabilities (541,071 records: generated/template decision states plus Open-Jev, typed-decisions, civil_comments, GoEmotions, prompt-injections and 8,932 MNLI/SNLI/BoolQ records under CC-BY-SA); the README states no benchmark data was used and overlapping records were dropped. HARDWARE: A100 80 GB; latency reflects that card. Measured accuracy on the 15 shortened states: 2 of 15 correct (13.3 %), versus 822 of 1485 (55.4 %) on the remaining items; a Score item is correct within half a label step.",
+   "custody": "single-use admission consumed",
+   "disclosure": "FIRST MEASUREMENT (paid fast-lane order d831408e). CONTEXT: states longer than 16,384 tokens are truncated by the model to 16,384 tokens and answered (15 items on this draw; scored as answered, as for earlier provider-truncated rows). BRIDGE: served through a first-party host-authored bridge around the author's documented entry points, not an author server. REPO: published as macrocosm-os/iota-sys1-4b, renamed to macrocosm-os/iota-decide-4b; measured revision bd88855a (weights/code/config identical at HEAD 745ccae4). PROVENANCE, author statements (unverified): LoRA fine-tune of Qwen/Qwen3.5-4B-Base distilled on Cloudflare Clef teacher probabilities (541,071 records: generated/template decision states plus Open-Jev, typed-decisions, civil_comments, GoEmotions, prompt-injections and 8,932 MNLI/SNLI/BoolQ records under CC-BY-SA); the README states no benchmark data was used and overlapping records were dropped. HARDWARE: A100 80 GB; latency reflects that card. Measured accuracy on the 15 shortened states: 2 of 15 correct (13.3 %), versus 822 of 1485 (55.4 %) on the remaining items; a Score item is correct within half a label step.",
    "endpoint_condition": "Evaluator-owned rented Verda GPU VM, 1x NVIDIA A100-SXM4-80GB (FIN-03, Finland, EU, pay-as-you-go non-spot, USD 2.141/h). Container with --network none (cut proven from inside before the sealed input), Hub offline, every credential unset, read-only weights, all 16 weight files sha256-verified; driven one request at a time. The standard self-hosted x2 + 0.15 s adjustment applies. Measured 21 Oct 2026 on the frozen v1.6-regular-20261012 self-hosted input (sha256 dfd36720...); determinism 50/50 bit-identical; VM and volume destroyed afterwards.",
    "endpoint_kind": "gpu",
-   "handoff": "#23299",
+   "handoff": "run receipt on file",
    "input_tokens": 1094798,
    "lane": "selfhosted",
    "measured_in": "v1.6.38",
@@ -1341,11 +1341,11 @@
    "common_input_tokens": 779294,
    "common_output_tokens": 1485,
    "cost_cap_ratio": 0.408530011475702,
-   "custody": "#23283",
-   "disclosure": "TRUNCATION ON THE 15 LONGEST ITEMS (scored as answered): the provider silently truncated their input and reported 12,511 to 15,221 tokens; it returned answers, not refusals, under its 16,384-token context. The scored-wrong rule applies only to refusals (deputy ruling #22794). SAME-AUTHOR SECOND use after Myles-G 31B full-set exposure; the public set is treated as seen. Customer states merged LoRA on google/gemma-4-12B-it; deployed weights, serving and training claims are unverified. Measured accuracy on the 15 shortened states: 2 of 15 correct (13.3 %), versus 1083 of 1485 (72.9 %) on the remaining items; a Score item is correct within half a label step.",
+   "custody": "admitted by the evaluator exposure gate",
+   "disclosure": "TRUNCATION ON THE 15 LONGEST ITEMS (scored as answered): the provider silently truncated their input and reported 12,511 to 15,221 tokens; it returned answers, not refusals, under its 16,384-token context. The scored-wrong rule applies only to refusals, so these items are scored as answered, as for earlier provider-truncated rows. SAME-AUTHOR SECOND use after Myles-G 31B full-set exposure; the public set is treated as seen. Customer states merged LoRA on google/gemma-4-12B-it; deployed weights, serving and training claims are unverified. Measured accuracy on the 15 shortened states: 2 of 15 correct (13.3 %), versus 1083 of 1485 (72.9 %) on the remaining items; a Score item is correct within half a label step.",
    "endpoint_condition": "Paid public fast-lane; full S1200+P300 draw v1.6-regular-20261012, unchanged evaluator API runner from Sandy, customer API key; full-set exposure gate logged all sealed items before the first scored request. Native probabilities; latency has no API adjustment.",
    "endpoint_kind": "api",
-   "handoff": "#23297",
+   "handoff": "run receipt on file",
    "input_tokens": 989607,
    "lane": "api",
    "measured_in": "v1.6.38",
@@ -2606,24 +2606,24 @@
  },
  "predecessor_pricing_module_sha256": "1f4d1f7b1ce97ab27b938043444b9c2757e4a9dbecc799a803122588401f5bf1",
  "predecessor_seal_sha256": "31bf96aef5ff1b7d49c109e832b87dd8ee05eeb6302899ec73f4f6211ac00b07",
- "pricing_module_sha256": "1f4d1f7b1ce97ab27b938043444b9c2757e4a9dbecc799a803122588401f5bf1",
+ "pricing_module_sha256": "a8a05890ddab2d39d1a1bd543f2b5c83842bdc70aa54766788bc89b7a8a448d7",
  "publication_approval": {
   "asks": {
    "drex-max": {
-    "admission": "#23283",
-    "handoff": "#23297",
+    "admission": "admitted by the evaluator exposure gate",
+    "handoff": "run receipt on file",
     "key": "drex-max",
     "relay": "Paid public fast-lane order 55dae0fd"
    },
    "iota-decide-4b": {
-    "admission": "#23061 consumed",
-    "handoff": "#23299",
+    "admission": "single-use admission consumed",
+    "handoff": "run receipt on file",
     "key": "iota-decide-4b",
     "relay": "Paid public fast-lane order d831408e"
    },
    "launchables-myles-g-12b": {
-    "admission": "#23283",
-    "handoff": "#23297",
+    "admission": "admitted by the evaluator exposure gate",
+    "handoff": "run receipt on file",
     "key": "launchables-myles-g-12b",
     "relay": "Paid public fast-lane order 157488bd"
    }
@@ -6152,7 +6152,7 @@
   "selection": "Publish (recommended)"
  },
  "refreshed_preview_go_card": "17515",
- "registry_sha256": "9517be011037d1ebe004e31d46426ec000cee8ef74f58a016b18b2cb36da2894",
+ "registry_sha256": "87a7858b2e623f2a27130465295d03c31f03775f30ba79859a291c628d8f3ba4",
  "repriced_rows": {
   "h2o-lightning-4b": {
    "authority": [
