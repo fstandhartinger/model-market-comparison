@@ -154,6 +154,30 @@ STEP_LIMITS = {
 BACKOFF_BASE_SECONDS = 300
 BACKOFF_CAP_SECONDS = 7200
 ALERT_REPEAT = timedelta(hours=24)
+# urgent-autofix-443 (22 Oct): an owner job running a held order by hand only stays off the urgent
+# card while it is demonstrably alive and the deadline is further away than this margin.
+OWNED_HOLD_DEADLINE_MARGIN = timedelta(hours=12)
+OWNED_HOLD_STATE_FRESH = timedelta(hours=6)
+OWNER_JOB_RE = re.compile(r"[a-z0-9][a-z0-9-]{2,100}")
+
+
+def owner_job_live(owner: object, now: datetime) -> bool:
+    """A named owner job counts as live when its unit runs or its STATE.md moved recently without FINAL DONE."""
+    if not isinstance(owner, str) or not OWNER_JOB_RE.fullmatch(owner):
+        return False
+    state_path = HOME / "jobs" / owner / "STATE.md"
+    try:
+        lines = [line.strip() for line in state_path.read_text(encoding="utf-8", errors="replace").splitlines() if line.strip()]
+        mtime = datetime.fromtimestamp(state_path.stat().st_mtime, tz=timezone.utc)
+    except OSError:
+        return False
+    if lines and lines[-1] == "- FINAL DONE":
+        return False
+    if now - mtime <= OWNED_HOLD_STATE_FRESH:
+        return True
+    result = subprocess.run(["systemctl", "--user", "is-active", f"{owner}.service"], text=True,
+                            capture_output=True, timeout=15, check=False)
+    return result.stdout.strip() == "active"
 
 # Operational holds that clear themselves: transient infrastructure causes retry the
 # evaluation with a bounded backoff; anything else (or a retry budget used up) escalates
@@ -4078,16 +4102,27 @@ def health(effects: Effects) -> dict[str, Any]:
                           and operational.get("owner") == "fastlane-acad951a-recovery-20261008"
                           and operational.get("transient") is False
                           and step_done(state, "source_access_review_handoff"))
-        if active_hold(row) or planned_review:
-            held_orders.append({"order": ref, "kind": "customer" if active_hold(row) else "operational_review",
+        # A deliberate non-transient hold whose named owner job is alive and has more than 12 h left is
+        # listed, not alerted; a dead owner or a near deadline still alerts (under its own key, so the
+        # earlier 24 h dedupe of the eval: key cannot swallow the deadline warning).
+        owned_run = (not active_hold(row) and not planned_review and isinstance(operational, dict)
+                     and operational.get("transient") is False and owner_job_live(operational.get("owner"), now))
+        owned_quiet = owned_run and deadline_for(row) - now > OWNED_HOLD_DEADLINE_MARGIN
+        if active_hold(row) or planned_review or owned_quiet:
+            held_orders.append({"order": ref, "kind": "customer" if active_hold(row) else
+                                "operational_review" if planned_review else "owned_manual_run",
                                 "reason": row.get("customer_hold_reason") if active_hold(row) else operational["reason"],
                                 "owner": None if active_hold(row) else operational["owner"],
                                 "deadline": iso(deadline_for(row)),
                                 "sla_paused": bool(active_hold(row))})
         if row.get("evaluation_status") in ("pending", "failed", "exhausted") and now - paid > timedelta(minutes=45) \
-                and not active_hold(row) and not (planned_review and now < deadline_for(row)):
+                and not active_hold(row) and not (planned_review and now < deadline_for(row)) and not owned_quiet:
             detail = f"; operational hold: {operational.get('reason') or 'unknown'}" if isinstance(operational, dict) else ""
-            problems.append((f"eval:{rid}", f"order {ref}: evaluation not running ({row.get('evaluation_status')}){detail}"))
+            if owned_run:
+                problems.append((f"eval-due:{rid}", f"order {ref}: evaluation not running ({row.get('evaluation_status')}){detail}; "
+                                 f"owner {operational.get('owner')} has under 12 h to the deadline"))
+            else:
+                problems.append((f"eval:{rid}", f"order {ref}: evaluation not running ({row.get('evaluation_status')}){detail}"))
         for name, item in state["steps"].items():
             if item.get("status") == "exhausted":
                 problems.append((f"exhausted:{rid}:{name}", f"order {ref}: step {name} exhausted"))
