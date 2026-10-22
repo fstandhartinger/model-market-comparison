@@ -65,6 +65,13 @@ for k in NEW:
             and s["rank"] is None
             and all(k not in b["order"] for b in r["board"].values())
         )
+_ap = p["publication_approval"]
+_cd = _ap["top_five_preview"]
+assert _ap["top_five_effect"] == "changes" and _ap["top_five_changed_by"] == ["drex-max"]
+assert (_cd["card_id"], _cd["selection"], _cd["channel"], _cd["button_tap"], _cd["recorded_at"]) == (
+    "18139", "Publish all (recomm.)", "telegram-button", True, "2026-10-22T08:18:57Z")
+assert _cd["preview_png_sha256"] == sha(J / "preview/card-v1638.png") == "23cf47ae5dec385f1403bee90909e682faad6fdd8567c225c9d6915b16afb28e"
+assert _ap["button_tap"] is True and "PLACEHOLDER" not in json.dumps([p, r])
 for f in paths:
     if f.suffix == ".json" and not any(
         f.name.endswith("-" + k + ".json") for k in ["history", "history-carry"]

@@ -3,7 +3,7 @@
 Field scoring verifies the 69 same-draw rows; published bootstrap intervals are
 retained (rather than replacing them merely because sorted-roster seeds change).
 """
-import hashlib, json, pathlib, copy, shutil
+import hashlib, json, os, pathlib, copy, shutil
 
 J = pathlib.Path(__file__).resolve().parent
 W = J.parents[1]
@@ -138,6 +138,38 @@ paid["orders"] = {
     k: {"drex-max": "55dae0fd", "launchables-myles-g-12b": "157488bd", "iota-decide-4b": "d831408e"}[k]
     for k in newkeys
 }
+LAST_CARD = 17911
+PH = "PLACEHOLDER"
+HEX64 = lambda v: isinstance(v, str) and len(v) == 64 and all(c in "0123456789abcdef" for c in v)
+# Florian's top-five preview approval (fill_approval_v1638.sh writes approval-v1638.json; absent = PLACEHOLDER build).
+AP_FILE = J / "approval-v1638.json"
+ap_in = load(AP_FILE) if AP_FILE.exists() else None
+if ap_in:
+    c = ap_in["card_id"]
+    assert c.isascii() and c.isdigit() and str(int(c)) == c and int(c) > LAST_CARD, "fresh numeric Telegram card id"
+    assert HEX64(ap_in["preview_png_sha256"]), "bind the exact preview PNG that was sent"
+    assert ap_in["channel"] in ("telegram-button", "direct-message")
+    assert PH not in json.dumps(ap_in)
+    card = {
+        "card_id": c,
+        "selection": ap_in["selection"],
+        "preview_png_sha256": ap_in["preview_png_sha256"],
+        "channel": ap_in["channel"],
+        "button_tap": ap_in["channel"] == "telegram-button",
+        "recorded_at": ap_in["recorded_at"],
+        "recorded_in": ap_in["recorded_in"],
+    }
+else:
+    card = {
+        "card_id": PH + "-CARD-ID",
+        "selection": PH + "-SELECTION",
+        "preview_png_sha256": PH + "-PNG-SHA256",
+        "channel": PH + "-CHANNEL",
+        "button_tap": None,
+        "recorded_at": PH + "-RECORDED-AT",
+        "recorded_in": PH + "-RECORDED-IN",
+    }
+FILLED = PH not in json.dumps(card)
 approval = {
     "go": old["proof"]["publication_approval"]["go"],
     "asks": {
@@ -150,15 +182,39 @@ approval = {
         for k in newkeys
     },
     "paid_fast_lane": paid,
-    "top_five_effect": (
-        "changes-paid-only" if tf and tf["any_top5_change"] else "none"
-    ),
-    "top_five_preview": None,
-    "button_tap": False,
+    "top_five_effect": "changes" if tf and tf["any_top5_change"] else "none",
+    "top_five_preview": card if tf and tf["any_top5_change"] else None,
+    "button_tap": card["button_tap"] if tf and tf["any_top5_change"] else False,
 }
 if tf and tf["any_top5_change"]:
     assert set(tf["entrants_all"]) <= set(newkeys)
-    approval["top_five_changed_by"] = tf["entrants_all"]
+    approval["top_five_changed_by"] = sorted(tf["entrants_all"])
+if FILLED and tf and tf["any_top5_change"] and card["button_tap"]:
+    approval_text = (
+        f'Florian selected "{card["selection"]}" on Telegram card #{card["card_id"]} ({card["recorded_at"]}), '
+        f'the top-five preview card with preview PNG sha256 {card["preview_png_sha256"]}.'
+    )
+    approval_marker = (
+        f'Florian top-five preview approval: Telegram card #{card["card_id"]}; selected "{card["selection"]}" '
+        f'({card["recorded_at"]}); preview PNG SHA-256 {card["preview_png_sha256"]}.'
+    )
+elif FILLED and tf and tf["any_top5_change"]:
+    approval_text = (
+        f'The top-five preview (PNG sha256 {card["preview_png_sha256"]}) was sent to Florian as Telegram card '
+        f'#{card["card_id"]}; it was published on his direct-message GO at {card["recorded_at"]} '
+        f'("{card["selection"]}"; {card["recorded_in"]}). The card\'s own button was not pressed.'
+    )
+    approval_marker = (
+        f'Florian top-five preview approval: {card["channel"]} {card["recorded_at"]}, recorded as Telegram card '
+        f'#{card["card_id"]} = "{card["selection"]}" ({card["recorded_in"]}; no button tap); preview PNG '
+        f'SHA-256 {card["preview_png_sha256"]}.'
+    )
+else:
+    approval_text = (
+        f"Top-five preview approval: {PH} - public top fives change and the preview card has not been answered yet; "
+        "this build cannot be published until fill_approval_v1638.sh rebuilds it with the real card, channel and timestamps."
+    )
+    approval_marker = f"Florian top-five preview approval: {PH}."
 notes = [
     "v1.6.38 adds " + NWL + " paid public fast-lane rows. All carried rows retain every field except rank/ranks, including published confidence intervals. New rows use their full-field bootstrap seeds. This release uses the v1.6 method; the 10-second rule does not apply. "
     + (
@@ -169,7 +225,13 @@ notes = [
         else "Drex Max uses its published launch list price; Myles-G 12B uses the published same-base sibling estimate; iota-decide-4b uses the Qwen 4B frozen estimate."
     ),
     tf["note"] if tf else "Board effect provisional: 40-list comparison pending.",
-    "Publication of v1.6.38: paid_fast_lane, 29 Sep 2026 automatic paid publication rule including top-five changes; no preview card; no button tap. Independent review remains PENDING.",
+    (
+        "Publication of v1.6.38: paid fast-lane rows (29 Sep 2026 paid publication exception); because Drex Max changes public top-five lists, Florian's top-five preview approval was obtained first (DECISIONS.md 2026-10-22 08:18:57Z). "
+        + approval_text
+        if tf and tf["any_top5_change"]
+        else "Publication of v1.6.38: paid fast-lane rows (29 Sep 2026 paid publication exception); no top-five list changes, so no top-five preview card was sent and none is claimed; no Telegram button was pressed."
+    )
+    + " Independent review remains PENDING.",
 ]
 for k in newkeys:
     s = out[k]
@@ -285,7 +347,11 @@ proof["predecessor_seal_sha256"] = sha(
 )
 proof[
     "authority"
-] += " " + NW + " paid public fast-lane additions; automatic paid publication exception, independent review PENDING."
+] += (
+    " NEW in v1.6.38: " + NW + " paid public fast-lane additions; paid publication exception"
++ (" plus Florian's top-five preview approval. " + approval_marker if tf and tf["any_top5_change"] else "; no top-five list changes, no preview card, no button tap.")
++ " Independent review PENDING."
+)
 put(V / f"jevbench-{REV}-proof.json", proof)
 pub = cp(old["publication"])
 pub.update(

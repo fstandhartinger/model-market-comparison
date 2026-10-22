@@ -57,7 +57,7 @@ export default async function JevModelsV1638Page() {
 p = WT / "lib/jevbench-releases.mjs"
 s = p.read_text()
 s = "".join(l for l in s.splitlines(keepends=True) if "version: 'v1.6.38'" not in l)
-entry = "  { version: 'v1.6.38', date: '2026-10-21', href: '/jev-models/v1.6.38', text: '" + NWU + " paid public fast-lane additions: " + ("Drex Max (Nace AI), " if DREX else "") + "Myles-G 12B (Launchables), and iota-decide-4b (Macrocosmos). Same draw and common cost basis; all carried scores and intervals retained. " + ("Two Drex overloaded failures retained; " if DREX else "") + "Myles and Iota answered 15 truncated states, scored as answered.' },\n"
+entry = "  { version: 'v1.6.38', date: '2026-10-22', href: '/jev-models/v1.6.38', text: '" + NWU + " paid public fast-lane additions: " + ("Drex Max (Nace AI), " if DREX else "") + "Myles-G 12B (Launchables), and iota-decide-4b (Macrocosmos). Same draw and common cost basis; all carried scores and intervals retained. " + ("Two Drex overloaded failures retained; " if DREX else "") + "Myles and Iota answered 15 truncated states, scored as answered.' },\n"
 assert s.count("  { version: 'v1.6.37'") == 1
 p.write_text(s.replace("  { version: 'v1.6.37'", entry + "  { version: 'v1.6.37'", 1))
 # ---- revision lists, nav, history availability, cohort reader, equating ----------------------------

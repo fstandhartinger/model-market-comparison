@@ -46,7 +46,24 @@ export function validateJevbenchV1638Bundle({manifest,artifact,categories,proof,
  if(proof.revision!=='v1.6.38')fail('proof revision');
  if(proof.pricing_module_sha256!==V1638_PRICING_MODULE_SHA256)fail('pricing module pin');
  for(const k of V1638_NEW_KEYS){const p=proof.new_rows[k];const s=by.get(k);if(p.raw_sha256!==proof.raw_sha256[k]||p.usd_per_1000!==s.cost.usd_per_1000||p.ranked!==s.ranked||p.paid_fast_lane!==true||p.over_10s!==0)fail('proof row '+k)}
- const a=proof.publication_approval;if(a.paid_fast_lane?.rule!=='paid fast-lane publication exception'||a.top_five_preview!==null||a.button_tap!==false)fail('paid publication authority');
+ const a=proof.publication_approval;if(a.paid_fast_lane?.rule!=='paid fast-lane publication exception')fail('paid publication authority');
+ if(JSON.stringify(proof).includes('PLACEHOLDER')||JSON.stringify(artifact).includes('PLACEHOLDER'))fail('approval placeholder not filled');
+ if(typeof proof.authority!=='string'||!proof.authority.startsWith(previous.proof.authority+' NEW in v1.6.38:'))fail('inherited authority unchanged');
+ const newAuthority=proof.authority.slice(previous.proof.authority.length);
+ const notes=artifact.measurement_notes.filter(n=>n.startsWith('Publication of v1.6.38:'));if(notes.length!==1)fail('public note must describe how the approval arrived');const note=notes[0];
+ const claimsCard=/Telegram card #\d/.test(note)||/selected "[^"]*" on Telegram card/.test(note);
+ if(a.top_five_effect==='none'){
+  if(a.top_five_preview!==null||a.button_tap!==false||'top_five_changed_by' in a||claimsCard||!note.includes('no top-five list changes'))fail('no-card approval provenance');
+ }else{
+  const ch=a.top_five_changed_by;if(a.top_five_effect!=='changes'||!Array.isArray(ch)||!ch.length||!ch.every(k=>V1638_NEW_KEYS.includes(k)))fail('approval and top-five effect disagree');
+  const c=a.top_five_preview,id=c?.card_id,hex=v=>typeof v==='string'&&/^[a-f0-9]{64}$/.test(v);
+  if(typeof id!=='string'||!/^\d+$/.test(id)||BigInt(id).toString()!==id||BigInt(id)<=17911n||typeof c.selection!=='string'||!c.selection.trim()||!hex(c.preview_png_sha256))fail('top-five preview approval card');
+  if(!['telegram-button','direct-message'].includes(c.channel)||typeof c.button_tap!=='boolean'||a.button_tap!==c.button_tap||(c.channel==='telegram-button')!==c.button_tap||!c.recorded_at||!c.recorded_in||Object.keys(a).sort().join()!=='asks,button_tap,go,paid_fast_lane,top_five_changed_by,top_five_effect,top_five_preview')fail('approval channel and provenance');
+  const claimsTap=/selected "[^"]*" on Telegram card/.test(note),saysNoTap=note.includes("The card's own button was not pressed.");
+  if((c.button_tap?(!claimsTap||saysNoTap):(claimsTap||!saysNoTap))||!note.includes('Telegram card #'+id)||!note.includes(c.preview_png_sha256)||!note.includes('DECISIONS.md 2026-10-22 08:18:57Z'))fail('public note must describe how the approval arrived');
+  const marker=c.button_tap?`Florian top-five preview approval: Telegram card #${id}; selected "${c.selection}" (${c.recorded_at}); preview PNG SHA-256 ${c.preview_png_sha256}.`:`Florian top-five preview approval: ${c.channel} ${c.recorded_at}, recorded as Telegram card #${id} = "${c.selection}" (${c.recorded_in}; no button tap); preview PNG SHA-256 ${c.preview_png_sha256}.`;
+  if(!newAuthority.includes(marker))fail('publication approval authority binding');
+ }
  same(Object.keys(a.paid_fast_lane.orders).sort(),V1638_NEW_KEYS,'paid orders');
  return {manifest,artifact,categories,proof};
 }
