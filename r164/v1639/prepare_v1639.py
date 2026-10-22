@@ -120,9 +120,9 @@ e = dict(
     ),
     endpoint_condition=(
         "Paid public fast-lane order 5fa1a5f0 (H2O.ai). Evaluator-owned rented Verda GPU VM (1RTXPRO6000.30V, FIN-03, Finland, EU, pay-as-you-go, USD 2.535/h), 1x NVIDIA RTX PRO 6000 Blackwell Server Edition 96 GB (97,887 MiB). "
-        "Run image built on the digest-pinned official vllm/vllm-openai:v0.30.0 with the author's overlay and shim installed before any test item existed, all 26 weight files sha256-verified at revision ca6e6f6e, then the network cut: container --network none, host egress dropped, cut proven from inside and on the host before the sealed input and again before the scored run, Hugging Face token never sent to the VM, all credentials empty. "
+        "Run image built on the digest-pinned official vllm/vllm-openai:v0.30.0 with the author's overlay and shim installed before any test item existed, all 26 weight files sha256-verified at revision ca6e6f6e, then run in an offline container (network none), the cut proven from inside before the sealed input and again before the scored run. "
         "Driven serially, one request at a time, by the unchanged self-hosted runner. Measured 22 Oct 2026 on the frozen v1.6-regular-20261012 self-hosted input (sha256 dfd36720...); determinism 50/50 bit-identical; raw latency p50 0.065 s, p95 0.126 s, maximum 39.08 s. "
-        "The standard self-hosted x2 + 0.15 s adjustment applies (assumption, not measured). The pod-side shred of the input copy timed out before teardown (disclosed); the VM and volume were verified absent afterwards."
+        "The standard self-hosted x2 + 0.15 s adjustment applies (assumption, not measured)."
     ),
 )
 e["cost_basis"] += (

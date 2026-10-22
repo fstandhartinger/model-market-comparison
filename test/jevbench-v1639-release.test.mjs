@@ -3,7 +3,7 @@ import { jevbenchCategoryView } from '../lib/jevbench-categories.mjs';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
-import { readOptionalJevbenchV1638Release } from '../lib/jevbench-v1638-release.mjs';
+import { readOptionalJevbenchV1638Release, v1638TopicSupplementBinds } from '../lib/jevbench-v1638-release.mjs';
 import { readOptionalJevbenchV1639Release, validateJevbenchV1639Bundle, V1639_NEW_KEYS, V1639_ROW_SPEC, v1639BoardInput } from '../lib/jevbench-v1639-release.mjs';
 const root=process.cwd(),v=root+'/data/raw/benchmarks/jevbench/v1.6/';
 const load=async f=>JSON.parse(await readFile(v+'jevbench-v1.6.39-'+f+'.json','utf8'));
@@ -44,3 +44,17 @@ for(const [label,mutate] of [
 ])test('v1.6.39 rejects '+label,()=>{const b=structuredClone(pass);mutate(b);assert.throws(()=>validateJevbenchV1639Bundle(b))});
 
 test('v1.6.39 archive comparison has measured topic and use-case cells for every ranked row', {skip:manifest.review.verdict==='PENDING'}, async()=>{const r=await readOptionalJevbenchV1639Release();const board=v1639BoardInput(r);assert.equal(board.categories.revision,'v1.6.39');assert.ok(board.categories.topics.length>=5);assert.doesNotThrow(()=>jevbenchCategoryView('v1.6.39',board.artifact.systems.filter(s=>s.ranked).map(s=>s.key),{artifact:board.categories}));for(const row of board.artifact.systems.filter(s=>s.ranked))for(const dim of ['topics','usecases'])assert.ok(Object.keys(board.categories.systems[row.key]?.[dim]??{}).length,`${row.key}.${dim}`)});
+
+test('v1.6.38 reader accepts a v1.6.39 topic supplement only with unchanged carried cells',async()=>{
+ const sup=JSON.parse(await readFile(v+'jevbench-v1.6-cohort-topic-cells.json','utf8')).draws['v1.6-regular-20261012'];
+ const roster=previous.artifact.systems.map(s=>s.key);
+ assert.equal(v1638TopicSupplementBinds(sup,'x',roster),true);
+ const mut=f=>{const c=structuredClone(sup);f(c);return v1638TopicSupplementBinds(c,'x',roster)};
+ const bump=o=>{for(const k of Object.keys(o)){if(typeof o[k]==='number'){o[k]+=1;return true}if(o[k]&&typeof o[k]==='object'&&bump(o[k]))return true}return false};
+ assert.equal(mut(c=>{assert.ok(bump(c.systems[roster.find(k=>c.systems[k])]))}),false);
+ assert.equal(mut(c=>{c.extra_rows={}}),false);
+ assert.equal(mut(c=>{delete c.systems[roster.find(k=>c.systems[k])]}),false);
+ assert.equal(mut(c=>{c.release='v1.6.40'}),false);
+ assert.equal(mut(c=>{c.release='v1.6.38';c.results_sha256='y'}),false);
+ assert.equal(v1638TopicSupplementBinds(null,'x',roster),false);
+});
