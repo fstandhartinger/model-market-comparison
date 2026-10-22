@@ -103,3 +103,18 @@ test("refuses to replace the snapshot on a large model loss", () => {
   const grown = product([...liveRows, priceRow("Nova 9B")]);
   assert.throws(() => parseStackitCatalog(docs(section("Nova 9B", "nova/nova-9b")), grown, previous, fx), /refusing/);
 });
+
+// CR-534: a single documented delisting is a catalog change, not an alias failure.
+test("a delisted Gemma 3 is removed while the retained roster stays complete", () => {
+  const prior = { models: [...previous.models, {
+    model_name: "Gemma 3 27B", model_id: "google/gemma-3-27b-it",
+    provider_org: "Google", billing_category: "LLM-Plus",
+    input_per_1m_eur: 0.45, output_per_1m_eur: 0.65, status: "deprecated",
+  }] };
+  const { models, diff } = parseStackitCatalog(liveDocs, liveProduct, prior, fx);
+  assert.deepEqual(diff.removed, ["google/gemma-3-27b-it"]);
+  assert.equal(models.length, 7);
+  assert.ok(!models.some((model) => model.model_id === "google/gemma-3-27b-it"));
+  assert.ok(models.some((model) => model.model_id === "cortecs/Llama-3.3-70B-Instruct-FP8-Dynamic"));
+  assert.ok(models.some((model) => model.model_id === "google/gemma-4-31B-it"));
+});

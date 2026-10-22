@@ -14,6 +14,7 @@ const codingAgents = JSON.parse(await readFile(join(__dirname, "..", "data", "ra
 const copilot = JSON.parse(await readFile(join(__dirname, "..", "data", "raw", "github-copilot.json"), "utf8"));
 const claude = JSON.parse(await readFile(join(__dirname, "..", "data", "raw", "claude-code.json"), "utf8"));
 const epochEci = JSON.parse(await readFile(join(__dirname, "..", "data", "raw", "epoch-eci.json"), "utf8"));
+const stackit = JSON.parse(await readFile(join(__dirname, "..", "data", "raw", "stackit.json"), "utf8"));
 const inceptron = JSON.parse(await readFile(join(__dirname, "..", "data", "raw", "inceptron.json"), "utf8"));
 
 const REQUIRED = [
@@ -657,9 +658,16 @@ test("audited provider checkpoint aliases join their benchmark families", () => 
 
   assert.ok(providers("llama-3.3-70b-instruct").has("OVHcloud"));
   // 2026-08-26: Scaleway EOL'd gemma-3-27b (08-01) and devstral-2 (08-01).
-  for (const provider of ["AWS Bedrock", "Nebius", "STACKIT"]) {
+  for (const provider of ["AWS Bedrock", "Nebius"]) {
     assert.ok(providers("gemma-3-27b-instruct").has(provider), provider);
   }
+  // CR-534: STACKIT delisted Gemma 3 in its 2026-10-15 documentation.
+  // Require the canonical join exactly when the retained catalog lists it;
+  // a delisted offer must not survive as a phantom offer either.
+  const stackitGemma3 = stackit.models.some((model) => model.model_id === "google/gemma-3-27b-it");
+  assert.equal(providers("gemma-3-27b-instruct").has("STACKIT"), stackitGemma3);
+  // Keep an unconditional STACKIT checkpoint-alias regression on its FP8 Llama SKU.
+  assert.ok(providers("llama-3.3-70b-instruct").has("STACKIT"));
   // 2026-08-26: OVHcloud delisted Mistral Small 3.2 and Mistral Nemo from its AI Endpoints catalog.
   for (const provider of ["Scaleway", "IONOS"]) {
     assert.ok(providers("mistral-small-3.2-24b-instruct").has(provider), provider);
