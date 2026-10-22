@@ -37,11 +37,11 @@ test('CR-536 H2O-31B: full image/use-case coverage is bound to the official outp
   }
   assert.equal(coverage.source.output_sha256, '4f6ca17c14094444fc46a9f99f5d6245738e1d67e375b3d7c02c617ab83b4cbe');
   assert.equal(coverage.source.public_score_sha256, row.source_sha256);
-  assert.equal((await read('../data/imagejev-ts20-categories.json')).systems[key], undefined);
-  const ex = (await read('../data/jevbench-breakdown-exceptions.json')).entries.find((x) => x.board === 'imagejevbench' && x.key === key);
-  assert.deepEqual(ex.dims, ['typesafe']);
-  assert.match(ex.reason, /^TEMPORARY:/);
-  assert.match(ex.decision, /board #\d+/);
+  const ts20 = await read('../data/imagejev-ts20-categories.json');
+  assert.equal(Object.keys(ts20.systems[key].typesafe).length, 20);
+  assert.deepEqual(ts20.summary[key], { rows: 600, errors: 0 });
+  const ex = (await read('../data/jevbench-breakdown-exceptions.json')).entries;
+  assert.ok(!ex.some((x) => x.key === key));
 });
 
 test('CR-536 H2O-31B: both paid public top-five changes and capped Capability eligibility are explicit', async () => {
@@ -59,4 +59,5 @@ test('CR-536 H2O-31B: both paid public top-five changes and capped Capability el
   assert.match(page, /22 Oct 2026 addendum, new row:<\/b> adds H2O-Lightning-31B/);
   assert.match(page, /Both top fives change: H2O-Lightning-31B enters at #5 by composite/);
   assert.match(page, /H2O-Lightning-31B enters at #1 \(80.88\)/);
+  assert.match(page, /TypeSafe-20 cells for this row were measured on 22 Oct 2026 on the 600 sealed items with 0 errors; the TypeSafe-20 bank had previously been exposed to API providers/);
 });
