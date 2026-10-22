@@ -6332,6 +6332,51 @@
             "fact": "Pinned backbone config: model_type qwen3_5_text, bfloat16; the modification notice states the language-model weights were fine-tuned from Qwen/Qwen3.5-4B (author statement, unverified)."
           }
         ]
+      },
+      "drex-max": {
+        "arch": "closed-api",
+        "badges": {
+          "derivation": null,
+          "params": null,
+          "quant": null
+        },
+        "evidence": [
+          {
+            "url": "https://drex.nace.ai/docs/drex/reference/pricing",
+            "kind": "provider-docs",
+            "fact": "Nace AI vendor-hosted Drex Max API; public launch input tariff, output not billed; deployed model and serving stack not independently inspected."
+          }
+        ]
+      },
+      "launchables-myles-g-12b": {
+        "arch": "closed-api",
+        "badges": {
+          "derivation": null,
+          "params": null,
+          "quant": null
+        },
+        "evidence": [
+          {
+            "url": "https://www.launchables.ai/licensing",
+            "kind": "provider-docs",
+            "fact": "Launchables vendor-hosted Myles-G 12B API. Customer states merged LoRA on google/gemma-4-12B-it; deployed weights and serving stack not independently inspected."
+          }
+        ]
+      },
+      "iota-decide-4b": {
+        "arch": "open-llm-decoder",
+        "badges": {
+          "derivation": "fine-tune",
+          "params": "4B",
+          "quant": "bf16"
+        },
+        "evidence": [
+          {
+            "url": "https://huggingface.co/macrocosm-os/iota-decide-4b/blob/bd88855a7e3379468537e0142d5f0ada079aca41/README.md",
+            "kind": "model-card",
+            "fact": "Macrocosmos Clef joint-head 4B on Qwen/Qwen3.5-4B-Base; one forward pass, no generated tokens; measured on Verda A100 80 GB through a first-party bridge."
+          }
+        ]
       }
     },
     "imagejevbench": {

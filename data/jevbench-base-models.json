@@ -2034,6 +2034,32 @@
           }
         ],
         "checked_utc": "2026-10-21T00:00:00Z"
+      },
+      "drex-max": {
+        "label": "undisclosed",
+        "status": "undisclosed",
+        "sources": [],
+        "note": "No public base model declared; proprietary vendor-hosted API.",
+        "checked_utc": "2026-10-21T00:00:00Z"
+      },
+      "launchables-myles-g-12b": {
+        "label": "google/gemma-4-12B-it",
+        "status": "self-reported",
+        "sources": [],
+        "note": "Customer states merged LoRA on Gemma 4 12B; not independently verified.",
+        "checked_utc": "2026-10-21T00:00:00Z"
+      },
+      "iota-decide-4b": {
+        "label": "Qwen/Qwen3.5-4B-Base",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/macrocosm-os/iota-decide-4b/blob/bd88855a7e3379468537e0142d5f0ada079aca41/README.md",
+            "title": "Pinned model card",
+            "evidence": "Author declares Qwen/Qwen3.5-4B-Base and Cloudflare Clef joint-head distillation."
+          }
+        ],
+        "checked_utc": "2026-10-21T00:00:00Z"
       }
     },
     "imagejevbench": {

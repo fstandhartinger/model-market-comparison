@@ -1,0 +1,3 @@
+- r160-v1638-rebuild: v1.6.38 final candidate re-pinned to pricing_v15 a8a05890 and rebuilt (A: Drex priced, 22/40 lists change; C: no Drex, 0/40).
+- A gates on a PASS copy: tsc, release 12/12, targeted 208/208, build 538, full suite 3,569/3,568/0 fail, loaders, authority, repro, localcheck.
+- GO-card material in preview/ (card-v1638.png, CARD-DETAILS.md). Real review PENDING; no seal, push, PR or deploy.

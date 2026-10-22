@@ -1,0 +1,122 @@
+{
+ "carried_rows_preserved_except_ranks": 72,
+ "carried_scorer_point_estimates_reproduced": 69,
+ "files": {
+  "categories": {
+   "path": "data/raw/benchmarks/jevbench/v1.6/jevbench-v1.6.38-categories.json",
+   "sha256": "bfd4d0eb539c80568e2b534d6b8cda87dbe050ce27c6df373baa7a43cd03518b"
+  },
+  "history": {
+   "path": "data/raw/benchmarks/jevbench/v1.6/jevbench-v1.6.38-history.json",
+   "sha256": "5cd8c1332226ea9c179883d2285c0d8b8cc593ae38f2645197364a7ddd9c83c1"
+  },
+  "history-carry": {
+   "path": "data/raw/benchmarks/jevbench/v1.6/jevbench-v1.6.38-history-carry.json",
+   "sha256": "334e851944e92383ab3071e52b3012040c7023d0fe236395953169ebee8f0459"
+  },
+  "proof": {
+   "path": "data/raw/benchmarks/jevbench/v1.6/jevbench-v1.6.38-proof.json",
+   "sha256": "e3d6fbec64016a1af49e4cc909952abebaff78afe68b1926a6c58fe74fcdfc35"
+  },
+  "results": {
+   "path": "data/raw/benchmarks/jevbench/v1.6/jevbench-v1.6.38-results.json",
+   "sha256": "f708b267ea22e6af3ddb4fcb9bd292720f2f0c639d9ea6ca11f436f34c661c33"
+  }
+ },
+ "new_rows": {
+  "drex-max": {
+   "axes": {
+    "calibration": 89.56795021085651,
+    "cost": 55.336763284582396,
+    "intelligence": 78.89021516142793,
+    "speed": 89.80651018227358
+   },
+   "capability": 84.22908268614222,
+   "cost": {
+    "basis": "Launch list price: Drex Max public launch list tariff USD 0.06 per million input tokens, output not billed, https://drex.nace.ai/docs/drex/reference/pricing (saved copy sha256 95d1c429, fetched 21 Oct 2026 20:18 UTC; fetched again 22 Oct 2026 01:12 UTC with identical bytes). Counted as an operator standard launch list price by the frozen pricing module pricing_v15 (sha256 a8a05890ddab2d39d1a1bd543f2b5c83842bdc70aa54766788bc89b7a8a448d7), which now carries a launch-list-price line for this product. Applied to provider-reported usage; not a base-model estimate. COMMON COST BASIS (v1.6.30): common 1,485 items, excluding the 15 longest for every row; 762,693 input / 262,045 output tokens. All-item usage 1,942,633 input / 264,615 output over 1,500 items.",
+    "common_basis": {
+     "n_items": 1485,
+     "rule": "common",
+     "usd_per_1000_all_items": 0.07770532
+    },
+    "kind": "listed",
+    "usage_estimated_rows": 0,
+    "usd_per_1000": 0.030815878787878788
+   },
+   "ranks": {
+    "A": 4,
+    "B": 2,
+    "C": 4,
+    "capability": 3
+   },
+   "scores": {
+    "A": 75.40515618514833,
+    "B": 76.0773154141038,
+    "C": 75.40515618514833
+   }
+  },
+  "iota-decide-4b": {
+   "axes": {
+    "calibration": 84.8346261602328,
+    "cost": 62.97034212213745,
+    "intelligence": 29.414053145614563,
+    "speed": 87.4670144658746
+   },
+   "capability": 57.12433965292368,
+   "cost": {
+    "basis": "ESTIMATE (*est.), base-model market reference through the frozen pricing_v15 module (sha256 a8a05890ddab2d39d1a1bd543f2b5c83842bdc70aa54766788bc89b7a8a448d7): base Qwen/Qwen3.5-4B-Base priced as Qwen/Qwen3.5-4B -> deepinfra:Qwen/Qwen3.5-4B USD 0.030000000000000002/M input, USD 0.15/M output. Estimated, not charged, not a quote from the author or any host. Tokens as reported by the server usage block: 1,094,798 input on 1,500 answered items, 0 output tokens (one forward pass, joint-head readout, no generation). COMMON COST BASIS (v1.6.30): common 1,485 items, excluding the 15 longest for every row; 849,038 input / 0 output tokens. All-item usage 1,094,798 input / 0 output over 1,500 items.",
+    "common_basis": {
+     "n_items": 1485,
+     "rule": "common",
+     "usd_per_1000_all_items": 0.021895960000000003
+    },
+    "kind": "estimate",
+    "usage_estimated_rows": 0,
+    "usd_per_1000": 0.017152282828282833
+   },
+   "ranks": {
+    "A": 45,
+    "B": 46,
+    "C": 45,
+    "capability": 47
+   },
+   "scores": {
+    "A": 18.937474020302744,
+    "B": 16.15725640426057,
+    "C": 13.151023625210243
+   }
+  },
+  "launchables-myles-g-12b": {
+   "axes": {
+    "calibration": 84.04872871623093,
+    "cost": 57.35738348807602,
+    "intelligence": 57.25409127121432,
+    "speed": 85.64932567577961
+   },
+   "capability": 70.65140999372262,
+   "cost": {
+    "basis": "ESTIMATE, nearest-listed-sibling reference: declared base google/gemma-4-12B-it is UNLISTED in frozen pricing_v15 (sha256 a8a05890ddab2d39d1a1bd543f2b5c83842bdc70aa54766788bc89b7a8a448d7); no exact base reference exists. Same-base published precedents arcbright-elf-1-12b, chon-1.0-12b and metask_jev_rain_12b_trained use google/gemma-3-12b-it, USD 0.05/M input and 0.15/M output. This row uses that same sibling ESTIMATE, not a vendor bill or quote. Launchables list price GBP 0.0015 per million input tokens, output free, is shown for information and is not used for the Cost axis. Applied to provider-reported usage. COMMON COST BASIS (v1.6.30): common 1,485 items, excluding the 15 longest for every row; 779,294 input / 1,485 output tokens. All-item usage 989,607 input / 1,500 output over 1,500 items.",
+    "common_basis": {
+     "n_items": 1485,
+     "rule": "common",
+     "usd_per_1000_all_items": 0.033136900000000004
+    },
+    "kind": "estimate",
+    "usage_estimated_rows": 0,
+    "usd_per_1000": 0.02638885521885522
+   },
+   "ranks": {
+    "A": 15,
+    "B": 20,
+    "C": 19,
+    "capability": 25
+   },
+   "scores": {
+    "A": 68.40656153142275,
+    "B": 65.84152005408374,
+    "C": 62.28856307389066
+   }
+  }
+ },
+ "variant": "A"
+}

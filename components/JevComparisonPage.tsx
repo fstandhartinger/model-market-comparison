@@ -14,7 +14,7 @@ export async function JevComparisonPage({rivalKey,path,label}: {rivalKey:string;
   const pair = data.comparisons.find((p) => p.key === rivalKey);
   if (!pair) throw new Error(`No published comparison for ${rivalKey}`);
   const {jev,rival} = pair;
-  const status = pair.inCurrentRelease ? `${rival.board === 'api' ? 'API offering, ranked on the API leaderboard' : rival.rank == null ? 'Outside the Capability caps' : `Rank #${rival.rank} on the open-weights board`} in ${data.artifact.revision}` : `Not in the current release ranking; last published measurement: ${rival.measurement_revision}, ${rival.last_measured_on ?? 'date not published'}`;
+  const status = pair.inCurrentRelease ? `${rival.board === 'api' ? boardRankText(rival) : rival.rank == null ? 'Outside the Capability caps' : `Rank #${rival.rank} on the open-weights board`} in ${data.artifact.revision}` : `Not in the current release ranking; last published measurement: ${rival.measurement_revision}, ${rival.last_measured_on ?? 'date not published'}`;
   const faq = [
     {question: `What does JevBench show for Jev and ${label}?`, answer: `Jev 1.13.0 has Capability ${one(jev.capability)} and is the unranked reference (the open-weights board ranks ${data.ranked.length} open-weights systems; hosted API offerings are ranked on the API leaderboard). ${rival.display} has Capability ${one(rival.capability)}. ${status}. Historical scores use their original method and are not ranked against the current release.`},
     {question: 'How does Capability differ from Composite?', answer: 'Capability is the mean of Intelligence and Calibration; headline ranks require both official cost and median-latency caps. Composite additionally scores Speed and Cost and is secondary.'},

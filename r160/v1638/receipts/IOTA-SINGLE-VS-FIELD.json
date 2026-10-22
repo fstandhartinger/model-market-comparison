@@ -1,0 +1,55 @@
+{
+ "single_row": {
+  "axes": {
+   "calibration": 84.8346261602328,
+   "cost": 59.78908026926491,
+   "intelligence": 29.414053145614563,
+   "speed": 87.4670144658746
+  },
+  "scores": {
+   "A": 18.721070415526594,
+   "B": 16.03077580679805,
+   "C": 13.000743344115694
+  },
+  "capability": 57.12433965292368,
+  "cost": {
+   "basis": "ESTIMATE (*est.), base-model market reference through the frozen pricing_v15 module (sha256 1f4d1f7b1ce97ab27b938043444b9c2757e4a9dbecc799a803122588401f5bf1): base Qwen/Qwen3.5-4B-Base priced as Qwen/Qwen3.5-4B -> deepinfra:Qwen/Qwen3.5-4B 0.03/0.15 per M. Estimated, not charged, not a quote from the author or any host. Tokens as reported by the server usage block: 1,094,798 input on 1,500 answered items, 0 output tokens (one forward pass, joint-head readout, no generation).",
+   "common_basis": null,
+   "kind": "estimate",
+   "usage_estimated_rows": 0,
+   "usd_per_1000": 0.021895960000000003
+  }
+ },
+ "field": {
+  "axes": {
+   "calibration": 84.8346261602328,
+   "cost": 62.97034212213745,
+   "intelligence": 29.414053145614563,
+   "speed": 87.4670144658746
+  },
+  "capability": 57.12433965292368,
+  "cost": {
+   "basis": "ESTIMATE (*est.), base-model market reference through the frozen pricing_v15 module (sha256 1f4d1f7b1ce97ab27b938043444b9c2757e4a9dbecc799a803122588401f5bf1): base Qwen/Qwen3.5-4B-Base priced as Qwen/Qwen3.5-4B -> deepinfra:Qwen/Qwen3.5-4B USD 0.030000000000000002/M input, USD 0.15/M output. Estimated, not charged, not a quote from the author or any host. Tokens as reported by the server usage block: 1,094,798 input on 1,500 answered items, 0 output tokens (one forward pass, joint-head readout, no generation). COMMON COST BASIS (v1.6.30): common 1,485 items, excluding the 15 longest for every row; 849,038 input / 0 output tokens. All-item usage 1,094,798 input / 0 output over 1,500 items.",
+   "common_basis": {
+    "n_items": 1485,
+    "rule": "common",
+    "usd_per_1000_all_items": 0.021895960000000003
+   },
+   "kind": "estimate",
+   "usage_estimated_rows": 0,
+   "usd_per_1000": 0.017152282828282833
+  },
+  "ranks": {
+   "A": 45,
+   "B": 46,
+   "C": 45,
+   "capability": 47
+  },
+  "scores": {
+   "A": 18.937474020302744,
+   "B": 16.15725640426057,
+   "C": 13.151023625210243
+  }
+ },
+ "explanation": "I/C/S identical. Single-row used all 1,500 items for cost; field release uses unchanged v1.6.30 common 1,485-item basis. Bootstrap seeds differ with sorted full-field roster; point estimates do not depend on seed."
+}

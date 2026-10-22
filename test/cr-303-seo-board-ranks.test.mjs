@@ -28,6 +28,8 @@ test('SEO rank is the open-weights board rank; API rows and the reference have n
 
 test('boardRankText words reference, API and open rows', () => {
   assert.equal(boardRankText({ board: 'reference', rank: null }), 'Reference, not ranked');
+  assert.equal(boardRankText({ board: 'api', rank: null, ranked: false }), 'API offering, listed but not ranked');
+  assert.equal(boardRankText({ board: 'api', rank: null, ranked: false }, 'de'), 'API-Angebot, gelistet, nicht gerankt');
   assert.match(boardRankText({ board: 'api', rank: null }), /API leaderboard/);
   assert.equal(boardRankText({ board: 'open', rank: 3 }), 'Rank #3 (open-weights board)');
   assert.match(boardRankText({ board: 'api', rank: null }, 'de'), /API-Leaderboard/);
