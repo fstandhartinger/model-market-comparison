@@ -19,6 +19,15 @@
    ],
    "reason": "TEMPORARY: basal-omni-1.0-ultra was measured on the ImageJevBench v0.3 core pool on one rented H200 on 17 Oct 2026; the TypeSafe-20 bank (600 sealed items) was not run in that session and the pod is gone, so a follow-up release adds the TypeSafe-20 cells and removes this entry.",
    "decision": "board #20750 (DECISIONS 2026-10-17 11:05 UTC, release-owner Agent §3 decision, jevbench-release-adopted-rows-20261008)"
+  },
+  {
+   "board": "imagejevbench",
+   "key": "h2o_lightning_31b_image",
+   "dims": [
+    "typesafe"
+   ],
+   "reason": "TEMPORARY: H2O-Lightning-31B was measured on the ImageJevBench v0.3 core pool on 22 Oct 2026; the TypeSafe-20 bank was not run in this pod session. A follow-up adds those cells and removes this entry.",
+   "decision": "board #23774 (owner AGENTS §3 decision, 22 Oct 2026, on routine ask #23649; same shape as basal_omni_1_0_ultra #20750 and drex_max #23336/#23339)"
   }
  ]
 }

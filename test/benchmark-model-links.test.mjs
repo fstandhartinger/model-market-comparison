@@ -57,7 +57,7 @@ test('every internal link on the benchmark pages opens a page or an element that
     assert.deepEqual(broken, [], `broken links:\n${broken.join('\n')}`);
     assert.ok(modelLinks >= 50, `the crawl must see the model links (found ${modelLinks})`);
     // v0.3.0: measured rows plus the dated v0.1.5 carries that keep their v0.1.5 detail page (CR-333: + Wity-1 reasoning off -> 56; CR-414: + 2 Liquid rows -> 58; CR-459: + H2O-Lightning-4B image -> 59; CR-482: + 2 Jev + images rows, - s1-vision -> 60; CR-496: + Sage 1.4 + images -> 61; CR-497 (kettei): + kettei-fat, kettei-chub -> 63; CR-500 (celeris): + Celeris-1 Decision -> 64; CR-506 (basal): + basal-omni-1.0-ultra -> 65).
-    assert.equal(imageSystemDetails, 66, `CR-254: every ImageJev system has a working detail page (found ${imageSystemDetails})`);
+    assert.equal(imageSystemDetails, 67, `CR-254: every ImageJev system has a working detail page (found ${imageSystemDetails})`);
   } finally {
     server.kill('SIGTERM');
   }
