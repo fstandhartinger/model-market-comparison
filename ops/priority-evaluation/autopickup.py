@@ -161,22 +161,27 @@ OWNED_HOLD_STATE_FRESH = timedelta(hours=6)
 OWNER_JOB_RE = re.compile(r"[a-z0-9][a-z0-9-]{2,100}")
 
 
-def owner_job_live(owner: object, now: datetime) -> bool:
-    """A named owner job counts as live when its unit runs or its STATE.md moved recently without FINAL DONE."""
+def owner_job_live(owner: object, rid: str, now: datetime) -> bool:
+    """A named owner job counts as live for an order when its STATE.md names the order, does not end with
+    FINAL DONE, and either moved recently or belongs to a running unit. Any doubt counts as not live."""
     if not isinstance(owner, str) or not OWNER_JOB_RE.fullmatch(owner):
         return False
     state_path = HOME / "jobs" / owner / "STATE.md"
     try:
-        lines = [line.strip() for line in state_path.read_text(encoding="utf-8", errors="replace").splitlines() if line.strip()]
+        text = state_path.read_text(encoding="utf-8", errors="replace")
         mtime = datetime.fromtimestamp(state_path.stat().st_mtime, tz=timezone.utc)
     except OSError:
         return False
-    if lines and lines[-1] == "- FINAL DONE":
+    lines = [line.strip() for line in text.splitlines() if line.strip()]
+    if (lines and lines[-1] == "- FINAL DONE") or rid[:8] not in text:
         return False
     if now - mtime <= OWNED_HOLD_STATE_FRESH:
         return True
-    result = subprocess.run(["systemctl", "--user", "is-active", f"{owner}.service"], text=True,
-                            capture_output=True, timeout=15, check=False)
+    try:
+        result = subprocess.run(["systemctl", "--user", "is-active", f"{owner}.service"], text=True,
+                                capture_output=True, timeout=15, check=False)
+    except (OSError, subprocess.SubprocessError):
+        return False
     return result.stdout.strip() == "active"
 
 # Operational holds that clear themselves: transient infrastructure causes retry the
@@ -4106,7 +4111,8 @@ def health(effects: Effects) -> dict[str, Any]:
         # listed, not alerted; a dead owner or a near deadline still alerts (under its own key, so the
         # earlier 24 h dedupe of the eval: key cannot swallow the deadline warning).
         owned_run = (not active_hold(row) and not planned_review and isinstance(operational, dict)
-                     and operational.get("transient") is False and owner_job_live(operational.get("owner"), now))
+                     and operational.get("transient") is False and operational.get("reason")
+                     and owner_job_live(operational.get("owner"), rid, now))
         owned_quiet = owned_run and deadline_for(row) - now > OWNED_HOLD_DEADLINE_MARGIN
         if active_hold(row) or planned_review or owned_quiet:
             held_orders.append({"order": ref, "kind": "customer" if active_hold(row) else

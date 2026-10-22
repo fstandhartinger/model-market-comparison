@@ -19,7 +19,8 @@ class Health(unittest.TestCase):
   def load(rid):
    if self.state is None:raise ValueError('corrupt')
    return copy.deepcopy(self.state)
-  self.ns=dict(Any=object,Effects=object,datetime=dt.datetime,timedelta=dt.timedelta,utcnow=lambda:NOW,iso=lambda d:d.isoformat(),PICKUP_TIMERS=[],WORKER_UNIT='worker',MAIL_WATCH_UNIT='mail',systemd_last_success=lambda *a:NOW,managed_predicate=lambda *a:'TRUE',JOB_ROOT=Path('/fake'),TABLE='fake',row_json_sql=lambda *a:'fake',sql_rows=lambda *a:[self.row],request_id=lambda r:r,order_ref=lambda r:r[:8],parse_ts=lambda v:dt.datetime.fromisoformat(v) if v else None,active_hold=lambda r:bool(r.get('customer_hold_started_at')),load_state=load,PickupError=ValueError,deadline_for=lambda r:dt.datetime.fromisoformat(r['paid_at'])+dt.timedelta(hours=48),STATE_ROOT=Path('/nonexistent-fixture'),json=json,ALERT_REPEAT=dt.timedelta(hours=24))
+  self.ns=dict(Any=object,Effects=object,datetime=dt.datetime,timedelta=dt.timedelta,utcnow=lambda:NOW,iso=lambda d:d.isoformat(),PICKUP_TIMERS=[],WORKER_UNIT='worker',MAIL_WATCH_UNIT='mail',systemd_last_success=lambda *a:NOW,managed_predicate=lambda *a:'TRUE',JOB_ROOT=Path('/fake'),TABLE='fake',row_json_sql=lambda *a:'fake',sql_rows=lambda *a:[self.row],request_id=lambda r:r,order_ref=lambda r:r[:8],parse_ts=lambda v:dt.datetime.fromisoformat(v) if v else None,active_hold=lambda r:bool(r.get('customer_hold_started_at')),load_state=load,PickupError=ValueError,deadline_for=lambda r:dt.datetime.fromisoformat(r['paid_at'])+dt.timedelta(hours=48),STATE_ROOT=Path('/nonexistent-fixture'),json=json,ALERT_REPEAT=dt.timedelta(hours=24),owner_job_live=lambda owner,rid,now:owner in self.live,OWNED_HOLD_DEADLINE_MARGIN=dt.timedelta(hours=12))
+  self.live=set()
   tree=ast.parse((ROOT/'ops/priority-evaluation/autopickup.py').read_text());nodes=[n for n in tree.body if isinstance(n,ast.FunctionDef) and n.name in ['health','step','step_done']]
   exec(compile(ast.Module(body=nodes,type_ignores=[]),'actual-health','exec'),self.ns)
   self.effects=SimpleNamespace(dry_run=True,notify=lambda text:True)
@@ -42,6 +43,12 @@ class Health(unittest.TestCase):
  def test_planned_hold_at_or_after_deadline_still_alarms(self):
   for now in [dt.datetime(2026,10,9,23,31,27,tzinfo=dt.timezone.utc),dt.datetime(2026,10,10,tzinfo=dt.timezone.utc)]:
    self.ns["utcnow"]=lambda:now;self.ns["systemd_last_success"]=lambda *a:now;r=self.call();self.assertIn("evaluation not running",r["problems"][0]);self.assertFalse(r["held_orders"][0]["sla_paused"])
+ def test_owned_live_hold_listed_until_twelve_hours_before_deadline(self):
+  self.row['id']='5fa1a5f0-dc7d-4eca-bbe2-b9d73051c70d';self.state['operational_hold']=dict(reason='official_method_retired_requires_admission',owner='fastlane-holds-x',transient=False)
+  r=self.call();self.assertEqual(r['problems'][0][:30],'order 5fa1a5f0: evaluation not');self.assertEqual(r['held_orders'],[])
+  self.live={'fastlane-holds-x'};r=self.call();self.assertEqual(r['problems'],[]);self.assertEqual(r['held_orders'][0]['kind'],'owned_manual_run')
+  now=dt.datetime(2026,10,9,12,tzinfo=dt.timezone.utc);self.ns["utcnow"]=lambda:now;self.ns["systemd_last_success"]=lambda *a:now;r=self.call();self.assertIn('under 12 h to the deadline',r['problems'][0]);self.assertEqual(r['held_orders'],[])
+  self.state['operational_hold']['transient']=True;self.assertNotIn('under 12 h',self.call()['problems'][0])
  def test_corrupt_state_fails_closed(self):
   self.state=None;r=self.call();self.assertEqual(len(r['problems']),2);self.assertIn('pickup state is unreadable',r['problems'][0])
 unittest.main()
