@@ -1,0 +1,80 @@
+{
+  "started_at": "2026-10-23T02:57:59.787Z",
+  "mode": "critic",
+  "requested_model": "chutes/moonshotai/Kimi-K3-TEE",
+  "producers": [
+    "z-ai/glm-5.3-flash"
+  ],
+  "qualification": {
+    "id": "chutes/moonshotai/Kimi-K3-TEE",
+    "family": "moonshotai",
+    "free": true,
+    "input_per_1m": 0,
+    "output_per_1m": 0,
+    "context": null,
+    "aa_intelligence_index": 43.6,
+    "aa_source": "exact_variant",
+    "matched_model_ids": [
+      "kimi-k3::max"
+    ],
+    "aa_variant_scores": [
+      {
+        "id": "kimi-k3::max",
+        "index": 43.6
+      }
+    ],
+    "transport": "router",
+    "router_model": "fw-kimi-k3",
+    "provider_model": "moonshotai/Kimi-K3-TEE",
+    "reasoning_effort": "max",
+    "allowed_as": "moonshotai/kimi-k3",
+    "healthy": true
+  },
+  "input_sha256": "b87499fd77adc3093e45cd190054d665c851a21d4a78901a3ca5d8c57c0691cd",
+  "route": "router:fw-kimi-k3",
+  "attempt": 1,
+  "free_route_role": "critic",
+  "free_routes_offered": [
+    "chutes/moonshotai/Kimi-K3-TEE"
+  ],
+  "excluded_models": [],
+  "hard_excluded_models": [],
+  "catalog": {
+    "source": "run-cache",
+    "fetched_at": "2026-10-23T02:41:30.035Z"
+  },
+  "request_limits": {
+    "max_tokens": 32768,
+    "timeout_seconds": 600,
+    "input_bytes": 26845
+  },
+  "reasoning": {
+    "effort": "max"
+  },
+  "ignored_providers": [],
+  "response_format_mode": "json_object",
+  "response_schema_sha256": "376bde7986cc2f8fd182f04e745c607933760bea7c306ea6e8e992b7f70be25a",
+  "images": [],
+  "actual_model": "moonshotai/Kimi-K3-TEE",
+  "usage": {
+    "completion_tokens": 2935,
+    "prompt_tokens": 6267,
+    "total_tokens": 9202,
+    "completion_tokens_details": {
+      "reasoning_tokens": 2256,
+      "text_tokens": 679
+    },
+    "prompt_tokens_details": {
+      "cached_tokens": 512
+    },
+    "cost": 0
+  },
+  "finish_reason": "stop",
+  "transport": "router",
+  "router_model": "fw-kimi-k3",
+  "price_context": "Free route behind the local router (Chutes under the owner's arrangement); cost recorded as $0.",
+  "provider": "chutes (via local router)",
+  "session_id": null,
+  "finished_at": "2026-10-23T03:00:25.263Z",
+  "output_sha256": "50c492ac37b630eda57dda610fef73d62f84138c7b9e81fd162c12bd88b8b442"
+}

@@ -1,0 +1,44 @@
+{
+  "artifact_id": "protocol-weirdml-2",
+  "artifact_sha256": "6bd60c5766dad9d19f8ad87594eec4ade45889654f1ab0b2516e23568e5c4ae7",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": ["weirdml::2", "c1", "c2"],
+  "errors_found": 4,
+  "findings": [
+    {
+      "id": "c1-version-mismatch",
+      "severity": "blocker",
+      "location": "row weirdml::2 -> version, version_guard",
+      "evidence": "Protocol SOURCE 1 states 'WeirdML v3' and lists 'Previous versions: WeirdML v2 · WeirdML v1'; row version is '2' and version_guard says 'Verify the published version 2 before reading results.'",
+      "repair": "Update version and version_guard to the current published version (v3) or correct the board identity; re-evaluate metric and description against the v3 protocol."
+    },
+    {
+      "id": "c1-metric-mismatch",
+      "severity": "major",
+      "location": "row weirdml::2 -> scoring.metric",
+      "evidence": "Protocol SOURCE 1 defines official score as '80% normalized area under its line on a logarithmic token axis, plus 20% of its final value' with '11 tasks' and '15 configurations'; row metric says 'Average Max Accuracy ... averaged over all 17 tasks'. The protocol also says effective scores are not raw accuracy.",
+      "repair": "Replace the metric with the protocol's official score definition and correct the task count to 11."
+    },
+    {
+      "id": "c1-description-mismatch",
+      "severity": "minor",
+      "location": "row weirdml::2 -> description",
+      "evidence": "Protocol describes tasks as 'develop machine learning and data analysis pipelines' with '11 complex hand-made tasks'; row description says 'write, run, and iteratively improve PyTorch code under fixed compute and time limits', which is not supported by the protocol text.",
+      "repair": "Align the description with the protocol's wording and task count."
+    },
+    {
+      "id": "c2-status-superseded-mismatch",
+      "severity": "major",
+      "location": "row weirdml::2 -> status, superseded_by",
+      "evidence": "Protocol SOURCE 1 identifies the current board as 'WeirdML v3' and lists 'WeirdML v2' under 'Previous versions', indicating v2 is replaced; row status is 'active' and superseded_by is null. The protocol names the successor board, so superseded_by cannot be null.",
+      "repair": "Set status to 'retained' and populate superseded_by with our registry id for the v3 successor board (e.g., 'weirdml::3'), or correct the board identity if this row is intended to be v3."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "The generated activity summary (SOURCE 2) reports 2 changed values for this board's source field, which per c2 could support 'active'; however the protocol text clearly marks v2 as a previous version, so the status and superseded_by still contradict the protocol.",
+    "The packet does not contain the raw CSV payload, so I could not independently verify the served value bounds; SOURCE 3 gives lowest/highest within the row's range [0,100], so no unit/range mismatch is asserted."
+  ],
+  "missing_evidence": []
+}

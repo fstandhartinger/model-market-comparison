@@ -3,7 +3,7 @@
   "basis": "measured",
   "interpretation": "benchmark_proxy",
   "caveat": "AA Intelligence Index benchmark token accounting. Ratios are BENCHMARK PROXIES, never typical user I/O usage; usage ratios must come from OpenRouter/Chutes sources.",
-  "collected_at": "2026-10-20T05:29:00.378Z",
+  "collected_at": "2026-10-23T02:38:32.048Z",
   "source_url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
   "data_fields": {
     "tokens_per_task": "intelligenceIndexOutputTokensPerTask {reasoning, answer, output} (measured)",
@@ -13,18 +13,18 @@
   "attempts": [
     {
       "url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
-      "fetched_at": "2026-10-20T05:28:59.920Z",
+      "fetched_at": "2026-10-23T02:38:31.068Z",
       "http_status": 200,
-      "bytes": 4357211,
-      "sha256": "42cd33958c54768a976dfdf1ffcbddccfe4d73e042838f6d312e060d3c2341ed"
+      "bytes": 4374309,
+      "sha256": "6ffccb2c313b10941f2fef0022b8213365b52b5b16e5dee17f6675e33f9d601c"
     }
   ],
   "coverage": {
-    "published_rows": 218,
-    "scored_denominator": 696,
+    "published_rows": 219,
+    "scored_denominator": 697,
     "denominator_source": "Leaderboard rows carrying a finite intelligenceIndex inside the same model-page Flight payload"
   },
-  "count": 218,
+  "count": 219,
   "rows": [
     {
       "source_id": "8215372b-66ff-457b-855e-e8abeafc9571",
@@ -3354,20 +3354,42 @@
       "name": "Ling 3.1 Flash",
       "variant": null,
       "tokens_per_task": {
-        "reasoning": 66992.4896987435,
-        "answer": 34994.746732624466,
-        "output": 101987.23643136797
+        "reasoning": 67067.84106237987,
+        "answer": 35135.228096260835,
+        "output": 102203.0691586407
       },
       "canonical_token_counts": {
-        "input": 9000777943,
-        "output": 220509377,
-        "answer": 50843541,
-        "reasoning": 169665836
+        "input": 9049497285,
+        "output": 220984209,
+        "answer": 51152600,
+        "reasoning": 169831609
       },
       "derived": {
         "basis": "derived",
-        "input_output_ratio": 40.81811878231373,
-        "reasoning_output_share": 0.6568713109882717
+        "input_output_ratio": 40.950877557952566,
+        "reasoning_output_share": 0.6562213993620528
+      }
+    },
+    {
+      "source_id": "539ed227-38f4-4bea-a015-117057c14b18",
+      "slug": "ling-3-1-flash-1019",
+      "name": "Ling 3.1 Flash 1019",
+      "variant": null,
+      "tokens_per_task": {
+        "reasoning": 93313.39477726251,
+        "answer": 51511.89885579588,
+        "output": 144825.29363305838
+      },
+      "canonical_token_counts": {
+        "input": 14134919467,
+        "output": 346800677,
+        "answer": 70934651,
+        "reasoning": 275866026
+      },
+      "derived": {
+        "basis": "derived",
+        "input_output_ratio": 40.75805038581283,
+        "reasoning_output_share": 0.6443169727912945
       }
     },
     {
@@ -3992,20 +4014,20 @@
       "name": "Muse Spark Open (Xhigh)",
       "variant": "xhigh",
       "tokens_per_task": {
-        "reasoning": 18397.715383937586,
-        "answer": 21937.346590321253,
-        "output": 40335.06197425884
+        "reasoning": 18399.797202119404,
+        "answer": 21999.167044866703,
+        "output": 40398.96424698611
       },
       "canonical_token_counts": {
-        "input": 2957750729,
-        "output": 106041181,
-        "answer": 32180422,
-        "reasoning": 73860759
+        "input": 2961207275,
+        "output": 106181766,
+        "answer": 32316427,
+        "reasoning": 73865339
       },
       "derived": {
         "basis": "derived",
-        "input_output_ratio": 27.89247253856971,
-        "reasoning_output_share": 0.4561221548557109
+        "input_output_ratio": 27.888095918464945,
+        "reasoning_output_share": 0.4554522014383596
       }
     },
     {

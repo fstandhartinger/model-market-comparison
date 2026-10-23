@@ -1,7 +1,7 @@
 {
   "source": "Nebius Token Factory — tokenfactory.nebius.com/api/public/models_info (first-party, public catalog)",
   "region": "mixed (eu-north1 / eu-west2 / us-central1 / uk-south1)",
-  "collected_at": "2026-10-22",
+  "collected_at": "2026-10-23",
   "listing_url": "https://tokenfactory.nebius.com/models",
   "method": "scripts/fetch-nebius-catalog.mjs: one GET of the public catalog (allowed by robots.txt); prices are flavors[].input/output_price_per_million_tokens in native USD; region from flavors[].regions[].country_code (EU member state → eu, US → us, UK → uk); non-chat types and zero-output-price rows (embeddings) omitted; curated model_name/provider_org carried over by exact model_id; new ids marked mapping=derived; catalog status kept per row. See nebius.method.md.",
   "models": [
@@ -15,6 +15,18 @@
       "context_length": 1048000,
       "status": "active",
       "notes": "flavor: cheap; served region: us-north1 (US); id deepseek-ai/DeepSeek-V4.1-Flash"
+    },
+    {
+      "model_name": "DeepSeek V4.1 Flash 1017",
+      "provider_org": "DeepSeek",
+      "input_per_1m_usd": 0.3,
+      "output_per_1m_usd": 1.2,
+      "region": "eu",
+      "model_id": "deepseek-ai/DeepSeek-V4.1-Flash-1017",
+      "context_length": 1048000,
+      "status": "active",
+      "notes": "flavor: cheap; served region: eu-north1 (FI); id deepseek-ai/DeepSeek-V4.1-Flash-1017",
+      "mapping": "derived"
     },
     {
       "model_name": "DeepSeek V4 Flash 0731",
@@ -302,12 +314,14 @@
       "notes": "flavor: cheap; served region: us-north1 (US); id zai-org/GLM-5.3-Flash"
     }
   ],
-  "response_sha256": "6e628d556c4600efc522b594e0f7477c4e01d6509026b4de8eb050ae6ad14533",
+  "response_sha256": "e04a4c9d8aa9f588a4984d4f94251d5e454bd785405776e3f6c2eac08b81d67d",
   "skipped": [
     "Qwen/Qwen3-Embedding-8B"
   ],
   "diff": {
-    "added": [],
+    "added": [
+      "deepseek-ai/DeepSeek-V4.1-Flash-1017"
+    ],
     "removed": [],
     "price_changed": [],
     "region_changed": []

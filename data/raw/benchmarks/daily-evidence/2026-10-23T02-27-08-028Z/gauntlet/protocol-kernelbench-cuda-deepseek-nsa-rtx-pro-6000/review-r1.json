@@ -1,0 +1,29 @@
+{
+  "artifact_id": "protocol-kernelbench-cuda-deepseek-nsa-rtx-pro-6000",
+  "artifact_sha256": "106e3ed5770f2399032cd76ef25ac0ad13ad843f58eaa616992a43c991185a9c",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": [
+    "kernelbench-cuda-deepseek-nsa::rtx-pro-6000",
+    "c1",
+    "c2"
+  ],
+  "errors_found": 1,
+  "findings": [
+    {
+      "id": "notes-ranked-list-muse-04",
+      "severity": "minor",
+      "location": "row kernelbench-cuda-deepseek-nsa::rtx-pro-6000, scoring.notes",
+      "evidence": "Note claims the published per_problem ranked list 'still holds the two audited-but-excluded cells', including 'the bug muse/muse-spark-1.3 [ultra] cell on 04 (0.2056)'. Primary evidence (SOURCE 2) contradicts this: muse/muse-spark-1.3 04_grid_mingru_sps record is correct:false, peak_fraction:null, annotation_verdict:'bug', and ranked_passes['04_grid_mingru_sps'] contains no muse/muse-spark-1.3 entry and no 0.2056 value anywhere. As the same note states, correct:false cells are absent from the ranked list, so this muse cell is excluded, not 'still held'. Only the suspect kinetic-claude/kinetic-0715[1m] cell on 03 (0.0622) is actually present in the ranked list.",
+      "repair": "Revise the note to state the ranked list holds only the suspect kinetic-claude/kinetic-0715[1m] 03 cell (0.0622); the muse/muse-spark-1.3 [ultra] 04 cell (correct:false, pid bug, peak_fraction null) is absent from the ranked list like other correct:false cells, and the 0.2056 figure (nonexistent in the payload) should be removed."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "version_status:'published' with version 'rtx-pro-6000': the protocol publishes no explicit board release-identifier field (leaderboard.json has schema_version 1 and SPEC.md 'Perfect stack (v1)', neither clearly a board release identifier). I treat the published hardware name 'RTX PRO 6000' as the identifier the row copies, so I did not flag 'published', but this is a judgement call with only weak support.",
+    "I cannot execute SHA-256, transport or qualification checks; I relied on the owner-provided row hash (89afb963...) and echoed the supplied artifact hash.",
+    "The note's phrase 'one unlimited agent session per cell' is not explicitly supported by the SPEC.md excerpt (which does show a single-run harness), but it is not contradicted by the payload; treated as unverified prose rather than a finding.",
+    "The conflict between the note's 'two audited-but-excluded cells held in the ranked list' claim and the evidence is captured as finding notes-ranked-list-muse-04; the suspect-cell portion of that claim is accurate."
+  ],
+  "missing_evidence": []
+}

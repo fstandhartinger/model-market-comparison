@@ -1,6 +1,6 @@
 {
   "source": "Chutes — llm.chutes.ai/v1/models (first-party, public catalog)",
-  "collected_at": "2026-10-22",
+  "collected_at": "2026-10-23",
   "method": "scripts/fetch-chutes-catalog.mjs: one GET of the public catalog; prices are price.{input,output,input_cache_read}.usd per 1M tokens; curated model_name/provider_org carried over by exact tee_model_id; new ids marked mapping=derived. See chutes.method.md.",
   "models": [
     {
@@ -12,6 +12,17 @@
       "context_length": 131072,
       "confidential_compute": true,
       "tee_model_id": "google/gemma-4-31B-turbo-TEE"
+    },
+    {
+      "model_name": "Kimi-K2.6",
+      "provider_org": "Moonshot AI",
+      "input_per_1m_usd": 0.45,
+      "output_per_1m_usd": 1.95,
+      "cache_read_per_1m_usd": 0.045,
+      "context_length": 262144,
+      "confidential_compute": true,
+      "tee_model_id": "moonshotai/Kimi-K2.6-TEE",
+      "notes": "2026-08-26: price cut 0.66/3.5->0.58/3.4 (live llm.chutes.ai)."
     },
     {
       "model_name": "Qwen3.8 27B",
@@ -35,27 +46,6 @@
       "tee_model_id": "deepseek-ai/DeepSeek-V3.2-TEE"
     },
     {
-      "model_name": "Qwen3.6-27B",
-      "provider_org": "Alibaba",
-      "input_per_1m_usd": 0.25,
-      "output_per_1m_usd": 2,
-      "cache_read_per_1m_usd": 0.025,
-      "context_length": 262144,
-      "confidential_compute": true,
-      "tee_model_id": "Qwen/Qwen3.6-27B-TEE"
-    },
-    {
-      "model_name": "Kimi-K2.6",
-      "provider_org": "Moonshot AI",
-      "input_per_1m_usd": 0.45,
-      "output_per_1m_usd": 1.95,
-      "cache_read_per_1m_usd": 0.045,
-      "context_length": 262144,
-      "confidential_compute": true,
-      "tee_model_id": "moonshotai/Kimi-K2.6-TEE",
-      "notes": "2026-08-26: price cut 0.66/3.5->0.58/3.4 (live llm.chutes.ai)."
-    },
-    {
       "model_name": "GLM-5.1",
       "provider_org": "Z.ai",
       "input_per_1m_usd": 0.98,
@@ -76,15 +66,14 @@
       "tee_model_id": "Qwen/Qwen3.5-397B-A17B-TEE"
     },
     {
-      "model_name": "DeepSeek V4 Flash 0731",
-      "provider_org": "DeepSeek",
-      "input_per_1m_usd": 0.44,
-      "output_per_1m_usd": 1.32,
-      "cache_read_per_1m_usd": 0.044,
+      "model_name": "Qwen3.6-27B",
+      "provider_org": "Alibaba",
+      "input_per_1m_usd": 0.25,
+      "output_per_1m_usd": 2,
+      "cache_read_per_1m_usd": 0.025,
+      "context_length": 262144,
       "confidential_compute": true,
-      "context_length": 1048576,
-      "tee_model_id": "deepseek-ai/DeepSeek-V4-Flash-0731-TEE",
-      "notes": "Added 2026-08-26 from llm.chutes.ai"
+      "tee_model_id": "Qwen/Qwen3.6-27B-TEE"
     },
     {
       "model_name": "GLM-5.2",
@@ -96,6 +85,17 @@
       "confidential_compute": true,
       "tee_model_id": "zai-org/GLM-5.2-TEE",
       "notes": " | 2026-07-31: price cut 1.40/4.40->1.25/3.95, cache-read 0.625 (live llm.chutes.ai)."
+    },
+    {
+      "model_name": "DeepSeek V4 Flash 0731",
+      "provider_org": "DeepSeek",
+      "input_per_1m_usd": 0.44,
+      "output_per_1m_usd": 1.32,
+      "cache_read_per_1m_usd": 0.044,
+      "confidential_compute": true,
+      "context_length": 1048576,
+      "tee_model_id": "deepseek-ai/DeepSeek-V4-Flash-0731-TEE",
+      "notes": "Added 2026-08-26 from llm.chutes.ai"
     },
     {
       "model_name": "Kimi K3",
@@ -129,16 +129,6 @@
       "tee_model_id": "unsloth/Mistral-Nemo-Instruct-2407-TEE"
     },
     {
-      "model_name": "Qwen3-235B-A22B",
-      "provider_org": "Alibaba",
-      "input_per_1m_usd": 0.2989,
-      "output_per_1m_usd": 1.1957,
-      "cache_read_per_1m_usd": 0.02989,
-      "context_length": 262144,
-      "confidential_compute": true,
-      "tee_model_id": "Qwen/Qwen3-235B-A22B-Thinking-2507-TEE"
-    },
-    {
       "model_name": "Nemotron-3-Nano-Omni-30B",
       "provider_org": "NVIDIA",
       "input_per_1m_usd": 0.0245,
@@ -148,9 +138,19 @@
       "confidential_compute": true,
       "tee_model_id": "Nemotron-3-Nano-Omni-30B-TEE",
       "notes": "Added 2026-08-26 from llm.chutes.ai (root nvidia/Nemotron-3-Nano-Omni-30B-A3B-Reasoning-BF16)"
+    },
+    {
+      "model_name": "Qwen3-235B-A22B",
+      "provider_org": "Alibaba",
+      "input_per_1m_usd": 0.2989,
+      "output_per_1m_usd": 1.1957,
+      "cache_read_per_1m_usd": 0.02989,
+      "context_length": 262144,
+      "confidential_compute": true,
+      "tee_model_id": "Qwen/Qwen3-235B-A22B-Thinking-2507-TEE"
     }
   ],
-  "response_sha256": "a94c349780477116231378505638454db6794ad391ddff993274aa1296d5bd07",
+  "response_sha256": "fcfadde599aaab7d7c3def42a15bc22b4f1b1f53e86b232df62932d1e32de509",
   "diff": {
     "added": [],
     "removed": [],

@@ -1,15 +1,15 @@
 {
   "source": "Scaleway Generative APIs — scaleway.com/en/pricing/model-as-a-service (first-party, public)",
   "region": "eu (Paris)",
-  "collected_at": "2026-10-22",
-  "currency_note": "Source prices are EUR/1M; converted to USD using the ECB reference rate EUR/USD = 1.1234 published 2026-10-21 (latest available on 2026-10-22).",
+  "collected_at": "2026-10-23",
+  "currency_note": "Source prices are EUR/1M; converted to USD using the ECB reference rate EUR/USD = 1.1205 published 2026-10-22 (latest available on 2026-10-23).",
   "method": "scripts/fetch-scaleway-catalog.mjs: one GET of the pricing page, reading the page's own structured catalog (__NEXT_DATA__ … catalogProducts.generativeApis.models); fr-par perMillionTokens input/output (and cached input) EUR prices from {units,nanos}; models without the chat task or without both token prices (embeddings, audio transcription) omitted; USD = EUR × ECB daily reference rate, rounded to cents; curated names kept by API slug; new slugs mapping=derived. EU-sovereign Paris region, ZDR by default. See scaleway.method.md.",
   "models": [
     {
       "model_name": "glm-5.3",
       "provider_org": "Z.ai",
       "input_per_1m_usd": 2.02,
-      "output_per_1m_usd": 6.18,
+      "output_per_1m_usd": 6.16,
       "region": "eu",
       "api_model_id": "glm-5.3",
       "context_length": 256000,
@@ -32,7 +32,7 @@
       "model_name": "qwen3.8-27b",
       "provider_org": "Alibaba",
       "input_per_1m_usd": 0.67,
-      "output_per_1m_usd": 3.71,
+      "output_per_1m_usd": 3.7,
       "cache_read_per_1m_usd": 0.13,
       "region": "eu",
       "api_model_id": "qwen3.8-27b",
@@ -54,8 +54,8 @@
     {
       "model_name": "Mistral Medium 3.5",
       "provider_org": "Mistral",
-      "input_per_1m_usd": 1.69,
-      "output_per_1m_usd": 8.43,
+      "input_per_1m_usd": 1.68,
+      "output_per_1m_usd": 8.4,
       "region": "eu",
       "api_model_id": "mistral-medium-3.5-128b",
       "context_length": 256000,
@@ -77,7 +77,7 @@
       "model_name": "Qwen3 235B",
       "provider_org": "Alibaba",
       "input_per_1m_usd": 0.84,
-      "output_per_1m_usd": 2.53,
+      "output_per_1m_usd": 2.52,
       "region": "eu",
       "api_model_id": "qwen3-235b-a22b-instruct-2507",
       "context_length": 250000,
@@ -88,7 +88,7 @@
       "model_name": "Qwen 3.6 35B",
       "provider_org": "Alibaba",
       "input_per_1m_usd": 0.28,
-      "output_per_1m_usd": 1.69,
+      "output_per_1m_usd": 1.68,
       "region": "eu",
       "api_model_id": "qwen3.6-35b-a3b",
       "context_length": 256000,
@@ -99,7 +99,7 @@
       "model_name": "Qwen 3.5 397B",
       "provider_org": "Alibaba",
       "input_per_1m_usd": 0.67,
-      "output_per_1m_usd": 4.04,
+      "output_per_1m_usd": 4.03,
       "region": "eu",
       "api_model_id": "qwen3.5-397b-a17b",
       "context_length": 250000,
@@ -132,7 +132,7 @@
       "model_name": "GLM 5.2",
       "provider_org": "Z.ai",
       "input_per_1m_usd": 2.02,
-      "output_per_1m_usd": 6.18,
+      "output_per_1m_usd": 6.16,
       "region": "eu",
       "api_model_id": "glm-5.2",
       "context_length": 256000,
@@ -152,8 +152,8 @@
       "notes": "€0.40/€0.80 (cached €0.08); deepseek-v4-flash-0731; status preview"
     }
   ],
-  "fx_eur_usd": 1.1234,
-  "response_sha256": "d4c4735c6dbc15db131ad466df34467dd588ebbbee0262315b7853aad97be917",
+  "fx_eur_usd": 1.1205,
+  "response_sha256": "bd006242152e64213823da50784fd1663c969582d2f45b1571ba2fa083be377c",
   "skipped": [
     "lightonocr-3-0.8b",
     "whisper-large-v3",
@@ -162,10 +162,7 @@
   ],
   "diff": {
     "added": [],
-    "removed": [
-      "qwen3-coder-30b-a3b-instruct",
-      "pixtral-12b-2409"
-    ],
+    "removed": [],
     "eur_price_changed": []
   }
 }

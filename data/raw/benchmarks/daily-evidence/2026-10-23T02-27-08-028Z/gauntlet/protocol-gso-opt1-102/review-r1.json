@@ -1,0 +1,24 @@
+{
+  "artifact_id": "protocol-gso-opt1-102",
+  "artifact_sha256": "eedef18bb298a4ecee13a356eb383d9eb5c33428b80c95017bb7ef88b2383f9f",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": ["gso::opt1-102", "c1", "c2"],
+  "errors_found": 1,
+  "findings": [
+    {
+      "id": "f1",
+      "severity": "major",
+      "location": "Row gso::opt1-102, field version_status (and version)",
+      "evidence": "Neither SOURCE 1 (protocol page excerpt) nor SOURCE 2 (leaderboard.json, complete JSON) publishes a release identifier for this board; metadata contains only last_updated and total_tasks. SOURCE 4's scale summary and the changelog likewise name no release identifier. version_status 'published' requires the maintainer to publish a release identifier that version copies, which the supplied evidence does not show; this contradicts the row's claim.",
+      "repair": "Change version_status to 'snapshot' and set version to 'snapshot-<date>' keyed to the captured payload date, because the maintainer publishes no release identifier for this board."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "I could not execute transport, hash, or qualification checks; those are owner-executed and were not independently verified here.",
+    "SOURCE 1 is a bounded excerpt (full page exceeds the bound), so a release identifier could conceivably appear beyond the excerpt; however, the complete leaderboard.json capture includes no version or release-identifier field, and that payload is the machine-readable source for the board values.",
+    "The version value 'opt1-102' is our constructed identity; it does not appear as a published release identifier in either source. The observed scale summary (SOURCE 4) was used only to confirm the unit/range scale, not the version status."
+  ],
+  "missing_evidence": []
+}
