@@ -247,7 +247,7 @@ for k in newkeys:
         "cost_cap_ratio": (s["cost"]["usd_per_1000"] / CAP if s["ranked"] else None),
         "under_cost_cap": (s["cost"]["usd_per_1000"] <= CAP if s["ranked"] else None),
         "treatment": ("ranked" if s["ranked"] else "listed-not-ranked"),
-        "truncated_long_items": 0,
+        "truncated_long_items": 15,
     }
     # Store only hash of local critic; never private filesystem paths in public evidence.
     proof["new_rows"][k].pop("pre_score_review", None)

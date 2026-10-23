@@ -22,7 +22,7 @@ test('v1.6.42 paid rows, carried scores/intervals, full category coverage',()=>{
  assert.equal(artifact.systems.length,previous.artifact.systems.length+V1642_NEW_KEYS.length);
  for(const k of V1642_NEW_KEYS){const r=artifact.systems.find(s=>s.key===k);assert.deepEqual(r,V1642_ROW_SPEC[k]);assert.ok(categories.systems[k]);assert.equal(r.paid_fast_lane,true)}
  assert.deepEqual(V1642_NEW_KEYS,['torchcast-decision-4b-v1.3']);
- assert.equal(proof.new_rows['torchcast-decision-4b-v1.3'].truncated_long_items,0);
+ assert.equal(proof.new_rows['torchcast-decision-4b-v1.3'].truncated_long_items,15);
  assert.equal(proof.new_rows['torchcast-decision-4b-v1.3'].over_10s,0);
  assert.deepEqual(proof.new_rows['torchcast-decision-4b-v1.3'].status_counts,{200:1500});
 });

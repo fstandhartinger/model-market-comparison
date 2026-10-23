@@ -4,7 +4,7 @@
  "files": {
   "categories": {
    "path": "data/raw/benchmarks/jevbench/v1.6/jevbench-v1.6.42-categories.json",
-   "sha256": "ab143d6a6dca3d33e12050927b74a6f318a964bbb9f62f826cae8ed1ef4ae26a"
+   "sha256": "189dd7e73235bc75c83647d6307b5430b720703ff77a619048d759c3f1186263"
   },
   "history": {
    "path": "data/raw/benchmarks/jevbench/v1.6/jevbench-v1.6.42-history.json",
@@ -16,11 +16,11 @@
   },
   "proof": {
    "path": "data/raw/benchmarks/jevbench/v1.6/jevbench-v1.6.42-proof.json",
-   "sha256": "0c2431e67255efaa798b4140c0f3ab2b85430e5d1e03a337ddfaeb6a72b6e8cc"
+   "sha256": "75c5456f0ef69634fd618fc0eb8a8ec1810c1ac0e0446d63ae5b3085c2928e02"
   },
   "results": {
    "path": "data/raw/benchmarks/jevbench/v1.6/jevbench-v1.6.42-results.json",
-   "sha256": "29b1b240db96a5e9b0d8db9e77640c6ca5de494feda9953ad69316ee36df3fcd"
+   "sha256": "f3bf12f5b4339fb0024422fd336eb0dd56b8a9e39e9380f13cb500b26552efb1"
   }
  },
  "new_rows": {
@@ -33,7 +33,7 @@
    },
    "capability": 77.49732669849632,
    "cost": {
-    "basis": "Self-hosted open weights, no bookable tariff. v1.5-M2 base-model reference rule: base Qwen/Qwen3.5-4B (model card base_model, finetune). OpenRouter snapshot of 2026-10-23 lists no Qwen3.5-4B; binding precedent INTERPRETATION-1 I-2/I-3 uses DeepInfra Qwen/Qwen3.5-4B at USD 0.03/M input and USD 0.15/M output from the frozen 25 Sep 2026 price cut-off snapshot (read 2026-10-23), through the frozen pricing_v15 module (sha256 aa2afcd5a58d0c4cc0e3d6867d590c70b6ac58e971410c27faf9628f97bcf8b7), the same reference as the live v1.2 row. ESTIMATE, not charged, not a quote from the author or any host. No-generation readout: output tokens 0. Frozen reference deepinfra:Qwen/Qwen3.5-4B; 982,889 input / 0 output tokens over all 1,500 decisions (USD 0.0196578 per 1,000 over all 1,500 items), inside the official cap. COMMON COST BASIS (v1.6.30): cost per 1,000 decisions is computed on the common 1,485 items of this draw, leaving out the 15 very long items that count for no row; 737,326 input / 0 output tokens on those 1,485 items. This row: USD 0.014895 per 1,000 decisions (0.231x the official cost cap USD 0.064595), against USD 0.019658 over all 1,500 items.",
+    "basis": "Self-hosted open weights, no bookable tariff. v1.5-M2 base-model reference rule: base Qwen/Qwen3.5-4B (model card base_model, finetune). OpenRouter snapshot of 2026-10-23 lists no Qwen3.5-4B; binding precedent INTERPRETATION-1 I-2/I-3 uses DeepInfra Qwen/Qwen3.5-4B at USD 0.03/M input and USD 0.15/M output from the frozen 25 Sep 2026 price cut-off snapshot (read 2026-10-23), through the frozen pricing_v15 module (sha256 aa2afcd5a58d0c4cc0e3d6867d590c70b6ac58e971410c27faf9628f97bcf8b7), the same reference as the live v1.2 row. ESTIMATE, not charged, not a quote from the author or any host. No-generation readout: output tokens 0. Frozen reference deepinfra:Qwen/Qwen3.5-4B; 982,889 input / 0 output tokens over all 1,500 decisions (USD 0.0196578 per 1,000 over all 1,500 items; the 15 truncated prompts count at their truncated size of about 16,370 tokens each), inside the official cap. COMMON COST BASIS (v1.6.30): cost per 1,000 decisions is computed on the common 1,485 items of this draw, leaving out the 15 very long items that count for no row; 737,326 input / 0 output tokens on those 1,485 items. This row: USD 0.014895 per 1,000 decisions (0.231x the official cost cap USD 0.064595), against USD 0.019658 over all 1,500 items.",
     "common_basis": {
      "n_items": 1485,
      "rule": "common",

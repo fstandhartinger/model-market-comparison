@@ -125,7 +125,7 @@ e = dict(
         "Self-hosted open weights, no bookable tariff. v1.5-M2 base-model reference rule: base Qwen/Qwen3.5-4B (model card base_model, finetune). "
         "OpenRouter snapshot of 2026-10-23 lists no Qwen3.5-4B; binding precedent INTERPRETATION-1 I-2/I-3 uses DeepInfra Qwen/Qwen3.5-4B at USD 0.03/M input and USD 0.15/M output from the frozen 25 Sep 2026 price cut-off snapshot (read 2026-10-23), "
         "through the frozen pricing_v15 module (sha256 " + PS + "), the same reference as the live v1.2 row. ESTIMATE, not charged, not a quote from the author or any host. "
-        "No-generation readout: output tokens 0. Frozen reference deepinfra:Qwen/Qwen3.5-4B; 982,889 input / 0 output tokens over all 1,500 decisions (USD 0.0196578 per 1,000 over all 1,500 items), inside the official cap. "
+        "No-generation readout: output tokens 0. Frozen reference deepinfra:Qwen/Qwen3.5-4B; 982,889 input / 0 output tokens over all 1,500 decisions (USD 0.0196578 per 1,000 over all 1,500 items; the 15 truncated prompts count at their truncated size of about 16,370 tokens each), inside the official cap. "
         "COMMON COST BASIS (v1.6.30): cost per 1,000 decisions is computed on the common 1,485 items of this draw, leaving out the 15 very long items that count for no row; "
         f"{ci:,} input / {co:,} output tokens on those 1,485 items. "
     ),
@@ -135,13 +135,13 @@ e = dict(
         "decision_config.json sets attention_mode noncausal_full_attention (the full-attention layers see the whole prompt in both directions, as trained; causal runtimes such as vLLM give different probabilities) and a disclosed yes/no commit floor of 0.801: a yes/no probability with max(P, 1-P) below 0.801 is moved to 0.801 on its own side (answer unchanged; same mechanism as h2o-lightning-4b, v1.1 and v1.2). "
         "New in v1.3: new fine-tuned weights; calibration temperature 0.9 (v1.2 used 1.0); CUDA graphs in the non-causal mode (speed only: graph and eager readouts were bit-identical in our check). "
         "Prompts over 16,384 tokens keep the head and the tail of the state (documented). Output tokens are 0 (no generation). "
-        "All 1,500 items answered, none refused or cut; no decision took more than 10 seconds (maximum 7.73 s). "
+        "All 1,500 items answered, none refused; the 15 states longer than 16,384 tokens are cut by the model to head and tail and scored as answered, as for earlier truncated rows. No decision took more than 10 seconds (maximum 7.73 s). "
         "The cost is a labelled estimate on the Qwen3.5-4B base-model reference, not a price the author or a host charges. "
         "Self-hosted speed adjustment as for every self-hosted row; the device class (A100 SXM4 80GB) is the same as for v1.2. "
         "v1.3 is a new row next to v1.2; v1.2 remains listed as its own version."
     ),
     endpoint_condition=(
-        "Evaluator-owned rented Verda GPU VM (1A100.22V, FIN-02, Finland, EU, pay-as-you-go), 1x NVIDIA A100 SXM4 80GB; offline read-only container (network none), the cut proven from inside before the sealed input was uploaded; "
+        "Evaluator-owned rented Verda GPU VM (1A100.22V, FIN-02, Finland, EU, pay-as-you-go), 1x NVIDIA A100 SXM4 80GB; offline read-only container (network none); "
         "author's torchcast_decision server unchanged at tag v1.3.0 with the bundled decision_config.json (bf16, one forward pass reading option letters, non-causal full attention as trained, calibration temperature 0.9, yes/no commit floor 0.801) "
         "on the documented stack torch 2.9.1+cu128 / transformers 5.8.1 / flash-linear-attention 0.5.2 / causal-conv1d 1.7.0 (fast kernels active; CUDA graphs with a key-padding mask in non-causal mode). "
         "Driven by the unchanged self-hosted runner on the frozen v1.6-regular-20261012 self-hosted input (sha256 dfd36720...), measured 23 Oct 2026; raw latency p50 0.034 s, p95 0.056 s, maximum 7.73 s. "
