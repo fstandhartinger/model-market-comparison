@@ -67,9 +67,9 @@ if (!reviewed) {
     assert.equal(r.artifact.restates.board_release, V170_BASE_RELEASE);
     assert.deepEqual(r.artifact.method, { label: 'v1.7', decision_limit_s: 10, rule: 'latency_s > 10.000 s -> failed', treatment: 'share' });
     assert.equal(r.carry.label, V170_CARRY_LABEL);
-    assert.equal(r.proof.pricing_module_sha256, '81e3578ff652f4eb05829f2068ee7810a0d13a227a9eaf3683aef6d07ba25524');
+    assert.equal(r.proof.pricing_module_sha256, 'aa2afcd5a58d0c4cc0e3d6867d590c70b6ac58e971410c27faf9628f97bcf8b7');
     assert.equal(r.proof.pricing_module_sha256, V170_PRICING_MODULE_SHA256);
-    assert.ok(['a8a05890ddab2d39d1a1bd543f2b5c83842bdc70aa54766788bc89b7a8a448d7', V170_PRICING_MODULE_SHA256].includes(r.proof.predecessor_pricing_module_sha256));
+    assert.ok(['81e3578ff652f4eb05829f2068ee7810a0d13a227a9eaf3683aef6d07ba25524', V170_PRICING_MODULE_SHA256].includes(r.proof.predecessor_pricing_module_sha256));
     assert.equal(r.proof.predecessor_pricing_module_sha256, V170_PREDECESSOR_PRICING_MODULE_SHA256);
     assert.deepEqual(r.proof.pricing_change.added_keys, V170_PREDECESSOR_PRICING_MODULE_SHA256 === V170_PRICING_MODULE_SHA256 ? [] : [...V170_PRICING_ADDED_KEYS]); assert.equal(r.proof.pricing_change.rows_whose_price_changes, 0);
   });
@@ -94,6 +94,20 @@ if (!reviewed) {
     assert.equal(pend.scores.A, pend.previous.scores.A);
     assert.ok(equated, 'an equated A4/A5 row exists'); assert.equal(Math.round(equated.scores.A * 100) / 100, equated.scores.A); assert.equal(equated.v16.equated, true);
     assert.equal(r.carry.rows.length, 14); assert.ok(r.carry.rows.every((c) => !c.ranked));
+  });
+  test('fastino-glide-api (v1.6.40 row, scored on 1,497 of 1,500 items) is re-scored under the rule on the same 1,497 items; two answered decisions over 10 s count failed', () => {
+    const g = rescored.find((s) => s.key === 'fastino-glide-api');
+    assert.ok(g, 'the hosted GLiDE row is a chain row of v1.7.0');
+    assert.equal(g.previous.board_release, 'v1.6.40'); assert.equal(+g.previous.scores.A.toFixed(3), 76.609); assert.equal(+g.previous.capability.toFixed(3), 84.702);
+    assert.equal(g.decision_limit.speed_n, 1497); assert.equal(g.speed.n, 1497);
+    assert.equal(g.decision_limit.n_over_limit, 2); assert.equal(g.decision_limit.n_over_limit_answered_ok, 2);
+    assert.equal(+g.scores.A.toFixed(3), 76.441); assert.equal(+g.capability.toFixed(3), 84.456);
+    assert.ok(g.scores.A < g.previous.scores.A && g.axes.intelligence < g.previous.axes.intelligence && g.axes.calibration < g.previous.axes.calibration);
+    assert.equal(g.axes.cost, g.previous.axes.cost); assert.equal(g.cost.usd_per_1000, 0.023065479082321188);
+    assert.deepEqual(g.custody_exclusion, { derived_gold_sha256: '9f1f8200d0a1b4384f43ffc0a91f3f36e4790fc3dbcef7486bf233b0142baa47', exclusion_list_sha256: '31b47af58dce134a70e5cbf60aad40db0000dd398f26649070fb7c9dfd1deeb3', items: 3, scored_items: 1497, rule: g.custody_exclusion.rule });
+    assert.match(g.underlying, /SCORED ON 1,497 OF THE DRAW'S 1,500 ITEMS/);
+    assert.match(g.cost.basis, /pricing_v15 \(sha256 aa2afcd5a58d0c4cc0e3d6867d590c70b6ac58e971410c27faf9628f97bcf8b7\)/);
+    assert.equal(r.proof.systems.find((s) => s.key === 'fastino-glide-api').n_decisions, 1497);
   });
   test('v1.7.0 archive files and the base release stay byte-identical', async () => {
     const m = JSON.parse(await readFile(`${ROOT}/v1.6/jevbench-${V170_BASE_RELEASE}-publication.json`, 'utf8'));
