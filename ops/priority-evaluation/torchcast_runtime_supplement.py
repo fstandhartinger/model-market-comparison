@@ -1,5 +1,5 @@
-"""Fixed-order offline runtime supplement for Torchcast Decision 4B (paid fast-lane orders 529be5d5 = v1.1 and
-39e2266a = v1.2; v1.2 documents the identical stack).
+"""Fixed-order offline runtime supplement for Torchcast Decision 4B (paid fast-lane orders 529be5d5 = v1.1,
+39e2266a = v1.2 and 9494e9ea = v1.3; v1.2 and v1.3 document the identical stack).
 
 The author documents a pip venv (torch 2.9.1 cu128, transformers 5.8.1, flash-linear-attention 0.5.2,
 causal-conv1d>=1.7) that no official image contains. This supplement overlays the digest-pinned official
@@ -21,7 +21,8 @@ import pod_runner
 
 ORDER = '529be5d5-512f-463f-bdae-d7cd289fe970'
 ORDER_V12 = '39e2266a-0cdb-450c-a879-27ebe0da1a6f'
-ORDERS = frozenset((ORDER, ORDER_V12))  # exact paid orders only, never a pattern
+ORDER_V13 = '9494e9ea-eeea-46e0-8fb1-41a045f41354'
+ORDERS = frozenset((ORDER, ORDER_V12, ORDER_V13))  # exact paid orders only, never a pattern
 BASE_IMAGE = 'pytorch/pytorch:2.9.1-cuda12.8-cudnn9-devel@sha256:39236c0ad9c66baecf01bb2e4f5562543c5b336c0c785887798775d6d6fdbf9a'
 CONTEXT = Path('/home/flori/jobs/fastlane-torchcast4b-native-20261012/supplement/PUBLIC-BUILD-CONTEXT.tar')
 CONTEXT_SHA = 'fc799cf0d8928650243f81a3d2e7fe3d91b42a955be8c31881392b8ca6be4b73'

@@ -61,7 +61,12 @@ class Tests(unittest.TestCase):
         job = '/home/flori/jobs/fastlane-evaluations/' + S.ORDER
         self.assertTrue(S.active(job, recipe()))
         self.assertTrue(S.active('/home/flori/jobs/fastlane-evaluations/' + S.ORDER_V12, recipe()))
-        self.assertEqual(S.ORDERS, {'529be5d5-512f-463f-bdae-d7cd289fe970', '39e2266a-0cdb-450c-a879-27ebe0da1a6f'})
+        self.assertTrue(S.active('/home/flori/jobs/fastlane-evaluations/' + S.ORDER_V13, recipe()))
+        self.assertEqual(S.ORDERS, {'529be5d5-512f-463f-bdae-d7cd289fe970', '39e2266a-0cdb-450c-a879-27ebe0da1a6f',
+                                    '9494e9ea-eeea-46e0-8fb1-41a045f41354'})
+        self.assertFalse(S.active('/jobs/9494e9ea', recipe()))
+        self.assertFalse(S.active('/jobs/9494e9ea-eeea-46e0-8fb1-41a045f41354-x', recipe()))
+        self.assertFalse(S.active('/jobs/' + S.ORDER_V13, recipe(kind='python_inprocess')))
         self.assertFalse(S.active('/jobs/39e2266a', recipe()))
         self.assertFalse(S.active('/jobs/39e2266a-0cdb-450c-a879-27ebe0da1a6f-x', recipe()))
         self.assertFalse(S.active('/jobs/' + S.ORDER_V12, recipe(kind='python_inprocess')))
