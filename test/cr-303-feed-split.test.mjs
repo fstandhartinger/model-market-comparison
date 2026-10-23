@@ -2,6 +2,7 @@ import test from 'node:test';
 import { V1638_ROW_SPEC } from '../lib/jevbench-v1638-release.mjs';
 import { V1639_ROW_SPEC } from '../lib/jevbench-v1639-release.mjs';
 import { V1640_ROW_SPEC } from '../lib/jevbench-v1640-release.mjs';
+import { V1642_ROW_SPEC } from '../lib/jevbench-v1642-release.mjs';
 import assert from 'node:assert/strict';
 import { readJevbenchAgentFeed } from '../lib/jevbench-agent-feed.mjs';
 import { readJevbenchSeoData } from '../lib/jevbench-seo.mjs';
@@ -22,10 +23,10 @@ test('feed carries board and open-board rank next to the unchanged combined rank
   assert.equal(get(feed, 'quyet-1-0-large').capability.open_board_rank, 4);
   // v1.6.28: basal-omni-1.0-ultra (Capability 82.5) enters the open board at #1, so every open-board rank below it moves down by one.
   // CR-338 adds decisio and René to the open board, and the merged live board adds the cohort rows (16 Oct 2026), shifting these older rows below the new entrants.
-  assert.equal(get(feed, 'h2o-lightning-4b').capability.open_board_rank, 12);
-  assert.equal(get(feed, 'surogate-rune-26b-a4b-v3-v16').capability.open_board_rank, 14);
-  assert.equal(get(feed, 'xor-26b-a4b').capability.open_board_rank, 17);
-  assert.equal(get(feed, 'torchcast-decision-12b').capability.open_board_rank, 19);
+  assert.equal(get(feed, 'h2o-lightning-4b').capability.open_board_rank, 13);
+  assert.equal(get(feed, 'surogate-rune-26b-a4b-v3-v16').capability.open_board_rank, 15);
+  assert.equal(get(feed, 'xor-26b-a4b').capability.open_board_rank, 18);
+  assert.equal(get(feed, 'torchcast-decision-12b').capability.open_board_rank, 20);
   // v1.6.24 (16 Oct 2026): the paid hosted kettei-fat (#1) and kettei-chub join the combined Capability ranking above it (22 -> 24);
   // they are API rows, so its open-board rank (15 at the time) did not move. v1.6.25: the paid hosted Celeris-1 Decision (Capability 73.6)
   // joins above it as well (24 -> 25); the StartLux rows are over the cost cap and take no capped Capability rank.
@@ -38,7 +39,7 @@ test('feed carries board and open-board rank next to the unchanged combined rank
   // amos-1-medium also moves inside the cap but sits below them by Capability.
   // v1.6.38: Drex and Myles-G 12B join the capped combined board; open-board ranks above Iota are unchanged.
   // v1.6.36: the paid hosted Myles-G 31B (Capability 78.8, API row, inside both caps) joins above it (31 -> 32); HS1 (65.0) and the two NeoHorse rows sit below it.
-  assert.equal(get(feed, 'torchcast-decision-12b').capability.rank, 32 + Number(V1638_ROW_SPEC['drex-max'].ranked) + Number(V1639_ROW_SPEC['h2o-lightning-31b'].ranked) + Number(V1640_ROW_SPEC['fastino-glide-api'].ranked));
+  assert.equal(get(feed, 'torchcast-decision-12b').capability.rank, 32 + Number(V1638_ROW_SPEC['drex-max'].ranked) + Number(V1639_ROW_SPEC['h2o-lightning-31b'].ranked) + Number(V1640_ROW_SPEC['fastino-glide-api'].ranked) + Number(V1642_ROW_SPEC['torchcast-decision-4b-v1.3'].ranked));
   const ranks = feed.systems.map((s) => s.capability.open_board_rank).filter((r) => r != null).sort((a, b) => a - b);
   assert.equal(get(feed, 'basal-omni-1.0-ultra').capability.open_board_rank, 3);
   assert.deepEqual(ranks, ranks.map((_, i) => i + 1));

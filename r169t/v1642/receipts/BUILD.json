@@ -1,0 +1,60 @@
+{
+ "carried_rows_preserved_except_ranks": 77,
+ "carried_scorer_point_estimates_reproduced": 73,
+ "files": {
+  "categories": {
+   "path": "data/raw/benchmarks/jevbench/v1.6/jevbench-v1.6.42-categories.json",
+   "sha256": "189dd7e73235bc75c83647d6307b5430b720703ff77a619048d759c3f1186263"
+  },
+  "history": {
+   "path": "data/raw/benchmarks/jevbench/v1.6/jevbench-v1.6.42-history.json",
+   "sha256": "5cd8c1332226ea9c179883d2285c0d8b8cc593ae38f2645197364a7ddd9c83c1"
+  },
+  "history-carry": {
+   "path": "data/raw/benchmarks/jevbench/v1.6/jevbench-v1.6.42-history-carry.json",
+   "sha256": "334e851944e92383ab3071e52b3012040c7023d0fe236395953169ebee8f0459"
+  },
+  "proof": {
+   "path": "data/raw/benchmarks/jevbench/v1.6/jevbench-v1.6.42-proof.json",
+   "sha256": "75c5456f0ef69634fd618fc0eb8a8ec1810c1ac0e0446d63ae5b3085c2928e02"
+  },
+  "results": {
+   "path": "data/raw/benchmarks/jevbench/v1.6/jevbench-v1.6.42-results.json",
+   "sha256": "f3bf12f5b4339fb0024422fd336eb0dd56b8a9e39e9380f13cb500b26552efb1"
+  }
+ },
+ "new_rows": {
+  "torchcast-decision-4b-v1.3": {
+   "axes": {
+    "calibration": 87.84716845590987,
+    "cost": 64.8083695127977,
+    "intelligence": 67.14748494108278,
+    "speed": 92.63835078333227
+   },
+   "capability": 77.49732669849632,
+   "cost": {
+    "basis": "Self-hosted open weights, no bookable tariff. v1.5-M2 base-model reference rule: base Qwen/Qwen3.5-4B (model card base_model, finetune). OpenRouter snapshot of 2026-10-23 lists no Qwen3.5-4B; binding precedent INTERPRETATION-1 I-2/I-3 uses DeepInfra Qwen/Qwen3.5-4B at USD 0.03/M input and USD 0.15/M output from the frozen 25 Sep 2026 price cut-off snapshot (read 2026-10-23), through the frozen pricing_v15 module (sha256 aa2afcd5a58d0c4cc0e3d6867d590c70b6ac58e971410c27faf9628f97bcf8b7), the same reference as the live v1.2 row. ESTIMATE, not charged, not a quote from the author or any host. No-generation readout: output tokens 0. Frozen reference deepinfra:Qwen/Qwen3.5-4B; 982,889 input / 0 output tokens over all 1,500 decisions (USD 0.0196578 per 1,000 over all 1,500 items; the 15 truncated prompts count at their truncated size of about 16,370 tokens each), inside the official cap. COMMON COST BASIS (v1.6.30): cost per 1,000 decisions is computed on the common 1,485 items of this draw, leaving out the 15 very long items that count for no row; 737,326 input / 0 output tokens on those 1,485 items. This row: USD 0.014895 per 1,000 decisions (0.231x the official cost cap USD 0.064595), against USD 0.019658 over all 1,500 items.",
+    "common_basis": {
+     "n_items": 1485,
+     "rule": "common",
+     "usd_per_1000_all_items": 0.019657780000000003
+    },
+    "kind": "estimate",
+    "usage_estimated_rows": 0,
+    "usd_per_1000": 0.01489547474747475
+   },
+   "ranks": {
+    "A": 3,
+    "B": 6,
+    "C": 3,
+    "capability": 20
+   },
+   "scores": {
+    "A": 76.18936170949911,
+    "B": 74.19128695067,
+    "C": 76.18936170949911
+   }
+  }
+ },
+ "variant": "single-row"
+}

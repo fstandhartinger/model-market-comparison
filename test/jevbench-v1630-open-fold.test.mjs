@@ -92,6 +92,6 @@ test('Delta 4: with the folds collapsed, Jev 1.13.0 and Jev 1.14.0 are rendered 
   assert.deepEqual(barIds(compHead).filter((k) => compRanked.includes(k)), compRanked.slice(0, 20), 'the first 20 ranked rows are above the Composite fold, in rank order');
   assert.equal(barIds(compHead).length, 22);
 
-  const frozen = JSON.parse(await readFile(`${root}/test/fixtures/jevbench-v1640-ranks.json`, 'utf8'));
+  const frozen = JSON.parse(await readFile(`${root}/test/fixtures/jevbench-v1642-ranks.json`, 'utf8'));
   assert.deepEqual(Object.fromEntries(open.systems.filter((s) => s.ranked).map((s) => [s.key, [s.rank, s.ranks.A, s.ranks.B, s.ranks.C, s.ranks.capability]])), frozen.views.open.ranks, 'every open-board rank matches the v1.6.31 roster fixture');
 });

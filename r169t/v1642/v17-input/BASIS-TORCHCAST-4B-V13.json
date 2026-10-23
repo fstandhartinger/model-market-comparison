@@ -1,0 +1,31 @@
+{
+ "cost_cap_ratio_common_basis": 0.23059918359678938,
+ "hardware": "Verda 1A100.22V FIN-02, 1x NVIDIA A100 SXM4 80GB, USD 2.128/h, serial, network none",
+ "key": "torchcast-decision-4b-v1.3",
+ "latency": {
+  "decisions_over_10s": 0,
+  "note": "No decision took more than 10 s (maximum 7.73 s), so a v1.7 10-second rule costs this row nothing.",
+  "raw_max_s": 7.7282,
+  "raw_p50_s": 0.0336,
+  "raw_p95_s": 0.056
+ },
+ "price_basis": "ESTIMATE, base Qwen/Qwen3.5-4B: reference() -> deepinfra:Qwen/Qwen3.5-4B, USD 0.03/M input, 0.15/M output (frozen 25 Sep 2026 cut-off snapshot), the same reference as the live v1.2 row; Qwen/Qwen3.5-4B-Base maps to the same reference",
+ "pricing_module_sha256": "aa2afcd5a58d0c4cc0e3d6867d590c70b6ac58e971410c27faf9628f97bcf8b7",
+ "serving": "author's torchcast_decision server unchanged at tag v1.3.0 with its bundled decision_config.json (non-causal full attention, calibration T 0.9, yes/no floor 0.801), official PyTorch 2.9.1 cu128 image, Python 3.11, offline hash-locked overlay (transformers 5.8.1, flash-linear-attention 0.5.2, causal-conv1d 1.7.0), CUDA graphs in non-causal mode",
+ "status": {
+  "http": {
+   "200": 1500
+  },
+  "ok": 1500,
+  "rows": 1500
+ },
+ "tokens": {
+  "all_input": 982889,
+  "all_output": 0,
+  "common_input": 737326,
+  "common_output": 0
+ },
+ "usd_per_1000_all_1500_items_resolve": 0.019657780000000003,
+ "usd_per_1000_common_basis_1485": 0.01489547474747475,
+ "v16_result": "see r169t/v1642/BUILD-REPORT.md and data/raw/benchmarks/jevbench/v1.6/jevbench-v1.6.42-results.json (when published)"
+}
