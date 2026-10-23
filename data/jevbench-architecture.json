@@ -6412,6 +6412,21 @@
             "fact": "Fastino documents GLiDE behind POST /v1/systemone (model fastino/GLiDE) at USD 0.04 per 1M input tokens and no output charge; the API serves it as glide_v2; no evaluated weights are published."
           }
         ]
+      },
+      "torchcast-decision-4b-v1.3": {
+        "arch": "open-llm-decoder",
+        "badges": {
+          "derivation": "fine-tune",
+          "params": "4B",
+          "quant": null
+        },
+        "evidence": [
+          {
+            "url": "https://huggingface.co/torchcast-ai/torchcast-decision-4b/blob/004acea2e23056bc79415cfa69b9f3ea4254e6d0/README.md",
+            "kind": "model-card",
+            "fact": "Pinned v1.3 card (tag v1.3.0): Qwen/Qwen3.5-4B fine-tune (base_model_relation finetune), option-letter readout without generation, Apache-2.0 weights; noncausal_full_attention as trained, calibration temperature 0.9, yes/no commit floor 0.801."
+          }
+        ]
       }
     },
     "imagejevbench": {

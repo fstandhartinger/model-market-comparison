@@ -1,0 +1,23 @@
+{
+ "calls": {
+  "torchcast-decision-4b-v1.3": {
+   "cost_cap_ratio": 0.23059918359678938,
+   "effective_price": [
+    0.030000000000000002,
+    0.15
+   ],
+   "reference_call": "reference('torchcast-decision-4b-v1.3', {'base_model': 'Qwen/Qwen3.5-4B', 'source': 'selfhosted', 'price_in_per_m': None, 'price_out_per_m': None}, catalog_rates())",
+   "reference_result": [
+    "deepinfra:Qwen/Qwen3.5-4B",
+    [
+     0.030000000000000002,
+     0.15
+    ]
+   ],
+   "usd_per_1000_all_items": 0.019657780000000003,
+   "usd_per_1000_common_basis": 0.01489547474747475
+  }
+ },
+ "module_sha256": "aa2afcd5a58d0c4cc0e3d6867d590c70b6ac58e971410c27faf9628f97bcf8b7",
+ "ten_second_rule_applied": false
+}

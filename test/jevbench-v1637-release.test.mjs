@@ -89,14 +89,14 @@ import { readJevbenchSeoData } from '../lib/jevbench-seo.mjs';
 import { jevbenchLlmsFull } from '../lib/jevbench-llms-full.mjs';
 test('live boards and the agent feed resolve each restated row exactly once with the corrected figures; the frozen archive keeps the published ones',async()=>{
  const {artifact}=await readCurrentJevbench();const m=jevWithCohortRows(artifact,await readCohortRows());
- for(const k of KEYS){const rows=m.systems.filter(s=>s.key===k);assert.equal(rows.length,1,k);assert.equal(rows[0].ranked,true);assert.equal(rows[0].draw.release,'v1.6.40');assert.equal(rows[0].cost.usd_per_1000,V1637_ROW_SPEC[k].usd);for(const b of Object.values(m.board))assert.equal(b.order.filter(x=>x===k).length,1,k);}
+ for(const k of KEYS){const rows=m.systems.filter(s=>s.key===k);assert.equal(rows.length,1,k);assert.equal(rows[0].ranked,true);assert.equal(rows[0].draw.release,'v1.6.42');assert.equal(rows[0].cost.usd_per_1000,V1637_ROW_SPEC[k].usd);for(const b of Object.values(m.board))assert.equal(b.order.filter(x=>x===k).length,1,k);}
  assert.equal(artifact.systems.find(s=>s.key===H2O).cost.usd_per_1000,0.021055837438423645);assert.equal(artifact.systems.find(s=>s.key===KAHN).cost.usd_per_1000,0.06129480295566502);
  for(const k of ['localjev-qwen3.5-4b','metask-jev-4b'])assert.deepEqual(m.systems.find(s=>s.key===k),artifact.systems.find(s=>s.key===k),k);
  const {feed}=await readJevbenchAgentFeed();for(const k of KEYS){const f=feed.systems.filter(s=>s.key===k);assert.equal(f.length,1,k);assert.equal(f[0].price.usd_per_1000_decisions,V1637_ROW_SPEC[k].usd);}
 });
 test('SEO model, comparison and full-text pages follow the merged feed with corrected costs and the re-measured Seb',async()=>{
  const data=await readJevbenchSeoData();
- assert.equal(data.artifact.revision,'v1.6.40');assert.equal(data.artifact.base_revision,'v1.6.1');
+ assert.equal(data.artifact.revision,'v1.6.42');assert.equal(data.artifact.base_revision,'v1.6.1');
  for(const k of KEYS){const rows=data.systems.filter(s=>s.key===k);assert.equal(rows.length,1,k);assert.equal(rows[0].cost.usd_per_1000,V1637_ROW_SPEC[k].usd);}
  assert.equal(data.systems.filter(s=>s.key==='seb-9b').length,1);
  const llms=await jevbenchLlmsFull();

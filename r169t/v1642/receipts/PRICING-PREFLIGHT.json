@@ -1,0 +1,45 @@
+{
+  "calls": {
+    "Qwen/Qwen3.5-4B": {
+      "base_explicitly_unlisted": false,
+      "reference_call": "reference('torchcast-decision-4b-v1.3', {'base_model': 'Qwen/Qwen3.5-4B', 'source': 'selfhosted', 'price_in_per_m': None, 'price_out_per_m': None}, catalog_rates())",
+      "reference_result": [
+        "deepinfra:Qwen/Qwen3.5-4B",
+        [
+          0.030000000000000002,
+          0.15
+        ]
+      ],
+      "resolve_result": {
+        "candidate_usd_per_1000": null,
+        "counting_list_price": false,
+        "deepinfra_snapshot_sha256": "84eb7926acd4e93b71d695be24898e2ca999b20011d1b66cc0348ce7c6c3546f",
+        "floor_binds": false,
+        "floor_usd_per_1000": 0.019657780000000003,
+        "key": "torchcast-decision-4b-v1.3",
+        "market_rates_per_m": [
+          0.030000000000000002,
+          0.15
+        ],
+        "market_reference": "deepinfra:Qwen/Qwen3.5-4B",
+        "note": "ESTIMATE: exact base-model market reference (operator tariff excluded by 30-day rule); reference deepinfra:Qwen/Qwen3.5-4B frozen at the 25 Sep cut-off, deprecated afterwards (replaced by Qwen/Qwen3.5-9B); re-score if it changes (I-3)",
+        "rankable": true,
+        "snapshot_sha256": "f5d0cd8e0f7d2d6514748c99bfcaeacc09775bac7aa7eecf765af4ba04b0dcd5",
+        "tokens": {
+          "decisions": 1500,
+          "input": 982889,
+          "output": 0
+        },
+        "usd_per_1000": 0.019657780000000003
+      }
+    }
+  },
+  "common_input_tokens": 737326,
+  "common_output_tokens": 0,
+  "over_official_cap_ratio": 0.23059918359678938,
+  "pricing_module_sha256": "aa2afcd5a58d0c4cc0e3d6867d590c70b6ac58e971410c27faf9628f97bcf8b7",
+  "raw_sha256": "057cae292bed0489d85af357e9aa4589b979677deb273b806b35f16180b8f478",
+  "scorer_sha256": "02132271117653e6302c509232a581d0094f0e78eac8b1bfc67596fd5d5097e9",
+  "usd_per_1000_all_items": 0.019657780000000003,
+  "usd_per_1000_common": 0.01489547474747475
+}
