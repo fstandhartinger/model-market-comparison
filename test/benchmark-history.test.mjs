@@ -305,6 +305,8 @@ test('real states: a superseded model gets a labelled estimate; an incomparable 
   assert.match(notComparable.note, /not comparable/i);
   for (const e of historical.estimates) {
     if (e.status !== 'not_comparable') continue;
+    // CR-545: a declared definition change (scoring.bridge_break) refuses the bridge outright; there is no measured cause value.
+    if (e.comparison.cause === 'definition_change') { assert.equal(e.comparison.definition_change, true); assert.equal(e.comparison.cause_value, null); continue; }
     assert.ok(['insufficient_bridges', 'spread_too_wide'].includes(e.comparison.cause), `${e.id} needs a machine-readable cause`);
     assert.equal(typeof e.comparison.cause_value, 'number');
     assert.ok(Number.isFinite(e.comparison.cause_value), `${e.id} needs a concrete cause value`);
@@ -359,4 +361,15 @@ test('identity churn is not a drop-out: a retained row whose source UUID is stil
     observation('churn-now', 0.61, 'bench::1', { subject: { model_id: null, source_id: uuid, name: 'Model churn', harness: 'Other CLI', variant: null } })];
   const again = datedEstimates(otherHarness, registry([registryEntry('bench::1')]), [state('S1', '2026-09-01T00:00:00.000Z', old)]);
   assert.ok(again.some((e) => e.subject_name === title('churn')));
+});
+
+test('CR-545: older versions are never bridged onto a version that declares a definition change', async () => {
+  const dataset = JSON.parse(await readFile(join(ROOT, 'data', 'dataset.json'), 'utf8'));
+  const onto = dataset.benchmark_results.historical.estimates.filter((e) => e.benchmark_id === 'aa-coding-agent-index::2.0');
+  assert.ok(onto.length > 0, 'v1.4/v1.5 configurations absent from v2.0 are listed');
+  for (const e of onto) {
+    assert.equal(e.status, 'not_comparable', `${e.id} must not become a v2.0 estimate`);
+    assert.equal(e.value, null);
+    assert.equal(e.comparison.cause, 'definition_change');
+  }
 });

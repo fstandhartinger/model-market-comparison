@@ -320,7 +320,7 @@ export const SCORE_PICKER_LABELS: Record<ScoreKey, string> = {
 export const SCORE_LABELS: Record<ScoreKey, string> = {
   composite: "Composite (coverage-neutral, dominance-safe percentiles, 0–100)",
   aa_coding_index: "ArtificialAnalysis — Coding Index",
-  aa_coding_agent: "ArtificialAnalysis — Coding Agent Index v1.4 (median harness; pinned snapshot, AA now publishes v1.5)",
+  aa_coding_agent: "ArtificialAnalysis — Coding Agent Index v1.4 (median harness; pinned snapshot, AA now publishes v2.0)",
   aa_intelligence_index: "ArtificialAnalysis — Intelligence Index",
   aa_agentic_index: "ArtificialAnalysis — Agentic Index (relayed via OpenRouter)",
   epoch_eci: "Epoch AI — Capabilities Index (ECI)",

@@ -155570,6 +155570,582 @@
       "comparison_key": null
     },
     {
+      "id": "aa-coding:2.0:a92c8b68f37df782f0e978e0e302b023",
+      "benchmark_id": "aa-coding-agent-index::2.0",
+      "subject": {
+        "source_id": "a92c8b68f37df782f0e978e0e302b023",
+        "name": "Grok 4.7 (xhigh)",
+        "model_id": null,
+        "variant": null,
+        "harness": "Grok Build"
+      },
+      "value": 0.465968752688172,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/agents/coding-agents",
+        "retrieved_at": "2026-10-23",
+        "published_at": null,
+        "sha256": "e0d05fe763d97149812181bfb14215ec280d576750a03c12fa32950cd1776040",
+        "file": "ops/cr-545/evidence/aa-coding-agents-v2.0.json",
+        "locator": "rows[0]; Grok 4.7 (xhigh); Grok Build; score; original retained collector output"
+      },
+      "protocol": "Coding Agent Index 2.0; complete 3 components; Grok Build; original model name Grok 4.7 (xhigh)",
+      "comparison_key": null
+    },
+    {
+      "id": "aa-coding:2.0:f09fd629724ff1b103982a6158d00183",
+      "benchmark_id": "aa-coding-agent-index::2.0",
+      "subject": {
+        "source_id": "f09fd629724ff1b103982a6158d00183",
+        "name": "Muse Spark 1.3 (max)",
+        "model_id": "muse-spark-1.3::max",
+        "variant": "max",
+        "harness": "Muse Code"
+      },
+      "value": 0.457077885630498,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/agents/coding-agents",
+        "retrieved_at": "2026-10-23",
+        "published_at": null,
+        "sha256": "e0d05fe763d97149812181bfb14215ec280d576750a03c12fa32950cd1776040",
+        "file": "ops/cr-545/evidence/aa-coding-agents-v2.0.json",
+        "locator": "rows[1]; Muse Spark 1.3 (max); Muse Code; score; original retained collector output"
+      },
+      "protocol": "Coding Agent Index 2.0; complete 3 components; Muse Code; original model name Muse Spark 1.3 (max)",
+      "comparison_key": null
+    },
+    {
+      "id": "aa-coding:2.0:c54a3c8e7e89d5a784e98211605eaa53",
+      "benchmark_id": "aa-coding-agent-index::2.0",
+      "subject": {
+        "source_id": "c54a3c8e7e89d5a784e98211605eaa53",
+        "name": "GPT-6 Luna (max)",
+        "model_id": null,
+        "variant": null,
+        "harness": "Codex"
+      },
+      "value": 0.311260251113284,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/agents/coding-agents",
+        "retrieved_at": "2026-10-23",
+        "published_at": null,
+        "sha256": "e0d05fe763d97149812181bfb14215ec280d576750a03c12fa32950cd1776040",
+        "file": "ops/cr-545/evidence/aa-coding-agents-v2.0.json",
+        "locator": "rows[2]; GPT-6 Luna (max); Codex; score; original retained collector output"
+      },
+      "protocol": "Coding Agent Index 2.0; complete 3 components; Codex; original model name GPT-6 Luna (max)",
+      "comparison_key": null
+    },
+    {
+      "id": "aa-coding:2.0:06c2cfad6e3aba9000f2dd5e429d4407",
+      "benchmark_id": "aa-coding-agent-index::2.0",
+      "subject": {
+        "source_id": "06c2cfad6e3aba9000f2dd5e429d4407",
+        "name": "Step 5 Preview",
+        "model_id": "step-5-preview::default",
+        "variant": "default",
+        "harness": "Claude Code"
+      },
+      "value": 0.431274491691105,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/agents/coding-agents",
+        "retrieved_at": "2026-10-23",
+        "published_at": null,
+        "sha256": "e0d05fe763d97149812181bfb14215ec280d576750a03c12fa32950cd1776040",
+        "file": "ops/cr-545/evidence/aa-coding-agents-v2.0.json",
+        "locator": "rows[3]; Step 5 Preview; Claude Code; score; original retained collector output"
+      },
+      "protocol": "Coding Agent Index 2.0; complete 3 components; Claude Code; original model name Step 5 Preview",
+      "comparison_key": null
+    },
+    {
+      "id": "aa-coding:2.0:ef847aa89b4f0471ffe5275ba2f11771",
+      "benchmark_id": "aa-coding-agent-index::2.0",
+      "subject": {
+        "source_id": "ef847aa89b4f0471ffe5275ba2f11771",
+        "name": "DeepSeek V4.1 Flash",
+        "model_id": null,
+        "variant": null,
+        "harness": "Codex"
+      },
+      "value": 0.473001334419464,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/agents/coding-agents",
+        "retrieved_at": "2026-10-23",
+        "published_at": null,
+        "sha256": "e0d05fe763d97149812181bfb14215ec280d576750a03c12fa32950cd1776040",
+        "file": "ops/cr-545/evidence/aa-coding-agents-v2.0.json",
+        "locator": "rows[4]; DeepSeek V4.1 Flash; Codex; score; original retained collector output"
+      },
+      "protocol": "Coding Agent Index 2.0; complete 3 components; Codex; original model name DeepSeek V4.1 Flash",
+      "comparison_key": null
+    },
+    {
+      "id": "aa-coding:2.0:34e0f78892fac8fd39aff6595d04610e",
+      "benchmark_id": "aa-coding-agent-index::2.0",
+      "subject": {
+        "source_id": "34e0f78892fac8fd39aff6595d04610e",
+        "name": "GPT-6 Astra (max)",
+        "model_id": "gpt-6-astra::max",
+        "variant": "max",
+        "harness": "Codex"
+      },
+      "value": 0.546635690561529,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/agents/coding-agents",
+        "retrieved_at": "2026-10-23",
+        "published_at": null,
+        "sha256": "e0d05fe763d97149812181bfb14215ec280d576750a03c12fa32950cd1776040",
+        "file": "ops/cr-545/evidence/aa-coding-agents-v2.0.json",
+        "locator": "rows[5]; GPT-6 Astra (max); Codex; score; original retained collector output"
+      },
+      "protocol": "Coding Agent Index 2.0; complete 3 components; Codex; original model name GPT-6 Astra (max)",
+      "comparison_key": null
+    },
+    {
+      "id": "aa-coding:2.0:e17ee3a79eab160154a92f31c6c2b1fa",
+      "benchmark_id": "aa-coding-agent-index::2.0",
+      "subject": {
+        "source_id": "e17ee3a79eab160154a92f31c6c2b1fa",
+        "name": "Gemini 3.8 Flash (high)",
+        "model_id": "gemini-3.8-flash::high",
+        "variant": "high",
+        "harness": "Antigravity SDK v0.1.12"
+      },
+      "value": 0.33272301118714,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/agents/coding-agents",
+        "retrieved_at": "2026-10-23",
+        "published_at": null,
+        "sha256": "e0d05fe763d97149812181bfb14215ec280d576750a03c12fa32950cd1776040",
+        "file": "ops/cr-545/evidence/aa-coding-agents-v2.0.json",
+        "locator": "rows[6]; Gemini 3.8 Flash (high); Antigravity SDK v0.1.12; score; original retained collector output"
+      },
+      "protocol": "Coding Agent Index 2.0; complete 3 components; Antigravity SDK v0.1.12; original model name Gemini 3.8 Flash (high)",
+      "comparison_key": null
+    },
+    {
+      "id": "aa-coding:2.0:24c98f188d41522a849006ac453fdebe",
+      "benchmark_id": "aa-coding-agent-index::2.0",
+      "subject": {
+        "source_id": "24c98f188d41522a849006ac453fdebe",
+        "name": "DeepSeek V4.1 Flash 1017",
+        "model_id": null,
+        "variant": null,
+        "harness": "DeepSeek Harness"
+      },
+      "value": 0.463051957532312,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/agents/coding-agents",
+        "retrieved_at": "2026-10-23",
+        "published_at": null,
+        "sha256": "e0d05fe763d97149812181bfb14215ec280d576750a03c12fa32950cd1776040",
+        "file": "ops/cr-545/evidence/aa-coding-agents-v2.0.json",
+        "locator": "rows[7]; DeepSeek V4.1 Flash 1017; DeepSeek Harness; score; original retained collector output"
+      },
+      "protocol": "Coding Agent Index 2.0; complete 3 components; DeepSeek Harness; original model name DeepSeek V4.1 Flash 1017",
+      "comparison_key": null
+    },
+    {
+      "id": "aa-coding:2.0:ee454ece0aab8dacb7127770643dcb6b",
+      "benchmark_id": "aa-coding-agent-index::2.0",
+      "subject": {
+        "source_id": "ee454ece0aab8dacb7127770643dcb6b",
+        "name": "Gemini 4 Argon",
+        "model_id": null,
+        "variant": null,
+        "harness": "Antigravity CLI"
+      },
+      "value": 0.532462665363311,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/agents/coding-agents",
+        "retrieved_at": "2026-10-23",
+        "published_at": null,
+        "sha256": "e0d05fe763d97149812181bfb14215ec280d576750a03c12fa32950cd1776040",
+        "file": "ops/cr-545/evidence/aa-coding-agents-v2.0.json",
+        "locator": "rows[8]; Gemini 4 Argon; Antigravity CLI; score; original retained collector output"
+      },
+      "protocol": "Coding Agent Index 2.0; complete 3 components; Antigravity CLI; original model name Gemini 4 Argon",
+      "comparison_key": null
+    },
+    {
+      "id": "aa-coding:2.0:dabb064c01568bc018ba730cc39c4a96",
+      "benchmark_id": "aa-coding-agent-index::2.0",
+      "subject": {
+        "source_id": "dabb064c01568bc018ba730cc39c4a96",
+        "name": "GPT-6 Astra XHigh + SWE-2 Medium",
+        "model_id": null,
+        "variant": null,
+        "harness": "Devin Fusion CLI"
+      },
+      "value": 0.530769734767025,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/agents/coding-agents",
+        "retrieved_at": "2026-10-23",
+        "published_at": null,
+        "sha256": "e0d05fe763d97149812181bfb14215ec280d576750a03c12fa32950cd1776040",
+        "file": "ops/cr-545/evidence/aa-coding-agents-v2.0.json",
+        "locator": "rows[9]; GPT-6 Astra XHigh + SWE-2 Medium; Devin Fusion CLI; score; original retained collector output"
+      },
+      "protocol": "Coding Agent Index 2.0; complete 3 components; Devin Fusion CLI; original model name GPT-6 Astra XHigh + SWE-2 Medium",
+      "comparison_key": null
+    },
+    {
+      "id": "aa-coding:2.0:9983e10d68576074ad63407d0ca81e4b",
+      "benchmark_id": "aa-coding-agent-index::2.0",
+      "subject": {
+        "source_id": "9983e10d68576074ad63407d0ca81e4b",
+        "name": "Sonnet 5.5 (max)",
+        "model_id": null,
+        "variant": null,
+        "harness": "Claude Code"
+      },
+      "value": 0.593374426631911,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/agents/coding-agents",
+        "retrieved_at": "2026-10-23",
+        "published_at": null,
+        "sha256": "e0d05fe763d97149812181bfb14215ec280d576750a03c12fa32950cd1776040",
+        "file": "ops/cr-545/evidence/aa-coding-agents-v2.0.json",
+        "locator": "rows[10]; Sonnet 5.5 (max); Claude Code; score; original retained collector output"
+      },
+      "protocol": "Coding Agent Index 2.0; complete 3 components; Claude Code; original model name Sonnet 5.5 (max)",
+      "comparison_key": null
+    },
+    {
+      "id": "aa-coding:2.0:52f72f7f3393c5edf92b32326e7a678d",
+      "benchmark_id": "aa-coding-agent-index::2.0",
+      "subject": {
+        "source_id": "52f72f7f3393c5edf92b32326e7a678d",
+        "name": "Muse Wonder (max)",
+        "model_id": null,
+        "variant": null,
+        "harness": "Muse Code"
+      },
+      "value": 0.519768236993592,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/agents/coding-agents",
+        "retrieved_at": "2026-10-23",
+        "published_at": null,
+        "sha256": "e0d05fe763d97149812181bfb14215ec280d576750a03c12fa32950cd1776040",
+        "file": "ops/cr-545/evidence/aa-coding-agents-v2.0.json",
+        "locator": "rows[11]; Muse Wonder (max); Muse Code; score; original retained collector output"
+      },
+      "protocol": "Coding Agent Index 2.0; complete 3 components; Muse Code; original model name Muse Wonder (max)",
+      "comparison_key": null
+    },
+    {
+      "id": "aa-coding:2.0:d843fce803ff4f84ababc47040306116",
+      "benchmark_id": "aa-coding-agent-index::2.0",
+      "subject": {
+        "source_id": "d843fce803ff4f84ababc47040306116",
+        "name": "Muse Spark Open (xhigh)",
+        "model_id": null,
+        "variant": null,
+        "harness": "Muse Code"
+      },
+      "value": 0.263007023894863,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/agents/coding-agents",
+        "retrieved_at": "2026-10-23",
+        "published_at": null,
+        "sha256": "e0d05fe763d97149812181bfb14215ec280d576750a03c12fa32950cd1776040",
+        "file": "ops/cr-545/evidence/aa-coding-agents-v2.0.json",
+        "locator": "rows[12]; Muse Spark Open (xhigh); Muse Code; score; original retained collector output"
+      },
+      "protocol": "Coding Agent Index 2.0; complete 3 components; Muse Code; original model name Muse Spark Open (xhigh)",
+      "comparison_key": null
+    },
+    {
+      "id": "aa-coding:2.0:1630d319b5e4dc5183cb88a2b2af1646",
+      "benchmark_id": "aa-coding-agent-index::2.0",
+      "subject": {
+        "source_id": "1630d319b5e4dc5183cb88a2b2af1646",
+        "name": "Qwen3.8 Max",
+        "model_id": "qwen3.8-max::default",
+        "variant": "default",
+        "harness": "Claude Code"
+      },
+      "value": 0.392199207885305,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/agents/coding-agents",
+        "retrieved_at": "2026-10-23",
+        "published_at": null,
+        "sha256": "e0d05fe763d97149812181bfb14215ec280d576750a03c12fa32950cd1776040",
+        "file": "ops/cr-545/evidence/aa-coding-agents-v2.0.json",
+        "locator": "rows[13]; Qwen3.8 Max; Claude Code; score; original retained collector output"
+      },
+      "protocol": "Coding Agent Index 2.0; complete 3 components; Claude Code; original model name Qwen3.8 Max",
+      "comparison_key": null
+    },
+    {
+      "id": "aa-coding:2.0:736e1c6006fd243c9cc384b61c478e97",
+      "benchmark_id": "aa-coding-agent-index::2.0",
+      "subject": {
+        "source_id": "736e1c6006fd243c9cc384b61c478e97",
+        "name": "Claude Opus 5.5 Max + GPT-6 Luna High",
+        "model_id": null,
+        "variant": null,
+        "harness": "Devin Fusion CLI"
+      },
+      "value": 0.615117219506897,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/agents/coding-agents",
+        "retrieved_at": "2026-10-23",
+        "published_at": null,
+        "sha256": "e0d05fe763d97149812181bfb14215ec280d576750a03c12fa32950cd1776040",
+        "file": "ops/cr-545/evidence/aa-coding-agents-v2.0.json",
+        "locator": "rows[14]; Claude Opus 5.5 Max + GPT-6 Luna High; Devin Fusion CLI; score; original retained collector output"
+      },
+      "protocol": "Coding Agent Index 2.0; complete 3 components; Devin Fusion CLI; original model name Claude Opus 5.5 Max + GPT-6 Luna High",
+      "comparison_key": null
+    },
+    {
+      "id": "aa-coding:2.0:fe6df4d0f0b5360790e73d6d8830d7a0",
+      "benchmark_id": "aa-coding-agent-index::2.0",
+      "subject": {
+        "source_id": "fe6df4d0f0b5360790e73d6d8830d7a0",
+        "name": "Claude Fable 5.1 XHigh + SWE-2 Medium",
+        "model_id": null,
+        "variant": null,
+        "harness": "Devin Fusion CLI"
+      },
+      "value": 0.586619030954708,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/agents/coding-agents",
+        "retrieved_at": "2026-10-23",
+        "published_at": null,
+        "sha256": "e0d05fe763d97149812181bfb14215ec280d576750a03c12fa32950cd1776040",
+        "file": "ops/cr-545/evidence/aa-coding-agents-v2.0.json",
+        "locator": "rows[15]; Claude Fable 5.1 XHigh + SWE-2 Medium; Devin Fusion CLI; score; original retained collector output"
+      },
+      "protocol": "Coding Agent Index 2.0; complete 3 components; Devin Fusion CLI; original model name Claude Fable 5.1 XHigh + SWE-2 Medium",
+      "comparison_key": null
+    },
+    {
+      "id": "aa-coding:2.0:047ef12b001416f72e30e1ad633988e2",
+      "benchmark_id": "aa-coding-agent-index::2.0",
+      "subject": {
+        "source_id": "047ef12b001416f72e30e1ad633988e2",
+        "name": "Muse Wonder Full (max)",
+        "model_id": null,
+        "variant": null,
+        "harness": "Muse Code"
+      },
+      "value": 0.588804489084392,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/agents/coding-agents",
+        "retrieved_at": "2026-10-23",
+        "published_at": null,
+        "sha256": "e0d05fe763d97149812181bfb14215ec280d576750a03c12fa32950cd1776040",
+        "file": "ops/cr-545/evidence/aa-coding-agents-v2.0.json",
+        "locator": "rows[16]; Muse Wonder Full (max); Muse Code; score; original retained collector output"
+      },
+      "protocol": "Coding Agent Index 2.0; complete 3 components; Muse Code; original model name Muse Wonder Full (max)",
+      "comparison_key": null
+    },
+    {
+      "id": "aa-coding:2.0:3897d72a57138fd2e2353367570b4b37",
+      "benchmark_id": "aa-coding-agent-index::2.0",
+      "subject": {
+        "source_id": "3897d72a57138fd2e2353367570b4b37",
+        "name": "GPT-6.1 Sol (max)",
+        "model_id": null,
+        "variant": null,
+        "harness": "Codex"
+      },
+      "value": 0.541279798631476,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/agents/coding-agents",
+        "retrieved_at": "2026-10-23",
+        "published_at": null,
+        "sha256": "e0d05fe763d97149812181bfb14215ec280d576750a03c12fa32950cd1776040",
+        "file": "ops/cr-545/evidence/aa-coding-agents-v2.0.json",
+        "locator": "rows[17]; GPT-6.1 Sol (max); Codex; score; original retained collector output"
+      },
+      "protocol": "Coding Agent Index 2.0; complete 3 components; Codex; original model name GPT-6.1 Sol (max)",
+      "comparison_key": null
+    },
+    {
+      "id": "aa-coding:2.0:accfbb12d349c0f2c93547ce814534b2",
+      "benchmark_id": "aa-coding-agent-index::2.0",
+      "subject": {
+        "source_id": "accfbb12d349c0f2c93547ce814534b2",
+        "name": "Beam 1.0",
+        "model_id": "beam-1.0::default",
+        "variant": "default",
+        "harness": "Mirror"
+      },
+      "value": 0.20478987379168,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/agents/coding-agents",
+        "retrieved_at": "2026-10-23",
+        "published_at": null,
+        "sha256": "e0d05fe763d97149812181bfb14215ec280d576750a03c12fa32950cd1776040",
+        "file": "ops/cr-545/evidence/aa-coding-agents-v2.0.json",
+        "locator": "rows[18]; Beam 1.0; Mirror; score; original retained collector output"
+      },
+      "protocol": "Coding Agent Index 2.0; complete 3 components; Mirror; original model name Beam 1.0",
+      "comparison_key": null
+    },
+    {
+      "id": "aa-coding:2.0:88c83705811535bca8ee000bfd3a256c",
+      "benchmark_id": "aa-coding-agent-index::2.0",
+      "subject": {
+        "source_id": "88c83705811535bca8ee000bfd3a256c",
+        "name": "Kimi K3",
+        "model_id": "kimi-k3::default",
+        "variant": "default",
+        "harness": "Kimi Code CLI"
+      },
+      "value": 0.41417319257087,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/agents/coding-agents",
+        "retrieved_at": "2026-10-23",
+        "published_at": null,
+        "sha256": "e0d05fe763d97149812181bfb14215ec280d576750a03c12fa32950cd1776040",
+        "file": "ops/cr-545/evidence/aa-coding-agents-v2.0.json",
+        "locator": "rows[19]; Kimi K3; Kimi Code CLI; score; original retained collector output"
+      },
+      "protocol": "Coding Agent Index 2.0; complete 3 components; Kimi Code CLI; original model name Kimi K3",
+      "comparison_key": null
+    },
+    {
+      "id": "aa-coding:2.0:2a2fed494e0d1343b14efe96e6bc3669",
+      "benchmark_id": "aa-coding-agent-index::2.0",
+      "subject": {
+        "source_id": "2a2fed494e0d1343b14efe96e6bc3669",
+        "name": "Haiku 5.5 (max)",
+        "model_id": null,
+        "variant": null,
+        "harness": "Claude Code"
+      },
+      "value": 0.373496050722277,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/agents/coding-agents",
+        "retrieved_at": "2026-10-23",
+        "published_at": null,
+        "sha256": "e0d05fe763d97149812181bfb14215ec280d576750a03c12fa32950cd1776040",
+        "file": "ops/cr-545/evidence/aa-coding-agents-v2.0.json",
+        "locator": "rows[20]; Haiku 5.5 (max); Claude Code; score; original retained collector output"
+      },
+      "protocol": "Coding Agent Index 2.0; complete 3 components; Claude Code; original model name Haiku 5.5 (max)",
+      "comparison_key": null
+    },
+    {
+      "id": "aa-coding:2.0:5c82a7985b08f35190cc0db574fd1773",
+      "benchmark_id": "aa-coding-agent-index::2.0",
+      "subject": {
+        "source_id": "5c82a7985b08f35190cc0db574fd1773",
+        "name": "Fable 5.1 (max) (with fallback)",
+        "model_id": "claude-fable-5.1::max",
+        "variant": "max",
+        "harness": "Claude Code"
+      },
+      "value": 0.576200245682633,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/agents/coding-agents",
+        "retrieved_at": "2026-10-23",
+        "published_at": null,
+        "sha256": "e0d05fe763d97149812181bfb14215ec280d576750a03c12fa32950cd1776040",
+        "file": "ops/cr-545/evidence/aa-coding-agents-v2.0.json",
+        "locator": "rows[21]; Fable 5.1 (max) (with fallback); Claude Code; score; original retained collector output"
+      },
+      "protocol": "Coding Agent Index 2.0; complete 3 components; Claude Code; original model name Fable 5.1 (max) (with fallback)",
+      "comparison_key": null
+    },
+    {
+      "id": "aa-coding:2.0:f8b3c23615b8b60e23364c27e8494d6d",
+      "benchmark_id": "aa-coding-agent-index::2.0",
+      "subject": {
+        "source_id": "f8b3c23615b8b60e23364c27e8494d6d",
+        "name": "Opus 5.5 (max)",
+        "model_id": null,
+        "variant": null,
+        "harness": "Claude Code"
+      },
+      "value": 0.616528649505811,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/agents/coding-agents",
+        "retrieved_at": "2026-10-23",
+        "published_at": null,
+        "sha256": "e0d05fe763d97149812181bfb14215ec280d576750a03c12fa32950cd1776040",
+        "file": "ops/cr-545/evidence/aa-coding-agents-v2.0.json",
+        "locator": "rows[22]; Opus 5.5 (max); Claude Code; score; original retained collector output"
+      },
+      "protocol": "Coding Agent Index 2.0; complete 3 components; Claude Code; original model name Opus 5.5 (max)",
+      "comparison_key": null
+    },
+    {
+      "id": "aa-coding:2.0:96d7404e06194027474a6cc3bb31c068",
+      "benchmark_id": "aa-coding-agent-index::2.0",
+      "subject": {
+        "source_id": "96d7404e06194027474a6cc3bb31c068",
+        "name": "GLM-5.3",
+        "model_id": null,
+        "variant": null,
+        "harness": "Opencode"
+      },
+      "value": 0.489161690344303,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/agents/coding-agents",
+        "retrieved_at": "2026-10-23",
+        "published_at": null,
+        "sha256": "e0d05fe763d97149812181bfb14215ec280d576750a03c12fa32950cd1776040",
+        "file": "ops/cr-545/evidence/aa-coding-agents-v2.0.json",
+        "locator": "rows[23]; GLM-5.3; Opencode; score; original retained collector output"
+      },
+      "protocol": "Coding Agent Index 2.0; complete 3 components; Opencode; original model name GLM-5.3",
+      "comparison_key": null
+    },
+    {
       "id": "realswe::snapshot-2026-09-12:gemini",
       "benchmark_id": "realswe::snapshot-2026-09-12",
       "subject": {
@@ -530623,7 +531199,13 @@
       "benchmark_id": "aa-coding-agent-index::1.5",
       "status": "collected",
       "source_url": "https://artificialanalysis.ai/agents/coding-agents",
-      "reason": "Reviewed 1.5 snapshot. Separate registry observations; no Composite attachment."
+      "reason": "Reviewed 1.5 snapshot. Frozen last v1.5 capture (AA moved to v2.0); separate registry observations; no Composite attachment."
+    },
+    {
+      "benchmark_id": "aa-coding-agent-index::2.0",
+      "status": "collected",
+      "source_url": "https://artificialanalysis.ai/agents/coding-agents",
+      "reason": "Reviewed 2.0 snapshot. Separate registry observations; no Composite attachment."
     },
     {
       "benchmark_id": "realswe::snapshot-2026-09-12",

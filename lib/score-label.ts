@@ -2,8 +2,8 @@ import { SCORE_LABELS, type ScoreKey } from './types';
 export function scoreVersion(key: ScoreKey, dates?: Record<string, string>) {
   if (key === 'composite') return `7 fixed inputs; Epoch ECI ${dates?.epoch_eci?.slice(0, 10) || 'date unavailable'}; Coding Agent v1.4`;
   if (key === 'epoch_eci' || key === 'epoch_eci_software') return `Epoch source ${dates?.epoch_eci?.slice(0, 10) || 'date unavailable'}`;
-  // CR-65.11: the pinned value is the retained v1.4 snapshot; AA itself now publishes v1.5.
-  if (key === 'aa_coding_agent') return `v1.4 snapshot ${dates?.aa_coding_agents || 'date unavailable'} (AA now publishes v1.5)`;
+  // CR-65.11: the pinned value is the retained v1.4 snapshot; AA itself now publishes v2.0.
+  if (key === 'aa_coding_agent') return `v1.4 snapshot ${dates?.aa_coding_agents || 'date unavailable'} (AA now publishes v2.0)`;
   // CR-34.4: the Agentic Index is relayed from Artificial Analysis by OpenRouter's
   // Benchmarks API (AA's own free API has no agentic field); its date is the relay capture.
   if (key === 'aa_agentic_index') return `snapshot ${dates?.openrouter_aa_relay || 'date unavailable'} · Artificial Analysis via OpenRouter`;

@@ -182,7 +182,7 @@
     },
     "aa_input": {
       "label": "AA index input",
-      "tip": "A benchmark Artificial Analysis averages into its Coding Index (Terminal-Bench, SciCode) or Coding Agent Index v1.5 (DeepSWE, Terminal-Bench 4.0, SWE-Atlas-QnA). The row shows this source’s own published results."
+      "tip": "A benchmark Artificial Analysis averages into its Coding Index (Terminal-Bench, SciCode) or Coding Agent Index (v1.5: DeepSWE, Terminal-Bench 4.0, SWE-Atlas-QnA; v2.0: FrontierCode v1.1, Terminal-Bench 4.0, SWE-Atlas-QnA-AA). The row shows this source’s own published results."
     },
     "retired": {
       "label": "Retired",
@@ -374,13 +374,19 @@
     ]
   },
   "best_of": {
-    "note": "CR-41.1 (Florian 2026-09-16): presentation-level merge. One board run through these agent harnesses reads as one row holding each model's best recorded result; boards listed under across_versions also merge their versions. Every run stays separate in the benchmark view, the API and on the result page each value links to. Only rows with the same key, unit and direction merge.",
+    "note": "CR-41.1 (Florian 2026-09-16): presentation-level merge. One board run through these agent harnesses reads as one row holding each model's best recorded result; boards listed under across_versions also merge their versions. Every run stays separate in the benchmark view, the API and on the result page each value links to. Only rows with the same key, unit and direction merge. CR-545 (2026-10-23): the Coding Agent Index merges only v1.4 and v1.5; v2.0 changed two of its three components and stays a separate row, never compared with them.",
     "harness_cohorts": [
       "Claude Code",
       "Codex"
     ],
     "across_versions": [
-      "aa-coding-agent-index"
+      {
+        "key": "aa-coding-agent-index",
+        "versions": [
+          "1.4",
+          "1.5"
+        ]
+      }
     ]
   },
   "benchmark_kinds_note": "CR-64 (Florian 2026-09-16): what each benchmark measures. capability = a task result; cost = money spent per task/rollout/test for a published run; efficiency = tokens, latency, speed or throughput. Only capability benchmarks enter the Benchmaxxing signal, report and radar; cost and efficiency stay visible in the tables and the cost views. Every benchmark key has an explicit entry (tested).",

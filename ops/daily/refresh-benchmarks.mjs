@@ -7,6 +7,7 @@ import { promisify, isDeepStrictEqual as equal } from 'node:util';
 import { writeJSONAtomic } from '../../lib/snapshot.mjs';
 import { parseAaBenchmarkFields, assertAaBenchmarkContinuity, aaNativeReviewEvidence } from '../../lib/aa-benchmark-fields.mjs';
 import { flightRecords, objects } from '../../lib/aa-rsc.mjs';
+import { CODING_AGENT_FILE, CODING_AGENT_VERSION } from '../../lib/aa-coding-agents.mjs';
 import { reviewArtifact, batchRows, sha256, defaultRunner } from './gauntlet.mjs';
 import { mapWithConcurrency, dailyConcurrency } from './concurrency.mjs';
 import { unlimitedReviewBudget, isBudgetExhausted } from './step-budget.mjs';
@@ -634,23 +635,26 @@ export async function refreshBenchmarks({ runDir, review = reviewArtifact, runne
   // Compare the complete public Real-SWE sample with its frozen observation lock.
   // Changed samples are retained for a reviewed dated release, never relabelled.
   checks.push(...await checkRealSweSnapshot({ entries: registry.entries, receipts: [...captured.values()], lock: lock.realswe }));
-  // Coding v1.5 has already passed complete primary-source review in the live
-  // stage. Preserve the v1.4 lock and snapshot without changing their dates.
+  // The current Coding Agent version (v2.0 since CR-545) has already passed complete primary-source review in the
+  // live stage. Preserve the v1.4 and frozen v1.5 locks and snapshots without changing their dates.
   const liveReview = await json(join(runDir, 'reports', 'live-step-result.json'));
   if (liveReview.ok !== true || liveReview.gauntlet?.complete !== true) throw new Error('Benchmark publication requires the completed live gauntlet');
-  const coding = await json('data/raw/aa-coding-agents-v1.5.json');
-  if (coding.version !== '1.5' || !coding.rows.length || coding.rows.some((r) => r.complete !== true)) throw new Error('Invalid current Coding Agent v1.5 snapshot');
-  const codingFile = join(evidenceDir, 'aa-coding-agents-v1.5.json');
-  await cp('data/raw/aa-coding-agents-v1.5.json', codingFile);
-  lock.coding['1.5'] = { file: codingFile, sha256: sha256(await readFile(codingFile)) };
+  const coding = await json(`data/raw/${CODING_AGENT_FILE}`);
+  if (coding.version !== CODING_AGENT_VERSION || !coding.rows.length || coding.rows.some((r) => r.complete !== true)) throw new Error(`Invalid current Coding Agent v${CODING_AGENT_VERSION} snapshot`);
+  const codingFile = join(evidenceDir, CODING_AGENT_FILE);
+  await cp(`data/raw/${CODING_AGENT_FILE}`, codingFile);
+  lock.coding[CODING_AGENT_VERSION] = { file: codingFile, sha256: sha256(await readFile(codingFile)) };
   // CR-67.2: when the live contract was withheld, this is the restored published snapshot, not a fresh update.
-  const codingRetained = (liveReview.gauntlet?.retained_contracts ?? []).some((r) => r.dataset === 'aa_coding_v15');
-  // CR-542: the source moved to a new index version; v1.5 stays on its dated identity until a reviewed adoption.
-  const codingWithheld = liveReview.deterministic?.retained?.aa_coding_v15 ?? null;
+  const codingRetained = (liveReview.gauntlet?.retained_contracts ?? []).some((r) => r.dataset === 'aa_coding_current');
+  // CR-542: the source moved to a new index version; the pinned version stays on its dated identity until a reviewed adoption.
+  const codingWithheld = liveReview.deterministic?.retained?.aa_coding_current ?? null;
+  const codingId = `aa-coding-agent-index::${CODING_AGENT_VERSION}`;
   checks.push(codingWithheld
-    ? { id: 'aa-coding-agent-index::1.5', status: 'source_changed_retained', rows: coding.rows.length, collected_at: coding.collected_at,
-      reason: `AA Coding Agent Index page now states v${codingWithheld.page_version}; the v1.5 snapshot of ${coding.collected_at} is retained with its own date until the new version is reviewed and registered separately.` }
-    : { id: 'aa-coding-agent-index::1.5', status: codingRetained ? 'retained_after_dispute' : 'updated', rows: coding.rows.length, ...(codingRetained ? { collected_at: coding.collected_at } : {}) });
+    ? { id: codingId, status: 'source_changed_retained', rows: coding.rows.length, collected_at: coding.collected_at,
+      reason: `AA Coding Agent Index page now states v${codingWithheld.page_version}; the v${CODING_AGENT_VERSION} snapshot of ${coding.collected_at} is retained with its own date until the new version is reviewed and registered separately.` }
+    : { id: codingId, status: codingRetained ? 'retained_after_dispute' : 'updated', rows: coding.rows.length, ...(codingRetained ? { collected_at: coding.collected_at } : {}) });
+  // CR-545: the frozen v1.5 identity gets no check here; like v1.4 it falls through to the registry's
+  // retained-protocol check below (no adapter), so it is not reported as an open source change.
   // CR-34.2/34.3: OpenRouter's own runs are a dated snapshot board, like Real-SWE and DeepSWE:
   // their ingested values stay bound to the registry-dated capture in the ingestion lock, and a
   // newer capture becomes a new dated registry identity in a reviewed change, never a silent

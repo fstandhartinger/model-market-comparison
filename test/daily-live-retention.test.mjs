@@ -12,8 +12,8 @@ import { MAX_RETAINED_CONTRACTS, planRejectedContract, retainPriorSnapshot, revi
 import { DAILY_FRESH_SOURCES, sourceFreshnessErrors } from '../ops/daily/policy.mjs';
 
 // Today's two example rows, as staged (values verbatim from the retained capture of run 2026-09-17T05-17-01).
-const example1 = { row_id: 'aa_coding_v15#00001', score: 0.519259105470924, components: [0.684365781710915, 0.661290322580645, 0.212121212121212] };
-const example15 = { row_id: 'aa_coding_v15#00015', score: 0.4305203524444174, components: [0.572271386430678, 0.618279569892473, 0.101010101010101] };
+const example1 = { row_id: 'aa_coding_current#00001', score: 0.519259105470924, components: [0.684365781710915, 0.661290322580645, 0.212121212121212] };
+const example15 = { row_id: 'aa_coding_current#00015', score: 0.4305203524444174, components: [0.572271386430678, 0.618279569892473, 0.101010101010101] };
 const mean = (xs) => xs.reduce((a, b) => a + b, 0) / xs.length;
 
 async function disputeRunner(args) {
@@ -22,8 +22,8 @@ async function disputeRunner(args) {
   const critic = args.includes('--critic');
   const object = critic ? {
     artifact_id: packet.match(/ARTIFACT_ID: (.*)/)[1], artifact_sha256: packet.match(/ARTIFACT_SHA256: (.*)/)[1], round: Number(packet.match(/ROUND: (\d+)/)[1]),
-    verdict: 'pass', coverage_checked: ['aa_coding_v15', 'mapping', 'safety'], errors_found: 0, findings: [], fixed: [], uncertainties: [], missing_evidence: [],
-  } : { rows: [{ id: 'aa_coding_v15', status: 'mismatch', note: `Supplied primary example #00015 has staged score ${example15.score}, but mean of listed component scores (${example1.components.join(', ')}) is ${mean(example1.components)}` }] };
+    verdict: 'pass', coverage_checked: ['aa_coding_current', 'mapping', 'safety'], errors_found: 0, findings: [], fixed: [], uncertainties: [], missing_evidence: [],
+  } : { rows: [{ id: 'aa_coding_current', status: 'mismatch', note: `Supplied primary example #00015 has staged score ${example15.score}, but mean of listed component scores (${example1.components.join(', ')}) is ${mean(example1.components)}` }] };
   const body = JSON.stringify(object) + '\n';
   await writeFile(out, body);
   const model = critic ? 'z-ai/glm-5.3-flash' : 'deepseek/deepseek-v4-flash-0731';
@@ -39,43 +39,43 @@ test('CR-67.1: the producer claim was an arithmetic mix-up — both staged score
 test('CR-67.1/67.2: the dispute still rejects the contract, and the run withholds only that dataset', async () => {
   const dir = await mkdtemp(join(tmpdir(), 'bh-live-retention-'));
   try {
-    const rows = [{ id: 'aa_coding_v15', mapping: 'score == mean of the 3 component rewards (1e-9)' }];
+    const rows = [{ id: 'aa_coding_current', mapping: 'score == mean of the 3 component rewards (1e-9)' }];
     const content = JSON.stringify(example15);
-    const review = await reviewArtifact({ runDir: dir, artifactId: 'live-contract-aa_coding_v15', rows, sources: [{ url: 'https://artificialanalysis.ai/agents/coding-agents', sha256: sha256(content), locator: 'benchmarkRows[14]', content }],
+    const review = await reviewArtifact({ runDir: dir, artifactId: 'live-contract-aa_coding_current', rows, sources: [{ url: 'https://artificialanalysis.ai/agents/coding-agents', sha256: sha256(content), locator: 'benchmarkRows[14]', content }],
       criteria: ['mapping'], runner: disputeRunner, maxRounds: 1 });
     // The rule stands: producer uncertainty is not overruled by the critic's pass.
     assert.equal(review.accepted, false);
-    assert.deepEqual(review.quarantined.map((r) => r.id), ['aa_coding_v15']);
+    assert.deepEqual(review.quarantined.map((r) => r.id), ['aa_coding_current']);
     // The secondary contract is withheld; the prior published snapshot is restored byte for byte.
-    const plan = planRejectedContract('aa_coding_v15');
+    const plan = planRejectedContract('aa_coding_current');
     assert.equal(plan.action, 'retain');
     const runDir = join(dir, 'run'), rawDir = join(dir, 'work', 'data', 'raw');
     await mkdir(join(runDir, 'before', 'raw'), { recursive: true }); await mkdir(rawDir, { recursive: true });
     const prior = JSON.stringify({ version: '1.5', collected_at: '2026-09-16', rows: [{ score: 0.43 }] });
-    await writeFile(join(runDir, 'before', 'raw', 'aa-coding-agents-v1.5.json'), prior);
-    await writeFile(join(rawDir, 'aa-coding-agents-v1.5.json'), JSON.stringify({ version: '1.5', collected_at: '2026-09-17', rows: [{ score: 0.4305203524444174 }] }));
-    const record = await retainPriorSnapshot({ runDir, rawDir, dataset: 'aa_coding_v15', errors: review.errors });
-    assert.equal(await readFile(join(rawDir, 'aa-coding-agents-v1.5.json'), 'utf8'), prior);
-    assert.deepEqual([record.source, record.restored[0].file, record.restored[0].retained_collected_at, record.restored[0].retained_sha256], ['aa_coding_agents_v1_5', 'data/raw/aa-coding-agents-v1.5.json', '2026-09-16', sha256(prior)]);
+    await writeFile(join(runDir, 'before', 'raw', 'aa-coding-agents-v2.0.json'), prior);
+    await writeFile(join(rawDir, 'aa-coding-agents-v2.0.json'), JSON.stringify({ version: '2.0', collected_at: '2026-09-17', rows: [{ score: 0.4305203524444174 }] }));
+    const record = await retainPriorSnapshot({ runDir, rawDir, dataset: 'aa_coding_current', errors: review.errors });
+    assert.equal(await readFile(join(rawDir, 'aa-coding-agents-v2.0.json'), 'utf8'), prior);
+    assert.deepEqual([record.source, record.restored[0].file, record.restored[0].retained_collected_at, record.restored[0].retained_sha256], ['aa_coding_agents_v2_0', 'data/raw/aa-coding-agents-v2.0.json', '2026-09-16', sha256(prior)]);
     assert.ok(record.reasons.length > 0 && record.restored[0].rejected_capture_sha256);
     // Freshness: the withheld source keeps its published date; every other source must still be today's.
     const day = '2026-09-17';
     const before = { sources: Object.fromEntries(DAILY_FRESH_SOURCES.map((k) => [k, '2026-09-16'])) };
-    const after = { sources: { ...Object.fromEntries(DAILY_FRESH_SOURCES.map((k) => [k, day])), aa_coding_agents_v1_5: '2026-09-16' } };
-    assert.deepEqual(sourceFreshnessErrors({ day, before, after, retained: ['aa_coding_agents_v1_5'] }), []);
-    assert.match(sourceFreshnessErrors({ day, before, after }).join(), /aa_coding_agents_v1_5 is not today/);
-    assert.match(sourceFreshnessErrors({ day, before, after: { sources: { ...after.sources, aa_coding_agents_v1_5: day } }, retained: ['aa_coding_agents_v1_5'] }).join(), /withheld but its date changed/);
+    const after = { sources: { ...Object.fromEntries(DAILY_FRESH_SOURCES.map((k) => [k, day])), aa_coding_agents_v2_0: '2026-09-16' } };
+    assert.deepEqual(sourceFreshnessErrors({ day, before, after, retained: ['aa_coding_agents_v2_0'] }), []);
+    assert.match(sourceFreshnessErrors({ day, before, after }).join(), /aa_coding_agents_v2_0 is not today/);
+    assert.match(sourceFreshnessErrors({ day, before, after: { sources: { ...after.sources, aa_coding_agents_v2_0: day } }, retained: ['aa_coding_agents_v2_0'] }).join(), /withheld but its date changed/);
     const epochRetained = { sources: { ...Object.fromEntries(DAILY_FRESH_SOURCES.map((k) => [k, day])), epoch_eci: '2026-09-16' } };
     assert.deepEqual(sourceFreshnessErrors({ day, before, after: epochRetained, retained: ['epoch_eci'] }), []);
     // No prior copy → nothing to fall back to → the run fails.
-    await assert.rejects(retainPriorSnapshot({ runDir: join(dir, 'empty'), rawDir, dataset: 'aa_coding_v15' }));
+    await assert.rejects(retainPriorSnapshot({ runDir: join(dir, 'empty'), rawDir, dataset: 'aa_coding_current' }));
   } finally { await rm(dir, { recursive: true, force: true }); }
 });
 
 test('CR-67.2: core contracts still fail the run closed; every retainable contract may be withheld (17 Sep)', () => {
   for (const core of ['aa', 'da', 'or', 'unknown']) assert.equal(planRejectedContract(core).action, 'fail', core);
   // 17 Sep 05:49 run: the or_efficiency critic asked for cache prices the source does not publish (it read the prompt/completion
-  // prices as cache prices). Efficiency datasets are retainable like aa_coding_v15 — withheld, never accepted.
+  // prices as cache prices). Efficiency datasets are retainable like aa_coding_current — withheld, never accepted.
   for (const [dataset, source] of [['or_efficiency', 'openrouter_efficiency'], ['aa_efficiency', 'aa_efficiency'], ['chutes_efficiency', 'chutes_efficiency']]) {
     assert.deepEqual([planRejectedContract(dataset).action, planRejectedContract(dataset).source], ['retain', source]);
   }
@@ -112,9 +112,9 @@ test('17 Sep: a substantive objection is never treated as an unavailable reviewe
     const content = JSON.stringify(example15);
     // Producer flags the row, then the critic answers malformed: the producer's dispute must survive.
     const flaggedThenMalformed = async (args) => (args.includes('--critic') ? malformedRunner(args) : disputeRunner(args));
-    const review = await reviewArtifact({ runDir: dir, artifactId: 'live-contract-aa_coding_v15', rows: [{ id: 'aa_coding_v15', mapping: 'mean' }],
+    const review = await reviewArtifact({ runDir: dir, artifactId: 'live-contract-aa_coding_current', rows: [{ id: 'aa_coding_current', mapping: 'mean' }],
       sources: [{ url: 'https://artificialanalysis.ai/x', sha256: sha256(content), locator: 'x', content }], criteria: ['mapping'], runner: flaggedThenMalformed, maxRounds: 1 });
-    assert.deepEqual(review.producer_disputed, ['aa_coding_v15']);
+    assert.deepEqual(review.producer_disputed, ['aa_coding_current']);
     assert.equal(reviewerUnavailable(review), false);
   } finally { await rm(dir, { recursive: true, force: true }); }
   // An objection inside an answer the strict parser rejects (errors_found miscounted) still counts as an objection.

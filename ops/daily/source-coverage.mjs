@@ -38,7 +38,7 @@ export function sourceCoverage({ registry, plan, report, observations = [] }) {
     if (check?.collector === 'frozen-vendor-document') mode = 'frozen_document';
     if (check?.collector === 'realswe-frozen-snapshot') mode = 'snapshot_comparison';
     if (access?.mode === 'browser_only') mode = 'browser_only';
-    if (entry.id === 'aa-coding-agent-index::1.4') mode = 'frozen_snapshot';
+    if (entry.id === 'aa-coding-agent-index::1.4' || entry.id === 'aa-coding-agent-index::1.5') mode = 'frozen_snapshot';
     if (entry.family === 'jevbench' || entry.id.startsWith('jevbench::')) mode = 'on_demand_evaluation';
     let status, reason;
     if (FAILURE.has(check?.status)) {

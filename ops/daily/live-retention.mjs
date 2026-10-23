@@ -8,6 +8,7 @@ import { cp, readFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { createHash } from 'node:crypto';
 import { GAUNTLET_LIMITS } from './gauntlet.mjs';
+import { CODING_AGENT_FILE, CODING_AGENT_SOURCE_KEY } from '../../lib/aa-coding-agents.mjs';
 
 // 17 Sep 2026 (Florian: single problems must stop blocking whole days): every retainable secondary contract may be withheld
 // in the same run — the 09:16 run failed because or_efficiency was the second one. Core sources still fail closed.
@@ -16,7 +17,8 @@ export const MAX_RETAINED_CONTRACTS = 4;
 // Headline and price sources (AA, DesignArena, OpenRouter models/endpoints) are never retainable. The token-efficiency
 // datasets are: a day-old cache-hit rate or usage ratio keeps its own date, like the rotated pages they already retain.
 export const RETAINABLE_CONTRACTS = {
-  aa_coding_v15: { files: ['aa-coding-agents-v1.5.json'], source: 'aa_coding_agents_v1_5' },
+  // CR-545: the current Coding Agent version (v2.0); the frozen v1.5 file is never a live contract.
+  aa_coding_current: { files: [CODING_AGENT_FILE], source: CODING_AGENT_SOURCE_KEY },
   aa_efficiency: { files: ['aa-efficiency.json'], source: 'aa_efficiency' },
   or_efficiency: { files: ['openrouter-efficiency.json'], source: 'openrouter_efficiency' },
   chutes_efficiency: { files: ['chutes-efficiency.json'], source: 'chutes_efficiency' },

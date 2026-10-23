@@ -47,6 +47,7 @@ for (const rawAccepted of [true, false]) {
         { url: protocolUrl, status: 200, sha256: sha256(protocolText), file: join(dir, 'run/sources/protocol.gz'), retrieved_at: '2026-09-29T05:17:00Z' },
       ].map(JSON.stringify).join('\n'));
       await write('run/reports/live-step-result.json', { ok: true, gauntlet: { complete: true } });
+      await write('data/raw/aa-coding-agents-v2.0.json', { version: '2.0', rows: [{ complete: true }] });
       await write('data/raw/aa-coding-agents-v1.5.json', { version: '1.5', rows: [{ complete: true }] });
       await write('scripts/capture-benchmark-sources.py', 'import sys,json,pathlib\nassert json.load(open(sys.argv[1])) == []\npathlib.Path(sys.argv[2],"manifest.json").write_text("[]")\n');
       await write('ops/daily/public-candidate.py', 'import sys,gzip\nprint(gzip.open(sys.argv[2],"rt").read())\n');

@@ -334,7 +334,7 @@ export function selectProducerCritic(catalog, { maxUsdPerMtok = MAX_WORKER_USD_P
 // and efficiency snapshot keeps its own date, so a price change can publish in minutes, not after a full run.
 export const DAILY_SCOPES = ['full', 'prices'];
 // Sources the dataset dates; `full` needs all of them from today.
-export const DAILY_FRESH_SOURCES = ['artificialanalysis', 'designarena', 'openrouter', 'aa_coding_agents_v1_5', 'aa_efficiency', 'openrouter_efficiency', 'chutes_efficiency', 'epoch_eci'];
+export const DAILY_FRESH_SOURCES = ['artificialanalysis', 'designarena', 'openrouter', 'aa_coding_agents_v2_0', 'aa_efficiency', 'openrouter_efficiency', 'chutes_efficiency', 'epoch_eci'];
 export const PRICES_SCOPE_FRESH_SOURCES = ['openrouter'];
 // Raw files a prices run must never change: benchmark results, benchmark-derived snapshots and efficiency observations.
 export const PRICES_SCOPE_FORBIDDEN = [/^data\/raw\/benchmarks\//, /^data\/raw\/(artificialanalysis|designarena|epoch-eci|epoch-hub-provenance|openrouter-benchmarks|lumina-ledger)\.json$/,

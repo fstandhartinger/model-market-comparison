@@ -1,7 +1,7 @@
 // CR-73.3: the live-source contract gauntlet, as independent units.
 //
 // Each of the seven adapter contracts (aa, da, or, aa_efficiency, or_efficiency,
-// chutes_efficiency, aa_coding_v15) is reviewed on its own frozen packet in its own
+// chutes_efficiency, aa_coding_current) is reviewed on its own frozen packet in its own
 // `runDir/gauntlet/live-contract-<dataset>/` directory: no unit reads or writes
 // another unit's files, and none of them touch the staged checkout. Reviewing them
 // one after the other cost 34.6 min of the 17 Sep baseline (PROFILE-CR73.md).
@@ -33,7 +33,7 @@ const VERIFIER_SECTIONS = {
   aa_efficiency: ['function aaCarrierExtracts(', 'async function verifyOrEfficiency('],
   or_efficiency: ['async function verifyOrEfficiency(', 'async function verifyChutes('],
   chutes_efficiency: ['async function verifyChutes(', '// Raw benchmarkRows'],
-  aa_coding_v15: ['function codingSourceRows(', '// --- evidence packets'],
+  aa_coding_current: ['function codingSourceRows(', '// --- evidence packets'],
 };
 
 const exampleContent = (r) => JSON.stringify({ row_id: r.row_id, staged: r.staged, primary: r.extract });

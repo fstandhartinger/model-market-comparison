@@ -282,6 +282,14 @@ is the actual last collection date of the retained v1.4 snapshot, not today's da
 explains this separation. The v1.5 raw rows carry exact source IDs, components and
 provenance; they will enter versioned benchmark views in phases 04–06.
 
+### Coding Agent Index v2.0 (CR-545, 2026-10-23)
+
+AA replaced v1.5 with v2.0 (FrontierCode v1.1 Main, Terminal-Bench 4.0, SWE-Atlas-QnA-AA).
+`sources.aa_coding_agents_v2_0` dates the current collection (`data/raw/aa-coding-agents-v2.0.json`,
+benchmark id `aa-coding-agent-index::2.0`). `sources.aa_coding_agents_v1_5` is now the frozen date of
+the last v1.5 capture (2026-10-22). The three versions are separate benchmarks with different
+components; their scores are never combined, ranked or compared as one scale.
+
 `sources.provider_meta` (since 2026-09-14) dates the daily cross-check of the curated
 `country` field against OpenRouter's provider table, i.e. the date of the table it read.
 The judgment fields (`eu_hosted`, `non_us`, `hyperscaler`, notes) keep their own date in

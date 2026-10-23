@@ -32,7 +32,7 @@ import { fileURLToPath } from 'node:url';
 import { isDeepStrictEqual } from 'node:util';
 import { flightRecords, objects, resolveFlight, parseArtificialAnalysisMetadata } from '../../lib/aa-rsc.mjs';
 import { parseAaEfficiency } from '../../lib/aa-efficiency.mjs';
-import { CODING_AGENT_URL, CODING_AGENT_VERSION, changedCodingAgentVersion, codingAgentPageVersions, parseCodingAgents } from '../../lib/aa-coding-agents.mjs';
+import { CODING_AGENT_FILE, CODING_AGENT_URL, CODING_AGENT_VERSION, changedCodingAgentVersion, codingAgentPageVersions, parseCodingAgents } from '../../lib/aa-coding-agents.mjs';
 import { parseOpenRouterPage, parseOpenRouterCache, parseOpenRouterRankings } from '../../lib/openrouter-efficiency.mjs';
 import { parseChutesUsage } from '../../lib/chutes-efficiency.mjs';
 import { absentIdentities, classifyBoardAbsence, endpointIdentity, BOARD_REGISTRY_INCONSISTENT } from '../../lib/live-source.mjs';
@@ -636,42 +636,44 @@ function codingSourceRows(html) {
       candidates.push(list.map((row) => resolveFlight(row, records)));
     }
   }
-  if (candidates.length !== 1) fail(`coding v1.5 extracts: expected one benchmarkRows array, got ${candidates.length}`);
+  if (candidates.length !== 1) fail(`coding v${CODING_AGENT_VERSION} extracts: expected one benchmarkRows array, got ${candidates.length}`);
   return new Map(candidates[0].map((row) => [row.id, row]));
 }
 
 // CR-542 (2026-10-23): AA moved the coding-agents page to Coding Agent Index v2.0. The daily withholds
-// today's v1.5 capture (daily.mjs readCodingAgentVersionChange) and this review would otherwise fail
-// re-deriving v1.5 from a v2.0 page. As with D255.2 the withheld path is proven from the captured
+// today's capture of the pinned version (daily.mjs readCodingAgentVersionChange) and this review would otherwise
+// fail re-deriving the pinned version from a page that states another one (CR-545 pinned the collector to v2.0). As with D255.2 the withheld path is proven from the captured
 // bytes, not trusted from the step: every version statement on the captured page must name the same
-// other version, and the staged v1.5 file must equal the snapshot this run started from with its own
+// other version, and the staged current-version file must equal the snapshot this run started from with its own
 // older date. It contributes no packet row — there is no fresh value to check.
-export async function verifyWithheldCodingV15({ staged, src, runStart, receipt }) {
+export async function verifyWithheldCoding({ staged, src, runStart, receipt }) {
   const changed = changedCodingAgentVersion(codingAgentPageVersions(receipt.body));
   if (!changed) return null;
-  eq(staged.version, CODING_AGENT_VERSION, 'coding v1.5 withheld snapshot version');
-  eq(staged, await baseline(src, 'aa-coding-agents-v1.5.json'), 'coding v1.5 withheld snapshot equals the snapshot this run started from');
-  assertRetainedDate(staged.collected_at, runStart, 'coding v1.5 withheld snapshot');
+  const label = `coding v${CODING_AGENT_VERSION} withheld snapshot`;
+  eq(staged.version, CODING_AGENT_VERSION, `${label} version`);
+  eq(staged, await baseline(src, CODING_AGENT_FILE), `${label} equals the snapshot this run started from`);
+  assertRetainedDate(staged.collected_at, runStart, label);
   return { retained_collected_at: staged.collected_at, page_version: changed, pinned_version: CODING_AGENT_VERSION, rows: staged.rows.length, source: loc(receipt) };
 }
 
-async function verifyCodingV15(rawDir, src, runStart, rows) {
-  const staged = JSON.parse(await readFile(join(rawDir, 'aa-coding-agents-v1.5.json'), 'utf8'));
-  const receipt = src.requireGet(CODING_AGENT_URL, 'aa coding agents v1.5');
-  const withheld = await verifyWithheldCodingV15({ staged, src, runStart, receipt });
-  if (withheld) return { aa_coding_v15: { withheld } };
+async function verifyCoding(rawDir, src, runStart, rows) {
+  const label = `coding v${CODING_AGENT_VERSION}`;
+  const staged = JSON.parse(await readFile(join(rawDir, CODING_AGENT_FILE), 'utf8'));
+  const receipt = src.requireGet(CODING_AGENT_URL, `aa coding agents v${CODING_AGENT_VERSION}`);
+  const withheld = await verifyWithheldCoding({ staged, src, runStart, receipt });
+  if (withheld) return { aa_coding_current: { withheld } };
   const derived = parseCodingAgents(receipt.body, staged); // floors at the staged count: a shrink fails here
-  eq(staged.version, derived.version, 'coding v1.5 version');
-  eq(staged.rows, derived.rows, 'coding v1.5 rows (score/harness/components)');
-  eq(staged.count, derived.count, 'coding v1.5 count');
+  eq(staged.version, derived.version, `${label} version`);
+  eq(staged.rows, derived.rows, `${label} rows (score/harness/components)`);
+  eq(staged.count, derived.count, `${label} count`);
   const sourceRows = codingSourceRows(receipt.body);
   const out = staged.rows.map((row, i) => {
     const extract = sourceRows.get(row.source_id);
-    if (!extract) fail(`coding v1.5 row ${row.source_id}: no raw benchmarkRows entry (partial source)`);
+    if (!extract) fail(`${label} row ${row.source_id}: no raw benchmarkRows entry (partial source)`);
     return { staged: row, extract, source: loc(receipt), pointer: `benchmarkRows[${i}] ${row.source_id}` };
   });
-  rows.set('aa_coding_v15', out);
-  return { aa_coding_v15: { rows: out.length, version: staged.version } };
+  rows.set('aa_coding_current', out);
+  return { aa_coding_current: { rows: out.length, version: staged.version } };
 }
 
 // --- evidence packets -------------------------------------------------------
@@ -683,7 +685,7 @@ export const RULES = {
   aa_efficiency: 'row = {source_id<-id (AA model UUID), slug, name, variant<-effort.slug, tokens_per_task<-intelligenceIndexOutputTokensPerTask, canonical_token_counts<-canonicalIntelligenceIndexTokenCount, derived ratios from those}; canonical_token_counts: integers with answer+reasoning==output exactly; tokens_per_task: answer+reasoning within 0.01 of output (SUM_TOLERANCE in lib/aa-efficiency.mjs).',
   or_efficiency: 'model = Flight model-page providerTableEndpointStats (endpoint_tag<-provider_slug exact routing tag, endpoint_id UUID, cache prices ×1e6) + appStats daily window usage; cache cacheHitRate merged ONLY by endpointId; rankings rows = weekly model-chart tokens.',
   chutes_efficiency: 'row = chute/day {chute_id,name,date,total_requests,total_input_tokens,total_output_tokens}; totals are column sums over token-positive rows; ratio = sum(input)/sum(output), never a per-chute mean.',
-  aa_coding_v15: 'row = benchmarkRows entry {source_id<-id, model_name<-display.model, harness<-agentName, score<-indexScore, components<-evals[].{datasetIndexName,mean.reward,weight}}; score == mean of the 3 component rewards (1e-9); board version locked to 1.5.',
+  aa_coding_current: `row = benchmarkRows entry {source_id<-id, model_name<-display.model, harness<-agentName, score<-indexScore, components<-evals[].{datasetIndexName,mean.reward,weight}}; score == mean of the 3 component rewards (1e-9); board version locked to ${CODING_AGENT_VERSION}.`,
 };
 
 function packetText(packet, sources) {
@@ -755,14 +757,14 @@ async function collectLiveRun({ runDir, rawDir = RAW_DEFAULT } = {}) {
   Object.assign(report.datasets, await verifyAaEfficiency(rawDir, src, src.first, rows));
   Object.assign(report.datasets, await verifyOrEfficiency(rawDir, src, src.first, rows));
   Object.assign(report.datasets, await verifyChutes(rawDir, src, src.first, rows));
-  Object.assign(report.datasets, await verifyCodingV15(rawDir, src, src.first, rows));
+  Object.assign(report.datasets, await verifyCoding(rawDir, src, src.first, rows));
   report.retained = {
     or_efficiency_pages: report.datasets.or_efficiency?.pages_retained ?? [],
     aa_metadata_fields: report.datasets.aa?.retained_metadata_fields ?? 0,
     // D255.2: null on an ordinary day; on a withheld day it names the boards and the retained date.
     designarena_board: report.datasets.da?.withheld ?? null,
-    // CR-542: null on an ordinary day; names the page's new index version and the retained v1.5 date.
-    aa_coding_v15: report.datasets.aa_coding_v15?.withheld ?? null,
+    // CR-542: null on an ordinary day; names the page's new index version and the retained snapshot date.
+    aa_coding_current: report.datasets.aa_coding_current?.withheld ?? null,
   };
   const run = { sources_dir: join(runDir, 'sources'), receipts: receipts.length, first_receipt: src.first, last_receipt: src.last };
   return { run, rows, report };
@@ -801,9 +803,9 @@ export async function reviewLive({ runDir, rawDir = RAW_DEFAULT, batchSize = 25,
     coverage: manifest.coverage,
     limitations: [
       'Rotated/retained OpenRouter page, cache and rankings entries and AA retained metadata are prior accepted observations republished with original dates; they are checked for original dates AND equality to the prior accepted snapshot, not re-verified against this run\u2019s sources.',
-      'data/raw/aa-coding-agents.json (v1.4) is intentionally untouched; the daily orchestrator validates it.',
+      'data/raw/aa-coding-agents.json (v1.4) and the frozen data/raw/aa-coding-agents-v1.5.json are intentionally untouched; the daily orchestrator validates them.',
       'A withheld DesignArena board (retained.designarena_board) stages no new byte: its rows are the previously published snapshot with its own older date, proven equal to it, and the withholding itself is re-derived from this run\u2019s captured board and registry bytes. Those rows are not in the critic packets, because there is no fresh value to check.',
-      'A withheld Coding Agent v1.5 snapshot (retained.aa_coding_v15) stages no new byte: the captured page states a different index version for every statement, and the staged v1.5 file is proven equal to the snapshot this run started from with its own older date. Its rows are not in the critic packets.',
+      `A withheld Coding Agent v${CODING_AGENT_VERSION} snapshot (retained.aa_coding_current) stages no new byte: the captured page states a different index version for every statement, and the staged v${CODING_AGENT_VERSION} file is proven equal to the snapshot this run started from with its own older date. Its rows are not in the critic packets.`,
       'This report is the programmatic numeric/source check only. The separate live-step-result.json records adapter-contract gauntlet acceptance and exact model example coverage.',
     ],
     evidence: null,

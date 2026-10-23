@@ -44,7 +44,7 @@ to block publication. If another completed commit reaches `origin/main` during c
 the staging push fails non-fast-forward and preserves both candidates for reconciliation.
 
 The pipeline collects AA and DesignArena, OpenRouter models/provider endpoints, AA
-Coding Agent v1.5, AA token efficiency, rotated OpenRouter usage/cache pages, Chutes
+Coding Agent v2.0 (v1.5 frozen since CR-545), AA token efficiency, rotated OpenRouter usage/cache pages, Chutes
 usage, and supported public/vendor benchmark sources. Coding Agent v1.4 remains the
 original dated Composite input. Curated provider catalogs remain curated. Unsupported
 collection recipes and inaccessible sources retain their original observations/dates
