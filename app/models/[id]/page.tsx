@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { previewMetadata } from "../../../lib/seo";
+import { PageJsonLd } from "../../../components/PageJsonLd";
 import { benchmaxxingByFamily } from "../../../lib/page-data";
 import { SignalValue } from "../../../components/SignalValue";
 import { benchmaxxingLevelInfo } from "../../../lib/benchmaxxing-levels.mjs";
@@ -256,6 +257,7 @@ export default async function ModelDetail({ params }: { params: Promise<{ id: st
       )}
 
       <ModelDetailOffers offers={offers} providers={providers} model={clientModel} pricingData={pricingData} view="all" />
+      <PageJsonLd meta={await generateMetadata({ params })} />
     </div>
   );
 }

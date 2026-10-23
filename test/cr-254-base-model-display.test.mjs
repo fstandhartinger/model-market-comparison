@@ -133,6 +133,7 @@ const detail = await importReactModule(file('../app/image-jev-bench/[system]/pag
   '../../../components/JevArchitecture': await compileReactModule(file('../components/JevArchitecture.tsx')),
   '../../../components/JevSystemCharts': moduleUrl('export const JevAxisBand=()=>null; export const typeColour=()=>"blue";'),
   '../../../lib/seo': moduleUrl('export const previewMetadata=(value)=>value;'),
+  '../../../components/PageJsonLd': moduleUrl('export const PageJsonLd=()=>null;'),
 });
 
 test('CR-254 every Image detail route renders published rank, axes, cost, latency and cited provenance', async () => {

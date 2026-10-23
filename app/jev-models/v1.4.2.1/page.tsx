@@ -4,6 +4,8 @@ import { readJevbenchV1421WithFamilies } from '../../../lib/jevbench-v1421-famil
 import { readJevbenchV142 } from '../../../lib/jevbench-v142.mjs';
 import { JevModelsV14Board } from '../../../components/JevModelsV14';
 import { JevCapabilityChart } from '../../../components/JevCapabilityChart';
+import { PageJsonLd } from '../../../components/PageJsonLd';
+import { seoTitle } from '../../../lib/seo';
 
 const short = (display: string) => display.split(' (')[0].split(', formerly')[0];
 const one = (score: number | null) => score === null ? '—' : score.toFixed(1);
@@ -24,7 +26,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const image = 'https://benchmarkheaven.com/jev-models/opengraph-image?v=og4';
   const imageAlt = 'JevBench by Benchmark Heaven: a benchmark for Jev-class decision models across intelligence, calibration, speed, and cost.';
   return {
-    title,
+    title: seoTitle(title),
     description,
     alternates: { canonical },
     openGraph: {
@@ -60,5 +62,6 @@ export default async function JevModelsV1421Page() {
       <summary className="cursor-pointer text-lg font-semibold text-accent">Explore Capability, cost and speed charts</summary>
       <JevCapabilityChart systems={view.systems} revision={view.revision} />
     </details>
+    <PageJsonLd meta={await generateMetadata()} />
   </>;
 }

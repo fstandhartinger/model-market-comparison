@@ -10,7 +10,7 @@ const PATH = '/jev-models/alternatives';
 const DE_PATH = '/de/jev-models/alternativen';
 export async function generateMetadata(): Promise<Metadata> {
   const data = await readJevbenchSeoData();
-  return jevIntentMetadata({path: PATH, title: `Best Jev alternatives (${data.month}): ${data.systems.length} models measured on JevBench`,
+  return jevIntentMetadata({path: PATH, title: `Best Jev alternatives (${data.month}): ${data.systems.length} models measured on JevBench`, documentTitle: `Best Jev alternatives (${data.month})`,
     description: `Compare ${data.systems.length} measured Jev-class models in ${data.month}: Capability, Intelligence, Calibration, price, latency and open-weight evidence.`, keywords: ['jev alternatives', 'best Jev alternative', 'JevBench'],
     languages: {en: PATH, de: DE_PATH, 'x-default': PATH}});
 }

@@ -5,8 +5,10 @@ import { JevBenchV16Board } from '../../../components/JevBenchV16Board';
 import { JevBenchReleaseVersionNav } from '../../../components/JevBenchReleaseVersionNav';
 import { JevHistoryLazy } from '../../../components/JevHistoryLazy';
 import { withPublicAdapterIds } from '../../../lib/jevbench-v15-release.mjs';
+import { seoTitle } from '../../../lib/seo';
+import { PageJsonLd } from '../../../components/PageJsonLd';
 
-export const metadata = { title: 'JevBench v1.6.23 · Sage 1.4 and Bespoke Nimble-v4 / v4-max priced and ranked', alternates: { canonical: '/jev-models/v1.6.23' } };
+export const metadata = { title: seoTitle('JevBench v1.6.23 · Sage 1.4 and Bespoke Nimble-v4 / v4-max priced and ranked'), alternates: { canonical: '/jev-models/v1.6.23' } };
 
 type Row = { key: string; display: string; ranked: boolean; repriced_in?: string; capability?: number;
   ranks?: { A: number | null; capability: number | null }; cost?: { usd_per_1000?: number | null } };
@@ -27,7 +29,7 @@ export default async function JevModelsV1623Page() {
   const nimbleMax = row('nimble-v4-max');
   const usd = (r?: Row) => r?.cost?.usd_per_1000 != null ? `USD ${r.cost.usd_per_1000.toFixed(4)}` : '–';
   return <>
-    <JevBenchReleaseVersionNav active="v1.6.23" />
+    <PageJsonLd meta={metadata} /><JevBenchReleaseVersionNav active="v1.6.23" />
     <header className="bh-page-head" data-bh-jev16-release-header>
       <div className="bh-eyebrow">JevBench v1.6.23 · price-only update</div>
       <h1 className="mt-1 text-3xl font-bold tracking-tight">Sage 1.4 and Bespoke Nimble-v4 / v4-max are now priced and ranked</h1>

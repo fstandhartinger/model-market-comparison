@@ -5,6 +5,7 @@ import { previewMetadata } from "../../lib/seo";
 import { BENCHMAXX_TIER_TABLE, BENCHMAXX_JAGGEDNESS_WEIGHT, benchmaxxingPrior } from "../../lib/benchmax.mjs";
 import { BENCHMAXX_COMPOSITE_WEIGHT } from "../../lib/composite.mjs";
 import { getBenchmarkView } from "../../lib/benchmark-data";
+import { PageJsonLd } from "../../components/PageJsonLd";
 
 
 export const metadata = previewMetadata({ path: "/about", documentTitle: "About & data sources", title: "How Benchmark Heaven works — sources & methodology",
@@ -454,6 +455,7 @@ export default async function AboutPage() {
         from a benchmark&apos;s name. Every row also names the version it is and the date we last verified its
         results from the source.
       </p>
+      <PageJsonLd meta={metadata} />
     </div>
   );
 }

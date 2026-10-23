@@ -134,6 +134,8 @@ async function pageModule(root) {
   '../../../components/JevBenchV16Board':{JevBenchV16Board:props=>React.createElement('div',{'data-fixture-board':true,'data-cohort-rows':props.artifact.systems.length,'data-category-revision':props.categories.revision})},
   '../../../components/JevBenchReleaseVersionNav':{JevBenchReleaseVersionNav:()=>React.createElement('nav',null,'version navigation')},
   '../../../components/JevHistoryLazy':{JevHistoryLazy:()=>React.createElement('div',null,'historical versions')},
+  '../../../lib/seo':{seoTitle:t=>t},
+  '../../../components/PageJsonLd':{PageJsonLd:()=>null},
  });
 }
 test('actual API returns 404 and actual server page invokes notFound when absent',async t=>{

@@ -5,8 +5,10 @@ import { JevBenchV16Board } from '../../../components/JevBenchV16Board';
 import { JevBenchReleaseVersionNav } from '../../../components/JevBenchReleaseVersionNav';
 import { JevHistoryLazy } from '../../../components/JevHistoryLazy';
 import { withPublicAdapterIds } from '../../../lib/jevbench-v15-release.mjs';
+import { seoTitle } from '../../../lib/seo';
+import { PageJsonLd } from '../../../components/PageJsonLd';
 
-export const metadata = { title: 'JevBench v1.6.25 · Celeris-1 Decision, Jebadiah 9B v2.1 and StartLux-Decision v1.1 27B join the regular draw', alternates: { canonical: '/jev-models/v1.6.25' } };
+export const metadata = { title: seoTitle('JevBench v1.6.25 · Celeris-1 Decision, Jebadiah 9B v2.1 and StartLux-Decision v1.1 27B join the regular draw'), alternates: { canonical: '/jev-models/v1.6.25' } };
 
 type Row = { key: string; display: string; ranked: boolean; measured_in?: string; capability?: number;
   ranks?: { A: number | null; capability: number | null }; cost?: { usd_per_1000?: number | null } };
@@ -28,7 +30,7 @@ export default async function JevModelsV1625Page() {
   const sla = row('startlux-decision-v1.1-27b-autothink');
   const usd = (r?: Row) => r?.cost?.usd_per_1000 != null ? `USD ${r.cost.usd_per_1000.toFixed(4)}` : '–';
   return <>
-    <JevBenchReleaseVersionNav active="v1.6.25" />
+    <PageJsonLd meta={metadata} /><JevBenchReleaseVersionNav active="v1.6.25" />
     <header className="bh-page-head" data-bh-jev16-release-header>
       <div className="bh-eyebrow">JevBench v1.6.25 · 4 rows added</div>
       <h1 className="mt-1 text-3xl font-bold tracking-tight">Celeris-1 Decision, Jebadiah 9B v2.1 and StartLux-Decision v1.1 27B join the regular draw</h1>

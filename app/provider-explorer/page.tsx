@@ -1,7 +1,8 @@
 import { ProviderExplorerLoader } from "../../components/deferred/ProviderExplorerLoader";
 import { pageDataVersion } from "../../lib/page-data";
+import { PageJsonLd } from "../../components/PageJsonLd";
 
-export const metadata = { title: "Provider explorer" };
+export const metadata = { title: "Provider explorer", alternates: { canonical: "/provider-explorer" } };
 
 export default async function ProviderExplorerPage() {
   const version = await pageDataVersion();
@@ -15,6 +16,7 @@ export default async function ProviderExplorerPage() {
         price against <b>all other providers</b> of the same model, ranked cheapest-first in the selected cost scenario (adjusted USD/task by default).
       </p>
       <ProviderExplorerLoader version={version} />
+      <PageJsonLd meta={metadata} />
     </div>
   );
 }

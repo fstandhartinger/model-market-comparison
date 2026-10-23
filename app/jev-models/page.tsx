@@ -3,6 +3,7 @@ import { readCurrentJevbench, CURRENT_JEVBENCH_PAGE } from '../../lib/jevbench-c
 import { JevBenchV16ReleaseRoute } from '../../components/JevBenchV16ReleaseRoute';
 import { JevHistoryLazy } from '../../components/JevHistoryLazy';
 import { JevBenchMainJsonLd } from '../../components/JevBenchJsonLd';
+import { seoTitle } from '../../lib/seo';
 
 const OG_ART_REVISION = 'og4'; // Keep the live board share card evergreen across releases.
 
@@ -12,7 +13,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const imageAlt = 'JevBench by Benchmark Heaven: evaluation of AI decision models and Jev-compatible systems across intelligence, calibration, speed, and cost.';
   const image = `https://benchmarkheaven.com/jev-models/opengraph-image?v=${OG_ART_REVISION}`;
   return {
-    title, description,
+    title: seoTitle(title), description,
     alternates: { canonical: '/jev-models' },
     openGraph: { type: 'website', siteName: 'Benchmark Heaven', locale: 'en_US', url: '/jev-models',
       title, description,

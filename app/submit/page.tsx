@@ -4,6 +4,7 @@ import { ModelSubmissionForm } from '../../components/ModelSubmissionForm';
 import { PRIORITY_PRICES_CENTS } from '../../lib/priority-evaluation.mjs';
 import { followupOptions } from '../../lib/submission-leaderboards.mjs';
 import { issueFormToken, submissionSecret } from '../../lib/submission-guard.mjs';
+import { PageJsonLd } from '../../components/PageJsonLd';
 
 export const metadata: Metadata = {
   title: 'Submit a model',
@@ -71,5 +72,6 @@ export default async function SubmitPage() {
     </section>
 
     <p className="bh-muted mt-6 text-xs">We store what you enter here to run and report on the evaluation, and delete a submitted API key afterwards. See the <Link className="text-accent underline" href="/privacy">privacy policy</Link> and <Link className="text-accent underline" href="/terms">terms</Link>.</p>
+    <PageJsonLd meta={metadata} />
   </article>;
 }

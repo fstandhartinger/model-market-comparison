@@ -6,12 +6,14 @@ import { JevHistoryLazy } from '../../../components/JevHistoryLazy';
 import { historicalCatalogue } from '../../../lib/jevbench-v162-release.mjs';
 import { withPublicAdapterIds } from '../../../lib/jevbench-v15-release.mjs';
 import { JEVBENCH_COST_RULE, JEVBENCH_COST_RULE_HISTORY } from '../../../lib/jevbench-cost-rule.mjs';
-export const metadata = {title: 'JevBench v1.6.33 · Perplexity Decider v1.2 (27B)', alternates:{canonical:'/jev-models/v1.6.33'}};
+import { seoTitle } from '../../../lib/seo';
+import { PageJsonLd } from '../../../components/PageJsonLd';
+export const metadata = {title: seoTitle('JevBench v1.6.33 · Perplexity Decider v1.2 (27B)'), alternates:{canonical:'/jev-models/v1.6.33'}};
 export default async function JevModelsV1633Page() {
  const release=await readOptionalJevbenchV1633Release();if(!release) notFound();
  const board=v1633BoardInput(release);
  const notes=(release.artifact as unknown as {measurement_notes:string[]}).measurement_notes;
- return <><JevBenchReleaseVersionNav active="v1.6.33" />
+ return <><PageJsonLd meta={metadata} /><JevBenchReleaseVersionNav active="v1.6.33" />
  <header className="bh-page-head" data-bh-jev16-release-header><div className="bh-eyebrow">JevBench v1.6.33 · same-draw addendum</div>
  <h1 className="mt-1 text-3xl font-bold">Perplexity Decider v1.2 (27B) joins the regular draw</h1>
  <p className="mt-3 max-w-3xl">One new ranked row on the same draw and common cost basis as v1.6.32. All 62 carried full-draw rows keep their point estimates. Perplexity Decider v1.2 is the 27B sibling of Flash v1.2 and Decider v1.1 27B. Measured on one H200 141 GB in the EU, using our own HTTP shim and the author’s numerical code. Cost exceeds the official cap; the row remains available in uncapped views.</p>

@@ -6,12 +6,14 @@ import { JevHistoryLazy } from '../../../components/JevHistoryLazy';
 import { historicalCatalogue } from '../../../lib/jevbench-v162-release.mjs';
 import { withPublicAdapterIds } from '../../../lib/jevbench-v15-release.mjs';
 import { JEVBENCH_COST_RULE, JEVBENCH_COST_RULE_HISTORY } from '../../../lib/jevbench-cost-rule.mjs';
-export const metadata = {title: 'JevBench v1.6.39 · H2O-Lightning-31B', alternates:{canonical:'/jev-models/v1.6.39'}};
+import { seoTitle } from '../../../lib/seo';
+import { PageJsonLd } from '../../../components/PageJsonLd';
+export const metadata = {title: seoTitle('JevBench v1.6.39 · H2O-Lightning-31B'), alternates:{canonical:'/jev-models/v1.6.39'}};
 export default async function JevModelsV1639Page() {
  const release=await readOptionalJevbenchV1639Release();if(!release) notFound();
  const board=v1639BoardInput(release);
  const notes=(release.artifact as unknown as {measurement_notes:string[]}).measurement_notes;
- return <><JevBenchReleaseVersionNav active="v1.6.39" />
+ return <><PageJsonLd meta={metadata} /><JevBenchReleaseVersionNav active="v1.6.39" />
  <header className="bh-page-head" data-bh-jev16-release-header><div className="bh-eyebrow">JevBench v1.6.39 · one paid fast-lane addition</div>
  <h1 className="mt-1 text-3xl font-bold">H2O-Lightning-31B added</h1>
  <p className="mt-3 max-w-3xl">One paid public fast-lane addition on the same draw and common cost basis: a self-hosted model measured as its author ships it (one-engine FP8 profile, two-way reading by default), priced as an estimate from its exact base model. All carried rows retain every score and confidence interval; only placement changes. Pricing, hosting and provenance are disclosed below.</p>

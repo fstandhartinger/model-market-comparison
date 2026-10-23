@@ -5,8 +5,10 @@ import { JevBenchV16Board } from '../../../components/JevBenchV16Board';
 import { JevBenchReleaseVersionNav } from '../../../components/JevBenchReleaseVersionNav';
 import { JevHistoryLazy } from '../../../components/JevHistoryLazy';
 import { withPublicAdapterIds } from '../../../lib/jevbench-v15-release.mjs';
+import { seoTitle } from '../../../lib/seo';
+import { PageJsonLd } from '../../../components/PageJsonLd';
 
-export const metadata = { title: 'JevBench v1.6.16 · vLLM-SR d3 added', alternates: { canonical: '/jev-models/v1.6.16' } };
+export const metadata = { title: seoTitle('JevBench v1.6.16 · vLLM-SR d3 added'), alternates: { canonical: '/jev-models/v1.6.16' } };
 
 export default async function JevModelsV1616Page() {
   const release = await readOptionalJevbenchV1616Release();
@@ -19,7 +21,7 @@ export default async function JevModelsV1616Page() {
   const oldKeys = uniqueRows.map(row => row.key);
   const threshold = Math.round((artifact.G_med + 8) * 1000) / 1000;
   return <>
-    <JevBenchReleaseVersionNav active="v1.6.16" />
+    <PageJsonLd meta={metadata} /><JevBenchReleaseVersionNav active="v1.6.16" />
     <header className="bh-page-head" data-bh-jev16-release-header>
       <div className="bh-eyebrow">JevBench v1.6.16 · one row added</div>
       <h1 className="mt-1 text-3xl font-bold tracking-tight">JevBench · vLLM-SR d3 joins the regular draw</h1>
