@@ -3,17 +3,23 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { paretoFrontier } from '../lib/pareto.mjs';
 import { useJevV15VisibleKeys } from './useJevV15VisibleKeys';
 import { publishJevHighlight, useJevHighlight, type JevBubblePoint } from './JevBubbleChart';
+import { JEV_OPEN_REFERENCE_KEYS } from '../lib/jevbench-scope.mjs';
 
 // Florian 10 Oct 2026 (GO 18:20Z, after the preview): Pareto views of the board, after the Decision Index charts —
 // capability against cost and against median latency, both on a log axis, with the nondominated systems joined by a
 // red frontier line and labelled, every other system faded, and the Jev-class cap shaded as the region beyond it.
 // Same points as the bubble charts above: official cost per 1,000 decisions (list price on the API board) and median
 // latency (measured endpoint latency on the API board). Display only; no score or rank changes.
+// Pareto blue (23 Oct 2026, display only): Jev, the board's reference, is always drawn in blue with a persistent label,
+// on or off the frontier. Identified only by the exact JEV_OPEN_REFERENCE_KEYS (never by a name match); the frontier
+// math is unchanged, a frontier Jev keeps its place on the red line and gets a thin red ring.
 
 type Kind = 'cost' | 'latency';
 type Placed = { p: JevBubblePoint; v: number; cx: number; cy: number };
 type Box = { x: number; y: number; w: number; h: number };
 const FRONTIER = '#e5484d';
+const JEV_BLUE = '#3b82f6';
+const isJev = (key: string) => JEV_OPEN_REFERENCE_KEYS.includes(key);
 const overlaps = (a: Box, b: Box) => a.x < b.x + b.w && b.x < a.x + a.w && a.y < b.y + b.h && b.y < a.y + a.h;
 const usd = (v: number) => `$${Number(v.toPrecision(2))}`;
 const secs = (v: number) => (v >= 1 ? `${v.toFixed(v >= 10 ? 0 : 1)} s` : `${Math.round(v * 1000)} ms`);
@@ -90,8 +96,13 @@ function ParetoChart({ kind, points, limit, title, unit, active, setActive, expa
   const labels = useMemo(() => {
     const taken: Box[] = [];
     const room = narrow ? 17 : 26;
-    return placed.filter((d) => onFrontier.has(d.p.key)).sort((a, b) => b.p.capability - a.p.capability).map((d) => {
-      const text = d.p.name.length > room ? `${d.p.name.slice(0, room - 1).trimEnd()}…` : d.p.name;
+    // Jev labels are placed first so the frontier labels avoid them; a frontier Jev gets only its blue label.
+    const jev = placed.filter((d) => isJev(d.p.key)).sort((a, b) => b.p.capability - a.p.capability);
+    const rest = placed.filter((d) => onFrontier.has(d.p.key) && !isJev(d.p.key)).sort((a, b) => b.p.capability - a.p.capability);
+    return [...jev, ...rest].map((d) => {
+      const jevPoint = isJev(d.p.key);
+      const name = jevPoint && d.p.key === JEV_OPEN_REFERENCE_KEYS[0] && !narrow ? `${d.p.name} (reference)` : d.p.name;
+      const text = name.length > room ? `${name.slice(0, room - 1).trimEnd()}…` : name;
       const w = text.length * fs * 0.58 + 4, h = fs + 3;
       const spots: [number, number, 'start' | 'end'][] = [];
       for (const dy of [0, -12, 12, -24, 24, -36, 36]) { spots.push([d.cx + 8, d.cy + dy, 'start']); spots.push([d.cx - 8, d.cy + dy, 'end']); }
@@ -100,7 +111,7 @@ function ParetoChart({ kind, points, limit, title, unit, active, setActive, expa
         if (box.x < L + 2 || box.x + box.w > W - R || box.y < T || box.y + box.h > H - B) continue;
         if (taken.some((t) => overlaps(t, box))) continue;
         taken.push(box);
-        return { key: d.p.key, text, x: s[0], y: s[1], anchor: s[2], lx: d.cx, ly: d.cy };
+        return { key: d.p.key, text, x: s[0], y: s[1], anchor: s[2], lx: d.cx, ly: d.cy, jev: jevPoint };
       }
       return null;
     }).filter((l): l is NonNullable<typeof l> => l != null);
@@ -147,24 +158,33 @@ function ParetoChart({ kind, points, limit, title, unit, active, setActive, expa
         </g>)}
         <text x={(L + W - R) / 2} y={H - 8} textAnchor="middle" fontSize={fs} fill="var(--muted)">{unit} (log scale) — further left is better</text>
         <text transform={`translate(10 ${(T + H - B) / 2}) rotate(-90)`} textAnchor="middle" fontSize={fs} fill="var(--muted)">Capability Score</text>
-        {placed.filter((d) => !onFrontier.has(d.p.key)).map((d) => <circle key={d.p.key} cx={d.cx} cy={d.cy} r={narrow ? 3 : 3.6}
+        {placed.filter((d) => !onFrontier.has(d.p.key) && !isJev(d.p.key)).map((d) => <circle key={d.p.key} cx={d.cx} cy={d.cy} r={narrow ? 3 : 3.6}
           fill="rgb(var(--accent) / .28)" stroke={d.p.isReference ? 'rgb(var(--accent))' : 'none'} strokeWidth={1.4} />)}
         <polyline points={line} fill="none" stroke={FRONTIER} strokeWidth={2.2} strokeLinejoin="round" data-bh-jev-pareto-line />
-        {placed.filter((d) => onFrontier.has(d.p.key)).map((d) => <circle key={d.p.key} cx={d.cx} cy={d.cy} r={narrow ? 4.2 : 5}
+        {placed.filter((d) => onFrontier.has(d.p.key) && !isJev(d.p.key)).map((d) => <circle key={d.p.key} cx={d.cx} cy={d.cy} r={narrow ? 4.2 : 5}
           fill={FRONTIER} stroke="var(--surface)" strokeWidth={1.4} />)}
-        {labels.filter((l) => Math.abs(l.y - l.ly) > 6).map((l) => <line key={`lead-${l.key}`} x1={l.lx} y1={l.ly} x2={l.anchor === 'start' ? l.x - 2 : l.x + 2} y2={l.y} stroke={FRONTIER} strokeOpacity={0.55} strokeWidth={1} />)}
+        {placed.filter((d) => isJev(d.p.key)).map((d) => <g key={d.p.key}>
+          {onFrontier.has(d.p.key) && <circle cx={d.cx} cy={d.cy} r={narrow ? 7 : 8.2} fill="none" stroke={FRONTIER} strokeWidth={1.2} />}
+          <circle cx={d.cx} cy={d.cy} r={narrow ? 5.2 : 6.2} fill={JEV_BLUE} stroke="var(--surface)" strokeWidth={1.6} data-bh-jev-pareto-jev={d.p.key} />
+        </g>)}
+        {labels.filter((l) => Math.abs(l.y - l.ly) > 6).map((l) => <line key={`lead-${l.key}`} x1={l.lx} y1={l.ly} x2={l.anchor === 'start' ? l.x - 2 : l.x + 2} y2={l.y} stroke={l.jev ? JEV_BLUE : FRONTIER} strokeOpacity={0.55} strokeWidth={1} />)}
         {labels.map((l) => <text key={l.key} x={l.x} y={l.y + fs / 3} textAnchor={l.anchor} fontSize={fs} fontWeight={600}
-          fill="var(--text)" stroke="var(--surface)" strokeWidth={3} paintOrder="stroke">{l.text}</text>)}
+          fill={l.jev ? JEV_BLUE : 'var(--text)'} stroke="var(--surface)" strokeWidth={3} paintOrder="stroke"
+          data-bh-jev-pareto-jev-label={l.jev ? l.key : undefined}>{l.text}</text>)}
         {hit && <circle cx={hit.cx} cy={hit.cy} r={8} fill="none" stroke="var(--text)" strokeWidth={1.5} data-bh-jev-pareto-highlight={hit.p.key} />}
       </svg>
       {hit && <div role="status" className="bh-panel pointer-events-none absolute z-10 max-w-[260px] p-2 text-xs shadow-lg"
         style={{ left: Math.min(Math.max(4, hit.cx + 12), W - 264), top: Math.max(4, hit.cy - 70) }}>
         <div className="font-semibold">{hit.p.name}</div>
         <div>Capability {hit.p.capability.toFixed(1)} · {kind === 'cost' ? `${usd(hit.v)} per 1,000 decisions` : `median ${secs(hit.v)}${hit.p.latencyMeasured != null ? ` est. incl. network (2x + 150 ms); measured ${secs(hit.p.latencyMeasured)} ${hit.p.latencyMeasuredTag ?? 'no network'}` : ''}`}</div>
-        <div className="bh-muted">{onFrontier.has(hit.p.key) ? 'On the Pareto frontier' : dominator ? `Beaten by ${dominator.p.name} (${fmt(kind, dominator.v)}, ${dominator.p.capability.toFixed(1)})` : ''}{hit.p.inClass ? '' : ' · outside Jev class'}</div>
+        <div className="bh-muted">{onFrontier.has(hit.p.key) ? 'On the Pareto frontier' : dominator ? `Beaten by ${dominator.p.name} (${fmt(kind, dominator.v)}, ${dominator.p.capability.toFixed(1)})` : ''}{hit.p.inClass ? '' : ' · outside Jev class'}{isJev(hit.p.key) ? ' · Jev reference' : ''}</div>
       </div>}
     </div>
-    <p className="bh-muted mt-2 text-xs">{frontier.length} of {placed.length} systems on the frontier: no other system is both {kind === 'cost' ? 'cheaper' : 'faster'} and more capable.{omitted > 0 ? ` ${omitted} without a positive ${kind === 'cost' ? 'price' : 'median latency'} are not plotted.` : ''}</p>
+    <p className="bh-muted mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs" data-bh-jev-pareto-legend>
+      <span className="inline-flex items-center gap-1"><svg width="10" height="10" aria-hidden="true"><circle cx="5" cy="5" r="4" fill={JEV_BLUE} /></svg>Jev (TypeSafe reference)</span>
+      <span className="inline-flex items-center gap-1"><svg width="18" height="10" aria-hidden="true"><line x1="1" x2="17" y1="5" y2="5" stroke={FRONTIER} strokeWidth={2} /><circle cx="9" cy="5" r="3" fill={FRONTIER} /></svg>Pareto frontier</span>
+    </p>
+    <p className="bh-muted mt-1 text-xs">{frontier.length} of {placed.length} systems on the frontier: no other system is both {kind === 'cost' ? 'cheaper' : 'faster'} and more capable.{omitted > 0 ? ` ${omitted} without a positive ${kind === 'cost' ? 'price' : 'median latency'} are not plotted.` : ''}</p>
   </figure>;
 }
 
@@ -180,7 +200,7 @@ export function JevParetoCharts({ points, costLimit, latencyLimit, scopeLabel, a
   const [expandedKind, setExpandedKind] = useState<Kind | null>(null);
   return <section id="jev-pareto" className="mt-8 scroll-mt-6" aria-labelledby="jev-pareto-title" data-bh-jev-pareto>
     <h2 id="jev-pareto-title" className="text-xl font-semibold">Pareto frontier: capability against cost and speed{scopeLabel && ` (${scopeLabel})`}</h2>
-    <p className="bh-muted mt-1 max-w-4xl text-sm">The red line joins the systems nobody beats on both axes at once{api ? ' (provider list price, measured endpoint latency)' : ''}; hover or tap a point for the system that beats it. Shaded: beyond the Jev-class cap.</p>
+    <p className="bh-muted mt-1 max-w-4xl text-sm">The red line joins the systems nobody beats on both axes at once{api ? ' (provider list price, measured endpoint latency)' : ''}; blue marks Jev, the reference, on or off the frontier; hover or tap a point for the system that beats it. Shaded: beyond the Jev-class cap.</p>
     {!api && <p className="bh-muted mt-1 max-w-4xl text-xs" data-bh-jev-latency-legend>Speed axis: self-hosted systems are plotted at est. incl. network (2x measured + 150 ms), the value the ranking and cap use; the measured loopback p50 is in each point&apos;s tooltip.</p>}
     <label className="mt-3 flex min-h-10 w-fit cursor-pointer items-center gap-2 text-sm">
       <input type="checkbox" checked={showOutside} onChange={(e) => { setShowOutside(e.target.checked); setActive(null); }} data-bh-jev-pareto-show-outside />
