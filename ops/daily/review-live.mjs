@@ -32,7 +32,7 @@ import { fileURLToPath } from 'node:url';
 import { isDeepStrictEqual } from 'node:util';
 import { flightRecords, objects, resolveFlight, parseArtificialAnalysisMetadata } from '../../lib/aa-rsc.mjs';
 import { parseAaEfficiency } from '../../lib/aa-efficiency.mjs';
-import { CODING_AGENT_URL, parseCodingAgents } from '../../lib/aa-coding-agents.mjs';
+import { CODING_AGENT_URL, CODING_AGENT_VERSION, changedCodingAgentVersion, codingAgentPageVersions, parseCodingAgents } from '../../lib/aa-coding-agents.mjs';
 import { parseOpenRouterPage, parseOpenRouterCache, parseOpenRouterRankings } from '../../lib/openrouter-efficiency.mjs';
 import { parseChutesUsage } from '../../lib/chutes-efficiency.mjs';
 import { absentIdentities, classifyBoardAbsence, endpointIdentity, BOARD_REGISTRY_INCONSISTENT } from '../../lib/live-source.mjs';
@@ -640,9 +640,26 @@ function codingSourceRows(html) {
   return new Map(candidates[0].map((row) => [row.id, row]));
 }
 
+// CR-542 (2026-10-23): AA moved the coding-agents page to Coding Agent Index v2.0. The daily withholds
+// today's v1.5 capture (daily.mjs readCodingAgentVersionChange) and this review would otherwise fail
+// re-deriving v1.5 from a v2.0 page. As with D255.2 the withheld path is proven from the captured
+// bytes, not trusted from the step: every version statement on the captured page must name the same
+// other version, and the staged v1.5 file must equal the snapshot this run started from with its own
+// older date. It contributes no packet row — there is no fresh value to check.
+export async function verifyWithheldCodingV15({ staged, src, runStart, receipt }) {
+  const changed = changedCodingAgentVersion(codingAgentPageVersions(receipt.body));
+  if (!changed) return null;
+  eq(staged.version, CODING_AGENT_VERSION, 'coding v1.5 withheld snapshot version');
+  eq(staged, await baseline(src, 'aa-coding-agents-v1.5.json'), 'coding v1.5 withheld snapshot equals the snapshot this run started from');
+  assertRetainedDate(staged.collected_at, runStart, 'coding v1.5 withheld snapshot');
+  return { retained_collected_at: staged.collected_at, page_version: changed, pinned_version: CODING_AGENT_VERSION, rows: staged.rows.length, source: loc(receipt) };
+}
+
 async function verifyCodingV15(rawDir, src, runStart, rows) {
   const staged = JSON.parse(await readFile(join(rawDir, 'aa-coding-agents-v1.5.json'), 'utf8'));
   const receipt = src.requireGet(CODING_AGENT_URL, 'aa coding agents v1.5');
+  const withheld = await verifyWithheldCodingV15({ staged, src, runStart, receipt });
+  if (withheld) return { aa_coding_v15: { withheld } };
   const derived = parseCodingAgents(receipt.body, staged); // floors at the staged count: a shrink fails here
   eq(staged.version, derived.version, 'coding v1.5 version');
   eq(staged.rows, derived.rows, 'coding v1.5 rows (score/harness/components)');
@@ -744,6 +761,8 @@ async function collectLiveRun({ runDir, rawDir = RAW_DEFAULT } = {}) {
     aa_metadata_fields: report.datasets.aa?.retained_metadata_fields ?? 0,
     // D255.2: null on an ordinary day; on a withheld day it names the boards and the retained date.
     designarena_board: report.datasets.da?.withheld ?? null,
+    // CR-542: null on an ordinary day; names the page's new index version and the retained v1.5 date.
+    aa_coding_v15: report.datasets.aa_coding_v15?.withheld ?? null,
   };
   const run = { sources_dir: join(runDir, 'sources'), receipts: receipts.length, first_receipt: src.first, last_receipt: src.last };
   return { run, rows, report };
@@ -784,6 +803,7 @@ export async function reviewLive({ runDir, rawDir = RAW_DEFAULT, batchSize = 25,
       'Rotated/retained OpenRouter page, cache and rankings entries and AA retained metadata are prior accepted observations republished with original dates; they are checked for original dates AND equality to the prior accepted snapshot, not re-verified against this run\u2019s sources.',
       'data/raw/aa-coding-agents.json (v1.4) is intentionally untouched; the daily orchestrator validates it.',
       'A withheld DesignArena board (retained.designarena_board) stages no new byte: its rows are the previously published snapshot with its own older date, proven equal to it, and the withholding itself is re-derived from this run\u2019s captured board and registry bytes. Those rows are not in the critic packets, because there is no fresh value to check.',
+      'A withheld Coding Agent v1.5 snapshot (retained.aa_coding_v15) stages no new byte: the captured page states a different index version for every statement, and the staged v1.5 file is proven equal to the snapshot this run started from with its own older date. Its rows are not in the critic packets.',
       'This report is the programmatic numeric/source check only. The separate live-step-result.json records adapter-contract gauntlet acceptance and exact model example coverage.',
     ],
     evidence: null,
