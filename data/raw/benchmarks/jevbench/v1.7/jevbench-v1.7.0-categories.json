@@ -798,7 +798,7 @@
  "metric": "O1S chance-corrected competence: equal mean across the request types present, clipped to 0–100. Zero means the equal-weight mean across present request types was at or below baseline; negative means are clipped. It does not mean every type scored zero. Choice uses a random-option baseline; Noul uses a fixed 50% accuracy baseline (abstentions count as wrong); Score uses the midpoint-guess error (random-guess fallback when every gold is at the midpoint). Compare models within a category; row pools and supported types can differ.",
  "min_n": 15,
  "provisional": false,
- "results_sha256": "57c77c7a5181c2fc0a01b0e71ccf1e3a01e5d0a67d1d813e18d4a3c55353a252",
+ "results_sha256": "66874f00cd54948bbc643c51c460e72a55c10d58130ddafa3b8107af9ad452e5",
  "results_sha256_note": "source_results_sha256 binds the scorer aggregate before release packaging; the public results have their own hash.",
  "revision": "v1.7.0",
  "rule_note": "Cells of re-scored rows are computed with the frozen category tools under the 10 s rule (a decision over 10 s counts as a wrong answer). Rows without cells are not yet re-scored under the rule or are re-measure pending; no v1.6 cell is shown for a v1.7 row.",
@@ -806,7 +806,7 @@
   "Official O1S; recorded failures count where supported; no missing response is imputed; stable identity dedupe parent first.",
   "S-based category cells pool recorded supported responses from S+P and the answered L1/L2/L3 supplements. API overlay category cells keep their separately recorded A4/A5+P union. Headline and per-type/tier scores are unchanged."
  ],
- "source_results_sha256": "57c77c7a5181c2fc0a01b0e71ccf1e3a01e5d0a67d1d813e18d4a3c55353a252",
+ "source_results_sha256": "66874f00cd54948bbc643c51c460e72a55c10d58130ddafa3b8107af9ad452e5",
  "source_sha256": "aab1cba1fa4221f8cb026baba46e831b9c5c17c5869bf1a3b2995dfc399e2bce",
  "supplement": {
   "drawn": "2026-10-06",
@@ -109412,6 +109412,220 @@
     }
    }
   },
+  "vega-u-qwen3.5-4b": {
+   "category_pools": "S+P (draw v1.6-regular-20261012)",
+   "coverage": "S+P (draw v1.6-regular-20261012)",
+   "coverage_note": "Subject topics and use cases come from this draw's own item labels, added after its release with the same labelling recipe as the earlier draws (hand check 71/75).",
+   "families": {
+    "calibration": {
+     "competence": 0.0,
+     "n": 22
+    },
+    "calibration_gen": {
+     "competence": 0.0,
+     "n": 101
+    },
+    "composite_gen": {
+     "competence": 0.0,
+     "n": 101
+    },
+    "fairness": {
+     "competence": 51.26,
+     "n": 48
+    },
+    "jaggedness": {
+     "competence": 0.0,
+     "n": 180
+    },
+    "llm_router": {
+     "competence": 0.48,
+     "n": 313
+    },
+    "long_state": {
+     "competence": 0.0,
+     "n": 15
+    },
+    "ml_usecase": {
+     "competence": 0.0,
+     "n": 27
+    },
+    "multilingual": {
+     "competence": 0.0,
+     "n": 275
+    },
+    "negation_pair_gen": {
+     "competence": 0.0,
+     "n": 86
+    },
+    "option_order": {
+     "competence": 12.12,
+     "n": 48
+    },
+    "perturb_pair": {
+     "competence": 0.0,
+     "n": 64
+    },
+    "usecase": {
+     "competence": 0.0,
+     "n": 220
+    }
+   },
+   "language_coverage": "S+P (draw v1.6-regular-20261012)",
+   "languages": {
+    "ar": {
+     "competence": 0.0,
+     "n": 16
+    },
+    "de": {
+     "competence": 9.53,
+     "n": 32
+    },
+    "el": {
+     "competence": 0.0,
+     "n": 15
+    },
+    "en": {
+     "competence": 0.0,
+     "n": 1151
+    },
+    "es": {
+     "competence": 0.0,
+     "n": 31
+    },
+    "hi": {
+     "competence": 0.0,
+     "n": 21
+    },
+    "it": {
+     "competence": 0.0,
+     "n": 15
+    },
+    "ja": {
+     "competence": 2.52,
+     "n": 25
+    },
+    "pl": {
+     "competence": 9.52,
+     "n": 39
+    },
+    "pt": {
+     "competence": 0.0,
+     "n": 28
+    }
+   },
+   "topics": {
+    "coding": {
+     "competence": 0.0,
+     "n": 198
+    },
+    "everyday_language": {
+     "competence": 0.0,
+     "n": 66
+    },
+    "finance_commerce": {
+     "competence": 2.4,
+     "n": 76
+    },
+    "law_policy": {
+     "competence": 0.0,
+     "n": 718
+    },
+    "math": {
+     "competence": 0.0,
+     "n": 289
+    },
+    "safety_security": {
+     "competence": 0.0,
+     "n": 48
+    },
+    "support_ops": {
+     "competence": 0.0,
+     "n": 105
+    }
+   },
+   "usecases": {
+    "advertising": {
+     "competence": 0.0,
+     "n": 22
+    },
+    "code_linting": {
+     "competence": 0.0,
+     "n": 24
+    },
+    "customer_support": {
+     "competence": 0.0,
+     "n": 157
+    },
+    "demand_forecasting": {
+     "competence": 0.0,
+     "n": 17
+    },
+    "ecommerce_marketplaces": {
+     "competence": 0.0,
+     "n": 55
+    },
+    "feature_extraction": {
+     "competence": 0.0,
+     "n": 19
+    },
+    "financial_crime": {
+     "competence": 0.0,
+     "n": 55
+    },
+    "gaming": {
+     "competence": 0.0,
+     "n": 23
+    },
+    "insurance_claims": {
+     "competence": 7.11,
+     "n": 27
+    },
+    "knowledge_graphs": {
+     "competence": 0.0,
+     "n": 22
+    },
+    "lead_generation": {
+     "competence": 0.51,
+     "n": 30
+    },
+    "legal_compliance": {
+     "competence": 0.0,
+     "n": 327
+    },
+    "llm_guardrails": {
+     "competence": 6.36,
+     "n": 27
+    },
+    "model_routing": {
+     "competence": 0.0,
+     "n": 325
+    },
+    "moderation_trust_safety": {
+     "competence": 0.0,
+     "n": 32
+    },
+    "other": {
+     "competence": 0.0,
+     "n": 216
+    },
+    "recruiting": {
+     "competence": 1.27,
+     "n": 19
+    },
+    "risk_assessment": {
+     "competence": 4.7,
+     "n": 56
+    },
+    "scientific_discovery": {
+     "competence": 0.0,
+     "n": 23
+    },
+    "search_retrieval": {
+     "competence": 27.35,
+     "n": 24
+    }
+   }
+  },
   "vegaml-0.8b": {
    "alt_O1S_topics_usecases": {
     "topics": {
@@ -116924,8 +117138,7 @@
   "modernbert-jev-v2": "Re-measure pending under the 10 s rule",
   "nev-2b": "Re-measure pending under the 10 s rule",
   "reflex-instinct-0.6b": "Re-measure pending under the 10 s rule",
-  "seb-9b": "not yet re-scored under the 10 s rule",
-  "vega-u-qwen3.5-4b": "Re-measure pending under the 10 s rule"
+  "seb-9b": "not yet re-scored under the 10 s rule"
  },
  "usecases": [
   {

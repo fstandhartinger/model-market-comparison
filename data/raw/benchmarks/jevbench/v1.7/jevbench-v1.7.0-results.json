@@ -330,6 +330,7 @@
     "jevact",
     "smalljev",
     "gutsy-0.8b-v0.3",
+    "vega-u-qwen3.5-4b",
     "purplemist-mini-1.0",
     "kev-0.6b",
     "jul-fast",
@@ -583,6 +584,7 @@
     "jevact",
     "smalljev",
     "gutsy-0.8b-v0.3",
+    "vega-u-qwen3.5-4b",
     "purplemist-mini-1.0",
     "kev-0.6b",
     "classone-gemma4-e2b",
@@ -836,6 +838,7 @@
     "jevact",
     "smalljev",
     "gutsy-0.8b-v0.3",
+    "vega-u-qwen3.5-4b",
     "purplemist-mini-1.0",
     "kev-0.6b",
     "jul-fast",
@@ -888,9 +891,9 @@
  "label": "JevBench v1.7.0: 10-second limit per decision; every row re-scored from its recorded per-decision times",
  "measurement_notes": [
   "Method v1.7: from v1.7.0 a decision that takes longer than 10 seconds (the measured time, strictly more than 10.000 s) counts as a wrong answer and as zero calibration for that item (each item type's calibration is multiplied by the share of its decisions answered within 10 s). Every row is re-scored from its recorded per-decision times: Intelligence, Calibration, Capability, the composites and their intervals are recomputed with the same frozen scorer plus the rule; the Speed axis now uses all decisions given (it replaces the 124-item subset of v1.6). Cost, tokens, the draws, the raw outputs and the field median are unchanged; no model was run again for the re-scored rows. Every re-scored row shows its v1.6 values next to the new ones.",
-  "Time limit on measured time: the limit uses the measured latency, not the displayed estimate (x2 + 0.15 s for self-hosted rows), so a self-hosted row can show an adjusted p95 above 10 s with no decision over the limit. In total 1,380 decisions across 54 rows are over the limit.",
-  "Re-measure pending: 6 rows (chon-1.0-e4b, nev-2b, modernbert-jev-v2, mghafiri-qwen3.5-0.8b-decision-model, reflex-instinct-0.6b, vega-u-qwen3.5-4b) recorded their per-decision times on a loaded CPU host, so they cannot be scored under the time limit and no estimate is published. They stay on the board with their v1.6 values, labelled as v1.6, unranked, until they are measured again.",
-  "Re-measured in v1.7.0: 3 rows that were pending (loaded CPU host) were measured again on the same items on a dedicated GPU. Each GPU row replaces the earlier CPU row in full, scores and times; GPU times are never combined with CPU scores, and the CPU values stay visible as the row's v1.6 values. pjev-2b (Kailune AI, frozen MiniCPM5-2B + merged LoRA r64, letter-logit readout, T=1 stub) (pjev-2b): no decision took longer than 10 seconds; re-measured on the same items, second and last use of these weights on the draw. PurpleMIST-Mini-1.0 (Olaverse) (purplemist-mini-1.0): no decision took longer than 10 seconds; re-measured on the same items, second and last use of these weights on the draw. Verdin-4B (Victor Bennett, Qwen3.5-4B + merged LoRA r16 + pointer head) (verdin-4b): no decision took longer than 10 seconds; re-measured on the same items, second and last use of these weights on the draw.",
+  "Time limit on measured time: the limit uses the measured latency, not the displayed estimate (x2 + 0.15 s for self-hosted rows), so a self-hosted row can show an adjusted p95 above 10 s with no decision over the limit. In total 1,395 decisions across 55 rows are over the limit.",
+  "Re-measure pending: 5 rows (chon-1.0-e4b, nev-2b, modernbert-jev-v2, mghafiri-qwen3.5-0.8b-decision-model, reflex-instinct-0.6b) recorded their per-decision times on a loaded CPU host, so they cannot be scored under the time limit and no estimate is published. They stay on the board with their v1.6 values, labelled as v1.6, unranked, until they are measured again.",
+  "Re-measured in v1.7.0: 4 rows that were pending (loaded CPU host) were measured again on the same items on a dedicated GPU. Each GPU row replaces the earlier CPU row in full, scores and times; GPU times are never combined with CPU scores, and the CPU values stay visible as the row's v1.6 values. pjev-2b (Kailune AI, frozen MiniCPM5-2B + merged LoRA r64, letter-logit readout, T=1 stub) (pjev-2b): no decision took longer than 10 seconds; re-measured on the same items, second and last use of these weights on the draw. PurpleMIST-Mini-1.0 (Olaverse) (purplemist-mini-1.0): no decision took longer than 10 seconds; re-measured on the same items, second and last use of these weights on the draw. Vega-U (Qwen3.5-4B reader) (vega-u-qwen3.5-4b): 15 of its 1,500 decisions took longer than 10 seconds; re-measured on the same items, second and last use of these weights on the draw. Verdin-4B (Victor Bennett, Qwen3.5-4B + merged LoRA r16 + pointer head) (verdin-4b): no decision took longer than 10 seconds; re-measured on the same items, second and last use of these weights on the draw.",
   "Open/sealed gap penalty: the public-versus-sealed gap penalty is computed from the row's own results, so a decision that now fails can slightly reduce that penalty and raise Intelligence a little. This affects 1 row in this release (shisa-de-1 (shisa-ai, Gemma-4-26B-A4B): +0.006 Intelligence points); it is a side effect of the existing penalty, not a change to it.",
   "Dated carry: 14 rows measured before v1.6 (v1.5 method) are carried as published and not re-scored.",
   "Equated API rows: the pool re-runs behind the A4 and A5 equating offsets are scored under the same rule, so the offsets moved with them. These rows keep the 2-decimal precision of their earlier publication.",
@@ -904,7 +907,7 @@
   "rule": "latency_s > 10.000 s -> failed",
   "treatment": "share"
  },
- "n_ranked": 247,
+ "n_ranked": 248,
  "not_measured": [
   {
    "addendum": null,
@@ -1270,7 +1273,7 @@
   "total": 1500
  },
  "sealed_share_of_intelligence": 0.5,
- "source_note": "269 rows: the 257 rows of the live board at v1.6.40 plus 12 new rows measured under the 10 s rule. 248 are re-scored under the 10 s rule from their recorded per-decision times (score_v17 sha256 6363458d..., share treatment, B=1000, the published per-row seeds), 6 are re-measure pending and shown as v1.6. 3 are re-measured on the same items on a GPU and replace their CPU rows in full. No model was run again for the re-scored rows.",
+ "source_note": "269 rows: the 257 rows of the live board at v1.6.40 plus 12 new rows measured under the 10 s rule. 248 are re-scored under the 10 s rule from their recorded per-decision times (score_v17 sha256 6363458d..., share treatment, B=1000, the published per-row seeds), 5 are re-measure pending and shown as v1.6. 4 are re-measured on the same items on a GPU and replace their CPU rows in full. No model was run again for the re-scored rows.",
  "source_sha256": "e15347783b8bedeeddd9017a831608a957f5bf0386f05902c50161ce0468f911",
  "status": "published",
  "systems": [
@@ -26808,7 +26811,7 @@
     "A": 121,
     "B": 133,
     "C": 140,
-    "capability": 224
+    "capability": 225
    },
    "repo": "https://huggingface.co/Qwen/Qwen3-4B-Instruct-2507",
    "rescored_in": "v1.7.0",
@@ -36815,7 +36818,7 @@
     "A": 174,
     "B": 174,
     "C": 175,
-    "capability": 235
+    "capability": 236
    },
    "repo": "https://github.com/sgoedecke/system-one",
    "rescored_in": "v1.7.0",
@@ -38985,7 +38988,7 @@
     "A": 181,
     "B": 179,
     "C": 182,
-    "capability": 234
+    "capability": 235
    },
    "repo": "https://huggingface.co/Qwen/Qwen3-8B",
    "rescored_in": "v1.7.0",
@@ -44205,7 +44208,7 @@
     "A": 202,
     "B": 202,
     "C": 202,
-    "capability": 222
+    "capability": 223
    },
    "repo": "https://huggingface.co/microsoft/Phi-4-mini-instruct",
    "rescored_in": "v1.7.0",
@@ -44639,7 +44642,7 @@
     "A": 204,
     "B": 204,
     "C": 204,
-    "capability": 231
+    "capability": 232
    },
    "repo": "https://github.com/featherless-ai/simple-jev",
    "rescored_in": "v1.7.0",
@@ -45501,13 +45504,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 209,
+   "rank": 210,
    "ranked": true,
    "ranks": {
-    "A": 209,
-    "B": 209,
-    "C": 209,
-    "capability": 217
+    "A": 210,
+    "B": 210,
+    "C": 210,
+    "capability": 218
    },
    "repo": "https://github.com/jaredpalmer/kev",
    "rescored_in": "v1.7.0",
@@ -45939,13 +45942,13 @@
     "carried_metadata_from": "Pinned author release; add-requests r61/score/withrows/REGISTRY.json measurement record",
     "kind": "v1.6.1 addendum a11 (scorer output sha256 4d2833926c2d, method option B / O1S)"
    },
-   "rank": 210,
+   "rank": 211,
    "ranked": true,
    "ranks": {
-    "A": 210,
-    "B": 211,
-    "C": 210,
-    "capability": 205
+    "A": 211,
+    "B": 212,
+    "C": 211,
+    "capability": 206
    },
    "repo": "https://huggingface.co/usejul/jul-decision-minicpm5-2b",
    "rescored_in": "v1.7.0",
@@ -46373,13 +46376,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 211,
+   "rank": 212,
    "ranked": true,
    "ranks": {
-    "A": 211,
-    "B": 212,
-    "C": 211,
-    "capability": 215
+    "A": 212,
+    "B": 213,
+    "C": 212,
+    "capability": 216
    },
    "repo": "https://github.com/deepanwadhwa/OpenDecision",
    "rescored_in": "v1.7.0",
@@ -46811,13 +46814,13 @@
     "carried_metadata_from": "Pinned author release; add-requests r61/score/withrows/REGISTRY.json measurement record",
     "kind": "v1.6.1 addendum a11 (scorer output sha256 4d2833926c2d, method option B / O1S)"
    },
-   "rank": 212,
+   "rank": 213,
    "ranked": true,
    "ranks": {
-    "A": 212,
-    "B": 210,
-    "C": 212,
-    "capability": 244
+    "A": 213,
+    "B": 211,
+    "C": 213,
+    "capability": 245
    },
    "repo": "https://huggingface.co/devops-thiago/classone-gemma4-e2b",
    "rescored_in": "v1.7.0",
@@ -47665,13 +47668,13 @@
     "carried_metadata_from": "v1.6.0 release row",
     "kind": "v1.6.1 full-set re-score (score-v161-3/out-O1S, O1S, hosted API on S u P, not equated)"
    },
-   "rank": 213,
+   "rank": 214,
    "ranked": true,
    "ranks": {
-    "A": 213,
-    "B": 213,
-    "C": 213,
-    "capability": 223
+    "A": 214,
+    "B": 214,
+    "C": 214,
+    "capability": 224
    },
    "repo": "https://fastino.ai/",
    "rescored_in": "v1.7.0",
@@ -48094,13 +48097,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 214,
+   "rank": 215,
    "ranked": true,
    "ranks": {
-    "A": 214,
-    "B": 214,
-    "C": 214,
-    "capability": 242
+    "A": 215,
+    "B": 215,
+    "C": 215,
+    "capability": 243
    },
    "repo": "https://huggingface.co/LibertAIDAI/deem-0.8-v1",
    "rescored_in": "v1.7.0",
@@ -48528,13 +48531,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 215,
+   "rank": 216,
    "ranked": true,
    "ranks": {
-    "A": 215,
-    "B": 215,
-    "C": 215,
-    "capability": 210
+    "A": 216,
+    "B": 216,
+    "C": 216,
+    "capability": 211
    },
    "repo": "https://huggingface.co/flymy-ai/decision-fast-preview",
    "rescored_in": "v1.7.0",
@@ -48960,13 +48963,13 @@
     "carried_metadata_from": "author submission",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 216,
+   "rank": 217,
    "ranked": true,
    "ranks": {
-    "A": 216,
-    "B": 216,
-    "C": 216,
-    "capability": 212
+    "A": 217,
+    "B": 217,
+    "C": 217,
+    "capability": 213
    },
    "repo": "https://huggingface.co/chinhnc/Quyet-1.0-Small-EN",
    "rescored_in": "v1.7.0",
@@ -49393,12 +49396,12 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 218,
+   "rank": 219,
    "ranked": true,
    "ranks": {
-    "A": 218,
-    "B": 218,
-    "C": 218,
+    "A": 219,
+    "B": 219,
+    "C": 219,
     "capability": 195
    },
    "repo": "https://huggingface.co/convaiinnovations/laya/tree/1c5edc17a7acd8701df6fc341c0d179f1c62c982/typed-decisions",
@@ -49831,13 +49834,13 @@
     "carried_metadata_from": "Pinned author release; add-requests r61/score/withrows/REGISTRY.json measurement record",
     "kind": "v1.6.1 addendum a11 (scorer output sha256 4d2833926c2d, method option B / O1S)"
    },
-   "rank": 220,
+   "rank": 221,
    "ranked": true,
    "ranks": {
-    "A": 220,
-    "B": 220,
-    "C": 220,
-    "capability": 220
+    "A": 221,
+    "B": 221,
+    "C": 221,
+    "capability": 221
    },
    "repo": "https://huggingface.co/samratduttaofficial/WaterSheep",
    "rescored_in": "v1.7.0",
@@ -50265,13 +50268,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 221,
+   "rank": 222,
    "ranked": true,
    "ranks": {
-    "A": 221,
-    "B": 222,
-    "C": 221,
-    "capability": 211
+    "A": 222,
+    "B": 223,
+    "C": 222,
+    "capability": 212
    },
    "repo": "https://huggingface.co/heman10x/rlcd-modernbert-151m",
    "rescored_in": "v1.7.0",
@@ -50699,13 +50702,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 222,
+   "rank": 223,
    "ranked": true,
    "ranks": {
-    "A": 222,
-    "B": 221,
-    "C": 222,
-    "capability": 247
+    "A": 223,
+    "B": 222,
+    "C": 223,
+    "capability": 248
    },
    "repo": "https://huggingface.co/Qwen/Qwen3-0.6B",
    "rescored_in": "v1.7.0",
@@ -51133,12 +51136,12 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 223,
+   "rank": 224,
    "ranked": true,
    "ranks": {
-    "A": 223,
-    "B": 224,
-    "C": 223,
+    "A": 224,
+    "B": 225,
+    "C": 224,
     "capability": 199
    },
    "repo": "https://github.com/franckverrot/lev",
@@ -51567,13 +51570,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 224,
+   "rank": 225,
    "ranked": true,
    "ranks": {
-    "A": 224,
-    "B": 223,
-    "C": 224,
-    "capability": 246
+    "A": 225,
+    "B": 224,
+    "C": 225,
+    "capability": 247
    },
    "repo": "https://huggingface.co/Qwen/Qwen3-1.7B",
    "rescored_in": "v1.7.0",
@@ -52001,13 +52004,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 225,
+   "rank": 226,
    "ranked": true,
    "ranks": {
-    "A": 225,
-    "B": 225,
-    "C": 225,
-    "capability": 226
+    "A": 226,
+    "B": 226,
+    "C": 226,
+    "capability": 227
    },
    "repo": "https://github.com/jaredpalmer/kev",
    "rescored_in": "v1.7.0",
@@ -52435,13 +52438,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 227,
+   "rank": 228,
    "ranked": true,
    "ranks": {
-    "A": 227,
-    "B": 227,
-    "C": 227,
-    "capability": 237
+    "A": 228,
+    "B": 228,
+    "C": 228,
+    "capability": 238
    },
    "repo": "https://github.com/Heman10x-NGU/openJev-verdict-2.0",
    "rescored_in": "v1.7.0",
@@ -52867,13 +52870,13 @@
     "carried_metadata_from": "author submission",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 228,
+   "rank": 229,
    "ranked": true,
    "ranks": {
-    "A": 228,
-    "B": 228,
-    "C": 228,
-    "capability": 229
+    "A": 229,
+    "B": 229,
+    "C": 229,
+    "capability": 230
    },
    "repo": "https://huggingface.co/chinhnc/Quyet-1.0-Small",
    "rescored_in": "v1.7.0",
@@ -53305,13 +53308,13 @@
     "carried_metadata_from": "Pinned author release; add-requests r61/score/withrows/REGISTRY.json measurement record",
     "kind": "v1.6.1 addendum a11 (scorer output sha256 4d2833926c2d, method option B / O1S)"
    },
-   "rank": 229,
+   "rank": 230,
    "ranked": true,
    "ranks": {
-    "A": 229,
-    "B": 229,
-    "C": 229,
-    "capability": 209
+    "A": 230,
+    "B": 230,
+    "C": 230,
+    "capability": 210
    },
    "repo": "https://huggingface.co/zaitlabs/watt-flash-0.1",
    "rescored_in": "v1.7.0",
@@ -53737,13 +53740,13 @@
     "carried_metadata_from": "author submission",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 230,
+   "rank": 231,
    "ranked": true,
    "ranks": {
-    "A": 230,
-    "B": 230,
-    "C": 230,
-    "capability": 230
+    "A": 231,
+    "B": 231,
+    "C": 231,
+    "capability": 231
    },
    "repo": "https://huggingface.co/chinhnc/Quyet-1.0-Tiny",
    "rescored_in": "v1.7.0",
@@ -54171,13 +54174,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 234,
+   "rank": 235,
    "ranked": true,
    "ranks": {
-    "A": 234,
-    "B": 234,
-    "C": 234,
-    "capability": 221
+    "A": 235,
+    "B": 235,
+    "C": 235,
+    "capability": 222
    },
    "repo": "https://github.com/kotoba-lang/typed-decisions",
    "rescored_in": "v1.7.0",
@@ -54605,13 +54608,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 236,
+   "rank": 237,
    "ranked": true,
    "ranks": {
-    "A": 236,
-    "B": 236,
-    "C": 236,
-    "capability": 216
+    "A": 237,
+    "B": 237,
+    "C": 237,
+    "capability": 217
    },
    "repo": "https://github.com/Manavarya09/verdict",
    "rescored_in": "v1.7.0",
@@ -55043,13 +55046,13 @@
     "carried_metadata_from": "Pinned author release; add-requests r61/score/withrows/REGISTRY.json measurement record",
     "kind": "v1.6.1 addendum a11 (scorer output sha256 4d2833926c2d, method option B / O1S)"
    },
-   "rank": 237,
+   "rank": 238,
    "ranked": true,
    "ranks": {
-    "A": 237,
-    "B": 237,
-    "C": 237,
-    "capability": 239
+    "A": 238,
+    "B": 238,
+    "C": 238,
+    "capability": 240
    },
    "repo": "https://huggingface.co/codepawl/tacet-sonata",
    "rescored_in": "v1.7.0",
@@ -55477,13 +55480,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 238,
+   "rank": 239,
    "ranked": true,
    "ranks": {
-    "A": 238,
-    "B": 238,
-    "C": 238,
-    "capability": 228
+    "A": 239,
+    "B": 239,
+    "C": 239,
+    "capability": 229
    },
    "repo": "https://huggingface.co/convaiinnovations/laya",
    "rescored_in": "v1.7.0",
@@ -55911,12 +55914,12 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 239,
+   "rank": 240,
    "ranked": true,
    "ranks": {
-    "A": 239,
-    "B": 239,
-    "C": 239,
+    "A": 240,
+    "B": 240,
+    "C": 240,
     "capability": 198
    },
    "repo": "https://huggingface.co/mixedbread-ai/mxbai-rerank-base-v2",
@@ -56344,13 +56347,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 240,
+   "rank": 241,
    "ranked": true,
    "ranks": {
-    "A": 240,
-    "B": 240,
-    "C": 240,
-    "capability": 243
+    "A": 241,
+    "B": 241,
+    "C": 241,
+    "capability": 244
    },
    "repo": "https://huggingface.co/convaiinnovations/laya/tree/1c5edc17a7acd8701df6fc341c0d179f1c62c982/multilingual",
    "rescored_in": "v1.7.0",
@@ -56778,12 +56781,12 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 241,
+   "rank": 242,
    "ranked": true,
    "ranks": {
-    "A": 241,
-    "B": 241,
-    "C": 241,
+    "A": 242,
+    "B": 242,
+    "C": 242,
     "capability": 201
    },
    "repo": "https://huggingface.co/altslate/certo-decision-model",
@@ -57212,13 +57215,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 242,
+   "rank": 243,
    "ranked": true,
    "ranks": {
-    "A": 242,
-    "B": 242,
-    "C": 242,
-    "capability": 240
+    "A": 243,
+    "B": 243,
+    "C": 243,
+    "capability": 241
    },
    "repo": "https://github.com/Contrastive-LM/CLM",
    "rescored_in": "v1.7.0",
@@ -57646,12 +57649,12 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 243,
+   "rank": 244,
    "ranked": true,
    "ranks": {
-    "A": 243,
-    "B": 243,
-    "C": 243,
+    "A": 244,
+    "B": 244,
+    "C": 244,
     "capability": 196
    },
    "repo": "https://huggingface.co/BAAI/bge-reranker-v2-m3",
@@ -58080,13 +58083,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 244,
+   "rank": 245,
    "ranked": true,
    "ranks": {
-    "A": 244,
-    "B": 244,
-    "C": 244,
-    "capability": 208
+    "A": 245,
+    "B": 245,
+    "C": 245,
+    "capability": 209
    },
    "repo": "https://huggingface.co/Alibaba-NLP/gte-reranker-modernbert-base",
    "rescored_in": "v1.7.0",
@@ -58514,13 +58517,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 245,
+   "rank": 246,
    "ranked": true,
    "ranks": {
-    "A": 245,
-    "B": 245,
-    "C": 245,
-    "capability": 238
+    "A": 246,
+    "B": 246,
+    "C": 246,
+    "capability": 239
    },
    "repo": "https://github.com/Bluusun/Decision-API",
    "rescored_in": "v1.7.0",
@@ -58917,13 +58920,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 246,
+   "rank": 247,
    "ranked": true,
    "ranks": {
-    "A": 246,
-    "B": 246,
-    "C": 246,
-    "capability": 232
+    "A": 247,
+    "B": 247,
+    "C": 247,
+    "capability": 233
    },
    "repo": "https://github.com/JoshuaSP/open-jev",
    "rescored_in": "v1.7.0",
@@ -65001,7 +65004,7 @@
     "A": 205,
     "B": 205,
     "C": 205,
-    "capability": 236
+    "capability": 237
    },
    "repo": "https://github.com/fstandhartinger/jevbench/issues/66",
    "rescored_in": "v1.7.0",
@@ -65247,12 +65250,12 @@
     },
     "views": null
    },
-   "rank": 247,
+   "rank": 248,
    "ranked": true,
    "ranks": {
-    "A": 247,
-    "B": 247,
-    "C": 247,
+    "A": 248,
+    "B": 248,
+    "C": 248,
     "capability": 184
    },
    "repo": "https://benchmarkheaven.com/jev-models/qwen3.8-27b",
@@ -76555,7 +76558,7 @@
     "A": 162,
     "B": 161,
     "C": 162,
-    "capability": 213
+    "capability": 214
    },
    "repo": "https://huggingface.co/devops-thiago/classone-gemma4-e4b",
    "rescored_in": "v1.7.0",
@@ -77962,13 +77965,13 @@
      "Intelligence only": 0.0786327227711625
     }
    },
-   "rank": 217,
+   "rank": 218,
    "ranked": true,
    "ranks": {
-    "A": 217,
-    "B": 217,
-    "C": 217,
-    "capability": 241
+    "A": 218,
+    "B": 218,
+    "C": 218,
+    "capability": 242
    },
    "repo": "https://huggingface.co/devops-thiago/classone-qwen3.5-2b",
    "rescored_in": "v1.7.0",
@@ -79381,7 +79384,7 @@
     "A": 166,
     "B": 166,
     "C": 167,
-    "capability": 214
+    "capability": 215
    },
    "repo": "https://huggingface.co/devops-thiago/classone-qwen3.5-4b",
    "rescored_in": "v1.7.0",
@@ -82206,7 +82209,7 @@
     "A": 207,
     "B": 207,
     "C": 207,
-    "capability": 207
+    "capability": 208
    },
    "repo": "https://huggingface.co/kouhxp/gutsy",
    "rescored_in": "v1.7.0",
@@ -87852,13 +87855,13 @@
      "Intelligence only": 0.013878616661020313
     }
    },
-   "rank": 232,
+   "rank": 233,
    "ranked": true,
    "ranks": {
-    "A": 232,
-    "B": 232,
-    "C": 232,
-    "capability": 227
+    "A": 233,
+    "B": 233,
+    "C": 233,
+    "capability": 228
    },
    "repo": "https://huggingface.co/LiquidAI/d1-omni-600M",
    "rescored_in": "v1.7.0",
@@ -93489,13 +93492,13 @@
      "Intelligence only": 0.011385887829608154
     }
    },
-   "rank": 233,
+   "rank": 234,
    "ranked": true,
    "ranks": {
-    "A": 233,
-    "B": 233,
-    "C": 233,
-    "capability": 225
+    "A": 234,
+    "B": 234,
+    "C": 234,
+    "capability": 226
    },
    "repo": "https://huggingface.co/nandakishorm/vega-08b-public-intents",
    "rescored_in": "v1.7.0",
@@ -94908,7 +94911,7 @@
     "A": 200,
     "B": 201,
     "C": 201,
-    "capability": 218
+    "capability": 219
    },
    "repo": "https://huggingface.co/nandakishorm/vega-08b-public-intents",
    "rescored_in": "v1.7.0",
@@ -136411,13 +136414,13 @@
      "Intelligence only": 0.005819814930094012
     }
    },
-   "rank": 235,
+   "rank": 236,
    "ranked": true,
    "ranks": {
-    "A": 235,
-    "B": 235,
-    "C": 235,
-    "capability": 245
+    "A": 236,
+    "B": 236,
+    "C": 236,
+    "capability": 246
    },
    "repo": "https://huggingface.co/SupersonicLabs/Julia-1",
    "rescored_in": "v1.7.0",
@@ -142508,7 +142511,7 @@
     "A": 183,
     "B": 184,
     "C": 184,
-    "capability": 206
+    "capability": 207
    },
    "repo": "https://huggingface.co/Guru0381/krino-2b",
    "rescored_in": "v1.7.0",
@@ -165108,13 +165111,13 @@
      "Intelligence only": 0.018814714977998477
     }
    },
-   "rank": 231,
+   "rank": 232,
    "ranked": true,
    "ranks": {
-    "A": 231,
-    "B": 231,
-    "C": 231,
-    "capability": 233
+    "A": 232,
+    "B": 232,
+    "C": 232,
+    "capability": 234
    },
    "repo": "https://huggingface.co/Phocinae/Phocinae-Largha-150M-v1",
    "rescored_in": "v1.7.0",
@@ -172185,12 +172188,12 @@
      "Intelligence only": 0.23537033944273675
     }
    },
-   "rank": 208,
+   "rank": 209,
    "ranked": true,
    "ranks": {
-    "A": 208,
-    "B": 208,
-    "C": 208,
+    "A": 209,
+    "B": 209,
+    "C": 209,
     "capability": 202
    },
    "remeasure": {
@@ -197629,13 +197632,13 @@
      "Intelligence only": 0.06667416738798192
     }
    },
-   "rank": 219,
+   "rank": 220,
    "ranked": true,
    "ranks": {
-    "A": 219,
-    "B": 219,
-    "C": 219,
-    "capability": 219
+    "A": 220,
+    "B": 220,
+    "C": 220,
+    "capability": 220
    },
    "repo": "https://huggingface.co/nandakishorm/vega-U",
    "rescored_in": "v1.7.0",
@@ -198777,57 +198780,63 @@
    "api_subset": false,
    "author": "Nandakishor M",
    "axes": {
-    "calibration": 79.8233873834119,
+    "calibration": 76.81388603317517,
     "cost": 64.90155987179207,
-    "intelligence": 8.801638441109716,
-    "speed": 60.651933418279626
+    "intelligence": 8.45673307172142,
+    "speed": 88.8199586422866
    },
    "calibration": {
     "parts": {
      "choice": {
-      "ece_hard": 0.04709579482418452,
-      "ece_score": 90.58084103516309,
+      "ece_hard": 0.07314029135902292,
+      "ece_score": 85.37194172819542,
       "mean_tvd": null,
       "n": 750,
       "n_ece_hard": 315,
       "n_tvd": 0,
-      "score": 90.58084103516309
+      "score": 84.2336491718195,
+      "score_before_time_limit": 85.37194172819542,
+      "time_limit_failed_share": 0.013333333333333334
      },
      "noul": {
-      "abstention_rate": 0.6719999999999999,
-      "brier": 0.227566471096863,
-      "ece": 0.1122361958446206,
+      "abstention_rate": 0.6693333333333333,
+      "brier": 0.22771527118772983,
+      "ece": 0.12364099316545366,
       "n": 375,
-      "score": 77.55276083107587
+      "score": 74.8703517596191,
+      "score_before_time_limit": 75.27180136690927,
+      "time_limit_failed_share": 0.005333333333333333
      },
      "score": {
-      "interval90_coverage": 0.7653333333333333,
-      "interval90_width": 0.46088888888888874,
+      "interval90_coverage": 0.768,
+      "interval90_width": 0.4584444444444443,
       "n": 375,
-      "nrps": 0.17472973562016728,
-      "score": 71.33656028399675,
-      "top_ece": 0.19926952934994893
+      "nrps": 0.1744417912695621,
+      "score": 71.33765716808692,
+      "score_before_time_limit": 71.91296085492633,
+      "time_limit_failed_share": 0.008,
+      "top_ece": 0.1936494958159556
      }
     },
-    "score": 79.8233873834119
+    "score": 76.81388603317517
    },
-   "capability": 44.31251291226081,
+   "capability": 42.63530955244829,
    "composite_ci95": {
     "A": [
-     0.4134795884464807,
-     1.7993673499327525
+     0.36273978490149095,
+     1.7366276349061507
     ],
     "B": [
-     0.29304131966029756,
-     1.366981924419596
+     0.2528709513330781,
+     1.288977371078567
     ],
     "C": [
-     0.28713860308783384,
-     1.2495606596755224
+     0.25190262840381317,
+     1.2059914131292713
     ]
    },
    "cost": {
-    "basis": "ESTIMATE (*est.) through the frozen pricing_v15 path (module sha256 6202ef78...): vega-U is a 14.3 M decision engine on a FROZEN Qwen/Qwen3.5-4B reader, which resolves to deepinfra:Qwen/Qwen3.5-4B in the dated 25 Sep DeepInfra catalog snapshot (sha256 84eb7926acd4e93b71d695be24898e2ca999b20011d1b66cc0348ce7c6c3546f), USD 0.03/M input and USD 0.15/M output. The model generates no text: 0 output tokens on every item, so cost = input tokens x USD 0.03/M. COMMON COST BASIS: published cost is recomputed over the same remaining 1,485 items as every other row; all 1,500 items count for Intelligence. ALL-ITEMS DIAGNOSTIC: USD 0.0367598 per 1,000 over all 1,500 items (0.569x cap).",
+    "basis": "ESTIMATE (*est.) through the frozen pricing_v15 path (module sha256 aa2afcd5...): vega-U is a 14.3 M decision engine on a FROZEN Qwen/Qwen3.5-4B reader, which resolves to deepinfra:Qwen/Qwen3.5-4B in the dated 25 Sep DeepInfra catalog snapshot (sha256 84eb7926acd4e93b71d695be24898e2ca999b20011d1b66cc0348ce7c6c3546f), USD 0.03/M input and USD 0.15/M output. The model generates no text: 0 output tokens on every item, so cost = input tokens x USD 0.03/M. COMMON COST BASIS: published cost is recomputed over the same remaining 1,485 items as every other row; all 1,500 items count for Intelligence. ALL-ITEMS DIAGNOSTIC: USD 0.0367598 per 1,000 over all 1,500 items (0.569x cap).",
     "common_basis": {
      "n_items": 1485,
      "rule": "common",
@@ -198837,36 +198846,44 @@
     "usage_estimated_rows": 0,
     "usd_per_1000": 0.014789313131313127
    },
-   "decision_limit": null,
+   "decision_limit": {
+    "limit_s": 10.0,
+    "n_over_limit": 15,
+    "n_over_limit_answered_ok": 15,
+    "rule": "latency_s > limit -> failed",
+    "speed_basis": "all decisions given (lane items in the raw), measured latency_s",
+    "speed_n": 1500,
+    "treatment": "share"
+   },
    "display": "Vega-U (Qwen3.5-4B reader)",
    "draw": {
     "drawn_on": "2026-10-12",
     "g_med": 9.839526770355711,
     "id": "v1.6-regular-20261012",
     "label": "Second regular draw",
-    "measured_on": "2026-10-20",
+    "measured_on": "2026-10-23",
     "offset": {
      "C": 0,
      "I": 0
     },
     "offset_ci95": null,
-    "release": "v1.6.40",
+    "release": "v1.7.0",
     "results_sha256": "8095b8c9fdf3c5d543ea2f007946094ce7dcb4184db5f610499d26f52afb8eb7",
     "status": "anchor-runs-pending"
    },
-   "endpoint_condition": "Our own CPU server (AMD EPYC, 32 cores), disposable container with no network (cut proven from inside before the sealed run), reviewed vegaml==0.12.2, torch 2.14.1+cpu, transformers 5.19.0; fp32 throughout (the author's own backbone_dtype() choice on CPU); context 73,728, and a longer state is cut on the right by the author's own build_prompt: 15 of the 1,500 items sit at that cap and are answered on a truncated state. Reference PyTorch paths only.",
-   "endpoint_kind": "cpu",
+   "endpoint_condition": "Verda RTX 6000 Ada (NVIDIA RTX 6000 Ada Generation, 49,140 MiB), FIN-01, one dedicated GPU instance, network none (proven), evaluator-controlled self-hosted deployment, measured 23 Oct 2026 06:56-07:03 UTC. The declared reviewed loopback shim `python3 vega_shim.py <pinned snapshot>/ckpt <port> vega-u-qwen3.5-4b`, with `VEGA_DEVICE=cuda`, vegaml==0.12.2, torch 2.14.1+cu126, mode=engine, adapters=auto, views=1, no max_len override (73,728); vegaml chooses the GPU dtype. The author's GPU configuration is used; the evaluator's RTX 6000 Ada is the only hardware deviation. The offline container-A2 recount matches the forecast fixed before the run: 1,500 answered, 0 refused, 1,837,991 input tokens, no output tokens. Fifteen items are cut on the right at the author's 73,728-token limit and take 13.8-14.3 s each on this card, so they count as failed under the 10 s rule. Speed is a dedicated-GPU figure measured one request at a time; the standard self-hosted x2 + 0.15 s adjustment applies and raw p50/p95 are kept. RE-MEASURE ON THE SAME ITEMS: this GPU row REPLACES the earlier loaded-CPU row in full (scores AND times); the GPU times are not combined with the CPU scores. The same 1,500 items of draw v1.6-regular-20261012 (input sha256 dfd36720077ef7c41ace367524896507c7f44ce71306fb3e659e8b85069d995b), the same pinned weights. Pod: Verda 1RTX6000ADA.10V (NVIDIA RTX 6000 Ada Generation, 49,140 MiB), FIN-01. The scoring run had no network: container NetworkMode none, only the loopback interface, cut proven before the first sealed byte; read-only root, all capabilities dropped. The earlier CPU measurement of this row was its first use of the weights on this draw; this is the second and last.",
+   "endpoint_kind": "gpu",
    "full_coverage": true,
    "intelligence": {
-    "I_open": 8.052855630646249,
-    "I_sealed": 9.550421251573185,
-    "base": 8.801638441109716,
-    "excess": -11.337092391282647,
-    "gap": -1.4975656209269363,
-    "penalty": 1,
+    "I_open": 7.801204167922121,
+    "I_sealed": 9.11226197552072,
+    "base": 8.45673307172142,
+    "excess": -11.15058457795431,
+    "gap": -1.3110578075985995,
+    "penalty": 1.0,
     "per_type_split": {
      "open|choice": {
-      "cc": 24.158566891938747,
+      "cc": 23.403612503766364,
       "n": {
        "easy": 33,
        "hard": 68,
@@ -198875,13 +198892,13 @@
       },
       "tiers": {
        "easy": 14.378378378378383,
-       "hard": 30.166719094054738,
+       "hard": 28.279333123623783,
        "judge": 9.030982201713911,
        "standard": 39.723733779824194
       }
      },
      "open|noul": {
-      "cc": 0,
+      "cc": 0.0,
       "n": {
        "easy": 14,
        "hard": 23,
@@ -198889,14 +198906,14 @@
        "standard": 18
       },
       "tiers": {
-       "easy": -14.28571428571429,
+       "easy": -28.57142857142857,
        "hard": -30.434782608695656,
-       "judge": -50,
+       "judge": -50.0,
        "standard": -55.55555555555556
       }
      },
      "open|score": {
-      "cc": 0,
+      "cc": 0.0,
       "n": {
        "easy": 9,
        "hard": 29,
@@ -198904,14 +198921,14 @@
        "standard": 16
       },
       "tiers": {
-       "easy": 50.49454583216968,
-       "hard": -8.843864831839587,
-       "judge": 0.3359341615495226,
-       "standard": -16.144738661185265
+       "easy": 51.312243229154305,
+       "hard": -8.801569670026566,
+       "judge": 0.2849655036505916,
+       "standard": -17.412006597581488
       }
      },
      "sealed|choice": {
-      "cc": 27.86833540536242,
+      "cc": 27.336785926562165,
       "n": {
        "easy": 70,
        "hard": 247,
@@ -198920,13 +198937,13 @@
       },
       "tiers": {
        "easy": 29.47903430749683,
-       "hard": 25.58112640222041,
-       "judge": 25.95494613124389,
-       "standard": 34.50748787175703
+       "hard": 24.540302995258457,
+       "judge": 26.836434867776703,
+       "standard": 32.609154186880424
       }
      },
      "sealed|noul": {
-      "cc": 0,
+      "cc": 0.0,
       "n": {
        "easy": 58,
        "hard": 110,
@@ -198935,13 +198952,13 @@
       },
       "tiers": {
        "easy": -41.379310344827594,
-       "hard": -52.727272727272734,
-       "judge": -66.15384615384615,
-       "standard": -52.23880597014925
+       "hard": -50.90909090909091,
+       "judge": -69.23076923076923,
+       "standard": -46.26865671641791
       }
      },
      "sealed|score": {
-      "cc": 0.7829283493571393,
+      "cc": 0.0,
       "n": {
        "easy": 35,
        "hard": 123,
@@ -198949,31 +198966,30 @@
        "standard": 75
       },
       "tiers": {
-       "easy": 17.532265400765844,
-       "hard": 10.0721317298201,
-       "judge": -15.387805654858422,
-       "standard": -1.9140459309497926
+       "easy": 20.512927693345652,
+       "hard": 5.426302008135641,
+       "judge": -15.699545487050193,
+       "standard": -2.3208485625247466
       }
      }
     }
    },
-   "jevbench_score": 0.7843042690267673,
+   "jevbench_score": 0.7245180783982694,
    "key": "vega-u-qwen3.5-4b",
-   "last_measured_on": "2026-10-20",
+   "last_measured_on": "2026-10-23",
    "licence": "vega-U checkpoint apache-2.0 (card and metadata agree); vegaml package apache-2.0; frozen reader Qwen/Qwen3.5-4B apache-2.0",
-   "listing": "remeasure-pending",
-   "measured_in": "v1.6.32",
+   "listing": "ranked",
+   "measured_in": "v1.7.0",
    "measurement_date_status": "measured",
-   "method": "v1.6",
+   "method": "v1.7",
    "model_pin": "nandakishorm/vega-U@b3e7383e463ef3b78324408cd82f4ab0d8f2e75a",
-   "not_ranked_because": "Re-measure pending under the 10 s rule: this row's per-decision times were recorded on a loaded CPU host, so they cannot be scored under the time limit. Shown with its v1.6 values until it is measured again.",
    "noul_decisive": {
-    "acc_among_decisive": 0.7560975609756098,
-    "decisive": 123,
-    "decisive_rate": 0.328,
+    "acc_among_decisive": 0.7580645161290323,
+    "decisive": 124,
+    "decisive_rate": 0.3324396782841823,
     "n": 375,
     "supported": true,
-    "valid": 375
+    "valid": 373
    },
    "paid_fast_lane": false,
    "planned_weight_denominator": 1,
@@ -199036,27 +199052,39 @@
      "Intelligence only": 0.27274108540540976
     }
    },
-   "rank": null,
-   "ranked": false,
+   "rank": 208,
+   "ranked": true,
    "ranks": {
-    "A": null,
-    "B": null,
-    "C": null,
-    "capability": null
+    "A": 208,
+    "B": 208,
+    "C": 208,
+    "capability": 205
    },
+   "remeasure": {
+    "disclosure": "Re-measure on the same items: this GPU row replaces the earlier loaded-CPU row of the same weights in full (scores and times) and is the second and last use of these weights on draw v1.6-regular-20261012. Fifteen items reach the author's 73,728-token context limit and are answered on a right-truncated state; they take 13.8-14.3 s each on this GPU and count as failed under the 10 s rule.",
+    "draw": "v1.6-regular-20261012",
+    "kind": "re-measure on the same items",
+    "replaces": {
+     "board_release": "v1.6.40",
+     "endpoint_kind": "cpu",
+     "in_full": "scores and times"
+    }
+   },
+   "remeasured_in": "v1.7.0",
    "repo": "https://huggingface.co/nandakishorm/vega-U",
    "scores": {
-    "A": 0.7843042690267673,
-    "B": 0.570350285841166,
-    "C": 0.5446557423796995
+    "A": 0.7245180783982694,
+    "B": 0.5178907226942993,
+    "C": 0.5031375544432425
    },
    "speed": {
     "adjustment": "x2 + 0.15 s (assumption, not measured)",
-    "n": 124,
-    "p50_s_adjusted": 6.766180534940213,
-    "p50_s_raw": 3.3080902674701065,
-    "p95_s_adjusted": 12.719296073674922,
-    "p95_s_raw": 6.284648036837461
+    "basis": "all decisions given (lane items in the raw), measured latency_s",
+    "n": 1500,
+    "p50_s_adjusted": 0.33023520699989606,
+    "p50_s_raw": 0.09011760349994802,
+    "p95_s_adjusted": 0.39735690419992126,
+    "p95_s_raw": 0.12367845209996063
    },
    "status": {
     "answered_ok": 1500,
@@ -199076,11 +199104,11 @@
      "family": {
       "calibration": {
        "accuracy": 0.45454545454545453,
-       "cc": -24.17302923959561,
+       "cc": -25.03596198376302,
        "cc_by_type": {
         "choice": 33.333333333333336,
-        "noul": -50,
-        "score": -55.852421052120164
+        "noul": -50.0,
+        "score": -58.441219284622406
        },
        "low_n": true,
        "n": 22,
@@ -199089,15 +199117,15 @@
         "noul": 4,
         "score": 2
        },
-       "score": 0
+       "score": 0.0
       },
       "calibration_gen": {
        "accuracy": 0.27722772277227725,
-       "cc": -15.832278196429003,
+       "cc": -14.828368777600858,
        "cc_by_type": {
-        "choice": 1.378579003181342,
-        "noul": -36,
-        "score": -12.875413592468355
+        "choice": 4.559915164369044,
+        "noul": -36.0,
+        "score": -13.045021497171616
        },
        "low_n": false,
        "n": 101,
@@ -199106,15 +199134,15 @@
         "noul": 25,
         "score": 35
        },
-       "score": 0
+       "score": 0.0
       },
       "composite_gen": {
-       "accuracy": 0.2871287128712871,
-       "cc": -20.330657729728976,
+       "accuracy": 0.31683168316831684,
+       "cc": -14.0069374233143,
        "cc_by_type": {
-        "choice": -0.8130081300813016,
-        "noul": -55.55555555555556,
-        "score": -4.623409503550069
+        "choice": 2.4390243902439046,
+        "noul": -40.74074074074075,
+        "score": -3.719095919446058
        },
        "low_n": false,
        "n": 101,
@@ -199123,15 +199151,15 @@
         "noul": 27,
         "score": 33
        },
-       "score": 0
+       "score": 0.0
       },
       "fairness": {
        "accuracy": 0.7083333333333334,
-       "cc": 49.77573182407097,
+       "cc": 51.26191529469682,
        "cc_by_type": {
-        "choice": 100,
+        "choice": 100.0,
         "noul": 33.33333333333333,
-        "score": 15.993862138879578
+        "score": 20.452412550757128
        },
        "low_n": false,
        "n": 48,
@@ -199140,15 +199168,15 @@
         "noul": 15,
         "score": 18
        },
-       "score": 49.77573182407097
+       "score": 51.26191529469682
       },
       "jaggedness": {
-       "accuracy": 0.25555555555555554,
-       "cc": -23.492092675958062,
+       "accuracy": 0.2611111111111111,
+       "cc": -23.663861725959578,
        "cc_by_type": {
         "choice": 4.716073147256991,
         "noul": -62.16216216216216,
-        "score": -13.030189012969018
+        "score": -13.545496162973558
        },
        "low_n": false,
        "n": 180,
@@ -199157,15 +199185,15 @@
         "noul": 37,
         "score": 49
        },
-       "score": 0
+       "score": 0.0
       },
       "llm_router": {
-       "accuracy": 0.38977635782747605,
-       "cc": 1.444353139275491,
+       "accuracy": 0.38338658146964855,
+       "cc": 0.4762587666438864,
        "cc_by_type": {
-        "choice": 27.885885357048526,
-        "noul": -40.20618556701031,
-        "score": 16.653359627788255
+        "choice": 27.093422558774332,
+        "noul": -42.26804123711341,
+        "score": 16.603394978270735
        },
        "low_n": false,
        "n": 313,
@@ -199174,15 +199202,15 @@
         "noul": 97,
         "score": 64
        },
-       "score": 1.444353139275491
+       "score": 0.4762587666438864
       },
       "long_state": {
-       "accuracy": 0.13333333333333333,
-       "cc": -52.30705368885267,
+       "accuracy": 0.0,
+       "cc": -143.01075268817203,
        "cc_by_type": {
-        "choice": -16.129032258064516,
-        "noul": -100,
-        "score": -40.7921288084935
+        "choice": -29.032258064516128,
+        "noul": -100.0,
+        "score": -300.0
        },
        "low_n": true,
        "n": 15,
@@ -199191,15 +199219,15 @@
         "noul": 2,
         "score": 3
        },
-       "score": 0
+       "score": 0.0
       },
       "ml_usecase": {
        "accuracy": 0.25925925925925924,
-       "cc": -52.98122765697014,
+       "cc": -53.162603064709884,
        "cc_by_type": {
         "choice": 13.402061855670107,
-        "noul": -100,
-        "score": -72.34574482658054
+        "noul": -100.0,
+        "score": -72.88987104979974
        },
        "low_n": true,
        "n": 27,
@@ -199208,15 +199236,15 @@
         "noul": 8,
         "score": 8
        },
-       "score": 0
+       "score": 0.0
       },
       "multilingual": {
-       "accuracy": 0.44363636363636366,
-       "cc": -1.5771151351023462,
+       "accuracy": 0.43636363636363634,
+       "cc": -1.4153482680333316,
        "cc_by_type": {
-        "choice": 50.11411803064885,
-        "noul": -66.66666666666667,
-        "score": 11.821203230710786
+        "choice": 48.15780893381155,
+        "noul": -63.888888888888886,
+        "score": 11.48503515097734
        },
        "low_n": false,
        "n": 275,
@@ -199225,15 +199253,15 @@
         "noul": 72,
         "score": 69
        },
-       "score": 0
+       "score": 0.0
       },
       "negation_pair_gen": {
-       "accuracy": 0.27906976744186046,
-       "cc": -21.004610641309178,
+       "accuracy": 0.26744186046511625,
+       "cc": -22.098041025583615,
        "cc_by_type": {
-        "choice": -3.3333333333333326,
-        "noul": -40,
-        "score": -19.680498590594198
+        "choice": -6.666666666666665,
+        "noul": -40.0,
+        "score": -19.627456410084186
        },
        "low_n": false,
        "n": 86,
@@ -199242,28 +199270,28 @@
         "noul": 30,
         "score": 16
        },
-       "score": 0
+       "score": 0.0
       },
       "option_order": {
-       "accuracy": 0.3333333333333333,
-       "cc": 14.780292942743008,
+       "accuracy": 0.3125,
+       "cc": 12.117177097203731,
        "cc_by_type": {
-        "choice": 14.780292942743008
+        "choice": 12.117177097203731
        },
        "low_n": false,
        "n": 48,
        "n_by_type": {
         "choice": 48
        },
-       "score": 14.780292942743008
+       "score": 12.117177097203731
       },
       "perturb_pair": {
        "accuracy": 0.46875,
-       "cc": -5.79415409515956,
+       "cc": -6.191039931210905,
        "cc_by_type": {
         "choice": 39.93993993993994,
-        "noul": -80,
-        "score": 22.677597774581383
+        "noul": -80.0,
+        "score": 21.486940266427347
        },
        "low_n": false,
        "n": 64,
@@ -199272,15 +199300,15 @@
         "noul": 10,
         "score": 10
        },
-       "score": 0
+       "score": 0.0
       },
       "usecase": {
-       "accuracy": 0.4,
-       "cc": -2.658665094941043,
+       "accuracy": 0.40454545454545454,
+       "cc": -4.150913529523027,
        "cc_by_type": {
         "choice": 43.627450980392176,
-        "noul": -58.33333333333333,
-        "score": 6.729887068118023
+        "noul": -62.5,
+        "score": 6.419808431038742
        },
        "low_n": false,
        "n": 220,
@@ -199289,17 +199317,17 @@
         "noul": 48,
         "score": 68
        },
-       "score": 0
+       "score": 0.0
       }
      },
      "lang": {
       "ar": {
        "accuracy": 0.1875,
-       "cc": -55.04980282535764,
+       "cc": -55.1179221238957,
        "cc_by_type": {
         "choice": -14.285714285714286,
-        "noul": -50,
-        "score": -100.86369419035863
+        "noul": -50.0,
+        "score": -101.06805208597281
        },
        "low_n": true,
        "n": 16,
@@ -199308,14 +199336,14 @@
         "noul": 4,
         "score": 5
        },
-       "score": 0
+       "score": 0.0
       },
       "cs": {
        "accuracy": 0.42857142857142855,
        "cc": -31.578947368421055,
        "cc_by_type": {
         "choice": 36.84210526315789,
-        "noul": -100
+        "noul": -100.0
        },
        "low_n": true,
        "n": 7,
@@ -199323,15 +199351,15 @@
         "choice": 6,
         "noul": 1
        },
-       "score": 0
+       "score": 0.0
       },
       "da": {
        "accuracy": 0.46153846153846156,
-       "cc": -16.601897961959065,
+       "cc": -16.347518774147833,
        "cc_by_type": {
         "choice": 79.26267281105991,
-        "noul": -100,
-        "score": -29.068366696937108
+        "noul": -100.0,
+        "score": -28.305229133503417
        },
        "low_n": true,
        "n": 13,
@@ -199340,15 +199368,15 @@
         "noul": 3,
         "score": 4
        },
-       "score": 0
+       "score": 0.0
       },
       "de": {
-       "accuracy": 0.5,
-       "cc": 12.057184053331648,
+       "accuracy": 0.46875,
+       "cc": 9.53194357801521,
        "cc_by_type": {
-        "choice": 76.10619469026548,
-        "noul": -50,
-        "score": 10.065357469729463
+        "choice": 68.14159292035399,
+        "noul": -50.0,
+        "score": 10.454237813691647
        },
        "low_n": false,
        "n": 32,
@@ -199357,15 +199385,15 @@
         "noul": 8,
         "score": 8
        },
-       "score": 12.057184053331648
+       "score": 9.53194357801521
       },
       "el": {
        "accuracy": 0.2,
-       "cc": -47.92157276276159,
+       "cc": -48.12894813495393,
        "cc_by_type": {
         "choice": 16.201117318435756,
-        "noul": -100,
-        "score": -59.96583560672053
+        "noul": -100.0,
+        "score": -60.58796172329757
        },
        "low_n": true,
        "n": 15,
@@ -199374,15 +199402,15 @@
         "noul": 6,
         "score": 1
        },
-       "score": 0
+       "score": 0.0
       },
       "en": {
-       "accuracy": 0.36142484795829716,
-       "cc": -6.85061998432743,
+       "accuracy": 0.36055603822762816,
+       "cc": -7.544666244633066,
        "cc_by_type": {
-        "choice": 22.45640155721795,
+        "choice": 22.0170610561257,
         "noul": -45.32374100719424,
-        "score": 2.3154794969939996
+        "score": 0.6726812171693464
        },
        "low_n": false,
        "n": 1151,
@@ -199391,15 +199419,15 @@
         "noul": 278,
         "score": 285
        },
-       "score": 0
+       "score": 0.0
       },
       "es": {
-       "accuracy": 0.4838709677419355,
-       "cc": -3.947121349485421,
+       "accuracy": 0.45161290322580644,
+       "cc": -7.245856233278336,
        "cc_by_type": {
-        "choice": 41.27243066884176,
-        "noul": -25,
-        "score": -28.113794717298024
+        "choice": 31.484502446982063,
+        "noul": -25.0,
+        "score": -28.222071146817072
        },
        "low_n": false,
        "n": 31,
@@ -199408,15 +199436,15 @@
         "noul": 8,
         "score": 10
        },
-       "score": 0
+       "score": 0.0
       },
       "fi": {
        "accuracy": 0.125,
-       "cc": -32.31974165131107,
+       "cc": -31.446955625689117,
        "cc_by_type": {
         "choice": 1.6393442622950836,
-        "noul": -100,
-        "score": 1.4014307837717177
+        "noul": -100.0,
+        "score": 4.019788860637563
        },
        "low_n": true,
        "n": 8,
@@ -199425,15 +199453,15 @@
         "noul": 3,
         "score": 1
        },
-       "score": 0
+       "score": 0.0
       },
       "fr": {
-       "accuracy": 0.6428571428571429,
-       "cc": 10.425181909247007,
+       "accuracy": 0.5714285714285714,
+       "cc": 7.9862271549963095,
        "cc_by_type": {
         "choice": 78.82352941176471,
-        "noul": -100,
-        "score": 52.452016315976294
+        "noul": -100.0,
+        "score": 45.13515205322422
        },
        "low_n": true,
        "n": 14,
@@ -199442,15 +199470,15 @@
         "noul": 2,
         "score": 6
        },
-       "score": 10.425181909247007
+       "score": 7.9862271549963095
       },
       "hi": {
        "accuracy": 0.42857142857142855,
-       "cc": -5.734296753197931,
+       "cc": -5.873615988487875,
        "cc_by_type": {
         "choice": 49.720670391061454,
-        "noul": -100,
-        "score": 33.07643934934475
+        "noul": -100.0,
+        "score": 32.65848164347492
        },
        "low_n": true,
        "n": 21,
@@ -199459,14 +199487,14 @@
         "noul": 8,
         "score": 5
        },
-       "score": 0
+       "score": 0.0
       },
       "id": {
        "accuracy": 0.25,
        "cc": -44.44444444444444,
        "cc_by_type": {
         "choice": 11.111111111111109,
-        "noul": -100
+        "noul": -100.0
        },
        "low_n": true,
        "n": 4,
@@ -199474,15 +199502,15 @@
         "choice": 3,
         "noul": 1
        },
-       "score": 0
+       "score": 0.0
       },
       "it": {
        "accuracy": 0.6,
-       "cc": -13.117898585302266,
+       "cc": -12.368119435536334,
        "cc_by_type": {
         "choice": 71.94076383476228,
-        "noul": -100,
-        "score": -11.294459590669081
+        "noul": -100.0,
+        "score": -9.045122141371277
        },
        "low_n": true,
        "n": 15,
@@ -199491,15 +199519,15 @@
         "noul": 3,
         "score": 3
        },
-       "score": 0
+       "score": 0.0
       },
       "ja": {
        "accuracy": 0.44,
-       "cc": 2.450580165572217,
+       "cc": 2.520638957463568,
        "cc_by_type": {
         "choice": -0.07942811755361648,
-        "noul": 0,
-        "score": 7.431168614270267
+        "noul": 0.0,
+        "score": 7.64134498994432
        },
        "low_n": true,
        "n": 25,
@@ -199508,15 +199536,15 @@
         "noul": 10,
         "score": 6
        },
-       "score": 2.450580165572217
+       "score": 2.520638957463568
       },
       "ko": {
        "accuracy": 0.3,
-       "cc": -38.051593527032615,
+       "cc": -38.53246573373655,
        "cc_by_type": {
         "choice": 11.111111111111109,
-        "noul": -100,
-        "score": -25.265891692208964
+        "noul": -100.0,
+        "score": -26.708508312320767
        },
        "low_n": true,
        "n": 10,
@@ -199525,15 +199553,15 @@
         "noul": 2,
         "score": 5
        },
-       "score": 0
+       "score": 0.0
       },
       "mixed": {
-       "accuracy": 0.5,
-       "cc": 20.539925397699854,
+       "accuracy": 0.5714285714285714,
+       "cc": 42.35289813052079,
        "cc_by_type": {
         "choice": 66.66666666666667,
-        "noul": -33.333333333333336,
-        "score": 28.286442859766225
+        "noul": 33.33333333333333,
+        "score": 27.058694391562376
        },
        "low_n": true,
        "n": 14,
@@ -199542,15 +199570,15 @@
         "noul": 3,
         "score": 3
        },
-       "score": 20.539925397699854
+       "score": 42.35289813052079
       },
       "nl": {
        "accuracy": 0.4,
-       "cc": -12.312064253368755,
+       "cc": -11.660456122154708,
        "cc_by_type": {
         "choice": 74.02597402597404,
-        "noul": -100,
-        "score": -10.962166786080306
+        "noul": -100.0,
+        "score": -9.007342392438167
        },
        "low_n": true,
        "n": 10,
@@ -199559,14 +199587,14 @@
         "noul": 3,
         "score": 2
        },
-       "score": 0
+       "score": 0.0
       },
       "no": {
        "accuracy": 0.16666666666666666,
        "cc": -32.25806451612903,
        "cc_by_type": {
         "choice": 35.483870967741936,
-        "noul": -100
+        "noul": -100.0
        },
        "low_n": true,
        "n": 6,
@@ -199574,15 +199602,15 @@
         "choice": 2,
         "noul": 4
        },
-       "score": 0
+       "score": 0.0
       },
       "pl": {
        "accuracy": 0.4358974358974359,
-       "cc": 9.228046961636409,
+       "cc": 9.515495097600082,
        "cc_by_type": {
         "choice": 54.29538721963606,
-        "noul": -60,
-        "score": 33.388753665273164
+        "noul": -60.0,
+        "score": 34.25109807316419
        },
        "low_n": false,
        "n": 39,
@@ -199591,15 +199619,15 @@
         "noul": 10,
         "score": 12
        },
-       "score": 9.228046961636409
+       "score": 9.515495097600082
       },
       "pt": {
        "accuracy": 0.39285714285714285,
-       "cc": -5.52266099464628,
+       "cc": -5.205980171443635,
        "cc_by_type": {
         "choice": 36.35827931644077,
-        "noul": -60,
-        "score": 7.073737699620386
+        "noul": -60.0,
+        "score": 8.023780169228322
        },
        "low_n": true,
        "n": 28,
@@ -199608,15 +199636,15 @@
         "noul": 5,
         "score": 11
        },
-       "score": 0
+       "score": 0.0
       },
       "sv": {
        "accuracy": 0.2727272727272727,
-       "cc": 2.5614476023127017,
+       "cc": 2.6759101210372713,
        "cc_by_type": {
         "choice": 23.404255319148945,
-        "noul": -60,
-        "score": 44.28008748778915
+        "noul": -60.0,
+        "score": 44.62347504396287
        },
        "low_n": true,
        "n": 11,
@@ -199625,15 +199653,15 @@
         "noul": 5,
         "score": 1
        },
-       "score": 2.5614476023127017
+       "score": 2.6759101210372713
       },
       "tr": {
        "accuracy": 0.23076923076923078,
-       "cc": -35.847585034891814,
+       "cc": -36.08796813124616,
        "cc_by_type": {
         "choice": 34.78260869565218,
-        "noul": -100,
-        "score": -42.32536380032763
+        "noul": -100.0,
+        "score": -43.04651308939067
        },
        "low_n": true,
        "n": 13,
@@ -199642,15 +199670,15 @@
         "noul": 4,
         "score": 3
        },
-       "score": 0
+       "score": 0.0
       },
       "uk": {
        "accuracy": 0.42857142857142855,
-       "cc": -27.484634905759815,
+       "cc": -27.496009583018008,
        "cc_by_type": {
         "choice": 67.74193548387096,
-        "noul": -100,
-        "score": -50.195840201150396
+        "noul": -100.0,
+        "score": -50.229964232924985
        },
        "low_n": true,
        "n": 7,
@@ -199659,15 +199687,15 @@
         "noul": 1,
         "score": 2
        },
-       "score": 0
+       "score": 0.0
       },
       "zh": {
        "accuracy": 0.4,
-       "cc": 9.93243727616373,
+       "cc": 9.62711250017331,
        "cc_by_type": {
         "choice": 23.72881355932204,
         "noul": -33.333333333333336,
-        "score": 39.40183160250248
+        "score": 38.48585727453122
        },
        "low_n": true,
        "n": 10,
@@ -199676,58 +199704,58 @@
         "noul": 3,
         "score": 2
        },
-       "score": 9.93243727616373
+       "score": 9.62711250017331
       }
      },
      "type": {
       "choice": {
-       "accuracy": 0.436,
-       "cc": 27.151304081593608,
+       "accuracy": 0.43066666666666664,
+       "cc": 26.462427524445555,
        "cc_by_type": {
-        "choice": 27.151304081593608
+        "choice": 26.462427524445555
        },
        "low_n": false,
        "n": 750,
        "n_by_type": {
         "choice": 750
        },
-       "score": 27.151304081593608
+       "score": 26.462427524445555
       },
       "noul": {
-       "accuracy": 0.248,
-       "cc": -50.4,
+       "accuracy": 0.25066666666666665,
+       "cc": -49.86666666666667,
        "cc_by_type": {
-        "noul": -50.4
+        "noul": -49.86666666666667
        },
        "low_n": false,
        "n": 375,
        "n_by_type": {
         "noul": 375
        },
-       "score": 0
+       "score": 0.0
       },
       "score": {
        "accuracy": 0.368,
-       "cc": 2.25075001040983,
+       "cc": 0.9290025644768996,
        "cc_by_type": {
-        "score": 2.25075001040983
+        "score": 0.9290025644768996
        },
        "low_n": false,
        "n": 375,
        "n_by_type": {
         "score": 375
        },
-       "score": 2.25075001040983
+       "score": 0.9290025644768996
       }
      },
      "usecase": {
       "advertising": {
        "accuracy": 0.2727272727272727,
-       "cc": -19.42899698359893,
+       "cc": -19.783631212480014,
        "cc_by_type": {
-        "choice": 20,
-        "noul": -75,
-        "score": -3.2869909507967865
+        "choice": 20.0,
+        "noul": -75.0,
+        "score": -4.350893637440034
        },
        "low_n": true,
        "n": 22,
@@ -199736,15 +199764,15 @@
         "noul": 8,
         "score": 6
        },
-       "score": 0
+       "score": 0.0
       },
       "code_linting": {
        "accuracy": 0.2916666666666667,
-       "cc": -25.024850935663057,
+       "cc": -24.99740795770514,
        "cc_by_type": {
         "choice": 62.73291925465839,
-        "noul": -100,
-        "score": -37.80747206164756
+        "noul": -100.0,
+        "score": -37.7251431277738
        },
        "low_n": true,
        "n": 24,
@@ -199753,15 +199781,15 @@
         "noul": 9,
         "score": 8
        },
-       "score": 0
+       "score": 0.0
       },
       "customer_support": {
        "accuracy": 0.5,
-       "cc": 17.706002757945217,
+       "cc": 16.845304659485688,
        "cc_by_type": {
         "choice": 34.959349593495936,
-        "noul": 0,
-        "score": 18.158658680339713
+        "noul": 0.0,
+        "score": 15.576564384961122
        },
        "low_n": true,
        "n": 14,
@@ -199770,15 +199798,15 @@
         "noul": 4,
         "score": 2
        },
-       "score": 17.706002757945217
+       "score": 16.845304659485688
       },
       "demand_forecasting": {
        "accuracy": 0.35294117647058826,
-       "cc": -42.92256173821594,
+       "cc": -42.72991178726473,
        "cc_by_type": {
         "choice": 29.82456140350877,
-        "noul": -100,
-        "score": -58.59224661815659
+        "noul": -100.0,
+        "score": -58.014296765302944
        },
        "low_n": true,
        "n": 17,
@@ -199787,15 +199815,15 @@
         "noul": 3,
         "score": 3
        },
-       "score": 0
+       "score": 0.0
       },
       "ecommerce_marketplaces": {
        "accuracy": 0.47058823529411764,
-       "cc": -9.634555022333693,
+       "cc": -9.175745041749694,
        "cc_by_type": {
         "choice": 71.0144927536232,
         "noul": -33.333333333333336,
-        "score": -66.58482448729094
+        "score": -65.20839454553895
        },
        "low_n": true,
        "n": 17,
@@ -199804,15 +199832,15 @@
         "noul": 3,
         "score": 5
        },
-       "score": 0
+       "score": 0.0
       },
       "feature_extraction": {
        "accuracy": 0.3684210526315789,
-       "cc": -39.18160806904829,
+       "cc": -37.19985828253814,
        "cc_by_type": {
         "choice": 24.528301886792455,
         "noul": -66.66666666666667,
-        "score": -75.40645942727066
+        "score": -69.4612100677402
        },
        "low_n": true,
        "n": 19,
@@ -199821,15 +199849,15 @@
         "noul": 6,
         "score": 3
        },
-       "score": 0
+       "score": 0.0
       },
       "financial_crime": {
-       "accuracy": 0.36666666666666664,
-       "cc": -8.874279270195027,
+       "accuracy": 0.4,
+       "cc": -8.951088980880352,
        "cc_by_type": {
         "choice": 50.98039215686275,
         "noul": -71.42857142857143,
-        "score": -6.174658538876399
+        "score": -6.4050876709323745
        },
        "low_n": false,
        "n": 30,
@@ -199838,15 +199866,15 @@
         "noul": 7,
         "score": 10
        },
-       "score": 0
+       "score": 0.0
       },
       "gaming": {
-       "accuracy": 0.36363636363636365,
-       "cc": -4.146996765170526,
+       "accuracy": 0.3181818181818182,
+       "cc": -20.737580599805494,
        "cc_by_type": {
         "choice": 26.82926829268293,
-        "noul": -50,
-        "score": 10.729741411805493
+        "noul": -100.0,
+        "score": 10.9579899079006
        },
        "low_n": true,
        "n": 22,
@@ -199855,15 +199883,15 @@
         "noul": 4,
         "score": 6
        },
-       "score": 0
+       "score": 0.0
       },
       "insurance_claims": {
-       "accuracy": 0.3333333333333333,
-       "cc": -9.413916258678304,
+       "accuracy": 0.26666666666666666,
+       "cc": -16.26424603536173,
        "cc_by_type": {
-        "choice": 37.5,
-        "noul": -100,
-        "score": 34.25825122396509
+        "choice": 16.666666666666668,
+        "noul": -100.0,
+        "score": 34.54059522724814
        },
        "low_n": true,
        "n": 15,
@@ -199872,15 +199900,15 @@
         "noul": 5,
         "score": 4
        },
-       "score": 0
+       "score": 0.0
       },
       "knowledge_graphs": {
        "accuracy": 0.2727272727272727,
-       "cc": -14.970088870547913,
+       "cc": -15.584461807455959,
        "cc_by_type": {
         "choice": -2.7837259100642404,
         "noul": -66.66666666666667,
-        "score": 24.540125965087167
+        "score": 22.697007154363035
        },
        "low_n": true,
        "n": 22,
@@ -199889,15 +199917,15 @@
         "noul": 6,
         "score": 6
        },
-       "score": 0
+       "score": 0.0
       },
       "lead_generation": {
        "accuracy": 0.36,
-       "cc": -3.4749367657072128,
+       "cc": -3.5346979404213195,
        "cc_by_type": {
         "choice": 65.11627906976744,
-        "noul": -100,
-        "score": 24.458910633110918
+        "noul": -100.0,
+        "score": 24.279627108968594
        },
        "low_n": true,
        "n": 25,
@@ -199906,15 +199934,15 @@
         "noul": 9,
         "score": 5
        },
-       "score": 0
+       "score": 0.0
       },
       "legal_compliance": {
        "accuracy": 0.2,
-       "cc": -41.453830241435405,
+       "cc": -43.23093560590408,
        "cc_by_type": {
         "choice": 3.2258064516129026,
-        "noul": -100,
-        "score": -27.587297175919122
+        "noul": -100.0,
+        "score": -32.91861326932515
        },
        "low_n": true,
        "n": 10,
@@ -199923,15 +199951,15 @@
         "noul": 3,
         "score": 3
        },
-       "score": 0
+       "score": 0.0
       },
       "llm_guardrails": {
-       "accuracy": 0.5185185185185185,
-       "cc": 7.248506347090742,
+       "accuracy": 0.48148148148148145,
+       "cc": 6.361974315412698,
        "cc_by_type": {
         "choice": 76.96737044145875,
-        "noul": -60,
-        "score": 4.77814859981347
+        "noul": -60.0,
+        "score": 2.1185525047793363
        },
        "low_n": true,
        "n": 27,
@@ -199940,15 +199968,15 @@
         "noul": 5,
         "score": 11
        },
-       "score": 7.248506347090742
+       "score": 6.361974315412698
       },
       "model_routing": {
-       "accuracy": 0.35023041474654376,
-       "cc": -4.581290645172082,
+       "accuracy": 0.33640552995391704,
+       "cc": -6.464313948023082,
        "cc_by_type": {
-        "choice": 27.532467532467553,
-        "noul": -39.39393939393939,
-        "score": -1.8824000740444102
+        "choice": 25.194805194805216,
+        "noul": -42.42424242424242,
+        "score": -2.163504614632039
        },
        "low_n": false,
        "n": 217,
@@ -199957,15 +199985,15 @@
         "noul": 66,
         "score": 50
        },
-       "score": 0
+       "score": 0.0
       },
       "moderation_trust_safety": {
        "accuracy": 0.4444444444444444,
-       "cc": -12.260170012432873,
+       "cc": -12.23020819041083,
        "cc_by_type": {
         "choice": 30.9021113243762,
-        "noul": -100,
-        "score": 32.31737863832518
+        "noul": -100.0,
+        "score": 32.40726410439131
        },
        "low_n": true,
        "n": 18,
@@ -199974,15 +200002,15 @@
         "noul": 2,
         "score": 5
        },
-       "score": 0
+       "score": 0.0
       },
       "recruiting": {
        "accuracy": 0.2777777777777778,
-       "cc": -1.9139165556921955,
+       "cc": -1.8346473851051428,
        "cc_by_type": {
         "choice": 16.434540389972145,
         "noul": -33.333333333333336,
-        "score": 11.157043276284606
+        "score": 11.394850788045762
        },
        "low_n": true,
        "n": 18,
@@ -199991,15 +200019,15 @@
         "noul": 3,
         "score": 7
        },
-       "score": 0
+       "score": 0.0
       },
       "risk_assessment": {
        "accuracy": 0.3333333333333333,
-       "cc": -16.44874502171474,
+       "cc": -15.876737884882187,
        "cc_by_type": {
         "choice": 26.10837438423645,
-        "noul": -100,
-        "score": 24.545390550619338
+        "noul": -100.0,
+        "score": 26.261411961117
        },
        "low_n": true,
        "n": 18,
@@ -200008,15 +200036,15 @@
         "noul": 4,
         "score": 5
        },
-       "score": 0
+       "score": 0.0
       },
       "scientific_discovery": {
-       "accuracy": 0.30434782608695654,
-       "cc": -10.491570278491375,
+       "accuracy": 0.34782608695652173,
+       "cc": -10.815448509295445,
        "cc_by_type": {
         "choice": 27.536231884057973,
         "noul": -33.333333333333336,
-        "score": -25.677609386198764
+        "score": -26.649244078610977
        },
        "low_n": true,
        "n": 23,
@@ -200025,15 +200053,15 @@
         "noul": 6,
         "score": 8
        },
-       "score": 0
+       "score": 0.0
       },
       "search_retrieval": {
        "accuracy": 0.625,
-       "cc": 27.086685394270827,
+       "cc": 27.35102015958954,
        "cc_by_type": {
         "choice": 89.3238434163701,
-        "noul": -50,
-        "score": 41.93621276644238
+        "noul": -50.0,
+        "score": 42.729217062398526
        },
        "low_n": true,
        "n": 24,
@@ -200042,7 +200070,7 @@
         "noul": 4,
         "score": 8
        },
-       "score": 27.086685394270827
+       "score": 27.35102015958954
       }
      }
     },
@@ -200050,29 +200078,29 @@
     "ci95": {
      "B": 1000,
      "C": [
-      73.33663720052219,
-      81.67370337992678
+      70.81973083659956,
+      79.10365039256962
      ],
      "I": [
-      6.968193509141361,
-      12.003324668847744
+      6.5873945818039585,
+      11.663246480964204
      ],
      "capability": [
-      41.22854654248536,
-      45.8809511180368
+      39.54192140892927,
+      44.55782071854231
      ],
      "composite": {
       "A": [
-       0.4134795884464807,
-       1.7993673499327525
+       0.36273978490149095,
+       1.7366276349061507
       ],
       "B": [
-       0.29304131966029756,
-       1.366981924419596
+       0.2528709513330781,
+       1.288977371078567
       ],
       "C": [
-       0.28713860308783384,
-       1.2495606596755224
+       0.25190262840381317,
+       1.2059914131292713
       ]
      },
      "seed": 81
@@ -200090,90 +200118,90 @@
     "n_public": 300,
     "n_sealed_side": 1200,
     "on_S": {
-     "calibration": 79.8233873834119,
-     "capability": 44.31251291226081,
-     "intelligence": 8.801638441109716
+     "calibration": 76.81388603317517,
+     "capability": 42.63530955244829,
+     "intelligence": 8.45673307172142
     },
     "per_type": {
      "choice": {
-      "accuracy": 0.436,
-      "calibration": 90.58084103516309,
-      "cc": 27.151304081593608,
+      "accuracy": 0.43066666666666664,
+      "calibration": 84.2336491718195,
+      "cc": 26.462427524445555,
       "cc_by_type": {
-       "choice": 27.151304081593608
+       "choice": 26.462427524445555
       },
-      "cc_tiered": 26.01345114865058,
-      "cc_tiered_open": 24.158566891938747,
-      "cc_tiered_sealed": 27.86833540536242,
+      "cc_tiered": 25.370199215164263,
+      "cc_tiered_open": 23.403612503766364,
+      "cc_tiered_sealed": 27.336785926562165,
       "low_n": false,
       "n": 750,
       "n_by_type": {
        "choice": 750
       },
-      "score": 27.151304081593608
+      "score": 26.462427524445555
      },
      "noul": {
-      "accuracy": 0.248,
-      "calibration": 77.55276083107587,
-      "cc": -50.4,
+      "accuracy": 0.25066666666666665,
+      "calibration": 74.8703517596191,
+      "cc": -49.86666666666667,
       "cc_by_type": {
-       "noul": -50.4
+       "noul": -49.86666666666667
       },
-      "cc_tiered": 0,
-      "cc_tiered_open": 0,
-      "cc_tiered_sealed": 0,
+      "cc_tiered": 0.0,
+      "cc_tiered_open": 0.0,
+      "cc_tiered_sealed": 0.0,
       "low_n": false,
       "n": 375,
       "n_by_type": {
        "noul": 375
       },
-      "score": 0
+      "score": 0.0
      },
      "score": {
       "accuracy": 0.368,
-      "calibration": 71.33656028399675,
-      "cc": 2.25075001040983,
+      "calibration": 71.33765716808692,
+      "cc": 0.9290025644768996,
       "cc_by_type": {
-       "score": 2.25075001040983
+       "score": 0.9290025644768996
       },
-      "cc_tiered": 0.39146417467856964,
-      "cc_tiered_open": 0,
-      "cc_tiered_sealed": 0.7829283493571393,
+      "cc_tiered": 0.0,
+      "cc_tiered_open": 0.0,
+      "cc_tiered_sealed": 0.0,
       "low_n": false,
       "n": 375,
       "n_by_type": {
        "score": 375
       },
-      "score": 2.25075001040983
+      "score": 0.9290025644768996
      }
     },
     "raw_on_A": {
-     "calibration": 79.49553540108805,
-     "capability": 44.68431975195327,
-     "intelligence": 9.873104102818482
+     "calibration": 75.03038816750606,
+     "capability": 42.19031445358924,
+     "intelligence": 9.350240739672419
     },
     "set": "S+P"
    },
    "validity": {
     "choice": {
-     "invalid_rate": 0,
+     "invalid_rate": 0.013333333333333308,
      "n": 750
     },
     "noul": {
-     "invalid_rate": 0,
+     "invalid_rate": 0.005333333333333301,
      "n": 375
     },
     "score": {
-     "invalid_rate": 0,
+     "invalid_rate": 0.008000000000000007,
      "n": 375
     }
    },
    "views": {
-    "Balanced 33:33:33": 0.638871364050114,
-    "Emphasis on Accuracy 60:20:20": 0.41567103323551446,
-    "Emphasis on Cost 20:20:60": 0.8786972307100303,
-    "Emphasis on Speed 20:60:20": 0.8680676350289552,
-    "Intelligence only": 0.27274108540540976
+    "Balanced 33:33:33": 0.5922038014681112,
+    "Emphasis on Accuracy 60:20:20": 0.3750067344536265,
+    "Emphasis on Cost 20:20:60": 0.8139270671824799,
+    "Emphasis on Speed 20:60:20": 0.8542674977714012,
+    "Intelligence only": 0.24191781959574568
    }
   },
   {
@@ -211474,12 +211502,12 @@
    },
    "paid_fast_lane": false,
    "planned_weight_denominator": 1.0,
-   "rank": 226,
+   "rank": 227,
    "ranked": true,
    "ranks": {
-    "A": 226,
-    "B": 226,
-    "C": 226,
+    "A": 227,
+    "B": 227,
+    "C": 227,
     "capability": 200
    },
    "repo": "https://huggingface.co/pragmaticfrontier/jez-small-1.0.0",
