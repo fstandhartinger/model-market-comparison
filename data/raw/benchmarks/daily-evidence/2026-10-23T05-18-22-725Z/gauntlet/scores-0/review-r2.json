@@ -1,0 +1,22 @@
+{
+  "artifact_id": "scores-0",
+  "artifact_sha256": "a777f3e98cb2b8586ca37c94623d32235ad81ce893d3303f40767039831963bd",
+  "round": 2,
+  "verdict": "pass",
+  "coverage_checked": [
+    "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/retail",
+    "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/airline",
+    "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/telecom",
+    "c1"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Could not independently recompute row/canonical hashes; owner-provided hashes accepted as binding per instructions.",
+    "Could not independently verify retrieval/transport/qualification; owner receipt accepted as evidence per instructions.",
+    "Source README lists output length 32,768 tokens (81,920 for highly challenging tasks) and sampling temp 0.6/TopP 0.95/TopK 20/MinP 0 as BEST PRACTICES recommendations; exact harness/effort used for TAU2 scores not explicitly named, so protocol description is an approximation from source.",
+    "TAU2 benchmark identity/version is inferred from README table labels TAU2-Retail/TAU2-Airline/TAU2-Telecom; no additional benchmark version metadata appears in the source packet."
+  ],
+  "missing_evidence": []
+}

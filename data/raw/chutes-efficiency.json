@@ -1,5 +1,5 @@
 {
-  "collected_at": "2026-10-23T02:40:53.005Z",
+  "collected_at": "2026-10-23T05:31:13.293Z",
   "window": {
     "start_date": "2026-10-16",
     "end_date": "2026-10-22"
@@ -841,7 +841,7 @@
       "chute_id": "c11edd71-24b1-57d0-93b5-fdbe590ee7e2",
       "name": "[private]",
       "date": "2026-10-22",
-      "total_requests": 8,
+      "total_requests": 9,
       "total_input_tokens": 0,
       "total_output_tokens": 0
     },
@@ -7472,23 +7472,23 @@
   "provenance": {
     "source": "Chutes LLM usage statistics",
     "url": "https://api.chutes.ai/invocations/stats/llm?start_date=2026-10-16&end_date=2026-10-22",
-    "collected_at": "2026-10-23T02:40:53.005Z",
+    "collected_at": "2026-10-23T05:31:13.293Z",
     "basis": "self_reported"
   },
   "ratio_provenance": {
     "source": "Chutes LLM usage statistics",
     "url": "https://api.chutes.ai/invocations/stats/llm?start_date=2026-10-16&end_date=2026-10-22",
-    "collected_at": "2026-10-23T02:40:53.005Z",
+    "collected_at": "2026-10-23T05:31:13.293Z",
     "basis": "derived",
     "formula": "sum(total_input_tokens) / sum(total_output_tokens)",
     "scope": "Global Chutes token-positive chute/day usage, not a coding-agent-only cohort."
   },
-  "response_sha256": "994ce4a7a34788a87c9b925cf0a1ff627c8604b43c379289fac675546c129929",
+  "response_sha256": "7444716510f813068b691a69722c3b5c8b99fcad7c6f9dd998c1164e8bd0c30c",
   "attempts": [
     {
       "source": "Chutes LLM usage statistics",
       "url": "https://api.chutes.ai/invocations/stats/llm?start_date=2026-10-16&end_date=2026-10-22",
-      "collected_at": "2026-10-23T02:40:53.005Z",
+      "collected_at": "2026-10-23T05:31:13.293Z",
       "status": "available",
       "http_status": 200
     }

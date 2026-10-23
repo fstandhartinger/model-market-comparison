@@ -21,12 +21,11 @@
       "provider_org": "DeepSeek",
       "input_per_1m_usd": 0.3,
       "output_per_1m_usd": 1.2,
-      "region": "eu",
+      "region": "us",
       "model_id": "deepseek-ai/DeepSeek-V4.1-Flash-1017",
-      "context_length": 1048000,
+      "context_length": 1048576,
       "status": "active",
-      "notes": "flavor: cheap; served region: eu-north1 (FI); id deepseek-ai/DeepSeek-V4.1-Flash-1017",
-      "mapping": "derived"
+      "notes": "flavor: cheap; served region: us-north1 (US); id deepseek-ai/DeepSeek-V4.1-Flash-1017"
     },
     {
       "model_name": "DeepSeek V4 Flash 0731",
@@ -314,16 +313,16 @@
       "notes": "flavor: cheap; served region: us-north1 (US); id zai-org/GLM-5.3-Flash"
     }
   ],
-  "response_sha256": "e04a4c9d8aa9f588a4984d4f94251d5e454bd785405776e3f6c2eac08b81d67d",
+  "response_sha256": "919545d4b60f575fbca960817b94904dbec6a983eafe0fecd4a47069b6a3024e",
   "skipped": [
     "Qwen/Qwen3-Embedding-8B"
   ],
   "diff": {
-    "added": [
-      "deepseek-ai/DeepSeek-V4.1-Flash-1017"
-    ],
+    "added": [],
     "removed": [],
     "price_changed": [],
-    "region_changed": []
+    "region_changed": [
+      "deepseek-ai/DeepSeek-V4.1-Flash-1017"
+    ]
   }
 }

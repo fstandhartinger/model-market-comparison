@@ -1,0 +1,36 @@
+{
+  "artifact_id": "scores-2",
+  "artifact_sha256": "efb5dd6214b447cff4c4a0e705d76bc805c1bf63e9004e5c1263b62d374b8e7d",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": [
+    "vendor:DeepSeek-V3:swe-bench-verified::snapshot-2026-09-10",
+    "c1"
+  ],
+  "errors_found": 2,
+  "findings": [
+    {
+      "id": "1",
+      "severity": "blocker",
+      "location": "row benchmark_id/id: vendor:DeepSeek-V3:swe-bench-verified::snapshot-2026-09-10",
+      "evidence": "Primary source (arXiv 2412.19437v2, Table 6, page 31) names only 'SWE-Bench Verified (Resolved)' with value 42.0 for DeepSeek V3; no snapshot/version such as 'snapshot-2026-09-10' appears anywhere in the captured pages or source metadata. The claimed snapshot is therefore unverifiable against the cited primary evidence.",
+      "repair": "Remove the unsupported 'snapshot-2026-09-10' segment from benchmark_id and row id, or supply primary evidence that explicitly documents this snapshot date and ties it to the benchmark identity."
+    },
+    {
+      "id": "2",
+      "severity": "minor",
+      "location": "row subject.source_id and source.published_at",
+      "evidence": "subject.source_id asserts 'chat model, December 2024 update per arXiv 2412.19437v2', but source.published_at is null. The primary packet contains no explicit publication date; only the arXiv ID 2412.19437v2 (encoding December 2024) is present. The exact v2 date is not captured, and the phrase 'December 2024 update' is not verbatim in the source.",
+      "repair": "Capture and set the explicit arXiv v2 publication date in source.published_at, or align subject.source_id to only state what the primary evidence supports (e.g., 'arXiv 2412.19437v2 Table 6')."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "Reviewer is read-only and could not execute owner-side SHA-256, transport, or qualification checks; row binding hashes and producer receipt are accepted as provided.",
+    "The arXiv ID 2412.19437v2 provides the month-year (December 2024), but the exact v2 publication date is not in the captured content; the v1/v2 delta was not inspected.",
+    "'December 2024 update' in subject.source_id is an interpretation of the arXiv ID rather than a verbatim source phrase; treated as labeling uncertainty, not a new model identity."
+  ],
+  "missing_evidence": [
+    "Benchmark snapshot version '2026-09-10' claimed in row id/benchmark_id is absent from the primary evidence packet; no source line or metadata documents this snapshot date."
+  ]
+}

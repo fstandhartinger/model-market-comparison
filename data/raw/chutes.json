@@ -14,17 +14,6 @@
       "tee_model_id": "google/gemma-4-31B-turbo-TEE"
     },
     {
-      "model_name": "Kimi-K2.6",
-      "provider_org": "Moonshot AI",
-      "input_per_1m_usd": 0.45,
-      "output_per_1m_usd": 1.95,
-      "cache_read_per_1m_usd": 0.045,
-      "context_length": 262144,
-      "confidential_compute": true,
-      "tee_model_id": "moonshotai/Kimi-K2.6-TEE",
-      "notes": "2026-08-26: price cut 0.66/3.5->0.58/3.4 (live llm.chutes.ai)."
-    },
-    {
       "model_name": "Qwen3.8 27B",
       "provider_org": "Alibaba",
       "input_per_1m_usd": 0.039,
@@ -46,6 +35,17 @@
       "tee_model_id": "deepseek-ai/DeepSeek-V3.2-TEE"
     },
     {
+      "model_name": "Kimi-K2.6",
+      "provider_org": "Moonshot AI",
+      "input_per_1m_usd": 0.45,
+      "output_per_1m_usd": 1.95,
+      "cache_read_per_1m_usd": 0.045,
+      "context_length": 262144,
+      "confidential_compute": true,
+      "tee_model_id": "moonshotai/Kimi-K2.6-TEE",
+      "notes": "2026-08-26: price cut 0.66/3.5->0.58/3.4 (live llm.chutes.ai)."
+    },
+    {
       "model_name": "GLM-5.1",
       "provider_org": "Z.ai",
       "input_per_1m_usd": 0.98,
@@ -56,16 +56,6 @@
       "tee_model_id": "zai-org/GLM-5.1-TEE"
     },
     {
-      "model_name": "Qwen3.5-397B-A17B",
-      "provider_org": "Alibaba",
-      "input_per_1m_usd": 0.45,
-      "output_per_1m_usd": 3,
-      "cache_read_per_1m_usd": 0.045,
-      "context_length": 262144,
-      "confidential_compute": true,
-      "tee_model_id": "Qwen/Qwen3.5-397B-A17B-TEE"
-    },
-    {
       "model_name": "Qwen3.6-27B",
       "provider_org": "Alibaba",
       "input_per_1m_usd": 0.25,
@@ -74,6 +64,16 @@
       "context_length": 262144,
       "confidential_compute": true,
       "tee_model_id": "Qwen/Qwen3.6-27B-TEE"
+    },
+    {
+      "model_name": "Qwen3.5-397B-A17B",
+      "provider_org": "Alibaba",
+      "input_per_1m_usd": 0.45,
+      "output_per_1m_usd": 3,
+      "cache_read_per_1m_usd": 0.045,
+      "context_length": 262144,
+      "confidential_compute": true,
+      "tee_model_id": "Qwen/Qwen3.5-397B-A17B-TEE"
     },
     {
       "model_name": "GLM-5.2",
@@ -150,7 +150,7 @@
       "tee_model_id": "Qwen/Qwen3-235B-A22B-Thinking-2507-TEE"
     }
   ],
-  "response_sha256": "fcfadde599aaab7d7c3def42a15bc22b4f1b1f53e86b232df62932d1e32de509",
+  "response_sha256": "68750f38506c11bfb23eef6f2b62a0dfa3d8854239c99744ede82d0d8b715fd9",
   "diff": {
     "added": [],
     "removed": [],

@@ -1,5 +1,5 @@
 {
-  "collected_at": "2026-10-23T02:40:36.400Z",
+  "collected_at": "2026-10-23T05:30:55.750Z",
   "models": {
     "moonshotai/kimi-k3": {
       "or_model_id": "moonshotai/kimi-k3",
@@ -14509,71 +14509,71 @@
         "status": "available",
         "daily": [
           {
+            "date": "2026-10-22",
+            "total_prompt_tokens": 1178473665,
+            "total_completion_tokens": 12384403,
+            "count": 10588
+          },
+          {
+            "date": "2026-10-21",
+            "total_prompt_tokens": 801802235,
+            "total_completion_tokens": 9958868,
+            "count": 8522
+          },
+          {
+            "date": "2026-10-20",
+            "total_prompt_tokens": 934586434,
+            "total_completion_tokens": 15902100,
+            "count": 11309
+          },
+          {
+            "date": "2026-10-19",
+            "total_prompt_tokens": 890787035,
+            "total_completion_tokens": 12090959,
+            "count": 7521
+          },
+          {
+            "date": "2026-10-18",
+            "total_prompt_tokens": 362520426,
+            "total_completion_tokens": 7439084,
+            "count": 4274
+          },
+          {
+            "date": "2026-10-17",
+            "total_prompt_tokens": 825529343,
+            "total_completion_tokens": 13564188,
+            "count": 6274
+          },
+          {
             "date": "2026-10-16",
             "total_prompt_tokens": 1164816683,
             "total_completion_tokens": 12128832,
             "count": 9284
-          },
-          {
-            "date": "2026-10-15",
-            "total_prompt_tokens": 1107507472,
-            "total_completion_tokens": 14883567,
-            "count": 10580
-          },
-          {
-            "date": "2026-10-14",
-            "total_prompt_tokens": 1109536382,
-            "total_completion_tokens": 17001824,
-            "count": 10381
-          },
-          {
-            "date": "2026-10-13",
-            "total_prompt_tokens": 1542415023,
-            "total_completion_tokens": 22371712,
-            "count": 12408
-          },
-          {
-            "date": "2026-10-12",
-            "total_prompt_tokens": 1238694542,
-            "total_completion_tokens": 12721606,
-            "count": 11233
-          },
-          {
-            "date": "2026-10-11",
-            "total_prompt_tokens": 621856996,
-            "total_completion_tokens": 6834173,
-            "count": 6101
-          },
-          {
-            "date": "2026-10-10",
-            "total_prompt_tokens": 716744942,
-            "total_completion_tokens": 7743954,
-            "count": 6648
           }
         ],
-        "total_prompt_tokens": 7501572040,
-        "total_completion_tokens": 93685668,
-        "total_requests": 66635,
-        "input_output_ratio": 80.07171427757766
+        "total_prompt_tokens": 6158515821,
+        "total_completion_tokens": 83468434,
+        "total_requests": 57772,
+        "input_output_ratio": 73.78257295446564
       },
-      "source_updated_at": "2026-10-17T05:28:42.084Z",
+      "source_updated_at": "2026-10-23T05:29:47.445Z",
       "window": {
-        "start_date": "2026-10-10",
-        "end_date": "2026-10-16"
+        "start_date": "2026-10-16",
+        "end_date": "2026-10-22"
       },
       "provenance": {
         "source": "OpenRouter model-page usage",
         "url": "https://openrouter.ai/openai/gpt-6-sol-pro",
-        "collected_at": "2026-10-17T05:29:15.211Z",
+        "collected_at": "2026-10-23T05:30:58.095Z",
         "basis": "measured"
       },
-      "response_sha256": "ab4dea59c85c0864b103f3cbd417cf062be653890633ba0273567be31d6dfbe8",
+      "response_sha256": "8655fb0ab72db4d51a5861181253c50087441ef5cc1ac672cbbfe91236265bca",
       "cache_attempt": {
         "source": "OpenRouter effective pricing statistics",
         "status": "fetch_or_parse_failed",
         "reason": "Partial cache summary: 1 previous endpoint rates absent; retaining dated cache observation",
         "url": "https://openrouter.ai/api/frontend/v1/stats/effective-pricing?permaslug=openai%2Fgpt-6-sol-pro-20260922&variant=standard&shape=v7",
-        "collected_at": "2026-10-17T05:29:17.302Z"
+        "collected_at": "2026-10-23T05:31:00.369Z"
       },
       "cache": {
         "unjoined": [],
@@ -21236,6 +21236,383 @@
         "basis": "measured",
         "status": "available"
       }
+    },
+    "mistralai/mixtral-8x22b-instruct": {
+      "or_model_id": "mistralai/mixtral-8x22b-instruct",
+      "model_permaslug": "mistralai/mixtral-8x22b-instruct",
+      "variant": "standard",
+      "endpoints": [
+        {
+          "or_model_id": "mistralai/mixtral-8x22b-instruct",
+          "endpoint_tag": "mistral/zdr",
+          "provider": "Mistral",
+          "endpoint_id": "424c1412-9232-4520-ba87-dd7c985b328f",
+          "cache_read_per_1m": 0.19999999999999998,
+          "cache_write_per_1m": null,
+          "cache_hit_rate": 0.20256402040263452,
+          "cache_status": "available",
+          "cache_note": "OpenRouter reported cacheHitRate as a fraction. Underlying numerator/denominator and exact summary interval are not published in this response.",
+          "source_provider_name": "Mistral (2)",
+          "source_provider_slug": "mistral",
+          "total_tokens": 378386
+        },
+        {
+          "or_model_id": "mistralai/mixtral-8x22b-instruct",
+          "endpoint_tag": "mistral",
+          "provider": "Mistral",
+          "endpoint_id": "e55a0c16-08a0-4871-ae6a-97482cc3231a",
+          "cache_read_per_1m": 0.19999999999999998,
+          "cache_write_per_1m": null,
+          "cache_hit_rate": 0.18176012151863774,
+          "cache_status": "available",
+          "cache_note": "OpenRouter reported cacheHitRate as a fraction. Underlying numerator/denominator and exact summary interval are not published in this response.",
+          "source_provider_name": "Mistral (3)",
+          "source_provider_slug": "mistral",
+          "total_tokens": 146951
+        },
+        {
+          "or_model_id": "mistralai/mixtral-8x22b-instruct",
+          "endpoint_tag": "mistral/eu",
+          "provider": "Mistral",
+          "endpoint_id": "23b689b2-6720-4e74-b114-6099ae1165f5",
+          "cache_read_per_1m": 0.22,
+          "cache_write_per_1m": null,
+          "cache_hit_rate": 0,
+          "cache_status": "available",
+          "cache_note": "OpenRouter reported cacheHitRate as a fraction. Underlying numerator/denominator and exact summary interval are not published in this response.",
+          "source_provider_name": "Mistral (1)",
+          "source_provider_slug": "mistral",
+          "total_tokens": 1849
+        }
+      ],
+      "usage": {
+        "status": "available",
+        "daily": [
+          {
+            "date": "2026-10-22",
+            "total_prompt_tokens": 2090083,
+            "total_completion_tokens": 189788,
+            "count": 3031
+          },
+          {
+            "date": "2026-10-21",
+            "total_prompt_tokens": 1548547,
+            "total_completion_tokens": 172943,
+            "count": 1263
+          },
+          {
+            "date": "2026-10-20",
+            "total_prompt_tokens": 1283637,
+            "total_completion_tokens": 115579,
+            "count": 795
+          },
+          {
+            "date": "2026-10-19",
+            "total_prompt_tokens": 3910643,
+            "total_completion_tokens": 287007,
+            "count": 1450
+          },
+          {
+            "date": "2026-10-18",
+            "total_prompt_tokens": 4133682,
+            "total_completion_tokens": 414917,
+            "count": 1854
+          },
+          {
+            "date": "2026-10-17",
+            "total_prompt_tokens": 3215473,
+            "total_completion_tokens": 277726,
+            "count": 1480
+          },
+          {
+            "date": "2026-10-16",
+            "total_prompt_tokens": 2998974,
+            "total_completion_tokens": 470511,
+            "count": 2332
+          }
+        ],
+        "total_prompt_tokens": 19181039,
+        "total_completion_tokens": 1928471,
+        "total_requests": 12205,
+        "input_output_ratio": 9.94624186726168
+      },
+      "source_updated_at": "2026-10-23T05:29:42.058Z",
+      "window": {
+        "start_date": "2026-10-16",
+        "end_date": "2026-10-22"
+      },
+      "provenance": {
+        "source": "OpenRouter model-page usage",
+        "url": "https://openrouter.ai/mistralai/mixtral-8x22b-instruct",
+        "collected_at": "2026-10-23T05:31:02.374Z",
+        "basis": "measured"
+      },
+      "response_sha256": "6bedc2bf5655d1715defa40788ee56f49cdbf04b2440860b678ac9f7d773ccf3",
+      "cache": {
+        "unjoined": [],
+        "returned_summaries": 3,
+        "summary_window": null,
+        "chart_date_range": {
+          "first": "2026-10-16 00:00:00",
+          "last": "2026-10-23 00:00:00"
+        },
+        "provenance": {
+          "source": "OpenRouter effective pricing statistics",
+          "url": "https://openrouter.ai/api/frontend/v1/stats/effective-pricing?permaslug=mistralai%2Fmixtral-8x22b-instruct&variant=standard&shape=v7",
+          "collected_at": "2026-10-23T05:31:04.580Z",
+          "basis": "measured"
+        },
+        "response_sha256": "250d9e4da53db8fac7aa52239d016e21f3cbce742e066582a4a960fe79954526"
+      },
+      "cache_attempt": {
+        "source": "OpenRouter effective pricing statistics",
+        "url": "https://openrouter.ai/api/frontend/v1/stats/effective-pricing?permaslug=mistralai%2Fmixtral-8x22b-instruct&variant=standard&shape=v7",
+        "collected_at": "2026-10-23T05:31:04.580Z",
+        "basis": "measured",
+        "status": "available"
+      }
+    },
+    "mistralai/voxtral-small-24b-2507": {
+      "or_model_id": "mistralai/voxtral-small-24b-2507",
+      "model_permaslug": "mistralai/voxtral-small-24b-2507",
+      "variant": "standard",
+      "endpoints": [
+        {
+          "or_model_id": "mistralai/voxtral-small-24b-2507",
+          "endpoint_tag": "mistral/zdr",
+          "provider": "Mistral",
+          "endpoint_id": "cb5eedb5-7e23-4343-9ef7-7ae2280a6741",
+          "cache_read_per_1m": 0.01,
+          "cache_write_per_1m": null,
+          "cache_hit_rate": 0.2937874965824267,
+          "cache_status": "available",
+          "cache_note": "OpenRouter reported cacheHitRate as a fraction. Underlying numerator/denominator and exact summary interval are not published in this response.",
+          "source_provider_name": "Mistral (3)",
+          "source_provider_slug": "mistral",
+          "total_tokens": 577132
+        },
+        {
+          "or_model_id": "mistralai/voxtral-small-24b-2507",
+          "endpoint_tag": "mistral",
+          "provider": "Mistral",
+          "endpoint_id": "814f9be0-e226-4b8c-bb5d-bf684359da13",
+          "cache_read_per_1m": 0.01,
+          "cache_write_per_1m": null,
+          "cache_hit_rate": 0.17116227338290763,
+          "cache_status": "available",
+          "cache_note": "OpenRouter reported cacheHitRate as a fraction. Underlying numerator/denominator and exact summary interval are not published in this response.",
+          "source_provider_name": "Mistral (2)",
+          "source_provider_slug": "mistral",
+          "total_tokens": 6152768
+        },
+        {
+          "or_model_id": "mistralai/voxtral-small-24b-2507",
+          "endpoint_tag": "mistral/eu",
+          "provider": "Mistral",
+          "endpoint_id": "73c36ff8-e5ff-4e17-a815-340e256a437b",
+          "cache_read_per_1m": 0.011,
+          "cache_write_per_1m": null,
+          "cache_hit_rate": 0.14568345323741008,
+          "cache_status": "available",
+          "cache_note": "OpenRouter reported cacheHitRate as a fraction. Underlying numerator/denominator and exact summary interval are not published in this response.",
+          "source_provider_name": "Mistral (1)",
+          "source_provider_slug": "mistral",
+          "total_tokens": 707
+        }
+      ],
+      "usage": {
+        "status": "available",
+        "daily": [
+          {
+            "date": "2026-10-22",
+            "total_prompt_tokens": 28372817,
+            "total_completion_tokens": 7583878,
+            "count": 52465
+          },
+          {
+            "date": "2026-10-21",
+            "total_prompt_tokens": 15881480,
+            "total_completion_tokens": 5924255,
+            "count": 55086
+          },
+          {
+            "date": "2026-10-20",
+            "total_prompt_tokens": 12617180,
+            "total_completion_tokens": 5841688,
+            "count": 50427
+          },
+          {
+            "date": "2026-10-19",
+            "total_prompt_tokens": 18039631,
+            "total_completion_tokens": 7095842,
+            "count": 47716
+          },
+          {
+            "date": "2026-10-18",
+            "total_prompt_tokens": 19358432,
+            "total_completion_tokens": 3978113,
+            "count": 28308
+          },
+          {
+            "date": "2026-10-17",
+            "total_prompt_tokens": 16100915,
+            "total_completion_tokens": 3402032,
+            "count": 23012
+          },
+          {
+            "date": "2026-10-16",
+            "total_prompt_tokens": 9246124,
+            "total_completion_tokens": 6181928,
+            "count": 48156
+          }
+        ],
+        "total_prompt_tokens": 119616579,
+        "total_completion_tokens": 40007736,
+        "total_requests": 305170,
+        "input_output_ratio": 2.989836240671054
+      },
+      "source_updated_at": "2026-10-23T05:30:20.119Z",
+      "window": {
+        "start_date": "2026-10-16",
+        "end_date": "2026-10-22"
+      },
+      "provenance": {
+        "source": "OpenRouter model-page usage",
+        "url": "https://openrouter.ai/mistralai/voxtral-small-24b-2507",
+        "collected_at": "2026-10-23T05:31:06.583Z",
+        "basis": "measured"
+      },
+      "response_sha256": "3ae643dbcdb4d6aadbeca93c39bec858753ebe8d1fba93c2278a3cf0a088252d",
+      "cache": {
+        "unjoined": [],
+        "returned_summaries": 3,
+        "summary_window": null,
+        "chart_date_range": {
+          "first": "2026-10-16 00:00:00",
+          "last": "2026-10-23 00:00:00"
+        },
+        "provenance": {
+          "source": "OpenRouter effective pricing statistics",
+          "url": "https://openrouter.ai/api/frontend/v1/stats/effective-pricing?permaslug=mistralai%2Fvoxtral-small-24b-2507&variant=standard&shape=v7",
+          "collected_at": "2026-10-23T05:31:09.068Z",
+          "basis": "measured"
+        },
+        "response_sha256": "eac8fb18a46463742efe6f734eac048f75e70642683e519453043ec0ef5fbada"
+      },
+      "cache_attempt": {
+        "source": "OpenRouter effective pricing statistics",
+        "url": "https://openrouter.ai/api/frontend/v1/stats/effective-pricing?permaslug=mistralai%2Fvoxtral-small-24b-2507&variant=standard&shape=v7",
+        "collected_at": "2026-10-23T05:31:09.068Z",
+        "basis": "measured",
+        "status": "available"
+      }
+    },
+    "moondream/moondream3-preview": {
+      "or_model_id": "moondream/moondream3-preview",
+      "model_permaslug": "moondream/moondream3-preview-20261013",
+      "variant": "standard",
+      "endpoints": [
+        {
+          "or_model_id": "moondream/moondream3-preview",
+          "endpoint_tag": "primeintellect/fp8",
+          "provider": "PrimeIntellect",
+          "endpoint_id": "9dd4f25f-d3df-49fd-834e-ffe8b48f5b20",
+          "cache_read_per_1m": null,
+          "cache_write_per_1m": null,
+          "cache_hit_rate": 0,
+          "cache_status": "available",
+          "cache_note": "OpenRouter reported cacheHitRate as a fraction. Underlying numerator/denominator and exact summary interval are not published in this response.",
+          "source_provider_name": "Prime Intellect",
+          "source_provider_slug": "primeintellect",
+          "total_tokens": 567813
+        }
+      ],
+      "usage": {
+        "status": "available",
+        "daily": [
+          {
+            "date": "2026-10-22",
+            "total_prompt_tokens": 1319579,
+            "total_completion_tokens": 483875,
+            "count": 2995
+          },
+          {
+            "date": "2026-10-21",
+            "total_prompt_tokens": 1719860,
+            "total_completion_tokens": 651221,
+            "count": 2676
+          },
+          {
+            "date": "2026-10-20",
+            "total_prompt_tokens": 2014132,
+            "total_completion_tokens": 684571,
+            "count": 3453
+          },
+          {
+            "date": "2026-10-19",
+            "total_prompt_tokens": 2471650,
+            "total_completion_tokens": 710652,
+            "count": 2806
+          },
+          {
+            "date": "2026-10-18",
+            "total_prompt_tokens": 4623785,
+            "total_completion_tokens": 1071344,
+            "count": 2555
+          },
+          {
+            "date": "2026-10-17",
+            "total_prompt_tokens": 6978132,
+            "total_completion_tokens": 1865552,
+            "count": 23467
+          },
+          {
+            "date": "2026-10-16",
+            "total_prompt_tokens": 5563427,
+            "total_completion_tokens": 1322195,
+            "count": 8659
+          }
+        ],
+        "total_prompt_tokens": 24690565,
+        "total_completion_tokens": 6789410,
+        "total_requests": 46611,
+        "input_output_ratio": 3.636628955977029
+      },
+      "source_updated_at": "2026-10-23T05:30:56.262Z",
+      "window": {
+        "start_date": "2026-10-16",
+        "end_date": "2026-10-22"
+      },
+      "provenance": {
+        "source": "OpenRouter model-page usage",
+        "url": "https://openrouter.ai/moondream/moondream3-preview",
+        "collected_at": "2026-10-23T05:31:11.071Z",
+        "basis": "measured"
+      },
+      "response_sha256": "ba605632ab381ef1fa927fea23547c4ae5872fbf5b0b32b52032764ac56b827e",
+      "cache": {
+        "unjoined": [],
+        "returned_summaries": 1,
+        "summary_window": null,
+        "chart_date_range": {
+          "first": "2026-10-16 00:00:00",
+          "last": "2026-10-23 00:00:00"
+        },
+        "provenance": {
+          "source": "OpenRouter effective pricing statistics",
+          "url": "https://openrouter.ai/api/frontend/v1/stats/effective-pricing?permaslug=moondream%2Fmoondream3-preview-20261013&variant=standard&shape=v7",
+          "collected_at": "2026-10-23T05:31:13.223Z",
+          "basis": "measured"
+        },
+        "response_sha256": "272657e8bede0fbbe08ceb0d402d9cd7a5671bb53f55a715281c841dc78d94a6"
+      },
+      "cache_attempt": {
+        "source": "OpenRouter effective pricing statistics",
+        "url": "https://openrouter.ai/api/frontend/v1/stats/effective-pricing?permaslug=moondream%2Fmoondream3-preview-20261013&variant=standard&shape=v7",
+        "collected_at": "2026-10-23T05:31:13.223Z",
+        "basis": "measured",
+        "status": "available"
+      }
     }
   },
   "attempts": {
@@ -21942,7 +22319,7 @@
     "openai/gpt-6-sol-pro": {
       "source": "OpenRouter model page",
       "url": "https://openrouter.ai/openai/gpt-6-sol-pro",
-      "collected_at": "2026-10-17T05:29:15.211Z",
+      "collected_at": "2026-10-23T05:30:58.095Z",
       "status": "available",
       "http_status": 200
     },
@@ -22323,6 +22700,27 @@
       "collected_at": "2026-10-23T02:40:51.022Z",
       "status": "available",
       "http_status": 200
+    },
+    "mistralai/mixtral-8x22b-instruct": {
+      "source": "OpenRouter model page",
+      "url": "https://openrouter.ai/mistralai/mixtral-8x22b-instruct",
+      "collected_at": "2026-10-23T05:31:02.374Z",
+      "status": "available",
+      "http_status": 200
+    },
+    "mistralai/voxtral-small-24b-2507": {
+      "source": "OpenRouter model page",
+      "url": "https://openrouter.ai/mistralai/voxtral-small-24b-2507",
+      "collected_at": "2026-10-23T05:31:06.583Z",
+      "status": "available",
+      "http_status": 200
+    },
+    "moondream/moondream3-preview": {
+      "source": "OpenRouter model page",
+      "url": "https://openrouter.ai/moondream/moondream3-preview",
+      "collected_at": "2026-10-23T05:31:11.071Z",
+      "status": "available",
+      "http_status": 200
     }
   },
   "rankings": {
@@ -22492,10 +22890,10 @@
         "variant": "standard",
         "variant_permaslug": "moonshotai/kimi-k3-20260715",
         "date": "2026-10-22 00:00:00",
-        "total_prompt_tokens": 1861772157623,
-        "total_completion_tokens": 32137144703,
-        "total_requests": 31737862,
-        "input_output_ratio": 57.93209617185449
+        "total_prompt_tokens": 1861772168075,
+        "total_completion_tokens": 32137829798,
+        "total_requests": 31737863,
+        "input_output_ratio": 57.930861535362965
       },
       {
         "model_permaslug": "xiaomi/mimo-v2.6-flash-20260921",
@@ -22535,15 +22933,15 @@
     "provenance": {
       "source": "OpenRouter weekly model rankings",
       "url": "https://openrouter.ai/rankings?view=week",
-      "collected_at": "2026-10-23T02:40:37.022Z",
+      "collected_at": "2026-10-23T05:30:56.085Z",
       "basis": "measured"
     },
-    "response_sha256": "c6e48460599f2a57aa57370f163ad54e276434959a160d1e0633f40a43e7dbb1"
+    "response_sha256": "2288dae3e70b6f385e482287dc3b301bc5c7544a2a2e7add6c9576832e386449"
   },
   "rankings_attempt": {
     "source": "OpenRouter weekly model rankings",
     "url": "https://openrouter.ai/rankings?view=week",
-    "collected_at": "2026-10-23T02:40:37.022Z",
+    "collected_at": "2026-10-23T05:30:56.085Z",
     "basis": "measured",
     "status": "available"
   },
@@ -22552,7 +22950,7 @@
     "eligible_page_models": 335,
     "pages_selected": 4,
     "pages_succeeded_this_run": 4,
-    "retained_model_pages": 145,
+    "retained_model_pages": 148,
     "policy": "At most four model pages per normal daily run: one oldest-attempt-first page from the maintained GPT-6 model/mode priority set, then up to three oldest-attempt-first pages from the remaining catalog; explicit targeted batches are capped at twelve. Per-observation dates are retained."
   }
 }

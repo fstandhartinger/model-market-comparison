@@ -3,18 +3,18 @@
   "collected_at": "2026-10-23",
   "method": "scripts/fetch-openrouter-benchmarks.mjs (2026-10-23): two authenticated GETs of /api/v1/benchmarks (source=openrouter&include_run_config=true, kept as own_data, and unfiltered). Terms evaluated 2026-09-15 — see openrouter-benchmarks.method.md: the payload's meta.citation is documented as \"Required attribution when republishing this data\" (per-source). Display attribution: \"OpenRouter Benchmarks\" linked to openrouter.ai/benchmarks.",
   "terms": "Source: OpenRouter evals (openrouter.ai) via OpenRouter (openrouter.ai/rankings).",
-  "as_of": "2026-10-23T02:19:10.314Z",
-  "own_as_of": "2026-10-23T02:19:10.314Z",
+  "as_of": "2026-10-23T03:28:29.933Z",
+  "own_as_of": "2026-10-23T03:28:29.933Z",
   "own_citation": "Source: OpenRouter evals (openrouter.ai) via OpenRouter (openrouter.ai/rankings).",
   "counts": {
-    "total_rows": 1879,
-    "own_rows": 328,
+    "total_rows": 1881,
+    "own_rows": 330,
     "aa_rows": 351,
     "design_arena_rows": 1200,
     "models": 415
   },
-  "response_sha256": "a73a1938183528de7a3ac10fd8491dc5974d99394516055825a90bdcb60556b0",
-  "own_response_sha256": "6a46a6419ca584016c584ec837142c213281a30e2171f696000cb0c625a54467",
+  "response_sha256": "dcb55318b831eaa0abc105e92a64abe1044084147968240e9119b4033e932bc1",
+  "own_response_sha256": "ef20f6e91b3d68032af61cfe30931ab5a471cf06c68ea5d24f1bd2b334026c58",
   "own_data": [
     {
       "source": "openrouter",
@@ -785,6 +785,17 @@
       "avg_cost_per_task": 0.10542726830808083,
       "total_tasks": 1584,
       "last_run_timestamp": "2026-10-17T08:18:05.929Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "minimax/minimax-m3.1-flash-20261019",
+      "display_name": "MiniMax: MiniMax M3.1 Flash",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.850168,
+      "accuracy_stddev": null,
+      "avg_cost_per_task": 0.011704070707070708,
+      "total_tasks": 198,
+      "last_run_timestamp": "2026-10-23T03:00:02.837Z"
     },
     {
       "source": "openrouter",
@@ -2845,6 +2856,17 @@
     },
     {
       "source": "openrouter",
+      "model_permaslug": "minimax/minimax-m3.1-flash-20261019",
+      "display_name": "MiniMax: MiniMax M3.1 Flash",
+      "benchmark_type": "tau_bench_verified_airline",
+      "accuracy": 0.686667,
+      "accuracy_stddev": null,
+      "avg_cost_per_task": 0.013198179999999999,
+      "total_tasks": 50,
+      "last_run_timestamp": "2026-10-23T03:28:29.933Z"
+    },
+    {
+      "source": "openrouter",
       "model_permaslug": "anthropic/claude-4-sonnet-20250522",
       "display_name": "Anthropic: Claude Sonnet 4",
       "benchmark_type": "tau_bench_verified_airline",
@@ -3991,8 +4013,8 @@
       "coding_index": null,
       "agentic_index": null,
       "pricing": {
-        "prompt": "0.0000001",
-        "completion": "0.0000005"
+        "prompt": "0.00000015",
+        "completion": "0.0000006"
       }
     },
     {
@@ -4111,8 +4133,8 @@
       "coding_index": null,
       "agentic_index": null,
       "pricing": {
-        "prompt": "0.00000025",
-        "completion": "0.000001"
+        "prompt": "0.0000003",
+        "completion": "0.0000012"
       }
     },
     {
@@ -4219,7 +4241,7 @@
       "coding_index": 68.8,
       "agentic_index": 41.3,
       "pricing": {
-        "prompt": "0.00000088",
+        "prompt": "0.00000108",
         "completion": "0.0000038"
       }
     },
@@ -8119,8 +8141,8 @@
         "total": 0
       },
       "pricing": {
-        "prompt": "0.00000025",
-        "completion": "0.000001"
+        "prompt": "0.0000003",
+        "completion": "0.0000012"
       }
     },
     {
@@ -8287,8 +8309,8 @@
         "total": 0
       },
       "pricing": {
-        "prompt": "0.00000025",
-        "completion": "0.000001"
+        "prompt": "0.0000003",
+        "completion": "0.0000012"
       }
     },
     {
@@ -8911,8 +8933,8 @@
         "total": 0
       },
       "pricing": {
-        "prompt": "0.00000025",
-        "completion": "0.000001"
+        "prompt": "0.0000003",
+        "completion": "0.0000012"
       }
     },
     {
@@ -9643,8 +9665,8 @@
         "total": 0
       },
       "pricing": {
-        "prompt": "0.00000025",
-        "completion": "0.000001"
+        "prompt": "0.0000003",
+        "completion": "0.0000012"
       }
     },
     {
@@ -9811,8 +9833,8 @@
         "total": 0
       },
       "pricing": {
-        "prompt": "0.00000025",
-        "completion": "0.000001"
+        "prompt": "0.0000003",
+        "completion": "0.0000012"
       }
     },
     {
@@ -10000,8 +10022,8 @@
         "total": 0
       },
       "pricing": {
-        "prompt": "0.00000025",
-        "completion": "0.000001"
+        "prompt": "0.0000003",
+        "completion": "0.0000012"
       }
     },
     {
@@ -14917,8 +14939,8 @@
         "total": 0
       },
       "pricing": {
-        "prompt": "0.00000025",
-        "completion": "0.000001"
+        "prompt": "0.0000003",
+        "completion": "0.0000012"
       }
     },
     {
@@ -33033,6 +33055,17 @@
     },
     {
       "source": "openrouter",
+      "model_permaslug": "minimax/minimax-m3.1-flash-20261019",
+      "display_name": "MiniMax: MiniMax M3.1 Flash",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.850168,
+      "accuracy_stddev": null,
+      "avg_cost_per_task": 0.011704070707070708,
+      "total_tasks": 198,
+      "last_run_timestamp": "2026-10-23T03:00:02.837Z"
+    },
+    {
+      "source": "openrouter",
       "model_permaslug": "qwen/qwen3.5-397b-a17b-20260216",
       "display_name": "Qwen: Qwen3.5 397B A17B",
       "benchmark_type": "gpqa_diamond",
@@ -35087,6 +35120,17 @@
       "avg_cost_per_task": 0.00219582,
       "total_tasks": 50,
       "last_run_timestamp": "2026-10-01T16:00:49.880Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "minimax/minimax-m3.1-flash-20261019",
+      "display_name": "MiniMax: MiniMax M3.1 Flash",
+      "benchmark_type": "tau_bench_verified_airline",
+      "accuracy": 0.686667,
+      "accuracy_stddev": null,
+      "avg_cost_per_task": 0.013198179999999999,
+      "total_tasks": 50,
+      "last_run_timestamp": "2026-10-23T03:28:29.933Z"
     },
     {
       "source": "openrouter",
