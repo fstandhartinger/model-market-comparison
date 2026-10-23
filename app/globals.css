@@ -18,12 +18,15 @@
      it has on white. Light values are sampled from Florian's artwork. */
   --brand-from: #2a68ff; --brand-to: #5ae6ff; --brand-ray: #ffd95c; --brand-stair: #ffffff;
   --brand-word: #5aa8ff;
+  /* Pareto charts: the Jev reference marker and label (4.6:1 on #171e29; light: 6.7:1 on #fff). */
+  --jev-ref: #3b82f6;
 }
 [data-theme="light"] {
   color-scheme: light;
   --ink: 245 248 252; --panel: 255 255 255; --line: 199 210 225;
   --accent: 29 78 185; --accent2: 4 109 91; --warn: 145 69 9;
   --surface: #fff; --text: #182639; --muted: #4c5e75; --control-border: #718198;
+  --jev-ref: #1d4ed8;
   --offer-tint-opacity: .06; --offer-border-opacity: .32;
   --negative: #b91c3a; --radar-1: #1d4eb9; --radar-2: #046d5b;
   --radar-3: #914509; --radar-4: #7433b7; --radar-grid: #61758f;
