@@ -31,7 +31,7 @@ export function TableLegend({ tags, tagKeys, outliers = false, scoreRow = null }
   return <details className="bh-legend mt-1" data-bh-legend data-bh-table-legend>
     <summary className="cursor-pointer select-none text-gray-400 hover:text-inherit">Legend: marks and tags</summary>
     <dl className="mt-2 grid grid-cols-[auto_1fr] items-baseline gap-x-3 gap-y-1.5">
-      <Row id="best-of" term={<b className="whitespace-nowrap">best of</b>}>Each model&apos;s best recorded result across agents (Claude Code, Codex) and, for the AA Coding Agent Index, versions.</Row>
+      <Row id="best-of" term={<b className="whitespace-nowrap">best of</b>}>Each model&apos;s best recorded result across agents (Claude Code, Codex) and, for the AA Coding Agent Index, versions 1.4 and 1.5 (v2.0 has different components and stays separate).</Row>
       <Row id="self-reported" term={<span aria-hidden="true">†</span>}>A developer&apos;s own report, not an independent measurement.</Row>
       <Row id="preliminary" term={<span aria-hidden="true">‡</span>}>{PRELIMINARY_NOTE}</Row>
       <Row id="missing" term={<span aria-hidden="true">—</span>}>No published result — never a zero.</Row>

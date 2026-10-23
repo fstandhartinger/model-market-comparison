@@ -10,7 +10,7 @@ Every new observation needs a different-family critic and bound primary evidence
 Astra is absent from cron; repeated failures create an operator escalation request.
 
 An isolated checkout collects the four live sources, efficiency, caching and
-benchmark candidates. Coding v1.5 uses scripts/fetch-aa-coding-agents.mjs;
+benchmark candidates. Coding v2.0 uses scripts/fetch-aa-coding-agents.mjs (v1.4 and v1.5 are frozen);
 preserve the dated v1.4 Composite input. No homepage-first-array extraction.
 Staged data must pass complete source review, build, tests, and typecheck before
 publication. Unresolved candidates retain prior dated observations or are dropped.

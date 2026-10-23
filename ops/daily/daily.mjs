@@ -7,7 +7,7 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 import { createHash } from 'node:crypto';
 import { writeJSONAtomic } from '../../lib/snapshot.mjs';
 import { BOARD_REGISTRY_INCONSISTENT } from '../../lib/live-source.mjs';
-import { CODING_AGENT_VERSION_CHANGED } from '../../lib/aa-coding-agents.mjs';
+import { CODING_AGENT_FILE, CODING_AGENT_SOURCE_KEY, CODING_AGENT_VERSION, CODING_AGENT_VERSION_CHANGED, FROZEN_CODING_AGENT_FILES } from '../../lib/aa-coding-agents.mjs';
 import { COMMIT_TRAILER, assessCommitScope, parseScope, parseStatusPorcelain, pricesScopeViolations, selectProducerCritic, sourceFreshnessErrors, staleCollectorDigestLines } from './policy.mjs';
 import { executeNotifications } from './notify.mjs';
 import { compactPublishedRun } from './compact-run.mjs';
@@ -58,18 +58,19 @@ export async function readDesignArenaInconsistency({ sourcesDir, runDir, work, e
   return { record, file, reason: `DesignArena board rows absent while the source's own registry still serves them as active for that category (${names}); today's capture is withheld and the published board of ${record.retained_collected_at ?? 'unknown date'} stays with its own date.` };
 }
 
-// CR-542 (2026-10-23): AA replaced Coding Agent Index v1.5 by v2.0 (new component set). The v1.5
-// collector refuses that page before its atomic write, as it must: a different index version is a
+// CR-542 (2026-10-23): AA replaced Coding Agent Index v1.5 by v2.0 (new component set). The pinned
+// collector refuses such a page before its atomic write, as it must: a different index version is a
 // methodology review, never a silent update. What it may not do is cost every other source its day.
 // Withhold only when the step's output carries the collector's version-change marker AND the staged
-// v1.5 file is byte-identical to the copy this run took of the published snapshot. Any other failure
+// current-version file is byte-identical to the copy this run took of the published snapshot. Since
+// CR-545 the collector is pinned to v2.0 and v1.5 is a frozen file like v1.4. Any other failure
 // (network, partial board, absent or mixed version statements, changed components) still fails closed.
 // review-live.mjs re-derives the version change from the captured page bytes independently.
 export async function readCodingAgentVersionChange({ runDir, work, error, read = readFile }) {
   const match = String(error?.message ?? '').match(new RegExp(`\\b${CODING_AGENT_VERSION_CHANGED} \\(page states v([0-9.]+), collector pinned to v([0-9.]+)\\)`));
   if (!match) return null;
-  const staged = await read(join(work, 'data/raw/aa-coding-agents-v1.5.json')).catch(() => null);
-  const published = await read(join(runDir, 'before/raw/aa-coding-agents-v1.5.json')).catch(() => null);
+  const staged = await read(join(work, 'data/raw', CODING_AGENT_FILE)).catch(() => null);
+  const published = await read(join(runDir, 'before/raw', CODING_AGENT_FILE)).catch(() => null);
   if (!staged || !published || hash(staged) !== hash(published)) return null;
   const retainedCollectedAt = JSON.parse(published.toString('utf8')).collected_at ?? null;
   return { page_version: match[1], pinned_version: match[2], retained_collected_at: retainedCollectedAt,
@@ -186,6 +187,8 @@ export async function runDaily({ repo = ROOT, home = '/opt/benchmarkheaven-daily
     await writeJSONAtomic(join(reports, 'dataset-before.json'), before);
     await cp(join(work, 'data/raw'), join(runDir, 'before/raw'), { recursive: true });
     const legacy = hash(await readFile(join(work, 'data/raw/aa-coding-agents.json')));
+    // CR-545: superseded Coding Agent versions (v1.5) are frozen like v1.4; nothing in the run may rewrite them.
+    const frozenCoding = await Promise.all(FROZEN_CODING_AGENT_FILES.map(async (file) => [file, hash(await readFile(join(work, 'data/raw', file)))]));
     // Preserve independent source receipts even if worker selection or a core collector/review fails.
     // This phase uses the existing robots/rate-limited capturers and cannot update scores.
     if (full) await command('capture-benchmarks', process.execPath, ['ops/daily/phase-step.mjs', 'capture', runDir], work, 3_900_000);
@@ -219,14 +222,14 @@ export async function runDaily({ repo = ROOT, home = '/opt/benchmarkheaven-daily
     report.openrouter_withdrawals = (await readJSON(join(work, 'data/raw/openrouter.json'))).withdrawal_run ?? null;
     if (full) {
       try {
-        await command('fetch-coding-v1.5', process.execPath, ['scripts/fetch-aa-coding-agents.mjs']);
+        await command(`fetch-coding-v${CODING_AGENT_VERSION}`, process.execPath, ['scripts/fetch-aa-coding-agents.mjs']);
       } catch (error) {
         const changed = await readCodingAgentVersionChange({ runDir, work, error });
         if (!changed) throw error;
-        report.retained_sources.push({ source: 'aa_coding_agents_v1_5', step: 'fetch-coding-v1.5', reason: changed.reason, page_version: changed.page_version, retained_collected_at: changed.retained_collected_at });
+        report.retained_sources.push({ source: CODING_AGENT_SOURCE_KEY, step: `fetch-coding-v${CODING_AGENT_VERSION}`, reason: changed.reason, page_version: changed.page_version, retained_collected_at: changed.retained_collected_at });
         report.warnings = report.warnings || [];
-        report.warnings.push(`fetch-coding-v1.5 withheld: ${changed.reason}`);
-        console.warn(`WARN fetch-coding-v1.5: AA states v${changed.page_version}; keeping the published v${changed.pinned_version} snapshot (${changed.retained_collected_at ?? 'unknown date'})`);
+        report.warnings.push(`fetch-coding-v${CODING_AGENT_VERSION} withheld: ${changed.reason}`);
+        console.warn(`WARN fetch-coding-v${CODING_AGENT_VERSION}: AA states v${changed.page_version}; keeping the published v${changed.pinned_version} snapshot (${changed.retained_collected_at ?? 'unknown date'})`);
       }
       // Epoch is an independently dated attachment. Its collector writes atomically, so any network,
       // HTTP, layout or validation failure leaves the last verified snapshot byte-for-byte intact.
@@ -414,6 +417,7 @@ export async function runDaily({ repo = ROOT, home = '/opt/benchmarkheaven-daily
       await command('refresh-benchmarks', process.execPath, ['ops/daily/phase-step.mjs', 'benchmarks', runDir], work, BENCHMARK_STEP_TIMEOUT_MS);
     }
     if (hash(await readFile(join(work, 'data/raw/aa-coding-agents.json'))) !== legacy) throw new Error('Legacy Coding Agent v1.4 changed: refusing publication');
+    for (const [file, sha] of frozenCoding) if (hash(await readFile(join(work, 'data/raw', file))) !== sha) throw new Error(`Frozen Coding Agent snapshot ${file} changed: refusing publication`);
     await command('build-dataset', process.execPath, ['scripts/build-dataset.mjs']);
     await command('npm-build', 'npm', ['run', 'build'], work, 1_200_000, isolatedEnvironment);
     await command('npm-test', 'npm', ['test'], work, 900_000, isolatedEnvironment);

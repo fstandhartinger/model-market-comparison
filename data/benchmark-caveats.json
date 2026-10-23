@@ -254,7 +254,8 @@
     "ifbench": "Deterministic verification functions decide each constraint; no model or human rates the answer.",
     "toolathlon": "The task's own ground-truth backend state decides; the grader executes it rather than rating the trajectory.",
     "toolathlon-verified": "The task's own ground-truth backend state decides; the grader executes it rather than rating the trajectory.",
-    "jevbench": "The rubric is part of each decision’s input, not a grader: the typed answer is checked against 242 fixed decisions, and the other axes are measured properties of the response."
+    "jevbench": "The rubric is part of each decision’s input, not a grader: the typed answer is checked against 242 fixed decisions, and the other axes are measured properties of the response.",
+    "aa-coding-agent-index": "Two of three components are verifier-scored (FrontierCode blocking checks, Terminal-Bench tests); the third, SWE-Atlas-QnA (v2.0: SWE-Atlas-QnA-AA), uses an LLM judge only to check rubric criteria, and a task counts only when all criteria pass (Scale AI Task Resolve Rate) — correctness against an answer rubric, not a quality rating."
   },
   "freshness": {
     "openai-mentalhealthbench": {

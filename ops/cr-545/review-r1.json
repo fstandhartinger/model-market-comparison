@@ -1,0 +1,16 @@
+{
+  "artifact_id": "cr-545-aa-coding-agent-v2",
+  "artifact_sha256": "git 30641ce059e066bef0ffa19a8f4adbe93fdb8af6",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": ["C1", "C2", "C3", "C4", "C5", "C6", "C7", "C8"],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "C7(i): Agree with considered_not_judged. The AA source describes binary criterion checks and Task Resolve Rate; the disclosed LLM judge checks rubric criteria rather than rating answer quality as a preference. The caveat explicitly identifies the judged component.",
+    "C7(ii): Acceptable for this release. The v2.0 bridge break removes 57 former v1.4-to-v1.5 estimates from the current historic overlay, but retaining that overlay would require a separate v1.5-target view. The conservative break avoids any accidental v1.5-to-v2.0 bridge; this is a historical-display tradeoff, not a correctness defect.",
+    "C7(iii): Agree with leaving the 16 unmatched v2.0 rows at model_id null. The existing exact-join path joins 8 of 24; guessing identities would create unsupported catalog attribution."
+  ],
+  "missing_evidence": []
+}

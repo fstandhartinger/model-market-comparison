@@ -12,20 +12,21 @@ import { writeJSONAtomic } from "../lib/snapshot.mjs";
 const rows = () => Array.from({ length: 13 }, (_, i) => ({
   id: `synthetic-${i}`, display: { model: `Fixture ${i} (max) "quoted" {name}` },
   agentName: "Fixture harness", indexScore: 0.5, indexComponentCount: 3, evalCount: 3,
-  evals: ["deep-swe-v1.1", "swe-atlas-qna", "terminal-bench-v4"].map((datasetIndexName) => ({ datasetIndexName, mean: { reward: 0.5 }, weight: 1 / 3 })),
+  evals: ["frontiercode-v1.1-main", "swe-atlas-qna", "terminal-bench-v4"].map((datasetIndexName) => ({ datasetIndexName, mean: { reward: 0.5 }, weight: 1 / 3 })),
 }));
 const html = (items = rows(), options = {}) => {
-  const change = options.badge === false ? "$undefined" : { description: `Coding Agent Index v${options.version || "1.5"}:` };
+  const change = options.badge === false ? "$undefined" : { description: `Coding Agent Index v${options.version || "2.0"}:` };
   const records = `a:${JSON.stringify(["$", "div", null, { rows: items }])}\nb:${JSON.stringify({ title: "Performance", description: "Performance across the Artificial Analysis Coding Agent Index.", change, benchmarkRows: items.map((_, i) => `$a:props:rows:${i}`) })}\n`;
   // A Flight chunk can end in the middle of a string escape.
-  const subtitle = options.subtitle ? `<span>Artificial Analysis Coding Agent Index v${options.subtitle} incorporates 3 benchmarks: DeepSWE v1.1, Terminal-Bench 4.0, and SWE-Atlas-QnA · Higher is better</span>` : "";
+  const subtitle = options.subtitle ? `<span>Artificial Analysis Coding Agent Index v${options.subtitle} incorporates 3 benchmarks: FrontierCode v1.1, Terminal-Bench 4.0, and SWE-Atlas-QnA-AA · Higher is better</span>` : "";
   return subtitle + [records.slice(0, 133), records.slice(133)].map((part) => `<script>self.__next_f.push(${JSON.stringify([1, part])})</script>`).join("");
 };
 
 test("full Coding Agent board resolves Flight references and preserves exact model/harness names", () => {
   const parsed = parseCodingAgents(html());
   assert.equal(parsed.count, 13);
-  assert.equal(parsed.version, "1.5");
+  assert.equal(parsed.version, "2.0");
+  assert.deepEqual(parsed.components.map((c) => c.id), ["frontiercode-v1.1-main", "swe-atlas-qna", "terminal-bench-v4"]);
   assert.equal(parsed.rows[0].model_name, rows()[0].display.model);
   assert.equal(parsed.rows[0].score, 0.5);
 });
@@ -33,10 +34,12 @@ test("full Coding Agent board resolves Flight references and preserves exact mod
 test("Coding Agent rejects partial, malformed, ambiguous, changed-version and invalid-score payloads", () => {
   assert.throws(() => parseCodingAgents("<html>unavailable</html>"), /missing/);
   assert.throws(() => parseCodingAgents(html(rows().slice(1))), /incomplete scrape/);
-  assert.throws(() => parseCodingAgents(html(), { version: "1.5", count: 14 }), /incomplete scrape/);
+  assert.throws(() => parseCodingAgents(html(), { version: "2.0", count: 14 }), /incomplete scrape/);
   assert.throws(() => parseCodingAgents(html(), { version: "1.4", count: 68 }), /version mismatch/);
+  // CR-545: the frozen v1.5 snapshot is never a "previous" the v2.0 collector may replace.
+  assert.throws(() => parseCodingAgents(html(), { version: "1.5", count: 13 }), /version mismatch/);
   assert.throws(() => parseCodingAgents(html(rows(), { version: "1.6" })), /version absent or changed/);
-  const history = `<script>self.__next_f.push(${JSON.stringify([1, 'c:{"history":"Coding Agent Index v1.5:"}\n'])})</script>`;
+  const history = `<script>self.__next_f.push(${JSON.stringify([1, 'c:{"history":"Coding Agent Index v2.0:"}\n'])})</script>`;
   assert.throws(() => parseCodingAgents(html(rows(), { version: "1.6" }) + history), /version absent or changed/);
   for (const change of [
     { indexScore: null }, { indexScore: 2 }, { indexScore: "0.5" },
@@ -51,6 +54,9 @@ test("Coding Agent rejects partial, malformed, ambiguous, changed-version and in
   assert.throws(() => parseCodingAgents(html() + extra), /expected one full benchmarkRows/);
   const components = rows(); components[0].evals[0].datasetIndexName = "different-benchmark";
   assert.throws(() => parseCodingAgents(html(components)), /changed components/);
+  // CR-545: a v1.5 component set (DeepSWE) on a page that claims v2.0 is a changed contract, never ingested.
+  const v15 = rows(); for (const row of v15) row.evals[0].datasetIndexName = "deep-swe-v1.1";
+  assert.throws(() => parseCodingAgents(html(v15)), /changed components/);
   const weight = rows(); weight[0].evals[0].weight = 0.5;
   assert.throws(() => parseCodingAgents(html(weight)), /invalid component/);
   const score = rows(); score[0].evals[0].mean.reward = 1.5;
@@ -58,18 +64,18 @@ test("Coding Agent rejects partial, malformed, ambiguous, changed-version and in
 });
 
 test("CR-285: Coding Agent version comes from the stable index subtitle when AA drops the change badge", () => {
-  assert.equal(parseCodingAgents(html(rows(), { badge: false, subtitle: "1.5" })).version, "1.5");
-  assert.equal(parseCodingAgents(html(rows(), { subtitle: "1.5" })).count, 13);
+  assert.equal(parseCodingAgents(html(rows(), { badge: false, subtitle: "2.0" })).version, "2.0");
+  assert.equal(parseCodingAgents(html(rows(), { subtitle: "2.0" })).count, 13);
   assert.throws(() => parseCodingAgents(html(rows(), { badge: false })), /version absent or changed/);
   assert.throws(() => parseCodingAgents(html(rows(), { badge: false, subtitle: "1.6" })), /version absent or changed/);
   assert.throws(() => parseCodingAgents(html(rows(), { subtitle: "1.6" })), /version absent or changed/);
-  assert.throws(() => parseCodingAgents(html(rows(), { version: "1.6", subtitle: "1.5" })), /version absent or changed/);
+  assert.throws(() => parseCodingAgents(html(rows(), { version: "1.6", subtitle: "2.0" })), /version absent or changed/);
 });
 
 test("failed live fetch or partial parse never overwrites the previous snapshot", async () => {
   const dir = await mkdtemp(join(tmpdir(), "aa-coding-test-"));
   const target = join(dir, "snapshot.json");
-  const original = JSON.stringify({ version: "1.5", count: 13, previous: "retain byte for byte" });
+  const original = JSON.stringify({ version: "2.0", count: 13, previous: "retain byte for byte" });
   try {
     await writeFile(target, original);
     await assert.rejects(refreshCodingAgents({ target, html: html(rows().slice(1)) }), /incomplete/);

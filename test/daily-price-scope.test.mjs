@@ -33,7 +33,7 @@ test('CR-66.7: a prices run needs today\'s OpenRouter and leaves every benchmark
 test('CR-66.7: a prices run may publish price files only', () => {
   assert.deepEqual(pricesScopeViolations(['data/dataset.json', 'data/raw/openrouter.json', 'data/raw/chutes.json', 'data/raw/aws-bedrock.json', 'data/raw/openrouter-data-policy.json']), []);
   const forbidden = ['data/raw/benchmarks/scores.json', 'data/raw/artificialanalysis.json', 'data/raw/designarena.json', 'data/raw/epoch-eci.json',
-    'data/raw/aa-efficiency.json', 'data/raw/aa-coding-agents-v1.5.json', 'data/raw/openrouter-efficiency.json', 'data/raw/chutes-efficiency.json', 'data/raw/openrouter-benchmarks.json', 'data/raw/lumina-ledger.json'];
+    'data/raw/aa-efficiency.json', 'data/raw/aa-coding-agents-v1.5.json', 'data/raw/aa-coding-agents-v2.0.json', 'data/raw/openrouter-efficiency.json', 'data/raw/chutes-efficiency.json', 'data/raw/openrouter-benchmarks.json', 'data/raw/lumina-ledger.json'];
   assert.deepEqual(pricesScopeViolations(forbidden), forbidden);
 });
 
@@ -47,6 +47,7 @@ test('CR-66.7: runDaily --scope prices collects OpenRouter without efficiency an
     const files = {
       'data/dataset.json': JSON.stringify({ models: [], sources: {}, benchmark_results: { divergences: [] } }),
       'data/raw/aa-coding-agents.json': JSON.stringify({ version: '1.4', fixture: true }),
+      'data/raw/aa-coding-agents-v1.5.json': JSON.stringify({ version: '1.5', fixture: true }),
       'data/raw/openrouter.json': JSON.stringify({ withdrawal_run: null }),
       'ops/rebuild-2026-09/bin/pick-worker-models.mjs': `throw new Error('a prices run must not select workers');`,
       'scripts/fetch-live.mjs': `import {appendFileSync} from 'node:fs';appendFileSync('fetch-live-args.txt', process.argv.slice(2).join(' ') + '\\n');`,
@@ -62,7 +63,7 @@ test('CR-66.7: runDaily --scope prices collects OpenRouter without efficiency an
     assert.equal(await readFile(join(result.run_dir, 'work/fetch-live-args.txt'), 'utf8'), 'or-prices\n');
     const names = result.steps.map((s) => s.name);
     assert.ok(names.includes('fetch-or') && result.steps.find((s) => s.name === 'fetch-or').ok);
-    for (const skipped of ['capture-benchmarks', 'worker-catalog', 'fetch-aa', 'fetch-da', 'fetch-coding-v1.5', 'fetch-epoch-eci', 'build-epoch-provenance', 'fetch-openrouter-benchmarks', 'fetch-lumina-ledger', 'review-live', 'refresh-benchmarks']) {
+    for (const skipped of ['capture-benchmarks', 'worker-catalog', 'fetch-aa', 'fetch-da', 'fetch-coding-v2.0', 'fetch-epoch-eci', 'build-epoch-provenance', 'fetch-openrouter-benchmarks', 'fetch-lumina-ledger', 'review-live', 'refresh-benchmarks']) {
       assert.ok(!names.includes(skipped), `${skipped} must not run in the prices scope`);
     }
     assert.equal(result.workers, undefined);

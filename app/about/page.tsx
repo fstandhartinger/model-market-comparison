@@ -88,7 +88,7 @@ export default async function AboutPage() {
       <ul className="space-y-2 text-sm text-gray-300">
         <li><b>OpenRouter</b> — model catalog and per-provider endpoint pricing (live API).</li>
         <li><b>ArtificialAnalysis</b> — Intelligence &amp; Coding indices plus sub-benchmarks (LiveCodeBench, SciCode, Terminal-Bench Hard, τ²-Bench, GPQA, MMLU-Pro) via the v2 API.</li>
-        <li><b>AA Coding Agent Index</b> — Composite retains v1.4, last collected {ds.sources.aa_coding_agents}. AA now publishes v1.5 with different benchmark components. We collect it separately and do not mix the versions.</li>
+        <li><b>AA Coding Agent Index</b> — Composite retains v1.4, last collected {ds.sources.aa_coding_agents}. AA now publishes v2.0 (FrontierCode v1.1, Terminal-Bench 4.0, SWE-Atlas-QnA-AA); the last v1.5 capture ({ds.sources.aa_coding_agents_v1_5}) is retained. Each version is a separate benchmark with different components; we never mix or compare them as one scale.</li>
         <li>Some AA licensing and model identifiers are retained from earlier source publications. Their original dates are recorded per field in the downloadable dataset.</li>
         <li><b>DesignArena</b> (Arcada Labs) — agentic Web Apps &amp; Full-Stack Elo leaderboards, read from
           the site&apos;s own public leaderboard endpoint. DesignArena publishes no API documentation or data licence,
@@ -277,7 +277,7 @@ export default async function AboutPage() {
         model for being measured on a selective board. Each of them is therefore <b>linked</b> to the common
         scale through the models measured on both: a result that ranks at the same position among those
         models as a given AA Intelligence percentile counts as that percentile. Differences at the top are
-        rank differences, so 99 against 97 is not a 2 % capability gap. The composite uses seven slots: AA Coding, source-matched AA Coding Agent v1.4 (the pinned 9 September snapshot; AA now publishes v1.5, which the Benchmarks table shows), AA
+        rank differences, so 99 against 97 is not a 2 % capability gap. The composite uses seven slots: AA Coding, source-matched AA Coding Agent v1.4 (the pinned 9 September snapshot; AA now publishes v2.0, which the Benchmarks table shows as its own benchmark), AA
         Intelligence, Epoch general ECI, Epoch Software Engineering ECI, DesignArena Web Apps (agentic) and
         DesignArena Full-Stack. The DesignArena inputs are its agentic{" "}
         <a className="text-accent underline" href="https://www.designarena.ai/leaderboard/webapps">Web Apps</a> and{" "}

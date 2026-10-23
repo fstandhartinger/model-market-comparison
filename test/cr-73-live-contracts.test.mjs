@@ -13,7 +13,7 @@ const unit = (dataset, rows = 10) => ({ dataset, rows, examples: [`${dataset}-fi
   row: { id: dataset }, sources: [{ url: `repo:${dataset}`, sha256: 'x'.repeat(64), content: '{}' }] });
 
 // The seven contracts of a real run, in manifest order.
-const UNITS = ['aa', 'da', 'or', 'aa_efficiency', 'or_efficiency', 'chutes_efficiency', 'aa_coding_v15'].map((d, i) => unit(d, 10 + i));
+const UNITS = ['aa', 'da', 'or', 'aa_efficiency', 'or_efficiency', 'chutes_efficiency', 'aa_coding_current'].map((d, i) => unit(d, 10 + i));
 
 const accepted = (dataset) => ({ accepted: true, fingerprints: [{ id: dataset }], quarantined: [], errors: [],
   reviews: [{ round: 1, verdict: 'pass' }], manifest: { artifact_id: `live-contract-${dataset}`, rounds_used: 1 } });
@@ -48,11 +48,11 @@ const OUTCOMES = {
   aa_efficiency: rejected,       // retainable → withheld
   or_efficiency: unusable,       // reviewer unavailable → deterministic fallback
   chutes_efficiency: rejected,   // retainable → withheld
-  aa_coding_v15: accepted,
+  aa_coding_current: accepted,
 };
 // The two withheld contracts finish first at concurrency 1 and last at concurrency 4 —
 // if retention order followed completion order, the aggregate would differ.
-const DELAYS = { aa: 60, da: 50, or: 40, aa_efficiency: 30, or_efficiency: 20, chutes_efficiency: 10, aa_coding_v15: 5 };
+const DELAYS = { aa: 60, da: 50, or: 40, aa_efficiency: 30, or_efficiency: 20, chutes_efficiency: 10, aa_coding_current: 5 };
 
 async function aggregate(limit) {
   const runDir = await runDirectory();
@@ -69,7 +69,7 @@ async function aggregate(limit) {
 test('CR-73.3: concurrent contract review aggregates exactly like the sequential loop', async () => {
   const sequential = await aggregate(1);
   const parallel = await aggregate(4);
-  assert.deepEqual(sequential.completion, ['aa', 'da', 'or', 'aa_efficiency', 'or_efficiency', 'chutes_efficiency', 'aa_coding_v15']);
+  assert.deepEqual(sequential.completion, ['aa', 'da', 'or', 'aa_efficiency', 'or_efficiency', 'chutes_efficiency', 'aa_coding_current']);
   assert.notDeepEqual(parallel.completion, sequential.completion, 'the fixture must actually complete out of manifest order');
   assert.equal(JSON.stringify(parallel.result), JSON.stringify(sequential.result));
   assert.deepEqual(parallel.result.reviewed.map((r) => r.dataset), sequential.completion);
@@ -98,7 +98,7 @@ test('CR-73.3: every withheld contract is retained once, in manifest order', asy
   });
   // The four retainable contracts finish in reverse manifest order in this fixture;
   // planRejectedContract counts them, so their order must follow the manifest.
-  assert.deepEqual(retainCalls, ['aa_efficiency', 'or_efficiency', 'chutes_efficiency', 'aa_coding_v15']);
+  assert.deepEqual(retainCalls, ['aa_efficiency', 'or_efficiency', 'chutes_efficiency', 'aa_coding_current']);
   assert.deepEqual(result.retained.map((r) => r.dataset), retainCalls);
   assert.equal(result.deterministic.length, 0);
 });
@@ -122,11 +122,11 @@ test('CR-73.3: a thrown review fails the stage with the first error in manifest 
       const dataset = artifactId.replace('live-contract-', '');
       await sleep(DELAYS[dataset]);
       reviewed.push(dataset);
-      if (dataset === 'or' || dataset === 'aa_coding_v15') throw new Error(`packet too large: ${dataset}`);
+      if (dataset === 'or' || dataset === 'aa_coding_current') throw new Error(`packet too large: ${dataset}`);
       return accepted(dataset);
     },
   }), /packet too large: or/);
-  assert.ok(reviewed.includes('aa_coding_v15'), 'every unit still spends its own budget before the stage fails');
+  assert.ok(reviewed.includes('aa_coding_current'), 'every unit still spends its own budget before the stage fails');
 });
 
 test('CR-73.3: buildLiveContractUnits keeps manifest order and one artifact per dataset', () => {

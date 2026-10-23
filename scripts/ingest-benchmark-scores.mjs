@@ -87,7 +87,8 @@ for (const mapping of registry.aa_field_map) {
       comparison_key: null });
   }
 }
-for (const version of ['1.4', '1.5']) {
+// CR-545: v2.0 is a separate identity next to the frozen v1.4 and v1.5 snapshots; values never cross versions.
+for (const version of ['1.4', '1.5', '2.0']) {
   const spec = lock.coding[version];
   const bytes = await readFile(spec.file);
   if (hash(bytes) !== spec.sha256) throw new Error(`Coding ${version} capture changed: review provenance/version lock`);
@@ -114,7 +115,7 @@ for (const version of ['1.4', '1.5']) {
       comparison_key: null });
   }
   collections.push({ benchmark_id, status: 'collected', source_url: 'https://artificialanalysis.ai/agents/coding-agents',
-    reason: `Reviewed ${version} snapshot. ${version === '1.4' ? 'Historical date retained; unchanged Composite source.' : 'Separate registry observations; no Composite attachment.'}` });
+    reason: `Reviewed ${version} snapshot. ${version === '1.4' ? 'Historical date retained; unchanged Composite source.' : version === '1.5' ? 'Frozen last v1.5 capture (AA moved to v2.0); separate registry observations; no Composite attachment.' : 'Separate registry observations; no Composite attachment.'}` });
 }
 {
   const spec = lock.realswe;
