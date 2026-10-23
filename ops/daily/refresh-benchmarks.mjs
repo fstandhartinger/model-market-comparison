@@ -645,7 +645,12 @@ export async function refreshBenchmarks({ runDir, review = reviewArtifact, runne
   lock.coding['1.5'] = { file: codingFile, sha256: sha256(await readFile(codingFile)) };
   // CR-67.2: when the live contract was withheld, this is the restored published snapshot, not a fresh update.
   const codingRetained = (liveReview.gauntlet?.retained_contracts ?? []).some((r) => r.dataset === 'aa_coding_v15');
-  checks.push({ id: 'aa-coding-agent-index::1.5', status: codingRetained ? 'retained_after_dispute' : 'updated', rows: coding.rows.length, ...(codingRetained ? { collected_at: coding.collected_at } : {}) });
+  // CR-542: the source moved to a new index version; v1.5 stays on its dated identity until a reviewed adoption.
+  const codingWithheld = liveReview.deterministic?.retained?.aa_coding_v15 ?? null;
+  checks.push(codingWithheld
+    ? { id: 'aa-coding-agent-index::1.5', status: 'source_changed_retained', rows: coding.rows.length, collected_at: coding.collected_at,
+      reason: `AA Coding Agent Index page now states v${codingWithheld.page_version}; the v1.5 snapshot of ${coding.collected_at} is retained with its own date until the new version is reviewed and registered separately.` }
+    : { id: 'aa-coding-agent-index::1.5', status: codingRetained ? 'retained_after_dispute' : 'updated', rows: coding.rows.length, ...(codingRetained ? { collected_at: coding.collected_at } : {}) });
   // CR-34.2/34.3: OpenRouter's own runs are a dated snapshot board, like Real-SWE and DeepSWE:
   // their ingested values stay bound to the registry-dated capture in the ingestion lock, and a
   // newer capture becomes a new dated registry identity in a reviewed change, never a silent
