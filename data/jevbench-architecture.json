@@ -6427,6 +6427,21 @@
             "fact": "Pinned v1.3 card (tag v1.3.0): Qwen/Qwen3.5-4B fine-tune (base_model_relation finetune), option-letter readout without generation, Apache-2.0 weights; noncausal_full_attention as trained, calibration temperature 0.9, yes/no commit floor 0.801."
           }
         ]
+      },
+      "subq-snap-1.1": {
+        "arch": "closed-api",
+        "badges": {
+          "derivation": null,
+          "params": null,
+          "quant": null
+        },
+        "evidence": [
+          {
+            "url": "https://docs.subq.ai/using-the-api/models/",
+            "kind": "provider-docs",
+            "fact": "SubQ Snap 1.1 is a vendor-hosted API with native probabilities; deployed weights and base model are undisclosed."
+          }
+        ]
       }
     },
     "imagejevbench": {
