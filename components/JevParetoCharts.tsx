@@ -18,7 +18,7 @@ type Kind = 'cost' | 'latency';
 type Placed = { p: JevBubblePoint; v: number; cx: number; cy: number };
 type Box = { x: number; y: number; w: number; h: number };
 const FRONTIER = '#e5484d';
-const JEV_BLUE = '#3b82f6';
+const JEV_BLUE = 'var(--jev-ref)';
 const isJev = (key: string) => JEV_OPEN_REFERENCE_KEYS.includes(key);
 const overlaps = (a: Box, b: Box) => a.x < b.x + b.w && b.x < a.x + a.w && a.y < b.y + b.h && b.y < a.y + a.h;
 const usd = (v: number) => `$${Number(v.toPrecision(2))}`;
