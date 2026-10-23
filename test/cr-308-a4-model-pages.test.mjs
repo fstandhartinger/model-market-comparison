@@ -42,15 +42,15 @@ test('every A4 key gets a model page with the API-board ranks', async () => {
   assert.deepEqual([...pages.keys()].sort(), [...a4.rows, ...(a4.a5_rows ?? []), ...(a4.full_rows ?? [])].map((r) => r.key).sort());
   assert.equal(pages.get('liquid-d1').full, true);
   assert.equal(pages.get('liquid-d1').nItems, 1500);
-  // The pages now follow the assembled live board (v1.7.0 slice), so the ranks include the cohort rows that joined the API board after CR-338 and the two API rows of v1.6.38 (14 -> 29, 8 -> 20, 7 -> 17, 13 -> 27).
-  assert.equal(pages.get('fastino-glide').compositeRank, 29);
-  assert.equal(pages.get('instinct').compositeRank, 20);
-  assert.equal(pages.get('instinct').capabilityRank, 17);
+  // The pages now follow the assembled live board (v1.7.0 slice), so the ranks include the cohort rows that joined the API board after CR-338 and the two API rows of v1.6.38 (14 -> 29, 8 -> 20, 7 -> 17, 13 -> 27), plus the hosted GLiDE API row of v1.6.40, which ranks above all of them (+1 each: 30, 21, 18, 28).
+  assert.equal(pages.get('fastino-glide').compositeRank, 30);
+  assert.equal(pages.get('instinct').compositeRank, 21);
+  assert.equal(pages.get('instinct').capabilityRank, 18);
   assert.equal(pages.get('openai-decisions').subset, 'A5');
   assert.equal(pages.get('openai-decisions').round, 'score-a5-1');
   assert.equal(pages.get('instinct').row.jevbench_score, 62.24);
   assert.equal(pages.get('classifier-dev-fast').compositeRank, null);
-  assert.equal(pages.get('gpt-6-luna').compositeRank, 27);
+  assert.equal(pages.get('gpt-6-luna').compositeRank, 28);
   assert.ok(pages.get('gpt-6-luna').capabilityOutside);
   } finally { await rm(root, { recursive: true, force: true }); }
 });
