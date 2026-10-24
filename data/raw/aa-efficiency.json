@@ -3,7 +3,7 @@
   "basis": "measured",
   "interpretation": "benchmark_proxy",
   "caveat": "AA Intelligence Index benchmark token accounting. Ratios are BENCHMARK PROXIES, never typical user I/O usage; usage ratios must come from OpenRouter/Chutes sources.",
-  "collected_at": "2026-10-23T05:29:52.186Z",
+  "collected_at": "2026-10-24T02:54:41.809Z",
   "source_url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
   "data_fields": {
     "tokens_per_task": "intelligenceIndexOutputTokensPerTask {reasoning, answer, output} (measured)",
@@ -13,18 +13,18 @@
   "attempts": [
     {
       "url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
-      "fetched_at": "2026-10-23T05:29:51.981Z",
+      "fetched_at": "2026-10-24T02:54:41.630Z",
       "http_status": 200,
-      "bytes": 4397780,
-      "sha256": "feda89e7b08204a6d74513b79d481bd1676f01aa2ca8bf9540453dee325f1620"
+      "bytes": 4419600,
+      "sha256": "e4683ab7c80df58ff3dbbe975312ad0272bb57b948605c24346b04c60495e495"
     }
   ],
   "coverage": {
-    "published_rows": 219,
-    "scored_denominator": 697,
+    "published_rows": 220,
+    "scored_denominator": 698,
     "denominator_source": "Leaderboard rows carrying a finite intelligenceIndex inside the same model-page Flight payload"
   },
-  "count": 219,
+  "count": 220,
   "rows": [
     {
       "source_id": "8215372b-66ff-457b-855e-e8abeafc9571",
@@ -3239,6 +3239,28 @@
       }
     },
     {
+      "source_id": "665c67ca-09eb-48f0-a7a3-0096e1d5de51",
+      "slug": "kimi-k3-1-pro",
+      "name": "Kimi K3.1 Pro",
+      "variant": null,
+      "tokens_per_task": {
+        "reasoning": 34882.69965070279,
+        "answer": 20311.903392257733,
+        "output": 55194.603042960516
+      },
+      "canonical_token_counts": {
+        "input": 5394975309,
+        "output": 147973700,
+        "answer": 29631734,
+        "reasoning": 118341966
+      },
+      "derived": {
+        "basis": "derived",
+        "input_output_ratio": 36.45901473707828,
+        "reasoning_output_share": 0.6319947554211408
+      }
+    },
+    {
       "source_id": "512d17ef-13d2-4f65-bf9b-154b0dec7e8d",
       "slug": "kimi-k3-low",
       "name": "Kimi K3 (Low)",
@@ -3354,20 +3376,20 @@
       "name": "Ling 3.1 Flash",
       "variant": null,
       "tokens_per_task": {
-        "reasoning": 67067.84106237987,
-        "answer": 35135.228096260835,
-        "output": 102203.0691586407
+        "reasoning": 67346.09015328897,
+        "answer": 35518.722187169915,
+        "output": 102864.81234045888
       },
       "canonical_token_counts": {
-        "input": 9049497285,
-        "output": 220984209,
-        "answer": 51152600,
-        "reasoning": 169831609
+        "input": 9259391335,
+        "output": 222440044,
+        "answer": 51996287,
+        "reasoning": 170443757
       },
       "derived": {
         "basis": "derived",
-        "input_output_ratio": 40.950877557952566,
-        "reasoning_output_share": 0.6562213993620528
+        "input_output_ratio": 41.62645883580206,
+        "reasoning_output_share": 0.6547048365809378
       }
     },
     {
@@ -3772,20 +3794,20 @@
       "name": "Mistral Large 4 Preview",
       "variant": null,
       "tokens_per_task": {
-        "reasoning": 52093.59436049082,
-        "answer": 17370.43825509927,
-        "output": 69464.03261559008
+        "reasoning": 52118.45163321809,
+        "answer": 17377.080073281093,
+        "output": 69495.53170649918
       },
       "canonical_token_counts": {
-        "input": 3654196987,
-        "output": 200098843,
-        "answer": 22296553,
-        "reasoning": 177802290
+        "input": 3656194389,
+        "output": 200168141,
+        "answer": 22311165,
+        "reasoning": 177856976
       },
       "derived": {
         "basis": "derived",
-        "input_output_ratio": 18.261959600635972,
-        "reasoning_output_share": 0.7499362245318197
+        "input_output_ratio": 18.265615950342468,
+        "reasoning_output_share": 0.7499539949320799
       }
     },
     {
@@ -4036,20 +4058,20 @@
       "name": "Muse Wonder (Max)",
       "variant": "max",
       "tokens_per_task": {
-        "reasoning": 28680.54555966468,
-        "answer": 25551.128682268547,
-        "output": 54231.67424193323
+        "reasoning": 28799.93283239195,
+        "answer": 25676.615045904913,
+        "output": 54476.547878296864
       },
       "canonical_token_counts": {
-        "input": 6480640728,
-        "output": 134220930,
-        "answer": 32417726,
-        "reasoning": 101803204
+        "input": 6580358236,
+        "output": 134759652,
+        "answer": 32693796,
+        "reasoning": 102065856
       },
       "derived": {
         "basis": "derived",
-        "input_output_ratio": 48.28338417860761,
-        "reasoning_output_share": 0.5288522982292181
+        "input_output_ratio": 48.83032968948302,
+        "reasoning_output_share": 0.5286666272747741
       }
     },
     {

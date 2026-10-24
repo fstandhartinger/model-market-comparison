@@ -1,7 +1,7 @@
 {
   "source": "ArtificialAnalysis Coding Agent Index",
   "version": "2.0",
-  "collected_at": "2026-10-23",
+  "collected_at": "2026-10-24",
   "endpoint": "https://artificialanalysis.ai/agents/coding-agents",
   "methodology_url": "https://artificialanalysis.ai/methodology/coding-agents-benchmarking",
   "method": "Decode Flight JSON and resolve benchmarkRows references on the full coding-agents page; validate version, row count, identities, components and index arithmetic before atomic replacement.",
@@ -24,6 +24,58 @@
   ],
   "completeness_note": "Complete v2.0 benchmarkRows only. v1.4 and v1.5 remain separate dated snapshots (v1.4 feeds the unchanged Composite); versions use different components and must never be combined or compared as one scale.",
   "rows": [
+    {
+      "source_id": "96d7404e06194027474a6cc3bb31c068",
+      "model_name": "GLM-5.3",
+      "harness": "Opencode",
+      "score": 0.489161690344303,
+      "eval_count": 3,
+      "index_component_count": 3,
+      "complete": true,
+      "components": [
+        {
+          "id": "frontiercode-v1.1-main",
+          "score": 0.482473666666667,
+          "weight": 0.333333333333333
+        },
+        {
+          "id": "swe-atlas-qna",
+          "score": 0.586021505376344,
+          "weight": 0.333333333333333
+        },
+        {
+          "id": "terminal-bench-v4",
+          "score": 0.398989898989899,
+          "weight": 0.333333333333333
+        }
+      ]
+    },
+    {
+      "source_id": "88c83705811535bca8ee000bfd3a256c",
+      "model_name": "Kimi K3",
+      "harness": "Kimi Code CLI",
+      "score": 0.41417319257087,
+      "eval_count": 3,
+      "index_component_count": 3,
+      "complete": true,
+      "components": [
+        {
+          "id": "frontiercode-v1.1-main",
+          "score": 0.430936,
+          "weight": 0.333333333333333
+        },
+        {
+          "id": "swe-atlas-qna",
+          "score": 0.599462365591398,
+          "weight": 0.333333333333333
+        },
+        {
+          "id": "terminal-bench-v4",
+          "score": 0.212121212121212,
+          "weight": 0.333333333333333
+        }
+      ]
+    },
     {
       "source_id": "a92c8b68f37df782f0e978e0e302b023",
       "model_name": "Grok 4.7 (xhigh)",
@@ -129,32 +181,6 @@
       ]
     },
     {
-      "source_id": "ef847aa89b4f0471ffe5275ba2f11771",
-      "model_name": "DeepSeek V4.1 Flash",
-      "harness": "Codex",
-      "score": 0.473001334419464,
-      "eval_count": 3,
-      "index_component_count": 3,
-      "complete": true,
-      "components": [
-        {
-          "id": "frontiercode-v1.1-main",
-          "score": 0.525960666666667,
-          "weight": 0.333333333333333
-        },
-        {
-          "id": "swe-atlas-qna",
-          "score": 0.610215053763441,
-          "weight": 0.333333333333333
-        },
-        {
-          "id": "terminal-bench-v4",
-          "score": 0.282828282828283,
-          "weight": 0.333333333333333
-        }
-      ]
-    },
-    {
       "source_id": "34e0f78892fac8fd39aff6595d04610e",
       "model_name": "GPT-6 Astra (max)",
       "harness": "Codex",
@@ -176,6 +202,32 @@
         {
           "id": "terminal-bench-v4",
           "score": 0.555555555555555,
+          "weight": 0.333333333333333
+        }
+      ]
+    },
+    {
+      "source_id": "ef847aa89b4f0471ffe5275ba2f11771",
+      "model_name": "DeepSeek V4.1 Flash",
+      "harness": "Codex",
+      "score": 0.473001334419464,
+      "eval_count": 3,
+      "index_component_count": 3,
+      "complete": true,
+      "components": [
+        {
+          "id": "frontiercode-v1.1-main",
+          "score": 0.525960666666667,
+          "weight": 0.333333333333333
+        },
+        {
+          "id": "swe-atlas-qna",
+          "score": 0.610215053763441,
+          "weight": 0.333333333333333
+        },
+        {
+          "id": "terminal-bench-v4",
+          "score": 0.282828282828283,
           "weight": 0.333333333333333
         }
       ]
@@ -519,27 +571,27 @@
       ]
     },
     {
-      "source_id": "88c83705811535bca8ee000bfd3a256c",
-      "model_name": "Kimi K3",
-      "harness": "Kimi Code CLI",
-      "score": 0.41417319257087,
+      "source_id": "5c82a7985b08f35190cc0db574fd1773",
+      "model_name": "Fable 5.1 (max) (with fallback)",
+      "harness": "Claude Code",
+      "score": 0.576200245682633,
       "eval_count": 3,
       "index_component_count": 3,
       "complete": true,
       "components": [
         {
           "id": "frontiercode-v1.1-main",
-          "score": 0.430936,
+          "score": 0.488864666666667,
           "weight": 0.333333333333333
         },
         {
           "id": "swe-atlas-qna",
-          "score": 0.599462365591398,
+          "score": 0.663978494623656,
           "weight": 0.333333333333333
         },
         {
           "id": "terminal-bench-v4",
-          "score": 0.212121212121212,
+          "score": 0.575757575757576,
           "weight": 0.333333333333333
         }
       ]
@@ -571,32 +623,6 @@
       ]
     },
     {
-      "source_id": "5c82a7985b08f35190cc0db574fd1773",
-      "model_name": "Fable 5.1 (max) (with fallback)",
-      "harness": "Claude Code",
-      "score": 0.576200245682633,
-      "eval_count": 3,
-      "index_component_count": 3,
-      "complete": true,
-      "components": [
-        {
-          "id": "frontiercode-v1.1-main",
-          "score": 0.488864666666667,
-          "weight": 0.333333333333333
-        },
-        {
-          "id": "swe-atlas-qna",
-          "score": 0.663978494623656,
-          "weight": 0.333333333333333
-        },
-        {
-          "id": "terminal-bench-v4",
-          "score": 0.575757575757576,
-          "weight": 0.333333333333333
-        }
-      ]
-    },
-    {
       "source_id": "f8b3c23615b8b60e23364c27e8494d6d",
       "model_name": "Opus 5.5 (max)",
       "harness": "Claude Code",
@@ -618,32 +644,6 @@
         {
           "id": "terminal-bench-v4",
           "score": 0.631313131313131,
-          "weight": 0.333333333333333
-        }
-      ]
-    },
-    {
-      "source_id": "96d7404e06194027474a6cc3bb31c068",
-      "model_name": "GLM-5.3",
-      "harness": "Opencode",
-      "score": 0.489161690344303,
-      "eval_count": 3,
-      "index_component_count": 3,
-      "complete": true,
-      "components": [
-        {
-          "id": "frontiercode-v1.1-main",
-          "score": 0.482473666666667,
-          "weight": 0.333333333333333
-        },
-        {
-          "id": "swe-atlas-qna",
-          "score": 0.586021505376344,
-          "weight": 0.333333333333333
-        },
-        {
-          "id": "terminal-bench-v4",
-          "score": 0.398989898989899,
           "weight": 0.333333333333333
         }
       ]

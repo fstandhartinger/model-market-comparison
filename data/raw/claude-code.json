@@ -1,7 +1,7 @@
 {
   "source": "Anthropic Claude API and Claude Code Enterprise",
-  "collected_at": "2026-10-23",
-  "method": "scripts/fetch-claude-api-catalog.mjs (2026-10-23): models[] from the server-rendered model and batch price tables on https://platform.claude.com/docs/en/about-claude/pricing; rows labelled retired there, or Retired in the lifecycle table on https://platform.claude.com/docs/en/about-claude/model-deprecations, are excluded; lifecycle_status and tentative retirement dates come from that table by API model id. Pricing modifiers are derived from the current tables and text. Claude Code Enterprise seat pricing comes from https://claude.com/pricing; seat minimums, usage billing, limits, and legacy-plan terms come from https://support.claude.com/en/articles/9797531-what-is-the-enterprise-plan. See claude-code.method.md.",
+  "collected_at": "2026-10-24",
+  "method": "scripts/fetch-claude-api-catalog.mjs (2026-10-24): models[] from the server-rendered model and batch price tables on https://platform.claude.com/docs/en/about-claude/pricing; rows labelled retired there, or Retired in the lifecycle table on https://platform.claude.com/docs/en/about-claude/model-deprecations, are excluded; lifecycle_status and tentative retirement dates come from that table by API model id. Pricing modifiers are derived from the current tables and text. Claude Code Enterprise seat pricing comes from https://claude.com/pricing; seat minimums, usage billing, limits, and legacy-plan terms come from https://support.claude.com/en/articles/9797531-what-is-the-enterprise-plan. See claude-code.method.md.",
   "models": [
     {
       "model_name": "Claude Fable 5.1",
@@ -282,8 +282,8 @@
     "sales_assisted_minimum_seats": 50,
     "sales_assisted_options": "Invoicing, multi-currency billing, and HIPAA-readiness/BAA are available through sales.",
     "legacy_note": "Some organizations remain on older seat-based Enterprise plans with Standard and Premium seats and per-seat limits until they migrate to usage-based billing.",
-    "seat_and_usage_checked_at": "2026-10-23",
-    "other_terms_checked_at": "2026-10-23"
+    "seat_and_usage_checked_at": "2026-10-24",
+    "other_terms_checked_at": "2026-10-24"
   },
   "pricing_modifiers": {
     "prompt_cache_5m_write_multiplier": 1.25,
@@ -307,10 +307,10 @@
     "Claude Haiku 3.5 (Retired)"
   ],
   "response_sha256": {
-    "pricing": "df1b119fa6f1d1fcd9b2a64e28e1e3cb76bc5e7b6ded40f94d6b04e102d4134e",
-    "deprecations": "41fda02309aae0e23d5fd2e005d9ffef41246c5303a682a301b48eaaf22a7ddd",
-    "enterprise": "e6e3d5ea7ee9c3efebf57c5028382382e026e0fe084816902f5a84c1bb8f73c3",
-    "enterprise_terms": "f5f0838503f3450085b9bbd5481e90213c8c955c79049ff88bfe273e8ea5634a"
+    "pricing": "c74375fe999978065cd44e11709a3c5899b086d63d1327a70f0f601b8604aec7",
+    "deprecations": "46ef85f9697c7a78e43e4b4af101997e09e962e6454c6622273672bcac164184",
+    "enterprise": "9419cad8680a154446c91fbcdd714149812220bcaef8a082ac81f6713a1d15ad",
+    "enterprise_terms": "ce3161c8263e7596763ea3168c9f5cf17585c51bbd9e7a61b0c8199734b1489f"
   },
   "diff": {
     "added": [],

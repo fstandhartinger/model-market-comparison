@@ -1,0 +1,25 @@
+{
+  "artifact_id": "protocol-kernelbench-cuda-glm52-fused-moe-rtx-pro-6000",
+  "artifact_sha256": "6aafe8f39bf09b836a09a197e283d2d81bad768a70baedba626edb70633514b9",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": ["kernelbench-cuda-glm52-fused-moe::rtx-pro-6000", "c1", "c2"],
+  "errors_found": 1,
+  "findings": [
+    {
+      "id": "F1",
+      "severity": "major",
+      "location": "row kernelbench-cuda-glm52-fused-moe::rtx-pro-6000, scoring.notes, claim about the per_problem ranked list holding the muse/muse-spark-1.3 [ultra] cell on 04 at 0.2056",
+      "evidence": "SOURCE 2 (leaderboard.json): muse 04_grid_mingru_sps has correct:false, peak_fraction null, annotation_verdict bug; the 04 ranked_passes list (best 1.961 or-opus/anthropic/claude-opus-5) contains no muse entry and no 0.2056 value anywhere in the payload. The row itself also states correct:false cells are absent from the ranked list, so the note is internally inconsistent and contradicts the primary evidence.",
+      "repair": "Remove or correct the claim that the ranked list still holds the muse 04 cell at 0.2056; state that the muse/muse-spark-1.3 [ultra] 04 cell (verdict bug, correct:false, peak_fraction null) is excluded by the validity rule and absent from the ranked list, leaving the kinetic-claude/kinetic-0715[1m] suspect 03 cell (0.0622, present in 03 ranked_passes) as the audited-but-excluded example."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "Owner-side hash verification and transport/qualification checks were not executed by this reviewer; owner receipt states output_sha256 for the producer, and row-level canonical sha256 values are taken as given.",
+    "SOURCE 7 reports served peak_fraction scale 4.11–11.3 while SOURCE 2's raw payload shows fractions 0.002–1.961; per criterion c1 the scale summary is admissible only for judging the row's unit/range, which it supports (percent-of-roofline, [0,null] unbounded); the discrepancy in the summary's framing is noted but not scored.",
+    "version_status 'published' rests on the maintainer publishing an identifier this version copies: leaderboard.json publishes schema_version 1 and the hardware name 'RTX PRO 6000 Blackwell Workstation' (also a site nav board label in SOURCE 4); treating this as a published release/board identifier is a judgment call, not a verbatim maintainer release string.",
+    "SOURCE 4's page-rendered cell values are shown as 0 in the capture excerpt; cross-checks of scored values relied on SOURCE 2's leaderboard.json as the primary payload."
+  ],
+  "missing_evidence": []
+}

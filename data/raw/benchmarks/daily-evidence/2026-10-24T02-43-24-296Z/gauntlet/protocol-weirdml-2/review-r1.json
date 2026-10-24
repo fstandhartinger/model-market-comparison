@@ -1,0 +1,43 @@
+{
+"artifact_id": "protocol-weirdml-2",
+"artifact_sha256": "6bd60c5766dad9d19f8ad87594eec4ade45889654f1ab0b2516e23568e5c4ae7",
+"round": 1,
+"verdict": "revise",
+"coverage_checked": [
+"weirdml::2",
+"c1",
+"c2"
+],
+"errors_found": 3,
+"findings": [
+{
+"id": "weirdml::2/c1",
+"severity": "major",
+"location": "Scoring/Description",
+"evidence": "Artifact claims the metric involves 'averaged over all 17 tasks'; Source 1 describes the benchmark using '11 complex hand-made tasks'. Furthermore, the scoring mechanism detailed in the artifact is not supported by Source 1.",
+"repair": "Update the task count and scoring description to match the definitions provided in the source material."
+},
+{
+"id": "weirdml::2/c2",
+"severity": "major",
+"location": "version_status",
+"evidence": "Artifact sets version_status to 'published', implying a release identifier is published. Source material does not contain any explicit statement confirming the publication of a release identifier for this board.",
+"repair": "Confirm via protocol text whether a release identifier is published for this board, and adjust version_status accordingly (either 'published' or 'snapshot')."
+},
+{
+"id": "weirdml::2/c1",
+"severity": "minor",
+"location": "version",
+"evidence": "Source 1 identifies 'WeirdML v3' as the primary version and lists 'WeirdML v2' only as a previous version, indicating potential protocol version drift relative to the artifact.",
+"repair": "Verify if version '2' in the artifact accurately reflects the current, intended protocol status."
+}
+],
+"fixed": [],
+"uncertainties": [
+"The exact relationship between the artifact's detailed metric description and the general scoring summary in Source 1 remains ambiguous.",
+"The status 'published' for version_status relies on the absence of explicit contradiction, which is insufficient for a definitive 'pass' on this lifecycle field."
+],
+"missing_evidence": [
+"Explicit confirmation from the protocol text that a release identifier is published for version '2'."
+]
+}

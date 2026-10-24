@@ -1,0 +1,17 @@
+{
+  "artifact_id": "scores-0",
+  "artifact_sha256": "f0c9000982101c718d9319dc1433b7d2855da6fff68a6bc832576b9969f88983",
+  "round": 2,
+  "verdict": "pass",
+  "coverage_checked": ["public:11d5c03af948d975efc95fe3","public:5209bb0be3355c9fcc02dbe5","public:92c01b54162fb97db6ee3ef5","public:22ce810f0c5b008971756f5a","public:776d886d5fb274da2e45436a","public:881bc82557e22b8f21957c7c","public:593e84686331e0253595f227","public:744709f0de60fd4beeb15d54","public:b89b190db9756540ac683444","public:850a0d237eed8b24e39c6774","public:51120c7a28bfc53e654e0a18","public:f80bb4fbfcd226e4d3d6b31b","public:a7aa7fe04b8e2ab3e5ef910c","public:44fc78b3d21a977d3f2ffb03","c1"],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Owner-computed row hashes and transport/qualification checks are executed separately; I cannot recompute them, which is a limitation, not absent source evidence.",
+    "The benchmark_id label 'slop-index::snapshot-2026-09-10' is the registry id the source itself serves, while the capture (retrieved 2026-10-24) is of a live board per SOURCE 2 and SOURCE 3 notes 19 rows changed today; values match the capture exactly, and the registry label is transcribed as served, not inferred.",
+    "Subject harness/model_id are null because the source payload does not publish those fields; protocol text describes default settings and no cherry-picking, so no harness value was invented.",
+    "published_at is null in all rows; the source payload does not carry a publish timestamp, so retrieved_at is the available source date. All 14 values, names, ids, units (points), protocol text, benchmark registry id/version, and locators (source_index 2,3,6,10,15,16,23,25,28,29,30,34,35,36) were compared field-by-field against SOURCES 1 and 5-18 and match exactly. SOURCE 4's scale summary (18.2-40.6 over 58 values) is consistent with all captured values; SOURCE 12 (qwen3.8-max-prime, rank 27) is an unused extra capture row and creates no coverage obligation."
+  ],
+  "missing_evidence": []
+}
