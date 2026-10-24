@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { PageJsonLd } from "../../components/PageJsonLd";
 
-export const metadata: Metadata = { title: "Terms of use", alternates: { canonical: "/terms" } };
+export const metadata: Metadata = { title: "Terms of use", description: "Benchmark Heaven terms of use — the rules for using the benchmark data, comparisons and submissions.", alternates: { canonical: "/terms" } };
 
 // CR-5.5: plain terms for a free, read-only comparison site with optional accounts.
 export default function TermsPage() {

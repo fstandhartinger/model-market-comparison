@@ -156,6 +156,7 @@ function CandidateCoverageTable({ candidates }: { candidates: any[] }) {
 }
 
 export async function MultimodalPreviewContent({ embedded = false }: { embedded?: boolean } = {}) {
+  const H = embedded ? 'h2' : 'h1';
   const a: any = await readMultimodalPreview();
   const s = a.split;
   const chartSystems = imageJevBoardSystems(a);
@@ -179,7 +180,7 @@ export async function MultimodalPreviewContent({ embedded = false }: { embedded?
   return <>
     <header className="bh-page-head max-w-5xl">
       <p className="bh-eyebrow">Image benchmark · {a.release_version}</p>
-      <h1 className="mt-1 text-3xl font-bold tracking-tight sm:text-4xl">Image JevBench</h1>
+      <H className="mt-1 text-3xl font-bold tracking-tight sm:text-4xl">Image JevBench</H>
       <p className="mt-3 max-w-3xl text-lg">The JevImageBench Capability Score compares intelligence and calibration inside the same cost and speed budget as JevBench.</p>
     </header>
 

@@ -8,7 +8,7 @@ import { withPublicAdapterIds } from '../../../lib/jevbench-v15-release.mjs';
 import { seoTitle } from '../../../lib/seo';
 import { PageJsonLd } from '../../../components/PageJsonLd';
 
-export const metadata = { title: seoTitle('JevBench v1.6.23 · Sage 1.4 and Bespoke Nimble-v4 / v4-max priced and ranked'), alternates: { canonical: '/jev-models/v1.6.23' } };
+export const metadata = { description: 'JevBench v1.6.23 release — Sage 1.4 and Bespoke Nimble-v4 / v4-max priced and ranked. Ranked decision-model results, sources and methodology on Benchmark.', title: seoTitle('JevBench v1.6.23 · Sage 1.4 and Bespoke Nimble-v4 / v4-max priced and ranked'), alternates: { canonical: '/jev-models/v1.6.23' } };
 
 type Row = { key: string; display: string; ranked: boolean; repriced_in?: string; capability?: number;
   ranks?: { A: number | null; capability: number | null }; cost?: { usd_per_1000?: number | null } };

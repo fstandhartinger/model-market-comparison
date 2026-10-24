@@ -8,7 +8,7 @@ import { withPublicAdapterIds } from '../../../lib/jevbench-v15-release.mjs';
 import { seoTitle } from '../../../lib/seo';
 import { PageJsonLd } from '../../../components/PageJsonLd';
 
-export const metadata = { title: seoTitle('JevBench v1.6.11 · second fresh regular draw, one row added'), alternates: { canonical: '/jev-models/v1.6.11' } };
+export const metadata = { description: 'JevBench v1.6.11 release — second fresh regular draw, one row added. Ranked decision-model results, sources and methodology on Benchmark Heaven.', title: seoTitle('JevBench v1.6.11 · second fresh regular draw, one row added'), alternates: { canonical: '/jev-models/v1.6.11' } };
 
 export default async function JevModelsV1611Page() {
   const release = await readOptionalJevbenchV1611Release();

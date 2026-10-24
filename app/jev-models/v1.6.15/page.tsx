@@ -8,7 +8,7 @@ import { withPublicAdapterIds } from '../../../lib/jevbench-v15-release.mjs';
 import { seoTitle } from '../../../lib/seo';
 import { PageJsonLd } from '../../../components/PageJsonLd';
 
-export const metadata = { title: seoTitle('JevBench v1.6.15 · three self-hosted CPU systems added'), alternates: { canonical: '/jev-models/v1.6.15' } };
+export const metadata = { description: 'JevBench v1.6.15 release — three self-hosted CPU systems added. Ranked decision-model results, sources and methodology on Benchmark Heaven.', title: seoTitle('JevBench v1.6.15 · three self-hosted CPU systems added'), alternates: { canonical: '/jev-models/v1.6.15' } };
 
 export default async function JevModelsV1615Page() {
   const release = await readOptionalJevbenchV1615Release();

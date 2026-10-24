@@ -6,12 +6,13 @@ import { JevHistoryLazy } from '../../../components/JevHistoryLazy';
 import { historicalCatalogue } from '../../../lib/jevbench-v162-release.mjs';
 import { withPublicAdapterIds } from '../../../lib/jevbench-v15-release.mjs';
 import { JEVBENCH_COST_RULE, JEVBENCH_COST_RULE_HISTORY } from '../../../lib/jevbench-cost-rule.mjs';
-export const metadata = {title: 'JevBench v1.6.40 · Fastino GLiDE (hosted API)', alternates:{canonical:'/jev-models/v1.6.40'}};
+import { PageJsonLd } from '../../../components/PageJsonLd';
+export const metadata = { description: 'JevBench v1.6.40 release — Fastino GLiDE (hosted API). Ranked decision-model results, sources and methodology on Benchmark Heaven.',title: 'JevBench v1.6.40 · Fastino GLiDE (hosted API)', alternates:{canonical:'/jev-models/v1.6.40'}};
 export default async function JevModelsV1640Page() {
  const release=await readOptionalJevbenchV1640Release();if(!release) notFound();
  const board=v1640BoardInput(release);
  const notes=(release.artifact as unknown as {measurement_notes:string[]}).measurement_notes;
- return <><JevBenchReleaseVersionNav active="v1.6.40" />
+ return <><PageJsonLd meta={metadata} /><JevBenchReleaseVersionNav active="v1.6.40" />
  <header className="bh-page-head" data-bh-jev16-release-header><div className="bh-eyebrow">JevBench v1.6.40 · one hosted-API addition</div>
  <h1 className="mt-1 text-3xl font-bold">Fastino GLiDE (hosted API) added</h1>
  <p className="mt-3 max-w-3xl">One hosted-API addition on the same draw and common cost basis: Fastino's GLiDE, measured on 22 Oct 2026 and scored on 1,497 of the draw's 1,500 items (three items the vendor had already seen were never sent). It is priced from the operator's published tariff. All carried rows retain every score and confidence interval; only placement changes. Pricing, hosting and provenance are disclosed below.</p>

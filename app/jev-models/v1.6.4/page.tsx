@@ -8,7 +8,7 @@ import { withPublicAdapterIds } from '../../../lib/jevbench-v15-release.mjs';
 import { seoTitle } from '../../../lib/seo';
 import { PageJsonLd } from '../../../components/PageJsonLd';
 
-export const metadata = { title: seoTitle('JevBench v1.6.4 · completed fresh native cohort'), alternates: { canonical: '/jev-models/v1.6.4' } };
+export const metadata = { description: 'JevBench v1.6.4 release — completed fresh native cohort. Ranked decision-model results, sources and methodology on Benchmark Heaven.', title: seoTitle('JevBench v1.6.4 · completed fresh native cohort'), alternates: { canonical: '/jev-models/v1.6.4' } };
 export default async function JevModelsV164Page() {
   const release = await readOptionalJevbenchV164Release();
   if (!release) notFound();

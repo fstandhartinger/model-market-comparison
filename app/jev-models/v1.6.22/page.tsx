@@ -8,7 +8,7 @@ import { withPublicAdapterIds } from '../../../lib/jevbench-v15-release.mjs';
 import { seoTitle } from '../../../lib/seo';
 import { PageJsonLd } from '../../../components/PageJsonLd';
 
-export const metadata = { title: seoTitle('JevBench v1.6.22 · four more evaluated systems join the regular draw'), alternates: { canonical: '/jev-models/v1.6.22' } };
+export const metadata = { description: 'JevBench v1.6.22 release — four more evaluated systems join the regular draw. Ranked decision-model results, sources and methodology on Benchmark Heaven.', title: seoTitle('JevBench v1.6.22 · four more evaluated systems join the regular draw'), alternates: { canonical: '/jev-models/v1.6.22' } };
 
 type Row = { key: string; display: string; ranked: boolean; measured_in?: string; capability?: number;
   ranks?: { A: number | null; capability: number | null }; cost?: { usd_per_1000?: number | null } };

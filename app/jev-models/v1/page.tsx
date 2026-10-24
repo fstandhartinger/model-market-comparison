@@ -8,7 +8,7 @@ import { PageJsonLd } from '../../../components/PageJsonLd';
 // reliable + ideally open". JevBench v1 is our own measurement; every number here comes from the committed artifact
 // (lib/jevbench.mjs validates it), and the copy is the supervisor's PAGE-COPY.md for this CR.
 export const metadata: Metadata = previewMetadata({ path: '/jev-models/v1', documentTitle: 'Jev-class decision models — JevBench v1.0', title: 'Jev-class models — JevBench v1.0 | Benchmark Heaven',
-  description: 'Our own benchmark of typed-decision models: Jev and its open rebuilds against small instruction models, on accuracy, cost, latency, calibration and openness. No combined winner.' });
+  description: 'Our own typed-decision benchmark: Jev and its open rebuilds vs small instruction models on accuracy, cost, latency, calibration and openness.' });
 
 const day = (iso: string) => new Date(iso).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' });
 

@@ -8,7 +8,7 @@ import { withPublicAdapterIds } from '../../../lib/jevbench-v15-release.mjs';
 import { JEVBENCH_COST_RULE, JEVBENCH_COST_RULE_HISTORY } from '../../../lib/jevbench-cost-rule.mjs';
 import { seoTitle } from '../../../lib/seo';
 import { PageJsonLd } from '../../../components/PageJsonLd';
-export const metadata = {title: seoTitle('JevBench v1.6.34 · Arcbright Elf 1 12B'), alternates:{canonical:'/jev-models/v1.6.34'}};
+export const metadata = { description: 'JevBench v1.6.34 release — Arcbright Elf 1 12B. Ranked decision-model results, sources and methodology on Benchmark Heaven.',title: seoTitle('JevBench v1.6.34 · Arcbright Elf 1 12B'), alternates:{canonical:'/jev-models/v1.6.34'}};
 export default async function JevModelsV1634Page() {
  const release=await readOptionalJevbenchV1634Release();if(!release) notFound();
  const board=v1634BoardInput(release);

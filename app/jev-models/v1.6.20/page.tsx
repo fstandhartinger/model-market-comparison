@@ -8,7 +8,7 @@ import { withPublicAdapterIds } from '../../../lib/jevbench-v15-release.mjs';
 import { seoTitle } from '../../../lib/seo';
 import { PageJsonLd } from '../../../components/PageJsonLd';
 
-export const metadata = { title: seoTitle('JevBench v1.6.20 · SubQ Snap same-draw price addendum'), alternates: { canonical: '/jev-models/v1.6.20' } };
+export const metadata = { description: 'JevBench v1.6.20 release — SubQ Snap same-draw price addendum. Ranked decision-model results, sources and methodology on Benchmark Heaven.', title: seoTitle('JevBench v1.6.20 · SubQ Snap same-draw price addendum'), alternates: { canonical: '/jev-models/v1.6.20' } };
 
 type Row = { key: string; display: string; ranked: boolean; measured_in?: string; repriced_in?: string; capability?: number; cost?: { basis?: string; usd_per_1000?: number } };
 

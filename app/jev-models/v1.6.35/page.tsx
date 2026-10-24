@@ -8,7 +8,7 @@ import { withPublicAdapterIds } from '../../../lib/jevbench-v15-release.mjs';
 import { JEVBENCH_COST_RULE, JEVBENCH_COST_RULE_HISTORY } from '../../../lib/jevbench-cost-rule.mjs';
 import { seoTitle } from '../../../lib/seo';
 import { PageJsonLd } from '../../../components/PageJsonLd';
-export const metadata = {title: seoTitle('JevBench v1.6.35 · Seb-9B'), alternates:{canonical:'/jev-models/v1.6.35'}};
+export const metadata = { description: 'JevBench v1.6.35 release — Seb-9B. Ranked decision-model results, sources and methodology on Benchmark Heaven.',title: seoTitle('JevBench v1.6.35 · Seb-9B'), alternates:{canonical:'/jev-models/v1.6.35'}};
 export default async function JevModelsV1635Page() {
  const release=await readOptionalJevbenchV1635Release();if(!release) notFound();
  const board=v1635BoardInput(release);

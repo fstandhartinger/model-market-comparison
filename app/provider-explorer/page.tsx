@@ -2,7 +2,7 @@ import { ProviderExplorerLoader } from "../../components/deferred/ProviderExplor
 import { pageDataVersion } from "../../lib/page-data";
 import { PageJsonLd } from "../../components/PageJsonLd";
 
-export const metadata = { title: "Provider explorer", alternates: { canonical: "/provider-explorer" } };
+export const metadata = { title: "Provider explorer", description: "Browse AI inference providers tagged hyperscaler, EU and non-US — models, prices and the cheapest provider for any model.", alternates: { canonical: "/provider-explorer" } };
 
 export default async function ProviderExplorerPage() {
   const version = await pageDataVersion();

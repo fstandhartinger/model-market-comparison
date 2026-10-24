@@ -6,7 +6,7 @@ import { JevReleaseStamp, costBasisLabel, DatasetFaqJsonLd, JevFaq, JevIntentLin
 
 const PATH = '/jev-models/open-source-jev';
 const TITLE = 'Is Jev open source? Open-weight Jev-class models ranked on JevBench';
-const DESCRIPTION = 'Jev is a proprietary API. See which open-source and open-weight Jev-class models JevBench measured, how they rank against Jev, and what hardware they ran on.';
+const DESCRIPTION = 'Jev is a proprietary API. Which open-weight Jev-class models JevBench measured, how they rank, and on what hardware.';
 const TOP = 10;
 
 export async function generateMetadata(): Promise<Metadata> {
