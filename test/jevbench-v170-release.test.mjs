@@ -98,7 +98,7 @@ if (!reviewed) {
   test('fastino-glide-api (v1.6.40 row, scored on 1,497 of 1,500 items) is re-scored under the rule on the same 1,497 items; two answered decisions over 10 s count failed', () => {
     const g = rescored.find((s) => s.key === 'fastino-glide-api');
     assert.ok(g, 'the hosted GLiDE row is a chain row of v1.7.0');
-    assert.equal(g.previous.board_release, 'v1.6.40'); assert.equal(+g.previous.scores.A.toFixed(3), 76.609); assert.equal(+g.previous.capability.toFixed(3), 84.702);
+    assert.equal(g.previous.board_release, V170_BASE_RELEASE); assert.equal(+g.previous.scores.A.toFixed(3), 76.609); assert.equal(+g.previous.capability.toFixed(3), 84.702);
     assert.equal(g.decision_limit.speed_n, 1497); assert.equal(g.speed.n, 1497);
     assert.equal(g.decision_limit.n_over_limit, 2); assert.equal(g.decision_limit.n_over_limit_answered_ok, 2);
     assert.equal(+g.scores.A.toFixed(3), 76.441); assert.equal(+g.capability.toFixed(3), 84.456);
@@ -108,6 +108,20 @@ if (!reviewed) {
     assert.match(g.underlying, /SCORED ON 1,497 OF THE DRAW'S 1,500 ITEMS/);
     assert.match(g.cost.basis, /pricing_v15 \(sha256 aa2afcd5a58d0c4cc0e3d6867d590c70b6ac58e971410c27faf9628f97bcf8b7\)/);
     assert.equal(r.proof.systems.find((s) => s.key === 'fastino-glide-api').n_decisions, 1497);
+  });
+  test('the four intake handoffs retain their distinct identities, frozen costs and disclosures', () => {
+    const by = Object.fromEntries(r.artifact.systems.map(s => [s.key,s]));
+    for (const [key,cap] of Object.entries({'bobcat-1.3':77.86,'wald-26b-a4b':76.78,'standard_one_3b_sh_v4':56.04,'seb-9b-v2':64.82,'knowline-35b-a3b-gen1.5':76.65,'fastino-glide-1.2-open':84.92})) {
+      assert.equal(+by[key].capability.toFixed(2),cap,key); assert.equal(by[key].new_in,'v1.7.0'); assert.equal(by[key].ranked,true);
+    }
+    for (const [old,key] of [['standard_one_3b_sh','standard_one_3b_sh_v4'],['seb-9b','seb-9b-v2']]) {
+      assert.match(by[key].underlying,new RegExp('PREDECESSOR: '+old)); assert.match(by[old].underlying,new RegExp('SUPERSEDED BY: '+key)); assert.ok(by[old].previous);
+    }
+    assert.match(by['wald-26b-a4b'].underlying,/0[.]81/); assert.match(by['wald-26b-a4b'].underlying,/123 of 375/); assert.match(by['wald-26b-a4b'].cost.basis,/Cost effect of the \+1: 0[.]19/);
+    const know=by['knowline-35b-a3b-gen1.5']; assert.equal(+know.cost.usd_per_1000.toFixed(6),0.322975); assert.match(know.cost.basis,/0[.]3125/); assert.match(know.cost.basis,/DeepInfra/); assert.ok(know.cost.usd_per_1000>0.06459465517241379);
+    const g=by['fastino-glide-1.2-open']; assert.equal(g.decision_limit.speed_n,1497); assert.equal(g.decision_limit.n_over_limit,0); assert.equal(g.cost.common_basis.n_items,1482); assert.equal(+g.cost.usd_per_1000.toFixed(6),0.205364); assert.match(g.cost.basis,/0[.]42/); assert.match(g.cost.basis,/3[.]0/);
+    assert.equal(g.custody_exclusion.derived_gold_sha256,'9f1f8200d0a1b4384f43ffc0a91f3f36e4790fc3dbcef7486bf233b0142baa47'); assert.match(g.underlying,/Built with Fastino GLiDE/); assert.match(g.underlying,/does not establish that the hosted fastino-glide-api row uses the same weights/);
+    for(const key of ['torchcast-decision-4b-v1.3','subq-snap-1.1']) { const s=by[key]; assert.equal(s.previous.board_release,'v1.6.43'); assert.equal(s.rescored_in,'v1.7.0'); assert.equal(s.decision_limit.n_over_limit,0); assert.equal(s.axes.cost,s.previous.axes.cost); }
   });
   test('v1.7.0 archive files and the base release stay byte-identical', async () => {
     const m = JSON.parse(await readFile(`${ROOT}/v1.6/jevbench-${V170_BASE_RELEASE}-publication.json`, 'utf8'));

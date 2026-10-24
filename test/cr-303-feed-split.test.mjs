@@ -17,7 +17,7 @@ test('feed carries board and open-board rank next to the unchanged combined rank
   const { feed } = await readJevbenchAgentFeed();
   // v1.7.0 (10 s rule) restates the whole board once it is published: the open-board order moves (H2O-Lightning-31B is #1, Basal Omni #2, arcbright-elf-1-31b, Capability 81.8, enters at #3) and the two hosted Super Decider rows join the capped combined board: [open-board rank, and for torchcast the combined Capability rank]; v1.6.39 values before that.
   const v170 = await hasPublishedJevbenchV170Release();
-  const want = v170 ? { quyet: [4], h2o: [12], surogate: [13], xor: [20], torchcast: [16, 34], basal: [2] } : { quyet: [4], h2o: [12], surogate: [14], xor: [17], torchcast: [19, 32 + Number(V1638_ROW_SPEC['drex-max'].ranked) + Number(V1639_ROW_SPEC['h2o-lightning-31b'].ranked) + Number(V1640_ROW_SPEC['fastino-glide-api'].ranked)], basal: [3] };
+  const want = v170 ? { quyet: [4], h2o: [15], surogate: [16], xor: [23], torchcast: [19, 38], basal: [2] } : { quyet: [4], h2o: [13], surogate: [15], xor: [18], torchcast: [20, 32 + Number(V1638_ROW_SPEC['drex-max'].ranked) + Number(V1639_ROW_SPEC['h2o-lightning-31b'].ranked) + Number(V1640_ROW_SPEC['fastino-glide-api'].ranked) + Number(V1642_ROW_SPEC['torchcast-decision-4b-v1.3'].ranked) + Number(V1643_ROW_SPEC['subq-snap-1.1'].ranked)], basal: [3] };
   assert.deepEqual(feed.boards, { open: '/jev-models', api: '/jev-models/api' });
   assert.equal(get(feed, 'sage-1.3.0').board, 'api');
   assert.equal(get(feed, 'sage-1.3.0').capability.open_board_rank, null);

@@ -181,6 +181,13 @@ function CurrentReleaseSystem({ data, row }: { data: Awaited<ReturnType<typeof r
   const url = `${SITE_URL}${jevSystemPath(row.key)}`;
   // Publish only the current sanitized presentation fields. No historical base-model overlay is copied.
   const price = row.cost?.usd_per_1000;
+  const versionPeers: Record<string, { key: string; label: string }> = {
+    standard_one_3b_sh_v4: { key: 'standard_one_3b_sh', label: 'Predecessor: StandardOne-3B-SH' },
+    'seb-9b-v2': { key: 'seb-9b', label: 'Predecessor: Seb-9B' },
+    standard_one_3b_sh: { key: 'standard_one_3b_sh_v4', label: 'Superseded by StandardOne-3B-SH v4' },
+    'seb-9b': { key: 'seb-9b-v2', label: 'Superseded by Seb-9B-v2' },
+  };
+  const versionPeer = data.artifact.revision === 'v1.7.0' ? versionPeers[row.key] : null;
   const json = {'@context':'https://schema.org','@graph':[
     {'@type':'SoftwareApplication',name:row.display,applicationCategory:'AI model',url,
       ...(Number.isFinite(price) && price != null && price >= 0 && ['measured','announced'].includes(row.cost?.kind ?? '') ? {offers:{'@type':'Offer',price,priceCurrency:'USD',description:`${costBasisLabel(row.cost?.kind)} USD per 1,000 decisions. ${row.cost?.basis ?? ''}`}} : {})},
@@ -197,6 +204,7 @@ function CurrentReleaseSystem({ data, row }: { data: Awaited<ReturnType<typeof r
     </header>
     <BaseModelDisplay systemKey={row.key} className="mt-2 block text-sm"/>
     <JevBenchRelatedLinks systemKey={row.key}/>
+    {versionPeer && <p className="mt-4 text-sm" data-bh-jev-version-link><Link className="text-accent underline" href={jevSystemPath(versionPeer.key)}>{versionPeer.label}</Link>. Both measurements remain separate rows.</p>}
     <section className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-4">{(['intelligence','calibration','speed','cost'] as const).map((axis) => <div className="bh-panel p-4" key={axis}><h2 className="capitalize">{axis}</h2><p className="text-2xl font-semibold">{seoOne(row.axes?.[axis])}</p></div>)}</section>
     <section className="bh-panel mt-6 p-5"><h2 className="font-semibold">Composite (secondary)</h2><p>{seoOne(row.jevbench_score)} · {row.composite_rank == null || row.board !== 'open' ? 'Not ranked on this board' : `Composite rank #${row.composite_rank}`}</p></section>
     <section className="bh-panel mt-6 p-5"><h2 className="font-semibold">Cost and measurement conditions</h2>
