@@ -102,12 +102,29 @@ test('CR-169 / D207: the ⓘ trigger is a small inline glyph that does not stret
   assert.doesNotMatch(trigger[0], /min-h-\[?44/, 'the trigger does not re-add a 44 px minimum');
 });
 
-test('CR-169 follow-up: long truncated names keep their ⓘ trigger visible', () => {
+test('CR-169 follow-up: long names keep their ⓘ trigger visible', () => {
   // On a 390 px phone the name ellipsis also clipped the trigger, so rows with long names had no tap target.
   const source = readFileSync(path.join(root, 'components/JevCapabilityRanking.tsx'), 'utf8');
-  const nameCell = source.match(/<span className="col-start-2 row-start-1([^"]*)"[^>]*>\s*<span className="min-w-0 truncate">[\s\S]*?<\/span>\s*(?:\{\/\*[\s\S]*?\*\/\}\s*)?<JevCapabilityTip /);
-  assert.ok(nameCell, 'the ⓘ trigger is a sibling of the truncated name, not inside it');
+  const nameCell = source.match(/<span className="col-start-2 row-start-1([^"]*)"[^>]*>\s*<span className="([^"]*)">\s*<span className="[^"]*" data-bh-jev-capability-name=[\s\S]*?<\/span>\s*(?:\{\/\*[\s\S]*?\*\/\}\s*)?<JevCapabilityTip /);
+  assert.ok(nameCell, 'the ⓘ trigger is a sibling of the name, not inside it');
   assert.doesNotMatch(nameCell[1], /truncate/, 'the cell that holds the trigger does not clip it');
+  assert.doesNotMatch(nameCell[2], /truncate/, 'the name line does not clip it either');
+});
+
+test('v1.7.0 audit (Florian 24 Oct 2026): chips never squeeze the name; names wrap instead of truncating', () => {
+  // Live v1.7.0 showed "H…" on the Capability ranking: the draw chip and the new method chip were shrink-0 siblings of a
+  // truncated name in a 12rem column, leaving 14-33 px for the name. Chips now sit on their own line under the name.
+  const source = readFileSync(path.join(root, 'components/JevCapabilityRanking.tsx'), 'utf8');
+  const name = source.match(/<span className="([^"]*)" data-bh-jev-capability-name=/);
+  assert.ok(name, 'the name span is tagged');
+  assert.doesNotMatch(name[1], /\btruncate\b/, 'the name is never cut with an ellipsis');
+  assert.match(name[1], /overflow-wrap:anywhere/, 'very long names wrap');
+  const chips = source.match(/data-bh-jev-capability-chips=\{row\.key\}>([\s\S]*?)<\/span>\}/);
+  assert.ok(chips, 'the chip line exists');
+  assert.match(chips[1], /<JevDrawTag /);
+  assert.match(chips[1], /<JevMethodTag /);
+  const nameLine = source.slice(source.indexOf('data-bh-jev-capability-name-cell'), source.indexOf('data-bh-jev-capability-chips'));
+  assert.doesNotMatch(nameLine, /<JevDrawTag |<JevMethodTag /, 'no chip sits on the name line');
 });
 
 test('F-200 (pass 36): the Capability ⓘ panel is a definition list and the row carries no 300-char title', () => {

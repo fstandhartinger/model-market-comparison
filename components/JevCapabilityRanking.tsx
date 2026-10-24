@@ -2,7 +2,7 @@
 import { jevLatencyView, latencySeconds, JEV_LATENCY_LABEL, type JevSpeedLike } from '../lib/jev-latency.mjs';
 import { jevRowArch } from './jevTypes';
 import { JevMethodTag } from './JevMethodTag';
-import { JEV_REMEASURE_PENDING, JEV_REMEASURE_PENDING_LABEL } from '../lib/jev-decision-limit.mjs';
+import { JEV_REMEASURE_PENDING, JEV_REMEASURE_PENDING_LABEL, jevMethodView } from '../lib/jev-decision-limit.mjs';
 import { JEV_SCOPE_LISTING, jevFoldWithPinned } from '../lib/jevbench-scope.mjs';
 
 import { useEffect, useId, useMemo, useState, type CSSProperties, type ReactNode } from 'react';
@@ -111,18 +111,25 @@ function RankingRow({ item, rank, reference, costFactor, latencyFactor, referenc
   const style = { '--jev-t': `var(${jevTypeVarName(jevRowArch(row))})` } as CSSProperties;
   const link = benchmark === 'imagejevbench' ? imageJevSourceUrl(row.key, row.repo) : jevSourceUrl(row.key, row.repo);
   const drawTag = (row as unknown as { draw?: JevDrawTagData | null }).draw;
+  const methodRow = row as unknown as Parameters<typeof JevMethodTag>[0]['row'];
   const nameTitle = compactName && drawTag ? `${row.display} · measured on the ${drawTag.label} (${drawTag.release}), ${drawTag.measured_on}` : row.display;
   return <li className={`group relative ${grid} min-h-[43px] items-center text-[11px] sm:text-sm`} style={style}
     data-bh-jev14-capability-row={row.key} data-bh-jev14-capability-value={capability.toFixed(3)} data-bh-jev14-cost={cost ?? ''}>
     <span className="bh-muted tabular col-start-1 row-start-1 text-right">{rank || '–'}</span>
-    <span className="col-start-2 row-start-1 flex min-w-0 items-center sm:justify-end" title={nameTitle}>
-      <span className="min-w-0 truncate">{link ? <a href={link} target="_blank" rel="noopener noreferrer" className="underline decoration-[rgb(var(--line))] underline-offset-2 hover:text-accent" data-bh-jev-source={row.key}>{name}</a> : name}</span>
-      {/* The ⓘ sits outside the truncated name so long names keep their tap target. */}
-      <JevCapabilityTip label={`Details for ${row.display}`} title={tipTitle}>{tipBody}</JevCapabilityTip>
-      {row.api_flag && <span className="bh-thin-tag bh-flag-tag ml-1 shrink-0 align-middle" data-bh-jev-capability-api={row.key} title={row.api_exposure_note ?? apiExplanation}>API</span>}
-      {!compactName && <JevDrawTag tag={drawTag} rowKey={row.key} className="ml-1 shrink-0 align-middle" />}
-      {!compactName && <JevMethodTag row={row as unknown as Parameters<typeof JevMethodTag>[0]['row']} className="ml-1 shrink-0 align-middle" />}
-      <UseModelEntry row={row} name={name} benchmark={benchmark} className="max-sm:!hidden" />
+    {/* v1.7.0 audit (Florian 24 Oct 2026): the draw and method chips sit on their own line under the name, so they never
+        squeeze the name column; the name keeps the full column width. */}
+    <span className="col-start-2 row-start-1 flex min-w-0 flex-col justify-center sm:items-end" title={nameTitle} data-bh-jev-capability-name-cell={row.key}>
+      <span className="flex min-w-0 max-w-full items-center sm:justify-end">
+        <span className="min-w-0 break-words leading-tight [overflow-wrap:anywhere] sm:text-right" data-bh-jev-capability-name={row.key}>{link ? <a href={link} target="_blank" rel="noopener noreferrer" className="underline decoration-[rgb(var(--line))] underline-offset-2 hover:text-accent" data-bh-jev-source={row.key}>{name}</a> : name}</span>
+        {/* The ⓘ sits outside the name so long names keep their tap target. */}
+        <JevCapabilityTip label={`Details for ${row.display}`} title={tipTitle}>{tipBody}</JevCapabilityTip>
+        {row.api_flag && <span className="bh-thin-tag bh-flag-tag ml-1 shrink-0 align-middle" data-bh-jev-capability-api={row.key} title={row.api_exposure_note ?? apiExplanation}>API</span>}
+        <UseModelEntry row={row} name={name} benchmark={benchmark} className="max-sm:!hidden" />
+      </span>
+      {!compactName && (drawTag || jevMethodView(methodRow)) && <span className="flex max-w-full flex-wrap gap-x-1 gap-y-0.5 text-[10px] leading-none sm:justify-end" data-bh-jev-capability-chips={row.key}>
+        <JevDrawTag tag={drawTag} rowKey={row.key} className="!ml-0 !text-[10px]" />
+        <JevMethodTag row={methodRow} className={`!ml-0 !text-[10px] ${jevMethodView(methodRow)?.kind === 'v1.7' ? 'max-sm:hidden' : ''}`} />
+      </span>}
     </span>
     <span className="col-start-2 col-end-7 row-start-2 mt-0.5 flex min-w-0 flex-col justify-center gap-[3px] sm:col-start-3 sm:col-end-4 sm:row-start-1 sm:mt-0">
       <span className="bh-jevc-grid flex h-[10px] rounded-sm" aria-hidden="true"><span className={'bh-jevc-bar' + (row.ranked ? '' : ' is-partial')} style={{ width: percent(Math.max(0, Math.min(100, capability))) }} /></span>
