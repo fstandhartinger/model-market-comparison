@@ -1,0 +1,25 @@
+{
+  "artifact_id": "scores-0",
+  "artifact_sha256": "5274d1a9843464d1c0ee56802f3b8975a5f897e6519a6a91b2c14c3d90a83e05",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": ["public:3198b8993094535009c98bd7","public:5454b2a08580ca53aa6cabbf","public:1b723bfa221128564132f1bd","public:8941895958a50e5699da87be","public:6ce0ea4b9a357a44a8cd5183","public:6456a618ad608d7c3e673de4","public:d6ea1c39226930758b0e9a84","public:e9e60a9e42f13fe6370404d5","public:13b9bc34a5d1290d32fb3924","public:1290333ed7dffdec3f39cc5c","public:0ec785b632244e0adafd06d1","public:4708a81d865dc36196fcfe5a","c1"],
+  "errors_found": 1,
+  "findings": [
+    {
+      "id": "F1",
+      "severity": "major",
+      "location": "row public:1290333ed7dffdec3f39cc5c (aion-3.5), subject.model_id and join_note",
+      "evidence": "Artifact sets model_id='aion-3.5::default' citing a 'Reviewed identity map 2026-09-27' stating the catalog has exactly one configuration (default). No such identity map or catalog evidence is present in the packet; SOURCE 13 only shows source row model_name='aion-3.5' with no setting information. All sibling rows correctly use model_id=null. Criterion c1 requires every derivation verified against primary evidence and forbids unknown configurations creating identity values.",
+      "repair": "Either set subject.model_id=null to match the unannotated source row like all other rows, or supply the identity-map/catalog evidence in the packet before retaining 'aion-3.5::default'."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "All 12 rows' values (82.8, 76.8, 82.8, 85.3, 74.2, 83.0, 74.0, 84.6, 82.8, 82.1, 80.9, 52.4), units 'points', basis 'measured', benchmark version v1.11, protocol text, source sha256 and retrieved_at match the per-row primary sources exactly; rows 140/141 correctly document the leading '*' badge stripping from source model_name. Numeric '83' vs '83.0' and '74' vs '74.0' are equal values.",
+    "I cannot execute the owner's hash or transport/qualification checks; the owner-computed row hashes and receipt were taken as given.",
+    "published_at is null on all rows; the packet provides retrieved_at as the source date and no published_at is claimed, so no comparison was possible.",
+    "Per-model effort/harness: the board publishes a single protocol (OpenRouter temp=0.7, min_p=0.1 per SOURCE 2) with no per-model harness field; artifact's null harness/variant fields match that absence and are not treated as missing evidence."
+  ],
+  "missing_evidence": []
+}

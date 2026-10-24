@@ -1,0 +1,25 @@
+{
+  "artifact_id": "protocol-kernelbench-cuda-glm52-fused-moe-rtx-pro-6000",
+  "artifact_sha256": "6aafe8f39bf09b836a09a197e283d2d81bad768a70baedba626edb70633514b9",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": ["kernelbench-cuda-glm52-fused-moe::rtx-pro-6000", "c1", "c2"],
+  "errors_found": 1,
+  "findings": [
+    {
+      "id": "F1",
+      "severity": "major",
+      "location": "row kernelbench-cuda-glm52-fused-moe::rtx-pro-6000, scoring.notes",
+      "evidence": "Notes claim the published per_problem ranked list 'still holds ... the bug muse/muse-spark-1.3 [ultra] cell on 04 (0.2056)'. Primary leaderboard.json (SOURCE 2) shows muse 04 with correct:false, peak_fraction null, annotation_verdict 'bug', and the 04_grid_mingru_sps ranked_passes list contains no muse entry and no value 0.2056 anywhere; the notes' own parenthetical says correct:false cells are absent from the ranked list. The 0.2056 figure and the claim that the ranked list holds this cell are unsupported.",
+      "repair": "Correct the note: the ranked-list cross-check holds only the audited-but-excluded suspect kinetic-claude/kinetic-0715[1m] cell on 03 (0.0622); the muse 04 cell is correct:false with peak_fraction null and is absent from the ranked list (no 0.2056 value exists in the source)."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "version_status 'published' for version 'rtx-pro-6000': the maintainer publishes the board identity (leaderboard hardware 'RTX PRO 6000 Blackwell Workstation', page header 'RTX PRO 6000', harness deck 'problems-rtxpro6000') but no numeric release identifier beyond schema_version 1; I read the row's version as copying the published hardware board identifier, which the criteria's 'published' wording plausibly covers, but this is a judgment call not settled by explicit maintainer text.",
+    "Owner hash verification, transport and qualification checks are executed separately by the owner; I cannot recompute row or source hashes and rely on the supplied per-row sha256 for binding.",
+    "unit 'percent of roofline' and range [0,null] agree with the served scale summary (SOURCE 7: 23 values, 4.11 to 11.3, i.e. peak_fraction x100); the summary settles scale only, not metric meaning, per criterion c1."
+  ],
+  "missing_evidence": [],
+  "notes": "c1 checked: metric (peak_fraction x100 geomean over frozen shape sweep, problem 01 dense-eq FLOP roofline) matches SPEC.md; deck of four problems, GLM-5.2 256+shared top-8, Triton/vLLM ban, schema_version 1, v2_containerized, sm_120a, 96 GB all match SOURCE 2/3/4. c2 checked: status 'active' supported by SOURCE 6 (5 model rows added today); superseded_by null consistent with SPEC non-goals ('deck stays at four', no successor named)."
+}

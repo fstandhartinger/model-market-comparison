@@ -1,0 +1,25 @@
+{
+  "artifact_id": "protocol-kernelbench-cuda-deepseek-nsa-rtx-pro-6000",
+  "artifact_sha256": "106e3ed5770f2399032cd76ef25ac0ad13ad843f58eaa616992a43c991185a9c",
+  "round": 2,
+  "verdict": "revise",
+  "coverage_checked": ["kernelbench-cuda-deepseek-nsa::rtx-pro-6000", "c1", "c2"],
+  "errors_found": 1,
+  "findings": [
+    {
+      "id": "F1",
+      "severity": "minor",
+      "location": "row kernelbench-cuda-deepseek-nsa::rtx-pro-6000, scoring.notes: claim that the ranked list holds the muse/muse-spark-1.3 [ultra] bug cell on 04 at peak_fraction 0.2056",
+      "evidence": "SOURCE 2 (leaderboard.json) muse/muse-spark-1.3 [ultra] 04_grid_mingru_sps has correct:false, peak_fraction:null, annotation_verdict:'bug'; the per_problem 04 ranked_passes contains no muse entry. No packet source contains the value 0.2056. The kinetic-claude/kinetic-0715[1m] 03 suspect cell at 0.0622 IS present in the 03 ranked_passes as claimed.",
+      "repair": "Amend the note: the muse-spark-1.3 [ultra] 04 cell is published by the maintainer as correct:false with peak_fraction null and annotation 'bug', so it is excluded from the ranked list and never scored; drop the unsupported 0.2056 figure. Keep the kinetic 03 (0.0622, suspect) example, which the ranked list does hold."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "Scale: SOURCE 7 (the run's admissible value-scale summary for this board's source field) reports 17 finite served values for the 02 board spanning 2.51–136.19, i.e. a percent scale, which matches the row's unit 'percent of roofline' and unbounded upper range [0,null]; per criterion c1 this settles the unit/range judgement. SOURCE 2's leaderboard.json shows the same field as raw fractions (e.g. 0.0251–1.3619 on 02), so the ×100 scaling appears to be a serving/presentation step; the packet does not fully reconcile SOURCE 2's raw scale with SOURCE 7's served scale, but c1 defers to SOURCE 7 and the row agrees with it.",
+    "version_status 'published': SPEC.md and leaderboard.json publish no dated release identifier for the board, but the site does publish a stable board identity (hardware 'RTX PRO 6000' / leaderboard hardware.name 'RTX PRO 6000 Blackwell Workstation', sm_120a, 96 GB), which the row's version 'rtx-pro-6000' copies and its version_guard pins. I judged this a published identifier rather than a snapshot; the alternative reading is arguable.",
+    "I cannot recompute row or source hashes or run transport/qualification checks; the owner's receipts bind the artifact and sources and are accepted as such.",
+    "The row's 'validity rule' (only correct + audited clean/interesting cells scored) is only partially corroborated: SOURCE 5's comment ties publication to 'clean+correct' annotations, and SOURCE 4's legend mentions 'no audited pass (failed, unaudited or not run)', but no source states the suspect/bug exclusion rule in those words."
+  ],
+  "missing_evidence": []
+}

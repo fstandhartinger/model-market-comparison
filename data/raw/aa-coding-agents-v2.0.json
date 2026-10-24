@@ -25,27 +25,53 @@
   "completeness_note": "Complete v2.0 benchmarkRows only. v1.4 and v1.5 remain separate dated snapshots (v1.4 feeds the unchanged Composite); versions use different components and must never be combined or compared as one scale.",
   "rows": [
     {
-      "source_id": "96d7404e06194027474a6cc3bb31c068",
-      "model_name": "GLM-5.3",
-      "harness": "Opencode",
-      "score": 0.489161690344303,
+      "source_id": "f8b3c23615b8b60e23364c27e8494d6d",
+      "model_name": "Opus 5.5 (max)",
+      "harness": "Claude Code",
+      "score": 0.616528649505811,
       "eval_count": 3,
       "index_component_count": 3,
       "complete": true,
       "components": [
         {
           "id": "frontiercode-v1.1-main",
-          "score": 0.482473666666667,
+          "score": 0.559670666666667,
           "weight": 0.333333333333333
         },
         {
           "id": "swe-atlas-qna",
-          "score": 0.586021505376344,
+          "score": 0.658602150537634,
           "weight": 0.333333333333333
         },
         {
           "id": "terminal-bench-v4",
-          "score": 0.398989898989899,
+          "score": 0.631313131313131,
+          "weight": 0.333333333333333
+        }
+      ]
+    },
+    {
+      "source_id": "5c82a7985b08f35190cc0db574fd1773",
+      "model_name": "Fable 5.1 (max) (with fallback)",
+      "harness": "Claude Code",
+      "score": 0.576200245682633,
+      "eval_count": 3,
+      "index_component_count": 3,
+      "complete": true,
+      "components": [
+        {
+          "id": "frontiercode-v1.1-main",
+          "score": 0.488864666666667,
+          "weight": 0.333333333333333
+        },
+        {
+          "id": "swe-atlas-qna",
+          "score": 0.663978494623656,
+          "weight": 0.333333333333333
+        },
+        {
+          "id": "terminal-bench-v4",
+          "score": 0.575757575757576,
           "weight": 0.333333333333333
         }
       ]
@@ -129,6 +155,32 @@
       ]
     },
     {
+      "source_id": "34e0f78892fac8fd39aff6595d04610e",
+      "model_name": "GPT-6 Astra (max)",
+      "harness": "Codex",
+      "score": 0.546635690561529,
+      "eval_count": 3,
+      "index_component_count": 3,
+      "complete": true,
+      "components": [
+        {
+          "id": "frontiercode-v1.1-main",
+          "score": 0.492953666666667,
+          "weight": 0.333333333333333
+        },
+        {
+          "id": "swe-atlas-qna",
+          "score": 0.591397849462366,
+          "weight": 0.333333333333333
+        },
+        {
+          "id": "terminal-bench-v4",
+          "score": 0.555555555555555,
+          "weight": 0.333333333333333
+        }
+      ]
+    },
+    {
       "source_id": "c54a3c8e7e89d5a784e98211605eaa53",
       "model_name": "GPT-6 Luna (max)",
       "harness": "Codex",
@@ -176,32 +228,6 @@
         {
           "id": "terminal-bench-v4",
           "score": 0.303030303030303,
-          "weight": 0.333333333333333
-        }
-      ]
-    },
-    {
-      "source_id": "34e0f78892fac8fd39aff6595d04610e",
-      "model_name": "GPT-6 Astra (max)",
-      "harness": "Codex",
-      "score": 0.546635690561529,
-      "eval_count": 3,
-      "index_component_count": 3,
-      "complete": true,
-      "components": [
-        {
-          "id": "frontiercode-v1.1-main",
-          "score": 0.492953666666667,
-          "weight": 0.333333333333333
-        },
-        {
-          "id": "swe-atlas-qna",
-          "score": 0.591397849462366,
-          "weight": 0.333333333333333
-        },
-        {
-          "id": "terminal-bench-v4",
-          "score": 0.555555555555555,
           "weight": 0.333333333333333
         }
       ]
@@ -571,27 +597,27 @@
       ]
     },
     {
-      "source_id": "5c82a7985b08f35190cc0db574fd1773",
-      "model_name": "Fable 5.1 (max) (with fallback)",
-      "harness": "Claude Code",
-      "score": 0.576200245682633,
+      "source_id": "96d7404e06194027474a6cc3bb31c068",
+      "model_name": "GLM-5.3",
+      "harness": "Opencode",
+      "score": 0.489161690344303,
       "eval_count": 3,
       "index_component_count": 3,
       "complete": true,
       "components": [
         {
           "id": "frontiercode-v1.1-main",
-          "score": 0.488864666666667,
+          "score": 0.482473666666667,
           "weight": 0.333333333333333
         },
         {
           "id": "swe-atlas-qna",
-          "score": 0.663978494623656,
+          "score": 0.586021505376344,
           "weight": 0.333333333333333
         },
         {
           "id": "terminal-bench-v4",
-          "score": 0.575757575757576,
+          "score": 0.398989898989899,
           "weight": 0.333333333333333
         }
       ]
@@ -618,32 +644,6 @@
         {
           "id": "terminal-bench-v4",
           "score": 0.308080808080808,
-          "weight": 0.333333333333333
-        }
-      ]
-    },
-    {
-      "source_id": "f8b3c23615b8b60e23364c27e8494d6d",
-      "model_name": "Opus 5.5 (max)",
-      "harness": "Claude Code",
-      "score": 0.616528649505811,
-      "eval_count": 3,
-      "index_component_count": 3,
-      "complete": true,
-      "components": [
-        {
-          "id": "frontiercode-v1.1-main",
-          "score": 0.559670666666667,
-          "weight": 0.333333333333333
-        },
-        {
-          "id": "swe-atlas-qna",
-          "score": 0.658602150537634,
-          "weight": 0.333333333333333
-        },
-        {
-          "id": "terminal-bench-v4",
-          "score": 0.631313131313131,
           "weight": 0.333333333333333
         }
       ]

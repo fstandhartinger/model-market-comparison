@@ -1,0 +1,25 @@
+{
+  "artifact_id": "protocol-kernelbench-cuda-megaqwen-decode-rtx-pro-6000",
+  "artifact_sha256": "281df10e55b53ee8409b58c066527c9940e0dcc645df63602f73a2c4c8533ee0",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": ["kernelbench-cuda-megaqwen-decode::rtx-pro-6000", "c1", "c2"],
+  "errors_found": 1,
+  "findings": [
+    {
+      "id": "F1",
+      "severity": "major",
+      "location": "row kernelbench-cuda-megaqwen-decode::rtx-pro-6000, scoring.notes, claim about the muse 04 cell",
+      "evidence": "Row states the published per_problem ranked list 'still holds the two audited-but-excluded cells ... the `bug` muse/muse-spark-1.3 [ultra] cell on 04 (0.2056)'. SOURCE 2 shows muse/muse-spark-1.3 04_grid_mingru_sps with peak_fraction null (correct: false, annotation_verdict 'bug') and the 04 ranked_passes list contains no muse entry at 0.2056 (list runs 1.961 down to 0.002, 20 entries). Only the kinetic-0715[1m] 03 suspect cell (0.0622) is confirmed present in the ranked list.",
+      "repair": "Correct the notes: the ranked list holds only one of the two cited cells (kinetic-0715[1m] 03 at 0.0622); the muse 04 cell has peak_fraction null in the captured payload and does not appear in the ranked list, so the claim of value 0.2056 must be removed or re-sourced."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "SOURCE 7's generated scale summary (23 values, lowest 0.97, highest 8.12) for field peak_fraction does not match the finite peak_fraction values in SOURCE 2 (fractions 0.002–1.961); the summary may describe a different field or slice. I did not let this drive a unit/range mismatch: the row's range [0,null] is unbounded above and its lower bound 0 is not contradicted by any served value, and the row's 'percent of roofline' unit with the explicitly stated ×100 mapping is a specified transformation of the served fraction scale, which SOURCE 2 supports.",
+    "version_status 'published' rests on the maintainer publishing the board identifier 'RTX PRO 6000' (SOURCE 2 hardware.name 'RTX PRO 6000 Blackwell Workstation', SOURCE 5 hardware 'RTX_PRO_6000', SOURCE 4 site nav 'RTX PRO 6000'), which the row's version copies in lowercase; no numeric release version like schema_version is copied, which is a judgement call I note but did not fail.",
+    "Hash binding of the row (ff4983ac...) and payload sha256 checks, and transport/qualification checks, are owner-executed; I could not recompute them (receipt notes actual_model deepseek/deepseek-v4-flash-0731 matching PRODUCERS).",
+    "SOURCE 4 site page shows cells as 0/blank in a text render, so per-cell page values could not be cross-checked individually; the leaderboard.json payload was used as the operative cross-check."
+  ],
+  "missing_evidence": []
+}

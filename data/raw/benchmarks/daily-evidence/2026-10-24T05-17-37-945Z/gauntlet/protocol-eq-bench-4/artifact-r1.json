@@ -1,0 +1,22 @@
+[
+  {
+    "id": "eq-bench::4",
+    "version": "4",
+    "version_guard": "Verify the published version 4 before reading results.",
+    "status": "active",
+    "version_status": "published",
+    "superseded_by": null,
+    "scoring": {
+      "metric": "Ranked Elo score from blind, bidirectional pairwise judging of multi-turn persona-chat transcripts by a three-judge LLM panel (soft Bradley–Terry fit, normalised against anchor models)",
+      "unit": "Elo",
+      "range": [
+        null,
+        null
+      ],
+      "higher_better": true,
+      "notes": "Values retain this source implementation and score convention; different harnesses, subsets, judge revisions and versions must remain separate."
+    },
+    "description": "Measures active emotional and social intelligence of LLMs in multi-turn roleplay chats with simulated personas, ranked by an LLM-judge panel Elo.",
+    "maintainer": "EQ-Bench (Sam Paech)"
+  }
+]
