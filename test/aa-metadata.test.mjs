@@ -1,6 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { enrichArtificialAnalysis, MAX_METADATA_ROLLOUT_LAG } from "../lib/aa-metadata.mjs";
+import { parseArtificialAnalysisDeprecatedModels } from "../lib/aa-rsc.mjs";
 
 test("a newly published API model keeps scores with explicitly unknown metadata", () => {
   const api = [{ id: "known", name: "Known" }, { id: "new", name: "Muse Spark 1.3 (max)", model_creator: { name: "Meta" }, evaluations: { artificial_analysis_intelligence_index: 52 } }];
@@ -63,4 +64,35 @@ test("CR-505: a row already published as deprecated may leave the leaderboard pa
   assert.deepEqual(enrichArtificialAnalysis(reslugged, page, previous).missing.map((m) => m.id), ["r1"]);
   // An empty page is still fatal.
   assert.throws(() => enrichArtificialAnalysis(api, new Map(), previous), /metadata mismatch/);
+});
+
+test("self-heal 2026-10-24: rows last published as live may leave the page when the page lists their release as deprecated", () => {
+  // Shape of the 2026-10-24 leaderboard capture: live metadata rows, the release list and the model -> release map.
+  const flight = {
+    models: [{ slug: "live", name: "Live", isOpenWeights: true, deprecated: false }],
+    releases: [{ slug: "kimi-k3", name: "Kimi K3", deprecated: true, releaseDate: "2026-07-16" },
+      { slug: "live", name: "Live", deprecated: false, releaseDate: "2026-10-23" },
+      { slug: "quiet", name: "Quiet", deprecated: false, releaseDate: "2026-09-01" }],
+    variants: [{ slug: "kimi-k3", name: "Kimi K3 (Max)", releaseSlug: "kimi-k3" }, { slug: "kimi-k3-low", name: "Kimi K3 (Low)", releaseSlug: "kimi-k3" },
+      { slug: "live", name: "Live", releaseSlug: "live" }, { slug: "quiet", name: "Quiet", releaseSlug: "quiet" }, { slug: "orphan", name: "Orphan", releaseSlug: "unlisted" }],
+  };
+  const html = `<script>self.__next_f.push(${JSON.stringify([1, `0:${JSON.stringify(flight)}\n`])})</script>`;
+  const deprecatedOnPage = parseArtificialAnalysisDeprecatedModels(html);
+  assert.deepEqual([...deprecatedOnPage].sort(), ["kimi-k3", "kimi-k3-low"]);
+  const prior = (id) => ({ id, slug: id, name: id, metadata: { deprecated: false, is_open_weights: true, license_name: "MIT" } });
+  const ids = ["live", "kimi-k3", "kimi-k3-low", "quiet", "orphan"];
+  const previous = { collected_at: "2026-10-23", metadata_endpoint: "https://artificialanalysis.ai/leaderboards/models", models: ids.map(prior) };
+  const api = previous.models.map(({ metadata, ...row }) => row);
+  const page = new Map([["live", { isOpenWeights: true, deprecated: false }]]);
+  const result = enrichArtificialAnalysis(api, page, previous, deprecatedOnPage);
+  assert.equal(result.retiredCount, 2);
+  // A release published as live, or a release the page does not list, is still an unexplained absence.
+  assert.deepEqual(result.missing.map((m) => m.id), ["quiet", "orphan"]);
+  const kimi = result.models.find((m) => m.id === "kimi-k3").metadata;
+  assert.equal(kimi.license_name, "MIT");
+  assert.equal(kimi.retained_fields.license_name.collected_at, "2026-10-23");
+  // Without the page's release evidence the same rows count against the bound as before.
+  assert.equal(enrichArtificialAnalysis(api, page, previous).missing.length, 4);
+  const conflicting = { releases: [{ slug: "x", deprecated: true, releaseDate: "d" }, { slug: "x", deprecated: false, releaseDate: "d" }] };
+  assert.throws(() => parseArtificialAnalysisDeprecatedModels(`<script>self.__next_f.push(${JSON.stringify([1, `0:${JSON.stringify(conflicting)}\n`])})</script>`), /conflicting release deprecation/);
 });
