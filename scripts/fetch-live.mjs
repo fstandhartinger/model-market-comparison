@@ -6,7 +6,7 @@ import { mkdir, readFile } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 import { enrichArtificialAnalysis, MAX_METADATA_ROLLOUT_LAG } from "../lib/aa-metadata.mjs";
-import { parseArtificialAnalysisMetadata } from "../lib/aa-rsc.mjs";
+import { parseArtificialAnalysisMetadata, parseArtificialAnalysisDeprecatedModels } from "../lib/aa-rsc.mjs";
 import { writeJSONAtomic } from "../lib/snapshot.mjs";
 import { refreshAaEfficiency } from "./fetch-aa-efficiency.mjs";
 import { execFile } from "node:child_process";
@@ -107,11 +107,11 @@ async function fetchArtificialAnalysis() {
     assertMeasuredFields(old?.evaluations, model.evaluations, [...new Set([...Object.keys(old?.evaluations || {}), ...Object.keys(model.evaluations)])], `AA ${model.id}`, { approvals: approvals.aa_measurements, modelId: model.id });
     assertMeasuredFields(old?.pricing, model.pricing, ['price_1m_input_tokens', 'price_1m_output_tokens'], `AA ${model.id}`);
   }
-  const { models, missing, retiredCount, extraCount } = enrichArtificialAnalysis(apiModels, metadata, previous);
+  const { models, missing, retiredCount, extraCount } = enrichArtificialAnalysis(apiModels, metadata, previous, parseArtificialAnalysisDeprecatedModels(leaderboardHtml));
   if (missing.length) {
     console.log(`  warn: ${missing.length} API model(s) lack leaderboard metadata (mid-rollout), shipping with null metadata: ${missing.map((m) => m.name).join(", ")}`);
   }
-  if (retiredCount) console.log(`  note: ${retiredCount} deprecated model(s) no longer on the leaderboard page keep their last published metadata`);
+  if (retiredCount) console.log(`  note: ${retiredCount} deprecated model(s) no longer on the leaderboard page keep their last published metadata (deprecated in the last snapshot or per the page's release list)`);
   if (extraCount) console.log(`  note: leaderboard carries ${extraCount} extra metadata row(s) not in the v2 API yet`);
   console.log(`  ${models.length} models`);
   const target = join(RAW, "artificialanalysis.json");
