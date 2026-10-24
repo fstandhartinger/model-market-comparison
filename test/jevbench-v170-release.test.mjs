@@ -123,6 +123,22 @@ if (!reviewed) {
     assert.equal(g.custody_exclusion.derived_gold_sha256,'9f1f8200d0a1b4384f43ffc0a91f3f36e4790fc3dbcef7486bf233b0142baa47'); assert.match(g.underlying,/Built with Fastino GLiDE/); assert.match(g.underlying,/does not establish that the hosted fastino-glide-api row uses the same weights/);
     for(const key of ['torchcast-decision-4b-v1.3','subq-snap-1.1']) { const s=by[key]; assert.equal(s.previous.board_release,'v1.6.43'); assert.equal(s.rescored_in,'v1.7.0'); assert.equal(s.decision_limit.n_over_limit,0); assert.equal(s.axes.cost,s.previous.axes.cost); }
   });
+  test('R9 rows retain the zero-output price convention, timeout outcomes and serving disclosures', () => {
+    const by = Object.fromEntries(r.artifact.systems.map(s => [s.key,s]));
+    const expected = {'decisionnode-edge-0.9.2':[0.009130,0], 'decisionnode-edge-mini-0.9.2':[0.004565,0], 'jeffan-31b-1710':[0.080895,15], 'jeffan-4b-2010':[0.015685,0], 'vera-large':[0.216840,0], 'vllm-sr-d3-mini':[0.015580,15], 'xevn-4b':[0.013629,0], 'knowline-31b-gen1':[0.093159,15]};
+    for (const [key,[cost,over]] of Object.entries(expected)) {
+      const x=by[key]; assert.equal(x.new_in,'v1.7.0',key); assert.equal(x.ranked,true,key); assert.equal(x.decision_limit.speed_n,1500,key);
+      assert.equal(+x.cost.usd_per_1000.toFixed(6),cost,key); assert.equal(x.decision_limit.n_over_limit,over,key); assert.equal(x.cost.common_basis.n_items,1485,key);
+    }
+    for(const key of ['decisionnode-edge-0.9.2','decisionnode-edge-mini-0.9.2']) {
+      assert.match(by[key].licence,/AGPL-3[.]0-only/); assert.match(by[key].licence,/commercial licence/); assert.match(by[key].underlying,/0[.]9[.]1/);
+    }
+    assert.match(by['jeffan-31b-1710'].underlying,/1,057/); assert.match(by['jeffan-31b-1710'].underlying,/never scored/);
+    assert.match(by['vera-large'].cost.basis,/USD 0[.]0\/M output/); assert.match(by['vera-large'].cost.basis,/84,061/); assert.match(by['vera-large'].cost.basis,/5[.]99/);
+    for(const key of ['vera-large','jeffan-31b-1710','knowline-31b-gen1']) assert.ok(by[key].cost.usd_per_1000>0.06459465517241379,key);
+    assert.match(by['xevn-4b'].underlying,/HTTP 500/); assert.match(by['xevn-4b'].underlying,/cuda_out_of_memory/);
+    assert.match(by['knowline-31b-gen1'].underlying,/--swa-full-tokens-ratio 0[.]15/); assert.match(by['knowline-31b-gen1'].underlying,/pool/);
+  });
   test('v1.7.0 archive files and the base release stay byte-identical', async () => {
     const m = JSON.parse(await readFile(`${ROOT}/v1.6/jevbench-${V170_BASE_RELEASE}-publication.json`, 'utf8'));
     for (const [k, f] of Object.entries(m.files)) assert.equal(await sha(f.path), f.sha256, `${V170_BASE_RELEASE} ${k}`);
