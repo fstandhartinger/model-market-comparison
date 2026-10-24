@@ -6,12 +6,13 @@ import { JevHistoryLazy } from '../../../components/JevHistoryLazy';
 import { historicalCatalogue } from '../../../lib/jevbench-v162-release.mjs';
 import { withPublicAdapterIds } from '../../../lib/jevbench-v15-release.mjs';
 import { JEVBENCH_COST_RULE, JEVBENCH_COST_RULE_HISTORY } from '../../../lib/jevbench-cost-rule.mjs';
-export const metadata = {title: 'JevBench v1.6.43 · SubQ Snap 1.1', alternates:{canonical:'/jev-models/v1.6.43'}};
+import { PageJsonLd } from '../../../components/PageJsonLd';
+export const metadata = { description: 'JevBench v1.6.43 release — SubQ Snap 1.1. Ranked decision-model results, sources and methodology on Benchmark Heaven.',title: 'JevBench v1.6.43 · SubQ Snap 1.1', alternates:{canonical:'/jev-models/v1.6.43'}};
 export default async function JevModelsV1643Page() {
  const release=await readOptionalJevbenchV1643Release();if(!release) notFound();
  const board=v1643BoardInput(release);
  const notes=(release.artifact as unknown as {measurement_notes:string[]}).measurement_notes;
- return <><JevBenchReleaseVersionNav active="v1.6.43" />
+ return <><PageJsonLd meta={metadata} /><JevBenchReleaseVersionNav active="v1.6.43" />
  <header className="bh-page-head" data-bh-jev16-release-header><div className="bh-eyebrow">JevBench v1.6.43 · one hosted API addition</div>
  <h1 className="mt-1 text-3xl font-bold">SubQ Snap 1.1 added</h1>
  <p className="mt-3 max-w-3xl">SubQ Snap 1.1 joins the hosted API board alongside its historical 13 Oct preview measurement. Public-preview capacity limits, same-author second exposure, published pricing and the sealed-versus-public check are disclosed below. All carried scores and confidence intervals are retained; only placement changes.</p>
