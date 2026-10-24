@@ -3,7 +3,7 @@ import { pageDataVersion } from "../../lib/page-data";
 import { PageJsonLd } from "../../components/PageJsonLd";
 
 
-export const metadata = { title: "Cost vs capability", alternates: { canonical: "/scatter" } };
+export const metadata = { title: "Cost vs capability", description: "Every AI model by real cost per task and benchmark score — the Pareto frontier marks the best value. Interactive cost–capability analysis.", alternates: { canonical: "/scatter" } };
 
 export default async function ScatterPage() {
   const version = await pageDataVersion();

@@ -8,7 +8,7 @@ import { withPublicAdapterIds } from '../../../lib/jevbench-v15-release.mjs';
 import { seoTitle } from '../../../lib/seo';
 import { PageJsonLd } from '../../../components/PageJsonLd';
 
-export const metadata = { title: seoTitle('JevBench v1.6.25 · Celeris-1 Decision, Jebadiah 9B v2.1 and StartLux-Decision v1.1 27B join the regular draw'), alternates: { canonical: '/jev-models/v1.6.25' } };
+export const metadata = { description: 'JevBench v1.6.25 release — Celeris-1 Decision, Jebadiah 9B v2.1 and StartLux-Decision v1.1 27B join the regular draw. Ranked decision-model results, sources.', title: seoTitle('JevBench v1.6.25 · Celeris-1 Decision, Jebadiah 9B v2.1 and StartLux-Decision v1.1 27B join the regular draw'), alternates: { canonical: '/jev-models/v1.6.25' } };
 
 type Row = { key: string; display: string; ranked: boolean; measured_in?: string; capability?: number;
   ranks?: { A: number | null; capability: number | null }; cost?: { usd_per_1000?: number | null } };

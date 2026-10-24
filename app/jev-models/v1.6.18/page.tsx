@@ -8,7 +8,7 @@ import { withPublicAdapterIds } from '../../../lib/jevbench-v15-release.mjs';
 import { seoTitle } from '../../../lib/seo';
 import { PageJsonLd } from '../../../components/PageJsonLd';
 
-export const metadata = { title: seoTitle('JevBench v1.6.18 · Respan Span-02 ranked; Nimble rows listed'), alternates: { canonical: '/jev-models/v1.6.18' } };
+export const metadata = { description: 'JevBench v1.6.18 release — Respan Span-02 ranked; Nimble rows listed. Ranked decision-model results, sources and methodology on Benchmark Heaven.', title: seoTitle('JevBench v1.6.18 · Respan Span-02 ranked; Nimble rows listed'), alternates: { canonical: '/jev-models/v1.6.18' } };
 
 type Row = { key: string; display: string; ranked: boolean; measured_in?: string; capability?: number };
 const short = (d: string) => (d.length <= 45 ? d : d.split(' (')[0]);

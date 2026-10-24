@@ -9,7 +9,7 @@ import { withPublicAdapterIds } from '../../../lib/jevbench-v15-release.mjs';
 import { seoTitle } from '../../../lib/seo';
 import { PageJsonLd } from '../../../components/PageJsonLd';
 
-export const metadata = { title: seoTitle('JevBench v1.6.30 · common cost basis on the regular draw'), alternates: { canonical: '/jev-models/v1.6.30' } };
+export const metadata = { description: 'JevBench v1.6.30 release — common cost basis on the regular draw. Ranked decision-model results, sources and methodology on Benchmark Heaven.', title: seoTitle('JevBench v1.6.30 · common cost basis on the regular draw'), alternates: { canonical: '/jev-models/v1.6.30' } };
 
 type Row = { key: string; display: string; ranked: boolean; ranks?: { A: number | null; capability: number | null };
   cost?: { usd_per_1000?: number | null; common_basis?: { usd_per_1000_all_items?: number } | null } };

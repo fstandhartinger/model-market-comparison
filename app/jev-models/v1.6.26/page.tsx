@@ -8,7 +8,7 @@ import { withPublicAdapterIds } from '../../../lib/jevbench-v15-release.mjs';
 import { seoTitle } from '../../../lib/seo';
 import { PageJsonLd } from '../../../components/PageJsonLd';
 
-export const metadata = { title: seoTitle('JevBench v1.6.26 · thirteen re-measured systems join the regular draw; Nimble-v4-max re-priced'), alternates: { canonical: '/jev-models/v1.6.26' } };
+export const metadata = { description: 'JevBench v1.6.26 release — thirteen re-measured systems join the regular draw; Nimble-v4-max re-priced. Ranked decision-model results, sources and.', title: seoTitle('JevBench v1.6.26 · thirteen re-measured systems join the regular draw; Nimble-v4-max re-priced'), alternates: { canonical: '/jev-models/v1.6.26' } };
 
 type Row = { key: string; display: string; ranked: boolean; measured_in?: string; capability?: number;
   ranks?: { A: number | null; capability: number | null }; cost?: { usd_per_1000?: number | null } };

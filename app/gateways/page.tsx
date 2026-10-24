@@ -2,7 +2,7 @@ import { GatewaysView } from "../../components/GatewaysView";
 import gw from "../../data/gateways.json";
 import { PageJsonLd } from "../../components/PageJsonLd";
 
-export const metadata = { title: "LLM Gateways", alternates: { canonical: "/gateways" } };
+export const metadata = { title: "LLM Gateways", description: "Multi-provider LLM gateways, routers and aggregators compared for EU deployments — one API key for many models, with sources and prices.", alternates: { canonical: "/gateways" } };
 
 export default function GatewaysPage() {
   return (

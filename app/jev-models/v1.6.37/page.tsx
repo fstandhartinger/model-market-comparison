@@ -8,7 +8,7 @@ import { withPublicAdapterIds } from '../../../lib/jevbench-v15-release.mjs';
 import { JEVBENCH_COST_RULE, JEVBENCH_COST_RULE_HISTORY } from '../../../lib/jevbench-cost-rule.mjs';
 import { seoTitle } from '../../../lib/seo';
 import { PageJsonLd } from '../../../components/PageJsonLd';
-export const metadata = {title: seoTitle('JevBench v1.6.37 · cost of H2O-Lightning-4B and Kahn1 corrected'), alternates:{canonical:'/jev-models/v1.6.37'}};
+export const metadata = { description: 'JevBench v1.6.37 release — cost of H2O-Lightning-4B and Kahn1 corrected. Ranked decision-model results, sources and methodology on Benchmark Heaven.',title: seoTitle('JevBench v1.6.37 · cost of H2O-Lightning-4B and Kahn1 corrected'), alternates:{canonical:'/jev-models/v1.6.37'}};
 export default async function JevModelsV1637Page() {
  const release=await readOptionalJevbenchV1637Release();if(!release) notFound();
  const board=v1637BoardInput(release);

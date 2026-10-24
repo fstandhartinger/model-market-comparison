@@ -12,7 +12,7 @@ import { AudioJevCompare } from '../../components/AudioJevCompare';
 export const dynamic = 'force-static';
 
 const title = 'AudioJevBench v0.1 — audio decision benchmark';
-const description = 'Which audio models make the typed decisions a voice agent needs — intent, sentiment, urgency, speaker verification, sound events — straight from audio, calibrated, fast and cheap? 17 systems on 988 public and sealed items.';
+const description = 'Audio decision models compared on accuracy, calibration, latency and cost — intent, sentiment, urgency, speaker verification, sound events. 17 systems measured.';
 const image = 'https://benchmarkheaven.com/audio-jev-bench/opengraph-image';
 
 export const metadata: Metadata = {

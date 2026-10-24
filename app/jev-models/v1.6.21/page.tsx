@@ -8,7 +8,7 @@ import { withPublicAdapterIds } from '../../../lib/jevbench-v15-release.mjs';
 import { seoTitle } from '../../../lib/seo';
 import { PageJsonLd } from '../../../components/PageJsonLd';
 
-export const metadata = { title: seoTitle('JevBench v1.6.21 · d1-ultra (Liquid AI) joins the regular draw, priced and ranked'), alternates: { canonical: '/jev-models/v1.6.21' } };
+export const metadata = { description: 'JevBench v1.6.21 release — d1-ultra (Liquid AI) joins the regular draw, priced and ranked. Ranked decision-model results, sources and methodology on.', title: seoTitle('JevBench v1.6.21 · d1-ultra (Liquid AI) joins the regular draw, priced and ranked'), alternates: { canonical: '/jev-models/v1.6.21' } };
 
 type Row = { key: string; display: string; ranked: boolean; measured_in?: string; capability?: number;
   ranks?: { A: number | null; capability: number | null }; cost?: { usd_per_1000?: number | null } };

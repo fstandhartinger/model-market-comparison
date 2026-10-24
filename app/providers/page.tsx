@@ -4,7 +4,7 @@ import { pageDataVersion } from "../../lib/page-data";
 import { PageJsonLd } from "../../components/PageJsonLd";
 
 
-export const metadata = { title: "Providers per model", alternates: { canonical: "/providers" } };
+export const metadata = { title: "Providers per model", description: "Every tracked inference provider and pricing platform, ranked by price — per model or by average position across its catalogue.", alternates: { canonical: "/providers" } };
 
 export default async function ProvidersPage() {
   const ds = await getDataset();

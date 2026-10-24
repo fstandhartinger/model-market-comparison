@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { PageJsonLd } from "../../components/PageJsonLd";
 
-export const metadata: Metadata = { title: "Privacy policy", alternates: { canonical: "/privacy" } };
+export const metadata: Metadata = { title: "Privacy policy", description: "Benchmark Heaven privacy policy — what data the site collects, how it is used, and your rights.", alternates: { canonical: "/privacy" } };
 
 // CR-5.5: written for what the site actually does — no advertising, optional Google sign-in.
 // CR-67.7: aggregate server-side visitor statistics (lib/visit-stats.mjs; decision record CR-67.5-CONSENT-DECISION.md).

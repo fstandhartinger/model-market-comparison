@@ -8,7 +8,7 @@ import { withPublicAdapterIds } from '../../../lib/jevbench-v15-release.mjs';
 import { seoTitle } from '../../../lib/seo';
 import { PageJsonLd } from '../../../components/PageJsonLd';
 
-export const metadata = { title: seoTitle('JevBench v1.6.8 · fresh regular draw + modernbert-jev v2'), alternates: { canonical: '/jev-models/v1.6.8' } };
+export const metadata = { description: 'JevBench v1.6.8 release — fresh regular draw + modernbert-jev v2. Ranked decision-model results, sources and methodology on Benchmark Heaven.', title: seoTitle('JevBench v1.6.8 · fresh regular draw + modernbert-jev v2'), alternates: { canonical: '/jev-models/v1.6.8' } };
 
 export default async function JevModelsV168Page() {
   const release = await readOptionalJevbenchV168Release();

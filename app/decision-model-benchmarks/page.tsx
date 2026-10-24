@@ -1,7 +1,7 @@
 import { previewMetadata } from '../../lib/seo';
 import { DecisionGuide } from '../../components/DecisionBenchmarkGuide';
 import { PageJsonLd } from '../../components/PageJsonLd';
-export const metadata = previewMetadata({ path: '/decision-model-benchmarks', title: 'Best benchmarks for AI decision models (2026)', documentTitle: 'Best benchmarks for AI decision models (2026)', description: 'Choose benchmarks by workload: JevBench, DecisionBench, RewardBench 2, ForecastBench, tau-bench and metamorphic coherence testing. Methods, sources and limitations.' });
+export const metadata = previewMetadata({ path: '/decision-model-benchmarks', title: 'Best benchmarks for AI decision models (2026)', documentTitle: 'Best benchmarks for AI decision models (2026)', description: 'Choose benchmarks by workload: JevBench, DecisionBench, RewardBench 2, ForecastBench, tau-bench and metamorphic testing. Methods and sources.' });
 
 const rows = [
   { name: 'JevBench by Benchmark Heaven', href: '/jev-models', task: 'Typed decisions from application state and a bounded rubric.', metrics: 'Intelligence, Calibration, measured latency and modeled cost; Capability and gated harmonic Composite.', fit: 'Compare open-weight decision models and hosted APIs, on separate boards.', limit: 'Finite coverage; sealed inputs limit independent reruns; runtime and cost assumptions affect interpretation.' },

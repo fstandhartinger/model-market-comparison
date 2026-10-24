@@ -6,12 +6,13 @@ import { JevHistoryLazy } from '../../../components/JevHistoryLazy';
 import { historicalCatalogue } from '../../../lib/jevbench-v162-release.mjs';
 import { withPublicAdapterIds } from '../../../lib/jevbench-v15-release.mjs';
 import { JEVBENCH_COST_RULE, JEVBENCH_COST_RULE_HISTORY } from '../../../lib/jevbench-cost-rule.mjs';
-export const metadata = {title: 'JevBench v1.6.42 · Torchcast Decision 4B (v1.3)', alternates:{canonical:'/jev-models/v1.6.42'}};
+import { PageJsonLd } from '../../../components/PageJsonLd';
+export const metadata = { description: 'JevBench v1.6.42 release — Torchcast Decision 4B (v1.3). Ranked decision-model results, sources and methodology on Benchmark Heaven.',title: 'JevBench v1.6.42 · Torchcast Decision 4B (v1.3)', alternates:{canonical:'/jev-models/v1.6.42'}};
 export default async function JevModelsV1642Page() {
  const release=await readOptionalJevbenchV1642Release();if(!release) notFound();
  const board=v1642BoardInput(release);
  const notes=(release.artifact as unknown as {measurement_notes:string[]}).measurement_notes;
- return <><JevBenchReleaseVersionNav active="v1.6.42" />
+ return <><PageJsonLd meta={metadata} /><JevBenchReleaseVersionNav active="v1.6.42" />
  <header className="bh-page-head" data-bh-jev16-release-header><div className="bh-eyebrow">JevBench v1.6.42 · one paid fast-lane addition</div>
  <h1 className="mt-1 text-3xl font-bold">Torchcast Decision 4B (v1.3) added</h1>
  <p className="mt-3 max-w-3xl">One paid public fast-lane addition on the same draw and common cost basis: Torchcast Decision 4B v1.3, a self-hosted model measured as its author ships it (the author's own server unchanged, non-causal full attention as trained), priced as an estimate from its declared base model. It is a new version next to v1.2, which stays listed. All carried rows retain every score and confidence interval; only placement changes. Pricing, hosting and provenance are disclosed below.</p>

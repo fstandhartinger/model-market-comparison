@@ -8,7 +8,7 @@ import { withPublicAdapterIds } from '../../../lib/jevbench-v15-release.mjs';
 import { JEVBENCH_COST_RULE, JEVBENCH_COST_RULE_HISTORY } from '../../../lib/jevbench-cost-rule.mjs';
 import { seoTitle } from '../../../lib/seo';
 import { PageJsonLd } from '../../../components/PageJsonLd';
-export const metadata = {title: seoTitle('JevBench v1.6.36 · Myles-G 31B, HS1, Arbiter-4B, Decider-4B'), alternates:{canonical:'/jev-models/v1.6.36'}};
+export const metadata = { description: 'JevBench v1.6.36 release — Myles-G 31B, HS1, Arbiter-4B, Decider-4B. Ranked decision-model results, sources and methodology on Benchmark Heaven.',title: seoTitle('JevBench v1.6.36 · Myles-G 31B, HS1, Arbiter-4B, Decider-4B'), alternates:{canonical:'/jev-models/v1.6.36'}};
 export default async function JevModelsV1636Page() {
  const release=await readOptionalJevbenchV1636Release();if(!release) notFound();
  const board=v1636BoardInput(release);

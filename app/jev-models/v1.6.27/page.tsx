@@ -8,7 +8,7 @@ import { withPublicAdapterIds } from '../../../lib/jevbench-v15-release.mjs';
 import { seoTitle } from '../../../lib/seo';
 import { PageJsonLd } from '../../../components/PageJsonLd';
 
-export const metadata = { title: seoTitle('JevBench v1.6.27 · Jev 1.14.0 (TypeSafe API) and Verdin-4B join the regular draw'), alternates: { canonical: '/jev-models/v1.6.27' } };
+export const metadata = { description: 'JevBench v1.6.27 release — Jev 1.14.0 (TypeSafe API) and Verdin-4B join the regular draw. Ranked decision-model results, sources and methodology on.', title: seoTitle('JevBench v1.6.27 · Jev 1.14.0 (TypeSafe API) and Verdin-4B join the regular draw'), alternates: { canonical: '/jev-models/v1.6.27' } };
 
 type Row = { key: string; display: string; ranked: boolean; measured_in?: string; capability?: number;
   ranks?: { A: number | null; capability: number | null }; cost?: { usd_per_1000?: number | null } };
