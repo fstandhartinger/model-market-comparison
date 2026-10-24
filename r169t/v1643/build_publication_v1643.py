@@ -4,7 +4,7 @@ The field scoring (74 carried same-draw registry rows plus the new row, real 1,5
 bootstrap intervals are retained (rather than replacing them merely because sorted-roster seeds change). The hosted GLiDE row of v1.6.42
 (scored on a derived 1,497-item gold, not part of the field run) is carried by bytes like every other published row.
 """
-import hashlib, json, os, pathlib, copy, shutil
+import hashlib, json, os, pathlib, copy, shutil, sys
 
 J = pathlib.Path(__file__).resolve().parent
 W = J.parents[1]
@@ -20,6 +20,44 @@ put = lambda p, v: pathlib.Path(p).write_text(
 sha = lambda p: hashlib.sha256(pathlib.Path(p).read_bytes()).hexdigest()
 PRICING_SHA = sha("/home/flori/jobs/jevbench-v15-measure-20260925/harness/pricing_v15.py")
 assert PRICING_SHA == "aa2afcd5a58d0c4cc0e3d6867d590c70b6ac58e971410c27faf9628f97bcf8b7"
+binding_path = J / "receipts/REFRESHED-GO-BINDING.json"
+if binding_path.exists():
+    refreshed_preview = load(binding_path)
+else:
+    if "--bootstrap" not in sys.argv:
+        raise SystemExit("missing refreshed-preview binding; use --bootstrap only for the first local build")
+    # Placeholder hashes permit only the isolated synthetic ranking pass; final verify requires real asset hashes.
+    refreshed_preview = {
+        "baseline": PREV,
+        "candidate": REV,
+        "topfive_diff_sha256": "a" * 64,
+        "approval_comparison_sha256": "b" * 64,
+        "interactive_preview_sha256": "c" * 64,
+        "card_image_sha256": "d" * 64,
+        "card_text_sha256": "e" * 64,
+        "sent_card_id": None,
+        "sent_at_utc": None,
+        "dispatch_receipt_sha256": None,
+        "dispatch_action_sha256": None,
+    }
+    refreshed_preview["asset_binding_sha256"] = hashlib.sha256(
+        json.dumps({k: refreshed_preview[k] for k in ["baseline", "candidate", "topfive_diff_sha256", "approval_comparison_sha256", "interactive_preview_sha256", "card_image_sha256", "card_text_sha256"]}, sort_keys=True, separators=(",", ":"), ensure_ascii=False).encode()
+    ).hexdigest()
+assert refreshed_preview["baseline"] == PREV and refreshed_preview["candidate"] == REV
+for k in ["asset_binding_sha256", "topfive_diff_sha256", "approval_comparison_sha256", "interactive_preview_sha256", "card_image_sha256", "card_text_sha256"]:
+    assert len(refreshed_preview[k]) == 64 and all(c in "0123456789abcdef" for c in refreshed_preview[k]), k
+    if "--bootstrap" not in sys.argv:
+        assert refreshed_preview[k] != "0" * 64, k
+assert (refreshed_preview["sent_card_id"] is None) == (refreshed_preview["dispatch_receipt_sha256"] is None)
+assert (refreshed_preview["sent_at_utc"] is None) == (refreshed_preview["dispatch_receipt_sha256"] is None)
+assert (refreshed_preview["dispatch_action_sha256"] is None) == (refreshed_preview["dispatch_receipt_sha256"] is None)
+asset_keys = ["baseline", "candidate", "topfive_diff_sha256", "approval_comparison_sha256", "interactive_preview_sha256", "card_image_sha256", "card_text_sha256"]
+assert hashlib.sha256(json.dumps({k: refreshed_preview[k] for k in asset_keys}, sort_keys=True, separators=(",", ":"), ensure_ascii=False).encode()).hexdigest() == refreshed_preview["asset_binding_sha256"]
+if refreshed_preview["sent_card_id"] is not None:
+    assert isinstance(refreshed_preview["sent_card_id"], str) and refreshed_preview["sent_card_id"].isdigit() and refreshed_preview["sent_card_id"] != "18406"
+    assert isinstance(refreshed_preview["sent_at_utc"], str) and refreshed_preview["sent_at_utc"].endswith("Z")
+    assert len(refreshed_preview["dispatch_receipt_sha256"]) == 64 and all(c in "0123456789abcdef" for c in refreshed_preview["dispatch_receipt_sha256"])
+    assert len(refreshed_preview["dispatch_action_sha256"]) == 64 and all(c in "0123456789abcdef" for c in refreshed_preview["dispatch_action_sha256"])
 cp = copy.deepcopy
 old = {
     n: load(V / f"jevbench-{PREV}-{n}.json")
@@ -128,21 +166,22 @@ tf = (
     if (J / "receipts/topfive-diff.json").exists()
     else None
 )
-# Historical GO is evidence only; fresh publication authority remains PENDING for lead verification.
+# The historical GO is evidence only. A fresh answer must bind to the refreshed preview assets.
 approval = {
-    "go": "PENDING: lead must verify refreshed top-five impact against the approved preview",
+    "go": "PENDING: fresh GO required for the v1.6.42-based refreshed preview",
     "status": "PENDING",
     "top_five_effect": "changes",
     "top_five_changed_by": ["subq-snap-1.1"],
-    "top_five_authority": "PENDING: current-baseline preview requires lead verification",
-    "top_five_preview": {"card_id": "18406", "baseline": "v1.6.40", "button": "Publish (recommended)", "approved_at_utc": "2026-10-23T16:40:00Z"},
-    "button_tap": True,
+    "top_five_authority": "PENDING: current-baseline preview requires a separate fresh answer",
+    "historical_preview": {"card_id": "18406", "baseline": "v1.6.40", "button": "Publish (recommended)", "approved_at_utc": "2026-10-23T16:40:00Z"},
+    "refreshed_preview": refreshed_preview,
+    "fresh_go": None,
     "fresh_baseline": PREV,
 }
 notes = [
     "v1.6.43 adds SubQ Snap 1.1, a hosted API version next to the historical 13 Oct preview row. Same draw and frozen common cost basis; all 78 carried rows retain every field except rank/ranks, including confidence intervals, categories and diagnostics. The 74 carried same-draw field rows reproduce every point estimate. Hosted GLiDE is byte-carried from its derived-gold measurement. This is the v1.6 method; no 10-second rule.",
     tf["note"] if tf else "Board effect provisional: 40-list comparison pending.",
-    "Publication of v1.6.43: independent review and current-baseline publication authority remain pending in this candidate.",
+    "Publication of v1.6.43: the top-five comparison uses the v1.6.42 baseline; current approval is recorded in the proof, and release review remains a separate gate.",
 ]
 for k in newkeys:
     s = out[k]
@@ -194,9 +233,12 @@ for k in newkeys:
 d.update(release=REV, results_sha256=sha(rp))
 put(sup_path, sup)
 proof = cp(old["proof"])
+proof.pop("refreshed_preview_approval", None)
+proof.pop("refreshed_preview_go_card", None)
 proof.update(
     revision=REV,
     registry_sha256=sha(B / "REGISTRY-PUBLIC.json"),
+    refreshed_preview=refreshed_preview,
     publication_approval=approval,
     predecessor_pricing_module_sha256=old["proof"]["pricing_module_sha256"],
     pricing_module_sha256=PRICING_SHA,

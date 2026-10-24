@@ -11,6 +11,9 @@ export const V1643_NEW_KEYS = /*KEYS*/;
 export const V1643_FILE_KEYS = ['results','categories','proof','history','history-carry'];
 export const V1643_EXPECTED_HASHES = /*HASHES*/;
 export const V1643_ROW_SPEC = /*ROWS*/;
+export const V1643_REFRESHED_PREVIEW = /*PREVIEW*/;
+export const V1643_REFRESHED_PREVIEW_SHA256 = /*PREVIEW_SHA*/;
+export const V1643_FRESH_GO_RECEIPT_SHA256 = /*GO_RECEIPT_SHA*/;
 export const V1643_PRICING_MODULE_SHA256 = 'aa2afcd5a58d0c4cc0e3d6867d590c70b6ac58e971410c27faf9628f97bcf8b7';
 export const V1643_FIXED_G_MED = 9.839526770355711;
 export const V1643_COST_CAP = 0.06459465517241379;
@@ -20,6 +23,11 @@ const hash = b=>createHash('sha256').update(b).digest('hex');
 const fail = x=>{throw new Error(`JevBench v1.6.43: ${x}`)};
 const same = (a,b,x)=>{if(!isDeepStrictEqual(a,b))fail(x)};
 const stripRank = a=>{const b=structuredClone(a);delete b.rank;delete b.ranks;return b};
+const parseCanonicalUtc = value=>{
+ if(typeof value!=='string'||!/^\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d(?:\.\d{3})?Z$/.test(value))return null;
+ const ms=Date.parse(value);if(!Number.isFinite(ms))return null;
+ return new Date(ms).toISOString().replace(/\.000Z$/,'Z')===value?ms:null;
+};
 const publicOnly = a=>{if(Array.isArray(a))return a.forEach(publicOnly);if(!a||typeof a!=='object')return;for(const [k,v] of Object.entries(a)){if(/^(task_id|item_text|question_text|predictions|per_item|item_results|raw_response|password|secret)$/i.test(k))fail('item-level/private field');publicOnly(v)}};
 export function validateJevbenchV1643Bundle({manifest,artifact,categories,proof,previous,previousManifestSha256}) {
  for(const v of [manifest,artifact,categories,proof])publicOnly(v);
@@ -47,14 +55,24 @@ export function validateJevbenchV1643Bundle({manifest,artifact,categories,proof,
  if(proof.pricing_module_sha256!==V1643_PRICING_MODULE_SHA256)fail('pricing module pin');
  for(const k of V1643_NEW_KEYS){const p=proof.new_rows[k];const s=by.get(k);if(p.raw_sha256!==proof.raw_sha256[k]||p.usd_per_1000!==s.cost.usd_per_1000||p.ranked!==s.ranked||p.paid_fast_lane!==false)fail('proof row '+k)}
  const a=proof.publication_approval;
+ if(Object.hasOwn(proof,'refreshed_preview_approval')||Object.hasOwn(proof,'refreshed_preview_go_card'))fail('stale inherited preview authority');
+ same(proof.refreshed_preview,V1643_REFRESHED_PREVIEW,'refreshed preview asset binding');
+ same(a?.refreshed_preview,V1643_REFRESHED_PREVIEW,'approval preview binding');
  if(a?.status!=='PASS')fail('publication authority PENDING');
  if(a.fresh_baseline!=='v1.6.42'||a.top_five_effect!=='changes')fail('fresh approval baseline/effect');
  same(a.top_five_changed_by,V1643_NEW_KEYS,'top-five causes');
- if(a.top_five_preview?.card_id!=='18406'||a.top_five_preview?.baseline!=='v1.6.40'||a.top_five_preview?.button!=='Publish (recommended)'||a.button_tap!==true)fail('approval provenance');
+ same(a.historical_preview,{card_id:'18406',baseline:'v1.6.40',button:'Publish (recommended)',approved_at_utc:'2026-10-23T16:40:00Z'},'historical approval record');
+ const go=a.fresh_go;
+ const sentAt=parseCanonicalUtc(V1643_REFRESHED_PREVIEW.sent_at_utc);
+ const answerAt=parseCanonicalUtc(go?.answered_at_utc);
+ if(!V1643_REFRESHED_PREVIEW.sent_card_id||!/^\d+$/.test(V1643_REFRESHED_PREVIEW.sent_card_id)||!sentAt||!/^([a-f0-9]{64})$/.test(V1643_REFRESHED_PREVIEW.dispatch_receipt_sha256??'')||!/^([a-f0-9]{64})$/.test(V1643_REFRESHED_PREVIEW.dispatch_action_sha256??''))fail('fresh request dispatch receipt');
+ if(!go||go.card_id!==V1643_REFRESHED_PREVIEW.sent_card_id||go.reply_to_card_id!==V1643_REFRESHED_PREVIEW.sent_card_id||go.from_user!=='florian'||typeof go.answer_event_id!=='string'||!go.answer_event_id||!(go.channel==='written'?(go.button===null&&go.decisions_key==='subq-snap-v1643-go'&&go.answer_event_id==='decisions:subq-snap-v1643-go'):(go.channel===undefined&&go.button==='Publish (recommended)'))||!answerAt||answerAt<sentAt||answerAt>Date.now())fail('fresh approval answer');
+ if(go.dispatch_receipt_sha256!==V1643_REFRESHED_PREVIEW.dispatch_receipt_sha256||go.dispatch_action_sha256!==V1643_REFRESHED_PREVIEW.dispatch_action_sha256||!/^([a-f0-9]{64})$/.test(go.answer_receipt_sha256??'')||go.answer_receipt_sha256!==V1643_FRESH_GO_RECEIPT_SHA256)fail('fresh answer receipt binding');
+ if(go.preview_binding_sha256!==V1643_REFRESHED_PREVIEW_SHA256)fail('fresh approval is not bound to the refreshed preview');
  if(JSON.stringify(proof).includes('PLACEHOLDER'))fail('approval placeholder');
  if(!proof.authority.startsWith(previous.proof.authority+' NEW in v1.6.43:'))fail('inherited authority unchanged');
  const note=artifact.measurement_notes.filter(n=>n.startsWith('Publication of v1.6.43:'));
- if(note.length!==1||!note[0].includes('independent review and current-baseline publication authority'))fail('public approval note');
+ if(note.length!==1||!note[0].includes('top-five comparison uses the v1.6.42 baseline')||!note[0].includes('current approval is recorded in the proof')||!note[0].includes('release review remains a separate gate'))fail('public approval note');
  for(const k of V1643_NEW_KEYS){
   const text=by.get(k).underlying+' '+by.get(k).endpoint_condition+' '+by.get(k).cost.basis;
   if(/18406|board|\/home\//i.test(text))fail('internal provenance in row');
