@@ -1,0 +1,60 @@
+{
+ "carried_rows_preserved_except_ranks": 78,
+ "carried_scorer_point_estimates_reproduced": 74,
+ "files": {
+  "categories": {
+   "path": "data/raw/benchmarks/jevbench/v1.6/jevbench-v1.6.43-categories.json",
+   "sha256": "b56083cd0c30c6253bbb7732415efef92121116d963814dea735f393a154df63"
+  },
+  "history": {
+   "path": "data/raw/benchmarks/jevbench/v1.6/jevbench-v1.6.43-history.json",
+   "sha256": "5cd8c1332226ea9c179883d2285c0d8b8cc593ae38f2645197364a7ddd9c83c1"
+  },
+  "history-carry": {
+   "path": "data/raw/benchmarks/jevbench/v1.6/jevbench-v1.6.43-history-carry.json",
+   "sha256": "334e851944e92383ab3071e52b3012040c7023d0fe236395953169ebee8f0459"
+  },
+  "proof": {
+   "path": "data/raw/benchmarks/jevbench/v1.6/jevbench-v1.6.43-proof.json",
+   "sha256": "7353afa60937eaf4034f11e7eccb3c762f089875d65fb313ffbc7a7c3d6bae30"
+  },
+  "results": {
+   "path": "data/raw/benchmarks/jevbench/v1.6/jevbench-v1.6.43-results.json",
+   "sha256": "260ea7e54cb5ef1805cef8652006ddc96a10843541807fe8fe159fa9cdcf7bdc"
+  }
+ },
+ "new_rows": {
+  "subq-snap-1.1": {
+   "axes": {
+    "calibration": 88.06513871774217,
+    "cost": 60.67742028447466,
+    "intelligence": 75.75710514449688,
+    "speed": 84.94774043787051
+   },
+   "capability": 81.91112193111952,
+   "cost": {
+    "basis": "Vendor's published standard launch tariff, USD 0.04 per million input tokens; output free (read 22 Oct 2026 at https://docs.subq.ai/using-the-api/models/ and https://subq.ai). Counted under the frozen I-1 launch-list-price rule. Capacity-limited public preview, first come first served, with a waitlist once capacity is reached; not openly bookable by everyone. Promotional signup credits are excluded. Own measured usage: 1,939,205 input / 0 output tokens over all 1,500 decisions. Common 1,485-item cost basis: 759,310 input / 0 output tokens, USD 0.020452795 per 1,000 decisions; all-item cost USD 0.051712133 per 1,000. The historical preview row keeps its frozen USD 0.05/M input tariff.",
+    "common_basis": {
+     "n_items": 1485,
+     "rule": "common",
+     "usd_per_1000_all_items": 0.051712133333333334
+    },
+    "kind": "estimate",
+    "usage_estimated_rows": 0,
+    "usd_per_1000": 0.020452794612794613
+   },
+   "ranks": {
+    "A": 5,
+    "B": 4,
+    "C": 5,
+    "capability": 10
+   },
+   "scores": {
+    "A": 75.7463117322681,
+    "B": 75.74847016866207,
+    "C": 75.7463117322681
+   }
+  }
+ },
+ "variant": "single-row"
+}

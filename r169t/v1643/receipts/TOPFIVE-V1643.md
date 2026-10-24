@@ -1,0 +1,46 @@
+# v1.6.43 top-five diff
+
+Board effect: the SubQ Snap 1.1 row was compared on the merged-board top fives before/after v1.6.43 over all 36 mixed, open-weights and API variants (including 7x/10x cost caps with no latency cap) plus 4 release-board lists: 14 of 40 top-five lists change. Top-five changes caused by: subq-snap-1.1 (publication authority PENDING). 
+
+|Scope|Variant|Before|After|Moved by|Position before -> after of new rows (of N)|Changed|
+|---|---|---|---|---|---|---|
+|all|composites/A|kettei-fat, fastino-glide-api, torchcast-decision-4b-v1.3, liquid-d1-ultra, nimble-v4-max|kettei-fat, fastino-glide-api, torchcast-decision-4b-v1.3, liquid-d1-ultra, subq-snap-1.1|subq-snap-1.1|None -> 5 of 242|True|
+|all|composites/B|kettei-fat, fastino-glide-api, drex-max, liquid-d1-ultra, h2o-lightning-31b|kettei-fat, fastino-glide-api, drex-max, subq-snap-1.1, liquid-d1-ultra|subq-snap-1.1|None -> 4 of 242|True|
+|all|composites/C|kettei-fat, fastino-glide-api, torchcast-decision-4b-v1.3, liquid-d1-ultra, nimble-v4-max|kettei-fat, fastino-glide-api, torchcast-decision-4b-v1.3, liquid-d1-ultra, subq-snap-1.1|subq-snap-1.1|None -> 5 of 242|True|
+|all|capability/official_caps|kettei-fat, chon-1.0-12b, h2o-lightning-31b, fastino-glide-api, drex-max|kettei-fat, chon-1.0-12b, h2o-lightning-31b, fastino-glide-api, drex-max|-|None -> 7 of 170|False|
+|all|capability/no_caps|gpt-6-luna, qwen3.8-27b, gpt-6-luna-low, deepseek-flash, gpt-5.6-luna|gpt-6-luna, qwen3.8-27b, gpt-6-luna-low, deepseek-flash, gpt-5.6-luna|-|None -> 16 of 242|False|
+|all|capability/cost_off_latency_2x|kettei-fat, chon-1.0-12b, h2o-lightning-31b, fastino-glide-api, drex-max|kettei-fat, chon-1.0-12b, h2o-lightning-31b, fastino-glide-api, drex-max|-|None -> 11 of 211|False|
+|all|capability/latency_none|kettei-fat, chon-1.0-12b, h2o-lightning-31b, fastino-glide-api, drex-max|kettei-fat, chon-1.0-12b, h2o-lightning-31b, fastino-glide-api, drex-max|-|None -> 7 of 188|False|
+|all|extra_capability/cost_7x|kettei-fat, chon-1.0-12b, h2o-lightning-31b, fastino-glide-api, drex-max|kettei-fat, chon-1.0-12b, h2o-lightning-31b, fastino-glide-api, drex-max|-|None -> 11 of 202|False|
+|all|extra_capability/cost_10x|kettei-fat, chon-1.0-12b, h2o-lightning-31b, fastino-glide-api, drex-max|kettei-fat, chon-1.0-12b, h2o-lightning-31b, fastino-glide-api, drex-max|-|None -> 11 of 208|False|
+|all|extra_capability/rank_field|gpt-6-luna, qwen3.8-27b, gpt-6-luna-low, deepseek-flash, gpt-5.6-luna|gpt-6-luna, qwen3.8-27b, gpt-6-luna-low, deepseek-flash, gpt-5.6-luna|-|None -> 16 of 242|False|
+|all|extra_capability/cost_7x_latency_none|gpt-6-luna, gpt-6-luna-low, gpt-5.6-luna, kettei-fat, chon-1.0-12b|gpt-6-luna, gpt-6-luna-low, gpt-5.6-luna, kettei-fat, chon-1.0-12b|-|None -> 14 of 226|False|
+|all|extra_capability/cost_10x_latency_none|gpt-6-luna, gpt-6-luna-low, gpt-5.6-luna, kettei-fat, chon-1.0-12b|gpt-6-luna, gpt-6-luna-low, gpt-5.6-luna, kettei-fat, chon-1.0-12b|-|None -> 14 of 235|False|
+|open|composites/A|torchcast-decision-4b-v1.3, h2o-lightning-4b, h2o-lightning-31b, torchcast-decision-4b-v1.2, decisio-gemma-4-31b-v080|torchcast-decision-4b-v1.3, h2o-lightning-4b, h2o-lightning-31b, torchcast-decision-4b-v1.2, decisio-gemma-4-31b-v080|-|None -> None of 197|False|
+|open|composites/B|h2o-lightning-31b, torchcast-decision-4b-v1.3, basal-omni-1.0-ultra, quyet-1-0-large, decisio-gemma-4-31b-v080|h2o-lightning-31b, torchcast-decision-4b-v1.3, basal-omni-1.0-ultra, quyet-1-0-large, decisio-gemma-4-31b-v080|-|None -> None of 197|False|
+|open|composites/C|torchcast-decision-4b-v1.3, h2o-lightning-4b, h2o-lightning-31b, torchcast-decision-4b-v1.2, decisio-gemma-4-31b-v080|torchcast-decision-4b-v1.3, h2o-lightning-4b, h2o-lightning-31b, torchcast-decision-4b-v1.2, decisio-gemma-4-31b-v080|-|None -> None of 197|False|
+|open|capability/official_caps|chon-1.0-12b, h2o-lightning-31b, basal-omni-1.0-ultra, quyet-1-0-large, jeff_1_0_large|chon-1.0-12b, h2o-lightning-31b, basal-omni-1.0-ultra, quyet-1-0-large, jeff_1_0_large|-|None -> None of 140|False|
+|open|capability/no_caps|chon-1.0-12b, h2o-lightning-31b, vllm-sr-d3, pplx-decider-v1-1-27b, vllm-sr-d3-turbo|chon-1.0-12b, h2o-lightning-31b, vllm-sr-d3, pplx-decider-v1-1-27b, vllm-sr-d3-turbo|-|None -> None of 197|False|
+|open|capability/cost_off_latency_2x|chon-1.0-12b, h2o-lightning-31b, vllm-sr-d3, pplx-decider-v1-1-27b, vllm-sr-d3-turbo|chon-1.0-12b, h2o-lightning-31b, vllm-sr-d3, pplx-decider-v1-1-27b, vllm-sr-d3-turbo|-|None -> None of 175|False|
+|open|capability/latency_none|chon-1.0-12b, h2o-lightning-31b, basal-omni-1.0-ultra, quyet-1-0-large, jeff_1_0_large|chon-1.0-12b, h2o-lightning-31b, basal-omni-1.0-ultra, quyet-1-0-large, jeff_1_0_large|-|None -> None of 156|False|
+|open|extra_capability/cost_7x|chon-1.0-12b, h2o-lightning-31b, vllm-sr-d3, pplx-decider-v1-1-27b, vllm-sr-d3-turbo|chon-1.0-12b, h2o-lightning-31b, vllm-sr-d3, pplx-decider-v1-1-27b, vllm-sr-d3-turbo|-|None -> None of 168|False|
+|open|extra_capability/cost_10x|chon-1.0-12b, h2o-lightning-31b, vllm-sr-d3, pplx-decider-v1-1-27b, vllm-sr-d3-turbo|chon-1.0-12b, h2o-lightning-31b, vllm-sr-d3, pplx-decider-v1-1-27b, vllm-sr-d3-turbo|-|None -> None of 173|False|
+|open|extra_capability/rank_field|chon-1.0-12b, h2o-lightning-31b, vllm-sr-d3, pplx-decider-v1-1-27b, vllm-sr-d3-turbo|chon-1.0-12b, h2o-lightning-31b, vllm-sr-d3, pplx-decider-v1-1-27b, vllm-sr-d3-turbo|-|None -> None of 197|False|
+|open|extra_capability/cost_7x_latency_none|chon-1.0-12b, h2o-lightning-31b, vllm-sr-d3, pplx-decider-v1-1-27b, vllm-sr-d3-turbo|chon-1.0-12b, h2o-lightning-31b, vllm-sr-d3, pplx-decider-v1-1-27b, vllm-sr-d3-turbo|-|None -> None of 185|False|
+|open|extra_capability/cost_10x_latency_none|chon-1.0-12b, h2o-lightning-31b, vllm-sr-d3, pplx-decider-v1-1-27b, vllm-sr-d3-turbo|chon-1.0-12b, h2o-lightning-31b, vllm-sr-d3, pplx-decider-v1-1-27b, vllm-sr-d3-turbo|-|None -> None of 193|False|
+|api|composites/A|kettei-fat, fastino-glide-api, liquid-d1-ultra, nimble-v4-max, drex-max|kettei-fat, fastino-glide-api, liquid-d1-ultra, subq-snap-1.1, nimble-v4-max|subq-snap-1.1|None -> 4 of 45|True|
+|api|composites/B|kettei-fat, fastino-glide-api, drex-max, liquid-d1-ultra, subq-snap-preview|kettei-fat, fastino-glide-api, drex-max, subq-snap-1.1, liquid-d1-ultra|subq-snap-1.1|None -> 4 of 45|True|
+|api|composites/C|kettei-fat, fastino-glide-api, liquid-d1-ultra, nimble-v4-max, drex-max|kettei-fat, fastino-glide-api, liquid-d1-ultra, subq-snap-1.1, nimble-v4-max|subq-snap-1.1|None -> 4 of 45|True|
+|api|capability/official_caps|kettei-fat, fastino-glide-api, drex-max, subq-snap-preview, liquid-d1-ultra|kettei-fat, fastino-glide-api, drex-max, subq-snap-1.1, subq-snap-preview|subq-snap-1.1|None -> 4 of 30|True|
+|api|capability/no_caps|gpt-6-luna, qwen3.8-27b, gpt-6-luna-low, deepseek-flash, gpt-5.6-luna|gpt-6-luna, qwen3.8-27b, gpt-6-luna-low, deepseek-flash, gpt-5.6-luna|-|None -> 9 of 45|False|
+|api|capability/cost_off_latency_2x|kettei-fat, fastino-glide-api, drex-max, subq-snap-preview, liquid-d1-ultra|kettei-fat, fastino-glide-api, drex-max, subq-snap-1.1, subq-snap-preview|subq-snap-1.1|None -> 4 of 36|True|
+|api|capability/latency_none|kettei-fat, fastino-glide-api, drex-max, subq-snap-preview, liquid-d1-ultra|kettei-fat, fastino-glide-api, drex-max, subq-snap-1.1, subq-snap-preview|subq-snap-1.1|None -> 4 of 32|True|
+|api|extra_capability/cost_7x|kettei-fat, fastino-glide-api, drex-max, subq-snap-preview, liquid-d1-ultra|kettei-fat, fastino-glide-api, drex-max, subq-snap-1.1, subq-snap-preview|subq-snap-1.1|None -> 4 of 34|True|
+|api|extra_capability/cost_10x|kettei-fat, fastino-glide-api, drex-max, subq-snap-preview, liquid-d1-ultra|kettei-fat, fastino-glide-api, drex-max, subq-snap-1.1, subq-snap-preview|subq-snap-1.1|None -> 4 of 35|True|
+|api|extra_capability/rank_field|gpt-6-luna, qwen3.8-27b, gpt-6-luna-low, deepseek-flash, gpt-5.6-luna|gpt-6-luna, qwen3.8-27b, gpt-6-luna-low, deepseek-flash, gpt-5.6-luna|-|None -> 9 of 45|False|
+|api|extra_capability/cost_7x_latency_none|gpt-6-luna, gpt-6-luna-low, gpt-5.6-luna, kettei-fat, fastino-glide-api|gpt-6-luna, gpt-6-luna-low, gpt-5.6-luna, kettei-fat, fastino-glide-api|-|None -> 7 of 41|False|
+|api|extra_capability/cost_10x_latency_none|gpt-6-luna, gpt-6-luna-low, gpt-5.6-luna, kettei-fat, fastino-glide-api|gpt-6-luna, gpt-6-luna-low, gpt-5.6-luna, kettei-fat, fastino-glide-api|-|None -> 7 of 42|False|
+|release|A|kettei-fat, fastino-glide-api, torchcast-decision-4b-v1.3, liquid-d1-ultra, nimble-v4-max|kettei-fat, fastino-glide-api, torchcast-decision-4b-v1.3, liquid-d1-ultra, subq-snap-1.1|subq-snap-1.1|None -> 5 of 68|True|
+|release|B|kettei-fat, fastino-glide-api, drex-max, liquid-d1-ultra, h2o-lightning-31b|kettei-fat, fastino-glide-api, drex-max, subq-snap-1.1, liquid-d1-ultra|subq-snap-1.1|None -> 4 of 68|True|
+|release|C|kettei-fat, fastino-glide-api, torchcast-decision-4b-v1.3, liquid-d1-ultra, nimble-v4-max|kettei-fat, fastino-glide-api, torchcast-decision-4b-v1.3, liquid-d1-ultra, subq-snap-1.1|subq-snap-1.1|None -> 5 of 68|True|
+|release|capability|kettei-fat, chon-1.0-12b, h2o-lightning-31b, fastino-glide-api, drex-max|kettei-fat, chon-1.0-12b, h2o-lightning-31b, fastino-glide-api, drex-max|-|None -> 10 of 68|False|

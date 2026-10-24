@@ -1,0 +1,225 @@
+TAP version 13
+# Subtest: v1.6.43 requires independent review and separate publication authority
+ok 1 - v1.6.43 requires independent review and separate publication authority
+  ---
+  duration_ms: 9764.252568
+  ...
+# Subtest: v1.6.43 measured hosted row and every carried score/interval/category
+ok 2 - v1.6.43 measured hosted row and every carried score/interval/category
+  ---
+  duration_ms: 0.632168
+  ...
+# Subtest: v1.6.43 rejects carried CI
+ok 3 - v1.6.43 rejects carried CI
+  ---
+  duration_ms: 119.934341
+  ...
+# Subtest: v1.6.43 rejects new cost
+ok 4 - v1.6.43 rejects new cost
+  ---
+  duration_ms: 174.678224
+  ...
+# Subtest: v1.6.43 rejects disclosure
+ok 5 - v1.6.43 rejects disclosure
+  ---
+  duration_ms: 173.186101
+  ...
+# Subtest: v1.6.43 rejects category
+ok 6 - v1.6.43 rejects category
+  ---
+  duration_ms: 165.398204
+  ...
+# Subtest: v1.6.43 rejects rank
+ok 7 - v1.6.43 rejects rank
+  ---
+  duration_ms: 200.619406
+  ...
+# Subtest: v1.6.43 rejects path
+ok 8 - v1.6.43 rejects path
+  ---
+  duration_ms: 118.723924
+  ...
+# Subtest: v1.6.43 rejects review
+ok 9 - v1.6.43 rejects review
+  ---
+  duration_ms: 116.174091
+  ...
+# Subtest: v1.6.43 rejects old-card-only approval
+ok 10 - v1.6.43 rejects old-card-only approval
+  ---
+  duration_ms: 168.611225
+  ...
+# Subtest: v1.6.43 rejects historical card reused
+ok 11 - v1.6.43 rejects historical card reused
+  ---
+  duration_ms: 188.790743
+  ...
+# Subtest: v1.6.43 rejects fresh approval button
+ok 12 - v1.6.43 rejects fresh approval button
+  ---
+  duration_ms: 245.43738
+  ...
+# Subtest: v1.6.43 rejects fresh approval answer time
+ok 13 - v1.6.43 rejects fresh approval answer time
+  ---
+  duration_ms: 185.825308
+  ...
+# Subtest: v1.6.43 rejects unrelated older card
+ok 14 - v1.6.43 rejects unrelated older card
+  ---
+  duration_ms: 198.306098
+  ...
+# Subtest: v1.6.43 rejects unsent card
+ok 15 - v1.6.43 rejects unsent card
+  ---
+  duration_ms: 207.757424
+  ...
+# Subtest: v1.6.43 rejects answer before dispatch
+ok 16 - v1.6.43 rejects answer before dispatch
+  ---
+  duration_ms: 186.471646
+  ...
+# Subtest: v1.6.43 rejects future answer
+ok 17 - v1.6.43 rejects future answer
+  ---
+  duration_ms: 149.186213
+  ...
+# Subtest: v1.6.43 rejects invalid calendar answer
+ok 18 - v1.6.43 rejects invalid calendar answer
+  ---
+  duration_ms: 225.676744
+  ...
+# Subtest: v1.6.43 rejects wrong answer sender
+ok 19 - v1.6.43 rejects wrong answer sender
+  ---
+  duration_ms: 200.984428
+  ...
+# Subtest: v1.6.43 rejects wrong dispatch receipt
+ok 20 - v1.6.43 rejects wrong dispatch receipt
+  ---
+  duration_ms: 204.824378
+  ...
+# Subtest: v1.6.43 rejects wrong answer receipt
+ok 21 - v1.6.43 rejects wrong answer receipt
+  ---
+  duration_ms: 176.357671
+  ...
+# Subtest: v1.6.43 rejects fresh approval binding
+ok 22 - v1.6.43 rejects fresh approval binding
+  ---
+  duration_ms: 151.054567
+  ...
+# Subtest: v1.6.43 rejects proof preview binding
+ok 23 - v1.6.43 rejects proof preview binding
+  ---
+  duration_ms: 141.977715
+  ...
+# Subtest: v1.6.43 rejects approval preview binding
+ok 24 - v1.6.43 rejects approval preview binding
+  ---
+  duration_ms: 147.462025
+  ...
+# Subtest: v1.6.43 rejects fresh baseline
+ok 25 - v1.6.43 rejects fresh baseline
+  ---
+  duration_ms: 170.98043
+  ...
+# Subtest: v1.6.43 rejects approval cause
+ok 26 - v1.6.43 rejects approval cause
+  ---
+  duration_ms: 208.138617
+  ...
+# Subtest: v1.6.43 rejects item leakage
+ok 27 - v1.6.43 rejects item leakage
+  ---
+  duration_ms: 90.673471
+  ...
+# Subtest: v1.6.43 rejects stale inherited authority
+ok 28 - v1.6.43 rejects stale inherited authority
+  ---
+  duration_ms: 148.545224
+  ...
+# Subtest: v1.6.43 rejects paid exception
+ok 29 - v1.6.43 rejects paid exception
+  ---
+  duration_ms: 135.255509
+  ...
+# Subtest: v1.6.43 accepts a written GO bound to the same dispatch and preview
+ok 30 - v1.6.43 accepts a written GO bound to the same dispatch and preview
+  ---
+  duration_ms: 75.276344
+  ...
+# Subtest: v1.6.43 rejects written GO with a button
+ok 31 - v1.6.43 rejects written GO with a button
+  ---
+  duration_ms: 174.381637
+  ...
+# Subtest: v1.6.43 rejects written GO with a button choice Hold
+ok 32 - v1.6.43 rejects written GO with a button choice Hold
+  ---
+  duration_ms: 173.471806
+  ...
+# Subtest: v1.6.43 rejects written GO for another decision key
+ok 33 - v1.6.43 rejects written GO for another decision key
+  ---
+  duration_ms: 165.953313
+  ...
+# Subtest: v1.6.43 rejects written GO with a mismatched event id
+ok 34 - v1.6.43 rejects written GO with a mismatched event id
+  ---
+  duration_ms: 170.054778
+  ...
+# Subtest: v1.6.43 rejects written GO on the historical card
+ok 35 - v1.6.43 rejects written GO on the historical card
+  ---
+  duration_ms: 170.270274
+  ...
+# Subtest: v1.6.43 rejects written GO before dispatch
+ok 36 - v1.6.43 rejects written GO before dispatch
+  ---
+  duration_ms: 137.486267
+  ...
+# Subtest: v1.6.43 rejects written GO with a wrong receipt
+ok 37 - v1.6.43 rejects written GO with a wrong receipt
+  ---
+  duration_ms: 150.488028
+  ...
+# Subtest: v1.6.43 rejects written GO not bound to the preview
+ok 38 - v1.6.43 rejects written GO not bound to the preview
+  ---
+  duration_ms: 150.973779
+  ...
+# Subtest: v1.6.43 rejects written GO from someone else
+ok 39 - v1.6.43 rejects written GO from someone else
+  ---
+  duration_ms: 148.098562
+  ...
+# Subtest: v1.6.43 rejects unknown approval channel
+ok 40 - v1.6.43 rejects unknown approval channel
+  ---
+  duration_ms: 152.497841
+  ...
+# Subtest: v1.6.43 rejects tap-shaped GO labelled with a channel
+ok 41 - v1.6.43 rejects tap-shaped GO labelled with a channel
+  ---
+  duration_ms: 180.076072
+  ...
+# Subtest: v1.6.42 archive supplement accepts only unchanged carried cells
+ok 42 - v1.6.42 archive supplement accepts only unchanged carried cells
+  ---
+  duration_ms: 52.09858
+  ...
+# Subtest: v1.6.43 comparison radars have measured topic and use-case cells
+ok 43 - v1.6.43 comparison radars have measured topic and use-case cells
+  ---
+  duration_ms: 8744.357978
+  ...
+1..43
+# tests 43
+# suites 0
+# pass 43
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 34846.712072

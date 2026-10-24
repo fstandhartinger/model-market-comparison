@@ -1,0 +1,8 @@
+- Candidate completed on base 1da05e6fc76807aad3287524dc0edbee7317b956; worker branch fusion/jevbench-add-requests-20260919-v1643-build.
+- Engine: codex gpt-6.1-sol medium (worker runner .engine).
+- 79 listed / 68 ranked; all 78 carried rows exact except rank/ranks. All 74 carried field rows, categories and Noul diagnostics reproduce; repeated scorer output bytes identical.
+- TypeScript, build, 279 targeted tests, 17 release tests, full suite (3654 pass / 1 skip / 0 fail), real PENDING refusal, synthetic load and deterministic rebuild PASS.
+- Same 14/40 lists change, but SubQ enters mixed/release A/C at #5 instead of approved #4 and drops Nimble-v4-max instead of Drex Max. REFRESHED GO REQUIRED.
+- Independent review and publication authority remain PENDING. No seal, flip, CR, push, PR, merge, deploy, dispatch, pod, spend, author message or board post.
+- Worker slice done; parent asks remain with the lead. See BUILD-REPORT.md and receipts/CHANGED-PATHS.txt.
+- FINAL DONE

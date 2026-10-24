@@ -1,0 +1,11 @@
+import assert from 'node:assert/strict';
+import {readFile,writeFile} from 'node:fs/promises';
+import {createHash} from 'node:crypto';
+import path from 'node:path';
+const J=path.dirname(new URL(import.meta.url).pathname),root=path.resolve(J,'../..'),pass=path.join(J,'pass');
+process.chdir(root);
+const real=await import(path.join(root,'lib/jevbench-v1643-release.mjs'));
+await assert.rejects(real.readOptionalJevbenchV1643Release(root),/independent release review/);
+const fake=await import(path.join(pass,'lib/jevbench-v1643-release.mjs'));
+const r=await fake.readOptionalJevbenchV1643Release(pass);assert.equal(r.artifact.systems.length,79);
+console.log('PASS: real PENDING tree refused, synthetic PASS tree loads 79 rows');

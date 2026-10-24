@@ -1,0 +1,3 @@
+Only existing run-168 and carried frozen-run measurements were read. No provider requests, new exposures, pods or model code executions occurred. Raw JSONL is referenced by private symlinks under ignored batch/runs; gold and cost-basis item membership are checked in memory. No raw JSONL, gold, task identifiers, predictions or per-item output is included in this candidate, preview, retained receipts or RESULT. The exploratory public identity-check receipt read described in IMPLEMENTATION-FIXES.md was not retained or copied.
+
+All reporting data is aggregate-only. The shared frozen store was read-only. The build's registry, cost-basis file and intermediate model artifacts remain ignored; only aggregate summaries, hashes, logs and final publication artifacts are committed.

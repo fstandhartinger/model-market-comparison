@@ -1,0 +1,145 @@
+/home/flori/jobs/jevbench-add-requests-20260919/workers/v1643-build/wt/r169t/v1643/batch/topics-v1643/categories-with-topics.json 75 systems; {'topics': 7, 'usecases': 20, 'families': 13, 'languages': 23}
+built v1.6.43 roster 79 ranked 68
+{
+ "subq-snap-1.1": {
+  "axes": {
+   "calibration": 88.06513871774217,
+   "cost": 60.67742028447466,
+   "intelligence": 75.75710514449688,
+   "speed": 84.94774043787051
+  },
+  "scores": {
+   "A": 75.7463117322681,
+   "B": 75.74847016866207,
+   "C": 75.7463117322681
+  },
+  "capability": 81.91112193111952,
+  "ranks": {
+   "A": 5,
+   "B": 4,
+   "C": 5,
+   "capability": 10
+  }
+ }
+}
+wired v1.6.43
+Board effect: the SubQ Snap 1.1 row was compared on the merged-board top fives before/after v1.6.43 over all 36 mixed, open-weights and API variants (including 7x/10x cost caps with no latency cap) plus 4 release-board lists: 14 of 40 top-five lists change. Top-five changes caused by: subq-snap-1.1 (publication authority PENDING). 
+ CHANGED all composites/A ['kettei-fat', 'fastino-glide-api', 'torchcast-decision-4b-v1.3', 'liquid-d1-ultra', 'nimble-v4-max'] -> ['kettei-fat', 'fastino-glide-api', 'torchcast-decision-4b-v1.3', 'liquid-d1-ultra', 'subq-snap-1.1']
+ CHANGED all composites/B ['kettei-fat', 'fastino-glide-api', 'drex-max', 'liquid-d1-ultra', 'h2o-lightning-31b'] -> ['kettei-fat', 'fastino-glide-api', 'drex-max', 'subq-snap-1.1', 'liquid-d1-ultra']
+ CHANGED all composites/C ['kettei-fat', 'fastino-glide-api', 'torchcast-decision-4b-v1.3', 'liquid-d1-ultra', 'nimble-v4-max'] -> ['kettei-fat', 'fastino-glide-api', 'torchcast-decision-4b-v1.3', 'liquid-d1-ultra', 'subq-snap-1.1']
+ CHANGED api composites/A ['kettei-fat', 'fastino-glide-api', 'liquid-d1-ultra', 'nimble-v4-max', 'drex-max'] -> ['kettei-fat', 'fastino-glide-api', 'liquid-d1-ultra', 'subq-snap-1.1', 'nimble-v4-max']
+ CHANGED api composites/B ['kettei-fat', 'fastino-glide-api', 'drex-max', 'liquid-d1-ultra', 'subq-snap-preview'] -> ['kettei-fat', 'fastino-glide-api', 'drex-max', 'subq-snap-1.1', 'liquid-d1-ultra']
+ CHANGED api composites/C ['kettei-fat', 'fastino-glide-api', 'liquid-d1-ultra', 'nimble-v4-max', 'drex-max'] -> ['kettei-fat', 'fastino-glide-api', 'liquid-d1-ultra', 'subq-snap-1.1', 'nimble-v4-max']
+ CHANGED api capability/official_caps ['kettei-fat', 'fastino-glide-api', 'drex-max', 'subq-snap-preview', 'liquid-d1-ultra'] -> ['kettei-fat', 'fastino-glide-api', 'drex-max', 'subq-snap-1.1', 'subq-snap-preview']
+ CHANGED api capability/cost_off_latency_2x ['kettei-fat', 'fastino-glide-api', 'drex-max', 'subq-snap-preview', 'liquid-d1-ultra'] -> ['kettei-fat', 'fastino-glide-api', 'drex-max', 'subq-snap-1.1', 'subq-snap-preview']
+ CHANGED api capability/latency_none ['kettei-fat', 'fastino-glide-api', 'drex-max', 'subq-snap-preview', 'liquid-d1-ultra'] -> ['kettei-fat', 'fastino-glide-api', 'drex-max', 'subq-snap-1.1', 'subq-snap-preview']
+ CHANGED api extra_capability/cost_7x ['kettei-fat', 'fastino-glide-api', 'drex-max', 'subq-snap-preview', 'liquid-d1-ultra'] -> ['kettei-fat', 'fastino-glide-api', 'drex-max', 'subq-snap-1.1', 'subq-snap-preview']
+ CHANGED api extra_capability/cost_10x ['kettei-fat', 'fastino-glide-api', 'drex-max', 'subq-snap-preview', 'liquid-d1-ultra'] -> ['kettei-fat', 'fastino-glide-api', 'drex-max', 'subq-snap-1.1', 'subq-snap-preview']
+ CHANGED release A ['kettei-fat', 'fastino-glide-api', 'torchcast-decision-4b-v1.3', 'liquid-d1-ultra', 'nimble-v4-max'] -> ['kettei-fat', 'fastino-glide-api', 'torchcast-decision-4b-v1.3', 'liquid-d1-ultra', 'subq-snap-1.1']
+ CHANGED release B ['kettei-fat', 'fastino-glide-api', 'drex-max', 'liquid-d1-ultra', 'h2o-lightning-31b'] -> ['kettei-fat', 'fastino-glide-api', 'drex-max', 'subq-snap-1.1', 'liquid-d1-ultra']
+ CHANGED release C ['kettei-fat', 'fastino-glide-api', 'torchcast-decision-4b-v1.3', 'liquid-d1-ultra', 'nimble-v4-max'] -> ['kettei-fat', 'fastino-glide-api', 'torchcast-decision-4b-v1.3', 'liquid-d1-ultra', 'subq-snap-1.1']
+built v1.6.43 roster 79 ranked 68
+{
+ "subq-snap-1.1": {
+  "axes": {
+   "calibration": 88.06513871774217,
+   "cost": 60.67742028447466,
+   "intelligence": 75.75710514449688,
+   "speed": 84.94774043787051
+  },
+  "scores": {
+   "A": 75.7463117322681,
+   "B": 75.74847016866207,
+   "C": 75.7463117322681
+  },
+  "capability": 81.91112193111952,
+  "ranks": {
+   "A": 5,
+   "B": 4,
+   "C": 5,
+   "capability": 10
+  }
+ }
+}
+{
+  "historical_card": "18406",
+  "historical_baseline": "v1.6.40",
+  "fresh_baseline": "v1.6.42",
+  "historical_preview_sha256": "8bc099f43bed6379a95b4798aac95fd9ba20e9882a14347dbd7c9fe893462a93",
+  "historical_changed_lists": 14,
+  "fresh_changed_lists": 14,
+  "changed_list_membership_matches": true,
+  "subq_effect_matches": false,
+  "material_differences": [
+    {
+      "list": "all/composites/A",
+      "old_position": 4,
+      "fresh_position": 5,
+      "old_dropped": [
+        "drex-max"
+      ],
+      "fresh_dropped": [
+        "nimble-v4-max"
+      ],
+      "old_entrants": [
+        "subq-snap-1.1"
+      ],
+      "fresh_entrants": [
+        "subq-snap-1.1"
+      ]
+    },
+    {
+      "list": "all/composites/C",
+      "old_position": 4,
+      "fresh_position": 5,
+      "old_dropped": [
+        "drex-max"
+      ],
+      "fresh_dropped": [
+        "nimble-v4-max"
+      ],
+      "old_entrants": [
+        "subq-snap-1.1"
+      ],
+      "fresh_entrants": [
+        "subq-snap-1.1"
+      ]
+    },
+    {
+      "list": "release/A",
+      "old_position": 4,
+      "fresh_position": 5,
+      "old_dropped": [
+        "drex-max"
+      ],
+      "fresh_dropped": [
+        "nimble-v4-max"
+      ],
+      "old_entrants": [
+        "subq-snap-1.1"
+      ],
+      "fresh_entrants": [
+        "subq-snap-1.1"
+      ]
+    },
+    {
+      "list": "release/C",
+      "old_position": 4,
+      "fresh_position": 5,
+      "old_dropped": [
+        "drex-max"
+      ],
+      "fresh_dropped": [
+        "nimble-v4-max"
+      ],
+      "old_entrants": [
+        "subq-snap-1.1"
+      ],
+      "fresh_entrants": [
+        "subq-snap-1.1"
+      ]
+    }
+  ],
+  "publication_authority": "PENDING",
+  "refreshed_GO_required": true
+}

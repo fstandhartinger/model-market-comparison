@@ -1,0 +1,8 @@
+tsc 0
+release 0
+targeted 0
+build 0
+fulltest 1
+# 24 Oct 10:1xZ (run 178, rebased on origin/main 8d8191ae): fulltest 3,701 tests, 3,697 pass, 1 skip, 3 fail.
+# 2 fails = release-page-seo.test.mjs (new on main, CR-551): v1.6.43 page lacked description + PageJsonLd -> fixed in 9fac4125; test re-run 2/2 pass, tsc 0.
+# 1 fail = daily-clean-checkout-wait.test.mjs: gate copy has no .git (environmental); passes 2/2 in the real worktree.
