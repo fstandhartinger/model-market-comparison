@@ -1,4 +1,7 @@
 import { JevLatencyDetail } from '../../../components/JevLatency';
+import { JevMethodTag } from '../../../components/JevMethodTag';
+import { JevDecisionLimitDetail } from '../../../components/JevDecisionLimitCell';
+import { JevPreviousValuesPanel } from '../../../components/JevPreviousValuesPanel';
 import { jevRowArch, JEV_TYPE_LABEL } from '../../../components/jevTypes';
 import { JevArchitectureBadge } from '../../../components/JevArchitecture';
 import { BaseModelDisplay } from '../../../components/BaseModelDisplay';
@@ -148,7 +151,7 @@ function A4System({ data, page, previous }: { data: Awaited<ReturnType<typeof re
   return <>
     <script type="application/ld+json" dangerouslySetInnerHTML={{__html:escapeJsonLd(json)}}/>
     <nav><Link href="/jev-models" className="text-accent underline">Back to JevBench</Link></nav>
-    <header className="bh-page-head mt-3"><h1 className="text-3xl font-bold">{s.display}</h1><JevReleaseStamp data={data}/>
+    <header className="bh-page-head mt-3"><h1 className="text-3xl font-bold">{s.display}<JevMethodTag row={s} /></h1><JevReleaseStamp data={data} row={s} />
       <p className="mt-3" data-bh-jev-a4-capability>Capability {seoOne(capability)} · {page.ranked ? <>API offering, ranked on the <Link href="/jev-models/api" className="text-accent underline">API leaderboard</Link>{page.capabilityRank != null ? ` · Capability rank #${page.capabilityRank} of ${page.nCapability} within the Jev-class caps` : ` · outside the Jev-class caps (${page.capabilityOutside}), below the Capability ranking`}</> : <>API offering, listed and never ranked (wrapper), see the <Link href="/jev-models/api" className="text-accent underline">API leaderboard</Link></>}</p>
       <p className="bh-muted mt-2">{page.full
         ? <>Measured {page.measuredOn} on the full v1.6.1 set ({page.nItems} items), scored like the other full-set API rows, not equated.</>
@@ -163,7 +166,9 @@ function A4System({ data, page, previous }: { data: Awaited<ReturnType<typeof re
       <p data-bh-jev-a4-cost>{usdPerThousand(s.cost?.usd_per_1000)} ({a4CostLabel(s.cost?.kind)})</p><p className="bh-muted mt-2">{s.cost?.basis ?? 'Cost basis not published'}</p>
       <JevLatencyDetail speed={s.speed} kind={(s as { endpoint_kind?: string | null }).endpoint_kind} plain={`p50 latency: ${seoOne(s.speed?.p50_s_adjusted ?? s.speed?.p50_s_raw)} s`} />
       <p className="bh-muted">{s.speed?.adjustment ?? 'Latency adjustment not stated'}</p>
+      <JevDecisionLimitDetail row={s} />
     </section>
+    <JevPreviousValuesPanel row={s} />
     <A4Breakdowns s={s} page={page} />
     {previous && <section className="bh-panel mt-6 p-5" data-bh-jev-a4-previous><h2 className="font-semibold">Previous measurement (v1.5.x, not comparable)</h2>
       <p>Capability {seoOne(previous.capability)} · composite {seoOne(previous.jevbench_score)} · cost {usdPerThousand(previous.cost?.usd_per_1000)} ({costBasisLabel(previous.cost?.kind)})</p>
@@ -176,6 +181,13 @@ function CurrentReleaseSystem({ data, row }: { data: Awaited<ReturnType<typeof r
   const url = `${SITE_URL}${jevSystemPath(row.key)}`;
   // Publish only the current sanitized presentation fields. No historical base-model overlay is copied.
   const price = row.cost?.usd_per_1000;
+  const versionPeers: Record<string, { key: string; label: string }> = {
+    standard_one_3b_sh_v4: { key: 'standard_one_3b_sh', label: 'Predecessor: StandardOne-3B-SH' },
+    'seb-9b-v2': { key: 'seb-9b', label: 'Predecessor: Seb-9B' },
+    standard_one_3b_sh: { key: 'standard_one_3b_sh_v4', label: 'Superseded by StandardOne-3B-SH v4' },
+    'seb-9b': { key: 'seb-9b-v2', label: 'Superseded by Seb-9B-v2' },
+  };
+  const versionPeer = data.artifact.revision === 'v1.7.0' ? versionPeers[row.key] : null;
   const json = {'@context':'https://schema.org','@graph':[
     {'@type':'SoftwareApplication',name:row.display,applicationCategory:'AI model',url,
       ...(Number.isFinite(price) && price != null && price >= 0 && ['measured','announced'].includes(row.cost?.kind ?? '') ? {offers:{'@type':'Offer',price,priceCurrency:'USD',description:`${costBasisLabel(row.cost?.kind)} USD per 1,000 decisions. ${row.cost?.basis ?? ''}`}} : {})},
@@ -184,7 +196,7 @@ function CurrentReleaseSystem({ data, row }: { data: Awaited<ReturnType<typeof r
   return <>
     <script type="application/ld+json" dangerouslySetInnerHTML={{__html:escapeJsonLd(json)}}/>
     <nav><Link href="/jev-models" className="text-accent underline">Back to JevBench</Link></nav>
-    <header className="bh-page-head mt-3"><h1 className="text-3xl font-bold">{row.display}</h1><JevReleaseStamp data={data}/>
+    <header className="bh-page-head mt-3"><h1 className="text-3xl font-bold">{row.display}<JevMethodTag row={row} /></h1><JevReleaseStamp data={data} row={row} />
       <p className="mt-3">Capability {seoOne(row.capability)} · {row.board === 'reference' ? 'Reference, not ranked' : row.board === 'api' ? <>{row.ranked === false ? 'API offering, listed but not ranked on the ' : 'API offering, ranked on the '}<Link href="/jev-models/api" className="text-accent underline">API leaderboard</Link></> : row.rank == null ? 'Not ranked in the current release' : `rank #${row.rank} of ${data.ranked.length} on the open-weights board`}</p>
       <p className="bh-muted mt-2">{row.not_ranked_because ?? row.capability_reasons?.join("; ")}</p>
       <p className="bh-muted mt-2">Last measured: {row.last_measured_on ?? 'date not published'} · measurement release: {row.measurement_revision}</p>
@@ -192,6 +204,7 @@ function CurrentReleaseSystem({ data, row }: { data: Awaited<ReturnType<typeof r
     </header>
     <BaseModelDisplay systemKey={row.key} className="mt-2 block text-sm"/>
     <JevBenchRelatedLinks systemKey={row.key}/>
+    {versionPeer && <p className="mt-4 text-sm" data-bh-jev-version-link><Link className="text-accent underline" href={jevSystemPath(versionPeer.key)}>{versionPeer.label}</Link>. Both measurements remain separate rows.</p>}
     <section className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-4">{(['intelligence','calibration','speed','cost'] as const).map((axis) => <div className="bh-panel p-4" key={axis}><h2 className="capitalize">{axis}</h2><p className="text-2xl font-semibold">{seoOne(row.axes?.[axis])}</p></div>)}</section>
     <section className="bh-panel mt-6 p-5"><h2 className="font-semibold">Composite (secondary)</h2><p>{seoOne(row.jevbench_score)} · {row.composite_rank == null || row.board !== 'open' ? 'Not ranked on this board' : `Composite rank #${row.composite_rank}`}</p></section>
     <section className="bh-panel mt-6 p-5"><h2 className="font-semibold">Cost and measurement conditions</h2>
@@ -199,7 +212,11 @@ function CurrentReleaseSystem({ data, row }: { data: Awaited<ReturnType<typeof r
       <JevLatencyDetail speed={row.speed} kind={(row as { endpoint_kind?: string | null }).endpoint_kind} plain={`p50 latency: ${seoOne(row.speed?.p50_s_adjusted ?? row.speed?.p50_s_raw)} s`} />
       <p className="bh-muted">{row.speed?.adjustment ?? 'Latency adjustment not stated'}</p>
       <p className="bh-muted">{row.speed?.hardware ?? row.endpoint_condition ?? row.speed?.measured_where ?? 'Setup not stated'}</p>
+      <JevDecisionLimitDetail row={row} />
     </section>
+    <JevPreviousValuesPanel row={row} />
+    {row.remeasured_in && row.remeasure?.disclosure && <section className="bh-panel mt-6 p-5" data-bh-jev-remeasure-disclosure><h2 className="font-semibold">Re-measured on a GPU</h2><p className="bh-muted mt-2">{row.remeasure.disclosure}</p></section>}
+    {row.new_in && row.underlying && <section className="bh-panel mt-6 p-5" data-bh-jev-new-row-disclosure><h2 className="font-semibold">Model and serving disclosure</h2><p className="bh-muted mt-2">{row.underlying}</p></section>}
     {(row.source_url ?? row.repo) && <p className="mt-4"><a className="text-accent underline" href={(row.source_url ?? row.repo)!}>Published source</a></p>}
   </>;
 }

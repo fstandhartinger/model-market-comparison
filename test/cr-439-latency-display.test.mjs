@@ -10,6 +10,7 @@ import {
 } from '../lib/jev-latency.mjs';
 import { readJevbenchAgentFeed } from '../lib/jevbench-agent-feed.mjs';
 import { readCurrentJevbench } from '../lib/jevbench-current.mjs';
+import { readOptionalJevbenchV170Release, hasPublishedJevbenchV170Release } from '../lib/jevbench-v170-release.mjs';
 import { jevClassRows, JEV_V16_CLASS_OPTIONS } from '../lib/jevbench-jev-class.mjs';
 import { jevV15BoardRow } from '../lib/jevbench-v15-board.mjs';
 import { compileTsModule } from './helpers/transpile-ts.mjs';
@@ -98,9 +99,12 @@ test('CR-439 data: the current release carries H2O-Lightning-4B measured 0.029 s
   assert.equal(v.estimate.toFixed(2), '0.21');
   const { feed } = await readJevbenchAgentFeed();
   const h = feed.systems.find((s) => s.key === 'h2o-lightning-4b');
-  assert.equal(h.latency.p50_s_raw, row.speed.p50_s_raw, 'existing fields are kept');
-  assert.equal(h.latency.p50_s_adjusted, row.speed.p50_s_adjusted);
-  assert.equal(h.latency.p50_s_measured, row.speed.p50_s_raw);
+  // v1.7.0 (10 s rule, published): the feed carries the restated Speed (all decisions: p50 0.0311 s) instead of the v1.6.1 release value; the adjustment rule is the same.
+  const v170 = (await hasPublishedJevbenchV170Release()) ? (await readOptionalJevbenchV170Release()).artifact.systems.find((s) => s.key === 'h2o-lightning-4b') : null;
+  const speed = v170 ? v170.speed : row.speed;
+  assert.equal(h.latency.p50_s_raw, speed.p50_s_raw, 'existing fields are kept');
+  assert.equal(h.latency.p50_s_adjusted, speed.p50_s_adjusted);
+  assert.equal(h.latency.p50_s_measured, speed.p50_s_raw);
   assert.equal(h.latency.latency_basis, 'measured-loopback');
   assert.match(h.latency.latency_note, /2 × measured p50 \+ 150 ms/);
   const api = feed.systems.find((s) => s.board === 'api');
@@ -136,7 +140,7 @@ test('CR-439 coverage: every latency surface uses the shared helper; method note
   for (const [file, pattern] of Object.entries(uses)) assert.match(await src(file), pattern, file);
   const board = await src('components/JevBenchV16Board.tsx');
   assert.match(board, /version: 'v1\.7\.45', date: '2026-10-11', text: 'Display: self-hosted rows now show the measured p50 next to the network-including estimate \(2× measured \+ 150 ms\), which the ranking continues to use\. No score or rank changed\.'/);
-  assert.match(board, /<JevLatencyMethodNote \/>/);
+  assert.match(board, /<JevLatencyMethodNote( inForce=\{.*\})? \/>/);
   const guide = await src('components/DecisionBenchmarkGuide.tsx');
   assert.match(guide, /2 × measured p50 \+ 150 ms/);
   assert.match(guide, /Hosted endpoint timing on request/);
@@ -160,6 +164,8 @@ test('CR-439 render: the board table shows 0.029 s with the est. line for H2O-Li
     './BaseModelDisplay': await compileReact('components/BaseModelDisplay.tsx'),
     './JevLatency': await compileReact('components/JevLatency.tsx'),
     './JevArchitecture': await compileReact('components/JevArchitecture.tsx'),
+    './JevMethodTag': await compileReact('components/JevMethodTag.tsx'),
+    './JevDecisionLimitCell': await compileReact('components/JevDecisionLimitCell.tsx'),
     './jevTypes': await compileTsModule(fileUrl('components/jevTypes.ts')),
     './useJevV15VisibleKeys': moduleUrl('export function useJevV15VisibleKeys(keys){return new Set(keys)}'),
     './UseModelButton': moduleUrl('export const UseModelEntry=()=>null;'),

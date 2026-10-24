@@ -60,7 +60,7 @@ test('badge uses row disclosure while the existing OpenAI P300 badge is unchange
   assert.equal(jevPartialLabel('preliminary', { label: V1614_A2_LABEL }), V1614_A2_LABEL);
   const source = await readFile('components/JevBoardInteractive.tsx', 'utf8');
   assert.match(source, /partialLabel\(row.listing, row.preliminary\)/);
-  assert.match(source, /export const partialLabel = jevPartialLabel/);
+  assert.match(source, /export const partialLabel = \(listing: string, preliminary\?: Parameters<typeof jevPartialLabel>\[1\]\) => listing === JEV_REMEASURE_PENDING \? JEV_REMEASURE_PENDING_LABEL : jevPartialLabel\(listing, preliminary\)/);
 });
 test('official Microsoft row and every ranked list remain unchanged after cohort addition', async () => {
   const base = withApiFullAddenda((await readCurrentJevbench()).artifact, await readApiFullAddenda());
@@ -80,7 +80,7 @@ test('official Microsoft row and every ranked list remain unchanged after cohort
 
 test('preliminary measurement is included in all/versioned and API chart/table projections with canonical links', async () => {
   const board = await readFile('components/JevBenchV16Board.tsx', 'utf8');
-  assert.match(board, /scope === 'all' \? jevScopeDisplayOrder\(a.systems.filter\(\(s\) => s.ranked \|\| s.listing === JEV_PRELIMINARY_LISTING\)\)/);
+  assert.match(board, /scope === 'all' \? jevScopeDisplayOrder\(a.systems.filter\(\(s\) => s.ranked \|\| s.listing === JEV_PRELIMINARY_LISTING \|\| remeasure\(s\)\)\)/);
   assert.match(board, /const listedRow[^;]+JEV_PRELIMINARY_LISTING/);
   const table = await readFile('components/JevBoardInteractive.tsx', 'utf8');
   assert.match(table, /jevSystemPath\(row.canonical_system_key \?\? row.key\)/);

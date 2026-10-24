@@ -189,6 +189,9 @@ const sharedAliases = {
   // CR-439: the shared latency cell (measured value + labelled estimate) is imported by the board table.
   './JevLatency': await compileReactModule(file('../components/JevLatency.tsx')),
   './JevArchitecture': await compileReactModule(file('../components/JevArchitecture.tsx')),
+  // v1.7.0: method tag and the 10 s cell are imported by the board table.
+  './JevMethodTag': await compileReactModule(file('../components/JevMethodTag.tsx')),
+  './JevDecisionLimitCell': await compileReactModule(file('../components/JevDecisionLimitCell.tsx')),
   './jevTypes': await compileTsModule(file('../components/jevTypes.ts')),
   // The isolated SSR render has no page-level filter provider; mirror the hook's default all-visible state.
   './useJevV15VisibleKeys': moduleUrl('export function useJevV15VisibleKeys(keys){return new Set(keys)}'),

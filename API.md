@@ -56,6 +56,23 @@ artifact URL and artifact SHA-256), `headline`, `composite_option`, `weights`,
   Prices are per thousand decisions, not token prices; consult the basis for the
   pricing scenario. `latency` includes raw/adjusted median seconds and adjustment.
 
+**`schema_version` 2 (from JevBench v1.7.0, method v1.7).** While the live board is a v1.7 board, `schema_version` is `2`;
+feeds of earlier boards stay `1` and carry none of the fields below. Additions at the top level: `restated_by` (the release
+that restated the board, e.g. `v1.7.0`) and `method` (`label`, `decision_limit_s` = 10, `treatment` = `share`, and the rule in
+words: a decision whose measured latency is over 10 s counts as a wrong answer and as zero calibration for that item).
+Additions per system, next to the unchanged `latency` object (which keeps its `raw`/`adjusted` p50 and adds `p95_s_raw`,
+`p95_s_adjusted` and `n`, the number of decisions the times cover):
+
+- `method`: `v1.7` for a row scored under the 10 s rule, `v1.6` for a row that is re-measure pending (its numbers are its v1.6
+  values, it is not ranked, `listing` is `remeasure-pending`), `null` for dated-carry rows. `method_status` repeats it as
+  `v1.7`, `v1.6-pending` or `v1.5-carry`.
+- `decision_limit`: the limit object verbatim (`limit_s`, `treatment`, `n_over_limit`, `n_over_limit_answered_ok`, `speed_n`, `rule`, `speed_basis`); `null` for rows without it.
+- `previous`: the row's values as published before the 10 s rule (`board_release`, `method` = `v1.6`, `composite_score`,
+  `capability`, `axes`, `rank`, `open_board_rank`, `api_board_rank`). It is never mixed into the v1.7 values. Rows measured for the first time
+  under the rule have no `previous` (`null`).
+- `rescored_in` (`v1.7.0` for a re-scored row), `new_in` (a row measured first under the rule) and `remeasured_in` (a row measured again on the same items on a
+  GPU that replaces its earlier CPU row in full); each appears only where it applies.
+
 Missing measurements and ineligible ranks are `null`, never invented zeroes.
 The response is CORS-enabled, cached for five minutes, with `X-Content-SHA256`
 covering the feed bytes. `source.artifact_sha256` covers the original release bytes.

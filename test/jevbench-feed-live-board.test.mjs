@@ -12,6 +12,7 @@ import { readDrawEquating, jevLiveAllArtifact } from '../lib/jevbench-cohort-mer
 import { jevbenchScopeArtifact, jevRowScope } from '../lib/jevbench-scope.mjs';
 import { jevClassRows, JEV_V16_CLASS_OPTIONS } from '../lib/jevbench-jev-class.mjs';
 import { jevV15BoardSystem } from '../lib/jevbench-v15-board.mjs';
+import { hasPublishedJevbenchV170Release } from '../lib/jevbench-v170-release.mjs';
 
 const { feed, bytes, sha256 } = await readJevbenchAgentFeed();
 const rel = await readJevbenchV161Release();
@@ -35,7 +36,9 @@ test('feed key set equals the merged live board and the page shares the assembly
 
 test('latest_release is the newest release of the draw table, not a hard-coded list', async () => {
   const { draws } = await readDrawEquating();
-  const newest = draws.map((d) => d.latest_release).sort((a, b) => a.localeCompare(b, 'en', { numeric: true })).at(-1);
+  const drawNewest = draws.map((d) => d.latest_release).sort((a, b) => a.localeCompare(b, 'en', { numeric: true })).at(-1);
+  // v1.7.0 restates the whole board (it is not a draw release): once it is published it is the newest release; the draw table is unchanged.
+  const newest = (await hasPublishedJevbenchV170Release()) ? 'v1.7.0' : drawNewest;
   assert.equal(feed.revision, newest);
   assert.equal(feed.latest_release, newest);
   assert.equal(feed.latest_release_page, `/jev-models/${newest}`);

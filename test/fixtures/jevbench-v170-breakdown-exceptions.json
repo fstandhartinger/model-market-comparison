@@ -1,0 +1,143 @@
+{
+ "schema_version": 1,
+ "kind": "jevbench-breakdown-exceptions",
+ "note": "Test-only: exceptions that apply to the restated v1.7.0 board once it is published (test/jevbench-breakdowns-every-listed-row.test.mjs adds them to data/jevbench-breakdown-exceptions.json only then). Generated from the gate output on the PASS tree.",
+ "entries": [
+  {
+   "key": "bb-qwen3.5-4b-lora",
+   "dims": [
+    "topics",
+    "usecases",
+    "languages"
+   ],
+   "reason": "Cells omitted in v1.7.0 (not carried from v1.6): the cell builder could not reproduce this row's published cells under the 10 s rule.",
+   "decision": "DECISIONS 2026-10-21 19:15 UTC (benchmark owner ruling on the share treatment: rows that cannot be re-scored show their v1.6 values, and cells that cannot be reproduced are omitted rather than carried)"
+  },
+  {
+   "key": "chon-1.0-e4b",
+   "dims": [
+    "topics",
+    "usecases",
+    "languages"
+   ],
+   "reason": "Re-measure pending under the 10 s rule: this row is listed inline and unranked with its v1.6 values shown as v1.6; its per-decision times were recorded on a loaded CPU host, so no v1.7 category or language cells exist (benchmark owner ruling).",
+   "decision": "DECISIONS 2026-10-21 19:15 UTC (benchmark owner ruling on the share treatment: rows that cannot be re-scored show their v1.6 values, and cells that cannot be reproduced are omitted rather than carried)"
+  },
+  {
+   "key": "classone-gemma4-e2b",
+   "dims": [
+    "topics",
+    "usecases",
+    "languages"
+   ],
+   "reason": "Cells omitted in v1.7.0 (not carried from v1.6): the cell builder could not reproduce this row's published cells under the 10 s rule.",
+   "decision": "DECISIONS 2026-10-21 19:15 UTC (benchmark owner ruling on the share treatment: rows that cannot be re-scored show their v1.6 values, and cells that cannot be reproduced are omitted rather than carried)"
+  },
+  {
+   "key": "decisio-gemma-4-31b-v080",
+   "dims": [
+    "topics",
+    "usecases",
+    "languages"
+   ],
+   "reason": "Cells omitted in v1.7.0 (not carried from v1.6): the cell builder could not reproduce this row's published cells under the 10 s rule.",
+   "decision": "DECISIONS 2026-10-21 19:15 UTC (benchmark owner ruling on the share treatment: rows that cannot be re-scored show their v1.6 values, and cells that cannot be reproduced are omitted rather than carried)"
+  },
+  {
+   "key": "fastino-gliner-2-5-decide",
+   "dims": [
+    "languages"
+   ],
+   "reason": "Cells omitted in v1.7.0 (not carried from v1.6): the cell builder could not reproduce this row's published cells under the 10 s rule.",
+   "decision": "DECISIONS 2026-10-21 19:15 UTC (benchmark owner ruling on the share treatment: rows that cannot be re-scored show their v1.6 values, and cells that cannot be reproduced are omitted rather than carried)"
+  },
+  {
+   "key": "mercury-decide",
+   "dims": [
+    "topics",
+    "usecases",
+    "languages"
+   ],
+   "reason": "Cells omitted in v1.7.0 (not carried from v1.6): the cell builder could not reproduce this row's published cells under the 10 s rule.",
+   "decision": "DECISIONS 2026-10-21 19:15 UTC (benchmark owner ruling on the share treatment: rows that cannot be re-scored show their v1.6 values, and cells that cannot be reproduced are omitted rather than carried)"
+  },
+  {
+   "key": "messier-one-v0.2",
+   "dims": [
+    "topics",
+    "usecases",
+    "languages"
+   ],
+   "reason": "Cells omitted in v1.7.0 (not carried from v1.6): the cell builder could not reproduce this row's published cells under the 10 s rule.",
+   "decision": "DECISIONS 2026-10-21 19:15 UTC (benchmark owner ruling on the share treatment: rows that cannot be re-scored show their v1.6 values, and cells that cannot be reproduced are omitted rather than carried)"
+  },
+  {
+   "key": "mghafiri-qwen3.5-0.8b-decision-model",
+   "dims": [
+    "topics",
+    "usecases",
+    "languages"
+   ],
+   "reason": "Re-measure pending under the 10 s rule: this row is listed inline and unranked with its v1.6 values shown as v1.6; its per-decision times were recorded on a loaded CPU host, so no v1.7 category or language cells exist (benchmark owner ruling).",
+   "decision": "DECISIONS 2026-10-21 19:15 UTC (benchmark owner ruling on the share treatment: rows that cannot be re-scored show their v1.6 values, and cells that cannot be reproduced are omitted rather than carried)"
+  },
+  {
+   "key": "microsoft-decision-1",
+   "dims": [
+    "topics",
+    "usecases",
+    "languages"
+   ],
+   "reason": "Cells omitted in v1.7.0 (not carried from v1.6): the descriptive scorer that produced this row's cells cannot be re-run under the 10 s rule.",
+   "decision": "DECISIONS 2026-10-21 19:15 UTC (benchmark owner ruling on the share treatment: rows that cannot be re-scored show their v1.6 values, and cells that cannot be reproduced are omitted rather than carried)"
+  },
+  {
+   "key": "modernbert-jev-v2",
+   "dims": [
+    "topics",
+    "usecases",
+    "languages"
+   ],
+   "reason": "Re-measure pending under the 10 s rule: this row is listed inline and unranked with its v1.6 values shown as v1.6; its per-decision times were recorded on a loaded CPU host, so no v1.7 category or language cells exist (benchmark owner ruling).",
+   "decision": "DECISIONS 2026-10-21 19:15 UTC (benchmark owner ruling on the share treatment: rows that cannot be re-scored show their v1.6 values, and cells that cannot be reproduced are omitted rather than carried)"
+  },
+  {
+   "key": "nev-2b",
+   "dims": [
+    "topics",
+    "usecases",
+    "languages"
+   ],
+   "reason": "Re-measure pending under the 10 s rule: this row is listed inline and unranked with its v1.6 values shown as v1.6; its per-decision times were recorded on a loaded CPU host, so no v1.7 category or language cells exist (benchmark owner ruling).",
+   "decision": "DECISIONS 2026-10-21 19:15 UTC (benchmark owner ruling on the share treatment: rows that cannot be re-scored show their v1.6 values, and cells that cannot be reproduced are omitted rather than carried)"
+  },
+  {
+   "key": "open-jev-deberta-v3-large",
+   "dims": [
+    "languages"
+   ],
+   "reason": "Cells omitted in v1.7.0 (not carried from v1.6): the cell builder could not reproduce this row's published cells under the 10 s rule.",
+   "decision": "DECISIONS 2026-10-21 19:15 UTC (benchmark owner ruling on the share treatment: rows that cannot be re-scored show their v1.6 values, and cells that cannot be reproduced are omitted rather than carried)"
+  },
+  {
+   "key": "reflex-instinct-0.6b",
+   "dims": [
+    "topics",
+    "usecases",
+    "languages"
+   ],
+   "reason": "Re-measure pending under the 10 s rule: this row is listed inline and unranked with its v1.6 values shown as v1.6; its per-decision times were recorded on a loaded CPU host, so no v1.7 category or language cells exist (benchmark owner ruling).",
+   "decision": "DECISIONS 2026-10-21 19:15 UTC (benchmark owner ruling on the share treatment: rows that cannot be re-scored show their v1.6 values, and cells that cannot be reproduced are omitted rather than carried)"
+  },
+  {
+   "key": "seb-9b",
+   "dims": [
+    "topics",
+    "usecases",
+    "languages"
+   ],
+   "reason": "Cells omitted in v1.7.0 (not carried from v1.6): the cell builder could not reproduce this row's published cells under the 10 s rule.",
+   "decision": "DECISIONS 2026-10-21 19:15 UTC (benchmark owner ruling on the share treatment: rows that cannot be re-scored show their v1.6 values, and cells that cannot be reproduced are omitted rather than carried)"
+  }
+ ]
+}

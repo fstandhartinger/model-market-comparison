@@ -52,9 +52,9 @@ test('3: on the open board with the toggle on, Jev and every API offering sit at
 
 test('4: the shared sort keeps interleaved listings in place; the board uses the display order; method + revision say so', () => {
   const chart = src('components/JevBoardInteractive.tsx');
-  assert.match(chart, /const placed = \(r: JevBoardViewRow\) => r\.ranked \|\| JEV_INTERLEAVED_LISTINGS\.has\(r\.listing\);/);
+  assert.match(chart, /const placed = \(r: JevBoardViewRow\) => r\.ranked \|\| JEV_INTERLEAVED_LISTINGS\.has\(r\.listing\) \|\| r\.listing === JEV_REMEASURE_PENDING;/);
   const board = src('components/JevBenchV16Board.tsx');
-  assert.match(board, /: jevScopeDisplayOrder\(\[\.\.\.a\.systems\.filter\(listedRow\), \.\.\.\(extra as typeof a\.systems\)\]\);/); // v1.7.5 adds API-board extras
+  assert.match(board, /: jevScopeDisplayOrder\(\[\.\.\.a\.systems\.filter\(\(s\) => listedRow\(s\) \|\| remeasure\(s\)\), \.\.\.\(extra as typeof a\.systems\)\]\);/); // v1.7.5 adds API-board extras
   assert.match(board, /The base-model reference price only applies to open-weights rows; API offerings are ranked at their own list price/);
   assert.match(board, /version: 'v1\.7\.3'/);
 });
