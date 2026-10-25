@@ -1,3 +1,4 @@
+import { hasPublishedJevbenchV172Release } from '../lib/jevbench-v172-release.mjs';
 import { hasPublishedJevbenchV171Release } from '../lib/jevbench-v171-release.mjs';
 import test from 'node:test';
 import { hasPublishedJevbenchV170Release } from '../lib/jevbench-v170-release.mjs';
@@ -95,6 +96,6 @@ test('Delta 4: with the folds collapsed, Jev 1.13.0 and Jev 1.14.0 are rendered 
   assert.equal(barIds(compHead).length, 22);
 
   // v1.7.0 (10 s rule): once the PASS-reviewed release is published the board is restated and the v1.7.0 roster applies; before that the v1.6.39 roster.
-  const frozen = JSON.parse(await readFile(`${root}/test/fixtures/jevbench-${(await hasPublishedJevbenchV171Release()) ? 'v171' : (await hasPublishedJevbenchV170Release()) ? 'v170' : 'v1643'}-ranks.json`, 'utf8'));
+  const frozen = JSON.parse(await readFile(`${root}/test/fixtures/jevbench-${(await hasPublishedJevbenchV172Release()) ? 'v172' : (await hasPublishedJevbenchV171Release()) ? 'v171' : (await hasPublishedJevbenchV170Release()) ? 'v170' : 'v1643'}-ranks.json`, 'utf8'));
   assert.deepEqual(Object.fromEntries(open.systems.filter((s) => s.ranked).map((s) => [s.key, [s.rank, s.ranks.A, s.ranks.B, s.ranks.C, s.ranks.capability]])), frozen.views.open.ranks, 'every open-board rank matches the v1.6.31 roster fixture');
 });

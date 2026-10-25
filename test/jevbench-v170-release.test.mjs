@@ -1,3 +1,4 @@
+import { hasPublishedJevbenchV172Release } from '../lib/jevbench-v172-release.mjs';
 import { hasPublishedJevbenchV171Release } from '../lib/jevbench-v171-release.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
@@ -341,7 +342,7 @@ if (!reviewed) {
   });
   test('a published v1.7.0 board is live: restated rows, v1.7.0 as the latest release, archive pages untouched', async () => {
     const live = await assembleJevBoard({ release, previous, live: true, apiA4 });
-    const latest = (await hasPublishedJevbenchV171Release()) ? 'v1.7.1' : 'v1.7.0';
+    const latest = (await hasPublishedJevbenchV172Release()) ? 'v1.7.2' : (await hasPublishedJevbenchV171Release()) ? 'v1.7.1' : 'v1.7.0';
     assert.equal(live.published.restated_by, latest); assert.equal(live.published.revision, 'v1.6.1');
     assert.equal(live.published.systems.find((s) => s.key === 'chon-1.0-12b').method, 'v1.7');
     assert.equal(await readLatestJevbenchRelease('v1.6.1'), latest);

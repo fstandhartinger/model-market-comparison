@@ -1,0 +1,110 @@
+{
+ "carried_rows": 288,
+ "carried_rows_equal_except": [
+  "rank",
+  "ranks"
+ ],
+ "files": {
+  "carry": "271d1fc77a136a04a1eb6deb5480c52d4211eb2b66b2ac8bb31e80867e69003a",
+  "categories": "fdb4d9dcc4eb625bfdffb3fe6b113f0239f19a77773987cbad64ca94185ea8eb",
+  "history": "5cd8c1332226ea9c179883d2285c0d8b8cc593ae38f2645197364a7ddd9c83c1",
+  "history-carry": "334e851944e92383ab3071e52b3012040c7023d0fe236395953169ebee8f0459",
+  "proof": "59bb46aa7b3972e3d1529194fcc7e83d73469995be5311d3d35d969408d32bdb",
+  "results": "754f776d1a14660936eea464070991243b0049aebda140ea5ff25c590e4fe2a7"
+ },
+ "method": {
+  "decision_limit_s": 10,
+  "label": "v1.7",
+  "rule": "latency_s > 10.000 s -> failed",
+  "treatment": "share"
+ },
+ "new_rows": {
+  "jeetu-decider-2b": {
+   "axes": {
+    "calibration": 73.13553830274921,
+    "cost": 70.29031879870993,
+    "intelligence": 10.191329118370533,
+    "speed": 90.89924129769977
+   },
+   "composite_ci95": {
+    "A": [
+     0.5644114232915887,
+     2.199782645374223
+    ],
+    "B": [
+     0.39994581307392085,
+     1.6471041186506117
+    ],
+    "C": [
+     0.3919523772858255,
+     1.5276268370654327
+    ]
+   },
+   "decision_limit": {
+    "limit_s": 10.0,
+    "n_over_limit": 0,
+    "n_over_limit_answered_ok": 0,
+    "rule": "latency_s > limit -> failed",
+    "speed_basis": "all decisions given (lane items in the raw), measured latency_s",
+    "speed_n": 1500,
+    "treatment": "share"
+   },
+   "model_pin": "Jeetu456/decider-2b@cd0216309bf590f387500d78d1970af15d04baf5",
+   "pre_score_review_sha256": "88856c0029a5b2e98c4e54c5ac33a6fee6103b8e470ecddb7b77a8bbb7e0f196",
+   "raw_sha256": "ef1f249dfbf156fb53f38028fe4d6b421b32760588a5b929f753573a8f326384",
+   "scored_input_sha256": "ac51a64e34c6e2dc1042f3e2f8f3da758d12de0e1e07e5c694cad9f72e3ecc0d",
+   "treatment": "ranked"
+  }
+ },
+ "predecessor": {
+  "publication_sha256": "756a97618090278f791b0474c8ba82b7d759f5535000755c081ac91300695639",
+  "revision": "v1.7.1"
+ },
+ "pricing_module_sha256": "aa2afcd5a58d0c4cc0e3d6867d590c70b6ac58e971410c27faf9628f97bcf8b7",
+ "publication_approval": {
+  "asks": [
+   {
+    "admission": "custody #26049 item 1; device #26264",
+    "handoff": "board #26283 (HANDOFF-R11A.md)",
+    "key": "jeetu-decider-2b",
+    "relay": "regular queue"
+   }
+  ],
+  "button_tap": false,
+  "fresh_baseline": "v1.7.1",
+  "go": {
+   "channel": "direct-message",
+   "date": "2026-10-16",
+   "quote": "I really want all of the models we have evaluated to be online (even if they land in #5) on both JevBench and ImageJevBench",
+   "recorded_at": "2026-10-16T12:50Z",
+   "recorded_in": "DECISIONS.md 2026-10-16 12:50 UTC",
+   "where": "laptop chat"
+  },
+  "status": "GO (standing, no top-five change)",
+  "top_five_effect": "none",
+  "top_five_preview": {
+   "path": "r185/v172/receipts/topfive-diff.json",
+   "sha256": "2f21d3c2d672a965a3acdbd65b6eaf26a9e11dcf3dcaf9465967d7b0db4667f4"
+  }
+ },
+ "publication_review": {
+  "engine": "claude-opus-5-5 (medium, account B, Sandy)",
+  "receipt_sha256": "43c954f4f65817fe71401aa3e64d10d9932ba590b65293ba81f34539da276132",
+  "verdict": "PASS"
+ },
+ "publication_sha256": "6b5eb8810895792fd3b468c58be9fc7f9a4ef412c0f330d6bdc32487fd249e73",
+ "release": "v1.7.2",
+ "scorers": {
+  "a2_cells_v16": "afd034efe27bde12f2ebbfd12c4c0792c93214e1aa9a63deecb0e83a0184c990",
+  "build_categories_v16": "40eb50f3d7fea2693b4478c4b89f8bfb957dd17776add491935742e3b9354e73",
+  "build_topics_v16": "ec04ab598162bfc4340ffa7916a06573eb1222132c61e47ab772045bc67ced78",
+  "decisive_v16": "80b9ccf43e58dddb1b2a77e0a33aba8a9f7337a3a9a639afc7264218bbf8918f",
+  "noul_method_v16": "119e59486ab3300b972fbcbadb0fe1dceceb124287607375aa61c66063c607d0",
+  "pins_v17": "b50cc00dd2cb0ba46157eb6a2bda620255f3ff54404025e992bc7962dfff2f8b",
+  "run_under_v17": "efb194b2ea350db59be37e5e72af71f809f763a2476cd6f521adf6f4fd90a64f",
+  "score_v15": "0931e05c6410b1b971201834397cb609cdb25f942723c50375632952f6dcc447",
+  "score_v15_headlineA": "826f2cbcb57007ec8a161e6eb0111182b8a656c0638027c6c78022a858fd8e2c",
+  "score_v16": "02132271117653e6302c509232a581d0094f0e78eac8b1bfc67596fd5d5097e9",
+  "score_v17": "6363458d208a52f4ad5aaf73027cad1b7e0358ff962e581d57a3cc462c8f1978"
+ }
+}

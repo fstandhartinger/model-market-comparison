@@ -1,0 +1,5 @@
+PASS dry-run flip leaves manifest byte-identical
+conditional critic refused even in dry run
+full freeze JSON parses and contains all new rows and approval, beyond old 3000-byte truncation
+both dry-run helpers reject a changed/non-PASS predecessor
+both dry-run helpers reject an unbound PASS predecessor
