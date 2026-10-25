@@ -1,0 +1,26 @@
+"""Idempotent v1.7.4 integration; predecessor chain remains unchanged."""
+import json,os,pathlib
+J=pathlib.Path(__file__).resolve().parent;W=pathlib.Path(os.environ.get('WT',str(J.parents[1])))
+def edit(name,old,new):
+ p=W/name;s=p.read_text()
+ if new in s:return
+ assert old in s,(name,old)
+ p.write_text(s.replace(old,new))
+p=W/'app/api/jevbench/v1.7.4/route.ts';p.parent.mkdir(parents=True,exist_ok=True);p.write_text((W/'app/api/jevbench/v1.7.3/route.ts').read_text().replace('V173','V174').replace('v173','v174'))
+p=W/'app/jev-models/v1.7.4/page.tsx';p.parent.mkdir(parents=True,exist_ok=True)
+s=(W/'app/jev-models/v1.7.3/page.tsx').read_text().replace('v1.7.3','__NEW__').replace('v1.7.2','v1.7.3').replace('__NEW__','v1.7.4').replace('V173','V174').replace('v173','v174').replace('jev173','jev174')
+s=s.replace('GPU replacement and one hosted addition','One same-draw self-hosted addition').replace('GPU replacement and hosted addition','One same-draw self-hosted addition')
+s=s.replace('Chon-1.0-E4B GPU scores and times replace CPU; ScaleDown classify-1 joins as a hosted API. Same method; all 288 carried rows keep their scores.','DOPEST 1.0 (31B) joins as a self-hosted row. Same method; all 290 carried rows retain their scores and confidence intervals.')
+s=s.replace('Chon-1.0-E4B GPU scores and times replace its CPU measurement in full; classify-1 (ScaleDown) joins as a hosted API row.','One new self-hosted row DOPEST 1.0 (31B); no method change.').replace('All 288 other rows','All 290 carried rows')
+p.write_text(s)
+edit('lib/jevbench-live-board.mjs',"import { readJevbenchV173ForBoard, withV173Addendum }", "import { readJevbenchV174ForBoard, withV174Addendum } from './jevbench-v174-release.mjs';\nimport { readJevbenchV173ForBoard, withV173Addendum }")
+edit('lib/jevbench-live-board.mjs','return v173 ? withV173Addendum(throughV172, v173) : throughV172;', 'const throughV173 = v173 ? withV173Addendum(throughV172, v173) : throughV172;\n  const v174 = await readJevbenchV174ForBoard(root);\n  return v174 ? withV174Addendum(throughV173, v174) : throughV173;')
+edit('lib/jevbench-live-board.mjs',"return (await readJevbenchV173ForBoard(root)) ? 'v1.7.3'", "return (await readJevbenchV174ForBoard(root)) ? 'v1.7.4' : (await readJevbenchV173ForBoard(root)) ? 'v1.7.3'")
+edit('components/JevBenchReleaseVersionNav.tsx',"type JevRelease = 'v1.7.3'", "type JevRelease = 'v1.7.4' | 'v1.7.3'")
+edit('lib/jevbench-categories.mjs',"'v1.7.1', 'v1.7.2', 'v1.7.3'];", "'v1.7.1', 'v1.7.2', 'v1.7.3', 'v1.7.4'];")
+edit('lib/jevbench-releases.mjs',"  { version: 'v1.7.3'", "  { version: 'v1.7.4', date: '2026-10-25', href: '/jev-models/v1.7.4', text: 'One new self-hosted row DOPEST 1.0 (31B); no method change.' },\n  { version: 'v1.7.3'")
+edit('components/JevReleaseHistory.tsx',"import { hasPublishedJevbenchV173Release }", "import { hasPublishedJevbenchV174Release } from '../lib/jevbench-v174-release.mjs';\nimport { hasPublishedJevbenchV173Release }")
+edit('components/JevReleaseHistory.tsx','v171, v172, v173] =','v171, v172, v173, v174] =')
+edit('components/JevReleaseHistory.tsx','hasPublishedJevbenchV173Release()]);','hasPublishedJevbenchV173Release(), hasPublishedJevbenchV174Release()]);')
+edit('components/JevReleaseHistory.tsx',"!v173 && 'v1.7.3'].filter", "!v173 && 'v1.7.3', !v174 && 'v1.7.4'].filter")
+print('wired v1.7.4; predecessor chain retained')

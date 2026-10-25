@@ -1,0 +1,14 @@
+import {readFileSync} from 'node:fs';
+import {createHash} from 'node:crypto';
+import path from 'node:path';
+import {pathToFileURL} from 'node:url';
+const root=process.argv[2]??process.cwd();
+const imp=p=>import(pathToFileURL(path.join(root,p)));
+const {readOptionalJevbenchV173Release}=await imp('lib/jevbench-v173-release.mjs');
+const {validateJevbenchV174Bundle,readJevbenchV174ForBoard}=await imp('lib/jevbench-v174-release.mjs');
+const load=n=>JSON.parse(readFileSync(path.join(root,`data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.4-${n}.json`)));
+const sha=p=>createHash('sha256').update(readFileSync(path.join(root,p))).digest('hex');
+const b={manifest:load('publication'),artifact:load('results'),categories:load('categories'),carry:load('carry'),proof:load('proof'),previous:await readOptionalJevbenchV173Release(root),previousManifestSha256:sha('data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.3-publication.json')};
+validateJevbenchV174Bundle(b,{candidate:true});
+if(b.manifest.review.verdict==='PENDING'&&await readJevbenchV174ForBoard(root)!==null)throw Error('PENDING leaked');
+console.log('PASS candidate row validator: 290 carried rows/cells equal except placements, 1 self-hosted row, immutable carry, method, pricing, scorer, ranks; PENDING hidden');
