@@ -161,21 +161,22 @@ export function JevFaq({ items, heading = 'Frequently asked questions' }: { item
 }
 
 const JEV_GUIDES = [
-  { key: 'alternatives', href: '/jev-models/alternatives', label: 'Jev alternatives' },
-  { key: 'chooser', href: '/jev-models/how-to-choose', label: 'How to choose a Jev-class model' },
+  { key: 'alternatives', href: '/jev-models/alternatives', label: 'Jev-compatible model alternatives' },
+  { key: 'chooser', href: '/jev-models/how-to-choose', label: 'How to choose a Jev-compatible model' },
   { key: 'openSource', href: '/jev-models/open-source-jev', label: 'Is Jev open source?' },
 ] as const;
 
 export function JevIntentLinks({ current }: { current: 'alternatives' | 'chooser' | 'openSource' }) {
   const sibling = current === 'alternatives'
-    ? { href: '/jev-models/how-to-choose', label: 'How to choose a Jev-class model' }
-    : { href: '/jev-models/alternatives', label: 'Jev alternatives' };
+    ? { href: '/jev-models/how-to-choose', label: 'How to choose a Jev-compatible model' }
+    : { href: '/jev-models/alternatives', label: 'Jev-compatible model alternatives' };
   const others = JEV_GUIDES.filter((guide) => guide.key !== current && guide.href !== sibling.href);
   return (
     <nav className="mt-5 flex flex-wrap gap-x-4 gap-y-2 text-sm" aria-label="JevBench guides" data-bh-jev-guides={current}>
       <Link className="text-accent underline" href="/jev-models">Live JevBench board</Link>
       <Link className="text-accent underline" href={sibling.href}>{sibling.label}</Link>
       {others.map((guide) => <Link className="text-accent underline" href={guide.href} key={guide.href}>{guide.label}</Link>)}
+      <Link className="text-accent underline" href="/jev-models/methodology">JevBench methodology</Link>
       <a className="text-accent underline" href="https://github.com/fstandhartinger/jevbench">JevBench method and repository</a>
     </nav>
   );
@@ -184,8 +185,8 @@ export function JevIntentLinks({ current }: { current: 'alternatives' | 'chooser
 export async function JevBoardIntentLinks() {
   const comparisons = await readJevbenchComparisonLinks();
   return <JevBoardGuides links={[
-    { href: '/jev-models/alternatives', label: 'Compare Jev alternatives' },
-    { href: '/jev-models/how-to-choose', label: 'Choose a Jev-class model by use case' },
+    { href: '/jev-models/alternatives', label: 'Compare Jev-compatible alternatives' },
+    { href: '/jev-models/how-to-choose', label: 'Choose a Jev-compatible model by use case' },
     { href: '/jev-models/open-source-jev', label: 'Is Jev open source? Open-weight options' },
     ...comparisons.map((pair) => ({ href: `/jev-models/${pair.slug}`, label: `Jev vs ${pair.label}` })),
   ]} />;

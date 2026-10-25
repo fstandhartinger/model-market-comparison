@@ -10,32 +10,32 @@ const PATH = '/jev-models/alternatives';
 const DE_PATH = '/de/jev-models/alternativen';
 export async function generateMetadata(): Promise<Metadata> {
   const data = await readJevbenchSeoData();
-  return jevIntentMetadata({path: PATH, title: `Best Jev alternatives (${data.month}): ${data.systems.length} models measured on JevBench`, documentTitle: `Best Jev alternatives (${data.month})`,
-    description: `Compare ${data.systems.length} measured Jev-class models in ${data.month}: Capability, Intelligence, Calibration, price, latency and open-weight evidence.`, keywords: ['jev alternatives', 'best Jev alternative', 'JevBench'],
+  return jevIntentMetadata({path: PATH, title: `Jev-compatible model alternatives (${data.month})`, documentTitle: `Jev-compatible alternatives for decision models (${data.month})`,
+    description: 'Compare Jev-compatible decision models through published JevBench measures for capability, calibration, speed and cost. Review sources, licences and methodology.', keywords: ['jev alternatives', 'best Jev alternative', 'JevBench'],
     languages: {en: PATH, de: DE_PATH, 'x-default': PATH}});
 }
 export default async function JevAlternativesPage() {
   const data = await readJevbenchSeoData();
   const bestOpen = data.openWeightAlternatives.find((r) => r.capability_eligible);
   const faq = [
-    {question: 'What does JevBench compare?', answer: `JevBench ${data.artifact.revision} measures Jev-class decision models across Intelligence, Calibration, Speed and Cost. Capability is the mean of Intelligence and Calibration within the official cost and median-latency caps; Composite is secondary.`},
-    {question: 'Which open-weight Jev alternative scores highest?', answer: bestOpen ? `${bestOpen.display} has the highest eligible Capability Score among open-weight Jev-class alternatives: ${one(bestOpen.capability)}, rank #${bestOpen.rank} on the JevBench open-weights board.` : 'No eligible open-weight alternative has published evidence in this release.'},
+    {question: 'What does JevBench compare?', answer: `JevBench ${data.artifact.revision} measures Jev-compatible decision models across Intelligence, Calibration, Speed and Cost. Capability is the mean of Intelligence and Calibration within the official cost and median-latency caps; Composite is secondary.`},
+    {question: 'Which open-weight Jev-compatible alternative scores highest?', answer: bestOpen ? `${bestOpen.display} has the highest eligible Capability Score among open-weight Jev-compatible models: ${one(bestOpen.capability)}, rank #${bestOpen.rank} on the JevBench open-weights board.` : 'No eligible open-weight alternative has published evidence in this release.'},
     {question: 'What counts as an open-weight alternative?', answer: 'The published row must have public code or weights, a licence and a source link. Unknown evidence remains unclassified. Terms can differ between code, adapters and weights.'},
     {question: 'Are prices and latency directly measured?', answer: 'Each row labels measured, estimated or self-reported announced pricing. Latency comes from the published benchmark conditions and may include a disclosed adjustment. Neither is a guarantee for a different workload.'},
   ];
   return <>
     <DatasetFaqJsonLd path={PATH} artifact={data.artifact} faq={faq} />
-    <header className="bh-page-head"><h1 className="text-3xl font-bold">Best Jev alternatives ({data.month})</h1>
-      <p className="bh-muted mt-3">{data.systems.length} measured Jev-class models; {data.openRanked.length} open-weights systems ranked on the JevBench open-weights board. Jev 1.13.0 is the unranked reference ({one(data.reference.capability)} Capability); hosted API offerings are ranked on the API leaderboard. Wrappers and subsidised listings are excluded from the ranking.</p>
+    <header className="bh-page-head"><h1 className="text-3xl font-bold">Jev-compatible decision model alternatives ({data.month})</h1>
+      <p className="bh-muted mt-3">{data.systems.length} decision models measured in JevBench {data.artifact.revision}; {data.openRanked.length} open-weight models have a Capability rank on the open-weights board. Jev 1.13.0 is the unranked reference ({one(data.reference.capability)} Capability); hosted API offerings use a separate board. Wrappers and subsidised listings are excluded from the ranking.</p>
       <JevReleaseStamp data={data}/><JevIntentLinks current="alternatives"/>
-      <p className="mt-2 text-sm"><Link className="text-accent underline" href={DE_PATH} hrefLang="de" lang="de">Deutsche Version: Jev-Alternativen im Vergleich</Link></p>
+      <p className="mt-2 text-sm"><Link className="text-accent underline" href={DE_PATH} hrefLang="de" lang="de">Deutsche Version: Jev-kompatible Entscheidungsmodelle im Vergleich</Link></p>
     </header>
     <section className="bh-panel mt-6 p-5"><h2 className="text-xl font-semibold">Top 15 by Capability Score</h2>
       <JevBenchRankingTable rows={data.ranked.slice(0,15)}/>
       <ApiBoardNote rows={data.apiRows}/>
     </section>
-    <section className="bh-panel mt-6 p-5"><h2 className="text-xl font-semibold">Open-weight Jev-class alternatives</h2>
-      <p className="bh-muted mt-2">Only current-release measurements are shown; Jev 1.13.0 is the reference row (it defines the Jev-class caps); Jev 1.14.0, TypeSafe&apos;s current version, is shown on the open-weights board as a second unranked reference and is ranked on the API leaderboard. Rows outside the caps have no Capability rank. Read the licence and recorded setup before self-hosting.</p>
+    <section className="bh-panel mt-6 p-5"><h2 className="text-xl font-semibold">Open-weight Jev-compatible alternatives</h2>
+      <p className="bh-muted mt-2">Only current-release measurements are shown; Jev 1.13.0 is the reference row that sets the official cost and latency caps. Jev 1.14.0, TypeSafe&apos;s current version, is shown on the open-weights board as a second unranked reference and is ranked on the API leaderboard. Rows outside the caps have no Capability rank. Read the licence and recorded setup before self-hosting.</p>
       <JevBenchRankingTable rows={[data.reference, ...data.openWeightAlternatives]}/>
       <ul className="mt-4 space-y-2">{data.openWeightAlternatives.map((r) => <li key={r.key}><Link href={jevSystemPath(r.key)} className="text-accent underline">{r.display}</Link>: {r.licence} · {r.speed?.hardware ?? r.endpoint_condition ?? r.speed?.measured_where ?? 'setup not stated'}{r.repo && <> · <a href={r.repo} className="text-accent underline">Published source or weights</a></>}</li>)}</ul>
     </section>

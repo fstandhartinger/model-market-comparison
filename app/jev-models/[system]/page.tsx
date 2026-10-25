@@ -240,7 +240,10 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: { params: Promise<{ system: string }> }): Promise<Metadata> {
   const { system } = await params;
   const pair = (await readJevbenchSeoData()).comparisons.find((p) => p.slug === system);
-  if (pair) return jevIntentMetadata({ path: `/jev-models/${pair.slug}`, title: `Jev vs ${pair.label} — JevBench by Benchmark Heaven`, description: `Published Jev-compatible model comparison from the current JevBench release.`, keywords: ['JevBench'] });
+  if (pair) {
+    const label = pair.key.endsWith('-thinking') ? `${pair.label} (thinking)` : pair.label;
+    return jevIntentMetadata({ path: `/jev-models/${pair.slug}`, title: `Jev vs ${label} — JevBench by Benchmark Heaven`, documentTitle: `Jev vs ${label} — JevBench`, description: `Published Jev-compatible model comparison from the current JevBench release.`, keywords: ['JevBench'] });
+  }
   const key = jevSystemKeyFromSlug(decodeURIComponent(system));
   const current = await findV142Row(key);
   const addendum = current ? null : await findV157Addendum(key);
@@ -258,7 +261,10 @@ export default async function JevSystemPage({ params }: { params: Promise<{ syst
   const { system } = await params;
   const data = await readJevbenchSeoData();
   const pair = data.comparisons.find((p) => p.slug === system);
-  if (pair) return <JevComparisonPage rivalKey={pair.key} label={pair.label} path={`/jev-models/${pair.slug}`} />;
+  if (pair) {
+    const label = pair.key.endsWith('-thinking') ? `${pair.label} (thinking)` : pair.label;
+    return <JevComparisonPage rivalKey={pair.key} label={label} path={`/jev-models/${pair.slug}`} />;
+  }
   const key = jevSystemKeyFromSlug(decodeURIComponent(system));
   const seoRow = data.systems.find((r) => r.key === key) ?? data.historical.find((r) => r.key === key);
   const a4Page = (await readJevbenchA4ModelPages() as Map<string, A4Page>).get(key);

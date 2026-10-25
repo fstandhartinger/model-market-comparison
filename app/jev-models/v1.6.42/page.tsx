@@ -7,7 +7,8 @@ import { historicalCatalogue } from '../../../lib/jevbench-v162-release.mjs';
 import { withPublicAdapterIds } from '../../../lib/jevbench-v15-release.mjs';
 import { JEVBENCH_COST_RULE, JEVBENCH_COST_RULE_HISTORY } from '../../../lib/jevbench-cost-rule.mjs';
 import { PageJsonLd } from '../../../components/PageJsonLd';
-export const metadata = { description: 'JevBench v1.6.42 release — Torchcast Decision 4B (v1.3). Ranked decision-model results, sources and methodology on Benchmark Heaven.',title: 'JevBench v1.6.42 · Torchcast Decision 4B (v1.3)', alternates:{canonical:'/jev-models/v1.6.42'}};
+import { seoTitle } from '../../../lib/seo';
+export const metadata = { description: 'JevBench v1.6.42 release — Torchcast Decision 4B (v1.3). Ranked decision-model results, sources and methodology on Benchmark Heaven.',title: seoTitle('JevBench v1.6.42 · Torchcast 4B v1.3'), alternates:{canonical:'/jev-models/v1.6.42'}};
 export default async function JevModelsV1642Page() {
  const release=await readOptionalJevbenchV1642Release();if(!release) notFound();
  const board=v1642BoardInput(release);
