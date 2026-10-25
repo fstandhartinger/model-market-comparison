@@ -8,7 +8,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 export default function JevVsMicrosoftDecision1Page() {
   return <JevComparisonPage rivalKey="microsoft-decision-1" path={PATH} label="Microsoft-Decision-1" priceNotes={[
-    'Microsoft-Decision-1 (Azure Foundry): USD 0.042 per 1M input tokens, output free. Source: Microsoft announcement of 9 Oct 2026 and the OpenRouter listing.',
+    'Microsoft-Decision-1 (Microsoft Foundry; on OpenRouter via Azure): USD 0.042 per 1M input tokens, output free. Source: openrouter.ai/microsoft/microsoft-decision-1, checked 25 Oct 2026.',
     'Jev (TypeSafe AI): USD 0.042 per 1M input tokens, output free. Source: docs.typesafe.ai/models, fetched 16 Oct 2026.',
   ]} />;
 }
