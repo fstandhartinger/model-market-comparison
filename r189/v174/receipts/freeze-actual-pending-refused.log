@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "/home/flori/jobs/jevbench-add-requests-20260919/workers/r189-v174-build/worktree/r189/v174/freeze_v174.py", line 27, in <module>
+    check_approval(W,proof)
+  File "/home/flori/jobs/jevbench-add-requests-20260919/workers/r189-v174-build/worktree/r189/v174/approval_v174.py", line 14, in check_approval
+    assert fair['verdict']=='FAIR','REFUSED: fairness PENDING or non-FAIR; non-PENDING FAIR required'
+AssertionError: REFUSED: fairness PENDING or non-FAIR; non-PENDING FAIR required

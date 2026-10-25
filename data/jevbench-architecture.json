@@ -6993,6 +6993,22 @@
             "fact": "Artifact key scaledown-classify-1 records the ScaleDown vendor-hosted classify-1 API with no public evaluated weights or serving code; no backbone, parameter count or quantization is inferred."
           }
         ]
+      },
+      "dopest-1.0-31b": {
+        "arch": "open-llm-decoder",
+        "badges": {
+          "derivation": "fine-tune",
+          "params": "31B",
+          "quant": "BF16"
+        },
+        "evidence": [
+          {
+            "kind": "model-card",
+            "url": "https://huggingface.co/dopest-studio/dopest-1.0-31b/blob/06e30b476d00cb84c2bd03999d54b63b58b106c1/README.md",
+            "fact": "Pinned author model card and adapter config declare a PEFT LoRA adapter (r=32, alpha=64) on google/gemma-4-31B-it. Measured in BF16 with bidirectional option readout."
+          }
+        ],
+        "note": "31B denotes the declared base class; base plus adapter, no merged checkpoint. Calibration and commit-floor configuration are disclosed in the row."
       }
     },
     "imagejevbench": {

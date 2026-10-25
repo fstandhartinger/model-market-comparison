@@ -1,0 +1,1 @@
+Open index.html locally. Full before/after rankings for all 252 supplementary lists, filters, model search and radar comparing DOPEST with the displaced row. card.png shows share/open/official Capability. Slider-transition evidence is in ../receipts/topfive-sliders.json. Fairness and publication review remain PENDING.

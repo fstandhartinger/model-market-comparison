@@ -1,0 +1,77 @@
+{
+ "release-tests": {
+  "status": "PASS",
+  "tests": 133,
+  "pass": 129,
+  "fail": 0,
+  "skipped": 4,
+  "cancelled": 0,
+  "log_sha256": "42fe31656691361edd65b94c715f258606def9bf576366c6020694486c662744"
+ },
+ "synthetic-tests": {
+  "status": "PASS",
+  "tests": 78,
+  "pass": 74,
+  "fail": 0,
+  "skipped": 4,
+  "cancelled": 0,
+  "log_sha256": "6f7a4716cafb3334732f4992a4462dbcbd704ff1bd523a1dd1e8dad2f850e07d"
+ },
+ "fulltest": {
+  "status": "PASS",
+  "tests": 3782,
+  "pass": 3777,
+  "fail": 0,
+  "skipped": 5,
+  "cancelled": 0,
+  "log_sha256": "e383a56409070ae875091fbd1f60178fc1a255ce4e180d5edcfcfd4d032fdce6"
+ },
+ "repro": {
+  "status": "PASS",
+  "log_sha256": "e4afd5458beb77e4511effe53514942fdbc50e96c43d860280ccf67e65d05181"
+ },
+ "validator": {
+  "status": "PASS",
+  "log_sha256": "d9b3188e5ad22b19675522a2a3ea585ebbaf2da382b0a3dd14c0c78acf4709fd"
+ },
+ "helpers": {
+  "status": "PASS",
+  "log_sha256": "f4f29d46bdb9e62c80030b774f837ee47c42999a8ceca30ad6affc9a571dd9bb"
+ },
+ "helpers-content-check": {
+  "status": "PASS",
+  "log_sha256": "cf09de73f2ae56304c8db0528dce20f93b00afe9f1c56c8238a3e6c673c5d5c4"
+ },
+ "source-equivalence": {
+  "status": "PASS",
+  "log_sha256": "b0bd55e50a3b1aba55eeb167d027eba791924c27e39bfc662c113520846822b7"
+ },
+ "preview-check": {
+  "status": "PASS",
+  "log_sha256": "5705ecac5c020bfa509c3c7928a3462355266cd83e31a0d443df67d549e42997"
+ },
+ "final-sanity": {
+  "status": "PASS",
+  "log_sha256": "30aa63366d18b7500f4812395988fabe425f81914a0255f0990d6b855725cf7b"
+ },
+ "typescript": {
+  "status": "PASS",
+  "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+ },
+ "production_build": {
+  "status": "PASS",
+  "log_sha256": "57b3b965b5dfa74ab0d62ab39a73c28ed1485698b7ea1c2283887e10139eb155"
+ },
+ "actual_pending_refusals": {
+  "flip": {
+   "status": "REFUSED_AS_REQUIRED",
+   "log_sha256": "14e2b8d540dc9996c6fd79a8fde1e0184a2691992a28ad9098adc614442e23c5"
+  },
+  "freeze": {
+   "status": "REFUSED_AS_REQUIRED",
+   "log_sha256": "ad0685089cfe3cf9bfc1fd6b577fabc623a80315c41d1924199125be7da499ea"
+  }
+ },
+ "candidate_publication_review": "PENDING",
+ "fairness": "PENDING"
+}

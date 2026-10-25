@@ -1,0 +1,55 @@
+TAP version 13
+# Subtest: v1.7.4 candidate preserves every carried score, CI, diagnostic, category and dated carry
+ok 1 - v1.7.4 candidate preserves every carried score, CI, diagnostic, category and dated carry
+  ---
+  duration_ms: 154.588308
+  ...
+# Subtest: v1.7.4 PENDING stays unavailable to board, API and navigation
+ok 2 - v1.7.4 PENDING stays unavailable to board, API and navigation
+  ---
+  duration_ms: 1725.252474
+  ...
+# Subtest: v1.7.4 rejects changed carried point estimates or intervals
+ok 3 - v1.7.4 rejects changed carried point estimates or intervals
+  ---
+  duration_ms: 381.681713
+  ...
+# Subtest: v1.7.4 rejects altered new row, dropped row and duplicated row
+ok 4 - v1.7.4 rejects altered new row, dropped row and duplicated row
+  ---
+  duration_ms: 702.552654
+  ...
+# Subtest: v1.7.4 rejects changed category, rank, price pin, provenance and predecessor
+ok 5 - v1.7.4 rejects changed category, rank, price pin, provenance and predecessor
+  ---
+  duration_ms: 1310.717363
+  ...
+# Subtest: v1.7.4 refuses missing release review and changed-top-five publication without GO
+ok 6 - v1.7.4 refuses missing release review and changed-top-five publication without GO
+  ---
+  duration_ms: 614.973598
+  ...
+# Subtest: v1.7.4 merged scope ranks and Capability cap lists match the independent site fixture
+ok 7 - v1.7.4 merged scope ranks and Capability cap lists match the independent site fixture
+  ---
+  duration_ms: 32.314519
+  ...
+# Subtest: version-peer links survive a v1.7.4 artifact and later v1.7 patches
+ok 8 - version-peer links survive a v1.7.4 artifact and later v1.7 patches
+  ---
+  duration_ms: 5.258119
+  ...
+# Subtest: DOPEST preserves the full scored row and native zero-output estimate
+ok 9 - DOPEST preserves the full scored row and native zero-output estimate
+  ---
+  duration_ms: 946.096252
+  ...
+1..9
+# tests 9
+# suites 0
+# pass 9
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 7772.58246
