@@ -1,3 +1,4 @@
+import { hasPublishedJevbenchV171Release } from '../lib/jevbench-v171-release.mjs';
 // The agent feed (/api/jevbench/latest) lists exactly the merged live board the pages render.
 import test from 'node:test';
 import assert from 'node:assert/strict';
@@ -38,7 +39,7 @@ test('latest_release is the newest release of the draw table, not a hard-coded l
   const { draws } = await readDrawEquating();
   const drawNewest = draws.map((d) => d.latest_release).sort((a, b) => a.localeCompare(b, 'en', { numeric: true })).at(-1);
   // v1.7.0 restates the whole board (it is not a draw release): once it is published it is the newest release; the draw table is unchanged.
-  const newest = (await hasPublishedJevbenchV170Release()) ? 'v1.7.0' : drawNewest;
+  const newest = (await hasPublishedJevbenchV171Release()) ? 'v1.7.1' : (await hasPublishedJevbenchV170Release()) ? 'v1.7.0' : drawNewest;
   assert.equal(feed.revision, newest);
   assert.equal(feed.latest_release, newest);
   assert.equal(feed.latest_release_page, `/jev-models/${newest}`);

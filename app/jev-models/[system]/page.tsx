@@ -187,7 +187,7 @@ function CurrentReleaseSystem({ data, row }: { data: Awaited<ReturnType<typeof r
     standard_one_3b_sh: { key: 'standard_one_3b_sh_v4', label: 'Superseded by StandardOne-3B-SH v4' },
     'seb-9b': { key: 'seb-9b-v2', label: 'Superseded by Seb-9B-v2' },
   };
-  const versionPeer = data.artifact.revision === 'v1.7.0' ? versionPeers[row.key] : null;
+  const versionPeer = /^v1\.7\.\d+$/.test(data.artifact.revision) ? versionPeers[row.key] : null;
   const json = {'@context':'https://schema.org','@graph':[
     {'@type':'SoftwareApplication',name:row.display,applicationCategory:'AI model',url,
       ...(Number.isFinite(price) && price != null && price >= 0 && ['measured','announced'].includes(row.cost?.kind ?? '') ? {offers:{'@type':'Offer',price,priceCurrency:'USD',description:`${costBasisLabel(row.cost?.kind)} USD per 1,000 decisions. ${row.cost?.basis ?? ''}`}} : {})},

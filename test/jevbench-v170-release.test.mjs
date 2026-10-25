@@ -1,3 +1,4 @@
+import { hasPublishedJevbenchV171Release } from '../lib/jevbench-v171-release.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
@@ -143,7 +144,8 @@ if (!reviewed) {
     const m = JSON.parse(await readFile(`${ROOT}/v1.6/jevbench-${V170_BASE_RELEASE}-publication.json`, 'utf8'));
     for (const [k, f] of Object.entries(m.files)) assert.equal(await sha(f.path), f.sha256, `${V170_BASE_RELEASE} ${k}`);
     assert.equal(await sha(`${ROOT}/v1.7/jevbench-v1.7.0-history.json`), m.files.history.sha256);
-    assert.equal(JEVBENCH_RELEASES[0].version, 'v1.7.0'); assert.equal(JEVBENCH_RELEASES[1].version, V170_BASE_RELEASE);
+    const at = JEVBENCH_RELEASES.findIndex(r => r.version === 'v1.7.0');
+    assert.ok(at >= 0); assert.equal(JEVBENCH_RELEASES[at + 1].version, V170_BASE_RELEASE);
   });
 
   test('v1.7.0 rejects altered evidence (bundle checks)', () => {
@@ -339,9 +341,10 @@ if (!reviewed) {
   });
   test('a published v1.7.0 board is live: restated rows, v1.7.0 as the latest release, archive pages untouched', async () => {
     const live = await assembleJevBoard({ release, previous, live: true, apiA4 });
-    assert.equal(live.published.restated_by, 'v1.7.0'); assert.equal(live.published.revision, 'v1.6.1');
+    const latest = (await hasPublishedJevbenchV171Release()) ? 'v1.7.1' : 'v1.7.0';
+    assert.equal(live.published.restated_by, latest); assert.equal(live.published.revision, 'v1.6.1');
     assert.equal(live.published.systems.find((s) => s.key === 'chon-1.0-12b').method, 'v1.7');
-    assert.equal(await readLatestJevbenchRelease('v1.6.1'), 'v1.7.0');
+    assert.equal(await readLatestJevbenchRelease('v1.6.1'), latest);
     const archived = await assembleJevBoard({ release, previous, live: false, apiA4 });
     assert.equal(archived.published.restated_by, undefined); assert.equal(archived.live, false);
     const page = await readFile('app/jev-models/v1.7.0/page.tsx', 'utf8'); assert.match(page, /readJevbenchV170ForBoard\(\)/); assert.match(page, /<JevV170OldNewTable systems=/);

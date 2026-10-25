@@ -1,0 +1,77 @@
+{
+ "deterministic_rebuild": {
+  "identical_bytes": true,
+  "passes": 2,
+  "site_files": 25
+ },
+ "full_suite": {
+  "fail": 0,
+  "pass": 3749,
+  "skipped": 2,
+  "tests": 3751
+ },
+ "helper_dry_run_checks": {
+  "checks": [
+   "PASS dry-run flip leaves manifest byte-identical",
+   "conditional critic refused even in dry run",
+   "full freeze JSON parses and contains all new rows and approval, beyond old 3000-byte truncation",
+   "both dry-run helpers reject a changed/non-PASS predecessor",
+   "both dry-run helpers reject an unbound PASS predecessor"
+  ],
+  "status": "PASS"
+ },
+ "log_formatting": "Next build progress log whitespace normalized after capture; original byte hash retained. Test and build outcomes unchanged.",
+ "logs_original_sha256": {
+  "fix-build.log": "6e593ecb5a70ca1dba7194ddf5159e8af03470fdae3a71515cb87fd32e2b4a8d"
+ },
+ "logs_sha256": {
+  "fix-build.log": "20acc86309a3241935381a9c741f99625e51c1239ac9ec2c3e7469d5bbc1456d",
+  "fix-extended-preview.log": "0f44b358c1ee8f2375031ef61ab7a5492caed9993c8fb00b914c3c005a6d5ad0",
+  "fix-final-sanity.log": "a1982b0fecbfc4e2f993b09f1f60afe7ba011cd8aeab0326151bde0e5de368b0",
+  "fix-fulltest.log": "97630b91c4b86aae077e7c08c3daa04aa5db4543d6aff507957258321c5c1dac",
+  "fix-repro.log": "2162a8f2e6334f318af83681e1e5b883c2d014cfe12202b4a40e4120458251cd",
+  "fix-synthetic-tests.log": "20020da74a496771a7da5942ca9e412fc60f087a4a2e413e5cfce0aa0a9f35a1",
+  "fix-targeted-tests.log": "2dc35f757ba9a7eefd4a4a722347e83fac924e4112ba73677b5e292b07c30dd7",
+  "fix-tsc.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+ },
+ "old_code_regression": {
+  "artifact_revision": "v1.7.1",
+  "candidate": "73ebbad8",
+  "new_regression_assertion_would_fail": true,
+  "old_result": null
+ },
+ "page_and_release_targeted_tests": {
+  "fail": 0,
+  "pass": 46,
+  "skipped": 0,
+  "tests": 46
+ },
+ "production_build": {
+  "exit_code": 0
+ },
+ "publication_approval": "GO (standing, no top-five change)",
+ "publication_review": "PENDING",
+ "row_validator": {
+  "PASS": true,
+  "carried_equal_except_rank_fields": 285,
+  "new_rows_exact_scored_values": 3
+ },
+ "source_candidate": "73ebbad8d6b0f20d1c3faf9b586e649b970181e6",
+ "status": "PASS",
+ "synthetic_pass_compatibility_tests": {
+  "fail": 0,
+  "pass": 57,
+  "skipped": 2,
+  "tests": 59
+ },
+ "top_five": {
+  "changed_labels": [],
+  "changed_lists": 0,
+  "site_lists": 40,
+  "supplemental_off_share_lists": 156
+ },
+ "typescript": {
+  "exit_code": 0
+ },
+ "whole_final_gate_script_exit_code": 0
+}

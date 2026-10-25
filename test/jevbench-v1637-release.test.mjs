@@ -1,3 +1,4 @@
+import { hasPublishedJevbenchV171Release } from '../lib/jevbench-v171-release.mjs';
 import test from 'node:test';
 import {hasPublishedJevbenchV170Release} from '../lib/jevbench-v170-release.mjs';
 import assert from 'node:assert/strict';
@@ -98,7 +99,7 @@ test('live boards and the agent feed resolve each restated row exactly once with
 test('SEO model, comparison and full-text pages follow the merged feed with corrected costs and the re-measured Seb',async()=>{
  const data=await readJevbenchSeoData();
  // v1.7.0 restates the v1.6.1 board once published (same rows, same costs); before that the board follows v1.6.40.
- assert.equal(data.artifact.revision,(await hasPublishedJevbenchV170Release())?'v1.7.0':'v1.6.43');assert.equal(data.artifact.base_revision,'v1.6.1');
+ assert.equal(data.artifact.revision,(await hasPublishedJevbenchV171Release())?'v1.7.1':(await hasPublishedJevbenchV170Release())?'v1.7.0':'v1.6.43');assert.equal(data.artifact.base_revision,'v1.6.1');
  for(const k of KEYS){const rows=data.systems.filter(s=>s.key===k);assert.equal(rows.length,1,k);assert.equal(rows[0].cost.usd_per_1000,V1637_ROW_SPEC[k].usd);}
  assert.equal(data.systems.filter(s=>s.key==='seb-9b').length,1);
  const llms=await jevbenchLlmsFull();
