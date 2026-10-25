@@ -1,4 +1,4 @@
-// Usage: cd <site tree> && node topfive_v171.mjs  -> JSON of the top fives (and every watched row's position) of the live board, built with the site's own assembleJevBoard
+// Usage: cd <site tree> && node topfive_v172.mjs  -> JSON of the top fives (and every watched row's position) of the live board, built with the site's own assembleJevBoard
 // so the before tree (origin/main, the v1.6 chain) and the after tree (pass copy with the v1.7.1 restatement) are read by exactly the same code.
 // 36 merged variants (3 scopes x 12 lists, incl. cost caps of 7x/10x the reference cost (Jev 1.13.0; the official cap is 2x) with no latency cap) + 4 release-board lists (= the all-scope A/B/C/Capability lists, by definition for v1.7.1).
 import { readFileSync } from 'node:fs';

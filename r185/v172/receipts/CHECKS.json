@@ -1,13 +1,58 @@
 {
- "approval_receipt_stable_after_second_prospective_run": true,
- "builder_refuses_unverified_raw": true,
+ "carried_rows": 288,
  "changed_labels": [],
  "changed_lists": 0,
- "complete_candidate_gates": "NOT RUN; complete candidate does not exist",
- "executable_mjs_syntax": "PASS",
- "prospective_topfive_lists": 40,
- "python_ast": "PASS",
- "raw_verification": "BLOCKED: LeChonk masked sealed path",
- "shell_syntax": "PASS",
- "supplementary_topfive_lists": 156
+ "comparison_scope": "complete candidate; real publication review remains PENDING",
+ "deterministic_rebuilds": 2,
+ "diff_check": "PASS final staged diff; only stdout trailing whitespace normalized; original stdout retained in worker evidence/original-stdout",
+ "flip_freeze_dry_runs": "PASS; complete 4079-byte addendum; predecessor PASS and exact-byte binding checked; no manifest mutation",
+ "frozen_category_decisive_extraction": "PASS off/share; four dimensions; exact aggregates",
+ "historical_logs": "Earlier prospective/refusal and *initial* logs are superseded by the final gate receipts; initial full run was deliberately stopped before completed build.",
+ "identical_site_files": 26,
+ "new_keys": [
+  "jeetu-decider-2b"
+ ],
+ "primary_topfive_lists": 40,
+ "production_build": "PASS npm run build, exit 0, 588 static pages",
+ "ranked_count": 268,
+ "raw_verification": "PASS; entry-pinned path; exact required SHA; read in place",
+ "roster_count": 289,
+ "status": "PASS",
+ "stdout_whitespace_normalized": [
+  "targeted-tests-initial.log",
+  "build.log",
+  "fulltest-initial-stopped.log",
+  "tsc.log",
+  "synthetic-tests-initial.log"
+ ],
+ "supplementary_topfive_lists": 156,
+ "syntax": "PASS Python AST, bash -n, node --check executable MJS",
+ "test_summaries": {
+  "fulltest.log": {
+   "fail": 0,
+   "pass": 3758,
+   "skipped": 3,
+   "tests": 3761
+  },
+  "release-tests.log": {
+   "fail": 0,
+   "pass": 55,
+   "skipped": 1,
+   "tests": 56
+  },
+  "synthetic-tests.log": {
+   "fail": 0,
+   "pass": 57,
+   "skipped": 2,
+   "tests": 59
+  },
+  "targeted-tests.log": {
+   "fail": 0,
+   "pass": 104,
+   "skipped": 2,
+   "tests": 106
+  }
+ },
+ "topfive_diff_sha256": "2f21d3c2d672a965a3acdbd65b6eaf26a9e11dcf3dcaf9465967d7b0db4667f4",
+ "typescript": "PASS npx --no-install tsc --noEmit, exit 0"
 }

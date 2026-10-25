@@ -1,0 +1,485 @@
+/home/flori/wt/jevbench-v172-20261025/r185/v172/.pass
+TAP version 13
+# Subtest: feed carries board and open-board rank next to the unchanged combined rank
+ok 1 - feed carries board and open-board rank next to the unchanged combined rank
+  ---
+  duration_ms: 39169.150584
+  ...
+# Subtest: llms-full and FAQ use the open-weights board
+ok 2 - llms-full and FAQ use the open-weights board
+  ---
+  duration_ms: 35161.476775
+  ...
+# Subtest: feed key set equals the merged live board and the page shares the assembly
+ok 3 - feed key set equals the merged live board and the page shares the assembly
+  ---
+  duration_ms: 7.666481
+  ...
+# Subtest: latest_release is the newest release of the draw table, not a hard-coded list
+ok 4 - latest_release is the newest release of the draw table, not a hard-coded list
+  ---
+  duration_ms: 6366.938546
+  ...
+# Subtest: feed ranks equal the ranks of the open and API Capability default views
+ok 5 - feed ranks equal the ranks of the open and API Capability default views
+  ---
+  duration_ms: 18.133487
+  ...
+# Subtest: rows carry their draw so agents can tell which draw a row was measured on
+ok 6 - rows carry their draw so agents can tell which draw a row was measured on
+  ---
+  duration_ms: 0.268275
+  ...
+# Subtest: jevFoldWithPinned: pinned rows keep their position above the fold, do not count toward the limit, and are moved up from below it
+ok 7 - jevFoldWithPinned: pinned rows keep their position above the fold, do not count toward the limit, and are moved up from below it
+  ---
+  duration_ms: 1.172967
+  ...
+# Subtest: Delta 4: with the folds collapsed, Jev 1.13.0 and Jev 1.14.0 are rendered above the fold in the open-board Capability and Composite sections
+ok 8 - Delta 4: with the folds collapsed, Jev 1.13.0 and Jev 1.14.0 are rendered above the fold in the open-board Capability and Composite sections
+  ---
+  duration_ms: 3561.240589
+  ...
+# Subtest: v1.6.30 accepts the stored build once the review passes
+ok 9 - v1.6.30 accepts the stored build once the review passes
+  ---
+  duration_ms: 355.545054
+  ...
+# Subtest: v1.6.30 is not publishable while the manifest is PENDING or the preview card is a placeholder
+ok 10 - v1.6.30 is not publishable while the manifest is PENDING or the preview card is a placeholder
+  ---
+  duration_ms: 445.146971
+  ...
+# Subtest: 48 token-priced rows change cost on the common basis, 9 unpriced rows do not
+ok 11 - 48 token-priced rows change cost on the common basis, 9 unpriced rows do not
+  ---
+  duration_ms: 14.196155
+  ...
+# Subtest: named rows: nimble-v4-max enters at \#3, subq-snap-preview falls inside the official cost cap
+ok 12 - named rows: nimble-v4-max enters at \#3, subq-snap-preview falls inside the official cost cap
+  ---
+  duration_ms: 0.426902
+  ...
+# Subtest: Intelligence, Calibration, Speed and Capability are byte-identical on all 57 rows
+ok 13 - Intelligence, Calibration, Speed and Capability are byte-identical on all 57 rows
+  ---
+  duration_ms: 8.026304
+  ...
+# Subtest: cost, axes, composites and placement follow from the common-basis cost; mutations are rejected
+ok 14 - cost, axes, composites and placement follow from the common-basis cost; mutations are rejected
+  ---
+  duration_ms: 4435.92273
+  ...
+# Subtest: the proof binds the cost basis, the superseded freeze and every re-costed row
+ok 15 - the proof binds the cost basis, the superseded freeze and every re-costed row
+  ---
+  duration_ms: 4526.611374
+  ...
+# Subtest: the release note states the rule, the unchanged measures, the cap moves and the superseded freeze
+ok 16 - the release note states the rule, the unchanged measures, the cap moves and the superseded freeze
+  ---
+  duration_ms: 2658.876211
+  ...
+# Subtest: approval: a changed top five needs the preview card; placeholders and wrong provenance are rejected
+ok 17 - approval: a changed top five needs the preview card; placeholders and wrong provenance are rejected
+  ---
+  duration_ms: 3374.815492
+  ...
+# Subtest: the cost rule wording is general and appears on the methodology page and the board
+ok 18 - the cost rule wording is general and appears on the methodology page and the board
+  ---
+  duration_ms: 24.224509
+  ...
+# Subtest: the text about this draw's 15 items names who refused them and where the token figure comes from; no time-bound claim about authors
+ok 19 - the text about this draw's 15 items names who refused them and where the token figure comes from; no time-bound claim about authors
+  ---
+  duration_ms: 71.52511
+  ...
+# Subtest: Delta 3 (display only): Jev 1.14.0 is a second unranked reference row on the open board without the toggle; every ranking and rank is unchanged
+ok 20 - Delta 3 (display only): Jev 1.14.0 is a second unranked reference row on the open board without the toggle; every ranking and rank is unchanged
+  ---
+  duration_ms: 26426.174352
+  ...
+# Subtest: release note [110] states the general rule and then its history sentence
+ok 21 - release note [110] states the general rule and then its history sentence
+  ---
+  duration_ms: 0.871354
+  ...
+# Subtest: v1.6.37 restates exactly the two v1.6.1 rows and adds nothing else
+ok 22 - v1.6.37 restates exactly the two v1.6.1 rows and adds nothing else
+  ---
+  duration_ms: 2.699838
+  ...
+# Subtest: h2o-lightning-4b: price corrected to the frozen Qwen/Qwen3.5-4B reference, nothing else of the published row changes
+ok 23 - h2o-lightning-4b: price corrected to the frozen Qwen/Qwen3.5-4B reference, nothing else of the published row changes
+  ---
+  duration_ms: 0.859824
+  ...
+# Subtest: kahn1: same correction on its own-estimate tokens; the false snapshot attribution of 0.04 is gone
+ok 24 - kahn1: same correction on its own-estimate tokens; the false snapshot attribution of 0.04 is gone
+  ---
+  duration_ms: 0.282525
+  ...
+# Subtest: all 70 carried rows keep every stored value; only rank and ranks move, by the restated rows above them
+ok 25 - all 70 carried rows keep every stored value; only rank and ranks move, by the restated rows above them
+  ---
+  duration_ms: 90.04423
+  ...
+# Subtest: the two other Qwen3.5-4B rows with the USD 0.04 inherited basis are untouched
+ok 26 - the two other Qwen3.5-4B rows with the USD 0.04 inherited basis are untouched
+  ---
+  duration_ms: 0.366543
+  ...
+# Subtest: v1.6.37 rejects altered price, usage, markers, text, intervals, approval and carried rows
+ok 27 - v1.6.37 rejects altered price, usage, markers, text, intervals, approval and carried rows
+  ---
+  duration_ms: 8673.881211
+  ...
+# Subtest: the corrected price is recomputed from tokens, the frozen tariff and the number of decisions
+ok 28 - the corrected price is recomputed from tokens, the frozen tariff and the number of decisions
+  ---
+  duration_ms: 0.248185
+  ...
+# Subtest: v1.6.37 archived route keeps shared board, method and history
+ok 29 - v1.6.37 archived route keeps shared board, method and history
+  ---
+  duration_ms: 18.224765
+  ...
+# Subtest: live boards and the agent feed resolve each restated row exactly once with the corrected figures; the frozen archive keeps the published ones
+ok 30 - live boards and the agent feed resolve each restated row exactly once with the corrected figures; the frozen archive keeps the published ones
+  ---
+  duration_ms: 38852.92474
+  ...
+# Subtest: SEO model, comparison and full-text pages follow the merged feed with corrected costs and the re-measured Seb
+ok 31 - SEO model, comparison and full-text pages follow the merged feed with corrected costs and the re-measured Seb
+  ---
+  duration_ms: 20897.368331
+  ...
+# Subtest: the unreviewed build is not published: the reader rejects it, the board stays on the validated v1.6 chain
+ok 32 - the unreviewed build is not published: the reader rejects it, the board stays on the validated v1.6 chain # SKIP
+  ---
+  duration_ms: 1.068359
+  ...
+# Subtest: v1.7.0 restates exactly the live board of its base release: every row, the pending set, the carry
+ok 33 - v1.7.0 restates exactly the live board of its base release: every row, the pending set, the carry
+  ---
+  duration_ms: 1.773905
+  ...
+# Subtest: every re-scored row shows its v1.6 values next to the v1.7 values and the time-limit evidence
+ok 34 - every re-scored row shows its v1.6 values next to the v1.7 values and the time-limit evidence
+  ---
+  duration_ms: 0.931342
+  ...
+# Subtest: pinned rows: chon-1.0-12b collapses under the limit, sage-1.3.0 and an A4 row follow the rule, the pending row keeps its v1.6 numbers
+ok 35 - pinned rows: chon-1.0-12b collapses under the limit, sage-1.3.0 and an A4 row follow the rule, the pending row keeps its v1.6 numbers
+  ---
+  duration_ms: 0.388653
+  ...
+# Subtest: fastino-glide-api (v1.6.40 row, scored on 1,497 of 1,500 items) is re-scored under the rule on the same 1,497 items; two answered decisions over 10 s count failed
+ok 36 - fastino-glide-api (v1.6.40 row, scored on 1,497 of 1,500 items) is re-scored under the rule on the same 1,497 items; two answered decisions over 10 s count failed
+  ---
+  duration_ms: 0.428271
+  ...
+# Subtest: the four intake handoffs retain their distinct identities, frozen costs and disclosures
+ok 37 - the four intake handoffs retain their distinct identities, frozen costs and disclosures
+  ---
+  duration_ms: 1.02664
+  ...
+# Subtest: R9 rows retain the zero-output price convention, timeout outcomes and serving disclosures
+ok 38 - R9 rows retain the zero-output price convention, timeout outcomes and serving disclosures
+  ---
+  duration_ms: 0.677857
+  ...
+# Subtest: v1.7.0 archive files and the base release stay byte-identical
+ok 39 - v1.7.0 archive files and the base release stay byte-identical
+  ---
+  duration_ms: 230.580458
+  ...
+# Subtest: v1.7.0 rejects altered evidence (bundle checks)
+ok 40 - v1.7.0 rejects altered evidence (bundle checks)
+  ---
+  duration_ms: 30714.129011
+  ...
+# Subtest: a new row (measured first under v1.7.0) has its own shape: no previous, new_in, disclosure and licence, ranked with the re-scored rows
+ok 41 - a new row (measured first under v1.7.0) has its own shape: no previous, new_in, disclosure and licence, ranked with the re-scored rows
+  ---
+  duration_ms: 1.296985
+  ...
+# Subtest: v1.7.0 rejects a malformed new row (6+ mutations)
+ok 42 - v1.7.0 rejects a malformed new row (6+ mutations)
+  ---
+  duration_ms: 12137.735625
+  ...
+# Subtest: the two Super Decider rows are ranked, priced at the launch list price of the provider's public product page, and say where the price comes from
+ok 43 - the two Super Decider rows are ranked, priced at the launch list price of the provider's public product page, and say where the price comes from
+  ---
+  duration_ms: 0.821634
+  ...
+# Subtest: a re-measured row (GPU, same items) replaces its CPU row in full: GPU scores and times, the CPU row as previous, disclosure on the row
+ok 44 - a re-measured row (GPU, same items) replaces its CPU row in full: GPU scores and times, the CPU row as previous, disclosure on the row
+  ---
+  duration_ms: 0.404202
+  ...
+# Subtest: the new row carries no board/issue number or custody reference in its public text
+ok 45 - the new row carries no board/issue number or custody reference in its public text
+  ---
+  duration_ms: 0.603299
+  ...
+# Subtest: v1.7.0 rejects a malformed re-measured row (GPU numbers with CPU times, still pending, no disclosure, wrong marks, ...)
+ok 46 - v1.7.0 rejects a malformed re-measured row (GPU numbers with CPU times, still pending, no disclosure, wrong marks, ...)
+  ---
+  duration_ms: 13116.236554
+  ...
+# Subtest: the restatement is bound to the live v1.6 chain: it passes on the chain it was built for
+ok 47 - the restatement is bound to the live v1.6 chain: it passes on the chain it was built for
+  ---
+  duration_ms: 380.054891
+  ...
+# Subtest: v1.7.0 rejects a restatement that does not match the chain (previous, identity, cost, row set, newer release, feed hash, seeds)
+ok 48 - v1.7.0 rejects a restatement that does not match the chain (previous, identity, cost, row set, newer release, feed hash, seeds)
+  ---
+  duration_ms: 2889.270848
+  ...
+# Subtest: a re-measured row is bound to the CPU row it replaces (previous == chain, same weights, same draw, another endpoint kind, same cost)
+ok 49 - a re-measured row is bound to the CPU row it replaces (previous == chain, same weights, same draw, another endpoint kind, same cost)
+  ---
+  duration_ms: 3141.919026
+  ...
+# Subtest: a published v1.7.0 board is live: restated rows, v1.7.0 as the latest release, archive pages untouched
+ok 50 - a published v1.7.0 board is live: restated rows, v1.7.0 as the latest release, archive pages untouched
+  ---
+  duration_ms: 19842.956957
+  ...
+# Subtest: v1.7.2 candidate preserves every carried score, CI, diagnostic, category and dated carry
+not ok 51 - v1.7.2 candidate preserves every carried score, CI, diagnostic, category and dated carry
+  ---
+  duration_ms: 42.138652
+  location: '/home/flori/wt/jevbench-v172-20261025/r185/v172/.pass/test/jevbench-v172-release.test.mjs:14:1'
+  failureType: 'testCodeFailure'
+  error: 'JevBench v1.7.2: validated predecessor'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    fail (file:///home/flori/wt/jevbench-v172-20261025/r185/v172/.pass/lib/jevbench-v172-release.mjs:14:27)
+    validateJevbenchV172Bundle (file:///home/flori/wt/jevbench-v172-20261025/r185/v172/.pass/lib/jevbench-v172-release.mjs:31:95)
+    TestContext.<anonymous> (file:///home/flori/wt/jevbench-v172-20261025/r185/v172/.pass/test/jevbench-v172-release.test.mjs:15:15)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    node:internal/test_runner/harness:255:12
+    node:internal/process/task_queues:140:7
+    AsyncResource.runInAsyncScope (node:async_hooks:206:9)
+    AsyncResource.runMicrotask (node:internal/process/task_queues:137:8)
+  ...
+# Subtest: v1.7.2 PENDING stays unavailable to board, API and navigation
+ok 52 - v1.7.2 PENDING stays unavailable to board, API and navigation # SKIP published
+  ---
+  duration_ms: 0.216196
+  ...
+# Subtest: v1.7.2 rejects changed carried point estimates or intervals
+not ok 53 - v1.7.2 rejects changed carried point estimates or intervals
+  ---
+  duration_ms: 219.209084
+  location: '/home/flori/wt/jevbench-v172-20261025/r185/v172/.pass/test/jevbench-v172-release.test.mjs:25:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /carried row/. Input:
+
+    'Error: JevBench v1.7.2: validated predecessor'
+
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+  error: 'JevBench v1.7.2: validated predecessor'
+  stack: |-
+    fail (file:///home/flori/wt/jevbench-v172-20261025/r185/v172/.pass/lib/jevbench-v172-release.mjs:14:27)
+    validateJevbenchV172Bundle (file:///home/flori/wt/jevbench-v172-20261025/r185/v172/.pass/lib/jevbench-v172-release.mjs:31:95)
+    file:///home/flori/wt/jevbench-v172-20261025/r185/v172/.pass/test/jevbench-v172-release.test.mjs:13:80
+    getActual (node:assert:498:5)
+    Function.throws (node:assert:644:24)
+    mutate (file:///home/flori/wt/jevbench-v172-20261025/r185/v172/.pass/test/jevbench-v172-release.test.mjs:13:69)
+    TestContext.<anonymous> (file:///home/flori/wt/jevbench-v172-20261025/r185/v172/.pass/test/jevbench-v172-release.test.mjs:26:2)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+  operator: 'throws'
+  stack: |-
+    mutate (file:///home/flori/wt/jevbench-v172-20261025/r185/v172/.pass/test/jevbench-v172-release.test.mjs:13:69)
+    TestContext.<anonymous> (file:///home/flori/wt/jevbench-v172-20261025/r185/v172/.pass/test/jevbench-v172-release.test.mjs:26:2)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: v1.7.2 rejects altered new row, dropped row and duplicated row
+not ok 54 - v1.7.2 rejects altered new row, dropped row and duplicated row
+  ---
+  duration_ms: 240.405312
+  location: '/home/flori/wt/jevbench-v172-20261025/r185/v172/.pass/test/jevbench-v172-release.test.mjs:29:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /new row/. Input:
+
+    'Error: JevBench v1.7.2: validated predecessor'
+
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+  error: 'JevBench v1.7.2: validated predecessor'
+  stack: |-
+    fail (file:///home/flori/wt/jevbench-v172-20261025/r185/v172/.pass/lib/jevbench-v172-release.mjs:14:27)
+    validateJevbenchV172Bundle (file:///home/flori/wt/jevbench-v172-20261025/r185/v172/.pass/lib/jevbench-v172-release.mjs:31:95)
+    file:///home/flori/wt/jevbench-v172-20261025/r185/v172/.pass/test/jevbench-v172-release.test.mjs:13:80
+    getActual (node:assert:498:5)
+    Function.throws (node:assert:644:24)
+    mutate (file:///home/flori/wt/jevbench-v172-20261025/r185/v172/.pass/test/jevbench-v172-release.test.mjs:13:69)
+    TestContext.<anonymous> (file:///home/flori/wt/jevbench-v172-20261025/r185/v172/.pass/test/jevbench-v172-release.test.mjs:30:2)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+  operator: 'throws'
+  stack: |-
+    mutate (file:///home/flori/wt/jevbench-v172-20261025/r185/v172/.pass/test/jevbench-v172-release.test.mjs:13:69)
+    TestContext.<anonymous> (file:///home/flori/wt/jevbench-v172-20261025/r185/v172/.pass/test/jevbench-v172-release.test.mjs:30:2)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: v1.7.2 rejects changed category, rank, price pin, provenance and predecessor
+not ok 55 - v1.7.2 rejects changed category, rank, price pin, provenance and predecessor
+  ---
+  duration_ms: 241.871074
+  location: '/home/flori/wt/jevbench-v172-20261025/r185/v172/.pass/test/jevbench-v172-release.test.mjs:34:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /carried cells/. Input:
+
+    'Error: JevBench v1.7.2: validated predecessor'
+
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+  error: 'JevBench v1.7.2: validated predecessor'
+  stack: |-
+    fail (file:///home/flori/wt/jevbench-v172-20261025/r185/v172/.pass/lib/jevbench-v172-release.mjs:14:27)
+    validateJevbenchV172Bundle (file:///home/flori/wt/jevbench-v172-20261025/r185/v172/.pass/lib/jevbench-v172-release.mjs:31:95)
+    file:///home/flori/wt/jevbench-v172-20261025/r185/v172/.pass/test/jevbench-v172-release.test.mjs:13:80
+    getActual (node:assert:498:5)
+    Function.throws (node:assert:644:24)
+    mutate (file:///home/flori/wt/jevbench-v172-20261025/r185/v172/.pass/test/jevbench-v172-release.test.mjs:13:69)
+    TestContext.<anonymous> (file:///home/flori/wt/jevbench-v172-20261025/r185/v172/.pass/test/jevbench-v172-release.test.mjs:35:2)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+  operator: 'throws'
+  stack: |-
+    mutate (file:///home/flori/wt/jevbench-v172-20261025/r185/v172/.pass/test/jevbench-v172-release.test.mjs:13:69)
+    TestContext.<anonymous> (file:///home/flori/wt/jevbench-v172-20261025/r185/v172/.pass/test/jevbench-v172-release.test.mjs:35:2)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: v1.7.2 refuses missing release review and changed-top-five publication without GO
+not ok 56 - v1.7.2 refuses missing release review and changed-top-five publication without GO
+  ---
+  duration_ms: 251.382708
+  location: '/home/flori/wt/jevbench-v172-20261025/r185/v172/.pass/test/jevbench-v172-release.test.mjs:42:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /Florian GO/. Input:
+
+    'Error: JevBench v1.7.2: validated predecessor'
+
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+  error: 'JevBench v1.7.2: validated predecessor'
+  stack: |-
+    fail (file:///home/flori/wt/jevbench-v172-20261025/r185/v172/.pass/lib/jevbench-v172-release.mjs:14:27)
+    validateJevbenchV172Bundle (file:///home/flori/wt/jevbench-v172-20261025/r185/v172/.pass/lib/jevbench-v172-release.mjs:31:95)
+    file:///home/flori/wt/jevbench-v172-20261025/r185/v172/.pass/test/jevbench-v172-release.test.mjs:46:20
+    getActual (node:assert:498:5)
+    Function.throws (node:assert:644:24)
+    TestContext.<anonymous> (file:///home/flori/wt/jevbench-v172-20261025/r185/v172/.pass/test/jevbench-v172-release.test.mjs:46:9)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+  operator: 'throws'
+  stack: |-
+    TestContext.<anonymous> (file:///home/flori/wt/jevbench-v172-20261025/r185/v172/.pass/test/jevbench-v172-release.test.mjs:46:9)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: v1.7.2 merged scope ranks and Capability cap lists match the independent site fixture
+ok 57 - v1.7.2 merged scope ranks and Capability cap lists match the independent site fixture
+  ---
+  duration_ms: 56.907445
+  ...
+# Subtest: version-peer links survive a v1.7.2 artifact and later v1.7 patches
+ok 58 - version-peer links survive a v1.7.2 artifact and later v1.7 patches
+  ---
+  duration_ms: 6.767089
+  ...
+# Subtest: Jeetu remains ranked within cap with zero-output pricing and bound standing GO
+not ok 59 - Jeetu remains ranked within cap with zero-output pricing and bound standing GO
+  ---
+  duration_ms: 225.268516
+  location: '/home/flori/wt/jevbench-v172-20261025/r185/v172/.pass/test/jevbench-v172-release.test.mjs:82:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /standing GO proof/. Input:
+
+    'Error: JevBench v1.7.2: validated predecessor'
+
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+  error: 'JevBench v1.7.2: validated predecessor'
+  stack: |-
+    fail (file:///home/flori/wt/jevbench-v172-20261025/r185/v172/.pass/lib/jevbench-v172-release.mjs:14:27)
+    validateJevbenchV172Bundle (file:///home/flori/wt/jevbench-v172-20261025/r185/v172/.pass/lib/jevbench-v172-release.mjs:31:95)
+    file:///home/flori/wt/jevbench-v172-20261025/r185/v172/.pass/test/jevbench-v172-release.test.mjs:13:80
+    getActual (node:assert:498:5)
+    Function.throws (node:assert:644:24)
+    mutate (file:///home/flori/wt/jevbench-v172-20261025/r185/v172/.pass/test/jevbench-v172-release.test.mjs:13:69)
+    TestContext.<anonymous> (file:///home/flori/wt/jevbench-v172-20261025/r185/v172/.pass/test/jevbench-v172-release.test.mjs:90:2)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+  operator: 'throws'
+  stack: |-
+    mutate (file:///home/flori/wt/jevbench-v172-20261025/r185/v172/.pass/test/jevbench-v172-release.test.mjs:13:69)
+    TestContext.<anonymous> (file:///home/flori/wt/jevbench-v172-20261025/r185/v172/.pass/test/jevbench-v172-release.test.mjs:90:2)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+1..59
+# tests 59
+# suites 0
+# pass 51
+# fail 6
+# cancelled 0
+# skipped 2
+# todo 0
+# duration_ms 219943.779114

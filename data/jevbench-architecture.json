@@ -6963,6 +6963,21 @@
             "fact": "google/gemma-4-12B-it derivative. Measured with the author serving implementation; BF16."
           }
         ]
+      },
+      "jeetu-decider-2b": {
+        "arch": "open-llm-decoder",
+        "badges": {
+          "params": "2B",
+          "derivation": "fine-tune",
+          "quant": "bf16"
+        },
+        "evidence": [
+          {
+            "url": "https://huggingface.co/Jeetu456/decider-2b/blob/cd0216309bf590f387500d78d1970af15d04baf5/README.md",
+            "kind": "model-card",
+            "fact": "Qwen3.5-2B-family fine-tune with a BF16 backbone and FP32 option-pointer decision head; native author serving implementation."
+          }
+        ]
       }
     },
     "imagejevbench": {

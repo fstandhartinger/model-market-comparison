@@ -1,7 +1,7 @@
 #!/bin/bash
-# Cells (families, languages, use cases, topics) and noul-decisive for rows scored outside the S12 bases (a NEW row of v1.7.1, or a v1.6.38 row pre-scored for the rebuild),
+# Cells (families, languages, use cases, topics) and noul-decisive for rows scored outside the S12 bases (a NEW row of v1.7.2, or a v1.6.38 row pre-scored for the rebuild),
 # with the UNCHANGED frozen tools under run_under_v17.py, same recipe as workers/r160-v171-s3/src/cells_draw.sh + run_decisive.sh (draw v1.6-regular-20261012, O1S).
-# usage: cells_new_rows_v171.sh <tag> <results-off.json> <results-share.json> <registry.json> <runs-dir>
+# usage: cells_new_rows_v172.sh <tag> <results-off.json> <results-share.json> <registry.json> <runs-dir>
 # RD / LABELS (env) override the release dir and the labels file: the hosted-GLiDE row uses the derived 1,497-item gold and labels (bases/d1022g/rel1497).
 set -euo pipefail
 export PYTHONDONTWRITEBYTECODE=1 JEV_NOUL_METHOD=O1S
