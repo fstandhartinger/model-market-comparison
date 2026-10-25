@@ -26,7 +26,7 @@ export default async function JevAlternativesPage() {
   return <>
     <DatasetFaqJsonLd path={PATH} artifact={data.artifact} faq={faq} />
     <header className="bh-page-head"><h1 className="text-3xl font-bold">Jev-compatible decision model alternatives ({data.month})</h1>
-      <p className="bh-muted mt-3">{data.systems.length} decision models measured in JevBench {data.artifact.revision}; {data.openRanked.length} open-weight models have a Capability rank on the open-weights board. Jev 1.13.0 is the unranked reference ({one(data.reference.capability)} Capability); hosted API offerings use a separate board. Wrappers and subsidised listings are excluded from the ranking.</p>
+      <p className="bh-muted mt-3">{data.systems.length} decision models measured in JevBench {data.artifact.revision}; {data.openRanked.length} open-weights systems ranked by Capability. Jev 1.13.0 is the unranked reference ({one(data.reference.capability)} Capability); hosted API offerings use a separate board. Wrappers and subsidised listings are excluded from the ranking.</p>
       <JevReleaseStamp data={data}/><JevIntentLinks current="alternatives"/>
       <p className="mt-2 text-sm"><Link className="text-accent underline" href={DE_PATH} hrefLang="de" lang="de">Deutsche Version: Jev-kompatible Entscheidungsmodelle im Vergleich</Link></p>
     </header>
