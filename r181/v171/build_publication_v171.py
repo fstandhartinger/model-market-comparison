@@ -28,9 +28,9 @@ for k,d in inputs.items():
  sib=next(s for s in prev.values() if s.get('draw',{}).get('id')=='v1.6-regular-20261012')
  s['draw']={**cp(sib['draw']),'release':REV,'measured_on':d['measured_on'],'results_sha256':L(J/'receipts/INPUTS.json')[k]['v17-share']['sha256']}
  assert s['draw']['g_med']==s['v16']['g_med_used']
- # Retain the field scorer's ranked_over_cap treatment without inventing a cap exception.
+ # Ranked listing matches over-cap peers; cost remains the cap eligibility signal.
  assert s['ranked'] and (s['cost']['usd_per_1000']>0.06459465517241379)==(k=='turion-jev-31b')
- if k=='turion-jev-31b':s['listing']='ranked_over_cap'
+ assert s['listing']=='ranked'
  public=json.dumps(s)
  assert not re.search(r'/home/|workers/|#\d{4,}|\bPREREG\b|\br181\b|\br168\b|task_id|opaque_id|prediction',public),k
  out[k]=s;new[k]=s
@@ -59,9 +59,12 @@ cat.update(revision=REV,results_sha256=sha(V/f'jevbench-{REV}-results.json'),sou
 put(V/f'jevbench-{REV}-categories.json',cat)
 for n in ['carry','history','history-carry']:shutil.copyfile(V/f'jevbench-{PREV}-{n}.json',V/f'jevbench-{REV}-{n}.json')
 # Proof is an explicit addendum, not a claim that the new rows were in the v1.7.0 rebuild.
-proof={'schema_version':1,'revision':REV,'predecessor':{'revision':PREV,'publication_sha256':sha(V/f'jevbench-{PREV}-publication.json')},'method':res['method'],'pricing_module_sha256':old['proof']['pricing_module_sha256'],'scorers':old['proof']['scorers'],'carried_rows':len(prev),'carried_rows_equal_except':['rank','ranks'],'new_rows':{k:{'raw_sha256':inputs[k]['raw_sha256'],'pre_score_review_sha256':L(J/'receipts/INPUTS.json')[k].get('pre_score_review_sha256'),'scored_input_sha256':spec[k]['source_sha256']['v17-share']['sha256'],'model_pin':s['model_pin'],'axes':s['axes'],'composite_ci95':s['composite_ci95'],'decision_limit':s['decision_limit'],'treatment':s['listing']} for k,s in new.items()},'publication_approval':{'status':'PENDING','top_five_effect':'PENDING','fresh_baseline':PREV}}
+proof={'schema_version':1,'revision':REV,'predecessor':{'revision':PREV,'publication_sha256':sha(V/f'jevbench-{PREV}-publication.json')},'method':res['method'],'pricing_module_sha256':old['proof']['pricing_module_sha256'],'scorers':old['proof']['scorers'],'carried_rows':len(prev),'carried_rows_equal_except':['rank','ranks'],'new_rows':{k:{'raw_sha256':inputs[k]['raw_sha256'],'pre_score_review_sha256':L(J/'receipts/INPUTS.json')[k].get('pre_score_review_sha256'),'scored_input_sha256':spec[k]['source_sha256']['v17-share']['sha256'],'model_pin':s['model_pin'],'axes':s['axes'],'composite_ci95':s['composite_ci95'],'decision_limit':s['decision_limit'],'treatment':s['listing']} for k,s in new.items()},'publication_approval':L(J/'inputs/APPROVAL.json')}
 tf=J/'receipts/topfive-diff.json'
-if tf.exists():proof['publication_approval']['top_five_effect']='changes' if L(tf)['changed'] else 'unchanged';proof['topfive_diff_sha256']=sha(tf)
+assert tf.exists() and L(tf)['changed'] is False and L(tf)['lists']==40
+assert proof['publication_approval']['top_five_effect']=='none'
+assert proof['publication_approval']['top_five_preview']=={'path':'r181/v171/receipts/topfive-diff.json', 'sha256':sha(tf)}
+proof['topfive_diff_sha256']=sha(tf)
 put(V/f'jevbench-{REV}-proof.json',proof)
 pub=cp(old['publication']);pub.update(revision=REV,predecessor=proof['predecessor'],review={'engine':'PENDING','verdict':'PENDING','receipt_sha256':None})
 pub['files']={n:{'path':f'data/raw/benchmarks/jevbench/v1.7/jevbench-{REV}-{n}.json','sha256':sha(V/f'jevbench-{REV}-{n}.json')} for n in ['results','categories','carry','proof','history','history-carry']}

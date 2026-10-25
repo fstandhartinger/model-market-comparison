@@ -66,3 +66,26 @@ test('v1.7.1 merged scope ranks and Capability cap lists match the independent s
   }
  }
 });
+
+test('version-peer links survive a v1.7.1 artifact and later v1.7 patches',async()=>{
+ const source=await readFile('app/jev-models/[system]/page.tsx','utf8');
+ const expression=source.match(/const versionPeer = (.*);/)[1];
+ const {runInNewContext}=await import('node:vm');
+ const peer={key:'standard_one_3b_sh',label:'Predecessor: StandardOne-3B-SH'};
+ for(const revision of [b.artifact.revision,'v1.7.0','v1.7.2','v1.7.10']) {
+  const result=runInNewContext(expression,{data:{artifact:{...b.artifact,revision}},row:{key:'standard_one_3b_sh_v4'},versionPeers:{standard_one_3b_sh_v4:peer}});
+  assert.equal(result,peer,revision);
+ }
+ for(const revision of ['v1.6.43','v1.70.0','v1.7.invalid'])assert.equal(runInNewContext(expression,{data:{artifact:{revision}},row:{key:'standard_one_3b_sh_v4'},versionPeers:{standard_one_3b_sh_v4:peer}}),null,revision);
+});
+
+test('Turion remains ranked with over-cap cost and a bound standing GO',()=>{
+ const row=b.artifact.systems.find(s=>s.key==='turion-jev-31b');
+ assert.equal(row.listing,'ranked');
+ assert.ok(row.cost.usd_per_1000>0.06459465517241379);
+ const a=b.proof.publication_approval;
+ assert.equal(a.status,'GO (standing, no top-five change)');
+ assert.equal(a.top_five_effect,'none');
+ assert.equal(a.top_five_preview.sha256,b.proof.topfive_diff_sha256);
+ mutate(x=>{x.proof.publication_approval.top_five_preview.sha256='b'.repeat(64);},/standing GO proof/);
+});

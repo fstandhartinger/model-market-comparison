@@ -54,7 +54,7 @@ export function validateJevbenchV171Bundle({manifest,artifact,categories,carry,p
   same(s.v16.ci95.composite,s.composite_ci95,'CI '+k);
   if (Math.abs(s.capability-(s.axes.intelligence+s.axes.calibration)/2)>1e-9) fail('Capability '+k);
   if (/\/home\/|workers\/|#\d{4,}|\bPREREG\b|\br181\b|\br168\b/.test(JSON.stringify(s))) fail('internal row text '+k);
-  if (k==='turion-jev-31b' && (s.listing!=='ranked_over_cap' || s.cost.usd_per_1000<=0.06459465517241379)) fail('Turion cap treatment');
+  if (k==='turion-jev-31b' && (s.listing!=='ranked' || s.cost.usd_per_1000<=0.06459465517241379)) fail('Turion cap treatment');
   const p=proof.new_rows[k];
   if (!hex(p.raw_sha256) || !hex(p.scored_input_sha256) || !hex(p.pre_score_review_sha256)) fail('source pins '+k);
   for (const f of ['axes','composite_ci95','decision_limit','model_pin']) same(p[f],s[f],'proof '+k+' '+f);
@@ -81,7 +81,8 @@ export function validateJevbenchV171Bundle({manifest,artifact,categories,carry,p
  same(proof.pricing_module_sha256,previous.proof.pricing_module_sha256,'pricing pin');
  same(proof.scorers,previous.proof.scorers,'scorer pins');
  const a=proof.publication_approval;
- if(a?.fresh_baseline!=='v1.7.0'||!['unchanged','changes','PENDING'].includes(a.top_five_effect))fail('approval baseline');
+ if(a?.fresh_baseline!=='v1.7.0'||!['none','unchanged','changes','PENDING'].includes(a.top_five_effect))fail('approval baseline');
+ if(a.top_five_effect==='none' && (a.status!=='GO (standing, no top-five change)' || a.button_tap!==false || !a.go?.quote || a.top_five_preview?.sha256!==proof.topfive_diff_sha256 || !a.top_five_preview?.path || V171_NEW_KEYS.some(k=>a.asks?.[k]?.key!==k || !a.asks[k].admission || !a.asks[k].handoff || !a.asks[k].relay)))fail('standing GO proof');
  if(!candidate && a.top_five_effect==='PENDING')fail('top-five comparison PENDING');
  if(!candidate && a.top_five_effect==='changes' && (a.status!=='PASS'||!a.go?.quote||!hex(a.go?.preview_sha256)||a.go?.topfive_diff_sha256!==proof.topfive_diff_sha256))fail('Florian GO required');
  return true;
