@@ -12,5 +12,5 @@ p=R/'build.log';s=p.read_text();assert 'Generating static pages' in s and 'Final
 out['actual_pending_refusals']={}
 for name in ['flip','freeze']:
  p=R/(name+'-actual-pending-refused.log');assert 'fairness PENDING' in p.read_text();out['actual_pending_refusals'][name]={'status':'REFUSED_AS_REQUIRED','log_sha256':sha(p)}
-out['double_rebuild']=json.loads((R/'REPRO.json').read_text());out['helper_controls']=json.loads((R/'fix-helper-checks.json').read_text());out['candidate_publication_review']='PENDING';out['fairness']='PENDING'
+out['double_rebuild']=json.loads((R/'REPRO.json').read_text());out['helper_controls']=json.loads((R/'fix-helper-checks.json').read_text());out['candidate_publication_review']='PENDING';out['fairness']=json.loads((J/'inputs/APPROVAL.json').read_text())['fairness_check']['verdict']
 (R/'GATES.json').write_text(json.dumps(out,indent=1,sort_keys=True)+'\n');print(json.dumps({k:v for k,v in out.items() if k not in ['double_rebuild','helper_controls']},indent=1))

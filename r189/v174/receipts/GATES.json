@@ -18,18 +18,18 @@
    "components/JevReleaseHistory.tsx": "7312c0abd5c73847a00ee89a8b3d85fc251d60f3596624d609433d27a92ae136",
    "data/jevbench-architecture.json": "9a4f6587615b391c1dbc607b732123c69cfcc6ad729a52b89f7479689deaa20d",
    "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.4-carry.json": "271d1fc77a136a04a1eb6deb5480c52d4211eb2b66b2ac8bb31e80867e69003a",
-   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.4-categories.json": "c7e9d5479a92c495f64116393834bb35790ca63e3328554dc1723ed6f8610b82",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.4-categories.json": "0952c6affc4be7905802749a855c8edeb03205cf01b7769307e75ffba570e74b",
    "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.4-history-carry.json": "334e851944e92383ab3071e52b3012040c7023d0fe236395953169ebee8f0459",
    "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.4-history.json": "5cd8c1332226ea9c179883d2285c0d8b8cc593ae38f2645197364a7ddd9c83c1",
-   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.4-proof.json": "558532a6c4931dab396a4f5135964113b016d798c8b11930ebeabdbb4e63e9cd",
-   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.4-publication.json": "0cea66e0afa402e939964bff48752701a951211c73d95d16a02f56d45e3823d9",
-   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.4-results.json": "4ccb6562d216de52af31a9e39704c6706f7c9e86367613873bf9770e48b9e2f0",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.4-proof.json": "9ecffe993d954781c90632fefd40a2c2bcd0a3be6b8105213e262ff1b3ab9139",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.4-publication.json": "d0dfdac47fb87bb669464f6b6ecc4bc483c0b7885379fe30187b2c29f4efa102",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.4-results.json": "ea97768c19a0162e3a28848d3fd485538ea4f80a18e76c8232b9f7e1225d5e65",
    "lib/jevbench-categories.mjs": "fac93eb3c075b2a1d2dc63aecae81fe5e987d4aa46f94d77dd64760927b7c0a1",
    "lib/jevbench-live-board.mjs": "fce3fae8709a271e927fee95cf4f947af25c1e6e1bfcd94889469e0ab2f6741f",
    "lib/jevbench-releases.mjs": "39a4550dc85668b3dbf5d52ac73bedde14f35e7e743124fa34573338508ea9ec",
-   "lib/jevbench-v174-release.mjs": "91381c80275aedeeaffe46c672d866eb45c812bbfecfe01eaa8a92808aeee0f9",
-   "r189/v174/preview/card.png": "3cb8ff0590933be58d0d0e923c34b70592c4919e7b0be347b38c4c7e55de315a",
-   "r189/v174/preview/index.html": "6f7165ffa1f2121de40e67df737885f1165e34b7b9889e0e33e1bc5744b74970",
+   "lib/jevbench-v174-release.mjs": "6ed372699870f80c0aadae19e2e90f938c7e1628f2d497d7c32c1fbef9aa5090",
+   "r189/v174/preview/card.png": "56dc7c8671f2f474567831a15432a4900fe1ef794f9be8108d56e725bf370a7c",
+   "r189/v174/preview/index.html": "2793628e02685f90b9e78f69c2acb3c04cf5c8edf2bc150c427f55d57fc6539f",
    "r189/v174/receipts/topfive-extended.json": "ed9d2278a088893b6bf4a018fbd282c66d2b61c7d4f00d713d2e62c55097b2c1",
    "r189/v174/receipts/topfive-sliders.json": "93db6ae66059cb3eb160704e3deefdcbeb39d0d55ef684f63f97d22497332c47",
    "test/cr-205-jev-page-structure.test.mjs": "d124fe780fcb1ec76e367029344aaa5fafafbdfd23e2bb1fbec74bef57da3668",
@@ -47,7 +47,7 @@
   "identical": true,
   "passes": 2
  },
- "fairness": "PENDING",
+ "fairness": "FAIR",
  "final-sanity": {
   "log_sha256": "30aa63366d18b7500f4812395988fabe425f81914a0255f0990d6b855725cf7b",
   "status": "PASS"
@@ -55,7 +55,7 @@
  "fulltest": {
   "cancelled": 0,
   "fail": 0,
-  "log_sha256": "e383a56409070ae875091fbd1f60178fc1a255ce4e180d5edcfcfd4d032fdce6",
+  "log_sha256": "c015941abb7d0a2244acfdae0308e37481711b9e8f36c8d9b1e33b0e7dcc1df3",
   "pass": 3777,
   "skipped": 5,
   "status": "PASS",
@@ -73,7 +73,7 @@
   "status": "PASS"
  },
  "helpers": {
-  "log_sha256": "f4f29d46bdb9e62c80030b774f837ee47c42999a8ceca30ad6affc9a571dd9bb",
+  "log_sha256": "cf09de73f2ae56304c8db0528dce20f93b00afe9f1c56c8238a3e6c673c5d5c4",
   "status": "PASS"
  },
  "helpers-content-check": {
@@ -85,13 +85,13 @@
   "status": "PASS"
  },
  "production_build": {
-  "log_sha256": "57b3b965b5dfa74ab0d62ab39a73c28ed1485698b7ea1c2283887e10139eb155",
+  "log_sha256": "c2678bc0487f2da5343639dd9ad604c5b6edecb1b79cf95da39f7e4843daf3a9",
   "status": "PASS"
  },
  "release-tests": {
   "cancelled": 0,
   "fail": 0,
-  "log_sha256": "42fe31656691361edd65b94c715f258606def9bf576366c6020694486c662744",
+  "log_sha256": "bc61ef1e07bfe23cb2b3e89c5598a985e95b351f342d68557bf45293b72cd273",
   "pass": 129,
   "skipped": 4,
   "status": "PASS",
@@ -108,7 +108,7 @@
  "synthetic-tests": {
   "cancelled": 0,
   "fail": 0,
-  "log_sha256": "6f7a4716cafb3334732f4992a4462dbcbd704ff1bd523a1dd1e8dad2f850e07d",
+  "log_sha256": "1e98717077d8243671a7a5a8e0c9b03c2270bf0540631da49167a9164e45b7e9",
   "pass": 74,
   "skipped": 4,
   "status": "PASS",

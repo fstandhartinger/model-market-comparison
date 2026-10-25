@@ -21,10 +21,11 @@ for p in (J/'cells').rglob('*.json'):
  walk(L(p))
 proof=L(V/'jevbench-v1.7.4-proof.json');approval=L(J/'inputs/APPROVAL.json');pub=L(V/'jevbench-v1.7.4-publication.json')
 assert proof['publication_approval']==approval and pub['review']['verdict']=='PENDING'
-assert approval['fairness_check']['verdict']=='PENDING','lead must separately review any fairness binding change'
+fair=approval['fairness_check'];FR=pathlib.Path('/home/flori/jobs/jevbench-add-requests-20260919')/fair['path']
+assert fair['verdict']=='FAIR' and FR.is_file() and sha(FR)==fair['sha256'] and L(FR).get('fairness')=='FAIR','FAIR fairness receipt bound by sha required'
 for f,d in pub['files'].items():assert sha(W/d['path'])==d['sha256'],f
 assert sha(J/'receipts/topfive-diff.json')==proof['topfive_diff_sha256']==approval['top_five_preview']['sha256']
 for p in [W/'app/api/jevbench/v1.7.3/route.ts',W/'app/jev-models/v1.7.3/page.tsx']:
  assert p.read_bytes()==subprocess.check_output(['git','show','HEAD:'+str(p.relative_to(W))]),p
-result={'status':'PASS','rows':291,'ranked':271,'carried_rows_equal_except_ranks':290,'new_row_numeric_fields_exact':True,'history_carry_bytes_exact':True,'new_public_text_scan':'PASS','cells_aggregate_only':'PASS','publication':'PENDING','fairness':'PENDING','preview_bound':True,'previous_release_pages_unchanged':True}
+result={'status':'PASS','rows':291,'ranked':271,'carried_rows_equal_except_ranks':290,'new_row_numeric_fields_exact':True,'history_carry_bytes_exact':True,'new_public_text_scan':'PASS','cells_aggregate_only':'PASS','publication':'PENDING','fairness':fair['verdict'],'fairness_receipt_sha256':fair['sha256'],'preview_bound':True,'previous_release_pages_unchanged':True}
 (J/'receipts/FINAL-SANITY.json').write_text(json.dumps(result,indent=1,sort_keys=True)+'\n');print(json.dumps(result))

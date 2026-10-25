@@ -4,7 +4,7 @@ from PIL import Image,ImageDraw,ImageFont
 J=pathlib.Path(__file__).resolve().parent;L=lambda p:json.loads(p.read_text())
 e=L(J/'receipts/topfive-extended.json');d=L(J/'receipts/topfive-diff.json')
 s=(J/'preview.template.html').read_text()
-(J/'preview/index.html').write_text(s.replace('/*DATA*/',json.dumps(e,separators=(',',':')).replace('</','<\\/')))
+(J/'preview/index.html').write_text(s.replace('/*FAIR*/',L(J/'inputs'/'APPROVAL.json')['fairness_check']['verdict']).replace('/*DATA*/',json.dumps(e,separators=(',',':')).replace('</','<\\/')))
 r=next(r for r in e['rows'] if r['variant']=='share' and r['scope']=='open' and r['caps']=='official' and r['metric']=='capability')
 m=e['models']['share'];k='dopest-1.0-31b';out=next(k for k in r['before'] if k not in r['after'])
 im=Image.new('RGB',(1440,900),'#101723');dr=ImageDraw.Draw(im)

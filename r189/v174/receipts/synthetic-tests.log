@@ -3,392 +3,392 @@ TAP version 13
 # Subtest: feed carries board and open-board rank next to the unchanged combined rank
 ok 1 - feed carries board and open-board rank next to the unchanged combined rank
   ---
-  duration_ms: 26387.123166
+  duration_ms: 24950.513176
   ...
 # Subtest: llms-full and FAQ use the open-weights board
 ok 2 - llms-full and FAQ use the open-weights board
   ---
-  duration_ms: 23327.634964
+  duration_ms: 23182.915899
   ...
 # Subtest: feed key set equals the merged live board and the page shares the assembly
 ok 3 - feed key set equals the merged live board and the page shares the assembly
   ---
-  duration_ms: 20.260726
+  duration_ms: 7.471569
   ...
 # Subtest: latest_release is the newest release of the draw table, not a hard-coded list
 ok 4 - latest_release is the newest release of the draw table, not a hard-coded list
   ---
-  duration_ms: 4838.407766
+  duration_ms: 4911.221339
   ...
 # Subtest: feed ranks equal the ranks of the open and API Capability default views
 ok 5 - feed ranks equal the ranks of the open and API Capability default views
   ---
-  duration_ms: 13.996312
+  duration_ms: 19.471771
   ...
 # Subtest: rows carry their draw so agents can tell which draw a row was measured on
 ok 6 - rows carry their draw so agents can tell which draw a row was measured on
   ---
-  duration_ms: 0.239806
+  duration_ms: 0.320584
   ...
 # Subtest: jevFoldWithPinned: pinned rows keep their position above the fold, do not count toward the limit, and are moved up from below it
 ok 7 - jevFoldWithPinned: pinned rows keep their position above the fold, do not count toward the limit, and are moved up from below it
   ---
-  duration_ms: 1.260637
+  duration_ms: 0.925932
   ...
 # Subtest: Delta 4: with the folds collapsed, Jev 1.13.0 and Jev 1.14.0 are rendered above the fold in the open-board Capability and Composite sections
 ok 8 - Delta 4: with the folds collapsed, Jev 1.13.0 and Jev 1.14.0 are rendered above the fold in the open-board Capability and Composite sections
   ---
-  duration_ms: 2341.170838
+  duration_ms: 2066.505002
   ...
 # Subtest: v1.6.30 accepts the stored build once the review passes
 ok 9 - v1.6.30 accepts the stored build once the review passes
   ---
-  duration_ms: 221.752226
+  duration_ms: 211.736316
   ...
 # Subtest: v1.6.30 is not publishable while the manifest is PENDING or the preview card is a placeholder
 ok 10 - v1.6.30 is not publishable while the manifest is PENDING or the preview card is a placeholder
   ---
-  duration_ms: 264.773532
+  duration_ms: 227.603194
   ...
 # Subtest: 48 token-priced rows change cost on the common basis, 9 unpriced rows do not
 ok 11 - 48 token-priced rows change cost on the common basis, 9 unpriced rows do not
   ---
-  duration_ms: 4.741553
+  duration_ms: 16.896829
   ...
 # Subtest: named rows: nimble-v4-max enters at \#3, subq-snap-preview falls inside the official cost cap
 ok 12 - named rows: nimble-v4-max enters at \#3, subq-snap-preview falls inside the official cost cap
   ---
-  duration_ms: 0.376233
+  duration_ms: 0.328384
   ...
 # Subtest: Intelligence, Calibration, Speed and Capability are byte-identical on all 57 rows
 ok 13 - Intelligence, Calibration, Speed and Capability are byte-identical on all 57 rows
   ---
-  duration_ms: 6.036749
+  duration_ms: 4.271379
   ...
 # Subtest: cost, axes, composites and placement follow from the common-basis cost; mutations are rejected
 ok 14 - cost, axes, composites and placement follow from the common-basis cost; mutations are rejected
   ---
-  duration_ms: 2378.064847
+  duration_ms: 2236.793147
   ...
 # Subtest: the proof binds the cost basis, the superseded freeze and every re-costed row
 ok 15 - the proof binds the cost basis, the superseded freeze and every re-costed row
   ---
-  duration_ms: 2557.805752
+  duration_ms: 1829.679252
   ...
 # Subtest: the release note states the rule, the unchanged measures, the cap moves and the superseded freeze
 ok 16 - the release note states the rule, the unchanged measures, the cap moves and the superseded freeze
   ---
-  duration_ms: 1673.620113
+  duration_ms: 1397.458266
   ...
 # Subtest: approval: a changed top five needs the preview card; placeholders and wrong provenance are rejected
 ok 17 - approval: a changed top five needs the preview card; placeholders and wrong provenance are rejected
   ---
-  duration_ms: 1795.851843
+  duration_ms: 1535.134288
   ...
 # Subtest: the cost rule wording is general and appears on the methodology page and the board
 ok 18 - the cost rule wording is general and appears on the methodology page and the board
   ---
-  duration_ms: 9.381277
+  duration_ms: 7.261393
   ...
 # Subtest: the text about this draw's 15 items names who refused them and where the token figure comes from; no time-bound claim about authors
 ok 19 - the text about this draw's 15 items names who refused them and where the token figure comes from; no time-bound claim about authors
   ---
-  duration_ms: 15.390046
+  duration_ms: 13.816478
   ...
 # Subtest: Delta 3 (display only): Jev 1.14.0 is a second unranked reference row on the open board without the toggle; every ranking and rank is unchanged
 ok 20 - Delta 3 (display only): Jev 1.14.0 is a second unranked reference row on the open board without the toggle; every ranking and rank is unchanged
   ---
-  duration_ms: 19152.813281
+  duration_ms: 16295.662267
   ...
 # Subtest: release note [110] states the general rule and then its history sentence
 ok 21 - release note [110] states the general rule and then its history sentence
   ---
-  duration_ms: 0.463882
+  duration_ms: 0.459472
   ...
 # Subtest: v1.6.37 restates exactly the two v1.6.1 rows and adds nothing else
 ok 22 - v1.6.37 restates exactly the two v1.6.1 rows and adds nothing else
   ---
-  duration_ms: 2.335486
+  duration_ms: 1.849065
   ...
 # Subtest: h2o-lightning-4b: price corrected to the frozen Qwen/Qwen3.5-4B reference, nothing else of the published row changes
 ok 23 - h2o-lightning-4b: price corrected to the frozen Qwen/Qwen3.5-4B reference, nothing else of the published row changes
   ---
-  duration_ms: 0.652248
+  duration_ms: 0.441932
   ...
 # Subtest: kahn1: same correction on its own-estimate tokens; the false snapshot attribution of 0.04 is gone
 ok 24 - kahn1: same correction on its own-estimate tokens; the false snapshot attribution of 0.04 is gone
   ---
-  duration_ms: 0.237716
+  duration_ms: 0.211586
   ...
 # Subtest: all 70 carried rows keep every stored value; only rank and ranks move, by the restated rows above them
 ok 25 - all 70 carried rows keep every stored value; only rank and ranks move, by the restated rows above them
   ---
-  duration_ms: 60.370244
+  duration_ms: 49.246314
   ...
 # Subtest: the two other Qwen3.5-4B rows with the USD 0.04 inherited basis are untouched
 ok 26 - the two other Qwen3.5-4B rows with the USD 0.04 inherited basis are untouched
   ---
-  duration_ms: 0.285105
+  duration_ms: 0.297265
   ...
 # Subtest: v1.6.37 rejects altered price, usage, markers, text, intervals, approval and carried rows
 ok 27 - v1.6.37 rejects altered price, usage, markers, text, intervals, approval and carried rows
   ---
-  duration_ms: 5693.019782
+  duration_ms: 4966.594203
   ...
 # Subtest: the corrected price is recomputed from tokens, the frozen tariff and the number of decisions
 ok 28 - the corrected price is recomputed from tokens, the frozen tariff and the number of decisions
   ---
-  duration_ms: 0.240085
+  duration_ms: 0.172017
   ...
 # Subtest: v1.6.37 archived route keeps shared board, method and history
 ok 29 - v1.6.37 archived route keeps shared board, method and history
   ---
-  duration_ms: 9.613962
+  duration_ms: 5.74251
   ...
 # Subtest: live boards and the agent feed resolve each restated row exactly once with the corrected figures; the frozen archive keeps the published ones
 ok 30 - live boards and the agent feed resolve each restated row exactly once with the corrected figures; the frozen archive keeps the published ones
   ---
-  duration_ms: 34555.827355
+  duration_ms: 24507.969113
   ...
 # Subtest: SEO model, comparison and full-text pages follow the merged feed with corrected costs and the re-measured Seb
 ok 31 - SEO model, comparison and full-text pages follow the merged feed with corrected costs and the re-measured Seb
   ---
-  duration_ms: 27375.048299
+  duration_ms: 20626.698787
   ...
 # Subtest: the unreviewed build is not published: the reader rejects it, the board stays on the validated v1.6 chain
 ok 32 - the unreviewed build is not published: the reader rejects it, the board stays on the validated v1.6 chain # SKIP
   ---
-  duration_ms: 1.074341
+  duration_ms: 1.010981
   ...
 # Subtest: v1.7.0 restates exactly the live board of its base release: every row, the pending set, the carry
 ok 33 - v1.7.0 restates exactly the live board of its base release: every row, the pending set, the carry
   ---
-  duration_ms: 1.751708
+  duration_ms: 2.021401
   ...
 # Subtest: every re-scored row shows its v1.6 values next to the v1.7 values and the time-limit evidence
 ok 34 - every re-scored row shows its v1.6 values next to the v1.7 values and the time-limit evidence
   ---
-  duration_ms: 0.699877
+  duration_ms: 0.780765
   ...
 # Subtest: pinned rows: chon-1.0-12b collapses under the limit, sage-1.3.0 and an A4 row follow the rule, the pending row keeps its v1.6 numbers
 ok 35 - pinned rows: chon-1.0-12b collapses under the limit, sage-1.3.0 and an A4 row follow the rule, the pending row keeps its v1.6 numbers
   ---
-  duration_ms: 4.264311
+  duration_ms: 0.487271
   ...
 # Subtest: fastino-glide-api (v1.6.40 row, scored on 1,497 of 1,500 items) is re-scored under the rule on the same 1,497 items; two answered decisions over 10 s count failed
 ok 36 - fastino-glide-api (v1.6.40 row, scored on 1,497 of 1,500 items) is re-scored under the rule on the same 1,497 items; two answered decisions over 10 s count failed
   ---
-  duration_ms: 0.497401
+  duration_ms: 0.394173
   ...
 # Subtest: the four intake handoffs retain their distinct identities, frozen costs and disclosures
 ok 37 - the four intake handoffs retain their distinct identities, frozen costs and disclosures
   ---
-  duration_ms: 1.040301
+  duration_ms: 1.417383
   ...
 # Subtest: R9 rows retain the zero-output price convention, timeout outcomes and serving disclosures
 ok 38 - R9 rows retain the zero-output price convention, timeout outcomes and serving disclosures
   ---
-  duration_ms: 8.998153
+  duration_ms: 0.978581
   ...
 # Subtest: v1.7.0 archive files and the base release stay byte-identical
 ok 39 - v1.7.0 archive files and the base release stay byte-identical
   ---
-  duration_ms: 299.862685
+  duration_ms: 274.457635
   ...
 # Subtest: v1.7.0 rejects altered evidence (bundle checks)
 ok 40 - v1.7.0 rejects altered evidence (bundle checks)
   ---
-  duration_ms: 22125.144077
+  duration_ms: 16663.514401
   ...
 # Subtest: a new row (measured first under v1.7.0) has its own shape: no previous, new_in, disclosure and licence, ranked with the re-scored rows
 ok 41 - a new row (measured first under v1.7.0) has its own shape: no previous, new_in, disclosure and licence, ranked with the re-scored rows
   ---
-  duration_ms: 1.342625
+  duration_ms: 0.776575
   ...
 # Subtest: v1.7.0 rejects a malformed new row (6+ mutations)
 ok 42 - v1.7.0 rejects a malformed new row (6+ mutations)
   ---
-  duration_ms: 9910.439904
+  duration_ms: 7246.33437
   ...
 # Subtest: the two Super Decider rows are ranked, priced at the launch list price of the provider's public product page, and say where the price comes from
 ok 43 - the two Super Decider rows are ranked, priced at the launch list price of the provider's public product page, and say where the price comes from
   ---
-  duration_ms: 1.049831
+  duration_ms: 0.742876
   ...
 # Subtest: a re-measured row (GPU, same items) replaces its CPU row in full: GPU scores and times, the CPU row as previous, disclosure on the row
 ok 44 - a re-measured row (GPU, same items) replaces its CPU row in full: GPU scores and times, the CPU row as previous, disclosure on the row
   ---
-  duration_ms: 0.470781
+  duration_ms: 0.375453
   ...
 # Subtest: the new row carries no board/issue number or custody reference in its public text
 ok 45 - the new row carries no board/issue number or custody reference in its public text
   ---
-  duration_ms: 0.677497
+  duration_ms: 0.56352
   ...
 # Subtest: v1.7.0 rejects a malformed re-measured row (GPU numbers with CPU times, still pending, no disclosure, wrong marks, ...)
 ok 46 - v1.7.0 rejects a malformed re-measured row (GPU numbers with CPU times, still pending, no disclosure, wrong marks, ...)
   ---
-  duration_ms: 14246.091064
+  duration_ms: 10485.875167
   ...
 # Subtest: the restatement is bound to the live v1.6 chain: it passes on the chain it was built for
 ok 47 - the restatement is bound to the live v1.6 chain: it passes on the chain it was built for
   ---
-  duration_ms: 424.364588
+  duration_ms: 352.649728
   ...
 # Subtest: v1.7.0 rejects a restatement that does not match the chain (previous, identity, cost, row set, newer release, feed hash, seeds)
 ok 48 - v1.7.0 rejects a restatement that does not match the chain (previous, identity, cost, row set, newer release, feed hash, seeds)
   ---
-  duration_ms: 3366.735961
+  duration_ms: 2239.315296
   ...
 # Subtest: a re-measured row is bound to the CPU row it replaces (previous == chain, same weights, same draw, another endpoint kind, same cost)
 ok 49 - a re-measured row is bound to the CPU row it replaces (previous == chain, same weights, same draw, another endpoint kind, same cost)
   ---
-  duration_ms: 3274.509871
+  duration_ms: 2135.680245
   ...
 # Subtest: a published v1.7.0 board is live: restated rows, v1.7.0 as the latest release, archive pages untouched
 ok 50 - a published v1.7.0 board is live: restated rows, v1.7.0 as the latest release, archive pages untouched
   ---
-  duration_ms: 21760.545542
+  duration_ms: 21755.400951
   ...
 # Subtest: v1.7.2 candidate preserves every carried score, CI, diagnostic, category and dated carry
 ok 51 - v1.7.2 candidate preserves every carried score, CI, diagnostic, category and dated carry
   ---
-  duration_ms: 210.871666
+  duration_ms: 217.074495
   ...
 # Subtest: v1.7.2 PENDING stays unavailable to board, API and navigation
 ok 52 - v1.7.2 PENDING stays unavailable to board, API and navigation # SKIP published
   ---
-  duration_ms: 0.248926
+  duration_ms: 0.232636
   ...
 # Subtest: v1.7.2 rejects changed carried point estimates or intervals
 ok 53 - v1.7.2 rejects changed carried point estimates or intervals
   ---
-  duration_ms: 455.086953
+  duration_ms: 480.95072
   ...
 # Subtest: v1.7.2 rejects altered new row, dropped row and duplicated row
 ok 54 - v1.7.2 rejects altered new row, dropped row and duplicated row
   ---
-  duration_ms: 703.580561
+  duration_ms: 731.731785
   ...
 # Subtest: v1.7.2 rejects changed category, rank, price pin, provenance and predecessor
 ok 55 - v1.7.2 rejects changed category, rank, price pin, provenance and predecessor
   ---
-  duration_ms: 1322.694006
+  duration_ms: 1694.367321
   ...
 # Subtest: v1.7.2 refuses missing release review and changed-top-five publication without GO
 ok 56 - v1.7.2 refuses missing release review and changed-top-five publication without GO
   ---
-  duration_ms: 453.426083
+  duration_ms: 351.740606
   ...
 # Subtest: v1.7.2 merged scope ranks and Capability cap lists match the independent site fixture
 ok 57 - v1.7.2 merged scope ranks and Capability cap lists match the independent site fixture
   ---
-  duration_ms: 43.780118
+  duration_ms: 42.157948
   ...
 # Subtest: version-peer links survive a v1.7.2 artifact and later v1.7 patches
 ok 58 - version-peer links survive a v1.7.2 artifact and later v1.7 patches
   ---
-  duration_ms: 4.541526
+  duration_ms: 4.553524
   ...
 # Subtest: Jeetu remains ranked within cap with zero-output pricing and bound standing GO
 ok 59 - Jeetu remains ranked within cap with zero-output pricing and bound standing GO
   ---
-  duration_ms: 327.234615
+  duration_ms: 355.289248
   ...
 # Subtest: v1.7.3 candidate preserves every carried score, CI, diagnostic, category and dated carry
 ok 60 - v1.7.3 candidate preserves every carried score, CI, diagnostic, category and dated carry
   ---
-  duration_ms: 220.968347
+  duration_ms: 223.793277
   ...
 # Subtest: v1.7.3 PENDING stays unavailable to board, API and navigation
 ok 61 - v1.7.3 PENDING stays unavailable to board, API and navigation # SKIP published
   ---
-  duration_ms: 0.179846
+  duration_ms: 0.181117
   ...
 # Subtest: v1.7.3 rejects changed carried point estimates or intervals
 ok 62 - v1.7.3 rejects changed carried point estimates or intervals
   ---
-  duration_ms: 520.030295
+  duration_ms: 359.034718
   ...
 # Subtest: v1.7.3 rejects altered new row, dropped row and duplicated row
 ok 63 - v1.7.3 rejects altered new row, dropped row and duplicated row
   ---
-  duration_ms: 998.50304
+  duration_ms: 675.461443
   ...
 # Subtest: v1.7.3 rejects changed category, rank, price pin, provenance and predecessor
 ok 64 - v1.7.3 rejects changed category, rank, price pin, provenance and predecessor
   ---
-  duration_ms: 1668.222984
+  duration_ms: 1567.904035
   ...
 # Subtest: v1.7.3 refuses missing release review and changed-top-five publication without GO
 ok 65 - v1.7.3 refuses missing release review and changed-top-five publication without GO
   ---
-  duration_ms: 875.881045
+  duration_ms: 843.01302
   ...
 # Subtest: v1.7.3 merged scope ranks and Capability cap lists match the independent site fixture
 ok 66 - v1.7.3 merged scope ranks and Capability cap lists match the independent site fixture
   ---
-  duration_ms: 51.436745
+  duration_ms: 56.491646
   ...
 # Subtest: version-peer links survive a v1.7.3 artifact and later v1.7 patches
 ok 67 - version-peer links survive a v1.7.3 artifact and later v1.7 patches
   ---
-  duration_ms: 8.339555
+  duration_ms: 6.884119
   ...
 # Subtest: GPU replaces CPU in full under the same key and retains its CPU history and cost value/basis
 ok 68 - GPU replaces CPU in full under the same key and retains its CPU history and cost value/basis
   ---
-  duration_ms: 832.987851
+  duration_ms: 737.404127
   ...
 # Subtest: ScaleDown retains vendor-hosted scoring and explicit vendor price including failed-usage fallback
 ok 69 - ScaleDown retains vendor-hosted scoring and explicit vendor price including failed-usage fallback
   ---
-  duration_ms: 730.72196
+  duration_ms: 812.490299
   ...
 # Subtest: v1.7.4 candidate preserves every carried score, CI, diagnostic, category and dated carry
 ok 70 - v1.7.4 candidate preserves every carried score, CI, diagnostic, category and dated carry
   ---
-  duration_ms: 178.959266
+  duration_ms: 196.706442
   ...
 # Subtest: v1.7.4 PENDING stays unavailable to board, API and navigation
 ok 71 - v1.7.4 PENDING stays unavailable to board, API and navigation # SKIP published
   ---
-  duration_ms: 0.212716
+  duration_ms: 0.246755
   ...
 # Subtest: v1.7.4 rejects changed carried point estimates or intervals
 ok 72 - v1.7.4 rejects changed carried point estimates or intervals
   ---
-  duration_ms: 450.432634
+  duration_ms: 488.948488
   ...
 # Subtest: v1.7.4 rejects altered new row, dropped row and duplicated row
 ok 73 - v1.7.4 rejects altered new row, dropped row and duplicated row
   ---
-  duration_ms: 767.512224
+  duration_ms: 1101.093116
   ...
 # Subtest: v1.7.4 rejects changed category, rank, price pin, provenance and predecessor
 ok 74 - v1.7.4 rejects changed category, rank, price pin, provenance and predecessor
   ---
-  duration_ms: 1647.103094
+  duration_ms: 1850.901586
   ...
 # Subtest: v1.7.4 refuses missing release review and changed-top-five publication without GO
 ok 75 - v1.7.4 refuses missing release review and changed-top-five publication without GO
   ---
-  duration_ms: 708.196825
+  duration_ms: 904.644869
   ...
 # Subtest: v1.7.4 merged scope ranks and Capability cap lists match the independent site fixture
 ok 76 - v1.7.4 merged scope ranks and Capability cap lists match the independent site fixture
   ---
-  duration_ms: 39.942018
+  duration_ms: 46.430788
   ...
 # Subtest: version-peer links survive a v1.7.4 artifact and later v1.7 patches
 ok 77 - version-peer links survive a v1.7.4 artifact and later v1.7 patches
   ---
-  duration_ms: 4.766462
+  duration_ms: 4.358168
   ...
 # Subtest: DOPEST preserves the full scored row and native zero-output estimate
 ok 78 - DOPEST preserves the full scored row and native zero-output estimate
   ---
-  duration_ms: 995.629314
+  duration_ms: 1142.130195
   ...
 1..78
 # tests 78
@@ -398,4 +398,4 @@ ok 78 - DOPEST preserves the full scored row and native zero-output estimate
 # cancelled 0
 # skipped 4
 # todo 0
-# duration_ms 171061.442055
+# duration_ms 146945.778616
