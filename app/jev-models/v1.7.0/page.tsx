@@ -4,7 +4,8 @@ import { JevBenchReleaseVersionNav } from '../../../components/JevBenchReleaseVe
 import { JevV170OldNewTable } from '../../../components/JevV170OldNewTable';
 import { JevHistoryLazy } from '../../../components/JevHistoryLazy';
 import { PageJsonLd } from '../../../components/PageJsonLd';
-export const metadata = {description: 'JevBench v1.7.0 release: decision-model results under a 10-second limit, with previous values, sources and methodology on Benchmark Heaven.', title: 'JevBench v1.7.0 · 10-second limit per decision, every row re-scored', alternates:{canonical:'/jev-models/v1.7.0'}};
+import { seoTitle } from '../../../lib/seo';
+export const metadata = {description: 'JevBench v1.7.0 release: decision-model results under a 10-second limit, with previous values, sources and methodology on Benchmark Heaven.', title: seoTitle('JevBench v1.7.0 · 10-second rule'), alternates:{canonical:'/jev-models/v1.7.0'}};
 type Row = { key: string; display: string; method: string; ranked: boolean; rank: number | null; listing: string; scores?: { A: number }; capability?: number; axes: { speed: number };
   speed?: { p50_s_raw: number; p95_s_raw: number }; decision_limit: { n_over_limit: number; speed_n: number } | null;
   previous: { board_release: string; scores: { A: number } | null; capability: number | null; rank: number | null } };

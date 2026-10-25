@@ -32,7 +32,8 @@ test('every comparison route renders current reference and valid matching FAQ/Br
 test('landing metadata and visible data stamp follow the release date; top 15 are visible',async()=>{
  for(const slug of ['alternatives','open-source-jev','how-to-choose']){
   const page=await importSeoModule(`app/jev-models/${slug}/page.tsx`);const metadata=await page.generateMetadata();
-  assert.ok(metadata.title.includes(data.month));assert.ok(metadata.description.includes(data.month));
+  const documentTitle=typeof metadata.title==='string'?metadata.title:metadata.title.absolute;
+  assert.ok(documentTitle.includes(data.month));assert.ok(metadata.description.includes(data.month));
   const html=renderSeo(await page.default());assert.ok(html.includes(data.artifact.revision));assert.ok(html.includes(data.date.slice(0,10)));
   assert.ok(!html.includes('v1.4.2.2'));assert.ok(parseJsonLd(html).length);
   if(slug==='alternatives')for(const row of data.ranked.slice(0,15))assert.ok(html.includes(row.key));
