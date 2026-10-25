@@ -19,24 +19,6 @@
       "notes": "trustedtokens.eu/api/public/models deepseek-ai/DeepSeek-V4.1-Flash-1017; 1048576 ctx; TNG-operated GPU inference in Germany; business accounts priced with included monthly credit (see trustedtokens.method.md)"
     },
     {
-      "model_name": "GLM 5.3 Flash",
-      "provider_org": "Z.ai",
-      "api_model_id": "zai-org/GLM-5.3-Flash",
-      "model_id": "zai-org/GLM-5.3-Flash",
-      "input_per_1m_eur": 0.3,
-      "output_per_1m_eur": 0.6,
-      "input_per_1m_usd": 0.34,
-      "output_per_1m_usd": 0.67,
-      "cache_read_per_1m_eur": 0.06,
-      "cache_read_per_1m_usd": 0.07,
-      "context_length": 1048576,
-      "status": "experimental",
-      "eu_hosted": true,
-      "hosting_class": "sovereign_germany",
-      "region": "eu",
-      "notes": "trustedtokens.eu/api/public/models zai-org/GLM-5.3-Flash; 1048576 ctx; TNG-operated GPU inference in Germany; business accounts priced with included monthly credit (see trustedtokens.method.md)"
-    },
-    {
       "model_name": "GLM 5.3",
       "provider_org": "Z.ai",
       "api_model_id": "zai-org/GLM-5.3",
@@ -53,6 +35,24 @@
       "hosting_class": "sovereign_germany",
       "region": "eu",
       "notes": "trustedtokens.eu/api/public/models zai-org/GLM-5.3; 230000 ctx; TNG-operated GPU inference in Germany; business accounts priced with included monthly credit (see trustedtokens.method.md)"
+    },
+    {
+      "model_name": "GLM 5.3 Flash",
+      "provider_org": "Z.ai",
+      "api_model_id": "zai-org/GLM-5.3-Flash",
+      "model_id": "zai-org/GLM-5.3-Flash",
+      "input_per_1m_eur": 0.3,
+      "output_per_1m_eur": 0.6,
+      "input_per_1m_usd": 0.34,
+      "output_per_1m_usd": 0.67,
+      "cache_read_per_1m_eur": 0.06,
+      "cache_read_per_1m_usd": 0.07,
+      "context_length": 1048576,
+      "status": "experimental",
+      "eu_hosted": true,
+      "hosting_class": "sovereign_germany",
+      "region": "eu",
+      "notes": "trustedtokens.eu/api/public/models zai-org/GLM-5.3-Flash; 1048576 ctx; TNG-operated GPU inference in Germany; business accounts priced with included monthly credit (see trustedtokens.method.md)"
     },
     {
       "model_name": "Gemma 4 26B A4B It",
@@ -200,8 +200,8 @@
     }
   ],
   "source": "TrustedTokens — trustedtokens.eu/api/public/models (first-party, public; the endpoint the /models page itself loads)",
-  "collected_at": "2026-10-24",
-  "method": "scripts/fetch-trustedtokens-catalog.mjs (2026-10-24): one unauthenticated GET of /api/public/models plus the ECB daily EUR/USD rate; EUR per-token prices normalized to EUR per 1M tokens (USD = EUR × ECB rate, nearest cent); rows without both token prices skipped; lifecycle from the catalog's attributes (deprecated kept); hosting audited sovereign Germany (see trustedtokens.method.md).",
+  "collected_at": "2026-10-25",
+  "method": "scripts/fetch-trustedtokens-catalog.mjs (2026-10-25): one unauthenticated GET of /api/public/models plus the ECB daily EUR/USD rate; EUR per-token prices normalized to EUR per 1M tokens (USD = EUR × ECB rate, nearest cent); rows without both token prices skipped; lifecycle from the catalog's attributes (deprecated kept); hosting audited sovereign Germany (see trustedtokens.method.md).",
   "currency": "EUR",
   "currency_note": "Native prices are EUR per token without VAT, shown here per 1M tokens; USD = EUR × ECB 2026-10-23: 1 EUR = 1.1193 USD, rounded to the nearest cent. Access is B2B: plans include monthly usage credit (Starter €50 / Pro €200 / Enterprise €2,000, all without VAT, marked indicative) against which these per-token prices are billed.",
   "usd_normalization": {
@@ -211,7 +211,7 @@
     "source": "https://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml",
     "rounding": "nearest USD cent"
   },
-  "response_sha256": "3edd734c2d4dc5e4cce04807ddb862a35728197f7646c5884cb131b17e19afc2",
+  "response_sha256": "a28d1be22bd77c29fa68a50d7c437a619620a108b3331e95909528eae95222f2",
   "skipped": [],
   "diff": {
     "added": [],

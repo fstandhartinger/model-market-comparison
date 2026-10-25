@@ -1,10 +1,21 @@
 {
   "source": "TensorX — tensorx.ai/pricing (first-party, public)",
   "region": "eu (Ireland)",
-  "collected_at": "2026-10-24",
+  "collected_at": "2026-10-25",
   "listing_url": "https://tensorx.ai/pricing/",
   "method": "scripts/fetch-tensorx-catalog.mjs: one GET of the server-rendered pricing table; columns located by header (Model Name, Context, Input Price, Cache Read, Output Price), native USD per 1M tokens; rows without both token prices (embeddings) omitted; curated names kept by api_model_id or normalized slug tail; new slugs mapping=derived; rows no longer listed are dropped. EU-sovereign (Dublin HQ, EU regions, zero data retention). See tensorx.method.md.",
   "models": [
+    {
+      "model_name": "Deepseek V4.1 Flash 1017",
+      "provider_org": "DeepSeek",
+      "input_per_1m_usd": 0.5,
+      "output_per_1m_usd": 1.5,
+      "cache_read_per_1m_usd": 0.13,
+      "region": "eu",
+      "api_model_id": "deepseek/deepseek-v4.1-flash-1017",
+      "notes": "tensorx.ai/pricing deepseek/deepseek-v4.1-flash-1017; 1M ctx",
+      "mapping": "derived"
+    },
     {
       "model_name": "GLM 5.3",
       "provider_org": "Z.ai",
@@ -26,6 +37,17 @@
       "api_model_id": "moonshotai/kimi-k3"
     },
     {
+      "model_name": "Minimax M3.1 Flash",
+      "provider_org": "MiniMax",
+      "input_per_1m_usd": 0.3,
+      "output_per_1m_usd": 1.2,
+      "cache_read_per_1m_usd": 0.08,
+      "region": "eu",
+      "api_model_id": "minimax/minimax-m3.1-flash",
+      "notes": "tensorx.ai/pricing minimax/minimax-m3.1-flash; 1M ctx",
+      "mapping": "derived"
+    },
+    {
       "model_name": "GLM 5.3 Flash",
       "provider_org": "Z.ai",
       "input_per_1m_usd": 0.2,
@@ -44,17 +66,6 @@
       "region": "eu",
       "notes": "tensorx.ai/pricing qwen/qwen3.8-flash-next; 256K ctx",
       "api_model_id": "qwen/qwen3.8-flash-next"
-    },
-    {
-      "model_name": "Deepseek V4.1 Flash 1017",
-      "provider_org": "DeepSeek",
-      "input_per_1m_usd": 0.5,
-      "output_per_1m_usd": 1.5,
-      "cache_read_per_1m_usd": 0.13,
-      "region": "eu",
-      "api_model_id": "deepseek/deepseek-v4.1-flash-1017",
-      "notes": "tensorx.ai/pricing deepseek/deepseek-v4.1-flash-1017; 1M ctx",
-      "mapping": "derived"
     },
     {
       "model_name": "Qwen3.8 2.4T A95B",
@@ -138,13 +149,14 @@
       "api_model_id": "moonshotai/kimi-k2.7-code"
     }
   ],
-  "response_sha256": "2c4f68a5b736daac3e8aeb1372821af9b1970f5f2845e8056e14d05bc2e45dde",
+  "response_sha256": "80eac3aaa939b4630a074bf231bc479f283b5078264f50973f98908a4ea24bd1",
   "skipped": [
     "qwen/qwen3-embedding-8b"
   ],
   "diff": {
     "added": [
       "deepseek/deepseek-v4.1-flash-1017",
+      "minimax/minimax-m3.1-flash",
       "deepseek/deepseek-v4.1-flash"
     ],
     "removed": [],

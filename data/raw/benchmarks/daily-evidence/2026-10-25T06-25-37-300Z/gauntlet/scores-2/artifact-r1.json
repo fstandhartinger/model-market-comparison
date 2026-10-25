@@ -1,0 +1,26 @@
+[
+  {
+    "id": "public:b6453b107813e34ce1cb50bb",
+    "benchmark_id": "eq-bench::4",
+    "subject": {
+      "source_id": "mistralai/mistral-medium-3-5",
+      "name": "mistral-medium-3-5",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 987.9,
+    "unit": "Elo",
+    "basis": "measured",
+    "source": {
+      "url": "https://eqbench.com/eqbench4/eqbench4_data.js?v=20260725-neighbours",
+      "retrieved_at": "2026-10-25T06:35:27.202712+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-10-25T06-25-37-300Z/3e1d3f2f07172a878221.gz",
+      "sha256": "3e1d3f2f07172a878221bb4170e45e7e36653d063d832af75645180ffe54891f",
+      "locator": "json_assignment; source row 30; mistralai/mistral-medium-3-5; field elo"
+    },
+    "protocol": "Ranked Elo score from blind, bidirectional pairwise judging of multi-turn persona-chat transcripts by a three-judge LLM panel (soft Bradley–Terry fit, normalised against anchor models)",
+    "comparison_key": null
+  }
+]
