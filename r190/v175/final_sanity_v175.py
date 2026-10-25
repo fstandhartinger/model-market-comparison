@@ -22,8 +22,7 @@ for p in (J/'cells').rglob('*.json'):
 proof=L(V/'jevbench-v1.7.5-proof.json');approval=L(J/'inputs/APPROVAL.json');pub=L(V/'jevbench-v1.7.5-publication.json')
 assert proof['publication_approval']==approval and pub['review']['verdict']=='PENDING'
 fair=approval['fairness_check'];FR=pathlib.Path('/home/flori/jobs/jevbench-add-requests-20260919')/fair['path']
-assert fair['verdict'] in ['PENDING','FAIR']
-if fair['verdict']=='FAIR':assert FR.is_file() and sha(FR)==fair['sha256'] and L(FR).get('fairness',L(FR).get('verdict'))=='FAIR'
+assert fair['verdict']=='FAIR' and re.fullmatch(r'[0-9a-f]{64}',fair.get('sha256','')) and FR.is_file() and sha(FR)==fair['sha256'] and L(FR).get('fairness')=='FAIR','FAIR fairness receipt bound by sha required'
 for f,d in pub['files'].items():assert sha(W/d['path'])==d['sha256'],f
 assert sha(J/'receipts/topfive-diff.json')==proof['topfive_diff_sha256']==approval['top_five_preview']['sha256']
 for p in [W/'app/api/jevbench/v1.7.4/route.ts',W/'app/jev-models/v1.7.4/page.tsx']:

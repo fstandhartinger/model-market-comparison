@@ -2,7 +2,7 @@
  "status": "PASS",
  "checks": [
   "injected PENDING fairness refused by both dry-run helpers; manifest unchanged",
-  "synthetic FAIR/hash-bound fixture: dry-run flip and full freeze succeed; no manifest or seal write",
+  "synthetic FAIR/hash-bound fixture: dry-run flip succeeds; PENDING freeze refuses; synthetic PASS freeze succeeds; no real manifest or seal write",
   "tampered fairness receipt refused",
   "hash-bound non-FAIR receipt content refused",
   "conditional release review refused",

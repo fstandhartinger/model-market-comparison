@@ -21,6 +21,7 @@ try:
   time.sleep(.1)
  else:raise AssertionError('preview did not render')
  checks={}
+ checks['fairness_header']=ev("document.querySelector('main>small').textContent");assert 'fairness FAIR' in checks['fairness_header'] and 'release review pending' in checks['fairness_header']
  checks['default_summary']=ev("document.querySelector('#summary').textContent")
  checks['changed_lists']=ev("document.querySelector('#list').options.length");assert checks['changed_lists']==59
  checks['default_third']=ev("document.querySelector('#ranking').rows[3].textContent");assert 'Sieve' in checks['default_third']

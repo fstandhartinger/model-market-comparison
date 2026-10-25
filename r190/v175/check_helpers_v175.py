@@ -30,11 +30,14 @@ with tempfile.TemporaryDirectory(prefix='.helper-check-',dir=J) as t:
   m=json.loads(manifest.read_text());m['files']['proof']['sha256']=sha(proof);put(manifest,m)
  d=json.loads(original_proof);d['publication_approval']['fairness_check']={'path':str(fair),'verdict':'FAIR','sha256':sha(fair)};put(proof,d);rebind()
  r=run(*flip,True);(J/'receipts/flip-fair-synthetic-dry-run.json').write_text(r.stdout)
+ run(*freeze,False,'publication review PENDING')
+ m=json.loads(manifest.read_text());m['review']={'verdict':'PASS','engine':'synthetic-helper-test-only','receipt_sha256':sha(receipt)};put(manifest,m)
  run(*freeze,True);add=json.loads(output.read_text())
- assert add['remeasured_rows']==d['remeasured_rows'] and add['carried_rows']==291 and add['publication_review']['verdict']=='PENDING'
+ assert add['remeasured_rows']==d['remeasured_rows'] and add['carried_rows']==291 and add['publication_review']['verdict']=='PASS'
  # Explicitly labelled synthetic fixture; no real fairness verdict or publication review is supplied.
  (J/'receipts/freeze-fair-synthetic-dry-run.json').write_bytes(output.read_bytes())
- checks.append('synthetic FAIR/hash-bound fixture: dry-run flip and full freeze succeed; no manifest or seal write')
+ checks.append('synthetic FAIR/hash-bound fixture: dry-run flip succeeds; PENDING freeze refuses; synthetic PASS freeze succeeds; no real manifest or seal write')
+ m=json.loads(manifest.read_text());m['review']={'verdict':'PENDING','engine':'PENDING','receipt_sha256':None};put(manifest,m)
  fair.write_bytes(fair.read_bytes()+b'\n')
  for script,args in [flip,freeze]:run(script,args,False,'fairness receipt missing or changed')
  checks.append('tampered fairness receipt refused')

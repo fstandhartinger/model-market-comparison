@@ -25,6 +25,7 @@ assert pred['revision'] == 'v1.7.4' and pred['review']['verdict'] == 'PASS', 'pr
 a = proof['publication_approval']
 from approval_v175 import check_approval
 check_approval(W,proof)
+assert man['review']['verdict']=='PASS', 'REFUSED: publication review PENDING or non-PASS'
 if A.write:
     ap.error('REFUSED: this helper never writes a seal; release owner must review the dry-run addendum')
 # Keep every same-draw provenance row; v1.7.5 has per-row raw pins, not v1.7.4 raw_sha256.
