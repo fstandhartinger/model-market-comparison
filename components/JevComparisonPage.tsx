@@ -10,7 +10,7 @@ import { boardRankText, costBasisLabel, DatasetFaqJsonLd, JevFaq, JevReleaseStam
 import { jevSystemPath } from '../lib/jev-system-slug.mjs';
 import { jevDecisionLimitText, jevMethodView, jevPreviousTitle } from '../lib/jev-decision-limit.mjs';
 
-export async function JevComparisonPage({rivalKey,path,label}: {rivalKey:string;path:string;label:string}) {
+export async function JevComparisonPage({rivalKey,path,label,priceNotes}: {rivalKey:string;path:string;label:string;priceNotes?:string[]}) {
   const data = await readJevbenchSeoData();
   const pair = data.comparisons.find((p) => p.key === rivalKey);
   if (!pair) throw new Error(`No published comparison for ${rivalKey}`);
@@ -48,6 +48,8 @@ export async function JevComparisonPage({rivalKey,path,label}: {rivalKey:string;
       <div className="overflow-x-auto"><table className="w-full text-left text-sm" data-bh-jev-comparison-table><thead><tr><th>Measure</th><th>{jev.display}</th><th>{rival.display}</th></tr></thead><tbody>{measures.map(([name,a,b]) => <tr className="border-t" key={name}><th className="py-2">{name}</th><td>{a}</td><td>{b}</td></tr>)}</tbody></table></div>
       {(jevLatencyView(jev.speed).adjusted || jevLatencyView(rival.speed).adjusted) && <JevLatencyLegend className="bh-muted mt-2 text-xs" />}
     </section>
+    {priceNotes && <section className="bh-panel mt-6 p-5" data-bh-jev-price-notes><h2 className="text-xl font-semibold">Published list prices</h2><ul className="mt-2 list-disc pl-5 text-sm">{priceNotes.map((n) => <li key={n}>{n}</li>)}</ul>
+      <p className="bh-muted mt-2 text-xs">List prices are the vendors' stated tariffs on the date given; the USD per 1,000 decisions above is the cost basis JevBench applies to each row.</p></section>}
     <section className="mt-6 grid gap-4 md:grid-cols-2">{[jev,rival].map((row) => <article className="bh-panel p-5" key={row.key}><h2><Link className="text-accent underline" href={jevSystemPath(row.key)}>{row.display}</Link></h2>
       <p>{row.licence || 'Licence not stated'}</p>{row.repo && <a className="text-accent underline" href={row.repo}>Published source</a>}
       <dl className="mt-3 text-sm" data-bh-jev-pair-conditions={row.key}><dt>Measured on</dt><dd>{row.speed?.hardware ?? row.endpoint_condition ?? row.speed?.measured_where ?? 'not stated'}</dd><dt>Cost basis ({costBasisLabel(row.cost?.kind)})</dt><dd>{row.cost?.basis ?? 'not published'}</dd><dt>Latency adjustment</dt><dd>{row.speed?.adjustment ?? 'not stated'}</dd></dl>
