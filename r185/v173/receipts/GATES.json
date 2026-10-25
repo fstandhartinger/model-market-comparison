@@ -1,18 +1,19 @@
 {
- "actual_fairness_approval": "PENDING",
+ "actual_fairness_approval": "FAIR",
  "actual_publication_review": "PENDING",
- "base": "460f9da9efbbe4370b7876fdd0b5b50a43c8e329",
- "cells": "frozen category/topic/decisive tools; off/share captured",
+ "base_commit": "5ab1b0d94930ab4e485edb0c65a1ad64a26e5dfc",
+ "bound_fair_dry_runs": "PASS; actual FAIR receipt, synthetic release-review receipt for flip --dry-run only; freeze no seal write",
+ "cells": "frozen category/topic/decisive tools; off/share captured for both rows",
  "double_rebuild": true,
  "full": {
   "fail": 0,
-  "pass": 3748,
+  "pass": 3768,
   "skipped": 4,
-  "tests": 3752
+  "tests": 3772
  },
  "helpers": {
   "checks": [
-   "real PENDING fairness refused by both dry-run helpers; manifest unchanged",
+   "injected PENDING fairness refused by both dry-run helpers; manifest unchanged",
    "synthetic FAIR/hash-bound fixture: dry-run flip and full freeze succeed; no manifest or seal write",
    "tampered fairness receipt refused",
    "conditional release review refused",
@@ -24,34 +25,39 @@
  "production_build": "PASS",
  "raw_verified_in_place": true,
  "receipts_sha256": {
-  "build.log": "8c0e65617b5439c1121a2d804d9fc20b6079a8f7073e7ba4cea6f74a73eb7865",
-  "final-sanity.log": "962342c468e18b3f3810f5941175be9e83bfbc4850a6537b70a5d24839e490fd",
-  "fulltest.log": "f6b8ce030269c4706a33bad1ff8c4d71917c230b5fbc82355feee100fa57f437",
-  "helpers.log": "3ef1050d3eb6e7cc67c83f6dd865d33d7ba8e0f01f5b7e7d4f214b1e9b93610f",
-  "preview-browser.json": "b49b6bf49c3c2a0f15ee9a3d332acbc67be3cf6e92e809f8b591e49ed3013521",
-  "release-tests.log": "17253195fb73b760392531a81b48f594c2a19518cb3dce759b66118951383634",
-  "repro.log": "b6993c72981c750eed83f97641b78a43b78790e47908771f37e53aabc485e129",
-  "synthetic-tests.log": "b4e4afb0cab33ae5f54eb6bf2d8664b5997009fea367ab175b869e3f507b8292",
+  "F6-COST-KIND.json": "f1d97a4193f019de5b02eed70626f956b3648c683ba2e535534d527f46600e32",
+  "SD-RECOMPUTE.json": "dd0ebe4b3681fbfee733a19c719629405e9de850f0c8775d9f8eecbf94584f0f",
+  "build.log": "80dbf00450f05cb1b9ed216bfdbf1fb406baa787004bb59cc4f3f05182a7b145",
+  "final-sanity.log": "7f7e6a05127ee9b59ec08ae5fa1fd98c0a73c0143692b7e0cd2425b1bf545df7",
+  "flip-bound-fair-dry-run.json": "898c4fa054e7802085586e615c48a8a8b4da8d2b806f8e67ae6161ccab5a0df4",
+  "freeze-bound-fair-dry-run.json": "6ebe2a65ee22bd4992031263e1551471c4e9927324742687e9ca68dd7a208570",
+  "fulltest.log": "b6dc99874f0275440cccc465cfc64c39963ea6613dd5677d56d0d6c85cf8eb65",
+  "helpers.log": "f4f29d46bdb9e62c80030b774f837ee47c42999a8ceca30ad6affc9a571dd9bb",
+  "preview-browser.json": "4ac31075ee16e06595b47d148b1ff0b66ef396105c87f60f8cc9a5ea189d9dc0",
+  "release-tests.log": "9714a85ef7f3ef08330de433a4d221a87b6f4e5acd7b5ac1b4ed2b0150959da1",
+  "repro.log": "395991f0fd652d9e057f91300f99b3ff76aa2cf4f27b844fa3a2da23793de1fc",
+  "synthetic-tests.log": "c4eee99c46ed6e1ddf7192027af020f9b34b0af1630870c78d64b47619f8cdbe",
   "tsc.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
  },
- "repro_files": 28,
- "row_validator_and_carry": "288 carried rows exact except rank/ranks; same 289-row roster",
+ "repro_files": 29,
+ "row_validator_and_carry": "288 carried rows exact except rank/ranks; 290 rows, 270 ranked; 1 GPU replacement + 1 new hosted row",
  "status": "PASS",
  "synthetic": {
   "fail": 0,
-  "pass": 65,
+  "pass": 66,
   "skipped": 3,
-  "tests": 68
+  "tests": 69
  },
  "targeted": {
   "fail": 0,
-  "pass": 113,
+  "pass": 120,
   "skipped": 3,
-  "tests": 116
+  "tests": 123
  },
  "topfive": {
   "frozen": 10,
   "off": 10,
+  "scaledown_enters_any": false,
   "share": 8,
   "site_changes": [
    "open/composites/A"

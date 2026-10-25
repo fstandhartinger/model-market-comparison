@@ -3,7 +3,7 @@ J=pathlib.Path(__file__).resolve().parent
 L=lambda p:json.loads(p.read_text())
 b=L(J/'receipts/topfive-before.json');a=L(J/'receipts/topfive-after.json')
 assert b['restated_by']=='v1.7.2' and a['restated_by']=='v1.7.3'
-assert b['merged_rows']==289 and a['merged_rows']==289
+assert b['merged_rows']==289 and a['merged_rows']==290
 assert not b['cohort_log'] and not a['cohort_log']
 rows=[]
 for view,groups in a['full_rankings'].items():

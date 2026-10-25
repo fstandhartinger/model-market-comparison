@@ -4,7 +4,9 @@
  "G_med_flag_gt10": false,
  "addendum": {
   "method_change": false,
-  "new_keys": [],
+  "new_keys": [
+   "scaledown-classify-1"
+  ],
   "predecessor": "v1.7.2",
   "remeasured_keys": [
    "chon-1.0-e4b"
@@ -333,6 +335,7 @@
     "raw-qwen3-8b",
     "liquid-d1-3b",
     "krino-2b",
+    "scaledown-classify-1",
     "imajev-2b",
     "decider-2b",
     "nemotron-diffusion-8b",
@@ -609,6 +612,7 @@
     "deepseek-flash",
     "liquid-d1-3b",
     "krino-2b",
+    "scaledown-classify-1",
     "imajev-2b",
     "decider-2b",
     "kev-27b",
@@ -884,6 +888,7 @@
     "raw-qwen3-8b",
     "liquid-d1-3b",
     "krino-2b",
+    "scaledown-classify-1",
     "kev-27b",
     "imajev-2b",
     "decider-2b",
@@ -1147,6 +1152,7 @@
     "spark-s1-4b-v6",
     "imajev-2b",
     "ryotide_qwen9",
+    "scaledown-classify-1",
     "goddragon-arbiter-4b",
     "decisionnode-edge-0.9.2",
     "system-one-open",
@@ -1232,7 +1238,7 @@
   "g_med_fixed": true
  },
  "headline": "A",
- "label": "JevBench v1.7.3: same-draw GPU re-time",
+ "label": "JevBench v1.7.3: GPU replacement and hosted addition",
  "measurement_notes": [
   "Method v1.7: from v1.7.0 a decision that takes longer than 10 seconds (the measured time, strictly more than 10.000 s) counts as a wrong answer and as zero calibration for that item (each item type's calibration is multiplied by the share of its decisions answered within 10 s). Every row is re-scored from its recorded per-decision times: Intelligence, Calibration, Capability, the composites and their intervals are recomputed with the same frozen scorer plus the rule; the Speed axis now uses all decisions given (it replaces the 124-item subset of v1.6). Cost, tokens, the draws, the raw outputs and the field median are unchanged; no model was run again for the re-scored rows. Every re-scored row shows its v1.6 values next to the new ones.",
   "Time limit on measured time: the limit uses the measured latency, not the displayed estimate (x2 + 0.15 s for self-hosted rows), so a self-hosted row can show an adjusted p95 above 10 s with no decision over the limit. In total 1,455 decisions across 59 rows are over the limit.",
@@ -1246,7 +1252,7 @@
   "Publication of v1.7.0: Florian selected \"Publish (recommended)\" on Telegram card #18506 (2026-10-24T14:13:05Z), the top-five preview card with preview PNG sha256 b082a945643c70be13f1628cfb9a908f4d11f1acdc72e33b2785ffecad617d2e. Florian top-five preview approval: Telegram card #18506; selected \"Publish (recommended)\" (2026-10-24T14:13:05Z); preview PNG SHA-256 b082a945643c70be13f1628cfb9a908f4d11f1acdc72e33b2785ffecad617d2e.",
   "Three new rows on v1.6-regular-20261012: Amazon Strands Decider 26B-A4B, Turion JEV 31B and Chon-1.0-12B-Fast. No method change. All 285 carried rows retain every score, confidence interval and diagnostic; only placements move. New rows use their already-scored full-field B=1000 intervals and the 10-second share rule.",
   "One new row on v1.6-regular-20261012: Jeetu Decider 2B. No method change. All 288 carried rows retain every score, confidence interval and diagnostic; only placements move. The new row uses its already-scored full-field B=1000 intervals and the 10-second share rule.",
-  "Chon-1.0-E4B re-timed on GPU (same system and configuration), replacing its CPU measurement; no method change. All 288 other rows retain every score, confidence interval and diagnostic; only placements move."
+  "Chon-1.0-E4B GPU scores and times replace its CPU measurement in full; classify-1 (ScaleDown) added as one new hosted API row; no method change. All 288 other rows retain every score, confidence interval and diagnostic; only placements move."
  ],
  "method": {
   "decision_limit_s": 10,
@@ -1254,7 +1260,7 @@
   "rule": "latency_s > 10.000 s -> failed",
   "treatment": "share"
  },
- "n_ranked": 269,
+ "n_ranked": 270,
  "not_measured": [
   {
    "addendum": null,
@@ -1611,7 +1617,7 @@
    "summary": "Rotating item draw (1,200 sealed + 300 public); hosted APIs on API subsets equated to the self-hosted scale; /jev-models/v1.6.0 stays available unchanged."
   }
  ],
- "roster_count": 289,
+ "roster_count": 290,
  "run_kind": "same-draw-addendum",
  "sample": {
   "open": 300,
@@ -1620,8 +1626,8 @@
   "total": 1500
  },
  "sealed_share_of_intelligence": 0.5,
- "source_note": "Chon-1.0-E4B re-timed on GPU (same system and configuration), replacing its CPU measurement; no method change. All 288 other rows retain every score, confidence interval and diagnostic; only placements move.",
- "source_sha256": "af7ba61b374b205300be5fd0064a14e69bc40e2829f1ed484da06cfff301986f",
+ "source_note": "Chon-1.0-E4B GPU scores and times replace its CPU measurement in full; classify-1 (ScaleDown) added as one new hosted API row; no method change. All 288 other rows retain every score, confidence interval and diagnostic; only placements move.",
+ "source_sha256": "bc9a05ac15b75ded4635f10e4224d31e3ddb91d3c4d1a0ffb100c621bbb68c97",
  "status": "published",
  "systems": [
   {
@@ -18821,13 +18827,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 265,
+   "rank": 266,
    "ranked": true,
    "ranks": {
-    "A": 265,
-    "B": 265,
-    "C": 265,
-    "capability": 216
+    "A": 266,
+    "B": 266,
+    "C": 266,
+    "capability": 217
    },
    "repo": "https://huggingface.co/BAAI/bge-reranker-v2-m3",
    "rescored_in": "v1.7.0",
@@ -26692,13 +26698,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 263,
+   "rank": 264,
    "ranked": true,
    "ranks": {
-    "A": 263,
-    "B": 263,
-    "C": 263,
-    "capability": 221
+    "A": 264,
+    "B": 264,
+    "C": 264,
+    "capability": 222
    },
    "repo": "https://huggingface.co/altslate/certo-decision-model",
    "rescored_in": "v1.7.0",
@@ -27144,7 +27150,7 @@
     "A": 187,
     "B": 189,
     "C": 189,
-    "capability": 223
+    "capability": 224
    },
    "repo": "https://huggingface.co/ninhnv/chon-1.0-12b",
    "rescored_in": "v1.7.0",
@@ -29710,7 +29716,7 @@
      "rule": "common",
      "usd_per_1000_all_items": 0.010571213333333334
     },
-    "kind": "listed",
+    "kind": "estimate",
     "usage_estimated_rows": 0,
     "usd_per_1000": 0.009443245791245792
    },
@@ -29739,7 +29745,7 @@
     "results_sha256": "171680e9f2f7b884b7a206e15d280bdfc189c2b35ad9c1f578709902c59a6892",
     "status": "anchor-runs-pending"
    },
-   "endpoint_condition": "Evaluator-owned rented Verda RTX A6000 48 GB, FIN-01 (Finland, EU), non-preemptible, measured 25 Oct 2026. Disposable read-only container with no network; network cut proven inside the container before sealed input. Author's chon.serve 1.0.0 at revision 35fb1142d9f4e68850bcb12d2df8b0b3564e0fc0, --device cuda --dtype bfloat16 --no-think; PyTorch 2.9.1+cu128, transformers 5.19.0, peft 0.18.1. GPU sampler CSV was empty; host CPU model was not retained in the collected receipts. Published Speed applies the standard self-hosted x2 + 0.15 s adjustment (assumption, not measured). Rental about USD 0.14 is separate from the unchanged listed inference tariff.",
+   "endpoint_condition": "Evaluator-owned rented Verda RTX A6000 48 GB, FIN-01 (Finland, EU), non-preemptible, measured 25 Oct 2026. Disposable read-only container with no network; network cut proven inside the container before sealed input. Author's chon.serve 1.0.0 at revision 35fb1142d9f4e68850bcb12d2df8b0b3564e0fc0, --device cuda --dtype bfloat16 --no-think; Runtime pinned by the build: Python 3.11 container (author documents Python 3.12), PyTorch 2.9.1+cu128, transformers 5.19.0, peft 0.18.1 and huggingface-hub 1.33.0; no runtime version readback was collected. GPU sampler CSV was empty; host CPU model was not retained in the collected receipts. Published Speed applies the standard self-hosted x2 + 0.15 s adjustment (assumption, not measured). Rental about USD 0.14 is separate from the unchanged base-model inference cost estimate.",
    "endpoint_kind": "gpu",
    "full_coverage": true,
    "intelligence": {
@@ -31217,7 +31223,7 @@
     "capability": 105
    },
    "remeasure": {
-    "disclosure": "Chon family, same author as the 12B sibling. --no-think is the author's documented CPU mode, a different serving configuration from the GPU default: the think pass that fires on up to 45 % of questions never runs. GPU re-time in the same --no-think serving configuration as the previous CPU measurement; the default think pass is not exercised. The yes/no commit rule [0.199, 0.801] moves P(yes) just outside the scorer's decisive band: the author's own mechanism. Fifteen states over 6,000 tokens are truncated keeping the start, answered rather than refused. The 231-public-item check was a sanity gate, not an independence check: the author used public items to choose serving settings. ATTEMPT HISTORY: an earlier think-on GPU attempt stopped at the public projection gate before any sealed byte and contributes no scored output. This no-think GPU run is the sole successful replacement measurement. All 1,500 items answered, zero output tokens and zero thinking items. GPU telemetry sampler produced an empty CSV; utilisation and clock samples are unavailable.",
+    "disclosure": "Chon family, same author as the 12B sibling. This uses the author's documented --no-think mode; the author's GPU default thinks first on up to 45 % of questions, while that think pass never runs here. GPU re-time in the same --no-think serving configuration as the previous CPU measurement; the default think pass is not exercised. The yes/no commit rule [0.199, 0.801] moves P(yes) just outside the scorer's decisive band: the author's own mechanism. Fifteen states over 6,000 tokens are truncated keeping the start, answered rather than refused. The 231-public-item check was a sanity gate, not an independence check: the author used public items to choose serving settings. ATTEMPT HISTORY: an earlier think-on GPU attempt stopped at the public projection gate before any sealed byte and contributes no scored output. This no-think GPU run is the sole successful replacement measurement. All 1,500 items answered, zero output tokens and zero thinking items. GPU telemetry sampler produced an empty CSV; utilisation and clock samples are unavailable. Scores AND times both come from this GPU run, replacing the CPU measurement in full (scores and times). CPU and GPU probabilities differ on 1,049 of 1,500 items (9 top answers changed), attributed to device numerics; Intelligence and Calibration therefore moved slightly.",
     "draw": "v1.6-regular-20261012",
     "kind": "re-measure on the same items",
     "replaces": {
@@ -32889,13 +32895,13 @@
     "carried_metadata_from": "Pinned author release; add-requests r61/score/withrows/REGISTRY.json measurement record",
     "kind": "v1.6.1 addendum a11 (scorer output sha256 4d2833926c2d, method option B / O1S)"
    },
-   "rank": 234,
+   "rank": 235,
    "ranked": true,
    "ranks": {
-    "A": 234,
-    "B": 232,
-    "C": 234,
-    "capability": 266
+    "A": 235,
+    "B": 233,
+    "C": 235,
+    "capability": 267
    },
    "repo": "https://huggingface.co/devops-thiago/classone-gemma4-e2b",
    "rescored_in": "v1.7.0",
@@ -33336,7 +33342,7 @@
     "A": 179,
     "B": 178,
     "C": 180,
-    "capability": 235
+    "capability": 236
    },
    "repo": "https://huggingface.co/devops-thiago/classone-gemma4-e4b",
    "rescored_in": "v1.7.0",
@@ -34743,13 +34749,13 @@
      "Intelligence only": 0.0786327227711625
     }
    },
-   "rank": 239,
+   "rank": 240,
    "ranked": true,
    "ranks": {
-    "A": 239,
-    "B": 239,
-    "C": 239,
-    "capability": 263
+    "A": 240,
+    "B": 240,
+    "C": 240,
+    "capability": 264
    },
    "repo": "https://huggingface.co/devops-thiago/classone-qwen3.5-2b",
    "rescored_in": "v1.7.0",
@@ -36162,7 +36168,7 @@
     "A": 184,
     "B": 185,
     "C": 186,
-    "capability": 236
+    "capability": 237
    },
    "repo": "https://huggingface.co/devops-thiago/classone-qwen3.5-4b",
    "rescored_in": "v1.7.0",
@@ -37572,7 +37578,7 @@
     "A": 101,
     "B": 101,
     "C": 103,
-    "capability": 197
+    "capability": 198
    },
    "repo": "https://huggingface.co/devops-thiago/classone-qwen3.5-9b",
    "rescored_in": "v1.7.0",
@@ -38899,12 +38905,12 @@
      "Intelligence only": 4.70710504931535
     }
    },
-   "rank": 208,
+   "rank": 209,
    "ranked": true,
    "ranks": {
-    "A": 208,
-    "B": 208,
-    "C": 210,
+    "A": 209,
+    "B": 209,
+    "C": 211,
     "capability": 163
    },
    "repo": "https://huggingface.co/Cloudflare/clef-omni",
@@ -40305,13 +40311,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 264,
+   "rank": 265,
    "ranked": true,
    "ranks": {
-    "A": 264,
-    "B": 264,
-    "C": 264,
-    "capability": 262
+    "A": 265,
+    "B": 265,
+    "C": 265,
+    "capability": 263
    },
    "repo": "https://github.com/Contrastive-LM/CLM",
    "rescored_in": "v1.7.0",
@@ -43898,13 +43904,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 204,
+   "rank": 205,
    "ranked": true,
    "ranks": {
-    "A": 204,
-    "B": 205,
-    "C": 206,
-    "capability": 214
+    "A": 205,
+    "B": 206,
+    "C": 207,
+    "capability": 215
    },
    "repo": "https://huggingface.co/Mapika/decider-2b",
    "rescored_in": "v1.7.0",
@@ -48692,13 +48698,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 237,
+   "rank": 238,
    "ranked": true,
    "ranks": {
-    "A": 237,
-    "B": 237,
-    "C": 237,
-    "capability": 232
+    "A": 238,
+    "B": 238,
+    "C": 238,
+    "capability": 233
    },
    "repo": "https://huggingface.co/flymy-ai/decision-fast-preview",
    "rescored_in": "v1.7.0",
@@ -49068,13 +49074,13 @@
     },
     "views": null
    },
-   "rank": 223,
+   "rank": 224,
    "ranked": true,
    "ranks": {
-    "A": 223,
-    "B": 223,
-    "C": 223,
-    "capability": 211
+    "A": 224,
+    "B": 224,
+    "C": 224,
+    "capability": 212
    },
    "repo": "https://www.milliseconds.ai",
    "rescored_in": "v1.7.0",
@@ -50757,7 +50763,7 @@
     "A": 182,
     "B": 183,
     "C": 184,
-    "capability": 195
+    "capability": 196
    },
    "repo": "https://huggingface.co/bynn-intelligence-com/decisionnode-edge",
    "scores": {
@@ -52113,13 +52119,13 @@
    },
    "paid_fast_lane": false,
    "planned_weight_denominator": 1.0,
-   "rank": 211,
+   "rank": 212,
    "ranked": true,
    "ranks": {
-    "A": 211,
-    "B": 211,
-    "C": 211,
-    "capability": 208
+    "A": 212,
+    "B": 212,
+    "C": 212,
+    "capability": 209
    },
    "repo": "https://huggingface.co/bynn-intelligence-com/decisionnode-edge-mini",
    "scores": {
@@ -53529,7 +53535,7 @@
     "A": 108,
     "B": 107,
     "C": 110,
-    "capability": 212
+    "capability": 213
    },
    "repo": "https://huggingface.co/underlabs/decisor-4b",
    "rescored_in": "v1.7.0",
@@ -55819,13 +55825,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 236,
+   "rank": 237,
    "ranked": true,
    "ranks": {
-    "A": 236,
-    "B": 236,
-    "C": 236,
-    "capability": 264
+    "A": 237,
+    "B": 237,
+    "C": 237,
+    "capability": 265
    },
    "repo": "https://huggingface.co/LibertAIDAI/deem-0.8-v1",
    "rescored_in": "v1.7.0",
@@ -56195,10 +56201,10 @@
     },
     "views": null
    },
-   "rank": 206,
+   "rank": 207,
    "ranked": true,
    "ranks": {
-    "A": 206,
+    "A": 207,
     "B": 201,
     "C": 198,
     "capability": 4
@@ -60594,13 +60600,13 @@
     "carried_metadata_from": "Pinned author release; add-requests r61/score/withrows/REGISTRY.json measurement record",
     "kind": "v1.6.1 addendum a11 (scorer output sha256 4d2833926c2d, method option B / O1S)"
    },
-   "rank": 217,
+   "rank": 218,
    "ranked": true,
    "ranks": {
-    "A": 217,
-    "B": 220,
-    "C": 218,
-    "capability": 206
+    "A": 218,
+    "B": 221,
+    "C": 219,
+    "capability": 207
    },
    "repo": "https://huggingface.co/carrtesy/EXAONE-4.0-1.2B-JEV",
    "rescored_in": "v1.7.0",
@@ -64074,13 +64080,13 @@
     "carried_metadata_from": "v1.6.0 release row",
     "kind": "v1.6.1 full-set re-score (score-v161-3/out-O1S, O1S, hosted API on S u P, not equated)"
    },
-   "rank": 235,
+   "rank": 236,
    "ranked": true,
    "ranks": {
-    "A": 235,
-    "B": 235,
-    "C": 235,
-    "capability": 245
+    "A": 236,
+    "B": 236,
+    "C": 236,
+    "capability": 246
    },
    "repo": "https://fastino.ai/",
    "rescored_in": "v1.7.0",
@@ -65212,7 +65218,7 @@
     "A": 177,
     "B": 179,
     "C": 178,
-    "capability": 194
+    "capability": 195
    },
    "repo": "https://huggingface.co/Goddragon/Arbiter-4B",
    "rescored_in": "v1.7.0",
@@ -67371,13 +67377,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 266,
+   "rank": 267,
    "ranked": true,
    "ranks": {
-    "A": 266,
-    "B": 266,
-    "C": 266,
-    "capability": 229
+    "A": 267,
+    "B": 267,
+    "C": 267,
+    "capability": 230
    },
    "repo": "https://huggingface.co/Alibaba-NLP/gte-reranker-modernbert-base",
    "rescored_in": "v1.7.0",
@@ -67811,13 +67817,13 @@
      "Intelligence only": 0.25450928339078893
     }
    },
-   "rank": 228,
+   "rank": 229,
    "ranked": true,
    "ranks": {
-    "A": 228,
-    "B": 228,
-    "C": 228,
-    "capability": 228
+    "A": 229,
+    "B": 229,
+    "C": 229,
+    "capability": 229
    },
    "repo": "https://huggingface.co/kouhxp/gutsy",
    "rescored_in": "v1.7.0",
@@ -73389,12 +73395,12 @@
      "Intelligence only": 3.789999234949207
     }
    },
-   "rank": 203,
+   "rank": 204,
    "ranked": true,
    "ranks": {
-    "A": 203,
-    "B": 204,
-    "C": 205,
+    "A": 204,
+    "B": 205,
+    "C": 206,
     "capability": 192
    },
    "repo": "https://huggingface.co/mohit67890/imajev-2b",
@@ -78575,7 +78581,7 @@
     "A": 153,
     "B": 152,
     "C": 161,
-    "capability": 201
+    "capability": 202
    },
    "repo": "https://huggingface.co/theunnecessarythings/JADE",
    "rescored_in": "v1.7.0",
@@ -84086,13 +84092,13 @@
    },
    "paid_fast_lane": false,
    "planned_weight_denominator": 1.0,
-   "rank": 225,
+   "rank": 226,
    "ranked": true,
    "ranks": {
-    "A": 225,
-    "B": 225,
-    "C": 225,
-    "capability": 230
+    "A": 226,
+    "B": 226,
+    "C": 226,
+    "capability": 231
    },
    "repo": "https://huggingface.co/Jeetu456/decider-2b",
    "scores": {
@@ -93157,13 +93163,13 @@
     },
     "views": null
    },
-   "rank": 226,
+   "rank": 227,
    "ranked": true,
    "ranks": {
-    "A": 226,
-    "B": 226,
-    "C": 226,
-    "capability": 258
+    "A": 227,
+    "B": 227,
+    "C": 227,
+    "capability": 259
    },
    "repo": "https://github.com/fstandhartinger/jevbench/issues/66",
    "rescored_in": "v1.7.0",
@@ -97474,13 +97480,13 @@
    },
    "paid_fast_lane": false,
    "planned_weight_denominator": 1.0,
-   "rank": 248,
+   "rank": 249,
    "ranked": true,
    "ranks": {
-    "A": 248,
-    "B": 248,
-    "C": 248,
-    "capability": 220
+    "A": 249,
+    "B": 249,
+    "C": 249,
+    "capability": 221
    },
    "repo": "https://huggingface.co/pragmaticfrontier/jez-small-1.0.0",
    "scores": {
@@ -98889,13 +98895,13 @@
      "Intelligence only": 1.599423855434685
     }
    },
-   "rank": 212,
+   "rank": 213,
    "ranked": true,
    "ranks": {
-    "A": 212,
-    "B": 214,
-    "C": 213,
-    "capability": 210
+    "A": 213,
+    "B": 215,
+    "C": 214,
+    "capability": 211
    },
    "repo": "https://huggingface.co/eljiwo/jiwo-0.8b",
    "rescored_in": "v1.7.0",
@@ -104003,13 +104009,13 @@
     "carried_metadata_from": "Pinned author release; add-requests r61/score/withrows/REGISTRY.json measurement record",
     "kind": "v1.6.1 addendum a11 (scorer output sha256 4d2833926c2d, method option B / O1S)"
    },
-   "rank": 232,
+   "rank": 233,
    "ranked": true,
    "ranks": {
-    "A": 232,
-    "B": 233,
-    "C": 232,
-    "capability": 226
+    "A": 233,
+    "B": 234,
+    "C": 233,
+    "capability": 227
    },
    "repo": "https://huggingface.co/usejul/jul-decision-minicpm5-2b",
    "rescored_in": "v1.7.0",
@@ -104448,13 +104454,13 @@
      "Intelligence only": 0.005819814930094012
     }
    },
-   "rank": 257,
+   "rank": 258,
    "ranked": true,
    "ranks": {
-    "A": 257,
-    "B": 257,
-    "C": 257,
-    "capability": 267
+    "A": 258,
+    "B": 258,
+    "C": 258,
+    "capability": 268
    },
    "repo": "https://huggingface.co/SupersonicLabs/Julia-1",
    "rescored_in": "v1.7.0",
@@ -109139,13 +109145,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 247,
+   "rank": 248,
    "ranked": true,
    "ranks": {
-    "A": 247,
-    "B": 247,
-    "C": 247,
-    "capability": 248
+    "A": 248,
+    "B": 248,
+    "C": 248,
+    "capability": 249
    },
    "repo": "https://github.com/jaredpalmer/kev",
    "rescored_in": "v1.7.0",
@@ -109573,13 +109579,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 231,
+   "rank": 232,
    "ranked": true,
    "ranks": {
-    "A": 231,
-    "B": 231,
-    "C": 231,
-    "capability": 239
+    "A": 232,
+    "B": 232,
+    "C": 232,
+    "capability": 240
    },
    "repo": "https://github.com/jaredpalmer/kev",
    "rescored_in": "v1.7.0",
@@ -110011,12 +110017,12 @@
     "carried_metadata_from": "author model card + config.json",
     "kind": "v1.6.1 addendum a6 (scorer output sha256 9d512dc13d7d, method option B / O1S)"
    },
-   "rank": 209,
+   "rank": 210,
    "ranked": true,
    "ranks": {
-    "A": 209,
-    "B": 206,
-    "C": 204,
+    "A": 210,
+    "B": 207,
+    "C": 205,
     "capability": 35
    },
    "repo": "https://huggingface.co/jaredpalmer/kev-27b",
@@ -110445,13 +110451,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 207,
+   "rank": 208,
    "ranked": true,
    "ranks": {
-    "A": 207,
-    "B": 210,
-    "C": 208,
-    "capability": 217
+    "A": 208,
+    "B": 211,
+    "C": 209,
+    "capability": 218
    },
    "repo": "https://github.com/jaredpalmer/kev",
    "rescored_in": "v1.7.0",
@@ -110885,7 +110891,7 @@
     "A": 195,
     "B": 195,
     "C": 195,
-    "capability": 198
+    "capability": 199
    },
    "repo": "https://github.com/jaredpalmer/kev",
    "rescored_in": "v1.7.0",
@@ -115443,7 +115449,7 @@
     "A": 202,
     "B": 203,
     "C": 203,
-    "capability": 227
+    "capability": 228
    },
    "repo": "https://huggingface.co/Guru0381/krino-2b",
    "rescored_in": "v1.7.0",
@@ -119931,13 +119937,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 260,
+   "rank": 261,
    "ranked": true,
    "ranks": {
-    "A": 260,
-    "B": 260,
-    "C": 260,
-    "capability": 250
+    "A": 261,
+    "B": 261,
+    "C": 261,
+    "capability": 251
    },
    "repo": "https://huggingface.co/convaiinnovations/laya",
    "rescored_in": "v1.7.0",
@@ -120364,13 +120370,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 262,
+   "rank": 263,
    "ranked": true,
    "ranks": {
-    "A": 262,
-    "B": 262,
-    "C": 262,
-    "capability": 265
+    "A": 263,
+    "B": 263,
+    "C": 263,
+    "capability": 266
    },
    "repo": "https://huggingface.co/convaiinnovations/laya/tree/1c5edc17a7acd8701df6fc341c0d179f1c62c982/multilingual",
    "rescored_in": "v1.7.0",
@@ -120797,13 +120803,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 240,
+   "rank": 241,
    "ranked": true,
    "ranks": {
-    "A": 240,
-    "B": 240,
-    "C": 240,
-    "capability": 215
+    "A": 241,
+    "B": 241,
+    "C": 241,
+    "capability": 216
    },
    "repo": "https://huggingface.co/convaiinnovations/laya/tree/1c5edc17a7acd8701df6fc341c0d179f1c62c982/typed-decisions",
    "rescored_in": "v1.7.0",
@@ -121665,13 +121671,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 245,
+   "rank": 246,
    "ranked": true,
    "ranks": {
-    "A": 245,
-    "B": 246,
-    "C": 245,
-    "capability": 219
+    "A": 246,
+    "B": 247,
+    "C": 246,
+    "capability": 220
    },
    "repo": "https://github.com/franckverrot/lev",
    "rescored_in": "v1.7.0",
@@ -122540,7 +122546,7 @@
     "A": 201,
     "B": 202,
     "C": 202,
-    "capability": 199
+    "capability": 200
    },
    "repo": "https://huggingface.co/LiquidAI/d1-3B",
    "rescored_in": "v1.7.0",
@@ -123947,13 +123953,13 @@
      "Intelligence only": 0.013878616661020313
     }
    },
-   "rank": 254,
+   "rank": 255,
    "ranked": true,
    "ranks": {
-    "A": 254,
-    "B": 254,
-    "C": 254,
-    "capability": 249
+    "A": 255,
+    "B": 255,
+    "C": 255,
+    "capability": 250
    },
    "repo": "https://huggingface.co/LiquidAI/d1-omni-600M",
    "rescored_in": "v1.7.0",
@@ -127590,12 +127596,12 @@
    },
    "paid_fast_lane": false,
    "planned_weight_denominator": 1.0,
-   "rank": 210,
+   "rank": 211,
    "ranked": true,
    "ranks": {
-    "A": 210,
-    "B": 209,
-    "C": 209,
+    "A": 211,
+    "B": 210,
+    "C": 210,
     "capability": 74
    },
    "repo": "https://huggingface.co/FrontiersMind/Lumma-fev-27B",
@@ -128998,13 +129004,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 213,
+   "rank": 214,
    "ranked": true,
    "ranks": {
-    "A": 213,
-    "B": 216,
-    "C": 214,
-    "capability": 207
+    "A": 214,
+    "B": 217,
+    "C": 215,
+    "capability": 208
    },
    "repo": "https://github.com/newfull5/malkuth",
    "rescored_in": "v1.7.0",
@@ -143711,13 +143717,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 267,
+   "rank": 268,
    "ranked": true,
    "ranks": {
-    "A": 267,
-    "B": 267,
-    "C": 267,
-    "capability": 260
+    "A": 268,
+    "B": 268,
+    "C": 268,
+    "capability": 261
    },
    "repo": "https://github.com/Bluusun/Decision-API",
    "rescored_in": "v1.7.0",
@@ -145543,13 +145549,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 261,
+   "rank": 262,
    "ranked": true,
    "ranks": {
-    "A": 261,
-    "B": 261,
-    "C": 261,
-    "capability": 218
+    "A": 262,
+    "B": 262,
+    "C": 262,
+    "capability": 219
    },
    "repo": "https://huggingface.co/mixedbread-ai/mxbai-rerank-base-v2",
    "rescored_in": "v1.7.0",
@@ -150174,13 +150180,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 205,
+   "rank": 206,
    "ranked": true,
    "ranks": {
-    "A": 205,
-    "B": 207,
-    "C": 207,
-    "capability": 209
+    "A": 206,
+    "B": 208,
+    "C": 208,
+    "capability": 210
    },
    "repo": "https://github.com/pst2154/Nemotron_Jev",
    "rescored_in": "v1.7.0",
@@ -158934,7 +158940,7 @@
     "A": 199,
     "B": 200,
     "C": 200,
-    "capability": 202
+    "capability": 203
    },
    "repo": "https://github.com/ikermoel/open-alternative-jev",
    "rescored_in": "v1.7.0",
@@ -159362,13 +159368,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 256,
+   "rank": 257,
    "ranked": true,
    "ranks": {
-    "A": 256,
-    "B": 256,
-    "C": 256,
-    "capability": 243
+    "A": 257,
+    "B": 257,
+    "C": 257,
+    "capability": 244
    },
    "repo": "https://github.com/kotoba-lang/typed-decisions",
    "rescored_in": "v1.7.0",
@@ -159765,13 +159771,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 268,
+   "rank": 269,
    "ranked": true,
    "ranks": {
-    "A": 268,
-    "B": 268,
-    "C": 268,
-    "capability": 254
+    "A": 269,
+    "B": 269,
+    "C": 269,
+    "capability": 255
    },
    "repo": "https://github.com/JoshuaSP/open-jev",
    "rescored_in": "v1.7.0",
@@ -160199,12 +160205,12 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 221,
+   "rank": 222,
    "ranked": true,
    "ranks": {
-    "A": 221,
-    "B": 215,
-    "C": 220,
+    "A": 222,
+    "B": 216,
+    "C": 221,
     "capability": 110
    },
    "repo": "https://huggingface.co/ZefanCai/Open-Jev-27B-v1.1",
@@ -160633,13 +160639,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 218,
+   "rank": 219,
    "ranked": true,
    "ranks": {
-    "A": 218,
-    "B": 218,
-    "C": 219,
-    "capability": 205
+    "A": 219,
+    "B": 219,
+    "C": 220,
+    "capability": 206
    },
    "repo": "https://github.com/Zefan-Cai/Open-Jev",
    "rescored_in": "v1.7.0",
@@ -161753,13 +161759,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 233,
+   "rank": 234,
    "ranked": true,
    "ranks": {
-    "A": 233,
-    "B": 234,
-    "C": 233,
-    "capability": 237
+    "A": 234,
+    "B": 235,
+    "C": 234,
+    "capability": 238
    },
    "repo": "https://github.com/deepanwadhwa/OpenDecision",
    "rescored_in": "v1.7.0",
@@ -162873,13 +162879,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 249,
+   "rank": 250,
    "ranked": true,
    "ranks": {
-    "A": 249,
-    "B": 249,
-    "C": 249,
-    "capability": 259
+    "A": 250,
+    "B": 250,
+    "C": 250,
+    "capability": 260
    },
    "repo": "https://github.com/Heman10x-NGU/openJev-verdict-2.0",
    "rescored_in": "v1.7.0",
@@ -163307,13 +163313,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 243,
+   "rank": 244,
    "ranked": true,
    "ranks": {
-    "A": 243,
-    "B": 244,
-    "C": 243,
-    "capability": 233
+    "A": 244,
+    "B": 245,
+    "C": 244,
+    "capability": 234
    },
    "repo": "https://huggingface.co/heman10x/rlcd-modernbert-151m",
    "rescored_in": "v1.7.0",
@@ -163747,7 +163753,7 @@
     "A": 197,
     "B": 197,
     "C": 197,
-    "capability": 204
+    "capability": 205
    },
    "repo": "https://github.com/sabeel111/OpenSourceJev",
    "rescored_in": "v1.7.0",
@@ -164176,13 +164182,13 @@
      "Intelligence only": 0.018814714977998477
     }
    },
-   "rank": 253,
+   "rank": 254,
    "ranked": true,
    "ranks": {
-    "A": 253,
-    "B": 253,
-    "C": 253,
-    "capability": 255
+    "A": 254,
+    "B": 254,
+    "C": 254,
+    "capability": 256
    },
    "repo": "https://huggingface.co/Phocinae/Phocinae-Largha-150M-v1",
    "rescored_in": "v1.7.0",
@@ -172125,13 +172131,13 @@
      "Intelligence only": 0.23537033944273675
     }
    },
-   "rank": 230,
+   "rank": 231,
    "ranked": true,
    "ranks": {
-    "A": 230,
-    "B": 230,
-    "C": 230,
-    "capability": 222
+    "A": 231,
+    "B": 231,
+    "C": 231,
+    "capability": 223
    },
    "remeasure": {
     "disclosure": "Re-measure on the same items: this GPU row replaces the earlier loaded-CPU row of the same weights in full (scores and times) and is the second and last use of these weights on draw v1.6-regular-20261012.",
@@ -174405,13 +174411,13 @@
     "carried_metadata_from": "author submission",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 250,
+   "rank": 251,
    "ranked": true,
    "ranks": {
-    "A": 250,
-    "B": 250,
-    "C": 250,
-    "capability": 251
+    "A": 251,
+    "B": 251,
+    "C": 251,
+    "capability": 252
    },
    "repo": "https://huggingface.co/chinhnc/Quyet-1.0-Small",
    "rescored_in": "v1.7.0",
@@ -174837,13 +174843,13 @@
     "carried_metadata_from": "author submission",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 238,
+   "rank": 239,
    "ranked": true,
    "ranks": {
-    "A": 238,
-    "B": 238,
-    "C": 238,
-    "capability": 234
+    "A": 239,
+    "B": 239,
+    "C": 239,
+    "capability": 235
    },
    "repo": "https://huggingface.co/chinhnc/Quyet-1.0-Small-EN",
    "rescored_in": "v1.7.0",
@@ -175269,13 +175275,13 @@
     "carried_metadata_from": "author submission",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 252,
+   "rank": 253,
    "ranked": true,
    "ranks": {
-    "A": 252,
-    "B": 252,
-    "C": 252,
-    "capability": 252
+    "A": 253,
+    "B": 253,
+    "C": 253,
+    "capability": 253
    },
    "repo": "https://huggingface.co/chinhnc/Quyet-1.0-Tiny",
    "rescored_in": "v1.7.0",
@@ -175703,13 +175709,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 214,
+   "rank": 215,
    "ranked": true,
    "ranks": {
-    "A": 214,
-    "B": 217,
-    "C": 215,
-    "capability": 213
+    "A": 215,
+    "B": 218,
+    "C": 216,
+    "capability": 214
    },
    "repo": "https://huggingface.co/Qwen/Qwen3-Reranker-4B",
    "rescored_in": "v1.7.0",
@@ -176079,13 +176085,13 @@
     },
     "views": null
    },
-   "rank": 269,
+   "rank": 270,
    "ranked": true,
    "ranks": {
-    "A": 269,
-    "B": 269,
-    "C": 269,
-    "capability": 203
+    "A": 270,
+    "B": 270,
+    "C": 270,
+    "capability": 204
    },
    "repo": "https://benchmarkheaven.com/jev-models/qwen3.8-27b",
    "rescored_in": "v1.7.0",
@@ -176823,13 +176829,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 222,
+   "rank": 223,
    "ranked": true,
    "ranks": {
-    "A": 222,
-    "B": 222,
-    "C": 222,
-    "capability": 244
+    "A": 223,
+    "B": 223,
+    "C": 223,
+    "capability": 245
    },
    "repo": "https://huggingface.co/microsoft/Phi-4-mini-instruct",
    "rescored_in": "v1.7.0",
@@ -177257,13 +177263,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 244,
+   "rank": 245,
    "ranked": true,
    "ranks": {
-    "A": 244,
-    "B": 243,
-    "C": 244,
-    "capability": 269
+    "A": 245,
+    "B": 244,
+    "C": 245,
+    "capability": 270
    },
    "repo": "https://huggingface.co/Qwen/Qwen3-0.6B",
    "rescored_in": "v1.7.0",
@@ -177691,13 +177697,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 246,
+   "rank": 247,
    "ranked": true,
    "ranks": {
-    "A": 246,
-    "B": 245,
-    "C": 246,
-    "capability": 268
+    "A": 247,
+    "B": 246,
+    "C": 247,
+    "capability": 269
    },
    "repo": "https://huggingface.co/Qwen/Qwen3-1.7B",
    "rescored_in": "v1.7.0",
@@ -178131,7 +178137,7 @@
     "A": 137,
     "B": 150,
     "C": 157,
-    "capability": 246
+    "capability": 247
    },
    "repo": "https://huggingface.co/Qwen/Qwen3-4B-Instruct-2507",
    "rescored_in": "v1.7.0",
@@ -178565,7 +178571,7 @@
     "A": 200,
     "B": 198,
     "C": 201,
-    "capability": 256
+    "capability": 257
    },
    "repo": "https://huggingface.co/Qwen/Qwen3-8B",
    "rescored_in": "v1.7.0",
@@ -191323,6 +191329,1357 @@
   },
   {
    "addendum": null,
+   "api_flag": true,
+   "api_subset": false,
+   "author": "ScaleDown",
+   "axes": {
+    "calibration": 82.82809086203193,
+    "cost": 50.78732378203712,
+    "intelligence": 21.787775467356628,
+    "speed": 83.72843286582474
+   },
+   "base_model": null,
+   "calibration": {
+    "parts": {
+     "choice": {
+      "ece_hard": 0.0328225927768466,
+      "ece_score": 93.43548144463068,
+      "mean_tvd": null,
+      "n": 749,
+      "n_ece_hard": 315,
+      "n_tvd": 0,
+      "score": 92.56341695114746,
+      "score_before_time_limit": 93.43548144463068,
+      "time_limit_failed_share": 0.009333333333333334
+     },
+     "noul": {
+      "abstention_rate": 0.9064171122994652,
+      "brier": 0.21132460936574093,
+      "ece": 0.15882660638443544,
+      "n": 374,
+      "score": 67.87076043658963,
+      "score_before_time_limit": 68.2346787231129,
+      "time_limit_failed_share": 0.005333333333333333
+     },
+     "score": {
+      "interval90_coverage": 0.9839142091152815,
+      "interval90_width": 0.7225201072386056,
+      "n": 373,
+      "nrps": 0.1191379439544878,
+      "score": 88.05009519835869,
+      "score_before_time_limit": 89.23996134968786,
+      "time_limit_failed_share": 0.013333333333333334,
+      "top_ece": 0.0480314145258774
+     }
+    },
+    "score": 82.82809086203193
+   },
+   "capability": 52.307933164694276,
+   "code_revision": "Vendor-hosted API: no vendor code ran locally; weights and serving code are not public. First-party adapter scaledown_classify_v16.py (sha256 f78d1f8251facaa60d10e9b5c5033dac206024bee5469968706d3ec2f61b8680) + spec scaledown-classify-1.json (sha256 47032611bea155be78f8acf8c2e41d73885e5e48829e79662d00fcc38cc64ec7); independent review PASS_WITH_MUSTS, musts fixed before dispatch.",
+   "composite_ci95": {
+    "A": [
+     4.672849375867131,
+     11.765050469662265
+    ],
+    "B": [
+     3.7201929696864933,
+     9.959843262217815
+    ],
+    "C": [
+     3.245034288796619,
+     8.170173937265462
+    ]
+   },
+   "cost": {
+    "basis": "ScaleDown vendor list price, USD 0.05/M input tokens; output is free. Explicit vendor reference scaledown:classify-1 (vendor list price), with no base-model price. The frozen pricing module has no key for this API, so this row uses an explicit reference at that price. The scored cost includes the frozen scorer's usage fallback for four HTTP 504 rows: USD 0.04369407407407409 per 1,000 decisions on the common 1,485-item basis (0.67643x the USD 0.06459465517241379 cap); USD 0.082679 per 1,000 over all 1,500. Provider-reported usage alone gives USD 0.035613266 per 1,000 common items and USD 0.074679 over all items, excluding usage estimates for those failures. Cost kind mixed: four rows have estimated usage. Not a bill or quote.",
+    "common_basis": {
+     "n_items": 1485,
+     "rule": "common",
+     "usd_per_1000_all_items": 0.082679
+    },
+    "kind": "mixed",
+    "usage_estimated_rows": 4,
+    "usd_per_1000": 0.04369407407407409
+   },
+   "decision_limit": {
+    "limit_s": 10.0,
+    "n_over_limit": 14,
+    "n_over_limit_answered_ok": 10,
+    "rule": "latency_s > limit -> failed",
+    "speed_basis": "all decisions given (lane items in the raw), measured latency_s",
+    "speed_n": 1500,
+    "treatment": "share"
+   },
+   "disclosure": "STOCK PROMPT: the canonical question is sent unchanged in ScaleDown's native Jev-compatible format (POST /v1/scaledown, model classify-1). The vendor asked for prompt tuning with its SLM_Agent method first; that method was applied by us on 40 public dev items only (no vendor code executed), and no variant beat the run-to-run noise floor, so the stock prompt is the only measured configuration. 4 items ended in HTTP 504 (gateway timeout) and are scored wrong; no retry. Free trial tokens plus a USD 5 evaluator-paid credit covered the run.",
+   "display": "classify-1 (ScaleDown)",
+   "draw": {
+    "id": "v1.6-regular-20261012",
+    "measured_on": "2026-10-24",
+    "release": "v1.7.3",
+    "results_sha256": "31efd92d925131d31de1656d55cadaefcf858ee776100eb50e35932ac5b354e9"
+   },
+   "endpoint_condition": "Vendor-hosted api.scaledown.xyz/v1/scaledown API, model classify-1 (served model checked on every row; all 1,500 rows named classify-1), through first-party adapter scaledown_classify_v16; latency measured from Sandy (Germany) without API adjustment. Full S1200+P300 draw of v1.6-regular-20261012 through the unchanged run_api_full_v161.py on 24 Oct 2026; the full-set exposure gate logged all 1,200 sealed items to provider scaledown before the first request. Native probabilities on all three question types; string states sent unchanged.",
+   "endpoint_kind": "api",
+   "full_coverage": true,
+   "intelligence": {
+    "I_open": 23.494782199971077,
+    "I_sealed": 20.08076873474218,
+    "base": 21.787775467356628,
+    "excess": -6.425513305126813,
+    "gap": 3.414013465228898,
+    "penalty": 1.0,
+    "per_type_split": {
+     "open|choice": {
+      "cc": 44.97100315222714,
+      "n": {
+       "easy": 33,
+       "hard": 68,
+       "judge": 32,
+       "standard": 17
+      },
+      "tiers": {
+       "easy": 84.43243243243244,
+       "hard": 32.05410506448569,
+       "judge": 52.537903757415954,
+       "standard": 39.723733779824194
+      }
+     },
+     "open|noul": {
+      "cc": 0.0,
+      "n": {
+       "easy": 14,
+       "hard": 23,
+       "judge": 20,
+       "standard": 18
+      },
+      "tiers": {
+       "easy": -28.57142857142857,
+       "hard": -100.0,
+       "judge": -80.0,
+       "standard": -77.77777777777779
+      }
+     },
+     "open|score": {
+      "cc": 25.5133434476861,
+      "n": {
+       "easy": 9,
+       "hard": 29,
+       "judge": 21,
+       "standard": 16
+      },
+      "tiers": {
+       "easy": 61.7781499849444,
+       "hard": 19.54744192589989,
+       "judge": 35.38519255206841,
+       "standard": 4.504969566055905
+      }
+     },
+     "sealed|choice": {
+      "cc": 42.194486380067914,
+      "n": {
+       "easy": 70,
+       "hard": 247,
+       "judge": 146,
+       "standard": 137
+      },
+      "tiers": {
+       "easy": 48.538754764930125,
+       "hard": 32.86689025095408,
+       "judge": 41.82174338883449,
+       "standard": 58.23665893271462
+      }
+     },
+     "sealed|noul": {
+      "cc": 0.0,
+      "n": {
+       "easy": 58,
+       "hard": 110,
+       "judge": 65,
+       "standard": 67
+      },
+      "tiers": {
+       "easy": -75.86206896551724,
+       "hard": -90.9090909090909,
+       "judge": -93.84615384615384,
+       "standard": -64.17910447761194
+      }
+     },
+     "sealed|score": {
+      "cc": 18.047819824158623,
+      "n": {
+       "easy": 35,
+       "hard": 123,
+       "judge": 67,
+       "standard": 75
+      },
+      "tiers": {
+       "easy": 35.58892918028347,
+       "hard": 10.509426612841189,
+       "judge": 17.760290836455994,
+       "standard": 24.785345050285013
+      }
+     }
+    }
+   },
+   "jevbench_score": 8.476551950321573,
+   "key": "scaledown-classify-1",
+   "last_measured_on": "2026-10-24",
+   "licence": "Proprietary hosted API (no weights release)",
+   "listing": "ranked",
+   "measured_in": "v1.7.3",
+   "measurement_date_status": "measured",
+   "method": "v1.7",
+   "model_pin": "classify-1 (vendor-hosted API; weights not public)",
+   "new_in": "v1.7.3",
+   "noul_decisive": {
+    "acc_among_decisive": 1.0,
+    "decisive": 35,
+    "decisive_rate": 0.0938337801608579,
+    "n": 375,
+    "supported": true,
+    "valid": 373
+   },
+   "paid_fast_lane": false,
+   "planned_weight_denominator": 1.0,
+   "rank": 203,
+   "ranked": true,
+   "ranks": {
+    "A": 203,
+    "B": 204,
+    "C": 204,
+    "capability": 194
+   },
+   "repo": "https://scaledown.ai",
+   "scores": {
+    "A": 8.476551950321573,
+    "B": 7.006689864970686,
+    "C": 5.886494409945535
+   },
+   "speed": {
+    "adjustment": "none (API)",
+    "basis": "all decisions given (lane items in the raw), measured latency_s",
+    "n": 1500,
+    "p50_s_adjusted": 0.5046778135074419,
+    "p50_s_raw": 0.5046778135074419,
+    "p95_s_adjusted": 0.8397354750937666,
+    "p95_s_raw": 0.8397354750937666
+   },
+   "status": {
+    "answered_ok": 1496,
+    "missing": 0,
+    "rows": 1500,
+    "status": "complete"
+   },
+   "support": {
+    "choice": "native",
+    "noul": "native",
+    "score": "native"
+   },
+   "v16": {
+    "api_subset": false,
+    "api_subset_tag": null,
+    "breakdowns": {
+     "family": {
+      "calibration": {
+       "accuracy": 0.5909090909090909,
+       "cc": -10.666206189926086,
+       "cc_by_type": {
+        "choice": 66.66666666666667,
+        "noul": -50.0,
+        "score": -48.66528523644493
+       },
+       "low_n": true,
+       "n": 22,
+       "n_by_type": {
+        "choice": 16,
+        "noul": 4,
+        "score": 2
+       },
+       "score": 0.0
+      },
+      "calibration_gen": {
+       "accuracy": 0.33663366336633666,
+       "cc": -17.53828239080254,
+       "cc_by_type": {
+        "choice": 36.37327677624603,
+        "noul": -100.0,
+        "score": 11.011876051346349
+       },
+       "low_n": false,
+       "n": 101,
+       "n_by_type": {
+        "choice": 41,
+        "noul": 25,
+        "score": 35
+       },
+       "score": 0.0
+      },
+      "composite_gen": {
+       "accuracy": 0.3465346534653465,
+       "cc": -23.057397205506685,
+       "cc_by_type": {
+        "choice": 38.211382113821145,
+        "noul": -100.0,
+        "score": -7.3835737303411975
+       },
+       "low_n": false,
+       "n": 101,
+       "n_by_type": {
+        "choice": 41,
+        "noul": 27,
+        "score": 33
+       },
+       "score": 0.0
+      },
+      "fairness": {
+       "accuracy": 0.3958333333333333,
+       "cc": 2.547459949373632,
+       "cc_by_type": {
+        "choice": 71.42857142857143,
+        "noul": -100.0,
+        "score": 36.213808419549466
+       },
+       "low_n": false,
+       "n": 48,
+       "n_by_type": {
+        "choice": 15,
+        "noul": 15,
+        "score": 18
+       },
+       "score": 2.547459949373632
+      },
+      "jaggedness": {
+       "accuracy": 0.3277777777777778,
+       "cc": -13.33111523931853,
+       "cc_by_type": {
+        "choice": 27.81520692974015,
+        "noul": -83.78378378378379,
+        "score": 15.975231136088052
+       },
+       "low_n": false,
+       "n": 180,
+       "n_by_type": {
+        "choice": 94,
+        "noul": 37,
+        "score": 49
+       },
+       "score": 0.0
+      },
+      "llm_router": {
+       "accuracy": 0.49201277955271566,
+       "cc": 16.58069562448333,
+       "cc_by_type": {
+        "choice": 48.48991811217751,
+        "noul": -36.08247422680413,
+        "score": 37.3346429880766
+       },
+       "low_n": false,
+       "n": 313,
+       "n_by_type": {
+        "choice": 152,
+        "noul": 97,
+        "score": 64
+       },
+       "score": 16.58069562448333
+      },
+      "long_state": {
+       "accuracy": 0.2,
+       "cc": -43.417982168029745,
+       "cc_by_type": {
+        "choice": -3.2258064516129026,
+        "noul": -100.0,
+        "score": -27.028140052476335
+       },
+       "low_n": true,
+       "n": 15,
+       "n_by_type": {
+        "choice": 10,
+        "noul": 2,
+        "score": 3
+       },
+       "score": 0.0
+      },
+      "ml_usecase": {
+       "accuracy": 0.25925925925925924,
+       "cc": -31.105400706660635,
+       "cc_by_type": {
+        "choice": 1.0309278350515454,
+        "noul": -100.0,
+        "score": 5.652870044966551
+       },
+       "low_n": true,
+       "n": 27,
+       "n_by_type": {
+        "choice": 11,
+        "noul": 8,
+        "score": 8
+       },
+       "score": 0.0
+      },
+      "multilingual": {
+       "accuracy": 0.4,
+       "cc": -8.401030900371623,
+       "cc_by_type": {
+        "choice": 44.24519074013694,
+        "noul": -100.0,
+        "score": 30.551716558748186
+       },
+       "low_n": false,
+       "n": 275,
+       "n_by_type": {
+        "choice": 134,
+        "noul": 72,
+        "score": 69
+       },
+       "score": 0.0
+      },
+      "negation_pair_gen": {
+       "accuracy": 0.3372093023255814,
+       "cc": -29.365420042260922,
+       "cc_by_type": {
+        "choice": 43.33333333333332,
+        "noul": -100.0,
+        "score": -31.429593460116088
+       },
+       "low_n": false,
+       "n": 86,
+       "n_by_type": {
+        "choice": 40,
+        "noul": 30,
+        "score": 16
+       },
+       "score": 0.0
+      },
+      "option_order": {
+       "accuracy": 0.6666666666666666,
+       "cc": 57.3901464713715,
+       "cc_by_type": {
+        "choice": 57.3901464713715
+       },
+       "low_n": false,
+       "n": 48,
+       "n_by_type": {
+        "choice": 48
+       },
+       "score": 57.3901464713715
+      },
+      "perturb_pair": {
+       "accuracy": 0.484375,
+       "cc": -1.007614951330936,
+       "cc_by_type": {
+        "choice": 39.93993993993994,
+        "noul": -100.0,
+        "score": 57.03721520606726
+       },
+       "low_n": false,
+       "n": 64,
+       "n_by_type": {
+        "choice": 44,
+        "noul": 10,
+        "score": 10
+       },
+       "score": 0.0
+      },
+      "usecase": {
+       "accuracy": 0.42272727272727273,
+       "cc": -9.73751981494302,
+       "cc_by_type": {
+        "choice": 52.205882352941195,
+        "noul": -100.0,
+        "score": 18.581558202229743
+       },
+       "low_n": false,
+       "n": 220,
+       "n_by_type": {
+        "choice": 104,
+        "noul": 48,
+        "score": 68
+       },
+       "score": 0.0
+      }
+     },
+     "lang": {
+      "ar": {
+       "accuracy": 0.1875,
+       "cc": -45.937517302071406,
+       "cc_by_type": {
+        "choice": -14.285714285714286,
+        "noul": -100.0,
+        "score": -23.52683762049994
+       },
+       "low_n": true,
+       "n": 16,
+       "n_by_type": {
+        "choice": 7,
+        "noul": 4,
+        "score": 5
+       },
+       "score": 0.0
+      },
+      "cs": {
+       "accuracy": 0.2857142857142857,
+       "cc": -42.10526315789474,
+       "cc_by_type": {
+        "choice": 15.789473684210522,
+        "noul": -100.0
+       },
+       "low_n": true,
+       "n": 7,
+       "n_by_type": {
+        "choice": 6,
+        "noul": 1
+       },
+       "score": 0.0
+      },
+      "da": {
+       "accuracy": 0.46153846153846156,
+       "cc": 15.03271897151216,
+       "cc_by_type": {
+        "choice": 37.78801843317972,
+        "noul": -33.333333333333336,
+        "score": 40.6434718146901
+       },
+       "low_n": true,
+       "n": 13,
+       "n_by_type": {
+        "choice": 6,
+        "noul": 3,
+        "score": 4
+       },
+       "score": 15.03271897151216
+      },
+      "de": {
+       "accuracy": 0.5,
+       "cc": 9.426749170259418,
+       "cc_by_type": {
+        "choice": 52.21238938053097,
+        "noul": -75.0,
+        "score": 51.06785813024728
+       },
+       "low_n": false,
+       "n": 32,
+       "n_by_type": {
+        "choice": 16,
+        "noul": 8,
+        "score": 8
+       },
+       "score": 9.426749170259418
+      },
+      "el": {
+       "accuracy": 0.3333333333333333,
+       "cc": 5.387342151544179,
+       "cc_by_type": {
+        "choice": 32.960893854748605,
+        "noul": -100.0,
+        "score": 83.20113259988393
+       },
+       "low_n": true,
+       "n": 15,
+       "n_by_type": {
+        "choice": 8,
+        "noul": 6,
+        "score": 1
+       },
+       "score": 5.387342151544179
+      },
+      "en": {
+       "accuracy": 0.4126846220677672,
+       "cc": -6.199340123447555,
+       "cc_by_type": {
+        "choice": 44.2037563612843,
+        "noul": -81.29496402877699,
+        "score": 18.493187297150026
+       },
+       "low_n": false,
+       "n": 1151,
+       "n_by_type": {
+        "choice": 588,
+        "noul": 278,
+        "score": 285
+       },
+       "score": 0.0
+      },
+      "es": {
+       "accuracy": 0.5483870967741935,
+       "cc": 8.100430998083267,
+       "cc_by_type": {
+        "choice": 60.848287112561174,
+        "noul": -25.0,
+        "score": -11.546994118311371
+       },
+       "low_n": false,
+       "n": 31,
+       "n_by_type": {
+        "choice": 13,
+        "noul": 8,
+        "score": 10
+       },
+       "score": 8.100430998083267
+      },
+      "fi": {
+       "accuracy": 0.0,
+       "cc": -22.38593627582843,
+       "cc_by_type": {
+        "choice": -31.14754098360656,
+        "noul": -100.0,
+        "score": 63.98973215612127
+       },
+       "low_n": true,
+       "n": 8,
+       "n_by_type": {
+        "choice": 4,
+        "noul": 3,
+        "score": 1
+       },
+       "score": 0.0
+      },
+      "fr": {
+       "accuracy": 0.42857142857142855,
+       "cc": -8.361590469741543,
+       "cc_by_type": {
+        "choice": 36.47058823529412,
+        "noul": -100.0,
+        "score": 38.444640355481255
+       },
+       "low_n": true,
+       "n": 14,
+       "n_by_type": {
+        "choice": 6,
+        "noul": 2,
+        "score": 6
+       },
+       "score": 0.0
+      },
+      "hi": {
+       "accuracy": 0.3333333333333333,
+       "cc": -24.140646616230526,
+       "cc_by_type": {
+        "choice": 49.720670391061454,
+        "noul": -100.0,
+        "score": -22.142610239753036
+       },
+       "low_n": true,
+       "n": 21,
+       "n_by_type": {
+        "choice": 8,
+        "noul": 8,
+        "score": 5
+       },
+       "score": 0.0
+      },
+      "id": {
+       "accuracy": 0.5,
+       "cc": -22.222222222222225,
+       "cc_by_type": {
+        "choice": 55.55555555555555,
+        "noul": -100.0
+       },
+       "low_n": true,
+       "n": 4,
+       "n_by_type": {
+        "choice": 3,
+        "noul": 1
+       },
+       "score": 0.0
+      },
+      "it": {
+       "accuracy": 0.6666666666666666,
+       "cc": 5.863255649147139,
+       "cc_by_type": {
+        "choice": 85.97038191738113,
+        "noul": -100.0,
+        "score": 31.619385030060286
+       },
+       "low_n": true,
+       "n": 15,
+       "n_by_type": {
+        "choice": 9,
+        "noul": 3,
+        "score": 3
+       },
+       "score": 5.863255649147139
+      },
+      "ja": {
+       "accuracy": 0.16,
+       "cc": -25.91213603285095,
+       "cc_by_type": {
+        "choice": -14.376489277204131,
+        "noul": -80.0,
+        "score": 16.64008117865129
+       },
+       "low_n": true,
+       "n": 25,
+       "n_by_type": {
+        "choice": 9,
+        "noul": 10,
+        "score": 6
+       },
+       "score": 0.0
+      },
+      "ko": {
+       "accuracy": 0.3,
+       "cc": -17.894184345779824,
+       "cc_by_type": {
+        "choice": 11.111111111111109,
+        "noul": -100.0,
+        "score": 35.20633585154942
+       },
+       "low_n": true,
+       "n": 10,
+       "n_by_type": {
+        "choice": 3,
+        "noul": 2,
+        "score": 5
+       },
+       "score": 0.0
+      },
+      "mixed": {
+       "accuracy": 0.6428571428571429,
+       "cc": 23.52372643283176,
+       "cc_by_type": {
+        "choice": 100.0,
+        "noul": -100.0,
+        "score": 70.57117929849528
+       },
+       "low_n": true,
+       "n": 14,
+       "n_by_type": {
+        "choice": 8,
+        "noul": 3,
+        "score": 3
+       },
+       "score": 23.52372643283176
+      },
+      "nl": {
+       "accuracy": 0.3,
+       "cc": -30.464207419154246,
+       "cc_by_type": {
+        "choice": 48.05194805194805,
+        "noul": -100.0,
+        "score": -39.44457030941078
+       },
+       "low_n": true,
+       "n": 10,
+       "n_by_type": {
+        "choice": 5,
+        "noul": 3,
+        "score": 2
+       },
+       "score": 0.0
+      },
+      "no": {
+       "accuracy": 0.16666666666666666,
+       "cc": -32.25806451612903,
+       "cc_by_type": {
+        "choice": 35.483870967741936,
+        "noul": -100.0
+       },
+       "low_n": true,
+       "n": 6,
+       "n_by_type": {
+        "choice": 2,
+        "noul": 4
+       },
+       "score": 0.0
+      },
+      "pl": {
+       "accuracy": 0.46153846153846156,
+       "cc": 5.647599423614661,
+       "cc_by_type": {
+        "choice": 54.29538721963606,
+        "noul": -60.0,
+        "score": 22.64741105120792
+       },
+       "low_n": false,
+       "n": 39,
+       "n_by_type": {
+        "choice": 17,
+        "noul": 10,
+        "score": 12
+       },
+       "score": 5.647599423614661
+      },
+      "pt": {
+       "accuracy": 0.6428571428571429,
+       "cc": 15.761110940502286,
+       "cc_by_type": {
+        "choice": 57.57218621096051,
+        "noul": -60.0,
+        "score": 49.71114661054635
+       },
+       "low_n": true,
+       "n": 28,
+       "n_by_type": {
+        "choice": 12,
+        "noul": 5,
+        "score": 11
+       },
+       "score": 15.761110940502286
+      },
+      "sv": {
+       "accuracy": 0.2727272727272727,
+       "cc": -7.918198558887582,
+       "cc_by_type": {
+        "choice": 48.93617021276595,
+        "noul": -100.0,
+        "score": 27.30923411057131
+       },
+       "low_n": true,
+       "n": 11,
+       "n_by_type": {
+        "choice": 5,
+        "noul": 5,
+        "score": 1
+       },
+       "score": 0.0
+      },
+      "tr": {
+       "accuracy": 0.3076923076923077,
+       "cc": -39.024340860461855,
+       "cc_by_type": {
+        "choice": 34.78260869565218,
+        "noul": -100.0,
+        "score": -51.85563127703776
+       },
+       "low_n": true,
+       "n": 13,
+       "n_by_type": {
+        "choice": 6,
+        "noul": 4,
+        "score": 3
+       },
+       "score": 0.0
+      },
+      "uk": {
+       "accuracy": 0.5714285714285714,
+       "cc": 3.307902839273879,
+       "cc_by_type": {
+        "choice": 35.483870967741936,
+        "noul": -100.0,
+        "score": 74.4398375500797
+       },
+       "low_n": true,
+       "n": 7,
+       "n_by_type": {
+        "choice": 4,
+        "noul": 1,
+        "score": 2
+       },
+       "score": 3.307902839273879
+      },
+      "zh": {
+       "accuracy": 0.3,
+       "cc": -30.87603744758397,
+       "cc_by_type": {
+        "choice": 23.72881355932204,
+        "noul": -100.0,
+        "score": -16.35692590207396
+       },
+       "low_n": true,
+       "n": 10,
+       "n_by_type": {
+        "choice": 5,
+        "noul": 3,
+        "score": 2
+       },
+       "score": 0.0
+      }
+     },
+     "type": {
+      "choice": {
+       "accuracy": 0.5653333333333334,
+       "cc": 43.856560592433844,
+       "cc_by_type": {
+        "choice": 43.856560592433844
+       },
+       "low_n": false,
+       "n": 750,
+       "n_by_type": {
+        "choice": 750
+       },
+       "score": 43.856560592433844
+      },
+      "noul": {
+       "accuracy": 0.09333333333333334,
+       "cc": -81.33333333333333,
+       "cc_by_type": {
+        "noul": -81.33333333333333
+       },
+       "low_n": false,
+       "n": 375,
+       "n_by_type": {
+        "noul": 375
+       },
+       "score": 0.0
+      },
+      "score": {
+       "accuracy": 0.4266666666666667,
+       "cc": 20.767057167986668,
+       "cc_by_type": {
+        "score": 20.767057167986668
+       },
+       "low_n": false,
+       "n": 375,
+       "n_by_type": {
+        "score": 375
+       },
+       "score": 20.767057167986668
+      }
+     },
+     "usecase": {
+      "advertising": {
+       "accuracy": 0.22727272727272727,
+       "cc": -34.66351608264553,
+       "cc_by_type": {
+        "choice": 20.0,
+        "noul": -100.0,
+        "score": -23.990548247936584
+       },
+       "low_n": true,
+       "n": 22,
+       "n_by_type": {
+        "choice": 8,
+        "noul": 8,
+        "score": 6
+       },
+       "score": 0.0
+      },
+      "code_linting": {
+       "accuracy": 0.25,
+       "cc": -28.909740728640543,
+       "cc_by_type": {
+        "choice": 25.465838509316768,
+        "noul": -100.0,
+        "score": -12.195060695238391
+       },
+       "low_n": true,
+       "n": 24,
+       "n_by_type": {
+        "choice": 7,
+        "noul": 9,
+        "score": 8
+       },
+       "score": 0.0
+      },
+      "customer_support": {
+       "accuracy": 0.5,
+       "cc": 4.559150971409042,
+       "cc_by_type": {
+        "choice": 51.21951219512195,
+        "noul": -100.0,
+        "score": 62.457940719105174
+       },
+       "low_n": true,
+       "n": 14,
+       "n_by_type": {
+        "choice": 8,
+        "noul": 4,
+        "score": 2
+       },
+       "score": 4.559150971409042
+      },
+      "demand_forecasting": {
+       "accuracy": 0.17647058823529413,
+       "cc": -32.121284533711,
+       "cc_by_type": {
+        "choice": -5.263157894736844,
+        "noul": -100.0,
+        "score": 8.89930429360386
+       },
+       "low_n": true,
+       "n": 17,
+       "n_by_type": {
+        "choice": 11,
+        "noul": 3,
+        "score": 3
+       },
+       "score": 0.0
+      },
+      "ecommerce_marketplaces": {
+       "accuracy": 0.5882352941176471,
+       "cc": -1.5302353780446747,
+       "cc_by_type": {
+        "choice": 56.52173913043478,
+        "noul": -100.0,
+        "score": 38.887554735431195
+       },
+       "low_n": true,
+       "n": 17,
+       "n_by_type": {
+        "choice": 9,
+        "noul": 3,
+        "score": 5
+       },
+       "score": 0.0
+      },
+      "feature_extraction": {
+       "accuracy": 0.2631578947368421,
+       "cc": -78.33824039809011,
+       "cc_by_type": {
+        "choice": 11.949685534591195,
+        "noul": -100.0,
+        "score": -146.96440672886152
+       },
+       "low_n": true,
+       "n": 19,
+       "n_by_type": {
+        "choice": 10,
+        "noul": 6,
+        "score": 3
+       },
+       "score": 0.0
+      },
+      "financial_crime": {
+       "accuracy": 0.4,
+       "cc": -5.263394470953986,
+       "cc_by_type": {
+        "choice": 60.784313725490186,
+        "noul": -100.0,
+        "score": 23.425502861647864
+       },
+       "low_n": false,
+       "n": 30,
+       "n_by_type": {
+        "choice": 13,
+        "noul": 7,
+        "score": 10
+       },
+       "score": 0.0
+      },
+      "gaming": {
+       "accuracy": 0.4090909090909091,
+       "cc": -5.73626261283147,
+       "cc_by_type": {
+        "choice": 47.73519163763067,
+        "noul": -100.0,
+        "score": 35.05602052387492
+       },
+       "low_n": true,
+       "n": 22,
+       "n_by_type": {
+        "choice": 12,
+        "noul": 4,
+        "score": 6
+       },
+       "score": 0.0
+      },
+      "insurance_claims": {
+       "accuracy": 0.2,
+       "cc": -10.506258968302104,
+       "cc_by_type": {
+        "choice": 37.5,
+        "noul": -100.0,
+        "score": 30.98122309509369
+       },
+       "low_n": true,
+       "n": 15,
+       "n_by_type": {
+        "choice": 6,
+        "noul": 5,
+        "score": 4
+       },
+       "score": 0.0
+      },
+      "knowledge_graphs": {
+       "accuracy": 0.22727272727272727,
+       "cc": -32.60737369559937,
+       "cc_by_type": {
+        "choice": 22.912205567451824,
+        "noul": -100.0,
+        "score": -20.734326654249923
+       },
+       "low_n": true,
+       "n": 22,
+       "n_by_type": {
+        "choice": 10,
+        "noul": 6,
+        "score": 6
+       },
+       "score": 0.0
+      },
+      "lead_generation": {
+       "accuracy": 0.28,
+       "cc": -19.150680306312765,
+       "cc_by_type": {
+        "choice": 41.860465116279066,
+        "noul": -100.0,
+        "score": 0.6874939647826372
+       },
+       "low_n": true,
+       "n": 25,
+       "n_by_type": {
+        "choice": 11,
+        "noul": 9,
+        "score": 5
+       },
+       "score": 0.0
+      },
+      "legal_compliance": {
+       "accuracy": 0.2,
+       "cc": -53.935848404475244,
+       "cc_by_type": {
+        "choice": -29.032258064516128,
+        "noul": -100.0,
+        "score": -32.775287148909584
+       },
+       "low_n": true,
+       "n": 10,
+       "n_by_type": {
+        "choice": 4,
+        "noul": 3,
+        "score": 3
+       },
+       "score": 0.0
+      },
+      "llm_guardrails": {
+       "accuracy": 0.5185185185185185,
+       "cc": -2.038133746750438,
+       "cc_by_type": {
+        "choice": 76.96737044145875,
+        "noul": -100.0,
+        "score": 16.91822831828993
+       },
+       "low_n": true,
+       "n": 27,
+       "n_by_type": {
+        "choice": 11,
+        "noul": 5,
+        "score": 11
+       },
+       "score": 0.0
+      },
+      "model_routing": {
+       "accuracy": 0.5714285714285714,
+       "cc": 29.51514079030297,
+       "cc_by_type": {
+        "choice": 61.42857142857144,
+        "noul": -9.090909090909093,
+        "score": 36.20776003324657
+       },
+       "low_n": false,
+       "n": 217,
+       "n_by_type": {
+        "choice": 101,
+        "noul": 66,
+        "score": 50
+       },
+       "score": 29.51514079030297
+      },
+      "moderation_trust_safety": {
+       "accuracy": 0.6111111111111112,
+       "cc": 7.42457875054303,
+       "cc_by_type": {
+        "choice": 65.4510556621881,
+        "noul": -100.0,
+        "score": 56.822680589441
+       },
+       "low_n": true,
+       "n": 18,
+       "n_by_type": {
+        "choice": 11,
+        "noul": 2,
+        "score": 5
+       },
+       "score": 7.42457875054303
+      },
+      "recruiting": {
+       "accuracy": 0.5555555555555556,
+       "cc": -4.107592505024665,
+       "cc_by_type": {
+        "choice": 66.57381615598885,
+        "noul": -100.0,
+        "score": 21.103406328937147
+       },
+       "low_n": true,
+       "n": 18,
+       "n_by_type": {
+        "choice": 8,
+        "noul": 3,
+        "score": 7
+       },
+       "score": 0.0
+      },
+      "risk_assessment": {
+       "accuracy": 0.3333333333333333,
+       "cc": -13.011365405747886,
+       "cc_by_type": {
+        "choice": 40.88669950738917,
+        "noul": -100.0,
+        "score": 20.07920427536718
+       },
+       "low_n": true,
+       "n": 18,
+       "n_by_type": {
+        "choice": 9,
+        "noul": 4,
+        "score": 5
+       },
+       "score": 0.0
+      },
+      "scientific_discovery": {
+       "accuracy": 0.391304347826087,
+       "cc": -13.243361938976696,
+       "cc_by_type": {
+        "choice": 42.02898550724638,
+        "noul": -100.0,
+        "score": 18.240928675823533
+       },
+       "low_n": true,
+       "n": 23,
+       "n_by_type": {
+        "choice": 9,
+        "noul": 6,
+        "score": 8
+       },
+       "score": 0.0
+      },
+      "search_retrieval": {
+       "accuracy": 0.7083333333333334,
+       "cc": 20.349313001199747,
+       "cc_by_type": {
+        "choice": 78.64768683274022,
+        "noul": -100.0,
+        "score": 82.40025217085902
+       },
+       "low_n": true,
+       "n": 24,
+       "n_by_type": {
+        "choice": 12,
+        "noul": 4,
+        "score": 8
+       },
+       "score": 20.349313001199747
+      }
+     }
+    },
+    "breakdowns_equated": false,
+    "ci95": {
+     "B": 1000,
+     "C": [
+      76.65403551196366,
+      83.9162808157726
+     ],
+     "I": [
+      17.266753746925517,
+      24.895368297491746
+     ],
+     "capability": [
+      47.686868271506455,
+      53.589923044650135
+     ],
+     "composite": {
+      "A": [
+       4.672849375867131,
+       11.765050469662265
+      ],
+      "B": [
+       3.7201929696864933,
+       9.959843262217815
+      ],
+      "C": [
+       3.245034288796619,
+       8.170173937265462
+      ]
+     },
+     "seed": 69
+    },
+    "ci95_n": 1200,
+    "complete": true,
+    "equated": null,
+    "equating_flag": null,
+    "equating_offset": null,
+    "full_set_api": true,
+    "g_med_used": 9.839526770355711,
+    "lane": "api",
+    "metric_basis": "S u P (full set, API lane, v1.6.1 amendment; not equated)",
+    "n_items": 1500,
+    "n_public": 300,
+    "n_sealed_side": 1200,
+    "on_S": {
+     "calibration": 82.82809086203193,
+     "capability": 52.307933164694276,
+     "intelligence": 21.787775467356628
+    },
+    "per_type": {
+     "choice": {
+      "accuracy": 0.5653333333333334,
+      "calibration": 92.56341695114746,
+      "cc": 43.856560592433844,
+      "cc_by_type": {
+       "choice": 43.856560592433844
+      },
+      "cc_tiered": 43.58274476614753,
+      "cc_tiered_open": 44.97100315222714,
+      "cc_tiered_sealed": 42.194486380067914,
+      "low_n": false,
+      "n": 750,
+      "n_by_type": {
+       "choice": 750
+      },
+      "score": 43.856560592433844
+     },
+     "noul": {
+      "accuracy": 0.09333333333333334,
+      "calibration": 67.87076043658963,
+      "cc": -81.33333333333333,
+      "cc_by_type": {
+       "noul": -81.33333333333333
+      },
+      "cc_tiered": 0.0,
+      "cc_tiered_open": 0.0,
+      "cc_tiered_sealed": 0.0,
+      "low_n": false,
+      "n": 375,
+      "n_by_type": {
+       "noul": 375
+      },
+      "score": 0.0
+     },
+     "score": {
+      "accuracy": 0.4266666666666667,
+      "calibration": 88.05009519835869,
+      "cc": 20.767057167986668,
+      "cc_by_type": {
+       "score": 20.767057167986668
+      },
+      "cc_tiered": 21.78058163592236,
+      "cc_tiered_open": 25.5133434476861,
+      "cc_tiered_sealed": 18.047819824158623,
+      "low_n": false,
+      "n": 375,
+      "n_by_type": {
+       "score": 375
+      },
+      "score": 20.767057167986668
+     }
+    },
+    "raw_on_A": null,
+    "set": "S+P"
+   },
+   "validity": {
+    "choice": {
+     "invalid_rate": 0.009333333333333305,
+     "n": 750
+    },
+    "noul": {
+     "invalid_rate": 0.005333333333333301,
+     "n": 375
+    },
+    "score": {
+     "invalid_rate": 0.013333333333333308,
+     "n": 375
+    }
+   },
+   "views": {
+    "Balanced 33:33:33": 7.347401123964962,
+    "Emphasis on Accuracy 60:20:20": 5.607046211426425,
+    "Emphasis on Cost 20:20:60": 8.120862405107507,
+    "Emphasis on Speed 20:60:20": 9.361456533393355,
+    "Intelligence only": 4.137125204326576
+   }
+  },
+  {
+   "addendum": null,
    "api_flag": false,
    "api_subset": false,
    "author": "ironbcc (Hugging Face)",
@@ -196224,13 +197581,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 224,
+   "rank": 225,
    "ranked": true,
    "ranks": {
-    "A": 224,
-    "B": 224,
-    "C": 224,
-    "capability": 253
+    "A": 225,
+    "B": 225,
+    "C": 225,
+    "capability": 254
    },
    "repo": "https://github.com/featherless-ai/simple-jev",
    "rescored_in": "v1.7.0",
@@ -196853,12 +198210,12 @@
     },
     "views": null
    },
-   "rank": 219,
+   "rank": 220,
    "ranked": true,
    "ranks": {
-    "A": 219,
-    "B": 213,
-    "C": 216,
+    "A": 220,
+    "B": 214,
+    "C": 217,
     "capability": 77
    },
    "repo": "https://github.com/featherless-ai/simple-jev",
@@ -197167,12 +198524,12 @@
     "carried_metadata_from": "author repository + base config.json",
     "kind": "v1.6.1 addendum a6 (scorer output sha256 9d512dc13d7d, method option B / O1S)"
    },
-   "rank": 215,
+   "rank": 216,
    "ranked": true,
    "ranks": {
-    "A": 215,
-    "B": 212,
-    "C": 212,
+    "A": 216,
+    "B": 213,
+    "C": 213,
     "capability": 58
    },
    "repo": "https://github.com/featherless-ai/simple-jev",
@@ -200317,13 +201674,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 227,
+   "rank": 228,
    "ranked": true,
    "ranks": {
-    "A": 227,
-    "B": 227,
-    "C": 227,
-    "capability": 224
+    "A": 228,
+    "B": 228,
+    "C": 228,
+    "capability": 225
    },
    "repo": "https://github.com/isHeSatoshi/smalljev",
    "rescored_in": "v1.7.0",
@@ -213613,7 +214970,7 @@
     "A": 175,
     "B": 176,
     "C": 176,
-    "capability": 196
+    "capability": 197
    },
    "repo": "https://github.com/mithalouni/system-one-open",
    "rescored_in": "v1.7.0",
@@ -213923,7 +215280,7 @@
     "A": 193,
     "B": 193,
     "C": 194,
-    "capability": 257
+    "capability": 258
    },
    "repo": "https://github.com/sgoedecke/system-one",
    "rescored_in": "v1.7.0",
@@ -214355,13 +215712,13 @@
     "carried_metadata_from": "Pinned author release; add-requests r61/score/withrows/REGISTRY.json measurement record",
     "kind": "v1.6.1 addendum a11 (scorer output sha256 4d2833926c2d, method option B / O1S)"
    },
-   "rank": 259,
+   "rank": 260,
    "ranked": true,
    "ranks": {
-    "A": 259,
-    "B": 259,
-    "C": 259,
-    "capability": 261
+    "A": 260,
+    "B": 260,
+    "C": 260,
+    "capability": 262
    },
    "repo": "https://huggingface.co/codepawl/tacet-sonata",
    "rescored_in": "v1.7.0",
@@ -227972,13 +229329,13 @@
      "Intelligence only": 0.06667416738798192
     }
    },
-   "rank": 241,
+   "rank": 242,
    "ranked": true,
    "ranks": {
-    "A": 241,
-    "B": 241,
-    "C": 241,
-    "capability": 241
+    "A": 242,
+    "B": 242,
+    "C": 242,
+    "capability": 242
    },
    "repo": "https://huggingface.co/nandakishorm/vega-U",
    "rescored_in": "v1.7.0",
@@ -229392,13 +230749,13 @@
      "Intelligence only": 0.27274108540540976
     }
    },
-   "rank": 229,
+   "rank": 230,
    "ranked": true,
    "ranks": {
-    "A": 229,
-    "B": 229,
-    "C": 229,
-    "capability": 225
+    "A": 230,
+    "B": 230,
+    "C": 230,
+    "capability": 226
    },
    "remeasure": {
     "disclosure": "Re-measure on the same items: this GPU row replaces the earlier loaded-CPU row of the same weights in full (scores and times) and is the second and last use of these weights on draw v1.6-regular-20261012. Fifteen items reach the author's 73,728-token context limit and are answered on a right-truncated state; they take 13.8-14.3 s each on this GPU and count as failed under the 10 s rule.",
@@ -230817,13 +232174,13 @@
      "Intelligence only": 0.011385887829608154
     }
    },
-   "rank": 255,
+   "rank": 256,
    "ranked": true,
    "ranks": {
-    "A": 255,
-    "B": 255,
-    "C": 255,
-    "capability": 247
+    "A": 256,
+    "B": 256,
+    "C": 256,
+    "capability": 248
    },
    "repo": "https://huggingface.co/nandakishorm/vega-08b-public-intents",
    "rescored_in": "v1.7.0",
@@ -232230,13 +233587,13 @@
      "Intelligence only": 1.654208859284027
     }
    },
-   "rank": 220,
+   "rank": 221,
    "ranked": true,
    "ranks": {
-    "A": 220,
-    "B": 221,
-    "C": 221,
-    "capability": 240
+    "A": 221,
+    "B": 222,
+    "C": 222,
+    "capability": 241
    },
    "repo": "https://huggingface.co/nandakishorm/vega-08b-public-intents",
    "rescored_in": "v1.7.0",
@@ -234998,13 +236355,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 258,
+   "rank": 259,
    "ranked": true,
    "ranks": {
-    "A": 258,
-    "B": 258,
-    "C": 258,
-    "capability": 238
+    "A": 259,
+    "B": 259,
+    "C": 259,
+    "capability": 239
    },
    "repo": "https://github.com/Manavarya09/verdict",
    "rescored_in": "v1.7.0",
@@ -245248,13 +246605,13 @@
     "carried_metadata_from": "Pinned author release; add-requests r61/score/withrows/REGISTRY.json measurement record",
     "kind": "v1.6.1 addendum a11 (scorer output sha256 4d2833926c2d, method option B / O1S)"
    },
-   "rank": 242,
+   "rank": 243,
    "ranked": true,
    "ranks": {
-    "A": 242,
-    "B": 242,
-    "C": 242,
-    "capability": 242
+    "A": 243,
+    "B": 243,
+    "C": 243,
+    "capability": 243
    },
    "repo": "https://huggingface.co/samratduttaofficial/WaterSheep",
    "rescored_in": "v1.7.0",
@@ -245686,13 +247043,13 @@
     "carried_metadata_from": "Pinned author release; add-requests r61/score/withrows/REGISTRY.json measurement record",
     "kind": "v1.6.1 addendum a11 (scorer output sha256 4d2833926c2d, method option B / O1S)"
    },
-   "rank": 251,
+   "rank": 252,
    "ranked": true,
    "ranks": {
-    "A": 251,
-    "B": 251,
-    "C": 251,
-    "capability": 231
+    "A": 252,
+    "B": 252,
+    "C": 252,
+    "capability": 232
    },
    "repo": "https://huggingface.co/zaitlabs/watt-flash-0.1",
    "rescored_in": "v1.7.0",
@@ -249667,13 +251024,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 216,
+   "rank": 217,
    "ranked": true,
    "ranks": {
-    "A": 216,
-    "B": 219,
-    "C": 217,
-    "capability": 200
+    "A": 217,
+    "B": 220,
+    "C": 218,
+    "capability": 201
    },
    "repo": "https://huggingface.co/zeroentropy/zerank-2-reranker",
    "rescored_in": "v1.7.0",

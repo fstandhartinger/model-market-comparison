@@ -5,12 +5,20 @@
    "handoff": "lead run 185 HANDOFF-CHONE4B-R185.md",
    "key": "chon-1.0-e4b",
    "relay": "regular queue"
+  },
+  {
+   "admission": "custody #25026/#25102",
+   "handoff": "board #25894 (HANDOFF-SD.md)",
+   "key": "scaledown-classify-1",
+   "relay": "regular queue"
   }
  ],
  "button_tap": false,
  "fairness_check": {
-  "path": "/home/flori/jobs/jevbench-add-requests-20260919/workers/r185-e4b-prescore/RESULT.json",
-  "verdict": "PENDING"
+  "engine": "claude-opus-5-5 (Claude Code worker, read-only)",
+  "path": "workers/r185-e4b-prescore/RESULT.json",
+  "sha256": "846c0dca823e93b085c58fac600b0ebc862155e4288d0b7f41e67fc846784122",
+  "verdict": "FAIR"
  },
  "fresh_baseline": "v1.7.2",
  "go": {
@@ -24,6 +32,6 @@
  "top_five_effect": "changed",
  "top_five_preview": {
   "path": "r185/v173/receipts/topfive-diff.json",
-  "sha256": "31cf7775ed86bc6746922ee0a826231f038de22a8017c700dec0e1d90f149e93"
+  "sha256": "eb527eb24e13e73268b0c49b1b1547fd1af4a954edbf9d7e489af6b6ffdcdd86"
  }
 }

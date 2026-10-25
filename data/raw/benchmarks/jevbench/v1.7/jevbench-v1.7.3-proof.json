@@ -10,7 +10,73 @@
   "rule": "latency_s > 10.000 s -> failed",
   "treatment": "share"
  },
- "new_rows": {},
+ "new_rows": {
+  "scaledown-classify-1": {
+   "axes": {
+    "calibration": 82.82809086203193,
+    "cost": 50.78732378203712,
+    "intelligence": 21.787775467356628,
+    "speed": 83.72843286582474
+   },
+   "composite_ci95": {
+    "A": [
+     4.672849375867131,
+     11.765050469662265
+    ],
+    "B": [
+     3.7201929696864933,
+     9.959843262217815
+    ],
+    "C": [
+     3.245034288796619,
+     8.170173937265462
+    ]
+   },
+   "decision_limit": {
+    "limit_s": 10.0,
+    "n_over_limit": 14,
+    "n_over_limit_answered_ok": 10,
+    "rule": "latency_s > limit -> failed",
+    "speed_basis": "all decisions given (lane items in the raw), measured latency_s",
+    "speed_n": 1500,
+    "treatment": "share"
+   },
+   "explicit_ref": {
+    "in": 0.05,
+    "key": "scaledown:classify-1 (vendor list price)",
+    "out": 0.0
+   },
+   "raw_sha256": "900652c68a38db3d51e00567b2dd45b2cdc771646a611058a1701441e3d10fbb",
+   "scored_input_sha256": "31efd92d925131d31de1656d55cadaefcf858ee776100eb50e35932ac5b354e9",
+   "source_sha256": {
+    "entry_path": "/home/flori/jobs/scaledown-eval-neal-20261023/official/ENTRIES-SD.json",
+    "entry_sha256": "33a7a1fb8b929005682820b82f149b2e1f7bde6115b926381632a8d285c61045",
+    "explicit_ref": {
+     "in": 0.05,
+     "key": "scaledown:classify-1 (vendor list price)",
+     "out": 0.0
+    },
+    "frozen": {
+     "path": "/home/flori/jobs/scaledown-eval-neal-20261023/official/field-sd/out-frozen/jevbench-v1.6.0-results.json",
+     "sha256": "c141a32401e776512dfb53080ffd302227db9e98453ec41f810359c1be696673"
+    },
+    "handoff_sha256": "1f0971a5bf62bcd5b1d9e4686ce2293b0d51b15443481785520cbbb012651a95",
+    "raw_hash_source": "in-place verification; raw not copied",
+    "raw_sha256": "900652c68a38db3d51e00567b2dd45b2cdc771646a611058a1701441e3d10fbb",
+    "raw_verified_in_place": true,
+    "registry_sha256": "55ffeeae1b90ebed2fe3fe119f47a1244387e93cc967d679c27f7ffb6841f5c9",
+    "v17-off": {
+     "path": "/home/flori/jobs/scaledown-eval-neal-20261023/official/field-sd/out-v17-off/jevbench-v1.6.0-results.json",
+     "sha256": "932267feb09497f81a613815356d226e1e53a26d6e27aaab07ca9b6eeb7db7f8"
+    },
+    "v17-share": {
+     "path": "/home/flori/jobs/scaledown-eval-neal-20261023/official/field-sd/out-v17-share/jevbench-v1.6.0-results.json",
+     "sha256": "31efd92d925131d31de1656d55cadaefcf858ee776100eb50e35932ac5b354e9"
+    }
+   },
+   "treatment": "ranked"
+  }
+ },
  "predecessor": {
   "publication_sha256": "6b5eb8810895792fd3b468c58be9fc7f9a4ef412c0f330d6bdc32487fd249e73",
   "revision": "v1.7.2"
@@ -23,12 +89,20 @@
     "handoff": "lead run 185 HANDOFF-CHONE4B-R185.md",
     "key": "chon-1.0-e4b",
     "relay": "regular queue"
+   },
+   {
+    "admission": "custody #25026/#25102",
+    "handoff": "board #25894 (HANDOFF-SD.md)",
+    "key": "scaledown-classify-1",
+    "relay": "regular queue"
    }
   ],
   "button_tap": false,
   "fairness_check": {
-   "path": "/home/flori/jobs/jevbench-add-requests-20260919/workers/r185-e4b-prescore/RESULT.json",
-   "verdict": "PENDING"
+   "engine": "claude-opus-5-5 (Claude Code worker, read-only)",
+   "path": "workers/r185-e4b-prescore/RESULT.json",
+   "sha256": "846c0dca823e93b085c58fac600b0ebc862155e4288d0b7f41e67fc846784122",
+   "verdict": "FAIR"
   },
   "fresh_baseline": "v1.7.2",
   "go": {
@@ -42,7 +116,7 @@
   "top_five_effect": "changed",
   "top_five_preview": {
    "path": "r185/v173/receipts/topfive-diff.json",
-   "sha256": "31cf7775ed86bc6746922ee0a826231f038de22a8017c700dec0e1d90f149e93"
+   "sha256": "eb527eb24e13e73268b0c49b1b1547fd1af4a954edbf9d7e489af6b6ffdcdd86"
   }
  },
  "remeasured_rows": {
@@ -126,9 +200,10 @@
   "score_v17": "6363458d208a52f4ad5aaf73027cad1b7e0358ff962e581d57a3cc462c8f1978"
  },
  "source_inputs": {
-  "cells_sha256": "6b0d804df441022163903b7bd9318ea28449040b952654a3509a7275fbb64c51",
-  "entry_sha256": "8bdfdca93a489405a0cb34aebaa7082670e6829e6c047bda784b24fb3db18dde",
-  "scored_rows_sha256": "b47d5f73995e76bfed4136ed639e2816d6ee4ef505fdb3297231a03611247218"
+  "cells_sha256": "a52ac55c51212e54ac6dabe08e0dfc0a9a71a23fd01de1c1bfff43b37b14e97d",
+  "entry_sha256": "c53a8846acd852922a0bf859ddb10e9959960aa8c0f2e27369b2aa91ed51c511",
+  "scored_rows_sha256": "824d43dd66626acd26a0b74a76e0df2c09e11c1dfb77a16986d65e39d65c0a4d",
+  "sd_entry_sha256": "6323221b68940e27df240f3145a7f303891dcc75c777f1db87f3dbeff781530c"
  },
- "topfive_diff_sha256": "31cf7775ed86bc6746922ee0a826231f038de22a8017c700dec0e1d90f149e93"
+ "topfive_diff_sha256": "eb527eb24e13e73268b0c49b1b1547fd1af4a954edbf9d7e489af6b6ffdcdd86"
 }

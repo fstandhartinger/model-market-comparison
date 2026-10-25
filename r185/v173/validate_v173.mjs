@@ -11,4 +11,4 @@ const sha=p=>createHash('sha256').update(readFileSync(path.join(root,p))).digest
 const b={manifest:load('publication'),artifact:load('results'),categories:load('categories'),carry:load('carry'),proof:load('proof'),previous:await readOptionalJevbenchV172Release(root),previousManifestSha256:sha('data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.2-publication.json')};
 validateJevbenchV173Bundle(b,{candidate:true});
 if(b.manifest.review.verdict==='PENDING'&&await readJevbenchV173ForBoard(root)!==null)throw Error('PENDING leaked');
-console.log('PASS candidate row validator: 288 carried rows/cells equal except placements, 1 pinned GPU replacement, immutable carry, method, pricing, scorer, ranks; PENDING hidden');
+console.log('PASS candidate row validator: 288 carried rows/cells equal except placements, 1 pinned GPU replacement + 1 hosted row, immutable carry, method, pricing, scorer, ranks; PENDING hidden');

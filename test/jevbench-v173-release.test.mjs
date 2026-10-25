@@ -83,13 +83,23 @@ test('version-peer links survive a v1.7.3 artifact and later v1.7 patches',async
  for(const revision of ['v1.6.43','v1.70.0','v1.7.invalid'])assert.equal(runInNewContext(expression,{data:{artifact:{revision}},row:{key:'standard_one_3b_sh_v4'},versionPeers:{standard_one_3b_sh_v4:peer}}),null,revision);
 });
 
-test('GPU replaces CPU in full under the same key and retains its CPU history and exact cost',()=>{
+test('GPU replaces CPU in full under the same key and retains its CPU history and cost value/basis',()=>{
  const row=b.artifact.systems.find(s=>s.key==='chon-1.0-e4b'),cpu=b.previous.artifact.systems.find(s=>s.key===row.key);
- assert.equal(b.artifact.systems.length,b.previous.artifact.systems.length);
+ assert.equal(b.artifact.systems.length,b.previous.artifact.systems.length+1);
  assert.equal(row.endpoint_kind,'gpu');assert.equal(row.remeasured_in,'v1.7.3');assert.equal(row.listing,'ranked');
  assert.equal(row.previous.endpoint_kind,'cpu');assert.equal(row.previous.board_release,'v1.7.2');assert.equal(row.previous.listing,'remeasure-pending');
- assert.deepEqual(row.cost,cpu.cost);assert.equal(row.model_pin,cpu.model_pin);assert.equal(row.decision_limit.n_over_limit,0);
+ assert.deepEqual(row.cost,{...cpu.cost,kind:'estimate'});assert.equal(row.model_pin,cpu.model_pin);assert.equal(row.decision_limit.n_over_limit,0);
  assert.equal(b.proof.publication_approval.top_five_effect,'changed');
  mutate(x=>{x.proof.publication_approval.top_five_preview.sha256='b'.repeat(64);},/fair top-five GO proof/);
  mutate(x=>{x.proof.publication_approval.fairness_check.verdict='UNFAIR';},/fairness receipt/);
+});
+
+test('ScaleDown retains vendor-hosted scoring and explicit vendor price including failed-usage fallback',()=>{
+ const row=b.artifact.systems.find(s=>s.key==='scaledown-classify-1');
+ assert.equal(row.endpoint_kind,'api');assert.equal(row.base_model,null);assert.equal(row.new_in,'v1.7.3');
+ assert.equal(row.status.answered_ok,1496);assert.equal(row.decision_limit.n_over_limit,14);
+ assert.deepEqual(b.proof.new_rows[row.key].explicit_ref,{key:'scaledown:classify-1 (vendor list price)',in:0.05,out:0});
+ assert.equal(row.cost.usd_per_1000,0.04369407407407409);assert.equal(row.cost.kind,'mixed');assert.equal(row.cost.usage_estimated_rows,4);
+ mutate(x=>{x.artifact.systems.find(s=>s.key===row.key).axes.cost+=1;},/new hosted row/);
+ mutate(x=>{x.proof.new_rows[row.key].explicit_ref.in=0.1;},/vendor price/);
 });

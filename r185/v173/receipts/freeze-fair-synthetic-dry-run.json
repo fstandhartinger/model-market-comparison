@@ -6,11 +6,11 @@
  ],
  "files": {
   "carry": "271d1fc77a136a04a1eb6deb5480c52d4211eb2b66b2ac8bb31e80867e69003a",
-  "categories": "955d6a4f26f267c62b9c26745f2c6a5c50d58878f6bc04ca9bc79963be9b818b",
+  "categories": "3c4fe4889669f3cc0643d100ad2fd27086aa37c7f34781beaf741bae8686dd0d",
   "history": "5cd8c1332226ea9c179883d2285c0d8b8cc593ae38f2645197364a7ddd9c83c1",
   "history-carry": "334e851944e92383ab3071e52b3012040c7023d0fe236395953169ebee8f0459",
-  "proof": "b99b9131cb26d95d593b1a1d535208ac424448cdcd1d945b08053bec8aa1629a",
-  "results": "10f1c022f79f24f82df2975e60c3759d14aa6987894e7cbc3e61f28f1f5fb8e2"
+  "proof": "362ff0ae7300acc694262d68de0d7b7184dae825cf4952132873fc1b3fa6d6de",
+  "results": "95251a6582156ce62f01ffd8810eda48c034f52420ba17ea6d378952f03b88fd"
  },
  "method": {
   "decision_limit_s": 10,
@@ -18,7 +18,73 @@
   "rule": "latency_s > 10.000 s -> failed",
   "treatment": "share"
  },
- "new_rows": {},
+ "new_rows": {
+  "scaledown-classify-1": {
+   "axes": {
+    "calibration": 82.82809086203193,
+    "cost": 50.78732378203712,
+    "intelligence": 21.787775467356628,
+    "speed": 83.72843286582474
+   },
+   "composite_ci95": {
+    "A": [
+     4.672849375867131,
+     11.765050469662265
+    ],
+    "B": [
+     3.7201929696864933,
+     9.959843262217815
+    ],
+    "C": [
+     3.245034288796619,
+     8.170173937265462
+    ]
+   },
+   "decision_limit": {
+    "limit_s": 10.0,
+    "n_over_limit": 14,
+    "n_over_limit_answered_ok": 10,
+    "rule": "latency_s > limit -> failed",
+    "speed_basis": "all decisions given (lane items in the raw), measured latency_s",
+    "speed_n": 1500,
+    "treatment": "share"
+   },
+   "explicit_ref": {
+    "in": 0.05,
+    "key": "scaledown:classify-1 (vendor list price)",
+    "out": 0.0
+   },
+   "raw_sha256": "900652c68a38db3d51e00567b2dd45b2cdc771646a611058a1701441e3d10fbb",
+   "scored_input_sha256": "31efd92d925131d31de1656d55cadaefcf858ee776100eb50e35932ac5b354e9",
+   "source_sha256": {
+    "entry_path": "/home/flori/jobs/scaledown-eval-neal-20261023/official/ENTRIES-SD.json",
+    "entry_sha256": "33a7a1fb8b929005682820b82f149b2e1f7bde6115b926381632a8d285c61045",
+    "explicit_ref": {
+     "in": 0.05,
+     "key": "scaledown:classify-1 (vendor list price)",
+     "out": 0.0
+    },
+    "frozen": {
+     "path": "/home/flori/jobs/scaledown-eval-neal-20261023/official/field-sd/out-frozen/jevbench-v1.6.0-results.json",
+     "sha256": "c141a32401e776512dfb53080ffd302227db9e98453ec41f810359c1be696673"
+    },
+    "handoff_sha256": "1f0971a5bf62bcd5b1d9e4686ce2293b0d51b15443481785520cbbb012651a95",
+    "raw_hash_source": "in-place verification; raw not copied",
+    "raw_sha256": "900652c68a38db3d51e00567b2dd45b2cdc771646a611058a1701441e3d10fbb",
+    "raw_verified_in_place": true,
+    "registry_sha256": "55ffeeae1b90ebed2fe3fe119f47a1244387e93cc967d679c27f7ffb6841f5c9",
+    "v17-off": {
+     "path": "/home/flori/jobs/scaledown-eval-neal-20261023/official/field-sd/out-v17-off/jevbench-v1.6.0-results.json",
+     "sha256": "932267feb09497f81a613815356d226e1e53a26d6e27aaab07ca9b6eeb7db7f8"
+    },
+    "v17-share": {
+     "path": "/home/flori/jobs/scaledown-eval-neal-20261023/official/field-sd/out-v17-share/jevbench-v1.6.0-results.json",
+     "sha256": "31efd92d925131d31de1656d55cadaefcf858ee776100eb50e35932ac5b354e9"
+    }
+   },
+   "treatment": "ranked"
+  }
+ },
  "predecessor": {
   "publication_sha256": "6b5eb8810895792fd3b468c58be9fc7f9a4ef412c0f330d6bdc32487fd249e73",
   "revision": "v1.7.2"
@@ -31,11 +97,17 @@
     "handoff": "lead run 185 HANDOFF-CHONE4B-R185.md",
     "key": "chon-1.0-e4b",
     "relay": "regular queue"
+   },
+   {
+    "admission": "custody #25026/#25102",
+    "handoff": "board #25894 (HANDOFF-SD.md)",
+    "key": "scaledown-classify-1",
+    "relay": "regular queue"
    }
   ],
   "button_tap": false,
   "fairness_check": {
-   "path": "/home/flori/wt/jevbench-v173-r185-build/r185/v173/.helper-check-hgoff14u/synthetic-fairness-only.json",
+   "path": "/home/flori/wt/jevbench-v173-r185-build/r185/v173/.helper-check-413wvkl0/synthetic-fairness-only.json",
    "sha256": "918df46ddcad0fb8cbec82758799cb192fe4ad8bb3c4dad37bf05f0d77d7962b",
    "verdict": "FAIR"
   },
@@ -51,7 +123,7 @@
   "top_five_effect": "changed",
   "top_five_preview": {
    "path": "r185/v173/receipts/topfive-diff.json",
-   "sha256": "31cf7775ed86bc6746922ee0a826231f038de22a8017c700dec0e1d90f149e93"
+   "sha256": "eb527eb24e13e73268b0c49b1b1547fd1af4a954edbf9d7e489af6b6ffdcdd86"
   }
  },
  "publication_review": {
@@ -59,7 +131,7 @@
   "receipt_sha256": null,
   "verdict": "PENDING"
  },
- "publication_sha256": "540e75fba7683b0854c737b648ce534551dbdad3bd8770e2917720356d8044d7",
+ "publication_sha256": "bbaf27f69d97d768a581417e221d2b69e16893ef48d5736d4baac5e9b69e406b",
  "release": "v1.7.3",
  "remeasured_rows": {
   "chon-1.0-e4b": {

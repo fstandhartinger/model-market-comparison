@@ -1,6 +1,6 @@
 # Changed top-five lists: v1.7.2 → v1.7.3
 
-Exactly 28 of 252 variant lists change (10 frozen, 10 rule-off, 8 share). The 40-list site comparison independently changes only open/composites/A, overlapping the share open Composite A comparison below.
+Exactly 28 of 252 variant lists change: 10 frozen, 10 off, 8 share. The 40-list exact site comparison changes only open/composites/A, which overlaps the share variant. ScaleDown enters none of the 292 checked lists. All API top-fives stay unchanged.
 
 | Variant | Scope | Caps | Metric | Chon rank | Displaced |
 | --- | --- | --- | --- | ---: | --- |
@@ -32,5 +32,3 @@ Exactly 28 of 252 variant lists change (10 frozen, 10 rule-off, 8 share). The 40
 | share | open | none | A | 5 | decisio v0.8.0 on gemma-4-31B-it (frozen, FP8 on load, one prefill per state, self-hosted) |
 | share | open | none | view/Balanced 33:33:33 | 4 | decider-12b v2 (Mapika) |
 | share | open | none | view/Emphasis on Cost 20:20:60 | 1 | Xevn-4B |
-
-Every API list and the Capability, Intelligence, Calibration, Speed-axis, Cost-axis and Composite B/C top fives remain unchanged. Full before/after orders and score precision are in receipts/topfive-extended.json.

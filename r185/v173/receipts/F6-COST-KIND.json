@@ -1,0 +1,14 @@
+{
+ "decision": "relabel listed -> estimate",
+ "numeric_value_and_basis_unchanged": true,
+ "scoring_unchanged": true,
+ "view_filter_comparisons": 12,
+ "equal": true,
+ "source_review": [
+  "lib/jevbench-jev-class.mjs: numeric USD and latency caps only",
+  "lib/jevbench-scope.mjs: endpoint/metadata classify API, not cost kind",
+  "components/JevCapabilityRanking.tsx: estimate label marker only",
+  "components/JevCapabilityChart.tsx: estimate label only",
+  "components/JevBenchV15Preview.tsx: label and explanatory estimate count only"
+ ]
+}

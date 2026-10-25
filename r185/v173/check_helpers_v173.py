@@ -23,7 +23,7 @@ with tempfile.TemporaryDirectory(prefix='.helper-check-',dir=J) as t:
  flip=('flip_verdict_v173.py',[receipt,'--dry-run']);freeze=('freeze_v173.py',['--wt',T,'--output',output])
  for script,args in [flip,freeze]:
   r=run(script,args,False,'fairness PENDING');(J/'receipts'/('flip-pending-refused.log' if script.startswith('flip') else 'freeze-pending-refused.log')).write_text(r.stderr)
- checks.append('real PENDING fairness refused by both dry-run helpers; manifest unchanged')
+ checks.append('injected PENDING fairness refused by both dry-run helpers; manifest unchanged')
  fair=T/'synthetic-fairness-only.json';put(fair,{'fixture_only':True,'verdict':'FAIR','publication_authority':False})
  original_proof=proof.read_bytes()
  def rebind():

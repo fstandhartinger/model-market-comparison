@@ -233,6 +233,7 @@
   "reflex-4b": "selfhosted",
   "rene-1-31b-fp8": "selfhosted",
   "sage-1.3.0": "api",
+  "scaledown-classify-1": "api",
   "seb-9b": "selfhosted",
   "semif-qwen3.5-4b": "selfhosted",
   "simplejev-qwen3.5-0.8b": "selfhosted",
@@ -803,7 +804,7 @@
  "metric": "O1S chance-corrected competence: equal mean across the request types present, clipped to 0–100. Zero means the equal-weight mean across present request types was at or below baseline; negative means are clipped. It does not mean every type scored zero. Choice uses a random-option baseline; Noul uses a fixed 50% accuracy baseline (abstentions count as wrong); Score uses the midpoint-guess error (random-guess fallback when every gold is at the midpoint). Compare models within a category; row pools and supported types can differ.",
  "min_n": 15,
  "provisional": false,
- "results_sha256": "10f1c022f79f24f82df2975e60c3759d14aa6987894e7cbc3e61f28f1f5fb8e2",
+ "results_sha256": "95251a6582156ce62f01ffd8810eda48c034f52420ba17ea6d378952f03b88fd",
  "results_sha256_note": "Bound to v1.7.3 results; 288 carried cells retained, GPU replacement cells computed with the same frozen tools.",
  "revision": "v1.7.3",
  "rule_note": "Cells of re-scored rows are computed with the frozen category tools under the 10 s rule (a decision over 10 s counts as a wrong answer). Rows without cells are not yet re-scored under the rule or are re-measure pending; no v1.6 cell is shown for a v1.7 row.",
@@ -811,7 +812,7 @@
   "Official O1S; recorded failures count where supported; no missing response is imputed; stable identity dedupe parent first.",
   "S-based category cells pool recorded supported responses from S+P and the answered L1/L2/L3 supplements. API overlay category cells keep their separately recorded A4/A5+P union. Headline and per-type/tier scores are unchanged."
  ],
- "source_results_sha256": "af7ba61b374b205300be5fd0064a14e69bc40e2829f1ed484da06cfff301986f",
+ "source_results_sha256": "bc9a05ac15b75ded4635f10e4224d31e3ddb91d3c4d1a0ffb100c621bbb68c97",
  "source_sha256": "aab1cba1fa4221f8cb026baba46e831b9c5c17c5869bf1a3b2995dfc399e2bce",
  "supplement": {
   "drawn": "2026-10-06",
@@ -96752,6 +96753,216 @@
     },
     "search_retrieval": {
      "competence": 97.5,
+     "n": 24
+    }
+   }
+  },
+  "scaledown-classify-1": {
+   "families": {
+    "calibration": {
+     "competence": 0.0,
+     "n": 22
+    },
+    "calibration_gen": {
+     "competence": 0.0,
+     "n": 101
+    },
+    "composite_gen": {
+     "competence": 0.0,
+     "n": 101
+    },
+    "fairness": {
+     "competence": 2.55,
+     "n": 48
+    },
+    "jaggedness": {
+     "competence": 0.0,
+     "n": 180
+    },
+    "llm_router": {
+     "competence": 16.58,
+     "n": 313
+    },
+    "long_state": {
+     "competence": 0.0,
+     "n": 15
+    },
+    "ml_usecase": {
+     "competence": 0.0,
+     "n": 27
+    },
+    "multilingual": {
+     "competence": 0.0,
+     "n": 275
+    },
+    "negation_pair_gen": {
+     "competence": 0.0,
+     "n": 86
+    },
+    "option_order": {
+     "competence": 57.39,
+     "n": 48
+    },
+    "perturb_pair": {
+     "competence": 0.0,
+     "n": 64
+    },
+    "usecase": {
+     "competence": 0.0,
+     "n": 220
+    }
+   },
+   "languages": {
+    "ar": {
+     "competence": 0.0,
+     "n": 16
+    },
+    "de": {
+     "competence": 9.43,
+     "n": 32
+    },
+    "el": {
+     "competence": 5.39,
+     "n": 15
+    },
+    "en": {
+     "competence": 0.0,
+     "n": 1151
+    },
+    "es": {
+     "competence": 8.1,
+     "n": 31
+    },
+    "hi": {
+     "competence": 0.0,
+     "n": 21
+    },
+    "it": {
+     "competence": 5.86,
+     "n": 15
+    },
+    "ja": {
+     "competence": 0.0,
+     "n": 25
+    },
+    "pl": {
+     "competence": 5.65,
+     "n": 39
+    },
+    "pt": {
+     "competence": 15.76,
+     "n": 28
+    }
+   },
+   "topics": {
+    "coding": {
+     "competence": 24.14,
+     "n": 198
+    },
+    "everyday_language": {
+     "competence": 0.0,
+     "n": 66
+    },
+    "finance_commerce": {
+     "competence": 1.79,
+     "n": 76
+    },
+    "law_policy": {
+     "competence": 0.0,
+     "n": 718
+    },
+    "math": {
+     "competence": 0.0,
+     "n": 289
+    },
+    "safety_security": {
+     "competence": 0.0,
+     "n": 48
+    },
+    "support_ops": {
+     "competence": 0.0,
+     "n": 105
+    }
+   },
+   "usecases": {
+    "advertising": {
+     "competence": 0.0,
+     "n": 22
+    },
+    "code_linting": {
+     "competence": 0.0,
+     "n": 24
+    },
+    "customer_support": {
+     "competence": 0.0,
+     "n": 157
+    },
+    "demand_forecasting": {
+     "competence": 0.0,
+     "n": 17
+    },
+    "ecommerce_marketplaces": {
+     "competence": 0.0,
+     "n": 55
+    },
+    "feature_extraction": {
+     "competence": 0.0,
+     "n": 19
+    },
+    "financial_crime": {
+     "competence": 0.0,
+     "n": 55
+    },
+    "gaming": {
+     "competence": 0.0,
+     "n": 23
+    },
+    "insurance_claims": {
+     "competence": 0.0,
+     "n": 27
+    },
+    "knowledge_graphs": {
+     "competence": 0.0,
+     "n": 22
+    },
+    "lead_generation": {
+     "competence": 0.0,
+     "n": 30
+    },
+    "legal_compliance": {
+     "competence": 0.0,
+     "n": 327
+    },
+    "llm_guardrails": {
+     "competence": 0.0,
+     "n": 27
+    },
+    "model_routing": {
+     "competence": 13.41,
+     "n": 325
+    },
+    "moderation_trust_safety": {
+     "competence": 1.61,
+     "n": 32
+    },
+    "other": {
+     "competence": 0.0,
+     "n": 216
+    },
+    "recruiting": {
+     "competence": 0.0,
+     "n": 19
+    },
+    "risk_assessment": {
+     "competence": 0.0,
+     "n": 56
+    },
+    "scientific_discovery": {
+     "competence": 0.0,
+     "n": 23
+    },
+    "search_retrieval": {
+     "competence": 20.35,
      "n": 24
     }
    }

@@ -12,7 +12,7 @@ def check_approval(W,proof):
  diff=json.loads(preview.read_text());assert diff['changed'] is True and not diff.get('bootstrap',False),'fresh complete top-five preview required'
  fair=a['fairness_check']
  assert fair['verdict']=='FAIR','REFUSED: fairness PENDING or non-FAIR; non-PENDING FAIR required'
- fp=pathlib.Path(fair['path']);fp=fp if fp.is_absolute() else W/fp
+ fp=pathlib.Path(fair['path']);fp=fp if fp.is_absolute() else pathlib.Path('/home/flori/jobs/jevbench-add-requests-20260919')/fp if fp.parts[0]=='workers' else W/fp
  assert fp.is_file() and sha(fp)==fair.get('sha256'),'fairness receipt missing or changed'
  assert json.loads(fp.read_text()),'fairness receipt must be nonempty JSON'
  return a

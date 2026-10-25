@@ -9,6 +9,9 @@ export const V173_MANIFEST = `${V173_ROOT}/jevbench-v1.7.3-publication.json`;
 export const V173_FILE_KEYS = ['results','categories','carry','proof','history','history-carry'];
 export const V173_EXPECTED_HASHES = /*HASHES*/;
 export const V173_REMEASURED_ROWS = /*ROWS*/;
+export const V173_NEW_ROWS = /*NEWROWS*/;
+export const V173_NEW_KEYS = Object.keys(V173_NEW_ROWS).sort();
+export const V173_CHANGED_KEYS = [...Object.keys(V173_REMEASURED_ROWS), ...V173_NEW_KEYS];
 export const V173_REMEASURED_KEYS = Object.keys(V173_REMEASURED_ROWS).sort();
 const hash = b => createHash('sha256').update(b).digest('hex');
 const fail = m => { throw new Error(`JevBench v1.7.3: ${m}`); };
@@ -39,7 +42,7 @@ export function validateJevbenchV173Bundle({manifest,artifact,categories,carry,p
  same(artifact.G_med,previous.artifact.G_med,'frozen median');
  const rows=artifact.systems,by=new Map(rows.map(s=>[s.key,s]));
  if (by.size !== rows.length) fail('duplicate key');
- same([...by.keys()].sort(),previous.artifact.systems.map(s=>s.key).sort(),'exact roster');
+ same([...by.keys()].sort(),[...previous.artifact.systems.map(s=>s.key),...V173_NEW_KEYS].sort(),'exact roster');
  if (artifact.roster_count!==rows.length || artifact.n_ranked!==rows.filter(s=>s.ranked).length) fail('counts');
  for (const p of previous.artifact.systems) {
   if(V173_REMEASURED_KEYS.includes(p.key))continue;
@@ -57,7 +60,7 @@ export function validateJevbenchV173Bundle({manifest,artifact,categories,carry,p
   if (/\/home\/|workers\/|#\d{4,}|\bPREREG\b|\br181\b|\br168\b/.test(JSON.stringify(s))) fail('internal row text '+k);
   const old=previous.artifact.systems.find(r=>r.key===k);
   same(s.previous, {...Object.fromEntries(Object.entries(old).filter(([f])=>f!=='previous')), board_release:'v1.7.2'},'CPU history '+k);
-  same(s.cost,old.cost,'unchanged replacement cost '+k);
+  same(s.cost,{...old.cost,kind:'estimate'},'replacement cost value/basis unchanged; estimate label '+k);
   same(s.model_pin,old.model_pin,'same weights '+k);
   same(s.remeasure.replaces,{board_release:'v1.7.2',endpoint_kind:'cpu',in_full:'scores and times'},'v1.7.0 replacement mapping '+k);
   if(s.remeasure.kind!=='re-measure on the same items')fail('replacement kind '+k);
@@ -68,18 +71,30 @@ export function validateJevbenchV173Bundle({manifest,artifact,categories,carry,p
   for (const f of ['axes','composite_ci95','decision_limit','model_pin']) same(p[f],s[f],'proof '+k+' '+f);
   same(p.treatment,s.listing,'proof listing '+k);
  }
+ for (const k of V173_NEW_KEYS) {
+  const s=by.get(k);same(s,V173_NEW_ROWS[k],'new hosted row '+k);
+  if(s.method!=='v1.7'||s.new_in!=='v1.7.3'||s.endpoint_kind!=='api'||s.paid_fast_lane!==false||s.base_model!==null||s.draw.id!=='v1.6-regular-20261012')fail('hosted identity '+k);
+  if(s.status.rows!==1500||s.status.answered_ok!==1496||s.decision_limit.n_over_limit!==14||s.decision_limit.treatment!=='share')fail('hosted coverage '+k);
+  if(s.cost.kind!=='mixed'||s.cost.usage_estimated_rows!==4)fail('hosted fallback cost '+k);
+  same(proof.new_rows[k].axes,s.axes,'new row proof axes '+k);
+  same(proof.new_rows[k].composite_ci95,s.composite_ci95,'new row proof CI '+k);
+  same(proof.new_rows[k].decision_limit,s.decision_limit,'new row proof decision limit '+k);
+  same(proof.new_rows[k].explicit_ref,{key:'scaledown:classify-1 (vendor list price)',in:0.05,out:0},'vendor price '+k);
+  if(!hex(proof.new_rows[k].raw_sha256)||!hex(proof.new_rows[k].scored_input_sha256))fail('hosted source pins '+k);
+  if(/\/home\/|workers\/|#\d{4,}|Florian/.test(JSON.stringify(s)))fail('internal hosted text '+k);
+ }
  for (const m of ['A','B','C','capability']) {
   const ord=artifact.board[m].order;
   same([...ord].sort(),rows.filter(s=>s.ranked).map(s=>s.key).sort(),'order membership '+m);
   const val=k=>m==='capability'?by.get(k).capability:by.get(k).scores[m];
   ord.forEach((k,i)=>{if(by.get(k).ranks[m]!==i+1||(m==='A'&&by.get(k).rank!==i+1))fail('rank '+k);if(i&&val(ord[i-1])<val(k))fail('sort '+m)});
-  same(ord.filter(k=>!V173_REMEASURED_KEYS.includes(k)),(m==='capability'?previous.artifact.systems.filter(s=>s.ranked).sort((a,b)=>a.ranks.capability-b.ranks.capability).map(s=>s.key):previous.artifact.board[m].order),'carried tie order '+m);
+  same(ord.filter(k=>!V173_CHANGED_KEYS.includes(k)),(m==='capability'?previous.artifact.systems.filter(s=>s.ranked).sort((a,b)=>a.ranks.capability-b.ranks.capability).map(s=>s.key):previous.artifact.board[m].order),'carried tie order '+m);
  }
  same(carry,previous.carry,'dated carry');
- same(Object.keys(categories.systems).sort(),[...new Set([...Object.keys(previous.categories.systems),...V173_REMEASURED_KEYS])].sort(),'category roster');
+ same(Object.keys(categories.systems).sort(),[...new Set([...Object.keys(previous.categories.systems),...V173_CHANGED_KEYS])].sort(),'category roster');
  if (categories.revision!=='v1.7.3'||categories.results_sha256!==manifest.files.results.sha256)fail('category binding');
  // Mixed draws retain their own cell counts, as in the v1.7.2 validator.
- for (const k of V173_REMEASURED_KEYS) for (const dim of ['families','languages','topics','usecases']) {
+ for (const k of V173_CHANGED_KEYS) for (const dim of ['families','languages','topics','usecases']) {
   const cells=categories.systems[k]?.[dim];if(!cells||!Object.keys(cells).length)fail('missing cells '+k+' '+dim);
   for(const c of Object.values(cells))if(!Number.isInteger(c.n)||c.n<1||c.n>1500||!Number.isFinite(c.competence))fail('cell '+k+' '+dim);
  }
@@ -90,7 +105,7 @@ export function validateJevbenchV173Bundle({manifest,artifact,categories,carry,p
  same(proof.pricing_module_sha256,previous.proof.pricing_module_sha256,'pricing pin');
  same(proof.scorers,previous.proof.scorers,'scorer pins');
  const a=proof.publication_approval;
- if(a?.fresh_baseline!=='v1.7.2'||a.top_five_effect!=='changed'||a.status!=='GO (fair top-five change, Florian rule 25 Oct 2026)'||a.button_tap!==false||a.go?.channel!=='laptop chat'||a.go?.date!=='2026-10-25'||a.go?.quote!=='3 ja'||a.go?.recorded_in!=='DECISIONS.md 2026-10-25 setup-review-open-questions-answered'||a.top_five_preview?.sha256!==proof.topfive_diff_sha256||!a.top_five_preview?.path||V173_REMEASURED_KEYS.some(k=>!a.asks?.some(x=>x.key===k&&x.admission&&x.handoff&&x.relay)))fail('fair top-five GO proof');
+ if(a?.fresh_baseline!=='v1.7.2'||a.top_five_effect!=='changed'||a.status!=='GO (fair top-five change, Florian rule 25 Oct 2026)'||a.button_tap!==false||a.go?.channel!=='laptop chat'||a.go?.date!=='2026-10-25'||a.go?.quote!=='3 ja'||a.go?.recorded_in!=='DECISIONS.md 2026-10-25 setup-review-open-questions-answered'||a.top_five_preview?.sha256!==proof.topfive_diff_sha256||!a.top_five_preview?.path||V173_CHANGED_KEYS.some(k=>!a.asks?.some(x=>x.key===k&&x.admission&&x.handoff&&x.relay)))fail('fair top-five GO proof');
  const fair=a.fairness_check;
  if(!fair?.path||!['PENDING','FAIR'].includes(fair.verdict)||(fair.verdict==='FAIR'&&!hex(fair.sha256)))fail('fairness receipt');
  if(!candidate && fair.verdict!=='FAIR')fail('fairness PENDING: non-PENDING FAIR verdict required');
@@ -119,7 +134,7 @@ export async function hasPublishedJevbenchV173Release(root=process.cwd(),log=con
 export function v173BoardInput(release){return {artifact:release.artifact,categories:release.categories};}
 export function withV173Addendum(chain,release) {
  const bounds={...apiFullAddendumCategoryBounds(chain.categories)};
- for(const k of V173_REMEASURED_KEYS) {
+ for(const k of V173_CHANGED_KEYS) {
   const row=release.artifact.systems.find(s=>s.key===k);
   const counts=new Map();
   for(const s of chain.published.systems)if(s.draw?.id===row.draw.id && bounds[s.key]){const b=JSON.stringify(bounds[s.key]);counts.set(b,(counts.get(b)??0)+1);}

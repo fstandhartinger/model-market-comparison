@@ -677,7 +677,7 @@ test('CR-205: v1.7.3 GPU replacement retains the shared board, method notes and 
   assert.match(route, /previousKeys=/);
   assert.match(route, /categories=\{board.categories\}/);
   assert.match(route, /All 288 other rows retain their scores and confidence intervals/);
-  assert.match(route, /Chon-1.0-E4B uses the same system and configuration on GPU, replacing its CPU measurement/);
+  assert.match(route, /Chon-1.0-E4B GPU scores and times replace its CPU measurement in full; classify-1 \(ScaleDown\) joins as a hosted API row/);
 });
 
 test('CR-205: every versioned JevBench route is covered by this test', async () => {
