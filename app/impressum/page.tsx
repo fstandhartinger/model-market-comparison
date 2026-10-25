@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { PageJsonLd } from "../../components/PageJsonLd";
 
-export const metadata: Metadata = { title: "Impressum", description: "Impressum — legal notice and contact for Benchmark Heaven.", alternates: { canonical: "/impressum" } };
+export const metadata: Metadata = { title: "Impressum", description: "Anbieterangaben für Benchmark Heaven: Unternehmenssitz, Kontakt, Handelsregister, Umsatzsteuer-ID, redaktionelle Verantwortung und Verbraucherstreitbeilegung.", alternates: { canonical: "/impressum" } };
 
 // CR-5.5: the operator is the same legal entity that publishes Florian's other ventures (e.g. postial.co/impressum).
 export default function ImpressumPage() {
