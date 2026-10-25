@@ -1,0 +1,64 @@
+{
+ "actual_fairness_approval": "PENDING",
+ "actual_publication_review": "PENDING",
+ "base": "460f9da9efbbe4370b7876fdd0b5b50a43c8e329",
+ "cells": "frozen category/topic/decisive tools; off/share captured",
+ "double_rebuild": true,
+ "full": {
+  "fail": 0,
+  "pass": 3748,
+  "skipped": 4,
+  "tests": 3752
+ },
+ "helpers": {
+  "checks": [
+   "real PENDING fairness refused by both dry-run helpers; manifest unchanged",
+   "synthetic FAIR/hash-bound fixture: dry-run flip and full freeze succeed; no manifest or seal write",
+   "tampered fairness receipt refused",
+   "conditional release review refused",
+   "unbound predecessor refused by both helpers"
+  ],
+  "status": "PASS"
+ },
+ "preview_browser": "PASS",
+ "production_build": "PASS",
+ "raw_verified_in_place": true,
+ "receipts_sha256": {
+  "build.log": "8c0e65617b5439c1121a2d804d9fc20b6079a8f7073e7ba4cea6f74a73eb7865",
+  "final-sanity.log": "962342c468e18b3f3810f5941175be9e83bfbc4850a6537b70a5d24839e490fd",
+  "fulltest.log": "f6b8ce030269c4706a33bad1ff8c4d71917c230b5fbc82355feee100fa57f437",
+  "helpers.log": "3ef1050d3eb6e7cc67c83f6dd865d33d7ba8e0f01f5b7e7d4f214b1e9b93610f",
+  "preview-browser.json": "b49b6bf49c3c2a0f15ee9a3d332acbc67be3cf6e92e809f8b591e49ed3013521",
+  "release-tests.log": "17253195fb73b760392531a81b48f594c2a19518cb3dce759b66118951383634",
+  "repro.log": "b6993c72981c750eed83f97641b78a43b78790e47908771f37e53aabc485e129",
+  "synthetic-tests.log": "b4e4afb0cab33ae5f54eb6bf2d8664b5997009fea367ab175b869e3f507b8292",
+  "tsc.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+ },
+ "repro_files": 28,
+ "row_validator_and_carry": "288 carried rows exact except rank/ranks; same 289-row roster",
+ "status": "PASS",
+ "synthetic": {
+  "fail": 0,
+  "pass": 65,
+  "skipped": 3,
+  "tests": 68
+ },
+ "targeted": {
+  "fail": 0,
+  "pass": 113,
+  "skipped": 3,
+  "tests": 116
+ },
+ "topfive": {
+  "frozen": 10,
+  "off": 10,
+  "share": 8,
+  "site_changes": [
+   "open/composites/A"
+  ],
+  "site_lists": 40,
+  "variant_changes": 28,
+  "variant_lists": 252
+ },
+ "typescript": "PASS"
+}

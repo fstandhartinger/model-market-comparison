@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "/home/flori/wt/jevbench-v173-r185-build/r185/v173/flip_verdict_v173.py", line 36, in <module>
+    check_approval(W,proof)
+  File "/home/flori/wt/jevbench-v173-r185-build/r185/v173/approval_v173.py", line 14, in check_approval
+    assert fair['verdict']=='FAIR','REFUSED: fairness PENDING or non-FAIR; non-PENDING FAIR required'
+AssertionError: REFUSED: fairness PENDING or non-FAIR; non-PENDING FAIR required

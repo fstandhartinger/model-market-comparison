@@ -1,0 +1,1 @@
+Open index.html locally. Self-contained full before/after rankings for all 252 variant lists, changed-list filter, model search, and entrant/displaced-row radar. card.png uses the share/open/official Emphasis on Cost list. Both artifacts are aggregate-only and grant no publication authority.
