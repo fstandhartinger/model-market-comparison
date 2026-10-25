@@ -261,10 +261,7 @@ export default async function JevSystemPage({ params }: { params: Promise<{ syst
   const { system } = await params;
   const data = await readJevbenchSeoData();
   const pair = data.comparisons.find((p) => p.slug === system);
-  if (pair) {
-    const label = pair.key.endsWith('-thinking') ? `${pair.label} (thinking)` : pair.label;
-    return <JevComparisonPage rivalKey={pair.key} label={label} path={`/jev-models/${pair.slug}`} />;
-  }
+  if (pair) return <JevComparisonPage rivalKey={pair.key} label={pair.label} path={`/jev-models/${pair.slug}`} />;
   const key = jevSystemKeyFromSlug(decodeURIComponent(system));
   const seoRow = data.systems.find((r) => r.key === key) ?? data.historical.find((r) => r.key === key);
   const a4Page = (await readJevbenchA4ModelPages() as Map<string, A4Page>).get(key);

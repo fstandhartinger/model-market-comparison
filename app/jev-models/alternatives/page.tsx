@@ -10,8 +10,8 @@ const PATH = '/jev-models/alternatives';
 const DE_PATH = '/de/jev-models/alternativen';
 export async function generateMetadata(): Promise<Metadata> {
   const data = await readJevbenchSeoData();
-  return jevIntentMetadata({path: PATH, title: `Jev-compatible model alternatives (${data.month})`, documentTitle: `Jev-compatible alternatives for decision models (${data.month})`,
-    description: 'Compare Jev-compatible decision models through published JevBench measures for capability, calibration, speed and cost. Review sources, licences and methodology.', keywords: ['jev alternatives', 'best Jev alternative', 'JevBench'],
+  return jevIntentMetadata({path: PATH, title: `Jev-compatible model alternatives (${data.month})`, documentTitle: `Jev-compatible alternatives (${data.month})`,
+    description: `${data.month}: compare Jev-compatible decision models on JevBench capability, calibration, speed and cost; review source links and licences.`, keywords: ['jev alternatives', 'best Jev alternative', 'JevBench'],
     languages: {en: PATH, de: DE_PATH, 'x-default': PATH}});
 }
 export default async function JevAlternativesPage() {
