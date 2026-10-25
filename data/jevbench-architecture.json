@@ -6918,6 +6918,51 @@
           }
         ],
         "note": "Self-hosted measurement; see the row disclosure for the pinned checkpoint and serving implementation."
+      },
+      "amazon-strands-decider-26b-a4b": {
+        "arch": "open-llm-decoder",
+        "badges": {
+          "params": "26B-A4B",
+          "derivation": "adapter",
+          "quant": "bf16"
+        },
+        "evidence": [
+          {
+            "url": "https://huggingface.co/amazon/strands-decider-26B-A4B-gemma4-v1-2610/blob/f08dc85955d008dc247fae5b4df53bc409704f8a/README.md",
+            "kind": "model-card",
+            "fact": "google/gemma-4-26B-A4B-it derivative. Measured with the author serving implementation; BF16."
+          }
+        ]
+      },
+      "turion-jev-31b": {
+        "arch": "open-llm-decoder",
+        "badges": {
+          "params": "31B",
+          "derivation": "fine-tune",
+          "quant": "fp8"
+        },
+        "evidence": [
+          {
+            "url": "https://huggingface.co/turion-ai/turion-jev-31b/blob/9edd5783ed1735cbf9e3e8ae7a546126ae05b0ce/README.md",
+            "kind": "model-card",
+            "fact": "google/gemma-4-31B-it derivative. Measured with the author serving implementation; FP8."
+          }
+        ]
+      },
+      "chon-1.0-12b-fast": {
+        "arch": "open-llm-decoder",
+        "badges": {
+          "params": "12B",
+          "derivation": "adapter",
+          "quant": "bf16"
+        },
+        "evidence": [
+          {
+            "url": "https://huggingface.co/ninhnv/chon-1.0-12b-fast/blob/92c960ef1245f604642538c562ed9dec89bab48f/README.md",
+            "kind": "model-card",
+            "fact": "google/gemma-4-12B-it derivative. Measured with the author serving implementation; BF16."
+          }
+        ]
       }
     },
     "imagejevbench": {
