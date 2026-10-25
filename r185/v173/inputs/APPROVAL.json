@@ -1,0 +1,37 @@
+{
+ "asks": [
+  {
+   "admission": "custody #26284 item 2; deputy #26197/#26198",
+   "handoff": "lead run 185 HANDOFF-CHONE4B-R185.md",
+   "key": "chon-1.0-e4b",
+   "relay": "regular queue"
+  },
+  {
+   "admission": "custody #25026/#25102",
+   "handoff": "board #25894 (HANDOFF-SD.md)",
+   "key": "scaledown-classify-1",
+   "relay": "regular queue"
+  }
+ ],
+ "button_tap": false,
+ "fairness_check": {
+  "engine": "claude-opus-5-5 (Claude Code worker, read-only)",
+  "path": "workers/r185-e4b-prescore/RESULT.json",
+  "sha256": "846c0dca823e93b085c58fac600b0ebc862155e4288d0b7f41e67fc846784122",
+  "verdict": "FAIR"
+ },
+ "fresh_baseline": "v1.7.2",
+ "go": {
+  "channel": "laptop chat",
+  "date": "2026-10-25",
+  "in_answer_to": "fair JevBench top-5 changes publish without asking (audit-pattern check; preview card for info only)",
+  "quote": "3 ja",
+  "recorded_in": "DECISIONS.md 2026-10-25 setup-review-open-questions-answered"
+ },
+ "status": "GO (fair top-five change, Florian rule 25 Oct 2026)",
+ "top_five_effect": "changed",
+ "top_five_preview": {
+  "path": "r185/v173/receipts/topfive-diff.json",
+  "sha256": "eb527eb24e13e73268b0c49b1b1547fd1af4a954edbf9d7e489af6b6ffdcdd86"
+ }
+}

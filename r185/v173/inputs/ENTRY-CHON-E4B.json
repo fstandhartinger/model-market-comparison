@@ -1,0 +1,50 @@
+{
+ "chon-1.0-e4b": {
+  "entry": {
+   "author": "Ninh (ninhnv / xoai)",
+   "base_model": "google/gemma-4-E4B-it",
+   "cost_basis": "Exact listed rate of the base model google/gemma-4-E4B-it (DeepInfra, frozen 25 Sep 2026 catalog snapshot, USD 0.02/M input, 0.10/M output); this line is added to the frozen pricing module at its next re-freeze. No output tokens under the author's --no-think mode. COMMON COST BASIS: the published cost uses the same remaining 1,485 items as every other row: 701,161 input tokens, USD 0.009443245791245792 per 1,000 decisions (0.146x cap). ALL-ITEMS DIAGNOSTIC: USD 0.010571213333333333 per 1,000 over all 1,500 items (0.164x cap). All items still count for Intelligence.",
+   "cost_kind": "estimate",
+   "disclosure": "Chon family, same author as the 12B sibling. This uses the author's documented --no-think mode; the author's GPU default thinks first on up to 45 % of questions, while that think pass never runs here. GPU re-time in the same --no-think serving configuration as the previous CPU measurement; the default think pass is not exercised. The yes/no commit rule [0.199, 0.801] moves P(yes) just outside the scorer's decisive band: the author's own mechanism. Fifteen states over 6,000 tokens are truncated keeping the start, answered rather than refused. The 231-public-item check was a sanity gate, not an independence check: the author used public items to choose serving settings. ATTEMPT HISTORY: an earlier think-on GPU attempt stopped at the public projection gate before any sealed byte and contributes no scored output. This no-think GPU run is the sole successful replacement measurement. All 1,500 items answered, zero output tokens and zero thinking items. GPU telemetry sampler produced an empty CSV; utilisation and clock samples are unavailable. Scores AND times both come from this GPU run, replacing the CPU measurement in full (scores and times). CPU and GPU probabilities differ on 1,049 of 1,500 items (9 top answers changed), attributed to device numerics; Intelligence and Calibration therefore moved slightly.",
+   "display": "Chon-1.0-E4B",
+   "endpoint_condition": "Evaluator-owned rented Verda RTX A6000 48 GB, FIN-01 (Finland, EU), non-preemptible, measured 25 Oct 2026. Disposable read-only container with no network; network cut proven inside the container before sealed input. Author's chon.serve 1.0.0 at revision 35fb1142d9f4e68850bcb12d2df8b0b3564e0fc0, --device cuda --dtype bfloat16 --no-think; Runtime pinned by the build: Python 3.11 container (author documents Python 3.12), PyTorch 2.9.1+cu128, transformers 5.19.0, peft 0.18.1 and huggingface-hub 1.33.0; no runtime version readback was collected. GPU sampler CSV was empty; host CPU model was not retained in the collected receipts. Published Speed applies the standard self-hosted x2 + 0.15 s adjustment (assumption, not measured). Rental about USD 0.14 is separate from the unchanged base-model inference cost estimate.",
+   "endpoint_kind": "gpu",
+   "lane": "selfhosted",
+   "licence": "Apache-2.0 (adapter card and base licence agree)",
+   "price_in_per_m": 0.02,
+   "price_kind": "estimate",
+   "price_out_per_m": 0.1,
+   "ranked": true,
+   "remeasure": {
+    "draw": "v1.6-regular-20261012",
+    "new_raw_sha256": "a48a935bd4857c5790239cfc39c28f4fd75c52a52051deb3f01d25ff2a5484b0",
+    "supersedes_base_row": {
+     "endpoint_kind": "cpu",
+     "key": "chon-1.0-e4b",
+     "raw_sha256": "e5258cc6e1d4cfa34fd4b2ee2ee1602941e3848b10012e7b3273db704f05d42f"
+    }
+   },
+   "repo": "https://huggingface.co/ninhnv/chon-1.0-e4b",
+   "revision": "b7b9ecdaa25d83696fb1c82c3b0acaff2923137a",
+   "support": {
+    "choice": "native",
+    "noul": "native",
+    "score": "native"
+   }
+  },
+  "expect": {
+   "failed": 0,
+   "input_tokens": 792841,
+   "ok": 1500,
+   "output_tokens": 0,
+   "status_counts": {
+    "200": 1500
+   }
+  },
+  "pricing_base": "google/gemma-4-E4B-it",
+  "raw": "/home/flori/jevbench-sealed/v1.6-run/v1.6-regular-20261012/runs-chon-e4b-r185/chon-1.0-e4b/chon-1.0-e4b-sealed.jsonl",
+  "tokens": "server",
+  "treatment": "auto",
+  "zero_output": true
+ }
+}

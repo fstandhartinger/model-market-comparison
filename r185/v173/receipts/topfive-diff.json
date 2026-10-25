@@ -1,0 +1,779 @@
+{
+ "base": "v1.7.2",
+ "candidate": "v1.7.3",
+ "changed": true,
+ "changed_labels": [
+  "open/composites/A"
+ ],
+ "changed_lists": 1,
+ "comparison_scope": "complete candidate assembly in isolated synthetic review tree; real manifest PENDING",
+ "lists": 40,
+ "rows": [
+  {
+   "after": [
+    "singularity-super-decider",
+    "kettei-fat",
+    "fastino-glide-api",
+    "torchcast-decision-4b-v1.3",
+    "liquid-d1-ultra"
+   ],
+   "before": [
+    "singularity-super-decider",
+    "kettei-fat",
+    "fastino-glide-api",
+    "torchcast-decision-4b-v1.3",
+    "liquid-d1-ultra"
+   ],
+   "changed": false,
+   "metric": "composites/A",
+   "view": "all"
+  },
+  {
+   "after": [
+    "singularity-super-decider",
+    "kettei-fat",
+    "fastino-glide-api",
+    "drex-max",
+    "subq-snap-1.1"
+   ],
+   "before": [
+    "singularity-super-decider",
+    "kettei-fat",
+    "fastino-glide-api",
+    "drex-max",
+    "subq-snap-1.1"
+   ],
+   "changed": false,
+   "metric": "composites/B",
+   "view": "all"
+  },
+  {
+   "after": [
+    "singularity-super-decider",
+    "kettei-fat",
+    "fastino-glide-api",
+    "torchcast-decision-4b-v1.3",
+    "liquid-d1-ultra"
+   ],
+   "before": [
+    "singularity-super-decider",
+    "kettei-fat",
+    "fastino-glide-api",
+    "torchcast-decision-4b-v1.3",
+    "liquid-d1-ultra"
+   ],
+   "changed": false,
+   "metric": "composites/C",
+   "view": "all"
+  },
+  {
+   "after": [
+    "kettei-fat",
+    "singularity-super-decider-thinking",
+    "singularity-super-decider",
+    "fastino-glide-api",
+    "h2o-lightning-31b"
+   ],
+   "before": [
+    "kettei-fat",
+    "singularity-super-decider-thinking",
+    "singularity-super-decider",
+    "fastino-glide-api",
+    "h2o-lightning-31b"
+   ],
+   "changed": false,
+   "metric": "capability/official_caps",
+   "view": "all"
+  },
+  {
+   "after": [
+    "gpt-6-luna",
+    "gpt-6-luna-low",
+    "gpt-5.6-luna",
+    "deepseek-flash",
+    "kettei-fat"
+   ],
+   "before": [
+    "gpt-6-luna",
+    "gpt-6-luna-low",
+    "gpt-5.6-luna",
+    "deepseek-flash",
+    "kettei-fat"
+   ],
+   "changed": false,
+   "metric": "capability/no_caps",
+   "view": "all"
+  },
+  {
+   "after": [
+    "kettei-fat",
+    "singularity-super-decider-thinking",
+    "mammoth-1",
+    "knowline-31b-gen1",
+    "fastino-glide-1.2-open"
+   ],
+   "before": [
+    "kettei-fat",
+    "singularity-super-decider-thinking",
+    "mammoth-1",
+    "knowline-31b-gen1",
+    "fastino-glide-1.2-open"
+   ],
+   "changed": false,
+   "metric": "capability/cost_off_latency_2x",
+   "view": "all"
+  },
+  {
+   "after": [
+    "kettei-fat",
+    "singularity-super-decider-thinking",
+    "singularity-super-decider",
+    "fastino-glide-api",
+    "h2o-lightning-31b"
+   ],
+   "before": [
+    "kettei-fat",
+    "singularity-super-decider-thinking",
+    "singularity-super-decider",
+    "fastino-glide-api",
+    "h2o-lightning-31b"
+   ],
+   "changed": false,
+   "metric": "capability/latency_none",
+   "view": "all"
+  },
+  {
+   "after": [
+    "kettei-fat",
+    "singularity-super-decider-thinking",
+    "mammoth-1",
+    "knowline-31b-gen1",
+    "fastino-glide-1.2-open"
+   ],
+   "before": [
+    "kettei-fat",
+    "singularity-super-decider-thinking",
+    "mammoth-1",
+    "knowline-31b-gen1",
+    "fastino-glide-1.2-open"
+   ],
+   "changed": false,
+   "metric": "extra_capability/cost_7x",
+   "view": "all"
+  },
+  {
+   "after": [
+    "kettei-fat",
+    "singularity-super-decider-thinking",
+    "mammoth-1",
+    "knowline-31b-gen1",
+    "fastino-glide-1.2-open"
+   ],
+   "before": [
+    "kettei-fat",
+    "singularity-super-decider-thinking",
+    "mammoth-1",
+    "knowline-31b-gen1",
+    "fastino-glide-1.2-open"
+   ],
+   "changed": false,
+   "metric": "extra_capability/cost_10x",
+   "view": "all"
+  },
+  {
+   "after": [
+    "gpt-6-luna",
+    "gpt-6-luna-low",
+    "gpt-5.6-luna",
+    "deepseek-flash",
+    "kettei-fat"
+   ],
+   "before": [
+    "gpt-6-luna",
+    "gpt-6-luna-low",
+    "gpt-5.6-luna",
+    "deepseek-flash",
+    "kettei-fat"
+   ],
+   "changed": false,
+   "metric": "extra_capability/rank_field",
+   "view": "all"
+  },
+  {
+   "after": [
+    "gpt-6-luna",
+    "gpt-6-luna-low",
+    "gpt-5.6-luna",
+    "kettei-fat",
+    "singularity-super-decider-thinking"
+   ],
+   "before": [
+    "gpt-6-luna",
+    "gpt-6-luna-low",
+    "gpt-5.6-luna",
+    "kettei-fat",
+    "singularity-super-decider-thinking"
+   ],
+   "changed": false,
+   "metric": "extra_capability/cost_7x_latency_none",
+   "view": "all"
+  },
+  {
+   "after": [
+    "gpt-6-luna",
+    "gpt-6-luna-low",
+    "gpt-5.6-luna",
+    "kettei-fat",
+    "singularity-super-decider-thinking"
+   ],
+   "before": [
+    "gpt-6-luna",
+    "gpt-6-luna-low",
+    "gpt-5.6-luna",
+    "kettei-fat",
+    "singularity-super-decider-thinking"
+   ],
+   "changed": false,
+   "metric": "extra_capability/cost_10x_latency_none",
+   "view": "all"
+  },
+  {
+   "after": [
+    "torchcast-decision-4b-v1.3",
+    "h2o-lightning-4b",
+    "h2o-lightning-31b",
+    "torchcast-decision-4b-v1.2",
+    "chon-1.0-e4b"
+   ],
+   "before": [
+    "torchcast-decision-4b-v1.3",
+    "h2o-lightning-4b",
+    "h2o-lightning-31b",
+    "torchcast-decision-4b-v1.2",
+    "decisio-gemma-4-31b-v080"
+   ],
+   "changed": true,
+   "metric": "composites/A",
+   "view": "open"
+  },
+  {
+   "after": [
+    "h2o-lightning-31b",
+    "torchcast-decision-4b-v1.3",
+    "basal-omni-1.0-ultra",
+    "quyet-1-0-large",
+    "decisio-gemma-4-31b-v080"
+   ],
+   "before": [
+    "h2o-lightning-31b",
+    "torchcast-decision-4b-v1.3",
+    "basal-omni-1.0-ultra",
+    "quyet-1-0-large",
+    "decisio-gemma-4-31b-v080"
+   ],
+   "changed": false,
+   "metric": "composites/B",
+   "view": "open"
+  },
+  {
+   "after": [
+    "torchcast-decision-4b-v1.3",
+    "h2o-lightning-4b",
+    "h2o-lightning-31b",
+    "torchcast-decision-4b-v1.2",
+    "decisio-gemma-4-31b-v080"
+   ],
+   "before": [
+    "torchcast-decision-4b-v1.3",
+    "h2o-lightning-4b",
+    "h2o-lightning-31b",
+    "torchcast-decision-4b-v1.2",
+    "decisio-gemma-4-31b-v080"
+   ],
+   "changed": false,
+   "metric": "composites/C",
+   "view": "open"
+  },
+  {
+   "after": [
+    "h2o-lightning-31b",
+    "basal-omni-1.0-ultra",
+    "arcbright-elf-1-31b",
+    "quyet-1-0-large",
+    "jeff_1_0_large"
+   ],
+   "before": [
+    "h2o-lightning-31b",
+    "basal-omni-1.0-ultra",
+    "arcbright-elf-1-31b",
+    "quyet-1-0-large",
+    "jeff_1_0_large"
+   ],
+   "changed": false,
+   "metric": "capability/official_caps",
+   "view": "open"
+  },
+  {
+   "after": [
+    "mammoth-1",
+    "knowline-31b-gen1",
+    "fastino-glide-1.2-open",
+    "h2o-lightning-31b",
+    "pplx-decider-v1-1-27b"
+   ],
+   "before": [
+    "mammoth-1",
+    "knowline-31b-gen1",
+    "fastino-glide-1.2-open",
+    "h2o-lightning-31b",
+    "pplx-decider-v1-1-27b"
+   ],
+   "changed": false,
+   "metric": "capability/no_caps",
+   "view": "open"
+  },
+  {
+   "after": [
+    "mammoth-1",
+    "knowline-31b-gen1",
+    "fastino-glide-1.2-open",
+    "h2o-lightning-31b",
+    "pplx-decider-v1-1-27b"
+   ],
+   "before": [
+    "mammoth-1",
+    "knowline-31b-gen1",
+    "fastino-glide-1.2-open",
+    "h2o-lightning-31b",
+    "pplx-decider-v1-1-27b"
+   ],
+   "changed": false,
+   "metric": "capability/cost_off_latency_2x",
+   "view": "open"
+  },
+  {
+   "after": [
+    "h2o-lightning-31b",
+    "basal-omni-1.0-ultra",
+    "arcbright-elf-1-31b",
+    "quyet-1-0-large",
+    "jeff_1_0_large"
+   ],
+   "before": [
+    "h2o-lightning-31b",
+    "basal-omni-1.0-ultra",
+    "arcbright-elf-1-31b",
+    "quyet-1-0-large",
+    "jeff_1_0_large"
+   ],
+   "changed": false,
+   "metric": "capability/latency_none",
+   "view": "open"
+  },
+  {
+   "after": [
+    "mammoth-1",
+    "knowline-31b-gen1",
+    "fastino-glide-1.2-open",
+    "h2o-lightning-31b",
+    "pplx-decider-v1-1-27b"
+   ],
+   "before": [
+    "mammoth-1",
+    "knowline-31b-gen1",
+    "fastino-glide-1.2-open",
+    "h2o-lightning-31b",
+    "pplx-decider-v1-1-27b"
+   ],
+   "changed": false,
+   "metric": "extra_capability/cost_7x",
+   "view": "open"
+  },
+  {
+   "after": [
+    "mammoth-1",
+    "knowline-31b-gen1",
+    "fastino-glide-1.2-open",
+    "h2o-lightning-31b",
+    "pplx-decider-v1-1-27b"
+   ],
+   "before": [
+    "mammoth-1",
+    "knowline-31b-gen1",
+    "fastino-glide-1.2-open",
+    "h2o-lightning-31b",
+    "pplx-decider-v1-1-27b"
+   ],
+   "changed": false,
+   "metric": "extra_capability/cost_10x",
+   "view": "open"
+  },
+  {
+   "after": [
+    "mammoth-1",
+    "knowline-31b-gen1",
+    "fastino-glide-1.2-open",
+    "h2o-lightning-31b",
+    "pplx-decider-v1-1-27b"
+   ],
+   "before": [
+    "mammoth-1",
+    "knowline-31b-gen1",
+    "fastino-glide-1.2-open",
+    "h2o-lightning-31b",
+    "pplx-decider-v1-1-27b"
+   ],
+   "changed": false,
+   "metric": "extra_capability/rank_field",
+   "view": "open"
+  },
+  {
+   "after": [
+    "mammoth-1",
+    "knowline-31b-gen1",
+    "fastino-glide-1.2-open",
+    "h2o-lightning-31b",
+    "pplx-decider-v1-1-27b"
+   ],
+   "before": [
+    "mammoth-1",
+    "knowline-31b-gen1",
+    "fastino-glide-1.2-open",
+    "h2o-lightning-31b",
+    "pplx-decider-v1-1-27b"
+   ],
+   "changed": false,
+   "metric": "extra_capability/cost_7x_latency_none",
+   "view": "open"
+  },
+  {
+   "after": [
+    "mammoth-1",
+    "knowline-31b-gen1",
+    "fastino-glide-1.2-open",
+    "h2o-lightning-31b",
+    "pplx-decider-v1-1-27b"
+   ],
+   "before": [
+    "mammoth-1",
+    "knowline-31b-gen1",
+    "fastino-glide-1.2-open",
+    "h2o-lightning-31b",
+    "pplx-decider-v1-1-27b"
+   ],
+   "changed": false,
+   "metric": "extra_capability/cost_10x_latency_none",
+   "view": "open"
+  },
+  {
+   "after": [
+    "singularity-super-decider",
+    "kettei-fat",
+    "fastino-glide-api",
+    "liquid-d1-ultra",
+    "subq-snap-1.1"
+   ],
+   "before": [
+    "singularity-super-decider",
+    "kettei-fat",
+    "fastino-glide-api",
+    "liquid-d1-ultra",
+    "subq-snap-1.1"
+   ],
+   "changed": false,
+   "metric": "composites/A",
+   "view": "api"
+  },
+  {
+   "after": [
+    "singularity-super-decider",
+    "kettei-fat",
+    "fastino-glide-api",
+    "drex-max",
+    "subq-snap-1.1"
+   ],
+   "before": [
+    "singularity-super-decider",
+    "kettei-fat",
+    "fastino-glide-api",
+    "drex-max",
+    "subq-snap-1.1"
+   ],
+   "changed": false,
+   "metric": "composites/B",
+   "view": "api"
+  },
+  {
+   "after": [
+    "singularity-super-decider",
+    "kettei-fat",
+    "fastino-glide-api",
+    "liquid-d1-ultra",
+    "subq-snap-1.1"
+   ],
+   "before": [
+    "singularity-super-decider",
+    "kettei-fat",
+    "fastino-glide-api",
+    "liquid-d1-ultra",
+    "subq-snap-1.1"
+   ],
+   "changed": false,
+   "metric": "composites/C",
+   "view": "api"
+  },
+  {
+   "after": [
+    "kettei-fat",
+    "singularity-super-decider-thinking",
+    "singularity-super-decider",
+    "fastino-glide-api",
+    "drex-max"
+   ],
+   "before": [
+    "kettei-fat",
+    "singularity-super-decider-thinking",
+    "singularity-super-decider",
+    "fastino-glide-api",
+    "drex-max"
+   ],
+   "changed": false,
+   "metric": "capability/official_caps",
+   "view": "api"
+  },
+  {
+   "after": [
+    "gpt-6-luna",
+    "gpt-6-luna-low",
+    "gpt-5.6-luna",
+    "deepseek-flash",
+    "kettei-fat"
+   ],
+   "before": [
+    "gpt-6-luna",
+    "gpt-6-luna-low",
+    "gpt-5.6-luna",
+    "deepseek-flash",
+    "kettei-fat"
+   ],
+   "changed": false,
+   "metric": "capability/no_caps",
+   "view": "api"
+  },
+  {
+   "after": [
+    "kettei-fat",
+    "singularity-super-decider-thinking",
+    "singularity-super-decider",
+    "fastino-glide-api",
+    "drex-max"
+   ],
+   "before": [
+    "kettei-fat",
+    "singularity-super-decider-thinking",
+    "singularity-super-decider",
+    "fastino-glide-api",
+    "drex-max"
+   ],
+   "changed": false,
+   "metric": "capability/cost_off_latency_2x",
+   "view": "api"
+  },
+  {
+   "after": [
+    "kettei-fat",
+    "singularity-super-decider-thinking",
+    "singularity-super-decider",
+    "fastino-glide-api",
+    "drex-max"
+   ],
+   "before": [
+    "kettei-fat",
+    "singularity-super-decider-thinking",
+    "singularity-super-decider",
+    "fastino-glide-api",
+    "drex-max"
+   ],
+   "changed": false,
+   "metric": "capability/latency_none",
+   "view": "api"
+  },
+  {
+   "after": [
+    "kettei-fat",
+    "singularity-super-decider-thinking",
+    "singularity-super-decider",
+    "fastino-glide-api",
+    "drex-max"
+   ],
+   "before": [
+    "kettei-fat",
+    "singularity-super-decider-thinking",
+    "singularity-super-decider",
+    "fastino-glide-api",
+    "drex-max"
+   ],
+   "changed": false,
+   "metric": "extra_capability/cost_7x",
+   "view": "api"
+  },
+  {
+   "after": [
+    "kettei-fat",
+    "singularity-super-decider-thinking",
+    "singularity-super-decider",
+    "fastino-glide-api",
+    "drex-max"
+   ],
+   "before": [
+    "kettei-fat",
+    "singularity-super-decider-thinking",
+    "singularity-super-decider",
+    "fastino-glide-api",
+    "drex-max"
+   ],
+   "changed": false,
+   "metric": "extra_capability/cost_10x",
+   "view": "api"
+  },
+  {
+   "after": [
+    "gpt-6-luna",
+    "gpt-6-luna-low",
+    "gpt-5.6-luna",
+    "deepseek-flash",
+    "kettei-fat"
+   ],
+   "before": [
+    "gpt-6-luna",
+    "gpt-6-luna-low",
+    "gpt-5.6-luna",
+    "deepseek-flash",
+    "kettei-fat"
+   ],
+   "changed": false,
+   "metric": "extra_capability/rank_field",
+   "view": "api"
+  },
+  {
+   "after": [
+    "gpt-6-luna",
+    "gpt-6-luna-low",
+    "gpt-5.6-luna",
+    "kettei-fat",
+    "singularity-super-decider-thinking"
+   ],
+   "before": [
+    "gpt-6-luna",
+    "gpt-6-luna-low",
+    "gpt-5.6-luna",
+    "kettei-fat",
+    "singularity-super-decider-thinking"
+   ],
+   "changed": false,
+   "metric": "extra_capability/cost_7x_latency_none",
+   "view": "api"
+  },
+  {
+   "after": [
+    "gpt-6-luna",
+    "gpt-6-luna-low",
+    "gpt-5.6-luna",
+    "kettei-fat",
+    "singularity-super-decider-thinking"
+   ],
+   "before": [
+    "gpt-6-luna",
+    "gpt-6-luna-low",
+    "gpt-5.6-luna",
+    "kettei-fat",
+    "singularity-super-decider-thinking"
+   ],
+   "changed": false,
+   "metric": "extra_capability/cost_10x_latency_none",
+   "view": "api"
+  },
+  {
+   "after": [
+    "singularity-super-decider",
+    "kettei-fat",
+    "fastino-glide-api",
+    "torchcast-decision-4b-v1.3",
+    "liquid-d1-ultra"
+   ],
+   "before": [
+    "singularity-super-decider",
+    "kettei-fat",
+    "fastino-glide-api",
+    "torchcast-decision-4b-v1.3",
+    "liquid-d1-ultra"
+   ],
+   "changed": false,
+   "metric": "A",
+   "view": "release"
+  },
+  {
+   "after": [
+    "singularity-super-decider",
+    "kettei-fat",
+    "fastino-glide-api",
+    "drex-max",
+    "subq-snap-1.1"
+   ],
+   "before": [
+    "singularity-super-decider",
+    "kettei-fat",
+    "fastino-glide-api",
+    "drex-max",
+    "subq-snap-1.1"
+   ],
+   "changed": false,
+   "metric": "B",
+   "view": "release"
+  },
+  {
+   "after": [
+    "singularity-super-decider",
+    "kettei-fat",
+    "fastino-glide-api",
+    "torchcast-decision-4b-v1.3",
+    "liquid-d1-ultra"
+   ],
+   "before": [
+    "singularity-super-decider",
+    "kettei-fat",
+    "fastino-glide-api",
+    "torchcast-decision-4b-v1.3",
+    "liquid-d1-ultra"
+   ],
+   "changed": false,
+   "metric": "C",
+   "view": "release"
+  },
+  {
+   "after": [
+    "gpt-6-luna",
+    "gpt-6-luna-low",
+    "gpt-5.6-luna",
+    "deepseek-flash",
+    "kettei-fat"
+   ],
+   "before": [
+    "gpt-6-luna",
+    "gpt-6-luna-low",
+    "gpt-5.6-luna",
+    "deepseek-flash",
+    "kettei-fat"
+   ],
+   "changed": false,
+   "metric": "capability",
+   "view": "release"
+  }
+ ],
+ "snapshots_sha256": {
+  "topfive-after.json": "68118740138eadf4be015bd253bd2594c298a7b14a5e717a6713969fe725f602",
+  "topfive-before.json": "a01e068a168423dba304853f8bd80cd362ff557365d32f4cb3dfa60107511d27",
+  "topfive-extended.json": "9dfa51a4c4270f18b9589a4e21628e834d1e29be76986f9644ecfab269d1b657"
+ },
+ "variant": "10-second share"
+}

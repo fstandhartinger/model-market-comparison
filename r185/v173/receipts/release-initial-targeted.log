@@ -1,0 +1,187 @@
+✔ CR-205: the live board and all frozen v1.5 pages render the complete release page (1.601389ms)
+✔ CR-205: the v1.5 release page keeps every required section, in the v1.4.2.2 order (0.699606ms)
+✔ CR-209: v1.5.1 ranks every full-coverage addendum and preserves the frozen v1.5.0 artifact (5.742267ms)
+✔ v1.5.2 adds the verified Nemotron A3 row and leaves every top five unchanged (1.941561ms)
+✔ CR-205: the frozen v1.4.2.2 page keeps its complete structure (0.287984ms)
+✔ CR-205: every older versioned page keeps its board and disclosures (0.426751ms)
+✔ CR-205: fresh native v1.6.2 uses the complete shared board, both radars and historical catalogue (15.348596ms)
+✔ CR-205: fail-closed v1.6.3 addendum uses the complete shared board, wrappers below it and the historical catalogue (0.733836ms)
+✔ CR-205: v1.6.4 retains shared board, both wrappers below ranking, method and full history (0.536979ms)
+✔ CR-205: fail-closed v1.6.5 regular draw uses the shared board, its own method notes and the full history (0.562069ms)
+✔ CR-205: fail-closed v1.6.6 same-draw addition uses the shared board, its own method notes and the full history (0.401462ms)
+✔ CR-205: fail-closed v1.6.7 same-draw addition uses the shared board, its own method notes and the full history (0.757535ms)
+✔ CR-205: fail-closed v1.6.8 same-draw addition uses the shared board, its own method notes and the full history (0.52046ms)
+✔ CR-205: fail-closed v1.6.9 same-draw addition uses the shared board, its own method notes and the full history (0.455321ms)
+✔ CR-205: fail-closed v1.6.10 first release on the second regular draw uses the shared board, its own method notes and the full history (0.48819ms)
+✔ CR-205: fail-closed v1.6.11 same-draw addition uses the shared board, its own method notes and the full history (0.51103ms)
+✔ CR-205: fail-closed v1.6.12 same-draw addition uses the shared board, its own method notes and the full history (0.631208ms)
+✔ CR-205: fail-closed v1.6.13 same-draw addition uses the shared board, its own method notes and the full history (0.391022ms)
+✔ CR-205: fail-closed v1.6.14 same-draw addition uses the shared board, its own method notes and the full history (0.398962ms)
+✔ CR-205: fail-closed v1.6.15 three-row same-draw addition uses the shared board, its own method notes and the full history (0.46082ms)
+✔ CR-205: fail-closed v1.6.16 one-row same-draw addition uses the shared board, its own method notes and the full history (0.678096ms)
+✔ CR-205: fail-closed v1.6.17 same-draw addition uses the shared board, its own method notes and the full history (0.845953ms)
+✔ CR-205: fail-closed v1.6.18 same-draw addition uses the shared board, its own method notes and the full history (0.390973ms)
+✔ CR-205: fail-closed v1.6.20 price-only addendum uses the shared board, its own method notes and the full history (0.400672ms)
+✔ CR-205: fail-closed v1.6.21 same-draw addition uses the shared board, its own method notes and the full history (0.467151ms)
+✔ CR-205: fail-closed v1.6.22 same-draw addition uses the shared board, its own method notes and the full history (0.385213ms)
+✔ CR-205: fail-closed v1.6.23 price-only addendum uses the shared board, its own method notes and the full history (0.431831ms)
+✔ CR-205: fail-closed v1.6.24 same-draw addition uses the shared board, its own method notes and the full history (0.421181ms)
+✔ CR-205: fail-closed v1.6.25 same-draw addition uses the shared board, its own method notes and the full history (0.50266ms)
+✔ CR-205: fail-closed v1.6.26 same-draw addition uses the shared board, its own method notes and the full history (4.06418ms)
+✔ CR-205: fail-closed v1.6.27 same-draw addition uses the shared board, its own method notes and the full history (0.50455ms)
+✔ CR-205: fail-closed v1.6.28 same-draw addition uses the shared board, its own method notes and the full history (0.343183ms)
+✔ CR-205: fail-closed v1.6.29 same-draw addition uses the shared board, its own method notes and the full history (0.450271ms)
+✔ CR-205: fail-closed v1.6.30 cost-rule release uses the shared board, its own method notes and the full history (0.527499ms)
+✔ CR-205: v1.7.1 same-draw additions retain the complete shared board, method notes and history (1.269635ms)
+✔ CR-205: v1.7.2 same-draw additions retain the complete shared board, method notes and history (0.569549ms)
+✖ CR-205: every versioned JevBench route is covered by this test (3.095169ms)
+✔ CR-205: the board sections are fed by the pinned v1.5 release artifact (20.252089ms)
+✔ feed carries board and open-board rank next to the unchanged combined rank (15081.148566ms)
+✔ llms-full and FAQ use the open-weights board (12246.878867ms)
+✔ feed key set equals the merged live board and the page shares the assembly (4.388564ms)
+✔ latest_release is the newest release of the draw table, not a hard-coded list (2275.214191ms)
+✔ feed ranks equal the ranks of the open and API Capability default views (9.316676ms)
+✔ rows carry their draw so agents can tell which draw a row was measured on (0.220176ms)
+(node:7009) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+✔ jevFoldWithPinned: pinned rows keep their position above the fold, do not count toward the limit, and are moved up from below it (1.477441ms)
+✔ Delta 4: with the folds collapsed, Jev 1.13.0 and Jev 1.14.0 are rendered above the fold in the open-board Capability and Composite sections (1381.095432ms)
+✔ v1.6.30 accepts the stored build once the review passes (203.033087ms)
+✔ v1.6.30 is not publishable while the manifest is PENDING or the preview card is a placeholder (243.34975ms)
+✔ 48 token-priced rows change cost on the common basis, 9 unpriced rows do not (3.116318ms)
+✔ named rows: nimble-v4-max enters at #3, subq-snap-preview falls inside the official cost cap (0.402092ms)
+✔ Intelligence, Calibration, Speed and Capability are byte-identical on all 57 rows (2.47838ms)
+✔ cost, axes, composites and placement follow from the common-basis cost; mutations are rejected (1806.439009ms)
+✔ the proof binds the cost basis, the superseded freeze and every re-costed row (1474.333026ms)
+✔ the release note states the rule, the unchanged measures, the cap moves and the superseded freeze (1195.430619ms)
+✔ approval: a changed top five needs the preview card; placeholders and wrong provenance are rejected (1273.258902ms)
+✔ the cost rule wording is general and appears on the methodology page and the board (7.448983ms)
+✔ the text about this draw's 15 items names who refused them and where the token figure comes from; no time-bound claim about authors (9.133289ms)
+✔ Delta 3 (display only): Jev 1.14.0 is a second unranked reference row on the open board without the toggle; every ranking and rank is unchanged (11588.971448ms)
+✔ release note [110] states the general rule and then its history sentence (0.291984ms)
+✔ v1.6.37 restates exactly the two v1.6.1 rows and adds nothing else (2.05087ms)
+✔ h2o-lightning-4b: price corrected to the frozen Qwen/Qwen3.5-4B reference, nothing else of the published row changes (0.432992ms)
+✔ kahn1: same correction on its own-estimate tokens; the false snapshot attribution of 0.04 is gone (0.202626ms)
+✔ all 70 carried rows keep every stored value; only rank and ranks move, by the restated rows above them (35.850892ms)
+✔ the two other Qwen3.5-4B rows with the USD 0.04 inherited basis are untouched (0.252395ms)
+✔ v1.6.37 rejects altered price, usage, markers, text, intervals, approval and carried rows (4229.104937ms)
+✔ the corrected price is recomputed from tokens, the frozen tariff and the number of decisions (0.241235ms)
+✔ v1.6.37 archived route keeps shared board, method and history (6.494152ms)
+✔ live boards and the agent feed resolve each restated row exactly once with the corrected figures; the frozen archive keeps the published ones (19346.688675ms)
+✔ SEO model, comparison and full-text pages follow the merged feed with corrected costs and the re-measured Seb (13895.536992ms)
+﹣ the unreviewed build is not published: the reader rejects it, the board stays on the validated v1.6 chain (0.670837ms) # SKIP
+✔ v1.7.0 restates exactly the live board of its base release: every row, the pending set, the carry (3.429582ms)
+✔ every re-scored row shows its v1.6 values next to the v1.7 values and the time-limit evidence (0.725856ms)
+✔ pinned rows: chon-1.0-12b collapses under the limit, sage-1.3.0 and an A4 row follow the rule, the pending row keeps its v1.6 numbers (0.290844ms)
+✔ fastino-glide-api (v1.6.40 row, scored on 1,497 of 1,500 items) is re-scored under the rule on the same 1,497 items; two answered decisions over 10 s count failed (0.378592ms)
+✔ the four intake handoffs retain their distinct identities, frozen costs and disclosures (1.02499ms)
+✔ R9 rows retain the zero-output price convention, timeout outcomes and serving disclosures (0.442871ms)
+✔ v1.7.0 archive files and the base release stay byte-identical (314.982562ms)
+✔ v1.7.0 rejects altered evidence (bundle checks) (14964.566384ms)
+✔ a new row (measured first under v1.7.0) has its own shape: no previous, new_in, disclosure and licence, ranked with the re-scored rows (0.562818ms)
+✔ v1.7.0 rejects a malformed new row (6+ mutations) (6648.352019ms)
+✔ the two Super Decider rows are ranked, priced at the launch list price of the provider's public product page, and say where the price comes from (0.681416ms)
+✔ a re-measured row (GPU, same items) replaces its CPU row in full: GPU scores and times, the CPU row as previous, disclosure on the row (0.516509ms)
+✔ the new row carries no board/issue number or custody reference in its public text (0.530269ms)
+✔ v1.7.0 rejects a malformed re-measured row (GPU numbers with CPU times, still pending, no disclosure, wrong marks, ...) (8713.850814ms)
+✔ the restatement is bound to the live v1.6 chain: it passes on the chain it was built for (264.924211ms)
+✔ v1.7.0 rejects a restatement that does not match the chain (previous, identity, cost, row set, newer release, feed hash, seeds) (2338.130801ms)
+✔ a re-measured row is bound to the CPU row it replaces (previous == chain, same weights, same draw, another endpoint kind, same cost) (1965.316938ms)
+✔ a published v1.7.0 board is live: restated rows, v1.7.0 as the latest release, archive pages untouched (11494.854197ms)
+✔ v1.7.1 candidate preserves every carried score, CI, diagnostic, category and dated carry (190.197393ms)
+﹣ v1.7.1 PENDING stays unavailable to board, API and navigation (0.171017ms) # published
+✔ v1.7.1 rejects changed carried point estimates or intervals (569.472341ms)
+✔ v1.7.1 rejects altered new row, dropped row and duplicated row (648.915885ms)
+✔ v1.7.1 rejects changed category, rank, price pin, provenance and predecessor (1581.148341ms)
+✔ v1.7.1 refuses missing release review and changed-top-five publication without GO (373.463033ms)
+✔ v1.7.1 merged scope ranks and Capability cap lists match the independent site fixture (29.185105ms)
+✔ version-peer links survive a v1.7.1 artifact and later v1.7 patches (6.463303ms)
+✔ Turion remains ranked with over-cap cost and a bound standing GO (330.787514ms)
+✔ v1.7.2 candidate preserves every carried score, CI, diagnostic, category and dated carry (122.433639ms)
+﹣ v1.7.2 PENDING stays unavailable to board, API and navigation (0.184567ms) # published
+✔ v1.7.2 rejects changed carried point estimates or intervals (335.738418ms)
+✔ v1.7.2 rejects altered new row, dropped row and duplicated row (633.732708ms)
+✔ v1.7.2 rejects changed category, rank, price pin, provenance and predecessor (1043.953919ms)
+✔ v1.7.2 refuses missing release review and changed-top-five publication without GO (291.305463ms)
+✔ v1.7.2 merged scope ranks and Capability cap lists match the independent site fixture (27.582027ms)
+✔ version-peer links survive a v1.7.2 artifact and later v1.7 patches (4.398263ms)
+✔ Jeetu remains ranked within cap with zero-output pricing and bound standing GO (263.770895ms)
+✔ v1.7.3 candidate preserves every carried score, CI, diagnostic, category and dated carry (126.919281ms)
+✔ v1.7.3 PENDING stays unavailable to board, API and navigation (1219.117544ms)
+✔ v1.7.3 rejects changed carried point estimates or intervals (394.843835ms)
+✔ v1.7.3 rejects altered new row, dropped row and duplicated row (612.633746ms)
+✔ v1.7.3 rejects changed category, rank, price pin, provenance and predecessor (1044.267158ms)
+✔ v1.7.3 refuses missing release review and changed-top-five publication without GO (566.559305ms)
+✔ v1.7.3 merged scope ranks and Capability cap lists match the independent site fixture (23.648324ms)
+✔ version-peer links survive a v1.7.3 artifact and later v1.7 patches (4.695427ms)
+✔ GPU replaces CPU in full under the same key and retains its CPU history and exact cost (523.884986ms)
+ℹ tests 115
+ℹ suites 0
+ℹ pass 111
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 3
+ℹ todo 0
+ℹ duration_ms 104660.05479
+
+✖ failing tests:
+
+test at test/cr-205-jev-page-structure.test.mjs:672:1
+✖ CR-205: every versioned JevBench route is covered by this test (3.095169ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  ... Skipped lines
+  
+    [
+      'v1',
+      'v1.4',
+      'v1.4.1',
+      'v1.4.2',
+  ...
+      'v1.7.2',
+  +   'v1.7.3'
+    ]
+  
+      at TestContext.<anonymous> (file:///home/flori/wt/jevbench-v173-r185-build/test/cr-205-jev-page-structure.test.mjs:680:10)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [
+      'v1',       'v1.4',     'v1.4.1',  'v1.4.2',
+      'v1.4.2.1', 'v1.4.2.2', 'v1.5.0',  'v1.5.1',
+      'v1.5.2',   'v1.5.3',   'v1.5.4',  'v1.5.5',
+      'v1.5.6',   'v1.5.7',   'v1.6',    'v1.6.0',
+      'v1.6.1',   'v1.6.10',  'v1.6.11', 'v1.6.12',
+      'v1.6.13',  'v1.6.14',  'v1.6.15', 'v1.6.16',
+      'v1.6.17',  'v1.6.18',  'v1.6.2',  'v1.6.20',
+      'v1.6.21',  'v1.6.22',  'v1.6.23', 'v1.6.24',
+      'v1.6.25',  'v1.6.26',  'v1.6.27', 'v1.6.28',
+      'v1.6.29',  'v1.6.3',   'v1.6.30', 'v1.6.31',
+      'v1.6.32',  'v1.6.33',  'v1.6.34', 'v1.6.35',
+      'v1.6.36',  'v1.6.37',  'v1.6.38', 'v1.6.39',
+      'v1.6.4',   'v1.6.40',  'v1.6.42', 'v1.6.43',
+      'v1.6.5',   'v1.6.6',   'v1.6.7',  'v1.6.8',
+      'v1.6.9',   'v1.7.0',   'v1.7.1',  'v1.7.2',
+      'v1.7.3'
+    ],
+    expected: [
+      'v1',       'v1.4',     'v1.4.1',  'v1.4.2',
+      'v1.4.2.1', 'v1.4.2.2', 'v1.5.0',  'v1.5.1',
+      'v1.5.2',   'v1.5.3',   'v1.5.4',  'v1.5.5',
+      'v1.5.6',   'v1.5.7',   'v1.6',    'v1.6.0',
+      'v1.6.1',   'v1.6.10',  'v1.6.11', 'v1.6.12',
+      'v1.6.13',  'v1.6.14',  'v1.6.15', 'v1.6.16',
+      'v1.6.17',  'v1.6.18',  'v1.6.2',  'v1.6.20',
+      'v1.6.21',  'v1.6.22',  'v1.6.23', 'v1.6.24',
+      'v1.6.25',  'v1.6.26',  'v1.6.27', 'v1.6.28',
+      'v1.6.29',  'v1.6.3',   'v1.6.30', 'v1.6.31',
+      'v1.6.32',  'v1.6.33',  'v1.6.34', 'v1.6.35',
+      'v1.6.36',  'v1.6.37',  'v1.6.38', 'v1.6.39',
+      'v1.6.4',   'v1.6.40',  'v1.6.42', 'v1.6.43',
+      'v1.6.5',   'v1.6.6',   'v1.6.7',  'v1.6.8',
+      'v1.6.9',   'v1.7.0',   'v1.7.1',  'v1.7.2'
+    ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }

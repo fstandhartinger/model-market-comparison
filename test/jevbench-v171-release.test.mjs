@@ -13,7 +13,7 @@ const opts={candidate:true};
 const mutate=(fn,pattern)=>{const x=structuredClone(b);fn(x);assert.throws(()=>validateJevbenchV171Bundle(x,opts),pattern);};
 test('v1.7.1 candidate preserves every carried score, CI, diagnostic, category and dated carry',()=>{
  assert.equal(validateJevbenchV171Bundle(b,opts),true);
- assert.deepEqual(JEVBENCH_RELEASES.filter(r=>r.version!=='v1.7.2').slice(0,2).map(r=>r.version),['v1.7.1','v1.7.0']);
+ assert.deepEqual(JEVBENCH_RELEASES.filter(r=>['v1.7.1','v1.7.0'].includes(r.version)).slice(0,2).map(r=>r.version),['v1.7.1','v1.7.0']);
 });
 test('v1.7.1 PENDING stays unavailable to board, API and navigation',async t=>{
  if(b.manifest.review.verdict==='PASS')return t.skip('published');

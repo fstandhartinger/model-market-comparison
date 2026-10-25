@@ -1,0 +1,21 @@
+{
+ "approval": "FAIR; source SHA and reviewer engine bound at job-relative workers/r185-e4b-prescore/RESULT.json",
+ "builder_mapping": "F2 mapped to v1.7.0 remeasure.replaces with in_full=scores and times; CPU removed from live ranks, retained in history",
+ "corrected_entry_sha256": "c53a8846acd852922a0bf859ddb10e9959960aa8c0f2e27369b2aa91ed51c511",
+ "fairness": "FAIR",
+ "fixes": {
+  "F1": "Corrected local ENTRY-CHON-E4B.json explicitly replaces CPU scores and times; 1049/1500 probability differences, 9 changed top answers, device numerics and moved I/C disclosed.",
+  "F2": "Builder v1.7.0 replaces mapping, previous CPU preserved; GPU replaces row after validated v1.7.2 chain.",
+  "F3": "Pinned by build, no collected readback; Python3.11 vs author3.12 and huggingface-hub1.33.0 disclosed.",
+  "F6": "Listed -> estimate display label only, same numeric value and basis; 12 scope/cap membership comparisons unchanged.",
+  "F7": "Top-five comparison rerun against v1.7.2 with both candidate rows.",
+  "F8": "Documented no-think mode, author GPU default thinks first."
+ },
+ "path": "/home/flori/jobs/jevbench-add-requests-20260919/workers/r185-e4b-prescore/RESULT.json",
+ "remaining_disclosed_deviations": [
+  "F4 host CPU/runtime receipts not collected",
+  "F5 empty GPU telemetry CSV"
+ ],
+ "sha256": "846c0dca823e93b085c58fac600b0ebc862155e4288d0b7f41e67fc846784122",
+ "verdict": "PASS_WITH_FINDINGS"
+}

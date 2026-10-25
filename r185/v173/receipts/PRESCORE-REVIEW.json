@@ -1,0 +1,118 @@
+{
+ "verdict": "PASS_WITH_FINDINGS",
+ "fairness": "FAIR",
+ "engine": "claude-opus-5-5 (Claude Code worker, read-only)",
+ "blockers": [],
+ "must_fix_before_release": [
+  "F1",
+  "F2"
+ ],
+ "findings": [
+  {
+   "id": "F1",
+   "severity": "must-fix",
+   "area": "entry text",
+   "text": "CPU-vs-GPU probability differences not disclosed; row described as 'GPU re-time' although I (54.96->55.49) and C (81.82->81.52) change; 1,049 items moved, 9 argmax flips. Add a sentence that scores and times both come from the GPU run (v1.7.0 'in full (scores and times)')."
+  },
+  {
+   "id": "F2",
+   "severity": "must-fix",
+   "area": "supersession shape",
+   "text": "remeasure.supersedes_base_row {key,raw_sha256,endpoint_kind} is not the v1.7.0 shape (builder: kind remeasured, raw_sha256, replaces_raw_sha256; published: remeasure.replaces{board_release,endpoint_kind,in_full} + remeasured_in; cohort merge only honours top-level string supersedes_base_row==artifact.revision). Facts correct (CPU raw e5258cc6 = v1.7.0 pending row); must be mapped by the release builder."
+  },
+  {
+   "id": "F3",
+   "severity": "minor",
+   "area": "entry text",
+   "text": "Runtime versions stated without collected VERSIONS.txt readback (pinned by build context); PREREG s8(d) Python 3.11 vs author 3.12 and huggingface-hub 1.33.0 missing."
+  },
+  {
+   "id": "F4",
+   "severity": "disclosed-deviation",
+   "area": "receipts",
+   "text": "Host CPU/VERSIONS/pip-freeze receipts not collected from pod; R184 s8 'row names host CPU' unmet; disclosed as not retained."
+  },
+  {
+   "id": "F5",
+   "severity": "disclosed",
+   "area": "receipts",
+   "text": "gpu-sealed.csv empty (nvidia-smi -l 30 -f, 157 s phase; flush likely). Disclosed; fix kit for future runs."
+  },
+  {
+   "id": "F6",
+   "severity": "pre-existing-labelling",
+   "area": "cost",
+   "text": "Only self-hosted row (1 of 237) with cost kind 'listed'; h2o-lightning-31b uses identical base-model rule and is labelled estimate. Value fair; recommend relabel to estimate in a separate correction."
+  },
+  {
+   "id": "F7",
+   "severity": "minor",
+   "area": "placement",
+   "text": "Placement against v1.7.1; v1.7.2 now merged (+jeetu-decider-2b only, no axis changes; I=10.2 gate penalty ~0.04, cannot enter these top-fives). Rerun against v1.7.2 for the receipt."
+  },
+  {
+   "id": "F8",
+   "severity": "wording",
+   "area": "entry text",
+   "text": "'documented CPU mode, a different serving configuration from the GPU default' reads oddly on a GPU row."
+  }
+ ],
+ "recomputed": {
+  "rows": 1500,
+  "unique_ids": 1500,
+  "ok_http200": 1500,
+  "probs_source_native": 1500,
+  "input_all": 792841,
+  "output_all": 0,
+  "common_items": 1485,
+  "input_common": 701161,
+  "output_common": 0,
+  "usd_per_1000_common": 0.009443245791245792,
+  "usd_per_1000_all": 0.010571213333333333,
+  "cap_ratio_common": 0.14619237,
+  "cap_usd_per_1000": 0.0645947,
+  "speed_subset_n": 124,
+  "p50_sub_raw_s": 0.072551518,
+  "p95_sub_raw_s": 0.136883422,
+  "p50_adj_s": 0.295103036,
+  "p95_adj_s": 0.423766844,
+  "speed_axis_frozen": 89.02899348,
+  "cost_axis": 70.74636119,
+  "cpu_speed_axis_same_filter": 43.95627534,
+  "p50_all_s": 0.073643472,
+  "p95_all_s": 0.151347942,
+  "max_s": 1.317001183,
+  "over_10s": 0,
+  "raw_sha256": "a48a935bd4857c5790239cfc39c28f4fd75c52a52051deb3f01d25ff2a5484b0",
+  "argmax_flips": {
+   "choice": 5,
+   "noul": 2,
+   "score": 2
+  },
+  "absdelta_p50": 0.000557,
+  "absdelta_p99": 0.0369,
+  "pod_life_s": 592,
+  "pod_all_in_usd": 0.134
+ },
+ "checks": {
+  "prereg_sha_ok": true,
+  "kit_manifest_ok": true,
+  "device_location_mode_ok": true,
+  "gates_ok": true,
+  "teardown_ok": true,
+  "scorer_byte_identical": true,
+  "builder_byte_identical": true,
+  "other_rows_changed": 0,
+  "pricing_sha": "aa2afcd5",
+  "axes_match_out": true,
+  "public_text_forbidden_hits": 0,
+  "speed_old_lower_bound_text_removed": true
+ },
+ "fairness_reasons": [
+  "same weights re-verified in container; identical label sets and per-item token counts; 9 flips are near-tie/commit-endpoint numerics",
+  "no position bias, no near-uniform pattern, noul 0.801 mass identical to CPU (documented commit rule)",
+  "open-sealed gap unremarkable (choice below peer median; noul ~p87, explained by disclosed public-item tuning)",
+  "A6000 is the slowest GPU class among GPU-timed top-five peers (H100/A100/5090/RTX PRO 6000); same x2+0.15 adjustment",
+  "cost value from same base-model reference rule as peers, unchanged; only the 'listed' label is inconsistent (F6, pre-existing)"
+ ]
+}

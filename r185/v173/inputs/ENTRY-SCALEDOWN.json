@@ -1,0 +1,42 @@
+{
+ "scaledown-classify-1": {
+  "entry": {
+   "api_subset": "S",
+   "author": "ScaleDown",
+   "base_model": null,
+   "code_revision": "Vendor-hosted API: no vendor code ran locally; weights and serving code are not public. First-party adapter scaledown_classify_v16.py (sha256 f78d1f8251facaa60d10e9b5c5033dac206024bee5469968706d3ec2f61b8680) + spec scaledown-classify-1.json (sha256 47032611bea155be78f8acf8c2e41d73885e5e48829e79662d00fcc38cc64ec7); independent review PASS_WITH_MUSTS, musts fixed before dispatch.",
+   "cost_basis": "ScaleDown vendor list price, USD 0.05/M input tokens; output is free. Explicit vendor reference scaledown:classify-1 (vendor list price), with no base-model price. The frozen pricing module has no key for this API, so this row uses an explicit reference at that price. The scored cost includes the frozen scorer's usage fallback for four HTTP 504 rows: USD 0.04369407407407409 per 1,000 decisions on the common 1,485-item basis (0.67643x the USD 0.06459465517241379 cap); USD 0.082679 per 1,000 over all 1,500. Provider-reported usage alone gives USD 0.035613266 per 1,000 common items and USD 0.074679 over all items, excluding usage estimates for those failures. Cost kind mixed: four rows have estimated usage. Not a bill or quote.",
+   "cost_kind": "estimate",
+   "disclosure": "STOCK PROMPT: the canonical question is sent unchanged in ScaleDown's native Jev-compatible format (POST /v1/scaledown, model classify-1). The vendor asked for prompt tuning with its SLM_Agent method first; that method was applied by us on 40 public dev items only (no vendor code executed), and no variant beat the run-to-run noise floor, so the stock prompt is the only measured configuration. 4 items ended in HTTP 504 (gateway timeout) and are scored wrong; no retry. Free trial tokens plus a USD 5 evaluator-paid credit covered the run.",
+   "display": "classify-1 (ScaleDown)",
+   "endpoint_condition": "Vendor-hosted api.scaledown.xyz/v1/scaledown API, model classify-1 (served model checked on every row; all 1,500 rows named classify-1), through first-party adapter scaledown_classify_v16; latency measured from Sandy (Germany) without API adjustment. Full S1200+P300 draw of v1.6-regular-20261012 through the unchanged run_api_full_v161.py on 24 Oct 2026; the full-set exposure gate logged all 1,200 sealed items to provider scaledown before the first request. Native probabilities on all three question types; string states sent unchanged.",
+   "endpoint_kind": "api",
+   "lane": "api",
+   "licence": "Proprietary hosted API (no weights release)",
+   "repo": "https://scaledown.ai",
+   "revision": null,
+   "support": {
+    "choice": "native",
+    "noul": "native",
+    "score": "native"
+   }
+  },
+  "expect": {
+   "failed": 4,
+   "input_tokens": 2240370,
+   "ok": 1496,
+   "output_tokens": 1496,
+   "status_counts": {
+    "200": 1496,
+    "504": 4
+   }
+  },
+  "explicit_ref": {
+   "in": 0.05,
+   "key": "scaledown:classify-1 (vendor list price)",
+   "out": 0.0
+  },
+  "pricing_base": "scaledown/classify-1",
+  "raw": "/home/flori/jevbench-sealed/v1.6-run/v1.6-regular-20261012/runs/api-full/scaledown-classify-1.jsonl"
+ }
+}

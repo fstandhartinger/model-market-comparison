@@ -1,0 +1,31 @@
+"""Idempotent v173 integration, invoked only after all candidate inputs exist."""
+import json,os,pathlib
+J=pathlib.Path(__file__).resolve().parent;W=pathlib.Path(os.environ.get('WT',str(J.parents[1])))
+def edit(name,old,new):
+ p=W/name;s=p.read_text()
+ if new in s:return
+ assert old in s,(name,old)
+ p.write_text(s.replace(old,new))
+p=W/'app/api/jevbench/v1.7.3/route.ts';p.parent.mkdir(parents=True,exist_ok=True);p.write_text((W/'app/api/jevbench/v1.7.2/route.ts').read_text().replace('V172','V173').replace('v172','v173'))
+p=W/'app/jev-models/v1.7.3/page.tsx';p.parent.mkdir(parents=True,exist_ok=True)
+s=(W/'app/jev-models/v1.7.2/page.tsx').read_text().replace('v1.7.2','__NEW__').replace('v1.7.1','v1.7.2').replace('__NEW__','v1.7.3').replace('V172','V173').replace('v172','v173').replace('jev172','jev173').replace('Three same-draw additions','One same-draw addition').replace('Amazon Strands Decider 26B-A4B, Turion JEV 31B and Chon-1.0-12B-Fast added.','Jeetu Decider 2B added.')
+s=s.replace('Amazon Strands Decider 26B-A4B, Turion JEV 31B and Chon-1.0-12B-Fast','Jeetu Decider 2B').replace('three new rows','one new row').replace('288 carried','288 carried')
+s=s.replace('Three decision models added','One decision model added').replace('same-draw additions</div>','same-draw addition</div>').replace(' Turion exceeds the official cost cap and appears in uncapped views.','')
+s=s.replace('One same-draw addition','GPU re-time on the same draw').replace('Jeetu Decider 2B added.','Chon-1.0-E4B GPU scores and times replace its CPU measurement in full; classify-1 (ScaleDown) added as one new hosted API row.').replace('One decision model added','Chon-1.0-E4B re-timed on GPU').replace('Jeetu Decider 2B joins on the same draw.','Chon-1.0-E4B GPU scores and times replace its CPU measurement in full; classify-1 (ScaleDown) joins as a hosted API row.').replace('same-draw addition</div>','same-draw GPU re-time</div>').replace('All carried scores and confidence intervals are retained','All 288 other rows retain their scores and confidence intervals')
+s=s.replace("{new_in?: string})=>row.new_in!=='v1.7.3'","{remeasured_in?: string})=>row.remeasured_in!=='v1.7.3'")
+s=s.replace('Chon-1.0-E4B re-timed on GPU</h1>','GPU replacement and one hosted addition</h1>').replace('same-draw GPU re-time</div>','GPU replacement and hosted addition</div>')
+import re
+s=re.sub(r"description:'[^']*'","description:'Chon-1.0-E4B GPU scores and times replace CPU; ScaleDown classify-1 joins as a hosted API. Same method; all 288 carried rows keep their scores.'",s,count=1)
+s=s.replace('GPU re-time on the same draw','GPU replacement and one hosted addition').replace("{remeasured_in?: string})=>row.remeasured_in!=='v1.7.3'","{remeasured_in?: string; new_in?: string})=>row.remeasured_in!=='v1.7.3' && row.new_in!=='v1.7.3'")
+p.write_text(s)
+edit('lib/jevbench-live-board.mjs',"import { readJevbenchV172ForBoard, withV172Addendum }", "import { readJevbenchV173ForBoard, withV173Addendum } from './jevbench-v173-release.mjs';\nimport { readJevbenchV172ForBoard, withV172Addendum }")
+edit('lib/jevbench-live-board.mjs','return v172 ? withV172Addendum(throughV171, v172) : throughV171;', 'const throughV172 = v172 ? withV172Addendum(throughV171, v172) : throughV171;\n  const v173 = await readJevbenchV173ForBoard(root);\n  return v173 ? withV173Addendum(throughV172, v173) : throughV172;')
+edit('lib/jevbench-live-board.mjs',"return (await readJevbenchV172ForBoard(root)) ? 'v1.7.2'", "return (await readJevbenchV173ForBoard(root)) ? 'v1.7.3' : (await readJevbenchV172ForBoard(root)) ? 'v1.7.2'")
+edit('components/JevBenchReleaseVersionNav.tsx',"type JevRelease = 'v1.7.2'", "type JevRelease = 'v1.7.3' | 'v1.7.2'")
+edit('lib/jevbench-categories.mjs',"'v1.7.0', 'v1.7.1', 'v1.7.2'];", "'v1.7.0', 'v1.7.1', 'v1.7.2', 'v1.7.3'];")
+edit('lib/jevbench-releases.mjs',"  { version: 'v1.7.2'", "  { version: 'v1.7.3', date: '2026-10-25', href: '/jev-models/v1.7.3', text: 'Chon-1.0-E4B GPU scores and times replace its CPU measurement in full; classify-1 (ScaleDown) added as one new hosted API row; no method change.' },\n  { version: 'v1.7.2'")
+edit('components/JevReleaseHistory.tsx',"import { hasPublishedJevbenchV172Release }", "import { hasPublishedJevbenchV173Release } from '../lib/jevbench-v173-release.mjs';\nimport { hasPublishedJevbenchV172Release }")
+edit('components/JevReleaseHistory.tsx','v170, v171, v172] =','v170, v171, v172, v173] =')
+edit('components/JevReleaseHistory.tsx','hasPublishedJevbenchV172Release()]);','hasPublishedJevbenchV172Release(), hasPublishedJevbenchV173Release()]);')
+edit('components/JevReleaseHistory.tsx',"!v172 && 'v1.7.2'].filter", "!v172 && 'v1.7.2', !v173 && 'v1.7.3'].filter")
+print('wired v1.7.3; predecessor chain retained')

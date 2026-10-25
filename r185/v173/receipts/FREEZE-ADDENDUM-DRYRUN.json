@@ -1,0 +1,215 @@
+{
+ "carried_rows": 288,
+ "carried_rows_equal_except": [
+  "rank",
+  "ranks"
+ ],
+ "files": {
+  "carry": "271d1fc77a136a04a1eb6deb5480c52d4211eb2b66b2ac8bb31e80867e69003a",
+  "categories": "3c4fe4889669f3cc0643d100ad2fd27086aa37c7f34781beaf741bae8686dd0d",
+  "history": "5cd8c1332226ea9c179883d2285c0d8b8cc593ae38f2645197364a7ddd9c83c1",
+  "history-carry": "334e851944e92383ab3071e52b3012040c7023d0fe236395953169ebee8f0459",
+  "proof": "ebeea031a755e24bdd2842e2dd98356143deebc4931ee6a3e31a64ce9d162942",
+  "results": "95251a6582156ce62f01ffd8810eda48c034f52420ba17ea6d378952f03b88fd"
+ },
+ "method": {
+  "decision_limit_s": 10,
+  "label": "v1.7",
+  "rule": "latency_s > 10.000 s -> failed",
+  "treatment": "share"
+ },
+ "new_rows": {
+  "scaledown-classify-1": {
+   "axes": {
+    "calibration": 82.82809086203193,
+    "cost": 50.78732378203712,
+    "intelligence": 21.787775467356628,
+    "speed": 83.72843286582474
+   },
+   "composite_ci95": {
+    "A": [
+     4.672849375867131,
+     11.765050469662265
+    ],
+    "B": [
+     3.7201929696864933,
+     9.959843262217815
+    ],
+    "C": [
+     3.245034288796619,
+     8.170173937265462
+    ]
+   },
+   "decision_limit": {
+    "limit_s": 10.0,
+    "n_over_limit": 14,
+    "n_over_limit_answered_ok": 10,
+    "rule": "latency_s > limit -> failed",
+    "speed_basis": "all decisions given (lane items in the raw), measured latency_s",
+    "speed_n": 1500,
+    "treatment": "share"
+   },
+   "explicit_ref": {
+    "in": 0.05,
+    "key": "scaledown:classify-1 (vendor list price)",
+    "out": 0.0
+   },
+   "raw_sha256": "900652c68a38db3d51e00567b2dd45b2cdc771646a611058a1701441e3d10fbb",
+   "scored_input_sha256": "31efd92d925131d31de1656d55cadaefcf858ee776100eb50e35932ac5b354e9",
+   "source_sha256": {
+    "entry_path": "/home/flori/jobs/scaledown-eval-neal-20261023/official/ENTRIES-SD.json",
+    "entry_sha256": "33a7a1fb8b929005682820b82f149b2e1f7bde6115b926381632a8d285c61045",
+    "explicit_ref": {
+     "in": 0.05,
+     "key": "scaledown:classify-1 (vendor list price)",
+     "out": 0.0
+    },
+    "frozen": {
+     "path": "/home/flori/jobs/scaledown-eval-neal-20261023/official/field-sd/out-frozen/jevbench-v1.6.0-results.json",
+     "sha256": "c141a32401e776512dfb53080ffd302227db9e98453ec41f810359c1be696673"
+    },
+    "handoff_sha256": "1f0971a5bf62bcd5b1d9e4686ce2293b0d51b15443481785520cbbb012651a95",
+    "raw_hash_source": "in-place verification; raw not copied",
+    "raw_sha256": "900652c68a38db3d51e00567b2dd45b2cdc771646a611058a1701441e3d10fbb",
+    "raw_verified_in_place": true,
+    "registry_sha256": "55ffeeae1b90ebed2fe3fe119f47a1244387e93cc967d679c27f7ffb6841f5c9",
+    "v17-off": {
+     "path": "/home/flori/jobs/scaledown-eval-neal-20261023/official/field-sd/out-v17-off/jevbench-v1.6.0-results.json",
+     "sha256": "932267feb09497f81a613815356d226e1e53a26d6e27aaab07ca9b6eeb7db7f8"
+    },
+    "v17-share": {
+     "path": "/home/flori/jobs/scaledown-eval-neal-20261023/official/field-sd/out-v17-share/jevbench-v1.6.0-results.json",
+     "sha256": "31efd92d925131d31de1656d55cadaefcf858ee776100eb50e35932ac5b354e9"
+    }
+   },
+   "treatment": "ranked"
+  }
+ },
+ "predecessor": {
+  "publication_sha256": "6b5eb8810895792fd3b468c58be9fc7f9a4ef412c0f330d6bdc32487fd249e73",
+  "revision": "v1.7.2"
+ },
+ "pricing_module_sha256": "aa2afcd5a58d0c4cc0e3d6867d590c70b6ac58e971410c27faf9628f97bcf8b7",
+ "publication_approval": {
+  "asks": [
+   {
+    "admission": "custody #26284 item 2; deputy #26197/#26198",
+    "handoff": "lead run 185 HANDOFF-CHONE4B-R185.md",
+    "key": "chon-1.0-e4b",
+    "relay": "regular queue"
+   },
+   {
+    "admission": "custody #25026/#25102",
+    "handoff": "board #25894 (HANDOFF-SD.md)",
+    "key": "scaledown-classify-1",
+    "relay": "regular queue"
+   }
+  ],
+  "button_tap": false,
+  "fairness_check": {
+   "engine": "claude-opus-5-5 (Claude Code worker, read-only)",
+   "path": "workers/r185-e4b-prescore/RESULT.json",
+   "sha256": "846c0dca823e93b085c58fac600b0ebc862155e4288d0b7f41e67fc846784122",
+   "verdict": "FAIR"
+  },
+  "fresh_baseline": "v1.7.2",
+  "go": {
+   "channel": "laptop chat",
+   "date": "2026-10-25",
+   "in_answer_to": "fair JevBench top-5 changes publish without asking (audit-pattern check; preview card for info only)",
+   "quote": "3 ja",
+   "recorded_in": "DECISIONS.md 2026-10-25 setup-review-open-questions-answered"
+  },
+  "status": "GO (fair top-five change, Florian rule 25 Oct 2026)",
+  "top_five_effect": "changed",
+  "top_five_preview": {
+   "path": "r185/v173/receipts/topfive-diff.json",
+   "sha256": "eb527eb24e13e73268b0c49b1b1547fd1af4a954edbf9d7e489af6b6ffdcdd86"
+  }
+ },
+ "publication_review": {
+  "engine": "claude-opus-5-5 (Claude Code worker, read-only)",
+  "receipt_sha256": "45d33ec828cc29ffc2610f2be23570e4dfb345b430a04c1026fa8015a8967070",
+  "verdict": "PASS"
+ },
+ "publication_sha256": "f4854ae72fbba9ae945c62924cf22617d615f844780df37046112a5014d5eaae",
+ "release": "v1.7.3",
+ "remeasured_rows": {
+  "chon-1.0-e4b": {
+   "axes": {
+    "calibration": 81.517233540399,
+    "cost": 70.74636118712607,
+    "intelligence": 55.488532895897606,
+    "speed": 88.71017618901561
+   },
+   "composite_ci95": {
+    "A": [
+     69.15759852337868,
+     73.47292835439181
+    ],
+    "B": [
+     64.43593220419316,
+     70.01512348524564
+    ],
+    "C": [
+     49.28143452065443,
+     71.22733225579768
+    ]
+   },
+   "decision_limit": {
+    "limit_s": 10.0,
+    "n_over_limit": 0,
+    "n_over_limit_answered_ok": 0,
+    "rule": "latency_s > limit -> failed",
+    "speed_basis": "all decisions given (lane items in the raw), measured latency_s",
+    "speed_n": 1500,
+    "treatment": "share"
+   },
+   "kind": "remeasured",
+   "model_pin": "ninhnv/chon-1.0-e4b@b7b9ecdaa25d83696fb1c82c3b0acaff2923137a",
+   "raw_sha256": "a48a935bd4857c5790239cfc39c28f4fd75c52a52051deb3f01d25ff2a5484b0",
+   "replaces_raw_sha256": "e5258cc6e1d4cfa34fd4b2ee2ee1602941e3848b10012e7b3273db704f05d42f",
+   "scored_input_sha256": "171680e9f2f7b884b7a206e15d280bdfc189c2b35ad9c1f578709902c59a6892",
+   "source_sha256": {
+    "entry_path": "/home/flori/jobs/jevbench-add-requests-20260919/workers/r185-e4b-score/ENTRIES-CHONE4B-R185.json",
+    "entry_sha256": "fbde31b54425454846820cf17d296b4b2b120fea5cc9b5a81ee0717131096de1",
+    "frozen": {
+     "path": "/home/flori/jobs/jevbench-add-requests-20260919/workers/r185-e4b-score/field-chone4b/out-frozen/jevbench-v1.6.0-results.json",
+     "sha256": "c7b25ef70ab34668cf6484da483e4a92358fb3adf46997eab78e0319a61c1fdc"
+    },
+    "handoff_sha256": "ef5c0790c8284d5f1d0c11108c6512276e5fb12f196ab1c4caa3d063c5082caf",
+    "raw_hash_source": "in-place verification; raw not copied",
+    "raw_sha256": "a48a935bd4857c5790239cfc39c28f4fd75c52a52051deb3f01d25ff2a5484b0",
+    "raw_verified_in_place": true,
+    "registry_sha256": "a71058043b997293c8c6585ecdca916cd80da58eaa88cd9e69f1c597903e043a",
+    "v17-off": {
+     "path": "/home/flori/jobs/jevbench-add-requests-20260919/workers/r185-e4b-score/field-chone4b/out-v17-off/jevbench-v1.6.0-results.json",
+     "sha256": "555317981d285898f425c9a0164f9f418155c8ea64cd54c1556d6278027d70fb"
+    },
+    "v17-share": {
+     "path": "/home/flori/jobs/jevbench-add-requests-20260919/workers/r185-e4b-score/field-chone4b/out-v17-share/jevbench-v1.6.0-results.json",
+     "sha256": "171680e9f2f7b884b7a206e15d280bdfc189c2b35ad9c1f578709902c59a6892"
+    }
+   },
+   "supersedes_base_row": {
+    "endpoint_kind": "cpu",
+    "key": "chon-1.0-e4b",
+    "raw_sha256": "e5258cc6e1d4cfa34fd4b2ee2ee1602941e3848b10012e7b3273db704f05d42f"
+   },
+   "treatment": "ranked"
+  }
+ },
+ "scorers": {
+  "a2_cells_v16": "afd034efe27bde12f2ebbfd12c4c0792c93214e1aa9a63deecb0e83a0184c990",
+  "build_categories_v16": "40eb50f3d7fea2693b4478c4b89f8bfb957dd17776add491935742e3b9354e73",
+  "build_topics_v16": "ec04ab598162bfc4340ffa7916a06573eb1222132c61e47ab772045bc67ced78",
+  "decisive_v16": "80b9ccf43e58dddb1b2a77e0a33aba8a9f7337a3a9a639afc7264218bbf8918f",
+  "noul_method_v16": "119e59486ab3300b972fbcbadb0fe1dceceb124287607375aa61c66063c607d0",
+  "pins_v17": "b50cc00dd2cb0ba46157eb6a2bda620255f3ff54404025e992bc7962dfff2f8b",
+  "run_under_v17": "efb194b2ea350db59be37e5e72af71f809f763a2476cd6f521adf6f4fd90a64f",
+  "score_v15": "0931e05c6410b1b971201834397cb609cdb25f942723c50375632952f6dcc447",
+  "score_v15_headlineA": "826f2cbcb57007ec8a161e6eb0111182b8a656c0638027c6c78022a858fd8e2c",
+  "score_v16": "02132271117653e6302c509232a581d0094f0e78eac8b1bfc67596fd5d5097e9",
+  "score_v17": "6363458d208a52f4ad5aaf73027cad1b7e0358ff962e581d57a3cc462c8f1978"
+ }
+}

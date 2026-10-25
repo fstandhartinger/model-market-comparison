@@ -6978,6 +6978,21 @@
             "fact": "Qwen3.5-2B-family fine-tune with a BF16 backbone and FP32 option-pointer decision head; native author serving implementation."
           }
         ]
+      },
+      "scaledown-classify-1": {
+        "arch": "closed-api",
+        "badges": {
+          "derivation": null,
+          "params": null,
+          "quant": null
+        },
+        "evidence": [
+          {
+            "url": "https://raw.githubusercontent.com/fstandhartinger/model-market-comparison/main/data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.3-results.json",
+            "kind": "artifact",
+            "fact": "Artifact key scaledown-classify-1 records the ScaleDown vendor-hosted classify-1 API with no public evaluated weights or serving code; no backbone, parameter count or quantization is inferred."
+          }
+        ]
       }
     },
     "imagejevbench": {
