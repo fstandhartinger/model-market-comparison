@@ -1,0 +1,180 @@
+{
+ "actual-refusals": {
+  "log_sha256": "968b18a5504de9767d49275bd4809d50c8681504888cda3114eadc5b3ea4f13a",
+  "status": "PASS"
+ },
+ "candidate_fairness": "PENDING",
+ "candidate_publication_review": "PENDING",
+ "categories-remediation": {
+  "cancelled": 0,
+  "fail": 0,
+  "log_sha256": "69273ca8a3945ccb14ffed647f955ec24c8a13a7d73730550cfcaed76ebc4211",
+  "pass": 5,
+  "skipped": 0,
+  "status": "PASS",
+  "tests": 5
+ },
+ "double-rebuild": {
+  "hashes": {
+   "app/api/jevbench/v1.7.5/route.ts": "664df535a172bfa5f8509309821ce47cd0ad1160a4598559d12bf4d15f6e579e",
+   "app/jev-models/v1.7.5/page.tsx": "dc64f529e480b915659cb615b9aa7c9b3e7800c8de96987a28682d2141179c6b",
+   "components/JevBenchReleaseVersionNav.tsx": "27ddbb3b2932813671d3d485922ea72c61fc2aa90943ad4101500ac71f3d63d8",
+   "components/JevReleaseHistory.tsx": "b451a50bbe05a5f389d471f9c8c0747c07cfa102285eb6ef1aac3d18e18204bd",
+   "data/jevbench-architecture.json": "91934478fc4fa8f3b33e3af5014c261c52bd8810144e153a3283a442f249a9ba",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.5-carry.json": "271d1fc77a136a04a1eb6deb5480c52d4211eb2b66b2ac8bb31e80867e69003a",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.5-categories.json": "6188d974d9a3aad714cd6bd443ee2408c24386d21d40e6647c49a211f6d6ad33",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.5-history-carry.json": "334e851944e92383ab3071e52b3012040c7023d0fe236395953169ebee8f0459",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.5-history.json": "5cd8c1332226ea9c179883d2285c0d8b8cc593ae38f2645197364a7ddd9c83c1",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.5-proof.json": "1eb9ad83d20b9660b797b721e902f9c1f8f234ca1d5a9f5e1d2e380458197e09",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.5-publication.json": "a93cb37db4b20656af0018270f4a2c84e9317d06b3e4a0ecf0860e9b83ba7e76",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.5-results.json": "843622f0c326aa90732791b349821bf53903cab11b83304543fa5852ee179468",
+   "lib/jevbench-categories.mjs": "b2a3e8ff8f39bfa8683ff09fb1d78652d57c4c063bad306ff6334007c0b665c1",
+   "lib/jevbench-live-board.mjs": "6ff7567a47554fdde96a4b9bc9a5974983ad8e8047b43910d7203750b1c5f58e",
+   "lib/jevbench-releases.mjs": "4c88ea1ee6012ee4c77f3380868c68d62f43f4623e4346bb65634fad904da342",
+   "lib/jevbench-v175-release.mjs": "877f7cd83d8c56766bdccadc749c48b63183b2bfb2c299c2e3611f12d70afe65",
+   "r190/v175/preview/card.png": "6c69026b038ce0fb0cddeb06b92b9d106b901dea23b0d3cd42462274c67541ef",
+   "r190/v175/preview/index.html": "447c50b6db6e426e9cd390e47cbec1646fefe5f3a5f6cff28d1e48898b66eae5",
+   "r190/v175/receipts/topfive-extended.json": "224ca884421490b2bf2b8a38ba6afafb29b6e03643b7bd6f158dda44a50955bd",
+   "r190/v175/receipts/topfive-sliders.json": "9716545c3ad5148692195bea1a54593c0e420c298d4067791d9c716ad635c73d",
+   "test/cr-205-jev-page-structure.test.mjs": "dbec158a762ef7ac6d04b4515664b800994c4f5641da3446a55cf60b7576d06e",
+   "test/cr-303-feed-split.test.mjs": "0f879636b4dfb3178e42caff6aa3d2a82292d798e901b4ed5ce1ddb1151fae22",
+   "test/fixtures/jevbench-v175-ranks.json": "1b9bc2ef07dc8a04efabd2dcff309d876e62317ac89951830fee7483c6277d31",
+   "test/jevbench-feed-live-board.test.mjs": "d024bf01716cafc44a205d92c6f58e3f267ced87c8bc62a7ab1e0ea3b35e3e14",
+   "test/jevbench-v1630-open-fold.test.mjs": "0f25b4a0a2e51fc781cc53bd31b5a77819fdbbf08348bd510beb2a4d676cb5dc",
+   "test/jevbench-v1630-release.test.mjs": "b4130fd7969c011f44dad3d864d1a0dbb99a8220e355f0a9e84374e2384c6751",
+   "test/jevbench-v1637-release.test.mjs": "fa3b6ed4149ce844b2cdd0f3104f3a30f5b143ec5ea2694876bb65ca6e7456a3",
+   "test/jevbench-v170-release.test.mjs": "7cb6f43a89a509f7f7009fda8aa1e0bb3b21ea1df0785c31644e3088a7262be0",
+   "test/jevbench-v171-release.test.mjs": "bfbba1952f223c221527f6f4110099e2a38ad5e87430fa77bc4383ed58119d60",
+   "test/jevbench-v173-release.test.mjs": "490f802e97edd68c0b6daa71f177be264c5c9dc201adb82670ddaea1e540def1",
+   "test/jevbench-v175-release.test.mjs": "7ee69ff9344eab35be54e4b4b35f11a6e56ca441422c9bd0991ef20bcc27f291"
+  },
+  "identical": true,
+  "passes": 2
+ },
+ "fairness-text": {
+  "log_sha256": "4152f290016a799599244b375fee09baa0b7fc9b9c49cb03ef786856ef5053d8",
+  "status": "PASS"
+ },
+ "final-sanity": {
+  "log_sha256": "3c961b94e89a44fd36b3f1c608cc4bdf2928204351b11fefbdb2d31dd8fa807a",
+  "status": "PASS"
+ },
+ "final-synthetic-release": {
+  "cancelled": 0,
+  "fail": 0,
+  "log_sha256": "aca058e2b69b364944ab1d114548499dc2f8e132c50a6a6fc078fc9d5fd6556c",
+  "pass": 8,
+  "skipped": 1,
+  "status": "PASS",
+  "tests": 9
+ },
+ "flip-actual-dry-run": {
+  "log_sha256": "906fdd17213f1f94b2f256287ddc84c76af1b3cf5afb45c9e283a1d22491c754",
+  "status": "REFUSED_AS_REQUIRED"
+ },
+ "freeze-actual-dry-run": {
+  "log_sha256": "bfd5dac7ddb085270b6636e8352a6215011e9e4f3d197fecf2f96991fdaf3a55",
+  "status": "REFUSED_AS_REQUIRED"
+ },
+ "fulltest": {
+  "cancelled": 0,
+  "fail": 0,
+  "log_sha256": "a30f02e8a402023b19cc6b50819f19faddb83d90f419a23593c12e87ef0957be",
+  "pass": 3786,
+  "skipped": 6,
+  "status": "PASS",
+  "tests": 3792
+ },
+ "helper-controls": {
+  "checks": [
+   "injected PENDING fairness refused by both dry-run helpers; manifest unchanged",
+   "synthetic FAIR/hash-bound fixture: dry-run flip and full freeze succeed; no manifest or seal write",
+   "tampered fairness receipt refused",
+   "hash-bound non-FAIR receipt content refused",
+   "conditional release review refused",
+   "unbound predecessor refused by both helpers"
+  ],
+  "status": "PASS"
+ },
+ "helpers": {
+  "log_sha256": "cf09de73f2ae56304c8db0528dce20f93b00afe9f1c56c8238a3e6c673c5d5c4",
+  "status": "PASS"
+ },
+ "initial-gates": {
+  "initial_build": "Superseded by the category registration fix and refreshed preview proof binding; stopped at 514/599 pages to avoid spending more compute on an obsolete artifact. Final build is a fresh gate.",
+  "initial_full_suite": "Stopped after detecting two failures: production-link test ran before the build finished, and category registration omitted v1.7.2. The category list and generator were fixed; remediation passes 5/5. Final full suite runs only after final build succeeds.",
+  "initial_targeted": "One route-coverage expectation omitted v1.7.5; fixed and remediation file passes 41/41."
+ },
+ "placements": {
+  "log_sha256": "2e0691ac099b481567b277be8621ec347d7569b709e95d7ddb37113351b177e0",
+  "status": "PASS"
+ },
+ "prepare": {
+  "log_sha256": "0818a0075c8058d92416cffe26ab5ac942c33b3bbccda45ad82a0616fba84511",
+  "status": "PASS"
+ },
+ "preview-binding": {
+  "log_sha256": "e9e0c4ca2872cc8bdfbfa098ac99b314cb3380b4e8f1d8dbe7769af66518405f",
+  "status": "PASS"
+ },
+ "preview-check": {
+  "log_sha256": "efaa05578cf87b55c0d48b9253f8e8aa02d4f63332037c90d34ceb40c1cdfb15",
+  "status": "PASS"
+ },
+ "production-build": {
+  "exit_code": 0,
+  "log_sha256": "e99aa1b139435b6be8354fb827bad0792936a62ee3a80191bc18252d5795beaa",
+  "status": "PASS"
+ },
+ "public-prose": {
+  "log_sha256": "aa810ed478d441d2ba47db4fa852393f96233ed26446e2ea2100593c9848dc6a",
+  "status": "PASS"
+ },
+ "repro": {
+  "log_sha256": "7fe93e6496ad046d6c08ccc9027b18c933b3b9c3c351d2b8f2cd4f12a286c6ee",
+  "status": "PASS"
+ },
+ "source-check": {
+  "log_sha256": "a96e678a52e60af018a2257c5cfecbefc1c38315a2dd3b48e0f4c962865821cb",
+  "status": "PASS"
+ },
+ "synthetic-tests": {
+  "cancelled": 0,
+  "fail": 0,
+  "log_sha256": "cd2e367c908c488b32c83c9a38a3853ae330027d3a3d8f6ab87c1abbd70221aa",
+  "pass": 74,
+  "skipped": 4,
+  "status": "PASS",
+  "tests": 78
+ },
+ "targeted-release-tests": {
+  "final_full_suite_includes_fix": true,
+  "initial": {
+   "cancelled": 0,
+   "fail": 1,
+   "log_sha256": "b4d9049aebad69b518ad82e6e4a8e89cf23ae05cdc61d7734fe1bbfd01ad562d",
+   "pass": 137,
+   "skipped": 5,
+   "tests": 143
+  },
+  "remediation": {
+   "cancelled": 0,
+   "fail": 0,
+   "log_sha256": "d3b56d6516983d18bd3e092cdb4ba5b231e44db507501737c5605818fe6b3342",
+   "pass": 41,
+   "skipped": 0,
+   "tests": 41
+  },
+  "remediation_file": "test/cr-205-jev-page-structure.test.mjs",
+  "status": "PASS_AFTER_ROUTE_COVERAGE_FIX"
+ },
+ "typescript": {
+  "exit_code": 0,
+  "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "status": "PASS"
+ },
+ "validator": {
+  "log_sha256": "9e44b4451c5abe483a1e23273aca48af39e9bc1c1e0be2a80fca472c3ea8c75c",
+  "status": "PASS"
+ }
+}

@@ -7009,6 +7009,22 @@
           }
         ],
         "note": "31B denotes the declared base class; base plus adapter, no merged checkpoint. Calibration and commit-floor configuration are disclosed in the row."
+      },
+      "sieve-31b-v2": {
+        "arch": "open-llm-decoder",
+        "badges": {
+          "derivation": "fine-tune",
+          "params": "31B",
+          "quant": "BF16"
+        },
+        "evidence": [
+          {
+            "kind": "model-card",
+            "url": "https://huggingface.co/sthanika-ai/Sieve-31B-v2/blob/2c0d64310ac944b350a9e19f1f54dcd9a5bed3eb/README.md",
+            "fact": "Pinned author model card identifies a full fine-tune of the 60 text decoder layers of google/gemma-4-31B-it, saved as a PEFT adapter; author training and serving temperature 8.5495."
+          }
+        ],
+        "note": "31B denotes the declared base class. BF16 base plus adapter containing fine-tuned decoder layers; no merged checkpoint. Own forward-only shim around author engine; datasets unidentified and contamination unchecked."
       }
     },
     "imagejevbench": {

@@ -1,0 +1,133 @@
+{
+ "carried_rows": 291,
+ "carried_rows_equal_except": [
+  "rank",
+  "ranks"
+ ],
+ "method": {
+  "decision_limit_s": 10,
+  "label": "v1.7",
+  "rule": "latency_s > 10.000 s -> failed",
+  "treatment": "share"
+ },
+ "new_rows": {
+  "sieve-31b-v2": {
+   "axes": {
+    "calibration": 93.43694381196171,
+    "cost": 50.90312025306687,
+    "intelligence": 68.69375926172683,
+    "speed": 85.61790755169669
+   },
+   "base_model": "google/gemma-4-31B-it",
+   "composite_ci95": {
+    "A": [
+     68.88815427349451,
+     71.47535159893336
+    ],
+    "B": [
+     67.75856457011294,
+     71.69528834811344
+    ],
+    "C": [
+     68.88815427349451,
+     71.47535159893336
+    ]
+   },
+   "decision_limit": {
+    "limit_s": 10.0,
+    "n_over_limit": 0,
+    "n_over_limit_answered_ok": 0,
+    "rule": "latency_s > limit -> failed",
+    "speed_basis": "all decisions given (lane items in the raw), measured latency_s",
+    "speed_n": 1500,
+    "treatment": "share"
+   },
+   "model_pin": "sthanika-ai/Sieve-31B-v2@2c0d64310ac944b350a9e19f1f54dcd9a5bed3eb + google/gemma-4-31B-it@842da3794eaa0b77d5f08bae87a17459d91ff475",
+   "price_reference": {
+    "base": "google/gemma-4-31B-it",
+    "in": 0.09,
+    "listing": "google/gemma-4-31b-it",
+    "out": 0.34,
+    "output_usage": 0
+   },
+   "raw_sha256": "6958563fdc1e88759f0a6ce82c6ec24e05b63a42cda7ec4249e54f2d0c77491c",
+   "scored_input_sha256": "db2289a36c22eac5ac03125690c2c9dbb9d1b024e662d17beb80e240bdd85859",
+   "source_sha256": {
+    "entry_path": "/home/flori/jobs/jevbench-auto-intake/r24-score/ENTRIES-R13A-LEAD.json",
+    "entry_sha256": "93b253178ba49d2d3781f2db970f53ef75f3a0db0c3d3954cb8dccb3f0c0db92",
+    "frozen": {
+     "path": "/home/flori/jobs/jevbench-auto-intake/r24-score/field-r13a/out-frozen/jevbench-v1.6.0-results.json",
+     "sha256": "a8a7dfc57b85367a4db2d4041f41294add294635e5dedd96bc879ea7f66108f9"
+    },
+    "raw_sha256": "6958563fdc1e88759f0a6ce82c6ec24e05b63a42cda7ec4249e54f2d0c77491c",
+    "raw_verified_in_place": true,
+    "registry_sha256": "66b4283ac5873ecf35a299ac0df42923f0eab96218d45d082e9b18a7e8ca80a4",
+    "scored_source_note": "Field scores retained exactly; source BUILD-META entry digest predates reviewed prose fixes F1-F4. Source entry verified against the reviewed handoff hash.",
+    "v17-off": {
+     "path": "/home/flori/jobs/jevbench-auto-intake/r24-score/field-r13a/out-v17-off/jevbench-v1.6.0-results.json",
+     "sha256": "990e78c7470950b9eab2bdf2e08cf64408490b9d4c417f256b3ed1ce57139171"
+    },
+    "v17-share": {
+     "path": "/home/flori/jobs/jevbench-auto-intake/r24-score/field-r13a/out-v17-share/jevbench-v1.6.0-results.json",
+     "sha256": "db2289a36c22eac5ac03125690c2c9dbb9d1b024e662d17beb80e240bdd85859"
+    }
+   },
+   "treatment": "ranked"
+  }
+ },
+ "predecessor": {
+  "publication_sha256": "955ea8efba661761560a9b609ec30eeb034f8cf65b8ee8e578ebf2f0102625e6",
+  "revision": "v1.7.4"
+ },
+ "pricing_module_sha256": "aa2afcd5a58d0c4cc0e3d6867d590c70b6ac58e971410c27faf9628f97bcf8b7",
+ "publication_approval": {
+  "asks": [
+   {
+    "admission": "custody #26740 item 3a, hash word #26772; consumed #26857",
+    "handoff": "board #26868",
+    "key": "sieve-31b-v2",
+    "relay": "regular queue"
+   }
+  ],
+  "button_tap": false,
+  "fairness_check": {
+   "path": "workers/r190-sieve-fair/RESULT.json",
+   "verdict": "PENDING"
+  },
+  "fresh_baseline": "v1.7.4",
+  "go": {
+   "channel": "laptop chat",
+   "date": "2026-10-25",
+   "quote": "3 ja",
+   "recorded_in": "DECISIONS.md 2026-10-25 setup-review-open-questions-answered"
+  },
+  "status": "GO (fair top-five change, Florian rule 25 Oct 2026)",
+  "top_five_effect": "changed",
+  "top_five_preview": {
+   "path": "r190/v175/receipts/topfive-diff.json",
+   "sha256": "fd5663b8c4fc6f98f4e59345ea2ea32c6b75419e12491cd69a13787c534c89f3"
+  }
+ },
+ "remeasured_rows": {},
+ "revision": "v1.7.5",
+ "schema_version": 1,
+ "scorers": {
+  "a2_cells_v16": "afd034efe27bde12f2ebbfd12c4c0792c93214e1aa9a63deecb0e83a0184c990",
+  "build_categories_v16": "40eb50f3d7fea2693b4478c4b89f8bfb957dd17776add491935742e3b9354e73",
+  "build_topics_v16": "ec04ab598162bfc4340ffa7916a06573eb1222132c61e47ab772045bc67ced78",
+  "decisive_v16": "80b9ccf43e58dddb1b2a77e0a33aba8a9f7337a3a9a639afc7264218bbf8918f",
+  "noul_method_v16": "119e59486ab3300b972fbcbadb0fe1dceceb124287607375aa61c66063c607d0",
+  "pins_v17": "b50cc00dd2cb0ba46157eb6a2bda620255f3ff54404025e992bc7962dfff2f8b",
+  "run_under_v17": "efb194b2ea350db59be37e5e72af71f809f763a2476cd6f521adf6f4fd90a64f",
+  "score_v15": "0931e05c6410b1b971201834397cb609cdb25f942723c50375632952f6dcc447",
+  "score_v15_headlineA": "826f2cbcb57007ec8a161e6eb0111182b8a656c0638027c6c78022a858fd8e2c",
+  "score_v16": "02132271117653e6302c509232a581d0094f0e78eac8b1bfc67596fd5d5097e9",
+  "score_v17": "6363458d208a52f4ad5aaf73027cad1b7e0358ff962e581d57a3cc462c8f1978"
+ },
+ "source_inputs": {
+  "cells_sha256": "e888755e64cebeae15eef3810c51b7d26ebba2193b3d9f7798557d07ce78dd54",
+  "entry_sha256": "561bb4bcce4f7cd2ae230cb4855a6b678ce0b7fd9381ddd256a05e775b6890e5",
+  "scored_rows_sha256": "c16e4f19d030e1aa69a69354633daa1817f62faf51210d0649a21f6bbd4461cc"
+ },
+ "topfive_diff_sha256": "fd5663b8c4fc6f98f4e59345ea2ea32c6b75419e12491cd69a13787c534c89f3"
+}

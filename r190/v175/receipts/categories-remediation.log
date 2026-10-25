@@ -1,0 +1,35 @@
+TAP version 13
+# Subtest: CR-257: every JevBench release page from v1.5.0 on is covered by a category artifact
+ok 1 - CR-257: every JevBench release page from v1.5.0 on is covered by a category artifact
+  ---
+  duration_ms: 12.580833
+  ...
+# Subtest: CR-257: the live JevBench release has category values for every ranked system
+ok 2 - CR-257: the live JevBench release has category values for every ranked system
+  ---
+  duration_ms: 248.760855
+  ...
+# Subtest: CR-257: the live ImageJevBench release has category values for every ranked system
+ok 3 - CR-257: the live ImageJevBench release has category values for every ranked system
+  ---
+  duration_ms: 99.03519
+  ...
+# Subtest: CR-257: both compare views receive the categories and draw the two category radars
+ok 4 - CR-257: both compare views receive the categories and draw the two category radars
+  ---
+  duration_ms: 29.291387
+  ...
+# Subtest: CR-257: category artifacts are aggregate-only and internally consistent
+ok 5 - CR-257: category artifacts are aggregate-only and internally consistent
+  ---
+  duration_ms: 11.981974
+  ...
+1..5
+# tests 5
+# suites 0
+# pass 5
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 560.069838

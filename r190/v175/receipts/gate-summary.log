@@ -1,0 +1,132 @@
+{
+ "synthetic-tests": {
+  "status": "PASS",
+  "tests": 78,
+  "pass": 74,
+  "fail": 0,
+  "skipped": 4,
+  "cancelled": 0,
+  "log_sha256": "cd2e367c908c488b32c83c9a38a3853ae330027d3a3d8f6ab87c1abbd70221aa"
+ },
+ "final-synthetic-release": {
+  "status": "PASS",
+  "tests": 9,
+  "pass": 8,
+  "fail": 0,
+  "skipped": 1,
+  "cancelled": 0,
+  "log_sha256": "aca058e2b69b364944ab1d114548499dc2f8e132c50a6a6fc078fc9d5fd6556c"
+ },
+ "fulltest": {
+  "status": "PASS",
+  "tests": 3792,
+  "pass": 3786,
+  "fail": 0,
+  "skipped": 6,
+  "cancelled": 0,
+  "log_sha256": "a30f02e8a402023b19cc6b50819f19faddb83d90f419a23593c12e87ef0957be"
+ },
+ "categories-remediation": {
+  "status": "PASS",
+  "tests": 5,
+  "pass": 5,
+  "fail": 0,
+  "skipped": 0,
+  "cancelled": 0,
+  "log_sha256": "69273ca8a3945ccb14ffed647f955ec24c8a13a7d73730550cfcaed76ebc4211"
+ },
+ "initial-gates": {
+  "initial_targeted": "One route-coverage expectation omitted v1.7.5; fixed and remediation file passes 41/41.",
+  "initial_full_suite": "Stopped after detecting two failures: production-link test ran before the build finished, and category registration omitted v1.7.2. The category list and generator were fixed; remediation passes 5/5. Final full suite runs only after final build succeeds.",
+  "initial_build": "Superseded by the category registration fix and refreshed preview proof binding; stopped at 514/599 pages to avoid spending more compute on an obsolete artifact. Final build is a fresh gate."
+ },
+ "targeted-release-tests": {
+  "status": "PASS_AFTER_ROUTE_COVERAGE_FIX",
+  "initial": {
+   "tests": 143,
+   "pass": 137,
+   "fail": 1,
+   "skipped": 5,
+   "cancelled": 0,
+   "log_sha256": "b4d9049aebad69b518ad82e6e4a8e89cf23ae05cdc61d7734fe1bbfd01ad562d"
+  },
+  "remediation_file": "test/cr-205-jev-page-structure.test.mjs",
+  "remediation": {
+   "tests": 41,
+   "pass": 41,
+   "fail": 0,
+   "skipped": 0,
+   "cancelled": 0,
+   "log_sha256": "d3b56d6516983d18bd3e092cdb4ba5b231e44db507501737c5605818fe6b3342"
+  },
+  "final_full_suite_includes_fix": true
+ },
+ "actual-refusals": {
+  "status": "PASS",
+  "log_sha256": "968b18a5504de9767d49275bd4809d50c8681504888cda3114eadc5b3ea4f13a"
+ },
+ "prepare": {
+  "status": "PASS",
+  "log_sha256": "0818a0075c8058d92416cffe26ab5ac942c33b3bbccda45ad82a0616fba84511"
+ },
+ "source-check": {
+  "status": "PASS",
+  "log_sha256": "a96e678a52e60af018a2257c5cfecbefc1c38315a2dd3b48e0f4c962865821cb"
+ },
+ "fairness-text": {
+  "status": "PASS",
+  "log_sha256": "4152f290016a799599244b375fee09baa0b7fc9b9c49cb03ef786856ef5053d8"
+ },
+ "repro": {
+  "status": "PASS",
+  "log_sha256": "7fe93e6496ad046d6c08ccc9027b18c933b3b9c3c351d2b8f2cd4f12a286c6ee"
+ },
+ "validator": {
+  "status": "PASS",
+  "log_sha256": "9e44b4451c5abe483a1e23273aca48af39e9bc1c1e0be2a80fca472c3ea8c75c"
+ },
+ "helpers": {
+  "status": "PASS",
+  "log_sha256": "cf09de73f2ae56304c8db0528dce20f93b00afe9f1c56c8238a3e6c673c5d5c4"
+ },
+ "preview-check": {
+  "status": "PASS",
+  "log_sha256": "efaa05578cf87b55c0d48b9253f8e8aa02d4f63332037c90d34ceb40c1cdfb15"
+ },
+ "preview-binding": {
+  "status": "PASS",
+  "log_sha256": "e9e0c4ca2872cc8bdfbfa098ac99b314cb3380b4e8f1d8dbe7769af66518405f"
+ },
+ "public-prose": {
+  "status": "PASS",
+  "log_sha256": "aa810ed478d441d2ba47db4fa852393f96233ed26446e2ea2100593c9848dc6a"
+ },
+ "placements": {
+  "status": "PASS",
+  "log_sha256": "2e0691ac099b481567b277be8621ec347d7569b709e95d7ddb37113351b177e0"
+ },
+ "final-sanity": {
+  "status": "PASS",
+  "log_sha256": "3c961b94e89a44fd36b3f1c608cc4bdf2928204351b11fefbdb2d31dd8fa807a"
+ },
+ "typescript": {
+  "status": "PASS",
+  "exit_code": 0,
+  "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+ },
+ "production-build": {
+  "status": "PASS",
+  "exit_code": 0,
+  "log_sha256": "e99aa1b139435b6be8354fb827bad0792936a62ee3a80191bc18252d5795beaa"
+ },
+ "flip-actual-dry-run": {
+  "status": "REFUSED_AS_REQUIRED",
+  "log_sha256": "906fdd17213f1f94b2f256287ddc84c76af1b3cf5afb45c9e283a1d22491c754"
+ },
+ "freeze-actual-dry-run": {
+  "status": "REFUSED_AS_REQUIRED",
+  "log_sha256": "bfd5dac7ddb085270b6636e8352a6215011e9e4f3d197fecf2f96991fdaf3a55"
+ },
+ "candidate_fairness": "PENDING",
+ "candidate_publication_review": "PENDING"
+}

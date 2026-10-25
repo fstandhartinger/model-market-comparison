@@ -1,0 +1,40 @@
+{
+ "sieve-31b-v2": {
+  "entry": {
+   "author": "sthanika-ai (Hugging Face)",
+   "base_model": "google/gemma-4-31B-it",
+   "code_revision": "Author's Sieve library at 3ff9195c902ee1882e3e4bcfcb5bc733b8fcbb7f (sieve-decisions 0.3.3) and decider-ai 1.6.0, served through our own shim: a forward-only wrapper around the author's SlotsEngine. The shim passes state and questions unchanged and returns native answers and usage unchanged, replacing only the model label. Native unsupported requests become HTTP 422; other exceptions stop the run. No evaluator prompt building, normalisation, truncation, selection, calibration or post-processing. Author defaults: chat layout, thinking off, one independent answer slot per question, option-label logits with softmax temperature 8.5495, bidirectional global attention, max_tokens 32,768, fwd_tokens 16,384, full_release True. BF16 base plus adapter containing the full fine-tuned decoder layers; no merged checkpoint or quantisation. Base google/gemma-4-31B-it at 842da3794eaa0b77d5f08bae87a17459d91ff475; adapter at 2c0d64310ac944b350a9e19f1f54dcd9a5bed3eb. Source reviewed before measurement; author code ran in an offline disposable environment. Runtime: torch 2.8.0, transformers 5.17.0, CUDA 12.8.",
+   "cost_basis": "ESTIMATE (*est.), base google/gemma-4-31B-it priced through frozen pricing_v15 (aa2afcd5a58d0c4cc0e3d6867d590c70b6ac58e971410c27faf9628f97bcf8b7) as google/gemma-4-31b-it at USD 0.09/M input and USD 0.34/M output. Native usage: 714,573 input and 0 output tokens across 1,485 answered items, matching the offline count exactly. Under the published zero-output convention for native-probability rows the output term is zero. The 15 HTTP 422 refusals carry no usage. Common 1,485-item basis: USD 0.043307455/1,000 decisions, 0.670449504 times the unchanged USD 0.06459465517241379 cap. All 1,500: USD 0.042874380/1,000, 0.663745009 times cap. Estimated model tariff, not charged rental or a host quote.",
+   "disclosure": "First measurement of Sieve-31B-v2; one new self-hosted row replacing nothing. Sieve-31B v1 was not measured here. Full fine-tune of 60 text decoder layers of google/gemma-4-31B-it, stored as a PEFT adapter. No shared adapter LFS objects across 15 compared repositories; this establishes byte difference only, not independent training. Jev-compatible only. Our own shim is a forward-only wrapper around the author's engine, with no evaluator prompt building, selection or post-processing. Native choice, noul and score probabilities use the author's declared training and serving temperature 8.5495. The training configuration identifies that temperature in the training objective and at inference; it does not identify a separate post-hoc fit on JevBench public items. Training datasets are not identified. We did not inspect training examples or check overlap with public or sealed JevBench items; contamination is unchecked. The author's public evaluation is Decision Index 0.3, a separate benchmark. The native formatter normalises each distribution and rounds probabilities to 4 decimals; maximum observed returned sum error 0.0002. Author defaults were used; no other setting measured. The engine's 32,768-token limit natively refused 15 preregistered long items before GPU work, without truncation. All 15 returned HTTP 422 and were scored as misses; the other 1,485 of 1,500 returned HTTP 200. No unexpected failure. Zero decisions exceeded 10 seconds; the 15 context refusals remain misses. Loopback p50 0.138 s, p95 0.248 s, maximum 0.475 s; adjusted common self-hosted p50 0.425271 s. Native input usage 714,573 equals the offline count; output usage is zero. Determinism: 50/50 requests bit-identical, no argmax flips. One attempt, no discarded scored attempt. Cost is an ESTIMATE from the base-model market reference.",
+   "display": "Sieve-31B-v2",
+   "endpoint_condition": "Evaluator-owned rented Verda GPU, one NVIDIA RTX PRO 6000 Blackwell Server Edition 96 GB, Finland, EU. One attempt, measured 25 Oct 2026. Author engine behind our own loopback shim in an offline, read-only container with empty environment and hash-checked model and code. Complete 1,500-request run; scored loop 237.8 s. About USD 1.31 GPU rental, separate from the estimated model tariff.",
+   "endpoint_kind": "gpu",
+   "lane": "selfhosted",
+   "licence": "Apache-2.0 per model card and LICENSE on weights and author library; base google/gemma-4-31B-it public and ungated under its own terms. No serving code redistributed here.",
+   "ranked": true,
+   "repo": "https://huggingface.co/sthanika-ai/Sieve-31B-v2",
+   "revision": "2c0d64310ac944b350a9e19f1f54dcd9a5bed3eb",
+   "support": {
+    "choice": "native",
+    "noul": "native",
+    "score": "native"
+   }
+  },
+  "expect": {
+   "failed": 15,
+   "input_tokens": 714573,
+   "ok": 1485,
+   "output_tokens": 0,
+   "status_counts": {
+    "200": 1485,
+    "422": 15
+   }
+  },
+  "price_output_zero": "#25647",
+  "pricing_base": "google/gemma-4-31B-it",
+  "raw": "/home/flori/jevbench-sealed/v1.6-run/v1.6-regular-20261012/runs-auto-intake/sieve-31b-v2.raw.jsonl",
+  "tokens": "server",
+  "treatment": "auto",
+  "zero_output": true
+ }
+}

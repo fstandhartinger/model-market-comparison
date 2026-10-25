@@ -1,0 +1,55 @@
+TAP version 13
+# Subtest: v1.7.5 candidate preserves every carried score, CI, diagnostic, category and dated carry
+ok 1 - v1.7.5 candidate preserves every carried score, CI, diagnostic, category and dated carry
+  ---
+  duration_ms: 178.188509
+  ...
+# Subtest: v1.7.5 PENDING stays unavailable to board, API and navigation
+ok 2 - v1.7.5 PENDING stays unavailable to board, API and navigation # SKIP published
+  ---
+  duration_ms: 0.246905
+  ...
+# Subtest: v1.7.5 rejects changed carried point estimates or intervals
+ok 3 - v1.7.5 rejects changed carried point estimates or intervals
+  ---
+  duration_ms: 496.858022
+  ...
+# Subtest: v1.7.5 rejects altered new row, dropped row and duplicated row
+ok 4 - v1.7.5 rejects altered new row, dropped row and duplicated row
+  ---
+  duration_ms: 813.974331
+  ...
+# Subtest: v1.7.5 rejects changed category, rank, price pin, provenance and predecessor
+ok 5 - v1.7.5 rejects changed category, rank, price pin, provenance and predecessor
+  ---
+  duration_ms: 1522.479491
+  ...
+# Subtest: v1.7.5 refuses missing release review and changed-top-five publication without GO
+ok 6 - v1.7.5 refuses missing release review and changed-top-five publication without GO
+  ---
+  duration_ms: 661.551886
+  ...
+# Subtest: v1.7.5 merged scope ranks and Capability cap lists match the independent site fixture
+ok 7 - v1.7.5 merged scope ranks and Capability cap lists match the independent site fixture
+  ---
+  duration_ms: 44.926493
+  ...
+# Subtest: version-peer links survive a v1.7.5 artifact and later v1.7 patches
+ok 8 - version-peer links survive a v1.7.5 artifact and later v1.7 patches
+  ---
+  duration_ms: 8.870712
+  ...
+# Subtest: Sieve preserves the full scored row and native zero-output estimate
+ok 9 - Sieve preserves the full scored row and native zero-output estimate
+  ---
+  duration_ms: 1181.622029
+  ...
+1..9
+# tests 9
+# suites 0
+# pass 8
+# fail 0
+# cancelled 0
+# skipped 1
+# todo 0
+# duration_ms 7299.783358
