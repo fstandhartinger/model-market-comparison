@@ -1,0 +1,992 @@
+{
+ "ajev-gemma4-31b-lm6q": {
+  "axes": {
+   "calibration": 91.33817262545804,
+   "cost": 40.983187840250785,
+   "intelligence": 71.46073788705554,
+   "speed": 83.26594430254445
+  },
+  "capability": 81.3994552562568,
+  "jevbench_score": 43.80289771611809,
+  "scores": {
+   "A": 43.80289771611809,
+   "B": 44.58441751573145,
+   "C": 43.80289771611809
+  },
+  "speed": {
+   "adjustment": "x2 + 0.15 s (assumption, not measured)",
+   "n": 124,
+   "p50_s_adjusted": 0.5287848070001019,
+   "p50_s_raw": 0.18939240350005093,
+   "p95_s_adjusted": 0.8915107846001433,
+   "p95_s_raw": 0.37075539230007165
+  },
+  "views": {
+   "Balanced 33:33:33": 39.98808911112762,
+   "Emphasis on Accuracy 60:20:20": 42.852380757084354,
+   "Emphasis on Cost 20:20:60": 33.8619211161105,
+   "Emphasis on Speed 20:60:20": 45.137116470779375,
+   "Intelligence only": 48.010802008180605
+  }
+ },
+ "aleria-judge-1.1.1": {
+  "axes": {
+   "calibration": 86.47467467206147,
+   "cost": 35.82235156694725,
+   "intelligence": 68.89144697352742,
+   "speed": 86.8399852916346
+  },
+  "capability": 77.68306082279445,
+  "jevbench_score": 31.341253638047004,
+  "scores": {
+   "A": 31.341253638047004,
+   "B": 32.0705090915946,
+   "C": 31.341253638047004
+  },
+  "speed": {
+   "adjustment": "x2 + 0.15 s (assumption, not measured)",
+   "n": 124,
+   "p50_s_adjusted": 0.39806589800027725,
+   "p50_s_raw": 0.12403294900013861,
+   "p95_s_adjusted": 0.5200516724001317,
+   "p95_s_raw": 0.18502583620006588
+  },
+  "views": {
+   "Balanced 33:33:33": 28.544715365960382,
+   "Emphasis on Accuracy 60:20:20": 30.92976392669825,
+   "Emphasis on Cost 20:20:60": 23.378916195720404,
+   "Emphasis on Speed 20:60:20": 33.340708850397625,
+   "Intelligence only": 35.36172818916244
+  }
+ },
+ "amazon-strands-decider-26b-a4b": {
+  "axes": {
+   "calibration": 86.70498962717834,
+   "cost": 50.45505166062758,
+   "intelligence": 46.72626896403243,
+   "speed": 88.1968170402543
+  },
+  "capability": 66.71562929560538,
+  "jevbench_score": 54.50483031252733,
+  "scores": {
+   "A": 54.50483031252733,
+   "B": 51.07612113463482,
+   "C": 37.85057660592176
+  },
+  "speed": {
+   "adjustment": "x2 + 0.15 s (assumption, not measured)",
+   "n": 124,
+   "p50_s_adjusted": 0.3654070130000605,
+   "p50_s_raw": 0.10770350650003024,
+   "p95_s_adjusted": 0.4145161137000002,
+   "p95_s_raw": 0.1322580568500001
+  },
+  "views": {
+   "Balanced 33:33:33": 49.84886025192057,
+   "Emphasis on Accuracy 60:20:20": 45.79084089454751,
+   "Emphasis on Cost 20:20:60": 47.36187873705321,
+   "Emphasis on Speed 20:60:20": 58.04011784386181,
+   "Intelligence only": 40.80781154329
+  }
+ },
+ "arcbright-elf-1-31b": {
+  "axes": {
+   "calibration": 91.63064878963459,
+   "cost": 49.70469532224864,
+   "intelligence": 71.94618834920504,
+   "speed": 90.21060860852916
+  },
+  "capability": 81.78841856941982,
+  "jevbench_score": 70.5663539371798,
+  "scores": {
+   "A": 70.5663539371798,
+   "B": 70.67221530232086,
+   "C": 70.5663539371798
+  },
+  "speed": {
+   "adjustment": "x2 + 0.15 s (assumption, not measured)",
+   "n": 124,
+   "p50_s_adjusted": 0.2588350160000573,
+   "p50_s_raw": 0.05441750800002865,
+   "p95_s_adjusted": 0.36805787169995485,
+   "p95_s_raw": 0.10902893584997742
+  },
+  "views": {
+   "Balanced 33:33:33": 65.73066637860781,
+   "Emphasis on Accuracy 60:20:20": 67.77763724504298,
+   "Emphasis on Cost 20:20:60": 57.898526864988966,
+   "Emphasis on Speed 20:60:20": 73.44801715728924,
+   "Intelligence only": 71.098856133272
+  }
+ },
+ "bobcat-1.3": {
+  "axes": {
+   "calibration": 88.42065295586985,
+   "cost": 49.86924343971057,
+   "intelligence": 68.9618046824047,
+   "speed": 89.80390273657844
+  },
+  "capability": 78.69122881913728,
+  "jevbench_score": 69.81112531962518,
+  "scores": {
+   "A": 69.81112531962518,
+   "B": 69.56581771904816,
+   "C": 69.81112531962518
+  },
+  "speed": {
+   "adjustment": "x2 + 0.15 s (assumption, not measured)",
+   "n": 124,
+   "p50_s_adjusted": 0.2789646449999964,
+   "p50_s_raw": 0.06448232249999819,
+   "p95_s_adjusted": 0.37502529429981446,
+   "p95_s_raw": 0.11251264714990725
+  },
+  "views": {
+   "Balanced 33:33:33": 65.31892264321225,
+   "Emphasis on Accuracy 60:20:20": 66.59355407668147,
+   "Emphasis on Cost 20:20:60": 57.975072987674665,
+   "Emphasis on Speed 20:60:20": 73.1890983023944,
+   "Intelligence only": 68.60158797119983
+  }
+ },
+ "chon-1.0-12b-fast": {
+  "axes": {
+   "calibration": 79.86233614365636,
+   "cost": 58.69824993647872,
+   "intelligence": 60.27202384762607,
+   "speed": 84.48072011079003
+  },
+  "capability": 70.06717999564123,
+  "jevbench_score": 68.98181606269121,
+  "scores": {
+   "A": 68.98181606269121,
+   "B": 67.04413277795051,
+   "C": 68.98181606269121
+  },
+  "speed": {
+   "adjustment": "x2 + 0.15 s (assumption, not measured)",
+   "n": 124,
+   "p50_s_adjusted": 0.48675786599985715,
+   "p50_s_raw": 0.16837893299992857,
+   "p95_s_adjusted": 0.732175193199987,
+   "p95_s_raw": 0.2910875965999935
+  },
+  "views": {
+   "Balanced 33:33:33": 65.98518795943674,
+   "Emphasis on Accuracy 60:20:20": 63.57469856118982,
+   "Emphasis on Cost 20:20:60": 62.863575450023994,
+   "Emphasis on Speed 20:60:20": 72.31830403961153,
+   "Intelligence only": 60.27202384762608
+  }
+ },
+ "decisionnode-edge-0.9.2": {
+  "axes": {
+   "calibration": 77.47576560172445,
+   "cost": 71.18546346484604,
+   "intelligence": 26.810082223231646,
+   "speed": 93.09196249361855
+  },
+  "capability": 52.14292391247805,
+  "jevbench_score": 15.334691530618258,
+  "scores": {
+   "A": 15.334691530618258,
+   "B": 12.80154030833392,
+   "C": 10.649091340707123
+  },
+  "speed": {
+   "adjustment": "x2 + 0.15 s (assumption, not measured)",
+   "n": 124,
+   "p50_s_adjusted": 0.20975700199996936,
+   "p50_s_raw": 0.02987850099998468,
+   "p95_s_adjusted": 0.2339307340000289,
+   "p95_s_raw": 0.04196536700001445
+  },
+  "views": {
+   "Balanced 33:33:33": 13.891876838745699,
+   "Emphasis on Accuracy 60:20:20": 10.517091306809865,
+   "Emphasis on Cost 20:20:60": 15.940151628127769,
+   "Emphasis on Speed 20:60:20": 17.20117690709071,
+   "Intelligence only": 7.70822581673003
+  }
+ },
+ "decisionnode-edge-mini-0.9.2": {
+  "axes": {
+   "calibration": 77.66777221653875,
+   "cost": 80.21636333476548,
+   "intelligence": 17.55610652928715,
+   "speed": 93.10372724859315
+  },
+  "capability": 47.61193937291295,
+  "jevbench_score": 5.300229014463926,
+  "scores": {
+   "A": 5.300229014463926,
+   "B": 4.109481054543122,
+   "C": 3.6807145933777266
+  },
+  "speed": {
+   "adjustment": "x2 + 0.15 s (assumption, not measured)",
+   "n": 124,
+   "p50_s_adjusted": 0.2099999330000287,
+   "p50_s_raw": 0.029999966500014352,
+   "p95_s_adjusted": 0.2330280059999609,
+   "p95_s_raw": 0.041514002999980454
+  },
+  "views": {
+   "Balanced 33:33:33": 4.613608938759583,
+   "Emphasis on Accuracy 60:20:20": 3.176057700674002,
+   "Emphasis on Cost 20:20:60": 5.865222923356724,
+   "Emphasis on Speed 20:60:20": 6.06435763485648,
+   "Intelligence only": 2.164435326956283
+  }
+ },
+ "elephant-1": {
+  "axes": {
+   "calibration": 84.65640909439074,
+   "cost": 48.3964659766053,
+   "intelligence": 55.83724375498836,
+   "speed": 90.00953857745046
+  },
+  "capability": 70.24682642468954,
+  "jevbench_score": 60.94145093255968,
+  "scores": {
+   "A": 60.94145093255968,
+   "B": 58.995375747837556,
+   "C": 52.77864473508672
+  },
+  "speed": {
+   "adjustment": "x2 + 0.15 s (assumption, not measured)",
+   "n": 124,
+   "p50_s_adjusted": 0.29563532200008924,
+   "p50_s_raw": 0.07281766100004461,
+   "p95_s_adjusted": 0.3375124679999999,
+   "p95_s_raw": 0.09375623399999995
+  },
+  "views": {
+   "Balanced 33:33:33": 56.57327045961919,
+   "Emphasis on Accuracy 60:20:20": 54.78860808186152,
+   "Emphasis on Cost 20:20:60": 51.47328708950933,
+   "Emphasis on Speed 20:60:20": 65.15059362380138,
+   "Intelligence only": 52.313197148753815
+  }
+ },
+ "fastino-glide-1.2-open": {
+  "axes": {
+   "calibration": 93.46414212015411,
+   "cost": 30.624280317474202,
+   "intelligence": 76.38100890445796,
+   "speed": 85.82867718048236
+  },
+  "capability": 84.92257551230603,
+  "jevbench_score": 22.035707528811592,
+  "scores": {
+   "A": 22.035707528811592,
+   "B": 23.102867789038882,
+   "C": 22.035707528811592
+  },
+  "speed": {
+   "adjustment": "x2 + 0.15 s (assumption, not measured)",
+   "n": 124,
+   "p50_s_adjusted": 0.42691122800001724,
+   "p50_s_raw": 0.1384556140000086,
+   "p95_s_adjusted": 0.6120609961999947,
+   "p95_s_raw": 0.23103049809999732
+  },
+  "views": {
+   "Balanced 33:33:33": 19.607502497903194,
+   "Emphasis on Accuracy 60:20:20": 22.441425929704216,
+   "Emphasis on Cost 20:20:60": 15.286216423870616,
+   "Emphasis on Speed 20:60:20": 23.242950326932096,
+   "Intelligence only": 28.653466120740877
+  }
+ },
+ "jeffan-31b-1710": {
+  "axes": {
+   "calibration": 92.56214779083176,
+   "cost": 42.76241306716163,
+   "intelligence": 72.46380371560996,
+   "speed": 85.13643496620801
+  },
+  "capability": 82.51297575322086,
+  "jevbench_score": 48.98010771568728,
+  "scores": {
+   "A": 48.98010771568728,
+   "B": 49.73518865335077,
+   "C": 48.98010771568728
+  },
+  "speed": {
+   "adjustment": "x2 + 0.15 s (assumption, not measured)",
+   "n": 124,
+   "p50_s_adjusted": 0.3920758240000396,
+   "p50_s_raw": 0.12103791200001979,
+   "p95_s_adjusted": 0.7816033993000701,
+   "p95_s_raw": 0.315801699650035
+  },
+  "views": {
+   "Balanced 33:33:33": 44.845898727556985,
+   "Emphasis on Accuracy 60:20:20": 47.78788834653472,
+   "Emphasis on Cost 20:20:60": 38.21539210832462,
+   "Emphasis on Speed 20:60:20": 50.49872965826449,
+   "Intelligence only": 53.00361941114669
+  }
+ },
+ "jeffan-4b-2010": {
+  "axes": {
+   "calibration": 87.9034951152282,
+   "cost": 64.1356069476132,
+   "intelligence": 40.09995458474205,
+   "speed": 93.06135062665624
+  },
+  "capability": 64.00172484998512,
+  "jevbench_score": 41.065513027003504,
+  "scores": {
+   "A": 41.065513027003504,
+   "B": 36.717066718131974,
+   "C": 28.517717379863555
+  },
+  "speed": {
+   "adjustment": "x2 + 0.15 s (assumption, not measured)",
+   "n": 124,
+   "p50_s_adjusted": 0.20633009599978322,
+   "p50_s_raw": 0.028165047999891613,
+   "p95_s_adjusted": 0.23949825700019572,
+   "p95_s_raw": 0.044749128500097865
+  },
+  "views": {
+   "Balanced 33:33:33": 37.632342394028754,
+   "Emphasis on Accuracy 60:20:20": 31.794297321607367,
+   "Emphasis on Cost 20:20:60": 39.00127340824624,
+   "Emphasis on Speed 20:60:20": 44.19636963029082,
+   "Intelligence only": 25.792392766272524
+  }
+ },
+ "jez-large-1.0.0": {
+  "axes": {
+   "calibration": 83.15885665129233,
+   "cost": 70.53667111174033,
+   "intelligence": 25.626746881681953,
+   "speed": 90.9276292734906
+  },
+  "capability": 54.39280176648714,
+  "jevbench_score": 13.785685960021231,
+  "scores": {
+   "A": 13.785685960021231,
+   "B": 11.397269685998051,
+   "C": 9.57339302779252
+  },
+  "speed": {
+   "adjustment": "x2 + 0.15 s (assumption, not measured)",
+   "n": 124,
+   "p50_s_adjusted": 0.2669836269999678,
+   "p50_s_raw": 0.05849181349998389,
+   "p95_s_adjusted": 0.30251885220000074,
+   "p95_s_raw": 0.07625942610000037
+  },
+  "views": {
+   "Balanced 33:33:33": 12.275997299179275,
+   "Emphasis on Accuracy 60:20:20": 9.234115467708726,
+   "Emphasis on Cost 20:20:60": 14.19181437352,
+   "Emphasis on Speed 20:60:20": 15.238768467862256,
+   "Intelligence only": 6.731942988264025
+  }
+ },
+ "jez-small-1.0.0": {
+  "axes": {
+   "calibration": 81.90437649433692,
+   "cost": 79.65307796501425,
+   "intelligence": 4.560234849177464,
+   "speed": 92.53501048686684
+  },
+  "capability": 43.23230567175719,
+  "jevbench_score": 0.13055605695682942,
+  "scores": {
+   "A": 0.13055605695682942,
+   "B": 0.08771901853083772,
+   "C": 0.09066392844224268
+  },
+  "speed": {
+   "adjustment": "x2 + 0.15 s (assumption, not measured)",
+   "n": 124,
+   "p50_s_adjusted": 0.23474704799982646,
+   "p50_s_raw": 0.04237352399991323,
+   "p95_s_adjusted": 0.23762865600010627,
+   "p95_s_raw": 0.04381432800005314
+  },
+  "views": {
+   "Balanced 33:33:33": 0.10284394850618163,
+   "Emphasis on Accuracy 60:20:20": 0.06105422697060222,
+   "Emphasis on Cost 20:20:60": 0.15533294626245228,
+   "Emphasis on Speed 20:60:20": 0.15738756841405868,
+   "Intelligence only": 0.03793338673363642
+  }
+ },
+ "knowline-31b-gen1": {
+  "axes": {
+   "calibration": 93.82610846310601,
+   "cost": 40.92322579288957,
+   "intelligence": 78.14435273781521,
+   "speed": 82.3002002133797
+  },
+  "capability": 85.98523060046061,
+  "jevbench_score": 44.62808814099723,
+  "scores": {
+   "A": 44.62808814099723,
+   "B": 45.984326351014744,
+   "C": 44.62808814099723
+  },
+  "speed": {
+   "adjustment": "x2 + 0.15 s (assumption, not measured)",
+   "n": 124,
+   "p50_s_adjusted": 0.6085585769999625,
+   "p50_s_raw": 0.22927928849998125,
+   "p95_s_adjusted": 0.9675592984001811,
+   "p95_s_raw": 0.4087796492000905
+  },
+  "views": {
+   "Balanced 33:33:33": 40.69484156105856,
+   "Emphasis on Accuracy 60:20:20": 44.672566308329415,
+   "Emphasis on Cost 20:20:60": 34.08889830353166,
+   "Emphasis on Speed 20:60:20": 45.45609410440681,
+   "Intelligence only": 52.347664383081444
+  }
+ },
+ "knowline-35b-a3b-gen1.5": {
+  "axes": {
+   "calibration": 92.98322836048867,
+   "cost": 24.72494297970482,
+   "intelligence": 60.31798461023689,
+   "speed": 91.86489862722573
+  },
+  "capability": 76.65060648536277,
+  "jevbench_score": 12.434110634133834,
+  "scores": {
+   "A": 12.434110634133834,
+   "B": 12.837148549230704,
+   "C": 12.434110634133834
+  },
+  "speed": {
+   "adjustment": "x2 + 0.15 s (assumption, not measured)",
+   "n": 124,
+   "p50_s_adjusted": 0.24242461799999546,
+   "p50_s_raw": 0.04621230899999773,
+   "p95_s_adjusted": 0.2684932781000612,
+   "p95_s_raw": 0.05924663905003058
+  },
+  "views": {
+   "Balanced 33:33:33": 10.802451566289282,
+   "Emphasis on Accuracy 60:20:20": 12.0973833816601,
+   "Emphasis on Cost 20:20:60": 8.216742190277376,
+   "Emphasis on Speed 20:60:20": 13.633358424719662,
+   "Intelligence only": 14.749503825986924
+  }
+ },
+ "lumma-fev-27b": {
+  "axes": {
+   "calibration": 89.11821147102742,
+   "cost": 17.92472424211776,
+   "intelligence": 55.45890006642501,
+   "speed": 85.83304467300866
+  },
+  "capability": 72.28855576872621,
+  "jevbench_score": 5.316615546150823,
+  "scores": {
+   "A": 5.316615546150823,
+   "B": 5.601234819331815,
+   "C": 4.542294201194288
+  },
+  "speed": {
+   "adjustment": "x2 + 0.15 s (assumption, not measured)",
+   "n": 124,
+   "p50_s_adjusted": 0.42697669399998406,
+   "p50_s_raw": 0.13848834699999202,
+   "p95_s_adjusted": 0.6113520353999945,
+   "p95_s_raw": 0.23067601769999724
+  },
+  "views": {
+   "Balanced 33:33:33": 4.510956608455388,
+   "Emphasis on Accuracy 60:20:20": 5.287360861888974,
+   "Emphasis on Cost 20:20:60": 3.2610830351709135,
+   "Emphasis on Speed 20:60:20": 5.907702430575555,
+   "Intelligence only": 7.12748331584751
+  }
+ },
+ "mammoth-1": {
+  "axes": {
+   "calibration": 94.26152926942419,
+   "cost": 39.535093444670714,
+   "intelligence": 76.20447479084162,
+   "speed": 84.67573743274104
+  },
+  "capability": 85.2330020301329,
+  "jevbench_score": 41.10845977991687,
+  "scores": {
+   "A": 41.10845977991687,
+   "B": 42.268041850473494,
+   "C": 41.10845977991687
+  },
+  "speed": {
+   "adjustment": "x2 + 0.15 s (assumption, not measured)",
+   "n": 124,
+   "p50_s_adjusted": 0.5148048399999198,
+   "p50_s_raw": 0.18240241999995987,
+   "p95_s_adjusted": 0.6618866709998429,
+   "p95_s_raw": 0.25594333549992143
+  },
+  "views": {
+   "Balanced 33:33:33": 37.34352690944416,
+   "Emphasis on Accuracy 60:20:20": 40.87858705241268,
+   "Emphasis on Cost 20:20:60": 31.007975029691366,
+   "Emphasis on Speed 20:60:20": 42.33206510144681,
+   "Intelligence only": 47.64375742643189
+  }
+ },
+ "nimble-v4-max-open": {
+  "axes": {
+   "calibration": 91.40280778240728,
+   "cost": 30.10714287562989,
+   "intelligence": 71.07698575693075,
+   "speed": 85.16118465467332
+  },
+  "capability": 81.23989676966902,
+  "jevbench_score": 20.728406828126957,
+  "scores": {
+   "A": 20.728406828126957,
+   "B": 21.57260039667536,
+   "C": 20.728406828126957
+  },
+  "speed": {
+   "adjustment": "x2 + 0.15 s (assumption, not measured)",
+   "n": 124,
+   "p50_s_adjusted": 0.4521038659999249,
+   "p50_s_raw": 0.15105193299996245,
+   "p95_s_adjusted": 0.6739742650001063,
+   "p95_s_raw": 0.2619871325000531
+  },
+  "views": {
+   "Balanced 33:33:33": 18.42782324141486,
+   "Emphasis on Accuracy 60:20:20": 20.798280486282327,
+   "Emphasis on Cost 20:20:60": 14.450346947229102,
+   "Emphasis on Speed 20:60:20": 21.9713008971402,
+   "Intelligence only": 25.77081067000434
+  }
+ },
+ "pjev-2b": {
+  "axes": {
+   "calibration": 84.15501405892886,
+   "cost": 63.52461077797332,
+   "intelligence": 28.75448619260912,
+   "speed": 92.72818425149762
+  },
+  "capability": 56.45475012576899,
+  "jevbench_score": 18.07599800155286,
+  "scores": {
+   "A": 18.07599800155286,
+   "B": 15.316690121294199,
+   "C": 12.552776389967265
+  },
+  "speed": {
+   "adjustment": "x2 + 0.15 s (assumption, not measured)",
+   "n": 124,
+   "p50_s_adjusted": 0.220090109000148,
+   "p50_s_raw": 0.035045054500074,
+   "p95_s_adjusted": 0.2424270347001311,
+   "p95_s_raw": 0.046213517350065556
+  },
+  "views": {
+   "Balanced 33:33:33": 16.1848423506575,
+   "Emphasis on Accuracy 60:20:20": 12.636941906899354,
+   "Emphasis on Cost 20:20:60": 17.821868680331253,
+   "Emphasis on Speed 20:60:20": 19.95422132485657,
+   "Intelligence only": 9.509919186674669
+  }
+ },
+ "purplemist-mini-1.0": {
+  "axes": {
+   "calibration": 77.68611335416006,
+   "cost": 70.75879834655666,
+   "intelligence": 8.377579633895749,
+   "speed": 88.89456733168942
+  },
+  "capability": 43.0318464940279,
+  "jevbench_score": 0.712434391664037,
+  "scores": {
+   "A": 0.712434391664037,
+   "B": 0.5067671380322686,
+   "C": 0.494746105322248
+  },
+  "speed": {
+   "adjustment": "x2 + 0.15 s (assumption, not measured)",
+   "n": 124,
+   "p50_s_adjusted": 0.29234608000015216,
+   "p50_s_raw": 0.07117304000007607,
+   "p95_s_adjusted": 0.4412106550999396,
+   "p95_s_raw": 0.14560532754996983
+  },
+  "views": {
+   "Balanced 33:33:33": 0.5818429148161071,
+   "Emphasis on Accuracy 60:20:20": 0.3660360765699516,
+   "Emphasis on Cost 20:20:60": 0.8113126594293115,
+   "Emphasis on Speed 20:60:20": 0.8392858050825149,
+   "Intelligence only": 0.23518828519516521
+  }
+ },
+ "seb-9b-v2": {
+  "axes": {
+   "calibration": 83.5320529378626,
+   "cost": 48.88742799396291,
+   "intelligence": 46.11278573865326,
+   "speed": 92.19482700362798
+  },
+  "capability": 64.82241933825793,
+  "jevbench_score": 50.0698907160068,
+  "scores": {
+   "A": 50.0698907160068,
+   "B": 46.922696218656,
+   "C": 34.7707574416714
+  },
+  "speed": {
+   "adjustment": "x2 + 0.15 s (assumption, not measured)",
+   "n": 124,
+   "p50_s_adjusted": 0.21965147600010368,
+   "p50_s_raw": 0.03482573800005184,
+   "p95_s_adjusted": 0.27465225790006115,
+   "p95_s_raw": 0.062326128950030577
+  },
+  "views": {
+   "Balanced 33:33:33": 46.036592442012804,
+   "Emphasis on Accuracy 60:20:20": 42.192179333209616,
+   "Emphasis on Cost 20:20:60": 43.29827818996294,
+   "Emphasis on Speed 20:60:20": 54.439925874133586,
+   "Intelligence only": 37.495438704806716
+  }
+ },
+ "singularity-super-decider": {
+  "axes": {
+   "calibration": 91.49871221562165,
+   "cost": 64.26424619973979,
+   "intelligence": 79.40584540873127,
+   "speed": 83.21052422462093
+  },
+  "capability": 85.45227881217646,
+  "jevbench_score": 78.27618690542559,
+  "scores": {
+   "A": 78.27618690542559,
+   "B": 78.49953991505394,
+   "C": 78.27618690542559
+  },
+  "speed": {
+   "adjustment": "none (API)",
+   "n": 124,
+   "p50_s_adjusted": 0.3802808640175499,
+   "p50_s_raw": 0.3802808640175499,
+   "p95_s_adjusted": 1.2555762887466697,
+   "p95_s_raw": 1.2555762887466697
+  },
+  "views": {
+   "Balanced 33:33:33": 74.67889204974088,
+   "Emphasis on Accuracy 60:20:20": 76.50049224514845,
+   "Emphasis on Cost 20:20:60": 70.13262272339875,
+   "Emphasis on Speed 20:60:20": 77.8726255535541,
+   "Intelligence only": 79.40584540873127
+  }
+ },
+ "singularity-super-decider-thinking": {
+  "axes": {
+   "calibration": 91.94070810870389,
+   "cost": 56.397623391206686,
+   "intelligence": 80.39787847051062,
+   "speed": 80.40839696960506
+  },
+  "capability": 86.16929328960725,
+  "jevbench_score": 74.7908616991383,
+  "scores": {
+   "A": 74.7908616991383,
+   "B": 75.84881392337026,
+   "C": 74.7908616991383
+  },
+  "speed": {
+   "adjustment": "none (API)",
+   "n": 124,
+   "p50_s_adjusted": 0.8723036280134693,
+   "p50_s_raw": 0.8723036280134693,
+   "p95_s_adjusted": 1.043500410573324,
+   "p95_s_raw": 1.043500410573324
+  },
+  "views": {
+   "Balanced 33:33:33": 70.41279171599817,
+   "Emphasis on Accuracy 60:20:20": 74.09364230796606,
+   "Emphasis on Cost 20:20:60": 64.04641502686343,
+   "Emphasis on Speed 20:60:20": 74.09721545266993,
+   "Intelligence only": 80.39787847051062
+  }
+ },
+ "standard_one_3b_sh_v4": {
+  "axes": {
+   "calibration": 77.72284683250058,
+   "cost": 48.64218899335634,
+   "intelligence": 34.357350203953175,
+   "speed": 93.24439075517861
+  },
+  "capability": 56.04009851822688,
+  "jevbench_score": 24.401076823613185,
+  "scores": {
+   "A": 24.401076823613185,
+   "B": 21.828413272516013,
+   "C": 16.94519223862027
+  },
+  "speed": {
+   "adjustment": "x2 + 0.15 s (assumption, not measured)",
+   "n": 124,
+   "p50_s_adjusted": 0.20677591400001347,
+   "p50_s_raw": 0.028387957000006736,
+   "p95_s_adjusted": 0.22911893149997695,
+   "p95_s_raw": 0.039559465749988476
+  },
+  "views": {
+   "Balanced 33:33:33": 22.199924686820204,
+   "Emphasis on Accuracy 60:20:20": 18.83950797331283,
+   "Emphasis on Cost 20:20:60": 22.01238884925592,
+   "Emphasis on Speed 20:60:20": 27.302495918689488,
+   "Intelligence only": 15.353422081196133
+  }
+ },
+ "tern-35b-a3b": {
+  "axes": {
+   "calibration": 88.71404111864382,
+   "cost": 42.09847950547972,
+   "intelligence": 44.07459281825939,
+   "speed": 91.05261196725431
+  },
+  "capability": 66.3943169684516,
+  "jevbench_score": 32.07367107987419,
+  "scores": {
+   "A": 32.07367107987419,
+   "B": 30.13827798638424,
+   "C": 22.273382694357075
+  },
+  "speed": {
+   "adjustment": "x2 + 0.15 s (assumption, not measured)",
+   "n": 124,
+   "p50_s_adjusted": 0.2689652609998575,
+   "p50_s_raw": 0.059482630499928746,
+   "p95_s_adjusted": 0.2917713280998555,
+   "p95_s_raw": 0.07088566404992776
+  },
+  "views": {
+   "Balanced 33:33:33": 28.77712652946903,
+   "Emphasis on Accuracy 60:20:20": 26.79131310275326,
+   "Emphasis on Cost 20:20:60": 26.24747549883641,
+   "Emphasis on Speed 20:60:20": 34.692071609680895,
+   "Intelligence only": 24.278269607215453
+  }
+ },
+ "turion-jev-31b": {
+  "axes": {
+   "calibration": 90.90010349317609,
+   "cost": 40.56404709887696,
+   "intelligence": 70.85736825150448,
+   "speed": 86.42087931456825
+  },
+  "capability": 80.87873587234029,
+  "jevbench_score": 42.921588550225984,
+  "scores": {
+   "A": 42.921588550225984,
+   "B": 43.61648785182672,
+   "C": 42.921588550225984
+  },
+  "speed": {
+   "adjustment": "x2 + 0.15 s (assumption, not measured)",
+   "n": 124,
+   "p50_s_adjusted": 0.37243909899998473,
+   "p50_s_raw": 0.11121954949999235,
+   "p95_s_adjusted": 0.6121485163000102,
+   "p95_s_raw": 0.2310742581500051
+  },
+  "views": {
+   "Balanced 33:33:33": 39.22660419458644,
+   "Emphasis on Accuracy 60:20:20": 41.888882625037596,
+   "Emphasis on Cost 20:20:60": 33.027322649704544,
+   "Emphasis on Speed 20:60:20": 44.78668680736186,
+   "Intelligence only": 46.636673540863306
+  }
+ },
+ "vega-u-qwen3.5-4b": {
+  "axes": {
+   "calibration": 77.518901316677,
+   "cost": 64.90155987179207,
+   "intelligence": 8.623850172106426,
+   "speed": 89.02487630228225
+  },
+  "capability": 43.071375744391716,
+  "jevbench_score": 0.7652382162937451,
+  "scores": {
+   "A": 0.7652382162937451,
+   "B": 0.5479402994486016,
+   "C": 0.5314154279817674
+  },
+  "speed": {
+   "adjustment": "x2 + 0.15 s (assumption, not measured)",
+   "n": 124,
+   "p50_s_adjusted": 0.3233080589999645,
+   "p50_s_raw": 0.08665402949998224,
+   "p95_s_adjusted": 0.3871647768001253,
+   "p95_s_raw": 0.11858238840006265
+  },
+  "views": {
+   "Balanced 33:33:33": 0.6258488314999244,
+   "Emphasis on Accuracy 60:20:20": 0.3971597589633822,
+   "Emphasis on Cost 20:20:60": 0.8577245890489041,
+   "Emphasis on Speed 20:60:20": 0.9011152530380923,
+   "Intelligence only": 0.25654502623439573
+  }
+ },
+ "vera-large": {
+  "axes": {
+   "calibration": 91.31679956749362,
+   "cost": 29.91580590336227,
+   "intelligence": 67.78675651753129,
+   "speed": 88.26784716296339
+  },
+  "capability": 79.55177804251245,
+  "jevbench_score": 20.322769057625663,
+  "scores": {
+   "A": 20.322769057625663,
+   "B": 21.005514657329776,
+   "C": 20.322769057625663
+  },
+  "speed": {
+   "adjustment": "x2 + 0.15 s (assumption, not measured)",
+   "n": 124,
+   "p50_s_adjusted": 0.32632102100003524,
+   "p50_s_raw": 0.08816051050001761,
+   "p95_s_adjusted": 0.4566360897999402,
+   "p95_s_raw": 0.15331804489997009
+  },
+  "views": {
+   "Balanced 33:33:33": 18.046960589224984,
+   "Emphasis on Accuracy 60:20:20": 20.108481732377108,
+   "Emphasis on Cost 20:20:60": 14.164863494844594,
+   "Emphasis on Speed 20:60:20": 21.78388306082691,
+   "Intelligence only": 24.266450679341077
+  }
+ },
+ "verdin-4b": {
+  "axes": {
+   "calibration": 83.75263461013449,
+   "cost": 62.17924458049355,
+   "intelligence": 35.44491489257096,
+   "speed": 90.90452488558782
+  },
+  "capability": 59.59877475135272,
+  "jevbench_score": 29.896975495673694,
+  "scores": {
+   "A": 29.896975495673694,
+   "B": 26.324996859923893,
+   "C": 20.761788538662287
+  },
+  "speed": {
+   "adjustment": "x2 + 0.15 s (assumption, not measured)",
+   "n": 124,
+   "p50_s_adjusted": 0.26501119500053394,
+   "p50_s_raw": 0.05750559750026696,
+   "p95_s_adjusted": 0.3063961408995055,
+   "p95_s_raw": 0.07819807044975277
+  },
+  "views": {
+   "Balanced 33:33:33": 27.26442473020148,
+   "Emphasis on Accuracy 60:20:20": 22.490610859734524,
+   "Emphasis on Cost 20:20:60": 28.729208136742884,
+   "Emphasis on Speed 20:60:20": 32.50688166327866,
+   "Intelligence only": 17.812373989297615
+  }
+ },
+ "vllm-sr-d3-mini": {
+  "axes": {
+   "calibration": 87.53013277203831,
+   "cost": 64.22331428461467,
+   "intelligence": 51.54168625152077,
+   "speed": 93.26501637006552
+  },
+  "capability": 69.53590951177955,
+  "jevbench_score": 70.02897771755956,
+  "scores": {
+   "A": 70.02897771755956,
+   "B": 65.34155493864613,
+   "C": 51.67643337178531
+  },
+  "speed": {
+   "adjustment": "x2 + 0.15 s (assumption, not measured)",
+   "n": 124,
+   "p50_s_adjusted": 0.20476590799997893,
+   "p50_s_raw": 0.027382953999989468,
+   "p95_s_adjusted": 0.23027177649996702,
+   "p95_s_raw": 0.040135888249983515
+  },
+  "views": {
+   "Balanced 33:33:33": 65.65330846729819,
+   "Emphasis on Accuracy 60:20:20": 59.17291636611944,
+   "Emphasis on Cost 20:20:60": 65.07373660417655,
+   "Emphasis on Speed 20:60:20": 74.4725379960435,
+   "Intelligence only": 51.54168625152077
+  }
+ },
+ "wald-26b-a4b": {
+  "axes": {
+   "calibration": 88.05577650422971,
+   "cost": 49.579289707036324,
+   "intelligence": 65.50854607947286,
+   "speed": 92.20139641014444
+  },
+  "capability": 76.78216129185128,
+  "jevbench_score": 68.23670265385383,
+  "scores": {
+   "A": 68.23670265385383,
+   "B": 67.43558400918712,
+   "C": 68.23670265385383
+  },
+  "speed": {
+   "adjustment": "x2 + 0.15 s (assumption, not measured)",
+   "n": 124,
+   "p50_s_adjusted": 0.23422900000005029,
+   "p50_s_raw": 0.042114500000025146,
+   "p95_s_adjusted": 0.2571696386999178,
+   "p95_s_raw": 0.05358481934995893
+  },
+  "views": {
+   "Balanced 33:33:33": 63.7355521959748,
+   "Emphasis on Accuracy 60:20:20": 64.00393701466066,
+   "Emphasis on Cost 20:20:60": 56.75598966758156,
+   "Emphasis on Speed 20:60:20": 72.32662860832114,
+   "Intelligence only": 64.41077922536263
+  }
+ },
+ "xevn-4b": {
+  "axes": {
+   "calibration": 85.13454850231766,
+   "cost": 65.96610922261206,
+   "intelligence": 52.14523729900746,
+   "speed": 92.00254831633245
+  },
+  "capability": 68.63989290066256,
+  "jevbench_score": 70.23472773941086,
+  "scores": {
+   "A": 70.23472773941086,
+   "B": 65.67791640802868,
+   "C": 53.04918287604137
+  },
+  "speed": {
+   "adjustment": "x2 + 0.15 s (assumption, not measured)",
+   "n": 124,
+   "p50_s_adjusted": 0.22632800400000405,
+   "p50_s_raw": 0.03816400200000203,
+   "p95_s_adjusted": 0.2786165273999728,
+   "p95_s_raw": 0.0643082636999864
+  },
+  "views": {
+   "Balanced 33:33:33": 66.36320929723146,
+   "Emphasis on Accuracy 60:20:20": 59.837110946132896,
+   "Emphasis on Cost 20:20:60": 66.20379693828475,
+   "Emphasis on Speed 20:60:20": 74.68895933047453,
+   "Intelligence only": 52.14523729900746
+  }
+ }
+}

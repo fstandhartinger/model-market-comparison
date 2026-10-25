@@ -1,0 +1,14 @@
+Traceback (most recent call last):
+  File "/home/flori/wt/r185-v172-build/r185/v172/prepare_v172.py", line 18, in <module>
+    if not A.aggregate_only:assert sha(pathlib.Path(e['raw']))==raw_sha
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/flori/wt/r185-v172-build/r185/v172/prepare_v172.py", line 11, in <lambda>
+    sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
+                                ^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/pathlib.py", line 1021, in read_bytes
+    with self.open(mode='rb') as f:
+         ^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/pathlib.py", line 1015, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: '/home/flori/jevbench-sealed/v1.6-run/v1.6-regular-20261012/runs-auto-intake/jeetu-decider-2b.raw.jsonl'

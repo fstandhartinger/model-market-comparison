@@ -1,0 +1,23 @@
+# Partial v1.7.2 preparation — BLOCKED, not a release candidate
+
+Base: origin/main 4365ca7ec2ee12ea952079185cbf68f37bbf7ff1 (live v1.7.1). Worktree: /home/flori/wt/r185-v172-build. Host: LeChonk. Engine: Codex GPT-6.1 Sol, medium.
+
+The worker was routed to LeChonk. The job's raw input and the frozen category/decisive tools require Sandy's masked sealed paths. The raw verification attempt fails with PermissionError; it is recorded in receipts/prepare-sandy-required.log. Shared execution-host rules explicitly state that sealed material is available only on Sandy. No permission boundary was bypassed and no raw content was copied. This means the requested complete candidate and its gates cannot be finished in this worker environment.
+
+Completed: verified the post-prescore entry SHA 318c039d19d2c659388e596e9372ae4d7a1ad2e410c460749a3e77a00fdbcdbd; captured already-scored aggregate values from field-r11a with reviewed identity/registry from field-r11a2; pinned all scoring source files and prescore review; checked frozen/off numbers and intervals, B=1000, zero over-limit, ranked treatment and native zero-output convention. Aggregate-only INPUTS.json explicitly records raw_verified_in_place=false. The builder refuses until prepare_v172.py verifies the raw in place. The handoff raw SHA is retained as an expected source pin, not claimed as independently verified here.
+
+Prospective comparison: 40 primary lists and 156 supplementary lists, zero changed; changed labels are []. The prospective numeric roster preserves all 288 carried rows exactly except rank/ranks. The primary comparison runs the same live v1.7.1 assembly and scope/cap functions as v171, with an explicit numeric-only insertion for the after snapshot. It does NOT pass a synthetic release through candidate validation and it does NOT check category cells. Supplementary off/share values preserve the v170/v171 captured aggregates; no inference or rescoring occurs. The complete assembled candidate must be compared again after it exists. preview/index.html clearly labels this limitation. inputs/APPROVAL.json contains the specified standing GO with the requested single-element asks array, bound to the unchanged numeric preview. Publication review has not been supplied.
+
+Copied/adapted release builder, loader template, category consolidation, top-five tools, freeze/flip helpers and integration scripts into r185/v172. Public explanation is independently cleaned in src/public-text.json. No production-facing repo files were changed. The adapted integration and release helpers are preparatory source, syntax-checked only; they are NOT verified by a built candidate. Historical equality presentation gates for === 'v1.7.1' were searched in app/components/lib: none found. Existing version-peer matching already accepts numeric v1.7 patches.
+
+Sandy continuation (by the lead, no extra worker launched here):
+
+1. Transfer/review this local commit; create the owned Sandy worktree at the same base or rebase and recheck all receipts.
+2. Run python3 -B r185/v172/prepare_v172.py (without --aggregate-only), then bash r185/v172/run_cells_v172.sh. This hashes raw in place and computes category/decisive aggregates with the existing frozen tools, never rescores different metrics.
+3. Build with bash r185/v172/rebuild_v172.sh. Recheck generated page wording and integration edits, generate the isolated .pass tree, run the original topfive_v172.mjs there, regenerate topfive-diff.json and the extended comparison against real candidate results, refresh APPROVAL.json, and rebuild/rebind hashes. The prospective receipt must not substitute for this complete-candidate check.
+4. Adapt the v171 release tests, dynamic published-state fixture selectors, final_sanity and helper/refusal tests; generate ranks fixture; create src/site-paths.json. These remaining integrations have NOT been completed in this partial result.
+5. Run the requested two deterministic rebuilds, carried equality and row validator, targeted/release tests, helper dry runs, TypeScript, production build and full suite. No such candidate gate is claimed here.
+
+The review manifest was never flipped; no seal/freeze dry-run output was generated, no seal was written, and no CR, push, PR, deployment, publication, author message, board post or notification occurred. Candidate results/proof/categories/API/page/fixtures do not yet exist. The release scripts requiring those outputs must not be described as passing.
+
+Cleanup: removed only the disposable prospective full-results duplicate after retaining ranking receipts and the comparison scripts. No shared caches, other jobs' files or sealed material were deleted. No dependencies or large data were downloaded.
