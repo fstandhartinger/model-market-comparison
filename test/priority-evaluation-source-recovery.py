@@ -48,6 +48,7 @@ class Recovery(unittest.TestCase):
    self.ns[key]=ast.literal_eval(next(n.value for n in tree.body if isinstance(n,ast.Assign)
                                     and any(isinstance(t,ast.Name) and t.id==key for t in n.targets)))
   self.ns['SITE']='https://benchmarkheaven.com'
+  self.ns['ensure_native_owner']=lambda *a,**k:False  # INCIDENTS #25: these source-access holds never need a native owner
   self.ns['public_link']=lambda value: URL if value==URL else None
  def call(self):return self.ns['recover_source_access'](RID)
  def test_preserves_payment_clock_attempts_and_original_artifacts(self):
