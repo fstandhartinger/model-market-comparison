@@ -164,12 +164,11 @@ class PreflightTests(unittest.TestCase):
         self.preflight(.63, recipe=recipe)
         self.assertEqual(recipe, before)
 
-    def test_run_binds_default_provider_to_order(self):
+    def test_run_has_no_default_provider(self):
+        # lium-sealed-data-ban (17 Oct 2026): run() stages sealed inputs, so it never builds a Lium provider itself.
         tree = ast.parse(inspect.getsource(pr.run))
         calls = [n for n in ast.walk(tree) if isinstance(n, ast.Call) and getattr(n.func, 'id', None) == 'LiumProvider']
-        self.assertEqual(len(calls), 1)
-        self.assertEqual([(k.arg, k.value.id) for k in calls[0].keywords], [('order_id', 'rid')])
-        self.assertEqual(calls[0].args, [])
+        self.assertEqual(calls, [])
 
 
 if __name__ == '__main__':
