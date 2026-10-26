@@ -5,7 +5,8 @@ import { JevBenchReleaseVersionNav } from '../../../components/JevBenchReleaseVe
 import { withPublicAdapterIds } from '../../../lib/jevbench-v15-release.mjs';
 import { JevHistoryLazy } from '../../../components/JevHistoryLazy';
 import { PageJsonLd } from '../../../components/PageJsonLd';
-export const metadata = {title:'JevBench v1.7.6 · One same-draw self-hosted addition',description:'Decisio 12B tuned commit joins as a self-hosted row. Same method; 292 carried rows retain their scores and confidence intervals.',alternates:{canonical:'/jev-models/v1.7.6'}};
+import { seoTitle } from '../../../lib/seo';
+export const metadata = {title:seoTitle('JevBench v1.7.6 · Decisio 12B'),description:'Decisio 12B tuned commit joins as a self-hosted row. Same method; 292 carried rows retain their scores and confidence intervals.',alternates:{canonical:'/jev-models/v1.7.6'}};
 export default async function JevModelsV176Page() {
  const release=await readJevbenchV176ForBoard();if(!release)notFound();
  const board=v176BoardInput(release);

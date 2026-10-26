@@ -5,7 +5,8 @@ import { JevBenchReleaseVersionNav } from '../../../components/JevBenchReleaseVe
 import { withPublicAdapterIds } from '../../../lib/jevbench-v15-release.mjs';
 import { JevHistoryLazy } from '../../../components/JevHistoryLazy';
 import { PageJsonLd } from '../../../components/PageJsonLd';
-export const metadata = {title:'JevBench v1.7.4 · One same-draw self-hosted addition',description:'DOPEST 1.0 (31B) joins as a self-hosted row. Same method; all 290 carried rows retain their scores and confidence intervals.',alternates:{canonical:'/jev-models/v1.7.4'}};
+import { seoTitle } from '../../../lib/seo';
+export const metadata = {title:seoTitle('JevBench v1.7.4 · DOPEST 31B'),description:'DOPEST 1.0 (31B) joins as a self-hosted row. Same method; all 290 carried rows retain their scores and confidence intervals.',alternates:{canonical:'/jev-models/v1.7.4'}};
 export default async function JevModelsV174Page() {
  const release=await readJevbenchV174ForBoard();if(!release)notFound();
  const board=v174BoardInput(release);

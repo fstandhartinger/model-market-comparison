@@ -5,7 +5,8 @@ import { JevBenchReleaseVersionNav } from '../../../components/JevBenchReleaseVe
 import { withPublicAdapterIds } from '../../../lib/jevbench-v15-release.mjs';
 import { JevHistoryLazy } from '../../../components/JevHistoryLazy';
 import { PageJsonLd } from '../../../components/PageJsonLd';
-export const metadata = {title:'JevBench v1.7.3 · GPU replacement and one hosted addition',description:'Chon-1.0-E4B GPU scores and times replace CPU; ScaleDown classify-1 joins as a hosted API. Same method; all 288 carried rows keep their scores.',alternates:{canonical:'/jev-models/v1.7.3'}};
+import { seoTitle } from '../../../lib/seo';
+export const metadata = {title:seoTitle('JevBench v1.7.3 · GPU replacement'),description:'Chon-1.0-E4B GPU scores and times replace CPU; ScaleDown classify-1 joins as a hosted API. Same method; all 288 carried rows keep their scores.',alternates:{canonical:'/jev-models/v1.7.3'}};
 export default async function JevModelsV173Page() {
  const release=await readJevbenchV173ForBoard();if(!release)notFound();
  const board=v173BoardInput(release);
