@@ -109,8 +109,10 @@
   ],
   "button_tap": false,
   "fairness_check": {
+   "engine": "claude-opus-5-5 (account C, effort medium)",
    "path": "workers/r196-v179-fair/RESULT.json",
-   "verdict": "PENDING"
+   "sha256": "2e1b723e03e25cff20c1a96a24caff3df62ad3bb916f696fbc099a62d0c9d3a3",
+   "verdict": "FAIR"
   },
   "fresh_baseline": "v1.7.8",
   "go": {
@@ -119,6 +121,9 @@
    "quote": "3 ja",
    "recorded_in": "DECISIONS.md 2026-10-25 setup-review-open-questions-answered"
   },
+  "release_owner_rulings": [
+   "mylesg12b-i1-27788"
+  ],
   "status": "GO (fair top-five change, Florian rule 25 Oct 2026)",
   "top_five_effect": "changed",
   "top_five_preview": {
@@ -136,8 +141,8 @@
     0.0
    ],
    "raw_sha256": "3f0929728f39bd41cfff6c404d6ed8793e8202f393b68264d3b1fc449d6a54ab",
-   "registry_sha256": "29de27eeade64d68ce8ea87938f1c0e44319eda08a8ac2c3f5143703390cd37a",
-   "scored_sha256": "fd781996c40c3a9848d2410b069dcb32af49b1137a77b78fdb4aaad2f868eeda",
+   "registry_sha256": "fb2228fffe8b7971abc09b7063514f03b9fdeac208a41fbc99375fa9e5672660",
+   "scored_sha256": "407904ef29b89ce4718e04eb12d2ed8a6534a73a201338ddda8c7455c64146aa",
    "source": "api",
    "vendor_page_sha256": "956fa709dfa454ee108966a9a0a79ec1660e91e7047a1b8ab6a32e146c36a01e",
    "vendor_price_url": "https://www.launchables.ai/docs/deploy/hosted"
@@ -161,9 +166,9 @@
  "source_inputs": {
   "cells_sha256": "8cdc6e62f92bb2201f8c9e4ccd471c63f9f95e95f767b8cd30301a13f74c45de",
   "entry_sha256": "63fafd631c108eadf164cbf7ab5616313059e294b9375e001511a53ac5cb4e63",
-  "reprice_off_sha256": "83c7ecd98d88fe19f077835990dac3ef93c88398bfa3b1f1a48f13d27d36faf3",
-  "reprice_registry_sha256": "29de27eeade64d68ce8ea87938f1c0e44319eda08a8ac2c3f5143703390cd37a",
-  "reprice_share_sha256": "fd781996c40c3a9848d2410b069dcb32af49b1137a77b78fdb4aaad2f868eeda",
+  "reprice_off_sha256": "0db6c8eeb875051bcd9b7919c996ea6572e9ceefe5cc860baf7d3b6ef34e9f1f",
+  "reprice_registry_sha256": "fb2228fffe8b7971abc09b7063514f03b9fdeac208a41fbc99375fa9e5672660",
+  "reprice_share_sha256": "407904ef29b89ce4718e04eb12d2ed8a6534a73a201338ddda8c7455c64146aa",
   "scored_rows_sha256": "f2e489abe0d95c0a224716e07a88d55ea50ee4bfad76fcd07b9ac59f510c8387"
  },
  "topfive_diff_sha256": "5fa7198de94c332c3aba71477c3b3116d11ea80a924343cc231efa4eb8eeef59"

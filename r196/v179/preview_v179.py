@@ -6,7 +6,7 @@ J=pathlib.Path(__file__).resolve().parent;L=lambda p:json.loads(p.read_text());e
 if A.publication_status=='published':
  assert L(J/'inputs/APPROVAL.json')['fairness_check']['verdict']=='FAIR', 'published footer requires bound FAIR review'
  assert L(J.parents[1]/'data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.9-publication.json')['review']['verdict']=='PASS', 'published footer requires publication PASS'
-footer='Published · independent review complete' if A.publication_status=='published' else 'Review pending · not published'
+footer='Published · independent review complete' if A.publication_status=='published' else 'Release review pending'
 s=(J/'preview.template.html').read_text();(J/'preview/index.html').write_text(s.replace('/*FOOTER*/',footer).replace('/*FAIR*/',L(J/'inputs/APPROVAL.json')['fairness_check']['verdict']).replace('/*DATA*/',json.dumps(e,separators=(',',':')).replace('</','<\\/')))
 r=next((r for r in e['rows'] if r['variant']=='share' and r['scope']=='api' and r['changed']),e['rows'][0]);m=e['models']['share'];k='launchables-myles-g-12b';out=next((k for k in r['before'] if k not in r['after']),r['before'][-1])
 im=Image.new('RGB',(1440,900),'#101723');dr=ImageDraw.Draw(im);font='/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf';bold='/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf'

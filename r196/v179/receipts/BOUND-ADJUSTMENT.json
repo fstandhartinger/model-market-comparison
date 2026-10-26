@@ -1,0 +1,19 @@
+{
+ "application_or_metric_changes_for_timeout": false,
+ "cause": "Outer 600-second synthetic timeout covered two separately bounded 600-second test groups plus setup. Both groups actually finished successfully after the wrapper exited.",
+ "full_suite_runs_before_adjustment": 0,
+ "full_suite_seconds": 3600,
+ "guardrails_unchanged": true,
+ "initial_run_gates_exit": 124,
+ "inner_synthetic_seconds_unchanged": 600,
+ "new_outer_synthetic_seconds": 1500,
+ "status": "RESOLVED",
+ "synthetic_complete_tests": 58,
+ "synthetic_fail": 0,
+ "synthetic_group_duration_ms": [
+  84467.831849,
+  562851.89433
+ ],
+ "synthetic_pass": 57,
+ "synthetic_skip": 1
+}

@@ -2,7 +2,9 @@
 import hashlib,json,pathlib
 J=pathlib.Path(__file__).resolve().parent;W=J.parents[1];V=W/'data/raw/benchmarks/jevbench/v1.7';L=lambda p:json.loads(p.read_text());sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
 proof=L(V/'jevbench-v1.7.9-proof.json');man=L(V/'jevbench-v1.7.9-publication.json');a=L(J/'inputs/APPROVAL.json')
-assert proof['publication_approval']==a and a['fairness_check']['verdict'] in ['PENDING','FAIR'];assert man['review']=={'engine':'PENDING','verdict':'PENDING','receipt_sha256':None}
+assert proof['publication_approval']==a and a['fairness_check']['verdict']=='FAIR';assert man['review']=={'engine':'PENDING','verdict':'PENDING','receipt_sha256':None}
+from approval_v179 import check_approval
+check_approval(W,proof)
 for n,f in man['files'].items():assert sha(W/f['path'])==f['sha256'],n
 old=L(V/'jevbench-v1.7.8-results.json');new=L(V/'jevbench-v1.7.9-results.json');old={s['key']:s for s in old['systems']};new={s['key']:s for s in new['systems']}
 def strip(s):s=json.loads(json.dumps(s));s.pop('rank',None);s.pop('ranks',None);return s

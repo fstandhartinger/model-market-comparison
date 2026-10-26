@@ -10,7 +10,7 @@ const path=require('node:path');
   await page.goto('file://'+path.join(__dirname,'preview/index.html'));
   await page.waitForSelector('#ranking tr');
   const fairness_header=await page.locator('main > small').innerText();
-  if(!fairness_header.includes('fairness PENDING'))throw Error('wrong fairness header: '+fairness_header);
+  if(!fairness_header.includes('fairness FAIR'))throw Error('wrong fairness header: '+fairness_header);
   const initial=await page.locator('#summary').innerText();
   if(!initial.includes('share / api / official / A'))throw Error('wrong initial view: '+initial);
   if(await page.locator('#radar polygon').count()!==6)throw Error('missing radar');

@@ -8,7 +8,7 @@
   },
   "freeze-actual-pending-refused": {
    "exit_code": 1,
-   "reason": "fairness PENDING",
+   "reason": "publication review PENDING",
    "status": "REFUSED_AS_REQUIRED"
   },
   "freeze_output_created": false,
@@ -21,6 +21,56 @@
   "mismatches": [],
   "status": "PASS",
   "v178_template_and_artifacts_unchanged": true
+ },
+ "BIND-NUMBERS": {
+  "build_commit": "63a957f355f04429214a0681de63198fd56746e3",
+  "checks": {
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.9-categories.json": {
+    "all_numeric_tokens_byte_equal": true,
+    "axes_and_usd_per_1000_byte_equal": true
+   },
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.9-results.json": {
+    "all_numeric_tokens_byte_equal": true,
+    "axes_and_usd_per_1000_byte_equal": true
+   },
+   "r196/v179/scoring/off/jevbench-v1.6.0-results.json": {
+    "all_numeric_tokens_byte_equal": true,
+    "axes_and_usd_per_1000_byte_equal": true
+   },
+   "r196/v179/scoring/off/launchables-myles-g-12b.json": {
+    "all_numeric_tokens_byte_equal": true,
+    "axes_and_usd_per_1000_byte_equal": true
+   },
+   "r196/v179/scoring/share/jevbench-v1.6.0-results.json": {
+    "all_numeric_tokens_byte_equal": true,
+    "axes_and_usd_per_1000_byte_equal": true
+   },
+   "r196/v179/scoring/share/launchables-myles-g-12b.json": {
+    "all_numeric_tokens_byte_equal": true,
+    "axes_and_usd_per_1000_byte_equal": true
+   }
+  },
+  "myles_g_31b_exact": true,
+  "status": "PASS"
+ },
+ "BOUND-ADJUSTMENT": {
+  "application_or_metric_changes_for_timeout": false,
+  "cause": "Outer 600-second synthetic timeout covered two separately bounded 600-second test groups plus setup. Both groups actually finished successfully after the wrapper exited.",
+  "full_suite_runs_before_adjustment": 0,
+  "full_suite_seconds": 3600,
+  "guardrails_unchanged": true,
+  "initial_run_gates_exit": 124,
+  "inner_synthetic_seconds_unchanged": 600,
+  "new_outer_synthetic_seconds": 1500,
+  "status": "RESOLVED",
+  "synthetic_complete_tests": 58,
+  "synthetic_fail": 0,
+  "synthetic_group_duration_ms": [
+   84467.831849,
+   562851.89433
+  ],
+  "synthetic_pass": 57,
+  "synthetic_skip": 1
  },
  "CARRIED-ROWS": {
   "all_predecessor_category_cells_equal": true,
@@ -61,13 +111,55 @@
   "status": "PASS",
   "unchanged_except_ranks": 293
  },
+ "COST-KIND": {
+  "allowed_measured_bill_keys_v178": [],
+  "board_est_tag_condition_verified": true,
+  "estimated_rows_list_includes_myles": true,
+  "myles_cost_kind": "estimate",
+  "negative_measured_without_bill": "REFUSED_AS_REQUIRED",
+  "status": "PASS"
+ },
+ "FAIRNESS-TEXT-RESOLUTION": {
+  "binding": {
+   "engine": "claude-opus-5-5 (account C, effort medium)",
+   "path": "workers/r196-v179-fair/RESULT.json",
+   "sha256": "2e1b723e03e25cff20c1a96a24caff3df62ad3bb916f696fbc099a62d0c9d3a3",
+   "verdict": "FAIR"
+  },
+  "changed_lists": 123,
+  "fairness": "FAIR",
+  "publication_authorized": false,
+  "release_owner_rulings": [
+   "mylesg12b-i1-27788"
+  ],
+  "status": "PASS",
+  "text_fix_checks": [
+   {
+    "id": "T1",
+    "status": "PASS"
+   },
+   {
+    "id": "T2",
+    "status": "PASS"
+   },
+   {
+    "id": "T3",
+    "status": "PASS"
+   },
+   {
+    "id": "T4",
+    "status": "PASS"
+   }
+  ],
+  "topfive_changed": true
+ },
  "FINAL-SANITY": {
   "exact_exceptions": [
    "launchables-myles-g-12b",
    "singularity-super-decider",
    "singularity-super-decider-thinking"
   ],
-  "fairness": "PENDING",
+  "fairness": "FAIR",
   "immutable_carry_history": true,
   "manifest_hashes_verified": true,
   "publication": "PENDING",
@@ -145,13 +237,13 @@
     ]
    },
    "cost": {
-    "basis": "Public launch list price (I-1): GBP 0.0015 per million input tokens, output free, from launchables.ai/docs/deploy/hosted fetched 26 Oct 2026 17:38 UTC. USD 0.0020020 per million input tokens at the ECB reference rate of 20 Oct 2026, GBP 1 = USD 1.33468; prices exclude VAT. Provider-reported usage: 779,294 input / 1,485 output tokens on the common 1,485-item basis; 989,607 input / 1,500 output over all 1,500 items. Common basis USD 0.00105060 per 1,000 decisions; all-item basis USD 0.00132080. Price corrected in v1.7.9; earlier releases showed a same-base ESTIMATE of USD 0.0264 per 1,000.",
+    "basis": "Public launch list price, counted under interpretation I-1 (a manufacturer's standard, non-promotional list price counts from day 1): GBP 0.0015 per million input tokens, output free, from launchables.ai/docs/deploy/hosted fetched 26 Oct 2026 17:38 UTC. USD 0.0020020 per million input tokens from the ECB euro reference rates of 20 Oct 2026 (GBP 1 = USD 1.33468); prices exclude VAT. Provider-reported usage: 779,294 input / 1,485 output tokens on the common 1,485-item basis; 989,607 input / 1,500 output over all 1,500 items. Common basis USD 0.00105060 per 1,000 decisions; all-item basis USD 0.00132080. The tariff applied to the row's own provider-reported tokens; not a bill and not a quote. Saved copy of the vendor page sha256 956fa709. Price corrected in v1.7.9; earlier releases showed a same-base ESTIMATE of USD 0.0264 per 1,000.",
     "common_basis": {
      "n_items": 1485,
      "rule": "common",
      "usd_per_1000_all_items": 0.0013207954759999999
     },
-    "kind": "measured",
+    "kind": "estimate",
     "usage_estimated_rows": 0,
     "usd_per_1000": 0.0010506037629629628
    },
@@ -205,7 +297,7 @@
  "MYLESG12-PRICE": {
   "module_sha256": "645fd82eac728d597048bec0995ecd3ac896566e269fb6c9a1fdb84c171a9ac4",
   "old_source_pod_never_resolved": true,
-  "registry_sha256": "29de27eeade64d68ce8ea87938f1c0e44319eda08a8ac2c3f5143703390cd37a",
+  "registry_sha256": "fb2228fffe8b7971abc09b7063514f03b9fdeac208a41fbc99375fa9e5672660",
   "results": {
    "all": {
     "candidate_usd_per_1000": 0.0013207954759999999,
@@ -248,6 +340,8 @@
   }
  },
  "PREVIEW-FOOTER": {
+  "candidate_fairness": "FAIR",
+  "candidate_footer": "Release review pending",
   "existing_preview_unchanged": true,
   "publication_status_parameter": true,
   "published_status_refused_while_pending": true,
@@ -267,18 +361,18 @@
    "components/JevReleaseHistory.tsx": "6b9f3d584e64b844a7b01bf9b3f07edd434cd9221a0c354da66afa4578efa85d",
    "data/jevbench-architecture.json": "2bb36830ec006aba340b28dbec0c78261e7b70f541fa04652f209ff9ea6f4311",
    "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.9-carry.json": "271d1fc77a136a04a1eb6deb5480c52d4211eb2b66b2ac8bb31e80867e69003a",
-   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.9-categories.json": "8289838b59dcb2faa4ef7287db891ec7c4576c3fcedd77bd661eb1b6f2cb980b",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.9-categories.json": "a365e06e214cb0d41fd511ec51e341b5263ce0d86fa05ca0bf358972c4ea08ba",
    "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.9-history-carry.json": "334e851944e92383ab3071e52b3012040c7023d0fe236395953169ebee8f0459",
    "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.9-history.json": "5cd8c1332226ea9c179883d2285c0d8b8cc593ae38f2645197364a7ddd9c83c1",
-   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.9-proof.json": "4fe982db3b012fad09e5d3098f03af6b0ce7bb0ff1ec72315b3b898f7d0f315c",
-   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.9-publication.json": "679e757c659003c1bb91704c1e2ace2e8576378b54cf738842b96db33af97b22",
-   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.9-results.json": "969747ce7012ce884d8cf0a56f3bd5c3b1e8c66f364f5b1d982f80ff5d791781",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.9-proof.json": "d2071e5aa01b106020907031f1d7526610c53cc85ba87610bcc4997d0ab40931",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.9-publication.json": "8c0aa31e3905cc23273e8f234a1e52a0082943cb6170c5a5c3e53aae78146f62",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.9-results.json": "ab863afda444baa950b6007768d0048060e5661b019ac94b0a777d6dded63294",
    "lib/jevbench-categories.mjs": "edec91aae6b0dc71b0da02405496c406bee2f02a7d7906bb1ef731cb47f05cc0",
    "lib/jevbench-live-board.mjs": "4b1d0f3dc6ac3292c25634baf34f59d1e2760644e2249a96e2e414c0c6214636",
    "lib/jevbench-releases.mjs": "07257875a44218458b38e52cb6c0cb1424a5f77440a70479f08483a7af439f7f",
-   "lib/jevbench-v179-release.mjs": "b38229d5b7f12f00fd324e4b4b7db9314a70cf206cd46c7d57906ffa896d043c",
-   "r196/v179/preview/card.png": "b4e2b288a1aaed3ec46bc5c6f2d830ab5e643a10cf63877cf4401d88b4027f7b",
-   "r196/v179/preview/index.html": "91c716979de5319d61d6625a9519dd68e461fdef5f26c456ed30dd679bdf36e1",
+   "lib/jevbench-v179-release.mjs": "96f1075d8b0da5dcec17a411bb9fac798f349c5d92573e9e0df3600e68d3fe41",
+   "r196/v179/preview/card.png": "76e6f8646fa851c8473fffadf02670003f3e383fa696379c2a950d33b0a641b7",
+   "r196/v179/preview/index.html": "bb0189986902884ca90c27760579ae01cbf16128dc882e7ea6e12623721a53aa",
    "test/cr-205-jev-page-structure.test.mjs": "2289262662af66c6b3f081f6860ce06318a63bb667b732a054dfab0b18584d4b",
    "test/cr-303-feed-split.test.mjs": "66259a0fa9b9970f3b011dd2075dc65fcd3724e9ea8465151f4805f68ad2ce93",
    "test/fixtures/jevbench-v179-ranks.json": "419268390f53fc1a0289bebb5edb3b80e84d03c386c635735aa1f99df97c4624",
@@ -291,13 +385,21 @@
   "identical": true,
   "passes": 2
  },
- "build": {
-  "log_sha256": "dd6ebd05373303080717df3593f2f18c6cc92102b4736eb7491b1401082cccdf",
+ "bind-numbers": {
+  "log_sha256": "d449755457f41ae19754b8c162cb8e239afc3bd4e1089d22720420bd8e0bfda6",
   "status": "PASS"
  },
- "fairness": "PENDING",
+ "build": {
+  "log_sha256": "9301b62e17697555ddf85ab7c73641eff4a426673df3dd24d5f40e8b743b854c",
+  "status": "PASS"
+ },
+ "cost-kind": {
+  "log_sha256": "376fd723366ca4b662b059fc76680be2118e8ef6f2992e2728534f79d8c2fb48",
+  "status": "PASS"
+ },
+ "fairness": "FAIR",
  "fairness-text": {
-  "log_sha256": "24af1ce330a109ef3e070e003f5c256e869a946162518f399119e5cfd0ce14d5",
+  "log_sha256": "221a07a44fec4090669f9f23c350833b0c41892d849fc796c682ff8702d31f09",
   "status": "PASS"
  },
  "final-sanity": {
@@ -307,11 +409,11 @@
  "fulltest": {
   "cancelled": 0,
   "fail": 0,
-  "log_sha256": "4f5c0a9e3555afc1522a8ac33a7b4b0b5879525847b6136ce2ab9303c4ba4690",
-  "pass": 3801,
+  "log_sha256": "5aa46a11465f7876f859df0c7a062a994fcbbb49a3ed43e83e98082be6121432",
+  "pass": 3820,
   "skipped": 8,
   "status": "PASS",
-  "tests": 3809
+  "tests": 3828
  },
  "helpers": {
   "log_sha256": "ddd050d7ce8aa1bac4bc3c2f4e5031dba613975e2b1a4bdbfc9285b0e4908df4",
@@ -331,7 +433,7 @@
  },
  "preview-browser": {
   "all_lists": 544,
-  "fairness_header": "LOCAL REVIEW PREVIEW \u00b7 Review pending \u00b7 not published \u00b7 fairness PENDING",
+  "fairness_header": "LOCAL REVIEW PREVIEW \u00b7 Release review pending \u00b7 fairness FAIR",
   "initial": "share / api / official / A \u2014 top five changed. 33 ranked rows.",
   "official_rows": 33,
   "page_errors": [],
@@ -347,7 +449,7 @@
  "release-tests": {
   "cancelled": 0,
   "fail": 0,
-  "log_sha256": "50a0ec45b89707643c17edf9b31264ff886a703c4e48244bbcbb9cc9e8a92508",
+  "log_sha256": "2718a705b93d901e5f9f8674690384e085cec7045055750a258860c14731c20b",
   "pass": 67,
   "skipped": 0,
   "status": "PASS",
@@ -365,7 +467,7 @@
  "synthetic-tests": {
   "cancelled": 0,
   "fail": 0,
-  "log_sha256": "452aa5f2b284ab55ad55d1f4114ac44e168697d202c9a1cd742bb4d75daffe31",
+  "log_sha256": "607f45d2a553e3c91eff485f3d41e0bd6fb2cb4bdd2acf5bed42d15511f045de",
   "pass": 57,
   "skipped": 1,
   "status": "PASS",

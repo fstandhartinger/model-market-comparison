@@ -24,7 +24,7 @@ for f in ['intelligence','calibration','speed','capability','decision_limit','st
 for f in ['intelligence','calibration','speed']:assert mr['axes'][f]==sc['axes'][f],f
 assert round(sc['cost']['usd_per_1000'],8)==0.00105060
 assert round(sc['cost']['common_basis']['usd_per_1000_all_items'],8)==0.00132080
-text='Public launch list price (I-1): GBP 0.0015 per million input tokens, output free, from launchables.ai/docs/deploy/hosted fetched 26 Oct 2026 17:38 UTC. USD 0.0020020 per million input tokens at the ECB reference rate of 20 Oct 2026, GBP 1 = USD 1.33468; prices exclude VAT. Provider-reported usage: 779,294 input / 1,485 output tokens on the common 1,485-item basis; 989,607 input / 1,500 output over all 1,500 items. Common basis USD 0.00105060 per 1,000 decisions; all-item basis USD 0.00132080. Price corrected in v1.7.9; earlier releases showed a same-base ESTIMATE of USD 0.0264 per 1,000.'
+text="Public launch list price, counted under interpretation I-1 (a manufacturer's standard, non-promotional list price counts from day 1): GBP 0.0015 per million input tokens, output free, from launchables.ai/docs/deploy/hosted fetched 26 Oct 2026 17:38 UTC. USD 0.0020020 per million input tokens from the ECB euro reference rates of 20 Oct 2026 (GBP 1 = USD 1.33468); prices exclude VAT. Provider-reported usage: 779,294 input / 1,485 output tokens on the common 1,485-item basis; 989,607 input / 1,500 output over all 1,500 items. Common basis USD 0.00105060 per 1,000 decisions; all-item basis USD 0.00132080. The tariff applied to the row's own provider-reported tokens; not a bill and not a quote. Saved copy of the vendor page sha256 956fa709. Price corrected in v1.7.9; earlier releases showed a same-base ESTIMATE of USD 0.0264 per 1,000."
 mr['cost']=cp(sc['cost']);mr['cost']['basis']=text
 for f in ['scores','views','jevbench_score','composite_ci95']:mr[f]=cp(sc[f])
 mr['axes']['cost']=sc['axes']['cost'];mr['v16']['ci95']['composite']=cp(sc['v16']['ci95']['composite'])
@@ -45,7 +45,7 @@ for k,row in prev.items():
  if k in ['launchables-myles-g-12b','singularity-super-decider','singularity-super-decider-thinking']:continue
  assert {f:v for f,v in row.items() if f not in ['rank','ranks']}=={f:v for f,v in out[k].items() if f not in ['rank','ranks']},k
 note='One new self-hosted row GLiClass v4 9B; Myles-G 12B now priced at its public list price; Super Decider links point to the vendor page; no method change.'
-res.update(revision=REV,label='JevBench v1.7.9: one same-draw self-hosted addition',systems=sorted(out.values(),key=lambda s:s['key']),n_ranked=sum(bool(s['ranked']) for s in out.values()),roster_count=len(out),run_kind='same-draw-addendum',source_sha256=source_sha,source_note=note)
+res.update(revision=REV,label='JevBench v1.7.9: one same-draw self-hosted addition and one price correction',systems=sorted(out.values(),key=lambda s:s['key']),n_ranked=sum(bool(s['ranked']) for s in out.values()),roster_count=len(out),run_kind='same-draw-addendum',source_sha256=source_sha,source_note=note)
 res['measurement_notes']=old['results']['measurement_notes']+[note+' GLiClass answered 1,485 of 1,500 requests; 15 HTTP 422 length refusals count as misses. Its cost is an ESTIMATE from Qwen/Qwen3.5-9B with zero generated output.'];res['addendum']={'predecessor':PREV,'new_keys':keys,'remeasured_keys':[],'repriced_keys':[mk],'link_fixed_keys':['singularity-super-decider','singularity-super-decider-thinking'],'method_change':False};put(V/f'jevbench-{REV}-results.json',res)
 cat=cp(old['categories'])
 for k in keys:cat['systems'][k]=cells[k]['cells_share'];cat['lanes'][k]=inputs[k]['registry']['lane']
@@ -57,3 +57,8 @@ proof={'source_inputs':source_inputs,'schema_version':1,'revision':REV,'predeces
 put(V/f'jevbench-{REV}-proof.json',proof);pub=cp(old['publication']);pub.update(revision=REV,predecessor=proof['predecessor'],review={'engine':'PENDING','verdict':'PENDING','receipt_sha256':None});pub['files']={n:{'path':f'data/raw/benchmarks/jevbench/v1.7/jevbench-{REV}-{n}.json','sha256':sha(V/f'jevbench-{REV}-{n}.json')} for n in ['results','categories','carry','proof','history','history-carry']}
 put(V/f'jevbench-{REV}-publication.json',pub);put(J/'receipts/REMEASURED-ROW-SPEC.json',{k:out[k] for k in [mk,'singularity-super-decider','singularity-super-decider-thinking']});put(J/'receipts/NEW-ROW-SPEC.json',new);put(J/'receipts/BUILD.json',{'revision':REV,'base':PREV,'carried_equal_except_ranks':len(prev)-3,'new_keys':keys,'remeasured_keys':[],'repriced_keys':[mk],'link_fixed_keys':['singularity-super-decider','singularity-super-decider-thinking'],'roster_count':len(out),'n_ranked':res['n_ranked'],'files':pub['files']})
 print('Built PENDING',REV,len(out),'rows;',len(prev)-3,'carried equal except ranks; 1 self-hosted addition; comparison_only',A.comparison_only)
+
+# Refresh the human-readable price delta receipt from the built row.
+before_after=L(J/'receipts/MYLESG12-BEFORE-AFTER.json')
+before_after['after']={f:out[mk][f] for f in before_after['after']}
+put(J/'receipts/MYLESG12-BEFORE-AFTER.json',before_after)
