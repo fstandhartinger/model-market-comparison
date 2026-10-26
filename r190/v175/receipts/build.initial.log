@@ -1,0 +1,28 @@
+
+> benchmark-heaven@1.0.0 prebuild
+> node scripts/validate-benchmark-scores.mjs
+
+Benchmark source/build guard: {
+  observations: 20200,
+  source_files: 283,
+  self_reported_verified: 2093
+}
+
+> benchmark-heaven@1.0.0 build
+> next build
+
+   ▲ Next.js 15.5.25
+   - Experiments (use with caution):
+     · cpus: 4
+
+   Creating an optimized production build ...
+ ✓ Compiled successfully in 46s
+   Linting and checking validity of types ...
+   Collecting page data ...
+   Generating static pages (0/599) ...
+   Generating static pages (50/599) 
+   Generating static pages (149/599) 
+   Generating static pages (299/599) 
+   Generating static pages (400/599) 
+   Generating static pages (449/599) 
+   Generating static pages (514/599) 

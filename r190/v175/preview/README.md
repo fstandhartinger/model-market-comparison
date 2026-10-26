@@ -1,0 +1,1 @@
+Open index.html locally. Full before/after rankings for all 540 supplementary lists, filters, model search and radar comparing Sieve with the displaced row. card.png shows share/open/uncapped Calibration. Slider-transition evidence is in ../receipts/topfive-sliders.json. Fairness verdict: see inputs/APPROVAL.json; the independent publication review is separate.
