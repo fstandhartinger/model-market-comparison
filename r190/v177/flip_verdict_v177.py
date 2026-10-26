@@ -17,12 +17,11 @@ sha = lambda p: hashlib.sha256(p.read_bytes()).hexdigest()
 rec = json.loads(A.receipt.read_text())
 if rec.get('verdict') != 'PASS':
     ap.error(f"REFUSED: independent review verdict {rec.get('verdict')!r} is not PASS")
-if not A.dry_run and (not rec.get('engine') or rec['engine'].lower().startswith(('synthetic', 'pending'))):
+if not isinstance(rec.get('engine'), str) or not rec['engine'].strip() or rec['engine'].strip().lower().startswith(('synthetic', 'pending')):
     ap.error('REFUSED: a real independent review engine is required')
 m = json.loads(MAN.read_text())
 assert m['revision'] == 'v1.7.7'
-assert m['review']['verdict']=='PASS', 'REFUSED: publication review PENDING; worker helper requires an isolated PASS fixture'
-assert A.dry_run, 'REFUSED: this worker helper supports --dry-run only'
+assert m['review'] == {'engine': 'PENDING', 'verdict': 'PENDING', 'receipt_sha256': None}
 for k, f in m['files'].items():
     assert sha(W / f['path']) == f['sha256'], f'{k}: manifest bytes differ'
 pred_path = V / 'jevbench-v1.7.6-publication.json'

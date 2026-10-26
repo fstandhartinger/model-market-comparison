@@ -1275,7 +1275,7 @@
   "One new self-hosted row DOPEST 1.0 (31B); no method change. All 290 carried rows retain every score, confidence interval and diagnostic; only placements move.",
   "One new self-hosted row Sieve-31B-v2; no method change. All 291 carried rows retain every score, confidence interval and diagnostic; only placements move.",
   "One new self-hosted row Decisio 12B tuned commit (variant of the Decisio family); no method change. All 292 carried rows retain every score, confidence interval and diagnostic; only placements move.",
-  "Two new self-hosted rows D1A on Gemma 4 E4B (JohnP1 d1a-e4b) and D1A on Gemma 4 E2B (JohnP1 d1a-e2b); no method change."
+  "Two new self-hosted rows D1A on Gemma 4 E4B (JohnP1 d1a-e4b) and D1A on Gemma 4 E2B (JohnP1 d1a-e2b); no method change. On each D1A row, 15 of 1,500 answers were made on a prompt truncated at the author's 65,536-token limit and took over 10 s (up to 20.6 s on E4B and 16.2 s on E2B); the v1.7 share view counts them as wrong."
  ],
  "method": {
   "decision_limit_s": 10,

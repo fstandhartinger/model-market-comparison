@@ -30,7 +30,7 @@ for k,row in out.items():
 for k,row in prev.items():assert {f:v for f,v in row.items() if f not in ['rank','ranks']}=={f:v for f,v in out[k].items() if f not in ['rank','ranks']},k
 note='Two new self-hosted rows '+entries['d1a-gemma4-e4b']['entry']['display']+' and '+entries['d1a-gemma4-e2b']['entry']['display']+'; no method change.'
 res.update(revision=REV,label='JevBench v1.7.7: two same-draw self-hosted additions',systems=sorted(out.values(),key=lambda s:s['key']),n_ranked=sum(bool(s['ranked']) for s in out.values()),roster_count=len(out),run_kind='same-draw-addendum',source_sha256=source_sha,source_note=note)
-res['measurement_notes']=old['results']['measurement_notes']+[note];res['addendum']={'predecessor':PREV,'new_keys':keys,'remeasured_keys':[],'method_change':False};put(V/f'jevbench-{REV}-results.json',res)
+res['measurement_notes']=old['results']['measurement_notes']+[note+' '+"On each D1A row, 15 of 1,500 answers were made on a prompt truncated at the author's 65,536-token limit and took over 10 s (up to 20.6 s on E4B and 16.2 s on E2B); the v1.7 share view counts them as wrong."];res['addendum']={'predecessor':PREV,'new_keys':keys,'remeasured_keys':[],'method_change':False};put(V/f'jevbench-{REV}-results.json',res)
 cat=cp(old['categories'])
 for k in keys:cat['systems'][k]=cells[k]['cells_share'];cat['lanes'][k]=inputs[k]['registry']['lane']
 cat.update(revision=REV,results_sha256=sha(V/f'jevbench-{REV}-results.json'),source_results_sha256=res['source_sha256'],results_sha256_note='Bound to v1.7.7 results; 293 carried cells retained; new cells computed with unchanged frozen tools.');put(V/f'jevbench-{REV}-categories.json',cat)

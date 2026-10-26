@@ -16,18 +16,19 @@ Benchmark source/build guard: {
      · cpus: 4
 
    Creating an optimized production build ...
- ✓ Compiled successfully in 32.8s
+ ✓ Compiled successfully in 36.0s
    Linting and checking validity of types ...
    Collecting page data ...
    Generating static pages (0/605) ...
+   Generating static pages (48/605)
    Generating static pages (151/605)
    Generating static pages (302/605)
-   Generating static pages (384/605)
-   Generating static pages (448/605)
+   Generating static pages (378/605)
+   Generating static pages (420/605)
+   Generating static pages (449/605)
    Generating static pages (453/605)
-   Generating static pages (531/605)
-   Generating static pages (581/605)
-   Generating static pages (597/605)
+   Generating static pages (541/605)
+   Generating static pages (589/605)
  ✓ Generating static pages (605/605)
    Finalizing page optimization ...
    Collecting build traces ...
@@ -293,7 +294,7 @@ Route (app)                                                  Size  First Load JS
 + First Load JS shared by all                              103 kB
   ├ chunks/8869-bf4235bedc86df65.js                       46.3 kB
   ├ chunks/d489993d-8e05677f086dcd34.js                   54.2 kB
-  └ other shared chunks (total)                           2.28 kB
+  └ other shared chunks (total)                           2.27 kB
 
 
 ○  (Static)   prerendered as static content
