@@ -1,0 +1,11 @@
+{
+ "checks": [
+  "real-engine PASS fixture receipt succeeds on copied PENDING manifest in dry-run; manifest unchanged",
+  "non-PASS and synthetic/pending/missing/invalid-engine receipts refused without mutation",
+  "freeze refuses PENDING manifest without mutation",
+  "isolated synthetic PASS manifest accepted by freeze; no seal writes",
+  "unbound predecessor refuses both helpers in their valid review states",
+  "both row gates reject foreign owner pins and mixed-case templates"
+ ],
+ "status": "PASS"
+}
