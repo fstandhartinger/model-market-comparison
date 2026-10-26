@@ -1675,6 +1675,7 @@ HOLD_REASON_LABELS = {
     "measurement_pins_differ_from_review": ("the test files differ from the reviewed files", "die Testdateien weichen von den geprüften Dateien ab"),
     "gpu_pod_capacity": ("no evaluation GPU is currently available", "derzeit ist keine GPU für die Messung verfügbar"),
     "gpu_pod_run_failed": ("the evaluation GPU run failed", "die Messung auf der GPU ist fehlgeschlagen"),
+    "sealed_run_needs_trusted_provider": ("the GPU run needs a trusted host for the sealed test set (Verda), started by an agent", "der GPU-Lauf braucht einen vertrauenswürdigen Host für das versiegelte Testset (Verda), gestartet von einem Agenten"),
     "fetch_source_transient": ("the model source download is temporarily unavailable", "der Download der Modellquellen ist vorübergehend nicht verfügbar"),
     "fetch_source_failed": ("the model source download failed and needs checking", "der Download der Modellquellen ist fehlgeschlagen und muss geprüft werden"),
     "source_access_recovered_pending_review": ("model access is repaired but the source and test approval still need review", "der Modellzugriff funktioniert wieder, aber Quellen und Testfreigabe müssen noch geprüft werden"),

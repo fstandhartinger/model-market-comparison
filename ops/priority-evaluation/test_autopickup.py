@@ -2508,6 +2508,7 @@ class PodServicesRenderTests(unittest.TestCase):
 
 class _FakeProvider(pod_runner.Provider):
     """Scripted in-memory provider; every call is recorded, nothing leaves the host."""
+    sealed_custody_ok = True
 
     def __init__(self, behavior=None):
         self.calls = []
@@ -2856,7 +2857,10 @@ class PodUnidentifiedCreateTests(unittest.TestCase):
             'node_id': '99999999-9999-4999-8999-999999999999', 'quoted_at': ap.iso(ap.utcnow())})
         quote_patcher.start()
         self.addCleanup(quote_patcher.stop)
-        return pod_runner.LiumProvider()
+        provider = pod_runner.LiumProvider()
+        # Exercises Lium CLI mechanics with a fake CLI only; real Lium is never sealed-custody-ok.
+        provider.sealed_custody_ok = True
+        return provider
 
     def _run(self, provider, max_usd=20.0):
         rid = str(uuid.uuid4())

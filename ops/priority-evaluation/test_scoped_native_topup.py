@@ -232,9 +232,9 @@ class ActualClosureTests(unittest.TestCase):
   stage=self.root/'synthetic-stage';stage.write_text('synthetic staging')
   pins={'profile':{'inputs':{'jevbench':{'count':1500}}}}
   with patch.object(runner,'PODS_DIR',self.state/'pods'),patch.object(runner,'validate_recipe'),patch.object(runner,'export_source'),patch.object(runner,'build_staging'),patch.object(runner,'_stage_tarball',return_value=stage),patch.object(runner,'_lifecycle',side_effect=runner.PodCapacityError('synthetic capacity'))as lifecycle:
-   with self.assertRaisesRegex(runner.measurement_dispatch.OperationalHold,'gpu_pod_capacity'):runner.run(self.rid,self.job,recipe,self.root/'out',pins,25,provider=Mock(),allocation_gate=x,measurement_pins_factory=lambda:pins)
+   with self.assertRaisesRegex(runner.measurement_dispatch.OperationalHold,'gpu_pod_capacity'):runner.run(self.rid,self.job,recipe,self.root/'out',pins,25,provider=Mock(sealed_custody_ok=True),allocation_gate=x,measurement_pins_factory=lambda:pins)
    self.assertEqual(lifecycle.call_count,1);args=lifecycle.call_args.args;self.assertEqual(args[6],('RTX6000',48));self.assertEqual(args[7:9],(1,5))
-   with self.assertRaisesRegex(runner.measurement_dispatch.OperationalHold,'gpu_pod_budget_exhausted'):runner.run(self.rid,self.job,recipe,self.root/'out2',pins,25,provider=Mock(),allocation_gate=Mock(lifetime_cap_usd=999,allowed_total=999,max_new_usd=999),measurement_pins_factory=lambda:pins)
+   with self.assertRaisesRegex(runner.measurement_dispatch.OperationalHold,'gpu_pod_budget_exhausted'):runner.run(self.rid,self.job,recipe,self.root/'out2',pins,25,provider=Mock(sealed_custody_ok=True),allocation_gate=Mock(lifetime_cap_usd=999,allowed_total=999,max_new_usd=999),measurement_pins_factory=lambda:pins)
  def test_actual_lifecycle_rejects_ducktyped_extended_ceiling(self):
   import pod_runner as runner
   from unittest.mock import patch
@@ -251,7 +251,7 @@ class ActualClosureTests(unittest.TestCase):
    f.adopt();x=f.instance();recipe=g.read(f.job/'trusted-runner/POD-RECIPE.json');source=f.job/'source';source.mkdir();f.write(source/'FETCH-RECEIPT-model.json',{})
    stage=f.root/'stage';stage.write_text('synthetic');pins={'profile':{'inputs':{'jevbench':{'count':1500}}}}
    with patch.object(runner,'PODS_DIR',f.state/'pods'),patch.object(runner,'validate_recipe'),patch.object(runner,'export_source'),patch.object(runner,'build_staging'),patch.object(runner,'_stage_tarball',return_value=stage),patch.object(runner,'_lifecycle',side_effect=runner.PodCapacityError('capacity'))as lifecycle:
-    with self.assertRaisesRegex(runner.measurement_dispatch.OperationalHold,'gpu_pod_capacity'):runner.run(f.rid,f.job,recipe,f.root/'out',pins,24.8,provider=Mock(),allocation_gate=x,measurement_pins_factory=lambda:pins)
+    with self.assertRaisesRegex(runner.measurement_dispatch.OperationalHold,'gpu_pod_capacity'):runner.run(f.rid,f.job,recipe,f.root/'out',pins,24.8,provider=Mock(sealed_custody_ok=True),allocation_gate=x,measurement_pins_factory=lambda:pins)
     self.assertEqual(lifecycle.call_count,1);self.assertEqual(lifecycle.call_args.args[6],('H100',80));self.assertAlmostEqual(lifecycle.call_args.args[8],5)
   finally:f.tearDown()
  def test_actual_eligible_original_native_row_and_sole_unit(self):

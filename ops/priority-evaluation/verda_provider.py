@@ -47,6 +47,7 @@ def _stop_deadman(instance_id):
 
 class VerdaProvider(pod_runner.Provider):
     name = 'verda'
+    sealed_custody_ok = True  # allowed tier-1 host for sealed inputs (lium-sealed-data-ban, custody #21023(3))
 
     def __init__(self, order_id, label):
         self._order_id = order_id

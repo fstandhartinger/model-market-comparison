@@ -480,6 +480,9 @@ def render_services_sh(recipe) -> str:
 
 class Provider:
     name = "provider"
+    # Every run() stages sealed benchmark inputs. Only providers reviewed as trusted sealed-custody hosts set this
+    # (DECISIONS 17 Oct 2026 lium-sealed-data-ban: never Lium or another marketplace GPU).
+    sealed_custody_ok = False
 
     def reserve(self, job: str, name: str, hourly: float, cost_cap: float, hours: float) -> str:
         raise NotImplementedError
@@ -1271,13 +1274,15 @@ def run(rid: str, job_dir: Path, recipe: dict, output: Path, expected_pins: dict
         except (OSError, ValueError):
             raise measurement_dispatch.OperationalHold('native_admission_missing') from None
         admission_binding = native_admission.validate_native_admission(job_dir, request_state, recipe, benchmarks, native_source_pins)
+    # Fail closed: no implicit provider, and sealed inputs only reach an explicitly trusted host (e.g. VerdaProvider).
+    if provider is None or getattr(provider, 'sealed_custody_ok', False) is not True:
+        raise measurement_dispatch.OperationalHold('sealed_run_needs_trusted_provider')
     output = Path(output)
     if output.is_symlink():
         raise measurement_dispatch.OperationalHold("measurement_output_unsafe")
     output.mkdir(parents=True, exist_ok=True, mode=0o700)
     receipt_file = output / "receipt.json"
     recipe_sha = hashlib.sha256(json.dumps({'recipe': recipe, 'benchmarks': list(benchmarks)}, sort_keys=True).encode()).hexdigest()
-    provider = provider or LiumProvider(order_id=rid)
     alert = alert if alert is not None else default_alert
     state_path = PODS_DIR / f"{rid}.json"
     state_path.parent.mkdir(parents=True, exist_ok=True, mode=0o700)

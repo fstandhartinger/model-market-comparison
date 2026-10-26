@@ -35,7 +35,7 @@ class Tests(unittest.TestCase):
                 with patch.object(pr,'STATE_ROOT',root),patch.object(pr,'PODS_DIR',pods),patch.object(pr,'validate_recipe'),patch.object(pr,'export_source',return_value=b'synthetic'),patch.object(pr,'build_staging',return_value={}),patch.object(pr,'_stage_tarball',return_value=stage),patch.object(pr,'_lifecycle',side_effect=error) as lifecycle:
                     gate=allocation.FreshAllocation(job,admission,Mock())
                     with self.assertRaisesRegex(measurement_dispatch.OperationalHold,reason):
-                        pr.run(allocation.DECISOR,job,recipe,root/'out',pins,20,provider=SimpleNamespace(),alert=Mock(),measurement_pins_factory=lambda:pins,allocation_gate=gate)
+                        pr.run(allocation.DECISOR,job,recipe,root/'out',pins,20,provider=SimpleNamespace(sealed_custody_ok=True),alert=Mock(),measurement_pins_factory=lambda:pins,allocation_gate=gate)
                     self.assertEqual(lifecycle.call_count,1)
                     self.assertAlmostEqual(lifecycle.call_args.args[7],2.36)
                     self.assertAlmostEqual(lifecycle.call_args.args[8],11.8)
