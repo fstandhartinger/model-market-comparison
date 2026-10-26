@@ -1,0 +1,19 @@
+{
+  "artifact_id": "protocol-eq-bench-4",
+  "artifact_sha256": "817db11872d3f1ebe9d61ecda8793aca6ec23a05a9bbf10b49ab00926094de31",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": ["eq-bench::4", "c1", "c2"],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "c1: metric description in row eq-bench::4 (blind, bidirectional pairwise judging by a three-judge LLM panel, soft Bradley-Terry fit, normalised against anchor models) matches SOURCE 1 'Pairwise Elo' text; I verified wording correspondence, not execution.",
+    "c1: unit 'Elo' with range [null,null] — row declines bounds; SOURCE 3 served scale (31 values, 987.9 to 1360.3) does not contradict a null/unbounded claim; Elo values on this scale are consistent with unit 'Elo'.",
+    "c2: status 'active' supported by SOURCE 2 (30 added/changed 'elo' values vs prior snapshot) and SOURCE 1 showing the board as a current leaderboard; per criteria this supports active only for reporting status.",
+    "c2: version_status 'published' supported by SOURCE 1 publishing the release identifier 'EQ-Bench 4' (page title and 'What is EQ-Bench 4?'); row version '4' copies that identifier.",
+    "c2: superseded_by null checked independently — SOURCE 1 names no successor board for EQ-Bench 4 (EQ-Bench 3 appears only under Legacy Leaderboards as a predecessor).",
+    "Owner-run hash and transport/qualification checks (SOURCE sha256s, producer receipt) are outside my execution ability; treated as owner responsibility, not missing evidence."
+  ],
+  "missing_evidence": []
+}

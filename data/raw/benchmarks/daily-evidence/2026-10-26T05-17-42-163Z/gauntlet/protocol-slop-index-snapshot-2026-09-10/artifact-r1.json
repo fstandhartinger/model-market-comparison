@@ -1,0 +1,22 @@
+[
+  {
+    "id": "slop-index::snapshot-2026-09-10",
+    "version": "snapshot-2026-09-10",
+    "version_guard": "No public version was verified: this identity freezes the observed methodology/source snapshot. Review task set, harness, judges, metric and configuration before importing any later result; a changed protocol needs a new identity.",
+    "status": "active",
+    "version_status": "snapshot",
+    "superseded_by": null,
+    "scoring": {
+      "metric": "Slop Score 0-100 = 40% live arena Elo votes + 15% each for concise, templating, rhythm, and tells measured against pre-AI human writing; higher = sloppier",
+      "unit": "points",
+      "range": [
+        0,
+        100
+      ],
+      "higher_better": false,
+      "notes": "Values retain this source implementation and score convention; different harnesses, subsets, judge revisions and versions must remain separate."
+    },
+    "description": "Leaderboard scoring how much each model's writing reads like chatbot slop versus pre-AI human writing, blending live arena votes with four mechanical axes.",
+    "maintainer": "The Slop Index (hgaddipati1118)"
+  }
+]

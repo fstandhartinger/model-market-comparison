@@ -1,5 +1,5 @@
 {
-  "collected_at": "2026-10-26T00:54:08.003Z",
+  "collected_at": "2026-10-26T05:30:10.689Z",
   "models": {
     "moonshotai/kimi-k3": {
       "or_model_id": "moonshotai/kimi-k3",
@@ -23214,6 +23214,327 @@
         "basis": "measured",
         "status": "available"
       }
+    },
+    "nex-agi/nex-n2.5-pro": {
+      "or_model_id": "nex-agi/nex-n2.5-pro",
+      "model_permaslug": "nex-agi/nex-n2.5-pro-20260907",
+      "variant": "standard",
+      "endpoints": [
+        {
+          "or_model_id": "nex-agi/nex-n2.5-pro",
+          "endpoint_tag": "nex-agi/fp8",
+          "provider": "Nex AGI",
+          "endpoint_id": "18fbe5dc-d6cc-44ad-8115-b07d43b9fc49",
+          "cache_read_per_1m": 0.015,
+          "cache_write_per_1m": null,
+          "cache_hit_rate": 0.7976344955715721,
+          "cache_status": "available",
+          "cache_note": "OpenRouter reported cacheHitRate as a fraction. Underlying numerator/denominator and exact summary interval are not published in this response.",
+          "source_provider_name": "Nex AGI",
+          "source_provider_slug": "nex-agi",
+          "total_tokens": 39366132
+        }
+      ],
+      "usage": {
+        "status": "available",
+        "daily": [
+          {
+            "date": "2026-10-25",
+            "total_prompt_tokens": 188867243,
+            "total_completion_tokens": 12672591,
+            "count": 11855
+          },
+          {
+            "date": "2026-10-24",
+            "total_prompt_tokens": 113360369,
+            "total_completion_tokens": 4900445,
+            "count": 9758
+          },
+          {
+            "date": "2026-10-23",
+            "total_prompt_tokens": 182621998,
+            "total_completion_tokens": 6289457,
+            "count": 7294
+          },
+          {
+            "date": "2026-10-22",
+            "total_prompt_tokens": 327215885,
+            "total_completion_tokens": 9199965,
+            "count": 7080
+          },
+          {
+            "date": "2026-10-21",
+            "total_prompt_tokens": 535422850,
+            "total_completion_tokens": 14176731,
+            "count": 26371
+          },
+          {
+            "date": "2026-10-20",
+            "total_prompt_tokens": 204042347,
+            "total_completion_tokens": 5917006,
+            "count": 6853
+          },
+          {
+            "date": "2026-10-19",
+            "total_prompt_tokens": 229416086,
+            "total_completion_tokens": 5978797,
+            "count": 9931
+          }
+        ],
+        "total_prompt_tokens": 1780946778,
+        "total_completion_tokens": 59134992,
+        "total_requests": 79142,
+        "input_output_ratio": 30.116631756710138
+      },
+      "source_updated_at": "2026-10-26T05:30:08.368Z",
+      "window": {
+        "start_date": "2026-10-19",
+        "end_date": "2026-10-25"
+      },
+      "provenance": {
+        "source": "OpenRouter model-page usage",
+        "url": "https://openrouter.ai/nex-agi/nex-n2.5-pro",
+        "collected_at": "2026-10-26T05:30:15.546Z",
+        "basis": "measured"
+      },
+      "response_sha256": "df88698015deb0551d54de1e843f1366adf22dc5c26eb8062e1b91fc6000fdcb",
+      "cache": {
+        "unjoined": [],
+        "returned_summaries": 1,
+        "summary_window": null,
+        "chart_date_range": {
+          "first": "2026-10-19 00:00:00",
+          "last": "2026-10-26 00:00:00"
+        },
+        "provenance": {
+          "source": "OpenRouter effective pricing statistics",
+          "url": "https://openrouter.ai/api/frontend/v1/stats/effective-pricing?permaslug=nex-agi%2Fnex-n2.5-pro-20260907&variant=standard&shape=v7",
+          "collected_at": "2026-10-26T05:30:17.749Z",
+          "basis": "measured"
+        },
+        "response_sha256": "b79c86c150fbf3fab0fbc49710293db3a431a771b1c26aaeca6028e8b46fa4ba"
+      },
+      "cache_attempt": {
+        "source": "OpenRouter effective pricing statistics",
+        "url": "https://openrouter.ai/api/frontend/v1/stats/effective-pricing?permaslug=nex-agi%2Fnex-n2.5-pro-20260907&variant=standard&shape=v7",
+        "collected_at": "2026-10-26T05:30:17.749Z",
+        "basis": "measured",
+        "status": "available"
+      }
+    },
+    "nousresearch/hermes-3-llama-3.1-405b": {
+      "or_model_id": "nousresearch/hermes-3-llama-3.1-405b",
+      "model_permaslug": "nousresearch/hermes-3-llama-3.1-405b",
+      "variant": "standard",
+      "endpoints": [
+        {
+          "or_model_id": "nousresearch/hermes-3-llama-3.1-405b",
+          "endpoint_tag": "deepinfra/fp8",
+          "provider": "DeepInfra",
+          "endpoint_id": "3280e8f8-0960-400c-8284-2e03a0bcb446",
+          "cache_read_per_1m": null,
+          "cache_write_per_1m": null,
+          "cache_hit_rate": 0,
+          "cache_status": "available",
+          "cache_note": "OpenRouter reported cacheHitRate as a fraction. Underlying numerator/denominator and exact summary interval are not published in this response.",
+          "source_provider_name": "DeepInfra",
+          "source_provider_slug": "deepinfra",
+          "total_tokens": 18451464
+        }
+      ],
+      "usage": {
+        "status": "available",
+        "daily": [
+          {
+            "date": "2026-10-25",
+            "total_prompt_tokens": 68361541,
+            "total_completion_tokens": 3324322,
+            "count": 20636
+          },
+          {
+            "date": "2026-10-24",
+            "total_prompt_tokens": 54264643,
+            "total_completion_tokens": 2269805,
+            "count": 15275
+          },
+          {
+            "date": "2026-10-23",
+            "total_prompt_tokens": 67608938,
+            "total_completion_tokens": 2893781,
+            "count": 21062
+          },
+          {
+            "date": "2026-10-22",
+            "total_prompt_tokens": 62601337,
+            "total_completion_tokens": 3026282,
+            "count": 17529
+          },
+          {
+            "date": "2026-10-21",
+            "total_prompt_tokens": 61621306,
+            "total_completion_tokens": 2895132,
+            "count": 17752
+          },
+          {
+            "date": "2026-10-20",
+            "total_prompt_tokens": 79265782,
+            "total_completion_tokens": 3147028,
+            "count": 21140
+          },
+          {
+            "date": "2026-10-19",
+            "total_prompt_tokens": 92707443,
+            "total_completion_tokens": 2979299,
+            "count": 22239
+          }
+        ],
+        "total_prompt_tokens": 486430990,
+        "total_completion_tokens": 20535649,
+        "total_requests": 135633,
+        "input_output_ratio": 23.68714960019038
+      },
+      "source_updated_at": "2026-10-26T05:28:56.730Z",
+      "window": {
+        "start_date": "2026-10-19",
+        "end_date": "2026-10-25"
+      },
+      "provenance": {
+        "source": "OpenRouter model-page usage",
+        "url": "https://openrouter.ai/nousresearch/hermes-3-llama-3.1-405b",
+        "collected_at": "2026-10-26T05:30:19.753Z",
+        "basis": "measured"
+      },
+      "response_sha256": "06d036e10c883575503fa9635abff9ea783e3da77d1dba8daccf4517209395a9",
+      "cache": {
+        "unjoined": [],
+        "returned_summaries": 1,
+        "summary_window": null,
+        "chart_date_range": {
+          "first": "2026-10-19 00:00:00",
+          "last": "2026-10-26 00:00:00"
+        },
+        "provenance": {
+          "source": "OpenRouter effective pricing statistics",
+          "url": "https://openrouter.ai/api/frontend/v1/stats/effective-pricing?permaslug=nousresearch%2Fhermes-3-llama-3.1-405b&variant=standard&shape=v7",
+          "collected_at": "2026-10-26T05:30:21.951Z",
+          "basis": "measured"
+        },
+        "response_sha256": "d9550d9bbfeed0873fbcc952c1e17ea6cbcbd2751ddb0a7f2d4b3bc7f25d3127"
+      },
+      "cache_attempt": {
+        "source": "OpenRouter effective pricing statistics",
+        "url": "https://openrouter.ai/api/frontend/v1/stats/effective-pricing?permaslug=nousresearch%2Fhermes-3-llama-3.1-405b&variant=standard&shape=v7",
+        "collected_at": "2026-10-26T05:30:21.951Z",
+        "basis": "measured",
+        "status": "available"
+      }
+    },
+    "nousresearch/hermes-3-llama-3.1-70b": {
+      "or_model_id": "nousresearch/hermes-3-llama-3.1-70b",
+      "model_permaslug": "nousresearch/hermes-3-llama-3.1-70b",
+      "variant": "standard",
+      "endpoints": [
+        {
+          "or_model_id": "nousresearch/hermes-3-llama-3.1-70b",
+          "endpoint_tag": "deepinfra/fp8",
+          "provider": "DeepInfra",
+          "endpoint_id": "2151651b-f4e9-4db7-b20d-8b91fb524bf8",
+          "cache_read_per_1m": null,
+          "cache_write_per_1m": null,
+          "cache_hit_rate": 0,
+          "cache_status": "available",
+          "cache_note": "OpenRouter reported cacheHitRate as a fraction. Underlying numerator/denominator and exact summary interval are not published in this response.",
+          "source_provider_name": "DeepInfra",
+          "source_provider_slug": "deepinfra",
+          "total_tokens": 28380168
+        }
+      ],
+      "usage": {
+        "status": "available",
+        "daily": [
+          {
+            "date": "2026-10-25",
+            "total_prompt_tokens": 178287287,
+            "total_completion_tokens": 9294217,
+            "count": 64238
+          },
+          {
+            "date": "2026-10-24",
+            "total_prompt_tokens": 161226450,
+            "total_completion_tokens": 8836011,
+            "count": 57585
+          },
+          {
+            "date": "2026-10-23",
+            "total_prompt_tokens": 146209945,
+            "total_completion_tokens": 8250507,
+            "count": 54822
+          },
+          {
+            "date": "2026-10-22",
+            "total_prompt_tokens": 160919298,
+            "total_completion_tokens": 8588400,
+            "count": 56171
+          },
+          {
+            "date": "2026-10-21",
+            "total_prompt_tokens": 177200917,
+            "total_completion_tokens": 11195137,
+            "count": 73132
+          },
+          {
+            "date": "2026-10-20",
+            "total_prompt_tokens": 171186862,
+            "total_completion_tokens": 9887659,
+            "count": 62750
+          },
+          {
+            "date": "2026-10-19",
+            "total_prompt_tokens": 164357796,
+            "total_completion_tokens": 9991586,
+            "count": 59301
+          }
+        ],
+        "total_prompt_tokens": 1159388555,
+        "total_completion_tokens": 66043517,
+        "total_requests": 427999,
+        "input_output_ratio": 17.554918448694973
+      },
+      "source_updated_at": "2026-10-26T05:28:41.276Z",
+      "window": {
+        "start_date": "2026-10-19",
+        "end_date": "2026-10-25"
+      },
+      "provenance": {
+        "source": "OpenRouter model-page usage",
+        "url": "https://openrouter.ai/nousresearch/hermes-3-llama-3.1-70b",
+        "collected_at": "2026-10-26T05:30:23.954Z",
+        "basis": "measured"
+      },
+      "response_sha256": "4161844a2e627e494f0818b7cfcfea543dc27ecef3026cedbc5628df380b1fd8",
+      "cache": {
+        "unjoined": [],
+        "returned_summaries": 1,
+        "summary_window": null,
+        "chart_date_range": {
+          "first": "2026-10-19 00:00:00",
+          "last": "2026-10-26 00:00:00"
+        },
+        "provenance": {
+          "source": "OpenRouter effective pricing statistics",
+          "url": "https://openrouter.ai/api/frontend/v1/stats/effective-pricing?permaslug=nousresearch%2Fhermes-3-llama-3.1-70b&variant=standard&shape=v7",
+          "collected_at": "2026-10-26T05:30:25.936Z",
+          "basis": "measured"
+        },
+        "response_sha256": "14dec9855d12b4fe023144080f6d4eb1d02e5265ada926bd8c5f797d67fa9217"
+      },
+      "cache_attempt": {
+        "source": "OpenRouter effective pricing statistics",
+        "url": "https://openrouter.ai/api/frontend/v1/stats/effective-pricing?permaslug=nousresearch%2Fhermes-3-llama-3.1-70b&variant=standard&shape=v7",
+        "collected_at": "2026-10-26T05:30:25.936Z",
+        "basis": "measured",
+        "status": "available"
+      }
     }
   },
   "attempts": {
@@ -23892,9 +24213,9 @@
     "openai/gpt-6-sol": {
       "source": "OpenRouter model page",
       "url": "https://openrouter.ai/openai/gpt-6-sol",
-      "collected_at": "2026-10-23T02:40:39.035Z",
-      "status": "available",
-      "http_status": 200
+      "collected_at": "2026-10-26T05:30:13.249Z",
+      "status": "fetch_or_parse_failed",
+      "reason": "OpenRouter provider table query missing"
     },
     "inference-net/schematron-v2-small": {
       "source": "OpenRouter model page",
@@ -24406,6 +24727,27 @@
       "collected_at": "2026-10-26T00:54:23.168Z",
       "status": "available",
       "http_status": 200
+    },
+    "nex-agi/nex-n2.5-pro": {
+      "source": "OpenRouter model page",
+      "url": "https://openrouter.ai/nex-agi/nex-n2.5-pro",
+      "collected_at": "2026-10-26T05:30:15.546Z",
+      "status": "available",
+      "http_status": 200
+    },
+    "nousresearch/hermes-3-llama-3.1-405b": {
+      "source": "OpenRouter model page",
+      "url": "https://openrouter.ai/nousresearch/hermes-3-llama-3.1-405b",
+      "collected_at": "2026-10-26T05:30:19.753Z",
+      "status": "available",
+      "http_status": 200
+    },
+    "nousresearch/hermes-3-llama-3.1-70b": {
+      "source": "OpenRouter model page",
+      "url": "https://openrouter.ai/nousresearch/hermes-3-llama-3.1-70b",
+      "collected_at": "2026-10-26T05:30:23.954Z",
+      "status": "available",
+      "http_status": 200
     }
   },
   "rankings": {
@@ -24425,10 +24767,10 @@
         "variant": "standard",
         "variant_permaslug": "deepseek/deepseek-v4.1-flash-20261017",
         "date": "2026-10-25 00:00:00",
-        "total_prompt_tokens": 33062840869464,
-        "total_completion_tokens": 494584283152,
-        "total_requests": 555370840,
-        "input_output_ratio": 66.84976048723901
+        "total_prompt_tokens": 33062841983730,
+        "total_completion_tokens": 494585163864,
+        "total_requests": 555370846,
+        "input_output_ratio": 66.8496437002335
       },
       {
         "model_permaslug": "openai/gpt-6.1-sol-20260929",
@@ -24495,10 +24837,10 @@
         "variant": "standard",
         "variant_permaslug": "z-ai/glm-5.3-flash-20260826",
         "date": "2026-10-25 00:00:00",
-        "total_prompt_tokens": 12676419122516,
-        "total_completion_tokens": 559444703900,
-        "total_requests": 639253740,
-        "input_output_ratio": 22.65893131912085
+        "total_prompt_tokens": 12676419487468,
+        "total_completion_tokens": 559446347167,
+        "total_requests": 639253750,
+        "input_output_ratio": 22.65886541517442
       },
       {
         "model_permaslug": "anthropic/claude-sonnet-5.5-20260928",
@@ -24545,10 +24887,10 @@
         "variant": "standard",
         "variant_permaslug": "deepseek/deepseek-v4-flash-20260423",
         "date": "2026-10-25 00:00:00",
-        "total_prompt_tokens": 2632304480016,
-        "total_completion_tokens": 174476794354,
-        "total_requests": 362057319,
-        "input_output_ratio": 15.086845730758078
+        "total_prompt_tokens": 2632305167124,
+        "total_completion_tokens": 174481226659,
+        "total_requests": 362057355,
+        "input_output_ratio": 15.086466421218399
       },
       {
         "model_permaslug": "moonshotai/kimi-k3-20260715",
@@ -24565,10 +24907,10 @@
         "variant": "standard",
         "variant_permaslug": "deepseek/deepseek-v4-flash-20260731",
         "date": "2026-10-25 00:00:00",
-        "total_prompt_tokens": 3810624872629,
-        "total_completion_tokens": 180200579861,
-        "total_requests": 334525101,
-        "input_output_ratio": 21.146573865458002
+        "total_prompt_tokens": 3810625493832,
+        "total_completion_tokens": 180204368102,
+        "total_requests": 334525119,
+        "input_output_ratio": 21.146132771182852
       },
       {
         "model_permaslug": "meta/muse-spark-1.3-contributor-20260902",
@@ -24595,10 +24937,10 @@
         "variant": "standard",
         "variant_permaslug": "deepseek/deepseek-v4.1-flash-20260910",
         "date": "2026-10-25 00:00:00",
-        "total_prompt_tokens": 17558281252124,
-        "total_completion_tokens": 436837948354,
-        "total_requests": 516560619,
-        "input_output_ratio": 40.19403835743526
+        "total_prompt_tokens": 17558281607758,
+        "total_completion_tokens": 436838392844,
+        "total_requests": 516560623,
+        "input_output_ratio": 40.193998273471955
       },
       {
         "model_permaslug": "stepfun/step-5-preview-20261008",
@@ -24618,15 +24960,15 @@
     "provenance": {
       "source": "OpenRouter weekly model rankings",
       "url": "https://openrouter.ai/rankings?view=week",
-      "collected_at": "2026-10-26T00:54:08.535Z",
+      "collected_at": "2026-10-26T05:30:11.235Z",
       "basis": "measured"
     },
-    "response_sha256": "4eb365cbd297696c93fd6b46977afbe7751f4ebb15a27b6601c0f45bb6353910"
+    "response_sha256": "d0a2040dac8e1b1a0d9855aeba7c38c6c2eeb977bb34dd281f54e263c0c8333f"
   },
   "rankings_attempt": {
     "source": "OpenRouter weekly model rankings",
     "url": "https://openrouter.ai/rankings?view=week",
-    "collected_at": "2026-10-26T00:54:08.535Z",
+    "collected_at": "2026-10-26T05:30:11.235Z",
     "basis": "measured",
     "status": "available"
   },
@@ -24634,8 +24976,8 @@
     "catalog_models": 467,
     "eligible_page_models": 335,
     "pages_selected": 4,
-    "pages_succeeded_this_run": 4,
-    "retained_model_pages": 159,
+    "pages_succeeded_this_run": 3,
+    "retained_model_pages": 162,
     "policy": "At most four model pages per normal daily run: one oldest-attempt-first page from the maintained GPT-6 model/mode priority set, then up to three oldest-attempt-first pages from the remaining catalog; explicit targeted batches are capped at twelve. Per-observation dates are retained."
   }
 }

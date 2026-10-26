@@ -1,0 +1,40 @@
+{
+  "artifact_id": "protocol-weirdml-2",
+  "artifact_sha256": "6bd60c5766dad9d19f8ad87594eec4ade45889654f1ab0b2516e23568e5c4ae7",
+  "round": 2,
+  "verdict": "blocked",
+  "coverage_checked": ["weirdml::2", "c1", "c2"],
+  "errors_found": 3,
+  "findings": [
+    {
+      "id": "f1",
+      "severity": "blocker",
+      "location": "row weirdml::2, scoring.metric, scoring.notes, description",
+      "evidence": "Row claims metric 'Average Max Accuracy ... across the 5 iterations per run, averaged over all 17 tasks'. SOURCE 1 (weirdml.html) describes only WeirdML v3: '11 complex hand-made tasks' and a different scoring rule ('80% normalized area ... plus 20% of its final value'; effective scores 'not raw accuracy'). The packet contains no WeirdML v2 protocol text; the excerpt only shows v2 exists as a linked 'Previous version'. The v2-specific scoring rule, 17-task set and 5-iteration convention cannot be verified from supplied evidence.",
+      "repair": "Supply the exact WeirdML v2 protocol page capture and either verify or correct the row's metric, task count, iteration convention and description against it."
+    },
+    {
+      "id": "f2",
+      "severity": "major",
+      "location": "row weirdml::2, version, version_status, status",
+      "evidence": "Row claims version '2', version_status 'published', status 'active' with no continuity guard satisfied. SOURCE 1 shows the current page publishes WeirdML v3 as the current board ('WeirdML v3 is an agentic benchmark...') and lists v2 only as a 'Previous version' link. The excerpt cannot establish that '2' is the release identifier the maintainer currently publishes for the board this row tracks, nor that the v2 task set/harness/scoring is unchanged from what the row describes (c1 continuity: 'A changed task set, harness, judges, configuration or release version cannot silently reuse the existing identity').",
+      "repair": "Capture the v2 subpage; if v2 is no longer the served board, re-version the row (e.g. v3 identity) or set version_status/status to reflect a superseded/retained prior release."
+    },
+    {
+      "id": "f3",
+      "severity": "major",
+      "location": "row weirdml::2, superseded_by",
+      "evidence": "Row sets superseded_by null ('declining to name a successor'). SOURCE 1 explicitly names a successor board: the page's current protocol is 'WeirdML v3' and v2 is listed under 'Previous versions', i.e. the protocol names the successor board v3. Per c2, superseded_by null is a mismatch when the protocol names a successor; it should hold our registry id for that successor board (its version is settled by the successor's own registry entry, not required here).",
+      "repair": "Set superseded_by to this registry's id for the WeirdML v3 board."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "Read-only critic: owner-executed hash, transport and qualification checks (SOURCE sha256s, row sha256, producer receipt) were not executed here; their stated values are taken as owner attestations, a limitation not numeric evidence.",
+    "SOURCE 2 activity summary supports status 'active' in the sense that the maintainer is still serving changed 'avg_acc' values, but the packet does not tie weirdml_data.csv to a specific WeirdML version; it settles nothing about methodology or version.",
+    "SOURCE 3 scale summary (162 values, 1.73–93.57) is consistent with unit 'percent' and range [0,100], so no c1 unit/range mismatch is reported; it does not validate the metric's meaning or the v2 identity."
+  ],
+  "missing_evidence": [
+    "weirdml::2: exact WeirdML v2 protocol text (scoring rule, task set and count, iteration convention, release identifier) absent from packet"
+  ]
+}

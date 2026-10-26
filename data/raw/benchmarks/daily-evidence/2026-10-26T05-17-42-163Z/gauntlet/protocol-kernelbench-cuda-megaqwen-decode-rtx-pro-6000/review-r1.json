@@ -1,0 +1,34 @@
+{
+  "artifact_id": "protocol-kernelbench-cuda-megaqwen-decode-rtx-pro-6000",
+  "artifact_sha256": "281df10e55b53ee8409b58c066527c9940e0dcc645df63602f73a2c4c8533ee0",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": ["kernelbench-cuda-megaqwen-decode::rtx-pro-6000", "c1", "c2"],
+  "errors_found": 2,
+  "findings": [
+    {
+      "id": "F1",
+      "severity": "major",
+      "location": "row kernelbench-cuda-megaqwen-decode::rtx-pro-6000, scoring.notes",
+      "evidence": "Notes claim the published per_problem ranked list 'still holds' two audited-but-excluded cells, including the muse/muse-spark-1.3 [ultra] cell on 04 at peak_fraction 0.2056. SOURCE 2 shows muse 04 is correct:false with peak_fraction null and annotation_verdict 'bug'; per_problem 04 has n_passed 20 and exactly 20 ranked_passes containing no muse entry; the value 0.2056 appears nowhere in the payload. Only the suspect kinetic-claude/kinetic-0715[1m] cell on 03 (0.0622) is both listed in ranked_passes and rejected by the stated validity rule.",
+      "repair": "Remove the fabricated muse-04 example (0.2056) and the 'two audited-but-excluded cells' framing; state that only the suspect kinetic[1m] 03 cell (0.0622) remains listed while rejected, and that correct:false cells such as muse 04 are absent from the ranked list."
+    },
+    {
+      "id": "F2",
+      "severity": "minor",
+      "location": "row kernelbench-cuda-megaqwen-decode::rtx-pro-6000, scoring.notes",
+      "evidence": "Notes state the peak_fraction context column under the 2026-07-15 latency-anchored rule 'is the number published here for 02', but this row publishes problem 03 (megaqwen_decode) only; no problem-02 value appears in this artifact, so the clause is factually inapplicable to this row.",
+      "repair": "Reword to attribute that context column to the separate 02 board row, or delete the clause."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "version_status 'published' with version 'rtx-pro-6000': the maintainer publishes the board identity (hardware.name 'RTX PRO 6000 Blackwell Workstation', site hardware tab, published_runs.json hardware 'RTX_PRO_6000') plus schema_version 1 / environment v2_containerized; version copies the hardware designation, not a numeric release id. Treated as consistent since no other board release identifier is published, but this is an interpretive call on the c2 wording.",
+    "SOURCE 7 reports 23 finite served values while SOURCE 2 contains 24 non-null problem-03 peak_fraction values; min 0.0097->0.97 and max 0.0812->8.12 match the summary's bounds on the row's x100 scale. The count discrepancy does not affect the unit/range judgement.",
+    "Unit wording 'percent of roofline' is loose: SPEC.md names the dense-equivalent FLOP roofline only for 01/02; the row's own text explicitly defines the 03 ceiling as decode-only tok/s, so treated as wording, not a metric mismatch.",
+    "'One unlimited agent session per cell' is not directly stated in the provided sources, though the payload shows one run_id per cell; not contradicted.",
+    "SOURCE 6's comparison against the 'previously published snapshot' cannot be independently verified from the packet; taken at face value as affirmative evidence for status 'active' per c2.",
+    "Hash, transport and qualification checks are executed by the owner; this reviewer cannot execute them, which is a limitation, not missing source evidence."
+  ],
+  "missing_evidence": []
+}

@@ -1,0 +1,37 @@
+{
+"artifact_id": "artifact_id_value_from_receipt",
+"artifact_sha256": "artifact_sha_value_from_receipt",
+"row_errors": [],
+"pass": false,
+"producer_summary_inconsistencies": [
+"The activity summary states 5 newly added peak_fraction values, but comparing the captured leaderboard (SOURCE 3, retrieved 2026-10-26T05:21:03Z, sha 6aafe8...) with every earlier run_id in published_runs.json (SOURCE 5) shows all 5 values belong to run_ids already listed in the manifest (20261013 agy/gemini-4-argon-high x4 and 20261018 v4.1-flash-1017 x4). The previous board snapshot the summary compared against is not in the packet, so the claimed '5 new rows' delta cannot be verified from SOURCE 5, which lists those run_ids as previously published. Not attributed to the row; flagged as producer-side inconsistency per instructions."
+],
+"scale_checks": [
+{
+"row_id": "rtx-pro-6000",
+"ok": true,
+"evidence": "Row scale 'percent' with bounds 0 and 196.1 fits the served range 4.11 to 11.3 from the scale summary (SOURCE 4)."
+},
+{
+"row_id": "rtx-pro-6000",
+"ok": true,
+"evidence": "The lower bound 0 is consistent with the scale summary's observed minimum of 4.11 (0 <= 4.11)."
+},
+{
+"row_id": "rtx-pro-6000",
+"ok": true,
+"evidence": "The upper bound 196.1 is consistent with the scale summary's observed maximum of 11.3 (196.1 >= 11.3)."
+}
+],
+"activity_checks": [
+{
+"row_id": "rtx-pro-6000",
+"ok": false,
+"reason": "Row status 'active' with version_status 'published' is supported by the site itself (SOURCE 1 shows a live page with updated per-model and per-problem leaderboards and problem tabs moe/nsa/qwen/sps) and by a maintained curation manifest (SOURCE 5). However, the packet's activity summary claiming 5 newly added values is not verifiable against the earlier snapshot it references, so the 'active' determination rests on SOURCE 1 plus the manifest rather than the claimed delta."
+}
+],
+"producer_notes": "Per instructions, the execution and verification summary is treated as this run's own generated diagnostic and is authoritative only for judging the row's declared scale against the observed served range; it does not establish metric meaning or provenance.",
+"scale_conflicts": [
+"The diagnostic claims 5 peak_fraction values were newly added today, yet every run_id backing a non-null peak_fraction in the captured leaderboard (SOURCE 3) already appears in published_runs.json (SOURCE 5), whose _comment describes it as the publish allowlist. Without the prior snapshot in the packet, the delta claim is unverifiable from the supplied sources."
+]
+}

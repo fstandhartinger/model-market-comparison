@@ -1,0 +1,20 @@
+{
+  "artifact_id": "protocol-eqbench-creative-writing-3",
+  "artifact_sha256": "80ef38506fe66e59005afe37521f7ac7be211cf056c6ab37452f547799bcc445",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": ["eqbench-creative-writing::3", "c1", "c2"],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Row-level sha256 (cf6b1f97...de9c9) and artifact sha256 are owner-computed bindings; I cannot recompute or verify them myself.",
+    "Source 1 is a bounded excerpt: it establishes the page title 'EQ-Bench Creative Writing v3 Leaderboard', the 'Creative Writing v3' nav identity, the 'Elo Score' column header, the description 'A LLM-judged creative writing benchmark.', and the Vocab Control / GPT-Slop Control widgets, but does not include the table body; the row claims no specific values, so nothing to compare there.",
+    "higher_better:true is not explicitly stated in the excerpt; it follows Elo convention and is not a field any acceptance criterion requires to be evidenced, so it is not a finding.",
+    "Sources 2 and 3 are this run's generated summaries, not maintainer text; per criteria they are admissible only for the status:active judgement (5 changed values) and the unit/range scale judgement (145 served values, 200-2174), and cannot establish methodology, task set, harness, judges, or version identity.",
+    "Version_status 'published' is supported: the page publishes the release identifier 'v3' for this board, which the row's version '3' copies.",
+    "Superseded_by:null is not contradicted: the excerpt names no successor for Creative Writing v3; the 'Legacy Leaderboards' nav lists Creative Writing v2 (predecessor), and other nav benchmarks are separate boards, not supersession of this one.",
+    "Range [null,null] declines bounds; served values 200-2174 cannot contradict unbounded bounds, so unit 'Elo' and range agree with the served scale per criterion c1."
+  ],
+  "missing_evidence": []
+}

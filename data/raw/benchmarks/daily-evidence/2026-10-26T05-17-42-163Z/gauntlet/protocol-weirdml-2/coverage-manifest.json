@@ -1,0 +1,151 @@
+{
+  "artifact_id": "protocol-weirdml-2",
+  "rounds_used": 2,
+  "rows": {
+    "total": 1,
+    "accepted": [],
+    "quarantined": [
+      "weirdml::2"
+    ]
+  },
+  "producer_flagged": [],
+  "second_opinion": null,
+  "criteria": [
+    "c1",
+    "c2"
+  ],
+  "coverage": {
+    "producer": null,
+    "critic": [
+      {
+        "round": 2,
+        "verdict": "blocked",
+        "coverage_complete": true,
+        "missing_rows": [],
+        "missing_criteria": []
+      }
+    ],
+    "final": {
+      "rows_covered": 0,
+      "criteria_covered": 0,
+      "complete": false
+    }
+  },
+  "receipts": [
+    {
+      "round": 2,
+      "role": "producer",
+      "reused_from_round": null,
+      "requested_model": "deepseek/deepseek-v4-flash-0731",
+      "model": "deepseek/deepseek-v4-flash-0731",
+      "route": "openrouter",
+      "attempt": 2,
+      "cost_usd": 0.000452919951,
+      "out": "data/raw/benchmarks/daily-evidence/2026-10-26T05-17-42-163Z/gauntlet/protocol-weirdml-2/producer-r2.json",
+      "output_sha256": "df26a36b80d7d56b4d7c09f39f9b6c4a7c94d9a015bd7f63dafba4a19c755c39",
+      "qualification": {
+        "id": "deepseek/deepseek-v4-flash-0731",
+        "family": "deepseek",
+        "free": false,
+        "input_per_1m": 0.44,
+        "output_per_1m": 1.32,
+        "context": 1048576,
+        "aa_intelligence_index": 34.3,
+        "aa_source": "exact_id_and_variants",
+        "matched_model_ids": [
+          "deepseek-v4-flash-0731::max"
+        ],
+        "aa_variant_scores": [
+          {
+            "id": "deepseek-v4-flash-0731::max",
+            "index": 34.3
+          }
+        ]
+      },
+      "usage": {
+        "prompt_tokens": 3135,
+        "completion_tokens": 1968,
+        "total_tokens": 5103,
+        "cost": 0.000452919951,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "audio_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.0004574949,
+          "upstream_inference_prompt_cost": 0.0001489125,
+          "upstream_inference_completions_cost": 0.0003085824
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 2002,
+          "image_tokens": 0,
+          "audio_tokens": 0
+        }
+      },
+      "reasoning": {
+        "effort": "low",
+        "exclude": true
+      }
+    },
+    {
+      "round": 2,
+      "role": "critic",
+      "requested_model": "z-ai/glm-5.3-flash",
+      "model": "z-ai/glm-5.3-flash",
+      "route": "openrouter",
+      "attempt": 2,
+      "cost_usd": 0.000389379375,
+      "out": "data/raw/benchmarks/daily-evidence/2026-10-26T05-17-42-163Z/gauntlet/protocol-weirdml-2/review-r2.json",
+      "output_sha256": "d0c40002f8b6dd2d174f3005e1a5f0d28e6b702292df6eedad3ffc97689f7a2e",
+      "qualification": {
+        "id": "z-ai/glm-5.3-flash",
+        "family": "z-ai",
+        "free": false,
+        "input_per_1m": 0.15,
+        "output_per_1m": 0.5,
+        "context": 1048576,
+        "aa_intelligence_index": 41.8,
+        "aa_source": "exact_id_and_variants",
+        "matched_model_ids": [
+          "glm-5.3-flash::default"
+        ],
+        "aa_variant_scores": [
+          {
+            "id": "glm-5.3-flash::default",
+            "index": 41.8
+          }
+        ]
+      },
+      "usage": {
+        "prompt_tokens": 3665,
+        "completion_tokens": 1613,
+        "total_tokens": 5278,
+        "cost": 0.000389379375,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "audio_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.0003933125,
+          "upstream_inference_prompt_cost": 0.0001594275,
+          "upstream_inference_completions_cost": 0.000233885
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 682,
+          "image_tokens": 0,
+          "audio_tokens": 0
+        }
+      },
+      "reasoning": {
+        "effort": "low",
+        "exclude": true
+      }
+    }
+  ]
+}

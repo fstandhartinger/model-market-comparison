@@ -1,0 +1,32 @@
+{
+  "artifact_id": "protocol-gso-opt1-102",
+  "artifact_sha256": "eedef18bb298a4ecee13a356eb383d9eb5c33428b80c95017bb7ef88b2383f9f",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": ["gso::opt1-102", "c1", "c2"],
+  "errors_found": 2,
+  "findings": [
+    {
+      "id": "F1",
+      "severity": "major",
+      "location": "gso::opt1-102.version_status",
+      "evidence": "Criterion c2 defines version_status \"published\" as requiring the maintainer to publish a release identifier for this board that the row's version copies. Source 1 (page excerpt) and Source 2 (full leaderboard.json) publish no release identifier: metadata carries only last_updated \"2026-09-27\" (a date, not a release id) and total_tasks 102; the page has no version tag. Per c2, a page publishing no release identifier is what supports \"snapshot\", so \"published\" is unsupported by the packet.",
+      "repair": "Set version_status to \"snapshot\" with the version as the dated identity snapshot-<capture date> (registry id gso::opt1-102 unchanged), or supply primary evidence that the maintainer publishes a release identifier the version copies."
+    },
+    {
+      "id": "F2",
+      "severity": "minor",
+      "location": "gso::opt1-102.maintainer",
+      "evidence": "Row claims maintainer \"GSO team (UC Berkeley)\". Primary maintainer text (Sources 1-2) shows only \"GSO\" (page title, footer, submission_org_name \"GSO\"); no maintainer text in the packet states \"UC Berkeley\". Source 3's \"GSO team (UC Berkeley)\" wording is this run's own generated comparison summary, not maintainer text, and cannot corroborate the affiliation.",
+      "repair": "Corroborate the UC Berkeley attribution from maintainer text supplied in a later round, or align the maintainer value with what the packet's primary text establishes (\"GSO\")."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "Owner-executed hash, transport and qualification checks were not run by this reviewer; row binding via supplied per-row SHA-256 and the producer receipt are taken as given, which is a limitation, not missing source evidence.",
+    "Per c1, Source 3 was used only for the status:\"active\" judgement (4 newly added score values) and Source 4 only for the unit/range scale judgement (32 served values, 0 to 88.24, consistent with unit \"percent\" and range [0,100]); neither was used to judge metric meaning, computation, task set, harness, judges or version.",
+    "Verified as matching: metric wording vs page Opt@1 definition (>=95% human speedup, correctness tests), description numbers (102 tasks, 10 codebases, 5 languages), version guard vs Source 2 (metadata.total_tasks 102; all rows have name, scaffold, setting in {Opt@1, Opt@10}, date; Opt@1 identity), status \"active\" supported by Source 3, superseded_by null not contradicted (page names no successor), higher_better true.",
+    "scoring.notes omits the 2026-09-27 changelog entry (improved elicitation affecting the 2026-09-27 runs). Omission is not a contradiction and notes need not be exhaustive, so recorded here rather than as a finding; next revision may add it alongside the 2026-04-27 and 2026-07-12 run-date conditions it already cites."
+  ],
+  "missing_evidence": []
+}

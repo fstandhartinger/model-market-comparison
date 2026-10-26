@@ -156,7 +156,7 @@
             "discount": 0
           },
           "status": 0,
-          "uptime_last_30m": null
+          "uptime_last_30m": 100
         }
       ]
     },
@@ -330,7 +330,7 @@
             "discount": 0
           },
           "status": 0,
-          "uptime_last_30m": 96.66666666666667
+          "uptime_last_30m": 100
         },
         {
           "provider_name": "InferenceNet",
@@ -365,7 +365,7 @@
             "discount": 0
           },
           "status": 0,
-          "uptime_last_30m": 100
+          "uptime_last_30m": 96.66666666666667
         },
         {
           "provider_name": "InferenceNet",
@@ -399,8 +399,8 @@
             "input_cache_read": "0.00000001",
             "discount": 0
           },
-          "status": 0,
-          "uptime_last_30m": 90.9090909090909
+          "status": -2,
+          "uptime_last_30m": 88.46153846153845
         },
         {
           "provider_name": "GMICloud",
@@ -964,6 +964,36 @@
           "uptime_last_30m": 100
         },
         {
+          "provider_name": "Reka",
+          "tag": "reka",
+          "quantization": "unknown",
+          "context_length": 1048576,
+          "max_completion_tokens": 393216,
+          "supported_parameters": [
+            "reasoning",
+            "include_reasoning",
+            "temperature",
+            "top_p",
+            "max_tokens",
+            "stop",
+            "response_format",
+            "structured_outputs",
+            "tools",
+            "tool_choice",
+            "logprobs",
+            "top_logprobs",
+            "reasoning_effort"
+          ],
+          "pricing": {
+            "prompt": "0.00000004",
+            "completion": "0.0000005",
+            "input_cache_read": "0.00000003",
+            "discount": 0
+          },
+          "status": 0,
+          "uptime_last_30m": 100
+        },
+        {
           "provider_name": "Relace",
           "tag": "relace",
           "quantization": "unknown",
@@ -992,41 +1022,6 @@
             "prompt": "0.00000007",
             "completion": "0.0000005",
             "input_cache_read": "0.000000008",
-            "discount": 0
-          },
-          "status": 0,
-          "uptime_last_30m": 100
-        },
-        {
-          "provider_name": "Morph",
-          "tag": "morph/fp8",
-          "quantization": "fp8",
-          "context_length": 1048576,
-          "max_completion_tokens": 943718,
-          "supported_parameters": [
-            "reasoning",
-            "include_reasoning",
-            "max_tokens",
-            "temperature",
-            "stop",
-            "top_p",
-            "top_k",
-            "min_p",
-            "frequency_penalty",
-            "presence_penalty",
-            "repetition_penalty",
-            "seed",
-            "logit_bias",
-            "tools",
-            "tool_choice",
-            "structured_outputs",
-            "response_format",
-            "reasoning_effort"
-          ],
-          "pricing": {
-            "prompt": "0.000000073",
-            "completion": "0.0000006",
-            "input_cache_read": "0.00000001",
             "discount": 0
           },
           "status": 0,
@@ -1128,36 +1123,6 @@
           "uptime_last_30m": 100
         },
         {
-          "provider_name": "Reka",
-          "tag": "reka",
-          "quantization": "unknown",
-          "context_length": 1048576,
-          "max_completion_tokens": 393216,
-          "supported_parameters": [
-            "reasoning",
-            "include_reasoning",
-            "temperature",
-            "top_p",
-            "max_tokens",
-            "stop",
-            "response_format",
-            "structured_outputs",
-            "tools",
-            "tool_choice",
-            "logprobs",
-            "top_logprobs",
-            "reasoning_effort"
-          ],
-          "pricing": {
-            "prompt": "0.00000008",
-            "completion": "0.0000008",
-            "input_cache_read": "0.00000008",
-            "discount": 0
-          },
-          "status": 0,
-          "uptime_last_30m": 100
-        },
-        {
           "provider_name": "DeepInfra",
           "tag": "deepinfra/fp8",
           "quantization": "fp8",
@@ -1224,6 +1189,41 @@
             "prompt": "0.0000001",
             "completion": "0.0000006",
             "input_cache_read": "0.000000003",
+            "discount": 0
+          },
+          "status": 0,
+          "uptime_last_30m": 100
+        },
+        {
+          "provider_name": "Morph",
+          "tag": "morph/fp8",
+          "quantization": "fp8",
+          "context_length": 1048576,
+          "max_completion_tokens": 943718,
+          "supported_parameters": [
+            "reasoning",
+            "include_reasoning",
+            "max_tokens",
+            "temperature",
+            "stop",
+            "top_p",
+            "top_k",
+            "min_p",
+            "frequency_penalty",
+            "presence_penalty",
+            "repetition_penalty",
+            "seed",
+            "logit_bias",
+            "tools",
+            "tool_choice",
+            "structured_outputs",
+            "response_format",
+            "reasoning_effort"
+          ],
+          "pricing": {
+            "prompt": "0.0000001",
+            "completion": "0.0000006",
+            "input_cache_read": "0.00000001",
             "discount": 0
           },
           "status": 0,
@@ -1879,6 +1879,36 @@
           "uptime_last_30m": 100
         },
         {
+          "provider_name": "StreamLake",
+          "tag": "streamlake",
+          "quantization": "unknown",
+          "context_length": 1024000,
+          "max_completion_tokens": 384000,
+          "supported_parameters": [
+            "reasoning",
+            "include_reasoning",
+            "max_tokens",
+            "temperature",
+            "top_p",
+            "stop",
+            "response_format",
+            "structured_outputs",
+            "tools",
+            "tool_choice",
+            "logprobs",
+            "top_logprobs",
+            "reasoning_effort"
+          ],
+          "pricing": {
+            "prompt": "0.0000003",
+            "completion": "0.0000012",
+            "input_cache_read": "0.000000006",
+            "discount": 0
+          },
+          "status": 0,
+          "uptime_last_30m": 100
+        },
+        {
           "provider_name": "Phala",
           "tag": "phala",
           "quantization": "unknown",
@@ -2246,7 +2276,7 @@
             "discount": 0
           },
           "status": 0,
-          "uptime_last_30m": 100
+          "uptime_last_30m": null
         }
       ]
     },
@@ -3081,7 +3111,7 @@
             "discount": 0
           },
           "status": 0,
-          "uptime_last_30m": null
+          "uptime_last_30m": 100
         },
         {
           "provider_name": "Fireworks",
@@ -3116,7 +3146,7 @@
             "discount": 0
           },
           "status": 0,
-          "uptime_last_30m": null
+          "uptime_last_30m": 100
         },
         {
           "provider_name": "BaseTen",
@@ -3145,7 +3175,7 @@
             "discount": 0
           },
           "status": 0,
-          "uptime_last_30m": 100
+          "uptime_last_30m": null
         }
       ]
     },
@@ -3333,7 +3363,7 @@
             "discount": 0
           },
           "status": 0,
-          "uptime_last_30m": 100
+          "uptime_last_30m": 96.15384615384616
         },
         {
           "provider_name": "Together",
@@ -3848,7 +3878,7 @@
             "discount": 0
           },
           "status": 0,
-          "uptime_last_30m": null
+          "uptime_last_30m": 100
         }
       ]
     },
@@ -4110,8 +4140,8 @@
             "input_cache_write": "0.0000001875",
             "discount": 0.5
           },
-          "status": 0,
-          "uptime_last_30m": null
+          "status": -2,
+          "uptime_last_30m": 100
         },
         {
           "provider_name": "Google",
@@ -4440,7 +4470,7 @@
             "discount": 0.2
           },
           "status": 0,
-          "uptime_last_30m": 95.45454545454545
+          "uptime_last_30m": 100
         }
       ]
     },
@@ -4809,7 +4839,7 @@
             "discount": 0
           },
           "status": 0,
-          "uptime_last_30m": null
+          "uptime_last_30m": 100
         },
         {
           "provider_name": "StepFun",
@@ -5355,7 +5385,7 @@
             ]
           },
           "status": 0,
-          "uptime_last_30m": 100
+          "uptime_last_30m": null
         }
       ]
     },
@@ -6082,7 +6112,7 @@
             ]
           },
           "status": 0,
-          "uptime_last_30m": null
+          "uptime_last_30m": 100
         },
         {
           "provider_name": "OpenAI",
@@ -6744,7 +6774,7 @@
             ]
           },
           "status": 0,
-          "uptime_last_30m": 100
+          "uptime_last_30m": null
         },
         {
           "provider_name": "OpenAI",
@@ -7315,7 +7345,7 @@
             "discount": 0
           },
           "status": 0,
-          "uptime_last_30m": null
+          "uptime_last_30m": 100
         },
         {
           "provider_name": "Azure",
@@ -7680,7 +7710,7 @@
             "discount": 0
           },
           "status": 0,
-          "uptime_last_30m": null
+          "uptime_last_30m": 100
         }
       ]
     },
@@ -8448,8 +8478,8 @@
               }
             ]
           },
-          "status": -2,
-          "uptime_last_30m": 53.333333333333336
+          "status": 0,
+          "uptime_last_30m": 100
         },
         {
           "provider_name": "OpenAI",
@@ -8854,8 +8884,8 @@
               }
             ]
           },
-          "status": -2,
-          "uptime_last_30m": 43.333333333333336
+          "status": 0,
+          "uptime_last_30m": 100
         },
         {
           "provider_name": "OpenAI",
@@ -10885,8 +10915,8 @@
             "input_cache_read": "0.00000000182",
             "discount": 0.35
           },
-          "status": -2,
-          "uptime_last_30m": 90
+          "status": -5,
+          "uptime_last_30m": 46.666666666666664
         },
         {
           "provider_name": "Io Net",
@@ -10952,7 +10982,7 @@
             "discount": 0
           },
           "status": 0,
-          "uptime_last_30m": null
+          "uptime_last_30m": 100
         },
         {
           "provider_name": "GMICloud",
@@ -10978,8 +11008,8 @@
             "input_cache_read": "0.00000000255",
             "discount": 0.15
           },
-          "status": -2,
-          "uptime_last_30m": 85.71428571428571
+          "status": 0,
+          "uptime_last_30m": 96.66666666666667
         },
         {
           "provider_name": "Makora",
@@ -11167,8 +11197,8 @@
             "input_cache_read": "0.00000000375",
             "discount": 0
           },
-          "status": 0,
-          "uptime_last_30m": 100
+          "status": -5,
+          "uptime_last_30m": 0
         }
       ]
     },
@@ -11657,7 +11687,7 @@
             ]
           },
           "status": 0,
-          "uptime_last_30m": 100
+          "uptime_last_30m": null
         },
         {
           "provider_name": "xAI",
@@ -12753,7 +12783,7 @@
             "discount": 0
           },
           "status": 0,
-          "uptime_last_30m": 100
+          "uptime_last_30m": null
         }
       ]
     },
@@ -12990,41 +13020,6 @@
           "uptime_last_30m": 100
         },
         {
-          "provider_name": "Morph",
-          "tag": "morph/fp8",
-          "quantization": "fp8",
-          "context_length": 1048576,
-          "max_completion_tokens": 943718,
-          "supported_parameters": [
-            "reasoning",
-            "include_reasoning",
-            "max_tokens",
-            "temperature",
-            "stop",
-            "top_p",
-            "top_k",
-            "min_p",
-            "frequency_penalty",
-            "presence_penalty",
-            "repetition_penalty",
-            "seed",
-            "logit_bias",
-            "response_format",
-            "structured_outputs",
-            "tools",
-            "tool_choice",
-            "reasoning_effort"
-          ],
-          "pricing": {
-            "prompt": "0.000000073",
-            "completion": "0.0000006",
-            "input_cache_read": "0.00000001",
-            "discount": 0
-          },
-          "status": 0,
-          "uptime_last_30m": 100
-        },
-        {
           "provider_name": "Decart",
           "tag": "decart/fp4",
           "quantization": "fp4",
@@ -13055,8 +13050,8 @@
             "input_cache_read": "0.000000018",
             "discount": 0
           },
-          "status": -2,
-          "uptime_last_30m": 60
+          "status": 0,
+          "uptime_last_30m": 100
         },
         {
           "provider_name": "Sail Research",
@@ -13119,6 +13114,41 @@
             "prompt": "0.00000009",
             "completion": "0.00000025",
             "input_cache_read": "0.000000006",
+            "discount": 0
+          },
+          "status": 0,
+          "uptime_last_30m": 100
+        },
+        {
+          "provider_name": "Morph",
+          "tag": "morph/fp8",
+          "quantization": "fp8",
+          "context_length": 1048576,
+          "max_completion_tokens": 943718,
+          "supported_parameters": [
+            "reasoning",
+            "include_reasoning",
+            "max_tokens",
+            "temperature",
+            "stop",
+            "top_p",
+            "top_k",
+            "min_p",
+            "frequency_penalty",
+            "presence_penalty",
+            "repetition_penalty",
+            "seed",
+            "logit_bias",
+            "response_format",
+            "structured_outputs",
+            "tools",
+            "tool_choice",
+            "reasoning_effort"
+          ],
+          "pricing": {
+            "prompt": "0.0000001",
+            "completion": "0.0000006",
+            "input_cache_read": "0.00000001",
             "discount": 0
           },
           "status": 0,
@@ -13484,7 +13514,7 @@
             "discount": 0.4
           },
           "status": 0,
-          "uptime_last_30m": 100
+          "uptime_last_30m": 96.66666666666667
         },
         {
           "provider_name": "Wafer",
@@ -13590,8 +13620,8 @@
             "completion": "0.000001",
             "discount": 0
           },
-          "status": 0,
-          "uptime_last_30m": 100
+          "status": -5,
+          "uptime_last_30m": 30
         },
         {
           "provider_name": "DeepInfra",
@@ -15272,7 +15302,7 @@
             ]
           },
           "status": 0,
-          "uptime_last_30m": 100
+          "uptime_last_30m": null
         },
         {
           "provider_name": "OpenAI",
@@ -15310,7 +15340,7 @@
             ]
           },
           "status": 0,
-          "uptime_last_30m": 100
+          "uptime_last_30m": null
         },
         {
           "provider_name": "Azure",
@@ -16201,8 +16231,8 @@
             "input_cache_write": "0.0000000208333333333333",
             "discount": 0.5
           },
-          "status": -5,
-          "uptime_last_30m": 16.666666666666664
+          "status": -2,
+          "uptime_last_30m": 77.77777777777779
         },
         {
           "provider_name": "Google AI Studio",
@@ -16302,7 +16332,7 @@
             "discount": 0.5
           },
           "status": -2,
-          "uptime_last_30m": 80
+          "uptime_last_30m": 96.55172413793103
         },
         {
           "provider_name": "Google AI Studio",
@@ -16783,7 +16813,7 @@
             "discount": 0
           },
           "status": 0,
-          "uptime_last_30m": null
+          "uptime_last_30m": 100
         },
         {
           "provider_name": "Anthropic",
@@ -16872,7 +16902,7 @@
             "discount": 0
           },
           "status": 0,
-          "uptime_last_30m": null
+          "uptime_last_30m": 100
         }
       ]
     },
@@ -17287,41 +17317,6 @@
       },
       "endpoints": [
         {
-          "provider_name": "DeepInfra",
-          "tag": "deepinfra/fp4",
-          "quantization": "fp4",
-          "context_length": 1048576,
-          "max_completion_tokens": 131072,
-          "supported_parameters": [
-            "reasoning",
-            "include_reasoning",
-            "max_tokens",
-            "temperature",
-            "top_p",
-            "stop",
-            "frequency_penalty",
-            "presence_penalty",
-            "repetition_penalty",
-            "top_k",
-            "seed",
-            "min_p",
-            "logit_bias",
-            "response_format",
-            "structured_outputs",
-            "tools",
-            "tool_choice",
-            "reasoning_effort"
-          ],
-          "pricing": {
-            "prompt": "0.0000007923",
-            "completion": "0.00000237595",
-            "input_cache_read": "0.0000000399",
-            "discount": 0.05
-          },
-          "status": 0,
-          "uptime_last_30m": 100
-        },
-        {
           "provider_name": "Cohere",
           "tag": "cohere",
           "quantization": "unknown",
@@ -17354,8 +17349,43 @@
             "input_cache_read": "0.000000042",
             "discount": 0
           },
-          "status": -2,
-          "uptime_last_30m": 93.33333333333333
+          "status": 0,
+          "uptime_last_30m": 100
+        },
+        {
+          "provider_name": "DeepInfra",
+          "tag": "deepinfra/fp4",
+          "quantization": "fp4",
+          "context_length": 1048576,
+          "max_completion_tokens": 131072,
+          "supported_parameters": [
+            "reasoning",
+            "include_reasoning",
+            "max_tokens",
+            "temperature",
+            "top_p",
+            "stop",
+            "frequency_penalty",
+            "presence_penalty",
+            "repetition_penalty",
+            "top_k",
+            "seed",
+            "min_p",
+            "logit_bias",
+            "response_format",
+            "structured_outputs",
+            "tools",
+            "tool_choice",
+            "reasoning_effort"
+          ],
+          "pricing": {
+            "prompt": "0.000000834",
+            "completion": "0.000002501",
+            "input_cache_read": "0.000000042",
+            "discount": 0
+          },
+          "status": 0,
+          "uptime_last_30m": 100
         },
         {
           "provider_name": "Novita",
@@ -17520,8 +17550,8 @@
         "top_p"
       ],
       "pricing": {
-        "prompt": "0.0000000513",
-        "completion": "0.0000000701",
+        "prompt": "0.0000000413",
+        "completion": "0.0000000758",
         "input_cache_read": "0.00000003"
       },
       "endpoints": []
@@ -17794,12 +17824,42 @@
             "reasoning_effort"
           ],
           "pricing": {
-            "prompt": "0.0000000513",
-            "completion": "0.0000000701",
+            "prompt": "0.0000000413",
+            "completion": "0.0000000758",
             "input_cache_read": "0.00000003",
             "discount": 0
           },
           "status": 0,
+          "uptime_last_30m": 100
+        },
+        {
+          "provider_name": "StreamLake",
+          "tag": "streamlake/fp8",
+          "quantization": "fp8",
+          "context_length": 1024000,
+          "max_completion_tokens": 128000,
+          "supported_parameters": [
+            "reasoning",
+            "include_reasoning",
+            "max_tokens",
+            "temperature",
+            "top_p",
+            "stop",
+            "response_format",
+            "tools",
+            "tool_choice",
+            "structured_outputs",
+            "logprobs",
+            "top_logprobs",
+            "reasoning_effort"
+          ],
+          "pricing": {
+            "prompt": "0.0000000435",
+            "completion": "0.000000145",
+            "input_cache_read": "0.0000000087",
+            "discount": 0.71
+          },
+          "status": -2,
           "uptime_last_30m": 100
         },
         {
@@ -17869,71 +17929,6 @@
             "input_cache_read": "0.0000000325",
             "discount": 0
           },
-          "status": 0,
-          "uptime_last_30m": null
-        },
-        {
-          "provider_name": "OpenInference",
-          "tag": "open-inference/fp4",
-          "quantization": "fp4",
-          "context_length": 1048576,
-          "max_completion_tokens": 943718,
-          "supported_parameters": [
-            "reasoning",
-            "include_reasoning",
-            "temperature",
-            "max_tokens",
-            "stop",
-            "seed",
-            "response_format",
-            "structured_outputs",
-            "top_p",
-            "frequency_penalty",
-            "presence_penalty",
-            "top_k",
-            "min_p",
-            "logit_bias",
-            "repetition_penalty",
-            "tools",
-            "tool_choice",
-            "reasoning_effort"
-          ],
-          "pricing": {
-            "prompt": "0.000000066466",
-            "completion": "0.000000069786",
-            "input_cache_read": "0.000000017825",
-            "discount": 0
-          },
-          "status": 0,
-          "uptime_last_30m": 100
-        },
-        {
-          "provider_name": "StreamLake",
-          "tag": "streamlake/fp8",
-          "quantization": "fp8",
-          "context_length": 1024000,
-          "max_completion_tokens": 128000,
-          "supported_parameters": [
-            "reasoning",
-            "include_reasoning",
-            "max_tokens",
-            "temperature",
-            "top_p",
-            "stop",
-            "response_format",
-            "tools",
-            "tool_choice",
-            "structured_outputs",
-            "logprobs",
-            "top_logprobs",
-            "reasoning_effort"
-          ],
-          "pricing": {
-            "prompt": "0.000000075",
-            "completion": "0.00000025",
-            "input_cache_read": "0.000000015",
-            "discount": 0.5
-          },
           "status": -2,
           "uptime_last_30m": 100
         },
@@ -17962,7 +17957,42 @@
             "discount": 0.5
           },
           "status": -2,
-          "uptime_last_30m": 93.33333333333333
+          "uptime_last_30m": 80
+        },
+        {
+          "provider_name": "OpenInference",
+          "tag": "open-inference/fp4",
+          "quantization": "fp4",
+          "context_length": 1048576,
+          "max_completion_tokens": 943718,
+          "supported_parameters": [
+            "reasoning",
+            "include_reasoning",
+            "temperature",
+            "max_tokens",
+            "stop",
+            "seed",
+            "response_format",
+            "structured_outputs",
+            "top_p",
+            "frequency_penalty",
+            "presence_penalty",
+            "top_k",
+            "min_p",
+            "logit_bias",
+            "repetition_penalty",
+            "tools",
+            "tool_choice",
+            "reasoning_effort"
+          ],
+          "pricing": {
+            "prompt": "0.000000076662",
+            "completion": "0.00000001",
+            "input_cache_read": "0.000000019758",
+            "discount": 0
+          },
+          "status": 0,
+          "uptime_last_30m": 100
         },
         {
           "provider_name": "Sail Research",
@@ -18433,8 +18463,8 @@
             "input_cache_read": "0.00000003",
             "discount": 0
           },
-          "status": -2,
-          "uptime_last_30m": 96.55172413793103
+          "status": 0,
+          "uptime_last_30m": 100
         },
         {
           "provider_name": "Modal",
@@ -18962,6 +18992,43 @@
           "uptime_last_30m": 100
         },
         {
+          "provider_name": "Morph",
+          "tag": "morph/fp8",
+          "quantization": "fp8",
+          "context_length": 1048576,
+          "max_completion_tokens": 943718,
+          "supported_parameters": [
+            "reasoning",
+            "include_reasoning",
+            "max_tokens",
+            "temperature",
+            "stop",
+            "top_p",
+            "top_k",
+            "min_p",
+            "frequency_penalty",
+            "presence_penalty",
+            "repetition_penalty",
+            "seed",
+            "logit_bias",
+            "response_format",
+            "structured_outputs",
+            "tools",
+            "tool_choice",
+            "logprobs",
+            "top_logprobs",
+            "reasoning_effort"
+          ],
+          "pricing": {
+            "prompt": "0.000000191",
+            "completion": "0.00000065",
+            "input_cache_read": "0.000000054",
+            "discount": 0
+          },
+          "status": 0,
+          "uptime_last_30m": 100
+        },
+        {
           "provider_name": "Fireworks",
           "tag": "fireworks/us",
           "quantization": "unknown",
@@ -18991,43 +19058,6 @@
             "prompt": "0.000000225",
             "completion": "0.00000075",
             "input_cache_read": "0.000000045",
-            "discount": 0
-          },
-          "status": 0,
-          "uptime_last_30m": 100
-        },
-        {
-          "provider_name": "Morph",
-          "tag": "morph/fp8",
-          "quantization": "fp8",
-          "context_length": 1048576,
-          "max_completion_tokens": 943718,
-          "supported_parameters": [
-            "reasoning",
-            "include_reasoning",
-            "max_tokens",
-            "temperature",
-            "stop",
-            "top_p",
-            "top_k",
-            "min_p",
-            "frequency_penalty",
-            "presence_penalty",
-            "repetition_penalty",
-            "seed",
-            "logit_bias",
-            "response_format",
-            "structured_outputs",
-            "tools",
-            "tool_choice",
-            "logprobs",
-            "top_logprobs",
-            "reasoning_effort"
-          ],
-          "pricing": {
-            "prompt": "0.000000259",
-            "completion": "0.00000065",
-            "input_cache_read": "0.000000073",
             "discount": 0
           },
           "status": 0,
@@ -19643,9 +19673,9 @@
         "top_p"
       ],
       "pricing": {
-        "prompt": "0.0000000703",
-        "completion": "0.0000043843",
-        "input_cache_read": "0.0000000703"
+        "prompt": "0.0000000699",
+        "completion": "0.0000014",
+        "input_cache_read": "0.0000000689"
       },
       "endpoints": []
     },
@@ -19846,43 +19876,11 @@
         "top_p"
       ],
       "pricing": {
-        "prompt": "0.000000079",
+        "prompt": "0.0000000699",
         "completion": "0.0000014",
-        "input_cache_read": "0.000000078"
+        "input_cache_read": "0.0000000689"
       },
       "endpoints": [
-        {
-          "provider_name": "Relace",
-          "tag": "relace",
-          "quantization": "unknown",
-          "context_length": 1048576,
-          "max_completion_tokens": 131072,
-          "supported_parameters": [
-            "reasoning",
-            "include_reasoning",
-            "max_tokens",
-            "temperature",
-            "top_p",
-            "stop",
-            "frequency_penalty",
-            "presence_penalty",
-            "seed",
-            "top_k",
-            "repetition_penalty",
-            "tools",
-            "tool_choice",
-            "response_format",
-            "reasoning_effort"
-          ],
-          "pricing": {
-            "prompt": "0.0000000703",
-            "completion": "0.0000043843",
-            "input_cache_read": "0.0000000703",
-            "discount": 0
-          },
-          "status": 0,
-          "uptime_last_30m": 100
-        },
         {
           "provider_name": "Wafer",
           "tag": "wafer/us",
@@ -19912,9 +19910,41 @@
             "reasoning_effort"
           ],
           "pricing": {
-            "prompt": "0.000000079",
+            "prompt": "0.0000000699",
             "completion": "0.0000014",
-            "input_cache_read": "0.000000078",
+            "input_cache_read": "0.0000000689",
+            "discount": 0
+          },
+          "status": 0,
+          "uptime_last_30m": 100
+        },
+        {
+          "provider_name": "Relace",
+          "tag": "relace",
+          "quantization": "unknown",
+          "context_length": 1048576,
+          "max_completion_tokens": 131072,
+          "supported_parameters": [
+            "reasoning",
+            "include_reasoning",
+            "max_tokens",
+            "temperature",
+            "top_p",
+            "stop",
+            "frequency_penalty",
+            "presence_penalty",
+            "seed",
+            "top_k",
+            "repetition_penalty",
+            "tools",
+            "tool_choice",
+            "response_format",
+            "reasoning_effort"
+          ],
+          "pricing": {
+            "prompt": "0.0000000703",
+            "completion": "0.0000043843",
+            "input_cache_read": "0.0000000703",
             "discount": 0
           },
           "status": 0,
@@ -20058,7 +20088,7 @@
             "discount": 0
           },
           "status": 0,
-          "uptime_last_30m": 86.20689655172413
+          "uptime_last_30m": 96.55172413793103
         },
         {
           "provider_name": "Wafer",
@@ -20266,43 +20296,6 @@
           "uptime_last_30m": 100
         },
         {
-          "provider_name": "Morph",
-          "tag": "morph/fp8",
-          "quantization": "fp8",
-          "context_length": 1048576,
-          "max_completion_tokens": 943718,
-          "supported_parameters": [
-            "reasoning",
-            "include_reasoning",
-            "max_tokens",
-            "temperature",
-            "stop",
-            "top_p",
-            "top_k",
-            "min_p",
-            "frequency_penalty",
-            "presence_penalty",
-            "repetition_penalty",
-            "seed",
-            "logit_bias",
-            "response_format",
-            "structured_outputs",
-            "tools",
-            "tool_choice",
-            "logprobs",
-            "top_logprobs",
-            "reasoning_effort"
-          ],
-          "pricing": {
-            "prompt": "0.000000565",
-            "completion": "0.0000044",
-            "input_cache_read": "0.000000141",
-            "discount": 0
-          },
-          "status": 0,
-          "uptime_last_30m": 100
-        },
-        {
           "provider_name": "Tenstorrent",
           "tag": "tenstorrent/fp8",
           "quantization": "fp8",
@@ -20363,6 +20356,43 @@
           },
           "status": 0,
           "uptime_last_30m": 100
+        },
+        {
+          "provider_name": "Morph",
+          "tag": "morph/fp8",
+          "quantization": "fp8",
+          "context_length": 1048576,
+          "max_completion_tokens": 943718,
+          "supported_parameters": [
+            "reasoning",
+            "include_reasoning",
+            "max_tokens",
+            "temperature",
+            "stop",
+            "top_p",
+            "top_k",
+            "min_p",
+            "frequency_penalty",
+            "presence_penalty",
+            "repetition_penalty",
+            "seed",
+            "logit_bias",
+            "response_format",
+            "structured_outputs",
+            "tools",
+            "tool_choice",
+            "logprobs",
+            "top_logprobs",
+            "reasoning_effort"
+          ],
+          "pricing": {
+            "prompt": "0.000000605",
+            "completion": "0.0000044",
+            "input_cache_read": "0.000000151",
+            "discount": 0
+          },
+          "status": -2,
+          "uptime_last_30m": 60
         },
         {
           "provider_name": "Novita",
@@ -20483,7 +20513,7 @@
             "discount": 0.4
           },
           "status": 0,
-          "uptime_last_30m": 100
+          "uptime_last_30m": null
         },
         {
           "provider_name": "Decart",
@@ -21145,7 +21175,7 @@
             "discount": 0
           },
           "status": 0,
-          "uptime_last_30m": 100
+          "uptime_last_30m": null
         },
         {
           "provider_name": "AtlasCloud",
@@ -21180,7 +21210,7 @@
             "discount": 0
           },
           "status": 0,
-          "uptime_last_30m": 100
+          "uptime_last_30m": null
         },
         {
           "provider_name": "Z.AI",
@@ -21270,7 +21300,7 @@
             "discount": 0
           },
           "status": 0,
-          "uptime_last_30m": null
+          "uptime_last_30m": 100
         },
         {
           "provider_name": "ModelRun",
@@ -21704,7 +21734,7 @@
             "discount": 0
           },
           "status": -2,
-          "uptime_last_30m": 88.88888888888889
+          "uptime_last_30m": 50
         },
         {
           "provider_name": "Darkbloom",
@@ -21738,7 +21768,7 @@
             "input_cache_read": "0.0000000175",
             "discount": 0
           },
-          "status": -2,
+          "status": 0,
           "uptime_last_30m": 100
         },
         {
@@ -21840,7 +21870,7 @@
             "discount": 0
           },
           "status": 0,
-          "uptime_last_30m": 100
+          "uptime_last_30m": 96.66666666666667
         },
         {
           "provider_name": "Reka",
@@ -22051,7 +22081,7 @@
             "discount": 0
           },
           "status": 0,
-          "uptime_last_30m": 100
+          "uptime_last_30m": null
         },
         {
           "provider_name": "ModelRun",
@@ -22116,7 +22146,7 @@
             "discount": 0
           },
           "status": 0,
-          "uptime_last_30m": 96.55172413793103
+          "uptime_last_30m": 100
         },
         {
           "provider_name": "AkashML",
@@ -22289,7 +22319,7 @@
             "input_cache_write": "0.00000053125",
             "discount": 0
           },
-          "status": 0,
+          "status": -2,
           "uptime_last_30m": 100
         },
         {
@@ -22670,8 +22700,8 @@
             "input_cache_write": "0.0000000208333333333333",
             "discount": 0.5
           },
-          "status": 0,
-          "uptime_last_30m": 100
+          "status": -5,
+          "uptime_last_30m": 28.57142857142857
         },
         {
           "provider_name": "Google AI Studio",
@@ -22771,7 +22801,7 @@
             "input_cache_write": "0.0000000416666666666667",
             "discount": 0.5
           },
-          "status": 0,
+          "status": -2,
           "uptime_last_30m": 100
         },
         {
@@ -22805,7 +22835,7 @@
             "discount": 0.5
           },
           "status": 0,
-          "uptime_last_30m": 100
+          "uptime_last_30m": null
         },
         {
           "provider_name": "Google",
@@ -22872,7 +22902,7 @@
             "discount": 0.5
           },
           "status": 0,
-          "uptime_last_30m": null
+          "uptime_last_30m": 100
         }
       ]
     },
@@ -23483,7 +23513,7 @@
             ]
           },
           "status": 0,
-          "uptime_last_30m": 100
+          "uptime_last_30m": null
         }
       ]
     },
@@ -23944,39 +23974,6 @@
           "uptime_last_30m": 100
         },
         {
-          "provider_name": "Phala",
-          "tag": "phala",
-          "quantization": "unknown",
-          "context_length": 1048576,
-          "max_completion_tokens": 393216,
-          "supported_parameters": [
-            "reasoning",
-            "include_reasoning",
-            "max_tokens",
-            "temperature",
-            "top_p",
-            "stop",
-            "frequency_penalty",
-            "presence_penalty",
-            "seed",
-            "top_k",
-            "min_p",
-            "repetition_penalty",
-            "response_format",
-            "tools",
-            "tool_choice",
-            "reasoning_effort"
-          ],
-          "pricing": {
-            "prompt": "0.000000957",
-            "completion": "0.0000028776",
-            "input_cache_read": "0.000000099",
-            "discount": 0.34
-          },
-          "status": 0,
-          "uptime_last_30m": null
-        },
-        {
           "provider_name": "Novita",
           "tag": "novita/fp8",
           "quantization": "fp8",
@@ -24035,7 +24032,7 @@
             "discount": 0.2
           },
           "status": 0,
-          "uptime_last_30m": 100
+          "uptime_last_30m": null
         },
         {
           "provider_name": "DekaLLM",
@@ -24215,7 +24212,7 @@
             "discount": 0
           },
           "status": 0,
-          "uptime_last_30m": null
+          "uptime_last_30m": 100
         },
         {
           "provider_name": "Alibaba",
@@ -24326,7 +24323,7 @@
             "discount": 0
           },
           "status": 0,
-          "uptime_last_30m": 100
+          "uptime_last_30m": null
         },
         {
           "provider_name": "Parasail",
@@ -24425,7 +24422,7 @@
             "discount": 0
           },
           "status": 0,
-          "uptime_last_30m": null
+          "uptime_last_30m": 100
         },
         {
           "provider_name": "SiliconFlow",
@@ -24453,7 +24450,7 @@
             "discount": 0
           },
           "status": 0,
-          "uptime_last_30m": null
+          "uptime_last_30m": 100
         },
         {
           "provider_name": "Cloudflare",
@@ -24487,6 +24484,39 @@
             "prompt": "0.00000132",
             "completion": "0.00000396",
             "input_cache_read": "0.000000044",
+            "discount": 0
+          },
+          "status": 0,
+          "uptime_last_30m": null
+        },
+        {
+          "provider_name": "Phala",
+          "tag": "phala",
+          "quantization": "unknown",
+          "context_length": 1048576,
+          "max_completion_tokens": 393216,
+          "supported_parameters": [
+            "reasoning",
+            "include_reasoning",
+            "max_tokens",
+            "temperature",
+            "top_p",
+            "stop",
+            "frequency_penalty",
+            "presence_penalty",
+            "seed",
+            "top_k",
+            "min_p",
+            "repetition_penalty",
+            "response_format",
+            "tools",
+            "tool_choice",
+            "reasoning_effort"
+          ],
+          "pricing": {
+            "prompt": "0.00000145",
+            "completion": "0.00000436",
+            "input_cache_read": "0.00000015",
             "discount": 0
           },
           "status": 0,
@@ -24832,7 +24862,7 @@
             ]
           },
           "status": 0,
-          "uptime_last_30m": 100
+          "uptime_last_30m": null
         },
         {
           "provider_name": "Amazon Bedrock",
@@ -25045,7 +25075,7 @@
             "discount": 0
           },
           "status": 0,
-          "uptime_last_30m": null
+          "uptime_last_30m": 100
         }
       ]
     },
@@ -25256,7 +25286,7 @@
             "discount": 0.33
           },
           "status": 0,
-          "uptime_last_30m": null
+          "uptime_last_30m": 95
         },
         {
           "provider_name": "DeepInfra",
@@ -25792,8 +25822,8 @@
             "input_cache_read": "0.00000004",
             "discount": 0
           },
-          "status": 0,
-          "uptime_last_30m": 100
+          "status": -5,
+          "uptime_last_30m": 0
         }
       ]
     },
@@ -26068,7 +26098,7 @@
       ],
       "pricing": {
         "prompt": "0.0000000475",
-        "completion": "0.0000001637",
+        "completion": "0.0000001568",
         "input_cache_read": "0.000000028"
       },
       "endpoints": []
@@ -26224,7 +26254,7 @@
           ],
           "pricing": {
             "prompt": "0.0000000475",
-            "completion": "0.0000001637",
+            "completion": "0.0000001568",
             "input_cache_read": "0.000000028",
             "discount": 0
           },
@@ -26255,8 +26285,8 @@
           ],
           "pricing": {
             "prompt": "0.00000005",
-            "completion": "0.000000528",
-            "input_cache_read": "0.00000002",
+            "completion": "0.00000028",
+            "input_cache_read": "0.00000004",
             "discount": 0
           },
           "status": 0,
@@ -26293,35 +26323,6 @@
             "completion": "0.00000018",
             "input_cache_read": "0.000000015",
             "discount": 0
-          },
-          "status": 0,
-          "uptime_last_30m": 100
-        },
-        {
-          "provider_name": "StreamLake",
-          "tag": "streamlake/fp8",
-          "quantization": "fp8",
-          "context_length": 1024000,
-          "max_completion_tokens": 384000,
-          "supported_parameters": [
-            "reasoning",
-            "include_reasoning",
-            "response_format",
-            "tools",
-            "tool_choice",
-            "logprobs",
-            "top_logprobs",
-            "max_tokens",
-            "temperature",
-            "top_p",
-            "stop",
-            "reasoning_effort"
-          ],
-          "pricing": {
-            "prompt": "0.000000088",
-            "completion": "0.000000264",
-            "input_cache_read": "0.0000000028",
-            "discount": 0.8
           },
           "status": 0,
           "uptime_last_30m": 100
@@ -26385,43 +26386,6 @@
             "prompt": "0.000000119",
             "completion": "0.000000238",
             "input_cache_read": "0.0000000238",
-            "discount": 0
-          },
-          "status": 0,
-          "uptime_last_30m": 100
-        },
-        {
-          "provider_name": "Wafer",
-          "tag": "wafer/fast",
-          "quantization": "nvfp4",
-          "context_length": 1048576,
-          "max_completion_tokens": 943718,
-          "supported_parameters": [
-            "reasoning",
-            "include_reasoning",
-            "temperature",
-            "top_p",
-            "top_k",
-            "min_p",
-            "frequency_penalty",
-            "presence_penalty",
-            "repetition_penalty",
-            "stop",
-            "seed",
-            "max_tokens",
-            "logit_bias",
-            "response_format",
-            "structured_outputs",
-            "logprobs",
-            "top_logprobs",
-            "tools",
-            "tool_choice",
-            "reasoning_effort"
-          ],
-          "pricing": {
-            "prompt": "0.00000013",
-            "completion": "0.00000023",
-            "input_cache_read": "0.000000125",
             "discount": 0
           },
           "status": 0,
@@ -26544,6 +26508,72 @@
             "prompt": "0.00000013",
             "completion": "0.00000028",
             "input_cache_read": "0.00000007",
+            "discount": 0
+          },
+          "status": 0,
+          "uptime_last_30m": 100
+        },
+        {
+          "provider_name": "StreamLake",
+          "tag": "streamlake/fp8",
+          "quantization": "fp8",
+          "context_length": 1024000,
+          "max_completion_tokens": 384000,
+          "supported_parameters": [
+            "reasoning",
+            "include_reasoning",
+            "response_format",
+            "tools",
+            "tool_choice",
+            "logprobs",
+            "top_logprobs",
+            "max_tokens",
+            "temperature",
+            "top_p",
+            "stop",
+            "reasoning_effort"
+          ],
+          "pricing": {
+            "prompt": "0.000000132",
+            "completion": "0.000000396",
+            "input_cache_read": "0.0000000042",
+            "discount": 0.7
+          },
+          "status": 0,
+          "uptime_last_30m": 100
+        },
+        {
+          "provider_name": "Wafer",
+          "tag": "wafer/fast",
+          "quantization": "nvfp4",
+          "context_length": 1048576,
+          "max_completion_tokens": 943718,
+          "supported_parameters": [
+            "reasoning",
+            "include_reasoning",
+            "temperature",
+            "top_p",
+            "top_k",
+            "min_p",
+            "frequency_penalty",
+            "presence_penalty",
+            "repetition_penalty",
+            "stop",
+            "seed",
+            "max_tokens",
+            "logit_bias",
+            "response_format",
+            "structured_outputs",
+            "logprobs",
+            "top_logprobs",
+            "tools",
+            "tool_choice",
+            "reasoning_effort"
+          ],
+          "pricing": {
+            "prompt": "0.00000014",
+            "completion": "0.00000023",
+            "input_cache_read": "0.000000135",
             "discount": 0
           },
           "status": 0,
@@ -26781,40 +26811,6 @@
           "uptime_last_30m": 100
         },
         {
-          "provider_name": "Phala",
-          "tag": "phala",
-          "quantization": "unknown",
-          "context_length": 1048576,
-          "max_completion_tokens": 393216,
-          "supported_parameters": [
-            "reasoning",
-            "include_reasoning",
-            "max_tokens",
-            "temperature",
-            "top_p",
-            "stop",
-            "frequency_penalty",
-            "presence_penalty",
-            "seed",
-            "top_k",
-            "min_p",
-            "repetition_penalty",
-            "response_format",
-            "structured_outputs",
-            "tools",
-            "tool_choice",
-            "reasoning_effort"
-          ],
-          "pricing": {
-            "prompt": "0.000000308",
-            "completion": "0.000000924",
-            "input_cache_read": "0.0000000196",
-            "discount": 0.3
-          },
-          "status": 0,
-          "uptime_last_30m": null
-        },
-        {
           "provider_name": "Alibaba",
           "tag": "alibaba",
           "quantization": "unknown",
@@ -26943,6 +26939,40 @@
           },
           "status": 0,
           "uptime_last_30m": 100
+        },
+        {
+          "provider_name": "Phala",
+          "tag": "phala",
+          "quantization": "unknown",
+          "context_length": 1048576,
+          "max_completion_tokens": 393216,
+          "supported_parameters": [
+            "reasoning",
+            "include_reasoning",
+            "max_tokens",
+            "temperature",
+            "top_p",
+            "stop",
+            "frequency_penalty",
+            "presence_penalty",
+            "seed",
+            "top_k",
+            "min_p",
+            "repetition_penalty",
+            "response_format",
+            "structured_outputs",
+            "tools",
+            "tool_choice",
+            "reasoning_effort"
+          ],
+          "pricing": {
+            "prompt": "0.00000044",
+            "completion": "0.00000132",
+            "input_cache_read": "0.000000028",
+            "discount": 0
+          },
+          "status": 0,
+          "uptime_last_30m": null
         },
         {
           "provider_name": "Baidu",
@@ -28241,7 +28271,7 @@
             "discount": 0
           },
           "status": -5,
-          "uptime_last_30m": 0
+          "uptime_last_30m": 19.230769230769234
         }
       ]
     },
@@ -28581,7 +28611,7 @@
             "discount": 0
           },
           "status": 0,
-          "uptime_last_30m": null
+          "uptime_last_30m": 100
         },
         {
           "provider_name": "Google AI Studio",
@@ -29098,8 +29128,8 @@
             "input_cache_write": "0.0000000416666666666667",
             "discount": 0
           },
-          "status": -2,
-          "uptime_last_30m": 83.33333333333334
+          "status": 0,
+          "uptime_last_30m": 100
         },
         {
           "provider_name": "Google AI Studio",
@@ -29233,7 +29263,7 @@
             "discount": 0
           },
           "status": 0,
-          "uptime_last_30m": null
+          "uptime_last_30m": 100
         },
         {
           "provider_name": "Google",
@@ -29266,7 +29296,7 @@
             "discount": 0
           },
           "status": 0,
-          "uptime_last_30m": 100
+          "uptime_last_30m": null
         },
         {
           "provider_name": "Google",
@@ -30083,9 +30113,9 @@
         "top_p"
       ],
       "pricing": {
-        "prompt": "0.000000152",
-        "completion": "0.000016",
-        "input_cache_read": "0.000000142"
+        "prompt": "0.000000161",
+        "completion": "0.00002",
+        "input_cache_read": "0.000000151"
       },
       "endpoints": [
         {
@@ -30116,7 +30146,7 @@
           ],
           "pricing": {
             "prompt": "0.000000152",
-            "completion": "0.000016",
+            "completion": "0.00002",
             "input_cache_read": "0.000000142",
             "discount": 0
           },
@@ -30146,7 +30176,7 @@
           ],
           "pricing": {
             "prompt": "0.0000001529",
-            "completion": "0.0000105572",
+            "completion": "0.00000975",
             "input_cache_read": "0.00000015",
             "discount": 0
           },
@@ -30357,9 +30387,9 @@
             "reasoning_effort"
           ],
           "pricing": {
-            "prompt": "0.000000945",
-            "completion": "0.0000149",
-            "input_cache_read": "0.000000262",
+            "prompt": "0.00000115",
+            "completion": "0.000016092",
+            "input_cache_read": "0.000000409",
             "discount": 0
           },
           "status": 0,
@@ -30561,8 +30591,8 @@
             "input_cache_read": "0.00000021",
             "discount": 0
           },
-          "status": -5,
-          "uptime_last_30m": 41.17647058823529
+          "status": -2,
+          "uptime_last_30m": 72.22222222222221
         },
         {
           "provider_name": "InferenceNet",
@@ -30662,7 +30692,7 @@
             "discount": 0
           },
           "status": 0,
-          "uptime_last_30m": 100
+          "uptime_last_30m": null
         },
         {
           "provider_name": "DeepInfra",
@@ -30788,8 +30818,8 @@
             "input_cache_read": "0.0000003",
             "discount": 0
           },
-          "status": -2,
-          "uptime_last_30m": 88
+          "status": 0,
+          "uptime_last_30m": 90
         },
         {
           "provider_name": "Modal",
@@ -30884,8 +30914,8 @@
             "input_cache_read": "0.0000003",
             "discount": 0
           },
-          "status": -2,
-          "uptime_last_30m": 66.66666666666666
+          "status": 0,
+          "uptime_last_30m": 100
         },
         {
           "provider_name": "BaseTen",
@@ -30913,7 +30943,7 @@
             "discount": 0
           },
           "status": 0,
-          "uptime_last_30m": null
+          "uptime_last_30m": 100
         },
         {
           "provider_name": "Moonshot AI",
@@ -30970,7 +31000,7 @@
             "discount": 0
           },
           "status": 0,
-          "uptime_last_30m": null
+          "uptime_last_30m": 100
         },
         {
           "provider_name": "Fireworks",
@@ -31039,7 +31069,7 @@
             "input_cache_read": "0.00000045",
             "discount": 0
           },
-          "status": -2,
+          "status": 0,
           "uptime_last_30m": 100
         }
       ]
@@ -31484,7 +31514,7 @@
             "discount": 0
           },
           "status": 0,
-          "uptime_last_30m": 100
+          "uptime_last_30m": null
         }
       ]
     },
@@ -31627,7 +31657,7 @@
             ]
           },
           "status": 0,
-          "uptime_last_30m": null
+          "uptime_last_30m": 100
         },
         {
           "provider_name": "OpenAI",
@@ -32067,7 +32097,7 @@
             ]
           },
           "status": 0,
-          "uptime_last_30m": null
+          "uptime_last_30m": 100
         },
         {
           "provider_name": "Amazon Bedrock",
@@ -32468,7 +32498,7 @@
             ]
           },
           "status": 0,
-          "uptime_last_30m": 100
+          "uptime_last_30m": null
         },
         {
           "provider_name": "Azure",
@@ -32756,7 +32786,7 @@
             ]
           },
           "status": 0,
-          "uptime_last_30m": null
+          "uptime_last_30m": 100
         },
         {
           "provider_name": "Azure",
@@ -32983,7 +33013,7 @@
             ]
           },
           "status": 0,
-          "uptime_last_30m": null
+          "uptime_last_30m": 100
         }
       ]
     },
@@ -33233,7 +33263,7 @@
             ]
           },
           "status": 0,
-          "uptime_last_30m": 100
+          "uptime_last_30m": null
         },
         {
           "provider_name": "OpenAI",
@@ -33562,7 +33592,7 @@
               }
             ]
           },
-          "status": 0,
+          "status": -2,
           "uptime_last_30m": 100
         },
         {
@@ -33677,7 +33707,7 @@
             ]
           },
           "status": 0,
-          "uptime_last_30m": null
+          "uptime_last_30m": 100
         },
         {
           "provider_name": "Amazon Bedrock",
@@ -33790,7 +33820,7 @@
             ]
           },
           "status": 0,
-          "uptime_last_30m": 100
+          "uptime_last_30m": null
         }
       ]
     },
@@ -34385,7 +34415,7 @@
             "discount": 0
           },
           "status": 0,
-          "uptime_last_30m": 100
+          "uptime_last_30m": null
         }
       ]
     },
@@ -35655,7 +35685,7 @@
             "web_search": "0.014",
             "discount": 0
           },
-          "status": -2,
+          "status": 0,
           "uptime_last_30m": 100
         },
         {
@@ -35681,8 +35711,8 @@
             "web_search": "0.014",
             "discount": 0
           },
-          "status": -5,
-          "uptime_last_30m": 0
+          "status": 0,
+          "uptime_last_30m": null
         }
       ]
     },
@@ -35851,7 +35881,7 @@
             "discount": 0
           },
           "status": 0,
-          "uptime_last_30m": 100
+          "uptime_last_30m": null
         },
         {
           "provider_name": "Google",
@@ -36460,36 +36490,6 @@
           "uptime_last_30m": 100
         },
         {
-          "provider_name": "StreamLake",
-          "tag": "streamlake/fp8",
-          "quantization": "fp8",
-          "context_length": 1024000,
-          "max_completion_tokens": 128000,
-          "supported_parameters": [
-            "reasoning",
-            "include_reasoning",
-            "tool_choice",
-            "tools",
-            "response_format",
-            "structured_outputs",
-            "logprobs",
-            "top_logprobs",
-            "max_tokens",
-            "temperature",
-            "top_p",
-            "stop",
-            "reasoning_effort"
-          ],
-          "pricing": {
-            "prompt": "0.00000055552",
-            "completion": "0.00000174592",
-            "input_cache_read": "0.000000103168",
-            "discount": 0.6032
-          },
-          "status": 0,
-          "uptime_last_30m": 100
-        },
-        {
           "provider_name": "DeepInfra",
           "tag": "deepinfra/fp4",
           "quantization": "fp4",
@@ -36525,43 +36525,6 @@
           "uptime_last_30m": 100
         },
         {
-          "provider_name": "Morph",
-          "tag": "morph/fp8",
-          "quantization": "fp8",
-          "context_length": 1048576,
-          "max_completion_tokens": 943718,
-          "supported_parameters": [
-            "reasoning",
-            "include_reasoning",
-            "max_tokens",
-            "temperature",
-            "stop",
-            "top_p",
-            "top_k",
-            "min_p",
-            "frequency_penalty",
-            "presence_penalty",
-            "repetition_penalty",
-            "seed",
-            "logit_bias",
-            "response_format",
-            "structured_outputs",
-            "tools",
-            "tool_choice",
-            "logprobs",
-            "top_logprobs",
-            "reasoning_effort"
-          ],
-          "pricing": {
-            "prompt": "0.000000565",
-            "completion": "0.0000044",
-            "input_cache_read": "0.000000141",
-            "discount": 0
-          },
-          "status": 0,
-          "uptime_last_30m": 50
-        },
-        {
           "provider_name": "Ambient",
           "tag": "ambient/fp8",
           "quantization": "fp8",
@@ -36591,6 +36554,73 @@
             "completion": "0.000002",
             "input_cache_read": "0.00000015",
             "discount": 0
+          },
+          "status": 0,
+          "uptime_last_30m": 100
+        },
+        {
+          "provider_name": "Morph",
+          "tag": "morph/fp8",
+          "quantization": "fp8",
+          "context_length": 1048576,
+          "max_completion_tokens": 943718,
+          "supported_parameters": [
+            "reasoning",
+            "include_reasoning",
+            "max_tokens",
+            "temperature",
+            "stop",
+            "top_p",
+            "top_k",
+            "min_p",
+            "frequency_penalty",
+            "presence_penalty",
+            "repetition_penalty",
+            "seed",
+            "logit_bias",
+            "response_format",
+            "structured_outputs",
+            "tools",
+            "tool_choice",
+            "logprobs",
+            "top_logprobs",
+            "reasoning_effort"
+          ],
+          "pricing": {
+            "prompt": "0.000000605",
+            "completion": "0.0000044",
+            "input_cache_read": "0.000000151",
+            "discount": 0
+          },
+          "status": -2,
+          "uptime_last_30m": 100
+        },
+        {
+          "provider_name": "StreamLake",
+          "tag": "streamlake/fp8",
+          "quantization": "fp8",
+          "context_length": 1024000,
+          "max_completion_tokens": 128000,
+          "supported_parameters": [
+            "reasoning",
+            "include_reasoning",
+            "tool_choice",
+            "tools",
+            "response_format",
+            "structured_outputs",
+            "logprobs",
+            "top_logprobs",
+            "max_tokens",
+            "temperature",
+            "top_p",
+            "stop",
+            "reasoning_effort"
+          ],
+          "pricing": {
+            "prompt": "0.00000061306",
+            "completion": "0.00000192676",
+            "input_cache_read": "0.000000113854",
+            "discount": 0.5621
           },
           "status": 0,
           "uptime_last_30m": 100
@@ -36715,8 +36745,8 @@
             "input_cache_read": "0.00000013",
             "discount": 0.5
           },
-          "status": 0,
-          "uptime_last_30m": 100
+          "status": -2,
+          "uptime_last_30m": 86.20689655172413
         },
         {
           "provider_name": "AtlasCloud",
@@ -36784,7 +36814,7 @@
             "discount": 0
           },
           "status": 0,
-          "uptime_last_30m": 100
+          "uptime_last_30m": null
         },
         {
           "provider_name": "Inceptron",
@@ -36885,40 +36915,6 @@
           },
           "status": 0,
           "uptime_last_30m": 100
-        },
-        {
-          "provider_name": "Phala",
-          "tag": "phala/fp8",
-          "quantization": "fp8",
-          "context_length": 1048576,
-          "max_completion_tokens": 131072,
-          "supported_parameters": [
-            "reasoning",
-            "include_reasoning",
-            "max_tokens",
-            "temperature",
-            "top_p",
-            "stop",
-            "frequency_penalty",
-            "presence_penalty",
-            "seed",
-            "top_k",
-            "min_p",
-            "repetition_penalty",
-            "response_format",
-            "tools",
-            "tool_choice",
-            "structured_outputs",
-            "reasoning_effort"
-          ],
-          "pricing": {
-            "prompt": "0.00000126",
-            "completion": "0.000003",
-            "input_cache_read": "0.00000022",
-            "discount": 0
-          },
-          "status": 0,
-          "uptime_last_30m": null
         },
         {
           "provider_name": "Nebius",
@@ -37427,8 +37423,8 @@
             "input_cache_read": "0.000000462",
             "discount": 0
           },
-          "status": 0,
-          "uptime_last_30m": null
+          "status": -2,
+          "uptime_last_30m": 58.333333333333336
         }
       ]
     },
@@ -37757,7 +37753,7 @@
             "discount": 0
           },
           "status": 0,
-          "uptime_last_30m": null
+          "uptime_last_30m": 100
         },
         {
           "provider_name": "SiliconFlow",
@@ -37851,7 +37847,7 @@
             "input_cache_read": "0.00000015",
             "discount": 0
           },
-          "status": 0,
+          "status": -2,
           "uptime_last_30m": 100
         },
         {
@@ -38001,7 +37997,7 @@
             "discount": 0
           },
           "status": 0,
-          "uptime_last_30m": 100
+          "uptime_last_30m": null
         }
       ]
     },
@@ -39067,7 +39063,7 @@
             "discount": 0
           },
           "status": 0,
-          "uptime_last_30m": 96.66666666666667
+          "uptime_last_30m": 100
         }
       ]
     },
@@ -39835,8 +39831,8 @@
             "input_cache_read": "0.000000048",
             "discount": 0.2
           },
-          "status": -5,
-          "uptime_last_30m": null
+          "status": 0,
+          "uptime_last_30m": 100
         },
         {
           "provider_name": "DeepInfra",
@@ -39895,7 +39891,7 @@
             "discount": 0.5
           },
           "status": 0,
-          "uptime_last_30m": 100
+          "uptime_last_30m": 75
         },
         {
           "provider_name": "Venice",
@@ -40811,7 +40807,7 @@
             "discount": 0
           },
           "status": 0,
-          "uptime_last_30m": null
+          "uptime_last_30m": 100
         },
         {
           "provider_name": "Google",
@@ -41467,7 +41463,7 @@
             ]
           },
           "status": 0,
-          "uptime_last_30m": 100
+          "uptime_last_30m": null
         },
         {
           "provider_name": "xAI",
@@ -41882,7 +41878,7 @@
             "discount": 0
           },
           "status": 0,
-          "uptime_last_30m": null
+          "uptime_last_30m": 100
         },
         {
           "provider_name": "Google",
@@ -42021,7 +42017,7 @@
             "discount": 0
           },
           "status": 0,
-          "uptime_last_30m": null
+          "uptime_last_30m": 100
         },
         {
           "provider_name": "Google AI Studio",
@@ -42388,7 +42384,7 @@
             "discount": 0
           },
           "status": 0,
-          "uptime_last_30m": null
+          "uptime_last_30m": 100
         }
       ]
     },
@@ -42487,7 +42483,7 @@
             "discount": 0
           },
           "status": -5,
-          "uptime_last_30m": 66.66666666666666
+          "uptime_last_30m": 8.333333333333332
         },
         {
           "provider_name": "Google AI Studio",
@@ -42660,7 +42656,7 @@
             "discount": 0
           },
           "status": 0,
-          "uptime_last_30m": null
+          "uptime_last_30m": 100
         },
         {
           "provider_name": "Google",
@@ -42729,7 +42725,7 @@
             "discount": 0
           },
           "status": 0,
-          "uptime_last_30m": 100
+          "uptime_last_30m": null
         }
       ]
     },
@@ -43162,8 +43158,8 @@
               }
             ]
           },
-          "status": 0,
-          "uptime_last_30m": 100
+          "status": -2,
+          "uptime_last_30m": 90
         },
         {
           "provider_name": "xAI",
@@ -43703,7 +43699,7 @@
             "discount": 0
           },
           "status": 0,
-          "uptime_last_30m": null
+          "uptime_last_30m": 100
         }
       ]
     },
@@ -43869,7 +43865,7 @@
             "discount": 0
           },
           "status": -5,
-          "uptime_last_30m": 0
+          "uptime_last_30m": 20
         }
       ]
     },
@@ -44113,9 +44109,9 @@
         "top_p"
       ],
       "pricing": {
-        "prompt": "0.000000152",
-        "completion": "0.000016",
-        "input_cache_read": "0.000000142"
+        "prompt": "0.0000001529",
+        "completion": "0.00000975",
+        "input_cache_read": "0.00000015"
       },
       "endpoints": []
     },
@@ -44725,7 +44721,7 @@
             "discount": 0
           },
           "status": 0,
-          "uptime_last_30m": 93.75
+          "uptime_last_30m": 100
         },
         {
           "provider_name": "SiliconFlow",
@@ -44816,8 +44812,8 @@
             "input_cache_read": "0.00000025",
             "discount": 0
           },
-          "status": -2,
-          "uptime_last_30m": 100
+          "status": 0,
+          "uptime_last_30m": null
         }
       ]
     },
@@ -45004,7 +45000,7 @@
             "discount": 0
           },
           "status": 0,
-          "uptime_last_30m": 100
+          "uptime_last_30m": 96.66666666666667
         },
         {
           "provider_name": "Phala",
@@ -45224,7 +45220,7 @@
             ]
           },
           "status": 0,
-          "uptime_last_30m": null
+          "uptime_last_30m": 100
         }
       ]
     },
@@ -45571,7 +45567,7 @@
             ]
           },
           "status": 0,
-          "uptime_last_30m": null
+          "uptime_last_30m": 100
         },
         {
           "provider_name": "Azure",
@@ -45607,7 +45603,7 @@
             ]
           },
           "status": 0,
-          "uptime_last_30m": 100
+          "uptime_last_30m": 96.29629629629629
         },
         {
           "provider_name": "OpenAI",
@@ -45786,7 +45782,7 @@
             ]
           },
           "status": 0,
-          "uptime_last_30m": 100
+          "uptime_last_30m": null
         }
       ]
     },
@@ -46182,9 +46178,9 @@
         "top_p"
       ],
       "pricing": {
-        "prompt": "0.0000009483",
-        "completion": "0.0000018966",
-        "input_cache_read": "0.000000079025"
+        "prompt": "0.00000095526",
+        "completion": "0.00000191052",
+        "input_cache_read": "0.000000079605"
       },
       "endpoints": [
         {
@@ -46242,10 +46238,10 @@
             "reasoning_effort"
           ],
           "pricing": {
-            "prompt": "0.0000009483",
-            "completion": "0.0000018966",
-            "input_cache_read": "0.000000079025",
-            "discount": 0.455
+            "prompt": "0.00000095526",
+            "completion": "0.00000191052",
+            "input_cache_read": "0.000000079605",
+            "discount": 0.451
           },
           "status": 0,
           "uptime_last_30m": 100
@@ -46440,7 +46436,7 @@
             "discount": 0
           },
           "status": -2,
-          "uptime_last_30m": 66.66666666666666
+          "uptime_last_30m": 100
         },
         {
           "provider_name": "SiliconFlow",
@@ -46600,7 +46596,7 @@
             "discount": 0
           },
           "status": 0,
-          "uptime_last_30m": null
+          "uptime_last_30m": 100
         },
         {
           "provider_name": "Baidu",
@@ -46663,7 +46659,7 @@
             "discount": 0
           },
           "status": 0,
-          "uptime_last_30m": null
+          "uptime_last_30m": 100
         },
         {
           "provider_name": "Azure",
@@ -46812,9 +46808,9 @@
         "top_p"
       ],
       "pricing": {
-        "prompt": "0.00000005",
-        "completion": "0.00000045",
-        "input_cache_read": "0.00000005"
+        "prompt": "0.000000091",
+        "completion": "0.000000182",
+        "input_cache_read": "0.0000000182"
       },
       "endpoints": [
         {
@@ -46872,10 +46868,10 @@
             "reasoning_effort"
           ],
           "pricing": {
-            "prompt": "0.000000084",
-            "completion": "0.000000168",
-            "input_cache_read": "0.0000000168",
-            "discount": 0.4
+            "prompt": "0.0000000826",
+            "completion": "0.0000001652",
+            "input_cache_read": "0.00000001652",
+            "discount": 0.41
           },
           "status": 0,
           "uptime_last_30m": 100
@@ -47035,7 +47031,7 @@
             "discount": 0
           },
           "status": -5,
-          "uptime_last_30m": 42.857142857142854
+          "uptime_last_30m": 47.368421052631575
         },
         {
           "provider_name": "SiliconFlow",
@@ -47265,8 +47261,8 @@
             "completion": "0.0000005",
             "discount": 0
           },
-          "status": 0,
-          "uptime_last_30m": 96.55172413793103
+          "status": -2,
+          "uptime_last_30m": 83.33333333333334
         },
         {
           "provider_name": "Azure",
@@ -47605,7 +47601,7 @@
             "discount": 0
           },
           "status": -2,
-          "uptime_last_30m": 75
+          "uptime_last_30m": 85.71428571428571
         },
         {
           "provider_name": "DigitalOcean",
@@ -48750,7 +48746,7 @@
             "discount": 0
           },
           "status": 0,
-          "uptime_last_30m": 100
+          "uptime_last_30m": null
         }
       ]
     },
@@ -48906,7 +48902,7 @@
             "discount": 0
           },
           "status": 0,
-          "uptime_last_30m": null
+          "uptime_last_30m": 100
         },
         {
           "provider_name": "Amazon Bedrock",
@@ -49424,8 +49420,8 @@
             "input_cache_read": "0.000000098",
             "discount": 0
           },
-          "status": 0,
-          "uptime_last_30m": null
+          "status": -2,
+          "uptime_last_30m": 66.66666666666666
         },
         {
           "provider_name": "SiliconFlow",
@@ -49486,7 +49482,7 @@
             "discount": 0
           },
           "status": 0,
-          "uptime_last_30m": 100
+          "uptime_last_30m": null
         },
         {
           "provider_name": "AtlasCloud",
@@ -49553,7 +49549,7 @@
             "discount": 0
           },
           "status": 0,
-          "uptime_last_30m": null
+          "uptime_last_30m": 100
         },
         {
           "provider_name": "Novita",
@@ -49615,7 +49611,7 @@
             "discount": 0
           },
           "status": 0,
-          "uptime_last_30m": null
+          "uptime_last_30m": 100
         },
         {
           "provider_name": "Baidu",
@@ -49645,7 +49641,7 @@
             "discount": 0
           },
           "status": 0,
-          "uptime_last_30m": 100
+          "uptime_last_30m": null
         },
         {
           "provider_name": "GMICloud",
@@ -49758,8 +49754,8 @@
             "input_cache_read": "0.00000026026",
             "discount": 0.09
           },
-          "status": -2,
-          "uptime_last_30m": 100
+          "status": -5,
+          "uptime_last_30m": 80
         }
       ]
     },
@@ -50470,7 +50466,7 @@
             "input_cache_read": "0.000000012",
             "discount": 0
           },
-          "status": -2,
+          "status": 0,
           "uptime_last_30m": 100
         },
         {
@@ -50670,7 +50666,7 @@
             "discount": 0
           },
           "status": 0,
-          "uptime_last_30m": 100
+          "uptime_last_30m": null
         },
         {
           "provider_name": "DeepInfra",
@@ -50784,8 +50780,8 @@
             "completion": "0.00000115",
             "discount": 0
           },
-          "status": -2,
-          "uptime_last_30m": 72.22222222222221
+          "status": 0,
+          "uptime_last_30m": 100
         },
         {
           "provider_name": "ModelRun",
@@ -51440,7 +51436,7 @@
             "discount": 0
           },
           "status": 0,
-          "uptime_last_30m": null
+          "uptime_last_30m": 100
         }
       ]
     },
@@ -52023,7 +52019,7 @@
             "completion": "0",
             "discount": 0
           },
-          "status": -5,
+          "status": 0,
           "uptime_last_30m": 0
         }
       ]
@@ -52158,7 +52154,7 @@
             "discount": 0
           },
           "status": 0,
-          "uptime_last_30m": null
+          "uptime_last_30m": 100
         }
       ]
     },
@@ -52410,7 +52406,7 @@
             "completion": "0.0000018",
             "discount": 0
           },
-          "status": -2,
+          "status": 0,
           "uptime_last_30m": 100
         },
         {
@@ -52436,7 +52432,7 @@
             "discount": 0
           },
           "status": 0,
-          "uptime_last_30m": null
+          "uptime_last_30m": 100
         }
       ]
     },
@@ -52527,7 +52523,7 @@
             "discount": 0
           },
           "status": 0,
-          "uptime_last_30m": null
+          "uptime_last_30m": 100
         },
         {
           "provider_name": "Azure",
@@ -52792,7 +52788,7 @@
             "discount": 0
           },
           "status": 0,
-          "uptime_last_30m": null
+          "uptime_last_30m": 100
         },
         {
           "provider_name": "Azure",
@@ -53179,7 +53175,7 @@
             "discount": 0
           },
           "status": 0,
-          "uptime_last_30m": null
+          "uptime_last_30m": 100
         }
       ]
     },
@@ -53537,7 +53533,7 @@
             "discount": 0
           },
           "status": 0,
-          "uptime_last_30m": null
+          "uptime_last_30m": 100
         },
         {
           "provider_name": "Crusoe",
@@ -53874,8 +53870,8 @@
             "completion": "0.00000015",
             "discount": 0
           },
-          "status": -5,
-          "uptime_last_30m": 27.586206896551722
+          "status": 0,
+          "uptime_last_30m": 100
         },
         {
           "provider_name": "DeepInfra",
@@ -53905,6 +53901,32 @@
           "pricing": {
             "prompt": "0.0000001",
             "completion": "0.00000015",
+            "discount": 0
+          },
+          "status": 0,
+          "uptime_last_30m": 100
+        },
+        {
+          "provider_name": "PrimeIntellect",
+          "tag": "primeintellect/bf16",
+          "quantization": "bf16",
+          "context_length": 262144,
+          "max_completion_tokens": 40960,
+          "supported_parameters": [
+            "reasoning",
+            "include_reasoning",
+            "temperature",
+            "top_p",
+            "max_tokens",
+            "max_completion_tokens",
+            "response_format",
+            "structured_outputs",
+            "tools",
+            "tool_choice"
+          ],
+          "pricing": {
+            "prompt": "0.0000001",
+            "completion": "0.00000025",
             "discount": 0
           },
           "status": 0,
@@ -53943,32 +53965,6 @@
           "uptime_last_30m": 100
         },
         {
-          "provider_name": "PrimeIntellect",
-          "tag": "primeintellect/bf16",
-          "quantization": "bf16",
-          "context_length": 262144,
-          "max_completion_tokens": 40960,
-          "supported_parameters": [
-            "reasoning",
-            "include_reasoning",
-            "temperature",
-            "top_p",
-            "max_tokens",
-            "max_completion_tokens",
-            "response_format",
-            "structured_outputs",
-            "tools",
-            "tool_choice"
-          ],
-          "pricing": {
-            "prompt": "0.00000017",
-            "completion": "0.00000025",
-            "discount": 0
-          },
-          "status": 0,
-          "uptime_last_30m": 100
-        },
-        {
           "provider_name": "Together",
           "tag": "together",
           "quantization": "unknown",
@@ -53997,8 +53993,8 @@
             "completion": "0.00000025",
             "discount": 0
           },
-          "status": 0,
-          "uptime_last_30m": 100
+          "status": -2,
+          "uptime_last_30m": 93.33333333333333
         }
       ]
     },
@@ -54450,7 +54446,7 @@
             ]
           },
           "status": 0,
-          "uptime_last_30m": null
+          "uptime_last_30m": 100
         },
         {
           "provider_name": "Azure",
@@ -54665,7 +54661,7 @@
             ]
           },
           "status": 0,
-          "uptime_last_30m": null
+          "uptime_last_30m": 100
         }
       ]
     },
@@ -55560,7 +55556,7 @@
             "discount": 0
           },
           "status": 0,
-          "uptime_last_30m": null
+          "uptime_last_30m": 100
         },
         {
           "provider_name": "Parasail",
@@ -55595,7 +55591,7 @@
             "discount": 0
           },
           "status": 0,
-          "uptime_last_30m": null
+          "uptime_last_30m": 100
         },
         {
           "provider_name": "Venice",
@@ -55627,7 +55623,7 @@
             "discount": 0
           },
           "status": 0,
-          "uptime_last_30m": null
+          "uptime_last_30m": 100
         },
         {
           "provider_name": "Alibaba",
@@ -55659,7 +55655,7 @@
             "discount": 0
           },
           "status": 0,
-          "uptime_last_30m": null
+          "uptime_last_30m": 100
         },
         {
           "provider_name": "AtlasCloud",
@@ -55812,8 +55808,8 @@
             "completion": "0.00000156",
             "discount": 0
           },
-          "status": 0,
-          "uptime_last_30m": 95
+          "status": -5,
+          "uptime_last_30m": 80
         },
         {
           "provider_name": "SiliconFlow",
@@ -56092,7 +56088,7 @@
             "discount": 0
           },
           "status": 0,
-          "uptime_last_30m": 100
+          "uptime_last_30m": null
         },
         {
           "provider_name": "AtlasCloud",
@@ -56125,7 +56121,7 @@
             "discount": 0
           },
           "status": 0,
-          "uptime_last_30m": 100
+          "uptime_last_30m": null
         },
         {
           "provider_name": "Novita",
@@ -56931,7 +56927,7 @@
             ]
           },
           "status": 0,
-          "uptime_last_30m": null
+          "uptime_last_30m": 0
         },
         {
           "provider_name": "Google AI Studio",
@@ -57816,7 +57812,7 @@
             "discount": 0
           },
           "status": 0,
-          "uptime_last_30m": null
+          "uptime_last_30m": 100
         },
         {
           "provider_name": "Google",
@@ -57880,7 +57876,7 @@
             "discount": 0
           },
           "status": 0,
-          "uptime_last_30m": 100
+          "uptime_last_30m": null
         }
       ]
     },
@@ -58564,7 +58560,7 @@
             "discount": 0
           },
           "status": 0,
-          "uptime_last_30m": 100
+          "uptime_last_30m": null
         },
         {
           "provider_name": "GMICloud",
@@ -58621,7 +58617,7 @@
             "discount": 0
           },
           "status": 0,
-          "uptime_last_30m": null
+          "uptime_last_30m": 100
         },
         {
           "provider_name": "Venice",
@@ -58854,7 +58850,7 @@
             "discount": 0
           },
           "status": 0,
-          "uptime_last_30m": 100
+          "uptime_last_30m": null
         },
         {
           "provider_name": "GMICloud",
@@ -58939,7 +58935,7 @@
             "discount": 0
           },
           "status": 0,
-          "uptime_last_30m": 100
+          "uptime_last_30m": null
         },
         {
           "provider_name": "Minimax",
@@ -58989,7 +58985,7 @@
             "discount": 0
           },
           "status": 0,
-          "uptime_last_30m": 100
+          "uptime_last_30m": null
         }
       ]
     },
@@ -59307,7 +59303,7 @@
             "discount": 0
           },
           "status": 0,
-          "uptime_last_30m": null
+          "uptime_last_30m": 100
         },
         {
           "provider_name": "Novita",
@@ -59337,7 +59333,7 @@
             "discount": 0
           },
           "status": 0,
-          "uptime_last_30m": 100
+          "uptime_last_30m": null
         },
         {
           "provider_name": "Z.AI",
@@ -59391,7 +59387,7 @@
             "discount": 0
           },
           "status": 0,
-          "uptime_last_30m": 100
+          "uptime_last_30m": null
         }
       ]
     },
@@ -60560,7 +60556,7 @@
             "discount": 0
           },
           "status": 0,
-          "uptime_last_30m": null
+          "uptime_last_30m": 100
         }
       ]
     },
@@ -61005,7 +61001,7 @@
             "discount": 0
           },
           "status": -5,
-          "uptime_last_30m": 0
+          "uptime_last_30m": 3.3333333333333335
         }
       ]
     },
@@ -61300,7 +61296,7 @@
             ]
           },
           "status": 0,
-          "uptime_last_30m": null
+          "uptime_last_30m": 100
         }
       ]
     },
@@ -61423,7 +61419,7 @@
             "discount": 0
           },
           "status": 0,
-          "uptime_last_30m": 100
+          "uptime_last_30m": null
         },
         {
           "provider_name": "Minimax",
@@ -61752,7 +61748,7 @@
             "discount": 0
           },
           "status": -5,
-          "uptime_last_30m": 0
+          "uptime_last_30m": null
         },
         {
           "provider_name": "Z.AI",
@@ -61808,7 +61804,7 @@
             "discount": 0
           },
           "status": 0,
-          "uptime_last_30m": null
+          "uptime_last_30m": 100
         }
       ]
     },
@@ -61997,8 +61993,8 @@
             "input_cache_write": "0.0000000416666666666667",
             "discount": 0
           },
-          "status": -5,
-          "uptime_last_30m": 57.14285714285714
+          "status": -2,
+          "uptime_last_30m": 81.81818181818183
         },
         {
           "provider_name": "Google AI Studio",
@@ -62963,7 +62959,7 @@
             "discount": 0
           },
           "status": 0,
-          "uptime_last_30m": 100
+          "uptime_last_30m": null
         }
       ]
     },
@@ -63222,7 +63218,7 @@
             "discount": 0
           },
           "status": 0,
-          "uptime_last_30m": null
+          "uptime_last_30m": 100
         }
       ]
     },
@@ -63371,7 +63367,7 @@
             "discount": 0
           },
           "status": 0,
-          "uptime_last_30m": 100
+          "uptime_last_30m": 90.9090909090909
         },
         {
           "provider_name": "Z.AI",
@@ -63395,8 +63391,8 @@
             "input_cache_read": "0.00000005",
             "discount": 0
           },
-          "status": 0,
-          "uptime_last_30m": 100
+          "status": -2,
+          "uptime_last_30m": 72.72727272727273
         }
       ]
     },
@@ -64642,7 +64638,7 @@
             "input_cache_read": "0.0000000216",
             "discount": 0.28
           },
-          "status": 0,
+          "status": -2,
           "uptime_last_30m": 100
         },
         {
@@ -64914,7 +64910,7 @@
             "discount": 0
           },
           "status": -5,
-          "uptime_last_30m": 0
+          "uptime_last_30m": null
         },
         {
           "provider_name": "SambaNova",
@@ -64939,7 +64935,7 @@
             "discount": 0
           },
           "status": -2,
-          "uptime_last_30m": 70
+          "uptime_last_30m": 100
         }
       ]
     },
@@ -65753,7 +65749,7 @@
             "discount": 0
           },
           "status": 0,
-          "uptime_last_30m": 100
+          "uptime_last_30m": null
         },
         {
           "provider_name": "OpenAI",
@@ -66650,7 +66646,7 @@
             "discount": 0
           },
           "status": 0,
-          "uptime_last_30m": 100
+          "uptime_last_30m": null
         },
         {
           "provider_name": "Mistral",
@@ -66880,7 +66876,7 @@
             "discount": 0.15
           },
           "status": 0,
-          "uptime_last_30m": 100
+          "uptime_last_30m": null
         },
         {
           "provider_name": "Google",
@@ -67426,7 +67422,7 @@
             "discount": 0
           },
           "status": 0,
-          "uptime_last_30m": 92.85714285714286
+          "uptime_last_30m": 100
         },
         {
           "provider_name": "Google",
@@ -67456,7 +67452,7 @@
             "discount": 0
           },
           "status": 0,
-          "uptime_last_30m": null
+          "uptime_last_30m": 100
         }
       ]
     },
@@ -67971,7 +67967,7 @@
             "discount": 0
           },
           "status": 0,
-          "uptime_last_30m": null
+          "uptime_last_30m": 100
         }
       ]
     },
@@ -68057,7 +68053,7 @@
             "discount": 0
           },
           "status": 0,
-          "uptime_last_30m": 96.66666666666667
+          "uptime_last_30m": 100
         },
         {
           "provider_name": "Novita",
@@ -68087,8 +68083,8 @@
             "completion": "0.0000007",
             "discount": 0
           },
-          "status": 0,
-          "uptime_last_30m": 100
+          "status": -2,
+          "uptime_last_30m": 93.33333333333333
         },
         {
           "provider_name": "SiliconFlow",
@@ -68113,7 +68109,7 @@
             "discount": 0
           },
           "status": 0,
-          "uptime_last_30m": null
+          "uptime_last_30m": 100
         }
       ]
     },
@@ -68891,7 +68887,7 @@
             ]
           },
           "status": 0,
-          "uptime_last_30m": 100
+          "uptime_last_30m": null
         },
         {
           "provider_name": "Amazon Bedrock",
@@ -68932,7 +68928,7 @@
             ]
           },
           "status": 0,
-          "uptime_last_30m": null
+          "uptime_last_30m": 100
         },
         {
           "provider_name": "Google",
@@ -70024,8 +70020,8 @@
             "completion": "0.0000011",
             "discount": 0
           },
-          "status": 0,
-          "uptime_last_30m": 100
+          "status": -5,
+          "uptime_last_30m": 13.043478260869565
         },
         {
           "provider_name": "Parasail",
@@ -70088,8 +70084,8 @@
             "completion": "0.00000165",
             "discount": 0
           },
-          "status": 0,
-          "uptime_last_30m": 100
+          "status": -5,
+          "uptime_last_30m": 0
         },
         {
           "provider_name": "Google",
@@ -70120,7 +70116,7 @@
             "discount": 0
           },
           "status": -5,
-          "uptime_last_30m": null
+          "uptime_last_30m": 0
         }
       ]
     },
@@ -70438,7 +70434,7 @@
             "discount": 0
           },
           "status": 0,
-          "uptime_last_30m": 96.66666666666667
+          "uptime_last_30m": 100
         },
         {
           "provider_name": "SiliconFlow",
@@ -70525,8 +70521,8 @@
             "completion": "0.0000017",
             "discount": 0
           },
-          "status": 0,
-          "uptime_last_30m": null
+          "status": -5,
+          "uptime_last_30m": 0
         },
         {
           "provider_name": "SambaNova",
@@ -70551,7 +70547,7 @@
             "discount": 0
           },
           "status": -2,
-          "uptime_last_30m": 89.65517241379311
+          "uptime_last_30m": 83.33333333333334
         }
       ]
     },
@@ -71137,7 +71133,7 @@
             "discount": 0
           },
           "status": 0,
-          "uptime_last_30m": 100
+          "uptime_last_30m": null
         },
         {
           "provider_name": "OpenAI",
@@ -72233,8 +72229,8 @@
             "input_cache_read": "0.00000003",
             "discount": 0
           },
-          "status": -2,
-          "uptime_last_30m": 96.66666666666667
+          "status": 0,
+          "uptime_last_30m": 100
         },
         {
           "provider_name": "CoreWeave",
@@ -72559,7 +72555,7 @@
             "discount": 0
           },
           "status": 0,
-          "uptime_last_30m": 100
+          "uptime_last_30m": 96.55172413793103
         },
         {
           "provider_name": "BaseTen",
@@ -72651,7 +72647,7 @@
             "discount": 0
           },
           "status": -5,
-          "uptime_last_30m": 37.5
+          "uptime_last_30m": 22.22222222222222
         },
         {
           "provider_name": "Amazon Bedrock",
@@ -72759,7 +72755,7 @@
             "discount": 0
           },
           "status": 0,
-          "uptime_last_30m": null
+          "uptime_last_30m": 100
         },
         {
           "provider_name": "Phala",
@@ -72886,7 +72882,7 @@
             "discount": 0
           },
           "status": 0,
-          "uptime_last_30m": null
+          "uptime_last_30m": 100
         },
         {
           "provider_name": "Cerebras",
@@ -73374,8 +73370,8 @@
             "completion": "0.00000018",
             "discount": 0
           },
-          "status": -5,
-          "uptime_last_30m": 58.333333333333336
+          "status": -2,
+          "uptime_last_30m": 82.14285714285714
         },
         {
           "provider_name": "Amazon Bedrock",
@@ -73401,7 +73397,7 @@
             "discount": 0
           },
           "status": 0,
-          "uptime_last_30m": null
+          "uptime_last_30m": 100
         },
         {
           "provider_name": "Amazon Bedrock",
@@ -73453,7 +73449,7 @@
             "completion": "0.00000025",
             "discount": 0
           },
-          "status": -5,
+          "status": 0,
           "uptime_last_30m": 0
         },
         {
@@ -73735,7 +73731,7 @@
             "discount": 0
           },
           "status": 0,
-          "uptime_last_30m": 100
+          "uptime_last_30m": null
         }
       ]
     },
@@ -73993,7 +73989,7 @@
             "discount": 0
           },
           "status": 0,
-          "uptime_last_30m": 100
+          "uptime_last_30m": null
         },
         {
           "provider_name": "Mistral",
@@ -74233,8 +74229,8 @@
             "completion": "0.00000028",
             "discount": 0
           },
-          "status": 0,
-          "uptime_last_30m": 100
+          "status": -2,
+          "uptime_last_30m": 94.73684210526315
         },
         {
           "provider_name": "Amazon Bedrock",
@@ -74678,7 +74674,7 @@
             "discount": 0
           },
           "status": 0,
-          "uptime_last_30m": null
+          "uptime_last_30m": 100
         },
         {
           "provider_name": "Z.AI",
@@ -74823,7 +74819,7 @@
             "discount": 0
           },
           "status": 0,
-          "uptime_last_30m": null
+          "uptime_last_30m": 100
         }
       ]
     },
@@ -74944,7 +74940,7 @@
             "completion": "0.0000018",
             "discount": 0
           },
-          "status": -5,
+          "status": 0,
           "uptime_last_30m": 0
         },
         {
@@ -74976,8 +74972,8 @@
             "input_cache_read": "0.0000001",
             "discount": 0
           },
-          "status": -5,
-          "uptime_last_30m": 47.368421052631575
+          "status": 0,
+          "uptime_last_30m": 96.66666666666667
         },
         {
           "provider_name": "Venice",
@@ -75004,8 +75000,8 @@
             "input_cache_read": "0.00000004",
             "discount": 0
           },
-          "status": -5,
-          "uptime_last_30m": 46.666666666666664
+          "status": 0,
+          "uptime_last_30m": 96.15384615384616
         }
       ]
     },
@@ -75398,7 +75394,7 @@
             "discount": 0
           },
           "status": 0,
-          "uptime_last_30m": 100
+          "uptime_last_30m": 83.33333333333334
         },
         {
           "provider_name": "Parasail",
@@ -75457,8 +75453,8 @@
             "completion": "0.00000075",
             "discount": 0
           },
-          "status": 0,
-          "uptime_last_30m": 100
+          "status": -2,
+          "uptime_last_30m": 93.33333333333333
         },
         {
           "provider_name": "Google",
@@ -76043,8 +76039,8 @@
             "completion": "0.00000025",
             "discount": 0
           },
-          "status": -2,
-          "uptime_last_30m": 93.33333333333333
+          "status": 0,
+          "uptime_last_30m": 100
         },
         {
           "provider_name": "Mistral",
@@ -76072,7 +76068,7 @@
             "discount": 0
           },
           "status": 0,
-          "uptime_last_30m": null
+          "uptime_last_30m": 100
         }
       ]
     },
@@ -76387,7 +76383,7 @@
             "discount": 0
           },
           "status": 0,
-          "uptime_last_30m": 90.9090909090909
+          "uptime_last_30m": 100
         }
       ]
     },
@@ -76543,7 +76539,7 @@
             ]
           },
           "status": 0,
-          "uptime_last_30m": null
+          "uptime_last_30m": 100
         },
         {
           "provider_name": "Google AI Studio",
@@ -76810,7 +76806,7 @@
             ]
           },
           "status": 0,
-          "uptime_last_30m": null
+          "uptime_last_30m": 100
         },
         {
           "provider_name": "Google AI Studio",
@@ -77064,7 +77060,7 @@
             "discount": 0
           },
           "status": 0,
-          "uptime_last_30m": 100
+          "uptime_last_30m": 96.55172413793103
         },
         {
           "provider_name": "StreamLake",
@@ -77241,7 +77237,7 @@
             "discount": 0
           },
           "status": 0,
-          "uptime_last_30m": null
+          "uptime_last_30m": 100
         },
         {
           "provider_name": "Mistral",
@@ -77269,7 +77265,7 @@
             "discount": 0
           },
           "status": 0,
-          "uptime_last_30m": null
+          "uptime_last_30m": 100
         }
       ]
     },
@@ -77869,7 +77865,7 @@
             "discount": 0
           },
           "status": -5,
-          "uptime_last_30m": 0
+          "uptime_last_30m": null
         }
       ]
     },
@@ -78506,7 +78502,7 @@
             "discount": 0
           },
           "status": 0,
-          "uptime_last_30m": null
+          "uptime_last_30m": 100
         }
       ]
     },
@@ -78795,7 +78791,7 @@
             "discount": 0
           },
           "status": 0,
-          "uptime_last_30m": null
+          "uptime_last_30m": 100
         }
       ]
     },
@@ -79505,8 +79501,8 @@
             "completion": "0.00000024",
             "discount": 0
           },
-          "status": 0,
-          "uptime_last_30m": null
+          "status": -2,
+          "uptime_last_30m": 80
         },
         {
           "provider_name": "DeepInfra",
@@ -79563,8 +79559,8 @@
             "completion": "0.00000045",
             "discount": 0
           },
-          "status": 0,
-          "uptime_last_30m": 100
+          "status": -5,
+          "uptime_last_30m": 96.66666666666667
         },
         {
           "provider_name": "Google",
@@ -79763,7 +79759,7 @@
             "discount": 0
           },
           "status": 0,
-          "uptime_last_30m": 0
+          "uptime_last_30m": null
         }
       ]
     },
@@ -79927,7 +79923,7 @@
             "discount": 0
           },
           "status": -2,
-          "uptime_last_30m": 84.21052631578947
+          "uptime_last_30m": 100
         },
         {
           "provider_name": "DeepInfra",
@@ -80426,7 +80422,7 @@
             "discount": 0
           },
           "status": 0,
-          "uptime_last_30m": 96.66666666666667
+          "uptime_last_30m": 100
         },
         {
           "provider_name": "Nebius",
@@ -80849,7 +80845,7 @@
             "discount": 0
           },
           "status": 0,
-          "uptime_last_30m": 100
+          "uptime_last_30m": null
         },
         {
           "provider_name": "Mistral",
@@ -80877,7 +80873,7 @@
             "discount": 0
           },
           "status": 0,
-          "uptime_last_30m": null
+          "uptime_last_30m": 100
         },
         {
           "provider_name": "Mistral",
@@ -81039,7 +81035,7 @@
             "discount": 0
           },
           "status": 0,
-          "uptime_last_30m": 100
+          "uptime_last_30m": null
         }
       ]
     },
@@ -81211,8 +81207,8 @@
               }
             ]
           },
-          "status": 0,
-          "uptime_last_30m": 100
+          "status": -2,
+          "uptime_last_30m": 66.66666666666666
         }
       ]
     },
@@ -81288,7 +81284,7 @@
             "discount": 0
           },
           "status": -5,
-          "uptime_last_30m": null
+          "uptime_last_30m": 0
         }
       ]
     },
@@ -81566,7 +81562,7 @@
             "discount": 0
           },
           "status": 0,
-          "uptime_last_30m": null
+          "uptime_last_30m": 100
         }
       ]
     },
@@ -81802,7 +81798,7 @@
             "discount": 0
           },
           "status": 0,
-          "uptime_last_30m": null
+          "uptime_last_30m": 100
         },
         {
           "provider_name": "StreamLake",
@@ -81858,7 +81854,7 @@
             "discount": 0
           },
           "status": 0,
-          "uptime_last_30m": 90
+          "uptime_last_30m": 100
         }
       ]
     },
@@ -82001,7 +81997,7 @@
             "discount": 0
           },
           "status": 0,
-          "uptime_last_30m": null
+          "uptime_last_30m": 100
         }
       ]
     },
@@ -82491,8 +82487,8 @@
             "completion": "0.00000014",
             "discount": 0
           },
-          "status": -2,
-          "uptime_last_30m": 82.35294117647058
+          "status": -5,
+          "uptime_last_30m": 10
         },
         {
           "provider_name": "Amazon Bedrock",
@@ -82588,7 +82584,7 @@
             "discount": 0
           },
           "status": 0,
-          "uptime_last_30m": null
+          "uptime_last_30m": 100
         },
         {
           "provider_name": "Amazon Bedrock",
@@ -82910,7 +82906,7 @@
             "discount": 0
           },
           "status": 0,
-          "uptime_last_30m": 100
+          "uptime_last_30m": null
         }
       ]
     },
@@ -83059,8 +83055,8 @@
             "completion": "0.000005",
             "discount": 0
           },
-          "status": 0,
-          "uptime_last_30m": 100
+          "status": -5,
+          "uptime_last_30m": 54.54545454545454
         }
       ]
     },
@@ -83471,7 +83467,7 @@
             "discount": 0
           },
           "status": 0,
-          "uptime_last_30m": 100
+          "uptime_last_30m": null
         }
       ]
     },
@@ -83834,8 +83830,8 @@
             "completion": "0.00000005",
             "discount": 0
           },
-          "status": -2,
-          "uptime_last_30m": 93.33333333333333
+          "status": 0,
+          "uptime_last_30m": 100
         },
         {
           "provider_name": "DeepInfra",
@@ -84450,8 +84446,8 @@
             "completion": "0.00000003",
             "discount": 0
           },
-          "status": -5,
-          "uptime_last_30m": 64.28571428571429
+          "status": 0,
+          "uptime_last_30m": 100
         },
         {
           "provider_name": "Mistral",
@@ -84629,7 +84625,7 @@
             "discount": 0
           },
           "status": 0,
-          "uptime_last_30m": 100
+          "uptime_last_30m": null
         }
       ]
     },
@@ -84868,7 +84864,7 @@
             "discount": 0
           },
           "status": 0,
-          "uptime_last_30m": null
+          "uptime_last_30m": 100
         }
       ]
     },
@@ -85491,7 +85487,7 @@
             "discount": 0
           },
           "status": -5,
-          "uptime_last_30m": 0
+          "uptime_last_30m": null
         }
       ]
     },
@@ -85887,7 +85883,7 @@
             "discount": 0
           },
           "status": 0,
-          "uptime_last_30m": null
+          "uptime_last_30m": 100
         },
         {
           "provider_name": "OpenAI",
@@ -86070,8 +86066,8 @@
             "completion": "0.00000065",
             "discount": 0
           },
-          "status": 0,
-          "uptime_last_30m": 100
+          "status": -5,
+          "uptime_last_30m": 37.5
         }
       ]
     },
@@ -86177,8 +86173,8 @@
             "completion": "0.0000006",
             "discount": 0
           },
-          "status": 0,
-          "uptime_last_30m": 100
+          "status": -5,
+          "uptime_last_30m": 25
         },
         {
           "provider_name": "DeepInfra",
@@ -86286,7 +86282,7 @@
             "discount": 0
           },
           "status": 0,
-          "uptime_last_30m": 100
+          "uptime_last_30m": null
         },
         {
           "provider_name": "OpenAI",
@@ -88686,6 +88682,15 @@
       },
       {
         "model_id": "z-ai/glm-5.2",
+        "identity": "Phala/phala/fp8/fp8",
+        "provider_name": "Phala",
+        "tag": "phala/fp8",
+        "quantization": "fp8",
+        "withdrawn_at": "2026-10-26",
+        "last_seen": "2026-10-26"
+      },
+      {
+        "model_id": "z-ai/glm-5.2",
         "identity": "Reka/reka/unknown",
         "provider_name": "Reka",
         "tag": "reka",
@@ -88961,24 +88966,17 @@
     "withdrawn_models": [],
     "withdrawn_endpoints": [
       {
-        "model_id": "google/gemma-4-31b-it",
-        "identity": "DekaLLM/dekallm/unknown",
-        "provider_name": "DekaLLM",
-        "tag": "dekallm",
-        "quantization": "unknown",
+        "model_id": "z-ai/glm-5.2",
+        "identity": "Phala/phala/fp8/fp8",
+        "provider_name": "Phala",
+        "tag": "phala/fp8",
+        "quantization": "fp8",
         "withdrawn_at": "2026-10-26",
-        "last_seen": "2026-10-25"
+        "last_seen": "2026-10-26"
       }
     ],
     "restored_models": [],
-    "restored_endpoints": [
-      {
-        "model_id": "deepseek/deepseek-v4-pro-0813",
-        "identity": "BaseTen/baseten/fp4/fp4",
-        "withdrawn_at": "2026-09-26",
-        "restored_at": "2026-10-26"
-      }
-    ],
+    "restored_endpoints": [],
     "limits": {
       "models": 10,
       "endpoints": 73
