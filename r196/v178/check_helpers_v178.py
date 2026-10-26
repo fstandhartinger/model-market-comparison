@@ -75,3 +75,20 @@ with tempfile.TemporaryDirectory(prefix='.row-check-',dir=J) as t:
 checks.append('positive row and negative foreign/revision pin, placeholder, and nine internal-text fixtures passed')
 (J/'receipts/HELPERS.json').write_text(json.dumps({'status':'PASS','checks':checks},indent=1)+'\n')
 print('PASS row pin, placeholder and public-text gates including negative fixtures')
+
+# Exercise the actual candidate without a publication receipt; never write its manifest or a seal.
+manifest=W/V/'jevbench-v1.7.8-publication.json'
+before={str(p):sha(p) for p in [manifest,*[W/f['path'] for f in json.loads(manifest.read_text())['files'].values()]]}
+with tempfile.TemporaryDirectory(prefix='.actual-refusal-',dir=J/'receipts') as t:
+ t=pathlib.Path(t);pending=t/'publication-pending.json';put(pending,json.loads(manifest.read_text())['review']);output=t/'must-not-exist.json'
+ commands=[('flip-actual-pending-refused',['python3','-B',str(J/'flip_verdict_v178.py'),str(pending),'--dry-run'],'not PASS'),('freeze-actual-pending-refused',['python3','-B',str(J/'freeze_v178.py'),'--wt',str(W),'--output',str(output)],'publication review PENDING')]
+ actual={}
+ for name,cmd,pattern in commands:
+  r=subprocess.run(cmd,env={**os.environ,'WT':str(W)},capture_output=True,text=True)
+  assert r.returncode!=0 and pattern in r.stderr and not output.exists(),name
+  (J/'receipts'/f'{name}.log').write_text(r.stderr)
+  actual[name]={'status':'REFUSED_AS_REQUIRED','exit_code':r.returncode,'reason':pattern}
+ assert before=={p:sha(pathlib.Path(p)) for p in before},'real candidate changed'
+ actual.update(status='PASS',candidate_manifest_and_files_unchanged=True,freeze_output_created=False,publication_review='PENDING')
+ (J/'receipts/ACTUAL-REFUSALS.json').write_text(json.dumps(actual,indent=1,sort_keys=True)+'\n')
+print('PASS real flip and freeze refuse publication PENDING without writing candidate files or freeze output')

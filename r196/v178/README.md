@@ -1,6 +1,6 @@
 # v1.7.8 candidate
 
-One new self-hosted row Jeff-1.1-Medium; no method change. Built on v1.7.7, 295 predecessor rows carried unchanged except ranks. Real publication review and fairness remain PENDING.
+One new self-hosted row Jeff-1.1-Medium; no method change. Built on v1.7.7, 295 predecessor rows carried unchanged except ranks. Independent fairness is FAIR and bound by its review SHA. Publication review remains PENDING.
 
 Rebuild from source (Sandy only, aggregate outputs):
 
@@ -21,6 +21,8 @@ After a public entry-text correction, edit `inputs/ENTRY-JEFF11M.json`, run prep
 
 `preview/index.html` is self-contained, with full rankings and a candidate/displaced-row radar. `preview/card.png` is the deterministic card; `preview/browser-check.png` is visual evidence only. Browser check uses the shared Chrome under its lock and closes the temporary tab.
 
-Both `flip_verdict_v178.py --dry-run` and `freeze_v178.py` refuse PENDING fairness. The lead must bind a real FAIR receipt path and SHA, rebuild, obtain independent publication PASS, and review all evidence. Only isolated synthetic fixtures were accepted in this worker's checks. No non-dry flip, seal write, CR, push, PR, merge, deployment or publication occurred.
+Both `flip_verdict_v178.py --dry-run` and `freeze_v178.py` refuse PENDING fairness. The real FAIR receipt is bound. The lead must obtain independent publication PASS and review all evidence. Only isolated synthetic publication approvals were accepted in helper checks; real publication flip/freeze still refuse without writing. No non-dry flip, seal write, CR, push, PR, merge, deployment or publication occurred.
+
+The ten adopted text fixes are checked against exact phrases in the built public row by `check_fairness_text_v178.py`; `final_sanity_v178.py` requires the bound FAIR verdict and unchanged numerical artifacts. The F2 native-usage-pricing ruling is recorded only in the approval/proof.
 
 Initial gate failures and the prior attempt's score-mismatch receipt are retained for audit; final gate outcomes are in `receipts/GATES.json`.

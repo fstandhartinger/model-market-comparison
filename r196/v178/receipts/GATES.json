@@ -1,4 +1,26 @@
 {
+ "actual-publication-refusals": {
+  "candidate_manifest_and_files_unchanged": true,
+  "flip-actual-pending-refused": {
+   "exit_code": 2,
+   "reason": "not PASS",
+   "status": "REFUSED_AS_REQUIRED"
+  },
+  "freeze-actual-pending-refused": {
+   "exit_code": 1,
+   "reason": "publication review PENDING",
+   "status": "REFUSED_AS_REQUIRED"
+  },
+  "freeze_output_created": false,
+  "publication_review": "PENDING",
+  "status": "PASS"
+ },
+ "candidate_fairness": {
+  "engine": "claude-opus-5-5 (account C, effort medium)",
+  "path": "workers/r196-jeff11m-fair/RESULT.json",
+  "sha256": "f87a754ff40f9707fb426df1f7b501a6f18a5b935f42dfe4d11e6bb13f4aa44c",
+  "verdict": "FAIR"
+ },
  "candidate_publication_review": "PENDING",
  "double-rebuild": {
   "hashes": {
@@ -11,15 +33,15 @@
    "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.8-categories.json": "7514697831e6f1683c5b05dafb5b6334b456f6819e43cafa36d69e784f988a94",
    "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.8-history-carry.json": "334e851944e92383ab3071e52b3012040c7023d0fe236395953169ebee8f0459",
    "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.8-history.json": "5cd8c1332226ea9c179883d2285c0d8b8cc593ae38f2645197364a7ddd9c83c1",
-   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.8-proof.json": "6bb0eafd1a0e14ec0fc5fe9fdf5b02da09ca011a95429843c1958178bc16c112",
-   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.8-publication.json": "52cffc0fb02462fb8ccf9e5727e132beb454be69045040056a259ce5edbe1d61",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.8-proof.json": "d63a16e301de6fd26da8cae46c84521cbbafbf412df840c03e1aeb3531e0d510",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.8-publication.json": "fd1c028e171bf88aaa3e792e3b49330087b071155de5e2abfc3877f365a6bdbc",
    "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.8-results.json": "706224f1f0102e543f606f0647056a7042f2bc8889fc0f2110bded071614b460",
    "lib/jevbench-categories.mjs": "511d2d194a9b573f86ccff3c0b6974482ce24bc59f81d82d3b164b9bd01d8b27",
    "lib/jevbench-live-board.mjs": "bea50d3aaa321f7f0a880508d06427597737dcba2c70e9b6aeca5acb9270c390",
    "lib/jevbench-releases.mjs": "fa7ea7ecf3e2f399253fd72edc809def9e071a9da88c8bee2d3e52be2dbc1de9",
-   "lib/jevbench-v178-release.mjs": "079845b13501d73afe618e4b93d36101cf61903f1c21a2c30821ea6b1879f573",
-   "r196/v178/preview/card.png": "ba03f35134aa613cefaabe9a87d0f7d0509e190780b5be4dba22924accc80f85",
-   "r196/v178/preview/index.html": "fac3a49b687334ce07532ad7738c9097617471046df6405d339548d718e0658d",
+   "lib/jevbench-v178-release.mjs": "9a60030d2c77b16776fecb465d3197a552e29d62a1c575fb89606232457a8d7d",
+   "r196/v178/preview/card.png": "128abf28dfa030fbd6eca1e320e65e79340bccf005533b1554a65901f022b38f",
+   "r196/v178/preview/index.html": "6066a957bbf77e08e38eaaea286674f49fd370ed61c02ba3dda6d3176bb0b62b",
    "test/cr-205-jev-page-structure.test.mjs": "d67ff4f9e160fd24f2aaf0e8029c2ed3c464f1c448ee86e22278881bf0b0d7e2",
    "test/cr-303-feed-split.test.mjs": "3eb2a2a92b086055f62237cfa9499e4a7e368083c3d0d3cab502adbd6391d297",
    "test/fixtures/jevbench-v178-ranks.json": "871a825ea6c3754a6d08e90399235f5434ff5a4057078082adc49c7559da8912",
@@ -33,6 +55,160 @@
   "identical": true,
   "passes": 2
  },
+ "fairness-text": {
+  "log_sha256": "2df8c12bd28bab05ce3cec2bcb2bc3f76b76b244e093e14b8bf87734b7fbe618",
+  "status": "PASS"
+ },
+ "fairness-text-resolution": {
+  "independent_fairness": "FAIR",
+  "publication_fairness_binding": {
+   "engine": "claude-opus-5-5 (account C, effort medium)",
+   "path": "workers/r196-jeff11m-fair/RESULT.json",
+   "sha256": "f87a754ff40f9707fb426df1f7b501a6f18a5b935f42dfe4d11e6bb13f4aa44c",
+   "verdict": "FAIR"
+  },
+  "release_owner_rulings": {
+   "jeff11m-v178-prefill-native-pricing": {
+    "finding": "F2",
+    "recorded_in": "DECISIONS.md 2026-10-26 17:0xZ",
+    "ruling": "Native usage pricing as preregistered; uncounted prefills disclosed with common-basis sensitivity, not priced."
+   }
+  },
+  "review_sha256": "f87a754ff40f9707fb426df1f7b501a6f18a5b935f42dfe4d11e6bb13f4aa44c",
+  "status": "PASS",
+  "text_fix_checks": [
+   {
+    "disposition": "Exact replacement or equivalent sanitized prose; process-only claims removed.",
+    "exact_required_phrases": [
+     "unlisted in the frozen pricing module",
+     "explicit USD 0.05/0.15"
+    ],
+    "field": "cost_basis",
+    "field_sha256": "fa291415e9235f17f7e2ef29d7b4832ceaad9856a5f8b9f05e035a7e47c2033a",
+    "fix": 1,
+    "kind": "required",
+    "old_phrase_absent": true,
+    "status": "PASS"
+   },
+   {
+    "disposition": "Exact replacement or equivalent sanitized prose; process-only claims removed.",
+    "exact_required_phrases": [
+     "no base_model key or exact-base floor applies",
+     "full catalog pair"
+    ],
+    "field": "cost_basis",
+    "field_sha256": "fa291415e9235f17f7e2ef29d7b4832ceaad9856a5f8b9f05e035a7e47c2033a",
+    "fix": 2,
+    "kind": "required",
+    "old_phrase_absent": true,
+    "status": "PASS"
+   },
+   {
+    "disposition": "Exact replacement or equivalent sanitized prose; process-only claims removed.",
+    "exact_required_phrases": [
+     "403,115 tokens on the common 1,485-item basis",
+     "USD 0.048268 per 1,000 decisions",
+     "0.747 times the cap",
+     "all-1,500 USD 0.051819, 0.802 times the cap",
+     "53.79 to 49.49, below the 50-point composite gate",
+     "not included in the published price or scores"
+    ],
+    "field": "cost_basis",
+    "field_sha256": "fa291415e9235f17f7e2ef29d7b4832ceaad9856a5f8b9f05e035a7e47c2033a",
+    "fix": 3,
+    "kind": "required",
+    "old_phrase_absent": true,
+    "status": "PASS"
+   },
+   {
+    "disposition": "Exact replacement or equivalent sanitized prose; process-only claims removed.",
+    "exact_required_phrases": [
+     "The scored process was fresh; no earlier probes affected its process-wide running limits."
+    ],
+    "field": "code_revision",
+    "field_sha256": "3b5d85ab47d97944b86ef454a73c4d8247b972bcbe1a18f64095ea6c110a921b",
+    "fix": 4,
+    "kind": "required",
+    "old_phrase_absent": true,
+    "status": "PASS"
+   },
+   {
+    "disposition": "Exact replacement or equivalent sanitized prose; process-only claims removed.",
+    "exact_required_phrases": [
+     "The shipped configuration uses a one-pass decision head",
+     "No alternative configuration was measured."
+    ],
+    "field": "disclosure",
+    "field_sha256": "41533b290626f5bbc39586bf969471e662f869e99fc615cbfc16ec39452a0126",
+    "fix": 5,
+    "kind": "required",
+    "old_phrase_absent": true,
+    "status": "PASS"
+   },
+   {
+    "disposition": "Exact replacement or equivalent sanitized prose; process-only claims removed.",
+    "exact_required_phrases": [
+     "All 1,500 requests returned HTTP 200 with answers, no refusals or errors"
+    ],
+    "field": "disclosure",
+    "field_sha256": "41533b290626f5bbc39586bf969471e662f869e99fc615cbfc16ec39452a0126",
+    "fix": 6,
+    "kind": "required",
+    "old_phrase_absent": true,
+    "status": "PASS"
+   },
+   {
+    "disposition": "Exact replacement or equivalent sanitized prose; process-only claims removed.",
+    "exact_required_phrases": [
+     "Weights carry non-commercial CC BY-NC-4.0 terms; listed for evaluation only."
+    ],
+    "field": "disclosure",
+    "field_sha256": "41533b290626f5bbc39586bf969471e662f869e99fc615cbfc16ec39452a0126",
+    "fix": 7,
+    "kind": "required",
+    "old_phrase_absent": true,
+    "status": "PASS"
+   },
+   {
+    "disposition": "Exact replacement or equivalent sanitized prose; process-only claims removed.",
+    "exact_required_phrases": [
+     "Weights CC BY-NC-4.0",
+     "non-commercial; listed for evaluation only"
+    ],
+    "field": "licence",
+    "field_sha256": "896ccf28a43e810c7197285414253e32d01abb1602355ff8e47277abb080d123",
+    "fix": 8,
+    "kind": "required",
+    "old_phrase_absent": true,
+    "status": "PASS"
+   },
+   {
+    "disposition": "Exact replacement or equivalent sanitized prose; process-only claims removed.",
+    "exact_required_phrases": [
+     "Every shipped temperature is a point of one geometric grid (steps of 1.05), and the reasoning thresholds are entries of the validation-quantile table published with the model for the chosen shares, so the many-digit values are grid and table entries, not item-level fits."
+    ],
+    "field": "disclosure",
+    "field_sha256": "41533b290626f5bbc39586bf969471e662f869e99fc615cbfc16ec39452a0126",
+    "fix": 9,
+    "kind": "recommended",
+    "old_phrase_absent": true,
+    "status": "PASS"
+   },
+   {
+    "disposition": "Exact replacement or equivalent sanitized prose; process-only claims removed.",
+    "exact_required_phrases": [
+     "Scoring the 15 retrieval answers as misses instead would lower Capability by 0.41 points, from 81.89 to 81.48."
+    ],
+    "field": "disclosure",
+    "field_sha256": "41533b290626f5bbc39586bf969471e662f869e99fc615cbfc16ec39452a0126",
+    "fix": 10,
+    "kind": "recommended",
+    "old_phrase_absent": true,
+    "status": "PASS"
+   }
+  ],
+  "text_fixes_sha256": "1f612b7908f54862faab56ce2167edb2cacf33938e19555d974b5841b617ebed"
+ },
  "final-prose-delta": {
   "changed_public_fields": [
    "systems/jeff_1_1_medium/disclosure"
@@ -44,9 +220,25 @@
   "reason": "Fresh release-owner ruling adopts all ten text fixes; added settings-grid/table provenance sentence.",
   "status": "PASS"
  },
+ "final-sanity": {
+  "approval_proof_equal": true,
+  "fairness": {
+   "engine": "claude-opus-5-5 (account C, effort medium)",
+   "path": "workers/r196-jeff11m-fair/RESULT.json",
+   "sha256": "f87a754ff40f9707fb426df1f7b501a6f18a5b935f42dfe4d11e6bb13f4aa44c",
+   "verdict": "FAIR"
+  },
+  "log_sha256": "292e6bf1d2a574ecfa3b3bf8510e2c9eb24e46b2f7e612c5981d92fc7a91a5da",
+  "manifest_hashes_verified": true,
+  "numeric_and_public_data_bytes_equal_to_build_commit": true,
+  "preview_fairness": "FAIR",
+  "publication": "PENDING",
+  "status": "PASS",
+  "text_fix_checks": 10
+ },
  "flip-fair-synthetic-dry-run": {
   "fixture_only": true,
-  "log_sha256": "e47c3a69c42b615d62df5e4eec3d73ac05ce9c2367a671f04fe69fe30ca0f193",
+  "log_sha256": "d9820e324029da21a4c1b6b2a2ed90228f8641bc08710002b0a767229e4acf47",
   "status": "PASS"
  },
  "flip-pending-refused": {
@@ -55,7 +247,7 @@
  },
  "freeze-fair-synthetic-dry-run": {
   "fixture_only": true,
-  "log_sha256": "abf46b38ab2a0bec54d83a2f46cf63eec230491e9e41f19a502e22d9e4bec131",
+  "log_sha256": "c0896af186c7d418eba00c150cabdab4ece50753bbbba12ec464ca26b79d3f24",
   "status": "PASS"
  },
  "freeze-pending-refused": {
@@ -69,7 +261,7 @@
  "fulltest": {
   "cancelled": 0,
   "fail": 0,
-  "log_sha256": "15c5bbcba7947913af9439274099a3e485706769d5a6815d46dd70fb1301bd5d",
+  "log_sha256": "83d29b737991bc89b009b9fc8237a7f1969bddbd302aadfcac45dfe959f0ad0a",
   "pass": 3811,
   "skipped": 8,
   "status": "PASS",
@@ -88,7 +280,7 @@
   "status": "PASS"
  },
  "helpers": {
-  "log_sha256": "7b8e7d7f7f593548036fc728c50c972fd179aa9c70e7731579ff71ae646d3eee",
+  "log_sha256": "ddd050d7ce8aa1bac4bc3c2f4e5031dba613975e2b1a4bdbfc9285b0e4908df4",
   "status": "PASS"
  },
  "prepare": {
@@ -101,10 +293,11 @@
  },
  "preview-browser": {
   "all_lists": 540,
+  "current_attempt_log_sha256": "3d839915971874425f3a8b14bf0b5fc6f488131c7d75c8cea1a8e11bbb66c994",
   "custom": "Jeff-1.1-Medium (jgeuter) vs Sieve-31B-v2 (leaves top five)",
   "initial": "share / open / official / capability \u2014 top five changed. 167 ranked rows.",
   "intelligence": "Jeff-1.1-Medium (jgeuter) vs DOPEST 1.0 31B (leaves top five)",
-  "limitation": "Browser functionality passed before final sensitivity text and four additional custom-preset data rows; interaction logic unchanged; final syntax PASS.",
+  "limitation": "Inherited browser functionality receipt predates final sensitivity text, four additional custom-preset rows and FAIR header; interaction logic unchanged. Current recheck could not acquire shared Chrome lock. Rebuilt FAIR header checked by final-sanity; card visually inspected.",
   "official_rows": 167,
   "page_errors": [],
   "status": "PASS_WITH_LIMITATION",
@@ -112,7 +305,7 @@
  },
  "production-build": {
   "exit_code": 0,
-  "log_sha256": "4b4dfabf31c9afe2730694f8f112040896f8ceb03b4e11b26feda799a54ae2dc",
+  "log_sha256": "f25c2447dadd9b2c48add0191afbb692f68ad513d209693338f1efac6a60ddad",
   "status": "PASS"
  },
  "public-fields": {
@@ -124,7 +317,7 @@
  "release-tests": {
   "cancelled": 0,
   "fail": 0,
-  "log_sha256": "ce6ae57a5162fc35094c3c8c2659193a85fafe96bd0740fca5b8e0b7d252cddd",
+  "log_sha256": "4f37f2033d9c6f153736508b17bdf256c406fcda3c49d872bb330be2f67de120",
   "pass": 65,
   "skipped": 0,
   "status": "PASS",
@@ -140,7 +333,7 @@
  },
  "synthetic-tests": {
   "fail": 0,
-  "log_sha256": "0dcc6c2ad7c5924ba36a2ea9be37c85e700b4045a6cd9619277dbbc4a45cb240",
+  "log_sha256": "95cde7139e0ce2d10cc20acf9489f17518addaf161f6906eedd7042678afc83b",
   "pass": 57,
   "status": "PASS",
   "tests": 58
