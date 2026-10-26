@@ -21,6 +21,8 @@ class Health(unittest.TestCase):
    return copy.deepcopy(self.state)
   self.ns=dict(Any=object,Effects=object,datetime=dt.datetime,timedelta=dt.timedelta,utcnow=lambda:NOW,iso=lambda d:d.isoformat(),PICKUP_TIMERS=[],WORKER_UNIT='worker',MAIL_WATCH_UNIT='mail',systemd_last_success=lambda *a:NOW,managed_predicate=lambda *a:'TRUE',JOB_ROOT=Path('/fake'),TABLE='fake',row_json_sql=lambda *a:'fake',sql_rows=lambda *a:[self.row],request_id=lambda r:r,order_ref=lambda r:r[:8],parse_ts=lambda v:dt.datetime.fromisoformat(v) if v else None,active_hold=lambda r:bool(r.get('customer_hold_started_at')),load_state=load,PickupError=ValueError,deadline_for=lambda r:dt.datetime.fromisoformat(r['paid_at'])+dt.timedelta(hours=48),STATE_ROOT=Path('/nonexistent-fixture'),json=json,ALERT_REPEAT=dt.timedelta(hours=24),owner_job_live=lambda owner,rid,now:owner in self.live,OWNED_HOLD_DEADLINE_MARGIN=dt.timedelta(hours=12))
   self.live=set()
+  # INCIDENTS #25 native owner: a plain owner counts as live exactly like owner_job_live; no native owner is starting.
+  self.ns.update(hold_owner_live=self.ns['owner_job_live'],native_owner_starting=lambda *a:False,native_owner=SimpleNamespace(owner_name=lambda rid:'fastlane-native-'+rid[:8]))
   tree=ast.parse((ROOT/'ops/priority-evaluation/autopickup.py').read_text());nodes=[n for n in tree.body if isinstance(n,ast.FunctionDef) and n.name in ['health','step','step_done']]
   exec(compile(ast.Module(body=nodes,type_ignores=[]),'actual-health','exec'),self.ns)
   self.effects=SimpleNamespace(dry_run=True,notify=lambda text:True)

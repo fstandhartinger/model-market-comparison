@@ -32,6 +32,7 @@ import host_github
 import host_evidence
 import public_artifacts
 import measurement_dispatch
+import native_owner
 import static_agent
 import source_metadata
 import native_source_selection
@@ -177,12 +178,30 @@ def owner_job_live(owner: object, rid: str, now: datetime) -> bool:
         return False
     if now - mtime <= OWNED_HOLD_STATE_FRESH:
         return True
-    try:
-        result = subprocess.run(["systemctl", "--user", "is-active", f"{owner}.service"], text=True,
-                                capture_output=True, timeout=15, check=False)
-    except (OSError, subprocess.SubprocessError):
+    # Hand-started owners run as <owner>.service; ~/bin/job-start (automatic native owners) uses job-<owner>.service.
+    for unit in (f"{owner}.service", f"job-{owner}.service"):
+        try:
+            result = subprocess.run(["systemctl", "--user", "is-active", unit], text=True,
+                                    capture_output=True, timeout=15, check=False)
+        except (OSError, subprocess.SubprocessError):
+            continue
+        if result.stdout.strip() == "active":
+            return True
+    return False
+
+
+def hold_owner_live(owner: object, rid: str, now: datetime) -> bool:
+    """owner_job_live, plus: an automatic native owner counts only after job-start really launched it."""
+    if owner == native_owner.owner_name(rid) and not native_owner.launched(HOME / "jobs" / owner):
         return False
-    return result.stdout.strip() == "active"
+    return owner_job_live(owner, rid, now)
+
+
+def native_owner_starting(state: dict[str, Any], now: datetime) -> bool:
+    """The cycle asked for a native owner a few minutes ago; its folder may not exist yet."""
+    record = state.get("native_owner")
+    requested = parse_ts(record.get("requested_at")) if isinstance(record, dict) and record.get("start_ok") else None
+    return requested is not None and timedelta(0) <= now - requested < timedelta(minutes=native_owner.START_GRACE_MINUTES)
 
 # Operational holds that clear themselves: transient infrastructure causes retry the
 # evaluation with a bounded backoff; anything else (or a retry budget used up) escalates
@@ -1337,6 +1356,7 @@ If the official run path is not clear, write a short blocker to `OUTPUT.md`; do 
 """
     # The open-weights pod-recipe contract is appended verbatim (brief requirement).
     text += "\n" + (Path(__file__).resolve().parent / "PREP-OPEN-WEIGHTS-PROMPT.txt").read_text(encoding="utf-8")
+    text += native_owner.generator_hint(row)
     atomic_write(prompt, text)
     return prompt
 
@@ -1667,6 +1687,9 @@ def set_operational_hold(state: dict[str, Any], reason: str, *, transient: bool,
 
 # Presentation only: reason keys remain unchanged in state, retries and board handoffs.
 HOLD_REASON_LABELS = {
+    "unsupported_measurement_backend": (
+        "no ready-made runtime exists for this model and it needs a custom one",
+        "für dieses Modell gibt es keine fertige Laufzeitumgebung, sie muss eigens gebaut werden"),
     "official_method_retired_requires_admission": (
         "the old test set is retired and the replacement test set has not been approved for this model",
         "das alte Testset ist außer Betrieb und das neue Testset ist für dieses Modell noch nicht freigegeben"),
@@ -1711,6 +1734,7 @@ def card_identity(row: dict[str, Any]) -> tuple[str, str, str]:
 
 
 SHORT_HOLD_LABELS = {
+    "unsupported_measurement_backend": "the model needs a custom runtime",
     "official_method_retired_requires_admission": "the replacement test set needs approval",
     "official_measurement_code_pin_changed": "changed test code needs review",
     "official_measurement_pin_changed": "changed test inputs need review",
@@ -1784,7 +1808,18 @@ def operational_escalate(row: dict[str, Any], state: dict[str, Any], effects: Ef
                              "fastlane-acad951a-recovery-20261008", thread=BOARD_HANDOFF_THREAD):
                 finish_ok(state, "source_access_review_handoff", now)
         return
-    if not step_done(state, "operational_handoff"):
+    covered = ensure_native_owner(row, state, effects, now, reason)
+    record = state.get("native_owner")
+    if isinstance(record, dict) and record.get("job") == native_owner.owner_name(rid) and record.get("start_ok") \
+            and native_owner_due(rid, reason):
+        if not step_done(state, "native_owner_handoff"):
+            if effects.board(f"Fast-lane order {order_ref(rid)}: the runner generator found no supported runtime "
+                             f"({reason}). The pickup started native owner job ~/jobs/{record['job']} automatically "
+                             f"(INCIDENTS #25). Payment deadline {deadline_for(row).isoformat()} continues; customer "
+                             f"hold is not set. Request evidence: {job_directory(rid, JOB_ROOT)}/STATE.md.",
+                             record["job"], thread=BOARD_HANDOFF_THREAD):
+                finish_ok(state, "native_owner_handoff", now)
+    elif not step_done(state, "operational_handoff"):
         if effects.board(f"Fast-lane order {order_ref(rid)} requires an official measurement owner: "
                          f"{reason}. Payment deadline "
                          f"{deadline_for(row).isoformat()} continues; customer hold is not set. "
@@ -1792,9 +1827,76 @@ def operational_escalate(row: dict[str, Any], state: dict[str, Any], effects: Ef
                          "Use the pinned runtime/review contract; never reuse another order's run.",
                          owner_for(rid), thread=BOARD_HANDOFF_THREAD):
             finish_ok(state, "operational_handoff", now)
+    if covered:
+        return  # a live native owner with more than 12 h left owns the hold; no urgent card
     hold_key = re.sub(r"[^A-Za-z0-9_]+", "_", reason)[:48]
     alert(state, f"operational_hold_{hold_key}", effects, urgent=True,
           text=rescue_card(row, reason, exhausted=exhausted))
+
+
+def native_owner_due(rid: str, reason: str) -> bool:
+    if reason in native_owner.REASONS:
+        return True
+    if reason != "unsupported_order_runtime":
+        return False
+    try:
+        runtime = load_json_file(job_directory(rid, JOB_ROOT) / "trusted-runner/RUNTIME.json", 100_000)
+    except PickupError:
+        return False
+    return native_owner.runtime_declares_unsupported(runtime)
+
+
+def ensure_native_owner(row: dict[str, Any], state: dict[str, Any], effects: Effects, now: datetime,
+                        reason: str) -> bool:
+    """INCIDENTS #25: a hold that means "no automatic runtime" gets a native owner job at once.
+
+    Returns True while that owner covers the hold quietly (just requested, or live with more than 12 h left).
+    A dead owner gets one more start; after that, or near the deadline, the caller raises the urgent card."""
+    rid = request_id(row.get("id"))
+    if not native_owner_due(rid, reason):
+        return False
+    name = native_owner.owner_name(rid)
+    quiet = deadline_for(row) - now > OWNED_HOLD_DEADLINE_MARGIN
+    operational = state.get("operational_hold")
+    existing = operational.get("owner") if isinstance(operational, dict) else None
+    if existing not in (None, name) and owner_job_live(existing, rid, now):
+        return quiet  # an owner job started by hand already covers this order; never replace it
+    if isinstance(operational, dict) and existing != name:
+        operational["owner"] = name
+        save_state(state)
+    if hold_owner_live(name, rid, now) or native_owner_starting(state, now):
+        return quiet
+    record = state.get("native_owner") if isinstance(state.get("native_owner"), dict) else {}
+    starts = int(record.get("starts") or 0)
+    if starts >= native_owner.MAX_STARTS:
+        return False
+    record = {"job": name, "reason": reason, "deadline": iso(deadline_for(row)),
+              "requested_at": iso(now), "starts": starts + 1, "start_ok": False}
+    state["native_owner"] = record
+    save_state(state)
+    record["start_ok"] = effects.start_unit(native_owner.UNIT.format(rid))
+    save_state(state)
+    return quiet and record["start_ok"]
+
+
+def start_native_owner_job(rid: str) -> int:
+    """Body of jevbench-native-owner@<id>.service: write the owner folder, then launch it with job-start."""
+    rid = request_id(rid)
+    state = load_state(rid)
+    record = state.get("native_owner")
+    if not isinstance(record, dict) or record.get("job") != native_owner.owner_name(rid):
+        raise PickupError("no native owner was requested for this order")
+    job_dir = job_directory(rid, JOB_ROOT)
+    order = load_json_file(job_dir / "request.json", 1_000_000)
+    if not isinstance(order, dict):
+        raise PickupError("order request file is invalid")
+    job = native_owner.write_owner_job(rid, order, reason=str(record.get("reason") or "unknown"),
+                                       deadline=str(record.get("deadline") or "unknown"), order_dir=job_dir,
+                                       jobs_home=HOME / "jobs", now=utcnow())
+    started = native_owner.launch(job, HOME / "bin/job-start")
+    native_owner.receipt(job, {"order": rid, "requested_at": record.get("requested_at"),
+                               "launched_at": iso(utcnow()), "launched": started})
+    return 0 if started else 1
 
 
 def manage_evaluation(row: dict[str, Any], state: dict[str, Any], effects: Effects, now: datetime) -> None:
@@ -4113,7 +4215,9 @@ def health(effects: Effects) -> dict[str, Any]:
         # earlier 24 h dedupe of the eval: key cannot swallow the deadline warning).
         owned_run = (not active_hold(row) and not planned_review and isinstance(operational, dict)
                      and operational.get("transient") is False and operational.get("reason")
-                     and owner_job_live(operational.get("owner"), rid, now))
+                     and (hold_owner_live(operational.get("owner"), rid, now)
+                          or (operational.get("owner") == native_owner.owner_name(rid)
+                              and native_owner_starting(state, now))))
         owned_quiet = owned_run and deadline_for(row) - now > OWNED_HOLD_DEADLINE_MARGIN
         if active_hold(row) or planned_review or owned_quiet:
             held_orders.append({"order": ref, "kind": "customer" if active_hold(row) else
@@ -4703,6 +4807,20 @@ def evaluate(rid: str) -> int:
                     update_row(rid, "evaluation_status='failed'", "evaluation_status='running'")
                     return prep_code or 1
                 freeze_runner_bundle(job_dir)
+                try:
+                    generated = load_json_file(job_dir / "trusted-runner/RUNTIME.json", 100_000)
+                except PickupError:
+                    generated = None
+                if native_owner.runtime_declares_unsupported(generated):
+                    # INCIDENTS #25: retrying the generator or reviewing an unsupported runtime only burns the
+                    # budget; the cycle hands the order to an automatic native owner job instead.
+                    state = load_state(rid)
+                    set_operational_hold(state, "unsupported_measurement_backend", transient=False,
+                                         detail="runner generator found no supported runtime")
+                    append_state(job_dir, f"\n\nThe runner generator found no supported runtime at {iso(utcnow())}; "
+                                          "the pickup starts a native owner job (no further preparation or review).\n")
+                    update_row(rid, "evaluation_status='pending'", "evaluation_status='running'")
+                    return 0
                 atomic_write(job_dir / "STATE.md", (job_dir / "STATE.md").read_text(encoding="utf-8")
                              + f"\n\nRequest-specific measurement adapter written without execution at {iso(utcnow())}; "
                                "it is frozen and awaits independent source review.\n")
@@ -5605,7 +5723,7 @@ def main(argv: list[str] | None = None) -> int:
     cycle_parser.add_argument("--synthetic")
     cycle_parser.add_argument("--job-root", type=Path)
     sub.add_parser("health")
-    for name in ("evaluate", "xpost", "adopt", "resume", "gate", "status", "recover-source-access"):
+    for name in ("evaluate", "xpost", "adopt", "resume", "gate", "status", "recover-source-access", "native-owner"):
         sub.add_parser(name).add_argument("request_id")
     resubmit_parser = sub.add_parser("resubmit")
     resubmit_parser.add_argument("request_id")
@@ -5642,6 +5760,8 @@ def main(argv: list[str] | None = None) -> int:
             return evaluate(args.request_id)
         if args.command == "xpost":
             return xpost(args.request_id)
+        if args.command == "native-owner":
+            return start_native_owner_job(args.request_id)
         if args.command == "gate":
             ok, reason = gate(args.request_id)
             print(reason)
