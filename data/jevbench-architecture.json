@@ -7041,6 +7041,38 @@
           }
         ],
         "note": "31B denotes the declared base class. BF16 base plus adapter containing fine-tuned decoder layers; no merged checkpoint. Own forward-only shim around author engine; datasets unidentified and contamination unchecked."
+      },
+      "d1a-gemma4-e2b": {
+        "arch": "open-llm-decoder",
+        "badges": {
+          "derivation": "fine-tune",
+          "params": null,
+          "quant": "BF16"
+        },
+        "evidence": [
+          {
+            "kind": "model-card",
+            "url": "https://huggingface.co/JohnP1/d1a-e2b/blob/42f61942442f06b9f4c572c071b63684f3ac0dea/README.md",
+            "fact": "The pinned card identifies a Gemma 4 E2B backbone with a LoRA adapter and pointer head. Native probability outputs use the learned temperature."
+          }
+        ],
+        "note": "Unmerged adapter and fp32 pointer head over a BF16 backbone, without quantisation. E2B/E4B are model-family labels; exact total parameter counts are not asserted."
+      },
+      "d1a-gemma4-e4b": {
+        "arch": "open-llm-decoder",
+        "badges": {
+          "derivation": "fine-tune",
+          "params": null,
+          "quant": "BF16"
+        },
+        "evidence": [
+          {
+            "kind": "model-card",
+            "url": "https://huggingface.co/JohnP1/d1a-e4b/blob/93ee47b2c5ffa96fe7213da6a23c8f53f25a9778/README.md",
+            "fact": "The pinned card identifies a Gemma 4 E4B backbone with a LoRA adapter and pointer head. Native probability outputs use the learned temperature."
+          }
+        ],
+        "note": "Unmerged adapter and fp32 pointer head over a BF16 backbone, without quantisation. E2B/E4B are model-family labels; exact total parameter counts are not asserted."
       }
     },
     "imagejevbench": {
