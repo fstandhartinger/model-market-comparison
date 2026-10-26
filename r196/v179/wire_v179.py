@@ -10,6 +10,8 @@ p=W/'app/api/jevbench/v1.7.9/route.ts';p.parent.mkdir(parents=True,exist_ok=True
 p=W/'app/jev-models/v1.7.9/page.tsx';p.parent.mkdir(parents=True,exist_ok=True)
 s=(W/'app/jev-models/v1.7.8/page.tsx').read_text().replace('v1.7.8','__NEW__').replace('v1.7.7','v1.7.8').replace('__NEW__','v1.7.9').replace('V178','V179').replace('v178','v179').replace('jev178','jev179')
 s=s.replace('Jeff-1.1-Medium','GLiClass v4 9B').replace('295 carried','296 carried')
+s=s.replace('JevBench v1.7.9 · One same-draw self-hosted addition', 'JevBench v1.7.9: one same-draw self-hosted addition and one price correction')
+s=s.replace('>One same-draw self-hosted addition</h1>', '>JevBench v1.7.9: one same-draw self-hosted addition and one price correction</h1>')
 s=s.replace('Same method; 296 carried rows retain their scores and confidence intervals.','Same method; one new row, one price correction and vendor link fixes.')
 a=s.index(' <p className="mt-3 max-w-3xl">');b=s.index('</p>',a)+4
 s=s[:a]+' <p className="mt-3 max-w-3xl">One new self-hosted row GLiClass v4 9B; Myles-G 12B now priced at its public list price; Super Decider links point to the vendor page; no method change. GLiClass answered 1,485 of 1,500 requests; 15 HTTP 422 length refusals count as misses. Its cost is an ESTIMATE from Qwen/Qwen3.5-9B with zero generated output. Myles-G 12B uses GBP 0.0015 per million input tokens, output free; prices exclude VAT. Price corrected in v1.7.9; earlier releases showed a same-base ESTIMATE of USD 0.0264 per 1,000. All other scores and confidence intervals are unchanged.</p>'+s[b:]
