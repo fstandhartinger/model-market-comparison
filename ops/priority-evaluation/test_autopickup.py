@@ -1421,6 +1421,35 @@ class EvaluateTests(DatabaseTestCase):
         self.assertEqual(row(rid)["status"], "completed")
         self.assertEqual(sum("your result" in mail[1] for mail in fx.mails), 1)
 
+    def test_unsupported_generated_runtime_hands_the_order_to_a_native_owner(self):
+        # INCIDENTS #25: no review or second preparation is spent; the cycle starts the native owner unit.
+        rid = insert_order(visibility="private")
+        fx = FakeEffects()
+        ap.cycle(fx)
+        stages = []
+        def agent(folder, env, timeout, **kwargs):
+            stages.append(folder.name)
+            out = folder / "trusted-runner"
+            out.mkdir()
+            (out / "RUNTIME.json").write_text(json.dumps({"jevbench": {"backend": "unsupported"}}))
+            (out / "MEASUREMENT-META.json").write_text("{}")
+            (out / "PRICING-REVIEW.md").write_text("No pinned image carries the documented stack.\n")
+            return 0
+        with mock.patch.object(ap, "fetch_source"), mock.patch.object(ap, "run_agent", side_effect=agent):
+            ap.sql(f"UPDATE {ap.TABLE} SET evaluation_status='starting' WHERE id='{rid}'")
+            self.assertEqual(ap.evaluate(rid), 0)
+        self.assertEqual(stages, ["runner-prepare"])
+        self.assertEqual(row(rid)["evaluation_status"], "pending")
+        hold = ap.load_state(rid)["operational_hold"]
+        self.assertEqual((hold["reason"], hold["transient"]), ("unsupported_measurement_backend", False))
+        notified = len(fx.notes)
+        make_due(rid)
+        ap.cycle(fx)
+        self.assertIn(f"jevbench-native-owner@{rid}.service", fx.started)
+        self.assertNotIn(ap.EVAL_UNIT.format(rid), fx.started[-1:])
+        self.assertEqual(ap.load_state(rid)["operational_hold"]["owner"], "fastlane-native-" + rid[:8])
+        self.assertFalse(any("DRINGEND" in text for _, _, text in fx.notes[notified:]))
+
     def test_generated_adapter_fail_retries_without_refund_even_with_customer_source(self):
         rid = insert_order()
         ap.cycle(FakeEffects())
