@@ -1,0 +1,23 @@
+{
+ "jeff_1_1_medium": {
+  "entry_path": "/home/flori/jobs/jevbench-auto-intake/r24-score/ENTRIES-R16A-REVIEWED.json",
+  "entry_sha256": "c7e71affeb9c44f021e516e5f8281c2a2a1e3f0a0bf52d780e13b8f239c341f6",
+  "frozen": {
+   "path": "/home/flori/jobs/jevbench-auto-intake/r24-score/field-r16a/out-frozen/jevbench-v1.6.0-results.json",
+   "sha256": "275ae03313b393a8178589999554cc67aa6d8ec80f417c388df4d312910aa5b8"
+  },
+  "raw_sha256": "9fdf4800785147b1c7b308cecbc07362e7726fb7f2481910cbdaa76b75c6bb89",
+  "raw_verified_in_place": true,
+  "registry_sha256": "8ad4253a89c6c6c77624c2d4f746a3244a77ff8d34abd545364697994df500d2",
+  "resolved_cost_basis": "ESTIMATE (*est.), explicit labelled pair with NO base key (the same treatment as the published google/gemma-4-12B-it rows): the frozen pricing_v15 module (sha256 aa2afcd5a58d0c4cc0e3d6867d590c70b6ac58e971410c27faf9628f97bcf8b7, re-freeze of 22 Oct 2026) has no listing for the card's base string google/gemma-4-12B-it (it is in the module's UNLISTED_BASE_MODELS set, so there is no exact rate and no floor; reference() returns nothing for it, checked on this module). ESTIMATE: google/gemma-4-12B-it is UNLISTED; settled Gemma-4-12B estimate via google/gemma-3-12b-it 0.05/0.15, google/gemma-3-12b-it USD 0.05/M input, USD 0.15/M output, the nearest publicly hosted 12B Gemma sibling, at its FULL catalog pair, the same explicit reference that the other published google/gemma-4-12B-it rows already carry. It is applied explicitly as a labelled estimate; no base key is registered. Estimated, not charged, not a quote from the author or any host. Tokens as reported natively by the usage block of the author's server: 910,751 input and 72,216 output tokens across all 1,500 answered items. The price is computed from this NATIVE usage, as the method does. The native input unit counts the one-pass decision prompt of each question only (after the author's own long-input retrieval, at most 8,192 tokens) and does not count the two further prefills that a reasoned decision runs (see disclosure: UNCOUNTED PREFILLS); native input usage equals our first-party offline count exactly (0 mismatches over 1,500 items). Output tokens are NATIVE and NONZERO (generated reasoning tokens of the 327 admitted reasonings; zero for every one-pass answer) and are priced as reported at the full output rate; the zero-output convention is NOT applied. Arithmetic over all 1,500 rows on native usage: USD 0.037580 per 1,000 decisions = 0.58x the unchanged USD 0.06459465517241379 cap. For information only, if our first-party estimate of the uncounted prefills (427,166 input tokens, an estimate, not measured by the server) were charged as input, the figure would be 0.80x the cap; this is NOT in the price. The common 1,485-item basis figure is computed by the scorer. COST FIGURES: USD 0.034695 per 1,000 decisions on the common 1,485-item cost basis that the score uses (the same items for every token-priced row: all items except the 15 very long ones that the Jev reference refused); separately, USD 0.037580 per 1,000 decisions over all 1,500 rows of the draw. The common-basis figure is 0.54x the official cost cap USD 0.064595 (all-rows figure 0.58x).",
+  "rows_sha256": "d33da379061acf76b13e5db79d4a119856291b66766f920a1beff1284b7b828d",
+  "v17-off": {
+   "path": "/home/flori/jobs/jevbench-auto-intake/r24-score/field-r16a/out-v17-off/jevbench-v1.6.0-results.json",
+   "sha256": "9723568f2fed8683189e083c18e5292bc2f03883e7966d881d343d13d21a90f0"
+  },
+  "v17-share": {
+   "path": "/home/flori/jobs/jevbench-auto-intake/r24-score/field-r16a/out-v17-share/jevbench-v1.6.0-results.json",
+   "sha256": "ae6176c6e26c68f2e3634e2c59c019ff8be04dfdcfb3f2ac73905338ad25f747"
+  }
+ }
+}

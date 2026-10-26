@@ -7073,6 +7073,27 @@
           }
         ],
         "note": "Unmerged adapter and fp32 pointer head over a BF16 backbone, without quantisation. E2B/E4B are model-family labels; exact total parameter counts are not asserted."
+      },
+      "jeff_1_1_medium": {
+        "arch": "open-llm-decoder",
+        "badges": {
+          "derivation": "fine-tune",
+          "params": "12B",
+          "quant": "BF16"
+        },
+        "evidence": [
+          {
+            "kind": "config.json",
+            "url": "https://huggingface.co/jgeuter/Jeff-1.1-Medium/blob/540c40924dd67c715d3367309ba6744bac754b00/config.json",
+            "fact": "Pinned config identifies Gemma4UnifiedForCausalLM with bfloat16 weights."
+          },
+          {
+            "kind": "model-card",
+            "url": "https://huggingface.co/jgeuter/Jeff-1.1-Medium/blob/540c40924dd67c715d3367309ba6744bac754b00/README.md",
+            "fact": "Pinned card describes Gemma 4 12B instruction-tuned weights with a merged LoRA adapter and decision head; full-attention layers use bidirectional attention. Weights CC BY-NC-4.0."
+          }
+        ],
+        "note": "Gemma decoder backbone adapted with bidirectional attention for decisions and optional generated reasoning; evaluated with reasoning enabled. Non-commercial weights; evaluation listing only."
       }
     },
     "imagejevbench": {

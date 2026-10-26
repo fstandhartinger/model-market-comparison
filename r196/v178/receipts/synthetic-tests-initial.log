@@ -1,0 +1,116 @@
+/home/flori/wt/r196-v178-build/r196/v178/.pass
+TAP version 13
+# Subtest: v1.7.8 preserves all 295 predecessor rows, cells and frozen method
+ok 1 - v1.7.8 preserves all 295 predecessor rows, cells and frozen method
+  ---
+  duration_ms: 177.879424
+  ...
+# Subtest: v1.7.8 PENDING is hidden; synthetic PASS is readable
+ok 2 - v1.7.8 PENDING is hidden; synthetic PASS is readable
+  ---
+  duration_ms: 3020.869936
+  ...
+# Subtest: v1.7.8 rejects changed carried scores, confidence intervals and cells
+ok 3 - v1.7.8 rejects changed carried scores, confidence intervals and cells
+  ---
+  duration_ms: 572.203887
+  ...
+# Subtest: v1.7.8 rejects altered new rows, roster, ranks and source pins
+ok 4 - v1.7.8 rejects altered new rows, roster, ranks and source pins
+  ---
+  duration_ms: 1921.680686
+  ...
+# Subtest: v1.7.8 requires standing approval and independent publication review
+ok 5 - v1.7.8 requires standing approval and independent publication review
+  ---
+  duration_ms: 713.901539
+  ...
+# Subtest: v1.7.8 published validation refuses unbound fairness
+ok 6 - v1.7.8 published validation refuses unbound fairness
+  ---
+  duration_ms: 467.247203
+  ...
+# Subtest: v1.7.8 carries exact Jeff scores, pin, licence and disclosures
+ok 7 - v1.7.8 carries exact Jeff scores, pin, licence and disclosures
+  ---
+  duration_ms: 9.800994
+  ...
+# Subtest: v1.7.8 synthetic board ranks and official cap lists match the recorded assembly
+ok 8 - v1.7.8 synthetic board ranks and official cap lists match the recorded assembly
+  ---
+  duration_ms: 33.806943
+  ...
+1..8
+# tests 8
+# suites 0
+# pass 8
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 10212.1724
+TAP version 13
+# Subtest: feed carries board and open-board rank next to the unchanged combined rank
+not ok 1 - feed carries board and open-board rank next to the unchanged combined rank
+  ---
+  duration_ms: 32770.67574
+  location: '/home/flori/wt/r196-v178-build/r196/v178/.pass/test/cr-303-feed-split.test.mjs:24:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    6 !== 5
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 5
+  actual: 6
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/flori/wt/r196-v178-build/r196/v178/.pass/test/cr-303-feed-split.test.mjs:41:10)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: llms-full and FAQ use the open-weights board
+ok 2 - llms-full and FAQ use the open-weights board
+  ---
+  duration_ms: 38152.38017
+  ...
+# Subtest: feed key set equals the merged live board and the page shares the assembly
+ok 3 - feed key set equals the merged live board and the page shares the assembly
+  ---
+  duration_ms: 8.501847
+  ...
+# Subtest: latest_release is the newest release of the draw table, not a hard-coded list
+not ok 4 - latest_release is the newest release of the draw table, not a hard-coded list
+  ---
+  duration_ms: 3972.931055
+  location: '/home/flori/wt/r196-v178-build/r196/v178/.pass/test/jevbench-feed-live-board.test.mjs:44:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'v1.7.8'
+    - 'v1.7.7'
+            ^
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'v1.7.7'
+  actual: 'v1.7.8'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/flori/wt/r196-v178-build/r196/v178/.pass/test/jevbench-feed-live-board.test.mjs:49:10)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: feed ranks equal the ranks of the open and API Capability default views
+ok 5 - feed ranks equal the ranks of the open and API Capability default views
+  ---
+  duration_ms: 17.368068
+  ...
+# Subtest: rows carry their draw so agents can tell which draw a row was measured on
+ok 6 - rows carry their draw so agents can tell which draw a row was measured on
+  ---
+  duration_ms: 0.259575
+  ...

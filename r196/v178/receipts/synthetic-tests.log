@@ -1,0 +1,311 @@
+/home/flori/wt/r196-v178-build/r196/v178/.pass
+TAP version 13
+# Subtest: v1.7.8 preserves all 295 predecessor rows, cells and frozen method
+ok 1 - v1.7.8 preserves all 295 predecessor rows, cells and frozen method
+  ---
+  duration_ms: 157.927317
+  ...
+# Subtest: v1.7.8 PENDING is hidden; synthetic PASS is readable
+ok 2 - v1.7.8 PENDING is hidden; synthetic PASS is readable
+  ---
+  duration_ms: 2912.1884
+  ...
+# Subtest: v1.7.8 rejects changed carried scores, confidence intervals and cells
+ok 3 - v1.7.8 rejects changed carried scores, confidence intervals and cells
+  ---
+  duration_ms: 655.882498
+  ...
+# Subtest: v1.7.8 rejects altered new rows, roster, ranks and source pins
+ok 4 - v1.7.8 rejects altered new rows, roster, ranks and source pins
+  ---
+  duration_ms: 2010.033333
+  ...
+# Subtest: v1.7.8 requires standing approval and independent publication review
+ok 5 - v1.7.8 requires standing approval and independent publication review
+  ---
+  duration_ms: 722.600837
+  ...
+# Subtest: v1.7.8 published validation refuses unbound fairness
+ok 6 - v1.7.8 published validation refuses unbound fairness
+  ---
+  duration_ms: 593.959793
+  ...
+# Subtest: v1.7.8 carries exact Jeff scores, pin, licence and disclosures
+ok 7 - v1.7.8 carries exact Jeff scores, pin, licence and disclosures
+  ---
+  duration_ms: 16.813017
+  ...
+# Subtest: v1.7.8 synthetic board ranks and official cap lists match the recorded assembly
+ok 8 - v1.7.8 synthetic board ranks and official cap lists match the recorded assembly
+  ---
+  duration_ms: 35.507541
+  ...
+1..8
+# tests 8
+# suites 0
+# pass 8
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 10201.769873
+TAP version 13
+# Subtest: feed carries board and open-board rank next to the unchanged combined rank
+ok 1 - feed carries board and open-board rank next to the unchanged combined rank
+  ---
+  duration_ms: 41311.638418
+  ...
+# Subtest: llms-full and FAQ use the open-weights board
+ok 2 - llms-full and FAQ use the open-weights board
+  ---
+  duration_ms: 32673.854966
+  ...
+# Subtest: feed key set equals the merged live board and the page shares the assembly
+ok 3 - feed key set equals the merged live board and the page shares the assembly
+  ---
+  duration_ms: 6.759518
+  ...
+# Subtest: latest_release is the newest release of the draw table, not a hard-coded list
+ok 4 - latest_release is the newest release of the draw table, not a hard-coded list
+  ---
+  duration_ms: 5769.655796
+  ...
+# Subtest: feed ranks equal the ranks of the open and API Capability default views
+ok 5 - feed ranks equal the ranks of the open and API Capability default views
+  ---
+  duration_ms: 8.747682
+  ...
+# Subtest: rows carry their draw so agents can tell which draw a row was measured on
+ok 6 - rows carry their draw so agents can tell which draw a row was measured on
+  ---
+  duration_ms: 0.181027
+  ...
+# Subtest: jevFoldWithPinned: pinned rows keep their position above the fold, do not count toward the limit, and are moved up from below it
+ok 7 - jevFoldWithPinned: pinned rows keep their position above the fold, do not count toward the limit, and are moved up from below it
+  ---
+  duration_ms: 1.13666
+  ...
+# Subtest: Delta 4: with the folds collapsed, Jev 1.13.0 and Jev 1.14.0 are rendered above the fold in the open-board Capability and Composite sections
+ok 8 - Delta 4: with the folds collapsed, Jev 1.13.0 and Jev 1.14.0 are rendered above the fold in the open-board Capability and Composite sections
+  ---
+  duration_ms: 3741.423238
+  ...
+# Subtest: v1.6.30 accepts the stored build once the review passes
+ok 9 - v1.6.30 accepts the stored build once the review passes
+  ---
+  duration_ms: 284.663017
+  ...
+# Subtest: v1.6.30 is not publishable while the manifest is PENDING or the preview card is a placeholder
+ok 10 - v1.6.30 is not publishable while the manifest is PENDING or the preview card is a placeholder
+  ---
+  duration_ms: 322.493653
+  ...
+# Subtest: 48 token-priced rows change cost on the common basis, 9 unpriced rows do not
+ok 11 - 48 token-priced rows change cost on the common basis, 9 unpriced rows do not
+  ---
+  duration_ms: 5.993342
+  ...
+# Subtest: named rows: nimble-v4-max enters at \#3, subq-snap-preview falls inside the official cost cap
+ok 12 - named rows: nimble-v4-max enters at \#3, subq-snap-preview falls inside the official cost cap
+  ---
+  duration_ms: 0.434162
+  ...
+# Subtest: Intelligence, Calibration, Speed and Capability are byte-identical on all 57 rows
+ok 13 - Intelligence, Calibration, Speed and Capability are byte-identical on all 57 rows
+  ---
+  duration_ms: 6.303806
+  ...
+# Subtest: cost, axes, composites and placement follow from the common-basis cost; mutations are rejected
+ok 14 - cost, axes, composites and placement follow from the common-basis cost; mutations are rejected
+  ---
+  duration_ms: 2601.949843
+  ...
+# Subtest: the proof binds the cost basis, the superseded freeze and every re-costed row
+ok 15 - the proof binds the cost basis, the superseded freeze and every re-costed row
+  ---
+  duration_ms: 2295.002538
+  ...
+# Subtest: the release note states the rule, the unchanged measures, the cap moves and the superseded freeze
+ok 16 - the release note states the rule, the unchanged measures, the cap moves and the superseded freeze
+  ---
+  duration_ms: 1722.933164
+  ...
+# Subtest: approval: a changed top five needs the preview card; placeholders and wrong provenance are rejected
+ok 17 - approval: a changed top five needs the preview card; placeholders and wrong provenance are rejected
+  ---
+  duration_ms: 1882.400207
+  ...
+# Subtest: the cost rule wording is general and appears on the methodology page and the board
+ok 18 - the cost rule wording is general and appears on the methodology page and the board
+  ---
+  duration_ms: 16.704679
+  ...
+# Subtest: the text about this draw's 15 items names who refused them and where the token figure comes from; no time-bound claim about authors
+ok 19 - the text about this draw's 15 items names who refused them and where the token figure comes from; no time-bound claim about authors
+  ---
+  duration_ms: 25.858474
+  ...
+# Subtest: Delta 3 (display only): Jev 1.14.0 is a second unranked reference row on the open board without the toggle; every ranking and rank is unchanged
+ok 20 - Delta 3 (display only): Jev 1.14.0 is a second unranked reference row on the open board without the toggle; every ranking and rank is unchanged
+  ---
+  duration_ms: 31633.615578
+  ...
+# Subtest: release note [110] states the general rule and then its history sentence
+ok 21 - release note [110] states the general rule and then its history sentence
+  ---
+  duration_ms: 0.461002
+  ...
+# Subtest: v1.6.37 restates exactly the two v1.6.1 rows and adds nothing else
+ok 22 - v1.6.37 restates exactly the two v1.6.1 rows and adds nothing else
+  ---
+  duration_ms: 1.889025
+  ...
+# Subtest: h2o-lightning-4b: price corrected to the frozen Qwen/Qwen3.5-4B reference, nothing else of the published row changes
+ok 23 - h2o-lightning-4b: price corrected to the frozen Qwen/Qwen3.5-4B reference, nothing else of the published row changes
+  ---
+  duration_ms: 0.390813
+  ...
+# Subtest: kahn1: same correction on its own-estimate tokens; the false snapshot attribution of 0.04 is gone
+ok 24 - kahn1: same correction on its own-estimate tokens; the false snapshot attribution of 0.04 is gone
+  ---
+  duration_ms: 0.194387
+  ...
+# Subtest: all 70 carried rows keep every stored value; only rank and ranks move, by the restated rows above them
+ok 25 - all 70 carried rows keep every stored value; only rank and ranks move, by the restated rows above them
+  ---
+  duration_ms: 52.857326
+  ...
+# Subtest: the two other Qwen3.5-4B rows with the USD 0.04 inherited basis are untouched
+ok 26 - the two other Qwen3.5-4B rows with the USD 0.04 inherited basis are untouched
+  ---
+  duration_ms: 0.257985
+  ...
+# Subtest: v1.6.37 rejects altered price, usage, markers, text, intervals, approval and carried rows
+ok 27 - v1.6.37 rejects altered price, usage, markers, text, intervals, approval and carried rows
+  ---
+  duration_ms: 5273.884493
+  ...
+# Subtest: the corrected price is recomputed from tokens, the frozen tariff and the number of decisions
+ok 28 - the corrected price is recomputed from tokens, the frozen tariff and the number of decisions
+  ---
+  duration_ms: 0.184716
+  ...
+# Subtest: v1.6.37 archived route keeps shared board, method and history
+ok 29 - v1.6.37 archived route keeps shared board, method and history
+  ---
+  duration_ms: 7.21595
+  ...
+# Subtest: live boards and the agent feed resolve each restated row exactly once with the corrected figures; the frozen archive keeps the published ones
+ok 30 - live boards and the agent feed resolve each restated row exactly once with the corrected figures; the frozen archive keeps the published ones
+  ---
+  duration_ms: 41498.006108
+  ...
+# Subtest: SEO model, comparison and full-text pages follow the merged feed with corrected costs and the re-measured Seb
+ok 31 - SEO model, comparison and full-text pages follow the merged feed with corrected costs and the re-measured Seb
+  ---
+  duration_ms: 41215.185901
+  ...
+# Subtest: the unreviewed build is not published: the reader rejects it, the board stays on the validated v1.6 chain
+ok 32 - the unreviewed build is not published: the reader rejects it, the board stays on the validated v1.6 chain # SKIP
+  ---
+  duration_ms: 1.029162
+  ...
+# Subtest: v1.7.0 restates exactly the live board of its base release: every row, the pending set, the carry
+ok 33 - v1.7.0 restates exactly the live board of its base release: every row, the pending set, the carry
+  ---
+  duration_ms: 14.723474
+  ...
+# Subtest: every re-scored row shows its v1.6 values next to the v1.7 values and the time-limit evidence
+ok 34 - every re-scored row shows its v1.6 values next to the v1.7 values and the time-limit evidence
+  ---
+  duration_ms: 0.696287
+  ...
+# Subtest: pinned rows: chon-1.0-12b collapses under the limit, sage-1.3.0 and an A4 row follow the rule, the pending row keeps its v1.6 numbers
+ok 35 - pinned rows: chon-1.0-12b collapses under the limit, sage-1.3.0 and an A4 row follow the rule, the pending row keeps its v1.6 numbers
+  ---
+  duration_ms: 0.325354
+  ...
+# Subtest: fastino-glide-api (v1.6.40 row, scored on 1,497 of 1,500 items) is re-scored under the rule on the same 1,497 items; two answered decisions over 10 s count failed
+ok 36 - fastino-glide-api (v1.6.40 row, scored on 1,497 of 1,500 items) is re-scored under the rule on the same 1,497 items; two answered decisions over 10 s count failed
+  ---
+  duration_ms: 0.357543
+  ...
+# Subtest: the four intake handoffs retain their distinct identities, frozen costs and disclosures
+ok 37 - the four intake handoffs retain their distinct identities, frozen costs and disclosures
+  ---
+  duration_ms: 0.792415
+  ...
+# Subtest: R9 rows retain the zero-output price convention, timeout outcomes and serving disclosures
+ok 38 - R9 rows retain the zero-output price convention, timeout outcomes and serving disclosures
+  ---
+  duration_ms: 0.562399
+  ...
+# Subtest: v1.7.0 archive files and the base release stay byte-identical
+ok 39 - v1.7.0 archive files and the base release stay byte-identical
+  ---
+  duration_ms: 281.697396
+  ...
+# Subtest: v1.7.0 rejects altered evidence (bundle checks)
+ok 40 - v1.7.0 rejects altered evidence (bundle checks)
+  ---
+  duration_ms: 19226.761248
+  ...
+# Subtest: a new row (measured first under v1.7.0) has its own shape: no previous, new_in, disclosure and licence, ranked with the re-scored rows
+ok 41 - a new row (measured first under v1.7.0) has its own shape: no previous, new_in, disclosure and licence, ranked with the re-scored rows
+  ---
+  duration_ms: 1.258867
+  ...
+# Subtest: v1.7.0 rejects a malformed new row (6+ mutations)
+ok 42 - v1.7.0 rejects a malformed new row (6+ mutations)
+  ---
+  duration_ms: 8701.876773
+  ...
+# Subtest: the two Super Decider rows are ranked, priced at the launch list price of the provider's public product page, and say where the price comes from
+ok 43 - the two Super Decider rows are ranked, priced at the launch list price of the provider's public product page, and say where the price comes from
+  ---
+  duration_ms: 1.050791
+  ...
+# Subtest: a re-measured row (GPU, same items) replaces its CPU row in full: GPU scores and times, the CPU row as previous, disclosure on the row
+ok 44 - a re-measured row (GPU, same items) replaces its CPU row in full: GPU scores and times, the CPU row as previous, disclosure on the row
+  ---
+  duration_ms: 0.491662
+  ...
+# Subtest: the new row carries no board/issue number or custody reference in its public text
+ok 45 - the new row carries no board/issue number or custody reference in its public text
+  ---
+  duration_ms: 0.788206
+  ...
+# Subtest: v1.7.0 rejects a malformed re-measured row (GPU numbers with CPU times, still pending, no disclosure, wrong marks, ...)
+ok 46 - v1.7.0 rejects a malformed re-measured row (GPU numbers with CPU times, still pending, no disclosure, wrong marks, ...)
+  ---
+  duration_ms: 10341.91119
+  ...
+# Subtest: the restatement is bound to the live v1.6 chain: it passes on the chain it was built for
+ok 47 - the restatement is bound to the live v1.6 chain: it passes on the chain it was built for
+  ---
+  duration_ms: 460.000762
+  ...
+# Subtest: v1.7.0 rejects a restatement that does not match the chain (previous, identity, cost, row set, newer release, feed hash, seeds)
+ok 48 - v1.7.0 rejects a restatement that does not match the chain (previous, identity, cost, row set, newer release, feed hash, seeds)
+  ---
+  duration_ms: 2751.047556
+  ...
+# Subtest: a re-measured row is bound to the CPU row it replaces (previous == chain, same weights, same draw, another endpoint kind, same cost)
+ok 49 - a re-measured row is bound to the CPU row it replaces (previous == chain, same weights, same draw, another endpoint kind, same cost)
+  ---
+  duration_ms: 2582.384561
+  ...
+# Subtest: a published v1.7.0 board is live: restated rows, v1.7.0 as the latest release, archive pages untouched
+ok 50 - a published v1.7.0 board is live: restated rows, v1.7.0 as the latest release, archive pages untouched
+  ---
+  duration_ms: 40900.085311
+  ...
+1..50
+# tests 50
+# suites 0
+# pass 49
+# fail 0
+# cancelled 0
+# skipped 1
+# todo 0
+# duration_ms 215747.562953
