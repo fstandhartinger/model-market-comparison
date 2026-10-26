@@ -18,18 +18,18 @@
    "components/JevReleaseHistory.tsx": "23a3c5fe11ac182659b5df4ac399b83bd535973fb8133977612cc5318687f1d5",
    "data/jevbench-architecture.json": "85f2f16b29f7b012e5f268b5ebe601f51af2e1cff850b8cd930cd733e244fd14",
    "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.6-carry.json": "271d1fc77a136a04a1eb6deb5480c52d4211eb2b66b2ac8bb31e80867e69003a",
-   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.6-categories.json": "4a7c9bc2bcb3585557c3e7dc7cf9c2b3621c1936df4e76a515252a068391a627",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.6-categories.json": "4547f06f56e79cd9566530ea75237822103fd02d19dca5224922e3d4c1eab696",
    "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.6-history-carry.json": "334e851944e92383ab3071e52b3012040c7023d0fe236395953169ebee8f0459",
    "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.6-history.json": "5cd8c1332226ea9c179883d2285c0d8b8cc593ae38f2645197364a7ddd9c83c1",
-   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.6-proof.json": "9902efe52ddb1c22046a7f121e02be34bf70a75e9f7043cee956b66606c6b4a4",
-   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.6-publication.json": "a402ff42ed3e573c0f8cfee57d3d1a29b65a6e509f487ef3de4e615cd4ae10bd",
-   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.6-results.json": "88e878c3a4b3cfa2576beaa584bc372953a0da88114cc5265fbaf5e69eba3539",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.6-proof.json": "e998eaedce3ae0da88752cc681dfa5edbae74bdb6e73b14a006f122f5eebf547",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.6-publication.json": "852941458da2f8b323ac266563a6894d75f02ad441fcdf3a31536d1dfa862d28",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.6-results.json": "f4516535b6dfb17da8520ed8a1b644ccf406f1ce920c9f19edbb7a59b160b8b3",
    "lib/jevbench-categories.mjs": "05fc21047b45b2d55903ae7bde49e78d3f45084c55462276a4d40549a535b43d",
    "lib/jevbench-live-board.mjs": "36d2cff4d441285f0abe5f38eb097135a7e9e2608c87020d7676c2f66bc28a13",
    "lib/jevbench-releases.mjs": "189a146522b3d08d945da58f5db60a8409c61113c4fb0a36f52c36bf1ed7b3ec",
-   "lib/jevbench-v176-release.mjs": "3bbd95031860033a37b7c292b5d7180d096367cc17d08eaf2297b118d5337073",
-   "r190/v176/preview/card.png": "de73c9155ebbe2264182b99597b3971de1a0cd18647a0e0280e5ed83a092f16c",
-   "r190/v176/preview/index.html": "35d1e34199808b748774b4b1b627c30040b236ac65c9f287b3226ac166c25f16",
+   "lib/jevbench-v176-release.mjs": "409db1018eb351e94f2b944674d1591ce55b73f235efa3fb971cbf72b16907e9",
+   "r190/v176/preview/card.png": "0d11605bbadf3df9f67b7c93aff9c5f168a4f37e37b6a6e724830a663b25f47c",
+   "r190/v176/preview/index.html": "28cef26e4b3db2cf88bcc6f7c3eb70573dd71a9c79619e63ef6d2e373efa197f",
    "r190/v176/receipts/topfive-custom.json": "4700c66f2c18ab2b4894e70e4692eff072e24f4515496ec62567279b19bf27dc",
    "r190/v176/receipts/topfive-extended.json": "4d2531cd717c58617b11ffe13675c24fb7fc797e2142ec38ed3266113192e090",
    "r190/v176/receipts/topfive-sliders.json": "4ca99af0e310a09fa01441e96d5c2e97d7446dcd4f1e37860062072eff09869b",
@@ -67,7 +67,7 @@
  "fulltest": {
   "cancelled": 0,
   "fail": 0,
-  "log_sha256": "64cd921f5a27014d3c227e76d7d6f583b3b3684ce0b7ba60b830f2f06145df19",
+  "log_sha256": "3c9cb74628cf0a37ce36cc865f59a8f24ebff3481d207f6c83d51af6a154f03d",
   "pass": 3795,
   "skipped": 7,
   "status": "PASS",
@@ -80,12 +80,13 @@
    "tampered fairness receipt refused",
    "hash-bound non-FAIR receipt content refused",
    "conditional release review refused",
-   "unbound predecessor refused by both helpers"
+   "unbound predecessor refused by both helpers",
+   "both row gates accept corrected bytes and reject old model_pin, foreign owner, wrong base size and old {REF} cost text"
   ],
   "status": "PASS"
  },
  "helpers": {
-  "log_sha256": "7e8800d3f337c586bb2721f6de4b517738dc8977bb2cc303eff597e21a8367d1",
+  "log_sha256": "44822cae5739b8f8a9fe249e0837f13325169d749990fa842e05f75900a36140",
   "status": "PASS"
  },
  "initial-full-suite-ordering": {
@@ -111,20 +112,20 @@
  },
  "production-build": {
   "exit_code": 0,
-  "log_sha256": "de013b1166acd2ca253bd7e55e6fd5e232de7272c4a0f522deaffda9a45212d6",
+  "log_sha256": "91b1ab8fa5611a8e3c231211421c79f60c34c8d9c378d99b5bc847f0da76db7a",
   "status": "PASS"
  },
  "release-tests": {
   "cancelled": 0,
   "fail": 0,
-  "log_sha256": "0e72d869bf4d01a05b8047772bf6e3c2472d8a90c9415ce2a2272b2fc2584229",
+  "log_sha256": "32d958a39e26ff2ec5dde0cdbc8ebe3ba22b8cb9df040bd737a7f46e2fe9be7d",
   "pass": 147,
   "skipped": 6,
   "status": "PASS",
   "tests": 153
  },
  "repro": {
-  "log_sha256": "0b08e6cf0461f9880474e2639fd055cc29e696ebca2b0023976df259bdaa65cb",
+  "log_sha256": "bda3b2c5808f07641a064983dc91ef950c85f1a890e638749e8dbe3eedec42b9",
   "status": "PASS"
  },
  "source-check": {
@@ -134,7 +135,7 @@
  "synthetic-tests": {
   "cancelled": 0,
   "fail": 0,
-  "log_sha256": "bf768e25fcb83a75a545695d2bb17321bcff0ff485aeaf673cbe53d8443bdc3c",
+  "log_sha256": "31df75c6d78b23ae517abf7056538c296d20c6a9f536c0ea5db9022c12e69577",
   "pass": 74,
   "skipped": 4,
   "status": "PASS",

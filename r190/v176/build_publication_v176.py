@@ -13,7 +13,7 @@ source_sha=hashlib.sha256(json.dumps(source_inputs,sort_keys=True).encode()).hex
 res=cp(old['results']);out={s['key']:s for s in res['systems']};prev=cp(out);assert K not in out
 ns=cp(d['v17-share']);ns.update(method='v1.7',new_in=REV,measured_in=REV,last_measured_on=d['measured_on'],measurement_date_status='measured',paid_fast_lane=False)
 for fld in ['display','author','repo','licence','endpoint_kind','endpoint_condition','base_model','disclosure','code_revision']:ns[fld]=e[fld]
-ns['model_pin']='sthanika-ai/Decisio 12B tuned commit@'+e['revision']+' + google/gemma-4-31B-it@842da3794eaa0b77d5f08bae87a17459d91ff475'
+ns['model_pin']=e['repo'].removeprefix('https://huggingface.co/')+'@'+e['revision']+' + aminry/decisio@4f849ff2dbae10a53026e382ce3dd60b95780594'
 ns['cost']['basis']=e['cost_basis']
 ns['draw']={'id':'v1.6-regular-20261012','release':REV,'measured_on':d['measured_on'],'results_sha256':pins[K]['v17-share']['sha256']}
 ns['noul_decisive']={f:cells[K]['noul_share'][f] for f in ['acc_among_decisive','decisive','decisive_rate','n','supported','valid']}

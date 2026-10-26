@@ -1,0 +1,66 @@
+{
+ "status": "PASS",
+ "old_bytes_commit": "dc1fed05",
+ "checks": [
+  {
+   "case": "corrected row",
+   "gate": "validate_v176.mjs",
+   "exit_code": 0,
+   "result": "PASS"
+  },
+  {
+   "case": "corrected row",
+   "gate": "final_sanity_v176.py",
+   "exit_code": 0,
+   "result": "PASS"
+  },
+  {
+   "case": "old model_pin",
+   "gate": "validate_v176.mjs",
+   "exit_code": 1,
+   "result": "REFUSED_AS_REQUIRED"
+  },
+  {
+   "case": "old model_pin",
+   "gate": "final_sanity_v176.py",
+   "exit_code": 1,
+   "result": "REFUSED_AS_REQUIRED"
+  },
+  {
+   "case": "foreign owner",
+   "gate": "validate_v176.mjs",
+   "exit_code": 1,
+   "result": "REFUSED_AS_REQUIRED"
+  },
+  {
+   "case": "foreign owner",
+   "gate": "final_sanity_v176.py",
+   "exit_code": 1,
+   "result": "REFUSED_AS_REQUIRED"
+  },
+  {
+   "case": "wrong base size",
+   "gate": "validate_v176.mjs",
+   "exit_code": 1,
+   "result": "REFUSED_AS_REQUIRED"
+  },
+  {
+   "case": "wrong base size",
+   "gate": "final_sanity_v176.py",
+   "exit_code": 1,
+   "result": "REFUSED_AS_REQUIRED"
+  },
+  {
+   "case": "old cost placeholder",
+   "gate": "validate_v176.mjs",
+   "exit_code": 1,
+   "result": "REFUSED_AS_REQUIRED"
+  },
+  {
+   "case": "old cost placeholder",
+   "gate": "final_sanity_v176.py",
+   "exit_code": 1,
+   "result": "REFUSED_AS_REQUIRED"
+  }
+ ]
+}

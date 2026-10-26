@@ -55,6 +55,25 @@ with tempfile.TemporaryDirectory(prefix='.helper-check-',dir=J) as t:
  pred=T/V/'jevbench-v1.7.5-publication.json';pred.write_bytes(pred.read_bytes()+b'\n')
  for script,args in [flip,freeze]:run(script,args,False)
  checks.append('unbound predecessor refused by both helpers')
+# Exercise each new gate in both languages against the actual pre-fix bytes.
+current=next(r for r in json.loads((W/V/'jevbench-v1.7.6-results.json').read_text())['systems'] if r['key']=='decisio-gemma-4-12b-tuned-commit')
+old=next(r for r in json.loads(subprocess.check_output(['git','show','dc1fed05:'+str(V/'jevbench-v1.7.6-results.json')]))['systems'] if r['key']==current['key'])
+negative=[]
+with tempfile.TemporaryDirectory(prefix='.row-gate-check-',dir=J) as t:
+ fixture=pathlib.Path(t)/'row.json'
+ cases=[('old model_pin',dict(current,model_pin=old['model_pin']),'model_pin'),
+        ('foreign owner',dict(current,model_pin=current['model_pin']+' + sthanika-ai/Other@123'),'model_pin'),
+        ('wrong base size',dict(current,model_pin=current['model_pin']+' + google/gemma-4-31B-it@123'),'model_pin'),
+        ('old cost placeholder',dict(current,cost=old['cost']),'template token')]
+ for label,row,pattern in [('corrected row',current,None),*cases]:
+  put(fixture,row)
+  for command in [['node',str(J/'validate_v176.mjs')],['python3','-B',str(J/'final_sanity_v176.py')]]:
+   r=subprocess.run([*command,'--check-row-json',str(fixture)],text=True,capture_output=True)
+   assert (r.returncode==0)==(pattern is None),(label,command,r.stdout,r.stderr)
+   if pattern:assert pattern in r.stderr,(label,r.stderr)
+   negative.append({'case':label,'gate':pathlib.Path(command[-1]).name,'exit_code':r.returncode,'result':'PASS' if pattern is None else 'REFUSED_AS_REQUIRED'})
+(J/'receipts/PIN-PLACEHOLDER-NEGATIVE.json').write_text(json.dumps({'status':'PASS','old_bytes_commit':'dc1fed05','checks':negative},indent=1)+'\n')
+checks.append('both row gates accept corrected bytes and reject old model_pin, foreign owner, wrong base size and old {REF} cost text')
 assert json.loads((W/V/'jevbench-v1.7.6-publication.json').read_text())['review']['verdict']=='PENDING'
 assert sha(J/'inputs/APPROVAL.json')==approval_before
 (J/'receipts/fix-helper-checks.json').write_text(json.dumps({'status':'PASS','checks':checks},indent=1)+'\n')

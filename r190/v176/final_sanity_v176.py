@@ -1,8 +1,20 @@
 """Independent aggregate checks; never imports or executes model/submitter code."""
-import pathlib,json,hashlib,re,subprocess
+import pathlib,json,hashlib,re,subprocess,sys
 J=pathlib.Path(__file__).resolve().parent;W=J.parents[1];V=W/'data/raw/benchmarks/jevbench/v1.7'
 L=lambda p:json.loads(p.read_text());sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest();K='decisio-gemma-4-12b-tuned-commit'
+def check_new_row_text(row):
+ repo=row['repo'].removeprefix('https://huggingface.co/').rstrip('/')
+ pin=row.get('model_pin','')
+ assert pin.startswith(repo+'@'),'model_pin must start with repo owner/name'
+ if row['key']==K:
+  assert 'tachara-ai/Decisio-12b-tuned-commit@245e00dc' in pin and not re.search('sthanika-ai|31B',pin,re.I),'model_pin owner/revision or base family size mismatch'
+  assert pin=='tachara-ai/Decisio-12b-tuned-commit@245e00dc45abad14d693b1ebae4d4c7aa9cf72f1 + aminry/decisio@4f849ff2dbae10a53026e382ce3dd60b95780594','model_pin owner/revision or base family size mismatch'
+ assert not re.search(r'\{[A-Z_]+\}',json.dumps(row)),'public text contains template token'
+if len(sys.argv)>1 and sys.argv[1]=='--check-row-json':
+ check_new_row_text(L(pathlib.Path(sys.argv[2])))
+ print('PASS new row pin and template gates');sys.exit(0)
 a=L(V/'jevbench-v1.7.6-results.json');b=L(V/'jevbench-v1.7.5-results.json');by={s['key']:s for s in a['systems']};x=L(J/'src/inputs.json')[K];row=by[K]
+for key in a['addendum']['new_keys']:check_new_row_text(by[key])
 assert len(by)==293 and a['n_ranked']==273 and len(b['systems'])==292
 for s in b['systems']:assert {k:v for k,v in s.items() if k not in ['rank','ranks']}=={k:v for k,v in by[s['key']].items() if k not in ['rank','ranks']},s['key']
 for f in ['axes','scores','views','jevbench_score','capability','speed','v16','intelligence','calibration','validity','composite_ci95','decision_limit','status','support']:assert row[f]==x['v17-share'][f],f
