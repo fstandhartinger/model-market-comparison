@@ -1,0 +1,25 @@
+"""Idempotent v1.7.6 integration; predecessor chain remains unchanged."""
+import json,os,pathlib
+J=pathlib.Path(__file__).resolve().parent;W=pathlib.Path(os.environ.get('WT',str(J.parents[1])))
+def edit(name,old,new):
+ p=W/name;s=p.read_text()
+ if new in s:return
+ assert old in s,(name,old)
+ p.write_text(s.replace(old,new))
+p=W/'app/api/jevbench/v1.7.6/route.ts';p.parent.mkdir(parents=True,exist_ok=True);p.write_text((W/'app/api/jevbench/v1.7.5/route.ts').read_text().replace('V175','V176').replace('v175','v176'))
+p=W/'app/jev-models/v1.7.6/page.tsx';p.parent.mkdir(parents=True,exist_ok=True)
+s=(W/'app/jev-models/v1.7.5/page.tsx').read_text().replace('v1.7.5','__NEW__').replace('v1.7.4','v1.7.5').replace('__NEW__','v1.7.6').replace('V175','V176').replace('v175','v176').replace('jev175','jev176')
+s=s.replace('Sieve-31B-v2','Decisio 12B tuned commit (variant of the Decisio family)').replace('291 carried','292 carried')
+s=s.replace('Decisio 12B tuned commit (variant of the Decisio family) joins as a self-hosted row. Same method; all 292 carried rows retain their scores and confidence intervals.', 'Decisio 12B tuned commit joins as a self-hosted row. Same method; 292 carried rows retain their scores and confidence intervals.')
+p.write_text(s)
+edit('lib/jevbench-live-board.mjs',"import { readJevbenchV175ForBoard, withV175Addendum }", "import { readJevbenchV176ForBoard, withV176Addendum } from './jevbench-v176-release.mjs';\nimport { readJevbenchV175ForBoard, withV175Addendum }")
+edit('lib/jevbench-live-board.mjs','return v175 ? withV175Addendum(throughV174, v175) : throughV174;', 'const throughV175 = v175 ? withV175Addendum(throughV174, v175) : throughV174;\n  const v176 = await readJevbenchV176ForBoard(root);\n  return v176 ? withV176Addendum(throughV175, v176) : throughV175;')
+edit('lib/jevbench-live-board.mjs',"return (await readJevbenchV175ForBoard(root)) ? 'v1.7.5'", "return (await readJevbenchV176ForBoard(root)) ? 'v1.7.6' : (await readJevbenchV175ForBoard(root)) ? 'v1.7.5'")
+edit('components/JevBenchReleaseVersionNav.tsx',"type JevRelease = 'v1.7.5'", "type JevRelease = 'v1.7.6' | 'v1.7.5'")
+edit('lib/jevbench-categories.mjs',"'v1.7.1', 'v1.7.2', 'v1.7.3', 'v1.7.4', 'v1.7.5'];", "'v1.7.1', 'v1.7.2', 'v1.7.3', 'v1.7.4', 'v1.7.5', 'v1.7.6'];")
+edit('lib/jevbench-releases.mjs',"  { version: 'v1.7.5'", "  { version: 'v1.7.6', date: '2026-10-25', href: '/jev-models/v1.7.6', text: 'One new self-hosted row Decisio 12B tuned commit (variant of the Decisio family); no method change.' },\n  { version: 'v1.7.5'")
+edit('components/JevReleaseHistory.tsx',"import { hasPublishedJevbenchV175Release }", "import { hasPublishedJevbenchV176Release } from '../lib/jevbench-v176-release.mjs';\nimport { hasPublishedJevbenchV175Release }")
+edit('components/JevReleaseHistory.tsx','v171, v172, v173, v174, v175] =','v171, v172, v173, v174, v175, v176] =')
+edit('components/JevReleaseHistory.tsx','hasPublishedJevbenchV175Release()]);','hasPublishedJevbenchV175Release(), hasPublishedJevbenchV176Release()]);')
+edit('components/JevReleaseHistory.tsx',"!v175 && 'v1.7.5'].filter", "!v175 && 'v1.7.5', !v176 && 'v1.7.6'].filter")
+print('wired v1.7.6; predecessor chain retained')

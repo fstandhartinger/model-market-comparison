@@ -1,0 +1,30 @@
+{
+ "asks": [
+  {
+   "admission": "custody #26740 item 3b, hash word #26876; consumed #26890",
+   "handoff": "board #26900",
+   "key": "decisio-gemma-4-12b-tuned-commit",
+   "relay": "regular queue"
+  }
+ ],
+ "button_tap": false,
+ "fairness_check": {
+  "engine": "claude-opus-5-5 (account C, effort medium)",
+  "path": "workers/r190-decisio-fair/RESULT.json",
+  "sha256": "09696d53206ede9d4fcb3b0a5af2061498a0d0f08a6ba4121135bee9d9d4d199",
+  "verdict": "FAIR"
+ },
+ "fresh_baseline": "v1.7.5",
+ "go": {
+  "channel": "laptop chat",
+  "date": "2026-10-25",
+  "quote": "3 ja",
+  "recorded_in": "DECISIONS.md 2026-10-25 setup-review-open-questions-answered"
+ },
+ "status": "GO (fair top-five change, Florian rule 25 Oct 2026)",
+ "top_five_effect": "changed",
+ "top_five_preview": {
+  "path": "r190/v176/receipts/topfive-diff.json",
+  "sha256": "1eee2a12aaf3919eb3b7539394db256c3203d622a4567fc296d3e8580cd5eb1e"
+ }
+}

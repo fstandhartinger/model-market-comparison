@@ -1,0 +1,21 @@
+"""Fail-closed approval binding shared by release-owner dry-run helpers."""
+import hashlib,json,pathlib
+
+def check_approval(W,proof):
+ sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
+ a=proof['publication_approval']
+ assert a['status']=='GO (fair top-five change, Florian rule 25 Oct 2026)' and a['top_five_effect']=='changed','fair top-five standing GO required'
+ assert a['fresh_baseline']=='v1.7.5' and a['go']['quote']=='3 ja' and a['go']['channel']=='laptop chat' and a['go']['date']=='2026-10-25' and a['button_tap'] is False
+ assert a['go']['recorded_in']=='DECISIONS.md 2026-10-25 setup-review-open-questions-answered'
+ preview=W/a['top_five_preview']['path']
+ assert sha(preview)==a['top_five_preview']['sha256']==proof['topfive_diff_sha256']
+ diff=json.loads(preview.read_text());assert diff['changed'] is True and not diff.get('bootstrap',False),'fresh complete top-five preview required'
+ fair=a['fairness_check']
+ if fair.get('path','').startswith('workers/'):
+  assert fair['path']=='workers/r190-decisio-fair/RESULT.json' and fair.get('sha256')=='09696d53206ede9d4fcb3b0a5af2061498a0d0f08a6ba4121135bee9d9d4d199','expected independent FAIR receipt'
+ assert fair['verdict']=='FAIR','REFUSED: fairness PENDING or non-FAIR; non-PENDING FAIR required'
+ fp=pathlib.Path(fair['path']);fp=fp if fp.is_absolute() else pathlib.Path('/home/flori/jobs/jevbench-add-requests-20260919')/fp if fp.parts[0]=='workers' else W/fp
+ assert fp.is_file() and sha(fp)==fair.get('sha256'),'fairness receipt missing or changed'
+ receipt=json.loads(fp.read_text())
+ assert receipt.get('fairness',receipt.get('verdict'))=='FAIR','fairness receipt content must be FAIR'
+ return a

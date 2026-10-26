@@ -1,3 +1,4 @@
+import { hasPublishedJevbenchV176Release } from '../lib/jevbench-v176-release.mjs';
 import { hasPublishedJevbenchV175Release } from '../lib/jevbench-v175-release.mjs';
 import { hasPublishedJevbenchV174Release } from '../lib/jevbench-v174-release.mjs';
 import { hasPublishedJevbenchV173Release } from '../lib/jevbench-v173-release.mjs';
@@ -25,7 +26,7 @@ test('feed carries board and open-board rank next to the unchanged combined rank
   const v170 = await hasPublishedJevbenchV170Release();
   let want = v170 ? { quyet: [4], h2o: [15], surogate: [16], xor: [23], torchcast: [19, 38], basal: [2] } : { quyet: [4], h2o: [13], surogate: [15], xor: [18], torchcast: [20, 32 + Number(V1638_ROW_SPEC['drex-max'].ranked) + Number(V1639_ROW_SPEC['h2o-lightning-31b'].ranked) + Number(V1640_ROW_SPEC['fastino-glide-api'].ranked) + Number(V1642_ROW_SPEC['torchcast-decision-4b-v1.3'].ranked) + Number(V1643_ROW_SPEC['subq-snap-1.1'].ranked)], basal: [3] };
   if ((await hasPublishedJevbenchV173Release()) || (await hasPublishedJevbenchV172Release()) || (await hasPublishedJevbenchV171Release())) {
-    const fixture = JSON.parse(await readFile(`test/fixtures/jevbench-${(await hasPublishedJevbenchV175Release()) ? 'v175' : (await hasPublishedJevbenchV174Release())?'v174':(await hasPublishedJevbenchV173Release())?'v173':(await hasPublishedJevbenchV172Release())?'v172':'v171'}-ranks.json`,'utf8'));
+    const fixture = JSON.parse(await readFile(`test/fixtures/jevbench-${(await hasPublishedJevbenchV176Release()) ? 'v176' : (await hasPublishedJevbenchV175Release()) ? 'v175' : (await hasPublishedJevbenchV174Release())?'v174':(await hasPublishedJevbenchV173Release())?'v173':(await hasPublishedJevbenchV172Release())?'v172':'v171'}-ranks.json`,'utf8'));
     const rank = (scope,key) => fixture.views[scope].capability.official_caps.indexOf(key)+1;
     want = {quyet:[rank('open','quyet-1-0-large')],h2o:[rank('open','h2o-lightning-4b')],surogate:[rank('open','surogate-rune-26b-a4b-v3-v16')],xor:[rank('open','xor-26b-a4b')],torchcast:[rank('open','torchcast-decision-12b'),rank('all','torchcast-decision-12b')],basal:[rank('open','basal-omni-1.0-ultra')]};
   }

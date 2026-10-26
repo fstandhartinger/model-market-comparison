@@ -1,0 +1,21 @@
+{
+ "status": "PASS",
+ "fixes": [
+  {
+   "old": "The v1.7 share ranking uses",
+   "new": "The v1.7 share view uses",
+   "reason": "Remove placement wording in public disclosure."
+  },
+  {
+   "old": "a rank-16 LoRA",
+   "new": "a LoRA with adapter dimension 16",
+   "reason": "Retain technical adapter dimension without ambiguous rank wording."
+  },
+  {
+   "old": ", r168 re-freeze of 22 Oct 2026",
+   "new": ", re-freeze of 22 Oct 2026",
+   "reason": "Remove internal preparation identifier."
+  }
+ ],
+ "numeric_changes": false
+}

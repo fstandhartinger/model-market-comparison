@@ -1,0 +1,174 @@
+{
+ "status": "PASS",
+ "old_bytes_commit": "dc1fed05",
+ "checks": [
+  {
+   "case": "corrected row",
+   "gate": "validate_v176.mjs",
+   "exit_code": 0,
+   "result": "PASS"
+  },
+  {
+   "case": "corrected row",
+   "gate": "final_sanity_v176.py",
+   "exit_code": 0,
+   "result": "PASS"
+  },
+  {
+   "case": "legitimate braces",
+   "gate": "validate_v176.mjs",
+   "exit_code": 0,
+   "result": "PASS"
+  },
+  {
+   "case": "legitimate braces",
+   "gate": "final_sanity_v176.py",
+   "exit_code": 0,
+   "result": "PASS"
+  },
+  {
+   "case": "old model_pin",
+   "gate": "validate_v176.mjs",
+   "exit_code": 1,
+   "result": "REFUSED_AS_REQUIRED"
+  },
+  {
+   "case": "old model_pin",
+   "gate": "final_sanity_v176.py",
+   "exit_code": 1,
+   "result": "REFUSED_AS_REQUIRED"
+  },
+  {
+   "case": "foreign owner",
+   "gate": "validate_v176.mjs",
+   "exit_code": 1,
+   "result": "REFUSED_AS_REQUIRED"
+  },
+  {
+   "case": "foreign owner",
+   "gate": "final_sanity_v176.py",
+   "exit_code": 1,
+   "result": "REFUSED_AS_REQUIRED"
+  },
+  {
+   "case": "wrong base size",
+   "gate": "validate_v176.mjs",
+   "exit_code": 1,
+   "result": "REFUSED_AS_REQUIRED"
+  },
+  {
+   "case": "wrong base size",
+   "gate": "final_sanity_v176.py",
+   "exit_code": 1,
+   "result": "REFUSED_AS_REQUIRED"
+  },
+  {
+   "case": "old cost placeholder",
+   "gate": "validate_v176.mjs",
+   "exit_code": 1,
+   "result": "REFUSED_AS_REQUIRED"
+  },
+  {
+   "case": "old cost placeholder",
+   "gate": "final_sanity_v176.py",
+   "exit_code": 1,
+   "result": "REFUSED_AS_REQUIRED"
+  },
+  {
+   "case": "template {ref}",
+   "gate": "validate_v176.mjs",
+   "exit_code": 1,
+   "result": "REFUSED_AS_REQUIRED"
+  },
+  {
+   "case": "template {ref}",
+   "gate": "final_sanity_v176.py",
+   "exit_code": 1,
+   "result": "REFUSED_AS_REQUIRED"
+  },
+  {
+   "case": "template {Ref}",
+   "gate": "validate_v176.mjs",
+   "exit_code": 1,
+   "result": "REFUSED_AS_REQUIRED"
+  },
+  {
+   "case": "template {Ref}",
+   "gate": "final_sanity_v176.py",
+   "exit_code": 1,
+   "result": "REFUSED_AS_REQUIRED"
+  },
+  {
+   "case": "template {{REF}}",
+   "gate": "validate_v176.mjs",
+   "exit_code": 1,
+   "result": "REFUSED_AS_REQUIRED"
+  },
+  {
+   "case": "template {{REF}}",
+   "gate": "final_sanity_v176.py",
+   "exit_code": 1,
+   "result": "REFUSED_AS_REQUIRED"
+  },
+  {
+   "case": "template {ref_2}",
+   "gate": "validate_v176.mjs",
+   "exit_code": 1,
+   "result": "REFUSED_AS_REQUIRED"
+  },
+  {
+   "case": "template {ref_2}",
+   "gate": "final_sanity_v176.py",
+   "exit_code": 1,
+   "result": "REFUSED_AS_REQUIRED"
+  },
+  {
+   "case": "src/inputs.json template {ref}",
+   "gate": "validate_v176.mjs",
+   "exit_code": 1,
+   "result": "REFUSED_AS_REQUIRED"
+  },
+  {
+   "case": "src/inputs.json template {ref}",
+   "gate": "final_sanity_v176.py",
+   "exit_code": 1,
+   "result": "REFUSED_AS_REQUIRED"
+  },
+  {
+   "case": "src/inputs.json template {Ref}",
+   "gate": "validate_v176.mjs",
+   "exit_code": 1,
+   "result": "REFUSED_AS_REQUIRED"
+  },
+  {
+   "case": "src/inputs.json template {Ref}",
+   "gate": "final_sanity_v176.py",
+   "exit_code": 1,
+   "result": "REFUSED_AS_REQUIRED"
+  },
+  {
+   "case": "inputs/ENTRY-DECISIO.json template {ref}",
+   "gate": "validate_v176.mjs",
+   "exit_code": 1,
+   "result": "REFUSED_AS_REQUIRED"
+  },
+  {
+   "case": "inputs/ENTRY-DECISIO.json template {ref}",
+   "gate": "final_sanity_v176.py",
+   "exit_code": 1,
+   "result": "REFUSED_AS_REQUIRED"
+  },
+  {
+   "case": "inputs/ENTRY-DECISIO.json template {Ref}",
+   "gate": "validate_v176.mjs",
+   "exit_code": 1,
+   "result": "REFUSED_AS_REQUIRED"
+  },
+  {
+   "case": "inputs/ENTRY-DECISIO.json template {Ref}",
+   "gate": "final_sanity_v176.py",
+   "exit_code": 1,
+   "result": "REFUSED_AS_REQUIRED"
+  }
+ ]
+}

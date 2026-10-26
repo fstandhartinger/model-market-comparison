@@ -7010,6 +7010,22 @@
         ],
         "note": "31B denotes the declared base class; base plus adapter, no merged checkpoint. Calibration and commit-floor configuration are disclosed in the row."
       },
+      "decisio-gemma-4-12b-tuned-commit": {
+        "arch": "open-llm-decoder",
+        "badges": {
+          "derivation": "merge",
+          "params": "12B",
+          "quant": "BF16"
+        },
+        "evidence": [
+          {
+            "kind": "model-card",
+            "url": "https://huggingface.co/tachara-ai/Decisio-12b-tuned-commit/blob/245e00dc45abad14d693b1ebae4d4c7aa9cf72f1/README.md",
+            "fact": "Pinned author card identifies a tuned Gemma 4 12B checkpoint with a LoRA of adapter dimension 16 merged in fp32 and rounded to bf16; measured using the author native runtime."
+          }
+        ],
+        "note": "12B denotes the declared base class. Distinct variant in the Decisio family, replacing no existing row. The shipped JevBench-aware commit rule and calibration configuration are disclosed in the row."
+      },
       "sieve-31b-v2": {
         "arch": "open-llm-decoder",
         "badges": {

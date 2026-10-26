@@ -1,0 +1,120 @@
+{
+ "release-tests": {
+  "status": "PASS",
+  "tests": 153,
+  "pass": 147,
+  "fail": 0,
+  "skipped": 6,
+  "cancelled": 0,
+  "log_sha256": "4f738a1915a54c87d92b844d09535162d2fd3aaaa68766ca3dae451a544ebc9c"
+ },
+ "synthetic-tests": {
+  "status": "PASS",
+  "tests": 78,
+  "pass": 74,
+  "fail": 0,
+  "skipped": 4,
+  "cancelled": 0,
+  "log_sha256": "61c96b9e9bc03d5faddadf3d63687e7485d9039fa56340a7cae2c269aac99f94"
+ },
+ "fulltest": {
+  "status": "PASS",
+  "tests": 3802,
+  "pass": 3795,
+  "fail": 0,
+  "skipped": 7,
+  "cancelled": 0,
+  "log_sha256": "f1d031e5c223fbf83834d62d4add2eddbcac1b61c1dbc412e8339eab56ade93e"
+ },
+ "actual-refusals": {
+  "status": "PASS",
+  "log_sha256": "968b18a5504de9767d49275bd4809d50c8681504888cda3114eadc5b3ea4f13a"
+ },
+ "prepare": {
+  "status": "PASS",
+  "log_sha256": "0818a0075c8058d92416cffe26ab5ac942c33b3bbccda45ad82a0616fba84511"
+ },
+ "source-check": {
+  "status": "PASS",
+  "log_sha256": "b5c6da57e0ce5295cde35ee31f4d52ee13c8cc5430425e4fa4b6076d7a858938"
+ },
+ "fairness-text": {
+  "status": "PASS",
+  "log_sha256": "ed96c3be8ca15ffcd1990dc57ff96c3e4371134c5fd477562581f89ef606db28"
+ },
+ "repro": {
+  "status": "PASS",
+  "log_sha256": "b40ca6741dac79ff52db0518145d97a66f11dafb4aea9bb77fe42c24695215ea"
+ },
+ "validator": {
+  "status": "PASS",
+  "log_sha256": "aa79d915a2e064de7b961d51a165b1e95fbf3134c55996c3c4573087756c9cde"
+ },
+ "helpers": {
+  "status": "PASS",
+  "log_sha256": "21824b3693385e13837f82d8f139667da38beecab92e1c79ca981db0a95e6719"
+ },
+ "preview-check": {
+  "status": "PASS",
+  "log_sha256": "5d6acc4ced9fc0ebf2e77b3f26a64d396e45bf9826226316d7c414afeb5599ed"
+ },
+ "placements": {
+  "status": "PASS",
+  "log_sha256": "80829bac32d1ca8e599a35351c34e067d2dcfa7ecf226ce56bdb10f2cd63b2cc"
+ },
+ "final-sanity": {
+  "status": "PASS",
+  "log_sha256": "165beec6a45ee8b33fceb2b6c37bd261dea6214618e6bf821d544769be64f55a"
+ },
+ "typescript": {
+  "status": "PASS",
+  "exit_code": 0,
+  "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+ },
+ "production-build": {
+  "status": "PASS",
+  "exit_code": 0,
+  "log_sha256": "977ddb1fab75716f9d307f4b7a60aa09dcb09610f83f6e57b79c6facc0718c9e"
+ },
+ "flip-actual-dry-run": {
+  "status": "REFUSED_AS_REQUIRED",
+  "log_sha256": "bcc9ca0c098ece3e5b1520a987e17283c96c017fcd7e600aa07953f55a903056"
+ },
+ "freeze-actual-dry-run": {
+  "status": "REFUSED_AS_REQUIRED",
+  "log_sha256": "f0e28a5a6e8f1514a0eb6e75e687174e1fdd380f49dca115da04ac4352fc88ef"
+ },
+ "initial-full-suite-ordering": {
+  "status": "REMEDIATED",
+  "issue": "Started before production build completed; server-link test could not find prerender manifest. Corrected by completing build before final full suite.",
+  "initial_log_sha256": "8ce857d846d5bc2c6c00a4148521022021e6608817a7d0e3164932b383fbb267",
+  "initial_failure_count": 3,
+  "initial_exit": 143,
+  "initial_run_interrupted": true,
+  "final_full_suite_passed": true
+ },
+ "targeted-remediation": {
+  "status": "PASS",
+  "initial_notes": {
+   "initial_release_tests": {
+    "tests": 144,
+    "pass": 136,
+    "fail": 3,
+    "skipped": 5
+   },
+   "fixes": [
+    "Corrected copied Sieve assertions in new v176 route test.",
+    "Added new row architecture metadata.",
+    "Shortened v176 page description to <=160 characters."
+   ]
+  },
+  "remediation_log_sha256": "aaf31e38154283960422894dc2e6e4093460ec7b1283dabb6fbdf0f8bfe0c6b0"
+ },
+ "candidate_fairness": {
+  "engine": "claude-opus-5-5 (account C, effort medium)",
+  "path": "workers/r190-decisio-fair/RESULT.json",
+  "sha256": "09696d53206ede9d4fcb3b0a5af2061498a0d0f08a6ba4121135bee9d9d4d199",
+  "verdict": "FAIR"
+ },
+ "candidate_publication_review": "PENDING"
+}
