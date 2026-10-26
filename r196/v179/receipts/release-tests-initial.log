@@ -1,0 +1,22 @@
+✔ v1.7.9 exact roster, predecessor and method; PENDING stays hidden (2843.515129ms)
+✔ v1.7.9 rejects changed carried scores, CIs, category cells and lane (915.650249ms)
+✔ v1.7.9 rejects changes outside the exact reprice/link exceptions (1189.209049ms)
+✔ v1.7.9 rejects altered new row, roster, ranks and provenance pins (2113.553605ms)
+✔ v1.7.9 requires bound fairness and independent publication review (1213.100184ms)
+✔ v1.7.9 carries exact GLiClass scores, coverage, pin and public price text (0.715507ms)
+✔ v1.7.9 reprices existing Myles-G usage only and preserves both Super Decider HF provenance (1.553971ms)
+✖ v1.7.9 synthetic board ranks and official cap lists match the recorded assembly (35.667519ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 7
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 11309.702945
+
+✖ failing tests:
+
+test at test/jevbench-v179-release.test.mjs:65:1
+✖ v1.7.9 synthetic board ranks and official cap lists match the recorded assembly (35.667519ms)
+  [Error: ENOENT: no such file or directory, open 'test/fixtures/jevbench-v179-ranks.json'] { errno: -2, code: 'ENOENT', syscall: 'open', path: 'test/fixtures/jevbench-v179-ranks.json' }

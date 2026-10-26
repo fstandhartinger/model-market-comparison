@@ -1,0 +1,27 @@
+{
+ "knowledgator_gliclass_v4_9b": {
+  "entry": {
+   "author": "knowledgator (Hugging Face)",
+   "base_model": "Qwen/Qwen3.5-9B",
+   "code_revision": "The model card's own Jev-style decision API block ran unmodified (README serving block SHA256 bf3d0336b74da40b1f4f908eef7b9a6bed3a160a28d694320e5044160fa367c1). Native probabilities with no response shim or instruction conversion. gliclass 0.1.21, decoder-kv architecture, DecoderKVZeroShotClassificationPipeline; maximum joint input 32,768 tokens, no truncation, bf16 on one CUDA device, no quantisation. torch 2.14.0, transformers 5.20.0, tokenizers 0.23.3. Pure torch Qwen3.5 GatedDeltaNet path; no custom kernels. A first-party wrapper adds only a health route. Source and pinned safetensors weights ran on isolated rented hardware with read-only mounts, no credentials and networking disabled. The scored process was fresh.",
+   "cost_basis": "ESTIMATE from base Qwen/Qwen3.5-9B at USD 0.10/0.15 per million input/output tokens; output priced at zero because this classifier generates no text. Input is the joint sequence actually encoded, including instructions and option labels: 626,409 native input tokens across 1,485 answered items, independently verified with zero mismatches; zero output tokens. The 15 HTTP 422 length refusals carry zero usage and count as misses. Common 1,485-item basis USD 0.04218 per 1,000 decisions = 0.653 times cap; all-1,500 basis USD 0.04176 = 0.647 times cap. Estimated usage price, not charged usage or a host quote.",
+   "disclosure": "First measurement of knowledgator/gliclass-v4-9b, a GLiClass model compatible with Jev-style decisions. Fine-tune of Qwen/Qwen3.5-9B: a decoder reads the question, a small recurrent DeBERTa-style scorer reads option labels, and a calibrator supplies native choice, noul and score probabilities. No generated explanation. scx-admin/Apex-large is a byte-identical republish of this checkpoint; the original repository was measured and the republish receives no separate row. The card's own serving configuration ran unchanged. Requests beyond the 32,768-token joint limit are refused before a forward pass. Of 1,500 requests, 1,485 answered and 15 returned HTTP 422 length refusals, scored as misses. No answered request was truncated. Native input usage equals an independent count on all answered requests; output is zero. No decision exceeded 10 s; loopback p95 was 0.25 s and maximum 0.48 s. The share view applies the common self-hosted latency assumption, twice measured p50 plus 0.15 s. A separate synthetic 32,768-token probe took 10.3–10.7 s on this hardware; the scored requests did not test performance near that length. Determinism record: 50/50 bit-identical repeat responses, zero argmax flips. The multimodal tower was loaded but no images were used. Card training-data statements and reported scores were not independently verified; training overlap with JevBench was not checked. Weights and base Apache-2.0; the original pinned repository has no separate LICENSE file, while the byte-identical republish includes the canonical Apache-2.0 text. One measured attempt; an earlier hardware create call failed before an instance existed.",
+   "display": "GLiClass v4 9B (Knowledgator)",
+   "endpoint_condition": "Measured 26 Oct 2026 on one rented NVIDIA RTX A6000 48 GB in Finland, over loopback. One measured attempt with pinned weights and serving code in a fresh process, read-only model and source, no credentials and networking disabled. GPU rental is separate from the estimated model tariff.",
+   "endpoint_kind": "gpu",
+   "lane": "selfhosted",
+   "licence": "Apache-2.0 per the original model card (weights); the Apex republish includes the canonical Apache-2.0 LICENSE text; the original pinned repository has no separate LICENSE file; gliclass wheel Apache-2.0; base Qwen/Qwen3.5-9B Apache-2.0",
+   "ranked": true,
+   "repo": "https://huggingface.co/knowledgator/gliclass-v4-9b",
+   "revision": "14d11a92b5e0bab4a166e1fce4cc0777cac27182",
+   "support": {
+    "choice": "native",
+    "noul": "native",
+    "score": "native"
+   }
+  },
+  "tokens": "server",
+  "treatment": "auto",
+  "zero_output": true
+ }
+}
