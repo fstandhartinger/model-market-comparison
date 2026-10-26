@@ -1,0 +1,37 @@
+{
+ "asks": [
+  {
+   "admission": "custody #26926 (b)-(d); consumed, notice #27673",
+   "handoff": "board #27706",
+   "key": "jeff_1_1_medium",
+   "relay": "regular queue"
+  }
+ ],
+ "button_tap": false,
+ "fairness_check": {
+  "engine": "claude-opus-5-5 (account C, effort medium)",
+  "path": "workers/r196-jeff11m-fair/RESULT.json",
+  "sha256": "f87a754ff40f9707fb426df1f7b501a6f18a5b935f42dfe4d11e6bb13f4aa44c",
+  "verdict": "FAIR"
+ },
+ "fresh_baseline": "v1.7.7",
+ "go": {
+  "channel": "laptop chat",
+  "date": "2026-10-25",
+  "quote": "3 ja",
+  "recorded_in": "DECISIONS.md 2026-10-25 setup-review-open-questions-answered"
+ },
+ "release_owner_rulings": {
+  "jeff11m-v178-prefill-native-pricing": {
+   "finding": "F2",
+   "recorded_in": "DECISIONS.md 2026-10-26 17:0xZ",
+   "ruling": "Native usage pricing as preregistered; uncounted prefills disclosed with common-basis sensitivity, not priced."
+  }
+ },
+ "status": "GO (fair top-five change, Florian rule 25 Oct 2026)",
+ "top_five_effect": "changed",
+ "top_five_preview": {
+  "path": "r196/v178/receipts/topfive-diff.json",
+  "sha256": "78e56c286b76b4e987b88c4869f53a0344d9500d0ed56005c6aa64a13c24e2bb"
+ }
+}

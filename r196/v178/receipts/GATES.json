@@ -1,0 +1,1264 @@
+{
+ "actual-publication-refusals": {
+  "candidate_manifest_and_files_unchanged": true,
+  "flip-actual-pending-refused": {
+   "exit_code": 2,
+   "reason": "not PASS",
+   "status": "REFUSED_AS_REQUIRED"
+  },
+  "freeze-actual-pending-refused": {
+   "exit_code": 1,
+   "reason": "publication review PENDING",
+   "status": "REFUSED_AS_REQUIRED"
+  },
+  "freeze_output_created": false,
+  "publication_review": "PENDING",
+  "status": "PASS"
+ },
+ "candidate_fairness": {
+  "engine": "claude-opus-5-5 (account C, effort medium)",
+  "path": "workers/r196-jeff11m-fair/RESULT.json",
+  "sha256": "f87a754ff40f9707fb426df1f7b501a6f18a5b935f42dfe4d11e6bb13f4aa44c",
+  "verdict": "FAIR"
+ },
+ "candidate_publication_review": "PENDING",
+ "double-rebuild": {
+  "hashes": {
+   "app/api/jevbench/v1.7.8/route.ts": "b0ac0e1a5cc81913ecc7844b43a9e5cb23c6fd043959f56132a549021ec573e9",
+   "app/jev-models/v1.7.8/page.tsx": "bc67ad28b8be029e769b6abb469eb240c2d730ee14c842c9d1d5cd2112247a33",
+   "components/JevBenchReleaseVersionNav.tsx": "6c8678127baf77b9be8cf4998635415fe4df39c4d13950f811356c06c6f38cf7",
+   "components/JevReleaseHistory.tsx": "c15917a941e42096c673873e47ba8fbe32a3a52789684dbb24d3d0938f1d5ea2",
+   "data/jevbench-architecture.json": "acda8bff32d304211ab10d429d36e78f0526b507116a6648592575150dee852d",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.8-carry.json": "271d1fc77a136a04a1eb6deb5480c52d4211eb2b66b2ac8bb31e80867e69003a",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.8-categories.json": "7514697831e6f1683c5b05dafb5b6334b456f6819e43cafa36d69e784f988a94",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.8-history-carry.json": "334e851944e92383ab3071e52b3012040c7023d0fe236395953169ebee8f0459",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.8-history.json": "5cd8c1332226ea9c179883d2285c0d8b8cc593ae38f2645197364a7ddd9c83c1",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.8-proof.json": "d63a16e301de6fd26da8cae46c84521cbbafbf412df840c03e1aeb3531e0d510",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.8-publication.json": "fd1c028e171bf88aaa3e792e3b49330087b071155de5e2abfc3877f365a6bdbc",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.8-results.json": "706224f1f0102e543f606f0647056a7042f2bc8889fc0f2110bded071614b460",
+   "lib/jevbench-categories.mjs": "511d2d194a9b573f86ccff3c0b6974482ce24bc59f81d82d3b164b9bd01d8b27",
+   "lib/jevbench-live-board.mjs": "bea50d3aaa321f7f0a880508d06427597737dcba2c70e9b6aeca5acb9270c390",
+   "lib/jevbench-releases.mjs": "fa7ea7ecf3e2f399253fd72edc809def9e071a9da88c8bee2d3e52be2dbc1de9",
+   "lib/jevbench-v178-release.mjs": "9a60030d2c77b16776fecb465d3197a552e29d62a1c575fb89606232457a8d7d",
+   "r196/v178/preview/card.png": "128abf28dfa030fbd6eca1e320e65e79340bccf005533b1554a65901f022b38f",
+   "r196/v178/preview/index.html": "6066a957bbf77e08e38eaaea286674f49fd370ed61c02ba3dda6d3176bb0b62b",
+   "test/cr-205-jev-page-structure.test.mjs": "d67ff4f9e160fd24f2aaf0e8029c2ed3c464f1c448ee86e22278881bf0b0d7e2",
+   "test/cr-303-feed-split.test.mjs": "3eb2a2a92b086055f62237cfa9499e4a7e368083c3d0d3cab502adbd6391d297",
+   "test/fixtures/jevbench-v178-ranks.json": "871a825ea6c3754a6d08e90399235f5434ff5a4057078082adc49c7559da8912",
+   "test/jevbench-feed-live-board.test.mjs": "2f5f8890da4d92449f77fd1b170cdb84bf16e00d88de26d7c3e9e7a76288a781",
+   "test/jevbench-v1630-open-fold.test.mjs": "8a90e86cb4833bb9bf687279504a511e2cd4d2a471f9ec4bfc87bcd272152079",
+   "test/jevbench-v1630-release.test.mjs": "af9cb3f693bbc7787c1b60bd3bbb57d2557f0031bf9bfa7dcdb5311deaf99376",
+   "test/jevbench-v1637-release.test.mjs": "f7b406e03e103e4e7687c50522fd2c8954efa92e50ff83fd5ce79c0c1b90e38e",
+   "test/jevbench-v170-release.test.mjs": "06cfda7060f544d45f6c307c4176c4f5c4d4cb348fdf3c99529cc7838bc1fe1e",
+   "test/jevbench-v178-release.test.mjs": "e9fba77607426fea5e6c4063ff4ed3e674e506686b079057b02198d30413160d"
+  },
+  "identical": true,
+  "passes": 2
+ },
+ "fairness-text": {
+  "log_sha256": "2df8c12bd28bab05ce3cec2bcb2bc3f76b76b244e093e14b8bf87734b7fbe618",
+  "status": "PASS"
+ },
+ "fairness-text-resolution": {
+  "independent_fairness": "FAIR",
+  "publication_fairness_binding": {
+   "engine": "claude-opus-5-5 (account C, effort medium)",
+   "path": "workers/r196-jeff11m-fair/RESULT.json",
+   "sha256": "f87a754ff40f9707fb426df1f7b501a6f18a5b935f42dfe4d11e6bb13f4aa44c",
+   "verdict": "FAIR"
+  },
+  "release_owner_rulings": {
+   "jeff11m-v178-prefill-native-pricing": {
+    "finding": "F2",
+    "recorded_in": "DECISIONS.md 2026-10-26 17:0xZ",
+    "ruling": "Native usage pricing as preregistered; uncounted prefills disclosed with common-basis sensitivity, not priced."
+   }
+  },
+  "review_sha256": "f87a754ff40f9707fb426df1f7b501a6f18a5b935f42dfe4d11e6bb13f4aa44c",
+  "status": "PASS",
+  "text_fix_checks": [
+   {
+    "disposition": "Exact replacement or equivalent sanitized prose; process-only claims removed.",
+    "exact_required_phrases": [
+     "unlisted in the frozen pricing module",
+     "explicit USD 0.05/0.15"
+    ],
+    "field": "cost_basis",
+    "field_sha256": "fa291415e9235f17f7e2ef29d7b4832ceaad9856a5f8b9f05e035a7e47c2033a",
+    "fix": 1,
+    "kind": "required",
+    "old_phrase_absent": true,
+    "status": "PASS"
+   },
+   {
+    "disposition": "Exact replacement or equivalent sanitized prose; process-only claims removed.",
+    "exact_required_phrases": [
+     "no base_model key or exact-base floor applies",
+     "full catalog pair"
+    ],
+    "field": "cost_basis",
+    "field_sha256": "fa291415e9235f17f7e2ef29d7b4832ceaad9856a5f8b9f05e035a7e47c2033a",
+    "fix": 2,
+    "kind": "required",
+    "old_phrase_absent": true,
+    "status": "PASS"
+   },
+   {
+    "disposition": "Exact replacement or equivalent sanitized prose; process-only claims removed.",
+    "exact_required_phrases": [
+     "403,115 tokens on the common 1,485-item basis",
+     "USD 0.048268 per 1,000 decisions",
+     "0.747 times the cap",
+     "all-1,500 USD 0.051819, 0.802 times the cap",
+     "53.79 to 49.49, below the 50-point composite gate",
+     "not included in the published price or scores"
+    ],
+    "field": "cost_basis",
+    "field_sha256": "fa291415e9235f17f7e2ef29d7b4832ceaad9856a5f8b9f05e035a7e47c2033a",
+    "fix": 3,
+    "kind": "required",
+    "old_phrase_absent": true,
+    "status": "PASS"
+   },
+   {
+    "disposition": "Exact replacement or equivalent sanitized prose; process-only claims removed.",
+    "exact_required_phrases": [
+     "The scored process was fresh; no earlier probes affected its process-wide running limits."
+    ],
+    "field": "code_revision",
+    "field_sha256": "3b5d85ab47d97944b86ef454a73c4d8247b972bcbe1a18f64095ea6c110a921b",
+    "fix": 4,
+    "kind": "required",
+    "old_phrase_absent": true,
+    "status": "PASS"
+   },
+   {
+    "disposition": "Exact replacement or equivalent sanitized prose; process-only claims removed.",
+    "exact_required_phrases": [
+     "The shipped configuration uses a one-pass decision head",
+     "No alternative configuration was measured."
+    ],
+    "field": "disclosure",
+    "field_sha256": "41533b290626f5bbc39586bf969471e662f869e99fc615cbfc16ec39452a0126",
+    "fix": 5,
+    "kind": "required",
+    "old_phrase_absent": true,
+    "status": "PASS"
+   },
+   {
+    "disposition": "Exact replacement or equivalent sanitized prose; process-only claims removed.",
+    "exact_required_phrases": [
+     "All 1,500 requests returned HTTP 200 with answers, no refusals or errors"
+    ],
+    "field": "disclosure",
+    "field_sha256": "41533b290626f5bbc39586bf969471e662f869e99fc615cbfc16ec39452a0126",
+    "fix": 6,
+    "kind": "required",
+    "old_phrase_absent": true,
+    "status": "PASS"
+   },
+   {
+    "disposition": "Exact replacement or equivalent sanitized prose; process-only claims removed.",
+    "exact_required_phrases": [
+     "Weights carry non-commercial CC BY-NC-4.0 terms; listed for evaluation only."
+    ],
+    "field": "disclosure",
+    "field_sha256": "41533b290626f5bbc39586bf969471e662f869e99fc615cbfc16ec39452a0126",
+    "fix": 7,
+    "kind": "required",
+    "old_phrase_absent": true,
+    "status": "PASS"
+   },
+   {
+    "disposition": "Exact replacement or equivalent sanitized prose; process-only claims removed.",
+    "exact_required_phrases": [
+     "Weights CC BY-NC-4.0",
+     "non-commercial; listed for evaluation only"
+    ],
+    "field": "licence",
+    "field_sha256": "896ccf28a43e810c7197285414253e32d01abb1602355ff8e47277abb080d123",
+    "fix": 8,
+    "kind": "required",
+    "old_phrase_absent": true,
+    "status": "PASS"
+   },
+   {
+    "disposition": "Exact replacement or equivalent sanitized prose; process-only claims removed.",
+    "exact_required_phrases": [
+     "Every shipped temperature is a point of one geometric grid (steps of 1.05), and the reasoning thresholds are entries of the validation-quantile table published with the model for the chosen shares, so the many-digit values are grid and table entries, not item-level fits."
+    ],
+    "field": "disclosure",
+    "field_sha256": "41533b290626f5bbc39586bf969471e662f869e99fc615cbfc16ec39452a0126",
+    "fix": 9,
+    "kind": "recommended",
+    "old_phrase_absent": true,
+    "status": "PASS"
+   },
+   {
+    "disposition": "Exact replacement or equivalent sanitized prose; process-only claims removed.",
+    "exact_required_phrases": [
+     "Scoring the 15 retrieval answers as misses instead would lower Capability by 0.41 points, from 81.89 to 81.48."
+    ],
+    "field": "disclosure",
+    "field_sha256": "41533b290626f5bbc39586bf969471e662f869e99fc615cbfc16ec39452a0126",
+    "fix": 10,
+    "kind": "recommended",
+    "old_phrase_absent": true,
+    "status": "PASS"
+   }
+  ],
+  "text_fixes_sha256": "1f612b7908f54862faab56ce2167edb2cacf33938e19555d974b5841b617ebed"
+ },
+ "final-prose-delta": {
+  "changed_public_fields": [
+   "systems/jeff_1_1_medium/disclosure"
+  ],
+  "full_suite_runs_after_build": 1,
+  "global_source_hash_rebound": true,
+  "numeric_payload_and_all_other_row_fields_equal": true,
+  "production_build_and_full_suite": "Passed before this final prose-only addition; operative code and all numeric fields unchanged. Final rebuild, row/text/approval gates and targeted tests rerun.",
+  "reason": "Fresh release-owner ruling adopts all ten text fixes; added settings-grid/table provenance sentence.",
+  "status": "PASS"
+ },
+ "final-sanity": {
+  "approval_proof_equal": true,
+  "fairness": {
+   "engine": "claude-opus-5-5 (account C, effort medium)",
+   "path": "workers/r196-jeff11m-fair/RESULT.json",
+   "sha256": "f87a754ff40f9707fb426df1f7b501a6f18a5b935f42dfe4d11e6bb13f4aa44c",
+   "verdict": "FAIR"
+  },
+  "log_sha256": "292e6bf1d2a574ecfa3b3bf8510e2c9eb24e46b2f7e612c5981d92fc7a91a5da",
+  "manifest_hashes_verified": true,
+  "numeric_and_public_data_bytes_equal_to_build_commit": true,
+  "preview_fairness": "FAIR",
+  "publication": "PENDING",
+  "status": "PASS",
+  "text_fix_checks": 10
+ },
+ "flip-fair-synthetic-dry-run": {
+  "fixture_only": true,
+  "log_sha256": "d9820e324029da21a4c1b6b2a2ed90228f8641bc08710002b0a767229e4acf47",
+  "status": "PASS"
+ },
+ "flip-pending-refused": {
+  "log_sha256": "e0854cf82e3b3fa2a4327c3e295e295277695e8d21a2dc2dfcac087901b3448a",
+  "status": "REFUSED_AS_REQUIRED"
+ },
+ "freeze-fair-synthetic-dry-run": {
+  "fixture_only": true,
+  "log_sha256": "c0896af186c7d418eba00c150cabdab4ece50753bbbba12ec464ca26b79d3f24",
+  "status": "PASS"
+ },
+ "freeze-pending-refused": {
+  "log_sha256": "216867a14bd26027ff126dc0adefbf3dbe6368a844c4ea5033179e195bc57ef8",
+  "status": "REFUSED_AS_REQUIRED"
+ },
+ "freeze-publication-pending": {
+  "log_sha256": "1a7b8113c7aa3c98106d03e10409f8ec35031cd93f9dca9d46cd26ca9ab2d4cd",
+  "status": "REFUSED_AS_REQUIRED"
+ },
+ "fulltest": {
+  "cancelled": 0,
+  "fail": 0,
+  "log_sha256": "83d29b737991bc89b009b9fc8237a7f1969bddbd302aadfcac45dfe959f0ad0a",
+  "pass": 3811,
+  "skipped": 8,
+  "status": "PASS",
+  "tests": 3819
+ },
+ "helper-controls": {
+  "checks": [
+   "injected PENDING fairness refused by both dry-run helpers; manifest unchanged",
+   "synthetic FAIR/hash-bound fixture: dry-run flip succeeds; PENDING freeze refuses; synthetic PASS freeze succeeds; no real manifest or seal write",
+   "tampered fairness receipt refused",
+   "hash-bound non-FAIR receipt content refused",
+   "conditional release review refused",
+   "unbound predecessor refused by both helpers",
+   "positive row and negative foreign/revision pin, placeholder, and nine internal-text fixtures passed"
+  ],
+  "status": "PASS"
+ },
+ "helpers": {
+  "log_sha256": "ddd050d7ce8aa1bac4bc3c2f4e5031dba613975e2b1a4bdbfc9285b0e4908df4",
+  "status": "PASS"
+ },
+ "prepare": {
+  "log_sha256": "a1512a5d49cebc707562effbf369b6d64100f36816742db288cb136d2c9791ab",
+  "status": "PASS"
+ },
+ "preview": {
+  "log_sha256": "999b115a21bfb5e0f39448c9799db496fd54954e8ada3628cfc585cbb8ed2142",
+  "status": "PASS"
+ },
+ "preview-browser": {
+  "all_lists": 540,
+  "current_attempt_log_sha256": "3d839915971874425f3a8b14bf0b5fc6f488131c7d75c8cea1a8e11bbb66c994",
+  "custom": "Jeff-1.1-Medium (jgeuter) vs Sieve-31B-v2 (leaves top five)",
+  "initial": "share / open / official / capability \u2014 top five changed. 167 ranked rows.",
+  "intelligence": "Jeff-1.1-Medium (jgeuter) vs DOPEST 1.0 31B (leaves top five)",
+  "limitation": "Inherited browser functionality receipt predates final sensitivity text, four additional custom-preset rows and FAIR header; interaction logic unchanged. Current recheck could not acquire shared Chrome lock. Rebuilt FAIR header checked by final-sanity; card visually inspected.",
+  "official_rows": 167,
+  "page_errors": [],
+  "status": "PASS_WITH_LIMITATION",
+  "tab_closed_in_finally": true
+ },
+ "production-build": {
+  "exit_code": 0,
+  "log_sha256": "f25c2447dadd9b2c48add0191afbb692f68ad513d209693338f1efac6a60ddad",
+  "status": "PASS"
+ },
+ "public-fields": {
+  "all_string_values_scanned": true,
+  "architecture_predecessor_entries_equal": true,
+  "raw_or_sealed_item_content_emitted": false,
+  "status": "PASS"
+ },
+ "release-tests": {
+  "cancelled": 0,
+  "fail": 0,
+  "log_sha256": "4f37f2033d9c6f153736508b17bdf256c406fcda3c49d872bb330be2f67de120",
+  "pass": 65,
+  "skipped": 0,
+  "status": "PASS",
+  "tests": 65
+ },
+ "repro": {
+  "log_sha256": "7b2f16bb17aa6e408e1ef1e38a4e054803e7974021f566ddddd36d5841888663",
+  "status": "PASS"
+ },
+ "source": {
+  "log_sha256": "51c2c9f192cfe7d6e08c61c579cdb640d4caee0513ac89a13b21dcd4f3114471",
+  "status": "PASS"
+ },
+ "synthetic-tests": {
+  "fail": 0,
+  "log_sha256": "95cde7139e0ce2d10cc20acf9489f17518addaf161f6906eedd7042678afc83b",
+  "pass": 57,
+  "status": "PASS",
+  "tests": 58
+ },
+ "topfive": {
+  "base": "v1.7.7",
+  "candidate": "v1.7.8",
+  "changed": true,
+  "changed_labels": [
+   "open/capability/official_caps",
+   "open/capability/latency_none",
+   "frozen/open/official/capability",
+   "frozen/open/official/intelligence",
+   "frozen/open/official/view/Emphasis on Accuracy 60:20:20",
+   "frozen/open/official/view/Intelligence only",
+   "frozen/open/official/view/Capability only",
+   "frozen/open/none/view/Emphasis on Accuracy 60:20:20",
+   "frozen/open/none/view/Intelligence only",
+   "frozen/open/none/view/Capability only",
+   "frozen/open/cost1.4/capability",
+   "frozen/open/cost1.4/intelligence",
+   "frozen/open/cost1.4/view/Emphasis on Accuracy 60:20:20",
+   "frozen/open/cost1.4/view/Intelligence only",
+   "frozen/open/cost1.4/view/Capability only",
+   "frozen/open/cost1.5/capability",
+   "frozen/open/cost1.5/intelligence",
+   "frozen/open/cost1.5/view/Emphasis on Accuracy 60:20:20",
+   "frozen/open/cost1.5/view/Intelligence only",
+   "frozen/open/cost1.5/view/Capability only",
+   "off/open/official/capability",
+   "off/open/official/intelligence",
+   "off/open/official/view/Emphasis on Accuracy 60:20:20",
+   "off/open/official/view/Intelligence only",
+   "off/open/official/view/Capability only",
+   "off/open/none/view/Emphasis on Accuracy 60:20:20",
+   "off/open/none/view/Intelligence only",
+   "off/open/none/view/Capability only",
+   "off/open/cost1.4/capability",
+   "off/open/cost1.4/intelligence",
+   "off/open/cost1.4/view/Emphasis on Accuracy 60:20:20",
+   "off/open/cost1.4/view/Intelligence only",
+   "off/open/cost1.4/view/Capability only",
+   "off/open/cost1.5/capability",
+   "off/open/cost1.5/intelligence",
+   "off/open/cost1.5/view/Emphasis on Accuracy 60:20:20",
+   "off/open/cost1.5/view/Intelligence only",
+   "off/open/cost1.5/view/Capability only",
+   "share/open/official/capability",
+   "share/open/official/intelligence",
+   "share/open/official/view/Emphasis on Accuracy 60:20:20",
+   "share/open/official/view/Intelligence only",
+   "share/open/official/view/Capability only",
+   "share/open/none/view/Emphasis on Accuracy 60:20:20",
+   "share/open/none/view/Intelligence only",
+   "share/open/none/view/Capability only",
+   "share/open/cost1.4/capability",
+   "share/open/cost1.4/intelligence",
+   "share/open/cost1.4/view/Emphasis on Accuracy 60:20:20",
+   "share/open/cost1.4/view/Intelligence only",
+   "share/open/cost1.4/view/Capability only",
+   "share/open/cost1.5/capability",
+   "share/open/cost1.5/intelligence",
+   "share/open/cost1.5/view/Emphasis on Accuracy 60:20:20",
+   "share/open/cost1.5/view/Intelligence only",
+   "share/open/cost1.5/view/Capability only"
+  ],
+  "changed_lists": 56,
+  "comparison_scope": "40 primary site assembly lists plus 540 supplementary axis/weight/cap lists and all recorded slider boundaries; real manifest PENDING",
+  "custom_changed_labels": [
+   "custom/Capability only",
+   "custom/Intelligence only",
+   "custom/I10 Calibration60 Speed0 Cost20"
+  ],
+  "custom_receipt_sha256": "7a8b8e4897e20cf880ce1a0b22b328f1058c403052877d488397604990126097",
+  "custom_weight_example": {
+   "calibration": 50,
+   "cost": 0,
+   "intelligence": 50,
+   "speed": 0
+  },
+  "explicit_slider_grid_changed": 276,
+  "explicit_slider_grid_states": 368,
+  "extended_changed_labels": [
+   "frozen/open/official/capability",
+   "frozen/open/official/intelligence",
+   "frozen/open/official/view/Emphasis on Accuracy 60:20:20",
+   "frozen/open/official/view/Intelligence only",
+   "frozen/open/official/view/Capability only",
+   "frozen/open/none/view/Emphasis on Accuracy 60:20:20",
+   "frozen/open/none/view/Intelligence only",
+   "frozen/open/none/view/Capability only",
+   "frozen/open/cost1.4/capability",
+   "frozen/open/cost1.4/intelligence",
+   "frozen/open/cost1.4/view/Emphasis on Accuracy 60:20:20",
+   "frozen/open/cost1.4/view/Intelligence only",
+   "frozen/open/cost1.4/view/Capability only",
+   "frozen/open/cost1.5/capability",
+   "frozen/open/cost1.5/intelligence",
+   "frozen/open/cost1.5/view/Emphasis on Accuracy 60:20:20",
+   "frozen/open/cost1.5/view/Intelligence only",
+   "frozen/open/cost1.5/view/Capability only",
+   "off/open/official/capability",
+   "off/open/official/intelligence",
+   "off/open/official/view/Emphasis on Accuracy 60:20:20",
+   "off/open/official/view/Intelligence only",
+   "off/open/official/view/Capability only",
+   "off/open/none/view/Emphasis on Accuracy 60:20:20",
+   "off/open/none/view/Intelligence only",
+   "off/open/none/view/Capability only",
+   "off/open/cost1.4/capability",
+   "off/open/cost1.4/intelligence",
+   "off/open/cost1.4/view/Emphasis on Accuracy 60:20:20",
+   "off/open/cost1.4/view/Intelligence only",
+   "off/open/cost1.4/view/Capability only",
+   "off/open/cost1.5/capability",
+   "off/open/cost1.5/intelligence",
+   "off/open/cost1.5/view/Emphasis on Accuracy 60:20:20",
+   "off/open/cost1.5/view/Intelligence only",
+   "off/open/cost1.5/view/Capability only",
+   "share/open/official/capability",
+   "share/open/official/intelligence",
+   "share/open/official/view/Emphasis on Accuracy 60:20:20",
+   "share/open/official/view/Intelligence only",
+   "share/open/official/view/Capability only",
+   "share/open/none/view/Emphasis on Accuracy 60:20:20",
+   "share/open/none/view/Intelligence only",
+   "share/open/none/view/Capability only",
+   "share/open/cost1.4/capability",
+   "share/open/cost1.4/intelligence",
+   "share/open/cost1.4/view/Emphasis on Accuracy 60:20:20",
+   "share/open/cost1.4/view/Intelligence only",
+   "share/open/cost1.4/view/Capability only",
+   "share/open/cost1.5/capability",
+   "share/open/cost1.5/intelligence",
+   "share/open/cost1.5/view/Emphasis on Accuracy 60:20:20",
+   "share/open/cost1.5/view/Intelligence only",
+   "share/open/cost1.5/view/Capability only"
+  ],
+  "extended_changed_lists": 54,
+  "extended_lists": 540,
+  "lists": 580,
+  "primary_changed_labels": [
+   "open/capability/official_caps",
+   "open/capability/latency_none"
+  ],
+  "primary_changed_lists": 2,
+  "primary_lists": 40,
+  "rows": [
+   {
+    "after": [
+     "singularity-super-decider",
+     "kettei-fat",
+     "fastino-glide-api",
+     "torchcast-decision-4b-v1.3",
+     "liquid-d1-ultra"
+    ],
+    "before": [
+     "singularity-super-decider",
+     "kettei-fat",
+     "fastino-glide-api",
+     "torchcast-decision-4b-v1.3",
+     "liquid-d1-ultra"
+    ],
+    "changed": false,
+    "metric": "composites/A",
+    "view": "all"
+   },
+   {
+    "after": [
+     "singularity-super-decider",
+     "kettei-fat",
+     "fastino-glide-api",
+     "drex-max",
+     "subq-snap-1.1"
+    ],
+    "before": [
+     "singularity-super-decider",
+     "kettei-fat",
+     "fastino-glide-api",
+     "drex-max",
+     "subq-snap-1.1"
+    ],
+    "changed": false,
+    "metric": "composites/B",
+    "view": "all"
+   },
+   {
+    "after": [
+     "singularity-super-decider",
+     "kettei-fat",
+     "fastino-glide-api",
+     "torchcast-decision-4b-v1.3",
+     "liquid-d1-ultra"
+    ],
+    "before": [
+     "singularity-super-decider",
+     "kettei-fat",
+     "fastino-glide-api",
+     "torchcast-decision-4b-v1.3",
+     "liquid-d1-ultra"
+    ],
+    "changed": false,
+    "metric": "composites/C",
+    "view": "all"
+   },
+   {
+    "after": [
+     "kettei-fat",
+     "singularity-super-decider-thinking",
+     "singularity-super-decider",
+     "fastino-glide-api",
+     "h2o-lightning-31b"
+    ],
+    "before": [
+     "kettei-fat",
+     "singularity-super-decider-thinking",
+     "singularity-super-decider",
+     "fastino-glide-api",
+     "h2o-lightning-31b"
+    ],
+    "changed": false,
+    "metric": "capability/official_caps",
+    "view": "all"
+   },
+   {
+    "after": [
+     "gpt-6-luna",
+     "gpt-6-luna-low",
+     "gpt-5.6-luna",
+     "deepseek-flash",
+     "kettei-fat"
+    ],
+    "before": [
+     "gpt-6-luna",
+     "gpt-6-luna-low",
+     "gpt-5.6-luna",
+     "deepseek-flash",
+     "kettei-fat"
+    ],
+    "changed": false,
+    "metric": "capability/no_caps",
+    "view": "all"
+   },
+   {
+    "after": [
+     "kettei-fat",
+     "singularity-super-decider-thinking",
+     "mammoth-1",
+     "knowline-31b-gen1",
+     "fastino-glide-1.2-open"
+    ],
+    "before": [
+     "kettei-fat",
+     "singularity-super-decider-thinking",
+     "mammoth-1",
+     "knowline-31b-gen1",
+     "fastino-glide-1.2-open"
+    ],
+    "changed": false,
+    "metric": "capability/cost_off_latency_2x",
+    "view": "all"
+   },
+   {
+    "after": [
+     "kettei-fat",
+     "singularity-super-decider-thinking",
+     "singularity-super-decider",
+     "fastino-glide-api",
+     "h2o-lightning-31b"
+    ],
+    "before": [
+     "kettei-fat",
+     "singularity-super-decider-thinking",
+     "singularity-super-decider",
+     "fastino-glide-api",
+     "h2o-lightning-31b"
+    ],
+    "changed": false,
+    "metric": "capability/latency_none",
+    "view": "all"
+   },
+   {
+    "after": [
+     "kettei-fat",
+     "singularity-super-decider-thinking",
+     "mammoth-1",
+     "knowline-31b-gen1",
+     "fastino-glide-1.2-open"
+    ],
+    "before": [
+     "kettei-fat",
+     "singularity-super-decider-thinking",
+     "mammoth-1",
+     "knowline-31b-gen1",
+     "fastino-glide-1.2-open"
+    ],
+    "changed": false,
+    "metric": "extra_capability/cost_7x",
+    "view": "all"
+   },
+   {
+    "after": [
+     "kettei-fat",
+     "singularity-super-decider-thinking",
+     "mammoth-1",
+     "knowline-31b-gen1",
+     "fastino-glide-1.2-open"
+    ],
+    "before": [
+     "kettei-fat",
+     "singularity-super-decider-thinking",
+     "mammoth-1",
+     "knowline-31b-gen1",
+     "fastino-glide-1.2-open"
+    ],
+    "changed": false,
+    "metric": "extra_capability/cost_10x",
+    "view": "all"
+   },
+   {
+    "after": [
+     "gpt-6-luna",
+     "gpt-6-luna-low",
+     "gpt-5.6-luna",
+     "deepseek-flash",
+     "kettei-fat"
+    ],
+    "before": [
+     "gpt-6-luna",
+     "gpt-6-luna-low",
+     "gpt-5.6-luna",
+     "deepseek-flash",
+     "kettei-fat"
+    ],
+    "changed": false,
+    "metric": "extra_capability/rank_field",
+    "view": "all"
+   },
+   {
+    "after": [
+     "gpt-6-luna",
+     "gpt-6-luna-low",
+     "gpt-5.6-luna",
+     "kettei-fat",
+     "singularity-super-decider-thinking"
+    ],
+    "before": [
+     "gpt-6-luna",
+     "gpt-6-luna-low",
+     "gpt-5.6-luna",
+     "kettei-fat",
+     "singularity-super-decider-thinking"
+    ],
+    "changed": false,
+    "metric": "extra_capability/cost_7x_latency_none",
+    "view": "all"
+   },
+   {
+    "after": [
+     "gpt-6-luna",
+     "gpt-6-luna-low",
+     "gpt-5.6-luna",
+     "kettei-fat",
+     "singularity-super-decider-thinking"
+    ],
+    "before": [
+     "gpt-6-luna",
+     "gpt-6-luna-low",
+     "gpt-5.6-luna",
+     "kettei-fat",
+     "singularity-super-decider-thinking"
+    ],
+    "changed": false,
+    "metric": "extra_capability/cost_10x_latency_none",
+    "view": "all"
+   },
+   {
+    "after": [
+     "torchcast-decision-4b-v1.3",
+     "h2o-lightning-4b",
+     "h2o-lightning-31b",
+     "torchcast-decision-4b-v1.2",
+     "decisio-gemma-4-12b-tuned-commit"
+    ],
+    "before": [
+     "torchcast-decision-4b-v1.3",
+     "h2o-lightning-4b",
+     "h2o-lightning-31b",
+     "torchcast-decision-4b-v1.2",
+     "decisio-gemma-4-12b-tuned-commit"
+    ],
+    "changed": false,
+    "metric": "composites/A",
+    "view": "open"
+   },
+   {
+    "after": [
+     "h2o-lightning-31b",
+     "torchcast-decision-4b-v1.3",
+     "basal-omni-1.0-ultra",
+     "quyet-1-0-large",
+     "decisio-gemma-4-31b-v080"
+    ],
+    "before": [
+     "h2o-lightning-31b",
+     "torchcast-decision-4b-v1.3",
+     "basal-omni-1.0-ultra",
+     "quyet-1-0-large",
+     "decisio-gemma-4-31b-v080"
+    ],
+    "changed": false,
+    "metric": "composites/B",
+    "view": "open"
+   },
+   {
+    "after": [
+     "torchcast-decision-4b-v1.3",
+     "h2o-lightning-4b",
+     "h2o-lightning-31b",
+     "torchcast-decision-4b-v1.2",
+     "decisio-gemma-4-12b-tuned-commit"
+    ],
+    "before": [
+     "torchcast-decision-4b-v1.3",
+     "h2o-lightning-4b",
+     "h2o-lightning-31b",
+     "torchcast-decision-4b-v1.2",
+     "decisio-gemma-4-12b-tuned-commit"
+    ],
+    "changed": false,
+    "metric": "composites/C",
+    "view": "open"
+   },
+   {
+    "after": [
+     "h2o-lightning-31b",
+     "basal-omni-1.0-ultra",
+     "dopest-1.0-31b",
+     "jeff_1_1_medium",
+     "arcbright-elf-1-31b"
+    ],
+    "before": [
+     "h2o-lightning-31b",
+     "basal-omni-1.0-ultra",
+     "dopest-1.0-31b",
+     "arcbright-elf-1-31b",
+     "quyet-1-0-large"
+    ],
+    "changed": true,
+    "metric": "capability/official_caps",
+    "view": "open"
+   },
+   {
+    "after": [
+     "mammoth-1",
+     "knowline-31b-gen1",
+     "fastino-glide-1.2-open",
+     "h2o-lightning-31b",
+     "pplx-decider-v1-1-27b"
+    ],
+    "before": [
+     "mammoth-1",
+     "knowline-31b-gen1",
+     "fastino-glide-1.2-open",
+     "h2o-lightning-31b",
+     "pplx-decider-v1-1-27b"
+    ],
+    "changed": false,
+    "metric": "capability/no_caps",
+    "view": "open"
+   },
+   {
+    "after": [
+     "mammoth-1",
+     "knowline-31b-gen1",
+     "fastino-glide-1.2-open",
+     "h2o-lightning-31b",
+     "pplx-decider-v1-1-27b"
+    ],
+    "before": [
+     "mammoth-1",
+     "knowline-31b-gen1",
+     "fastino-glide-1.2-open",
+     "h2o-lightning-31b",
+     "pplx-decider-v1-1-27b"
+    ],
+    "changed": false,
+    "metric": "capability/cost_off_latency_2x",
+    "view": "open"
+   },
+   {
+    "after": [
+     "h2o-lightning-31b",
+     "basal-omni-1.0-ultra",
+     "dopest-1.0-31b",
+     "jeff_1_1_medium",
+     "arcbright-elf-1-31b"
+    ],
+    "before": [
+     "h2o-lightning-31b",
+     "basal-omni-1.0-ultra",
+     "dopest-1.0-31b",
+     "arcbright-elf-1-31b",
+     "quyet-1-0-large"
+    ],
+    "changed": true,
+    "metric": "capability/latency_none",
+    "view": "open"
+   },
+   {
+    "after": [
+     "mammoth-1",
+     "knowline-31b-gen1",
+     "fastino-glide-1.2-open",
+     "h2o-lightning-31b",
+     "pplx-decider-v1-1-27b"
+    ],
+    "before": [
+     "mammoth-1",
+     "knowline-31b-gen1",
+     "fastino-glide-1.2-open",
+     "h2o-lightning-31b",
+     "pplx-decider-v1-1-27b"
+    ],
+    "changed": false,
+    "metric": "extra_capability/cost_7x",
+    "view": "open"
+   },
+   {
+    "after": [
+     "mammoth-1",
+     "knowline-31b-gen1",
+     "fastino-glide-1.2-open",
+     "h2o-lightning-31b",
+     "pplx-decider-v1-1-27b"
+    ],
+    "before": [
+     "mammoth-1",
+     "knowline-31b-gen1",
+     "fastino-glide-1.2-open",
+     "h2o-lightning-31b",
+     "pplx-decider-v1-1-27b"
+    ],
+    "changed": false,
+    "metric": "extra_capability/cost_10x",
+    "view": "open"
+   },
+   {
+    "after": [
+     "mammoth-1",
+     "knowline-31b-gen1",
+     "fastino-glide-1.2-open",
+     "h2o-lightning-31b",
+     "pplx-decider-v1-1-27b"
+    ],
+    "before": [
+     "mammoth-1",
+     "knowline-31b-gen1",
+     "fastino-glide-1.2-open",
+     "h2o-lightning-31b",
+     "pplx-decider-v1-1-27b"
+    ],
+    "changed": false,
+    "metric": "extra_capability/rank_field",
+    "view": "open"
+   },
+   {
+    "after": [
+     "mammoth-1",
+     "knowline-31b-gen1",
+     "fastino-glide-1.2-open",
+     "h2o-lightning-31b",
+     "pplx-decider-v1-1-27b"
+    ],
+    "before": [
+     "mammoth-1",
+     "knowline-31b-gen1",
+     "fastino-glide-1.2-open",
+     "h2o-lightning-31b",
+     "pplx-decider-v1-1-27b"
+    ],
+    "changed": false,
+    "metric": "extra_capability/cost_7x_latency_none",
+    "view": "open"
+   },
+   {
+    "after": [
+     "mammoth-1",
+     "knowline-31b-gen1",
+     "fastino-glide-1.2-open",
+     "h2o-lightning-31b",
+     "pplx-decider-v1-1-27b"
+    ],
+    "before": [
+     "mammoth-1",
+     "knowline-31b-gen1",
+     "fastino-glide-1.2-open",
+     "h2o-lightning-31b",
+     "pplx-decider-v1-1-27b"
+    ],
+    "changed": false,
+    "metric": "extra_capability/cost_10x_latency_none",
+    "view": "open"
+   },
+   {
+    "after": [
+     "singularity-super-decider",
+     "kettei-fat",
+     "fastino-glide-api",
+     "liquid-d1-ultra",
+     "subq-snap-1.1"
+    ],
+    "before": [
+     "singularity-super-decider",
+     "kettei-fat",
+     "fastino-glide-api",
+     "liquid-d1-ultra",
+     "subq-snap-1.1"
+    ],
+    "changed": false,
+    "metric": "composites/A",
+    "view": "api"
+   },
+   {
+    "after": [
+     "singularity-super-decider",
+     "kettei-fat",
+     "fastino-glide-api",
+     "drex-max",
+     "subq-snap-1.1"
+    ],
+    "before": [
+     "singularity-super-decider",
+     "kettei-fat",
+     "fastino-glide-api",
+     "drex-max",
+     "subq-snap-1.1"
+    ],
+    "changed": false,
+    "metric": "composites/B",
+    "view": "api"
+   },
+   {
+    "after": [
+     "singularity-super-decider",
+     "kettei-fat",
+     "fastino-glide-api",
+     "liquid-d1-ultra",
+     "subq-snap-1.1"
+    ],
+    "before": [
+     "singularity-super-decider",
+     "kettei-fat",
+     "fastino-glide-api",
+     "liquid-d1-ultra",
+     "subq-snap-1.1"
+    ],
+    "changed": false,
+    "metric": "composites/C",
+    "view": "api"
+   },
+   {
+    "after": [
+     "kettei-fat",
+     "singularity-super-decider-thinking",
+     "singularity-super-decider",
+     "fastino-glide-api",
+     "drex-max"
+    ],
+    "before": [
+     "kettei-fat",
+     "singularity-super-decider-thinking",
+     "singularity-super-decider",
+     "fastino-glide-api",
+     "drex-max"
+    ],
+    "changed": false,
+    "metric": "capability/official_caps",
+    "view": "api"
+   },
+   {
+    "after": [
+     "gpt-6-luna",
+     "gpt-6-luna-low",
+     "gpt-5.6-luna",
+     "deepseek-flash",
+     "kettei-fat"
+    ],
+    "before": [
+     "gpt-6-luna",
+     "gpt-6-luna-low",
+     "gpt-5.6-luna",
+     "deepseek-flash",
+     "kettei-fat"
+    ],
+    "changed": false,
+    "metric": "capability/no_caps",
+    "view": "api"
+   },
+   {
+    "after": [
+     "kettei-fat",
+     "singularity-super-decider-thinking",
+     "singularity-super-decider",
+     "fastino-glide-api",
+     "drex-max"
+    ],
+    "before": [
+     "kettei-fat",
+     "singularity-super-decider-thinking",
+     "singularity-super-decider",
+     "fastino-glide-api",
+     "drex-max"
+    ],
+    "changed": false,
+    "metric": "capability/cost_off_latency_2x",
+    "view": "api"
+   },
+   {
+    "after": [
+     "kettei-fat",
+     "singularity-super-decider-thinking",
+     "singularity-super-decider",
+     "fastino-glide-api",
+     "drex-max"
+    ],
+    "before": [
+     "kettei-fat",
+     "singularity-super-decider-thinking",
+     "singularity-super-decider",
+     "fastino-glide-api",
+     "drex-max"
+    ],
+    "changed": false,
+    "metric": "capability/latency_none",
+    "view": "api"
+   },
+   {
+    "after": [
+     "kettei-fat",
+     "singularity-super-decider-thinking",
+     "singularity-super-decider",
+     "fastino-glide-api",
+     "drex-max"
+    ],
+    "before": [
+     "kettei-fat",
+     "singularity-super-decider-thinking",
+     "singularity-super-decider",
+     "fastino-glide-api",
+     "drex-max"
+    ],
+    "changed": false,
+    "metric": "extra_capability/cost_7x",
+    "view": "api"
+   },
+   {
+    "after": [
+     "kettei-fat",
+     "singularity-super-decider-thinking",
+     "singularity-super-decider",
+     "fastino-glide-api",
+     "drex-max"
+    ],
+    "before": [
+     "kettei-fat",
+     "singularity-super-decider-thinking",
+     "singularity-super-decider",
+     "fastino-glide-api",
+     "drex-max"
+    ],
+    "changed": false,
+    "metric": "extra_capability/cost_10x",
+    "view": "api"
+   },
+   {
+    "after": [
+     "gpt-6-luna",
+     "gpt-6-luna-low",
+     "gpt-5.6-luna",
+     "deepseek-flash",
+     "kettei-fat"
+    ],
+    "before": [
+     "gpt-6-luna",
+     "gpt-6-luna-low",
+     "gpt-5.6-luna",
+     "deepseek-flash",
+     "kettei-fat"
+    ],
+    "changed": false,
+    "metric": "extra_capability/rank_field",
+    "view": "api"
+   },
+   {
+    "after": [
+     "gpt-6-luna",
+     "gpt-6-luna-low",
+     "gpt-5.6-luna",
+     "kettei-fat",
+     "singularity-super-decider-thinking"
+    ],
+    "before": [
+     "gpt-6-luna",
+     "gpt-6-luna-low",
+     "gpt-5.6-luna",
+     "kettei-fat",
+     "singularity-super-decider-thinking"
+    ],
+    "changed": false,
+    "metric": "extra_capability/cost_7x_latency_none",
+    "view": "api"
+   },
+   {
+    "after": [
+     "gpt-6-luna",
+     "gpt-6-luna-low",
+     "gpt-5.6-luna",
+     "kettei-fat",
+     "singularity-super-decider-thinking"
+    ],
+    "before": [
+     "gpt-6-luna",
+     "gpt-6-luna-low",
+     "gpt-5.6-luna",
+     "kettei-fat",
+     "singularity-super-decider-thinking"
+    ],
+    "changed": false,
+    "metric": "extra_capability/cost_10x_latency_none",
+    "view": "api"
+   },
+   {
+    "after": [
+     "singularity-super-decider",
+     "kettei-fat",
+     "fastino-glide-api",
+     "torchcast-decision-4b-v1.3",
+     "liquid-d1-ultra"
+    ],
+    "before": [
+     "singularity-super-decider",
+     "kettei-fat",
+     "fastino-glide-api",
+     "torchcast-decision-4b-v1.3",
+     "liquid-d1-ultra"
+    ],
+    "changed": false,
+    "metric": "A",
+    "view": "release"
+   },
+   {
+    "after": [
+     "singularity-super-decider",
+     "kettei-fat",
+     "fastino-glide-api",
+     "drex-max",
+     "subq-snap-1.1"
+    ],
+    "before": [
+     "singularity-super-decider",
+     "kettei-fat",
+     "fastino-glide-api",
+     "drex-max",
+     "subq-snap-1.1"
+    ],
+    "changed": false,
+    "metric": "B",
+    "view": "release"
+   },
+   {
+    "after": [
+     "singularity-super-decider",
+     "kettei-fat",
+     "fastino-glide-api",
+     "torchcast-decision-4b-v1.3",
+     "liquid-d1-ultra"
+    ],
+    "before": [
+     "singularity-super-decider",
+     "kettei-fat",
+     "fastino-glide-api",
+     "torchcast-decision-4b-v1.3",
+     "liquid-d1-ultra"
+    ],
+    "changed": false,
+    "metric": "C",
+    "view": "release"
+   },
+   {
+    "after": [
+     "gpt-6-luna",
+     "gpt-6-luna-low",
+     "gpt-5.6-luna",
+     "deepseek-flash",
+     "kettei-fat"
+    ],
+    "before": [
+     "gpt-6-luna",
+     "gpt-6-luna-low",
+     "gpt-5.6-luna",
+     "deepseek-flash",
+     "kettei-fat"
+    ],
+    "changed": false,
+    "metric": "capability",
+    "view": "release"
+   }
+  ],
+  "slider_changed_states": 77,
+  "snapshots_sha256": {
+   "topfive-after.json": "3414678df37e6ed0c188d2e54bffe2290ca5f163af61355b471fb0f97c406ece",
+   "topfive-before.json": "a31ec9edd3fe3d288313d1461d79346d37f2f38de0e2b347fac348e171d17692",
+   "topfive-extended.json": "1de8def9987152c2d0da290260ac1f4d70321731b92ad01f1744a17bb6d88cae",
+   "topfive-sliders.json": "a4d62e3f73d2c8ed39ae0c05ecbd44574a8ead41e70ed020d9005add0425592f"
+  },
+  "variant": "10-second share"
+ },
+ "typescript": {
+  "exit_code": 0,
+  "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "status": "PASS"
+ },
+ "validator": {
+  "log_sha256": "a7bc81e0f13521be3397a4752497ff003d8fcad2ef7deb9d202584e22bd79ea7",
+  "status": "PASS"
+ }
+}

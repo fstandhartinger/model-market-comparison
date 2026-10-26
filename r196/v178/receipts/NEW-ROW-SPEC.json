@@ -1,0 +1,1356 @@
+{
+ "jeff_1_1_medium": {
+  "addendum": null,
+  "api_flag": false,
+  "api_subset": false,
+  "author": "jgeuter (Hugging Face)",
+  "axes": {
+   "calibration": 89.2826256096074,
+   "cost": 53.79201221112599,
+   "intelligence": 74.49393760932514,
+   "speed": 73.9814920153467
+  },
+  "calibration": {
+   "parts": {
+    "choice": {
+     "ece_hard": 0.03660587736612005,
+     "ece_score": 92.678824526776,
+     "mean_tvd": null,
+     "n": 750,
+     "n_ece_hard": 315,
+     "n_tvd": 0,
+     "score": 92.678824526776,
+     "score_before_time_limit": 92.678824526776,
+     "time_limit_failed_share": 0.0
+    },
+    "noul": {
+     "abstention_rate": 0.0,
+     "brier": 0.08204756078344574,
+     "ece": 0.039414676672970925,
+     "n": 375,
+     "score": 92.1170646654058,
+     "score_before_time_limit": 92.1170646654058,
+     "time_limit_failed_share": 0.0
+    },
+    "score": {
+     "interval90_coverage": 0.8693333333333333,
+     "interval90_width": 0.10555555555555553,
+     "n": 375,
+     "nrps": 0.06185082837121522,
+     "score": 83.05198763664039,
+     "score_before_time_limit": 83.05198763664039,
+     "time_limit_failed_share": 0.0,
+     "top_ece": 0.13855470944798848
+    }
+   },
+   "score": 89.2826256096074
+  },
+  "capability": 81.88828160946628,
+  "code_revision": "The author's own serving path ran unmodified: j-geuter/Jeff-JevBench@3b53b463f6427f45450b1e99c9d67842fed780d6 installing jeff 1.4.0 (j-geuter/Jeff@47ac025a1d8a011bdb1fb1cbbbf20607884d35ee). Native /v1/systemone endpoint with no response shim or instruction conversion. Reasoning enabled, JevBench limits enabled, fast_reasoning resolved to copy, reasoning_engine transformers, batching off, shipped Jeff-1.1-Medium settings unchanged. Reasoning budget 256, shares choice 0 / noul 0.1 / score 0.6, maximum output per decision 224, maximum share 0.45, decision_seconds 8.5, request_seconds 30, window 1000 and warm-up 100 decisions. The commitment band moves probabilities strictly inside (0.2, 0.8) to 0.801 or 0.199. Adapted google/gemma-4-12B-it with adapter and decision head, full bidirectional attention in the decision pass, maximum input 8,192 tokens, no quantisation. Hash-locked dependencies included torch 2.13.0+cu130 and transformers 5.17.0. Source and weights ran on isolated rented hardware with networking disabled, no credentials and read-only mounts. The scored process was fresh; no earlier probes affected its process-wide running limits.",
+  "composite_ci95": {
+   "A": [
+    69.01864536776712,
+    71.26205057949386
+   ],
+   "B": [
+    69.2808468276072,
+    72.51411427697472
+   ],
+   "C": [
+    69.01864536776712,
+    71.26205057949386
+   ]
+  },
+  "cost": {
+   "basis": "ESTIMATE: explicit USD 0.05/0.15 per million input/output tokens, settled Gemma-4-12B estimate via google/gemma-3-12b-it at the full catalog pair. google/gemma-4-12B-it is unlisted in the frozen pricing module; no base_model key or exact-base floor applies. Native usage priced as reported; uncounted second-prefill estimate of 427,166 input tokens is disclosed and not priced. Common 1,485-item basis USD 0.03469 per 1,000 decisions = 0.537 times cap; all-1,500 basis USD 0.03758 = 0.582 times cap. Estimated, not charged usage or a host quote. If the uncounted prefills were priced as input (403,115 tokens on the common 1,485-item basis), the common-basis cost would be USD 0.048268 per 1,000 decisions, 0.747 times the cap (all-1,500 USD 0.051819, 0.802 times the cap). The Cost axis would fall from 53.79 to 49.49, below the 50-point composite gate. This sensitivity estimate is not included in the published price or scores.",
+   "common_basis": {
+    "n_items": 1485,
+    "rule": "common",
+    "usd_per_1000_all_items": 0.03757996666666667
+   },
+   "kind": "estimate",
+   "usage_estimated_rows": 0,
+   "usd_per_1000": 0.0346949494949495
+  },
+  "decision_limit": {
+   "limit_s": 10.0,
+   "n_over_limit": 0,
+   "n_over_limit_answered_ok": 0,
+   "rule": "latency_s > limit -> failed",
+   "speed_basis": "all decisions given (lane items in the raw), measured latency_s",
+   "speed_n": 1500,
+   "treatment": "share"
+  },
+  "disclosure": "First measurement of jgeuter/Jeff-1.1-Medium, a Jev-compatible model. Jeff-1.0-Large remains a separate measured model; nothing is inferred about unmeasured siblings. The author's own serving path ran unmodified with native choice, noul and score probabilities. The shipped configuration uses a one-pass decision head and limited generated reasoning read back into the answer: 324 decisions were reasoned, three further reasonings were admitted but dropped, and 1,173 were one-pass. Fast reasoning resolved to copy on this hardware; other hardware may use a slower shared path. The settings target the published latency and cost caps: decision_seconds 8.5, max_share 0.45 and max_output_per_decision 224. The commitment band changes yes/no probabilities; Calibration includes its effect. No alternative configuration was measured. The card reports public-231 scores and separately held-out tuning data; the data used to tune the JevBench-specific settings are not identified. Every shipped temperature is a point of one geometric grid (steps of 1.05), and the reasoning thresholds are entries of the validation-quantile table published with the model for the chosen shares, so the many-digit values are grid and table entries, not item-level fits. Training data are not identified beyond the card's description of CC BY-NC and research-only sources; the author states no JevBench items were used. Training examples and overlap with JevBench were not independently checked. Question-aware retrieval answered the 15 long items at at most 8,192 input tokens, selecting state passages matching the question in original order, with a start-of-state fallback. These answers use retrieved passages, not the whole state. All 1,500 requests returned HTTP 200 with answers, no refusals or errors; zero exceeded 10 s (maximum 8.092 s). Measured p50 0.067 s and p95 6.957 s; the common self-hosted latency assumption is twice p50 plus 0.15 s. Native usage is 910,751 input and 72,216 output tokens. Ordinary input counts match the independent count on all 1,485 common items; the 15 retrieval answers stay within 8,192 tokens. The server counts one-pass input only: an uncounted second-prefill estimate totals 427,166 tokens (188,995 generation-prefill plus 238,171 read-prefill), not measured natively and not priced. Native nonzero output is generated reasoning and is priced as reported. Cost is an ESTIMATE using explicit 0.05/0.15 USD per million tokens, not charged usage or a host quote. The common 1,485-item basis costs USD 0.03469 per 1,000 decisions (0.537 times cap); all 1,500 cost USD 0.03758 (0.582 times cap). Weights carry non-commercial CC BY-NC-4.0 terms; listed for evaluation only. If the uncounted prefills were priced as input (403,115 tokens on the common 1,485-item basis), the common-basis cost would be USD 0.048268 per 1,000 decisions, 0.747 times the cap (all-1,500 USD 0.051819, 0.802 times the cap). The Cost axis would fall from 53.79 to 49.49, below the 50-point composite gate. This sensitivity estimate is not included in the published price or scores. Scoring the 15 retrieval answers as misses instead would lower Capability by 0.41 points, from 81.89 to 81.48.",
+  "display": "Jeff-1.1-Medium (jgeuter)",
+  "draw": {
+   "id": "v1.6-regular-20261012",
+   "measured_on": "2026-10-26",
+   "release": "v1.7.8",
+   "results_sha256": "ae6176c6e26c68f2e3634e2c59c019ff8be04dfdcfb3f2ac73905338ad25f747"
+  },
+  "endpoint_condition": "Measured 26 Oct 2026 on one rented NVIDIA RTX PRO 6000 Blackwell Server Edition 96 GB in Finland over loopback. One measured attempt in a fresh process with pinned weights and serving code, read-only model and source, no credentials and networking disabled. GPU rental is separate from the estimated model tariff.",
+  "endpoint_kind": "gpu",
+  "full_coverage": true,
+  "intelligence": {
+   "I_open": 75.96270449682046,
+   "I_sealed": 73.02517072182982,
+   "base": 74.49393760932514,
+   "excess": -6.90199299536507,
+   "gap": 2.9375337749906407,
+   "penalty": 1.0,
+   "per_type_split": {
+    "open|choice": {
+     "cc": 75.89450831799229,
+     "n": {
+      "easy": 33,
+      "hard": 68,
+      "judge": 32,
+      "standard": 17
+     },
+     "tiers": {
+      "easy": 96.10810810810811,
+      "hard": 73.57659641396664,
+      "judge": 76.26895187870798,
+      "standard": 69.8618668899121
+     }
+    },
+    "open|noul": {
+     "cc": 82.59903381642512,
+     "n": {
+      "easy": 14,
+      "hard": 23,
+      "judge": 20,
+      "standard": 18
+     },
+     "tiers": {
+      "easy": 100.0,
+      "hard": 82.6086956521739,
+      "judge": 80.0,
+      "standard": 77.77777777777777
+     }
+    },
+    "open|score": {
+     "cc": 69.394571356044,
+     "n": {
+      "easy": 9,
+      "hard": 29,
+      "judge": 21,
+      "standard": 16
+     },
+     "tiers": {
+      "easy": 82.09429427667607,
+      "hard": 67.98331028970999,
+      "judge": 66.81081924529522,
+      "standard": 69.74286019451912
+     }
+    },
+    "sealed|choice": {
+     "cc": 74.82919916715036,
+     "n": {
+      "easy": 70,
+      "hard": 247,
+      "judge": 146,
+      "standard": 137
+     },
+     "tiers": {
+      "easy": 92.37611181702668,
+      "hard": 71.89776801202729,
+      "judge": 70.02938295788442,
+      "standard": 79.11832946635731
+     }
+    },
+    "sealed|noul": {
+     "cc": 76.91360415189546,
+     "n": {
+      "easy": 58,
+      "hard": 110,
+      "judge": 65,
+      "standard": 67
+     },
+     "tiers": {
+      "easy": 79.3103448275862,
+      "hard": 67.27272727272727,
+      "judge": 81.53846153846153,
+      "standard": 88.05970149253733
+     }
+    },
+    "sealed|score": {
+     "cc": 67.33270884644364,
+     "n": {
+      "easy": 35,
+      "hard": 123,
+      "judge": 67,
+      "standard": 75
+     },
+     "tiers": {
+      "easy": 80.6214036297183,
+      "hard": 65.80169539771485,
+      "judge": 64.5447063320077,
+      "standard": 67.93239212391775
+     }
+    }
+   }
+  },
+  "jevbench_score": 70.5077981163115,
+  "key": "jeff_1_1_medium",
+  "last_measured_on": "2026-10-26",
+  "licence": "Weights CC BY-NC-4.0 per the model card (non-commercial; listed for evaluation only); bases Apache-2.0; serving code Apache-2.0 (jeff 1.4.0).",
+  "listing": "ranked",
+  "measured_in": "v1.7.8",
+  "measurement_date_status": "measured",
+  "method": "v1.7",
+  "model_pin": "jgeuter/Jeff-1.1-Medium@540c40924dd67c715d3367309ba6744bac754b00",
+  "new_in": "v1.7.8",
+  "noul_decisive": {
+   "acc_among_decisive": 0.8933333333333333,
+   "decisive": 375,
+   "decisive_rate": 1.0,
+   "n": 375,
+   "supported": true,
+   "valid": 375
+  },
+  "paid_fast_lane": false,
+  "planned_weight_denominator": 1.0,
+  "rank": 29,
+  "ranked": true,
+  "ranks": {
+   "A": 29,
+   "B": 16,
+   "C": 26,
+   "capability": 21
+  },
+  "repo": "https://huggingface.co/jgeuter/Jeff-1.1-Medium",
+  "scores": {
+   "A": 70.5077981163115,
+   "B": 71.2705293691451,
+   "C": 70.5077981163115
+  },
+  "speed": {
+   "adjustment": "x2 + 0.15 s (assumption, not measured)",
+   "basis": "all decisions given (lane items in the raw), measured latency_s",
+   "n": 1500,
+   "p50_s_adjusted": 0.2842651589998241,
+   "p50_s_raw": 0.06713257949991203,
+   "p95_s_adjusted": 14.064592863100074,
+   "p95_s_raw": 6.957296431550037
+  },
+  "status": {
+   "answered_ok": 1500,
+   "missing": 0,
+   "rows": 1500,
+   "status": "complete"
+  },
+  "support": {
+   "choice": "native",
+   "noul": "native",
+   "score": "native"
+  },
+  "v16": {
+   "api_subset": false,
+   "api_subset_tag": null,
+   "breakdowns": {
+    "family": {
+     "calibration": {
+      "accuracy": 0.8636363636363636,
+      "cc": 74.04529521973119,
+      "cc_by_type": {
+       "choice": 83.33333333333333,
+       "noul": 100.0,
+       "score": 38.80255232586025
+      },
+      "low_n": true,
+      "n": 22,
+      "n_by_type": {
+       "choice": 16,
+       "noul": 4,
+       "score": 2
+      },
+      "score": 74.04529521973119
+     },
+     "calibration_gen": {
+      "accuracy": 0.7821782178217822,
+      "cc": 73.26356147477776,
+      "cc_by_type": {
+       "choice": 52.27995758218452,
+       "noul": 84.00000000000001,
+       "score": 83.51072684214877
+      },
+      "low_n": false,
+      "n": 101,
+      "n_by_type": {
+       "choice": 41,
+       "noul": 25,
+       "score": 35
+      },
+      "score": 73.26356147477776
+     },
+     "composite_gen": {
+      "accuracy": 0.9207920792079208,
+      "cc": 86.32227320831622,
+      "cc_by_type": {
+       "choice": 83.73983739837398,
+       "noul": 77.77777777777777,
+       "score": 97.44920444879689
+      },
+      "low_n": false,
+      "n": 101,
+      "n_by_type": {
+       "choice": 41,
+       "noul": 27,
+       "score": 33
+      },
+      "score": 86.32227320831622
+     },
+     "fairness": {
+      "accuracy": 1.0,
+      "cc": 98.94166903836147,
+      "cc_by_type": {
+       "choice": 100.0,
+       "noul": 100.0,
+       "score": 96.82500711508443
+      },
+      "low_n": false,
+      "n": 48,
+      "n_by_type": {
+       "choice": 15,
+       "noul": 15,
+       "score": 18
+      },
+      "score": 98.94166903836147
+     },
+     "jaggedness": {
+      "accuracy": 0.7166666666666667,
+      "cc": 60.46415936626732,
+      "cc_by_type": {
+       "choice": 61.02021174205967,
+       "noul": 78.37837837837837,
+       "score": 41.9938879783639
+      },
+      "low_n": false,
+      "n": 180,
+      "n_by_type": {
+       "choice": 94,
+       "noul": 37,
+       "score": 49
+      },
+      "score": 60.46415936626732
+     },
+     "llm_router": {
+      "accuracy": 0.8594249201277955,
+      "cc": 78.38340387498164,
+      "cc_by_type": {
+       "choice": 81.77335563969358,
+       "noul": 91.75257731958763,
+       "score": 61.62427866566371
+      },
+      "low_n": false,
+      "n": 313,
+      "n_by_type": {
+       "choice": 152,
+       "noul": 97,
+       "score": 64
+      },
+      "score": 78.38340387498164
+     },
+     "long_state": {
+      "accuracy": 0.7333333333333333,
+      "cc": 28.483908704969963,
+      "cc_by_type": {
+       "choice": 74.19354838709678,
+       "noul": 0.0,
+       "score": 11.258177727813102
+      },
+      "low_n": true,
+      "n": 15,
+      "n_by_type": {
+       "choice": 10,
+       "noul": 2,
+       "score": 3
+      },
+      "score": 28.483908704969963
+     },
+     "ml_usecase": {
+      "accuracy": 0.7777777777777778,
+      "cc": 65.70296712637615,
+      "cc_by_type": {
+       "choice": 62.886597938144334,
+       "noul": 50.0,
+       "score": 84.22230344098408
+      },
+      "low_n": true,
+      "n": 27,
+      "n_by_type": {
+       "choice": 11,
+       "noul": 8,
+       "score": 8
+      },
+      "score": 65.70296712637615
+     },
+     "multilingual": {
+      "accuracy": 0.8036363636363636,
+      "cc": 69.89465982016291,
+      "cc_by_type": {
+       "choice": 71.63351809585916,
+       "noul": 69.44444444444444,
+       "score": 68.60601692018513
+      },
+      "low_n": false,
+      "n": 275,
+      "n_by_type": {
+       "choice": 134,
+       "noul": 72,
+       "score": 69
+      },
+      "score": 69.89465982016291
+     },
+     "negation_pair_gen": {
+      "accuracy": 0.8604651162790697,
+      "cc": 74.24798945628622,
+      "cc_by_type": {
+       "choice": 93.33333333333333,
+       "noul": 39.99999999999999,
+       "score": 89.41063503552536
+      },
+      "low_n": false,
+      "n": 86,
+      "n_by_type": {
+       "choice": 40,
+       "noul": 30,
+       "score": 16
+      },
+      "score": 74.24798945628622
+     },
+     "option_order": {
+      "accuracy": 0.9791666666666666,
+      "cc": 97.3368841544607,
+      "cc_by_type": {
+       "choice": 97.3368841544607
+      },
+      "low_n": false,
+      "n": 48,
+      "n_by_type": {
+       "choice": 48
+      },
+      "score": 97.3368841544607
+     },
+     "perturb_pair": {
+      "accuracy": 0.859375,
+      "cc": 85.66876756627528,
+      "cc_by_type": {
+       "choice": 78.97897897897899,
+       "noul": 100.0,
+       "score": 78.02732371984685
+      },
+      "low_n": false,
+      "n": 64,
+      "n_by_type": {
+       "choice": 44,
+       "noul": 10,
+       "score": 10
+      },
+      "score": 85.66876756627528
+     },
+     "usecase": {
+      "accuracy": 0.7727272727272727,
+      "cc": 72.53328986838547,
+      "cc_by_type": {
+       "choice": 71.81372549019609,
+       "noul": 83.33333333333333,
+       "score": 62.45281078162699
+      },
+      "low_n": false,
+      "n": 220,
+      "n_by_type": {
+       "choice": 104,
+       "noul": 48,
+       "score": 68
+      },
+      "score": 72.53328986838547
+     }
+    },
+    "lang": {
+     "ar": {
+      "accuracy": 0.6875,
+      "cc": 52.33345053481445,
+      "cc_by_type": {
+       "choice": 42.857142857142854,
+       "noul": 50.0,
+       "score": 64.14320874730049
+      },
+      "low_n": true,
+      "n": 16,
+      "n_by_type": {
+       "choice": 7,
+       "noul": 4,
+       "score": 5
+      },
+      "score": 52.33345053481445
+     },
+     "cs": {
+      "accuracy": 0.5714285714285714,
+      "cc": 68.42105263157895,
+      "cc_by_type": {
+       "choice": 36.84210526315789,
+       "noul": 100.0
+      },
+      "low_n": true,
+      "n": 7,
+      "n_by_type": {
+       "choice": 6,
+       "noul": 1
+      },
+      "score": 68.42105263157895
+     },
+     "da": {
+      "accuracy": 0.8461538461538461,
+      "cc": 78.31837894245962,
+      "cc_by_type": {
+       "choice": 79.26267281105991,
+       "noul": 100.0,
+       "score": 55.69246401631893
+      },
+      "low_n": true,
+      "n": 13,
+      "n_by_type": {
+       "choice": 6,
+       "noul": 3,
+       "score": 4
+      },
+      "score": 78.31837894245962
+     },
+     "de": {
+      "accuracy": 0.9375,
+      "cc": 93.77361445100517,
+      "cc_by_type": {
+       "choice": 84.07079646017698,
+       "noul": 100.0,
+       "score": 97.25004689283854
+      },
+      "low_n": false,
+      "n": 32,
+      "n_by_type": {
+       "choice": 16,
+       "noul": 8,
+       "score": 8
+      },
+      "score": 93.77361445100517
+     },
+     "el": {
+      "accuracy": 0.8,
+      "cc": 77.58948950019511,
+      "cc_by_type": {
+       "choice": 66.4804469273743,
+       "noul": 66.66666666666667,
+       "score": 99.62135490654435
+      },
+      "low_n": true,
+      "n": 15,
+      "n_by_type": {
+       "choice": 8,
+       "noul": 6,
+       "score": 1
+      },
+      "score": 77.58948950019511
+     },
+     "en": {
+      "accuracy": 0.8288444830582102,
+      "cc": 75.40805527369746,
+      "cc_by_type": {
+       "choice": 77.15429394320303,
+       "noul": 80.57553956834533,
+       "score": 68.49433230954402
+      },
+      "low_n": false,
+      "n": 1151,
+      "n_by_type": {
+       "choice": 588,
+       "noul": 278,
+       "score": 285
+      },
+      "score": 75.40805527369746
+     },
+     "es": {
+      "accuracy": 0.9032258064516129,
+      "cc": 81.97978510361118,
+      "cc_by_type": {
+       "choice": 90.2120717781403,
+       "noul": 100.0,
+       "score": 55.72728353269325
+      },
+      "low_n": false,
+      "n": 31,
+      "n_by_type": {
+       "choice": 13,
+       "noul": 8,
+       "score": 10
+      },
+      "score": 81.97978510361118
+     },
+     "fi": {
+      "accuracy": 0.625,
+      "cc": 55.50725895726558,
+      "cc_by_type": {
+       "choice": 34.42622950819673,
+       "noul": 33.33333333333333,
+       "score": 98.76221403026668
+      },
+      "low_n": true,
+      "n": 8,
+      "n_by_type": {
+       "choice": 4,
+       "noul": 3,
+       "score": 1
+      },
+      "score": 55.50725895726558
+     },
+     "fr": {
+      "accuracy": 0.7142857142857143,
+      "cc": 72.88174853616643,
+      "cc_by_type": {
+       "choice": 36.47058823529412,
+       "noul": 100.0,
+       "score": 82.17465737320516
+      },
+      "low_n": true,
+      "n": 14,
+      "n_by_type": {
+       "choice": 6,
+       "noul": 2,
+       "score": 6
+      },
+      "score": 72.88174853616643
+     },
+     "hi": {
+      "accuracy": 0.9523809523809523,
+      "cc": 88.07505097668599,
+      "cc_by_type": {
+       "choice": 99.99999999999999,
+       "noul": 75.0,
+       "score": 89.22515293005797
+      },
+      "low_n": true,
+      "n": 21,
+      "n_by_type": {
+       "choice": 8,
+       "noul": 8,
+       "score": 5
+      },
+      "score": 88.07505097668599
+     },
+     "id": {
+      "accuracy": 1.0,
+      "cc": 100.0,
+      "cc_by_type": {
+       "choice": 100.0,
+       "noul": 100.0
+      },
+      "low_n": true,
+      "n": 4,
+      "n_by_type": {
+       "choice": 3,
+       "noul": 1
+      },
+      "score": 100.0
+     },
+     "it": {
+      "accuracy": 0.8666666666666667,
+      "cc": 84.94064835071737,
+      "cc_by_type": {
+       "choice": 85.97038191738113,
+       "noul": 100.0,
+       "score": 68.85156313477098
+      },
+      "low_n": true,
+      "n": 15,
+      "n_by_type": {
+       "choice": 9,
+       "noul": 3,
+       "score": 3
+      },
+      "score": 84.94064835071737
+     },
+     "ja": {
+      "accuracy": 0.6,
+      "cc": 28.694620754724344,
+      "cc_by_type": {
+       "choice": 28.514694201747414,
+       "noul": 39.99999999999999,
+       "score": 17.569168062425632
+      },
+      "low_n": true,
+      "n": 25,
+      "n_by_type": {
+       "choice": 9,
+       "noul": 10,
+       "score": 6
+      },
+      "score": 28.694620754724344
+     },
+     "ko": {
+      "accuracy": 0.7,
+      "cc": 51.38820512271098,
+      "cc_by_type": {
+       "choice": 100.0,
+       "noul": 0.0,
+       "score": 54.16461536813292
+      },
+      "low_n": true,
+      "n": 10,
+      "n_by_type": {
+       "choice": 3,
+       "noul": 2,
+       "score": 5
+      },
+      "score": 51.38820512271098
+     },
+     "mixed": {
+      "accuracy": 1.0,
+      "cc": 99.96951944444963,
+      "cc_by_type": {
+       "choice": 100.0,
+       "noul": 100.0,
+       "score": 99.90855833334889
+      },
+      "low_n": true,
+      "n": 14,
+      "n_by_type": {
+       "choice": 8,
+       "noul": 3,
+       "score": 3
+      },
+      "score": 99.96951944444963
+     },
+     "nl": {
+      "accuracy": 0.8,
+      "cc": 51.54853464698423,
+      "cc_by_type": {
+       "choice": 100.0,
+       "noul": 33.33333333333333,
+       "score": 21.312270607619375
+      },
+      "low_n": true,
+      "n": 10,
+      "n_by_type": {
+       "choice": 5,
+       "noul": 3,
+       "score": 2
+      },
+      "score": 51.54853464698423
+     },
+     "no": {
+      "accuracy": 0.6666666666666666,
+      "cc": 42.74193548387097,
+      "cc_by_type": {
+       "choice": 35.483870967741936,
+       "noul": 50.0
+      },
+      "low_n": true,
+      "n": 6,
+      "n_by_type": {
+       "choice": 2,
+       "noul": 4
+      },
+      "score": 42.74193548387097
+     },
+     "pl": {
+      "accuracy": 0.8974358974358975,
+      "cc": 88.22581168041158,
+      "cc_by_type": {
+       "choice": 92.382564536606,
+       "noul": 100.0,
+       "score": 72.29487050462875
+      },
+      "low_n": false,
+      "n": 39,
+      "n_by_type": {
+       "choice": 17,
+       "noul": 10,
+       "score": 12
+      },
+      "score": 88.22581168041158
+     },
+     "pt": {
+      "accuracy": 0.7857142857142857,
+      "cc": 76.18822971124843,
+      "cc_by_type": {
+       "choice": 57.57218621096051,
+       "noul": 100.0,
+       "score": 70.99250292278478
+      },
+      "low_n": true,
+      "n": 28,
+      "n_by_type": {
+       "choice": 12,
+       "noul": 5,
+       "score": 11
+      },
+      "score": 76.18822971124843
+     },
+     "sv": {
+      "accuracy": 0.45454545454545453,
+      "cc": 22.60823352443819,
+      "cc_by_type": {
+       "choice": -2.127659574468081,
+       "noul": 60.00000000000001,
+       "score": 9.952360147782645
+      },
+      "low_n": true,
+      "n": 11,
+      "n_by_type": {
+       "choice": 5,
+       "noul": 5,
+       "score": 1
+      },
+      "score": 22.60823352443819
+     },
+     "tr": {
+      "accuracy": 0.7692307692307693,
+      "cc": 47.06918621687356,
+      "cc_by_type": {
+       "choice": 100.0,
+       "noul": 50.0,
+       "score": -8.792441349379331
+      },
+      "low_n": true,
+      "n": 13,
+      "n_by_type": {
+       "choice": 6,
+       "noul": 4,
+       "score": 3
+      },
+      "score": 47.06918621687356
+     },
+     "uk": {
+      "accuracy": 0.7142857142857143,
+      "cc": 70.84238776953744,
+      "cc_by_type": {
+       "choice": 35.483870967741936,
+       "noul": 100.0,
+       "score": 77.04329234087038
+      },
+      "low_n": true,
+      "n": 7,
+      "n_by_type": {
+       "choice": 4,
+       "noul": 1,
+       "score": 2
+      },
+      "score": 70.84238776953744
+     },
+     "zh": {
+      "accuracy": 0.9,
+      "cc": 76.5651301216297,
+      "cc_by_type": {
+       "choice": 100.0,
+       "noul": 33.33333333333333,
+       "score": 96.36205703155578
+      },
+      "low_n": true,
+      "n": 10,
+      "n_by_type": {
+       "choice": 5,
+       "noul": 3,
+       "score": 2
+      },
+      "score": 76.5651301216297
+     }
+    },
+    "type": {
+     "choice": {
+      "accuracy": 0.8146666666666667,
+      "cc": 76.06153963910522,
+      "cc_by_type": {
+       "choice": 76.06153963910522
+      },
+      "low_n": false,
+      "n": 750,
+      "n_by_type": {
+       "choice": 750
+      },
+      "score": 76.06153963910522
+     },
+     "noul": {
+      "accuracy": 0.8933333333333333,
+      "cc": 78.66666666666666,
+      "cc_by_type": {
+       "noul": 78.66666666666666
+      },
+      "low_n": false,
+      "n": 375,
+      "n_by_type": {
+       "noul": 375
+      },
+      "score": 78.66666666666666
+     },
+     "score": {
+      "accuracy": 0.7733333333333333,
+      "cc": 68.37938316437497,
+      "cc_by_type": {
+       "score": 68.37938316437497
+      },
+      "low_n": false,
+      "n": 375,
+      "n_by_type": {
+       "score": 375
+      },
+      "score": 68.37938316437497
+     }
+    },
+    "usecase": {
+     "advertising": {
+      "accuracy": 0.6818181818181818,
+      "cc": 50.997318254623764,
+      "cc_by_type": {
+       "choice": 68.0,
+       "noul": 25.0,
+       "score": 59.99195476387129
+      },
+      "low_n": true,
+      "n": 22,
+      "n_by_type": {
+       "choice": 8,
+       "noul": 8,
+       "score": 6
+      },
+      "score": 50.997318254623764
+     },
+     "code_linting": {
+      "accuracy": 0.7916666666666666,
+      "cc": 75.59952536520309,
+      "cc_by_type": {
+       "choice": 81.36645962732919,
+       "noul": 100.0,
+       "score": 45.43211646828009
+      },
+      "low_n": true,
+      "n": 24,
+      "n_by_type": {
+       "choice": 7,
+       "noul": 9,
+       "score": 8
+      },
+      "score": 75.59952536520309
+     },
+     "customer_support": {
+      "accuracy": 0.9285714285714286,
+      "cc": 93.82613783345033,
+      "cc_by_type": {
+       "choice": 83.73983739837398,
+       "noul": 100.0,
+       "score": 97.738576101977
+      },
+      "low_n": true,
+      "n": 14,
+      "n_by_type": {
+       "choice": 8,
+       "noul": 4,
+       "score": 2
+      },
+      "score": 93.82613783345033
+     },
+     "demand_forecasting": {
+      "accuracy": 0.5294117647058824,
+      "cc": 37.02863066579305,
+      "cc_by_type": {
+       "choice": 41.5204678362573,
+       "noul": 100.0,
+       "score": -30.434575838878143
+      },
+      "low_n": true,
+      "n": 17,
+      "n_by_type": {
+       "choice": 11,
+       "noul": 3,
+       "score": 3
+      },
+      "score": 37.02863066579305
+     },
+     "ecommerce_marketplaces": {
+      "accuracy": 0.7647058823529411,
+      "cc": 62.4594050673673,
+      "cc_by_type": {
+       "choice": 56.52173913043478,
+       "noul": 33.33333333333333,
+       "score": 97.5231427383338
+      },
+      "low_n": true,
+      "n": 17,
+      "n_by_type": {
+       "choice": 9,
+       "noul": 3,
+       "score": 5
+      },
+      "score": 62.4594050673673
+     },
+     "feature_extraction": {
+      "accuracy": 0.7368421052631579,
+      "cc": 41.24982350682995,
+      "cc_by_type": {
+       "choice": 49.685534591194966,
+       "noul": 100.0,
+       "score": -25.93606407070512
+      },
+      "low_n": true,
+      "n": 19,
+      "n_by_type": {
+       "choice": 10,
+       "noul": 6,
+       "score": 3
+      },
+      "score": 41.24982350682995
+     },
+     "financial_crime": {
+      "accuracy": 0.6666666666666666,
+      "cc": 51.987489008302326,
+      "cc_by_type": {
+       "choice": 70.58823529411765,
+       "noul": 42.85714285714286,
+       "score": 42.51708887364644
+      },
+      "low_n": false,
+      "n": 30,
+      "n_by_type": {
+       "choice": 13,
+       "noul": 7,
+       "score": 10
+      },
+      "score": 51.987489008302326
+     },
+     "gaming": {
+      "accuracy": 0.7272727272727273,
+      "cc": 52.81035605231892,
+      "cc_by_type": {
+       "choice": 68.6411149825784,
+       "noul": 0.0,
+       "score": 89.78995317437838
+      },
+      "low_n": true,
+      "n": 22,
+      "n_by_type": {
+       "choice": 12,
+       "noul": 4,
+       "score": 6
+      },
+      "score": 52.81035605231892
+     },
+     "insurance_claims": {
+      "accuracy": 0.6,
+      "cc": 53.29289143844748,
+      "cc_by_type": {
+       "choice": 16.666666666666668,
+       "noul": 60.00000000000001,
+       "score": 83.21200764867575
+      },
+      "low_n": true,
+      "n": 15,
+      "n_by_type": {
+       "choice": 6,
+       "noul": 5,
+       "score": 4
+      },
+      "score": 53.29289143844748
+     },
+     "knowledge_graphs": {
+      "accuracy": 0.7272727272727273,
+      "cc": 65.41736151061887,
+      "cc_by_type": {
+       "choice": 61.4561027837259,
+       "noul": 100.0,
+       "score": 34.7959817481307
+      },
+      "low_n": true,
+      "n": 22,
+      "n_by_type": {
+       "choice": 10,
+       "noul": 6,
+       "score": 6
+      },
+      "score": 65.41736151061887
+     },
+     "lead_generation": {
+      "accuracy": 0.8,
+      "cc": 70.6861526028783,
+      "cc_by_type": {
+       "choice": 76.74418604651163,
+       "noul": 100.0,
+       "score": 35.31427176212328
+      },
+      "low_n": true,
+      "n": 25,
+      "n_by_type": {
+       "choice": 11,
+       "noul": 9,
+       "score": 5
+      },
+      "score": 70.6861526028783
+     },
+     "legal_compliance": {
+      "accuracy": 0.5,
+      "cc": 18.13702390604988,
+      "cc_by_type": {
+       "choice": 3.2258064516129026,
+       "noul": 33.33333333333333,
+       "score": 17.851931933203403
+      },
+      "low_n": true,
+      "n": 10,
+      "n_by_type": {
+       "choice": 4,
+       "noul": 3,
+       "score": 3
+      },
+      "score": 18.13702390604988
+     },
+     "llm_guardrails": {
+      "accuracy": 0.8148148148148148,
+      "cc": 81.29121408419138,
+      "cc_by_type": {
+       "choice": 88.48368522072937,
+       "noul": 100.0,
+       "score": 55.38995703184477
+      },
+      "low_n": true,
+      "n": 27,
+      "n_by_type": {
+       "choice": 11,
+       "noul": 5,
+       "score": 11
+      },
+      "score": 81.29121408419138
+     },
+     "model_routing": {
+      "accuracy": 0.8755760368663594,
+      "cc": 80.18749530098063,
+      "cc_by_type": {
+       "choice": 88.31168831168831,
+       "noul": 100.0,
+       "score": 52.25079759125356
+      },
+      "low_n": false,
+      "n": 217,
+      "n_by_type": {
+       "choice": 101,
+       "noul": 66,
+       "score": 50
+      },
+      "score": 80.18749530098063
+     },
+     "moderation_trust_safety": {
+      "accuracy": 0.8333333333333334,
+      "cc": 56.33976600319954,
+      "cc_by_type": {
+       "choice": 76.96737044145875,
+       "noul": 0.0,
+       "score": 92.05192756813989
+      },
+      "low_n": true,
+      "n": 18,
+      "n_by_type": {
+       "choice": 11,
+       "noul": 2,
+       "score": 5
+      },
+      "score": 56.33976600319954
+     },
+     "recruiting": {
+      "accuracy": 0.8333333333333334,
+      "cc": 67.65913874047219,
+      "cc_by_type": {
+       "choice": 100.0,
+       "noul": 33.33333333333333,
+       "score": 69.64408288808322
+      },
+      "low_n": true,
+      "n": 18,
+      "n_by_type": {
+       "choice": 8,
+       "noul": 3,
+       "score": 7
+      },
+      "score": 67.65913874047219
+     },
+     "risk_assessment": {
+      "accuracy": 0.7777777777777778,
+      "cc": 61.179241846697074,
+      "cc_by_type": {
+       "choice": 70.44334975369459,
+       "noul": 50.0,
+       "score": 63.094375786396625
+      },
+      "low_n": true,
+      "n": 18,
+      "n_by_type": {
+       "choice": 9,
+       "noul": 4,
+       "score": 5
+      },
+      "score": 61.179241846697074
+     },
+     "scientific_discovery": {
+      "accuracy": 0.6956521739130435,
+      "cc": 52.34973530808358,
+      "cc_by_type": {
+       "choice": 42.02898550724638,
+       "noul": 33.33333333333333,
+       "score": 81.68688708367102
+      },
+      "low_n": true,
+      "n": 23,
+      "n_by_type": {
+       "choice": 9,
+       "noul": 6,
+       "score": 8
+      },
+      "score": 52.34973530808358
+     },
+     "search_retrieval": {
+      "accuracy": 0.9166666666666666,
+      "cc": 92.54238789893508,
+      "cc_by_type": {
+       "choice": 78.64768683274022,
+       "noul": 100.0,
+       "score": 98.97947686406498
+      },
+      "low_n": true,
+      "n": 24,
+      "n_by_type": {
+       "choice": 12,
+       "noul": 4,
+       "score": 8
+      },
+      "score": 92.54238789893508
+     }
+    }
+   },
+   "breakdowns_equated": false,
+   "ci95": {
+    "B": 1000,
+    "C": [
+     84.3699288964331,
+     90.33992765291686
+    ],
+    "I": [
+     70.30556786548495,
+     78.00313122788796
+    ],
+    "capability": [
+     78.07130351149658,
+     83.70328873895242
+    ],
+    "composite": {
+     "A": [
+      69.01864536776712,
+      71.26205057949386
+     ],
+     "B": [
+      69.2808468276072,
+      72.51411427697472
+     ],
+     "C": [
+      69.01864536776712,
+      71.26205057949386
+     ]
+    },
+    "seed": 36
+   },
+   "ci95_n": 1200,
+   "complete": true,
+   "equated": null,
+   "equating_flag": null,
+   "equating_offset": null,
+   "full_set_api": false,
+   "g_med_used": 9.839526770355711,
+   "lane": "selfhosted",
+   "metric_basis": "S u P",
+   "n_items": 1500,
+   "n_public": 300,
+   "n_sealed_side": 1200,
+   "on_S": {
+    "calibration": 89.2826256096074,
+    "capability": 81.88828160946628,
+    "intelligence": 74.49393760932514
+   },
+   "per_type": {
+    "choice": {
+     "accuracy": 0.8146666666666667,
+     "calibration": 92.678824526776,
+     "cc": 76.06153963910522,
+     "cc_by_type": {
+      "choice": 76.06153963910522
+     },
+     "cc_tiered": 75.36185374257133,
+     "cc_tiered_open": 75.89450831799229,
+     "cc_tiered_sealed": 74.82919916715036,
+     "low_n": false,
+     "n": 750,
+     "n_by_type": {
+      "choice": 750
+     },
+     "score": 76.06153963910522
+    },
+    "noul": {
+     "accuracy": 0.8933333333333333,
+     "calibration": 92.1170646654058,
+     "cc": 78.66666666666666,
+     "cc_by_type": {
+      "noul": 78.66666666666666
+     },
+     "cc_tiered": 79.75631898416029,
+     "cc_tiered_open": 82.59903381642512,
+     "cc_tiered_sealed": 76.91360415189546,
+     "low_n": false,
+     "n": 375,
+     "n_by_type": {
+      "noul": 375
+     },
+     "score": 78.66666666666666
+    },
+    "score": {
+     "accuracy": 0.7733333333333333,
+     "calibration": 83.05198763664039,
+     "cc": 68.37938316437497,
+     "cc_by_type": {
+      "score": 68.37938316437497
+     },
+     "cc_tiered": 68.36364010124382,
+     "cc_tiered_open": 69.394571356044,
+     "cc_tiered_sealed": 67.33270884644364,
+     "low_n": false,
+     "n": 375,
+     "n_by_type": {
+      "score": 375
+     },
+     "score": 68.37938316437497
+    }
+   },
+   "raw_on_A": {
+    "calibration": 89.32459776218087,
+    "capability": 82.6725937543221,
+    "intelligence": 76.0205897464633
+   },
+   "set": "S+P"
+  },
+  "validity": {
+   "choice": {
+    "invalid_rate": 0.0,
+    "n": 750
+   },
+   "noul": {
+    "invalid_rate": 0.0,
+    "n": 375
+   },
+   "score": {
+    "invalid_rate": 0.0,
+    "n": 375
+   }
+  },
+  "views": {
+   "Balanced 33:33:33": 65.88928141611956,
+   "Emphasis on Accuracy 60:20:20": 69.08105090265153,
+   "Emphasis on Cost 20:20:60": 60.451329042407174,
+   "Emphasis on Speed 20:60:20": 68.9040126201815,
+   "Intelligence only": 74.49393760932514
+  }
+ }
+}
