@@ -64,16 +64,33 @@ with tempfile.TemporaryDirectory(prefix='.row-gate-check-',dir=J) as t:
  cases=[('old model_pin',dict(current,model_pin=old['model_pin']),'model_pin'),
         ('foreign owner',dict(current,model_pin=current['model_pin']+' + sthanika-ai/Other@123'),'model_pin'),
         ('wrong base size',dict(current,model_pin=current['model_pin']+' + google/gemma-4-31B-it@123'),'model_pin'),
-        ('old cost placeholder',dict(current,cost=old['cost']),'template token')]
- for label,row,pattern in [('corrected row',current,None),*cases]:
+        ('old cost placeholder',dict(current,cost=old['cost']),'template token'),
+        *[(f'template {token}',dict(current,disclosure=current['disclosure']+' '+token),'template token') for token in ['{ref}','{Ref}','{{REF}}','{ref_2}']]]
+ for label,row,pattern in [('corrected row',current,None),('legitimate braces',dict(current,disclosure=current['disclosure']+' {} {name commit, …}'),None),*cases]:
   put(fixture,row)
   for command in [['node',str(J/'validate_v176.mjs')],['python3','-B',str(J/'final_sanity_v176.py')]]:
    r=subprocess.run([*command,'--check-row-json',str(fixture)],text=True,capture_output=True)
    assert (r.returncode==0)==(pattern is None),(label,command,r.stdout,r.stderr)
    if pattern:assert pattern in r.stderr,(label,r.stderr)
    negative.append({'case':label,'gate':pathlib.Path(command[-1]).name,'exit_code':r.returncode,'result':'PASS' if pattern is None else 'REFUSED_AS_REQUIRED'})
+# Full validator entry points must inspect both committed source files too.
+with tempfile.TemporaryDirectory(prefix='.source-gate-check-',dir=J) as t:
+ T=pathlib.Path(t);F=T/'r190/v176';(F/'src').mkdir(parents=True);(F/'inputs').mkdir()
+ (T/'lib').symlink_to(W/'lib');(T/'data').symlink_to(W/'data')
+ shutil.copyfile(J/'final_sanity_v176.py',F/'final_sanity_v176.py')
+ source_paths=['src/inputs.json','inputs/ENTRY-DECISIO.json']
+ for name in source_paths:shutil.copyfile(J/name,F/name)
+ for name in source_paths:
+  original=(F/name).read_bytes()
+  for token in ['{ref}','{Ref}']:
+   d=json.loads(original);d['negative_fixture']=token;put(F/name,d)
+   for command in [['node',str(J/'validate_v176.mjs'),str(T)],['python3','-B',str(F/'final_sanity_v176.py')]]:
+    r=subprocess.run(command,text=True,capture_output=True)
+    assert r.returncode!=0 and 'source text contains template token' in r.stderr,(name,token,command,r.stdout,r.stderr)
+    negative.append({'case':name+' template '+token,'gate':'validate_v176.mjs' if command[0]=='node' else 'final_sanity_v176.py','exit_code':r.returncode,'result':'REFUSED_AS_REQUIRED'})
+  (F/name).write_bytes(original)
 (J/'receipts/PIN-PLACEHOLDER-NEGATIVE.json').write_text(json.dumps({'status':'PASS','old_bytes_commit':'dc1fed05','checks':negative},indent=1)+'\n')
-checks.append('both row gates accept corrected bytes and reject old model_pin, foreign owner, wrong base size and old {REF} cost text')
+checks.append('both row gates accept corrected bytes and reject old model_pin, foreign owner, wrong base size and old {REF} cost text; mixed/lowercase tokens refused; legitimate braces accepted')
 assert json.loads((W/V/'jevbench-v1.7.6-publication.json').read_text())['review']['verdict']=='PENDING'
 assert sha(J/'inputs/APPROVAL.json')==approval_before
 (J/'receipts/fix-helper-checks.json').write_text(json.dumps({'status':'PASS','checks':checks},indent=1)+'\n')

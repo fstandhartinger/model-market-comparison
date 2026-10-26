@@ -8,7 +8,7 @@ s=(J/'preview.template.html').read_text()
 (J/'preview/index.html').write_text(s.replace('/*FAIR*/',L(J/'inputs'/'APPROVAL.json')['fairness_check']['verdict']).replace('/*DATA*/',json.dumps(e,separators=(',',':')).replace('</','<\\/')))
 r=next(r for r in e['rows'] if r['variant']=='share' and r['scope']=='open' and r['caps']=='none' and r['metric']=='A')
 m=e['models']['share'];k='decisio-gemma-4-12b-tuned-commit';out=next(k for k in r['before'] if k not in r['after'])
-im=Image.new('RGB',(1440,930),'#101723');dr=ImageDraw.Draw(im)
+im=Image.new('RGB',(1440,1030),'#101723');dr=ImageDraw.Draw(im)
 font='/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf';bold='/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf';f=lambda n,b=False:ImageFont.truetype(bold if b else font,n)
 def txt(x,y,t,n=24,col='#e4edf8',b=False):dr.text((x,y),t,font=f(n,b),fill=col)
 txt(60,40,'JEVBENCH v1.7.5 → v1.7.6  ·  REVIEW PREVIEW',22,'#a3b8d3')
@@ -32,8 +32,18 @@ txt(880,745,'Green: Decisio   Pink: Chon',20,'#a3b8d3')
 txt(60,755,'Composite C open #5 also changes.',23)
 txt(60,807,'292 carried rows retain all scores and confidence intervals.',23,'#a3b8d3')
 txt(60,852,'Fairness '+L(J/'inputs'/'APPROVAL.json')['fairness_check']['verdict']+' (independent review) · release review pending · not yet published',20,'#a3b8d3')
-txt(60,893,"Placement rests on the author's JevBench-aware commit rule (composite A ≈36.7 without it); the A margin over the displaced row is +0.40, inside its CI and device-speed noise.",13,'#a3b8d3')
-im=im.crop((0,0,1440,930))
+commit_rule="Placement rests on the author's JevBench-aware commit rule (composite A ≈36.7 without it); the A margin over the displaced row is +0.40, inside its CI and device-speed noise."
+# Wrap at the body font size instead of shrinking the disclosure to fit one line.
+words=commit_rule.split();lines=[];line=''
+for word in words:
+ candidate=(line+' '+word).strip()
+ if dr.textlength(candidate,font=f(23))>1320:
+  lines.append(line);line=word
+ else:line=candidate
+lines.append(line)
+for i,line in enumerate(lines):txt(60,900+i*32,line,23,'#a3b8d3')
+assert 900+len(lines)*32<1030,'commit-rule disclosure exceeds card height'
+im=im.crop((0,0,1440,1030))
 im.save(J/'preview/card.png',optimize=True)
 (J/'preview/README.md').write_text('Open index.html locally. Full before/after rankings for all 540 supplementary lists plus two custom-weight examples (542 total), filters, model search and radar comparing Decisio with the displaced row. card.png shows share/open/uncapped Composite A. Slider-transition evidence is in ../receipts/topfive-sliders.json. Fairness verdict: see inputs/APPROVAL.json; the independent publication review is separate.\n')
-print('Built full-ranking interactive preview and deterministic 1440x930 PNG card')
+print('Built full-ranking interactive preview and deterministic 1440x1030 PNG card')
