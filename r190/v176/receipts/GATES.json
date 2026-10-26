@@ -1,0 +1,169 @@
+{
+ "actual-refusals": {
+  "log_sha256": "968b18a5504de9767d49275bd4809d50c8681504888cda3114eadc5b3ea4f13a",
+  "status": "PASS"
+ },
+ "candidate_fairness": {
+  "engine": "claude-opus-5-5 (account C, effort medium)",
+  "path": "workers/r190-decisio-fair/RESULT.json",
+  "sha256": "09696d53206ede9d4fcb3b0a5af2061498a0d0f08a6ba4121135bee9d9d4d199",
+  "verdict": "FAIR"
+ },
+ "candidate_publication_review": "PENDING",
+ "double-rebuild": {
+  "hashes": {
+   "app/api/jevbench/v1.7.6/route.ts": "feee86d969185c827ff127298cf7a2b161c97ff3f486c3c3c9832b69b09fddae",
+   "app/jev-models/v1.7.6/page.tsx": "d2ebbc8ed5d8cb6396dd1c152c5bd715ce802b488244b89f4d05361a08149abe",
+   "components/JevBenchReleaseVersionNav.tsx": "ee66dab900e227dcda126fe8cd03b7c34bbe1580751b1882ff7b7da4b206a7da",
+   "components/JevReleaseHistory.tsx": "23a3c5fe11ac182659b5df4ac399b83bd535973fb8133977612cc5318687f1d5",
+   "data/jevbench-architecture.json": "85f2f16b29f7b012e5f268b5ebe601f51af2e1cff850b8cd930cd733e244fd14",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.6-carry.json": "271d1fc77a136a04a1eb6deb5480c52d4211eb2b66b2ac8bb31e80867e69003a",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.6-categories.json": "4a7c9bc2bcb3585557c3e7dc7cf9c2b3621c1936df4e76a515252a068391a627",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.6-history-carry.json": "334e851944e92383ab3071e52b3012040c7023d0fe236395953169ebee8f0459",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.6-history.json": "5cd8c1332226ea9c179883d2285c0d8b8cc593ae38f2645197364a7ddd9c83c1",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.6-proof.json": "9902efe52ddb1c22046a7f121e02be34bf70a75e9f7043cee956b66606c6b4a4",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.6-publication.json": "a402ff42ed3e573c0f8cfee57d3d1a29b65a6e509f487ef3de4e615cd4ae10bd",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.6-results.json": "88e878c3a4b3cfa2576beaa584bc372953a0da88114cc5265fbaf5e69eba3539",
+   "lib/jevbench-categories.mjs": "05fc21047b45b2d55903ae7bde49e78d3f45084c55462276a4d40549a535b43d",
+   "lib/jevbench-live-board.mjs": "36d2cff4d441285f0abe5f38eb097135a7e9e2608c87020d7676c2f66bc28a13",
+   "lib/jevbench-releases.mjs": "189a146522b3d08d945da58f5db60a8409c61113c4fb0a36f52c36bf1ed7b3ec",
+   "lib/jevbench-v176-release.mjs": "3bbd95031860033a37b7c292b5d7180d096367cc17d08eaf2297b118d5337073",
+   "r190/v176/preview/card.png": "de73c9155ebbe2264182b99597b3971de1a0cd18647a0e0280e5ed83a092f16c",
+   "r190/v176/preview/index.html": "35d1e34199808b748774b4b1b627c30040b236ac65c9f287b3226ac166c25f16",
+   "r190/v176/receipts/topfive-custom.json": "4700c66f2c18ab2b4894e70e4692eff072e24f4515496ec62567279b19bf27dc",
+   "r190/v176/receipts/topfive-extended.json": "4d2531cd717c58617b11ffe13675c24fb7fc797e2142ec38ed3266113192e090",
+   "r190/v176/receipts/topfive-sliders.json": "4ca99af0e310a09fa01441e96d5c2e97d7446dcd4f1e37860062072eff09869b",
+   "test/cr-205-jev-page-structure.test.mjs": "ca1e0a680af2c4510c385b12fde573cbc7b15491daf0244d67500c1f985dedca",
+   "test/cr-303-feed-split.test.mjs": "dd4645f91bbb190a0c85d19c62dacedd06e8b053d9dfb2df828f8fd88f2a25cf",
+   "test/fixtures/jevbench-v176-ranks.json": "d358e0f8c9c1aeb9caa4671ce67c4b18108f5e0561565f8bca65f6ebf397aff7",
+   "test/jevbench-feed-live-board.test.mjs": "45fcf007d6db38817b62d32a9ba92bdc4beb1500f951641abb9bc9a2d5880a87",
+   "test/jevbench-v1630-open-fold.test.mjs": "18e9f3295dddafa8222caed8acff5ffff0cfcc9293124a1a0b7984768d629364",
+   "test/jevbench-v1630-release.test.mjs": "cc3da184517e2a41114b48a8410643435fe426cff93e03bcca21e54c7b0a7bf8",
+   "test/jevbench-v1637-release.test.mjs": "d21dfdb72b9837d98e2ac59329cd5a4027621c7a1de3db38b705633d4a585d46",
+   "test/jevbench-v170-release.test.mjs": "ba07b62543862e7fa3ed64fbbca61bf71f96072b35c3f11266579c42bcd581d3",
+   "test/jevbench-v171-release.test.mjs": "bfbba1952f223c221527f6f4110099e2a38ad5e87430fa77bc4383ed58119d60",
+   "test/jevbench-v173-release.test.mjs": "490f802e97edd68c0b6daa71f177be264c5c9dc201adb82670ddaea1e540def1",
+   "test/jevbench-v176-release.test.mjs": "036afaa46c00a1a8a31e6e0b7149f51283f0de0cab11d03903732ee052c5ff74"
+  },
+  "identical": true,
+  "passes": 2
+ },
+ "fairness-text": {
+  "log_sha256": "ed96c3be8ca15ffcd1990dc57ff96c3e4371134c5fd477562581f89ef606db28",
+  "status": "PASS"
+ },
+ "final-sanity": {
+  "log_sha256": "165beec6a45ee8b33fceb2b6c37bd261dea6214618e6bf821d544769be64f55a",
+  "status": "PASS"
+ },
+ "flip-actual-dry-run": {
+  "log_sha256": "bcc9ca0c098ece3e5b1520a987e17283c96c017fcd7e600aa07953f55a903056",
+  "status": "REFUSED_AS_REQUIRED"
+ },
+ "freeze-actual-dry-run": {
+  "log_sha256": "f0e28a5a6e8f1514a0eb6e75e687174e1fdd380f49dca115da04ac4352fc88ef",
+  "status": "REFUSED_AS_REQUIRED"
+ },
+ "fulltest": {
+  "cancelled": 0,
+  "fail": 0,
+  "log_sha256": "64cd921f5a27014d3c227e76d7d6f583b3b3684ce0b7ba60b830f2f06145df19",
+  "pass": 3795,
+  "skipped": 7,
+  "status": "PASS",
+  "tests": 3802
+ },
+ "helper-controls": {
+  "checks": [
+   "injected PENDING fairness refused by both dry-run helpers; manifest unchanged",
+   "synthetic FAIR/hash-bound fixture: dry-run flip succeeds; PENDING freeze refuses; synthetic PASS freeze succeeds; no real manifest or seal write",
+   "tampered fairness receipt refused",
+   "hash-bound non-FAIR receipt content refused",
+   "conditional release review refused",
+   "unbound predecessor refused by both helpers"
+  ],
+  "status": "PASS"
+ },
+ "helpers": {
+  "log_sha256": "7e8800d3f337c586bb2721f6de4b517738dc8977bb2cc303eff597e21a8367d1",
+  "status": "PASS"
+ },
+ "initial-full-suite-ordering": {
+  "final_full_suite_passed": true,
+  "initial_exit": 143,
+  "initial_failure_count": 3,
+  "initial_log_sha256": "8ce857d846d5bc2c6c00a4148521022021e6608817a7d0e3164932b383fbb267",
+  "initial_run_interrupted": true,
+  "issue": "Started before production build completed; server-link test could not find prerender manifest. Corrected by completing build before final full suite.",
+  "status": "REMEDIATED"
+ },
+ "placements": {
+  "log_sha256": "80829bac32d1ca8e599a35351c34e067d2dcfa7ecf226ce56bdb10f2cd63b2cc",
+  "status": "PASS"
+ },
+ "prepare": {
+  "log_sha256": "0818a0075c8058d92416cffe26ab5ac942c33b3bbccda45ad82a0616fba84511",
+  "status": "PASS"
+ },
+ "preview-check": {
+  "log_sha256": "5d6acc4ced9fc0ebf2e77b3f26a64d396e45bf9826226316d7c414afeb5599ed",
+  "status": "PASS"
+ },
+ "production-build": {
+  "exit_code": 0,
+  "log_sha256": "de013b1166acd2ca253bd7e55e6fd5e232de7272c4a0f522deaffda9a45212d6",
+  "status": "PASS"
+ },
+ "release-tests": {
+  "cancelled": 0,
+  "fail": 0,
+  "log_sha256": "0e72d869bf4d01a05b8047772bf6e3c2472d8a90c9415ce2a2272b2fc2584229",
+  "pass": 147,
+  "skipped": 6,
+  "status": "PASS",
+  "tests": 153
+ },
+ "repro": {
+  "log_sha256": "0b08e6cf0461f9880474e2639fd055cc29e696ebca2b0023976df259bdaa65cb",
+  "status": "PASS"
+ },
+ "source-check": {
+  "log_sha256": "b5c6da57e0ce5295cde35ee31f4d52ee13c8cc5430425e4fa4b6076d7a858938",
+  "status": "PASS"
+ },
+ "synthetic-tests": {
+  "cancelled": 0,
+  "fail": 0,
+  "log_sha256": "bf768e25fcb83a75a545695d2bb17321bcff0ff485aeaf673cbe53d8443bdc3c",
+  "pass": 74,
+  "skipped": 4,
+  "status": "PASS",
+  "tests": 78
+ },
+ "targeted-remediation": {
+  "initial_notes": {
+   "fixes": [
+    "Corrected copied Sieve assertions in new v176 route test.",
+    "Added new row architecture metadata.",
+    "Shortened v176 page description to <=160 characters."
+   ],
+   "initial_release_tests": {
+    "fail": 3,
+    "pass": 136,
+    "skipped": 5,
+    "tests": 144
+   }
+  },
+  "remediation_log_sha256": "aaf31e38154283960422894dc2e6e4093460ec7b1283dabb6fbdf0f8bfe0c6b0",
+  "status": "PASS"
+ },
+ "typescript": {
+  "exit_code": 0,
+  "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "status": "PASS"
+ },
+ "validator": {
+  "log_sha256": "aa79d915a2e064de7b961d51a165b1e95fbf3134c55996c3c4573087756c9cde",
+  "status": "PASS"
+ }
+}

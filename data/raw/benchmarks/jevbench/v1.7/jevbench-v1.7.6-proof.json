@@ -1,0 +1,135 @@
+{
+ "carried_rows": 292,
+ "carried_rows_equal_except": [
+  "rank",
+  "ranks"
+ ],
+ "method": {
+  "decision_limit_s": 10,
+  "label": "v1.7",
+  "rule": "latency_s > 10.000 s -> failed",
+  "treatment": "share"
+ },
+ "new_rows": {
+  "decisio-gemma-4-12b-tuned-commit": {
+   "axes": {
+    "calibration": 88.61282851120822,
+    "cost": 58.46456446887949,
+    "intelligence": 62.78089467434111,
+    "speed": 90.3121994607612
+   },
+   "base_model": "google/gemma-4-12B-it",
+   "composite_ci95": {
+    "A": [
+     70.47317689975598,
+     73.0373853224774
+    ],
+    "B": [
+     67.91900605407731,
+     71.50800165577638
+    ],
+    "C": [
+     68.84141766602376,
+     73.0373853224774
+    ]
+   },
+   "decision_limit": {
+    "limit_s": 10.0,
+    "n_over_limit": 0,
+    "n_over_limit_answered_ok": 0,
+    "rule": "latency_s > limit -> failed",
+    "speed_basis": "all decisions given (lane items in the raw), measured latency_s",
+    "speed_n": 1500,
+    "treatment": "share"
+   },
+   "model_pin": "sthanika-ai/Decisio 12B tuned commit@245e00dc45abad14d693b1ebae4d4c7aa9cf72f1 + google/gemma-4-31B-it@842da3794eaa0b77d5f08bae87a17459d91ff475",
+   "price_reference": {
+    "base": null,
+    "in": 0.05,
+    "listing": "google/gemma-3-12b-it",
+    "out": 0.15,
+    "output_usage": 1485
+   },
+   "raw_sha256": "e9c889e1a138c875eb52521748e63b4344043c7a5598527c073172dd1c81594f",
+   "scored_input_sha256": "456546008cd5759995a21c706181c70926f81d32944a7eda4f3367fd8f800841",
+   "source_sha256": {
+    "entry_path": "/home/flori/jobs/jevbench-auto-intake/r24-score/ENTRIES-R14A-LEAD.json",
+    "entry_sha256": "e8725279270bc103d89447c6ddf353c4f626fff263d8baa9cecb758205eb1c95",
+    "frozen": {
+     "path": "/home/flori/jobs/jevbench-auto-intake/r24-score/field-r14a/out-frozen/jevbench-v1.6.0-results.json",
+     "sha256": "2000a9cf7d8ba4eea72801554a8682d0b785fbb9fe987f9a58254acbcd40f2c0"
+    },
+    "raw_sha256": "e9c889e1a138c875eb52521748e63b4344043c7a5598527c073172dd1c81594f",
+    "raw_verified_in_place": true,
+    "registry_sha256": "9a0d578058cefd03284b5f67b1a7eb4206a546bdf54fea17aabd6631651bcf02",
+    "scored_source_note": "Field scores retained exactly; source BUILD-META entry digest predates reviewed prose fixes F1-F6. Source entry verified against the reviewed handoff hash.",
+    "v17-off": {
+     "path": "/home/flori/jobs/jevbench-auto-intake/r24-score/field-r14a/out-v17-off/jevbench-v1.6.0-results.json",
+     "sha256": "cf7ee9a76b1a2bac6c762d3d856fcf6b66775b06d5ce96314e3e2b9faabf22e2"
+    },
+    "v17-share": {
+     "path": "/home/flori/jobs/jevbench-auto-intake/r24-score/field-r14a/out-v17-share/jevbench-v1.6.0-results.json",
+     "sha256": "456546008cd5759995a21c706181c70926f81d32944a7eda4f3367fd8f800841"
+    }
+   },
+   "treatment": "ranked"
+  }
+ },
+ "predecessor": {
+  "publication_sha256": "e530322a5d28f0157647c7098d77c388b380fe64164cfd6a92bce29a6f03c024",
+  "revision": "v1.7.5"
+ },
+ "pricing_module_sha256": "aa2afcd5a58d0c4cc0e3d6867d590c70b6ac58e971410c27faf9628f97bcf8b7",
+ "publication_approval": {
+  "asks": [
+   {
+    "admission": "custody #26740 item 3b, hash word #26876; consumed #26890",
+    "handoff": "board #26900",
+    "key": "decisio-gemma-4-12b-tuned-commit",
+    "relay": "regular queue"
+   }
+  ],
+  "button_tap": false,
+  "fairness_check": {
+   "engine": "claude-opus-5-5 (account C, effort medium)",
+   "path": "workers/r190-decisio-fair/RESULT.json",
+   "sha256": "09696d53206ede9d4fcb3b0a5af2061498a0d0f08a6ba4121135bee9d9d4d199",
+   "verdict": "FAIR"
+  },
+  "fresh_baseline": "v1.7.5",
+  "go": {
+   "channel": "laptop chat",
+   "date": "2026-10-25",
+   "quote": "3 ja",
+   "recorded_in": "DECISIONS.md 2026-10-25 setup-review-open-questions-answered"
+  },
+  "status": "GO (fair top-five change, Florian rule 25 Oct 2026)",
+  "top_five_effect": "changed",
+  "top_five_preview": {
+   "path": "r190/v176/receipts/topfive-diff.json",
+   "sha256": "1eee2a12aaf3919eb3b7539394db256c3203d622a4567fc296d3e8580cd5eb1e"
+  }
+ },
+ "remeasured_rows": {},
+ "revision": "v1.7.6",
+ "schema_version": 1,
+ "scorers": {
+  "a2_cells_v16": "afd034efe27bde12f2ebbfd12c4c0792c93214e1aa9a63deecb0e83a0184c990",
+  "build_categories_v16": "40eb50f3d7fea2693b4478c4b89f8bfb957dd17776add491935742e3b9354e73",
+  "build_topics_v16": "ec04ab598162bfc4340ffa7916a06573eb1222132c61e47ab772045bc67ced78",
+  "decisive_v16": "80b9ccf43e58dddb1b2a77e0a33aba8a9f7337a3a9a639afc7264218bbf8918f",
+  "noul_method_v16": "119e59486ab3300b972fbcbadb0fe1dceceb124287607375aa61c66063c607d0",
+  "pins_v17": "b50cc00dd2cb0ba46157eb6a2bda620255f3ff54404025e992bc7962dfff2f8b",
+  "run_under_v17": "efb194b2ea350db59be37e5e72af71f809f763a2476cd6f521adf6f4fd90a64f",
+  "score_v15": "0931e05c6410b1b971201834397cb609cdb25f942723c50375632952f6dcc447",
+  "score_v15_headlineA": "826f2cbcb57007ec8a161e6eb0111182b8a656c0638027c6c78022a858fd8e2c",
+  "score_v16": "02132271117653e6302c509232a581d0094f0e78eac8b1bfc67596fd5d5097e9",
+  "score_v17": "6363458d208a52f4ad5aaf73027cad1b7e0358ff962e581d57a3cc462c8f1978"
+ },
+ "source_inputs": {
+  "cells_sha256": "997e44a2cb676393e68e585d8e465bd927f18fdba9bfca7502e29037942b1f5a",
+  "entry_sha256": "478bd7bc9304107fa746995706d13230b3ea768c314a9ef77dcbd287b64b5e26",
+  "scored_rows_sha256": "fa3e424028c448e4a93ae6d7280032acbba4a24360f64d0d40a68a02155b3170"
+ },
+ "topfive_diff_sha256": "1eee2a12aaf3919eb3b7539394db256c3203d622a4567fc296d3e8580cd5eb1e"
+}

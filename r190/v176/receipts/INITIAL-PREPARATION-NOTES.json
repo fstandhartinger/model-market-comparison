@@ -1,0 +1,11 @@
+{
+ "source": "Observed preparatory tool output before final gates; notes retain failures whose working logs were subsequently replaced by the final successful checks.",
+ "items": [
+  {"check": "prepare", "observation": "Copied Sieve assertion expected CI seed 71; Decisio source seed is 28 with B=1000.", "resolution": "Retained original Decisio seed 28 and its exact scored CIs; source numeric verification passes."},
+  {"check": "source-check", "observation": "An overly broad template edit changed the expected 715443 token literal to 285443.", "resolution": "Corrected the check literal to source 715443; native/offline usage equality passes. No scored data changed."},
+  {"check": "public-hygiene", "observation": "The no-rank-prose scan also found neutral share-ranking wording and technical rank-16 LoRA wording after the 14 requested fixes.", "resolution": "Applied the additional prose-only fixes recorded in ADDITIONAL-TEXT-FIXES.json; hygiene passes."},
+  {"check": "custom-preview", "observation": "Prescore witness I0:C50:S10:Cost5 was #3 against v1.7.4, but is #4 against live v1.7.5 because Sieve is ahead.", "resolution": "Reported fresh #4 for that witness and verified a new reachable I10:C60:S0:Cost20 witness at #3 against v1.7.5."}
+ ],
+ "measurement_changes": false,
+ "final_checks": "PASS; source hashes, scored numbers and native usage retained exactly."
+}
