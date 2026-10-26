@@ -1,0 +1,25 @@
+{
+  "artifact_id": "protocol-gso-opt1-102",
+  "artifact_sha256": "eedef18bb298a4ecee13a356eb383d9eb5c33428b80c95017bb7ef88b2383f9f",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": ["gso::opt1-102", "c1", "c2"],
+  "errors_found": 1,
+  "findings": [
+    {
+      "id": "F1",
+      "severity": "major",
+      "location": "gso::opt1-102 — version_status/version fields (c2)",
+      "evidence": "Row claims version_status=\"published\" with version=\"opt1-102\". Source 1 (protocol page) publishes no release identifier for this board; the changelog lists methodology dates only. Per c2, when the maintainer publishes no release identifier, the row's version must be the dated identity snapshot-<date> and version_status=\"snapshot\". \"opt1-102\" is a registry-coined identity, not a maintainer release identifier. All other c2 fields check out: status=\"active\" is affirmatively supported by Source 3 (4 newly served score values); superseded_by=null is uncontradicted (no successor board named in Source 1).",
+      "repair": "Set version_status=\"snapshot\" and version to snapshot-<date> using this run's capture date (e.g., snapshot-2026-10-26 per Source 2 retrieved_at), preserving the version_guard text; keep status and superseded_by unchanged."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "Owner hash/transport/qualification checks (row sha256 26dbde96..., payload sha256 ea360f34..., producer receipt) were not executed by this review; treated as owner-executed per instructions.",
+    "c1 metric/unit/range verified against Source 1 metric text and Source 4 scale summary (32 values, min 0, max 88.24 — consistent with unit=percent, range [0,100]); Source 4 is this run's own read and cannot establish metric meaning, only the served scale.",
+    "Row notes cite changelog entries 2026-04-27 and 2026-07-12 but not 2026-09-27/2026-11-03 items; the row does not claim exhaustiveness, so no mismatch.",
+    "Source 1 is an excerpt bounded capture; the full page was not inspected beyond the supplied excerpt."
+  ],
+  "missing_evidence": []
+}

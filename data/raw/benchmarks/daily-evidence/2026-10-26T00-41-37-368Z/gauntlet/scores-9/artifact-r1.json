@@ -1,0 +1,371 @@
+[
+  {
+    "id": "public:a5f238004486707c071192ae",
+    "benchmark_id": "eqbench-creative-writing::3",
+    "subject": {
+      "source_id": "openrouter/sherlock-dash-alpha",
+      "name": "openrouter/sherlock-dash-alpha",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 1333,
+    "unit": "Elo",
+    "basis": "measured",
+    "source": {
+      "url": "https://eqbench.com/creative_writing.js?v=1.0.91",
+      "retrieved_at": "2026-10-26T00:51:35.307097+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-10-26T00-41-37-368Z/85f5c7aa457db83f6b31.gz",
+      "sha256": "85f5c7aa457db83f6b31a0fb48b3d1d1199542a201f7394200b659eecc513021",
+      "locator": "template_csv; source row 93; openrouter/sherlock-dash-alpha; field elo_score"
+    },
+    "protocol": "Elo Score column in the leaderboard",
+    "comparison_key": null
+  },
+  {
+    "id": "public:ab8d2b261b5365385429c127",
+    "benchmark_id": "eqbench-creative-writing::3",
+    "subject": {
+      "source_id": "grok-4.1-fast",
+      "name": "grok-4.1-fast",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 1327.8,
+    "unit": "Elo",
+    "basis": "measured",
+    "source": {
+      "url": "https://eqbench.com/creative_writing.js?v=1.0.91",
+      "retrieved_at": "2026-10-26T00:51:35.307097+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-10-26T00-41-37-368Z/85f5c7aa457db83f6b31.gz",
+      "sha256": "85f5c7aa457db83f6b31a0fb48b3d1d1199542a201f7394200b659eecc513021",
+      "locator": "template_csv; source row 94; grok-4.1-fast; field elo_score"
+    },
+    "protocol": "Elo Score column in the leaderboard",
+    "comparison_key": null
+  },
+  {
+    "id": "public:4c039eab879add9501304915",
+    "benchmark_id": "eqbench-creative-writing::3",
+    "subject": {
+      "source_id": "gpt-5-mini-2025-08-07",
+      "name": "gpt-5-mini-2025-08-07",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 1313.5,
+    "unit": "Elo",
+    "basis": "measured",
+    "source": {
+      "url": "https://eqbench.com/creative_writing.js?v=1.0.91",
+      "retrieved_at": "2026-10-26T00:51:35.307097+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-10-26T00-41-37-368Z/85f5c7aa457db83f6b31.gz",
+      "sha256": "85f5c7aa457db83f6b31a0fb48b3d1d1199542a201f7394200b659eecc513021",
+      "locator": "template_csv; source row 95; gpt-5-mini-2025-08-07; field elo_score"
+    },
+    "protocol": "Elo Score column in the leaderboard",
+    "comparison_key": null
+  },
+  {
+    "id": "public:d722b2d84e29756c1b351c1a",
+    "benchmark_id": "eqbench-creative-writing::3",
+    "subject": {
+      "source_id": "google/gemma-4-26B-A4B-it",
+      "name": "google/gemma-4-26B-A4B-it",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 1305,
+    "unit": "Elo",
+    "basis": "measured",
+    "source": {
+      "url": "https://eqbench.com/creative_writing.js?v=1.0.91",
+      "retrieved_at": "2026-10-26T00:51:35.307097+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-10-26T00-41-37-368Z/85f5c7aa457db83f6b31.gz",
+      "sha256": "85f5c7aa457db83f6b31a0fb48b3d1d1199542a201f7394200b659eecc513021",
+      "locator": "template_csv; source row 96; google/gemma-4-26B-A4B-it; field elo_score"
+    },
+    "protocol": "Elo Score column in the leaderboard",
+    "comparison_key": null
+  },
+  {
+    "id": "public:e7408c4af01de7e59ba0c503",
+    "benchmark_id": "eqbench-creative-writing::3",
+    "subject": {
+      "source_id": "google/gemma-4-12B-it",
+      "name": "google/gemma-4-12B-it",
+      "model_id": "gemma-4-12b::non-reasoning",
+      "variant": null,
+      "harness": null
+    },
+    "value": 1289.4,
+    "unit": "Elo",
+    "basis": "measured",
+    "source": {
+      "url": "https://eqbench.com/creative_writing.js?v=1.0.91",
+      "retrieved_at": "2026-10-26T00:51:35.307097+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-10-26T00-41-37-368Z/85f5c7aa457db83f6b31.gz",
+      "sha256": "85f5c7aa457db83f6b31a0fb48b3d1d1199542a201f7394200b659eecc513021",
+      "locator": "template_csv; source row 97; google/gemma-4-12B-it; field elo_score"
+    },
+    "protocol": "Elo Score column in the leaderboard",
+    "comparison_key": null,
+    "join_note": "Unique exact Hugging Face checkpoint URL in retained catalog metadata; source effort remains as published."
+  },
+  {
+    "id": "public:fc26ee65f2a5ef6b79133d73",
+    "benchmark_id": "eqbench-creative-writing::3",
+    "subject": {
+      "source_id": "nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-NVFP4",
+      "name": "nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-NVFP4",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 1280.8,
+    "unit": "Elo",
+    "basis": "measured",
+    "source": {
+      "url": "https://eqbench.com/creative_writing.js?v=1.0.91",
+      "retrieved_at": "2026-10-26T00:51:35.307097+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-10-26T00-41-37-368Z/85f5c7aa457db83f6b31.gz",
+      "sha256": "85f5c7aa457db83f6b31a0fb48b3d1d1199542a201f7394200b659eecc513021",
+      "locator": "template_csv; source row 98; nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-NVFP4; field elo_score"
+    },
+    "protocol": "Elo Score column in the leaderboard",
+    "comparison_key": null
+  },
+  {
+    "id": "public:d4c2edd39974a7aaa76b8892",
+    "benchmark_id": "eqbench-creative-writing::3",
+    "subject": {
+      "source_id": "deepseek-ai/DeepSeek-V3.2-Speciale",
+      "name": "deepseek-ai/DeepSeek-V3.2-Speciale",
+      "model_id": "deepseek-v3.2-speciale::default",
+      "variant": null,
+      "harness": null
+    },
+    "value": 1276.8,
+    "unit": "Elo",
+    "basis": "measured",
+    "source": {
+      "url": "https://eqbench.com/creative_writing.js?v=1.0.91",
+      "retrieved_at": "2026-10-26T00:51:35.307097+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-10-26T00-41-37-368Z/85f5c7aa457db83f6b31.gz",
+      "sha256": "85f5c7aa457db83f6b31a0fb48b3d1d1199542a201f7394200b659eecc513021",
+      "locator": "template_csv; source row 99; deepseek-ai/DeepSeek-V3.2-Speciale; field elo_score"
+    },
+    "protocol": "Elo Score column in the leaderboard",
+    "comparison_key": null,
+    "join_note": "Unique exact Hugging Face checkpoint URL in retained catalog metadata; source effort remains as published."
+  },
+  {
+    "id": "public:0e9c3c0e89fe2ed2cc334ebc",
+    "benchmark_id": "eqbench-creative-writing::3",
+    "subject": {
+      "source_id": "google/gemma-3-27b-it",
+      "name": "google/gemma-3-27b-it",
+      "model_id": "gemma-3-27b-instruct::default",
+      "variant": null,
+      "harness": null
+    },
+    "value": 1266.3,
+    "unit": "Elo",
+    "basis": "measured",
+    "source": {
+      "url": "https://eqbench.com/creative_writing.js?v=1.0.91",
+      "retrieved_at": "2026-10-26T00:51:35.307097+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-10-26T00-41-37-368Z/85f5c7aa457db83f6b31.gz",
+      "sha256": "85f5c7aa457db83f6b31a0fb48b3d1d1199542a201f7394200b659eecc513021",
+      "locator": "template_csv; source row 100; google/gemma-3-27b-it; field elo_score"
+    },
+    "protocol": "Elo Score column in the leaderboard",
+    "comparison_key": null,
+    "join_note": "Unique exact Hugging Face checkpoint URL in retained catalog metadata; source effort remains as published."
+  },
+  {
+    "id": "public:40d0ddd6d98727cf7b1fc1ec",
+    "benchmark_id": "eqbench-creative-writing::3",
+    "subject": {
+      "source_id": "gpt-4.5-preview",
+      "name": "gpt-4.5-preview",
+      "model_id": "gpt-4.5-preview::default",
+      "variant": null,
+      "harness": null
+    },
+    "value": 1258.7,
+    "unit": "Elo",
+    "basis": "measured",
+    "source": {
+      "url": "https://eqbench.com/creative_writing.js?v=1.0.91",
+      "retrieved_at": "2026-10-26T00:51:35.307097+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-10-26T00-41-37-368Z/85f5c7aa457db83f6b31.gz",
+      "sha256": "85f5c7aa457db83f6b31a0fb48b3d1d1199542a201f7394200b659eecc513021",
+      "locator": "template_csv; source row 101; gpt-4.5-preview; field elo_score"
+    },
+    "protocol": "Elo Score column in the leaderboard",
+    "comparison_key": null,
+    "join_note": "Reviewed identity map 2026-09-26: label names gpt-4.5-preview and the board states no setting; the catalog has exactly one configuration, the default (gpt-4.5-preview::default)"
+  },
+  {
+    "id": "public:f5e062722bfe06274487ded3",
+    "benchmark_id": "eqbench-creative-writing::3",
+    "subject": {
+      "source_id": "qwen/qwq-32b",
+      "name": "qwen/qwq-32b",
+      "model_id": "qwq-32b::default",
+      "variant": null,
+      "harness": null
+    },
+    "value": 1258.1,
+    "unit": "Elo",
+    "basis": "measured",
+    "source": {
+      "url": "https://eqbench.com/creative_writing.js?v=1.0.91",
+      "retrieved_at": "2026-10-26T00:51:35.307097+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-10-26T00-41-37-368Z/85f5c7aa457db83f6b31.gz",
+      "sha256": "85f5c7aa457db83f6b31a0fb48b3d1d1199542a201f7394200b659eecc513021",
+      "locator": "template_csv; source row 102; qwen/qwq-32b; field elo_score"
+    },
+    "protocol": "Elo Score column in the leaderboard",
+    "comparison_key": null,
+    "join_note": "Reviewed identity map 2026-09-26: label names qwq-32b and the board states no setting; the catalog has exactly one configuration, the default (qwq-32b::default)"
+  },
+  {
+    "id": "public:39d18c9517f2176ed7be7121",
+    "benchmark_id": "eqbench-creative-writing::3",
+    "subject": {
+      "source_id": "mistralai/Mistral-Small-3.2-24B-Instruct-2506",
+      "name": "mistralai/Mistral-Small-3.2-24B-Instruct-2506",
+      "model_id": "mistral-small-3.2-24b-instruct::default",
+      "variant": null,
+      "harness": null
+    },
+    "value": 1256.1,
+    "unit": "Elo",
+    "basis": "measured",
+    "source": {
+      "url": "https://eqbench.com/creative_writing.js?v=1.0.91",
+      "retrieved_at": "2026-10-26T00:51:35.307097+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-10-26T00-41-37-368Z/85f5c7aa457db83f6b31.gz",
+      "sha256": "85f5c7aa457db83f6b31a0fb48b3d1d1199542a201f7394200b659eecc513021",
+      "locator": "template_csv; source row 103; mistralai/Mistral-Small-3.2-24B-Instruct-2506; field elo_score"
+    },
+    "protocol": "Elo Score column in the leaderboard",
+    "comparison_key": null,
+    "join_note": "Unique exact Hugging Face checkpoint URL in retained catalog metadata; source effort remains as published."
+  },
+  {
+    "id": "public:f68a7a20b4788452ed8f7adc",
+    "benchmark_id": "eqbench-creative-writing::3",
+    "subject": {
+      "source_id": "RekaAI/reka-flash-3",
+      "name": "RekaAI/reka-flash-3",
+      "model_id": "reka-flash-3::default",
+      "variant": null,
+      "harness": null
+    },
+    "value": 1228.7,
+    "unit": "Elo",
+    "basis": "measured",
+    "source": {
+      "url": "https://eqbench.com/creative_writing.js?v=1.0.91",
+      "retrieved_at": "2026-10-26T00:51:35.307097+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-10-26T00-41-37-368Z/85f5c7aa457db83f6b31.gz",
+      "sha256": "85f5c7aa457db83f6b31a0fb48b3d1d1199542a201f7394200b659eecc513021",
+      "locator": "template_csv; source row 104; RekaAI/reka-flash-3; field elo_score"
+    },
+    "protocol": "Elo Score column in the leaderboard",
+    "comparison_key": null,
+    "join_note": "Unique exact Hugging Face checkpoint URL in retained catalog metadata; source effort remains as published."
+  },
+  {
+    "id": "public:88bf136458aeea0fc56842ff",
+    "benchmark_id": "eqbench-creative-writing::3",
+    "subject": {
+      "source_id": "grok-3-beta",
+      "name": "grok-3-beta",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 1186.2,
+    "unit": "Elo",
+    "basis": "measured",
+    "source": {
+      "url": "https://eqbench.com/creative_writing.js?v=1.0.91",
+      "retrieved_at": "2026-10-26T00:51:35.307097+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-10-26T00-41-37-368Z/85f5c7aa457db83f6b31.gz",
+      "sha256": "85f5c7aa457db83f6b31a0fb48b3d1d1199542a201f7394200b659eecc513021",
+      "locator": "template_csv; source row 105; grok-3-beta; field elo_score"
+    },
+    "protocol": "Elo Score column in the leaderboard",
+    "comparison_key": null
+  },
+  {
+    "id": "public:025066bd1f4fccf0217d0d85",
+    "benchmark_id": "eqbench-creative-writing::3",
+    "subject": {
+      "source_id": "gpt-4.1-mini",
+      "name": "gpt-4.1-mini",
+      "model_id": "gpt-4.1-mini::default",
+      "variant": null,
+      "harness": null
+    },
+    "value": 1145.3,
+    "unit": "Elo",
+    "basis": "measured",
+    "source": {
+      "url": "https://eqbench.com/creative_writing.js?v=1.0.91",
+      "retrieved_at": "2026-10-26T00:51:35.307097+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-10-26T00-41-37-368Z/85f5c7aa457db83f6b31.gz",
+      "sha256": "85f5c7aa457db83f6b31a0fb48b3d1d1199542a201f7394200b659eecc513021",
+      "locator": "template_csv; source row 106; gpt-4.1-mini; field elo_score"
+    },
+    "protocol": "Elo Score column in the leaderboard",
+    "comparison_key": null,
+    "join_note": "Reviewed identity map 2026-09-26: label names gpt-4.1-mini and the board states no setting; the catalog has exactly one configuration, the default (gpt-4.1-mini::default)"
+  },
+  {
+    "id": "public:bd51a7cd79123f7ba6d87559",
+    "benchmark_id": "eqbench-creative-writing::3",
+    "subject": {
+      "source_id": "CohereForAI/c4ai-command-a-03-2025",
+      "name": "CohereForAI/c4ai-command-a-03-2025",
+      "model_id": "command-a::default",
+      "variant": null,
+      "harness": null
+    },
+    "value": 1144.6,
+    "unit": "Elo",
+    "basis": "measured",
+    "source": {
+      "url": "https://eqbench.com/creative_writing.js?v=1.0.91",
+      "retrieved_at": "2026-10-26T00:51:35.307097+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-10-26T00-41-37-368Z/85f5c7aa457db83f6b31.gz",
+      "sha256": "85f5c7aa457db83f6b31a0fb48b3d1d1199542a201f7394200b659eecc513021",
+      "locator": "template_csv; source row 107; CohereForAI/c4ai-command-a-03-2025; field elo_score"
+    },
+    "protocol": "Elo Score column in the leaderboard",
+    "comparison_key": null,
+    "join_note": "Unique exact Hugging Face checkpoint URL in retained catalog metadata; source effort remains as published."
+  }
+]

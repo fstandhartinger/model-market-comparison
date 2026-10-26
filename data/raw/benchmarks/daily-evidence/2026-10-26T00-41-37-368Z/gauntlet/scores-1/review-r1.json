@@ -1,0 +1,40 @@
+{
+  "artifact_id": "scores-1",
+  "artifact_sha256": "35088a930905dab796c2d80ba93d70df954489d0cb3f5c62abfc7791c9278610",
+  "round": 1,
+  "verdict": "blocked",
+  "coverage_checked": [],
+  "errors_found": 1,
+  "findings": [
+    {
+      "id": "F1",
+      "severity": "blocker",
+      "location": "packet / candidate artifact rows 1-15",
+      "evidence": "The packet states 'Candidate rows (15 rows; the frozen artifact file content is JSON.stringify of these rows)' and supplies only one row binding (public:906c33aca7292b9baec9f13a, sha256=61e6d742...), plus four source excerpts (SOURCES 15-18, eqbench4 rows 26-29 for google/gemini-3.5-flash, x-ai/grok-4.3, claude-haiku-4-5-20251001, qwen/qwen3.6-27b). The actual candidate row content for all 15 required row ids, row-to-source mappings, and row hash bindings for the other 14 rows are absent. No claimed field (model, elo value, version, units, basis, date, protocol, locator) can be compared against the packet's primary fields.",
+      "repair": "Supply the frozen artifact's 15 candidate rows with their owner-computed row sha256 bindings and the mapping of each row id to its source excerpt/locator so every claimed field can be compared against the primary fields."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "I cannot recompute hashes; row binding relies on owner-computed per-row sha256 values, of which only one (public:906c33aca7292b9baec9f13a) was supplied.",
+    "Owner separately executes transport/qualification checks; the producer receipt covers identity/qualification only and was not independently verified here.",
+    "Coverage could not be performed because no candidate row content was reviewable; coverage_checked is therefore empty. This is a packet-completeness limitation, not missing numeric source values."
+  ],
+  "missing_evidence": [
+    "Artifact row content for public:906c33aca7292b9baec9f13a",
+    "Artifact row content for public:1b376b4c358caadd2892feaa",
+    "Artifact row content for public:a834fc47da03a523394eef6f",
+    "Artifact row content for public:a1eea4492f8995bcfa384ff4",
+    "Artifact row content for public:e9fa60ad6aedb3acd1ee12b0",
+    "Artifact row content for public:6d7bac8cc62a3b32fca0cd9a",
+    "Artifact row content for public:882377b4bdd8822b23a05155",
+    "Artifact row content for public:ee5a727b0f2aab504a0efad4",
+    "Artifact row content for public:15a1ca123b4ef58752ebbdb3",
+    "Artifact row content for public:937d85ce51b58015a522503e",
+    "Artifact row content for public:dfd3f8e25563335464d1e0e9",
+    "Artifact row content for public:a8199f65e0e3cdd726e9ea03",
+    "Artifact row content for public:6a17e2bfc490ec510514805d",
+    "Artifact row content for public:8ab72ae4081296decb3139fe",
+    "Artifact row content for public:3039be4103dd09cc70dddba7"
+  ]
+}

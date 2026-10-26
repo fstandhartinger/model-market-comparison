@@ -1,0 +1,26 @@
+{
+"artifact_id": "protocol-mazur-creative-story-writing-snapshot-2026-09-10",
+"artifact_sha256": "d0bedc67f03020a1918d640a6c576ae6937e5130eb4cf9579a6d457ab8fc7a3e",
+"round": 1,
+"verdict": "revise",
+"coverage_checked": [
+"mazur-creative-story-writing::snapshot-2026-09-10",
+"c1",
+"c2"
+],
+"errors_found": 1,
+"findings": [
+{
+"id": "c1",
+"severity": "major",
+"location": "scoring.range",
+"evidence": "The candidate row claims scoring.range is [null, null] (unbounded). Source 3 provides a generated value-scale summary stating the observed finite values range from -5.131 (lowest) to 3.745 (highest).",
+"repair": "Update scoring.range to reflect the observed finite bounds: [-5.131, 3.745]."
+}
+],
+"fixed": [],
+"uncertainties": [
+"The exact unit 'points' for the metric is not explicitly defined in the source material, only that scores are relative and centered at zero."
+],
+"missing_evidence": []
+}

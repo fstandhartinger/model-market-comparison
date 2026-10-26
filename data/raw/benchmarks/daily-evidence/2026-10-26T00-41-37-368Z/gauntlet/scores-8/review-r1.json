@@ -1,0 +1,17 @@
+{
+  "artifact_id": "scores-8",
+  "artifact_sha256": "229e383e938405255cc45aa90aec18377d3d51eba865520280ea0b771b6ca5c9",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": ["public:5bb2e576679b427c2f9a4032","public:c3491d938488c2c079ff2bd0","public:786338758a97a21f86f2678d","public:d21a4143f4d49e7d5cc91e24","public:b333c6d67e79274ecc984033","public:27837f3bf1d6f1f45dedc690","public:696e47f5d512e17ff5f49be0","public:3475d439d23f550b49b893bb","public:a23c5e3bf02b693ed9906797","public:e8abb432083ff4fbfefc385b","public:2a29f11589dea897f8e857a3","public:e94cd52fa3388e2ad22b6a93","public:3cec760bf9001897b5b0d6a6","public:0011edf7699c2a5109ab8fb9","public:c5d55055832067f71a875f19","c1"],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "I cannot recompute row-level or artifact SHA-256 hashes or execute transport/qualification checks; I relied on the owner-computed canonical hashes and the executed producer receipt for identity binding.",
+    "Sources serve elo_score as strings (e.g., '1420.0', '1412.0'); artifact rows carry numbers 1420 and 1412. Numerically identical after the parser's scale=1, so treated as exact transcription, not an error.",
+    "Rows with model_id joins (gpt-4.1, Mistral-Large-3, gemma-4-31B, minimax-m2.5, GLM-4.5) rely on retained catalog metadata and prior accepted identity maps not re-verifiable in this packet; comparison_key remains null so no comparison key was derived from unknown configurations, consistent with c1.",
+    "The source publishes no effort/harness metadata; artifact correctly leaves harness null and protocol reflects the board's Elo Score column per registry and SOURCE 2 page text."
+  ],
+  "missing_evidence": []
+}

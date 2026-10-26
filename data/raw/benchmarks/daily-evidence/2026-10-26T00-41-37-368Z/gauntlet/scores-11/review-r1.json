@@ -1,0 +1,12 @@
+{
+  "artifact_id": "scores-11",
+  "artifact_sha256": "b88f2d32bdf149fd19db077cc436158313502f7d4d9adea2633a41d5c9873d0c",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": ["public:9238cadd9933d21e539fee66","public:f2570c7343c3536e13fcedeb","public:dbd92f84441908982e744cb0","public:1ebf35580659c8394ebf442f","public:062dd2b49cea0eb31494b26e","public:57c9044b24f0aa088bf4b992","public:fab7a3535e310b0f953f62d8","public:46282c0b32f7d399ca98cc87","public:c70b7f4933b9f05692b08571","public:659c53be425d45a016b6fb4c","public:d21c23406ad8ecb550a8f352","public:b85f8dbbef85f38d5fc07611","public:700611e8f14e140f80322692","public:476f576ebe61d4b6546c876f","public:c13ca5ea586bd477f2d76773","c1"],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": ["I cannot recompute the artifact or per-row SHA-256 hashes; binding relies on the owner-computed hashes supplied in the packet. Transport/hash qualification was separately executed by the owner per receipt, which I cannot independently verify.", "All 15 rows' values, model_name, source_index, benchmark version 3 (eqbench-creative-writing::3), unit 'Elo', protocol text, url, retrieved_at 2026-10-26T00:51:35.307097+00:00, and source sha256 85f5c7aa457db83f6b31a0fb48b3d1d1199542a201f7394200b659eecc513021 match the primary template_csv projections exactly (rows 123-137), including integer-valued rows (881.0, 868.0, 858.0) numerically equal to artifact values 881, 868, 858.", "c1: the board publishes no explicit effort/harness configuration and no published_at date; rows correctly carry harness=null and published_at=null rather than inferred values, and all model_id claims are null or '::default' supported by retained join_note identity maps; no comparison_key is derived from unknown configurations (all null).", "Value-scale summary (SOURCE 4) covers 145 served values in range 200-2174; all row values fall within this observed scale, consistent with the capture."],
+  "missing_evidence": []
+}

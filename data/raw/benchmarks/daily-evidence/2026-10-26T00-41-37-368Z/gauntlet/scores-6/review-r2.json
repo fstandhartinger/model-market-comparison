@@ -1,0 +1,17 @@
+{
+  "artifact_id": "scores-6",
+  "artifact_sha256": "63dadec90e55075d4ca02fad3d49e15ecd37eb502cdc7cbb375656c8f411243e",
+  "round": 2,
+  "verdict": "pass",
+  "coverage_checked": ["public:6a201144cc1619810818b70b","public:ea80737d28de3c97a1dd5e40","public:d8b505954a7f00fde41ed759","public:b8dd7231e98739259117d289","public:4f519751500bd71997553025","public:2c0bf59734572a5f909871a2","public:104216916fc50ef0094d71b2","public:996c9a94e13f48ef15583c56","public:33373f2f698998e460c53917","public:267a17e79b99421b279b4bca","public:d66417b916a5142caf595b41","public:8817bf4e64726f3c8da8f0a6","public:267fb28dba204c798d776623","c1"],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Could not recompute artifact or row SHA-256 hashes; relied on owner-provided canonical hashes for binding.",
+    "Could not independently verify transport/qualification checks; owner executes these separately per packet instructions.",
+    "Source serves '1578.0' for claude-opus-4 while artifact records 1578; numerically identical, no repair needed.",
+    "Row 2c0bf59734572a5f909871a2: primary model_name is '*AlexWortega/Qwen3.8-27B-antislop'; artifact uses the stripped name per the documented * badge marker mapping in the parser metadata, which is a specified mapping, not alias inference. Value 1592.9 matches source exactly."
+  ],
+  "missing_evidence": []
+}

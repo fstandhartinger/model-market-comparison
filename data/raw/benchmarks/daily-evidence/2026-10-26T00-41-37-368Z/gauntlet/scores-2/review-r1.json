@@ -1,0 +1,19 @@
+{
+  "artifact_id": "scores-2",
+  "artifact_sha256": "2c80a73b577127dc5e6fec0551b21a90f450246b2bbaf51303a08d4c358e3b9a",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": ["public:b6453b107813e34ce1cb50bb", "c1"],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Row public:b6453b107813e34ce1cb50bb: source does not publish a distinct publication date (published_at:null); retrieved_at 2026-10-26T00:51:32.314526+00:00 is the only source timestamp and is used as the source date. Not a mismatch, just an absence the source itself declares.",
+    "Subject identity: source gives model/display fields 'mistralai/mistral-medium-3-5'/'mistral-medium-3-5' exactly as transcribed; no checkpoint or variant is published by the source, so model_id/variant/harness null fields are faithful absences, not gaps filled by inference. No alias inference was performed.",
+    "I cannot recompute the row SHA-256 or execute transport/qualification checks; owner-computed hashes and the executed producer receipt are accepted as owner-executed identity/qualification evidence only.",
+    "Protocol text in the row matches the registry 'scoring.metric' string character-for-character and is consistent with the published eqbench.com method description (blind bidirectional pairwise judging, three-judge panel, soft Bradley-Terry fit, anchor normalisation); I verified consistency of the excerpt, not the full live page.",
+    "Basis 'measured': the Elo is judge-derived (LLM panel) per the published method; 'measured' is used in the benchmark-observation sense (not self-reported), which I judge consistent, but this is a labelling judgment."
+  ],
+  "missing_evidence": [],
+  "details": "Row public:b6453b107813e34ce1cb50bb verified against SOURCE 1 (exact projection, locator json_assignment; source_index 30; field elo): value 987.9 == source elo 987.9; unit 'Elo' == registry unit; benchmark_id 'eq-bench::4' == registry id with version '4'; subject source_id/name == source model/display fields; protocol == registry scoring.metric exactly; comparison_key null correctly avoids creating a key from unknown configuration. SOURCE 4 corroborates 987.9 as the minimum served elo value in the same hash-verified capture. Criterion c1 checked: primary value, model/checkpoint as published, benchmark version, units, source date via retrieved_at, measured basis, and derivation (no derivations claimed; none required)."
+}
