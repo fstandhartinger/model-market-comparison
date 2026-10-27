@@ -88,6 +88,23 @@ export async function sendNotify(text, { bin = notifyBinary(), execImpl = execFi
   }
 }
 
+// Reliability review N7 (27 Oct 2026): a collector failing 3-6 days is agent work, not a message to Florian, so it
+// goes to the owning job as a board handoff (`agent-board post <thread> --kind handoff --to <owner>`) under the daily
+// run's own identity. Same contract as sendNotify: { sent, reason? }, never throws; a failed post is not marked sent, so the next run replans it while the collector still fails.
+export const agentBoardBinary = (env = process.env) => env.BH_AGENT_BOARD || join(env.HOME || '/home/flori', 'bin/agent-board');
+export const DAILY_BOARD_IDENTITY = 'ops:benchmarkheaven-daily';
+
+export async function sendBoardHandoff(text, { thread, to, bin = agentBoardBinary(), execImpl = execFileAsync, env = process.env } = {}) {
+  if (!Number.isSafeInteger(thread) || typeof to !== 'string' || !to) return { sent: false, reason: 'board_target_missing' };
+  try {
+    await execImpl(bin, ['--as', DAILY_BOARD_IDENTITY, 'post', String(thread), '--kind', 'handoff', '--to', to, String(text).slice(0, 4000)],
+      { timeout: NOTIFY_TIMEOUT_MS, env });
+    return { sent: true };
+  } catch (error) {
+    return { sent: false, reason: error?.code === 'ENOENT' ? 'agent_board_missing' : `agent_board_failed:${String(error?.stderr || error?.message || 'unknown error').slice(0, 200)}` };
+  }
+}
+
 // --- human-action cards ---------------------------------------------------------
 // bh-daily-collectors-fix (7 Oct 2026): the quarantine card was sent as a plain `notify now` from 1 Oct on, and
 // `~/bin/notify` refused every send ("a 🧑 Für dich ask needs --ask [minutes]"), so it sat in `pending` and was
@@ -142,8 +159,8 @@ export async function executeNotifications({
   // Pending DATA events are replayed first. Failure alerts are replanned from
   // current status through the weekly gate; recovery drops stale unsent failures.
   // Replaying them directly would bypass weekly dedup and report resolved problems.
-  // Human-action cards are never replayed: the current plan re-creates one that is still due and unsent.
-  const pendingReplay = state.pending.filter((p) => p.kind !== 'failure' && !HUMAN_TODO_KINDS.has(p.kind) && !state.notified[p.key]).map((p) => ({
+  // Human-action cards and collector handoffs are never replayed: the current plan re-creates one that is still due and unsent.
+  const pendingReplay = state.pending.filter((p) => p.kind !== 'failure' && !HUMAN_TODO_KINDS.has(p.kind) && p.kind !== 'collector-handoff' && !state.notified[p.key]).map((p) => ({
     kind: p.kind ?? 'pending', key: p.key ?? null, text: p.text, onSent: p.onSent ?? null, pending: true,
   }));
   const pendingKeys = new Set(pendingReplay.map((p) => p.key).filter((k) => typeof k === 'string' && k));
@@ -169,7 +186,9 @@ export async function executeNotifications({
     }
     const result = replyJobDir === null && HUMAN_TODO_KINDS.has(send.kind)
       ? { sent: false, reason: 'reply_job_unavailable' }
-      : await sendNotify(send.text, { bin: notifyBinary(env), env, replyJobDir, ...(execImpl ? { execImpl } : {}) });
+      : send.board
+        ? await sendBoardHandoff(send.text, { ...send.board, bin: agentBoardBinary(env), env, ...(execImpl ? { execImpl } : {}) })
+        : await sendNotify(send.text, { bin: notifyBinary(env), env, replyJobDir, ...(execImpl ? { execImpl } : {}) });
     if (result.sent) {
       console.log(`notify: sent ${send.kind} [${send.key}]`);
       sent.push(send.kind);
