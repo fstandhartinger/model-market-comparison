@@ -19,7 +19,8 @@ test('CR-578 H2O-4B v1.4.1: pinned official GPU row discloses version, engine, i
   assert.match(row.measurement_source, /MAX_LEN 40960, GPU_UTIL 0.70/);
   assert.match(row.measurement_source, /h2oai\/vllm @b05cc29a/);
   assert.match(row.measurement_source, /1,048,576/);
-  assert.match(row.measurement_source, /1,605,632/);
+  assert.match(row.measurement_source, /same per-request cap as the earlier H2O-Lightning-4B image row/);
+  assert.doesNotMatch(row.measurement_source, /serving fallback/);
   assert.match(row.measurement_source, /base64/);
   assert.match(row.measurement_source, /wall clock of each loopback request/);
   assert.match(row.measurement_source, /TypeSafe-20 was not run in this pod session/);
