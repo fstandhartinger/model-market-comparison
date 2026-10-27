@@ -5,7 +5,7 @@ import assert from 'node:assert/strict';
 import { mkdtemp, rm, writeFile, chmod, readFile, readdir } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { planNotifications, staleCollectorDigestLines, staleCollectorHumanTodo, COLLECTOR_CARD_DAYS } from '../ops/daily/policy.mjs';
+import { planNotifications, staleCollectorDigestLines, staleCollectorHumanTodo, staleCollectorHandoff, COLLECTOR_CARD_DAYS, COLLECTOR_OWNER_JOB } from '../ops/daily/policy.mjs';
 import { prepareReplyJob } from '../ops/daily/notify.mjs';
 import { updateCollectorHealth, staleSources } from '../ops/daily/source-health.mjs';
 import { executeNotifications } from '../ops/daily/notify.mjs';
@@ -97,5 +97,76 @@ test('two cards the same day get separate reply jobs, and a retry keeps an appen
     assert.match(prompt, /card A\n/);
     assert.match(prompt, /## Reply\nyes/);
     assert.doesNotMatch(prompt, /card A again/);
+  } finally { await rm(dir, { recursive: true, force: true }); }
+});
+
+// Reliability review N7 (27 Oct 2026): days 3-6 went only to the discontinued digest, so fetch-ovhcloud-catalog
+// failed 20 -> 27 Oct before anyone acted. Days 3-6 are now one board handoff to the owning job.
+test('days 3-6 are one board handoff to the owning job per failure episode; day 7 is the card, not a handoff', () => {
+  assert.equal(staleCollectorHandoff([stale('fetch-x', 2)]), null);
+  assert.equal(staleCollectorHandoff([stale('fetch-x', COLLECTOR_CARD_DAYS)]), null, 'day 7 belongs to the card');
+  const h = staleCollectorHandoff([stale('fetch-ovhcloud-catalog', 6, { failing_since: '2026-10-21' }), stale('fetch-x', 3), stale('fetch-y', 7), { ...stale('vals-index::2', 4), kind: 'benchmark' }]);
+  assert.deepEqual(h.collectors, ['fetch-ovhcloud-catalog', 'fetch-x']);
+  assert.equal(h.key, 'collector-handoff:fetch-ovhcloud-catalog@2026-10-21|fetch-x@2026-09-23');
+  assert.equal(h.owner, COLLECTOR_OWNER_JOB);
+  assert.equal(h.thread, 8);
+  assert.match(h.text, new RegExp(`^@${COLLECTOR_OWNER_JOB} `));
+  assert.match(h.text, /^- fetch-ovhcloud-catalog: failing for 6 days \(last good 2026-09-22\); cause: HTTP 404$/m);
+  assert.doesNotMatch(h.text, /DU BIST DRAN|fetch-y/);
+  const plan = (days, notified = {}) => planNotifications({ status_ok: false, rc: 1, notified, stale_sources: [stale('fetch-x', days)], now: 1_800_000_000_000 });
+  for (const days of [3, 4, 5, 6]) {
+    const kinds = plan(days).sends.map((s) => s.kind);
+    assert.ok(kinds.includes('collector-handoff'), `day ${days} hands off, even from a failed run`);
+    assert.ok(!kinds.includes('collector-stale'), `day ${days} is no card`);
+  }
+  const send = plan(3).sends.find((s) => s.kind === 'collector-handoff');
+  assert.deepEqual(send.board, { thread: 8, to: COLLECTOR_OWNER_JOB });
+  assert.equal(plan(4, { [send.key]: '2026-10-01' }).sends.some((s) => s.kind === 'collector-handoff'), false, 'once per episode');
+  assert.deepEqual(plan(7).sends.filter((s) => s.kind.startsWith('collector')).map((s) => s.kind), ['collector-stale']);
+});
+
+async function stubBoard(dir, { fail = false } = {}) {
+  const bin = join(dir, 'agent-board'), log = join(dir, 'board.jsonl');
+  await writeFile(bin, `#!/usr/bin/env node\nrequire('node:fs').appendFileSync(${JSON.stringify(log)}, JSON.stringify({ argv: process.argv.slice(2) }) + '\\n');\n${fail ? "process.stderr.write('board locked'); process.exit(1);\n" : ''}`);
+  await chmod(bin, 0o755);
+  return { bin, calls: async () => (await readFile(log, 'utf8').catch(() => '')).trim().split('\n').filter(Boolean).map(JSON.parse) };
+}
+
+test('a collector handoff is posted to the board, not sent to Telegram; a failed post is retried by replanning only', async () => {
+  const dir = await mkdtemp(join(tmpdir(), 'bh-collector-handoff-'));
+  try {
+    const stateDir = join(dir, 'state');
+    const { mkdir } = await import('node:fs/promises');
+    await mkdir(stateDir, { recursive: true });
+    const notifyStub = await stubNotify(dir);
+    const context = (days) => ({ status_ok: true, top5: null, quarantined_arms: [], stale_sources: days ? [stale('fetch-ovhcloud-catalog', days)] : [] });
+    // 1. The board is down: nothing is recorded as sent, the entry is kept pending.
+    const down = await stubBoard(join(dir), { fail: true });
+    let env = { BH_NOTIFY: notifyStub.bin, BH_AGENT_BOARD: down.bin, HOME: dir };
+    let result = await executeNotifications({ stateDir, env, now: Date.parse('2026-10-23T05:17:00Z'), context: context(3) });
+    assert.deepEqual(result.failed.map((f) => f.kind), ['collector-handoff']);
+    assert.match(result.failed[0].reason, /^agent_board_failed:/);
+    let state = JSON.parse(await readFile(join(stateDir, 'daily-state.json'), 'utf8'));
+    assert.equal(state.notified['collector-handoff:fetch-ovhcloud-catalog@2026-09-23'], undefined);
+    // 2. The collector recovered before the board came back: the stale pending handoff is not replayed.
+    await rm(join(dir, 'board.jsonl'), { force: true });
+    result = await executeNotifications({ stateDir, env, now: Date.parse('2026-10-24T05:17:00Z'), context: context(0) });
+    assert.deepEqual(result.sent, []);
+    assert.equal((await down.calls()).length, 0);
+    // 3. Failing again with a working board: exactly one post, addressed to the owner as a handoff.
+    const up = await stubBoard(join(dir, 'state'));
+    env = { ...env, BH_AGENT_BOARD: up.bin };
+    result = await executeNotifications({ stateDir, env, now: Date.parse('2026-10-25T05:17:00Z'), context: context(4) });
+    assert.deepEqual(result.sent, ['collector-handoff']);
+    const [call] = await up.calls();
+    assert.deepEqual(call.argv.slice(0, 8), ['--as', 'ops:benchmarkheaven-daily', 'post', '8', '--kind', 'handoff', '--to', COLLECTOR_OWNER_JOB]);
+    assert.match(call.argv[8], /fetch-ovhcloud-catalog: failing for 4 days/);
+    assert.deepEqual(await notifyStub.calls(), [], 'no Telegram message for days 3-6');
+    state = JSON.parse(await readFile(join(stateDir, 'daily-state.json'), 'utf8'));
+    assert.ok(state.notified['collector-handoff:fetch-ovhcloud-catalog@2026-09-23']);
+    // 4. Next day, same episode: no second post.
+    result = await executeNotifications({ stateDir, env, now: Date.parse('2026-10-26T05:17:00Z'), context: context(5) });
+    assert.deepEqual(result.sent, []);
+    assert.equal((await up.calls()).length, 1);
   } finally { await rm(dir, { recursive: true, force: true }); }
 });
