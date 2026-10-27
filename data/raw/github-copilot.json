@@ -1,7 +1,7 @@
 {
   "source": "GitHub Copilot (current usage-based billing plus annual-plan legacy request billing)",
-  "collected_at": "2026-10-26",
-  "method": "scripts/fetch-github-copilot-catalog.mjs (2026-10-26): current_models[] = the intersection of the supported-models catalog table (https://docs.github.com/en/copilot/reference/ai-models/supported-models) and the per-token pricing tables (https://docs.github.com/en/copilot/reference/copilot-billing/models-and-pricing), matched by exact name after footnote markers are removed; Default and Long context tiers are folded into one row (long_context carries the threshold and higher price); promotion end dates come from the pricing footnotes. models[] = the legacy annual-plan multiplier table (https://docs.github.com/en/copilot/reference/copilot-billing/request-based-billing-legacy/model-multipliers-for-annual-plans) with effective USD per request = multiplier × per_premium_request_usd; the page's \"subject to change\" list sets the note. Plan allowances (plans[]) are documented on separate billing pages and keep plans_checked_at. See github-copilot.method.md.",
+  "collected_at": "2026-10-27",
+  "method": "scripts/fetch-github-copilot-catalog.mjs (2026-10-27): current_models[] = the intersection of the supported-models catalog table (https://docs.github.com/en/copilot/reference/ai-models/supported-models) and the per-token pricing tables (https://docs.github.com/en/copilot/reference/copilot-billing/models-and-pricing), matched by exact name after footnote markers are removed; Default and Long context tiers are folded into one row (long_context carries the threshold and higher price); promotion end dates come from the pricing footnotes. models[] = the legacy annual-plan multiplier table (https://docs.github.com/en/copilot/reference/copilot-billing/request-based-billing-legacy/model-multipliers-for-annual-plans) with effective USD per request = multiplier × per_premium_request_usd; the page's \"subject to change\" list sets the note. Plan allowances (plans[]) are documented on separate billing pages and keep plans_checked_at. See github-copilot.method.md.",
   "pricing_model": "ai_credits_per_token_with_legacy_per_premium_request",
   "ai_credit_usd": 0.01,
   "per_premium_request_usd": 0.04,
@@ -193,6 +193,24 @@
         "cached_input_per_1m_usd": 0.2,
         "cache_write_per_1m_usd": 5,
         "output_per_1m_usd": 15,
+        "threshold_input_tokens_gt": 272000
+      },
+      "mapping": "derived"
+    },
+    {
+      "model_name": "GPT-6.1 Terra",
+      "provider_org": "OpenAI",
+      "release_status": "GA",
+      "category": "Versatile",
+      "input_per_1m_usd": 1,
+      "cached_input_per_1m_usd": 0.05,
+      "cache_write_per_1m_usd": 1.25,
+      "output_per_1m_usd": 5,
+      "long_context": {
+        "input_per_1m_usd": 2,
+        "cached_input_per_1m_usd": 0.1,
+        "cache_write_per_1m_usd": 2.5,
+        "output_per_1m_usd": 7.5,
         "threshold_input_tokens_gt": 272000
       },
       "mapping": "derived"
@@ -716,12 +734,14 @@
     "Claude Sonnet 4.6 (2026-09-01)"
   ],
   "response_sha256": {
-    "supported": "3b59e7ee1f5fabedca4c477aade3741f3d3b071e5f996e2e89b05e15e1a90ef4",
-    "pricing": "550348ad2fd2bdbe9f5462fae70437401bd733c5b4a59271dfccd1aad4af7dec",
-    "multipliers": "7cf4b5edf7c7d475c0f164d28082a7b52d8916eed83c840d806da7997035921d"
+    "supported": "35bcd6eaa926212534e0873d1ebf0a2e36d4f51f4bace6fb1abf86443fe90236",
+    "pricing": "1231af7b66c32d4ad68f2c4438ecba99053633db92c1ef81c8d3e206f9306b65",
+    "multipliers": "3a5a0a2cfb5995fe9f334fe6e927a80ef580b849ddaefeda86ea55e739cf73bc"
   },
   "diff": {
-    "current_added": [],
+    "current_added": [
+      "GPT-6.1 Terra"
+    ],
     "current_removed": [],
     "current_price_changed": [],
     "legacy_added": [],

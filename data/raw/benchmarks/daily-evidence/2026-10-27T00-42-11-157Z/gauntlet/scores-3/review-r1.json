@@ -1,0 +1,19 @@
+{
+  "artifact_id": "scores-3",
+  "artifact_sha256": "d4f7914eb6546797eef2ef57a60992a6328658597cc9fd71a137da1b692a546b",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": ["public:1290333ed7dffdec3f39cc5c", "c1"],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Row public:1290333ed7dffdec3f39cc5c: all claimed fields verified against SOURCE 1 (sha256 matches packet binding): model_name aion-3.5, overall_score_100 \"82.1\", unit points, registry id/version v1.11, protocol text, source_index 139 and parser kind template_csv all match exactly. Source 2 corroborates the score definition, 14 rubric dimensions, 5x forced poetry/metaphor weighting and degradation penalty.",
+    "harness=null in the row: Source 2 only states models are 'typically evaluated via openrouter, temp=0.7, min_p=0.1' as a general statement, not a model-specific harness, so leaving harness null appears accurate rather than a missing value; flagging as interpretive uncertainty only.",
+    "published_at=null: the page carries a v1.11 changelog date of 2026-02-19, but that is the benchmark version release date, not the observation's publication date; treated as a wording ambiguity, not missing evidence.",
+    "basis 'measured' is consistent with the board's LLM-judged leaderboard presentation; the criterion-level protocol/locator fields match current primary evidence textually.",
+    "Owner hash and transport/qualification checks are executed separately by the owner; I cannot recompute them and this limitation does not imply missing source evidence.",
+    "SOURCE 3 is a generated scale summary (range 17-86.3 over 142 values) and cannot establish meaning or joins; it does not conflict with the row value and was used only as corroboration that 82.1 lies on the served scale."
+  ],
+  "missing_evidence": []
+}

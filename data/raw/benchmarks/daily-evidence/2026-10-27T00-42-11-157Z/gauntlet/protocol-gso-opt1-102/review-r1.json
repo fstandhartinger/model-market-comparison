@@ -1,0 +1,25 @@
+{
+  "artifact_id": "protocol-gso-opt1-102",
+  "artifact_sha256": "eedef18bb298a4ecee13a356eb383d9eb5c33428b80c95017bb7ef88b2383f9f",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": ["gso::opt1-102", "c1", "c2"],
+  "errors_found": 1,
+  "findings": [
+    {
+      "id": "gso::opt1-102",
+      "severity": "major",
+      "location": "row gso::opt1-102, field version_status (and version \"opt1-102\")",
+      "evidence": "c2 requires version_status \"published\" only when the maintainer publishes a release identifier for this board and the version copies it. Neither SOURCE 1 (protocol page) nor SOURCE 2 (leaderboard.json) publishes any release identifier for GSO; the page publishes no version string, and leaderboard.json metadata carries only last_updated and total_tasks. The row's version \"opt1-102\" is our own identifier (total_tasks 102), not a maintainer-published release id. The protocol page publishes no release identifier, which is exactly what supports \"snapshot\".",
+      "repair": "Set version_status to \"snapshot\" and version to the dated identity snapshot-<date> (e.g. snapshot-2026-10-27) freezing the methodology observed this capture, or provide packet evidence that the maintainer publishes a release identifier that the row copies."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "I cannot execute the owner's hash or transport/qualification checks; per instructions this is a limitation, not missing evidence.",
+    "c1: metric wording matches (Opt@1: ≥95% human speedup, passes correctness; unit percent; range [0,100] contains served values 0–88.24 from SOURCE 4). Description (102 tasks, 10 codebases, 5 languages, codebase + performance test, expert-developer optimization) matches SOURCE 1. The changelog dates (2026-04-27, 2026-07-12) cited in the row's notes match the page's changelog.",
+    "c2: status \"active\" is affirmatively supported by SOURCE 3 (4 added score values). superseded_by null is consistent: neither source names a successor board.",
+    "The row's version_guard requires metadata.total_tasks 102 and known settings; SOURCE 2 states total_tasks 102 and settings are Opt@1/Opt@10, consistent with the guard, but the guard itself is a row-side condition, not a maintainer field."
+  ],
+  "missing_evidence": []
+}

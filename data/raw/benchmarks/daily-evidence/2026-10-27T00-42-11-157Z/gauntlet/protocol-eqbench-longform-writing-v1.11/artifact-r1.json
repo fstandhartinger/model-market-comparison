@@ -1,0 +1,22 @@
+[
+  {
+    "id": "eqbench-longform-writing::v1.11",
+    "version": "v1.11",
+    "version_guard": "Verify the published version v1.11 before reading results.",
+    "status": "active",
+    "version_status": "published",
+    "superseded_by": null,
+    "scoring": {
+      "metric": "Score (0-100): average of all chapter scores plus the final scored piece across 14 rubric dimensions, with the forced poetry/metaphor criterion weighted 5x and a long-context degradation penalty applied",
+      "unit": "points",
+      "range": [
+        0,
+        100
+      ],
+      "higher_better": true,
+      "notes": "Values retain this source implementation and score convention; different harnesses, subsets, judge revisions and versions must remain separate."
+    },
+    "description": "LLM-judged benchmark in which models plan and write a short story/novella over 8x 1000-word turns, scored 0-100 across 14 rubric dimensions.",
+    "maintainer": "EQ-Bench (Sam Paech)"
+  }
+]

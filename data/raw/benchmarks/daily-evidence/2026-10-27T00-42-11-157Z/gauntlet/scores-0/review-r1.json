@@ -1,0 +1,26 @@
+{
+  "artifact_id": "scores-0",
+  "artifact_sha256": "5c95d40024540cf9b887660a09e23b2385e2806205ad484f5ac9cfe2ad9472d6",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": ["public:b0cdd310f814faada2bad8df", "public:055c991f9f9592355c4fc874", "public:ff716078d9357c238c2fe4c3", "public:6d996ebed11fbb1648aee35c", "public:7973014386258ed8a4f45160", "public:a6ed809a476fe07a42e105a0", "public:9f0c356adf10d4e03febc520", "public:1facb14c3e79222ddd5fc497", "public:cbf3b113094d1a30eb8080c9", "public:827e9c5def20de2d932f1406", "public:4c59751ab8bf04e9a35fe997", "public:3feb4777d1e77eda1fbd120b", "public:491bb9bb174926967eb76a9f", "public:f7e072c4d605d81c87506174", "public:b311636f38189300c7ede210", "c1"],
+  "errors_found": 1,
+  "findings": [
+    {
+      "id": "F1",
+      "severity": "major",
+      "location": "public:b311636f38189300c7ede210 (thinkingmachines/Inkling), subject.model_id",
+      "evidence": "Source row 14 (SOURCE 18) has model 'thinkingmachines/Inkling', elo 1215.6, and contains no variant, checkpoint or effort/harness fields. The row asserts model_id 'inkling::xhigh' via a join_note citing 'Unique exact Hugging Face checkpoint URL in retained catalog metadata', but that catalog metadata is not present in the packet. Unknown configurations cannot create such identifiers under criterion c1.",
+      "repair": "Drop the unsupported model_id (set to null like the other rows) or supply the retained catalog evidence in the packet; remove or reword the join_note accordingly."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "Could not recompute row or artifact hashes; relied on owner-supplied SHA-256 bindings.",
+    "I verified all 15 rows' values, names, source file sha256, url and retrieved_at against the corresponding primary source excerpts; each matches (e.g. claude-opus-5=1360.3, claude-opus-5-5=1338.9, claude-fable-5=1310, muse-spark-1.1=1252, Inkling=1215.6). Units (Elo), benchmark_id eq-bench::4 and protocol strings match the registry fields. Basis 'measured' is the source's own leaderboard Elo, not a derived value; no derivation is claimed.",
+    "Rows 0-13 contain no effort/harness or variant claims; the source publishes none, so nothing was required beyond transcription. Only the Inkling row asserts configuration data (F1).",
+    "comparison_key is null on all rows, consistent with no configuration knowledge; no comparison was claimed.",
+    "SOURCE 3-5 are generated summaries, not primary values; they were used only for context, not to substantiate any row field."
+  ],
+  "missing_evidence": []
+}

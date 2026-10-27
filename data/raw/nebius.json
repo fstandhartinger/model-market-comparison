@@ -1,7 +1,7 @@
 {
   "source": "Nebius Token Factory — tokenfactory.nebius.com/api/public/models_info (first-party, public catalog)",
   "region": "mixed (eu-north1 / eu-west2 / us-central1 / uk-south1)",
-  "collected_at": "2026-10-26",
+  "collected_at": "2026-10-27",
   "listing_url": "https://tokenfactory.nebius.com/models",
   "method": "scripts/fetch-nebius-catalog.mjs: one GET of the public catalog (allowed by robots.txt); prices are flavors[].input/output_price_per_million_tokens in native USD; region from flavors[].regions[].country_code (EU member state → eu, US → us, UK → uk); non-chat types and zero-output-price rows (embeddings) omitted; curated model_name/provider_org carried over by exact model_id; new ids marked mapping=derived; catalog status kept per row. See nebius.method.md.",
   "models": [
@@ -298,8 +298,8 @@
       "region": "uk",
       "model_id": "zai-org/GLM-5.2",
       "context_length": 1048576,
-      "status": "active",
-      "notes": "flavor: cheap; served region: uk-south1 (UK); id zai-org/GLM-5.2"
+      "status": "error",
+      "notes": "flavor: cheap; served region: uk-south1 (UK); id zai-org/GLM-5.2; catalog status: error"
     },
     {
       "model_name": "GLM 5.3",
@@ -324,7 +324,7 @@
       "notes": "flavor: cheap; served region: us-north1 (US); id zai-org/GLM-5.3-Flash"
     }
   ],
-  "response_sha256": "626d6327596f959a4db8f8802d5985c67c6f4bccdf8a7b6b70b57e9167614eee",
+  "response_sha256": "7a3a07b502efed6f28fd22d8803239c00f11ebe6cfe201fa95ad981e0889572e",
   "skipped": [
     "Qwen/Qwen3-Embedding-8B"
   ],

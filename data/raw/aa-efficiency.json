@@ -3,7 +3,7 @@
   "basis": "measured",
   "interpretation": "benchmark_proxy",
   "caveat": "AA Intelligence Index benchmark token accounting. Ratios are BENCHMARK PROXIES, never typical user I/O usage; usage ratios must come from OpenRouter/Chutes sources.",
-  "collected_at": "2026-10-26T05:29:07.813Z",
+  "collected_at": "2026-10-27T00:53:38.505Z",
   "source_url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
   "data_fields": {
     "tokens_per_task": "intelligenceIndexOutputTokensPerTask {reasoning, answer, output} (measured)",
@@ -13,18 +13,18 @@
   "attempts": [
     {
       "url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
-      "fetched_at": "2026-10-26T05:29:07.434Z",
+      "fetched_at": "2026-10-27T00:53:36.889Z",
       "http_status": 200,
-      "bytes": 4417612,
-      "sha256": "8be0ef77a2f4af7d02ffc322b1a0d37ed4788cb234dccaacaf77065a5ee3a37e"
+      "bytes": 4479343,
+      "sha256": "a508b0ce3d9c77c2203083b496b5fe2829712b9585f1ec21c94c96b460bea2bc"
     }
   ],
   "coverage": {
-    "published_rows": 220,
-    "scored_denominator": 698,
+    "published_rows": 226,
+    "scored_denominator": 704,
     "denominator_source": "Leaderboard rows carrying a finite intelligenceIndex inside the same model-page Flight payload"
   },
-  "count": 220,
+  "count": 226,
   "rows": [
     {
       "source_id": "8215372b-66ff-457b-855e-e8abeafc9571",
@@ -2271,6 +2271,138 @@
       }
     },
     {
+      "source_id": "b0c462cf-f2d0-4126-9434-28db9502219f",
+      "slug": "gpt-6-1-terra",
+      "name": "GPT-6.1 Terra (Max)",
+      "variant": "max",
+      "tokens_per_task": {
+        "reasoning": 24891.820026418292,
+        "answer": 10204.197474289615,
+        "output": 35096.01750070791
+      },
+      "canonical_token_counts": {
+        "input": 2348033907,
+        "output": 128152739,
+        "answer": 14990548,
+        "reasoning": 113162191
+      },
+      "derived": {
+        "basis": "derived",
+        "input_output_ratio": 18.32215156166112,
+        "reasoning_output_share": 0.7092491342049339
+      }
+    },
+    {
+      "source_id": "ea3e1f50-f62d-41d2-849a-9af0413e4d37",
+      "slug": "gpt-6-1-terra-high",
+      "name": "GPT-6.1 Terra (High)",
+      "variant": "high",
+      "tokens_per_task": {
+        "reasoning": 3927.579130045172,
+        "answer": 5099.202524803887,
+        "output": 9026.78165484906
+      },
+      "canonical_token_counts": {
+        "input": 733544594,
+        "output": 22507031,
+        "answer": 9399112,
+        "reasoning": 13107919
+      },
+      "derived": {
+        "basis": "derived",
+        "input_output_ratio": 32.59179738100507,
+        "reasoning_output_share": 0.4351029281776559
+      }
+    },
+    {
+      "source_id": "c955b262-a17f-4f1a-b097-6860b866295b",
+      "slug": "gpt-6-1-terra-low",
+      "name": "GPT-6.1 Terra (Low)",
+      "variant": "low",
+      "tokens_per_task": {
+        "reasoning": 472.1274145936141,
+        "answer": 2208.72042885585,
+        "output": 2680.847843449464
+      },
+      "canonical_token_counts": {
+        "input": 266608093,
+        "output": 7884067,
+        "answer": 5732928,
+        "reasoning": 2151139
+      },
+      "derived": {
+        "basis": "derived",
+        "input_output_ratio": 33.81606130440038,
+        "reasoning_output_share": 0.17611123128350498
+      }
+    },
+    {
+      "source_id": "c441e158-a87d-4116-911b-93325e4b4f1c",
+      "slug": "gpt-6-1-terra-medium",
+      "name": "GPT-6.1 Terra (Medium)",
+      "variant": "medium",
+      "tokens_per_task": {
+        "reasoning": 1939.9846465741039,
+        "answer": 3894.7828589955047,
+        "output": 5834.767505569609
+      },
+      "canonical_token_counts": {
+        "input": 507876520,
+        "output": 14475448,
+        "answer": 7913212,
+        "reasoning": 6562236
+      },
+      "derived": {
+        "basis": "derived",
+        "input_output_ratio": 35.08537490514974,
+        "reasoning_output_share": 0.3324870519214829
+      }
+    },
+    {
+      "source_id": "0d3c777f-6817-42d7-9bb9-223314bc5a57",
+      "slug": "gpt-6-1-terra-non-reasoning",
+      "name": "GPT-6.1 Terra (Non-reasoning)",
+      "variant": null,
+      "tokens_per_task": {
+        "reasoning": 0,
+        "answer": 4736.737408685987,
+        "output": 4736.737408685987
+      },
+      "canonical_token_counts": {
+        "input": 679784160,
+        "output": 8283832,
+        "answer": 8283832,
+        "reasoning": 0
+      },
+      "derived": {
+        "basis": "derived",
+        "input_output_ratio": 82.06155798427588,
+        "reasoning_output_share": 0
+      }
+    },
+    {
+      "source_id": "e8d443ba-8aca-4830-a186-ae869bb9c6fe",
+      "slug": "gpt-6-1-terra-xhigh",
+      "name": "GPT-6.1 Terra (Xhigh)",
+      "variant": "xhigh",
+      "tokens_per_task": {
+        "reasoning": 8017.320278504038,
+        "answer": 6534.0290499172315,
+        "output": 14551.34932842127
+      },
+      "canonical_token_counts": {
+        "input": 1093347992,
+        "output": 40819645,
+        "answer": 11006247,
+        "reasoning": 29813398
+      },
+      "derived": {
+        "basis": "derived",
+        "input_output_ratio": 26.784848128885002,
+        "reasoning_output_share": 0.5509674805789208
+      }
+    },
+    {
       "source_id": "2f339a97-9a0d-499a-9cb5-e0db665bfa25",
       "slug": "gpt-6-astra",
       "name": "GPT-6 Astra (Max)",
@@ -4036,20 +4168,20 @@
       "name": "Muse Spark Open (Xhigh)",
       "variant": "xhigh",
       "tokens_per_task": {
-        "reasoning": 18399.797202119404,
-        "answer": 21999.167044866703,
-        "output": 40398.96424698611
+        "reasoning": 18400.94492939213,
+        "answer": 22017.197953957617,
+        "output": 40418.14288334975
       },
       "canonical_token_counts": {
-        "input": 2961207275,
-        "output": 106181766,
-        "answer": 32316427,
-        "reasoning": 73865339
+        "input": 2961769834,
+        "output": 106223959,
+        "answer": 32356095,
+        "reasoning": 73867864
       },
       "derived": {
         "basis": "derived",
-        "input_output_ratio": 27.888095918464945,
-        "reasoning_output_share": 0.4554522014383596
+        "input_output_ratio": 27.88231451625711,
+        "reasoning_output_share": 0.4552644831430986
       }
     },
     {

@@ -1,0 +1,35 @@
+{
+  "artifact_id": "protocol-weirdml-2",
+  "artifact_sha256": "6bd60c5766dad9d19f8ad87594eec4ade45889654f1ab0b2516e23568e5c4ae7",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": ["weirdml::2", "c1", "c2"],
+  "errors_found": 2,
+  "findings": [
+    {
+      "id": "f1",
+      "severity": "blocker",
+      "location": "row weirdml::2, fields version, scoring.metric, scoring.notes, description (criterion c1)",
+      "evidence": "SOURCE 1 (htihle.github.io/weirdml.html, retrieved 2026-10-27) shows the current protocol is 'WeirdML v3' with '11 complex hand-made tasks' and a token-area-based scoring rule (80% normalized area + 20% final value). The row claims version '2' with '17 tasks', '5 iterations per run' and metric 'Average Max Accuracy'. No excerpt of the v2 page (linked only as 'Previous versions: WeirdML v2') is supplied, so continuity of the v2 identity, task set, scoring rule and release identifier cannot be established from the packet.",
+      "repair": "Supply primary evidence for the v2 protocol page (its own scoring text and version identifier) or re-bind the row; do not infer v2 details from the v3 page or memory."
+    },
+    {
+      "id": "f2",
+      "severity": "major",
+      "location": "row weirdml::2, fields superseded_by and status (criterion c2)",
+      "evidence": "SOURCE 1 explicitly names 'WeirdML v3' as the current board and lists 'WeirdML v2' under 'Previous versions', i.e. the protocol names a successor, so superseded_by: null is a mismatch per c2. The row's status: 'active' additionally asserts the maintainer still reports results for the v2 board; SOURCE 2's activity summary evidences ongoing updates to a weirdml_data.csv but does not establish that payload belongs to the v2 board rather than v3.",
+      "repair": "Set superseded_by to this registry's id for the WeirdML v3 board, and re-evaluate status against evidence that the v2 board specifically is still being reported."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "SOURCE 2/SOURCE 3 concern field 'avg_acc' whose board-level version identity (v2 vs v3) is not stated; the 162 served values (1.729-93.573) are consistent with the row's unit 'percent' and range [0,100], but this alone cannot confirm the payload is the v2 board.",
+    "Row range [0,100]: c1 permits judging only against SOURCE 3's scale summary; the observed min/max fall within the stated bounds, so no scale mismatch is reported, though accuracy-as-percent semantics remain unverifiable without the v2 protocol text.",
+    "Owner hash verification and transport/qualification checks (producer receipt) are not executable by this reviewer; their output is taken as given and is not numeric source evidence.",
+    "Whether the maintainer's v2 page still exists and publishes a release identifier is unknown; this affects version_status 'published' but is subsumed by finding f1."
+  ],
+  "missing_evidence": [
+    "Primary excerpt of the WeirdML v2 protocol page establishing v2's release identifier, task set (17 tasks), iterations (5), and scoring rule 'Average Max Accuracy' as claimed by row weirdml::2.",
+    "Evidence that the weirdml_data.csv 'avg_acc' payload corresponds to the v2 board, needed to support status 'active' for weirdml::2 under criterion c2."
+  ]
+}

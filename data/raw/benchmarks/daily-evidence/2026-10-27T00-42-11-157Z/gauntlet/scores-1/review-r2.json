@@ -1,0 +1,23 @@
+{
+  "artifact_id": "benchmark-heaven-daily-2026-10-27",
+  "artifact_sha256": "3f2c1d9a",
+  "round": 3,
+  "verdict": "blocked",
+  "coverage_checked": ["row-1","row-2","row-3","row-4","row-5","row-6","row-7","row-8","row-9","row-10","row-11","row-12","criterion-1","criterion-2"],
+  "errors_found": 2,
+  "findings": [
+    {"id":"F1","severity":"blocker","location":"row-8","evidence":"Artifact lists n/a for row-8 with no primary source or value, yet the row asserts benchmark_identity and pass/fail-relevant fields; packet row 'row-8' has no corresponding source and the criterion 'criterion-2' declares row-8 out of scope, so scope and evidence conflict and the row cannot be verified.","repair":"Either add the primary source/row for row-8 or remove row-8 from the artifact and reconcile the scope declared in criterion-2 before acceptance."},
+    {"id":"F2","severity":"blocker","location":"artifact-level / row-4","evidence":"Packet rows row-9..row-12 define source fields and computed values, but the packet contains no canonical hash algorithm, no pre-registered value derivation formula, and no ground-truth reference for criterion-2's tolerance (±0.5), so claimed values for row-4 (n/a) and all computed benchmark_identity fields cannot be reproduced or checked against any supplied evidence.","repair":"Supply the canonical hash definition, the exact derivation for each benchmark_identity field, and the authoritative reference for the ±0.5 tolerance, or mark those fields as unverifiable and exclude them from the pass verdict."}
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "I am a read-only critic; I could not execute hashing, recompute derived fields, or probe the source system, so pass/fail of hash and value checks rests solely on packet consistency.",
+    "row-13 and row-14 were checked only for structural completeness against the packet; their values are stated as already-verified upstream and I had no independent evidence to confirm them.",
+    "Whether 'n/a' in row-4 is an intentional sentinel or an omission could not be determined from the packet alone; treated as unverifiable rather than as a numeric error."
+  ],
+  "missing_evidence": [
+    "row-4: primary source value for benchmark_identity (artifact records n/a)",
+    "artifact-level: canonical hash algorithm specification referenced by criterion-1",
+    "artifact-level: derivation formula and authoritative reference defining the ±0.5 tolerance in criterion-2"
+  ]
+}

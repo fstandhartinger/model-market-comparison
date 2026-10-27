@@ -1,0 +1,18 @@
+{
+  "artifact_id": "protocol-eqbench-longform-writing-v1.11",
+  "artifact_sha256": "6699de06f61ea6504caf6f2ecccdf99309febc6f76778e6c276e9aeac0143363",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": ["eqbench-longform-writing::v1.11", "c1", "c2"],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Row sha256 8a6c07...d19 accepted from packet; I cannot execute hash verification (owner executes hashes/transport checks, per instructions).",
+    "SOURCE 1 is an excerpt/limited capture of the protocol page (retrieved 2026-10-27); it establishes v1.11 (2026-02-19 changelog), the Score (0-100) definition, 14 rubric dimensions, 5x Forced Poetry/Metaphor weighting, and the long-context degradation penalty, all matching the row's scoring and description fields.",
+    "SOURCE 1's weighting formula renders 'Forced Poetry/Metaphor 1.7' with 'scaled 0-1'; the row claims only 'weighted 5x', which matches, so no conflict, but the formula's exact rendering is ambiguous in the excerpt.",
+    "SOURCE 2 is the run's own generated value-scale summary (142 finite values, min 17, max 86.3) for overall_score_100; it is admissible only for c1's unit/range check: served values lie within the row's [0,100] range and 'points' is consistent with a 0-100 score scale. It settles nothing about metric meaning, task set, harness, judges or version.",
+    "c2: the page publishes a release identifier (v1.11) for this board, supporting version_status 'published' and matching row version; the page names no successor board, so superseded_by null is not contradicted; the leaderboard is currently presented with results, supporting status 'active', and no change/added-value summary was supplied so no additional c2 affirmative evidence applies (none required)."
+  ],
+  "missing_evidence": []
+}

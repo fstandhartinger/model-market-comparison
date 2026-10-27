@@ -1,0 +1,19 @@
+{
+  "artifact_id": "AH-2025-11-07",
+  "artifact_sha256": "3f9a1c8e77b24d5e9a0b4c2f6d8e1a3b5c7d9e0f2a4b6c8d0e2f4a6b8c0d2e4f",
+  "round": 3,
+  "verdict": "pass",
+  "coverage_checked": ["AH-001", "AH-002", "AH-003", "AH-004", "AH-005", "AH-006", "AH-007", "AH-008", "AH-009", "AH-010", "AH-011", "AH-012", "AH-013", "AH-014", "AH-015"],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Read-only limitation: I could not recompute the artifact sha256 (3f9a1c8e...) or the SOURCE A page sha256 (9c2f...); I verified rows only against the packet's inline SOURCE A content and accepted the stated hashes as owner-executed checks.",
+    "Rows AH-001..AH-015 were compared field-by-field (model, spec, score, unit, metric/basis wording, source URL, source sha, excerpt text) against the SOURCE A leaderboard table and footer; all quoted excerpts and values matched the corresponding table rows, including spec labels such as 'High (default)'.",
+    "The artifact reports 15 of the 17 leaderboard table entries; per the stated acceptance criteria not every table row is required, so the two omitted entries are not a finding.",
+    "Rows paraphrase the page footer for basis ('Pass@1 accuracy on the fixed 640-prompt set'); exact footer wording differs slightly, judged a faithful characterization rather than a numeric claim.",
+    "95% CI values from the table are carried as separate context fields, not merged into score_pct, consistent with criteria point 3.",
+    "SOURCE B (GitHub README) was not used as the numeric source for any row; no cross-source conflict affects the reported scores."
+  ],
+  "missing_evidence": []
+}
