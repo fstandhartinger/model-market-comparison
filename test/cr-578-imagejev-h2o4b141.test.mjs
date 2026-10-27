@@ -33,7 +33,7 @@ test('CR-578 H2O-4B v1.4.1: pinned official GPU row discloses version, engine, i
   assert.equal(release.ranking.find((r) => r.key === 'h2o_lightning_4b_image').name, 'H2O-Lightning-4B (image)');
 });
 
-test('CR-578 H2O-4B v1.4.1: full image/use-case coverage is bound to the official output; TS20 is an explicit temporary exception', async () => {
+test('CR-578 H2O-4B v1.4.1: full image/use-case coverage is bound to the official output; TS20 cells are measured and the temporary exception is removed', async () => {
   const cats = release.categories.systems[key];
   assert.equal(Object.keys(cats.capabilities).length, 14);
   assert.equal(Object.keys(cats.usecases).length, 5);
@@ -45,12 +45,10 @@ test('CR-578 H2O-4B v1.4.1: full image/use-case coverage is bound to the officia
   assert.equal(coverage.source.output_sha256, '1350387a12fc22a234654cbd6fde401a45ccd7a81538db339e5c541a73ae050f');
   assert.equal(coverage.source.public_score_sha256, row.source_sha256);
   const ts20 = await read('../data/imagejev-ts20-categories.json');
-  assert.equal(ts20.systems[key], undefined);
+  assert.equal(Object.keys(ts20.systems[key].typesafe).length, 20);
+  assert.deepEqual(ts20.summary[key], { rows: 600, errors: 0 });
   const ex = (await read('../data/jevbench-breakdown-exceptions.json')).entries.filter((x) => x.key === key);
-  assert.equal(ex.length, 1);
-  assert.deepEqual(ex[0].dims, ['typesafe']);
-  assert.equal(ex[0].board, 'imagejevbench');
-  assert.match(ex[0].decision, /board #29845/);
+  assert.equal(ex.length, 0);
 });
 
 test('CR-578 H2O-4B v1.4.1: scores, composite top-five change and unchanged capped Capability top five are explicit', async () => {
@@ -67,6 +65,7 @@ test('CR-578 H2O-4B v1.4.1: scores, composite top-five change and unchanged capp
   assert.deepEqual(capped.slice(0, 5).map((r) => r.key), ['h2o_lightning_31b_image', 'kettei_fat', 'sage_1_4_images', 'drex_max', 'jev_1_13_images']);
   const page = await readFile(new URL('../components/ImageJevV03Page.tsx', import.meta.url), 'utf8');
   assert.match(page, /27 Oct 2026 addendum, new row:<\/b> adds H2O-Lightning-4B v1.4.1 \(image\)/);
+  assert.match(page, /TypeSafe-20 cells for this row were measured on 27 Oct 2026 on the 600 sealed items with 0 errors; the TypeSafe-20 bank had previously been exposed to API providers/);
   assert.match(page, /The composite top five changes: H2O-Lightning-4B v1.4.1 enters at #3 \(66.58\)/);
   assert.match(page, /The capped Capability headline \(55 of 66 rows\) keeps its top five/);
 });
