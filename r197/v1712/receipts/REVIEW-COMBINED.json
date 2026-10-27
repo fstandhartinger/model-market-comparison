@@ -1,0 +1,149 @@
+{
+ "engine": "independent review workers v1712-independent-review (REVISE, single blocker R1) + v1712-sitemap-delta-review (PASS, R1 resolved)",
+ "kind": "combined independent review receipt for JevBench v1.7.12",
+ "reviews": {
+  "v1712-independent-review": {
+   "result": {
+    "candidate_files_modified": false,
+    "candidate_root": "/home/flori/wt/jevbench-v1712-20261027",
+    "checks": {
+     "carry_history": "PASS: carry, history and history-carry are byte-identical to v1.7.11.",
+     "categories": "PASS: category systems and lanes deeply equal; only revision/results_sha256/results_sha256_note/source_results_sha256 metadata differs.",
+     "disclosures": "PASS: four exact appended strings match scope; factual support from board 28557, release-owner 28575, custody 28569/28600; no new private/sealed content. Torchcast remains unchanged per 28655.",
+     "main_baseline": "PASS for benchmark baseline: all six v1.7.11 publication/results/categories/carry/history/history-carry files byte-equal to main. HEAD predates main by four unrelated commits; no app/lib/components changes in that intervening range.",
+     "publication_gate": "PARTIAL: manifest PENDING; direct page/API, live-board assembly, latest release and release-history navigation are gated. Sitemap bypass is R1.",
+     "receipts": "PASS: six BUILD/manifest file hashes match actual bytes. Four TEXT-ROW-SPEC after_rows, before/after basis hashes and proof hashes match.",
+     "rows": "PASS: 300 rows; only systems[41,42,121,122].cost.basis changed. All other row fields, including all numeric costs, scores, ranks, measured dates and identities, are deeply equal.",
+     "topfive": "PASS: entire board order and all row inputs unchanged, hence no top-five or custom-weight ranking change. Canonical json.dumps(board, sort_keys=True) SHA-256 is a644410b37e6198c16af0ef589c3a73ef10941099fd14d15ded4119ea1eb268b for both releases."
+    },
+    "deletions": [],
+    "evidence": {
+     "candidate_file_sha256": {
+      "app/api/jevbench/v1.7.12/route.ts": "4279be9f317f6b9f2b344a7dfd52fd3c8c3c78fc8aa65d9c6405a332d494ed2f",
+      "app/jev-models/v1.7.12/page.tsx": "a4b89245524ec71d5a08c5f466a2dac3ad7c0009c969f196a4ed0645fcddd915",
+      "components/JevBenchReleaseVersionNav.tsx": "d4196b2d1b2644404d5975b2f3620383ca4a1e7188551c9765a604c717c056a2",
+      "components/JevReleaseHistory.tsx": "0e8ab0a1777e1b8cb5cb4f9a06eb59105c6ff160de66aff9f9aa296f03a2dd5a",
+      "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.12-carry.json": "271d1fc77a136a04a1eb6deb5480c52d4211eb2b66b2ac8bb31e80867e69003a",
+      "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.12-categories.json": "709c48f9051750afb7fd4efd3e986f9456029444962ed6d6fd6e64f3a7b84e39",
+      "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.12-history-carry.json": "334e851944e92383ab3071e52b3012040c7023d0fe236395953169ebee8f0459",
+      "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.12-history.json": "5cd8c1332226ea9c179883d2285c0d8b8cc593ae38f2645197364a7ddd9c83c1",
+      "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.12-proof.json": "e60299657d211ca6dba9bf774a36951088edfa188eaf311314bff41d78a4a55d",
+      "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.12-publication.json": "4c23b7762324f319bfe11739ccd45c1dc3c653b5a5da09419a676994132ffa55",
+      "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.12-results.json": "19a6a6562cb7375fa25611364a317ca010fa4084e0ffeb310299a943ac07bde5",
+      "lib/jevbench-categories.mjs": "cdf75d143523264cd791c817757ef8070d580924ed027b52d153a3287d545108",
+      "lib/jevbench-live-board.mjs": "7fb439010e28ca47003a0b23da2b6552fcfdeb7fb4c4952044cce38753b586cb",
+      "lib/jevbench-releases.mjs": "ced719276468d08f1b5a977a5beed2baff1d93212f0fc25d42037983ac78838f",
+      "lib/jevbench-v1712-release.mjs": "4bb7e2d6549eb7e7e8c2a171adb2c6f304bbbfb8879c36633f3bf277951a6a5e"
+     },
+     "commands": [
+      "git status --short; git rev-parse HEAD main origin/main; git log HEAD..main --oneline",
+      "git diff HEAD -- <five tracked files>; git diff main HEAD --name-only -- lib components app",
+      "Read every untracked candidate file, scope, BUILD, TEXT-ROW-SPEC, TOPFIVE-NOCHANGE and cited aggregate/ruling reports",
+      "Python JSON deep comparison of v1.7.11 and v1.7.12 artifacts; hashlib SHA-256 checks of candidate/receipt bytes and basis strings",
+      "git show main:<v1.7.11 artifact path> byte comparison for six baseline artifacts",
+      "Read-only SQLite SELECT of board entries 28557,28569,28575,28600,28655",
+      "Static call-path review of lib/jevbench-v1712-release.mjs, live board, page/API, release history, SEO and sitemap"
+     ],
+     "receipt_sha256": {
+      "/home/flori/jobs/jevbench-add-requests-20260919/r197/r197/v1712/receipts/BUILD.json": "62a30b3920259c0a112d96421c531d3cd57c3d189f0214d510fcb51f97625657",
+      "/home/flori/jobs/jevbench-add-requests-20260919/r197/r197/v1712/receipts/TEXT-ROW-SPEC.json": "44f4fad64561da9d72b71c31bd9a85c1003e680d83f6c57bd805ffa4ab54be50",
+      "/home/flori/jobs/jevbench-add-requests-20260919/r197/r197/v1712/receipts/TOPFIVE-NOCHANGE.json": "26db9a719c88fce005c2c69aec3c406c6d0742a4ed6be5f1d1e87b03c86a7074"
+     },
+     "tracked_diff_sha256": "f78cbf47081715ce108affe53f8757bfd0fbb143d009e773c5357152dc01a014",
+     "tracked_file_count": 5,
+     "untracked_file_count": 10
+    },
+    "files_written": [
+     "/home/flori/jobs/jevbench-add-requests-20260919/workers/v1712-independent-review/RESULT.md",
+     "/home/flori/jobs/jevbench-add-requests-20260919/workers/v1712-independent-review/RESULT.json",
+     "/home/flori/jobs/jevbench-add-requests-20260919/workers/v1712-independent-review/STATE.md"
+    ],
+    "findings": [
+     {
+      "blocking": true,
+      "evidence": "v1.7.12 is unconditionally present in JEVBENCH_RELEASES. sitemap() maps every catalog href into public URLs without checking hasPublishedJevbenchV1712Release or review.verdict. The manifest review is PENDING. If deployed as-is, /sitemap.xml advertises /jev-models/v1.7.12 while that page and its API remain gated. This exposes existence/URL, not result bytes.",
+      "id": "R1",
+      "locations": [
+       {
+        "line": 4,
+        "path": "lib/jevbench-releases.mjs"
+       },
+       {
+        "line": 20,
+        "path": "app/sitemap.ts"
+       },
+       {
+        "line": 21,
+        "path": "app/sitemap.ts"
+       },
+       {
+        "line": 27,
+        "path": "app/sitemap.ts"
+       }
+      ],
+      "requested_change": "Filter candidate release URLs through validated publication status before adding them to the sitemap (or defer the catalog entry until publication). Re-review the resulting changes; keep the pending candidate out of all public discovery surfaces.",
+      "severity": "P2",
+      "title": "Pending candidate is exposed through the public sitemap"
+     }
+    ],
+    "head": "ab64e90e70aafee8b1bd326f484a65e94020f71e",
+    "limitations": [
+     "No tests, builds or candidate runtime code executed, as requested. Gate results are source-level conclusions.",
+     "No live deployment check; reviewed candidate is unpublished.",
+     "Recount was checked against existing aggregate evidence and rulings; no sealed items, per-item data or archived measurement raw were accessed.",
+     "A clean integration with current main remains the lead’s responsibility; unrelated main data changes are not candidate edits."
+    ],
+    "main": "65327b0ad281bea8fe137ac2b9bbcb7ac9240a9b",
+    "review_kind": "read-only publication and benchmark-integrity review",
+    "reviewed_at_utc": "2026-10-27T07:18:07.367758+00:00",
+    "verdict": "REVISE"
+   },
+   "sha256": "96403493c060fc261be96a504249540c64c9cc15052f7a1f39bb17619bba9e11"
+  },
+  "v1712-sitemap-delta-review": {
+   "result": {
+    "candidate_files_modified": false,
+    "candidate_root": "/home/flori/wt/jevbench-v1712-20261027",
+    "checks": {
+     "alternate_pending_discovery": "PASS within delta and traced discovery sources: SEO latest-release uses same gate; fixed/image/family sources cannot add this candidate URL; history navigation filters it.",
+     "other_entries_unchanged": "PASS: predicate retains all other versions; all remaining sitemap construction unchanged against HEAD.",
+     "pending_absent": "PASS: sitemap.ts:21-24 filters candidate; release gate:79-85 returns false for PENDING.",
+     "validated_pass_included": "PASS conditional on shared gate validation completing: gate:26-34,69-85; catalog:4; sitemap:24-31."
+    },
+    "deletions": [],
+    "evidence": {
+     "commands": [
+      "git diff -- app/sitemap.ts",
+      "git show HEAD:app/sitemap.ts",
+      "git rev-parse HEAD",
+      "git diff --numstat -- app/sitemap.ts",
+      "sha256sum app/sitemap.ts",
+      "cat/nl/sed supporting source and manifest",
+      "rg release identifiers and catalog consumers in app/components/lib"
+     ],
+     "diff_numstat": "5 additions, 1 deletion"
+    },
+    "files_written": [
+     "RESULT.md",
+     "RESULT.json"
+    ],
+    "findings": [],
+    "head": "ab64e90e70aafee8b1bd326f484a65e94020f71e",
+    "limitations": [
+     "No tests, builds or runtime code executed; source-level conclusions only.",
+     "Shared gate checks receipt_sha256 format, not review receipt contents/authenticity. This is inherited, outside the sitemap delta, and not independently verified here.",
+     "No publication approval or live deployment verification.",
+     "Existing unrelated language-supplement v1.7.12 text remains unchanged; no guarantee about static metadata on a guessed pending URL."
+    ],
+    "r1_resolved": true,
+    "scope": "Unstaged app/sitemap.ts delta against HEAD; source-only R1 follow-up",
+    "sitemap_sha256": "796e0108d5d402f4e7a1071aa3018253791d5666f55e1f66ba6365e9c806f374",
+    "verdict": "PASS"
+   },
+   "sha256": "eba6003a6c9dd8aa7f30e24301e56f9a4486ef5a63aec942965e02eb817db79b"
+  }
+ },
+ "rule": "R1 (sitemap exposure of a pending release) is resolved by the reviewed app/sitemap.ts delta; all other checks of the first review PASS",
+ "sitemap_sha256": "796e0108d5d402f4e7a1071aa3018253791d5666f55e1f66ba6365e9c806f374",
+ "verdict": "PASS"
+}

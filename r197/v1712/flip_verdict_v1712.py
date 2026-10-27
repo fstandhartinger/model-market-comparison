@@ -1,0 +1,41 @@
+#!/usr/bin/env python3
+"""Release-owner helper: bind the combined independent PASS receipt into the v1.7.12 manifest. --dry-run inspects only."""
+import argparse
+import hashlib
+import json
+import pathlib
+
+ap = argparse.ArgumentParser(description=__doc__)
+ap.add_argument('receipt', type=pathlib.Path)
+ap.add_argument('--dry-run', action='store_true')
+A = ap.parse_args()
+W = pathlib.Path(__file__).resolve().parents[2]
+V = W / 'data/raw/benchmarks/jevbench/v1.7'
+MAN = V / 'jevbench-v1.7.12-publication.json'
+sha = lambda p: hashlib.sha256(p.read_bytes()).hexdigest()
+rec = json.loads(A.receipt.read_text())
+if rec.get('verdict') != 'PASS':
+    ap.error(f"REFUSED: independent review verdict {rec.get('verdict')!r} is not PASS")
+if not isinstance(rec.get('engine'), str) or not rec['engine'].strip() or rec['engine'].strip().lower().startswith(('synthetic', 'pending', 'fixture', 'dry-run')):
+    ap.error('REFUSED: a real independent review engine is required')
+m = json.loads(MAN.read_text())
+assert m['revision'] == 'v1.7.12'
+assert m['review'] == {'engine': 'PENDING', 'verdict': 'PENDING', 'receipt_sha256': None}
+for k, f in m['files'].items():
+    assert sha(W / f['path']) == f['sha256'], f'{k}: manifest bytes differ'
+pred_path = V / 'jevbench-v1.7.11-publication.json'
+pred = json.loads(pred_path.read_text())
+assert m['predecessor'] == {'revision': 'v1.7.11', 'publication_sha256': sha(pred_path)}, 'predecessor binding'
+assert pred['revision'] == 'v1.7.11' and pred['review']['verdict'] == 'PASS', 'predecessor must be PASS'
+proof = json.loads((V / 'jevbench-v1.7.12-proof.json').read_text())
+assert proof['predecessor'] == m['predecessor']
+a = proof['publication_approval']
+assert a['status'].startswith('GO (standing') and a['top_five_effect'] == 'unchanged', 'approval'
+assert 'PLACEHOLDER' not in json.dumps(proof) and 'PLACEHOLDER' not in (V / 'jevbench-v1.7.12-results.json').read_text()
+m['review'] = {'engine': rec['engine'], 'verdict': 'PASS', 'receipt_sha256': sha(A.receipt)}
+data = json.dumps(m, indent=1, sort_keys=True, ensure_ascii=False) + '\n'
+if A.dry_run:
+    print(json.dumps({'dry_run': True, 'would_set_review': m['review'], 'manifest_sha256_after': hashlib.sha256(data.encode()).hexdigest(), 'manifest_unchanged_on_disk_sha256': sha(MAN)}, indent=1))
+else:
+    MAN.write_text(data)
+    print(json.dumps({'manifest': str(MAN), 'review': m['review'], 'manifest_sha256': sha(MAN)}, indent=1))
