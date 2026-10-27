@@ -1,6 +1,12 @@
-Traceback (most recent call last):
-  File "/home/flori/wt/jevbench-v1713-20261027/r197/v1713/flip_verdict_v1713.py", line 38, in <module>
-    check_approval(W,proof)
-  File "/home/flori/wt/jevbench-v1713-20261027/r197/v1713/approval_v1713.py", line 18, in check_approval
-    assert fair.get('verdict')=='FAIR','REFUSED: fairness PENDING or non-FAIR; a bound FAIR verdict is required for a top-five change'
-AssertionError: REFUSED: fairness PENDING or non-FAIR; a bound FAIR verdict is required for a top-five change
+{
+ "dry_run": true,
+ "manifest": "/home/flori/wt/jevbench-v1713-20261027/data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.13-publication.json",
+ "would_set_review": {
+  "engine": "fixture-only: dry-run input, not an independent review",
+  "verdict": "PASS",
+  "receipt_sha256": "be2afe3b1991725711c6749329614c822a64c7939453b92f62cc2a7464d1a2ee"
+ },
+ "predecessor_pass_and_bound": true,
+ "manifest_sha256_after": "6e234a8436ddc07bf02900abf3aeb69fada91ba5bccdd05b717d290bde9cc0f9",
+ "manifest_unchanged_on_disk_sha256": "f8e0a475b62a7dad39a1b081e9932189e599fd6ac1247bb8c08e701f2d84a9d4"
+}

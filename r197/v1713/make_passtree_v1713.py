@@ -19,10 +19,11 @@ for f in (W/'data/raw/benchmarks/jevbench/v1.7').iterdir():
 sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
 put=lambda p,d:p.write_text(json.dumps(d,indent=1,sort_keys=True)+'\n')
 p=D/'jevbench-v1.7.13-proof.json';d=json.loads(p.read_text())
-# Synthetic FAIR binding for the PASS preview copy only (the real approval stays PENDING until the fairness review is bound).
-if d['publication_approval']['top_five_effect']=='changed' and d['publication_approval']['fairness_check']['verdict']!='FAIR':
- fr=P/'synthetic-fair/workers/r197-v1713-fair';fr.mkdir(parents=True,exist_ok=True);(fr/'RESULT.json').write_text(json.dumps({'fairness':'FAIR','engine':'synthetic-preview-only','note':'synthetic fixture for the .pass preview tree; confers no authority'})+'\n')
- d['publication_approval']['fairness_check']={'verdict':'FAIR','sha256':sha(fr/'RESULT.json'),'path':'workers/r197-v1713-fair/RESULT.json','engine':'synthetic-preview-only'}
+# The approval is unchanged in the PASS copy (standing GO, no top-five change, fairness SUSPICIOUS bound as evidence);
+# the dry-run helpers read the fairness receipt from a byte copy so the .pass tree never touches the job directory.
+assert d['publication_approval']['top_five_effect']=='unchanged','the PASS copy is only built for an unranked, no-top-five-change release'
+fr=P/'synthetic-fair/workers/r197-v1713-fair';fr.mkdir(parents=True,exist_ok=True)
+shutil.copyfile(pathlib.Path('/home/flori/jobs/jevbench-add-requests-20260919/workers/r197-v1713-fair/RESULT.json'),fr/'RESULT.json')
 put(p,d)
 proof_sha=sha(p)
 p=D/'jevbench-v1.7.13-publication.json';d=json.loads(p.read_text());d['files']['proof']['sha256']=proof_sha;d['review']={'engine':'synthetic-preview-only','verdict':'PASS','receipt_sha256':'a'*64};put(p,d)

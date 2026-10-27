@@ -4,7 +4,9 @@ enters the live board through the v1.7.13 addendum, so the v1.6 cohort reader an
 (which v1.7.0's restatement is bound to) skip it."""
 import json, os, pathlib
 J = pathlib.Path(__file__).resolve().parent; W = pathlib.Path(os.environ.get('WT', str(J.parents[1])))
-HIST = 'First release on the 27 Oct regular draw: H2O-Lightning-4B v1.4.1 (paid evaluation).'
+HIST = "First release on the 27 Oct regular draw: H2O-Lightning-4B v1.4.1 (paid evaluation), shown unranked until the draw's anchor runs are complete."
+# Earlier wired wordings of the v1.7.13 history line (replaced, never duplicated, on a rewire).
+STALE_HIST = ['First release on the 27 Oct regular draw: H2O-Lightning-4B v1.4.1 (paid evaluation).']
 def edit(name, old, new, count=1):
     p = W / name; s = p.read_text()
     if new in s: return
@@ -19,9 +21,9 @@ s = s.replace('v1.7.12', '__NEW__').replace('v1.7.11', 'v1.7.12').replace('__NEW
 REPL = [
     ('self-hosted cost disclosures', 'first release on the 27 Oct regular draw', 3),
     ('Four existing rows receive cost-basis wording updates: Jez Large, Jez Small and two D1A Gemma 4 rows. Their numeric costs, scores, ranks and measurement records are unchanged. No new measurement or method change.',
-     HIST + ' It is the first row measured on a fresh sealed draw drawn on 27 Oct 2026; that draw has no anchor runs yet, so the row is shown as published (offset 0). The 10 s rule applies; no decision took longer than 10 s. Cost is an estimate from the base model price on the prompt tokens the model processed. Every existing row keeps its scores and confidence intervals; no method change.', 1),
+     HIST.replace("'", '&apos;') + ' It is the first row measured on a fresh sealed draw drawn on 27 Oct 2026; that draw has no anchor runs yet, so its numbers are shown as published (offset 0) and it is not ranked: no ranking or ranked order changes. The 10 s rule applies; no decision took longer than 10 s. Cost is an estimate from the base model price on the prompt tokens the model processed. Every existing row keeps its scores and confidence intervals; no method change.', 1),
     ('Jez Large, Jez Small and two D1A Gemma 4 rows receive cost-basis wording updates. Numeric costs, scores, ranks and measurement records stay unchanged.',
-     'One new self-hosted row on a new draw. Every existing score, interval and category cell is unchanged.', 1),
+     'One new self-hosted row on a new draw, shown unranked. Every existing score, rank, interval and category cell is unchanged.', 1),
 ]
 for a, b, n in REPL:
     assert s.count(a) == n, ('page anchor', a[:80]); s = s.replace(a, b)
@@ -47,7 +49,11 @@ if not any(d['draw'] == entry['draw'] for d in t['draws']):
 # navigation, categories, release list, history, sitemap
 edit('components/JevBenchReleaseVersionNav.tsx', "type JevRelease = 'v1.7.12'", "type JevRelease = 'v1.7.13' | 'v1.7.12'")
 edit('lib/jevbench-categories.mjs', "'v1.7.11', 'v1.7.12'];", "'v1.7.11', 'v1.7.12', 'v1.7.13'];")
-edit('lib/jevbench-releases.mjs', "  { version: 'v1.7.12'", "  { version: 'v1.7.13', date: '2026-10-28', href: '/jev-models/v1.7.13', text: '" + HIST + "' },\n  { version: 'v1.7.12'")
+for old in STALE_HIST:
+    q = W / 'lib/jevbench-releases.mjs'; t = q.read_text()
+    stale = "  { version: 'v1.7.13', date: '2026-10-28', href: '/jev-models/v1.7.13', text: '" + old + "' },\n"
+    if stale in t: q.write_text(t.replace(stale, ''))
+edit('lib/jevbench-releases.mjs', "  { version: 'v1.7.12'", "  { version: 'v1.7.13', date: '2026-10-28', href: '/jev-models/v1.7.13', text: '" + HIST.replace("'", "\\'") + "' },\n  { version: 'v1.7.12'")
 edit('components/JevReleaseHistory.tsx', "import { hasPublishedJevbenchV1712Release } from '../lib/jevbench-v1712-release.mjs';",
      "import { hasPublishedJevbenchV1713Release } from '../lib/jevbench-v1713-release.mjs';\nimport { hasPublishedJevbenchV1712Release } from '../lib/jevbench-v1712-release.mjs';")
 edit('components/JevReleaseHistory.tsx', 'v1711, v1712] = await Promise.all([', 'v1711, v1712, v1713] = await Promise.all([')

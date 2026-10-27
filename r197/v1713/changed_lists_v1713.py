@@ -11,11 +11,13 @@ for k in by:
  for r in rows:
   after=[x for x in r['after'] if x not in keys or x==k][:5];before=r['before'][:5]
   if after!=before:by[k].append({'list':r['label'],'before':before,'after':after,'entrant_rank':after.index(k)+1 if k in after else None})
-out={'status':'PASS','baseline':'v1.7.12','candidate':'v1.7.13','method':'Single-entrant insertion from full production ranking orders; all other new keys removed. Slider transitions separately retained.','lists':len(rows),'changed_lists_by_row':by,'counts':{k:len(v) for k,v in by.items()},'paid_public_rule_covers_any_changes':True}
+out={'status':'PASS','baseline':'v1.7.12','candidate':'v1.7.13','method':'Single-entrant insertion from full production ranking orders; all other new keys removed. Slider transitions separately retained.','lists':len(rows),'changed_lists_by_row':by,'counts':{k:len(v) for k,v in by.items()},'unranked_new_rows':sorted(keys),'standing_go_requires_zero':True,'total_changed':sum(len(v) for v in by.values())}
 (J/'receipts/CHANGED-LISTS-BY-ROW.json').write_text(json.dumps(out,indent=1,sort_keys=True)+'\n')
-lines=['# Fresh top-five comparison v1.7.12 → v1.7.13','','One new row (paid public order, automatic publication). Every list below is a change caused by that row alone.','']
+lines=['# Fresh top-five comparison v1.7.12 → v1.7.13','','One new row (paid public order), published UNRANKED: it is in no ranked list, so no list may change. Any list below would be a change caused by that row alone.','',f'Lists compared: {len(rows)}. Changed: {out["total_changed"]}.','']
 for k,rs in by.items():
  lines+=['## '+k,'',str(len(rs))+' watched lists change under single-row insertion.','']
  lines += [f'- {r["list"]}: entrant #{r["entrant_rank"]}' for r in rs]
  lines+=['']
-(J/'receipts/CHANGED-LISTS.md').write_text('\n'.join(lines));print('PASS per-row changes:',out['counts'])
+(J/'receipts/CHANGED-LISTS.md').write_text('\n'.join(lines))
+assert out['total_changed']==0,('REFUSED: top-five lists change although the row is unranked',out['counts'])
+print('PASS',len(rows),'lists; per-row changes:',out['counts'])

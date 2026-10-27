@@ -140,7 +140,6 @@
     "fastino-glide-api",
     "torchcast-decision-4b-v1.3",
     "liquid-d1-ultra",
-    "h2o-lightning-4b-v1.4.1",
     "subq-snap-1.1",
     "drex-max",
     "nimble-v4-max",
@@ -432,7 +431,6 @@
     "torchcast-decision-4b-v1.3",
     "subq-snap-preview",
     "nimble-v4-max",
-    "h2o-lightning-4b-v1.4.1",
     "launchables-myles-g-12b",
     "basal-omni-1.0-ultra",
     "sage-1.3.0",
@@ -713,7 +711,6 @@
     "fastino-glide-api",
     "torchcast-decision-4b-v1.3",
     "liquid-d1-ultra",
-    "h2o-lightning-4b-v1.4.1",
     "subq-snap-1.1",
     "drex-max",
     "nimble-v4-max",
@@ -1042,7 +1039,6 @@
     "torchcast-decision-4b-v1.3",
     "eikos-27b",
     "jev-1.13.0",
-    "h2o-lightning-4b-v1.4.1",
     "fastino-glide",
     "wity-1",
     "metask_jev_rain_12b_trained",
@@ -1307,7 +1303,7 @@
   "Three new self-hosted rows Philly Decider v2, iota-decide-4b-v0.3 and Decisio 0.9.0 (Qwen3.6-35B-A3B); no method change. Super Decider rows now link to the vendor page (completes the v1.7.9 change). Philly and iota v0.3 answered all 1,500 requests with disclosed truncation. Decisio answered 1,485; 15 HTTP 500 over-length refusals count as misses. All three costs are ESTIMATE base-model prices; Decisio uses disclosed offline engine-input billing and exceeds the cost cap.",
   "Cost correction for four Decisio Gemma rows (engine-processed input); no new measurement, no method change.",
   "Cost-basis wording clarification for Jez Large, Jez Small and D1A Gemma 4; no measurements, numeric costs, scores, ranks, or method changed.",
-  "First release on the 27 Oct regular draw: H2O-Lightning-4B v1.4.1 (paid evaluation). It answered all 1,500 requests of the new draw (5 long states trimmed by the model at pre-registered positions), none over 10 s. Its draw has no anchor runs yet, so its numbers are shown as published (offset 0) with the reference gap-penalty median. Cost is an ESTIMATE from the base model price on the prompt tokens the model processed. No existing row changed."
+  "First release on the 27 Oct regular draw: H2O-Lightning-4B v1.4.1 (paid evaluation), shown unranked until the draw's anchor runs are complete. It answered all 1,500 requests of the new draw (5 long states trimmed by the model at pre-registered positions), none over 10 s. Its draw has no anchor runs yet, so its numbers are shown as published (offset 0) with the reference gap-penalty median. Cost is an ESTIMATE from the base model price on the prompt tokens the model processed. This draw has no topic labels, so the row has no topic cells. NOT RANKED: Measured on the 27 Oct 2026 draw, which has no anchor runs yet, so its scores are not yet on the reference scale. This draw differs strongly from earlier draws (72% multilingual items). On the 300 public items every draw shares, this version scores 57.2 Intelligence vs 61.1 for H2O-Lightning-4B v1.1; its higher overall Intelligence comes from this draw's sealed items. Shown unranked until the draw's anchor runs are complete. No existing row, rank or ranking changed."
  ],
  "method": {
   "decision_limit_s": 10,
@@ -1315,7 +1311,7 @@
   "rule": "latency_s > 10.000 s -> failed",
   "treatment": "share"
  },
- "n_ranked": 281,
+ "n_ranked": 280,
  "not_measured": [
   {
    "addendum": null,
@@ -1681,7 +1677,7 @@
   "total": 1500
  },
  "sealed_share_of_intelligence": 0.5,
- "source_note": "First release on the 27 Oct regular draw: H2O-Lightning-4B v1.4.1 (paid evaluation).",
+ "source_note": "First release on the 27 Oct regular draw: H2O-Lightning-4B v1.4.1 (paid evaluation), shown unranked until the draw's anchor runs are complete.",
  "source_sha256": "915c50009a0786854adce2d9a3c8824578a11019d080e62275589196039409bf",
  "status": "published",
  "systems": [
@@ -1905,12 +1901,12 @@
    },
    "paid_fast_lane": false,
    "planned_weight_denominator": 1.0,
-   "rank": 92,
+   "rank": 91,
    "ranked": true,
    "ranks": {
-    "A": 92,
-    "B": 88,
-    "C": 78,
+    "A": 91,
+    "B": 87,
+    "C": 77,
     "capability": 27
    },
    "repo": "https://huggingface.co/andyzhang232/ajev-gemma4-31b-lm6q",
@@ -3267,13 +3263,13 @@
    },
    "paid_fast_lane": false,
    "planned_weight_denominator": 1.0,
-   "rank": 123,
+   "rank": 122,
    "ranked": true,
    "ranks": {
-    "A": 123,
-    "B": 116,
-    "C": 97,
-    "capability": 54
+    "A": 122,
+    "B": 115,
+    "C": 96,
+    "capability": 53
    },
    "repo": "https://github.com/ALERIA-ML/aleria-judge",
    "scores": {
@@ -4629,13 +4625,13 @@
    },
    "paid_fast_lane": false,
    "planned_weight_denominator": 1.0,
-   "rank": 76,
+   "rank": 75,
    "ranked": true,
    "ranks": {
-    "A": 76,
-    "B": 79,
-    "C": 88,
-    "capability": 120
+    "A": 75,
+    "B": 78,
+    "C": 87,
+    "capability": 119
    },
    "repo": "https://huggingface.co/amazon/strands-decider-26B-A4B-gemma4-v1-2610",
    "scores": {
@@ -6048,12 +6044,12 @@
      "Intelligence only": 25.18364392366508
     }
    },
-   "rank": 160,
+   "rank": 159,
    "ranked": true,
    "ranks": {
-    "A": 160,
-    "B": 156,
-    "C": 142,
+    "A": 159,
+    "B": 155,
+    "C": 141,
     "capability": 44
    },
    "repo": "https://huggingface.co/mukaddamzaid/amos-1-large",
@@ -7463,13 +7459,13 @@
      "Intelligence only": 21.46731530678655
     }
    },
-   "rank": 122,
+   "rank": 121,
    "ranked": true,
    "ranks": {
-    "A": 122,
-    "B": 124,
-    "C": 126,
-    "capability": 143
+    "A": 121,
+    "B": 123,
+    "C": 125,
+    "capability": 142
    },
    "repo": "https://huggingface.co/mukaddamzaid/amos-1-medium",
    "rescored_in": "v1.7.0",
@@ -8871,13 +8867,13 @@
     "carried_metadata_from": "Pinned author release; add-requests r61/score/withrows/REGISTRY.json measurement record",
     "kind": "v1.6.1 addendum a11 (scorer output sha256 4d2833926c2d, method option B / O1S)"
    },
-   "rank": 80,
+   "rank": 79,
    "ranked": true,
    "ranks": {
-    "A": 80,
-    "B": 82,
-    "C": 91,
-    "capability": 118
+    "A": 79,
+    "B": 81,
+    "C": 90,
+    "capability": 117
    },
    "repo": "https://huggingface.co/empiriolabsai/aplomb-1",
    "rescored_in": "v1.7.0",
@@ -9710,13 +9706,13 @@
     "carried_metadata_from": "Pinned author release; add-requests r61/score/withrows/REGISTRY.json measurement record",
     "kind": "v1.6.1 addendum a11 (scorer output sha256 4d2833926c2d, method option B / O1S)"
    },
-   "rank": 83,
+   "rank": 82,
    "ranked": true,
    "ranks": {
-    "A": 83,
-    "B": 84,
-    "C": 93,
-    "capability": 184
+    "A": 82,
+    "B": 83,
+    "C": 92,
+    "capability": 183
    },
    "repo": "https://huggingface.co/apus-ailab/APUS-OpenJev-v1-9B",
    "rescored_in": "v1.7.0",
@@ -10156,13 +10152,13 @@
      "Intelligence only": 33.50703306610661
     }
    },
-   "rank": 84,
+   "rank": 83,
    "ranked": true,
    "ranks": {
-    "A": 84,
-    "B": 87,
-    "C": 94,
-    "capability": 128
+    "A": 83,
+    "B": 86,
+    "C": 93,
+    "capability": 127
    },
    "repo": "https://huggingface.co/arcbright/elf-1-12b",
    "rescored_in": "v1.7.0",
@@ -11518,12 +11514,12 @@
    },
    "paid_fast_lane": false,
    "planned_weight_denominator": 1.0,
-   "rank": 30,
+   "rank": 29,
    "ranked": true,
    "ranks": {
-    "A": 30,
-    "B": 21,
-    "C": 26,
+    "A": 29,
+    "B": 20,
+    "C": 25,
     "capability": 22
    },
    "repo": "https://huggingface.co/arcbright/elf-1-31b",
@@ -12937,13 +12933,13 @@
      "Intelligence only": 8.739821181204116
     }
    },
-   "rank": 182,
+   "rank": 181,
    "ranked": true,
    "ranks": {
-    "A": 182,
-    "B": 183,
-    "C": 183,
-    "capability": 195
+    "A": 181,
+    "B": 182,
+    "C": 182,
+    "capability": 194
    },
    "repo": "https://huggingface.co/IBOU-SEARCH/ArseneLupin-v1.1",
    "rescored_in": "v1.7.0",
@@ -14356,13 +14352,13 @@
      "Intelligence only": 65.23849472031306
     }
    },
-   "rank": 50,
+   "rank": 49,
    "ranked": true,
    "ranks": {
-    "A": 50,
-    "B": 43,
-    "C": 41,
-    "capability": 103
+    "A": 49,
+    "B": 42,
+    "C": 40,
+    "capability": 102
    },
    "repo": "https://attest.engineering/model",
    "rescored_in": "v1.7.0",
@@ -15760,13 +15756,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 170,
+   "rank": 169,
    "ranked": true,
    "ranks": {
-    "A": 170,
-    "B": 165,
-    "C": 164,
-    "capability": 81
+    "A": 169,
+    "B": 164,
+    "C": 163,
+    "capability": 80
    },
    "repo": "https://huggingface.co/denis-pplx/autojev-27b",
    "rescored_in": "v1.7.0",
@@ -16205,12 +16201,12 @@
      "Intelligence only": 74.05810874808022
     }
    },
-   "rank": 22,
+   "rank": 21,
    "ranked": true,
    "ranks": {
-    "A": 22,
-    "B": 14,
-    "C": 20,
+    "A": 21,
+    "B": 13,
+    "C": 19,
     "capability": 18
    },
    "repo": "https://huggingface.co/Remek/basal-omni-1.0-ultra",
@@ -18015,13 +18011,13 @@
     "carried_metadata_from": "author model card + config.json",
     "kind": "v1.6.1 addendum a6 (scorer output sha256 9d512dc13d7d, method option B / O1S)"
    },
-   "rank": 79,
+   "rank": 78,
    "ranked": true,
    "ranks": {
-    "A": 79,
-    "B": 76,
-    "C": 72,
-    "capability": 119
+    "A": 78,
+    "B": 75,
+    "C": 71,
+    "capability": 118
    },
    "repo": "https://huggingface.co/bespokelabs/Bespoke-Nimble-9B-v3",
    "rescored_in": "v1.7.0",
@@ -18448,13 +18444,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 198,
+   "rank": 197,
    "ranked": true,
    "ranks": {
-    "A": 198,
-    "B": 194,
-    "C": 199,
-    "capability": 124
+    "A": 197,
+    "B": 193,
+    "C": 198,
+    "capability": 123
    },
    "repo": "https://huggingface.co/Reza2kn/Bev",
    "rescored_in": "v1.7.0",
@@ -18882,13 +18878,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 277,
+   "rank": 276,
    "ranked": true,
    "ranks": {
-    "A": 277,
-    "B": 277,
-    "C": 277,
-    "capability": 228
+    "A": 276,
+    "B": 276,
+    "C": 276,
+    "capability": 227
    },
    "repo": "https://huggingface.co/BAAI/bge-reranker-v2-m3",
    "rescored_in": "v1.7.0",
@@ -19327,13 +19323,13 @@
      "Intelligence only": 17.58206451384755
     }
    },
-   "rank": 129,
+   "rank": 128,
    "ranked": true,
    "ranks": {
-    "A": 129,
-    "B": 130,
-    "C": 138,
-    "capability": 157
+    "A": 128,
+    "B": 129,
+    "C": 137,
+    "capability": 156
    },
    "repo": "https://huggingface.co/thegovind/blink-4b",
    "rescored_in": "v1.7.0",
@@ -20742,13 +20738,13 @@
      "Intelligence only": 46.97811680206471
     }
    },
-   "rank": 71,
+   "rank": 70,
    "ranked": true,
    "ranks": {
-    "A": 71,
-    "B": 73,
-    "C": 82,
-    "capability": 101
+    "A": 70,
+    "B": 72,
+    "C": 81,
+    "capability": 100
    },
    "repo": "https://huggingface.co/PixilabAI/Blink-v0.3-26B-A4B-NVFP4",
    "rescored_in": "v1.7.0",
@@ -22102,12 +22098,12 @@
    },
    "paid_fast_lane": false,
    "planned_weight_denominator": 1.0,
-   "rank": 40,
+   "rank": 39,
    "ranked": true,
    "ranks": {
-    "A": 40,
-    "B": 31,
-    "C": 33,
+    "A": 39,
+    "B": 30,
+    "C": 32,
     "capability": 45
    },
    "repo": "https://huggingface.co/sanghwa-na/bobcat-1.3",
@@ -23514,13 +23510,13 @@
     "carried_metadata_from": "Pinned author release; add-requests r61/score/withrows/REGISTRY.json measurement record",
     "kind": "v1.6.1 addendum a12 (scorer output sha256 4d2833926c2d, method option B / O1S)"
    },
-   "rank": 56,
+   "rank": 55,
    "ranked": true,
    "ranks": {
-    "A": 56,
-    "B": 48,
-    "C": 46,
-    "capability": 75
+    "A": 55,
+    "B": 47,
+    "C": 45,
+    "capability": 74
    },
    "repo": "https://huggingface.co/sanghwa-na/bobcat-flash-1.2",
    "rescored_in": "v1.7.0",
@@ -25349,13 +25345,13 @@
      "Intelligence only": 58.89019286287232
     }
    },
-   "rank": 26,
+   "rank": 25,
    "ranked": true,
    "ranks": {
-    "A": 26,
-    "B": 36,
-    "C": 39,
-    "capability": 69
+    "A": 25,
+    "B": 35,
+    "C": 38,
+    "capability": 68
    },
    "repo": "https://docs.celeris.ai",
    "rescored_in": "v1.7.0",
@@ -26753,13 +26749,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 275,
+   "rank": 274,
    "ranked": true,
    "ranks": {
-    "A": 275,
-    "B": 275,
-    "C": 275,
-    "capability": 233
+    "A": 274,
+    "B": 274,
+    "C": 274,
+    "capability": 232
    },
    "repo": "https://huggingface.co/altslate/certo-decision-model",
    "rescored_in": "v1.7.0",
@@ -27199,13 +27195,13 @@
      "Intelligence only": 76.65679978603575
     }
    },
-   "rank": 195,
+   "rank": 194,
    "ranked": true,
    "ranks": {
-    "A": 195,
-    "B": 197,
-    "C": 197,
-    "capability": 235
+    "A": 194,
+    "B": 196,
+    "C": 196,
+    "capability": 234
    },
    "repo": "https://huggingface.co/ninhnv/chon-1.0-12b",
    "rescored_in": "v1.7.0",
@@ -28561,13 +28557,13 @@
    },
    "paid_fast_lane": false,
    "planned_weight_denominator": 1.0,
-   "rank": 44,
+   "rank": 43,
    "ranked": true,
    "ranks": {
-    "A": 44,
-    "B": 45,
-    "C": 35,
-    "capability": 99
+    "A": 43,
+    "B": 44,
+    "C": 34,
+    "capability": 98
    },
    "repo": "https://huggingface.co/ninhnv/chon-1.0-12b-fast",
    "scores": {
@@ -31269,13 +31265,13 @@
      "Intelligence only": 42.477623199386635
     }
    },
-   "rank": 20,
+   "rank": 19,
    "ranked": true,
    "ranks": {
-    "A": 20,
-    "B": 38,
-    "C": 52,
-    "capability": 112
+    "A": 19,
+    "B": 37,
+    "C": 51,
+    "capability": 111
    },
    "remeasure": {
     "disclosure": "Chon family, same author as the 12B sibling. This uses the author's documented --no-think mode; the author's GPU default thinks first on up to 45 % of questions, while that think pass never runs here. GPU re-time in the same --no-think serving configuration as the previous CPU measurement; the default think pass is not exercised. The yes/no commit rule [0.199, 0.801] moves P(yes) just outside the scorer's decisive band: the author's own mechanism. Fifteen states over 6,000 tokens are truncated keeping the start, answered rather than refused. The 231-public-item check was a sanity gate, not an independence check: the author used public items to choose serving settings. ATTEMPT HISTORY: an earlier think-on GPU attempt stopped at the public projection gate before any sealed byte and contributes no scored output. This no-think GPU run is the sole successful replacement measurement. All 1,500 items answered, zero output tokens and zero thinking items. GPU telemetry sampler produced an empty CSV; utilisation and clock samples are unavailable. Scores AND times both come from this GPU run, replacing the CPU measurement in full (scores and times). CPU and GPU probabilities differ on 1,049 of 1,500 items (9 top answers changed), attributed to device numerics; Intelligence and Calibration therefore moved slightly.",
@@ -32950,13 +32946,13 @@
     "carried_metadata_from": "Pinned author release; add-requests r61/score/withrows/REGISTRY.json measurement record",
     "kind": "v1.6.1 addendum a11 (scorer output sha256 4d2833926c2d, method option B / O1S)"
    },
-   "rank": 246,
+   "rank": 245,
    "ranked": true,
    "ranks": {
-    "A": 246,
-    "B": 244,
-    "C": 246,
-    "capability": 278
+    "A": 245,
+    "B": 243,
+    "C": 245,
+    "capability": 277
    },
    "repo": "https://huggingface.co/devops-thiago/classone-gemma4-e2b",
    "rescored_in": "v1.7.0",
@@ -33391,13 +33387,13 @@
      "Intelligence only": 8.95354562245959
     }
    },
-   "rank": 187,
+   "rank": 186,
    "ranked": true,
    "ranks": {
-    "A": 187,
-    "B": 186,
-    "C": 188,
-    "capability": 247
+    "A": 186,
+    "B": 185,
+    "C": 187,
+    "capability": 246
    },
    "repo": "https://huggingface.co/devops-thiago/classone-gemma4-e4b",
    "rescored_in": "v1.7.0",
@@ -34804,13 +34800,13 @@
      "Intelligence only": 0.0786327227711625
     }
    },
-   "rank": 251,
+   "rank": 250,
    "ranked": true,
    "ranks": {
-    "A": 251,
-    "B": 251,
-    "C": 251,
-    "capability": 275
+    "A": 250,
+    "B": 250,
+    "C": 250,
+    "capability": 274
    },
    "repo": "https://huggingface.co/devops-thiago/classone-qwen3.5-2b",
    "rescored_in": "v1.7.0",
@@ -36217,13 +36213,13 @@
      "Intelligence only": 8.172749758440709
     }
    },
-   "rank": 192,
+   "rank": 191,
    "ranked": true,
    "ranks": {
-    "A": 192,
-    "B": 193,
-    "C": 194,
-    "capability": 248
+    "A": 191,
+    "B": 192,
+    "C": 193,
+    "capability": 247
    },
    "repo": "https://huggingface.co/devops-thiago/classone-qwen3.5-4b",
    "rescored_in": "v1.7.0",
@@ -37627,13 +37623,13 @@
     "carried_metadata_from": "Pinned author release; add-requests r61/score/withrows/REGISTRY.json measurement record",
     "kind": "v1.6.1 addendum a11 (scorer output sha256 4d2833926c2d, method option B / O1S)"
    },
-   "rank": 108,
+   "rank": 107,
    "ranked": true,
    "ranks": {
-    "A": 108,
-    "B": 108,
-    "C": 110,
-    "capability": 208
+    "A": 107,
+    "B": 107,
+    "C": 109,
+    "capability": 207
    },
    "repo": "https://huggingface.co/devops-thiago/classone-qwen3.5-9b",
    "rescored_in": "v1.7.0",
@@ -38073,13 +38069,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 181,
+   "rank": 180,
    "ranked": true,
    "ranks": {
-    "A": 181,
-    "B": 170,
-    "C": 162,
-    "capability": 60
+    "A": 180,
+    "B": 169,
+    "C": 161,
+    "capability": 59
    },
    "repo": "https://huggingface.co/Cloudflare/clef",
    "rescored_in": "v1.7.0",
@@ -38519,13 +38515,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 114,
+   "rank": 113,
    "ranked": true,
    "ranks": {
-    "A": 114,
-    "B": 109,
-    "C": 116,
-    "capability": 135
+    "A": 113,
+    "B": 108,
+    "C": 115,
+    "capability": 134
    },
    "repo": "https://huggingface.co/Cloudflare/clef-flash",
    "rescored_in": "v1.7.0",
@@ -38960,13 +38956,13 @@
      "Intelligence only": 4.70710504931535
     }
    },
-   "rank": 219,
+   "rank": 218,
    "ranked": true,
    "ranks": {
-    "A": 219,
-    "B": 218,
-    "C": 221,
-    "capability": 172
+    "A": 218,
+    "B": 217,
+    "C": 220,
+    "capability": 171
    },
    "repo": "https://huggingface.co/Cloudflare/clef-omni",
    "rescored_in": "v1.7.0",
@@ -40366,13 +40362,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 276,
+   "rank": 275,
    "ranked": true,
    "ranks": {
-    "A": 276,
-    "B": 276,
-    "C": 276,
-    "capability": 274
+    "A": 275,
+    "B": 275,
+    "C": 275,
+    "capability": 273
    },
    "repo": "https://github.com/Contrastive-LM/CLM",
    "rescored_in": "v1.7.0",
@@ -40804,13 +40800,13 @@
     "carried_metadata_from": "Pinned author release; add-requests r61/score/withrows/REGISTRY.json measurement record",
     "kind": "v1.6.1 addendum a11 (scorer output sha256 4d2833926c2d, method option B / O1S)"
    },
-   "rank": 140,
+   "rank": 139,
    "ranked": true,
    "ranks": {
-    "A": 140,
-    "B": 152,
-    "C": 158,
-    "capability": 183
+    "A": 139,
+    "B": 151,
+    "C": 157,
+    "capability": 182
    },
    "repo": "https://huggingface.co/corners-ai/CoCo-Decision-4B-Ko",
    "rescored_in": "v1.7.0",
@@ -41249,13 +41245,13 @@
      "Intelligence only": 9.672511174017334
     }
    },
-   "rank": 175,
+   "rank": 174,
    "ranked": true,
    "ranks": {
-    "A": 175,
-    "B": 179,
-    "C": 179,
-    "capability": 191
+    "A": 174,
+    "B": 178,
+    "C": 178,
+    "capability": 190
    },
    "repo": "https://huggingface.co/adimyth/compass-lora-v2",
    "rescored_in": "v1.7.0",
@@ -42657,13 +42653,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 48,
+   "rank": 47,
    "ranked": true,
    "ranks": {
-    "A": 48,
-    "B": 53,
-    "C": 56,
-    "capability": 89
+    "A": 47,
+    "B": 52,
+    "C": 55,
+    "capability": 88
    },
    "repo": "https://github.com/blockbrain-ai/cygnet-recipe",
    "rescored_in": "v1.7.0",
@@ -43038,13 +43034,13 @@
    },
    "paid_fast_lane": false,
    "planned_weight_denominator": 1.0,
-   "rank": 238,
+   "rank": 237,
    "ranked": true,
    "ranks": {
-    "A": 238,
-    "B": 238,
-    "C": 238,
-    "capability": 224
+    "A": 237,
+    "B": 237,
+    "C": 237,
+    "capability": 223
    },
    "repo": "https://huggingface.co/JohnP1/d1a-e2b",
    "scores": {
@@ -44392,13 +44388,13 @@
    },
    "paid_fast_lane": false,
    "planned_weight_denominator": 1.0,
-   "rank": 216,
+   "rank": 215,
    "ranked": true,
    "ranks": {
-    "A": 216,
-    "B": 219,
-    "C": 218,
-    "capability": 207
+    "A": 215,
+    "B": 218,
+    "C": 217,
+    "capability": 206
    },
    "repo": "https://huggingface.co/JohnP1/d1a-e4b",
    "scores": {
@@ -45799,13 +45795,13 @@
     "carried_metadata_from": "run 46 author metadata + current P83 staged pin/measurement receipt",
     "kind": "v1.6.1 addendum a12 (scorer output sha256 4d2833926c2d, method option B / O1S)"
    },
-   "rank": 32,
+   "rank": 31,
    "ranked": true,
    "ranks": {
-    "A": 32,
-    "B": 35,
-    "C": 28,
-    "capability": 83
+    "A": 31,
+    "B": 34,
+    "C": 27,
+    "capability": 82
    },
    "repo": "https://huggingface.co/Mapika/decider-12b",
    "rescored_in": "v1.7.0",
@@ -46233,13 +46229,13 @@
     "carried_metadata_from": "run 46 author metadata + current P83 staged pin/measurement receipt",
     "kind": "v1.6.1 addendum a12 (scorer output sha256 4d2833926c2d, method option B / O1S)"
    },
-   "rank": 36,
+   "rank": 35,
    "ranked": true,
    "ranks": {
-    "A": 36,
-    "B": 41,
-    "C": 36,
-    "capability": 88
+    "A": 35,
+    "B": 40,
+    "C": 35,
+    "capability": 87
    },
    "repo": "https://huggingface.co/Mapika/decider-12b",
    "rescored_in": "v1.7.0",
@@ -46667,13 +46663,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 214,
+   "rank": 213,
    "ranked": true,
    "ranks": {
-    "A": 214,
-    "B": 215,
-    "C": 216,
-    "capability": 226
+    "A": 213,
+    "B": 214,
+    "C": 215,
+    "capability": 225
    },
    "repo": "https://huggingface.co/Mapika/decider-2b",
    "rescored_in": "v1.7.0",
@@ -47101,13 +47097,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 139,
+   "rank": 138,
    "ranked": true,
    "ranks": {
-    "A": 139,
-    "B": 135,
-    "C": 157,
-    "capability": 123
+    "A": 138,
+    "B": 134,
+    "C": 156,
+    "capability": 122
    },
    "repo": "https://huggingface.co/Mapika/decider-35b-a3b",
    "rescored_in": "v1.7.0",
@@ -47535,13 +47531,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 100,
+   "rank": 99,
    "ranked": true,
    "ranks": {
-    "A": 100,
-    "B": 105,
-    "C": 106,
-    "capability": 129
+    "A": 99,
+    "B": 104,
+    "C": 105,
+    "capability": 128
    },
    "repo": "https://github.com/Mapika/decider",
    "rescored_in": "v1.7.0",
@@ -47973,13 +47969,13 @@
     "carried_metadata_from": "author model card + config.json",
     "kind": "v1.6.1 addendum a6 (scorer output sha256 9d512dc13d7d, method option B / O1S)"
    },
-   "rank": 61,
+   "rank": 60,
    "ranked": true,
    "ranks": {
-    "A": 61,
-    "B": 59,
-    "C": 49,
-    "capability": 95
+    "A": 60,
+    "B": 58,
+    "C": 48,
+    "capability": 94
    },
    "repo": "https://github.com/Mapika/decider",
    "rescored_in": "v1.7.0",
@@ -48355,13 +48351,13 @@
    },
    "paid_fast_lane": false,
    "planned_weight_denominator": 1.0,
-   "rank": 21,
+   "rank": 20,
    "ranked": true,
    "ranks": {
-    "A": 21,
-    "B": 28,
-    "C": 19,
-    "capability": 59
+    "A": 20,
+    "B": 27,
+    "C": 18,
+    "capability": 58
    },
    "repo": "https://huggingface.co/tachara-ai/Decisio-12b-tuned-commit",
    "scores": {
@@ -49766,13 +49762,13 @@
     "carried_metadata_from": "r54/r55/r61 registry and pinned author package",
     "kind": "v1.6.1 addendum a11 (scorer output sha256 4d2833926c2d, method option B / O1S)"
    },
-   "rank": 54,
+   "rank": 53,
    "ranked": true,
    "ranks": {
-    "A": 54,
-    "B": 60,
-    "C": 64,
-    "capability": 91
+    "A": 53,
+    "B": 59,
+    "C": 63,
+    "capability": 90
    },
    "repo": "https://github.com/aminry/decisio",
    "rescored_in": "v1.7.0",
@@ -50204,13 +50200,13 @@
     "carried_metadata_from": "r54/r55/r61 registry and pinned author package",
     "kind": "v1.6.1 addendum a11 (scorer output sha256 4d2833926c2d, method option B / O1S)"
    },
-   "rank": 57,
+   "rank": 56,
    "ranked": true,
    "ranks": {
-    "A": 57,
-    "B": 61,
-    "C": 65,
-    "capability": 100
+    "A": 56,
+    "B": 60,
+    "C": 64,
+    "capability": 99
    },
    "repo": "https://github.com/aminry/decisio",
    "rescored_in": "v1.7.0",
@@ -50642,12 +50638,12 @@
     "carried_metadata_from": "r54/r55/r61 registry and pinned author package",
     "kind": "v1.6.1 addendum a12 (scorer output sha256 4d2833926c2d, method option B / O1S)"
    },
-   "rank": 38,
+   "rank": 37,
    "ranked": true,
    "ranks": {
-    "A": 38,
-    "B": 29,
-    "C": 32,
+    "A": 37,
+    "B": 28,
+    "C": 31,
     "capability": 36
    },
    "repo": "https://github.com/aminry/decisio",
@@ -51020,13 +51016,13 @@
    },
    "paid_fast_lane": false,
    "planned_weight_denominator": 1.0,
-   "rank": 208,
+   "rank": 207,
    "ranked": true,
    "ranks": {
-    "A": 208,
-    "B": 205,
-    "C": 209,
-    "capability": 156
+    "A": 207,
+    "B": 204,
+    "C": 208,
+    "capability": 155
    },
    "repo": "https://github.com/aminry/decisio",
    "scores": {
@@ -52431,13 +52427,13 @@
     "carried_metadata_from": "author model card + config.json",
     "kind": "v1.6.1 addendum a6 (scorer output sha256 9d512dc13d7d, method option B / O1S)"
    },
-   "rank": 166,
+   "rank": 165,
    "ranked": true,
    "ranks": {
-    "A": 166,
-    "B": 162,
-    "C": 147,
-    "capability": 84
+    "A": 165,
+    "B": 161,
+    "C": 146,
+    "capability": 83
    },
    "repo": "https://huggingface.co/vllm-sr/Decision-2.0-Vega-27B",
    "rescored_in": "v1.7.0",
@@ -52865,13 +52861,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 204,
+   "rank": 203,
    "ranked": true,
    "ranks": {
-    "A": 204,
-    "B": 208,
-    "C": 204,
-    "capability": 197
+    "A": 203,
+    "B": 207,
+    "C": 203,
+    "capability": 196
    },
    "repo": "https://huggingface.co/flymy-ai/decision-2b-preview",
    "rescored_in": "v1.7.0",
@@ -53299,13 +53295,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 169,
+   "rank": 168,
    "ranked": true,
    "ranks": {
-    "A": 169,
-    "B": 176,
-    "C": 175,
-    "capability": 178
+    "A": 168,
+    "B": 175,
+    "C": 174,
+    "capability": 177
    },
    "repo": "https://benchmarkheaven.com/jev-models/decision-4b-v11",
    "rescored_in": "v1.7.0",
@@ -53733,13 +53729,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 142,
+   "rank": 141,
    "ranked": true,
    "ranks": {
-    "A": 142,
-    "B": 154,
-    "C": 160,
-    "capability": 161
+    "A": 141,
+    "B": 153,
+    "C": 159,
+    "capability": 160
    },
    "repo": "https://benchmarkheaven.com/jev-models/decision-4b-v12",
    "rescored_in": "v1.7.0",
@@ -54167,13 +54163,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 249,
+   "rank": 248,
    "ranked": true,
    "ranks": {
-    "A": 249,
-    "B": 249,
-    "C": 249,
-    "capability": 244
+    "A": 248,
+    "B": 248,
+    "C": 248,
+    "capability": 243
    },
    "repo": "https://huggingface.co/flymy-ai/decision-fast-preview",
    "rescored_in": "v1.7.0",
@@ -54543,13 +54539,13 @@
     },
     "views": null
    },
-   "rank": 234,
+   "rank": 233,
    "ranked": true,
    "ranks": {
-    "A": 234,
-    "B": 234,
-    "C": 234,
-    "capability": 222
+    "A": 233,
+    "B": 233,
+    "C": 233,
+    "capability": 221
    },
    "repo": "https://www.milliseconds.ai",
    "rescored_in": "v1.7.0",
@@ -54864,13 +54860,13 @@
      "Intelligence only": 17.265698468557986
     }
    },
-   "rank": 134,
+   "rank": 133,
    "ranked": true,
    "ranks": {
-    "A": 134,
-    "B": 134,
-    "C": 149,
-    "capability": 154
+    "A": 133,
+    "B": 133,
+    "C": 148,
+    "capability": 153
    },
    "repo": "https://huggingface.co/vllm-sr/Decision-2.0-Lux-9B",
    "rescored_in": "v1.7.0",
@@ -56226,13 +56222,13 @@
    },
    "paid_fast_lane": false,
    "planned_weight_denominator": 1.0,
-   "rank": 190,
+   "rank": 189,
    "ranked": true,
    "ranks": {
-    "A": 190,
-    "B": 191,
-    "C": 192,
-    "capability": 205
+    "A": 189,
+    "B": 190,
+    "C": 191,
+    "capability": 204
    },
    "repo": "https://huggingface.co/bynn-intelligence-com/decisionnode-edge",
    "scores": {
@@ -57588,13 +57584,13 @@
    },
    "paid_fast_lane": false,
    "planned_weight_denominator": 1.0,
-   "rank": 222,
+   "rank": 221,
    "ranked": true,
    "ranks": {
-    "A": 222,
-    "B": 222,
-    "C": 222,
-    "capability": 219
+    "A": 221,
+    "B": 221,
+    "C": 221,
+    "capability": 218
    },
    "repo": "https://huggingface.co/bynn-intelligence-com/decisionnode-edge-mini",
    "scores": {
@@ -58998,13 +58994,13 @@
      "Intelligence only": 24.851733846686635
     }
    },
-   "rank": 116,
+   "rank": 115,
    "ranked": true,
    "ranks": {
-    "A": 116,
-    "B": 115,
-    "C": 118,
-    "capability": 223
+    "A": 115,
+    "B": 114,
+    "C": 117,
+    "capability": 222
    },
    "repo": "https://huggingface.co/underlabs/decisor-4b",
    "rescored_in": "v1.7.0",
@@ -60432,13 +60428,13 @@
     "carried_metadata_from": null,
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 111,
+   "rank": 110,
    "ranked": true,
    "ranks": {
-    "A": 111,
-    "B": 113,
-    "C": 113,
-    "capability": 138
+    "A": 110,
+    "B": 112,
+    "C": 112,
+    "capability": 137
    },
    "repo": "https://github.com/krishna-gogineni-765/deck",
    "rescored_in": "v1.7.0",
@@ -60862,12 +60858,12 @@
     "carried_metadata_from": null,
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 46,
+   "rank": 45,
    "ranked": true,
    "ranks": {
-    "A": 46,
-    "B": 30,
-    "C": 37,
+    "A": 45,
+    "B": 29,
+    "C": 36,
     "capability": 46
    },
    "repo": "https://github.com/krishna-gogineni-765/deck31b",
@@ -61294,13 +61290,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 248,
+   "rank": 247,
    "ranked": true,
    "ranks": {
-    "A": 248,
-    "B": 248,
-    "C": 248,
-    "capability": 276
+    "A": 247,
+    "B": 247,
+    "C": 247,
+    "capability": 275
    },
    "repo": "https://huggingface.co/LibertAIDAI/deem-0.8-v1",
    "rescored_in": "v1.7.0",
@@ -61670,12 +61666,12 @@
     },
     "views": null
    },
-   "rank": 217,
+   "rank": 216,
    "ranked": true,
    "ranks": {
-    "A": 217,
-    "B": 210,
-    "C": 206,
+    "A": 216,
+    "B": 209,
+    "C": 205,
     "capability": 4
    },
    "repo": "https://benchmarkheaven.com/jev-models/deepseek-flash",
@@ -61984,13 +61980,13 @@
     "carried_metadata_from": "Pinned author release; add-requests r61/score/withrows/REGISTRY.json measurement record",
     "kind": "v1.6.1 addendum a11 (scorer output sha256 4d2833926c2d, method option B / O1S)"
    },
-   "rank": 74,
+   "rank": 73,
    "ranked": true,
    "ranks": {
-    "A": 74,
-    "B": 72,
-    "C": 68,
-    "capability": 175
+    "A": 73,
+    "B": 71,
+    "C": 67,
+    "capability": 174
    },
    "repo": "https://huggingface.co/google/diffusiongemma-26B-A4B-it",
    "rescored_in": "v1.7.0",
@@ -62366,12 +62362,12 @@
    },
    "paid_fast_lane": false,
    "planned_weight_denominator": 1.0,
-   "rank": 51,
+   "rank": 50,
    "ranked": true,
    "ranks": {
-    "A": 51,
-    "B": 34,
-    "C": 42,
+    "A": 50,
+    "B": 33,
+    "C": 41,
     "capability": 19
    },
    "repo": "https://huggingface.co/dopest-studio/dopest-1.0-31b",
@@ -63785,12 +63781,12 @@
      "Intelligence only": 78.89021516142793
     }
    },
-   "rank": 9,
+   "rank": 8,
    "ranked": true,
    "ranks": {
-    "A": 9,
+    "A": 8,
     "B": 4,
-    "C": 8,
+    "C": 7,
     "capability": 13
    },
    "repo": "https://drex.nace.ai",
@@ -65190,12 +65186,12 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 172,
+   "rank": 171,
    "ranked": true,
    "ranks": {
-    "A": 172,
-    "B": 164,
-    "C": 153,
+    "A": 171,
+    "B": 163,
+    "C": 152,
     "capability": 48
    },
    "repo": "https://huggingface.co/caiovicentino1/eikos-27b",
@@ -65578,13 +65574,13 @@
    },
    "paid_fast_lane": false,
    "planned_weight_denominator": 1.0,
-   "rank": 73,
+   "rank": 72,
    "ranked": true,
    "ranks": {
-    "A": 73,
-    "B": 69,
-    "C": 62,
-    "capability": 96
+    "A": 72,
+    "B": 68,
+    "C": 61,
+    "capability": 95
    },
    "repo": "https://huggingface.co/baselabs/elephant-1",
    "scores": {
@@ -66986,13 +66982,13 @@
     "carried_metadata_from": "Current inventory + r20 source metadata; unresolved runtime join",
     "kind": "v1.6.1 addendum a11 (scorer output sha256 4d2833926c2d, method option B / O1S)"
    },
-   "rank": 115,
+   "rank": 114,
    "ranked": true,
    "ranks": {
-    "A": 115,
-    "B": 117,
-    "C": 117,
-    "capability": 168
+    "A": 114,
+    "B": 116,
+    "C": 116,
+    "capability": 167
    },
    "repo": "https://huggingface.co/evalengine/decision-4b-gguf",
    "rescored_in": "v1.7.0",
@@ -67424,13 +67420,13 @@
     "carried_metadata_from": "Pinned author release; add-requests r61/score/withrows/REGISTRY.json measurement record",
     "kind": "v1.6.1 addendum a11 (scorer output sha256 4d2833926c2d, method option B / O1S)"
    },
-   "rank": 228,
+   "rank": 227,
    "ranked": true,
    "ranks": {
-    "A": 228,
-    "B": 231,
-    "C": 229,
-    "capability": 217
+    "A": 227,
+    "B": 230,
+    "C": 228,
+    "capability": 216
    },
    "repo": "https://huggingface.co/carrtesy/EXAONE-4.0-1.2B-JEV",
    "rescored_in": "v1.7.0",
@@ -67800,13 +67796,13 @@
     },
     "views": null
    },
-   "rank": 125,
+   "rank": 124,
    "ranked": true,
    "ranks": {
-    "A": 125,
-    "B": 119,
-    "C": 99,
-    "capability": 51
+    "A": 124,
+    "B": 118,
+    "C": 98,
+    "capability": 50
    },
    "repo": null,
    "rescored_in": "v1.7.0",
@@ -68071,12 +68067,12 @@
    },
    "paid_fast_lane": false,
    "planned_weight_denominator": 1.0,
-   "rank": 144,
+   "rank": 143,
    "ranked": true,
    "ranks": {
-    "A": 144,
-    "B": 137,
-    "C": 125,
+    "A": 143,
+    "B": 136,
+    "C": 124,
     "capability": 9
    },
    "repo": "https://huggingface.co/fastino/GLiDE",
@@ -70904,13 +70900,13 @@
     "carried_metadata_from": "v1.6.0 release row",
     "kind": "v1.6.1 full-set re-score (score-v161-3/out-O1S, O1S, hosted API on S u P, not equated)"
    },
-   "rank": 247,
+   "rank": 246,
    "ranked": true,
    "ranks": {
-    "A": 247,
-    "B": 247,
-    "C": 247,
-    "capability": 257
+    "A": 246,
+    "B": 246,
+    "C": 246,
+    "capability": 256
    },
    "repo": "https://fastino.ai/",
    "rescored_in": "v1.7.0",
@@ -71276,13 +71272,13 @@
     },
     "views": null
    },
-   "rank": 179,
+   "rank": 178,
    "ranked": true,
    "ranks": {
-    "A": 179,
-    "B": 169,
-    "C": 163,
-    "capability": 164
+    "A": 178,
+    "B": 168,
+    "C": 162,
+    "capability": 163
    },
    "repo": "https://benchmarkheaven.com/jev-models/gemini-3.1-flash-lite",
    "rescored_in": "v1.7.0",
@@ -71590,13 +71586,13 @@
     "carried_metadata_from": "author model card + config.json",
     "kind": "v1.6.1 addendum a6 (scorer output sha256 9d512dc13d7d, method option B / O1S)"
    },
-   "rank": 65,
+   "rank": 64,
    "ranked": true,
    "ranks": {
-    "A": 65,
-    "B": 65,
-    "C": 75,
-    "capability": 98
+    "A": 64,
+    "B": 64,
+    "C": 74,
+    "capability": 97
    },
    "repo": "https://huggingface.co/autotrust/GEV-26B-Decide",
    "rescored_in": "v1.7.0",
@@ -72036,13 +72032,13 @@
      "Intelligence only": 8.22044918523227
     }
    },
-   "rank": 185,
+   "rank": 184,
    "ranked": true,
    "ranks": {
-    "A": 185,
-    "B": 187,
-    "C": 186,
-    "capability": 204
+    "A": 184,
+    "B": 186,
+    "C": 185,
+    "capability": 203
    },
    "repo": "https://huggingface.co/Goddragon/Arbiter-4B",
    "rescored_in": "v1.7.0",
@@ -73387,12 +73383,12 @@
     },
     "views": null
    },
-   "rank": 149,
+   "rank": 148,
    "ranked": true,
    "ranks": {
-    "A": 149,
-    "B": 138,
-    "C": 130,
+    "A": 148,
+    "B": 137,
+    "C": 129,
     "capability": 3
    },
    "repo": "https://benchmarkheaven.com/jev-models/gpt-5.6-luna",
@@ -73639,12 +73635,12 @@
     },
     "views": null
    },
-   "rank": 107,
+   "rank": 106,
    "ranked": true,
    "ranks": {
-    "A": 107,
-    "B": 94,
-    "C": 86,
+    "A": 106,
+    "B": 93,
+    "C": 85,
     "capability": 1
    },
    "repo": "https://benchmarkheaven.com/jev-models/gpt-6-luna",
@@ -73891,12 +73887,12 @@
     },
     "views": null
    },
-   "rank": 104,
+   "rank": 103,
    "ranked": true,
    "ranks": {
-    "A": 104,
-    "B": 91,
-    "C": 85,
+    "A": 103,
+    "B": 90,
+    "C": 84,
     "capability": 2
    },
    "repo": "https://benchmarkheaven.com/jev-models/gpt-6-luna-low",
@@ -74201,13 +74197,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 278,
+   "rank": 277,
    "ranked": true,
    "ranks": {
-    "A": 278,
-    "B": 278,
-    "C": 278,
-    "capability": 241
+    "A": 277,
+    "B": 277,
+    "C": 277,
+    "capability": 240
    },
    "repo": "https://huggingface.co/Alibaba-NLP/gte-reranker-modernbert-base",
    "rescored_in": "v1.7.0",
@@ -74641,13 +74637,13 @@
      "Intelligence only": 0.25450928339078893
     }
    },
-   "rank": 240,
+   "rank": 239,
    "ranked": true,
    "ranks": {
-    "A": 240,
-    "B": 240,
-    "C": 240,
-    "capability": 240
+    "A": 239,
+    "B": 239,
+    "C": 239,
+    "capability": 239
    },
    "repo": "https://huggingface.co/kouhxp/gutsy",
    "rescored_in": "v1.7.0",
@@ -76059,12 +76055,12 @@
      "Intelligence only": 80.15012041049178
     }
    },
-   "rank": 16,
+   "rank": 15,
    "ranked": true,
    "ranks": {
-    "A": 16,
+    "A": 15,
     "B": 8,
-    "C": 15,
+    "C": 14,
     "capability": 12
    },
    "repo": "https://huggingface.co/h2oai/h2o-lightning-31b",
@@ -77483,13 +77479,13 @@
     "carried_metadata_from": "author model card + config.json",
     "kind": "v1.6.1 addendum a8 (scorer output sha256 7a5b4d4c7b7c, method option B / O1S)"
    },
-   "rank": 13,
+   "rank": 12,
    "ranked": true,
    "ranks": {
-    "A": 13,
-    "B": 22,
-    "C": 12,
-    "capability": 62
+    "A": 12,
+    "B": 21,
+    "C": 11,
+    "capability": 61
    },
    "repo": "https://huggingface.co/h2oai/h2o-lightning-4b",
    "repriced_in": "v1.6.37",
@@ -77857,12 +77853,13 @@
    "key": "h2o-lightning-4b-v1.4.1",
    "last_measured_on": "2026-10-27",
    "licence": "Apache-2.0 (HF metadata and LICENSE), public, not gated",
-   "listing": "ranked",
+   "listing": "unranked",
    "measured_in": "v1.7.13",
    "measurement_date_status": "measured",
    "method": "v1.7",
    "model_pin": "h2oai/h2o-lightning-4b@cc18ee330e6895c41b9a60f37a0dd122dc4c3461",
    "new_in": "v1.7.13",
+   "not_ranked_because": "Measured on the 27 Oct 2026 draw, which has no anchor runs yet, so its scores are not yet on the reference scale. This draw differs strongly from earlier draws (72% multilingual items). On the 300 public items every draw shares, this version scores 57.2 Intelligence vs 61.1 for H2O-Lightning-4B v1.1; its higher overall Intelligence comes from this draw's sealed items. Shown unranked until the draw's anchor runs are complete.",
    "noul_decisive": {
     "acc_among_decisive": 0.8933333333333333,
     "decisive": 375,
@@ -77873,13 +77870,13 @@
    },
    "paid_fast_lane": true,
    "planned_weight_denominator": 1.0,
-   "rank": 7,
-   "ranked": true,
+   "rank": null,
+   "ranked": false,
    "ranks": {
-    "A": 7,
-    "B": 12,
-    "C": 6,
-    "capability": 50
+    "A": null,
+    "B": null,
+    "C": null,
+    "capability": null
    },
    "repo": "https://huggingface.co/h2oai/h2o-lightning-4b",
    "scores": {
@@ -79295,13 +79292,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 135,
+   "rank": 134,
    "ranked": true,
    "ranks": {
-    "A": 135,
-    "B": 139,
-    "C": 151,
-    "capability": 158
+    "A": 134,
+    "B": 138,
+    "C": 150,
+    "capability": 157
    },
    "repo": "https://huggingface.co/HopitAI/hopper",
    "rescored_in": "v1.7.0",
@@ -79733,13 +79730,13 @@
     "carried_metadata_from": "Pinned author release; add-requests r61/score/withrows/REGISTRY.json measurement record",
     "kind": "v1.6.1 addendum a11 (scorer output sha256 4d2833926c2d, method option B / O1S)"
    },
-   "rank": 62,
+   "rank": 61,
    "ranked": true,
    "ranks": {
-    "A": 62,
-    "B": 64,
-    "C": 70,
-    "capability": 114
+    "A": 61,
+    "B": 63,
+    "C": 69,
+    "capability": 113
    },
    "repo": "https://huggingface.co/HopitAI/hopper",
    "rescored_in": "v1.7.0",
@@ -80179,13 +80176,13 @@
      "Intelligence only": 51.66752129933851
     }
    },
-   "rank": 72,
+   "rank": 71,
    "ranked": true,
    "ranks": {
-    "A": 72,
-    "B": 71,
-    "C": 73,
-    "capability": 131
+    "A": 71,
+    "B": 70,
+    "C": 72,
+    "capability": 130
    },
    "repo": "https://www.hyland.com",
    "rescored_in": "v1.7.0",
@@ -81595,13 +81592,13 @@
      "Intelligence only": 3.789999234949207
     }
    },
-   "rank": 213,
+   "rank": 212,
    "ranked": true,
    "ranks": {
-    "A": 213,
-    "B": 214,
-    "C": 215,
-    "capability": 201
+    "A": 212,
+    "B": 213,
+    "C": 214,
+    "capability": 200
    },
    "repo": "https://huggingface.co/mohit67890/imajev-2b",
    "rescored_in": "v1.7.0",
@@ -83003,13 +83000,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 131,
+   "rank": 130,
    "ranked": true,
    "ranks": {
-    "A": 131,
-    "B": 132,
-    "C": 144,
-    "capability": 147
+    "A": 130,
+    "B": 131,
+    "C": 143,
+    "capability": 146
    },
    "repo": "https://github.com/fstandhartinger/jevbench/issues/110",
    "rescored_in": "v1.7.0",
@@ -83448,13 +83445,13 @@
      "Intelligence only": 7.519195208738335
     }
    },
-   "rank": 206,
+   "rank": 205,
    "ranked": true,
    "ranks": {
-    "A": 206,
-    "B": 204,
-    "C": 207,
-    "capability": 146
+    "A": 205,
+    "B": 203,
+    "C": 206,
+    "capability": 145
    },
    "repo": "https://huggingface.co/mohit67890/imajev-9b",
    "rescored_in": "v1.7.0",
@@ -84798,13 +84795,13 @@
     },
     "views": null
    },
-   "rank": 70,
+   "rank": 69,
    "ranked": true,
    "ranks": {
-    "A": 70,
-    "B": 74,
-    "C": 80,
-    "capability": 94
+    "A": 69,
+    "B": 73,
+    "C": 79,
+    "capability": 93
    },
    "repo": "https://github.com/fstandhartinger/jevbench/issues/69",
    "rescored_in": "v1.7.0",
@@ -85050,13 +85047,13 @@
     },
     "views": null
    },
-   "rank": 173,
+   "rank": 172,
    "ranked": true,
    "ranks": {
-    "A": 173,
-    "B": 181,
-    "C": 177,
-    "capability": 177
+    "A": 172,
+    "B": 180,
+    "C": 176,
+    "capability": 176
    },
    "repo": "https://github.com/fstandhartinger/jevbench/issues/123",
    "rescored_in": "v1.7.0",
@@ -85372,13 +85369,13 @@
      "Intelligence only": 10.17945694092124
     }
    },
-   "rank": 165,
+   "rank": 164,
    "ranked": true,
    "ranks": {
-    "A": 165,
-    "B": 175,
-    "C": 172,
-    "capability": 180
+    "A": 164,
+    "B": 174,
+    "C": 171,
+    "capability": 179
    },
    "repo": "https://huggingface.co/macrocosm-os/iota-decide-4b",
    "rescored_in": "v1.7.0",
@@ -86729,13 +86726,13 @@
    },
    "paid_fast_lane": true,
    "planned_weight_denominator": 1.0,
-   "rank": 41,
+   "rank": 40,
    "ranked": true,
    "ranks": {
-    "A": 41,
-    "B": 54,
-    "C": 60,
-    "capability": 110
+    "A": 40,
+    "B": 53,
+    "C": 59,
+    "capability": 109
    },
    "repo": "https://huggingface.co/macrocosm-os/iota-decide-4b-v0.3",
    "scores": {
@@ -88130,13 +88127,13 @@
     "carried_metadata_from": "author model card + config.json",
     "kind": "v1.6.1 addendum a6 (scorer output sha256 9d512dc13d7d, method option B / O1S)"
    },
-   "rank": 161,
+   "rank": 160,
    "ranked": true,
    "ranks": {
-    "A": 161,
-    "B": 160,
-    "C": 169,
-    "capability": 212
+    "A": 160,
+    "B": 159,
+    "C": 168,
+    "capability": 211
    },
    "repo": "https://huggingface.co/theunnecessarythings/JADE",
    "rescored_in": "v1.7.0",
@@ -88564,13 +88561,13 @@
     "carried_metadata_from": "run 47 author metadata + current P83 staged pin/measurement receipt",
     "kind": "v1.6.1 addendum a11 (scorer output sha256 4d2833926c2d, method option B / O1S)"
    },
-   "rank": 117,
+   "rank": 116,
    "ranked": true,
    "ranks": {
-    "A": 117,
-    "B": 120,
-    "C": 119,
-    "capability": 142
+    "A": 116,
+    "B": 119,
+    "C": 118,
+    "capability": 141
    },
    "repo": "https://huggingface.co/cmxu/janus-4b",
    "rescored_in": "v1.7.0",
@@ -89009,13 +89006,13 @@
      "Intelligence only": 10.816061538150686
     }
    },
-   "rank": 176,
+   "rank": 175,
    "ranked": true,
    "ranks": {
-    "A": 176,
-    "B": 177,
-    "C": 180,
-    "capability": 155
+    "A": 175,
+    "B": 176,
+    "C": 179,
+    "capability": 154
    },
    "repo": "https://huggingface.co/szybkie-ai/jeb-35b-a3b",
    "rescored_in": "v1.7.0",
@@ -90421,13 +90418,13 @@
     "carried_metadata_from": "author model card + config.json",
     "kind": "v1.6.1 addendum a6 (scorer output sha256 9d512dc13d7d, method option B / O1S)"
    },
-   "rank": 164,
+   "rank": 163,
    "ranked": true,
    "ranks": {
-    "A": 164,
-    "B": 161,
-    "C": 154,
-    "capability": 97
+    "A": 163,
+    "B": 160,
+    "C": 153,
+    "capability": 96
    },
    "repo": "https://huggingface.co/frontier-infra/jebadiah-27b",
    "rescored_in": "v1.7.0",
@@ -90866,13 +90863,13 @@
      "Intelligence only": 10.92887170611703
     }
    },
-   "rank": 167,
+   "rank": 166,
    "ranked": true,
    "ranks": {
-    "A": 167,
-    "B": 174,
-    "C": 173,
-    "capability": 182
+    "A": 166,
+    "B": 173,
+    "C": 172,
+    "capability": 181
    },
    "repo": "https://huggingface.co/frontier-infra/jebadiah-9b-v2",
    "rescored_in": "v1.7.0",
@@ -92285,13 +92282,13 @@
      "Intelligence only": 19.581330456126626
     }
    },
-   "rank": 126,
+   "rank": 125,
    "ranked": true,
    "ranks": {
-    "A": 126,
-    "B": 127,
-    "C": 132,
-    "capability": 139
+    "A": 125,
+    "B": 126,
+    "C": 131,
+    "capability": 138
    },
    "repo": "https://huggingface.co/frontier-infra/jebadiah-9b-v2-1",
    "rescored_in": "v1.7.0",
@@ -93647,13 +93644,13 @@
    },
    "paid_fast_lane": false,
    "planned_weight_denominator": 1.0,
-   "rank": 236,
+   "rank": 235,
    "ranked": true,
    "ranks": {
-    "A": 236,
-    "B": 236,
-    "C": 236,
-    "capability": 242
+    "A": 235,
+    "B": 235,
+    "C": 235,
+    "capability": 241
    },
    "repo": "https://huggingface.co/Jeetu456/decider-2b",
    "scores": {
@@ -95056,12 +95053,12 @@
      "Intelligence only": 69.62097236625647
     }
    },
-   "rank": 47,
+   "rank": 46,
    "ranked": true,
    "ranks": {
-    "A": 47,
-    "B": 32,
-    "C": 38,
+    "A": 46,
+    "B": 31,
+    "C": 37,
     "capability": 25
    },
    "repo": "https://huggingface.co/jgeuter/Jeff-1.0-Large",
@@ -96409,12 +96406,12 @@
    },
    "paid_fast_lane": false,
    "planned_weight_denominator": 1.0,
-   "rank": 31,
+   "rank": 30,
    "ranked": true,
    "ranks": {
-    "A": 31,
-    "B": 17,
-    "C": 27,
+    "A": 30,
+    "B": 16,
+    "C": 26,
     "capability": 21
    },
    "repo": "https://huggingface.co/jgeuter/Jeff-1.1-Medium",
@@ -97770,12 +97767,12 @@
    },
    "paid_fast_lane": false,
    "planned_weight_denominator": 1.0,
-   "rank": 85,
+   "rank": 84,
    "ranked": true,
    "ranks": {
-    "A": 85,
-    "B": 81,
-    "C": 69,
+    "A": 84,
+    "B": 80,
+    "C": 68,
     "capability": 24
    },
    "repo": "https://huggingface.co/tattrongvu/Jeffan-31b-1710",
@@ -99132,13 +99129,13 @@
    },
    "paid_fast_lane": false,
    "planned_weight_denominator": 1.0,
-   "rank": 102,
+   "rank": 101,
    "ranked": true,
    "ranks": {
-    "A": 102,
-    "B": 106,
-    "C": 107,
-    "capability": 134
+    "A": 101,
+    "B": 105,
+    "C": 106,
+    "capability": 133
    },
    "repo": "https://huggingface.co/tattrongvu/Jeffan-4B-2010",
    "scores": {
@@ -100544,12 +100541,12 @@
     "carried_metadata_from": "v1.6.0 release row",
     "kind": "v1.6.1 full-set re-score (score-v161-3/out-O1S, O1S, hosted API on S u P, not equated)"
    },
-   "rank": 23,
+   "rank": 22,
    "ranked": true,
    "ranks": {
-    "A": 23,
-    "B": 27,
-    "C": 21,
+    "A": 22,
+    "B": 26,
+    "C": 20,
     "capability": 49
    },
    "repo": "https://docs.typesafe.ai",
@@ -100986,13 +100983,13 @@
      "Intelligence only": 59.94298184843013
     }
    },
-   "rank": 34,
+   "rank": 33,
    "ranked": true,
    "ranks": {
-    "A": 34,
-    "B": 37,
-    "C": 29,
-    "capability": 61
+    "A": 33,
+    "B": 36,
+    "C": 28,
+    "capability": 60
    },
    "repo": "https://docs.typesafe.ai/models",
    "rescored_in": "v1.7.0",
@@ -102394,13 +102391,13 @@
     "carried_metadata_from": "author model card + config.json",
     "kind": "v1.6.1 addendum a6 (scorer output sha256 9d512dc13d7d, method option B / O1S)"
    },
-   "rank": 150,
+   "rank": 149,
    "ranked": true,
    "ranks": {
-    "A": 150,
-    "B": 150,
-    "C": 146,
-    "capability": 66
+    "A": 149,
+    "B": 149,
+    "C": 145,
+    "capability": 65
    },
    "repo": "https://huggingface.co/autotrust/JEV-27B",
    "rescored_in": "v1.7.0",
@@ -102828,13 +102825,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 103,
+   "rank": 102,
    "ranked": true,
    "ranks": {
-    "A": 103,
-    "B": 103,
-    "C": 108,
-    "capability": 176
+    "A": 102,
+    "B": 102,
+    "C": 107,
+    "capability": 175
    },
    "repo": "https://github.com/us/jev-local",
    "rescored_in": "v1.7.0",
@@ -103262,13 +103259,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 53,
+   "rank": 52,
    "ranked": true,
    "ranks": {
-    "A": 53,
-    "B": 56,
-    "C": 54,
-    "capability": 85
+    "A": 52,
+    "B": 55,
+    "C": 53,
+    "capability": 84
    },
    "repo": "https://huggingface.co/akhilaaa3/Jev-Omni",
    "rescored_in": "v1.7.0",
@@ -103696,13 +103693,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 184,
+   "rank": 183,
    "ranked": true,
    "ranks": {
-    "A": 184,
-    "B": 185,
-    "C": 185,
-    "capability": 179
+    "A": 183,
+    "B": 184,
+    "C": 184,
+    "capability": 178
    },
    "repo": "https://huggingface.co/WIlfLin/JEV-Qwen3.5-9B-Base-NVFP4",
    "rescored_in": "v1.7.0",
@@ -104072,13 +104069,13 @@
     },
     "views": null
    },
-   "rank": 237,
+   "rank": 236,
    "ranked": true,
    "ranks": {
-    "A": 237,
-    "B": 237,
-    "C": 237,
-    "capability": 270
+    "A": 236,
+    "B": 236,
+    "C": 236,
+    "capability": 269
    },
    "repo": "https://github.com/fstandhartinger/jevbench/issues/66",
    "rescored_in": "v1.7.0",
@@ -104382,13 +104379,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 109,
+   "rank": 108,
    "ranked": true,
    "ranks": {
-    "A": 109,
-    "B": 114,
-    "C": 111,
-    "capability": 132
+    "A": 108,
+    "B": 113,
+    "C": 110,
+    "capability": 131
    },
    "repo": "https://huggingface.co/alibiserikbay/JevK5",
    "rescored_in": "v1.7.0",
@@ -104816,13 +104813,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 120,
+   "rank": 119,
    "ranked": true,
    "ranks": {
-    "A": 120,
-    "B": 125,
-    "C": 123,
-    "capability": 144
+    "A": 119,
+    "B": 124,
+    "C": 122,
+    "capability": 143
    },
    "repo": "https://github.com/allebee/jevk5",
    "rescored_in": "v1.7.0",
@@ -105250,13 +105247,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 124,
+   "rank": 123,
    "ranked": true,
    "ranks": {
-    "A": 124,
-    "B": 122,
-    "C": 127,
-    "capability": 107
+    "A": 123,
+    "B": 121,
+    "C": 126,
+    "capability": 106
    },
    "repo": "https://huggingface.co/juspay/jev-one",
    "rescored_in": "v1.7.0",
@@ -107027,13 +107024,13 @@
    },
    "paid_fast_lane": false,
    "planned_weight_denominator": 1.0,
-   "rank": 193,
+   "rank": 192,
    "ranked": true,
    "ranks": {
-    "A": 193,
-    "B": 196,
-    "C": 195,
-    "capability": 198
+    "A": 192,
+    "B": 195,
+    "C": 194,
+    "capability": 197
    },
    "repo": "https://huggingface.co/pragmaticfrontier/jez-large-1.0.0",
    "scores": {
@@ -108389,13 +108386,13 @@
    },
    "paid_fast_lane": false,
    "planned_weight_denominator": 1.0,
-   "rank": 260,
+   "rank": 259,
    "ranked": true,
    "ranks": {
-    "A": 260,
-    "B": 260,
-    "C": 260,
-    "capability": 232
+    "A": 259,
+    "B": 259,
+    "C": 259,
+    "capability": 231
    },
    "repo": "https://huggingface.co/pragmaticfrontier/jez-small-1.0.0",
    "scores": {
@@ -109804,13 +109801,13 @@
      "Intelligence only": 1.599423855434685
     }
    },
-   "rank": 223,
+   "rank": 222,
    "ranked": true,
    "ranks": {
-    "A": 223,
-    "B": 225,
-    "C": 224,
-    "capability": 221
+    "A": 222,
+    "B": 224,
+    "C": 223,
+    "capability": 220
    },
    "repo": "https://huggingface.co/eljiwo/jiwo-0.8b",
    "rescored_in": "v1.7.0",
@@ -111217,13 +111214,13 @@
      "Intelligence only": 16.835004451338282
     }
    },
-   "rank": 130,
+   "rank": 129,
    "ranked": true,
    "ranks": {
-    "A": 130,
-    "B": 131,
-    "C": 143,
-    "capability": 162
+    "A": 129,
+    "B": 130,
+    "C": 142,
+    "capability": 161
    },
    "repo": "https://huggingface.co/eljiwo/jiwo-4b",
    "rescored_in": "v1.7.0",
@@ -112627,13 +112624,13 @@
     "carried_metadata_from": "author model card + config.json",
     "kind": "v1.6.1 addendum a6 (scorer output sha256 9d512dc13d7d, method option B / O1S)"
    },
-   "rank": 138,
+   "rank": 137,
    "ranked": true,
    "ranks": {
-    "A": 138,
-    "B": 133,
-    "C": 150,
-    "capability": 92
+    "A": 137,
+    "B": 132,
+    "C": 149,
+    "capability": 91
    },
    "repo": "https://huggingface.co/kirp/jpt-35b-a3b",
    "rescored_in": "v1.7.0",
@@ -113072,13 +113069,13 @@
      "Intelligence only": 27.06799772975727
     }
    },
-   "rank": 97,
+   "rank": 96,
    "ranked": true,
    "ranks": {
-    "A": 97,
-    "B": 104,
-    "C": 103,
-    "capability": 136
+    "A": 96,
+    "B": 103,
+    "C": 102,
+    "capability": 135
    },
    "repo": "https://huggingface.co/kirp/jpt-4b",
    "rescored_in": "v1.7.0",
@@ -114480,13 +114477,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 137,
+   "rank": 136,
    "ranked": true,
    "ranks": {
-    "A": 137,
-    "B": 142,
-    "C": 155,
-    "capability": 148
+    "A": 136,
+    "B": 141,
+    "C": 154,
+    "capability": 147
    },
    "repo": "https://github.com/Octalab-Inc/jqv",
    "rescored_in": "v1.7.0",
@@ -114918,13 +114915,13 @@
     "carried_metadata_from": "Pinned author release; add-requests r61/score/withrows/REGISTRY.json measurement record",
     "kind": "v1.6.1 addendum a11 (scorer output sha256 4d2833926c2d, method option B / O1S)"
    },
-   "rank": 244,
+   "rank": 243,
    "ranked": true,
    "ranks": {
-    "A": 244,
-    "B": 245,
-    "C": 244,
-    "capability": 238
+    "A": 243,
+    "B": 244,
+    "C": 243,
+    "capability": 237
    },
    "repo": "https://huggingface.co/usejul/jul-decision-minicpm5-2b",
    "rescored_in": "v1.7.0",
@@ -115363,13 +115360,13 @@
      "Intelligence only": 0.005819814930094012
     }
    },
-   "rank": 269,
+   "rank": 268,
    "ranked": true,
    "ranks": {
-    "A": 269,
-    "B": 269,
-    "C": 269,
-    "capability": 279
+    "A": 268,
+    "B": 268,
+    "C": 268,
+    "capability": 278
    },
    "repo": "https://huggingface.co/SupersonicLabs/Julia-1",
    "rescored_in": "v1.7.0",
@@ -116786,13 +116783,13 @@
     "carried_metadata_from": "author model card + config.json",
     "kind": "v1.6.1 addendum a8 (scorer output sha256 7a5b4d4c7b7c, method option B / O1S)"
    },
-   "rank": 113,
+   "rank": 112,
    "ranked": true,
    "ranks": {
-    "A": 113,
-    "B": 110,
-    "C": 115,
-    "capability": 151
+    "A": 112,
+    "B": 109,
+    "C": 114,
+    "capability": 150
    },
    "repo": "https://huggingface.co/Okura66/Kahn1-Qwen3.5-4B",
    "repriced_in": "v1.6.37",
@@ -117234,13 +117231,13 @@
      "Intelligence only": 62.182714942969874
     }
    },
-   "rank": 15,
+   "rank": 14,
    "ranked": true,
    "ranks": {
-    "A": 15,
-    "B": 20,
-    "C": 14,
-    "capability": 74
+    "A": 14,
+    "B": 19,
+    "C": 13,
+    "capability": 73
    },
    "repo": "https://docs.sqwish.ai",
    "rescored_in": "v1.7.0",
@@ -120054,13 +120051,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 259,
+   "rank": 258,
    "ranked": true,
    "ranks": {
-    "A": 259,
-    "B": 259,
-    "C": 259,
-    "capability": 260
+    "A": 258,
+    "B": 258,
+    "C": 258,
+    "capability": 259
    },
    "repo": "https://github.com/jaredpalmer/kev",
    "rescored_in": "v1.7.0",
@@ -120488,13 +120485,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 243,
+   "rank": 242,
    "ranked": true,
    "ranks": {
-    "A": 243,
-    "B": 243,
-    "C": 243,
-    "capability": 251
+    "A": 242,
+    "B": 242,
+    "C": 242,
+    "capability": 250
    },
    "repo": "https://github.com/jaredpalmer/kev",
    "rescored_in": "v1.7.0",
@@ -120926,12 +120923,12 @@
     "carried_metadata_from": "author model card + config.json",
     "kind": "v1.6.1 addendum a6 (scorer output sha256 9d512dc13d7d, method option B / O1S)"
    },
-   "rank": 220,
+   "rank": 219,
    "ranked": true,
    "ranks": {
-    "A": 220,
-    "B": 216,
-    "C": 214,
+    "A": 219,
+    "B": 215,
+    "C": 213,
     "capability": 38
    },
    "repo": "https://huggingface.co/jaredpalmer/kev-27b",
@@ -121360,13 +121357,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 218,
+   "rank": 217,
    "ranked": true,
    "ranks": {
-    "A": 218,
-    "B": 221,
-    "C": 219,
-    "capability": 229
+    "A": 217,
+    "B": 220,
+    "C": 218,
+    "capability": 228
    },
    "repo": "https://github.com/jaredpalmer/kev",
    "rescored_in": "v1.7.0",
@@ -121794,13 +121791,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 203,
+   "rank": 202,
    "ranked": true,
    "ranks": {
-    "A": 203,
-    "B": 203,
-    "C": 203,
-    "capability": 209
+    "A": 202,
+    "B": 202,
+    "C": 202,
+    "capability": 208
    },
    "repo": "https://github.com/jaredpalmer/kev",
    "rescored_in": "v1.7.0",
@@ -123565,13 +123562,13 @@
    },
    "paid_fast_lane": false,
    "planned_weight_denominator": 1.0,
-   "rank": 112,
+   "rank": 111,
    "ranked": true,
    "ranks": {
-    "A": 112,
-    "B": 111,
-    "C": 114,
-    "capability": 140
+    "A": 111,
+    "B": 110,
+    "C": 113,
+    "capability": 139
    },
    "repo": "https://huggingface.co/knowledgator/gliclass-v4-9b",
    "scores": {
@@ -124926,12 +124923,12 @@
    },
    "paid_fast_lane": false,
    "planned_weight_denominator": 1.0,
-   "rank": 90,
+   "rank": 89,
    "ranked": true,
    "ranks": {
-    "A": 90,
-    "B": 86,
-    "C": 76,
+    "A": 89,
+    "B": 85,
+    "C": 75,
     "capability": 8
    },
    "repo": "https://huggingface.co/PelaAI/KnowLine-31B-Gen1",
@@ -126288,13 +126285,13 @@
    },
    "paid_fast_lane": false,
    "planned_weight_denominator": 1.0,
-   "rank": 197,
+   "rank": 196,
    "ranked": true,
    "ranks": {
-    "A": 197,
-    "B": 190,
-    "C": 178,
-    "capability": 56
+    "A": 196,
+    "B": 189,
+    "C": 177,
+    "capability": 55
    },
    "repo": "https://huggingface.co/PelaAI/KnowLine-35B-A3B-Gen1.5",
    "scores": {
@@ -127707,13 +127704,13 @@
      "Intelligence only": 4.258556788204026
     }
    },
-   "rank": 211,
+   "rank": 210,
    "ranked": true,
    "ranks": {
-    "A": 211,
-    "B": 212,
-    "C": 212,
-    "capability": 239
+    "A": 210,
+    "B": 211,
+    "C": 211,
+    "capability": 238
    },
    "repo": "https://huggingface.co/Guru0381/krino-2b",
    "rescored_in": "v1.7.0",
@@ -129057,13 +129054,13 @@
     },
     "views": null
    },
-   "rank": 105,
+   "rank": 104,
    "ranked": true,
    "ranks": {
-    "A": 105,
-    "B": 98,
-    "C": 89,
-    "capability": 76
+    "A": 104,
+    "B": 97,
+    "C": 88,
+    "capability": 75
    },
    "repo": "https://benchmarkheaven.com/jev-models/kushal-gemma4-31b-it-autoloops",
    "rescored_in": "v1.7.0",
@@ -129383,9 +129380,9 @@
    "ranked": true,
    "ranks": {
     "A": 2,
-    "B": 13,
-    "C": 23,
-    "capability": 93
+    "B": 12,
+    "C": 22,
+    "capability": 92
    },
    "repo": "https://www.launchables.ai/licensing",
    "rescored_in": "v1.7.0",
@@ -130796,12 +130793,12 @@
      "Intelligence only": 73.64186833978687
     }
    },
-   "rank": 29,
+   "rank": 28,
    "ranked": true,
    "ranks": {
-    "A": 29,
-    "B": 18,
-    "C": 25,
+    "A": 28,
+    "B": 17,
+    "C": 24,
     "capability": 40
    },
    "repo": "https://www.launchables.ai/licensing",
@@ -132201,13 +132198,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 272,
+   "rank": 271,
    "ranked": true,
    "ranks": {
-    "A": 272,
-    "B": 272,
-    "C": 272,
-    "capability": 262
+    "A": 271,
+    "B": 271,
+    "C": 271,
+    "capability": 261
    },
    "repo": "https://huggingface.co/convaiinnovations/laya",
    "rescored_in": "v1.7.0",
@@ -132634,13 +132631,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 274,
+   "rank": 273,
    "ranked": true,
    "ranks": {
-    "A": 274,
-    "B": 274,
-    "C": 274,
-    "capability": 277
+    "A": 273,
+    "B": 273,
+    "C": 273,
+    "capability": 276
    },
    "repo": "https://huggingface.co/convaiinnovations/laya/tree/1c5edc17a7acd8701df6fc341c0d179f1c62c982/multilingual",
    "rescored_in": "v1.7.0",
@@ -133067,13 +133064,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 252,
+   "rank": 251,
    "ranked": true,
    "ranks": {
-    "A": 252,
-    "B": 252,
-    "C": 252,
-    "capability": 227
+    "A": 251,
+    "B": 251,
+    "C": 251,
+    "capability": 226
    },
    "repo": "https://huggingface.co/convaiinnovations/laya/tree/1c5edc17a7acd8701df6fc341c0d179f1c62c982/typed-decisions",
    "rescored_in": "v1.7.0",
@@ -133501,13 +133498,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 98,
+   "rank": 97,
    "ranked": true,
    "ranks": {
-    "A": 98,
-    "B": 102,
-    "C": 104,
-    "capability": 153
+    "A": 97,
+    "B": 101,
+    "C": 103,
+    "capability": 152
    },
    "repo": "https://huggingface.co/interfaze-ai/lev",
    "rescored_in": "v1.7.0",
@@ -133935,13 +133932,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 257,
+   "rank": 256,
    "ranked": true,
    "ranks": {
-    "A": 257,
-    "B": 258,
-    "C": 257,
-    "capability": 231
+    "A": 256,
+    "B": 257,
+    "C": 256,
+    "capability": 230
    },
    "repo": "https://github.com/franckverrot/lev",
    "rescored_in": "v1.7.0",
@@ -134367,13 +134364,13 @@
      "Intelligence only": 62.05738930369758
     }
    },
-   "rank": 18,
+   "rank": 17,
    "ranked": true,
    "ranks": {
-    "A": 18,
-    "B": 23,
-    "C": 17,
-    "capability": 64
+    "A": 17,
+    "B": 22,
+    "C": 16,
+    "capability": 63
    },
    "repo": "https://www.liquid.ai/blog/d1-decision-model",
    "rescored_in": "v1.7.0",
@@ -134804,13 +134801,13 @@
      "Intelligence only": 4.340556958274228
     }
    },
-   "rank": 210,
+   "rank": 209,
    "ranked": true,
    "ranks": {
-    "A": 210,
-    "B": 211,
-    "C": 211,
-    "capability": 210
+    "A": 209,
+    "B": 210,
+    "C": 210,
+    "capability": 209
    },
    "repo": "https://huggingface.co/LiquidAI/d1-3B",
    "rescored_in": "v1.7.0",
@@ -136217,13 +136214,13 @@
      "Intelligence only": 0.013878616661020313
     }
    },
-   "rank": 266,
+   "rank": 265,
    "ranked": true,
    "ranks": {
-    "A": 266,
-    "B": 266,
-    "C": 266,
-    "capability": 261
+    "A": 265,
+    "B": 265,
+    "C": 265,
+    "capability": 260
    },
    "repo": "https://huggingface.co/LiquidAI/d1-omni-600M",
    "rescored_in": "v1.7.0",
@@ -139038,13 +139035,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 199,
+   "rank": 198,
    "ranked": true,
    "ranks": {
-    "A": 199,
-    "B": 198,
-    "C": 200,
-    "capability": 121
+    "A": 198,
+    "B": 197,
+    "C": 199,
+    "capability": 120
    },
    "repo": "https://github.com/zhengxuyu/litjev",
    "rescored_in": "v1.7.0",
@@ -139472,13 +139469,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 200,
+   "rank": 199,
    "ranked": true,
    "ranks": {
-    "A": 200,
-    "B": 202,
-    "C": 201,
-    "capability": 196
+    "A": 199,
+    "B": 201,
+    "C": 200,
+    "capability": 195
    },
    "repo": "https://github.com/amithgc/local-jev",
    "rescored_in": "v1.7.0",
@@ -139860,13 +139857,13 @@
    },
    "paid_fast_lane": false,
    "planned_weight_denominator": 1.0,
-   "rank": 221,
+   "rank": 220,
    "ranked": true,
    "ranks": {
-    "A": 221,
-    "B": 220,
-    "C": 220,
-    "capability": 79
+    "A": 220,
+    "B": 219,
+    "C": 219,
+    "capability": 78
    },
    "repo": "https://huggingface.co/FrontiersMind/Lumma-fev-27B",
    "scores": {
@@ -141268,13 +141265,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 224,
+   "rank": 223,
    "ranked": true,
    "ranks": {
-    "A": 224,
-    "B": 227,
-    "C": 225,
-    "capability": 218
+    "A": 223,
+    "B": 226,
+    "C": 224,
+    "capability": 217
    },
    "repo": "https://github.com/newfull5/malkuth",
    "rescored_in": "v1.7.0",
@@ -141702,13 +141699,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 136,
+   "rank": 135,
    "ranked": true,
    "ranks": {
-    "A": 136,
-    "B": 140,
-    "C": 152,
-    "capability": 159
+    "A": 135,
+    "B": 139,
+    "C": 151,
+    "capability": 158
    },
    "repo": "https://github.com/newfull5/malkuth",
    "rescored_in": "v1.7.0",
@@ -142090,12 +142087,12 @@
    },
    "paid_fast_lane": false,
    "planned_weight_denominator": 1.0,
-   "rank": 101,
+   "rank": 100,
    "ranked": true,
    "ranks": {
-    "A": 101,
-    "B": 93,
-    "C": 83,
+    "A": 100,
+    "B": 92,
+    "C": 82,
     "capability": 7
    },
    "repo": "https://huggingface.co/baselabs/mammoth-1",
@@ -143497,13 +143494,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 141,
+   "rank": 140,
    "ranked": true,
    "ranks": {
-    "A": 141,
-    "B": 153,
-    "C": 159,
-    "capability": 173
+    "A": 140,
+    "B": 152,
+    "C": 158,
+    "capability": 172
    },
    "repo": "https://github.com/nschlaepfer/manchego-serve",
    "rescored_in": "v1.7.0",
@@ -143935,13 +143932,13 @@
     "carried_metadata_from": "Current-pool API measurement registry",
     "kind": "v1.6.1 addendum a12 (scorer output sha256 4d2833926c2d, method option B / O1S)"
    },
-   "rank": 19,
+   "rank": 18,
    "ranked": true,
    "ranks": {
-    "A": 19,
-    "B": 19,
-    "C": 18,
-    "capability": 68
+    "A": 18,
+    "B": 18,
+    "C": 17,
+    "capability": 67
    },
    "repo": "https://openrouter.ai/inception/mercury-decide:free",
    "rescored_in": "v1.7.0",
@@ -144370,13 +144367,13 @@
     "carried_metadata_from": "Pinned author release; add-requests r61/score/withrows/REGISTRY.json measurement record",
     "kind": "v1.6.1 addendum a11 (scorer output sha256 4d2833926c2d, method option B / O1S)"
    },
-   "rank": 88,
+   "rank": 87,
    "ranked": true,
    "ranks": {
-    "A": 88,
-    "B": 96,
-    "C": 96,
-    "capability": 174
+    "A": 87,
+    "B": 95,
+    "C": 95,
+    "capability": 173
    },
    "repo": "https://huggingface.co/agentmessier/messier-one",
    "rescored_in": "v1.7.0",
@@ -144815,13 +144812,13 @@
      "Intelligence only": 52.02542301918905
     }
    },
-   "rank": 60,
+   "rank": 59,
    "ranked": true,
    "ranks": {
-    "A": 60,
-    "B": 63,
-    "C": 67,
-    "capability": 145
+    "A": 59,
+    "B": 62,
+    "C": 66,
+    "capability": 144
    },
    "repo": "https://huggingface.co/agentmessier/messier-one",
    "rescored_in": "v1.7.0",
@@ -146223,13 +146220,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 110,
+   "rank": 109,
    "ranked": true,
    "ranks": {
-    "A": 110,
-    "B": 112,
-    "C": 112,
-    "capability": 150
+    "A": 109,
+    "B": 111,
+    "C": 111,
+    "capability": 149
    },
    "repo": "https://github.com/metask-ai/metask-jev",
    "rescored_in": "v1.7.0",
@@ -146658,13 +146655,13 @@
      "Intelligence only": 51.08240263971605
     }
    },
-   "rank": 67,
+   "rank": 66,
    "ranked": true,
    "ranks": {
-    "A": 67,
-    "B": 67,
-    "C": 74,
-    "capability": 125
+    "A": 66,
+    "B": 66,
+    "C": 73,
+    "capability": 124
    },
    "repo": "https://huggingface.co/wayfind/metask-jev-4b-policy-mix",
    "rescored_in": "v1.7.0",
@@ -149483,13 +149480,13 @@
      "Intelligence only": 67.8255189476327
     }
    },
-   "rank": 55,
+   "rank": 54,
    "ranked": true,
    "ranks": {
-    "A": 55,
-    "B": 44,
-    "C": 45,
-    "capability": 53
+    "A": 54,
+    "B": 43,
+    "C": 44,
+    "capability": 52
    },
    "repo": "https://huggingface.co/MeTask-Rain/metask-jev-rain-12B-trained",
    "rescored_in": "v1.7.0",
@@ -150902,12 +150899,12 @@
      "Intelligence only": 70.71905450578407
     }
    },
-   "rank": 37,
+   "rank": 36,
    "ranked": true,
    "ranks": {
-    "A": 37,
-    "B": 26,
-    "C": 31,
+    "A": 36,
+    "B": 25,
+    "C": 30,
     "capability": 39
    },
    "repo": "https://huggingface.co/MeTask-Rain/metask-jev-rain-31B-trained",
@@ -152321,12 +152318,12 @@
      "Intelligence only": 70.5102505244786
     }
    },
-   "rank": 63,
+   "rank": 62,
    "ranked": true,
    "ranks": {
-    "A": 63,
-    "B": 50,
-    "C": 47,
+    "A": 62,
+    "B": 49,
+    "C": 46,
     "capability": 35
    },
    "repo": "https://huggingface.co/MeTask-Rain/metask-jev-rain-31B-trained",
@@ -154152,13 +154149,13 @@
     },
     "views": null
    },
-   "rank": 42,
+   "rank": 41,
    "ranked": true,
    "ranks": {
-    "A": 42,
-    "B": 51,
-    "C": 50,
-    "capability": 90
+    "A": 41,
+    "B": 50,
+    "C": 49,
+    "capability": 89
    },
    "repo": "https://commandline.microsoft.com/microsoft-decision-1-model-foundry/",
    "rescored_in": "v1.7.0",
@@ -155981,13 +155978,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 279,
+   "rank": 278,
    "ranked": true,
    "ranks": {
-    "A": 279,
-    "B": 279,
-    "C": 279,
-    "capability": 272
+    "A": 278,
+    "B": 278,
+    "C": 278,
+    "capability": 271
    },
    "repo": "https://github.com/Bluusun/Decision-API",
    "rescored_in": "v1.7.0",
@@ -157813,13 +157810,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 273,
+   "rank": 272,
    "ranked": true,
    "ranks": {
-    "A": 273,
-    "B": 273,
-    "C": 273,
-    "capability": 230
+    "A": 272,
+    "B": 272,
+    "C": 272,
+    "capability": 229
    },
    "repo": "https://huggingface.co/mixedbread-ai/mxbai-rerank-base-v2",
    "rescored_in": "v1.7.0",
@@ -158258,13 +158255,13 @@
      "Intelligence only": 22.442101625156123
     }
    },
-   "rank": 162,
+   "rank": 161,
    "ranked": true,
    "ranks": {
-    "A": 162,
-    "B": 157,
-    "C": 145,
-    "capability": 67
+    "A": 161,
+    "B": 156,
+    "C": 144,
+    "capability": 66
    },
    "repo": "https://huggingface.co/nagisanzeninz/Nagi-ENORMOUS",
    "rescored_in": "v1.7.0",
@@ -162444,13 +162441,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 215,
+   "rank": 214,
    "ranked": true,
    "ranks": {
-    "A": 215,
-    "B": 217,
-    "C": 217,
-    "capability": 220
+    "A": 214,
+    "B": 216,
+    "C": 216,
+    "capability": 219
    },
    "repo": "https://github.com/pst2154/Nemotron_Jev",
    "rescored_in": "v1.7.0",
@@ -164282,13 +164279,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 152,
+   "rank": 151,
    "ranked": true,
    "ranks": {
-    "A": 152,
-    "B": 159,
-    "C": 167,
-    "capability": 187
+    "A": 151,
+    "B": 158,
+    "C": 166,
+    "capability": 186
    },
    "repo": "https://github.com/bespokelabsai/nimble",
    "rescored_in": "v1.7.0",
@@ -164728,13 +164725,13 @@
      "Intelligence only": 28.393660603216478
     }
    },
-   "rank": 94,
+   "rank": 93,
    "ranked": true,
    "ranks": {
-    "A": 94,
-    "B": 100,
-    "C": 101,
-    "capability": 133
+    "A": 93,
+    "B": 99,
+    "C": 100,
+    "capability": 132
    },
    "repo": "https://bespokelabs.ai",
    "repriced_in": "v1.6.23",
@@ -166144,12 +166141,12 @@
      "Intelligence only": 68.18491883484498
     }
    },
-   "rank": 10,
+   "rank": 9,
    "ranked": true,
    "ranks": {
-    "A": 10,
+    "A": 9,
     "B": 11,
-    "C": 9,
+    "C": 8,
     "capability": 34
    },
    "repo": "https://bespokelabs.ai",
@@ -167503,12 +167500,12 @@
    },
    "paid_fast_lane": false,
    "planned_weight_denominator": 1.0,
-   "rank": 153,
+   "rank": 152,
    "ranked": true,
    "ranks": {
-    "A": 153,
-    "B": 147,
-    "C": 135,
+    "A": 152,
+    "B": 146,
+    "C": 134,
     "capability": 28
    },
    "repo": "https://huggingface.co/bespokelabs/Nimble-v4-max",
@@ -168911,13 +168908,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 174,
+   "rank": 173,
    "ranked": true,
    "ranks": {
-    "A": 174,
-    "B": 168,
-    "C": 171,
-    "capability": 116
+    "A": 173,
+    "B": 167,
+    "C": 170,
+    "capability": 115
    },
    "repo": "https://github.com/igorls/ninfer",
    "rescored_in": "v1.7.0",
@@ -169345,13 +169342,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 99,
+   "rank": 98,
    "ranked": true,
    "ranks": {
-    "A": 99,
-    "B": 97,
-    "C": 105,
-    "capability": 102
+    "A": 98,
+    "B": 96,
+    "C": 104,
+    "capability": 101
    },
    "repo": "https://github.com/igorls/ninfer",
    "rescored_in": "v1.7.0",
@@ -169790,13 +169787,13 @@
      "Intelligence only": 6.2886612524076995
     }
    },
-   "rank": 196,
+   "rank": 195,
    "ranked": true,
    "ranks": {
-    "A": 196,
-    "B": 200,
-    "C": 198,
-    "capability": 199
+    "A": 195,
+    "B": 199,
+    "C": 197,
+    "capability": 198
    },
    "repo": "https://huggingface.co/BlackdromeAILabs/noma",
    "rescored_in": "v1.7.0",
@@ -171198,13 +171195,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 207,
+   "rank": 206,
    "ranked": true,
    "ranks": {
-    "A": 207,
-    "B": 209,
-    "C": 208,
-    "capability": 213
+    "A": 206,
+    "B": 208,
+    "C": 207,
+    "capability": 212
    },
    "repo": "https://github.com/ikermoel/open-alternative-jev",
    "rescored_in": "v1.7.0",
@@ -171632,13 +171629,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 268,
+   "rank": 267,
    "ranked": true,
    "ranks": {
-    "A": 268,
-    "B": 268,
-    "C": 268,
-    "capability": 255
+    "A": 267,
+    "B": 267,
+    "C": 267,
+    "capability": 254
    },
    "repo": "https://github.com/kotoba-lang/typed-decisions",
    "rescored_in": "v1.7.0",
@@ -172035,13 +172032,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 280,
+   "rank": 279,
    "ranked": true,
    "ranks": {
-    "A": 280,
-    "B": 280,
-    "C": 280,
-    "capability": 266
+    "A": 279,
+    "B": 279,
+    "C": 279,
+    "capability": 265
    },
    "repo": "https://github.com/JoshuaSP/open-jev",
    "rescored_in": "v1.7.0",
@@ -172469,13 +172466,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 232,
+   "rank": 231,
    "ranked": true,
    "ranks": {
-    "A": 232,
-    "B": 226,
-    "C": 231,
-    "capability": 117
+    "A": 231,
+    "B": 225,
+    "C": 230,
+    "capability": 116
    },
    "repo": "https://huggingface.co/ZefanCai/Open-Jev-27B-v1.1",
    "rescored_in": "v1.7.0",
@@ -172903,13 +172900,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 229,
+   "rank": 228,
    "ranked": true,
    "ranks": {
-    "A": 229,
-    "B": 229,
-    "C": 230,
-    "capability": 216
+    "A": 228,
+    "B": 228,
+    "C": 229,
+    "capability": 215
    },
    "repo": "https://github.com/Zefan-Cai/Open-Jev",
    "rescored_in": "v1.7.0",
@@ -173337,13 +173334,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 178,
+   "rank": 177,
    "ranked": true,
    "ranks": {
-    "A": 178,
-    "B": 173,
-    "C": 181,
-    "capability": 149
+    "A": 177,
+    "B": 172,
+    "C": 180,
+    "capability": 148
    },
    "repo": "https://github.com/Zefan-Cai/Open-Jev",
    "rescored_in": "v1.7.0",
@@ -173713,13 +173710,13 @@
     },
     "views": null
    },
-   "rank": 69,
+   "rank": 68,
    "ranked": true,
    "ranks": {
-    "A": 69,
-    "B": 66,
-    "C": 58,
-    "capability": 70
+    "A": 68,
+    "B": 65,
+    "C": 57,
+    "capability": 69
    },
    "repo": null,
    "rescored_in": "v1.7.0",
@@ -174023,13 +174020,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 245,
+   "rank": 244,
    "ranked": true,
    "ranks": {
-    "A": 245,
-    "B": 246,
-    "C": 245,
-    "capability": 249
+    "A": 244,
+    "B": 245,
+    "C": 244,
+    "capability": 248
    },
    "repo": "https://github.com/deepanwadhwa/OpenDecision",
    "rescored_in": "v1.7.0",
@@ -174399,13 +174396,13 @@
     },
     "views": null
    },
-   "rank": 189,
+   "rank": 188,
    "ranked": true,
    "ranks": {
-    "A": 189,
-    "B": 182,
-    "C": 191,
-    "capability": 170
+    "A": 188,
+    "B": 181,
+    "C": 190,
+    "capability": 169
    },
    "repo": "https://github.com/ekzhang/openjev-sglang",
    "rescored_in": "v1.7.0",
@@ -174709,13 +174706,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 177,
+   "rank": 176,
    "ranked": true,
    "ranks": {
-    "A": 177,
-    "B": 166,
-    "C": 156,
-    "capability": 58
+    "A": 176,
+    "B": 165,
+    "C": 155,
+    "capability": 57
    },
    "repo": "https://github.com/razorback16/openjev",
    "rescored_in": "v1.7.0",
@@ -175143,13 +175140,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 261,
+   "rank": 260,
    "ranked": true,
    "ranks": {
-    "A": 261,
-    "B": 261,
-    "C": 261,
-    "capability": 271
+    "A": 260,
+    "B": 260,
+    "C": 260,
+    "capability": 270
    },
    "repo": "https://github.com/Heman10x-NGU/openJev-verdict-2.0",
    "rescored_in": "v1.7.0",
@@ -175577,13 +175574,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 255,
+   "rank": 254,
    "ranked": true,
    "ranks": {
-    "A": 255,
-    "B": 256,
-    "C": 255,
-    "capability": 245
+    "A": 254,
+    "B": 255,
+    "C": 254,
+    "capability": 244
    },
    "repo": "https://huggingface.co/heman10x/rlcd-modernbert-151m",
    "rescored_in": "v1.7.0",
@@ -176011,13 +176008,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 205,
+   "rank": 204,
    "ranked": true,
    "ranks": {
-    "A": 205,
-    "B": 206,
-    "C": 205,
-    "capability": 215
+    "A": 204,
+    "B": 205,
+    "C": 204,
+    "capability": 214
    },
    "repo": "https://github.com/sabeel111/OpenSourceJev",
    "rescored_in": "v1.7.0",
@@ -176393,13 +176390,13 @@
    },
    "paid_fast_lane": false,
    "planned_weight_denominator": 1.0,
-   "rank": 25,
+   "rank": 24,
    "ranked": true,
    "ranks": {
-    "A": 25,
-    "B": 40,
-    "C": 51,
-    "capability": 105
+    "A": 24,
+    "B": 39,
+    "C": 50,
+    "capability": 104
    },
    "repo": "https://huggingface.co/PhillyLabs/philly-decider-v2",
    "scores": {
@@ -177801,13 +177798,13 @@
      "Intelligence only": 0.018814714977998477
     }
    },
-   "rank": 265,
+   "rank": 264,
    "ranked": true,
    "ranks": {
-    "A": 265,
-    "B": 265,
-    "C": 265,
-    "capability": 267
+    "A": 264,
+    "B": 264,
+    "C": 264,
+    "capability": 266
    },
    "repo": "https://huggingface.co/Phocinae/Phocinae-Largha-150M-v1",
    "rescored_in": "v1.7.0",
@@ -179220,13 +179217,13 @@
      "Intelligence only": 9.380636713101017
     }
    },
-   "rank": 171,
+   "rank": 170,
    "ranked": true,
    "ranks": {
-    "A": 171,
-    "B": 178,
-    "C": 176,
-    "capability": 188
+    "A": 170,
+    "B": 177,
+    "C": 175,
+    "capability": 187
    },
    "remeasure": {
     "disclosure": "Re-measure on the same items: this GPU row replaces the earlier loaded-CPU row of the same weights in full (scores and times) and is the second and last use of these weights on draw v1.6-regular-20261012.",
@@ -180638,13 +180635,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 86,
+   "rank": 85,
    "ranked": true,
    "ranks": {
-    "A": 86,
-    "B": 90,
-    "C": 95,
-    "capability": 127
+    "A": 85,
+    "B": 89,
+    "C": 94,
+    "capability": 126
    },
    "repo": "https://huggingface.co/crh225/plumb-4b",
    "rescored_in": "v1.7.0",
@@ -181084,13 +181081,13 @@
      "Intelligence only": 39.81196500845765
     }
    },
-   "rank": 78,
+   "rank": 77,
    "ranked": true,
    "ranks": {
-    "A": 78,
-    "B": 80,
-    "C": 90,
-    "capability": 152
+    "A": 77,
+    "B": 79,
+    "C": 89,
+    "capability": 151
    },
    "repo": "https://huggingface.co/perplexity-ai/pplx-decider-flash-v1.2",
    "rescored_in": "v1.7.0",
@@ -182496,12 +182493,12 @@
     "carried_metadata_from": "author model card + config.json",
     "kind": "v1.6.1 addendum a6 (scorer output sha256 9d512dc13d7d, method option B / O1S)"
    },
-   "rank": 155,
+   "rank": 154,
    "ranked": true,
    "ranks": {
-    "A": 155,
-    "B": 146,
-    "C": 137,
+    "A": 154,
+    "B": 145,
+    "C": 136,
     "capability": 14
    },
    "repo": "https://huggingface.co/perplexity-ai/pplx-decider-v1.1-27b",
@@ -182942,12 +182939,12 @@
      "Intelligence only": 26.249785582202126
     }
    },
-   "rank": 154,
+   "rank": 153,
    "ranked": true,
    "ranks": {
-    "A": 154,
-    "B": 148,
-    "C": 136,
+    "A": 153,
+    "B": 147,
+    "C": 135,
     "capability": 31
    },
    "repo": "https://huggingface.co/perplexity-ai/pplx-decider-v1.2",
@@ -185750,13 +185747,13 @@
      "Intelligence only": 0.23537033944273675
     }
    },
-   "rank": 242,
+   "rank": 241,
    "ranked": true,
    "ranks": {
-    "A": 242,
-    "B": 242,
-    "C": 242,
-    "capability": 234
+    "A": 241,
+    "B": 241,
+    "C": 241,
+    "capability": 233
    },
    "remeasure": {
     "disclosure": "Re-measure on the same items: this GPU row replaces the earlier loaded-CPU row of the same weights in full (scores and times) and is the second and last use of these weights on draw v1.6-regular-20261012.",
@@ -187166,12 +187163,12 @@
     "carried_metadata_from": "author submission",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 24,
+   "rank": 23,
    "ranked": true,
    "ranks": {
-    "A": 24,
-    "B": 16,
-    "C": 22,
+    "A": 23,
+    "B": 15,
+    "C": 21,
     "capability": 23
    },
    "repo": "https://huggingface.co/chinhnc/Quyet-1.0-Large",
@@ -187598,13 +187595,13 @@
     "carried_metadata_from": "author submission",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 93,
+   "rank": 92,
    "ranked": true,
    "ranks": {
-    "A": 93,
-    "B": 99,
-    "C": 100,
-    "capability": 167
+    "A": 92,
+    "B": 98,
+    "C": 99,
+    "capability": 166
    },
    "repo": "https://huggingface.co/chinhnc/Quyet-1.0-Medium",
    "rescored_in": "v1.7.0",
@@ -188030,13 +188027,13 @@
     "carried_metadata_from": "author submission",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 262,
+   "rank": 261,
    "ranked": true,
    "ranks": {
-    "A": 262,
-    "B": 262,
-    "C": 262,
-    "capability": 263
+    "A": 261,
+    "B": 261,
+    "C": 261,
+    "capability": 262
    },
    "repo": "https://huggingface.co/chinhnc/Quyet-1.0-Small",
    "rescored_in": "v1.7.0",
@@ -188462,13 +188459,13 @@
     "carried_metadata_from": "author submission",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 250,
+   "rank": 249,
    "ranked": true,
    "ranks": {
-    "A": 250,
-    "B": 250,
-    "C": 250,
-    "capability": 246
+    "A": 249,
+    "B": 249,
+    "C": 249,
+    "capability": 245
    },
    "repo": "https://huggingface.co/chinhnc/Quyet-1.0-Small-EN",
    "rescored_in": "v1.7.0",
@@ -188894,13 +188891,13 @@
     "carried_metadata_from": "author submission",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 264,
+   "rank": 263,
    "ranked": true,
    "ranks": {
-    "A": 264,
-    "B": 264,
-    "C": 264,
-    "capability": 264
+    "A": 263,
+    "B": 263,
+    "C": 263,
+    "capability": 263
    },
    "repo": "https://huggingface.co/chinhnc/Quyet-1.0-Tiny",
    "rescored_in": "v1.7.0",
@@ -189328,13 +189325,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 225,
+   "rank": 224,
    "ranked": true,
    "ranks": {
-    "A": 225,
-    "B": 228,
-    "C": 226,
-    "capability": 225
+    "A": 224,
+    "B": 227,
+    "C": 225,
+    "capability": 224
    },
    "repo": "https://huggingface.co/Qwen/Qwen3-Reranker-4B",
    "rescored_in": "v1.7.0",
@@ -189704,13 +189701,13 @@
     },
     "views": null
    },
-   "rank": 281,
+   "rank": 280,
    "ranked": true,
    "ranks": {
-    "A": 281,
-    "B": 281,
-    "C": 281,
-    "capability": 214
+    "A": 280,
+    "B": 280,
+    "C": 280,
+    "capability": 213
    },
    "repo": "https://benchmarkheaven.com/jev-models/qwen3.8-27b",
    "rescored_in": "v1.7.0",
@@ -190014,13 +190011,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 118,
+   "rank": 117,
    "ranked": true,
    "ranks": {
-    "A": 118,
-    "B": 118,
-    "C": 121,
-    "capability": 160
+    "A": 117,
+    "B": 117,
+    "C": 120,
+    "capability": 159
    },
    "repo": "https://huggingface.co/jsaurabh/qwen3.5-9b-jev-data-mix-v2",
    "rescored_in": "v1.7.0",
@@ -190448,13 +190445,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 233,
+   "rank": 232,
    "ranked": true,
    "ranks": {
-    "A": 233,
-    "B": 233,
-    "C": 233,
-    "capability": 256
+    "A": 232,
+    "B": 232,
+    "C": 232,
+    "capability": 255
    },
    "repo": "https://huggingface.co/microsoft/Phi-4-mini-instruct",
    "rescored_in": "v1.7.0",
@@ -190882,13 +190879,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 256,
+   "rank": 255,
    "ranked": true,
    "ranks": {
-    "A": 256,
-    "B": 255,
-    "C": 256,
-    "capability": 281
+    "A": 255,
+    "B": 254,
+    "C": 255,
+    "capability": 280
    },
    "repo": "https://huggingface.co/Qwen/Qwen3-0.6B",
    "rescored_in": "v1.7.0",
@@ -191316,13 +191313,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 258,
+   "rank": 257,
    "ranked": true,
    "ranks": {
-    "A": 258,
-    "B": 257,
-    "C": 258,
-    "capability": 280
+    "A": 257,
+    "B": 256,
+    "C": 257,
+    "capability": 279
    },
    "repo": "https://huggingface.co/Qwen/Qwen3-1.7B",
    "rescored_in": "v1.7.0",
@@ -191750,13 +191747,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 145,
+   "rank": 144,
    "ranked": true,
    "ranks": {
-    "A": 145,
-    "B": 158,
-    "C": 165,
-    "capability": 258
+    "A": 144,
+    "B": 157,
+    "C": 164,
+    "capability": 257
    },
    "repo": "https://huggingface.co/Qwen/Qwen3-4B-Instruct-2507",
    "rescored_in": "v1.7.0",
@@ -192184,13 +192181,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 209,
+   "rank": 208,
    "ranked": true,
    "ranks": {
-    "A": 209,
-    "B": 207,
-    "C": 210,
-    "capability": 268
+    "A": 208,
+    "B": 206,
+    "C": 209,
+    "capability": 267
    },
    "repo": "https://huggingface.co/Qwen/Qwen3-8B",
    "rescored_in": "v1.7.0",
@@ -192618,13 +192615,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 158,
+   "rank": 157,
    "ranked": true,
    "ranks": {
-    "A": 158,
-    "B": 167,
-    "C": 168,
-    "capability": 169
+    "A": 157,
+    "B": 166,
+    "C": 167,
+    "capability": 168
    },
    "repo": "https://github.com/kshetrajna12/reflex",
    "rescored_in": "v1.7.0",
@@ -194460,13 +194457,13 @@
     "carried_metadata_from": "Pinned author release; add-requests r61/score/withrows/REGISTRY.json measurement record",
     "kind": "v1.6.1 addendum a12 (scorer output sha256 4d2833926c2d, method option B / O1S)"
    },
-   "rank": 75,
+   "rank": 74,
    "ranked": true,
    "ranks": {
-    "A": 75,
-    "B": 75,
-    "C": 59,
-    "capability": 57
+    "A": 74,
+    "B": 74,
+    "C": 58,
+    "capability": 56
    },
    "repo": "https://huggingface.co/salfatigroup/rene-1-31b-fp8",
    "rescored_in": "v1.7.0",
@@ -194905,13 +194902,13 @@
      "Intelligence only": 49.49258431639605
     }
    },
-   "rank": 81,
+   "rank": 80,
    "ranked": true,
    "ranks": {
-    "A": 81,
-    "B": 78,
-    "C": 63,
-    "capability": 104
+    "A": 80,
+    "B": 77,
+    "C": 62,
+    "capability": 103
    },
    "repo": "https://huggingface.co/lihe07/span-02",
    "rescored_in": "v1.7.0",
@@ -196325,13 +196322,13 @@
      "Intelligence only": 7.933031176045365
     }
    },
-   "rank": 186,
+   "rank": 185,
    "ranked": true,
    "ranks": {
-    "A": 186,
-    "B": 188,
-    "C": 187,
-    "capability": 185
+    "A": 185,
+    "B": 187,
+    "C": 186,
+    "capability": 184
    },
    "repo": "https://huggingface.co/roudone/Decider-4B",
    "rescored_in": "v1.7.0",
@@ -197741,13 +197738,13 @@
      "Intelligence only": 23.882030176915077
     }
    },
-   "rank": 148,
+   "rank": 147,
    "ranked": true,
    "ranks": {
-    "A": 148,
-    "B": 143,
-    "C": 129,
-    "capability": 72
+    "A": 147,
+    "B": 142,
+    "C": 128,
+    "capability": 71
    },
    "repo": "https://huggingface.co/shgao/rsi-jev-v6.1-vl-27b",
    "rescored_in": "v1.7.0",
@@ -200547,13 +200544,13 @@
      "Intelligence only": 6.571813520246787
     }
    },
-   "rank": 194,
+   "rank": 193,
    "ranked": true,
    "ranks": {
-    "A": 194,
-    "B": 199,
-    "C": 196,
-    "capability": 190
+    "A": 193,
+    "B": 198,
+    "C": 195,
+    "capability": 189
    },
    "repo": "https://github.com/csabag/ryotide",
    "rescored_in": "v1.7.0",
@@ -201958,13 +201955,13 @@
      "Intelligence only": 9.189428059162678
     }
    },
-   "rank": 191,
+   "rank": 190,
    "ranked": true,
    "ranks": {
-    "A": 191,
-    "B": 192,
-    "C": 193,
-    "capability": 202
+    "A": 190,
+    "B": 191,
+    "C": 192,
+    "capability": 201
    },
    "repo": "https://github.com/csabag/ryotide/tree/94c71a3d9f044ffaba87981e985b66f47de3be80",
    "rescored_in": "v1.7.0",
@@ -203366,12 +203363,12 @@
     "carried_metadata_from": "v1.6.0 release row",
     "kind": "v1.6.1 full-set re-score (score-v161-3/out-O1S, O1S, hosted API on S u P, not equated)"
    },
-   "rank": 14,
+   "rank": 13,
    "ranked": true,
    "ranks": {
-    "A": 14,
-    "B": 15,
-    "C": 13,
+    "A": 13,
+    "B": 14,
+    "C": 12,
     "capability": 42
    },
    "repo": "https://levanto.ai",
@@ -203807,13 +203804,13 @@
      "Intelligence only": 65.88206323551285
     }
    },
-   "rank": 52,
+   "rank": 51,
    "ranked": true,
    "ranks": {
-    "A": 52,
-    "B": 46,
-    "C": 44,
-    "capability": 73
+    "A": 51,
+    "B": 45,
+    "C": 43,
+    "capability": 72
    },
    "repo": "https://levanto.ai/",
    "repriced_in": "v1.6.23",
@@ -205160,13 +205157,13 @@
    },
    "paid_fast_lane": false,
    "planned_weight_denominator": 1.0,
-   "rank": 212,
+   "rank": 211,
    "ranked": true,
    "ranks": {
-    "A": 212,
-    "B": 213,
-    "C": 213,
-    "capability": 203
+    "A": 211,
+    "B": 212,
+    "C": 212,
+    "capability": 202
    },
    "repo": "https://scaledown.ai",
    "scores": {
@@ -206575,13 +206572,13 @@
      "Intelligence only": 21.50556650674145
     }
    },
-   "rank": 119,
+   "rank": 118,
    "ranked": true,
    "ranks": {
-    "A": 119,
-    "B": 123,
-    "C": 122,
-    "capability": 141
+    "A": 118,
+    "B": 122,
+    "C": 121,
+    "capability": 140
    },
    "repo": "https://huggingface.co/ironbcc/seb-9b",
    "rescored_in": "v1.7.0",
@@ -207939,13 +207936,13 @@
    },
    "paid_fast_lane": false,
    "planned_weight_denominator": 1.0,
-   "rank": 82,
+   "rank": 81,
    "ranked": true,
    "ranks": {
-    "A": 82,
-    "B": 85,
-    "C": 92,
-    "capability": 130
+    "A": 81,
+    "B": 84,
+    "C": 91,
+    "capability": 129
    },
    "repo": "https://huggingface.co/ironbcc/Seb-9B-v2",
    "scores": {
@@ -209347,13 +209344,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 188,
+   "rank": 187,
    "ranked": true,
    "ranks": {
-    "A": 188,
-    "B": 189,
-    "C": 190,
-    "capability": 194
+    "A": 187,
+    "B": 188,
+    "C": 189,
+    "capability": 193
    },
    "repo": "https://github.com/TheoLeeCJ/openjev",
    "rescored_in": "v1.7.0",
@@ -209792,13 +209789,13 @@
      "Intelligence only": 49.23369255351228
     }
    },
-   "rank": 68,
+   "rank": 67,
    "ranked": true,
    "ranks": {
-    "A": 68,
-    "B": 68,
-    "C": 79,
-    "capability": 126
+    "A": 67,
+    "B": 67,
+    "C": 78,
+    "capability": 125
    },
    "repo": "https://huggingface.co/shisa-ai/shisa-de-1",
    "rescored_in": "v1.7.0",
@@ -211148,12 +211145,12 @@
    },
    "paid_fast_lane": false,
    "planned_weight_denominator": 1.0,
-   "rank": 27,
+   "rank": 26,
    "ranked": true,
    "ranks": {
-    "A": 27,
-    "B": 24,
-    "C": 24,
+    "A": 26,
+    "B": 23,
+    "C": 23,
     "capability": 29
    },
    "repo": "https://huggingface.co/sthanika-ai/Sieve-31B-v2",
@@ -212555,13 +212552,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 235,
+   "rank": 234,
    "ranked": true,
    "ranks": {
-    "A": 235,
-    "B": 235,
-    "C": 235,
-    "capability": 265
+    "A": 234,
+    "B": 234,
+    "C": 234,
+    "capability": 264
    },
    "repo": "https://github.com/featherless-ai/simple-jev",
    "rescored_in": "v1.7.0",
@@ -212932,13 +212929,13 @@
     },
     "views": null
    },
-   "rank": 132,
+   "rank": 131,
    "ranked": true,
    "ranks": {
-    "A": 132,
-    "B": 126,
-    "C": 120,
-    "capability": 113
+    "A": 131,
+    "B": 125,
+    "C": 119,
+    "capability": 112
    },
    "repo": "https://github.com/featherless-ai/simple-jev",
    "rescored_in": "v1.7.0",
@@ -213184,13 +213181,13 @@
     },
     "views": null
    },
-   "rank": 230,
+   "rank": 229,
    "ranked": true,
    "ranks": {
-    "A": 230,
-    "B": 224,
-    "C": 227,
-    "capability": 82
+    "A": 229,
+    "B": 223,
+    "C": 226,
+    "capability": 81
    },
    "repo": "https://github.com/featherless-ai/simple-jev",
    "rescored_in": "v1.7.0",
@@ -213498,13 +213495,13 @@
     "carried_metadata_from": "author repository + base config.json",
     "kind": "v1.6.1 addendum a6 (scorer output sha256 9d512dc13d7d, method option B / O1S)"
    },
-   "rank": 226,
+   "rank": 225,
    "ranked": true,
    "ranks": {
-    "A": 226,
-    "B": 223,
-    "C": 223,
-    "capability": 63
+    "A": 225,
+    "B": 222,
+    "C": 222,
+    "capability": 62
    },
    "repo": "https://github.com/featherless-ai/simple-jev",
    "rescored_in": "v1.7.0",
@@ -215245,12 +215242,12 @@
    },
    "paid_fast_lane": true,
    "planned_weight_denominator": 1.0,
-   "rank": 11,
+   "rank": 10,
    "ranked": true,
    "ranks": {
-    "A": 11,
+    "A": 10,
     "B": 6,
-    "C": 10,
+    "C": 9,
     "capability": 6
    },
    "repo": "https://singularitycompute.com/super-decider",
@@ -216650,13 +216647,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 239,
+   "rank": 238,
    "ranked": true,
    "ranks": {
-    "A": 239,
-    "B": 239,
-    "C": 239,
-    "capability": 236
+    "A": 238,
+    "B": 238,
+    "C": 238,
+    "capability": 235
    },
    "repo": "https://github.com/isHeSatoshi/smalljev",
    "rescored_in": "v1.7.0",
@@ -217084,13 +217081,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 89,
+   "rank": 88,
    "ranked": true,
    "ranks": {
-    "A": 89,
-    "B": 95,
-    "C": 98,
-    "capability": 200
+    "A": 88,
+    "B": 94,
+    "C": 97,
+    "capability": 199
    },
    "repo": "https://github.com/abhishek085/open-spark-jev",
    "rescored_in": "v1.7.0",
@@ -217522,13 +217519,13 @@
     "carried_metadata_from": "Current-pool API measurement registry",
     "kind": "v1.6.1 addendum a12 (scorer output sha256 4d2833926c2d, method option B / O1S)"
    },
-   "rank": 59,
+   "rank": 58,
    "ranked": true,
    "ranks": {
-    "A": 59,
-    "B": 55,
-    "C": 48,
-    "capability": 65
+    "A": 58,
+    "B": 54,
+    "C": 47,
+    "capability": 64
    },
    "repo": "https://surd.ai",
    "rescored_in": "v1.7.0",
@@ -217957,13 +217954,13 @@
     "carried_metadata_from": "r53 PREREG-R53.md, dl_r53.sh and current registry",
     "kind": "v1.6.1 addendum a11 (scorer output sha256 4d2833926c2d, method option B / O1S)"
    },
-   "rank": 66,
+   "rank": 65,
    "ranked": true,
    "ranks": {
-    "A": 66,
-    "B": 70,
-    "C": 77,
-    "capability": 115
+    "A": 65,
+    "B": 69,
+    "C": 76,
+    "capability": 114
    },
    "repo": "https://huggingface.co/SurdAI/SPX-CD-Omni",
    "rescored_in": "v1.7.0",
@@ -218395,12 +218392,12 @@
     "carried_metadata_from": "Current-pool API measurement registry",
     "kind": "v1.6.1 addendum a12 (scorer output sha256 4d2833926c2d, method option B / O1S)"
    },
-   "rank": 87,
+   "rank": 86,
    "ranked": true,
    "ranks": {
-    "A": 87,
-    "B": 83,
-    "C": 71,
+    "A": 86,
+    "B": 82,
+    "C": 70,
     "capability": 43
    },
    "repo": "https://surd.ai",
@@ -218837,13 +218834,13 @@
      "Intelligence only": 13.341942508299013
     }
    },
-   "rank": 147,
+   "rank": 146,
    "ranked": true,
    "ranks": {
-    "A": 147,
-    "B": 163,
-    "C": 166,
-    "capability": 193
+    "A": 146,
+    "B": 162,
+    "C": 165,
+    "capability": 192
    },
    "repo": "https://huggingface.co/StandardThinking/StandardOne-3B-SH",
    "rescored_in": "v1.7.0",
@@ -220200,13 +220197,13 @@
    },
    "paid_fast_lane": false,
    "planned_weight_denominator": 1.0,
-   "rank": 143,
+   "rank": 142,
    "ranked": true,
    "ranks": {
-    "A": 143,
-    "B": 145,
-    "C": 161,
-    "capability": 192
+    "A": 142,
+    "B": 144,
+    "C": 160,
+    "capability": 191
    },
    "repo": "https://huggingface.co/StandardThinking/StandardOne-3B-SH",
    "scores": {
@@ -221615,13 +221612,13 @@
      "Intelligence only": 12.230517698051182
     }
    },
-   "rank": 168,
+   "rank": 167,
    "ranked": true,
    "ranks": {
-    "A": 168,
-    "B": 171,
-    "C": 174,
-    "capability": 163
+    "A": 167,
+    "B": 170,
+    "C": 173,
+    "capability": 162
    },
    "repo": "https://huggingface.co/StandardThinking/StandardOne-8B-SH",
    "rescored_in": "v1.7.0",
@@ -223021,13 +223018,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 180,
+   "rank": 179,
    "ranked": true,
    "ranks": {
-    "A": 180,
-    "B": 180,
-    "C": 182,
-    "capability": 171
+    "A": 179,
+    "B": 179,
+    "C": 181,
+    "capability": 170
    },
    "repo": "https://huggingface.co/StandardThinking/StandardOne-8B",
    "rescored_in": "v1.7.0",
@@ -223466,12 +223463,12 @@
      "Intelligence only": 15.258250914248908
     }
    },
-   "rank": 202,
+   "rank": 201,
    "ranked": true,
    "ranks": {
-    "A": 202,
-    "B": 195,
-    "C": 189,
+    "A": 201,
+    "B": 194,
+    "C": 188,
     "capability": 41
    },
    "repo": "https://huggingface.co/startlux-models/StartLux-Decision-v1.1-27B-AutoThink",
@@ -224885,12 +224882,12 @@
      "Intelligence only": 27.08009959487104
     }
    },
-   "rank": 146,
+   "rank": 145,
    "ranked": true,
    "ranks": {
-    "A": 146,
-    "B": 141,
-    "C": 128,
+    "A": 145,
+    "B": 140,
+    "C": 127,
     "capability": 16
    },
    "repo": "https://huggingface.co/startlux-models/StartLux-Decision-v1.1-27B-Instant",
@@ -226305,12 +226302,12 @@
      "Intelligence only": 75.75710514449688
     }
    },
-   "rank": 8,
+   "rank": 7,
    "ranked": true,
    "ranks": {
-    "A": 8,
+    "A": 7,
     "B": 5,
-    "C": 7,
+    "C": 6,
     "capability": 20
    },
    "repo": "https://subq.ai",
@@ -227721,12 +227718,12 @@
      "Intelligence only": 72.25005247787018
     }
    },
-   "rank": 12,
+   "rank": 11,
    "ranked": true,
    "ranks": {
-    "A": 12,
+    "A": 11,
     "B": 10,
-    "C": 11,
+    "C": 10,
     "capability": 26
    },
    "repo": "https://subq.ai",
@@ -229130,13 +229127,13 @@
     "carried_metadata_from": "author model card metadata",
     "kind": "v1.6.1 addendum a7 (scorer output sha256 9d512dc13d7d, method option B / O1S)"
    },
-   "rank": 64,
+   "rank": 63,
    "ranked": true,
    "ranks": {
-    "A": 64,
-    "B": 62,
-    "C": 57,
-    "capability": 71
+    "A": 63,
+    "B": 61,
+    "C": 56,
+    "capability": 70
    },
    "repo": "https://huggingface.co/surogate/rune-26b-a4b-GGUF",
    "rescored_in": "v1.7.0",
@@ -229564,13 +229561,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 91,
+   "rank": 90,
    "ranked": true,
    "ranks": {
-    "A": 91,
-    "B": 92,
-    "C": 87,
-    "capability": 78
+    "A": 90,
+    "B": 91,
+    "C": 86,
+    "capability": 77
    },
    "repo": "https://github.com/blockbrain-ai/swanone-recipe",
    "rescored_in": "v1.7.0",
@@ -229940,13 +229937,13 @@
     },
     "views": null
    },
-   "rank": 183,
+   "rank": 182,
    "ranked": true,
    "ranks": {
-    "A": 183,
-    "B": 184,
-    "C": 184,
-    "capability": 206
+    "A": 182,
+    "B": 183,
+    "C": 183,
+    "capability": 205
    },
    "repo": "https://github.com/mithalouni/system-one-open",
    "rescored_in": "v1.7.0",
@@ -230250,13 +230247,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 201,
+   "rank": 200,
    "ranked": true,
    "ranks": {
-    "A": 201,
-    "B": 201,
-    "C": 202,
-    "capability": 269
+    "A": 200,
+    "B": 200,
+    "C": 201,
+    "capability": 268
    },
    "repo": "https://github.com/sgoedecke/system-one",
    "rescored_in": "v1.7.0",
@@ -230688,13 +230685,13 @@
     "carried_metadata_from": "Pinned author release; add-requests r61/score/withrows/REGISTRY.json measurement record",
     "kind": "v1.6.1 addendum a11 (scorer output sha256 4d2833926c2d, method option B / O1S)"
    },
-   "rank": 271,
+   "rank": 270,
    "ranked": true,
    "ranks": {
-    "A": 271,
-    "B": 271,
-    "C": 271,
-    "capability": 273
+    "A": 270,
+    "B": 270,
+    "C": 270,
+    "capability": 272
    },
    "repo": "https://huggingface.co/codepawl/tacet-sonata",
    "rescored_in": "v1.7.0",
@@ -232465,13 +232462,13 @@
    },
    "paid_fast_lane": false,
    "planned_weight_denominator": 1.0,
-   "rank": 121,
+   "rank": 120,
    "ranked": true,
    "ranks": {
-    "A": 121,
-    "B": 121,
-    "C": 124,
-    "capability": 122
+    "A": 120,
+    "B": 120,
+    "C": 123,
+    "capability": 121
    },
    "repo": "https://huggingface.co/matthewagi/Tern-35B-A3B",
    "scores": {
@@ -233871,13 +233868,13 @@
     "carried_metadata_from": "author submission",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 35,
+   "rank": 34,
    "ranked": true,
    "ranks": {
-    "A": 35,
-    "B": 39,
-    "C": 30,
-    "capability": 80
+    "A": 34,
+    "B": 38,
+    "C": 29,
+    "capability": 79
    },
    "repo": "https://huggingface.co/torchcast-ai/torchcast-decision-12b",
    "rescored_in": "v1.7.0",
@@ -234309,12 +234306,12 @@
     "carried_metadata_from": "author model card + config.json",
     "kind": "v1.6.1 addendum a6 (scorer output sha256 9d512dc13d7d, method option B / O1S)"
    },
-   "rank": 151,
+   "rank": 150,
    "ranked": true,
    "ranks": {
-    "A": 151,
-    "B": 144,
-    "C": 131,
+    "A": 150,
+    "B": 143,
+    "C": 130,
     "capability": 33
    },
    "repo": "https://huggingface.co/torchcast-ai/torchcast-decision-27b",
@@ -234754,13 +234751,13 @@
      "Intelligence only": 54.20841827353793
     }
    },
-   "rank": 28,
+   "rank": 27,
    "ranked": true,
    "ranks": {
-    "A": 28,
-    "B": 49,
-    "C": 55,
-    "capability": 109
+    "A": 27,
+    "B": 48,
+    "C": 54,
+    "capability": 108
    },
    "repo": "https://huggingface.co/torchcast-ai/torchcast-decision-4b",
    "rescored_in": "v1.7.0",
@@ -236174,13 +236171,13 @@
      "Intelligence only": 60.262524104890716
     }
    },
-   "rank": 17,
+   "rank": 16,
    "ranked": true,
    "ranks": {
-    "A": 17,
-    "B": 25,
-    "C": 16,
-    "capability": 77
+    "A": 16,
+    "B": 24,
+    "C": 15,
+    "capability": 76
    },
    "repo": "https://huggingface.co/torchcast-ai/torchcast-decision-4b",
    "rescored_in": "v1.7.0",
@@ -240342,12 +240339,12 @@
    },
    "paid_fast_lane": false,
    "planned_weight_denominator": 1.0,
-   "rank": 95,
+   "rank": 94,
    "ranked": true,
    "ranks": {
-    "A": 95,
-    "B": 89,
-    "C": 81,
+    "A": 94,
+    "B": 88,
+    "C": 80,
     "capability": 30
    },
    "repo": "https://huggingface.co/turion-ai/turion-jev-31b",
@@ -241750,13 +241747,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 163,
+   "rank": 162,
    "ranked": true,
    "ranks": {
-    "A": 163,
-    "B": 172,
-    "C": 170,
-    "capability": 186
+    "A": 162,
+    "B": 171,
+    "C": 169,
+    "capability": 185
    },
    "repo": "https://github.com/mihail-gribov/typecastlm",
    "rescored_in": "v1.7.0",
@@ -242188,13 +242185,13 @@
     "carried_metadata_from": "Pinned author release; add-requests r61/score/withrows/REGISTRY.json measurement record",
     "kind": "v1.6.1 addendum a11 (scorer output sha256 4d2833926c2d, method option B / O1S)"
    },
-   "rank": 128,
+   "rank": 127,
    "ranked": true,
    "ranks": {
-    "A": 128,
-    "B": 129,
-    "C": 134,
-    "capability": 189
+    "A": 127,
+    "B": 128,
+    "C": 133,
+    "capability": 188
    },
    "repo": "https://huggingface.co/mihailgribov/typecastlm-qwen3.5-3.8b",
    "rescored_in": "v1.7.0",
@@ -242633,13 +242630,13 @@
      "Intelligence only": 15.932855168800014
     }
    },
-   "rank": 133,
+   "rank": 132,
    "ranked": true,
    "ranks": {
-    "A": 133,
-    "B": 136,
-    "C": 148,
-    "capability": 181
+    "A": 132,
+    "B": 135,
+    "C": 147,
+    "capability": 180
    },
    "repo": "https://huggingface.co/Uniphore/uniphore-4b-decider",
    "rescored_in": "v1.7.0",
@@ -243983,13 +243980,13 @@
     },
     "views": null
    },
-   "rank": 96,
+   "rank": 95,
    "ranked": true,
    "ranks": {
-    "A": 96,
-    "B": 101,
-    "C": 102,
-    "capability": 137
+    "A": 95,
+    "B": 100,
+    "C": 101,
+    "capability": 136
    },
    "repo": "https://vansa.org",
    "rescored_in": "v1.7.0",
@@ -244305,13 +244302,13 @@
      "Intelligence only": 0.06667416738798192
     }
    },
-   "rank": 253,
+   "rank": 252,
    "ranked": true,
    "ranks": {
-    "A": 253,
-    "B": 253,
-    "C": 253,
-    "capability": 253
+    "A": 252,
+    "B": 252,
+    "C": 252,
+    "capability": 252
    },
    "repo": "https://huggingface.co/nandakishorm/vega-U",
    "rescored_in": "v1.7.0",
@@ -245725,13 +245722,13 @@
      "Intelligence only": 0.27274108540540976
     }
    },
-   "rank": 241,
+   "rank": 240,
    "ranked": true,
    "ranks": {
-    "A": 241,
-    "B": 241,
-    "C": 241,
-    "capability": 237
+    "A": 240,
+    "B": 240,
+    "C": 240,
+    "capability": 236
    },
    "remeasure": {
     "disclosure": "Re-measure on the same items: this GPU row replaces the earlier loaded-CPU row of the same weights in full (scores and times) and is the second and last use of these weights on draw v1.6-regular-20261012. Fifteen items reach the author's 73,728-token context limit and are answered on a right-truncated state; they take 13.8-14.3 s each on this GPU and count as failed under the 10 s rule.",
@@ -247150,13 +247147,13 @@
      "Intelligence only": 0.011385887829608154
     }
    },
-   "rank": 267,
+   "rank": 266,
    "ranked": true,
    "ranks": {
-    "A": 267,
-    "B": 267,
-    "C": 267,
-    "capability": 259
+    "A": 266,
+    "B": 266,
+    "C": 266,
+    "capability": 258
    },
    "repo": "https://huggingface.co/nandakishorm/vega-08b-public-intents",
    "rescored_in": "v1.7.0",
@@ -248563,13 +248560,13 @@
      "Intelligence only": 1.654208859284027
     }
    },
-   "rank": 231,
+   "rank": 230,
    "ranked": true,
    "ranks": {
-    "A": 231,
-    "B": 232,
-    "C": 232,
-    "capability": 252
+    "A": 230,
+    "B": 231,
+    "C": 231,
+    "capability": 251
    },
    "repo": "https://huggingface.co/nandakishorm/vega-08b-public-intents",
    "rescored_in": "v1.7.0",
@@ -249923,12 +249920,12 @@
    },
    "paid_fast_lane": false,
    "planned_weight_denominator": 1.0,
-   "rank": 159,
+   "rank": 158,
    "ranked": true,
    "ranks": {
-    "A": 159,
-    "B": 155,
-    "C": 141,
+    "A": 158,
+    "B": 154,
+    "C": 140,
     "capability": 37
    },
    "repo": "https://huggingface.co/scar-ai/vera-large",
@@ -251331,13 +251328,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 270,
+   "rank": 269,
    "ranked": true,
    "ranks": {
-    "A": 270,
-    "B": 270,
-    "C": 270,
-    "capability": 250
+    "A": 269,
+    "B": 269,
+    "C": 269,
+    "capability": 249
    },
    "repo": "https://github.com/Manavarya09/verdict",
    "rescored_in": "v1.7.0",
@@ -251776,13 +251773,13 @@
      "Intelligence only": 15.078600269727296
     }
    },
-   "rank": 127,
+   "rank": 126,
    "ranked": true,
    "ranks": {
-    "A": 127,
-    "B": 128,
-    "C": 133,
-    "capability": 165
+    "A": 126,
+    "B": 127,
+    "C": 132,
+    "capability": 164
    },
    "remeasure": {
     "disclosure": "Re-measure on the same items: this GPU row replaces the earlier loaded-CPU row of the same weights in full (scores and times) and is the second and last use of these weights on draw v1.6-regular-20261012.",
@@ -253205,12 +253202,12 @@
      "Intelligence only": 26.26006480299088
     }
    },
-   "rank": 157,
+   "rank": 156,
    "ranked": true,
    "ranks": {
-    "A": 157,
-    "B": 151,
-    "C": 140,
+    "A": 156,
+    "B": 150,
+    "C": 139,
     "capability": 17
    },
    "repo": "https://huggingface.co/vllm-sr/d3",
@@ -254567,13 +254564,13 @@
    },
    "paid_fast_lane": false,
    "planned_weight_denominator": 1.0,
-   "rank": 39,
+   "rank": 38,
    "ranked": true,
    "ranks": {
-    "A": 39,
-    "B": 57,
-    "C": 66,
-    "capability": 108
+    "A": 38,
+    "B": 56,
+    "C": 65,
+    "capability": 107
    },
    "repo": "https://huggingface.co/vllm-sr/d3-mini",
    "scores": {
@@ -255987,12 +255984,12 @@
      "Intelligence only": 26.65091271040641
     }
    },
-   "rank": 156,
+   "rank": 155,
    "ranked": true,
    "ranks": {
-    "A": 156,
-    "B": 149,
-    "C": 139,
+    "A": 155,
+    "B": 148,
+    "C": 138,
     "capability": 15
    },
    "repo": "https://huggingface.co/vllm-sr/d3-turbo",
@@ -257349,13 +257346,13 @@
    },
    "paid_fast_lane": false,
    "planned_weight_denominator": 1.0,
-   "rank": 49,
+   "rank": 48,
    "ranked": true,
    "ranks": {
-    "A": 49,
-    "B": 42,
-    "C": 40,
-    "capability": 55
+    "A": 48,
+    "B": 41,
+    "C": 39,
+    "capability": 54
    },
    "repo": "https://huggingface.co/org2ai/Wald-26B-A4B",
    "scores": {
@@ -258758,13 +258755,13 @@
      "Intelligence only": 27.7941118378976
     }
    },
-   "rank": 106,
+   "rank": 105,
    "ranked": true,
    "ranks": {
-    "A": 106,
-    "B": 107,
-    "C": 109,
-    "capability": 166
+    "A": 105,
+    "B": 106,
+    "C": 108,
+    "capability": 165
    },
    "repo": "https://huggingface.co/org2ai/Wald-4B",
    "rescored_in": "v1.7.0",
@@ -260171,13 +260168,13 @@
      "Intelligence only": 44.522489120413574
     }
    },
-   "rank": 77,
+   "rank": 76,
    "ranked": true,
    "ranks": {
-    "A": 77,
-    "B": 77,
-    "C": 84,
-    "capability": 106
+    "A": 76,
+    "B": 76,
+    "C": 83,
+    "capability": 105
    },
    "repo": "https://huggingface.co/org2ai/Wald-4B",
    "rescored_in": "v1.7.0",
@@ -261581,13 +261578,13 @@
     "carried_metadata_from": "Pinned author release; add-requests r61/score/withrows/REGISTRY.json measurement record",
     "kind": "v1.6.1 addendum a11 (scorer output sha256 4d2833926c2d, method option B / O1S)"
    },
-   "rank": 254,
+   "rank": 253,
    "ranked": true,
    "ranks": {
-    "A": 254,
-    "B": 254,
-    "C": 254,
-    "capability": 254
+    "A": 253,
+    "B": 253,
+    "C": 253,
+    "capability": 253
    },
    "repo": "https://huggingface.co/samratduttaofficial/WaterSheep",
    "rescored_in": "v1.7.0",
@@ -262019,13 +262016,13 @@
     "carried_metadata_from": "Pinned author release; add-requests r61/score/withrows/REGISTRY.json measurement record",
     "kind": "v1.6.1 addendum a11 (scorer output sha256 4d2833926c2d, method option B / O1S)"
    },
-   "rank": 263,
+   "rank": 262,
    "ranked": true,
    "ranks": {
-    "A": 263,
-    "B": 263,
-    "C": 263,
-    "capability": 243
+    "A": 262,
+    "B": 262,
+    "C": 262,
+    "capability": 242
    },
    "repo": "https://huggingface.co/zaitlabs/watt-flash-0.1",
    "rescored_in": "v1.7.0",
@@ -262453,13 +262450,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 45,
+   "rank": 44,
    "ranked": true,
    "ranks": {
-    "A": 45,
-    "B": 47,
-    "C": 43,
-    "capability": 86
+    "A": 44,
+    "B": 46,
+    "C": 42,
+    "capability": 85
    },
    "repo": "https://huggingface.co/EldanRing/Winnow-12B",
    "rescored_in": "v1.7.0",
@@ -262901,13 +262898,13 @@
     "carried_metadata_from": "v1.6.0 release row",
     "kind": "v1.6.1 full-set re-score (score-v161-3/out-O1S, O1S, hosted API on S u P, not equated)"
    },
-   "rank": 43,
+   "rank": 42,
    "ranked": true,
    "ranks": {
-    "A": 43,
-    "B": 33,
-    "C": 34,
-    "capability": 52
+    "A": 42,
+    "B": 32,
+    "C": 33,
+    "capability": 51
    },
    "repo": "https://wity.alphanimble.com/",
    "rescored_in": "v1.7.0",
@@ -264154,13 +264151,13 @@
    },
    "paid_fast_lane": false,
    "planned_weight_denominator": 1.0,
-   "rank": 33,
+   "rank": 32,
    "ranked": true,
    "ranks": {
-    "A": 33,
-    "B": 52,
-    "C": 61,
-    "capability": 111
+    "A": 32,
+    "B": 51,
+    "C": 60,
+    "capability": 110
    },
    "repo": "https://huggingface.co/quevirus/Xevn-4B",
    "scores": {
@@ -265566,13 +265563,13 @@
     "carried_metadata_from": "author model card + config.json",
     "kind": "v1.6.1 addendum a7 (scorer output sha256 9d512dc13d7d, method option B / O1S)"
    },
-   "rank": 58,
+   "rank": 57,
    "ranked": true,
    "ranks": {
-    "A": 58,
-    "B": 58,
-    "C": 53,
-    "capability": 87
+    "A": 57,
+    "B": 57,
+    "C": 52,
+    "capability": 86
    },
    "repo": "https://huggingface.co/juspay/Xor-26B-A4B",
    "rescored_in": "v1.7.0",
@@ -266000,13 +265997,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 227,
+   "rank": 226,
    "ranked": true,
    "ranks": {
-    "A": 227,
-    "B": 230,
-    "C": 228,
-    "capability": 211
+    "A": 226,
+    "B": 229,
+    "C": 227,
+    "capability": 210
    },
    "repo": "https://huggingface.co/zeroentropy/zerank-2-reranker",
    "rescored_in": "v1.7.0",

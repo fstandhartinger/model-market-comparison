@@ -1,16 +1,13 @@
 {
  "carried_rows": 300,
- "carried_rows_equal_except": [
-  "rank",
-  "ranks"
- ],
+ "carried_rows_equal_except": [],
  "files": {
   "carry": "271d1fc77a136a04a1eb6deb5480c52d4211eb2b66b2ac8bb31e80867e69003a",
-  "categories": "5803b9cc9d5833e6f96304f3ffec868bf82f005ba42bb6c2dee7d9d26fd67384",
+  "categories": "60d81f1b6c74e14801aadcd4b0961526a5dcf2f4d8f83252077512d333209a22",
   "history": "5cd8c1332226ea9c179883d2285c0d8b8cc593ae38f2645197364a7ddd9c83c1",
   "history-carry": "334e851944e92383ab3071e52b3012040c7023d0fe236395953169ebee8f0459",
-  "proof": "7e38e5d3c4510373e9b2120c641aedf8f3d0b706fac51eeb835c5bc5b670dd79",
-  "results": "8e0346259f84dd7594ece6d6408db6bebe63936524c69127ec7d7e8e04603363"
+  "proof": "f3d7637ae3063b49fb57aaac2dd4f699df9896bc553c07bbfbfe23e4db028c55",
+  "results": "e0416fc42d4d118e88d9b146a1cb472422b2a5e9118a711c190e9bc35ff67659"
  },
  "link_fixed_rows": [],
  "method": {
@@ -161,7 +158,7 @@
      "sha256": "68b75d4d8b25a0775b8620c1a7b522e66b8abcf3b34549f757eb04cc4769bed7"
     }
    },
-   "treatment": "ranked"
+   "treatment": "unranked"
   }
  },
  "predecessor": {
@@ -180,27 +177,29 @@
   ],
   "button_tap": false,
   "fairness_check": {
-   "engine": "synthetic-preview-only",
+   "engine": "claude-opus-5-5 (Claude Code subscription session, worker r197-v1713-fair)",
+   "handled_by": "row published unranked (ranked false), no order list changes",
    "path": "workers/r197-v1713-fair/RESULT.json",
-   "sha256": "4e7a8d11d3c44e50769abbdf769ef97ea30ab2ef5ae00a25d35c1c011eec00c8",
-   "verdict": "FAIR"
+   "sha256": "c353e6b2ee40dd75000c0ba521606fcb59c78403b808d08a9b779586e9f6ebfd",
+   "verdict": "SUSPICIOUS"
   },
   "fresh_baseline": "v1.7.12",
   "paid_public": {
    "key": "h2o-lightning-4b-v1.4.1",
    "order": "54575fd5",
-   "rule": "paid public automatic publication including top-five changes",
+   "rule": "paid public order: published with all measured values, unranked while its draw has no anchor runs; no top-five change",
    "visibility": "public"
   },
   "release_owner_rulings": [
    "h2o141-processed-input-pricing-28621",
-   "key h2o-lightning-4b-v1.4.1 as a new row; h2o-lightning-4b (v1.1) unchanged"
+   "key h2o-lightning-4b-v1.4.1 as a new row; h2o-lightning-4b (v1.1) unchanged",
+   "v1713-h2o141-unranked-provisional"
   ],
-  "status": "GO (paid public fast-lane order, automatic publication)",
-  "top_five_effect": "changed",
+  "status": "GO (standing; no top-five change; paid public order)",
+  "top_five_effect": "unchanged",
   "top_five_preview": {
    "path": "r197/v1713/receipts/topfive-diff.json",
-   "sha256": "c609f44040b4f479d2cfa5c5d300d528cb8ad8fbe5bbc2c989bd8c0bba43939c"
+   "sha256": "51813e57846710bffb58c138ceece8bf912aedc0f17e36d6504e31d95e228628"
   }
  },
  "publication_review": {
@@ -208,7 +207,7 @@
   "receipt_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
   "verdict": "PASS"
  },
- "publication_sha256": "3b80b3a680fb8ad39d37375715dcfae07c1108b26e8e7c044d04b3f20166e619",
+ "publication_sha256": "65c917970ff952ac93633195a12c1150a99afea6982397173f63516f8f10fafc",
  "release": "v1.7.13",
  "remeasured_rows": {},
  "repriced_rows": {},

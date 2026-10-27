@@ -203,12 +203,13 @@
   "key": "h2o-lightning-4b-v1.4.1",
   "last_measured_on": "2026-10-27",
   "licence": "Apache-2.0 (HF metadata and LICENSE), public, not gated",
-  "listing": "ranked",
+  "listing": "unranked",
   "measured_in": "v1.7.13",
   "measurement_date_status": "measured",
   "method": "v1.7",
   "model_pin": "h2oai/h2o-lightning-4b@cc18ee330e6895c41b9a60f37a0dd122dc4c3461",
   "new_in": "v1.7.13",
+  "not_ranked_because": "Measured on the 27 Oct 2026 draw, which has no anchor runs yet, so its scores are not yet on the reference scale. This draw differs strongly from earlier draws (72% multilingual items). On the 300 public items every draw shares, this version scores 57.2 Intelligence vs 61.1 for H2O-Lightning-4B v1.1; its higher overall Intelligence comes from this draw's sealed items. Shown unranked until the draw's anchor runs are complete.",
   "noul_decisive": {
    "acc_among_decisive": 0.8933333333333333,
    "decisive": 375,
@@ -219,13 +220,13 @@
   },
   "paid_fast_lane": true,
   "planned_weight_denominator": 1.0,
-  "rank": 7,
-  "ranked": true,
+  "rank": null,
+  "ranked": false,
   "ranks": {
-   "A": 7,
-   "B": 12,
-   "C": 6,
-   "capability": 50
+   "A": null,
+   "B": null,
+   "C": null,
+   "capability": null
   },
   "repo": "https://huggingface.co/h2oai/h2o-lightning-4b",
   "scores": {

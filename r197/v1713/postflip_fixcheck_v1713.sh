@@ -1,6 +1,6 @@
 #!/bin/bash
 # Post-flip simulation: swap the synthetic PASS manifest/proof/loader from .pass into the worktree, run the release and
-# roster suites, then restore and verify the original bytes. Synthetic PASS/FAIR confer no authority.
+# roster suites, then restore and verify the original bytes. The synthetic PASS manifest confers no authority.
 set -uo pipefail
 J=$(cd "$(dirname "$0")" && pwd); W=$(cd "$J/../.." && pwd); V=data/raw/benchmarks/jevbench/v1.7
 cd "$W"; B=$(mktemp -d)

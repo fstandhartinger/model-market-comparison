@@ -9,25 +9,28 @@
  ],
  "button_tap": false,
  "fairness_check": {
+  "engine": "claude-opus-5-5 (Claude Code subscription session, worker r197-v1713-fair)",
+  "handled_by": "row published unranked (ranked false), no order list changes",
   "path": "workers/r197-v1713-fair/RESULT.json",
-  "sha256": null,
-  "verdict": "PENDING"
+  "sha256": "c353e6b2ee40dd75000c0ba521606fcb59c78403b808d08a9b779586e9f6ebfd",
+  "verdict": "SUSPICIOUS"
  },
  "fresh_baseline": "v1.7.12",
  "paid_public": {
   "key": "h2o-lightning-4b-v1.4.1",
   "order": "54575fd5",
-  "rule": "paid public automatic publication including top-five changes",
+  "rule": "paid public order: published with all measured values, unranked while its draw has no anchor runs; no top-five change",
   "visibility": "public"
  },
  "release_owner_rulings": [
   "h2o141-processed-input-pricing-28621",
-  "key h2o-lightning-4b-v1.4.1 as a new row; h2o-lightning-4b (v1.1) unchanged"
+  "key h2o-lightning-4b-v1.4.1 as a new row; h2o-lightning-4b (v1.1) unchanged",
+  "v1713-h2o141-unranked-provisional"
  ],
- "status": "GO (paid public fast-lane order, automatic publication)",
- "top_five_effect": "changed",
+ "status": "GO (standing; no top-five change; paid public order)",
+ "top_five_effect": "unchanged",
  "top_five_preview": {
   "path": "r197/v1713/receipts/topfive-diff.json",
-  "sha256": "c609f44040b4f479d2cfa5c5d300d528cb8ad8fbe5bbc2c989bd8c0bba43939c"
+  "sha256": "51813e57846710bffb58c138ceece8bf912aedc0f17e36d6504e31d95e228628"
  }
 }

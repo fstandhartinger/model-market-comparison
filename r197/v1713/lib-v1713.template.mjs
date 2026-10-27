@@ -1,5 +1,6 @@
-// First release on the fresh draw v1.6-regular-20261027: one new self-hosted paid public row on v1.7.12.
-// All other scores, intervals and cells are immutable.
+// First release on the fresh draw v1.6-regular-20261027: one new self-hosted paid public row on v1.7.12, measured but UNRANKED
+// until the draw's anchor runs are complete (precedent: ranked false + null ranks + not_ranked_because, jevbench-v1630-release.mjs;
+// listing 'unranked' for a scored row, jevbench-v15-preview.mjs). All other rows, ranks, order lists and cells are immutable.
 import { createHash } from 'node:crypto';
 import { readFile } from 'node:fs/promises';
 import { isDeepStrictEqual } from 'node:util';
@@ -15,12 +16,14 @@ export const V1713_SCORERS = /*SCORERS*/;
 export const V1713_NEW_DRAW = 'v1.6-regular-20261027';
 export const V1713_NEW_KEYS = Object.keys(V1713_NEW_ROWS).sort();
 export const V1713_CHANGED_KEYS = [...V1713_NEW_KEYS];
+export const V1713_UNRANKED_NEW_KEYS = [...V1713_NEW_KEYS];
+export const V1713_NOT_RANKED_BECAUSE = "Measured on the 27 Oct 2026 draw, which has no anchor runs yet, so its scores are not yet on the reference scale. This draw differs strongly from earlier draws (72% multilingual items). On the 300 public items every draw shares, this version scores 57.2 Intelligence vs 61.1 for H2O-Lightning-4B v1.1; its higher overall Intelligence comes from this draw's sealed items. Shown unranked until the draw's anchor runs are complete.";
+export const V1713_APPROVAL_STATUS = 'GO (standing; no top-five change; paid public order)';
 const PAID_KEY = 'h2o-lightning-4b-v1.4.1';
 const REFERENCE_G_MED = 2.573387642438244;
 const hash = b => createHash('sha256').update(b).digest('hex');
 const fail = m => { throw new Error(`JevBench v1.7.13: ${m}`); };
 const same = (a,b,m) => { if (!isDeepStrictEqual(a,b)) fail(m); };
-const stripRank = s => { const r = structuredClone(s); delete r.rank; delete r.ranks; return r; };
 const hex = s => /^[a-f0-9]{64}$/.test(s ?? '');
 function publicOnly(v) {
  if (!v || typeof v !== 'object') return;
@@ -49,12 +52,15 @@ export function validateJevbenchV1713Bundle({manifest,artifact,categories,carry,
  same([...by.keys()].sort(),[...previous.artifact.systems.map(s=>s.key),...V1713_NEW_KEYS].sort(),'exact roster');
  if (artifact.roster_count!==rows.length || artifact.n_ranked!==rows.filter(s=>s.ranked).length) fail('counts');
  for (const p of previous.artifact.systems) {
-  same(stripRank(by.get(p.key)),stripRank(p),'carried row '+p.key);
+  same(by.get(p.key),p,'carried row '+p.key);
   same(categories.systems[p.key],previous.categories.systems[p.key],'carried cells '+p.key);
   same(categories.lanes[p.key],previous.categories.lanes[p.key],'carried lane '+p.key);
  }
  for (const k of V1713_NEW_KEYS) {
   const s=by.get(k);same(s,V1713_NEW_ROWS[k],'new self-hosted row '+k);
+  if(s.ranked!==false||s.rank!==null||s.listing!=='unranked'||s.not_ranked_because!==V1713_NOT_RANKED_BECAUSE)fail('unranked provisional row '+k);
+  same(s.ranks,{A:null,B:null,C:null,capability:null},'null ranks of the unranked row '+k);
+  if(proof.new_rows[k].treatment!=='unranked')fail('unranked provisional row proof '+k);
   if(s.method!=='v1.7'||s.new_in!=='v1.7.13'||s.endpoint_kind!=='gpu'||s.paid_fast_lane!==(k===PAID_KEY)||s.draw?.id!==V1713_NEW_DRAW||s.draw.status!=='anchor-runs-pending'||s.draw.offset?.I!==0||s.draw.offset?.C!==0)fail('self-hosted identity '+k);
   if(s.v16.g_med_used!==REFERENCE_G_MED||s.draw.g_med!==REFERENCE_G_MED)fail('reference gap median '+k);
   if(s.status.rows!==1500||s.status.answered_ok!==1500||s.decision_limit.n_over_limit!==0||s.decision_limit.treatment!=='share'||s.decision_limit.limit_s!==10)fail('self-hosted coverage '+k);
@@ -68,8 +74,12 @@ export function validateJevbenchV1713Bundle({manifest,artifact,categories,carry,
   if(Math.abs(proof.new_rows[k].cost.usd_per_1000-s.cost.usd_per_1000)>1e-15||Math.abs(s.cost.usd_per_1000-1000*(711020*0.03+1500*0.15)/1e6/1500)>1e-12)fail('processed-input cost '+k);
   same(proof.new_rows[k].category_pool_bounds,V1713_NEW_ROW_BOUNDS[k],'category pool bounds '+k);
   if(!hex(proof.new_rows[k].raw_sha256)||!hex(proof.new_rows[k].scored_input_sha256))fail('self-hosted source pins '+k);
-  if(/\/home\/|workers\/|#\d{4,}|Florian|\bPREREG\b|54575fd5|auto-intake|custody|deputy/i.test(JSON.stringify(s)))fail('internal self-hosted text '+k);
+  if(/\/home\/|workers\/|#\d{4,}|Florian|\bPREREG\b|54575fd5|auto-intake|custody|deputy|h2o141|jevbench-add-requests|release.owner/i.test(JSON.stringify(s)))fail('internal self-hosted text '+k);
  }
+ // Unranked: the board (every order list) is the predecessor's, and no unranked row is in any order list.
+ same(artifact.board,previous.artifact.board,'unchanged order lists');
+ same(artifact.n_ranked,previous.artifact.n_ranked,'unchanged ranked count');
+ for (const k of V1713_UNRANKED_NEW_KEYS) for (const [m,b] of Object.entries(artifact.board)) if ((b?.order??[]).includes(k)) fail('unranked row in order list '+m+' '+k);
  for (const m of ['A','B','C','capability']) {
   const ord=artifact.board[m].order;
   same([...ord].sort(),rows.filter(s=>s.ranked).map(s=>s.key).sort(),'order membership '+m);
@@ -89,7 +99,7 @@ export function validateJevbenchV1713Bundle({manifest,artifact,categories,carry,
   }
  }
  if(proof.revision!=='v1.7.13'||proof.carried_rows!==previous.artifact.systems.length)fail('proof identity');
- same(proof.carried_rows_equal_except,['rank','ranks'],'carry exception');
+ same(proof.carried_rows_equal_except,[],'carry exception (none: ranks unchanged)');
  same(proof.method,previous.artifact.method,'proof method');
  same(artifact.addendum.new_keys,V1713_NEW_KEYS,'addendum keys');
  same(artifact.addendum.new_draw,V1713_NEW_DRAW,'addendum draw');
@@ -98,10 +108,11 @@ export function validateJevbenchV1713Bundle({manifest,artifact,categories,carry,
  same(proof.pricing_module_sha256,'645fd82eac728d597048bec0995ecd3ac896566e269fb6c9a1fdb84c171a9ac4','pricing pin');
  same(proof.scorers,V1713_SCORERS,'scorer pins (v1.7.11 tools, byte-identical)');
  const a=proof.publication_approval;
- if(a?.fresh_baseline!=='v1.7.12'||!['changed','unchanged'].includes(a.top_five_effect)||a.top_five_preview?.sha256!==proof.topfive_diff_sha256||!hex(proof.topfive_diff_sha256)||!a.top_five_preview?.path)fail('top-five preview binding');
- if(a.status!=='GO (paid public fast-lane order, automatic publication)')fail('approval status');
+ if(a?.fresh_baseline!=='v1.7.12'||a.top_five_effect!=='unchanged'||a.top_five_preview?.sha256!==proof.topfive_diff_sha256||!hex(proof.topfive_diff_sha256)||!a.top_five_preview?.path)fail('top-five preview binding');
+ if(a.status!==V1713_APPROVAL_STATUS)fail('approval status');
  if(a.paid_public?.key!==PAID_KEY||a.paid_public?.visibility!=='public')fail('paid public basis');
- if(a.top_five_effect==='changed'&&(a.fairness_check?.verdict!=='FAIR'||!hex(a.fairness_check?.sha256)||!a.fairness_check?.path))fail('bound FAIR verdict required for a top-five change');
+ // The fairness receipt (SUSPICIOUS) stays bound as evidence; it is handled by unranking, so no top-five list may change.
+ if(a.fairness_check?.verdict!=='SUSPICIOUS'||!hex(a.fairness_check?.sha256)||a.fairness_check?.path!=='workers/r197-v1713-fair/RESULT.json')fail('fairness receipt evidence');
  return true;
 }
 async function load(p,root) { const bytes=await readFile(`${root}/${p}`);return {bytes,value:JSON.parse(bytes),sha256:hash(bytes)}; }
