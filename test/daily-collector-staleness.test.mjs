@@ -39,6 +39,7 @@ test('retired collectors are dropped by name; a collector a partial run skipped 
     'fetch-published': { last_ok: '2026-09-20', failing_since: null, last_error: null },
     'fetch-lumina-ledger': { last_ok: '2026-09-22', failing_since: '2026-09-23', last_error: 'HTTP 404' },
     'fetch-aa': { last_ok: '2026-09-20', failing_since: '2026-09-21', last_error: 'HTTP 500' },
+    'fetch-coding-v1.5': { last_ok: '2026-10-22', failing_since: '2026-10-23', last_error: 'AA_CODING_AGENT_VERSION_CHANGED' },
   } };
   // A prices-only run executes only fetch-or; fetch-aa is still configured and must not lose its failure start.
   state = updateCollectorHealth(state, [{ name: 'fetch-or', ok: true }], '2026-10-07');
