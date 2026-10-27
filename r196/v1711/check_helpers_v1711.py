@@ -5,9 +5,13 @@ J=pathlib.Path(__file__).resolve().parent;W=J.parents[1];P=J/'.pass';R=J/'receip
 put=lambda p,d:p.write_text(json.dumps(d,indent=1,sort_keys=True)+'\n');sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
 run=lambda argv,**kw:subprocess.run(argv,text=True,capture_output=True,**kw)
 pub=W/(V+'jevbench-v1.7.11-publication.json');before=sha(pub);proof=json.loads((W/(V+'jevbench-v1.7.11-proof.json')).read_text());changed=proof['publication_approval']['top_five_effect']=='changed'
+check_approval(W,proof)
+pending=R/'PENDING-REVIEW-FIXTURE.json';put(pending,{'verdict':'PENDING','engine':'PENDING'})
 fixture=R/'DRYRUN-REVIEW-FIXTURE.json';put(fixture,{'verdict':'PASS','engine':'fixture-only: dry-run input, no authority'})
-x=run(['python3','-B',str(J/'flip_verdict_v1711.py'),str(fixture),'--dry-run']);(R/'flip-pending.log').write_text(x.stdout+x.stderr)
-assert (x.returncode!=0 and 'fairness PENDING' in x.stderr) if changed else x.returncode==0
+x=run(['python3','-B',str(J/'flip_verdict_v1711.py'),str(pending)]);(R/'flip-pending.log').write_text(x.stdout+x.stderr)
+assert x.returncode!=0 and 'is not PASS' in x.stderr
+x=run(['python3','-B',str(J/'flip_verdict_v1711.py'),str(fixture)]);(R/'flip-fixture-refused.log').write_text(x.stdout+x.stderr)
+assert x.returncode!=0 and 'dry-run only' in x.stderr
 x=run(['python3','-B',str(J/'freeze_v1711.py'),'--wt',str(W),'--output',str(R/'actual-must-not-exist.json')]);(R/'freeze-pending-refused.log').write_text(x.stdout+x.stderr);assert x.returncode!=0;assert not (R/'actual-must-not-exist.json').exists()
 subprocess.run(['python3','-B',str(J/'make_passtree_v1711.py')],check=True)
 pr=P/'r196/v1711/receipts';pr.mkdir(parents=True,exist_ok=True);(pr/'topfive-diff.json').write_bytes((R/'topfive-diff.json').read_bytes());fair=pr/'FAIR-FIXTURE.json';put(fair,{'verdict':'FAIR','engine':'synthetic fixture only; no publication authority'})
@@ -28,5 +32,5 @@ if changed:
   except AssertionError:negative+=1
   else:raise AssertionError('invalid FAIR accepted')
 assert sha(pub)==before
-put(R/'HELPERS.json',{'status':'PASS','real_pending_flip_refused':changed,'synthetic_flip_dry_run':True,'pending_freeze_refused':True,'synthetic_freeze_dry_run':True,'seal_write_refused':True,'fairness_negative_cases':negative,'real_manifest_unchanged':before,'fixture_grants_no_authority':True})
+put(R/'HELPERS.json',{'status':'PASS','bound_fair_approval_checked':True,'real_pending_flip_refused':True,'real_fixture_flip_refused':True,'synthetic_flip_dry_run':True,'pending_freeze_refused':True,'synthetic_freeze_dry_run':True,'seal_write_refused':True,'fairness_negative_cases':negative,'real_manifest_unchanged':before,'fixture_grants_no_authority':True})
 print('PASS actual pending refusal, synthetic flip/freeze dry runs, seal-write refusal and FAIR negatives; real manifest unchanged')

@@ -814,7 +814,7 @@
  "metric": "O1S chance-corrected competence: equal mean across the request types present, clipped to 0–100. Zero means the equal-weight mean across present request types was at or below baseline; negative means are clipped. It does not mean every type scored zero. Choice uses a random-option baseline; Noul uses a fixed 50% accuracy baseline (abstentions count as wrong); Score uses the midpoint-guess error (random-guess fallback when every gold is at the midpoint). Compare models within a category; row pools and supported types can differ.",
  "min_n": 15,
  "provisional": false,
- "results_sha256": "59d264f8d8640183227cc413301affeddc08af30fc053126e5e7a257b917c8d2",
+ "results_sha256": "a4143c0e6877824a034c32db1d1bee6384f530392b9676ce2cae5c01b9df5320",
  "results_sha256_note": "Bound to v1.7.11 results; all existing category cells and lanes retained exactly.",
  "revision": "v1.7.11",
  "rule_note": "Cells of re-scored rows are computed with the frozen category tools under the 10 s rule (a decision over 10 s counts as a wrong answer). Rows without cells are not yet re-scored under the rule or are re-measure pending; no v1.6 cell is shown for a v1.7 row.",
@@ -822,7 +822,7 @@
   "Official O1S; recorded failures count where supported; no missing response is imputed; stable identity dedupe parent first.",
   "S-based category cells pool recorded supported responses from S+P and the answered L1/L2/L3 supplements. API overlay category cells keep their separately recorded A4/A5+P union. Headline and per-type/tier scores are unchanged."
  ],
- "source_results_sha256": "43661d8504620579fcf515580e19fb8692dac2270b7599494d3f99d80822c23e",
+ "source_results_sha256": "b2b096713cc6328b41f0e7c5ead6c69653cab060b68a1e32ad19e671878f5f44",
  "source_sha256": "aab1cba1fa4221f8cb026baba46e831b9c5c17c5869bf1a3b2995dfc399e2bce",
  "supplement": {
   "drawn": "2026-10-06",

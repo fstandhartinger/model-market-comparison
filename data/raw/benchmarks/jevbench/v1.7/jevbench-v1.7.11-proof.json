@@ -52,8 +52,10 @@
   ],
   "button_tap": false,
   "fairness_check": {
+   "engine": "claude-opus-5-5 account C effort medium",
    "path": "workers/r196-v1711-fair/RESULT.json",
-   "verdict": "PENDING"
+   "sha256": "6f8fb3b2d14ef364931f3e08d135598424d30c176d02d5bb5bb717045cbcb801",
+   "verdict": "FAIR"
   },
   "fresh_baseline": "v1.7.10",
   "go": {
@@ -69,6 +71,9 @@
    "sha256": "ca11652395685509b20bcebbdd5305cac6c0be849d12b87540ec0ee5b3e4ce08"
   }
  },
+ "release_owner_rulings": [
+  "decisio-gemma-engine-correction-28484"
+ ],
  "remeasured_rows": {},
  "repriced_rows": {
   "decisio-gemma-4-12b-tuned-commit": {
@@ -212,7 +217,7 @@
   "score_v17": "6363458d208a52f4ad5aaf73027cad1b7e0358ff962e581d57a3cc462c8f1978"
  },
  "source_inputs": {
-  "entry_sha256": "89db47a1acfb51fa4bca48c1a7bad41e489441dc22654df726d8b804f90a3038",
+  "entry_sha256": "d9978b701ceb8f8502cde6a225f80208f409655ab874594eb2049ea9c294a7cf",
   "recount_bindings_sha256": "bf87049279cd2e44882423c54b6b393dd076f874221ad08d69be3bb8d13c8ced",
   "scored_rows_sha256": "8ddf23cfc32c0b9081c6a3e495d8f55cb1901d86119f9df53812ec8e22d30937"
  },

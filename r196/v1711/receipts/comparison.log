@@ -1,3 +1,4 @@
+Running scope as unit: run-u140272.scope
 Built PENDING v1.7.11 300 rows; four cost corrections only
 v1711 loader generated
 wired v1.7.11
@@ -10,16 +11,3 @@ Built PENDING v1.7.11 300 rows; four cost corrections only
 v1711 loader generated
 wired v1.7.11
 /home/flori/wt/r196-v1711-build/r196/v1711/.pass
-file:///home/flori/wt/r196-v1711-build/r196/v1711/.pass/lib/jevbench-v1711-release.mjs:17
-const fail = m => { throw new Error(`JevBench v1.7.11: ${m}`); };
-                          ^
-
-Error: JevBench v1.7.11: pinned bytes proof
-    at fail (file:///home/flori/wt/r196-v1711-build/r196/v1711/.pass/lib/jevbench-v1711-release.mjs:17:27)
-    at same (file:///home/flori/wt/r196-v1711-build/r196/v1711/.pass/lib/jevbench-v1711-release.mjs:18:56)
-    at validateJevbenchV1711Bundle (file:///home/flori/wt/r196-v1711-build/r196/v1711/.pass/lib/jevbench-v1711-release.mjs:39:3)
-    at readOptionalJevbenchV1711Release (file:///home/flori/wt/r196-v1711-build/r196/v1711/.pass/lib/jevbench-v1711-release.mjs:109:2)
-    at async assembleJevBoard (file:///home/flori/wt/r196-v1711-build/r196/v1711/.pass/lib/jevbench-live-board.mjs:79:17)
-    at async file:///home/flori/wt/r196-v1711-build/r196/v1711/ranks_fixture_v1711.mjs:16:15
-
-Node.js v20.19.4

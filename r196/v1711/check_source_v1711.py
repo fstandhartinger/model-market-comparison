@@ -48,11 +48,12 @@ for k,p in pins.items():
   try:bind(bad)
   except AssertionError:negative+=1
   else:raise AssertionError('bad recount binding accepted')
-pattern=re.compile(r'([^\s]+) at USD ([0-9.]+)/([0-9.]+) per million input/output tokens')
+pattern=re.compile(r'([^\s]+)(?: \(nearest listed 12B Gemma sibling; google/gemma-4-12B-it has no listing\))? at USD ([0-9.]+)/([0-9.]+) per million input/output tokens')
 def prices(k,row,pr):
  r=reference(k,entries[k]['entry']);assert r==pr
  m=pattern.findall(row['cost']['basis']);assert len(m)==1
  listing,i,o=m[0];assert (listing,float(i),float(o))==(r['listing'],r['in'],r['out'])
+ if '12b' in k:assert row['cost']['basis'].startswith('ESTIMATE; reference google/gemma-3-12b-it (nearest listed 12B Gemma sibling; google/gemma-4-12B-it has no listing) at USD 0.05/0.15 per million input/output tokens.')
  assert row['cost']['kind']==before[k]['cost']['kind']=='estimate'
  assert row['cost']['common_basis']['n_items']==before[k]['cost']['common_basis']['n_items']
  assert row['model_pin']==before[k]['model_pin']

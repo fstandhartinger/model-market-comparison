@@ -1678,7 +1678,7 @@
  },
  "sealed_share_of_intelligence": 0.5,
  "source_note": "Cost correction for four Decisio Gemma rows (engine-processed input); no new measurement, no method change.",
- "source_sha256": "43661d8504620579fcf515580e19fb8692dac2270b7599494d3f99d80822c23e",
+ "source_sha256": "b2b096713cc6328b41f0e7c5ead6c69653cab060b68a1e32ad19e671878f5f44",
  "status": "published",
  "systems": [
   {
@@ -48201,7 +48201,7 @@
     ]
    },
    "cost": {
-    "basis": "ESTIMATE; google/gemma-3-12b-it at USD 0.05/0.15 per million input/output tokens. Billed on engine-processed input (decisio adds a system turn and chat template, +78 tokens per answered item, that its own usage does not report); offline per-item recount, residual 0; corrected in v1.7.11 from the earlier usage-based USD 0.024239/1k. Exact engine input 831,272 tokens and output 1,485 tokens on this row's own 1,485-item common basis; USD 0.028139/1k common and USD 0.027858/1k all 1,500. The exact recount includes one token-boundary merge: 1,484 increments of 78 tokens and one of 77. Decisio also sends one registration prefill per new state boundary; an offline estimate (about 648,827 tokens; USD 0.049985/1k if billed) is not exact and not a lower bound, so it is disclosed, not priced. Estimated model tariff, not charged usage or a host quote.",
+    "basis": "ESTIMATE; reference google/gemma-3-12b-it (nearest listed 12B Gemma sibling; google/gemma-4-12B-it has no listing) at USD 0.05/0.15 per million input/output tokens. Billed on engine-processed input (decisio adds a system turn and chat template, +78 tokens per answered item, that its own usage does not report); offline per-item recount, residual 0; corrected in v1.7.11 from the earlier usage-based USD 0.024239/1k. Exact engine input 831,272 tokens and output 1,485 tokens on this row's own 1,485-item common basis; USD 0.028139/1k common and USD 0.027858/1k all 1,500. The exact recount includes one token-boundary merge: 1,484 increments of 78 tokens and one of 77. Decisio also sends one registration prefill per new state boundary; an offline estimate (about 648,827 tokens; USD 0.049985/1k if billed) is not exact and not a lower bound, so it is disclosed, not priced. Estimated model tariff, not charged usage or a host quote.",
     "common_basis": {
      "n_items": 1485,
      "rule": "common",
@@ -49557,7 +49557,7 @@
     ]
    },
    "cost": {
-    "basis": "ESTIMATE; google/gemma-3-12b-it at USD 0.05/0.15 per million input/output tokens. Billed on engine-processed input (decisio adds a system turn and chat template, +78 tokens per answered item, that its own usage does not report); offline per-item recount, residual 0; corrected in v1.7.11 from the earlier usage-based USD 0.022654/1k. Exact engine input 779,965 tokens and output 1,477 tokens on this row's own 1,477-item common basis; USD 0.026554/1k common and USD 0.026147/1k all 1,500. Estimated model tariff, not charged usage or a host quote.",
+    "basis": "ESTIMATE; reference google/gemma-3-12b-it (nearest listed 12B Gemma sibling; google/gemma-4-12B-it has no listing) at USD 0.05/0.15 per million input/output tokens. Billed on engine-processed input (decisio adds a system turn and chat template, +78 tokens per answered item, that its own usage does not report); offline per-item recount, residual 0; corrected in v1.7.11 from the earlier usage-based USD 0.022654/1k. Exact engine input 779,965 tokens and output 1,477 tokens on this row's own 1,477-item common basis; USD 0.026554/1k common and USD 0.026147/1k all 1,500. Estimated model tariff, not charged usage or a host quote.",
     "common_basis": {
      "n_items": 1477,
      "rule": "common",
@@ -49995,7 +49995,7 @@
     ]
    },
    "cost": {
-    "basis": "ESTIMATE; google/gemma-3-12b-it at USD 0.05/0.15 per million input/output tokens. Billed on engine-processed input (decisio adds a system turn and chat template, +78 tokens per answered item, that its own usage does not report); offline per-item recount, residual 0; corrected in v1.7.11 from the earlier usage-based USD 0.022654/1k. Exact engine input 779,965 tokens and output 1,477 tokens on this row's own 1,477-item common basis; USD 0.026554/1k common and USD 0.026147/1k all 1,500. Decisio also sends one registration prefill per new state boundary; an offline estimate (about 550,630 tokens; USD 0.045194/1k if billed) is not exact and not a lower bound, so it is disclosed, not priced. Estimated model tariff, not charged usage or a host quote.",
+    "basis": "ESTIMATE; reference google/gemma-3-12b-it (nearest listed 12B Gemma sibling; google/gemma-4-12B-it has no listing) at USD 0.05/0.15 per million input/output tokens. Billed on engine-processed input (decisio adds a system turn and chat template, +78 tokens per answered item, that its own usage does not report); offline per-item recount, residual 0; corrected in v1.7.11 from the earlier usage-based USD 0.022654/1k. Exact engine input 779,965 tokens and output 1,477 tokens on this row's own 1,477-item common basis; USD 0.026554/1k common and USD 0.026147/1k all 1,500. Decisio also sends one registration prefill per new state boundary; an offline estimate (about 550,630 tokens; USD 0.045194/1k if billed) is not exact and not a lower bound, so it is disclosed, not priced. Estimated model tariff, not charged usage or a host quote.",
     "common_basis": {
      "n_items": 1477,
      "rule": "common",

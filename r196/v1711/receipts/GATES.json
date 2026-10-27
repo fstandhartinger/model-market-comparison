@@ -9,11 +9,35 @@
   "shared_cdp": 9333,
   "status": "PASS"
  },
+ "FAIR": {
+  "engine": "claude-opus-5-5 account C effort medium",
+  "path": "workers/r196-v1711-fair/RESULT.json",
+  "publication_review": "PENDING",
+  "sha256": "6f8fb3b2d14ef364931f3e08d135598424d30c176d02d5bb5bb717045cbcb801",
+  "status": "PASS",
+  "verdict": "FAIR"
+ },
+ "FAIR-BINDING": {
+  "post_edit_results_sha256": "a4143c0e6877824a034c32db1d1bee6384f530392b9676ce2cae5c01b9df5320",
+  "post_review_data_changes": "Only three 12B cost basis descriptions and derived source provenance hash; all numeric fields unchanged",
+  "pre_edit_results_sha256": "59d264f8d8640183227cc413301affeddc08af30fc053126e5e7a257b917c8d2",
+  "pre_edit_topfive_diff_sha256": "ca11652395685509b20bcebbdd5305cac6c0be849d12b87540ec0ee5b3e4ce08",
+  "review_receipt_sha256": "6f8fb3b2d14ef364931f3e08d135598424d30c176d02d5bb5bb717045cbcb801",
+  "status": "PASS",
+  "text_changed_rows": [
+   "decisio-gemma-4-12b-tuned-commit",
+   "decisio-gemma-4-12b-v080",
+   "decisio-gemma-4-12b-v090"
+  ],
+  "topfive_diff_unchanged": true
+ },
  "HELPERS": {
+  "bound_fair_approval_checked": true,
   "fairness_negative_cases": 2,
   "fixture_grants_no_authority": true,
   "pending_freeze_refused": true,
-  "real_manifest_unchanged": "546038853ffa20bcf6467b885e757c5f97f9c748faaaeb8d185cd6531828849e",
+  "real_fixture_flip_refused": true,
+  "real_manifest_unchanged": "3d4d3e657e68e8df6b667e3a620d40e0dd318a04f84614c69589ef8cc0aac2b0",
   "real_pending_flip_refused": true,
   "seal_write_refused": true,
   "status": "PASS",
@@ -32,7 +56,7 @@
  },
  "PASS-STATE": {
   "actual_manifest_still_pending": true,
-  "actual_manifest_unchanged_sha256": "546038853ffa20bcf6467b885e757c5f97f9c748faaaeb8d185cd6531828849e",
+  "actual_manifest_unchanged_sha256": "3d4d3e657e68e8df6b667e3a620d40e0dd318a04f84614c69589ef8cc0aac2b0",
   "fixture_grants_no_authority": true,
   "status": "PASS",
   "synthetic_post_flip_tests": 14
@@ -76,13 +100,13 @@
    "app/jev-models/v1.7.11/page.tsx": "401673d32fad0c74e8edc4a93a1965c986f5811f1b3ceaa91cec9e9d3a9b2d9f",
    "data/jevbench-architecture.json": "e3a127a7df41d2bb9bda9f4aecbb59dba430e37153b181e9d0d3fd2b70eabbf7",
    "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.11-carry.json": "271d1fc77a136a04a1eb6deb5480c52d4211eb2b66b2ac8bb31e80867e69003a",
-   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.11-categories.json": "633fa4a1497c7ee07e31a0f0d80e4c48333542e501b4a4fb61a70d9fc2e091ca",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.11-categories.json": "13e5bb92f5f15b50ff7507bc8e85e83db4e06a6d876b3db65d67f70c36f64c5a",
    "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.11-history-carry.json": "334e851944e92383ab3071e52b3012040c7023d0fe236395953169ebee8f0459",
    "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.11-history.json": "5cd8c1332226ea9c179883d2285c0d8b8cc593ae38f2645197364a7ddd9c83c1",
-   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.11-proof.json": "6abc54f89f6aee6dd3a872136983af4b767b346ffe7b988945861a9c1a8d6196",
-   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.11-publication.json": "546038853ffa20bcf6467b885e757c5f97f9c748faaaeb8d185cd6531828849e",
-   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.11-results.json": "59d264f8d8640183227cc413301affeddc08af30fc053126e5e7a257b917c8d2",
-   "lib/jevbench-v1711-release.mjs": "71a62cc85cbbf1340436b267e5116104c254945169377cacfb59a4e87647feb3"
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.11-proof.json": "7ff71a269a5307661a09b199edc0527addcb16a16fe0911f0ea9d9d27d9d1865",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.11-publication.json": "3d4d3e657e68e8df6b667e3a620d40e0dd318a04f84614c69589ef8cc0aac2b0",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.11-results.json": "a4143c0e6877824a034c32db1d1bee6384f530392b9676ce2cae5c01b9df5320",
+   "lib/jevbench-v1711-release.mjs": "7566241f2594741810833a757fffe077d7e8de6057b8f5ee1a9a98e7bf3cd8a5"
   },
   "status": "PASS",
   "two_rebuilds_identical": true
@@ -237,7 +261,7 @@
   "status": "PASS"
  },
  "build": {
-  "log_sha256": "f503deac6d2802031cf422199ccc68408fcdbbc2f22f49f9c53d6ea4e2bdaa7c",
+  "log_sha256": "de54901f37cc84f0fb8ecf38dc58280d15af95092be068cbcee3f6b6b4043ca7",
   "status": "PASS"
  },
  "fulltest": {
@@ -245,11 +269,11 @@
   "command": "npm test",
   "exit_code": 0,
   "fail": 0,
-  "log_sha256": "658c98b0d92d91e89f7456f8cc867b9e9cbbfc6ee690da17334c0910d864ac8e",
-  "pass": 3826,
+  "log_sha256": "7484707975f2808fc18ad1c700f4ef49816eb4a3bacff0c2fb9af07a610a7270",
+  "pass": 3845,
   "skipped": 8,
   "status": "PASS",
-  "tests": 3834,
+  "tests": 3853,
   "todo": 0
  },
  "helpers": {
@@ -259,7 +283,7 @@
  "post-flip-tests": {
   "cancelled": 0,
   "fail": 0,
-  "log_sha256": "81d8453358d08fee970badfb8981a2e3b0c62deab4be75c753a33635a16b0f71",
+  "log_sha256": "c8fb0a4f5f563f0c16d81844c9d72a0cc2131c4259d126867e65b603822f22cc",
   "pass": 14,
   "skipped": 0,
   "status": "PASS",
@@ -278,7 +302,7 @@
  "release-tests": {
   "cancelled": 0,
   "fail": 0,
-  "log_sha256": "dc45d8025045918d0d4c6094ff57048f0e92d32f3e5a00706473241e7d082ba3",
+  "log_sha256": "ffb3aa985304fd218e96238e5459febbcc678797e25a398dc2872de37ba4f7bd",
   "pass": 73,
   "skipped": 0,
   "status": "PASS",

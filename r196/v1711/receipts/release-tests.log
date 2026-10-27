@@ -1,81 +1,375 @@
-✔ CR-205: the live board and all frozen v1.5 pages render the complete release page (1.315595ms)
-✔ CR-205: the v1.5 release page keeps every required section, in the v1.4.2.2 order (0.598409ms)
-✔ CR-209: v1.5.1 ranks every full-coverage addendum and preserves the frozen v1.5.0 artifact (2.482622ms)
-✔ v1.5.2 adds the verified Nemotron A3 row and leaves every top five unchanged (0.893603ms)
-✔ CR-205: the frozen v1.4.2.2 page keeps its complete structure (0.197656ms)
-✔ CR-205: every older versioned page keeps its board and disclosures (0.229866ms)
-✔ CR-205: fresh native v1.6.2 uses the complete shared board, both radars and historical catalogue (10.487769ms)
-✔ CR-205: fail-closed v1.6.3 addendum uses the complete shared board, wrappers below it and the historical catalogue (0.481041ms)
-✔ CR-205: v1.6.4 retains shared board, both wrappers below ranking, method and full history (0.382992ms)
-✔ CR-205: fail-closed v1.6.5 regular draw uses the shared board, its own method notes and the full history (0.482531ms)
-✔ CR-205: fail-closed v1.6.6 same-draw addition uses the shared board, its own method notes and the full history (0.531579ms)
-✔ CR-205: fail-closed v1.6.7 same-draw addition uses the shared board, its own method notes and the full history (0.306025ms)
-✔ CR-205: fail-closed v1.6.8 same-draw addition uses the shared board, its own method notes and the full history (0.302604ms)
-✔ CR-205: fail-closed v1.6.9 same-draw addition uses the shared board, its own method notes and the full history (0.390822ms)
-✔ CR-205: fail-closed v1.6.10 first release on the second regular draw uses the shared board, its own method notes and the full history (0.380463ms)
-✔ CR-205: fail-closed v1.6.11 same-draw addition uses the shared board, its own method notes and the full history (0.328093ms)
-✔ CR-205: fail-closed v1.6.12 same-draw addition uses the shared board, its own method notes and the full history (0.349174ms)
-✔ CR-205: fail-closed v1.6.13 same-draw addition uses the shared board, its own method notes and the full history (0.292694ms)
-✔ CR-205: fail-closed v1.6.14 same-draw addition uses the shared board, its own method notes and the full history (0.282834ms)
-✔ CR-205: fail-closed v1.6.15 three-row same-draw addition uses the shared board, its own method notes and the full history (0.435711ms)
-✔ CR-205: fail-closed v1.6.16 one-row same-draw addition uses the shared board, its own method notes and the full history (0.399683ms)
-✔ CR-205: fail-closed v1.6.17 same-draw addition uses the shared board, its own method notes and the full history (0.315094ms)
-✔ CR-205: fail-closed v1.6.18 same-draw addition uses the shared board, its own method notes and the full history (0.301064ms)
-✔ CR-205: fail-closed v1.6.20 price-only addendum uses the shared board, its own method notes and the full history (0.292094ms)
-✔ CR-205: fail-closed v1.6.21 same-draw addition uses the shared board, its own method notes and the full history (0.408302ms)
-✔ CR-205: fail-closed v1.6.22 same-draw addition uses the shared board, its own method notes and the full history (0.378233ms)
-✔ CR-205: fail-closed v1.6.23 price-only addendum uses the shared board, its own method notes and the full history (0.372863ms)
-✔ CR-205: fail-closed v1.6.24 same-draw addition uses the shared board, its own method notes and the full history (0.465211ms)
-✔ CR-205: fail-closed v1.6.25 same-draw addition uses the shared board, its own method notes and the full history (0.465621ms)
-✔ CR-205: fail-closed v1.6.26 same-draw addition uses the shared board, its own method notes and the full history (0.335353ms)
-✔ CR-205: fail-closed v1.6.27 same-draw addition uses the shared board, its own method notes and the full history (0.308615ms)
-✔ CR-205: fail-closed v1.6.28 same-draw addition uses the shared board, its own method notes and the full history (0.385663ms)
-✔ CR-205: fail-closed v1.6.29 same-draw addition uses the shared board, its own method notes and the full history (0.383993ms)
-✔ CR-205: fail-closed v1.6.30 cost-rule release uses the shared board, its own method notes and the full history (0.392403ms)
-✔ CR-205: v1.7.1 same-draw additions retain the complete shared board, method notes and history (0.355143ms)
-✔ CR-205: v1.7.2 same-draw additions retain the complete shared board, method notes and history (0.401662ms)
-✔ CR-205: v1.7.3 GPU replacement retains the shared board, method notes and history (0.356783ms)
-✔ CR-205: v1.7.4 self-hosted addition retains shared board, method notes and history (0.322403ms)
-✔ CR-205: every versioned JevBench route is covered by this test (0.636848ms)
-✔ CR-205: the board sections are fed by the pinned v1.5 release artifact (12.48633ms)
-✔ CR-205: v1.7.5 self-hosted addition retains shared board, method notes and history (0.47462ms)
-✔ CR-205: v1.7.6 self-hosted addition retains shared board, method notes and history (0.351103ms)
-✔ CR-205: v1.7.7 self-hosted addition retains shared board, method notes and history (0.326443ms)
-✔ CR-205: v1.7.8 self-hosted addition retains shared board, method notes and history (0.300534ms)
-✔ CR-205: v1.7.9 addendum retains shared board, method notes and history (0.322304ms)
-✔ architecture schema, evidence and badges are valid for every entry (5.935055ms)
-✔ all historical and current JevBench and ImageJevBench artifact keys are covered (2669.455932ms)
-✔ wity entries preserve the author-requested model-family non-disclosure (1.111809ms)
-✔ encoder, diffusion, reranker, reference and single-backbone corrections remain explicit (0.157077ms)
-✔ v1.7.10 validates all rows and hides PENDING from public readers (2707.377129ms)
-✔ v1.7.10 rejects carried score, interval, category and lane changes (2524.840002ms)
-✔ v1.7.10 rejects roster, rank, new row and provenance mutations (2577.378497ms)
-✔ v1.7.10 requires exact FAIR receipt and paid public order (1089.054443ms)
-✔ v1.7.10 pin, template, public-text and cost-kind gates reject negatives (5.137592ms)
-✔ v1.7.10 exact new scores, coverage and public disclosures (0.415702ms)
-✔ v1.7.10 synthetic board ranks and official cap lists match the recorded assembly (22.914749ms)
-✔ v1.7.10 repo exception rejects HF regression, source or other field changes (1550.552603ms)
-✔ candidate validates; publication reader accepts either PENDING-hidden or independently reviewed PASS (127.687455ms)
-✔ noncost intelligence tamper refuses (174.23357ms)
-✔ noncost calibration tamper refuses (173.964795ms)
-✔ noncost speed tamper refuses (168.748856ms)
-✔ noncost capability tamper refuses (204.951049ms)
-✔ corrected row gates refuse tamper r=>r.cost.kind='measured' (205.870631ms)
-✔ corrected row gates refuse tamper r=>r.cost.common_basis.n_items=1500 (167.604268ms)
-✔ corrected row gates refuse tamper r=>r.model_pin='wrong' (156.159427ms)
-✔ corrected row gates refuse tamper r=>r.cost.basis+=' PLACEHOLDER' (174.571974ms)
-✔ corrected row gates refuse tamper r=>r.cost.basis+=' Florian' (167.321562ms)
-✔ changed top-five cannot publish with pending fairness (303.840158ms)
-✔ unrelated carried row and cell tampering refuse (317.835668ms)
-✔ proof reference tamper refuses (213.123313ms)
-✔ proof recount tamper refuses (159.66412ms)
-✔ every /jev-models/v* release page sets its own description <=160 chars (3.442154ms)
-✔ every /jev-models/v* release page renders JSON-LD (PageJsonLd or an embedded component) (3.102091ms)
-ℹ tests 73
-ℹ suites 0
-ℹ pass 73
-ℹ fail 0
-ℹ cancelled 0
-ℹ skipped 0
-ℹ todo 0
-ℹ duration_ms 13332.338999
+TAP version 13
+# Subtest: CR-205: the live board and all frozen v1.5 pages render the complete release page
+ok 1 - CR-205: the live board and all frozen v1.5 pages render the complete release page
+  ---
+  duration_ms: 1.237326
+  ...
+# Subtest: CR-205: the v1.5 release page keeps every required section, in the v1.4.2.2 order
+ok 2 - CR-205: the v1.5 release page keeps every required section, in the v1.4.2.2 order
+  ---
+  duration_ms: 0.601668
+  ...
+# Subtest: CR-209: v1.5.1 ranks every full-coverage addendum and preserves the frozen v1.5.0 artifact
+ok 3 - CR-209: v1.5.1 ranks every full-coverage addendum and preserves the frozen v1.5.0 artifact
+  ---
+  duration_ms: 3.01875
+  ...
+# Subtest: v1.5.2 adds the verified Nemotron A3 row and leaves every top five unchanged
+ok 4 - v1.5.2 adds the verified Nemotron A3 row and leaves every top five unchanged
+  ---
+  duration_ms: 1.617198
+  ...
+# Subtest: CR-205: the frozen v1.4.2.2 page keeps its complete structure
+ok 5 - CR-205: the frozen v1.4.2.2 page keeps its complete structure
+  ---
+  duration_ms: 0.205036
+  ...
+# Subtest: CR-205: every older versioned page keeps its board and disclosures
+ok 6 - CR-205: every older versioned page keeps its board and disclosures
+  ---
+  duration_ms: 0.226066
+  ...
+# Subtest: CR-205: fresh native v1.6.2 uses the complete shared board, both radars and historical catalogue
+ok 7 - CR-205: fresh native v1.6.2 uses the complete shared board, both radars and historical catalogue
+  ---
+  duration_ms: 15.891999
+  ...
+# Subtest: CR-205: fail-closed v1.6.3 addendum uses the complete shared board, wrappers below it and the historical catalogue
+ok 8 - CR-205: fail-closed v1.6.3 addendum uses the complete shared board, wrappers below it and the historical catalogue
+  ---
+  duration_ms: 0.813584
+  ...
+# Subtest: CR-205: v1.6.4 retains shared board, both wrappers below ranking, method and full history
+ok 9 - CR-205: v1.6.4 retains shared board, both wrappers below ranking, method and full history
+  ---
+  duration_ms: 0.888523
+  ...
+# Subtest: CR-205: fail-closed v1.6.5 regular draw uses the shared board, its own method notes and the full history
+ok 10 - CR-205: fail-closed v1.6.5 regular draw uses the shared board, its own method notes and the full history
+  ---
+  duration_ms: 0.833213
+  ...
+# Subtest: CR-205: fail-closed v1.6.6 same-draw addition uses the shared board, its own method notes and the full history
+ok 11 - CR-205: fail-closed v1.6.6 same-draw addition uses the shared board, its own method notes and the full history
+  ---
+  duration_ms: 0.803605
+  ...
+# Subtest: CR-205: fail-closed v1.6.7 same-draw addition uses the shared board, its own method notes and the full history
+ok 12 - CR-205: fail-closed v1.6.7 same-draw addition uses the shared board, its own method notes and the full history
+  ---
+  duration_ms: 0.722536
+  ...
+# Subtest: CR-205: fail-closed v1.6.8 same-draw addition uses the shared board, its own method notes and the full history
+ok 13 - CR-205: fail-closed v1.6.8 same-draw addition uses the shared board, its own method notes and the full history
+  ---
+  duration_ms: 0.771485
+  ...
+# Subtest: CR-205: fail-closed v1.6.9 same-draw addition uses the shared board, its own method notes and the full history
+ok 14 - CR-205: fail-closed v1.6.9 same-draw addition uses the shared board, its own method notes and the full history
+  ---
+  duration_ms: 0.878382
+  ...
+# Subtest: CR-205: fail-closed v1.6.10 first release on the second regular draw uses the shared board, its own method notes and the full history
+ok 15 - CR-205: fail-closed v1.6.10 first release on the second regular draw uses the shared board, its own method notes and the full history
+  ---
+  duration_ms: 0.808764
+  ...
+# Subtest: CR-205: fail-closed v1.6.11 same-draw addition uses the shared board, its own method notes and the full history
+ok 16 - CR-205: fail-closed v1.6.11 same-draw addition uses the shared board, its own method notes and the full history
+  ---
+  duration_ms: 0.750985
+  ...
+# Subtest: CR-205: fail-closed v1.6.12 same-draw addition uses the shared board, its own method notes and the full history
+ok 17 - CR-205: fail-closed v1.6.12 same-draw addition uses the shared board, its own method notes and the full history
+  ---
+  duration_ms: 0.722756
+  ...
+# Subtest: CR-205: fail-closed v1.6.13 same-draw addition uses the shared board, its own method notes and the full history
+ok 18 - CR-205: fail-closed v1.6.13 same-draw addition uses the shared board, its own method notes and the full history
+  ---
+  duration_ms: 0.939712
+  ...
+# Subtest: CR-205: fail-closed v1.6.14 same-draw addition uses the shared board, its own method notes and the full history
+ok 19 - CR-205: fail-closed v1.6.14 same-draw addition uses the shared board, its own method notes and the full history
+  ---
+  duration_ms: 0.722456
+  ...
+# Subtest: CR-205: fail-closed v1.6.15 three-row same-draw addition uses the shared board, its own method notes and the full history
+ok 20 - CR-205: fail-closed v1.6.15 three-row same-draw addition uses the shared board, its own method notes and the full history
+  ---
+  duration_ms: 0.740476
+  ...
+# Subtest: CR-205: fail-closed v1.6.16 one-row same-draw addition uses the shared board, its own method notes and the full history
+ok 21 - CR-205: fail-closed v1.6.16 one-row same-draw addition uses the shared board, its own method notes and the full history
+  ---
+  duration_ms: 0.755975
+  ...
+# Subtest: CR-205: fail-closed v1.6.17 same-draw addition uses the shared board, its own method notes and the full history
+ok 22 - CR-205: fail-closed v1.6.17 same-draw addition uses the shared board, its own method notes and the full history
+  ---
+  duration_ms: 1.080359
+  ...
+# Subtest: CR-205: fail-closed v1.6.18 same-draw addition uses the shared board, its own method notes and the full history
+ok 23 - CR-205: fail-closed v1.6.18 same-draw addition uses the shared board, its own method notes and the full history
+  ---
+  duration_ms: 0.5445
+  ...
+# Subtest: CR-205: fail-closed v1.6.20 price-only addendum uses the shared board, its own method notes and the full history
+ok 24 - CR-205: fail-closed v1.6.20 price-only addendum uses the shared board, its own method notes and the full history
+  ---
+  duration_ms: 0.789495
+  ...
+# Subtest: CR-205: fail-closed v1.6.21 same-draw addition uses the shared board, its own method notes and the full history
+ok 25 - CR-205: fail-closed v1.6.21 same-draw addition uses the shared board, its own method notes and the full history
+  ---
+  duration_ms: 0.51797
+  ...
+# Subtest: CR-205: fail-closed v1.6.22 same-draw addition uses the shared board, its own method notes and the full history
+ok 26 - CR-205: fail-closed v1.6.22 same-draw addition uses the shared board, its own method notes and the full history
+  ---
+  duration_ms: 0.465681
+  ...
+# Subtest: CR-205: fail-closed v1.6.23 price-only addendum uses the shared board, its own method notes and the full history
+ok 27 - CR-205: fail-closed v1.6.23 price-only addendum uses the shared board, its own method notes and the full history
+  ---
+  duration_ms: 0.462241
+  ...
+# Subtest: CR-205: fail-closed v1.6.24 same-draw addition uses the shared board, its own method notes and the full history
+ok 28 - CR-205: fail-closed v1.6.24 same-draw addition uses the shared board, its own method notes and the full history
+  ---
+  duration_ms: 0.4656
+  ...
+# Subtest: CR-205: fail-closed v1.6.25 same-draw addition uses the shared board, its own method notes and the full history
+ok 29 - CR-205: fail-closed v1.6.25 same-draw addition uses the shared board, its own method notes and the full history
+  ---
+  duration_ms: 0.571299
+  ...
+# Subtest: CR-205: fail-closed v1.6.26 same-draw addition uses the shared board, its own method notes and the full history
+ok 30 - CR-205: fail-closed v1.6.26 same-draw addition uses the shared board, its own method notes and the full history
+  ---
+  duration_ms: 0.683966
+  ...
+# Subtest: CR-205: fail-closed v1.6.27 same-draw addition uses the shared board, its own method notes and the full history
+ok 31 - CR-205: fail-closed v1.6.27 same-draw addition uses the shared board, its own method notes and the full history
+  ---
+  duration_ms: 0.47661
+  ...
+# Subtest: CR-205: fail-closed v1.6.28 same-draw addition uses the shared board, its own method notes and the full history
+ok 32 - CR-205: fail-closed v1.6.28 same-draw addition uses the shared board, its own method notes and the full history
+  ---
+  duration_ms: 0.544269
+  ...
+# Subtest: CR-205: fail-closed v1.6.29 same-draw addition uses the shared board, its own method notes and the full history
+ok 33 - CR-205: fail-closed v1.6.29 same-draw addition uses the shared board, its own method notes and the full history
+  ---
+  duration_ms: 0.686947
+  ...
+# Subtest: CR-205: fail-closed v1.6.30 cost-rule release uses the shared board, its own method notes and the full history
+ok 34 - CR-205: fail-closed v1.6.30 cost-rule release uses the shared board, its own method notes and the full history
+  ---
+  duration_ms: 0.53214
+  ...
+# Subtest: CR-205: v1.7.1 same-draw additions retain the complete shared board, method notes and history
+ok 35 - CR-205: v1.7.1 same-draw additions retain the complete shared board, method notes and history
+  ---
+  duration_ms: 0.46987
+  ...
+# Subtest: CR-205: v1.7.2 same-draw additions retain the complete shared board, method notes and history
+ok 36 - CR-205: v1.7.2 same-draw additions retain the complete shared board, method notes and history
+  ---
+  duration_ms: 0.48107
+  ...
+# Subtest: CR-205: v1.7.3 GPU replacement retains the shared board, method notes and history
+ok 37 - CR-205: v1.7.3 GPU replacement retains the shared board, method notes and history
+  ---
+  duration_ms: 0.793894
+  ...
+# Subtest: CR-205: v1.7.4 self-hosted addition retains shared board, method notes and history
+ok 38 - CR-205: v1.7.4 self-hosted addition retains shared board, method notes and history
+  ---
+  duration_ms: 0.452581
+  ...
+# Subtest: CR-205: every versioned JevBench route is covered by this test
+ok 39 - CR-205: every versioned JevBench route is covered by this test
+  ---
+  duration_ms: 1.02006
+  ...
+# Subtest: CR-205: the board sections are fed by the pinned v1.5 release artifact
+ok 40 - CR-205: the board sections are fed by the pinned v1.5 release artifact
+  ---
+  duration_ms: 14.071484
+  ...
+# Subtest: CR-205: v1.7.5 self-hosted addition retains shared board, method notes and history
+ok 41 - CR-205: v1.7.5 self-hosted addition retains shared board, method notes and history
+  ---
+  duration_ms: 0.756836
+  ...
+# Subtest: CR-205: v1.7.6 self-hosted addition retains shared board, method notes and history
+ok 42 - CR-205: v1.7.6 self-hosted addition retains shared board, method notes and history
+  ---
+  duration_ms: 0.5032
+  ...
+# Subtest: CR-205: v1.7.7 self-hosted addition retains shared board, method notes and history
+ok 43 - CR-205: v1.7.7 self-hosted addition retains shared board, method notes and history
+  ---
+  duration_ms: 0.47304
+  ...
+# Subtest: CR-205: v1.7.8 self-hosted addition retains shared board, method notes and history
+ok 44 - CR-205: v1.7.8 self-hosted addition retains shared board, method notes and history
+  ---
+  duration_ms: 0.741705
+  ...
+# Subtest: CR-205: v1.7.9 addendum retains shared board, method notes and history
+ok 45 - CR-205: v1.7.9 addendum retains shared board, method notes and history
+  ---
+  duration_ms: 0.487191
+  ...
+# Subtest: architecture schema, evidence and badges are valid for every entry
+ok 46 - architecture schema, evidence and badges are valid for every entry
+  ---
+  duration_ms: 6.864235
+  ...
+# Subtest: all historical and current JevBench and ImageJevBench artifact keys are covered
+ok 47 - all historical and current JevBench and ImageJevBench artifact keys are covered
+  ---
+  duration_ms: 5356.397462
+  ...
+# Subtest: wity entries preserve the author-requested model-family non-disclosure
+ok 48 - wity entries preserve the author-requested model-family non-disclosure
+  ---
+  duration_ms: 0.937342
+  ...
+# Subtest: encoder, diffusion, reranker, reference and single-backbone corrections remain explicit
+ok 49 - encoder, diffusion, reranker, reference and single-backbone corrections remain explicit
+  ---
+  duration_ms: 0.218556
+  ...
+# Subtest: v1.7.10 validates all rows and hides PENDING from public readers
+ok 50 - v1.7.10 validates all rows and hides PENDING from public readers
+  ---
+  duration_ms: 4338.23793
+  ...
+# Subtest: v1.7.10 rejects carried score, interval, category and lane changes
+ok 51 - v1.7.10 rejects carried score, interval, category and lane changes
+  ---
+  duration_ms: 4051.537824
+  ...
+# Subtest: v1.7.10 rejects roster, rank, new row and provenance mutations
+ok 52 - v1.7.10 rejects roster, rank, new row and provenance mutations
+  ---
+  duration_ms: 3547.271863
+  ...
+# Subtest: v1.7.10 requires exact FAIR receipt and paid public order
+ok 53 - v1.7.10 requires exact FAIR receipt and paid public order
+  ---
+  duration_ms: 1329.309779
+  ...
+# Subtest: v1.7.10 pin, template, public-text and cost-kind gates reject negatives
+ok 54 - v1.7.10 pin, template, public-text and cost-kind gates reject negatives
+  ---
+  duration_ms: 8.639461
+  ...
+# Subtest: v1.7.10 exact new scores, coverage and public disclosures
+ok 55 - v1.7.10 exact new scores, coverage and public disclosures
+  ---
+  duration_ms: 0.461061
+  ...
+# Subtest: v1.7.10 synthetic board ranks and official cap lists match the recorded assembly
+ok 56 - v1.7.10 synthetic board ranks and official cap lists match the recorded assembly
+  ---
+  duration_ms: 45.436151
+  ...
+# Subtest: v1.7.10 repo exception rejects HF regression, source or other field changes
+ok 57 - v1.7.10 repo exception rejects HF regression, source or other field changes
+  ---
+  duration_ms: 2133.856955
+  ...
+# Subtest: candidate validates; publication reader accepts either PENDING-hidden or independently reviewed PASS
+ok 58 - candidate validates; publication reader accepts either PENDING-hidden or independently reviewed PASS
+  ---
+  duration_ms: 177.054092
+  ...
+# Subtest: noncost intelligence tamper refuses
+ok 59 - noncost intelligence tamper refuses
+  ---
+  duration_ms: 290.352895
+  ...
+# Subtest: noncost calibration tamper refuses
+ok 60 - noncost calibration tamper refuses
+  ---
+  duration_ms: 296.409906
+  ...
+# Subtest: noncost speed tamper refuses
+ok 61 - noncost speed tamper refuses
+  ---
+  duration_ms: 368.68352
+  ...
+# Subtest: noncost capability tamper refuses
+ok 62 - noncost capability tamper refuses
+  ---
+  duration_ms: 387.072151
+  ...
+# Subtest: corrected row gates refuse tamper r=>r.cost.kind='measured'
+ok 63 - corrected row gates refuse tamper r=>r.cost.kind='measured'
+  ---
+  duration_ms: 364.581551
+  ...
+# Subtest: corrected row gates refuse tamper r=>r.cost.common_basis.n_items=1500
+ok 64 - corrected row gates refuse tamper r=>r.cost.common_basis.n_items=1500
+  ---
+  duration_ms: 281.962108
+  ...
+# Subtest: corrected row gates refuse tamper r=>r.model_pin='wrong'
+ok 65 - corrected row gates refuse tamper r=>r.model_pin='wrong'
+  ---
+  duration_ms: 337.331125
+  ...
+# Subtest: corrected row gates refuse tamper r=>r.cost.basis+=' PLACEHOLDER'
+ok 66 - corrected row gates refuse tamper r=>r.cost.basis+=' PLACEHOLDER'
+  ---
+  duration_ms: 300.696582
+  ...
+# Subtest: corrected row gates refuse tamper r=>r.cost.basis+=' Florian'
+ok 67 - corrected row gates refuse tamper r=>r.cost.basis+=' Florian'
+  ---
+  duration_ms: 224.768188
+  ...
+# Subtest: changed top-five cannot publish with pending fairness
+ok 68 - changed top-five cannot publish with pending fairness
+  ---
+  duration_ms: 388.971775
+  ...
+# Subtest: unrelated carried row and cell tampering refuse
+ok 69 - unrelated carried row and cell tampering refuse
+  ---
+  duration_ms: 398.643295
+  ...
+# Subtest: proof reference tamper refuses
+ok 70 - proof reference tamper refuses
+  ---
+  duration_ms: 270.16566
+  ...
+# Subtest: proof recount tamper refuses
+ok 71 - proof recount tamper refuses
+  ---
+  duration_ms: 284.179116
+  ...
+# Subtest: every /jev-models/v* release page sets its own description <=160 chars
+ok 72 - every /jev-models/v* release page sets its own description <=160 chars
+  ---
+  duration_ms: 5.130039
+  ...
+# Subtest: every /jev-models/v* release page renders JSON-LD (PageJsonLd or an embedded component)
+ok 73 - every /jev-models/v* release page renders JSON-LD (PageJsonLd or an embedded component)
+  ---
+  duration_ms: 4.504992
+  ...
+1..73
+# tests 73
+# suites 0
+# pass 73
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 20321.515129
