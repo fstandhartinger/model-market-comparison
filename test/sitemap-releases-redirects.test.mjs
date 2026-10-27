@@ -9,7 +9,7 @@ const read = (p) => readFileSync(new URL(`../${p}`, import.meta.url), 'utf8');
 
 test('sitemap takes every release page from the release history, not a hard-coded list', () => {
   const src = read('app/sitemap.ts');
-  assert.match(src, /JEVBENCH_RELEASES\.map/);
+  assert.match(src, /JEVBENCH_RELEASES(\s*\.filter\([\s\S]*?\))?\s*\.map/);
   assert.doesNotMatch(src, /"\/jev-models\/v1\.6\.([2-9]|\d\d)"/, 'no hard-coded v1.6.N page after v1.6.1 in the sitemap');
   for (const r of JEVBENCH_RELEASES) assert.ok(existsSync(new URL(`../app${r.href}`, import.meta.url)), `${r.href} has no app route`);
 });

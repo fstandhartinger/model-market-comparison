@@ -1,0 +1,57 @@
+{
+ "carried_rows": 300,
+ "carried_rows_equal_except": [
+  "cost.basis on four keys"
+ ],
+ "link_fixed_rows": [],
+ "method": {
+  "decision_limit_s": 10,
+  "label": "v1.7",
+  "rule": "latency_s > 10.000 s -> failed",
+  "treatment": "share"
+ },
+ "new_rows": {},
+ "predecessor": {
+  "publication_sha256": "00830b67637de735e567f1a11db1520bee0e92aec5be84934614d50f8ad2d97f",
+  "revision": "v1.7.11"
+ },
+ "publication_approval": {
+  "button_tap": false,
+  "fresh_baseline": "v1.7.11",
+  "status": "GO (standing; wording-only, no numeric or top-five change)",
+  "top_five_effect": "unchanged",
+  "top_five_preview_sha256": "26db9a719c88fce005c2c69aec3c406c6d0742a4ed6be5f1d1e87b03c86a7074"
+ },
+ "release_owner_rulings": [
+  "jez-disclosure-lost-raw-28569",
+  "selfhosted-primary-prompt-billing-28557"
+ ],
+ "remeasured_rows": {},
+ "repriced_rows": {},
+ "revision": "v1.7.12",
+ "schema_version": 1,
+ "source_inputs": {
+  "predecessor_publication_sha256": "00830b67637de735e567f1a11db1520bee0e92aec5be84934614d50f8ad2d97f",
+  "predecessor_results_sha256": "a4143c0e6877824a034c32db1d1bee6384f530392b9676ce2cae5c01b9df5320",
+  "wording_sha256": "f51779f0498c7ac251c666dc5241091e2167a24672eecc0e0accaed4b7d055ca"
+ },
+ "text_only_rows": {
+  "d1a-gemma4-e2b": {
+   "after_basis_sha256": "4d786286a47ca3103d3aa4a50dde80eea78f7f2df4b3679739277289c4fb9a00",
+   "before_basis_sha256": "41c2517b8bd7074b91293629473cb4594fb6bfc9a154f9af74f4c5020de96a00"
+  },
+  "d1a-gemma4-e4b": {
+   "after_basis_sha256": "daaf1426688ecbc88034880d426e7ef887b334c00b1d1fa87171f4c7097219a4",
+   "before_basis_sha256": "9cb8ac4c96e192b30f5be8ea2a4e0f98c6aae1302166cbdc83646db7df16681d"
+  },
+  "jez-large-1.0.0": {
+   "after_basis_sha256": "071279aabb18b8bddeccfa62f85c854d7533fa37eaa9c1461feca6931669a9cb",
+   "before_basis_sha256": "53a1369a9ace8a59d07df90d2ce8c053577913cf955bcd6bd5abbdb502d565a7"
+  },
+  "jez-small-1.0.0": {
+   "after_basis_sha256": "348c6e211355b356c75b5b095dffd5a48748e3f5622c8bfcddf2ccdf93bcdbdb",
+   "before_basis_sha256": "c86663ddfb5b6d44d2c9d429de31d36cc890264fee519d66ac125ffba3117239"
+  }
+ },
+ "topfive_diff_sha256": "26db9a719c88fce005c2c69aec3c406c6d0742a4ed6be5f1d1e87b03c86a7074"
+}
