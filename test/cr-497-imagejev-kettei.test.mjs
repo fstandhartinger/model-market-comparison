@@ -7,7 +7,7 @@ const release = JSON.parse(await read('../data/imagejev-v03.json'));
 const row = (key) => release.ranking.find((r) => r.key === key);
 const ROWS = [
   { key: 'kettei_fat', name: 'kettei-fat (Sqwish)', model: 'kettei-fat', window: '17:24-17:34 UTC', price: /USD 0\.06 per 1M input tokens/, rank: 1 },
-  { key: 'kettei_chub', name: 'kettei-chub (Sqwish)', model: 'kettei-chub', window: '17:35-17:43 UTC', price: /USD 0\.04 per 1M input tokens/, rank: 4 },
+  { key: 'kettei_chub', name: 'kettei-chub (Sqwish)', model: 'kettei-chub', window: '17:35-17:43 UTC', price: /USD 0\.04 per 1M input tokens/, rank: 5 },
 ];
 
 for (const R of ROWS) {
