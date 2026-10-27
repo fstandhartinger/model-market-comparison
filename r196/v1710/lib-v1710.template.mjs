@@ -17,6 +17,8 @@ const hash = b => createHash('sha256').update(b).digest('hex');
 const fail = m => { throw new Error(`JevBench v1.7.10: ${m}`); };
 const same = (a,b,m) => { if (!isDeepStrictEqual(a,b)) fail(m); };
 const stripRank = s => { const r = structuredClone(s); delete r.rank; delete r.ranks; return r; };
+const linkKeys = ['singularity-super-decider','singularity-super-decider-thinking'];
+const vendorUrl = 'https://singularitycompute.com/super-decider';
 const hex = s => /^[a-f0-9]{64}$/.test(s ?? '');
 function publicOnly(v) {
  if (!v || typeof v !== 'object') return;
@@ -45,7 +47,9 @@ export function validateJevbenchV1710Bundle({manifest,artifact,categories,carry,
  same([...by.keys()].sort(),[...previous.artifact.systems.map(s=>s.key),...V1710_NEW_KEYS].sort(),'exact roster');
  if (artifact.roster_count!==rows.length || artifact.n_ranked!==rows.filter(s=>s.ranked).length) fail('counts');
  for (const p of previous.artifact.systems) {
-  same(stripRank(by.get(p.key)),stripRank(p),'carried row '+p.key);
+  const expected=stripRank(p);
+  if(linkKeys.includes(p.key)){expected.repo=vendorUrl;same(by.get(p.key).source_url,vendorUrl,'vendor source '+p.key);}
+  same(stripRank(by.get(p.key)),expected,'carried row '+p.key);
   same(categories.systems[p.key],previous.categories.systems[p.key],'carried cells '+p.key);
   same(categories.lanes[p.key],previous.categories.lanes[p.key],'carried lane '+p.key);
  }
@@ -80,6 +84,9 @@ export function validateJevbenchV1710Bundle({manifest,artifact,categories,carry,
  }
  if(proof.revision!=='v1.7.10'||proof.carried_rows!==previous.artifact.systems.length-V1710_REMEASURED_KEYS.length)fail('proof identity');
  same(proof.method,previous.artifact.method,'proof method');
+ same(artifact.addendum.link_fixed_keys,linkKeys,'link keys');
+ same(proof.link_fixed_rows,linkKeys,'link proof keys');
+ same(proof.exceptions,Object.fromEntries(linkKeys.map(k=>[k,{repo:vendorUrl}])),'link proof exceptions');
  for(const f of ['scored_rows_sha256','entry_sha256','cells_sha256'])if(!hex(proof.source_inputs?.[f]))fail('input provenance '+f);
  same(proof.predecessor,manifest.predecessor,'proof predecessor');
  same(proof.pricing_module_sha256,'645fd82eac728d597048bec0995ecd3ac896566e269fb6c9a1fdb84c171a9ac4','pricing pin');

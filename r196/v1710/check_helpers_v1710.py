@@ -19,4 +19,8 @@ for field,value in [('verdict','PENDING'),('sha256','a'*64)]:
  except AssertionError:pass
  else:raise AssertionError('bad FAIR accepted')
 assert sha(pub)==before
-(R/'HELPERS.json').write_text(json.dumps({'status':'PASS','flip_dry_run':True,'real_manifest_unchanged':before,'pending_freeze_refused':True,'synthetic_freeze_dry_run':True,'seal_write_refused':True,'fairness_negative_cases':2,'fixture_grants_no_authority':True},indent=1)+'\n');print('PASS flip/freeze dry runs, actual PENDING refusal, seal-write refusal, FAIR negatives; real manifest unchanged')
+x=run(['python3','-B',str(J/'flip_verdict_v1710.py'),str(fixture)])
+(R/'flip-real-refused.log').write_text(x.stdout+x.stderr)
+assert x.returncode!=0 and 'fixture receipts are dry-run only' in x.stderr
+assert sha(pub)==before
+(R/'HELPERS.json').write_text(json.dumps({'status':'PASS','flip_dry_run':True,'real_manifest_unchanged':before,'pending_freeze_refused':True,'real_flip_with_fixture_refused':True,'synthetic_freeze_dry_run':True,'seal_write_refused':True,'fairness_negative_cases':2,'fixture_grants_no_authority':True},indent=1)+'\n');print('PASS flip/freeze dry runs, actual PENDING refusal, seal-write refusal, FAIR negatives; real manifest unchanged')

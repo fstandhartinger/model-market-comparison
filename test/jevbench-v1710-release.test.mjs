@@ -56,3 +56,12 @@ test('v1.7.10 synthetic board ranks and official cap lists match the recorded as
   for(const [label,opts]of [['official_caps',{}],['no_caps',{costFactor:Infinity,latencyFactor:Infinity}],['cost_off_latency_2x',{costFactor:Infinity}],['latency_none',{latencyFactor:Infinity}]])assert.deepEqual(jevClassRows(rows,{...JEV_V16_CLASS_OPTIONS,...opts}).rows.filter(r=>r.inClass).map(r=>r.row.key),f.views[scope].capability[label]);
  }
 });
+
+test('v1.7.10 repo exception rejects HF regression, source or other field changes',()=>{
+ for(const k of ['singularity-super-decider','singularity-super-decider-thinking']){
+  mutate(x=>{row(x,k).repo='https://huggingface.co/singularity';},/carried row/);
+  mutate(x=>{row(x,k).source_url='https://wrong.example';},/vendor source/);
+  mutate(x=>{row(x,k).disclosure+=' changed';},/carried row/);
+ }
+ mutate(x=>{x.proof.exceptions={};},/link proof exceptions/);
+});

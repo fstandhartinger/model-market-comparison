@@ -1,4 +1,143 @@
 {
+ "BUILT-LINKS": {
+  "compiled_route": ".next/server/app/api/jevbench/latest/route.js",
+  "real_manifest_unchanged": true,
+  "real_pending_latest": "v1.7.9",
+  "rows": [
+   {
+    "api_board_rank": 1,
+    "axes": {
+     "calibration": 90.84828412834014,
+     "cost": 64.26424619973979,
+     "intelligence": 78.8866847061141,
+     "speed": 85.30638666270315
+    },
+    "board": "api",
+    "capability": {
+     "api_board_rank": 3,
+     "eligible": true,
+     "open_board_rank": null,
+     "rank": 3,
+     "reasons": [],
+     "score": 84.86748441722712,
+     "within_caps": true
+    },
+    "composite_score": 78.48219079083019,
+    "decision_limit": {
+     "limit_s": 10,
+     "n_over_limit": 11,
+     "n_over_limit_answered_ok": 11,
+     "rule": "latency_s > limit -> failed",
+     "speed_basis": "all decisions given (lane items in the raw), measured latency_s",
+     "speed_n": 1500,
+     "treatment": "share"
+    },
+    "draw": {
+     "id": "v1.6-regular-20261012",
+     "label": "Second regular draw",
+     "measured_on": "2026-10-21",
+     "release": "v1.7.0",
+     "status": "anchor-runs-pending"
+    },
+    "key": "singularity-super-decider",
+    "latency": {
+     "adjustment": "none (API)",
+     "latency_basis": "api-end-to-end",
+     "n": 1500,
+     "p50_s_adjusted": 0.24612953246105462,
+     "p50_s_measured": 0.24612953246105462,
+     "p50_s_raw": 0.24612953246105462,
+     "p95_s_adjusted": 1.1972851804515812,
+     "p95_s_raw": 1.1972851804515812
+    },
+    "listing": "ranked",
+    "measured_in": "v1.7.0",
+    "method": "v1.7",
+    "method_status": "v1.7",
+    "name": "Super Decider",
+    "new_in": "v1.7.0",
+    "not_ranked_because": null,
+    "open_board_rank": null,
+    "previous": null,
+    "price": {
+     "basis": "Launch list price: the launch list price stated on the vendor's public product page (singularitycompute.com/super-decider, fetched 22 Oct 2026: USD 0.03 per 1M input tokens, output tokens free); the ASI:Cloud catalogue itself was not reachable to us. The page lists one price for the product and no separate rate for thinking mode; we apply it to both rows. Counted as an operator launch list price by the frozen pricing module pricing_v15 (sha256 aa2afcd5a58d0c4cc0e3d6867d590c70b6ac58e971410c27faf9628f97bcf8b7, re-frozen on 22 Oct 2026 with launch-list keys added and nothing else changed; the launch-list line and the rates for this product are identical in the earlier module 81e3578f), which carries a launch-list-price line for this product. Applied to the tokens reported by the provider's API; not a base-model estimate. Over all 1,500 items the frozen resolve() gives USD 0.039197 per 1,000 decisions; the official cost axis uses the common 1,485-item basis, where it is USD 0.015531 per 1,000 decisions. COMMON COST BASIS (v1.6.30): common 1,485 items, excluding the 15 longest for every row; 768,771 input / 322,546 output tokens. All-item usage 1,959,826 input / 328,348 output over 1,500 items.",
+     "kind": "listed",
+     "usd_per_1000_decisions": 0.01553072727272727
+    },
+    "rank": 1,
+    "ranked": true,
+    "rescored_in": null,
+    "source_url": "https://singularitycompute.com/super-decider"
+   },
+   {
+    "api_board_rank": 9,
+    "axes": {
+     "calibration": 91.69553288708067,
+     "cost": 56.397623391206686,
+     "intelligence": 80.00899811568502,
+     "speed": 79.83008200555805
+    },
+    "board": "api",
+    "capability": {
+     "api_board_rank": 2,
+     "eligible": true,
+     "open_board_rank": null,
+     "rank": 2,
+     "reasons": [],
+     "score": 85.85226550138285,
+     "within_caps": true
+    },
+    "composite_score": 74.54050341581339,
+    "decision_limit": {
+     "limit_s": 10,
+     "n_over_limit": 4,
+     "n_over_limit_answered_ok": 4,
+     "rule": "latency_s > limit -> failed",
+     "speed_basis": "all decisions given (lane items in the raw), measured latency_s",
+     "speed_n": 1500,
+     "treatment": "share"
+    },
+    "draw": {
+     "id": "v1.6-regular-20261012",
+     "label": "Second regular draw",
+     "measured_on": "2026-10-21",
+     "release": "v1.7.0",
+     "status": "anchor-runs-pending"
+    },
+    "key": "singularity-super-decider-thinking",
+    "latency": {
+     "adjustment": "none (API)",
+     "latency_basis": "api-end-to-end",
+     "n": 1500,
+     "p50_s_adjusted": 0.8880362859927118,
+     "p50_s_measured": 0.8880362859927118,
+     "p50_s_raw": 0.8880362859927118,
+     "p95_s_adjusted": 1.171011304546846,
+     "p95_s_raw": 1.171011304546846
+    },
+    "listing": "ranked",
+    "measured_in": "v1.7.0",
+    "method": "v1.7",
+    "method_status": "v1.7",
+    "name": "Super Decider (thinking)",
+    "new_in": "v1.7.0",
+    "not_ranked_because": null,
+    "open_board_rank": null,
+    "previous": null,
+    "price": {
+     "basis": "Launch list price: the launch list price stated on the vendor's public product page (singularitycompute.com/super-decider, fetched 22 Oct 2026: USD 0.03 per 1M input tokens, output tokens free); the ASI:Cloud catalogue itself was not reachable to us. The page lists one price for the product and no separate rate for thinking mode; we apply it to both rows. Counted as an operator launch list price by the frozen pricing module pricing_v15 (sha256 aa2afcd5a58d0c4cc0e3d6867d590c70b6ac58e971410c27faf9628f97bcf8b7, re-frozen on 22 Oct 2026 with launch-list keys added and nothing else changed; the launch-list line and the rates for this product are identical in the earlier module 81e3578f), which carries a launch-list-price line for this product. Applied to the tokens reported by the provider's API; not a base-model estimate. Over all 1,500 items the frozen resolve() gives USD 0.052098 per 1,000 decisions; the official cost axis uses the common 1,485-item basis, where it is USD 0.028406 per 1,000 decisions. COMMON COST BASIS (v1.6.30): common 1,485 items, excluding the 15 longest for every row; 1,406,105 input / 636,221 output tokens. All-item usage 2,604,915 input / 643,964 output over 1,500 items.",
+     "kind": "listed",
+     "usd_per_1000_decisions": 0.028406161616161614
+    },
+    "rank": 10,
+    "ranked": true,
+    "rescored_in": null,
+    "source_url": "https://singularitycompute.com/super-decider"
+   }
+  ],
+  "status": "PASS",
+  "synthetic_candidate_latest": "v1.7.10"
+ },
  "CARRIED-ROWS": {
   "carried_cells_equal": 302,
   "immutable_bytes": [
@@ -8,7 +147,12 @@
   ],
   "new_score_payloads_equal_to_sources": true,
   "predecessor_files_equal_to_base": 7,
-  "rows_equal_except_rank": 297,
+  "repo_exception_keys": [
+   "singularity-super-decider",
+   "singularity-super-decider-thinking"
+  ],
+  "rows_equal_except_rank": 295,
+  "rows_equal_except_rank_and_repo": 2,
   "status": "PASS"
  },
  "CHANGED-LISTS-BY-ROW": {
@@ -489,10 +633,26 @@
   "fixture_grants_no_authority": true,
   "flip_dry_run": true,
   "pending_freeze_refused": true,
-  "real_manifest_unchanged": "80b196b9702d4c4cbb24b5ff393fd1a3430e7c4428519211c18c381467108e1a",
+  "real_flip_with_fixture_refused": true,
+  "real_manifest_unchanged": "942fbbd5f89a59f0430a46c21864e0326c2d72abfeb474509de0165be48aecfc",
   "seal_write_refused": true,
   "status": "PASS",
   "synthetic_freeze_dry_run": true
+ },
+ "PREDECESSOR-REBASE": {
+  "base": "39d148e0f30d10648d484559a8bf565f0b722bd1",
+  "binding_sha256": "95c99857e5f5fd9cf4f9ef93621c8092af3c15d08a92782dc659da39f1bc44ce",
+  "files": {
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.9-carry.json": "271d1fc77a136a04a1eb6deb5480c52d4211eb2b66b2ac8bb31e80867e69003a",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.9-categories.json": "a365e06e214cb0d41fd511ec51e341b5263ce0d86fa05ca0bf358972c4ea08ba",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.9-history-carry.json": "334e851944e92383ab3071e52b3012040c7023d0fe236395953169ebee8f0459",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.9-history.json": "5cd8c1332226ea9c179883d2285c0d8b8cc593ae38f2645197364a7ddd9c83c1",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.9-proof.json": "d2071e5aa01b106020907031f1d7526610c53cc85ba87610bcc4997d0ab40931",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.9-publication.json": "95c99857e5f5fd9cf4f9ef93621c8092af3c15d08a92782dc659da39f1bc44ce",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.9-results.json": "ab863afda444baa950b6007768d0048060e5661b019ac94b0a777d6dded63294"
+  },
+  "proof_and_manifest_binding": true,
+  "status": "PASS"
  },
  "PREVIEW": {
   "footer": "Release review pending",
@@ -508,16 +668,16 @@
  "REPRO": {
   "files": {
    "app/api/jevbench/v1.7.10/route.ts": "b2c77e8ed86709e88dcc47085993b0757e18ead34e4308297938c51003fd3d64",
-   "app/jev-models/v1.7.10/page.tsx": "de6fb21ac51537ce49ee3003d47c3be2ad9fc0ba3dcf8df75302efe72be3d4f6",
+   "app/jev-models/v1.7.10/page.tsx": "68496b5523ef6f5fee5272bec1841ed3e50b6e9aee96e0a476af24b9ea867df7",
    "data/jevbench-architecture.json": "e3a127a7df41d2bb9bda9f4aecbb59dba430e37153b181e9d0d3fd2b70eabbf7",
    "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.10-carry.json": "271d1fc77a136a04a1eb6deb5480c52d4211eb2b66b2ac8bb31e80867e69003a",
-   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.10-categories.json": "f4aee99099f773195d941b915343b770e6abffd5ff857dd29ee7f6a8a4915755",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.10-categories.json": "1c3e326799226bac4fc01c6c85873d3ee3b2cd3a8debf4141eabe04d276a7189",
    "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.10-history-carry.json": "334e851944e92383ab3071e52b3012040c7023d0fe236395953169ebee8f0459",
    "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.10-history.json": "5cd8c1332226ea9c179883d2285c0d8b8cc593ae38f2645197364a7ddd9c83c1",
-   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.10-proof.json": "d806272e9d068cc4b7ce1131a4c1835088dd7ee78b104e404b14ddb2241bb403",
-   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.10-publication.json": "80b196b9702d4c4cbb24b5ff393fd1a3430e7c4428519211c18c381467108e1a",
-   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.10-results.json": "1076187e7621c2ca4c514d8d29d857fc870970926a279475a23c8faea0b09e88",
-   "lib/jevbench-v1710-release.mjs": "c0b27f22c040e7484faccfaa535f7df0a187e2703b5c06371b50df4e53db5ead"
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.10-proof.json": "808b395fa7bd6d089ca0af8a706a005176fe5527869bdbccc0e0261853b8ef27",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.10-publication.json": "942fbbd5f89a59f0430a46c21864e0326c2d72abfeb474509de0165be48aecfc",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.10-results.json": "a64a249cdb08fc6d642c59043e7591dfecf15ce6296f503f29d9b9ac073d7b80",
+   "lib/jevbench-v1710-release.mjs": "fec58658ec9c7963021cc2c02326b440634cfab3c4402b4fa5f5ed503ba434b9"
   },
   "status": "PASS",
   "two_rebuilds_identical": true
@@ -526,11 +686,11 @@
  "fulltest": {
   "cancelled": 0,
   "fail": 0,
-  "log_sha256": "33a4098b55bda94f9cb0fb842466fa6894f23c1420b120313283af764a4ee573",
-  "pass": 3827,
+  "log_sha256": "08f184c5067f3353a930a87f758048dca9aec6b7fb47c7fc282ef0634ab339e6",
+  "pass": 3831,
   "skipped": 8,
   "status": "PASS",
-  "tests": 3835
+  "tests": 3839
  },
  "helpers": {
   "log_sha256": "0f8b99c5b21274fc1648f47fe4657e54f5d89b91eeca08d7886aabb1a8adce51",
@@ -545,25 +705,25 @@
   "status": "PASS"
  },
  "production-build": {
-  "log_sha256": "e5cc888e55edbf2f70c18c4f3169295a669fa9c6e5c387794d1d3996b0e39f8c",
+  "log_sha256": "26a3fd5447d0e451b499a34b5dd6421aa096fd2d9c32fa7e56ce67961415bad0",
   "status": "PASS"
  },
  "publication_review": "PENDING",
  "release-tests": {
   "cancelled": 0,
   "fail": 0,
-  "log_sha256": "555d5cb9efa39c33494167a6c5d3396b88e6725e244d86b68d94ff4db5bd7770",
-  "pass": 66,
+  "log_sha256": "e113530dcfed5ff6a821b9559e8b83e8d1c20e68d52ff800be0241f1e14d672e",
+  "pass": 23,
   "skipped": 0,
   "status": "PASS",
-  "tests": 66
+  "tests": 23
  },
  "repro": {
-  "log_sha256": "3b77c108c9d64b3b83fdb10c87e33c81271e69059862d2f258f1f3a22e854c5e",
+  "log_sha256": "7930c372c596124a8de2e93dc1f54a5be446df2b6044cac6e115cba976704919",
   "status": "PASS"
  },
  "source": {
-  "log_sha256": "4a173a71209a59d350f67e9859602085c8ed615bc6e8103c407f283838f0acde",
+  "log_sha256": "8701b6f5c3589ca8788a1e85006e511e13a501acafaeab3329ecfe0c17675f49",
   "status": "PASS"
  },
  "status": "PASS",

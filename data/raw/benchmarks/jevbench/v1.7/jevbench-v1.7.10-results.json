@@ -3,7 +3,10 @@
  "G_med_api_basis_P_vs_A": -1.1922125858968342,
  "G_med_flag_gt10": false,
  "addendum": {
-  "link_fixed_keys": [],
+  "link_fixed_keys": [
+   "singularity-super-decider",
+   "singularity-super-decider-thinking"
+  ],
   "method_change": false,
   "new_keys": [
    "decisio-qwen3.6-35b-a3b-v090",
@@ -1301,7 +1304,7 @@
   "Two new self-hosted rows D1A on Gemma 4 E4B (JohnP1 d1a-e4b) and D1A on Gemma 4 E2B (JohnP1 d1a-e2b); no method change. On each D1A row, 15 of 1,500 answers were made on a prompt truncated at the author's 65,536-token limit and took over 10 s (up to 20.6 s on E4B and 16.2 s on E2B); the v1.7 share view counts them as wrong.",
   "One new self-hosted row Jeff-1.1-Medium; no method change. Question-aware retrieval answered 15 long items within 8,192 input tokens; zero of 1,500 answers exceeded 10 s. Cost is an ESTIMATE; an uncounted second-prefill estimate of 427,166 input tokens is not priced. Weights CC BY-NC-4.0 (non-commercial).",
   "One new self-hosted row GLiClass v4 9B; Myles-G 12B now priced at its public list price; Super Decider links point to the vendor page; no method change. GLiClass answered 1,485 of 1,500 requests; 15 HTTP 422 length refusals count as misses. Its cost is an ESTIMATE from Qwen/Qwen3.5-9B with zero generated output.",
-  "Three new self-hosted rows Philly Decider v2, iota-decide-4b-v0.3 and Decisio 0.9.0 (Qwen3.6-35B-A3B); no method change. Philly and iota v0.3 answered all 1,500 requests with disclosed truncation. Decisio answered 1,485; 15 HTTP 500 over-length refusals count as misses. All three costs are ESTIMATE base-model prices; Decisio uses disclosed offline engine-input billing and exceeds the cost cap."
+  "Three new self-hosted rows Philly Decider v2, iota-decide-4b-v0.3 and Decisio 0.9.0 (Qwen3.6-35B-A3B); no method change. Super Decider rows now link to the vendor page (completes the v1.7.9 change). Philly and iota v0.3 answered all 1,500 requests with disclosed truncation. Decisio answered 1,485; 15 HTTP 500 over-length refusals count as misses. All three costs are ESTIMATE base-model prices; Decisio uses disclosed offline engine-input billing and exceeds the cost cap."
  ],
  "method": {
   "decision_limit_s": 10,
@@ -1675,7 +1678,7 @@
   "total": 1500
  },
  "sealed_share_of_intelligence": 0.5,
- "source_note": "Three new self-hosted rows Philly Decider v2, iota-decide-4b-v0.3 and Decisio 0.9.0 (Qwen3.6-35B-A3B); no method change.",
+ "source_note": "Three new self-hosted rows Philly Decider v2, iota-decide-4b-v0.3 and Decisio 0.9.0 (Qwen3.6-35B-A3B); no method change. Super Decider rows now link to the vendor page (completes the v1.7.9 change).",
  "source_sha256": "036f9cdb1a181c07fe638d7f643410343c3bb74931dc053624c212ee20924c64",
  "status": "published",
  "systems": [
@@ -212512,7 +212515,7 @@
     "C": 1,
     "capability": 10
    },
-   "repo": "https://huggingface.co/Singularity-Compute/super-decider",
+   "repo": "https://singularitycompute.com/super-decider",
    "scores": {
     "A": 78.48219079083019,
     "B": 78.56275738441518,
@@ -213871,7 +213874,7 @@
     "C": 9,
     "capability": 6
    },
-   "repo": "https://huggingface.co/Singularity-Compute/super-decider",
+   "repo": "https://singularitycompute.com/super-decider",
    "scores": {
     "A": 74.54050341581339,
     "B": 75.57357140671725,
