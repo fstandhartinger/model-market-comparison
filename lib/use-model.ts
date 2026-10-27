@@ -1,6 +1,6 @@
 // "Use this model" entry on JevBench (open weights) and ImageJevBench rows. Framing (27 Oct 2026): run open-weights decision
 // models yourself instead of depending on a closed company; every open-weights row gets the same link, it never touches
-// scores or ranks, and the page says that Decision Models is run by the same company. PREVIEW: hidden from visitors until
+// scores or ranks, and the page says that Decision Models is run by the same company. Public since CR-577 (Florian's GO); before that hidden until
 // Florian's GO (not before the Decision Models unstealth). Flip USE_MODEL_PUBLIC to true to roll it out; until then it
 // only renders in a tab opened with the unpublished ?bh-pv=<token> link. It lasts for that tab only (sessionStorage),
 // always shows a PREVIEW banner, and any other ?bh-pv value or the banner's exit button switches it off (10 Oct 2026).
@@ -8,7 +8,7 @@
 import slugs from '../data/use-model-slugs.json';
 import optOutData from '../data/use-model-optout.json';
 
-export const USE_MODEL_PUBLIC = false;
+export const USE_MODEL_PUBLIC = true;
 export const USE_MODEL_PARAM = 'bh-pv';
 export const USE_MODEL_TOKEN = 'dm-use-7q';
 /** sessionStorage key; the 9 Oct preview kept the same key in localStorage, which is now cleared on every visit. */
