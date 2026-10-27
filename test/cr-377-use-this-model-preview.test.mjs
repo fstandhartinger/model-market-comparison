@@ -7,9 +7,9 @@ import { readFile } from 'node:fs/promises';
 
 const read = (path) => readFile(new URL(path, import.meta.url), 'utf8');
 
-test('CR-377: the entry is off for everyone unless the preview parameter was opened', async () => {
+test('CR-377 / CR-577: the entry is public since Florian\'s GO; the server snapshot stays off', async () => {
   const [lib, button] = await Promise.all([read('../lib/use-model.ts'), read('../components/UseModelButton.tsx')]);
-  assert.match(lib, /export const USE_MODEL_PUBLIC = false;/, 'rolling it out needs Florian\'s GO; keep this false until then');
+  assert.match(lib, /export const USE_MODEL_PUBLIC = true;/, 'CR-577: Florian tapped Live on the Use-buttons card');
   assert.match(button, /useSyncExternalStore\(subscribe, readFlag, \(\) => false\)/, 'the server snapshot is always off, so crawlers and visitors get the unchanged HTML');
   assert.match(button, /if \(!enabled\) return null;/, 'a disabled button renders nothing, not even a wrapper that would shift the row layout');
 });
