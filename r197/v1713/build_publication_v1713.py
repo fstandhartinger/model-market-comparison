@@ -1,5 +1,5 @@
 """v1.7.13: first release on the fresh draw v1.6-regular-20261027 — one new self-hosted paid public row, measured but UNRANKED
-(provisional: its draw has no anchor runs yet; release-owner decision v1713-h2o141-unranked-provisional after a SUSPICIOUS
+(provisional: its draw is not yet equated; release-owner decision v1713-h2o141-unranked-provisional after a SUSPICIOUS
 fairness review). Every predecessor row is immutable, ranks included; no order list changes."""
 import os, pathlib, json, hashlib, copy, shutil, re, argparse
 from pricing_reference_v1713 import reference, PIN
@@ -9,10 +9,10 @@ L = lambda p: json.loads(pathlib.Path(p).read_text()); sha = lambda p: hashlib.s
 put = lambda p, d: pathlib.Path(p).write_text(json.dumps(d, indent=1, sort_keys=True, ensure_ascii=False) + '\n')
 # Unranked-row precedent: ranked false, rank null, all ranks null, a stated not_ranked_because (lib/jevbench-v1630-release.mjs:242-245);
 # listing 'unranked' for a measured row that keeps its scores (lib/jevbench-v15-preview.mjs:29,123).
-NOT_RANKED_BECAUSE = ('Measured on the 27 Oct 2026 draw, which has no anchor runs yet, so its scores are not yet on the reference scale. '
+NOT_RANKED_BECAUSE = ('Measured on the 27 Oct 2026 draw, which is not yet equated to the reference scale. '
                       'This draw differs strongly from earlier draws (72% multilingual items). On the 300 public items every draw shares, this version '
                       'scores 57.2 Intelligence vs 61.1 for H2O-Lightning-4B v1.1; its higher overall Intelligence comes from this draw\'s sealed items. '
-                      'Shown unranked until the draw\'s anchor runs are complete.')
+                      'Shown unranked until the draw is equated.')
 NULL_RANKS = {'A': None, 'B': None, 'C': None, 'capability': None}
 DRAW = {'id': 'v1.6-regular-20261027', 'label': 'Third regular draw', 'drawn_on': '2026-10-27', 'status': 'anchor-runs-pending', 'offset': {'C': 0, 'I': 0}, 'offset_ci95': None}
 old = {n: L(V / f'jevbench-{PREV}-{n}.json') for n in ['results', 'categories', 'carry', 'proof', 'publication']}; assert old['publication']['review']['verdict'] == 'PASS'
@@ -43,9 +43,9 @@ for k in keys:
 # Unranked: no order list and no carried rank changes (the board is the predecessor's, byte for byte).
 assert res['board'] == old['results']['board'] and not any(k in res['board'][m]['order'] for m in res['board'] for k in keys)
 for k, row in prev.items(): assert row == out[k], k
-note = "First release on the 27 Oct regular draw: H2O-Lightning-4B v1.4.1 (paid evaluation), shown unranked until the draw's anchor runs are complete."
+note = "First release on the 27 Oct regular draw: H2O-Lightning-4B v1.4.1 (paid evaluation), shown unranked until the draw is equated to the reference scale."
 res.update(revision=REV, label='JevBench v1.7.13: first release on the 27 Oct regular draw', systems=sorted(out.values(), key=lambda s: s['key']), n_ranked=sum(bool(s['ranked']) for s in out.values()), roster_count=len(out), run_kind='same-draw-addendum', source_sha256=source_sha, source_note=note)
-res['measurement_notes'] = old['results']['measurement_notes'] + [note + ' It answered all 1,500 requests of the new draw (5 long states trimmed by the model at pre-registered positions), none over 10 s. Its draw has no anchor runs yet, so its numbers are shown as published (offset 0) with the reference gap-penalty median. Cost is an ESTIMATE from the base model price on the prompt tokens the model processed. This draw has no topic labels, so the row has no topic cells. NOT RANKED: ' + NOT_RANKED_BECAUSE + ' No existing row, rank or ranking changed.']
+res['measurement_notes'] = old['results']['measurement_notes'] + [note + ' It answered all 1,500 requests of the new draw (5 long states trimmed by the model at pre-registered positions), none over 10 s. Its draw is not yet equated to the reference scale, so its numbers are shown as published (offset 0) with the reference gap-penalty median. Cost is an ESTIMATE from the base model price on the prompt tokens the model processed. This draw has no subject-topic labels yet, so the row has no topic cells; its use-case and language cells are measured on its own draw. NOT RANKED: ' + NOT_RANKED_BECAUSE + ' No existing row, rank or ranking changed.']
 res['addendum'] = {'predecessor': PREV, 'new_keys': keys, 'remeasured_keys': [], 'repriced_keys': [], 'link_fixed_keys': [], 'method_change': False, 'new_draw': DRAW['id']}
 put(V / f'jevbench-{REV}-results.json', res)
 cat = cp(old['categories'])

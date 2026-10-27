@@ -2,167 +2,167 @@ TAP version 13
 # Subtest: feed carries board and open-board rank next to the unchanged combined rank
 ok 1 - feed carries board and open-board rank next to the unchanged combined rank
   ---
-  duration_ms: 136924.510368
+  duration_ms: 70663.110971
   ...
 # Subtest: llms-full and FAQ use the open-weights board
 ok 2 - llms-full and FAQ use the open-weights board
   ---
-  duration_ms: 100511.128523
+  duration_ms: 62069.862555
   ...
 # Subtest: gate: no listed row lacks topic, use-case or language cells without a recorded exception
 ok 3 - gate: no listed row lacks topic, use-case or language cells without a recorded exception
   ---
-  duration_ms: 46.367722
+  duration_ms: 23.418134
   ...
 # Subtest: gate catches a future fresh-draw row whose release ships no category cells
 ok 4 - gate catches a future fresh-draw row whose release ships no category cells
   ---
-  duration_ms: 8.957244
+  duration_ms: 6.113416
   ...
 # Subtest: gate catches an added API row and a carry row without language cells
 ok 5 - gate catches an added API row and a carry row without language cells
   ---
-  duration_ms: 9.330998
+  duration_ms: 5.103845
   ...
 # Subtest: exceptions need a reason and a decision reference
 ok 6 - exceptions need a reason and a decision reference
   ---
-  duration_ms: 0.677288
+  duration_ms: 0.720907
   ...
 # Subtest: fresh-draw rows carry their own draw cells, tagged with the draw; no row of the base is overridden
 ok 7 - fresh-draw rows carry their own draw cells, tagged with the draw; no row of the base is overridden
   ---
-  duration_ms: 19.875962
+  duration_ms: 14.549639
   ...
 # Subtest: cohort topic supplement is aggregate-only and validated
 ok 8 - cohort topic supplement is aggregate-only and validated
   ---
-  duration_ms: 29.19336
+  duration_ms: 10.427116
   ...
 # Subtest: gate (ImageJevBench v0.3): every ranking row has image-type, use-case and TypeSafe-20 cells or a recorded exception
 ok 9 - gate (ImageJevBench v0.3): every ranking row has image-type, use-case and TypeSafe-20 cells or a recorded exception
   ---
-  duration_ms: 19.635676
+  duration_ms: 13.331331
   ...
 # Subtest: jevFoldWithPinned: pinned rows keep their position above the fold, do not count toward the limit, and are moved up from below it
 ok 10 - jevFoldWithPinned: pinned rows keep their position above the fold, do not count toward the limit, and are moved up from below it
   ---
-  duration_ms: 1.572711
+  duration_ms: 1.336345
   ...
 # Subtest: Delta 4: with the folds collapsed, Jev 1.13.0 and Jev 1.14.0 are rendered above the fold in the open-board Capability and Composite sections
 ok 11 - Delta 4: with the folds collapsed, Jev 1.13.0 and Jev 1.14.0 are rendered above the fold in the open-board Capability and Composite sections
   ---
-  duration_ms: 9401.799175
+  duration_ms: 5766.500754
   ...
 # Subtest: v1.6.30 accepts the stored build once the review passes
 ok 12 - v1.6.30 accepts the stored build once the review passes
   ---
-  duration_ms: 496.2516
+  duration_ms: 295.784573
   ...
 # Subtest: v1.6.30 is not publishable while the manifest is PENDING or the preview card is a placeholder
 ok 13 - v1.6.30 is not publishable while the manifest is PENDING or the preview card is a placeholder
   ---
-  duration_ms: 429.948607
+  duration_ms: 347.635877
   ...
 # Subtest: 48 token-priced rows change cost on the common basis, 9 unpriced rows do not
 ok 14 - 48 token-priced rows change cost on the common basis, 9 unpriced rows do not
   ---
-  duration_ms: 26.796464
+  duration_ms: 5.012247
   ...
 # Subtest: named rows: nimble-v4-max enters at \#3, subq-snap-preview falls inside the official cost cap
 ok 15 - named rows: nimble-v4-max enters at \#3, subq-snap-preview falls inside the official cost cap
   ---
-  duration_ms: 8.884585
+  duration_ms: 0.333794
   ...
 # Subtest: Intelligence, Calibration, Speed and Capability are byte-identical on all 57 rows
 ok 16 - Intelligence, Calibration, Speed and Capability are byte-identical on all 57 rows
   ---
-  duration_ms: 8.568211
+  duration_ms: 5.346991
   ...
 # Subtest: cost, axes, composites and placement follow from the common-basis cost; mutations are rejected
 ok 17 - cost, axes, composites and placement follow from the common-basis cost; mutations are rejected
   ---
-  duration_ms: 4942.368837
+  duration_ms: 2967.19107
   ...
 # Subtest: the proof binds the cost basis, the superseded freeze and every re-costed row
 ok 18 - the proof binds the cost basis, the superseded freeze and every re-costed row
   ---
-  duration_ms: 4355.402206
+  duration_ms: 2378.886283
   ...
 # Subtest: the release note states the rule, the unchanged measures, the cap moves and the superseded freeze
 ok 19 - the release note states the rule, the unchanged measures, the cap moves and the superseded freeze
   ---
-  duration_ms: 4265.032278
+  duration_ms: 1792.62351
   ...
 # Subtest: approval: a changed top five needs the preview card; placeholders and wrong provenance are rejected
 ok 20 - approval: a changed top five needs the preview card; placeholders and wrong provenance are rejected
   ---
-  duration_ms: 3467.05974
+  duration_ms: 2069.26375
   ...
 # Subtest: the cost rule wording is general and appears on the methodology page and the board
 ok 21 - the cost rule wording is general and appears on the methodology page and the board
   ---
-  duration_ms: 29.233299
+  duration_ms: 10.146091
   ...
 # Subtest: the text about this draw's 15 items names who refused them and where the token figure comes from; no time-bound claim about authors
 ok 22 - the text about this draw's 15 items names who refused them and where the token figure comes from; no time-bound claim about authors
   ---
-  duration_ms: 30.229011
+  duration_ms: 21.185216
   ...
 # Subtest: Delta 3 (display only): Jev 1.14.0 is a second unranked reference row on the open board without the toggle; every ranking and rank is unchanged
 ok 23 - Delta 3 (display only): Jev 1.14.0 is a second unranked reference row on the open board without the toggle; every ranking and rank is unchanged
   ---
-  duration_ms: 99912.658743
+  duration_ms: 60550.965572
   ...
 # Subtest: release note [110] states the general rule and then its history sentence
 ok 24 - release note [110] states the general rule and then its history sentence
   ---
-  duration_ms: 0.57204
+  duration_ms: 0.51382
   ...
 # Subtest: v1.7.13 validates every row; PENDING is hidden, PASS is readable
 ok 25 - v1.7.13 validates every row; PENDING is hidden, PASS is readable
   ---
-  duration_ms: 9672.904781
+  duration_ms: 4935.351592
   ...
 # Subtest: v1.7.13 standing GO: no top-five change, fairness receipt (SUSPICIOUS) bound as evidence, paid public basis exact
 ok 26 - v1.7.13 standing GO: no top-five change, fairness receipt (SUSPICIOUS) bound as evidence, paid public basis exact
   ---
-  duration_ms: 4271.03397
+  duration_ms: 1904.680444
   ...
 # Subtest: v1.7.13 rejects carried score, interval, category and lane changes, including the v1.1 row
 ok 27 - v1.7.13 rejects carried score, interval, category and lane changes, including the v1.1 row
   ---
-  duration_ms: 6853.231041
+  duration_ms: 4621.829782
   ...
 # Subtest: v1.7.13 rejects roster, rank, new row, draw and provenance mutations
 ok 28 - v1.7.13 rejects roster, rank, new row, draw and provenance mutations
   ---
-  duration_ms: 4128.686136
+  duration_ms: 3418.726265
   ...
 # Subtest: v1.7.13 pin, template, public-text and cost-kind gates reject negatives
 ok 29 - v1.7.13 pin, template, public-text and cost-kind gates reject negatives
   ---
-  duration_ms: 8.191348
+  duration_ms: 6.728975
   ...
 # Subtest: v1.7.13 exact new scores, cost, coverage, draw and disclosures
 ok 30 - v1.7.13 exact new scores, cost, coverage, draw and disclosures
   ---
-  duration_ms: 0.491861
+  duration_ms: 0.377863
   ...
 # Subtest: v1.7.13 the new row is unranked: no rank, in no order list, every carried rank and order list unchanged
 ok 31 - v1.7.13 the new row is unranked: no rank, in no order list, every carried rank and order list unchanged
   ---
-  duration_ms: 3378.238828
+  duration_ms: 2447.189475
   ...
 # Subtest: v1.7.13 new draw joins the equating table without touching the v1.6 chain v1.7.0 is bound to
 ok 32 - v1.7.13 new draw joins the equating table without touching the v1.6 chain v1.7.0 is bound to
   ---
-  duration_ms: 20861.631022
+  duration_ms: 10803.289421
   ...
 # Subtest: v1.7.13 synthetic board ranks and official cap lists match the recorded assembly
 ok 33 - v1.7.13 synthetic board ranks and official cap lists match the recorded assembly
   ---
-  duration_ms: 123.601743
+  duration_ms: 38.402185
   ...
 1..33
 # tests 33
@@ -172,4 +172,4 @@ ok 33 - v1.7.13 synthetic board ranks and official cap lists match the recorded 
 # cancelled 0
 # skipped 0
 # todo 0
-# duration_ms 240442.676332
+# duration_ms 133033.947461

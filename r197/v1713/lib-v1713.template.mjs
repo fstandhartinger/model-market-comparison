@@ -1,5 +1,5 @@
 // First release on the fresh draw v1.6-regular-20261027: one new self-hosted paid public row on v1.7.12, measured but UNRANKED
-// until the draw's anchor runs are complete (precedent: ranked false + null ranks + not_ranked_because, jevbench-v1630-release.mjs;
+// until its draw is equated (precedent: ranked false + null ranks + not_ranked_because, jevbench-v1630-release.mjs;
 // listing 'unranked' for a scored row, jevbench-v15-preview.mjs). All other rows, ranks, order lists and cells are immutable.
 import { createHash } from 'node:crypto';
 import { readFile } from 'node:fs/promises';
@@ -17,7 +17,7 @@ export const V1713_NEW_DRAW = 'v1.6-regular-20261027';
 export const V1713_NEW_KEYS = Object.keys(V1713_NEW_ROWS).sort();
 export const V1713_CHANGED_KEYS = [...V1713_NEW_KEYS];
 export const V1713_UNRANKED_NEW_KEYS = [...V1713_NEW_KEYS];
-export const V1713_NOT_RANKED_BECAUSE = "Measured on the 27 Oct 2026 draw, which has no anchor runs yet, so its scores are not yet on the reference scale. This draw differs strongly from earlier draws (72% multilingual items). On the 300 public items every draw shares, this version scores 57.2 Intelligence vs 61.1 for H2O-Lightning-4B v1.1; its higher overall Intelligence comes from this draw's sealed items. Shown unranked until the draw's anchor runs are complete.";
+export const V1713_NOT_RANKED_BECAUSE = "Measured on the 27 Oct 2026 draw, which is not yet equated to the reference scale. This draw differs strongly from earlier draws (72% multilingual items). On the 300 public items every draw shares, this version scores 57.2 Intelligence vs 61.1 for H2O-Lightning-4B v1.1; its higher overall Intelligence comes from this draw's sealed items. Shown unranked until the draw is equated.";
 export const V1713_APPROVAL_STATUS = 'GO (standing; no top-five change; paid public order)';
 const PAID_KEY = 'h2o-lightning-4b-v1.4.1';
 const REFERENCE_G_MED = 2.573387642438244;

@@ -39,10 +39,10 @@ rewrite('code_revision', en['code_revision'].replace(" Kit SHAS 99f91ea7 (auto-i
 rewrite('disclosure',
     "FIRST MEASUREMENT of v1.4.1 (paid evaluation, public). FAMILY: new weights (model.safetensors c9b6290d) of a family with an earlier row "
     "(H2O-Lightning-4B v1.1, which stays on the board unchanged); an earlier v1.4.0 measurement attempt stopped before completion because of an "
-    "evaluator-side monitoring error and has no row. DRAW: first row measured on the 27 Oct 2026 regular draw (fresh sealed items; anchor runs "
-    "pending, so its numbers are shown as published, offset 0). CONTEXT: 5 items whose state exceeds the shipped 32,000-token limit are answered "
+    "evaluator-side monitoring error and has no row. DRAW: first row measured on the 27 Oct 2026 regular draw (fresh sealed items; not yet equated "
+    "to the reference scale, so its numbers are shown as published, offset 0). This draw has no subject-topic labels yet, so the row has no topic cells; its use-case and language cells are measured on its own draw. CONTEXT: 5 items whose state exceeds the shipped 32,000-token limit are answered "
     "on the author's own head/tail state trim (pre-registered positions); cost is priced on the trimmed prompt, the untrimmed count is disclosed. "
-    "ENGINE: the author's documented JevBench configuration, two-way reading on one engine with the h2oai vLLM overlay (README: the one-way "
+    "ENGINE: the author's documented JevBench configuration, two-way reading on one engine with the h2oai vLLM overlay and an open request shim (README: the one-way "
     "TWO_WAY=0 setting is not the measured configuration). PROVENANCE, author statements (unverified): fine-tune of Qwen/Qwen3.5-4B. HARDWARE: "
     "one Verda RTX PRO 6000 Blackwell Server Edition 96 GB (FIN-03, EU); latency reflects that card.",
     ['FIRST MEASUREMENT of v1.4.1', 'c9b6290d', '5 items', 'TWO_WAY=0', 'RTX PRO 6000'])

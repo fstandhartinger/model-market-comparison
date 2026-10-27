@@ -44,4 +44,6 @@ if A.dry_run:
                       'manifest_unchanged_on_disk_sha256': sha(MAN)}, indent=1))
 else:
     MAN.write_text(data)
+    import subprocess, sys
+    subprocess.run([sys.executable, '-B', str(pathlib.Path(__file__).resolve().parent / 'wire_v1713.py'), '--set-release-date'] + ([os.environ['V1713_RELEASE_DATE']] if os.environ.get('V1713_RELEASE_DATE') else []), check=True, env={**os.environ, 'WT': str(W)})
     print(json.dumps({'manifest': str(MAN), 'review': m['review'], 'manifest_sha256': sha(MAN)}, indent=1))

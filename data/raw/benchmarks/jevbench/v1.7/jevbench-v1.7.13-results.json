@@ -1303,7 +1303,7 @@
   "Three new self-hosted rows Philly Decider v2, iota-decide-4b-v0.3 and Decisio 0.9.0 (Qwen3.6-35B-A3B); no method change. Super Decider rows now link to the vendor page (completes the v1.7.9 change). Philly and iota v0.3 answered all 1,500 requests with disclosed truncation. Decisio answered 1,485; 15 HTTP 500 over-length refusals count as misses. All three costs are ESTIMATE base-model prices; Decisio uses disclosed offline engine-input billing and exceeds the cost cap.",
   "Cost correction for four Decisio Gemma rows (engine-processed input); no new measurement, no method change.",
   "Cost-basis wording clarification for Jez Large, Jez Small and D1A Gemma 4; no measurements, numeric costs, scores, ranks, or method changed.",
-  "First release on the 27 Oct regular draw: H2O-Lightning-4B v1.4.1 (paid evaluation), shown unranked until the draw's anchor runs are complete. It answered all 1,500 requests of the new draw (5 long states trimmed by the model at pre-registered positions), none over 10 s. Its draw has no anchor runs yet, so its numbers are shown as published (offset 0) with the reference gap-penalty median. Cost is an ESTIMATE from the base model price on the prompt tokens the model processed. This draw has no topic labels, so the row has no topic cells. NOT RANKED: Measured on the 27 Oct 2026 draw, which has no anchor runs yet, so its scores are not yet on the reference scale. This draw differs strongly from earlier draws (72% multilingual items). On the 300 public items every draw shares, this version scores 57.2 Intelligence vs 61.1 for H2O-Lightning-4B v1.1; its higher overall Intelligence comes from this draw's sealed items. Shown unranked until the draw's anchor runs are complete. No existing row, rank or ranking changed."
+  "First release on the 27 Oct regular draw: H2O-Lightning-4B v1.4.1 (paid evaluation), shown unranked until the draw is equated to the reference scale. It answered all 1,500 requests of the new draw (5 long states trimmed by the model at pre-registered positions), none over 10 s. Its draw is not yet equated to the reference scale, so its numbers are shown as published (offset 0) with the reference gap-penalty median. Cost is an ESTIMATE from the base model price on the prompt tokens the model processed. This draw has no subject-topic labels yet, so the row has no topic cells; its use-case and language cells are measured on its own draw. NOT RANKED: Measured on the 27 Oct 2026 draw, which is not yet equated to the reference scale. This draw differs strongly from earlier draws (72% multilingual items). On the 300 public items every draw shares, this version scores 57.2 Intelligence vs 61.1 for H2O-Lightning-4B v1.1; its higher overall Intelligence comes from this draw's sealed items. Shown unranked until the draw is equated. No existing row, rank or ranking changed."
  ],
  "method": {
   "decision_limit_s": 10,
@@ -1677,8 +1677,8 @@
   "total": 1500
  },
  "sealed_share_of_intelligence": 0.5,
- "source_note": "First release on the 27 Oct regular draw: H2O-Lightning-4B v1.4.1 (paid evaluation), shown unranked until the draw's anchor runs are complete.",
- "source_sha256": "915c50009a0786854adce2d9a3c8824578a11019d080e62275589196039409bf",
+ "source_note": "First release on the 27 Oct regular draw: H2O-Lightning-4B v1.4.1 (paid evaluation), shown unranked until the draw is equated to the reference scale.",
+ "source_sha256": "d8650d0d291678db8f0fc3a89c87871a73e26d4e1c7a301798cc668a506576d6",
  "status": "published",
  "systems": [
   {
@@ -77728,7 +77728,7 @@
     "speed_n": 1500,
     "treatment": "share"
    },
-   "disclosure": "FIRST MEASUREMENT of v1.4.1 (paid evaluation, public). FAMILY: new weights (model.safetensors c9b6290d) of a family with an earlier row (H2O-Lightning-4B v1.1, which stays on the board unchanged); an earlier v1.4.0 measurement attempt stopped before completion because of an evaluator-side monitoring error and has no row. DRAW: first row measured on the 27 Oct 2026 regular draw (fresh sealed items; anchor runs pending, so its numbers are shown as published, offset 0). CONTEXT: 5 items whose state exceeds the shipped 32,000-token limit are answered on the author's own head/tail state trim (pre-registered positions); cost is priced on the trimmed prompt, the untrimmed count is disclosed. ENGINE: the author's documented JevBench configuration, two-way reading on one engine with the h2oai vLLM overlay (README: the one-way TWO_WAY=0 setting is not the measured configuration). PROVENANCE, author statements (unverified): fine-tune of Qwen/Qwen3.5-4B. HARDWARE: one Verda RTX PRO 6000 Blackwell Server Edition 96 GB (FIN-03, EU); latency reflects that card.",
+   "disclosure": "FIRST MEASUREMENT of v1.4.1 (paid evaluation, public). FAMILY: new weights (model.safetensors c9b6290d) of a family with an earlier row (H2O-Lightning-4B v1.1, which stays on the board unchanged); an earlier v1.4.0 measurement attempt stopped before completion because of an evaluator-side monitoring error and has no row. DRAW: first row measured on the 27 Oct 2026 regular draw (fresh sealed items; not yet equated to the reference scale, so its numbers are shown as published, offset 0). This draw has no subject-topic labels yet, so the row has no topic cells; its use-case and language cells are measured on its own draw. CONTEXT: 5 items whose state exceeds the shipped 32,000-token limit are answered on the author's own head/tail state trim (pre-registered positions); cost is priced on the trimmed prompt, the untrimmed count is disclosed. ENGINE: the author's documented JevBench configuration, two-way reading on one engine with the h2oai vLLM overlay and an open request shim (README: the one-way TWO_WAY=0 setting is not the measured configuration). PROVENANCE, author statements (unverified): fine-tune of Qwen/Qwen3.5-4B. HARDWARE: one Verda RTX PRO 6000 Blackwell Server Edition 96 GB (FIN-03, EU); latency reflects that card.",
    "display": "H2O-Lightning-4B v1.4.1",
    "draw": {
     "drawn_on": "2026-10-27",
@@ -77859,7 +77859,7 @@
    "method": "v1.7",
    "model_pin": "h2oai/h2o-lightning-4b@cc18ee330e6895c41b9a60f37a0dd122dc4c3461",
    "new_in": "v1.7.13",
-   "not_ranked_because": "Measured on the 27 Oct 2026 draw, which has no anchor runs yet, so its scores are not yet on the reference scale. This draw differs strongly from earlier draws (72% multilingual items). On the 300 public items every draw shares, this version scores 57.2 Intelligence vs 61.1 for H2O-Lightning-4B v1.1; its higher overall Intelligence comes from this draw's sealed items. Shown unranked until the draw's anchor runs are complete.",
+   "not_ranked_because": "Measured on the 27 Oct 2026 draw, which is not yet equated to the reference scale. This draw differs strongly from earlier draws (72% multilingual items). On the 300 public items every draw shares, this version scores 57.2 Intelligence vs 61.1 for H2O-Lightning-4B v1.1; its higher overall Intelligence comes from this draw's sealed items. Shown unranked until the draw is equated.",
    "noul_decisive": {
     "acc_among_decisive": 0.8933333333333333,
     "decisive": 375,

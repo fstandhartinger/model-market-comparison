@@ -19,8 +19,8 @@ sh=L(J/'src/inputs.json')[k]['v17-share'];txt(60,275,f"Composite A {sh['scores']
 txt(60,370,'Unchanged example: '+r['scope']+' / '+r['caps']+' / '+r['metric']+' (the new row is in no ranked list)',23,'#a3b8d3')
 short=lambda t:t if len(t)<=78 else t[:77].rstrip()+'…'
 for i,key in enumerate(r['after']):txt(70,430+i*55,f"{i+1}. {short(m['after'][key]['display'])}",23,'#64dfb7' if key==k else '#e4edf8',key==k)
-txt(60,735,'Why unranked: its draw has no anchor runs yet, and on the 300 shared public items',24)
-txt(60,770,'it scores 57.2 Intelligence vs 61.1 for v1.1. Shown unranked until anchor runs complete.',24)
+txt(60,735,'Why unranked: its draw is not yet equated, and on the 300 shared public items',24)
+txt(60,770,'it scores 57.2 Intelligence vs 61.1 for v1.1. Shown unranked until the draw is equated.',24)
 txt(60,805,'All 300 carried scores, ranks and intervals unchanged.',24)
 txt(60,850,footer+' · fairness '+L(J/'inputs/APPROVAL.json')['fairness_check']['verdict']+' → shown unranked',20,'#a3b8d3')
 im.save(J/'preview/card.png',optimize=True)

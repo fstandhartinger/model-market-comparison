@@ -2,9 +2,18 @@
 The new draw joins data/jevbench-draw-equating.json for the board's draw table, marked joins_via "v1.7-addendum": its row
 enters the live board through the v1.7.13 addendum, so the v1.6 cohort reader and the v1.6 chain's latest release
 (which v1.7.0's restatement is bound to) skip it."""
-import json, os, pathlib
+import datetime, json, os, pathlib, re, sys
 J = pathlib.Path(__file__).resolve().parent; W = pathlib.Path(os.environ.get('WT', str(J.parents[1])))
-HIST = "First release on the 27 Oct regular draw: H2O-Lightning-4B v1.4.1 (paid evaluation), shown unranked until the draw's anchor runs are complete."
+HIST = "First release on the 27 Oct regular draw: H2O-Lightning-4B v1.4.1 (paid evaluation), shown unranked until the draw is equated to the reference scale."
+# The only place the release/history date lives: lib/jevbench-releases.mjs, written from RELEASE_DATE. It defaults to today's UTC date
+# (V1713_RELEASE_DATE=YYYY-MM-DD overrides). The flip re-stamps it: `python3 wire_v1713.py --set-release-date [YYYY-MM-DD]` (flip_verdict_v1713.py does this).
+RELEASE_DATE = os.environ.get('V1713_RELEASE_DATE') or datetime.datetime.now(datetime.timezone.utc).date().isoformat()
+assert re.fullmatch(r'\d{4}-\d{2}-\d{2}', RELEASE_DATE), RELEASE_DATE
+def set_release_date(date):
+    q = W / 'lib/jevbench-releases.mjs'; t = q.read_text(); u, n = re.subn(r"(\{ version: 'v1\.7\.13', date: ')\d{4}-\d{2}-\d{2}(')", r'\g<1>' + date + r'\2', t)
+    assert n == 1, 'v1.7.13 history line'; q.write_text(u)
+if sys.argv[1:2] == ['--set-release-date']:
+    RELEASE_DATE = sys.argv[2] if len(sys.argv) > 2 else RELEASE_DATE; assert re.fullmatch(r'\d{4}-\d{2}-\d{2}', RELEASE_DATE); set_release_date(RELEASE_DATE); print('release date', RELEASE_DATE); sys.exit(0)
 # Earlier wired wordings of the v1.7.13 history line (replaced, never duplicated, on a rewire).
 STALE_HIST = ['First release on the 27 Oct regular draw: H2O-Lightning-4B v1.4.1 (paid evaluation).']
 def edit(name, old, new, count=1):
@@ -21,7 +30,7 @@ s = s.replace('v1.7.12', '__NEW__').replace('v1.7.11', 'v1.7.12').replace('__NEW
 REPL = [
     ('self-hosted cost disclosures', 'first release on the 27 Oct regular draw', 3),
     ('Four existing rows receive cost-basis wording updates: Jez Large, Jez Small and two D1A Gemma 4 rows. Their numeric costs, scores, ranks and measurement records are unchanged. No new measurement or method change.',
-     HIST.replace("'", '&apos;') + ' It is the first row measured on a fresh sealed draw drawn on 27 Oct 2026; that draw has no anchor runs yet, so its numbers are shown as published (offset 0) and it is not ranked: no ranking or ranked order changes. The 10 s rule applies; no decision took longer than 10 s. Cost is an estimate from the base model price on the prompt tokens the model processed. Every existing row keeps its scores and confidence intervals; no method change.', 1),
+     HIST.replace("'", '&apos;') + ' It is the first row measured on a fresh sealed draw drawn on 27 Oct 2026; that draw is not yet equated to the reference scale, so its numbers are shown as published (offset 0) and it is not ranked: no ranking or ranked order changes. The 10 s rule applies; no decision took longer than 10 s. Cost is an estimate from the base model price on the prompt tokens the model processed. Every existing row keeps its scores and confidence intervals; no method change.', 1),
     ('Jez Large, Jez Small and two D1A Gemma 4 rows receive cost-basis wording updates. Numeric costs, scores, ranks and measurement records stay unchanged.',
      'One new self-hosted row on a new draw, shown unranked. Every existing score, rank, interval and category cell is unchanged.', 1),
 ]
@@ -49,11 +58,9 @@ if not any(d['draw'] == entry['draw'] for d in t['draws']):
 # navigation, categories, release list, history, sitemap
 edit('components/JevBenchReleaseVersionNav.tsx', "type JevRelease = 'v1.7.12'", "type JevRelease = 'v1.7.13' | 'v1.7.12'")
 edit('lib/jevbench-categories.mjs', "'v1.7.11', 'v1.7.12'];", "'v1.7.11', 'v1.7.12', 'v1.7.13'];")
-for old in STALE_HIST:
-    q = W / 'lib/jevbench-releases.mjs'; t = q.read_text()
-    stale = "  { version: 'v1.7.13', date: '2026-10-28', href: '/jev-models/v1.7.13', text: '" + old + "' },\n"
-    if stale in t: q.write_text(t.replace(stale, ''))
-edit('lib/jevbench-releases.mjs', "  { version: 'v1.7.12'", "  { version: 'v1.7.13', date: '2026-10-28', href: '/jev-models/v1.7.13', text: '" + HIST.replace("'", "\\'") + "' },\n  { version: 'v1.7.12'")
+q = W / 'lib/jevbench-releases.mjs'; t = q.read_text(); line = "  { version: 'v1.7.13', date: '" + RELEASE_DATE + "', href: '/jev-models/v1.7.13', text: '" + HIST.replace("'", "\\'") + "' },\n"
+if line not in t: q.write_text(re.sub(r"  \{ version: 'v1\.7\.13'.*\n", '', t))   # replace, never duplicate, any earlier wording/date of the line
+edit('lib/jevbench-releases.mjs', "  { version: 'v1.7.12'", "  { version: 'v1.7.13', date: '" + RELEASE_DATE + "', href: '/jev-models/v1.7.13', text: '" + HIST.replace("'", "\\'") + "' },\n  { version: 'v1.7.12'")
 edit('components/JevReleaseHistory.tsx', "import { hasPublishedJevbenchV1712Release } from '../lib/jevbench-v1712-release.mjs';",
      "import { hasPublishedJevbenchV1713Release } from '../lib/jevbench-v1713-release.mjs';\nimport { hasPublishedJevbenchV1712Release } from '../lib/jevbench-v1712-release.mjs';")
 edit('components/JevReleaseHistory.tsx', 'v1711, v1712] = await Promise.all([', 'v1711, v1712, v1713] = await Promise.all([')

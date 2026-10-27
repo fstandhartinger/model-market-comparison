@@ -10,7 +10,7 @@ def check_approval(W,proof):
  a=proof['publication_approval']
  assert a['status']==STATUS,'standing GO (no top-five change) required'
  assert a['fresh_baseline']=='v1.7.12' and a['button_tap'] is False
- assert a['paid_public']=={'key':'h2o-lightning-4b-v1.4.1','order':'54575fd5','rule':'paid public order: published with all measured values, unranked while its draw has no anchor runs; no top-five change','visibility':'public'},'paid public rule binding'
+ assert a['paid_public']=={'key':'h2o-lightning-4b-v1.4.1','order':'54575fd5','rule':'paid public order: published with all measured values, unranked while its draw is not yet equated; no top-five change','visibility':'public'},'paid public rule binding'
  preview=W/a['top_five_preview']['path']
  assert sha(preview)==a['top_five_preview']['sha256']==proof['topfive_diff_sha256']
  diff=json.loads(preview.read_text());assert not diff.get('bootstrap',False),'fresh complete top-five preview required'

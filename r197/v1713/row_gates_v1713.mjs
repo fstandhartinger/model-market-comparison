@@ -9,8 +9,8 @@ export function checkNewRowText(s){
  if(s.display!=='H2O-Lightning-4B v1.4.1'||s.author!=='H2O.ai')throw Error('display or author');
  if(!/RTX PRO 6000/.test(s.endpoint_condition??'')||!/RTX PRO 6000/.test(s.disclosure??''))throw Error('device disclosure');
 }
-// v1.7.13 ships the row unranked (provisional until its draw's anchor runs are complete): it can never carry a rank or sit in an order list.
-export const NOT_RANKED_BECAUSE="Measured on the 27 Oct 2026 draw, which has no anchor runs yet, so its scores are not yet on the reference scale. This draw differs strongly from earlier draws (72% multilingual items). On the 300 public items every draw shares, this version scores 57.2 Intelligence vs 61.1 for H2O-Lightning-4B v1.1; its higher overall Intelligence comes from this draw's sealed items. Shown unranked until the draw's anchor runs are complete.";
+// v1.7.13 ships the row unranked (provisional until its draw is equated): it can never carry a rank or sit in an order list.
+export const NOT_RANKED_BECAUSE="Measured on the 27 Oct 2026 draw, which is not yet equated to the reference scale. This draw differs strongly from earlier draws (72% multilingual items). On the 300 public items every draw shares, this version scores 57.2 Intelligence vs 61.1 for H2O-Lightning-4B v1.1; its higher overall Intelligence comes from this draw's sealed items. Shown unranked until the draw is equated.";
 export function checkUnrankedRow(s,board){
  if(s.ranked!==false||s.rank!==null||s.listing!=='unranked')throw Error('unranked row is ranked');
  if(JSON.stringify(s.ranks)!==JSON.stringify({A:null,B:null,C:null,capability:null}))throw Error('unranked row has ranks');
