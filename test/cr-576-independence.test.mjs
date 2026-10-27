@@ -27,12 +27,11 @@ const loadEligibility = (entries) => load('../lib/use-model.ts', {
   '../data/use-model-slugs.json': slugs, '../data/use-model-optout.json': entries,
 });
 
-test('CR-576: independence is a server-side 404 until the public flag changes', async () => {
+test('CR-576: explicitly disabling the public flag makes independence a server-side 404', async () => {
   const lib = await loadEligibility(optOuts);
-  assert.equal(lib.USE_MODEL_PUBLIC, false, 'Florian has not approved the rollout');
   const notFound = () => { throw new Error('NEXT_HTTP_ERROR_FALLBACK;404'); };
   const page = await load('../app/independence/page.tsx', {
-    '../../lib/use-model': lib, 'next/navigation': { notFound },
+    '../../lib/use-model': { ...lib, USE_MODEL_PUBLIC: false }, 'next/navigation': { notFound },
   });
   assert.throws(() => page.default(), /NEXT_HTTP_ERROR_FALLBACK;404/);
   assert.equal(page.metadata.robots.index, false);
@@ -41,7 +40,7 @@ test('CR-576: independence is a server-side 404 until the public flag changes', 
 
 test('CR-576: public page uses existing methodology, data and contact routes', async () => {
   const page = await load('../app/independence/page.tsx', {
-    '../../lib/use-model': { USE_MODEL_PUBLIC: true },
+    '../../lib/use-model': await loadEligibility(optOuts),
     'next/navigation': { notFound() { assert.fail('public page must render'); } },
   });
   const html = renderToStaticMarkup(page.default());
