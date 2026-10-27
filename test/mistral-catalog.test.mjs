@@ -43,6 +43,10 @@ test("a docs model page yields the copyable API id and its labelled USD prices",
   assert.deepEqual(parseMistralDocsModel(docsPage("zai-glm-5-3", { input: 1.4, cached: 0.14, output: 4.4 })),
     { api_model_id: "zai-glm-5-3", input: 1.4, cached: 0.14, output: 4.4 });
   assert.deepEqual(parseMistralDocsModel(docsPage("codestral-latest", { input: 0.3, output: 0.9 })).cached, null);
+  // 22 Oct 2026: the amount is one "$0.15" token and a USD/EUR toggle is present.
+  const oneToken = (usd) => `<button title="Click to copy: zai-glm-5-3-flash"></button><button aria-pressed="${usd}">USD</button><button aria-pressed="${!usd}">EUR</button><span>$0.15</span><span>Input</span><span>/M Tokens</span><span>$0.03</span><span>Cached input</span><span>/M Tokens</span><span>$0.5</span><span>Output</span><span>/M Tokens</span>`;
+  assert.deepEqual(parseMistralDocsModel(oneToken(true)), { api_model_id: "zai-glm-5-3-flash", input: 0.15, cached: 0.03, output: 0.5 });
+  assert.throws(() => parseMistralDocsModel(oneToken(false)), /not in USD/);
   assert.throws(() => parseMistralDocsModel("<html>no badge</html>"), /exactly one copyable API id/);
   assert.throws(() => parseMistralDocsModel(`<button title="Click to copy: a"></button><button title="Click to copy: b"></button>`), /exactly one copyable API id/);
   assert.throws(() => parseMistralDocsModel(`<button title="Click to copy: x"></button><span>Free</span><span>Input</span><span>/M Tokens</span>`), /without a \$ amount/);
@@ -55,6 +59,19 @@ test("only per-million-token rows with input and output are chat models; 'Prices
     chat(row("Mistral Moderation 2", "Free", "Free", "Free")),
   );
   assert.deepEqual([...pricedChatCards(html).keys()], ["mistrallarge3"]);
+});
+
+test("22 Oct 2026: an OCR section headed 'Prices /1000 Pages' is skipped; an unknown unit heading still fails closed", () => {
+  const html = page(
+    chat(row("Mistral Large 3", 0.5, 0.05, 1.5)),
+    section("/1000 Pages", row("OCR 4.1", "$4 /1000 Pages", "$0.4 /1000 Pages", null), row("Bare OCR", 4, null, 8)),
+  );
+  assert.deepEqual([...pricedChatCards(html).keys()], ["mistrallarge3"]);
+  // Voice agents (22 Oct 2026): no "Prices" heading, a per-minute blurb and a Model | Price header.
+  const voice = `<div><p>Pricing for the Voice Agents API, billed per minute of conversation.</p></div><table><thead><tr><th>Model</th><th>Price</th></tr></thead><tbody><tr><td>Mistral Small 4</td><td>$0.04/min</td></tr></tbody></table>`;
+  assert.deepEqual([...pricedChatCards(page(chat(row("Mistral Large 3", 0.5, 0.05, 1.5)), voice)).keys()], ["mistrallarge3"]);
+  assert.throws(() => pricedChatCards(page(voice.replace("billed per minute", "billed somehow"), chat(row("A", 1, null, 2)))), /unit heading/);
+  assert.throws(() => pricedChatCards(page(section("/Day", row("X", 1, null, 2)))), /unit heading/);
 });
 
 test("identity is the normalized name (or the name the page last used) against the snapshot; duplicates must agree", () => {
