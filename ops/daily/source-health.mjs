@@ -237,6 +237,8 @@ const dayDiff = (a, b) => Math.round((Date.parse(`${a}T00:00:00Z`) - Date.parse(
 export const RETIRED_COLLECTORS = {
   'fetch-published': '2026-09-21: folded into fetch-main (e79693f3)',
   'fetch-lumina-ledger': '2026-10-07: Lumina retired its public ledger; step removed (see data/raw/lumina-ledger.method.md)',
+  // 27 Oct: listed as "failing since 23 Oct" in every summary, although the v1.5 snapshot is frozen on purpose.
+  'fetch-coding-v1.5': '2026-10-23: AA moved to Coding Agent Index v2.0; v1.5 frozen and the step is now fetch-coding-v2.0 (CR-545, a6b459d5)',
 };
 
 export function updateCollectorHealth(state, steps, day, { retired = RETIRED_COLLECTORS } = {}) {

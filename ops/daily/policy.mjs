@@ -159,6 +159,27 @@ export function staleCollectorDigestLines(stale, { minDays = COLLECTOR_DIGEST_DA
     .map((x) => `Collector ${x.id} failing for ${x.stale_days} days (last good ${x.last_ok ?? 'never'}); previous snapshot kept: ${String(x.reason ?? 'no reason recorded').slice(0, 200)}`);
 }
 
+// Reliability review N7 (27 Oct 2026): the digest was discontinued on 25 Oct, so days 3-6 reached nobody and
+// fetch-ovhcloud-catalog failed from 20 to 27 Oct before anyone acted (the third weekly episode). From day 3 the
+// notify pass now posts one board handoff per failure episode to the job that owns collector repairs (an
+// agent-fixable parser repair; job-wake reopens a finished owner); the day-7 card stays as the last resort.
+// The digest line above is kept only as the run receipt in last-summary.txt.
+export const COLLECTOR_OWNER_JOB = 'bh-daily-collectors-fix-20261007';
+export const COLLECTOR_HANDOFF_THREAD = 8;
+
+/** The one board handoff for collectors failing `minDays`..`cardAfter`-1 days, or null. */
+export function staleCollectorHandoff(stale, { minDays = COLLECTOR_DIGEST_DAYS, cardAfter = COLLECTOR_CARD_DAYS, owner = COLLECTOR_OWNER_JOB } = {}) {
+  const due = (Array.isArray(stale) ? stale : []).filter((x) => x?.kind === 'collector' && typeof x.id === 'string'
+    && Number.isFinite(x.stale_days) && x.stale_days >= minDays && x.stale_days < cardAfter).sort((a, b) => a.id.localeCompare(b.id));
+  if (!due.length) return null;
+  const lines = [`@${owner} Benchmark Heaven daily run: ${due.length === 1 ? 'a collector is' : `${due.length} collectors are`} failing, please repair (or retire with a dated note) before day ${cardAfter}, when it becomes a card to Florian.`];
+  for (const x of due) lines.push(`- ${x.id}: failing for ${x.stale_days} days (last good ${x.last_ok ?? 'never'}); cause: ${String(x.reason ?? 'not recorded').slice(0, 200)}`);
+  lines.push('Fix in a Benchmark Heaven worktree through the PR merge queue (skill benchmarkheaven-site-merge-queue); never edit /opt/model-market-comparison.',
+    'Evidence: /opt/benchmarkheaven-daily/state/collector-health.json and last-summary.txt. Ack this entry when the fix PR is open.');
+  return { key: `collector-handoff:${due.map((x) => `${x.id}@${x.failing_since ?? x.last_ok ?? 'unknown'}`).join('|')}`, text: lines.join('\n'),
+    owner, thread: COLLECTOR_HANDOFF_THREAD, collectors: due.map((x) => x.id) };
+}
+
 /** The one human-action block for collectors failing `cardAfter`+ days, or null. */
 export function staleCollectorHumanTodo(stale, { cardAfter = COLLECTOR_CARD_DAYS } = {}) {
   const due = (Array.isArray(stale) ? stale : []).filter((x) => x?.kind === 'collector' && typeof x.id === 'string'
@@ -286,6 +307,12 @@ export function planNotifications({
   if (todo) {
     if (known[todo.key]) skips.push({ kind: 'quarantine', key: todo.key, reason: 'duplicate' });
     else sends.push({ kind: 'quarantine', key: todo.key, text: todo.text, onSent: { notified_key: todo.key } });
+  }
+  const collectorHandoff = staleCollectorHandoff(staleSourceList);
+  if (collectorHandoff) {
+    if (known[collectorHandoff.key]) skips.push({ kind: 'collector-handoff', key: collectorHandoff.key, reason: 'duplicate' });
+    else sends.push({ kind: 'collector-handoff', key: collectorHandoff.key, text: collectorHandoff.text,
+      board: { thread: collectorHandoff.thread, to: collectorHandoff.owner }, onSent: { notified_key: collectorHandoff.key } });
   }
   const collectorTodo = staleCollectorHumanTodo(staleSourceList);
   if (collectorTodo) {
