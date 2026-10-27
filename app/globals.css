@@ -821,6 +821,7 @@ a[data-bh-base-model-footnote-ref] { text-decoration: underline; text-underline-
 .bh-use-model-pop li small { display: block; color: var(--muted); font-size: 11.5px; line-height: 1.3; }
 .bh-use-model-pop-all { display: block; margin: 4px 0 0; padding: 8px 8px 4px; border-top: 1px solid rgb(var(--line)); color: rgb(var(--accent2)); font-size: 12px; font-weight: 600; text-decoration: none; }
 .bh-use-model-pop-all:hover { text-decoration: underline; }
+.bh-use-model-pop-note { margin: 2px 8px 2px; color: var(--muted); font-size: 11px; line-height: 1.35; }
 /* The row tooltip of the capability chart would sit under our popover; ours wins while it is open. */
 html[data-bh-use-model-open] .bh-jev-cap-tip { display: none !important; }
 .bh-use-model-banner { position: sticky; top: 0; z-index: 90; display: flex; align-items: center; justify-content: center; gap: 12px; padding: 8px 16px; border-bottom: 2px solid #b45309; background: #fef3c7; color: #451a03; font-size: 13px; line-height: 1.35; }

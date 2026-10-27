@@ -18,7 +18,7 @@ import { apiExplanation } from './JevBoardShared';
 import { BaseModelDisplay, type BaseModelBenchmark } from './BaseModelDisplay';
 import { useJevV15VisibleKeys } from './useJevV15VisibleKeys';
 import { JEV_V15_ELIGIBILITY_CHANGE_EVENT } from '../lib/jevbench-global-filter-events.mjs';
-import { UseModelEntry } from './UseModelButton';
+import { UseModelEntry, UseModelNote } from './UseModelButton';
 
 // Florian 25 Sep 2026 (DECISIONS.md): the page headline is the Capability ranking — the mean of Intelligence and
 // Calibration — of Jev-class systems. Jev-class = cost per decision at most 2x Jev 1.13.0's AND median latency at most
@@ -310,6 +310,7 @@ export function JevCapabilityRanking({ systems, eligibilitySystems = systems, re
         {types.map((type) => <li key={type} style={{ '--jev-t': `var(${jevTypeVarName(type)})` } as CSSProperties}><span className="bh-jevc-swatch mr-1.5" />{JEV_TYPE_LABEL[type]} ({filteredRows.filter((r) => jevRowArch(r.row) === type).length})</li>)}
         {(['green', 'amber', 'red'] as const).map((zone) => <li key={zone}><span className={`bh-tl-${zone} mr-1.5 inline-block h-[4px] w-4 rounded-full align-middle`} />{zone}: {zone === 'green' ? '≤ reference' : zone === 'amber' ? official ? `≤ cap (${limits.factor}× reference)` : `above reference, within cost ${formatCap(costFactor)} / latency ${formatCap(latencyFactor)}` : official ? '> cap' : costFactor === Infinity && latencyFactor === Infinity ? 'disabled (no caps)' : '> the selected axis cap'}</li>)}
       </ul>
+      <UseModelNote className="mt-1.5" />
 
       <div className="bh-jev-class-divider" role="separator" data-bh-jev-class-divider>Outside the {classLabel} limits · {outside.length} systems</div>
       <details className="mt-2" open={outsideOpen || undefined} data-bh-jev-class-outside>
