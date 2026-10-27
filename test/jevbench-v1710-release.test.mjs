@@ -11,7 +11,8 @@ const row=(x,k)=>x.artifact.systems.find(s=>s.key===k),mutate=(fn,pattern)=>{con
 test('v1.7.10 validates all rows and hides PENDING from public readers',async()=>{
  assert.equal(validateJevbenchV1710Bundle(b,{candidate:true}),true);assert.equal(b.previous.artifact.systems.length,297);assert.equal(b.artifact.systems.length,300);
  assert.deepEqual(V1710_NEW_KEYS,['decisio-qwen3.6-35b-a3b-v090','iota-decide-4b-v0.3','phillylabs_philly_decider_v2']);
- assert.equal(b.manifest.review.verdict,'PENDING');assert.equal(await readJevbenchV1710ForBoard(),null);await assert.rejects(()=>readOptionalJevbenchV1710Release(),/review PENDING/);
+ if(b.manifest.review.verdict==='PENDING'){assert.equal(await readJevbenchV1710ForBoard(),null);await assert.rejects(()=>readOptionalJevbenchV1710Release(),/review PENDING/);}
+ else {assert.equal(b.manifest.review.verdict,'PASS');assert.equal((await readJevbenchV1710ForBoard()).artifact.revision,'v1.7.10');}
 });
 test('v1.7.10 rejects carried score, interval, category and lane changes',()=>{
  for(const key of ['launchables-myles-g-12b','iota-decide-4b','knowledgator_gliclass_v4_9b']){
