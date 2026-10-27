@@ -5,6 +5,7 @@ import { readCards, parseOvhcloudCatalog } from "../lib/ovhcloud-catalog.mjs";
 const price = (value, unit) => `<div class="d-flex"><h2 class="_text--heading-2 Models_priceMain__yxl2K" data-ods="text">${value}<!-- -->€</h2><span class="_text--caption m-2" data-ods="text">/<!-- -->${unit}</span></div>`;
 const card = (slug, title, prices, category = "LLM", ctx = "131<!-- -->K") => `<div data-tc-clic="public-cloud::ai-endpoints::link-discover-catalog-ai-endpoints-${slug}" style="cursor:pointer"><div class="_card"><span class="_text--caption_1aw48_2" data-ods="text">${category}</span><h3 class="_text--heading-3 Models_modelTitle__HWqKA" data-ods="text">${title}</h3><div class="Models_price__VnaI3">${prices}</div><p><strong>Max. context size<!-- -->:</strong> <!-- -->${ctx}</p></div></div>`;
 const chat = (slug, title, i, o) => card(slug, title, price(i, "Mtoken(input)") + price(o, "Mtoken(output)"));
+const currentChat = (slug, title, i, o) => `<a data-tc-clic="public-cloud::ai-endpoints::link-discover-catalog-ai-endpoints-${slug}" aria-label="${title}" href="/en/public-cloud/ai-endpoints/catalog/${slug}/"><div class="catalog_cardTop__hash"><span class="catalog_eyebrow__hash">Text Generation</span></div><h3 class="catalog_cardName__hash">${title}</h3><div class="catalog_price__hash"><div class="catalog_priceLine__hash"><b class="catalog_priceValue__hash">${i}<!-- -->€</b><span class="catalog_priceUnit__hash">/<!-- -->Mtoken<!-- --> (input)</span></div><div class="catalog_priceLine__hash"><b class="catalog_priceValue__hash">${o}<!-- -->€</b><span class="catalog_priceUnit__hash">/<!-- -->Mtoken<!-- --> (<!-- -->output<!-- -->)</span></div></div><div class="catalog_specs__hash"><span><b>Max. context<!-- --> :</b> <!-- -->262K</span></div></a>`;
 const page = (...cards) => `<html><div class="models-listing">${cards.join("")}</div></html>`;
 const fx = { rate: 1.1592, date: "2026-09-11" };
 const previous = { models: [
@@ -18,6 +19,18 @@ test("reads cards: title, category, context and unit-labelled EUR prices", () =>
   assert.equal(cards[1].inputEur, null);
   assert.throws(() => readCards("<html></html>"), /no model cards/);
   assert.throws(() => readCards(page(chat("x", "X", "free", "0.4"))), /unreadable price/);
+});
+
+test("parses current OVHcloud catalog cards with catalog classes and separated unit labels", () => {
+  const { models, skipped } = parseOvhcloudCatalog(page(currentChat("qwen-3-8-27b", "Qwen3.8-27B", "0.4", "2.7")), { models: [] }, fx);
+  assert.equal(models[0].model_name, "Qwen3.8-27B");
+  assert.equal(models[0].model_id, "Qwen3.8-27B");
+  assert.equal(models[0].input_per_1m_eur, 0.4);
+  assert.equal(models[0].output_per_1m_eur, 2.7);
+  assert.equal(models[0].input_per_1m_usd, 0.46);
+  assert.equal(models[0].output_per_1m_usd, 3.13);
+  assert.equal(models[0].notes, "Text Generation; 262K context");
+  assert.deepEqual(skipped, []);
 });
 
 test("keeps curated rows by model_id, converts with ECB, skips non-token cards, derives new ones", () => {
@@ -46,4 +59,7 @@ test("fails closed on missing FX, conflicting duplicates, empty scope and large 
   assert.throws(() => parseOvhcloudCatalog(page(chat("gpt-oss-120b", "gpt-oss-120b", "0.08", "0.4"), chat("gpt-oss-120b", "gpt-oss-120b", "0.09", "0.4")), previous, fx), /different prices/);
   assert.throws(() => parseOvhcloudCatalog(page(card("bge-m3", "bge-m3", price("0.01", "Mtoken"))), previous, fx), /no priced/);
   assert.throws(() => parseOvhcloudCatalog(page(chat("new", "New", "1", "1")), previous, fx), /refusing/);
+  assert.throws(() => parseOvhcloudCatalog(page(currentChat("qwen-3-8-27b", "Qwen3.8-27B", "free", "2.7")), previous, fx), /unreadable price/);
+  const titleless = currentChat("qwen-3-8-27b", "Qwen3.8-27B", "0.4", "2.7").replace(/<h3\b[^>]*>[\s\S]*?<\/h3>/, "");
+  assert.throws(() => readCards(page(titleless)), /without a title/);
 });
