@@ -1,0 +1,173 @@
+{
+ "carried_rows": 293,
+ "carried_rows_equal_except": [
+  "rank",
+  "ranks"
+ ],
+ "files": {
+  "carry": "271d1fc77a136a04a1eb6deb5480c52d4211eb2b66b2ac8bb31e80867e69003a",
+  "categories": "a365e06e214cb0d41fd511ec51e341b5263ce0d86fa05ca0bf358972c4ea08ba",
+  "history": "5cd8c1332226ea9c179883d2285c0d8b8cc593ae38f2645197364a7ddd9c83c1",
+  "history-carry": "334e851944e92383ab3071e52b3012040c7023d0fe236395953169ebee8f0459",
+  "proof": "ba73797732bff91a4d9c60da21cc376f7b885f629de10f694aba14d6091dd45f",
+  "results": "ab863afda444baa950b6007768d0048060e5661b019ac94b0a777d6dded63294"
+ },
+ "link_fixed_rows": [
+  "singularity-super-decider",
+  "singularity-super-decider-thinking"
+ ],
+ "method": {
+  "decision_limit_s": 10,
+  "label": "v1.7",
+  "rule": "latency_s > 10.000 s -> failed",
+  "treatment": "share"
+ },
+ "new_rows": {
+  "knowledgator_gliclass_v4_9b": {
+   "axes": {
+    "calibration": 86.76027774140783,
+    "cost": 51.24605394354774,
+    "intelligence": 39.63748168273355,
+    "speed": 85.63164752763427
+   },
+   "composite_ci95": {
+    "A": [
+     24.119609626901248,
+     47.727959107973355
+    ],
+    "B": [
+     21.344261392098502,
+     44.30042948669007
+    ],
+    "C": [
+     16.74972890757031,
+     33.14441604720373
+    ]
+   },
+   "decision_limit": {
+    "limit_s": 10.0,
+    "n_over_limit": 0,
+    "n_over_limit_answered_ok": 0,
+    "rule": "latency_s > limit -> failed",
+    "speed_basis": "all decisions given (lane items in the raw), measured latency_s",
+    "speed_n": 1500,
+    "treatment": "share"
+   },
+   "model_pin": "knowledgator/gliclass-v4-9b@14d11a92b5e0bab4a166e1fce4cc0777cac27182",
+   "price_reference": {
+    "base": "Qwen/Qwen3.5-9B",
+    "in": 0.1,
+    "listing": "qwen/qwen3.5-9b",
+    "out": 0.0
+   },
+   "raw_sha256": "a209661a2dc66b156e041fb1082721d9145e32ad21ac6b16c2e2b7984261aeda",
+   "scored_input_sha256": "0755266afdae3fb7c0098c96a783d998852e265dca6b329f0ebd1045969a0428",
+   "source_sha256": {
+    "entry_path": "/home/flori/jobs/jevbench-auto-intake/r24-score/ENTRIES-R16B-REVIEWED.json",
+    "entry_sha256": "4fc7df8fd50352c0a067670cb09f5666d18531e92fc27c21237c7bf61e315381",
+    "frozen": {
+     "path": "/home/flori/jobs/jevbench-auto-intake/r24-score/field-r16b/out-frozen/jevbench-v1.6.0-results.json",
+     "sha256": "78c44682eb5d2dfd5068ca64b5bfc9084ebb9d5448963b090ec4f6e83b0d0942"
+    },
+    "raw_sha256": "a209661a2dc66b156e041fb1082721d9145e32ad21ac6b16c2e2b7984261aeda",
+    "raw_verified_in_place": true,
+    "registry_sha256": "abc7696fb43c7b2a4a3ac4111abccb614ad0e134cfa57040f7a54853dc355f99",
+    "v17-off": {
+     "path": "/home/flori/jobs/jevbench-auto-intake/r24-score/field-r16b/out-v17-off/jevbench-v1.6.0-results.json",
+     "sha256": "4c4ab33c714542e4063a63cc6aa180f2721751b12316c54f428d0b100a912dab"
+    },
+    "v17-share": {
+     "path": "/home/flori/jobs/jevbench-auto-intake/r24-score/field-r16b/out-v17-share/jevbench-v1.6.0-results.json",
+     "sha256": "0755266afdae3fb7c0098c96a783d998852e265dca6b329f0ebd1045969a0428"
+    }
+   },
+   "treatment": "ranked"
+  }
+ },
+ "predecessor": {
+  "publication_sha256": "252aea4bc5d7772b4d15c776f39adc5fbcbc11862bfb23ff93e15695b81a481d",
+  "revision": "v1.7.8"
+ },
+ "pricing_module_sha256": "645fd82eac728d597048bec0995ecd3ac896566e269fb6c9a1fdb84c171a9ac4",
+ "publication_approval": {
+  "asks": [
+   {
+    "admission": "custody #27033; consumed, notice #27817",
+    "handoff": "board #27905",
+    "key": "knowledgator_gliclass_v4_9b",
+    "relay": "regular queue"
+   },
+   {
+    "admission": "re-price only, no new measurement",
+    "handoff": "deputy #27806",
+    "key": "launchables-myles-g-12b",
+    "relay": "paid order 157488bd"
+   },
+   {
+    "admission": "link only",
+    "handoff": "vendor request 26 Oct",
+    "key": "singularity-super-decider(+thinking)",
+    "relay": "paid order 9d0e7740"
+   }
+  ],
+  "button_tap": false,
+  "fairness_check": {
+   "path": "/home/flori/wt/r196-v179-build/r196/v179/.helper-check-bjlmmih6/synthetic-fairness-only.json",
+   "sha256": "918df46ddcad0fb8cbec82758799cb192fe4ad8bb3c4dad37bf05f0d77d7962b",
+   "verdict": "FAIR"
+  },
+  "fresh_baseline": "v1.7.8",
+  "go": {
+   "channel": "laptop chat",
+   "date": "2026-10-25",
+   "quote": "3 ja",
+   "recorded_in": "DECISIONS.md 2026-10-25 setup-review-open-questions-answered"
+  },
+  "release_owner_rulings": [
+   "mylesg12b-i1-27788"
+  ],
+  "status": "GO (fair top-five change, Florian rule 25 Oct 2026)",
+  "top_five_effect": "changed",
+  "top_five_preview": {
+   "path": "r196/v179/receipts/topfive-diff.json",
+   "sha256": "5fa7198de94c332c3aba71477c3b3116d11ea80a924343cc231efa4eb8eeef59"
+  }
+ },
+ "publication_review": {
+  "engine": "independent dry-run fixture",
+  "receipt_sha256": "a0c814446bc1015d3a2deb5727fbb378a93be78819fd1a6f4aef2919e1fd54a2",
+  "verdict": "PASS"
+ },
+ "publication_sha256": "d26762060568c25113f9672776d5fa2307a0f2e5ebb34c3c457f55d60f80110c",
+ "release": "v1.7.9",
+ "remeasured_rows": {},
+ "repriced_rows": {
+  "launchables-myles-g-12b": {
+   "fetched_at": "2026-10-26T17:38:00Z",
+   "measurement_changed": false,
+   "rates_per_m": [
+    0.002002,
+    0.0
+   ],
+   "raw_sha256": "3f0929728f39bd41cfff6c404d6ed8793e8202f393b68264d3b1fc449d6a54ab",
+   "registry_sha256": "fb2228fffe8b7971abc09b7063514f03b9fdeac208a41fbc99375fa9e5672660",
+   "scored_sha256": "407904ef29b89ce4718e04eb12d2ed8a6534a73a201338ddda8c7455c64146aa",
+   "source": "api",
+   "vendor_page_sha256": "956fa709dfa454ee108966a9a0a79ec1660e91e7047a1b8ab6a32e146c36a01e",
+   "vendor_price_url": "https://www.launchables.ai/docs/deploy/hosted"
+  }
+ },
+ "scorers": {
+  "a2_cells_v16": "afd034efe27bde12f2ebbfd12c4c0792c93214e1aa9a63deecb0e83a0184c990",
+  "build_categories_v16": "40eb50f3d7fea2693b4478c4b89f8bfb957dd17776add491935742e3b9354e73",
+  "build_topics_v16": "ec04ab598162bfc4340ffa7916a06573eb1222132c61e47ab772045bc67ced78",
+  "decisive_v16": "80b9ccf43e58dddb1b2a77e0a33aba8a9f7337a3a9a639afc7264218bbf8918f",
+  "noul_method_v16": "119e59486ab3300b972fbcbadb0fe1dceceb124287607375aa61c66063c607d0",
+  "pins_v17": "b50cc00dd2cb0ba46157eb6a2bda620255f3ff54404025e992bc7962dfff2f8b",
+  "run_under_v17": "efb194b2ea350db59be37e5e72af71f809f763a2476cd6f521adf6f4fd90a64f",
+  "score_v15": "0931e05c6410b1b971201834397cb609cdb25f942723c50375632952f6dcc447",
+  "score_v15_headlineA": "826f2cbcb57007ec8a161e6eb0111182b8a656c0638027c6c78022a858fd8e2c",
+  "score_v16": "02132271117653e6302c509232a581d0094f0e78eac8b1bfc67596fd5d5097e9",
+  "score_v17": "6363458d208a52f4ad5aaf73027cad1b7e0358ff962e581d57a3cc462c8f1978"
+ }
+}

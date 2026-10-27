@@ -1,0 +1,1528 @@
+{
+ "ACTUAL-REFUSALS": {
+  "candidate_manifest_and_files_unchanged": true,
+  "flip-actual-pending-refused": {
+   "exit_code": 2,
+   "reason": "not PASS",
+   "status": "REFUSED_AS_REQUIRED"
+  },
+  "freeze-actual-pending-refused": {
+   "exit_code": 1,
+   "reason": "publication review PENDING",
+   "status": "REFUSED_AS_REQUIRED"
+  },
+  "freeze_output_created": false,
+  "publication_review": "PENDING",
+  "status": "PASS"
+ },
+ "BASE-IMMUTABLE": {
+  "base": "2e303d9364ddca3dfe6ed16cec64c4dcbff8e299",
+  "checked_files": 131,
+  "mismatches": [],
+  "status": "PASS",
+  "v178_template_and_artifacts_unchanged": true
+ },
+ "BIND-NUMBERS": {
+  "build_commit": "63a957f355f04429214a0681de63198fd56746e3",
+  "checks": {
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.9-categories.json": {
+    "all_numeric_tokens_byte_equal": true,
+    "axes_and_usd_per_1000_byte_equal": true
+   },
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.9-results.json": {
+    "all_numeric_tokens_byte_equal": true,
+    "axes_and_usd_per_1000_byte_equal": true
+   },
+   "r196/v179/scoring/off/jevbench-v1.6.0-results.json": {
+    "all_numeric_tokens_byte_equal": true,
+    "axes_and_usd_per_1000_byte_equal": true
+   },
+   "r196/v179/scoring/off/launchables-myles-g-12b.json": {
+    "all_numeric_tokens_byte_equal": true,
+    "axes_and_usd_per_1000_byte_equal": true
+   },
+   "r196/v179/scoring/share/jevbench-v1.6.0-results.json": {
+    "all_numeric_tokens_byte_equal": true,
+    "axes_and_usd_per_1000_byte_equal": true
+   },
+   "r196/v179/scoring/share/launchables-myles-g-12b.json": {
+    "all_numeric_tokens_byte_equal": true,
+    "axes_and_usd_per_1000_byte_equal": true
+   }
+  },
+  "myles_g_31b_exact": true,
+  "status": "PASS"
+ },
+ "BOUND-ADJUSTMENT": {
+  "application_or_metric_changes_for_timeout": false,
+  "cause": "Outer 600-second synthetic timeout covered two separately bounded 600-second test groups plus setup. Both groups actually finished successfully after the wrapper exited.",
+  "full_suite_runs_before_adjustment": 0,
+  "full_suite_seconds": 3600,
+  "guardrails_unchanged": true,
+  "initial_run_gates_exit": 124,
+  "inner_synthetic_seconds_unchanged": 600,
+  "new_outer_synthetic_seconds": 1500,
+  "status": "RESOLVED",
+  "synthetic_complete_tests": 58,
+  "synthetic_fail": 0,
+  "synthetic_group_duration_ms": [
+   84467.831849,
+   562851.89433
+  ],
+  "synthetic_pass": 57,
+  "synthetic_skip": 1
+ },
+ "CARRIED-ROWS": {
+  "all_predecessor_category_cells_equal": true,
+  "candidate_rows": 297,
+  "new_keys": [
+   "knowledgator_gliclass_v4_9b"
+  ],
+  "non_rank_deltas": {
+   "launchables-myles-g-12b": [
+    "axes.cost",
+    "composite_ci95.A",
+    "composite_ci95.B",
+    "composite_ci95.C",
+    "cost.basis",
+    "cost.common_basis.usd_per_1000_all_items",
+    "cost.kind",
+    "cost.usd_per_1000",
+    "jevbench_score",
+    "scores.A",
+    "scores.B",
+    "scores.C",
+    "v16.ci95.composite.A",
+    "v16.ci95.composite.B",
+    "v16.ci95.composite.C",
+    "views.Balanced 33:33:33",
+    "views.Emphasis on Accuracy 60:20:20",
+    "views.Emphasis on Cost 20:20:60",
+    "views.Emphasis on Speed 20:60:20"
+   ],
+   "singularity-super-decider": [
+    "source_url"
+   ],
+   "singularity-super-decider-thinking": [
+    "source_url"
+   ]
+  },
+  "previous_rows": 296,
+  "status": "PASS",
+  "unchanged_except_ranks": 293
+ },
+ "COST-KIND": {
+  "allowed_measured_bill_keys_v178": [],
+  "board_est_tag_condition_verified": true,
+  "estimated_rows_list_includes_myles": true,
+  "myles_cost_kind": "estimate",
+  "negative_measured_without_bill": "REFUSED_AS_REQUIRED",
+  "status": "PASS"
+ },
+ "FAIRNESS-TEXT-RESOLUTION": {
+  "binding": {
+   "engine": "claude-opus-5-5 (account C, effort medium)",
+   "path": "workers/r196-v179-fair/RESULT.json",
+   "sha256": "2e1b723e03e25cff20c1a96a24caff3df62ad3bb916f696fbc099a62d0c9d3a3",
+   "verdict": "FAIR"
+  },
+  "changed_lists": 123,
+  "fairness": "FAIR",
+  "publication_authorized": false,
+  "release_owner_rulings": [
+   "mylesg12b-i1-27788"
+  ],
+  "status": "PASS",
+  "text_fix_checks": [
+   {
+    "id": "T1",
+    "status": "PASS"
+   },
+   {
+    "id": "T2",
+    "status": "PASS"
+   },
+   {
+    "id": "T3",
+    "status": "PASS"
+   },
+   {
+    "id": "T4",
+    "status": "PASS"
+   }
+  ],
+  "topfive_changed": true
+ },
+ "FINAL-SANITY": {
+  "exact_exceptions": [
+   "launchables-myles-g-12b",
+   "singularity-super-decider",
+   "singularity-super-decider-thinking"
+  ],
+  "fairness": "FAIR",
+  "immutable_carry_history": true,
+  "manifest_hashes_verified": true,
+  "publication": "PENDING",
+  "status": "PASS",
+  "unchanged_except_rank": 293
+ },
+ "GLICLASS-NO-TOP5": {
+  "changed_lists_driven_by": "launchables-myles-g-12b",
+  "custom_presets": 4,
+  "in_any_watched_top_five": false,
+  "new_key": "knowledgator_gliclass_v4_9b",
+  "primary_and_supplementary_lists": 580
+ },
+ "GLICLASS-PRICING-EQUIV": {
+  "base_sha256": "aa2afcd5a58d0c4cc0e3d6867d590c70b6ac58e971410c27faf9628f97bcf8b7",
+  "candidate_sha256": "645fd82eac728d597048bec0995ecd3ac896566e269fb6c9a1fdb84c171a9ac4",
+  "equal": true,
+  "key": "Qwen/Qwen3.5-9B",
+  "resolved": {
+   "candidate_usd_per_1000": null,
+   "counting_list_price": false,
+   "deepinfra_snapshot_sha256": "84eb7926acd4e93b71d695be24898e2ca999b20011d1b66cc0348ce7c6c3546f",
+   "floor_binds": false,
+   "floor_usd_per_1000": 0.04218242424242424,
+   "key": "Qwen/Qwen3.5-9B",
+   "market_rates_per_m": [
+    0.09999999999999999,
+    0.15
+   ],
+   "market_reference": "qwen/qwen3.5-9b",
+   "note": "ESTIMATE: exact base-model market reference (operator tariff excluded by 30-day rule)",
+   "rankable": true,
+   "snapshot_sha256": "f5d0cd8e0f7d2d6514748c99bfcaeacc09775bac7aa7eecf765af4ba04b0dcd5",
+   "tokens": {
+    "decisions": 1485,
+    "input": 626409,
+    "output": 0
+   },
+   "usd_per_1000": 0.04218242424242424
+  }
+ },
+ "HELPERS": {
+  "checks": [
+   "injected PENDING fairness refused by both dry-run helpers; manifest unchanged",
+   "synthetic FAIR/hash-bound fixture: dry-run flip succeeds; PENDING freeze refuses; synthetic PASS freeze succeeds; no real manifest or seal write",
+   "tampered fairness receipt refused",
+   "hash-bound non-FAIR receipt content refused",
+   "conditional release review refused",
+   "unbound predecessor refused by both helpers",
+   "positive row and negative foreign/revision pin, placeholder, and nine internal-text fixtures passed"
+  ],
+  "status": "PASS"
+ },
+ "MYLESG12-BEFORE-AFTER": {
+  "after": {
+   "axes": {
+    "calibration": 84.04872871623093,
+    "cost": 99.35683144033557,
+    "intelligence": 57.25409127121432,
+    "speed": 85.292646608578
+   },
+   "capability": 70.65140999372262,
+   "composite_ci95": {
+    "A": [
+     74.67174426737074,
+     80.110488383192
+    ],
+    "B": [
+     68.63780034080798,
+     75.44547169412674
+    ],
+    "C": [
+     55.61664767547676,
+     80.110488383192
+    ]
+   },
+   "cost": {
+    "basis": "Public launch list price, counted under interpretation I-1 (a manufacturer's standard, non-promotional list price counts from day 1): GBP 0.0015 per million input tokens, output free, from launchables.ai/docs/deploy/hosted fetched 26 Oct 2026 17:38 UTC. USD 0.0020020 per million input tokens from the ECB euro reference rates of 20 Oct 2026 (GBP 1 = USD 1.33468); prices exclude VAT. Provider-reported usage: 779,294 input / 1,485 output tokens on the common 1,485-item basis; 989,607 input / 1,500 output over all 1,500 items. Common basis USD 0.00105060 per 1,000 decisions; all-item basis USD 0.00132080. The tariff applied to the row's own provider-reported tokens; not a bill and not a quote. Saved copy of the vendor page sha256 956fa709. Price corrected in v1.7.9; earlier releases showed a same-base ESTIMATE of USD 0.0264 per 1,000.",
+    "common_basis": {
+     "n_items": 1485,
+     "rule": "common",
+     "usd_per_1000_all_items": 0.0013207954759999999
+    },
+    "kind": "estimate",
+    "usage_estimated_rows": 0,
+    "usd_per_1000": 0.0010506037629629628
+   },
+   "scores": {
+    "A": 78.19688312813278,
+    "B": 72.86618513011912,
+    "C": 71.20327901104855
+   }
+  },
+  "before": {
+   "axes": {
+    "calibration": 84.04872871623093,
+    "cost": 57.35738348807602,
+    "intelligence": 57.25409127121432,
+    "speed": 85.292646608578
+   },
+   "capability": 70.65140999372262,
+   "composite_ci95": {
+    "A": [
+     65.64091834901892,
+     69.8069877215792
+    ],
+    "B": [
+     62.331726606578606,
+     67.89525971382662
+    ],
+    "C": [
+     48.87458483878408,
+     69.8069877215792
+    ]
+   },
+   "cost": {
+    "basis": "ESTIMATE, nearest-listed-sibling reference: declared base google/gemma-4-12B-it is UNLISTED in frozen pricing_v15 (sha256 a8a05890ddab2d39d1a1bd543f2b5c83842bdc70aa54766788bc89b7a8a448d7); no exact base reference exists. Same-base published precedents arcbright-elf-1-12b, chon-1.0-12b and metask_jev_rain_12b_trained use google/gemma-3-12b-it, USD 0.05/M input and 0.15/M output. This row uses that same sibling ESTIMATE, not a vendor bill or quote. Launchables list price GBP 0.0015 per million input tokens, output free, is shown for information and is not used for the Cost axis. Applied to provider-reported usage. COMMON COST BASIS (v1.6.30): common 1,485 items, excluding the 15 longest for every row; 779,294 input / 1,485 output tokens. All-item usage 989,607 input / 1,500 output over 1,500 items.",
+    "common_basis": {
+     "n_items": 1485,
+     "rule": "common",
+     "usd_per_1000_all_items": 0.033136900000000004
+    },
+    "kind": "estimate",
+    "usage_estimated_rows": 0,
+    "usd_per_1000": 0.02638885521885522
+   },
+   "scores": {
+    "A": 68.34949057703662,
+    "B": 65.79921496246162,
+    "C": 62.23659630838769
+   }
+  },
+  "nonprice_metrics_and_ci_equal": true
+ },
+ "MYLESG12-PRICE": {
+  "module_sha256": "645fd82eac728d597048bec0995ecd3ac896566e269fb6c9a1fdb84c171a9ac4",
+  "old_source_pod_never_resolved": true,
+  "registry_sha256": "fb2228fffe8b7971abc09b7063514f03b9fdeac208a41fbc99375fa9e5672660",
+  "results": {
+   "all": {
+    "candidate_usd_per_1000": 0.0013207954759999999,
+    "counting_list_price": true,
+    "deepinfra_snapshot_sha256": "84eb7926acd4e93b71d695be24898e2ca999b20011d1b66cc0348ce7c6c3546f",
+    "floor_binds": false,
+    "floor_usd_per_1000": null,
+    "key": "launchables-myles-g-12b",
+    "market_rates_per_m": null,
+    "market_reference": null,
+    "note": "operator standard launch list price (interpretation I-1); no exact base-model floor applies",
+    "rankable": true,
+    "snapshot_sha256": "f5d0cd8e0f7d2d6514748c99bfcaeacc09775bac7aa7eecf765af4ba04b0dcd5",
+    "tokens": {
+     "decisions": 1500,
+     "input": 989607,
+     "output": 1500
+    },
+    "usd_per_1000": 0.0013207954759999999
+   },
+   "common": {
+    "candidate_usd_per_1000": 0.0010506037629629628,
+    "counting_list_price": true,
+    "deepinfra_snapshot_sha256": "84eb7926acd4e93b71d695be24898e2ca999b20011d1b66cc0348ce7c6c3546f",
+    "floor_binds": false,
+    "floor_usd_per_1000": null,
+    "key": "launchables-myles-g-12b",
+    "market_rates_per_m": null,
+    "market_reference": null,
+    "note": "operator standard launch list price (interpretation I-1); no exact base-model floor applies",
+    "rankable": true,
+    "snapshot_sha256": "f5d0cd8e0f7d2d6514748c99bfcaeacc09775bac7aa7eecf765af4ba04b0dcd5",
+    "tokens": {
+     "decisions": 1485,
+     "input": 779294,
+     "output": 1485
+    },
+    "usd_per_1000": 0.0010506037629629628
+   }
+  }
+ },
+ "PREVIEW-FOOTER": {
+  "candidate_fairness": "FAIR",
+  "candidate_footer": "Release review pending",
+  "existing_preview_unchanged": true,
+  "publication_status_parameter": true,
+  "published_status_refused_while_pending": true,
+  "status": "PASS"
+ },
+ "PUBLIC-FIELDS": {
+  "all_string_values_scanned": true,
+  "architecture_predecessor_entries_equal": true,
+  "raw_or_sealed_item_content_emitted": false,
+  "status": "PASS"
+ },
+ "REPRO": {
+  "hashes": {
+   "app/api/jevbench/v1.7.9/route.ts": "2d3bafb1f5602ad3dc60b5a31951cf16b1cde63ea12095899dd3c5c422190fc7",
+   "app/jev-models/v1.7.9/page.tsx": "8b7745c0ea830c3f0c6b6fe9482e370c24326dcc599b99625afef97cd0c5bc00",
+   "components/JevBenchReleaseVersionNav.tsx": "a548e94d56321e8b0c746eca0e685ad5437c0fa8806bb2cb351699087d2204de",
+   "components/JevReleaseHistory.tsx": "6b9f3d584e64b844a7b01bf9b3f07edd434cd9221a0c354da66afa4578efa85d",
+   "data/jevbench-architecture.json": "2bb36830ec006aba340b28dbec0c78261e7b70f541fa04652f209ff9ea6f4311",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.9-carry.json": "271d1fc77a136a04a1eb6deb5480c52d4211eb2b66b2ac8bb31e80867e69003a",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.9-categories.json": "a365e06e214cb0d41fd511ec51e341b5263ce0d86fa05ca0bf358972c4ea08ba",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.9-history-carry.json": "334e851944e92383ab3071e52b3012040c7023d0fe236395953169ebee8f0459",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.9-history.json": "5cd8c1332226ea9c179883d2285c0d8b8cc593ae38f2645197364a7ddd9c83c1",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.9-proof.json": "d2071e5aa01b106020907031f1d7526610c53cc85ba87610bcc4997d0ab40931",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.9-publication.json": "8c0aa31e3905cc23273e8f234a1e52a0082943cb6170c5a5c3e53aae78146f62",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.9-results.json": "ab863afda444baa950b6007768d0048060e5661b019ac94b0a777d6dded63294",
+   "lib/jevbench-categories.mjs": "edec91aae6b0dc71b0da02405496c406bee2f02a7d7906bb1ef731cb47f05cc0",
+   "lib/jevbench-live-board.mjs": "4b1d0f3dc6ac3292c25634baf34f59d1e2760644e2249a96e2e414c0c6214636",
+   "lib/jevbench-releases.mjs": "07257875a44218458b38e52cb6c0cb1424a5f77440a70479f08483a7af439f7f",
+   "lib/jevbench-v179-release.mjs": "96f1075d8b0da5dcec17a411bb9fac798f349c5d92573e9e0df3600e68d3fe41",
+   "r196/v179/preview/card.png": "76e6f8646fa851c8473fffadf02670003f3e383fa696379c2a950d33b0a641b7",
+   "r196/v179/preview/index.html": "bb0189986902884ca90c27760579ae01cbf16128dc882e7ea6e12623721a53aa",
+   "test/cr-205-jev-page-structure.test.mjs": "2289262662af66c6b3f081f6860ce06318a63bb667b732a054dfab0b18584d4b",
+   "test/cr-303-feed-split.test.mjs": "66259a0fa9b9970f3b011dd2075dc65fcd3724e9ea8465151f4805f68ad2ce93",
+   "test/fixtures/jevbench-v179-ranks.json": "419268390f53fc1a0289bebb5edb3b80e84d03c386c635735aa1f99df97c4624",
+   "test/jevbench-feed-live-board.test.mjs": "d72b3d7572c27a4edcec3c48008af65492fe533df029ac16741f7b79bcca2831",
+   "test/jevbench-v1630-open-fold.test.mjs": "906bad132bd319829e939e465169a715dd068082d422fbe82c3c3355ca283ed8",
+   "test/jevbench-v1630-release.test.mjs": "e721b82eb0da5afbc49776c3c6dfbdcb640a543741531f98c049699335b5ccdf",
+   "test/jevbench-v1637-release.test.mjs": "1c200d57b9cb4e69eb8dbfdbb0f6c19d8843d7d074f96ff262ce26193e4180df",
+   "test/jevbench-v170-release.test.mjs": "1aa9b658f97fe15f44692f52279cce33efc4780e715ec2f2a1bacfc755c1be7a"
+  },
+  "identical": true,
+  "passes": 2
+ },
+ "bind-numbers": {
+  "log_sha256": "d449755457f41ae19754b8c162cb8e239afc3bd4e1089d22720420bd8e0bfda6",
+  "status": "PASS"
+ },
+ "build": {
+  "log_sha256": "9301b62e17697555ddf85ab7c73641eff4a426673df3dd24d5f40e8b743b854c",
+  "status": "PASS"
+ },
+ "cost-kind": {
+  "log_sha256": "376fd723366ca4b662b059fc76680be2118e8ef6f2992e2728534f79d8c2fb48",
+  "status": "PASS"
+ },
+ "fairness": "FAIR",
+ "fairness-text": {
+  "log_sha256": "221a07a44fec4090669f9f23c350833b0c41892d849fc796c682ff8702d31f09",
+  "status": "PASS"
+ },
+ "final-sanity": {
+  "log_sha256": "85fecb29e34a3146b965968e62790718022a6c8509a3d8f30007b528897fe47f",
+  "status": "PASS"
+ },
+ "fulltest": {
+  "cancelled": 0,
+  "fail": 0,
+  "log_sha256": "5aa46a11465f7876f859df0c7a062a994fcbbb49a3ed43e83e98082be6121432",
+  "pass": 3820,
+  "skipped": 8,
+  "status": "PASS",
+  "tests": 3828
+ },
+ "helpers": {
+  "log_sha256": "ddd050d7ce8aa1bac4bc3c2f4e5031dba613975e2b1a4bdbfc9285b0e4908df4",
+  "status": "PASS"
+ },
+ "myles-pricing": {
+  "log_sha256": "133b8e75b41b99cb323eb41f9ffd2fc61b26022a28de8d051ff12939812e091b",
+  "status": "PASS"
+ },
+ "prepare": {
+  "log_sha256": "366fbb387a57406406dbf574ec0652c8a30bc6670b1b7cbb23691efba75b9f5b",
+  "status": "PASS"
+ },
+ "preview": {
+  "log_sha256": "16b7d5fd48c912266654eb99b3f2180e3309fcefa0c6a975fcafaf08704619c6",
+  "status": "PASS"
+ },
+ "preview-browser": {
+  "all_lists": 544,
+  "fairness_header": "LOCAL REVIEW PREVIEW \u00b7 Release review pending \u00b7 fairness FAIR",
+  "initial": "share / api / official / A \u2014 top five changed. 33 ranked rows.",
+  "official_rows": 33,
+  "page_errors": [],
+  "pair": "Myles-G 12B (Launchables) vs SubQ Snap 1.1 (SubQ) (leaves top five)",
+  "status": "PASS",
+  "tab_closed_in_finally": true
+ },
+ "public-fields": {
+  "log_sha256": "73e07c631de3583c4adf22892e87949d73145acfbe792bfb85daf61b77e6f7d7",
+  "status": "PASS"
+ },
+ "publication_review": "PENDING",
+ "release-tests": {
+  "cancelled": 0,
+  "fail": 0,
+  "log_sha256": "2718a705b93d901e5f9f8674690384e085cec7045055750a258860c14731c20b",
+  "pass": 67,
+  "skipped": 0,
+  "status": "PASS",
+  "tests": 67
+ },
+ "repro": {
+  "log_sha256": "1365f7f6333ec12e9fe79c7a5ed5f64fc58176068b762821302059d68467522c",
+  "status": "PASS"
+ },
+ "source": {
+  "log_sha256": "518c4250a9eff2f7d927725723bc91418bc1e961c2502f6265e2ddc7b651f973",
+  "status": "PASS"
+ },
+ "status": "PASS",
+ "synthetic-tests": {
+  "cancelled": 0,
+  "fail": 0,
+  "log_sha256": "607f45d2a553e3c91eff485f3d41e0bd6fb2cb4bdd2acf5bed42d15511f045de",
+  "pass": 57,
+  "skipped": 1,
+  "status": "PASS",
+  "tests": 58
+ },
+ "topfive-diff": {
+  "base": "v1.7.8",
+  "candidate": "v1.7.9",
+  "changed": true,
+  "changed_labels": [
+   "all/composites/A",
+   "api/composites/A",
+   "release/A",
+   "frozen/all/official/A",
+   "frozen/all/official/cost",
+   "frozen/all/official/view/Balanced 33:33:33",
+   "frozen/all/official/view/Emphasis on Cost 20:20:60",
+   "frozen/all/official/view/Emphasis on Speed 20:60:20",
+   "frozen/all/none/A",
+   "frozen/all/none/cost",
+   "frozen/all/none/view/Balanced 33:33:33",
+   "frozen/all/none/view/Emphasis on Cost 20:20:60",
+   "frozen/all/none/view/Emphasis on Speed 20:60:20",
+   "frozen/all/cost1.4/A",
+   "frozen/all/cost1.4/cost",
+   "frozen/all/cost1.4/view/Balanced 33:33:33",
+   "frozen/all/cost1.4/view/Emphasis on Cost 20:20:60",
+   "frozen/all/cost1.4/view/Emphasis on Speed 20:60:20",
+   "frozen/all/cost1.5/A",
+   "frozen/all/cost1.5/cost",
+   "frozen/all/cost1.5/view/Balanced 33:33:33",
+   "frozen/all/cost1.5/view/Emphasis on Cost 20:20:60",
+   "frozen/all/cost1.5/view/Emphasis on Speed 20:60:20",
+   "frozen/api/official/A",
+   "frozen/api/official/cost",
+   "frozen/api/official/view/Balanced 33:33:33",
+   "frozen/api/official/view/Emphasis on Cost 20:20:60",
+   "frozen/api/official/view/Emphasis on Speed 20:60:20",
+   "frozen/api/none/A",
+   "frozen/api/none/cost",
+   "frozen/api/none/view/Balanced 33:33:33",
+   "frozen/api/none/view/Emphasis on Cost 20:20:60",
+   "frozen/api/none/view/Emphasis on Speed 20:60:20",
+   "frozen/api/cost1.4/A",
+   "frozen/api/cost1.4/cost",
+   "frozen/api/cost1.4/view/Balanced 33:33:33",
+   "frozen/api/cost1.4/view/Emphasis on Cost 20:20:60",
+   "frozen/api/cost1.4/view/Emphasis on Speed 20:60:20",
+   "frozen/api/cost1.5/A",
+   "frozen/api/cost1.5/cost",
+   "frozen/api/cost1.5/view/Balanced 33:33:33",
+   "frozen/api/cost1.5/view/Emphasis on Cost 20:20:60",
+   "frozen/api/cost1.5/view/Emphasis on Speed 20:60:20",
+   "off/all/official/A",
+   "off/all/official/cost",
+   "off/all/official/view/Balanced 33:33:33",
+   "off/all/official/view/Emphasis on Cost 20:20:60",
+   "off/all/official/view/Emphasis on Speed 20:60:20",
+   "off/all/none/A",
+   "off/all/none/cost",
+   "off/all/none/view/Balanced 33:33:33",
+   "off/all/none/view/Emphasis on Cost 20:20:60",
+   "off/all/none/view/Emphasis on Speed 20:60:20",
+   "off/all/cost1.4/A",
+   "off/all/cost1.4/cost",
+   "off/all/cost1.4/view/Balanced 33:33:33",
+   "off/all/cost1.4/view/Emphasis on Cost 20:20:60",
+   "off/all/cost1.4/view/Emphasis on Speed 20:60:20",
+   "off/all/cost1.5/A",
+   "off/all/cost1.5/cost",
+   "off/all/cost1.5/view/Balanced 33:33:33",
+   "off/all/cost1.5/view/Emphasis on Cost 20:20:60",
+   "off/all/cost1.5/view/Emphasis on Speed 20:60:20",
+   "off/api/official/A",
+   "off/api/official/cost",
+   "off/api/official/view/Balanced 33:33:33",
+   "off/api/official/view/Emphasis on Cost 20:20:60",
+   "off/api/official/view/Emphasis on Speed 20:60:20",
+   "off/api/none/A",
+   "off/api/none/cost",
+   "off/api/none/view/Balanced 33:33:33",
+   "off/api/none/view/Emphasis on Cost 20:20:60",
+   "off/api/none/view/Emphasis on Speed 20:60:20",
+   "off/api/cost1.4/A",
+   "off/api/cost1.4/cost",
+   "off/api/cost1.4/view/Balanced 33:33:33",
+   "off/api/cost1.4/view/Emphasis on Cost 20:20:60",
+   "off/api/cost1.4/view/Emphasis on Speed 20:60:20",
+   "off/api/cost1.5/A",
+   "off/api/cost1.5/cost",
+   "off/api/cost1.5/view/Balanced 33:33:33",
+   "off/api/cost1.5/view/Emphasis on Cost 20:20:60",
+   "off/api/cost1.5/view/Emphasis on Speed 20:60:20",
+   "share/all/official/A",
+   "share/all/official/cost",
+   "share/all/official/view/Balanced 33:33:33",
+   "share/all/official/view/Emphasis on Cost 20:20:60",
+   "share/all/official/view/Emphasis on Speed 20:60:20",
+   "share/all/none/A",
+   "share/all/none/cost",
+   "share/all/none/view/Balanced 33:33:33",
+   "share/all/none/view/Emphasis on Cost 20:20:60",
+   "share/all/none/view/Emphasis on Speed 20:60:20",
+   "share/all/cost1.4/A",
+   "share/all/cost1.4/cost",
+   "share/all/cost1.4/view/Balanced 33:33:33",
+   "share/all/cost1.4/view/Emphasis on Cost 20:20:60",
+   "share/all/cost1.4/view/Emphasis on Speed 20:60:20",
+   "share/all/cost1.5/A",
+   "share/all/cost1.5/cost",
+   "share/all/cost1.5/view/Balanced 33:33:33",
+   "share/all/cost1.5/view/Emphasis on Cost 20:20:60",
+   "share/all/cost1.5/view/Emphasis on Speed 20:60:20",
+   "share/api/official/A",
+   "share/api/official/cost",
+   "share/api/official/view/Balanced 33:33:33",
+   "share/api/official/view/Emphasis on Cost 20:20:60",
+   "share/api/official/view/Emphasis on Speed 20:60:20",
+   "share/api/none/A",
+   "share/api/none/cost",
+   "share/api/none/view/Balanced 33:33:33",
+   "share/api/none/view/Emphasis on Cost 20:20:60",
+   "share/api/none/view/Emphasis on Speed 20:60:20",
+   "share/api/cost1.4/A",
+   "share/api/cost1.4/cost",
+   "share/api/cost1.4/view/Balanced 33:33:33",
+   "share/api/cost1.4/view/Emphasis on Cost 20:20:60",
+   "share/api/cost1.4/view/Emphasis on Speed 20:60:20",
+   "share/api/cost1.5/A",
+   "share/api/cost1.5/cost",
+   "share/api/cost1.5/view/Balanced 33:33:33",
+   "share/api/cost1.5/view/Emphasis on Cost 20:20:60",
+   "share/api/cost1.5/view/Emphasis on Speed 20:60:20"
+  ],
+  "changed_lists": 123,
+  "comparison_scope": "40 primary site assembly lists plus 540 supplementary axis/weight/cap lists and all recorded slider boundaries; real manifest PENDING",
+  "custom_changed_labels": [],
+  "custom_receipt_sha256": "376954865389c3b6cd63ea2ac23adcb3f608b829a5b3feb5510e0d34f389ac44",
+  "custom_weight_example": {
+   "calibration": 50,
+   "cost": 0,
+   "intelligence": 50,
+   "speed": 0
+  },
+  "explicit_slider_grid_changed": 0,
+  "explicit_slider_grid_states": 368,
+  "extended_changed_labels": [
+   "frozen/all/official/A",
+   "frozen/all/official/cost",
+   "frozen/all/official/view/Balanced 33:33:33",
+   "frozen/all/official/view/Emphasis on Cost 20:20:60",
+   "frozen/all/official/view/Emphasis on Speed 20:60:20",
+   "frozen/all/none/A",
+   "frozen/all/none/cost",
+   "frozen/all/none/view/Balanced 33:33:33",
+   "frozen/all/none/view/Emphasis on Cost 20:20:60",
+   "frozen/all/none/view/Emphasis on Speed 20:60:20",
+   "frozen/all/cost1.4/A",
+   "frozen/all/cost1.4/cost",
+   "frozen/all/cost1.4/view/Balanced 33:33:33",
+   "frozen/all/cost1.4/view/Emphasis on Cost 20:20:60",
+   "frozen/all/cost1.4/view/Emphasis on Speed 20:60:20",
+   "frozen/all/cost1.5/A",
+   "frozen/all/cost1.5/cost",
+   "frozen/all/cost1.5/view/Balanced 33:33:33",
+   "frozen/all/cost1.5/view/Emphasis on Cost 20:20:60",
+   "frozen/all/cost1.5/view/Emphasis on Speed 20:60:20",
+   "frozen/api/official/A",
+   "frozen/api/official/cost",
+   "frozen/api/official/view/Balanced 33:33:33",
+   "frozen/api/official/view/Emphasis on Cost 20:20:60",
+   "frozen/api/official/view/Emphasis on Speed 20:60:20",
+   "frozen/api/none/A",
+   "frozen/api/none/cost",
+   "frozen/api/none/view/Balanced 33:33:33",
+   "frozen/api/none/view/Emphasis on Cost 20:20:60",
+   "frozen/api/none/view/Emphasis on Speed 20:60:20",
+   "frozen/api/cost1.4/A",
+   "frozen/api/cost1.4/cost",
+   "frozen/api/cost1.4/view/Balanced 33:33:33",
+   "frozen/api/cost1.4/view/Emphasis on Cost 20:20:60",
+   "frozen/api/cost1.4/view/Emphasis on Speed 20:60:20",
+   "frozen/api/cost1.5/A",
+   "frozen/api/cost1.5/cost",
+   "frozen/api/cost1.5/view/Balanced 33:33:33",
+   "frozen/api/cost1.5/view/Emphasis on Cost 20:20:60",
+   "frozen/api/cost1.5/view/Emphasis on Speed 20:60:20",
+   "off/all/official/A",
+   "off/all/official/cost",
+   "off/all/official/view/Balanced 33:33:33",
+   "off/all/official/view/Emphasis on Cost 20:20:60",
+   "off/all/official/view/Emphasis on Speed 20:60:20",
+   "off/all/none/A",
+   "off/all/none/cost",
+   "off/all/none/view/Balanced 33:33:33",
+   "off/all/none/view/Emphasis on Cost 20:20:60",
+   "off/all/none/view/Emphasis on Speed 20:60:20",
+   "off/all/cost1.4/A",
+   "off/all/cost1.4/cost",
+   "off/all/cost1.4/view/Balanced 33:33:33",
+   "off/all/cost1.4/view/Emphasis on Cost 20:20:60",
+   "off/all/cost1.4/view/Emphasis on Speed 20:60:20",
+   "off/all/cost1.5/A",
+   "off/all/cost1.5/cost",
+   "off/all/cost1.5/view/Balanced 33:33:33",
+   "off/all/cost1.5/view/Emphasis on Cost 20:20:60",
+   "off/all/cost1.5/view/Emphasis on Speed 20:60:20",
+   "off/api/official/A",
+   "off/api/official/cost",
+   "off/api/official/view/Balanced 33:33:33",
+   "off/api/official/view/Emphasis on Cost 20:20:60",
+   "off/api/official/view/Emphasis on Speed 20:60:20",
+   "off/api/none/A",
+   "off/api/none/cost",
+   "off/api/none/view/Balanced 33:33:33",
+   "off/api/none/view/Emphasis on Cost 20:20:60",
+   "off/api/none/view/Emphasis on Speed 20:60:20",
+   "off/api/cost1.4/A",
+   "off/api/cost1.4/cost",
+   "off/api/cost1.4/view/Balanced 33:33:33",
+   "off/api/cost1.4/view/Emphasis on Cost 20:20:60",
+   "off/api/cost1.4/view/Emphasis on Speed 20:60:20",
+   "off/api/cost1.5/A",
+   "off/api/cost1.5/cost",
+   "off/api/cost1.5/view/Balanced 33:33:33",
+   "off/api/cost1.5/view/Emphasis on Cost 20:20:60",
+   "off/api/cost1.5/view/Emphasis on Speed 20:60:20",
+   "share/all/official/A",
+   "share/all/official/cost",
+   "share/all/official/view/Balanced 33:33:33",
+   "share/all/official/view/Emphasis on Cost 20:20:60",
+   "share/all/official/view/Emphasis on Speed 20:60:20",
+   "share/all/none/A",
+   "share/all/none/cost",
+   "share/all/none/view/Balanced 33:33:33",
+   "share/all/none/view/Emphasis on Cost 20:20:60",
+   "share/all/none/view/Emphasis on Speed 20:60:20",
+   "share/all/cost1.4/A",
+   "share/all/cost1.4/cost",
+   "share/all/cost1.4/view/Balanced 33:33:33",
+   "share/all/cost1.4/view/Emphasis on Cost 20:20:60",
+   "share/all/cost1.4/view/Emphasis on Speed 20:60:20",
+   "share/all/cost1.5/A",
+   "share/all/cost1.5/cost",
+   "share/all/cost1.5/view/Balanced 33:33:33",
+   "share/all/cost1.5/view/Emphasis on Cost 20:20:60",
+   "share/all/cost1.5/view/Emphasis on Speed 20:60:20",
+   "share/api/official/A",
+   "share/api/official/cost",
+   "share/api/official/view/Balanced 33:33:33",
+   "share/api/official/view/Emphasis on Cost 20:20:60",
+   "share/api/official/view/Emphasis on Speed 20:60:20",
+   "share/api/none/A",
+   "share/api/none/cost",
+   "share/api/none/view/Balanced 33:33:33",
+   "share/api/none/view/Emphasis on Cost 20:20:60",
+   "share/api/none/view/Emphasis on Speed 20:60:20",
+   "share/api/cost1.4/A",
+   "share/api/cost1.4/cost",
+   "share/api/cost1.4/view/Balanced 33:33:33",
+   "share/api/cost1.4/view/Emphasis on Cost 20:20:60",
+   "share/api/cost1.4/view/Emphasis on Speed 20:60:20",
+   "share/api/cost1.5/A",
+   "share/api/cost1.5/cost",
+   "share/api/cost1.5/view/Balanced 33:33:33",
+   "share/api/cost1.5/view/Emphasis on Cost 20:20:60",
+   "share/api/cost1.5/view/Emphasis on Speed 20:60:20"
+  ],
+  "extended_changed_lists": 120,
+  "extended_lists": 540,
+  "lists": 580,
+  "primary_changed_labels": [
+   "all/composites/A",
+   "api/composites/A",
+   "release/A"
+  ],
+  "primary_changed_lists": 3,
+  "primary_lists": 40,
+  "rows": [
+   {
+    "after": [
+     "singularity-super-decider",
+     "launchables-myles-g-12b",
+     "kettei-fat",
+     "fastino-glide-api",
+     "torchcast-decision-4b-v1.3"
+    ],
+    "before": [
+     "singularity-super-decider",
+     "kettei-fat",
+     "fastino-glide-api",
+     "torchcast-decision-4b-v1.3",
+     "liquid-d1-ultra"
+    ],
+    "changed": true,
+    "metric": "composites/A",
+    "view": "all"
+   },
+   {
+    "after": [
+     "singularity-super-decider",
+     "kettei-fat",
+     "fastino-glide-api",
+     "drex-max",
+     "subq-snap-1.1"
+    ],
+    "before": [
+     "singularity-super-decider",
+     "kettei-fat",
+     "fastino-glide-api",
+     "drex-max",
+     "subq-snap-1.1"
+    ],
+    "changed": false,
+    "metric": "composites/B",
+    "view": "all"
+   },
+   {
+    "after": [
+     "singularity-super-decider",
+     "kettei-fat",
+     "fastino-glide-api",
+     "torchcast-decision-4b-v1.3",
+     "liquid-d1-ultra"
+    ],
+    "before": [
+     "singularity-super-decider",
+     "kettei-fat",
+     "fastino-glide-api",
+     "torchcast-decision-4b-v1.3",
+     "liquid-d1-ultra"
+    ],
+    "changed": false,
+    "metric": "composites/C",
+    "view": "all"
+   },
+   {
+    "after": [
+     "kettei-fat",
+     "singularity-super-decider-thinking",
+     "singularity-super-decider",
+     "fastino-glide-api",
+     "h2o-lightning-31b"
+    ],
+    "before": [
+     "kettei-fat",
+     "singularity-super-decider-thinking",
+     "singularity-super-decider",
+     "fastino-glide-api",
+     "h2o-lightning-31b"
+    ],
+    "changed": false,
+    "metric": "capability/official_caps",
+    "view": "all"
+   },
+   {
+    "after": [
+     "gpt-6-luna",
+     "gpt-6-luna-low",
+     "gpt-5.6-luna",
+     "deepseek-flash",
+     "kettei-fat"
+    ],
+    "before": [
+     "gpt-6-luna",
+     "gpt-6-luna-low",
+     "gpt-5.6-luna",
+     "deepseek-flash",
+     "kettei-fat"
+    ],
+    "changed": false,
+    "metric": "capability/no_caps",
+    "view": "all"
+   },
+   {
+    "after": [
+     "kettei-fat",
+     "singularity-super-decider-thinking",
+     "mammoth-1",
+     "knowline-31b-gen1",
+     "fastino-glide-1.2-open"
+    ],
+    "before": [
+     "kettei-fat",
+     "singularity-super-decider-thinking",
+     "mammoth-1",
+     "knowline-31b-gen1",
+     "fastino-glide-1.2-open"
+    ],
+    "changed": false,
+    "metric": "capability/cost_off_latency_2x",
+    "view": "all"
+   },
+   {
+    "after": [
+     "kettei-fat",
+     "singularity-super-decider-thinking",
+     "singularity-super-decider",
+     "fastino-glide-api",
+     "h2o-lightning-31b"
+    ],
+    "before": [
+     "kettei-fat",
+     "singularity-super-decider-thinking",
+     "singularity-super-decider",
+     "fastino-glide-api",
+     "h2o-lightning-31b"
+    ],
+    "changed": false,
+    "metric": "capability/latency_none",
+    "view": "all"
+   },
+   {
+    "after": [
+     "kettei-fat",
+     "singularity-super-decider-thinking",
+     "mammoth-1",
+     "knowline-31b-gen1",
+     "fastino-glide-1.2-open"
+    ],
+    "before": [
+     "kettei-fat",
+     "singularity-super-decider-thinking",
+     "mammoth-1",
+     "knowline-31b-gen1",
+     "fastino-glide-1.2-open"
+    ],
+    "changed": false,
+    "metric": "extra_capability/cost_7x",
+    "view": "all"
+   },
+   {
+    "after": [
+     "kettei-fat",
+     "singularity-super-decider-thinking",
+     "mammoth-1",
+     "knowline-31b-gen1",
+     "fastino-glide-1.2-open"
+    ],
+    "before": [
+     "kettei-fat",
+     "singularity-super-decider-thinking",
+     "mammoth-1",
+     "knowline-31b-gen1",
+     "fastino-glide-1.2-open"
+    ],
+    "changed": false,
+    "metric": "extra_capability/cost_10x",
+    "view": "all"
+   },
+   {
+    "after": [
+     "gpt-6-luna",
+     "gpt-6-luna-low",
+     "gpt-5.6-luna",
+     "deepseek-flash",
+     "kettei-fat"
+    ],
+    "before": [
+     "gpt-6-luna",
+     "gpt-6-luna-low",
+     "gpt-5.6-luna",
+     "deepseek-flash",
+     "kettei-fat"
+    ],
+    "changed": false,
+    "metric": "extra_capability/rank_field",
+    "view": "all"
+   },
+   {
+    "after": [
+     "gpt-6-luna",
+     "gpt-6-luna-low",
+     "gpt-5.6-luna",
+     "kettei-fat",
+     "singularity-super-decider-thinking"
+    ],
+    "before": [
+     "gpt-6-luna",
+     "gpt-6-luna-low",
+     "gpt-5.6-luna",
+     "kettei-fat",
+     "singularity-super-decider-thinking"
+    ],
+    "changed": false,
+    "metric": "extra_capability/cost_7x_latency_none",
+    "view": "all"
+   },
+   {
+    "after": [
+     "gpt-6-luna",
+     "gpt-6-luna-low",
+     "gpt-5.6-luna",
+     "kettei-fat",
+     "singularity-super-decider-thinking"
+    ],
+    "before": [
+     "gpt-6-luna",
+     "gpt-6-luna-low",
+     "gpt-5.6-luna",
+     "kettei-fat",
+     "singularity-super-decider-thinking"
+    ],
+    "changed": false,
+    "metric": "extra_capability/cost_10x_latency_none",
+    "view": "all"
+   },
+   {
+    "after": [
+     "torchcast-decision-4b-v1.3",
+     "h2o-lightning-4b",
+     "h2o-lightning-31b",
+     "torchcast-decision-4b-v1.2",
+     "decisio-gemma-4-12b-tuned-commit"
+    ],
+    "before": [
+     "torchcast-decision-4b-v1.3",
+     "h2o-lightning-4b",
+     "h2o-lightning-31b",
+     "torchcast-decision-4b-v1.2",
+     "decisio-gemma-4-12b-tuned-commit"
+    ],
+    "changed": false,
+    "metric": "composites/A",
+    "view": "open"
+   },
+   {
+    "after": [
+     "h2o-lightning-31b",
+     "torchcast-decision-4b-v1.3",
+     "basal-omni-1.0-ultra",
+     "quyet-1-0-large",
+     "decisio-gemma-4-31b-v080"
+    ],
+    "before": [
+     "h2o-lightning-31b",
+     "torchcast-decision-4b-v1.3",
+     "basal-omni-1.0-ultra",
+     "quyet-1-0-large",
+     "decisio-gemma-4-31b-v080"
+    ],
+    "changed": false,
+    "metric": "composites/B",
+    "view": "open"
+   },
+   {
+    "after": [
+     "torchcast-decision-4b-v1.3",
+     "h2o-lightning-4b",
+     "h2o-lightning-31b",
+     "torchcast-decision-4b-v1.2",
+     "decisio-gemma-4-12b-tuned-commit"
+    ],
+    "before": [
+     "torchcast-decision-4b-v1.3",
+     "h2o-lightning-4b",
+     "h2o-lightning-31b",
+     "torchcast-decision-4b-v1.2",
+     "decisio-gemma-4-12b-tuned-commit"
+    ],
+    "changed": false,
+    "metric": "composites/C",
+    "view": "open"
+   },
+   {
+    "after": [
+     "h2o-lightning-31b",
+     "basal-omni-1.0-ultra",
+     "dopest-1.0-31b",
+     "jeff_1_1_medium",
+     "arcbright-elf-1-31b"
+    ],
+    "before": [
+     "h2o-lightning-31b",
+     "basal-omni-1.0-ultra",
+     "dopest-1.0-31b",
+     "jeff_1_1_medium",
+     "arcbright-elf-1-31b"
+    ],
+    "changed": false,
+    "metric": "capability/official_caps",
+    "view": "open"
+   },
+   {
+    "after": [
+     "mammoth-1",
+     "knowline-31b-gen1",
+     "fastino-glide-1.2-open",
+     "h2o-lightning-31b",
+     "pplx-decider-v1-1-27b"
+    ],
+    "before": [
+     "mammoth-1",
+     "knowline-31b-gen1",
+     "fastino-glide-1.2-open",
+     "h2o-lightning-31b",
+     "pplx-decider-v1-1-27b"
+    ],
+    "changed": false,
+    "metric": "capability/no_caps",
+    "view": "open"
+   },
+   {
+    "after": [
+     "mammoth-1",
+     "knowline-31b-gen1",
+     "fastino-glide-1.2-open",
+     "h2o-lightning-31b",
+     "pplx-decider-v1-1-27b"
+    ],
+    "before": [
+     "mammoth-1",
+     "knowline-31b-gen1",
+     "fastino-glide-1.2-open",
+     "h2o-lightning-31b",
+     "pplx-decider-v1-1-27b"
+    ],
+    "changed": false,
+    "metric": "capability/cost_off_latency_2x",
+    "view": "open"
+   },
+   {
+    "after": [
+     "h2o-lightning-31b",
+     "basal-omni-1.0-ultra",
+     "dopest-1.0-31b",
+     "jeff_1_1_medium",
+     "arcbright-elf-1-31b"
+    ],
+    "before": [
+     "h2o-lightning-31b",
+     "basal-omni-1.0-ultra",
+     "dopest-1.0-31b",
+     "jeff_1_1_medium",
+     "arcbright-elf-1-31b"
+    ],
+    "changed": false,
+    "metric": "capability/latency_none",
+    "view": "open"
+   },
+   {
+    "after": [
+     "mammoth-1",
+     "knowline-31b-gen1",
+     "fastino-glide-1.2-open",
+     "h2o-lightning-31b",
+     "pplx-decider-v1-1-27b"
+    ],
+    "before": [
+     "mammoth-1",
+     "knowline-31b-gen1",
+     "fastino-glide-1.2-open",
+     "h2o-lightning-31b",
+     "pplx-decider-v1-1-27b"
+    ],
+    "changed": false,
+    "metric": "extra_capability/cost_7x",
+    "view": "open"
+   },
+   {
+    "after": [
+     "mammoth-1",
+     "knowline-31b-gen1",
+     "fastino-glide-1.2-open",
+     "h2o-lightning-31b",
+     "pplx-decider-v1-1-27b"
+    ],
+    "before": [
+     "mammoth-1",
+     "knowline-31b-gen1",
+     "fastino-glide-1.2-open",
+     "h2o-lightning-31b",
+     "pplx-decider-v1-1-27b"
+    ],
+    "changed": false,
+    "metric": "extra_capability/cost_10x",
+    "view": "open"
+   },
+   {
+    "after": [
+     "mammoth-1",
+     "knowline-31b-gen1",
+     "fastino-glide-1.2-open",
+     "h2o-lightning-31b",
+     "pplx-decider-v1-1-27b"
+    ],
+    "before": [
+     "mammoth-1",
+     "knowline-31b-gen1",
+     "fastino-glide-1.2-open",
+     "h2o-lightning-31b",
+     "pplx-decider-v1-1-27b"
+    ],
+    "changed": false,
+    "metric": "extra_capability/rank_field",
+    "view": "open"
+   },
+   {
+    "after": [
+     "mammoth-1",
+     "knowline-31b-gen1",
+     "fastino-glide-1.2-open",
+     "h2o-lightning-31b",
+     "pplx-decider-v1-1-27b"
+    ],
+    "before": [
+     "mammoth-1",
+     "knowline-31b-gen1",
+     "fastino-glide-1.2-open",
+     "h2o-lightning-31b",
+     "pplx-decider-v1-1-27b"
+    ],
+    "changed": false,
+    "metric": "extra_capability/cost_7x_latency_none",
+    "view": "open"
+   },
+   {
+    "after": [
+     "mammoth-1",
+     "knowline-31b-gen1",
+     "fastino-glide-1.2-open",
+     "h2o-lightning-31b",
+     "pplx-decider-v1-1-27b"
+    ],
+    "before": [
+     "mammoth-1",
+     "knowline-31b-gen1",
+     "fastino-glide-1.2-open",
+     "h2o-lightning-31b",
+     "pplx-decider-v1-1-27b"
+    ],
+    "changed": false,
+    "metric": "extra_capability/cost_10x_latency_none",
+    "view": "open"
+   },
+   {
+    "after": [
+     "singularity-super-decider",
+     "launchables-myles-g-12b",
+     "kettei-fat",
+     "fastino-glide-api",
+     "liquid-d1-ultra"
+    ],
+    "before": [
+     "singularity-super-decider",
+     "kettei-fat",
+     "fastino-glide-api",
+     "liquid-d1-ultra",
+     "subq-snap-1.1"
+    ],
+    "changed": true,
+    "metric": "composites/A",
+    "view": "api"
+   },
+   {
+    "after": [
+     "singularity-super-decider",
+     "kettei-fat",
+     "fastino-glide-api",
+     "drex-max",
+     "subq-snap-1.1"
+    ],
+    "before": [
+     "singularity-super-decider",
+     "kettei-fat",
+     "fastino-glide-api",
+     "drex-max",
+     "subq-snap-1.1"
+    ],
+    "changed": false,
+    "metric": "composites/B",
+    "view": "api"
+   },
+   {
+    "after": [
+     "singularity-super-decider",
+     "kettei-fat",
+     "fastino-glide-api",
+     "liquid-d1-ultra",
+     "subq-snap-1.1"
+    ],
+    "before": [
+     "singularity-super-decider",
+     "kettei-fat",
+     "fastino-glide-api",
+     "liquid-d1-ultra",
+     "subq-snap-1.1"
+    ],
+    "changed": false,
+    "metric": "composites/C",
+    "view": "api"
+   },
+   {
+    "after": [
+     "kettei-fat",
+     "singularity-super-decider-thinking",
+     "singularity-super-decider",
+     "fastino-glide-api",
+     "drex-max"
+    ],
+    "before": [
+     "kettei-fat",
+     "singularity-super-decider-thinking",
+     "singularity-super-decider",
+     "fastino-glide-api",
+     "drex-max"
+    ],
+    "changed": false,
+    "metric": "capability/official_caps",
+    "view": "api"
+   },
+   {
+    "after": [
+     "gpt-6-luna",
+     "gpt-6-luna-low",
+     "gpt-5.6-luna",
+     "deepseek-flash",
+     "kettei-fat"
+    ],
+    "before": [
+     "gpt-6-luna",
+     "gpt-6-luna-low",
+     "gpt-5.6-luna",
+     "deepseek-flash",
+     "kettei-fat"
+    ],
+    "changed": false,
+    "metric": "capability/no_caps",
+    "view": "api"
+   },
+   {
+    "after": [
+     "kettei-fat",
+     "singularity-super-decider-thinking",
+     "singularity-super-decider",
+     "fastino-glide-api",
+     "drex-max"
+    ],
+    "before": [
+     "kettei-fat",
+     "singularity-super-decider-thinking",
+     "singularity-super-decider",
+     "fastino-glide-api",
+     "drex-max"
+    ],
+    "changed": false,
+    "metric": "capability/cost_off_latency_2x",
+    "view": "api"
+   },
+   {
+    "after": [
+     "kettei-fat",
+     "singularity-super-decider-thinking",
+     "singularity-super-decider",
+     "fastino-glide-api",
+     "drex-max"
+    ],
+    "before": [
+     "kettei-fat",
+     "singularity-super-decider-thinking",
+     "singularity-super-decider",
+     "fastino-glide-api",
+     "drex-max"
+    ],
+    "changed": false,
+    "metric": "capability/latency_none",
+    "view": "api"
+   },
+   {
+    "after": [
+     "kettei-fat",
+     "singularity-super-decider-thinking",
+     "singularity-super-decider",
+     "fastino-glide-api",
+     "drex-max"
+    ],
+    "before": [
+     "kettei-fat",
+     "singularity-super-decider-thinking",
+     "singularity-super-decider",
+     "fastino-glide-api",
+     "drex-max"
+    ],
+    "changed": false,
+    "metric": "extra_capability/cost_7x",
+    "view": "api"
+   },
+   {
+    "after": [
+     "kettei-fat",
+     "singularity-super-decider-thinking",
+     "singularity-super-decider",
+     "fastino-glide-api",
+     "drex-max"
+    ],
+    "before": [
+     "kettei-fat",
+     "singularity-super-decider-thinking",
+     "singularity-super-decider",
+     "fastino-glide-api",
+     "drex-max"
+    ],
+    "changed": false,
+    "metric": "extra_capability/cost_10x",
+    "view": "api"
+   },
+   {
+    "after": [
+     "gpt-6-luna",
+     "gpt-6-luna-low",
+     "gpt-5.6-luna",
+     "deepseek-flash",
+     "kettei-fat"
+    ],
+    "before": [
+     "gpt-6-luna",
+     "gpt-6-luna-low",
+     "gpt-5.6-luna",
+     "deepseek-flash",
+     "kettei-fat"
+    ],
+    "changed": false,
+    "metric": "extra_capability/rank_field",
+    "view": "api"
+   },
+   {
+    "after": [
+     "gpt-6-luna",
+     "gpt-6-luna-low",
+     "gpt-5.6-luna",
+     "kettei-fat",
+     "singularity-super-decider-thinking"
+    ],
+    "before": [
+     "gpt-6-luna",
+     "gpt-6-luna-low",
+     "gpt-5.6-luna",
+     "kettei-fat",
+     "singularity-super-decider-thinking"
+    ],
+    "changed": false,
+    "metric": "extra_capability/cost_7x_latency_none",
+    "view": "api"
+   },
+   {
+    "after": [
+     "gpt-6-luna",
+     "gpt-6-luna-low",
+     "gpt-5.6-luna",
+     "kettei-fat",
+     "singularity-super-decider-thinking"
+    ],
+    "before": [
+     "gpt-6-luna",
+     "gpt-6-luna-low",
+     "gpt-5.6-luna",
+     "kettei-fat",
+     "singularity-super-decider-thinking"
+    ],
+    "changed": false,
+    "metric": "extra_capability/cost_10x_latency_none",
+    "view": "api"
+   },
+   {
+    "after": [
+     "singularity-super-decider",
+     "launchables-myles-g-12b",
+     "kettei-fat",
+     "fastino-glide-api",
+     "torchcast-decision-4b-v1.3"
+    ],
+    "before": [
+     "singularity-super-decider",
+     "kettei-fat",
+     "fastino-glide-api",
+     "torchcast-decision-4b-v1.3",
+     "liquid-d1-ultra"
+    ],
+    "changed": true,
+    "metric": "A",
+    "view": "release"
+   },
+   {
+    "after": [
+     "singularity-super-decider",
+     "kettei-fat",
+     "fastino-glide-api",
+     "drex-max",
+     "subq-snap-1.1"
+    ],
+    "before": [
+     "singularity-super-decider",
+     "kettei-fat",
+     "fastino-glide-api",
+     "drex-max",
+     "subq-snap-1.1"
+    ],
+    "changed": false,
+    "metric": "B",
+    "view": "release"
+   },
+   {
+    "after": [
+     "singularity-super-decider",
+     "kettei-fat",
+     "fastino-glide-api",
+     "torchcast-decision-4b-v1.3",
+     "liquid-d1-ultra"
+    ],
+    "before": [
+     "singularity-super-decider",
+     "kettei-fat",
+     "fastino-glide-api",
+     "torchcast-decision-4b-v1.3",
+     "liquid-d1-ultra"
+    ],
+    "changed": false,
+    "metric": "C",
+    "view": "release"
+   },
+   {
+    "after": [
+     "gpt-6-luna",
+     "gpt-6-luna-low",
+     "gpt-5.6-luna",
+     "deepseek-flash",
+     "kettei-fat"
+    ],
+    "before": [
+     "gpt-6-luna",
+     "gpt-6-luna-low",
+     "gpt-5.6-luna",
+     "deepseek-flash",
+     "kettei-fat"
+    ],
+    "changed": false,
+    "metric": "capability",
+    "view": "release"
+   }
+  ],
+  "slider_changed_states": 0,
+  "snapshots_sha256": {
+   "topfive-after.json": "9f0d53da0e29b5db7ae5a5395af93eb2efeb07eea936ed945fc1efde6c303c53",
+   "topfive-before.json": "3414678df37e6ed0c188d2e54bffe2290ca5f163af61355b471fb0f97c406ece",
+   "topfive-extended.json": "7ef35a01fb77a8b0c7eb213337ddf290e6648bbc15de31da41cb5de285e411cf",
+   "topfive-sliders.json": "d7f2101a853b3287df35622b36eafe005846e138d0092a8b2ec326e9b1f31fa7"
+  },
+  "variant": "10-second share"
+ },
+ "typescript": {
+  "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "status": "PASS"
+ },
+ "validator": {
+  "log_sha256": "6633cca11468a3a5fe9d4be6b2f9f8a0786e550769ee93d33c236e6bbe888e60",
+  "status": "PASS"
+ }
+}

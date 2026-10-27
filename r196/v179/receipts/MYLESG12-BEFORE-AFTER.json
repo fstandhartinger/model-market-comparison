@@ -1,0 +1,81 @@
+{
+ "after": {
+  "axes": {
+   "calibration": 84.04872871623093,
+   "cost": 99.35683144033557,
+   "intelligence": 57.25409127121432,
+   "speed": 85.292646608578
+  },
+  "capability": 70.65140999372262,
+  "composite_ci95": {
+   "A": [
+    74.67174426737074,
+    80.110488383192
+   ],
+   "B": [
+    68.63780034080798,
+    75.44547169412674
+   ],
+   "C": [
+    55.61664767547676,
+    80.110488383192
+   ]
+  },
+  "cost": {
+   "basis": "Public launch list price, counted under interpretation I-1 (a manufacturer's standard, non-promotional list price counts from day 1): GBP 0.0015 per million input tokens, output free, from launchables.ai/docs/deploy/hosted fetched 26 Oct 2026 17:38 UTC. USD 0.0020020 per million input tokens from the ECB euro reference rates of 20 Oct 2026 (GBP 1 = USD 1.33468); prices exclude VAT. Provider-reported usage: 779,294 input / 1,485 output tokens on the common 1,485-item basis; 989,607 input / 1,500 output over all 1,500 items. Common basis USD 0.00105060 per 1,000 decisions; all-item basis USD 0.00132080. The tariff applied to the row's own provider-reported tokens; not a bill and not a quote. Saved copy of the vendor page sha256 956fa709. Price corrected in v1.7.9; earlier releases showed a same-base ESTIMATE of USD 0.0264 per 1,000.",
+   "common_basis": {
+    "n_items": 1485,
+    "rule": "common",
+    "usd_per_1000_all_items": 0.0013207954759999999
+   },
+   "kind": "estimate",
+   "usage_estimated_rows": 0,
+   "usd_per_1000": 0.0010506037629629628
+  },
+  "scores": {
+   "A": 78.19688312813278,
+   "B": 72.86618513011912,
+   "C": 71.20327901104855
+  }
+ },
+ "before": {
+  "axes": {
+   "calibration": 84.04872871623093,
+   "cost": 57.35738348807602,
+   "intelligence": 57.25409127121432,
+   "speed": 85.292646608578
+  },
+  "capability": 70.65140999372262,
+  "composite_ci95": {
+   "A": [
+    65.64091834901892,
+    69.8069877215792
+   ],
+   "B": [
+    62.331726606578606,
+    67.89525971382662
+   ],
+   "C": [
+    48.87458483878408,
+    69.8069877215792
+   ]
+  },
+  "cost": {
+   "basis": "ESTIMATE, nearest-listed-sibling reference: declared base google/gemma-4-12B-it is UNLISTED in frozen pricing_v15 (sha256 a8a05890ddab2d39d1a1bd543f2b5c83842bdc70aa54766788bc89b7a8a448d7); no exact base reference exists. Same-base published precedents arcbright-elf-1-12b, chon-1.0-12b and metask_jev_rain_12b_trained use google/gemma-3-12b-it, USD 0.05/M input and 0.15/M output. This row uses that same sibling ESTIMATE, not a vendor bill or quote. Launchables list price GBP 0.0015 per million input tokens, output free, is shown for information and is not used for the Cost axis. Applied to provider-reported usage. COMMON COST BASIS (v1.6.30): common 1,485 items, excluding the 15 longest for every row; 779,294 input / 1,485 output tokens. All-item usage 989,607 input / 1,500 output over 1,500 items.",
+   "common_basis": {
+    "n_items": 1485,
+    "rule": "common",
+    "usd_per_1000_all_items": 0.033136900000000004
+   },
+   "kind": "estimate",
+   "usage_estimated_rows": 0,
+   "usd_per_1000": 0.02638885521885522
+  },
+  "scores": {
+   "A": 68.34949057703662,
+   "B": 65.79921496246162,
+   "C": 62.23659630838769
+  }
+ },
+ "nonprice_metrics_and_ci_equal": true
+}

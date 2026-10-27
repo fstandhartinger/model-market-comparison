@@ -1,0 +1,15 @@
+{
+ "arch": "open-llm-decoder",
+ "badges": {
+  "derivation": "fine-tune",
+  "params": "9B",
+  "quant": "BF16"
+ },
+ "evidence": [
+  {
+   "fact": "GLiClass v4 decoder-kv scorer based on Qwen/Qwen3.5-9B, with recurrent DeBERTa-style option-label scorer and calibrator; native decision probabilities. Pinned serving block, bf16, no quantisation.",
+   "kind": "model-card",
+   "url": "https://huggingface.co/knowledgator/gliclass-v4-9b/blob/14d11a92b5e0bab4a166e1fce4cc0777cac27182/README.md"
+  }
+ ]
+}
