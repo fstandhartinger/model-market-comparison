@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "/home/flori/wt/jevbench-v1713-20261027/r197/v1713/freeze_v1713.py", line 27, in <module>
+    check_approval(W,proof)
+  File "/home/flori/wt/jevbench-v1713-20261027/r197/v1713/approval_v1713.py", line 18, in check_approval
+    assert fair.get('verdict')=='FAIR','REFUSED: fairness PENDING or non-FAIR; a bound FAIR verdict is required for a top-five change'
+AssertionError: REFUSED: fairness PENDING or non-FAIR; a bound FAIR verdict is required for a top-five change

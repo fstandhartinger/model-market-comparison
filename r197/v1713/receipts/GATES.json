@@ -1,0 +1,2024 @@
+{
+ "CARRIED-ROWS": {
+  "base_commit": "020019b8926fc8beaa872edbabb2bcb509446c0f",
+  "carried_cells_equal": 305,
+  "immutable_bytes": [
+   "carry",
+   "history",
+   "history-carry"
+  ],
+  "new_score_payloads_equal_to_sources": true,
+  "predecessor_files_equal_to_base": 7,
+  "rows_equal_except_rank": 300,
+  "status": "PASS",
+  "v1_1_row_equal_except_rank": true
+ },
+ "CHANGED-LISTS-BY-ROW": {
+  "baseline": "v1.7.12",
+  "candidate": "v1.7.13",
+  "changed_lists_by_row": {
+   "h2o-lightning-4b-v1.4.1": [
+    {
+     "after": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b-v1.4.1",
+      "h2o-lightning-4b",
+      "h2o-lightning-31b",
+      "torchcast-decision-4b-v1.2"
+     ],
+     "before": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b",
+      "h2o-lightning-31b",
+      "torchcast-decision-4b-v1.2",
+      "chon-1.0-e4b"
+     ],
+     "entrant_rank": 2,
+     "list": "open/composites/A"
+    },
+    {
+     "after": [
+      "h2o-lightning-31b",
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b-v1.4.1",
+      "basal-omni-1.0-ultra",
+      "quyet-1-0-large"
+     ],
+     "before": [
+      "h2o-lightning-31b",
+      "torchcast-decision-4b-v1.3",
+      "basal-omni-1.0-ultra",
+      "quyet-1-0-large",
+      "jeff_1_1_medium"
+     ],
+     "entrant_rank": 3,
+     "list": "open/composites/B"
+    },
+    {
+     "after": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b-v1.4.1",
+      "h2o-lightning-4b",
+      "h2o-lightning-31b",
+      "torchcast-decision-4b-v1.2"
+     ],
+     "before": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b",
+      "h2o-lightning-31b",
+      "torchcast-decision-4b-v1.2",
+      "decisio-gemma-4-12b-tuned-commit"
+     ],
+     "entrant_rank": 2,
+     "list": "open/composites/C"
+    },
+    {
+     "after": [
+      "launchables-myles-g-12b",
+      "singularity-super-decider",
+      "chon-1.0-e4b",
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b-v1.4.1"
+     ],
+     "before": [
+      "launchables-myles-g-12b",
+      "singularity-super-decider",
+      "chon-1.0-e4b",
+      "torchcast-decision-4b-v1.3",
+      "liquid-d1-ultra"
+     ],
+     "entrant_rank": 5,
+     "list": "frozen/all/official/view/Emphasis on Cost 20:20:60"
+    },
+    {
+     "after": [
+      "kettei-fat",
+      "launchables-myles-g-12b",
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b-v1.4.1",
+      "kettei-chub"
+     ],
+     "before": [
+      "kettei-fat",
+      "launchables-myles-g-12b",
+      "torchcast-decision-4b-v1.3",
+      "kettei-chub",
+      "nimble-v4-max"
+     ],
+     "entrant_rank": 4,
+     "list": "frozen/all/official/view/Emphasis on Speed 20:60:20"
+    },
+    {
+     "after": [
+      "launchables-myles-g-12b",
+      "singularity-super-decider",
+      "chon-1.0-e4b",
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b-v1.4.1"
+     ],
+     "before": [
+      "launchables-myles-g-12b",
+      "singularity-super-decider",
+      "chon-1.0-e4b",
+      "torchcast-decision-4b-v1.3",
+      "liquid-d1-ultra"
+     ],
+     "entrant_rank": 5,
+     "list": "frozen/all/none/view/Emphasis on Cost 20:20:60"
+    },
+    {
+     "after": [
+      "kettei-fat",
+      "launchables-myles-g-12b",
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b-v1.4.1",
+      "kettei-chub"
+     ],
+     "before": [
+      "kettei-fat",
+      "launchables-myles-g-12b",
+      "torchcast-decision-4b-v1.3",
+      "kettei-chub",
+      "nimble-v4-max"
+     ],
+     "entrant_rank": 4,
+     "list": "frozen/all/none/view/Emphasis on Speed 20:60:20"
+    },
+    {
+     "after": [
+      "launchables-myles-g-12b",
+      "singularity-super-decider",
+      "chon-1.0-e4b",
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b-v1.4.1"
+     ],
+     "before": [
+      "launchables-myles-g-12b",
+      "singularity-super-decider",
+      "chon-1.0-e4b",
+      "torchcast-decision-4b-v1.3",
+      "liquid-d1-ultra"
+     ],
+     "entrant_rank": 5,
+     "list": "frozen/all/cost1.4/view/Emphasis on Cost 20:20:60"
+    },
+    {
+     "after": [
+      "kettei-fat",
+      "launchables-myles-g-12b",
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b-v1.4.1",
+      "kettei-chub"
+     ],
+     "before": [
+      "kettei-fat",
+      "launchables-myles-g-12b",
+      "torchcast-decision-4b-v1.3",
+      "kettei-chub",
+      "nimble-v4-max"
+     ],
+     "entrant_rank": 4,
+     "list": "frozen/all/cost1.4/view/Emphasis on Speed 20:60:20"
+    },
+    {
+     "after": [
+      "launchables-myles-g-12b",
+      "singularity-super-decider",
+      "chon-1.0-e4b",
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b-v1.4.1"
+     ],
+     "before": [
+      "launchables-myles-g-12b",
+      "singularity-super-decider",
+      "chon-1.0-e4b",
+      "torchcast-decision-4b-v1.3",
+      "liquid-d1-ultra"
+     ],
+     "entrant_rank": 5,
+     "list": "frozen/all/cost1.5/view/Emphasis on Cost 20:20:60"
+    },
+    {
+     "after": [
+      "kettei-fat",
+      "launchables-myles-g-12b",
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b-v1.4.1",
+      "kettei-chub"
+     ],
+     "before": [
+      "kettei-fat",
+      "launchables-myles-g-12b",
+      "torchcast-decision-4b-v1.3",
+      "kettei-chub",
+      "nimble-v4-max"
+     ],
+     "entrant_rank": 4,
+     "list": "frozen/all/cost1.5/view/Emphasis on Speed 20:60:20"
+    },
+    {
+     "after": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b-v1.4.1",
+      "h2o-lightning-4b",
+      "h2o-lightning-31b",
+      "torchcast-decision-4b-v1.2"
+     ],
+     "before": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b",
+      "h2o-lightning-31b",
+      "torchcast-decision-4b-v1.2",
+      "decisio-gemma-4-12b-tuned-commit"
+     ],
+     "entrant_rank": 2,
+     "list": "frozen/open/official/A"
+    },
+    {
+     "after": [
+      "h2o-lightning-31b",
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b-v1.4.1",
+      "basal-omni-1.0-ultra",
+      "quyet-1-0-large"
+     ],
+     "before": [
+      "h2o-lightning-31b",
+      "torchcast-decision-4b-v1.3",
+      "basal-omni-1.0-ultra",
+      "quyet-1-0-large",
+      "decisio-gemma-4-31b-v080"
+     ],
+     "entrant_rank": 3,
+     "list": "frozen/open/official/B"
+    },
+    {
+     "after": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b-v1.4.1",
+      "h2o-lightning-4b",
+      "h2o-lightning-31b",
+      "torchcast-decision-4b-v1.2"
+     ],
+     "before": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b",
+      "h2o-lightning-31b",
+      "torchcast-decision-4b-v1.2",
+      "decisio-gemma-4-12b-tuned-commit"
+     ],
+     "entrant_rank": 2,
+     "list": "frozen/open/official/C"
+    },
+    {
+     "after": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b-v1.4.1",
+      "torchcast-decision-4b-v1.2",
+      "h2o-lightning-4b",
+      "h2o-lightning-31b"
+     ],
+     "before": [
+      "torchcast-decision-4b-v1.3",
+      "torchcast-decision-4b-v1.2",
+      "h2o-lightning-4b",
+      "h2o-lightning-31b",
+      "chon-1.0-e4b"
+     ],
+     "entrant_rank": 2,
+     "list": "frozen/open/official/view/Balanced 33:33:33"
+    },
+    {
+     "after": [
+      "chon-1.0-e4b",
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b-v1.4.1",
+      "torchcast-decision-4b-v1.2",
+      "h2o-lightning-4b"
+     ],
+     "before": [
+      "chon-1.0-e4b",
+      "torchcast-decision-4b-v1.3",
+      "torchcast-decision-4b-v1.2",
+      "h2o-lightning-4b",
+      "phillylabs_philly_decider_v2"
+     ],
+     "entrant_rank": 3,
+     "list": "frozen/open/official/view/Emphasis on Cost 20:20:60"
+    },
+    {
+     "after": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b-v1.4.1",
+      "h2o-lightning-4b",
+      "torchcast-decision-4b-v1.2",
+      "phillylabs_philly_decider_v2"
+     ],
+     "before": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b",
+      "torchcast-decision-4b-v1.2",
+      "phillylabs_philly_decider_v2",
+      "h2o-lightning-31b"
+     ],
+     "entrant_rank": 2,
+     "list": "frozen/open/official/view/Emphasis on Speed 20:60:20"
+    },
+    {
+     "after": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b-v1.4.1",
+      "h2o-lightning-4b",
+      "h2o-lightning-31b",
+      "torchcast-decision-4b-v1.2"
+     ],
+     "before": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b",
+      "h2o-lightning-31b",
+      "torchcast-decision-4b-v1.2",
+      "decisio-gemma-4-12b-tuned-commit"
+     ],
+     "entrant_rank": 2,
+     "list": "frozen/open/none/A"
+    },
+    {
+     "after": [
+      "h2o-lightning-31b",
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b-v1.4.1",
+      "basal-omni-1.0-ultra",
+      "quyet-1-0-large"
+     ],
+     "before": [
+      "h2o-lightning-31b",
+      "torchcast-decision-4b-v1.3",
+      "basal-omni-1.0-ultra",
+      "quyet-1-0-large",
+      "decisio-gemma-4-31b-v080"
+     ],
+     "entrant_rank": 3,
+     "list": "frozen/open/none/B"
+    },
+    {
+     "after": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b-v1.4.1",
+      "h2o-lightning-4b",
+      "h2o-lightning-31b",
+      "torchcast-decision-4b-v1.2"
+     ],
+     "before": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b",
+      "h2o-lightning-31b",
+      "torchcast-decision-4b-v1.2",
+      "decisio-gemma-4-12b-tuned-commit"
+     ],
+     "entrant_rank": 2,
+     "list": "frozen/open/none/C"
+    },
+    {
+     "after": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b-v1.4.1",
+      "torchcast-decision-4b-v1.2",
+      "h2o-lightning-4b",
+      "h2o-lightning-31b"
+     ],
+     "before": [
+      "torchcast-decision-4b-v1.3",
+      "torchcast-decision-4b-v1.2",
+      "h2o-lightning-4b",
+      "h2o-lightning-31b",
+      "chon-1.0-e4b"
+     ],
+     "entrant_rank": 2,
+     "list": "frozen/open/none/view/Balanced 33:33:33"
+    },
+    {
+     "after": [
+      "chon-1.0-e4b",
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b-v1.4.1",
+      "torchcast-decision-4b-v1.2",
+      "h2o-lightning-4b"
+     ],
+     "before": [
+      "chon-1.0-e4b",
+      "torchcast-decision-4b-v1.3",
+      "torchcast-decision-4b-v1.2",
+      "h2o-lightning-4b",
+      "phillylabs_philly_decider_v2"
+     ],
+     "entrant_rank": 3,
+     "list": "frozen/open/none/view/Emphasis on Cost 20:20:60"
+    },
+    {
+     "after": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b-v1.4.1",
+      "h2o-lightning-4b",
+      "torchcast-decision-4b-v1.2",
+      "phillylabs_philly_decider_v2"
+     ],
+     "before": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b",
+      "torchcast-decision-4b-v1.2",
+      "phillylabs_philly_decider_v2",
+      "h2o-lightning-31b"
+     ],
+     "entrant_rank": 2,
+     "list": "frozen/open/none/view/Emphasis on Speed 20:60:20"
+    },
+    {
+     "after": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b-v1.4.1",
+      "h2o-lightning-4b",
+      "h2o-lightning-31b",
+      "torchcast-decision-4b-v1.2"
+     ],
+     "before": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b",
+      "h2o-lightning-31b",
+      "torchcast-decision-4b-v1.2",
+      "decisio-gemma-4-12b-tuned-commit"
+     ],
+     "entrant_rank": 2,
+     "list": "frozen/open/cost1.4/A"
+    },
+    {
+     "after": [
+      "h2o-lightning-31b",
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b-v1.4.1",
+      "basal-omni-1.0-ultra",
+      "quyet-1-0-large"
+     ],
+     "before": [
+      "h2o-lightning-31b",
+      "torchcast-decision-4b-v1.3",
+      "basal-omni-1.0-ultra",
+      "quyet-1-0-large",
+      "jeff_1_1_medium"
+     ],
+     "entrant_rank": 3,
+     "list": "frozen/open/cost1.4/B"
+    },
+    {
+     "after": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b-v1.4.1",
+      "h2o-lightning-4b",
+      "h2o-lightning-31b",
+      "torchcast-decision-4b-v1.2"
+     ],
+     "before": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b",
+      "h2o-lightning-31b",
+      "torchcast-decision-4b-v1.2",
+      "decisio-gemma-4-12b-tuned-commit"
+     ],
+     "entrant_rank": 2,
+     "list": "frozen/open/cost1.4/C"
+    },
+    {
+     "after": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b-v1.4.1",
+      "torchcast-decision-4b-v1.2",
+      "h2o-lightning-4b",
+      "h2o-lightning-31b"
+     ],
+     "before": [
+      "torchcast-decision-4b-v1.3",
+      "torchcast-decision-4b-v1.2",
+      "h2o-lightning-4b",
+      "h2o-lightning-31b",
+      "chon-1.0-e4b"
+     ],
+     "entrant_rank": 2,
+     "list": "frozen/open/cost1.4/view/Balanced 33:33:33"
+    },
+    {
+     "after": [
+      "chon-1.0-e4b",
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b-v1.4.1",
+      "torchcast-decision-4b-v1.2",
+      "h2o-lightning-4b"
+     ],
+     "before": [
+      "chon-1.0-e4b",
+      "torchcast-decision-4b-v1.3",
+      "torchcast-decision-4b-v1.2",
+      "h2o-lightning-4b",
+      "phillylabs_philly_decider_v2"
+     ],
+     "entrant_rank": 3,
+     "list": "frozen/open/cost1.4/view/Emphasis on Cost 20:20:60"
+    },
+    {
+     "after": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b-v1.4.1",
+      "h2o-lightning-4b",
+      "torchcast-decision-4b-v1.2",
+      "phillylabs_philly_decider_v2"
+     ],
+     "before": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b",
+      "torchcast-decision-4b-v1.2",
+      "phillylabs_philly_decider_v2",
+      "h2o-lightning-31b"
+     ],
+     "entrant_rank": 2,
+     "list": "frozen/open/cost1.4/view/Emphasis on Speed 20:60:20"
+    },
+    {
+     "after": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b-v1.4.1",
+      "h2o-lightning-4b",
+      "h2o-lightning-31b",
+      "torchcast-decision-4b-v1.2"
+     ],
+     "before": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b",
+      "h2o-lightning-31b",
+      "torchcast-decision-4b-v1.2",
+      "decisio-gemma-4-12b-tuned-commit"
+     ],
+     "entrant_rank": 2,
+     "list": "frozen/open/cost1.5/A"
+    },
+    {
+     "after": [
+      "h2o-lightning-31b",
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b-v1.4.1",
+      "basal-omni-1.0-ultra",
+      "quyet-1-0-large"
+     ],
+     "before": [
+      "h2o-lightning-31b",
+      "torchcast-decision-4b-v1.3",
+      "basal-omni-1.0-ultra",
+      "quyet-1-0-large",
+      "decisio-gemma-4-31b-v080"
+     ],
+     "entrant_rank": 3,
+     "list": "frozen/open/cost1.5/B"
+    },
+    {
+     "after": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b-v1.4.1",
+      "h2o-lightning-4b",
+      "h2o-lightning-31b",
+      "torchcast-decision-4b-v1.2"
+     ],
+     "before": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b",
+      "h2o-lightning-31b",
+      "torchcast-decision-4b-v1.2",
+      "decisio-gemma-4-12b-tuned-commit"
+     ],
+     "entrant_rank": 2,
+     "list": "frozen/open/cost1.5/C"
+    },
+    {
+     "after": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b-v1.4.1",
+      "torchcast-decision-4b-v1.2",
+      "h2o-lightning-4b",
+      "h2o-lightning-31b"
+     ],
+     "before": [
+      "torchcast-decision-4b-v1.3",
+      "torchcast-decision-4b-v1.2",
+      "h2o-lightning-4b",
+      "h2o-lightning-31b",
+      "chon-1.0-e4b"
+     ],
+     "entrant_rank": 2,
+     "list": "frozen/open/cost1.5/view/Balanced 33:33:33"
+    },
+    {
+     "after": [
+      "chon-1.0-e4b",
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b-v1.4.1",
+      "torchcast-decision-4b-v1.2",
+      "h2o-lightning-4b"
+     ],
+     "before": [
+      "chon-1.0-e4b",
+      "torchcast-decision-4b-v1.3",
+      "torchcast-decision-4b-v1.2",
+      "h2o-lightning-4b",
+      "phillylabs_philly_decider_v2"
+     ],
+     "entrant_rank": 3,
+     "list": "frozen/open/cost1.5/view/Emphasis on Cost 20:20:60"
+    },
+    {
+     "after": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b-v1.4.1",
+      "h2o-lightning-4b",
+      "torchcast-decision-4b-v1.2",
+      "phillylabs_philly_decider_v2"
+     ],
+     "before": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b",
+      "torchcast-decision-4b-v1.2",
+      "phillylabs_philly_decider_v2",
+      "h2o-lightning-31b"
+     ],
+     "entrant_rank": 2,
+     "list": "frozen/open/cost1.5/view/Emphasis on Speed 20:60:20"
+    },
+    {
+     "after": [
+      "launchables-myles-g-12b",
+      "singularity-super-decider",
+      "chon-1.0-e4b",
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b-v1.4.1"
+     ],
+     "before": [
+      "launchables-myles-g-12b",
+      "singularity-super-decider",
+      "chon-1.0-e4b",
+      "torchcast-decision-4b-v1.3",
+      "liquid-d1-ultra"
+     ],
+     "entrant_rank": 5,
+     "list": "off/all/official/view/Emphasis on Cost 20:20:60"
+    },
+    {
+     "after": [
+      "kettei-fat",
+      "launchables-myles-g-12b",
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b-v1.4.1",
+      "kettei-chub"
+     ],
+     "before": [
+      "kettei-fat",
+      "launchables-myles-g-12b",
+      "torchcast-decision-4b-v1.3",
+      "kettei-chub",
+      "nimble-v4-max"
+     ],
+     "entrant_rank": 4,
+     "list": "off/all/official/view/Emphasis on Speed 20:60:20"
+    },
+    {
+     "after": [
+      "launchables-myles-g-12b",
+      "singularity-super-decider",
+      "chon-1.0-e4b",
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b-v1.4.1"
+     ],
+     "before": [
+      "launchables-myles-g-12b",
+      "singularity-super-decider",
+      "chon-1.0-e4b",
+      "torchcast-decision-4b-v1.3",
+      "liquid-d1-ultra"
+     ],
+     "entrant_rank": 5,
+     "list": "off/all/none/view/Emphasis on Cost 20:20:60"
+    },
+    {
+     "after": [
+      "kettei-fat",
+      "launchables-myles-g-12b",
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b-v1.4.1",
+      "kettei-chub"
+     ],
+     "before": [
+      "kettei-fat",
+      "launchables-myles-g-12b",
+      "torchcast-decision-4b-v1.3",
+      "kettei-chub",
+      "nimble-v4-max"
+     ],
+     "entrant_rank": 4,
+     "list": "off/all/none/view/Emphasis on Speed 20:60:20"
+    },
+    {
+     "after": [
+      "launchables-myles-g-12b",
+      "singularity-super-decider",
+      "chon-1.0-e4b",
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b-v1.4.1"
+     ],
+     "before": [
+      "launchables-myles-g-12b",
+      "singularity-super-decider",
+      "chon-1.0-e4b",
+      "torchcast-decision-4b-v1.3",
+      "liquid-d1-ultra"
+     ],
+     "entrant_rank": 5,
+     "list": "off/all/cost1.4/view/Emphasis on Cost 20:20:60"
+    },
+    {
+     "after": [
+      "kettei-fat",
+      "launchables-myles-g-12b",
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b-v1.4.1",
+      "kettei-chub"
+     ],
+     "before": [
+      "kettei-fat",
+      "launchables-myles-g-12b",
+      "torchcast-decision-4b-v1.3",
+      "kettei-chub",
+      "nimble-v4-max"
+     ],
+     "entrant_rank": 4,
+     "list": "off/all/cost1.4/view/Emphasis on Speed 20:60:20"
+    },
+    {
+     "after": [
+      "launchables-myles-g-12b",
+      "singularity-super-decider",
+      "chon-1.0-e4b",
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b-v1.4.1"
+     ],
+     "before": [
+      "launchables-myles-g-12b",
+      "singularity-super-decider",
+      "chon-1.0-e4b",
+      "torchcast-decision-4b-v1.3",
+      "liquid-d1-ultra"
+     ],
+     "entrant_rank": 5,
+     "list": "off/all/cost1.5/view/Emphasis on Cost 20:20:60"
+    },
+    {
+     "after": [
+      "kettei-fat",
+      "launchables-myles-g-12b",
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b-v1.4.1",
+      "kettei-chub"
+     ],
+     "before": [
+      "kettei-fat",
+      "launchables-myles-g-12b",
+      "torchcast-decision-4b-v1.3",
+      "kettei-chub",
+      "nimble-v4-max"
+     ],
+     "entrant_rank": 4,
+     "list": "off/all/cost1.5/view/Emphasis on Speed 20:60:20"
+    },
+    {
+     "after": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b-v1.4.1",
+      "h2o-lightning-4b",
+      "h2o-lightning-31b",
+      "torchcast-decision-4b-v1.2"
+     ],
+     "before": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b",
+      "h2o-lightning-31b",
+      "torchcast-decision-4b-v1.2",
+      "decisio-gemma-4-12b-tuned-commit"
+     ],
+     "entrant_rank": 2,
+     "list": "off/open/official/A"
+    },
+    {
+     "after": [
+      "h2o-lightning-31b",
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b-v1.4.1",
+      "basal-omni-1.0-ultra",
+      "quyet-1-0-large"
+     ],
+     "before": [
+      "h2o-lightning-31b",
+      "torchcast-decision-4b-v1.3",
+      "basal-omni-1.0-ultra",
+      "quyet-1-0-large",
+      "decisio-gemma-4-31b-v080"
+     ],
+     "entrant_rank": 3,
+     "list": "off/open/official/B"
+    },
+    {
+     "after": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b-v1.4.1",
+      "h2o-lightning-4b",
+      "h2o-lightning-31b",
+      "torchcast-decision-4b-v1.2"
+     ],
+     "before": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b",
+      "h2o-lightning-31b",
+      "torchcast-decision-4b-v1.2",
+      "decisio-gemma-4-12b-tuned-commit"
+     ],
+     "entrant_rank": 2,
+     "list": "off/open/official/C"
+    },
+    {
+     "after": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b-v1.4.1",
+      "torchcast-decision-4b-v1.2",
+      "h2o-lightning-4b",
+      "h2o-lightning-31b"
+     ],
+     "before": [
+      "torchcast-decision-4b-v1.3",
+      "torchcast-decision-4b-v1.2",
+      "h2o-lightning-4b",
+      "h2o-lightning-31b",
+      "chon-1.0-e4b"
+     ],
+     "entrant_rank": 2,
+     "list": "off/open/official/view/Balanced 33:33:33"
+    },
+    {
+     "after": [
+      "chon-1.0-e4b",
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b-v1.4.1",
+      "torchcast-decision-4b-v1.2",
+      "h2o-lightning-4b"
+     ],
+     "before": [
+      "chon-1.0-e4b",
+      "torchcast-decision-4b-v1.3",
+      "torchcast-decision-4b-v1.2",
+      "h2o-lightning-4b",
+      "phillylabs_philly_decider_v2"
+     ],
+     "entrant_rank": 3,
+     "list": "off/open/official/view/Emphasis on Cost 20:20:60"
+    },
+    {
+     "after": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b-v1.4.1",
+      "h2o-lightning-4b",
+      "torchcast-decision-4b-v1.2",
+      "phillylabs_philly_decider_v2"
+     ],
+     "before": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b",
+      "torchcast-decision-4b-v1.2",
+      "phillylabs_philly_decider_v2",
+      "h2o-lightning-31b"
+     ],
+     "entrant_rank": 2,
+     "list": "off/open/official/view/Emphasis on Speed 20:60:20"
+    },
+    {
+     "after": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b-v1.4.1",
+      "h2o-lightning-4b",
+      "h2o-lightning-31b",
+      "torchcast-decision-4b-v1.2"
+     ],
+     "before": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b",
+      "h2o-lightning-31b",
+      "torchcast-decision-4b-v1.2",
+      "decisio-gemma-4-12b-tuned-commit"
+     ],
+     "entrant_rank": 2,
+     "list": "off/open/none/A"
+    },
+    {
+     "after": [
+      "h2o-lightning-31b",
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b-v1.4.1",
+      "basal-omni-1.0-ultra",
+      "quyet-1-0-large"
+     ],
+     "before": [
+      "h2o-lightning-31b",
+      "torchcast-decision-4b-v1.3",
+      "basal-omni-1.0-ultra",
+      "quyet-1-0-large",
+      "decisio-gemma-4-31b-v080"
+     ],
+     "entrant_rank": 3,
+     "list": "off/open/none/B"
+    },
+    {
+     "after": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b-v1.4.1",
+      "h2o-lightning-4b",
+      "h2o-lightning-31b",
+      "torchcast-decision-4b-v1.2"
+     ],
+     "before": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b",
+      "h2o-lightning-31b",
+      "torchcast-decision-4b-v1.2",
+      "decisio-gemma-4-12b-tuned-commit"
+     ],
+     "entrant_rank": 2,
+     "list": "off/open/none/C"
+    },
+    {
+     "after": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b-v1.4.1",
+      "torchcast-decision-4b-v1.2",
+      "h2o-lightning-4b",
+      "h2o-lightning-31b"
+     ],
+     "before": [
+      "torchcast-decision-4b-v1.3",
+      "torchcast-decision-4b-v1.2",
+      "h2o-lightning-4b",
+      "h2o-lightning-31b",
+      "chon-1.0-e4b"
+     ],
+     "entrant_rank": 2,
+     "list": "off/open/none/view/Balanced 33:33:33"
+    },
+    {
+     "after": [
+      "chon-1.0-e4b",
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b-v1.4.1",
+      "torchcast-decision-4b-v1.2",
+      "h2o-lightning-4b"
+     ],
+     "before": [
+      "chon-1.0-e4b",
+      "torchcast-decision-4b-v1.3",
+      "torchcast-decision-4b-v1.2",
+      "h2o-lightning-4b",
+      "phillylabs_philly_decider_v2"
+     ],
+     "entrant_rank": 3,
+     "list": "off/open/none/view/Emphasis on Cost 20:20:60"
+    },
+    {
+     "after": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b-v1.4.1",
+      "h2o-lightning-4b",
+      "torchcast-decision-4b-v1.2",
+      "phillylabs_philly_decider_v2"
+     ],
+     "before": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b",
+      "torchcast-decision-4b-v1.2",
+      "phillylabs_philly_decider_v2",
+      "h2o-lightning-31b"
+     ],
+     "entrant_rank": 2,
+     "list": "off/open/none/view/Emphasis on Speed 20:60:20"
+    },
+    {
+     "after": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b-v1.4.1",
+      "h2o-lightning-4b",
+      "h2o-lightning-31b",
+      "torchcast-decision-4b-v1.2"
+     ],
+     "before": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b",
+      "h2o-lightning-31b",
+      "torchcast-decision-4b-v1.2",
+      "decisio-gemma-4-12b-tuned-commit"
+     ],
+     "entrant_rank": 2,
+     "list": "off/open/cost1.4/A"
+    },
+    {
+     "after": [
+      "h2o-lightning-31b",
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b-v1.4.1",
+      "basal-omni-1.0-ultra",
+      "quyet-1-0-large"
+     ],
+     "before": [
+      "h2o-lightning-31b",
+      "torchcast-decision-4b-v1.3",
+      "basal-omni-1.0-ultra",
+      "quyet-1-0-large",
+      "jeff_1_1_medium"
+     ],
+     "entrant_rank": 3,
+     "list": "off/open/cost1.4/B"
+    },
+    {
+     "after": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b-v1.4.1",
+      "h2o-lightning-4b",
+      "h2o-lightning-31b",
+      "torchcast-decision-4b-v1.2"
+     ],
+     "before": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b",
+      "h2o-lightning-31b",
+      "torchcast-decision-4b-v1.2",
+      "decisio-gemma-4-12b-tuned-commit"
+     ],
+     "entrant_rank": 2,
+     "list": "off/open/cost1.4/C"
+    },
+    {
+     "after": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b-v1.4.1",
+      "torchcast-decision-4b-v1.2",
+      "h2o-lightning-4b",
+      "h2o-lightning-31b"
+     ],
+     "before": [
+      "torchcast-decision-4b-v1.3",
+      "torchcast-decision-4b-v1.2",
+      "h2o-lightning-4b",
+      "h2o-lightning-31b",
+      "chon-1.0-e4b"
+     ],
+     "entrant_rank": 2,
+     "list": "off/open/cost1.4/view/Balanced 33:33:33"
+    },
+    {
+     "after": [
+      "chon-1.0-e4b",
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b-v1.4.1",
+      "torchcast-decision-4b-v1.2",
+      "h2o-lightning-4b"
+     ],
+     "before": [
+      "chon-1.0-e4b",
+      "torchcast-decision-4b-v1.3",
+      "torchcast-decision-4b-v1.2",
+      "h2o-lightning-4b",
+      "phillylabs_philly_decider_v2"
+     ],
+     "entrant_rank": 3,
+     "list": "off/open/cost1.4/view/Emphasis on Cost 20:20:60"
+    },
+    {
+     "after": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b-v1.4.1",
+      "h2o-lightning-4b",
+      "torchcast-decision-4b-v1.2",
+      "phillylabs_philly_decider_v2"
+     ],
+     "before": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b",
+      "torchcast-decision-4b-v1.2",
+      "phillylabs_philly_decider_v2",
+      "h2o-lightning-31b"
+     ],
+     "entrant_rank": 2,
+     "list": "off/open/cost1.4/view/Emphasis on Speed 20:60:20"
+    },
+    {
+     "after": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b-v1.4.1",
+      "h2o-lightning-4b",
+      "h2o-lightning-31b",
+      "torchcast-decision-4b-v1.2"
+     ],
+     "before": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b",
+      "h2o-lightning-31b",
+      "torchcast-decision-4b-v1.2",
+      "decisio-gemma-4-12b-tuned-commit"
+     ],
+     "entrant_rank": 2,
+     "list": "off/open/cost1.5/A"
+    },
+    {
+     "after": [
+      "h2o-lightning-31b",
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b-v1.4.1",
+      "basal-omni-1.0-ultra",
+      "quyet-1-0-large"
+     ],
+     "before": [
+      "h2o-lightning-31b",
+      "torchcast-decision-4b-v1.3",
+      "basal-omni-1.0-ultra",
+      "quyet-1-0-large",
+      "decisio-gemma-4-31b-v080"
+     ],
+     "entrant_rank": 3,
+     "list": "off/open/cost1.5/B"
+    },
+    {
+     "after": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b-v1.4.1",
+      "h2o-lightning-4b",
+      "h2o-lightning-31b",
+      "torchcast-decision-4b-v1.2"
+     ],
+     "before": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b",
+      "h2o-lightning-31b",
+      "torchcast-decision-4b-v1.2",
+      "decisio-gemma-4-12b-tuned-commit"
+     ],
+     "entrant_rank": 2,
+     "list": "off/open/cost1.5/C"
+    },
+    {
+     "after": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b-v1.4.1",
+      "torchcast-decision-4b-v1.2",
+      "h2o-lightning-4b",
+      "h2o-lightning-31b"
+     ],
+     "before": [
+      "torchcast-decision-4b-v1.3",
+      "torchcast-decision-4b-v1.2",
+      "h2o-lightning-4b",
+      "h2o-lightning-31b",
+      "chon-1.0-e4b"
+     ],
+     "entrant_rank": 2,
+     "list": "off/open/cost1.5/view/Balanced 33:33:33"
+    },
+    {
+     "after": [
+      "chon-1.0-e4b",
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b-v1.4.1",
+      "torchcast-decision-4b-v1.2",
+      "h2o-lightning-4b"
+     ],
+     "before": [
+      "chon-1.0-e4b",
+      "torchcast-decision-4b-v1.3",
+      "torchcast-decision-4b-v1.2",
+      "h2o-lightning-4b",
+      "phillylabs_philly_decider_v2"
+     ],
+     "entrant_rank": 3,
+     "list": "off/open/cost1.5/view/Emphasis on Cost 20:20:60"
+    },
+    {
+     "after": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b-v1.4.1",
+      "h2o-lightning-4b",
+      "torchcast-decision-4b-v1.2",
+      "phillylabs_philly_decider_v2"
+     ],
+     "before": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b",
+      "torchcast-decision-4b-v1.2",
+      "phillylabs_philly_decider_v2",
+      "h2o-lightning-31b"
+     ],
+     "entrant_rank": 2,
+     "list": "off/open/cost1.5/view/Emphasis on Speed 20:60:20"
+    },
+    {
+     "after": [
+      "launchables-myles-g-12b",
+      "singularity-super-decider",
+      "chon-1.0-e4b",
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b-v1.4.1"
+     ],
+     "before": [
+      "launchables-myles-g-12b",
+      "singularity-super-decider",
+      "chon-1.0-e4b",
+      "torchcast-decision-4b-v1.3",
+      "liquid-d1-ultra"
+     ],
+     "entrant_rank": 5,
+     "list": "share/all/official/view/Emphasis on Cost 20:20:60"
+    },
+    {
+     "after": [
+      "kettei-fat",
+      "launchables-myles-g-12b",
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b-v1.4.1",
+      "singularity-super-decider"
+     ],
+     "before": [
+      "kettei-fat",
+      "launchables-myles-g-12b",
+      "torchcast-decision-4b-v1.3",
+      "singularity-super-decider",
+      "kettei-chub"
+     ],
+     "entrant_rank": 4,
+     "list": "share/all/official/view/Emphasis on Speed 20:60:20"
+    },
+    {
+     "after": [
+      "launchables-myles-g-12b",
+      "singularity-super-decider",
+      "chon-1.0-e4b",
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b-v1.4.1"
+     ],
+     "before": [
+      "launchables-myles-g-12b",
+      "singularity-super-decider",
+      "chon-1.0-e4b",
+      "torchcast-decision-4b-v1.3",
+      "liquid-d1-ultra"
+     ],
+     "entrant_rank": 5,
+     "list": "share/all/none/view/Emphasis on Cost 20:20:60"
+    },
+    {
+     "after": [
+      "kettei-fat",
+      "launchables-myles-g-12b",
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b-v1.4.1",
+      "singularity-super-decider"
+     ],
+     "before": [
+      "kettei-fat",
+      "launchables-myles-g-12b",
+      "torchcast-decision-4b-v1.3",
+      "singularity-super-decider",
+      "kettei-chub"
+     ],
+     "entrant_rank": 4,
+     "list": "share/all/none/view/Emphasis on Speed 20:60:20"
+    },
+    {
+     "after": [
+      "launchables-myles-g-12b",
+      "singularity-super-decider",
+      "chon-1.0-e4b",
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b-v1.4.1"
+     ],
+     "before": [
+      "launchables-myles-g-12b",
+      "singularity-super-decider",
+      "chon-1.0-e4b",
+      "torchcast-decision-4b-v1.3",
+      "liquid-d1-ultra"
+     ],
+     "entrant_rank": 5,
+     "list": "share/all/cost1.4/view/Emphasis on Cost 20:20:60"
+    },
+    {
+     "after": [
+      "kettei-fat",
+      "launchables-myles-g-12b",
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b-v1.4.1",
+      "singularity-super-decider"
+     ],
+     "before": [
+      "kettei-fat",
+      "launchables-myles-g-12b",
+      "torchcast-decision-4b-v1.3",
+      "singularity-super-decider",
+      "kettei-chub"
+     ],
+     "entrant_rank": 4,
+     "list": "share/all/cost1.4/view/Emphasis on Speed 20:60:20"
+    },
+    {
+     "after": [
+      "launchables-myles-g-12b",
+      "singularity-super-decider",
+      "chon-1.0-e4b",
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b-v1.4.1"
+     ],
+     "before": [
+      "launchables-myles-g-12b",
+      "singularity-super-decider",
+      "chon-1.0-e4b",
+      "torchcast-decision-4b-v1.3",
+      "liquid-d1-ultra"
+     ],
+     "entrant_rank": 5,
+     "list": "share/all/cost1.5/view/Emphasis on Cost 20:20:60"
+    },
+    {
+     "after": [
+      "kettei-fat",
+      "launchables-myles-g-12b",
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b-v1.4.1",
+      "singularity-super-decider"
+     ],
+     "before": [
+      "kettei-fat",
+      "launchables-myles-g-12b",
+      "torchcast-decision-4b-v1.3",
+      "singularity-super-decider",
+      "kettei-chub"
+     ],
+     "entrant_rank": 4,
+     "list": "share/all/cost1.5/view/Emphasis on Speed 20:60:20"
+    },
+    {
+     "after": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b-v1.4.1",
+      "h2o-lightning-4b",
+      "h2o-lightning-31b",
+      "torchcast-decision-4b-v1.2"
+     ],
+     "before": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b",
+      "h2o-lightning-31b",
+      "torchcast-decision-4b-v1.2",
+      "chon-1.0-e4b"
+     ],
+     "entrant_rank": 2,
+     "list": "share/open/official/A"
+    },
+    {
+     "after": [
+      "h2o-lightning-31b",
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b-v1.4.1",
+      "basal-omni-1.0-ultra",
+      "quyet-1-0-large"
+     ],
+     "before": [
+      "h2o-lightning-31b",
+      "torchcast-decision-4b-v1.3",
+      "basal-omni-1.0-ultra",
+      "quyet-1-0-large",
+      "jeff_1_1_medium"
+     ],
+     "entrant_rank": 3,
+     "list": "share/open/official/B"
+    },
+    {
+     "after": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b-v1.4.1",
+      "h2o-lightning-4b",
+      "h2o-lightning-31b",
+      "torchcast-decision-4b-v1.2"
+     ],
+     "before": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b",
+      "h2o-lightning-31b",
+      "torchcast-decision-4b-v1.2",
+      "decisio-gemma-4-12b-tuned-commit"
+     ],
+     "entrant_rank": 2,
+     "list": "share/open/official/C"
+    },
+    {
+     "after": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b-v1.4.1",
+      "torchcast-decision-4b-v1.2",
+      "h2o-lightning-4b",
+      "chon-1.0-e4b"
+     ],
+     "before": [
+      "torchcast-decision-4b-v1.3",
+      "torchcast-decision-4b-v1.2",
+      "h2o-lightning-4b",
+      "chon-1.0-e4b",
+      "h2o-lightning-31b"
+     ],
+     "entrant_rank": 2,
+     "list": "share/open/official/view/Balanced 33:33:33"
+    },
+    {
+     "after": [
+      "chon-1.0-e4b",
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b-v1.4.1",
+      "torchcast-decision-4b-v1.2",
+      "h2o-lightning-4b"
+     ],
+     "before": [
+      "chon-1.0-e4b",
+      "torchcast-decision-4b-v1.3",
+      "torchcast-decision-4b-v1.2",
+      "h2o-lightning-4b",
+      "phillylabs_philly_decider_v2"
+     ],
+     "entrant_rank": 3,
+     "list": "share/open/official/view/Emphasis on Cost 20:20:60"
+    },
+    {
+     "after": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b-v1.4.1",
+      "h2o-lightning-4b",
+      "torchcast-decision-4b-v1.2",
+      "phillylabs_philly_decider_v2"
+     ],
+     "before": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b",
+      "torchcast-decision-4b-v1.2",
+      "phillylabs_philly_decider_v2",
+      "h2o-lightning-31b"
+     ],
+     "entrant_rank": 2,
+     "list": "share/open/official/view/Emphasis on Speed 20:60:20"
+    },
+    {
+     "after": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b-v1.4.1",
+      "h2o-lightning-4b",
+      "h2o-lightning-31b",
+      "torchcast-decision-4b-v1.2"
+     ],
+     "before": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b",
+      "h2o-lightning-31b",
+      "torchcast-decision-4b-v1.2",
+      "chon-1.0-e4b"
+     ],
+     "entrant_rank": 2,
+     "list": "share/open/none/A"
+    },
+    {
+     "after": [
+      "h2o-lightning-31b",
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b-v1.4.1",
+      "basal-omni-1.0-ultra",
+      "quyet-1-0-large"
+     ],
+     "before": [
+      "h2o-lightning-31b",
+      "torchcast-decision-4b-v1.3",
+      "basal-omni-1.0-ultra",
+      "quyet-1-0-large",
+      "jeff_1_1_medium"
+     ],
+     "entrant_rank": 3,
+     "list": "share/open/none/B"
+    },
+    {
+     "after": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b-v1.4.1",
+      "h2o-lightning-4b",
+      "h2o-lightning-31b",
+      "torchcast-decision-4b-v1.2"
+     ],
+     "before": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b",
+      "h2o-lightning-31b",
+      "torchcast-decision-4b-v1.2",
+      "decisio-gemma-4-12b-tuned-commit"
+     ],
+     "entrant_rank": 2,
+     "list": "share/open/none/C"
+    },
+    {
+     "after": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b-v1.4.1",
+      "torchcast-decision-4b-v1.2",
+      "h2o-lightning-4b",
+      "chon-1.0-e4b"
+     ],
+     "before": [
+      "torchcast-decision-4b-v1.3",
+      "torchcast-decision-4b-v1.2",
+      "h2o-lightning-4b",
+      "chon-1.0-e4b",
+      "h2o-lightning-31b"
+     ],
+     "entrant_rank": 2,
+     "list": "share/open/none/view/Balanced 33:33:33"
+    },
+    {
+     "after": [
+      "chon-1.0-e4b",
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b-v1.4.1",
+      "torchcast-decision-4b-v1.2",
+      "h2o-lightning-4b"
+     ],
+     "before": [
+      "chon-1.0-e4b",
+      "torchcast-decision-4b-v1.3",
+      "torchcast-decision-4b-v1.2",
+      "h2o-lightning-4b",
+      "phillylabs_philly_decider_v2"
+     ],
+     "entrant_rank": 3,
+     "list": "share/open/none/view/Emphasis on Cost 20:20:60"
+    },
+    {
+     "after": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b-v1.4.1",
+      "h2o-lightning-4b",
+      "torchcast-decision-4b-v1.2",
+      "phillylabs_philly_decider_v2"
+     ],
+     "before": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b",
+      "torchcast-decision-4b-v1.2",
+      "phillylabs_philly_decider_v2",
+      "h2o-lightning-31b"
+     ],
+     "entrant_rank": 2,
+     "list": "share/open/none/view/Emphasis on Speed 20:60:20"
+    },
+    {
+     "after": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b-v1.4.1",
+      "h2o-lightning-4b",
+      "h2o-lightning-31b",
+      "torchcast-decision-4b-v1.2"
+     ],
+     "before": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b",
+      "h2o-lightning-31b",
+      "torchcast-decision-4b-v1.2",
+      "chon-1.0-e4b"
+     ],
+     "entrant_rank": 2,
+     "list": "share/open/cost1.4/A"
+    },
+    {
+     "after": [
+      "h2o-lightning-31b",
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b-v1.4.1",
+      "basal-omni-1.0-ultra",
+      "quyet-1-0-large"
+     ],
+     "before": [
+      "h2o-lightning-31b",
+      "torchcast-decision-4b-v1.3",
+      "basal-omni-1.0-ultra",
+      "quyet-1-0-large",
+      "jeff_1_1_medium"
+     ],
+     "entrant_rank": 3,
+     "list": "share/open/cost1.4/B"
+    },
+    {
+     "after": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b-v1.4.1",
+      "h2o-lightning-4b",
+      "h2o-lightning-31b",
+      "torchcast-decision-4b-v1.2"
+     ],
+     "before": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b",
+      "h2o-lightning-31b",
+      "torchcast-decision-4b-v1.2",
+      "decisio-gemma-4-12b-tuned-commit"
+     ],
+     "entrant_rank": 2,
+     "list": "share/open/cost1.4/C"
+    },
+    {
+     "after": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b-v1.4.1",
+      "torchcast-decision-4b-v1.2",
+      "h2o-lightning-4b",
+      "chon-1.0-e4b"
+     ],
+     "before": [
+      "torchcast-decision-4b-v1.3",
+      "torchcast-decision-4b-v1.2",
+      "h2o-lightning-4b",
+      "chon-1.0-e4b",
+      "h2o-lightning-31b"
+     ],
+     "entrant_rank": 2,
+     "list": "share/open/cost1.4/view/Balanced 33:33:33"
+    },
+    {
+     "after": [
+      "chon-1.0-e4b",
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b-v1.4.1",
+      "torchcast-decision-4b-v1.2",
+      "h2o-lightning-4b"
+     ],
+     "before": [
+      "chon-1.0-e4b",
+      "torchcast-decision-4b-v1.3",
+      "torchcast-decision-4b-v1.2",
+      "h2o-lightning-4b",
+      "phillylabs_philly_decider_v2"
+     ],
+     "entrant_rank": 3,
+     "list": "share/open/cost1.4/view/Emphasis on Cost 20:20:60"
+    },
+    {
+     "after": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b-v1.4.1",
+      "h2o-lightning-4b",
+      "torchcast-decision-4b-v1.2",
+      "phillylabs_philly_decider_v2"
+     ],
+     "before": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b",
+      "torchcast-decision-4b-v1.2",
+      "phillylabs_philly_decider_v2",
+      "h2o-lightning-31b"
+     ],
+     "entrant_rank": 2,
+     "list": "share/open/cost1.4/view/Emphasis on Speed 20:60:20"
+    },
+    {
+     "after": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b-v1.4.1",
+      "h2o-lightning-4b",
+      "h2o-lightning-31b",
+      "torchcast-decision-4b-v1.2"
+     ],
+     "before": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b",
+      "h2o-lightning-31b",
+      "torchcast-decision-4b-v1.2",
+      "chon-1.0-e4b"
+     ],
+     "entrant_rank": 2,
+     "list": "share/open/cost1.5/A"
+    },
+    {
+     "after": [
+      "h2o-lightning-31b",
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b-v1.4.1",
+      "basal-omni-1.0-ultra",
+      "quyet-1-0-large"
+     ],
+     "before": [
+      "h2o-lightning-31b",
+      "torchcast-decision-4b-v1.3",
+      "basal-omni-1.0-ultra",
+      "quyet-1-0-large",
+      "jeff_1_1_medium"
+     ],
+     "entrant_rank": 3,
+     "list": "share/open/cost1.5/B"
+    },
+    {
+     "after": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b-v1.4.1",
+      "h2o-lightning-4b",
+      "h2o-lightning-31b",
+      "torchcast-decision-4b-v1.2"
+     ],
+     "before": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b",
+      "h2o-lightning-31b",
+      "torchcast-decision-4b-v1.2",
+      "decisio-gemma-4-12b-tuned-commit"
+     ],
+     "entrant_rank": 2,
+     "list": "share/open/cost1.5/C"
+    },
+    {
+     "after": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b-v1.4.1",
+      "torchcast-decision-4b-v1.2",
+      "h2o-lightning-4b",
+      "chon-1.0-e4b"
+     ],
+     "before": [
+      "torchcast-decision-4b-v1.3",
+      "torchcast-decision-4b-v1.2",
+      "h2o-lightning-4b",
+      "chon-1.0-e4b",
+      "h2o-lightning-31b"
+     ],
+     "entrant_rank": 2,
+     "list": "share/open/cost1.5/view/Balanced 33:33:33"
+    },
+    {
+     "after": [
+      "chon-1.0-e4b",
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b-v1.4.1",
+      "torchcast-decision-4b-v1.2",
+      "h2o-lightning-4b"
+     ],
+     "before": [
+      "chon-1.0-e4b",
+      "torchcast-decision-4b-v1.3",
+      "torchcast-decision-4b-v1.2",
+      "h2o-lightning-4b",
+      "phillylabs_philly_decider_v2"
+     ],
+     "entrant_rank": 3,
+     "list": "share/open/cost1.5/view/Emphasis on Cost 20:20:60"
+    },
+    {
+     "after": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b-v1.4.1",
+      "h2o-lightning-4b",
+      "torchcast-decision-4b-v1.2",
+      "phillylabs_philly_decider_v2"
+     ],
+     "before": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b",
+      "torchcast-decision-4b-v1.2",
+      "phillylabs_philly_decider_v2",
+      "h2o-lightning-31b"
+     ],
+     "entrant_rank": 2,
+     "list": "share/open/cost1.5/view/Emphasis on Speed 20:60:20"
+    },
+    {
+     "after": [
+      "h2o-lightning-4b-v1.4.1",
+      "h2o-lightning-4b",
+      "sieve-31b-v2",
+      "torchcast-decision-4b-v1.3",
+      "vllm-sr-d3-mini"
+     ],
+     "before": [
+      "h2o-lightning-4b",
+      "sieve-31b-v2",
+      "torchcast-decision-4b-v1.3",
+      "vllm-sr-d3-mini",
+      "decisio-gemma-4-12b-tuned-commit"
+     ],
+     "entrant_rank": 1,
+     "list": "share/open/none/custom/I0 Calibration50 Speed10 Cost5"
+    },
+    {
+     "after": [
+      "h2o-lightning-4b-v1.4.1",
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b",
+      "jeff_1_1_medium",
+      "sieve-31b-v2"
+     ],
+     "before": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b",
+      "jeff_1_1_medium",
+      "sieve-31b-v2",
+      "torchcast-decision-4b-v1.2"
+     ],
+     "entrant_rank": 1,
+     "list": "share/open/none/custom/I10 Calibration60 Speed0 Cost20"
+    }
+   ]
+  },
+  "counts": {
+   "h2o-lightning-4b-v1.4.1": 101
+  },
+  "lists": 584,
+  "method": "Single-entrant insertion from full production ranking orders; all other new keys removed. Slider transitions separately retained.",
+  "paid_public_rule_covers_any_changes": true,
+  "status": "PASS"
+ },
+ "COST-KIND": {
+  "measured_without_bill": 0,
+  "negative_test": "test/jevbench-v1713-release.test.mjs",
+  "new_rows": {
+   "h2o-lightning-4b-v1.4.1": {
+    "base": "Qwen/Qwen3.5-4B",
+    "basis_items": 1500,
+    "kind": "estimate",
+    "output_tokens": 1500,
+    "priced_input_tokens": 711020,
+    "untrimmed_input_tokens_disclosed": 944694,
+    "usd_per_1000": 0.014370400000000004
+   }
+  },
+  "status": "PASS"
+ },
+ "HELPERS": {
+  "approval_negative_cases": 5,
+  "fairness_pending_refused": true,
+  "fixture_grants_no_authority": true,
+  "flip_dry_run": true,
+  "flip_dry_run_actual_ok": false,
+  "pending_freeze_refused": true,
+  "real_flip_with_fixture_refused": true,
+  "real_manifest_unchanged": "58406ecac52ac2874125bcb2834346a179b5a490054abc82ee070ab779a21863",
+  "seal_write_refused": true,
+  "status": "PASS",
+  "synthetic_freeze_dry_run": true
+ },
+ "PREVIEW": {
+  "footer": "Release review pending",
+  "html_script_syntax": true,
+  "png": [
+   1440,
+   900
+  ],
+  "ranking_models_resolve": true,
+  "status": "PASS",
+  "visual_inspection": "Card viewed; no clipping or overlap"
+ },
+ "PRICING-REFERENCES": {
+  "basis_items": 1500,
+  "negative_cases_refused": 4,
+  "new_rows": {
+   "h2o-lightning-4b-v1.4.1": {
+    "base": "Qwen/Qwen3.5-4B",
+    "in": 0.03,
+    "listing": "deepinfra:Qwen/Qwen3.5-4B",
+    "out": 0.15
+   }
+  },
+  "output_tokens": 1500,
+  "priced_input_tokens": 711020,
+  "pricing_module_sha256": "645fd82eac728d597048bec0995ecd3ac896566e269fb6c9a1fdb84c171a9ac4",
+  "processed_input_cost_usd_per_1000": 0.014370400000000004,
+  "status": "PASS"
+ },
+ "RAW-BINDING": {
+  "entry_sha256": "62f71cdc1b376b2b402d0935bbff7fae10c9237df76761a706116abf0396e551",
+  "http_200": 1500,
+  "input_order": true,
+  "latency_max_s": 2.246,
+  "output_tokens": 1500,
+  "over_10s": 0,
+  "raw_mode": "0600",
+  "raw_sha256": "96d26bb3c0486ecbee832e309db4099b3a616b1540b4a92eff09dec81b719335",
+  "rows": 1500,
+  "status": "PASS",
+  "untrimmed_input_tokens": 944694
+ },
+ "REPRO": {
+  "files": {
+   "app/api/jevbench/v1.7.13/route.ts": "fafd446da7322044d5cdc21729e3977c7ed2e9b060c6046808a5799251bd6970",
+   "app/jev-models/v1.7.13/page.tsx": "e3f6827daa9efbf5c613f86be64880c02c47cdda6f5955aca0bc8411e84729a9",
+   "data/jevbench-architecture.json": "e12d08b69be3b078da41477fb41bdbb70c0f854f1e032f34def6100ca29895f8",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.13-carry.json": "271d1fc77a136a04a1eb6deb5480c52d4211eb2b66b2ac8bb31e80867e69003a",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.13-categories.json": "5803b9cc9d5833e6f96304f3ffec868bf82f005ba42bb6c2dee7d9d26fd67384",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.13-history-carry.json": "334e851944e92383ab3071e52b3012040c7023d0fe236395953169ebee8f0459",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.13-history.json": "5cd8c1332226ea9c179883d2285c0d8b8cc593ae38f2645197364a7ddd9c83c1",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.13-proof.json": "e61c6eb306bc58cd9105eb055a301647360f72779380c2be7c43dd53c3a7027a",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.13-publication.json": "58406ecac52ac2874125bcb2834346a179b5a490054abc82ee070ab779a21863",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.13-results.json": "8e0346259f84dd7594ece6d6408db6bebe63936524c69127ec7d7e8e04603363",
+   "lib/jevbench-v1713-release.mjs": "892c4cd8e12d15ec05ea03d760bc3b23d6b8431f5b92662625c59a70815e6ff4"
+  },
+  "status": "PASS",
+  "two_rebuilds_identical": true
+ },
+ "fairness": "PENDING",
+ "fulltest-postflip-once": {
+  "cancelled": 0,
+  "fail": 4,
+  "log_sha256": "ba223d2c1b2dbf105a4ca4b741eeabbc4e544733595aa01204953ab8a6b05ef0",
+  "not_ok": [
+   "feed carries board and open-board rank next to the unchanged combined rank",
+   "gate: no listed row lacks topic, use-case or language cells without a recorded exception",
+   "Delta 4: with the folds collapsed, Jev 1.13.0 and Jev 1.14.0 are rendered above the fold in the open-board Capability and Composite sections",
+   "Delta 3 (display only): Jev 1.14.0 is a second unranked reference row on the open board without the toggle; every ranking and rank is unchanged"
+  ],
+  "note": "Full npm test run once in the simulated post-flip state; the 4 failures were fixed (3 tests choosing a ranks fixture by newest release now include v1.7.13; the topics gate needs a recorded exception, helper add_topics_exception_v1713.py) and re-verified below; the full suite was not re-run.",
+  "pass": 3871,
+  "skipped": 8,
+  "tests": 3883
+ },
+ "helpers": {
+  "log_sha256": "89c85bc0a8fe2195a447d6fb347eb6f97f216e229c9085227c67f449b87399da",
+  "status": "PASS"
+ },
+ "open_items": [
+  "fairness review not bound (PENDING): flip/freeze refuse until bind_fair_v1713.py runs",
+  "topics breakdown exception needs a recorded decision (add_topics_exception_v1713.py --decision ...)"
+ ],
+ "postflip-fix-recheck": {
+  "cancelled": 0,
+  "fail": 0,
+  "log_sha256": "80ce73e18c89e642a61081bad108eec7a389820603d31c5b7a36ec3fad0877b2",
+  "not_ok": [],
+  "note": "The 4 previously failing suites plus the release test, post-flip, with a SYNTHETIC topics exception applied temporarily and removed afterwards",
+  "pass": 32,
+  "skipped": 0,
+  "tests": 32
+ },
+ "postflip-release-suites": {
+  "cancelled": 0,
+  "fail": 0,
+  "log_sha256": "d214127ad2dfed3a5532346376b92eb81cf3a3ef060758161f6b3313678c568b",
+  "not_ok": [],
+  "pass": 129,
+  "skipped": 1,
+  "tests": 130
+ },
+ "preview-check": {
+  "log_sha256": "8dc1970e979e55619b70fed6652c78c5722a242ccd10caf9be3e41392cc91b0b",
+  "status": "PASS"
+ },
+ "pricing-references": {
+  "log_sha256": "b36b9e4aa2a76b543ef7f581507c6f484ea4b8debbbd53834de54c0d60ff3f24",
+  "status": "PASS"
+ },
+ "production-build-postflip": {
+  "log_sha256": "05a93a3c68537629c0560f28b8b1ac5c47fe2c133c57316450f7fc45ab79dc37",
+  "pages": "626/626",
+  "status": "PASS"
+ },
+ "publication_review": "PENDING",
+ "raw": {
+  "log_sha256": "6e8575128cc8e3bd90f910795402f7b40c1fad998ff7c67412ecbf4d3d2bc324",
+  "status": "PASS"
+ },
+ "release-tests-pending": {
+  "cancelled": 0,
+  "fail": 0,
+  "log_sha256": "c2164593e7aa50b737e8c5acd7d2ddd7ef5896166ec98bd8a3dbc5d4e1f9a46e",
+  "not_ok": [],
+  "pass": 139,
+  "skipped": 1,
+  "tests": 140
+ },
+ "repro": {
+  "log_sha256": "5730ffa9d30d108477a77ad71afcbafc0bb7c8a11b346fa1ea6a5b3b5f8421d2",
+  "status": "PASS"
+ },
+ "source": {
+  "log_sha256": "05cff012e91c573931c6d1753b4a9987a9bd366b01e5209a3b373444dbf2e72c",
+  "status": "PASS"
+ },
+ "status": "PASS_WITH_OPEN_ITEMS",
+ "typescript": {
+  "exit_code": 0,
+  "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "status": "PASS"
+ },
+ "validator": {
+  "log_sha256": "732dac4ddb56876187c07d6c50ab48f8da615a3f07c45ed66c7f2b69cc4e272f",
+  "status": "PASS"
+ }
+}

@@ -1,0 +1,27 @@
+{
+ "h2o-lightning-4b-v1.4.1": {
+  "author": "H2O.ai (paid fast-lane order 54575fd5, PUBLIC visibility)",
+  "base_model": "Qwen/Qwen3.5-4B",
+  "code_revision": "Author's own serving stack from the model repo at cc18ee33 (serve.sh 378e5c05, h2o_lightning_shim.py bc386d26, box.py, assets.py, pooled_readout.py; POST /v1/systemone), README 'For benchmark maintainers: JevBench' default: two-way reading, one engine (TWO_WAY=1, ONE_ENGINE=1), shipped serve_config.json (32,000-token state trim), MAX_LEN 40960, on vLLM 0.30.0 (official image digest 8a69ffad) with the author's h2oai/vllm per-request-attention overlay @b05cc29a (30 files, every sha256 checked against the author's engine/vllm_per_request_attention.SHA256SUMS). Kit SHAS 99f91ea7 (auto-intake r59 lineage, independent reviews PASS); no trust_remote_code.",
+  "cost_basis": "ESTIMATE (*est.), self-hosted open weights, no public tariff: base Qwen/Qwen3.5-4B at the frozen reference deepinfra:Qwen/Qwen3.5-4B USD 0.03 per 1M input / USD 0.15 per 1M output (25 Sep 2026 snapshot; listing later deprecated, frozen reference kept). Input billed on processed_input_tokens per DECISIONS h2o141-processed-input-pricing-28621: 711,020 prompt tokens actually passed to the model after the shipped 32,000-token state trim (template and system turn included); the untrimmed rendered count, 944,694, is disclosed, not priced. Output: 1,500 tokens (one per answered question, as reported).",
+  "cost_kind": "estimate",
+  "disclosure": "FIRST MEASUREMENT of v1.4.1 (paid fast-lane order 54575fd5). FAMILY: new weights (model.safetensors c9b6290d) of a family with a live row (h2o-lightning-4b, v1.1, which stays ranked); the v1.4.0 attempt on d1012 stopped as an unscored 31-row partial (our observer error) and has no row. CONTEXT: 5 items whose state exceeds the shipped 32,000-token limit are answered on the author's own head/tail state trim (pre-registered positions); priced on the trimmed prompt per #28622, untrimmed count disclosed. ENGINE: the author's documented JevBench configuration, two-way reading on one engine with the h2oai vLLM overlay (README: the one-way TWO_WAY=0 setting is not the measured configuration). PROVENANCE, author statements (unverified): fine-tune of Qwen/Qwen3.5-4B. HARDWARE: one Verda RTX PRO 6000 Blackwell Server Edition 96 GB; latency reflects that card.",
+  "display": "H2O-Lightning-4B v1.4.1 (H2O.ai, Qwen3.5-4B fine-tune, h2oai vLLM overlay + open shim)",
+  "endpoint_condition": "Evaluator-owned rented Verda GPU VM, 1x NVIDIA RTX PRO 6000 Blackwell Server Edition (1RTXPRO6000.30V, FIN-03, Finland, EU, pay-as-you-go non-spot, USD 2.649/h all-in), instance id 15b01e61-e76c-4e50-80c0-7aaebf2551d5. Container --network none (cut proven from inside before the sealed input), every credential unset, read-only weights, all 24 model files sha256-verified; driven one request at a time by the frozen v16 pod driver. The standard self-hosted adjustment applies. Measured 27 Oct 2026 15:22Z on the frozen v1.6-regular-20261027 self-hosted input (sha256 9b2f32ed...); determinism 50/50 bit-identical, 0 argmax flips; VM and volume destroyed afterwards.",
+  "endpoint_kind": "gpu",
+  "lane": "selfhosted",
+  "licence": "Apache-2.0 (HF metadata and LICENSE), public, not gated",
+  "price_in_per_m": 0.030000000000000002,
+  "price_kind": "estimate",
+  "price_out_per_m": 0.15,
+  "ranked": true,
+  "repo": "https://huggingface.co/h2oai/h2o-lightning-4b",
+  "revision": "cc18ee330e6895c41b9a60f37a0dd122dc4c3461",
+  "support": {
+   "choice": "native",
+   "noul": "native",
+   "score": "native"
+  },
+  "usd_per_1000_override": 0.014370400000000004
+ }
+}

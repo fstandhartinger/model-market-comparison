@@ -1,0 +1,228 @@
+{
+ "carried_rows": 300,
+ "carried_rows_equal_except": [
+  "rank",
+  "ranks"
+ ],
+ "files": {
+  "carry": "271d1fc77a136a04a1eb6deb5480c52d4211eb2b66b2ac8bb31e80867e69003a",
+  "categories": "5803b9cc9d5833e6f96304f3ffec868bf82f005ba42bb6c2dee7d9d26fd67384",
+  "history": "5cd8c1332226ea9c179883d2285c0d8b8cc593ae38f2645197364a7ddd9c83c1",
+  "history-carry": "334e851944e92383ab3071e52b3012040c7023d0fe236395953169ebee8f0459",
+  "proof": "7e38e5d3c4510373e9b2120c641aedf8f3d0b706fac51eeb835c5bc5b670dd79",
+  "results": "8e0346259f84dd7594ece6d6408db6bebe63936524c69127ec7d7e8e04603363"
+ },
+ "link_fixed_rows": [],
+ "method": {
+  "decision_limit_s": 10,
+  "label": "v1.7",
+  "rule": "latency_s > 10.000 s -> failed",
+  "treatment": "share"
+ },
+ "new_rows": {
+  "h2o-lightning-4b-v1.4.1": {
+   "axes": {
+    "calibration": 89.65360096890336,
+    "cost": 65.2759342933949,
+    "intelligence": 64.42926862934559,
+    "speed": 93.86173474461954
+   },
+   "category_pool_bounds": {
+    "languages": {
+     "ar": 21,
+     "cs": 37,
+     "da": 36,
+     "de": 48,
+     "el": 28,
+     "en": 555,
+     "es": 37,
+     "fi": 52,
+     "fr": 32,
+     "hi": 37,
+     "id": 41,
+     "it": 45,
+     "ja": 44,
+     "ko": 43,
+     "mixed": 64,
+     "nl": 36,
+     "no": 51,
+     "pl": 57,
+     "pt": 47,
+     "sv": 46,
+     "tr": 46,
+     "uk": 56,
+     "zh": 41
+    },
+    "topics": {},
+    "usecases": {
+     "advertising": 48,
+     "code_linting": 69,
+     "customer_support": 66,
+     "demand_forecasting": 66,
+     "ecommerce_marketplaces": 62,
+     "feature_extraction": 72,
+     "financial_crime": 63,
+     "gaming": 58,
+     "insurance_claims": 62,
+     "knowledge_graphs": 67,
+     "lead_generation": 75,
+     "legal_compliance": 56,
+     "llm_guardrails": 71,
+     "model_routing": 148,
+     "moderation_trust_safety": 59,
+     "other": 32,
+     "recruiting": 65,
+     "risk_assessment": 48,
+     "scientific_discovery": 42,
+     "search_retrieval": 67
+    }
+   },
+   "composite_ci95": {
+    "A": [
+     73.49081923059627,
+     77.34463567174879
+    ],
+    "B": [
+     70.04437840342874,
+     75.48339313657809
+    ],
+    "C": [
+     70.63199718907954,
+     77.34463567174879
+    ]
+   },
+   "cost": {
+    "basis_items": 1500,
+    "kind": "estimate",
+    "output_tokens": 1500,
+    "processed_input_tokens": 711020,
+    "untrimmed_input_tokens": 944694,
+    "usd_per_1000": 0.014370400000000004,
+    "usd_per_1000_untrimmed": 0.019043880000000003
+   },
+   "decision_limit": {
+    "limit_s": 10.0,
+    "n_over_limit": 0,
+    "n_over_limit_answered_ok": 0,
+    "rule": "latency_s > limit -> failed",
+    "speed_basis": "all decisions given (lane items in the raw), measured latency_s",
+    "speed_n": 1500,
+    "treatment": "share"
+   },
+   "equated": {
+    "calibration": 89.65360096890336,
+    "capability": 77.04143479912447,
+    "intelligence": 64.42926862934559,
+    "offset": {
+     "C": 0,
+     "I": 0
+    },
+    "scores": {
+     "A": 75.9755905301598,
+     "B": 73.34670857753824,
+     "C": 75.9755905301598
+    }
+   },
+   "model_pin": "h2oai/h2o-lightning-4b@cc18ee330e6895c41b9a60f37a0dd122dc4c3461",
+   "price_reference": {
+    "base": "Qwen/Qwen3.5-4B",
+    "in": 0.03,
+    "listing": "deepinfra:Qwen/Qwen3.5-4B",
+    "out": 0.15
+   },
+   "raw_sha256": "96d26bb3c0486ecbee832e309db4099b3a616b1540b4a92eff09dec81b719335",
+   "scored_input_sha256": "68b75d4d8b25a0775b8620c1a7b522e66b8abcf3b34549f757eb04cc4769bed7",
+   "source_sha256": {
+    "cells_off": {
+     "categories_sha256": "e8997cdc8da58287d166602a285f1d35d2b9c55a8086c1a5237bdaa6ec57bf75",
+     "decisive_sha256": "7b35c59da1253d95118cfea7aecab968ecb3d01812104951048831674abb18f9"
+    },
+    "cells_share": {
+     "categories_sha256": "529d1d7c09fe25d6798b4b67abcbc00f1ffd69a035ef90be2aae511381424e8b",
+     "decisive_sha256": "7b35c59da1253d95118cfea7aecab968ecb3d01812104951048831674abb18f9"
+    },
+    "entry_path": "/home/flori/jobs/fastlane-native-54575fd5/score/ENTRIES-H2O141.json",
+    "entry_sha256": "62f71cdc1b376b2b402d0935bbff7fae10c9237df76761a706116abf0396e551",
+    "frozen": {
+     "path": "/home/flori/jobs/jevbench-add-requests-20260919/r197/v1713/score/field/out-frozen/jevbench-v1.6.0-results.json",
+     "sha256": "11b391ff3b53cd06d8a75b527ccd2df458c66e5519208734d1100b208c3066e3"
+    },
+    "input_sha256": "9b2f32edaccb29afd726af8cd54cf1a22d85e8b1824566924045d83c6f828426",
+    "manifest_sha256": "f5a5151a1a19923dec1434230dbc451d9ca879ce8ccba8f268b296cac9c1ee35",
+    "raw_sha256": "96d26bb3c0486ecbee832e309db4099b3a616b1540b4a92eff09dec81b719335",
+    "raw_verified_in_place": true,
+    "registry_sha256": "796903ef6d7de1ded43e39eb6f9b32955557b0982208de8c395b440479a24574",
+    "v17-off": {
+     "path": "/home/flori/jobs/jevbench-add-requests-20260919/r197/v1713/score/field/out-v17-off/jevbench-v1.6.0-results.json",
+     "sha256": "83147a14c0f3c8d4ff46581f27d06f6c3f0ea88e9d1d0f75a82d7263348e3146"
+    },
+    "v17-share": {
+     "path": "/home/flori/jobs/jevbench-add-requests-20260919/r197/v1713/score/field/out-v17-share/jevbench-v1.6.0-results.json",
+     "sha256": "68b75d4d8b25a0775b8620c1a7b522e66b8abcf3b34549f757eb04cc4769bed7"
+    }
+   },
+   "treatment": "ranked"
+  }
+ },
+ "predecessor": {
+  "publication_sha256": "a8689464e703a73778738055d093858d884a18183ce555fac43e166b911c3cb6",
+  "revision": "v1.7.12"
+ },
+ "pricing_module_sha256": "645fd82eac728d597048bec0995ecd3ac896566e269fb6c9a1fdb84c171a9ac4",
+ "publication_approval": {
+  "asks": [
+   {
+    "admission": "custody hash word on kit 99f91ea7 (consumed), deputy #29070",
+    "handoff": "board #29765",
+    "key": "h2o-lightning-4b-v1.4.1",
+    "relay": "paid order 54575fd5"
+   }
+  ],
+  "button_tap": false,
+  "fairness_check": {
+   "engine": "synthetic-preview-only",
+   "path": "workers/r197-v1713-fair/RESULT.json",
+   "sha256": "4e7a8d11d3c44e50769abbdf769ef97ea30ab2ef5ae00a25d35c1c011eec00c8",
+   "verdict": "FAIR"
+  },
+  "fresh_baseline": "v1.7.12",
+  "paid_public": {
+   "key": "h2o-lightning-4b-v1.4.1",
+   "order": "54575fd5",
+   "rule": "paid public automatic publication including top-five changes",
+   "visibility": "public"
+  },
+  "release_owner_rulings": [
+   "h2o141-processed-input-pricing-28621",
+   "key h2o-lightning-4b-v1.4.1 as a new row; h2o-lightning-4b (v1.1) unchanged"
+  ],
+  "status": "GO (paid public fast-lane order, automatic publication)",
+  "top_five_effect": "changed",
+  "top_five_preview": {
+   "path": "r197/v1713/receipts/topfive-diff.json",
+   "sha256": "c609f44040b4f479d2cfa5c5d300d528cb8ad8fbe5bbc2c989bd8c0bba43939c"
+  }
+ },
+ "publication_review": {
+  "engine": "synthetic-preview-only",
+  "receipt_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "verdict": "PASS"
+ },
+ "publication_sha256": "3b80b3a680fb8ad39d37375715dcfae07c1108b26e8e7c044d04b3f20166e619",
+ "release": "v1.7.13",
+ "remeasured_rows": {},
+ "repriced_rows": {},
+ "scorers": {
+  "a2_cells_v16": "afd034efe27bde12f2ebbfd12c4c0792c93214e1aa9a63deecb0e83a0184c990",
+  "build_categories_v16": "40eb50f3d7fea2693b4478c4b89f8bfb957dd17776add491935742e3b9354e73",
+  "build_topics_v16": "ec04ab598162bfc4340ffa7916a06573eb1222132c61e47ab772045bc67ced78",
+  "decisive_v16": "80b9ccf43e58dddb1b2a77e0a33aba8a9f7337a3a9a639afc7264218bbf8918f",
+  "noul_method_v16": "119e59486ab3300b972fbcbadb0fe1dceceb124287607375aa61c66063c607d0",
+  "pins_v17": "b50cc00dd2cb0ba46157eb6a2bda620255f3ff54404025e992bc7962dfff2f8b",
+  "run_under_v17": "efb194b2ea350db59be37e5e72af71f809f763a2476cd6f521adf6f4fd90a64f",
+  "score_v15": "0931e05c6410b1b971201834397cb609cdb25f942723c50375632952f6dcc447",
+  "score_v15_headlineA": "826f2cbcb57007ec8a161e6eb0111182b8a656c0638027c6c78022a858fd8e2c",
+  "score_v16": "02132271117653e6302c509232a581d0094f0e78eac8b1bfc67596fd5d5097e9",
+  "score_v17": "6363458d208a52f4ad5aaf73027cad1b7e0358ff962e581d57a3cc462c8f1978"
+ }
+}
