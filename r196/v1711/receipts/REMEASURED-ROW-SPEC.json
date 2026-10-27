@@ -1,0 +1,2671 @@
+{
+ "decisio-gemma-4-12b-tuned-commit": {
+  "addendum": null,
+  "api_flag": false,
+  "api_subset": false,
+  "author": "tachara-ai (Hugging Face)",
+  "axes": {
+   "calibration": 88.61282851120822,
+   "cost": 56.5207604825306,
+   "intelligence": 62.78089467434111,
+   "speed": 90.3121994607612
+  },
+  "base_model": "google/gemma-4-12B-it",
+  "calibration": {
+   "parts": {
+    "choice": {
+     "ece_hard": 0.03870305643842932,
+     "ece_score": 92.25938871231413,
+     "mean_tvd": null,
+     "n": 740,
+     "n_ece_hard": 305,
+     "n_tvd": 0,
+     "score": 92.25938871231413,
+     "score_before_time_limit": 92.25938871231413,
+     "time_limit_failed_share": 0.0
+    },
+    "noul": {
+     "abstention_rate": 0.0,
+     "brier": 0.10394989403343095,
+     "ece": 0.09193095805447535,
+     "n": 373,
+     "score": 81.61380838910492,
+     "score_before_time_limit": 81.61380838910492,
+     "time_limit_failed_share": 0.0
+    },
+    "score": {
+     "interval90_coverage": 0.967741935483871,
+     "interval90_width": 0.5199372759856628,
+     "n": 372,
+     "nrps": 0.08852525470256986,
+     "score": 91.96528843220563,
+     "score_before_time_limit": 91.96528843220563,
+     "time_limit_failed_share": 0.0,
+     "top_ece": 0.03608448832665872
+    }
+   },
+   "score": 88.61282851120822
+  },
+  "capability": 75.69686159277467,
+  "code_revision": "THE AUTHOR'S OWN SERVER, run unmodified: aminry/decisio at 4f849ff2dbae10a53026e382ce3dd60b95780594 (one commit after tag v0.32.0 e7e8937f35b0611d327295563b0cffbeb8bafdc3; the commit changes README.md only, so every src/ file equals the tag; package decisio 0.32.0), installed on the pod with the author's own 'uv sync --extra serve --frozen' from the repository's uv.lock (sha256 d82e40ba4b3693a17e7cd85f17604d1f818fae6dad431293e3b4541932bbbbe3) with credentials absent, before any sealed byte; the sealed run itself had no network. Entrypoint: python -m decisio.serve.vllm_engine --base /model --max-model-len 32768 --host 127.0.0.1 --port 8000, every other flag at its 0.32.0 default (over-limit refuse, header-limit auto, concurrency serial, orders 1, think off, no adapters, no branch log, no task store, stock vLLM with no patches), HF offline flags set. The server's native endpoint POST /v1/systemone was used with no response shim and no launcher shim; the request path is the frozen v1.6 measurement driver with the frozen TypeSafe adapter. The only flag outside the author's defaults, --max-model-len 32768, fixes the context length: without it 0.32.0 picks an automatic length up to 65,536 that depends on the model card, which would make the refusal set card-dependent. On-pod asserts passed before any sealed input: distribution versions decisio 0.32.0, vllm 0.31.0, torch 2.13.0, transformers 5.17.0, triton 3.7.1 (tokenizers 0.23.2 in uv.lock; python 3.12); /health flavor report {name commit, served_name Decisio-12b-tuned-commit, overrides {}, pending []}; abstention_tasks {} (no task source configured, so no per-task calibration, head or abstention applies). Source review (line by line over the request path, before measurement): no branch on item text, ids, gold labels or item lists; the disclosed item-blind label-shape rules do inspect option keys/descriptions. No network, subprocess, eval or pickle on the request path; no stop condition. Model: tachara-ai/Decisio-12b-tuned-commit at 245e00dc45abad14d693b1ebae4d4c7aa9cf72f1, a MERGED BF16 checkpoint (6 safetensors shards, 23,919,548,376 shard bytes; every file hashed against the repository SHA256SUMS on the node) of google/gemma-4-12B-it at 707f0a3b8a3c7ad586ed01e27eafbad8a27dd0f7 plus a LoRA with adapter dimension 16 merged in fp32 and rounded once to bf16 (stochastic, seed 0, per the model card); on one CUDA device, no quantisation. Author code and weights were fetched by our code at the pinned revisions and ran only on a disposable rented GPU VM; the measurement kit was hash-pinned and independently reviewed before measurement, and the draw was used once for this row. Weights: 12B-class merged checkpoint, not an adapter.",
+  "composite_ci95": {
+   "A": [
+    69.7503043743632,
+    72.26124115912
+   ],
+   "B": [
+    67.38060244747632,
+    70.91144359683345
+   ],
+   "C": [
+    68.1366041314051,
+    72.26124115912
+   ]
+  },
+  "cost": {
+   "basis": "ESTIMATE; reference google/gemma-3-12b-it (nearest listed 12B Gemma sibling; google/gemma-4-12B-it has no listing) at USD 0.05/0.15 per million input/output tokens. Billed on engine-processed input (decisio adds a system turn and chat template, +78 tokens per answered item, that its own usage does not report); offline per-item recount, residual 0; corrected in v1.7.11 from the earlier usage-based USD 0.024239/1k. Exact engine input 831,272 tokens and output 1,485 tokens on this row's own 1,485-item common basis; USD 0.028139/1k common and USD 0.027858/1k all 1,500. The exact recount includes one token-boundary merge: 1,484 increments of 78 tokens and one of 77. Decisio also sends one registration prefill per new state boundary; an offline estimate (about 648,827 tokens; USD 0.049985/1k if billed) is not exact and not a lower bound, so it is disclosed, not priced. Estimated model tariff, not charged usage or a host quote.",
+   "common_basis": {
+    "n_items": 1485,
+    "rule": "common",
+    "usd_per_1000_all_items": 0.027857566666666674
+   },
+   "kind": "estimate",
+   "usage_estimated_rows": 0,
+   "usd_per_1000": 0.028138956228956232
+  },
+  "decision_limit": {
+   "limit_s": 10.0,
+   "n_over_limit": 0,
+   "n_over_limit_answered_ok": 0,
+   "rule": "latency_s > limit -> failed",
+   "speed_basis": "all decisions given (lane items in the raw), measured latency_s",
+   "speed_n": 1500,
+   "treatment": "share"
+  },
+  "disclosure": "FIRST MEASUREMENT of Decisio-12b-tuned-commit in this intake (our own intake). A NEW ROW, A VARIANT OF THE DECISIO FAMILY: tachara-ai/Decisio-12b-tuned-commit is a different set of weights from the live decisio-gemma-4-12b-v080 and -v090 rows, which are the stock google/gemma-4-12B-it served by decisio; none of its 6 shard LFS sha256s equals the safetensors blob of google/gemma-4-12B-it at 707f0a3b, of google/gemma-4-31B-it at 842da379, of the decisio FP8 31B repository at eaf1e4fa, or of the weights behind the live decisio rows (byte-identity evidence only, not proof of independent training). It replaces and supersedes none of the live decisio rows. The model card states that a sibling repository, Decisio-12b-tuned-calibrated, holds the same weights and differs in decision_config.json only; that sibling was not measured and nothing is inferred about it. The name is 'Jev-compatible' only: it is a Decisio model, not a Jev model. FINE-TUNE OF GEMMA 4: a LoRA merged into google/gemma-4-12B-it (see code_revision). AUTHOR'S OWN SERVER on our rented hardware, run unmodified (see code_revision) with no shim. NATIVE OUTPUTS: probabilities for choice, noul and score from the option-letter readout (vLLM max_tokens=1 for the option-label readout, softmax over the label tokens, think off; state-prefix registration can add a warm-up, excluded from native usage) at the repository's shipped per-type temperatures (yes/no 3.314, score 2.1109, choice 2-10 options 2.1317, 11-26 options 1.8766, 27-255 options 1.7181); no generated explanation. CONFIGURATION: the repository's shipped flavor 'commit', exactly as shipped; the card also names the calibrated sibling. We did not measure any other flavor or setting and infer nothing about one. JEVBENCH-AWARE DEFAULT, THE COMMIT RULE (a disclosed non-raw, item-blind output transform, treated like the DOPEST 0.801 floor): for yes/no questions, a temperature-scaled P(yes) strictly between 0.20 and 0.80 is reported at the nearer band edge, 0.80 if it is above 0.5, otherwise 0.20 (exactly 0.5 goes to 0.20). The band is exactly JevBench's own yes/no decision band: JevBench scores an answer strictly between 0.20 and 0.80 as an abstention, counted wrong, and the author's repository ships its own reading of that open-set rule (not imported by the server). On this draw the rule moved 193 of the 373 answered yes/no answers to a band edge, so the row has no yes/no abstentions; without it those answers would be scored as abstentions. It is the shipped flavor's default, measured as shipped. The argmax never changes; the Calibration axis includes the effect of this transform, and we did not measure a variant without it. LABEL-SHAPE RULES ON BY DEFAULT: hide_index_keys, describe_options and desnake_labels. The author documents hide_index_keys as motivated by the Decision Index option_N format and desnake_labels by BANKING77; they act on the shape of the labels of any request, never on item text, ids, gold labels or item lists (source review confirmed item-blind), and the answer keys are always the request's own keys. The frozen offline layout counter recorded 739 describe_options, 375 noul_as_letters and 11 hide_index_keys applications across all 1,500 draw rows, including the refused rows; desnake_labels recorded 0. Of 375 yes/no rows, 373 were answered. On the 231 public items the corresponding counts were 139 / 74 / 0 (desnake_labels 0). TRAINING DATA (author statement, not independently verified): the model card says the training data is not disclosed, that no Decision Index or JevBench evaluation items were used in training or checkpoint selection, that the data was decontaminated against both boards' public test sets, and that official training splits of some public benchmarks were used under their licences. We did not inspect the training examples or check overlap with JevBench items; contamination of the sealed draw is unchecked. The card says the temperatures were fitted by minimum log loss per question type and choice band on the plain readout; it does not identify the data of that fit. LICENCE NOTE: Apache-2.0 per the model card, LICENSE and NOTICE on the weights and per the author server licence; the base is Gemma 4 under its own terms. CONTEXT AND REFUSALS: the server refuses a row natively when even the plain layout (system turn, chat template, state, question, no header) exceeds its 32,767-token prompt limit (32,767 answered, 32,768 refused; boundary proven offline, and a row whose header alone pushes it over is answered on the plain layout instead); a refused row is never truncated. NOT ANSWERED, counted wrong: the draw's 15 standard long positions (plain-layout prompts of 76,531 to 81,726 tokens by our offline count), counted and frozen in the preregistered refusal list before launch; all returned HTTP 422 and the measured 422 set equals the preregistered set exactly (no unexpected failure; every other row HTTP 200). ANSWERED: 1,485 of 1,500. 10 s RULE: 0 decisions over 10 s, so no decision is scored wrong under the 10 s rule in the v1.7 share view (the frozen v1.6 and v1.7-off views apply no time limit); measured loopback median 0.058397072 s, interpolated p95 0.099410957 s (upper-order p95 0.099450955 s), maximum 0.167558985 s over all 1,500 requests on the recorded hardware. The v1.7 share view uses the common self-hosted latency estimate, 2 times measured p50 plus 0.15 s = 0.266794144 s; this adjustment is an assumption, not a measured hosted endpoint. USAGE: the server-native input usage (715,443 tokens) equals our first-party count exactly, 0 mismatches; output_tokens 1 per answered row natively (1,485 in total). DETERMINISM (record-only): the first 50 requests were run twice; 3 of 50 were bit-identical, 0 argmax flips, maximum probability difference 0.0195 (observed on the serial vLLM path; its cause was not isolated; a short smoke probe also varied between 0.8451876 and 0.8500589). The scored rows are the first run and stand. ATTEMPT HISTORY: one attempt, no earlier failed or discarded attempt on the sealed input; the pre-sealed smoke and gates passed before any sealed item.",
+  "display": "Decisio 12B tuned commit (variant of the Decisio family)",
+  "draw": {
+   "id": "v1.6-regular-20261012",
+   "measured_on": "2026-10-25",
+   "release": "v1.7.6",
+   "results_sha256": "456546008cd5759995a21c706181c70926f81d32944a7eda4f3367fd8f800841"
+  },
+  "endpoint_condition": "Evaluator-owned rented Verda GPU VM, one NVIDIA RTX PRO 6000 Blackwell Server Edition 96 GB (97,887 MiB, driver 580.178.04), FIN-03 (Finland, EU), PAYG non-spot, instance type 1RTXPRO6000.30V, USD 2.558095890410959/h recorded by the runner, 150 GB disk. One VM for this row, one attempt. Measured 25 Oct 2026, VM window about 23:26-23:39Z, about USD 0.55 GPU rental (elapsed time at the recorded hourly rate). Author server at 127.0.0.1:8000, network cut before sealed input (offline proof and cut proof receipts), read-only model and input, private output, HF offline flags, no credentials. Before sealed input: model files re-hashed against SHA256SUMS; the dependency Triton gate, a pre-warm and the smoke passed (the smoke includes both 422 over-limit probes at 32,768 and 80k tokens); the TTL fit gate admitted the run. Input sha256 dfd36720077ef7c41ace367524896507c7f44ce71306fb3e659e8b85069d995b (v1.6-regular-20261012) was re-checked inside the container (match). Complete 1,500-row run, rc 0. Raw output sha256 e9c889e1a138c875eb52521748e63b4344043c7a5598527c073172dd1c81594f (the pull-hash receipt). Node-shred and local-shred receipts verified; exact-id teardown receipt confirms the VM closed. GPU rental is separate from the benchmark's estimated model tariff.",
+  "endpoint_kind": "gpu",
+  "full_coverage": true,
+  "intelligence": {
+   "I_open": 68.7111277698651,
+   "I_sealed": 56.85066157881713,
+   "base": 62.78089467434111,
+   "excess": 2.020939420692258,
+   "gap": 11.86046619104797,
+   "penalty": 1.0,
+   "per_type_split": {
+    "open|choice": {
+     "cc": 73.51239714334199,
+     "n": {
+      "easy": 33,
+      "hard": 68,
+      "judge": 32,
+      "standard": 17
+     },
+     "tiers": {
+      "easy": 96.10810810810811,
+      "hard": 62.25228059138094,
+      "judge": 68.35860250494397,
+      "standard": 92.46546672247803
+     }
+    },
+    "open|noul": {
+     "cc": 80.3768115942029,
+     "n": {
+      "easy": 14,
+      "hard": 23,
+      "judge": 20,
+      "standard": 18
+     },
+     "tiers": {
+      "easy": 100.0,
+      "hard": 82.6086956521739,
+      "judge": 80.0,
+      "standard": 66.66666666666667
+     }
+    },
+    "open|score": {
+     "cc": 52.24417457205039,
+     "n": {
+      "easy": 9,
+      "hard": 29,
+      "judge": 21,
+      "standard": 16
+     },
+     "tiers": {
+      "easy": 58.52839650119154,
+      "hard": 47.74971241071595,
+      "judge": 52.83373682048644,
+      "standard": 57.20664455749461
+     }
+    },
+    "sealed|choice": {
+     "cc": 64.43982160940423,
+     "n": {
+      "easy": 70,
+      "hard": 247,
+      "judge": 146,
+      "standard": 137
+     },
+     "tiers": {
+      "easy": 86.6581956797967,
+      "hard": 57.84665201804093,
+      "judge": 58.570029382957905,
+      "standard": 75.32166209660409
+     }
+    },
+    "sealed|noul": {
+     "cc": 70.28427671145118,
+     "n": {
+      "easy": 58,
+      "hard": 110,
+      "judge": 65,
+      "standard": 67
+     },
+     "tiers": {
+      "easy": 72.41379310344827,
+      "hard": 65.45454545454545,
+      "judge": 66.15384615384616,
+      "standard": 85.07462686567165
+     }
+    },
+    "sealed|score": {
+     "cc": 35.82788641559598,
+     "n": {
+      "easy": 35,
+      "hard": 123,
+      "judge": 67,
+      "standard": 75
+     },
+     "tiers": {
+      "easy": 53.92109493878885,
+      "hard": 28.30185867749081,
+      "judge": 36.085638239942895,
+      "standard": 41.4467098936895
+     }
+    }
+   }
+  },
+  "jevbench_score": 71.45565353358278,
+  "key": "decisio-gemma-4-12b-tuned-commit",
+  "last_measured_on": "2026-10-25",
+  "licence": "Apache-2.0 per the model card, LICENSE and NOTICE on the weights and the author server; base google/gemma-4-12B-it public, ungated, under its own terms",
+  "listing": "ranked",
+  "measured_in": "v1.7.6",
+  "measurement_date_status": "measured",
+  "method": "v1.7",
+  "model_pin": "tachara-ai/Decisio-12b-tuned-commit@245e00dc45abad14d693b1ebae4d4c7aa9cf72f1 + aminry/decisio@4f849ff2dbae10a53026e382ce3dd60b95780594",
+  "new_in": "v1.7.6",
+  "noul_decisive": {
+   "acc_among_decisive": 0.871313672922252,
+   "decisive": 373,
+   "decisive_rate": 1.0,
+   "n": 375,
+   "supported": true,
+   "valid": 373
+  },
+  "paid_fast_lane": false,
+  "planned_weight_denominator": 1.0,
+  "rank": 20,
+  "ranked": true,
+  "ranks": {
+   "A": 20,
+   "B": 27,
+   "C": 18,
+   "capability": 58
+  },
+  "repo": "https://huggingface.co/tachara-ai/Decisio-12b-tuned-commit",
+  "scores": {
+   "A": 71.45565353358278,
+   "B": 69.53407736996427,
+   "C": 71.45565353358278
+  },
+  "speed": {
+   "adjustment": "x2 + 0.15 s (assumption, not measured)",
+   "basis": "all decisions given (lane items in the raw), measured latency_s",
+   "n": 1500,
+   "p50_s_adjusted": 0.26679414399998225,
+   "p50_s_raw": 0.05839707199999111,
+   "p95_s_adjusted": 0.3488219143000151,
+   "p95_s_raw": 0.09941095715000756
+  },
+  "status": {
+   "answered_ok": 1485,
+   "missing": 0,
+   "rows": 1500,
+   "status": "complete"
+  },
+  "support": {
+   "choice": "native",
+   "noul": "native",
+   "score": "native"
+  },
+  "v16": {
+   "api_subset": false,
+   "api_subset_tag": null,
+   "breakdowns": {
+    "family": {
+     "calibration": {
+      "accuracy": 0.7727272727272727,
+      "cc": 67.26883523733275,
+      "cc_by_type": {
+       "choice": 66.66666666666667,
+       "noul": 100.0,
+       "score": 35.13983904533158
+      },
+      "low_n": true,
+      "n": 22,
+      "n_by_type": {
+       "choice": 16,
+       "noul": 4,
+       "score": 2
+      },
+      "score": 67.26883523733275
+     },
+     "calibration_gen": {
+      "accuracy": 0.693069306930693,
+      "cc": 61.316515410629954,
+      "cc_by_type": {
+       "choice": 49.09862142099682,
+       "noul": 92.0,
+       "score": 42.85092481089304
+      },
+      "low_n": false,
+      "n": 101,
+      "n_by_type": {
+       "choice": 41,
+       "noul": 25,
+       "score": 35
+      },
+      "score": 61.316515410629954
+     },
+     "composite_gen": {
+      "accuracy": 0.7326732673267327,
+      "cc": 55.20486090453259,
+      "cc_by_type": {
+       "choice": 70.73170731707317,
+       "noul": 55.55555555555556,
+       "score": 39.327319840969025
+      },
+      "low_n": false,
+      "n": 101,
+      "n_by_type": {
+       "choice": 41,
+       "noul": 27,
+       "score": 33
+      },
+      "score": 55.20486090453259
+     },
+     "fairness": {
+      "accuracy": 0.8541666666666666,
+      "cc": 84.67262300350875,
+      "cc_by_type": {
+       "choice": 100.0,
+       "noul": 86.66666666666667,
+       "score": 67.35120234385954
+      },
+      "low_n": false,
+      "n": 48,
+      "n_by_type": {
+       "choice": 15,
+       "noul": 15,
+       "score": 18
+      },
+      "score": 84.67262300350875
+     },
+     "jaggedness": {
+      "accuracy": 0.6333333333333333,
+      "cc": 48.38264830927233,
+      "cc_by_type": {
+       "choice": 58.132820019249294,
+       "noul": 67.56756756756756,
+       "score": 19.44755734100011
+      },
+      "low_n": false,
+      "n": 180,
+      "n_by_type": {
+       "choice": 94,
+       "noul": 37,
+       "score": 49
+      },
+      "score": 48.38264830927233
+     },
+     "llm_router": {
+      "accuracy": 0.8274760383386581,
+      "cc": 72.14922012688827,
+      "cc_by_type": {
+       "choice": 73.84872765695167,
+       "noul": 89.69072164948453,
+       "score": 52.90821107422858
+      },
+      "low_n": false,
+      "n": 313,
+      "n_by_type": {
+       "choice": 152,
+       "noul": 97,
+       "score": 64
+      },
+      "score": 72.14922012688827
+     },
+     "long_state": {
+      "accuracy": 0.0,
+      "cc": -143.01075268817203,
+      "cc_by_type": {
+       "choice": -29.032258064516128,
+       "noul": -100.0,
+       "score": -300.0
+      },
+      "low_n": true,
+      "n": 15,
+      "n_by_type": {
+       "choice": 10,
+       "noul": 2,
+       "score": 3
+      },
+      "score": 0.0
+     },
+     "ml_usecase": {
+      "accuracy": 0.6666666666666666,
+      "cc": 45.73235129034188,
+      "cc_by_type": {
+       "choice": 50.51546391752578,
+       "noul": 75.0,
+       "score": 11.68158995349986
+      },
+      "low_n": true,
+      "n": 27,
+      "n_by_type": {
+       "choice": 11,
+       "noul": 8,
+       "score": 8
+      },
+      "score": 45.73235129034188
+     },
+     "multilingual": {
+      "accuracy": 0.7272727272727273,
+      "cc": 59.84482702135487,
+      "cc_by_type": {
+       "choice": 65.76459080534725,
+       "noul": 66.66666666666667,
+       "score": 47.10322359205068
+      },
+      "low_n": false,
+      "n": 275,
+      "n_by_type": {
+       "choice": 134,
+       "noul": 72,
+       "score": 69
+      },
+      "score": 59.84482702135487
+     },
+     "negation_pair_gen": {
+      "accuracy": 0.8023255813953488,
+      "cc": 49.24476329337568,
+      "cc_by_type": {
+       "choice": 90.0,
+       "noul": 46.66666666666666,
+       "score": 11.067623213460354
+      },
+      "low_n": false,
+      "n": 86,
+      "n_by_type": {
+       "choice": 40,
+       "noul": 30,
+       "score": 16
+      },
+      "score": 49.24476329337568
+     },
+     "option_order": {
+      "accuracy": 0.8541666666666666,
+      "cc": 81.35818908122504,
+      "cc_by_type": {
+       "choice": 81.35818908122504
+      },
+      "low_n": false,
+      "n": 48,
+      "n_by_type": {
+       "choice": 48
+      },
+      "score": 81.35818908122504
+     },
+     "perturb_pair": {
+      "accuracy": 0.828125,
+      "cc": 75.35377046178358,
+      "cc_by_type": {
+       "choice": 78.97897897897899,
+       "noul": 100.0,
+       "score": 47.08233240637176
+      },
+      "low_n": false,
+      "n": 64,
+      "n_by_type": {
+       "choice": 44,
+       "noul": 10,
+       "score": 10
+      },
+      "score": 75.35377046178358
+     },
+     "usecase": {
+      "accuracy": 0.6590909090909091,
+      "cc": 55.50649874544674,
+      "cc_by_type": {
+       "choice": 58.33333333333336,
+       "noul": 66.66666666666667,
+       "score": 41.51949623634018
+      },
+      "low_n": false,
+      "n": 220,
+      "n_by_type": {
+       "choice": 104,
+       "noul": 48,
+       "score": 68
+      },
+      "score": 55.50649874544674
+     }
+    },
+    "lang": {
+     "ar": {
+      "accuracy": 0.625,
+      "cc": 38.82047887275462,
+      "cc_by_type": {
+       "choice": 61.904761904761905,
+       "noul": 100.0,
+       "score": -45.44332528649804
+      },
+      "low_n": true,
+      "n": 16,
+      "n_by_type": {
+       "choice": 7,
+       "noul": 4,
+       "score": 5
+      },
+      "score": 38.82047887275462
+     },
+     "cs": {
+      "accuracy": 0.5714285714285714,
+      "cc": 68.42105263157895,
+      "cc_by_type": {
+       "choice": 36.84210526315789,
+       "noul": 100.0
+      },
+      "low_n": true,
+      "n": 7,
+      "n_by_type": {
+       "choice": 6,
+       "noul": 1
+      },
+      "score": 68.42105263157895
+     },
+     "da": {
+      "accuracy": 0.6153846153846154,
+      "cc": 44.71318819900765,
+      "cc_by_type": {
+       "choice": 79.26267281105991,
+       "noul": 33.33333333333333,
+       "score": 21.543558452629696
+      },
+      "low_n": true,
+      "n": 13,
+      "n_by_type": {
+       "choice": 6,
+       "noul": 3,
+       "score": 4
+      },
+      "score": 44.71318819900765
+     },
+     "de": {
+      "accuracy": 0.875,
+      "cc": 83.22813715774681,
+      "cc_by_type": {
+       "choice": 76.10619469026548,
+       "noul": 100.0,
+       "score": 73.57821678297495
+      },
+      "low_n": false,
+      "n": 32,
+      "n_by_type": {
+       "choice": 16,
+       "noul": 8,
+       "score": 8
+      },
+      "score": 83.22813715774681
+     },
+     "el": {
+      "accuracy": 0.7333333333333333,
+      "cc": 71.33436068920314,
+      "cc_by_type": {
+       "choice": 49.720670391061454,
+       "noul": 66.66666666666667,
+       "score": 97.61574500988128
+      },
+      "low_n": true,
+      "n": 15,
+      "n_by_type": {
+       "choice": 8,
+       "noul": 6,
+       "score": 1
+      },
+      "score": 71.33436068920314
+     },
+     "en": {
+      "accuracy": 0.7324066029539531,
+      "cc": 59.691544815211365,
+      "cc_by_type": {
+       "choice": 67.2691326686274,
+       "noul": 73.38129496402878,
+       "score": 38.42420681297789
+      },
+      "low_n": false,
+      "n": 1151,
+      "n_by_type": {
+       "choice": 588,
+       "noul": 278,
+       "score": 285
+      },
+      "score": 59.691544815211365
+     },
+     "es": {
+      "accuracy": 0.8387096774193549,
+      "cc": 69.82090482784348,
+      "cc_by_type": {
+       "choice": 80.42414355628058,
+       "noul": 100.0,
+       "score": 29.03857092724983
+      },
+      "low_n": false,
+      "n": 31,
+      "n_by_type": {
+       "choice": 13,
+       "noul": 8,
+       "score": 10
+      },
+      "score": 69.82090482784348
+     },
+     "fi": {
+      "accuracy": 0.875,
+      "cc": 86.05624760972051,
+      "cc_by_type": {
+       "choice": 67.21311475409836,
+       "noul": 100.0,
+       "score": 90.95562807506322
+      },
+      "low_n": true,
+      "n": 8,
+      "n_by_type": {
+       "choice": 4,
+       "noul": 3,
+       "score": 1
+      },
+      "score": 86.05624760972051
+     },
+     "fr": {
+      "accuracy": 0.7142857142857143,
+      "cc": 73.60280835996384,
+      "cc_by_type": {
+       "choice": 57.64705882352941,
+       "noul": 100.0,
+       "score": 63.16136625636213
+      },
+      "low_n": true,
+      "n": 14,
+      "n_by_type": {
+       "choice": 6,
+       "noul": 2,
+       "score": 6
+      },
+      "score": 73.60280835996384
+     },
+     "hi": {
+      "accuracy": 0.7619047619047619,
+      "cc": 55.66558052274937,
+      "cc_by_type": {
+       "choice": 66.4804469273743,
+       "noul": 75.0,
+       "score": 25.516294640873795
+      },
+      "low_n": true,
+      "n": 21,
+      "n_by_type": {
+       "choice": 8,
+       "noul": 8,
+       "score": 5
+      },
+      "score": 55.66558052274937
+     },
+     "id": {
+      "accuracy": 1.0,
+      "cc": 100.0,
+      "cc_by_type": {
+       "choice": 100.0,
+       "noul": 100.0
+      },
+      "low_n": true,
+      "n": 4,
+      "n_by_type": {
+       "choice": 3,
+       "noul": 1
+      },
+      "score": 100.0
+     },
+     "it": {
+      "accuracy": 0.8,
+      "cc": 55.24199041446298,
+      "cc_by_type": {
+       "choice": 85.97038191738113,
+       "noul": 100.0,
+       "score": -20.244410673992185
+      },
+      "low_n": true,
+      "n": 15,
+      "n_by_type": {
+       "choice": 9,
+       "noul": 3,
+       "score": 3
+      },
+      "score": 55.24199041446298
+     },
+     "ja": {
+      "accuracy": 0.72,
+      "cc": 51.625121154190175,
+      "cc_by_type": {
+       "choice": 42.81175536139793,
+       "noul": 80.0,
+       "score": 32.06360810117259
+      },
+      "low_n": true,
+      "n": 25,
+      "n_by_type": {
+       "choice": 9,
+       "noul": 10,
+       "score": 6
+      },
+      "score": 51.625121154190175
+     },
+     "ko": {
+      "accuracy": 0.6,
+      "cc": 33.92524256687532,
+      "cc_by_type": {
+       "choice": 55.55555555555555,
+       "noul": 0.0,
+       "score": 46.22017214507041
+      },
+      "low_n": true,
+      "n": 10,
+      "n_by_type": {
+       "choice": 3,
+       "noul": 2,
+       "score": 5
+      },
+      "score": 33.92524256687532
+     },
+     "mixed": {
+      "accuracy": 1.0,
+      "cc": 99.02353869768989,
+      "cc_by_type": {
+       "choice": 100.0,
+       "noul": 100.0,
+       "score": 97.07061609306963
+      },
+      "low_n": true,
+      "n": 14,
+      "n_by_type": {
+       "choice": 8,
+       "noul": 3,
+       "score": 3
+      },
+      "score": 99.02353869768989
+     },
+     "nl": {
+      "accuracy": 0.6,
+      "cc": 32.7221653981354,
+      "cc_by_type": {
+       "choice": 48.05194805194805,
+       "noul": 33.33333333333333,
+       "score": 16.781214809124823
+      },
+      "low_n": true,
+      "n": 10,
+      "n_by_type": {
+       "choice": 5,
+       "noul": 3,
+       "score": 2
+      },
+      "score": 32.7221653981354
+     },
+     "no": {
+      "accuracy": 0.6666666666666666,
+      "cc": 42.74193548387097,
+      "cc_by_type": {
+       "choice": 35.483870967741936,
+       "noul": 50.0
+      },
+      "low_n": true,
+      "n": 6,
+      "n_by_type": {
+       "choice": 2,
+       "noul": 4
+      },
+      "score": 42.74193548387097
+     },
+     "pl": {
+      "accuracy": 0.6923076923076923,
+      "cc": 61.07657575616964,
+      "cc_by_type": {
+       "choice": 77.14769360981802,
+       "noul": 60.00000000000001,
+       "score": 46.08203365869091
+      },
+      "low_n": false,
+      "n": 39,
+      "n_by_type": {
+       "choice": 17,
+       "noul": 10,
+       "score": 12
+      },
+      "score": 61.07657575616964
+     },
+     "pt": {
+      "accuracy": 0.7142857142857143,
+      "cc": 66.05025592954213,
+      "cc_by_type": {
+       "choice": 57.57218621096051,
+       "noul": 100.0,
+       "score": 40.57858157766589
+      },
+      "low_n": true,
+      "n": 28,
+      "n_by_type": {
+       "choice": 12,
+       "noul": 5,
+       "score": 11
+      },
+      "score": 66.05025592954213
+     },
+     "sv": {
+      "accuracy": 0.45454545454545453,
+      "cc": 24.57605603447779,
+      "cc_by_type": {
+       "choice": 23.404255319148945,
+       "noul": 19.999999999999996,
+       "score": 30.323912784284435
+      },
+      "low_n": true,
+      "n": 11,
+      "n_by_type": {
+       "choice": 5,
+       "noul": 5,
+       "score": 1
+      },
+      "score": 24.57605603447779
+     },
+     "tr": {
+      "accuracy": 0.7692307692307693,
+      "cc": 48.73848556245495,
+      "cc_by_type": {
+       "choice": 78.26086956521739,
+       "noul": 50.0,
+       "score": 17.95458712214747
+      },
+      "low_n": true,
+      "n": 13,
+      "n_by_type": {
+       "choice": 6,
+       "noul": 4,
+       "score": 3
+      },
+      "score": 48.73848556245495
+     },
+     "uk": {
+      "accuracy": 0.5714285714285714,
+      "cc": 63.26031326555928,
+      "cc_by_type": {
+       "choice": 3.225806451612906,
+       "noul": 100.0,
+       "score": 86.55513334506495
+      },
+      "low_n": true,
+      "n": 7,
+      "n_by_type": {
+       "choice": 4,
+       "noul": 1,
+       "score": 2
+      },
+      "score": 63.26031326555928
+     },
+     "zh": {
+      "accuracy": 0.8,
+      "cc": 46.487524666943465,
+      "cc_by_type": {
+       "choice": 100.0,
+       "noul": 33.33333333333333,
+       "score": 6.129240667497049
+      },
+      "low_n": true,
+      "n": 10,
+      "n_by_type": {
+       "choice": 5,
+       "noul": 3,
+       "score": 2
+      },
+      "score": 46.487524666943465
+     }
+    },
+    "type": {
+     "choice": {
+      "accuracy": 0.7453333333333333,
+      "cc": 67.10614439618055,
+      "cc_by_type": {
+       "choice": 67.10614439618055
+      },
+      "low_n": false,
+      "n": 750,
+      "n_by_type": {
+       "choice": 750
+      },
+      "score": 67.10614439618055
+     },
+     "noul": {
+      "accuracy": 0.8666666666666667,
+      "cc": 73.33333333333334,
+      "cc_by_type": {
+       "noul": 73.33333333333334
+      },
+      "low_n": false,
+      "n": 375,
+      "n_by_type": {
+       "noul": 375
+      },
+      "score": 73.33333333333334
+     },
+     "score": {
+      "accuracy": 0.5786666666666667,
+      "cc": 39.703122087156686,
+      "cc_by_type": {
+       "score": 39.703122087156686
+      },
+      "low_n": false,
+      "n": 375,
+      "n_by_type": {
+       "score": 375
+      },
+      "score": 39.703122087156686
+     }
+    },
+    "usecase": {
+     "advertising": {
+      "accuracy": 0.45454545454545453,
+      "cc": 15.347146722143526,
+      "cc_by_type": {
+       "choice": 20.0,
+       "noul": 25.0,
+       "score": 1.041440166430574
+      },
+      "low_n": true,
+      "n": 22,
+      "n_by_type": {
+       "choice": 8,
+       "noul": 8,
+       "score": 6
+      },
+      "score": 15.347146722143526
+     },
+     "code_linting": {
+      "accuracy": 0.6666666666666666,
+      "cc": 51.60783601808881,
+      "cc_by_type": {
+       "choice": 81.36645962732919,
+       "noul": 77.77777777777777,
+       "score": -4.320729350840535
+      },
+      "low_n": true,
+      "n": 24,
+      "n_by_type": {
+       "choice": 7,
+       "noul": 9,
+       "score": 8
+      },
+      "score": 51.60783601808881
+     },
+     "customer_support": {
+      "accuracy": 0.8571428571428571,
+      "cc": 65.38801499319703,
+      "cc_by_type": {
+       "choice": 67.47967479674797,
+       "noul": 100.0,
+       "score": 28.684370182843132
+      },
+      "low_n": true,
+      "n": 14,
+      "n_by_type": {
+       "choice": 8,
+       "noul": 4,
+       "score": 2
+      },
+      "score": 65.38801499319703
+     },
+     "demand_forecasting": {
+      "accuracy": 0.4117647058823529,
+      "cc": 16.537880084637816,
+      "cc_by_type": {
+       "choice": 29.82456140350877,
+       "noul": 33.33333333333333,
+       "score": -13.544254482928642
+      },
+      "low_n": true,
+      "n": 17,
+      "n_by_type": {
+       "choice": 11,
+       "noul": 3,
+       "score": 3
+      },
+      "score": 16.537880084637816
+     },
+     "ecommerce_marketplaces": {
+      "accuracy": 0.7058823529411765,
+      "cc": 52.516672769135546,
+      "cc_by_type": {
+       "choice": 56.52173913043478,
+       "noul": 33.33333333333333,
+       "score": 67.69494584363854
+      },
+      "low_n": true,
+      "n": 17,
+      "n_by_type": {
+       "choice": 9,
+       "noul": 3,
+       "score": 5
+      },
+      "score": 52.516672769135546
+     },
+     "feature_extraction": {
+      "accuracy": 0.631578947368421,
+      "cc": 34.81929131567247,
+      "cc_by_type": {
+       "choice": 37.106918238993714,
+       "noul": 33.33333333333333,
+       "score": 34.01762237469037
+      },
+      "low_n": true,
+      "n": 19,
+      "n_by_type": {
+       "choice": 10,
+       "noul": 6,
+       "score": 3
+      },
+      "score": 34.81929131567247
+     },
+     "financial_crime": {
+      "accuracy": 0.6666666666666666,
+      "cc": 58.91679800241892,
+      "cc_by_type": {
+       "choice": 60.784313725490186,
+       "noul": 71.42857142857142,
+       "score": 44.53750885319516
+      },
+      "low_n": false,
+      "n": 30,
+      "n_by_type": {
+       "choice": 13,
+       "noul": 7,
+       "score": 10
+      },
+      "score": 58.91679800241892
+     },
+     "gaming": {
+      "accuracy": 0.5,
+      "cc": 47.053185149789385,
+      "cc_by_type": {
+       "choice": 37.2822299651568,
+       "noul": 50.0,
+       "score": 53.877325484211354
+      },
+      "low_n": true,
+      "n": 22,
+      "n_by_type": {
+       "choice": 12,
+       "noul": 4,
+       "score": 6
+      },
+      "score": 47.053185149789385
+     },
+     "insurance_claims": {
+      "accuracy": 0.4666666666666667,
+      "cc": 34.24280870741969,
+      "cc_by_type": {
+       "choice": 16.666666666666668,
+       "noul": 60.00000000000001,
+       "score": 26.061759455592394
+      },
+      "low_n": true,
+      "n": 15,
+      "n_by_type": {
+       "choice": 6,
+       "noul": 5,
+       "score": 4
+      },
+      "score": 34.24280870741969
+     },
+     "knowledge_graphs": {
+      "accuracy": 0.6818181818181818,
+      "cc": 55.44950237560722,
+      "cc_by_type": {
+       "choice": 61.4561027837259,
+       "noul": 100.0,
+       "score": 4.892404343095757
+      },
+      "low_n": true,
+      "n": 22,
+      "n_by_type": {
+       "choice": 10,
+       "noul": 6,
+       "score": 6
+      },
+      "score": 55.44950237560722
+     },
+     "lead_generation": {
+      "accuracy": 0.76,
+      "cc": 61.10411665841116,
+      "cc_by_type": {
+       "choice": 88.3720930232558,
+       "noul": 77.77777777777777,
+       "score": 17.162479174199895
+      },
+      "low_n": true,
+      "n": 25,
+      "n_by_type": {
+       "choice": 11,
+       "noul": 9,
+       "score": 5
+      },
+      "score": 61.10411665841116
+     },
+     "legal_compliance": {
+      "accuracy": 0.5,
+      "cc": 11.937064584279774,
+      "cc_by_type": {
+       "choice": 3.2258064516129026,
+       "noul": 33.33333333333333,
+       "score": -0.7479460321069054
+      },
+      "low_n": true,
+      "n": 10,
+      "n_by_type": {
+       "choice": 4,
+       "noul": 3,
+       "score": 3
+      },
+      "score": 11.937064584279774
+     },
+     "llm_guardrails": {
+      "accuracy": 0.7407407407407407,
+      "cc": 68.22947053888926,
+      "cc_by_type": {
+       "choice": 88.48368522072937,
+       "noul": 60.00000000000001,
+       "score": 56.20472639593841
+      },
+      "low_n": true,
+      "n": 27,
+      "n_by_type": {
+       "choice": 11,
+       "noul": 5,
+       "score": 11
+      },
+      "score": 68.22947053888926
+     },
+     "model_routing": {
+      "accuracy": 0.8571428571428571,
+      "cc": 74.96732105007766,
+      "cc_by_type": {
+       "choice": 83.63636363636363,
+       "noul": 100.0,
+       "score": 41.265599513869354
+      },
+      "low_n": false,
+      "n": 217,
+      "n_by_type": {
+       "choice": 101,
+       "noul": 66,
+       "score": 50
+      },
+      "score": 74.96732105007766
+     },
+     "moderation_trust_safety": {
+      "accuracy": 0.7222222222222222,
+      "cc": 15.725784823047766,
+      "cc_by_type": {
+       "choice": 88.48368522072937,
+       "noul": -100.0,
+       "score": 58.693669248413926
+      },
+      "low_n": true,
+      "n": 18,
+      "n_by_type": {
+       "choice": 11,
+       "noul": 2,
+       "score": 5
+      },
+      "score": 15.725784823047766
+     },
+     "recruiting": {
+      "accuracy": 0.6111111111111112,
+      "cc": 47.98819341018694,
+      "cc_by_type": {
+       "choice": 66.57381615598885,
+       "noul": 33.33333333333333,
+       "score": 44.05743074123863
+      },
+      "low_n": true,
+      "n": 18,
+      "n_by_type": {
+       "choice": 8,
+       "noul": 3,
+       "score": 7
+      },
+      "score": 47.98819341018694
+     },
+     "risk_assessment": {
+      "accuracy": 0.6111111111111112,
+      "cc": 42.66737091740362,
+      "cc_by_type": {
+       "choice": 55.665024630541865,
+       "noul": 50.0,
+       "score": 22.337088121669012
+      },
+      "low_n": true,
+      "n": 18,
+      "n_by_type": {
+       "choice": 9,
+       "noul": 4,
+       "score": 5
+      },
+      "score": 42.66737091740362
+     },
+     "scientific_discovery": {
+      "accuracy": 0.5652173913043478,
+      "cc": 37.21267435688048,
+      "cc_by_type": {
+       "choice": 13.04347826086957,
+       "noul": 66.66666666666667,
+       "score": 31.927878143105172
+      },
+      "low_n": true,
+      "n": 23,
+      "n_by_type": {
+       "choice": 9,
+       "noul": 6,
+       "score": 8
+      },
+      "score": 37.21267435688048
+     },
+     "search_retrieval": {
+      "accuracy": 0.9583333333333334,
+      "cc": 94.01193249489371,
+      "cc_by_type": {
+       "choice": 89.3238434163701,
+       "noul": 100.0,
+       "score": 92.71195406831106
+      },
+      "low_n": true,
+      "n": 24,
+      "n_by_type": {
+       "choice": 12,
+       "noul": 4,
+       "score": 8
+      },
+      "score": 94.01193249489371
+     }
+    }
+   },
+   "breakdowns_equated": false,
+   "ci95": {
+    "B": 1000,
+    "C": [
+     83.4228400017454,
+     89.51286151618956
+    ],
+    "I": [
+     59.205525821419656,
+     66.08910669761744
+    ],
+    "capability": [
+     71.9959068772358,
+     77.02677744787904
+    ],
+    "composite": {
+     "A": [
+      69.7503043743632,
+      72.26124115912
+     ],
+     "B": [
+      67.38060244747632,
+      70.91144359683345
+     ],
+     "C": [
+      68.1366041314051,
+      72.26124115912
+     ]
+    },
+    "seed": 28
+   },
+   "ci95_n": 1200,
+   "complete": true,
+   "equated": null,
+   "equating_flag": null,
+   "equating_offset": null,
+   "full_set_api": false,
+   "g_med_used": 9.839526770355711,
+   "lane": "selfhosted",
+   "metric_basis": "S u P",
+   "n_items": 1500,
+   "n_public": 300,
+   "n_sealed_side": 1200,
+   "on_S": {
+    "calibration": 88.61282851120822,
+    "capability": 75.69686159277467,
+    "intelligence": 62.78089467434111
+   },
+   "per_type": {
+    "choice": {
+     "accuracy": 0.7453333333333333,
+     "calibration": 92.25938871231413,
+     "cc": 67.10614439618055,
+     "cc_by_type": {
+      "choice": 67.10614439618055
+     },
+     "cc_tiered": 68.9761093763731,
+     "cc_tiered_open": 73.51239714334199,
+     "cc_tiered_sealed": 64.43982160940423,
+     "low_n": false,
+     "n": 750,
+     "n_by_type": {
+      "choice": 750
+     },
+     "score": 67.10614439618055
+    },
+    "noul": {
+     "accuracy": 0.8666666666666667,
+     "calibration": 81.61380838910492,
+     "cc": 73.33333333333334,
+     "cc_by_type": {
+      "noul": 73.33333333333334
+     },
+     "cc_tiered": 75.33054415282704,
+     "cc_tiered_open": 80.3768115942029,
+     "cc_tiered_sealed": 70.28427671145118,
+     "low_n": false,
+     "n": 375,
+     "n_by_type": {
+      "noul": 375
+     },
+     "score": 73.33333333333334
+    },
+    "score": {
+     "accuracy": 0.5786666666666667,
+     "calibration": 91.96528843220563,
+     "cc": 39.703122087156686,
+     "cc_by_type": {
+      "score": 39.703122087156686
+     },
+     "cc_tiered": 44.03603049382318,
+     "cc_tiered_open": 52.24417457205039,
+     "cc_tiered_sealed": 35.82788641559598,
+     "low_n": false,
+     "n": 375,
+     "n_by_type": {
+      "score": 375
+     },
+     "score": 39.703122087156686
+    }
+   },
+   "raw_on_A": {
+    "calibration": 84.59655678674739,
+    "capability": 74.22390984881723,
+    "intelligence": 63.85126291088707
+   },
+   "set": "S+P"
+  },
+  "validity": {
+   "choice": {
+    "invalid_rate": 0.013333333333333308,
+    "n": 750
+   },
+   "noul": {
+    "invalid_rate": 0.005333333333333301,
+    "n": 375
+   },
+   "score": {
+    "invalid_rate": 0.008000000000000007,
+    "n": 375
+   }
+  },
+  "views": {
+   "Balanced 33:33:33": 67.12351236717248,
+   "Emphasis on Accuracy 60:20:20": 65.3163142793382,
+   "Emphasis on Cost 20:20:60": 62.43837644293835,
+   "Emphasis on Speed 20:60:20": 74.80647898330825,
+   "Intelligence only": 62.78089467434112
+  }
+ },
+ "decisio-gemma-4-12b-v080": {
+  "adapter_id": null,
+  "addendum": null,
+  "alt": null,
+  "api_flag": false,
+  "api_subset": false,
+  "author": "Amin Roudaki (@aminry)",
+  "axes": {
+   "calibration": 89.15794375860679,
+   "cost": 57.27625361932229,
+   "intelligence": 52.324988528776075,
+   "speed": 86.316096866496
+  },
+  "calibration": {
+   "parts": {
+    "choice": {
+     "ece_hard": 0.07110019971983926,
+     "ece_score": 85.77996005603214,
+     "mean_tvd": null,
+     "n": 737,
+     "n_ece_hard": 307,
+     "n_tvd": 0,
+     "score": 85.77996005603214,
+     "score_before_time_limit": 85.77996005603214,
+     "time_limit_failed_share": 0.0
+    },
+    "noul": {
+     "abstention_rate": 0.18328840970350402,
+     "brier": 0.10602428963864989,
+     "ece": 0.056082845451344523,
+     "n": 371,
+     "score": 88.7834309097311,
+     "score_before_time_limit": 88.7834309097311,
+     "time_limit_failed_share": 0.0
+    },
+    "score": {
+     "interval90_coverage": 0.986449864498645,
+     "interval90_width": 0.49186991869918684,
+     "n": 369,
+     "nrps": 0.073791213570342,
+     "score": 92.91044031005717,
+     "score_before_time_limit": 92.91044031005717,
+     "time_limit_failed_share": 0.0,
+     "top_ece": 0.03399999011425735
+    }
+   },
+   "score": 89.15794375860679
+  },
+  "capability": 70.74146614369144,
+  "class": "Jev-compatible decision readout on frozen base",
+  "composite_ci95": {
+   "A": [
+    56.7281349349204,
+    68.81315375315542
+   ],
+   "B": [
+    52.736778408131244,
+    65.96516688224837
+   ],
+   "C": [
+    39.39453814925029,
+    60.95522801050226
+   ]
+  },
+  "cost": {
+   "basis": "ESTIMATE; reference google/gemma-3-12b-it (nearest listed 12B Gemma sibling; google/gemma-4-12B-it has no listing) at USD 0.05/0.15 per million input/output tokens. Billed on engine-processed input (decisio adds a system turn and chat template, +78 tokens per answered item, that its own usage does not report); offline per-item recount, residual 0; corrected in v1.7.11 from the earlier usage-based USD 0.022654/1k. Exact engine input 779,965 tokens and output 1,477 tokens on this row's own 1,477-item common basis; USD 0.026554/1k common and USD 0.026147/1k all 1,500. Estimated model tariff, not charged usage or a host quote.",
+   "common_basis": {
+    "n_items": 1477,
+    "rule": "common",
+    "usd_per_1000_all_items": 0.02614653333333334
+   },
+   "kind": "estimate",
+   "usage_estimated_rows": 0,
+   "usd_per_1000": 0.026553689911983754
+  },
+  "decision_limit": {
+   "limit_s": 10.0,
+   "n_over_limit": 0,
+   "n_over_limit_answered_ok": 0,
+   "rule": "latency_s > limit -> failed",
+   "speed_basis": "all decisions given (lane items in the raw), measured latency_s",
+   "speed_n": 1500,
+   "treatment": "share"
+  },
+  "display": "decisio v0.8.0 on gemma-4-12B-it (frozen, one forward pass, self-hosted)",
+  "endpoint_condition": "measured 2026-10-06 on the live v1.6.0/v1.6.1 pool. github.com/aminry/decisio tag v0.8.0 (5b42101a191d222062a795194b0aedb5003bf6ea, verified against the GitHub refs API), installed with their own `uv sync --extra serve --frozen` so their lockfile fixes every version, and served with their own `python -m decisio.serve.vllm_engine --base gemma-4-12b`. --base carries google/gemma-4-12B-it@707f0a3b (bf16, 22.8 GiB) and that profile's measured settings - temperature 3.592 for every question type, a system turn, the chat template's own answer position, every single-token form of each letter summed. Frozen base: no fine-tuning, no adapter, no task registered. One RTX 6000 Ada 48 GB (Lium, Toronto). Latency axis uses the standard self-hosted x2 + 0.15 s adjustment. add-requests run 54, GitHub #169",
+  "endpoint_kind": "gpu",
+  "full_coverage": true,
+  "gpu": "RTX 6000 Ada",
+  "intelligence": {
+   "I_open": 53.076253329484096,
+   "I_sealed": 51.57372372806806,
+   "base": 52.324988528776075,
+   "excess": -1.0708580410222077,
+   "gap": 1.502529601416036,
+   "penalty": 1.0,
+   "per_type_split": {
+    "open|choice": {
+     "cc": 72.23658792816236,
+     "n": {
+      "easy": 33,
+      "hard": 68,
+      "judge": 32,
+      "standard": 17
+     },
+     "tiers": {
+      "easy": 84.43243243243244,
+      "hard": 67.9144385026738,
+      "judge": 60.44825313117996,
+      "standard": 92.46546672247803
+     }
+    },
+    "open|noul": {
+     "cc": 43.54106280193237,
+     "n": {
+      "easy": 14,
+      "hard": 23,
+      "judge": 20,
+      "standard": 18
+     },
+     "tiers": {
+      "easy": 100.0,
+      "hard": 39.13043478260869,
+      "judge": 30.000000000000004,
+      "standard": 44.44444444444444
+     }
+    },
+    "open|score": {
+     "cc": 43.45110925835756,
+     "n": {
+      "easy": 9,
+      "hard": 29,
+      "judge": 21,
+      "standard": 16
+     },
+     "tiers": {
+      "easy": 52.14556472904645,
+      "hard": 43.95984283175309,
+      "judge": 46.337851474151414,
+      "standard": 33.75630105253128
+     }
+    },
+    "sealed|choice": {
+     "cc": 65.8737458551212,
+     "n": {
+      "easy": 96,
+      "hard": 252,
+      "judge": 137,
+      "standard": 115
+     },
+     "tiers": {
+      "easy": 85.3669351858695,
+      "hard": 57.74886877828053,
+      "judge": 67.41154562383613,
+      "standard": 70.07020569035596
+     }
+    },
+    "sealed|noul": {
+     "cc": 40.79862969333631,
+     "n": {
+      "easy": 50,
+      "hard": 103,
+      "judge": 76,
+      "standard": 71
+     },
+     "tiers": {
+      "easy": 76.0,
+      "hard": 8.737864077669899,
+      "judge": 47.36842105263157,
+      "standard": 77.46478873239437
+     }
+    },
+    "sealed|score": {
+     "cc": 48.04879563574668,
+     "n": {
+      "easy": 43,
+      "hard": 125,
+      "judge": 57,
+      "standard": 75
+     },
+     "tiers": {
+      "easy": 67.31002438791882,
+      "hard": 37.90772388734433,
+      "judge": 56.21653541756339,
+      "standard": 46.44871508374021
+     }
+    }
+   }
+  },
+  "jevbench_score": 67.3718872605589,
+  "key": "decisio-gemma-4-12b-v080",
+  "last_measured_on": "2026-10-06",
+  "licence": "Apache-2.0 software; Gemma model terms",
+  "listing": "ranked",
+  "measured_in": "v1.6.1",
+  "measurement_date_status": "run output completion day (UTC)",
+  "method": "v1.7",
+  "model_pin": "aminry/decisio@5b42101a191d222062a795194b0aedb5003bf6ea + google/gemma-4-12B-it@707f0a3b",
+  "not_ranked_because": null,
+  "noul_decisive": {
+   "acc_among_decisive": 0.9075907590759076,
+   "decisive_rate": 0.816711590296496,
+   "supported": true,
+   "valid": 371
+  },
+  "open": "open weights",
+  "planned_weight_denominator": 1,
+  "previous": {
+   "api_board_rank": null,
+   "axes": {
+    "calibration": 89.15794375860679,
+    "cost": 59.34583145470655,
+    "intelligence": 52.324988528776075,
+    "speed": 86.9860428376769
+   },
+   "board_release": "v1.6.43",
+   "capability": 70.74146614369144,
+   "capability_api_board_rank": null,
+   "capability_open_board_rank": 24,
+   "capability_rank": 42,
+   "composite_ci95": {
+    "A": [
+     57.374888808052155,
+     69.64960281748938
+    ],
+    "B": [
+     53.18263176533343,
+     66.57834556173977
+    ],
+    "C": [
+     39.84367278336956,
+     61.696012278542455
+    ]
+   },
+   "jevbench_score": 68.17346094077045,
+   "measured_in": "v1.6.1",
+   "method": "v1.6",
+   "open_board_rank": 17,
+   "rank": 36,
+   "ranks": {
+    "A": 36,
+    "B": 45,
+    "C": 48,
+    "capability": 72
+   },
+   "scores": {
+    "A": 68.17346094077045,
+    "B": 64.2795916317687,
+    "C": 51.847894540473604
+   },
+   "speed": {
+    "adjustment": "x2 + 0.15 s (assumption, not measured)",
+    "n": 124,
+    "p50_s_adjusted": 0.3548810470150784,
+    "p50_s_raw": 0.10244052350753918,
+    "p95_s_adjusted": 0.564043904747814,
+    "p95_s_raw": 0.20702195237390697
+   },
+   "views": {
+    "Balanced 33:33:33": 63.21404479691977,
+    "Emphasis on Accuracy 60:20:20": 58.35636046255001,
+    "Emphasis on Cost 20:20:60": 61.60778501333468,
+    "Emphasis on Speed 20:60:20": 70.97231847224265,
+    "Intelligence only": 52.324988528776075
+   }
+  },
+  "provenance": {
+   "carried_metadata_from": "r54/r55/r61 registry and pinned author package",
+   "kind": "v1.6.1 addendum a11 (scorer output sha256 4d2833926c2d, method option B / O1S)"
+  },
+  "rank": 53,
+  "ranked": true,
+  "ranks": {
+   "A": 53,
+   "B": 59,
+   "C": 63,
+   "capability": 90
+  },
+  "repo": "https://github.com/aminry/decisio",
+  "rescored_in": "v1.7.0",
+  "scores": {
+   "A": 67.3718872605589,
+   "B": 63.70784266556785,
+   "C": 51.238274505572704
+  },
+  "speed": {
+   "adjustment": "x2 + 0.15 s (assumption, not measured)",
+   "basis": "all decisions given (lane items in the raw), measured latency_s",
+   "n": 1500,
+   "p50_s_adjusted": 0.3814489560085349,
+   "p50_s_raw": 0.11572447800426744,
+   "p95_s_adjusted": 0.6122853703564033,
+   "p95_s_raw": 0.23114268517820163
+  },
+  "status": {
+   "answered_ok": 1477,
+   "missing": 0,
+   "rows": 1500,
+   "status": "complete"
+  },
+  "support": {
+   "choice": "native",
+   "noul": "native",
+   "score": "native"
+  },
+  "underlying": "google/gemma-4-12B-it",
+  "v16": {
+   "api_subset": false,
+   "api_subset_tag": null,
+   "breakdowns_equated": false,
+   "ci95": {
+    "B": 1000,
+    "C": [
+     83.58456964369535,
+     89.43375634811495
+    ],
+    "I": [
+     46.8581794615679,
+     56.47360933655171
+    ],
+    "capability": [
+     66.07776568391779,
+     72.37388803479945
+    ],
+    "composite": {
+     "A": [
+      56.7281349349204,
+      68.81315375315542
+     ],
+     "B": [
+      52.736778408131244,
+      65.96516688224837
+     ],
+     "C": [
+      39.39453814925029,
+      60.95522801050226
+     ]
+    },
+    "seed": 39
+   },
+   "ci95_n": 1200,
+   "complete": true,
+   "equated": null,
+   "equating_flag": null,
+   "equating_offset": null,
+   "g_med_used": 2.573387642438244,
+   "lane": "selfhosted",
+   "metric_basis": "S u P",
+   "n_items": 1500,
+   "n_public": 300,
+   "n_sealed_side": 1200,
+   "on_S": {
+    "calibration": 89.15794375860679,
+    "capability": 70.74146614369144,
+    "intelligence": 52.324988528776075
+   },
+   "per_type": {
+    "choice": {
+     "accuracy": 0.7493333333333333,
+     "calibration": 85.77996005603214,
+     "cc": 67.9433134715762,
+     "cc_by_type": {
+      "choice": 67.9433134715762
+     },
+     "cc_tiered": 69.05516689164179,
+     "cc_tiered_open": 72.23658792816236,
+     "cc_tiered_sealed": 65.8737458551212,
+     "low_n": false,
+     "n": 750,
+     "n_by_type": {
+      "choice": 750
+     },
+     "score": 67.9433134715762
+    },
+    "noul": {
+     "accuracy": 0.7333333333333333,
+     "calibration": 88.7834309097311,
+     "cc": 46.66666666666666,
+     "cc_by_type": {
+      "noul": 46.66666666666666
+     },
+     "cc_tiered": 42.16984624763434,
+     "cc_tiered_open": 43.54106280193237,
+     "cc_tiered_sealed": 40.79862969333631,
+     "low_n": false,
+     "n": 375,
+     "n_by_type": {
+      "noul": 375
+     },
+     "score": 46.66666666666666
+    },
+    "score": {
+     "accuracy": 0.616,
+     "calibration": 92.91044031005717,
+     "cc": 47.02582727916151,
+     "cc_by_type": {
+      "score": 47.02582727916151
+     },
+     "cc_tiered": 45.749952447052124,
+     "cc_tiered_open": 43.45110925835756,
+     "cc_tiered_sealed": 48.04879563574668,
+     "low_n": false,
+     "n": 375,
+     "n_by_type": {
+      "score": 375
+     },
+     "score": 47.02582727916151
+    }
+   },
+   "raw_on_A": {
+    "calibration": 85.4557717128137,
+    "capability": 69.50074934822587,
+    "intelligence": 53.54572698363802
+   },
+   "set": "S+P"
+  },
+  "validity": {
+   "choice": {
+    "invalid_rate": 0.01733333333333331,
+    "n": 750
+   },
+   "noul": {
+    "invalid_rate": 0.010666666666666713,
+    "n": 375
+   },
+   "score": {
+    "invalid_rate": 0.016000000000000014,
+    "n": 375
+   }
+  },
+  "views": {
+   "Balanced 33:33:33": 62.297669215552645,
+   "Emphasis on Accuracy 60:20:20": 57.88474104981347,
+   "Emphasis on Cost 20:20:60": 60.18702781657036,
+   "Emphasis on Speed 20:60:20": 70.10012999248188,
+   "Intelligence only": 52.324988528776075
+  }
+ },
+ "decisio-gemma-4-12b-v090": {
+  "adapter_id": null,
+  "addendum": null,
+  "alt": null,
+  "api_flag": false,
+  "api_subset": false,
+  "author": "Amin Roudaky / @aminry (roudaky@gmail.com)",
+  "axes": {
+   "calibration": 87.60965425617285,
+   "cost": 57.27625361932229,
+   "intelligence": 52.299106200484864,
+   "speed": 85.2750295056469
+  },
+  "calibration": {
+   "parts": {
+    "choice": {
+     "ece_hard": 0.08060951899685599,
+     "ece_score": 83.8780962006288,
+     "mean_tvd": null,
+     "n": 737,
+     "n_ece_hard": 307,
+     "n_tvd": 0,
+     "score": 83.8780962006288,
+     "score_before_time_limit": 83.8780962006288,
+     "time_limit_failed_share": 0.0
+    },
+    "noul": {
+     "abstention_rate": 0.18867924528301883,
+     "brier": 0.10747754831036967,
+     "ece": 0.06459999777321335,
+     "n": 371,
+     "score": 87.08000044535733,
+     "score_before_time_limit": 87.08000044535733,
+     "time_limit_failed_share": 0.0
+    },
+    "score": {
+     "interval90_coverage": 0.991869918699187,
+     "interval90_width": 0.4905149051490515,
+     "n": 369,
+     "nrps": 0.07376404038589723,
+     "score": 91.87086612253242,
+     "score_before_time_limit": 91.87086612253242,
+     "time_limit_failed_share": 0.0,
+     "top_ece": 0.044409318581727114
+    }
+   },
+   "score": 87.60965425617285
+  },
+  "capability": 69.95438022832886,
+  "class": "Jev-compatible decision readout on frozen base",
+  "composite_ci95": {
+   "A": [
+    53.78061013556917,
+    68.73896395098696
+   ],
+   "B": [
+    49.88130820773739,
+    66.05199888635511
+   ],
+   "C": [
+    37.3476459274786,
+    62.02048655915421
+   ]
+  },
+  "cost": {
+   "basis": "ESTIMATE; reference google/gemma-3-12b-it (nearest listed 12B Gemma sibling; google/gemma-4-12B-it has no listing) at USD 0.05/0.15 per million input/output tokens. Billed on engine-processed input (decisio adds a system turn and chat template, +78 tokens per answered item, that its own usage does not report); offline per-item recount, residual 0; corrected in v1.7.11 from the earlier usage-based USD 0.022654/1k. Exact engine input 779,965 tokens and output 1,477 tokens on this row's own 1,477-item common basis; USD 0.026554/1k common and USD 0.026147/1k all 1,500. Decisio also sends one registration prefill per new state boundary; an offline estimate (about 550,630 tokens; USD 0.045194/1k if billed) is not exact and not a lower bound, so it is disclosed, not priced. Estimated model tariff, not charged usage or a host quote.",
+   "common_basis": {
+    "n_items": 1477,
+    "rule": "common",
+    "usd_per_1000_all_items": 0.02614653333333334
+   },
+   "kind": "estimate",
+   "usage_estimated_rows": 0,
+   "usd_per_1000": 0.026553689911983754
+  },
+  "decision_limit": {
+   "limit_s": 10.0,
+   "n_over_limit": 0,
+   "n_over_limit_answered_ok": 0,
+   "rule": "latency_s > limit -> failed",
+   "speed_basis": "all decisions given (lane items in the raw), measured latency_s",
+   "speed_n": 1500,
+   "treatment": "share"
+  },
+  "display": "decisio v0.9.0 on gemma-4-12B-it (frozen, one prefill per question, self-hosted)",
+  "endpoint_condition": "measured 2026-10-07 21:11:36-21:15:32Z on the live v1.6.0/v1.6.1 pool (inputs/input-selfhosted-1500.jsonl, sha256 901983ae...), 1,477 of 1,500 answered. github.com/aminry/decisio tag v0.9.0 = 333a0a849de7658969a8f8933b34a8097a8c3489 (verified against the GitHub refs API before the run and re-read as the pod's checked-out HEAD after it), Apache-2.0, installed with their own `uv sync --extra serve --frozen` so their lockfile fixes every version (decisio 0.9.0, torch 2.13.0+cu130, vllm 0.30.0, transformers 5.18.0) and served with their own command `python -m decisio.serve.vllm_engine --base gemma-4-12b`. --base carries google/gemma-4-12B-it@707f0a3b8a3c7ad586ed01e27eafbad8a27dd0f7 (bf16, 22.8 GiB) and that profile's own settings - temperature 3.592 for every question type, a system turn, the spaced layout read at the chat template's own answer position, every single-token form of each letter summed. Frozen base: no fine-tuning, no adapter, no task registered. UNCHANGED typesafe adapter and UNCHANGED run_v16.py; all eight checks of the unchanged smoke gate passed on synthetic requests before any sealed item was sent. A FOLLOW-UP OF THIS JOB'S OWN decisio-gemma-4-12b-v080 ROW (run 54, same pool, same basis, same rate), measured as a CANDIDATE: which version is listed is the release lane's decision. WHAT v0.9.0 CHANGES is prefix-cache state-boundary registration, request ticketing and engine-health probing; the whole readout package, serve/systemone.py, serve/temperature.py, serve/abstention.py and the entire vllm_plugin are BYTE-IDENTICAL between the two tags, and no temperature or prompt line moved (r61/receipts/DECISIO-V090-SOURCE-DIFF.json). THE 23 LONG ITEMS FAIL WITH A BARE HTTP 500 from the author's own server - vLLM raises VLLMValidationError because the rendered prompt exceeds the 32,768-token context the profile declares, and the server does not translate that into the 422 the harness scores as a refusal. They are counted wrong either way and they are exactly the 23 items the v1.6.1 common cost basis excludes (the ones the Jev reference itself refuses), but it is the author's own code and A FINDING TO REPORT, NOT A THING TO PATCH AROUND; no setting of theirs was changed and no retry was made. One NVIDIA RTX 6000 Ada Generation 48 GB (Lium, Toronto, CANADA) - the same card model and city on which run 54 measured the v0.8.0 row, chosen over the 96 GB class the author names because the 12B profile is proven to fit it. Latency axis uses the standard self-hosted x2 + 0.15 s adjustment. Serial, one decision per request, no retry, no batching, offline after setup, credential-free. add-requests run 61, PREREG-R61-AMENDMENT-2, benchmarkheaven.com/submit ref 65B71BD3 (bh-submit f05c3298-702f-4314-bc8e-f823d9bce858); previously GitHub #169 for v0.8.0",
+  "endpoint_kind": "gpu",
+  "full_coverage": true,
+  "gpu": "RTX 6000 Ada Generation",
+  "intelligence": {
+   "I_open": 53.066754472907135,
+   "I_sealed": 51.53145792806259,
+   "base": 52.299106200484864,
+   "excess": -1.038091097593702,
+   "gap": 1.5352965448445417,
+   "penalty": 1.0,
+   "per_type_split": {
+    "open|choice": {
+     "cc": 72.23658792816236,
+     "n": {
+      "easy": 33,
+      "hard": 68,
+      "judge": 32,
+      "standard": 17
+     },
+     "tiers": {
+      "easy": 84.43243243243244,
+      "hard": 67.9144385026738,
+      "judge": 60.44825313117996,
+      "standard": 92.46546672247803
+     }
+    },
+    "open|noul": {
+     "cc": 43.54106280193237,
+     "n": {
+      "easy": 14,
+      "hard": 23,
+      "judge": 20,
+      "standard": 18
+     },
+     "tiers": {
+      "easy": 100.0,
+      "hard": 39.13043478260869,
+      "judge": 30.000000000000004,
+      "standard": 44.44444444444444
+     }
+    },
+    "open|score": {
+     "cc": 43.422612688626685,
+     "n": {
+      "easy": 9,
+      "hard": 29,
+      "judge": 21,
+      "standard": 16
+     },
+     "tiers": {
+      "easy": 52.00297563421439,
+      "hard": 44.200521547084826,
+      "judge": 45.87070740823223,
+      "standard": 33.90447141950822
+     }
+    },
+    "sealed|choice": {
+     "cc": 65.83450996318003,
+     "n": {
+      "easy": 96,
+      "hard": 252,
+      "judge": 137,
+      "standard": 115
+     },
+     "tiers": {
+      "easy": 84.03665656640308,
+      "hard": 56.730769230769226,
+      "judge": 68.34264432029796,
+      "standard": 71.17871659071314
+     }
+    },
+    "sealed|noul": {
+     "cc": 40.79862969333631,
+     "n": {
+      "easy": 50,
+      "hard": 103,
+      "judge": 76,
+      "standard": 71
+     },
+     "tiers": {
+      "easy": 76.0,
+      "hard": 8.737864077669899,
+      "judge": 47.36842105263157,
+      "standard": 77.46478873239437
+     }
+    },
+    "sealed|score": {
+     "cc": 47.96123412767146,
+     "n": {
+      "easy": 43,
+      "hard": 125,
+      "judge": 57,
+      "standard": 75
+     },
+     "tiers": {
+      "easy": 66.87191488571192,
+      "hard": 38.251545396524136,
+      "judge": 55.512516311610604,
+      "standard": 46.59834793503713
+     }
+    }
+   }
+  },
+  "jevbench_score": 66.97805031267872,
+  "key": "decisio-gemma-4-12b-v090",
+  "last_measured_on": "2026-10-07",
+  "licence": "Apache-2.0 software; Gemma model terms",
+  "listing": "ranked",
+  "measured_in": "v1.6.1",
+  "measurement_date_status": "run output completion day (UTC)",
+  "method": "v1.7",
+  "model_pin": "aminry/decisio@333a0a849de7658969a8f8933b34a8097a8c3489 + google/gemma-4-12B-it@707f0a3b8a3c7ad586ed01e27eafbad8a27dd0f7",
+  "not_ranked_because": null,
+  "noul_decisive": {
+   "acc_among_decisive": 0.9136212624584718,
+   "decisive_rate": 0.8113207547169812,
+   "supported": true,
+   "valid": 371
+  },
+  "open": "open weights",
+  "planned_weight_denominator": 1,
+  "previous": {
+   "api_board_rank": null,
+   "axes": {
+    "calibration": 87.60965425617285,
+    "cost": 59.34583145470655,
+    "intelligence": 52.299106200484864,
+    "speed": 85.86778537116794
+   },
+   "board_release": "v1.6.43",
+   "capability": 69.95438022832886,
+   "capability_api_board_rank": null,
+   "capability_open_board_rank": 27,
+   "capability_rank": 47,
+   "composite_ci95": {
+    "A": [
+     54.37922382108821,
+     69.5635857308408
+    ],
+    "B": [
+     50.29209403611676,
+     66.65944464115974
+    ],
+    "C": [
+     37.763349875755715,
+     62.76631856626907
+    ]
+   },
+   "jevbench_score": 67.76072338665118,
+   "measured_in": "v1.6.1",
+   "method": "v1.6",
+   "open_board_rank": 19,
+   "rank": 39,
+   "ranks": {
+    "A": 39,
+    "B": 46,
+    "C": 49,
+    "capability": 79
+   },
+   "scores": {
+    "A": 67.76072338665118,
+    "B": 63.97786249241387,
+    "C": 51.483026133201925
+   },
+   "speed": {
+    "adjustment": "x2 + 0.15 s (assumption, not measured)",
+    "n": 124,
+    "p50_s_adjusted": 0.4135970369447023,
+    "p50_s_raw": 0.13179851847235113,
+    "p95_s_adjusted": 0.6261004906438755,
+    "p95_s_raw": 0.23805024532193778
+   },
+   "views": {
+    "Balanced 33:33:33": 63.00273578153404,
+    "Emphasis on Accuracy 60:20:20": 58.2353176446816,
+    "Emphasis on Cost 20:20:60": 61.48719355296207,
+    "Emphasis on Speed 20:60:20": 70.51330683201019,
+    "Intelligence only": 52.299106200484864
+   }
+  },
+  "provenance": {
+   "carried_metadata_from": "r54/r55/r61 registry and pinned author package",
+   "kind": "v1.6.1 addendum a11 (scorer output sha256 4d2833926c2d, method option B / O1S)"
+  },
+  "rank": 56,
+  "ranked": true,
+  "ranks": {
+   "A": 56,
+   "B": 60,
+   "C": 64,
+   "capability": 99
+  },
+  "repo": "https://github.com/aminry/decisio",
+  "rescored_in": "v1.7.0",
+  "scores": {
+   "A": 66.97805031267872,
+   "B": 63.4181012736682,
+   "C": 50.888369283227746
+  },
+  "speed": {
+   "adjustment": "x2 + 0.15 s (assumption, not measured)",
+   "basis": "all decisions given (lane items in the raw), measured latency_s",
+   "n": 1500,
+   "p50_s_adjusted": 0.43738937998423355,
+   "p50_s_raw": 0.14369468999211676,
+   "p95_s_adjusted": 0.6786233761755284,
+   "p95_s_raw": 0.2643116880877642
+  },
+  "status": {
+   "answered_ok": 1477,
+   "missing": 0,
+   "rows": 1500,
+   "status": "complete"
+  },
+  "support": {
+   "choice": "native",
+   "noul": "native",
+   "score": "native"
+  },
+  "underlying": "google/gemma-4-12B-it",
+  "v16": {
+   "api_subset": false,
+   "api_subset_tag": null,
+   "breakdowns_equated": false,
+   "ci95": {
+    "B": 1000,
+    "C": [
+     82.75352521796918,
+     88.88216270564548
+    ],
+    "I": [
+     45.89453540642751,
+     56.94412894091952
+    ],
+    "capability": [
+     65.24251668071038,
+     72.31935391386574
+    ],
+    "composite": {
+     "A": [
+      53.78061013556917,
+      68.73896395098696
+     ],
+     "B": [
+      49.88130820773739,
+      66.05199888635511
+     ],
+     "C": [
+      37.3476459274786,
+      62.02048655915421
+     ]
+    },
+    "seed": 40
+   },
+   "ci95_n": 1200,
+   "complete": true,
+   "equated": null,
+   "equating_flag": null,
+   "equating_offset": null,
+   "g_med_used": 2.573387642438244,
+   "lane": "selfhosted",
+   "metric_basis": "S u P",
+   "n_items": 1500,
+   "n_public": 300,
+   "n_sealed_side": 1200,
+   "on_S": {
+    "calibration": 87.60965425617285,
+    "capability": 69.95438022832886,
+    "intelligence": 52.299106200484864
+   },
+   "per_type": {
+    "choice": {
+     "accuracy": 0.748,
+     "calibration": 83.8780962006288,
+     "cc": 67.7727991815314,
+     "cc_by_type": {
+      "choice": 67.7727991815314
+     },
+     "cc_tiered": 69.0355489456712,
+     "cc_tiered_open": 72.23658792816236,
+     "cc_tiered_sealed": 65.83450996318003,
+     "low_n": false,
+     "n": 750,
+     "n_by_type": {
+      "choice": 750
+     },
+     "score": 67.7727991815314
+    },
+    "noul": {
+     "accuracy": 0.7333333333333333,
+     "calibration": 87.08000044535733,
+     "cc": 46.66666666666666,
+     "cc_by_type": {
+      "noul": 46.66666666666666
+     },
+     "cc_tiered": 42.16984624763434,
+     "cc_tiered_open": 43.54106280193237,
+     "cc_tiered_sealed": 40.79862969333631,
+     "low_n": false,
+     "n": 375,
+     "n_by_type": {
+      "noul": 375
+     },
+     "score": 46.66666666666666
+    },
+    "score": {
+     "accuracy": 0.6133333333333333,
+     "calibration": 91.87086612253242,
+     "cc": 47.01542304941684,
+     "cc_by_type": {
+      "score": 47.01542304941684
+     },
+     "cc_tiered": 45.69192340814907,
+     "cc_tiered_open": 43.422612688626685,
+     "cc_tiered_sealed": 47.96123412767146,
+     "low_n": false,
+     "n": 375,
+     "n_by_type": {
+      "score": 375
+     },
+     "score": 47.01542304941684
+    }
+   },
+   "raw_on_A": {
+    "calibration": 83.89503312669699,
+    "capability": 68.67777484474954,
+    "intelligence": 53.460516562802084
+   },
+   "set": "S+P"
+  },
+  "validity": {
+   "choice": {
+    "invalid_rate": 0.01733333333333331,
+    "n": 750
+   },
+   "noul": {
+    "invalid_rate": 0.010666666666666713,
+    "n": 375
+   },
+   "score": {
+    "invalid_rate": 0.016000000000000014,
+    "n": 375
+   }
+  },
+  "views": {
+   "Balanced 33:33:33": 62.103070265233384,
+   "Emphasis on Accuracy 60:20:20": 57.771168615420066,
+   "Emphasis on Cost 20:20:60": 60.077902746724526,
+   "Emphasis on Speed 20:60:20": 69.67639426019912,
+   "Intelligence only": 52.299106200484864
+  }
+ },
+ "decisio-gemma-4-31b-v080": {
+  "adapter_id": null,
+  "addendum": null,
+  "alt": null,
+  "api_flag": false,
+  "api_subset": false,
+  "author": "Amin Roudaki (@aminry)",
+  "axes": {
+   "calibration": 88.71627256952715,
+   "cost": 49.59901120154938,
+   "intelligence": 70.42321091828492,
+   "speed": 91.13376683561437
+  },
+  "calibration": {
+   "parts": {
+    "choice": {
+     "ece_hard": 0.06150753988606317,
+     "ece_score": 87.69849202278736,
+     "mean_tvd": null,
+     "n": 737,
+     "n_ece_hard": 307,
+     "n_tvd": 0,
+     "score": 87.69849202278736,
+     "score_before_time_limit": 87.69849202278736,
+     "time_limit_failed_share": 0.0
+    },
+    "noul": {
+     "abstention_rate": 0.06469002695417791,
+     "brier": 0.04879523639868886,
+     "ece": 0.04694201082318837,
+     "n": 371,
+     "score": 90.61159783536232,
+     "score_before_time_limit": 90.61159783536232,
+     "time_limit_failed_share": 0.0
+    },
+    "score": {
+     "interval90_coverage": 0.9349593495934959,
+     "interval90_width": 0.1980578139114724,
+     "n": 369,
+     "nrps": 0.057879253805657324,
+     "score": 87.83872785043177,
+     "score_before_time_limit": 87.83872785043177,
+     "time_limit_failed_share": 0.0,
+     "top_ece": 0.09267309459285371
+    }
+   },
+   "score": 88.71627256952715
+  },
+  "capability": 79.56974174390604,
+  "class": "Jev-compatible decision readout on frozen base",
+  "composite_ci95": {
+   "A": [
+    67.77964411695916,
+    70.60132868150278
+   ],
+   "B": [
+    67.02862182021929,
+    71.02513396620175
+   ],
+   "C": [
+    67.77964411695916,
+    70.60132868150278
+   ]
+  },
+  "cost": {
+   "basis": "ESTIMATE; google/gemma-4-31b-it at USD 0.09/0.34 per million input/output tokens. Billed on engine-processed input (decisio adds a system turn and chat template, +78 tokens per answered item, that its own usage does not report); offline per-item recount, residual 0; corrected in v1.7.11 from the earlier usage-based USD 0.040847/1k. Exact engine input 779,965 tokens and output 1,477 tokens on this row's own 1,477-item common basis; USD 0.047867/1k common and USD 0.047133/1k all 1,500. Estimated model tariff, not charged usage or a host quote.",
+   "common_basis": {
+    "n_items": 1477,
+    "rule": "common",
+    "usd_per_1000_all_items": 0.04713268666666666
+   },
+   "kind": "estimate",
+   "usage_estimated_rows": 0,
+   "usd_per_1000": 0.047866641841570745
+  },
+  "decision_limit": {
+   "limit_s": 10.0,
+   "n_over_limit": 0,
+   "n_over_limit_answered_ok": 0,
+   "rule": "latency_s > limit -> failed",
+   "speed_basis": "all decisions given (lane items in the raw), measured latency_s",
+   "speed_n": 1500,
+   "treatment": "share"
+  },
+  "display": "decisio v0.8.0 on gemma-4-31B-it (frozen, FP8 on load, one prefill per state, self-hosted)",
+  "endpoint_condition": "measured 2026-10-06 on the live v1.6.0/v1.6.1 pool. github.com/aminry/decisio tag v0.8.0 (5b42101a191d222062a795194b0aedb5003bf6ea) - the same tag whose other two entries run 54 measured - installed with their own `uv sync --extra serve --frozen` so their lockfile fixes every version, and served with their own `python -m decisio.serve.vllm_engine --base gemma-4-31b`. --base carries google/gemma-4-31B-it@842da379, the official weights, FROZEN: no fine-tuning, no adapter, no task registered; vLLM 0.30.0 quantizes it to FP8 when it loads (30.6 GiB). That profile's measured settings: temperature 4.672 for choice questions and 5.252 for the rest, the 12B entry's prompt unchanged, a system turn, the chat template's own answer position, every single-token form of each letter summed, no tokens generated. New in 0.8.0 on this base and the reason it is worth its own row: several questions of a state are scored in ONE pass after a single prefill. The author's own limit is a 32,768-token prompt, so the pool's 23 items at ~80,000 tokens are a documented capacity limit, not a defect. THE AUTHOR STATES ONE 96 GB CARD; this is one H100 80 GB (Lium) and no flag of theirs was changed to make it fit. Latency axis uses the standard self-hosted x2 + 0.15 s adjustment. add-requests run 55, GitHub #169",
+  "endpoint_kind": "gpu",
+  "full_coverage": true,
+  "gpu": "H100",
+  "intelligence": {
+   "I_open": 67.59136348711468,
+   "I_sealed": 73.25505834945518,
+   "base": 70.42321091828492,
+   "excess": -8.23708250477875,
+   "gap": -5.663694862340506,
+   "penalty": 1.0,
+   "per_type_split": {
+    "open|choice": {
+     "cc": 70.82494232345373,
+     "n": {
+      "easy": 33,
+      "hard": 68,
+      "judge": 32,
+      "standard": 17
+     },
+     "tiers": {
+      "easy": 96.10810810810811,
+      "hard": 69.80182447310474,
+      "judge": 64.40342781806196,
+      "standard": 69.8618668899121
+     }
+    },
+    "open|noul": {
+     "cc": 73.1207729468599,
+     "n": {
+      "easy": 14,
+      "hard": 23,
+      "judge": 20,
+      "standard": 18
+     },
+     "tiers": {
+      "easy": 100.0,
+      "hard": 73.91304347826086,
+      "judge": 60.00000000000001,
+      "standard": 77.77777777777777
+     }
+    },
+    "open|score": {
+     "cc": 58.8283751910304,
+     "n": {
+      "easy": 9,
+      "hard": 29,
+      "judge": 21,
+      "standard": 16
+     },
+     "tiers": {
+      "easy": 71.01492747107596,
+      "hard": 63.1937957087831,
+      "judge": 57.45226814139626,
+      "standard": 46.068418589953396
+     }
+    },
+    "sealed|choice": {
+     "cc": 83.09170328497459,
+     "n": {
+      "easy": 96,
+      "hard": 252,
+      "judge": 137,
+      "standard": 115
+     },
+     "tiers": {
+      "easy": 90.68804966373514,
+      "hard": 76.07466063348416,
+      "judge": 86.03351955307262,
+      "standard": 88.91489099642814
+     }
+    },
+    "sealed|noul": {
+     "cc": 76.04956278293162,
+     "n": {
+      "easy": 50,
+      "hard": 103,
+      "judge": 76,
+      "standard": 71
+     },
+     "tiers": {
+      "easy": 87.99999999999999,
+      "hard": 61.165048543689316,
+      "judge": 81.57894736842107,
+      "standard": 91.54929577464787
+     }
+    },
+    "sealed|score": {
+     "cc": 60.62390898045936,
+     "n": {
+      "easy": 43,
+      "hard": 125,
+      "judge": 57,
+      "standard": 75
+     },
+     "tiers": {
+      "easy": 72.91119795662057,
+      "hard": 56.16498434122372,
+      "judge": 63.285909697701555,
+      "standard": 59.4051126949867
+     }
+    }
+   }
+  },
+  "jevbench_score": 69.53461393242803,
+  "key": "decisio-gemma-4-31b-v080",
+  "last_measured_on": "2026-10-06",
+  "licence": "Apache-2.0 software; Gemma model terms",
+  "listing": "ranked",
+  "measured_in": "v1.6.1",
+  "measurement_date_status": "run output completion day (UTC)",
+  "method": "v1.7",
+  "model_pin": "aminry/decisio@5b42101a191d222062a795194b0aedb5003bf6ea + google/gemma-4-31B-it@842da379",
+  "not_ranked_because": null,
+  "noul_decisive": {
+   "acc_among_decisive": 0.9596541786743515,
+   "decisive_rate": 0.9353099730458221,
+   "supported": true,
+   "valid": 371
+  },
+  "open": "open weights",
+  "planned_weight_denominator": 1,
+  "previous": {
+   "api_board_rank": null,
+   "axes": {
+    "calibration": 88.71627256952715,
+    "cost": 51.66530928015878,
+    "intelligence": 70.42321091828492,
+    "speed": 91.18580810090454
+   },
+   "board_release": "v1.6.43",
+   "capability": 79.56974174390604,
+   "capability_api_board_rank": null,
+   "capability_open_board_rank": 7,
+   "capability_rank": 14,
+   "composite_ci95": {
+    "A": [
+     69.85754247280484,
+     72.80874617920621
+    ],
+    "B": [
+     68.87932855683242,
+     73.03493454427631
+    ],
+    "C": [
+     69.85754247280484,
+     72.80874617920621
+    ]
+   },
+   "jevbench_score": 71.6926576652985,
+   "measured_in": "v1.6.1",
+   "method": "v1.6",
+   "open_board_rank": 5,
+   "rank": 16,
+   "ranks": {
+    "A": 16,
+    "B": 13,
+    "C": 16,
+    "capability": 26
+   },
+   "scores": {
+    "A": 71.6926576652985,
+    "B": 71.43512018650192,
+    "C": 71.6926576652985
+   },
+   "speed": {
+    "adjustment": "x2 + 0.15 s (assumption, not measured)",
+    "n": 124,
+    "p50_s_adjusted": 0.24419243037700653,
+    "p50_s_raw": 0.047096215188503265,
+    "p95_s_adjusted": 0.3116642528679222,
+    "p95_s_raw": 0.0808321264339611
+   },
+   "views": {
+    "Balanced 33:33:33": 67.38267528356181,
+    "Emphasis on Accuracy 60:20:20": 68.56682969127965,
+    "Emphasis on Cost 20:20:60": 60.07267047173585,
+    "Emphasis on Speed 20:60:20": 75.23880708945377,
+    "Intelligence only": 70.42321091828492
+   }
+  },
+  "provenance": {
+   "carried_metadata_from": "r54/r55/r61 registry and pinned author package",
+   "kind": "v1.6.1 addendum a12 (scorer output sha256 4d2833926c2d, method option B / O1S)"
+  },
+  "rank": 37,
+  "ranked": true,
+  "ranks": {
+   "A": 37,
+   "B": 28,
+   "C": 31,
+   "capability": 36
+  },
+  "repo": "https://github.com/aminry/decisio",
+  "rescored_in": "v1.7.0",
+  "scores": {
+   "A": 69.53461393242803,
+   "B": 69.48719888312223,
+   "C": 69.53461393242803
+  },
+  "speed": {
+   "adjustment": "x2 + 0.15 s (assumption, not measured)",
+   "basis": "all decisions given (lane items in the raw), measured latency_s",
+   "n": 1500,
+   "p50_s_adjusted": 0.24408713364973664,
+   "p50_s_raw": 0.04704356682486832,
+   "p95_s_adjusted": 0.315557443536818,
+   "p95_s_raw": 0.082778721768409
+  },
+  "status": {
+   "answered_ok": 1477,
+   "missing": 0,
+   "rows": 1500,
+   "status": "complete"
+  },
+  "support": {
+   "choice": "native",
+   "noul": "native",
+   "score": "native"
+  },
+  "underlying": "google/gemma-4-31B-it",
+  "v16": {
+   "api_subset": false,
+   "api_subset_tag": null,
+   "breakdowns_equated": false,
+   "ci95": {
+    "B": 1000,
+    "C": [
+     85.0517072217947,
+     90.77969936508954
+    ],
+    "I": [
+     65.27867139621,
+     74.3007710998681
+    ],
+    "capability": [
+     75.67457118842692,
+     81.98658905786246
+    ],
+    "composite": {
+     "A": [
+      67.77964411695916,
+      70.60132868150278
+     ],
+     "B": [
+      67.02862182021929,
+      71.02513396620175
+     ],
+     "C": [
+      67.77964411695916,
+      70.60132868150278
+     ]
+    },
+    "seed": 41
+   },
+   "ci95_n": 1200,
+   "complete": true,
+   "equated": null,
+   "equating_flag": null,
+   "equating_offset": null,
+   "g_med_used": 2.573387642438244,
+   "lane": "selfhosted",
+   "metric_basis": "S u P",
+   "n_items": 1500,
+   "n_public": 300,
+   "n_sealed_side": 1200,
+   "on_S": {
+    "calibration": 88.71627256952715,
+    "capability": 79.56974174390604,
+    "intelligence": 70.42321091828492
+   },
+   "per_type": {
+    "choice": {
+     "accuracy": 0.8546666666666667,
+     "calibration": 87.69849202278736,
+     "cc": 81.41394238511599,
+     "cc_by_type": {
+      "choice": 81.41394238511599
+     },
+     "cc_tiered": 76.95832280421416,
+     "cc_tiered_open": 70.82494232345373,
+     "cc_tiered_sealed": 83.09170328497459,
+     "low_n": false,
+     "n": 750,
+     "n_by_type": {
+      "choice": 750
+     },
+     "score": 81.41394238511599
+    },
+    "noul": {
+     "accuracy": 0.888,
+     "calibration": 90.61159783536232,
+     "cc": 77.60000000000001,
+     "cc_by_type": {
+      "noul": 77.60000000000001
+     },
+     "cc_tiered": 74.58516786489577,
+     "cc_tiered_open": 73.1207729468599,
+     "cc_tiered_sealed": 76.04956278293162,
+     "low_n": false,
+     "n": 375,
+     "n_by_type": {
+      "noul": 375
+     },
+     "score": 77.60000000000001
+    },
+    "score": {
+     "accuracy": 0.7093333333333334,
+     "calibration": 87.83872785043177,
+     "cc": 60.762544130610976,
+     "cc_by_type": {
+      "score": 60.762544130610976
+     },
+     "cc_tiered": 59.72614208574488,
+     "cc_tiered_open": 58.8283751910304,
+     "cc_tiered_sealed": 60.62390898045936,
+     "low_n": false,
+     "n": 375,
+     "n_by_type": {
+      "score": 375
+     },
+     "score": 60.762544130610976
+    }
+   },
+   "raw_on_A": {
+    "calibration": 84.78496723140272,
+    "capability": 77.99664929333233,
+    "intelligence": 71.20833135526192
+   },
+   "set": "S+P"
+  },
+  "validity": {
+   "choice": {
+    "invalid_rate": 0.01733333333333331,
+    "n": 750
+   },
+   "noul": {
+    "invalid_rate": 0.010666666666666713,
+    "n": 375
+   },
+   "score": {
+    "invalid_rate": 0.016000000000000014,
+    "n": 375
+   }
+  },
+  "views": {
+   "Balanced 33:33:33": 65.11770023416665,
+   "Emphasis on Accuracy 60:20:20": 66.7278708768102,
+   "Emphasis on Cost 20:20:60": 57.439282527941046,
+   "Emphasis on Speed 20:60:20": 73.12885284800589,
+   "Intelligence only": 69.29818356515491
+  }
+ }
+}

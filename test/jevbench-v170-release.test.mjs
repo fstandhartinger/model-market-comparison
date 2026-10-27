@@ -1,3 +1,4 @@
+import { hasPublishedJevbenchV1711Release } from '../lib/jevbench-v1711-release.mjs';
 import { hasPublishedJevbenchV1710Release } from '../lib/jevbench-v1710-release.mjs';
 import { hasPublishedJevbenchV179Release } from '../lib/jevbench-v179-release.mjs';
 import { hasPublishedJevbenchV178Release } from '../lib/jevbench-v178-release.mjs';
@@ -350,7 +351,7 @@ if (!reviewed) {
   });
   test('a published v1.7.0 board is live: restated rows, v1.7.0 as the latest release, archive pages untouched', async () => {
     const live = await assembleJevBoard({ release, previous, live: true, apiA4 });
-    const latest = (await hasPublishedJevbenchV1710Release()) ? 'v1.7.10' : (await hasPublishedJevbenchV179Release()) ? 'v1.7.9' : (await hasPublishedJevbenchV178Release()) ? 'v1.7.8' : (await hasPublishedJevbenchV177Release()) ? 'v1.7.7' : (await hasPublishedJevbenchV176Release()) ? 'v1.7.6' : (await hasPublishedJevbenchV175Release()) ? 'v1.7.5' : (await hasPublishedJevbenchV174Release()) ? 'v1.7.4' : (await hasPublishedJevbenchV173Release()) ? 'v1.7.3' : (await hasPublishedJevbenchV172Release()) ? 'v1.7.2' : (await hasPublishedJevbenchV171Release()) ? 'v1.7.1' : 'v1.7.0';
+    const latest = (await hasPublishedJevbenchV1711Release()) ? 'v1.7.11' : (await hasPublishedJevbenchV1710Release()) ? 'v1.7.10' : (await hasPublishedJevbenchV179Release()) ? 'v1.7.9' : (await hasPublishedJevbenchV178Release()) ? 'v1.7.8' : (await hasPublishedJevbenchV177Release()) ? 'v1.7.7' : (await hasPublishedJevbenchV176Release()) ? 'v1.7.6' : (await hasPublishedJevbenchV175Release()) ? 'v1.7.5' : (await hasPublishedJevbenchV174Release()) ? 'v1.7.4' : (await hasPublishedJevbenchV173Release()) ? 'v1.7.3' : (await hasPublishedJevbenchV172Release()) ? 'v1.7.2' : (await hasPublishedJevbenchV171Release()) ? 'v1.7.1' : 'v1.7.0';
     assert.equal(live.published.restated_by, latest); assert.equal(live.published.revision, 'v1.6.1');
     assert.equal(live.published.systems.find((s) => s.key === 'chon-1.0-12b').method, 'v1.7');
     assert.equal(await readLatestJevbenchRelease('v1.6.1'), latest);

@@ -1,0 +1,48 @@
+{
+ "asks": [
+  {
+   "admission": "cost correction only, no new measurement",
+   "handoff": "board #28484/#28489",
+   "key": "decisio-gemma-4-12b-tuned-commit",
+   "relay": "release-owner rule #27240"
+  },
+  {
+   "admission": "cost correction only, no new measurement",
+   "handoff": "board #28484/#28489",
+   "key": "decisio-gemma-4-12b-v080",
+   "relay": "release-owner rule #27240"
+  },
+  {
+   "admission": "cost correction only, no new measurement",
+   "handoff": "board #28484/#28489",
+   "key": "decisio-gemma-4-12b-v090",
+   "relay": "release-owner rule #27240"
+  },
+  {
+   "admission": "cost correction only, no new measurement",
+   "handoff": "board #28484/#28489",
+   "key": "decisio-gemma-4-31b-v080",
+   "relay": "release-owner rule #27240"
+  }
+ ],
+ "button_tap": false,
+ "fairness_check": {
+  "engine": "claude-opus-5-5 account C effort medium",
+  "path": "workers/r196-v1711-fair/RESULT.json",
+  "sha256": "6f8fb3b2d14ef364931f3e08d135598424d30c176d02d5bb5bb717045cbcb801",
+  "verdict": "FAIR"
+ },
+ "fresh_baseline": "v1.7.10",
+ "go": {
+  "channel": "laptop chat",
+  "date": "2026-10-25",
+  "quote": "3 ja",
+  "recorded_in": "DECISIONS.md 2026-10-25 setup-review-open-questions-answered"
+ },
+ "status": "GO (fair top-five change, Florian rule 25 Oct 2026)",
+ "top_five_effect": "changed",
+ "top_five_preview": {
+  "path": "r196/v1711/receipts/topfive-diff.json",
+  "sha256": "ca11652395685509b20bcebbdd5305cac6c0be849d12b87540ec0ee5b3e4ce08"
+ }
+}

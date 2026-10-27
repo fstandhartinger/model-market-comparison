@@ -1,0 +1,333 @@
+{
+ "BROWSER": {
+  "four_target_selections": true,
+  "model_search": true,
+  "only_new_tab_used": true,
+  "radar": true,
+  "rankings": true,
+  "screenshot": "preview/browser.png",
+  "shared_cdp": 9333,
+  "status": "PASS"
+ },
+ "FAIR": {
+  "engine": "claude-opus-5-5 account C effort medium",
+  "path": "workers/r196-v1711-fair/RESULT.json",
+  "publication_review": "PENDING",
+  "sha256": "6f8fb3b2d14ef364931f3e08d135598424d30c176d02d5bb5bb717045cbcb801",
+  "status": "PASS",
+  "verdict": "FAIR"
+ },
+ "FAIR-BINDING": {
+  "post_edit_results_sha256": "a4143c0e6877824a034c32db1d1bee6384f530392b9676ce2cae5c01b9df5320",
+  "post_review_data_changes": "Only three 12B cost basis descriptions and derived source provenance hash; all numeric fields unchanged",
+  "pre_edit_results_sha256": "59d264f8d8640183227cc413301affeddc08af30fc053126e5e7a257b917c8d2",
+  "pre_edit_topfive_diff_sha256": "ca11652395685509b20bcebbdd5305cac6c0be849d12b87540ec0ee5b3e4ce08",
+  "review_receipt_sha256": "6f8fb3b2d14ef364931f3e08d135598424d30c176d02d5bb5bb717045cbcb801",
+  "status": "PASS",
+  "text_changed_rows": [
+   "decisio-gemma-4-12b-tuned-commit",
+   "decisio-gemma-4-12b-v080",
+   "decisio-gemma-4-12b-v090"
+  ],
+  "topfive_diff_unchanged": true
+ },
+ "HELPERS": {
+  "bound_fair_approval_checked": true,
+  "fairness_negative_cases": 2,
+  "fixture_grants_no_authority": true,
+  "pending_freeze_refused": true,
+  "real_fixture_flip_refused": true,
+  "real_manifest_unchanged": "3d4d3e657e68e8df6b667e3a620d40e0dd318a04f84614c69589ef8cc0aac2b0",
+  "real_pending_flip_refused": true,
+  "seal_write_refused": true,
+  "status": "PASS",
+  "synthetic_flip_dry_run": true,
+  "synthetic_freeze_dry_run": true
+ },
+ "OFF-NONCOST": {
+  "off_axes_and_capability_unchanged": true,
+  "rows": [
+   "decisio-gemma-4-12b-tuned-commit",
+   "decisio-gemma-4-12b-v080",
+   "decisio-gemma-4-12b-v090",
+   "decisio-gemma-4-31b-v080"
+  ],
+  "status": "PASS"
+ },
+ "PASS-STATE": {
+  "actual_manifest_still_pending": true,
+  "actual_manifest_unchanged_sha256": "3d4d3e657e68e8df6b667e3a620d40e0dd318a04f84614c69589ef8cc0aac2b0",
+  "fixture_grants_no_authority": true,
+  "status": "PASS",
+  "synthetic_post_flip_tests": 14
+ },
+ "PRECONDITIONS": {
+  "audit_review_sha256": "4981e8acb772517c0d95c5c8de3629a0670b8b7ad0eeb90d281fd182144258a8",
+  "base": "7343bd25",
+  "checked_at": "2026-10-27T03:35:02.018968+00:00",
+  "hostname": "Ubuntu-2204-jammy-amd64-base",
+  "live": {
+   "benchmarkheaven.com": "v1.7.10",
+   "www.benchmarkheaven.com": "v1.7.10"
+  },
+  "origin_main": "7343bd259a0edd72674084b524898245640e8059",
+  "pricing_module_sha256": "645fd82eac728d597048bec0995ecd3ac896566e269fb6c9a1fdb84c171a9ac4",
+  "status": "PASS"
+ },
+ "PREVIEW": {
+  "footer": "Release review pending",
+  "html_script_syntax": true,
+  "png": [
+   1440,
+   900
+  ],
+  "ranking_models_resolve": true,
+  "status": "PASS",
+  "visual_inspection": "Card viewed; no clipping or overlap"
+ },
+ "RAW-HANDOFF": {
+  "handoff": "board #28503",
+  "qwen_registration_prefills": false,
+  "status": "PASS",
+  "v080_native_anchor_hashes_match": {
+   "decisio-gemma-4-12b-v080": "20f9e33bb5977d29ae90d5cfa97494c411d868ce15449997dc27bb41c9b2d837",
+   "decisio-gemma-4-31b-v080": "3488203318811a1638d6299408fb409d5045654387f55f483e47909a4fe57595"
+  }
+ },
+ "REPRO": {
+  "files": {
+   "app/api/jevbench/v1.7.11/route.ts": "367871986c43e29f1374b742f6044e3e7f311ccfdba7d207a2cb91be49e08fb1",
+   "app/jev-models/v1.7.11/page.tsx": "401673d32fad0c74e8edc4a93a1965c986f5811f1b3ceaa91cec9e9d3a9b2d9f",
+   "data/jevbench-architecture.json": "e3a127a7df41d2bb9bda9f4aecbb59dba430e37153b181e9d0d3fd2b70eabbf7",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.11-carry.json": "271d1fc77a136a04a1eb6deb5480c52d4211eb2b66b2ac8bb31e80867e69003a",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.11-categories.json": "13e5bb92f5f15b50ff7507bc8e85e83db4e06a6d876b3db65d67f70c36f64c5a",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.11-history-carry.json": "334e851944e92383ab3071e52b3012040c7023d0fe236395953169ebee8f0459",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.11-history.json": "5cd8c1332226ea9c179883d2285c0d8b8cc593ae38f2645197364a7ddd9c83c1",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.11-proof.json": "7ff71a269a5307661a09b199edc0527addcb16a16fe0911f0ea9d9d27d9d1865",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.11-publication.json": "3d4d3e657e68e8df6b667e3a620d40e0dd318a04f84614c69589ef8cc0aac2b0",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.11-results.json": "a4143c0e6877824a034c32db1d1bee6384f530392b9676ce2cae5c01b9df5320",
+   "lib/jevbench-v1711-release.mjs": "7566241f2594741810833a757fffe077d7e8de6057b8f5ee1a9a98e7bf3cd8a5"
+  },
+  "status": "PASS",
+  "two_rebuilds_identical": true
+ },
+ "SCORING": {
+  "method": "frozen v1.7; native live reproduction; aggregate cost replacement before fixed-cost bootstrap; no item mutation",
+  "rows": {
+   "decisio-gemma-4-12b-tuned-commit": {
+    "off": {
+     "B": 1000,
+     "common_cost": 0.028138956228956232,
+     "cost_axis": 56.5207604825306,
+     "native_reproduces_live": false,
+     "noncost_equal": true,
+     "raw_sha256": "e9c889e1a138c875eb52521748e63b4344043c7a5598527c073172dd1c81594f",
+     "seed": 28
+    },
+    "share": {
+     "B": 1000,
+     "common_cost": 0.028138956228956232,
+     "cost_axis": 56.5207604825306,
+     "native_reproduces_live": true,
+     "noncost_equal": true,
+     "raw_sha256": "e9c889e1a138c875eb52521748e63b4344043c7a5598527c073172dd1c81594f",
+     "seed": 28
+    }
+   },
+   "decisio-gemma-4-12b-v080": {
+    "off": {
+     "B": 1000,
+     "common_cost": 0.026553689911983754,
+     "cost_axis": 57.27625361932229,
+     "native_reproduces_live": false,
+     "noncost_equal": true,
+     "raw_sha256": "20f9e33bb5977d29ae90d5cfa97494c411d868ce15449997dc27bb41c9b2d837",
+     "seed": 39
+    },
+    "share": {
+     "B": 1000,
+     "common_cost": 0.026553689911983754,
+     "cost_axis": 57.27625361932229,
+     "native_reproduces_live": true,
+     "noncost_equal": true,
+     "raw_sha256": "20f9e33bb5977d29ae90d5cfa97494c411d868ce15449997dc27bb41c9b2d837",
+     "seed": 39
+    }
+   },
+   "decisio-gemma-4-12b-v090": {
+    "off": {
+     "B": 1000,
+     "common_cost": 0.026553689911983754,
+     "cost_axis": 57.27625361932229,
+     "native_reproduces_live": false,
+     "noncost_equal": true,
+     "raw_sha256": "ecceaa4d8a481fd9ad1e47f2108656cc14a0cc5939247bfc2045d8838516be3c",
+     "seed": 40
+    },
+    "share": {
+     "B": 1000,
+     "common_cost": 0.026553689911983754,
+     "cost_axis": 57.27625361932229,
+     "native_reproduces_live": true,
+     "noncost_equal": true,
+     "raw_sha256": "ecceaa4d8a481fd9ad1e47f2108656cc14a0cc5939247bfc2045d8838516be3c",
+     "seed": 40
+    }
+   },
+   "decisio-gemma-4-31b-v080": {
+    "off": {
+     "B": 1000,
+     "common_cost": 0.047866641841570745,
+     "cost_axis": 49.59901120154938,
+     "native_reproduces_live": false,
+     "noncost_equal": true,
+     "raw_sha256": "3488203318811a1638d6299408fb409d5045654387f55f483e47909a4fe57595",
+     "seed": 41
+    },
+    "share": {
+     "B": 1000,
+     "common_cost": 0.047866641841570745,
+     "cost_axis": 49.59901120154938,
+     "native_reproduces_live": true,
+     "noncost_equal": true,
+     "raw_sha256": "3488203318811a1638d6299408fb409d5045654387f55f483e47909a4fe57595",
+     "seed": 41
+    }
+   }
+  },
+  "status": "PASS"
+ },
+ "SOURCE": {
+  "audit_and_raw_bindings": 4,
+  "carried_cells_equal": 305,
+  "cost_correction_exceptions": [
+   "decisio-gemma-4-12b-tuned-commit",
+   "decisio-gemma-4-12b-v080",
+   "decisio-gemma-4-12b-v090",
+   "decisio-gemma-4-31b-v080"
+  ],
+  "immutable_bytes": [
+   "carry",
+   "history",
+   "history-carry"
+  ],
+  "negative_cases_refused": 55,
+  "noncost_equal": true,
+  "predecessor_files_equal_to_base": 7,
+  "pricing_module_sha256": "645fd82eac728d597048bec0995ecd3ac896566e269fb6c9a1fdb84c171a9ac4",
+  "references": {
+   "decisio-gemma-4-12b-tuned-commit": {
+    "base": "google/gemma-4-12B-it",
+    "in": 0.05,
+    "listing": "google/gemma-3-12b-it",
+    "out": 0.15
+   },
+   "decisio-gemma-4-12b-v080": {
+    "base": "google/gemma-4-12B-it",
+    "in": 0.05,
+    "listing": "google/gemma-3-12b-it",
+    "out": 0.15
+   },
+   "decisio-gemma-4-12b-v090": {
+    "base": "google/gemma-4-12B-it",
+    "in": 0.05,
+    "listing": "google/gemma-3-12b-it",
+    "out": 0.15
+   },
+   "decisio-gemma-4-31b-v080": {
+    "base": "google/gemma-4-31B-it",
+    "in": 0.09,
+    "listing": "google/gemma-4-31b-it",
+    "out": 0.34
+   }
+  },
+  "rows_equal_except_ranks": 296,
+  "status": "PASS"
+ },
+ "TOPFIVE": {
+  "changed_lists": 34,
+  "custom_changed_lists": [
+   "custom/I0 Calibration50 Speed10 Cost5",
+   "custom/I10 Calibration60 Speed0 Cost20"
+  ],
+  "diff_bound_to_proof": true,
+  "grid_changed_states": 92,
+  "grid_states": 368,
+  "lists": 580,
+  "ranks_fixture_present": true,
+  "slider_changed_states": 30,
+  "slider_states": 177,
+  "snapshot_hashes_verified": true,
+  "status": "PASS"
+ },
+ "build": {
+  "log_sha256": "de54901f37cc84f0fb8ecf38dc58280d15af95092be068cbcee3f6b6b4043ca7",
+  "status": "PASS"
+ },
+ "fulltest": {
+  "cancelled": 0,
+  "command": "npm test",
+  "exit_code": 0,
+  "fail": 0,
+  "log_sha256": "7484707975f2808fc18ad1c700f4ef49816eb4a3bacff0c2fb9af07a610a7270",
+  "pass": 3845,
+  "skipped": 8,
+  "status": "PASS",
+  "tests": 3853,
+  "todo": 0
+ },
+ "helpers": {
+  "log_sha256": "e6eeb1b8b0c60f2e8549102df889a14c42c6fdc52145168ae405961c7a1e43a0",
+  "status": "PASS"
+ },
+ "post-flip-tests": {
+  "cancelled": 0,
+  "fail": 0,
+  "log_sha256": "c8fb0a4f5f563f0c16d81844c9d72a0cc2131c4259d126867e65b603822f22cc",
+  "pass": 14,
+  "skipped": 0,
+  "status": "PASS",
+  "tests": 14,
+  "todo": 0
+ },
+ "preview-check": {
+  "log_sha256": "8dc1970e979e55619b70fed6652c78c5722a242ccd10caf9be3e41392cc91b0b",
+  "status": "PASS"
+ },
+ "production-build": {
+  "command": "npm run build",
+  "exit_code": 0,
+  "status": "PASS"
+ },
+ "release-tests": {
+  "cancelled": 0,
+  "fail": 0,
+  "log_sha256": "ffb3aa985304fd218e96238e5459febbcc678797e25a398dc2872de37ba4f7bd",
+  "pass": 73,
+  "skipped": 0,
+  "status": "PASS",
+  "tests": 73,
+  "todo": 0
+ },
+ "repro": {
+  "log_sha256": "002e1aa8a724d3ddcbfcd8bc841c31b80298a1c63f6ac64b8c515fb37b0aa838",
+  "status": "PASS"
+ },
+ "source": {
+  "log_sha256": "9314c71c1c57af73d7bee87511333a007dceaf18d06dcea76e4d408aa66c6edd",
+  "status": "PASS"
+ },
+ "tsc": {
+  "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "status": "PASS"
+ },
+ "typescript": {
+  "command": "npx --no-install tsc --noEmit",
+  "exit_code": 0,
+  "status": "PASS"
+ },
+ "validator": {
+  "log_sha256": "c233f6a90ecca97f8fcc50dbb226d6cae353615df14902900316358300d80b7a",
+  "status": "PASS"
+ }
+}

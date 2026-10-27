@@ -1,0 +1,370 @@
+{
+ "decisio-gemma-4-12b-tuned-commit": {
+  "after": {
+   "axes": {
+    "calibration": 88.61282851120822,
+    "cost": 56.5207604825306,
+    "intelligence": 62.78089467434111,
+    "speed": 90.3121994607612
+   },
+   "composite_ci95": {
+    "A": [
+     69.7503043743632,
+     72.26124115912
+    ],
+    "B": [
+     67.38060244747632,
+     70.91144359683345
+    ],
+    "C": [
+     68.1366041314051,
+     72.26124115912
+    ]
+   },
+   "cost": {
+    "basis": "ESTIMATE; reference google/gemma-3-12b-it (nearest listed 12B Gemma sibling; google/gemma-4-12B-it has no listing) at USD 0.05/0.15 per million input/output tokens. Billed on engine-processed input (decisio adds a system turn and chat template, +78 tokens per answered item, that its own usage does not report); offline per-item recount, residual 0; corrected in v1.7.11 from the earlier usage-based USD 0.024239/1k. Exact engine input 831,272 tokens and output 1,485 tokens on this row's own 1,485-item common basis; USD 0.028139/1k common and USD 0.027858/1k all 1,500. The exact recount includes one token-boundary merge: 1,484 increments of 78 tokens and one of 77. Decisio also sends one registration prefill per new state boundary; an offline estimate (about 648,827 tokens; USD 0.049985/1k if billed) is not exact and not a lower bound, so it is disclosed, not priced. Estimated model tariff, not charged usage or a host quote.",
+    "common_basis": {
+     "n_items": 1485,
+     "rule": "common",
+     "usd_per_1000_all_items": 0.027857566666666674
+    },
+    "kind": "estimate",
+    "usage_estimated_rows": 0,
+    "usd_per_1000": 0.028138956228956232
+   },
+   "rank": 20,
+   "ranks": {
+    "A": 20,
+    "B": 27,
+    "C": 18,
+    "capability": 58
+   },
+   "scores": {
+    "A": 71.45565353358278,
+    "B": 69.53407736996427,
+    "C": 71.45565353358278
+   }
+  },
+  "before": {
+   "axes": {
+    "calibration": 88.61282851120822,
+    "cost": 58.46456446887949,
+    "intelligence": 62.78089467434111,
+    "speed": 90.3121994607612
+   },
+   "composite_ci95": {
+    "A": [
+     70.47317689975598,
+     73.0373853224774
+    ],
+    "B": [
+     67.91900605407731,
+     71.50800165577638
+    ],
+    "C": [
+     68.84141766602376,
+     73.0373853224774
+    ]
+   },
+   "cost": {
+    "basis": "ESTIMATE (*est.), base-model market reference, explicit reference with NO base key: the frozen pricing_v15 module (sha256 aa2afcd5a58d0c4cc0e3d6867d590c70b6ac58e971410c27faf9628f97bcf8b7, re-freeze of 22 Oct 2026) has no listing for the card's base string google/gemma-4-12B-it (it is in the module's UNLISTED_BASE_MODELS set, so there is no exact rate and no floor; reference() returns nothing for it, checked on this module). The reference used is therefore google/gemma-3-12b-it USD 0.05/M input, USD 0.15/M output, the nearest publicly hosted 12B Gemma sibling, at its FULL catalog pair, the same explicit reference that the published google/gemma-4-12B-it rows cygnet, jev-omni, winnow-12b, torchcast-decision-12b and the live decisio v0.8.0 and v0.9.0 rows already carry. It is applied explicitly, as a labelled estimate; no base key is registered for it. Estimated, not charged, not a quote from the author or any host. Tokens as reported natively by the usage block of the author's server: 715,443 input and 1,485 output tokens across the 1,485 answered items (1 reported output token per answered row for the option-label readout; no generated prose). The native input unit counts header, state and question separately without the system turn or chat template. It is not a count of every token processed internally: the server can also register the state prefix through a warm-up, and that work is not added to native usage. Native input usage equals our first-party offline count exactly (0 mismatches over the answered items; our sealed-input count before the run was also 715,443). The 15 items refused HTTP 422 carry no usage and count 0 tokens, so the common 1,485-item basis (v1.6.30) has the same totals, 715,443 input and 1,485 output tokens. The zero-output convention for native-probability rows is NOT applied: the server reports a real output count of 1 per answered row (the same treatment as the live decisio rows, seb-9b-v2 and KnowLine, which price their 1 output token per row), and the full output price is used. Measured arithmetic: USD 0.024239 per 1,000 decisions on the common 1,485-item basis = 0.375248x the unchanged USD 0.06459465517241379 cap; separately USD 0.023997 per 1,000 over all 1,500 rows = 0.371495x. WITHIN COST CAP on both bases: within the automatic cost treatment; no cap exception or top-up.",
+    "common_basis": {
+     "n_items": 1485,
+     "rule": "common",
+     "usd_per_1000_all_items": 0.0239966
+    },
+    "kind": "estimate",
+    "usage_estimated_rows": 0,
+    "usd_per_1000": 0.0242389898989899
+   },
+   "rank": 19,
+   "ranks": {
+    "A": 19,
+    "B": 25,
+    "C": 18,
+    "capability": 58
+   },
+   "scores": {
+    "A": 72.21449796895163,
+    "B": 70.10759199306933,
+    "C": 72.21449796895163
+   }
+  }
+ },
+ "decisio-gemma-4-12b-v080": {
+  "after": {
+   "axes": {
+    "calibration": 89.15794375860679,
+    "cost": 57.27625361932229,
+    "intelligence": 52.324988528776075,
+    "speed": 86.316096866496
+   },
+   "composite_ci95": {
+    "A": [
+     56.7281349349204,
+     68.81315375315542
+    ],
+    "B": [
+     52.736778408131244,
+     65.96516688224837
+    ],
+    "C": [
+     39.39453814925029,
+     60.95522801050226
+    ]
+   },
+   "cost": {
+    "basis": "ESTIMATE; reference google/gemma-3-12b-it (nearest listed 12B Gemma sibling; google/gemma-4-12B-it has no listing) at USD 0.05/0.15 per million input/output tokens. Billed on engine-processed input (decisio adds a system turn and chat template, +78 tokens per answered item, that its own usage does not report); offline per-item recount, residual 0; corrected in v1.7.11 from the earlier usage-based USD 0.022654/1k. Exact engine input 779,965 tokens and output 1,477 tokens on this row's own 1,477-item common basis; USD 0.026554/1k common and USD 0.026147/1k all 1,500. Estimated model tariff, not charged usage or a host quote.",
+    "common_basis": {
+     "n_items": 1477,
+     "rule": "common",
+     "usd_per_1000_all_items": 0.02614653333333334
+    },
+    "kind": "estimate",
+    "usage_estimated_rows": 0,
+    "usd_per_1000": 0.026553689911983754
+   },
+   "rank": 53,
+   "ranks": {
+    "A": 53,
+    "B": 59,
+    "C": 63,
+    "capability": 90
+   },
+   "scores": {
+    "A": 67.3718872605589,
+    "B": 63.70784266556785,
+    "C": 51.238274505572704
+   }
+  },
+  "before": {
+   "axes": {
+    "calibration": 89.15794375860679,
+    "cost": 59.34583145470655,
+    "intelligence": 52.324988528776075,
+    "speed": 86.316096866496
+   },
+   "composite_ci95": {
+    "A": [
+     57.29140177846576,
+     69.54155861089073
+    ],
+    "B": [
+     53.12522431622021,
+     66.49933617015681
+    ],
+    "C": [
+     39.785695679490125,
+     61.6003253038042
+    ]
+   },
+   "cost": {
+    "basis": "ESTIMATE (base-model reference; self-hosted open weights, no public tariff): the exact base google/gemma-4-12B-it is in the frozen pricing module's UNLISTED_BASE_MODELS set, so no exact base-model rate and no floor exist. The reference is the one the rows PUBLISHED on this same base use - cygnet, jev-omni and winnow-12b - OpenRouter google/gemma-3-12b-it, the nearest publicly hosted 12B Gemma sibling, at its FULL catalog pair USD 0.05 per 1M input and USD 0.15 per 1M output. PREREG-R54-AMENDMENT-1 uses the full pair rather than run 53's output=0, so a row that emits tokens pays for them; where a row generates nothing the output term is zero anyway. x this row's own measured input/output tokens, the deck31b method. Estimated, not charged",
+    "common_basis": {
+     "n_items": 1477,
+     "rule": "common",
+     "usd_per_1000_all_items": 0.022306333333333338
+    },
+    "kind": "estimate",
+    "usage_estimated_rows": 0,
+    "usd_per_1000": 0.022653689911983754
+   },
+   "rank": 49,
+   "ranks": {
+    "A": 49,
+    "B": 59,
+    "C": 62,
+    "capability": 90
+   },
+   "scores": {
+    "A": 68.06994454095005,
+    "B": 64.20594095677818,
+    "C": 51.76916731572905
+   }
+  }
+ },
+ "decisio-gemma-4-12b-v090": {
+  "after": {
+   "axes": {
+    "calibration": 87.60965425617285,
+    "cost": 57.27625361932229,
+    "intelligence": 52.299106200484864,
+    "speed": 85.2750295056469
+   },
+   "composite_ci95": {
+    "A": [
+     53.78061013556917,
+     68.73896395098696
+    ],
+    "B": [
+     49.88130820773739,
+     66.05199888635511
+    ],
+    "C": [
+     37.3476459274786,
+     62.02048655915421
+    ]
+   },
+   "cost": {
+    "basis": "ESTIMATE; reference google/gemma-3-12b-it (nearest listed 12B Gemma sibling; google/gemma-4-12B-it has no listing) at USD 0.05/0.15 per million input/output tokens. Billed on engine-processed input (decisio adds a system turn and chat template, +78 tokens per answered item, that its own usage does not report); offline per-item recount, residual 0; corrected in v1.7.11 from the earlier usage-based USD 0.022654/1k. Exact engine input 779,965 tokens and output 1,477 tokens on this row's own 1,477-item common basis; USD 0.026554/1k common and USD 0.026147/1k all 1,500. Decisio also sends one registration prefill per new state boundary; an offline estimate (about 550,630 tokens; USD 0.045194/1k if billed) is not exact and not a lower bound, so it is disclosed, not priced. Estimated model tariff, not charged usage or a host quote.",
+    "common_basis": {
+     "n_items": 1477,
+     "rule": "common",
+     "usd_per_1000_all_items": 0.02614653333333334
+    },
+    "kind": "estimate",
+    "usage_estimated_rows": 0,
+    "usd_per_1000": 0.026553689911983754
+   },
+   "rank": 56,
+   "ranks": {
+    "A": 56,
+    "B": 60,
+    "C": 64,
+    "capability": 99
+   },
+   "scores": {
+    "A": 66.97805031267872,
+    "B": 63.4181012736682,
+    "C": 50.888369283227746
+   }
+  },
+  "before": {
+   "axes": {
+    "calibration": 87.60965425617285,
+    "cost": 59.34583145470655,
+    "intelligence": 52.299106200484864,
+    "speed": 85.2750295056469
+   },
+   "composite_ci95": {
+    "A": [
+     54.30828550432116,
+     69.46579072589009
+    ],
+    "B": [
+     50.243537053294915,
+     66.58758109477095
+    ],
+    "C": [
+     37.714087155778586,
+     62.67786529075028
+    ]
+   },
+   "cost": {
+    "basis": "ESTIMATE (base-model reference; self-hosted open weights, no public tariff), CARRIED AND NOT NEW: the exact base google/gemma-4-12B-it is in the frozen pricing module's UNLISTED_BASE_MODELS set, so no exact base-model rate and no floor exist, and (0.05, 0.15) is the reference the rows PUBLISHED on this same base already use - cygnet, jev-omni, winnow-12b and torchcast-decision-12b - OpenRouter google/gemma-3-12b-it, the nearest publicly hosted 12B Gemma sibling, at its FULL catalog pair USD 0.05 per 1M input and USD 0.15 per 1M output. It is also the rate THIS ROW'S OWN v0.8.0 SIBLING carries, so the two versions are priced identically and the comparison between them is clean. PREREG-R54-AMENDMENT-1's full pair rather than output=0, x this row's own measured input/output tokens, the deck31b method. The server reports its own usage.input_tokens/output_tokens on every answer (664,759 in and 1,477 out over the answered rows: one prefill, one option-label readout step per decision), so no token-accounting amendment was needed. Estimated, not charged.",
+    "common_basis": {
+     "n_items": 1477,
+     "rule": "common",
+     "usd_per_1000_all_items": 0.022306333333333338
+    },
+    "kind": "estimate",
+    "usage_estimated_rows": 0,
+    "usd_per_1000": 0.022653689911983754
+   },
+   "rank": 53,
+   "ranks": {
+    "A": 53,
+    "B": 60,
+    "C": 64,
+    "capability": 99
+   },
+   "scores": {
+    "A": 67.66792837235077,
+    "B": 63.9116616447286,
+    "C": 51.41252263342376
+   }
+  }
+ },
+ "decisio-gemma-4-31b-v080": {
+  "after": {
+   "axes": {
+    "calibration": 88.71627256952715,
+    "cost": 49.59901120154938,
+    "intelligence": 70.42321091828492,
+    "speed": 91.13376683561437
+   },
+   "composite_ci95": {
+    "A": [
+     67.77964411695916,
+     70.60132868150278
+    ],
+    "B": [
+     67.02862182021929,
+     71.02513396620175
+    ],
+    "C": [
+     67.77964411695916,
+     70.60132868150278
+    ]
+   },
+   "cost": {
+    "basis": "ESTIMATE; google/gemma-4-31b-it at USD 0.09/0.34 per million input/output tokens. Billed on engine-processed input (decisio adds a system turn and chat template, +78 tokens per answered item, that its own usage does not report); offline per-item recount, residual 0; corrected in v1.7.11 from the earlier usage-based USD 0.040847/1k. Exact engine input 779,965 tokens and output 1,477 tokens on this row's own 1,477-item common basis; USD 0.047867/1k common and USD 0.047133/1k all 1,500. Estimated model tariff, not charged usage or a host quote.",
+    "common_basis": {
+     "n_items": 1477,
+     "rule": "common",
+     "usd_per_1000_all_items": 0.04713268666666666
+    },
+    "kind": "estimate",
+    "usage_estimated_rows": 0,
+    "usd_per_1000": 0.047866641841570745
+   },
+   "rank": 37,
+   "ranks": {
+    "A": 37,
+    "B": 28,
+    "C": 31,
+    "capability": 36
+   },
+   "scores": {
+    "A": 69.53461393242803,
+    "B": 69.48719888312223,
+    "C": 69.53461393242803
+   }
+  },
+  "before": {
+   "axes": {
+    "calibration": 88.71627256952715,
+    "cost": 51.66530928015878,
+    "intelligence": 70.42321091828492,
+    "speed": 91.13376683561437
+   },
+   "composite_ci95": {
+    "A": [
+     69.84990305266089,
+     72.80044769282709
+    ],
+    "B": [
+     68.87338684458163,
+     73.02825429245821
+    ],
+    "C": [
+     69.84990305266089,
+     72.80044769282709
+    ]
+   },
+   "cost": {
+    "basis": "ESTIMATE (base-model reference; self-hosted open weights, no public tariff) and CLEAN: unlike run 54's FP8 sibling, the frozen pricing snapshot resolves this EXACT base - google/gemma-4-31B-it - to USD 0.09 per 1M input and USD 0.34 per 1M output. Read before the pod and asserted in make_registry_r55.py. x this row's own measured tokens, the deck31b method. Nothing is provisional and no release-lane line is open on it. Estimated, not charged",
+    "common_basis": {
+     "n_items": 1477,
+     "rule": "common",
+     "usd_per_1000_all_items": 0.04022032666666667
+    },
+    "kind": "estimate",
+    "usage_estimated_rows": 0,
+    "usd_per_1000": 0.04084664184157075
+   },
+   "rank": 21,
+   "ranks": {
+    "A": 21,
+    "B": 16,
+    "C": 19,
+    "capability": 36
+   },
+   "scores": {
+    "A": 71.68461163062156,
+    "B": 71.42872937549377,
+    "C": 71.68461163062156
+   }
+  }
+ }
+}

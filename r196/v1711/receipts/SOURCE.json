@@ -1,0 +1,47 @@
+{
+ "audit_and_raw_bindings": 4,
+ "carried_cells_equal": 305,
+ "cost_correction_exceptions": [
+  "decisio-gemma-4-12b-tuned-commit",
+  "decisio-gemma-4-12b-v080",
+  "decisio-gemma-4-12b-v090",
+  "decisio-gemma-4-31b-v080"
+ ],
+ "immutable_bytes": [
+  "carry",
+  "history",
+  "history-carry"
+ ],
+ "negative_cases_refused": 55,
+ "noncost_equal": true,
+ "predecessor_files_equal_to_base": 7,
+ "pricing_module_sha256": "645fd82eac728d597048bec0995ecd3ac896566e269fb6c9a1fdb84c171a9ac4",
+ "references": {
+  "decisio-gemma-4-12b-tuned-commit": {
+   "base": "google/gemma-4-12B-it",
+   "in": 0.05,
+   "listing": "google/gemma-3-12b-it",
+   "out": 0.15
+  },
+  "decisio-gemma-4-12b-v080": {
+   "base": "google/gemma-4-12B-it",
+   "in": 0.05,
+   "listing": "google/gemma-3-12b-it",
+   "out": 0.15
+  },
+  "decisio-gemma-4-12b-v090": {
+   "base": "google/gemma-4-12B-it",
+   "in": 0.05,
+   "listing": "google/gemma-3-12b-it",
+   "out": 0.15
+  },
+  "decisio-gemma-4-31b-v080": {
+   "base": "google/gemma-4-31B-it",
+   "in": 0.09,
+   "listing": "google/gemma-4-31b-it",
+   "out": 0.34
+  }
+ },
+ "rows_equal_except_ranks": 296,
+ "status": "PASS"
+}

@@ -1,3 +1,4 @@
+import { hasPublishedJevbenchV1711Release } from '../lib/jevbench-v1711-release.mjs';
 import { hasPublishedJevbenchV1710Release } from '../lib/jevbench-v1710-release.mjs';
 import { hasPublishedJevbenchV179Release } from '../lib/jevbench-v179-release.mjs';
 import { hasPublishedJevbenchV178Release } from '../lib/jevbench-v178-release.mjs';
@@ -104,6 +105,6 @@ test('Delta 4: with the folds collapsed, Jev 1.13.0 and Jev 1.14.0 are rendered 
   assert.equal(barIds(compHead).length, 22);
 
   // v1.7.0 (10 s rule): once the PASS-reviewed release is published the board is restated and the v1.7.0 roster applies; before that the v1.6.39 roster.
-  const frozen = JSON.parse(await readFile(`${root}/test/fixtures/jevbench-${(await hasPublishedJevbenchV1710Release()) ? 'v1710' : (await hasPublishedJevbenchV179Release()) ? 'v179' : (await hasPublishedJevbenchV178Release()) ? 'v178' : (await hasPublishedJevbenchV177Release()) ? 'v177' : (await hasPublishedJevbenchV176Release()) ? 'v176' : (await hasPublishedJevbenchV175Release()) ? 'v175' : (await hasPublishedJevbenchV174Release()) ? 'v174' : (await hasPublishedJevbenchV173Release()) ? 'v173' : (await hasPublishedJevbenchV172Release()) ? 'v172' : (await hasPublishedJevbenchV171Release()) ? 'v171' : (await hasPublishedJevbenchV170Release()) ? 'v170' : 'v1643'}-ranks.json`, 'utf8'));
+  const frozen = JSON.parse(await readFile(`${root}/test/fixtures/jevbench-${(await hasPublishedJevbenchV1711Release()) ? 'v1711' : (await hasPublishedJevbenchV1710Release()) ? 'v1710' : (await hasPublishedJevbenchV179Release()) ? 'v179' : (await hasPublishedJevbenchV178Release()) ? 'v178' : (await hasPublishedJevbenchV177Release()) ? 'v177' : (await hasPublishedJevbenchV176Release()) ? 'v176' : (await hasPublishedJevbenchV175Release()) ? 'v175' : (await hasPublishedJevbenchV174Release()) ? 'v174' : (await hasPublishedJevbenchV173Release()) ? 'v173' : (await hasPublishedJevbenchV172Release()) ? 'v172' : (await hasPublishedJevbenchV171Release()) ? 'v171' : (await hasPublishedJevbenchV170Release()) ? 'v170' : 'v1643'}-ranks.json`, 'utf8'));
   assert.deepEqual(Object.fromEntries(open.systems.filter((s) => s.ranked).map((s) => [s.key, [s.rank, s.ranks.A, s.ranks.B, s.ranks.C, s.ranks.capability]])), frozen.views.open.ranks, 'every open-board rank matches the v1.6.31 roster fixture');
 });
