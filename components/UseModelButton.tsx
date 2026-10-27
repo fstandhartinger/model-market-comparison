@@ -91,7 +91,14 @@ const POP_W = 296;
 function UseModelPopover({ pos, name, modelKey, benchmark, onEnter, onLeave, onNavigate }: {
   pos: Pos; name: string; modelKey: string; benchmark: UseModelBenchmark; onEnter: () => void; onLeave: () => void; onNavigate: (t: UseModelTarget) => void;
 }) {
-  const style: CSSProperties = { left: pos.left, top: pos.up ? undefined : pos.top, bottom: pos.up ? window.innerHeight - pos.top : undefined, width: POP_W };
+  const style: CSSProperties = {
+    left: pos.left,
+    top: pos.up ? undefined : pos.top,
+    bottom: pos.up ? window.innerHeight - pos.top : undefined,
+    width: POP_W,
+    maxHeight: Math.max(0, (pos.up ? pos.top : window.innerHeight - pos.top) - 8),
+    overflowY: 'auto',
+  };
   return createPortal(
     <div role="group" aria-label={`Ways to use ${name}`} className="bh-use-model-pop" style={style} data-bh-use-model-pop={modelKey} onMouseEnter={onEnter} onMouseLeave={onLeave}>
       <p className="bh-use-model-pop-head"><DmMark /><span><small>Run it yourself</small><b>{name}</b></span></p>
@@ -123,7 +130,8 @@ export function UseModelButton({ modelKey, name, benchmark = 'jevbench', classNa
     clearTimeout(timer.current);
     const rect = anchor.current?.getBoundingClientRect();
     if (!rect) return;
-    const up = rect.bottom + 280 > window.innerHeight && rect.top > 290;
+    // Use the roomier side; content height changes with model names, disclosure and zoom.
+    const up = rect.top > window.innerHeight - rect.bottom;
     const left = Math.max(8, Math.min(rect.left, window.innerWidth - POP_W - 8));
     setPos({ left, top: up ? rect.top - 6 : rect.bottom + 6, up });
   }, []);
@@ -136,7 +144,11 @@ export function UseModelButton({ modelKey, name, benchmark = 'jevbench', classNa
     if (!pos) return;
     document.documentElement.setAttribute('data-bh-use-model-open', '');
     const esc = (e: KeyboardEvent) => { if (e.key === 'Escape') close(); };
-    const away = () => close();
+    const away = (event: Event) => {
+      // A short viewport can require scrolling the panel itself to reach its disclosure.
+      if (event.target instanceof Element && event.target.closest('[data-bh-use-model-pop]')) return;
+      close();
+    };
     window.addEventListener('keydown', esc); window.addEventListener('scroll', away, true); window.addEventListener('resize', away);
     return () => { document.documentElement.removeAttribute('data-bh-use-model-open'); window.removeEventListener('keydown', esc); window.removeEventListener('scroll', away, true); window.removeEventListener('resize', away); };
   }, [pos, close]);
