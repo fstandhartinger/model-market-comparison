@@ -168,7 +168,7 @@ test('CR-439 render: the board table shows 0.029 s with the est. line for H2O-Li
     './JevDecisionLimitCell': await compileReact('components/JevDecisionLimitCell.tsx'),
     './jevTypes': await compileTsModule(fileUrl('components/jevTypes.ts')),
     './useJevV15VisibleKeys': moduleUrl('export function useJevV15VisibleKeys(keys){return new Set(keys)}'),
-    './UseModelButton': moduleUrl('export const UseModelEntry=()=>null;'),
+    './UseModelButton': moduleUrl('export const UseModelEntry=()=>null;export const UseModelNote=()=>null;'),
     './jevSystemLinks': moduleUrl(`import data from ${JSON.stringify(fileUrl('data/raw/benchmarks/jevbench/jev-system-links.json').href)} with {type:'json'};
 export const jevSourceUrl=(key,repo)=>data.links[key]?.url??repo??null;`),
   };

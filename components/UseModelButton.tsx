@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useRef, useState, useSyncExternalStore, type CSSProperties } from 'react';
 import { createPortal } from 'react-dom';
 import {
-  USE_MODEL_PARAM, USE_MODEL_PUBLIC, USE_MODEL_STORAGE_KEY, USE_MODEL_TOKEN, useModelEligible, useModelHref,
+  USE_MODEL_DISCLOSURE, USE_MODEL_PARAM, USE_MODEL_PUBLIC, USE_MODEL_STORAGE_KEY, USE_MODEL_TOKEN, useModelEligible, useModelHref,
   type UseModelBenchmark, type UseModelTarget,
 } from '../lib/use-model';
 
@@ -70,10 +70,10 @@ function track(target: UseModelTarget, model: string, benchmark: UseModelBenchma
 }
 
 const OPTIONS: { target: Exclude<UseModelTarget, 'hub'>; title: string; text: string; icon: string }[] = [
-  { target: 'dedicated', title: 'Dedicated hosting', text: 'Your own private endpoint, EU or global tier', icon: 'M4 6h16v5H4zM4 13h16v5H4zM7.5 8.5h.01M7.5 15.5h.01' },
-  { target: 'api', title: 'Hosted API', text: 'Pay per use, or request it', icon: 'M8 8l-4 4 4 4M16 8l4 4-4 4M13.5 6l-3 12' },
-  { target: 'local', title: 'Run locally', text: 'Free installer with a hardware check', icon: 'M4 5h16v10H4zM9 19h6M12 15v4' },
-  { target: 'hardware', title: 'Pre-installed hardware', text: 'A ready-to-run box, shipped to you', icon: 'M5 8l7-4 7 4v8l-7 4-7-4zM5 8l7 4 7-4M12 12v8' },
+  { target: 'dedicated', title: 'Dedicated hosting', text: 'Your own private endpoint, EU or global', icon: 'M4 6h16v5H4zM4 13h16v5H4zM7.5 8.5h.01M7.5 15.5h.01' },
+  { target: 'api', title: 'Hosted API', text: 'Pay per use where we serve it, else request it', icon: 'M8 8l-4 4 4 4M16 8l4 4-4 4M13.5 6l-3 12' },
+  { target: 'local', title: 'Run locally', text: 'On your own machine: installer or setup help', icon: 'M4 5h16v10H4zM9 19h6M12 15v4' },
+  { target: 'hardware', title: 'Pre-installed hardware', text: 'A box with it pre-installed, quote on request', icon: 'M5 8l7-4 7 4v8l-7 4-7-4zM5 8l7 4 7-4M12 12v8' },
 ];
 
 function Icon({ d, size = 14 }: { d: string; size?: number }) {
@@ -94,7 +94,7 @@ function UseModelPopover({ pos, name, modelKey, benchmark, onEnter, onLeave, onN
   const style: CSSProperties = { left: pos.left, top: pos.up ? undefined : pos.top, bottom: pos.up ? window.innerHeight - pos.top : undefined, width: POP_W };
   return createPortal(
     <div role="group" aria-label={`Ways to use ${name}`} className="bh-use-model-pop" style={style} data-bh-use-model-pop={modelKey} onMouseEnter={onEnter} onMouseLeave={onLeave}>
-      <p className="bh-use-model-pop-head"><DmMark /><span><small>Use this model</small><b>{name}</b></span></p>
+      <p className="bh-use-model-pop-head"><DmMark /><span><small>Run it yourself</small><b>{name}</b></span></p>
       <ul>
         {OPTIONS.map((o) => <li key={o.target}>
           <a href={useModelHref(modelKey, benchmark, o.target)} target="_blank" rel="noopener" onClick={() => onNavigate(o.target)} data-bh-use-model-option={o.target}>
@@ -104,6 +104,7 @@ function UseModelPopover({ pos, name, modelKey, benchmark, onEnter, onLeave, onN
         </li>)}
       </ul>
       <a className="bh-use-model-pop-all" href={useModelHref(modelKey, benchmark)} target="_blank" rel="noopener" onClick={() => onNavigate('hub')}>All options on Decision Models →</a>
+      <p className="bh-use-model-pop-note" data-bh-use-model-disclosure>{USE_MODEL_DISCLOSURE}</p>
     </div>,
     document.body,
   );
@@ -153,6 +154,15 @@ export function UseModelButton({ modelKey, name, benchmark = 'jevbench', classNa
     </a>
     {pos && <UseModelPopover pos={pos} name={name} modelKey={modelKey} benchmark={benchmark} onEnter={() => clearTimeout(timer.current)} onLeave={() => later(close, 220)} onNavigate={onNavigate} />}
   </span>;
+}
+
+/** Page-level disclosure under a ranking: renders only while the buttons are visible. */
+export function UseModelNote({ className = '' }: { className?: string }) {
+  const enabled = usePreviewEnabled();
+  if (!enabled) return null;
+  return <p className={`bh-muted text-[11.5px] leading-snug ${className}`} data-bh-use-model-note>
+    <b>Use</b> = run this open-weights model yourself: own endpoint, API, local install or hardware, on Decision Models. {USE_MODEL_DISCLOSURE}
+  </p>;
 }
 
 /** Row-level entry: renders the button for open-weights rows the hub knows, nothing for everything else. */

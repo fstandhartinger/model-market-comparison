@@ -1,4 +1,6 @@
-// "Use this model" entry on JevBench (open weights) and ImageJevBench rows. PREVIEW: hidden from visitors until
+// "Use this model" entry on JevBench (open weights) and ImageJevBench rows. Framing (27 Oct 2026): run open-weights decision
+// models yourself instead of depending on a closed company; every open-weights row gets the same link, it never touches
+// scores or ranks, and the page says that Decision Models is run by the same company. PREVIEW: hidden from visitors until
 // Florian's GO (not before the Decision Models unstealth). Flip USE_MODEL_PUBLIC to true to roll it out; until then it
 // only renders in a tab opened with the unpublished ?bh-pv=<token> link. It lasts for that tab only (sessionStorage),
 // always shows a PREVIEW banner, and any other ?bh-pv value or the banner's exit button switches it off (10 Oct 2026).
@@ -29,8 +31,13 @@ export function useModelSlug(key: string, benchmark: UseModelBenchmark): string 
 
 export function useModelHref(key: string, benchmark: UseModelBenchmark, target: UseModelTarget = 'hub'): string {
   const hash = target === 'hub' ? '' : `#${USE_MODEL_ANCHORS[target]}`;
-  return `${USE_MODEL_HUB}/${useModelSlug(key, benchmark)}?ref=${benchmark}${hash}`;
+  const slug = useModelSlug(key, benchmark);
+  // Attribution for the Decision Models side (board #22 #28951): ref stays for the hub, utm_* for its analytics.
+  return `${USE_MODEL_HUB}/${slug}?ref=${benchmark}&utm_source=benchmarkheaven&utm_medium=use-button&utm_content=${encodeURIComponent(slug)}${hash}`;
 }
+
+/** One-line disclosure shown in the hover panel and under each ranking while the entry is visible. */
+export const USE_MODEL_DISCLOSURE = 'Decision Models is run by the same company as Benchmark Heaven. Every open-weights row gets the same link, whether or not we serve the model; it never affects scores or ranks.';
 
 /** Open-weights rows the hub knows: hosted APIs, wrappers and the Jev reference cannot be hosted or run by the visitor,
  *  and a row the hub has no page for yet shows no button instead of a dead link. */
