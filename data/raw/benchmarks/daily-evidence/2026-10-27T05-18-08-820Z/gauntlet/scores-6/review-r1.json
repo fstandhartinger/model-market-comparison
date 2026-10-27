@@ -1,0 +1,48 @@
+{
+  "artifact_id": "scores-6",
+  "artifact_sha256": "7472d1aad47ac5bfd4fe6642ecf3d0c32635bafd5c1c30a55088a9ccf2e4eee5",
+  "round": 1,
+  "verdict": "blocked",
+  "coverage_checked": [
+    "vendor:DeepSeek-V3:swe-bench-verified::snapshot-2026-09-10",
+    "c1"
+  ],
+  "errors_found": 4,
+  "findings": [
+    {
+      "id": "f1",
+      "severity": "blocker",
+      "location": "row vendor:DeepSeek-V3:swe-bench-verified::snapshot-2026-09-10 benchmark_id",
+      "evidence": "Source Table 6 (arXiv 2412.19437v2) lists 'SWE Verified (Resolved)' with no snapshot; source is from Dec 2024. Artifact benchmark_id includes 'snapshot-2026-09-10' not present in source.",
+      "repair": "Remove unsupported snapshot from benchmark_id or supply a source that supports it; if the snapshot is a required identity, the source must be updated to a matching snapshot."
+    },
+    {
+      "id": "f2",
+      "severity": "major",
+      "location": "row source.published_at",
+      "evidence": "published_at is null; criterion c1 requires source date; primary evidence does not include a publication date.",
+      "repair": "Populate published_at from arXiv metadata (e.g., 2024-12-27) or mark as unavailable; current null fails the criterion."
+    },
+    {
+      "id": "f3",
+      "severity": "minor",
+      "location": "row subject.variant/model_id",
+      "evidence": "Source identifies DeepSeek-V3 chat model but no variant; artifact sets variant 'default' and model_id 'deepseek-v3-dec-24::default'.",
+      "repair": "Remove variant or mark as unknown; do not infer a variant not in source."
+    },
+    {
+      "id": "f4",
+      "severity": "minor",
+      "location": "row protocol",
+      "evidence": "Protocol includes 'overall' which is not explicitly stated in source; source describes Table 6 and settings without 'overall'.",
+      "repair": "Remove 'overall' or clarify its basis."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "Read-only review; cannot recompute SHA-256 or verify transport/qualification checks; owner performs those separately."
+  ],
+  "missing_evidence": [
+    "Exact publication date for arXiv 2412.19437v2"
+  ]
+}

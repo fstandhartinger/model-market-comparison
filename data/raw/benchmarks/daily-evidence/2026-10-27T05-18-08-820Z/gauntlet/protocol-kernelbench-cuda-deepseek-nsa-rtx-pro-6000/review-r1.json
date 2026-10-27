@@ -1,0 +1,22 @@
+{
+  "artifact_id": "protocol-kernelbench-cuda-deepseek-nsa-rtx-pro-6000",
+  "artifact_sha256": "106e3ed5770f2399032cd76ef25ac0ad13ad843f58eaa616992a43c991185a9c",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": ["kernelbench-cuda-deepseek-nsa::rtx-pro-6000", "c1", "c2"],
+  "errors_found": 1,
+  "findings": [
+    {
+      "id": "kernelbench-cuda-deepseek-nsa::rtx-pro-6000::version_status",
+      "severity": "major",
+      "location": "version_status field of row kernelbench-cuda-deepseek-nsa::rtx-pro-6000",
+      "evidence": "Row claims version_status='published' but no captured source publishes a release/version identifier for this '02_deepseek_nsa' board. leaderboard.json has schema_version 1 (a schema id, not a board release identifier) and generated_from_summary.tag 'v2' (an internal import tag describing 'benchmarks/cuda/outputs/runs', not a publishable board release identifier); SPEC.md is dated but offers no release identifier line; kernelbench.com/cuda shows only tab labels. Per criterion c2, 'published' requires the page to publish a release identifier that the version copies; no source provides one.",
+      "repair": "Set version_status to 'snapshot' unless a maintainer-published release identifier for the board is captured in a source. The row's version 'rtx-pro-6000' is also a hardware board name, not a release identifier, so it cannot support 'published'."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "Owner separately performs hash/transport/qualification checks; I cannot recompute hashes or verify the transport envelope. No errors found in that area."
+  ],
+  "missing_evidence": []
+}

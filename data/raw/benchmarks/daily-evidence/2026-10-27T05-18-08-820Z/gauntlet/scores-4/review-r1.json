@@ -1,0 +1,22 @@
+{
+  "artifact_id": "scores-4",
+  "artifact_sha256": "964b957ecb7b141ed90961d2611d2720cb3abd02ee73db0cd11016dea813823c",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/retail",
+    "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/airline",
+    "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/telecom",
+    "c1"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Units 'percent' not explicitly labeled in the README table; inferred by convention from percentage-style scores, not stated verbatim in source.",
+    "I cannot recompute row/artifact SHA-256 hashes; owner-side hash/transport verification is outside my read-only execution limits.",
+    "harness is null for all rows; README does not publish a specific evaluation harness for TAU2, so null reflects absence rather than a verified harness.",
+    "published_at null because the README lacks an explicit publication timestamp; retrieval timestamp is recorded instead."
+  ],
+  "missing_evidence": []
+}

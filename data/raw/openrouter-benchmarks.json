@@ -3,18 +3,18 @@
   "collected_at": "2026-10-27",
   "method": "scripts/fetch-openrouter-benchmarks.mjs (2026-10-27): two authenticated GETs of /api/v1/benchmarks (source=openrouter&include_run_config=true, kept as own_data, and unfiltered). Terms evaluated 2026-09-15 — see openrouter-benchmarks.method.md: the payload's meta.citation is documented as \"Required attribution when republishing this data\" (per-source). Display attribution: \"OpenRouter Benchmarks\" linked to openrouter.ai/benchmarks.",
   "terms": "Source: OpenRouter evals (openrouter.ai) via OpenRouter (openrouter.ai/rankings).",
-  "as_of": "2026-10-27T00:01:12.089Z",
-  "own_as_of": "2026-10-24T21:02:58.473Z",
+  "as_of": "2026-10-27T03:32:35.022Z",
+  "own_as_of": "2026-10-27T03:32:35.022Z",
   "own_citation": "Source: OpenRouter evals (openrouter.ai) via OpenRouter (openrouter.ai/rankings).",
   "counts": {
-    "total_rows": 1901,
-    "own_rows": 334,
+    "total_rows": 1903,
+    "own_rows": 336,
     "aa_rows": 353,
     "design_arena_rows": 1214,
-    "models": 420
+    "models": 422
   },
-  "response_sha256": "00f5b386eacd6507dbb46c71cf204f9d791427c8f0680899196178f60ef539a8",
-  "own_response_sha256": "6a24c1c93a0a475a28d8ee0fa216ceca1258903a7a4f128fbd2f62e5a912757c",
+  "response_sha256": "f3d587118760f0c0f4f2772968a5eb58f68320f14ef1b22a54c4dd887306e969",
+  "own_response_sha256": "ae8654b14c973c8224b9206c774b5a1d30fb24a622f084fa5ac902f052519ca4",
   "own_data": [
     {
       "source": "openrouter",
@@ -260,6 +260,17 @@
     },
     {
       "source": "openrouter",
+      "model_permaslug": "openai/gpt-6.1-terra",
+      "display_name": "GPT-6.1-Terra",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.9141410000000001,
+      "accuracy_stddev": null,
+      "avg_cost_per_task": 0.0075055656565656565,
+      "total_tasks": 198,
+      "last_run_timestamp": "2026-10-27T03:32:35.022Z"
+    },
+    {
+      "source": "openrouter",
       "model_permaslug": "z-ai/glm-5.3-flash",
       "display_name": "GLM 5.3 Flash",
       "benchmark_type": "gpqa_diamond",
@@ -323,6 +334,17 @@
       "avg_cost_per_task": 0.03395674834694671,
       "total_tasks": 2571,
       "last_run_timestamp": "2026-10-24T16:12:49.069Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "moonshotai/kimi-k3.1-pro",
+      "display_name": "Kimi K3.1 Pro",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.9040400000000001,
+      "accuracy_stddev": null,
+      "avg_cost_per_task": 0.021051848484848486,
+      "total_tasks": 198,
+      "last_run_timestamp": "2026-10-26T19:26:14.323Z"
     },
     {
       "source": "openrouter",
@@ -15544,8 +15566,8 @@
         "total": 0
       },
       "pricing": {
-        "prompt": "0.00000024",
-        "completion": "0.00000098"
+        "prompt": "0.0000004",
+        "completion": "0.0000012"
       }
     },
     {
@@ -15829,8 +15851,8 @@
         "total": 0
       },
       "pricing": {
-        "prompt": "0.00000024",
-        "completion": "0.00000098"
+        "prompt": "0.0000004",
+        "completion": "0.0000012"
       }
     },
     {
@@ -16390,8 +16412,8 @@
         "total": 0
       },
       "pricing": {
-        "prompt": "0.00000024",
-        "completion": "0.00000098"
+        "prompt": "0.0000004",
+        "completion": "0.0000012"
       }
     },
     {
@@ -32859,6 +32881,17 @@
     },
     {
       "source": "openrouter",
+      "model_permaslug": "openai/gpt-6.1-terra",
+      "display_name": "GPT-6.1-Terra",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.9141410000000001,
+      "accuracy_stddev": null,
+      "avg_cost_per_task": 0.0075055656565656565,
+      "total_tasks": 198,
+      "last_run_timestamp": "2026-10-27T03:32:35.022Z"
+    },
+    {
+      "source": "openrouter",
       "model_permaslug": "z-ai/glm-5.3-flash",
       "display_name": "GLM 5.3 Flash",
       "benchmark_type": "gpqa_diamond",
@@ -32922,6 +32955,17 @@
       "avg_cost_per_task": 0.03395674834694671,
       "total_tasks": 2571,
       "last_run_timestamp": "2026-10-24T16:12:49.069Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "moonshotai/kimi-k3.1-pro",
+      "display_name": "Kimi K3.1 Pro",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.9040400000000001,
+      "accuracy_stddev": null,
+      "avg_cost_per_task": 0.021051848484848486,
+      "total_tasks": 198,
+      "last_run_timestamp": "2026-10-26T19:26:14.323Z"
     },
     {
       "source": "openrouter",

@@ -1,0 +1,34 @@
+{
+  "artifact_id": "scores-7",
+  "artifact_sha256": "b52e917e4a63b2a3d395d5319d3a215d622df2a3b8f07b6fe745a334e8accda7",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": [
+    "vendor:DeepSeek-V3:aider-polyglot::snapshot-2026-09-10",
+    "c1"
+  ],
+  "errors_found": 2,
+  "findings": [
+    {
+      "id": "f1-unsupported-benchmark-snapshot",
+      "severity": "major",
+      "location": "row vendor:DeepSeek-V3:aider-polyglot::snapshot-2026-09-10, field benchmark_id and row id",
+      "evidence": "Primary source Table 6 labels only 'Aider-Polyglot (Acc.)' and gives 49.6 for DeepSeek V3; no benchmark snapshot/version appears in the source text, URL, or file path. The row's benchmark_id 'aider-polyglot::snapshot-2026-09-10' and row id add 'snapshot-2026-09-10' without primary evidence.",
+      "repair": "Change benchmark_id and row id to a version actually stated in the source (e.g., 'aider-polyglot' referenced to arXiv 2412.19437v2), or include primary evidence that specifies the snapshot. Do not retain an unsupported snapshot string."
+    },
+    {
+      "id": "f2-missing-source-date",
+      "severity": "major",
+      "location": "row.source.published_at and row.subject.source_id",
+      "evidence": "source.published_at is null; the captured PDF text does not give a publication date, only the arXiv ID 2412.19437v2 and retrieved_at. The source_id claims 'December 2024 update' without a dated primary field in the packet.",
+      "repair": "Populate published_at from a verified arXiv metadata record included in the packet, or remove the 'December 2024 update' qualifier and mark the source date as unavailable in published_at."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "This review could not independently hash or fetch external arXiv metadata; the exact publication date of arXiv 2412.19437v2 is not given in the captured PDF text, so the Dec '24 qualifier and published_at cannot be fully verified from the packet alone."
+  ],
+  "missing_evidence": [
+    "published date of arXiv 2412.19437v2"
+  ]
+}

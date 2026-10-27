@@ -1,0 +1,63 @@
+{
+  "artifact_id": "scores-5",
+  "artifact_sha256": "7a79ec0b00b7fc01a84a4328071f07d3994bcb07aa515d0131e42f4c8c006276",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": [
+    "vendor:mistralai/Devstral-2-123B-Instruct-2512:swe-bench-verified::snapshot-2026-09-10",
+    "vendor:mistralai/Devstral-Small-2-24B-Instruct-2512:swe-bench-verified::snapshot-2026-09-10",
+    "c1"
+  ],
+  "errors_found": 6,
+  "findings": [
+    {
+      "id": "F1",
+      "severity": "major",
+      "location": "row1 source.published_at",
+      "evidence": "Source page contains 'December 9, 2025' (both SOURCE 1 and SOURCE 2), but row1 published_at is null.",
+      "repair": "Set published_at to the source publication date (e.g., '2025-12-09') or document why the date is not applicable."
+    },
+    {
+      "id": "F2",
+      "severity": "major",
+      "location": "row1 benchmark_id",
+      "evidence": "Source only states 'SWE-bench Verified'; no 'snapshot-2026-09-10' exists in the supplied source text.",
+      "repair": "Either remove the unsupported snapshot suffix or map it explicitly to a documented pipeline/benchmark version in the protocol."
+    },
+    {
+      "id": "F3",
+      "severity": "major",
+      "location": "row1 subject.model_id",
+      "evidence": "Source identifies the model as 'Devstral 2' and shows API id 'devstral-medium-latest'; 'devstral-2-123b::default' is not present.",
+      "repair": "Use the source model designation or provide an explicit, packet-supported mapping from the fixed subject identity to this model_id."
+    },
+    {
+      "id": "F4",
+      "severity": "major",
+      "location": "row2 source.published_at",
+      "evidence": "Source page contains 'December 9, 2025' (SOURCE 1/2), but row2 published_at is null.",
+      "repair": "Set published_at to the source publication date (e.g., '2025-12-09') or document why it is not applicable."
+    },
+    {
+      "id": "F5",
+      "severity": "major",
+      "location": "row2 benchmark_id",
+      "evidence": "Source only states 'SWE-bench Verified'; no 'snapshot-2026-09-10' appears in the supplied source text.",
+      "repair": "Remove the unsupported snapshot suffix or map it explicitly to a documented version in the protocol."
+    },
+    {
+      "id": "F6",
+      "severity": "major",
+      "location": "row2 subject.model_id",
+      "evidence": "Source identifies the model as 'Devstral Small 2'; no 'devstral-small-2::default' appears in the source text.",
+      "repair": "Use the source model designation or provide an explicit, packet-supported mapping from the fixed subject identity to this model_id."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "Owner-side hash verification/transport checks were not executed; the provided per-row and source hashes are assumed correct.",
+    "The snapshot suffix 'snapshot-2026-09-10' in required row ids and benchmark_id is not attested in the primary source; a catalog mapping is not included in the packet, so it is treated as an unverified claim.",
+    "The model_id strings ('devstral-2-123b::default', 'devstral-small-2::default') are not found in the source; their mapping to the fixed source_id/variant is not documented in the packet."
+  ],
+  "missing_evidence": []
+}

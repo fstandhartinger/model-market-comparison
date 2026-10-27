@@ -1,0 +1,29 @@
+{
+  "artifact_id": "scores-2",
+  "artifact_sha256": "5e79a260e1d5e5c1ee3182c956da7af9172d5b194c070e65ab37cbbc338b51e6",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "public:45c320abdc81295093747b64",
+    "public:d28ea86c9aa9200933c22f38",
+    "public:0b50aee3fd1edd9f5d2b0e8c",
+    "public:3f6f230c90d184ff164de9d4",
+    "public:285dad114cde14bcf4c3b5df",
+    "public:4a33d782ed6dbf15edee5b45",
+    "public:430bbd316a22df4068cbffb7",
+    "public:c5a7f7d6432745ea755f807b",
+    "public:b90528537b942e5e327600e1",
+    "c1"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Row hash binding (owner-computed SHA-256 per row) and file sha256 64bd80c7... could not be re-executed in this read-only review; treated owner hash and evidence sha256 as given.",
+    "Rows 0b50aee3 (deepseek-v4.1-flash::max) and 285dad11 (grok-4.7::xhigh) carry model_id values supported only by join_note retained-context entries (2026-09-19/2026-09-25), not by primary evidence in this packet; accepted as prior accepted subject identity per instructions, comparison_key is null.",
+    "Grading scale: August 2026 edition note (SOURCE 2) states 0–3 per response while general /brokenarxiv page (SOURCE 4) states 0–2; rows follow the edition's own statement and document the discrepancy; this is a recorded caveat, not a transcription error.",
+    "SOURCE 6 reports 1 accuracy value newly present today vs prior snapshot; this run's rows include that source state as captured; trend/change handling is outside supplied evidence.",
+    "Primary sources are MathArena's published competition table; published_at is null because no separate publication date is exposed for the board."
+  ],
+  "missing_evidence": []
+}

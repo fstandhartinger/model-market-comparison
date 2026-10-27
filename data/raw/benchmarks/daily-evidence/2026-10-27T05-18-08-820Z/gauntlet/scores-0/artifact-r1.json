@@ -1,0 +1,52 @@
+[
+  {
+    "id": "public:b311636f38189300c7ede210",
+    "benchmark_id": "eq-bench::4",
+    "subject": {
+      "source_id": "thinkingmachines/Inkling",
+      "name": "Inkling",
+      "model_id": "inkling::xhigh",
+      "variant": null,
+      "harness": null
+    },
+    "value": 1215.6,
+    "unit": "Elo",
+    "basis": "measured",
+    "source": {
+      "url": "https://eqbench.com/eqbench4/eqbench4_data.js?v=20260725-neighbours",
+      "retrieved_at": "2026-10-27T05:27:57.297216+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-10-27T05-18-08-820Z/3e1d3f2f07172a878221.gz",
+      "sha256": "3e1d3f2f07172a878221bb4170e45e7e36653d063d832af75645180ffe54891f",
+      "locator": "json_assignment; source row 14; thinkingmachines/Inkling; field elo"
+    },
+    "protocol": "Ranked Elo score from blind, bidirectional pairwise judging of multi-turn persona-chat transcripts by a three-judge LLM panel (soft Bradley–Terry fit, normalised against anchor models)",
+    "comparison_key": null,
+    "join_note": "Unique exact Hugging Face checkpoint URL in retained catalog metadata; source effort remains as published."
+  },
+  {
+    "id": "public:ee5a727b0f2aab504a0efad4",
+    "benchmark_id": "eq-bench::4",
+    "subject": {
+      "source_id": "minimax/minimax-m3",
+      "name": "minimax-m3",
+      "model_id": "minimax-m3::default",
+      "variant": null,
+      "harness": null
+    },
+    "value": 1143.9,
+    "unit": "Elo",
+    "basis": "measured",
+    "source": {
+      "url": "https://eqbench.com/eqbench4/eqbench4_data.js?v=20260725-neighbours",
+      "retrieved_at": "2026-10-27T05:27:57.297216+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-10-27T05-18-08-820Z/3e1d3f2f07172a878221.gz",
+      "sha256": "3e1d3f2f07172a878221bb4170e45e7e36653d063d832af75645180ffe54891f",
+      "locator": "json_assignment; source row 22; minimax/minimax-m3; field elo"
+    },
+    "protocol": "Ranked Elo score from blind, bidirectional pairwise judging of multi-turn persona-chat transcripts by a three-judge LLM panel (soft Bradley–Terry fit, normalised against anchor models)",
+    "comparison_key": null,
+    "join_note": "Exact display name, unique default catalog configuration; no effort alias inference."
+  }
+]

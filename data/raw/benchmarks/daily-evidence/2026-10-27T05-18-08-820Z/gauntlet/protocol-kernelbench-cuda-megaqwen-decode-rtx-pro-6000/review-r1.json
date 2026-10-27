@@ -1,0 +1,15 @@
+{
+  "artifact_id": "protocol-kernelbench-cuda-megaqwen-decode-rtx-pro-6000",
+  "artifact_sha256": "281df10e55b53ee8409b58c066527c9940e0dcc645df63602f73a2c4c8533ee0",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": ["kernelbench-cuda-megaqwen-decode::rtx-pro-6000", "c1", "c2"],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Cannot independently recompute hashes or run transport/qualification checks; relied on the owner-supplied SHA-256 bindings for the row and sources.",
+    "Excerpts are bounded projections; I compared the fields the row claims against the corresponding supplied primary fields and did not require unrelated payload fields."
+  ],
+  "missing_evidence": []
+}
