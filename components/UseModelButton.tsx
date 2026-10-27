@@ -104,7 +104,7 @@ function UseModelPopover({ pos, name, modelKey, benchmark, onEnter, onLeave, onN
         </li>)}
       </ul>
       <a className="bh-use-model-pop-all" href={useModelHref(modelKey, benchmark)} target="_blank" rel="noopener" onClick={() => onNavigate('hub')}>All options on Decision Models →</a>
-      <p className="bh-use-model-pop-note" data-bh-use-model-disclosure>{USE_MODEL_DISCLOSURE}</p>
+      <p className="bh-use-model-pop-note" data-bh-use-model-disclosure>{USE_MODEL_DISCLOSURE} <a href="/independence" className="text-accent underline">Why this link?</a></p>
     </div>,
     document.body,
   );
@@ -161,7 +161,7 @@ export function UseModelNote({ className = '' }: { className?: string }) {
   const enabled = usePreviewEnabled();
   if (!enabled) return null;
   return <p className={`bh-muted text-[11.5px] leading-snug ${className}`} data-bh-use-model-note>
-    <b>Use</b> = run this open-weights model yourself: own endpoint, API, local install or hardware, on Decision Models. {USE_MODEL_DISCLOSURE}
+    <b>Use</b> = run this open-weights model yourself: own endpoint, API, local install or hardware, on Decision Models. {USE_MODEL_DISCLOSURE} <a href="/independence" className="text-accent underline">Independence</a>
   </p>;
 }
 

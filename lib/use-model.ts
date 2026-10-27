@@ -6,6 +6,7 @@
 // always shows a PREVIEW banner, and any other ?bh-pv value or the banner's exit button switches it off (10 Oct 2026).
 
 import slugs from '../data/use-model-slugs.json';
+import optOutData from '../data/use-model-optout.json';
 
 export const USE_MODEL_PUBLIC = false;
 export const USE_MODEL_PARAM = 'bh-pv';
@@ -15,6 +16,10 @@ export const USE_MODEL_STORAGE_KEY = 'bh-use-model-preview';
 export const USE_MODEL_HUB = 'https://decisionmodels.io/models';
 
 export type UseModelBenchmark = 'jevbench' | 'imagejevbench';
+/** Author-requested link removals only; benchmark results remain untouched. */
+// Entries: { benchmark: 'jevbench' | 'imagejevbench', key: the exact row key }.
+const optOuts = optOutData as { benchmark: UseModelBenchmark; key: string }[];
+
 export type UseModelTarget = 'hub' | 'dedicated' | 'api' | 'local' | 'hardware';
 
 /** Hub card anchors on decisionmodels.io/models/<slug> (workstream D owns the hub; renamed here if D names them differently). */
@@ -42,6 +47,7 @@ export const USE_MODEL_DISCLOSURE = 'Decision Models is run by the same company 
 /** Open-weights rows the hub knows: hosted APIs, wrappers and the Jev reference cannot be hosted or run by the visitor,
  *  and a row the hub has no page for yet shows no button instead of a dead link. */
 export function useModelEligible(row: { key: string; api_flag?: boolean; listing?: string }, benchmark: UseModelBenchmark): boolean {
+  if (optOuts.some((entry) => entry.benchmark === benchmark && entry.key === row.key)) return false;
   if (row.api_flag) return false;
   if (row.listing && ['reference', 'wrapper', 'api_offering'].includes(row.listing)) return false;
   return row.key in SLUGS[benchmark];
