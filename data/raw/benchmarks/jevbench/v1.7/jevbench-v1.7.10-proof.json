@@ -117,7 +117,7 @@
    "price_reference": {
     "base": "Qwen/Qwen3.5-4B",
     "in": 0.03,
-    "listing": "qwen/qwen3.5-4b",
+    "listing": "deepinfra:Qwen/Qwen3.5-4B",
     "out": 0.15
    },
    "raw_sha256": "4e4ee3e1da2b58990e51ee471875a8c7d5e92a727c4024771d1d6703a8ae4927",
@@ -177,7 +177,7 @@
    "price_reference": {
     "base": "Qwen/Qwen3.5-4B",
     "in": 0.03,
-    "listing": "qwen/qwen3.5-4b",
+    "listing": "deepinfra:Qwen/Qwen3.5-4B",
     "out": 0.15
    },
    "raw_sha256": "6d02e677e68cd68383a789e4f720e025b4c14845a02c831a2ba95f8b6f7eaf67",
@@ -231,6 +231,21 @@
    }
   ],
   "button_tap": false,
+  "custom_weight_top_five_effect": {
+   "baseline": "v1.7.8 (FAIR receipt; supplementary to fresh v1.7.9 comparison)",
+   "covered_by": "fair top-five GO (Florian rule 25 Oct 2026)",
+   "key": "phillylabs_philly_decider_v2",
+   "mixed": {
+    "best_rank": 3,
+    "top_five_weightings": 1849
+   },
+   "open": {
+    "best_rank": 2,
+    "top_five_weightings": 31663
+   },
+   "source": "workers/r196-philly-fair/RESULT.json",
+   "weightings": 194480
+  },
   "fairness_check": {
    "engine": "claude-opus-5-5 account C effort medium",
    "path": "workers/r196-philly-fair/RESULT.json",
@@ -280,8 +295,8 @@
  },
  "source_inputs": {
   "cells_sha256": "6f8dc6a743a75358c8c32029a55dd19636d8a7caf320c36630e8c20c6970fc22",
-  "entry_sha256": "2d4ff761855ebeb160c18d4b1ba9ad80ea4d39d0d2ed2f4b5f7444d029e57673",
-  "scored_rows_sha256": "72f282f031446b6eeeb9407c7860fbe8dbcd3841ec3d57d8be9a101d1145857e"
+  "entry_sha256": "4acbe71075625669a60f941f982321aee13bab4d360a7d8d035d1e96291fe034",
+  "scored_rows_sha256": "5efe8d280c2f7e8fd1ac779ce6e004bf7a934090a751e1ffbc962b7731fa326f"
  },
  "topfive_diff_sha256": "853e4d3c2540bb4d789b466bcaa47fb1984941a86da2cc550b8c2b336c73d8b5"
 }

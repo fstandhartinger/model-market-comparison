@@ -13,7 +13,8 @@ for k in by:
   if after!=before:by[k].append({'list':r['label'],'before':before,'after':after,'entrant_rank':after.index(k)+1 if k in after else None})
 out={'status':'PASS','baseline':'v1.7.9','candidate':'v1.7.10','method':'Single-entrant insertion from full production ranking orders; all other new keys removed. Slider transitions separately retained.','lists':len(rows),'changed_lists_by_row':by,'counts':{k:len(v) for k,v in by.items()},'iota_paid_rule_covers_any_changes':True}
 (J/'receipts/CHANGED-LISTS-BY-ROW.json').write_text(json.dumps(out,indent=1,sort_keys=True)+'\n')
-lines=['# Fresh top-five comparison v1.7.9 → v1.7.10','']
+lines=['# Fresh top-five comparison v1.7.9 → v1.7.10','',
+ 'Philly also changes custom-weight top fives, covered by the fair top-five GO. The independent FAIR receipt (workers/r196-philly-fair/RESULT.json, v1.7.8 baseline) reports open: 31,663 of 194,480 weightings, best #2; mixed: 1,849 of 194,480 weightings, best #3. These supplementary receipt counts are not a fresh exhaustive v1.7.9 comparison.','']
 for k,rs in by.items():
  lines+=['## '+k,'',str(len(rs))+' watched lists change under single-row insertion.','']
  lines += [f'- {r["list"]}: entrant #{r["entrant_rank"]}' for r in rs]

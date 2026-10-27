@@ -6,11 +6,11 @@
  ],
  "files": {
   "carry": "271d1fc77a136a04a1eb6deb5480c52d4211eb2b66b2ac8bb31e80867e69003a",
-  "categories": "1c3e326799226bac4fc01c6c85873d3ee3b2cd3a8debf4141eabe04d276a7189",
+  "categories": "182d4246c22e02296a48c3a49de6e7d1b2e5b2737c18841340e270e6d9890a37",
   "history": "5cd8c1332226ea9c179883d2285c0d8b8cc593ae38f2645197364a7ddd9c83c1",
   "history-carry": "334e851944e92383ab3071e52b3012040c7023d0fe236395953169ebee8f0459",
-  "proof": "808b395fa7bd6d089ca0af8a706a005176fe5527869bdbccc0e0261853b8ef27",
-  "results": "a64a249cdb08fc6d642c59043e7591dfecf15ce6296f503f29d9b9ac073d7b80"
+  "proof": "7f3443c03d549f33aaf867f97725eba2b9ca1967c47e0f8b15b0a345969f96a3",
+  "results": "6cc676e03fd01dcbf9a307c9e02b2ef94b1b5a33a17ec89165c284a73d7ce417"
  },
  "link_fixed_rows": [
   "singularity-super-decider",
@@ -117,7 +117,7 @@
    "price_reference": {
     "base": "Qwen/Qwen3.5-4B",
     "in": 0.03,
-    "listing": "qwen/qwen3.5-4b",
+    "listing": "deepinfra:Qwen/Qwen3.5-4B",
     "out": 0.15
    },
    "raw_sha256": "4e4ee3e1da2b58990e51ee471875a8c7d5e92a727c4024771d1d6703a8ae4927",
@@ -177,7 +177,7 @@
    "price_reference": {
     "base": "Qwen/Qwen3.5-4B",
     "in": 0.03,
-    "listing": "qwen/qwen3.5-4b",
+    "listing": "deepinfra:Qwen/Qwen3.5-4B",
     "out": 0.15
    },
    "raw_sha256": "6d02e677e68cd68383a789e4f720e025b4c14845a02c831a2ba95f8b6f7eaf67",
@@ -231,6 +231,21 @@
    }
   ],
   "button_tap": false,
+  "custom_weight_top_five_effect": {
+   "baseline": "v1.7.8 (FAIR receipt; supplementary to fresh v1.7.9 comparison)",
+   "covered_by": "fair top-five GO (Florian rule 25 Oct 2026)",
+   "key": "phillylabs_philly_decider_v2",
+   "mixed": {
+    "best_rank": 3,
+    "top_five_weightings": 1849
+   },
+   "open": {
+    "best_rank": 2,
+    "top_five_weightings": 31663
+   },
+   "source": "workers/r196-philly-fair/RESULT.json",
+   "weightings": 194480
+  },
   "fairness_check": {
    "engine": "claude-opus-5-5 account C effort medium",
    "path": "workers/r196-philly-fair/RESULT.json",
@@ -266,7 +281,7 @@
   "receipt_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
   "verdict": "PASS"
  },
- "publication_sha256": "08ae77e180692eac3931831a9faad61883381a06f38cb3cb49a9ed6d8660dcc8",
+ "publication_sha256": "6f59fd75075e5e6f8bb8ec132f4912d026cb3ef5456475abdefeef64f5c79a00",
  "release": "v1.7.10",
  "remeasured_rows": {},
  "repriced_rows": {},

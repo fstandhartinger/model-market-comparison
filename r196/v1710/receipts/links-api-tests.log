@@ -1,0 +1,45 @@
+TAP version 13
+# Subtest: 1: OpenAI Decisions is added once with the lane figures, ranked, equated on A5 u P
+ok 1 - 1: OpenAI Decisions is added once with the lane figures, ranked, equated on A5 u P
+  ---
+  duration_ms: 1.972703
+  ...
+# Subtest: 2: A4 rows keep the A4 round and offsets
+ok 2 - 2: A4 rows keep the A4 round and offsets
+  ---
+  duration_ms: 0.249036
+  ...
+# Subtest: 3: it is ranked \#7 in API Composite A after CR-338 and never on the open-weights board
+ok 3 - 3: it is ranked \#7 in API Composite A after CR-338 and never on the open-weights board
+  ---
+  duration_ms: 0.747656
+  ...
+# Subtest: 4: the preliminary public-set row is superseded (board key present, so the chart extras drop it)
+ok 4 - 4: the preliminary public-set row is superseded (board key present, so the chart extras drop it)
+  ---
+  duration_ms: 1.529471
+  ...
+# Subtest: v1.7.10 Super Decider changes exactly repo besides ranks, preserving source and provenance
+ok 5 - v1.7.10 Super Decider changes exactly repo besides ranks, preserving source and provenance
+  ---
+  duration_ms: 4.568253
+  ...
+# Subtest: v1.7.10 latest feed projection uses vendor links for both API rows
+ok 6 - v1.7.10 latest feed projection uses vendor links for both API rows
+  ---
+  duration_ms: 46.97325
+  ...
+# Subtest: v1.7.10 actual API roster JSX renders vendor hrefs for both rows
+ok 7 - v1.7.10 actual API roster JSX renders vendor hrefs for both rows
+  ---
+  duration_ms: 147.380178
+  ...
+1..7
+# tests 7
+# suites 0
+# pass 7
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1329.881853

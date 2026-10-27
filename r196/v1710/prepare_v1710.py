@@ -1,5 +1,6 @@
 """Capture trusted aggregate outputs; sealed raw only hashed, never rendered."""
 import copy,hashlib,json,pathlib,re,socket
+from pricing_reference_v1710 import reference_text
 J=pathlib.Path(__file__).resolve().parent;W=J.parents[1];B=pathlib.Path('/home/flori/jobs/jevbench-add-requests-20260919');I=pathlib.Path('/home/flori/jobs/jevbench-auto-intake/r24-score');P='645fd82eac728d597048bec0995ecd3ac896566e269fb6c9a1fdb84c171a9ac4'
 L=lambda p:json.loads(p.read_text());sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest();put=lambda p,d:p.write_text(json.dumps(d,indent=1,sort_keys=True,ensure_ascii=False)+'\n')
 assert socket.gethostname()=='Ubuntu-2204-jammy-amd64-base'
@@ -20,12 +21,18 @@ for k,ep,eh,F,rh,expect,share,answered,cost,allcost in specs:
   en['display']='iota-decide-4b-v0.3 (Macrocosmos, letter-readout 4B, self-hosted)';pin='macrocosm-os/iota-decide-4b-v0.3@'+en['revision']
  else:pin='aminry/decisio@'+en['revision']+' + weights Qwen/Qwen3.6-35B-A3B-FP8@95a723d08a9490559dae23d0cff1d9466213d989'
  # Resolve only the tariff placeholder; no scored value is changed.
- ref='deepinfra:Qwen/Qwen3.5-4B at USD 0.03/0.15 per million input/output tokens' if '4b' in k or k.startswith('philly') else 'deepinfra:Qwen/Qwen3.6-35B-A3B at USD 0.15/1.00 per million input/output tokens'
+ ref=reference_text(k,en)
  for f in ['cost_basis','code_revision','endpoint_condition','disclosure']:
   original=en.get(f,'');s=original.replace('{REF}',ref).replace('aa2afcd5a58d0c4cc0e3d6867d590c70b6ac58e971410c27faf9628f97bcf8b7, r168 re-freeze of 22 Oct 2026',P+', re-frozen 26 Oct 2026')
   s=s.replace('Per the release-owner position,','Under the published treatment,').replace('release-owner ruling','billing decision').replace('release owner','evaluator').replace('lead-verified','evaluator-verified').replace('release-review finding','review finding').replace('(custody disclosure)','(preregistration disclosure)').replace('Custody noted the edit, accepted it','The evaluator recorded and accepted the edit').replace('custody confirmed','the evaluator confirmed')
   s=s.replace(', deputy ruling #22794','').replace('board #22794', 'the earlier measurement').replace('#22794', 'the earlier measurement')
   s=re.sub(r'\branked\b','included',s,flags=re.I).replace('ranking uses','view uses')
+  if k.startswith('decisio') and f=='cost_basis':
+   old_audit='The native-usage audit passed, but the separate per-request engine-residual audit described in the preregistration was not implemented in the run receipts.'
+   assert s.count(old_audit)==1
+   s=s.replace(old_audit,'An offline, token-boundary-aware per-item audit of the front pad on the frozen kit (no new measurement) found a residual of 0 on all 1,485 answered items.').replace('; the missing separate audit remains a review finding','')
+  if k.startswith('philly') and f=='cost_basis':
+   text_changes.append({'key':k,'field':f,'change':'Pricing module pin rewritten from aa2afcd5 to 645fd82e; tariff identical (USD 0.03/0.15 per million input/output tokens); no reprice.'})
   if s!=original:text_changes.append({'key':k,'field':f,'before_sha256':hashlib.sha256(original.encode()).hexdigest(),'after_sha256':hashlib.sha256(s.encode()).hexdigest()})
   en[f]=s
  d={'registry':reg,'measured_on':'2026-10-26','raw_sha256':rh,'model_pin':pin};r={'entry_path':str(ep),'entry_sha256':eh,'raw_sha256':rh,'raw_verified_in_place':True,'registry_sha256':sha(F/'REGISTRY.json')}

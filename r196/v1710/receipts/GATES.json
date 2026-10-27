@@ -628,13 +628,21 @@
   },
   "status": "PASS"
  },
+ "FULL-SUITE-SCOPE": {
+  "base": "62ae1e003bb1763128b1b6e57a35c5d87f96da28",
+  "full_suite_rerun": true,
+  "outside_r196_source_changes": "Generated lib/jevbench-v1710-release.mjs validator reference literal updated to match module-derived iota/Philly proof references.",
+  "prior_full_suite_log": "r196/v1710/receipts/fulltest.log",
+  "reason": "The proof-reference check in the generated loader now changes, so run the full suite once.",
+  "status": "PASS"
+ },
  "HELPERS": {
   "fairness_negative_cases": 2,
   "fixture_grants_no_authority": true,
   "flip_dry_run": true,
   "pending_freeze_refused": true,
   "real_flip_with_fixture_refused": true,
-  "real_manifest_unchanged": "942fbbd5f89a59f0430a46c21864e0326c2d72abfeb474509de0165be48aecfc",
+  "real_manifest_unchanged": "6d36b9d86b4abe19ba9d50ea56353294dac4f4f3c909ae4874e8167000e6801a",
   "seal_write_refused": true,
   "status": "PASS",
   "synthetic_freeze_dry_run": true
@@ -665,19 +673,45 @@
   "status": "PASS",
   "visual_inspection": "Card viewed; no clipping or overlap"
  },
+ "PRICING-REFERENCES": {
+  "decisio_cost_unchanged_usd_per_1000_rounded": 0.178942,
+  "negative_cases_refused": 12,
+  "new_rows": {
+   "decisio-qwen3.6-35b-a3b-v090": {
+    "base": "Qwen/Qwen3.6-35B-A3B",
+    "in": 0.15,
+    "listing": "qwen/qwen3.6-35b-a3b",
+    "out": 1.0
+   },
+   "iota-decide-4b-v0.3": {
+    "base": "Qwen/Qwen3.5-4B",
+    "in": 0.03,
+    "listing": "deepinfra:Qwen/Qwen3.5-4B",
+    "out": 0.15
+   },
+   "phillylabs_philly_decider_v2": {
+    "base": "Qwen/Qwen3.5-4B",
+    "in": 0.03,
+    "listing": "deepinfra:Qwen/Qwen3.5-4B",
+    "out": 0.15
+   }
+  },
+  "pricing_module_sha256": "645fd82eac728d597048bec0995ecd3ac896566e269fb6c9a1fdb84c171a9ac4",
+  "status": "PASS"
+ },
  "REPRO": {
   "files": {
    "app/api/jevbench/v1.7.10/route.ts": "b2c77e8ed86709e88dcc47085993b0757e18ead34e4308297938c51003fd3d64",
    "app/jev-models/v1.7.10/page.tsx": "68496b5523ef6f5fee5272bec1841ed3e50b6e9aee96e0a476af24b9ea867df7",
    "data/jevbench-architecture.json": "e3a127a7df41d2bb9bda9f4aecbb59dba430e37153b181e9d0d3fd2b70eabbf7",
    "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.10-carry.json": "271d1fc77a136a04a1eb6deb5480c52d4211eb2b66b2ac8bb31e80867e69003a",
-   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.10-categories.json": "1c3e326799226bac4fc01c6c85873d3ee3b2cd3a8debf4141eabe04d276a7189",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.10-categories.json": "182d4246c22e02296a48c3a49de6e7d1b2e5b2737c18841340e270e6d9890a37",
    "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.10-history-carry.json": "334e851944e92383ab3071e52b3012040c7023d0fe236395953169ebee8f0459",
    "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.10-history.json": "5cd8c1332226ea9c179883d2285c0d8b8cc593ae38f2645197364a7ddd9c83c1",
-   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.10-proof.json": "808b395fa7bd6d089ca0af8a706a005176fe5527869bdbccc0e0261853b8ef27",
-   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.10-publication.json": "942fbbd5f89a59f0430a46c21864e0326c2d72abfeb474509de0165be48aecfc",
-   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.10-results.json": "a64a249cdb08fc6d642c59043e7591dfecf15ce6296f503f29d9b9ac073d7b80",
-   "lib/jevbench-v1710-release.mjs": "fec58658ec9c7963021cc2c02326b440634cfab3c4402b4fa5f5ed503ba434b9"
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.10-proof.json": "7f3443c03d549f33aaf867f97725eba2b9ca1967c47e0f8b15b0a345969f96a3",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.10-publication.json": "6d36b9d86b4abe19ba9d50ea56353294dac4f4f3c909ae4874e8167000e6801a",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.10-results.json": "6cc676e03fd01dcbf9a307c9e02b2ef94b1b5a33a17ec89165c284a73d7ce417",
+   "lib/jevbench-v1710-release.mjs": "a1365a81e8e8a0e8ab75dd8636d26270a0eb39391f02dfa69d97443877615704"
   },
   "status": "PASS",
   "two_rebuilds_identical": true
@@ -686,8 +720,9 @@
  "fulltest": {
   "cancelled": 0,
   "fail": 0,
-  "log_sha256": "08f184c5067f3353a930a87f758048dca9aec6b7fb47c7fc282ef0634ab339e6",
+  "log_sha256": "477407811c9c5525ff9c6d420ff2baf5bb9979d798737402ce1525a1e96942ae",
   "pass": 3831,
+  "run_scope": "Full suite rerun once after generated validator reference literal changed; see FULL-SUITE-SCOPE",
   "skipped": 8,
   "status": "PASS",
   "tests": 3839
@@ -700,23 +735,36 @@
   "log_sha256": "dd72c5d4afb11fb597642c40aedbfdc4c9a4fca7664bce7a9487ccfbfc4532b4",
   "status": "PASS"
  },
+ "links-api-tests": {
+  "cancelled": 0,
+  "fail": 0,
+  "log_sha256": "c5c8e8db9b8269a157120e3b2f6eafd8a2a107eb0f338bb3b5579bb8c01d81e6",
+  "pass": 7,
+  "skipped": 0,
+  "status": "PASS",
+  "tests": 7
+ },
  "preview-check": {
   "log_sha256": "8dc1970e979e55619b70fed6652c78c5722a242ccd10caf9be3e41392cc91b0b",
   "status": "PASS"
  },
+ "pricing-references": {
+  "log_sha256": "a879751f68c4b03a33529b03fdebb5f191f82e08c05de15dab0ac623d840a4de",
+  "status": "PASS"
+ },
  "production-build": {
-  "log_sha256": "26a3fd5447d0e451b499a34b5dd6421aa096fd2d9c32fa7e56ce67961415bad0",
+  "log_sha256": "639bc1a5ba2020b7ba4e2c646fd2acd2b0f7406cfa4fe998c707d9fed39c98be",
   "status": "PASS"
  },
  "publication_review": "PENDING",
  "release-tests": {
   "cancelled": 0,
   "fail": 0,
-  "log_sha256": "e113530dcfed5ff6a821b9559e8b83e8d1c20e68d52ff800be0241f1e14d672e",
-  "pass": 23,
+  "log_sha256": "54f448bcbb215811fca8f844a7b69a64e2c6666e8e58c08e0a027168bf353fda",
+  "pass": 67,
   "skipped": 0,
   "status": "PASS",
-  "tests": 23
+  "tests": 67
  },
  "repro": {
   "log_sha256": "7930c372c596124a8de2e93dc1f54a5be446df2b6044cac6e115cba976704919",

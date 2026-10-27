@@ -63,7 +63,7 @@ export function validateJevbenchV1710Bundle({manifest,artifact,categories,carry,
   if(s.v16.ci95.B!==1000)fail('frozen confidence method '+k);
   same(s.v16.ci95.composite,s.composite_ci95,'CI '+k);
   for(const f of ['axes','composite_ci95','decision_limit','model_pin'])same(proof.new_rows[k][f],s[f],'new row proof '+f+' '+k);
-  same(proof.new_rows[k].price_reference,{base:k.startsWith('decisio')?'Qwen/Qwen3.6-35B-A3B':'Qwen/Qwen3.5-4B',listing:k.startsWith('decisio')?'qwen/qwen3.6-35b-a3b':'qwen/qwen3.5-4b',in:k.startsWith('decisio')?0.15:0.03,out:k.startsWith('decisio')?1.0:0.15},'base price '+k);
+  same(proof.new_rows[k].price_reference,{base:k.startsWith('decisio')?'Qwen/Qwen3.6-35B-A3B':'Qwen/Qwen3.5-4B',listing:k.startsWith('decisio')?'qwen/qwen3.6-35b-a3b':'deepinfra:Qwen/Qwen3.5-4B',in:k.startsWith('decisio')?0.15:0.03,out:k.startsWith('decisio')?1.0:0.15},'base price '+k);
   if(!hex(proof.new_rows[k].raw_sha256)||!hex(proof.new_rows[k].scored_input_sha256))fail('self-hosted source pins '+k);
   if(/\/home\/|workers\/|#\d{4,}|Florian|\bPREREG\b|b7099b77|53a5052f/.test(JSON.stringify(s)))fail('internal self-hosted text '+k);
  }
