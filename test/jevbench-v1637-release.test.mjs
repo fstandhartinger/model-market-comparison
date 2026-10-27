@@ -1,3 +1,4 @@
+import { hasPublishedJevbenchV1711Release } from '../lib/jevbench-v1711-release.mjs';
 import { hasPublishedJevbenchV1710Release } from '../lib/jevbench-v1710-release.mjs';
 import { hasPublishedJevbenchV179Release } from '../lib/jevbench-v179-release.mjs';
 import { hasPublishedJevbenchV178Release } from '../lib/jevbench-v178-release.mjs';
@@ -108,7 +109,7 @@ test('live boards and the agent feed resolve each restated row exactly once with
 test('SEO model, comparison and full-text pages follow the merged feed with corrected costs and the re-measured Seb',async()=>{
  const data=await readJevbenchSeoData();
  // v1.7.0 restates the v1.6.1 board once published (same rows, same costs); before that the board follows v1.6.40.
- assert.equal(data.artifact.revision,(await hasPublishedJevbenchV1710Release()) ? 'v1.7.10' : (await hasPublishedJevbenchV179Release()) ? 'v1.7.9' : (await hasPublishedJevbenchV178Release()) ? 'v1.7.8' : (await hasPublishedJevbenchV177Release()) ? 'v1.7.7' : (await hasPublishedJevbenchV176Release()) ? 'v1.7.6' : (await hasPublishedJevbenchV175Release()) ? 'v1.7.5' : (await hasPublishedJevbenchV174Release())?'v1.7.4':(await hasPublishedJevbenchV173Release())?'v1.7.3':(await hasPublishedJevbenchV172Release())?'v1.7.2':(await hasPublishedJevbenchV171Release())?'v1.7.1':(await hasPublishedJevbenchV170Release())?'v1.7.0':'v1.6.43');assert.equal(data.artifact.base_revision,'v1.6.1');
+ assert.equal(data.artifact.revision,(await hasPublishedJevbenchV1711Release()) ? 'v1.7.11' : (await hasPublishedJevbenchV1710Release()) ? 'v1.7.10' : (await hasPublishedJevbenchV179Release()) ? 'v1.7.9' : (await hasPublishedJevbenchV178Release()) ? 'v1.7.8' : (await hasPublishedJevbenchV177Release()) ? 'v1.7.7' : (await hasPublishedJevbenchV176Release()) ? 'v1.7.6' : (await hasPublishedJevbenchV175Release()) ? 'v1.7.5' : (await hasPublishedJevbenchV174Release())?'v1.7.4':(await hasPublishedJevbenchV173Release())?'v1.7.3':(await hasPublishedJevbenchV172Release())?'v1.7.2':(await hasPublishedJevbenchV171Release())?'v1.7.1':(await hasPublishedJevbenchV170Release())?'v1.7.0':'v1.6.43');assert.equal(data.artifact.base_revision,'v1.6.1');
  for(const k of KEYS){const rows=data.systems.filter(s=>s.key===k);assert.equal(rows.length,1,k);assert.equal(rows[0].cost.usd_per_1000,V1637_ROW_SPEC[k].usd);}
  assert.equal(data.systems.filter(s=>s.key==='seb-9b').length,1);
  const llms=await jevbenchLlmsFull();

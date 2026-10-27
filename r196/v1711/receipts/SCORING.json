@@ -1,0 +1,86 @@
+{
+ "method": "frozen v1.7; native live reproduction; aggregate cost replacement before fixed-cost bootstrap; no item mutation",
+ "rows": {
+  "decisio-gemma-4-12b-tuned-commit": {
+   "off": {
+    "B": 1000,
+    "common_cost": 0.028138956228956232,
+    "cost_axis": 56.5207604825306,
+    "native_reproduces_live": false,
+    "noncost_equal": true,
+    "raw_sha256": "e9c889e1a138c875eb52521748e63b4344043c7a5598527c073172dd1c81594f",
+    "seed": 28
+   },
+   "share": {
+    "B": 1000,
+    "common_cost": 0.028138956228956232,
+    "cost_axis": 56.5207604825306,
+    "native_reproduces_live": true,
+    "noncost_equal": true,
+    "raw_sha256": "e9c889e1a138c875eb52521748e63b4344043c7a5598527c073172dd1c81594f",
+    "seed": 28
+   }
+  },
+  "decisio-gemma-4-12b-v080": {
+   "off": {
+    "B": 1000,
+    "common_cost": 0.026553689911983754,
+    "cost_axis": 57.27625361932229,
+    "native_reproduces_live": false,
+    "noncost_equal": true,
+    "raw_sha256": "20f9e33bb5977d29ae90d5cfa97494c411d868ce15449997dc27bb41c9b2d837",
+    "seed": 39
+   },
+   "share": {
+    "B": 1000,
+    "common_cost": 0.026553689911983754,
+    "cost_axis": 57.27625361932229,
+    "native_reproduces_live": true,
+    "noncost_equal": true,
+    "raw_sha256": "20f9e33bb5977d29ae90d5cfa97494c411d868ce15449997dc27bb41c9b2d837",
+    "seed": 39
+   }
+  },
+  "decisio-gemma-4-12b-v090": {
+   "off": {
+    "B": 1000,
+    "common_cost": 0.026553689911983754,
+    "cost_axis": 57.27625361932229,
+    "native_reproduces_live": false,
+    "noncost_equal": true,
+    "raw_sha256": "ecceaa4d8a481fd9ad1e47f2108656cc14a0cc5939247bfc2045d8838516be3c",
+    "seed": 40
+   },
+   "share": {
+    "B": 1000,
+    "common_cost": 0.026553689911983754,
+    "cost_axis": 57.27625361932229,
+    "native_reproduces_live": true,
+    "noncost_equal": true,
+    "raw_sha256": "ecceaa4d8a481fd9ad1e47f2108656cc14a0cc5939247bfc2045d8838516be3c",
+    "seed": 40
+   }
+  },
+  "decisio-gemma-4-31b-v080": {
+   "off": {
+    "B": 1000,
+    "common_cost": 0.047866641841570745,
+    "cost_axis": 49.59901120154938,
+    "native_reproduces_live": false,
+    "noncost_equal": true,
+    "raw_sha256": "3488203318811a1638d6299408fb409d5045654387f55f483e47909a4fe57595",
+    "seed": 41
+   },
+   "share": {
+    "B": 1000,
+    "common_cost": 0.047866641841570745,
+    "cost_axis": 49.59901120154938,
+    "native_reproduces_live": true,
+    "noncost_equal": true,
+    "raw_sha256": "3488203318811a1638d6299408fb409d5045654387f55f483e47909a4fe57595",
+    "seed": 41
+   }
+  }
+ },
+ "status": "PASS"
+}

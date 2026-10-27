@@ -1,0 +1,80 @@
+TAP version 13
+# Subtest: candidate validates; publication reader accepts either PENDING-hidden or independently reviewed PASS
+ok 1 - candidate validates; publication reader accepts either PENDING-hidden or independently reviewed PASS
+  ---
+  duration_ms: 3607.582429
+  ...
+# Subtest: noncost intelligence tamper refuses
+ok 2 - noncost intelligence tamper refuses
+  ---
+  duration_ms: 201.26187
+  ...
+# Subtest: noncost calibration tamper refuses
+ok 3 - noncost calibration tamper refuses
+  ---
+  duration_ms: 202.884039
+  ...
+# Subtest: noncost speed tamper refuses
+ok 4 - noncost speed tamper refuses
+  ---
+  duration_ms: 208.593891
+  ...
+# Subtest: noncost capability tamper refuses
+ok 5 - noncost capability tamper refuses
+  ---
+  duration_ms: 191.379417
+  ...
+# Subtest: corrected row gates refuse tamper r=>r.cost.kind='measured'
+ok 6 - corrected row gates refuse tamper r=>r.cost.kind='measured'
+  ---
+  duration_ms: 196.97789
+  ...
+# Subtest: corrected row gates refuse tamper r=>r.cost.common_basis.n_items=1500
+ok 7 - corrected row gates refuse tamper r=>r.cost.common_basis.n_items=1500
+  ---
+  duration_ms: 199.741549
+  ...
+# Subtest: corrected row gates refuse tamper r=>r.model_pin='wrong'
+ok 8 - corrected row gates refuse tamper r=>r.model_pin='wrong'
+  ---
+  duration_ms: 200.073172
+  ...
+# Subtest: corrected row gates refuse tamper r=>r.cost.basis+=' PLACEHOLDER'
+ok 9 - corrected row gates refuse tamper r=>r.cost.basis+=' PLACEHOLDER'
+  ---
+  duration_ms: 200.643441
+  ...
+# Subtest: corrected row gates refuse tamper r=>r.cost.basis+=' Florian'
+ok 10 - corrected row gates refuse tamper r=>r.cost.basis+=' Florian'
+  ---
+  duration_ms: 193.076194
+  ...
+# Subtest: changed top-five cannot publish with pending fairness
+ok 11 - changed top-five cannot publish with pending fairness
+  ---
+  duration_ms: 336.221801
+  ...
+# Subtest: unrelated carried row and cell tampering refuse
+ok 12 - unrelated carried row and cell tampering refuse
+  ---
+  duration_ms: 360.447873
+  ...
+# Subtest: proof reference tamper refuses
+ok 13 - proof reference tamper refuses
+  ---
+  duration_ms: 198.648638
+  ...
+# Subtest: proof recount tamper refuses
+ok 14 - proof recount tamper refuses
+  ---
+  duration_ms: 199.828746
+  ...
+1..14
+# tests 14
+# suites 0
+# pass 14
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 10121.703176

@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "/home/flori/wt/r196-v1711-build/r196/v1711/freeze_v1711.py", line 27, in <module>
+    check_approval(W,proof)
+  File "/home/flori/wt/r196-v1711-build/r196/v1711/approval_v1711.py", line 14, in check_approval
+    f=a['fairness_check'];assert f['verdict']=='FAIR','REFUSED: fairness PENDING or non-FAIR; bound FAIR required'
+AssertionError: REFUSED: fairness PENDING or non-FAIR; bound FAIR required

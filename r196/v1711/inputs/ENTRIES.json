@@ -1,0 +1,131 @@
+{
+ "decisio-gemma-4-12b-tuned-commit": {
+  "all_cost": 0.027857566666666674,
+  "common_cost": 0.028138956228956232,
+  "common_n": 1485,
+  "engine_input": 831272,
+  "entry": {
+   "author": "tachara-ai (Hugging Face)",
+   "base_model": "google/gemma-4-12B-it",
+   "code_revision": "THE AUTHOR'S OWN SERVER, run unmodified: aminry/decisio at 4f849ff2dbae10a53026e382ce3dd60b95780594 (one commit after tag v0.32.0 e7e8937f35b0611d327295563b0cffbeb8bafdc3; the commit changes README.md only, so every src/ file equals the tag; package decisio 0.32.0), installed on the pod with the author's own 'uv sync --extra serve --frozen' from the repository's uv.lock (sha256 d82e40ba4b3693a17e7cd85f17604d1f818fae6dad431293e3b4541932bbbbe3) with credentials absent, before any sealed byte; the sealed run itself had no network. Entrypoint: python -m decisio.serve.vllm_engine --base /model --max-model-len 32768 --host 127.0.0.1 --port 8000, every other flag at its 0.32.0 default (over-limit refuse, header-limit auto, concurrency serial, orders 1, think off, no adapters, no branch log, no task store, stock vLLM with no patches), HF offline flags set. The server's native endpoint POST /v1/systemone was used with no response shim and no launcher shim; the request path is the frozen v1.6 measurement driver with the frozen TypeSafe adapter. The only flag outside the author's defaults, --max-model-len 32768, fixes the context length: without it 0.32.0 picks an automatic length up to 65,536 that depends on the model card, which would make the refusal set card-dependent. On-pod asserts passed before any sealed input: distribution versions decisio 0.32.0, vllm 0.31.0, torch 2.13.0, transformers 5.17.0, triton 3.7.1 (tokenizers 0.23.2 in uv.lock; python 3.12); /health flavor report {name commit, served_name Decisio-12b-tuned-commit, overrides {}, pending []}; abstention_tasks {} (no task source configured, so no per-task calibration, head or abstention applies). Source review (J/r43-decisio12b/SOURCE-REVIEW.md, line by line over the request path): no branch on item text, ids, labels or item lists, no network, subprocess, eval or pickle on the path; no stop condition. Model: tachara-ai/Decisio-12b-tuned-commit at 245e00dc45abad14d693b1ebae4d4c7aa9cf72f1, a MERGED BF16 checkpoint (6 safetensors shards, 23,919,548,376 shard bytes; every file hashed against the repository SHA256SUMS on the node) of google/gemma-4-12B-it at 707f0a3b8a3c7ad586ed01e27eafbad8a27dd0f7 plus a rank-16 LoRA merged in fp32 and rounded once to bf16 (stochastic, seed 0, per the model card); on one CUDA device, no quantisation. Author code and weights were fetched by our code at the pinned revisions and ran only on the disposable rented pod (Florian standing rule #25610); custody #26740 item 3b (one first self-hosted use) and #26876, device ruling #26884 (after HOLD #26812), kit SHAS sha256 prefix 44085ba6. Independent reviews: runner, delta, full, F1 and F1b reviews (J/workers/review-decisio-runner, -delta, -full2, -f1, -f1b). Weights: 12B-class merged checkpoint, not an adapter.",
+   "cost_basis": "ESTIMATE; google/gemma-3-12b-it at USD 0.05/0.15 per million input/output tokens. Billed on engine-processed input (decisio adds a system turn and chat template, +78 tokens per answered item, that its own usage does not report); offline per-item recount, residual 0; corrected in v1.7.11 from the earlier usage-based USD 0.024239/1k. Exact engine input 831,272 tokens and output 1,485 tokens on this row's own 1,485-item common basis; USD 0.028139/1k common and USD 0.027858/1k all 1,500. The exact recount includes one token-boundary merge: 1,484 increments of 78 tokens and one of 77. Decisio also sends one registration prefill per new state boundary; an offline estimate (about 648,827 tokens; USD 0.049985/1k if billed) is not exact and not a lower bound, so it is disclosed, not priced. Estimated model tariff, not charged usage or a host quote.",
+   "cost_kind": "estimate",
+   "disclosure": "FIRST MEASUREMENT of Decisio-12b-tuned-commit in this intake (our own intake). A NEW ROW, A VARIANT OF THE DECISIO FAMILY: tachara-ai/Decisio-12b-tuned-commit is a different set of weights from the live decisio-gemma-4-12b-v080 and -v090 rows, which are the stock google/gemma-4-12B-it served by decisio; none of its 6 shard LFS sha256s equals the safetensors blob of google/gemma-4-12B-it at 707f0a3b, of google/gemma-4-31B-it at 842da379, of the decisio FP8 31B repository at eaf1e4fa, or of the weights behind the live decisio rows (byte-identity evidence only, not proof of independent training; check_siblings.py all_new_weights=true, custody #26740/#26806). It replaces and supersedes none of the live decisio rows; the release owner decides the family labelling (#26730 item 2). The model card states that a sibling repository, Decisio-12b-tuned-calibrated, holds the same weights and differs in decision_config.json only; that sibling was not measured and nothing is inferred about it. The name is 'Jev-compatible' only: it is a Decisio model, not a Jev model. FINE-TUNE OF GEMMA 4: a LoRA merged into google/gemma-4-12B-it (see code_revision). AUTHOR'S OWN SERVER on our rented hardware, run unmodified (see code_revision) with no shim. NATIVE OUTPUTS: probabilities for choice, noul and score from the option-letter readout (one prefill, vLLM max_tokens=1, softmax over the label tokens, think off) at the repository's shipped per-type temperatures (yes/no 3.314, score 2.1109, choice 2-10 options 2.1317, 11-26 options 1.8766, 27-255 options 1.7181); no generated explanation. CONFIGURATION: flavor 'commit', the only public flavor, exactly as shipped; we did not measure any other flavor or setting and infer nothing about one. COMMIT RULE (a disclosed non-raw, item-blind output transform, in the same way as the DOPEST 0.801 floor): for yes/no questions, a temperature-scaled P(yes) strictly between 0.20 and 0.80 is reported at the nearer band edge, 0.80 if it is above 0.5, otherwise 0.20 (exactly 0.5 goes to 0.20). The argmax never changes; the Calibration axis includes the effect of this transform, and we did not measure a variant without it. LABEL-SHAPE RULES ON BY DEFAULT: hide_index_keys, describe_options and desnake_labels. The author documents them as motivated by the Decision Index's BANKING77 format; they act on the shape of the labels of any request, never on item text, ids, gold labels or item lists (source review confirmed item-blind), and the answer keys are always the request's own keys. On the sealed draw they fired on 739 choice questions (describe_options), 375 yes/no questions (noul rendered as letters) and 11 (hide_index_keys); on the 231 public items they fired 139 / 74 / 0. TRAINING DATA (author statement, not independently verified): the model card says the training data is not disclosed, that no Decision Index or JevBench evaluation items were used in training or checkpoint selection, that the data was decontaminated against both boards' public test sets, and that official training splits of some public benchmarks were used under their licences. We did not inspect the training examples or check overlap with JevBench items; contamination of the sealed draw is unchecked. The card says the temperatures were fitted by minimum log loss per question type and choice band on the plain readout; it does not identify the data of that fit. LICENCE NOTE: Apache-2.0 per the model card, LICENSE and NOTICE on the weights and per the author server licence; the base is Gemma 4 under its own terms; the disposition is for the release owner. CONTEXT AND REFUSALS: the server refuses a row natively when even the plain layout (system turn, chat template, state, question, no header) exceeds its 32,767-token prompt limit (32,767 answered, 32,768 refused; boundary proven offline, and a row whose header alone pushes it over is answered on the plain layout instead); a refused row is never truncated. NOT ANSWERED, counted wrong: exactly the 15 pre-registered long items (v16-3343e14627d6a9, v16-d2ce3f280a2e4f, v16-492a0a1dca32c5, v16-f1bf85071689a3, v16-2aa5f519502bee, v16-cbc887a8fe3c2f, v16-fe185b92a09870, v16-10072e0bdd2f42, v16-d37a6cc608604e, v16-f443356c238c04, v16-ddb9a30708a3b5, v16-cd3d6eb68fcc5e, v16-f8dedc39795de0, v16-0b3461492ca533, v16-7e5ced7e715bc6) at positions 65, 169, 474, 482, 515, 573, 580, 729, 833, 899, 951, 1057, 1116, 1198, 1418 (zero-based, the draw's 15 standard long positions; plain-layout prompts of 76,531 to 81,726 tokens by our offline count), counted and frozen by the lead before launch (PREREG-DECISIO12B.md LEAD section; expected-refusals.json sha256 073f209861ee529ed39b73251da07f601f94d14514c9bda37514173fb27a395a); all returned HTTP 422 and the measured 422 set equals the preregistered set exactly (no unexpected failure; every other row HTTP 200). ANSWERED: 1,485 of 1,500. 10 s RULE: 0 decisions over 10 s, so no decision is scored wrong under the 10 s rule in the v1.7 share view (the frozen v1.6 and v1.7-off views apply no time limit); measured loopback median 0.058 s, p95 0.099 s, maximum 0.168 s over the 1,500 requests on this hardware. The v1.7 share ranking uses the common self-hosted latency estimate (2 times measured p50 plus 0.15 s). USAGE: the server-native input usage (715,443 tokens) equals our first-party count exactly, 0 mismatches; output_tokens 1 per answered row natively (1,485 in total). DETERMINISM (record-only): the first 50 requests were run twice; 3 of 50 were bit-identical, 0 argmax flips, maximum probability difference 0.0195 (batch nondeterminism of vLLM; a short smoke probe also varied between 0.8451876 and 0.8500589). The scored rows are the first run and stand. ATTEMPT HISTORY: one attempt, no earlier failed or discarded attempt on the sealed input; the pre-sealed smoke and gates passed before any sealed item. Custody #26740 item 3b admitted one first self-hosted use. Receipts: J/r43-decisio12b/attempt1-measured/out/decisio12b.",
+   "display": "Decisio 12B tuned commit (variant of the Decisio family)",
+   "endpoint_condition": "Evaluator-owned rented Verda GPU VM, one NVIDIA RTX PRO 6000 Blackwell Server Edition 96 GB (97,887 MiB, driver 580.178.04), FIN-03 (Finland, EU), PAYG non-spot, instance type 1RTXPRO6000.30V, instance id 356c1464-5a5d-4d0c-b5d6-c13e38eae70b, USD 2.558095890410959/h recorded by the runner, 150 GB disk. One VM for this row, one attempt. Measured 25 Oct 2026, VM window about 23:26-23:39Z, about USD 0.55 GPU rental (elapsed time at the recorded hourly rate). Author server at 127.0.0.1:8000, network cut before sealed input (offline proof and cut proof receipts), read-only model and input, private output, HF offline flags, no credentials. Before sealed input: model files re-hashed against SHA256SUMS; the dependency Triton gate, a pre-warm and the smoke passed (the smoke includes both 422 over-limit probes at 32,768 and 80k tokens); the TTL fit gate admitted the run. Input sha256 dfd36720077ef7c41ace367524896507c7f44ce71306fb3e659e8b85069d995b (v1.6-regular-20261012) was re-checked inside the container (match). Complete 1,500-row run, rc 0. Raw output sha256 e9c889e1a138c875eb52521748e63b4344043c7a5598527c073172dd1c81594f (the pull-hash receipt). Node-shred and local-shred receipts verified; exact-id teardown receipt confirms the VM closed. GPU rental is separate from the benchmark's estimated model tariff.",
+   "endpoint_kind": "gpu",
+   "explicit_reference": "google/gemma-3-12b-it",
+   "lane": "selfhosted",
+   "licence": "Apache-2.0 per the model card, LICENSE and NOTICE on the weights and the author server; base google/gemma-4-12B-it public, ungated, under its own terms (release owner decides licence and redistribution)",
+   "price_in_per_m": 0.05,
+   "price_kind": "estimate",
+   "price_out_per_m": 0.15,
+   "ranked": true,
+   "repo": "https://huggingface.co/tachara-ai/Decisio-12b-tuned-commit",
+   "revision": "245e00dc45abad14d693b1ebae4d4c7aa9cf72f1",
+   "source": "pod",
+   "support": {
+    "choice": "native",
+    "noul": "native",
+    "score": "native"
+   }
+  },
+  "g_med": 9.839526770355711,
+  "output": 1485,
+  "raw": "/home/flori/jevbench-sealed/v1.6-run/v1.6-regular-20261012/runs-auto-intake/decisio-12b-tuned-commit.raw.jsonl",
+  "release_dir": "/home/flori/jevbench-sealed/v1.6-run/v1.6-regular-20261012",
+  "seed": 28
+ },
+ "decisio-gemma-4-12b-v080": {
+  "all_cost": 0.02614653333333334,
+  "common_cost": 0.026553689911983754,
+  "common_n": 1477,
+  "engine_input": 779965,
+  "entry": {
+   "author": "Amin Roudaki (@aminry)",
+   "base_model": "google/gemma-4-12B-it",
+   "cost_basis": "ESTIMATE; google/gemma-3-12b-it at USD 0.05/0.15 per million input/output tokens. Billed on engine-processed input (decisio adds a system turn and chat template, +78 tokens per answered item, that its own usage does not report); offline per-item recount, residual 0; corrected in v1.7.11 from the earlier usage-based USD 0.022654/1k. Exact engine input 779,965 tokens and output 1,477 tokens on this row's own 1,477-item common basis; USD 0.026554/1k common and USD 0.026147/1k all 1,500. Estimated model tariff, not charged usage or a host quote.",
+   "cost_kind": "estimate",
+   "display": "decisio v0.8.0 on gemma-4-12B-it (frozen, one forward pass, self-hosted)",
+   "endpoint_kind": "gpu",
+   "explicit_reference": "google/gemma-3-12b-it",
+   "lane": "selfhosted",
+   "measurement_status": "measured 2026-10-06 on the live v1.6.0/v1.6.1 pool. github.com/aminry/decisio tag v0.8.0 (5b42101a191d222062a795194b0aedb5003bf6ea, verified against the GitHub refs API), installed with their own `uv sync --extra serve --frozen` so their lockfile fixes every version, and served with their own `python -m decisio.serve.vllm_engine --base gemma-4-12b`. --base carries google/gemma-4-12B-it@707f0a3b (bf16, 22.8 GiB) and that profile's measured settings - temperature 3.592 for every question type, a system turn, the chat template's own answer position, every single-token form of each letter summed. Frozen base: no fine-tuning, no adapter, no task registered. One RTX 6000 Ada 48 GB (Lium, Toronto). Latency axis uses the standard self-hosted x2 + 0.15 s adjustment. add-requests run 54, GitHub #169",
+   "price_in_per_m": 0.05,
+   "price_out_per_m": 0.15,
+   "ranked": true,
+   "source": "pod",
+   "support": {
+    "choice": "native",
+    "noul": "native",
+    "score": "native"
+   }
+  },
+  "g_med": 2.573387642438244,
+  "output": 1477,
+  "raw": "/home/flori/jobs/jevbench-add-requests-20260919/r160/v170/bases/pool/runs/decisio-gemma-4-12b-v080.jsonl",
+  "release_dir": "/home/flori/jevbench-sealed/v1.6-run/v1.6.0",
+  "seed": 39
+ },
+ "decisio-gemma-4-12b-v090": {
+  "all_cost": 0.02614653333333334,
+  "common_cost": 0.026553689911983754,
+  "common_n": 1477,
+  "engine_input": 779965,
+  "entry": {
+   "author": "Amin Roudaky / @aminry (roudaky@gmail.com)",
+   "base_model": "google/gemma-4-12B-it",
+   "cost_basis": "ESTIMATE; google/gemma-3-12b-it at USD 0.05/0.15 per million input/output tokens. Billed on engine-processed input (decisio adds a system turn and chat template, +78 tokens per answered item, that its own usage does not report); offline per-item recount, residual 0; corrected in v1.7.11 from the earlier usage-based USD 0.022654/1k. Exact engine input 779,965 tokens and output 1,477 tokens on this row's own 1,477-item common basis; USD 0.026554/1k common and USD 0.026147/1k all 1,500. Decisio also sends one registration prefill per new state boundary; an offline estimate (about 550,630 tokens; USD 0.045194/1k if billed) is not exact and not a lower bound, so it is disclosed, not priced. Estimated model tariff, not charged usage or a host quote.",
+   "cost_kind": "estimate",
+   "display": "decisio v0.9.0 on gemma-4-12B-it (frozen, one prefill per question, self-hosted)",
+   "endpoint_kind": "gpu",
+   "explicit_reference": "google/gemma-3-12b-it",
+   "lane": "selfhosted",
+   "measurement_status": "measured 2026-10-07 21:11:36-21:15:32Z on the live v1.6.0/v1.6.1 pool (inputs/input-selfhosted-1500.jsonl, sha256 901983ae...), 1,477 of 1,500 answered. github.com/aminry/decisio tag v0.9.0 = 333a0a849de7658969a8f8933b34a8097a8c3489 (verified against the GitHub refs API before the run and re-read as the pod's checked-out HEAD after it), Apache-2.0, installed with their own `uv sync --extra serve --frozen` so their lockfile fixes every version (decisio 0.9.0, torch 2.13.0+cu130, vllm 0.30.0, transformers 5.18.0) and served with their own command `python -m decisio.serve.vllm_engine --base gemma-4-12b`. --base carries google/gemma-4-12B-it@707f0a3b8a3c7ad586ed01e27eafbad8a27dd0f7 (bf16, 22.8 GiB) and that profile's own settings - temperature 3.592 for every question type, a system turn, the spaced layout read at the chat template's own answer position, every single-token form of each letter summed. Frozen base: no fine-tuning, no adapter, no task registered. UNCHANGED typesafe adapter and UNCHANGED run_v16.py; all eight checks of the unchanged smoke gate passed on synthetic requests before any sealed item was sent. A FOLLOW-UP OF THIS JOB'S OWN decisio-gemma-4-12b-v080 ROW (run 54, same pool, same basis, same rate), measured as a CANDIDATE: which version is listed is the release lane's decision. WHAT v0.9.0 CHANGES is prefix-cache state-boundary registration, request ticketing and engine-health probing; the whole readout package, serve/systemone.py, serve/temperature.py, serve/abstention.py and the entire vllm_plugin are BYTE-IDENTICAL between the two tags, and no temperature or prompt line moved (r61/receipts/DECISIO-V090-SOURCE-DIFF.json). THE 23 LONG ITEMS FAIL WITH A BARE HTTP 500 from the author's own server - vLLM raises VLLMValidationError because the rendered prompt exceeds the 32,768-token context the profile declares, and the server does not translate that into the 422 the harness scores as a refusal. They are counted wrong either way and they are exactly the 23 items the v1.6.1 common cost basis excludes (the ones the Jev reference itself refuses), but it is the author's own code and A FINDING TO REPORT, NOT A THING TO PATCH AROUND; no setting of theirs was changed and no retry was made. One NVIDIA RTX 6000 Ada Generation 48 GB (Lium, Toronto, CANADA) - the same card model and city on which run 54 measured the v0.8.0 row, chosen over the 96 GB class the author names because the 12B profile is proven to fit it. Latency axis uses the standard self-hosted x2 + 0.15 s adjustment. Serial, one decision per request, no retry, no batching, offline after setup, credential-free. add-requests run 61, PREREG-R61-AMENDMENT-2, benchmarkheaven.com/submit ref 65B71BD3 (bh-submit f05c3298-702f-4314-bc8e-f823d9bce858); previously GitHub #169 for v0.8.0",
+   "price_in_per_m": 0.05,
+   "price_out_per_m": 0.15,
+   "ranked": true,
+   "source": "pod",
+   "support": {
+    "choice": "native",
+    "noul": "native",
+    "score": "native"
+   }
+  },
+  "g_med": 2.573387642438244,
+  "output": 1477,
+  "raw": "/home/flori/jobs/jevbench-add-requests-20260919/r160/v170/bases/pool/runs/decisio-gemma-4-12b-v090.jsonl",
+  "release_dir": "/home/flori/jevbench-sealed/v1.6-run/v1.6.0",
+  "seed": 40
+ },
+ "decisio-gemma-4-31b-v080": {
+  "all_cost": 0.04713268666666666,
+  "common_cost": 0.047866641841570745,
+  "common_n": 1477,
+  "engine_input": 779965,
+  "entry": {
+   "author": "Amin Roudaki (@aminry)",
+   "base_model": "google/gemma-4-31B-it",
+   "cost_basis": "ESTIMATE; google/gemma-4-31b-it at USD 0.09/0.34 per million input/output tokens. Billed on engine-processed input (decisio adds a system turn and chat template, +78 tokens per answered item, that its own usage does not report); offline per-item recount, residual 0; corrected in v1.7.11 from the earlier usage-based USD 0.040847/1k. Exact engine input 779,965 tokens and output 1,477 tokens on this row's own 1,477-item common basis; USD 0.047867/1k common and USD 0.047133/1k all 1,500. Estimated model tariff, not charged usage or a host quote.",
+   "cost_kind": "estimate",
+   "display": "decisio v0.8.0 on gemma-4-31B-it (frozen, FP8 on load, one prefill per state, self-hosted)",
+   "endpoint_kind": "gpu",
+   "lane": "selfhosted",
+   "measurement_status": "measured 2026-10-06 on the live v1.6.0/v1.6.1 pool. github.com/aminry/decisio tag v0.8.0 (5b42101a191d222062a795194b0aedb5003bf6ea) - the same tag whose other two entries run 54 measured - installed with their own `uv sync --extra serve --frozen` so their lockfile fixes every version, and served with their own `python -m decisio.serve.vllm_engine --base gemma-4-31b`. --base carries google/gemma-4-31B-it@842da379, the official weights, FROZEN: no fine-tuning, no adapter, no task registered; vLLM 0.30.0 quantizes it to FP8 when it loads (30.6 GiB). That profile's measured settings: temperature 4.672 for choice questions and 5.252 for the rest, the 12B entry's prompt unchanged, a system turn, the chat template's own answer position, every single-token form of each letter summed, no tokens generated. New in 0.8.0 on this base and the reason it is worth its own row: several questions of a state are scored in ONE pass after a single prefill. The author's own limit is a 32,768-token prompt, so the pool's 23 items at ~80,000 tokens are a documented capacity limit, not a defect. THE AUTHOR STATES ONE 96 GB CARD; this is one H100 80 GB (Lium) and no flag of theirs was changed to make it fit. Latency axis uses the standard self-hosted x2 + 0.15 s adjustment. add-requests run 55, GitHub #169",
+   "price_in_per_m": 0.09,
+   "price_out_per_m": 0.34,
+   "ranked": true,
+   "source": "pod",
+   "support": {
+    "choice": "native",
+    "noul": "native",
+    "score": "native"
+   }
+  },
+  "g_med": 2.573387642438244,
+  "output": 1477,
+  "raw": "/home/flori/jobs/jevbench-add-requests-20260919/r160/v170/bases/pool/runs/decisio-gemma-4-31b-v080.jsonl",
+  "release_dir": "/home/flori/jevbench-sealed/v1.6-run/v1.6.0",
+  "seed": 41
+ }
+}

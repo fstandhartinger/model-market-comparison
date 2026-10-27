@@ -1,0 +1,220 @@
+{
+ "carried_rows": 296,
+ "carried_rows_equal_except": [
+  "rank",
+  "ranks"
+ ],
+ "exceptions": {
+  "decisio-gemma-4-12b-tuned-commit": "cost, composites, composite CIs, ranks and price fields only",
+  "decisio-gemma-4-12b-v080": "cost, composites, composite CIs, ranks and price fields only",
+  "decisio-gemma-4-12b-v090": "cost, composites, composite CIs, ranks and price fields only",
+  "decisio-gemma-4-31b-v080": "cost, composites, composite CIs, ranks and price fields only"
+ },
+ "link_fixed_rows": [],
+ "method": {
+  "decision_limit_s": 10,
+  "label": "v1.7",
+  "rule": "latency_s > 10.000 s -> failed",
+  "treatment": "share"
+ },
+ "new_rows": {},
+ "predecessor": {
+  "publication_sha256": "57912458277b63c5194153dd458619bd77e8cebd043542373092a9505c319c90",
+  "revision": "v1.7.10"
+ },
+ "pricing_module_sha256": "645fd82eac728d597048bec0995ecd3ac896566e269fb6c9a1fdb84c171a9ac4",
+ "publication_approval": {
+  "asks": [
+   {
+    "admission": "cost correction only, no new measurement",
+    "handoff": "board #28484/#28489",
+    "key": "decisio-gemma-4-12b-tuned-commit",
+    "relay": "release-owner rule #27240"
+   },
+   {
+    "admission": "cost correction only, no new measurement",
+    "handoff": "board #28484/#28489",
+    "key": "decisio-gemma-4-12b-v080",
+    "relay": "release-owner rule #27240"
+   },
+   {
+    "admission": "cost correction only, no new measurement",
+    "handoff": "board #28484/#28489",
+    "key": "decisio-gemma-4-12b-v090",
+    "relay": "release-owner rule #27240"
+   },
+   {
+    "admission": "cost correction only, no new measurement",
+    "handoff": "board #28484/#28489",
+    "key": "decisio-gemma-4-31b-v080",
+    "relay": "release-owner rule #27240"
+   }
+  ],
+  "button_tap": false,
+  "fairness_check": {
+   "path": "workers/r196-v1711-fair/RESULT.json",
+   "verdict": "PENDING"
+  },
+  "fresh_baseline": "v1.7.10",
+  "go": {
+   "channel": "laptop chat",
+   "date": "2026-10-25",
+   "quote": "3 ja",
+   "recorded_in": "DECISIONS.md 2026-10-25 setup-review-open-questions-answered"
+  },
+  "status": "GO (fair top-five change, Florian rule 25 Oct 2026)",
+  "top_five_effect": "changed",
+  "top_five_preview": {
+   "path": "r196/v1711/receipts/topfive-diff.json",
+   "sha256": "ca11652395685509b20bcebbdd5305cac6c0be849d12b87540ec0ee5b3e4ce08"
+  }
+ },
+ "remeasured_rows": {},
+ "repriced_rows": {
+  "decisio-gemma-4-12b-tuned-commit": {
+   "answered": 1485,
+   "audit_path": "/home/flori/jobs/jevbench-auto-intake/workers/locate-decisio-gemma/out-lead/audit-decisio-gemma-4-12b-tuned-commit.json",
+   "audit_sha256": "594256198501fb31df06c7a566166455e108cc0fafe71c1c5879004c2ee75842",
+   "draw": "v1.6-regular-20261012",
+   "engine_input": 831272,
+   "measurement_changed": false,
+   "native_input": 715443,
+   "output": 1485,
+   "price_reference": {
+    "base": "google/gemma-4-12B-it",
+    "in": 0.05,
+    "listing": "google/gemma-3-12b-it",
+    "out": 0.15
+   },
+   "published_cost": {
+    "basis": "ESTIMATE (*est.), base-model market reference, explicit reference with NO base key: the frozen pricing_v15 module (sha256 aa2afcd5a58d0c4cc0e3d6867d590c70b6ac58e971410c27faf9628f97bcf8b7, re-freeze of 22 Oct 2026) has no listing for the card's base string google/gemma-4-12B-it (it is in the module's UNLISTED_BASE_MODELS set, so there is no exact rate and no floor; reference() returns nothing for it, checked on this module). The reference used is therefore google/gemma-3-12b-it USD 0.05/M input, USD 0.15/M output, the nearest publicly hosted 12B Gemma sibling, at its FULL catalog pair, the same explicit reference that the published google/gemma-4-12B-it rows cygnet, jev-omni, winnow-12b, torchcast-decision-12b and the live decisio v0.8.0 and v0.9.0 rows already carry. It is applied explicitly, as a labelled estimate; no base key is registered for it. Estimated, not charged, not a quote from the author or any host. Tokens as reported natively by the usage block of the author's server: 715,443 input and 1,485 output tokens across the 1,485 answered items (1 reported output token per answered row for the option-label readout; no generated prose). The native input unit counts header, state and question separately without the system turn or chat template. It is not a count of every token processed internally: the server can also register the state prefix through a warm-up, and that work is not added to native usage. Native input usage equals our first-party offline count exactly (0 mismatches over the answered items; our sealed-input count before the run was also 715,443). The 15 items refused HTTP 422 carry no usage and count 0 tokens, so the common 1,485-item basis (v1.6.30) has the same totals, 715,443 input and 1,485 output tokens. The zero-output convention for native-probability rows is NOT applied: the server reports a real output count of 1 per answered row (the same treatment as the live decisio rows, seb-9b-v2 and KnowLine, which price their 1 output token per row), and the full output price is used. Measured arithmetic: USD 0.024239 per 1,000 decisions on the common 1,485-item basis = 0.375248x the unchanged USD 0.06459465517241379 cap; separately USD 0.023997 per 1,000 over all 1,500 rows = 0.371495x. WITHIN COST CAP on both bases: within the automatic cost treatment; no cap exception or top-up.",
+    "common_basis": {
+     "n_items": 1485,
+     "rule": "common",
+     "usd_per_1000_all_items": 0.0239966
+    },
+    "kind": "estimate",
+    "usage_estimated_rows": 0,
+    "usd_per_1000": 0.0242389898989899
+   },
+   "raw_path": "/home/flori/jevbench-sealed/v1.6-run/v1.6-regular-20261012/runs-auto-intake/decisio-12b-tuned-commit.raw.jsonl",
+   "raw_sha256": "e9c889e1a138c875eb52521748e63b4344043c7a5598527c073172dd1c81594f",
+   "raw_verified_in_place": true,
+   "scored_sha256": "439f0934f6c380000813e1dc9d95696c71086061cd88d93363f1e5dd2915dafe"
+  },
+  "decisio-gemma-4-12b-v080": {
+   "answered": 1477,
+   "audit_path": "/home/flori/jobs/jevbench-auto-intake/workers/locate-decisio-gemma/out-lead/audit-decisio-gemma-4-12b-v080.json",
+   "audit_sha256": "836371b436f3bd801debc3f8f7b273ec2fc9dc4d175b8b2f2c1c022b22c45493",
+   "draw": "v1.6.0",
+   "engine_input": 779965,
+   "measurement_changed": false,
+   "native_input": 664759,
+   "output": 1477,
+   "price_reference": {
+    "base": "google/gemma-4-12B-it",
+    "in": 0.05,
+    "listing": "google/gemma-3-12b-it",
+    "out": 0.15
+   },
+   "published_cost": {
+    "basis": "ESTIMATE (base-model reference; self-hosted open weights, no public tariff): the exact base google/gemma-4-12B-it is in the frozen pricing module's UNLISTED_BASE_MODELS set, so no exact base-model rate and no floor exist. The reference is the one the rows PUBLISHED on this same base use - cygnet, jev-omni and winnow-12b - OpenRouter google/gemma-3-12b-it, the nearest publicly hosted 12B Gemma sibling, at its FULL catalog pair USD 0.05 per 1M input and USD 0.15 per 1M output. PREREG-R54-AMENDMENT-1 uses the full pair rather than run 53's output=0, so a row that emits tokens pays for them; where a row generates nothing the output term is zero anyway. x this row's own measured input/output tokens, the deck31b method. Estimated, not charged",
+    "common_basis": {
+     "n_items": 1477,
+     "rule": "common",
+     "usd_per_1000_all_items": 0.022306333333333338
+    },
+    "kind": "estimate",
+    "usage_estimated_rows": 0,
+    "usd_per_1000": 0.022653689911983754
+   },
+   "raw_path": "/home/flori/jobs/jevbench-add-requests-20260919/r160/v170/bases/pool/runs/decisio-gemma-4-12b-v080.jsonl",
+   "raw_sha256": "20f9e33bb5977d29ae90d5cfa97494c411d868ce15449997dc27bb41c9b2d837",
+   "raw_verified_in_place": true,
+   "scored_sha256": "b3c29fb8b3a044226b6ecd11e55efea54213e4b8d2a3bbac9627b0d34df3cf4e"
+  },
+  "decisio-gemma-4-12b-v090": {
+   "answered": 1477,
+   "audit_path": "/home/flori/jobs/jevbench-auto-intake/workers/locate-decisio-gemma/out-lead/audit-decisio-gemma-4-12b-v090.json",
+   "audit_sha256": "8f7f76e717aa1198e7a40c9bec586426d9c538d9f4237acf04acb4be66ae19a2",
+   "draw": "v1.6.0",
+   "engine_input": 779965,
+   "measurement_changed": false,
+   "native_input": 664759,
+   "output": 1477,
+   "price_reference": {
+    "base": "google/gemma-4-12B-it",
+    "in": 0.05,
+    "listing": "google/gemma-3-12b-it",
+    "out": 0.15
+   },
+   "published_cost": {
+    "basis": "ESTIMATE (base-model reference; self-hosted open weights, no public tariff), CARRIED AND NOT NEW: the exact base google/gemma-4-12B-it is in the frozen pricing module's UNLISTED_BASE_MODELS set, so no exact base-model rate and no floor exist, and (0.05, 0.15) is the reference the rows PUBLISHED on this same base already use - cygnet, jev-omni, winnow-12b and torchcast-decision-12b - OpenRouter google/gemma-3-12b-it, the nearest publicly hosted 12B Gemma sibling, at its FULL catalog pair USD 0.05 per 1M input and USD 0.15 per 1M output. It is also the rate THIS ROW'S OWN v0.8.0 SIBLING carries, so the two versions are priced identically and the comparison between them is clean. PREREG-R54-AMENDMENT-1's full pair rather than output=0, x this row's own measured input/output tokens, the deck31b method. The server reports its own usage.input_tokens/output_tokens on every answer (664,759 in and 1,477 out over the answered rows: one prefill, one option-label readout step per decision), so no token-accounting amendment was needed. Estimated, not charged.",
+    "common_basis": {
+     "n_items": 1477,
+     "rule": "common",
+     "usd_per_1000_all_items": 0.022306333333333338
+    },
+    "kind": "estimate",
+    "usage_estimated_rows": 0,
+    "usd_per_1000": 0.022653689911983754
+   },
+   "raw_path": "/home/flori/jobs/jevbench-add-requests-20260919/r160/v170/bases/pool/runs/decisio-gemma-4-12b-v090.jsonl",
+   "raw_sha256": "ecceaa4d8a481fd9ad1e47f2108656cc14a0cc5939247bfc2045d8838516be3c",
+   "raw_verified_in_place": true,
+   "scored_sha256": "5cd425051ca40f086eed97203a5529e8f75580424920b4be070a8112420b2803"
+  },
+  "decisio-gemma-4-31b-v080": {
+   "answered": 1477,
+   "audit_path": "/home/flori/jobs/jevbench-auto-intake/workers/locate-decisio-gemma/out-lead/audit-decisio-gemma-4-31b-v080.json",
+   "audit_sha256": "a8bd3a668f1a8512a9150ebda8bcb1f6f07c35af99d358dada7e22bb4cdb8d7b",
+   "draw": "v1.6.0",
+   "engine_input": 779965,
+   "measurement_changed": false,
+   "native_input": 664759,
+   "output": 1477,
+   "price_reference": {
+    "base": "google/gemma-4-31B-it",
+    "in": 0.09,
+    "listing": "google/gemma-4-31b-it",
+    "out": 0.34
+   },
+   "published_cost": {
+    "basis": "ESTIMATE (base-model reference; self-hosted open weights, no public tariff) and CLEAN: unlike run 54's FP8 sibling, the frozen pricing snapshot resolves this EXACT base - google/gemma-4-31B-it - to USD 0.09 per 1M input and USD 0.34 per 1M output. Read before the pod and asserted in make_registry_r55.py. x this row's own measured tokens, the deck31b method. Nothing is provisional and no release-lane line is open on it. Estimated, not charged",
+    "common_basis": {
+     "n_items": 1477,
+     "rule": "common",
+     "usd_per_1000_all_items": 0.04022032666666667
+    },
+    "kind": "estimate",
+    "usage_estimated_rows": 0,
+    "usd_per_1000": 0.04084664184157075
+   },
+   "raw_path": "/home/flori/jobs/jevbench-add-requests-20260919/r160/v170/bases/pool/runs/decisio-gemma-4-31b-v080.jsonl",
+   "raw_sha256": "3488203318811a1638d6299408fb409d5045654387f55f483e47909a4fe57595",
+   "raw_verified_in_place": true,
+   "scored_sha256": "6276d40ec9f7e2ee65cc3ccb698dd2516eaf00f9848af20f96916d3a02c73185"
+  }
+ },
+ "revision": "v1.7.11",
+ "schema_version": 1,
+ "scorers": {
+  "a2_cells_v16": "afd034efe27bde12f2ebbfd12c4c0792c93214e1aa9a63deecb0e83a0184c990",
+  "build_categories_v16": "40eb50f3d7fea2693b4478c4b89f8bfb957dd17776add491935742e3b9354e73",
+  "build_topics_v16": "ec04ab598162bfc4340ffa7916a06573eb1222132c61e47ab772045bc67ced78",
+  "decisive_v16": "80b9ccf43e58dddb1b2a77e0a33aba8a9f7337a3a9a639afc7264218bbf8918f",
+  "noul_method_v16": "119e59486ab3300b972fbcbadb0fe1dceceb124287607375aa61c66063c607d0",
+  "pins_v17": "b50cc00dd2cb0ba46157eb6a2bda620255f3ff54404025e992bc7962dfff2f8b",
+  "run_under_v17": "efb194b2ea350db59be37e5e72af71f809f763a2476cd6f521adf6f4fd90a64f",
+  "score_v15": "0931e05c6410b1b971201834397cb609cdb25f942723c50375632952f6dcc447",
+  "score_v15_headlineA": "826f2cbcb57007ec8a161e6eb0111182b8a656c0638027c6c78022a858fd8e2c",
+  "score_v16": "02132271117653e6302c509232a581d0094f0e78eac8b1bfc67596fd5d5097e9",
+  "score_v17": "6363458d208a52f4ad5aaf73027cad1b7e0358ff962e581d57a3cc462c8f1978"
+ },
+ "source_inputs": {
+  "entry_sha256": "89db47a1acfb51fa4bca48c1a7bad41e489441dc22654df726d8b804f90a3038",
+  "recount_bindings_sha256": "bf87049279cd2e44882423c54b6b393dd076f874221ad08d69be3bb8d13c8ced",
+  "scored_rows_sha256": "8ddf23cfc32c0b9081c6a3e495d8f55cb1901d86119f9df53812ec8e22d30937"
+ },
+ "topfive_diff_sha256": "ca11652395685509b20bcebbdd5305cac6c0be849d12b87540ec0ee5b3e4ce08"
+}
