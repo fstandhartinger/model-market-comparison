@@ -1,0 +1,139 @@
+{
+ "status": "PASS",
+ "compiled_route": ".next/server/app/api/jevbench/latest/route.js",
+ "real_pending_latest": "v1.7.9",
+ "synthetic_candidate_latest": "v1.7.10",
+ "rows": [
+  {
+   "key": "singularity-super-decider",
+   "name": "Super Decider",
+   "board": "api",
+   "source_url": "https://singularitycompute.com/super-decider",
+   "axes": {
+    "intelligence": 78.8866847061141,
+    "calibration": 90.84828412834014,
+    "speed": 85.30638666270315,
+    "cost": 64.26424619973979
+   },
+   "capability": {
+    "score": 84.86748441722712,
+    "rank": 3,
+    "eligible": true,
+    "within_caps": true,
+    "reasons": [],
+    "open_board_rank": null,
+    "api_board_rank": 3
+   },
+   "composite_score": 78.48219079083019,
+   "rank": 1,
+   "open_board_rank": null,
+   "api_board_rank": 1,
+   "measured_in": "v1.7.0",
+   "draw": {
+    "id": "v1.6-regular-20261012",
+    "label": "Second regular draw",
+    "release": "v1.7.0",
+    "measured_on": "2026-10-21",
+    "status": "anchor-runs-pending"
+   },
+   "ranked": true,
+   "listing": "ranked",
+   "not_ranked_because": null,
+   "price": {
+    "kind": "listed",
+    "usd_per_1000_decisions": 0.01553072727272727,
+    "basis": "Launch list price: the launch list price stated on the vendor's public product page (singularitycompute.com/super-decider, fetched 22 Oct 2026: USD 0.03 per 1M input tokens, output tokens free); the ASI:Cloud catalogue itself was not reachable to us. The page lists one price for the product and no separate rate for thinking mode; we apply it to both rows. Counted as an operator launch list price by the frozen pricing module pricing_v15 (sha256 aa2afcd5a58d0c4cc0e3d6867d590c70b6ac58e971410c27faf9628f97bcf8b7, re-frozen on 22 Oct 2026 with launch-list keys added and nothing else changed; the launch-list line and the rates for this product are identical in the earlier module 81e3578f), which carries a launch-list-price line for this product. Applied to the tokens reported by the provider's API; not a base-model estimate. Over all 1,500 items the frozen resolve() gives USD 0.039197 per 1,000 decisions; the official cost axis uses the common 1,485-item basis, where it is USD 0.015531 per 1,000 decisions. COMMON COST BASIS (v1.6.30): common 1,485 items, excluding the 15 longest for every row; 768,771 input / 322,546 output tokens. All-item usage 1,959,826 input / 328,348 output over 1,500 items."
+   },
+   "latency": {
+    "p50_s_raw": 0.24612953246105462,
+    "p50_s_adjusted": 0.24612953246105462,
+    "adjustment": "none (API)",
+    "p50_s_measured": 0.24612953246105462,
+    "latency_basis": "api-end-to-end",
+    "p95_s_raw": 1.1972851804515812,
+    "p95_s_adjusted": 1.1972851804515812,
+    "n": 1500
+   },
+   "method": "v1.7",
+   "rescored_in": null,
+   "new_in": "v1.7.0",
+   "method_status": "v1.7",
+   "decision_limit": {
+    "limit_s": 10,
+    "n_over_limit": 11,
+    "n_over_limit_answered_ok": 11,
+    "rule": "latency_s > limit -> failed",
+    "speed_basis": "all decisions given (lane items in the raw), measured latency_s",
+    "speed_n": 1500,
+    "treatment": "share"
+   },
+   "previous": null
+  },
+  {
+   "key": "singularity-super-decider-thinking",
+   "name": "Super Decider (thinking)",
+   "board": "api",
+   "source_url": "https://singularitycompute.com/super-decider",
+   "axes": {
+    "intelligence": 80.00899811568502,
+    "calibration": 91.69553288708067,
+    "speed": 79.83008200555805,
+    "cost": 56.397623391206686
+   },
+   "capability": {
+    "score": 85.85226550138285,
+    "rank": 2,
+    "eligible": true,
+    "within_caps": true,
+    "reasons": [],
+    "open_board_rank": null,
+    "api_board_rank": 2
+   },
+   "composite_score": 74.54050341581339,
+   "rank": 10,
+   "open_board_rank": null,
+   "api_board_rank": 9,
+   "measured_in": "v1.7.0",
+   "draw": {
+    "id": "v1.6-regular-20261012",
+    "label": "Second regular draw",
+    "release": "v1.7.0",
+    "measured_on": "2026-10-21",
+    "status": "anchor-runs-pending"
+   },
+   "ranked": true,
+   "listing": "ranked",
+   "not_ranked_because": null,
+   "price": {
+    "kind": "listed",
+    "usd_per_1000_decisions": 0.028406161616161614,
+    "basis": "Launch list price: the launch list price stated on the vendor's public product page (singularitycompute.com/super-decider, fetched 22 Oct 2026: USD 0.03 per 1M input tokens, output tokens free); the ASI:Cloud catalogue itself was not reachable to us. The page lists one price for the product and no separate rate for thinking mode; we apply it to both rows. Counted as an operator launch list price by the frozen pricing module pricing_v15 (sha256 aa2afcd5a58d0c4cc0e3d6867d590c70b6ac58e971410c27faf9628f97bcf8b7, re-frozen on 22 Oct 2026 with launch-list keys added and nothing else changed; the launch-list line and the rates for this product are identical in the earlier module 81e3578f), which carries a launch-list-price line for this product. Applied to the tokens reported by the provider's API; not a base-model estimate. Over all 1,500 items the frozen resolve() gives USD 0.052098 per 1,000 decisions; the official cost axis uses the common 1,485-item basis, where it is USD 0.028406 per 1,000 decisions. COMMON COST BASIS (v1.6.30): common 1,485 items, excluding the 15 longest for every row; 1,406,105 input / 636,221 output tokens. All-item usage 2,604,915 input / 643,964 output over 1,500 items."
+   },
+   "latency": {
+    "p50_s_raw": 0.8880362859927118,
+    "p50_s_adjusted": 0.8880362859927118,
+    "adjustment": "none (API)",
+    "p50_s_measured": 0.8880362859927118,
+    "latency_basis": "api-end-to-end",
+    "p95_s_raw": 1.171011304546846,
+    "p95_s_adjusted": 1.171011304546846,
+    "n": 1500
+   },
+   "method": "v1.7",
+   "rescored_in": null,
+   "new_in": "v1.7.0",
+   "method_status": "v1.7",
+   "decision_limit": {
+    "limit_s": 10,
+    "n_over_limit": 4,
+    "n_over_limit_answered_ok": 4,
+    "rule": "latency_s > limit -> failed",
+    "speed_basis": "all decisions given (lane items in the raw), measured latency_s",
+    "speed_n": 1500,
+    "treatment": "share"
+   },
+   "previous": null
+  }
+ ],
+ "real_manifest_unchanged": true
+}

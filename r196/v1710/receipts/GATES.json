@@ -1,0 +1,786 @@
+{
+ "BUILT-LINKS": {
+  "compiled_route": ".next/server/app/api/jevbench/latest/route.js",
+  "real_manifest_unchanged": true,
+  "real_pending_latest": "v1.7.9",
+  "rows": [
+   {
+    "api_board_rank": 1,
+    "axes": {
+     "calibration": 90.84828412834014,
+     "cost": 64.26424619973979,
+     "intelligence": 78.8866847061141,
+     "speed": 85.30638666270315
+    },
+    "board": "api",
+    "capability": {
+     "api_board_rank": 3,
+     "eligible": true,
+     "open_board_rank": null,
+     "rank": 3,
+     "reasons": [],
+     "score": 84.86748441722712,
+     "within_caps": true
+    },
+    "composite_score": 78.48219079083019,
+    "decision_limit": {
+     "limit_s": 10,
+     "n_over_limit": 11,
+     "n_over_limit_answered_ok": 11,
+     "rule": "latency_s > limit -> failed",
+     "speed_basis": "all decisions given (lane items in the raw), measured latency_s",
+     "speed_n": 1500,
+     "treatment": "share"
+    },
+    "draw": {
+     "id": "v1.6-regular-20261012",
+     "label": "Second regular draw",
+     "measured_on": "2026-10-21",
+     "release": "v1.7.0",
+     "status": "anchor-runs-pending"
+    },
+    "key": "singularity-super-decider",
+    "latency": {
+     "adjustment": "none (API)",
+     "latency_basis": "api-end-to-end",
+     "n": 1500,
+     "p50_s_adjusted": 0.24612953246105462,
+     "p50_s_measured": 0.24612953246105462,
+     "p50_s_raw": 0.24612953246105462,
+     "p95_s_adjusted": 1.1972851804515812,
+     "p95_s_raw": 1.1972851804515812
+    },
+    "listing": "ranked",
+    "measured_in": "v1.7.0",
+    "method": "v1.7",
+    "method_status": "v1.7",
+    "name": "Super Decider",
+    "new_in": "v1.7.0",
+    "not_ranked_because": null,
+    "open_board_rank": null,
+    "previous": null,
+    "price": {
+     "basis": "Launch list price: the launch list price stated on the vendor's public product page (singularitycompute.com/super-decider, fetched 22 Oct 2026: USD 0.03 per 1M input tokens, output tokens free); the ASI:Cloud catalogue itself was not reachable to us. The page lists one price for the product and no separate rate for thinking mode; we apply it to both rows. Counted as an operator launch list price by the frozen pricing module pricing_v15 (sha256 aa2afcd5a58d0c4cc0e3d6867d590c70b6ac58e971410c27faf9628f97bcf8b7, re-frozen on 22 Oct 2026 with launch-list keys added and nothing else changed; the launch-list line and the rates for this product are identical in the earlier module 81e3578f), which carries a launch-list-price line for this product. Applied to the tokens reported by the provider's API; not a base-model estimate. Over all 1,500 items the frozen resolve() gives USD 0.039197 per 1,000 decisions; the official cost axis uses the common 1,485-item basis, where it is USD 0.015531 per 1,000 decisions. COMMON COST BASIS (v1.6.30): common 1,485 items, excluding the 15 longest for every row; 768,771 input / 322,546 output tokens. All-item usage 1,959,826 input / 328,348 output over 1,500 items.",
+     "kind": "listed",
+     "usd_per_1000_decisions": 0.01553072727272727
+    },
+    "rank": 1,
+    "ranked": true,
+    "rescored_in": null,
+    "source_url": "https://singularitycompute.com/super-decider"
+   },
+   {
+    "api_board_rank": 9,
+    "axes": {
+     "calibration": 91.69553288708067,
+     "cost": 56.397623391206686,
+     "intelligence": 80.00899811568502,
+     "speed": 79.83008200555805
+    },
+    "board": "api",
+    "capability": {
+     "api_board_rank": 2,
+     "eligible": true,
+     "open_board_rank": null,
+     "rank": 2,
+     "reasons": [],
+     "score": 85.85226550138285,
+     "within_caps": true
+    },
+    "composite_score": 74.54050341581339,
+    "decision_limit": {
+     "limit_s": 10,
+     "n_over_limit": 4,
+     "n_over_limit_answered_ok": 4,
+     "rule": "latency_s > limit -> failed",
+     "speed_basis": "all decisions given (lane items in the raw), measured latency_s",
+     "speed_n": 1500,
+     "treatment": "share"
+    },
+    "draw": {
+     "id": "v1.6-regular-20261012",
+     "label": "Second regular draw",
+     "measured_on": "2026-10-21",
+     "release": "v1.7.0",
+     "status": "anchor-runs-pending"
+    },
+    "key": "singularity-super-decider-thinking",
+    "latency": {
+     "adjustment": "none (API)",
+     "latency_basis": "api-end-to-end",
+     "n": 1500,
+     "p50_s_adjusted": 0.8880362859927118,
+     "p50_s_measured": 0.8880362859927118,
+     "p50_s_raw": 0.8880362859927118,
+     "p95_s_adjusted": 1.171011304546846,
+     "p95_s_raw": 1.171011304546846
+    },
+    "listing": "ranked",
+    "measured_in": "v1.7.0",
+    "method": "v1.7",
+    "method_status": "v1.7",
+    "name": "Super Decider (thinking)",
+    "new_in": "v1.7.0",
+    "not_ranked_because": null,
+    "open_board_rank": null,
+    "previous": null,
+    "price": {
+     "basis": "Launch list price: the launch list price stated on the vendor's public product page (singularitycompute.com/super-decider, fetched 22 Oct 2026: USD 0.03 per 1M input tokens, output tokens free); the ASI:Cloud catalogue itself was not reachable to us. The page lists one price for the product and no separate rate for thinking mode; we apply it to both rows. Counted as an operator launch list price by the frozen pricing module pricing_v15 (sha256 aa2afcd5a58d0c4cc0e3d6867d590c70b6ac58e971410c27faf9628f97bcf8b7, re-frozen on 22 Oct 2026 with launch-list keys added and nothing else changed; the launch-list line and the rates for this product are identical in the earlier module 81e3578f), which carries a launch-list-price line for this product. Applied to the tokens reported by the provider's API; not a base-model estimate. Over all 1,500 items the frozen resolve() gives USD 0.052098 per 1,000 decisions; the official cost axis uses the common 1,485-item basis, where it is USD 0.028406 per 1,000 decisions. COMMON COST BASIS (v1.6.30): common 1,485 items, excluding the 15 longest for every row; 1,406,105 input / 636,221 output tokens. All-item usage 2,604,915 input / 643,964 output over 1,500 items.",
+     "kind": "listed",
+     "usd_per_1000_decisions": 0.028406161616161614
+    },
+    "rank": 10,
+    "ranked": true,
+    "rescored_in": null,
+    "source_url": "https://singularitycompute.com/super-decider"
+   }
+  ],
+  "status": "PASS",
+  "synthetic_candidate_latest": "v1.7.10"
+ },
+ "CARRIED-ROWS": {
+  "carried_cells_equal": 302,
+  "immutable_bytes": [
+   "carry",
+   "history",
+   "history-carry"
+  ],
+  "new_score_payloads_equal_to_sources": true,
+  "predecessor_files_equal_to_base": 7,
+  "repo_exception_keys": [
+   "singularity-super-decider",
+   "singularity-super-decider-thinking"
+  ],
+  "rows_equal_except_rank": 295,
+  "rows_equal_except_rank_and_repo": 2,
+  "status": "PASS"
+ },
+ "CHANGED-LISTS-BY-ROW": {
+  "baseline": "v1.7.9",
+  "candidate": "v1.7.10",
+  "changed_lists_by_row": {
+   "decisio-qwen3.6-35b-a3b-v090": [],
+   "iota-decide-4b-v0.3": [],
+   "phillylabs_philly_decider_v2": [
+    {
+     "after": [
+      "chon-1.0-e4b",
+      "torchcast-decision-4b-v1.3",
+      "torchcast-decision-4b-v1.2",
+      "h2o-lightning-4b",
+      "phillylabs_philly_decider_v2"
+     ],
+     "before": [
+      "chon-1.0-e4b",
+      "torchcast-decision-4b-v1.3",
+      "torchcast-decision-4b-v1.2",
+      "h2o-lightning-4b",
+      "torchcast-decision-4b-v1.1"
+     ],
+     "entrant_rank": 5,
+     "list": "frozen/open/official/view/Emphasis on Cost 20:20:60"
+    },
+    {
+     "after": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b",
+      "torchcast-decision-4b-v1.2",
+      "phillylabs_philly_decider_v2",
+      "h2o-lightning-31b"
+     ],
+     "before": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b",
+      "torchcast-decision-4b-v1.2",
+      "h2o-lightning-31b",
+      "chon-1.0-e4b"
+     ],
+     "entrant_rank": 4,
+     "list": "frozen/open/official/view/Emphasis on Speed 20:60:20"
+    },
+    {
+     "after": [
+      "chon-1.0-e4b",
+      "torchcast-decision-4b-v1.3",
+      "torchcast-decision-4b-v1.2",
+      "h2o-lightning-4b",
+      "phillylabs_philly_decider_v2"
+     ],
+     "before": [
+      "chon-1.0-e4b",
+      "torchcast-decision-4b-v1.3",
+      "torchcast-decision-4b-v1.2",
+      "h2o-lightning-4b",
+      "torchcast-decision-4b-v1.1"
+     ],
+     "entrant_rank": 5,
+     "list": "frozen/open/none/view/Emphasis on Cost 20:20:60"
+    },
+    {
+     "after": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b",
+      "torchcast-decision-4b-v1.2",
+      "phillylabs_philly_decider_v2",
+      "h2o-lightning-31b"
+     ],
+     "before": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b",
+      "torchcast-decision-4b-v1.2",
+      "h2o-lightning-31b",
+      "chon-1.0-e4b"
+     ],
+     "entrant_rank": 4,
+     "list": "frozen/open/none/view/Emphasis on Speed 20:60:20"
+    },
+    {
+     "after": [
+      "chon-1.0-e4b",
+      "torchcast-decision-4b-v1.3",
+      "torchcast-decision-4b-v1.2",
+      "h2o-lightning-4b",
+      "phillylabs_philly_decider_v2"
+     ],
+     "before": [
+      "chon-1.0-e4b",
+      "torchcast-decision-4b-v1.3",
+      "torchcast-decision-4b-v1.2",
+      "h2o-lightning-4b",
+      "torchcast-decision-4b-v1.1"
+     ],
+     "entrant_rank": 5,
+     "list": "frozen/open/cost1.4/view/Emphasis on Cost 20:20:60"
+    },
+    {
+     "after": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b",
+      "torchcast-decision-4b-v1.2",
+      "phillylabs_philly_decider_v2",
+      "h2o-lightning-31b"
+     ],
+     "before": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b",
+      "torchcast-decision-4b-v1.2",
+      "h2o-lightning-31b",
+      "chon-1.0-e4b"
+     ],
+     "entrant_rank": 4,
+     "list": "frozen/open/cost1.4/view/Emphasis on Speed 20:60:20"
+    },
+    {
+     "after": [
+      "chon-1.0-e4b",
+      "torchcast-decision-4b-v1.3",
+      "torchcast-decision-4b-v1.2",
+      "h2o-lightning-4b",
+      "phillylabs_philly_decider_v2"
+     ],
+     "before": [
+      "chon-1.0-e4b",
+      "torchcast-decision-4b-v1.3",
+      "torchcast-decision-4b-v1.2",
+      "h2o-lightning-4b",
+      "torchcast-decision-4b-v1.1"
+     ],
+     "entrant_rank": 5,
+     "list": "frozen/open/cost1.5/view/Emphasis on Cost 20:20:60"
+    },
+    {
+     "after": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b",
+      "torchcast-decision-4b-v1.2",
+      "phillylabs_philly_decider_v2",
+      "h2o-lightning-31b"
+     ],
+     "before": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b",
+      "torchcast-decision-4b-v1.2",
+      "h2o-lightning-31b",
+      "chon-1.0-e4b"
+     ],
+     "entrant_rank": 4,
+     "list": "frozen/open/cost1.5/view/Emphasis on Speed 20:60:20"
+    },
+    {
+     "after": [
+      "chon-1.0-e4b",
+      "torchcast-decision-4b-v1.3",
+      "torchcast-decision-4b-v1.2",
+      "h2o-lightning-4b",
+      "phillylabs_philly_decider_v2"
+     ],
+     "before": [
+      "chon-1.0-e4b",
+      "torchcast-decision-4b-v1.3",
+      "torchcast-decision-4b-v1.2",
+      "h2o-lightning-4b",
+      "torchcast-decision-4b-v1.1"
+     ],
+     "entrant_rank": 5,
+     "list": "off/open/official/view/Emphasis on Cost 20:20:60"
+    },
+    {
+     "after": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b",
+      "torchcast-decision-4b-v1.2",
+      "phillylabs_philly_decider_v2",
+      "h2o-lightning-31b"
+     ],
+     "before": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b",
+      "torchcast-decision-4b-v1.2",
+      "h2o-lightning-31b",
+      "chon-1.0-e4b"
+     ],
+     "entrant_rank": 4,
+     "list": "off/open/official/view/Emphasis on Speed 20:60:20"
+    },
+    {
+     "after": [
+      "chon-1.0-e4b",
+      "torchcast-decision-4b-v1.3",
+      "torchcast-decision-4b-v1.2",
+      "h2o-lightning-4b",
+      "phillylabs_philly_decider_v2"
+     ],
+     "before": [
+      "chon-1.0-e4b",
+      "torchcast-decision-4b-v1.3",
+      "torchcast-decision-4b-v1.2",
+      "h2o-lightning-4b",
+      "torchcast-decision-4b-v1.1"
+     ],
+     "entrant_rank": 5,
+     "list": "off/open/none/view/Emphasis on Cost 20:20:60"
+    },
+    {
+     "after": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b",
+      "torchcast-decision-4b-v1.2",
+      "phillylabs_philly_decider_v2",
+      "h2o-lightning-31b"
+     ],
+     "before": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b",
+      "torchcast-decision-4b-v1.2",
+      "h2o-lightning-31b",
+      "chon-1.0-e4b"
+     ],
+     "entrant_rank": 4,
+     "list": "off/open/none/view/Emphasis on Speed 20:60:20"
+    },
+    {
+     "after": [
+      "chon-1.0-e4b",
+      "torchcast-decision-4b-v1.3",
+      "torchcast-decision-4b-v1.2",
+      "h2o-lightning-4b",
+      "phillylabs_philly_decider_v2"
+     ],
+     "before": [
+      "chon-1.0-e4b",
+      "torchcast-decision-4b-v1.3",
+      "torchcast-decision-4b-v1.2",
+      "h2o-lightning-4b",
+      "torchcast-decision-4b-v1.1"
+     ],
+     "entrant_rank": 5,
+     "list": "off/open/cost1.4/view/Emphasis on Cost 20:20:60"
+    },
+    {
+     "after": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b",
+      "torchcast-decision-4b-v1.2",
+      "phillylabs_philly_decider_v2",
+      "h2o-lightning-31b"
+     ],
+     "before": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b",
+      "torchcast-decision-4b-v1.2",
+      "h2o-lightning-31b",
+      "chon-1.0-e4b"
+     ],
+     "entrant_rank": 4,
+     "list": "off/open/cost1.4/view/Emphasis on Speed 20:60:20"
+    },
+    {
+     "after": [
+      "chon-1.0-e4b",
+      "torchcast-decision-4b-v1.3",
+      "torchcast-decision-4b-v1.2",
+      "h2o-lightning-4b",
+      "phillylabs_philly_decider_v2"
+     ],
+     "before": [
+      "chon-1.0-e4b",
+      "torchcast-decision-4b-v1.3",
+      "torchcast-decision-4b-v1.2",
+      "h2o-lightning-4b",
+      "torchcast-decision-4b-v1.1"
+     ],
+     "entrant_rank": 5,
+     "list": "off/open/cost1.5/view/Emphasis on Cost 20:20:60"
+    },
+    {
+     "after": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b",
+      "torchcast-decision-4b-v1.2",
+      "phillylabs_philly_decider_v2",
+      "h2o-lightning-31b"
+     ],
+     "before": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b",
+      "torchcast-decision-4b-v1.2",
+      "h2o-lightning-31b",
+      "chon-1.0-e4b"
+     ],
+     "entrant_rank": 4,
+     "list": "off/open/cost1.5/view/Emphasis on Speed 20:60:20"
+    },
+    {
+     "after": [
+      "chon-1.0-e4b",
+      "torchcast-decision-4b-v1.3",
+      "torchcast-decision-4b-v1.2",
+      "h2o-lightning-4b",
+      "phillylabs_philly_decider_v2"
+     ],
+     "before": [
+      "chon-1.0-e4b",
+      "torchcast-decision-4b-v1.3",
+      "torchcast-decision-4b-v1.2",
+      "h2o-lightning-4b",
+      "torchcast-decision-4b-v1.1"
+     ],
+     "entrant_rank": 5,
+     "list": "share/open/official/view/Emphasis on Cost 20:20:60"
+    },
+    {
+     "after": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b",
+      "torchcast-decision-4b-v1.2",
+      "phillylabs_philly_decider_v2",
+      "h2o-lightning-31b"
+     ],
+     "before": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b",
+      "torchcast-decision-4b-v1.2",
+      "h2o-lightning-31b",
+      "torchcast-decision-4b-v1.1"
+     ],
+     "entrant_rank": 4,
+     "list": "share/open/official/view/Emphasis on Speed 20:60:20"
+    },
+    {
+     "after": [
+      "chon-1.0-e4b",
+      "torchcast-decision-4b-v1.3",
+      "torchcast-decision-4b-v1.2",
+      "h2o-lightning-4b",
+      "phillylabs_philly_decider_v2"
+     ],
+     "before": [
+      "chon-1.0-e4b",
+      "torchcast-decision-4b-v1.3",
+      "torchcast-decision-4b-v1.2",
+      "h2o-lightning-4b",
+      "torchcast-decision-4b-v1.1"
+     ],
+     "entrant_rank": 5,
+     "list": "share/open/none/view/Emphasis on Cost 20:20:60"
+    },
+    {
+     "after": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b",
+      "torchcast-decision-4b-v1.2",
+      "phillylabs_philly_decider_v2",
+      "h2o-lightning-31b"
+     ],
+     "before": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b",
+      "torchcast-decision-4b-v1.2",
+      "h2o-lightning-31b",
+      "torchcast-decision-4b-v1.1"
+     ],
+     "entrant_rank": 4,
+     "list": "share/open/none/view/Emphasis on Speed 20:60:20"
+    },
+    {
+     "after": [
+      "chon-1.0-e4b",
+      "torchcast-decision-4b-v1.3",
+      "torchcast-decision-4b-v1.2",
+      "h2o-lightning-4b",
+      "phillylabs_philly_decider_v2"
+     ],
+     "before": [
+      "chon-1.0-e4b",
+      "torchcast-decision-4b-v1.3",
+      "torchcast-decision-4b-v1.2",
+      "h2o-lightning-4b",
+      "torchcast-decision-4b-v1.1"
+     ],
+     "entrant_rank": 5,
+     "list": "share/open/cost1.4/view/Emphasis on Cost 20:20:60"
+    },
+    {
+     "after": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b",
+      "torchcast-decision-4b-v1.2",
+      "phillylabs_philly_decider_v2",
+      "h2o-lightning-31b"
+     ],
+     "before": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b",
+      "torchcast-decision-4b-v1.2",
+      "h2o-lightning-31b",
+      "torchcast-decision-4b-v1.1"
+     ],
+     "entrant_rank": 4,
+     "list": "share/open/cost1.4/view/Emphasis on Speed 20:60:20"
+    },
+    {
+     "after": [
+      "chon-1.0-e4b",
+      "torchcast-decision-4b-v1.3",
+      "torchcast-decision-4b-v1.2",
+      "h2o-lightning-4b",
+      "phillylabs_philly_decider_v2"
+     ],
+     "before": [
+      "chon-1.0-e4b",
+      "torchcast-decision-4b-v1.3",
+      "torchcast-decision-4b-v1.2",
+      "h2o-lightning-4b",
+      "torchcast-decision-4b-v1.1"
+     ],
+     "entrant_rank": 5,
+     "list": "share/open/cost1.5/view/Emphasis on Cost 20:20:60"
+    },
+    {
+     "after": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b",
+      "torchcast-decision-4b-v1.2",
+      "phillylabs_philly_decider_v2",
+      "h2o-lightning-31b"
+     ],
+     "before": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b",
+      "torchcast-decision-4b-v1.2",
+      "h2o-lightning-31b",
+      "torchcast-decision-4b-v1.1"
+     ],
+     "entrant_rank": 4,
+     "list": "share/open/cost1.5/view/Emphasis on Speed 20:60:20"
+    }
+   ]
+  },
+  "counts": {
+   "decisio-qwen3.6-35b-a3b-v090": 0,
+   "iota-decide-4b-v0.3": 0,
+   "phillylabs_philly_decider_v2": 24
+  },
+  "iota_paid_rule_covers_any_changes": true,
+  "lists": 584,
+  "method": "Single-entrant insertion from full production ranking orders; all other new keys removed. Slider transitions separately retained.",
+  "status": "PASS"
+ },
+ "COST-KIND": {
+  "measured_without_bill": 0,
+  "negative_test": "test/jevbench-v1710-release.test.mjs",
+  "new_rows": {
+   "decisio-qwen3.6-35b-a3b-v090": {
+    "base": "Qwen/Qwen3.6-35B-A3B",
+    "common_usd_per_1000": 0.17894171717171717,
+    "kind": "estimate"
+   },
+   "iota-decide-4b-v0.3": {
+    "base": "Qwen/Qwen3.5-4B",
+    "common_usd_per_1000": 0.015456404040404043,
+    "kind": "estimate"
+   },
+   "phillylabs_philly_decider_v2": {
+    "base": "Qwen/Qwen3.5-4B",
+    "common_usd_per_1000": 0.015192080808080809,
+    "kind": "estimate"
+   }
+  },
+  "status": "PASS"
+ },
+ "FULL-SUITE-SCOPE": {
+  "base": "62ae1e003bb1763128b1b6e57a35c5d87f96da28",
+  "full_suite_rerun": true,
+  "outside_r196_source_changes": "Generated lib/jevbench-v1710-release.mjs validator reference literal updated to match module-derived iota/Philly proof references.",
+  "prior_full_suite_log": "r196/v1710/receipts/fulltest.log",
+  "reason": "The proof-reference check in the generated loader now changes, so run the full suite once.",
+  "status": "PASS"
+ },
+ "HELPERS": {
+  "fairness_negative_cases": 2,
+  "fixture_grants_no_authority": true,
+  "flip_dry_run": true,
+  "pending_freeze_refused": true,
+  "real_flip_with_fixture_refused": true,
+  "real_manifest_unchanged": "6d36b9d86b4abe19ba9d50ea56353294dac4f4f3c909ae4874e8167000e6801a",
+  "seal_write_refused": true,
+  "status": "PASS",
+  "synthetic_freeze_dry_run": true
+ },
+ "PREDECESSOR-REBASE": {
+  "base": "39d148e0f30d10648d484559a8bf565f0b722bd1",
+  "binding_sha256": "95c99857e5f5fd9cf4f9ef93621c8092af3c15d08a92782dc659da39f1bc44ce",
+  "files": {
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.9-carry.json": "271d1fc77a136a04a1eb6deb5480c52d4211eb2b66b2ac8bb31e80867e69003a",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.9-categories.json": "a365e06e214cb0d41fd511ec51e341b5263ce0d86fa05ca0bf358972c4ea08ba",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.9-history-carry.json": "334e851944e92383ab3071e52b3012040c7023d0fe236395953169ebee8f0459",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.9-history.json": "5cd8c1332226ea9c179883d2285c0d8b8cc593ae38f2645197364a7ddd9c83c1",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.9-proof.json": "d2071e5aa01b106020907031f1d7526610c53cc85ba87610bcc4997d0ab40931",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.9-publication.json": "95c99857e5f5fd9cf4f9ef93621c8092af3c15d08a92782dc659da39f1bc44ce",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.9-results.json": "ab863afda444baa950b6007768d0048060e5661b019ac94b0a777d6dded63294"
+  },
+  "proof_and_manifest_binding": true,
+  "status": "PASS"
+ },
+ "PREVIEW": {
+  "footer": "Release review pending",
+  "html_script_syntax": true,
+  "png": [
+   1440,
+   900
+  ],
+  "ranking_models_resolve": true,
+  "status": "PASS",
+  "visual_inspection": "Card viewed; no clipping or overlap"
+ },
+ "PRICING-REFERENCES": {
+  "decisio_cost_unchanged_usd_per_1000_rounded": 0.178942,
+  "negative_cases_refused": 12,
+  "new_rows": {
+   "decisio-qwen3.6-35b-a3b-v090": {
+    "base": "Qwen/Qwen3.6-35B-A3B",
+    "in": 0.15,
+    "listing": "qwen/qwen3.6-35b-a3b",
+    "out": 1.0
+   },
+   "iota-decide-4b-v0.3": {
+    "base": "Qwen/Qwen3.5-4B",
+    "in": 0.03,
+    "listing": "deepinfra:Qwen/Qwen3.5-4B",
+    "out": 0.15
+   },
+   "phillylabs_philly_decider_v2": {
+    "base": "Qwen/Qwen3.5-4B",
+    "in": 0.03,
+    "listing": "deepinfra:Qwen/Qwen3.5-4B",
+    "out": 0.15
+   }
+  },
+  "pricing_module_sha256": "645fd82eac728d597048bec0995ecd3ac896566e269fb6c9a1fdb84c171a9ac4",
+  "status": "PASS"
+ },
+ "REPRO": {
+  "files": {
+   "app/api/jevbench/v1.7.10/route.ts": "b2c77e8ed86709e88dcc47085993b0757e18ead34e4308297938c51003fd3d64",
+   "app/jev-models/v1.7.10/page.tsx": "68496b5523ef6f5fee5272bec1841ed3e50b6e9aee96e0a476af24b9ea867df7",
+   "data/jevbench-architecture.json": "e3a127a7df41d2bb9bda9f4aecbb59dba430e37153b181e9d0d3fd2b70eabbf7",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.10-carry.json": "271d1fc77a136a04a1eb6deb5480c52d4211eb2b66b2ac8bb31e80867e69003a",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.10-categories.json": "182d4246c22e02296a48c3a49de6e7d1b2e5b2737c18841340e270e6d9890a37",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.10-history-carry.json": "334e851944e92383ab3071e52b3012040c7023d0fe236395953169ebee8f0459",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.10-history.json": "5cd8c1332226ea9c179883d2285c0d8b8cc593ae38f2645197364a7ddd9c83c1",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.10-proof.json": "7f3443c03d549f33aaf867f97725eba2b9ca1967c47e0f8b15b0a345969f96a3",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.10-publication.json": "6d36b9d86b4abe19ba9d50ea56353294dac4f4f3c909ae4874e8167000e6801a",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.10-results.json": "6cc676e03fd01dcbf9a307c9e02b2ef94b1b5a33a17ec89165c284a73d7ce417",
+   "lib/jevbench-v1710-release.mjs": "a1365a81e8e8a0e8ab75dd8636d26270a0eb39391f02dfa69d97443877615704"
+  },
+  "status": "PASS",
+  "two_rebuilds_identical": true
+ },
+ "fairness": "FAIR",
+ "fulltest": {
+  "cancelled": 0,
+  "fail": 0,
+  "log_sha256": "477407811c9c5525ff9c6d420ff2baf5bb9979d798737402ce1525a1e96942ae",
+  "pass": 3831,
+  "run_scope": "Full suite rerun once after generated validator reference literal changed; see FULL-SUITE-SCOPE",
+  "skipped": 8,
+  "status": "PASS",
+  "tests": 3839
+ },
+ "helpers": {
+  "log_sha256": "0f8b99c5b21274fc1648f47fe4657e54f5d89b91eeca08d7886aabb1a8adce51",
+  "status": "PASS"
+ },
+ "iota-raw": {
+  "log_sha256": "dd72c5d4afb11fb597642c40aedbfdc4c9a4fca7664bce7a9487ccfbfc4532b4",
+  "status": "PASS"
+ },
+ "links-api-tests": {
+  "cancelled": 0,
+  "fail": 0,
+  "log_sha256": "c5c8e8db9b8269a157120e3b2f6eafd8a2a107eb0f338bb3b5579bb8c01d81e6",
+  "pass": 7,
+  "skipped": 0,
+  "status": "PASS",
+  "tests": 7
+ },
+ "preview-check": {
+  "log_sha256": "8dc1970e979e55619b70fed6652c78c5722a242ccd10caf9be3e41392cc91b0b",
+  "status": "PASS"
+ },
+ "pricing-references": {
+  "log_sha256": "a879751f68c4b03a33529b03fdebb5f191f82e08c05de15dab0ac623d840a4de",
+  "status": "PASS"
+ },
+ "production-build": {
+  "log_sha256": "639bc1a5ba2020b7ba4e2c646fd2acd2b0f7406cfa4fe998c707d9fed39c98be",
+  "status": "PASS"
+ },
+ "publication_review": "PENDING",
+ "release-tests": {
+  "cancelled": 0,
+  "fail": 0,
+  "log_sha256": "54f448bcbb215811fca8f844a7b69a64e2c6666e8e58c08e0a027168bf353fda",
+  "pass": 67,
+  "skipped": 0,
+  "status": "PASS",
+  "tests": 67
+ },
+ "repro": {
+  "log_sha256": "7930c372c596124a8de2e93dc1f54a5be446df2b6044cac6e115cba976704919",
+  "status": "PASS"
+ },
+ "source": {
+  "log_sha256": "8701b6f5c3589ca8788a1e85006e511e13a501acafaeab3329ecfe0c17675f49",
+  "status": "PASS"
+ },
+ "status": "PASS",
+ "typescript": {
+  "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "status": "PASS"
+ },
+ "validator": {
+  "log_sha256": "bd617599f7de405a6df385ca27746cd8fcb731fcd444f6b074395a9e40bb2e0f",
+  "status": "PASS"
+ }
+}

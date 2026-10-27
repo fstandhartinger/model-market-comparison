@@ -1,0 +1,26 @@
+{
+ "iota-decide-4b-v0.3": {
+  "author": "Macrocosmos (paid fast-lane order b6b2b557, PUBLIC visibility)",
+  "base_model": "Qwen/Qwen3.5-4B",
+  "code_revision": "First-party host-authored HTTP /v1/systemone bridge (sha256 9d23d050e537d9d7) around the repo's documented letter_decide.load_release_model()/systemone() (letter_decide.py blob 9d42370e); fast-lane source review PASS (review sha e7b48c5f) and independent bridge delta reviews PASS (kit SHAS 9673c3ec); no trust_remote_code, no pickle weights.",
+  "cost_basis": "ESTIMATE (*est.), base-model market reference through the frozen pricing_v15 module (installed sha256 645fd82eac728d597048bec0995ecd3ac896566e269fb6c9a1fdb84c171a9ac4): base Qwen/Qwen3.5-4B -> deepinfra:Qwen/Qwen3.5-4B USD 0.030000000000000002/M input, USD 0.15/M output. Estimated, not charged, not a quote from the author or any host. Tokens as reported by the server usage block: 1,008,925 input on 1,500 answered items, 0 output tokens (one forward pass per question, option-letter readout, no generation). COST FIGURES: USD 0.015456 per 1,000 decisions on the common 1,485-item cost basis that the score uses (the same items for every token-priced row: all items except the 15 very long ones that the Jev reference refused); separately, USD 0.020179 per 1,000 decisions over all 1,500 rows of the draw. The common-basis figure is 0.24x the official cost cap USD 0.064595 (all-rows figure 0.31x).",
+  "cost_kind": "estimate",
+  "disclosure": "FIRST MEASUREMENT of v0.3 (paid fast-lane order b6b2b557). FAMILY: new checkpoint of a family with an earlier d1012 row (iota-decide-4b, v1.6.38); new weights (only the stock tokenizer is shared). CONTEXT: prompts longer than 16,384 tokens are cut by the model (letter_decide.fit_state keeps the head and tail of the state) and answered (15 items on this draw; scored as answered, deputy ruling #22794). READOUT: one forward pass per question; softmax over the option-letter logits with a stored temperature. The author's documented NOUL_FLOOR moves any yes/no probability inside 0.2-0.8 to 0.801/0.199 on the same side (applied to every input, answer unchanged). BRIDGE: served through a first-party host-authored bridge around the author's documented entry points, not an author server. PROVENANCE, author statements (unverified): LoRA r16 fine-tune of Qwen/Qwen3.5-4B (instruct), 211k records / 488k questions incl. human-labelled public datasets and teacher-agreed generated states; the README states no benchmark items or benchmark-shaped data were used. HARDWARE: A100 80 GB; latency reflects that card.",
+  "display": "iota-decide-4b-v0.3 (Macrocosmos, letter-readout 4B, self-hosted)",
+  "endpoint_condition": "Evaluator-owned rented Verda GPU VM, 1x NVIDIA A100-SXM4-80GB (FIN-03, Finland, EU, pay-as-you-go non-spot, USD 2.215/h), instance id e352f0be-a001-4a77-83ff-8734642cf20f. Container with --network none (cut proven from inside before the sealed input), Hub offline, every credential unset, read-only weights, all 11 weight files sha256-verified; driven one request at a time. The standard self-hosted x2 + 0.15 s adjustment applies. Measured 26 Oct 2026 on the frozen v1.6-regular-20261012 self-hosted input (sha256 dfd36720...); determinism 50/50 bit-identical; VM and volume destroyed afterwards.",
+  "endpoint_kind": "gpu",
+  "lane": "selfhosted",
+  "licence": "Apache-2.0 (HF metadata and README), public, not gated",
+  "price_in_per_m": 0.030000000000000002,
+  "price_kind": "estimate",
+  "price_out_per_m": 0.15,
+  "ranked": true,
+  "repo": "https://huggingface.co/macrocosm-os/iota-decide-4b-v0.3",
+  "revision": "1da87f01c949e2f8a65e5958ef7cc43ec18da999",
+  "support": {
+   "choice": "native",
+   "noul": "native",
+   "score": "native"
+  }
+ }
+}

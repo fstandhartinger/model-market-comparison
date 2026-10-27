@@ -1,0 +1,67 @@
+{
+ "asks": [
+  {
+   "admission": "custody #27310/#27913; consumed, notice #28028",
+   "handoff": "board #28056",
+   "key": "phillylabs_philly_decider_v2",
+   "relay": "GitHub #233"
+  },
+  {
+   "admission": "custody #28019/#28069; consumed, #28088",
+   "handoff": "board #28089",
+   "key": "iota-decide-4b-v0.3",
+   "relay": "paid order b6b2b557"
+  },
+  {
+   "admission": "custody #27310/#27975; consumed, notice #28159",
+   "handoff": "board #28249",
+   "key": "decisio-qwen3.6-35b-a3b-v090",
+   "relay": "regular queue (form 4EAF168C)"
+  }
+ ],
+ "button_tap": false,
+ "custom_weight_top_five_effect": {
+  "baseline": "v1.7.8 (FAIR receipt; supplementary to fresh v1.7.9 comparison)",
+  "covered_by": "fair top-five GO (Florian rule 25 Oct 2026)",
+  "key": "phillylabs_philly_decider_v2",
+  "mixed": {
+   "best_rank": 3,
+   "top_five_weightings": 1849
+  },
+  "open": {
+   "best_rank": 2,
+   "top_five_weightings": 31663
+  },
+  "source": "workers/r196-philly-fair/RESULT.json",
+  "weightings": 194480
+ },
+ "fairness_check": {
+  "engine": "claude-opus-5-5 account C effort medium",
+  "path": "workers/r196-philly-fair/RESULT.json",
+  "sha256": "0cbbcc7fa4e7404c898a24b0393773567dd7c1f14cbc27ec1455fa0914e0ae3d",
+  "verdict": "FAIR"
+ },
+ "fresh_baseline": "v1.7.9",
+ "go": {
+  "channel": "laptop chat",
+  "date": "2026-10-25",
+  "quote": "3 ja",
+  "recorded_in": "DECISIONS.md 2026-10-25 setup-review-open-questions-answered"
+ },
+ "paid_public": {
+  "key": "iota-decide-4b-v0.3",
+  "order": "b6b2b557",
+  "rule": "paid public automatic publication including top-five changes",
+  "visibility": "public"
+ },
+ "release_owner_rulings": [
+  "unchanged strict frozen scorer for Philly floating-point validity",
+  "decisio090-qwen-engine-basis-f1"
+ ],
+ "status": "GO (fair top-five change, Florian rule 25 Oct 2026; paid public automatic publication)",
+ "top_five_effect": "changed",
+ "top_five_preview": {
+  "path": "r196/v1710/receipts/topfive-diff.json",
+  "sha256": "853e4d3c2540bb4d789b466bcaa47fb1984941a86da2cc550b8c2b336c73d8b5"
+ }
+}
