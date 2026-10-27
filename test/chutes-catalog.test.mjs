@@ -34,6 +34,16 @@ test("Chutes catalog fails closed on missing prices, missing TEE flag, empty dat
   assert.throws(() => parseChutesCatalog({ data: [row("a/b-TEE", 1, 1)] }, { models: [...previous.models, { tee_model_id: "c" }] }), /refusing/);
 });
 
+test("unpriced non-TEE rows are skipped by name; malformed prices and a mostly unpriced catalog still fail", () => {
+  const unpriced = (id) => ({ id, object: "model", owned_by: "chutes", chute_id: "x", confidential_compute: false });
+  const { models, skipped } = parseChutesCatalog({ data: [row("moonshotai/Kimi-K3-TEE", 3, 15), row("zai-org/GLM-5.1-TEE", 0.98, 3.08), unpriced("deepseek-ai/DeepSeek-V4-Pro-0813")] }, previous);
+  assert.equal(models.length, 2);
+  assert.deepEqual(skipped, [{ id: "deepseek-ai/DeepSeek-V4-Pro-0813", reason: "no price object in catalog row" }]);
+  assert.throws(() => parseChutesCatalog({ data: [row("moonshotai/Kimi-K3-TEE", 3, 15), { ...unpriced("a/b"), price: { input: {}, output: {} } }] }, previous), /numeric/);
+  assert.throws(() => parseChutesCatalog({ data: [row("moonshotai/Kimi-K3-TEE", 3, 15), row("zai-org/GLM-5.1-TEE", 1, 1), unpriced("a/b"), unpriced("a/c"), unpriced("a/d")] }, previous), /no price; refusing/);
+  assert.throws(() => parseChutesCatalog({ data: [unpriced("a/b")] }, { models: [] }), /no price; refusing/);
+});
+
 test("context length falls back to max_model_len, then the previous value, never blank", () => {
   const prev = { models: [{ ...previous.models[1], context_length: 202752 }] };
   const noCtx = (extra) => row("zai-org/GLM-5.1-TEE", 0.98, 3.08, { context_length: undefined, ...extra });

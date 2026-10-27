@@ -16,7 +16,8 @@ try {
   const response = await fetch(url, { headers: { "User-Agent": "BenchmarkHeaven/1.0 (+https://github.com/fstandhartinger/model-market-comparison)" }, signal: AbortSignal.timeout(60000) });
   if (!response.ok) throw new Error(`Chutes HTTP ${response.status}`);
   const text = await response.text();
-  const { models, diff } = parseChutesCatalog(JSON.parse(text), previous);
+  const { models, diff, skipped } = parseChutesCatalog(JSON.parse(text), previous);
+  for (const { id, reason } of skipped) console.warn(`Chutes catalog: skipped ${id}: ${reason}`);
   await captureLiveSource(url, text);
   const collected_at = new Date().toISOString().slice(0, 10);
   await writeJSONAtomic(target, {
@@ -26,9 +27,10 @@ try {
     method: "scripts/fetch-chutes-catalog.mjs: one GET of the public catalog; prices are price.{input,output,input_cache_read}.usd per 1M tokens; curated model_name/provider_org carried over by exact tee_model_id; new ids marked mapping=derived. See chutes.method.md.",
     response_sha256: createHash("sha256").update(text).digest("hex"),
     diff,
+    skipped_unpriced: skipped.map((s) => s.id),
     models,
   });
-  console.log(`Chutes catalog: ${models.length} models (added ${diff.added.length}, removed ${diff.removed.length}, price changes ${diff.price_changed.length})`);
+  console.log(`Chutes catalog: ${models.length} models (added ${diff.added.length}, removed ${diff.removed.length}, price changes ${diff.price_changed.length}, skipped unpriced ${skipped.length})`);
 } catch (error) {
   console.error(`Chutes catalog refresh failed; previous snapshot preserved: ${error.message}`);
   process.exitCode = 1;
