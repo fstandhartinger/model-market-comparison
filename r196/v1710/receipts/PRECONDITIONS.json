@@ -1,0 +1,84 @@
+{
+ "base": "a589248f361f74ee1e8e94a2ff9dae9e400762b8",
+ "fairness_sha256": "0cbbcc7fa4e7404c898a24b0393773567dd7c1f14cbc27ec1455fa0914e0ae3d",
+ "hostname": "Ubuntu-2204-jammy-amd64-base",
+ "iota_input_checks": {
+  "input_tokens": 1008925,
+  "latency": {
+   "max": 2.4117727500000683,
+   "over_10s": 0,
+   "p50": 0.11314048350004668,
+   "p95": 0.16305253200005154,
+   "p95_method": "nearest rank"
+  },
+  "ok": 1500,
+  "output_tokens": 0,
+  "pricing_sha256": "645fd82eac728d597048bec0995ecd3ac896566e269fb6c9a1fdb84c171a9ac4",
+  "resolve_all": {
+   "candidate_usd_per_1000": null,
+   "counting_list_price": false,
+   "deepinfra_snapshot_sha256": "84eb7926acd4e93b71d695be24898e2ca999b20011d1b66cc0348ce7c6c3546f",
+   "floor_binds": false,
+   "floor_usd_per_1000": 0.020178500000000002,
+   "key": "iota-decide-4b-v0.3",
+   "market_rates_per_m": [
+    0.030000000000000002,
+    0.15
+   ],
+   "market_reference": "deepinfra:Qwen/Qwen3.5-4B",
+   "note": "ESTIMATE: exact base-model market reference (operator tariff excluded by 30-day rule); reference deepinfra:Qwen/Qwen3.5-4B frozen at the 25 Sep cut-off, deprecated afterwards (replaced by Qwen/Qwen3.5-9B); re-score if it changes (I-3)",
+   "rankable": true,
+   "snapshot_sha256": "f5d0cd8e0f7d2d6514748c99bfcaeacc09775bac7aa7eecf765af4ba04b0dcd5",
+   "tokens": {
+    "decisions": 1500,
+    "input": 1008925,
+    "output": 0
+   },
+   "usd_per_1000": 0.020178500000000002
+  },
+  "resolve_common": {
+   "candidate_usd_per_1000": null,
+   "counting_list_price": false,
+   "deepinfra_snapshot_sha256": "84eb7926acd4e93b71d695be24898e2ca999b20011d1b66cc0348ce7c6c3546f",
+   "floor_binds": false,
+   "floor_usd_per_1000": 0.015456404040404043,
+   "key": "iota-decide-4b-v0.3",
+   "market_rates_per_m": [
+    0.030000000000000002,
+    0.15
+   ],
+   "market_reference": "deepinfra:Qwen/Qwen3.5-4B",
+   "note": "ESTIMATE: exact base-model market reference (operator tariff excluded by 30-day rule); reference deepinfra:Qwen/Qwen3.5-4B frozen at the 25 Sep cut-off, deprecated afterwards (replaced by Qwen/Qwen3.5-9B); re-score if it changes (I-3)",
+   "rankable": true,
+   "snapshot_sha256": "f5d0cd8e0f7d2d6514748c99bfcaeacc09775bac7aa7eecf765af4ba04b0dcd5",
+   "tokens": {
+    "decisions": 1485,
+    "input": 765092,
+    "output": 0
+   },
+   "usd_per_1000": 0.015456404040404043
+  },
+  "rows": 1500,
+  "status_counts": {
+   "200": 1500
+  }
+ },
+ "paid_request_sha256": "41b40b80ed7b91150e0eee56afb2a51a08a9351ad1a0541249610faa8db01400",
+ "paid_visibility": "public",
+ "predecessor_review": "PASS",
+ "pricing_sha256": "645fd82eac728d597048bec0995ecd3ac896566e269fb6c9a1fdb84c171a9ac4",
+ "sources": {
+  "decisio-qwen3.6-35b-a3b-v090": {
+   "field": "/home/flori/jobs/jevbench-auto-intake/r24-score/field-r16d",
+   "raw_sha256": "9e72102fef97c070a00f88d6cd22b3fe6de99f725d535df3e338c8d20d0a16b1"
+  },
+  "iota-decide-4b-v0.3": {
+   "field": "/home/flori/jobs/jevbench-add-requests-20260919/r196/score-iota03/field",
+   "raw_sha256": "4e4ee3e1da2b58990e51ee471875a8c7d5e92a727c4024771d1d6703a8ae4927"
+  },
+  "phillylabs_philly_decider_v2": {
+   "field": "/home/flori/jobs/jevbench-auto-intake/r24-score/field-r16c",
+   "raw_sha256": "6d02e677e68cd68383a789e4f720e025b4c14845a02c831a2ba95f8b6f7eaf67"
+  }
+ }
+}

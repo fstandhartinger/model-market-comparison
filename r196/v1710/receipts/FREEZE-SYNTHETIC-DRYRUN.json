@@ -1,0 +1,283 @@
+{
+ "carried_rows": 297,
+ "carried_rows_equal_except": [
+  "rank",
+  "ranks"
+ ],
+ "files": {
+  "carry": "271d1fc77a136a04a1eb6deb5480c52d4211eb2b66b2ac8bb31e80867e69003a",
+  "categories": "f4aee99099f773195d941b915343b770e6abffd5ff857dd29ee7f6a8a4915755",
+  "history": "5cd8c1332226ea9c179883d2285c0d8b8cc593ae38f2645197364a7ddd9c83c1",
+  "history-carry": "334e851944e92383ab3071e52b3012040c7023d0fe236395953169ebee8f0459",
+  "proof": "d806272e9d068cc4b7ce1131a4c1835088dd7ee78b104e404b14ddb2241bb403",
+  "results": "1076187e7621c2ca4c514d8d29d857fc870970926a279475a23c8faea0b09e88"
+ },
+ "link_fixed_rows": [],
+ "method": {
+  "decision_limit_s": 10,
+  "label": "v1.7",
+  "rule": "latency_s > 10.000 s -> failed",
+  "treatment": "share"
+ },
+ "new_rows": {
+  "decisio-qwen3.6-35b-a3b-v090": {
+   "axes": {
+    "calibration": 89.00828628793406,
+    "cost": 32.41865198106416,
+    "intelligence": 33.9677591411048,
+    "speed": 90.99460763280192
+   },
+   "composite_ci95": {
+    "A": [
+     6.561533205946806,
+     12.888735861171485
+    ],
+    "B": [
+     5.8977471445442635,
+     12.175544367484347
+    ],
+    "C": [
+     4.556620281907502,
+     8.95051101470242
+    ]
+   },
+   "decision_limit": {
+    "limit_s": 10.0,
+    "n_over_limit": 0,
+    "n_over_limit_answered_ok": 0,
+    "rule": "latency_s > limit -> failed",
+    "speed_basis": "all decisions given (lane items in the raw), measured latency_s",
+    "speed_n": 1500,
+    "treatment": "share"
+   },
+   "model_pin": "aminry/decisio@333a0a849de7658969a8f8933b34a8097a8c3489 + weights Qwen/Qwen3.6-35B-A3B-FP8@95a723d08a9490559dae23d0cff1d9466213d989",
+   "price_reference": {
+    "base": "Qwen/Qwen3.6-35B-A3B",
+    "in": 0.15,
+    "listing": "qwen/qwen3.6-35b-a3b",
+    "out": 1.0
+   },
+   "raw_sha256": "9e72102fef97c070a00f88d6cd22b3fe6de99f725d535df3e338c8d20d0a16b1",
+   "scored_input_sha256": "f64f94ec6de6eab37bb55dfc109b1778d81968d076fdfa355f545b3ad6364f7f",
+   "source_sha256": {
+    "entry_path": "/home/flori/jobs/jevbench-auto-intake/r24-score/ENTRIES-R16D-REVIEWED.json",
+    "entry_sha256": "8fd61c527dba19eccf26379b3ee3273ddb2d0217eb84a822a37518d0030c364d",
+    "frozen": {
+     "path": "/home/flori/jobs/jevbench-auto-intake/r24-score/field-r16d/out-frozen/jevbench-v1.6.0-results.json",
+     "sha256": "0c71304134535c9a2b8a4ae2e3c14d7f66b15999836b90a2f1d3efc29877334a"
+    },
+    "raw_sha256": "9e72102fef97c070a00f88d6cd22b3fe6de99f725d535df3e338c8d20d0a16b1",
+    "raw_verified_in_place": true,
+    "registry_sha256": "4ffc220e3bd24e6b1c39fd06401ecafb124e01e3d5532d38d9e2233f274fc738",
+    "v17-off": {
+     "path": "/home/flori/jobs/jevbench-auto-intake/r24-score/field-r16d/out-v17-off/jevbench-v1.6.0-results.json",
+     "sha256": "6c687ebbf00e91e1e6939e234e19b972a538edd718ab29f422cfbe6235703ab3"
+    },
+    "v17-share": {
+     "path": "/home/flori/jobs/jevbench-auto-intake/r24-score/field-r16d/out-v17-share/jevbench-v1.6.0-results.json",
+     "sha256": "f64f94ec6de6eab37bb55dfc109b1778d81968d076fdfa355f545b3ad6364f7f"
+    }
+   },
+   "treatment": "ranked"
+  },
+  "iota-decide-4b-v0.3": {
+   "axes": {
+    "calibration": 84.75645357480421,
+    "cost": 64.3267461412417,
+    "intelligence": 52.532639982463,
+    "speed": 87.46776808261981
+   },
+   "composite_ci95": {
+    "A": [
+     59.741282715371796,
+     70.59941125239224
+    ],
+    "B": [
+     55.345864268296616,
+     66.97056326582823
+    ],
+    "C": [
+     41.48700188567486,
+     60.91192876869338
+    ]
+   },
+   "decision_limit": {
+    "limit_s": 10.0,
+    "n_over_limit": 0,
+    "n_over_limit_answered_ok": 0,
+    "rule": "latency_s > limit -> failed",
+    "speed_basis": "all decisions given (lane items in the raw), measured latency_s",
+    "speed_n": 1500,
+    "treatment": "share"
+   },
+   "model_pin": "macrocosm-os/iota-decide-4b-v0.3@1da87f01c949e2f8a65e5958ef7cc43ec18da999",
+   "price_reference": {
+    "base": "Qwen/Qwen3.5-4B",
+    "in": 0.03,
+    "listing": "qwen/qwen3.5-4b",
+    "out": 0.15
+   },
+   "raw_sha256": "4e4ee3e1da2b58990e51ee471875a8c7d5e92a727c4024771d1d6703a8ae4927",
+   "scored_input_sha256": "e550b1b765ce11f2e4d3bed3de9c59abde005e1e0f06c4a309d8a41bed77cf18",
+   "source_sha256": {
+    "entry_path": "/home/flori/jobs/fastlane-iota-v03-b6b2b557-20261026/score/ENTRIES-IOTA-V03.json",
+    "entry_sha256": "f8a47bb3a751004061b13e5a0edd2056b4b0de3cfc0c2d6f58147c935c5d1f8e",
+    "frozen": {
+     "path": "/home/flori/jobs/jevbench-add-requests-20260919/r196/score-iota03/field/out-frozen/jevbench-v1.6.0-results.json",
+     "sha256": "7f87d5e115724095c8410e919502c49a733aeb2c15232da14e062d11c2571bdd"
+    },
+    "raw_sha256": "4e4ee3e1da2b58990e51ee471875a8c7d5e92a727c4024771d1d6703a8ae4927",
+    "raw_verified_in_place": true,
+    "registry_sha256": "f5d37f68d7d99d54c1c859203a28df5b198b7d3fc54ab9d2ee1062f5ffbeb6c7",
+    "v17-off": {
+     "path": "/home/flori/jobs/jevbench-add-requests-20260919/r196/score-iota03/field/out-v17-off/jevbench-v1.6.0-results.json",
+     "sha256": "e728d9a822b5263ef850ec3e582c1d9870b7ae512f54876c31fb931cef4cebe6"
+    },
+    "v17-share": {
+     "path": "/home/flori/jobs/jevbench-add-requests-20260919/r196/score-iota03/field/out-v17-share/jevbench-v1.6.0-results.json",
+     "sha256": "e550b1b765ce11f2e4d3bed3de9c59abde005e1e0f06c4a309d8a41bed77cf18"
+    }
+   },
+   "treatment": "ranked"
+  },
+  "phillylabs_philly_decider_v2": {
+   "axes": {
+    "calibration": 82.5161952575238,
+    "cost": 64.55148214637316,
+    "intelligence": 56.08237887792767,
+    "speed": 93.1956789542462
+   },
+   "composite_ci95": {
+    "A": [
+     68.16632857007097,
+     73.02622022921112
+    ],
+    "B": [
+     63.78341037751451,
+     70.00058599861448
+    ],
+    "C": [
+     48.71975355536661,
+     72.95919062225715
+    ]
+   },
+   "decision_limit": {
+    "limit_s": 10.0,
+    "n_over_limit": 0,
+    "n_over_limit_answered_ok": 0,
+    "rule": "latency_s > limit -> failed",
+    "speed_basis": "all decisions given (lane items in the raw), measured latency_s",
+    "speed_n": 1500,
+    "treatment": "share"
+   },
+   "model_pin": "PhillyLabs/philly-decider-v2@36e5ddde2c59021d37ed5974aa7c9f16062050e0 + base h2oai/h2o-lightning-4b@193ad740925b176a3b70a5a13a7cff2f2fadd01e",
+   "price_reference": {
+    "base": "Qwen/Qwen3.5-4B",
+    "in": 0.03,
+    "listing": "qwen/qwen3.5-4b",
+    "out": 0.15
+   },
+   "raw_sha256": "6d02e677e68cd68383a789e4f720e025b4c14845a02c831a2ba95f8b6f7eaf67",
+   "scored_input_sha256": "dd7bafcf7783111d8ab95852e5a9716f88093473df4a710d7d563bec377fa139",
+   "source_sha256": {
+    "entry_path": "/home/flori/jobs/jevbench-auto-intake/r24-score/ENTRIES-R16C-REVIEWED.json",
+    "entry_sha256": "a9d4be51eed589f94c26ba8190bce22a751271c5b0bfcade5c04139bafb448b8",
+    "frozen": {
+     "path": "/home/flori/jobs/jevbench-auto-intake/r24-score/field-r16c/out-frozen/jevbench-v1.6.0-results.json",
+     "sha256": "5ede5266d2b9f0e713fe7e23c3d0839c040ab1cb3807b0d84271a353860aabae"
+    },
+    "raw_sha256": "6d02e677e68cd68383a789e4f720e025b4c14845a02c831a2ba95f8b6f7eaf67",
+    "raw_verified_in_place": true,
+    "registry_sha256": "72f8bed0bdf88fdde0074e964f6267017ca03e4e87e3927c135a67725c5c55be",
+    "v17-off": {
+     "path": "/home/flori/jobs/jevbench-auto-intake/r24-score/field-r16c/out-v17-off/jevbench-v1.6.0-results.json",
+     "sha256": "df94112e860f64b9c9abdb6ec362d4f69c626fca761483244fc729a88d98a916"
+    },
+    "v17-share": {
+     "path": "/home/flori/jobs/jevbench-auto-intake/r24-score/field-r16c/out-v17-share/jevbench-v1.6.0-results.json",
+     "sha256": "dd7bafcf7783111d8ab95852e5a9716f88093473df4a710d7d563bec377fa139"
+    }
+   },
+   "treatment": "ranked"
+  }
+ },
+ "predecessor": {
+  "publication_sha256": "95c99857e5f5fd9cf4f9ef93621c8092af3c15d08a92782dc659da39f1bc44ce",
+  "revision": "v1.7.9"
+ },
+ "pricing_module_sha256": "645fd82eac728d597048bec0995ecd3ac896566e269fb6c9a1fdb84c171a9ac4",
+ "publication_approval": {
+  "asks": [
+   {
+    "admission": "custody #27310/#27913; consumed, notice #28028",
+    "handoff": "board #28056",
+    "key": "phillylabs_philly_decider_v2",
+    "relay": "GitHub #233"
+   },
+   {
+    "admission": "custody #28019/#28069; consumed, #28088",
+    "handoff": "board #28089",
+    "key": "iota-decide-4b-v0.3",
+    "relay": "paid order b6b2b557"
+   },
+   {
+    "admission": "custody #27310/#27975; consumed, notice #28159",
+    "handoff": "board #28249",
+    "key": "decisio-qwen3.6-35b-a3b-v090",
+    "relay": "regular queue (form 4EAF168C)"
+   }
+  ],
+  "button_tap": false,
+  "fairness_check": {
+   "engine": "claude-opus-5-5 account C effort medium",
+   "path": "workers/r196-philly-fair/RESULT.json",
+   "sha256": "0cbbcc7fa4e7404c898a24b0393773567dd7c1f14cbc27ec1455fa0914e0ae3d",
+   "verdict": "FAIR"
+  },
+  "fresh_baseline": "v1.7.9",
+  "go": {
+   "channel": "laptop chat",
+   "date": "2026-10-25",
+   "quote": "3 ja",
+   "recorded_in": "DECISIONS.md 2026-10-25 setup-review-open-questions-answered"
+  },
+  "paid_public": {
+   "key": "iota-decide-4b-v0.3",
+   "order": "b6b2b557",
+   "rule": "paid public automatic publication including top-five changes",
+   "visibility": "public"
+  },
+  "release_owner_rulings": [
+   "unchanged strict frozen scorer for Philly floating-point validity",
+   "decisio090-qwen-engine-basis-f1"
+  ],
+  "status": "GO (fair top-five change, Florian rule 25 Oct 2026; paid public automatic publication)",
+  "top_five_effect": "changed",
+  "top_five_preview": {
+   "path": "r196/v1710/receipts/topfive-diff.json",
+   "sha256": "853e4d3c2540bb4d789b466bcaa47fb1984941a86da2cc550b8c2b336c73d8b5"
+  }
+ },
+ "publication_review": {
+  "engine": "synthetic-preview-only",
+  "receipt_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "verdict": "PASS"
+ },
+ "publication_sha256": "f94897506e816a3a340ad03bc5ebad8a9e72bbc4d5e8ac8ca2e1c9f015bede95",
+ "release": "v1.7.10",
+ "remeasured_rows": {},
+ "repriced_rows": {},
+ "scorers": {
+  "a2_cells_v16": "afd034efe27bde12f2ebbfd12c4c0792c93214e1aa9a63deecb0e83a0184c990",
+  "build_categories_v16": "40eb50f3d7fea2693b4478c4b89f8bfb957dd17776add491935742e3b9354e73",
+  "build_topics_v16": "ec04ab598162bfc4340ffa7916a06573eb1222132c61e47ab772045bc67ced78",
+  "decisive_v16": "80b9ccf43e58dddb1b2a77e0a33aba8a9f7337a3a9a639afc7264218bbf8918f",
+  "noul_method_v16": "119e59486ab3300b972fbcbadb0fe1dceceb124287607375aa61c66063c607d0",
+  "pins_v17": "b50cc00dd2cb0ba46157eb6a2bda620255f3ff54404025e992bc7962dfff2f8b",
+  "run_under_v17": "efb194b2ea350db59be37e5e72af71f809f763a2476cd6f521adf6f4fd90a64f",
+  "score_v15": "0931e05c6410b1b971201834397cb609cdb25f942723c50375632952f6dcc447",
+  "score_v15_headlineA": "826f2cbcb57007ec8a161e6eb0111182b8a656c0638027c6c78022a858fd8e2c",
+  "score_v16": "02132271117653e6302c509232a581d0094f0e78eac8b1bfc67596fd5d5097e9",
+  "score_v17": "6363458d208a52f4ad5aaf73027cad1b7e0358ff962e581d57a3cc462c8f1978"
+ }
+}

@@ -1,3 +1,4 @@
+import { hasPublishedJevbenchV1710Release } from '../lib/jevbench-v1710-release.mjs';
 import { hasPublishedJevbenchV179Release } from '../lib/jevbench-v179-release.mjs';
 import { hasPublishedJevbenchV178Release } from '../lib/jevbench-v178-release.mjs';
 import { hasPublishedJevbenchV177Release } from '../lib/jevbench-v177-release.mjs';
@@ -241,7 +242,7 @@ test('the text about this draw\'s 15 items names who refused them and where the 
 
 test('Delta 3 (display only): Jev 1.14.0 is a second unranked reference row on the open board without the toggle; every ranking and rank is unchanged', async () => {
   // v1.7.0 (10 s rule): once the PASS-reviewed release is published the board is restated and the v1.7.0 roster applies; before that the v1.6.39 roster.
-  const frozen = JSON.parse(await readFile(`${root}/test/fixtures/jevbench-${(await hasPublishedJevbenchV179Release()) ? 'v179' : (await hasPublishedJevbenchV178Release()) ? 'v178' : (await hasPublishedJevbenchV177Release()) ? 'v177' : (await hasPublishedJevbenchV176Release()) ? 'v176' : (await hasPublishedJevbenchV175Release()) ? 'v175' : (await hasPublishedJevbenchV174Release()) ? 'v174' : (await hasPublishedJevbenchV173Release()) ? 'v173' : (await hasPublishedJevbenchV172Release()) ? 'v172' : (await hasPublishedJevbenchV171Release()) ? 'v171' : (await hasPublishedJevbenchV170Release()) ? 'v170' : 'v1643'}-ranks.json`, 'utf8'));
+  const frozen = JSON.parse(await readFile(`${root}/test/fixtures/jevbench-${(await hasPublishedJevbenchV1710Release()) ? 'v1710' : (await hasPublishedJevbenchV179Release()) ? 'v179' : (await hasPublishedJevbenchV178Release()) ? 'v178' : (await hasPublishedJevbenchV177Release()) ? 'v177' : (await hasPublishedJevbenchV176Release()) ? 'v176' : (await hasPublishedJevbenchV175Release()) ? 'v175' : (await hasPublishedJevbenchV174Release()) ? 'v174' : (await hasPublishedJevbenchV173Release()) ? 'v173' : (await hasPublishedJevbenchV172Release()) ? 'v172' : (await hasPublishedJevbenchV171Release()) ? 'v171' : (await hasPublishedJevbenchV170Release()) ? 'v170' : 'v1643'}-ranks.json`, 'utf8'));
   const [release, prev, apiA4] = await Promise.all([readJevbenchV161Release(), readJevbenchV157Release(), readFile(`${root}/data/jevbench-api-a4-equated.json`, 'utf8').then(JSON.parse)]);
   const { published, publishedCarry } = await assembleJevBoard({ release, previous: prev, live: true, apiA4 });
   const isApi = jevScopeClassifier(published.systems, publishedCarry.rows, prev.artifact.systems, prev.artifact.not_measured);

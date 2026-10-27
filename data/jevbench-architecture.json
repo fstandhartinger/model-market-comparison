@@ -7109,6 +7109,54 @@
             "url": "https://huggingface.co/knowledgator/gliclass-v4-9b/blob/14d11a92b5e0bab4a166e1fce4cc0777cac27182/README.md"
           }
         ]
+      },
+      "decisio-qwen3.6-35b-a3b-v090": {
+        "arch": "open-llm-decoder",
+        "badges": {
+          "derivation": "pipeline",
+          "params": "35B-A3B",
+          "quant": "FP8"
+        },
+        "evidence": [
+          {
+            "fact": "Decisio 0.9.0 serves official Qwen3.6-35B-A3B FP8 weights with a native label-logprob decision readout.",
+            "kind": "repo-readme",
+            "url": "https://github.com/aminry/decisio/tree/333a0a849de7658969a8f8933b34a8097a8c3489/README.md"
+          }
+        ],
+        "note": "Qwen/Qwen3.6-35B-A3B; measured configuration and lineage disclosed on the row."
+      },
+      "iota-decide-4b-v0.3": {
+        "arch": "open-llm-decoder",
+        "badges": {
+          "derivation": "fine-tune",
+          "params": "4B",
+          "quant": "BF16"
+        },
+        "evidence": [
+          {
+            "fact": "The pinned model card declares a Qwen3.5-4B-lineage fine-tune with native letter-logprob decision readout.",
+            "kind": "model-card",
+            "url": "https://huggingface.co/macrocosm-os/iota-decide-4b-v0.3/blob/1da87f01c949e2f8a65e5958ef7cc43ec18da999/README.md"
+          }
+        ],
+        "note": "Qwen/Qwen3.5-4B; measured configuration and lineage disclosed on the row."
+      },
+      "phillylabs_philly_decider_v2": {
+        "arch": "open-llm-decoder",
+        "badges": {
+          "derivation": "fine-tune",
+          "params": "4B",
+          "quant": "BF16"
+        },
+        "evidence": [
+          {
+            "fact": "The pinned model card declares a Qwen3.5-4B-lineage fine-tune with native letter-logprob decision readout.",
+            "kind": "model-card",
+            "url": "https://huggingface.co/PhillyLabs/philly-decider-v2/blob/36e5ddde2c59021d37ed5974aa7c9f16062050e0/README.md"
+          }
+        ],
+        "note": "Qwen/Qwen3.5-4B; measured configuration and lineage disclosed on the row."
       }
     },
     "imagejevbench": {

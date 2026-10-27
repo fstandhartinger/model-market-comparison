@@ -1,0 +1,10 @@
+"""Aggregate-only verification; never render sealed identifiers or probabilities."""
+import json,pathlib,collections,statistics,hashlib,importlib.util
+J=pathlib.Path(__file__).resolve().parent;ep=pathlib.Path('/home/flori/jobs/fastlane-iota-v03-b6b2b557-20261026/score/ENTRIES-IOTA-V03.json');e=json.loads(ep.read_text());k='iota-decide-4b-v0.3';raw=pathlib.Path(e[k]['raw']);assert hashlib.sha256(raw.read_bytes()).hexdigest()=='4e4ee3e1da2b58990e51ee471875a8c7d5e92a727c4024771d1d6703a8ae4927'
+rows=[json.loads(line) for line in raw.read_text().splitlines() if line.strip()]
+c={'rows':len(rows),'ok':sum(x['ok'] for x in rows),'status_counts':dict(collections.Counter(str(x['status_code']) for x in rows)),'input_tokens':sum(x['usage']['input_tokens'] for x in rows),'output_tokens':sum(x['usage']['output_tokens'] for x in rows)}
+assert c=={'rows':1500,'ok':1500,'status_counts':{'200':1500},'input_tokens':1008925,'output_tokens':0},'STOP iota aggregate counts differ'
+lat=sorted(x['latency_s'] for x in rows);c['latency']={'p50':statistics.median(lat),'max':max(lat),'over_10s':sum(x>10 for x in lat)};assert c['latency']['over_10s']==0 and round(max(lat),2)==2.41
+p=pathlib.Path('/home/flori/jobs/jevbench-v15-measure-20260925/harness/pricing_v15.py');c['pricing_sha256']=hashlib.sha256(p.read_bytes()).hexdigest();assert c['pricing_sha256']=='645fd82eac728d597048bec0995ecd3ac896566e269fb6c9a1fdb84c171a9ac4'
+spec=importlib.util.spec_from_file_location('pricing',p);pr=importlib.util.module_from_spec(spec);spec.loader.exec_module(pr);r=pr.resolve(k,e[k]['entry'],rows,pr.catalog_rates());assert r['rankable'] and all(abs(a-b)<1e-12 for a,b in zip(r['market_rates_per_m'],[0.03,0.15]));assert abs(r['usd_per_1000']-0.0201785)<1e-12;c['resolve_all']=r
+(J/'receipts/IOTA-RAW-AGGREGATE.json').write_text(json.dumps(c,indent=1,sort_keys=True)+'\n');print('PASS independently recounted iota raw: 1500 HTTP 200; 1008925 input / 0 output tokens; no >10s; pinned price resolve 0.03/0.15 and all-item USD 0.0201785/1k')

@@ -1,0 +1,578 @@
+{
+ "CARRIED-ROWS": {
+  "carried_cells_equal": 302,
+  "immutable_bytes": [
+   "carry",
+   "history",
+   "history-carry"
+  ],
+  "new_score_payloads_equal_to_sources": true,
+  "predecessor_files_equal_to_base": 7,
+  "rows_equal_except_rank": 297,
+  "status": "PASS"
+ },
+ "CHANGED-LISTS-BY-ROW": {
+  "baseline": "v1.7.9",
+  "candidate": "v1.7.10",
+  "changed_lists_by_row": {
+   "decisio-qwen3.6-35b-a3b-v090": [],
+   "iota-decide-4b-v0.3": [],
+   "phillylabs_philly_decider_v2": [
+    {
+     "after": [
+      "chon-1.0-e4b",
+      "torchcast-decision-4b-v1.3",
+      "torchcast-decision-4b-v1.2",
+      "h2o-lightning-4b",
+      "phillylabs_philly_decider_v2"
+     ],
+     "before": [
+      "chon-1.0-e4b",
+      "torchcast-decision-4b-v1.3",
+      "torchcast-decision-4b-v1.2",
+      "h2o-lightning-4b",
+      "torchcast-decision-4b-v1.1"
+     ],
+     "entrant_rank": 5,
+     "list": "frozen/open/official/view/Emphasis on Cost 20:20:60"
+    },
+    {
+     "after": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b",
+      "torchcast-decision-4b-v1.2",
+      "phillylabs_philly_decider_v2",
+      "h2o-lightning-31b"
+     ],
+     "before": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b",
+      "torchcast-decision-4b-v1.2",
+      "h2o-lightning-31b",
+      "chon-1.0-e4b"
+     ],
+     "entrant_rank": 4,
+     "list": "frozen/open/official/view/Emphasis on Speed 20:60:20"
+    },
+    {
+     "after": [
+      "chon-1.0-e4b",
+      "torchcast-decision-4b-v1.3",
+      "torchcast-decision-4b-v1.2",
+      "h2o-lightning-4b",
+      "phillylabs_philly_decider_v2"
+     ],
+     "before": [
+      "chon-1.0-e4b",
+      "torchcast-decision-4b-v1.3",
+      "torchcast-decision-4b-v1.2",
+      "h2o-lightning-4b",
+      "torchcast-decision-4b-v1.1"
+     ],
+     "entrant_rank": 5,
+     "list": "frozen/open/none/view/Emphasis on Cost 20:20:60"
+    },
+    {
+     "after": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b",
+      "torchcast-decision-4b-v1.2",
+      "phillylabs_philly_decider_v2",
+      "h2o-lightning-31b"
+     ],
+     "before": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b",
+      "torchcast-decision-4b-v1.2",
+      "h2o-lightning-31b",
+      "chon-1.0-e4b"
+     ],
+     "entrant_rank": 4,
+     "list": "frozen/open/none/view/Emphasis on Speed 20:60:20"
+    },
+    {
+     "after": [
+      "chon-1.0-e4b",
+      "torchcast-decision-4b-v1.3",
+      "torchcast-decision-4b-v1.2",
+      "h2o-lightning-4b",
+      "phillylabs_philly_decider_v2"
+     ],
+     "before": [
+      "chon-1.0-e4b",
+      "torchcast-decision-4b-v1.3",
+      "torchcast-decision-4b-v1.2",
+      "h2o-lightning-4b",
+      "torchcast-decision-4b-v1.1"
+     ],
+     "entrant_rank": 5,
+     "list": "frozen/open/cost1.4/view/Emphasis on Cost 20:20:60"
+    },
+    {
+     "after": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b",
+      "torchcast-decision-4b-v1.2",
+      "phillylabs_philly_decider_v2",
+      "h2o-lightning-31b"
+     ],
+     "before": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b",
+      "torchcast-decision-4b-v1.2",
+      "h2o-lightning-31b",
+      "chon-1.0-e4b"
+     ],
+     "entrant_rank": 4,
+     "list": "frozen/open/cost1.4/view/Emphasis on Speed 20:60:20"
+    },
+    {
+     "after": [
+      "chon-1.0-e4b",
+      "torchcast-decision-4b-v1.3",
+      "torchcast-decision-4b-v1.2",
+      "h2o-lightning-4b",
+      "phillylabs_philly_decider_v2"
+     ],
+     "before": [
+      "chon-1.0-e4b",
+      "torchcast-decision-4b-v1.3",
+      "torchcast-decision-4b-v1.2",
+      "h2o-lightning-4b",
+      "torchcast-decision-4b-v1.1"
+     ],
+     "entrant_rank": 5,
+     "list": "frozen/open/cost1.5/view/Emphasis on Cost 20:20:60"
+    },
+    {
+     "after": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b",
+      "torchcast-decision-4b-v1.2",
+      "phillylabs_philly_decider_v2",
+      "h2o-lightning-31b"
+     ],
+     "before": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b",
+      "torchcast-decision-4b-v1.2",
+      "h2o-lightning-31b",
+      "chon-1.0-e4b"
+     ],
+     "entrant_rank": 4,
+     "list": "frozen/open/cost1.5/view/Emphasis on Speed 20:60:20"
+    },
+    {
+     "after": [
+      "chon-1.0-e4b",
+      "torchcast-decision-4b-v1.3",
+      "torchcast-decision-4b-v1.2",
+      "h2o-lightning-4b",
+      "phillylabs_philly_decider_v2"
+     ],
+     "before": [
+      "chon-1.0-e4b",
+      "torchcast-decision-4b-v1.3",
+      "torchcast-decision-4b-v1.2",
+      "h2o-lightning-4b",
+      "torchcast-decision-4b-v1.1"
+     ],
+     "entrant_rank": 5,
+     "list": "off/open/official/view/Emphasis on Cost 20:20:60"
+    },
+    {
+     "after": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b",
+      "torchcast-decision-4b-v1.2",
+      "phillylabs_philly_decider_v2",
+      "h2o-lightning-31b"
+     ],
+     "before": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b",
+      "torchcast-decision-4b-v1.2",
+      "h2o-lightning-31b",
+      "chon-1.0-e4b"
+     ],
+     "entrant_rank": 4,
+     "list": "off/open/official/view/Emphasis on Speed 20:60:20"
+    },
+    {
+     "after": [
+      "chon-1.0-e4b",
+      "torchcast-decision-4b-v1.3",
+      "torchcast-decision-4b-v1.2",
+      "h2o-lightning-4b",
+      "phillylabs_philly_decider_v2"
+     ],
+     "before": [
+      "chon-1.0-e4b",
+      "torchcast-decision-4b-v1.3",
+      "torchcast-decision-4b-v1.2",
+      "h2o-lightning-4b",
+      "torchcast-decision-4b-v1.1"
+     ],
+     "entrant_rank": 5,
+     "list": "off/open/none/view/Emphasis on Cost 20:20:60"
+    },
+    {
+     "after": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b",
+      "torchcast-decision-4b-v1.2",
+      "phillylabs_philly_decider_v2",
+      "h2o-lightning-31b"
+     ],
+     "before": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b",
+      "torchcast-decision-4b-v1.2",
+      "h2o-lightning-31b",
+      "chon-1.0-e4b"
+     ],
+     "entrant_rank": 4,
+     "list": "off/open/none/view/Emphasis on Speed 20:60:20"
+    },
+    {
+     "after": [
+      "chon-1.0-e4b",
+      "torchcast-decision-4b-v1.3",
+      "torchcast-decision-4b-v1.2",
+      "h2o-lightning-4b",
+      "phillylabs_philly_decider_v2"
+     ],
+     "before": [
+      "chon-1.0-e4b",
+      "torchcast-decision-4b-v1.3",
+      "torchcast-decision-4b-v1.2",
+      "h2o-lightning-4b",
+      "torchcast-decision-4b-v1.1"
+     ],
+     "entrant_rank": 5,
+     "list": "off/open/cost1.4/view/Emphasis on Cost 20:20:60"
+    },
+    {
+     "after": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b",
+      "torchcast-decision-4b-v1.2",
+      "phillylabs_philly_decider_v2",
+      "h2o-lightning-31b"
+     ],
+     "before": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b",
+      "torchcast-decision-4b-v1.2",
+      "h2o-lightning-31b",
+      "chon-1.0-e4b"
+     ],
+     "entrant_rank": 4,
+     "list": "off/open/cost1.4/view/Emphasis on Speed 20:60:20"
+    },
+    {
+     "after": [
+      "chon-1.0-e4b",
+      "torchcast-decision-4b-v1.3",
+      "torchcast-decision-4b-v1.2",
+      "h2o-lightning-4b",
+      "phillylabs_philly_decider_v2"
+     ],
+     "before": [
+      "chon-1.0-e4b",
+      "torchcast-decision-4b-v1.3",
+      "torchcast-decision-4b-v1.2",
+      "h2o-lightning-4b",
+      "torchcast-decision-4b-v1.1"
+     ],
+     "entrant_rank": 5,
+     "list": "off/open/cost1.5/view/Emphasis on Cost 20:20:60"
+    },
+    {
+     "after": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b",
+      "torchcast-decision-4b-v1.2",
+      "phillylabs_philly_decider_v2",
+      "h2o-lightning-31b"
+     ],
+     "before": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b",
+      "torchcast-decision-4b-v1.2",
+      "h2o-lightning-31b",
+      "chon-1.0-e4b"
+     ],
+     "entrant_rank": 4,
+     "list": "off/open/cost1.5/view/Emphasis on Speed 20:60:20"
+    },
+    {
+     "after": [
+      "chon-1.0-e4b",
+      "torchcast-decision-4b-v1.3",
+      "torchcast-decision-4b-v1.2",
+      "h2o-lightning-4b",
+      "phillylabs_philly_decider_v2"
+     ],
+     "before": [
+      "chon-1.0-e4b",
+      "torchcast-decision-4b-v1.3",
+      "torchcast-decision-4b-v1.2",
+      "h2o-lightning-4b",
+      "torchcast-decision-4b-v1.1"
+     ],
+     "entrant_rank": 5,
+     "list": "share/open/official/view/Emphasis on Cost 20:20:60"
+    },
+    {
+     "after": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b",
+      "torchcast-decision-4b-v1.2",
+      "phillylabs_philly_decider_v2",
+      "h2o-lightning-31b"
+     ],
+     "before": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b",
+      "torchcast-decision-4b-v1.2",
+      "h2o-lightning-31b",
+      "torchcast-decision-4b-v1.1"
+     ],
+     "entrant_rank": 4,
+     "list": "share/open/official/view/Emphasis on Speed 20:60:20"
+    },
+    {
+     "after": [
+      "chon-1.0-e4b",
+      "torchcast-decision-4b-v1.3",
+      "torchcast-decision-4b-v1.2",
+      "h2o-lightning-4b",
+      "phillylabs_philly_decider_v2"
+     ],
+     "before": [
+      "chon-1.0-e4b",
+      "torchcast-decision-4b-v1.3",
+      "torchcast-decision-4b-v1.2",
+      "h2o-lightning-4b",
+      "torchcast-decision-4b-v1.1"
+     ],
+     "entrant_rank": 5,
+     "list": "share/open/none/view/Emphasis on Cost 20:20:60"
+    },
+    {
+     "after": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b",
+      "torchcast-decision-4b-v1.2",
+      "phillylabs_philly_decider_v2",
+      "h2o-lightning-31b"
+     ],
+     "before": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b",
+      "torchcast-decision-4b-v1.2",
+      "h2o-lightning-31b",
+      "torchcast-decision-4b-v1.1"
+     ],
+     "entrant_rank": 4,
+     "list": "share/open/none/view/Emphasis on Speed 20:60:20"
+    },
+    {
+     "after": [
+      "chon-1.0-e4b",
+      "torchcast-decision-4b-v1.3",
+      "torchcast-decision-4b-v1.2",
+      "h2o-lightning-4b",
+      "phillylabs_philly_decider_v2"
+     ],
+     "before": [
+      "chon-1.0-e4b",
+      "torchcast-decision-4b-v1.3",
+      "torchcast-decision-4b-v1.2",
+      "h2o-lightning-4b",
+      "torchcast-decision-4b-v1.1"
+     ],
+     "entrant_rank": 5,
+     "list": "share/open/cost1.4/view/Emphasis on Cost 20:20:60"
+    },
+    {
+     "after": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b",
+      "torchcast-decision-4b-v1.2",
+      "phillylabs_philly_decider_v2",
+      "h2o-lightning-31b"
+     ],
+     "before": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b",
+      "torchcast-decision-4b-v1.2",
+      "h2o-lightning-31b",
+      "torchcast-decision-4b-v1.1"
+     ],
+     "entrant_rank": 4,
+     "list": "share/open/cost1.4/view/Emphasis on Speed 20:60:20"
+    },
+    {
+     "after": [
+      "chon-1.0-e4b",
+      "torchcast-decision-4b-v1.3",
+      "torchcast-decision-4b-v1.2",
+      "h2o-lightning-4b",
+      "phillylabs_philly_decider_v2"
+     ],
+     "before": [
+      "chon-1.0-e4b",
+      "torchcast-decision-4b-v1.3",
+      "torchcast-decision-4b-v1.2",
+      "h2o-lightning-4b",
+      "torchcast-decision-4b-v1.1"
+     ],
+     "entrant_rank": 5,
+     "list": "share/open/cost1.5/view/Emphasis on Cost 20:20:60"
+    },
+    {
+     "after": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b",
+      "torchcast-decision-4b-v1.2",
+      "phillylabs_philly_decider_v2",
+      "h2o-lightning-31b"
+     ],
+     "before": [
+      "torchcast-decision-4b-v1.3",
+      "h2o-lightning-4b",
+      "torchcast-decision-4b-v1.2",
+      "h2o-lightning-31b",
+      "torchcast-decision-4b-v1.1"
+     ],
+     "entrant_rank": 4,
+     "list": "share/open/cost1.5/view/Emphasis on Speed 20:60:20"
+    }
+   ]
+  },
+  "counts": {
+   "decisio-qwen3.6-35b-a3b-v090": 0,
+   "iota-decide-4b-v0.3": 0,
+   "phillylabs_philly_decider_v2": 24
+  },
+  "iota_paid_rule_covers_any_changes": true,
+  "lists": 584,
+  "method": "Single-entrant insertion from full production ranking orders; all other new keys removed. Slider transitions separately retained.",
+  "status": "PASS"
+ },
+ "COST-KIND": {
+  "measured_without_bill": 0,
+  "negative_test": "test/jevbench-v1710-release.test.mjs",
+  "new_rows": {
+   "decisio-qwen3.6-35b-a3b-v090": {
+    "base": "Qwen/Qwen3.6-35B-A3B",
+    "common_usd_per_1000": 0.17894171717171717,
+    "kind": "estimate"
+   },
+   "iota-decide-4b-v0.3": {
+    "base": "Qwen/Qwen3.5-4B",
+    "common_usd_per_1000": 0.015456404040404043,
+    "kind": "estimate"
+   },
+   "phillylabs_philly_decider_v2": {
+    "base": "Qwen/Qwen3.5-4B",
+    "common_usd_per_1000": 0.015192080808080809,
+    "kind": "estimate"
+   }
+  },
+  "status": "PASS"
+ },
+ "HELPERS": {
+  "fairness_negative_cases": 2,
+  "fixture_grants_no_authority": true,
+  "flip_dry_run": true,
+  "pending_freeze_refused": true,
+  "real_manifest_unchanged": "80b196b9702d4c4cbb24b5ff393fd1a3430e7c4428519211c18c381467108e1a",
+  "seal_write_refused": true,
+  "status": "PASS",
+  "synthetic_freeze_dry_run": true
+ },
+ "PREVIEW": {
+  "footer": "Release review pending",
+  "html_script_syntax": true,
+  "png": [
+   1440,
+   900
+  ],
+  "ranking_models_resolve": true,
+  "status": "PASS",
+  "visual_inspection": "Card viewed; no clipping or overlap"
+ },
+ "REPRO": {
+  "files": {
+   "app/api/jevbench/v1.7.10/route.ts": "b2c77e8ed86709e88dcc47085993b0757e18ead34e4308297938c51003fd3d64",
+   "app/jev-models/v1.7.10/page.tsx": "de6fb21ac51537ce49ee3003d47c3be2ad9fc0ba3dcf8df75302efe72be3d4f6",
+   "data/jevbench-architecture.json": "e3a127a7df41d2bb9bda9f4aecbb59dba430e37153b181e9d0d3fd2b70eabbf7",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.10-carry.json": "271d1fc77a136a04a1eb6deb5480c52d4211eb2b66b2ac8bb31e80867e69003a",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.10-categories.json": "f4aee99099f773195d941b915343b770e6abffd5ff857dd29ee7f6a8a4915755",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.10-history-carry.json": "334e851944e92383ab3071e52b3012040c7023d0fe236395953169ebee8f0459",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.10-history.json": "5cd8c1332226ea9c179883d2285c0d8b8cc593ae38f2645197364a7ddd9c83c1",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.10-proof.json": "d806272e9d068cc4b7ce1131a4c1835088dd7ee78b104e404b14ddb2241bb403",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.10-publication.json": "80b196b9702d4c4cbb24b5ff393fd1a3430e7c4428519211c18c381467108e1a",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.10-results.json": "1076187e7621c2ca4c514d8d29d857fc870970926a279475a23c8faea0b09e88",
+   "lib/jevbench-v1710-release.mjs": "c0b27f22c040e7484faccfaa535f7df0a187e2703b5c06371b50df4e53db5ead"
+  },
+  "status": "PASS",
+  "two_rebuilds_identical": true
+ },
+ "fairness": "FAIR",
+ "fulltest": {
+  "cancelled": 0,
+  "fail": 0,
+  "log_sha256": "33a4098b55bda94f9cb0fb842466fa6894f23c1420b120313283af764a4ee573",
+  "pass": 3827,
+  "skipped": 8,
+  "status": "PASS",
+  "tests": 3835
+ },
+ "helpers": {
+  "log_sha256": "0f8b99c5b21274fc1648f47fe4657e54f5d89b91eeca08d7886aabb1a8adce51",
+  "status": "PASS"
+ },
+ "iota-raw": {
+  "log_sha256": "dd72c5d4afb11fb597642c40aedbfdc4c9a4fca7664bce7a9487ccfbfc4532b4",
+  "status": "PASS"
+ },
+ "preview-check": {
+  "log_sha256": "8dc1970e979e55619b70fed6652c78c5722a242ccd10caf9be3e41392cc91b0b",
+  "status": "PASS"
+ },
+ "production-build": {
+  "log_sha256": "e5cc888e55edbf2f70c18c4f3169295a669fa9c6e5c387794d1d3996b0e39f8c",
+  "status": "PASS"
+ },
+ "publication_review": "PENDING",
+ "release-tests": {
+  "cancelled": 0,
+  "fail": 0,
+  "log_sha256": "555d5cb9efa39c33494167a6c5d3396b88e6725e244d86b68d94ff4db5bd7770",
+  "pass": 66,
+  "skipped": 0,
+  "status": "PASS",
+  "tests": 66
+ },
+ "repro": {
+  "log_sha256": "3b77c108c9d64b3b83fdb10c87e33c81271e69059862d2f258f1f3a22e854c5e",
+  "status": "PASS"
+ },
+ "source": {
+  "log_sha256": "4a173a71209a59d350f67e9859602085c8ed615bc6e8103c407f283838f0acde",
+  "status": "PASS"
+ },
+ "status": "PASS",
+ "typescript": {
+  "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "status": "PASS"
+ },
+ "validator": {
+  "log_sha256": "bd617599f7de405a6df385ca27746cd8fcb731fcd444f6b074395a9e40bb2e0f",
+  "status": "PASS"
+ }
+}
