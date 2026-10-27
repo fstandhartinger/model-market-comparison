@@ -34,7 +34,7 @@ test('CR-500 Celeris-1 Decision: official pass 1 via Celeris /v1/systemone, paid
   assert.match(row.tracks.core.cost.source, /^Celeris list price/);
   assert.equal(row.measurement_date_basis, 'Run timestamps: 16 Oct 2026, 20:12-20:26 UTC.');
   assert.equal(row.ranked, true);
-  assert.equal(row.rank, 11); // CR-536: H2O-Lightning-31B added; field equating and ranks refreshed.
+  assert.equal(row.rank, 12); // CR-536: H2O-Lightning-31B added; field equating and ranks refreshed.
 });
 
 test('CR-500 Celeris-1 Decision has aggregate-only category, answered-coverage and TypeSafe-20 cells', async () => {

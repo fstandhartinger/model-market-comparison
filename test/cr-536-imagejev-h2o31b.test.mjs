@@ -48,12 +48,12 @@ test('CR-536 H2O-31B: both paid public top-five changes and capped Capability el
   const c = row.tracks.core;
   assert.ok(Math.abs(c.capability - 80.87514534412216) < 1e-9);
   assert.ok(Math.abs(c.composite.score - 51.223777781083754) < 1e-9);
-  assert.equal(row.rank, 5);
+  assert.equal(row.rank, 6);
   assert.ok(Math.abs(c.cost.usd_per_1000 - 0.07527457930166843) < 1e-12);
   assert.ok(Math.abs(c.speed.raw_p50_s - 0.2188372124999205) < 1e-12);
   const e = release.capability_eligibility;
   const capped = release.ranking.filter((r) => r.ranked && r.tracks.core.cost.usd_per_1000 <= e.cost_usd_per_1000_cap && r.tracks.core.speed.adjusted_p50_s <= e.latency_p50_s_cap).sort((a,b) => b.tracks.core.capability - a.tracks.core.capability);
-  assert.equal(capped.length, 54);
+  assert.equal(capped.length, 55);
   assert.equal(capped[0].key, key);
   const page = await readFile(new URL('../components/ImageJevV03Page.tsx', import.meta.url), 'utf8');
   assert.match(page, /22 Oct 2026 addendum, new row:<\/b> adds H2O-Lightning-31B/);
