@@ -14,7 +14,8 @@ gets a derived name (vendor prefix, `-TEE` and quant suffix removed) plus `mappi
 The snapshot records `response_sha256` and a `diff` (added / removed / price_changed). The run
 fails closed — previous snapshot untouched — on an empty payload, a row without numeric
 input/output USD price or `confidential_compute` flag, or when fewer than half of the previous ids
-are still listed. The per-chute price cross-check below stays a manual audit step.
+are still listed. Rows with no `price` key at all (non-TEE chutes listed unpriced since 2026-10-26) are skipped, logged
+and recorded in `skipped_unpriced`; more than half the rows unpriced fails the run. The per-chute price cross-check below stays a manual audit step.
 
 ## Manual refresh (historical)
 
