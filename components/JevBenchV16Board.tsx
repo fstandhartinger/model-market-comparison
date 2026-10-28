@@ -1,3 +1,4 @@
+import { knowlineDiagnosticUnavailable } from '../lib/jevbench-knowline-diagnostic.mjs';
 import { hasApiFullAddendumCategories } from '../lib/jevbench-api-full-addenda.mjs';
 import { JevMethodTag } from './JevMethodTag';
 import { JEV_REMEASURE_PENDING } from '../lib/jev-decision-limit.mjs';
@@ -470,6 +471,8 @@ function NoulAndGate({ a, hiddenApi }: { a: JevV16ReleaseArtifact; hiddenApi: Re
         const I = s.axes.intelligence;
         const support = (s as unknown as { support?: Record<string, string> }).support ?? {};
         const d = s.noul_decisive;
+        const unavailable = knowlineDiagnosticUnavailable(s);
+        const unavailableReason = (d as unknown as { unavailable_reason?: string })?.unavailable_reason;
         // v1.7.7: A4 re-run rows come as system aggregates without per-type support or decisiveness figures.
         const a4Row = !!(s as { a4?: unknown }).a4;
         // v1.7.8: rows added after the release show a dash unless they carry the decisive_v16 figures (Liquid d1, Microsoft-Decision-1 since 10 Oct 2026).
@@ -478,8 +481,8 @@ function NoulAndGate({ a, hiddenApi }: { a: JevV16ReleaseArtifact; hiddenApi: Re
           <th scope="row" className="p-2 font-normal whitespace-nowrap">{short(s.display)}{s.listing === JEV_SCOPE_LISTING.reference && <span className="bh-muted"> · reference</span>}</th>
           <td className="p-2">{one(I)}{I != null && I < 50 && <span className="bh-muted ml-1 text-xs" data-bh-below-gate>below gate</span>}</td>
           {TYPES.map((t) => <td key={t} className="p-2">{a4Row ? <span className="bh-muted">—</span> : (support[t] ?? 'unsupported') === 'unsupported' ? <span className="bh-muted">not supported</span> : support[t]}</td>)}
-          <td className="p-2">{d && d.supported ? pct(d.decisive_rate) : <span className="bh-muted">{a4Row || addon ? '—' : 'not supported'}</span>}</td>
-          <td className="p-2">{d && d.supported ? pct(d.acc_among_decisive) : '—'}</td>
+          <td className="p-2">{unavailable ? <span className="bh-muted" title={unavailableReason}>unavailable</span> : d && d.supported ? pct(d.decisive_rate) : <span className="bh-muted">{a4Row || addon ? '—' : 'not supported'}</span>}</td>
+          <td className="p-2">{unavailable ? <span className="bh-muted" title={unavailableReason}>unavailable</span> : d && d.supported ? pct(d.acc_among_decisive) : '—'}</td>
         </tr>;
       })}</tbody>
     </table></div>
