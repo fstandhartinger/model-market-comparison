@@ -1,0 +1,39 @@
+{
+ "basis_items": 1500,
+ "cap": 0.06459465517241379,
+ "cap_ratio": 0.2224704189788309,
+ "hashes": {
+  "/home/flori/jevbench-sealed/v1.6-run/v1.6-regular-20261027/inputs/input-selfhosted-1500.jsonl": "9b2f32edaccb29afd726af8cd54cf1a22d85e8b1824566924045d83c6f828426",
+  "/home/flori/jevbench-sealed/v1.6-run/v1.6-regular-20261027/inputs/manifest.json": "f5a5151a1a19923dec1434230dbc451d9ca879ce8ccba8f268b296cac9c1ee35",
+  "/home/flori/jevbench-sealed/v1.6-run/v1.6-regular-20261027/runs-fastlane/h2o-lightning-4b-v1.4.1.raw.jsonl": "96d26bb3c0486ecbee832e309db4099b3a616b1540b4a92eff09dec81b719335",
+  "/home/flori/jobs/fastlane-native-54575fd5/score/ENTRIES-H2O141.json": "62f71cdc1b376b2b402d0935bbff7fae10c9237df76761a706116abf0396e551",
+  "/home/flori/jobs/jevbench-v15-measure-20260925/harness/pricing_v15.py": "645fd82eac728d597048bec0995ecd3ac896566e269fb6c9a1fdb84c171a9ac4",
+  "/home/flori/jobs/jevbench-v16-run-20261001/harness/score_v16.py": "02132271117653e6302c509232a581d0094f0e78eac8b1bfc67596fd5d5097e9"
+ },
+ "input_order_asserted": true,
+ "key": "h2o-lightning-4b-v1.4.1",
+ "latency": {
+  "max": 2.2462460160001,
+  "n": 1500,
+  "over_10s": 0,
+  "p50_mid": 0.019854689999988295
+ },
+ "ok": 1500,
+ "output_tokens": 1500,
+ "processed_input_tokens": 711020,
+ "ref": [
+  "deepinfra:Qwen/Qwen3.5-4B",
+  [
+   0.030000000000000002,
+   0.15
+  ]
+ ],
+ "rows": 1500,
+ "status_counts": {
+  "200": 1500
+ },
+ "untrimmed_input_tokens": 944694,
+ "usd_per_1000": 0.014370400000000004,
+ "usd_per_1000_if_untrimmed_priced": 0.019043880000000003,
+ "visibility": "public"
+}

@@ -1,3 +1,4 @@
+import { hasPublishedJevbenchV1713Release } from '../lib/jevbench-v1713-release.mjs';
 import { hasPublishedJevbenchV1712Release } from '../lib/jevbench-v1712-release.mjs';
 import { hasPublishedJevbenchV1711Release } from '../lib/jevbench-v1711-release.mjs';
 import { hasPublishedJevbenchV1710Release } from '../lib/jevbench-v1710-release.mjs';
@@ -50,7 +51,7 @@ test('latest_release is the newest release of the draw table, not a hard-coded l
   const { draws } = await readDrawEquating();
   const drawNewest = draws.map((d) => d.latest_release).sort((a, b) => a.localeCompare(b, 'en', { numeric: true })).at(-1);
   // v1.7.0 restates the whole board (it is not a draw release): once it is published it is the newest release; the draw table is unchanged.
-  const newest = (await hasPublishedJevbenchV1712Release()) ? 'v1.7.12' : (await hasPublishedJevbenchV1711Release()) ? 'v1.7.11' : (await hasPublishedJevbenchV1710Release()) ? 'v1.7.10' : (await hasPublishedJevbenchV179Release()) ? 'v1.7.9' : (await hasPublishedJevbenchV178Release()) ? 'v1.7.8' : (await hasPublishedJevbenchV177Release()) ? 'v1.7.7' : (await hasPublishedJevbenchV176Release()) ? 'v1.7.6' : (await hasPublishedJevbenchV175Release()) ? 'v1.7.5' : (await hasPublishedJevbenchV174Release()) ? 'v1.7.4' : (await hasPublishedJevbenchV173Release()) ? 'v1.7.3' : (await hasPublishedJevbenchV172Release()) ? 'v1.7.2' : (await hasPublishedJevbenchV171Release()) ? 'v1.7.1' : (await hasPublishedJevbenchV170Release()) ? 'v1.7.0' : drawNewest;
+  const newest = (await hasPublishedJevbenchV1713Release()) ? 'v1.7.13' : (await hasPublishedJevbenchV1712Release()) ? 'v1.7.12' : (await hasPublishedJevbenchV1711Release()) ? 'v1.7.11' : (await hasPublishedJevbenchV1710Release()) ? 'v1.7.10' : (await hasPublishedJevbenchV179Release()) ? 'v1.7.9' : (await hasPublishedJevbenchV178Release()) ? 'v1.7.8' : (await hasPublishedJevbenchV177Release()) ? 'v1.7.7' : (await hasPublishedJevbenchV176Release()) ? 'v1.7.6' : (await hasPublishedJevbenchV175Release()) ? 'v1.7.5' : (await hasPublishedJevbenchV174Release()) ? 'v1.7.4' : (await hasPublishedJevbenchV173Release()) ? 'v1.7.3' : (await hasPublishedJevbenchV172Release()) ? 'v1.7.2' : (await hasPublishedJevbenchV171Release()) ? 'v1.7.1' : (await hasPublishedJevbenchV170Release()) ? 'v1.7.0' : drawNewest;
   assert.equal(feed.revision, newest);
   assert.equal(feed.latest_release, newest);
   assert.equal(feed.latest_release_page, `/jev-models/${newest}`);

@@ -7157,6 +7157,27 @@
           }
         ],
         "note": "Qwen/Qwen3.5-4B; measured configuration and lineage disclosed on the row."
+      },
+      "h2o-lightning-4b-v1.4.1": {
+        "arch": "open-llm-decoder",
+        "badges": {
+          "derivation": "fine-tune",
+          "params": "4B",
+          "quant": null
+        },
+        "evidence": [
+          {
+            "fact": "\"H2O-Lightning-4B is a 4B-parameter decision model from H2O.ai, built on Qwen/Qwen3.5-4B\"; \"This card describes v1.4.1\"; card metadata base_model: Qwen/Qwen3.5-4B, license: apache-2.0; the two-way reading needs the h2oai/vllm per-request-attention build at b05cc29a",
+            "kind": "model-card",
+            "url": "https://huggingface.co/h2oai/h2o-lightning-4b/blob/cc18ee330e6895c41b9a60f37a0dd122dc4c3461/README.md"
+          },
+          {
+            "fact": "architectures: [\"Qwen3_5ForConditionalGeneration\"]; model_type: \"qwen3_5\"; text_config dtype: bfloat16",
+            "kind": "config.json",
+            "url": "https://huggingface.co/h2oai/h2o-lightning-4b/blob/cc18ee330e6895c41b9a60f37a0dd122dc4c3461/config.json"
+          }
+        ],
+        "note": "Qwen/Qwen3.5-4B; v1.4.1 weights at revision cc18ee33; measured configuration disclosed on the row."
       }
     },
     "imagejevbench": {
