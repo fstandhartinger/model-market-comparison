@@ -1,0 +1,17 @@
+{
+ "status": "PASS",
+ "original_test_unchanged": true,
+ "red_exact_error": "ERR_CHILD_PROCESS_STDIO_MAXBUFFER",
+ "red_tests": 2,
+ "red_failures": 1,
+ "git_status_bytes_before": 4404862,
+ "git_status_bytes_after": 0,
+ "fix": "temporary snapshot has a tracked HEAD, matching a real checkout",
+ "green_tests": 2,
+ "green_pass": 2,
+ "green_fail": 0,
+ "full_suite_rerun": false,
+ "snapshot_commit_is_disposable": true,
+ "minimized_repro": true,
+ "input": "three unchanged source files plus original tracked path names; other contents empty"
+}

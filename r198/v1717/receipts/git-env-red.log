@@ -1,0 +1,34 @@
+TAP version 13
+# Subtest: publication is independent of the writer-owned primary checkout
+ok 1 - publication is independent of the writer-owned primary checkout
+  ---
+  duration_ms: 4.497086
+  type: 'test'
+  ...
+# Subtest: the supervisor's dated brief backups can never make the checkout dirty again
+not ok 2 - the supervisor's dated brief backups can never make the checkout dirty again
+  ---
+  duration_ms: 167.417819
+  type: 'test'
+  location: '/srv/batch/jobs/r198-v1717-build/work/test/daily-clean-checkout-wait.test.mjs:22:1'
+  failureType: 'testCodeFailure'
+  error: 'stdout maxBuffer length exceeded'
+  code: 'ERR_CHILD_PROCESS_STDIO_MAXBUFFER'
+  name: 'RangeError'
+  stack: |-
+    Socket.onChildStdout (node:child_process:484:14)
+    Socket.emit (node:events:514:28)
+    addChunk (node:internal/streams/readable:569:12)
+    readableAddChunkPushByteMode (node:internal/streams/readable:520:3)
+    Readable.push (node:internal/streams/readable:400:5)
+    Pipe.onStreamRead (node:internal/stream_base_commons:194:23)
+  ...
+1..2
+# tests 2
+# suites 0
+# pass 1
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 267.578723

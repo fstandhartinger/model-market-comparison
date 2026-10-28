@@ -1,0 +1,307 @@
+{
+ "carried_rows": 308,
+ "carried_rows_equal_except": [],
+ "cost_basis": {
+  "cost_basis_msft_view_sha256": "6ae64d0a92a926e853b32c549636737ddaf4917553350d94821c51713033e29e",
+  "cost_basis_sha256": "30e36886acc33251ac9195a863da332df59b79ce956697417eadff198d8401af",
+  "decisio_note": "Decisio is priced on its engine recount (totals only): the common-set engine count assumes the modal per-item engine-native delta 78 for the 6 further excluded items; exact to within 6 tokens (USD bound in rows)",
+  "h2o_note": "H2O is priced on processed tokens after its 32k trim; its only 5 trimmed states are the 5 longest items, all outside the common set, so processed = raw usage there",
+  "n_excluded_from_1500": 11,
+  "n_items": 1489,
+  "per_row_membership": {
+   "arcbright-elf-1-12b-r2": {
+    "answered_not_in_common": 11,
+    "answered_ok": 1500,
+    "raw_sha256": "84f08ebb6ff92af453b75cda042f617ea89c5be6a2176c7c69e11f2521da6f08",
+    "rows": 1500
+   },
+   "chaoliangunsw-jev-style-2b-decision-v4": {
+    "answered_not_in_common": 6,
+    "answered_ok": 1495,
+    "raw_sha256": "96e11049d1593d75ee84fe258f6a6c4020c9e37ebe299c7d18a3b6846fbacf81",
+    "rows": 1500
+   },
+   "decisio-gemma-4-12b-tuned-commit-think": {
+    "answered_not_in_common": 11,
+    "answered_ok": 1500,
+    "raw_sha256": "d7396dd680e13af9ba26c4526007fee3647d03eee7673bf88075ac510f39cc3c",
+    "rows": 1500
+   },
+   "h2o-lightning-4b-v1.4.1": {
+    "answered_not_in_common": 11,
+    "answered_ok": 1500,
+    "raw_sha256": "96d26bb3c0486ecbee832e309db4099b3a616b1540b4a92eff09dec81b719335",
+    "rows": 1500
+   },
+   "jeff_1_1_large": {
+    "answered_not_in_common": 11,
+    "answered_ok": 1500,
+    "raw_sha256": "1f1fdc2df674da00128ae7b47d5ea3429cf1124383a077577e7c68c7d9cc0e72",
+    "rows": 1500
+   },
+   "jeff_1_1_qwen_4b": {
+    "answered_not_in_common": 11,
+    "answered_ok": 1500,
+    "raw_sha256": "c37fada15a2021cf744b2031acb964508caf48873a2bcda5da6d6ac4a5e7c288",
+    "rows": 1500
+   },
+   "microsoft-decision-1-r2": {
+    "answered_not_in_common": 0,
+    "answered_ok": 1489,
+    "raw_sha256": "1f069818cdc069a532a4c4965d306fbd302bb819dde4aa3c48a9bd676c4a981e",
+    "rows": 1493
+   },
+   "strike-1": {
+    "answered_not_in_common": 6,
+    "answered_ok": 1495,
+    "raw_sha256": "4c6c7ab25b11432f8934425a44806ec5a2499241a9c5790216a11651473f2027",
+    "rows": 1500
+   },
+   "torchcast-decision-31b-v1.0": {
+    "answered_not_in_common": 11,
+    "answered_ok": 1500,
+    "raw_sha256": "e51a1c22336050368336c996d7cb32181bad5e854024f07844b2a8577a0dda7d",
+    "rows": 1500
+   }
+  },
+  "precedent": "v1.6.30 on v1.6-regular-20261012 (scorer flag --cost-basis)",
+  "rows": {},
+  "rule": "same-items: cost per 1,000 decisions on the items every row on the draw answered (HTTP 200, ok, no error); refused, failed or not-sent items count for no row's cost and still count as wrong answers",
+  "scorer_flag": "--cost-basis",
+  "set_hash_rule": "sha256 of the sorted opaque id list as compact JSON",
+  "set_sha256": "4e912731e63369e1b3066b0b4afa87b44f1094aea079c5b41dc6d02e7f235537"
+ },
+ "exceptions": {},
+ "files": {
+  "carry": "271d1fc77a136a04a1eb6deb5480c52d4211eb2b66b2ac8bb31e80867e69003a",
+  "categories": "0c34bf59d101172227ee53e9b4cdf55936db466663d567c94f2729814e1c5a12",
+  "history": "5cd8c1332226ea9c179883d2285c0d8b8cc593ae38f2645197364a7ddd9c83c1",
+  "history-carry": "334e851944e92383ab3071e52b3012040c7023d0fe236395953169ebee8f0459",
+  "proof": "5945d52e8122710de8553a3f4f280d6f14c909b49f907b72e0b679bdf268d5f5",
+  "results": "244275a329e4a458186c4e912c203781dcd32ad1a17393eff600bd3cd59d0e90"
+ },
+ "link_fixed_rows": [],
+ "method": {
+  "decision_limit_s": 10,
+  "label": "v1.7",
+  "rule": "latency_s > 10.000 s -> failed",
+  "treatment": "share"
+ },
+ "new_rows": {
+  "chaoliangunsw-jev-style-2b-decision-v4": {
+   "axes": {
+    "calibration": 88.50529260806339,
+    "cost": 75.39968935948227,
+    "intelligence": 33.91785114475573,
+    "speed": 94.44817145387303
+   },
+   "category_pool_bounds": {
+    "languages": {
+     "ar": 21,
+     "cs": 37,
+     "da": 36,
+     "de": 48,
+     "el": 28,
+     "en": 555,
+     "es": 37,
+     "fi": 52,
+     "fr": 32,
+     "hi": 37,
+     "id": 41,
+     "it": 45,
+     "ja": 44,
+     "ko": 43,
+     "mixed": 64,
+     "nl": 36,
+     "no": 51,
+     "pl": 57,
+     "pt": 47,
+     "sv": 46,
+     "tr": 46,
+     "uk": 56,
+     "zh": 41
+    },
+    "topics": {},
+    "usecases": {
+     "advertising": 48,
+     "code_linting": 69,
+     "customer_support": 66,
+     "demand_forecasting": 66,
+     "ecommerce_marketplaces": 62,
+     "feature_extraction": 72,
+     "financial_crime": 63,
+     "gaming": 58,
+     "insurance_claims": 62,
+     "knowledge_graphs": 67,
+     "lead_generation": 75,
+     "legal_compliance": 56,
+     "llm_guardrails": 71,
+     "model_routing": 148,
+     "moderation_trust_safety": 59,
+     "other": 32,
+     "recruiting": 65,
+     "risk_assessment": 48,
+     "scientific_discovery": 42,
+     "search_retrieval": 67
+    }
+   },
+   "composite_ci95": {
+    "A": [
+     21.454255379094633,
+     34.92938673462708
+    ],
+    "B": [
+     18.098762137451825,
+     30.50618496213986
+    ],
+    "C": [
+     14.898788457704601,
+     24.256518565713247
+    ]
+   },
+   "cost": {
+    "basis_items": 1489,
+    "input_tokens_all": 494187,
+    "input_tokens_common": 491898,
+    "kind": "estimate",
+    "output_tokens": 0,
+    "usd_per_1000": 0.0066070920080591004,
+    "usd_per_1000_all_items": 0.006589159999999999
+   },
+   "decision_limit": {
+    "limit_s": 10.0,
+    "n_over_limit": 0,
+    "n_over_limit_answered_ok": 0,
+    "rule": "latency_s > limit -> failed",
+    "speed_basis": "all decisions given (lane items in the raw), measured latency_s",
+    "speed_n": 1500,
+    "treatment": "share"
+   },
+   "equated": {
+    "calibration": 88.50529260806339,
+    "capability": 61.21157187640956,
+    "intelligence": 33.91785114475573,
+    "offset": {
+     "C": 0,
+     "I": 0
+    },
+    "scores": {
+     "A": 28.47918106314405,
+     "B": 24.447065985396033,
+     "C": 19.777209071627816
+    }
+   },
+   "model_pin": {
+    "base": "Qwen/Qwen3.5-2B",
+    "model": "chaoliangUNSW/Jev-Style-2B-Decision-v4",
+    "revision": "c9504148dae7f7a43d67a5782f12a015a4b4022c",
+    "served_model": "jev-style-2b-decision-v4"
+   },
+   "n_answered": 1495,
+   "n_items": 1500,
+   "n_refused_over_limit": 5,
+   "price_reference": {
+    "base": "Qwen/Qwen3.5-2B",
+    "in": 0.02,
+    "kind": "estimate",
+    "listing": "deepinfra:Qwen/Qwen3.5-2B",
+    "out": 0.1,
+    "rule": "frozen pricing_v15 reference() for the stated base model; output priced at 0 tokens as the vendor reports (9 Oct 2026 zero-output rule)"
+   },
+   "raw_sha256": "96e11049d1593d75ee84fe258f6a6c4020c9e37ebe299c7d18a3b6846fbacf81",
+   "refused_because": "input over the model limit of 32,768 tokens; scored as misses, kept in the denominator",
+   "scored_input_sha256": "e970d8fb5adcdbdf164859e8faac65ff1a7825e83210b80bc2375ec9c2414ba0",
+   "source_sha256": {
+    "cells_off": {
+     "categories_sha256": "068a1d8f6500c34d84c412838799eac17e274174ef7a9d0972fee2fc8c2a205b",
+     "decisive_sha256": "32c8854be39512c6b4163b65719a68e4f040026412bfbf3c522d9cc73c6f502a"
+    },
+    "cells_share": {
+     "categories_sha256": "66c16557d5d9ebb58072f7a21e5390423d1f5d5840a836dec6971c9a9c6495b4",
+     "decisive_sha256": "32c8854be39512c6b4163b65719a68e4f040026412bfbf3c522d9cc73c6f502a"
+    },
+    "frozen": {
+     "path": "/home/flori/jobs/jevbench-add-requests-20260919/r198/v1717/score/field/fnew/out-frozen/jevbench-v1.6.0-results.json",
+     "sha256": "566fe54680572783ce8d00e001d773eb25ef4f0a44056243c9698c3cafd74ce2"
+    },
+    "gold_sha256": "8aaf8ab4c58fe06e1f7494a965701ffc0c1a7879392b0bc2309f7f1724b5e200",
+    "input_sha256": "9b2f32edaccb29afd726af8cd54cf1a22d85e8b1824566924045d83c6f828426",
+    "kit_shas_sha256": "9ae16901690e06f5328caa4da6f5ee6b66d14b796cd8e681f6a3c498505f21d5",
+    "manifest_sha256": "f5a5151a1a19923dec1434230dbc451d9ca879ce8ccba8f268b296cac9c1ee35",
+    "pull_receipt_sha256": "09f1e622d7fbc9ef26e6f92e859681e5e222702626f3deea50d93e26dfb5859c",
+    "raw_sha256": "96e11049d1593d75ee84fe258f6a6c4020c9e37ebe299c7d18a3b6846fbacf81",
+    "raw_verified_in_place": true,
+    "registry_sha256": "40e121cbf813d1e35edbabf589389239e2b58f33434f21e1a9dc78d09a7b523e",
+    "v17-off": {
+     "path": "/home/flori/jobs/jevbench-add-requests-20260919/r198/v1717/score/field/fnew/out-v17-off/jevbench-v1.6.0-results.json",
+     "sha256": "2f26ed444e2a4563e1cab5cce7a84fa4e1bc893f5d69a42a05d4117189ec4078"
+    },
+    "v17-share": {
+     "path": "/home/flori/jobs/jevbench-add-requests-20260919/r198/v1717/score/field/fnew/out-v17-share/jevbench-v1.6.0-results.json",
+     "sha256": "e970d8fb5adcdbdf164859e8faac65ff1a7825e83210b80bc2375ec9c2414ba0"
+    }
+   },
+   "treatment": "unranked"
+  }
+ },
+ "predecessor": {
+  "publication_sha256": "cda5f6a04b60402a5c18f1940e1a45cc543e11d33af1378134b0fc3f65c02fe6",
+  "revision": "v1.7.16"
+ },
+ "pricing_module_sha256": "645fd82eac728d597048bec0995ecd3ac896566e269fb6c9a1fdb84c171a9ac4",
+ "publication_approval": {
+  "asks": [
+   {
+    "handoff": "Jev-Style-2B measured on d1027, self-hosted, 1,495/1,500, five pre-registered over-limit refusals",
+    "key": "chaoliangunsw-jev-style-2b-decision-v4",
+    "relay": "board #11 #31736; kit 9ae16901"
+   }
+  ],
+  "button_tap": false,
+  "cost_basis": {
+   "decision": "same-items cost rule draw-wide on d1027 (board #31465; precedent v1.6.30, DECISIONS 2026-10-19 16:40Z, board #21769)",
+   "key": "v1.6-regular-20261027"
+  },
+  "fresh_baseline": "v1.7.16",
+  "release_owner_rulings": [
+   "d1027-strong-anchors-needed (all d1027 rows stay measured-but-unranked)",
+   "Jev-Style-2B pricing: frozen reference Qwen/Qwen3.5-2B 0.02/0.10, native input usage, reported output 0 (#30913)",
+   "same-items cost rule across all nine d1027 raws; unchanged 1,489-item set",
+   "TEMPORARY topics exception on this draw"
+  ],
+  "status": "GO (standing; no top-five change)",
+  "top_five_effect": "unchanged",
+  "top_five_preview": {
+   "path": "r198/v1717/receipts/topfive-diff.json",
+   "sha256": "b8c58fe858b2e95c0415bfae1dc654f7980a479c4cdf77f01045d1fa778ccd42"
+  },
+  "unranked_basis": {
+   "card": "#18781",
+   "decision": "d1027-strong-anchors-needed",
+   "handled_by": "rows published unranked (ranked false), no order list changes; draw not equated (offset 0)"
+  }
+ },
+ "publication_review": {
+  "engine": "synthetic-preview-only",
+  "receipt_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "verdict": "PASS"
+ },
+ "publication_sha256": "f6afd5c4346cd0fa74bdd1852d0d638408c81fbe1d31c5b39a272ee0113c446c",
+ "release": "v1.7.17",
+ "remeasured_rows": {},
+ "repriced_rows": {},
+ "scorers": {
+  "a2_cells_v16": "afd034efe27bde12f2ebbfd12c4c0792c93214e1aa9a63deecb0e83a0184c990",
+  "build_categories_v16": "40eb50f3d7fea2693b4478c4b89f8bfb957dd17776add491935742e3b9354e73",
+  "build_topics_v16": "ec04ab598162bfc4340ffa7916a06573eb1222132c61e47ab772045bc67ced78",
+  "decisive_v16": "80b9ccf43e58dddb1b2a77e0a33aba8a9f7337a3a9a639afc7264218bbf8918f",
+  "noul_method_v16": "119e59486ab3300b972fbcbadb0fe1dceceb124287607375aa61c66063c607d0",
+  "pins_v17": "b50cc00dd2cb0ba46157eb6a2bda620255f3ff54404025e992bc7962dfff2f8b",
+  "run_under_v17": "efb194b2ea350db59be37e5e72af71f809f763a2476cd6f521adf6f4fd90a64f",
+  "score_v15": "0931e05c6410b1b971201834397cb609cdb25f942723c50375632952f6dcc447",
+  "score_v15_headlineA": "826f2cbcb57007ec8a161e6eb0111182b8a656c0638027c6c78022a858fd8e2c",
+  "score_v16": "02132271117653e6302c509232a581d0094f0e78eac8b1bfc67596fd5d5097e9",
+  "score_v17": "6363458d208a52f4ad5aaf73027cad1b7e0358ff962e581d57a3cc462c8f1978"
+ },
+ "text_fixed_rows": []
+}

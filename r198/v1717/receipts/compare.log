@@ -1,0 +1,33 @@
+Built PENDING v1.7.17 309 rows; 308 carried ( 308 fully equal incl. ranks; 0 draw rows re-costed on 1489 common items, cost fields only); new row unranked: chaoliangunsw-jev-style-2b-decision-v4 ; board unchanged; n_ranked 280 ; comparison_only True
+v1717 loader generated
+wired v1.7.17; predecessor chain retained; 27 Oct draw entry stays anchor-runs-pending (offset 0) and now lists v1.7.13 to v1.7.17
+Extended frozen/off/share, scopes, caps, composites, axes and weighted views: 540 lists; 0 changed
+Slider transitions: 171 states; 0 changed
+Custom weighting and slider grid: 368 states; 0 changed
+Compared 580 primary plus supplementary lists; 0 changed; 0 of 171 slider states changed; 0 of 368 grid states changed; custom changed []
+Built PENDING v1.7.17 309 rows; 308 carried ( 308 fully equal incl. ranks; 0 draw rows re-costed on 1489 common items, cost fields only); new row unranked: chaoliangunsw-jev-style-2b-decision-v4 ; board unchanged; n_ranked 280 ; comparison_only False
+v1717 loader generated
+wired v1.7.17; predecessor chain retained; 27 Oct draw entry stays anchor-runs-pending (offset 0) and now lists v1.7.13 to v1.7.17
+PASS 580 lists; 0 changed; sliders 0 ; grid 0 ; custom 0 ; entrants {} ; leavers {}
+node:internal/fs/promises:639
+  return new FileHandle(await PromisePrototypeThen(
+                        ^
+
+Error: ENOENT: no such file or directory, open '/home/flori/wt/jevbench-v1717-20261028/r198/v1717/.pass/data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.8-proof.json'
+    at async open (node:internal/fs/promises:639:25)
+    at async readFile (node:internal/fs/promises:1246:14)
+    at async load (file:///home/flori/wt/jevbench-v1717-20261028/r198/v1717/.pass/lib/jevbench-v178-release.mjs:94:43)
+    at async file:///home/flori/wt/jevbench-v1717-20261028/r198/v1717/.pass/lib/jevbench-v178-release.mjs:100:83
+    at async Promise.all (index 3)
+    at async readOptionalJevbenchV178Release (file:///home/flori/wt/jevbench-v1717-20261028/r198/v1717/.pass/lib/jevbench-v178-release.mjs:100:34)
+    at async readOptionalJevbenchV179Release (file:///home/flori/wt/jevbench-v1717-20261028/r198/v1717/.pass/lib/jevbench-v179-release.mjs:113:17)
+    at async readOptionalJevbenchV1710Release (file:///home/flori/wt/jevbench-v1717-20261028/r198/v1717/.pass/lib/jevbench-v1710-release.mjs:105:17)
+    at async readOptionalJevbenchV1711Release (file:///home/flori/wt/jevbench-v1717-20261028/r198/v1717/.pass/lib/jevbench-v1711-release.mjs:108:17)
+    at async readOptionalJevbenchV1712Release (file:///home/flori/wt/jevbench-v1717-20261028/r198/v1717/.pass/lib/jevbench-v1712-release.mjs:71:17) {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/home/flori/wt/jevbench-v1717-20261028/r198/v1717/.pass/data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.8-proof.json'
+}
+
+Node.js v20.19.4
