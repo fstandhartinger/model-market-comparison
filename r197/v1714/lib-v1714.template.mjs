@@ -1,6 +1,7 @@
 // Same-draw addendum on the 27 Oct 2026 regular draw (v1.6-regular-20261027), stacked on v1.7.13: five new self-hosted rows (one
 // paid public order), measured but UNRANKED until the draw is equated (the v1.7.13 mechanism: ranked false + null ranks + listing
-// 'unranked' + not_ranked_because). All other rows, ranks, order lists and cells are immutable.
+// 'unranked' + not_ranked_because). All other rows, ranks, order lists and cells are immutable, except one text-only correction:
+// DOPEST 1.0 31B's code_revision/disclosure/licence (its serving-code repository was never private); those texts are pinned by hash.
 import { createHash } from 'node:crypto';
 import { readFile } from 'node:fs/promises';
 import { isDeepStrictEqual } from 'node:util';
@@ -14,6 +15,8 @@ export const V1714_NEW_ROWS = /*NEWROWS*/;
 export const V1714_NEW_ROW_BOUNDS = /*BOUNDS*/;
 export const V1714_SCORERS = /*SCORERS*/;
 export const V1714_PRICE_REFERENCES = /*PRICES*/;
+export const V1714_TEXT_FIXED = /*TEXTFIX*/;
+export const V1714_CARRY_EXCEPT = /*TEXTEXCEPT*/;
 export const V1714_DRAW = 'v1.6-regular-20261027';
 export const V1714_NEW_KEYS = Object.keys(V1714_NEW_ROWS).sort();
 export const V1714_CHANGED_KEYS = [...V1714_NEW_KEYS];
@@ -53,7 +56,15 @@ export function validateJevbenchV1714Bundle({manifest,artifact,categories,carry,
  same([...by.keys()].sort(),[...previous.artifact.systems.map(s=>s.key),...V1714_NEW_KEYS].sort(),'exact roster');
  if (artifact.roster_count!==rows.length || artifact.n_ranked!==rows.filter(s=>s.ranked).length) fail('counts');
  for (const p of previous.artifact.systems) {
-  same(by.get(p.key),p,'carried row '+p.key);
+  const fix=V1714_TEXT_FIXED[p.key];
+  if (fix) {
+   const now=by.get(p.key),a=structuredClone(now),b=structuredClone(p);
+   for (const [f,h] of Object.entries(fix)) {
+    if (hash(Buffer.from(p[f]??''))!==h.before_sha256||hash(Buffer.from(now?.[f]??''))!==h.after_sha256) fail('text correction pin '+p.key+' '+f);
+    delete a[f]; delete b[f];
+   }
+   same(a,b,'carried row '+p.key);
+  } else same(by.get(p.key),p,'carried row '+p.key);
   same(categories.systems[p.key],previous.categories.systems[p.key],'carried cells '+p.key);
   same(categories.lanes[p.key],previous.categories.lanes[p.key],'carried lane '+p.key);
  }
@@ -104,7 +115,9 @@ export function validateJevbenchV1714Bundle({manifest,artifact,categories,carry,
   }
  }
  if(proof.revision!=='v1.7.14'||proof.carried_rows!==previous.artifact.systems.length)fail('proof identity');
- same(proof.carried_rows_equal_except,[],'carry exception (none: ranks unchanged)');
+ same(proof.carried_rows_equal_except,V1714_CARRY_EXCEPT,'carry exception (text correction only; ranks unchanged)');
+ same(proof.exceptions,V1714_TEXT_FIXED,'text correction proof');
+ same(artifact.addendum.text_fixed_keys,Object.keys(V1714_TEXT_FIXED).sort(),'text-corrected roster');
  same(proof.method,previous.artifact.method,'proof method');
  same(artifact.addendum.new_keys,V1714_NEW_KEYS,'addendum keys');
  same(artifact.addendum.same_draw,V1714_DRAW,'addendum draw');

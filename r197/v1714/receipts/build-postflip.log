@@ -1,4 +1,3 @@
-### chunk start 2026-10-28T00:38:37Z: bash -c ~/bin/suite-slot --max-wait 1800 -- timeout 2400 ~/bin/heavy npm run build; rc=$?; echo "{\"exit_code\":$rc,\"command\":\"suite-slot npm run build (simulated post-flip state)\"}" > /home/flori/wt/jevbench-v1714-20261027/r197/v1714/receipts/BUILD-POSTFLIP-EXIT.json; [ $rc -eq 0 ] || exit $rc; node /home/flori/wt/jevbench-v1714-20261027/r197/v1714/check_built_links_v1714.mjs || { echo 'built-route check failed'; exit 5; }
 suite-slot: admitted in slot 0 after 0s
 
 > benchmark-heaven@1.0.0 prebuild
@@ -18,21 +17,20 @@ Benchmark source/build guard: {
      · cpus: 4
 
    Creating an optimized production build ...
- ✓ Compiled successfully in 37.4s
+ ✓ Compiled successfully in 36.8s
    Linting and checking validity of types ...
    Collecting page data ...
    Generating static pages (0/634) ...
-   Generating static pages (39/634) 
-   Generating static pages (71/634) 
+   Generating static pages (63/634) 
    Generating static pages (158/634) 
    Generating static pages (316/634) 
-   Generating static pages (388/634) 
-   Generating static pages (469/634) 
+   Generating static pages (399/634) 
+   Generating static pages (456/634) 
    Generating static pages (475/634) 
-   Generating static pages (557/634) 
-   Generating static pages (576/634) 
-   Generating static pages (597/634) 
-   Generating static pages (627/634) 
+   Generating static pages (556/634) 
+   Generating static pages (568/634) 
+   Generating static pages (581/634) 
+   Generating static pages (619/634) 
  ✓ Generating static pages (634/634)
    Finalizing page optimization ...
    Collecting build traces ...
@@ -321,5 +319,4 @@ Route (app)                                                  Size  First Load JS
 ƒ  (Dynamic)  server-rendered on demand
 
 PASS built latest GET (synthetic PASS): latest v1.7.14, 5 rows unranked with reason, v1.7.13 row present; prerendered v1.7.14 page shows all five; main board html shows 5
-### chunk rc 0 2026-10-28T00:56:33Z
 restored byte-equal: data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.14-publication.json

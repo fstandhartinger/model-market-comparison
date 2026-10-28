@@ -2,9 +2,11 @@
 The draw entry in data/jevbench-draw-equating.json gains v1.7.14 (releases + latest_release); it keeps joins_via "v1.7-addendum",
 so the v1.6 cohort reader and the v1.6 chain's latest release (which v1.7.0's restatement is bound to) still skip it."""
 import datetime, json, os, pathlib, re, sys
+from textfix_v1714 import HIST_ADD
 J = pathlib.Path(__file__).resolve().parent; W = pathlib.Path(os.environ.get('WT', str(J.parents[1])))
-HIST = ("Five more rows on the 27 Oct regular draw (Torchcast Decision 31B v1.0, paid evaluation; Arcbright Elf 1 12B (r2); Jeff-1.1-Qwen-4B; "
+HIST_BASE = ("Five more rows on the 27 Oct regular draw (Torchcast Decision 31B v1.0, paid evaluation; Arcbright Elf 1 12B (r2); Jeff-1.1-Qwen-4B; "
         "Decisio 12B tuned commit-think; Jeff-1.1-Large), shown unranked until the draw is equated to the reference scale.")
+HIST = HIST_BASE + ' ' + HIST_ADD
 # The only place the release/history date lives: lib/jevbench-releases.mjs, written from RELEASE_DATE. It defaults to today's UTC date
 # (V1714_RELEASE_DATE=YYYY-MM-DD overrides). The flip re-stamps it: `python3 wire_v1714.py --set-release-date [YYYY-MM-DD]` (flip_verdict_v1714.py does this).
 RELEASE_DATE = os.environ.get('V1714_RELEASE_DATE') or datetime.datetime.now(datetime.timezone.utc).date().isoformat()
@@ -28,7 +30,7 @@ s = s.replace('v1.7.13', '__NEW__').replace('v1.7.12', 'v1.7.13').replace('__NEW
 REPL = [
     ('first release on the 27 Oct regular draw', 'five more rows on the 27 Oct regular draw', 3),
     ("First release on the 27 Oct regular draw: H2O-Lightning-4B v1.4.1 (paid evaluation), shown unranked until the draw is equated to the reference scale. It is the first row measured on a fresh sealed draw drawn on 27 Oct 2026; that draw is not yet equated to the reference scale, so its numbers are shown as published (offset 0) and it is not ranked: no ranking or ranked order changes. The 10 s rule applies; no decision took longer than 10 s. Cost is an estimate from the base model price on the prompt tokens the model processed. Every existing row keeps its scores and confidence intervals; no method change.",
-     HIST.replace("'", '&apos;') + " They are measured on the same fresh sealed draw as H2O-Lightning-4B v1.4.1 (drawn on 27 Oct 2026); that draw is not yet equated to the reference scale, so their numbers are shown as published (offset 0) and they are not ranked: no ranking or ranked order changes. The 10 s rule applies; no decision took longer than 10 s. Cost is an estimate from each base model price on the prompt tokens the model processed, over all 1,500 items. Every existing row keeps its scores and confidence intervals; no method change.", 1),
+     HIST_BASE.replace("'", '&apos;') + " They are measured on the same fresh sealed draw as H2O-Lightning-4B v1.4.1 (drawn on 27 Oct 2026); that draw is not yet equated to the reference scale, so their numbers are shown as published (offset 0) and they are not ranked: no ranking or ranked order changes. The 10 s rule applies; no decision took longer than 10 s. Cost is an estimate from each base model price on the prompt tokens the model processed, over all 1,500 items. Every existing row keeps its scores and confidence intervals; no method change. " + HIST_ADD, 1),
     ('One new self-hosted row on a new draw, shown unranked. Every existing score, rank, interval and category cell is unchanged.',
      'Five new self-hosted rows on the 27 Oct draw, shown unranked. Every existing score, rank, interval and category cell is unchanged.', 1),
 ]

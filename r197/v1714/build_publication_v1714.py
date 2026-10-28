@@ -1,10 +1,11 @@
 """v1.7.14: same-draw addendum on the 27 Oct 2026 regular draw (v1.6-regular-20261027), stacked on v1.7.13 — five new self-hosted
 rows (one paid public order), all measured but UNRANKED (provisional: the draw is not yet equated; decision
 v1713-h2o141-unranked-provisional, "the same treatment applies to the other rows on that draw"). Every predecessor row is immutable,
-ranks included; no order list changes. Every predecessor dependency (v1.7.13 results/categories/carry/history bytes, its publication
+ranks included, except a text-only correction of DOPEST 1.0 31B's notes (textfix_v1714.py); no order list changes. Every predecessor dependency (v1.7.13 results/categories/carry/history bytes, its publication
 sha256, scorer pins, draw entry) is read from the files at build time, so restack_v1714.sh can rebuild after v1.7.13's flip."""
 import os, pathlib, json, hashlib, copy, shutil, re, argparse
 from pricing_reference_v1714 import reference, PIN
+import textfix_v1714 as TF
 ap = argparse.ArgumentParser(); ap.add_argument('--comparison-only', action='store_true'); A = ap.parse_args()
 J = pathlib.Path(__file__).resolve().parent; W = pathlib.Path(os.environ.get('WT', str(J.parents[1]))); V = W / 'data/raw/benchmarks/jevbench/v1.7'; REV = 'v1.7.14'; PREV = 'v1.7.13'
 L = lambda p: json.loads(pathlib.Path(p).read_text()); sha = lambda p: hashlib.sha256(pathlib.Path(p).read_bytes()).hexdigest(); cp = copy.deepcopy
@@ -25,6 +26,9 @@ assert keys == ['arcbright-elf-1-12b-r2', 'decisio-gemma-4-12b-tuned-commit-thin
 source_inputs = {n: sha(J / p) for n, p in {'scored_rows_sha256': 'src/inputs.json', 'entry_sha256': 'inputs/ENTRIES.json', 'cells_sha256': 'src/cells.json'}.items()}
 source_sha = hashlib.sha256(json.dumps(source_inputs, sort_keys=True).encode()).hexdigest()
 res = cp(old['results']); out = {s['key']: s for s in res['systems']}; prev = cp(out); new = {}
+# The one carried-row exception: a text correction of DOPEST 1.0 31B (textfix_v1714.py); every number, rank and cell stays equal.
+out[TF.KEY] = TF.apply(prev[TF.KEY]); assert TF.masked(out[TF.KEY]) == TF.masked(prev[TF.KEY])
+assert not re.search(TF.STALE, json.dumps({f: out[TF.KEY][f] for f in TF.FIELDS + ['endpoint_condition']}), re.I)
 BANNED = re.compile(r'/home/|workers/|#\d{4,}|\bPREREG\b|Florian|\brank(?:ed|ing)?\b|top[- ]five|top[- ]5|release.owner|\blead\b|custody|deputy|auto-intake|\br59\b|69f7a75d|54575fd5|h2o141|tc31b|(?-i:DECISIONS)|\{[A-Za-z_][A-Za-z0-9_]*\}', re.I)
 for k in keys:
     assert k not in out and pins[k]['raw_verified_in_place']; d = inputs[k]; e = entries[k]['entry']
@@ -44,15 +48,15 @@ for k in keys:
 hit = BANNED.search(NOT_RANKED_BECAUSE.replace('unranked', '')); assert not hit, ('internal public text', hit.group())
 # Unranked: no order list and no carried rank changes (the board is the predecessor's, byte for byte).
 assert res['board'] == old['results']['board'] and not any(k in res['board'][m]['order'] for m in res['board'] for k in keys)
-for k, row in prev.items(): assert row == out[k], k
-note = ("Five more rows on the 27 Oct regular draw (Torchcast Decision 31B v1.0, paid evaluation; Arcbright Elf 1 12B (r2); Jeff-1.1-Qwen-4B; "
+for k, row in prev.items(): assert (TF.masked(row) == TF.masked(out[k])) if k == TF.KEY else (row == out[k]), k
+note = HIST_BASE = ("Five more rows on the 27 Oct regular draw (Torchcast Decision 31B v1.0, paid evaluation; Arcbright Elf 1 12B (r2); Jeff-1.1-Qwen-4B; "
         "Decisio 12B tuned commit-think; Jeff-1.1-Large), shown unranked until the draw is equated to the reference scale.")
-res.update(revision=REV, label='JevBench v1.7.14: five more rows on the 27 Oct regular draw', systems=sorted(out.values(), key=lambda s: s['key']), n_ranked=sum(bool(s['ranked']) for s in out.values()), roster_count=len(out), run_kind='same-draw-addendum', source_sha256=source_sha, source_note=note)
+res.update(revision=REV, label='JevBench v1.7.14: five more rows on the 27 Oct regular draw', systems=sorted(out.values(), key=lambda s: s['key']), n_ranked=sum(bool(s['ranked']) for s in out.values()), roster_count=len(out), run_kind='same-draw-addendum', source_sha256=source_sha, source_note=HIST_BASE + ' ' + TF.HIST_ADD)
 res['measurement_notes'] = old['results']['measurement_notes'] + [note + ' Each answered all 1,500 requests of the draw (the draw\'s 5 long states shortened by each model\'s own documented rule and answered), none over 10 s. '
     'Their draw is not yet equated to the reference scale, so their numbers are shown as published (offset 0) with the reference gap-penalty median. '
     'Cost is an ESTIMATE from the base model price on the prompt tokens each model processed, over all 1,500 items. This draw has no subject-topic labels yet, so the rows have no topic cells; '
-    'their use-case and language cells are measured on their own draw. NOT RANKED: ' + NOT_RANKED_BECAUSE + ' No existing row, rank or ranking changed.']
-res['addendum'] = {'predecessor': PREV, 'new_keys': keys, 'remeasured_keys': [], 'repriced_keys': [], 'link_fixed_keys': [], 'method_change': False, 'same_draw': DRAW['id']}
+    'their use-case and language cells are measured on their own draw. NOT RANKED: ' + NOT_RANKED_BECAUSE + ' No existing score, rank or ranking changed. ' + TF.HIST_ADD]
+res['addendum'] = {'predecessor': PREV, 'new_keys': keys, 'remeasured_keys': [], 'repriced_keys': [], 'link_fixed_keys': [], 'text_fixed_keys': [TF.KEY], 'method_change': False, 'same_draw': DRAW['id']}
 put(V / f'jevbench-{REV}-results.json', res)
 cat = cp(old['categories'])
 for k in keys:
@@ -69,15 +73,15 @@ tf = J / 'receipts/topfive-diff.json'; a = L(J / 'inputs/APPROVAL.json')
 if tf.exists() and not A.comparison_only: assert not L(tf).get('bootstrap')
 if A.comparison_only and not tf.exists(): a['top_five_preview']['sha256'] = hashlib.sha256(b'comparison bootstrap').hexdigest()
 bounds = {k: {dim: cells[k]['pool_share'][dim] for dim in ['usecases', 'languages']} | {'topics': {}} for k in keys}
-proof = {'source_inputs': source_inputs, 'schema_version': 1, 'revision': REV, 'predecessor': {'revision': PREV, 'publication_sha256': sha(V / f'jevbench-{PREV}-publication.json')}, 'method': res['method'], 'pricing_module_sha256': PIN, 'scorers': scorers, 'carried_rows': len(prev), 'carried_rows_equal_except': [], 'exceptions': {},
+proof = {'source_inputs': source_inputs, 'schema_version': 1, 'revision': REV, 'predecessor': {'revision': PREV, 'publication_sha256': sha(V / f'jevbench-{PREV}-publication.json')}, 'method': res['method'], 'pricing_module_sha256': PIN, 'scorers': scorers, 'carried_rows': len(prev), 'carried_rows_equal_except': TF.EXCEPT, 'exceptions': {TF.KEY: {f: {'before_sha256': hashlib.sha256(prev[TF.KEY][f].encode()).hexdigest(), 'after_sha256': hashlib.sha256(out[TF.KEY][f].encode()).hexdigest()} for f in TF.FIELDS}},
          'same_draw': {**DRAW, 'g_med_used': res['G_med'], 'g_med_rule': 'reference G_med of the merged board (every row\'s gap - G_med is below 8, so penalty 1.0 under the reference or the field median; GMED-CHECK in the scoring receipts)', 'manifest_sha256': pins[keys[0]]['manifest_sha256'], 'selfhosted_input_sha256': pins[keys[0]]['input_sha256']},
          'new_rows': {k: {'raw_sha256': inputs[k]['raw_sha256'], 'scored_input_sha256': pins[k]['v17-share']['sha256'], 'source_sha256': pins[k], 'model_pin': new[k]['model_pin'], 'price_reference': reference(k, entries[k]['entry']), 'axes': new[k]['axes'], 'composite_ci95': new[k]['composite_ci95'], 'decision_limit': new[k]['decision_limit'], 'treatment': new[k]['listing'],
                           'cost': {'usd_per_1000': inputs[k]['usd_per_1000'], 'priced_input_tokens': inputs[k]['priced_input_tokens'], 'native_input_tokens': inputs[k]['native_input_tokens'], 'output_tokens': inputs[k]['output_tokens'], 'basis_items': 1500, 'kind': 'estimate', **({'usd_per_1000_if_uncounted_prefills_priced': inputs[k]['usd_per_1000_if_uncounted_prefills_priced']} if 'usd_per_1000_if_uncounted_prefills_priced' in inputs[k] else {})},
                           'equated': {'offset': DRAW['offset'], 'intelligence': new[k]['axes']['intelligence'], 'calibration': new[k]['axes']['calibration'], 'capability': new[k]['capability'], 'scores': new[k]['scores']},
                           'category_pool_bounds': bounds[k]} for k in keys},
-         'remeasured_rows': {}, 'repriced_rows': {}, 'link_fixed_rows': [], 'publication_approval': a, 'topfive_diff_sha256': sha(tf) if tf.exists() else a['top_five_preview']['sha256']}
+         'remeasured_rows': {}, 'repriced_rows': {}, 'link_fixed_rows': [], 'text_fixed_rows': [TF.KEY], 'publication_approval': a, 'topfive_diff_sha256': sha(tf) if tf.exists() else a['top_five_preview']['sha256']}
 put(V / f'jevbench-{REV}-proof.json', proof); pub = cp(old['publication']); pub.update(revision=REV, predecessor=proof['predecessor'], review={'engine': 'PENDING', 'verdict': 'PENDING', 'receipt_sha256': None})
 pub['files'] = {n: {'path': f'data/raw/benchmarks/jevbench/v1.7/jevbench-{REV}-{n}.json', 'sha256': sha(V / f'jevbench-{REV}-{n}.json')} for n in ['results', 'categories', 'carry', 'proof', 'history', 'history-carry']}
 put(V / f'jevbench-{REV}-publication.json', pub); put(J / 'receipts/NEW-ROW-SPEC.json', new); put(J / 'receipts/NEW-ROW-BOUNDS.json', bounds)
-put(J / 'receipts/BUILD.json', {'revision': REV, 'base': PREV, 'base_publication_sha256': proof['predecessor']['publication_sha256'], 'base_review_at_build': old['publication']['review']['verdict'], 'carried_equal': len(prev), 'new_rows_unranked': keys, 'new_keys': keys, 'same_draw': DRAW['id'], 'roster_count': len(out), 'n_ranked': res['n_ranked'], 'files': pub['files']})
-print('Built PENDING', REV, len(out), 'rows;', len(prev), 'carried (fully equal, ranks included); new rows unranked:', keys, '; predecessor', PREV, old['publication']['review']['verdict'], proof['predecessor']['publication_sha256'][:12], '; comparison_only', A.comparison_only)
+put(J / 'receipts/BUILD.json', {'revision': REV, 'base': PREV, 'base_publication_sha256': proof['predecessor']['publication_sha256'], 'base_review_at_build': old['publication']['review']['verdict'], 'carried_equal': len(prev) - 1, 'carried_text_fixed': [TF.KEY], 'new_rows_unranked': keys, 'new_keys': keys, 'same_draw': DRAW['id'], 'roster_count': len(out), 'n_ranked': res['n_ranked'], 'files': pub['files']})
+print('Built PENDING', REV, len(out), 'rows;', len(prev), 'carried (fully equal, ranks included, except the', TF.KEY, 'text fields', TF.FIELDS, '); new rows unranked:', keys, '; predecessor', PREV, old['publication']['review']['verdict'], proof['predecessor']['publication_sha256'][:12], '; comparison_only', A.comparison_only)

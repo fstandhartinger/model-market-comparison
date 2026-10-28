@@ -1,7 +1,24 @@
 {
  "carried_rows": 301,
- "carried_rows_equal_except": [],
- "exceptions": {},
+ "carried_rows_equal_except": [
+  "dopest-1.0-31b: code_revision, disclosure, licence (text correction; numbers, ranks and cells unchanged)"
+ ],
+ "exceptions": {
+  "dopest-1.0-31b": {
+   "code_revision": {
+    "after_sha256": "da2bb56fdba840cfd17c901595d51866ca030f74b2c54d146f551d428787971d",
+    "before_sha256": "7b6b739dcdce268fa307af61b91aaca27d55a9fe6fadc3d849bef500cd7c42b7"
+   },
+   "disclosure": {
+    "after_sha256": "25cb06cc2c4e63fbf574ad8dfc2491074efd886a9c1fd6ceef47710286572b22",
+    "before_sha256": "761f292a4bb1f11cde13d0dc674d4619c11f1cd7f75b1d1cf57c32abef89bac7"
+   },
+   "licence": {
+    "after_sha256": "aedb20bbeeae28fd14e7a76d3017602985e7381f70350f49f26a1ebb9ebc9438",
+    "before_sha256": "82942fb513af1df119abfdce0a2f291ffece4bbc4ef08757f087274c90ba1ebb"
+   }
+  }
+ },
  "link_fixed_rows": [],
  "method": {
   "decision_limit_s": 10,
@@ -832,5 +849,8 @@
   "entry_sha256": "a373683c8d3b88ec0bf5d9d6639ffe1898a3a76c4055dd91ad0344167f7509c3",
   "scored_rows_sha256": "c7d9815f4cc8c760ac8302d8ba33cc417934451a0b35099b633f4767f85920d8"
  },
+ "text_fixed_rows": [
+  "dopest-1.0-31b"
+ ],
  "topfive_diff_sha256": "00c3315da50f21e98717afaa22da9bc3e9bd23a191c00ab2de9299aa9bd54051"
 }

@@ -1,13 +1,31 @@
 {
  "carried_rows": 301,
- "carried_rows_equal_except": [],
+ "carried_rows_equal_except": [
+  "dopest-1.0-31b: code_revision, disclosure, licence (text correction; numbers, ranks and cells unchanged)"
+ ],
+ "exceptions": {
+  "dopest-1.0-31b": {
+   "code_revision": {
+    "after_sha256": "da2bb56fdba840cfd17c901595d51866ca030f74b2c54d146f551d428787971d",
+    "before_sha256": "7b6b739dcdce268fa307af61b91aaca27d55a9fe6fadc3d849bef500cd7c42b7"
+   },
+   "disclosure": {
+    "after_sha256": "25cb06cc2c4e63fbf574ad8dfc2491074efd886a9c1fd6ceef47710286572b22",
+    "before_sha256": "761f292a4bb1f11cde13d0dc674d4619c11f1cd7f75b1d1cf57c32abef89bac7"
+   },
+   "licence": {
+    "after_sha256": "aedb20bbeeae28fd14e7a76d3017602985e7381f70350f49f26a1ebb9ebc9438",
+    "before_sha256": "82942fb513af1df119abfdce0a2f291ffece4bbc4ef08757f087274c90ba1ebb"
+   }
+  }
+ },
  "files": {
   "carry": "271d1fc77a136a04a1eb6deb5480c52d4211eb2b66b2ac8bb31e80867e69003a",
-  "categories": "fe7d471f2bff4f1c9eb43adbb8ecb1dd1e3c9838dc2912c7dfaab342e7c6da3e",
+  "categories": "b1f8d4831570eea1318f05909469c4e5e8e443498b9ebd5caf0a2c8a9716fc85",
   "history": "5cd8c1332226ea9c179883d2285c0d8b8cc593ae38f2645197364a7ddd9c83c1",
   "history-carry": "334e851944e92383ab3071e52b3012040c7023d0fe236395953169ebee8f0459",
-  "proof": "e75c7bf055efbd34462484f578ba66140bb06d718b2c59e514edc58a07c4c8d3",
-  "results": "d84b02a57b294327066e8c012d939e2d4509c1c241530869c246b61a1ef4ae4e"
+  "proof": "0070dcb23431f98592882e53252c4d3fb9bf8995b17b94e6b8490c510a659752",
+  "results": "6f9f4b1896e9aff9d3173d3206238a80c7272f6ea60133125c218b6b5945d8f9"
  },
  "link_fixed_rows": [],
  "method": {
@@ -807,7 +825,7 @@
   "receipt_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
   "verdict": "PASS"
  },
- "publication_sha256": "007d2cda352a1cc975052540eae8656629929e0eb13c66183fd389577fff0733",
+ "publication_sha256": "13d3ad1d5f5b85c2962986908902d675d4736586525f1875c000003381a33b60",
  "release": "v1.7.14",
  "remeasured_rows": {},
  "repriced_rows": {},
@@ -823,5 +841,8 @@
   "score_v15_headlineA": "826f2cbcb57007ec8a161e6eb0111182b8a656c0638027c6c78022a858fd8e2c",
   "score_v16": "02132271117653e6302c509232a581d0094f0e78eac8b1bfc67596fd5d5097e9",
   "score_v17": "6363458d208a52f4ad5aaf73027cad1b7e0358ff962e581d57a3cc462c8f1978"
- }
+ },
+ "text_fixed_rows": [
+  "dopest-1.0-31b"
+ ]
 }

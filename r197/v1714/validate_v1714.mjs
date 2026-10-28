@@ -39,6 +39,10 @@ for(const [name,fn] of [
  ['paid row private',x=>{x.proof.publication_approval.paid_public.visibility='private'}],
  ['predecessor hash',x=>{x.manifest.predecessor.publication_sha256='b'.repeat(64)}],
  ['other draw',x=>{x.artifact.systems.find(s=>s.key===ROW_KEYS[0]).draw.status='equated'}],
+ ['DOPEST number changed with the text correction',x=>{x.artifact.systems.find(s=>s.key==='dopest-1.0-31b').axes.speed+=1}],
+ ['DOPEST text reverted',x=>{const s=x.artifact.systems.find(s=>s.key==='dopest-1.0-31b');s.licence=x.previous.artifact.systems.find(p=>p.key===s.key).licence}],
+ ['DOPEST other text field changed',x=>{x.artifact.systems.find(s=>s.key==='dopest-1.0-31b').endpoint_condition+=' x'}],
+ ['carry exception dropped',x=>{x.proof.carried_rows_equal_except=[]}],
 ]){const y=structuredClone(b);fn(y);let threw=false;try{validateJevbenchV1714Bundle(y,{candidate:true})}catch{threw=true}if(!threw)throw Error('negative accepted: '+name);rejected++;}
 if(b.manifest.review.verdict==='PENDING'&&await readJevbenchV1714ForBoard(root)!==null)throw Error('PENDING leak');
-console.log(`PASS ${b.previous.artifact.systems.length} carried rows/cells fully equal (ranks included), unchanged order lists, ${ROW_KEYS.length} exact UNRANKED new rows on the 27 Oct draw, immutable method/carry, pins, public text, estimate cost, standing-GO approval binding; ${rejected} bundle negatives and ${gateRejected} row-gate negatives rejected (no row can be ranked or in any order list); predecessor v1.7.13 ${b.previous.candidate?'PENDING (candidate-validated)':'PASS'}; v1.7.14 ${b.manifest.review.verdict} ${b.manifest.review.verdict==='PENDING'?'hidden':''}`);
+console.log(`PASS ${b.previous.artifact.systems.length} carried rows/cells fully equal (ranks included; dopest-1.0-31b differs only in its pinned code_revision/disclosure/licence text correction), unchanged order lists, ${ROW_KEYS.length} exact UNRANKED new rows on the 27 Oct draw, immutable method/carry, pins, public text, estimate cost, standing-GO approval binding; ${rejected} bundle negatives and ${gateRejected} row-gate negatives rejected (no row can be ranked or in any order list); predecessor v1.7.13 ${b.previous.candidate?'PENDING (candidate-validated)':'PASS'}; v1.7.14 ${b.manifest.review.verdict} ${b.manifest.review.verdict==='PENDING'?'hidden':''}`);

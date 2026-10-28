@@ -13,7 +13,9 @@ on that draw"):
 | decisio-gemma-4-12b-tuned-commit-think | Decisio 12B tuned commit-think (variant of the Decisio family) | 73.11 | 78.65 | 0.029046 (0.45x, engine tokens) |
 | jeff_1_1_large | Jeff-1.1-Large (jgeuter) | 71.34 | 88.22 | 0.042161 (0.65x) |
 
-All 301 v1.7.13 rows (incl. H2O-Lightning-4B v1.4.1) are fully equal, ranks included; the board and every order list equal v1.7.13's;
+All 301 v1.7.13 rows (incl. H2O-Lightning-4B v1.4.1) are fully equal, ranks included, except one text-only correction: DOPEST 1.0 31B's
+code_revision, disclosure and licence no longer say its serving-code repository became private (it has been public throughout;
+`textfix_v1714.py`, pinned by hash in the loader, gated in `check_source_v1714.py`/`check_public_text_v1714.py`); the board and every order list equal v1.7.13's;
 carry/history bytes are copied. Top fives v1.7.13 → v1.7.14: 0 of 580 lists, 0 of 171 slider states, 0 of 368 grid states, both
 legacy custom weightings unchanged; single-entrant 0 of 584 for every row (`receipts/topfive-diff.json`, `receipts/CHANGED-LISTS.md`).
 Scoring: `scoring/README.md` (same scorer/flags as v1.7.13; fixed reference G_med; cohort-independent).

@@ -32,7 +32,7 @@ if A.write:
 add = {'release': 'v1.7.14', 'method': proof['method'], 'predecessor': proof['predecessor'],
        'files': {k: f['sha256'] for k, f in man['files'].items()}, 'scorers': proof['scorers'],
        'pricing_module_sha256': proof['pricing_module_sha256'], 'new_rows': proof['new_rows'], 'remeasured_rows': proof['remeasured_rows'], 'repriced_rows': proof['repriced_rows'], 'link_fixed_rows': proof['link_fixed_rows'],
-       'carried_rows': proof['carried_rows'], 'carried_rows_equal_except': proof['carried_rows_equal_except'],
+       'carried_rows': proof['carried_rows'], 'carried_rows_equal_except': proof['carried_rows_equal_except'], 'text_fixed_rows': proof['text_fixed_rows'], 'exceptions': proof['exceptions'],
        'publication_approval': a, 'publication_review': man['review'], 'publication_sha256': sha(V / 'jevbench-v1.7.14-publication.json')}
 output = A.output.resolve()
 assert output.is_relative_to(W / 'r197/v1714/receipts'), 'dry-run output must stay in this job receipts directory'

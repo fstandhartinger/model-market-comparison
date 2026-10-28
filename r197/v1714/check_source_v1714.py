@@ -1,12 +1,20 @@
 """Source pins, carried-row invariants and priced-input arithmetic (v1.7.14: five unranked rows on v1.7.13's draw)."""
 import pathlib,json,hashlib,subprocess,sys
+import textfix_v1714 as TF
 J=pathlib.Path(__file__).resolve().parent;W=J.parents[1];L=lambda p:json.loads(p.read_text());sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest();V=W/'data/raw/benchmarks/jevbench/v1.7'
 # The predecessor files must equal the base commit's bytes (restack_v1714.sh passes the new base; default = the v1.7.13 candidate).
 BASE=sys.argv[1] if len(sys.argv)>1 else '0defb755'
 BASE=subprocess.check_output(['git','rev-parse',BASE],cwd=W,text=True).strip()
 b=L(V/'jevbench-v1.7.13-results.json');a=L(V/'jevbench-v1.7.14-results.json');by={r['key']:r for r in a['systems']}
-# Unranked release: every carried row is fully equal (ranks included) and the board is the predecessor's.
-for r in b['systems']:assert r==by[r['key']],r['key']
+# Unranked release: every carried row is fully equal (ranks included) and the board is the predecessor's. The single exception is the
+# DOPEST 1.0 31B text correction: exactly its three text fields differ, each equal to the pinned replacement of the v1.7.13 text.
+diff={r['key']:sorted(f for f in set(r)|set(by[r['key']]) if r.get(f)!=by[r['key']].get(f)) for r in b['systems']}
+assert {k:v for k,v in diff.items() if v}=={TF.KEY:sorted(TF.FIELDS)},{k:v for k,v in diff.items() if v}
+prev_d=next(r for r in b['systems'] if r['key']==TF.KEY);assert by[TF.KEY]==TF.apply(prev_d) and TF.masked(by[TF.KEY])==TF.masked(prev_d)
+proof_x=L(V/'jevbench-v1.7.14-proof.json')
+assert proof_x['carried_rows_equal_except']==TF.EXCEPT and sorted(proof_x['exceptions'])==[TF.KEY] and sorted(proof_x['exceptions'][TF.KEY])==sorted(TF.FIELDS)
+for f in TF.FIELDS:assert proof_x['exceptions'][TF.KEY][f]=={'before_sha256':hashlib.sha256(prev_d[f].encode()).hexdigest(),'after_sha256':hashlib.sha256(by[TF.KEY][f].encode()).hexdigest()},f
+assert a['addendum']['text_fixed_keys']==[TF.KEY]
 for k in ['h2o-lightning-4b-v1.4.1','h2o-lightning-4b','arcbright-elf-1-12b','decisio-gemma-4-12b-tuned-commit','jeff_1_1_medium','jeff_1_0_large']:
  assert json.dumps(by[k],sort_keys=True)==json.dumps(next(r for r in b['systems'] if r['key']==k),sort_keys=True),k+' must stay equal'
 inputs=L(J/'src/inputs.json');entries=L(J/'inputs/ENTRIES.json');pins=L(J/'receipts/INPUTS.json')
@@ -35,6 +43,6 @@ for k,v in inputs.items():
  assert by[k]['paid_fast_lane'] is (k=='torchcast-decision-31b-v1.0')
 assert inputs['decisio-gemma-4-12b-tuned-commit-think']['priced_input_tokens']==844031 and pins['decisio-gemma-4-12b-tuned-commit-think']['engine_recount']['file_sha256'].startswith('8c9f4691551a')
 put=lambda n,d:(J/'receipts'/n).write_text(json.dumps(d,indent=1,sort_keys=True)+'\n')
-put('CARRIED-ROWS.json',{'status':'PASS','rows_equal':len(b['systems']),'rows_equal_including_ranks':True,'board_equal':True,'new_rows_unranked':sorted(inputs),'family_rows_equal':['h2o-lightning-4b-v1.4.1','h2o-lightning-4b','arcbright-elf-1-12b','decisio-gemma-4-12b-tuned-commit','jeff_1_1_medium','jeff_1_0_large'],'carried_cells_equal':len(bc['systems']),'immutable_bytes':['carry','history','history-carry'],'predecessor_files_equal_to_base':14,'base_commit':BASE,'predecessor_publication_sha256':proof['predecessor']['publication_sha256'],'new_score_payloads_equal_to_sources':True})
+put('CARRIED-ROWS.json',{'status':'PASS','rows_equal':len(b['systems'])-1,'rows_equal_including_ranks':True,'text_only_exception':{TF.KEY:sorted(TF.FIELDS)},'exception_rows_equal_outside_text_fields':True,'board_equal':True,'new_rows_unranked':sorted(inputs),'family_rows_equal':['h2o-lightning-4b-v1.4.1','h2o-lightning-4b','arcbright-elf-1-12b','decisio-gemma-4-12b-tuned-commit','jeff_1_1_medium','jeff_1_0_large'],'carried_cells_equal':len(bc['systems']),'immutable_bytes':['carry','history','history-carry'],'predecessor_files_equal_to_base':14,'base_commit':BASE,'predecessor_publication_sha256':proof['predecessor']['publication_sha256'],'new_score_payloads_equal_to_sources':True})
 put('COST-KIND.json',{'status':'PASS','new_rows':{k:{'kind':by[k]['cost']['kind'],'usd_per_1000':by[k]['cost']['usd_per_1000'],'basis_items':1500,'priced_input_tokens':inputs[k]['priced_input_tokens'],'native_input_tokens':inputs[k]['native_input_tokens'],'output_tokens':inputs[k]['output_tokens'],'base':entries[k]['entry']['base_model'],'reference':proof['new_rows'][k]['price_reference']} for k in inputs},'measured_without_bill':0,'negative_test':'test/jevbench-v1714-release.test.mjs'})
-print('PASS',len(b['systems']),'carried rows/cells fully equal incl. ranks (family rows included), board unchanged, 5 new rows unranked on the same draw, carry/history bytes and 14 predecessor files (v1.7.12 + v1.7.13) equal to',BASE[:8],'; predecessor hash bound; new row scores/CI equal trusted sources; estimate costs recomputed')
+print('PASS',len(b['systems'])-1,'carried rows fully equal incl. ranks (family rows included), only exception',TF.KEY,sorted(TF.FIELDS),'(text; all numbers/ranks equal);',len(b['systems']),'carried cells equal, board unchanged, 5 new rows unranked on the same draw, carry/history bytes and 14 predecessor files (v1.7.12 + v1.7.13) equal to',BASE[:8],'; predecessor hash bound; new row scores/CI equal trusted sources; estimate costs recomputed')

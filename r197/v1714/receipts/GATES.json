@@ -3,6 +3,7 @@
   "base_commit": "83705a970a61b844e77044bc195831e9913d6585",
   "board_equal": true,
   "carried_cells_equal": 306,
+  "exception_rows_equal_outside_text_fields": true,
   "family_rows_equal": [
    "h2o-lightning-4b-v1.4.1",
    "h2o-lightning-4b",
@@ -26,9 +27,16 @@
   "new_score_payloads_equal_to_sources": true,
   "predecessor_files_equal_to_base": 14,
   "predecessor_publication_sha256": "460156d172505b5159539f3d32b05decbb6c86defb22fda2fc6c0b910f7a76b6",
-  "rows_equal": 301,
+  "rows_equal": 300,
   "rows_equal_including_ranks": true,
-  "status": "PASS"
+  "status": "PASS",
+  "text_only_exception": {
+   "dopest-1.0-31b": [
+    "code_revision",
+    "disclosure",
+    "licence"
+   ]
+  }
  },
  "CHANGED-LISTS-BY-ROW": {
   "baseline": "v1.7.13",
@@ -149,7 +157,7 @@
   "pending_freeze_refused": true,
   "real_flip_dry_run_refused_while_v1713_pending": false,
   "real_manifests_unchanged": [
-   "4c88670224f336eecaa386a763f8b0a6ce75989f5112c20b0cef02fd7a2ba5b2",
+   "260eb80d798d1f14c923e4496cd7b9fab320d15a8192beb8a23b7489414322f2",
    "460156d172505b5159539f3d32b05decbb6c86defb22fda2fc6c0b910f7a76b6"
   ],
   "real_v1713_review": "PASS",
@@ -258,6 +266,9 @@
    "decisio-gemma-4-12b-tuned-commit-think.display",
    "decisio-gemma-4-12b-tuned-commit-think.endpoint_condition",
    "decisio-gemma-4-12b-tuned-commit-think.licence",
+   "dopest-1.0-31b.code_revision",
+   "dopest-1.0-31b.disclosure",
+   "dopest-1.0-31b.licence",
    "history_line",
    "jeff_1_1_large.author",
    "jeff_1_1_large.code_revision",
@@ -331,9 +342,15 @@
     "paid evaluation"
    ]
   },
+  "dopest_text_corrected": [
+   "code_revision",
+   "disclosure",
+   "licence"
+  ],
   "exact_history_sentence": true,
   "exact_reason": true,
   "h2o_comparison_sentence_absent": true,
+  "stale_private_claim_absent": "became private|went private|private since|repository private|private \\(HTTP 401\\)|HTTP 401",
   "status": "PASS"
  },
  "RAW-BINDING": {
@@ -420,20 +437,20 @@
  "REPRO": {
   "files": {
    "app/api/jevbench/v1.7.14/route.ts": "9bc10da4239125c1f058b50cc7a74814388a90282c846fd40fe2a681f47428cd",
-   "app/jev-models/v1.7.14/page.tsx": "e1f2131ebfd7a85c2293af86ba7893edb29e5ef74937d5824947fd9032f160a2",
+   "app/jev-models/v1.7.14/page.tsx": "71179b8a22a037cd8a11d0a9bad2e8e206ae5f0e83722bb802abc5b67f591aeb",
    "data/jevbench-architecture.json": "6812fd80aa4336e0495d1a450d59851acba73076e5449f2118c47c3195cebea2",
    "data/jevbench-breakdown-exceptions.json": "3fc4d391306c64895f961ea137a531ee9ac85b3bf6c3259c0e65b6f6200242bc",
    "data/jevbench-draw-equating.json": "2b48806c0ab5c2f9eda334b912a3612af2eca60f7708cc1fddf1240107a538f3",
    "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.14-carry.json": "271d1fc77a136a04a1eb6deb5480c52d4211eb2b66b2ac8bb31e80867e69003a",
-   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.14-categories.json": "fe7d471f2bff4f1c9eb43adbb8ecb1dd1e3c9838dc2912c7dfaab342e7c6da3e",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.14-categories.json": "b1f8d4831570eea1318f05909469c4e5e8e443498b9ebd5caf0a2c8a9716fc85",
    "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.14-history-carry.json": "334e851944e92383ab3071e52b3012040c7023d0fe236395953169ebee8f0459",
    "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.14-history.json": "5cd8c1332226ea9c179883d2285c0d8b8cc593ae38f2645197364a7ddd9c83c1",
-   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.14-proof.json": "e75c7bf055efbd34462484f578ba66140bb06d718b2c59e514edc58a07c4c8d3",
-   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.14-publication.json": "4c88670224f336eecaa386a763f8b0a6ce75989f5112c20b0cef02fd7a2ba5b2",
-   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.14-results.json": "d84b02a57b294327066e8c012d939e2d4509c1c241530869c246b61a1ef4ae4e",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.14-proof.json": "0070dcb23431f98592882e53252c4d3fb9bf8995b17b94e6b8490c510a659752",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.14-publication.json": "260eb80d798d1f14c923e4496cd7b9fab320d15a8192beb8a23b7489414322f2",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.14-results.json": "6f9f4b1896e9aff9d3173d3206238a80c7272f6ea60133125c218b6b5945d8f9",
    "lib/jevbench-live-board.mjs": "0d2a533816c46d4b167711374b9af8a3c831f5fd5e89d2d6b408a992e1031dc5",
-   "lib/jevbench-releases.mjs": "b5f7ccd39a6290305fb0a184cf39dd8c69a0e24696f20c8e609a378d9cadcf31",
-   "lib/jevbench-v1714-release.mjs": "7cb5914f9e99e21d7e2447c40c3cd3336f64ab4e211aeb5fdf66aec91d060eee",
+   "lib/jevbench-releases.mjs": "c6d046122f03ed8a62e54d73d325b8454b33a5e7481a0ca9ae8b596e9f3d61b9",
+   "lib/jevbench-v1714-release.mjs": "e1f2eededabd62ffb206bcd5a67f644c7eb951ba158c607f3e7da29fc25dcd3d",
    "test/jevbench-v1713-release.test.mjs": "baece28e3615ce1579730a9fea48089c8b433faad572bfa75e15b273e0668edb"
   },
   "status": "PASS",
@@ -610,16 +627,16 @@
  "fulltest-postflip-once": {
   "cancelled": 0,
   "exit": {
-   "command": "suite-slot node --test --test-concurrency=2 test/ (simulated post-flip state, .next from the post-flip build)",
+   "command": "suite-slot npm test (simulated post-flip state, .next from the post-flip build)",
    "exit_code": 0
   },
   "fail": 0,
-  "log_sha256": "56f0f733aff5dfd9b7b287c2bb3cc14d294713fbc97f21b684d6c8bdff926673",
+  "log_sha256": "ba690172fa62d5f8d994e1e801a4c6aee418f55c9f5ad4531a016b84b0d7a288",
   "not_ok": [],
   "note": "Full npm test run once in the simulated post-flip state (v1.7.13 + v1.7.14 synthetic PASS).",
-  "pass": 3889,
+  "pass": 3890,
   "skipped": 8,
-  "tests": 3897
+  "tests": 3898
  },
  "helpers": {
   "log_sha256": "2428c51ab2ce7f39cd0b2ac8cbc633d71a25339d68299fd0dd05b64521bf908f",
@@ -633,11 +650,11 @@
  "postflip-release-suites": {
   "cancelled": 0,
   "fail": 0,
-  "log_sha256": "ee2c5a0652a076fc33171224a1893f3621d7167687e6619024ff8ef67a56a51a",
+  "log_sha256": "57de7c3906148b31c0ba3cbc3699f974b0fdac649b77fa5ad89ce8e1436ae638",
   "not_ok": [],
-  "pass": 164,
+  "pass": 165,
   "skipped": 1,
-  "tests": 165
+  "tests": 166
  },
  "predecessor_review": "PASS",
  "preview-check": {
@@ -702,14 +719,14 @@
    "synthetic_latest": "v1.7.14",
    "v1714_page_shows_all_five": true
   },
-  "log_sha256": "2a827934a7a5c909b88dc1dfbbda5a1105b3c29351161242882925605cf9fae4",
+  "log_sha256": "38a75521d2767c2216a205ba5742567f6ac4d8edfee4ec2c2fb0e1b17d520fa3",
   "pages": "634/634",
   "status": "PASS"
  },
  "public-text": {
-  "log_sha256": "85ca61886f1c31ef36216caedc0fb65fffba589a9287b0aadd88df390c929b51",
+  "log_sha256": "32ba3496afae1ca26ed342d01e0811088a9850a6e1487c00073a4fecaf976056",
   "status": "PASS",
-  "summary": "PASS public text: 41 texts clean; exact reason and history sentence present; builder disclosures kept for 5 rows"
+  "summary": "PASS public text: 44 texts clean; exact reason and history sentence present; builder disclosures kept for 5 rows"
  },
  "publication_review": "PENDING",
  "raw": {
@@ -720,24 +737,24 @@
  "release-tests-pending": {
   "cancelled": 0,
   "fail": 1,
-  "log_sha256": "adc55465d4c862d9d8dd41162addaf90682c9282659f5cf518987699308b8976",
+  "log_sha256": "e947e97616199764317bcdcc84f05be473d445940b70c05da53637498bfd55ed",
   "not_ok": [
    "gate: no listed row lacks topic, use-case or language cells without a recorded exception"
   ],
   "note": "PENDING state: only the breakdown gate fails (orphan topics exceptions for the hidden v1.7.13 and v1.7.14 rows; pre-existing at 0defb755); it passes post-flip",
-  "pass": 149,
+  "pass": 150,
   "skipped": 1,
-  "tests": 151
+  "tests": 152
  },
  "repro": {
-  "log_sha256": "4af6af5c47cecd72bc33f3299da336ca39161a7455cdc176e24157573d6372a2",
+  "log_sha256": "b81ffe6c82ef17bcac216714d1637dfce3cb738e494f514b58aebf842474ac8d",
   "status": "PASS",
   "summary": "PASS two deterministic rebuilds, 16 artifact hashes"
  },
  "source": {
-  "log_sha256": "604fa368480f01c666319c2da1d815e2e36cb87c920bf9823758d558a2855de9",
+  "log_sha256": "ce2f9e12d4f8263b09d8d0ac0048e06fe1ea66faa86005a7341b4272077bbe35",
   "status": "PASS",
-  "summary": "PASS 301 carried rows/cells fully equal incl. ranks (family rows included), board unchanged, 5 new rows unranked on the same draw, carry/history bytes and 14 predecessor files (v1.7.12 + v1.7.13) equal to 83705a97 ; predecessor hash bound; new row scores/CI equal trusted sources; estimate costs recomputed"
+  "summary": "PASS 300 carried rows fully equal incl. ranks (family rows included), only exception dopest-1.0-31b ['code_revision', 'disclosure', 'licence'] (text; all numbers/ranks equal); 301 carried cells equal, board unchanged, 5 new rows unranked on the same draw, carry/history bytes and 14 predecessor files (v1.7.12 + v1.7.13) equal to 83705a97 ; predecessor hash bound; new row scores/CI equal trusted sou"
  },
  "status": "PASS_WITH_OPEN_ITEMS",
  "top-five": {
@@ -756,9 +773,9 @@
   "status": "PASS"
  },
  "validator": {
-  "log_sha256": "48c6021a732805db18d011253b91e2cdfbef9dde87785487264eb2dbfee27a83",
+  "log_sha256": "806f721de8f51c8378bd32b32f79e0119422747939dcb1afe690a3b8a2ee1bc0",
   "status": "PASS",
-  "summary": "PASS 301 carried rows/cells fully equal (ranks included), unchanged order lists, 5 exact UNRANKED new rows on the 27 Oct draw, immutable method/carry, pins, public text, estimate cost, standing-GO approval binding; 58 bundle negatives and 50 row-gate negatives rejected (no row can be ranked or in any order list); predecessor v1.7.13 PASS; v1.7.14 PENDING hidden"
+  "summary": "PASS 301 carried rows/cells fully equal (ranks included; dopest-1.0-31b differs only in its pinned code_revision/disclosure/licence text correction), unchanged order lists, 5 exact UNRANKED new rows on the 27 Oct draw, immutable method/carry, pins, public text, estimate cost, standing-GO approval binding; 62 bundle negatives and 50 row-gate negatives rejected (no row can be ranked or in any order "
  },
  "visibility": {
   "log_sha256": "ae0a3e2a174630c35f7227f807d39cfd5701c3e72e41fc30d5dcd8afd71a5d3c",

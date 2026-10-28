@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
 import {createHash} from 'node:crypto';
-import {validateJevbenchV1714Bundle,readJevbenchV1714ForBoard,readOptionalJevbenchV1714Release,V1714_NEW_KEYS,V1714_DRAW} from '../lib/jevbench-v1714-release.mjs';
+import {validateJevbenchV1714Bundle,readJevbenchV1714ForBoard,readOptionalJevbenchV1714Release,V1714_NEW_KEYS,V1714_DRAW,V1714_TEXT_FIXED} from '../lib/jevbench-v1714-release.mjs';
 import {readDrawEquating,readCohortRows} from '../lib/jevbench-cohort-merge.mjs';
 import {readChainLatestRelease} from '../lib/jevbench-live-board.mjs';
 import {checkNewRowText,checkUnrankedRow,NOT_RANKED_BECAUSE} from '../r197/v1714/row_gates_v1714.mjs';
@@ -10,6 +10,7 @@ import {readV1713ForV1714} from '../r197/v1714/prev_v1714.mjs';
 const base='data/raw/benchmarks/jevbench/v1.7/',load=async n=>JSON.parse(await readFile(`${base}jevbench-v1.7.14-${n}.json`));
 const b={manifest:await load('publication'),artifact:await load('results'),categories:await load('categories'),carry:await load('carry'),proof:await load('proof'),previous:await readV1713ForV1714(),previousManifestSha256:createHash('sha256').update(await readFile(`${base}jevbench-v1.7.13-publication.json`)).digest('hex')};
 const KEYS=['arcbright-elf-1-12b-r2','decisio-gemma-4-12b-tuned-commit-think','jeff_1_1_large','jeff_1_1_qwen_4b','torchcast-decision-31b-v1.0'],PAID='torchcast-decision-31b-v1.0',H2O='h2o-lightning-4b-v1.4.1';
+const DOPEST='dopest-1.0-31b',DOPEST_FIELDS=['code_revision','disclosure','licence'];
 const row=(x,k)=>x.artifact.systems.find(s=>s.key===k),mutate=(fn,pattern)=>{const x=structuredClone(b);fn(x);assert.throws(()=>validateJevbenchV1714Bundle(x,{candidate:true}),pattern)};
 test('v1.7.14 validates every row; PENDING is hidden, PASS is readable',async()=>{
  assert.equal(validateJevbenchV1714Bundle(b,{candidate:true}),true);assert.equal(b.previous.artifact.systems.length,301);assert.equal(b.artifact.systems.length,306);
@@ -36,6 +37,17 @@ test('v1.7.14 rejects carried score, interval, category and lane changes, includ
   mutate(x=>{row(x,key).axes.speed+=1},/carried row/);mutate(x=>{row(x,key).composite_ci95.A[0]+=1},/carried row/);mutate(x=>{row(x,key).disclosure=(row(x,key).disclosure??'')+' newer version measured'},/carried row/);
   mutate(x=>{x.categories.systems[key]={}},/carried cells/);mutate(x=>{x.categories.lanes[key]='api'},/carried lane/);
  }
+});
+test('v1.7.14 corrects only the DOPEST 1.0 31B text fields (repository public throughout); its numbers and cells stay equal',()=>{
+ assert.deepEqual(Object.keys(V1714_TEXT_FIXED),[DOPEST]);assert.deepEqual(Object.keys(V1714_TEXT_FIXED[DOPEST]).sort(),DOPEST_FIELDS);assert.deepEqual(b.artifact.addendum.text_fixed_keys,[DOPEST]);
+ const d=row(b,DOPEST),p=b.previous.artifact.systems.find(s=>s.key===DOPEST);
+ for(const f of DOPEST_FIELDS){assert.notEqual(d[f],p[f]);assert.doesNotMatch(d[f],/became private|went private|private since|repository private|HTTP 401/i)}
+ assert.match(d.code_revision,/serving code is public on GitHub \(DOPEST-studio\/dopest-model, created 24 Oct 2026\); an earlier version of this note said the repository had become private, which was our error; the measured vendored bytes remain pinned above\./);
+ assert.match(d.licence,/author serving code public on GitHub at the pin \(no serving code redistributed here\)$/);
+ assert.match(b.artifact.source_note,/Corrected the DOPEST 1\.0 31B notes: its serving-code repository has been public throughout\.$/);
+ mutate(x=>{row(x,DOPEST).axes.speed+=1},/carried row/);mutate(x=>{row(x,DOPEST).rank=(row(x,DOPEST).rank??0)+1},/carried row/);mutate(x=>{row(x,DOPEST).author+=' x'},/carried row/);
+ mutate(x=>{row(x,DOPEST).licence+=' x'},/text correction pin/);mutate(x=>{row(x,DOPEST).code_revision=b.previous.artifact.systems.find(s=>s.key===DOPEST).code_revision},/text correction pin/);
+ mutate(x=>{x.categories.systems[DOPEST]={}},/carried cells/);mutate(x=>{x.proof.carried_rows_equal_except=[]},/carry exception/);mutate(x=>{x.proof.exceptions={}},/text correction proof/);
 });
 test('v1.7.14 rejects roster, rank, new row, draw and provenance mutations',()=>{
  mutate(x=>x.artifact.systems.pop(),/roster/);mutate(x=>x.artifact.systems.push(x.artifact.systems[0]),/duplicate/);mutate(x=>x.artifact.board.A.order.reverse(),/order lists|rank|sort/);
@@ -74,8 +86,8 @@ test('v1.7.14 exact new scores, cost, coverage, draw and disclosures',()=>{
  assert.equal(b.proof.new_rows['decisio-gemma-4-12b-tuned-commit-think'].cost.priced_input_tokens,844031);assert.match(row(b,'decisio-gemma-4-12b-tuned-commit-think').cost.basis,/504,719/);
 });
 test('v1.7.14 the new rows are unranked: no rank, in no order list, every carried rank and order list unchanged',()=>{
- assert.deepEqual(b.artifact.board,b.previous.artifact.board);assert.equal(b.artifact.n_ranked,b.previous.artifact.n_ranked);assert.deepEqual(b.proof.carried_rows_equal_except,[]);
- for(const p of b.previous.artifact.systems)assert.deepEqual(row(b,p.key),p);
+ assert.deepEqual(b.artifact.board,b.previous.artifact.board);assert.equal(b.artifact.n_ranked,b.previous.artifact.n_ranked);assert.deepEqual(b.proof.carried_rows_equal_except,[DOPEST+': code_revision, disclosure, licence (text correction; numbers, ranks and cells unchanged)']);
+ for(const p of b.previous.artifact.systems){if(p.key!==DOPEST){assert.deepEqual(row(b,p.key),p);continue}const a={...row(b,p.key)},o={...p};for(const f of DOPEST_FIELDS){delete a[f];delete o[f]}assert.deepEqual(a,o)}
  for(const K of KEYS){
   const s=row(b,K);checkUnrankedRow(s,b.artifact.board);
   assert.equal(s.ranked,false);assert.equal(s.rank,null);assert.equal(s.listing,'unranked');assert.deepEqual(s.ranks,{A:null,B:null,C:null,capability:null});assert.equal(s.not_ranked_because,NOT_RANKED_BECAUSE);
