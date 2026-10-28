@@ -7331,6 +7331,38 @@
           }
         ],
         "note": "Self-hosted through the author HTTP server on one RTX 6000 Ada; Apache-2.0."
+      },
+      "knowline-26b-a4b-gen2.5": {
+        "arch": "open-llm-decoder",
+        "badges": {
+          "derivation": "fine-tune",
+          "params": "26B-A4B",
+          "quant": null
+        },
+        "evidence": [
+          {
+            "kind": "model-card",
+            "url": "https://huggingface.co/PelaAI/KnowLine-26B-A4B-Gen2.5/blob/7486767f8546beb510e61aef07d0e74219ceb4e3/README.md",
+            "fact": "Pinned measurement entry identifies PelaAI/KnowLine-26B-A4B-Gen2.5 and base google/gemma-4-26B-A4B-it; serving conditions are disclosed on the row."
+          }
+        ],
+        "note": "Aggregate-only release of the 23 Oct measurement; see the row disclosure for the answer-file loss and serving conditions."
+      },
+      "knowline-4b-gen5.5": {
+        "arch": "open-llm-decoder",
+        "badges": {
+          "derivation": "fine-tune",
+          "params": "4B",
+          "quant": null
+        },
+        "evidence": [
+          {
+            "kind": "model-card",
+            "url": "https://huggingface.co/PelaAI/KnowLine-4B-Gen5.5/blob/779944d2cc8ffa19cef386aee83c83bcb967ade2/README.md",
+            "fact": "Pinned measurement entry identifies PelaAI/KnowLine-4B-Gen5.5 and base Qwen/Qwen3.5-4B; serving conditions are disclosed on the row."
+          }
+        ],
+        "note": "Aggregate-only release of the 23 Oct measurement; see the row disclosure for the answer-file loss and serving conditions."
       }
     },
     "imagejevbench": {

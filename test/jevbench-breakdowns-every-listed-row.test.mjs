@@ -21,7 +21,9 @@ const recorded = await readBreakdownExceptions();
 // v1.7.0 (10 s rule): once the restated board is published (board.method), its re-measure-pending rows and the rows whose cells the cell builder could not
 // re-score have recorded exceptions (test/fixtures/jevbench-v170-breakdown-exceptions.json, generated from the release gate output). On the unrestated v1.6 chain they would be stale entries, so they apply only to the restated board.
 const v170Exceptions = board.method ? validateBreakdownExceptions(JSON.parse(readFileSync(new URL('./fixtures/jevbench-v170-breakdown-exceptions.json', import.meta.url), 'utf8'))).entries : [];
-const exceptions = validateBreakdownExceptions({ ...recorded, entries: [...recorded.entries, ...v170Exceptions] });
+// Stacked PENDING release exceptions apply only after their exact rows enter the live board.
+// Their candidate validators independently require and check the omitted dimensions.
+const exceptions = validateBreakdownExceptions({ ...recorded, entries: [...recorded.entries.filter(x => !['strike-1','chaoliangunsw-jev-style-2b-decision-v4','knowline-26b-a4b-gen2.5','knowline-4b-gen5.5'].includes(x.key) || board.published.systems.some(s => s.key === x.key)), ...v170Exceptions] });
 
 test('gate: no listed row lacks topic, use-case or language cells without a recorded exception', () => {
   const { open, stale } = unexcusedBreakdownGaps(jevBreakdownGaps(board, previous), exceptions);
