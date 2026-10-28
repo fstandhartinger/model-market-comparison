@@ -1,0 +1,848 @@
+{
+ "carried_rows": 301,
+ "carried_rows_equal_except": [
+  "dopest-1.0-31b: code_revision, disclosure, licence (text correction; numbers, ranks and cells unchanged)"
+ ],
+ "exceptions": {
+  "dopest-1.0-31b": {
+   "code_revision": {
+    "after_sha256": "da2bb56fdba840cfd17c901595d51866ca030f74b2c54d146f551d428787971d",
+    "before_sha256": "7b6b739dcdce268fa307af61b91aaca27d55a9fe6fadc3d849bef500cd7c42b7"
+   },
+   "disclosure": {
+    "after_sha256": "25cb06cc2c4e63fbf574ad8dfc2491074efd886a9c1fd6ceef47710286572b22",
+    "before_sha256": "761f292a4bb1f11cde13d0dc674d4619c11f1cd7f75b1d1cf57c32abef89bac7"
+   },
+   "licence": {
+    "after_sha256": "aedb20bbeeae28fd14e7a76d3017602985e7381f70350f49f26a1ebb9ebc9438",
+    "before_sha256": "82942fb513af1df119abfdce0a2f291ffece4bbc4ef08757f087274c90ba1ebb"
+   }
+  }
+ },
+ "files": {
+  "carry": "271d1fc77a136a04a1eb6deb5480c52d4211eb2b66b2ac8bb31e80867e69003a",
+  "categories": "b1f8d4831570eea1318f05909469c4e5e8e443498b9ebd5caf0a2c8a9716fc85",
+  "history": "5cd8c1332226ea9c179883d2285c0d8b8cc593ae38f2645197364a7ddd9c83c1",
+  "history-carry": "334e851944e92383ab3071e52b3012040c7023d0fe236395953169ebee8f0459",
+  "proof": "0070dcb23431f98592882e53252c4d3fb9bf8995b17b94e6b8490c510a659752",
+  "results": "6f9f4b1896e9aff9d3173d3206238a80c7272f6ea60133125c218b6b5945d8f9"
+ },
+ "link_fixed_rows": [],
+ "method": {
+  "decision_limit_s": 10,
+  "label": "v1.7",
+  "rule": "latency_s > 10.000 s -> failed",
+  "treatment": "share"
+ },
+ "new_rows": {
+  "arcbright-elf-1-12b-r2": {
+   "axes": {
+    "calibration": 92.92233551579638,
+    "cost": 60.64018322577787,
+    "intelligence": 66.79530416169641,
+    "speed": 92.52857247879322
+   },
+   "category_pool_bounds": {
+    "languages": {
+     "ar": 21,
+     "cs": 37,
+     "da": 36,
+     "de": 48,
+     "el": 28,
+     "en": 555,
+     "es": 37,
+     "fi": 52,
+     "fr": 32,
+     "hi": 37,
+     "id": 41,
+     "it": 45,
+     "ja": 44,
+     "ko": 43,
+     "mixed": 64,
+     "nl": 36,
+     "no": 51,
+     "pl": 57,
+     "pt": 47,
+     "sv": 46,
+     "tr": 46,
+     "uk": 56,
+     "zh": 41
+    },
+    "topics": {},
+    "usecases": {
+     "advertising": 48,
+     "code_linting": 69,
+     "customer_support": 66,
+     "demand_forecasting": 66,
+     "ecommerce_marketplaces": 62,
+     "feature_extraction": 72,
+     "financial_crime": 63,
+     "gaming": 58,
+     "insurance_claims": 62,
+     "knowledge_graphs": 67,
+     "lead_generation": 75,
+     "legal_compliance": 56,
+     "llm_guardrails": 71,
+     "model_routing": 148,
+     "moderation_trust_safety": 59,
+     "other": 32,
+     "recruiting": 65,
+     "risk_assessment": 48,
+     "scientific_discovery": 42,
+     "search_retrieval": 67
+    }
+   },
+   "composite_ci95": {
+    "A": [
+     73.05912733005324,
+     76.48004320162917
+    ],
+    "B": [
+     70.47669626693505,
+     75.18081749101063
+    ],
+    "C": [
+     73.05912733005324,
+     76.48004320162917
+    ]
+   },
+   "cost": {
+    "basis_items": 1500,
+    "kind": "estimate",
+    "native_input_tokens": 610840,
+    "output_tokens": 1500,
+    "priced_input_tokens": 610840,
+    "usd_per_1000": 0.020511333333333333
+   },
+   "decision_limit": {
+    "limit_s": 10.0,
+    "n_over_limit": 0,
+    "n_over_limit_answered_ok": 0,
+    "rule": "latency_s > limit -> failed",
+    "speed_basis": "all decisions given (lane items in the raw), measured latency_s",
+    "speed_n": 1500,
+    "treatment": "share"
+   },
+   "equated": {
+    "calibration": 92.92233551579638,
+    "capability": 79.8588198387464,
+    "intelligence": 66.79530416169641,
+    "offset": {
+     "C": 0,
+     "I": 0
+    },
+    "scores": {
+     "A": 75.42761509888035,
+     "B": 73.52715437967998,
+     "C": 75.42761509888035
+    }
+   },
+   "model_pin": "arcbright/elf-1-12b@1018696022ae3fdd9cb8a93e3e972f69c11184c1",
+   "price_reference": {
+    "base": "google/gemma-4-12B-it",
+    "in": 0.05,
+    "listing": "google/gemma-3-12b-it",
+    "out": 0.15
+   },
+   "raw_sha256": "84f08ebb6ff92af453b75cda042f617ea89c5be6a2176c7c69e11f2521da6f08",
+   "scored_input_sha256": "9e460d48571eeb00d94f554a985fdc2ebd52b63beb9aed7a4efe88762eb7b32e",
+   "source_sha256": {
+    "cells_off": {
+     "categories_sha256": "ee06148510984c7b20cb191ed9ff21bf45b23bb0a06b0910dcac5c23df38f9ed",
+     "decisive_sha256": "d3037f75c735ecc31a402b8fd060fce1954553228774ea0d0eea3dfd565f96b4"
+    },
+    "cells_share": {
+     "categories_sha256": "1b32074525850feeeb8e5b9ab432971baa7f8b25ba2c12ddfe281f4e34a804ae",
+     "decisive_sha256": "d3037f75c735ecc31a402b8fd060fce1954553228774ea0d0eea3dfd565f96b4"
+    },
+    "entry_path": "/home/flori/jobs/jevbench-auto-intake/r24-score/ENTRIES-R17-LEAD.json",
+    "entry_sha256": "bb53dc42a9e16169bd2e7f33e527b8780037cef386263f109e50285cde3be20f",
+    "frozen": {
+     "path": "/home/flori/jobs/jevbench-add-requests-20260919/r197/v1714/score/field/out-frozen/jevbench-v1.6.0-results.json",
+     "sha256": "d50182e51e0dd56e72766d145c0b906182fd346df5071eadf184dea7b794d4c1"
+    },
+    "input_sha256": "9b2f32edaccb29afd726af8cd54cf1a22d85e8b1824566924045d83c6f828426",
+    "manifest_sha256": "f5a5151a1a19923dec1434230dbc451d9ca879ce8ccba8f268b296cac9c1ee35",
+    "raw_sha256": "84f08ebb6ff92af453b75cda042f617ea89c5be6a2176c7c69e11f2521da6f08",
+    "raw_verified_in_place": true,
+    "registry_sha256": "d8282ee5f701997a73d63fb38cee1010cf09b61cc8e36851846d1763664745bd",
+    "v17-off": {
+     "path": "/home/flori/jobs/jevbench-add-requests-20260919/r197/v1714/score/field/out-v17-off/jevbench-v1.6.0-results.json",
+     "sha256": "a23e458e1cd14ec1bc8fefdd8e5e43cbdf980c0f7080fc42404854a8eca8d108"
+    },
+    "v17-share": {
+     "path": "/home/flori/jobs/jevbench-add-requests-20260919/r197/v1714/score/field/out-v17-share/jevbench-v1.6.0-results.json",
+     "sha256": "9e460d48571eeb00d94f554a985fdc2ebd52b63beb9aed7a4efe88762eb7b32e"
+    }
+   },
+   "treatment": "unranked"
+  },
+  "decisio-gemma-4-12b-tuned-commit-think": {
+   "axes": {
+    "calibration": 88.68433331756145,
+    "cost": 56.10720068357701,
+    "intelligence": 68.62145857576381,
+    "speed": 90.60515121372691
+   },
+   "category_pool_bounds": {
+    "languages": {
+     "ar": 21,
+     "cs": 37,
+     "da": 36,
+     "de": 48,
+     "el": 28,
+     "en": 555,
+     "es": 37,
+     "fi": 52,
+     "fr": 32,
+     "hi": 37,
+     "id": 41,
+     "it": 45,
+     "ja": 44,
+     "ko": 43,
+     "mixed": 64,
+     "nl": 36,
+     "no": 51,
+     "pl": 57,
+     "pt": 47,
+     "sv": 46,
+     "tr": 46,
+     "uk": 56,
+     "zh": 41
+    },
+    "topics": {},
+    "usecases": {
+     "advertising": 48,
+     "code_linting": 69,
+     "customer_support": 66,
+     "demand_forecasting": 66,
+     "ecommerce_marketplaces": 62,
+     "feature_extraction": 72,
+     "financial_crime": 63,
+     "gaming": 58,
+     "insurance_claims": 62,
+     "knowledge_graphs": 67,
+     "lead_generation": 75,
+     "legal_compliance": 56,
+     "llm_guardrails": 71,
+     "model_routing": 148,
+     "moderation_trust_safety": 59,
+     "other": 32,
+     "recruiting": 65,
+     "risk_assessment": 48,
+     "scientific_discovery": 42,
+     "search_retrieval": 67
+    }
+   },
+   "composite_ci95": {
+    "A": [
+     71.51630943847644,
+     73.95326930868197
+    ],
+    "B": [
+     70.06420605732261,
+     73.57712816620165
+    ],
+    "C": [
+     71.51630943847644,
+     73.95326930868197
+    ]
+   },
+   "cost": {
+    "basis_items": 1500,
+    "kind": "estimate",
+    "native_input_tokens": 727045,
+    "output_tokens": 9121,
+    "priced_input_tokens": 844031,
+    "usd_per_1000": 0.02904646666666667
+   },
+   "decision_limit": {
+    "limit_s": 10.0,
+    "n_over_limit": 0,
+    "n_over_limit_answered_ok": 0,
+    "rule": "latency_s > limit -> failed",
+    "speed_basis": "all decisions given (lane items in the raw), measured latency_s",
+    "speed_n": 1500,
+    "treatment": "share"
+   },
+   "equated": {
+    "calibration": 88.68433331756145,
+    "capability": 78.65289594666262,
+    "intelligence": 68.62145857576381,
+    "offset": {
+     "C": 0,
+     "I": 0
+    },
+    "scores": {
+     "A": 73.11468195716678,
+     "B": 72.16957231800892,
+     "C": 73.11468195716678
+    }
+   },
+   "model_pin": "tachara-ai/Decisio-12b-tuned-commit-think@e36aeb243dea3008c593f454112840a1a29e5837",
+   "price_reference": {
+    "base": "google/gemma-4-12B-it",
+    "in": 0.05,
+    "listing": "google/gemma-3-12b-it",
+    "out": 0.15
+   },
+   "raw_sha256": "d7396dd680e13af9ba26c4526007fee3647d03eee7673bf88075ac510f39cc3c",
+   "scored_input_sha256": "9e460d48571eeb00d94f554a985fdc2ebd52b63beb9aed7a4efe88762eb7b32e",
+   "source_sha256": {
+    "cells_off": {
+     "categories_sha256": "ee06148510984c7b20cb191ed9ff21bf45b23bb0a06b0910dcac5c23df38f9ed",
+     "decisive_sha256": "d3037f75c735ecc31a402b8fd060fce1954553228774ea0d0eea3dfd565f96b4"
+    },
+    "cells_share": {
+     "categories_sha256": "1b32074525850feeeb8e5b9ab432971baa7f8b25ba2c12ddfe281f4e34a804ae",
+     "decisive_sha256": "d3037f75c735ecc31a402b8fd060fce1954553228774ea0d0eea3dfd565f96b4"
+    },
+    "engine_recount": {
+     "answered_engine_input_tokens": 844031,
+     "answered_native_input_tokens": 727045,
+     "engine_minus_native_total": 116986,
+     "engine_recount_sha256": "07b69b7a71ba53f1e3b6d22d64803c9bfa97496479c0205e613484e673401319",
+     "file_sha256": "8c9f4691551a99a23c2763783278727f6f6fd7ca5c9fc24467c2dec8b144b646",
+     "independent_recompute_mismatches": 0,
+     "rendering_sha256": "fc4ffec452f3a7034e378cdb9f0d07d34aa6de3f79ae0b70910e923feea2cd17",
+     "think_eligible_n": 746,
+     "think_second_read_prefill_upper_bound_tokens_if_all_eligible_thought": 504719
+    },
+    "entry_path": "/home/flori/jobs/jevbench-auto-intake/r24-score/ENTRIES-R17-LEAD.json",
+    "entry_sha256": "bb53dc42a9e16169bd2e7f33e527b8780037cef386263f109e50285cde3be20f",
+    "frozen": {
+     "path": "/home/flori/jobs/jevbench-add-requests-20260919/r197/v1714/score/field/out-frozen/jevbench-v1.6.0-results.json",
+     "sha256": "d50182e51e0dd56e72766d145c0b906182fd346df5071eadf184dea7b794d4c1"
+    },
+    "input_sha256": "9b2f32edaccb29afd726af8cd54cf1a22d85e8b1824566924045d83c6f828426",
+    "manifest_sha256": "f5a5151a1a19923dec1434230dbc451d9ca879ce8ccba8f268b296cac9c1ee35",
+    "raw_sha256": "d7396dd680e13af9ba26c4526007fee3647d03eee7673bf88075ac510f39cc3c",
+    "raw_verified_in_place": true,
+    "registry_sha256": "d8282ee5f701997a73d63fb38cee1010cf09b61cc8e36851846d1763664745bd",
+    "v17-off": {
+     "path": "/home/flori/jobs/jevbench-add-requests-20260919/r197/v1714/score/field/out-v17-off/jevbench-v1.6.0-results.json",
+     "sha256": "a23e458e1cd14ec1bc8fefdd8e5e43cbdf980c0f7080fc42404854a8eca8d108"
+    },
+    "v17-share": {
+     "path": "/home/flori/jobs/jevbench-add-requests-20260919/r197/v1714/score/field/out-v17-share/jevbench-v1.6.0-results.json",
+     "sha256": "9e460d48571eeb00d94f554a985fdc2ebd52b63beb9aed7a4efe88762eb7b32e"
+    }
+   },
+   "treatment": "unranked"
+  },
+  "jeff_1_1_large": {
+   "axes": {
+    "calibration": 91.95478386454448,
+    "cost": 51.25266260360077,
+    "intelligence": 84.4898380044484,
+    "speed": 72.19753970140297
+   },
+   "category_pool_bounds": {
+    "languages": {
+     "ar": 21,
+     "cs": 37,
+     "da": 36,
+     "de": 48,
+     "el": 28,
+     "en": 555,
+     "es": 37,
+     "fi": 52,
+     "fr": 32,
+     "hi": 37,
+     "id": 41,
+     "it": 45,
+     "ja": 44,
+     "ko": 43,
+     "mixed": 64,
+     "nl": 36,
+     "no": 51,
+     "pl": 57,
+     "pt": 47,
+     "sv": 46,
+     "tr": 46,
+     "uk": 56,
+     "zh": 41
+    },
+    "topics": {},
+    "usecases": {
+     "advertising": 48,
+     "code_linting": 69,
+     "customer_support": 66,
+     "demand_forecasting": 66,
+     "ecommerce_marketplaces": 62,
+     "feature_extraction": 72,
+     "financial_crime": 63,
+     "gaming": 58,
+     "insurance_claims": 62,
+     "knowledge_graphs": 67,
+     "lead_generation": 75,
+     "legal_compliance": 56,
+     "llm_guardrails": 71,
+     "model_routing": 148,
+     "moderation_trust_safety": 59,
+     "other": 32,
+     "recruiting": 65,
+     "risk_assessment": 48,
+     "scientific_discovery": 42,
+     "search_retrieval": 67
+    }
+   },
+   "composite_ci95": {
+    "A": [
+     70.36884547045463,
+     71.78561252018568
+    ],
+    "B": [
+     72.25420852324346,
+     74.3733662141431
+    ],
+    "C": [
+     70.36884547045463,
+     71.78561252018568
+    ]
+   },
+   "cost": {
+    "basis_items": 1500,
+    "kind": "estimate",
+    "native_input_tokens": 620215,
+    "output_tokens": 21830,
+    "priced_input_tokens": 620215,
+    "usd_per_1000": 0.042161033333333334,
+    "usd_per_1000_if_uncounted_prefills_priced": 0.054144
+   },
+   "decision_limit": {
+    "limit_s": 10.0,
+    "n_over_limit": 0,
+    "n_over_limit_answered_ok": 0,
+    "rule": "latency_s > limit -> failed",
+    "speed_basis": "all decisions given (lane items in the raw), measured latency_s",
+    "speed_n": 1500,
+    "treatment": "share"
+   },
+   "equated": {
+    "calibration": 91.95478386454448,
+    "capability": 88.22231093449645,
+    "intelligence": 84.4898380044484,
+    "offset": {
+     "C": 0,
+     "I": 0
+    },
+    "scores": {
+     "A": 71.33593425029217,
+     "B": 73.62852359794118,
+     "C": 71.33593425029217
+    }
+   },
+   "model_pin": "jgeuter/Jeff-1.1-Large@970c21af246a44c5527f7109fca129ab6015c941",
+   "price_reference": {
+    "base": "google/gemma-4-31B-it",
+    "in": 0.09,
+    "listing": "google/gemma-4-31b-it",
+    "out": 0.34
+   },
+   "raw_sha256": "1f1fdc2df674da00128ae7b47d5ea3429cf1124383a077577e7c68c7d9cc0e72",
+   "scored_input_sha256": "9e460d48571eeb00d94f554a985fdc2ebd52b63beb9aed7a4efe88762eb7b32e",
+   "source_sha256": {
+    "cells_off": {
+     "categories_sha256": "ee06148510984c7b20cb191ed9ff21bf45b23bb0a06b0910dcac5c23df38f9ed",
+     "decisive_sha256": "d3037f75c735ecc31a402b8fd060fce1954553228774ea0d0eea3dfd565f96b4"
+    },
+    "cells_share": {
+     "categories_sha256": "1b32074525850feeeb8e5b9ab432971baa7f8b25ba2c12ddfe281f4e34a804ae",
+     "decisive_sha256": "d3037f75c735ecc31a402b8fd060fce1954553228774ea0d0eea3dfd565f96b4"
+    },
+    "entry_path": "/home/flori/jobs/jevbench-auto-intake/r24-score/ENTRIES-R17B-LEAD.json",
+    "entry_sha256": "094aedba39685e9a0949d381746a50dd274ef145c8aadf3d2d4889581d6ea7c0",
+    "frozen": {
+     "path": "/home/flori/jobs/jevbench-add-requests-20260919/r197/v1714/score/field/out-frozen/jevbench-v1.6.0-results.json",
+     "sha256": "d50182e51e0dd56e72766d145c0b906182fd346df5071eadf184dea7b794d4c1"
+    },
+    "input_sha256": "9b2f32edaccb29afd726af8cd54cf1a22d85e8b1824566924045d83c6f828426",
+    "manifest_sha256": "f5a5151a1a19923dec1434230dbc451d9ca879ce8ccba8f268b296cac9c1ee35",
+    "raw_sha256": "1f1fdc2df674da00128ae7b47d5ea3429cf1124383a077577e7c68c7d9cc0e72",
+    "raw_verified_in_place": true,
+    "registry_sha256": "d8282ee5f701997a73d63fb38cee1010cf09b61cc8e36851846d1763664745bd",
+    "v17-off": {
+     "path": "/home/flori/jobs/jevbench-add-requests-20260919/r197/v1714/score/field/out-v17-off/jevbench-v1.6.0-results.json",
+     "sha256": "a23e458e1cd14ec1bc8fefdd8e5e43cbdf980c0f7080fc42404854a8eca8d108"
+    },
+    "v17-share": {
+     "path": "/home/flori/jobs/jevbench-add-requests-20260919/r197/v1714/score/field/out-v17-share/jevbench-v1.6.0-results.json",
+     "sha256": "9e460d48571eeb00d94f554a985fdc2ebd52b63beb9aed7a4efe88762eb7b32e"
+    }
+   },
+   "treatment": "unranked"
+  },
+  "jeff_1_1_qwen_4b": {
+   "axes": {
+    "calibration": 91.10060876207879,
+    "cost": 61.26091960325116,
+    "intelligence": 68.16962043390559,
+    "speed": 78.37104008757272
+   },
+   "category_pool_bounds": {
+    "languages": {
+     "ar": 21,
+     "cs": 37,
+     "da": 36,
+     "de": 48,
+     "el": 28,
+     "en": 555,
+     "es": 37,
+     "fi": 52,
+     "fr": 32,
+     "hi": 37,
+     "id": 41,
+     "it": 45,
+     "ja": 44,
+     "ko": 43,
+     "mixed": 64,
+     "nl": 36,
+     "no": 51,
+     "pl": 57,
+     "pt": 47,
+     "sv": 46,
+     "tr": 46,
+     "uk": 56,
+     "zh": 41
+    },
+    "topics": {},
+    "usecases": {
+     "advertising": 48,
+     "code_linting": 69,
+     "customer_support": 66,
+     "demand_forecasting": 66,
+     "ecommerce_marketplaces": 62,
+     "feature_extraction": 72,
+     "financial_crime": 63,
+     "gaming": 58,
+     "insurance_claims": 62,
+     "knowledge_graphs": 67,
+     "lead_generation": 75,
+     "legal_compliance": 56,
+     "llm_guardrails": 71,
+     "model_routing": 148,
+     "moderation_trust_safety": 59,
+     "other": 32,
+     "recruiting": 65,
+     "risk_assessment": 48,
+     "scientific_discovery": 42,
+     "search_retrieval": 67
+    }
+   },
+   "composite_ci95": {
+    "A": [
+     70.88863798277767,
+     74.16923394178606
+    ],
+    "B": [
+     69.02259298492622,
+     73.80817311427786
+    ],
+    "C": [
+     70.88863798277767,
+     74.16923394178606
+    ]
+   },
+   "cost": {
+    "basis_items": 1500,
+    "kind": "estimate",
+    "native_input_tokens": 629951,
+    "output_tokens": 69580,
+    "priced_input_tokens": 629951,
+    "usd_per_1000": 0.019557019999999998,
+    "usd_per_1000_if_uncounted_prefills_priced": 0.02653
+   },
+   "decision_limit": {
+    "limit_s": 10.0,
+    "n_over_limit": 0,
+    "n_over_limit_answered_ok": 0,
+    "rule": "latency_s > limit -> failed",
+    "speed_basis": "all decisions given (lane items in the raw), measured latency_s",
+    "speed_n": 1500,
+    "treatment": "share"
+   },
+   "equated": {
+    "calibration": 91.10060876207879,
+    "capability": 79.63511459799219,
+    "intelligence": 68.16962043390559,
+    "offset": {
+     "C": 0,
+     "I": 0
+    },
+    "scores": {
+     "A": 73.0865905114461,
+     "B": 72.04725887427759,
+     "C": 73.0865905114461
+    }
+   },
+   "model_pin": "jgeuter/Jeff-1.1-Qwen-4B@5401940b5a8c959cba82187ebfa2dce5a21abc0a",
+   "price_reference": {
+    "base": "Qwen/Qwen3.5-4B",
+    "in": 0.03,
+    "listing": "deepinfra:Qwen/Qwen3.5-4B",
+    "out": 0.15
+   },
+   "raw_sha256": "c37fada15a2021cf744b2031acb964508caf48873a2bcda5da6d6ac4a5e7c288",
+   "scored_input_sha256": "9e460d48571eeb00d94f554a985fdc2ebd52b63beb9aed7a4efe88762eb7b32e",
+   "source_sha256": {
+    "cells_off": {
+     "categories_sha256": "ee06148510984c7b20cb191ed9ff21bf45b23bb0a06b0910dcac5c23df38f9ed",
+     "decisive_sha256": "d3037f75c735ecc31a402b8fd060fce1954553228774ea0d0eea3dfd565f96b4"
+    },
+    "cells_share": {
+     "categories_sha256": "1b32074525850feeeb8e5b9ab432971baa7f8b25ba2c12ddfe281f4e34a804ae",
+     "decisive_sha256": "d3037f75c735ecc31a402b8fd060fce1954553228774ea0d0eea3dfd565f96b4"
+    },
+    "entry_path": "/home/flori/jobs/jevbench-auto-intake/r24-score/ENTRIES-R17-LEAD.json",
+    "entry_sha256": "bb53dc42a9e16169bd2e7f33e527b8780037cef386263f109e50285cde3be20f",
+    "frozen": {
+     "path": "/home/flori/jobs/jevbench-add-requests-20260919/r197/v1714/score/field/out-frozen/jevbench-v1.6.0-results.json",
+     "sha256": "d50182e51e0dd56e72766d145c0b906182fd346df5071eadf184dea7b794d4c1"
+    },
+    "input_sha256": "9b2f32edaccb29afd726af8cd54cf1a22d85e8b1824566924045d83c6f828426",
+    "manifest_sha256": "f5a5151a1a19923dec1434230dbc451d9ca879ce8ccba8f268b296cac9c1ee35",
+    "raw_sha256": "c37fada15a2021cf744b2031acb964508caf48873a2bcda5da6d6ac4a5e7c288",
+    "raw_verified_in_place": true,
+    "registry_sha256": "d8282ee5f701997a73d63fb38cee1010cf09b61cc8e36851846d1763664745bd",
+    "v17-off": {
+     "path": "/home/flori/jobs/jevbench-add-requests-20260919/r197/v1714/score/field/out-v17-off/jevbench-v1.6.0-results.json",
+     "sha256": "a23e458e1cd14ec1bc8fefdd8e5e43cbdf980c0f7080fc42404854a8eca8d108"
+    },
+    "v17-share": {
+     "path": "/home/flori/jobs/jevbench-add-requests-20260919/r197/v1714/score/field/out-v17-share/jevbench-v1.6.0-results.json",
+     "sha256": "9e460d48571eeb00d94f554a985fdc2ebd52b63beb9aed7a4efe88762eb7b32e"
+    }
+   },
+   "treatment": "unranked"
+  },
+  "torchcast-decision-31b-v1.0": {
+   "axes": {
+    "calibration": 95.28336264420759,
+    "cost": 52.36325864257654,
+    "intelligence": 88.35914237381022,
+    "speed": 87.26135463003386
+   },
+   "category_pool_bounds": {
+    "languages": {
+     "ar": 21,
+     "cs": 37,
+     "da": 36,
+     "de": 48,
+     "el": 28,
+     "en": 555,
+     "es": 37,
+     "fi": 52,
+     "fr": 32,
+     "hi": 37,
+     "id": 41,
+     "it": 45,
+     "ja": 44,
+     "ko": 43,
+     "mixed": 64,
+     "nl": 36,
+     "no": 51,
+     "pl": 57,
+     "pt": 47,
+     "sv": 46,
+     "tr": 46,
+     "uk": 56,
+     "zh": 41
+    },
+    "topics": {},
+    "usecases": {
+     "advertising": 48,
+     "code_linting": 69,
+     "customer_support": 66,
+     "demand_forecasting": 66,
+     "ecommerce_marketplaces": 62,
+     "feature_extraction": 72,
+     "financial_crime": 63,
+     "gaming": 58,
+     "insurance_claims": 62,
+     "knowledge_graphs": 67,
+     "lead_generation": 75,
+     "legal_compliance": 56,
+     "llm_guardrails": 71,
+     "model_routing": 148,
+     "moderation_trust_safety": 59,
+     "other": 32,
+     "recruiting": 65,
+     "risk_assessment": 48,
+     "scientific_discovery": 42,
+     "search_retrieval": 67
+    }
+   },
+   "composite_ci95": {
+    "A": [
+     75.30907757496718,
+     76.8076715740695
+    ],
+    "B": [
+     76.8982015600077,
+     79.26556182470127
+    ],
+    "C": [
+     75.30907757496718,
+     76.8076715740695
+    ]
+   },
+   "cost": {
+    "basis_items": 1500,
+    "kind": "estimate",
+    "native_input_tokens": 645268,
+    "output_tokens": 0,
+    "priced_input_tokens": 645268,
+    "usd_per_1000": 0.03871607999999999
+   },
+   "decision_limit": {
+    "limit_s": 10.0,
+    "n_over_limit": 0,
+    "n_over_limit_answered_ok": 0,
+    "rule": "latency_s > limit -> failed",
+    "speed_basis": "all decisions given (lane items in the raw), measured latency_s",
+    "speed_n": 1500,
+    "treatment": "share"
+   },
+   "equated": {
+    "calibration": 95.28336264420759,
+    "capability": 91.8212525090089,
+    "intelligence": 88.35914237381022,
+    "offset": {
+     "C": 0,
+     "I": 0
+    },
+    "scores": {
+     "A": 76.38012249209945,
+     "B": 78.50884160179682,
+     "C": 76.38012249209945
+    }
+   },
+   "model_pin": "torchcast-ai/torchcast-decision-31b@1e267fc9409654a3ac91c123265c21cddce73a3b",
+   "price_reference": {
+    "base": "google/gemma-4-31B-it",
+    "in": 0.09,
+    "listing": "google/gemma-4-31b-it",
+    "out": 0.34
+   },
+   "raw_sha256": "e51a1c22336050368336c996d7cb32181bad5e854024f07844b2a8577a0dda7d",
+   "scored_input_sha256": "9e460d48571eeb00d94f554a985fdc2ebd52b63beb9aed7a4efe88762eb7b32e",
+   "source_sha256": {
+    "cells_off": {
+     "categories_sha256": "ee06148510984c7b20cb191ed9ff21bf45b23bb0a06b0910dcac5c23df38f9ed",
+     "decisive_sha256": "d3037f75c735ecc31a402b8fd060fce1954553228774ea0d0eea3dfd565f96b4"
+    },
+    "cells_share": {
+     "categories_sha256": "1b32074525850feeeb8e5b9ab432971baa7f8b25ba2c12ddfe281f4e34a804ae",
+     "decisive_sha256": "d3037f75c735ecc31a402b8fd060fce1954553228774ea0d0eea3dfd565f96b4"
+    },
+    "entry_path": "/home/flori/jobs/fastlane-native-69f7a75d/score/ENTRIES-TC31B.json",
+    "entry_sha256": "f36373abe1a01b3fbf0e19e6ebb4fddfe0615f472e1528c9906fa9eb0f2b454a",
+    "frozen": {
+     "path": "/home/flori/jobs/jevbench-add-requests-20260919/r197/v1714/score/field/out-frozen/jevbench-v1.6.0-results.json",
+     "sha256": "d50182e51e0dd56e72766d145c0b906182fd346df5071eadf184dea7b794d4c1"
+    },
+    "input_sha256": "9b2f32edaccb29afd726af8cd54cf1a22d85e8b1824566924045d83c6f828426",
+    "manifest_sha256": "f5a5151a1a19923dec1434230dbc451d9ca879ce8ccba8f268b296cac9c1ee35",
+    "raw_sha256": "e51a1c22336050368336c996d7cb32181bad5e854024f07844b2a8577a0dda7d",
+    "raw_verified_in_place": true,
+    "registry_sha256": "d8282ee5f701997a73d63fb38cee1010cf09b61cc8e36851846d1763664745bd",
+    "v17-off": {
+     "path": "/home/flori/jobs/jevbench-add-requests-20260919/r197/v1714/score/field/out-v17-off/jevbench-v1.6.0-results.json",
+     "sha256": "a23e458e1cd14ec1bc8fefdd8e5e43cbdf980c0f7080fc42404854a8eca8d108"
+    },
+    "v17-share": {
+     "path": "/home/flori/jobs/jevbench-add-requests-20260919/r197/v1714/score/field/out-v17-share/jevbench-v1.6.0-results.json",
+     "sha256": "9e460d48571eeb00d94f554a985fdc2ebd52b63beb9aed7a4efe88762eb7b32e"
+    }
+   },
+   "treatment": "unranked"
+  }
+ },
+ "predecessor": {
+  "publication_sha256": "460156d172505b5159539f3d32b05decbb6c86defb22fda2fc6c0b910f7a76b6",
+  "revision": "v1.7.13"
+ },
+ "pricing_module_sha256": "645fd82eac728d597048bec0995ecd3ac896566e269fb6c9a1fdb84c171a9ac4",
+ "publication_approval": {
+  "asks": [
+   {
+    "admission": "release-owner cap + noul_floor disposition tc31b-cap-noulfloor-29092",
+    "handoff": "board #30313",
+    "key": "torchcast-decision-31b-v1.0",
+    "relay": "paid order 69f7a75d"
+   },
+   {
+    "handoff": "board #30239",
+    "key": "arcbright-elf-1-12b-r2",
+    "relay": "intake draft ENTRIES-R17-LEAD.json"
+   },
+   {
+    "handoff": "board #30239",
+    "key": "jeff_1_1_qwen_4b",
+    "relay": "intake draft ENTRIES-R17-LEAD.json"
+   },
+   {
+    "handoff": "board #30239 + engine recount #30496",
+    "key": "decisio-gemma-4-12b-tuned-commit-think",
+    "relay": "intake draft ENTRIES-R17-LEAD.json"
+   },
+   {
+    "handoff": "board #30459",
+    "key": "jeff_1_1_large",
+    "relay": "intake draft ENTRIES-R17B-LEAD.json"
+   }
+  ],
+  "button_tap": false,
+  "fresh_baseline": "v1.7.13",
+  "paid_public": {
+   "key": "torchcast-decision-31b-v1.0",
+   "order": "69f7a75d",
+   "rule": "paid public order: published with all measured values, unranked while its draw is not yet equated; no top-five change",
+   "visibility": "public"
+  },
+  "release_owner_rulings": [
+   "v1713-h2o141-unranked-provisional (Florian card #18781 'Unranked': the same treatment applies to the other rows on that draw)",
+   "tc31b-cap-noulfloor-29092",
+   "selfhosted-primary-prompt-billing-28557 (Decisio commit-think billed on the engine recount)",
+   "cost basis all 1,500 items for every row on the draw (board #30239 answer)",
+   "v1713-topics-exception-h2o141 extended to the five rows (TEMPORARY topics exception)"
+  ],
+  "status": "GO (standing; no top-five change; paid public order for Torchcast)",
+  "top_five_effect": "unchanged",
+  "top_five_preview": {
+   "path": "r197/v1714/receipts/topfive-diff.json",
+   "sha256": "00c3315da50f21e98717afaa22da9bc3e9bd23a191c00ab2de9299aa9bd54051"
+  },
+  "unranked_basis": {
+   "card": "#18781",
+   "decision": "v1713-h2o141-unranked-provisional",
+   "handled_by": "rows published unranked (ranked false), no order list changes"
+  }
+ },
+ "publication_review": {
+  "engine": "synthetic-preview-only",
+  "receipt_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "verdict": "PASS"
+ },
+ "publication_sha256": "13d3ad1d5f5b85c2962986908902d675d4736586525f1875c000003381a33b60",
+ "release": "v1.7.14",
+ "remeasured_rows": {},
+ "repriced_rows": {},
+ "scorers": {
+  "a2_cells_v16": "afd034efe27bde12f2ebbfd12c4c0792c93214e1aa9a63deecb0e83a0184c990",
+  "build_categories_v16": "40eb50f3d7fea2693b4478c4b89f8bfb957dd17776add491935742e3b9354e73",
+  "build_topics_v16": "ec04ab598162bfc4340ffa7916a06573eb1222132c61e47ab772045bc67ced78",
+  "decisive_v16": "80b9ccf43e58dddb1b2a77e0a33aba8a9f7337a3a9a639afc7264218bbf8918f",
+  "noul_method_v16": "119e59486ab3300b972fbcbadb0fe1dceceb124287607375aa61c66063c607d0",
+  "pins_v17": "b50cc00dd2cb0ba46157eb6a2bda620255f3ff54404025e992bc7962dfff2f8b",
+  "run_under_v17": "efb194b2ea350db59be37e5e72af71f809f763a2476cd6f521adf6f4fd90a64f",
+  "score_v15": "0931e05c6410b1b971201834397cb609cdb25f942723c50375632952f6dcc447",
+  "score_v15_headlineA": "826f2cbcb57007ec8a161e6eb0111182b8a656c0638027c6c78022a858fd8e2c",
+  "score_v16": "02132271117653e6302c509232a581d0094f0e78eac8b1bfc67596fd5d5097e9",
+  "score_v17": "6363458d208a52f4ad5aaf73027cad1b7e0358ff962e581d57a3cc462c8f1978"
+ },
+ "text_fixed_rows": [
+  "dopest-1.0-31b"
+ ]
+}

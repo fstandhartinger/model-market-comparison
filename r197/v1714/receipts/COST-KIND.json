@@ -1,0 +1,82 @@
+{
+ "measured_without_bill": 0,
+ "negative_test": "test/jevbench-v1714-release.test.mjs",
+ "new_rows": {
+  "arcbright-elf-1-12b-r2": {
+   "base": "google/gemma-4-12B-it",
+   "basis_items": 1500,
+   "kind": "estimate",
+   "native_input_tokens": 610840,
+   "output_tokens": 1500,
+   "priced_input_tokens": 610840,
+   "reference": {
+    "base": "google/gemma-4-12B-it",
+    "in": 0.05,
+    "listing": "google/gemma-3-12b-it",
+    "out": 0.15
+   },
+   "usd_per_1000": 0.020511333333333333
+  },
+  "decisio-gemma-4-12b-tuned-commit-think": {
+   "base": "google/gemma-4-12B-it",
+   "basis_items": 1500,
+   "kind": "estimate",
+   "native_input_tokens": 727045,
+   "output_tokens": 9121,
+   "priced_input_tokens": 844031,
+   "reference": {
+    "base": "google/gemma-4-12B-it",
+    "in": 0.05,
+    "listing": "google/gemma-3-12b-it",
+    "out": 0.15
+   },
+   "usd_per_1000": 0.02904646666666667
+  },
+  "jeff_1_1_large": {
+   "base": "google/gemma-4-31B-it",
+   "basis_items": 1500,
+   "kind": "estimate",
+   "native_input_tokens": 620215,
+   "output_tokens": 21830,
+   "priced_input_tokens": 620215,
+   "reference": {
+    "base": "google/gemma-4-31B-it",
+    "in": 0.09,
+    "listing": "google/gemma-4-31b-it",
+    "out": 0.34
+   },
+   "usd_per_1000": 0.042161033333333334
+  },
+  "jeff_1_1_qwen_4b": {
+   "base": "Qwen/Qwen3.5-4B",
+   "basis_items": 1500,
+   "kind": "estimate",
+   "native_input_tokens": 629951,
+   "output_tokens": 69580,
+   "priced_input_tokens": 629951,
+   "reference": {
+    "base": "Qwen/Qwen3.5-4B",
+    "in": 0.03,
+    "listing": "deepinfra:Qwen/Qwen3.5-4B",
+    "out": 0.15
+   },
+   "usd_per_1000": 0.019557019999999998
+  },
+  "torchcast-decision-31b-v1.0": {
+   "base": "google/gemma-4-31B-it",
+   "basis_items": 1500,
+   "kind": "estimate",
+   "native_input_tokens": 645268,
+   "output_tokens": 0,
+   "priced_input_tokens": 645268,
+   "reference": {
+    "base": "google/gemma-4-31B-it",
+    "in": 0.09,
+    "listing": "google/gemma-4-31b-it",
+    "out": 0.34
+   },
+   "usd_per_1000": 0.03871607999999999
+  }
+ },
+ "status": "PASS"
+}
