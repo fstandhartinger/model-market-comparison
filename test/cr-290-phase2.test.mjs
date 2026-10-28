@@ -94,7 +94,8 @@ test('Core track labels include all core sources', () => {
 });
 
 test('all-data families use disclosures while unknown rows retain their text and Wity stays private', () => {
-  assert.match(board, /metadata=\{\{ families: baseModelFamilies\('jevbench', a\.systems\) \}\}/);
+  // CR-600: the All data grid props are built server-side on demand (lib/jevbench-alldata-props.ts).
+  assert.match(src('lib/jevbench-alldata-props.ts'), /metadata: \{ families: baseModelFamilies\('jevbench', artifact\.systems\) \}/);
   const families = baseModelFamilies('jevbench', release.systems);
   assert.equal(families.deck31b, 'google/gemma-4-31B-it');
   const systems = [...release.systems.filter((r) => r.key === 'deck31b' || r.key.startsWith('wity-1')),
