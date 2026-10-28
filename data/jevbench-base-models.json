@@ -2091,6 +2091,17 @@
           }
         ],
         "checked_utc": "2026-10-23T00:00:00Z"
+      },
+      "dopest-1.0-31b": {
+        "label": "google/gemma-4-31B-it",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/dopest-studio/dopest-1.0-31b/blob/06e30b476d00cb84c2bd03999d54b63b58b106c1/README.md",
+            "title": "Author model card",
+            "evidence": "The model card explicitly names this upstream checkpoint in its base_model metadata (PEFT LoRA adapter on this base)."
+          }
+        ]
       }
     },
     "imagejevbench": {
