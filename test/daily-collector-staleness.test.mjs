@@ -171,3 +171,69 @@ test('a collector handoff is posted to the board, not sent to Telegram; a failed
     assert.equal((await up.calls()).length, 1);
   } finally { await rm(dir, { recursive: true, force: true }); }
 });
+
+// Reliability review N11 (28 Oct 2026): `notify` routed each day-7 card to board #15 (ROUTED_TO_BOARD_ID=) but exited
+// non-zero, so the key never reached `notified` and every re-run asked again (5 identical asks on #15 in 3.7 h).
+async function scriptedNotify(dir, body) {
+  const bin = join(dir, 'notify'), log = join(dir, 'calls.log');
+  await writeFile(bin, `#!/usr/bin/env node\nrequire('node:fs').appendFileSync(${JSON.stringify(log)}, 'x');\n${body}\n`);
+  await chmod(bin, 0o755);
+  return { bin, calls: async () => (await readFile(log, 'utf8').catch(() => '')).length };
+}
+
+test('a card notify routed to the board (or queued) is sent even when notify exits non-zero, and is not re-planned', async () => {
+  const cases = [
+    ['routed', `console.log('ROUTED_TO_BOARD_ID=1'); process.exit(1);`, { routed_board_id: 1 }],
+    ['queued', `console.log('QUEUED: outbox ob-7 (cap: pacing). Do not resend.'); process.exit(75);`, { queued_outbox_id: 'ob-7' }],
+  ];
+  for (const [name, body, extra] of cases) {
+    const dir = await mkdtemp(join(tmpdir(), `bh-notify-${name}-`));
+    try {
+      const stateDir = join(dir, 'state');
+      const stub = await scriptedNotify(dir, body);
+      const env = { BH_NOTIFY: stub.bin, BH_TODO_REPLY_ROOT: join(dir, 'jobs'), BH_NOTIFY_LOG: join(dir, 'none.jsonl'), HOME: dir };
+      const run = (now) => executeNotifications({ stateDir, env, now,
+        context: { status_ok: true, top5: null, quarantined_arms: [], stale_sources: [stale('fetch-mistral-catalog', 7)] } });
+      const first = await run(Date.parse('2026-10-28T05:17:00Z'));
+      assert.deepEqual(first.sent, ['collector-stale'], name);
+      assert.deepEqual(first.failed, [], name);
+      const state = JSON.parse(await readFile(join(stateDir, 'daily-state.json'), 'utf8'));
+      assert.ok(state.notified['collector-stale:fetch-mistral-catalog@2026-09-23'], name);
+      assert.deepEqual(state.pending, [], name);
+      const again = await run(Date.parse('2026-10-28T07:17:00Z'));
+      assert.equal(again.plan.sends.some((s) => s.kind === 'collector-stale'), false, `${name}: not re-planned`);
+      assert.equal(await stub.calls(), 1, `${name}: notify called once`);
+      const { sendNotify } = await import('../ops/daily/notify.mjs');
+      assert.deepEqual(await sendNotify('x', { bin: stub.bin, env }), { sent: true, ...extra });
+    } finally { await rm(dir, { recursive: true, force: true }); }
+  }
+});
+
+test('a notify timeout counts as sent only if the notify log shows this reply job routed after the send began', async () => {
+  const dir = await mkdtemp(join(tmpdir(), 'bh-notify-timeout-'));
+  try {
+    const { sendNotify } = await import('../ops/daily/notify.mjs');
+    const logPath = join(dir, 'log.jsonl'), jobDir = join(dir, 'jobs', 'reply');
+    const timeout = async () => { const e = new Error('Command failed: notify now --ask 960 ...'); e.killed = true; e.signal = 'SIGTERM'; e.stdout = ''; e.stderr = ''; throw e; };
+    const env = { BH_NOTIFY_LOG: logPath };
+    const at = 1_800_000_000_000;
+    await writeFile(logPath, JSON.stringify({ ts: (at - 3_600_000) / 1000, level: 'routed-board', job_dir: jobDir, board_entry_id: 5 }) + '\n');
+    const stale = await sendNotify('x', { execImpl: timeout, replyJobDir: jobDir, env, now: () => at });
+    assert.equal(stale.sent, false, 'an older routing of the same job does not count');
+    assert.match(stale.reason, /^notify_failed \(timeout\):/);
+    await writeFile(logPath, JSON.stringify({ ts: (at + 5000) / 1000, level: 'routed-board', job_dir: join(dir, 'other'), board_entry_id: 6 }) + '\n'
+      + JSON.stringify({ ts: (at + 5000) / 1000, level: 'routed-board', job_dir: jobDir, board_entry_id: 7 }) + '\n', { flag: 'a' });
+    assert.deepEqual(await sendNotify('x', { execImpl: timeout, replyJobDir: jobDir, env, now: () => at }), { sent: true, routed_board_id: 7 });
+  } finally { await rm(dir, { recursive: true, force: true }); }
+});
+
+test('a real notify failure stays unsent and its reason is the stderr tail, not the command line', async () => {
+  const dir = await mkdtemp(join(tmpdir(), 'bh-notify-fail-'));
+  try {
+    const { sendNotify } = await import('../ops/daily/notify.mjs');
+    const stub = await scriptedNotify(dir, `console.log('NOT SENT: pacing cap'); console.error('notify: refused: ' + 'card too long'); process.exit(2);`);
+    const result = await sendNotify('secret card body', { bin: stub.bin, env: { BH_NOTIFY_LOG: join(dir, 'none.jsonl') } });
+    assert.equal(result.sent, false);
+    assert.equal(result.reason, 'notify_failed (exit 2):notify: refused: card too long');
+  } finally { await rm(dir, { recursive: true, force: true }); }
+});
