@@ -3,8 +3,8 @@
   "exit_code": 0
  },
  "FULLTEST-POSTFLIP": {
-  "command": "suite-slot heavy-run npm test (one run)",
-  "exit_code": 1
+  "reason": "Only rebase, predecessor binding, text and their gate adaptations changed versus c82f6b74; exempt per brief",
+  "status": "NOT_RUN"
  },
  "PENDING": {
   "exit_code": 1
@@ -119,7 +119,7 @@
   "v1717_page_shows_new_row": true
  },
  "carried_rows": {
-  "base_commit": "a65b7568dadc6084a3018dfba12975c6f7ad8e6c",
+  "base_commit": "6ef616054c679ad69bd8366654ba92e471bca74a",
   "board_equal": true,
   "carried_cells_equal": 313,
   "carried_rows": 308,
@@ -208,26 +208,25 @@
   "unchanged": true
  },
  "comparison_finalization": {
+  "aggregate_gate_rerun": {
+   "command": "suite-slot --max-wait 1800 -- bash r198/v1717/run-gates.sh",
+   "exit_code": 0,
+   "status": "PASS"
+  },
   "changed_lists": 0,
-  "comparison_receipts_unchanged": true,
+  "comparison_command": "bash r198/v1717/compare_v1717.sh",
+  "comparison_results_complete": true,
   "grid_changed_states": 0,
-  "initial_postcomparison_rank_step": "ENOENT while another local gate recreated the shared .pass fixture; retained compare.log records this failure",
+  "local_wrapper_exit": 143,
+  "local_wrapper_note": "Comparison, rank fixture and preview completed; combined wrapper terminated without diagnostic before aggregate gates completed. Aggregate gates rerun separately via suite-slot.",
   "no_comparison_failure_ignored": true,
   "primary_and_supplementary_lists": 580,
-  "rank_fixture_recovery": "heavy-run disposable snapshot generated ranks fixture with absolute paths, then rsync read-back; views exactly equal the v1716 fixture",
   "slider_changed_states": 0,
   "status": "PASS"
  },
  "fulltest-postflip": {
-  "cancelled": 0,
-  "fail": 1,
-  "log_sha256": "afba1d8d3863690a897e1383296d32ef808b3f270f31a84e7c3efed30269b866",
-  "not_ok": [
-   "the supervisor's dated brief backups can never make the checkout dirty again"
-  ],
-  "pass": 3918,
-  "skipped": 10,
-  "tests": 3929
+  "reason": "Only rebase, predecessor binding, text and their gate adaptations changed versus c82f6b74; exempt per brief",
+  "status": "NOT_RUN"
  },
  "helpers": {
   "approval_negative_cases": 11,
@@ -236,11 +235,11 @@
   "pending_freeze_refused": true,
   "real_flip_dry_run_accepted_no_write": true,
   "real_manifests_unchanged": [
-   "86f419cbf5e7321d5a557551089e193d8adac511cbd3b0ec80a4c3e3dcdcfbdc",
-   "0b3e968e4930437a0ed9f054d7bc52603499390c796821f48937a5769a3b22a6",
-   "28eef00f3632496325ae0b30e21ae32c91c64e3624e7e181784f80a51108fcfd"
+   "4efdecfd116029a169ae69c73a7d624143174b383ef53f76e85a57656a481356",
+   "8a8ff006bbfd5b1fd09786d0acf00f79fc1f4bf34cca18a75be38e6de0922f42",
+   "6f1cfd02552e50848de3735f8d164a2cc6d7658a6525a3aa97f58380f359a646"
   ],
-  "real_v1716_review": "PENDING",
+  "real_v1716_review": "PASS",
   "seal_write_refused": true,
   "stale_predecessor_binding_refused": true,
   "standing_go_checked": true,
@@ -258,11 +257,11 @@
  "postflip-tests": {
   "cancelled": 0,
   "fail": 0,
-  "log_sha256": "88cdb760f8f102a585235661df2e8c9bffd7afde7c050fec22cff076b566e88d",
+  "log_sha256": "a2689504f1ce790970a8f66721bc4b15c17655e3915dc646698c134a0977c165",
   "not_ok": [],
-  "pass": 192,
+  "pass": 193,
   "skipped": 1,
-  "tests": 193
+  "tests": 194
  },
  "preview": {
   "footer": "Release review pending",
@@ -289,10 +288,24 @@
   },
   "status": "PASS"
  },
+ "prior_build_full_suite": {
+  "cancelled": 0,
+  "fail": 1,
+  "log_sha256": "afba1d8d3863690a897e1383296d32ef808b3f270f31a84e7c3efed30269b866",
+  "not_ok": [
+   "the supervisor's dated brief backups can never make the checkout dirty again"
+  ],
+  "note": "Historical c82f6b74 receipt; not rerun for this rebase/text-only slice under the explicit brief exemption.",
+  "pass": 3918,
+  "skipped": 10,
+  "tests": 3929
+ },
  "public_text": {
   "all_disclosures": true,
   "exact_note": true,
+  "neutral_page_wording": true,
   "no_cosmetic_state_tokens": true,
+  "old_paraphrase_negatives": 2,
   "status": "PASS",
   "texts": 5
  },
@@ -306,36 +319,71 @@
   "rows": 1500,
   "status": "PASS"
  },
+ "rebase_numbers": {
+  "common_set": {
+   "sha": "4e912731e63369e1b3066b0b4afa87b44f1094aea079c5b41dc6d02e7f235537",
+   "size": 1489,
+   "unchanged": true
+  },
+  "complete_new_row_equal_to_c82f6b74": true,
+  "matches_prior_RESULT_numbers": true,
+  "predecessor_manifest_sha256": "8a8ff006bbfd5b1fd09786d0acf00f79fc1f4bf34cca18a75be38e6de0922f42",
+  "row": {
+   "axes": {
+    "calibration": 88.50529260806339,
+    "cost": 75.39968935948227,
+    "intelligence": 33.91785114475573,
+    "speed": 94.44817145387303
+   },
+   "cap_ratio": 0.10228542888608481,
+   "capability": 61.21157187640956,
+   "composites": {
+    "A": 28.47918106314405,
+    "B": 24.447065985396033,
+    "C": 19.777209071627816
+   },
+   "cost_usd_per_1000": 0.006607092008059101,
+   "key": "chaoliangunsw-jev-style-2b-decision-v4",
+   "latency": {
+    "adjusted_p50_s": 0.17682074799997735,
+    "n_over_10s": 0,
+    "raw_max_s": 0.08912668499999654,
+    "raw_p50_s": 0.013410373999988678,
+    "raw_p95_s": 0.02653590299998996
+   }
+  },
+  "status": "PASS"
+ },
  "release-tests": {
   "cancelled": 0,
   "fail": 1,
-  "log_sha256": "af6ee9b6e910fcf4cdbdf4f683a4bb12ef58f66fa41dc51674505e3ca210c91b",
+  "log_sha256": "8b1689810bb96531adc6660f9f4093509cc32d4bd1da9a8ba1face4a04c95958",
   "not_ok": [
    "gate: no listed row lacks topic, use-case or language cells without a recorded exception"
   ],
-  "pass": 177,
+  "pass": 178,
   "skipped": 1,
-  "tests": 179
+  "tests": 180
  },
  "repro": {
   "files": {
    "app/api/jevbench/v1.7.17/route.ts": "26ccc0c2aeb90c5ca5ff3c64b66a801d102829fbf9a3a1597134d04f402b47b0",
-   "app/jev-models/v1.7.17/page.tsx": "0db84369aa5c5968fa5bb4ac3185df329a1c96e3ff013006861f028afb00a25e",
+   "app/jev-models/v1.7.17/page.tsx": "54e09837c1b9093f2d2f349c31c9630a3fa436eee5ebda98dfff7571a17b511c",
    "data/jevbench-architecture.json": "b7645a8188d179add9290714ceb0be16c1196c80ea0272492cc31fdb69d6571a",
    "data/jevbench-breakdown-exceptions.json": "6413311404c3f83e0bf1aaf67a0afe99d23a9ef1ae325629afd9ef7276627336",
    "data/jevbench-draw-equating.json": "5be781d85f2dd2d496a1b726ffd79be996b6fd77998875f26dcfd52314955bd0",
    "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.17-carry.json": "271d1fc77a136a04a1eb6deb5480c52d4211eb2b66b2ac8bb31e80867e69003a",
-   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.17-categories.json": "0c34bf59d101172227ee53e9b4cdf55936db466663d567c94f2729814e1c5a12",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.17-categories.json": "ffd36e29eabbad168639410bd7ef2e0ab4ecf99b22b5c914b27d2b32229e2da4",
    "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.17-history-carry.json": "334e851944e92383ab3071e52b3012040c7023d0fe236395953169ebee8f0459",
    "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.17-history.json": "5cd8c1332226ea9c179883d2285c0d8b8cc593ae38f2645197364a7ddd9c83c1",
-   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.17-proof.json": "b825a8d44355e55c7db137b74c54a848f13b36df31acf6541cc875c73c70ae5b",
-   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.17-publication.json": "86f419cbf5e7321d5a557551089e193d8adac511cbd3b0ec80a4c3e3dcdcfbdc",
-   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.17-results.json": "244275a329e4a458186c4e912c203781dcd32ad1a17393eff600bd3cd59d0e90",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.17-proof.json": "e11cd57f1a44acdd6a76875759caf65993de87ac18df5567541e7f6d233b5334",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.17-publication.json": "4efdecfd116029a169ae69c73a7d624143174b383ef53f76e85a57656a481356",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.17-results.json": "cee300a75e44782be0b07885501737884c50c782133564d3cc5c297283304d67",
    "lib/jevbench-live-board.mjs": "2b73f32f1aff5f4132857ed81bd3860fc71d73eeda2184d06e01f2da85076559",
    "lib/jevbench-releases.mjs": "a016e39a95393c16161c3bb41ac6de1f4786fe81e47f7da6aed94d6534d2537a",
-   "lib/jevbench-v1717-release.mjs": "ee58a895be723fa9c30d5cdb8ece3afb1f6dcbf1136a784cf8ada804ff6b3670",
+   "lib/jevbench-v1717-release.mjs": "8989c3384b997cb78d8785a9aca5d016fcaed35f1b7fe2a0f0913ec04b620bc2",
    "test/jevbench-v1714-release.test.mjs": "a1ec49d8a431944c71ebde0c83bdbbe4ac34fb3f8195378e7d3c22137c9c9d23",
-   "test/jevbench-v1716-release.test.mjs": "c288cbcc90588f051c792525c9de42159e2a49588e17860f63b557ca7917b308"
+   "test/jevbench-v1716-release.test.mjs": "9b86668a65708be930d7fb9c6a77da3ec5d7c059b434278cee0ac5aaf144eb9c"
   },
   "status": "PASS",
   "two_rebuilds_identical": true
@@ -348,7 +396,7 @@
   "changed_lists": 0,
   "comparison_scope": "40 primary site assembly lists plus supplementary frozen/off/share axis/weight/cap lists, slider boundaries, four custom weightings and a 368-state slider grid; before = v1.7.16 (PASS) tree with v1.7.17 wired but PENDING (equal to the same tree without v1.7.17), after = v1.7.17 synthetic PASS; real manifest PENDING",
   "custom_changed_labels": [],
-  "custom_receipt_sha256": "fd1f13ca55f222313d3e80a0139dbf39b85b28483479c65df037edeaf97e4390",
+  "custom_receipt_sha256": "a972f622bb16c6aa4879db3e2cfa5fe00b67d32c2719de15bb8c75c494b1e2ce",
   "custom_weight_example": {
    "calibration": 50,
    "cost": 0,
@@ -1132,7 +1180,7 @@
    "topfive-after.json": "66fc1c6d0cb67d933d6f45061f37bf227e4bcd238a90028f23f4c2b9c44260b4",
    "topfive-before.json": "2448ae066f4ce7c06e81a264d12a373d5260d7fadd9114ec5931750c3f4879b5",
    "topfive-extended.json": "12728e51f99a54982ee10e2baab6b2724e15e409b6eb39efd97d1c0a5b9f701b",
-   "topfive-sliders.json": "3bd9433d9e0699346879992cdf45436b9a5a33d7bd40347eb31673b6d7f859c1"
+   "topfive-sliders.json": "80764678fa79b745e3e986a5690ae5374643a6fe57b8c27d4d43ba49adf1e68f"
   },
   "variant": "10-second share"
  },
@@ -1178,7 +1226,7 @@
   "new_row_open_scope": true,
   "orders_equal": true,
   "pending_hidden_in_real_tree": true,
-  "real_tree_restated_by": "v1.7.15",
+  "real_tree_restated_by": "v1.7.16",
   "status": "PASS"
  }
 }

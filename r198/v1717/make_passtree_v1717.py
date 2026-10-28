@@ -28,12 +28,8 @@ for f in (W/'data/raw/benchmarks/jevbench/v1.7').iterdir():
 sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
 put=lambda p,d:p.write_text(json.dumps(d,indent=1,sort_keys=True,ensure_ascii=False)+'\n')
 FAKE={'engine':'synthetic-preview-only','verdict':'PASS','receipt_sha256':'a'*64}
-# Isolated simulation only: the base predecessor is still PENDING.
-q=D/'jevbench-v1.7.16-publication.json';md=json.loads(q.read_text());md['review']=FAKE;put(q,md)
-# Bind the candidate proof/manifest/loader to this simulated predecessor manifest.
-q=D/'jevbench-v1.7.17-proof.json';pr=json.loads(q.read_text());pr['predecessor']['publication_sha256']=sha(D/'jevbench-v1.7.16-publication.json');put(q,pr)
-m=D/'jevbench-v1.7.17-publication.json';md=json.loads(m.read_text());md['predecessor']=pr['predecessor'];md['files']['proof']['sha256']=sha(q);put(m,md)
-lp=P/'lib/jevbench-v1717-release.mjs';text=lp.read_text();original=json.loads((W/'data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.17-publication.json').read_text());text=text.replace(original['files']['proof']['sha256'],md['files']['proof']['sha256']);lp.write_text(text)
+# The final predecessor is PASS: preserve its manifest and candidate binding byte-for-byte.
+assert json.loads((D/'jevbench-v1.7.16-publication.json').read_text())['review']['verdict']=='PASS'
 if A.v1717=='absent':
  for f in D.glob('jevbench-v1.7.17-*.json'):f.unlink()
 elif A.v1717=='pass':
