@@ -1,3 +1,4 @@
+import { hasPublishedJevbenchV1715Release } from '../lib/jevbench-v1715-release.mjs';
 import { hasPublishedJevbenchV1714Release } from '../lib/jevbench-v1714-release.mjs';
 import { hasPublishedJevbenchV1713Release } from '../lib/jevbench-v1713-release.mjs';
 import { hasPublishedJevbenchV1712Release } from '../lib/jevbench-v1712-release.mjs';
@@ -354,7 +355,7 @@ if (!reviewed) {
   });
   test('a published v1.7.0 board is live: restated rows, v1.7.0 as the latest release, archive pages untouched', async () => {
     const live = await assembleJevBoard({ release, previous, live: true, apiA4 });
-    const latest = (await hasPublishedJevbenchV1714Release()) ? 'v1.7.14' : (await hasPublishedJevbenchV1713Release()) ? 'v1.7.13' : (await hasPublishedJevbenchV1712Release()) ? 'v1.7.12' : (await hasPublishedJevbenchV1711Release()) ? 'v1.7.11' : (await hasPublishedJevbenchV1710Release()) ? 'v1.7.10' : (await hasPublishedJevbenchV179Release()) ? 'v1.7.9' : (await hasPublishedJevbenchV178Release()) ? 'v1.7.8' : (await hasPublishedJevbenchV177Release()) ? 'v1.7.7' : (await hasPublishedJevbenchV176Release()) ? 'v1.7.6' : (await hasPublishedJevbenchV175Release()) ? 'v1.7.5' : (await hasPublishedJevbenchV174Release()) ? 'v1.7.4' : (await hasPublishedJevbenchV173Release()) ? 'v1.7.3' : (await hasPublishedJevbenchV172Release()) ? 'v1.7.2' : (await hasPublishedJevbenchV171Release()) ? 'v1.7.1' : 'v1.7.0';
+    const latest = (await hasPublishedJevbenchV1715Release()) ? 'v1.7.15' : (await hasPublishedJevbenchV1714Release()) ? 'v1.7.14' : (await hasPublishedJevbenchV1713Release()) ? 'v1.7.13' : (await hasPublishedJevbenchV1712Release()) ? 'v1.7.12' : (await hasPublishedJevbenchV1711Release()) ? 'v1.7.11' : (await hasPublishedJevbenchV1710Release()) ? 'v1.7.10' : (await hasPublishedJevbenchV179Release()) ? 'v1.7.9' : (await hasPublishedJevbenchV178Release()) ? 'v1.7.8' : (await hasPublishedJevbenchV177Release()) ? 'v1.7.7' : (await hasPublishedJevbenchV176Release()) ? 'v1.7.6' : (await hasPublishedJevbenchV175Release()) ? 'v1.7.5' : (await hasPublishedJevbenchV174Release()) ? 'v1.7.4' : (await hasPublishedJevbenchV173Release()) ? 'v1.7.3' : (await hasPublishedJevbenchV172Release()) ? 'v1.7.2' : (await hasPublishedJevbenchV171Release()) ? 'v1.7.1' : 'v1.7.0';
     assert.equal(live.published.restated_by, latest); assert.equal(live.published.revision, 'v1.6.1');
     assert.equal(live.published.systems.find((s) => s.key === 'chon-1.0-12b').method, 'v1.7');
     assert.equal(await readLatestJevbenchRelease('v1.6.1'), latest);

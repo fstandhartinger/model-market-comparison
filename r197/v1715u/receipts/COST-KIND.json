@@ -1,0 +1,27 @@
+{
+ "measured_without_bill": 0,
+ "negative_test": "r197/v1715u/check_pricing_reference_v1715.py + validate_v1715.mjs",
+ "new_rows": {
+  "microsoft-decision-1-r2": {
+   "basis_items": 1493,
+   "input_tokens": 467021,
+   "kind": "tariff",
+   "output_tokens": 1489,
+   "reference": {
+    "base": "Qwen/Qwen3.5-9B",
+    "decision": "msft-r2-cost-basis-tariff",
+    "frozen_module_not_used": {
+     "in": 0.1,
+     "listing": "qwen/qwen3.5-9b",
+     "out": 0.15
+    },
+    "in": 0.042,
+    "kind": "tariff",
+    "listing": "Azure Foundry advertised tariff (Microsoft-Decision-1)",
+    "out": 0.0
+   },
+   "usd_per_1000": 0.013137898191560617
+  }
+ },
+ "status": "PASS"
+}

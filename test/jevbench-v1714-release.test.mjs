@@ -104,7 +104,9 @@ test('v1.7.14 the new rows are unranked: no rank, in no order list, every carrie
 });
 test('v1.7.14 extends the 27 Oct draw entry without touching the v1.6 chain v1.7.0 is bound to',async()=>{
  const t=await readDrawEquating();const d=t.draws.find(x=>x.draw===V1714_DRAW);
- assert.deepEqual({...d},{draw:V1714_DRAW,label:'Third regular draw',drawn_on:'2026-10-27',releases:['v1.7.13','v1.7.14'],latest_release:'v1.7.14',status:'anchor-runs-pending',offset:{I:0,C:0},offset_ci95:null,anchors:[],joins_via:'v1.7-addendum'});
+ // Later same-draw addenda (v1.7.15+) append to releases; the first two releases stay v1.7.13 and v1.7.14 and the latest release is the newest entry.
+ assert.deepEqual(d.releases.slice(0,2),['v1.7.13','v1.7.14']);assert.equal(d.latest_release,d.releases.at(-1));assert.ok(d.releases.every(r=>/^v1\.7\.\d+$/.test(r)));
+ assert.deepEqual({...d,releases:undefined,latest_release:undefined},{draw:V1714_DRAW,label:'Third regular draw',drawn_on:'2026-10-27',releases:undefined,latest_release:undefined,status:'anchor-runs-pending',offset:{I:0,C:0},offset_ci95:null,anchors:[],joins_via:'v1.7-addendum'});
  assert.equal(await readChainLatestRelease('v1.6.1'),'v1.6.43');
  const cohort=await readCohortRows(process.cwd(),()=>{});assert.ok(!cohort.rows.some(r=>r.draw.id===V1714_DRAW));
 });

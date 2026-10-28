@@ -6,6 +6,7 @@ import { JEVBENCH_RELEASES } from '../lib/jevbench-releases.mjs';
 import { hasPublishedJevbenchV1712Release } from '../lib/jevbench-v1712-release.mjs';
 import { hasPublishedJevbenchV1713Release } from '../lib/jevbench-v1713-release.mjs';
 import { hasPublishedJevbenchV1714Release } from '../lib/jevbench-v1714-release.mjs';
+import { hasPublishedJevbenchV1715Release } from '../lib/jevbench-v1715-release.mjs';
 import { readImageJevSitemapPaths } from '../lib/imagejev-sitemap.mjs';
 
 const PAGES = ["/decision-model-benchmarks", "/jev-models/methodology", "/jev-models/methodology/v1.6.1", "/jev-models/data", "/jev-models/calibration-reliability", "/jev-models/evaluate-alternatives", "/", "/benchmarks", "/compare", "/benchmaxxing", "/charts", "/scatter", "/eu", "/jev-models", "/jev-models/api", "/jev-models/all", "/image-jev-bench", "/audio-jev-bench", "/submit", "/jev-models/alternatives", "/de/jev-models/alternativen", "/jev-models/how-to-choose", "/jev-models/open-source-jev", "/jev-models/jev-vs-imajev", "/jev-models/jev-vs-plumb", "/jev-models/jev-vs-decider-4b-v2", "/jev-models/jev-vs-jevk5", "/jev-models/jev-vs-cygnet", "/jev-models/jev-vs-hopper", "/jev-models/jev-vs-winnow-12b-q8", "/jev-models/jev-vs-reflex-4b", "/jev-models/jev-vs-laya", "/jev-models/jev-vs-openai-decisions-api", "/jev-models/jev-vs-microsoft-decision-1", "/jev-models/v1", "/jev-models/v1.4", "/jev-models/v1.4.1", "/jev-models/v1.4.2", "/jev-models/v1.4.2.1", "/jev-models/v1.4.2.2", "/jev-models/v1.5.0", "/jev-models/v1.5.1", "/jev-models/v1.5.2", "/jev-models/v1.5.3", "/jev-models/v1.5.4", "/jev-models/v1.5.5", "/jev-models/v1.5.6", "/jev-models/v1.5.7", "/jev-models/v1.6.0", "/jev-models/v1.6.1", "/providers", "/provider-explorer", "/gateways", "/about", "/privacy", "/terms", "/impressum"];
@@ -23,8 +24,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const v1712Visible = await hasPublishedJevbenchV1712Release();
   const v1713Visible = await hasPublishedJevbenchV1713Release();
   const v1714Visible = await hasPublishedJevbenchV1714Release();
+  const v1715Visible = await hasPublishedJevbenchV1715Release();
   const releasePages = JEVBENCH_RELEASES
-    .filter((r: { version: string }) => (r.version !== 'v1.7.12' || v1712Visible) && (r.version !== 'v1.7.13' || v1713Visible) && (r.version !== 'v1.7.14' || v1714Visible))
+    .filter((r: { version: string }) => (r.version !== 'v1.7.12' || v1712Visible) && (r.version !== 'v1.7.13' || v1713Visible) && (r.version !== 'v1.7.14' || v1714Visible) && (r.version !== 'v1.7.15' || v1715Visible))
     .map((r: { href: string }) => r.href);
   const urls = [...new Set([...PAGES, ...releasePages, ...current.urls, ...await readImageJevSitemapPaths()])];
   return [
