@@ -1,266 +1,264 @@
-suite-slot: waiting: load5=18.18 >= 18
-suite-slot: admitted in slot 0 after 15s
 TAP version 13
 # Subtest: CR-205: the live board and all frozen v1.5 pages render the complete release page
 ok 1 - CR-205: the live board and all frozen v1.5 pages render the complete release page
   ---
-  duration_ms: 1.561473
+  duration_ms: 1.460253
   ...
 # Subtest: CR-205: the v1.5 release page keeps every required section, in the v1.4.2.2 order
 ok 2 - CR-205: the v1.5 release page keeps every required section, in the v1.4.2.2 order
   ---
-  duration_ms: 0.725518
+  duration_ms: 0.759175
   ...
 # Subtest: CR-209: v1.5.1 ranks every full-coverage addendum and preserves the frozen v1.5.0 artifact
 ok 3 - CR-209: v1.5.1 ranks every full-coverage addendum and preserves the frozen v1.5.0 artifact
   ---
-  duration_ms: 3.744115
+  duration_ms: 3.729613
   ...
 # Subtest: v1.5.2 adds the verified Nemotron A3 row and leaves every top five unchanged
 ok 4 - v1.5.2 adds the verified Nemotron A3 row and leaves every top five unchanged
   ---
-  duration_ms: 1.548394
+  duration_ms: 1.505795
   ...
 # Subtest: CR-205: the frozen v1.4.2.2 page keeps its complete structure
 ok 5 - CR-205: the frozen v1.4.2.2 page keeps its complete structure
   ---
-  duration_ms: 0.239456
+  duration_ms: 0.237858
   ...
 # Subtest: CR-205: every older versioned page keeps its board and disclosures
 ok 6 - CR-205: every older versioned page keeps its board and disclosures
   ---
-  duration_ms: 0.232066
+  duration_ms: 0.261836
   ...
 # Subtest: CR-205: fresh native v1.6.2 uses the complete shared board, both radars and historical catalogue
 ok 7 - CR-205: fresh native v1.6.2 uses the complete shared board, both radars and historical catalogue
   ---
-  duration_ms: 14.194586
+  duration_ms: 12.173717
   ...
 # Subtest: CR-205: fail-closed v1.6.3 addendum uses the complete shared board, wrappers below it and the historical catalogue
 ok 8 - CR-205: fail-closed v1.6.3 addendum uses the complete shared board, wrappers below it and the historical catalogue
   ---
-  duration_ms: 1.022762
+  duration_ms: 1.146363
   ...
 # Subtest: CR-205: v1.6.4 retains shared board, both wrappers below ranking, method and full history
 ok 9 - CR-205: v1.6.4 retains shared board, both wrappers below ranking, method and full history
   ---
-  duration_ms: 0.907115
+  duration_ms: 1.151133
   ...
 # Subtest: CR-205: fail-closed v1.6.5 regular draw uses the shared board, its own method notes and the full history
 ok 10 - CR-205: fail-closed v1.6.5 regular draw uses the shared board, its own method notes and the full history
   ---
-  duration_ms: 0.894625
+  duration_ms: 3.311392
   ...
 # Subtest: CR-205: fail-closed v1.6.6 same-draw addition uses the shared board, its own method notes and the full history
 ok 11 - CR-205: fail-closed v1.6.6 same-draw addition uses the shared board, its own method notes and the full history
   ---
-  duration_ms: 1.054942
+  duration_ms: 0.829136
   ...
 # Subtest: CR-205: fail-closed v1.6.7 same-draw addition uses the shared board, its own method notes and the full history
 ok 12 - CR-205: fail-closed v1.6.7 same-draw addition uses the shared board, its own method notes and the full history
   ---
-  duration_ms: 0.905325
+  duration_ms: 0.72196
   ...
 # Subtest: CR-205: fail-closed v1.6.8 same-draw addition uses the shared board, its own method notes and the full history
 ok 13 - CR-205: fail-closed v1.6.8 same-draw addition uses the shared board, its own method notes and the full history
   ---
-  duration_ms: 0.988883
+  duration_ms: 0.679545
   ...
 # Subtest: CR-205: fail-closed v1.6.9 same-draw addition uses the shared board, its own method notes and the full history
 ok 14 - CR-205: fail-closed v1.6.9 same-draw addition uses the shared board, its own method notes and the full history
   ---
-  duration_ms: 1.025332
+  duration_ms: 0.743764
   ...
 # Subtest: CR-205: fail-closed v1.6.10 first release on the second regular draw uses the shared board, its own method notes and the full history
 ok 15 - CR-205: fail-closed v1.6.10 first release on the second regular draw uses the shared board, its own method notes and the full history
   ---
-  duration_ms: 0.913504
+  duration_ms: 0.751009
   ...
 # Subtest: CR-205: fail-closed v1.6.11 same-draw addition uses the shared board, its own method notes and the full history
 ok 16 - CR-205: fail-closed v1.6.11 same-draw addition uses the shared board, its own method notes and the full history
   ---
-  duration_ms: 0.929544
+  duration_ms: 0.767322
   ...
 # Subtest: CR-205: fail-closed v1.6.12 same-draw addition uses the shared board, its own method notes and the full history
 ok 17 - CR-205: fail-closed v1.6.12 same-draw addition uses the shared board, its own method notes and the full history
   ---
-  duration_ms: 0.858015
+  duration_ms: 0.672982
   ...
 # Subtest: CR-205: fail-closed v1.6.13 same-draw addition uses the shared board, its own method notes and the full history
 ok 18 - CR-205: fail-closed v1.6.13 same-draw addition uses the shared board, its own method notes and the full history
   ---
-  duration_ms: 0.977633
+  duration_ms: 0.764015
   ...
 # Subtest: CR-205: fail-closed v1.6.14 same-draw addition uses the shared board, its own method notes and the full history
 ok 19 - CR-205: fail-closed v1.6.14 same-draw addition uses the shared board, its own method notes and the full history
   ---
-  duration_ms: 0.833386
+  duration_ms: 0.694435
   ...
 # Subtest: CR-205: fail-closed v1.6.15 three-row same-draw addition uses the shared board, its own method notes and the full history
 ok 20 - CR-205: fail-closed v1.6.15 three-row same-draw addition uses the shared board, its own method notes and the full history
   ---
-  duration_ms: 1.106411
+  duration_ms: 0.760047
   ...
 # Subtest: CR-205: fail-closed v1.6.16 one-row same-draw addition uses the shared board, its own method notes and the full history
 ok 21 - CR-205: fail-closed v1.6.16 one-row same-draw addition uses the shared board, its own method notes and the full history
   ---
-  duration_ms: 0.879205
+  duration_ms: 0.6868
   ...
 # Subtest: CR-205: fail-closed v1.6.17 same-draw addition uses the shared board, its own method notes and the full history
 ok 22 - CR-205: fail-closed v1.6.17 same-draw addition uses the shared board, its own method notes and the full history
   ---
-  duration_ms: 0.803537
+  duration_ms: 0.697471
   ...
 # Subtest: CR-205: fail-closed v1.6.18 same-draw addition uses the shared board, its own method notes and the full history
 ok 23 - CR-205: fail-closed v1.6.18 same-draw addition uses the shared board, its own method notes and the full history
   ---
-  duration_ms: 0.804216
+  duration_ms: 0.610296
   ...
 # Subtest: CR-205: fail-closed v1.6.20 price-only addendum uses the shared board, its own method notes and the full history
 ok 24 - CR-205: fail-closed v1.6.20 price-only addendum uses the shared board, its own method notes and the full history
   ---
-  duration_ms: 1.197059
+  duration_ms: 0.633884
   ...
 # Subtest: CR-205: fail-closed v1.6.21 same-draw addition uses the shared board, its own method notes and the full history
 ok 25 - CR-205: fail-closed v1.6.21 same-draw addition uses the shared board, its own method notes and the full history
   ---
-  duration_ms: 0.810546
+  duration_ms: 0.787251
   ...
 # Subtest: CR-205: fail-closed v1.6.22 same-draw addition uses the shared board, its own method notes and the full history
 ok 26 - CR-205: fail-closed v1.6.22 same-draw addition uses the shared board, its own method notes and the full history
   ---
-  duration_ms: 0.786787
+  duration_ms: 0.650858
   ...
 # Subtest: CR-205: fail-closed v1.6.23 price-only addendum uses the shared board, its own method notes and the full history
 ok 27 - CR-205: fail-closed v1.6.23 price-only addendum uses the shared board, its own method notes and the full history
   ---
-  duration_ms: 1.017692
+  duration_ms: 0.633182
   ...
 # Subtest: CR-205: fail-closed v1.6.24 same-draw addition uses the shared board, its own method notes and the full history
 ok 28 - CR-205: fail-closed v1.6.24 same-draw addition uses the shared board, its own method notes and the full history
   ---
-  duration_ms: 0.888145
+  duration_ms: 0.61179
   ...
 # Subtest: CR-205: fail-closed v1.6.25 same-draw addition uses the shared board, its own method notes and the full history
 ok 29 - CR-205: fail-closed v1.6.25 same-draw addition uses the shared board, its own method notes and the full history
   ---
-  duration_ms: 0.880725
+  duration_ms: 0.673804
   ...
 # Subtest: CR-205: fail-closed v1.6.26 same-draw addition uses the shared board, its own method notes and the full history
 ok 30 - CR-205: fail-closed v1.6.26 same-draw addition uses the shared board, its own method notes and the full history
   ---
-  duration_ms: 1.055432
+  duration_ms: 0.801681
   ...
 # Subtest: CR-205: fail-closed v1.6.27 same-draw addition uses the shared board, its own method notes and the full history
 ok 31 - CR-205: fail-closed v1.6.27 same-draw addition uses the shared board, its own method notes and the full history
   ---
-  duration_ms: 1.438595
+  duration_ms: 0.608803
   ...
 # Subtest: CR-205: fail-closed v1.6.28 same-draw addition uses the shared board, its own method notes and the full history
 ok 32 - CR-205: fail-closed v1.6.28 same-draw addition uses the shared board, its own method notes and the full history
   ---
-  duration_ms: 1.74865
+  duration_ms: 0.682711
   ...
 # Subtest: CR-205: fail-closed v1.6.29 same-draw addition uses the shared board, its own method notes and the full history
 ok 33 - CR-205: fail-closed v1.6.29 same-draw addition uses the shared board, its own method notes and the full history
   ---
-  duration_ms: 1.043832
+  duration_ms: 0.712421
   ...
 # Subtest: CR-205: fail-closed v1.6.30 cost-rule release uses the shared board, its own method notes and the full history
 ok 34 - CR-205: fail-closed v1.6.30 cost-rule release uses the shared board, its own method notes and the full history
   ---
-  duration_ms: 0.900065
+  duration_ms: 0.625847
   ...
 # Subtest: CR-205: v1.7.1 same-draw additions retain the complete shared board, method notes and history
 ok 35 - CR-205: v1.7.1 same-draw additions retain the complete shared board, method notes and history
   ---
-  duration_ms: 0.785316
+  duration_ms: 0.583773
   ...
 # Subtest: CR-205: v1.7.2 same-draw additions retain the complete shared board, method notes and history
 ok 36 - CR-205: v1.7.2 same-draw additions retain the complete shared board, method notes and history
   ---
-  duration_ms: 0.652419
+  duration_ms: 0.594755
   ...
 # Subtest: CR-205: v1.7.3 GPU replacement retains the shared board, method notes and history
 ok 37 - CR-205: v1.7.3 GPU replacement retains the shared board, method notes and history
   ---
-  duration_ms: 0.543811
+  duration_ms: 0.589895
   ...
 # Subtest: CR-205: v1.7.4 self-hosted addition retains shared board, method notes and history
 ok 38 - CR-205: v1.7.4 self-hosted addition retains shared board, method notes and history
   ---
-  duration_ms: 0.519871
+  duration_ms: 0.58264
   ...
 # Subtest: CR-205: every versioned JevBench route is covered by this test
 ok 39 - CR-205: every versioned JevBench route is covered by this test
   ---
-  duration_ms: 1.071541
+  duration_ms: 1.321184
   ...
 # Subtest: CR-205: the board sections are fed by the pinned v1.5 release artifact
 ok 40 - CR-205: the board sections are fed by the pinned v1.5 release artifact
   ---
-  duration_ms: 16.31344
+  duration_ms: 16.150347
   ...
 # Subtest: CR-205: v1.7.5 self-hosted addition retains shared board, method notes and history
 ok 41 - CR-205: v1.7.5 self-hosted addition retains shared board, method notes and history
   ---
-  duration_ms: 0.974893
+  duration_ms: 0.867333
   ...
 # Subtest: CR-205: v1.7.6 self-hosted addition retains shared board, method notes and history
 ok 42 - CR-205: v1.7.6 self-hosted addition retains shared board, method notes and history
   ---
-  duration_ms: 1.748919
+  duration_ms: 0.575155
   ...
 # Subtest: CR-205: v1.7.7 self-hosted addition retains shared board, method notes and history
 ok 43 - CR-205: v1.7.7 self-hosted addition retains shared board, method notes and history
   ---
-  duration_ms: 0.898245
+  duration_ms: 0.564905
   ...
 # Subtest: CR-205: v1.7.8 self-hosted addition retains shared board, method notes and history
 ok 44 - CR-205: v1.7.8 self-hosted addition retains shared board, method notes and history
   ---
-  duration_ms: 1.025002
+  duration_ms: 0.929397
   ...
 # Subtest: CR-205: v1.7.9 addendum retains shared board, method notes and history
 ok 45 - CR-205: v1.7.9 addendum retains shared board, method notes and history
   ---
-  duration_ms: 0.972743
+  duration_ms: 0.591959
   ...
 # Subtest: feed carries board and open-board rank next to the unchanged combined rank
 ok 46 - feed carries board and open-board rank next to the unchanged combined rank
   ---
-  duration_ms: 74481.112975
+  duration_ms: 72532.430095
   ...
 # Subtest: llms-full and FAQ use the open-weights board
 ok 47 - llms-full and FAQ use the open-weights board
   ---
-  duration_ms: 66198.228564
+  duration_ms: 66679.213179
   ...
 # Subtest: architecture schema, evidence and badges are valid for every entry
 ok 48 - architecture schema, evidence and badges are valid for every entry
   ---
-  duration_ms: 6.756125
+  duration_ms: 8.330226
   ...
 # Subtest: all historical and current JevBench and ImageJevBench artifact keys are covered
 ok 49 - all historical and current JevBench and ImageJevBench artifact keys are covered
   ---
-  duration_ms: 5862.100954
+  duration_ms: 5944.478143
   ...
 # Subtest: wity entries preserve the author-requested model-family non-disclosure
 ok 50 - wity entries preserve the author-requested model-family non-disclosure
   ---
-  duration_ms: 1.057012
+  duration_ms: 0.832954
   ...
 # Subtest: encoder, diffusion, reranker, reference and single-backbone corrections remain explicit
 ok 51 - encoder, diffusion, reranker, reference and single-backbone corrections remain explicit
   ---
-  duration_ms: 0.180397
+  duration_ms: 0.193679
   ...
 # Subtest: gate: no listed row lacks topic, use-case or language cells without a recorded exception
 not ok 52 - gate: no listed row lacks topic, use-case or language cells without a recorded exception
   ---
-  duration_ms: 20.497104
-  location: '/home/flori/wt/jevbench-v1716-20261028/test/jevbench-breakdowns-every-listed-row.test.mjs:26:1'
+  duration_ms: 19.923637
+  location: '/srv/heavy/jobs/r198-v1716-fix--r1028165828vbzf/work/test/jevbench-breakdowns-every-listed-row.test.mjs:26:1'
   failureType: 'testCodeFailure'
   error: |-
     exception entries without a matching gap must be removed
@@ -277,7 +275,7 @@ not ok 52 - gate: no listed row lacks topic, use-case or language cells without 
     0: 'strike-1'
   operator: 'deepStrictEqual'
   stack: |-
-    TestContext.<anonymous> (file:///home/flori/wt/jevbench-v1716-20261028/test/jevbench-breakdowns-every-listed-row.test.mjs:29:10)
+    TestContext.<anonymous> (file:///srv/heavy/jobs/r198-v1716-fix--r1028165828vbzf/work/test/jevbench-breakdowns-every-listed-row.test.mjs:29:10)
     Test.runInAsyncScope (node:async_hooks:206:9)
     Test.run (node:internal/test_runner/test:796:25)
     Test.processPendingSubtests (node:internal/test_runner/test:526:18)
@@ -289,599 +287,611 @@ not ok 52 - gate: no listed row lacks topic, use-case or language cells without 
 # Subtest: gate catches a future fresh-draw row whose release ships no category cells
 ok 53 - gate catches a future fresh-draw row whose release ships no category cells
   ---
-  duration_ms: 4.932114
+  duration_ms: 5.318695
   ...
 # Subtest: gate catches an added API row and a carry row without language cells
 ok 54 - gate catches an added API row and a carry row without language cells
   ---
-  duration_ms: 4.228097
+  duration_ms: 3.927069
   ...
 # Subtest: exceptions need a reason and a decision reference
 ok 55 - exceptions need a reason and a decision reference
   ---
-  duration_ms: 0.584039
+  duration_ms: 0.490445
   ...
 # Subtest: fresh-draw rows carry their own draw cells, tagged with the draw; no row of the base is overridden
 ok 56 - fresh-draw rows carry their own draw cells, tagged with the draw; no row of the base is overridden
   ---
-  duration_ms: 11.392122
+  duration_ms: 11.868414
   ...
 # Subtest: cohort topic supplement is aggregate-only and validated
 ok 57 - cohort topic supplement is aggregate-only and validated
   ---
-  duration_ms: 9.464466
+  duration_ms: 11.247105
   ...
 # Subtest: gate (ImageJevBench v0.3): every ranking row has image-type, use-case and TypeSafe-20 cells or a recorded exception
 ok 58 - gate (ImageJevBench v0.3): every ranking row has image-type, use-case and TypeSafe-20 cells or a recorded exception
   ---
-  duration_ms: 13.269679
+  duration_ms: 13.646055
   ...
 # Subtest: feed key set equals the merged live board and the page shares the assembly
 ok 59 - feed key set equals the merged live board and the page shares the assembly
   ---
-  duration_ms: 5.278837
+  duration_ms: 5.928139
   ...
 # Subtest: latest_release is the newest release of the draw table, not a hard-coded list
 ok 60 - latest_release is the newest release of the draw table, not a hard-coded list
   ---
-  duration_ms: 10085.83009
+  duration_ms: 9945.911869
   ...
 # Subtest: feed ranks equal the ranks of the open and API Capability default views
 ok 61 - feed ranks equal the ranks of the open and API Capability default views
   ---
-  duration_ms: 10.986107
+  duration_ms: 10.840329
   ...
 # Subtest: rows carry their draw so agents can tell which draw a row was measured on
 ok 62 - rows carry their draw so agents can tell which draw a row was measured on
   ---
-  duration_ms: 0.163777
+  duration_ms: 0.17901
   ...
 # Subtest: every cohort system joins once, from its latest release, with its draw
 ok 63 - every cohort system joins once, from its latest release, with its draw
   ---
-  duration_ms: 10016.915136
+  duration_ms: 9807.681082
   ...
 # Subtest: the composite port reproduces the published scores
 ok 64 - the composite port reproduces the published scores
   ---
-  duration_ms: 69.546263
+  duration_ms: 85.798861
   ...
 # Subtest: pending draws show the published numbers unchanged; an offset moves the axes and recomputes
 ok 65 - pending draws show the published numbers unchanged; an offset moves the axes and recomputes
   ---
-  duration_ms: 8879.804671
+  duration_ms: 9581.560259
   ...
 # Subtest: merged board slots ranked cohort rows by score and keeps published rows in order
 ok 66 - merged board slots ranked cohort rows by score and keeps published rows in order
   ---
-  duration_ms: 22484.912669
+  duration_ms: 18612.79474
   ...
 # Subtest: live pages: filter presets, no version tabs, release history; archived pages keep their URLs
 ok 67 - live pages: filter presets, no version tabs, release history; archived pages keep their URLs
   ---
-  duration_ms: 1.669791
+  duration_ms: 1.357607
   ...
 # Subtest: listing corrections: only presentation fields, the published release row is never mutated
 ok 68 - listing corrections: only presentation fields, the published release row is never mutated
   ---
-  duration_ms: 0.378783
+  duration_ms: 0.332067
   ...
 # Subtest: score correction: decisor-4b cost re-estimate applies on the live merged board only, every other stored field unchanged
 ok 69 - score correction: decisor-4b cost re-estimate applies on the live merged board only, every other stored field unchanged
   ---
-  duration_ms: 20971.549979
+  duration_ms: 18845.741396
   ...
 # Subtest: score correction: refuses to apply on any mismatch and shows the published row
 ok 70 - score correction: refuses to apply on any mismatch and shows the published row
   ---
-  duration_ms: 394.038601
+  duration_ms: 362.719373
   ...
 # Subtest: score correction: reader rejects unknown fields and an altered receipt disables the correction
 ok 71 - score correction: reader rejects unknown fields and an altered receipt disables the correction
   ---
-  duration_ms: 382.738058
+  duration_ms: 310.296004
   ...
 # Subtest: score correction: archived release pages and published files never read it
 ok 72 - score correction: archived release pages and published files never read it
   ---
-  duration_ms: 99.711007
+  duration_ms: 50.927433
   ...
 # Subtest: jevFoldWithPinned: pinned rows keep their position above the fold, do not count toward the limit, and are moved up from below it
 ok 73 - jevFoldWithPinned: pinned rows keep their position above the fold, do not count toward the limit, and are moved up from below it
   ---
-  duration_ms: 1.327057
+  duration_ms: 1.071022
   ...
 # Subtest: Delta 4: with the folds collapsed, Jev 1.13.0 and Jev 1.14.0 are rendered above the fold in the open-board Capability and Composite sections
 ok 74 - Delta 4: with the folds collapsed, Jev 1.13.0 and Jev 1.14.0 are rendered above the fold in the open-board Capability and Composite sections
   ---
-  duration_ms: 5969.352719
+  duration_ms: 5326.17098
   ...
 # Subtest: v1.6.30 accepts the stored build once the review passes
 ok 75 - v1.6.30 accepts the stored build once the review passes
   ---
-  duration_ms: 201.448785
+  duration_ms: 273.273897
   ...
 # Subtest: v1.6.30 is not publishable while the manifest is PENDING or the preview card is a placeholder
 ok 76 - v1.6.30 is not publishable while the manifest is PENDING or the preview card is a placeholder
   ---
-  duration_ms: 227.178432
+  duration_ms: 272.869444
   ...
 # Subtest: 48 token-priced rows change cost on the common basis, 9 unpriced rows do not
 ok 77 - 48 token-priced rows change cost on the common basis, 9 unpriced rows do not
   ---
-  duration_ms: 18.22485
+  duration_ms: 4.797008
   ...
 # Subtest: named rows: nimble-v4-max enters at \#3, subq-snap-preview falls inside the official cost cap
 ok 78 - named rows: nimble-v4-max enters at \#3, subq-snap-preview falls inside the official cost cap
   ---
-  duration_ms: 0.423642
+  duration_ms: 0.311326
   ...
 # Subtest: Intelligence, Calibration, Speed and Capability are byte-identical on all 57 rows
 ok 79 - Intelligence, Calibration, Speed and Capability are byte-identical on all 57 rows
   ---
-  duration_ms: 5.817837
+  duration_ms: 4.883831
   ...
 # Subtest: cost, axes, composites and placement follow from the common-basis cost; mutations are rejected
 ok 80 - cost, axes, composites and placement follow from the common-basis cost; mutations are rejected
   ---
-  duration_ms: 2246.914254
+  duration_ms: 2632.160561
   ...
 # Subtest: the proof binds the cost basis, the superseded freeze and every re-costed row
 ok 81 - the proof binds the cost basis, the superseded freeze and every re-costed row
   ---
-  duration_ms: 2108.731469
+  duration_ms: 2358.333714
   ...
 # Subtest: the release note states the rule, the unchanged measures, the cap moves and the superseded freeze
 ok 82 - the release note states the rule, the unchanged measures, the cap moves and the superseded freeze
   ---
-  duration_ms: 1715.445058
+  duration_ms: 1742.187358
   ...
 # Subtest: approval: a changed top five needs the preview card; placeholders and wrong provenance are rejected
 ok 83 - approval: a changed top five needs the preview card; placeholders and wrong provenance are rejected
   ---
-  duration_ms: 1736.651999
+  duration_ms: 1864.851509
   ...
 # Subtest: the cost rule wording is general and appears on the methodology page and the board
 ok 84 - the cost rule wording is general and appears on the methodology page and the board
   ---
-  duration_ms: 9.283776
+  duration_ms: 9.68157
   ...
 # Subtest: the text about this draw's 15 items names who refused them and where the token figure comes from; no time-bound claim about authors
 ok 85 - the text about this draw's 15 items names who refused them and where the token figure comes from; no time-bound claim about authors
   ---
-  duration_ms: 21.276585
+  duration_ms: 16.780261
   ...
 # Subtest: Delta 3 (display only): Jev 1.14.0 is a second unranked reference row on the open board without the toggle; every ranking and rank is unchanged
 ok 86 - Delta 3 (display only): Jev 1.14.0 is a second unranked reference row on the open board without the toggle; every ranking and rank is unchanged
   ---
-  duration_ms: 73436.673602
+  duration_ms: 63616.867219
   ...
 # Subtest: release note [110] states the general rule and then its history sentence
 ok 87 - release note [110] states the general rule and then its history sentence
   ---
-  duration_ms: 0.634958
+  duration_ms: 0.55076
   ...
 # Subtest: v1.6.37 restates exactly the two v1.6.1 rows and adds nothing else
 ok 88 - v1.6.37 restates exactly the two v1.6.1 rows and adds nothing else
   ---
-  duration_ms: 2.80653
+  duration_ms: 2.494989
   ...
 # Subtest: h2o-lightning-4b: price corrected to the frozen Qwen/Qwen3.5-4B reference, nothing else of the published row changes
 ok 89 - h2o-lightning-4b: price corrected to the frozen Qwen/Qwen3.5-4B reference, nothing else of the published row changes
   ---
-  duration_ms: 0.693938
+  duration_ms: 0.544648
   ...
 # Subtest: kahn1: same correction on its own-estimate tokens; the false snapshot attribution of 0.04 is gone
 ok 90 - kahn1: same correction on its own-estimate tokens; the false snapshot attribution of 0.04 is gone
   ---
-  duration_ms: 0.274105
+  duration_ms: 0.229042
   ...
 # Subtest: all 70 carried rows keep every stored value; only rank and ranks move, by the restated rows above them
 ok 91 - all 70 carried rows keep every stored value; only rank and ranks move, by the restated rows above them
   ---
-  duration_ms: 74.154606
+  duration_ms: 56.564796
   ...
 # Subtest: the two other Qwen3.5-4B rows with the USD 0.04 inherited basis are untouched
 ok 92 - the two other Qwen3.5-4B rows with the USD 0.04 inherited basis are untouched
   ---
-  duration_ms: 0.377103
+  duration_ms: 0.275755
   ...
 # Subtest: v1.6.37 rejects altered price, usage, markers, text, intervals, approval and carried rows
 ok 93 - v1.6.37 rejects altered price, usage, markers, text, intervals, approval and carried rows
   ---
-  duration_ms: 6206.320789
+  duration_ms: 6171.214454
   ...
 # Subtest: the corrected price is recomputed from tokens, the frozen tariff and the number of decisions
 ok 94 - the corrected price is recomputed from tokens, the frozen tariff and the number of decisions
   ---
-  duration_ms: 0.295084
+  duration_ms: 0.211346
   ...
 # Subtest: v1.6.37 archived route keeps shared board, method and history
 ok 95 - v1.6.37 archived route keeps shared board, method and history
   ---
-  duration_ms: 43.312133
+  duration_ms: 7.000759
   ...
 # Subtest: live boards and the agent feed resolve each restated row exactly once with the corrected figures; the frozen archive keeps the published ones
 ok 96 - live boards and the agent feed resolve each restated row exactly once with the corrected figures; the frozen archive keeps the published ones
   ---
-  duration_ms: 102893.070425
+  duration_ms: 72599.894593
   ...
 # Subtest: SEO model, comparison and full-text pages follow the merged feed with corrected costs and the re-measured Seb
 ok 97 - SEO model, comparison and full-text pages follow the merged feed with corrected costs and the re-measured Seb
   ---
-  duration_ms: 83199.496587
+  duration_ms: 70639.597417
   ...
 # Subtest: the unreviewed build is not published: the reader rejects it, the board stays on the validated v1.6 chain
 ok 98 - the unreviewed build is not published: the reader rejects it, the board stays on the validated v1.6 chain # SKIP
   ---
-  duration_ms: 1.080851
+  duration_ms: 1.223105
   ...
 # Subtest: v1.7.0 restates exactly the live board of its base release: every row, the pending set, the carry
 ok 99 - v1.7.0 restates exactly the live board of its base release: every row, the pending set, the carry
   ---
-  duration_ms: 1.880107
+  duration_ms: 1.580305
   ...
 # Subtest: every re-scored row shows its v1.6 values next to the v1.7 values and the time-limit evidence
 ok 100 - every re-scored row shows its v1.6 values next to the v1.7 values and the time-limit evidence
   ---
-  duration_ms: 0.772367
+  duration_ms: 0.580961
   ...
 # Subtest: pinned rows: chon-1.0-12b collapses under the limit, sage-1.3.0 and an A4 row follow the rule, the pending row keeps its v1.6 numbers
 ok 101 - pinned rows: chon-1.0-12b collapses under the limit, sage-1.3.0 and an A4 row follow the rule, the pending row keeps its v1.6 numbers
   ---
-  duration_ms: 0.463562
+  duration_ms: 0.33253
   ...
 # Subtest: fastino-glide-api (v1.6.40 row, scored on 1,497 of 1,500 items) is re-scored under the rule on the same 1,497 items; two answered decisions over 10 s count failed
 ok 102 - fastino-glide-api (v1.6.40 row, scored on 1,497 of 1,500 items) is re-scored under the rule on the same 1,497 items; two answered decisions over 10 s count failed
   ---
-  duration_ms: 0.424412
+  duration_ms: 0.354855
   ...
 # Subtest: the four intake handoffs retain their distinct identities, frozen costs and disclosures
 ok 103 - the four intake handoffs retain their distinct identities, frozen costs and disclosures
   ---
-  duration_ms: 1.061582
+  duration_ms: 0.915345
   ...
 # Subtest: R9 rows retain the zero-output price convention, timeout outcomes and serving disclosures
 ok 104 - R9 rows retain the zero-output price convention, timeout outcomes and serving disclosures
   ---
-  duration_ms: 0.763587
+  duration_ms: 0.601362
   ...
 # Subtest: v1.7.0 archive files and the base release stay byte-identical
 ok 105 - v1.7.0 archive files and the base release stay byte-identical
   ---
-  duration_ms: 285.934554
+  duration_ms: 386.690634
   ...
 # Subtest: v1.7.0 rejects altered evidence (bundle checks)
 ok 106 - v1.7.0 rejects altered evidence (bundle checks)
   ---
-  duration_ms: 24542.717459
+  duration_ms: 20729.041856
   ...
 # Subtest: a new row (measured first under v1.7.0) has its own shape: no previous, new_in, disclosure and licence, ranked with the re-scored rows
 ok 107 - a new row (measured first under v1.7.0) has its own shape: no previous, new_in, disclosure and licence, ranked with the re-scored rows
   ---
-  duration_ms: 0.919664
+  duration_ms: 0.930426
   ...
 # Subtest: v1.7.0 rejects a malformed new row (6+ mutations)
 ok 108 - v1.7.0 rejects a malformed new row (6+ mutations)
   ---
-  duration_ms: 11496.605388
+  duration_ms: 9002.488886
   ...
 # Subtest: the two Super Decider rows are ranked, priced at the launch list price of the provider's public product page, and say where the price comes from
 ok 109 - the two Super Decider rows are ranked, priced at the launch list price of the provider's public product page, and say where the price comes from
   ---
-  duration_ms: 1.270827
+  duration_ms: 0.589859
   ...
 # Subtest: a re-measured row (GPU, same items) replaces its CPU row in full: GPU scores and times, the CPU row as previous, disclosure on the row
 ok 110 - a re-measured row (GPU, same items) replaces its CPU row in full: GPU scores and times, the CPU row as previous, disclosure on the row
   ---
-  duration_ms: 0.58187
+  duration_ms: 0.532333
   ...
 # Subtest: the new row carries no board/issue number or custody reference in its public text
 ok 111 - the new row carries no board/issue number or custody reference in its public text
   ---
-  duration_ms: 0.672618
+  duration_ms: 0.541011
   ...
 # Subtest: v1.7.0 rejects a malformed re-measured row (GPU numbers with CPU times, still pending, no disclosure, wrong marks, ...)
 ok 112 - v1.7.0 rejects a malformed re-measured row (GPU numbers with CPU times, still pending, no disclosure, wrong marks, ...)
   ---
-  duration_ms: 15546.029013
+  duration_ms: 11659.769062
   ...
 # Subtest: the restatement is bound to the live v1.6 chain: it passes on the chain it was built for
 ok 113 - the restatement is bound to the live v1.6 chain: it passes on the chain it was built for
   ---
-  duration_ms: 566.97461
+  duration_ms: 413.690911
   ...
 # Subtest: v1.7.0 rejects a restatement that does not match the chain (previous, identity, cost, row set, newer release, feed hash, seeds)
 ok 114 - v1.7.0 rejects a restatement that does not match the chain (previous, identity, cost, row set, newer release, feed hash, seeds)
   ---
-  duration_ms: 3986.96772
+  duration_ms: 2860.477775
   ...
 # Subtest: a re-measured row is bound to the CPU row it replaces (previous == chain, same weights, same draw, another endpoint kind, same cost)
 ok 115 - a re-measured row is bound to the CPU row it replaces (previous == chain, same weights, same draw, another endpoint kind, same cost)
   ---
-  duration_ms: 3503.906022
+  duration_ms: 2638.358284
   ...
 # Subtest: a published v1.7.0 board is live: restated rows, v1.7.0 as the latest release, archive pages untouched
 ok 116 - a published v1.7.0 board is live: restated rows, v1.7.0 as the latest release, archive pages untouched
   ---
-  duration_ms: 84508.871416
+  duration_ms: 69742.485479
   ...
 # Subtest: candidate validates; board reader accepts either PENDING-hidden or independently reviewed PASS
 ok 117 - candidate validates; board reader accepts either PENDING-hidden or independently reviewed PASS
   ---
-  duration_ms: 10086.095561
+  duration_ms: 9102.56396
   ...
 # Subtest: pending review is refused when published validation is requested
 ok 118 - pending review is refused when published validation is requested
   ---
-  duration_ms: 356.332279
+  duration_ms: 227.425451
   ...
 # Subtest: numeric intelligence tamper refuses
 ok 119 - numeric intelligence tamper refuses
   ---
-  duration_ms: 269.74242
+  duration_ms: 236.2337
   ...
 # Subtest: numeric calibration tamper refuses
 ok 120 - numeric calibration tamper refuses
   ---
-  duration_ms: 284.599014
+  duration_ms: 255.201893
   ...
 # Subtest: numeric speed tamper refuses
 ok 121 - numeric speed tamper refuses
   ---
-  duration_ms: 306.364184
+  duration_ms: 215.41999
   ...
 # Subtest: numeric capability tamper refuses
 ok 122 - numeric capability tamper refuses
   ---
-  duration_ms: 247.35401
+  duration_ms: 219.900824
   ...
 # Subtest: text-only row gates refuse tamper r=>r.cost.basis+=' extra'
 ok 123 - text-only row gates refuse tamper r=>r.cost.basis+=' extra'
   ---
-  duration_ms: 284.23622
+  duration_ms: 222.54549
   ...
 # Subtest: text-only row gates refuse tamper r=>r.cost.usd_per_1000+=1
 ok 124 - text-only row gates refuse tamper r=>r.cost.usd_per_1000+=1
   ---
-  duration_ms: 249.65134
+  duration_ms: 223.245619
   ...
 # Subtest: unrelated carried row and cell tampering refuse
 ok 125 - unrelated carried row and cell tampering refuse
   ---
-  duration_ms: 568.893232
+  duration_ms: 447.995247
   ...
 # Subtest: ranked order tamper refuses
 ok 126 - ranked order tamper refuses
   ---
-  duration_ms: 289.039404
-  ...
-# Subtest: v1.7.13 validates every row; PENDING is hidden, PASS is readable
-ok 127 - v1.7.13 validates every row; PENDING is hidden, PASS is readable
-  ---
-  duration_ms: 6004.080976
-  ...
-# Subtest: v1.7.13 standing GO: no top-five change, fairness receipt (SUSPICIOUS) bound as evidence, paid public basis exact
-ok 128 - v1.7.13 standing GO: no top-five change, fairness receipt (SUSPICIOUS) bound as evidence, paid public basis exact
-  ---
-  duration_ms: 1973.776689
-  ...
-# Subtest: v1.7.13 rejects carried score, interval, category and lane changes, including the v1.1 row
-ok 129 - v1.7.13 rejects carried score, interval, category and lane changes, including the v1.1 row
-  ---
-  duration_ms: 4763.725178
-  ...
-# Subtest: v1.7.13 rejects roster, rank, new row, draw and provenance mutations
-ok 130 - v1.7.13 rejects roster, rank, new row, draw and provenance mutations
-  ---
-  duration_ms: 4023.314363
-  ...
-# Subtest: v1.7.13 pin, template, public-text and cost-kind gates reject negatives
-ok 131 - v1.7.13 pin, template, public-text and cost-kind gates reject negatives
-  ---
-  duration_ms: 9.023538
-  ...
-# Subtest: v1.7.13 exact new scores, cost, coverage, draw and disclosures
-ok 132 - v1.7.13 exact new scores, cost, coverage, draw and disclosures
-  ---
-  duration_ms: 0.538511
-  ...
-# Subtest: v1.7.13 the new row is unranked: no rank, in no order list, every carried rank and order list unchanged
-ok 133 - v1.7.13 the new row is unranked: no rank, in no order list, every carried rank and order list unchanged
-  ---
-  duration_ms: 2831.011719
-  ...
-# Subtest: v1.7.13 new draw joins the equating table without touching the v1.6 chain v1.7.0 is bound to
-ok 134 - v1.7.13 new draw joins the equating table without touching the v1.6 chain v1.7.0 is bound to
-  ---
-  duration_ms: 12414.316545
-  ...
-# Subtest: v1.7.13 synthetic board ranks and official cap lists match the recorded assembly
-ok 135 - v1.7.13 synthetic board ranks and official cap lists match the recorded assembly
-  ---
-  duration_ms: 43.611807
+  duration_ms: 243.286442
   ...
 # Subtest: v1.7.14 validates every row; PENDING is hidden, PASS is readable
-ok 136 - v1.7.14 validates every row; PENDING is hidden, PASS is readable
+ok 127 - v1.7.14 validates every row; PENDING is hidden, PASS is readable
   ---
-  duration_ms: 6741.902172
+  duration_ms: 4934.546419
   ...
 # Subtest: v1.7.14 is bound to the current v1.7.13 manifest bytes and refuses a stale binding
-ok 137 - v1.7.14 is bound to the current v1.7.13 manifest bytes and refuses a stale binding
+ok 128 - v1.7.14 is bound to the current v1.7.13 manifest bytes and refuses a stale binding
   ---
-  duration_ms: 875.077748
+  duration_ms: 658.054727
   ...
 # Subtest: v1.7.14 standing GO: no top-five change, unranked basis and paid public basis exact
-ok 138 - v1.7.14 standing GO: no top-five change, unranked basis and paid public basis exact
+ok 129 - v1.7.14 standing GO: no top-five change, unranked basis and paid public basis exact
   ---
-  duration_ms: 2378.015153
+  duration_ms: 1794.359129
   ...
 # Subtest: v1.7.14 rejects carried score, interval, category and lane changes, including the v1.7.13 row and the family rows
-ok 139 - v1.7.14 rejects carried score, interval, category and lane changes, including the v1.7.13 row and the family rows
+ok 130 - v1.7.14 rejects carried score, interval, category and lane changes, including the v1.7.13 row and the family rows
   ---
-  duration_ms: 9731.840768
+  duration_ms: 7478.997189
   ...
 # Subtest: v1.7.14 corrects only the DOPEST 1.0 31B text fields (repository public throughout); its numbers and cells stay equal
-ok 140 - v1.7.14 corrects only the DOPEST 1.0 31B text fields (repository public throughout); its numbers and cells stay equal
+ok 131 - v1.7.14 corrects only the DOPEST 1.0 31B text fields (repository public throughout); its numbers and cells stay equal
   ---
-  duration_ms: 2827.172757
+  duration_ms: 2068.397107
   ...
 # Subtest: v1.7.14 rejects roster, rank, new row, draw and provenance mutations
-ok 141 - v1.7.14 rejects roster, rank, new row, draw and provenance mutations
+ok 132 - v1.7.14 rejects roster, rank, new row, draw and provenance mutations
   ---
-  duration_ms: 19318.062534
+  duration_ms: 10027.947306
   ...
 # Subtest: v1.7.14 pin, template, public-text and cost-kind gates reject negatives
-ok 142 - v1.7.14 pin, template, public-text and cost-kind gates reject negatives
+ok 133 - v1.7.14 pin, template, public-text and cost-kind gates reject negatives
   ---
-  duration_ms: 40.337736
+  duration_ms: 33.851911
   ...
 # Subtest: v1.7.14 exact new scores, cost, coverage, draw and disclosures
-ok 143 - v1.7.14 exact new scores, cost, coverage, draw and disclosures
+ok 134 - v1.7.14 exact new scores, cost, coverage, draw and disclosures
   ---
-  duration_ms: 1.026972
+  duration_ms: 0.656542
   ...
 # Subtest: v1.7.14 the new rows are unranked: no rank, in no order list, every carried rank and order list unchanged
-ok 144 - v1.7.14 the new rows are unranked: no rank, in no order list, every carried rank and order list unchanged
+ok 135 - v1.7.14 the new rows are unranked: no rank, in no order list, every carried rank and order list unchanged
   ---
-  duration_ms: 13919.689217
+  duration_ms: 8879.040723
   ...
 # Subtest: v1.7.14 extends the 27 Oct draw entry without touching the v1.6 chain v1.7.0 is bound to
-ok 145 - v1.7.14 extends the 27 Oct draw entry without touching the v1.6 chain v1.7.0 is bound to
+ok 136 - v1.7.14 extends the 27 Oct draw entry without touching the v1.6 chain v1.7.0 is bound to
   ---
-  duration_ms: 17291.986691
+  duration_ms: 9733.2915
   ...
 # Subtest: v1.7.14 synthetic board ranks and official cap lists match the recorded assembly
-ok 146 - v1.7.14 synthetic board ranks and official cap lists match the recorded assembly
+ok 137 - v1.7.14 synthetic board ranks and official cap lists match the recorded assembly
   ---
-  duration_ms: 234.359924
+  duration_ms: 32.300982
   ...
 # Subtest: v1.7.15 validates every row; PENDING is hidden, PASS is readable
-ok 147 - v1.7.15 validates every row; PENDING is hidden, PASS is readable
+ok 138 - v1.7.15 validates every row; PENDING is hidden, PASS is readable
   ---
-  duration_ms: 9761.911292
+  duration_ms: 5145.459248
   ...
 # Subtest: v1.7.15 is bound to the PASS v1.7.14 manifest bytes and refuses a stale binding
-ok 148 - v1.7.15 is bound to the PASS v1.7.14 manifest bytes and refuses a stale binding
+ok 139 - v1.7.15 is bound to the PASS v1.7.14 manifest bytes and refuses a stale binding
   ---
-  duration_ms: 1251.492155
+  duration_ms: 694.60123
   ...
 # Subtest: v1.7.15 standing GO: no top-five change, unranked basis, cost basis and paid public basis exact
-ok 149 - v1.7.15 standing GO: no top-five change, unranked basis, cost basis and paid public basis exact
+ok 140 - v1.7.15 standing GO: no top-five change, unranked basis, cost basis and paid public basis exact
   ---
-  duration_ms: 4055.528169
+  duration_ms: 2425.870662
   ...
 # Subtest: v1.7.15 rejects carried score, interval, category and lane changes, including the family and round-1 Microsoft rows
-ok 150 - v1.7.15 rejects carried score, interval, category and lane changes, including the family and round-1 Microsoft rows
+ok 141 - v1.7.15 rejects carried score, interval, category and lane changes, including the family and round-1 Microsoft rows
   ---
-  duration_ms: 23964.745661
+  duration_ms: 15303.555904
   ...
 # Subtest: v1.7.15 replaces only the not_ranked_because note of the six carried draw rows (H2O keeps its v1.1 sentence)
-ok 151 - v1.7.15 replaces only the not_ranked_because note of the six carried draw rows (H2O keeps its v1.1 sentence)
+ok 142 - v1.7.15 replaces only the not_ranked_because note of the six carried draw rows (H2O keeps its v1.1 sentence)
   ---
-  duration_ms: 8167.318402
+  duration_ms: 3871.175698
   ...
 # Subtest: v1.7.15 Microsoft-Decision-1 round 2: exact published values, 1,493 items, tariff, own row; round 1 unchanged
-ok 152 - v1.7.15 Microsoft-Decision-1 round 2: exact published values, 1,493 items, tariff, own row; round 1 unchanged
+ok 143 - v1.7.15 Microsoft-Decision-1 round 2: exact published values, 1,493 items, tariff, own row; round 1 unchanged
   ---
-  duration_ms: 914.994342
+  duration_ms: 565.000512
   ...
 # Subtest: v1.7.15 every row of the draw is unranked: no rank, in no order list, every carried rank and order list unchanged
-ok 153 - v1.7.15 every row of the draw is unranked: no rank, in no order list, every carried rank and order list unchanged
+ok 144 - v1.7.15 every row of the draw is unranked: no rank, in no order list, every carried rank and order list unchanged
   ---
-  duration_ms: 14999.747731
+  duration_ms: 9797.290884
   ...
 # Subtest: v1.7.15 extends the 27 Oct draw entry (still not equated) without touching the v1.6 chain v1.7.0 is bound to
-ok 154 - v1.7.15 extends the 27 Oct draw entry (still not equated) without touching the v1.6 chain v1.7.0 is bound to
+ok 145 - v1.7.15 extends the 27 Oct draw entry (still not equated) without touching the v1.6 chain v1.7.0 is bound to
   ---
-  duration_ms: 14423.712807
+  duration_ms: 9848.714528
   ...
 # Subtest: v1.7.15 synthetic board ranks and official cap lists match the recorded assembly
-ok 155 - v1.7.15 synthetic board ranks and official cap lists match the recorded assembly
+ok 146 - v1.7.15 synthetic board ranks and official cap lists match the recorded assembly
   ---
-  duration_ms: 55.629418
+  duration_ms: 32.897221
   ...
 # Subtest: v1.7.16 validates every row; PENDING is hidden, PASS is readable
-ok 156 - v1.7.16 validates every row; PENDING is hidden, PASS is readable
+ok 147 - v1.7.16 validates every row; PENDING is hidden, PASS is readable
   ---
-  duration_ms: 7580.196083
+  duration_ms: 5162.131624
   ...
 # Subtest: v1.7.16 is bound to the PASS v1.7.15 manifest bytes and refuses a stale binding
-ok 157 - v1.7.16 is bound to the PASS v1.7.15 manifest bytes and refuses a stale binding
+ok 148 - v1.7.16 is bound to the PASS v1.7.15 manifest bytes and refuses a stale binding
   ---
-  duration_ms: 1068.526477
+  duration_ms: 655.549129
   ...
 # Subtest: v1.7.16 standing GO: no top-five change, unranked basis and same-items cost basis exact
-ok 158 - v1.7.16 standing GO: no top-five change, unranked basis and same-items cost basis exact
+ok 149 - v1.7.16 standing GO: no top-five change, unranked basis and same-items cost basis exact
   ---
-  duration_ms: 2639.085054
+  duration_ms: 1761.686194
   ...
 # Subtest: v1.7.16 rejects carried score, interval, category and lane changes, including the family and round-1 Microsoft rows
-ok 159 - v1.7.16 rejects carried score, interval, category and lane changes, including the family and round-1 Microsoft rows
+ok 150 - v1.7.16 rejects carried score, interval, category and lane changes, including the family and round-1 Microsoft rows
   ---
-  duration_ms: 25866.46817
+  duration_ms: 16705.283937
   ...
 # Subtest: v1.7.16 same-items cost rule: the seven carried draw rows change only cost fields, each pinned; set size and hash bound
-ok 160 - v1.7.16 same-items cost rule: the seven carried draw rows change only cost fields, each pinned; set size and hash bound
+ok 151 - v1.7.16 same-items cost rule: the seven carried draw rows change only cost fields, each pinned; set size and hash bound
   ---
-  duration_ms: 13644.500395
+  duration_ms: 8663.803653
   ...
 # Subtest: v1.7.16 Strike-1: exact published values, 1,500 items with 5 over-limit refusals, estimate on the common set, own row
-ok 161 - v1.7.16 Strike-1: exact published values, 1,500 items with 5 over-limit refusals, estimate on the common set, own row
+ok 152 - v1.7.16 Strike-1: exact published values, 1,500 items with 5 over-limit refusals, estimate on the common set, own row
   ---
-  duration_ms: 1480.557285
+  duration_ms: 1219.215255
   ...
 # Subtest: v1.7.16 every row of the draw is unranked: no rank, in no order list, every carried rank and order list unchanged
-ok 162 - v1.7.16 every row of the draw is unranked: no rank, in no order list, every carried rank and order list unchanged
+ok 153 - v1.7.16 every row of the draw is unranked: no rank, in no order list, every carried rank and order list unchanged
   ---
-  duration_ms: 21706.205189
+  duration_ms: 11470.372301
   ...
 # Subtest: v1.7.16 extends the 27 Oct draw entry (still not equated) without touching the v1.6 chain v1.7.0 is bound to
-ok 163 - v1.7.16 extends the 27 Oct draw entry (still not equated) without touching the v1.6 chain v1.7.0 is bound to
+ok 154 - v1.7.16 extends the 27 Oct draw entry (still not equated) without touching the v1.6 chain v1.7.0 is bound to
   ---
-  duration_ms: 15849.360433
+  duration_ms: 9829.723825
   ...
 # Subtest: v1.7.16 synthetic board ranks and official cap lists match the recorded assembly
-ok 164 - v1.7.16 synthetic board ranks and official cap lists match the recorded assembly
+ok 155 - v1.7.16 synthetic board ranks and official cap lists match the recorded assembly
   ---
-  duration_ms: 52.418543
+  duration_ms: 31.875562
   ...
 # Subtest: every /jev-models/v* release page sets its own description <=160 chars
-ok 165 - every /jev-models/v* release page sets its own description <=160 chars
+ok 156 - every /jev-models/v* release page sets its own description <=160 chars
   ---
-  duration_ms: 4.903922
+  duration_ms: 4.102601
   ...
 # Subtest: every /jev-models/v* release page renders JSON-LD (PageJsonLd or an embedded component)
-ok 166 - every /jev-models/v* release page renders JSON-LD (PageJsonLd or an embedded component)
+ok 157 - every /jev-models/v* release page renders JSON-LD (PageJsonLd or an embedded component)
   ---
-  duration_ms: 4.99027
+  duration_ms: 3.593716
   ...
 # Subtest: sitemap takes every release page from the release history, not a hard-coded list
-ok 167 - sitemap takes every release page from the release history, not a hard-coded list
+ok 158 - sitemap takes every release page from the release history, not a hard-coded list
   ---
-  duration_ms: 3.000186
+  duration_ms: 2.505204
   ...
 # Subtest: sitemap URL helper omits URLs that redirect
-ok 168 - sitemap URL helper omits URLs that redirect
+ok 159 - sitemap URL helper omits URLs that redirect
   ---
-  duration_ms: 109062.122916
+  duration_ms: 67817.188209
   ...
 # Subtest: next.config redirects come from the shared superseded list
-ok 169 - next.config redirects come from the shared superseded list
+ok 160 - next.config redirects come from the shared superseded list
   ---
-  duration_ms: 1.530223
+  duration_ms: 1.315158
   ...
 # Subtest: llms.txt names the manifest as base release and points to the feed for the current release, with no literal version
-ok 170 - llms.txt names the manifest as base release and points to the feed for the current release, with no literal version
+ok 161 - llms.txt names the manifest as base release and points to the feed for the current release, with no literal version
   ---
-  duration_ms: 0.239336
+  duration_ms: 0.181075
   ...
-1..170
-# tests 170
+1..161
+# tests 161
 # suites 0
-# pass 168
+# pass 159
 # fail 1
 # cancelled 0
 # skipped 1
 # todo 0
-# duration_ms 706417.684269
+# duration_ms 548936.011547
+
+# R198 supplemental v1.7.13 PENDING suite
+TAP version 13
+# Subtest: v1.7.13 validates every row; PENDING is hidden, PASS is readable
+ok 1 - v1.7.13 validates every row; PENDING is hidden, PASS is readable
+  ---
+  duration_ms: 4707.826344
+  ...
+# Subtest: v1.7.13 standing GO: no top-five change, fairness receipt (SUSPICIOUS) bound as evidence, paid public basis exact
+ok 2 - v1.7.13 standing GO: no top-five change, fairness receipt (SUSPICIOUS) bound as evidence, paid public basis exact
+  ---
+  duration_ms: 1771.2307
+  ...
+# Subtest: v1.7.13 rejects carried score, interval, category and lane changes, including the v1.1 row
+ok 3 - v1.7.13 rejects carried score, interval, category and lane changes, including the v1.1 row
+  ---
+  duration_ms: 3938.478791
+  ...
+# Subtest: v1.7.13 rejects roster, rank, new row, draw and provenance mutations
+ok 4 - v1.7.13 rejects roster, rank, new row, draw and provenance mutations
+  ---
+  duration_ms: 2748.979232
+  ...
+# Subtest: v1.7.13 pin, template, public-text and cost-kind gates reject negatives
+ok 5 - v1.7.13 pin, template, public-text and cost-kind gates reject negatives
+  ---
+  duration_ms: 6.702285
+  ...
+# Subtest: v1.7.13 exact new scores, cost, coverage, draw and disclosures
+ok 6 - v1.7.13 exact new scores, cost, coverage, draw and disclosures
+  ---
+  duration_ms: 0.311116
+  ...
+# Subtest: v1.7.13 the new row is unranked: no rank, in no order list, every carried rank and order list unchanged
+ok 7 - v1.7.13 the new row is unranked: no rank, in no order list, every carried rank and order list unchanged
+  ---
+  duration_ms: 1999.628606
+  ...
+# Subtest: v1.7.13 new draw joins the equating table without touching the v1.6 chain v1.7.0 is bound to
+ok 8 - v1.7.13 new draw joins the equating table without touching the v1.6 chain v1.7.0 is bound to
+  ---
+  duration_ms: 9778.009374
+  ...
+# Subtest: v1.7.13 synthetic board ranks and official cap lists match the recorded assembly
+ok 9 - v1.7.13 synthetic board ranks and official cap lists match the recorded assembly
+  ---
+  duration_ms: 30.255492
+  ...
+1..9
+# tests 9
+# suites 0
+# pass 9
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 30225.65471

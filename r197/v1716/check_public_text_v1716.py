@@ -9,6 +9,7 @@ BANNED=re.compile(r"/home/|workers/|board\s*#|#\d{4,}|Florian|release.owner|\ble
 HIST="Added Strike-1 (hosted) on the 27 Oct regular draw, shown unranked; costs on that draw now use the items every row answered."
 HEAD="Measured on the 27 Oct 2026 draw, which is not yet equated to the reference scale: its first anchor runs used models weaker than this row, and stronger anchors are being measured.";TAIL="Shown unranked until then."
 NOTE=HEAD+' '+TAIL
+STRIKE_NOTE="Measured on the 27 Oct 2026 draw, which is not yet equated to the reference scale; stronger anchor runs for that draw are being measured. Shown unranked until then."
 H2O='h2o-lightning-4b-v1.4.1';H2O_EXTRA='On the 300 public items every draw shares, this version scores 57.2 Intelligence vs 61.1 for H2O-Lightning-4B v1.1.'
 TOPIC='This draw has no subject-topic labels yet, so the row has no topic cells'
 res=L(V/'jevbench-v1.7.16-results.json');cat=L(V/'jevbench-v1.7.16-categories.json');by={s['key']:s for s in res['systems']}
@@ -18,7 +19,7 @@ rel=next(l for l in (W/'lib/jevbench-releases.mjs').read_text().splitlines() if 
 texts={'page':page_text,'history_line':rel,'label':res['label'],'source_note':res['source_note'],'new_measurement_note':res['measurement_notes'][-1],'categories_note':cat['results_sha256_note'],
        'draw_table_entry':json.dumps(next(x for x in L(W/'data/jevbench-draw-equating.json')['draws'] if x['draw']=='v1.6-regular-20261027'))}
 for k in DK:
- r=by[k];assert r['not_ranked_because']==HEAD+(' '+H2O_EXTRA if k==H2O else '')+' '+TAIL,(k,'exact public note')
+ r=by[k];assert r['not_ranked_because']==(STRIKE_NOTE if k==K else HEAD+(' '+H2O_EXTRA if k==H2O else '')+' '+TAIL),(k,'exact public note')
  assert TOPIC in r['disclosure'],(k,'topic-cell sentence kept')
  assert 'listing_note' not in r and not re.search(r'equated to the reference scale with|anchor equating',r['disclosure']),(k,'no equated wording')
  texts[f'{k}.not_ranked_because']=r['not_ranked_because'];texts[f'{k}.cost.basis']=r['cost']['basis']
@@ -33,7 +34,7 @@ def strip(t):
  return t
 hits={nm:m.group() for nm,t in texts.items() if (m:=BANNED.search(strip(t)))}
 assert not hits,('internal public text',hits)
-assert res['source_note']==HIST and HIST.replace("'","\\'") in rel and HIST.replace("'","&apos;") in page and res['measurement_notes'][-1].startswith(HIST) and NOTE in res['measurement_notes'][-1]
+assert res['source_note']==HIST and HIST.replace("'","\\'") in rel and HIST.replace("'","&apos;") in page and res['measurement_notes'][-1].startswith(HIST) and NOTE in res['measurement_notes'][-1] and STRIKE_NOTE in res['measurement_notes'][-1]
 assert res['label']=='JevBench v1.7.16: Strike-1 on the 27 Oct regular draw; same-items cost on that draw'
 assert n['display']=='Strike-1' and n['author']=='Strike (strike-ai.eu)'
 for frag in ['hosted decision API (EU, OVH Gravelines)','fine-tune of Qwen/Qwen3.5-4B','all 1,500 items of the draw were sent; 5 items over the provider\'s input limit were refused and are scored as misses (kept in the denominator)',

@@ -1,0 +1,55 @@
+TAP version 13
+# Subtest: v1.7.13 validates every row; PENDING is hidden, PASS is readable
+ok 1 - v1.7.13 validates every row; PENDING is hidden, PASS is readable
+  ---
+  duration_ms: 4707.826344
+  ...
+# Subtest: v1.7.13 standing GO: no top-five change, fairness receipt (SUSPICIOUS) bound as evidence, paid public basis exact
+ok 2 - v1.7.13 standing GO: no top-five change, fairness receipt (SUSPICIOUS) bound as evidence, paid public basis exact
+  ---
+  duration_ms: 1771.2307
+  ...
+# Subtest: v1.7.13 rejects carried score, interval, category and lane changes, including the v1.1 row
+ok 3 - v1.7.13 rejects carried score, interval, category and lane changes, including the v1.1 row
+  ---
+  duration_ms: 3938.478791
+  ...
+# Subtest: v1.7.13 rejects roster, rank, new row, draw and provenance mutations
+ok 4 - v1.7.13 rejects roster, rank, new row, draw and provenance mutations
+  ---
+  duration_ms: 2748.979232
+  ...
+# Subtest: v1.7.13 pin, template, public-text and cost-kind gates reject negatives
+ok 5 - v1.7.13 pin, template, public-text and cost-kind gates reject negatives
+  ---
+  duration_ms: 6.702285
+  ...
+# Subtest: v1.7.13 exact new scores, cost, coverage, draw and disclosures
+ok 6 - v1.7.13 exact new scores, cost, coverage, draw and disclosures
+  ---
+  duration_ms: 0.311116
+  ...
+# Subtest: v1.7.13 the new row is unranked: no rank, in no order list, every carried rank and order list unchanged
+ok 7 - v1.7.13 the new row is unranked: no rank, in no order list, every carried rank and order list unchanged
+  ---
+  duration_ms: 1999.628606
+  ...
+# Subtest: v1.7.13 new draw joins the equating table without touching the v1.6 chain v1.7.0 is bound to
+ok 8 - v1.7.13 new draw joins the equating table without touching the v1.6 chain v1.7.0 is bound to
+  ---
+  duration_ms: 9778.009374
+  ...
+# Subtest: v1.7.13 synthetic board ranks and official cap lists match the recorded assembly
+ok 9 - v1.7.13 synthetic board ranks and official cap lists match the recorded assembly
+  ---
+  duration_ms: 30.255492
+  ...
+1..9
+# tests 9
+# suites 0
+# pass 9
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 30225.65471

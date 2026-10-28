@@ -21,6 +21,7 @@ let rejected=0,gateRejected=0;
 const expectReject=(name,fn)=>{const y=structuredClone(b);fn(y);let threw=false;try{validateJevbenchV1716Bundle(y,{candidate:true})}catch{threw=true}if(!threw)throw Error('negative accepted: '+name);rejected++;};
 for(const K of DRAW_KEYS){
  const neg=[
+  ...(K==='strike-1' ? [['old weaker-anchor note',x=>{row(x,K).not_ranked_because=row(x,'jeff_1_1_large').not_ranked_because}]] : []),
   ['ranked true',x=>{const s=row(x,K);s.ranked=true;s.listing='ranked';s.rank=282;s.ranks={A:282,B:282,C:282,capability:282};x.artifact.n_ranked+=1}],
   ['rank only',x=>{row(x,K).rank=1}],
   ['ranks only',x=>{row(x,K).ranks.capability=50}],

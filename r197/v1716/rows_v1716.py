@@ -11,14 +11,16 @@ CAP = 0.06459465517241379
 DRAW_NOTE = ("DRAW: measured on the 27 Oct 2026 regular draw (fresh sealed items; not yet equated to the reference scale, so its numbers "
              "are shown as published, offset 0).")
 TOPIC = "This draw has no subject-topic labels yet, so the row has no topic cells"
-# The public not-ranked note of every row on the 27 Oct draw (unchanged from v1.7.15; H2O-Lightning-4B v1.4.1 keeps its v1.1 sentence).
+# The carried public not-ranked note of every row on the 27 Oct draw (unchanged from v1.7.15; H2O-Lightning-4B v1.4.1 keeps its v1.1 sentence).
 NOTE_HEAD = ("Measured on the 27 Oct 2026 draw, which is not yet equated to the reference scale: its first anchor runs used models weaker than this row, and stronger anchors are being measured.")
 NOTE_TAIL = "Shown unranked until then."
 NOT_RANKED_BECAUSE = NOTE_HEAD + ' ' + NOTE_TAIL
 H2O_KEY = 'h2o-lightning-4b-v1.4.1'
 MSFT_KEY = 'microsoft-decision-1-r2'
 H2O_EXTRA = 'On the 300 public items every draw shares, this version scores 57.2 Intelligence vs 61.1 for H2O-Lightning-4B v1.1.'
+STRIKE_NOTE = "Measured on the 27 Oct 2026 draw, which is not yet equated to the reference scale; stronger anchor runs for that draw are being measured. Shown unranked until then."
 def note_for(key):
+    if key == KEY: return STRIKE_NOTE
     return NOTE_HEAD + (' ' + H2O_EXTRA if key == H2O_KEY else '') + ' ' + NOTE_TAIL
 # ---- same-items cost rule (every d1027 row)
 def same_items_sentence(n, usd_all):

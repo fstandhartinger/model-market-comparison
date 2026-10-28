@@ -11,7 +11,8 @@ b=L(V/'jevbench-v1.7.15-results.json');a=L(V/'jevbench-v1.7.16-results.json');by
 DRAW='v1.6-regular-20261027';K='strike-1';H2O='h2o-lightning-4b-v1.4.1';MS='microsoft-decision-1-r2'
 HEAD="Measured on the 27 Oct 2026 draw, which is not yet equated to the reference scale: its first anchor runs used models weaker than this row, and stronger anchors are being measured.";TAIL="Shown unranked until then."
 EXTRA='On the 300 public items every draw shares, this version scores 57.2 Intelligence vs 61.1 for H2O-Lightning-4B v1.1.'
-note=lambda k:HEAD+(' '+EXTRA if k==H2O else '')+' '+TAIL
+STRIKE_NOTE="Measured on the 27 Oct 2026 draw, which is not yet equated to the reference scale; stronger anchor runs for that draw are being measured. Shown unranked until then."
+note=lambda k:STRIKE_NOTE if k==K else HEAD+(' '+EXTRA if k==H2O else '')+' '+TAIL
 COST_FIELDS={'axes','composite_ci95','cost','jevbench_score','scores','v16','views'}
 DK=sorted(k for k,r in pb.items() if (r.get('draw') or {}).get('id')==DRAW)
 assert DK==['arcbright-elf-1-12b-r2','decisio-gemma-4-12b-tuned-commit-think',H2O,'jeff_1_1_large','jeff_1_1_qwen_4b',MS,'torchcast-decision-31b-v1.0']

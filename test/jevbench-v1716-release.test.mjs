@@ -64,6 +64,9 @@ test('v1.7.16 Strike-1: exact published values, 1,500 items with 5 over-limit re
  assert.deepEqual([s.capability,a.intelligence,a.calibration,a.speed,a.cost,s.scores.A,s.scores.B,s.scores.C].map(x=>+x.toFixed(4)),[68.3532,45.3479,91.3585,83.2956,54.0596,51.8147,48.074,35.9824]);
  assert.equal(s.display,'Strike-1');assert.equal(s.endpoint_kind,'api');assert.equal(s.status.rows,1500);assert.equal(s.status.answered_ok,1495);
  assert.equal(s.cost.kind,'estimate');assert.ok(Math.abs(s.cost.usd_per_1000-1000*b.proof.new_rows[ST].cost.input_tokens_common*0.03/1e6/1489)<1e-12);assert.equal(b.proof.new_rows[ST].cost.output_tokens,0);
+ assert.equal(s.not_ranked_because,'Measured on the 27 Oct 2026 draw, which is not yet equated to the reference scale; stronger anchor runs for that draw are being measured. Shown unranked until then.');
+ mutate(x=>{row(x,ST).not_ranked_because=V1716_NOT_RANKED_BECAUSE},/new row|public note/);
+ const oldNote=structuredClone(s);oldNote.not_ranked_because=V1716_NOT_RANKED_BECAUSE;assert.throws(()=>checkUnrankedRow(oldNote,b.artifact.board),/unranked reason/);
  assert.equal(s.paid_fast_lane,false);assert.equal(s.draw.release,'v1.7.16');
  assert.deepEqual(s.draw.offset,{C:0,I:0});assert.equal(s.draw.status,'anchor-runs-pending');assert.equal(s.published_scores,undefined);assert.equal(s.v16.equating_offset,null);
  assert.match(s.disclosure,/5 items over the provider's input limit were refused and are scored as misses/);assert.match(s.disclosure,/uncalibrated during beta/);assert.match(s.disclosure,/fine-tune of Qwen\/Qwen3\.5-4B/);
