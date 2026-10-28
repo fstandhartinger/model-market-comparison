@@ -15,6 +15,7 @@ const copilot = JSON.parse(await readFile(join(__dirname, "..", "data", "raw", "
 const claude = JSON.parse(await readFile(join(__dirname, "..", "data", "raw", "claude-code.json"), "utf8"));
 const epochEci = JSON.parse(await readFile(join(__dirname, "..", "data", "raw", "epoch-eci.json"), "utf8"));
 const stackit = JSON.parse(await readFile(join(__dirname, "..", "data", "raw", "stackit.json"), "utf8"));
+const chutesCatalog = JSON.parse(await readFile(join(__dirname, "..", "data", "raw", "chutes.json"), "utf8"));
 const inceptron = JSON.parse(await readFile(join(__dirname, "..", "data", "raw", "inceptron.json"), "utf8"));
 
 const REQUIRED = [
@@ -672,7 +673,10 @@ test("audited provider checkpoint aliases join their benchmark families", () => 
   for (const provider of ["Scaleway", "IONOS"]) {
     assert.ok(providers("mistral-small-3.2-24b-instruct").has(provider), provider);
   }
-  assert.ok(providers("mistral-nemo").has("Chutes"));
+  // CR-597: Chutes removed Mistral-Nemo-Instruct-2407-TEE on 2026-10-28; require the join exactly
+  // while the retained Chutes catalog lists it.
+  const chutesNemo = chutesCatalog.models.some((model) => model.model_name === "Mistral-Nemo");
+  assert.equal(providers("mistral-nemo").has("Chutes"), chutesNemo);
   assert.ok(providers("mistral-medium-3.5").has("Scaleway"));
   assert.ok(providers("gemma-4-31b-it").has("Chutes"));
 

@@ -71,7 +71,11 @@ test('D248: every OpenRouter route of the two repaired families is still reachab
     rowsOf(familyKey).flatMap((r) => r.offers).filter((o) => o.or_model_id).map((o) => o.or_model_id),
   );
   assert.deepEqual([...reachable('command-a+')].sort(), ['cohere/command-a-plus']);
+  // CR-597: OpenRouter withdrew the :free route on 2026-10-28; every route the retained catalog
+  // still lists must stay reachable, and a withdrawn route must not survive as a phantom offer.
+  const listed = new Set((openRouter.models || []).map((m) => m.id));
+  assert.ok(listed.has('nvidia/nemotron-3-super-120b-a12b'));
   assert.deepEqual([...reachable('nemotron-3-super-120b-a12b')].sort(), [
     'nvidia/nemotron-3-super-120b-a12b', 'nvidia/nemotron-3-super-120b-a12b:free',
-  ]);
+  ].filter((id) => listed.has(id)));
 });
