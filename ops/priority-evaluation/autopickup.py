@@ -4155,10 +4155,25 @@ def cycle(effects: Effects, synthetic_id: str | None = None, job_root: Path | No
     return counts
 
 
-def systemd_last_success(effects: Effects, unit: str) -> datetime | None:
+def journal_last_success(unit: str, window: timedelta) -> datetime | None:
+    # One transient failed run (e.g. a single IMAP timeout) must not hide a success earlier in the window.
+    since = f"-{int(window.total_seconds() // 60) + 5}min"
+    result = subprocess.run(
+        ["journalctl", "--user", "-u", unit, "JOB_TYPE=start", "JOB_RESULT=done", "--since", since,
+         "-o", "json", "--no-pager", "-q"],
+        text=True, capture_output=True, timeout=20, check=False,
+    )
+    last = 0
+    for line in result.stdout.splitlines():
+        with contextlib.suppress(ValueError, KeyError, TypeError):
+            last = max(last, int(json.loads(line)["__REALTIME_TIMESTAMP"]))
+    return datetime.fromtimestamp(last / 1_000_000, timezone.utc) if last else None
+
+
+def systemd_last_success(effects: Effects, unit: str, window: timedelta | None = None) -> datetime | None:
     values = effects.unit_state(unit)
     if values.get("Result") != "success" or values.get("ExecMainStatus") not in ("0", None):
-        return None
+        return journal_last_success(unit, window) if window else None
     stamp = values.get("ExecMainExitTimestamp") or ""
     if not stamp or stamp == "n/a":
         return None
@@ -4177,7 +4192,7 @@ def health(effects: Effects) -> dict[str, Any]:
         if result.stdout.strip() != "active":
             problems.append((f"timer:{timer}", f"{timer} is not active"))
     for unit, limit in ((WORKER_UNIT, timedelta(minutes=20)), (MAIL_WATCH_UNIT, timedelta(hours=1))):
-        last = systemd_last_success(effects, unit)
+        last = systemd_last_success(effects, unit, limit)
         if last is None or now - last > limit:
             problems.append((f"stale:{unit}", f"{unit} has not succeeded within {int(limit.total_seconds() // 60)} minutes"))
     predicate = managed_predicate("r", None, JOB_ROOT)
