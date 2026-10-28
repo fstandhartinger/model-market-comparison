@@ -83,5 +83,5 @@ test('CR-482 System1 s1-vision is no longer an ImageJevBench row anywhere in the
   assert.equal(ts20.systems['s1-vision'], undefined);
   assert.equal(ts20.summary['s1-vision'], undefined);
   assert.ok(!/s1-vision|System1 s1|Blink/.test(JSON.stringify(release)), 'no mention of the removed row in the published data');
-  assert.equal(release.ranking.length, 66); // CR-536: H2O-Lightning-31B added; field equating and ranks refreshed.
+  assert.equal(release.ranking.length, 67); // CR-536: H2O-Lightning-31B added; field equating and ranks refreshed.
 });

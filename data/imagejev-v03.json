@@ -2,7 +2,7 @@
   "benchmark": "ImageJevBench",
   "revision": "v0.3.0",
   "release_version": "v0.3.0",
-  "built_utc": "2026-10-27T16:08:30.962601+00:00",
+  "built_utc": "2026-10-28T18:06:26.533607+00:00",
   "status": "released",
   "headline_track": "core",
   "capability_eligibility": {
@@ -52099,6 +52099,833 @@
       "not_ranked_because": null
     },
     {
+      "key": "h2o_lightning_4b_v141_d7f1_image",
+      "name": "H2O-Lightning-4B v1.4.1 @d7f1b05a (image)",
+      "kind": "gpu",
+      "api_flag": false,
+      "last_measured_utc": "2026-10-28T18:05:44.373864+00:00",
+      "score_source": "run03/final-gpu/h2o_lightning_4b_v141_d7f1_image.json",
+      "source_sha256": "04cfedd4820732dc6999a98d40e480c5de55f229c2cc702e7ff7a16a385a959e",
+      "holds": [],
+      "release_ready": true,
+      "rank": null,
+      "ranked": false,
+      "listing": "unranked",
+      "pricing_alternative": null,
+      "measurement_date_basis": "Pod session: 28 Oct 2026, 17:30:40-17:50:59 UTC; official pass 1.",
+      "author": "H2O.ai",
+      "repo": "https://huggingface.co/h2oai/h2o-lightning-4b/tree/d7f1b05aa0b4e789b3896116f309ef842440e260",
+      "licence": "Apache-2.0",
+      "license": "Apache-2.0",
+      "open": true,
+      "params": "4B",
+      "underlying": "Qwen/Qwen3.5-4B",
+      "inference_setting": "Author's documented vision configuration at d7f1b05a: shipped serve_config.json, image temperature 1.0, two-way one engine, images on, MAX_LEN 40960, GPU_UTIL 0.70, max_pixels 1,048,576; selector v2 (BM25); transformers 5.20.2, vLLM 0.30.0 + h2oai overlay @b05cc29a; bfloat16, one RTX PRO 6000 Blackwell, offline container, base64 image input",
+      "measurement_source": "Official ImageJev v0.3 S1200+P300 pass 1 on 28 Oct 2026, paid public fast-lane evaluation. Model: h2oai/h2o-lightning-4b at d7f1b05aa0b4e789b3896116f309ef842440e260, Apache-2.0, base Qwen/Qwen3.5-4B; same weights (c9b6290d) as the ranked @cc18ee33 row. Author's documented vision configuration: shipped serve_config.json, image temperature 1.0 (previous read 0.65), two-way one engine, images on, MAX_LEN 40960, GPU_UTIL 0.70, max_pixels 1,048,576; selector v2 (BM25), transformers 5.20.2, vLLM 0.30.0 + h2oai per-request-attention overlay @b05cc29a, one RTX PRO 6000 Blackwell. Base64 images, no retries. 1,500 of 1,500 answered, no inference errors. state_selection_items: 0 of 1,500; effort log complete (1,500 rows), effort_log_match true. Latency and GPU seconds use the wall clock of each loopback request, including shim and server overhead. The model card discloses temperature refit data: Decision Index 0.3 public vision rows (12,210 questions), MMStar four-option (1,493 questions), own training-kind image questions (3,961 questions); disclosure only, these are not additional benchmark measurements. Unranked second read of the same frozen input after serving settings changed; excluded from field medians, gaps and equating reference statistics so all existing scores and ranks stay unchanged. TypeSafe-20: not measured for this revision (temperature refit); ranked TS20 is on the @cc18ee33 row.",
+      "prior_exposure": "Second read of the same frozen input; first read published on 27 Oct 2026 at cc18ee33. Self-hosted and offline.",
+      "pricing_note": "Cost uses measured GPU seconds (raw gpu_s) x USD 1.19 per GPU-hour, the standard self-hosted benchmark rate. The Verda pod all-in price was USD 2.661 per hour; disclosed separately from the benchmark cost basis. Core track: 1,174 items, 101.3 request GPU seconds, USD 0.0285 per 1,000 decisions.",
+      "score": 68.5137371492465,
+      "tracks": {
+        "core": {
+          "n_public": 235,
+          "n_sealed": 939,
+          "correct_public": 158,
+          "correct_sealed": 671,
+          "public": {
+            "n": 235,
+            "correct": 158,
+            "accuracy": 0.6723404255319149,
+            "chance": 0.3231205673758865,
+            "chance_corrected_intelligence": 51.592623637887684,
+            "ece": 0.0900157434034287,
+            "probability_coverage": 1.0,
+            "valid_answer_count": 235
+          },
+          "sealed": {
+            "n": 939,
+            "correct": 671,
+            "accuracy": 0.7145899893503728,
+            "chance": 0.3272275470358537,
+            "chance_corrected_intelligence": 57.57703672435627,
+            "ece": 0.04236049303471725,
+            "probability_coverage": 1.0,
+            "valid_answer_count": 939
+          },
+          "axes": {
+            "intelligence": 55.48249214409226,
+            "calibration": 88.19203386724675,
+            "speed": 88.71919775819978,
+            "cost": 56.34330221005649
+          },
+          "capability_raw": 71.83726300566951,
+          "composite": {
+            "harmonic_before_gates": 68.5137371492465,
+            "gates": {
+              "intelligence": 1.0,
+              "speed": 1.0,
+              "cost": 1.0
+            },
+            "score": 68.5137371492465
+          },
+          "composite_details": {
+            "harmonic_before_gates": 68.5137371492465,
+            "gates": {
+              "intelligence": 1.0,
+              "speed": 1.0,
+              "cost": 1.0
+            },
+            "score": 68.5137371492465
+          },
+          "p50_s": 0.0862887115000035,
+          "p95_s": 0.13316909800005305,
+          "cost_per_1000": 0.0285248427972811,
+          "cost_basis": "measured GPU seconds x $1.19/GPU-hour",
+          "speed": {
+            "score": 88.71919775819978,
+            "raw_p50_s": 0.0862887115000035,
+            "raw_p95_s": 0.13316909800005305,
+            "adjusted_p50_s": 0.322577423000007,
+            "adjusted_p95_s": 0.41633819600010613,
+            "latency_coverage": 1.0
+          },
+          "cost": {
+            "score": 56.34330221005649,
+            "raw_score": 56.343302210056486,
+            "usd_per_1000": 0.0285248427972811,
+            "total_usd": 0.03348816544400801,
+            "coverage": 1.0,
+            "source": "measured GPU seconds x $1.19/GPU-hour"
+          },
+          "intelligence_before_penalty": 55.48249214409226,
+          "gap_pp": -3.125676818577375,
+          "raw_gap_pp": -4.22495638184579,
+          "gap_details": {
+            "chart_reasoning": {
+              "n_public": 16,
+              "n_sealed": 44,
+              "gap_pp": 4.545454545454541,
+              "weight": 11.733333333333333
+            },
+            "counting": {
+              "n_public": 22,
+              "n_sealed": 83,
+              "gap_pp": 8.105147864184008,
+              "weight": 17.39047619047619
+            },
+            "diagram_reasoning": {
+              "n_public": 32,
+              "n_sealed": 109,
+              "gap_pp": 0.71674311926605,
+              "weight": 24.73758865248227
+            },
+            "multi_panel": {
+              "n_public": 17,
+              "n_sealed": 92,
+              "gap_pp": -8.759590792838868,
+              "weight": 14.34862385321101
+            },
+            "photo_docs": {
+              "n_public": 30,
+              "n_sealed": 88,
+              "gap_pp": 1.0606060606060619,
+              "weight": 22.372881355932204
+            },
+            "receipt": {
+              "n_public": 22,
+              "n_sealed": 110,
+              "gap_pp": -0.9090909090909038,
+              "weight": 18.333333333333332
+            },
+            "small_text": {
+              "n_public": 36,
+              "n_sealed": 139,
+              "gap_pp": -16.82653876898481,
+              "weight": 28.594285714285714
+            },
+            "spatial": {
+              "n_public": 30,
+              "n_sealed": 130,
+              "gap_pp": -2.3076923076923106,
+              "weight": 24.375
+            },
+            "trap_charts": {
+              "n_public": 21,
+              "n_sealed": 94,
+              "gap_pp": -6.737588652482273,
+              "weight": 17.16521739130435
+            }
+          },
+          "gap_unavailable": false,
+          "penalty_points": 0,
+          "penalty_multiplier": 1.0,
+          "failures": 0,
+          "sets": {
+            "P": {
+              "n": 235,
+              "metrics": {
+                "n": 235,
+                "correct": 158,
+                "accuracy": 0.6723404255319149,
+                "chance": 0.3231205673758865,
+                "chance_corrected_intelligence": 51.592623637887684,
+                "ece": 0.0900157434034287,
+                "probability_coverage": 1.0,
+                "valid_answer_count": 235
+              },
+              "score": 66.79473747860098
+            },
+            "S": {
+              "n": 939,
+              "metrics": {
+                "n": 939,
+                "correct": 671,
+                "accuracy": 0.7145899893503728,
+                "chance": 0.3272275470358537,
+                "chance_corrected_intelligence": 57.57703672435627,
+                "ece": 0.04236049303471725,
+                "probability_coverage": 1.0,
+                "valid_answer_count": 939
+              },
+              "score": 74.55246905870641
+            },
+            "A": {
+              "n": 234,
+              "metrics": {
+                "n": 234,
+                "correct": 175,
+                "accuracy": 0.7478632478632479,
+                "chance": 0.3225071225071225,
+                "chance_corrected_intelligence": 62.783851976450805,
+                "ece": 0.044751584199687354,
+                "probability_coverage": 1.0,
+                "valid_answer_count": 234
+              },
+              "score": 76.91676756825666
+            }
+          },
+          "per_type": {
+            "choice": {
+              "n": 544,
+              "metrics": {
+                "n": 544,
+                "correct": 379,
+                "accuracy": 0.6966911764705882,
+                "chance": 0.3001838235294118,
+                "chance_corrected_intelligence": 56.658786446020486,
+                "ece": 0.08020758590002752,
+                "probability_coverage": 1.0,
+                "valid_answer_count": 544
+              },
+              "score": 70.3086346330075
+            },
+            "noul": {
+              "n": 265,
+              "metrics": {
+                "n": 265,
+                "correct": 213,
+                "accuracy": 0.8037735849056604,
+                "chance": 0.5,
+                "chance_corrected_intelligence": 60.754716981132084,
+                "ece": 0.060640297868914436,
+                "probability_coverage": 1.0,
+                "valid_answer_count": 265
+              },
+              "score": 74.3133287036746
+            },
+            "score": {
+              "n": 365,
+              "metrics": {
+                "n": 365,
+                "correct": 237,
+                "accuracy": 0.6493150684931507,
+                "chance": 0.23945205479452056,
+                "chance_corrected_intelligence": 53.89048991354466,
+                "ece": 0.058060444402331865,
+                "probability_coverage": 1.0,
+                "valid_answer_count": 365
+              },
+              "score": 71.13920051653915
+            }
+          },
+          "hard_slices": {
+            "hard": {
+              "n": 517,
+              "metrics": {
+                "n": 517,
+                "correct": 309,
+                "accuracy": 0.597678916827853,
+                "chance": 0.33497743391360413,
+                "chance_corrected_intelligence": 39.50264191187164,
+                "ece": 0.0937143564586064,
+                "probability_coverage": 1.0,
+                "valid_answer_count": 517
+              },
+              "score": 60.37988531007518
+            },
+            "non-hard": {
+              "n": 657,
+              "metrics": {
+                "n": 657,
+                "correct": 520,
+                "accuracy": 0.791476407914764,
+                "chance": 0.31966007102993405,
+                "chance_corrected_intelligence": 69.35008762444534,
+                "ece": 0.04841710181801619,
+                "probability_coverage": 1.0,
+                "valid_answer_count": 657
+              },
+              "score": 79.83333363042105
+            }
+          },
+          "gap_policy_pending": true,
+          "rotation_adjustment": {
+            "sealed_set": "S",
+            "offset_pp": 0,
+            "field_median_gap_pp": -1.6622426006391429,
+            "measured_gap_pp": -7.757731580105428,
+            "penalty_points": 0,
+            "equated_sealed_score": 74.55246905870641,
+            "capability_score": 71.83726300566951,
+            "frozen_axes_unchanged": true,
+            "ready": true
+          },
+          "axes_raw": {
+            "intelligence": 55.48249214409226,
+            "calibration": 88.19203386724675,
+            "speed": 88.71919775819978,
+            "cost": 56.34330221005649
+          },
+          "composite_raw": 68.5137371492465,
+          "capability": 71.83726300566951,
+          "capability_adjustment_pp": 0.0,
+          "matched_gap_pp": -3.125676818577375,
+          "raw_overall_gap_pp": -4.22495638184579
+        },
+        "computer-use": {
+          "n_public": 65,
+          "n_sealed": 261,
+          "correct_public": 61,
+          "correct_sealed": 242,
+          "public": {
+            "n": 65,
+            "correct": 61,
+            "accuracy": 0.9384615384615385,
+            "chance": 0.3569230769230769,
+            "chance_corrected_intelligence": 90.43062200956938,
+            "ece": 0.062101101258143734,
+            "probability_coverage": 1.0,
+            "valid_answer_count": 65
+          },
+          "sealed": {
+            "n": 261,
+            "correct": 242,
+            "accuracy": 0.9272030651340997,
+            "chance": 0.34827586206896555,
+            "chance_corrected_intelligence": 88.83009994121106,
+            "ece": 0.07214219015129118,
+            "probability_coverage": 1.0,
+            "valid_answer_count": 261
+          },
+          "axes": {
+            "intelligence": 89.39028266513647,
+            "calibration": 86.27443819226208,
+            "speed": 89.59400351143502,
+            "cost": 57.56011200430403
+          },
+          "capability_raw": 87.83236042869927,
+          "composite": {
+            "harmonic_before_gates": 77.9538360969156,
+            "gates": {
+              "intelligence": 1.0,
+              "speed": 1.0,
+              "cost": 1.0
+            },
+            "score": 77.9538360969156
+          },
+          "composite_details": {
+            "harmonic_before_gates": 77.9538360969156,
+            "gates": {
+              "intelligence": 1.0,
+              "speed": 1.0,
+              "cost": 1.0
+            },
+            "score": 77.9538360969156
+          },
+          "p50_s": 0.08420528299996022,
+          "p95_s": 0.09741783300000861,
+          "cost_per_1000": 0.02598142297218718,
+          "cost_basis": "measured GPU seconds x $1.19/GPU-hour",
+          "speed": {
+            "score": 89.59400351143502,
+            "raw_p50_s": 0.08420528299996022,
+            "raw_p95_s": 0.09741783300000861,
+            "adjusted_p50_s": 0.31841056599992046,
+            "adjusted_p95_s": 0.34483566600001725,
+            "latency_coverage": 1.0
+          },
+          "cost": {
+            "score": 57.56011200430403,
+            "raw_score": 57.56011200430403,
+            "usd_per_1000": 0.02598142297218718,
+            "total_usd": 0.00846994388893302,
+            "coverage": 1.0,
+            "source": "measured GPU seconds x $1.19/GPU-hour"
+          },
+          "intelligence_before_penalty": 89.39028266513647,
+          "gap_pp": 1.1759171476363346,
+          "raw_gap_pp": 1.125847332743879,
+          "gap_details": {
+            "agent_safety": {
+              "n_public": 14,
+              "n_sealed": 47,
+              "gap_pp": 19.14893617021277,
+              "weight": 10.78688524590164
+            },
+            "dense_ui": {
+              "n_public": 12,
+              "n_sealed": 54,
+              "gap_pp": -14.814814814814813,
+              "weight": 9.818181818181818
+            },
+            "ui_screenshots": {
+              "n_public": 39,
+              "n_sealed": 160,
+              "gap_pp": 0.0,
+              "weight": 31.35678391959799
+            }
+          },
+          "gap_unavailable": false,
+          "penalty_points": 0,
+          "penalty_multiplier": 1.0,
+          "failures": 0,
+          "sets": {
+            "P": {
+              "n": 65,
+              "metrics": {
+                "n": 65,
+                "correct": 61,
+                "accuracy": 0.9384615384615385,
+                "chance": 0.3569230769230769,
+                "chance_corrected_intelligence": 90.43062200956938,
+                "ece": 0.062101101258143734,
+                "probability_coverage": 1.0,
+                "valid_answer_count": 65
+              },
+              "score": 89.00520087897031
+            },
+            "S": {
+              "n": 261,
+              "metrics": {
+                "n": 261,
+                "correct": 242,
+                "accuracy": 0.9272030651340997,
+                "chance": 0.34827586206896555,
+                "chance_corrected_intelligence": 88.83009994121106,
+                "ece": 0.07214219015129118,
+                "probability_coverage": 1.0,
+                "valid_answer_count": 261
+              },
+              "score": 87.20083095547642
+            },
+            "A": {
+              "n": 66,
+              "metrics": {
+                "n": 66,
+                "correct": 59,
+                "accuracy": 0.8939393939393939,
+                "chance": 0.3318181818181818,
+                "chance_corrected_intelligence": 84.12698412698413,
+                "ece": 0.06365897381091029,
+                "probability_coverage": 1.0,
+                "valid_answer_count": 66
+              },
+              "score": 85.69759468240103
+            }
+          },
+          "per_type": {
+            "choice": {
+              "n": 206,
+              "metrics": {
+                "n": 206,
+                "correct": 187,
+                "accuracy": 0.9077669902912622,
+                "chance": 0.27475728155339807,
+                "chance_corrected_intelligence": 87.28246318607765,
+                "ece": 0.05637176916693065,
+                "probability_coverage": 1.0,
+                "valid_answer_count": 206
+              },
+              "score": 88.00405467634576
+            },
+            "noul": {
+              "n": 110,
+              "metrics": {
+                "n": 110,
+                "correct": 106,
+                "accuracy": 0.9636363636363636,
+                "chance": 0.5,
+                "chance_corrected_intelligence": 92.72727272727272,
+                "ece": 0.09026787784840154,
+                "probability_coverage": 1.0,
+                "valid_answer_count": 110
+              },
+              "score": 87.33684857879621
+            },
+            "score": {
+              "n": 10,
+              "metrics": {
+                "n": 10,
+                "correct": 10,
+                "accuracy": 1.0,
+                "chance": 0.25,
+                "chance_corrected_intelligence": 100.0,
+                "ece": 0.1435357169627768,
+                "probability_coverage": 1.0,
+                "valid_answer_count": 10
+              },
+              "score": 85.64642830372233
+            }
+          },
+          "hard_slices": {
+            "hard": {
+              "n": 83,
+              "metrics": {
+                "n": 83,
+                "correct": 66,
+                "accuracy": 0.7951807228915663,
+                "chance": 0.36686746987951807,
+                "chance_corrected_intelligence": 67.64985727878211,
+                "ece": 0.05169305400360418,
+                "probability_coverage": 1.0,
+                "valid_answer_count": 83
+              },
+              "score": 78.65562323903063
+            },
+            "non-hard": {
+              "n": 243,
+              "metrics": {
+                "n": 243,
+                "correct": 237,
+                "accuracy": 0.9753086419753086,
+                "chance": 0.34423868312757205,
+                "chance_corrected_intelligence": 96.2347034828993,
+                "ece": 0.08842400689688644,
+                "probability_coverage": 1.0,
+                "valid_answer_count": 243
+              },
+              "score": 89.27495105176101
+            }
+          },
+          "gap_policy_pending": true,
+          "rotation_adjustment": {
+            "sealed_set": "S",
+            "offset_pp": 0,
+            "field_median_gap_pp": -1.4771631397072866,
+            "measured_gap_pp": 1.8043699234938941,
+            "penalty_points": 0,
+            "equated_sealed_score": 87.20083095547642,
+            "capability_score": 87.83236042869927,
+            "frozen_axes_unchanged": true,
+            "ready": true
+          },
+          "axes_raw": {
+            "intelligence": 89.39028266513647,
+            "calibration": 86.27443819226208,
+            "speed": 89.59400351143502,
+            "cost": 57.56011200430403
+          },
+          "composite_raw": 77.9538360969156,
+          "capability": 87.83236042869927,
+          "capability_adjustment_pp": 0.0,
+          "matched_gap_pp": 1.1759171476363346,
+          "raw_overall_gap_pp": 1.125847332743879
+        },
+        "browser-use": {
+          "n_public": 0,
+          "n_sealed": 0,
+          "unmeasured": true,
+          "axes": null,
+          "composite": null
+        },
+        "all": {
+          "n_public": 235,
+          "n_sealed": 939,
+          "correct_public": 158,
+          "correct_sealed": 671,
+          "public": {
+            "n": 235,
+            "correct": 158,
+            "accuracy": 0.6723404255319149,
+            "chance": 0.3231205673758865,
+            "chance_corrected_intelligence": 51.592623637887684,
+            "ece": 0.0900157434034287,
+            "probability_coverage": 1.0,
+            "valid_answer_count": 235
+          },
+          "sealed": {
+            "n": 939,
+            "correct": 671,
+            "accuracy": 0.7145899893503728,
+            "chance": 0.3272275470358537,
+            "chance_corrected_intelligence": 57.57703672435627,
+            "ece": 0.04236049303471725,
+            "probability_coverage": 1.0,
+            "valid_answer_count": 939
+          },
+          "axes": {
+            "intelligence": 55.48249214409226,
+            "calibration": 88.19203386724675,
+            "speed": 88.71919775819978,
+            "cost": 56.34330221005649
+          },
+          "capability_raw": 71.83726300566951,
+          "composite": {
+            "harmonic_before_gates": 68.5137371492465,
+            "gates": {
+              "intelligence": 1.0,
+              "speed": 1.0,
+              "cost": 1.0
+            },
+            "score": 68.5137371492465
+          },
+          "composite_details": {
+            "harmonic_before_gates": 68.5137371492465,
+            "gates": {
+              "intelligence": 1.0,
+              "speed": 1.0,
+              "cost": 1.0
+            },
+            "score": 68.5137371492465
+          },
+          "p50_s": 0.0862887115000035,
+          "p95_s": 0.13316909800005305,
+          "cost_per_1000": 0.0285248427972811,
+          "cost_basis": "measured GPU seconds x $1.19/GPU-hour",
+          "speed": {
+            "score": 88.71919775819978,
+            "raw_p50_s": 0.0862887115000035,
+            "raw_p95_s": 0.13316909800005305,
+            "adjusted_p50_s": 0.322577423000007,
+            "adjusted_p95_s": 0.41633819600010613,
+            "latency_coverage": 1.0
+          },
+          "cost": {
+            "score": 56.34330221005649,
+            "raw_score": 56.343302210056486,
+            "usd_per_1000": 0.0285248427972811,
+            "total_usd": 0.03348816544400801,
+            "coverage": 1.0,
+            "source": "measured GPU seconds x $1.19/GPU-hour"
+          },
+          "intelligence_before_penalty": 55.48249214409226,
+          "gap_pp": -3.125676818577375,
+          "raw_gap_pp": -4.22495638184579,
+          "gap_details": {
+            "chart_reasoning": {
+              "n_public": 16,
+              "n_sealed": 44,
+              "gap_pp": 4.545454545454541,
+              "weight": 11.733333333333333
+            },
+            "counting": {
+              "n_public": 22,
+              "n_sealed": 83,
+              "gap_pp": 8.105147864184008,
+              "weight": 17.39047619047619
+            },
+            "diagram_reasoning": {
+              "n_public": 32,
+              "n_sealed": 109,
+              "gap_pp": 0.71674311926605,
+              "weight": 24.73758865248227
+            },
+            "multi_panel": {
+              "n_public": 17,
+              "n_sealed": 92,
+              "gap_pp": -8.759590792838868,
+              "weight": 14.34862385321101
+            },
+            "photo_docs": {
+              "n_public": 30,
+              "n_sealed": 88,
+              "gap_pp": 1.0606060606060619,
+              "weight": 22.372881355932204
+            },
+            "receipt": {
+              "n_public": 22,
+              "n_sealed": 110,
+              "gap_pp": -0.9090909090909038,
+              "weight": 18.333333333333332
+            },
+            "small_text": {
+              "n_public": 36,
+              "n_sealed": 139,
+              "gap_pp": -16.82653876898481,
+              "weight": 28.594285714285714
+            },
+            "spatial": {
+              "n_public": 30,
+              "n_sealed": 130,
+              "gap_pp": -2.3076923076923106,
+              "weight": 24.375
+            },
+            "trap_charts": {
+              "n_public": 21,
+              "n_sealed": 94,
+              "gap_pp": -6.737588652482273,
+              "weight": 17.16521739130435
+            }
+          },
+          "gap_unavailable": false,
+          "penalty_points": 0,
+          "penalty_multiplier": 1.0,
+          "failures": 0,
+          "sets": {
+            "P": {
+              "n": 235,
+              "metrics": {
+                "n": 235,
+                "correct": 158,
+                "accuracy": 0.6723404255319149,
+                "chance": 0.3231205673758865,
+                "chance_corrected_intelligence": 51.592623637887684,
+                "ece": 0.0900157434034287,
+                "probability_coverage": 1.0,
+                "valid_answer_count": 235
+              },
+              "score": 66.79473747860098
+            },
+            "S": {
+              "n": 939,
+              "metrics": {
+                "n": 939,
+                "correct": 671,
+                "accuracy": 0.7145899893503728,
+                "chance": 0.3272275470358537,
+                "chance_corrected_intelligence": 57.57703672435627,
+                "ece": 0.04236049303471725,
+                "probability_coverage": 1.0,
+                "valid_answer_count": 939
+              },
+              "score": 74.55246905870641
+            },
+            "A": {
+              "n": 234,
+              "metrics": {
+                "n": 234,
+                "correct": 175,
+                "accuracy": 0.7478632478632479,
+                "chance": 0.3225071225071225,
+                "chance_corrected_intelligence": 62.783851976450805,
+                "ece": 0.044751584199687354,
+                "probability_coverage": 1.0,
+                "valid_answer_count": 234
+              },
+              "score": 76.91676756825666
+            }
+          },
+          "per_type": {
+            "choice": {
+              "n": 544,
+              "metrics": {
+                "n": 544,
+                "correct": 379,
+                "accuracy": 0.6966911764705882,
+                "chance": 0.3001838235294118,
+                "chance_corrected_intelligence": 56.658786446020486,
+                "ece": 0.08020758590002752,
+                "probability_coverage": 1.0,
+                "valid_answer_count": 544
+              },
+              "score": 70.3086346330075
+            },
+            "noul": {
+              "n": 265,
+              "metrics": {
+                "n": 265,
+                "correct": 213,
+                "accuracy": 0.8037735849056604,
+                "chance": 0.5,
+                "chance_corrected_intelligence": 60.754716981132084,
+                "ece": 0.060640297868914436,
+                "probability_coverage": 1.0,
+                "valid_answer_count": 265
+              },
+              "score": 74.3133287036746
+            },
+            "score": {
+              "n": 365,
+              "metrics": {
+                "n": 365,
+                "correct": 237,
+                "accuracy": 0.6493150684931507,
+                "chance": 0.23945205479452056,
+                "chance_corrected_intelligence": 53.89048991354466,
+                "ece": 0.058060444402331865,
+                "probability_coverage": 1.0,
+                "valid_answer_count": 365
+              },
+              "score": 71.13920051653915
+            }
+          },
+          "hard_slices": {
+            "hard": {
+              "n": 517,
+              "metrics": {
+                "n": 517,
+                "correct": 309,
+                "accuracy": 0.597678916827853,
+                "chance": 0.33497743391360413,
+                "chance_corrected_intelligence": 39.50264191187164,
+                "ece": 0.0937143564586064,
+                "probability_coverage": 1.0,
+                "valid_answer_count": 517
+              },
+              "score": 60.37988531007518
+            },
+            "non-hard": {
+              "n": 657,
+              "metrics": {
+                "n": 657,
+                "correct": 520,
+                "accuracy": 0.791476407914764,
+                "chance": 0.31966007102993405,
+                "chance_corrected_intelligence": 69.35008762444534,
+                "ece": 0.04841710181801619,
+                "probability_coverage": 1.0,
+                "valid_answer_count": 657
+              },
+              "score": 79.83333363042105
+            }
+          },
+          "gap_policy_pending": true,
+          "rotation_adjustment": {
+            "sealed_set": "S",
+            "offset_pp": 0,
+            "field_median_gap_pp": -1.6622426006391429,
+            "measured_gap_pp": -7.757731580105428,
+            "penalty_points": 0,
+            "equated_sealed_score": 74.55246905870641,
+            "capability_score": 71.83726300566951,
+            "frozen_axes_unchanged": true,
+            "ready": true
+          },
+          "axes_raw": {
+            "intelligence": 55.48249214409226,
+            "calibration": 88.19203386724675,
+            "speed": 88.71919775819978,
+            "cost": 56.34330221005649
+          },
+          "composite_raw": 68.5137371492465,
+          "capability": 71.83726300566951,
+          "capability_adjustment_pp": 0.0,
+          "matched_gap_pp": -3.125676818577375,
+          "raw_overall_gap_pp": -4.22495638184579
+        }
+      },
+      "not_ranked_because": "same weights (c9b6290d); serving settings changed after the 27 Oct ImageJev result was published (image temperature 0.65 -> 1.0, BM25 selector, transformers 5.20.2); second read of the same frozen input"
+    },
+    {
       "api_flag": false,
       "key": "standard_one_3b",
       "prior_exposure": "First ImageJevBench measurement, intake run 26 Sep 2026 (offline container, own pod).",
@@ -54067,7 +54894,7 @@
       "carry_note": "Source unavailable since 30 Sep 2026: the Hugging Face repository returns 401 and the author lists no public models. Carried, not re-measured."
     }
   ],
-  "n_systems": 66,
+  "n_systems": 67,
   "categories": {
     "revision": "v0.3.0",
     "minN": 15,
@@ -61012,9 +61839,112 @@
             284
           ]
         }
+      },
+      "h2o_lightning_4b_v141_d7f1_image": {
+        "capabilities": {
+          "receipt": [
+            94.44,
+            132,
+            132
+          ],
+          "surface_inspection": [
+            100.0,
+            19,
+            19
+          ],
+          "ui_screenshots": [
+            100.0,
+            199,
+            199
+          ],
+          "diagram_reasoning": [
+            85.34,
+            141,
+            141
+          ],
+          "chart_reasoning": [
+            95.56,
+            60,
+            60
+          ],
+          "photo_docs": [
+            25.42,
+            118,
+            118
+          ],
+          "small_text": [
+            11.0,
+            175,
+            175
+          ],
+          "dense_ui": [
+            69.44,
+            66,
+            66
+          ],
+          "trap_charts": [
+            53.48,
+            115,
+            115
+          ],
+          "agent_safety": [
+            74.86,
+            61,
+            61
+          ],
+          "counting": [
+            14.76,
+            105,
+            105
+          ],
+          "multi_panel": [
+            64.98,
+            109,
+            109
+          ],
+          "multilingual": [
+            100.0,
+            40,
+            40
+          ],
+          "spatial": [
+            62.5,
+            160,
+            160
+          ]
+        },
+        "usecases": {
+          "document_check": [
+            46.0,
+            465,
+            465
+          ],
+          "count_inspect": [
+            27.82,
+            124,
+            124
+          ],
+          "ui_agent_action": [
+            89.11,
+            326,
+            326
+          ],
+          "diagram_planning": [
+            73.2,
+            301,
+            301
+          ],
+          "chart_decision": [
+            66.78,
+            284,
+            284
+          ]
+        }
       }
     },
-    "missing": {}
+    "missing": {
+      "h2o_lightning_4b_v141_d7f1_image": "not measured for this revision (temperature refit); ranked TS20 is on the @cc18ee33 row"
+    }
   },
   "warnings": [],
   "sources": [
@@ -61081,6 +62011,10 @@
     {
       "path": "run03/final-gpu/h2o_lightning_4b_image.json",
       "sha256": "0d5d222176f51749aeecc8aba78da91a2aed77e95c2a225bd0bf9fed639fb7cf"
+    },
+    {
+      "path": "run03/final-gpu/h2o_lightning_4b_v141_d7f1_image.json",
+      "sha256": "04cfedd4820732dc6999a98d40e480c5de55f229c2cc702e7ff7a16a385a959e"
     },
     {
       "path": "run03/final-gpu/h2o_lightning_4b_v141_image.json",
