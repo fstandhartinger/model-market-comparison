@@ -76,7 +76,45 @@ export async function readNotifyState(stateDir) {
 // never throws — a failed send must not mask the daily run's own exit code.
 export const notifyBinary = (env = process.env) => env.BH_NOTIFY || join(env.HOME || '/home/flori', 'bin/notify');
 
-export async function sendNotify(text, { bin = notifyBinary(), execImpl = execFileAsync, replyJobDir = null, env = process.env } = {}) {
+// Reliability review N11 (28 Oct 2026): a routine ask that `notify` routes to board #15 prints ROUTED_TO_BOARD_ID=<id>
+// but still exits non-zero (75 NOT SENT: it did not reach Telegram), and a capped card printing QUEUED: outbox <id> is
+// held by the outbox ("never resend"). Both were logged as failures, the key never reached `notified`, and every re-run
+// re-asked: the day-7 Mistral card became 5 identical asks on #15 in 3.7 h. Both now count as sent; a timeout counts as
+// sent when ~/.notify/log.jsonl holds a routed-board line from this card's reply job written after the send started.
+export const notifyLogPath = (env = process.env) => env.BH_NOTIFY_LOG || join(env.HOME || '/home/flori', '.notify/log.jsonl');
+
+export function deliveredOutcome(stdout) {
+  const out = String(stdout ?? '');
+  const routed = out.match(/^ROUTED_TO_BOARD_ID=(\d+)/m);
+  if (routed) return { sent: true, routed_board_id: Number(routed[1]) };
+  const queued = out.match(/^QUEUED: outbox (\S+)/m);
+  if (queued) return { sent: true, queued_outbox_id: queued[1].replace(/[.,;]$/, '') };
+  return null;
+}
+
+async function routedInLog(logPath, replyJobDir, sinceMs) {
+  if (!replyJobDir) return null;
+  let text;
+  try { text = await readFile(logPath, 'utf8'); } catch { return null; }
+  // Only the tail can hold an entry written during this send.
+  for (const line of text.slice(-200_000).split('\n').reverse()) {
+    if (!line.includes('routed-board')) continue;
+    try {
+      const entry = JSON.parse(line);
+      if (entry.level === 'routed-board' && entry.job_dir === replyJobDir && entry.ts * 1000 >= sinceMs) return { sent: true, routed_board_id: entry.board_entry_id ?? null };
+    } catch { /* a half-written line */ }
+  }
+  return null;
+}
+
+const failureTail = (error) => {
+  const stream = [error?.stderr, error?.stdout].map((x) => String(x ?? '').trim()).find(Boolean);
+  const detail = stream ? stream.slice(-200) : String(error?.message || 'unknown error').slice(0, 200);
+  return `notify_failed${error?.killed ? ' (timeout)' : Number.isInteger(error?.code) ? ` (exit ${error.code})` : ''}:${detail}`;
+};
+
+export async function sendNotify(text, { bin = notifyBinary(), execImpl = execFileAsync, replyJobDir = null, env = process.env, now = Date.now } = {}) {
+  const startedAt = now();
   try {
     // A 🧑 human-action block is an ask: `notify` refuses it without `--ask` and a job folder that owns the reply.
     const args = replyJobDir ? ['now', '--ask', String(HUMAN_TODO_ASK_MINUTES), String(text).slice(0, 4000)] : ['now', String(text).slice(0, 4000)];
@@ -84,7 +122,10 @@ export async function sendNotify(text, { bin = notifyBinary(), execImpl = execFi
       ...(replyJobDir ? { env: { ...env, AGENT_BOARD_JOBDIR: replyJobDir, NOTIFY_SOURCE: 'benchmarkheaven-daily' } } : {}) });
     return { sent: true };
   } catch (error) {
-    return { sent: false, reason: error?.code === 'ENOENT' ? 'notify_missing' : `notify_failed:${String(error?.message || 'unknown error').slice(0, 200)}` };
+    if (error?.code === 'ENOENT') return { sent: false, reason: 'notify_missing' };
+    const delivered = deliveredOutcome(error?.stdout) ?? await routedInLog(notifyLogPath(env), replyJobDir, startedAt - 1000);
+    if (delivered) return delivered;
+    return { sent: false, reason: failureTail(error) };
   }
 }
 
@@ -190,7 +231,8 @@ export async function executeNotifications({
         ? await sendBoardHandoff(send.text, { ...send.board, bin: agentBoardBinary(env), env, ...(execImpl ? { execImpl } : {}) })
         : await sendNotify(send.text, { bin: notifyBinary(env), env, replyJobDir, ...(execImpl ? { execImpl } : {}) });
     if (result.sent) {
-      console.log(`notify: sent ${send.kind} [${send.key}]`);
+      const via = result.routed_board_id ? ` (routed to board #${result.routed_board_id})` : result.queued_outbox_id ? ` (queued in outbox ${result.queued_outbox_id})` : '';
+      console.log(`notify: sent ${send.kind} [${send.key}]${via}`);
       sent.push(send.kind);
       if (send.onSent?.notified_key) notifiedAdditions[send.onSent.notified_key] = plan.evaluated_at;
       if (send.onSent?.failure_alert_sent_at) failureStampMs = now;
