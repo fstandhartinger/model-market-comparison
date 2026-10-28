@@ -1,11 +1,17 @@
 {
- "status": "PASS",
- "primary_and_supplementary_lists": 580,
+ "aggregate_gate_rerun": {
+  "command": "suite-slot --max-wait 1800 -- bash r198/v1717/run-gates.sh",
+  "exit_code": 0,
+  "status": "PASS"
+ },
  "changed_lists": 0,
- "slider_changed_states": 0,
+ "comparison_command": "bash r198/v1717/compare_v1717.sh",
+ "comparison_results_complete": true,
  "grid_changed_states": 0,
- "initial_postcomparison_rank_step": "ENOENT while another local gate recreated the shared .pass fixture; retained compare.log records this failure",
- "rank_fixture_recovery": "heavy-run disposable snapshot generated ranks fixture with absolute paths, then rsync read-back; views exactly equal the v1716 fixture",
- "comparison_receipts_unchanged": true,
- "no_comparison_failure_ignored": true
+ "local_wrapper_exit": 143,
+ "local_wrapper_note": "Comparison, rank fixture and preview completed; combined wrapper terminated without diagnostic before aggregate gates completed. Aggregate gates rerun separately via suite-slot.",
+ "no_comparison_failure_ignored": true,
+ "primary_and_supplementary_lists": 580,
+ "slider_changed_states": 0,
+ "status": "PASS"
 }

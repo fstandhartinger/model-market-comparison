@@ -28,7 +28,7 @@ BODY = (HIST + " Jev-Style-2B is a Qwen3.5-2B fine-tune, measured through the au
         "All 1,500 items were sent; the five longest exceeded its 32,768-token input limit and count as misses. "
         "The model was trained in part on soft labels from TypeSafe Jev 1.14 via its public API and official train splits of public benchmarks. "
         "The server reports 0 output tokens. Cost is an estimate at the base-model market reference, on the unchanged 1,489 items every row on the draw answered. "
-        "The draw is not yet equated to the reference scale; stronger anchor runs are being measured. No existing score, interval, rank, order or category cell changes.")
+        "The draw is not yet equated to the reference scale (stronger anchor runs for that draw are being measured), so its numbers are shown as published (offset 0) and no ranking or ranked order changes.")
 s=s.replace(body_old,BODY.replace("'",'&apos;'))
 s=s.replace('Strike-1 on the 27 Oct draw, shown unranked; that draw is now costed on the items every row answered. No ranking or ranked order changes.',
             'Jev-Style-2B on the 27 Oct draw, shown unranked. All existing rows and ranked orders are unchanged.')
