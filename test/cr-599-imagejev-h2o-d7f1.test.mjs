@@ -69,6 +69,28 @@ test('CR-599: pinned provenance, full image coverage, refit disclosure and uncha
   }
   const page = readFileSync(new URL('../components/ImageJevV03Page.tsx', import.meta.url), 'utf8');
   assert.match(page, /28 Oct 2026 addendum, unranked second read/);
-  assert.match(page, /@d7f1b05a Capability 71.84, composite 68.51; @cc18ee33 Capability 66.16, composite 66.58 \(deltas \+5.68 and \+1.94 points\)/);
+  assert.match(page, /@d7f1b05a Capability 71.84, composite 68.51; @cc18ee33 Capability 66.16, composite 66.58 \(deltas \+5.68 and \+1.93 points\)/);
   assert.match(page, /all top-five lists unchanged/);
+});
+
+test('CR-599 (critic F1): the Capability headline lists the second read below every ranked in-class row', async () => {
+  const { imageJevCapabilityLimits } = await import('../lib/imagejev-board.mjs');
+  const { jevClassRows } = await import('../lib/jevbench-jev-class.mjs');
+  const { jevBelowRankedLast, JEV_BELOW_RANKED_KEYS } = await import('../lib/jev-below-ranked.mjs');
+  const { jevFoldWithPinned } = await import('../lib/jevbench-scope.mjs');
+  assert.deepEqual([...JEV_BELOW_RANKED_KEYS], [key]);
+  const sys = imageJevBoardSystems(a); const lim = imageJevCapabilityLimits(a);
+  const cls = jevClassRows(sys, { limits: lim, factor: lim.factor, referenceLabel: lim.referenceLabel });
+  const inside = jevBelowRankedLast(cls.rows.filter((r) => r.inClass));
+  const at = inside.findIndex((r) => r.row.key === key);
+  assert.ok(at >= 0, 'second read is in class');
+  assert.equal(at, inside.length - 1);
+  assert.ok(inside.slice(0, at).every((r) => r.row.key !== key));
+  const without = cls.rows.filter((r) => r.inClass && r.row.key !== key).map((r) => r.row.key);
+  assert.deepEqual(inside.slice(0, -1).map((r) => r.row.key), without, 'every other row keeps its order');
+  const { head } = jevFoldWithPinned(inside, 10, () => false);
+  assert.ok(head.every((r) => r.row.key !== key), 'not inside the visible top ten');
+  assert.ok(head.some((r) => r.row.key === 'h2o_lightning_4b_v141_image'), 'ranked @cc18ee33 row stays in the visible top ten');
+  assert.equal(head.length, 10);
+  assert.ok(head.every((r) => r.row.ranked), 'the visible top ten are exactly ten ranked rows');
 });

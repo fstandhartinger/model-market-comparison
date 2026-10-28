@@ -4,6 +4,7 @@ import { jevRowArch } from './jevTypes';
 import { JevMethodTag } from './JevMethodTag';
 import { JEV_REMEASURE_PENDING, JEV_REMEASURE_PENDING_LABEL, jevMethodView } from '../lib/jev-decision-limit.mjs';
 import { JEV_SCOPE_LISTING, jevFoldWithPinned } from '../lib/jevbench-scope.mjs';
+import { jevBelowRankedLast } from '../lib/jev-below-ranked.mjs';
 
 import { useEffect, useId, useMemo, useState, type CSSProperties, type ReactNode } from 'react';
 import { DEFAULT_CAP, clampCap, formatCap, isOfficialCaps, parseCaps, serialiseCaps, type ClassCaps } from '../lib/jevbench-class-caps.mjs';
@@ -237,7 +238,8 @@ export function JevCapabilityRanking({ systems, eligibilitySystems = systems, re
     .filter(([cost, latency]) => cost != null && latency != null);
   const costLatencySpearman = spearman(paired.map((p) => p[0]), paired.map((p) => p[1]));
   const pairedCount = paired.length;
-  const inside = filteredRows.filter((r) => r.inClass);
+  // CR-599 (#31027): listed unranked second reads go below the ranked in-class rows (outside the HEADLINE_TOP fold count).
+  const inside = jevBelowRankedLast(filteredRows.filter((r) => r.inClass));
   const outside = filteredRows.filter((r) => !r.inClass);
   const speedFallback = inside.filter((r) => r.latencyBasis === 'speed-axis');
   const refName = shortName(reference.display);
