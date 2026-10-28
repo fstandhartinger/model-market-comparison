@@ -1056,13 +1056,16 @@
    "licence": "Apache-2.0",
    "params": "4B",
    "access": "self-hosted vLLM",
-   "url": "https://huggingface.co/h2oai/h2o-lightning-4b/tree/cc18ee330e6895c41b9a60f37a0dd122dc4c3461",
+   "url": "https://huggingface.co/h2oai/h2o-lightning-4b/tree/d7f1b05aa0b4e789b3896116f309ef842440e260",
    "kind": "gpu",
    "prompt": "native",
    "model_id": "h2o_lightning_4b_v141",
    "weights": {
     "repo": "h2oai/h2o-lightning-4b",
-    "revision": "cc18ee330e6895c41b9a60f37a0dd122dc4c3461"
+    "revision": "d7f1b05aa0b4e789b3896116f309ef842440e260",
+    "files_identical_at": [
+     "cc18ee330e6895c41b9a60f37a0dd122dc4c3461"
+    ]
    },
    "n": 300,
    "valid_share": 1.0,
@@ -1708,7 +1711,8 @@
   "Claude Haiku 5.5 and GPT-6 Luna were run with reasoning off at temperature 0; both are not fully deterministic at temperature 0. One GPT-6 Luna answer failed with a provider error and Moondream 3 returned no box for 6 items; these count as invalid.",
   "Moondream 3 (preview) is released under the Business Source License 1.1; we ran it only to measure it and do not offer it as a service.",
   "Molmo 2 (Ai2) answers with points, not boxes, so it cannot be scored on IoU and is not ranked; its point-in-box rate is shown below the table as a side metric.",
-  "H2O Lightning 4B v1.4.1 states a confidence on only 16 % of its answers (v1.1: 94 %); a missing confidence counts as no confidence, so its Calibration is low and its Box Capability falls below v1.1 although its boxes are better (Box Intelligence 76.5 against 70.2, documents 53 against 26)."
+  "H2O Lightning 4B v1.4.1 states a confidence on only 16 % of its answers (v1.1: 94 %); a missing confidence counts as no confidence, so its Calibration is low and its Box Capability falls below v1.1 although its boxes are better (Box Intelligence 76.5 against 70.2, documents 53 against 26).",
+  "H2O Lightning 4B v1.4.1 is listed at revision d7f1b05a. The files this track serves (weights, config, tokenizer, chat template) are byte-identical at cc18ee33, where they were loaded; the two revisions differ only in the H2O shim and its serve_config.json, which this track does not use (stock vLLM, temperature 0)."
  ],
  "points_only": [
   {
