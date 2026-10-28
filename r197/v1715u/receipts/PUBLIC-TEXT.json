@@ -1,0 +1,48 @@
+{
+ "allowed_ranking_phrases": [
+  "unranked",
+  "NOT RANKED",
+  "no ranking or ranked order changes",
+  "No existing score, rank or ranking changed",
+  "Every existing score, rank, interval and category cell is unchanged"
+ ],
+ "banned_pattern": "/home/|workers/|board\\s*#|#\\d{4,}|Florian|release.owner|\\blead\\b|deputy|custody|auto-intake|\\br59\\b|\\br19\\d\\b|d2b677de|9cde338c|Anna|Roth|Gmail|h2o141|tc31b|d1027-|v171[345]u?-|jevbench-add-requests|\\bfusion\\b|\\bworker\\b|fast-lane order|paid order|\\bPREREG\\b|(?-i:DECISIONS)|\\{[A-Za-z_][A-Za-z0-9_]*\\}|\\brank(?:ed|ing)?\\b|top[- ](?:five|5)",
+ "checked": [
+  "arcbright-elf-1-12b-r2.not_ranked_because",
+  "categories_note",
+  "decisio-gemma-4-12b-tuned-commit-think.not_ranked_because",
+  "draw_table_entry",
+  "h2o-lightning-4b-v1.4.1.not_ranked_because",
+  "history_line",
+  "jeff_1_1_large.not_ranked_because",
+  "jeff_1_1_qwen_4b.not_ranked_because",
+  "label",
+  "microsoft-decision-1-r2.author",
+  "microsoft-decision-1-r2.cost.basis",
+  "microsoft-decision-1-r2.disclosure",
+  "microsoft-decision-1-r2.display",
+  "microsoft-decision-1-r2.endpoint_condition",
+  "microsoft-decision-1-r2.model_pin",
+  "microsoft-decision-1-r2.not_ranked_because",
+  "new_measurement_note",
+  "page",
+  "source_note",
+  "torchcast-decision-31b-v1.0.not_ranked_because"
+ ],
+ "context_limit_refusals_disclosed": true,
+ "exact_history_sentence": true,
+ "exact_notes": [
+  "arcbright-elf-1-12b-r2",
+  "decisio-gemma-4-12b-tuned-commit-think",
+  "h2o-lightning-4b-v1.4.1",
+  "jeff_1_1_large",
+  "jeff_1_1_qwen_4b",
+  "microsoft-decision-1-r2",
+  "torchcast-decision-31b-v1.0"
+ ],
+ "h2o_extra_sentence": true,
+ "n_1493_disclosed": true,
+ "no_equating_claim": true,
+ "status": "PASS",
+ "topic_cell_sentence_kept": true
+}

@@ -1,0 +1,20 @@
+{
+ "microsoft-decision-1-r2": {
+  "entry": {
+   "author": "Microsoft",
+   "cost_basis": "Advertised Azure Foundry tariff USD 0.042 per million input tokens, output free (same basis as the first Microsoft-Decision-1 row); provider-reported usage on all n = 1,493 decisions (467,021 input and 1,489 output tokens), the 4 refused requests kept in the denominator: USD 0.013138 per 1,000 decisions. Billed invoice unknown.",
+   "disclosure": "SECOND MEASUREMENT (paid evaluation, public) of Microsoft-Decision-1 after a weights update reported by Microsoft. The served model id (microsoft-decision-1) is identical to the first measurement; we cannot verify a weights change behind an API. The first measurement (10 Oct 2026, another draw) stays listed unchanged as Microsoft-Decision-1 (Azure Foundry). ITEMS: n = 1,493 of the draw's 1,500 items (1,193 sealed + 300 public): 7 sealed items are excluded because this provider had seen them in an earlier evaluation, so every score, the speed and the cost are computed on those 1,493 items. DRAW: measured on the 27 Oct 2026 regular draw (fresh sealed items; not yet equated to the reference scale, so its numbers are shown as published, offset 0). This draw has no subject-topic labels yet, so the row has no topic cells; its use-case and language cells are measured on its own 1,493 items. LATENCY: p50 0.319 s, p95 0.364 s, maximum 0.605 s.",
+   "display": "Microsoft-Decision-1 (updated weights, Oct 2026)",
+   "endpoint_condition": "Vendor-hosted Azure AI Foundry deployment (Sweden Central), native API; latency measured from our server in Germany. 1,489 of 1,493 requests answered (HTTP 200); 4 were refused by the server because the prompt exceeded its 32,768-token context limit and are scored wrong; no decision took longer than 10 s.",
+   "model_pin": {
+    "deployment": "Decision-1",
+    "model": "Microsoft-Decision-1",
+    "provider": "Microsoft/Azure Foundry",
+    "response_model": "microsoft-decision-1",
+    "version": "updated weights, Oct 2026 (per Microsoft; served model id unchanged)"
+   },
+   "provider": "microsoft",
+   "repo": "https://commandline.microsoft.com/microsoft-decision-1-model-foundry/"
+  }
+ }
+}

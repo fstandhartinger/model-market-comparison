@@ -1,0 +1,306 @@
+{
+ "carried_rows": 306,
+ "carried_rows_equal_except": [
+  "arcbright-elf-1-12b-r2, decisio-gemma-4-12b-tuned-commit-think, h2o-lightning-4b-v1.4.1, jeff_1_1_large, jeff_1_1_qwen_4b, torchcast-decision-31b-v1.0: not_ranked_because only (the public note of the 27 Oct draw rows; numbers, ranks, listing, disclosures and cells unchanged)"
+ ],
+ "exceptions": {
+  "arcbright-elf-1-12b-r2": {
+   "not_ranked_because": {
+    "after_sha256": "e08d9232920e0cc13edbb9c2051599862bcedbf35a178da5e17878c6541062f8",
+    "before_sha256": "8af4751432cbb157ac419a5575be0c5a7de288d550f72000503c61500d22dba6"
+   }
+  },
+  "decisio-gemma-4-12b-tuned-commit-think": {
+   "not_ranked_because": {
+    "after_sha256": "e08d9232920e0cc13edbb9c2051599862bcedbf35a178da5e17878c6541062f8",
+    "before_sha256": "8af4751432cbb157ac419a5575be0c5a7de288d550f72000503c61500d22dba6"
+   }
+  },
+  "h2o-lightning-4b-v1.4.1": {
+   "not_ranked_because": {
+    "after_sha256": "4abefed2a0a6808b6b617f6f44eaa9334583aede1c19b572ca015c64ec8df8ee",
+    "before_sha256": "3ad45537a765367c1fd35c4c2eb918e0616b18dfb2fd4c06486fad9a5b6e05fd"
+   }
+  },
+  "jeff_1_1_large": {
+   "not_ranked_because": {
+    "after_sha256": "e08d9232920e0cc13edbb9c2051599862bcedbf35a178da5e17878c6541062f8",
+    "before_sha256": "8af4751432cbb157ac419a5575be0c5a7de288d550f72000503c61500d22dba6"
+   }
+  },
+  "jeff_1_1_qwen_4b": {
+   "not_ranked_because": {
+    "after_sha256": "e08d9232920e0cc13edbb9c2051599862bcedbf35a178da5e17878c6541062f8",
+    "before_sha256": "8af4751432cbb157ac419a5575be0c5a7de288d550f72000503c61500d22dba6"
+   }
+  },
+  "torchcast-decision-31b-v1.0": {
+   "not_ranked_because": {
+    "after_sha256": "e08d9232920e0cc13edbb9c2051599862bcedbf35a178da5e17878c6541062f8",
+    "before_sha256": "8af4751432cbb157ac419a5575be0c5a7de288d550f72000503c61500d22dba6"
+   }
+  }
+ },
+ "link_fixed_rows": [],
+ "method": {
+  "decision_limit_s": 10,
+  "label": "v1.7",
+  "rule": "latency_s > 10.000 s -> failed",
+  "treatment": "share"
+ },
+ "new_rows": {
+  "microsoft-decision-1-r2": {
+   "axes": {
+    "calibration": 92.50018348092215,
+    "cost": 66.44422323693733,
+    "intelligence": 67.11026330364345,
+    "speed": 89.34376153841384
+   },
+   "category_pool_bounds": {
+    "languages": {
+     "ar": 21,
+     "cs": 37,
+     "da": 36,
+     "de": 48,
+     "el": 28,
+     "en": 548,
+     "es": 37,
+     "fi": 52,
+     "fr": 32,
+     "hi": 37,
+     "id": 41,
+     "it": 45,
+     "ja": 44,
+     "ko": 43,
+     "mixed": 64,
+     "nl": 36,
+     "no": 51,
+     "pl": 57,
+     "pt": 47,
+     "sv": 46,
+     "tr": 46,
+     "uk": 56,
+     "zh": 41
+    },
+    "topics": {},
+    "usecases": {
+     "advertising": 48,
+     "code_linting": 69,
+     "customer_support": 66,
+     "demand_forecasting": 66,
+     "ecommerce_marketplaces": 62,
+     "feature_extraction": 72,
+     "financial_crime": 63,
+     "gaming": 58,
+     "insurance_claims": 62,
+     "knowledge_graphs": 67,
+     "lead_generation": 75,
+     "legal_compliance": 56,
+     "llm_guardrails": 71,
+     "model_routing": 148,
+     "moderation_trust_safety": 59,
+     "other": 32,
+     "recruiting": 65,
+     "risk_assessment": 48,
+     "scientific_discovery": 42,
+     "search_retrieval": 67
+    }
+   },
+   "composite_ci95": {
+    "A": [
+     74.35149967567996,
+     78.10905510312763
+    ],
+    "B": [
+     71.28474955571528,
+     76.66805984039655
+    ],
+    "C": [
+     74.35149967567996,
+     78.10905510312763
+    ]
+   },
+   "cost": {
+    "basis_items": 1493,
+    "input_tokens": 467021,
+    "kind": "tariff",
+    "output_tokens": 1489,
+    "usd_per_1000": 0.013137898191560617
+   },
+   "decision_limit": {
+    "limit_s": 10.0,
+    "n_over_limit": 0,
+    "n_over_limit_answered_ok": 0,
+    "rule": "latency_s > limit -> failed",
+    "speed_basis": "all decisions given (lane items in the raw), measured latency_s",
+    "speed_n": 1493,
+    "treatment": "share"
+   },
+   "equated": {
+    "calibration": 92.50018348092215,
+    "capability": 79.8052233922828,
+    "intelligence": 67.11026330364345,
+    "offset": {
+     "C": 0,
+     "I": 0
+    },
+    "scores": {
+     "A": 76.99032431119126,
+     "B": 74.78823975641242,
+     "C": 76.99032431119126
+    }
+   },
+   "excluded_because": "provider had seen them in an earlier evaluation",
+   "model_pin": {
+    "deployment": "Decision-1",
+    "model": "Microsoft-Decision-1",
+    "provider": "Microsoft/Azure Foundry",
+    "response_model": "microsoft-decision-1",
+    "version": "updated weights, Oct 2026 (per Microsoft; served model id unchanged)"
+   },
+   "n_excluded": 7,
+   "n_items": 1493,
+   "price_reference": {
+    "base": "Qwen/Qwen3.5-9B",
+    "decision": "msft-r2-cost-basis-tariff",
+    "frozen_module_not_used": {
+     "in": 0.1,
+     "listing": "qwen/qwen3.5-9b",
+     "out": 0.15
+    },
+    "in": 0.042,
+    "kind": "tariff",
+    "listing": "Azure Foundry advertised tariff (Microsoft-Decision-1)",
+    "out": 0.0
+   },
+   "raw_sha256": "1f069818cdc069a532a4c4965d306fbd302bb819dde4aa3c48a9bd676c4a981e",
+   "scored_input_sha256": "37d0d8f38f36a2d7dde8e3317199a72604417cf85748bc086e865d362a82b897",
+   "source_sha256": {
+    "cells_off": {
+     "categories_sha256": "efb232bbfab04da7f28f27702463afc5e54ca57903bbd22227f3ea4a0f0f3ec5",
+     "decisive_sha256": "c71269fff06d240ca00812a079cce24afb7986cbe34595aa31f42171b1d89a52"
+    },
+    "cells_share": {
+     "categories_sha256": "e6c71209d0e8248438f92edcf5b8460821af825cded2d2acbce087be6e45b0b8",
+     "decisive_sha256": "c71269fff06d240ca00812a079cce24afb7986cbe34595aa31f42171b1d89a52"
+    },
+    "frozen": {
+     "path": "/home/flori/jobs/jevbench-add-requests-20260919/r197/v1715/score/field/out-frozen/jevbench-v1.6.0-results.json",
+     "sha256": "0f20b096c9b9e22033e6cceb99f720397980868c4b5f7f07c3f60aa24a9501f4"
+    },
+    "gold_sha256": "8aaf8ab4c58fe06e1f7494a965701ffc0c1a7879392b0bc2309f7f1724b5e200",
+    "gold_view_sha256": "120d0ba782186a0ebc78e8a71b0caf7ff60d49d30cdbd650ae0d2afe297d96b5",
+    "input_sha256": "ffbd2e9b3cbce53c48d11066ea32b96b1dfb36377618d679b8534dda9bcf8361",
+    "manifest_sha256": "f5a5151a1a19923dec1434230dbc451d9ca879ce8ccba8f268b296cac9c1ee35",
+    "private_result_sha256": "9a147bfed78e72153b97da9ff75c3e34ff6e91c45f23cded0f1da092b0ba72aa",
+    "raw_sha256": "1f069818cdc069a532a4c4965d306fbd302bb819dde4aa3c48a9bd676c4a981e",
+    "raw_verified_in_place": true,
+    "registry_sha256": "55d969aa3de519039203789a7431caf3c5d6742ab4f0a983705d876185c0a4d5",
+    "v17-off": {
+     "path": "/home/flori/jobs/jevbench-add-requests-20260919/r197/v1715/score/field/out-v17-off/jevbench-v1.6.0-results.json",
+     "sha256": "d6781a80177eab609eeb6330b62ccece97de3db9ab676fee5ae90aed2c05b428"
+    },
+    "v17-share": {
+     "path": "/home/flori/jobs/jevbench-add-requests-20260919/r197/v1715/score/field/out-v17-share/jevbench-v1.6.0-results.json",
+     "sha256": "37d0d8f38f36a2d7dde8e3317199a72604417cf85748bc086e865d362a82b897"
+    },
+    "validation_sha256": "29c8949351bcd87a622560fd80094254d98ca9d7350fd210ee2c893d6ab2cdcd"
+   },
+   "treatment": "unranked"
+  }
+ },
+ "predecessor": {
+  "publication_sha256": "5240aacdeeb39990b71ee50c1c9a8335ca1997559fed360229dff069872b26bd",
+  "revision": "v1.7.14"
+ },
+ "pricing_module_sha256": "645fd82eac728d597048bec0995ecd3ac896566e269fb6c9a1fdb84c171a9ac4",
+ "publication_approval": {
+  "asks": [
+   {
+    "handoff": "paid fast-lane round 2 (custody #30746 e: 1,493 items)",
+    "key": "microsoft-decision-1-r2",
+    "relay": "paid order d2b677de, credit 9cde338c"
+   },
+   {
+    "handoff": "release owner decision d1027-strong-anchors-needed (DECISIONS 2026-10-28 06:48 UTC)",
+    "key": "v1.6-regular-20261027",
+    "relay": "fairness review of the equated candidate fd2b67db SUSPICIOUS (workers/r197-v1715-fair); equated build parked"
+   }
+  ],
+  "button_tap": false,
+  "cost_basis": {
+   "decision": "msft-r2-cost-basis-tariff",
+   "key": "microsoft-decision-1-r2"
+  },
+  "fresh_baseline": "v1.7.14",
+  "paid_public": {
+   "key": "microsoft-decision-1-r2",
+   "order": "d2b677de",
+   "rule": "paid public order: published with all measured values, unranked while its draw has no strong anchors; no top-five change",
+   "visibility": "public"
+  },
+  "release_owner_rulings": [
+   "d1027-strong-anchors-needed (all d1027 rows stay measured-but-unranked; v1.7.15 adds Microsoft-Decision-1 r2 unranked and updates the d1027 note)",
+   "v1713-h2o141-unranked-provisional (Florian card #18781 'Unranked' / 'until calibrated')",
+   "msft-r2-cost-basis-tariff",
+   "v1713-topics-exception-h2o141 extended to every row on the draw (TEMPORARY topics exception)"
+  ],
+  "status": "GO (standing; no top-five change; paid public order)",
+  "top_five_effect": "unchanged",
+  "top_five_preview": {
+   "path": "r197/v1715u/receipts/topfive-diff.json",
+   "sha256": "8d4be2aa8c380e2f5a17945599fa66dace6561c1a641fa49c37b6f61668ec3db"
+  },
+  "unranked_basis": {
+   "card": "#18781",
+   "decision": "d1027-strong-anchors-needed",
+   "handled_by": "rows published unranked (ranked false), no order list changes; draw not equated (offset 0)"
+  }
+ },
+ "remeasured_rows": {},
+ "repriced_rows": {},
+ "revision": "v1.7.15",
+ "same_draw": {
+  "drawn_on": "2026-10-27",
+  "equating": "not applied (draw stays anchor-runs-pending, offset 0)",
+  "g_med_rule": "reference G_med of the merged board (penalty 1.0 for the new row under the reference)",
+  "g_med_used": 2.573387642438244,
+  "id": "v1.6-regular-20261027",
+  "label": "Third regular draw",
+  "manifest_sha256": "f5a5151a1a19923dec1434230dbc451d9ca879ce8ccba8f268b296cac9c1ee35",
+  "offset": {
+   "C": 0,
+   "I": 0
+  },
+  "offset_ci95": null,
+  "status": "anchor-runs-pending"
+ },
+ "schema_version": 1,
+ "scorers": {
+  "a2_cells_v16": "afd034efe27bde12f2ebbfd12c4c0792c93214e1aa9a63deecb0e83a0184c990",
+  "build_categories_v16": "40eb50f3d7fea2693b4478c4b89f8bfb957dd17776add491935742e3b9354e73",
+  "build_topics_v16": "ec04ab598162bfc4340ffa7916a06573eb1222132c61e47ab772045bc67ced78",
+  "decisive_v16": "80b9ccf43e58dddb1b2a77e0a33aba8a9f7337a3a9a639afc7264218bbf8918f",
+  "noul_method_v16": "119e59486ab3300b972fbcbadb0fe1dceceb124287607375aa61c66063c607d0",
+  "pins_v17": "b50cc00dd2cb0ba46157eb6a2bda620255f3ff54404025e992bc7962dfff2f8b",
+  "run_under_v17": "efb194b2ea350db59be37e5e72af71f809f763a2476cd6f521adf6f4fd90a64f",
+  "score_v15": "0931e05c6410b1b971201834397cb609cdb25f942723c50375632952f6dcc447",
+  "score_v15_headlineA": "826f2cbcb57007ec8a161e6eb0111182b8a656c0638027c6c78022a858fd8e2c",
+  "score_v16": "02132271117653e6302c509232a581d0094f0e78eac8b1bfc67596fd5d5097e9",
+  "score_v17": "6363458d208a52f4ad5aaf73027cad1b7e0358ff962e581d57a3cc462c8f1978"
+ },
+ "source_inputs": {
+  "cells_sha256": "e6f7aae0b2a63d88737c4ec47317d19764902376f615378b93d40bbdffa34d86",
+  "entry_sha256": "3687e1a86bedf3eddf3d9c5f323f7e8ac4dd3e2c6f91f69c5f164b5e593ad955",
+  "scored_rows_sha256": "6ef491e7bd2b9fa16c72053b929aa6e501997d4098ecfc998fee96e26124046c"
+ },
+ "text_fixed_rows": [
+  "arcbright-elf-1-12b-r2",
+  "decisio-gemma-4-12b-tuned-commit-think",
+  "h2o-lightning-4b-v1.4.1",
+  "jeff_1_1_large",
+  "jeff_1_1_qwen_4b",
+  "torchcast-decision-31b-v1.0"
+ ],
+ "topfive_diff_sha256": "8d4be2aa8c380e2f5a17945599fa66dace6561c1a641fa49c37b6f61668ec3db"
+}

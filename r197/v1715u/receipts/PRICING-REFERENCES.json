@@ -1,0 +1,20 @@
+{
+ "negatives_rejected": 3,
+ "pricing_module_sha256": "645fd82eac728d597048bec0995ecd3ac896566e269fb6c9a1fdb84c171a9ac4",
+ "rows": {
+  "microsoft-decision-1-r2": {
+   "base": "Qwen/Qwen3.5-9B",
+   "decision": "msft-r2-cost-basis-tariff",
+   "frozen_module_not_used": {
+    "in": 0.1,
+    "listing": "qwen/qwen3.5-9b",
+    "out": 0.15
+   },
+   "in": 0.042,
+   "kind": "tariff",
+   "listing": "Azure Foundry advertised tariff (Microsoft-Decision-1)",
+   "out": 0.0
+  }
+ },
+ "status": "PASS"
+}

@@ -1,0 +1,43 @@
+{
+ "asks": [
+  {
+   "handoff": "paid fast-lane round 2 (custody #30746 e: 1,493 items)",
+   "key": "microsoft-decision-1-r2",
+   "relay": "paid order d2b677de, credit 9cde338c"
+  },
+  {
+   "handoff": "release owner decision d1027-strong-anchors-needed (DECISIONS 2026-10-28 06:48 UTC)",
+   "key": "v1.6-regular-20261027",
+   "relay": "fairness review of the equated candidate fd2b67db SUSPICIOUS (workers/r197-v1715-fair); equated build parked"
+  }
+ ],
+ "button_tap": false,
+ "cost_basis": {
+  "decision": "msft-r2-cost-basis-tariff",
+  "key": "microsoft-decision-1-r2"
+ },
+ "fresh_baseline": "v1.7.14",
+ "paid_public": {
+  "key": "microsoft-decision-1-r2",
+  "order": "d2b677de",
+  "rule": "paid public order: published with all measured values, unranked while its draw has no strong anchors; no top-five change",
+  "visibility": "public"
+ },
+ "release_owner_rulings": [
+  "d1027-strong-anchors-needed (all d1027 rows stay measured-but-unranked; v1.7.15 adds Microsoft-Decision-1 r2 unranked and updates the d1027 note)",
+  "v1713-h2o141-unranked-provisional (Florian card #18781 'Unranked' / 'until calibrated')",
+  "msft-r2-cost-basis-tariff",
+  "v1713-topics-exception-h2o141 extended to every row on the draw (TEMPORARY topics exception)"
+ ],
+ "status": "GO (standing; no top-five change; paid public order)",
+ "top_five_effect": "unchanged",
+ "top_five_preview": {
+  "path": "r197/v1715u/receipts/topfive-diff.json",
+  "sha256": "8d4be2aa8c380e2f5a17945599fa66dace6561c1a641fa49c37b6f61668ec3db"
+ },
+ "unranked_basis": {
+  "card": "#18781",
+  "decision": "d1027-strong-anchors-needed",
+  "handled_by": "rows published unranked (ranked false), no order list changes; draw not equated (offset 0)"
+ }
+}
