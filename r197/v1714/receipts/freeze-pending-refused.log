@@ -1,4 +1,4 @@
 Traceback (most recent call last):
-  File "/home/flori/wt/jevbench-v1714-20261027/r197/v1714/freeze_v1714.py", line 24, in <module>
-    assert pred['revision'] == 'v1.7.13' and pred['review']['verdict'] == 'PASS', 'predecessor must be PASS'
-AssertionError: predecessor must be PASS
+  File "/home/flori/wt/jevbench-v1714-20261027/r197/v1714/freeze_v1714.py", line 28, in <module>
+    assert man['review']['verdict']=='PASS', 'REFUSED: publication review PENDING or non-PASS'
+AssertionError: REFUSED: publication review PENDING or non-PASS

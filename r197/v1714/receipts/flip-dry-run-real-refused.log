@@ -1,2 +1,12 @@
-usage: flip_verdict_v1714.py [-h] [--dry-run] receipt
-flip_verdict_v1714.py: error: REFUSED: predecessor v1.7.13 must be PASS first (flip v1.7.13, then run restack_v1714.sh)
+{
+ "dry_run": true,
+ "manifest": "/home/flori/wt/jevbench-v1714-20261027/data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.14-publication.json",
+ "would_set_review": {
+  "engine": "fixture-only: dry-run input, not an independent review",
+  "verdict": "PASS",
+  "receipt_sha256": "be2afe3b1991725711c6749329614c822a64c7939453b92f62cc2a7464d1a2ee"
+ },
+ "predecessor_pass_and_bound": true,
+ "manifest_sha256_after": "45e83aff32311bb818b4822a6e3f93920cacbf44107731346c11fb260fd12f2d",
+ "manifest_unchanged_on_disk_sha256": "4c88670224f336eecaa386a763f8b0a6ce75989f5112c20b0cef02fd7a2ba5b2"
+}

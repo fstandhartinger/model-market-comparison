@@ -1,0 +1,768 @@
+{
+ "CARRIED-ROWS": {
+  "base_commit": "83705a970a61b844e77044bc195831e9913d6585",
+  "board_equal": true,
+  "carried_cells_equal": 306,
+  "family_rows_equal": [
+   "h2o-lightning-4b-v1.4.1",
+   "h2o-lightning-4b",
+   "arcbright-elf-1-12b",
+   "decisio-gemma-4-12b-tuned-commit",
+   "jeff_1_1_medium",
+   "jeff_1_0_large"
+  ],
+  "immutable_bytes": [
+   "carry",
+   "history",
+   "history-carry"
+  ],
+  "new_rows_unranked": [
+   "arcbright-elf-1-12b-r2",
+   "decisio-gemma-4-12b-tuned-commit-think",
+   "jeff_1_1_large",
+   "jeff_1_1_qwen_4b",
+   "torchcast-decision-31b-v1.0"
+  ],
+  "new_score_payloads_equal_to_sources": true,
+  "predecessor_files_equal_to_base": 14,
+  "predecessor_publication_sha256": "460156d172505b5159539f3d32b05decbb6c86defb22fda2fc6c0b910f7a76b6",
+  "rows_equal": 301,
+  "rows_equal_including_ranks": true,
+  "status": "PASS"
+ },
+ "CHANGED-LISTS-BY-ROW": {
+  "baseline": "v1.7.13",
+  "candidate": "v1.7.14",
+  "changed_lists_by_row": {
+   "arcbright-elf-1-12b-r2": [],
+   "decisio-gemma-4-12b-tuned-commit-think": [],
+   "jeff_1_1_large": [],
+   "jeff_1_1_qwen_4b": [],
+   "torchcast-decision-31b-v1.0": []
+  },
+  "counts": {
+   "arcbright-elf-1-12b-r2": 0,
+   "decisio-gemma-4-12b-tuned-commit-think": 0,
+   "jeff_1_1_large": 0,
+   "jeff_1_1_qwen_4b": 0,
+   "torchcast-decision-31b-v1.0": 0
+  },
+  "lists": 584,
+  "method": "Single-entrant insertion from full production ranking orders; all other new keys removed. Slider transitions separately retained.",
+  "standing_go_requires_zero": true,
+  "status": "PASS",
+  "total_changed": 0,
+  "unranked_new_rows": [
+   "arcbright-elf-1-12b-r2",
+   "decisio-gemma-4-12b-tuned-commit-think",
+   "jeff_1_1_large",
+   "jeff_1_1_qwen_4b",
+   "torchcast-decision-31b-v1.0"
+  ]
+ },
+ "COST-KIND": {
+  "measured_without_bill": 0,
+  "negative_test": "test/jevbench-v1714-release.test.mjs",
+  "new_rows": {
+   "arcbright-elf-1-12b-r2": {
+    "base": "google/gemma-4-12B-it",
+    "basis_items": 1500,
+    "kind": "estimate",
+    "native_input_tokens": 610840,
+    "output_tokens": 1500,
+    "priced_input_tokens": 610840,
+    "reference": {
+     "base": "google/gemma-4-12B-it",
+     "in": 0.05,
+     "listing": "google/gemma-3-12b-it",
+     "out": 0.15
+    },
+    "usd_per_1000": 0.020511333333333333
+   },
+   "decisio-gemma-4-12b-tuned-commit-think": {
+    "base": "google/gemma-4-12B-it",
+    "basis_items": 1500,
+    "kind": "estimate",
+    "native_input_tokens": 727045,
+    "output_tokens": 9121,
+    "priced_input_tokens": 844031,
+    "reference": {
+     "base": "google/gemma-4-12B-it",
+     "in": 0.05,
+     "listing": "google/gemma-3-12b-it",
+     "out": 0.15
+    },
+    "usd_per_1000": 0.02904646666666667
+   },
+   "jeff_1_1_large": {
+    "base": "google/gemma-4-31B-it",
+    "basis_items": 1500,
+    "kind": "estimate",
+    "native_input_tokens": 620215,
+    "output_tokens": 21830,
+    "priced_input_tokens": 620215,
+    "reference": {
+     "base": "google/gemma-4-31B-it",
+     "in": 0.09,
+     "listing": "google/gemma-4-31b-it",
+     "out": 0.34
+    },
+    "usd_per_1000": 0.042161033333333334
+   },
+   "jeff_1_1_qwen_4b": {
+    "base": "Qwen/Qwen3.5-4B",
+    "basis_items": 1500,
+    "kind": "estimate",
+    "native_input_tokens": 629951,
+    "output_tokens": 69580,
+    "priced_input_tokens": 629951,
+    "reference": {
+     "base": "Qwen/Qwen3.5-4B",
+     "in": 0.03,
+     "listing": "deepinfra:Qwen/Qwen3.5-4B",
+     "out": 0.15
+    },
+    "usd_per_1000": 0.019557019999999998
+   },
+   "torchcast-decision-31b-v1.0": {
+    "base": "google/gemma-4-31B-it",
+    "basis_items": 1500,
+    "kind": "estimate",
+    "native_input_tokens": 645268,
+    "output_tokens": 0,
+    "priced_input_tokens": 645268,
+    "reference": {
+     "base": "google/gemma-4-31B-it",
+     "in": 0.09,
+     "listing": "google/gemma-4-31b-it",
+     "out": 0.34
+    },
+    "usd_per_1000": 0.03871607999999999
+   }
+  },
+  "status": "PASS"
+ },
+ "HELPERS": {
+  "approval_negative_cases": 13,
+  "fixture_flip_refused": true,
+  "fixture_grants_no_authority": true,
+  "pending_freeze_refused": true,
+  "real_flip_dry_run_refused_while_v1713_pending": false,
+  "real_manifests_unchanged": [
+   "4c88670224f336eecaa386a763f8b0a6ce75989f5112c20b0cef02fd7a2ba5b2",
+   "460156d172505b5159539f3d32b05decbb6c86defb22fda2fc6c0b910f7a76b6"
+  ],
+  "real_v1713_review": "PASS",
+  "seal_write_refused": true,
+  "stale_predecessor_binding_refused": true,
+  "standing_go_checked": true,
+  "status": "PASS",
+  "synthetic_flip_dry_run": true,
+  "synthetic_freeze_dry_run": true
+ },
+ "PREVIEW": {
+  "footer": "Release review pending",
+  "html_script_syntax": true,
+  "png": [
+   1440,
+   900
+  ],
+  "ranking_models_resolve": true,
+  "status": "PASS",
+  "visual_inspection": "Card viewed; no clipping or overlap"
+ },
+ "PRICING-REFERENCES": {
+  "costs": {
+   "arcbright-elf-1-12b-r2": {
+    "basis_items": 1500,
+    "output_tokens": 1500,
+    "priced_input_tokens": 610840,
+    "usd_per_1000": 0.020511333333333333
+   },
+   "decisio-gemma-4-12b-tuned-commit-think": {
+    "basis_items": 1500,
+    "output_tokens": 9121,
+    "priced_input_tokens": 844031,
+    "usd_per_1000": 0.02904646666666667
+   },
+   "jeff_1_1_large": {
+    "basis_items": 1500,
+    "output_tokens": 21830,
+    "priced_input_tokens": 620215,
+    "usd_per_1000": 0.042161033333333334
+   },
+   "jeff_1_1_qwen_4b": {
+    "basis_items": 1500,
+    "output_tokens": 69580,
+    "priced_input_tokens": 629951,
+    "usd_per_1000": 0.019557019999999998
+   },
+   "torchcast-decision-31b-v1.0": {
+    "basis_items": 1500,
+    "output_tokens": 0,
+    "priced_input_tokens": 645268,
+    "usd_per_1000": 0.03871607999999999
+   }
+  },
+  "negative_cases_refused": 21,
+  "new_rows": {
+   "arcbright-elf-1-12b-r2": {
+    "base": "google/gemma-4-12B-it",
+    "in": 0.05,
+    "listing": "google/gemma-3-12b-it",
+    "out": 0.15
+   },
+   "decisio-gemma-4-12b-tuned-commit-think": {
+    "base": "google/gemma-4-12B-it",
+    "in": 0.05,
+    "listing": "google/gemma-3-12b-it",
+    "out": 0.15
+   },
+   "jeff_1_1_large": {
+    "base": "google/gemma-4-31B-it",
+    "in": 0.09,
+    "listing": "google/gemma-4-31b-it",
+    "out": 0.34
+   },
+   "jeff_1_1_qwen_4b": {
+    "base": "Qwen/Qwen3.5-4B",
+    "in": 0.03,
+    "listing": "deepinfra:Qwen/Qwen3.5-4B",
+    "out": 0.15
+   },
+   "torchcast-decision-31b-v1.0": {
+    "base": "google/gemma-4-31B-it",
+    "in": 0.09,
+    "listing": "google/gemma-4-31b-it",
+    "out": 0.34
+   }
+  },
+  "pricing_module_sha256": "645fd82eac728d597048bec0995ecd3ac896566e269fb6c9a1fdb84c171a9ac4",
+  "status": "PASS"
+ },
+ "PUBLIC-TEXT": {
+  "banned_pattern": "/home/|workers/|board\\s*#|#\\d{4,}|Florian|release.owner|\\blead\\b|deputy|custody|auto-intake|\\br59\\b|\\br19\\d\\b|69f7a75d|54575fd5|h2o141|tc31b|v171[34]-|jevbench-add-requests|\\bfusion\\b|\\bworker\\b|fast-lane order|paid order|\\bPREREG\\b|(?-i:DECISIONS)|\\{[A-Za-z_][A-Za-z0-9_]*\\}|\\brank(?:ed|ing)?\\b|top[- ](?:five|5)",
+  "checked": [
+   "arcbright-elf-1-12b-r2.author",
+   "arcbright-elf-1-12b-r2.code_revision",
+   "arcbright-elf-1-12b-r2.cost.basis",
+   "arcbright-elf-1-12b-r2.disclosure",
+   "arcbright-elf-1-12b-r2.display",
+   "arcbright-elf-1-12b-r2.endpoint_condition",
+   "arcbright-elf-1-12b-r2.licence",
+   "categories_note",
+   "decisio-gemma-4-12b-tuned-commit-think.author",
+   "decisio-gemma-4-12b-tuned-commit-think.code_revision",
+   "decisio-gemma-4-12b-tuned-commit-think.cost.basis",
+   "decisio-gemma-4-12b-tuned-commit-think.disclosure",
+   "decisio-gemma-4-12b-tuned-commit-think.display",
+   "decisio-gemma-4-12b-tuned-commit-think.endpoint_condition",
+   "decisio-gemma-4-12b-tuned-commit-think.licence",
+   "history_line",
+   "jeff_1_1_large.author",
+   "jeff_1_1_large.code_revision",
+   "jeff_1_1_large.cost.basis",
+   "jeff_1_1_large.disclosure",
+   "jeff_1_1_large.display",
+   "jeff_1_1_large.endpoint_condition",
+   "jeff_1_1_large.licence",
+   "jeff_1_1_qwen_4b.author",
+   "jeff_1_1_qwen_4b.code_revision",
+   "jeff_1_1_qwen_4b.cost.basis",
+   "jeff_1_1_qwen_4b.disclosure",
+   "jeff_1_1_qwen_4b.display",
+   "jeff_1_1_qwen_4b.endpoint_condition",
+   "jeff_1_1_qwen_4b.licence",
+   "label",
+   "new_measurement_note",
+   "page",
+   "source_note",
+   "torchcast-decision-31b-v1.0.author",
+   "torchcast-decision-31b-v1.0.code_revision",
+   "torchcast-decision-31b-v1.0.cost.basis",
+   "torchcast-decision-31b-v1.0.disclosure",
+   "torchcast-decision-31b-v1.0.display",
+   "torchcast-decision-31b-v1.0.endpoint_condition",
+   "torchcast-decision-31b-v1.0.licence"
+  ],
+  "disclosures_kept": {
+   "arcbright-elf-1-12b-r2": [
+    "ELF_TRUNCATE=1",
+    "noul_commit",
+    "byte-identical",
+    "0.0327",
+    "610,840",
+    "30,789"
+   ],
+   "decisio-gemma-4-12b-tuned-commit-think": [
+    "844,031",
+    "727,045",
+    "504,719",
+    "36 of the 746",
+    "7,621",
+    "COMMIT RULE",
+    "9,121"
+   ],
+   "jeff_1_1_large": [
+    "186 decisions",
+    "199,718",
+    "max_output_per_decision 35",
+    "different probability vectors",
+    "CC BY-NC-4.0",
+    "620,215",
+    "21,830"
+   ],
+   "jeff_1_1_qwen_4b": [
+    "313 decisions",
+    "348,654",
+    "max_output_per_decision 143",
+    "CC BY-NC-4.0",
+    "629,951",
+    "69,580"
+   ],
+   "torchcast-decision-31b-v1.0": [
+    "noul_floor 0.801",
+    "0.801 / 0.199",
+    "5 items",
+    "SDPA",
+    "FlashAttention-3 path",
+    "RTX PRO 6000",
+    "645,268",
+    "paid evaluation"
+   ]
+  },
+  "exact_history_sentence": true,
+  "exact_reason": true,
+  "h2o_comparison_sentence_absent": true,
+  "status": "PASS"
+ },
+ "RAW-BINDING": {
+  "rows": {
+   "arcbright-elf-1-12b-r2": {
+    "entry_sha256": "bb53dc42a9e16169bd2e7f33e527b8780037cef386263f109e50285cde3be20f",
+    "http_200": 1500,
+    "input_order": true,
+    "latency_max_s": 0.557,
+    "native_input_tokens": 610840,
+    "output_tokens": 1500,
+    "over_10s": 0,
+    "priced_input_tokens": 610840,
+    "raw_mode": "0600",
+    "raw_sha256": "84f08ebb6ff92af453b75cda042f617ea89c5be6a2176c7c69e11f2521da6f08",
+    "rows": 1500
+   },
+   "decisio-gemma-4-12b-tuned-commit-think": {
+    "engine_recount": {
+     "answered_engine_input_tokens": 844031,
+     "answered_native_input_tokens": 727045,
+     "engine_minus_native_total": 116986,
+     "engine_recount_sha256": "07b69b7a71ba53f1e3b6d22d64803c9bfa97496479c0205e613484e673401319",
+     "file_sha256": "8c9f4691551a99a23c2763783278727f6f6fd7ca5c9fc24467c2dec8b144b646",
+     "independent_recompute_mismatches": 0,
+     "rendering_sha256": "fc4ffec452f3a7034e378cdb9f0d07d34aa6de3f79ae0b70910e923feea2cd17",
+     "think_eligible_n": 746,
+     "think_second_read_prefill_upper_bound_tokens_if_all_eligible_thought": 504719
+    },
+    "entry_sha256": "bb53dc42a9e16169bd2e7f33e527b8780037cef386263f109e50285cde3be20f",
+    "http_200": 1500,
+    "input_order": true,
+    "latency_max_s": 6.928,
+    "native_input_tokens": 727045,
+    "output_tokens": 9121,
+    "over_10s": 0,
+    "priced_input_tokens": 844031,
+    "raw_mode": "0600",
+    "raw_sha256": "d7396dd680e13af9ba26c4526007fee3647d03eee7673bf88075ac510f39cc3c",
+    "rows": 1500
+   },
+   "jeff_1_1_large": {
+    "entry_sha256": "094aedba39685e9a0949d381746a50dd274ef145c8aadf3d2d4889581d6ea7c0",
+    "http_200": 1500,
+    "input_order": true,
+    "latency_max_s": 8.319,
+    "native_input_tokens": 620215,
+    "output_tokens": 21830,
+    "over_10s": 0,
+    "priced_input_tokens": 620215,
+    "raw_mode": "0600",
+    "raw_sha256": "1f1fdc2df674da00128ae7b47d5ea3429cf1124383a077577e7c68c7d9cc0e72",
+    "rows": 1500
+   },
+   "jeff_1_1_qwen_4b": {
+    "entry_sha256": "bb53dc42a9e16169bd2e7f33e527b8780037cef386263f109e50285cde3be20f",
+    "http_200": 1500,
+    "input_order": true,
+    "latency_max_s": 5.921,
+    "native_input_tokens": 629951,
+    "output_tokens": 69580,
+    "over_10s": 0,
+    "priced_input_tokens": 629951,
+    "raw_mode": "0600",
+    "raw_sha256": "c37fada15a2021cf744b2031acb964508caf48873a2bcda5da6d6ac4a5e7c288",
+    "rows": 1500
+   },
+   "torchcast-decision-31b-v1.0": {
+    "entry_sha256": "f36373abe1a01b3fbf0e19e6ebb4fddfe0615f472e1528c9906fa9eb0f2b454a",
+    "http_200": 1500,
+    "input_order": true,
+    "latency_max_s": 6.235,
+    "native_input_tokens": 645268,
+    "output_tokens": 0,
+    "over_10s": 0,
+    "priced_input_tokens": 645268,
+    "raw_mode": "0600",
+    "raw_sha256": "e51a1c22336050368336c996d7cb32181bad5e854024f07844b2a8577a0dda7d",
+    "rows": 1500
+   }
+  },
+  "status": "PASS"
+ },
+ "REPRO": {
+  "files": {
+   "app/api/jevbench/v1.7.14/route.ts": "9bc10da4239125c1f058b50cc7a74814388a90282c846fd40fe2a681f47428cd",
+   "app/jev-models/v1.7.14/page.tsx": "e1f2131ebfd7a85c2293af86ba7893edb29e5ef74937d5824947fd9032f160a2",
+   "data/jevbench-architecture.json": "6812fd80aa4336e0495d1a450d59851acba73076e5449f2118c47c3195cebea2",
+   "data/jevbench-breakdown-exceptions.json": "3fc4d391306c64895f961ea137a531ee9ac85b3bf6c3259c0e65b6f6200242bc",
+   "data/jevbench-draw-equating.json": "2b48806c0ab5c2f9eda334b912a3612af2eca60f7708cc1fddf1240107a538f3",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.14-carry.json": "271d1fc77a136a04a1eb6deb5480c52d4211eb2b66b2ac8bb31e80867e69003a",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.14-categories.json": "fe7d471f2bff4f1c9eb43adbb8ecb1dd1e3c9838dc2912c7dfaab342e7c6da3e",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.14-history-carry.json": "334e851944e92383ab3071e52b3012040c7023d0fe236395953169ebee8f0459",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.14-history.json": "5cd8c1332226ea9c179883d2285c0d8b8cc593ae38f2645197364a7ddd9c83c1",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.14-proof.json": "e75c7bf055efbd34462484f578ba66140bb06d718b2c59e514edc58a07c4c8d3",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.14-publication.json": "4c88670224f336eecaa386a763f8b0a6ce75989f5112c20b0cef02fd7a2ba5b2",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.14-results.json": "d84b02a57b294327066e8c012d939e2d4509c1c241530869c246b61a1ef4ae4e",
+   "lib/jevbench-live-board.mjs": "0d2a533816c46d4b167711374b9af8a3c831f5fd5e89d2d6b408a992e1031dc5",
+   "lib/jevbench-releases.mjs": "b5f7ccd39a6290305fb0a184cf39dd8c69a0e24696f20c8e609a378d9cadcf31",
+   "lib/jevbench-v1714-release.mjs": "7cb5914f9e99e21d7e2447c40c3cd3336f64ab4e211aeb5fdf66aec91d060eee",
+   "test/jevbench-v1713-release.test.mjs": "baece28e3615ce1579730a9fea48089c8b433faad572bfa75e15b273e0668edb"
+  },
+  "status": "PASS",
+  "two_rebuilds_identical": true
+ },
+ "VISIBILITY-POSTFLIP": {
+  "baseline_restated_by": "v1.7.13",
+  "board_rows_after": 306,
+  "board_rows_before": 301,
+  "board_rows_real": 301,
+  "feed_latest_release": "v1.7.14",
+  "feed_rows_after": 306,
+  "feed_rows_before": 301,
+  "new_rows": {
+   "arcbright-elf-1-12b-r2": {
+    "board": {
+     "draw": "v1.6-regular-20261027",
+     "listing": "unranked",
+     "not_ranked_because": "Measured on the 27 Oct 2026 draw, which is not yet equated to the reference scale. This draw differs strongly from earlier draws (72% multilingual items). Shown unranked until the draw is equated.",
+     "rank": null,
+     "ranked": false,
+     "ranks": {
+      "A": null,
+      "B": null,
+      "C": null,
+      "capability": null
+     }
+    },
+    "feed": {
+     "api_board_rank": null,
+     "capability_rank": null,
+     "composite_score": 75.42761509888035,
+     "draw": "v1.6-regular-20261027",
+     "listing": "unranked",
+     "not_ranked_because": "Measured on the 27 Oct 2026 draw, which is not yet equated to the reference scale. This draw differs strongly from earlier draws (72% multilingual items). Shown unranked until the draw is equated.",
+     "open_board_rank": null,
+     "open_capability_rank": null,
+     "rank": null,
+     "ranked": false
+    }
+   },
+   "decisio-gemma-4-12b-tuned-commit-think": {
+    "board": {
+     "draw": "v1.6-regular-20261027",
+     "listing": "unranked",
+     "not_ranked_because": "Measured on the 27 Oct 2026 draw, which is not yet equated to the reference scale. This draw differs strongly from earlier draws (72% multilingual items). Shown unranked until the draw is equated.",
+     "rank": null,
+     "ranked": false,
+     "ranks": {
+      "A": null,
+      "B": null,
+      "C": null,
+      "capability": null
+     }
+    },
+    "feed": {
+     "api_board_rank": null,
+     "capability_rank": null,
+     "composite_score": 73.11468195716678,
+     "draw": "v1.6-regular-20261027",
+     "listing": "unranked",
+     "not_ranked_because": "Measured on the 27 Oct 2026 draw, which is not yet equated to the reference scale. This draw differs strongly from earlier draws (72% multilingual items). Shown unranked until the draw is equated.",
+     "open_board_rank": null,
+     "open_capability_rank": null,
+     "rank": null,
+     "ranked": false
+    }
+   },
+   "jeff_1_1_large": {
+    "board": {
+     "draw": "v1.6-regular-20261027",
+     "listing": "unranked",
+     "not_ranked_because": "Measured on the 27 Oct 2026 draw, which is not yet equated to the reference scale. This draw differs strongly from earlier draws (72% multilingual items). Shown unranked until the draw is equated.",
+     "rank": null,
+     "ranked": false,
+     "ranks": {
+      "A": null,
+      "B": null,
+      "C": null,
+      "capability": null
+     }
+    },
+    "feed": {
+     "api_board_rank": null,
+     "capability_rank": null,
+     "composite_score": 71.33593425029217,
+     "draw": "v1.6-regular-20261027",
+     "listing": "unranked",
+     "not_ranked_because": "Measured on the 27 Oct 2026 draw, which is not yet equated to the reference scale. This draw differs strongly from earlier draws (72% multilingual items). Shown unranked until the draw is equated.",
+     "open_board_rank": null,
+     "open_capability_rank": null,
+     "rank": null,
+     "ranked": false
+    }
+   },
+   "jeff_1_1_qwen_4b": {
+    "board": {
+     "draw": "v1.6-regular-20261027",
+     "listing": "unranked",
+     "not_ranked_because": "Measured on the 27 Oct 2026 draw, which is not yet equated to the reference scale. This draw differs strongly from earlier draws (72% multilingual items). Shown unranked until the draw is equated.",
+     "rank": null,
+     "ranked": false,
+     "ranks": {
+      "A": null,
+      "B": null,
+      "C": null,
+      "capability": null
+     }
+    },
+    "feed": {
+     "api_board_rank": null,
+     "capability_rank": null,
+     "composite_score": 73.0865905114461,
+     "draw": "v1.6-regular-20261027",
+     "listing": "unranked",
+     "not_ranked_because": "Measured on the 27 Oct 2026 draw, which is not yet equated to the reference scale. This draw differs strongly from earlier draws (72% multilingual items). Shown unranked until the draw is equated.",
+     "open_board_rank": null,
+     "open_capability_rank": null,
+     "rank": null,
+     "ranked": false
+    }
+   },
+   "torchcast-decision-31b-v1.0": {
+    "board": {
+     "draw": "v1.6-regular-20261027",
+     "listing": "unranked",
+     "not_ranked_because": "Measured on the 27 Oct 2026 draw, which is not yet equated to the reference scale. This draw differs strongly from earlier draws (72% multilingual items). Shown unranked until the draw is equated.",
+     "rank": null,
+     "ranked": false,
+     "ranks": {
+      "A": null,
+      "B": null,
+      "C": null,
+      "capability": null
+     }
+    },
+    "feed": {
+     "api_board_rank": null,
+     "capability_rank": null,
+     "composite_score": 76.38012249209945,
+     "draw": "v1.6-regular-20261027",
+     "listing": "unranked",
+     "not_ranked_because": "Measured on the 27 Oct 2026 draw, which is not yet equated to the reference scale. This draw differs strongly from earlier draws (72% multilingual items). Shown unranked until the draw is equated.",
+     "open_board_rank": null,
+     "open_capability_rank": null,
+     "rank": null,
+     "ranked": false
+    }
+   }
+  },
+  "new_rows_in_open_scope": true,
+  "order_lists_identical": true,
+  "other_rows_identical": true,
+  "pass_tree_restated_by": "v1.7.14",
+  "pending_hidden_in_real_tree": true,
+  "real_tree_latest": "v1.7.13",
+  "real_tree_restated_by": "v1.7.13",
+  "rows_per_draw_after": {
+   "None": 158,
+   "v1.6-fastlane-20261009": 6,
+   "v1.6-regular-20261010-a2": 16,
+   "v1.6-regular-20261012": 120,
+   "v1.6-regular-20261027": 6
+  },
+  "rows_per_draw_before": {
+   "None": 158,
+   "v1.6-fastlane-20261009": 6,
+   "v1.6-regular-20261010-a2": 16,
+   "v1.6-regular-20261012": 120,
+   "v1.6-regular-20261027": 1
+  },
+  "status": "PASS"
+ },
+ "fulltest-postflip-once": {
+  "cancelled": 0,
+  "exit": {
+   "command": "suite-slot node --test --test-concurrency=2 test/ (simulated post-flip state, .next from the post-flip build)",
+   "exit_code": 0
+  },
+  "fail": 0,
+  "log_sha256": "56f0f733aff5dfd9b7b287c2bb3cc14d294713fbc97f21b684d6c8bdff926673",
+  "not_ok": [],
+  "note": "Full npm test run once in the simulated post-flip state (v1.7.13 + v1.7.14 synthetic PASS).",
+  "pass": 3889,
+  "skipped": 8,
+  "tests": 3897
+ },
+ "helpers": {
+  "log_sha256": "2428c51ab2ce7f39cd0b2ac8cbc633d71a25339d68299fd0dd05b64521bf908f",
+  "status": "PASS",
+  "summary": "PASS flip/freeze dry runs (v1.7.13 PASS: real-tree flip dry run accepted, no write; synthetic tree OK), stale-binding refusal, seal-write refusal, 13 approval negatives; real manifests unchanged"
+ },
+ "open_items": [
+  "v1.7.13 must be flipped first; then restack_v1714.sh <new-base> (re-binds the v1.7.13 manifest hash)",
+  "independent publication review PENDING (flip_verdict_v1714.py binds a real PASS receipt)"
+ ],
+ "postflip-release-suites": {
+  "cancelled": 0,
+  "fail": 0,
+  "log_sha256": "ee2c5a0652a076fc33171224a1893f3621d7167687e6619024ff8ef67a56a51a",
+  "not_ok": [],
+  "pass": 164,
+  "skipped": 1,
+  "tests": 165
+ },
+ "predecessor_review": "PASS",
+ "preview-check": {
+  "log_sha256": "8dc1970e979e55619b70fed6652c78c5722a242ccd10caf9be3e41392cc91b0b",
+  "status": "PASS",
+  "summary": "PASS preview script syntax, ranking model mappings, PENDING footer and 1440x900 card"
+ },
+ "pricing-references": {
+  "log_sha256": "12743c52f5481904e57c1d1ea6ce3e6881746107a6aae55c87ecf4c2975a065a",
+  "status": "PASS",
+  "summary": "PASS all 5 new row references/rates match pricing.reference() (explicit gemma-3-12b-it pair for the unlisted 12B base); 21 mismatches refused; priced-input costs recomputed"
+ },
+ "production-build-postflip": {
+  "built_route": {
+   "compiled_route": ".next/server/app/api/jevbench/latest/route.js",
+   "feed_rows": 306,
+   "main_board_html_shows": [
+    "arcbright-elf-1-12b-r2",
+    "decisio-gemma-4-12b-tuned-commit-think",
+    "jeff_1_1_large",
+    "jeff_1_1_qwen_4b",
+    "torchcast-decision-31b-v1.0"
+   ],
+   "new_rows_in_feed": [
+    {
+     "composite_score": 75.42761509888035,
+     "key": "arcbright-elf-1-12b-r2",
+     "listing": "unranked",
+     "rank": null,
+     "ranked": false
+    },
+    {
+     "composite_score": 73.11468195716678,
+     "key": "decisio-gemma-4-12b-tuned-commit-think",
+     "listing": "unranked",
+     "rank": null,
+     "ranked": false
+    },
+    {
+     "composite_score": 71.33593425029217,
+     "key": "jeff_1_1_large",
+     "listing": "unranked",
+     "rank": null,
+     "ranked": false
+    },
+    {
+     "composite_score": 73.0865905114461,
+     "key": "jeff_1_1_qwen_4b",
+     "listing": "unranked",
+     "rank": null,
+     "ranked": false
+    },
+    {
+     "composite_score": 76.38012249209945,
+     "key": "torchcast-decision-31b-v1.0",
+     "listing": "unranked",
+     "rank": null,
+     "ranked": false
+    }
+   ],
+   "status": "PASS",
+   "synthetic_latest": "v1.7.14",
+   "v1714_page_shows_all_five": true
+  },
+  "log_sha256": "2a827934a7a5c909b88dc1dfbbda5a1105b3c29351161242882925605cf9fae4",
+  "pages": "634/634",
+  "status": "PASS"
+ },
+ "public-text": {
+  "log_sha256": "85ca61886f1c31ef36216caedc0fb65fffba589a9287b0aadd88df390c929b51",
+  "status": "PASS",
+  "summary": "PASS public text: 41 texts clean; exact reason and history sentence present; builder disclosures kept for 5 rows"
+ },
+ "publication_review": "PENDING",
+ "raw": {
+  "log_sha256": "5c9ce76c2949546056423487e28f5f95ee3f6d4956734ac5d6d25627b922b854",
+  "status": "PASS",
+  "summary": "PASS raw/entry/input/manifest hash binding for 5 rows, sealed input order, 1500 x 200 each, token totals, 0 over 10 s; Decisio engine recount bound (file + script hash)"
+ },
+ "release-tests-pending": {
+  "cancelled": 0,
+  "fail": 1,
+  "log_sha256": "adc55465d4c862d9d8dd41162addaf90682c9282659f5cf518987699308b8976",
+  "not_ok": [
+   "gate: no listed row lacks topic, use-case or language cells without a recorded exception"
+  ],
+  "note": "PENDING state: only the breakdown gate fails (orphan topics exceptions for the hidden v1.7.13 and v1.7.14 rows; pre-existing at 0defb755); it passes post-flip",
+  "pass": 149,
+  "skipped": 1,
+  "tests": 151
+ },
+ "repro": {
+  "log_sha256": "4af6af5c47cecd72bc33f3299da336ca39161a7455cdc176e24157573d6372a2",
+  "status": "PASS",
+  "summary": "PASS two deterministic rebuilds, 16 artifact hashes"
+ },
+ "source": {
+  "log_sha256": "604fa368480f01c666319c2da1d815e2e36cb87c920bf9823758d558a2855de9",
+  "status": "PASS",
+  "summary": "PASS 301 carried rows/cells fully equal incl. ranks (family rows included), board unchanged, 5 new rows unranked on the same draw, carry/history bytes and 14 predecessor files (v1.7.12 + v1.7.13) equal to 83705a97 ; predecessor hash bound; new row scores/CI equal trusted sources; estimate costs recomputed"
+ },
+ "status": "PASS_WITH_OPEN_ITEMS",
+ "top-five": {
+  "changed": false,
+  "changed_lists": 0,
+  "custom_changed_labels": [],
+  "lists": 580,
+  "single_entrant_changed": 0,
+  "single_entrant_lists": 584,
+  "slider_changed_states": 0,
+  "slider_grid_changed": 0
+ },
+ "typescript": {
+  "exit_code": 0,
+  "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "status": "PASS"
+ },
+ "validator": {
+  "log_sha256": "48c6021a732805db18d011253b91e2cdfbef9dde87785487264eb2dbfee27a83",
+  "status": "PASS",
+  "summary": "PASS 301 carried rows/cells fully equal (ranks included), unchanged order lists, 5 exact UNRANKED new rows on the 27 Oct draw, immutable method/carry, pins, public text, estimate cost, standing-GO approval binding; 58 bundle negatives and 50 row-gate negatives rejected (no row can be ranked or in any order list); predecessor v1.7.13 PASS; v1.7.14 PENDING hidden"
+ },
+ "visibility": {
+  "log_sha256": "ae0a3e2a174630c35f7227f807d39cfd5701c3e72e41fc30d5dcd8afd71a5d3c",
+  "status": "PASS",
+  "summary": "PASS 5 rows visible unranked on merged board + feed (open scope); 301 -> 306 board rows; no row of any draw vanished or changed; orders identical; real PENDING tree shows none ( 301 rows, v1.7.13 )"
+ }
+}
