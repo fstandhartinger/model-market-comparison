@@ -1,0 +1,26 @@
+{
+ "verdict": "PASS",
+ "engine": "Claude Opus 5.5 (full critic, a65b7568) + Claude Sonnet 5.5 (delta critic, a98fa4a9)",
+ "release": "v1.7.16",
+ "head_reviewed": "a98fa4a9 (rebased onto origin/main 1dcc3a76 as a889f5fe, rebuild byte-identical)",
+ "reviews": [
+  {
+   "path": "workers/r198-v1716-critic/RESULT.json",
+   "sha256": "518bb6df49c2446da9510c108ce6c6da116f590f7798b7f2232bf87faa93d942",
+   "verdict": "REVISE",
+   "blocking": [
+    "F1"
+   ]
+  },
+  {
+   "path": "workers/r198-v1716-delta/RESULT.json",
+   "sha256": "9cf109d619612757d6cdf4ad328d09aafe2076df3e5fc5303cfd4d413b354630",
+   "verdict": "PASS",
+   "closes": [
+    "F1",
+    "F2"
+   ]
+  }
+ ],
+ "note": "Full critic REVISE with one blocker (F1: release-page anchor paraphrase false for Strike-1); F2 adopted; text-only fix a98fa4a9; delta critic PASS closes F1 and F2 (D1/D2 non-blocking: carried d1027 notes remain true for those rows; preview intro is local-only). Combined receipt per the v1.7.12/v1.7.15 precedent."
+}
