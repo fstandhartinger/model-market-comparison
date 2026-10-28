@@ -192,12 +192,28 @@ def notify_florian(message: str) -> bool:
 
 
 CONTEXT_MAX_CHARS = 220  # notify rejects a longer "Worum geht's:" line
+FX_FILE = HOME / ".notify/fx-usd-eur.json"  # USD->EUR cache that notify refreshes from the ECB
+FX_FALLBACK = 0.90
 
 
-def notification_context(model: str, email: str, payment_link: str) -> str:
+def usd_to_eur_rate() -> float:
+    try:
+        return float(json.loads(FX_FILE.read_text())["rate"])
+    except (OSError, ValueError, KeyError, TypeError):
+        return FX_FALLBACK
+
+
+def eur_phrase(amount_cents: int) -> str:
+    """Money cards must show the EUR value in the headline (DECISIONS 26 Oct, board #27878)."""
+    return f"about EUR {round(int(amount_cents) / 100 * usd_to_eur_rate())}"
+
+
+def notification_context(model: str, email: str, payment_link: str, eur: str = "") -> str:
     """Keep the context line under the notify limit; the card body still carries the full model name and email."""
+    paid = f"is paid ({eur})" if eur else "is paid"
+
     def line(name: str, who: str) -> str:
-        return f"the Benchmark Heaven fast-lane order for {name}{f' ({who})' if who else ''} is paid. {payment_link}"
+        return f"the Benchmark Heaven fast-lane order for {name}{f' ({who})' if who else ''} {paid}. {payment_link}"
     about = line(model, email)
     if len(about) <= CONTEXT_MAX_CHARS:
         return about
@@ -224,7 +240,7 @@ def process_notification() -> bool:
     model = str(row.get("model_name", "")).strip() or "unnamed model"
     message = (
         "✅ ERLEDIGT\n"
-        f"Worum geht's: {notification_context(model, str(row.get('email', '')), payment_link)}\n\n"
+        f"Worum geht's: {notification_context(model, str(row.get('email', '')), payment_link, eur_phrase(amount))}\n\n"
         f"New {mode} priority evaluation payment\n"
         f"From: {row.get('email', '')}\n"
         f"Model: {row.get('model_name', '')}\n"

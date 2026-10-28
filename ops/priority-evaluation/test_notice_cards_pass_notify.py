@@ -32,6 +32,13 @@ def dry_run(argv, message=None):
 
 @unittest.skipUnless(NOTIFY.is_file(), "installed Sandy notifier is unavailable")
 class NoticeCardsPassNotify(unittest.TestCase):
+    def assertCardClean(self, card, result):
+        # Board #30934: the payment headline must carry the EUR value itself, not rely on notify's auto-fix.
+        self.assertRegex(card.splitlines()[1], r"is paid \(about EUR \d+\)\.")
+        output = result.stdout + result.stderr
+        self.assertNotIn("repeat-lint", output)
+        self.assertNotIn("reformatted automatically", output)
+
     def test_payment_notice_passes_notify(self):
         row = {"id": "00000000-0000-4000-8000-000000000000", "stripe_mode": "live", "payment_intent_id": "pi_Test123",
                "amount_total": 9900, "benchmarks": ["jevbench"], "email": "a@example.com",
@@ -43,6 +50,7 @@ class NoticeCardsPassNotify(unittest.TestCase):
             worker.process_notification()
         result = dry_run([str(NOTIFY), "now", "--requested", "--text-stdin"], sent[0])
         self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertCardClean(sent[0], result)
 
     def test_long_model_name_payment_notice_passes_notify(self):
         # Urgent card q1792346705: an 83-character model name pushed the context line past 220 characters.
@@ -58,6 +66,7 @@ class NoticeCardsPassNotify(unittest.TestCase):
         self.assertIn("Model: " + row["model_name"], sent[0])
         result = dry_run([str(NOTIFY), "now", "--requested", "--text-stdin"], sent[0])
         self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertCardClean(sent[0], result)
 
     def test_customer_mail_notice_passes_notify(self):
         event = {"gmail_message_id": "m1", "request_id": "00000000-0000-4000-8000-000000000000",
