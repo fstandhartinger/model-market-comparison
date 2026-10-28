@@ -48,6 +48,7 @@ FILE_HEAD = "# JevBench add requests\n\n"
 MAIL_RE = re.compile(r"^[A-Za-z0-9._%+-]{1,64}@[A-Za-z0-9-]{1,63}(\.[A-Za-z0-9-]{1,63})*\.[A-Za-z]{2,24}$")
 MAX_MAILS_PER_RUN = 10
 MAX_ATTEMPTS = 96
+COOLDOWN_MAX_DEFER_HOURS = 48  # a cooldown-deferred receipt goes out at the latest this long after filing
 BENCH_LABEL = {"jevbench": "JevBench", "imagejevbench": "ImageJevBench", "audiojevbench": "AudioJevBench"}
 TOP_N = 10
 
@@ -109,7 +110,10 @@ def append_row(path: Path, marker: str, line: str) -> bool:
     path.parent.mkdir(parents=True, exist_ok=True)
     with lock.open("a") as lock_fh:
         fcntl.flock(lock_fh, fcntl.LOCK_EX)
-        text = path.read_text() if path.exists() else ""
+        text = ""
+        if path.exists():
+            with path.open(newline="") as fh:  # keep CR bytes; a lone CR must not split a row
+                text = fh.read()
         if marker in text:
             return False
         if SECTION not in text:
@@ -132,7 +136,8 @@ def append_row(path: Path, marker: str, line: str) -> bool:
                 last = i
         lines.insert(last + 1, line)
         tmp = path.with_name(path.name + ".bh-submit.tmp")
-        tmp.write_text("\n".join(lines))
+        with tmp.open("w", newline="") as fh:
+            fh.write("\n".join(lines))
         os.replace(tmp, path)
         return True
 
@@ -276,10 +281,11 @@ def step_confirmations(db: Db, dry: bool, counts: dict) -> None:
         (SELECT count(*) + 1 FROM bh_model_submissions o WHERE o.status='queued' AND NOT o.fast_lane
            AND (o.queued_at, o.id) < (s.queued_at, s.id)) AS position,
         EXISTS (SELECT 1 FROM bh_model_submissions o WHERE lower(o.contact_email)=lower(s.contact_email) AND o.id<>s.id
-           AND o.confirmation_status='sent' AND o.updated_at > now() - interval '24 hours') AS mailed_recently
+           AND o.confirmation_status='sent' AND o.updated_at > now() - interval '24 hours') AS mailed_recently,
+        s.queued_at < now() - interval '%d hours' AS cooldown_expired
         FROM bh_model_submissions s
         WHERE s.status='queued' AND NOT s.fast_lane AND s.confirmation_status='pending'
-        ORDER BY s.queued_at, s.id""")
+        ORDER BY s.queued_at, s.id""" % COOLDOWN_MAX_DEFER_HOURS)
     attempted, blocked_domains, mailed = 0, set(), set()
     for row in rows:
         address = (row.get("contact_email") or "").strip()
@@ -289,11 +295,11 @@ def step_confirmations(db: Db, dry: bool, counts: dict) -> None:
                 db.execute("UPDATE bh_model_submissions SET confirmation_status='failed', updated_at=now() WHERE id=(:'id')::uuid", id=row["id"])
             counts["confirm_failed"] += 1
             continue
-        if row["mailed_recently"] or address.lower() in mailed or recently_mailed(address):
-            if not dry:
-                db.execute("UPDATE bh_model_submissions SET confirmation_status='skipped', updated_at=now() WHERE id=(:'id')::uuid", id=row["id"])
-            counts["confirm_skipped"] += 1
-            log("confirmation", id=row["id"], result="skipped_recent")
+        # The per-address cooldown only delays the receipt: the row stays pending and a later tick sends it
+        # (once the cooldown lapses, or after COOLDOWN_MAX_DEFER_HOURS at the latest). Never two in one run.
+        if address.lower() in mailed or (not row["cooldown_expired"] and (row["mailed_recently"] or recently_mailed(address))):
+            counts["confirm_cooldown_deferred"] += 1
+            log("confirmation", id=row["id"], result="deferred_recent")
             continue
         if attempted >= MAX_MAILS_PER_RUN or domain in blocked_domains:
             continue
@@ -357,7 +363,7 @@ def step_digest(db: Db, synced: list[dict], dry: bool) -> None:
 # ------------------------------------------------------------------------------------ main
 def run(db: Db, dry: bool) -> dict:
     counts = {k: 0 for k in ("intake_synced", "intake_would_sync", "confirm_sent", "confirm_dry_ok", "confirm_skipped",
-                             "confirm_failed", "confirm_deferred", "keys_purged", "abandoned")}
+                             "confirm_failed", "confirm_deferred", "confirm_cooldown_deferred", "keys_purged", "abandoned")}
     synced = step_intake(db, dry, counts)
     step_confirmations(db, dry, counts)
     step_purge(db, dry, counts)
