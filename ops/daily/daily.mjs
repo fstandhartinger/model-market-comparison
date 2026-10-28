@@ -419,8 +419,13 @@ export async function runDaily({ repo = ROOT, home = '/opt/benchmarkheaven-daily
     if (hash(await readFile(join(work, 'data/raw/aa-coding-agents.json'))) !== legacy) throw new Error('Legacy Coding Agent v1.4 changed: refusing publication');
     for (const [file, sha] of frozenCoding) if (hash(await readFile(join(work, 'data/raw', file))) !== sha) throw new Error(`Frozen Coding Agent snapshot ${file} changed: refusing publication`);
     await command('build-dataset', process.execPath, ['scripts/build-dataset.mjs']);
-    await command('npm-build', 'npm', ['run', 'build'], work, 1_200_000, isolatedEnvironment);
-    await command('npm-test', 'npm', ['test'], work, 900_000, isolatedEnvironment);
+    // CR-592: 30 min for build and test. The suite needed 868 s of the 900 s cap on a quiet
+    // 27 Oct run; on 28 Oct two publishes died at the cap under ordinary shared-host load —
+    // build 1099/1200 s, test killed twice at 900 s with zero failing tests, so every daily
+    // publication had become a coin flip against the wall-clock. The 3 h run cap still bounds a
+    // genuinely hung step.
+    await command('npm-build', 'npm', ['run', 'build'], work, 1_800_000, isolatedEnvironment);
+    await command('npm-test', 'npm', ['test'], work, 1_800_000, isolatedEnvironment);
     await command('typecheck', 'npx', ['tsc', '--noEmit', '-p', '.'], work, 600_000, isolatedEnvironment);
     await command('prerender', process.execPath, ['--test', 'test/production/prerender.mjs'], work, 600_000, isolatedEnvironment);
     after = await readJSON(join(work, 'data/dataset.json'));
