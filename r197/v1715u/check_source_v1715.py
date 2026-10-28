@@ -7,10 +7,10 @@ BASE=sys.argv[1] if len(sys.argv)>1 else 'c51053c3'
 BASE=subprocess.check_output(['git','rev-parse',BASE],cwd=W,text=True).strip()
 b=L(V/'jevbench-v1.7.14-results.json');a=L(V/'jevbench-v1.7.15-results.json');by={r['key']:r for r in a['systems']};pb={r['key']:r for r in b['systems']}
 DRAW='v1.6-regular-20261027';K='microsoft-decision-1-r2';H2O='h2o-lightning-4b-v1.4.1'
-NOTE=("Measured on the 27 Oct 2026 draw. Its anchor runs are complete, but the anchor models are weaker than this row, and for models at this level "
-      "the draw's adjustment is uncertain by several points. Shown unranked until stronger anchors are measured.")
+HEAD="Measured on the 27 Oct 2026 draw, which is not yet equated to the reference scale: its first anchor runs used models weaker than this row, and stronger anchors are being measured.";TAIL="Shown unranked until then."
+NOTE=HEAD+' '+TAIL
 EXTRA='On the 300 public items every draw shares, this version scores 57.2 Intelligence vs 61.1 for H2O-Lightning-4B v1.1.'
-note=lambda k:NOTE+(' '+EXTRA if k==H2O else '')
+note=lambda k:HEAD+(' '+EXTRA if k==H2O else '')+' '+TAIL
 DK=sorted(k for k,r in pb.items() if (r.get('draw') or {}).get('id')==DRAW)
 assert DK==['arcbright-elf-1-12b-r2','decisio-gemma-4-12b-tuned-commit-think',H2O,'jeff_1_1_large','jeff_1_1_qwen_4b','torchcast-decision-31b-v1.0']
 # Every carried row is fully equal (ranks included); the six draw rows differ in exactly one field, not_ranked_because, = the new note.

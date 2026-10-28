@@ -8,12 +8,13 @@ DRAW_NOTE = ("DRAW: measured on the 27 Oct 2026 regular draw (fresh sealed items
              "are shown as published, offset 0).")
 # The public not-ranked note of every row on the 27 Oct draw (decision d1027-strong-anchors-needed): the six carried rows' notes are
 # replaced with it (H2O-Lightning-4B v1.4.1 keeps its extra v1.1 comparison sentence) and the new row carries it.
-NOT_RANKED_BECAUSE = ("Measured on the 27 Oct 2026 draw. Its anchor runs are complete, but the anchor models are weaker than this row, and for "
-                      "models at this level the draw's adjustment is uncertain by several points. Shown unranked until stronger anchors are measured.")
+NOTE_HEAD = ("Measured on the 27 Oct 2026 draw, which is not yet equated to the reference scale: its first anchor runs used models weaker than this row, and stronger anchors are being measured.")
+NOTE_TAIL = "Shown unranked until then."
+NOT_RANKED_BECAUSE = NOTE_HEAD + ' ' + NOTE_TAIL
 H2O_KEY = 'h2o-lightning-4b-v1.4.1'
 H2O_EXTRA = 'On the 300 public items every draw shares, this version scores 57.2 Intelligence vs 61.1 for H2O-Lightning-4B v1.1.'
 def note_for(key):
-    return NOT_RANKED_BECAUSE + (' ' + H2O_EXTRA if key == H2O_KEY else '')
+    return NOTE_HEAD + (' ' + H2O_EXTRA if key == H2O_KEY else '') + ' ' + NOTE_TAIL
 ROW = {
  'display': DISPLAY, 'author': 'Microsoft', 'provider': 'microsoft',
  'repo': 'https://commandline.microsoft.com/microsoft-decision-1-model-foundry/',

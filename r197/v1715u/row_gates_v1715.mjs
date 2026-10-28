@@ -2,9 +2,11 @@
 // unranked mechanism for every row of the 27 Oct draw (never a rank, never in an order list, the exact d1027 note).
 export const ROW_KEYS=['microsoft-decision-1-r2'];
 export const DRAW_KEYS=['arcbright-elf-1-12b-r2','decisio-gemma-4-12b-tuned-commit-think','h2o-lightning-4b-v1.4.1','jeff_1_1_large','jeff_1_1_qwen_4b','microsoft-decision-1-r2','torchcast-decision-31b-v1.0'];
-export const NOT_RANKED_BECAUSE="Measured on the 27 Oct 2026 draw. Its anchor runs are complete, but the anchor models are weaker than this row, and for models at this level the draw's adjustment is uncertain by several points. Shown unranked until stronger anchors are measured.";
+export const NOTE_HEAD="Measured on the 27 Oct 2026 draw, which is not yet equated to the reference scale: its first anchor runs used models weaker than this row, and stronger anchors are being measured.";
+export const NOTE_TAIL="Shown unranked until then.";
+export const NOT_RANKED_BECAUSE=NOTE_HEAD+' '+NOTE_TAIL;
 export const H2O_EXTRA='On the 300 public items every draw shares, this version scores 57.2 Intelligence vs 61.1 for H2O-Lightning-4B v1.1.';
-export const noteFor=k=>NOT_RANKED_BECAUSE+(k==='h2o-lightning-4b-v1.4.1'?' '+H2O_EXTRA:'');
+export const noteFor=k=>NOTE_HEAD+(k==='h2o-lightning-4b-v1.4.1'?' '+H2O_EXTRA:'')+' '+NOTE_TAIL;
 const INTERNAL=/\/home\/|workers\/|board\s*#|#\d{4,}|Florian|release.owner|\blead\b|deputy|custody|auto-intake|\br59\b|d2b677de|9cde338c|Anna|Roth|Gmail|jevbench-add-requests|\bfusion\b|\bworker\b|fast-lane order|paid order|\brank(?:ed|ing)?\b|top[- ](?:five|5)/i;
 export function checkNewRowText(s){
  if(s.key!=='microsoft-decision-1-r2')throw Error('model pin');

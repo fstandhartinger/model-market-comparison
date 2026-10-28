@@ -27,8 +27,8 @@ s = s.replace('v1.7.14', '__NEW__').replace('v1.7.13', 'v1.7.14').replace('__NEW
 TITLE = 'Microsoft-Decision-1 with updated weights on the 27 Oct regular draw'
 body_old = re.search(r'<p className="mt-3 max-w-3xl">(.*?)</p>', s).group(1)
 BODY = (HIST.replace("'", '&apos;') + ' It is measured on 1,493 of the draw&apos;s items (7 items its provider had seen in an earlier evaluation are excluded; '
-        '4 requests over its 32,768-token context limit count as wrong); the first Microsoft-Decision-1 row stays unchanged. The draw&apos;s anchor runs are '
-        'complete, but the anchor models are weaker than the draw&apos;s rows, so the draw is not equated: its numbers are shown as published (offset 0) and '
+        '4 requests over its 32,768-token context limit count as wrong); the first Microsoft-Decision-1 row stays unchanged. The draw&apos;s first anchor runs '
+        'used models weaker than the draw&apos;s rows and stronger anchors are being measured, so the draw is not equated: its numbers are shown as published (offset 0) and '
         'no ranking or ranked order changes. The 10 s rule applies; no decision took longer than 10 s. Cost uses the advertised Azure Foundry tariff '
         '(USD 0.042 per million input tokens, output free), as for the first row. Every existing row keeps its scores and confidence intervals; no method change.')
 REPL = [

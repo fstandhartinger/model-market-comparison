@@ -9,8 +9,8 @@ BANNED=re.compile(r"/home/|workers/|board\s*#|#\d{4,}|Florian|release.owner|\ble
 RANKWORDS=re.compile(r"\brank(?:ed|ing)?\b|top[- ](?:five|5)",re.I)
 HIST=("Added Microsoft-Decision-1 with updated weights (paid evaluation) on the 27 Oct regular draw; that draw's rows stay unranked "
       "until stronger anchors are measured.")
-NOTE=("Measured on the 27 Oct 2026 draw. Its anchor runs are complete, but the anchor models are weaker than this row, and for models at this level "
-      "the draw's adjustment is uncertain by several points. Shown unranked until stronger anchors are measured.")
+HEAD="Measured on the 27 Oct 2026 draw, which is not yet equated to the reference scale: its first anchor runs used models weaker than this row, and stronger anchors are being measured.";TAIL="Shown unranked until then."
+NOTE=HEAD+' '+TAIL
 H2O='h2o-lightning-4b-v1.4.1';H2O_EXTRA='On the 300 public items every draw shares, this version scores 57.2 Intelligence vs 61.1 for H2O-Lightning-4B v1.1.'
 TOPIC='This draw has no subject-topic labels yet, so the row has no topic cells'
 res=L(V/'jevbench-v1.7.15-results.json');cat=L(V/'jevbench-v1.7.15-categories.json');by={s['key']:s for s in res['systems']}
@@ -20,7 +20,7 @@ rel=next(l for l in (W/'lib/jevbench-releases.mjs').read_text().splitlines() if 
 texts={'page':page_text,'history_line':rel,'label':res['label'],'source_note':res['source_note'],'new_measurement_note':res['measurement_notes'][-1],'categories_note':cat['results_sha256_note'],
        'draw_table_entry':json.dumps(next(x for x in L(W/'data/jevbench-draw-equating.json')['draws'] if x['draw']=='v1.6-regular-20261027'))}
 for k in DK:
- r=by[k];assert r['not_ranked_because']==NOTE+(' '+H2O_EXTRA if k==H2O else ''),(k,'exact public note')
+ r=by[k];assert r['not_ranked_because']==HEAD+(' '+H2O_EXTRA if k==H2O else '')+' '+TAIL,(k,'exact public note')
  assert TOPIC in r['disclosure'],(k,'topic-cell sentence kept')
  assert 'listing_note' not in r and not re.search(r'equated to the reference scale with|anchor equating',r['disclosure']),(k,'no equated wording')
  texts[f'{k}.not_ranked_because']=r['not_ranked_because']

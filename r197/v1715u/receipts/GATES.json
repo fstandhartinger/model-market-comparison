@@ -85,7 +85,7 @@
   "pending_freeze_refused": true,
   "real_flip_dry_run_accepted_no_write": true,
   "real_manifests_unchanged": [
-   "c22d1a5d7d27383470a049390a1b4a9b0e112d694f44183234d3775ab61637c1",
+   "0e339cf8ce883255c1724ddc4c9ff180d41dd4d6f101df61279749bf1e8aae18",
    "5240aacdeeb39990b71ee50c1c9a8335ca1997559fed360229dff069872b26bd",
    "ea6611ed334db8a4fd2f74213fd0f8566d27ec6fb28e8f37979efc1460054384"
   ],
@@ -196,20 +196,20 @@
  "REPRO": {
   "files": {
    "app/api/jevbench/v1.7.15/route.ts": "669c07929c219d307b83106b09c5e228c1862677d8159a74bd2f3bf5572788ed",
-   "app/jev-models/v1.7.15/page.tsx": "7abf92f91a2fa90a1cdaa1480a44168583411e78b664abe32eeccf3cbe8f60d6",
+   "app/jev-models/v1.7.15/page.tsx": "0544a2165c3985b70e24437d9eef82c440965f1d7d65152ea8093a61ce82f762",
    "data/jevbench-architecture.json": "ecabfdb913efbf879281e8f35882423e183ac3b8cf128776d0c63e5124310eae",
    "data/jevbench-breakdown-exceptions.json": "c24adcc8428309223773bae4547209d4fe5a828248b5b15aee959ae5e3d93754",
    "data/jevbench-draw-equating.json": "f697912cb05c6cf07566e7f4e29e9d845a8252f59bfdce51e55ca9d15659083a",
    "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.15-carry.json": "271d1fc77a136a04a1eb6deb5480c52d4211eb2b66b2ac8bb31e80867e69003a",
-   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.15-categories.json": "6db29b5c67f8309232434eb76374cbdbd51941bbc09121294f50e340760bb4f4",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.15-categories.json": "7fed03fb6ffafc01e02e117fee9c2c2aafbb792cfe30c4a2d197a32d177a5cb8",
    "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.15-history-carry.json": "334e851944e92383ab3071e52b3012040c7023d0fe236395953169ebee8f0459",
    "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.15-history.json": "5cd8c1332226ea9c179883d2285c0d8b8cc593ae38f2645197364a7ddd9c83c1",
-   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.15-proof.json": "cc1e344f5760ff81c822b702fee4f1558dae9e5ccf131f79900934acd99c8941",
-   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.15-publication.json": "c22d1a5d7d27383470a049390a1b4a9b0e112d694f44183234d3775ab61637c1",
-   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.15-results.json": "824cba1f281834e9674bd5ae9fffcdea5586a8862b270496b3e12b6252fd5fa3",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.15-proof.json": "bfb36e2e8cf5605a14295e0c6ce8dcdd2e76b4ca852e908f841dbcf88bef4edc",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.15-publication.json": "0e339cf8ce883255c1724ddc4c9ff180d41dd4d6f101df61279749bf1e8aae18",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.15-results.json": "cab905abf2bab1f71a3c81b14bdcbf4d9c989a586925897c678c30d275ff22d4",
    "lib/jevbench-live-board.mjs": "68941cfdae05c4bb784206ca09c8afbe273754e38f9fd02254ac3e9dd11a0d6d",
    "lib/jevbench-releases.mjs": "d976e43c4e222113707262a2714a1d277b166cc273296bde3f3c5774792ec466",
-   "lib/jevbench-v1715-release.mjs": "ae6912dd73aa02cd6386b6c1474cc4f005c1900ed04e2517bcf44a07f2aa5268",
+   "lib/jevbench-v1715-release.mjs": "c32b1b3bad8db75a119d11272f56e49caf05d7218f4927ba30981b3c8e8f514e",
    "test/jevbench-v1713-release.test.mjs": "baece28e3615ce1579730a9fea48089c8b433faad572bfa75e15b273e0668edb",
    "test/jevbench-v1714-release.test.mjs": "a1ec49d8a431944c71ebde0c83bdbbe4ac34fb3f8195378e7d3c22137c9c9d23"
   },
@@ -226,7 +226,7 @@
     "board": {
      "draw": "v1.6-regular-20261027",
      "listing": "unranked",
-     "not_ranked_because": "Measured on the 27 Oct 2026 draw. Its anchor runs are complete, but the anchor models are weaker than this row, and for models at this level the draw's adjustment is uncertain by several points. Shown unranked until stronger anchors are measured.",
+     "not_ranked_because": "Measured on the 27 Oct 2026 draw, which is not yet equated to the reference scale: its first anchor runs used models weaker than this row, and stronger anchors are being measured. Shown unranked until then.",
      "rank": null,
      "ranked": false,
      "ranks": {
@@ -242,7 +242,7 @@
      "composite_score": 75.42761509888035,
      "draw": "v1.6-regular-20261027",
      "listing": "unranked",
-     "not_ranked_because": "Measured on the 27 Oct 2026 draw. Its anchor runs are complete, but the anchor models are weaker than this row, and for models at this level the draw's adjustment is uncertain by several points. Shown unranked until stronger anchors are measured.",
+     "not_ranked_because": "Measured on the 27 Oct 2026 draw, which is not yet equated to the reference scale: its first anchor runs used models weaker than this row, and stronger anchors are being measured. Shown unranked until then.",
      "open_board_rank": null,
      "open_capability_rank": null,
      "rank": null,
@@ -253,7 +253,7 @@
     "board": {
      "draw": "v1.6-regular-20261027",
      "listing": "unranked",
-     "not_ranked_because": "Measured on the 27 Oct 2026 draw. Its anchor runs are complete, but the anchor models are weaker than this row, and for models at this level the draw's adjustment is uncertain by several points. Shown unranked until stronger anchors are measured.",
+     "not_ranked_because": "Measured on the 27 Oct 2026 draw, which is not yet equated to the reference scale: its first anchor runs used models weaker than this row, and stronger anchors are being measured. Shown unranked until then.",
      "rank": null,
      "ranked": false,
      "ranks": {
@@ -269,7 +269,7 @@
      "composite_score": 73.11468195716678,
      "draw": "v1.6-regular-20261027",
      "listing": "unranked",
-     "not_ranked_because": "Measured on the 27 Oct 2026 draw. Its anchor runs are complete, but the anchor models are weaker than this row, and for models at this level the draw's adjustment is uncertain by several points. Shown unranked until stronger anchors are measured.",
+     "not_ranked_because": "Measured on the 27 Oct 2026 draw, which is not yet equated to the reference scale: its first anchor runs used models weaker than this row, and stronger anchors are being measured. Shown unranked until then.",
      "open_board_rank": null,
      "open_capability_rank": null,
      "rank": null,
@@ -280,7 +280,7 @@
     "board": {
      "draw": "v1.6-regular-20261027",
      "listing": "unranked",
-     "not_ranked_because": "Measured on the 27 Oct 2026 draw. Its anchor runs are complete, but the anchor models are weaker than this row, and for models at this level the draw's adjustment is uncertain by several points. Shown unranked until stronger anchors are measured. On the 300 public items every draw shares, this version scores 57.2 Intelligence vs 61.1 for H2O-Lightning-4B v1.1.",
+     "not_ranked_because": "Measured on the 27 Oct 2026 draw, which is not yet equated to the reference scale: its first anchor runs used models weaker than this row, and stronger anchors are being measured. On the 300 public items every draw shares, this version scores 57.2 Intelligence vs 61.1 for H2O-Lightning-4B v1.1. Shown unranked until then.",
      "rank": null,
      "ranked": false,
      "ranks": {
@@ -296,7 +296,7 @@
      "composite_score": 75.9755905301598,
      "draw": "v1.6-regular-20261027",
      "listing": "unranked",
-     "not_ranked_because": "Measured on the 27 Oct 2026 draw. Its anchor runs are complete, but the anchor models are weaker than this row, and for models at this level the draw's adjustment is uncertain by several points. Shown unranked until stronger anchors are measured. On the 300 public items every draw shares, this version scores 57.2 Intelligence vs 61.1 for H2O-Lightning-4B v1.1.",
+     "not_ranked_because": "Measured on the 27 Oct 2026 draw, which is not yet equated to the reference scale: its first anchor runs used models weaker than this row, and stronger anchors are being measured. On the 300 public items every draw shares, this version scores 57.2 Intelligence vs 61.1 for H2O-Lightning-4B v1.1. Shown unranked until then.",
      "open_board_rank": null,
      "open_capability_rank": null,
      "rank": null,
@@ -307,7 +307,7 @@
     "board": {
      "draw": "v1.6-regular-20261027",
      "listing": "unranked",
-     "not_ranked_because": "Measured on the 27 Oct 2026 draw. Its anchor runs are complete, but the anchor models are weaker than this row, and for models at this level the draw's adjustment is uncertain by several points. Shown unranked until stronger anchors are measured.",
+     "not_ranked_because": "Measured on the 27 Oct 2026 draw, which is not yet equated to the reference scale: its first anchor runs used models weaker than this row, and stronger anchors are being measured. Shown unranked until then.",
      "rank": null,
      "ranked": false,
      "ranks": {
@@ -323,7 +323,7 @@
      "composite_score": 71.33593425029217,
      "draw": "v1.6-regular-20261027",
      "listing": "unranked",
-     "not_ranked_because": "Measured on the 27 Oct 2026 draw. Its anchor runs are complete, but the anchor models are weaker than this row, and for models at this level the draw's adjustment is uncertain by several points. Shown unranked until stronger anchors are measured.",
+     "not_ranked_because": "Measured on the 27 Oct 2026 draw, which is not yet equated to the reference scale: its first anchor runs used models weaker than this row, and stronger anchors are being measured. Shown unranked until then.",
      "open_board_rank": null,
      "open_capability_rank": null,
      "rank": null,
@@ -334,7 +334,7 @@
     "board": {
      "draw": "v1.6-regular-20261027",
      "listing": "unranked",
-     "not_ranked_because": "Measured on the 27 Oct 2026 draw. Its anchor runs are complete, but the anchor models are weaker than this row, and for models at this level the draw's adjustment is uncertain by several points. Shown unranked until stronger anchors are measured.",
+     "not_ranked_because": "Measured on the 27 Oct 2026 draw, which is not yet equated to the reference scale: its first anchor runs used models weaker than this row, and stronger anchors are being measured. Shown unranked until then.",
      "rank": null,
      "ranked": false,
      "ranks": {
@@ -350,7 +350,7 @@
      "composite_score": 73.0865905114461,
      "draw": "v1.6-regular-20261027",
      "listing": "unranked",
-     "not_ranked_because": "Measured on the 27 Oct 2026 draw. Its anchor runs are complete, but the anchor models are weaker than this row, and for models at this level the draw's adjustment is uncertain by several points. Shown unranked until stronger anchors are measured.",
+     "not_ranked_because": "Measured on the 27 Oct 2026 draw, which is not yet equated to the reference scale: its first anchor runs used models weaker than this row, and stronger anchors are being measured. Shown unranked until then.",
      "open_board_rank": null,
      "open_capability_rank": null,
      "rank": null,
@@ -361,7 +361,7 @@
     "board": {
      "draw": "v1.6-regular-20261027",
      "listing": "unranked",
-     "not_ranked_because": "Measured on the 27 Oct 2026 draw. Its anchor runs are complete, but the anchor models are weaker than this row, and for models at this level the draw's adjustment is uncertain by several points. Shown unranked until stronger anchors are measured.",
+     "not_ranked_because": "Measured on the 27 Oct 2026 draw, which is not yet equated to the reference scale: its first anchor runs used models weaker than this row, and stronger anchors are being measured. Shown unranked until then.",
      "rank": null,
      "ranked": false,
      "ranks": {
@@ -377,7 +377,7 @@
      "composite_score": 76.99032431119126,
      "draw": "v1.6-regular-20261027",
      "listing": "unranked",
-     "not_ranked_because": "Measured on the 27 Oct 2026 draw. Its anchor runs are complete, but the anchor models are weaker than this row, and for models at this level the draw's adjustment is uncertain by several points. Shown unranked until stronger anchors are measured.",
+     "not_ranked_because": "Measured on the 27 Oct 2026 draw, which is not yet equated to the reference scale: its first anchor runs used models weaker than this row, and stronger anchors are being measured. Shown unranked until then.",
      "open_board_rank": null,
      "open_capability_rank": null,
      "rank": null,
@@ -388,7 +388,7 @@
     "board": {
      "draw": "v1.6-regular-20261027",
      "listing": "unranked",
-     "not_ranked_because": "Measured on the 27 Oct 2026 draw. Its anchor runs are complete, but the anchor models are weaker than this row, and for models at this level the draw's adjustment is uncertain by several points. Shown unranked until stronger anchors are measured.",
+     "not_ranked_because": "Measured on the 27 Oct 2026 draw, which is not yet equated to the reference scale: its first anchor runs used models weaker than this row, and stronger anchors are being measured. Shown unranked until then.",
      "rank": null,
      "ranked": false,
      "ranks": {
@@ -404,7 +404,7 @@
      "composite_score": 76.38012249209945,
      "draw": "v1.6-regular-20261027",
      "listing": "unranked",
-     "not_ranked_because": "Measured on the 27 Oct 2026 draw. Its anchor runs are complete, but the anchor models are weaker than this row, and for models at this level the draw's adjustment is uncertain by several points. Shown unranked until stronger anchors are measured.",
+     "not_ranked_because": "Measured on the 27 Oct 2026 draw, which is not yet equated to the reference scale: its first anchor runs used models weaker than this row, and stronger anchors are being measured. Shown unranked until then.",
      "open_board_rank": null,
      "open_capability_rank": null,
      "rank": null,
@@ -472,7 +472,7 @@
  "postflip-release-suites": {
   "cancelled": 0,
   "fail": 0,
-  "log_sha256": "3ab2ccb6a520f8c5982b16b8892177b47224181a78c7025ac9a5b901353fa649",
+  "log_sha256": "b6afbb3b27a4bf5b8dc0be5a88e8011e47e6ff4cd84e29e80ef13d5b82a3393d",
   "not_ok": [],
   "pass": 174,
   "skipped": 1,
@@ -564,7 +564,7 @@
    "synthetic_latest": "v1.7.15",
    "v1715_page_shows_new_row": true
   },
-  "log_sha256": "f93a27fdee0afda0ddfb4d3580599733af8607e9b00a7e3c704639189b59f254",
+  "log_sha256": "712713fb51ce4c31eacecd467a3a0efe57ad293e0cdebbd931dd88fead665f01",
   "pages": "637/637",
   "status": "PASS"
  },
@@ -582,7 +582,7 @@
  "release-tests-pending": {
   "cancelled": 0,
   "fail": 1,
-  "log_sha256": "24a3dca3cb82120c4bfdac79c33b323422dd04a23c7376d841a1d9ee6352ab74",
+  "log_sha256": "945a4787935943d53a9edf5de2ad91c82b780c3271b3ef3ea8346bc55dfe947f",
   "not_ok": [
    "gate: no listed row lacks topic, use-case or language cells without a recorded exception"
   ],

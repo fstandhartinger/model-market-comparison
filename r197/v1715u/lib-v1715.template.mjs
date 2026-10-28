@@ -23,7 +23,9 @@ export const V1715_NEW_KEYS = Object.keys(V1715_NEW_ROWS).sort();
 export const V1715_CHANGED_KEYS = [...V1715_NEW_KEYS];
 export const V1715_UNRANKED_NEW_KEYS = [...V1715_NEW_KEYS];
 export const V1715_DRAW_KEYS = Object.keys(V1715_TEXT_FIXED).sort();
-export const V1715_NOT_RANKED_BECAUSE = "Measured on the 27 Oct 2026 draw. Its anchor runs are complete, but the anchor models are weaker than this row, and for models at this level the draw's adjustment is uncertain by several points. Shown unranked until stronger anchors are measured.";
+export const V1715_NOTE_HEAD = "Measured on the 27 Oct 2026 draw, which is not yet equated to the reference scale: its first anchor runs used models weaker than this row, and stronger anchors are being measured.";
+export const V1715_NOTE_TAIL = "Shown unranked until then.";
+export const V1715_NOT_RANKED_BECAUSE = V1715_NOTE_HEAD + ' ' + V1715_NOTE_TAIL;
 export const V1715_H2O_EXTRA = 'On the 300 public items every draw shares, this version scores 57.2 Intelligence vs 61.1 for H2O-Lightning-4B v1.1.';
 export const V1715_APPROVAL_STATUS = 'GO (standing; no top-five change; paid public order)';
 const PAID_KEY = 'microsoft-decision-1-r2', H2O = 'h2o-lightning-4b-v1.4.1';
@@ -32,7 +34,7 @@ const hash = b => createHash('sha256').update(b).digest('hex');
 const fail = m => { throw new Error(`JevBench v1.7.15: ${m}`); };
 const same = (a,b,m) => { if (!isDeepStrictEqual(a,b)) fail(m); };
 const hex = s => /^[a-f0-9]{64}$/.test(s ?? '');
-export const v1715NoteFor = k => V1715_NOT_RANKED_BECAUSE + (k === H2O ? ' ' + V1715_H2O_EXTRA : '');
+export const v1715NoteFor = k => V1715_NOTE_HEAD + (k === H2O ? ' ' + V1715_H2O_EXTRA : '') + ' ' + V1715_NOTE_TAIL;
 function publicOnly(v) {
  if (!v || typeof v !== 'object') return;
  for (const [k,x] of Object.entries(v)) {

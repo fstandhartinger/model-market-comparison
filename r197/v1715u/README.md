@@ -10,9 +10,7 @@ Stacked on the flipped, sealed v1.7.14 (`c51053c3` = origin/main with the v1.7.1
    private 1,493-item gold view `120d0ba7…`; raw `1f069818…`), 4 context-limit refusals scored wrong, served model id unchanged from round 1.
    Cost: advertised Azure Foundry tariff 0.042/M input, output free, kind tariff (decision `msft-r2-cost-basis-tariff`), USD 0.013138/1k.
    `ranked: false`, null ranks, listing `unranked`, in no order list. The live round-1 row is unchanged.
-2. **Public note** (`not_ranked_because`) of all seven d1027 rows: "Measured on the 27 Oct 2026 draw. Its anchor runs are complete, but the
-   anchor models are weaker than this row, and for models at this level the draw's adjustment is uncertain by several points. Shown
-   unranked until stronger anchors are measured." H2O-Lightning-4B v1.4.1 keeps its v1.1 comparison sentence. Disclosures (with the
+2. **Public note** (`not_ranked_because`) of all seven d1027 rows: "Measured on the 27 Oct 2026 draw, which is not yet equated to the reference scale: its first anchor runs used models weaker than this row, and stronger anchors are being measured. Shown unranked until then." H2O-Lightning-4B v1.4.1 keeps its v1.1 comparison sentence, placed before the final "Shown unranked until then." sentence. Disclosures (with the
    topic-cell sentence) are unchanged. The six carried rows differ from v1.7.14 in exactly that one field, pinned by sha256
    (proof `exceptions`, loader `V1715_TEXT_FIXED`).
 

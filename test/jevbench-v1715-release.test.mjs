@@ -45,13 +45,13 @@ test('v1.7.15 replaces only the not_ranked_because note of the six carried draw 
  for(const k of DRAW_ROWS){
   assert.deepEqual(Object.keys(V1715_TEXT_FIXED[k]),['not_ranked_because']);
   const now=row(b,k),p=prev(k);assert.notEqual(now.not_ranked_because,p.not_ranked_because);
-  assert.equal(now.not_ranked_because,V1715_NOT_RANKED_BECAUSE+(k===H2O?' '+V1715_H2O_EXTRA:''));assert.equal(now.not_ranked_because,noteFor(k));
+  assert.equal(now.not_ranked_because,k===H2O?V1715_NOT_RANKED_BECAUSE.replace(' Shown unranked until then.',' '+V1715_H2O_EXTRA+' Shown unranked until then.'):V1715_NOT_RANKED_BECAUSE);assert.equal(now.not_ranked_because,noteFor(k));
   assert.deepEqual({...now,not_ranked_because:undefined},{...p,not_ranked_because:undefined});
   assert.match(now.disclosure,/This draw has no subject-topic labels yet, so the row has no topic cells/);
   assert.doesNotMatch(now.not_ranked_because,/72% multilingual|until the draw is equated/);
   mutate(x=>{row(x,k).not_ranked_because=p.not_ranked_because},/note pin|public note/);mutate(x=>{row(x,k).rank=3},/carried row|draw row/);
  }
- assert.match(row(b,H2O).not_ranked_because,/On the 300 public items every draw shares, this version scores 57\.2 Intelligence vs 61\.1 for H2O-Lightning-4B v1\.1\.$/);
+ assert.match(row(b,H2O).not_ranked_because,/On the 300 public items every draw shares, this version scores 57\.2 Intelligence vs 61\.1 for H2O-Lightning-4B v1\.1\. Shown unranked until then\.$/);
  assert.doesNotMatch(row(b,'jeff_1_1_large').not_ranked_because,/H2O-Lightning-4B/);
  mutate(x=>{row(x,H2O).not_ranked_because=V1715_NOT_RANKED_BECAUSE},/note pin|public note/);
  mutate(x=>{x.proof.carried_rows_equal_except=[]},/carry exception/);mutate(x=>{x.proof.exceptions={}},/note change proof/);

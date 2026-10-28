@@ -1313,7 +1313,7 @@
   "Cost-basis wording clarification for Jez Large, Jez Small and D1A Gemma 4; no measurements, numeric costs, scores, ranks, or method changed.",
   "First release on the 27 Oct regular draw: H2O-Lightning-4B v1.4.1 (paid evaluation), shown unranked until the draw is equated to the reference scale. It answered all 1,500 requests of the new draw (5 long states trimmed by the model at pre-registered positions), none over 10 s. Its draw is not yet equated to the reference scale, so its numbers are shown as published (offset 0) with the reference gap-penalty median. Cost is an ESTIMATE from the base model price on the prompt tokens the model processed. This draw has no subject-topic labels yet, so the row has no topic cells; its use-case and language cells are measured on its own draw. NOT RANKED: Measured on the 27 Oct 2026 draw, which is not yet equated to the reference scale. This draw differs strongly from earlier draws (72% multilingual items). On the 300 public items every draw shares, this version scores 57.2 Intelligence vs 61.1 for H2O-Lightning-4B v1.1; its higher overall Intelligence comes from this draw's sealed items. Shown unranked until the draw is equated. No existing row, rank or ranking changed.",
   "Five more rows on the 27 Oct regular draw (Torchcast Decision 31B v1.0, paid evaluation; Arcbright Elf 1 12B (r2); Jeff-1.1-Qwen-4B; Decisio 12B tuned commit-think; Jeff-1.1-Large), shown unranked until the draw is equated to the reference scale. Each answered all 1,500 requests of the draw (the draw's 5 long states shortened by each model's own documented rule and answered), none over 10 s. Their draw is not yet equated to the reference scale, so their numbers are shown as published (offset 0) with the reference gap-penalty median. Cost is an ESTIMATE from the base model price on the prompt tokens each model processed, over all 1,500 items. This draw has no subject-topic labels yet, so the rows have no topic cells; their use-case and language cells are measured on their own draw. NOT RANKED: Measured on the 27 Oct 2026 draw, which is not yet equated to the reference scale. This draw differs strongly from earlier draws (72% multilingual items). Shown unranked until the draw is equated. No existing score, rank or ranking changed. Corrected the DOPEST 1.0 31B notes: its serving-code repository has been public throughout.",
-  "Added Microsoft-Decision-1 with updated weights (paid evaluation) on the 27 Oct regular draw; that draw's rows stay unranked until stronger anchors are measured. Microsoft-Decision-1 (updated weights) answered 1,489 of 1,493 items of the draw: 7 items its provider had seen in an earlier evaluation are excluded, and 4 requests over its 32,768-token context limit count as wrong; none took longer than 10 s. The served model id is unchanged from the first measurement; the weights update is Microsoft's statement. Its cost uses the advertised Azure Foundry tariff (USD 0.042 per million input tokens, output free), as for the first Microsoft-Decision-1 row, which stays unchanged. The draw is not equated to the reference scale, so its numbers are shown as published (offset 0) with the reference gap-penalty median. This draw has no subject-topic labels yet, so the row has no topic cells; its use-case and language cells are measured on its own 1,493 items. NOT RANKED: every row on that draw now carries the note \"Measured on the 27 Oct 2026 draw. Its anchor runs are complete, but the anchor models are weaker than this row, and for models at this level the draw's adjustment is uncertain by several points. Shown unranked until stronger anchors are measured.\" No existing score, rank or ranking changed."
+  "Added Microsoft-Decision-1 with updated weights (paid evaluation) on the 27 Oct regular draw; that draw's rows stay unranked until stronger anchors are measured. Microsoft-Decision-1 (updated weights) answered 1,489 of 1,493 items of the draw: 7 items its provider had seen in an earlier evaluation are excluded, and 4 requests over its 32,768-token context limit count as wrong; none took longer than 10 s. The served model id is unchanged from the first measurement; the weights update is Microsoft's statement. Its cost uses the advertised Azure Foundry tariff (USD 0.042 per million input tokens, output free), as for the first Microsoft-Decision-1 row, which stays unchanged. The draw is not equated to the reference scale, so its numbers are shown as published (offset 0) with the reference gap-penalty median. This draw has no subject-topic labels yet, so the row has no topic cells; its use-case and language cells are measured on its own 1,493 items. NOT RANKED: every row on that draw now carries the note \"Measured on the 27 Oct 2026 draw, which is not yet equated to the reference scale: its first anchor runs used models weaker than this row, and stronger anchors are being measured. Shown unranked until then.\" No existing score, rank or ranking changed."
  ],
  "method": {
   "decision_limit_s": 10,
@@ -11514,7 +11514,7 @@
    "method": "v1.7",
    "model_pin": "arcbright/elf-1-12b@1018696022ae3fdd9cb8a93e3e972f69c11184c1",
    "new_in": "v1.7.14",
-   "not_ranked_because": "Measured on the 27 Oct 2026 draw. Its anchor runs are complete, but the anchor models are weaker than this row, and for models at this level the draw's adjustment is uncertain by several points. Shown unranked until stronger anchors are measured.",
+   "not_ranked_because": "Measured on the 27 Oct 2026 draw, which is not yet equated to the reference scale: its first anchor runs used models weaker than this row, and stronger anchors are being measured. Shown unranked until then.",
    "noul_decisive": {
     "acc_among_decisive": 0.8933333333333333,
     "decisive": 375,
@@ -51089,7 +51089,7 @@
    "method": "v1.7",
    "model_pin": "tachara-ai/Decisio-12b-tuned-commit-think@e36aeb243dea3008c593f454112840a1a29e5837",
    "new_in": "v1.7.14",
-   "not_ranked_because": "Measured on the 27 Oct 2026 draw. Its anchor runs are complete, but the anchor models are weaker than this row, and for models at this level the draw's adjustment is uncertain by several points. Shown unranked until stronger anchors are measured.",
+   "not_ranked_because": "Measured on the 27 Oct 2026 draw, which is not yet equated to the reference scale: its first anchor runs used models weaker than this row, and stronger anchors are being measured. Shown unranked until then.",
    "noul_decisive": {
     "acc_among_decisive": 0.888,
     "decisive": 375,
@@ -80623,7 +80623,7 @@
    "method": "v1.7",
    "model_pin": "h2oai/h2o-lightning-4b@cc18ee330e6895c41b9a60f37a0dd122dc4c3461",
    "new_in": "v1.7.13",
-   "not_ranked_because": "Measured on the 27 Oct 2026 draw. Its anchor runs are complete, but the anchor models are weaker than this row, and for models at this level the draw's adjustment is uncertain by several points. Shown unranked until stronger anchors are measured. On the 300 public items every draw shares, this version scores 57.2 Intelligence vs 61.1 for H2O-Lightning-4B v1.1.",
+   "not_ranked_because": "Measured on the 27 Oct 2026 draw, which is not yet equated to the reference scale: its first anchor runs used models weaker than this row, and stronger anchors are being measured. On the 300 public items every draw shares, this version scores 57.2 Intelligence vs 61.1 for H2O-Lightning-4B v1.1. Shown unranked until then.",
    "noul_decisive": {
     "acc_among_decisive": 0.8933333333333333,
     "decisive": 375,
@@ -99167,7 +99167,7 @@
    "method": "v1.7",
    "model_pin": "jgeuter/Jeff-1.1-Large@970c21af246a44c5527f7109fca129ab6015c941",
    "new_in": "v1.7.14",
-   "not_ranked_because": "Measured on the 27 Oct 2026 draw. Its anchor runs are complete, but the anchor models are weaker than this row, and for models at this level the draw's adjustment is uncertain by several points. Shown unranked until stronger anchors are measured.",
+   "not_ranked_because": "Measured on the 27 Oct 2026 draw, which is not yet equated to the reference scale: its first anchor runs used models weaker than this row, and stronger anchors are being measured. Shown unranked until then.",
    "noul_decisive": {
     "acc_among_decisive": 0.9626666666666667,
     "decisive": 375,
@@ -101898,7 +101898,7 @@
    "method": "v1.7",
    "model_pin": "jgeuter/Jeff-1.1-Qwen-4B@5401940b5a8c959cba82187ebfa2dce5a21abc0a",
    "new_in": "v1.7.14",
-   "not_ranked_because": "Measured on the 27 Oct 2026 draw. Its anchor runs are complete, but the anchor models are weaker than this row, and for models at this level the draw's adjustment is uncertain by several points. Shown unranked until stronger anchors are measured.",
+   "not_ranked_because": "Measured on the 27 Oct 2026 draw, which is not yet equated to the reference scale: its first anchor runs used models weaker than this row, and stronger anchors are being measured. Shown unranked until then.",
    "noul_decisive": {
     "acc_among_decisive": 0.9066666666666666,
     "decisive": 375,
@@ -161442,7 +161442,7 @@
     "version": "updated weights, Oct 2026 (per Microsoft; served model id unchanged)"
    },
    "new_in": "v1.7.15",
-   "not_ranked_because": "Measured on the 27 Oct 2026 draw. Its anchor runs are complete, but the anchor models are weaker than this row, and for models at this level the draw's adjustment is uncertain by several points. Shown unranked until stronger anchors are measured.",
+   "not_ranked_because": "Measured on the 27 Oct 2026 draw, which is not yet equated to the reference scale: its first anchor runs used models weaker than this row, and stronger anchors are being measured. Shown unranked until then.",
    "noul_decisive": {
     "acc_among_decisive": 0.9548387096774194,
     "decisive": 310,
@@ -241578,7 +241578,7 @@
    "method": "v1.7",
    "model_pin": "torchcast-ai/torchcast-decision-31b@1e267fc9409654a3ac91c123265c21cddce73a3b",
    "new_in": "v1.7.14",
-   "not_ranked_because": "Measured on the 27 Oct 2026 draw. Its anchor runs are complete, but the anchor models are weaker than this row, and for models at this level the draw's adjustment is uncertain by several points. Shown unranked until stronger anchors are measured.",
+   "not_ranked_because": "Measured on the 27 Oct 2026 draw, which is not yet equated to the reference scale: its first anchor runs used models weaker than this row, and stronger anchors are being measured. Shown unranked until then.",
    "noul_decisive": {
     "acc_among_decisive": 0.9733333333333334,
     "decisive": 375,
