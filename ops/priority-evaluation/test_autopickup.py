@@ -3047,5 +3047,27 @@ class PodRuntimeSpecTests(unittest.TestCase):
             ap.measurement_dispatch.validate_api_meta("jevbench", meta, self.GPU_RUNTIME)
 
 
+class SystemdLastSuccessTests(unittest.TestCase):
+    """Card 490: one transient failed run must not hide a success earlier in the window."""
+
+    class Failed:
+        def unit_state(self, unit):
+            return {"Result": "exit-code", "ExecMainStatus": "1"}
+
+    def journal(self, stdout):
+        return mock.patch.object(ap.subprocess, "run", return_value=subprocess.CompletedProcess([], 0, stdout, ""))
+
+    def test_failed_latest_run_falls_back_to_journal_success(self):
+        lines = "\n".join(json.dumps({"__REALTIME_TIMESTAMP": str(v)}) for v in (1793165404138657, 1793166304250483))
+        with self.journal(lines + "\nnot json\n"):
+            last = ap.systemd_last_success(self.Failed(), "x.service", timedelta(hours=1))
+        self.assertEqual(last, datetime.fromtimestamp(1793166304.250483, timezone.utc))
+
+    def test_failed_latest_run_without_journal_success_is_stale(self):
+        with self.journal(""):
+            self.assertIsNone(ap.systemd_last_success(self.Failed(), "x.service", timedelta(hours=1)))
+        self.assertIsNone(ap.systemd_last_success(self.Failed(), "x.service"))
+
+
 if __name__ == "__main__":
     unittest.main()
