@@ -14,6 +14,7 @@ import sqlite3
 import subprocess
 import sys
 import tempfile
+import time
 import uuid
 from pathlib import Path
 
@@ -221,9 +222,9 @@ def test_confirmation_sent_once_per_recipient_and_template(env):
     b = insert(env["db"], model_name="Mine 2", queued_at="now() + interval '1 second'")  # same recipient
     c = insert(env["db"], model_name="Other", contact_email="other@example.invalid", queued_at="now() + interval '2 seconds'")
     out = bridge(env)
-    assert out["confirm_sent"] == 2 and out["confirm_skipped"] == 1
+    assert out["confirm_sent"] == 2 and out["confirm_cooldown_deferred"] == 1 and "confirm_skipped" not in out
     states = dict(line.split("|") for line in sql(env["db"], "SELECT id||'|'||confirmation_status FROM bh_model_submissions").splitlines())
-    assert states == {a: "sent", b: "skipped", c: "sent"}
+    assert states == {a: "sent", b: "pending", c: "sent"}  # deferred, not terminally skipped
     sent = [l.split("\t") for l in (env["tmp"] / "mail.log").read_text().splitlines()]
     assert [s[0] for s in sent] == ["owner@example.invalid", "other@example.invalid"] and all(s[2] == "real" for s in sent)
     assert sent[0][1] == "We received your model submission: Mine"
@@ -237,6 +238,31 @@ def test_confirmation_sent_once_per_recipient_and_template(env):
     assert body.rstrip().endswith("— Florian, Benchmark Heaven") and "{{" not in body
     _, body2 = ib.render_confirmation({"id": a, "submission_id": sql(env["db"], f"SELECT submission_id FROM bh_model_submissions WHERE id='{a}'"), "model_name": "Mine", "benchmarks": ["jevbench"], "followup_rank": 4}, 1)
     assert "apologise" not in body2
+
+
+def test_cooldown_defers_receipt_until_it_lapses(env):
+    # #31615: another job mailed this address 15 h before the filing; the receipt must wait, not vanish.
+    audit = env["tmp"] / "mail/sent-audit.log"
+    audit.write_text(f"{time.time() - 15 * 3600:.0f}\tx\tx\towner@example.invalid\n")
+    r = insert(env["db"], model_name="Engaged")
+    out = bridge(env)
+    assert out["confirm_cooldown_deferred"] == 1 and "confirm_sent" not in out
+    assert sql(env["db"], f"SELECT confirmation_status||confirmation_attempts FROM bh_model_submissions WHERE id='{r}'") == "pending0"
+    assert not (env["tmp"] / "mail.log").exists()
+    audit.write_text(f"{time.time() - 25 * 3600:.0f}\tx\tx\towner@example.invalid\n")  # cooldown lapsed
+    assert bridge(env)["confirm_sent"] == 1
+    assert sql(env["db"], f"SELECT confirmation_status FROM bh_model_submissions WHERE id='{r}'") == "sent"
+
+
+def test_cooldown_deferral_is_bounded(env):
+    audit = env["tmp"] / "mail/sent-audit.log"
+    audit.write_text(f"{time.time() - 60:.0f}\tx\tx\towner@example.invalid\n")  # mailed a minute ago
+    old = insert(env["db"], model_name="Old", queued_at="now() - interval '49 hours'")
+    newer = insert(env["db"], model_name="Newer", queued_at="now() - interval '48 hours' + interval '1 minute'")
+    out = bridge(env)
+    assert out["confirm_sent"] == 1 and out["confirm_cooldown_deferred"] == 1  # past the bound: sent; one per run
+    assert sql(env["db"], f"SELECT confirmation_status FROM bh_model_submissions WHERE id='{old}'") == "sent"
+    assert sql(env["db"], f"SELECT confirmation_status FROM bh_model_submissions WHERE id='{newer}'") == "pending"
 
 
 def test_fast_lane_skipped_and_gate_refusal_defers_then_fails(env):

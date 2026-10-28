@@ -21,7 +21,8 @@ What runs where:
 3. Regular rows get the approved transactional confirmation (`submission-confirmation-template.txt`, nothing else) through
    the shared mail tool, in-process, with the same gate overrides as the fast-lane autopickup. A gate refusal leaves the row
    `pending` and counts an attempt (96 attempts, about 8 hours, then `failed`). One confirmation per recipient per 24 h
-   (further rows are `skipped`); fast-lane rows are `skipped` because the priority worker sends the paid confirmation.
+   (further rows, and rows whose address got any mail in the last 24 h, stay `pending` and go out once the cooldown
+   lapses, at the latest 48 h after filing, never two per run); fast-lane rows are `skipped` because the priority worker sends the paid confirmation.
    At most 10 mails per run.
 4. Keys are purged (`api_key_ciphertext=NULL`, `api_key_deleted_at=now()`) when the status is `evaluated`, `rejected`,
    `spam`, `withdrawn`, or when the row is older than 30 days. `awaiting_payment` rows older than 48 h whose priority
