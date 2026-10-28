@@ -116,3 +116,11 @@ test('v1.7.16 synthetic board ranks and official cap lists match the recorded as
  // The v1.7.16 fixture equals the v1.7.15 one: no ranked row changes.
  const f15=JSON.parse(await readFile('test/fixtures/jevbench-v1715-ranks.json'));assert.deepEqual(f.views,f15.views);
 });
+
+// Exact release-page wording: draw-wide status and common-set attribution.
+test('v1.7.16 release page pins draw status and common-set attribution',async()=>{
+ const page=await readFile(new URL('../app/jev-models/v1.7.16/page.tsx',import.meta.url),'utf8');
+ assert.ok(page.includes('The draw is not yet equated to the reference scale (stronger anchor runs for that draw are being measured), so its numbers are shown as published (offset 0) and no ranking or ranked order changes.'));
+ assert.ok(page.includes('Microsoft-Decision-1 (updated weights) ran on 1,493 items and answered 1,489; Strike-1&apos;s 5 refused long items are among those it did not answer, so every row on this draw is costed on those 1,489 items'));
+ assert.ok(!page.includes("The draw&apos;s first anchor runs used models weaker than the draw&apos;s rows"));
+});

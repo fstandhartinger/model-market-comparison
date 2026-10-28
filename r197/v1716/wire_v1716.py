@@ -26,11 +26,11 @@ s = s.replace('v1.7.15', '__NEW__').replace('v1.7.14', 'v1.7.15').replace('__NEW
 TITLE = 'Strike-1 on the 27 Oct regular draw; same-items cost on that draw'
 body_old = re.search(r'<p className="mt-3 max-w-3xl">(.*?)</p>', s).group(1)
 BODY = (HIST.replace("'", '&apos;') + ' Strike-1 is a hosted decision API (EU, OVH Gravelines); it answered 1,495 of the draw&apos;s 1,500 items: 5 items over '
-        'the provider&apos;s input limit were refused and count as wrong. Because Strike-1 refuses the 5 longest items and Microsoft-Decision-1 (updated weights) ran '
-        'on 1,493 items, every row on the draw is now costed on the 1,489 items every row answered, each with its own price reference and token basis, and its '
+        'the provider&apos;s input limit were refused and count as wrong. Microsoft-Decision-1 (updated weights) ran on 1,493 items and answered 1,489; '
+        'Strike-1&apos;s 5 refused long items are among those it did not answer, so every row on this draw is costed on those 1,489 items, each with its own price reference and token basis, and its '
         'all-items cost is stated next to it. Only cost, the Cost axis and the composites of those rows move; Intelligence, Calibration, Speed and category cells '
-        'are unchanged. The draw&apos;s first anchor runs used models weaker than the draw&apos;s rows and stronger anchors are being measured, so the draw is not '
-        'equated: its numbers are shown as published (offset 0) and no ranking or ranked order changes. The 10 s rule applies; no decision took longer than 10 s. '
+        'are unchanged. The draw is not yet equated to the reference scale (stronger anchor runs for that draw are being measured), '
+        'so its numbers are shown as published (offset 0) and no ranking or ranked order changes. The 10 s rule applies; no decision took longer than 10 s. '
         'Rows on other draws keep their scores and confidence intervals; no method change.')
 REPL = [
     ('Microsoft-Decision-1 with updated weights on the 27 Oct regular draw', TITLE, 3),

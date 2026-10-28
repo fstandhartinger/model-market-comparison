@@ -1,0 +1,158 @@
+{
+ "all_308_rows_equal_to_base": true,
+ "base": "a65b7568",
+ "build_exit": 0,
+ "build_pages": [
+  "640",
+  "640"
+ ],
+ "built_route": {
+  "compiled_route": ".next/server/app/api/jevbench/latest/route.js",
+  "draw_rows_in_feed": [
+   {
+    "composite_score": 75.66989716801469,
+    "key": "arcbright-elf-1-12b-r2",
+    "listing": "unranked",
+    "note_exact": true,
+    "rank": null,
+    "ranked": false
+   },
+   {
+    "composite_score": 74.67659424956109,
+    "key": "decisio-gemma-4-12b-tuned-commit-think",
+    "listing": "unranked",
+    "note_exact": true,
+    "rank": null,
+    "ranked": false
+   },
+   {
+    "composite_score": 77.04257936486634,
+    "key": "h2o-lightning-4b-v1.4.1",
+    "listing": "unranked",
+    "note_exact": true,
+    "rank": null,
+    "ranked": false
+   },
+   {
+    "composite_score": 71.57749064353953,
+    "key": "jeff_1_1_large",
+    "listing": "unranked",
+    "note_exact": true,
+    "rank": null,
+    "ranked": false
+   },
+   {
+    "composite_score": 73.21882869773437,
+    "key": "jeff_1_1_qwen_4b",
+    "listing": "unranked",
+    "note_exact": true,
+    "rank": null,
+    "ranked": false
+   },
+   {
+    "composite_score": 76.97858754817413,
+    "key": "microsoft-decision-1-r2",
+    "listing": "unranked",
+    "note_exact": true,
+    "rank": null,
+    "ranked": false
+   },
+   {
+    "composite_score": 51.81470102195167,
+    "key": "strike-1",
+    "listing": "unranked",
+    "note_exact": true,
+    "rank": null,
+    "ranked": false
+   },
+   {
+    "composite_score": 77.28255327361624,
+    "key": "torchcast-decision-31b-v1.0",
+    "listing": "unranked",
+    "note_exact": true,
+    "rank": null,
+    "ranked": false
+   }
+  ],
+  "feed_rows": 308,
+  "live_round1_rank": 41,
+  "main_board_html_shows": [
+   "arcbright-elf-1-12b-r2",
+   "decisio-gemma-4-12b-tuned-commit-think",
+   "h2o-lightning-4b-v1.4.1",
+   "jeff_1_1_large",
+   "jeff_1_1_qwen_4b",
+   "microsoft-decision-1-r2",
+   "strike-1",
+   "torchcast-decision-31b-v1.0"
+  ],
+  "status": "PASS",
+  "synthetic_latest": "v1.7.16",
+  "v1716_page_shows_new_row": true
+ },
+ "changed_lists_count": 0,
+ "cheap_gates": {
+  "compare": {
+   "sha256": "5c8a1673cdbda9bbe056e75a8df554ae4a2818c7d4149ebf33ea4ddcc609be4c",
+   "summary": "PASS 580 lists; 0 changed; sliders 0 ; grid 0 ; custom 0 ; entrants {} ; leavers {}"
+  },
+  "helpers": {
+   "sha256": "6d46afd9a36f75e879560dc9e2127fd3f39e2ab4f32a7e8fb45be3f78d0dee5e",
+   "summary": "PASS flip/freeze dry runs (real tree: v1.7.15 PASS, dry-run flip accepted without writing, freeze refused while PENDING; synthetic tree OK), stale-binding refusal, fixture non-dry flip refused, seal-write refusal, 16 approval negatives; real manifests unchanged"
+  },
+  "preview": {
+   "sha256": "16b7d5fd48c912266654eb99b3f2180e3309fcefa0c6a975fcafaf08704619c6",
+   "summary": "PASS deterministic preview HTML and 1440x900 card; footer pending"
+  },
+  "preview-check": {
+   "sha256": "8dc1970e979e55619b70fed6652c78c5722a242ccd10caf9be3e41392cc91b0b",
+   "summary": "PASS preview script syntax, ranking model mappings, PENDING footer and 1440x900 card"
+  },
+  "public-text": {
+   "sha256": "a244d42ceb71d698cc6bfa61a5b2c37fdd0991d09677e4fb426c8b2f2fdc4d01",
+   "summary": "PASS public text: 29 texts clean; exact history sentence, exact d1027 note and the same-items cost sentence on all 8 draw rows (H2O with its v1.1 sentence), topic-cell sentence kept; Strike-1: hosted EU, 5 over-limit refusals scored as misses, output 0, stated base, beta disclosed; no equating claim"
+  },
+  "repro": {
+   "sha256": "160c2f1dfb7cf11dd90090d2ea22a1d54c1b79b8c8927deef148dbd3039d3ae7",
+   "summary": "PASS two deterministic rebuilds, 17 artifact hashes"
+  },
+  "source": {
+   "sha256": "a62030ccd41b6471d5777dba8f19cbf6a366a41040df286b2066f8647fd72270",
+   "summary": "PASS 300 carried rows fully equal incl. ranks (live round-1 Microsoft and family rows included); the 7 draw rows differ only in cost fields (Microsoft r2 also its ITEMS sentence), hash-pinned, re-derived from the --cost-basis scorer views and the common-set arithmetic; common set 1489 items sha 4e912731 bound (membership of all 8 rows); board/n_ranked unchanged; new row unranked with published values and estimate cost; draw entry only gains v1.7.16; carry/history bytes, 21 predecessor files and 4 predecessor libs equal to ba210893"
+  },
+  "validator": {
+   "sha256": "c2e78118bae6375b64ef5ada25c3b157e07626659550df769c121cca54fb5378",
+   "summary": "PASS 307 carried rows/cells (300 fully equal incl. ranks; the 7 rows of the 27 Oct draw differ only in their pinned cost fields under the same-items rule), unchanged order lists, 1 exact UNRANKED new hosted row (strike-1, 1,495/1,500, estimate on the common set), all 8 rows of the draw unranked with the exact note, draw not equated (offset 0); 133 bundle negatives and 97 row-gate negatives rejected"
+  },
+  "visibility": {
+   "sha256": "2e8e66593cee456ca0e0be4204223a70cd89196415edeed7be9d9de8ca1c3d81",
+   "summary": "PASS new row visible unranked on merged board + feed (api scope, like the other hosted row); the 7 carried draw rows unranked, only their cost/Cost axis/composite moved; 307 -> 308 board rows; no row of any draw vanished or changed; orders identical; real PENDING tree shows the v1.7.15 board ( 307 rows, v1.7.15 )"
+  }
+ },
+ "full_suite": "not rerun (text-only; prior .git-only failure accepted by lead)",
+ "lists": 580,
+ "pending": {
+  "cancelled": 0,
+  "fail": 1,
+  "failures": [
+   "gate: no listed row lacks topic, use-case or language cells without a recorded exception"
+  ],
+  "pass": 169,
+  "sha256": "c339f32eeeb2ecba57ea78720a402c0fc4562c6caf536f65a1f193eb3fcd4a13",
+  "skipped": 1,
+  "tests": 171
+ },
+ "postflip": {
+  "cancelled": 0,
+  "fail": 0,
+  "failures": [],
+  "pass": 184,
+  "sha256": "2d35c2cc6716be90da2e5a475734ea528689ee2ea7ddbb521c4038f1951eefef",
+  "skipped": 1,
+  "tests": 185
+ },
+ "preview": "regenerated and visually inspected, no clipping/overlap",
+ "publication_review": "PENDING",
+ "status": "PASS_WITH_EXPECTED_PENDING_FAILURE",
+ "typescript_exit": 0
+}
