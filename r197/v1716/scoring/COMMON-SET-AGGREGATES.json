@@ -1,0 +1,106 @@
+{
+ "common_n": 1489,
+ "common_set_sha256": "4e912731e63369e1b3066b0b4afa87b44f1094aea079c5b41dc6d02e7f235537",
+ "cost_basis_msft_sha256": "3bb4e58e15530a2688b561ab3fbaf9c8f956ec149853b6397c89d094779fb715",
+ "cost_basis_sha256": "b83bdfd14c263ffacfa572b304084154afca84c1f00083101a33783ae6f8b356",
+ "excluded_from_1500": 11,
+ "excluded_from_msft_view": 4,
+ "exclusion_pattern_counts": {
+  "microsoft-decision-1-r2": 6,
+  "microsoft-decision-1-r2,strike-1": 5
+ },
+ "input_sha256": "9b2f32edaccb29afd726af8cd54cf1a22d85e8b1824566924045d83c6f828426",
+ "rows": {
+  "arcbright-elf-1-12b-r2": {
+   "answered_not_in_common": 11,
+   "common_subset_of_ok": true,
+   "not_measured": 0,
+   "ok": 1500,
+   "raw_sha256": "84f08ebb6ff92af453b75cda042f617ea89c5be6a2176c7c69e11f2521da6f08",
+   "rows": 1500,
+   "status_counts": {
+    "200": 1500
+   }
+  },
+  "decisio-gemma-4-12b-tuned-commit-think": {
+   "answered_not_in_common": 11,
+   "common_subset_of_ok": true,
+   "not_measured": 0,
+   "ok": 1500,
+   "raw_sha256": "d7396dd680e13af9ba26c4526007fee3647d03eee7673bf88075ac510f39cc3c",
+   "rows": 1500,
+   "status_counts": {
+    "200": 1500
+   }
+  },
+  "h2o-lightning-4b-v1.4.1": {
+   "answered_not_in_common": 11,
+   "common_subset_of_ok": true,
+   "not_measured": 0,
+   "ok": 1500,
+   "raw_sha256": "96d26bb3c0486ecbee832e309db4099b3a616b1540b4a92eff09dec81b719335",
+   "rows": 1500,
+   "status_counts": {
+    "200": 1500
+   }
+  },
+  "jeff_1_1_large": {
+   "answered_not_in_common": 11,
+   "common_subset_of_ok": true,
+   "not_measured": 0,
+   "ok": 1500,
+   "raw_sha256": "1f1fdc2df674da00128ae7b47d5ea3429cf1124383a077577e7c68c7d9cc0e72",
+   "rows": 1500,
+   "status_counts": {
+    "200": 1500
+   }
+  },
+  "jeff_1_1_qwen_4b": {
+   "answered_not_in_common": 11,
+   "common_subset_of_ok": true,
+   "not_measured": 0,
+   "ok": 1500,
+   "raw_sha256": "c37fada15a2021cf744b2031acb964508caf48873a2bcda5da6d6ac4a5e7c288",
+   "rows": 1500,
+   "status_counts": {
+    "200": 1500
+   }
+  },
+  "microsoft-decision-1-r2": {
+   "answered_not_in_common": 0,
+   "common_subset_of_ok": true,
+   "not_measured": 7,
+   "ok": 1489,
+   "raw_sha256": "1f069818cdc069a532a4c4965d306fbd302bb819dde4aa3c48a9bd676c4a981e",
+   "rows": 1493,
+   "status_counts": {
+    "200": 1489,
+    "422": 4
+   }
+  },
+  "strike-1": {
+   "answered_not_in_common": 6,
+   "common_subset_of_ok": true,
+   "not_measured": 0,
+   "ok": 1495,
+   "raw_sha256": "4c6c7ab25b11432f8934425a44806ec5a2499241a9c5790216a11651473f2027",
+   "rows": 1500,
+   "status_counts": {
+    "200": 1495,
+    "400": 5
+   }
+  },
+  "torchcast-decision-31b-v1.0": {
+   "answered_not_in_common": 11,
+   "common_subset_of_ok": true,
+   "not_measured": 0,
+   "ok": 1500,
+   "raw_sha256": "e51a1c22336050368336c996d7cb32181bad5e854024f07844b2a8577a0dda7d",
+   "rows": 1500,
+   "status_counts": {
+    "200": 1500
+   }
+  }
+ },
+ "set_hash_rule": "sha256 of the sorted opaque id list as compact JSON"
+}

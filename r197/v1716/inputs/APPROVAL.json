@@ -1,0 +1,37 @@
+{
+ "asks": [
+  {
+   "handoff": "strike-1 measured on d1027 (hosted, 1,495/1,500, 5 pre-registered over-limit refusals); custody CONSUMED verified",
+   "key": "strike-1",
+   "relay": "board #31456 handoff, #31480 custody, #31488 same refused-id set (8d7957c3)"
+  },
+  {
+   "handoff": "release owner: same-items cost rule draw-wide on v1.6-regular-20261027 (v1.6.30 precedent)",
+   "key": "v1.6-regular-20261027",
+   "relay": "board #31465 (release owner), #31488 (intake: fine by me)"
+  }
+ ],
+ "button_tap": false,
+ "cost_basis": {
+  "decision": "same-items cost rule draw-wide on d1027 (board #31465; precedent v1.6.30, DECISIONS 2026-10-19 16:40Z, board #21769)",
+  "key": "v1.6-regular-20261027"
+ },
+ "fresh_baseline": "v1.7.15",
+ "release_owner_rulings": [
+  "d1027-strong-anchors-needed (all d1027 rows stay measured-but-unranked)",
+  "strike-1 pricing: declared base Qwen/Qwen3.5-4B through the frozen reference (0.03/0.15), output as the vendor reports (0), board #31196",
+  "same-items cost rule draw-wide on d1027 (board #31465)",
+  "v1713-topics-exception-h2o141 extended to every row on the draw (TEMPORARY topics exception)"
+ ],
+ "status": "GO (standing; no top-five change)",
+ "top_five_effect": "unchanged",
+ "top_five_preview": {
+  "path": "r197/v1716/receipts/topfive-diff.json",
+  "sha256": "742d619fc7dc37f130df22e6c3fa5e4a7d04cec664ae11fff49757eb13031ea9"
+ },
+ "unranked_basis": {
+  "card": "#18781",
+  "decision": "d1027-strong-anchors-needed",
+  "handled_by": "rows published unranked (ranked false), no order list changes; draw not equated (offset 0)"
+ }
+}
