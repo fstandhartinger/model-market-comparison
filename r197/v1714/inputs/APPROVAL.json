@@ -1,0 +1,56 @@
+{
+ "asks": [
+  {
+   "admission": "release-owner cap + noul_floor disposition tc31b-cap-noulfloor-29092",
+   "handoff": "board #30313",
+   "key": "torchcast-decision-31b-v1.0",
+   "relay": "paid order 69f7a75d"
+  },
+  {
+   "handoff": "board #30239",
+   "key": "arcbright-elf-1-12b-r2",
+   "relay": "intake draft ENTRIES-R17-LEAD.json"
+  },
+  {
+   "handoff": "board #30239",
+   "key": "jeff_1_1_qwen_4b",
+   "relay": "intake draft ENTRIES-R17-LEAD.json"
+  },
+  {
+   "handoff": "board #30239 + engine recount #30496",
+   "key": "decisio-gemma-4-12b-tuned-commit-think",
+   "relay": "intake draft ENTRIES-R17-LEAD.json"
+  },
+  {
+   "handoff": "board #30459",
+   "key": "jeff_1_1_large",
+   "relay": "intake draft ENTRIES-R17B-LEAD.json"
+  }
+ ],
+ "button_tap": false,
+ "fresh_baseline": "v1.7.13",
+ "paid_public": {
+  "key": "torchcast-decision-31b-v1.0",
+  "order": "69f7a75d",
+  "rule": "paid public order: published with all measured values, unranked while its draw is not yet equated; no top-five change",
+  "visibility": "public"
+ },
+ "release_owner_rulings": [
+  "v1713-h2o141-unranked-provisional (Florian card #18781 'Unranked': the same treatment applies to the other rows on that draw)",
+  "tc31b-cap-noulfloor-29092",
+  "selfhosted-primary-prompt-billing-28557 (Decisio commit-think billed on the engine recount)",
+  "cost basis all 1,500 items for every row on the draw (board #30239 answer)",
+  "v1713-topics-exception-h2o141 extended to the five rows (TEMPORARY topics exception)"
+ ],
+ "status": "GO (standing; no top-five change; paid public order for Torchcast)",
+ "top_five_effect": "unchanged",
+ "top_five_preview": {
+  "path": "r197/v1714/receipts/topfive-diff.json",
+  "sha256": "00c3315da50f21e98717afaa22da9bc3e9bd23a191c00ab2de9299aa9bd54051"
+ },
+ "unranked_basis": {
+  "card": "#18781",
+  "decision": "v1713-h2o141-unranked-provisional",
+  "handled_by": "rows published unranked (ranked false), no order list changes"
+ }
+}

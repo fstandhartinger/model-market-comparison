@@ -1,0 +1,31 @@
+{
+ "allowed_changes": {
+  "v1713_publication_sha256": {
+   "new": "460156d172505b5159539f3d32b05decbb6c86defb22fda2fc6c0b910f7a76b6",
+   "old": "1d0ba3a7b243459b4b98a6019ad2577ed80377e346bd6faf66eaf2b86403913f"
+  },
+  "v1714_proof_sha256": {
+   "new": "e75c7bf055efbd34462484f578ba66140bb06d718b2c59e514edc58a07c4c8d3",
+   "old": "501ab2158e750ec1f1a2a840cb517bba373c684a42b9161f856d56379e40e058"
+  }
+ },
+ "backup_branch": "backup/v1714-pre-restack-981d2f59",
+ "files_compared": 139,
+ "gates": {
+  "pricing": "PASS all 5 new row references/rates match pricing.reference() (explicit gemma-3-12b-it pair for the unlisted 12B base); 21 mismatches refused; priced-input costs recomputed",
+  "public-text": "PASS public text: 41 texts clean; exact reason and history sentence present; builder disclosures kept for 5 rows",
+  "raw": "PASS raw/entry/input/manifest hash binding for 5 rows, sealed input order, 1500 x 200 each, token totals, 0 over 10 s; Decisio engine recount bound (file + script hash)",
+  "release-tests": [
+   "# pass 19",
+   "# fail 0"
+  ],
+  "repro": "PASS two deterministic rebuilds, 16 artifact hashes",
+  "source": "PASS 301 carried rows/cells fully equal incl. ranks (family rows included), board unchanged, 5 new rows unranked on the same draw, carry/history bytes and 14 predecessor files (v1.7.12 + v1.7.13) equal to 83705a97 ; predecessor hash bound; new row scores/CI equal trusted sources; estimate costs reco",
+  "validator": "PASS 301 carried rows/cells fully equal (ranks included), unchanged order lists, 5 exact UNRANKED new rows on the 27 Oct draw, immutable method/carry, pins, public text, estimate cost, standing-GO approval binding; 58 bundle negatives and 50 row-gate negatives rejected (no row can be ranked or in an"
+ },
+ "new_base": "83705a970a61b844e77044bc195831e9913d6585",
+ "old_base": "0defb755c713de2e03184175b9a381dd74d842b2",
+ "old_head": "981d2f5975af8aa94f6f742f304f73b0cd62a14e",
+ "problems": [],
+ "status": "PASS"
+}

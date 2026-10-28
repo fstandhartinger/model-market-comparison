@@ -7178,6 +7178,111 @@
           }
         ],
         "note": "Qwen/Qwen3.5-4B; v1.4.1 weights at revision cc18ee33; measured configuration disclosed on the row."
+      },
+      "arcbright-elf-1-12b-r2": {
+        "arch": "open-llm-decoder",
+        "badges": {
+          "derivation": "fine-tune",
+          "params": "12B",
+          "quant": "bf16"
+        },
+        "evidence": [
+          {
+            "fact": "Pinned card at revision 10186960: base_model google/gemma-4-12B-it (base_model_relation finetune), Apache-2.0; \"Fine-tuned from google/gemma-4-12B-it with one LoRA adapter on the attention and MLP layers, merged into the bf16 weights\"; 12.0B parameters (bf16 checkpoint); served with the author elf_serve package.",
+            "kind": "model-card",
+            "url": "https://huggingface.co/arcbright/elf-1-12b/blob/1018696022ae3fdd9cb8a93e3e972f69c11184c1/README.md"
+          },
+          {
+            "fact": "architectures: [\"Gemma4UnifiedForConditionalGeneration\"]; model_type: \"gemma4_unified\"; 48 layers, hidden_size 3840; dtype bfloat16.",
+            "kind": "config.json",
+            "url": "https://huggingface.co/arcbright/elf-1-12b/blob/1018696022ae3fdd9cb8a93e3e972f69c11184c1/config.json"
+          }
+        ],
+        "note": "Second row on the Arcbright Elf 1 12B weights (new revision with a yes/no commit band and an optional truncation setting); the earlier row is unchanged."
+      },
+      "decisio-gemma-4-12b-tuned-commit-think": {
+        "arch": "open-llm-decoder",
+        "badges": {
+          "derivation": "merge",
+          "params": "12B",
+          "quant": "BF16"
+        },
+        "evidence": [
+          {
+            "fact": "Pinned author card: google/gemma-4-12B-it (revision 707f0a3b) with a LoRA adapter merged into its weights, served with decisio; one of three repositories of the same weights that differ in decision_config.json only; the commit-think flavor reads some choice questions again after up to 256 reasoning tokens.",
+            "kind": "model-card",
+            "url": "https://huggingface.co/tachara-ai/Decisio-12b-tuned-commit-think/blob/e36aeb243dea3008c593f454112840a1a29e5837/README.md"
+          },
+          {
+            "fact": "architectures: [\"Gemma4UnifiedForConditionalGeneration\"]; model_type: \"gemma4_unified\"; 48 layers, hidden_size 3840; dtype bfloat16.",
+            "kind": "config.json",
+            "url": "https://huggingface.co/tachara-ai/Decisio-12b-tuned-commit-think/blob/e36aeb243dea3008c593f454112840a1a29e5837/config.json"
+          }
+        ],
+        "note": "12B denotes the declared base class. Same weights as the Decisio 12B tuned commit row, different shipped flavor (commit-think); replaces no existing row. The commit rule and think pass are disclosed in the row."
+      },
+      "jeff_1_1_large": {
+        "arch": "open-llm-decoder",
+        "badges": {
+          "derivation": "fine-tune",
+          "params": "31B",
+          "quant": "BF16"
+        },
+        "evidence": [
+          {
+            "fact": "Pinned config identifies Gemma4ForCausalLM (model_type gemma4_text) with bfloat16 weights.",
+            "kind": "config.json",
+            "url": "https://huggingface.co/jgeuter/Jeff-1.1-Large/blob/970c21af246a44c5527f7109fca129ab6015c941/config.json"
+          },
+          {
+            "fact": "Pinned card describes Gemma 4 31B (instruction-tuned) with a LoRA adapter merged into the weights and a small decision head; optional short reasoning. Weights CC BY-NC-4.0.",
+            "kind": "model-card",
+            "url": "https://huggingface.co/jgeuter/Jeff-1.1-Large/blob/970c21af246a44c5527f7109fca129ab6015c941/README.md"
+          }
+        ],
+        "note": "Gemma decoder backbone with a decision head and optional generated reasoning; evaluated with reasoning enabled. Non-commercial weights; evaluation listing only."
+      },
+      "jeff_1_1_qwen_4b": {
+        "arch": "open-llm-decoder",
+        "badges": {
+          "derivation": "fine-tune",
+          "params": "4B",
+          "quant": "BF16"
+        },
+        "evidence": [
+          {
+            "fact": "Pinned config identifies Qwen3_5ForCausalLM (model_type qwen3_5_text) with bfloat16 weights.",
+            "kind": "config.json",
+            "url": "https://huggingface.co/jgeuter/Jeff-1.1-Qwen-4B/blob/5401940b5a8c959cba82187ebfa2dce5a21abc0a/config.json"
+          },
+          {
+            "fact": "Pinned card describes Qwen3.5-4B (instruction-tuned) with a LoRA adapter merged into the weights and a small decision head; full-attention layers use bidirectional attention; optional short reasoning. Weights CC BY-NC-4.0.",
+            "kind": "model-card",
+            "url": "https://huggingface.co/jgeuter/Jeff-1.1-Qwen-4B/blob/5401940b5a8c959cba82187ebfa2dce5a21abc0a/README.md"
+          }
+        ],
+        "note": "Qwen decoder backbone adapted with bidirectional attention for decisions and optional generated reasoning; evaluated with reasoning enabled. Non-commercial weights; evaluation listing only."
+      },
+      "torchcast-decision-31b-v1.0": {
+        "arch": "open-llm-decoder",
+        "badges": {
+          "derivation": "fine-tune",
+          "params": "31B",
+          "quant": null
+        },
+        "evidence": [
+          {
+            "fact": "Pinned v1.0 card: \"a full fine-tune of google/gemma-4-31B-it\"; option letters read at the answer position in one forward pass, nothing generated; hybrid attention (global layers without a causal mask, attention_mode hybrid_bidir_global); Apache-2.0.",
+            "kind": "model-card",
+            "url": "https://huggingface.co/torchcast-ai/torchcast-decision-31b/blob/1e267fc9409654a3ac91c123265c21cddce73a3b/README.md"
+          },
+          {
+            "fact": "architectures: [\"Gemma4ForConditionalGeneration\"]; model_type: \"gemma4\"; text_config.model_type \"gemma4_text\", 60 layers, hidden_size 5376; dtype bfloat16.",
+            "kind": "config.json",
+            "url": "https://huggingface.co/torchcast-ai/torchcast-decision-31b/blob/1e267fc9409654a3ac91c123265c21cddce73a3b/config.json"
+          }
+        ],
+        "note": "Gemma 4 31B full fine-tune with non-causal global attention layers; the shipped yes/no commit floor is disclosed in the row."
       }
     },
     "imagejevbench": {

@@ -1,0 +1,81 @@
+{
+ "rows": {
+  "arcbright-elf-1-12b-r2": {
+   "entry_sha256": "bb53dc42a9e16169bd2e7f33e527b8780037cef386263f109e50285cde3be20f",
+   "http_200": 1500,
+   "input_order": true,
+   "latency_max_s": 0.557,
+   "native_input_tokens": 610840,
+   "output_tokens": 1500,
+   "over_10s": 0,
+   "priced_input_tokens": 610840,
+   "raw_mode": "0600",
+   "raw_sha256": "84f08ebb6ff92af453b75cda042f617ea89c5be6a2176c7c69e11f2521da6f08",
+   "rows": 1500
+  },
+  "decisio-gemma-4-12b-tuned-commit-think": {
+   "engine_recount": {
+    "answered_engine_input_tokens": 844031,
+    "answered_native_input_tokens": 727045,
+    "engine_minus_native_total": 116986,
+    "engine_recount_sha256": "07b69b7a71ba53f1e3b6d22d64803c9bfa97496479c0205e613484e673401319",
+    "file_sha256": "8c9f4691551a99a23c2763783278727f6f6fd7ca5c9fc24467c2dec8b144b646",
+    "independent_recompute_mismatches": 0,
+    "rendering_sha256": "fc4ffec452f3a7034e378cdb9f0d07d34aa6de3f79ae0b70910e923feea2cd17",
+    "think_eligible_n": 746,
+    "think_second_read_prefill_upper_bound_tokens_if_all_eligible_thought": 504719
+   },
+   "entry_sha256": "bb53dc42a9e16169bd2e7f33e527b8780037cef386263f109e50285cde3be20f",
+   "http_200": 1500,
+   "input_order": true,
+   "latency_max_s": 6.928,
+   "native_input_tokens": 727045,
+   "output_tokens": 9121,
+   "over_10s": 0,
+   "priced_input_tokens": 844031,
+   "raw_mode": "0600",
+   "raw_sha256": "d7396dd680e13af9ba26c4526007fee3647d03eee7673bf88075ac510f39cc3c",
+   "rows": 1500
+  },
+  "jeff_1_1_large": {
+   "entry_sha256": "094aedba39685e9a0949d381746a50dd274ef145c8aadf3d2d4889581d6ea7c0",
+   "http_200": 1500,
+   "input_order": true,
+   "latency_max_s": 8.319,
+   "native_input_tokens": 620215,
+   "output_tokens": 21830,
+   "over_10s": 0,
+   "priced_input_tokens": 620215,
+   "raw_mode": "0600",
+   "raw_sha256": "1f1fdc2df674da00128ae7b47d5ea3429cf1124383a077577e7c68c7d9cc0e72",
+   "rows": 1500
+  },
+  "jeff_1_1_qwen_4b": {
+   "entry_sha256": "bb53dc42a9e16169bd2e7f33e527b8780037cef386263f109e50285cde3be20f",
+   "http_200": 1500,
+   "input_order": true,
+   "latency_max_s": 5.921,
+   "native_input_tokens": 629951,
+   "output_tokens": 69580,
+   "over_10s": 0,
+   "priced_input_tokens": 629951,
+   "raw_mode": "0600",
+   "raw_sha256": "c37fada15a2021cf744b2031acb964508caf48873a2bcda5da6d6ac4a5e7c288",
+   "rows": 1500
+  },
+  "torchcast-decision-31b-v1.0": {
+   "entry_sha256": "f36373abe1a01b3fbf0e19e6ebb4fddfe0615f472e1528c9906fa9eb0f2b454a",
+   "http_200": 1500,
+   "input_order": true,
+   "latency_max_s": 6.235,
+   "native_input_tokens": 645268,
+   "output_tokens": 0,
+   "over_10s": 0,
+   "priced_input_tokens": 645268,
+   "raw_mode": "0600",
+   "raw_sha256": "e51a1c22336050368336c996d7cb32181bad5e854024f07844b2a8577a0dda7d",
+   "rows": 1500
+  }
+ },
+ "status": "PASS"
+}
