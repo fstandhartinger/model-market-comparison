@@ -100,7 +100,7 @@ res['measurement_notes'] = old['results']['measurement_notes'] + [HIST + ' Strik
     'Microsoft-Decision-1 (updated weights) ran on 1,493 items, every row on that draw is now costed on the ' + f'{N:,}' + ' items every row answered, with its own price '
     'reference and token basis; its all-items cost is stated next to it. Only cost, the Cost axis and the composites of those rows change; Intelligence, Calibration, Speed '
     'and every category cell are unchanged. The draw is not equated to the reference scale, so its numbers are shown as published (offset 0). '
-    'NOT RANKED: every row on that draw carries the note "' + NOT_RANKED_BECAUSE + '" No existing rank or ranking changed.']
+    'NOT RANKED: the carried rows on that draw keep their notes, based on "' + NOT_RANKED_BECAUSE + '" Strike-1 carries the note "' + note_for(STRIKE) + '" No existing rank or ranking changed.']
 res['addendum'] = {'predecessor': PREV, 'new_keys': [STRIKE], 'remeasured_keys': [], 'repriced_keys': DRAW_ROWS, 'link_fixed_keys': [], 'text_fixed_keys': [], 'method_change': False, 'same_draw': DRAW_ID,
                    'cost_basis': {'rule': 'same-items (common answered set of every row on the draw)', 'n_items': N, 'set_sha256': CS['set_sha256']}}
 put(V / f'jevbench-{REV}-results.json', res)

@@ -37,7 +37,8 @@ const hash = b => createHash('sha256').update(b).digest('hex');
 const fail = m => { throw new Error(`JevBench v1.7.16: ${m}`); };
 const same = (a,b,m) => { if (!isDeepStrictEqual(a,b)) fail(m); };
 const hex = s => /^[a-f0-9]{64}$/.test(s ?? '');
-export const v1716NoteFor = k => V1716_NOTE_HEAD + (k === H2O ? ' ' + V1716_H2O_EXTRA : '') + ' ' + V1716_NOTE_TAIL;
+export const V1716_STRIKE_NOTE = "Measured on the 27 Oct 2026 draw, which is not yet equated to the reference scale; stronger anchor runs for that draw are being measured. Shown unranked until then.";
+export const v1716NoteFor = k => k === 'strike-1' ? V1716_STRIKE_NOTE : V1716_NOTE_HEAD + (k === H2O ? ' ' + V1716_H2O_EXTRA : '') + ' ' + V1716_NOTE_TAIL;
 function publicOnly(v) {
  if (!v || typeof v !== 'object') return;
  for (const [k,x] of Object.entries(v)) {

@@ -7,7 +7,8 @@ export const NOTE_HEAD="Measured on the 27 Oct 2026 draw, which is not yet equat
 export const NOTE_TAIL="Shown unranked until then.";
 export const NOT_RANKED_BECAUSE=NOTE_HEAD+' '+NOTE_TAIL;
 export const H2O_EXTRA='On the 300 public items every draw shares, this version scores 57.2 Intelligence vs 61.1 for H2O-Lightning-4B v1.1.';
-export const noteFor=k=>NOTE_HEAD+(k==='h2o-lightning-4b-v1.4.1'?' '+H2O_EXTRA:'')+' '+NOTE_TAIL;
+export const STRIKE_NOTE="Measured on the 27 Oct 2026 draw, which is not yet equated to the reference scale; stronger anchor runs for that draw are being measured. Shown unranked until then.";
+export const noteFor=k=>k==='strike-1'?STRIKE_NOTE:NOTE_HEAD+(k==='h2o-lightning-4b-v1.4.1'?' '+H2O_EXTRA:'')+' '+NOTE_TAIL;
 const INTERNAL=/\/home\/|workers\/|board\s*#|#\d{4,}|Florian|release.owner|\blead\b|deputy|custody|auto-intake|\br59\b|\br65\b|9D88ECFA|d2b677de|9cde338c|\bkit\b|Anna|Roth|Gmail|jevbench-add-requests|\bfusion\b|\bworker\b|fast-lane order|paid order|\brank(?:ed|ing)?\b|top[- ](?:five|5)/i;
 export function checkNewRowText(s){
  if(s.key!=='strike-1')throw Error('key');
