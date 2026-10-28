@@ -61,6 +61,47 @@ test("only per-million-token rows with input and output are chat models; 'Prices
   assert.deepEqual([...pricedChatCards(html).keys()], ["mistrallarge3"]);
 });
 
+// 28 Oct 2026 layout: the unit label is a badge AFTER each table inside its <section>, and the
+// Standard mode, USD/EUR currency and regional-inference controls are one global set above the
+// first table instead of repeating per section.
+const controls28 = `<div><label><button type="button" role="checkbox" aria-checked="false" data-state="unchecked"></button>Regional inference</label><button aria-pressed="true">Standard</button><button aria-pressed="false">Batch</button><button aria-pressed="false">Priority</button><button aria-pressed="true">USD</button><button aria-pressed="false">EUR</button></div>`;
+const section28 = (id, unit, ...rows) => `<section id="${id}"><div><h2>${id}</h2><p>Models for ${id}.</p></div>
+  <div><table><thead><tr><th>Model</th><th>Input</th><th>Cached input</th><th>Output</th></tr></thead><tbody>${rows.join("")}</tbody></table></div>
+  ${unit === null ? "" : `<span class="badge">Prices ${unit}</span>`}</section>`;
+const page28 = (...sections) => `<html><body><header>API pricing</header>${controls28}${sections.join("\n")}</body></html>`;
+
+test("28 Oct 2026: the unit badge follows its table and the controls are one global set", () => {
+  const html = page28(
+    section28("generalist-models", "/M Tokens", row("Mistral Large 3", 0.5, 0.05, 1.5), row("Codestral", 0.3, 0.03, 0.9)),
+    section28("ocr-models", "/1000 Pages", row("OCR 4.1", "$4 /1000 Pages", "$0.4 /1000 Pages", null), row("Bare OCR", 4, null, 8)),
+    section28("audio-models", "as marked", row("Voxtral TTS", "$0 /M Chars", "$0 /M Chars", "$16 /M Chars")),
+    section28("code-models", "/M Tokens", row("Codestral", 0.3, 0.03, 0.9)),
+    // Voice agents: no badge, the per-minute unit is only in the section's own blurb above its table.
+    `<section id="voice-agents"><p>Pricing for the Voice Agents API, billed per minute of conversation.</p>
+    <table><thead><tr><th>Model</th><th>Price</th></tr></thead><tbody><tr><td>Mistral Small 4</td><td>$0.04/min</td></tr></tbody></table></section>`,
+  );
+  const { models, diff } = parseMistralPricing(html, { models: [
+    { model_name: "Mistral Large 3", provider_org: "Mistral", input_per_1m_usd: 0.5, output_per_1m_usd: 1.5, region: "eu", api_model_id: "mistral-large-latest" },
+    { model_name: "Codestral", provider_org: "Mistral", input_per_1m_usd: 0.3, output_per_1m_usd: 0.9, region: "eu", api_model_id: "codestral-latest" },
+  ] });
+  assert.equal(models.length, 2);
+  assert.deepEqual(diff, { added: [], removed: [], price_changed: [], cache_read_dropped: [] });
+  // The badge is bounded by its own </section>: a section without one must not inherit the next
+  // section's label, and a badge disagreeing with its own section head fails closed.
+  assert.throws(() => pricedChatCards(page28(
+    section28("generalist-models", null, row("Mistral Large 3", 0.5, 0.05, 1.5)),
+    section28("ocr-models", "/1000 Pages", row("OCR 4.1", "$4 /1000 Pages", "$0.4 /1000 Pages", null)),
+  )), /unit heading/);
+  const conflict = page28(`<section><p>Prices /M Tokens</p><table><tr><th>Model</th><th>Input</th><th>Cached input</th><th>Output</th></tr><tr><td>A</td><td>$1</td><td>—</td><td>$2</td></tr></table><span>Prices as marked</span></section>`);
+  assert.throws(() => pricedChatCards(conflict), /conflicting unit labels/);
+  // The global controls still gate the read: Batch pressed, EUR pressed, regional on, or a missing
+  // control set all fail closed.
+  assert.throws(() => pricedChatCards(page28(section28("generalist-models", "/M Tokens", row("Mistral Large 3", 0.5, 0.05, 1.5))).replace('aria-pressed="true">Standard', 'aria-pressed="false">Standard').replace('aria-pressed="false">Batch', 'aria-pressed="true">Batch')), /not on the Standard pricing mode \(pressed: \["Batch","USD"\]\)/);
+  assert.throws(() => pricedChatCards(page28(section28("generalist-models", "/M Tokens", row("Mistral Large 3", 0.5, 0.05, 1.5))).replace('aria-pressed="true">USD', 'aria-pressed="false">USD').replace('aria-pressed="false">EUR', 'aria-pressed="true">EUR')), /not in USD \(pressed: \["Standard","EUR"\]\)/);
+  assert.throws(() => pricedChatCards(page28(section28("generalist-models", "/M Tokens", row("Mistral Large 3", 0.5, 0.05, 1.5))).replace('aria-checked="false"', 'aria-checked="true"')), /regional-inference switch is not off/);
+  assert.throws(() => pricedChatCards(`<html><body>${section28("generalist-models", "/M Tokens", row("Mistral Large 3", 0.5, 0.05, 1.5))}</body></html>`), /no Standard\/Batch\/Priority pricing-mode control/);
+});
+
 test("22 Oct 2026: an OCR section headed 'Prices /1000 Pages' is skipped; an unknown unit heading still fails closed", () => {
   const html = page(
     chat(row("Mistral Large 3", 0.5, 0.05, 1.5)),
