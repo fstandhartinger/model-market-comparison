@@ -96,8 +96,8 @@ res.update(revision=REV, label='JevBench v1.7.16: Strike-1 on the 27 Oct regular
 assert res['n_ranked'] == old['results']['n_ranked'] and res['roster_count'] == len(prev) + 1
 res['measurement_notes'] = old['results']['measurement_notes'] + [HIST + ' Strike-1 is a hosted decision API (EU, OVH Gravelines); it answered 1,495 of the draw\'s 1,500 items: '
     '5 items over the provider\'s input limit were refused and count as wrong; none took longer than 10 s. The vendor reports 0 output tokens (no text is generated) and describes '
-    'the model as a fine-tune of Qwen/Qwen3.5-4B, whose market reference prices its cost (estimate). SAME-ITEMS COST: because Strike-1 refuses the 5 longest items and '
-    'Microsoft-Decision-1 (updated weights) ran on 1,493 items, every row on that draw is now costed on the ' + f'{N:,}' + ' items every row answered, with its own price '
+    'the model as a fine-tune of Qwen/Qwen3.5-4B, whose market reference prices its cost (estimate). SAME-ITEMS COST: Microsoft-Decision-1 (updated weights) ran on 1,493 items and answered 1,489; '
+    "Strike-1's 5 refused long items are among those it did not answer, so every row on this draw is costed on those " + f'{N:,}' + ' items, with its own price '
     'reference and token basis; its all-items cost is stated next to it. Only cost, the Cost axis and the composites of those rows change; Intelligence, Calibration, Speed '
     'and every category cell are unchanged. The draw is not equated to the reference scale, so its numbers are shown as published (offset 0). '
     'NOT RANKED: the carried rows on that draw keep their notes, based on "' + NOT_RANKED_BECAUSE + '" Strike-1 carries the note "' + note_for(STRIKE) + '" No existing rank or ranking changed.']

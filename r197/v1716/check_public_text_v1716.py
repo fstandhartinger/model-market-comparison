@@ -35,16 +35,21 @@ def strip(t):
 hits={nm:m.group() for nm,t in texts.items() if (m:=BANNED.search(strip(t)))}
 assert not hits,('internal public text',hits)
 assert res['source_note']==HIST and HIST.replace("'","\\'") in rel and HIST.replace("'","&apos;") in page and res['measurement_notes'][-1].startswith(HIST) and NOTE in res['measurement_notes'][-1] and STRIKE_NOTE in res['measurement_notes'][-1]
+assert 'The draw is not yet equated to the reference scale (stronger anchor runs for that draw are being measured), so its numbers are shown as published (offset 0) and no ranking or ranked order changes.' in page
+assert "Microsoft-Decision-1 (updated weights) ran on 1,493 items and answered 1,489; Strike-1's 5 refused long items are among those it did not answer, so every row on this draw is costed on those 1,489 items".replace("'",'&apos;') in page
+assert 'The draw&apos;s first anchor runs used models weaker than the draw&apos;s rows' not in page
 assert res['label']=='JevBench v1.7.16: Strike-1 on the 27 Oct regular draw; same-items cost on that draw'
 assert n['display']=='Strike-1' and n['author']=='Strike (strike-ai.eu)'
 for frag in ['hosted decision API (EU, OVH Gravelines)','fine-tune of Qwen/Qwen3.5-4B','all 1,500 items of the draw were sent; 5 items over the provider\'s input limit were refused and are scored as misses (kept in the denominator)',
              'the API reports 0 output tokens on every answer','uncalibrated during beta','not yet equated to the reference scale, so its numbers are shown as published, offset 0',TOPIC]:assert frag in n['disclosure'],frag
 assert '5 were refused by the server because the input exceeded its limit (8,192 tokens or 32,000 characters) and are scored as misses' in n['endpoint_condition'] and 'OVH Gravelines' in n['endpoint_condition']
 assert 'Qwen/Qwen3.5-4B' in n['cost']['basis'] and '0 output tokens on the 1,489 common items' in n['cost']['basis'] and 'ESTIMATE' in n['cost']['basis']
-assert '1,495 of the draw\'s 1,500 items' in res['measurement_notes'][-1] and '5 items over the provider\'s input limit were refused and count as wrong' in res['measurement_notes'][-1] and '1,489 items every row answered' in res['measurement_notes'][-1]
+assert '1,495 of the draw\'s 1,500 items' in res['measurement_notes'][-1] and '5 items over the provider\'s input limit were refused and count as wrong' in res['measurement_notes'][-1] and "Microsoft-Decision-1 (updated weights) ran on 1,493 items and answered 1,489; Strike-1's 5 refused long items are among those it did not answer, so every row on this draw is costed on those 1,489 items" in res['measurement_notes'][-1]
 assert 'the cost uses the 1,489 items every row on this draw answered (same-items rule)' in by[MS]['disclosure']
 assert 'no topic labels' in cat['results_sha256_note'] and 'changes no cell' in cat['results_sha256_note']
 assert not re.search(r'equated with 12|Intelligence -1\.2|Calibration -0\.7',json.dumps(texts)),'no equating claim anywhere'
 (J/'receipts/PUBLIC-TEXT.json').write_text(json.dumps({'status':'PASS','checked':sorted(texts),'banned_pattern':BANNED.pattern,'allowed_ranking_phrases':ALLOWED,'exact_history_sentence':True,'exact_notes':DK,'h2o_extra_sentence':True,'topic_cell_sentence_kept':True,
+   'release_draw_status':'The draw is not yet equated to the reference scale (stronger anchor runs for that draw are being measured), so its numbers are shown as published (offset 0) and no ranking or ranked order changes.',
+   'common_set_attribution':"Microsoft-Decision-1 (updated weights) ran on 1,493 items and answered 1,489; Strike-1's 5 refused long items are among those it did not answer, so every row on this draw is costed on those 1,489 items",
    'same_items_sentence_on_all_8':True,'strike_disclosures':['hosted EU','5 over-limit refusals scored as misses','output 0','stated base Qwen3.5-4B fine-tune','beta, uncalibrated probabilities'],'no_equating_claim':True},indent=1,sort_keys=True)+'\n')
 print('PASS public text:',len(texts),'texts clean; exact history sentence, exact d1027 note and the same-items cost sentence on all',len(DK),'draw rows (H2O with its v1.1 sentence), topic-cell sentence kept; Strike-1: hosted EU, 5 over-limit refusals scored as misses, output 0, stated base, beta disclosed; no equating claim')
