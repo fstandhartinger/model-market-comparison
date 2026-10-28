@@ -10,7 +10,7 @@ import { JevArchitectureMethod } from './JevArchitecture';
 import type { CSSProperties } from 'react';
 import type { JevV15Artifact } from '../lib/jevbench-v15-preview.mjs';
 import { jevV15LeaderSentence } from '../lib/jevbench-v15-preview.mjs';
-import { jevV15SliderPresets, jevV15BoardSystem, jevV15BoardRow, jevV15CompareRow } from '../lib/jevbench-v15-board.mjs';
+import { jevV15SliderPresets, jevV16ChartRow, jevV15BoardRow, jevV15CompareRow } from '../lib/jevbench-v15-board.mjs';
 import type { JevV16ReleaseArtifact, JevV16Categories, JevV16Carry } from '../lib/jevbench-v16-release.mjs';
 import type { JevV14System } from '../lib/jevbench-v14.mjs';
 import { JEVBENCH_LANGUAGE_META, jevLanguageRows, languagePoolNote, jevbenchCategoryView, isFreshJevbenchV16Revision, freshJevbenchCategoryRows, JEVBENCH_S_CATEGORY_CELLS_ARTIFACT, L3_EXPOSURE_NOTES } from '../lib/jevbench-categories.mjs';
@@ -22,7 +22,6 @@ import { JevScoreChart } from './JevBoardInteractive';
 import { JevCompareV15 } from './JevCompareV15';
 import { JevV15FilterProvider, JevV15FilterPanel, type JevV15RowMeta } from './JevV15Filters';
 import { JevV15FilterVisibilityBridge } from './JevV15FilterVisibilityBridge';
-import { baseModelFamilies } from '../lib/jev-base-model.mjs';
 import { JevV15AllDataGrid } from './JevV15AllDataGrid';
 import { JevApiOfferingsToggle } from './JevApiOfferingsToggle';
 import { JevLanguageTableControls } from './JevLanguageTableControls';
@@ -637,8 +636,10 @@ export function JevBenchV16Board({ artifact: a, sha256, categories, categoriesSh
   const remeasure = (s: { listing?: string }) => s.listing === JEV_REMEASURE_PENDING;
   const ranked = scope === 'all' ? jevScopeDisplayOrder(a.systems.filter((s) => s.ranked || s.listing === JEV_PRELIMINARY_LISTING || remeasure(s))) : jevScopeDisplayOrder([...a.systems.filter((s) => listedRow(s) || remeasure(s)), ...(extra as typeof a.systems)]);
   const hiddenApi: ReadonlySet<string> = new Set(scope === 'open' ? apiKeys : []);
-  const chartSystems = ranked.map((s) => jevV15BoardSystem(s) as JevV14System);
-  const allChartSystems = [...a.systems, ...(extra as typeof a.systems)].map((s) => jevV15BoardSystem(s) as JevV14System);
+  const allChartSystems = [...a.systems, ...(extra as typeof a.systems)].map((s) => jevV16ChartRow(s) as JevV14System);
+  // Both chart lists share projected objects so RSC can reference each system once.
+  const chartByKey = new Map(allChartSystems.map((row) => [row.key, row]));
+  const chartSystems = ranked.map((s) => chartByKey.get(s.key) ?? jevV16ChartRow(s) as JevV14System);
   const allClass = jevClassView(allChartSystems, { ...JEV_V16_CLASS_OPTIONS, nearCapPrecision: true });
   const eligibilityByKey = new Map(allClass.rows.map((row) => [row.row.key, {
     status: (row.inClass ? 'eligible' : 'outside') as 'eligible' | 'outside',
@@ -661,7 +662,6 @@ export function JevBenchV16Board({ artifact: a, sha256, categories, categoriesSh
       officialCost: x.cost?.usd_per_1000 ?? null, alternativePrice: null, p50: x.speed?.p50_s_adjusted ?? null, p95: x.speed?.p95_s_adjusted ?? null,
       jevClass: { status: e?.status ?? 'outside', reason: e?.reason ?? 'no v1.6 figure yet' } });
   }
-  const allDataKeys = [...new Set([...a.systems, ...a.not_measured].map((row) => row.key))];
   const previous = new Set(previousKeys);
   const viewRows = ranked.map((s) => jevV15BoardRow(s, { isNew: previous.size > 0 && !previous.has(s.key), headline: a.headline }));
   const compareSources = ['v1.6.3', 'v1.6.4'].includes(a.revision) ? freshJevbenchCategoryRows(a.systems) : ranked;
@@ -689,14 +689,7 @@ export function JevBenchV16Board({ artifact: a, sha256, categories, categoriesSh
       <p className="bh-muted mt-2 max-w-4xl text-xs" data-bh-jev16-radar-note>{categories.supplement ? <>Category radars count each answered item once from the pools named under each radar. API overlay rows use {API_CATEGORY_POOLS}. Raw and unequated; cells under {categories.min_n} answered items are omitted. Per-type and tier radars retain each row&apos;s original measurement pools: A4/A5 rows have 300 open plus 300 sealed items; full-set rows have S {a.v16.counts.S.toLocaleString('en-US')} plus P {a.v16.counts.P}.</> : <>{categories.lane_note} Sealed counts refer to self-hosted S ({a.v16.counts.S.toLocaleString('en-US')}); API rows use their original measured sealed basis.</>}</p>
       <LanguageView carry={carry} scope={scope} a={a} categories={categories} hiddenApi={hiddenApi} />
       <NoulAndGate a={a} hiddenApi={hiddenApi} />
-      <JevV15AllDataGrid
-        artifact={v15}
-        categoryView={jevbenchCategoryView(a.revision, allDataKeys, { supplement: Boolean(categories.supplement), artifact: fresh || hasApiFullAddendumCategories(categories) ? categories : undefined })}
-        previousKeys={previousKeys}
-        eligibility={allClass}
-        metadata={{ families: baseModelFamilies('jevbench', a.systems) }}
-        links={{ method: '#jev16-method', pricing: live ? '#jev-costs' : '#jev16-method', revisionNotes: '#jev16-method', addenda: {} }}
-      />
+      <JevV15AllDataGrid key={live ? `board-${scope}` : a.revision} version={live ? `board-${scope}` : a.revision} revision={a.revision} />
       {scope === 'open' && <div className="mt-10"><JevGpuCostCalculator systems={ranked.filter((s) => s.v16.lane !== 'api' && !remeasure(s)).map((s) => ({
         key: s.key, display: short(s.display), gpu: (s as { gpu?: string | null }).gpu ?? null, p50_s_raw: s.speed?.p50_s_raw ?? null,
         officialUsdPer1000: s.cost?.usd_per_1000 ?? null, ranked: !!s.ranked }))} /></div>}

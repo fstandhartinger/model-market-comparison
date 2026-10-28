@@ -14,3 +14,5 @@ export declare function jevV15BoardRow(row: JevV15System & { alt?: JevBoardViewR
 export declare function jevV15CompareRow(row: JevV15System): JevCompareV15Row;
 
 export declare function jevBoardAlternative(row: JevBoardViewRow, rows: JevBoardViewRow[], weights: JevWeights, rescore?: (axes: JevBoardViewRow['axes'], weights: JevWeights) => number | null): JevBoardAlternative | null;
+
+export declare function jevV16ChartRow(row: JevV15System): JevV14System;
