@@ -1,0 +1,320 @@
+{
+ "carried_rows": 315,
+ "carried_rows_equal_except": [],
+ "cost_basis": {
+  "cost_basis_msft_view_sha256": "3bb4e58e15530a2688b561ab3fbaf9c8f956ec149853b6397c89d094779fb715",
+  "cost_basis_sha256": "b83bdfd14c263ffacfa572b304084154afca84c1f00083101a33783ae6f8b356",
+  "decisio_note": "Decisio is priced on its engine recount (totals only): the common-set engine count assumes the modal per-item engine-native delta 78 for the 6 further excluded items; exact to within 6 tokens (USD bound in rows)",
+  "frozen_at": "v1.7.16",
+  "h2o_note": "H2O is priced on processed tokens after its 32k trim; its only 5 trimmed states are the 5 longest items, all outside the common set, so processed = raw usage there",
+  "n_excluded_from_1500": 11,
+  "n_items": 1489,
+  "per_row_membership": {
+   "arcbright-elf-1-12b-r2": {
+    "answered_not_in_common": 11,
+    "answered_ok": 1500,
+    "raw_sha256": "84f08ebb6ff92af453b75cda042f617ea89c5be6a2176c7c69e11f2521da6f08",
+    "rows": 1500
+   },
+   "chaoliangunsw-jev-style-2b-decision-v4": {
+    "answered_not_in_common": 6,
+    "answered_ok": 1495,
+    "raw_sha256": "96e11049d1593d75ee84fe258f6a6c4020c9e37ebe299c7d18a3b6846fbacf81",
+    "rows": 1500
+   },
+   "decisio-gemma-4-12b-tuned-commit-think": {
+    "answered_not_in_common": 11,
+    "answered_ok": 1500,
+    "raw_sha256": "d7396dd680e13af9ba26c4526007fee3647d03eee7673bf88075ac510f39cc3c",
+    "rows": 1500
+   },
+   "h2o-lightning-4b-v1.4.1": {
+    "answered_not_in_common": 11,
+    "answered_ok": 1500,
+    "raw_sha256": "96d26bb3c0486ecbee832e309db4099b3a616b1540b4a92eff09dec81b719335",
+    "rows": 1500
+   },
+   "jeff_1_1_large": {
+    "answered_not_in_common": 11,
+    "answered_ok": 1500,
+    "raw_sha256": "1f1fdc2df674da00128ae7b47d5ea3429cf1124383a077577e7c68c7d9cc0e72",
+    "rows": 1500
+   },
+   "jeff_1_1_qwen_4b": {
+    "answered_not_in_common": 11,
+    "answered_ok": 1500,
+    "raw_sha256": "c37fada15a2021cf744b2031acb964508caf48873a2bcda5da6d6ac4a5e7c288",
+    "rows": 1500
+   },
+   "microsoft-decision-1-r2": {
+    "answered_not_in_common": 0,
+    "answered_ok": 1489,
+    "raw_sha256": "1f069818cdc069a532a4c4965d306fbd302bb819dde4aa3c48a9bd676c4a981e",
+    "rows": 1493
+   },
+   "strike-1": {
+    "answered_not_in_common": 6,
+    "answered_ok": 1495,
+    "raw_sha256": "4c6c7ab25b11432f8934425a44806ec5a2499241a9c5790216a11651473f2027",
+    "rows": 1500
+   },
+   "torchcast-decision-31b-v1.0": {
+    "answered_not_in_common": 11,
+    "answered_ok": 1500,
+    "raw_sha256": "e51a1c22336050368336c996d7cb32181bad5e854024f07844b2a8577a0dda7d",
+    "rows": 1500
+   },
+   "umpire-35b-a3b": {
+    "answered_not_in_common": 6,
+    "answered_ok": 1495,
+    "raw_sha256": "d1568cc82b893339bc4b5bc21c49a036190851cfcd7d10cd2a343dab910711ad",
+    "rows": 1500
+   },
+   "visionjev-1.0.0-27b": {
+    "answered_not_in_common": 6,
+    "answered_ok": 1495,
+    "raw_sha256": "89a5de4e94a9b1feed12144db1c5879c7e59c149f0d1667cb3b12e4763b89496",
+    "rows": 1500
+   }
+  },
+  "precedent": "v1.6.30 on v1.6-regular-20261012 (scorer flag --cost-basis)",
+  "rows": {},
+  "rule": "fixed-common-cost-basis-d1027: the 1,489-item v1.7.16 basis is frozen; later rows use this same denominator without shrinking the set; native refusals have no billed usage and remain scored misses",
+  "scorer_flag": "--cost-basis",
+  "set_hash_rule": "sha256 of the sorted opaque id list as compact JSON",
+  "set_sha256": "4e912731e63369e1b3066b0b4afa87b44f1094aea079c5b41dc6d02e7f235537"
+ },
+ "exceptions": {},
+ "files": {
+  "carry": "271d1fc77a136a04a1eb6deb5480c52d4211eb2b66b2ac8bb31e80867e69003a",
+  "categories": "893cdad9a89953d13b98e2322d91ac985a04c0e6b1e2bc348e3cfee81e2a4b49",
+  "history": "5cd8c1332226ea9c179883d2285c0d8b8cc593ae38f2645197364a7ddd9c83c1",
+  "history-carry": "334e851944e92383ab3071e52b3012040c7023d0fe236395953169ebee8f0459",
+  "proof": "acfea2ab0c85d43a17e30a64238db05fd7e6a8eef965beadf6c454bc7f9baccb",
+  "results": "e6471b4196c8d828a2144437ba88a23a1dcaca7a57bc40381abdc7eeaaa1d169"
+ },
+ "link_fixed_rows": [],
+ "method": {
+  "decision_limit_s": 10,
+  "label": "v1.7",
+  "rule": "latency_s > 10.000 s -> failed",
+  "treatment": "share"
+ },
+ "new_rows": {
+  "umpire-35b-a3b": {
+   "axes": {
+    "calibration": 90.73266984958518,
+    "cost": 36.601949665906865,
+    "intelligence": 58.18796963108992,
+    "speed": 79.61785431820445
+   },
+   "category_pool_bounds": {
+    "languages": {
+     "ar": 21,
+     "cs": 37,
+     "da": 36,
+     "de": 48,
+     "el": 28,
+     "en": 555,
+     "es": 37,
+     "fi": 52,
+     "fr": 32,
+     "hi": 37,
+     "id": 41,
+     "it": 45,
+     "ja": 44,
+     "ko": 43,
+     "mixed": 64,
+     "nl": 36,
+     "no": 51,
+     "pl": 57,
+     "pt": 47,
+     "sv": 46,
+     "tr": 46,
+     "uk": 56,
+     "zh": 41
+    },
+    "topics": {},
+    "usecases": {
+     "advertising": 48,
+     "code_linting": 69,
+     "customer_support": 66,
+     "demand_forecasting": 66,
+     "ecommerce_marketplaces": 62,
+     "feature_extraction": 72,
+     "financial_crime": 63,
+     "gaming": 58,
+     "insurance_claims": 62,
+     "knowledge_graphs": 67,
+     "lead_generation": 75,
+     "legal_compliance": 56,
+     "llm_guardrails": 71,
+     "model_routing": 148,
+     "moderation_trust_safety": 59,
+     "other": 32,
+     "recruiting": 65,
+     "risk_assessment": 48,
+     "scientific_discovery": 42,
+     "search_retrieval": 67
+    }
+   },
+   "composite_ci95": {
+    "A": [
+     30.444647867506113,
+     31.968325246480745
+    ],
+    "B": [
+     29.94065084222929,
+     32.29499345631673
+    ],
+    "C": [
+     23.260038808436455,
+     31.968325246480745
+    ]
+   },
+   "cost": {
+    "basis_items": 1489,
+    "input_tokens_all": 621390,
+    "input_tokens_common": 618462,
+    "kind": "estimate",
+    "output_tokens": 0,
+    "usd_per_1000": 0.12979810275352585,
+    "usd_per_1000_all_items": 0.12945625
+   },
+   "decision_limit": {
+    "limit_s": 10.0,
+    "n_over_limit": 0,
+    "n_over_limit_answered_ok": 0,
+    "rule": "latency_s > limit -> failed",
+    "speed_basis": "all decisions given (lane items in the raw), measured latency_s",
+    "speed_n": 1500,
+    "treatment": "share"
+   },
+   "equated": {
+    "calibration": 90.73266984958518,
+    "capability": 74.46031974033755,
+    "intelligence": 58.18796963108992,
+    "offset": {
+     "C": 0,
+     "I": 0
+    },
+    "scores": {
+     "A": 31.48166793420532,
+     "B": 31.42124042366434,
+     "C": 29.608856825049713
+    }
+   },
+   "model_pin": {
+    "base": "ornith-ai/Ornith-1.5-35B-A3B",
+    "model": "ezoushen/umpire-35b-a3b-bf16",
+    "revision": "c928afd208de9f85d2c194042364b1a62ca4d080",
+    "served_model": "Umpire 35B-A3B"
+   },
+   "n_answered": 1495,
+   "n_items": 1500,
+   "n_refused_over_limit": 5,
+   "price_reference": {
+    "base": "ornith-ai/Ornith-1.5-35B-A3B",
+    "in": 0.3125,
+    "kind": "estimate",
+    "listing": "qwen/qwen3.5-35b-a3b",
+    "out": 1.25,
+    "rule": "Explicit size/architecture-class estimate, qwen3_5_moe 35B total / 3B active; declared base unlisted with no declared parent; no lineage asserted; zero output tokens"
+   },
+   "raw_sha256": "d1568cc82b893339bc4b5bc21c49a036190851cfcd7d10cd2a343dab910711ad",
+   "refused_because": "input over the model limit of 16,384 tokens; scored as misses, kept in the denominator",
+   "scored_input_sha256": "27ba1fbbf115e51c247551557fc36b5298d609a0dbec7079e5abbfb2ca70ee47",
+   "source_sha256": {
+    "cells_off": {
+     "categories_sha256": "86fb894f24510da1ddd600f22e8409a1a7ad8c76964b0933e68e62ee167e188a",
+     "decisive_sha256": "f8f24adf88a23fe999ea91c5d2b90ab29965ca940f8bfb947b6e197bc7614087"
+    },
+    "cells_share": {
+     "categories_sha256": "7c3f858b7785ed5df220bbc63f5f6811612b49007ee3ad57a0222b5a76fc93b7",
+     "decisive_sha256": "f8f24adf88a23fe999ea91c5d2b90ab29965ca940f8bfb947b6e197bc7614087"
+    },
+    "frozen": {
+     "path": "/home/flori/jobs/jevbench-add-requests-20260919/workers/r198-v1722-build/score/field/fnew/out-frozen/jevbench-v1.6.0-results.json",
+     "sha256": "5d207bc61ad192049a963d4ba23f0cc118f7d3793bbe2aea2e95c300092bc1ed"
+    },
+    "gold_sha256": "8aaf8ab4c58fe06e1f7494a965701ffc0c1a7879392b0bc2309f7f1724b5e200",
+    "input_sha256": "9b2f32edaccb29afd726af8cd54cf1a22d85e8b1824566924045d83c6f828426",
+    "kit_shas_sha256": "bd6ae6818815b861f3cb7bf144f2fd3a0a78b4fac50e0359020d91650a99d806",
+    "manifest_sha256": "f5a5151a1a19923dec1434230dbc451d9ca879ce8ccba8f268b296cac9c1ee35",
+    "pull_receipt_sha256": "285ac1c5f1c07144000219ec0dd3e8b69a4f82d0f6f84d5ba6f3411e2aa9af7c",
+    "raw_sha256": "d1568cc82b893339bc4b5bc21c49a036190851cfcd7d10cd2a343dab910711ad",
+    "raw_verified_in_place": true,
+    "registry_sha256": "b4c2ac75269e6a63da672696ebabde5bdb14538bdb8288681a08acc43ce7ac8c",
+    "v17-off": {
+     "path": "/home/flori/jobs/jevbench-add-requests-20260919/workers/r198-v1722-build/score/field/fnew/out-v17-off/jevbench-v1.6.0-results.json",
+     "sha256": "c4a7ab2b6844aa95bbfe90588257bae17b7b03924b715a9a1e545568017ef2f6"
+    },
+    "v17-share": {
+     "path": "/home/flori/jobs/jevbench-add-requests-20260919/workers/r198-v1722-build/score/field/fnew/out-v17-share/jevbench-v1.6.0-results.json",
+     "sha256": "27ba1fbbf115e51c247551557fc36b5298d609a0dbec7079e5abbfb2ca70ee47"
+    }
+   },
+   "treatment": "unranked"
+  }
+ },
+ "predecessor": {
+  "publication_sha256": "dbab41625c6742298c0c4201883c208a04d81fd5200b26eece16263cff79bf3d",
+  "revision": "v1.7.21"
+ },
+ "pricing_module_sha256": "645fd82eac728d597048bec0995ecd3ac896566e269fb6c9a1fdb84c171a9ac4",
+ "publication_approval": {
+  "asks": [
+   {
+    "handoff": "Umpire 35B-A3B measured on d1027, self-hosted, 1,495/1,500, five pre-registered over-limit refusals",
+    "key": "umpire-35b-a3b",
+    "relay": "board #11 #32733"
+   }
+  ],
+  "button_tap": false,
+  "cost_basis": {
+   "decision": "Fixed common cost basis d1027, DECISIONS 2026-10-28",
+   "key": "v1.6-regular-20261027"
+  },
+  "fresh_baseline": "v1.7.21",
+  "release_owner_rulings": [
+   "d1027 rows remain unranked",
+   "Umpire size/architecture-class estimate Qwen/Qwen3.5-35B-A3B 0.3125/1.25; declared Ornith base unlisted with no declared parent; no lineage asserted; output zero (DECISIONS 2026-10-29 umpire-size-class-pricing)",
+   "Fixed 1489-item d1027 common basis, never shrunk; refusals unbilled in denominator",
+   "Temporary topics exception"
+  ],
+  "status": "GO (standing; no top-five change)",
+  "top_five_effect": "unchanged",
+  "top_five_preview": {
+   "path": "r198/v1722/receipts/topfive-diff.json",
+   "sha256": "c5b299962d452457d6b4e86593a2b91398e80d490916b2ef839af7b50581231a"
+  },
+  "unranked_basis": {
+   "card": "#18781",
+   "decision": "d1027-strong-anchors-needed",
+   "handled_by": "rows published unranked (ranked false), no order list changes; draw not equated (offset 0)"
+  }
+ },
+ "publication_review": {
+  "engine": "synthetic-preview-only",
+  "receipt_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "verdict": "PASS"
+ },
+ "publication_sha256": "e851fab5d92e4ec23ebdb5bec4b5542bb89d09cb823844c8fcb17a9699516fa1",
+ "release": "v1.7.22",
+ "remeasured_rows": {},
+ "repriced_rows": {},
+ "scorers": {
+  "a2_cells_v16": "afd034efe27bde12f2ebbfd12c4c0792c93214e1aa9a63deecb0e83a0184c990",
+  "build_categories_v16": "40eb50f3d7fea2693b4478c4b89f8bfb957dd17776add491935742e3b9354e73",
+  "build_topics_v16": "ec04ab598162bfc4340ffa7916a06573eb1222132c61e47ab772045bc67ced78",
+  "decisive_v16": "80b9ccf43e58dddb1b2a77e0a33aba8a9f7337a3a9a639afc7264218bbf8918f",
+  "noul_method_v16": "119e59486ab3300b972fbcbadb0fe1dceceb124287607375aa61c66063c607d0",
+  "pins_v17": "b50cc00dd2cb0ba46157eb6a2bda620255f3ff54404025e992bc7962dfff2f8b",
+  "run_under_v17": "efb194b2ea350db59be37e5e72af71f809f763a2476cd6f521adf6f4fd90a64f",
+  "score_v15": "0931e05c6410b1b971201834397cb609cdb25f942723c50375632952f6dcc447",
+  "score_v15_headlineA": "826f2cbcb57007ec8a161e6eb0111182b8a656c0638027c6c78022a858fd8e2c",
+  "score_v16": "02132271117653e6302c509232a581d0094f0e78eac8b1bfc67596fd5d5097e9",
+  "score_v17": "6363458d208a52f4ad5aaf73027cad1b7e0358ff962e581d57a3cc462c8f1978"
+ },
+ "text_fixed_rows": []
+}

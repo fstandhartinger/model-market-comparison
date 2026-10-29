@@ -1,0 +1,1219 @@
+{
+ "BUILD-POSTFLIP": {
+  "exit_code": 0
+ },
+ "FULLTEST-POSTFLIP": {
+  "command": "suite-slot heavy-run npm test (one run)",
+  "exit_code": 1
+ },
+ "PENDING": {
+  "exit_code": 1
+ },
+ "POSTFLIP": {
+  "exit_code": 0
+ },
+ "TSC": {
+  "command": "suite-slot heavy-run tsc --noEmit",
+  "exit_code": 0
+ },
+ "all_data_pass": {
+  "previous_keys": 315,
+  "review": "PASS",
+  "row_count": 316,
+  "status": "PASS",
+  "version": "v1.7.22"
+ },
+ "all_data_pending": {
+  "previous_keys": null,
+  "review": "PENDING",
+  "row_count": null,
+  "status": "PASS",
+  "version": "v1.7.22"
+ },
+ "built_artifact": {
+  "compiled_route": ".next/server/app/api/jevbench/latest/route.js",
+  "draw_rows_in_feed": [
+   {
+    "composite_score": 75.66989716801469,
+    "cost_usd_per_1000": 0.01954180658159839,
+    "key": "arcbright-elf-1-12b-r2",
+    "listing": "unranked",
+    "note_exact": true,
+    "rank": null,
+    "ranked": false
+   },
+   {
+    "composite_score": 28.47918106314405,
+    "cost_usd_per_1000": 0.006607092008059101,
+    "key": "chaoliangunsw-jev-style-2b-decision-v4",
+    "listing": "unranked",
+    "note_exact": true,
+    "rank": null,
+    "ranked": false
+   },
+   {
+    "composite_score": 74.67659424956109,
+    "cost_usd_per_1000": 0.02161638683680323,
+    "key": "decisio-gemma-4-12b-tuned-commit-think",
+    "listing": "unranked",
+    "note_exact": true,
+    "rank": null,
+    "ranked": false
+   },
+   {
+    "composite_score": null,
+    "cost_usd_per_1000": null,
+    "key": "decisionnode-flash-0.9.1-rc1",
+    "listing": "unranked",
+    "note_exact": true,
+    "rank": null,
+    "ranked": false
+   },
+   {
+    "composite_score": null,
+    "cost_usd_per_1000": null,
+    "key": "decisionnode-main-0.9.1-rc1",
+    "listing": "unranked",
+    "note_exact": true,
+    "rank": null,
+    "ranked": false
+   },
+   {
+    "composite_score": 77.04257936486634,
+    "cost_usd_per_1000": 0.011187461383478847,
+    "key": "h2o-lightning-4b-v1.4.1",
+    "listing": "unranked",
+    "note_exact": true,
+    "rank": null,
+    "ranked": false
+   },
+   {
+    "composite_score": 71.57749064353953,
+    "cost_usd_per_1000": 0.040567629281396914,
+    "key": "jeff_1_1_large",
+    "listing": "unranked",
+    "note_exact": true,
+    "rank": null,
+    "ranked": false
+   },
+   {
+    "composite_score": 73.21882869773437,
+    "cost_usd_per_1000": 0.0190047481531229,
+    "key": "jeff_1_1_qwen_4b",
+    "listing": "unranked",
+    "note_exact": true,
+    "rank": null,
+    "ranked": false
+   },
+   {
+    "composite_score": 76.97858754817413,
+    "cost_usd_per_1000": 0.013173191403626596,
+    "key": "microsoft-decision-1-r2",
+    "listing": "unranked",
+    "note_exact": true,
+    "rank": null,
+    "ranked": false
+   },
+   {
+    "composite_score": 51.81470102195167,
+    "cost_usd_per_1000": 0.03398969778374748,
+    "key": "strike-1",
+    "listing": "unranked",
+    "note_exact": true,
+    "rank": null,
+    "ranked": false
+   },
+   {
+    "composite_score": 77.28255327361624,
+    "cost_usd_per_1000": 0.03389621222296844,
+    "key": "torchcast-decision-31b-v1.0",
+    "listing": "unranked",
+    "note_exact": true,
+    "rank": null,
+    "ranked": false
+   },
+   {
+    "composite_score": 31.48166793420532,
+    "cost_usd_per_1000": 0.12979810275352585,
+    "key": "umpire-35b-a3b",
+    "listing": "unranked",
+    "note_exact": true,
+    "rank": null,
+    "ranked": false
+   },
+   {
+    "composite_score": 28.78594982878189,
+    "cost_usd_per_1000": 0.15784722632639353,
+    "key": "visionjev-1.0.0-27b",
+    "listing": "unranked",
+    "note_exact": true,
+    "rank": null,
+    "ranked": false
+   }
+  ],
+  "feed_rows": 316,
+  "live_round1_rank": 41,
+  "main_board_html_shows": [
+   "arcbright-elf-1-12b-r2",
+   "chaoliangunsw-jev-style-2b-decision-v4",
+   "decisio-gemma-4-12b-tuned-commit-think",
+   "decisionnode-flash-0.9.1-rc1",
+   "decisionnode-main-0.9.1-rc1",
+   "h2o-lightning-4b-v1.4.1",
+   "jeff_1_1_large",
+   "jeff_1_1_qwen_4b",
+   "microsoft-decision-1-r2",
+   "strike-1",
+   "torchcast-decision-31b-v1.0",
+   "umpire-35b-a3b",
+   "visionjev-1.0.0-27b"
+  ],
+  "status": "PASS",
+  "synthetic_latest": "v1.7.22",
+  "v1722_page_shows_new_row": true
+ },
+ "carried_rows": {
+  "base_commit": "a84361b60c9332cb1b61e78cc5344fee0fe5f50e",
+  "board_equal": true,
+  "carried_cells_equal": 320,
+  "carried_rows": 315,
+  "predecessor_bytes_equal": 68,
+  "rows_equal_including_ranks": 315,
+  "status": "PASS"
+ },
+ "common_set": {
+  "frozen_at": "v1.7.16",
+  "historical_membership_rows": 10,
+  "n_items": 1489,
+  "new_membership_rows": 1,
+  "per_row_membership": {
+   "arcbright-elf-1-12b-r2": {
+    "answered_not_in_common": 11,
+    "answered_ok": 1500,
+    "raw_sha256": "84f08ebb6ff92af453b75cda042f617ea89c5be6a2176c7c69e11f2521da6f08",
+    "rows": 1500
+   },
+   "chaoliangunsw-jev-style-2b-decision-v4": {
+    "answered_not_in_common": 6,
+    "answered_ok": 1495,
+    "raw_sha256": "96e11049d1593d75ee84fe258f6a6c4020c9e37ebe299c7d18a3b6846fbacf81",
+    "rows": 1500
+   },
+   "decisio-gemma-4-12b-tuned-commit-think": {
+    "answered_not_in_common": 11,
+    "answered_ok": 1500,
+    "raw_sha256": "d7396dd680e13af9ba26c4526007fee3647d03eee7673bf88075ac510f39cc3c",
+    "rows": 1500
+   },
+   "h2o-lightning-4b-v1.4.1": {
+    "answered_not_in_common": 11,
+    "answered_ok": 1500,
+    "raw_sha256": "96d26bb3c0486ecbee832e309db4099b3a616b1540b4a92eff09dec81b719335",
+    "rows": 1500
+   },
+   "jeff_1_1_large": {
+    "answered_not_in_common": 11,
+    "answered_ok": 1500,
+    "raw_sha256": "1f1fdc2df674da00128ae7b47d5ea3429cf1124383a077577e7c68c7d9cc0e72",
+    "rows": 1500
+   },
+   "jeff_1_1_qwen_4b": {
+    "answered_not_in_common": 11,
+    "answered_ok": 1500,
+    "raw_sha256": "c37fada15a2021cf744b2031acb964508caf48873a2bcda5da6d6ac4a5e7c288",
+    "rows": 1500
+   },
+   "microsoft-decision-1-r2": {
+    "answered_not_in_common": 0,
+    "answered_ok": 1489,
+    "raw_sha256": "1f069818cdc069a532a4c4965d306fbd302bb819dde4aa3c48a9bd676c4a981e",
+    "rows": 1493
+   },
+   "strike-1": {
+    "answered_not_in_common": 6,
+    "answered_ok": 1495,
+    "raw_sha256": "4c6c7ab25b11432f8934425a44806ec5a2499241a9c5790216a11651473f2027",
+    "rows": 1500
+   },
+   "torchcast-decision-31b-v1.0": {
+    "answered_not_in_common": 11,
+    "answered_ok": 1500,
+    "raw_sha256": "e51a1c22336050368336c996d7cb32181bad5e854024f07844b2a8577a0dda7d",
+    "rows": 1500
+   },
+   "umpire-35b-a3b": {
+    "answered_not_in_common": 6,
+    "answered_ok": 1495,
+    "raw_sha256": "d1568cc82b893339bc4b5bc21c49a036190851cfcd7d10cd2a343dab910711ad",
+    "rows": 1500
+   },
+   "visionjev-1.0.0-27b": {
+    "answered_not_in_common": 6,
+    "answered_ok": 1495,
+    "raw_sha256": "89a5de4e94a9b1feed12144db1c5879c7e59c149f0d1667cb3b12e4763b89496",
+    "rows": 1500
+   }
+  },
+  "set_sha256": "4e912731e63369e1b3066b0b4afa87b44f1094aea079c5b41dc6d02e7f235537",
+  "status": "PASS",
+  "unchanged": true
+ },
+ "fulltest-postflip": {
+  "cancelled": 0,
+  "fail": 1,
+  "log_sha256": "d6e054296b80e2e62ac35f53adfb7488dcd400d32e3b2ab21ce8c72d647635cf",
+  "not_ok": [
+   "the supervisor's dated brief backups can never make the checkout dirty again"
+  ],
+  "pass": 3970,
+  "skipped": 10,
+  "tests": 3981
+ },
+ "helpers": {
+  "approval_negative_cases": 11,
+  "fixture_flip_refused": true,
+  "fixture_grants_no_authority": true,
+  "pending_freeze_refused": true,
+  "real_flip_dry_run_accepted_no_write": true,
+  "real_manifests_unchanged": [
+   "0127b75b302cbb48b23ef1032cd959c7da0f5adf0a77c9259bc187396ae0f45c",
+   "8cba2e9d31d640f70fba2d299ecb0a90fb9b6dcfd964d1c16595ffb57e384ec1",
+   "b6155b8c899bdbb9bb1c76a812cbc125c8c9952ecbc73d92925d1733c9826e67"
+  ],
+  "real_v1721_review": "PENDING",
+  "seal_write_refused": true,
+  "stale_predecessor_binding_refused": true,
+  "standing_go_checked": true,
+  "status": "PASS",
+  "synthetic_flip_dry_run": true,
+  "synthetic_freeze_dry_run": true
+ },
+ "postflip-tests": {
+  "cancelled": 0,
+  "fail": 0,
+  "log_sha256": "3123ec61844a791c6a228aaa566403aeabd46599aa3ab9ee9d44ef45c626fd03",
+  "not_ok": [],
+  "pass": 225,
+  "skipped": 1,
+  "tests": 226
+ },
+ "preview": {
+  "footer": "Release review pending",
+  "html_script_syntax": true,
+  "png": [
+   1440,
+   900
+  ],
+  "png_sha256": "1bc900dec7b75d8f1ccd75d700a4b9d6b39b8c4d57c701e0af6480ceb029de71",
+  "ranking_models_resolve": true,
+  "status": "PASS",
+  "visual_inspection": "Card viewed; no clipping or overlap"
+ },
+ "pricing": {
+  "mismatch_negatives": 3,
+  "pricing_module_sha256": "645fd82eac728d597048bec0995ecd3ac896566e269fb6c9a1fdb84c171a9ac4",
+  "reference": {
+   "base": "ornith-ai/Ornith-1.5-35B-A3B",
+   "in": 0.3125,
+   "kind": "estimate",
+   "listing": "qwen/qwen3.5-35b-a3b",
+   "out": 1.25,
+   "rule": "Explicit size/architecture-class estimate, qwen3_5_moe 35B total / 3B active; declared base unlisted with no declared parent; no lineage asserted; zero output tokens"
+  },
+  "status": "PASS"
+ },
+ "public_text": {
+  "all_disclosures": true,
+  "exact_note": true,
+  "neutral_page_wording": true,
+  "no_cosmetic_state_tokens": true,
+  "old_paraphrase_negatives": 2,
+  "status": "PASS",
+  "texts": 5
+ },
+ "raw": {
+  "answered": 1495,
+  "fixed_common_basis": true,
+  "native_output_tokens": 0,
+  "raw_sha256": "d1568cc82b893339bc4b5bc21c49a036190851cfcd7d10cd2a343dab910711ad",
+  "refused": 5,
+  "rows": 1500,
+  "status": "PASS"
+ },
+ "release-tests": {
+  "cancelled": 0,
+  "fail": 1,
+  "log_sha256": "cabc087cd2bd7e165c34d1c36e5ec1bcb1ce2e9a78e09666d7b01398b2ac6b39",
+  "not_ok": [
+   "gate: no listed row lacks topic, use-case or language cells without a recorded exception"
+  ],
+  "pass": 210,
+  "skipped": 1,
+  "tests": 212
+ },
+ "repro": {
+  "files": {
+   "app/api/jevbench/v1.7.22/route.ts": "900fdd1194013ce4365784917f820a0f345f0992cdd8a40fef2e5426666b9c10",
+   "app/jev-models/v1.7.22/page.tsx": "6e5f1c8982d49ea2965e43b6348766a51192de9f1fd6c518c63e60a375c37839",
+   "data/jevbench-architecture.json": "49c8f50939ae425080801cef13929613da5c8250c2673c8cdfcdb3008c86632f",
+   "data/jevbench-breakdown-exceptions.json": "4e581f631f4ab500a4cb44ea7a4d1357e0cfca58e66de2a4ffba13f368f94d8a",
+   "data/jevbench-draw-equating.json": "d3b9db9fba055fbafff3ef4dd5296bdb7dd3dc6f80713bbaf46e89cabe2130dc",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.22-carry.json": "271d1fc77a136a04a1eb6deb5480c52d4211eb2b66b2ac8bb31e80867e69003a",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.22-categories.json": "893cdad9a89953d13b98e2322d91ac985a04c0e6b1e2bc348e3cfee81e2a4b49",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.22-history-carry.json": "334e851944e92383ab3071e52b3012040c7023d0fe236395953169ebee8f0459",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.22-history.json": "5cd8c1332226ea9c179883d2285c0d8b8cc593ae38f2645197364a7ddd9c83c1",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.22-proof.json": "37c6244abc7df8f67f11ce07ca0c2f73679bc6041dd25a59b11aa1ec674eb1fa",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.22-publication.json": "0127b75b302cbb48b23ef1032cd959c7da0f5adf0a77c9259bc187396ae0f45c",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.22-results.json": "e6471b4196c8d828a2144437ba88a23a1dcaca7a57bc40381abdc7eeaaa1d169",
+   "lib/jevbench-alldata-input.mjs": "34857d50ba5f452182ad7e05508f5d53d3bc6c7fe62a82bc1077ede496813fff",
+   "lib/jevbench-live-board.mjs": "578454abf86c43ad419480dc868d723dc369f172478e827b84afe66e62977e10",
+   "lib/jevbench-releases.mjs": "d3c145e65dacfa371839c435d3b6c3bf0781637dc12f85efb632740ed6085b61",
+   "lib/jevbench-v1722-release.mjs": "1c1466f6f464e3e1305d6600bec2555c12479cd48d69ba7591813550b40d8113",
+   "test/jevbench-v1714-release.test.mjs": "a1ec49d8a431944c71ebde0c83bdbbe4ac34fb3f8195378e7d3c22137c9c9d23",
+   "test/jevbench-v1722-release.test.mjs": "6c39b9768b79930d6dce268d1dcd39a67fd6c61372d38a040559b54dd1d6cf8e"
+  },
+  "status": "PASS",
+  "two_rebuilds_identical": true
+ },
+ "topfive": {
+  "base": "v1.7.21",
+  "candidate": "v1.7.22",
+  "changed": false,
+  "changed_labels": [],
+  "changed_lists": 0,
+  "comparison_scope": "40 primary site assembly lists plus supplementary frozen/off/share axis/weight/cap lists, slider boundaries, four custom weightings and a 368-state slider grid; before = v1.7.21 (PASS) tree with v1.7.22 wired but PENDING (equal to the same tree without v1.7.22), after = v1.7.22 synthetic PASS; real manifest PENDING",
+  "custom_changed_labels": [],
+  "custom_receipt_sha256": "433fe80e72cbb884a1b91ad011e0c25060dfe045f1bce90bf2e7d03e4f115516",
+  "custom_weight_example": {
+   "calibration": 50,
+   "cost": 0,
+   "intelligence": 50,
+   "speed": 0
+  },
+  "explicit_slider_grid_changed": 0,
+  "explicit_slider_grid_states": 368,
+  "extended_changed_labels": [],
+  "extended_changed_lists": 0,
+  "extended_lists": 540,
+  "lists": 580,
+  "primary_changed_labels": [],
+  "primary_changed_lists": 0,
+  "primary_lists": 40,
+  "rows": [
+   {
+    "after": [
+     "singularity-super-decider",
+     "launchables-myles-g-12b",
+     "kettei-fat",
+     "fastino-glide-api",
+     "torchcast-decision-4b-v1.3"
+    ],
+    "before": [
+     "singularity-super-decider",
+     "launchables-myles-g-12b",
+     "kettei-fat",
+     "fastino-glide-api",
+     "torchcast-decision-4b-v1.3"
+    ],
+    "changed": false,
+    "metric": "composites/A",
+    "view": "all"
+   },
+   {
+    "after": [
+     "singularity-super-decider",
+     "kettei-fat",
+     "fastino-glide-api",
+     "drex-max",
+     "subq-snap-1.1"
+    ],
+    "before": [
+     "singularity-super-decider",
+     "kettei-fat",
+     "fastino-glide-api",
+     "drex-max",
+     "subq-snap-1.1"
+    ],
+    "changed": false,
+    "metric": "composites/B",
+    "view": "all"
+   },
+   {
+    "after": [
+     "singularity-super-decider",
+     "kettei-fat",
+     "fastino-glide-api",
+     "torchcast-decision-4b-v1.3",
+     "liquid-d1-ultra"
+    ],
+    "before": [
+     "singularity-super-decider",
+     "kettei-fat",
+     "fastino-glide-api",
+     "torchcast-decision-4b-v1.3",
+     "liquid-d1-ultra"
+    ],
+    "changed": false,
+    "metric": "composites/C",
+    "view": "all"
+   },
+   {
+    "after": [
+     "kettei-fat",
+     "singularity-super-decider-thinking",
+     "singularity-super-decider",
+     "fastino-glide-api",
+     "h2o-lightning-31b"
+    ],
+    "before": [
+     "kettei-fat",
+     "singularity-super-decider-thinking",
+     "singularity-super-decider",
+     "fastino-glide-api",
+     "h2o-lightning-31b"
+    ],
+    "changed": false,
+    "metric": "capability/official_caps",
+    "view": "all"
+   },
+   {
+    "after": [
+     "gpt-6-luna",
+     "gpt-6-luna-low",
+     "gpt-5.6-luna",
+     "deepseek-flash",
+     "kettei-fat"
+    ],
+    "before": [
+     "gpt-6-luna",
+     "gpt-6-luna-low",
+     "gpt-5.6-luna",
+     "deepseek-flash",
+     "kettei-fat"
+    ],
+    "changed": false,
+    "metric": "capability/no_caps",
+    "view": "all"
+   },
+   {
+    "after": [
+     "kettei-fat",
+     "singularity-super-decider-thinking",
+     "mammoth-1",
+     "knowline-31b-gen1",
+     "fastino-glide-1.2-open"
+    ],
+    "before": [
+     "kettei-fat",
+     "singularity-super-decider-thinking",
+     "mammoth-1",
+     "knowline-31b-gen1",
+     "fastino-glide-1.2-open"
+    ],
+    "changed": false,
+    "metric": "capability/cost_off_latency_2x",
+    "view": "all"
+   },
+   {
+    "after": [
+     "kettei-fat",
+     "singularity-super-decider-thinking",
+     "singularity-super-decider",
+     "fastino-glide-api",
+     "h2o-lightning-31b"
+    ],
+    "before": [
+     "kettei-fat",
+     "singularity-super-decider-thinking",
+     "singularity-super-decider",
+     "fastino-glide-api",
+     "h2o-lightning-31b"
+    ],
+    "changed": false,
+    "metric": "capability/latency_none",
+    "view": "all"
+   },
+   {
+    "after": [
+     "kettei-fat",
+     "singularity-super-decider-thinking",
+     "mammoth-1",
+     "knowline-31b-gen1",
+     "fastino-glide-1.2-open"
+    ],
+    "before": [
+     "kettei-fat",
+     "singularity-super-decider-thinking",
+     "mammoth-1",
+     "knowline-31b-gen1",
+     "fastino-glide-1.2-open"
+    ],
+    "changed": false,
+    "metric": "extra_capability/cost_7x",
+    "view": "all"
+   },
+   {
+    "after": [
+     "kettei-fat",
+     "singularity-super-decider-thinking",
+     "mammoth-1",
+     "knowline-31b-gen1",
+     "fastino-glide-1.2-open"
+    ],
+    "before": [
+     "kettei-fat",
+     "singularity-super-decider-thinking",
+     "mammoth-1",
+     "knowline-31b-gen1",
+     "fastino-glide-1.2-open"
+    ],
+    "changed": false,
+    "metric": "extra_capability/cost_10x",
+    "view": "all"
+   },
+   {
+    "after": [
+     "gpt-6-luna",
+     "gpt-6-luna-low",
+     "gpt-5.6-luna",
+     "deepseek-flash",
+     "kettei-fat"
+    ],
+    "before": [
+     "gpt-6-luna",
+     "gpt-6-luna-low",
+     "gpt-5.6-luna",
+     "deepseek-flash",
+     "kettei-fat"
+    ],
+    "changed": false,
+    "metric": "extra_capability/rank_field",
+    "view": "all"
+   },
+   {
+    "after": [
+     "gpt-6-luna",
+     "gpt-6-luna-low",
+     "gpt-5.6-luna",
+     "kettei-fat",
+     "singularity-super-decider-thinking"
+    ],
+    "before": [
+     "gpt-6-luna",
+     "gpt-6-luna-low",
+     "gpt-5.6-luna",
+     "kettei-fat",
+     "singularity-super-decider-thinking"
+    ],
+    "changed": false,
+    "metric": "extra_capability/cost_7x_latency_none",
+    "view": "all"
+   },
+   {
+    "after": [
+     "gpt-6-luna",
+     "gpt-6-luna-low",
+     "gpt-5.6-luna",
+     "kettei-fat",
+     "singularity-super-decider-thinking"
+    ],
+    "before": [
+     "gpt-6-luna",
+     "gpt-6-luna-low",
+     "gpt-5.6-luna",
+     "kettei-fat",
+     "singularity-super-decider-thinking"
+    ],
+    "changed": false,
+    "metric": "extra_capability/cost_10x_latency_none",
+    "view": "all"
+   },
+   {
+    "after": [
+     "torchcast-decision-4b-v1.3",
+     "h2o-lightning-4b",
+     "h2o-lightning-31b",
+     "torchcast-decision-4b-v1.2",
+     "chon-1.0-e4b"
+    ],
+    "before": [
+     "torchcast-decision-4b-v1.3",
+     "h2o-lightning-4b",
+     "h2o-lightning-31b",
+     "torchcast-decision-4b-v1.2",
+     "chon-1.0-e4b"
+    ],
+    "changed": false,
+    "metric": "composites/A",
+    "view": "open"
+   },
+   {
+    "after": [
+     "h2o-lightning-31b",
+     "torchcast-decision-4b-v1.3",
+     "basal-omni-1.0-ultra",
+     "quyet-1-0-large",
+     "jeff_1_1_medium"
+    ],
+    "before": [
+     "h2o-lightning-31b",
+     "torchcast-decision-4b-v1.3",
+     "basal-omni-1.0-ultra",
+     "quyet-1-0-large",
+     "jeff_1_1_medium"
+    ],
+    "changed": false,
+    "metric": "composites/B",
+    "view": "open"
+   },
+   {
+    "after": [
+     "torchcast-decision-4b-v1.3",
+     "h2o-lightning-4b",
+     "h2o-lightning-31b",
+     "torchcast-decision-4b-v1.2",
+     "decisio-gemma-4-12b-tuned-commit"
+    ],
+    "before": [
+     "torchcast-decision-4b-v1.3",
+     "h2o-lightning-4b",
+     "h2o-lightning-31b",
+     "torchcast-decision-4b-v1.2",
+     "decisio-gemma-4-12b-tuned-commit"
+    ],
+    "changed": false,
+    "metric": "composites/C",
+    "view": "open"
+   },
+   {
+    "after": [
+     "h2o-lightning-31b",
+     "basal-omni-1.0-ultra",
+     "dopest-1.0-31b",
+     "jeff_1_1_medium",
+     "arcbright-elf-1-31b"
+    ],
+    "before": [
+     "h2o-lightning-31b",
+     "basal-omni-1.0-ultra",
+     "dopest-1.0-31b",
+     "jeff_1_1_medium",
+     "arcbright-elf-1-31b"
+    ],
+    "changed": false,
+    "metric": "capability/official_caps",
+    "view": "open"
+   },
+   {
+    "after": [
+     "mammoth-1",
+     "knowline-31b-gen1",
+     "fastino-glide-1.2-open",
+     "h2o-lightning-31b",
+     "pplx-decider-v1-1-27b"
+    ],
+    "before": [
+     "mammoth-1",
+     "knowline-31b-gen1",
+     "fastino-glide-1.2-open",
+     "h2o-lightning-31b",
+     "pplx-decider-v1-1-27b"
+    ],
+    "changed": false,
+    "metric": "capability/no_caps",
+    "view": "open"
+   },
+   {
+    "after": [
+     "mammoth-1",
+     "knowline-31b-gen1",
+     "fastino-glide-1.2-open",
+     "h2o-lightning-31b",
+     "pplx-decider-v1-1-27b"
+    ],
+    "before": [
+     "mammoth-1",
+     "knowline-31b-gen1",
+     "fastino-glide-1.2-open",
+     "h2o-lightning-31b",
+     "pplx-decider-v1-1-27b"
+    ],
+    "changed": false,
+    "metric": "capability/cost_off_latency_2x",
+    "view": "open"
+   },
+   {
+    "after": [
+     "h2o-lightning-31b",
+     "basal-omni-1.0-ultra",
+     "dopest-1.0-31b",
+     "jeff_1_1_medium",
+     "arcbright-elf-1-31b"
+    ],
+    "before": [
+     "h2o-lightning-31b",
+     "basal-omni-1.0-ultra",
+     "dopest-1.0-31b",
+     "jeff_1_1_medium",
+     "arcbright-elf-1-31b"
+    ],
+    "changed": false,
+    "metric": "capability/latency_none",
+    "view": "open"
+   },
+   {
+    "after": [
+     "mammoth-1",
+     "knowline-31b-gen1",
+     "fastino-glide-1.2-open",
+     "h2o-lightning-31b",
+     "pplx-decider-v1-1-27b"
+    ],
+    "before": [
+     "mammoth-1",
+     "knowline-31b-gen1",
+     "fastino-glide-1.2-open",
+     "h2o-lightning-31b",
+     "pplx-decider-v1-1-27b"
+    ],
+    "changed": false,
+    "metric": "extra_capability/cost_7x",
+    "view": "open"
+   },
+   {
+    "after": [
+     "mammoth-1",
+     "knowline-31b-gen1",
+     "fastino-glide-1.2-open",
+     "h2o-lightning-31b",
+     "pplx-decider-v1-1-27b"
+    ],
+    "before": [
+     "mammoth-1",
+     "knowline-31b-gen1",
+     "fastino-glide-1.2-open",
+     "h2o-lightning-31b",
+     "pplx-decider-v1-1-27b"
+    ],
+    "changed": false,
+    "metric": "extra_capability/cost_10x",
+    "view": "open"
+   },
+   {
+    "after": [
+     "mammoth-1",
+     "knowline-31b-gen1",
+     "fastino-glide-1.2-open",
+     "h2o-lightning-31b",
+     "pplx-decider-v1-1-27b"
+    ],
+    "before": [
+     "mammoth-1",
+     "knowline-31b-gen1",
+     "fastino-glide-1.2-open",
+     "h2o-lightning-31b",
+     "pplx-decider-v1-1-27b"
+    ],
+    "changed": false,
+    "metric": "extra_capability/rank_field",
+    "view": "open"
+   },
+   {
+    "after": [
+     "mammoth-1",
+     "knowline-31b-gen1",
+     "fastino-glide-1.2-open",
+     "h2o-lightning-31b",
+     "pplx-decider-v1-1-27b"
+    ],
+    "before": [
+     "mammoth-1",
+     "knowline-31b-gen1",
+     "fastino-glide-1.2-open",
+     "h2o-lightning-31b",
+     "pplx-decider-v1-1-27b"
+    ],
+    "changed": false,
+    "metric": "extra_capability/cost_7x_latency_none",
+    "view": "open"
+   },
+   {
+    "after": [
+     "mammoth-1",
+     "knowline-31b-gen1",
+     "fastino-glide-1.2-open",
+     "h2o-lightning-31b",
+     "pplx-decider-v1-1-27b"
+    ],
+    "before": [
+     "mammoth-1",
+     "knowline-31b-gen1",
+     "fastino-glide-1.2-open",
+     "h2o-lightning-31b",
+     "pplx-decider-v1-1-27b"
+    ],
+    "changed": false,
+    "metric": "extra_capability/cost_10x_latency_none",
+    "view": "open"
+   },
+   {
+    "after": [
+     "singularity-super-decider",
+     "launchables-myles-g-12b",
+     "kettei-fat",
+     "fastino-glide-api",
+     "liquid-d1-ultra"
+    ],
+    "before": [
+     "singularity-super-decider",
+     "launchables-myles-g-12b",
+     "kettei-fat",
+     "fastino-glide-api",
+     "liquid-d1-ultra"
+    ],
+    "changed": false,
+    "metric": "composites/A",
+    "view": "api"
+   },
+   {
+    "after": [
+     "singularity-super-decider",
+     "kettei-fat",
+     "fastino-glide-api",
+     "drex-max",
+     "subq-snap-1.1"
+    ],
+    "before": [
+     "singularity-super-decider",
+     "kettei-fat",
+     "fastino-glide-api",
+     "drex-max",
+     "subq-snap-1.1"
+    ],
+    "changed": false,
+    "metric": "composites/B",
+    "view": "api"
+   },
+   {
+    "after": [
+     "singularity-super-decider",
+     "kettei-fat",
+     "fastino-glide-api",
+     "liquid-d1-ultra",
+     "subq-snap-1.1"
+    ],
+    "before": [
+     "singularity-super-decider",
+     "kettei-fat",
+     "fastino-glide-api",
+     "liquid-d1-ultra",
+     "subq-snap-1.1"
+    ],
+    "changed": false,
+    "metric": "composites/C",
+    "view": "api"
+   },
+   {
+    "after": [
+     "kettei-fat",
+     "singularity-super-decider-thinking",
+     "singularity-super-decider",
+     "fastino-glide-api",
+     "drex-max"
+    ],
+    "before": [
+     "kettei-fat",
+     "singularity-super-decider-thinking",
+     "singularity-super-decider",
+     "fastino-glide-api",
+     "drex-max"
+    ],
+    "changed": false,
+    "metric": "capability/official_caps",
+    "view": "api"
+   },
+   {
+    "after": [
+     "gpt-6-luna",
+     "gpt-6-luna-low",
+     "gpt-5.6-luna",
+     "deepseek-flash",
+     "kettei-fat"
+    ],
+    "before": [
+     "gpt-6-luna",
+     "gpt-6-luna-low",
+     "gpt-5.6-luna",
+     "deepseek-flash",
+     "kettei-fat"
+    ],
+    "changed": false,
+    "metric": "capability/no_caps",
+    "view": "api"
+   },
+   {
+    "after": [
+     "kettei-fat",
+     "singularity-super-decider-thinking",
+     "singularity-super-decider",
+     "fastino-glide-api",
+     "drex-max"
+    ],
+    "before": [
+     "kettei-fat",
+     "singularity-super-decider-thinking",
+     "singularity-super-decider",
+     "fastino-glide-api",
+     "drex-max"
+    ],
+    "changed": false,
+    "metric": "capability/cost_off_latency_2x",
+    "view": "api"
+   },
+   {
+    "after": [
+     "kettei-fat",
+     "singularity-super-decider-thinking",
+     "singularity-super-decider",
+     "fastino-glide-api",
+     "drex-max"
+    ],
+    "before": [
+     "kettei-fat",
+     "singularity-super-decider-thinking",
+     "singularity-super-decider",
+     "fastino-glide-api",
+     "drex-max"
+    ],
+    "changed": false,
+    "metric": "capability/latency_none",
+    "view": "api"
+   },
+   {
+    "after": [
+     "kettei-fat",
+     "singularity-super-decider-thinking",
+     "singularity-super-decider",
+     "fastino-glide-api",
+     "drex-max"
+    ],
+    "before": [
+     "kettei-fat",
+     "singularity-super-decider-thinking",
+     "singularity-super-decider",
+     "fastino-glide-api",
+     "drex-max"
+    ],
+    "changed": false,
+    "metric": "extra_capability/cost_7x",
+    "view": "api"
+   },
+   {
+    "after": [
+     "kettei-fat",
+     "singularity-super-decider-thinking",
+     "singularity-super-decider",
+     "fastino-glide-api",
+     "drex-max"
+    ],
+    "before": [
+     "kettei-fat",
+     "singularity-super-decider-thinking",
+     "singularity-super-decider",
+     "fastino-glide-api",
+     "drex-max"
+    ],
+    "changed": false,
+    "metric": "extra_capability/cost_10x",
+    "view": "api"
+   },
+   {
+    "after": [
+     "gpt-6-luna",
+     "gpt-6-luna-low",
+     "gpt-5.6-luna",
+     "deepseek-flash",
+     "kettei-fat"
+    ],
+    "before": [
+     "gpt-6-luna",
+     "gpt-6-luna-low",
+     "gpt-5.6-luna",
+     "deepseek-flash",
+     "kettei-fat"
+    ],
+    "changed": false,
+    "metric": "extra_capability/rank_field",
+    "view": "api"
+   },
+   {
+    "after": [
+     "gpt-6-luna",
+     "gpt-6-luna-low",
+     "gpt-5.6-luna",
+     "kettei-fat",
+     "singularity-super-decider-thinking"
+    ],
+    "before": [
+     "gpt-6-luna",
+     "gpt-6-luna-low",
+     "gpt-5.6-luna",
+     "kettei-fat",
+     "singularity-super-decider-thinking"
+    ],
+    "changed": false,
+    "metric": "extra_capability/cost_7x_latency_none",
+    "view": "api"
+   },
+   {
+    "after": [
+     "gpt-6-luna",
+     "gpt-6-luna-low",
+     "gpt-5.6-luna",
+     "kettei-fat",
+     "singularity-super-decider-thinking"
+    ],
+    "before": [
+     "gpt-6-luna",
+     "gpt-6-luna-low",
+     "gpt-5.6-luna",
+     "kettei-fat",
+     "singularity-super-decider-thinking"
+    ],
+    "changed": false,
+    "metric": "extra_capability/cost_10x_latency_none",
+    "view": "api"
+   },
+   {
+    "after": [
+     "singularity-super-decider",
+     "launchables-myles-g-12b",
+     "kettei-fat",
+     "fastino-glide-api",
+     "torchcast-decision-4b-v1.3"
+    ],
+    "before": [
+     "singularity-super-decider",
+     "launchables-myles-g-12b",
+     "kettei-fat",
+     "fastino-glide-api",
+     "torchcast-decision-4b-v1.3"
+    ],
+    "changed": false,
+    "metric": "A",
+    "view": "release"
+   },
+   {
+    "after": [
+     "singularity-super-decider",
+     "kettei-fat",
+     "fastino-glide-api",
+     "drex-max",
+     "subq-snap-1.1"
+    ],
+    "before": [
+     "singularity-super-decider",
+     "kettei-fat",
+     "fastino-glide-api",
+     "drex-max",
+     "subq-snap-1.1"
+    ],
+    "changed": false,
+    "metric": "B",
+    "view": "release"
+   },
+   {
+    "after": [
+     "singularity-super-decider",
+     "kettei-fat",
+     "fastino-glide-api",
+     "torchcast-decision-4b-v1.3",
+     "liquid-d1-ultra"
+    ],
+    "before": [
+     "singularity-super-decider",
+     "kettei-fat",
+     "fastino-glide-api",
+     "torchcast-decision-4b-v1.3",
+     "liquid-d1-ultra"
+    ],
+    "changed": false,
+    "metric": "C",
+    "view": "release"
+   },
+   {
+    "after": [
+     "gpt-6-luna",
+     "gpt-6-luna-low",
+     "gpt-5.6-luna",
+     "deepseek-flash",
+     "kettei-fat"
+    ],
+    "before": [
+     "gpt-6-luna",
+     "gpt-6-luna-low",
+     "gpt-5.6-luna",
+     "deepseek-flash",
+     "kettei-fat"
+    ],
+    "changed": false,
+    "metric": "capability",
+    "view": "release"
+   }
+  ],
+  "slider_changed_states": 0,
+  "slider_states": 171,
+  "snapshots_sha256": {
+   "topfive-after.json": "282b81c5c1bd8ac92cefcbba2e9d996aa5ddb4e71232ef78834c7887ae2a21f6",
+   "topfive-before.json": "9ca59208cea444eb935608d28f6164b2d6902f7293fc058ba14e56380c16c516",
+   "topfive-extended.json": "f79c50aff3708eb2f6af965df0e87ed4270dbc0229881e97ce060e85ce062773",
+   "topfive-sliders.json": "8ed8fecba92d0d832c4850c4ae600ccce2aa3fd4b9a466bd5c6d11eb8b0f35b1"
+  },
+  "variant": "10-second share"
+ },
+ "validator": {
+  "log_sha256": "a91e49473e1288da5dba32ab5202009ebdf7c6cca22bae7c01ea077bcaf00b15",
+  "status": "PASS"
+ },
+ "visibility": {
+  "all_carried_rows_equal": true,
+  "board_rows_after": 316,
+  "board_rows_before": 315,
+  "new_row": {
+   "board": {
+    "cost_axis": 36.601949665906865,
+    "draw": "v1.6-regular-20261027",
+    "intelligence": 58.18796963108992,
+    "listing": "unranked",
+    "not_ranked_because": "Measured on the 27 Oct 2026 draw, which is not yet equated to the reference scale; stronger anchor runs for that draw are being measured. Shown unranked until then.",
+    "rank": null,
+    "ranked": false,
+    "ranks": {
+     "A": null,
+     "B": null,
+     "C": null,
+     "capability": null
+    },
+    "score_A": 31.48166793420532,
+    "usd_per_1000": 0.12979810275352585
+   },
+   "feed": {
+    "api_board_rank": null,
+    "capability_rank": null,
+    "composite_score": 31.48166793420532,
+    "draw": "v1.6-regular-20261027",
+    "listing": "unranked",
+    "not_ranked_because": "Measured on the 27 Oct 2026 draw, which is not yet equated to the reference scale; stronger anchor runs for that draw are being measured. Shown unranked until then.",
+    "open_board_rank": null,
+    "open_capability_rank": null,
+    "rank": null,
+    "ranked": false
+   }
+  },
+  "new_row_open_scope": true,
+  "orders_equal": true,
+  "pending_hidden_in_real_tree": true,
+  "real_tree_restated_by": "v1.7.20",
+  "status": "PASS"
+ }
+}

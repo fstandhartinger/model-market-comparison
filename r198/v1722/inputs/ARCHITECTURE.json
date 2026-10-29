@@ -1,0 +1,18 @@
+{
+ "umpire-35b-a3b": {
+  "arch": "open-llm-decoder",
+  "badges": {
+   "derivation": "fine-tune",
+   "params": "35B / 3B active",
+   "quant": "bf16"
+  },
+  "evidence": [
+   {
+    "fact": "Model card/config declares qwen3_5_moe architecture, 35B total / 3B active and base ornith-ai/Ornith-1.5-35B-A3B. BF16 CUDA measurement; dequantized-served-4-bit claim is the author's, unverified.",
+    "kind": "model-card",
+    "url": "https://huggingface.co/ezoushen/umpire-35b-a3b-bf16/tree/c928afd208de9f85d2c194042364b1a62ca4d080"
+   }
+  ],
+  "note": "Author Transformers server on one A100 80 GB, no vLLM engine; weights CC BY-NC 4.0 (non-commercial use only); serving code Apache-2.0."
+ }
+}

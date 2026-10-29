@@ -1,0 +1,108 @@
+{
+ "common_set": {
+  "common_set_receipt_sha256": "2f748d8dd5dbe1f9b84862d4caf51d215bc97bb0c76e936e83f533e193d2b37e",
+  "cost_basis_msft_view_sha256": "3bb4e58e15530a2688b561ab3fbaf9c8f956ec149853b6397c89d094779fb715",
+  "cost_basis_sha256": "b83bdfd14c263ffacfa572b304084154afca84c1f00083101a33783ae6f8b356",
+  "n": 1489,
+  "per_row_membership": {
+   "arcbright-elf-1-12b-r2": {
+    "answered_not_in_common": 11,
+    "answered_ok": 1500,
+    "raw_sha256": "84f08ebb6ff92af453b75cda042f617ea89c5be6a2176c7c69e11f2521da6f08",
+    "rows": 1500
+   },
+   "chaoliangunsw-jev-style-2b-decision-v4": {
+    "answered_not_in_common": 6,
+    "answered_ok": 1495,
+    "raw_sha256": "96e11049d1593d75ee84fe258f6a6c4020c9e37ebe299c7d18a3b6846fbacf81",
+    "rows": 1500
+   },
+   "decisio-gemma-4-12b-tuned-commit-think": {
+    "answered_not_in_common": 11,
+    "answered_ok": 1500,
+    "raw_sha256": "d7396dd680e13af9ba26c4526007fee3647d03eee7673bf88075ac510f39cc3c",
+    "rows": 1500
+   },
+   "h2o-lightning-4b-v1.4.1": {
+    "answered_not_in_common": 11,
+    "answered_ok": 1500,
+    "raw_sha256": "96d26bb3c0486ecbee832e309db4099b3a616b1540b4a92eff09dec81b719335",
+    "rows": 1500
+   },
+   "jeff_1_1_large": {
+    "answered_not_in_common": 11,
+    "answered_ok": 1500,
+    "raw_sha256": "1f1fdc2df674da00128ae7b47d5ea3429cf1124383a077577e7c68c7d9cc0e72",
+    "rows": 1500
+   },
+   "jeff_1_1_qwen_4b": {
+    "answered_not_in_common": 11,
+    "answered_ok": 1500,
+    "raw_sha256": "c37fada15a2021cf744b2031acb964508caf48873a2bcda5da6d6ac4a5e7c288",
+    "rows": 1500
+   },
+   "microsoft-decision-1-r2": {
+    "answered_not_in_common": 0,
+    "answered_ok": 1489,
+    "raw_sha256": "1f069818cdc069a532a4c4965d306fbd302bb819dde4aa3c48a9bd676c4a981e",
+    "rows": 1493
+   },
+   "strike-1": {
+    "answered_not_in_common": 6,
+    "answered_ok": 1495,
+    "raw_sha256": "4c6c7ab25b11432f8934425a44806ec5a2499241a9c5790216a11651473f2027",
+    "rows": 1500
+   },
+   "torchcast-decision-31b-v1.0": {
+    "answered_not_in_common": 11,
+    "answered_ok": 1500,
+    "raw_sha256": "e51a1c22336050368336c996d7cb32181bad5e854024f07844b2a8577a0dda7d",
+    "rows": 1500
+   },
+   "umpire-35b-a3b": {
+    "answered_not_in_common": 6,
+    "answered_ok": 1495,
+    "raw_sha256": "d1568cc82b893339bc4b5bc21c49a036190851cfcd7d10cd2a343dab910711ad",
+    "rows": 1500
+   },
+   "visionjev-1.0.0-27b": {
+    "answered_not_in_common": 6,
+    "answered_ok": 1495,
+    "raw_sha256": "89a5de4e94a9b1feed12144db1c5879c7e59c149f0d1667cb3b12e4763b89496",
+    "rows": 1500
+   }
+  },
+  "set_hash_rule": "sha256 of the sorted opaque id list as compact JSON",
+  "set_sha256": "4e912731e63369e1b3066b0b4afa87b44f1094aea079c5b41dc6d02e7f235537"
+ },
+ "umpire-35b-a3b": {
+  "cells_off": {
+   "categories_sha256": "86fb894f24510da1ddd600f22e8409a1a7ad8c76964b0933e68e62ee167e188a",
+   "decisive_sha256": "f8f24adf88a23fe999ea91c5d2b90ab29965ca940f8bfb947b6e197bc7614087"
+  },
+  "cells_share": {
+   "categories_sha256": "7c3f858b7785ed5df220bbc63f5f6811612b49007ee3ad57a0222b5a76fc93b7",
+   "decisive_sha256": "f8f24adf88a23fe999ea91c5d2b90ab29965ca940f8bfb947b6e197bc7614087"
+  },
+  "frozen": {
+   "path": "/home/flori/jobs/jevbench-add-requests-20260919/workers/r198-v1722-build/score/field/fnew/out-frozen/jevbench-v1.6.0-results.json",
+   "sha256": "5d207bc61ad192049a963d4ba23f0cc118f7d3793bbe2aea2e95c300092bc1ed"
+  },
+  "gold_sha256": "8aaf8ab4c58fe06e1f7494a965701ffc0c1a7879392b0bc2309f7f1724b5e200",
+  "input_sha256": "9b2f32edaccb29afd726af8cd54cf1a22d85e8b1824566924045d83c6f828426",
+  "kit_shas_sha256": "bd6ae6818815b861f3cb7bf144f2fd3a0a78b4fac50e0359020d91650a99d806",
+  "manifest_sha256": "f5a5151a1a19923dec1434230dbc451d9ca879ce8ccba8f268b296cac9c1ee35",
+  "pull_receipt_sha256": "285ac1c5f1c07144000219ec0dd3e8b69a4f82d0f6f84d5ba6f3411e2aa9af7c",
+  "raw_sha256": "d1568cc82b893339bc4b5bc21c49a036190851cfcd7d10cd2a343dab910711ad",
+  "raw_verified_in_place": true,
+  "registry_sha256": "b4c2ac75269e6a63da672696ebabde5bdb14538bdb8288681a08acc43ce7ac8c",
+  "v17-off": {
+   "path": "/home/flori/jobs/jevbench-add-requests-20260919/workers/r198-v1722-build/score/field/fnew/out-v17-off/jevbench-v1.6.0-results.json",
+   "sha256": "c4a7ab2b6844aa95bbfe90588257bae17b7b03924b715a9a1e545568017ef2f6"
+  },
+  "v17-share": {
+   "path": "/home/flori/jobs/jevbench-add-requests-20260919/workers/r198-v1722-build/score/field/fnew/out-v17-share/jevbench-v1.6.0-results.json",
+   "sha256": "27ba1fbbf115e51c247551557fc36b5298d609a0dbec7079e5abbfb2ca70ee47"
+  }
+ }
+}
