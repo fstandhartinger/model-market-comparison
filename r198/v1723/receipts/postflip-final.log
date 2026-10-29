@@ -1,0 +1,85 @@
+TAP version 13
+# Subtest: architecture schema, evidence and badges are valid for every entry
+ok 1 - architecture schema, evidence and badges are valid for every entry
+  ---
+  duration_ms: 8.919109
+  ...
+# Subtest: all historical and current JevBench and ImageJevBench artifact keys are covered
+ok 2 - all historical and current JevBench and ImageJevBench artifact keys are covered
+  ---
+  duration_ms: 7193.54027
+  ...
+# Subtest: wity entries preserve the author-requested model-family non-disclosure
+ok 3 - wity entries preserve the author-requested model-family non-disclosure
+  ---
+  duration_ms: 0.861058
+  ...
+# Subtest: encoder, diffusion, reranker, reference and single-backbone corrections remain explicit
+ok 4 - encoder, diffusion, reranker, reference and single-backbone corrections remain explicit
+  ---
+  duration_ms: 0.19889
+  ...
+# Subtest: v1.7.23 candidate validates against the pinned predecessor
+ok 5 - v1.7.23 candidate validates against the pinned predecessor
+  ---
+  duration_ms: 164.939366
+  ...
+# Subtest: carried rows equal v1.7.22 except the pinned text fields; numbers and cells are byte-equal
+ok 6 - carried rows equal v1.7.22 except the pinned text fields; numbers and cells are byte-equal
+  ---
+  duration_ms: 302.008984
+  ...
+# Subtest: no internal process reference remains in any rendered text
+ok 7 - no internal process reference remains in any rendered text
+  ---
+  duration_ms: 131.055813
+  ...
+# Subtest: KnowLine, DecisionNode and drex-max corrections
+ok 8 - KnowLine, DecisionNode and drex-max corrections
+  ---
+  duration_ms: 0.444903
+  ...
+# Subtest: history sentence and What-changed slice show exactly this release
+ok 9 - history sentence and What-changed slice show exactly this release
+  ---
+  duration_ms: 0.386697
+  ...
+# Subtest: validator rejects a reappearing leak, a changed number and old wording
+ok 10 - validator rejects a reappearing leak, a changed number and old wording
+  ---
+  duration_ms: 4396.838683
+  ...
+# Subtest: PENDING is hidden from the board
+ok 11 - PENDING is hidden from the board
+  ---
+  duration_ms: 6827.03131
+  ...
+# Subtest: site fix: over-limit count says answered without error
+ok 12 - site fix: over-limit count says answered without error
+  ---
+  duration_ms: 133.403559
+  ...
+# Subtest: site fix: over-cap rows are labelled on the system page, not "Not ranked"
+ok 13 - site fix: over-cap rows are labelled on the system page, not "Not ranked"
+  ---
+  duration_ms: 0.582239
+  ...
+# Subtest: current release-history catalog has no internal process references
+ok 14 - current release-history catalog has no internal process references
+  ---
+  duration_ms: 11.450421
+  ...
+# Subtest: current architecture disclosure overlay has no internal process references
+ok 15 - current architecture disclosure overlay has no internal process references
+  ---
+  duration_ms: 7.302372
+  ...
+1..15
+# tests 15
+# suites 0
+# pass 15
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 19905.168427

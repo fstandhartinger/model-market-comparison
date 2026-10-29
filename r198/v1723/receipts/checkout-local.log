@@ -1,0 +1,21 @@
+suite-slot: admitted in slot 1 after 0s
+TAP version 13
+# Subtest: publication is independent of the writer-owned primary checkout
+ok 1 - publication is independent of the writer-owned primary checkout
+  ---
+  duration_ms: 4.659589
+  ...
+# Subtest: the supervisor's dated brief backups can never make the checkout dirty again
+ok 2 - the supervisor's dated brief backups can never make the checkout dirty again
+  ---
+  duration_ms: 132.009476
+  ...
+1..2
+# tests 2
+# suites 0
+# pass 2
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 185.633254

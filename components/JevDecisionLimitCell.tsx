@@ -26,7 +26,7 @@ export function JevDecisionLimitDetail({ row, className = 'mt-3' }: { row: Row; 
     ? <p className={className} data-bh-jev-limit-detail="pending">{JEV_NOT_RESCORED}.</p> : null;
   return <div className={className} data-bh-jev-limit-detail>
     <p data-bh-jev-limit-latency>Measured latency over {v.n == null ? 'all' : v.n.toLocaleString('en-US')} decisions: p50 {v.p50Raw == null ? '—' : `${v.p50Raw.toFixed(3)} s`} · p95 {v.p95Raw == null ? '—' : `${v.p95Raw.toFixed(3)} s`}</p>
-    <p data-bh-jev-limit-count>{v.nOver == null ? '—' : `${v.nOver.toLocaleString('en-US')}`} decision{v.nOver === 1 ? '' : 's'} over {v.limit} s{v.nOver ? ` (${v.nOverOk ?? '—'} of them answered correctly, counted as wrong)` : ''}.</p>
+    <p data-bh-jev-limit-count>{v.nOver == null ? '—' : `${v.nOver.toLocaleString('en-US')}`} decision{v.nOver === 1 ? '' : 's'} over {v.limit} s{v.nOver ? ` (${v.nOverOk ?? '—'} of them answered without error, counted as wrong)` : ''}.</p>
     <p className="bh-muted mt-1 text-sm" data-bh-jev-limit-rule>{JEV_LIMIT_RULE_EN} {v.note}</p>
   </div>;
 }

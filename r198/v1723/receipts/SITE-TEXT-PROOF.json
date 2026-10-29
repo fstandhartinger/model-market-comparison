@@ -1,0 +1,61 @@
+{
+ "scope": "Current release-history catalog and architecture disclosure prose; no archived release data file changed",
+ "exceptions": [
+  {
+   "path": "lib/jevbench-releases.mjs:v1.6.18.text",
+   "row_or_note": "v1.6.18 release-history summary",
+   "old": "Second regular draw, + Respan Span-02 (ranked, above the official cost cap, RTX 5090 Speed) and 2 Bespoke Labs API rows: Nimble-v4 and Nimble-v4-max. Both listed but not ranked, unpriced under deputy decision #19084; measured Intelligence, Calibration, Capability and Speed only, no Cost, Composite or rank in any view. All 18 carried full-draw rows keep every point estimate; carried rank shifts below Span-02 are disclosed in the release notes; the unranked Microsoft A2 measurement is unchanged. No top five changes.",
+   "new": "Second regular draw, + Respan Span-02 (ranked, above the official cost cap, RTX 5090 Speed) and 2 Bespoke Labs API rows: Nimble-v4 and Nimble-v4-max. Both listed but not ranked, unpriced under the frozen pricing policy; measured Intelligence, Calibration, Capability and Speed only, no Cost, Composite or rank in any view. All 18 carried full-draw rows keep every point estimate; carried rank shifts below Span-02 are disclosed in the release notes; the unranked Microsoft A2 measurement is unchanged. No top five changes.",
+   "before_sha256": "d67558676f76c3d071f88facf6694c8c3538206195daef2647d6f6b1f283724e",
+   "after_sha256": "4fa6ea2f78e7ba0952fc19807fcfab332082187db07a79a6b37a0ce63b2ff95e"
+  },
+  {
+   "path": "lib/jevbench-releases.mjs:v1.6.17.text",
+   "row_or_note": "v1.6.17 release-history summary",
+   "old": "Second regular draw, + 7 systems (5 ranked, 2 listed but not ranked; 18 full-draw rows, same frozen field median): Amos 1 large (Scira), Amos 1 medium (Scira), metask-jev-rain-31B-trained service v3, pjev-2b, PurpleMIST-Mini-1.0 (Olaverse), Sage 1.4 (Levanto Labs), SubQ Snap (preview, SubQ). One paid fast-lane re-submission is disclosed as such; hosted rows above the Jev-class cost cap are ranked and disclosed. Metask service v3 (paid) enters the default Capability top five at #3. Amos 1 large enters the API cost-off Capability top five at #1 with Florian GO (card #17487). The unranked Microsoft A2 measurement is carried through unchanged.",
+   "new": "Second regular draw, + 7 systems (5 ranked, 2 listed but not ranked; 18 full-draw rows, same frozen field median): Amos 1 large (Scira), Amos 1 medium (Scira), metask-jev-rain-31B-trained service v3, pjev-2b, PurpleMIST-Mini-1.0 (Olaverse), Sage 1.4 (Levanto Labs), SubQ Snap (preview, SubQ). One paid fast-lane re-submission is disclosed as such; hosted rows above the Jev-class cost cap are ranked and disclosed. Metask service v3 (paid) enters the default Capability top five at #3. Amos 1 large enters the API cost-off Capability top five at #1 after publication approval. The unranked Microsoft A2 measurement is carried through unchanged.",
+   "before_sha256": "d842052309457121142165b996f70908ef21917cdb4192ed848b03036fe31dea",
+   "after_sha256": "cf4be826ec85efa64ab3fd413683d1b5b9cba3efe6725eba93247a4c85d908a1"
+  },
+  {
+   "path": "data/jevbench-architecture.json:/benchmarks/jevbench/reflex-instinct-0.6b/note",
+   "row_or_note": "reflex-instinct-0.6b architecture disclosure",
+   "old": "Listed but not ranked in v1.6.15: CoS deputy decision #18761 declares its Speed figure non-official, and the composite weights Speed.",
+   "new": "Listed but not ranked in v1.6.15: its Speed figure was non-official, and the composite weights Speed.",
+   "before_sha256": "02c1a4aeffd129cee724e45fe21c1c3c3e0303362f4d78d0edde749f510c927b",
+   "after_sha256": "3498b45e14dee027701c32ae452d9e780bdb6500a11f9ffa91eb56286403ecda"
+  },
+  {
+   "path": "data/jevbench-architecture.json:/benchmarks/jevbench/metask_jev_rain_31b_trained_v3/note",
+   "row_or_note": "metask_jev_rain_31b_trained_v3 architecture disclosure",
+   "old": "Re-submission of the weights of metask_jev_rain_31b_trained with a changed service/ layer (paid fast-lane order 4d9fef10); timed on an RTX PRO 6000 96 GB, not the H100 of the earlier row.",
+   "new": "Re-submission of the weights of metask_jev_rain_31b_trained with a changed serving layer (paid evaluation); timed on an RTX PRO 6000 96 GB, not the H100 of the earlier row.",
+   "before_sha256": "11f971b1b651bc9664c2dec08daeeb8c8584029f944e64ca56f345234d5faddc",
+   "after_sha256": "c5dcc4b184f803dbcb3a936e1f1103d7fed8f82e53d6473af6d7dc37688fcb58"
+  },
+  {
+   "path": "data/jevbench-architecture.json:/benchmarks/jevbench/subq-snap-preview/evidence/0/fact",
+   "row_or_note": "subq-snap-preview architecture disclosure",
+   "old": "Artifact key subq-snap-preview records a vendor-hosted API with no public evaluated weights; listed but not ranked (cost unpriced, CoS deputy decision #18975).",
+   "new": "Artifact key subq-snap-preview records a vendor-hosted API with no public evaluated weights; listed but not ranked (cost unpriced in that artifact).",
+   "before_sha256": "7c06e01dd8ebed7ae8eb9eee7b1b472fa529aa3a3bde06b4b4fd7a4da033f49e",
+   "after_sha256": "e0439f64efa8e005adbf58417062871773b7bbdefb7463c17f9a67f7ab6acb74"
+  },
+  {
+   "path": "data/jevbench-architecture.json:/benchmarks/jevbench/nimble-v4/evidence/0/fact",
+   "row_or_note": "nimble-v4 architecture disclosure",
+   "old": "Artifact key nimble-v4 records a Bespoke Labs vendor-hosted proprietary API with no public evaluated weights; listed but not ranked and unpriced under CoS deputy #19084. Hosting implementation and deployed weights were not independently inspected.",
+   "new": "Artifact key nimble-v4 records a Bespoke Labs vendor-hosted proprietary API with no public evaluated weights; listed but not ranked and unpriced in that artifact. Hosting implementation and deployed weights were not independently inspected.",
+   "before_sha256": "794b516a589b1a4437cde494471bded11f1214a9d4110084b777160b75b7e321",
+   "after_sha256": "ee39bee638d09c016b1c18ebaeed2e4fbf5e8522277b9b2feb6f38de3fda9438"
+  },
+  {
+   "path": "data/jevbench-architecture.json:/benchmarks/jevbench/nimble-v4-max/evidence/0/fact",
+   "row_or_note": "nimble-v4-max architecture disclosure",
+   "old": "Artifact key nimble-v4-max records a Bespoke Labs vendor-hosted proprietary API with no public evaluated weights; listed but not ranked and unpriced under CoS deputy #19084. Hosting implementation and deployed weights were not independently inspected.",
+   "new": "Artifact key nimble-v4-max records a Bespoke Labs vendor-hosted proprietary API with no public evaluated weights; listed but not ranked and unpriced in that artifact. Hosting implementation and deployed weights were not independently inspected.",
+   "before_sha256": "136af0fc13a1ad850ef01d1c4ca7a8800c626b215f38e4f489a53634644fc374",
+   "after_sha256": "b524aae3537b3363e0e784599105dfc9edb9d142279bf8b194bd927bc30289f3"
+  }
+ ]
+}
