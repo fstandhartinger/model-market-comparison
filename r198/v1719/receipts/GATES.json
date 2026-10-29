@@ -1,0 +1,76 @@
+{
+ "passed": [
+  "raw binding and refusal-set hash",
+  "frozen pricing resolve and aggregate recheck",
+  "311 carried rows/cells/ranks/orders equal",
+  "24 predecessor files byte equal",
+  "two deterministic rebuilds",
+  "72 validator negatives",
+  "7 approval negatives",
+  "dry flip and stale dry-run binding guard",
+  "PENDING freeze refusal",
+  "public text",
+  "preview viewed",
+  "architecture 4/4",
+  "tsc --noEmit",
+  "PENDING release suite 195 tests / 194 pass / 1 skipped / 0 fail"
+ ],
+ "status": "STOP",
+ "top_five": {
+  "changed_lists": 0,
+  "custom_changed": 0,
+  "grid": 368,
+  "grid_changed": 0,
+  "lists": 580,
+  "slider_changed": 0,
+  "sliders": 2052
+ },
+ "unresolved": [
+  "visibility checker false-negative requires lead disposition",
+  "post-flip release suite not run",
+  "production next build not run",
+  "full suite not run",
+  "v1.7.18 predecessor still PENDING; rebind after flip",
+  "independent review PENDING"
+ ],
+ "visibility": {
+  "assertion": "assert.ok(!a.scopes.open.includes(k))",
+  "captured": {
+   "after_rows": 313,
+   "before_rows": 311,
+   "carried_board_equal": true,
+   "carried_feed_equal": true,
+   "orders_equal": true,
+   "rows": {
+    "decisionnode-flash-0.9.1-rc1": {
+     "cost_axis": null,
+     "in_api": true,
+     "in_open_artifact": true,
+     "rank": null,
+     "ranked": false,
+     "usd_per_1000": null
+    },
+    "decisionnode-main-0.9.1-rc1": {
+     "cost_axis": null,
+     "in_api": true,
+     "in_open_artifact": true,
+     "rank": null,
+     "ranked": false,
+     "usd_per_1000": null
+    }
+   }
+  },
+  "diagnosis": "The checker incorrectly assumes the open artifact excludes API rows. Existing jevbenchScopeArtifact deliberately retains every row in open scope for the Show API offerings toggle. No release classification regression demonstrated.",
+  "failed_command": "node r198/v1719/check_visibility_v1719.mjs",
+  "full_suite": {
+   "invocations": 0,
+   "status": "NOT_RUN"
+  },
+  "needs": "Lead disposition of STOP; correct visibility assertion to check API classification/scope rather than exclusion from the toggle-capable open artifact, then run remaining gates.",
+  "postflip_suite": "NOT_RUN",
+  "production_next_build": "NOT_RUN",
+  "real_manifests_changed": false,
+  "source": "lib/jevbench-scope.mjs:67-75",
+  "status": "STOP"
+ }
+}
