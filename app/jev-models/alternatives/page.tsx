@@ -5,6 +5,7 @@ import { jevIntentMetadata } from '../../../lib/jevbench-seo-metadata';
 import { JevBenchRankingTable } from '../../../components/JevBenchRankingTable';
 import { DatasetFaqJsonLd, JevFaq, JevIntentLinks, JevReleaseStamp, one, usdPerThousand, costBasisLabel, ApiBoardNote } from '../../../components/JevBenchSeoBlocks';
 import { jevSystemPath } from '../../../lib/jev-system-slug.mjs';
+import { DM_COMPARE_FALLBACK, DM_COMPARE_DISCLOSURE, dmCompareHref } from '../../../lib/dm-compare-links';
 
 const PATH = '/jev-models/alternatives';
 const DE_PATH = '/de/jev-models/alternativen';
@@ -43,6 +44,11 @@ export default async function JevAlternativesPage() {
       ['Most accurate (Intelligence axis)',data.winners.mostAccurate], ['Fastest (Speed axis)',data.winners.fastest], ['Cheapest per decision',data.winners.cheapest],
     ].map(([label,row]) => { const r = row as typeof data.winners.mostAccurate; return r && <article key={String(label)} className="bh-panel p-5"><h2 className="font-semibold">{String(label)}</h2><p><Link href={jevSystemPath(r.key)} className="text-accent underline">{r.display}</Link></p><p>Intelligence {one(r.axes.intelligence)} · Speed {one(r.axes.speed)}</p><p>{usdPerThousand(r.cost?.usd_per_1000)} ({costBasisLabel(r.cost?.kind)})</p></article>; })}</section>
     <p className="mt-4"><Link href="/jev-models/how-to-choose" className="text-accent underline">Choose by use case and measurement conditions</Link></p>
+    <section className="bh-panel mt-6 p-5"><h2 className="text-xl font-semibold">Using these models through an API</h2>
+      <p className="mt-2">Decision Models offers a Jev-compatible API; its comparison page lists hosted options and prices, checked on the date shown there.</p>
+      <p className="mt-2"><a className="text-accent underline" href={dmCompareHref('alternatives')} rel="noopener" data-cta="bh-compare-dm">{DM_COMPARE_FALLBACK.label}</a></p>
+      <p className="bh-muted mt-2 text-xs">{DM_COMPARE_DISCLOSURE}</p>
+    </section>
     <JevFaq items={faq}/>
   </>;
 }

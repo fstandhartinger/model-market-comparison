@@ -111,7 +111,7 @@ export default async function OpenSourceJevPage() {
       </article>
     </section>
 
-    <p className="mt-6 text-sm" data-bh-jev-open-compare>Head-to-head: <Link className="text-accent underline" href="/jev-models/jev-vs-decider-4b-v2">Jev vs decider-4b v2</Link> <span className="bh-muted">·</span> <Link className="text-accent underline" href="/jev-models/jev-vs-cygnet">Jev vs Cygnet</Link> <span className="bh-muted">·</span> <Link className="text-accent underline" href="/jev-models/jev-vs-hopper">Jev vs Hopper</Link> <span className="bh-muted">·</span> <Link className="text-accent underline" href="/jev-models/jev-vs-laya">Jev vs Laya</Link></p>
+    <p className="mt-6 text-sm" data-bh-jev-open-compare>Head-to-head: <Link className="text-accent underline" href="/jev-models/jev-vs-decider-4b-v2">Jev vs decider-4b v2</Link> <span className="bh-muted">·</span> <Link className="text-accent underline" href="/jev-models/jev-vs-cygnet">Jev vs Cygnet</Link> <span className="bh-muted">·</span> <Link className="text-accent underline" href="/jev-models/jev-vs-hopper">Jev vs Hopper</Link> <span className="bh-muted">·</span> <Link className="text-accent underline" href="/jev-models/jev-vs-laya">Jev vs Laya</Link> <span className="bh-muted">·</span> <Link className="text-accent underline" href="/jev-models/jev-vs-kev">Jev vs Kev</Link></p>
     <JevFaq items={faq} />
   </>;
 }
