@@ -2,7 +2,7 @@
 set -euo pipefail
 J=$(cd "$(dirname "$0")" && pwd)
 cd "$J/../.."
-BASE=${BASE:-dfad0a062b25fe6d6bd79fb1beb1af6a5e204f6e}
+BASE=${BASE:-ac469ee24cc2053deb40d33b5bec11a4a4cb510a}
 for name in repro source pricing_reference public_text raw helpers visibility;do
  script="$J/check_${name}_v1721.py"
  if [[ $name == source ]];then python3 -B "$script" "$BASE" > "$J/receipts/$name.log" 2>&1;else python3 -B "$script" > "$J/receipts/$name.log" 2>&1;fi

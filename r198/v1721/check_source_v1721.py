@@ -1,6 +1,6 @@
 """Independent equality and source binding against the exact base commit."""
 import pathlib,json,subprocess,hashlib,sys
-J=pathlib.Path(__file__).resolve().parent;W=J.parents[1];V=W/'data/raw/benchmarks/jevbench/v1.7';BASE=sys.argv[1] if len(sys.argv)>1 else 'dfad0a062b25fe6d6bd79fb1beb1af6a5e204f6e'
+J=pathlib.Path(__file__).resolve().parent;W=J.parents[1];V=W/'data/raw/benchmarks/jevbench/v1.7';BASE=sys.argv[1] if len(sys.argv)>1 else 'ac469ee24cc2053deb40d33b5bec11a4a4cb510a'
 L=lambda p:json.loads(pathlib.Path(p).read_text());sha=lambda p:hashlib.sha256(pathlib.Path(p).read_bytes()).hexdigest();put=lambda n,d:(J/'receipts'/n).write_text(json.dumps(d,indent=1,sort_keys=True)+'\n')
 b=L(V/'jevbench-v1.7.20-results.json');a=L(V/'jevbench-v1.7.21-results.json');by={r['key']:r for r in a['systems']};K='visionjev-1.0.0-27b';proof=L(V/'jevbench-v1.7.21-proof.json')
 for r in b['systems']:assert by[r['key']]==r,('carried row',r['key'])

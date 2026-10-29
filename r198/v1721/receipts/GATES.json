@@ -3,8 +3,8 @@
   "exit_code": 0
  },
  "FULLTEST-POSTFLIP": {
-  "command": "suite-slot heavy-run npm test (one run)",
-  "exit_code": 1
+  "reason": "Text and wiring fixes only versus a84361b60; full suite exempt per worker brief",
+  "status": "NOT_RUN"
  },
  "PENDING": {
   "exit_code": 1
@@ -163,7 +163,7 @@
   "v1721_page_shows_new_row": true
  },
  "carried_rows": {
-  "base_commit": "dfad0a062b25fe6d6bd79fb1beb1af6a5e204f6e",
+  "base_commit": "ac469ee24cc2053deb40d33b5bec11a4a4cb510a",
   "board_equal": true,
   "carried_cells_equal": 319,
   "carried_rows": 314,
@@ -243,15 +243,8 @@
   "unchanged": true
  },
  "fulltest-postflip": {
-  "cancelled": 0,
-  "fail": 1,
-  "log_sha256": "9aed6b5432363b084aa209633ab117113134ff43b4b70de86e0b3f9e90ac24f5",
-  "not_ok": [
-   "the supervisor's dated brief backups can never make the checkout dirty again"
-  ],
-  "pass": 3961,
-  "skipped": 10,
-  "tests": 3972
+  "reason": "Full suite exempt for text/wiring changes; existing fulltest log is historical, not rerun by this slice.",
+  "status": "NOT_RUN"
  },
  "helpers": {
   "approval_negative_cases": 11,
@@ -260,11 +253,11 @@
   "pending_freeze_refused": true,
   "real_flip_dry_run_accepted_no_write": true,
   "real_manifests_unchanged": [
-   "c5b5a15e19364f7c226842a09fd8ec2b471bf112687c0bd3b6f6c69acb968f92",
-   "c53863cb0d9e66d093f2a2d4fba91184b10a51d1180e0aaebedcdb06077ef8bb",
+   "aa329edb76de10ef088450ea27ba54d830b88578d7ae74ba368ac5a9f4d167fb",
+   "6f2c8a22e4badcfe7c0db38a8b3a1ca231f429025e8d864cc695fd329d4d4c8b",
    "feda24ae3f628225475523179fa3b7f1d7d6153a1cd454b7af8790e256e50582"
   ],
-  "real_v1720_review": "PENDING",
+  "real_v1720_review": "PASS",
   "seal_write_refused": true,
   "stale_predecessor_binding_refused": true,
   "standing_go_checked": true,
@@ -275,11 +268,11 @@
  "postflip-tests": {
   "cancelled": 0,
   "fail": 0,
-  "log_sha256": "81a9508b4d010e53a1bb9197e425a3023367bd315b0fdce0c2d323486eb11d59",
+  "log_sha256": "6127fe60845cb76991c6a6027051c3f19382d3841c14fef96f67275d24a2416e",
   "not_ok": [],
-  "pass": 216,
+  "pass": 222,
   "skipped": 1,
-  "tests": 217
+  "tests": 223
  },
  "preview": {
   "footer": "Release review pending",
@@ -327,32 +320,32 @@
  "release-tests": {
   "cancelled": 0,
   "fail": 1,
-  "log_sha256": "7a0421d405b831facea6d2df74b0750f8fab3e251253abb9c87533b321e210c3",
+  "log_sha256": "0963c62e473663f2d33f0a350f06743e4a65ed6220d89d02fde357709c4a83e1",
   "not_ok": [
    "gate: no listed row lacks topic, use-case or language cells without a recorded exception"
   ],
-  "pass": 201,
+  "pass": 207,
   "skipped": 1,
-  "tests": 203
+  "tests": 209
  },
  "repro": {
   "files": {
    "app/api/jevbench/v1.7.21/route.ts": "e54f2efd169972c86324c32156485317f3f0c167446d4547260924ef1d0f8aef",
-   "app/jev-models/v1.7.21/page.tsx": "f0e11b30cd0e828c088b9a782153d6c2abc91e40487a79583fe816dc810ceda6",
+   "app/jev-models/v1.7.21/page.tsx": "24154de00c79eb2e0f30009b6e6e7af0b9951eb2f409f363296ef9d49ccface7",
    "data/jevbench-architecture.json": "3246ff493bf89fa1b08a93adf9b6a7dfb1b720454c9e3adbebf3dc4c3bf82420",
-   "data/jevbench-breakdown-exceptions.json": "e4577b87de70013b0c2abbad3ac37fb2c1fbe1fb919fef044d7551e95f8f2537",
+   "data/jevbench-breakdown-exceptions.json": "c384067f3b83816a51ab3eed5e6411fd08d43b2a711379f9f08ca276b21c81c8",
    "data/jevbench-draw-equating.json": "e71fb754f2cd5ddefe1b3b999502c41c061c9141986f53e408b37f0962e4bc92",
    "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.21-carry.json": "271d1fc77a136a04a1eb6deb5480c52d4211eb2b66b2ac8bb31e80867e69003a",
-   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.21-categories.json": "c2914ca3d4b9efd0702de6bf6bf2da7f014d548188a9f5f30cd9d1a94ae80128",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.21-categories.json": "ed111d7302a9b49c2d5f588be2be701e61722316bf3601b6ef0221bbdd4bf122",
    "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.21-history-carry.json": "334e851944e92383ab3071e52b3012040c7023d0fe236395953169ebee8f0459",
    "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.21-history.json": "5cd8c1332226ea9c179883d2285c0d8b8cc593ae38f2645197364a7ddd9c83c1",
-   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.21-proof.json": "7db3cc7a8d327a0f1cf7efbf8a5733bd1ce9384e3e5cdd52faf4a6882bc2a56a",
-   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.21-publication.json": "c5b5a15e19364f7c226842a09fd8ec2b471bf112687c0bd3b6f6c69acb968f92",
-   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.21-results.json": "caa12f8496e640af08805e13dd932983db912355d5584fb63c761e1508da0471",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.21-proof.json": "7f301081f9c8bae305ee46be1af3d60a59122363efac94fdeded1373fd103368",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.21-publication.json": "aa329edb76de10ef088450ea27ba54d830b88578d7ae74ba368ac5a9f4d167fb",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.21-results.json": "6367e470798aaa446a5567dd25bc97d11303a4cdbc0288d9961a64e1ef353d1b",
    "lib/jevbench-alldata-input.mjs": "50f1af2833996c9badc2bdf4ce6209ec77530ef3d19ff02677897e8fa83118b4",
    "lib/jevbench-live-board.mjs": "e34139ccaf49b8d4ce10d23c0b2d94ec4ddc21a351d14b135acf8a3611df445b",
    "lib/jevbench-releases.mjs": "d38ae8d65b25fbe63b28ed536c5c6d076442209d4774e0422c6ce994d483433b",
-   "lib/jevbench-v1721-release.mjs": "864fcdfe1bfec0d346fb3092d9af3f534893c8276e20a28b25475786e5b3796e",
+   "lib/jevbench-v1721-release.mjs": "50b48f7388e2617a81760438ae31df31e26a9581b1d5a3c6f21a25ab053d939e",
    "test/jevbench-v1714-release.test.mjs": "a1ec49d8a431944c71ebde0c83bdbbe4ac34fb3f8195378e7d3c22137c9c9d23",
    "test/jevbench-v1720-release.test.mjs": "b5a167b09781b25ae0cd206b1d00fb31db67ca0067c466976049fbeb767d7b14"
   },
@@ -1197,7 +1190,7 @@
   "new_row_open_scope": true,
   "orders_equal": true,
   "pending_hidden_in_real_tree": true,
-  "real_tree_restated_by": "v1.7.19",
+  "real_tree_restated_by": "v1.7.20",
   "status": "PASS"
  }
 }

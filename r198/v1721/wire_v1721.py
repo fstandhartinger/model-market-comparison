@@ -27,7 +27,7 @@ s=s.replace('Lychee-27B',TITLE)
 s=re.sub(r"description:'[^']*'", "description:'VisionJEV 1.0.0 measured on the 27 Oct regular draw, shown unranked.'",s)
 BODY=HIST+" A Qwen3.8-27B model measured through the author's own server on one A100 80 GB GPU, text only. All 1,500 items were sent; five exceeded its native 8,192-token input cap and were refused with HTTP 422, scored as misses and unbilled. Output tokens are zero. The cost estimate uses the unchanged 1,489-item basis. Training-data overlap is unchecked; 49 of 50 replayed requests were bit-identical, with no argmax flips. Apache-2.0 + NOTICE. Stronger anchor runs are being measured; the draw is not yet equated to the reference scale."
 s=re.sub(r'<p className="mt-3 max-w-3xl">.*?</p>','<p className="mt-3 max-w-3xl">'+BODY.replace("'",'&apos;')+'</p>',s)
-s=s.replace('measurement_notes.slice(-2);','measurement_notes.slice(-2);')
+s=s.replace('measurement_notes.slice(-2);','measurement_notes.slice(-1);')
 p.write_text(s)
 # live board chain
 edit('lib/jevbench-live-board.mjs', "import { readJevbenchV1720ForBoard, withV1720Addendum } from './jevbench-v1720-release.mjs';",

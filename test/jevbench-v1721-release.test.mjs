@@ -19,3 +19,14 @@ test('all training, serving, limit and token disclosures are required',()=>{chec
 test('old stronger-than-anchor note is refused',()=>{const x=structuredClone(s);x.not_ranked_because=b.artifact.systems.find(s=>s.key==='jeff_1_1_large').not_ranked_because;assert.throws(()=>checkUnrankedRow(x,b.artifact.board));});
 test('PENDING is hidden; synthetic PASS exposes the validated release',async()=>{const r=await readJevbenchV1721ForBoard();if(b.manifest.review.verdict==='PENDING')assert.equal(r,null);else assert.equal(r.artifact.revision,'v1.7.21');});
 test('draw remains unequated and topic cells stay absent',()=>{assert.equal(s.draw.status,'anchor-runs-pending');assert.deepEqual(s.draw.offset,{I:0,C:0});assert.equal(b.categories.systems[k].topics,undefined);});
+
+test('release page shows exactly the measurement notes added since v1.7.20',()=>{
+ const page=readFileSync('app/jev-models/v1.7.21/page.tsx','utf8');
+ const match=page.match(/measurement_notes\.slice\((-?\d+)\)/);
+ assert.ok(match,'page must select its release notes');
+ const notes=b.artifact.measurement_notes.slice(Number(match[1]));
+ const added=b.artifact.measurement_notes.slice(previous.artifact.measurement_notes.length);
+ assert.equal(added.length,1);
+ assert.deepEqual(notes,added);
+ assert.doesNotMatch(notes.join(' '),/Lychee|paid[- ](?:priority )?evaluation/i);
+});
