@@ -19,11 +19,13 @@ p = W / 'app/api/jevbench/v1.7.18/route.ts'; p.parent.mkdir(parents=True, exist_
 p.write_text((W / 'app/api/jevbench/v1.7.17/route.ts').read_text().replace('V1717', 'V1718').replace('v1717', 'v1718'))
 p = W / 'app/jev-models/v1.7.18/page.tsx'; p.parent.mkdir(parents=True, exist_ok=True)
 s = (W / 'app/jev-models/v1.7.17/page.tsx').read_text()
-s = s.replace('v1.7.17', '__NEW__').replace('v1.7.15', 'v1.7.17').replace('__NEW__', 'v1.7.18').replace('V1717', 'V1718').replace('v1717', 'v1718').replace('jev1717', 'jev1718')
+s = s.replace('v1.7.17', '__NEW__').replace('v1.7.16', 'v1.7.17').replace('__NEW__', 'v1.7.18').replace('V1717', 'V1718').replace('v1717', 'v1718').replace('jev1717', 'jev1718')
 TITLE='KnowLine 4B-Gen5.5 and KnowLine 26B-A4B-Gen2.5'
 s=re.sub(r'Jev-Style-2B on the 27 Oct regular draw, shown unranked',TITLE,s)
 s=re.sub(r"description:'[^']*'", "description:'Two KnowLine models measured on 23 Oct on the 12 Oct regular draw, with retained scores and confidence intervals.'",s)
 s=re.sub(r'<p className="mt-3 max-w-3xl">.*?</p>','<p className="mt-3 max-w-3xl">'+(HIST+' '+LOST+' KnowLine 26B-A4B-Gen2.5: '+NOUL+' '+PARTIAL).replace("'",'&apos;')+'</p>',s)
+# This release's method section describes only its own additions, not inherited draw notes.
+s = s.replace('}).measurement_notes;', '}).measurement_notes.slice(-3);')
 p.write_text(s)
 # live board chain
 edit('lib/jevbench-live-board.mjs', "import { readJevbenchV1717ForBoard, withV1717Addendum } from './jevbench-v1717-release.mjs';",
@@ -31,6 +33,9 @@ edit('lib/jevbench-live-board.mjs', "import { readJevbenchV1717ForBoard, withV17
 edit('lib/jevbench-live-board.mjs', '  const v1717 = await readJevbenchV1717ForBoard(root);\n  return v1717 ? withV1717Addendum(throughV1716, v1717) : throughV1716;',
      '  const v1717 = await readJevbenchV1717ForBoard(root);\n  const throughV1717 = v1717 ? withV1717Addendum(throughV1716, v1717) : throughV1716;\n  const v1718 = await readJevbenchV1718ForBoard(root);\n  return v1718 ? withV1718Addendum(throughV1717, v1718) : throughV1717;')
 edit('lib/jevbench-live-board.mjs', "return (await readJevbenchV1717ForBoard(root)) ? 'v1.7.17'", "return (await readJevbenchV1718ForBoard(root)) ? 'v1.7.18' : (await readJevbenchV1717ForBoard(root)) ? 'v1.7.17'")
+# Export every ranked measurement, including the newly introduced over-cap listing.
+edit('lib/jevbench-llms-full.mjs', "  const listed = data.systems.filter((r) => r.ranked && r.listing === 'ranked');",
+     "  // Outside-cap ranked rows remain public measurements; their Capability rank is shown as outside caps.\n  const listed = data.systems.filter((r) => r.ranked && ['ranked', 'ranked_over_cap'].includes(r.listing));")
 # navigation, categories, release list, history, sitemap
 edit('components/JevBenchReleaseVersionNav.tsx', "type JevRelease = 'v1.7.17'", "type JevRelease = 'v1.7.18' | 'v1.7.17'")
 edit('lib/jevbench-categories.mjs', "'v1.7.15', 'v1.7.16', 'v1.7.17'];", "'v1.7.15', 'v1.7.16', 'v1.7.17', 'v1.7.18'];")

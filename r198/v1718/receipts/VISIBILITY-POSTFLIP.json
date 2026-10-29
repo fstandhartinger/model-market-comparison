@@ -1,7 +1,11 @@
 {
- "after_rows": 311,
+ "status": "PASS",
  "before_rows": 309,
+ "after_rows": 311,
+ "real_pending_hidden": true,
+ "scopes_correct": true,
  "carried_score_fields_equal": true,
+ "relative_orders_unchanged": true,
  "derived_fields": [
   "rank",
   "open_board_rank",
@@ -10,3009 +14,3005 @@
   "capability.open_board_rank",
   "capability.api_board_rank"
  ],
- "derived_rank_change_rows": 211,
  "derived_rank_changes": {
   "ajev-gemma4-31b-lm6q": {
-   "open_board_rank": {
-    "after": 65,
-    "before": 64
-   },
    "rank": {
-    "after": 92,
-    "before": 91
+    "before": 91,
+    "after": 92
+   },
+   "open_board_rank": {
+    "before": 64,
+    "after": 65
    }
   },
   "aleria-judge-1.1.1": {
-   "open_board_rank": {
-    "after": 91,
-    "before": 89
-   },
    "rank": {
-    "after": 124,
-    "before": 122
+    "before": 122,
+    "after": 124
+   },
+   "open_board_rank": {
+    "before": 89,
+    "after": 91
    }
   },
   "amazon-strands-decider-26b-a4b": {
-   "open_board_rank": {
-    "after": 50,
-    "before": 49
-   },
    "rank": {
-    "after": 76,
-    "before": 75
+    "before": 75,
+    "after": 76
+   },
+   "open_board_rank": {
+    "before": 49,
+    "after": 50
    }
   },
   "amos-1-large": {
    "rank": {
-    "after": 161,
-    "before": 159
+    "before": 159,
+    "after": 161
    }
   },
   "amos-1-medium": {
-   "capability_rank": {
-    "after": 91,
-    "before": 90
-   },
    "rank": {
-    "after": 123,
-    "before": 121
+    "before": 121,
+    "after": 123
+   },
+   "capability_rank": {
+    "before": 90,
+    "after": 91
    }
   },
   "aplomb-1": {
-   "open_board_rank": {
-    "after": 54,
-    "before": 53
-   },
    "rank": {
-    "after": 80,
-    "before": 79
+    "before": 79,
+    "after": 80
+   },
+   "open_board_rank": {
+    "before": 53,
+    "after": 54
    }
   },
   "apus-openjev-v1-9b": {
-   "capability_rank": {
-    "after": 121,
-    "before": 120
+   "rank": {
+    "before": 82,
+    "after": 83
    },
    "open_board_rank": {
-    "after": 57,
-    "before": 56
+    "before": 56,
+    "after": 57
+   },
+   "capability_rank": {
+    "before": 120,
+    "after": 121
    },
    "open_capability_rank": {
-    "after": 93,
-    "before": 92
-   },
-   "rank": {
-    "after": 83,
-    "before": 82
+    "before": 92,
+    "after": 93
    }
   },
   "arcbright-elf-1-12b": {
-   "capability_rank": {
-    "after": 76,
-    "before": 75
+   "rank": {
+    "before": 83,
+    "after": 84
    },
    "open_board_rank": {
-    "after": 58,
-    "before": 57
+    "before": 57,
+    "after": 58
+   },
+   "capability_rank": {
+    "before": 75,
+    "after": 76
    },
    "open_capability_rank": {
-    "after": 53,
-    "before": 52
-   },
-   "rank": {
-    "after": 84,
-    "before": 83
+    "before": 52,
+    "after": 53
    }
   },
   "arsenelupin-v1.1": {
-   "capability_rank": {
-    "after": 131,
-    "before": 130
+   "rank": {
+    "before": 181,
+    "after": 183
    },
    "open_board_rank": {
-    "after": 144,
-    "before": 142
+    "before": 142,
+    "after": 144
+   },
+   "capability_rank": {
+    "before": 130,
+    "after": 131
    },
    "open_capability_rank": {
-    "after": 103,
-    "before": 102
-   },
-   "rank": {
-    "after": 183,
-    "before": 181
+    "before": 102,
+    "after": 103
    }
   },
   "autojev-27b": {
-   "open_board_rank": {
-    "after": 134,
-    "before": 132
-   },
    "rank": {
-    "after": 171,
-    "before": 169
+    "before": 169,
+    "after": 171
+   },
+   "open_board_rank": {
+    "before": 132,
+    "after": 134
    }
   },
   "bespoke-nimble-9b-v3": {
-   "open_board_rank": {
-    "after": 53,
-    "before": 52
-   },
    "rank": {
-    "after": 79,
-    "before": 78
+    "before": 78,
+    "after": 79
+   },
+   "open_board_rank": {
+    "before": 52,
+    "after": 53
    }
   },
   "bev-bonsai-27b": {
-   "open_board_rank": {
-    "after": 158,
-    "before": 156
-   },
    "rank": {
-    "after": 199,
-    "before": 197
+    "before": 197,
+    "after": 199
+   },
+   "open_board_rank": {
+    "before": 156,
+    "after": 158
    }
   },
   "bge-reranker-v2-m3": {
-   "capability_rank": {
-    "after": 159,
-    "before": 158
+   "rank": {
+    "before": 276,
+    "after": 278
    },
    "open_board_rank": {
-    "after": 231,
-    "before": 229
+    "before": 229,
+    "after": 231
+   },
+   "capability_rank": {
+    "before": 158,
+    "after": 159
    },
    "open_capability_rank": {
-    "after": 128,
-    "before": 127
-   },
-   "rank": {
-    "after": 278,
-    "before": 276
+    "before": 127,
+    "after": 128
    }
   },
   "blink-4b": {
-   "capability_rank": {
-    "after": 101,
-    "before": 100
+   "rank": {
+    "before": 128,
+    "after": 130
    },
    "open_board_rank": {
-    "after": 96,
-    "before": 94
+    "before": 94,
+    "after": 96
+   },
+   "capability_rank": {
+    "before": 100,
+    "after": 101
    },
    "open_capability_rank": {
-    "after": 74,
-    "before": 73
-   },
-   "rank": {
-    "after": 130,
-    "before": 128
+    "before": 73,
+    "after": 74
    }
   },
   "certo": {
-   "capability_rank": {
-    "after": 164,
-    "before": 163
+   "rank": {
+    "before": 274,
+    "after": 276
    },
    "open_board_rank": {
-    "after": 229,
-    "before": 227
+    "before": 227,
+    "after": 229
+   },
+   "capability_rank": {
+    "before": 163,
+    "after": 164
    },
    "open_capability_rank": {
-    "after": 133,
-    "before": 132
-   },
-   "rank": {
-    "after": 276,
-    "before": 274
+    "before": 132,
+    "after": 133
    }
   },
   "chon-1.0-12b": {
-   "capability_rank": {
-    "after": 166,
-    "before": 165
+   "rank": {
+    "before": 194,
+    "after": 196
    },
    "open_board_rank": {
-    "after": 155,
-    "before": 153
+    "before": 153,
+    "after": 155
+   },
+   "capability_rank": {
+    "before": 165,
+    "after": 166
    },
    "open_capability_rank": {
-    "after": 135,
-    "before": 134
-   },
-   "rank": {
-    "after": 196,
-    "before": 194
+    "before": 134,
+    "after": 135
    }
   },
   "classone-gemma4-e2b": {
-   "capability_rank": {
-    "after": 201,
-    "before": 200
+   "rank": {
+    "before": 245,
+    "after": 247
    },
    "open_board_rank": {
-    "after": 201,
-    "before": 199
+    "before": 199,
+    "after": 201
+   },
+   "capability_rank": {
+    "before": 200,
+    "after": 201
    },
    "open_capability_rank": {
-    "after": 168,
-    "before": 167
-   },
-   "rank": {
-    "after": 247,
-    "before": 245
+    "before": 167,
+    "after": 168
    }
   },
   "classone-gemma4-e4b": {
-   "capability_rank": {
-    "after": 177,
-    "before": 176
+   "rank": {
+    "before": 186,
+    "after": 188
    },
    "open_board_rank": {
-    "after": 148,
-    "before": 146
+    "before": 146,
+    "after": 148
+   },
+   "capability_rank": {
+    "before": 176,
+    "after": 177
    },
    "open_capability_rank": {
-    "after": 146,
-    "before": 145
-   },
-   "rank": {
-    "after": 188,
-    "before": 186
+    "before": 145,
+    "after": 146
    }
   },
   "classone-qwen3.5-2b": {
-   "capability_rank": {
-    "after": 198,
-    "before": 197
+   "rank": {
+    "before": 250,
+    "after": 252
    },
    "open_board_rank": {
-    "after": 205,
-    "before": 203
+    "before": 203,
+    "after": 205
+   },
+   "capability_rank": {
+    "before": 197,
+    "after": 198
    },
    "open_capability_rank": {
-    "after": 165,
-    "before": 164
-   },
-   "rank": {
-    "after": 252,
-    "before": 250
+    "before": 164,
+    "after": 165
    }
   },
   "classone-qwen3.5-4b": {
-   "capability_rank": {
-    "after": 178,
-    "before": 177
+   "rank": {
+    "before": 191,
+    "after": 193
    },
    "open_board_rank": {
-    "after": 152,
-    "before": 150
+    "before": 150,
+    "after": 152
+   },
+   "capability_rank": {
+    "before": 177,
+    "after": 178
    },
    "open_capability_rank": {
-    "after": 147,
-    "before": 146
-   },
-   "rank": {
-    "after": 193,
-    "before": 191
+    "before": 146,
+    "after": 147
    }
   },
   "classone-qwen3.5-9b": {
-   "capability_rank": {
-    "after": 144,
-    "before": 143
+   "rank": {
+    "before": 107,
+    "after": 109
    },
    "open_board_rank": {
-    "after": 77,
-    "before": 75
+    "before": 75,
+    "after": 77
+   },
+   "capability_rank": {
+    "before": 143,
+    "after": 144
    },
    "open_capability_rank": {
-    "after": 114,
-    "before": 113
-   },
-   "rank": {
-    "after": 109,
-    "before": 107
+    "before": 113,
+    "after": 114
    }
   },
   "clef": {
-   "open_board_rank": {
-    "after": 143,
-    "before": 141
-   },
    "rank": {
-    "after": 182,
-    "before": 180
+    "before": 180,
+    "after": 182
+   },
+   "open_board_rank": {
+    "before": 141,
+    "after": 143
    }
   },
   "clef-flash": {
-   "capability_rank": {
-    "after": 83,
-    "before": 82
+   "rank": {
+    "before": 113,
+    "after": 115
    },
    "open_board_rank": {
-    "after": 83,
-    "before": 81
+    "before": 81,
+    "after": 83
+   },
+   "capability_rank": {
+    "before": 82,
+    "after": 83
    },
    "open_capability_rank": {
-    "after": 58,
-    "before": 57
-   },
-   "rank": {
-    "after": 115,
-    "before": 113
+    "before": 57,
+    "after": 58
    }
   },
   "clef-omni": {
-   "open_board_rank": {
-    "after": 177,
-    "before": 175
-   },
    "rank": {
-    "after": 220,
-    "before": 218
+    "before": 218,
+    "after": 220
+   },
+   "open_board_rank": {
+    "before": 175,
+    "after": 177
    }
   },
   "clm-8b": {
-   "capability_rank": {
-    "after": 197,
-    "before": 196
+   "rank": {
+    "before": 275,
+    "after": 277
    },
    "open_board_rank": {
-    "after": 230,
-    "before": 228
+    "before": 228,
+    "after": 230
+   },
+   "capability_rank": {
+    "before": 196,
+    "after": 197
    },
    "open_capability_rank": {
-    "after": 164,
-    "before": 163
-   },
-   "rank": {
-    "after": 277,
-    "before": 275
+    "before": 163,
+    "after": 164
    }
   },
   "coco-decision-4b": {
-   "capability_rank": {
-    "after": 120,
-    "before": 119
+   "rank": {
+    "before": 139,
+    "after": 141
    },
    "open_board_rank": {
-    "after": 106,
-    "before": 104
+    "before": 104,
+    "after": 106
+   },
+   "capability_rank": {
+    "before": 119,
+    "after": 120
    },
    "open_capability_rank": {
-    "after": 92,
-    "before": 91
-   },
-   "rank": {
-    "after": 141,
-    "before": 139
+    "before": 91,
+    "after": 92
    }
   },
   "compass-0.2.0": {
-   "capability_rank": {
-    "after": 127,
-    "before": 126
+   "rank": {
+    "before": 174,
+    "after": 176
    },
    "open_board_rank": {
-    "after": 138,
-    "before": 136
+    "before": 136,
+    "after": 138
+   },
+   "capability_rank": {
+    "before": 126,
+    "after": 127
    },
    "open_capability_rank": {
-    "after": 99,
-    "before": 98
-   },
-   "rank": {
-    "after": 176,
-    "before": 174
+    "before": 98,
+    "after": 99
    }
   },
   "d1a-gemma4-e2b": {
-   "capability_rank": {
-    "after": 156,
-    "before": 155
+   "rank": {
+    "before": 237,
+    "after": 239
    },
    "open_board_rank": {
-    "after": 193,
-    "before": 191
+    "before": 191,
+    "after": 193
+   },
+   "capability_rank": {
+    "before": 155,
+    "after": 156
    },
    "open_capability_rank": {
-    "after": 125,
-    "before": 124
-   },
-   "rank": {
-    "after": 239,
-    "before": 237
+    "before": 124,
+    "after": 125
    }
   },
   "d1a-gemma4-e4b": {
-   "capability_rank": {
-    "after": 143,
-    "before": 142
+   "rank": {
+    "before": 215,
+    "after": 217
    },
    "open_board_rank": {
-    "after": 175,
-    "before": 173
+    "before": 173,
+    "after": 175
+   },
+   "capability_rank": {
+    "before": 142,
+    "after": 143
    },
    "open_capability_rank": {
-    "after": 113,
-    "before": 112
-   },
-   "rank": {
-    "after": 217,
-    "before": 215
+    "before": 112,
+    "after": 113
    }
   },
   "decider-2b": {
-   "capability_rank": {
-    "after": 158,
-    "before": 157
+   "rank": {
+    "before": 213,
+    "after": 215
    },
    "open_board_rank": {
-    "after": 173,
-    "before": 171
+    "before": 171,
+    "after": 173
+   },
+   "capability_rank": {
+    "before": 157,
+    "after": 158
    },
    "open_capability_rank": {
-    "after": 127,
-    "before": 126
-   },
-   "rank": {
-    "after": 215,
-    "before": 213
+    "before": 126,
+    "after": 127
    }
   },
   "decider-35b-a3b": {
-   "open_board_rank": {
-    "after": 105,
-    "before": 103
-   },
    "rank": {
-    "after": 140,
-    "before": 138
+    "before": 138,
+    "after": 140
+   },
+   "open_board_rank": {
+    "before": 103,
+    "after": 105
    }
   },
   "decider-4b-v2": {
-   "capability_rank": {
-    "after": 77,
-    "before": 76
+   "rank": {
+    "before": 99,
+    "after": 101
    },
    "open_board_rank": {
-    "after": 72,
-    "before": 70
+    "before": 70,
+    "after": 72
+   },
+   "capability_rank": {
+    "before": 76,
+    "after": 77
    },
    "open_capability_rank": {
-    "after": 54,
-    "before": 53
-   },
-   "rank": {
-    "after": 101,
-    "before": 99
+    "before": 53,
+    "after": 54
    }
   },
   "decisio-qwen3.6-35b-a3b-v090": {
-   "open_board_rank": {
-    "after": 168,
-    "before": 166
-   },
    "rank": {
-    "after": 209,
-    "before": 207
+    "before": 207,
+    "after": 209
+   },
+   "open_board_rank": {
+    "before": 166,
+    "after": 168
    }
   },
   "decision-2-0-vega-27b": {
-   "open_board_rank": {
-    "after": 130,
-    "before": 128
-   },
    "rank": {
-    "after": 167,
-    "before": 165
+    "before": 165,
+    "after": 167
+   },
+   "open_board_rank": {
+    "before": 128,
+    "after": 130
    }
   },
   "decision-2b": {
-   "capability_rank": {
-    "after": 133,
-    "before": 132
+   "rank": {
+    "before": 203,
+    "after": 205
    },
    "open_board_rank": {
-    "after": 164,
-    "before": 162
+    "before": 162,
+    "after": 164
+   },
+   "capability_rank": {
+    "before": 132,
+    "after": 133
    },
    "open_capability_rank": {
-    "after": 105,
-    "before": 104
-   },
-   "rank": {
-    "after": 205,
-    "before": 203
+    "before": 104,
+    "after": 105
    }
   },
   "decision-4b-v11": {
-   "capability_rank": {
-    "after": 115,
-    "before": 114
+   "rank": {
+    "before": 168,
+    "after": 170
    },
    "open_board_rank": {
-    "after": 133,
-    "before": 131
+    "before": 131,
+    "after": 133
+   },
+   "capability_rank": {
+    "before": 114,
+    "after": 115
    },
    "open_capability_rank": {
-    "after": 87,
-    "before": 86
-   },
-   "rank": {
-    "after": 170,
-    "before": 168
+    "before": 86,
+    "after": 87
    }
   },
   "decision-4b-v12": {
-   "capability_rank": {
-    "after": 104,
-    "before": 103
+   "rank": {
+    "before": 141,
+    "after": 143
    },
    "open_board_rank": {
-    "after": 108,
-    "before": 106
+    "before": 106,
+    "after": 108
+   },
+   "capability_rank": {
+    "before": 103,
+    "after": 104
    },
    "open_capability_rank": {
-    "after": 77,
-    "before": 76
-   },
-   "rank": {
-    "after": 143,
-    "before": 141
+    "before": 76,
+    "after": 77
    }
   },
   "decision-fast": {
-   "capability_rank": {
-    "after": 174,
-    "before": 173
+   "rank": {
+    "before": 248,
+    "after": 250
    },
    "open_board_rank": {
-    "after": 203,
-    "before": 201
+    "before": 201,
+    "after": 203
+   },
+   "capability_rank": {
+    "before": 173,
+    "after": 174
    },
    "open_capability_rank": {
-    "after": 143,
-    "before": 142
-   },
-   "rank": {
-    "after": 250,
-    "before": 248
+    "before": 142,
+    "after": 143
    }
   },
   "decision-machine-1": {
-   "capability_rank": {
-    "after": 154,
-    "before": 153
-   },
    "rank": {
-    "after": 235,
-    "before": 233
+    "before": 233,
+    "after": 235
+   },
+   "capability_rank": {
+    "before": 153,
+    "after": 154
    }
   },
   "decision2-lux-9b": {
-   "capability_rank": {
-    "after": 100,
-    "before": 99
+   "rank": {
+    "before": 133,
+    "after": 135
    },
    "open_board_rank": {
-    "after": 100,
-    "before": 98
+    "before": 98,
+    "after": 100
+   },
+   "capability_rank": {
+    "before": 99,
+    "after": 100
    },
    "open_capability_rank": {
-    "after": 73,
-    "before": 72
-   },
-   "rank": {
-    "after": 135,
-    "before": 133
+    "before": 72,
+    "after": 73
    }
   },
   "decisionnode-edge-0.9.2": {
-   "capability_rank": {
-    "after": 141,
-    "before": 140
+   "rank": {
+    "before": 189,
+    "after": 191
    },
    "open_board_rank": {
-    "after": 150,
-    "before": 148
+    "before": 148,
+    "after": 150
+   },
+   "capability_rank": {
+    "before": 140,
+    "after": 141
    },
    "open_capability_rank": {
-    "after": 112,
-    "before": 111
-   },
-   "rank": {
-    "after": 191,
-    "before": 189
+    "before": 111,
+    "after": 112
    }
   },
   "decisionnode-edge-mini-0.9.2": {
-   "capability_rank": {
-    "after": 151,
-    "before": 150
+   "rank": {
+    "before": 221,
+    "after": 223
    },
    "open_board_rank": {
-    "after": 180,
-    "before": 178
+    "before": 178,
+    "after": 180
+   },
+   "capability_rank": {
+    "before": 150,
+    "after": 151
    },
    "open_capability_rank": {
-    "after": 121,
-    "before": 120
-   },
-   "rank": {
-    "after": 223,
-    "before": 221
+    "before": 120,
+    "after": 121
    }
   },
   "decisor_4b": {
-   "capability_rank": {
-    "after": 155,
-    "before": 154
+   "rank": {
+    "before": 115,
+    "after": 117
    },
    "open_board_rank": {
-    "after": 85,
-    "before": 83
+    "before": 83,
+    "after": 85
+   },
+   "capability_rank": {
+    "before": 154,
+    "after": 155
    },
    "open_capability_rank": {
-    "after": 124,
-    "before": 123
-   },
-   "rank": {
-    "after": 117,
-    "before": 115
+    "before": 123,
+    "after": 124
    }
   },
   "deck-4b-v1-0": {
-   "capability_rank": {
-    "after": 86,
-    "before": 85
+   "rank": {
+    "before": 110,
+    "after": 112
    },
    "open_board_rank": {
-    "after": 80,
-    "before": 78
+    "before": 78,
+    "after": 80
+   },
+   "capability_rank": {
+    "before": 85,
+    "after": 86
    },
    "open_capability_rank": {
-    "after": 60,
-    "before": 59
-   },
-   "rank": {
-    "after": 112,
-    "before": 110
+    "before": 59,
+    "after": 60
    }
   },
   "deem-0.8-v1": {
-   "capability_rank": {
-    "after": 199,
-    "before": 198
+   "rank": {
+    "before": 247,
+    "after": 249
    },
    "open_board_rank": {
-    "after": 202,
-    "before": 200
+    "before": 200,
+    "after": 202
+   },
+   "capability_rank": {
+    "before": 198,
+    "after": 199
    },
    "open_capability_rank": {
-    "after": 166,
-    "before": 165
-   },
-   "rank": {
-    "after": 249,
-    "before": 247
+    "before": 165,
+    "after": 166
    }
   },
   "deepseek-flash": {
    "rank": {
-    "after": 218,
-    "before": 216
+    "before": 216,
+    "after": 218
    }
   },
   "diffusion-jev": {
    "capability_rank": {
-    "after": 112,
-    "before": 111
+    "before": 111,
+    "after": 112
    },
    "open_capability_rank": {
-    "after": 85,
-    "before": 84
+    "before": 84,
+    "after": 85
    }
   },
   "eikos-27b": {
-   "open_board_rank": {
-    "after": 136,
-    "before": 134
-   },
    "rank": {
-    "after": 173,
-    "before": 171
+    "before": 171,
+    "after": 173
+   },
+   "open_board_rank": {
+    "before": 134,
+    "after": 136
    }
   },
   "evalengine-decision-4b": {
-   "capability_rank": {
-    "after": 109,
-    "before": 108
+   "rank": {
+    "before": 114,
+    "after": 116
    },
    "open_board_rank": {
-    "after": 84,
-    "before": 82
+    "before": 82,
+    "after": 84
+   },
+   "capability_rank": {
+    "before": 108,
+    "after": 109
    },
    "open_capability_rank": {
-    "after": 82,
-    "before": 81
-   },
-   "rank": {
-    "after": 116,
-    "before": 114
+    "before": 81,
+    "after": 82
    }
   },
   "exaone-4.0-1.2b-jev-v0.3": {
-   "capability_rank": {
-    "after": 149,
-    "before": 148
+   "rank": {
+    "before": 227,
+    "after": 229
    },
    "open_board_rank": {
-    "after": 186,
-    "before": 184
+    "before": 184,
+    "after": 186
+   },
+   "capability_rank": {
+    "before": 148,
+    "after": 149
    },
    "open_capability_rank": {
-    "after": 119,
-    "before": 118
-   },
-   "rank": {
-    "after": 229,
-    "before": 227
+    "before": 118,
+    "after": 119
    }
   },
   "fastino-glide": {
    "rank": {
-    "after": 126,
-    "before": 124
+    "before": 124,
+    "after": 126
    }
   },
   "fastino-glide-1.2-open": {
-   "open_board_rank": {
-    "after": 110,
-    "before": 108
-   },
    "rank": {
-    "after": 145,
-    "before": 143
+    "before": 143,
+    "after": 145
+   },
+   "open_board_rank": {
+    "before": 108,
+    "after": 110
    }
   },
   "fastino-gliner-2-5-decide": {
-   "capability_rank": {
-    "after": 185,
-    "before": 184
-   },
    "rank": {
-    "after": 248,
-    "before": 246
+    "before": 246,
+    "after": 248
+   },
+   "capability_rank": {
+    "before": 184,
+    "after": 185
    }
   },
   "gemini-3.1-flash-lite": {
    "rank": {
-    "after": 180,
-    "before": 178
+    "before": 178,
+    "after": 180
    }
   },
   "goddragon-arbiter-4b": {
-   "capability_rank": {
-    "after": 140,
-    "before": 139
+   "rank": {
+    "before": 184,
+    "after": 186
    },
    "open_board_rank": {
-    "after": 146,
-    "before": 144
+    "before": 144,
+    "after": 146
+   },
+   "capability_rank": {
+    "before": 139,
+    "after": 140
    },
    "open_capability_rank": {
-    "after": 111,
-    "before": 110
-   },
-   "rank": {
-    "after": 186,
-    "before": 184
+    "before": 110,
+    "after": 111
    }
   },
   "gpt-5.6-luna": {
    "rank": {
-    "after": 150,
-    "before": 148
+    "before": 148,
+    "after": 150
    }
   },
   "gpt-6-luna": {
    "rank": {
-    "after": 108,
-    "before": 106
+    "before": 106,
+    "after": 108
    }
   },
   "gpt-6-luna-low": {
    "rank": {
-    "after": 105,
-    "before": 103
+    "before": 103,
+    "after": 105
    }
   },
   "gte-reranker-modernbert-base": {
-   "capability_rank": {
-    "after": 171,
-    "before": 170
+   "rank": {
+    "before": 277,
+    "after": 279
    },
    "open_board_rank": {
-    "after": 232,
-    "before": 230
+    "before": 230,
+    "after": 232
+   },
+   "capability_rank": {
+    "before": 170,
+    "after": 171
    },
    "open_capability_rank": {
-    "after": 140,
-    "before": 139
-   },
-   "rank": {
-    "after": 279,
-    "before": 277
+    "before": 139,
+    "after": 140
    }
   },
   "gutsy-0.8b-v0.3": {
-   "open_board_rank": {
-    "after": 195,
-    "before": 193
-   },
    "rank": {
-    "after": 241,
-    "before": 239
+    "before": 239,
+    "after": 241
+   },
+   "open_board_rank": {
+    "before": 193,
+    "after": 195
    }
   },
   "hopper": {
-   "capability_rank": {
-    "after": 102,
-    "before": 101
+   "rank": {
+    "before": 134,
+    "after": 136
    },
    "open_board_rank": {
-    "after": 101,
-    "before": 99
+    "before": 99,
+    "after": 101
+   },
+   "capability_rank": {
+    "before": 101,
+    "after": 102
    },
    "open_capability_rank": {
-    "after": 75,
-    "before": 74
-   },
-   "rank": {
-    "after": 136,
-    "before": 134
+    "before": 74,
+    "after": 75
    }
   },
   "hyland-hs1": {
    "capability_rank": {
-    "after": 79,
-    "before": 78
+    "before": 78,
+    "after": 79
    }
   },
   "imajev-2b": {
-   "capability_rank": {
-    "after": 137,
-    "before": 136
+   "rank": {
+    "before": 212,
+    "after": 214
    },
    "open_board_rank": {
-    "after": 172,
-    "before": 170
+    "before": 170,
+    "after": 172
+   },
+   "capability_rank": {
+    "before": 136,
+    "after": 137
    },
    "open_capability_rank": {
-    "after": 109,
-    "before": 108
-   },
-   "rank": {
-    "after": 214,
-    "before": 212
+    "before": 108,
+    "after": 109
    }
   },
   "imajev-4b-rtx5090-a2": {
-   "capability_rank": {
-    "after": 94,
-    "before": 93
+   "rank": {
+    "before": 130,
+    "after": 132
    },
    "open_board_rank": {
-    "after": 98,
-    "before": 96
+    "before": 96,
+    "after": 98
+   },
+   "capability_rank": {
+    "before": 93,
+    "after": 94
    },
    "open_capability_rank": {
-    "after": 67,
-    "before": 66
-   },
-   "rank": {
-    "after": 132,
-    "before": 130
+    "before": 66,
+    "after": 67
    }
   },
   "imajev-9b": {
-   "open_board_rank": {
-    "after": 166,
-    "before": 164
-   },
    "rank": {
-    "after": 207,
-    "before": 205
+    "before": 205,
+    "after": 207
+   },
+   "open_board_rank": {
+    "before": 164,
+    "after": 166
    }
   },
   "instinct-dual-4b": {
-   "capability_rank": {
-    "after": 114,
-    "before": 113
-   },
    "rank": {
-    "after": 174,
-    "before": 172
+    "before": 172,
+    "after": 174
+   },
+   "capability_rank": {
+    "before": 113,
+    "after": 114
    }
   },
   "iota-decide-4b": {
-   "capability_rank": {
-    "after": 117,
-    "before": 116
+   "rank": {
+    "before": 164,
+    "after": 166
    },
    "open_board_rank": {
-    "after": 129,
-    "before": 127
+    "before": 127,
+    "after": 129
+   },
+   "capability_rank": {
+    "before": 116,
+    "after": 117
    },
    "open_capability_rank": {
-    "after": 89,
-    "before": 88
-   },
-   "rank": {
-    "after": 166,
-    "before": 164
+    "before": 88,
+    "after": 89
    }
   },
   "jade": {
-   "open_board_rank": {
-    "after": 125,
-    "before": 123
-   },
    "rank": {
-    "after": 162,
-    "before": 160
+    "before": 160,
+    "after": 162
+   },
+   "open_board_rank": {
+    "before": 123,
+    "after": 125
    }
   },
   "janus-4b": {
-   "capability_rank": {
-    "after": 90,
-    "before": 89
+   "rank": {
+    "before": 116,
+    "after": 118
    },
    "open_board_rank": {
-    "after": 86,
-    "before": 84
+    "before": 84,
+    "after": 86
+   },
+   "capability_rank": {
+    "before": 89,
+    "after": 90
    },
    "open_capability_rank": {
-    "after": 64,
-    "before": 63
-   },
-   "rank": {
-    "after": 118,
-    "before": 116
+    "before": 63,
+    "after": 64
    }
   },
   "jeb-35b-a3b": {
-   "open_board_rank": {
-    "after": 139,
-    "before": 137
-   },
    "rank": {
-    "after": 177,
-    "before": 175
+    "before": 175,
+    "after": 177
+   },
+   "open_board_rank": {
+    "before": 137,
+    "after": 139
    }
   },
   "jebadiah-27b": {
-   "open_board_rank": {
-    "after": 128,
-    "before": 126
-   },
    "rank": {
-    "after": 165,
-    "before": 163
+    "before": 163,
+    "after": 165
+   },
+   "open_board_rank": {
+    "before": 126,
+    "after": 128
    }
   },
   "jebadiah-9b-v2": {
-   "capability_rank": {
-    "after": 119,
-    "before": 118
+   "rank": {
+    "before": 166,
+    "after": 168
    },
    "open_board_rank": {
-    "after": 131,
-    "before": 129
+    "before": 129,
+    "after": 131
+   },
+   "capability_rank": {
+    "before": 118,
+    "after": 119
    },
    "open_capability_rank": {
-    "after": 91,
-    "before": 90
-   },
-   "rank": {
-    "after": 168,
-    "before": 166
+    "before": 90,
+    "after": 91
    }
   },
   "jebadiah-9b-v2-1": {
-   "capability_rank": {
-    "after": 87,
-    "before": 86
+   "rank": {
+    "before": 125,
+    "after": 127
    },
    "open_board_rank": {
-    "after": 93,
-    "before": 91
+    "before": 91,
+    "after": 93
+   },
+   "capability_rank": {
+    "before": 86,
+    "after": 87
    },
    "open_capability_rank": {
-    "after": 61,
-    "before": 60
-   },
-   "rank": {
-    "after": 127,
-    "before": 125
+    "before": 60,
+    "after": 61
    }
   },
   "jeetu-decider-2b": {
-   "capability_rank": {
-    "after": 172,
-    "before": 171
+   "rank": {
+    "before": 235,
+    "after": 237
    },
    "open_board_rank": {
-    "after": 192,
-    "before": 190
+    "before": 190,
+    "after": 192
+   },
+   "capability_rank": {
+    "before": 171,
+    "after": 172
    },
    "open_capability_rank": {
-    "after": 141,
-    "before": 140
-   },
-   "rank": {
-    "after": 237,
-    "before": 235
+    "before": 140,
+    "after": 141
    }
   },
   "jeffan-31b-1710": {
-   "open_board_rank": {
-    "after": 59,
-    "before": 58
-   },
    "rank": {
-    "after": 85,
-    "before": 84
+    "before": 84,
+    "after": 85
+   },
+   "open_board_rank": {
+    "before": 58,
+    "after": 59
    }
   },
   "jeffan-4b-2010": {
-   "capability_rank": {
-    "after": 82,
-    "before": 81
+   "rank": {
+    "before": 101,
+    "after": 103
    },
    "open_board_rank": {
-    "after": 74,
-    "before": 72
+    "before": 72,
+    "after": 74
+   },
+   "capability_rank": {
+    "before": 81,
+    "after": 82
    },
    "open_capability_rank": {
-    "after": 57,
-    "before": 56
-   },
-   "rank": {
-    "after": 103,
-    "before": 101
+    "before": 56,
+    "after": 57
    }
   },
   "jev-27b-autotrust": {
-   "open_board_rank": {
-    "after": 115,
-    "before": 113
-   },
    "rank": {
-    "after": 151,
-    "before": 149
+    "before": 149,
+    "after": 151
+   },
+   "open_board_rank": {
+    "before": 113,
+    "after": 115
    }
   },
   "jev-local": {
-   "capability_rank": {
-    "after": 113,
-    "before": 112
+   "rank": {
+    "before": 102,
+    "after": 104
    },
    "open_board_rank": {
-    "after": 75,
-    "before": 73
+    "before": 73,
+    "after": 75
+   },
+   "capability_rank": {
+    "before": 112,
+    "after": 113
    },
    "open_capability_rank": {
-    "after": 86,
-    "before": 85
-   },
-   "rank": {
-    "after": 104,
-    "before": 102
+    "before": 85,
+    "after": 86
    }
   },
   "jev-qwen3.5-9b-base-nvfp4": {
-   "capability_rank": {
-    "after": 116,
-    "before": 115
+   "rank": {
+    "before": 183,
+    "after": 185
    },
    "open_board_rank": {
-    "after": 145,
-    "before": 143
+    "before": 143,
+    "after": 145
+   },
+   "capability_rank": {
+    "before": 115,
+    "after": 116
    },
    "open_capability_rank": {
-    "after": 88,
-    "before": 87
-   },
-   "rank": {
-    "after": 185,
-    "before": 183
+    "before": 87,
+    "after": 88
    }
   },
   "jevact": {
-   "capability_rank": {
-    "after": 194,
-    "before": 193
-   },
    "rank": {
-    "after": 238,
-    "before": 236
+    "before": 236,
+    "after": 238
+   },
+   "capability_rank": {
+    "before": 193,
+    "after": 194
    }
   },
   "jevk5-v0.3-4b": {
-   "capability_rank": {
-    "after": 80,
-    "before": 79
+   "rank": {
+    "before": 108,
+    "after": 110
    },
    "open_board_rank": {
-    "after": 78,
-    "before": 76
+    "before": 76,
+    "after": 78
+   },
+   "capability_rank": {
+    "before": 79,
+    "after": 80
    },
    "open_capability_rank": {
-    "after": 56,
-    "before": 55
-   },
-   "rank": {
-    "after": 110,
-    "before": 108
+    "before": 55,
+    "after": 56
    }
   },
   "jevk5-v02": {
-   "capability_rank": {
-    "after": 92,
-    "before": 91
+   "rank": {
+    "before": 119,
+    "after": 121
    },
    "open_board_rank": {
-    "after": 89,
-    "before": 87
+    "before": 87,
+    "after": 89
+   },
+   "capability_rank": {
+    "before": 91,
+    "after": 92
    },
    "open_capability_rank": {
-    "after": 65,
-    "before": 64
-   },
-   "rank": {
-    "after": 121,
-    "before": 119
+    "before": 64,
+    "after": 65
    }
   },
   "jevone": {
-   "open_board_rank": {
-    "after": 92,
-    "before": 90
-   },
    "rank": {
-    "after": 125,
-    "before": 123
+    "before": 123,
+    "after": 125
+   },
+   "open_board_rank": {
+    "before": 90,
+    "after": 92
    }
   },
   "jez-large-1.0.0": {
-   "capability_rank": {
-    "after": 134,
-    "before": 133
+   "rank": {
+    "before": 192,
+    "after": 194
    },
    "open_board_rank": {
-    "after": 153,
-    "before": 151
+    "before": 151,
+    "after": 153
+   },
+   "capability_rank": {
+    "before": 133,
+    "after": 134
    },
    "open_capability_rank": {
-    "after": 106,
-    "before": 105
-   },
-   "rank": {
-    "after": 194,
-    "before": 192
+    "before": 105,
+    "after": 106
    }
   },
   "jez-small-1.0.0": {
-   "capability_rank": {
-    "after": 163,
-    "before": 162
+   "rank": {
+    "before": 259,
+    "after": 261
    },
    "open_board_rank": {
-    "after": 214,
-    "before": 212
+    "before": 212,
+    "after": 214
+   },
+   "capability_rank": {
+    "before": 162,
+    "after": 163
    },
    "open_capability_rank": {
-    "after": 132,
-    "before": 131
-   },
-   "rank": {
-    "after": 261,
-    "before": 259
+    "before": 131,
+    "after": 132
    }
   },
   "jiwo-0.8b": {
-   "capability_rank": {
-    "after": 153,
-    "before": 152
+   "rank": {
+    "before": 222,
+    "after": 224
    },
    "open_board_rank": {
-    "after": 181,
-    "before": 179
+    "before": 179,
+    "after": 181
+   },
+   "capability_rank": {
+    "before": 152,
+    "after": 153
    },
    "open_capability_rank": {
-    "after": 123,
-    "before": 122
-   },
-   "rank": {
-    "after": 224,
-    "before": 222
+    "before": 122,
+    "after": 123
    }
   },
   "jiwo-4b": {
-   "capability_rank": {
-    "after": 105,
-    "before": 104
+   "rank": {
+    "before": 129,
+    "after": 131
    },
    "open_board_rank": {
-    "after": 97,
-    "before": 95
+    "before": 95,
+    "after": 97
+   },
+   "capability_rank": {
+    "before": 104,
+    "after": 105
    },
    "open_capability_rank": {
-    "after": 78,
-    "before": 77
-   },
-   "rank": {
-    "after": 131,
-    "before": 129
+    "before": 77,
+    "after": 78
    }
   },
   "jpt-35b-a3b": {
-   "open_board_rank": {
-    "after": 104,
-    "before": 102
-   },
    "rank": {
-    "after": 139,
-    "before": 137
+    "before": 137,
+    "after": 139
+   },
+   "open_board_rank": {
+    "before": 102,
+    "after": 104
    }
   },
   "jpt-4b": {
-   "capability_rank": {
-    "after": 84,
-    "before": 83
+   "rank": {
+    "before": 96,
+    "after": 98
    },
    "open_board_rank": {
-    "after": 69,
-    "before": 67
+    "before": 67,
+    "after": 69
+   },
+   "capability_rank": {
+    "before": 83,
+    "after": 84
    },
    "open_capability_rank": {
-    "after": 59,
-    "before": 58
-   },
-   "rank": {
-    "after": 98,
-    "before": 96
+    "before": 58,
+    "after": 59
    }
   },
   "jqv": {
-   "capability_rank": {
-    "after": 95,
-    "before": 94
+   "rank": {
+    "before": 136,
+    "after": 138
    },
    "open_board_rank": {
-    "after": 103,
-    "before": 101
+    "before": 101,
+    "after": 103
+   },
+   "capability_rank": {
+    "before": 94,
+    "after": 95
    },
    "open_capability_rank": {
-    "after": 68,
-    "before": 67
-   },
-   "rank": {
-    "after": 138,
-    "before": 136
+    "before": 67,
+    "after": 68
    }
   },
   "jul-fast": {
-   "capability_rank": {
-    "after": 169,
-    "before": 168
+   "rank": {
+    "before": 243,
+    "after": 245
    },
    "open_board_rank": {
-    "after": 199,
-    "before": 197
+    "before": 197,
+    "after": 199
+   },
+   "capability_rank": {
+    "before": 168,
+    "after": 169
    },
    "open_capability_rank": {
-    "after": 138,
-    "before": 137
-   },
-   "rank": {
-    "after": 245,
-    "before": 243
+    "before": 137,
+    "after": 138
    }
   },
   "julia-1": {
-   "capability_rank": {
-    "after": 202,
-    "before": 201
+   "rank": {
+    "before": 268,
+    "after": 270
    },
    "open_board_rank": {
-    "after": 223,
-    "before": 221
+    "before": 221,
+    "after": 223
+   },
+   "capability_rank": {
+    "before": 201,
+    "after": 202
    },
    "open_capability_rank": {
-    "after": 169,
-    "before": 168
-   },
-   "rank": {
-    "after": 270,
-    "before": 268
+    "before": 168,
+    "after": 169
    }
   },
   "kahn1": {
-   "capability_rank": {
-    "after": 97,
-    "before": 96
+   "rank": {
+    "before": 112,
+    "after": 114
    },
    "open_board_rank": {
-    "after": 82,
-    "before": 80
+    "before": 80,
+    "after": 82
+   },
+   "capability_rank": {
+    "before": 96,
+    "after": 97
    },
    "open_capability_rank": {
-    "after": 70,
-    "before": 69
-   },
-   "rank": {
-    "after": 114,
-    "before": 112
+    "before": 69,
+    "after": 70
    }
   },
   "kev-0.5b": {
-   "capability_rank": {
-    "after": 188,
-    "before": 187
+   "rank": {
+    "before": 258,
+    "after": 260
    },
    "open_board_rank": {
-    "after": 213,
-    "before": 211
+    "before": 211,
+    "after": 213
+   },
+   "capability_rank": {
+    "before": 187,
+    "after": 188
    },
    "open_capability_rank": {
-    "after": 156,
-    "before": 155
-   },
-   "rank": {
-    "after": 260,
-    "before": 258
+    "before": 155,
+    "after": 156
    }
   },
   "kev-0.6b": {
-   "capability_rank": {
-    "after": 181,
-    "before": 180
+   "rank": {
+    "before": 242,
+    "after": 244
    },
    "open_board_rank": {
-    "after": 198,
-    "before": 196
+    "before": 196,
+    "after": 198
+   },
+   "capability_rank": {
+    "before": 180,
+    "after": 181
    },
    "open_capability_rank": {
-    "after": 150,
-    "before": 149
-   },
-   "rank": {
-    "after": 244,
-    "before": 242
+    "before": 149,
+    "after": 150
    }
   },
   "kev-27b": {
-   "open_board_rank": {
-    "after": 178,
-    "before": 176
-   },
    "rank": {
-    "after": 221,
-    "before": 219
+    "before": 219,
+    "after": 221
+   },
+   "open_board_rank": {
+    "before": 176,
+    "after": 178
    }
   },
   "kev-4b": {
-   "capability_rank": {
-    "after": 160,
-    "before": 159
+   "rank": {
+    "before": 217,
+    "after": 219
    },
    "open_board_rank": {
-    "after": 176,
-    "before": 174
+    "before": 174,
+    "after": 176
+   },
+   "capability_rank": {
+    "before": 159,
+    "after": 160
    },
    "open_capability_rank": {
-    "after": 129,
-    "before": 128
-   },
-   "rank": {
-    "after": 219,
-    "before": 217
+    "before": 128,
+    "after": 129
    }
   },
   "kev-8b": {
-   "open_board_rank": {
-    "after": 163,
-    "before": 161
-   },
    "rank": {
-    "after": 204,
-    "before": 202
+    "before": 202,
+    "after": 204
+   },
+   "open_board_rank": {
+    "before": 161,
+    "after": 163
    }
   },
   "knowledgator_gliclass_v4_9b": {
-   "capability_rank": {
-    "after": 88,
-    "before": 87
+   "rank": {
+    "before": 111,
+    "after": 113
    },
    "open_board_rank": {
-    "after": 81,
-    "before": 79
+    "before": 79,
+    "after": 81
+   },
+   "capability_rank": {
+    "before": 87,
+    "after": 88
    },
    "open_capability_rank": {
-    "after": 62,
-    "before": 61
-   },
-   "rank": {
-    "after": 113,
-    "before": 111
+    "before": 61,
+    "after": 62
    }
   },
   "knowline-31b-gen1": {
-   "open_board_rank": {
-    "after": 63,
-    "before": 62
-   },
    "rank": {
-    "after": 90,
-    "before": 89
+    "before": 89,
+    "after": 90
+   },
+   "open_board_rank": {
+    "before": 62,
+    "after": 63
    }
   },
   "knowline-35b-a3b-gen1.5": {
-   "open_board_rank": {
-    "after": 157,
-    "before": 155
-   },
    "rank": {
-    "after": 198,
-    "before": 196
+    "before": 196,
+    "after": 198
+   },
+   "open_board_rank": {
+    "before": 155,
+    "after": 157
    }
   },
   "krino-2b": {
-   "capability_rank": {
-    "after": 170,
-    "before": 169
+   "rank": {
+    "before": 210,
+    "after": 212
    },
    "open_board_rank": {
-    "after": 171,
-    "before": 169
+    "before": 169,
+    "after": 171
+   },
+   "capability_rank": {
+    "before": 169,
+    "after": 170
    },
    "open_capability_rank": {
-    "after": 139,
-    "before": 138
-   },
-   "rank": {
-    "after": 212,
-    "before": 210
+    "before": 138,
+    "after": 139
    }
   },
   "kushal-gemma4-31b-it-autoloops": {
    "rank": {
-    "after": 106,
-    "before": 104
+    "before": 104,
+    "after": 106
    }
   },
   "laya": {
-   "open_board_rank": {
-    "after": 226,
-    "before": 224
-   },
    "rank": {
-    "after": 273,
-    "before": 271
+    "before": 271,
+    "after": 273
+   },
+   "open_board_rank": {
+    "before": 224,
+    "after": 226
    }
   },
   "laya-multilingual": {
-   "capability_rank": {
-    "after": 200,
-    "before": 199
+   "rank": {
+    "before": 273,
+    "after": 275
    },
    "open_board_rank": {
-    "after": 228,
-    "before": 226
+    "before": 226,
+    "after": 228
+   },
+   "capability_rank": {
+    "before": 199,
+    "after": 200
    },
    "open_capability_rank": {
-    "after": 167,
-    "before": 166
-   },
-   "rank": {
-    "after": 275,
-    "before": 273
+    "before": 166,
+    "after": 167
    }
   },
   "laya-typed-decisions": {
-   "open_board_rank": {
-    "after": 206,
-    "before": 204
-   },
    "rank": {
-    "after": 253,
-    "before": 251
+    "before": 251,
+    "after": 253
+   },
+   "open_board_rank": {
+    "before": 204,
+    "after": 206
    }
   },
   "lev": {
-   "capability_rank": {
-    "after": 99,
-    "before": 98
+   "rank": {
+    "before": 97,
+    "after": 99
    },
    "open_board_rank": {
-    "after": 70,
-    "before": 68
+    "before": 68,
+    "after": 70
+   },
+   "capability_rank": {
+    "before": 98,
+    "after": 99
    },
    "open_capability_rank": {
-    "after": 72,
-    "before": 71
-   },
-   "rank": {
-    "after": 99,
-    "before": 97
+    "before": 71,
+    "after": 72
    }
   },
   "lev-350m": {
-   "capability_rank": {
-    "after": 162,
-    "before": 161
+   "rank": {
+    "before": 256,
+    "after": 258
    },
    "open_board_rank": {
-    "after": 211,
-    "before": 209
+    "before": 209,
+    "after": 211
+   },
+   "capability_rank": {
+    "before": 161,
+    "after": 162
    },
    "open_capability_rank": {
-    "after": 131,
-    "before": 130
-   },
-   "rank": {
-    "after": 258,
-    "before": 256
+    "before": 130,
+    "after": 131
    }
   },
   "liquid-d1-3b": {
-   "capability_rank": {
-    "after": 145,
-    "before": 144
+   "rank": {
+    "before": 209,
+    "after": 211
    },
    "open_board_rank": {
-    "after": 170,
-    "before": 168
+    "before": 168,
+    "after": 170
+   },
+   "capability_rank": {
+    "before": 144,
+    "after": 145
    },
    "open_capability_rank": {
-    "after": 115,
-    "before": 114
-   },
-   "rank": {
-    "after": 211,
-    "before": 209
+    "before": 114,
+    "after": 115
    }
   },
   "liquid-d1-omni-600m": {
-   "capability_rank": {
-    "after": 189,
-    "before": 188
+   "rank": {
+    "before": 265,
+    "after": 267
    },
    "open_board_rank": {
-    "after": 220,
-    "before": 218
+    "before": 218,
+    "after": 220
+   },
+   "capability_rank": {
+    "before": 188,
+    "after": 189
    },
    "open_capability_rank": {
-    "after": 157,
-    "before": 156
-   },
-   "rank": {
-    "after": 267,
-    "before": 265
+    "before": 156,
+    "after": 157
    }
   },
   "litjev": {
-   "open_board_rank": {
-    "after": 159,
-    "before": 157
-   },
    "rank": {
-    "after": 200,
-    "before": 198
+    "before": 198,
+    "after": 200
+   },
+   "open_board_rank": {
+    "before": 157,
+    "after": 159
    }
   },
   "localjev-qwen3.5-4b": {
-   "capability_rank": {
-    "after": 132,
-    "before": 131
+   "rank": {
+    "before": 199,
+    "after": 201
    },
    "open_board_rank": {
-    "after": 160,
-    "before": 158
+    "before": 158,
+    "after": 160
+   },
+   "capability_rank": {
+    "before": 131,
+    "after": 132
    },
    "open_capability_rank": {
-    "after": 104,
-    "before": 103
-   },
-   "rank": {
-    "after": 201,
-    "before": 199
+    "before": 103,
+    "after": 104
    }
   },
   "lumma-fev-27b": {
-   "open_board_rank": {
-    "after": 179,
-    "before": 177
-   },
    "rank": {
-    "after": 222,
-    "before": 220
+    "before": 220,
+    "after": 222
+   },
+   "open_board_rank": {
+    "before": 177,
+    "after": 179
    }
   },
   "malkuth-2b": {
-   "capability_rank": {
-    "after": 150,
-    "before": 149
+   "rank": {
+    "before": 223,
+    "after": 225
    },
    "open_board_rank": {
-    "after": 182,
-    "before": 180
+    "before": 180,
+    "after": 182
+   },
+   "capability_rank": {
+    "before": 149,
+    "after": 150
    },
    "open_capability_rank": {
-    "after": 120,
-    "before": 119
-   },
-   "rank": {
-    "after": 225,
-    "before": 223
+    "before": 119,
+    "after": 120
    }
   },
   "malkuth-4b": {
-   "capability_rank": {
-    "after": 103,
-    "before": 102
+   "rank": {
+    "before": 135,
+    "after": 137
    },
    "open_board_rank": {
-    "after": 102,
-    "before": 100
+    "before": 100,
+    "after": 102
+   },
+   "capability_rank": {
+    "before": 102,
+    "after": 103
    },
    "open_capability_rank": {
-    "after": 76,
-    "before": 75
-   },
-   "rank": {
-    "after": 137,
-    "before": 135
+    "before": 75,
+    "after": 76
    }
   },
   "mammoth-1": {
-   "open_board_rank": {
-    "after": 73,
-    "before": 71
-   },
    "rank": {
-    "after": 102,
-    "before": 100
+    "before": 100,
+    "after": 102
+   },
+   "open_board_rank": {
+    "before": 71,
+    "after": 73
    }
   },
   "manchego-v21-v15": {
-   "capability_rank": {
-    "after": 110,
-    "before": 109
+   "rank": {
+    "before": 140,
+    "after": 142
    },
    "open_board_rank": {
-    "after": 107,
-    "before": 105
+    "before": 105,
+    "after": 107
+   },
+   "capability_rank": {
+    "before": 109,
+    "after": 110
    },
    "open_capability_rank": {
-    "after": 83,
-    "before": 82
-   },
-   "rank": {
-    "after": 142,
-    "before": 140
+    "before": 82,
+    "after": 83
    }
   },
   "messier-one-v0.2": {
-   "capability_rank": {
-    "after": 111,
-    "before": 110
+   "rank": {
+    "before": 87,
+    "after": 88
    },
    "open_board_rank": {
-    "after": 61,
-    "before": 60
+    "before": 60,
+    "after": 61
+   },
+   "capability_rank": {
+    "before": 110,
+    "after": 111
    },
    "open_capability_rank": {
-    "after": 84,
-    "before": 83
-   },
-   "rank": {
-    "after": 88,
-    "before": 87
+    "before": 83,
+    "after": 84
    }
   },
   "messier-one-v0.4": {
    "capability_rank": {
-    "after": 93,
-    "before": 92
+    "before": 92,
+    "after": 93
    },
    "open_capability_rank": {
-    "after": 66,
-    "before": 65
+    "before": 65,
+    "after": 66
    }
   },
   "metask-jev-4b": {
-   "capability_rank": {
-    "after": 96,
-    "before": 95
+   "rank": {
+    "before": 109,
+    "after": 111
    },
    "open_board_rank": {
-    "after": 79,
-    "before": 77
+    "before": 77,
+    "after": 79
+   },
+   "capability_rank": {
+    "before": 95,
+    "after": 96
    },
    "open_capability_rank": {
-    "after": 69,
-    "before": 68
-   },
-   "rank": {
-    "after": 111,
-    "before": 109
+    "before": 68,
+    "after": 69
    }
   },
   "metask-jev-rain-4b": {
    "capability_rank": {
-    "after": 73,
-    "before": 72
+    "before": 72,
+    "after": 73
    },
    "open_capability_rank": {
-    "after": 50,
-    "before": 49
+    "before": 49,
+    "after": 50
    }
   },
   "mirror": {
-   "open_board_rank": {
-    "after": 233,
-    "before": 231
-   },
    "rank": {
-    "after": 280,
-    "before": 278
+    "before": 278,
+    "after": 280
+   },
+   "open_board_rank": {
+    "before": 231,
+    "after": 233
    }
   },
   "mxbai-rerank-base-v2": {
-   "capability_rank": {
-    "after": 161,
-    "before": 160
+   "rank": {
+    "before": 272,
+    "after": 274
    },
    "open_board_rank": {
-    "after": 227,
-    "before": 225
+    "before": 225,
+    "after": 227
+   },
+   "capability_rank": {
+    "before": 160,
+    "after": 161
    },
    "open_capability_rank": {
-    "after": 130,
-    "before": 129
-   },
-   "rank": {
-    "after": 274,
-    "before": 272
+    "before": 129,
+    "after": 130
    }
   },
   "nagi-enormous": {
-   "open_board_rank": {
-    "after": 126,
-    "before": 124
-   },
    "rank": {
-    "after": 163,
-    "before": 161
+    "before": 161,
+    "after": 163
+   },
+   "open_board_rank": {
+    "before": 124,
+    "after": 126
    }
   },
   "nemotron-diffusion-8b": {
-   "capability_rank": {
-    "after": 152,
-    "before": 151
+   "rank": {
+    "before": 214,
+    "after": 216
    },
    "open_board_rank": {
-    "after": 174,
-    "before": 172
+    "before": 172,
+    "after": 174
+   },
+   "capability_rank": {
+    "before": 151,
+    "after": 152
    },
    "open_capability_rank": {
-    "after": 122,
-    "before": 121
-   },
-   "rank": {
-    "after": 216,
-    "before": 214
+    "before": 121,
+    "after": 122
    }
   },
   "nimble-9b": {
-   "open_board_rank": {
-    "after": 117,
-    "before": 115
-   },
    "rank": {
-    "after": 153,
-    "before": 151
+    "before": 151,
+    "after": 153
+   },
+   "open_board_rank": {
+    "before": 115,
+    "after": 117
    }
   },
   "nimble-v4": {
-   "capability_rank": {
-    "after": 81,
-    "before": 80
-   },
    "rank": {
-    "after": 94,
-    "before": 93
+    "before": 93,
+    "after": 94
+   },
+   "capability_rank": {
+    "before": 80,
+    "after": 81
    }
   },
   "nimble-v4-max-open": {
-   "open_board_rank": {
-    "after": 118,
-    "before": 116
-   },
    "rank": {
-    "after": 154,
-    "before": 152
+    "before": 152,
+    "after": 154
+   },
+   "open_board_rank": {
+    "before": 116,
+    "after": 118
    }
   },
   "ninfer-qwen3.8-27b": {
-   "open_board_rank": {
-    "after": 137,
-    "before": 135
-   },
    "rank": {
-    "after": 175,
-    "before": 173
+    "before": 173,
+    "after": 175
+   },
+   "open_board_rank": {
+    "before": 135,
+    "after": 137
    }
   },
   "ninfer-qwen3.8-flash-next": {
-   "open_board_rank": {
-    "after": 71,
-    "before": 69
-   },
    "rank": {
-    "after": 100,
-    "before": 98
+    "before": 98,
+    "after": 100
+   },
+   "open_board_rank": {
+    "before": 69,
+    "after": 71
    }
   },
   "noma": {
-   "capability_rank": {
-    "after": 135,
-    "before": 134
+   "rank": {
+    "before": 195,
+    "after": 197
    },
    "open_board_rank": {
-    "after": 156,
-    "before": 154
+    "before": 154,
+    "after": 156
+   },
+   "capability_rank": {
+    "before": 134,
+    "after": 135
    },
    "open_capability_rank": {
-    "after": 107,
-    "before": 106
-   },
-   "rank": {
-    "after": 197,
-    "before": 195
+    "before": 106,
+    "after": 107
    }
   },
   "open-alternative-jev": {
-   "capability_rank": {
-    "after": 147,
-    "before": 146
+   "rank": {
+    "before": 206,
+    "after": 208
    },
    "open_board_rank": {
-    "after": 167,
-    "before": 165
+    "before": 165,
+    "after": 167
+   },
+   "capability_rank": {
+    "before": 146,
+    "after": 147
    },
    "open_capability_rank": {
-    "after": 117,
-    "before": 116
-   },
-   "rank": {
-    "after": 208,
-    "before": 206
+    "before": 116,
+    "after": 117
    }
   },
   "open-jev-deberta-v3-large": {
-   "open_board_rank": {
-    "after": 222,
-    "before": 220
-   },
    "rank": {
-    "after": 269,
-    "before": 267
+    "before": 267,
+    "after": 269
+   },
+   "open_board_rank": {
+    "before": 220,
+    "after": 222
    }
   },
   "open-jev-json-canvas-joshuasp": {
-   "capability_rank": {
-    "after": 192,
-    "before": 191
+   "rank": {
+    "before": 279,
+    "after": 281
    },
    "open_board_rank": {
-    "after": 234,
-    "before": 232
+    "before": 232,
+    "after": 234
+   },
+   "capability_rank": {
+    "before": 191,
+    "after": 192
    },
    "open_capability_rank": {
-    "after": 160,
-    "before": 159
-   },
-   "rank": {
-    "after": 281,
-    "before": 279
+    "before": 159,
+    "after": 160
    }
   },
   "open-jev-zefan-27b-v1.1": {
-   "open_board_rank": {
-    "after": 189,
-    "before": 187
-   },
    "rank": {
-    "after": 233,
-    "before": 231
+    "before": 231,
+    "after": 233
+   },
+   "open_board_rank": {
+    "before": 187,
+    "after": 189
    }
   },
   "open-jev-zefan-2b": {
-   "open_board_rank": {
-    "after": 187,
-    "before": 185
-   },
    "rank": {
-    "after": 230,
-    "before": 228
+    "before": 228,
+    "after": 230
+   },
+   "open_board_rank": {
+    "before": 185,
+    "after": 187
    }
   },
   "open-jev-zefan-9b": {
-   "open_board_rank": {
-    "after": 141,
-    "before": 139
-   },
    "rank": {
-    "after": 179,
-    "before": 177
+    "before": 177,
+    "after": 179
+   },
+   "open_board_rank": {
+    "before": 139,
+    "after": 141
    }
   },
   "opendecision": {
-   "capability_rank": {
-    "after": 179,
-    "before": 178
+   "rank": {
+    "before": 244,
+    "after": 246
    },
    "open_board_rank": {
-    "after": 200,
-    "before": 198
+    "before": 198,
+    "after": 200
+   },
+   "capability_rank": {
+    "before": 178,
+    "after": 179
    },
    "open_capability_rank": {
-    "after": 148,
-    "before": 147
-   },
-   "rank": {
-    "after": 246,
-    "before": 244
+    "before": 147,
+    "after": 148
    }
   },
   "openjev-sglang": {
    "rank": {
-    "after": 190,
-    "before": 188
+    "before": 188,
+    "after": 190
    }
   },
   "openjev-thinking": {
-   "open_board_rank": {
-    "after": 140,
-    "before": 138
-   },
    "rank": {
-    "after": 178,
-    "before": 176
+    "before": 176,
+    "after": 178
+   },
+   "open_board_rank": {
+    "before": 138,
+    "after": 140
    }
   },
   "openjev-verdict": {
-   "capability_rank": {
-    "after": 195,
-    "before": 194
+   "rank": {
+    "before": 260,
+    "after": 262
    },
    "open_board_rank": {
-    "after": 215,
-    "before": 213
+    "before": 213,
+    "after": 215
+   },
+   "capability_rank": {
+    "before": 194,
+    "after": 195
    },
    "open_capability_rank": {
-    "after": 162,
-    "before": 161
-   },
-   "rank": {
-    "after": 262,
-    "before": 260
+    "before": 161,
+    "after": 162
    }
   },
   "openjev-verdict-1.4": {
-   "capability_rank": {
-    "after": 175,
-    "before": 174
+   "rank": {
+    "before": 254,
+    "after": 256
    },
    "open_board_rank": {
-    "after": 209,
-    "before": 207
+    "before": 207,
+    "after": 209
+   },
+   "capability_rank": {
+    "before": 174,
+    "after": 175
    },
    "open_capability_rank": {
-    "after": 144,
-    "before": 143
-   },
-   "rank": {
-    "after": 256,
-    "before": 254
+    "before": 143,
+    "after": 144
    }
   },
   "opensourcejev-qwen35-4b-q4km": {
-   "capability_rank": {
-    "after": 148,
-    "before": 147
+   "rank": {
+    "before": 204,
+    "after": 206
    },
    "open_board_rank": {
-    "after": 165,
-    "before": 163
+    "before": 163,
+    "after": 165
+   },
+   "capability_rank": {
+    "before": 147,
+    "after": 148
    },
    "open_capability_rank": {
-    "after": 118,
-    "before": 117
-   },
-   "rank": {
-    "after": 206,
-    "before": 204
+    "before": 117,
+    "after": 118
    }
   },
   "phocinae-largha-150m-v1": {
-   "capability_rank": {
-    "after": 193,
-    "before": 192
+   "rank": {
+    "before": 264,
+    "after": 266
    },
    "open_board_rank": {
-    "after": 219,
-    "before": 217
+    "before": 217,
+    "after": 219
+   },
+   "capability_rank": {
+    "before": 192,
+    "after": 193
    },
    "open_capability_rank": {
-    "after": 161,
-    "before": 160
-   },
-   "rank": {
-    "after": 266,
-    "before": 264
+    "before": 160,
+    "after": 161
    }
   },
   "pjev-2b": {
-   "capability_rank": {
-    "after": 124,
-    "before": 123
+   "rank": {
+    "before": 170,
+    "after": 172
    },
    "open_board_rank": {
-    "after": 135,
-    "before": 133
+    "before": 133,
+    "after": 135
+   },
+   "capability_rank": {
+    "before": 123,
+    "after": 124
    },
    "open_capability_rank": {
-    "after": 96,
-    "before": 95
-   },
-   "rank": {
-    "after": 172,
-    "before": 170
+    "before": 95,
+    "after": 96
    }
   },
   "plumb-4b": {
-   "capability_rank": {
-    "after": 75,
-    "before": 74
+   "rank": {
+    "before": 85,
+    "after": 86
    },
    "open_board_rank": {
-    "after": 60,
-    "before": 59
+    "before": 59,
+    "after": 60
+   },
+   "capability_rank": {
+    "before": 74,
+    "after": 75
    },
    "open_capability_rank": {
-    "after": 52,
-    "before": 51
-   },
-   "rank": {
-    "after": 86,
-    "before": 85
+    "before": 51,
+    "after": 52
    }
   },
   "pplx-decider-flash-v1.2": {
-   "capability_rank": {
-    "after": 98,
-    "before": 97
+   "rank": {
+    "before": 77,
+    "after": 78
    },
    "open_board_rank": {
-    "after": 52,
-    "before": 51
+    "before": 51,
+    "after": 52
+   },
+   "capability_rank": {
+    "before": 97,
+    "after": 98
    },
    "open_capability_rank": {
-    "after": 71,
-    "before": 70
-   },
-   "rank": {
-    "after": 78,
-    "before": 77
+    "before": 70,
+    "after": 71
    }
   },
   "pplx-decider-v1-1-27b": {
-   "open_board_rank": {
-    "after": 120,
-    "before": 118
-   },
    "rank": {
-    "after": 156,
-    "before": 154
+    "before": 154,
+    "after": 156
+   },
+   "open_board_rank": {
+    "before": 118,
+    "after": 120
    }
   },
   "pplx-decider-v1.2": {
-   "open_board_rank": {
-    "after": 119,
-    "before": 117
-   },
    "rank": {
-    "after": 155,
-    "before": 153
+    "before": 153,
+    "after": 155
+   },
+   "open_board_rank": {
+    "before": 117,
+    "after": 119
    }
   },
   "purplemist-mini-1.0": {
-   "capability_rank": {
-    "after": 165,
-    "before": 164
+   "rank": {
+    "before": 241,
+    "after": 243
    },
    "open_board_rank": {
-    "after": 197,
-    "before": 195
+    "before": 195,
+    "after": 197
+   },
+   "capability_rank": {
+    "before": 164,
+    "after": 165
    },
    "open_capability_rank": {
-    "after": 134,
-    "before": 133
-   },
-   "rank": {
-    "after": 243,
-    "before": 241
+    "before": 133,
+    "after": 134
    }
   },
   "quyet-1-0-medium": {
-   "capability_rank": {
-    "after": 108,
-    "before": 107
+   "rank": {
+    "before": 92,
+    "after": 93
    },
    "open_board_rank": {
-    "after": 66,
-    "before": 65
+    "before": 65,
+    "after": 66
+   },
+   "capability_rank": {
+    "before": 107,
+    "after": 108
    },
    "open_capability_rank": {
-    "after": 81,
-    "before": 80
-   },
-   "rank": {
-    "after": 93,
-    "before": 92
+    "before": 80,
+    "after": 81
    }
   },
   "quyet-1-0-small": {
-   "capability_rank": {
-    "after": 190,
-    "before": 189
+   "rank": {
+    "before": 261,
+    "after": 263
    },
    "open_board_rank": {
-    "after": 216,
-    "before": 214
+    "before": 214,
+    "after": 216
+   },
+   "capability_rank": {
+    "before": 189,
+    "after": 190
    },
    "open_capability_rank": {
-    "after": 158,
-    "before": 157
-   },
-   "rank": {
-    "after": 263,
-    "before": 261
+    "before": 157,
+    "after": 158
    }
   },
   "quyet-1-0-small-en": {
-   "capability_rank": {
-    "after": 176,
-    "before": 175
+   "rank": {
+    "before": 249,
+    "after": 251
    },
    "open_board_rank": {
-    "after": 204,
-    "before": 202
+    "before": 202,
+    "after": 204
+   },
+   "capability_rank": {
+    "before": 175,
+    "after": 176
    },
    "open_capability_rank": {
-    "after": 145,
-    "before": 144
-   },
-   "rank": {
-    "after": 251,
-    "before": 249
+    "before": 144,
+    "after": 145
    }
   },
   "quyet-1-0-tiny": {
-   "capability_rank": {
-    "after": 191,
-    "before": 190
+   "rank": {
+    "before": 263,
+    "after": 265
    },
    "open_board_rank": {
-    "after": 218,
-    "before": 216
+    "before": 216,
+    "after": 218
+   },
+   "capability_rank": {
+    "before": 190,
+    "after": 191
    },
    "open_capability_rank": {
-    "after": 159,
-    "before": 158
-   },
-   "rank": {
-    "after": 265,
-    "before": 263
+    "before": 158,
+    "after": 159
    }
   },
   "qwen3-reranker-4b": {
-   "capability_rank": {
-    "after": 157,
-    "before": 156
+   "rank": {
+    "before": 224,
+    "after": 226
    },
    "open_board_rank": {
-    "after": 183,
-    "before": 181
+    "before": 181,
+    "after": 183
+   },
+   "capability_rank": {
+    "before": 156,
+    "after": 157
    },
    "open_capability_rank": {
-    "after": 126,
-    "before": 125
-   },
-   "rank": {
-    "after": 226,
-    "before": 224
+    "before": 125,
+    "after": 126
    }
   },
   "qwen3.8-27b": {
    "rank": {
-    "after": 282,
-    "before": 280
+    "before": 280,
+    "after": 282
    }
   },
   "qwen35-9b-jev-data-mix-v2": {
-   "open_board_rank": {
-    "after": 87,
-    "before": 85
-   },
    "rank": {
-    "after": 119,
-    "before": 117
+    "before": 117,
+    "after": 119
+   },
+   "open_board_rank": {
+    "before": 85,
+    "after": 87
    }
   },
   "raw-phi-4-mini": {
-   "capability_rank": {
-    "after": 184,
-    "before": 183
+   "rank": {
+    "before": 232,
+    "after": 234
    },
    "open_board_rank": {
-    "after": 190,
-    "before": 188
+    "before": 188,
+    "after": 190
+   },
+   "capability_rank": {
+    "before": 183,
+    "after": 184
    },
    "open_capability_rank": {
-    "after": 153,
-    "before": 152
-   },
-   "rank": {
-    "after": 234,
-    "before": 232
+    "before": 152,
+    "after": 153
    }
   },
   "raw-qwen3-0.6b": {
-   "capability_rank": {
-    "after": 204,
-    "before": 203
+   "rank": {
+    "before": 255,
+    "after": 257
    },
    "open_board_rank": {
-    "after": 210,
-    "before": 208
+    "before": 208,
+    "after": 210
+   },
+   "capability_rank": {
+    "before": 203,
+    "after": 204
    },
    "open_capability_rank": {
-    "after": 171,
-    "before": 170
-   },
-   "rank": {
-    "after": 257,
-    "before": 255
+    "before": 170,
+    "after": 171
    }
   },
   "raw-qwen3-1.7b": {
-   "capability_rank": {
-    "after": 203,
-    "before": 202
+   "rank": {
+    "before": 257,
+    "after": 259
    },
    "open_board_rank": {
-    "after": 212,
-    "before": 210
+    "before": 210,
+    "after": 212
+   },
+   "capability_rank": {
+    "before": 202,
+    "after": 203
    },
    "open_capability_rank": {
-    "after": 170,
-    "before": 169
-   },
-   "rank": {
-    "after": 259,
-    "before": 257
+    "before": 169,
+    "after": 170
    }
   },
   "raw-qwen3-4b-instruct-2507": {
-   "capability_rank": {
-    "after": 186,
-    "before": 185
+   "rank": {
+    "before": 144,
+    "after": 146
    },
    "open_board_rank": {
-    "after": 111,
-    "before": 109
+    "before": 109,
+    "after": 111
+   },
+   "capability_rank": {
+    "before": 185,
+    "after": 186
    },
    "open_capability_rank": {
-    "after": 154,
-    "before": 153
-   },
-   "rank": {
-    "after": 146,
-    "before": 144
+    "before": 153,
+    "after": 154
    }
   },
   "raw-qwen3-8b": {
-   "open_board_rank": {
-    "after": 169,
-    "before": 167
-   },
    "rank": {
-    "after": 210,
-    "before": 208
+    "before": 208,
+    "after": 210
+   },
+   "open_board_rank": {
+    "before": 167,
+    "after": 169
    }
   },
   "reflex-4b": {
-   "open_board_rank": {
-    "after": 123,
-    "before": 121
-   },
    "rank": {
-    "after": 159,
-    "before": 157
+    "before": 157,
+    "after": 159
+   },
+   "open_board_rank": {
+    "before": 121,
+    "after": 123
    }
   },
   "respan-span-02": {
-   "open_board_rank": {
-    "after": 55,
-    "before": 54
-   },
    "rank": {
-    "after": 81,
-    "before": 80
+    "before": 80,
+    "after": 81
+   },
+   "open_board_rank": {
+    "before": 54,
+    "after": 55
    }
   },
   "roudone-decider-4b": {
-   "capability_rank": {
-    "after": 122,
-    "before": 121
+   "rank": {
+    "before": 185,
+    "after": 187
    },
    "open_board_rank": {
-    "after": 147,
-    "before": 145
+    "before": 145,
+    "after": 147
+   },
+   "capability_rank": {
+    "before": 121,
+    "after": 122
    },
    "open_capability_rank": {
-    "after": 94,
-    "before": 93
-   },
-   "rank": {
-    "after": 187,
-    "before": 185
+    "before": 93,
+    "after": 94
    }
   },
   "rsi-jev-v6.1-vl-27b": {
-   "open_board_rank": {
-    "after": 114,
-    "before": 112
-   },
    "rank": {
-    "after": 149,
-    "before": 147
+    "before": 147,
+    "after": 149
+   },
+   "open_board_rank": {
+    "before": 112,
+    "after": 114
    }
   },
   "ryotide-qwen": {
-   "capability_rank": {
-    "after": 126,
-    "before": 125
+   "rank": {
+    "before": 193,
+    "after": 195
    },
    "open_board_rank": {
-    "after": 154,
-    "before": 152
+    "before": 152,
+    "after": 154
+   },
+   "capability_rank": {
+    "before": 125,
+    "after": 126
    },
    "open_capability_rank": {
-    "after": 98,
-    "before": 97
-   },
-   "rank": {
-    "after": 195,
-    "before": 193
+    "before": 97,
+    "after": 98
    }
   },
   "ryotide_qwen9": {
-   "capability_rank": {
-    "after": 138,
-    "before": 137
+   "rank": {
+    "before": 190,
+    "after": 192
    },
    "open_board_rank": {
-    "after": 151,
-    "before": 149
+    "before": 149,
+    "after": 151
+   },
+   "capability_rank": {
+    "before": 137,
+    "after": 138
    },
    "open_capability_rank": {
-    "after": 110,
-    "before": 109
-   },
-   "rank": {
-    "after": 192,
-    "before": 190
+    "before": 109,
+    "after": 110
    }
   },
   "scaledown-classify-1": {
-   "capability_rank": {
-    "after": 139,
-    "before": 138
-   },
    "rank": {
-    "after": 213,
-    "before": 211
+    "before": 211,
+    "after": 213
+   },
+   "capability_rank": {
+    "before": 138,
+    "after": 139
    }
   },
   "seb-9b": {
-   "capability_rank": {
-    "after": 89,
-    "before": 88
+   "rank": {
+    "before": 118,
+    "after": 120
    },
    "open_board_rank": {
-    "after": 88,
-    "before": 86
+    "before": 86,
+    "after": 88
+   },
+   "capability_rank": {
+    "before": 88,
+    "after": 89
    },
    "open_capability_rank": {
-    "after": 63,
-    "before": 62
-   },
-   "rank": {
-    "after": 120,
-    "before": 118
+    "before": 62,
+    "after": 63
    }
   },
   "seb-9b-v2": {
-   "capability_rank": {
-    "after": 78,
-    "before": 77
+   "rank": {
+    "before": 81,
+    "after": 82
    },
    "open_board_rank": {
-    "after": 56,
-    "before": 55
+    "before": 55,
+    "after": 56
+   },
+   "capability_rank": {
+    "before": 77,
+    "after": 78
    },
    "open_capability_rank": {
-    "after": 55,
-    "before": 54
-   },
-   "rank": {
-    "after": 82,
-    "before": 81
+    "before": 54,
+    "after": 55
    }
   },
   "semif-qwen3.5-4b": {
-   "capability_rank": {
-    "after": 130,
-    "before": 129
+   "rank": {
+    "before": 187,
+    "after": 189
    },
    "open_board_rank": {
-    "after": 149,
-    "before": 147
+    "before": 147,
+    "after": 149
+   },
+   "capability_rank": {
+    "before": 129,
+    "after": 130
    },
    "open_capability_rank": {
-    "after": 102,
-    "before": 101
-   },
-   "rank": {
-    "after": 189,
-    "before": 187
+    "before": 101,
+    "after": 102
    }
   },
   "shisa-de-1": {
    "capability_rank": {
-    "after": 74,
-    "before": 73
+    "before": 73,
+    "after": 74
    },
    "open_capability_rank": {
-    "after": 51,
-    "before": 50
+    "before": 50,
+    "after": 51
    }
   },
   "simplejev-qwen3.5-0.8b": {
-   "open_board_rank": {
-    "after": 191,
-    "before": 189
-   },
    "rank": {
-    "after": 236,
-    "before": 234
+    "before": 234,
+    "after": 236
+   },
+   "open_board_rank": {
+    "before": 189,
+    "after": 191
    }
   },
   "simplejev-qwen3.6-35b-a3b": {
    "rank": {
-    "after": 133,
-    "before": 131
+    "before": 131,
+    "after": 133
    }
   },
   "simplejev-qwen3.8-27b": {
    "rank": {
-    "after": 231,
-    "before": 229
+    "before": 229,
+    "after": 231
    }
   },
   "simplejev-qwen3.8-27b-selfhost": {
-   "open_board_rank": {
-    "after": 184,
-    "before": 182
-   },
    "rank": {
-    "after": 227,
-    "before": 225
+    "before": 225,
+    "after": 227
+   },
+   "open_board_rank": {
+    "before": 182,
+    "after": 184
    }
   },
   "smalljev": {
-   "capability_rank": {
-    "after": 167,
-    "before": 166
+   "rank": {
+    "before": 238,
+    "after": 240
    },
    "open_board_rank": {
-    "after": 194,
-    "before": 192
+    "before": 192,
+    "after": 194
+   },
+   "capability_rank": {
+    "before": 166,
+    "after": 167
    },
    "open_capability_rank": {
-    "after": 136,
-    "before": 135
-   },
-   "rank": {
-    "after": 240,
-    "before": 238
+    "before": 135,
+    "after": 136
    }
   },
   "spark-s1-4b-v6": {
-   "capability_rank": {
-    "after": 136,
-    "before": 135
+   "rank": {
+    "before": 88,
+    "after": 89
    },
    "open_board_rank": {
-    "after": 62,
-    "before": 61
+    "before": 61,
+    "after": 62
+   },
+   "capability_rank": {
+    "before": 135,
+    "after": 136
    },
    "open_capability_rank": {
-    "after": 108,
-    "before": 107
-   },
-   "rank": {
-    "after": 89,
-    "before": 88
+    "before": 107,
+    "after": 108
    }
   },
   "spx-cd-pro": {
    "rank": {
-    "after": 87,
-    "before": 86
+    "before": 86,
+    "after": 87
    }
   },
   "standard_one_3b_sh": {
-   "capability_rank": {
-    "after": 129,
-    "before": 128
+   "rank": {
+    "before": 146,
+    "after": 148
    },
    "open_board_rank": {
-    "after": 113,
-    "before": 111
+    "before": 111,
+    "after": 113
+   },
+   "capability_rank": {
+    "before": 128,
+    "after": 129
    },
    "open_capability_rank": {
-    "after": 101,
-    "before": 100
-   },
-   "rank": {
-    "after": 148,
-    "before": 146
+    "before": 100,
+    "after": 101
    }
   },
   "standard_one_3b_sh_v4": {
-   "capability_rank": {
-    "after": 128,
-    "before": 127
+   "rank": {
+    "before": 142,
+    "after": 144
    },
    "open_board_rank": {
-    "after": 109,
-    "before": 107
+    "before": 107,
+    "after": 109
+   },
+   "capability_rank": {
+    "before": 127,
+    "after": 128
    },
    "open_capability_rank": {
-    "after": 100,
-    "before": 99
-   },
-   "rank": {
-    "after": 144,
-    "before": 142
+    "before": 99,
+    "after": 100
    }
   },
   "standard_one_8b_sh": {
-   "open_board_rank": {
-    "after": 132,
-    "before": 130
-   },
    "rank": {
-    "after": 169,
-    "before": 167
+    "before": 167,
+    "after": 169
+   },
+   "open_board_rank": {
+    "before": 130,
+    "after": 132
    }
   },
   "standardone-8b": {
-   "open_board_rank": {
-    "after": 142,
-    "before": 140
-   },
    "rank": {
-    "after": 181,
-    "before": 179
+    "before": 179,
+    "after": 181
+   },
+   "open_board_rank": {
+    "before": 140,
+    "after": 142
    }
   },
   "startlux-decision-v1.1-27b-autothink": {
-   "open_board_rank": {
-    "after": 162,
-    "before": 160
-   },
    "rank": {
-    "after": 203,
-    "before": 201
+    "before": 201,
+    "after": 203
+   },
+   "open_board_rank": {
+    "before": 160,
+    "after": 162
    }
   },
   "startlux-decision-v1.1-27b-instant": {
-   "open_board_rank": {
-    "after": 112,
-    "before": 110
-   },
    "rank": {
-    "after": 147,
-    "before": 145
+    "before": 145,
+    "after": 147
+   },
+   "open_board_rank": {
+    "before": 110,
+    "after": 112
    }
   },
   "swanone": {
-   "open_board_rank": {
-    "after": 64,
-    "before": 63
-   },
    "rank": {
-    "after": 91,
-    "before": 90
+    "before": 90,
+    "after": 91
+   },
+   "open_board_rank": {
+    "before": 63,
+    "after": 64
    }
   },
   "system-one-open": {
-   "capability_rank": {
-    "after": 142,
-    "before": 141
-   },
    "rank": {
-    "after": 184,
-    "before": 182
+    "before": 182,
+    "after": 184
+   },
+   "capability_rank": {
+    "before": 141,
+    "after": 142
    }
   },
   "system-one-sg": {
-   "open_board_rank": {
-    "after": 161,
-    "before": 159
-   },
    "rank": {
-    "after": 202,
-    "before": 200
+    "before": 200,
+    "after": 202
+   },
+   "open_board_rank": {
+    "before": 159,
+    "after": 161
    }
   },
   "tacet-sonata": {
-   "capability_rank": {
-    "after": 196,
-    "before": 195
+   "rank": {
+    "before": 270,
+    "after": 272
    },
    "open_board_rank": {
-    "after": 225,
-    "before": 223
+    "before": 223,
+    "after": 225
+   },
+   "capability_rank": {
+    "before": 195,
+    "after": 196
    },
    "open_capability_rank": {
-    "after": 163,
-    "before": 162
-   },
-   "rank": {
-    "after": 272,
-    "before": 270
+    "before": 162,
+    "after": 163
    }
   },
   "tern-35b-a3b": {
-   "open_board_rank": {
-    "after": 90,
-    "before": 88
-   },
    "rank": {
-    "after": 122,
-    "before": 120
+    "before": 120,
+    "after": 122
+   },
+   "open_board_rank": {
+    "before": 88,
+    "after": 90
    }
   },
   "torchcast-decision-27b": {
-   "open_board_rank": {
-    "after": 116,
-    "before": 114
-   },
    "rank": {
-    "after": 152,
-    "before": 150
+    "before": 150,
+    "after": 152
+   },
+   "open_board_rank": {
+    "before": 114,
+    "after": 116
    }
   },
   "turion-jev-31b": {
-   "open_board_rank": {
-    "after": 68,
-    "before": 66
-   },
    "rank": {
-    "after": 96,
-    "before": 94
+    "before": 94,
+    "after": 96
+   },
+   "open_board_rank": {
+    "before": 66,
+    "after": 68
    }
   },
   "typecastlm": {
-   "capability_rank": {
-    "after": 123,
-    "before": 122
+   "rank": {
+    "before": 162,
+    "after": 164
    },
    "open_board_rank": {
-    "after": 127,
-    "before": 125
+    "before": 125,
+    "after": 127
+   },
+   "capability_rank": {
+    "before": 122,
+    "after": 123
    },
    "open_capability_rank": {
-    "after": 95,
-    "before": 94
-   },
-   "rank": {
-    "after": 164,
-    "before": 162
+    "before": 94,
+    "after": 95
    }
   },
   "typecastlm-1.4.0": {
-   "capability_rank": {
-    "after": 125,
-    "before": 124
+   "rank": {
+    "before": 127,
+    "after": 129
    },
    "open_board_rank": {
-    "after": 95,
-    "before": 93
+    "before": 93,
+    "after": 95
+   },
+   "capability_rank": {
+    "before": 124,
+    "after": 125
    },
    "open_capability_rank": {
-    "after": 97,
-    "before": 96
-   },
-   "rank": {
-    "after": 129,
-    "before": 127
+    "before": 96,
+    "after": 97
    }
   },
   "uniphore-4b-decider": {
-   "capability_rank": {
-    "after": 118,
-    "before": 117
+   "rank": {
+    "before": 132,
+    "after": 134
    },
    "open_board_rank": {
-    "after": 99,
-    "before": 97
+    "before": 97,
+    "after": 99
+   },
+   "capability_rank": {
+    "before": 117,
+    "after": 118
    },
    "open_capability_rank": {
-    "after": 90,
-    "before": 89
-   },
-   "rank": {
-    "after": 134,
-    "before": 132
+    "before": 89,
+    "after": 90
    }
   },
   "vansa-3.4": {
-   "capability_rank": {
-    "after": 85,
-    "before": 84
-   },
    "rank": {
-    "after": 97,
-    "before": 95
+    "before": 95,
+    "after": 97
+   },
+   "capability_rank": {
+    "before": 84,
+    "after": 85
    }
   },
   "vega-u-qwen3.5-0.8b": {
-   "open_board_rank": {
-    "after": 207,
-    "before": 205
-   },
    "rank": {
-    "after": 254,
-    "before": 252
+    "before": 252,
+    "after": 254
+   },
+   "open_board_rank": {
+    "before": 205,
+    "after": 207
    }
   },
   "vega-u-qwen3.5-4b": {
-   "capability_rank": {
-    "after": 168,
-    "before": 167
+   "rank": {
+    "before": 240,
+    "after": 242
    },
    "open_board_rank": {
-    "after": 196,
-    "before": 194
+    "before": 194,
+    "after": 196
+   },
+   "capability_rank": {
+    "before": 167,
+    "after": 168
    },
    "open_capability_rank": {
-    "after": 137,
-    "before": 136
-   },
-   "rank": {
-    "after": 242,
-    "before": 240
+    "before": 136,
+    "after": 137
    }
   },
   "vegaml-0.8b": {
-   "capability_rank": {
-    "after": 187,
-    "before": 186
+   "rank": {
+    "before": 266,
+    "after": 268
    },
    "open_board_rank": {
-    "after": 221,
-    "before": 219
+    "before": 219,
+    "after": 221
+   },
+   "capability_rank": {
+    "before": 186,
+    "after": 187
    },
    "open_capability_rank": {
-    "after": 155,
-    "before": 154
-   },
-   "rank": {
-    "after": 268,
-    "before": 266
+    "before": 154,
+    "after": 155
    }
   },
   "vegaml-4b": {
-   "capability_rank": {
-    "after": 182,
-    "before": 181
+   "rank": {
+    "before": 230,
+    "after": 232
    },
    "open_board_rank": {
-    "after": 188,
-    "before": 186
+    "before": 186,
+    "after": 188
+   },
+   "capability_rank": {
+    "before": 181,
+    "after": 182
    },
    "open_capability_rank": {
-    "after": 151,
-    "before": 150
-   },
-   "rank": {
-    "after": 232,
-    "before": 230
+    "before": 150,
+    "after": 151
    }
   },
   "vera-large": {
-   "open_board_rank": {
-    "after": 124,
-    "before": 122
-   },
    "rank": {
-    "after": 160,
-    "before": 158
+    "before": 158,
+    "after": 160
+   },
+   "open_board_rank": {
+    "before": 122,
+    "after": 124
    }
   },
   "verdict-small": {
-   "capability_rank": {
-    "after": 180,
-    "before": 179
+   "rank": {
+    "before": 269,
+    "after": 271
    },
    "open_board_rank": {
-    "after": 224,
-    "before": 222
+    "before": 222,
+    "after": 224
+   },
+   "capability_rank": {
+    "before": 179,
+    "after": 180
    },
    "open_capability_rank": {
-    "after": 149,
-    "before": 148
-   },
-   "rank": {
-    "after": 271,
-    "before": 269
+    "before": 148,
+    "after": 149
    }
   },
   "verdin-4b": {
-   "capability_rank": {
-    "after": 106,
-    "before": 105
+   "rank": {
+    "before": 126,
+    "after": 128
    },
    "open_board_rank": {
-    "after": 94,
-    "before": 92
+    "before": 92,
+    "after": 94
+   },
+   "capability_rank": {
+    "before": 105,
+    "after": 106
    },
    "open_capability_rank": {
-    "after": 79,
-    "before": 78
-   },
-   "rank": {
-    "after": 128,
-    "before": 126
+    "before": 78,
+    "after": 79
    }
   },
   "vllm-sr-d3": {
-   "open_board_rank": {
-    "after": 122,
-    "before": 120
-   },
    "rank": {
-    "after": 158,
-    "before": 156
+    "before": 156,
+    "after": 158
+   },
+   "open_board_rank": {
+    "before": 120,
+    "after": 122
    }
   },
   "vllm-sr-d3-turbo": {
-   "open_board_rank": {
-    "after": 121,
-    "before": 119
-   },
    "rank": {
-    "after": 157,
-    "before": 155
+    "before": 155,
+    "after": 157
+   },
+   "open_board_rank": {
+    "before": 119,
+    "after": 121
    }
   },
   "wald-4b-v2": {
-   "capability_rank": {
-    "after": 107,
-    "before": 106
+   "rank": {
+    "before": 105,
+    "after": 107
    },
    "open_board_rank": {
-    "after": 76,
-    "before": 74
+    "before": 74,
+    "after": 76
+   },
+   "capability_rank": {
+    "before": 106,
+    "after": 107
    },
    "open_capability_rank": {
-    "after": 80,
-    "before": 79
-   },
-   "rank": {
-    "after": 107,
-    "before": 105
+    "before": 79,
+    "after": 80
    }
   },
   "wald-4b-v2-1": {
-   "open_board_rank": {
-    "after": 51,
-    "before": 50
-   },
    "rank": {
-    "after": 77,
-    "before": 76
+    "before": 76,
+    "after": 77
+   },
+   "open_board_rank": {
+    "before": 50,
+    "after": 51
    }
   },
   "watersheep": {
-   "capability_rank": {
-    "after": 183,
-    "before": 182
+   "rank": {
+    "before": 253,
+    "after": 255
    },
    "open_board_rank": {
-    "after": 208,
-    "before": 206
+    "before": 206,
+    "after": 208
+   },
+   "capability_rank": {
+    "before": 182,
+    "after": 183
    },
    "open_capability_rank": {
-    "after": 152,
-    "before": 151
-   },
-   "rank": {
-    "after": 255,
-    "before": 253
+    "before": 151,
+    "after": 152
    }
   },
   "watt-flash-0.1": {
-   "capability_rank": {
-    "after": 173,
-    "before": 172
+   "rank": {
+    "before": 262,
+    "after": 264
    },
    "open_board_rank": {
-    "after": 217,
-    "before": 215
+    "before": 215,
+    "after": 217
+   },
+   "capability_rank": {
+    "before": 172,
+    "after": 173
    },
    "open_capability_rank": {
-    "after": 142,
-    "before": 141
-   },
-   "rank": {
-    "after": 264,
-    "before": 262
+    "before": 141,
+    "after": 142
    }
   },
   "zerank-2": {
-   "capability_rank": {
-    "after": 146,
-    "before": 145
+   "rank": {
+    "before": 226,
+    "after": 228
    },
    "open_board_rank": {
-    "after": 185,
-    "before": 183
+    "before": 183,
+    "after": 185
+   },
+   "capability_rank": {
+    "before": 145,
+    "after": 146
    },
    "open_capability_rank": {
-    "after": 116,
-    "before": 115
-   },
-   "rank": {
-    "after": 228,
-    "before": 226
+    "before": 115,
+    "after": 116
    }
   }
  },
- "real_pending_hidden": true,
- "relative_orders_unchanged": true,
- "scopes_correct": true,
- "status": "PASS"
+ "derived_rank_change_rows": 211
 }
