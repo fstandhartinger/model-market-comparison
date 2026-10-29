@@ -1,0 +1,30 @@
+TAP version 13
+# Subtest: architecture schema, evidence and badges are valid for every entry
+ok 1 - architecture schema, evidence and badges are valid for every entry
+  ---
+  duration_ms: 8.229615
+  ...
+# Subtest: all historical and current JevBench and ImageJevBench artifact keys are covered
+ok 2 - all historical and current JevBench and ImageJevBench artifact keys are covered
+  ---
+  duration_ms: 7432.104177
+  ...
+# Subtest: wity entries preserve the author-requested model-family non-disclosure
+ok 3 - wity entries preserve the author-requested model-family non-disclosure
+  ---
+  duration_ms: 0.849077
+  ...
+# Subtest: encoder, diffusion, reranker, reference and single-backbone corrections remain explicit
+ok 4 - encoder, diffusion, reranker, reference and single-backbone corrections remain explicit
+  ---
+  duration_ms: 0.19913
+  ...
+1..4
+# tests 4
+# suites 0
+# pass 4
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 7525.261257

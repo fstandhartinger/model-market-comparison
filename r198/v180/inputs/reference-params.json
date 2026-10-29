@@ -1,0 +1,43 @@
+{
+ "_note": "Calibrated 29 Oct 2026, RunPod RTX PRO 6000 Server (pod xsy5c4mazkl81h), vLLM 0.32.0, 200 public P300 items, c32 fresh. Gemma dense: mean of EFF runs 10,686 and 9,527 tok/s (31B). Qwen dense: EFF 11,763 (Qwen3.8-27B). Small: Qwen3.5-4B EFF 61,525. MoE: Qwen3.5-35B-A3B EFF 38,000 (3B active). OOTB factors EFF/BF16: Gemma31 1.67 (ctx8192 pair), Qwen27 1.66, 4B 1.48, MoE 1.04. Gemma-4-26B-A4B MoE EFF 34,662 (4B active), factor 1.03. Gemma-4-12B EFF 26,862, factor 1.81. Pod cost USD 3.08.",
+ "C_dense_gemma": 313302,
+ "C_dense_qwen": 317601,
+ "C_small": 246100,
+ "C_moe": 113999,
+ "tok_s_max": 100000,
+ "ootb_factor": {
+  "dense": 1.67,
+  "moe": 1.03,
+  "small": 1.48
+ },
+ "never_more_expensive": true,
+ "scenarios": {
+  "a": {
+   "label": "today: base-model list price",
+   "gpu": false
+  },
+  "b": {
+   "label": "monthly GPU (Katowice EUR 999/mo = USD 1.52/h), stock vLLM BF16, 70% load",
+   "gpu": true,
+   "efficient": false,
+   "usd_h": 1.5235,
+   "load": 0.7
+  },
+  "c": {
+   "label": "monthly GPU USD 1.52/h + efficient engine (FP8), 70% load",
+   "gpu": true,
+   "efficient": true,
+   "usd_h": 1.5235,
+   "load": 0.7
+  },
+  "c100": {
+   "label": "as c, 100% load",
+   "gpu": true,
+   "efficient": true,
+   "usd_h": 1.5235,
+   "load": 1.0
+  }
+ },
+ "C_moe_gemma": 138650,
+ "C_small_gemma": 322343
+}
