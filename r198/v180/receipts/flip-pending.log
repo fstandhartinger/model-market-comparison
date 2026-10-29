@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/srv/heavy/jobs/jevbench-r198-v180-build2--r1029191004wd1h/work/r198/v180/flip_verdict_v180.py", line 6, in <module>
+    m=json.loads((D/'jevbench-v1.8.0-publication.json').read_text());pr=json.loads((D/'jevbench-v1.8.0-proof.json').read_text());check_approval(W,pr)
+                                                                                                                                 ^^^^^^^^^^^^^^^^^^^^
+  File "/srv/heavy/jobs/jevbench-r198-v180-build2--r1029191004wd1h/work/r198/v180/approval_v180.py", line 5, in check_approval
+    a=proof['publication_approval'];assert a.get('status')=='GO','REFUSED: publication approval PENDING'
+                                           ^^^^^^^^^^^^^^^^^^^^^
+AssertionError: REFUSED: publication approval PENDING

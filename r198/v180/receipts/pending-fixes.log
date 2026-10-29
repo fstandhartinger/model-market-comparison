@@ -1,0 +1,80 @@
+TAP version 13
+# Subtest: architecture schema, evidence and badges are valid for every entry
+ok 1 - architecture schema, evidence and badges are valid for every entry
+  ---
+  duration_ms: 8.964529
+  ...
+# Subtest: all historical and current JevBench and ImageJevBench artifact keys are covered
+ok 2 - all historical and current JevBench and ImageJevBench artifact keys are covered
+  ---
+  duration_ms: 7384.746086
+  ...
+# Subtest: wity entries preserve the author-requested model-family non-disclosure
+ok 3 - wity entries preserve the author-requested model-family non-disclosure
+  ---
+  duration_ms: 0.83611
+  ...
+# Subtest: encoder, diffusion, reranker, reference and single-backbone corrections remain explicit
+ok 4 - encoder, diffusion, reranker, reference and single-backbone corrections remain explicit
+  ---
+  duration_ms: 0.19414
+  ...
+# Subtest: v1.6.37 restates exactly the two v1.6.1 rows and adds nothing else
+ok 5 - v1.6.37 restates exactly the two v1.6.1 rows and adds nothing else
+  ---
+  duration_ms: 2.496445
+  ...
+# Subtest: h2o-lightning-4b: price corrected to the frozen Qwen/Qwen3.5-4B reference, nothing else of the published row changes
+ok 6 - h2o-lightning-4b: price corrected to the frozen Qwen/Qwen3.5-4B reference, nothing else of the published row changes
+  ---
+  duration_ms: 0.553973
+  ...
+# Subtest: kahn1: same correction on its own-estimate tokens; the false snapshot attribution of 0.04 is gone
+ok 7 - kahn1: same correction on its own-estimate tokens; the false snapshot attribution of 0.04 is gone
+  ---
+  duration_ms: 0.230323
+  ...
+# Subtest: all 70 carried rows keep every stored value; only rank and ranks move, by the restated rows above them
+ok 8 - all 70 carried rows keep every stored value; only rank and ranks move, by the restated rows above them
+  ---
+  duration_ms: 57.171062
+  ...
+# Subtest: the two other Qwen3.5-4B rows with the USD 0.04 inherited basis are untouched
+ok 9 - the two other Qwen3.5-4B rows with the USD 0.04 inherited basis are untouched
+  ---
+  duration_ms: 0.271796
+  ...
+# Subtest: v1.6.37 rejects altered price, usage, markers, text, intervals, approval and carried rows
+ok 10 - v1.6.37 rejects altered price, usage, markers, text, intervals, approval and carried rows
+  ---
+  duration_ms: 6791.832192
+  ...
+# Subtest: the corrected price is recomputed from tokens, the frozen tariff and the number of decisions
+ok 11 - the corrected price is recomputed from tokens, the frozen tariff and the number of decisions
+  ---
+  duration_ms: 0.214782
+  ...
+# Subtest: v1.6.37 archived route keeps shared board, method and history
+ok 12 - v1.6.37 archived route keeps shared board, method and history
+  ---
+  duration_ms: 8.036234
+  ...
+# Subtest: live boards and the agent feed resolve each restated row exactly once with the corrected figures; the frozen archive keeps the published ones
+ok 13 - live boards and the agent feed resolve each restated row exactly once with the corrected figures; the frozen archive keeps the published ones
+  ---
+  duration_ms: 119117.913784
+  ...
+# Subtest: SEO model, comparison and full-text pages follow the merged feed with corrected costs and the re-measured Seb
+ok 14 - SEO model, comparison and full-text pages follow the merged feed with corrected costs and the re-measured Seb
+  ---
+  duration_ms: 118309.384186
+  ...
+1..14
+# tests 14
+# suites 0
+# pass 14
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 258516.27501

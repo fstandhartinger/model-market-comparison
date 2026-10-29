@@ -1,0 +1,17 @@
+{
+ "handle": "r102919583071hb",
+ "unit": "heavy-jevbench-r198-v180-build2--r102919583071hb.service",
+ "exit_code": 1,
+ "phase": "browser launch after successful production build",
+ "postflip_suite": {
+  "tests": 246,
+  "pass": 245,
+  "fail": 0,
+  "skip": 1
+ },
+ "production_build": "PASS",
+ "compiled_feed": "PASS: 316 rows, 217 eligible open; API costs/caps unchanged",
+ "public_text": "PASS",
+ "full_suite_started": false,
+ "fix": "Playwright Python expected absent browser revision 1200; use existing /srv/heavy/tools/ms-playwright/chromium_headless_shell-1234 executable explicitly. New harness preflights launch before rebuilding, retains a disposable compiled-cache archive for recovery."
+}

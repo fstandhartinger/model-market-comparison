@@ -1,0 +1,747 @@
+{
+ "cost_changed": 210,
+ "max_diff_pct": 1256.9018706924842,
+ "newly_eligible": 46,
+ "note": "Cost basis for self-hosted open weights changed from base-model list prices to GPU time on a monthly-rented RTX PRO 6000 with an efficient inference engine. 210 rows have verified scored usage and a resolvable architecture; 46 additional open-weight rows fall within both official caps. Intelligence, Calibration and latency are unchanged; API costs and both caps are unchanged. Encoders, unresolved architectures and rows without a verified token basis retain their old costs. Composite intervals affected by the cost change are withheld; the archived v1.7 intervals use the old cost. Old values remain available in v1.7.x.",
+ "restated": 210,
+ "rows_over_2pct": [
+  {
+   "diff_pct": -87.76301210689911,
+   "explanation": "Own scored basis: 874592 input + 0 output / 1624 decisions = 538.541871921 tokens/decision; reproduces old USD 0.226187586206897. Reference architecture=dense, active_B=27.0. Reference tokens/decision=not recovered, token source=absent, throughput=11763.0; actual throughput=11763 (class, dense qwen, 27B). The reference omitted recoverable original scored usage. The release uses verified scored token totals rather than cost/input-rate inference; input and output token counts both enter GPU time.",
+   "key": "autojev-27b",
+   "reference_cost": 0.22618758620689655,
+   "release_cost": 0.02767854753983507
+  },
+  {
+   "diff_pct": -87.89095673434788,
+   "explanation": "Own scored basis: 942533 input + 1624 output / 1624 decisions = 581.377463054 tokens/decision; reproduces old USD 0.246758534482759. Reference architecture=dense, active_B=27.0. Reference tokens/decision=not recovered, token source=absent, throughput=11763.0; actual throughput=11763 (class, dense qwen, 27B). The reference omitted recoverable original scored usage. The release uses verified scored token totals rather than cost/input-rate inference; input and output token counts both enter GPU time.",
+   "key": "bev-bonsai-27b",
+   "reference_cost": 0.2467585344827586,
+   "release_cost": 0.02988009770220635
+  },
+  {
+   "diff_pct": -34.71826756277031,
+   "explanation": "Own scored basis: 714121 input + 258678 output / 1485 decisions = 655.083501684 tokens/decision; reproduces old USD 0.050173569023569. Reference architecture=small, active_B=12.0. Reference tokens/decision=1003.4713804713804, token source=derived(cost/in_rate), throughput=26861.916666666668; actual throughput=26861.9166667 (class, small gemma, 12B). The release uses verified scored token totals rather than cost/input-rate inference; input and output token counts both enter GPU time.",
+   "key": "chon-1.0-12b",
+   "reference_cost": 0.022584470404391006,
+   "release_cost": 0.014743533541759862
+  },
+  {
+   "diff_pct": -87.76301210689911,
+   "explanation": "Own scored basis: 963677 input + 0 output / 1624 decisions = 593.397167488 tokens/decision; reproduces old USD 0.249226810344828. Reference architecture=dense, active_B=27.0. Reference tokens/decision=not recovered, token source=absent, throughput=11763.0; actual throughput=11763 (class, dense qwen, 27B). The reference omitted recoverable original scored usage. The release uses verified scored token totals rather than cost/input-rate inference; input and output token counts both enter GPU time.",
+   "key": "clef",
+   "reference_cost": 0.24922681034482758,
+   "release_cost": 0.030497854608258067
+  },
+  {
+   "diff_pct": -77.89081093632089,
+   "explanation": "Own scored basis: 963677 input + 0 output / 1624 decisions = 593.397167488 tokens/decision; reproduces old USD 0.0593397167487685. Reference architecture=small, active_B=9.0. Reference tokens/decision=not recovered, token source=absent, throughput=27344.444444444445; actual throughput=27344.4444444 (class, small qwen, 9B). The reference omitted recoverable original scored usage. The release uses verified scored token totals rather than cost/input-rate inference; input and output token counts both enter GPU time.",
+   "key": "clef-flash",
+   "reference_cost": 0.05933971674876847,
+   "release_cost": 0.013119530165836881
+  },
+  {
+   "diff_pct": -83.20289529824949,
+   "explanation": "Own scored basis: 619933 input + 0 output / 1624 decisions = 381.732142857 tokens/decision; reproduces old USD 0.0446626607142857. Reference architecture=small, active_B=8.0. Reference tokens/decision=not recovered, token source=absent, throughput=30762.5; actual throughput=30762.5 (class, small qwen, 8B). The reference omitted recoverable original scored usage. The release uses verified scored token totals rather than cost/input-rate inference; input and output token counts both enter GPU time.",
+   "key": "clm-8b",
+   "reference_cost": 0.044662660714285714,
+   "release_cost": 0.007502033882766164
+  },
+  {
+   "diff_pct": -54.90789304865811,
+   "explanation": "Own scored basis: 920404 input + 1624 output / 1624 decisions = 567.751231527 tokens/decision; reproduces old USD 0.0283375615763547. Reference architecture=small, active_B=12.0. Reference tokens/decision=not recovered, token source=absent, throughput=26861.916666666668; actual throughput=26861.9166667 (class, small gemma, 12B). The reference omitted recoverable original scored usage. The release uses verified scored token totals rather than cost/input-rate inference; input and output token counts both enter GPU time.",
+   "key": "cygnet",
+   "reference_cost": 0.028337561576354687,
+   "release_cost": 0.01277800357341222
+  },
+  {
+   "diff_pct": -45.149323675107134,
+   "explanation": "Own scored basis: 664666 input + 172216 output / 1485 decisions = 563.556902357 tokens/decision; reproduces old USD 0.0205487676767677. Reference architecture=small, active_B=2.0. Reference tokens/decision=1027.438383838384, token source=derived(cost/in_rate), throughput=100000; actual throughput=100000 (class, small gemma, 2B). The release uses verified scored token totals rather than cost/input-rate inference; input and output token counts both enter GPU time.",
+   "key": "d1a-gemma4-e2b",
+   "reference_cost": 0.00621151737213404,
+   "release_cost": 0.0034070592886537333
+  },
+  {
+   "diff_pct": -45.159142851152154,
+   "explanation": "Own scored basis: 664666 input + 172302 output / 1485 decisions = 563.614814815 tokens/decision; reproduces old USD 0.0205545589225589. Reference architecture=small, active_B=4.0. Reference tokens/decision=1027.727946127946, token source=derived(cost/in_rate), throughput=80585.75; actual throughput=80585.75 (class, small gemma, 4B). The release uses verified scored token totals rather than cost/input-rate inference; input and output token counts both enter GPU time.",
+   "key": "d1a-gemma4-e4b",
+   "reference_cost": 0.007710132324912923,
+   "release_cost": 0.004228302654292637
+  },
+  {
+   "diff_pct": -54.98731534569137,
+   "explanation": "Own scored basis: 831319 input + 0 output / 1624 decisions = 511.895935961 tokens/decision; reproduces old USD 0.0255947967980296. Reference architecture=small, active_B=12.0. Reference tokens/decision=not recovered, token source=absent, throughput=26861.916666666668; actual throughput=26861.9166667 (class, small gemma, 12B). The reference omitted recoverable original scored usage. The release uses verified scored token totals rather than cost/input-rate inference; input and output token counts both enter GPU time.",
+   "key": "decider-12b",
+   "reference_cost": 0.025594796798029562,
+   "release_cost": 0.01152090517060813
+  },
+  {
+   "diff_pct": -54.98731534569137,
+   "explanation": "Own scored basis: 831319 input + 0 output / 1624 decisions = 511.895935961 tokens/decision; reproduces old USD 0.0255947967980296. Reference architecture=small, active_B=12.0. Reference tokens/decision=not recovered, token source=absent, throughput=26861.916666666668; actual throughput=26861.9166667 (class, small gemma, 12B). The reference omitted recoverable original scored usage. The release uses verified scored token totals rather than cost/input-rate inference; input and output token counts both enter GPU time.",
+   "key": "decider-12b-v1",
+   "reference_cost": 0.025594796798029562,
+   "release_cost": 0.01152090517060813
+  },
+  {
+   "diff_pct": -79.8478835978836,
+   "explanation": "Own scored basis: 799606 input + 0 output / 1624 decisions = 492.368226601 tokens/decision; reproduces old USD 0.0147710467980296. Reference architecture=small, active_B=2.0. Reference tokens/decision=not recovered, token source=absent, throughput=100000; actual throughput=100000 (class, small qwen, 2B). The reference omitted recoverable original scored usage. The release uses verified scored token totals rather than cost/input-rate inference; input and output token counts both enter GPU time.",
+   "key": "decider-2b",
+   "reference_cost": 0.014771046798029557,
+   "release_cost": 0.0029766785445500044
+  },
+  {
+   "diff_pct": -94.90889435538072,
+   "explanation": "Own scored basis: 799606 input + 0 output / 1624 decisions = 492.368226601 tokens/decision; reproduces old USD 0.153865070812808. Reference architecture=moe, active_B=3.0. Reference tokens/decision=not recovered, token source=absent, throughput=37999.666666666664; actual throughput=37999.6666667 (class, moe qwen, 3B). The reference omitted recoverable original scored usage. The release uses verified scored token totals rather than cost/input-rate inference; input and output token counts both enter GPU time.",
+   "key": "decider-35b-a3b",
+   "reference_cost": 0.1538650708128079,
+   "release_cost": 0.007833433305248303
+  },
+  {
+   "diff_pct": -67.24564583158651,
+   "explanation": "Own scored basis: 822885 input + 0 output / 1624 decisions = 506.702586207 tokens/decision; reproduces old USD 0.0152010775862069. Reference architecture=small, active_B=4.0. Reference tokens/decision=not recovered, token source=absent, throughput=61525.0; actual throughput=61525 (class, small qwen, 4B). The reference omitted recoverable original scored usage. The release uses verified scored token totals rather than cost/input-rate inference; input and output token counts both enter GPU time.",
+   "key": "decider-4b-v2",
+   "reference_cost": 0.015201077586206898,
+   "release_cost": 0.004979014790001528
+  },
+  {
+   "diff_pct": -23.65275498459716,
+   "explanation": "Own scored basis: 831272 input + 1485 output / 1485 decisions = 560.779124579 tokens/decision; reproduces old USD 0.0281389562289562. Reference architecture=small, active_B=12.0. Reference tokens/decision=560.7791245791245, token source=disclosed, throughput=20508.333333333332; actual throughput=26861.9166667 (class, small gemma, 12B). The release uses verified scored token totals rather than cost/input-rate inference; input and output token counts both enter GPU time.",
+   "key": "decisio-gemma-4-12b-tuned-commit",
+   "reference_cost": 0.01653116225104577,
+   "release_cost": 0.012621086947699698
+  },
+  {
+   "diff_pct": -2.830352815439874,
+   "explanation": "Own scored basis: 616406 input + 9110 output / 1489 decisions = 420.091336467 tokens/decision; reproduces old USD 0.0216163868368032. Reference architecture=small, active_B=12.0. Reference tokens/decision=432.32773673606454, token source=derived(cost/in_rate), throughput=26861.916666666668; actual throughput=26861.9166667 (class, small gemma, 12B). The release uses verified scored token totals rather than cost/input-rate inference; input and output token counts both enter GPU time.",
+   "key": "decisio-gemma-4-12b-tuned-commit-think",
+   "reference_cost": 0.009730116040505717,
+   "release_cost": 0.009454719427207697
+  },
+  {
+   "diff_pct": -67.24564583158651,
+   "explanation": "Own scored basis: 921181 input + 0 output / 1624 decisions = 567.229679803 tokens/decision; reproduces old USD 0.0170168903940887. Reference architecture=small, active_B=4.0. Reference tokens/decision=not recovered, token source=absent, throughput=61525.0; actual throughput=61525 (class, small qwen, 4B). The reference omitted recoverable original scored usage. The release uses verified scored token totals rather than cost/input-rate inference; input and output token counts both enter GPU time.",
+   "key": "decision-4b-v11",
+   "reference_cost": 0.01701689039408867,
+   "release_cost": 0.005573772548130538
+  },
+  {
+   "diff_pct": -67.24564583158651,
+   "explanation": "Own scored basis: 921181 input + 0 output / 1624 decisions = 567.229679803 tokens/decision; reproduces old USD 0.0170168903940887. Reference architecture=small, active_B=4.0. Reference tokens/decision=not recovered, token source=absent, throughput=61525.0; actual throughput=61525 (class, small qwen, 4B). The reference omitted recoverable original scored usage. The release uses verified scored token totals rather than cost/input-rate inference; input and output token counts both enter GPU time.",
+   "key": "decision-4b-v12",
+   "reference_cost": 0.01701689039408867,
+   "release_cost": 0.005573772548130538
+  },
+  {
+   "diff_pct": -39.543650793650784,
+   "explanation": "Own scored basis: 748805 input + 0 output / 1624 decisions = 461.08682266 tokens/decision; reproduces old USD 0.00461086822660099. Reference architecture=small, active_B=0.6. Reference tokens/decision=not recovered, token source=absent, throughput=100000; actual throughput=100000 (class, small qwen, 0.6B). The reference omitted recoverable original scored usage. The release uses verified scored token totals rather than cost/input-rate inference; input and output token counts both enter GPU time.",
+   "key": "decision-fast",
+   "reference_cost": 0.004610868226600985,
+   "release_cost": 0.0027875625965184925
+  },
+  {
+   "diff_pct": -39.5436507936508,
+   "explanation": "Own scored basis: 737323 input + 0 output / 1624 decisions = 454.016625616 tokens/decision; reproduces old USD 0.00454016625615764. Reference architecture=small, active_B=0.8. Reference tokens/decision=not recovered, token source=absent, throughput=100000; actual throughput=100000 (class, small qwen, 0.8B). The reference omitted recoverable original scored usage. The release uses verified scored token totals rather than cost/input-rate inference; input and output token counts both enter GPU time.",
+   "key": "deem-0.8-v1",
+   "reference_cost": 0.004540166256157636,
+   "release_cost": 0.0027448187663714914
+  },
+  {
+   "diff_pct": -2.182546145895936,
+   "explanation": "Own scored basis: 763351 input + 7370 output / 1477 decisions = 521.815165877 tokens/decision; reproduces old USD 0.0480112322274881. Reference architecture=moe, active_B=4.0. Reference tokens/decision=533.4581358609794, token source=derived(cost/in_rate), throughput=34662.5; actual throughput=34662.5 (class, moe gemma, 4B). The release uses verified scored token totals rather than cost/input-rate inference; input and output token counts both enter GPU time.",
+   "key": "diffusion-jev",
+   "reference_cost": 0.009304271575500742,
+   "release_cost": 0.00910120155482596
+  },
+  {
+   "diff_pct": -87.76301210689911,
+   "explanation": "Own scored basis: 921181 input + 0 output / 1624 decisions = 567.229679803 tokens/decision; reproduces old USD 0.238236465517241. Reference architecture=dense, active_B=27.0. Reference tokens/decision=not recovered, token source=absent, throughput=11763.0; actual throughput=11763 (class, dense qwen, 27B). The reference omitted recoverable original scored usage. The release uses verified scored token totals rather than cost/input-rate inference; input and output token counts both enter GPU time.",
+   "key": "eikos-27b",
+   "reference_cost": 0.23823646551724137,
+   "release_cost": 0.029152967442296302
+  },
+  {
+   "diff_pct": -67.24564583158651,
+   "explanation": "Own scored basis: 742801 input + 0 output / 1624 decisions = 457.389778325 tokens/decision; reproduces old USD 0.0137216933497537. Reference architecture=small, active_B=4.0. Reference tokens/decision=not recovered, token source=absent, throughput=61525.0; actual throughput=61525 (class, small qwen, 4B). The reference omitted recoverable original scored usage. The release uses verified scored token totals rather than cost/input-rate inference; input and output token counts both enter GPU time.",
+   "key": "evalengine-decision-4b",
+   "reference_cost": 0.013721693349753695,
+   "release_cost": 0.004494452037681966
+  },
+  {
+   "diff_pct": 230.81719724318995,
+   "explanation": "Old cost retained: unresolvable. Declared base LGAI-EXAONE/EXAONE-4.0-1.2B has no verified mapping to the six calibrated Gemma/Qwen classes; a pricing proxy alone is not architecture evidence.",
+   "key": "exaone-4.0-1.2b-jev-v0.3",
+   "reference_cost": 0.007640045265499566,
+   "release_cost": 0.025274583615436694
+  },
+  {
+   "diff_pct": -67.24564583158651,
+   "explanation": "Own scored basis: 980819 input + 0 output / 1624 decisions = 603.952586207 tokens/decision; reproduces old USD 0.0181185775862069. Reference architecture=small, active_B=4.0. Reference tokens/decision=not recovered, token source=absent, throughput=61525.0; actual throughput=61525 (class, small qwen, 4B). The reference omitted recoverable original scored usage. The release uses verified scored token totals rather than cost/input-rate inference; input and output token counts both enter GPU time.",
+   "key": "hopper",
+   "reference_cost": 0.018118577586206896,
+   "release_cost": 0.005934623072864991
+  },
+  {
+   "diff_pct": -67.2456458315865,
+   "explanation": "Own scored basis: 831083 input + 0 output / 1624 decisions = 511.750615764 tokens/decision; reproduces old USD 0.0153525184729064. Reference architecture=small, active_B=4.0. Reference tokens/decision=not recovered, token source=absent, throughput=61525.0; actual throughput=61525 (class, small qwen, 4B). The reference omitted recoverable original scored usage. The release uses verified scored token totals rather than cost/input-rate inference; input and output token counts both enter GPU time.",
+   "key": "janus-4b",
+   "reference_cost": 0.015352518472906404,
+   "release_cost": 0.005028618274386871
+  },
+  {
+   "diff_pct": -8.99012005588924,
+   "explanation": "Own scored basis: 589108 input + 21722 output / 1489 decisions = 410.228341169 tokens/decision; reproduces old USD 0.0405676292813969. Reference architecture=dense, active_B=31.0. Reference tokens/decision=450.75143645996576, token source=derived(cost/in_rate), throughput=10106.516129032258; actual throughput=10106.516129 (class, dense gemma, 31B). The release uses verified scored token totals rather than cost/input-rate inference; input and output token counts both enter GPU time.",
+   "key": "jeff_1_1_large",
+   "reference_cost": 0.026963580624589176,
+   "release_cost": 0.02453952235507212
+  },
+  {
+   "diff_pct": -34.311762168330205,
+   "explanation": "Own scored basis: 814647 input + 71931 output / 1485 decisions = 597.022222222 tokens/decision; reproduces old USD 0.0346949494949495. Reference architecture=small, active_B=12. Reference tokens/decision=693.89898989899, token source=derived(cost/in_rate), throughput=20508.333333333332; actual throughput=26861.9166667 (class, small gemma, 12B). The release uses verified scored token totals rather than cost/input-rate inference; input and output token counts both enter GPU time.",
+   "key": "jeff_1_1_medium",
+   "reference_cost": 0.020455391945030307,
+   "release_cost": 0.013436786510251734
+  },
+  {
+   "diff_pct": -29.240439365652872,
+   "explanation": "Own scored basis: 598499 input + 68954 output / 1489 decisions = 448.255876427 tokens/decision; reproduces old USD 0.0190047481531229. Reference architecture=small, active_B=4.0. Reference tokens/decision=633.4916051040968, token source=derived(cost/in_rate), throughput=61525.0; actual throughput=61525 (class, small qwen, 4B). The release uses verified scored token totals rather than cost/input-rate inference; input and output token counts both enter GPU time.",
+   "key": "jeff_1_1_qwen_4b",
+   "reference_cost": 0.006224882518888899,
+   "release_cost": 0.004404699520370065
+  },
+  {
+   "diff_pct": -77.93780694034102,
+   "explanation": "Own scored basis: 379568 input + 1624 output / 1624 decisions = 234.724137931 tokens/decision; reproduces old USD 0.0235224137931034. Reference architecture=small, active_B=9.0. Reference tokens/decision=not recovered, token source=absent, throughput=27344.444444444445; actual throughput=27344.4444444 (class, small qwen, 9B). The reference omitted recoverable original scored usage. The release uses verified scored token totals rather than cost/input-rate inference; input and output token counts both enter GPU time.",
+   "key": "jev-local",
+   "reference_cost": 0.023522413793103446,
+   "release_cost": 0.0051895603433263346
+  },
+  {
+   "diff_pct": -54.98731534569136,
+   "explanation": "Own scored basis: 947498 input + 0 output / 1624 decisions = 583.434729064 tokens/decision; reproduces old USD 0.029171736453202. Reference architecture=small, active_B=12.0. Reference tokens/decision=not recovered, token source=absent, throughput=26861.916666666668; actual throughput=26861.9166667 (class, small gemma, 12B). The reference omitted recoverable original scored usage. The release uses verified scored token totals rather than cost/input-rate inference; input and output token counts both enter GPU time.",
+   "key": "jev-omni",
+   "reference_cost": 0.02917173645320197,
+   "release_cost": 0.013130981737865803
+  },
+  {
+   "diff_pct": -67.24564583158651,
+   "explanation": "Own scored basis: 921181 input + 0 output / 1624 decisions = 567.229679803 tokens/decision; reproduces old USD 0.0170168903940887. Reference architecture=small, active_B=4.0. Reference tokens/decision=not recovered, token source=absent, throughput=61525.0; actual throughput=61525 (class, small qwen, 4B). The reference omitted recoverable original scored usage. The release uses verified scored token totals rather than cost/input-rate inference; input and output token counts both enter GPU time.",
+   "key": "jevk5-v0.3-4b",
+   "reference_cost": 0.01701689039408867,
+   "release_cost": 0.005573772548130538
+  },
+  {
+   "diff_pct": -67.24564583158651,
+   "explanation": "Own scored basis: 921181 input + 0 output / 1624 decisions = 567.229679803 tokens/decision; reproduces old USD 0.0170168903940887. Reference architecture=small, active_B=4.0. Reference tokens/decision=not recovered, token source=absent, throughput=61525.0; actual throughput=61525 (class, small qwen, 4B). The reference omitted recoverable original scored usage. The release uses verified scored token totals rather than cost/input-rate inference; input and output token counts both enter GPU time.",
+   "key": "jevk5-v02",
+   "reference_cost": 0.01701689039408867,
+   "release_cost": 0.005573772548130538
+  },
+  {
+   "diff_pct": -92.02942934256939,
+   "explanation": "Own scored basis: 821899 input + 1624 output / 1624 decisions = 507.09544335 tokens/decision; reproduces old USD 0.101219088669951. Reference architecture=moe, active_B=3.0. Reference tokens/decision=not recovered, token source=absent, throughput=37999.666666666664; actual throughput=37999.6666667 (class, moe qwen, 3B). The reference omitted recoverable original scored usage. The release uses verified scored token totals rather than cost/input-rate inference; input and output token counts both enter GPU time.",
+   "key": "jevone",
+   "reference_cost": 0.10121908866995075,
+   "release_cost": 0.008067738981245761
+  },
+  {
+   "diff_pct": -23.858741998483357,
+   "explanation": "Own scored basis: 861145 input + 0 output / 1624 decisions = 530.261699507 tokens/decision; reproduces old USD 0.0424209359605911. Reference architecture=dense, active_B=32.0. Reference tokens/decision=not recovered, token source=absent, throughput=9925.03125; actual throughput=9925.03125 (class, dense qwen, 32B). The reference omitted recoverable original scored usage. The release uses verified scored token totals rather than cost/input-rate inference; input and output token counts both enter GPU time.",
+   "key": "jqv",
+   "reference_cost": 0.042420935960591134,
+   "release_cost": 0.032299834296411846
+  },
+  {
+   "diff_pct": 230.81719724318995,
+   "explanation": "Old cost retained: unresolvable. Declared base openbmb/MiniCPM5-2B has no verified mapping to the six calibrated Gemma/Qwen classes; a pricing proxy alone is not architecture evidence.",
+   "key": "jul-fast",
+   "reference_cost": 0.0032671970048682984,
+   "release_cost": 0.010808449559918753
+  },
+  {
+   "diff_pct": -27.008007688521207,
+   "explanation": "Own scored basis: 748376 input + 155176 output / 1624 decisions = 556.374384236 tokens/decision; reproduces old USD 0.00460822660098522. Reference architecture=small, active_B=0.5. Reference tokens/decision=not recovered, token source=absent, throughput=100000; actual throughput=100000 (class, small qwen, 0.5B). The reference omitted recoverable original scored usage. The release uses verified scored token totals rather than cost/input-rate inference; input and output token counts both enter GPU time.",
+   "key": "kev-0.5b",
+   "reference_cost": 0.004608226600985222,
+   "release_cost": 0.0033636364062866533
+  },
+  {
+   "diff_pct": -27.035618893846703,
+   "explanation": "Own scored basis: 748375 input + 154834 output / 1624 decisions = 556.16317734 tokens/decision; reproduces old USD 0.00460822044334975. Reference architecture=small, active_B=0.6. Reference tokens/decision=not recovered, token source=absent, throughput=100000; actual throughput=100000 (class, small qwen, 0.6B). The reference omitted recoverable original scored usage. The release uses verified scored token totals rather than cost/input-rate inference; input and output token counts both enter GPU time.",
+   "key": "kev-0.6b",
+   "reference_cost": 0.004608220443349753,
+   "release_cost": 0.003362359526497381
+  },
+  {
+   "diff_pct": -55.30650083824338,
+   "explanation": "Own scored basis: 663658 input + 167418 output / 1477 decisions = 562.678402167 tokens/decision; reproduces old USD 0.528768016249154. Reference architecture=dense, active_B=27.0. Reference tokens/decision=1258.9714672598898, token source=derived(cost/in_rate), throughput=11763.0; actual throughput=11763 (class, dense qwen, 27B). The release uses verified scored token totals rather than cost/input-rate inference; input and output token counts both enter GPU time.",
+   "key": "kev-27b",
+   "reference_cost": 0.06470527813099868,
+   "release_cost": 0.028919052939090185
+  },
+  {
+   "diff_pct": -60.526008283792024,
+   "explanation": "Own scored basis: 748375 input + 153531 output / 1624 decisions = 555.360837438 tokens/decision; reproduces old USD 0.0138246613300493. Reference architecture=small, active_B=4.0. Reference tokens/decision=not recovered, token source=absent, throughput=61525.0; actual throughput=61525 (class, small qwen, 4B). The reference omitted recoverable original scored usage. The release uses verified scored token totals rather than cost/input-rate inference; input and output token counts both enter GPU time.",
+   "key": "kev-4b",
+   "reference_cost": 0.013824661330049262,
+   "release_cost": 0.005457145668217454
+  },
+  {
+   "diff_pct": -88.73246997033746,
+   "explanation": "Own scored basis: 748375 input + 153147 output / 1624 decisions = 555.124384236 tokens/decision; reproduces old USD 0.0968237438423645. Reference architecture=small, active_B=8.0. Reference tokens/decision=not recovered, token source=absent, throughput=30762.5; actual throughput=30762.5 (class, small qwen, 8B). The reference omitted recoverable original scored usage. The release uses verified scored token totals rather than cost/input-rate inference; input and output token counts both enter GPU time.",
+   "key": "kev-8b",
+   "reference_cost": 0.09682374384236453,
+   "release_cost": 0.01090964441328195
+  },
+  {
+   "diff_pct": -77.89081093632089,
+   "explanation": "Own scored basis: 626409 input + 0 output / 1485 decisions = 421.824242424 tokens/decision; reproduces old USD 0.0421824242424242. Reference architecture=encoder, active_B=. Reference tokens/decision=421.8242424242423, token source=derived(cost/in_rate), throughput=; actual throughput=27344.4444444 (class, small qwen, 9B). The release uses verified scored token totals rather than cost/input-rate inference; input and output token counts both enter GPU time.",
+   "key": "knowledgator_gliclass_v4_9b",
+   "reference_cost": 0.04218242424242424,
+   "release_cost": 0.009326191927400784
+  },
+  {
+   "diff_pct": -44.21349361285043,
+   "explanation": "Own scored basis: 662682 input + 163746 output / 1485 decisions = 556.517171717 tokens/decision; reproduces old USD 0.0199516767676768. Reference architecture=small, active_B=2.0. Reference tokens/decision=997.5838383838382, token source=derived(cost/in_rate), throughput=100000; actual throughput=100000 (class, small qwen, 2B). The release uses verified scored token totals rather than cost/input-rate inference; input and output token counts both enter GPU time.",
+   "key": "krino-2b",
+   "reference_cost": 0.006031027689594356,
+   "release_cost": 0.0033644996472663143
+  },
+  {
+   "diff_pct": -67.2456458315865,
+   "explanation": "Own scored basis: 1015861 input + 0 output / 1624 decisions = 625.530172414 tokens/decision; reproduces old USD 0.0187659051724138. Reference architecture=small, active_B=4.0. Reference tokens/decision=not recovered, token source=absent, throughput=61525.0; actual throughput=61525 (class, small qwen, 4B). The reference omitted recoverable original scored usage. The release uses verified scored token totals rather than cost/input-rate inference; input and output token counts both enter GPU time.",
+   "key": "lev",
+   "reference_cost": 0.01876590517241379,
+   "release_cost": 0.006146651043081042
+  },
+  {
+   "diff_pct": 307.0705612077454,
+   "explanation": "Old cost retained: unresolvable. Declared base LiquidAI/LFM2.5-VL-3B has no verified mapping to the six calibrated Gemma/Qwen classes; a pricing proxy alone is not architecture evidence.",
+   "key": "liquid-d1-3b",
+   "reference_cost": 0.010921796916016847,
+   "release_cost": 0.044459420000000006
+  },
+  {
+   "diff_pct": -87.76301210689911,
+   "explanation": "Own scored basis: 944931 input + 0 output / 1624 decisions = 581.854064039 tokens/decision; reproduces old USD 0.244378706896552. Reference architecture=dense, active_B=27.0. Reference tokens/decision=not recovered, token source=absent, throughput=11763.0; actual throughput=11763 (class, dense qwen, 27B). The reference omitted recoverable original scored usage. The release uses verified scored token totals rather than cost/input-rate inference; input and output token counts both enter GPU time.",
+   "key": "litjev",
+   "reference_cost": 0.2443787068965517,
+   "release_cost": 0.029904592776247543
+  },
+  {
+   "diff_pct": -75.39111115018507,
+   "explanation": "Own scored basis: 925135 input + 1624 output / 1624 decisions = 570.664408867 tokens/decision; reproduces old USD 0.0227865763546798. Reference architecture=small, active_B=4.0. Reference tokens/decision=not recovered, token source=absent, throughput=61525.0; actual throughput=61525 (class, small qwen, 4B). The reference omitted recoverable original scored usage. The release uses verified scored token totals rather than cost/input-rate inference; input and output token counts both enter GPU time.",
+   "key": "localjev-qwen3.5-4b",
+   "reference_cost": 0.022786576354679802,
+   "release_cost": 0.005607523247801365
+  },
+  {
+   "diff_pct": -75.37077157739192,
+   "explanation": "Own scored basis: 760783 input + 169020 output / 1624 decisions = 572.538793103 tokens/decision; reproduces old USD 0.0140538731527094. Reference architecture=small, active_B=2.0. Reference tokens/decision=not recovered, token source=absent, throughput=100000; actual throughput=100000 (class, small qwen, 2B). The reference omitted recoverable original scored usage. The release uses verified scored token totals rather than cost/input-rate inference; input and output token counts both enter GPU time.",
+   "key": "malkuth-2b",
+   "reference_cost": 0.014053873152709357,
+   "release_cost": 0.0034613605210043795
+  },
+  {
+   "diff_pct": -81.04309798574305,
+   "explanation": "Own scored basis: 760783 input + 169222 output / 1624 decisions = 572.66317734 tokens/decision; reproduces old USD 0.0296839839901478. Reference architecture=small, active_B=4.0. Reference tokens/decision=not recovered, token source=absent, throughput=61525.0; actual throughput=61525 (class, small qwen, 4B). The reference omitted recoverable original scored usage. The release uses verified scored token totals rather than cost/input-rate inference; input and output token counts both enter GPU time.",
+   "key": "malkuth-4b",
+   "reference_cost": 0.02968398399014778,
+   "release_cost": 0.005627163758940036
+  },
+  {
+   "diff_pct": -75.43423437368988,
+   "explanation": "Own scored basis: 1041090 input + 0 output / 1624 decisions = 641.065270936 tokens/decision; reproduces old USD 0.0256426108374384. Reference architecture=small, active_B=4.0. Reference tokens/decision=not recovered, token source=absent, throughput=61525.0; actual throughput=61525 (class, small qwen, 4B). The reference omitted recoverable original scored usage. The release uses verified scored token totals rather than cost/input-rate inference; input and output token counts both enter GPU time.",
+   "key": "metask-jev-4b",
+   "reference_cost": 0.025642610837438424,
+   "release_cost": 0.006299303678791922
+  },
+  {
+   "diff_pct": -21.423664074181104,
+   "explanation": "Own scored basis: 1456885 input + 106568 output / 1479 decisions = 1057.10141988 tokens/decision; reproduces old USD 0.0403595334685598. Reference architecture=small, active_B=4.0. Reference tokens/decision=1345.317782285328, token source=derived(cost/in_rate), throughput=61525.0; actual throughput=61525 (class, small qwen, 4B). The release uses verified scored token totals rather than cost/input-rate inference; input and output token counts both enter GPU time.",
+   "key": "metask-jev-rain-4b",
+   "reference_cost": 0.013219504533011468,
+   "release_cost": 0.010387402289587948
+  },
+  {
+   "diff_pct": -35.42301671846001,
+   "explanation": "Own scored basis: 859455 input + 86179 output / 1479 decisions = 639.373901285 tokens/decision; reproduces old USD 0.037795537525355. Reference architecture=small, active_B=12.0. Reference tokens/decision=755.9107505070994, token source=derived(cost/in_rate), throughput=20508.333333333332; actual throughput=26861.9166667 (class, small gemma, 12B). The release uses verified scored token totals rather than cost/input-rate inference; input and output token counts both enter GPU time.",
+   "key": "metask_jev_rain_12b",
+   "reference_cost": 0.022283431597638705,
+   "release_cost": 0.014389967897360545
+  },
+  {
+   "diff_pct": -14.995904850081898,
+   "explanation": "Own scored basis: 870611 input + 84223 output / 1485 decisions = 642.985858586 tokens/decision; reproduces old USD 0.0378208754208754. Reference architecture=small, active_B=12.0. Reference tokens/decision=756.4175084175083, token source=derived(cost/in_rate), throughput=26861.916666666668; actual throughput=26861.9166667 (class, small gemma, 12B). The release uses verified scored token totals rather than cost/input-rate inference; input and output token counts both enter GPU time.",
+   "key": "metask_jev_rain_12b_trained",
+   "reference_cost": 0.017024191386697578,
+   "release_cost": 0.014471259844852572
+  },
+  {
+   "diff_pct": -5.964444744576813,
+   "explanation": "Own scored basis: 743854 input + 17382 output / 1485 decisions = 512.616835017 tokens/decision; reproduces old USD 0.0490617777777778. Reference architecture=dense, active_B=31.0. Reference tokens/decision=545.1308641975309, token source=derived(cost/in_rate), throughput=10106.516129032258; actual throughput=10106.516129 (class, dense gemma, 31B). The release uses verified scored token totals rather than cost/input-rate inference; input and output token counts both enter GPU time.",
+   "key": "metask_jev_rain_31b_trained_v3",
+   "reference_cost": 0.03260928045660834,
+   "release_cost": 0.03066431794216985
+  },
+  {
+   "diff_pct": -39.54365079365078,
+   "explanation": "Own scored basis: 782199 input + 0 output / 1624 decisions = 481.649630542 tokens/decision; reproduces old USD 0.00481649630541872. Reference architecture=small, active_B=0.8. Reference tokens/decision=not recovered, token source=absent, throughput=100000; actual throughput=100000 (class, small qwen, 0.8B). The reference omitted recoverable original scored usage. The release uses verified scored token totals rather than cost/input-rate inference; input and output token counts both enter GPU time.",
+   "key": "mghafiri-qwen3.5-0.8b-decision-model",
+   "reference_cost": 0.00481649630541872,
+   "release_cost": 0.0029118778259148497
+  },
+  {
+   "diff_pct": -77.90803961433316,
+   "explanation": "Own scored basis: 2079172 input + 3248 output / 1624 decisions = 1282.27832512 tokens/decision; reproduces old USD 0.128327832512315. Reference architecture=small, active_B=9.0. Reference tokens/decision=not recovered, token source=absent, throughput=27344.444444444445; actual throughput=27344.4444444 (class, small qwen, 9B). The reference omitted recoverable original scored usage. The release uses verified scored token totals rather than cost/input-rate inference; input and output token counts both enter GPU time.",
+   "key": "nimble-9b",
+   "reference_cost": 0.1283278325123153,
+   "release_cost": 0.02835013392240557
+  },
+  {
+   "diff_pct": -87.76301210689911,
+   "explanation": "Own scored basis: 891334 input + 0 output / 1624 decisions = 548.850985222 tokens/decision; reproduces old USD 0.230517413793103. Reference architecture=dense, active_B=27.0. Reference tokens/decision=not recovered, token source=absent, throughput=11763.0; actual throughput=11763 (class, dense qwen, 27B). The reference omitted recoverable original scored usage. The release uses verified scored token totals rather than cost/input-rate inference; input and output token counts both enter GPU time.",
+   "key": "ninfer-qwen3.8-27b",
+   "reference_cost": 0.2305174137931034,
+   "release_cost": 0.02820838801735135
+  },
+  {
+   "diff_pct": -89.39352990704317,
+   "explanation": "Own scored basis: 891334 input + 0 output / 1624 decisions = 548.850985222 tokens/decision; reproduces old USD 0.0823276477832512. Reference architecture=moe, active_B=3.0. Reference tokens/decision=not recovered, token source=absent, throughput=37999.666666666664; actual throughput=37999.6666667 (class, moe qwen, 3B). The reference omitted recoverable original scored usage. The release uses verified scored token totals rather than cost/input-rate inference; input and output token counts both enter GPU time.",
+   "key": "ninfer-qwen3.8-flash-next",
+   "reference_cost": 0.08232764778325123,
+   "release_cost": 0.00873205734036537
+  },
+  {
+   "diff_pct": -80.62063574745387,
+   "explanation": "Own scored basis: 884103 input + 0 output / 1624 decisions = 544.398399015 tokens/decision; reproduces old USD 0.0489958559113301. Reference architecture=moe, active_B=4.0. Reference tokens/decision=not recovered, token source=absent, throughput=34662.5; actual throughput=34662.5 (class, moe gemma, 4B). The reference omitted recoverable original scored usage. The release uses verified scored token totals rather than cost/input-rate inference; input and output token counts both enter GPU time.",
+   "key": "open-jev-json-canvas-joshuasp",
+   "reference_cost": 0.04899585591133005,
+   "release_cost": 0.009495085385709303
+  },
+  {
+   "diff_pct": -93.95436507936508,
+   "explanation": "Own scored basis: 2767510 input + 0 output / 1624 decisions = 1704.1317734 tokens/decision; reproduces old USD 0.170413177339901. Reference architecture=small, active_B=2.0. Reference tokens/decision=not recovered, token source=absent, throughput=100000; actual throughput=100000 (class, small qwen, 2B). The reference omitted recoverable original scored usage. The release uses verified scored token totals rather than cost/input-rate inference; input and output token counts both enter GPU time.",
+   "key": "open-jev-zefan-2b",
+   "reference_cost": 0.17041317733990147,
+   "release_cost": 0.0103025585586246
+  },
+  {
+   "diff_pct": -77.89081093632089,
+   "explanation": "Own scored basis: 2767510 input + 0 output / 1624 decisions = 1704.1317734 tokens/decision; reproduces old USD 0.170413177339901. Reference architecture=small, active_B=9.0. Reference tokens/decision=not recovered, token source=absent, throughput=27344.444444444445; actual throughput=27344.4444444 (class, small qwen, 9B). The reference omitted recoverable original scored usage. The release uses verified scored token totals rather than cost/input-rate inference; input and output token counts both enter GPU time.",
+   "key": "open-jev-zefan-9b",
+   "reference_cost": 0.17041317733990147,
+   "release_cost": 0.03767697156750158
+  },
+  {
+   "diff_pct": -86.7654028394877,
+   "explanation": "Own scored basis: 2383393 input + 592069 output / 1624 decisions = 1832.18103448 tokens/decision; reproduces old USD 0.241456939655172. Reference architecture=moe, active_B=4.0. Reference tokens/decision=not recovered, token source=absent, throughput=34662.5; actual throughput=34662.5 (class, moe gemma, 4B). The reference omitted recoverable original scored usage. The release uses verified scored token totals rather than cost/input-rate inference; input and output token counts both enter GPU time.",
+   "key": "openjev-thinking",
+   "reference_cost": 0.24145693965517237,
+   "release_cost": 0.03195585327946334
+  },
+  {
+   "diff_pct": -67.61349476684326,
+   "explanation": "Own scored basis: 570303 input + 1624 output / 1624 decisions = 352.17179803 tokens/decision; reproduces old USD 0.0106851539408867. Reference architecture=small, active_B=4.0. Reference tokens/decision=not recovered, token source=absent, throughput=61525.0; actual throughput=61525 (class, small qwen, 4B). The reference omitted recoverable original scored usage. The release uses verified scored token totals rather than cost/input-rate inference; input and output token counts both enter GPU time.",
+   "key": "opensourcejev-qwen35-4b-q4km",
+   "reference_cost": 0.0106851539408867,
+   "release_cost": 0.003460547940236125
+  },
+  {
+   "diff_pct": 396.2257958647849,
+   "explanation": "Old cost retained: unresolvable. Declared base not resolved has no verified mapping to the six calibrated Gemma/Qwen classes; a pricing proxy alone is not architecture evidence.",
+   "key": "pjev-2b",
+   "reference_cost": 0.0033125845385067612,
+   "release_cost": 0.01643789898989899
+  },
+  {
+   "diff_pct": -67.24564583158651,
+   "explanation": "Own scored basis: 921181 input + 0 output / 1624 decisions = 567.229679803 tokens/decision; reproduces old USD 0.0170168903940887. Reference architecture=small, active_B=4.0. Reference tokens/decision=not recovered, token source=absent, throughput=61525.0; actual throughput=61525 (class, small qwen, 4B). The reference omitted recoverable original scored usage. The release uses verified scored token totals rather than cost/input-rate inference; input and output token counts both enter GPU time.",
+   "key": "plumb-4b",
+   "reference_cost": 0.01701689039408867,
+   "release_cost": 0.005573772548130538
+  },
+  {
+   "diff_pct": -60.694774997903814,
+   "explanation": "Own scored basis: 3409751 input + 0 output / 1624 decisions = 2099.60036946 tokens/decision; reproduces old USD 0.0524900092364532. Reference architecture=small, active_B=4.0. Reference tokens/decision=not recovered, token source=absent, throughput=61525.0; actual throughput=61525 (class, small qwen, 4B). The reference omitted recoverable original scored usage. The release uses verified scored token totals rather than cost/input-rate inference; input and output token counts both enter GPU time.",
+   "key": "qwen3-reranker-4b",
+   "reference_cost": 0.05249000923645321,
+   "release_cost": 0.020631316234009007
+  },
+  {
+   "diff_pct": -77.89081093632089,
+   "explanation": "Own scored basis: 1049330 input + 0 output / 1624 decisions = 646.139162562 tokens/decision; reproduces old USD 0.0646139162561576. Reference architecture=small, active_B=9.0. Reference tokens/decision=not recovered, token source=absent, throughput=27344.444444444445; actual throughput=27344.4444444 (class, small qwen, 9B). The reference omitted recoverable original scored usage. The release uses verified scored token totals rather than cost/input-rate inference; input and output token counts both enter GPU time.",
+   "key": "qwen35-9b-jev-data-mix-v2",
+   "reference_cost": 0.06461391625615764,
+   "release_cost": 0.014285612906521182
+  },
+  {
+   "diff_pct": -39.543650793650784,
+   "explanation": "Own scored basis: 907601 input + 0 output / 1624 decisions = 558.867610837 tokens/decision; reproduces old USD 0.00558867610837438. Reference architecture=small, active_B=0.6. Reference tokens/decision=not recovered, token source=absent, throughput=100000; actual throughput=100000 (class, small qwen, 0.6B). The reference omitted recoverable original scored usage. The release uses verified scored token totals rather than cost/input-rate inference; input and output token counts both enter GPU time.",
+   "key": "raw-qwen3-0.6b",
+   "reference_cost": 0.005588676108374384,
+   "release_cost": 0.003378709544090625
+  },
+  {
+   "diff_pct": -69.77182539682539,
+   "explanation": "Own scored basis: 907601 input + 0 output / 1624 decisions = 558.867610837 tokens/decision; reproduces old USD 0.0111773522167488. Reference architecture=small, active_B=1.7. Reference tokens/decision=not recovered, token source=absent, throughput=100000; actual throughput=100000 (class, small qwen, 1.7B). The reference omitted recoverable original scored usage. The release uses verified scored token totals rather than cost/input-rate inference; input and output token counts both enter GPU time.",
+   "key": "raw-qwen3-1.7b",
+   "reference_cost": 0.011177352216748768,
+   "release_cost": 0.003378709544090625
+  },
+  {
+   "diff_pct": -67.2456458315865,
+   "explanation": "Own scored basis: 901105 input + 0 output / 1624 decisions = 554.867610837 tokens/decision; reproduces old USD 0.0166460283251232. Reference architecture=small, active_B=4.0. Reference tokens/decision=not recovered, token source=absent, throughput=61525.0; actual throughput=61525 (class, small qwen, 4B). The reference omitted recoverable original scored usage. The release uses verified scored token totals rather than cost/input-rate inference; input and output token counts both enter GPU time.",
+   "key": "raw-qwen3-4b-instruct-2507",
+   "reference_cost": 0.01664602832512315,
+   "release_cost": 0.005452299072585267
+  },
+  {
+   "diff_pct": -83.20289529824949,
+   "explanation": "Own scored basis: 907601 input + 0 output / 1624 decisions = 558.867610837 tokens/decision; reproduces old USD 0.0653875104679803. Reference architecture=small, active_B=8.0. Reference tokens/decision=not recovered, token source=absent, throughput=30762.5; actual throughput=30762.5 (class, small qwen, 8B). The reference omitted recoverable original scored usage. The release uses verified scored token totals rather than cost/input-rate inference; input and output token counts both enter GPU time.",
+   "key": "raw-qwen3-8b",
+   "reference_cost": 0.0653875104679803,
+   "release_cost": 0.010983208595174725
+  },
+  {
+   "diff_pct": -67.2456458315865,
+   "explanation": "Own scored basis: 916307 input + 0 output / 1624 decisions = 564.228448276 tokens/decision; reproduces old USD 0.0169268534482759. Reference architecture=small, active_B=4.0. Reference tokens/decision=not recovered, token source=absent, throughput=61525.0; actual throughput=61525 (class, small qwen, 4B). The reference omitted recoverable original scored usage. The release uses verified scored token totals rather than cost/input-rate inference; input and output token counts both enter GPU time.",
+   "key": "reflex-4b",
+   "reference_cost": 0.016926853448275863,
+   "release_cost": 0.005544281528016589
+  },
+  {
+   "diff_pct": -67.24564583158651,
+   "explanation": "Own scored basis: 921181 input + 0 output / 1624 decisions = 567.229679803 tokens/decision; reproduces old USD 0.0170168903940887. Reference architecture=small, active_B=4.0. Reference tokens/decision=not recovered, token source=absent, throughput=61525.0; actual throughput=61525 (class, small qwen, 4B). The reference omitted recoverable original scored usage. The release uses verified scored token totals rather than cost/input-rate inference; input and output token counts both enter GPU time.",
+   "key": "semif-qwen3.5-4b",
+   "reference_cost": 0.01701689039408867,
+   "release_cost": 0.005573772548130538
+  },
+  {
+   "diff_pct": -39.54365079365078,
+   "explanation": "Own scored basis: 1585602 input + 0 output / 1624 decisions = 976.35591133 tokens/decision; reproduces old USD 0.00976355911330049. Reference architecture=small, active_B=0.8. Reference tokens/decision=not recovered, token source=absent, throughput=100000; actual throughput=100000 (class, small qwen, 0.8B). The reference omitted recoverable original scored usage. The release uses verified scored token totals rather than cost/input-rate inference; input and output token counts both enter GPU time.",
+   "key": "simplejev-qwen3.5-0.8b",
+   "reference_cost": 0.009763559113300492,
+   "release_cost": 0.005902691392505279
+  },
+  {
+   "diff_pct": -67.2456458315865,
+   "explanation": "Own scored basis: 1129092 input + 0 output / 1624 decisions = 695.253694581 tokens/decision; reproduces old USD 0.0208576108374384. Reference architecture=small, active_B=4.0. Reference tokens/decision=not recovered, token source=absent, throughput=61525.0; actual throughput=61525 (class, small qwen, 4B). The reference omitted recoverable original scored usage. The release uses verified scored token totals rather than cost/input-rate inference; input and output token counts both enter GPU time.",
+   "key": "spark-s1-4b-v6",
+   "reference_cost": 0.020857610837438423,
+   "release_cost": 0.006831775724763977
+  },
+  {
+   "diff_pct": 1256.9018706924842,
+   "explanation": "Old cost retained: unresolvable. Declared base not resolved has no verified mapping to the six calibrated Gemma/Qwen classes; a pricing proxy alone is not architecture evidence.",
+   "key": "standard_one_3b_sh",
+   "reference_cost": 0.0037964579360421163,
+   "release_cost": 0.05151420875420875
+  },
+  {
+   "diff_pct": 1256.9018706924842,
+   "explanation": "Old cost retained: unresolvable. Declared base not resolved has no verified mapping to the six calibrated Gemma/Qwen classes; a pricing proxy alone is not architecture evidence.",
+   "key": "standard_one_3b_sh_v4",
+   "reference_cost": 0.0037964579360421163,
+   "release_cost": 0.05151420875420875
+  },
+  {
+   "diff_pct": 663.2573022645223,
+   "explanation": "Old cost retained: unresolvable. Declared base not resolved has no verified mapping to the six calibrated Gemma/Qwen classes; a pricing proxy alone is not architecture evidence.",
+   "key": "standard_one_8b_sh",
+   "reference_cost": 0.01023970550535443,
+   "release_cost": 0.0781553
+  },
+  {
+   "diff_pct": -35.33676280750091,
+   "explanation": "Own scored basis: 737990 input + 72063 output / 1485 decisions = 545.49023569 tokens/decision; reproduces old USD 0.354306262626263. Reference architecture=dense, active_B=27.0. Reference tokens/decision=843.5863395863396, token source=derived(cost/in_rate), throughput=11763.0; actual throughput=11763 (class, dense qwen, 27B). The release uses verified scored token totals rather than cost/input-rate inference; input and output token counts both enter GPU time.",
+   "key": "startlux-decision-v1.1-27b-autothink",
+   "reference_cost": 0.043356414462074,
+   "release_cost": 0.02803566112177389
+  },
+  {
+   "diff_pct": -89.43356238042352,
+   "explanation": "Own scored basis: 912828 input + 1624 output / 1624 decisions = 563.086206897 tokens/decision; reproduces old USD 0.0847829310344827. Reference architecture=moe, active_B=3.0. Reference tokens/decision=not recovered, token source=absent, throughput=37999.666666666664; actual throughput=37999.6666667 (class, moe qwen, 3B). The reference omitted recoverable original scored usage. The release uses verified scored token totals rather than cost/input-rate inference; input and output token counts both enter GPU time.",
+   "key": "swanone",
+   "reference_cost": 0.08478293103448274,
+   "release_cost": 0.008958535519807157
+  },
+  {
+   "diff_pct": -83.28602758569791,
+   "explanation": "Own scored basis: 941626 input + 1624 output / 1624 decisions = 580.818965517 tokens/decision; reproduces old USD 0.0682938189655172. Reference architecture=small, active_B=8.0. Reference tokens/decision=not recovered, token source=absent, throughput=30762.5; actual throughput=30762.5 (class, small qwen, 8B). The reference omitted recoverable original scored usage. The release uses verified scored token totals rather than cost/input-rate inference; input and output token counts both enter GPU time.",
+   "key": "system-one-sg",
+   "reference_cost": 0.06829381896551724,
+   "release_cost": 0.011414610062569962
+  },
+  {
+   "diff_pct": 122.15959960617005,
+   "explanation": "Old cost retained: missing token basis. No verified scored token basis reproducing carried cost; keep old cost",
+   "key": "torchcast-decision-12b",
+   "reference_cost": 0.012823016258066526,
+   "release_cost": 0.02848756157635468
+  },
+  {
+   "diff_pct": -67.24564583158651,
+   "explanation": "Own scored basis: 860659 input + 0 output / 1624 decisions = 529.962438424 tokens/decision; reproduces old USD 0.0158988731527094. Reference architecture=small, active_B=4.0. Reference tokens/decision=not recovered, token source=absent, throughput=61525.0; actual throughput=61525 (class, small qwen, 4B). The reference omitted recoverable original scored usage. The release uses verified scored token totals rather than cost/input-rate inference; input and output token counts both enter GPU time.",
+   "key": "typecastlm",
+   "reference_cost": 0.01589887315270936,
+   "release_cost": 0.005207573221225232
+  },
+  {
+   "diff_pct": -94.90889435538072,
+   "explanation": "Own scored basis: 618462 input + 0 output / 1489 decisions = 415.353928811 tokens/decision; reproduces old USD 0.129798102753526. Reference architecture=moe, active_B=3.0. Reference tokens/decision=not recovered, token source=absent, throughput=37999.666666666664; actual throughput=37999.6666667 (class, moe qwen, 3B). The reference omitted recoverable original scored usage. The release uses verified scored token totals rather than cost/input-rate inference; input and output token counts both enter GPU time.",
+   "key": "umpire-35b-a3b",
+   "reference_cost": 0.12979810275352585,
+   "release_cost": 0.006608158535893478
+  },
+  {
+   "diff_pct": 10.964216073093947,
+   "explanation": "Own scored basis: 766685 input + 84061 output / 1485 decisions = 572.892929293 tokens/decision; reproduces old USD 0.216840202020202. Reference architecture=dense, active_B=27.0. Reference tokens/decision=516.2861952861953, token source=derived(cost/in_rate), throughput=11763.0; actual throughput=11763 (class, dense qwen, 27B). The release uses verified scored token totals rather than cost/input-rate inference; input and output token counts both enter GPU time.",
+   "key": "vera-large",
+   "reference_cost": 0.026534709268587624,
+   "release_cost": 0.029444032127162855
+  },
+  {
+   "diff_pct": -67.24564583158651,
+   "explanation": "Own scored basis: 902188 input + 0 output / 1485 decisions = 607.534006734 tokens/decision; reproduces old USD 0.0182260202020202. Reference architecture=small, active_B=4.0. Reference tokens/decision=not recovered, token source=absent, throughput=61525.0; actual throughput=61525 (class, small qwen, 4B). The reference omitted recoverable original scored usage. The release uses verified scored token totals rather than cost/input-rate inference; input and output token counts both enter GPU time.",
+   "key": "verdin-4b",
+   "reference_cost": 0.018226020202020205,
+   "release_cost": 0.00596981520777629
+  },
+  {
+   "diff_pct": -87.76301210689911,
+   "explanation": "Own scored basis: 559606 input + 0 output / 1489 decisions = 375.826729349 tokens/decision; reproduces old USD 0.157847226326394. Reference architecture=, active_B=. Reference tokens/decision=not recovered, token source=absent, throughput=; actual throughput=11763 (class, dense qwen, 27B). The reference omitted recoverable original scored usage. The release uses verified scored token totals rather than cost/input-rate inference; input and output token counts both enter GPU time.",
+   "key": "visionjev-1.0.0-27b",
+   "reference_cost": 0.15784722632639353,
+   "release_cost": 0.019315745975156336
+  },
+  {
+   "diff_pct": -12.184862197327229,
+   "explanation": "Own scored basis: 1394108 input + 50098 output / 1479 decisions = 976.47464503 tokens/decision; reproduces old USD 0.033358985801217. Reference architecture=small, active_B=4.0. Reference tokens/decision=1111.9661933739012, token source=derived(cost/in_rate), throughput=61525.0; actual throughput=61525 (class, small qwen, 4B). The release uses verified scored token totals rather than cost/input-rate inference; input and output token counts both enter GPU time.",
+   "key": "wald-4b-v2",
+   "reference_cost": 0.010926520356321398,
+   "release_cost": 0.009595138907940727
+  },
+  {
+   "diff_pct": -54.98731534569137,
+   "explanation": "Own scored basis: 911483 input + 0 output / 1624 decisions = 561.258004926 tokens/decision; reproduces old USD 0.0280629002463054. Reference architecture=small, active_B=12.0. Reference tokens/decision=not recovered, token source=absent, throughput=26861.916666666668; actual throughput=26861.9166667 (class, small gemma, 12B). The reference omitted recoverable original scored usage. The release uses verified scored token totals rather than cost/input-rate inference; input and output token counts both enter GPU time.",
+   "key": "winnow-12b",
+   "reference_cost": 0.028062900246305422,
+   "release_cost": 0.012631864792722661
+  },
+  {
+   "diff_pct": -60.694774997903814,
+   "explanation": "Own scored basis: 3409751 input + 0 output / 1624 decisions = 2099.60036946 tokens/decision; reproduces old USD 0.0524900092364532. Reference architecture=small, active_B=4.0. Reference tokens/decision=not recovered, token source=absent, throughput=61525.0; actual throughput=61525 (class, small qwen, 4B). The reference omitted recoverable original scored usage. The release uses verified scored token totals rather than cost/input-rate inference; input and output token counts both enter GPU time.",
+   "key": "zerank-2",
+   "reference_cost": 0.05249000923645321,
+   "release_cost": 0.020631316234009007
+  }
+ ],
+ "unchanged": {
+  "amos-1-large": "api",
+  "amos-1-medium": "api",
+  "apus-openjev-v1-35b-a3b": "unpriced",
+  "attest-31b-v1.0": "api",
+  "bb-qwen3.5-4b-lora": "api",
+  "bge-reranker-v2-m3": "encoder",
+  "bongard-mini": "unpriced",
+  "celeris-1-decision": "api",
+  "certo": "encoder",
+  "classifier-dev-fast": "api",
+  "decision-2b": "unresolvable",
+  "decision-machine-1": "api",
+  "decisionnode-flash-0.9.1-rc1": "api",
+  "decisionnode-main-0.9.1-rc1": "api",
+  "deepseek-flash": "api",
+  "drex-max": "api",
+  "exaone-4.0-1.2b-jev-v0.3": "unresolvable",
+  "fastino-glide": "api",
+  "fastino-glide-api": "api",
+  "fastino-gliner-2-5-decide": "api",
+  "gemini-3.1-flash-lite": "api",
+  "gpt-5.6-luna": "api",
+  "gpt-6-luna": "api",
+  "gpt-6-luna-low": "api",
+  "gte-reranker-modernbert-base": "encoder",
+  "hyland-hs1": "api",
+  "instinct": "api",
+  "instinct-dual-4b": "api",
+  "jev-1.13.0": "api",
+  "jev-1.14.0": "api",
+  "jev-qwen3.5-9b-base-nvfp4": "missing token basis",
+  "jevact": "api",
+  "jevora-9b-v1": "unpriced",
+  "jul-fast": "unresolvable",
+  "julia-1": "encoder",
+  "kettei-chub": "api",
+  "kettei-fat": "api",
+  "kev-9b-v2": "unpriced",
+  "kushal-gemma4-31b-it-autoloops": "api",
+  "launchables-myles-g-12b": "api",
+  "launchables-myles-g-31b": "api",
+  "laya": "encoder",
+  "laya-multilingual": "encoder",
+  "laya-typed-decisions": "encoder",
+  "lev-350m": "unresolvable",
+  "liquid-d1": "api",
+  "liquid-d1-3b": "unresolvable",
+  "liquid-d1-omni-600m": "encoder",
+  "liquid-d1-ultra": "api",
+  "mercury-decide": "api",
+  "microsoft-decision-1": "api",
+  "microsoft-decision-1-a2-20261012": "api",
+  "microsoft-decision-1-r2": "api",
+  "mirror": "encoder",
+  "modernbert-jev-v2": "encoder",
+  "mxbai-rerank-base-v2": "unresolvable",
+  "nagi-huge": "unpriced",
+  "nemotron-deciffusion-8b-v2": "unresolvable",
+  "nemotron-diffusion-8b": "unresolvable",
+  "nimble-v4": "api",
+  "nimble-v4-max": "api",
+  "open-alternative-jev": "missing token basis",
+  "open-jev-deberta-v3-large": "encoder",
+  "openai-decisions": "api",
+  "opendecision": "encoder",
+  "openjev-sglang": "api",
+  "openjev-verdict": "encoder",
+  "openjev-verdict-1.4": "encoder",
+  "phocinae-largha-150m-v1": "encoder",
+  "pjev-2b": "unresolvable",
+  "purplemist-flash-1.0": "unpriced",
+  "quyet-1-0-small": "encoder",
+  "quyet-1-0-small-en": "encoder",
+  "quyet-1-0-tiny": "encoder",
+  "qwen3.8-27b": "api",
+  "raw-phi-4-mini": "unresolvable",
+  "ryotide-gemma": "unpriced",
+  "sage-1.3.0": "api",
+  "sage-1.4.0": "api",
+  "scaledown-classify-1": "api",
+  "simplejev-qwen3.6-35b-a3b": "api",
+  "simplejev-qwen3.8-27b": "api",
+  "singularity-super-decider": "api",
+  "singularity-super-decider-thinking": "api",
+  "smalljev": "unresolvable",
+  "spx-cd-flash": "api",
+  "spx-cd-pro": "api",
+  "standard_one_3b_sh": "unresolvable",
+  "standard_one_3b_sh_v4": "unresolvable",
+  "standard_one_8b_sh": "unresolvable",
+  "standardone-8b": "unresolvable",
+  "strike-1": "api",
+  "subq-snap-1.1": "api",
+  "subq-snap-preview": "api",
+  "system-one-open": "api",
+  "tacet-sonata": "encoder",
+  "tde-general-large": "encoder",
+  "torchcast-decision-12b": "missing token basis",
+  "trio-spark-v1.3": "api",
+  "vansa-3.4": "api",
+  "verdict-small": "encoder",
+  "watersheep": "encoder",
+  "watt-flash-0.1": "encoder",
+  "wity-1": "api",
+  "wity-1-always": "api",
+  "wity-1-off": "api"
+ }
+}

@@ -63,11 +63,11 @@ test('all historical and current JevBench and ImageJevBench artifact keys are co
   const jevKeys = new Set(jevFiles.flatMap((path) => systemKeys(read(path))));
   // v1.7.0: the restated artifacts list every live board row, including rows that until now lived only in data/ registries this scan never read: the dated carry
   // additions (data/jevbench-carry-additions.json, Drex v1.5) and the API full-set addenda (data/jevbench-api-full-addenda.json, Microsoft-Decision-1, whose
-  // architecture entry is keyed by its A2 artifact key). Only keys listed in one of those registries, first appearing in a v1.7 file and still without an
+  // architecture entry is keyed by its A2 artifact key). The v1.8 cost restatement inherits those same keys. Only keys listed in one of those registries, first appearing in a restatement file and still without an
   // architecture entry, are exempt; any other uncovered key still fails.
   const registryKeys = new Set([...read('data/jevbench-carry-additions.json').rows.map((row) => row.key), ...read('data/jevbench-api-full-addenda.json').entries.map((entry) => entry.row.key)]);
-  const olderKeys = new Set(jevFiles.filter((path) => !path.includes('/jevbench/v1.7/')).flatMap((path) => systemKeys(read(path))));
-  for (const key of jevFiles.filter((path) => path.includes('/jevbench/v1.7/')).flatMap((path) => systemKeys(read(path)))) {
+  const olderKeys = new Set(jevFiles.filter((path) => !/\/jevbench\/v1\.(?:7|8)\//.test(path)).flatMap((path) => systemKeys(read(path))));
+  for (const key of jevFiles.filter((path) => /\/jevbench\/v1\.(?:7|8)\//.test(path)).flatMap((path) => systemKeys(read(path)))) {
     if (registryKeys.has(key) && !olderKeys.has(key) && !data.benchmarks.jevbench[key]) jevKeys.delete(key);
   }
   // v1.7.5: API rows first shown through the public-set figures (e.g. Fastino GLiDE) are artifact keys too.
