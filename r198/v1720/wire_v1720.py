@@ -74,5 +74,5 @@ print('wired v1.7.20; paid 12 Oct-draw addition; predecessor chain retained')
 
 
 # Explicit archive loader for the on-demand All data grid. Predecessor gaps belong to the base owner.
-edit('lib/jevbench-alldata-input.mjs', "import { readJevbenchV1715ForBoard, v1715BoardInput } from './jevbench-v1715-release.mjs';", "import { readJevbenchV1715ForBoard, v1715BoardInput } from './jevbench-v1715-release.mjs';\nimport { readJevbenchV1720ForBoard, v1720BoardInput } from './jevbench-v1720-release.mjs';")
-edit('lib/jevbench-alldata-input.mjs', "  'v1.7.15': { read: readJevbenchV1715ForBoard, board: v1715BoardInput },", "  'v1.7.15': { read: readJevbenchV1715ForBoard, board: v1715BoardInput },\n  'v1.7.20': { read: readJevbenchV1720ForBoard, board: v1720BoardInput },")
+edit('lib/jevbench-alldata-input.mjs', "import { readJevbenchV1719ForBoard, v1719BoardInput } from './jevbench-v1719-release.mjs';", "import { readJevbenchV1719ForBoard, v1719BoardInput } from './jevbench-v1719-release.mjs';\nimport { readJevbenchV1720ForBoard, v1720BoardInput } from './jevbench-v1720-release.mjs';")
+edit('lib/jevbench-alldata-input.mjs', "  'v1.7.19': { read: readJevbenchV1719ForBoard, board: v1719BoardInput },", "  'v1.7.19': { read: readJevbenchV1719ForBoard, board: v1719BoardInput },\n  'v1.7.20': { read: readJevbenchV1720ForBoard, board: v1720BoardInput },")
