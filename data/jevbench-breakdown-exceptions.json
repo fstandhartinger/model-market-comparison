@@ -18,7 +18,7 @@
     "typesafe"
    ],
    "reason": "TEMPORARY: basal-omni-1.0-ultra was measured on the ImageJevBench v0.3 core pool on one rented H200 on 17 Oct 2026; the TypeSafe-20 bank (600 sealed items) was not run in that session and the pod is gone, so a follow-up release adds the TypeSafe-20 cells and removes this entry.",
-   "decision": "board #20750 (DECISIONS 2026-10-17 11:05 UTC, release-owner Agent §3 decision, jevbench-release-adopted-rows-20261008)"
+   "decision": "board #20750 (DECISIONS 2026-10-17 11:05 UTC, release-owner Agent \u00a73 decision, jevbench-release-adopted-rows-20261008)"
   },
   {
    "key": "h2o-lightning-4b-v1.4.1",
@@ -75,6 +75,15 @@
    ],
    "reason": "TEMPORARY: row on the 27 Oct 2026 regular draw (v1.6-regular-20261027, release v1.7.15). That draw has no ruled subject-topic labels yet, so no topic cells exist; its use-case and language cells are measured on the row's own 1,493 items of the draw. A follow-up release adds the topic cells once the draw's items are labelled and removes this entry.",
    "decision": "DECISIONS 2026-10-27 18:20 UTC v1713-topics-exception-h2o141 (release owner), extended to every row on the 27 Oct draw (v1.7.15)"
+  },
+  {
+   "board": "imagejevbench",
+   "key": "h2o_lightning_4b_v141_d7f1_image",
+   "dims": [
+    "typesafe"
+   ],
+   "reason": "Permanent revision-specific exception: not measured for this revision (temperature refit); ranked TS20 is on the @cc18ee33 row.",
+   "decision": "board #31072"
   }
  ]
 }

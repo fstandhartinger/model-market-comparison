@@ -9,7 +9,7 @@ test('ImageJevBench v0.3.0 release data keeps the reviewed roster and top five',
   const a = JSON.parse(await read('../data/imagejev-v03.json'));
   assert.equal(a.revision, 'v0.3.0');
   assert.equal(a.status, 'released');
-  assert.equal(a.ranking.length, 66); // CR-536: H2O-Lightning-31B added; field equating and ranks refreshed.
+  assert.equal(a.ranking.length, 67); // CR-536: H2O-Lightning-31B added; field equating and ranks refreshed.
   assert.equal(a.carried.length, 2); // CR-333 dated-carry re-run: only the two JevAny rows remain (source unavailable)
   const ranked = a.ranking.filter((row) => row.ranked).sort((x, y) => x.rank - y.rank);
   assert.equal(ranked.length, 64); // CR-536: H2O-Lightning-31B added; field equating and ranks refreshed.

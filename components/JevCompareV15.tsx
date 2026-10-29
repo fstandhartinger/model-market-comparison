@@ -62,7 +62,7 @@ function categorySpokes(pair: JevCompareV15Row[], dim: CategoryDim, cats: Compar
       key: c.key, lines: lines(c.short),
       thin: cells.map((v) => v.thin),
       values: cells.map((v) => v.value),
-      texts: cells.map((v) => v.text),
+      texts: cells.map((v, i) => !cats.systems[pair[i].key]?.[dim.key] && cats.missing[pair[i].key] ? cats.missing[pair[i].key] : v.text),
       tip: `${c.label}: ${c.covers}. ${c.n} items (${c.split.a} ${cats.splitNames[0]}, ${c.split.b} ${cats.splitNames[1]}).`,
     };
   });
@@ -207,7 +207,7 @@ export function JevCompareV15({ rows, openDecisions, sealedDecisions, heading, a
   };
   const categoryFigures = (categories?.dims ?? []).map((dim) => {
     const spokes = categorySpokes(pair, dim, categories!);
-    const absent = pair.filter((r) => !categories!.systems[r.key]);
+    const absent = pair.filter((r) => !categories!.systems[r.key]?.[dim.key]);
     return { key: `cat-${dim.key}`, title: dim.title, dim,
       note: `${dim.note} Chance-corrected competence per category (${clippedMetric ? "0 = at or below chance; negative averages are reported as 0" : "0 = chance, below chance negative"}, 100 = perfect), ${(dim as { poolNote?: string }).poolNote ?? `${pair.map((r) => `${r.name}: ${categories!.categoryPools?.[r.key] ?? categories!.splitNames.join("+")}`).join("; ")} items pooled`}; only categories with at least ${categories!.radarMinN} items are spokes, smaller ones are listed below. Hover a category for its definition and item count.`,
       spokes, domain: RADAR_SIGNED_DOMAIN as RadarDomain, missing: [...pair.filter((r) => categories!.spokeExceptions?.[r.key]).map((r) => `${r.name}: ${categories!.spokeExceptions![r.key]}`), ...pair.filter((r) => categories!.exposureNotes?.[r.key]).map((r) => `${r.name}: ${categories!.exposureNotes![r.key]}`), ...pair.filter((r) => categories!.coverageNotes?.[r.key]).map((r) => `${r.name}: ${categories!.coverageNotes![r.key]}`), ...absent.map((r) => `${r.name}: ${categories!.missing[r.key] ?? "no per-category values"}`)], size: { w: 500, h: 400, r: 112 } };
