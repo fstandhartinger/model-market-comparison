@@ -1,6 +1,6 @@
 # JevBench v1.7.20 PENDING candidate — Lychee-27B
 
-Base a30917baa (v1.7.19 PENDING), no publication authority. Original 13 Oct custody raw and original fast-lane handoff SHA-256 agree. Scores recalculated with frozen d1012 tools: B1000, seed16, O1S, fixed G_med 9.839526770355711, common1485 cost basis, 10 s share view. Aggregate-only reproducible inputs here; raw/gold/items never committed.
+Base 65a8810ea (v1.7.19 flipped, sealed; candidate first built on a30917baa), no publication authority. Original 13 Oct custody raw and original fast-lane handoff SHA-256 agree. Scores recalculated with frozen d1012 tools: B1000, seed16, O1S, fixed G_med 9.839526770355711, common1485 cost basis, 10 s share view. Aggregate-only reproducible inputs here; raw/gold/items never committed.
 
 `scoring/setup.py` and `scoring/run_scores_v1720.sh` capture the original raw with the frozen registry/reference; `scoring/cells_v1720.sh` builds exact family/language/topic/use-case cells. Those steps require Sandy-local private data. `prepare_v1720.py` binds raw/scorer outputs; `rebuild_v1720.sh` rebuilds entirely from retained aggregates. `check_source_v1720.py` verifies frozen tools, pricing, original custody and predecessor bytes; validator + helpers test refusal cases. No top-five changes in 580 lists, 2064 slider checkpoints, 368 grid states, four custom weightings. Carried rows/cells unchanged except independently recomputed and pinned rank/ranks and derived feed ranks.
 

@@ -16,5 +16,5 @@ assert r['v16']['ci95']['B']==1000
 files=[]
 for v in ['16','17','18','19']:
  files += [f'data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.{v}-{n}.json' for n in ['results','categories','proof','publication','carry','history','history-carry']]+[f'lib/jevbench-v17{v}-release.mjs']
-for f in files:assert (W/f).read_bytes()==subprocess.check_output(['git','show','a30917baa:'+f],cwd=W),f
+for f in files:assert (W/f).read_bytes()==subprocess.check_output(['git','show','65a8810ea:'+f],cwd=W),f
 receipt={'status':'PASS','tools_verified':{n:sha(p) for n,p in paths.items()},'pricing_sha256':sha(P),'frozen_reference':[.42,3.],'usd_per_1000':cost,'cap_ratio':cost/CAP,'predecessor_files_byte_equal':len(files),'consent':'Original fastlane owner confirms Gmail uid35123, accepted by release owner #32063/#32071; no new publication authorized here.'};(J/'receipts/SOURCE-PRICING.json').write_text(json.dumps(receipt,indent=1)+'\n');print('PASS frozen scorer/cell tools, pricing, ranked over-cap paid row, original consent and 32 predecessor files byte equal')
