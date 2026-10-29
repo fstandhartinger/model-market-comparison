@@ -15,7 +15,7 @@ test('live boards render the context-length views, the cost section and an open 
   assert.match(v16, /id=\{live \? 'jev16-costs-note' : 'jev-costs'\}/, 'one #jev-costs target per page');
   assert.match(v16, /!hiddenApi.has\(s.key\)\)\n?\s*\.map\(\(s\) => \(\{ key: s.key, system: s.display/);
   assert.match(v16, /data-bh-jev15-cost-unit-panel/);
-  assert.match(v16, /pricing: live \? '#jev-costs'/);
+  assert.match(src('lib/jevbench-alldata-props.ts'), /pricing: live \? '#jev-costs'/, 'CR-600: All data grid links are built in the on-demand props');
   const charts = src('components/JevBenchV16Charts.tsx');
   assert.match(charts, /useState\(pareto\)/, 'live boards (pareto) open the 3D view by default; archived pages keep it folded');
   assert.match(charts, /\{!pareto && toggle3d\}/, 'archived pages keep the published toggle above the panel');

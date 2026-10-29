@@ -81,7 +81,8 @@ test('historical revisions keep their imported artifacts and hide Other', () => 
 test('board dispatches fresh behaviour through the helper and keeps every section', () => {
   const board = read('components/JevBenchV16Board.tsx');
   assert.match(board, /const fresh = isFreshJevbenchV16Revision\(a\.revision\);/);
-  assert.equal([...board.matchAll(/artifact: fresh \|\| hasApiFullAddendumCategories\(categories\) \? categories : undefined/g)].length, 2, 'Compare and All data both pass only fresh or authenticated full-addendum categories');
+  assert.equal([...board.matchAll(/artifact: fresh \|\| hasApiFullAddendumCategories\(categories\) \? categories : undefined/g)].length, 1, 'Compare passes only fresh or authenticated full-addendum categories');
+  assert.match(read('lib/jevbench-alldata-props.ts'), /artifact: isFreshJevbenchV16Revision\(artifact\.revision\) \|\| hasApiFullAddendumCategories\(categories\) \? categories : undefined/, 'All data keeps the same category rule in its server props builder');
   assert.match(board, /\(!fresh \|\| carry\.rows\.length > 0\) && <DatedCarry/);
   assert.match(board, /if \(isFreshJevbenchV16Revision\(a\.revision\)\) return <>/);
   assert.match(board, /isFreshJevbenchV16Revision\(props\.a\.revision\) \? `Method notes · fresh native cohort\$\{props\.a\.revision === 'v1\.6\.2' \? '' :/);
