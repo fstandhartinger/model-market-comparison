@@ -252,9 +252,10 @@ export async function generateMetadata({ params }: { params: Promise<{ system: s
   const a4 = ((await readJevbenchA4ModelPages()) as Map<string, A4Page>).get(key)?.row as typeof seo;
   const row = found?.row ?? current?.row ?? addendum?.row ?? seo ?? a4;
   if (!row) return { title: 'System not found' };
-  const title = `${short(row.display)} — JevBench by Benchmark Heaven`;
-  const description = `Explore the ${short(row.display)} configuration evaluated across intelligence, calibration, speed, and cost.`;
-  return previewMetadata({ path: jevSystemPath(row.key), documentTitle: `${short(row.display)} — JevBench`, title, description });
+  const titleDisplay = row.key.endsWith('-r2') ? row.display : short(row.display);
+  const title = `${titleDisplay} — JevBench by Benchmark Heaven`;
+  const description = `Explore the ${titleDisplay} configuration evaluated across intelligence, calibration, speed, and cost.`;
+  return previewMetadata({ path: jevSystemPath(row.key), documentTitle: `${titleDisplay} — JevBench`, title, description });
 }
 
 export default async function JevSystemPage({ params }: { params: Promise<{ system: string }> }) {
