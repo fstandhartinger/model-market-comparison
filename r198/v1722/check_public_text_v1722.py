@@ -5,7 +5,7 @@ assert s['not_ranked_because']==NOT_RANKED_BECAUSE==p['not_ranked_because'] and 
 texts=[s[f] for f in ['display','author','disclosure','endpoint_condition']]+[s['cost']['basis']]
 for t in texts:assert not re.search(r'/home/|workers/|#\d{4,}|Florian|\bPREREG\b|custody|deputy|release.owner|\{[A-Z_]+\}',t,re.I)
 assert a['source_note']=='Added Umpire 35B-A3B (self-hosted) on the 27 Oct regular draw, shown unranked.'
-for t in ['ornith-ai/Ornith-1.5-35B-A3B',"author's unchanged Transformers server",'16,384-token input limit','scored as misses and kept in the denominator','output tokens reported as 0','49 of 50','training data were not inspected','Apache-2.0','CC BY-NC 4.0','dequantized','KERNEL PATH','disposable rented pod']:assert t in s['disclosure'],t
+for t in ['ornith-ai/Ornith-1.5-35B-A3B',"author's unchanged Transformers server",'16,384-token input limit','scored as misses and kept in the denominator','output tokens reported as 0','49 of 50','Training data were not inspected','Apache-2.0','CC BY-NC 4.0','dequantized','KERNEL PATH','disposable rented pod']:assert t in s['disclosure'],t
 assert s['cost']['basis'].count('COST FIGURES:')==1
 assert 'state_tokens' not in s['disclosure'] and 'state_tokens' not in s['cost']['basis']
 NEUTRAL="Stronger anchor runs are being measured; the draw is not yet equated to the reference scale."

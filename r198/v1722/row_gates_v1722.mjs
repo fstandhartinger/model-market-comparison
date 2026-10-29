@@ -18,7 +18,7 @@ export function checkNewRowText(s){
  for(const t of ['SIZE/ARCHITECTURE-CLASS','declares no parent','no lineage is asserted'])if(!s.cost.basis.includes(t))throw Error('class estimate '+t);
  if(!s.cost.basis.includes('0 output tokens on the 1,489 common items')||!s.cost.basis.includes('Cost on the 1,489 items every row on this draw answered (same-items rule)'))throw Error('cost basis');
  if(s.disclosure!==undefined){
-  for(const t of ['ornith-ai/Ornith-1.5-35B-A3B',"author's unchanged Transformers server",'16,384-token input limit','scored as misses and kept in the denominator','output tokens reported as 0','49 of 50','training data were not inspected','Apache-2.0','CC BY-NC 4.0','dequantized','KERNEL PATH','disposable rented pod'])if(!s.disclosure.includes(t))throw Error('disclosure '+t);
+  for(const t of ['ornith-ai/Ornith-1.5-35B-A3B',"author's unchanged Transformers server",'16,384-token input limit','scored as misses and kept in the denominator','output tokens reported as 0','49 of 50','Training data were not inspected','Apache-2.0','CC BY-NC 4.0','dequantized','KERNEL PATH','disposable rented pod'])if(!s.disclosure.includes(t))throw Error('disclosure '+t);
   if(s.display!=='Umpire 35B-A3B'||s.author!=='ezoushen (Hugging Face)')throw Error('identity');
   if(s.model_pin?.revision!=='c928afd208de9f85d2c194042364b1a62ca4d080')throw Error('revision');
  }

@@ -41,7 +41,7 @@ for(const [name,fn] of [
  ['new cost all items',x=>{const s=row(x,ST);s.cost.usd_per_1000=s.cost.common_basis.usd_per_1000_all_items}],
  ['nominal output',x=>{x.proof.new_rows[ST].cost.output_tokens=1495}],
  ['1495 denominator',x=>{row(x,ST).status.rows=1495}],
- ['disclosure missing',x=>{row(x,ST).disclosure=row(x,ST).disclosure.replace('training data were not inspected','')}],
+ ['disclosure missing',x=>{row(x,ST).disclosure=row(x,ST).disclosure.replace('Training data were not inspected','')}],
  ['common basis no freeze',x=>{delete x.proof.cost_basis.frozen_at}],
  ['common basis old intersection',x=>{x.proof.cost_basis.rule='recompute every row intersection'}],
  ['common set size',x=>{x.proof.cost_basis.n_items=1488}],
@@ -54,7 +54,7 @@ for(const [name,fn] of [
  ['carried exceptions added',x=>{x.proof.exceptions={x:{}}}],
  ['repriced roster added',x=>{x.artifact.addendum.repriced_keys=['strike-1']}],
 ])expectReject(name,fn);
-for(const part of ['training data were not inspected','49 of 50','16,384-token input limit','output tokens reported as 0','CC BY-NC 4.0','dequantized','KERNEL PATH']){
+for(const part of ['Training data were not inspected','49 of 50','16,384-token input limit','output tokens reported as 0','CC BY-NC 4.0','dequantized','KERNEL PATH']){
  const s=structuredClone(row(b,ST));s.disclosure=s.disclosure.replace(part,'');let threw=false;try{checkNewRowText(s)}catch{threw=true}if(!threw)throw Error('missing disclosure accepted');gateRejected++;
 }
 if(b.manifest.review.verdict==='PENDING'&&await readJevbenchV1722ForBoard(root)!==null)throw Error('PENDING leak');

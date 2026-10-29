@@ -830,7 +830,7 @@
  "metric": "O1S chance-corrected competence: equal mean across the request types present, clipped to 0–100. Zero means the equal-weight mean across present request types was at or below baseline; negative means are clipped. It does not mean every type scored zero. Choice uses a random-option baseline; Noul uses a fixed 50% accuracy baseline (abstentions count as wrong); Score uses the midpoint-guess error (random-guess fallback when every gold is at the midpoint). Compare models within a category; row pools and supported types can differ.",
  "min_n": 15,
  "provisional": false,
- "results_sha256": "d8e66264aa3b537fe454ede356e1100bd0fed4249789f9faa7b9b835ce800750",
+ "results_sha256": "4967f7421ff1f8ddfde97e8c52eb2494f57215c6c935598e4954e66ce742ad9d",
  "results_sha256_note": "Bound to v1.7.22 results; all carried rows and cells retained exactly; the new row's cells are computed with unchanged frozen tools on its own draw (no topic labels on that draw).",
  "revision": "v1.7.22",
  "rule_note": "Cells of re-scored rows are computed with the frozen category tools under the 10 s rule (a decision over 10 s counts as a wrong answer). Rows without cells are not yet re-scored under the rule or are re-measure pending; no v1.6 cell is shown for a v1.7 row.",
@@ -838,7 +838,7 @@
   "Official O1S; recorded failures count where supported; no missing response is imputed; stable identity dedupe parent first.",
   "S-based category cells pool recorded supported responses from S+P and the answered L1/L2/L3 supplements. API overlay category cells keep their separately recorded A4/A5+P union. Headline and per-type/tier scores are unchanged."
  ],
- "source_results_sha256": "6dcdb03dc0c0fd04e32d30e5549b106e0f033c68cf07a2741f23c8d6cd65f5cb",
+ "source_results_sha256": "a2de01bc9df9f677f9cdcb643e33fc0b22929c8c5523922a543f1bee7ec01f0d",
  "source_sha256": "aab1cba1fa4221f8cb026baba46e831b9c5c17c5869bf1a3b2995dfc399e2bce",
  "supplement": {
   "drawn": "2026-10-06",

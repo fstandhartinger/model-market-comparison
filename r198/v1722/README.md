@@ -1,6 +1,6 @@
 # JevBench v1.7.22 — Umpire 35B-A3B (unranked)
 
-Base 89a9594688b6d8f78bdba0b136c20590729b640f, v1.7.21 flipped PASS and sealed. Unpublished candidate only. The real board remains v1.7.21 while v1.7.22 is PENDING. Public row umpire-35b-a3b; ezoushen/umpire-35b-a3b-bf16 at c928afd208de9f85d2c194042364b1a62ca4d080; weights CC BY-NC 4.0 (non-commercial use only), serving code Apache-2.0 with MIT SemIf notice preserved. The author claims the BF16 weights are his served 4-bit weights dequantized; this is unverified.
+Base 89a9594688b6d8f78bdba0b136c20590729b640f, v1.7.21 flipped PASS and sealed. Unpublished candidate only. The real board remains v1.7.21 while v1.7.22 is PENDING. Public row umpire-35b-a3b; ezoushen/umpire-35b-a3b-bf16 at c928afd208de9f85d2c194042364b1a62ca4d080; weights CC BY-NC 4.0 (non-commercial use only), serving code Apache-2.0 with MIT SemIf notice preserved. The author claims the BF16 weights are the author's served 4-bit weights dequantized; this is unverified.
 
 The frozen score_v16 02132271 / score_v17 6363458d tools use B=1000, seed=16, O1S, fixed G_med 2.573387642438244 and the 10-second share rule. The v1.7.16 common cost basis is frozen: 1,489 items, set SHA 4e912731e63369e1b3066b0b4afa87b44f1094aea079c5b41dc6d02e7f235537, basis file SHA b83bdfd14c263ffacfa572b304084154afca84c1f00083101a33783ae6f8b356. It is verified in place, never shrunk or recomputed from later rows. Old membership records are provenance, not a new intersection. All 315 carried rows, cells and ranks are unchanged.
 
