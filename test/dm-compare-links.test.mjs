@@ -33,6 +33,7 @@ test('vendor comparisons use their specific pages and other rivals use the fallb
     'openai-decisions': '/openai-decisions-api-alternative',
     'microsoft-decision-1': '/decision-1-vs-decision-models',
     laya: '/laya-model',
+    'kev-27b': '/kev-model',
   };
   for (const key of Object.keys(paths)) assert.ok(rivalKeys.includes(key), key);
   for (const key of rivalKeys) {
