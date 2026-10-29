@@ -1,0 +1,10 @@
+KEYS=['decisionnode-flash-0.9.1-rc1','decisionnode-main-0.9.1-rc1']
+DRAW_ID='v1.6-regular-20261027'
+HIST='Added DecisionNode and DecisionNode Flash (hosted) on the 27 Oct regular draw, shown unranked and not priced.'
+NOTE='Measured on the 27 Oct 2026 draw, which is not yet equated to the reference scale; stronger anchor runs for that draw are being measured. Shown unranked until then.'
+PINS=dict(zip(KEYS,['6dfe974f9f90568b8f60a1c0edc096066b5608d975c2d891de5874f9cd1ec5e6','9e2b8c464130e86d61af0b17e38531103a1f960c073b95ea9b3f23f31fe6bac2']))
+COMMON_SHA='4e912731e63369e1b3066b0b4afa87b44f1094aea079c5b41dc6d02e7f235537'
+PIN='645fd82eac728d597048bec0995ecd3ac896566e269fb6c9a1fdb84c171a9ac4'
+DISCLOSURE="Hosted API by Bynn, measured directly through the vendor's synchronous endpoint. All 1,500 items were sent; 5 items over the provider's input limit were refused (HTTP 400 max_tokens_exceeded), scored as misses and kept in the denominator. The provider reports probabilities to two decimals; exact zeros on many-option items are expected, and Calibration is computed on the reported values without adjustment. Output tokens reported as 0. Measured on the 27 Oct 2026 regular draw, not yet equated to the reference scale (offset 0). This draw has no subject-topic labels yet; use-case and language cells are measured on its own draw."
+MAIN_DISCLOSURE=' A first attempt stopped incomplete because of a harness resend bug on our side and is not used; the published result is the second, complete attempt.'
+COST_BASIS="NOT PRICED. The vendor states USD 0.042 (DecisionNode) / 0.035 (Flash) per 1M input tokens, output not billed, but under the frozen pricing rules a hosted model's own tariff counts only once it is admitted to the frozen list-price set, and these models declare no base model. Token usage: {n} input, 0 output on the answered items. Usage is reported on the fixed 1,489-item cost set from the 27 Oct draw. The vendor tariff is not used to compute a cost."

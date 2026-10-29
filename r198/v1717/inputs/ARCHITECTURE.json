@@ -1,0 +1,18 @@
+{
+ "chaoliangunsw-jev-style-2b-decision-v4": {
+  "arch": "open-llm-decoder",
+  "badges": {
+   "derivation": "fine-tune",
+   "params": "2B",
+   "quant": "bf16"
+  },
+  "evidence": [
+   {
+    "kind": "model-card",
+    "url": "https://huggingface.co/chaoliangUNSW/Jev-Style-2B-Decision-v4/tree/c9504148dae7f7a43d67a5782f12a015a4b4022c",
+    "fact": "Qwen/Qwen3.5-2B full fine-tune, Qwen3_5ForConditionalGeneration, 2,213,241,664 parameters; vision tower unused on the text draw."
+   }
+  ],
+  "note": "Self-hosted through the author HTTP server on one RTX 6000 Ada; Apache-2.0."
+ }
+}

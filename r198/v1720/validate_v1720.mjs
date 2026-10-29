@@ -1,0 +1,14 @@
+import {readFileSync} from 'node:fs';import {createHash} from 'node:crypto';
+import {validateJevbenchV1720Bundle,readJevbenchV1720ForBoard,V1720_NEW_KEYS} from '../../lib/jevbench-v1720-release.mjs';
+import {readV1719ForV1720} from './prev_v1720.mjs';
+const p='data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.20-',load=n=>JSON.parse(readFileSync(p+n+'.json'));
+export const bundle={manifest:load('publication'),artifact:load('results'),categories:load('categories'),carry:load('carry'),proof:load('proof'),previous:await readV1719ForV1720(),previousManifestSha256:createHash('sha256').update(readFileSync('data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.19-publication.json')).digest('hex')};
+const b=bundle,k='lychee-27b',row=x=>x.artifact.systems.find(s=>s.key===k);validateJevbenchV1720Bundle(b,{candidate:true});let rejected=0;
+const neg=(name,fn)=>{const x=structuredClone(b);fn(x);try{validateJevbenchV1720Bundle(x,{candidate:true})}catch{rejected++;return}throw Error('negative accepted: '+name)};
+for(const dim of ['families','languages','topics','usecases'])neg('missing '+dim,x=>{delete x.categories.systems[k][dim]});
+for(const axis of ['intelligence','calibration','speed','cost'])neg('old v1.6.16 '+axis,x=>{row(x).axes[axis]={intelligence:75.30887432957479,calibration:86.11719241235002,speed:84.24269550432561,cost:17.92634850427801}[axis]});
+neg('unranked',x=>{row(x).ranked=false});neg('live tariff',x=>{row(x).cost.kind='tariff';row(x).cost.basis='live OpenRouter price 0.04/2.30'});neg('within caps',x=>{row(x).listing='ranked';row(x).cost.usd_per_1000=.01});neg('no consent',x=>{x.proof.consent=''});neg('no paid marker',x=>{row(x).paid_fast_lane=false});neg('no paid disclosure',x=>{row(x).disclosure='Measured 13 Oct 2026'});neg('no licence disclosure',x=>{row(x).licence='Apache-2.0'});
+for(const field of ['axes','scores','composite_ci95','cost','noul_decisive','draw','model_pin'])neg('row pin '+field,x=>{row(x)[field]={}});
+for(const m of ['A','B','C','capability'])neg('order '+m,x=>{x.artifact.board[m].order.reverse()});
+neg('carried score',x=>{x.artifact.systems.find(s=>s.key==='knowline-31b-gen1').axes.intelligence++});neg('carried ranks',x=>{x.artifact.systems.find(s=>s.key==='knowline-31b-gen1').rank++});neg('rank exceptions',x=>{x.proof.exceptions={}});neg('approval pending',x=>{x.proof.publication_approval.status='PENDING TOP-FIVE APPROVAL'});neg('topfive changed',x=>{x.proof.publication_approval.top_five_effect='changed'});neg('raw pin',x=>{x.proof.new_rows[k].raw_sha256='a'.repeat(64)});neg('predecessor',x=>{x.manifest.predecessor.publication_sha256='b'.repeat(64)});
+if(b.manifest.review.verdict==='PENDING'&&await readJevbenchV1720ForBoard()!==null)throw Error('PENDING leak');console.log(`PASS candidate, ${rejected} negatives rejected`);

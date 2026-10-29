@@ -1,0 +1,17 @@
+{
+ "status": "PASS",
+ "timestamp": "2026-10-28T22:36:39.923824+00:00",
+ "commands": {
+  "derive_v1718.py": "PASS aggregate derivation and live KnowLine-31B control",
+  "prepare_v1718.py": "PASS aggregate capture; no raw access",
+  "topfive-insertion_v1718.mjs": "580 lists, 0 changed; 2052 sliders, 0 changed; 368 grid states, 0 changed; 4 customs, 0 changed",
+  "validate_v1718.mjs": "PASS candidate; 45 negatives rejected",
+  "check_source_v1718.py": "PASS 15 retained aggregate source pins, current scorer and pricing pins; no raw/sealed reads",
+  "check_pricing_v1718.py": "PASS both exact same-items estimates and frozen references",
+  "check_public_text_v1718.py": "PASS exact disclosures and 1485 same-items estimate",
+  "check_helpers_v1718.py": "PASS dry flip without write, freeze refused PENDING, 7 approval negatives",
+  "two rebuild_v1718.sh runs": "PASS byte-identical; see REPRO.json",
+  "preview_v1718.py": "PASS regenerated; card viewed; byte-identical to inspected predecessor draft"
+ },
+ "base_check": "278 predecessor files byte-equal, exact new-row build2 numbers unchanged; see BASE-BUILD3.json"
+}

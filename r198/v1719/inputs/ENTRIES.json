@@ -1,0 +1,34 @@
+{
+ "decisionnode-flash-0.9.1-rc1": {
+  "entry": {
+   "author": "Bynn",
+   "cost_basis": "NOT PRICED. The vendor states USD 0.042 (DecisionNode) / 0.035 (Flash) per 1M input tokens, output not billed, but under the frozen pricing rules a hosted model's own tariff counts only once it is admitted to the frozen list-price set, and these models declare no base model. Token usage: 471,195 input, 0 output on the answered items. Usage is reported on the fixed 1,489-item cost set from the 27 Oct draw. The vendor tariff is not used to compute a cost.",
+   "disclosure": "Hosted API by Bynn, measured directly through the vendor's synchronous endpoint. All 1,500 items were sent; 5 items over the provider's input limit were refused (HTTP 400 max_tokens_exceeded), scored as misses and kept in the denominator. The provider reports probabilities to two decimals; exact zeros on many-option items are expected, and Calibration is computed on the reported values without adjustment. Output tokens reported as 0. Measured on the 27 Oct 2026 regular draw, not yet equated to the reference scale (offset 0). This draw has no subject-topic labels yet; use-case and language cells are measured on its own draw. Latency: p50 0.256 s, p95 0.317 s, maximum 0.668 s.",
+   "display": "DecisionNode Flash",
+   "endpoint_condition": "Hosted API by Bynn; direct synchronous vendor endpoint https://api.decisionnode.com/v1/systemone.",
+   "licence": "proprietary hosted API",
+   "model_pin": {
+    "model": "decisionnode-flash-0.9.1-rc1",
+    "served_model": "decisionnode-flash-0.9.1-rc1"
+   },
+   "provider": "bynn",
+   "repo": "https://decisionnode.com"
+  }
+ },
+ "decisionnode-main-0.9.1-rc1": {
+  "entry": {
+   "author": "Bynn",
+   "cost_basis": "NOT PRICED. The vendor states USD 0.042 (DecisionNode) / 0.035 (Flash) per 1M input tokens, output not billed, but under the frozen pricing rules a hosted model's own tariff counts only once it is admitted to the frozen list-price set, and these models declare no base model. Token usage: 471,195 input, 0 output on the answered items. Usage is reported on the fixed 1,489-item cost set from the 27 Oct draw. The vendor tariff is not used to compute a cost.",
+   "disclosure": "Hosted API by Bynn, measured directly through the vendor's synchronous endpoint. All 1,500 items were sent; 5 items over the provider's input limit were refused (HTTP 400 max_tokens_exceeded), scored as misses and kept in the denominator. The provider reports probabilities to two decimals; exact zeros on many-option items are expected, and Calibration is computed on the reported values without adjustment. Output tokens reported as 0. Measured on the 27 Oct 2026 regular draw, not yet equated to the reference scale (offset 0). This draw has no subject-topic labels yet; use-case and language cells are measured on its own draw. A first attempt stopped incomplete because of a harness resend bug on our side and is not used; the published result is the second, complete attempt. Latency: p50 0.675 s, p95 0.802 s, maximum 1.408 s.",
+   "display": "DecisionNode",
+   "endpoint_condition": "Hosted API by Bynn; direct synchronous vendor endpoint https://api.decisionnode.com/v1/systemone.",
+   "licence": "proprietary hosted API",
+   "model_pin": {
+    "model": "decisionnode-main-0.9.1-rc1",
+    "served_model": "decisionnode-main-0.9.1-rc1"
+   },
+   "provider": "bynn",
+   "repo": "https://decisionnode.com"
+  }
+ }
+}

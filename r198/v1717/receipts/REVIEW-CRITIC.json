@@ -1,0 +1,55 @@
+{
+ "verdict": "PASS",
+ "engine": "claude-opus-5-5 (Claude Code, medium)",
+ "head_sha": "c287232401ff6e89856e5b2eaae584b308f19c00",
+ "base_sha": "6ef616054c679ad69bd8366654ba92e471bca74a",
+ "reproduced": {
+  "raw_sha256": "96e11049d1593d75ee84fe258f6a6c4020c9e37ebe299c7d18a3b6846fbacf81 (= kit out/jevstyle2b/pull-sha256.json)",
+  "rows": 1500, "answered_ok": 1495, "http400": 5, "refused_positions": [19, 85, 397, 455, 1179],
+  "refused_set_sha256_prefix": "8d7957c3 (new row) = 8d7957c3 (strike-1) = PREREG line 31",
+  "raw_order_equals_input_9b2f32ed": true,
+  "common_set_8_raws": [1489, "4e912731"], "common_set_9_raws": [1489, "4e912731"],
+  "frozen_v1716_cost_basis_equals_9raw_complement": true,
+  "scorers": "score_v16 02132271 / score_v17 6363458d, B 1000 seed 16 O1S, G_med 2.573387642438244, 10 s share, --cost-basis = frozen v1.7.16 file",
+  "per_system_outputs_vs_builder": "byte-equal in all 3 modes (frozen/off/share); results files differ only in v16.cost_basis rule/reference/file_sha256 strings (I used the frozen v1.7.16 cost-basis file)",
+  "public_row_vs_share_output": "748/748 shared numeric paths equal; only rank fields absent (row unranked)",
+  "axes": {"intelligence": 33.91785114475573, "calibration": 88.50529260806339, "speed": 94.44817145387303, "cost": 75.39968935948227},
+  "capability": 61.21157187640956,
+  "composites": {"A": 28.47918106314405, "B": 24.447065985396033, "C": 19.777209071627816},
+  "cost": {"reference": "deepinfra:Qwen/Qwen3.5-2B (0.02, 0.1) from pricing_v15.reference() sha 645fd82e", "input_tokens_common": 491898, "input_tokens_all": 494187, "output_tokens": 0, "usd_per_1000": 0.006607092008059101, "usd_per_1000_all_items": 0.006589159999999999, "kind": "estimate"},
+  "latency": {"raw_p50_s": 0.013410373999988678, "adjusted_p50_s": 0.17682074799997735, "n_over_10s": 0}
+ },
+ "findings": [
+  {"id": "F1", "severity": "low", "blocking": false, "title": "Benchmark train-split wording adds 'public' to the PREREG wording",
+   "evidence": "PREREG-JEVSTYLE2B.md:61 says 'official train splits of several benchmarks are in the training data (not zero-shot)'; row disclosure / v1.7.17 measurement note say 'official train splits of several public benchmarks'; app/jev-models/v1.7.17/page.tsx:16 says 'official train splits of public benchmarks'.",
+   "requested_change": "Optional: drop 'public' to mirror the PREREG word for word, or accept as a harmless paraphrase (benchmarks with official train splits are public). Not required for publication."},
+  {"id": "F2", "severity": "info", "blocking": false, "title": "Proof file carries internal references (same as v1.7.15/v1.7.16 precedent)",
+   "evidence": "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.17-proof.json contains #18781 #21769 #30913 #31465 #31736, a /home/flori/jobs/jevbench-add-requests-20260919/r198/v1717/s... path and 'DECISIONS'; v1.7.16-proof.json and v1.7.15-proof.json contain the same kinds (v1.7.15 even 'Florian'). Not rendered on any page; the results row, notes, page, publication manifest and addendum are clean.",
+   "requested_change": "None for v1.7.17 (accepted precedent). Consider sanitizing proof files in a future release if the repo/data are public."},
+  {"id": "F3", "severity": "info", "blocking": false, "title": "Carried d1027 rows still say 'first anchor runs used models weaker than this row'",
+   "evidence": "7 carried d1027 rows (arcbright-elf-1-12b-r2, decisio-gemma-4-12b-tuned-commit-think, h2o-lightning-4b-v1.4.1, jeff_1_1_large, jeff_1_1_qwen_4b, microsoft-decision-1-r2, torchcast-decision-31b-v1.0) have that not_ranked_because, byte-equal to v1.7.16; built .next v1.7.17.html and jev-models.html each contain 1 'weaker than' occurrence. The new row and the v1.7.17 page text contain 0.",
+   "requested_change": "None for v1.7.17 (carried rows must stay byte-equal). If the neutral wording should also cover those rows, that is a separate text-fix release."}
+ ],
+ "checks": {
+  "ranking": "ranked false, rank null, ranks all null, listing unranked; key appears outside systems only in addendum.new_keys; board (all order lists) canonical-equal to v1.7.16; draw status anchor-runs-pending offset {I:0,C:0} in row and data/jevbench-draw-equating.json",
+  "carried_rows": "308/308 canonical-equal to v1.7.16 incl. the 7 d1027 rows' costs; addendum.repriced_keys []",
+  "note": "new row not_ranked_because == strike-1's exactly; 0 'weaker' in new row + v1.7.17 page",
+  "history_sentence": "lib/jevbench-releases.mjs and results source_note: 'Added Jev-Style-2B (self-hosted) on the 27 Oct regular draw, shown unranked.'",
+  "neutral_draw_wording": "page.tsx:16 contains the exact rebase-brief sentence",
+  "disclosures_vs_prereg": "full fine-tune of Qwen/Qwen3.5-2B Apache-2.0 (PREREG:9,11); soft labels from TypeSafe Jev 1.14 via public API 334,739 rows (PREREG:61); author's documented server CUDA bf16 CUDA graphs FLA (PREREG:61); 74.9% float32 MPS not official (PREREG:61); multimodal tower unused (PREREG:61); contributor code on disposable pod (PREREG:61); 5 longest refused HTTP 400 over 32,768, misses, in denominator (PREREG:31,61,85; max answered prompt 1,656 so the 5 refused are the 5 longest); output 0 (PREREG:51,61)",
+  "sealed_leak": "0 of 1,500 input task_ids and 0 of 3,174 40-char string fragments of input rows occur in any added line of git diff 6ef61605..c2872324 (46.9 MB)",
+  "internal_ids_public_text": "row, new measurement note, page, publication manifest, addendum: no Florian/board numbers/job names/paths"
+ },
+ "tests": {
+  "tsc": "PASS: suite-slot npx tsc --noEmit exit 0 (local, admitted after 1008 s)",
+  "topfive_rerun": "PASS: suite-slot bash r198/v1717/compare_v1717.sh -> 'PASS 580 lists; 0 changed; sliders 0 ; grid 0 ; custom 0 ; entrants {} ; leavers {}'; full regeneration left 0 tracked diffs (deterministic)",
+  "postflip_suites": "PASS: heavy-run r10282300026km0 (LeChonk), synthetic PASS swap of the 1 publication manifest: node --test v1717-release, v1716-release, merged-board, breakdowns-every-listed-row, feed-live-board, cr-303-feed-split, cr-205-jev-page-structure, sitemap-releases-redirects: 91 tests, 91 pass, 0 fail",
+  "production_build": "PASS: npm run build exit 0, compiled, 643 static pages; .next/server/app/jev-models/v1.7.17.html exists, shows Jev-Style-2B and the neutral draw sentence"
+ },
+ "limitations": [
+  "Post-flip suites and build used my own harness (src/critic-heavy.sh) but the builder's make_passtree_v1717.py to simulate PASS.",
+  "I ran 8 targeted suites, not the full 18-file set in heavy_v1717.sh, and not npm test (full suite).",
+  "The compare_v1717.sh wrapper exit code was not captured separately; all steps completed and printed PASS, last step (preview) PASS.",
+  "Built-HTML checks were grep counts on the remote .next; the HTML itself was not brought back or viewed visually; preview card not re-inspected."
+ ]
+}

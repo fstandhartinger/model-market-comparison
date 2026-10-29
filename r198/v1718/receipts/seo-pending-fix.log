@@ -1,0 +1,35 @@
+TAP version 13
+# Subtest: SEO headline ranks match the open-weights board in the current public feed, not artifact-wide ranks
+ok 1 - SEO headline ranks match the open-weights board in the current public feed, not artifact-wide ranks
+  ---
+  duration_ms: 73690.173848
+  ...
+# Subtest: comparisons preserve legacy slugs and derive current top-eight rivals
+ok 2 - comparisons preserve legacy slugs and derive current top-eight rivals
+  ---
+  duration_ms: 1.237436
+  ...
+# Subtest: picks and open-weight classification use current measured evidence
+ok 3 - picks and open-weight classification use current measured evidence
+  ---
+  duration_ms: 0.825859
+  ...
+# Subtest: main server JSON-LD renders valid Dataset, Breadcrumb and visible matching FAQ
+ok 4 - main server JSON-LD renders valid Dataset, Breadcrumb and visible matching FAQ
+  ---
+  duration_ms: 130.781192
+  ...
+# Subtest: static model params include every current and historical public system; private keys never escape
+ok 5 - static model params include every current and historical public system; private keys never escape
+  ---
+  duration_ms: 68152.114639
+  ...
+1..5
+# tests 5
+# suites 0
+# pass 5
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 219392.208475

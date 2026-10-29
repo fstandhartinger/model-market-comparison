@@ -1,0 +1,107 @@
+{
+ "verdict": "PASS",
+ "engine": "claude-opus-5-5 (Claude Code)",
+ "head_sha": "5d0479f417c47e0c2f90a18976b9c52155ba2cbc",
+ "findings": [
+  {
+   "id": "F1",
+   "severity": "low",
+   "blocking": false,
+   "title": "Disclosure text artifact and ambiguous 'no earlier-generation KnowLine row exists on the board'",
+   "evidence": "jevbench-v1.7.18-results.json measurement_notes[-2:] and rows' disclosure: 'FIRST MEASUREMENT of this .5 serving version . SAME WEIGHTS AS Gen2 (no earlier-generation KnowLine row exists on the board)'; ENTRIES-R8C-LEAD had '(our own intake)' removed leaving ' .'; knowline-31b-gen1 and knowline-35b-a3b-gen1.5 are on the board",
+   "requested_change": "Optional: '...serving version. SAME WEIGHTS AS Gen2 (no Gen2 row exists on the board)...' (4B: Gen5); needs a rebuild of pinned bytes now or a later text-fix release"
+  },
+  {
+   "id": "F2",
+   "severity": "medium",
+   "blocking": false,
+   "title": "Pre-existing site-wide: over-10s 'answered correctly' wording is wrong",
+   "evidence": "components/JevDecisionLimitCell.tsx:29 renders n_over_limit_answered_ok as 'answered correctly'; r160/scorer/score_v17.py:174 (sha 6363458d) counts ok-and-no-error answers. 26B system page: '15 of them answered correctly, counted as wrong'. 62 carried rows affected since v1.7.0",
+   "requested_change": "Separate site fix: 'answered without error' (not caused by this release)"
+  },
+  {
+   "id": "F3",
+   "severity": "low",
+   "blocking": false,
+   "title": "26B system page says 'Not ranked in the current release' for a ranked_over_cap row",
+   "evidence": "app/jev-models/[system]/page.tsx:200; compiled knowline-26b-a4b-gen2.5.html: 'Capability 77.3 \u00b7 Not ranked in the current release' then 'Composite rank #67'; llms-full says 'outside caps'; first live ranked_over_cap row since v1.7.0",
+   "requested_change": "Add an over-cap branch: 'outside the official caps (no Capability rank)'"
+  },
+  {
+   "id": "F4",
+   "severity": "low",
+   "blocking": false,
+   "title": "Model pages do not show the lost-answer-file / Noul-unavailable disclosures",
+   "evidence": "compiled knowline-4b-gen5.5.html / knowline-26b-a4b-gen2.5.html contain none of the ruled sentences; release page and live board do (D1 x14/x8). No system page renders row disclosures (precedent)",
+   "requested_change": "Optional"
+  },
+  {
+   "id": "I1",
+   "severity": "info",
+   "blocking": false,
+   "title": "Base model shown 'undisclosed' though model_pin.base is known",
+   "evidence": "data/jevbench-base-models.json has no KnowLine entries (also live 31B/35B)",
+   "requested_change": "Separate base-model overlay CR"
+  },
+  {
+   "id": "I2",
+   "severity": "info",
+   "blocking": false,
+   "title": "Top-five insertion input uses candidate-rows.json (26B 'ranked', old cost text)",
+   "evidence": "rerun with published rows: 0/580 lists, 0/2052 sliders, 0/368 grid, 0/4 custom (evidence/topfive-comparison.published-rows.json)",
+   "requested_change": "None needed"
+  },
+  {
+   "id": "I3",
+   "severity": "info",
+   "blocking": false,
+   "title": "Release date 2026-10-28",
+   "evidence": "lib/jevbench-releases.mjs v1.7.18 entry; llms 'published 2026-10-28'",
+   "requested_change": "Check at flip time whether the date should be the actual publication day"
+  }
+ ],
+ "reproduced": {
+  "published_fields_vs_out_v17_share": "all numeric leaves equal at full precision (862/863 leaves); diffs only cost.basis text, rank/ranks, 26B listing ranked->ranked_over_cap (ROWS.json)",
+  "control_rows": "knowline-31b-gen1 (field-r9f) and knowline-35b-a3b-gen1.5 (field-r8d): 831 equal leaves each vs live v1.7.17, diffs only cost.basis text and ranks",
+  "cost": {
+   "knowline-4b-gen5.5": {
+    "ref": "deepinfra:Qwen/Qwen3.5-4B 0.03/0.15",
+    "usd_common": 0.031035575757575755,
+    "usd_all": 0.05432537999999999,
+    "cap_ratio": 0.4804666218085178,
+    "listing": "ranked",
+    "exact": true
+   },
+   "knowline-26b-a4b-gen2.5": {
+    "ref": "google/gemma-4-26b-a4b-it 0.09/0.30",
+    "usd_common": 0.09311921212121212,
+    "usd_all": 0.16365029999999997,
+    "cap_ratio": 1.4415931453254387,
+    "listing": "ranked_over_cap",
+    "exact": true
+   },
+   "pricing_module": "645fd82e",
+   "cap": 0.06459465517241379,
+   "basis": "1485 common items, sha 2125e620"
+  },
+  "cells": "families 13 + languages 10 per row equal; same rule reproduces both controls",
+  "noul_4b": "decisive 264 / rate 0.704 / acc 235/264; method validated on 237/237 published rows with zero Noul time-limit failures",
+  "ranks": "board orders = v1.7.17 + insertion, 0 inversions; 255 carried rank/ranks changes all = insertion shift; 0 other carried field changes; 211 derived feed-rank changes match proof pins exactly",
+  "top5": "0/580 (committed script rerun byte-identical) and 0/580 with published rows; assembled board 0/40, carried relative order unchanged in all 40"
+ },
+ "tests": {
+  "heavy_run": "r1029003606omd0 on LeChonk via suite-slot --max-wait 1800, exit 0, 2902 s",
+  "tsc": "exit 0",
+  "postflip_suites": "204 tests, 203 pass, 1 skip (by design), 0 fail",
+  "next_build": "PASS",
+  "compiled": "latest v1.7.18 311 systems; /api/jevbench/v1.7.18 bytes sha 7a715715 = pin; page has ruled disclosures, 'unavailable', Previous v1.7.17",
+  "negatives": "9 own cases: baseline accepted, 8 tampering cases rejected",
+  "full_suite": "not run (not requested)"
+ },
+ "limitations": [
+  "CIs are retained 23 Oct outputs: verified equal, not recomputable",
+  "aggregate files trusted as scorer-written; source shas covered by the build's recheck, not re-verified here",
+  "client-rendered topic/radar UI checked only via post-flip breakdown suites",
+  "lost raws only stat()-ed (0 bytes, 26 Oct 18:01Z); control raw never read"
+ ]
+}

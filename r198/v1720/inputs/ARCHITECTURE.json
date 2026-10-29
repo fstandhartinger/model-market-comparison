@@ -1,0 +1,18 @@
+{
+ "lychee-27b": {
+  "arch": "open-llm-decoder",
+  "badges": {
+   "derivation": "fine-tune",
+   "params": "27B",
+   "quant": "bf16"
+  },
+  "evidence": [
+   {
+    "kind": "model-card",
+    "url": "https://huggingface.co/LycheeAI/Lychee-27B/tree/f3f95d18a3b1ef3c483c2a5d7e8e5272a2af31e2",
+    "fact": "Lychee-27B, declared base Qwen/Qwen3.8-27B; bf16 forward pass and linear readout as measured in the original priority evaluation."
+   }
+  ],
+  "note": "Weights CC BY-NC 4.0, non-commercial use only; base Apache-2.0. See measured conditions on the row."
+ }
+}

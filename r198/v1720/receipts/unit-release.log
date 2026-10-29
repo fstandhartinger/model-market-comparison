@@ -1,0 +1,31 @@
+TAP version 13
+# PASS candidate, 33 negatives rejected
+# Subtest: v1.7.20 paid Lychee d1012 candidate and negatives
+ok 1 - v1.7.20 paid Lychee d1012 candidate and negatives
+  ---
+  duration_ms: 94.89802
+  ...
+# Subtest: PENDING stays hidden and synthetic PASS is visible
+ok 2 - PENDING stays hidden and synthetic PASS is visible
+  ---
+  duration_ms: 4.67631
+  ...
+# Subtest: paid row has native cells and full pricing and licence disclosures
+ok 3 - paid row has native cells and full pricing and licence disclosures
+  ---
+  duration_ms: 0.486331
+  ...
+# Subtest: page and draw include the d1012 addition
+ok 4 - page and draw include the d1012 addition
+  ---
+  duration_ms: 0.450261
+  ...
+1..4
+# tests 4
+# suites 0
+# pass 4
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 37969.831421

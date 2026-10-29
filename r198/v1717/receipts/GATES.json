@@ -1,0 +1,1232 @@
+{
+ "BUILD-POSTFLIP": {
+  "exit_code": 0
+ },
+ "FULLTEST-POSTFLIP": {
+  "reason": "Only rebase, predecessor binding, text and their gate adaptations changed versus c82f6b74; exempt per brief",
+  "status": "NOT_RUN"
+ },
+ "PENDING": {
+  "exit_code": 1
+ },
+ "POSTFLIP": {
+  "exit_code": 0
+ },
+ "TSC": {
+  "command": "suite-slot heavy-run tsc --noEmit",
+  "exit_code": 0
+ },
+ "built_artifact": {
+  "compiled_route": ".next/server/app/api/jevbench/latest/route.js",
+  "draw_rows_in_feed": [
+   {
+    "composite_score": 75.66989716801469,
+    "cost_usd_per_1000": 0.01954180658159839,
+    "key": "arcbright-elf-1-12b-r2",
+    "listing": "unranked",
+    "note_exact": true,
+    "rank": null,
+    "ranked": false
+   },
+   {
+    "composite_score": 28.47918106314405,
+    "cost_usd_per_1000": 0.006607092008059101,
+    "key": "chaoliangunsw-jev-style-2b-decision-v4",
+    "listing": "unranked",
+    "note_exact": true,
+    "rank": null,
+    "ranked": false
+   },
+   {
+    "composite_score": 74.67659424956109,
+    "cost_usd_per_1000": 0.02161638683680323,
+    "key": "decisio-gemma-4-12b-tuned-commit-think",
+    "listing": "unranked",
+    "note_exact": true,
+    "rank": null,
+    "ranked": false
+   },
+   {
+    "composite_score": 77.04257936486634,
+    "cost_usd_per_1000": 0.011187461383478847,
+    "key": "h2o-lightning-4b-v1.4.1",
+    "listing": "unranked",
+    "note_exact": true,
+    "rank": null,
+    "ranked": false
+   },
+   {
+    "composite_score": 71.57749064353953,
+    "cost_usd_per_1000": 0.040567629281396914,
+    "key": "jeff_1_1_large",
+    "listing": "unranked",
+    "note_exact": true,
+    "rank": null,
+    "ranked": false
+   },
+   {
+    "composite_score": 73.21882869773437,
+    "cost_usd_per_1000": 0.0190047481531229,
+    "key": "jeff_1_1_qwen_4b",
+    "listing": "unranked",
+    "note_exact": true,
+    "rank": null,
+    "ranked": false
+   },
+   {
+    "composite_score": 76.97858754817413,
+    "cost_usd_per_1000": 0.013173191403626596,
+    "key": "microsoft-decision-1-r2",
+    "listing": "unranked",
+    "note_exact": true,
+    "rank": null,
+    "ranked": false
+   },
+   {
+    "composite_score": 51.81470102195167,
+    "cost_usd_per_1000": 0.03398969778374748,
+    "key": "strike-1",
+    "listing": "unranked",
+    "note_exact": true,
+    "rank": null,
+    "ranked": false
+   },
+   {
+    "composite_score": 77.28255327361624,
+    "cost_usd_per_1000": 0.03389621222296844,
+    "key": "torchcast-decision-31b-v1.0",
+    "listing": "unranked",
+    "note_exact": true,
+    "rank": null,
+    "ranked": false
+   }
+  ],
+  "feed_rows": 309,
+  "live_round1_rank": 41,
+  "main_board_html_shows": [
+   "arcbright-elf-1-12b-r2",
+   "chaoliangunsw-jev-style-2b-decision-v4",
+   "decisio-gemma-4-12b-tuned-commit-think",
+   "h2o-lightning-4b-v1.4.1",
+   "jeff_1_1_large",
+   "jeff_1_1_qwen_4b",
+   "microsoft-decision-1-r2",
+   "strike-1",
+   "torchcast-decision-31b-v1.0"
+  ],
+  "status": "PASS",
+  "synthetic_latest": "v1.7.17",
+  "v1717_page_shows_new_row": true
+ },
+ "carried_rows": {
+  "base_commit": "6ef616054c679ad69bd8366654ba92e471bca74a",
+  "board_equal": true,
+  "carried_cells_equal": 313,
+  "carried_rows": 308,
+  "predecessor_bytes_equal": 33,
+  "rows_equal_including_ranks": 308,
+  "status": "PASS"
+ },
+ "checkout_environment_recovery": {
+  "fix": "temporary snapshot has a tracked HEAD, matching a real checkout",
+  "full_suite_rerun": false,
+  "git_status_bytes_after": 0,
+  "git_status_bytes_before": 4404862,
+  "green_fail": 0,
+  "green_pass": 2,
+  "green_tests": 2,
+  "input": "three unchanged source files plus original tracked path names; other contents empty",
+  "minimized_repro": true,
+  "original_test_unchanged": true,
+  "red_exact_error": "ERR_CHILD_PROCESS_STDIO_MAXBUFFER",
+  "red_failures": 1,
+  "red_tests": 2,
+  "snapshot_commit_is_disposable": true,
+  "status": "PASS"
+ },
+ "common_set": {
+  "n_items": 1489,
+  "per_row_membership": {
+   "arcbright-elf-1-12b-r2": {
+    "answered_not_in_common": 11,
+    "answered_ok": 1500,
+    "raw_sha256": "84f08ebb6ff92af453b75cda042f617ea89c5be6a2176c7c69e11f2521da6f08",
+    "rows": 1500
+   },
+   "chaoliangunsw-jev-style-2b-decision-v4": {
+    "answered_not_in_common": 6,
+    "answered_ok": 1495,
+    "raw_sha256": "96e11049d1593d75ee84fe258f6a6c4020c9e37ebe299c7d18a3b6846fbacf81",
+    "rows": 1500
+   },
+   "decisio-gemma-4-12b-tuned-commit-think": {
+    "answered_not_in_common": 11,
+    "answered_ok": 1500,
+    "raw_sha256": "d7396dd680e13af9ba26c4526007fee3647d03eee7673bf88075ac510f39cc3c",
+    "rows": 1500
+   },
+   "h2o-lightning-4b-v1.4.1": {
+    "answered_not_in_common": 11,
+    "answered_ok": 1500,
+    "raw_sha256": "96d26bb3c0486ecbee832e309db4099b3a616b1540b4a92eff09dec81b719335",
+    "rows": 1500
+   },
+   "jeff_1_1_large": {
+    "answered_not_in_common": 11,
+    "answered_ok": 1500,
+    "raw_sha256": "1f1fdc2df674da00128ae7b47d5ea3429cf1124383a077577e7c68c7d9cc0e72",
+    "rows": 1500
+   },
+   "jeff_1_1_qwen_4b": {
+    "answered_not_in_common": 11,
+    "answered_ok": 1500,
+    "raw_sha256": "c37fada15a2021cf744b2031acb964508caf48873a2bcda5da6d6ac4a5e7c288",
+    "rows": 1500
+   },
+   "microsoft-decision-1-r2": {
+    "answered_not_in_common": 0,
+    "answered_ok": 1489,
+    "raw_sha256": "1f069818cdc069a532a4c4965d306fbd302bb819dde4aa3c48a9bd676c4a981e",
+    "rows": 1493
+   },
+   "strike-1": {
+    "answered_not_in_common": 6,
+    "answered_ok": 1495,
+    "raw_sha256": "4c6c7ab25b11432f8934425a44806ec5a2499241a9c5790216a11651473f2027",
+    "rows": 1500
+   },
+   "torchcast-decision-31b-v1.0": {
+    "answered_not_in_common": 11,
+    "answered_ok": 1500,
+    "raw_sha256": "e51a1c22336050368336c996d7cb32181bad5e854024f07844b2a8577a0dda7d",
+    "rows": 1500
+   }
+  },
+  "raws": 9,
+  "set_sha256": "4e912731e63369e1b3066b0b4afa87b44f1094aea079c5b41dc6d02e7f235537",
+  "status": "PASS",
+  "unchanged": true
+ },
+ "comparison_finalization": {
+  "aggregate_gate_rerun": {
+   "command": "suite-slot --max-wait 1800 -- bash r198/v1717/run-gates.sh",
+   "exit_code": 0,
+   "status": "PASS"
+  },
+  "changed_lists": 0,
+  "comparison_command": "bash r198/v1717/compare_v1717.sh",
+  "comparison_results_complete": true,
+  "grid_changed_states": 0,
+  "local_wrapper_exit": 143,
+  "local_wrapper_note": "Comparison, rank fixture and preview completed; combined wrapper terminated without diagnostic before aggregate gates completed. Aggregate gates rerun separately via suite-slot.",
+  "no_comparison_failure_ignored": true,
+  "primary_and_supplementary_lists": 580,
+  "slider_changed_states": 0,
+  "status": "PASS"
+ },
+ "fulltest-postflip": {
+  "reason": "Only rebase, predecessor binding, text and their gate adaptations changed versus c82f6b74; exempt per brief",
+  "status": "NOT_RUN"
+ },
+ "helpers": {
+  "approval_negative_cases": 11,
+  "fixture_flip_refused": true,
+  "fixture_grants_no_authority": true,
+  "pending_freeze_refused": true,
+  "real_flip_dry_run_accepted_no_write": true,
+  "real_manifests_unchanged": [
+   "4efdecfd116029a169ae69c73a7d624143174b383ef53f76e85a57656a481356",
+   "8a8ff006bbfd5b1fd09786d0acf00f79fc1f4bf34cca18a75be38e6de0922f42",
+   "6f1cfd02552e50848de3735f8d164a2cc6d7658a6525a3aa97f58380f359a646"
+  ],
+  "real_v1716_review": "PASS",
+  "seal_write_refused": true,
+  "stale_predecessor_binding_refused": true,
+  "standing_go_checked": true,
+  "status": "PASS",
+  "synthetic_flip_dry_run": true,
+  "synthetic_freeze_dry_run": true
+ },
+ "kit_disclosures": {
+  "both_bound_in_shas": true,
+  "prereg_sha256": "36aa9216b4b81b2e7b74f6e3f3a0b2c14a9a3bf29e1f14046c8f5ca16d590035",
+  "rows_sha256": "5d146a5d3512fc15f7b18430c0074b9f43a74872a92f26ded531c07ec0eb2a53",
+  "shas_sha256": "9ae16901690e06f5328caa4da6f5ee6b66d14b796cd8e681f6a3c498505f21d5",
+  "status": "PASS"
+ },
+ "postflip-tests": {
+  "cancelled": 0,
+  "fail": 0,
+  "log_sha256": "a2689504f1ce790970a8f66721bc4b15c17655e3915dc646698c134a0977c165",
+  "not_ok": [],
+  "pass": 193,
+  "skipped": 1,
+  "tests": 194
+ },
+ "preview": {
+  "footer": "Release review pending",
+  "html_script_syntax": true,
+  "png": [
+   1440,
+   900
+  ],
+  "png_sha256": "36d6a0321f24d362b105620c9ac0225dfda6930dac150c8145d620ea111f5b76",
+  "ranking_models_resolve": true,
+  "status": "PASS",
+  "visual_inspection": "Card viewed; no clipping or overlap"
+ },
+ "pricing": {
+  "mismatch_negatives": 3,
+  "pricing_module_sha256": "645fd82eac728d597048bec0995ecd3ac896566e269fb6c9a1fdb84c171a9ac4",
+  "reference": {
+   "base": "Qwen/Qwen3.5-2B",
+   "in": 0.02,
+   "kind": "estimate",
+   "listing": "deepinfra:Qwen/Qwen3.5-2B",
+   "out": 0.1,
+   "rule": "frozen pricing_v15 reference() for the stated base model; output priced at 0 tokens as the vendor reports (9 Oct 2026 zero-output rule)"
+  },
+  "status": "PASS"
+ },
+ "prior_build_full_suite": {
+  "cancelled": 0,
+  "fail": 1,
+  "log_sha256": "afba1d8d3863690a897e1383296d32ef808b3f270f31a84e7c3efed30269b866",
+  "not_ok": [
+   "the supervisor's dated brief backups can never make the checkout dirty again"
+  ],
+  "note": "Historical c82f6b74 receipt; not rerun for this rebase/text-only slice under the explicit brief exemption.",
+  "pass": 3918,
+  "skipped": 10,
+  "tests": 3929
+ },
+ "public_text": {
+  "all_disclosures": true,
+  "exact_note": true,
+  "neutral_page_wording": true,
+  "no_cosmetic_state_tokens": true,
+  "old_paraphrase_negatives": 2,
+  "status": "PASS",
+  "texts": 5
+ },
+ "raw": {
+  "answered": 1495,
+  "native_output_tokens": 0,
+  "nine_raw_set_recomputed": true,
+  "raw_sha256": "96e11049d1593d75ee84fe258f6a6c4020c9e37ebe299c7d18a3b6846fbacf81",
+  "refused": 5,
+  "refused_set_sha256": "8d7957c3ee9da390b38a249dc2bc72db04fa26b185ce600beb1ffcb1aa47b543",
+  "rows": 1500,
+  "status": "PASS"
+ },
+ "rebase_numbers": {
+  "common_set": {
+   "sha": "4e912731e63369e1b3066b0b4afa87b44f1094aea079c5b41dc6d02e7f235537",
+   "size": 1489,
+   "unchanged": true
+  },
+  "complete_new_row_equal_to_c82f6b74": true,
+  "matches_prior_RESULT_numbers": true,
+  "predecessor_manifest_sha256": "8a8ff006bbfd5b1fd09786d0acf00f79fc1f4bf34cca18a75be38e6de0922f42",
+  "row": {
+   "axes": {
+    "calibration": 88.50529260806339,
+    "cost": 75.39968935948227,
+    "intelligence": 33.91785114475573,
+    "speed": 94.44817145387303
+   },
+   "cap_ratio": 0.10228542888608481,
+   "capability": 61.21157187640956,
+   "composites": {
+    "A": 28.47918106314405,
+    "B": 24.447065985396033,
+    "C": 19.777209071627816
+   },
+   "cost_usd_per_1000": 0.006607092008059101,
+   "key": "chaoliangunsw-jev-style-2b-decision-v4",
+   "latency": {
+    "adjusted_p50_s": 0.17682074799997735,
+    "n_over_10s": 0,
+    "raw_max_s": 0.08912668499999654,
+    "raw_p50_s": 0.013410373999988678,
+    "raw_p95_s": 0.02653590299998996
+   }
+  },
+  "status": "PASS"
+ },
+ "release-tests": {
+  "cancelled": 0,
+  "fail": 1,
+  "log_sha256": "8b1689810bb96531adc6660f9f4093509cc32d4bd1da9a8ba1face4a04c95958",
+  "not_ok": [
+   "gate: no listed row lacks topic, use-case or language cells without a recorded exception"
+  ],
+  "pass": 178,
+  "skipped": 1,
+  "tests": 180
+ },
+ "repro": {
+  "files": {
+   "app/api/jevbench/v1.7.17/route.ts": "26ccc0c2aeb90c5ca5ff3c64b66a801d102829fbf9a3a1597134d04f402b47b0",
+   "app/jev-models/v1.7.17/page.tsx": "54e09837c1b9093f2d2f349c31c9630a3fa436eee5ebda98dfff7571a17b511c",
+   "data/jevbench-architecture.json": "b7645a8188d179add9290714ceb0be16c1196c80ea0272492cc31fdb69d6571a",
+   "data/jevbench-breakdown-exceptions.json": "6413311404c3f83e0bf1aaf67a0afe99d23a9ef1ae325629afd9ef7276627336",
+   "data/jevbench-draw-equating.json": "5be781d85f2dd2d496a1b726ffd79be996b6fd77998875f26dcfd52314955bd0",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.17-carry.json": "271d1fc77a136a04a1eb6deb5480c52d4211eb2b66b2ac8bb31e80867e69003a",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.17-categories.json": "ffd36e29eabbad168639410bd7ef2e0ab4ecf99b22b5c914b27d2b32229e2da4",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.17-history-carry.json": "334e851944e92383ab3071e52b3012040c7023d0fe236395953169ebee8f0459",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.17-history.json": "5cd8c1332226ea9c179883d2285c0d8b8cc593ae38f2645197364a7ddd9c83c1",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.17-proof.json": "e11cd57f1a44acdd6a76875759caf65993de87ac18df5567541e7f6d233b5334",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.17-publication.json": "4efdecfd116029a169ae69c73a7d624143174b383ef53f76e85a57656a481356",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.17-results.json": "cee300a75e44782be0b07885501737884c50c782133564d3cc5c297283304d67",
+   "lib/jevbench-live-board.mjs": "2b73f32f1aff5f4132857ed81bd3860fc71d73eeda2184d06e01f2da85076559",
+   "lib/jevbench-releases.mjs": "a016e39a95393c16161c3bb41ac6de1f4786fe81e47f7da6aed94d6534d2537a",
+   "lib/jevbench-v1717-release.mjs": "8989c3384b997cb78d8785a9aca5d016fcaed35f1b7fe2a0f0913ec04b620bc2",
+   "test/jevbench-v1714-release.test.mjs": "a1ec49d8a431944c71ebde0c83bdbbe4ac34fb3f8195378e7d3c22137c9c9d23",
+   "test/jevbench-v1716-release.test.mjs": "9b86668a65708be930d7fb9c6a77da3ec5d7c059b434278cee0ac5aaf144eb9c"
+  },
+  "status": "PASS",
+  "two_rebuilds_identical": true
+ },
+ "topfive": {
+  "base": "v1.7.16",
+  "candidate": "v1.7.17",
+  "changed": false,
+  "changed_labels": [],
+  "changed_lists": 0,
+  "comparison_scope": "40 primary site assembly lists plus supplementary frozen/off/share axis/weight/cap lists, slider boundaries, four custom weightings and a 368-state slider grid; before = v1.7.16 (PASS) tree with v1.7.17 wired but PENDING (equal to the same tree without v1.7.17), after = v1.7.17 synthetic PASS; real manifest PENDING",
+  "custom_changed_labels": [],
+  "custom_receipt_sha256": "a972f622bb16c6aa4879db3e2cfa5fe00b67d32c2719de15bb8c75c494b1e2ce",
+  "custom_weight_example": {
+   "calibration": 50,
+   "cost": 0,
+   "intelligence": 50,
+   "speed": 0
+  },
+  "explicit_slider_grid_changed": 0,
+  "explicit_slider_grid_states": 368,
+  "extended_changed_labels": [],
+  "extended_changed_lists": 0,
+  "extended_lists": 540,
+  "lists": 580,
+  "primary_changed_labels": [],
+  "primary_changed_lists": 0,
+  "primary_lists": 40,
+  "rows": [
+   {
+    "after": [
+     "singularity-super-decider",
+     "launchables-myles-g-12b",
+     "kettei-fat",
+     "fastino-glide-api",
+     "torchcast-decision-4b-v1.3"
+    ],
+    "before": [
+     "singularity-super-decider",
+     "launchables-myles-g-12b",
+     "kettei-fat",
+     "fastino-glide-api",
+     "torchcast-decision-4b-v1.3"
+    ],
+    "changed": false,
+    "metric": "composites/A",
+    "view": "all"
+   },
+   {
+    "after": [
+     "singularity-super-decider",
+     "kettei-fat",
+     "fastino-glide-api",
+     "drex-max",
+     "subq-snap-1.1"
+    ],
+    "before": [
+     "singularity-super-decider",
+     "kettei-fat",
+     "fastino-glide-api",
+     "drex-max",
+     "subq-snap-1.1"
+    ],
+    "changed": false,
+    "metric": "composites/B",
+    "view": "all"
+   },
+   {
+    "after": [
+     "singularity-super-decider",
+     "kettei-fat",
+     "fastino-glide-api",
+     "torchcast-decision-4b-v1.3",
+     "liquid-d1-ultra"
+    ],
+    "before": [
+     "singularity-super-decider",
+     "kettei-fat",
+     "fastino-glide-api",
+     "torchcast-decision-4b-v1.3",
+     "liquid-d1-ultra"
+    ],
+    "changed": false,
+    "metric": "composites/C",
+    "view": "all"
+   },
+   {
+    "after": [
+     "kettei-fat",
+     "singularity-super-decider-thinking",
+     "singularity-super-decider",
+     "fastino-glide-api",
+     "h2o-lightning-31b"
+    ],
+    "before": [
+     "kettei-fat",
+     "singularity-super-decider-thinking",
+     "singularity-super-decider",
+     "fastino-glide-api",
+     "h2o-lightning-31b"
+    ],
+    "changed": false,
+    "metric": "capability/official_caps",
+    "view": "all"
+   },
+   {
+    "after": [
+     "gpt-6-luna",
+     "gpt-6-luna-low",
+     "gpt-5.6-luna",
+     "deepseek-flash",
+     "kettei-fat"
+    ],
+    "before": [
+     "gpt-6-luna",
+     "gpt-6-luna-low",
+     "gpt-5.6-luna",
+     "deepseek-flash",
+     "kettei-fat"
+    ],
+    "changed": false,
+    "metric": "capability/no_caps",
+    "view": "all"
+   },
+   {
+    "after": [
+     "kettei-fat",
+     "singularity-super-decider-thinking",
+     "mammoth-1",
+     "knowline-31b-gen1",
+     "fastino-glide-1.2-open"
+    ],
+    "before": [
+     "kettei-fat",
+     "singularity-super-decider-thinking",
+     "mammoth-1",
+     "knowline-31b-gen1",
+     "fastino-glide-1.2-open"
+    ],
+    "changed": false,
+    "metric": "capability/cost_off_latency_2x",
+    "view": "all"
+   },
+   {
+    "after": [
+     "kettei-fat",
+     "singularity-super-decider-thinking",
+     "singularity-super-decider",
+     "fastino-glide-api",
+     "h2o-lightning-31b"
+    ],
+    "before": [
+     "kettei-fat",
+     "singularity-super-decider-thinking",
+     "singularity-super-decider",
+     "fastino-glide-api",
+     "h2o-lightning-31b"
+    ],
+    "changed": false,
+    "metric": "capability/latency_none",
+    "view": "all"
+   },
+   {
+    "after": [
+     "kettei-fat",
+     "singularity-super-decider-thinking",
+     "mammoth-1",
+     "knowline-31b-gen1",
+     "fastino-glide-1.2-open"
+    ],
+    "before": [
+     "kettei-fat",
+     "singularity-super-decider-thinking",
+     "mammoth-1",
+     "knowline-31b-gen1",
+     "fastino-glide-1.2-open"
+    ],
+    "changed": false,
+    "metric": "extra_capability/cost_7x",
+    "view": "all"
+   },
+   {
+    "after": [
+     "kettei-fat",
+     "singularity-super-decider-thinking",
+     "mammoth-1",
+     "knowline-31b-gen1",
+     "fastino-glide-1.2-open"
+    ],
+    "before": [
+     "kettei-fat",
+     "singularity-super-decider-thinking",
+     "mammoth-1",
+     "knowline-31b-gen1",
+     "fastino-glide-1.2-open"
+    ],
+    "changed": false,
+    "metric": "extra_capability/cost_10x",
+    "view": "all"
+   },
+   {
+    "after": [
+     "gpt-6-luna",
+     "gpt-6-luna-low",
+     "gpt-5.6-luna",
+     "deepseek-flash",
+     "kettei-fat"
+    ],
+    "before": [
+     "gpt-6-luna",
+     "gpt-6-luna-low",
+     "gpt-5.6-luna",
+     "deepseek-flash",
+     "kettei-fat"
+    ],
+    "changed": false,
+    "metric": "extra_capability/rank_field",
+    "view": "all"
+   },
+   {
+    "after": [
+     "gpt-6-luna",
+     "gpt-6-luna-low",
+     "gpt-5.6-luna",
+     "kettei-fat",
+     "singularity-super-decider-thinking"
+    ],
+    "before": [
+     "gpt-6-luna",
+     "gpt-6-luna-low",
+     "gpt-5.6-luna",
+     "kettei-fat",
+     "singularity-super-decider-thinking"
+    ],
+    "changed": false,
+    "metric": "extra_capability/cost_7x_latency_none",
+    "view": "all"
+   },
+   {
+    "after": [
+     "gpt-6-luna",
+     "gpt-6-luna-low",
+     "gpt-5.6-luna",
+     "kettei-fat",
+     "singularity-super-decider-thinking"
+    ],
+    "before": [
+     "gpt-6-luna",
+     "gpt-6-luna-low",
+     "gpt-5.6-luna",
+     "kettei-fat",
+     "singularity-super-decider-thinking"
+    ],
+    "changed": false,
+    "metric": "extra_capability/cost_10x_latency_none",
+    "view": "all"
+   },
+   {
+    "after": [
+     "torchcast-decision-4b-v1.3",
+     "h2o-lightning-4b",
+     "h2o-lightning-31b",
+     "torchcast-decision-4b-v1.2",
+     "chon-1.0-e4b"
+    ],
+    "before": [
+     "torchcast-decision-4b-v1.3",
+     "h2o-lightning-4b",
+     "h2o-lightning-31b",
+     "torchcast-decision-4b-v1.2",
+     "chon-1.0-e4b"
+    ],
+    "changed": false,
+    "metric": "composites/A",
+    "view": "open"
+   },
+   {
+    "after": [
+     "h2o-lightning-31b",
+     "torchcast-decision-4b-v1.3",
+     "basal-omni-1.0-ultra",
+     "quyet-1-0-large",
+     "jeff_1_1_medium"
+    ],
+    "before": [
+     "h2o-lightning-31b",
+     "torchcast-decision-4b-v1.3",
+     "basal-omni-1.0-ultra",
+     "quyet-1-0-large",
+     "jeff_1_1_medium"
+    ],
+    "changed": false,
+    "metric": "composites/B",
+    "view": "open"
+   },
+   {
+    "after": [
+     "torchcast-decision-4b-v1.3",
+     "h2o-lightning-4b",
+     "h2o-lightning-31b",
+     "torchcast-decision-4b-v1.2",
+     "decisio-gemma-4-12b-tuned-commit"
+    ],
+    "before": [
+     "torchcast-decision-4b-v1.3",
+     "h2o-lightning-4b",
+     "h2o-lightning-31b",
+     "torchcast-decision-4b-v1.2",
+     "decisio-gemma-4-12b-tuned-commit"
+    ],
+    "changed": false,
+    "metric": "composites/C",
+    "view": "open"
+   },
+   {
+    "after": [
+     "h2o-lightning-31b",
+     "basal-omni-1.0-ultra",
+     "dopest-1.0-31b",
+     "jeff_1_1_medium",
+     "arcbright-elf-1-31b"
+    ],
+    "before": [
+     "h2o-lightning-31b",
+     "basal-omni-1.0-ultra",
+     "dopest-1.0-31b",
+     "jeff_1_1_medium",
+     "arcbright-elf-1-31b"
+    ],
+    "changed": false,
+    "metric": "capability/official_caps",
+    "view": "open"
+   },
+   {
+    "after": [
+     "mammoth-1",
+     "knowline-31b-gen1",
+     "fastino-glide-1.2-open",
+     "h2o-lightning-31b",
+     "pplx-decider-v1-1-27b"
+    ],
+    "before": [
+     "mammoth-1",
+     "knowline-31b-gen1",
+     "fastino-glide-1.2-open",
+     "h2o-lightning-31b",
+     "pplx-decider-v1-1-27b"
+    ],
+    "changed": false,
+    "metric": "capability/no_caps",
+    "view": "open"
+   },
+   {
+    "after": [
+     "mammoth-1",
+     "knowline-31b-gen1",
+     "fastino-glide-1.2-open",
+     "h2o-lightning-31b",
+     "pplx-decider-v1-1-27b"
+    ],
+    "before": [
+     "mammoth-1",
+     "knowline-31b-gen1",
+     "fastino-glide-1.2-open",
+     "h2o-lightning-31b",
+     "pplx-decider-v1-1-27b"
+    ],
+    "changed": false,
+    "metric": "capability/cost_off_latency_2x",
+    "view": "open"
+   },
+   {
+    "after": [
+     "h2o-lightning-31b",
+     "basal-omni-1.0-ultra",
+     "dopest-1.0-31b",
+     "jeff_1_1_medium",
+     "arcbright-elf-1-31b"
+    ],
+    "before": [
+     "h2o-lightning-31b",
+     "basal-omni-1.0-ultra",
+     "dopest-1.0-31b",
+     "jeff_1_1_medium",
+     "arcbright-elf-1-31b"
+    ],
+    "changed": false,
+    "metric": "capability/latency_none",
+    "view": "open"
+   },
+   {
+    "after": [
+     "mammoth-1",
+     "knowline-31b-gen1",
+     "fastino-glide-1.2-open",
+     "h2o-lightning-31b",
+     "pplx-decider-v1-1-27b"
+    ],
+    "before": [
+     "mammoth-1",
+     "knowline-31b-gen1",
+     "fastino-glide-1.2-open",
+     "h2o-lightning-31b",
+     "pplx-decider-v1-1-27b"
+    ],
+    "changed": false,
+    "metric": "extra_capability/cost_7x",
+    "view": "open"
+   },
+   {
+    "after": [
+     "mammoth-1",
+     "knowline-31b-gen1",
+     "fastino-glide-1.2-open",
+     "h2o-lightning-31b",
+     "pplx-decider-v1-1-27b"
+    ],
+    "before": [
+     "mammoth-1",
+     "knowline-31b-gen1",
+     "fastino-glide-1.2-open",
+     "h2o-lightning-31b",
+     "pplx-decider-v1-1-27b"
+    ],
+    "changed": false,
+    "metric": "extra_capability/cost_10x",
+    "view": "open"
+   },
+   {
+    "after": [
+     "mammoth-1",
+     "knowline-31b-gen1",
+     "fastino-glide-1.2-open",
+     "h2o-lightning-31b",
+     "pplx-decider-v1-1-27b"
+    ],
+    "before": [
+     "mammoth-1",
+     "knowline-31b-gen1",
+     "fastino-glide-1.2-open",
+     "h2o-lightning-31b",
+     "pplx-decider-v1-1-27b"
+    ],
+    "changed": false,
+    "metric": "extra_capability/rank_field",
+    "view": "open"
+   },
+   {
+    "after": [
+     "mammoth-1",
+     "knowline-31b-gen1",
+     "fastino-glide-1.2-open",
+     "h2o-lightning-31b",
+     "pplx-decider-v1-1-27b"
+    ],
+    "before": [
+     "mammoth-1",
+     "knowline-31b-gen1",
+     "fastino-glide-1.2-open",
+     "h2o-lightning-31b",
+     "pplx-decider-v1-1-27b"
+    ],
+    "changed": false,
+    "metric": "extra_capability/cost_7x_latency_none",
+    "view": "open"
+   },
+   {
+    "after": [
+     "mammoth-1",
+     "knowline-31b-gen1",
+     "fastino-glide-1.2-open",
+     "h2o-lightning-31b",
+     "pplx-decider-v1-1-27b"
+    ],
+    "before": [
+     "mammoth-1",
+     "knowline-31b-gen1",
+     "fastino-glide-1.2-open",
+     "h2o-lightning-31b",
+     "pplx-decider-v1-1-27b"
+    ],
+    "changed": false,
+    "metric": "extra_capability/cost_10x_latency_none",
+    "view": "open"
+   },
+   {
+    "after": [
+     "singularity-super-decider",
+     "launchables-myles-g-12b",
+     "kettei-fat",
+     "fastino-glide-api",
+     "liquid-d1-ultra"
+    ],
+    "before": [
+     "singularity-super-decider",
+     "launchables-myles-g-12b",
+     "kettei-fat",
+     "fastino-glide-api",
+     "liquid-d1-ultra"
+    ],
+    "changed": false,
+    "metric": "composites/A",
+    "view": "api"
+   },
+   {
+    "after": [
+     "singularity-super-decider",
+     "kettei-fat",
+     "fastino-glide-api",
+     "drex-max",
+     "subq-snap-1.1"
+    ],
+    "before": [
+     "singularity-super-decider",
+     "kettei-fat",
+     "fastino-glide-api",
+     "drex-max",
+     "subq-snap-1.1"
+    ],
+    "changed": false,
+    "metric": "composites/B",
+    "view": "api"
+   },
+   {
+    "after": [
+     "singularity-super-decider",
+     "kettei-fat",
+     "fastino-glide-api",
+     "liquid-d1-ultra",
+     "subq-snap-1.1"
+    ],
+    "before": [
+     "singularity-super-decider",
+     "kettei-fat",
+     "fastino-glide-api",
+     "liquid-d1-ultra",
+     "subq-snap-1.1"
+    ],
+    "changed": false,
+    "metric": "composites/C",
+    "view": "api"
+   },
+   {
+    "after": [
+     "kettei-fat",
+     "singularity-super-decider-thinking",
+     "singularity-super-decider",
+     "fastino-glide-api",
+     "drex-max"
+    ],
+    "before": [
+     "kettei-fat",
+     "singularity-super-decider-thinking",
+     "singularity-super-decider",
+     "fastino-glide-api",
+     "drex-max"
+    ],
+    "changed": false,
+    "metric": "capability/official_caps",
+    "view": "api"
+   },
+   {
+    "after": [
+     "gpt-6-luna",
+     "gpt-6-luna-low",
+     "gpt-5.6-luna",
+     "deepseek-flash",
+     "kettei-fat"
+    ],
+    "before": [
+     "gpt-6-luna",
+     "gpt-6-luna-low",
+     "gpt-5.6-luna",
+     "deepseek-flash",
+     "kettei-fat"
+    ],
+    "changed": false,
+    "metric": "capability/no_caps",
+    "view": "api"
+   },
+   {
+    "after": [
+     "kettei-fat",
+     "singularity-super-decider-thinking",
+     "singularity-super-decider",
+     "fastino-glide-api",
+     "drex-max"
+    ],
+    "before": [
+     "kettei-fat",
+     "singularity-super-decider-thinking",
+     "singularity-super-decider",
+     "fastino-glide-api",
+     "drex-max"
+    ],
+    "changed": false,
+    "metric": "capability/cost_off_latency_2x",
+    "view": "api"
+   },
+   {
+    "after": [
+     "kettei-fat",
+     "singularity-super-decider-thinking",
+     "singularity-super-decider",
+     "fastino-glide-api",
+     "drex-max"
+    ],
+    "before": [
+     "kettei-fat",
+     "singularity-super-decider-thinking",
+     "singularity-super-decider",
+     "fastino-glide-api",
+     "drex-max"
+    ],
+    "changed": false,
+    "metric": "capability/latency_none",
+    "view": "api"
+   },
+   {
+    "after": [
+     "kettei-fat",
+     "singularity-super-decider-thinking",
+     "singularity-super-decider",
+     "fastino-glide-api",
+     "drex-max"
+    ],
+    "before": [
+     "kettei-fat",
+     "singularity-super-decider-thinking",
+     "singularity-super-decider",
+     "fastino-glide-api",
+     "drex-max"
+    ],
+    "changed": false,
+    "metric": "extra_capability/cost_7x",
+    "view": "api"
+   },
+   {
+    "after": [
+     "kettei-fat",
+     "singularity-super-decider-thinking",
+     "singularity-super-decider",
+     "fastino-glide-api",
+     "drex-max"
+    ],
+    "before": [
+     "kettei-fat",
+     "singularity-super-decider-thinking",
+     "singularity-super-decider",
+     "fastino-glide-api",
+     "drex-max"
+    ],
+    "changed": false,
+    "metric": "extra_capability/cost_10x",
+    "view": "api"
+   },
+   {
+    "after": [
+     "gpt-6-luna",
+     "gpt-6-luna-low",
+     "gpt-5.6-luna",
+     "deepseek-flash",
+     "kettei-fat"
+    ],
+    "before": [
+     "gpt-6-luna",
+     "gpt-6-luna-low",
+     "gpt-5.6-luna",
+     "deepseek-flash",
+     "kettei-fat"
+    ],
+    "changed": false,
+    "metric": "extra_capability/rank_field",
+    "view": "api"
+   },
+   {
+    "after": [
+     "gpt-6-luna",
+     "gpt-6-luna-low",
+     "gpt-5.6-luna",
+     "kettei-fat",
+     "singularity-super-decider-thinking"
+    ],
+    "before": [
+     "gpt-6-luna",
+     "gpt-6-luna-low",
+     "gpt-5.6-luna",
+     "kettei-fat",
+     "singularity-super-decider-thinking"
+    ],
+    "changed": false,
+    "metric": "extra_capability/cost_7x_latency_none",
+    "view": "api"
+   },
+   {
+    "after": [
+     "gpt-6-luna",
+     "gpt-6-luna-low",
+     "gpt-5.6-luna",
+     "kettei-fat",
+     "singularity-super-decider-thinking"
+    ],
+    "before": [
+     "gpt-6-luna",
+     "gpt-6-luna-low",
+     "gpt-5.6-luna",
+     "kettei-fat",
+     "singularity-super-decider-thinking"
+    ],
+    "changed": false,
+    "metric": "extra_capability/cost_10x_latency_none",
+    "view": "api"
+   },
+   {
+    "after": [
+     "singularity-super-decider",
+     "launchables-myles-g-12b",
+     "kettei-fat",
+     "fastino-glide-api",
+     "torchcast-decision-4b-v1.3"
+    ],
+    "before": [
+     "singularity-super-decider",
+     "launchables-myles-g-12b",
+     "kettei-fat",
+     "fastino-glide-api",
+     "torchcast-decision-4b-v1.3"
+    ],
+    "changed": false,
+    "metric": "A",
+    "view": "release"
+   },
+   {
+    "after": [
+     "singularity-super-decider",
+     "kettei-fat",
+     "fastino-glide-api",
+     "drex-max",
+     "subq-snap-1.1"
+    ],
+    "before": [
+     "singularity-super-decider",
+     "kettei-fat",
+     "fastino-glide-api",
+     "drex-max",
+     "subq-snap-1.1"
+    ],
+    "changed": false,
+    "metric": "B",
+    "view": "release"
+   },
+   {
+    "after": [
+     "singularity-super-decider",
+     "kettei-fat",
+     "fastino-glide-api",
+     "torchcast-decision-4b-v1.3",
+     "liquid-d1-ultra"
+    ],
+    "before": [
+     "singularity-super-decider",
+     "kettei-fat",
+     "fastino-glide-api",
+     "torchcast-decision-4b-v1.3",
+     "liquid-d1-ultra"
+    ],
+    "changed": false,
+    "metric": "C",
+    "view": "release"
+   },
+   {
+    "after": [
+     "gpt-6-luna",
+     "gpt-6-luna-low",
+     "gpt-5.6-luna",
+     "deepseek-flash",
+     "kettei-fat"
+    ],
+    "before": [
+     "gpt-6-luna",
+     "gpt-6-luna-low",
+     "gpt-5.6-luna",
+     "deepseek-flash",
+     "kettei-fat"
+    ],
+    "changed": false,
+    "metric": "capability",
+    "view": "release"
+   }
+  ],
+  "slider_changed_states": 0,
+  "slider_states": 171,
+  "snapshots_sha256": {
+   "topfive-after.json": "66fc1c6d0cb67d933d6f45061f37bf227e4bcd238a90028f23f4c2b9c44260b4",
+   "topfive-before.json": "2448ae066f4ce7c06e81a264d12a373d5260d7fadd9114ec5931750c3f4879b5",
+   "topfive-extended.json": "12728e51f99a54982ee10e2baab6b2724e15e409b6eb39efd97d1c0a5b9f701b",
+   "topfive-sliders.json": "80764678fa79b745e3e986a5690ae5374643a6fe57b8c27d4d43ba49adf1e68f"
+  },
+  "variant": "10-second share"
+ },
+ "validator": {
+  "log_sha256": "e04fa4087fe945e37de23c290eec063626ffc7082bbbe065f63f04c52937a6d6",
+  "status": "PASS"
+ },
+ "visibility": {
+  "all_carried_rows_equal": true,
+  "board_rows_after": 309,
+  "board_rows_before": 308,
+  "new_row": {
+   "board": {
+    "cost_axis": 75.39968935948227,
+    "draw": "v1.6-regular-20261027",
+    "intelligence": 33.91785114475573,
+    "listing": "unranked",
+    "not_ranked_because": "Measured on the 27 Oct 2026 draw, which is not yet equated to the reference scale; stronger anchor runs for that draw are being measured. Shown unranked until then.",
+    "rank": null,
+    "ranked": false,
+    "ranks": {
+     "A": null,
+     "B": null,
+     "C": null,
+     "capability": null
+    },
+    "score_A": 28.47918106314405,
+    "usd_per_1000": 0.006607092008059101
+   },
+   "feed": {
+    "api_board_rank": null,
+    "capability_rank": null,
+    "composite_score": 28.47918106314405,
+    "draw": "v1.6-regular-20261027",
+    "listing": "unranked",
+    "not_ranked_because": "Measured on the 27 Oct 2026 draw, which is not yet equated to the reference scale; stronger anchor runs for that draw are being measured. Shown unranked until then.",
+    "open_board_rank": null,
+    "open_capability_rank": null,
+    "rank": null,
+    "ranked": false
+   }
+  },
+  "new_row_open_scope": true,
+  "orders_equal": true,
+  "pending_hidden_in_real_tree": true,
+  "real_tree_restated_by": "v1.7.16",
+  "status": "PASS"
+ }
+}

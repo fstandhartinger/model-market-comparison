@@ -1,0 +1,96 @@
+{
+ "chaoliangunsw-jev-style-2b-decision-v4": {
+  "cells_off": {
+   "categories_sha256": "068a1d8f6500c34d84c412838799eac17e274174ef7a9d0972fee2fc8c2a205b",
+   "decisive_sha256": "32c8854be39512c6b4163b65719a68e4f040026412bfbf3c522d9cc73c6f502a"
+  },
+  "cells_share": {
+   "categories_sha256": "66c16557d5d9ebb58072f7a21e5390423d1f5d5840a836dec6971c9a9c6495b4",
+   "decisive_sha256": "32c8854be39512c6b4163b65719a68e4f040026412bfbf3c522d9cc73c6f502a"
+  },
+  "frozen": {
+   "path": "/home/flori/jobs/jevbench-add-requests-20260919/r198/v1717/score/field/fnew/out-frozen/jevbench-v1.6.0-results.json",
+   "sha256": "566fe54680572783ce8d00e001d773eb25ef4f0a44056243c9698c3cafd74ce2"
+  },
+  "gold_sha256": "8aaf8ab4c58fe06e1f7494a965701ffc0c1a7879392b0bc2309f7f1724b5e200",
+  "input_sha256": "9b2f32edaccb29afd726af8cd54cf1a22d85e8b1824566924045d83c6f828426",
+  "kit_shas_sha256": "9ae16901690e06f5328caa4da6f5ee6b66d14b796cd8e681f6a3c498505f21d5",
+  "manifest_sha256": "f5a5151a1a19923dec1434230dbc451d9ca879ce8ccba8f268b296cac9c1ee35",
+  "pull_receipt_sha256": "09f1e622d7fbc9ef26e6f92e859681e5e222702626f3deea50d93e26dfb5859c",
+  "raw_sha256": "96e11049d1593d75ee84fe258f6a6c4020c9e37ebe299c7d18a3b6846fbacf81",
+  "raw_verified_in_place": true,
+  "registry_sha256": "40e121cbf813d1e35edbabf589389239e2b58f33434f21e1a9dc78d09a7b523e",
+  "v17-off": {
+   "path": "/home/flori/jobs/jevbench-add-requests-20260919/r198/v1717/score/field/fnew/out-v17-off/jevbench-v1.6.0-results.json",
+   "sha256": "2f26ed444e2a4563e1cab5cce7a84fa4e1bc893f5d69a42a05d4117189ec4078"
+  },
+  "v17-share": {
+   "path": "/home/flori/jobs/jevbench-add-requests-20260919/r198/v1717/score/field/fnew/out-v17-share/jevbench-v1.6.0-results.json",
+   "sha256": "e970d8fb5adcdbdf164859e8faac65ff1a7825e83210b80bc2375ec9c2414ba0"
+  }
+ },
+ "common_set": {
+  "common_set_receipt_sha256": "a21433f64ce1bff66eb873f16ebaab57d78e95afc14454c80c45d35c3a4d18d5",
+  "cost_basis_msft_view_sha256": "6ae64d0a92a926e853b32c549636737ddaf4917553350d94821c51713033e29e",
+  "cost_basis_sha256": "30e36886acc33251ac9195a863da332df59b79ce956697417eadff198d8401af",
+  "n": 1489,
+  "per_row_membership": {
+   "arcbright-elf-1-12b-r2": {
+    "answered_not_in_common": 11,
+    "answered_ok": 1500,
+    "raw_sha256": "84f08ebb6ff92af453b75cda042f617ea89c5be6a2176c7c69e11f2521da6f08",
+    "rows": 1500
+   },
+   "chaoliangunsw-jev-style-2b-decision-v4": {
+    "answered_not_in_common": 6,
+    "answered_ok": 1495,
+    "raw_sha256": "96e11049d1593d75ee84fe258f6a6c4020c9e37ebe299c7d18a3b6846fbacf81",
+    "rows": 1500
+   },
+   "decisio-gemma-4-12b-tuned-commit-think": {
+    "answered_not_in_common": 11,
+    "answered_ok": 1500,
+    "raw_sha256": "d7396dd680e13af9ba26c4526007fee3647d03eee7673bf88075ac510f39cc3c",
+    "rows": 1500
+   },
+   "h2o-lightning-4b-v1.4.1": {
+    "answered_not_in_common": 11,
+    "answered_ok": 1500,
+    "raw_sha256": "96d26bb3c0486ecbee832e309db4099b3a616b1540b4a92eff09dec81b719335",
+    "rows": 1500
+   },
+   "jeff_1_1_large": {
+    "answered_not_in_common": 11,
+    "answered_ok": 1500,
+    "raw_sha256": "1f1fdc2df674da00128ae7b47d5ea3429cf1124383a077577e7c68c7d9cc0e72",
+    "rows": 1500
+   },
+   "jeff_1_1_qwen_4b": {
+    "answered_not_in_common": 11,
+    "answered_ok": 1500,
+    "raw_sha256": "c37fada15a2021cf744b2031acb964508caf48873a2bcda5da6d6ac4a5e7c288",
+    "rows": 1500
+   },
+   "microsoft-decision-1-r2": {
+    "answered_not_in_common": 0,
+    "answered_ok": 1489,
+    "raw_sha256": "1f069818cdc069a532a4c4965d306fbd302bb819dde4aa3c48a9bd676c4a981e",
+    "rows": 1493
+   },
+   "strike-1": {
+    "answered_not_in_common": 6,
+    "answered_ok": 1495,
+    "raw_sha256": "4c6c7ab25b11432f8934425a44806ec5a2499241a9c5790216a11651473f2027",
+    "rows": 1500
+   },
+   "torchcast-decision-31b-v1.0": {
+    "answered_not_in_common": 11,
+    "answered_ok": 1500,
+    "raw_sha256": "e51a1c22336050368336c996d7cb32181bad5e854024f07844b2a8577a0dda7d",
+    "rows": 1500
+   }
+  },
+  "set_hash_rule": "sha256 of the sorted opaque id list as compact JSON",
+  "set_sha256": "4e912731e63369e1b3066b0b4afa87b44f1094aea079c5b41dc6d02e7f235537"
+ }
+}

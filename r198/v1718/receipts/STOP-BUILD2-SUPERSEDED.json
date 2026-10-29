@@ -1,0 +1,16 @@
+{
+ "status": "STOP",
+ "stage": "compiled route/page verification after successful production next build",
+ "exit_code": 1,
+ "command": "node r198/v1718/check_built_links_v1718.mjs",
+ "assertion": "assert.ok(page.includes('/jev-models/v1.7.17'))",
+ "log": "r198/v1718/receipts/build-postflip.log",
+ "root_cause": "wire_v1718.py:22 shifts v1.7.15 to v1.7.17 instead of shifting v1.7.16; the generated page retains Previous v1.7.16.",
+ "source": "app/jev-models/v1.7.18/page.tsx:17",
+ "full_suite": "NOT RUN: set -e stopped before npm test",
+ "commit": null,
+ "real_manifests_pending": true,
+ "synthetic_bindings_restored": true,
+ "fix_applied_after_failure": false,
+ "stop_rule": "Any failure except the explicitly accepted daily-clean-checkout-wait snapshot issue is a STOP."
+}

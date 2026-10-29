@@ -1,0 +1,3018 @@
+{
+ "status": "PASS",
+ "before_rows": 309,
+ "after_rows": 311,
+ "real_pending_hidden": true,
+ "scopes_correct": true,
+ "carried_score_fields_equal": true,
+ "relative_orders_unchanged": true,
+ "derived_fields": [
+  "rank",
+  "open_board_rank",
+  "api_board_rank",
+  "capability.rank",
+  "capability.open_board_rank",
+  "capability.api_board_rank"
+ ],
+ "derived_rank_changes": {
+  "ajev-gemma4-31b-lm6q": {
+   "rank": {
+    "before": 91,
+    "after": 92
+   },
+   "open_board_rank": {
+    "before": 64,
+    "after": 65
+   }
+  },
+  "aleria-judge-1.1.1": {
+   "rank": {
+    "before": 122,
+    "after": 124
+   },
+   "open_board_rank": {
+    "before": 89,
+    "after": 91
+   }
+  },
+  "amazon-strands-decider-26b-a4b": {
+   "rank": {
+    "before": 75,
+    "after": 76
+   },
+   "open_board_rank": {
+    "before": 49,
+    "after": 50
+   }
+  },
+  "amos-1-large": {
+   "rank": {
+    "before": 159,
+    "after": 161
+   }
+  },
+  "amos-1-medium": {
+   "rank": {
+    "before": 121,
+    "after": 123
+   },
+   "capability_rank": {
+    "before": 90,
+    "after": 91
+   }
+  },
+  "aplomb-1": {
+   "rank": {
+    "before": 79,
+    "after": 80
+   },
+   "open_board_rank": {
+    "before": 53,
+    "after": 54
+   }
+  },
+  "apus-openjev-v1-9b": {
+   "rank": {
+    "before": 82,
+    "after": 83
+   },
+   "open_board_rank": {
+    "before": 56,
+    "after": 57
+   },
+   "capability_rank": {
+    "before": 120,
+    "after": 121
+   },
+   "open_capability_rank": {
+    "before": 92,
+    "after": 93
+   }
+  },
+  "arcbright-elf-1-12b": {
+   "rank": {
+    "before": 83,
+    "after": 84
+   },
+   "open_board_rank": {
+    "before": 57,
+    "after": 58
+   },
+   "capability_rank": {
+    "before": 75,
+    "after": 76
+   },
+   "open_capability_rank": {
+    "before": 52,
+    "after": 53
+   }
+  },
+  "arsenelupin-v1.1": {
+   "rank": {
+    "before": 181,
+    "after": 183
+   },
+   "open_board_rank": {
+    "before": 142,
+    "after": 144
+   },
+   "capability_rank": {
+    "before": 130,
+    "after": 131
+   },
+   "open_capability_rank": {
+    "before": 102,
+    "after": 103
+   }
+  },
+  "autojev-27b": {
+   "rank": {
+    "before": 169,
+    "after": 171
+   },
+   "open_board_rank": {
+    "before": 132,
+    "after": 134
+   }
+  },
+  "bespoke-nimble-9b-v3": {
+   "rank": {
+    "before": 78,
+    "after": 79
+   },
+   "open_board_rank": {
+    "before": 52,
+    "after": 53
+   }
+  },
+  "bev-bonsai-27b": {
+   "rank": {
+    "before": 197,
+    "after": 199
+   },
+   "open_board_rank": {
+    "before": 156,
+    "after": 158
+   }
+  },
+  "bge-reranker-v2-m3": {
+   "rank": {
+    "before": 276,
+    "after": 278
+   },
+   "open_board_rank": {
+    "before": 229,
+    "after": 231
+   },
+   "capability_rank": {
+    "before": 158,
+    "after": 159
+   },
+   "open_capability_rank": {
+    "before": 127,
+    "after": 128
+   }
+  },
+  "blink-4b": {
+   "rank": {
+    "before": 128,
+    "after": 130
+   },
+   "open_board_rank": {
+    "before": 94,
+    "after": 96
+   },
+   "capability_rank": {
+    "before": 100,
+    "after": 101
+   },
+   "open_capability_rank": {
+    "before": 73,
+    "after": 74
+   }
+  },
+  "certo": {
+   "rank": {
+    "before": 274,
+    "after": 276
+   },
+   "open_board_rank": {
+    "before": 227,
+    "after": 229
+   },
+   "capability_rank": {
+    "before": 163,
+    "after": 164
+   },
+   "open_capability_rank": {
+    "before": 132,
+    "after": 133
+   }
+  },
+  "chon-1.0-12b": {
+   "rank": {
+    "before": 194,
+    "after": 196
+   },
+   "open_board_rank": {
+    "before": 153,
+    "after": 155
+   },
+   "capability_rank": {
+    "before": 165,
+    "after": 166
+   },
+   "open_capability_rank": {
+    "before": 134,
+    "after": 135
+   }
+  },
+  "classone-gemma4-e2b": {
+   "rank": {
+    "before": 245,
+    "after": 247
+   },
+   "open_board_rank": {
+    "before": 199,
+    "after": 201
+   },
+   "capability_rank": {
+    "before": 200,
+    "after": 201
+   },
+   "open_capability_rank": {
+    "before": 167,
+    "after": 168
+   }
+  },
+  "classone-gemma4-e4b": {
+   "rank": {
+    "before": 186,
+    "after": 188
+   },
+   "open_board_rank": {
+    "before": 146,
+    "after": 148
+   },
+   "capability_rank": {
+    "before": 176,
+    "after": 177
+   },
+   "open_capability_rank": {
+    "before": 145,
+    "after": 146
+   }
+  },
+  "classone-qwen3.5-2b": {
+   "rank": {
+    "before": 250,
+    "after": 252
+   },
+   "open_board_rank": {
+    "before": 203,
+    "after": 205
+   },
+   "capability_rank": {
+    "before": 197,
+    "after": 198
+   },
+   "open_capability_rank": {
+    "before": 164,
+    "after": 165
+   }
+  },
+  "classone-qwen3.5-4b": {
+   "rank": {
+    "before": 191,
+    "after": 193
+   },
+   "open_board_rank": {
+    "before": 150,
+    "after": 152
+   },
+   "capability_rank": {
+    "before": 177,
+    "after": 178
+   },
+   "open_capability_rank": {
+    "before": 146,
+    "after": 147
+   }
+  },
+  "classone-qwen3.5-9b": {
+   "rank": {
+    "before": 107,
+    "after": 109
+   },
+   "open_board_rank": {
+    "before": 75,
+    "after": 77
+   },
+   "capability_rank": {
+    "before": 143,
+    "after": 144
+   },
+   "open_capability_rank": {
+    "before": 113,
+    "after": 114
+   }
+  },
+  "clef": {
+   "rank": {
+    "before": 180,
+    "after": 182
+   },
+   "open_board_rank": {
+    "before": 141,
+    "after": 143
+   }
+  },
+  "clef-flash": {
+   "rank": {
+    "before": 113,
+    "after": 115
+   },
+   "open_board_rank": {
+    "before": 81,
+    "after": 83
+   },
+   "capability_rank": {
+    "before": 82,
+    "after": 83
+   },
+   "open_capability_rank": {
+    "before": 57,
+    "after": 58
+   }
+  },
+  "clef-omni": {
+   "rank": {
+    "before": 218,
+    "after": 220
+   },
+   "open_board_rank": {
+    "before": 175,
+    "after": 177
+   }
+  },
+  "clm-8b": {
+   "rank": {
+    "before": 275,
+    "after": 277
+   },
+   "open_board_rank": {
+    "before": 228,
+    "after": 230
+   },
+   "capability_rank": {
+    "before": 196,
+    "after": 197
+   },
+   "open_capability_rank": {
+    "before": 163,
+    "after": 164
+   }
+  },
+  "coco-decision-4b": {
+   "rank": {
+    "before": 139,
+    "after": 141
+   },
+   "open_board_rank": {
+    "before": 104,
+    "after": 106
+   },
+   "capability_rank": {
+    "before": 119,
+    "after": 120
+   },
+   "open_capability_rank": {
+    "before": 91,
+    "after": 92
+   }
+  },
+  "compass-0.2.0": {
+   "rank": {
+    "before": 174,
+    "after": 176
+   },
+   "open_board_rank": {
+    "before": 136,
+    "after": 138
+   },
+   "capability_rank": {
+    "before": 126,
+    "after": 127
+   },
+   "open_capability_rank": {
+    "before": 98,
+    "after": 99
+   }
+  },
+  "d1a-gemma4-e2b": {
+   "rank": {
+    "before": 237,
+    "after": 239
+   },
+   "open_board_rank": {
+    "before": 191,
+    "after": 193
+   },
+   "capability_rank": {
+    "before": 155,
+    "after": 156
+   },
+   "open_capability_rank": {
+    "before": 124,
+    "after": 125
+   }
+  },
+  "d1a-gemma4-e4b": {
+   "rank": {
+    "before": 215,
+    "after": 217
+   },
+   "open_board_rank": {
+    "before": 173,
+    "after": 175
+   },
+   "capability_rank": {
+    "before": 142,
+    "after": 143
+   },
+   "open_capability_rank": {
+    "before": 112,
+    "after": 113
+   }
+  },
+  "decider-2b": {
+   "rank": {
+    "before": 213,
+    "after": 215
+   },
+   "open_board_rank": {
+    "before": 171,
+    "after": 173
+   },
+   "capability_rank": {
+    "before": 157,
+    "after": 158
+   },
+   "open_capability_rank": {
+    "before": 126,
+    "after": 127
+   }
+  },
+  "decider-35b-a3b": {
+   "rank": {
+    "before": 138,
+    "after": 140
+   },
+   "open_board_rank": {
+    "before": 103,
+    "after": 105
+   }
+  },
+  "decider-4b-v2": {
+   "rank": {
+    "before": 99,
+    "after": 101
+   },
+   "open_board_rank": {
+    "before": 70,
+    "after": 72
+   },
+   "capability_rank": {
+    "before": 76,
+    "after": 77
+   },
+   "open_capability_rank": {
+    "before": 53,
+    "after": 54
+   }
+  },
+  "decisio-qwen3.6-35b-a3b-v090": {
+   "rank": {
+    "before": 207,
+    "after": 209
+   },
+   "open_board_rank": {
+    "before": 166,
+    "after": 168
+   }
+  },
+  "decision-2-0-vega-27b": {
+   "rank": {
+    "before": 165,
+    "after": 167
+   },
+   "open_board_rank": {
+    "before": 128,
+    "after": 130
+   }
+  },
+  "decision-2b": {
+   "rank": {
+    "before": 203,
+    "after": 205
+   },
+   "open_board_rank": {
+    "before": 162,
+    "after": 164
+   },
+   "capability_rank": {
+    "before": 132,
+    "after": 133
+   },
+   "open_capability_rank": {
+    "before": 104,
+    "after": 105
+   }
+  },
+  "decision-4b-v11": {
+   "rank": {
+    "before": 168,
+    "after": 170
+   },
+   "open_board_rank": {
+    "before": 131,
+    "after": 133
+   },
+   "capability_rank": {
+    "before": 114,
+    "after": 115
+   },
+   "open_capability_rank": {
+    "before": 86,
+    "after": 87
+   }
+  },
+  "decision-4b-v12": {
+   "rank": {
+    "before": 141,
+    "after": 143
+   },
+   "open_board_rank": {
+    "before": 106,
+    "after": 108
+   },
+   "capability_rank": {
+    "before": 103,
+    "after": 104
+   },
+   "open_capability_rank": {
+    "before": 76,
+    "after": 77
+   }
+  },
+  "decision-fast": {
+   "rank": {
+    "before": 248,
+    "after": 250
+   },
+   "open_board_rank": {
+    "before": 201,
+    "after": 203
+   },
+   "capability_rank": {
+    "before": 173,
+    "after": 174
+   },
+   "open_capability_rank": {
+    "before": 142,
+    "after": 143
+   }
+  },
+  "decision-machine-1": {
+   "rank": {
+    "before": 233,
+    "after": 235
+   },
+   "capability_rank": {
+    "before": 153,
+    "after": 154
+   }
+  },
+  "decision2-lux-9b": {
+   "rank": {
+    "before": 133,
+    "after": 135
+   },
+   "open_board_rank": {
+    "before": 98,
+    "after": 100
+   },
+   "capability_rank": {
+    "before": 99,
+    "after": 100
+   },
+   "open_capability_rank": {
+    "before": 72,
+    "after": 73
+   }
+  },
+  "decisionnode-edge-0.9.2": {
+   "rank": {
+    "before": 189,
+    "after": 191
+   },
+   "open_board_rank": {
+    "before": 148,
+    "after": 150
+   },
+   "capability_rank": {
+    "before": 140,
+    "after": 141
+   },
+   "open_capability_rank": {
+    "before": 111,
+    "after": 112
+   }
+  },
+  "decisionnode-edge-mini-0.9.2": {
+   "rank": {
+    "before": 221,
+    "after": 223
+   },
+   "open_board_rank": {
+    "before": 178,
+    "after": 180
+   },
+   "capability_rank": {
+    "before": 150,
+    "after": 151
+   },
+   "open_capability_rank": {
+    "before": 120,
+    "after": 121
+   }
+  },
+  "decisor_4b": {
+   "rank": {
+    "before": 115,
+    "after": 117
+   },
+   "open_board_rank": {
+    "before": 83,
+    "after": 85
+   },
+   "capability_rank": {
+    "before": 154,
+    "after": 155
+   },
+   "open_capability_rank": {
+    "before": 123,
+    "after": 124
+   }
+  },
+  "deck-4b-v1-0": {
+   "rank": {
+    "before": 110,
+    "after": 112
+   },
+   "open_board_rank": {
+    "before": 78,
+    "after": 80
+   },
+   "capability_rank": {
+    "before": 85,
+    "after": 86
+   },
+   "open_capability_rank": {
+    "before": 59,
+    "after": 60
+   }
+  },
+  "deem-0.8-v1": {
+   "rank": {
+    "before": 247,
+    "after": 249
+   },
+   "open_board_rank": {
+    "before": 200,
+    "after": 202
+   },
+   "capability_rank": {
+    "before": 198,
+    "after": 199
+   },
+   "open_capability_rank": {
+    "before": 165,
+    "after": 166
+   }
+  },
+  "deepseek-flash": {
+   "rank": {
+    "before": 216,
+    "after": 218
+   }
+  },
+  "diffusion-jev": {
+   "capability_rank": {
+    "before": 111,
+    "after": 112
+   },
+   "open_capability_rank": {
+    "before": 84,
+    "after": 85
+   }
+  },
+  "eikos-27b": {
+   "rank": {
+    "before": 171,
+    "after": 173
+   },
+   "open_board_rank": {
+    "before": 134,
+    "after": 136
+   }
+  },
+  "evalengine-decision-4b": {
+   "rank": {
+    "before": 114,
+    "after": 116
+   },
+   "open_board_rank": {
+    "before": 82,
+    "after": 84
+   },
+   "capability_rank": {
+    "before": 108,
+    "after": 109
+   },
+   "open_capability_rank": {
+    "before": 81,
+    "after": 82
+   }
+  },
+  "exaone-4.0-1.2b-jev-v0.3": {
+   "rank": {
+    "before": 227,
+    "after": 229
+   },
+   "open_board_rank": {
+    "before": 184,
+    "after": 186
+   },
+   "capability_rank": {
+    "before": 148,
+    "after": 149
+   },
+   "open_capability_rank": {
+    "before": 118,
+    "after": 119
+   }
+  },
+  "fastino-glide": {
+   "rank": {
+    "before": 124,
+    "after": 126
+   }
+  },
+  "fastino-glide-1.2-open": {
+   "rank": {
+    "before": 143,
+    "after": 145
+   },
+   "open_board_rank": {
+    "before": 108,
+    "after": 110
+   }
+  },
+  "fastino-gliner-2-5-decide": {
+   "rank": {
+    "before": 246,
+    "after": 248
+   },
+   "capability_rank": {
+    "before": 184,
+    "after": 185
+   }
+  },
+  "gemini-3.1-flash-lite": {
+   "rank": {
+    "before": 178,
+    "after": 180
+   }
+  },
+  "goddragon-arbiter-4b": {
+   "rank": {
+    "before": 184,
+    "after": 186
+   },
+   "open_board_rank": {
+    "before": 144,
+    "after": 146
+   },
+   "capability_rank": {
+    "before": 139,
+    "after": 140
+   },
+   "open_capability_rank": {
+    "before": 110,
+    "after": 111
+   }
+  },
+  "gpt-5.6-luna": {
+   "rank": {
+    "before": 148,
+    "after": 150
+   }
+  },
+  "gpt-6-luna": {
+   "rank": {
+    "before": 106,
+    "after": 108
+   }
+  },
+  "gpt-6-luna-low": {
+   "rank": {
+    "before": 103,
+    "after": 105
+   }
+  },
+  "gte-reranker-modernbert-base": {
+   "rank": {
+    "before": 277,
+    "after": 279
+   },
+   "open_board_rank": {
+    "before": 230,
+    "after": 232
+   },
+   "capability_rank": {
+    "before": 170,
+    "after": 171
+   },
+   "open_capability_rank": {
+    "before": 139,
+    "after": 140
+   }
+  },
+  "gutsy-0.8b-v0.3": {
+   "rank": {
+    "before": 239,
+    "after": 241
+   },
+   "open_board_rank": {
+    "before": 193,
+    "after": 195
+   }
+  },
+  "hopper": {
+   "rank": {
+    "before": 134,
+    "after": 136
+   },
+   "open_board_rank": {
+    "before": 99,
+    "after": 101
+   },
+   "capability_rank": {
+    "before": 101,
+    "after": 102
+   },
+   "open_capability_rank": {
+    "before": 74,
+    "after": 75
+   }
+  },
+  "hyland-hs1": {
+   "capability_rank": {
+    "before": 78,
+    "after": 79
+   }
+  },
+  "imajev-2b": {
+   "rank": {
+    "before": 212,
+    "after": 214
+   },
+   "open_board_rank": {
+    "before": 170,
+    "after": 172
+   },
+   "capability_rank": {
+    "before": 136,
+    "after": 137
+   },
+   "open_capability_rank": {
+    "before": 108,
+    "after": 109
+   }
+  },
+  "imajev-4b-rtx5090-a2": {
+   "rank": {
+    "before": 130,
+    "after": 132
+   },
+   "open_board_rank": {
+    "before": 96,
+    "after": 98
+   },
+   "capability_rank": {
+    "before": 93,
+    "after": 94
+   },
+   "open_capability_rank": {
+    "before": 66,
+    "after": 67
+   }
+  },
+  "imajev-9b": {
+   "rank": {
+    "before": 205,
+    "after": 207
+   },
+   "open_board_rank": {
+    "before": 164,
+    "after": 166
+   }
+  },
+  "instinct-dual-4b": {
+   "rank": {
+    "before": 172,
+    "after": 174
+   },
+   "capability_rank": {
+    "before": 113,
+    "after": 114
+   }
+  },
+  "iota-decide-4b": {
+   "rank": {
+    "before": 164,
+    "after": 166
+   },
+   "open_board_rank": {
+    "before": 127,
+    "after": 129
+   },
+   "capability_rank": {
+    "before": 116,
+    "after": 117
+   },
+   "open_capability_rank": {
+    "before": 88,
+    "after": 89
+   }
+  },
+  "jade": {
+   "rank": {
+    "before": 160,
+    "after": 162
+   },
+   "open_board_rank": {
+    "before": 123,
+    "after": 125
+   }
+  },
+  "janus-4b": {
+   "rank": {
+    "before": 116,
+    "after": 118
+   },
+   "open_board_rank": {
+    "before": 84,
+    "after": 86
+   },
+   "capability_rank": {
+    "before": 89,
+    "after": 90
+   },
+   "open_capability_rank": {
+    "before": 63,
+    "after": 64
+   }
+  },
+  "jeb-35b-a3b": {
+   "rank": {
+    "before": 175,
+    "after": 177
+   },
+   "open_board_rank": {
+    "before": 137,
+    "after": 139
+   }
+  },
+  "jebadiah-27b": {
+   "rank": {
+    "before": 163,
+    "after": 165
+   },
+   "open_board_rank": {
+    "before": 126,
+    "after": 128
+   }
+  },
+  "jebadiah-9b-v2": {
+   "rank": {
+    "before": 166,
+    "after": 168
+   },
+   "open_board_rank": {
+    "before": 129,
+    "after": 131
+   },
+   "capability_rank": {
+    "before": 118,
+    "after": 119
+   },
+   "open_capability_rank": {
+    "before": 90,
+    "after": 91
+   }
+  },
+  "jebadiah-9b-v2-1": {
+   "rank": {
+    "before": 125,
+    "after": 127
+   },
+   "open_board_rank": {
+    "before": 91,
+    "after": 93
+   },
+   "capability_rank": {
+    "before": 86,
+    "after": 87
+   },
+   "open_capability_rank": {
+    "before": 60,
+    "after": 61
+   }
+  },
+  "jeetu-decider-2b": {
+   "rank": {
+    "before": 235,
+    "after": 237
+   },
+   "open_board_rank": {
+    "before": 190,
+    "after": 192
+   },
+   "capability_rank": {
+    "before": 171,
+    "after": 172
+   },
+   "open_capability_rank": {
+    "before": 140,
+    "after": 141
+   }
+  },
+  "jeffan-31b-1710": {
+   "rank": {
+    "before": 84,
+    "after": 85
+   },
+   "open_board_rank": {
+    "before": 58,
+    "after": 59
+   }
+  },
+  "jeffan-4b-2010": {
+   "rank": {
+    "before": 101,
+    "after": 103
+   },
+   "open_board_rank": {
+    "before": 72,
+    "after": 74
+   },
+   "capability_rank": {
+    "before": 81,
+    "after": 82
+   },
+   "open_capability_rank": {
+    "before": 56,
+    "after": 57
+   }
+  },
+  "jev-27b-autotrust": {
+   "rank": {
+    "before": 149,
+    "after": 151
+   },
+   "open_board_rank": {
+    "before": 113,
+    "after": 115
+   }
+  },
+  "jev-local": {
+   "rank": {
+    "before": 102,
+    "after": 104
+   },
+   "open_board_rank": {
+    "before": 73,
+    "after": 75
+   },
+   "capability_rank": {
+    "before": 112,
+    "after": 113
+   },
+   "open_capability_rank": {
+    "before": 85,
+    "after": 86
+   }
+  },
+  "jev-qwen3.5-9b-base-nvfp4": {
+   "rank": {
+    "before": 183,
+    "after": 185
+   },
+   "open_board_rank": {
+    "before": 143,
+    "after": 145
+   },
+   "capability_rank": {
+    "before": 115,
+    "after": 116
+   },
+   "open_capability_rank": {
+    "before": 87,
+    "after": 88
+   }
+  },
+  "jevact": {
+   "rank": {
+    "before": 236,
+    "after": 238
+   },
+   "capability_rank": {
+    "before": 193,
+    "after": 194
+   }
+  },
+  "jevk5-v0.3-4b": {
+   "rank": {
+    "before": 108,
+    "after": 110
+   },
+   "open_board_rank": {
+    "before": 76,
+    "after": 78
+   },
+   "capability_rank": {
+    "before": 79,
+    "after": 80
+   },
+   "open_capability_rank": {
+    "before": 55,
+    "after": 56
+   }
+  },
+  "jevk5-v02": {
+   "rank": {
+    "before": 119,
+    "after": 121
+   },
+   "open_board_rank": {
+    "before": 87,
+    "after": 89
+   },
+   "capability_rank": {
+    "before": 91,
+    "after": 92
+   },
+   "open_capability_rank": {
+    "before": 64,
+    "after": 65
+   }
+  },
+  "jevone": {
+   "rank": {
+    "before": 123,
+    "after": 125
+   },
+   "open_board_rank": {
+    "before": 90,
+    "after": 92
+   }
+  },
+  "jez-large-1.0.0": {
+   "rank": {
+    "before": 192,
+    "after": 194
+   },
+   "open_board_rank": {
+    "before": 151,
+    "after": 153
+   },
+   "capability_rank": {
+    "before": 133,
+    "after": 134
+   },
+   "open_capability_rank": {
+    "before": 105,
+    "after": 106
+   }
+  },
+  "jez-small-1.0.0": {
+   "rank": {
+    "before": 259,
+    "after": 261
+   },
+   "open_board_rank": {
+    "before": 212,
+    "after": 214
+   },
+   "capability_rank": {
+    "before": 162,
+    "after": 163
+   },
+   "open_capability_rank": {
+    "before": 131,
+    "after": 132
+   }
+  },
+  "jiwo-0.8b": {
+   "rank": {
+    "before": 222,
+    "after": 224
+   },
+   "open_board_rank": {
+    "before": 179,
+    "after": 181
+   },
+   "capability_rank": {
+    "before": 152,
+    "after": 153
+   },
+   "open_capability_rank": {
+    "before": 122,
+    "after": 123
+   }
+  },
+  "jiwo-4b": {
+   "rank": {
+    "before": 129,
+    "after": 131
+   },
+   "open_board_rank": {
+    "before": 95,
+    "after": 97
+   },
+   "capability_rank": {
+    "before": 104,
+    "after": 105
+   },
+   "open_capability_rank": {
+    "before": 77,
+    "after": 78
+   }
+  },
+  "jpt-35b-a3b": {
+   "rank": {
+    "before": 137,
+    "after": 139
+   },
+   "open_board_rank": {
+    "before": 102,
+    "after": 104
+   }
+  },
+  "jpt-4b": {
+   "rank": {
+    "before": 96,
+    "after": 98
+   },
+   "open_board_rank": {
+    "before": 67,
+    "after": 69
+   },
+   "capability_rank": {
+    "before": 83,
+    "after": 84
+   },
+   "open_capability_rank": {
+    "before": 58,
+    "after": 59
+   }
+  },
+  "jqv": {
+   "rank": {
+    "before": 136,
+    "after": 138
+   },
+   "open_board_rank": {
+    "before": 101,
+    "after": 103
+   },
+   "capability_rank": {
+    "before": 94,
+    "after": 95
+   },
+   "open_capability_rank": {
+    "before": 67,
+    "after": 68
+   }
+  },
+  "jul-fast": {
+   "rank": {
+    "before": 243,
+    "after": 245
+   },
+   "open_board_rank": {
+    "before": 197,
+    "after": 199
+   },
+   "capability_rank": {
+    "before": 168,
+    "after": 169
+   },
+   "open_capability_rank": {
+    "before": 137,
+    "after": 138
+   }
+  },
+  "julia-1": {
+   "rank": {
+    "before": 268,
+    "after": 270
+   },
+   "open_board_rank": {
+    "before": 221,
+    "after": 223
+   },
+   "capability_rank": {
+    "before": 201,
+    "after": 202
+   },
+   "open_capability_rank": {
+    "before": 168,
+    "after": 169
+   }
+  },
+  "kahn1": {
+   "rank": {
+    "before": 112,
+    "after": 114
+   },
+   "open_board_rank": {
+    "before": 80,
+    "after": 82
+   },
+   "capability_rank": {
+    "before": 96,
+    "after": 97
+   },
+   "open_capability_rank": {
+    "before": 69,
+    "after": 70
+   }
+  },
+  "kev-0.5b": {
+   "rank": {
+    "before": 258,
+    "after": 260
+   },
+   "open_board_rank": {
+    "before": 211,
+    "after": 213
+   },
+   "capability_rank": {
+    "before": 187,
+    "after": 188
+   },
+   "open_capability_rank": {
+    "before": 155,
+    "after": 156
+   }
+  },
+  "kev-0.6b": {
+   "rank": {
+    "before": 242,
+    "after": 244
+   },
+   "open_board_rank": {
+    "before": 196,
+    "after": 198
+   },
+   "capability_rank": {
+    "before": 180,
+    "after": 181
+   },
+   "open_capability_rank": {
+    "before": 149,
+    "after": 150
+   }
+  },
+  "kev-27b": {
+   "rank": {
+    "before": 219,
+    "after": 221
+   },
+   "open_board_rank": {
+    "before": 176,
+    "after": 178
+   }
+  },
+  "kev-4b": {
+   "rank": {
+    "before": 217,
+    "after": 219
+   },
+   "open_board_rank": {
+    "before": 174,
+    "after": 176
+   },
+   "capability_rank": {
+    "before": 159,
+    "after": 160
+   },
+   "open_capability_rank": {
+    "before": 128,
+    "after": 129
+   }
+  },
+  "kev-8b": {
+   "rank": {
+    "before": 202,
+    "after": 204
+   },
+   "open_board_rank": {
+    "before": 161,
+    "after": 163
+   }
+  },
+  "knowledgator_gliclass_v4_9b": {
+   "rank": {
+    "before": 111,
+    "after": 113
+   },
+   "open_board_rank": {
+    "before": 79,
+    "after": 81
+   },
+   "capability_rank": {
+    "before": 87,
+    "after": 88
+   },
+   "open_capability_rank": {
+    "before": 61,
+    "after": 62
+   }
+  },
+  "knowline-31b-gen1": {
+   "rank": {
+    "before": 89,
+    "after": 90
+   },
+   "open_board_rank": {
+    "before": 62,
+    "after": 63
+   }
+  },
+  "knowline-35b-a3b-gen1.5": {
+   "rank": {
+    "before": 196,
+    "after": 198
+   },
+   "open_board_rank": {
+    "before": 155,
+    "after": 157
+   }
+  },
+  "krino-2b": {
+   "rank": {
+    "before": 210,
+    "after": 212
+   },
+   "open_board_rank": {
+    "before": 169,
+    "after": 171
+   },
+   "capability_rank": {
+    "before": 169,
+    "after": 170
+   },
+   "open_capability_rank": {
+    "before": 138,
+    "after": 139
+   }
+  },
+  "kushal-gemma4-31b-it-autoloops": {
+   "rank": {
+    "before": 104,
+    "after": 106
+   }
+  },
+  "laya": {
+   "rank": {
+    "before": 271,
+    "after": 273
+   },
+   "open_board_rank": {
+    "before": 224,
+    "after": 226
+   }
+  },
+  "laya-multilingual": {
+   "rank": {
+    "before": 273,
+    "after": 275
+   },
+   "open_board_rank": {
+    "before": 226,
+    "after": 228
+   },
+   "capability_rank": {
+    "before": 199,
+    "after": 200
+   },
+   "open_capability_rank": {
+    "before": 166,
+    "after": 167
+   }
+  },
+  "laya-typed-decisions": {
+   "rank": {
+    "before": 251,
+    "after": 253
+   },
+   "open_board_rank": {
+    "before": 204,
+    "after": 206
+   }
+  },
+  "lev": {
+   "rank": {
+    "before": 97,
+    "after": 99
+   },
+   "open_board_rank": {
+    "before": 68,
+    "after": 70
+   },
+   "capability_rank": {
+    "before": 98,
+    "after": 99
+   },
+   "open_capability_rank": {
+    "before": 71,
+    "after": 72
+   }
+  },
+  "lev-350m": {
+   "rank": {
+    "before": 256,
+    "after": 258
+   },
+   "open_board_rank": {
+    "before": 209,
+    "after": 211
+   },
+   "capability_rank": {
+    "before": 161,
+    "after": 162
+   },
+   "open_capability_rank": {
+    "before": 130,
+    "after": 131
+   }
+  },
+  "liquid-d1-3b": {
+   "rank": {
+    "before": 209,
+    "after": 211
+   },
+   "open_board_rank": {
+    "before": 168,
+    "after": 170
+   },
+   "capability_rank": {
+    "before": 144,
+    "after": 145
+   },
+   "open_capability_rank": {
+    "before": 114,
+    "after": 115
+   }
+  },
+  "liquid-d1-omni-600m": {
+   "rank": {
+    "before": 265,
+    "after": 267
+   },
+   "open_board_rank": {
+    "before": 218,
+    "after": 220
+   },
+   "capability_rank": {
+    "before": 188,
+    "after": 189
+   },
+   "open_capability_rank": {
+    "before": 156,
+    "after": 157
+   }
+  },
+  "litjev": {
+   "rank": {
+    "before": 198,
+    "after": 200
+   },
+   "open_board_rank": {
+    "before": 157,
+    "after": 159
+   }
+  },
+  "localjev-qwen3.5-4b": {
+   "rank": {
+    "before": 199,
+    "after": 201
+   },
+   "open_board_rank": {
+    "before": 158,
+    "after": 160
+   },
+   "capability_rank": {
+    "before": 131,
+    "after": 132
+   },
+   "open_capability_rank": {
+    "before": 103,
+    "after": 104
+   }
+  },
+  "lumma-fev-27b": {
+   "rank": {
+    "before": 220,
+    "after": 222
+   },
+   "open_board_rank": {
+    "before": 177,
+    "after": 179
+   }
+  },
+  "malkuth-2b": {
+   "rank": {
+    "before": 223,
+    "after": 225
+   },
+   "open_board_rank": {
+    "before": 180,
+    "after": 182
+   },
+   "capability_rank": {
+    "before": 149,
+    "after": 150
+   },
+   "open_capability_rank": {
+    "before": 119,
+    "after": 120
+   }
+  },
+  "malkuth-4b": {
+   "rank": {
+    "before": 135,
+    "after": 137
+   },
+   "open_board_rank": {
+    "before": 100,
+    "after": 102
+   },
+   "capability_rank": {
+    "before": 102,
+    "after": 103
+   },
+   "open_capability_rank": {
+    "before": 75,
+    "after": 76
+   }
+  },
+  "mammoth-1": {
+   "rank": {
+    "before": 100,
+    "after": 102
+   },
+   "open_board_rank": {
+    "before": 71,
+    "after": 73
+   }
+  },
+  "manchego-v21-v15": {
+   "rank": {
+    "before": 140,
+    "after": 142
+   },
+   "open_board_rank": {
+    "before": 105,
+    "after": 107
+   },
+   "capability_rank": {
+    "before": 109,
+    "after": 110
+   },
+   "open_capability_rank": {
+    "before": 82,
+    "after": 83
+   }
+  },
+  "messier-one-v0.2": {
+   "rank": {
+    "before": 87,
+    "after": 88
+   },
+   "open_board_rank": {
+    "before": 60,
+    "after": 61
+   },
+   "capability_rank": {
+    "before": 110,
+    "after": 111
+   },
+   "open_capability_rank": {
+    "before": 83,
+    "after": 84
+   }
+  },
+  "messier-one-v0.4": {
+   "capability_rank": {
+    "before": 92,
+    "after": 93
+   },
+   "open_capability_rank": {
+    "before": 65,
+    "after": 66
+   }
+  },
+  "metask-jev-4b": {
+   "rank": {
+    "before": 109,
+    "after": 111
+   },
+   "open_board_rank": {
+    "before": 77,
+    "after": 79
+   },
+   "capability_rank": {
+    "before": 95,
+    "after": 96
+   },
+   "open_capability_rank": {
+    "before": 68,
+    "after": 69
+   }
+  },
+  "metask-jev-rain-4b": {
+   "capability_rank": {
+    "before": 72,
+    "after": 73
+   },
+   "open_capability_rank": {
+    "before": 49,
+    "after": 50
+   }
+  },
+  "mirror": {
+   "rank": {
+    "before": 278,
+    "after": 280
+   },
+   "open_board_rank": {
+    "before": 231,
+    "after": 233
+   }
+  },
+  "mxbai-rerank-base-v2": {
+   "rank": {
+    "before": 272,
+    "after": 274
+   },
+   "open_board_rank": {
+    "before": 225,
+    "after": 227
+   },
+   "capability_rank": {
+    "before": 160,
+    "after": 161
+   },
+   "open_capability_rank": {
+    "before": 129,
+    "after": 130
+   }
+  },
+  "nagi-enormous": {
+   "rank": {
+    "before": 161,
+    "after": 163
+   },
+   "open_board_rank": {
+    "before": 124,
+    "after": 126
+   }
+  },
+  "nemotron-diffusion-8b": {
+   "rank": {
+    "before": 214,
+    "after": 216
+   },
+   "open_board_rank": {
+    "before": 172,
+    "after": 174
+   },
+   "capability_rank": {
+    "before": 151,
+    "after": 152
+   },
+   "open_capability_rank": {
+    "before": 121,
+    "after": 122
+   }
+  },
+  "nimble-9b": {
+   "rank": {
+    "before": 151,
+    "after": 153
+   },
+   "open_board_rank": {
+    "before": 115,
+    "after": 117
+   }
+  },
+  "nimble-v4": {
+   "rank": {
+    "before": 93,
+    "after": 94
+   },
+   "capability_rank": {
+    "before": 80,
+    "after": 81
+   }
+  },
+  "nimble-v4-max-open": {
+   "rank": {
+    "before": 152,
+    "after": 154
+   },
+   "open_board_rank": {
+    "before": 116,
+    "after": 118
+   }
+  },
+  "ninfer-qwen3.8-27b": {
+   "rank": {
+    "before": 173,
+    "after": 175
+   },
+   "open_board_rank": {
+    "before": 135,
+    "after": 137
+   }
+  },
+  "ninfer-qwen3.8-flash-next": {
+   "rank": {
+    "before": 98,
+    "after": 100
+   },
+   "open_board_rank": {
+    "before": 69,
+    "after": 71
+   }
+  },
+  "noma": {
+   "rank": {
+    "before": 195,
+    "after": 197
+   },
+   "open_board_rank": {
+    "before": 154,
+    "after": 156
+   },
+   "capability_rank": {
+    "before": 134,
+    "after": 135
+   },
+   "open_capability_rank": {
+    "before": 106,
+    "after": 107
+   }
+  },
+  "open-alternative-jev": {
+   "rank": {
+    "before": 206,
+    "after": 208
+   },
+   "open_board_rank": {
+    "before": 165,
+    "after": 167
+   },
+   "capability_rank": {
+    "before": 146,
+    "after": 147
+   },
+   "open_capability_rank": {
+    "before": 116,
+    "after": 117
+   }
+  },
+  "open-jev-deberta-v3-large": {
+   "rank": {
+    "before": 267,
+    "after": 269
+   },
+   "open_board_rank": {
+    "before": 220,
+    "after": 222
+   }
+  },
+  "open-jev-json-canvas-joshuasp": {
+   "rank": {
+    "before": 279,
+    "after": 281
+   },
+   "open_board_rank": {
+    "before": 232,
+    "after": 234
+   },
+   "capability_rank": {
+    "before": 191,
+    "after": 192
+   },
+   "open_capability_rank": {
+    "before": 159,
+    "after": 160
+   }
+  },
+  "open-jev-zefan-27b-v1.1": {
+   "rank": {
+    "before": 231,
+    "after": 233
+   },
+   "open_board_rank": {
+    "before": 187,
+    "after": 189
+   }
+  },
+  "open-jev-zefan-2b": {
+   "rank": {
+    "before": 228,
+    "after": 230
+   },
+   "open_board_rank": {
+    "before": 185,
+    "after": 187
+   }
+  },
+  "open-jev-zefan-9b": {
+   "rank": {
+    "before": 177,
+    "after": 179
+   },
+   "open_board_rank": {
+    "before": 139,
+    "after": 141
+   }
+  },
+  "opendecision": {
+   "rank": {
+    "before": 244,
+    "after": 246
+   },
+   "open_board_rank": {
+    "before": 198,
+    "after": 200
+   },
+   "capability_rank": {
+    "before": 178,
+    "after": 179
+   },
+   "open_capability_rank": {
+    "before": 147,
+    "after": 148
+   }
+  },
+  "openjev-sglang": {
+   "rank": {
+    "before": 188,
+    "after": 190
+   }
+  },
+  "openjev-thinking": {
+   "rank": {
+    "before": 176,
+    "after": 178
+   },
+   "open_board_rank": {
+    "before": 138,
+    "after": 140
+   }
+  },
+  "openjev-verdict": {
+   "rank": {
+    "before": 260,
+    "after": 262
+   },
+   "open_board_rank": {
+    "before": 213,
+    "after": 215
+   },
+   "capability_rank": {
+    "before": 194,
+    "after": 195
+   },
+   "open_capability_rank": {
+    "before": 161,
+    "after": 162
+   }
+  },
+  "openjev-verdict-1.4": {
+   "rank": {
+    "before": 254,
+    "after": 256
+   },
+   "open_board_rank": {
+    "before": 207,
+    "after": 209
+   },
+   "capability_rank": {
+    "before": 174,
+    "after": 175
+   },
+   "open_capability_rank": {
+    "before": 143,
+    "after": 144
+   }
+  },
+  "opensourcejev-qwen35-4b-q4km": {
+   "rank": {
+    "before": 204,
+    "after": 206
+   },
+   "open_board_rank": {
+    "before": 163,
+    "after": 165
+   },
+   "capability_rank": {
+    "before": 147,
+    "after": 148
+   },
+   "open_capability_rank": {
+    "before": 117,
+    "after": 118
+   }
+  },
+  "phocinae-largha-150m-v1": {
+   "rank": {
+    "before": 264,
+    "after": 266
+   },
+   "open_board_rank": {
+    "before": 217,
+    "after": 219
+   },
+   "capability_rank": {
+    "before": 192,
+    "after": 193
+   },
+   "open_capability_rank": {
+    "before": 160,
+    "after": 161
+   }
+  },
+  "pjev-2b": {
+   "rank": {
+    "before": 170,
+    "after": 172
+   },
+   "open_board_rank": {
+    "before": 133,
+    "after": 135
+   },
+   "capability_rank": {
+    "before": 123,
+    "after": 124
+   },
+   "open_capability_rank": {
+    "before": 95,
+    "after": 96
+   }
+  },
+  "plumb-4b": {
+   "rank": {
+    "before": 85,
+    "after": 86
+   },
+   "open_board_rank": {
+    "before": 59,
+    "after": 60
+   },
+   "capability_rank": {
+    "before": 74,
+    "after": 75
+   },
+   "open_capability_rank": {
+    "before": 51,
+    "after": 52
+   }
+  },
+  "pplx-decider-flash-v1.2": {
+   "rank": {
+    "before": 77,
+    "after": 78
+   },
+   "open_board_rank": {
+    "before": 51,
+    "after": 52
+   },
+   "capability_rank": {
+    "before": 97,
+    "after": 98
+   },
+   "open_capability_rank": {
+    "before": 70,
+    "after": 71
+   }
+  },
+  "pplx-decider-v1-1-27b": {
+   "rank": {
+    "before": 154,
+    "after": 156
+   },
+   "open_board_rank": {
+    "before": 118,
+    "after": 120
+   }
+  },
+  "pplx-decider-v1.2": {
+   "rank": {
+    "before": 153,
+    "after": 155
+   },
+   "open_board_rank": {
+    "before": 117,
+    "after": 119
+   }
+  },
+  "purplemist-mini-1.0": {
+   "rank": {
+    "before": 241,
+    "after": 243
+   },
+   "open_board_rank": {
+    "before": 195,
+    "after": 197
+   },
+   "capability_rank": {
+    "before": 164,
+    "after": 165
+   },
+   "open_capability_rank": {
+    "before": 133,
+    "after": 134
+   }
+  },
+  "quyet-1-0-medium": {
+   "rank": {
+    "before": 92,
+    "after": 93
+   },
+   "open_board_rank": {
+    "before": 65,
+    "after": 66
+   },
+   "capability_rank": {
+    "before": 107,
+    "after": 108
+   },
+   "open_capability_rank": {
+    "before": 80,
+    "after": 81
+   }
+  },
+  "quyet-1-0-small": {
+   "rank": {
+    "before": 261,
+    "after": 263
+   },
+   "open_board_rank": {
+    "before": 214,
+    "after": 216
+   },
+   "capability_rank": {
+    "before": 189,
+    "after": 190
+   },
+   "open_capability_rank": {
+    "before": 157,
+    "after": 158
+   }
+  },
+  "quyet-1-0-small-en": {
+   "rank": {
+    "before": 249,
+    "after": 251
+   },
+   "open_board_rank": {
+    "before": 202,
+    "after": 204
+   },
+   "capability_rank": {
+    "before": 175,
+    "after": 176
+   },
+   "open_capability_rank": {
+    "before": 144,
+    "after": 145
+   }
+  },
+  "quyet-1-0-tiny": {
+   "rank": {
+    "before": 263,
+    "after": 265
+   },
+   "open_board_rank": {
+    "before": 216,
+    "after": 218
+   },
+   "capability_rank": {
+    "before": 190,
+    "after": 191
+   },
+   "open_capability_rank": {
+    "before": 158,
+    "after": 159
+   }
+  },
+  "qwen3-reranker-4b": {
+   "rank": {
+    "before": 224,
+    "after": 226
+   },
+   "open_board_rank": {
+    "before": 181,
+    "after": 183
+   },
+   "capability_rank": {
+    "before": 156,
+    "after": 157
+   },
+   "open_capability_rank": {
+    "before": 125,
+    "after": 126
+   }
+  },
+  "qwen3.8-27b": {
+   "rank": {
+    "before": 280,
+    "after": 282
+   }
+  },
+  "qwen35-9b-jev-data-mix-v2": {
+   "rank": {
+    "before": 117,
+    "after": 119
+   },
+   "open_board_rank": {
+    "before": 85,
+    "after": 87
+   }
+  },
+  "raw-phi-4-mini": {
+   "rank": {
+    "before": 232,
+    "after": 234
+   },
+   "open_board_rank": {
+    "before": 188,
+    "after": 190
+   },
+   "capability_rank": {
+    "before": 183,
+    "after": 184
+   },
+   "open_capability_rank": {
+    "before": 152,
+    "after": 153
+   }
+  },
+  "raw-qwen3-0.6b": {
+   "rank": {
+    "before": 255,
+    "after": 257
+   },
+   "open_board_rank": {
+    "before": 208,
+    "after": 210
+   },
+   "capability_rank": {
+    "before": 203,
+    "after": 204
+   },
+   "open_capability_rank": {
+    "before": 170,
+    "after": 171
+   }
+  },
+  "raw-qwen3-1.7b": {
+   "rank": {
+    "before": 257,
+    "after": 259
+   },
+   "open_board_rank": {
+    "before": 210,
+    "after": 212
+   },
+   "capability_rank": {
+    "before": 202,
+    "after": 203
+   },
+   "open_capability_rank": {
+    "before": 169,
+    "after": 170
+   }
+  },
+  "raw-qwen3-4b-instruct-2507": {
+   "rank": {
+    "before": 144,
+    "after": 146
+   },
+   "open_board_rank": {
+    "before": 109,
+    "after": 111
+   },
+   "capability_rank": {
+    "before": 185,
+    "after": 186
+   },
+   "open_capability_rank": {
+    "before": 153,
+    "after": 154
+   }
+  },
+  "raw-qwen3-8b": {
+   "rank": {
+    "before": 208,
+    "after": 210
+   },
+   "open_board_rank": {
+    "before": 167,
+    "after": 169
+   }
+  },
+  "reflex-4b": {
+   "rank": {
+    "before": 157,
+    "after": 159
+   },
+   "open_board_rank": {
+    "before": 121,
+    "after": 123
+   }
+  },
+  "respan-span-02": {
+   "rank": {
+    "before": 80,
+    "after": 81
+   },
+   "open_board_rank": {
+    "before": 54,
+    "after": 55
+   }
+  },
+  "roudone-decider-4b": {
+   "rank": {
+    "before": 185,
+    "after": 187
+   },
+   "open_board_rank": {
+    "before": 145,
+    "after": 147
+   },
+   "capability_rank": {
+    "before": 121,
+    "after": 122
+   },
+   "open_capability_rank": {
+    "before": 93,
+    "after": 94
+   }
+  },
+  "rsi-jev-v6.1-vl-27b": {
+   "rank": {
+    "before": 147,
+    "after": 149
+   },
+   "open_board_rank": {
+    "before": 112,
+    "after": 114
+   }
+  },
+  "ryotide-qwen": {
+   "rank": {
+    "before": 193,
+    "after": 195
+   },
+   "open_board_rank": {
+    "before": 152,
+    "after": 154
+   },
+   "capability_rank": {
+    "before": 125,
+    "after": 126
+   },
+   "open_capability_rank": {
+    "before": 97,
+    "after": 98
+   }
+  },
+  "ryotide_qwen9": {
+   "rank": {
+    "before": 190,
+    "after": 192
+   },
+   "open_board_rank": {
+    "before": 149,
+    "after": 151
+   },
+   "capability_rank": {
+    "before": 137,
+    "after": 138
+   },
+   "open_capability_rank": {
+    "before": 109,
+    "after": 110
+   }
+  },
+  "scaledown-classify-1": {
+   "rank": {
+    "before": 211,
+    "after": 213
+   },
+   "capability_rank": {
+    "before": 138,
+    "after": 139
+   }
+  },
+  "seb-9b": {
+   "rank": {
+    "before": 118,
+    "after": 120
+   },
+   "open_board_rank": {
+    "before": 86,
+    "after": 88
+   },
+   "capability_rank": {
+    "before": 88,
+    "after": 89
+   },
+   "open_capability_rank": {
+    "before": 62,
+    "after": 63
+   }
+  },
+  "seb-9b-v2": {
+   "rank": {
+    "before": 81,
+    "after": 82
+   },
+   "open_board_rank": {
+    "before": 55,
+    "after": 56
+   },
+   "capability_rank": {
+    "before": 77,
+    "after": 78
+   },
+   "open_capability_rank": {
+    "before": 54,
+    "after": 55
+   }
+  },
+  "semif-qwen3.5-4b": {
+   "rank": {
+    "before": 187,
+    "after": 189
+   },
+   "open_board_rank": {
+    "before": 147,
+    "after": 149
+   },
+   "capability_rank": {
+    "before": 129,
+    "after": 130
+   },
+   "open_capability_rank": {
+    "before": 101,
+    "after": 102
+   }
+  },
+  "shisa-de-1": {
+   "capability_rank": {
+    "before": 73,
+    "after": 74
+   },
+   "open_capability_rank": {
+    "before": 50,
+    "after": 51
+   }
+  },
+  "simplejev-qwen3.5-0.8b": {
+   "rank": {
+    "before": 234,
+    "after": 236
+   },
+   "open_board_rank": {
+    "before": 189,
+    "after": 191
+   }
+  },
+  "simplejev-qwen3.6-35b-a3b": {
+   "rank": {
+    "before": 131,
+    "after": 133
+   }
+  },
+  "simplejev-qwen3.8-27b": {
+   "rank": {
+    "before": 229,
+    "after": 231
+   }
+  },
+  "simplejev-qwen3.8-27b-selfhost": {
+   "rank": {
+    "before": 225,
+    "after": 227
+   },
+   "open_board_rank": {
+    "before": 182,
+    "after": 184
+   }
+  },
+  "smalljev": {
+   "rank": {
+    "before": 238,
+    "after": 240
+   },
+   "open_board_rank": {
+    "before": 192,
+    "after": 194
+   },
+   "capability_rank": {
+    "before": 166,
+    "after": 167
+   },
+   "open_capability_rank": {
+    "before": 135,
+    "after": 136
+   }
+  },
+  "spark-s1-4b-v6": {
+   "rank": {
+    "before": 88,
+    "after": 89
+   },
+   "open_board_rank": {
+    "before": 61,
+    "after": 62
+   },
+   "capability_rank": {
+    "before": 135,
+    "after": 136
+   },
+   "open_capability_rank": {
+    "before": 107,
+    "after": 108
+   }
+  },
+  "spx-cd-pro": {
+   "rank": {
+    "before": 86,
+    "after": 87
+   }
+  },
+  "standard_one_3b_sh": {
+   "rank": {
+    "before": 146,
+    "after": 148
+   },
+   "open_board_rank": {
+    "before": 111,
+    "after": 113
+   },
+   "capability_rank": {
+    "before": 128,
+    "after": 129
+   },
+   "open_capability_rank": {
+    "before": 100,
+    "after": 101
+   }
+  },
+  "standard_one_3b_sh_v4": {
+   "rank": {
+    "before": 142,
+    "after": 144
+   },
+   "open_board_rank": {
+    "before": 107,
+    "after": 109
+   },
+   "capability_rank": {
+    "before": 127,
+    "after": 128
+   },
+   "open_capability_rank": {
+    "before": 99,
+    "after": 100
+   }
+  },
+  "standard_one_8b_sh": {
+   "rank": {
+    "before": 167,
+    "after": 169
+   },
+   "open_board_rank": {
+    "before": 130,
+    "after": 132
+   }
+  },
+  "standardone-8b": {
+   "rank": {
+    "before": 179,
+    "after": 181
+   },
+   "open_board_rank": {
+    "before": 140,
+    "after": 142
+   }
+  },
+  "startlux-decision-v1.1-27b-autothink": {
+   "rank": {
+    "before": 201,
+    "after": 203
+   },
+   "open_board_rank": {
+    "before": 160,
+    "after": 162
+   }
+  },
+  "startlux-decision-v1.1-27b-instant": {
+   "rank": {
+    "before": 145,
+    "after": 147
+   },
+   "open_board_rank": {
+    "before": 110,
+    "after": 112
+   }
+  },
+  "swanone": {
+   "rank": {
+    "before": 90,
+    "after": 91
+   },
+   "open_board_rank": {
+    "before": 63,
+    "after": 64
+   }
+  },
+  "system-one-open": {
+   "rank": {
+    "before": 182,
+    "after": 184
+   },
+   "capability_rank": {
+    "before": 141,
+    "after": 142
+   }
+  },
+  "system-one-sg": {
+   "rank": {
+    "before": 200,
+    "after": 202
+   },
+   "open_board_rank": {
+    "before": 159,
+    "after": 161
+   }
+  },
+  "tacet-sonata": {
+   "rank": {
+    "before": 270,
+    "after": 272
+   },
+   "open_board_rank": {
+    "before": 223,
+    "after": 225
+   },
+   "capability_rank": {
+    "before": 195,
+    "after": 196
+   },
+   "open_capability_rank": {
+    "before": 162,
+    "after": 163
+   }
+  },
+  "tern-35b-a3b": {
+   "rank": {
+    "before": 120,
+    "after": 122
+   },
+   "open_board_rank": {
+    "before": 88,
+    "after": 90
+   }
+  },
+  "torchcast-decision-27b": {
+   "rank": {
+    "before": 150,
+    "after": 152
+   },
+   "open_board_rank": {
+    "before": 114,
+    "after": 116
+   }
+  },
+  "turion-jev-31b": {
+   "rank": {
+    "before": 94,
+    "after": 96
+   },
+   "open_board_rank": {
+    "before": 66,
+    "after": 68
+   }
+  },
+  "typecastlm": {
+   "rank": {
+    "before": 162,
+    "after": 164
+   },
+   "open_board_rank": {
+    "before": 125,
+    "after": 127
+   },
+   "capability_rank": {
+    "before": 122,
+    "after": 123
+   },
+   "open_capability_rank": {
+    "before": 94,
+    "after": 95
+   }
+  },
+  "typecastlm-1.4.0": {
+   "rank": {
+    "before": 127,
+    "after": 129
+   },
+   "open_board_rank": {
+    "before": 93,
+    "after": 95
+   },
+   "capability_rank": {
+    "before": 124,
+    "after": 125
+   },
+   "open_capability_rank": {
+    "before": 96,
+    "after": 97
+   }
+  },
+  "uniphore-4b-decider": {
+   "rank": {
+    "before": 132,
+    "after": 134
+   },
+   "open_board_rank": {
+    "before": 97,
+    "after": 99
+   },
+   "capability_rank": {
+    "before": 117,
+    "after": 118
+   },
+   "open_capability_rank": {
+    "before": 89,
+    "after": 90
+   }
+  },
+  "vansa-3.4": {
+   "rank": {
+    "before": 95,
+    "after": 97
+   },
+   "capability_rank": {
+    "before": 84,
+    "after": 85
+   }
+  },
+  "vega-u-qwen3.5-0.8b": {
+   "rank": {
+    "before": 252,
+    "after": 254
+   },
+   "open_board_rank": {
+    "before": 205,
+    "after": 207
+   }
+  },
+  "vega-u-qwen3.5-4b": {
+   "rank": {
+    "before": 240,
+    "after": 242
+   },
+   "open_board_rank": {
+    "before": 194,
+    "after": 196
+   },
+   "capability_rank": {
+    "before": 167,
+    "after": 168
+   },
+   "open_capability_rank": {
+    "before": 136,
+    "after": 137
+   }
+  },
+  "vegaml-0.8b": {
+   "rank": {
+    "before": 266,
+    "after": 268
+   },
+   "open_board_rank": {
+    "before": 219,
+    "after": 221
+   },
+   "capability_rank": {
+    "before": 186,
+    "after": 187
+   },
+   "open_capability_rank": {
+    "before": 154,
+    "after": 155
+   }
+  },
+  "vegaml-4b": {
+   "rank": {
+    "before": 230,
+    "after": 232
+   },
+   "open_board_rank": {
+    "before": 186,
+    "after": 188
+   },
+   "capability_rank": {
+    "before": 181,
+    "after": 182
+   },
+   "open_capability_rank": {
+    "before": 150,
+    "after": 151
+   }
+  },
+  "vera-large": {
+   "rank": {
+    "before": 158,
+    "after": 160
+   },
+   "open_board_rank": {
+    "before": 122,
+    "after": 124
+   }
+  },
+  "verdict-small": {
+   "rank": {
+    "before": 269,
+    "after": 271
+   },
+   "open_board_rank": {
+    "before": 222,
+    "after": 224
+   },
+   "capability_rank": {
+    "before": 179,
+    "after": 180
+   },
+   "open_capability_rank": {
+    "before": 148,
+    "after": 149
+   }
+  },
+  "verdin-4b": {
+   "rank": {
+    "before": 126,
+    "after": 128
+   },
+   "open_board_rank": {
+    "before": 92,
+    "after": 94
+   },
+   "capability_rank": {
+    "before": 105,
+    "after": 106
+   },
+   "open_capability_rank": {
+    "before": 78,
+    "after": 79
+   }
+  },
+  "vllm-sr-d3": {
+   "rank": {
+    "before": 156,
+    "after": 158
+   },
+   "open_board_rank": {
+    "before": 120,
+    "after": 122
+   }
+  },
+  "vllm-sr-d3-turbo": {
+   "rank": {
+    "before": 155,
+    "after": 157
+   },
+   "open_board_rank": {
+    "before": 119,
+    "after": 121
+   }
+  },
+  "wald-4b-v2": {
+   "rank": {
+    "before": 105,
+    "after": 107
+   },
+   "open_board_rank": {
+    "before": 74,
+    "after": 76
+   },
+   "capability_rank": {
+    "before": 106,
+    "after": 107
+   },
+   "open_capability_rank": {
+    "before": 79,
+    "after": 80
+   }
+  },
+  "wald-4b-v2-1": {
+   "rank": {
+    "before": 76,
+    "after": 77
+   },
+   "open_board_rank": {
+    "before": 50,
+    "after": 51
+   }
+  },
+  "watersheep": {
+   "rank": {
+    "before": 253,
+    "after": 255
+   },
+   "open_board_rank": {
+    "before": 206,
+    "after": 208
+   },
+   "capability_rank": {
+    "before": 182,
+    "after": 183
+   },
+   "open_capability_rank": {
+    "before": 151,
+    "after": 152
+   }
+  },
+  "watt-flash-0.1": {
+   "rank": {
+    "before": 262,
+    "after": 264
+   },
+   "open_board_rank": {
+    "before": 215,
+    "after": 217
+   },
+   "capability_rank": {
+    "before": 172,
+    "after": 173
+   },
+   "open_capability_rank": {
+    "before": 141,
+    "after": 142
+   }
+  },
+  "zerank-2": {
+   "rank": {
+    "before": 226,
+    "after": 228
+   },
+   "open_board_rank": {
+    "before": 183,
+    "after": 185
+   },
+   "capability_rank": {
+    "before": 145,
+    "after": 146
+   },
+   "open_capability_rank": {
+    "before": 115,
+    "after": 116
+   }
+  }
+ },
+ "derived_rank_change_rows": 211
+}

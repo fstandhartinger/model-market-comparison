@@ -1,0 +1,21 @@
+{
+ "verdict": "PASS",
+ "engine": "Claude Opus 5.5 (independent critic, dfad0a06)",
+ "release": "v1.7.20",
+ "head_reviewed": "dfad0a06; final head adds only the critic-F1 receipt rebind (check_source base 65a8810e, REPRODUCIBILITY.json, README), no release-file byte changed",
+ "reviews": [
+  {
+   "path": "workers/r198-v1720-critic/RESULT.json",
+   "sha256": "24d72171da1ec47336b936269f194321243cd897a73b1d2d22b0ac774c553b5f",
+   "verdict": "PASS",
+   "closed": [
+    "F1"
+   ],
+   "non_blocking": [
+    "F2",
+    "F3",
+    "F4"
+   ]
+  }
+ ]
+}

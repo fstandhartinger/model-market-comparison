@@ -1,0 +1,36 @@
+import {readFileSync,writeFileSync} from 'node:fs';
+import {createHash} from 'node:crypto';
+import {validateJevbenchV1719Bundle,readJevbenchV1719ForBoard,V1719_NEW_KEYS} from '../../lib/jevbench-v1719-release.mjs';
+import {readV1718ForV1719} from './prev_v1719.mjs';
+const p='data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.19-',load=n=>JSON.parse(readFileSync(p+n+'.json'));
+const previous=await readV1718ForV1719();
+export const bundle={manifest:load('publication'),artifact:load('results'),categories:load('categories'),carry:load('carry'),proof:load('proof'),previous,previousManifestSha256:createHash('sha256').update(readFileSync('data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.18-publication.json')).digest('hex')};
+validateJevbenchV1719Bundle(bundle,{candidate:true});
+let rejected=0;const row=(x,k)=>x.artifact.systems.find(s=>s.key===k);
+const neg=(name,fn)=>{const x=structuredClone(bundle);fn(x);try{validateJevbenchV1719Bundle(x,{candidate:true})}catch{rejected++;return}throw Error('negative accepted: '+name)};
+for(const k of V1719_NEW_KEYS){
+ for(const f of ['ranked','listing','rank','ranks','not_ranked_because'])neg(k+' '+f,x=>{row(x,k)[f]=f==='ranked'?true:f==='listing'?'ranked':f==='rank'?1:f==='ranks'?{A:1,B:1,C:1,capability:1}:''});
+ for(const m of Object.keys(bundle.artifact.board))neg(k+' ordered '+m,x=>x.artifact.board[m].order.push(k));
+ for(const [f,v]of [['usd_per_1000',0],['usd_per_1000',.0001],['kind','measured'],['common_basis',{n_items:1489,rule:'common',usd_per_1000_all_items:0}]])neg(k+' computed cost '+f,x=>row(x,k).cost[f]=v);
+ neg(k+' cost axis',x=>row(x,k).axes.cost=100);neg(k+' cost composite',x=>row(x,k).scores.A=0);
+ neg(k+' tariff used',x=>x.proof.new_rows[k].price_reference.counting_list_price=true);
+ neg(k+' attempt 1 data present',x=>{x.proof.new_rows[k].source_sha256.attempt=1;x.proof.new_rows[k].source_sha256.raw_sha256='1'.repeat(64)});
+ neg(k+' denominator 1495',x=>row(x,k).v16.n_items=1495);neg(k+' missing 5 misses',x=>row(x,k).status.rows=1495);
+ const fragments=['Hosted API by Bynn','5 items over the provider\'s input limit','scored as misses and kept in the denominator','probabilities to two decimals','Calibration is computed on the reported values without adjustment','Output tokens reported as 0'];
+ if(k.includes('main'))fragments.push('A first attempt stopped incomplete because of a harness resend bug on our side','the second, complete attempt');
+ for(const text of fragments)neg(k+' missing disclosure '+text,x=>row(x,k).disclosure=row(x,k).disclosure.replace(text,''));
+ neg(k+' basis missing',x=>row(x,k).cost.basis='');neg(k+' paid',x=>row(x,k).paid_fast_lane=true);
+ for(const dim of ['families','languages','usecases'])neg(k+' missing '+dim,x=>delete x.categories.systems[k][dim]);
+ neg(k+' invented topics',x=>x.categories.systems[k].topics={fake:{n:30,competence:90}});
+}
+neg('carried score',x=>x.artifact.systems.find(s=>!V1719_NEW_KEYS.includes(s.key)).axes.intelligence++);
+neg('carried rank',x=>x.artifact.systems.find(s=>s.ranked).rank++);
+neg('order reversed',x=>x.artifact.board.A.order.reverse());
+neg('frozen common set reduced',x=>x.proof.cost_basis.n_items=1488);
+neg('common set hash changed',x=>x.proof.cost_basis.set_sha256='b'.repeat(64));
+neg('approval hash',x=>x.proof.topfive_diff_sha256='b'.repeat(64));
+neg('top-five changed',x=>x.proof.publication_approval.top_five_effect='changed');
+neg('private field',x=>x.artifact.task_id='private');
+if(bundle.manifest.review.verdict==='PENDING'&&await readJevbenchV1719ForBoard()!==null)throw Error('PENDING leak');
+writeFileSync('r198/v1719/receipts/VALIDATOR.json',JSON.stringify({status:'PASS',carried_rows:311,negative_rejections:rejected},null,1)+'\n');
+console.log(`PASS candidate: 311 carried rows/cells/orders equal; ${rejected} negatives rejected`);

@@ -1,0 +1,33 @@
+{
+ "lychee-27b": {
+  "entry": {
+   "author": "LycheeAI",
+   "base_model": "Qwen/Qwen3.8-27B",
+   "cost_basis": "ESTIMATE (*est.), frozen 25 Sep 2026 base-model market reference qwen/qwen3.8-27b: USD 0.42 per million input and USD 3.00 per million output tokens. Measured output tokens: 0 (no generation). Common cost basis: the same 1,485 answered items as other rows on this draw, 763,765 input tokens. USD 0.216014343 per 1,000 decisions (3.34 times the official cap); all-items cost USD 0.544237400 per 1,000 decisions on 1,500 items (1,943,705 input tokens). Estimated model tariff, not charged usage or a host quote; GPU rental is separate.",
+   "cost_kind": "estimate",
+   "disclosure": "Measured on 13 Oct 2026 as a paid priority evaluation; published at the customer's request. The estimated cost exceeds the official cost cap, so this row is outside the default cost-capped Capability ranking.",
+   "display": "Lychee-27B",
+   "endpoint_condition": "evaluator-owned Lium GPU pod (A100 80GB PCIe), offline read-only container (--network none); author's lychee server unchanged at revision f3f95d18 (bf16, one forward pass, linear readout over answer codes, temperature 1.0, prompts read whole; over-length/OOM -> HTTP 422) on the documented stack Python 3.12 / torch 2.14.0 (cu126) / transformers 5.17.0 / flash-linear-attention 0.5.2 / kernels 0.16.1",
+   "endpoint_kind": "gpu",
+   "lane": "selfhosted",
+   "licence": "CC BY-NC 4.0 (weights; non-commercial use only); base Qwen3.8-27B Apache-2.0",
+   "measured_on": "2026-10-13",
+   "model_pin": {
+    "base": "Qwen/Qwen3.8-27B",
+    "model": "LycheeAI/Lychee-27B",
+    "revision": "f3f95d18a3b1ef3c483c2a5d7e8e5272a2af31e2"
+   },
+   "price_in_per_m": 0.42,
+   "price_kind": "estimate",
+   "price_out_per_m": 3.0,
+   "ranked": true,
+   "repo": "https://huggingface.co/LycheeAI/Lychee-27B",
+   "revision": "f3f95d18a3b1ef3c483c2a5d7e8e5272a2af31e2",
+   "support": {
+    "choice": "native",
+    "noul": "native",
+    "score": "native"
+   }
+  }
+ }
+}

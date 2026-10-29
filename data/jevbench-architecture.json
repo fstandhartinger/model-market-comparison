@@ -7315,6 +7315,102 @@
           }
         ],
         "note": "Hosted API measured on the 27 Oct 2026 draw; the stated base is the vendor's, no architecture or parameter count is inferred."
+      },
+      "chaoliangunsw-jev-style-2b-decision-v4": {
+        "arch": "open-llm-decoder",
+        "badges": {
+          "derivation": "fine-tune",
+          "params": "2B",
+          "quant": "bf16"
+        },
+        "evidence": [
+          {
+            "kind": "model-card",
+            "url": "https://huggingface.co/chaoliangUNSW/Jev-Style-2B-Decision-v4/tree/c9504148dae7f7a43d67a5782f12a015a4b4022c",
+            "fact": "Qwen/Qwen3.5-2B full fine-tune, Qwen3_5ForConditionalGeneration, 2,213,241,664 parameters; vision tower unused on the text draw."
+          }
+        ],
+        "note": "Self-hosted through the author HTTP server on one RTX 6000 Ada; Apache-2.0."
+      },
+      "knowline-26b-a4b-gen2.5": {
+        "arch": "open-llm-decoder",
+        "badges": {
+          "derivation": "fine-tune",
+          "params": "26B-A4B",
+          "quant": null
+        },
+        "evidence": [
+          {
+            "kind": "model-card",
+            "url": "https://huggingface.co/PelaAI/KnowLine-26B-A4B-Gen2.5/blob/7486767f8546beb510e61aef07d0e74219ceb4e3/README.md",
+            "fact": "Pinned measurement entry identifies PelaAI/KnowLine-26B-A4B-Gen2.5 and base google/gemma-4-26B-A4B-it; serving conditions are disclosed on the row."
+          }
+        ],
+        "note": "Aggregate-only release of the 23 Oct measurement; see the row disclosure for the answer-file loss and serving conditions."
+      },
+      "knowline-4b-gen5.5": {
+        "arch": "open-llm-decoder",
+        "badges": {
+          "derivation": "fine-tune",
+          "params": "4B",
+          "quant": null
+        },
+        "evidence": [
+          {
+            "kind": "model-card",
+            "url": "https://huggingface.co/PelaAI/KnowLine-4B-Gen5.5/blob/779944d2cc8ffa19cef386aee83c83bcb967ade2/README.md",
+            "fact": "Pinned measurement entry identifies PelaAI/KnowLine-4B-Gen5.5 and base Qwen/Qwen3.5-4B; serving conditions are disclosed on the row."
+          }
+        ],
+        "note": "Aggregate-only release of the 23 Oct measurement; see the row disclosure for the answer-file loss and serving conditions."
+      },
+      "decisionnode-flash-0.9.1-rc1": {
+        "arch": "closed-api",
+        "badges": {
+          "derivation": null,
+          "params": null,
+          "quant": null
+        },
+        "evidence": [
+          {
+            "kind": "provider-docs",
+            "url": "https://decisionnode.com",
+            "fact": "Hosted native-probability API by Bynn; no base model declared."
+          }
+        ],
+        "note": "Proprietary hosted API; evaluated model pin decisionnode-flash-0.9.1-rc1."
+      },
+      "decisionnode-main-0.9.1-rc1": {
+        "arch": "closed-api",
+        "badges": {
+          "derivation": null,
+          "params": null,
+          "quant": null
+        },
+        "evidence": [
+          {
+            "kind": "provider-docs",
+            "url": "https://decisionnode.com",
+            "fact": "Hosted native-probability API by Bynn; no base model declared."
+          }
+        ],
+        "note": "Proprietary hosted API; evaluated model pin decisionnode-main-0.9.1-rc1."
+      },
+      "lychee-27b": {
+        "arch": "open-llm-decoder",
+        "badges": {
+          "derivation": "fine-tune",
+          "params": "27B",
+          "quant": "bf16"
+        },
+        "evidence": [
+          {
+            "kind": "model-card",
+            "url": "https://huggingface.co/LycheeAI/Lychee-27B/tree/f3f95d18a3b1ef3c483c2a5d7e8e5272a2af31e2",
+            "fact": "Lychee-27B, declared base Qwen/Qwen3.8-27B; bf16 forward pass and linear readout as measured in the original priority evaluation."
+          }
+        ],
+        "note": "Weights CC BY-NC 4.0, non-commercial use only; base Apache-2.0. See measured conditions on the row."
       }
     },
     "imagejevbench": {

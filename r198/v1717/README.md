@@ -1,0 +1,13 @@
+# JevBench v1.7.17 — Jev-Style-2B (unranked)
+
+Base: 6ef616054c679ad69bd8366654ba92e471bca74a, v1.7.16 final PASS (sealed). This pipeline prepares an unpublished candidate only.
+
+The public row key follows the handoff/raw key `chaoliangunsw-jev-style-2b-decision-v4`; the kit's launcher alias is `jevstyle2b` and the served model name is `jev-style-2b-decision-v4`. Display: Jev-Style-2B.
+
+`prepare_v1717.py` captures aggregate outputs of the frozen scorers, B=1000 seed=16 O1S, fixed G_med 2.573387642438244, 10-second share and `--cost-basis`. Raw and private cost-basis files stay in the job/sealed custody locations, never in this repository. The common set is recomputed across all nine draw raws: unchanged at 1,489 items, sha256 `4e912731e63369e1b3066b0b4afa87b44f1094aea079c5b41dc6d02e7f235537`. Every one of the 308 carried rows and all their cells stay equal. New row: 1,500-item scoring denominator, 1,495 answers plus five pre-registered over-limit refusals counted as misses. Price: frozen Qwen/Qwen3.5-2B reference 0.02/0.10 per million, native input, reported output 0, estimate.
+
+Run `compare_v1717.sh`, `rebuild_v1717.sh`, then `run-gates.sh`. Heavy gates use `suite-slot` + `heavy-run`; the full suite is omitted for this rebase/binding/text-only update per the lead brief. `heavy_v1717.sh` initializes a real temporary git repository with a tracked HEAD in the remote snapshot because heavy-run excludes .git and an existing full-suite test invokes git status. It does not change the test. The once-only full run exposed an untracked-snapshot stdout overflow; the tracked-HEAD fix was verified red/green against the unchanged checkout test in a minimized offline batch fixture. The original full-run failure is retained, with no full-suite retry. No sealed material is sent remotely.
+
+`prev_v1717.mjs` validates the pinned predecessor for candidate tests; public readers require its real PASS. The predecessor is now final PASS. `make_passtree_v1717.py` preserves its exact bytes and only simulates the candidate PASS in a disposable fixture. Its one swap file is the v1.7.17 publication manifest and must be restored byte-equal. The real v1.7.17 tree remains PENDING and the public board remains v1.7.16.
+
+Rebased onto final v1.7.16 on 28 Oct; v1.7.17 rebuilt against its flipped manifest. Release-page wording is neutral, with two rejected weaker-than paraphrases. `flip_verdict_v1717.py --dry-run` accepts the bound candidate against the PASS predecessor. Freeze refuses while v1.7.17 is PENDING and never writes a seal. No release flip, seal or publication is authorized by these fixtures.

@@ -1,0 +1,43 @@
+{
+ "gates": {
+  "ASSEMBLED-TOPFIVE.json": "PASS",
+  "BUILD-POSTFLIP": "PASS",
+  "BUILT-LINKS.json": "PASS",
+  "CARRIED-ROWS.json": "PASS",
+  "HELPERS.json": "PASS",
+  "PENDING": "PASS",
+  "POSTFLIP": "PASS",
+  "PREVIEW.json": "PASS",
+  "PUBLIC-TEXT.json": "PASS",
+  "REPRO.json": "PASS",
+  "TSC": "PASS",
+  "VALIDATOR.json": "PASS",
+  "VISIBILITY-POSTFLIP.json": "PASS",
+  "full_suite": {
+   "accepted_test": "test/daily-clean-checkout-wait.test.mjs",
+   "fail": 1,
+   "invocations": 1,
+   "pass": 3929,
+   "reason": "heavy snapshot has no .git/HEAD",
+   "skipped": 10,
+   "status": "PASS_EXCEPT_ACCEPTED_SNAPSHOT_ENVIRONMENT",
+   "tests": 3940
+  },
+  "postflip-tests.log": {
+   "fail": 0,
+   "pass": 208,
+   "skipped": 1,
+   "tests": 209
+  },
+  "release-tests.log": {
+   "fail": 0,
+   "pass": 194,
+   "skipped": 1,
+   "tests": 195
+  }
+ },
+ "real_candidate_pending": true,
+ "real_predecessor_pass": true,
+ "status": "PASS",
+ "synthetic_bindings_restored": true
+}
