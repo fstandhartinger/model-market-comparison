@@ -1,0 +1,61 @@
+{
+ "TSC": "PASS",
+ "PENDING": "PASS",
+ "POSTFLIP": "PASS",
+ "BUILD-POSTFLIP": "PASS",
+ "SEO-PENDING-FIX": "PASS",
+ "SEO-POSTFLIP-FIX": "PASS",
+ "release-tests.log": {
+  "tests": 185,
+  "pass": 184,
+  "fail": 0,
+  "skipped": 1
+ },
+ "postflip-tests.log": {
+  "tests": 199,
+  "pass": 198,
+  "fail": 0,
+  "skipped": 1
+ },
+ "seo-pending-fix.log": {
+  "tests": 5,
+  "pass": 5,
+  "fail": 0,
+  "skipped": 0
+ },
+ "seo-postflip-fix.log": {
+  "tests": 10,
+  "pass": 10,
+  "fail": 0,
+  "skipped": 0
+ },
+ "full_suite": {
+  "status": "COMPLETED_WITH_ACCEPTED_SNAPSHOT_FAILURE_AND_REPAIRED_OWN_FAILURE",
+  "invocations": 1,
+  "accepted_failure": "the supervisor's dated brief backups can never make the checkout dirty again",
+  "accepted_test": "test/daily-clean-checkout-wait.test.mjs",
+  "repaired_failure": "static model params include every current and historical public system; private keys never escape",
+  "repaired_test": "test/jevbench-seo.test.mjs:50",
+  "repair_verification": "PENDING and synthetic-PASS SEO tests, fresh build, compiled llms-full both rows and outside-caps label",
+  "full_suite_rerun": false,
+  "unresolved_failures": 0,
+  "tests": 3935,
+  "pass": 3923,
+  "fail": 2,
+  "skipped": 10
+ },
+ "CARRIED-EQUALITY.json": "PASS",
+ "REPRO.json": "PASS",
+ "HELPERS.json": "PASS",
+ "PRICING.json": "PASS",
+ "PUBLIC-TEXT.json": "PASS",
+ "PREVIEW.json": "PASS",
+ "SOURCE-RECHECK-BUILD2.json": "PASS",
+ "VISIBILITY-POSTFLIP.json": "PASS",
+ "ASSEMBLED-TOPFIVE.json": "PASS",
+ "BUILT-LINKS.json": "PASS",
+ "predecessor_v1716_pass": true,
+ "synthetic_bindings_restored": true,
+ "real_manifests_pending": true,
+ "repro_hashes_still_match": true
+}

@@ -825,7 +825,7 @@
  "metric": "O1S chance-corrected competence: equal mean across the request types present, clipped to 0–100. Zero means the equal-weight mean across present request types was at or below baseline; negative means are clipped. It does not mean every type scored zero. Choice uses a random-option baseline; Noul uses a fixed 50% accuracy baseline (abstentions count as wrong); Score uses the midpoint-guess error (random-guess fallback when every gold is at the midpoint). Compare models within a category; row pools and supported types can differ.",
  "min_n": 15,
  "provisional": false,
- "results_sha256": "80e63fd46572be6678d337b189553d9466fb71bfcad3fd6a29eab6d4768d1b3d",
+ "results_sha256": "7a715715a8e68047422a651b77e82092e501e38701bdb1978000969550be47dc",
  "results_sha256_note": "Carried cells unchanged; new family and language cells reconstructed exactly from retained scoring summaries. Ruled topics and use cases unavailable after answer-file loss.",
  "revision": "v1.7.18",
  "rule_note": "Cells of re-scored rows are computed with the frozen category tools under the 10 s rule (a decision over 10 s counts as a wrong answer). Rows without cells are not yet re-scored under the rule or are re-measure pending; no v1.6 cell is shown for a v1.7 row.",

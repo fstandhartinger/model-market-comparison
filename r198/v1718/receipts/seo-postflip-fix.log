@@ -1,0 +1,61 @@
+TAP version 13
+# Subtest: SEO headline ranks match the open-weights board in the current public feed, not artifact-wide ranks
+ok 1 - SEO headline ranks match the open-weights board in the current public feed, not artifact-wide ranks
+  ---
+  duration_ms: 85356.10483
+  ...
+# Subtest: comparisons preserve legacy slugs and derive current top-eight rivals
+ok 2 - comparisons preserve legacy slugs and derive current top-eight rivals
+  ---
+  duration_ms: 1.240321
+  ...
+# Subtest: picks and open-weight classification use current measured evidence
+ok 3 - picks and open-weight classification use current measured evidence
+  ---
+  duration_ms: 0.877422
+  ...
+# Subtest: main server JSON-LD renders valid Dataset, Breadcrumb and visible matching FAQ
+ok 4 - main server JSON-LD renders valid Dataset, Breadcrumb and visible matching FAQ
+  ---
+  duration_ms: 132.212077
+  ...
+# Subtest: static model params include every current and historical public system; private keys never escape
+ok 5 - static model params include every current and historical public system; private keys never escape
+  ---
+  duration_ms: 79700.288356
+  ...
+# PASS candidate: 309 carried scores/cells equal, 255 rank changes independently recomputed and pinned; 45 negatives rejected
+# Subtest: v1.7.18 aggregate-only candidate and all negative release gates
+ok 6 - v1.7.18 aggregate-only candidate and all negative release gates
+  ---
+  duration_ms: 85.258656
+  ...
+# Subtest: 26B unavailable diagnostic remains native supported and renders explicitly unavailable
+ok 7 - 26B unavailable diagnostic remains native supported and renders explicitly unavailable
+  ---
+  duration_ms: 0.949778
+  ...
+# Subtest: both lost-raw rows have only recorded topic/use-case omissions
+ok 8 - both lost-raw rows have only recorded topic/use-case omissions
+  ---
+  duration_ms: 0.519032
+  ...
+# Subtest: PENDING is hidden and synthetic PASS exposes v1.7.18
+ok 9 - PENDING is hidden and synthetic PASS exposes v1.7.18
+  ---
+  duration_ms: 5775.334121
+  ...
+# Subtest: v1.7.18 generated page preserves the complete predecessor navigation and draw-specific prose
+ok 10 - v1.7.18 generated page preserves the complete predecessor navigation and draw-specific prose
+  ---
+  duration_ms: 1.003305
+  ...
+1..10
+# tests 10
+# suites 0
+# pass 10
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 253816.446548

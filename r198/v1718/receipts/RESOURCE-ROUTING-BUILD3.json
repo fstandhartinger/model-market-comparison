@@ -1,0 +1,30 @@
+{
+ "status": "COMPLETE",
+ "host": "lechonk",
+ "run": "r102822330643r",
+ "guard": "unchanged /home/flori/bin/suite-slot --max-wait 1800",
+ "guard_sha256": "9ec08fc5a889a54c2ddcc9f29a239bac098df0bde44bf8d2d033fc23694ab16e",
+ "load5_at_capture": 1.61,
+ "load5_independently_checked_after_start": 1.55,
+ "guard_max_load": 18,
+ "load_input": "SUITE_SLOT_LOAD_FILE=.worker-tools/host-load5; measured host value, not synthetic load",
+ "reason": "Heavy sandbox masks /proc/loadavg; supported load-file guard input avoids missing-proc fallback",
+ "cancelled_pre_page_fix_run": "r1028223129mhm8; own run stopped before full suite, exit TERM",
+ "full_run": {
+  "run": "r102822330643r",
+  "exit_code": 1,
+  "elapsed_s": 4524,
+  "full_suite_invocations": 1
+ },
+ "repair_run": {
+  "run": "r1028234905bs25",
+  "exit_code": 0,
+  "elapsed_s": 2030,
+  "full_suite_invocations": 0,
+  "load5_at_capture": 5.0,
+  "load5_independently_checked_after_start": 4.71,
+  "timeout_s": 10800
+ },
+ "memory_cap": "16G",
+ "snapshots_removed": true
+}

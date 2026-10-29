@@ -15,3 +15,16 @@ test('both lost-raw rows have only recorded topic/use-case omissions',()=>{
  for(const k of bundle.artifact.addendum.new_keys){assert.deepEqual(entries.find(x=>x.key===k).dims,['topics','usecases']);assert.match(entries.find(x=>x.key===k).decision,/knowline-r8c-lost-raw-omissions/);assert.equal(bundle.categories.systems[k].topics,undefined);assert.equal(bundle.categories.systems[k].usecases,undefined);}
 });
 test('PENDING is hidden and synthetic PASS exposes v1.7.18',async()=>{const r=await readJevbenchV1718ForBoard();assert.equal(r?.artifact.revision??null,bundle.manifest.review.verdict==='PASS'?'v1.7.18':null)});
+
+test('v1.7.18 generated page preserves the complete predecessor navigation and draw-specific prose',()=>{
+ const page=readFileSync('app/jev-models/v1.7.18/page.tsx','utf8');
+ assert.match(page, /href="\/jev-models\/v1\.7\.17">Previous v1\.7\.17<\/a>/);
+ assert.doesNotMatch(page, /Previous v1\.7\.16|27 Oct|anchor runs/);
+ for(const version of ['v1.7.16','v1.7.17','v1.7.18']){
+  assert.ok(readFileSync('components/JevBenchReleaseVersionNav.tsx','utf8').includes(version));
+  assert.ok(readFileSync('lib/jevbench-releases.mjs','utf8').includes("version: '"+version+"'"));
+ }
+ assert.ok(page.includes('measurement_notes.slice(-3)'));
+ assert.ok(bundle.artifact.measurement_notes.slice(-3).every(note=>!(/27 Oct|anchor/i.test(note))));
+ assert.match(readFileSync('app/jev-models/v1.7.17/page.tsx','utf8'), /Previous v1\.7\.16/);
+});
