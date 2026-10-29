@@ -1,0 +1,701 @@
+{
+ "after": [],
+ "before": [
+  {
+   "match": "Florian",
+   "path": "results.amendments[0].text"
+  },
+  {
+   "match": "Florian",
+   "path": "results.amendments[1].text"
+  },
+  {
+   "match": "Florian",
+   "path": "results.measurement_notes[9]"
+  },
+  {
+   "match": "CoS",
+   "path": "results.systems[3].endpoint_condition"
+  },
+  {
+   "match": "CoS",
+   "path": "results.systems[4].endpoint_condition"
+  },
+  {
+   "match": "release lane",
+   "path": "results.systems[5].cost.basis"
+  },
+  {
+   "match": "release lane",
+   "path": "results.systems[6].cost.basis"
+  },
+  {
+   "match": "#20150",
+   "path": "results.systems[11].endpoint_condition"
+  },
+  {
+   "match": "order 07d13315",
+   "path": "results.systems[12].endpoint_condition"
+  },
+  {
+   "match": "deputy",
+   "path": "results.systems[15].cost.basis"
+  },
+  {
+   "match": "#20324",
+   "path": "results.systems[19].endpoint_condition"
+  },
+  {
+   "match": "jevbench-v15-measure-20260925",
+   "path": "results.systems[20].cost.basis"
+  },
+  {
+   "match": "RELEASE-LANE",
+   "path": "results.systems[22].cost.basis"
+  },
+  {
+   "match": "#20150",
+   "path": "results.systems[23].endpoint_condition"
+  },
+  {
+   "match": "#20414",
+   "path": "results.systems[24].endpoint_condition"
+  },
+  {
+   "match": "RELEASE-LANE",
+   "path": "results.systems[31].cost.basis"
+  },
+  {
+   "match": "RELEASE-LANE",
+   "path": "results.systems[32].cost.basis"
+  },
+  {
+   "match": "release-lane",
+   "path": "results.systems[33].cost.basis"
+  },
+  {
+   "match": "release-lane",
+   "path": "results.systems[34].cost.basis"
+  },
+  {
+   "match": "/home/flori/",
+   "path": "results.systems[36].adapter_id"
+  },
+  {
+   "match": "/home/flori/",
+   "path": "results.systems[37].adapter_id"
+  },
+  {
+   "match": "#20324",
+   "path": "results.systems[41].endpoint_condition"
+  },
+  {
+   "match": "THIS JOB",
+   "path": "results.systems[54].endpoint_condition"
+  },
+  {
+   "match": "#20150",
+   "path": "results.systems[63].endpoint_condition"
+  },
+  {
+   "match": "release owner",
+   "path": "results.systems[64].underlying"
+  },
+  {
+   "match": "release owner",
+   "path": "results.systems[65].underlying"
+  },
+  {
+   "match": "RELEASE-LANE",
+   "path": "results.systems[79].cost.basis"
+  },
+  {
+   "match": "release-lane",
+   "path": "results.systems[85].cost.basis"
+  },
+  {
+   "match": "chief-of-staff",
+   "path": "results.systems[91].cost.basis"
+  },
+  {
+   "match": "order 5fa1a5f0",
+   "path": "results.systems[92].author"
+  },
+  {
+   "match": "order 5fa1a5f0",
+   "path": "results.systems[92].endpoint_condition"
+  },
+  {
+   "match": "order 880b09e8",
+   "path": "results.systems[97].endpoint_condition"
+  },
+  {
+   "match": "#20150",
+   "path": "results.systems[98].endpoint_condition"
+  },
+  {
+   "match": "#20150",
+   "path": "results.systems[100].endpoint_condition"
+  },
+  {
+   "match": "order d831408e",
+   "path": "results.systems[103].author"
+  },
+  {
+   "match": "order d831408e",
+   "path": "results.systems[103].underlying"
+  },
+  {
+   "match": "order b6b2b557",
+   "path": "results.systems[104].author"
+  },
+  {
+   "match": "order b6b2b557",
+   "path": "results.systems[104].disclosure"
+  },
+  {
+   "match": "#20324",
+   "path": "results.systems[107].endpoint_condition"
+  },
+  {
+   "match": "#20324",
+   "path": "results.systems[109].endpoint_condition"
+  },
+  {
+   "match": "#20323",
+   "path": "results.systems[110].endpoint_condition"
+  },
+  {
+   "match": "#20474",
+   "path": "results.systems[119].endpoint_condition"
+  },
+  {
+   "match": "#20324",
+   "path": "results.systems[128].endpoint_condition"
+  },
+  {
+   "match": "release-lane",
+   "path": "results.systems[131].cost.basis"
+  },
+  {
+   "match": "release-lane",
+   "path": "results.systems[132].cost.basis"
+  },
+  {
+   "match": "release-lane",
+   "path": "results.systems[133].cost.basis"
+  },
+  {
+   "match": "#20324",
+   "path": "results.systems[134].endpoint_condition"
+  },
+  {
+   "match": "RELEASE-LANE",
+   "path": "results.systems[136].cost.basis"
+  },
+  {
+   "match": "CoS",
+   "path": "results.systems[137].cost.basis"
+  },
+  {
+   "match": "CoS",
+   "path": "results.systems[137].endpoint_condition"
+  },
+  {
+   "match": "Florian",
+   "path": "results.systems[138].cost.basis"
+  },
+  {
+   "match": "#20263",
+   "path": "results.systems[139].endpoint_condition"
+  },
+  {
+   "match": "#20263",
+   "path": "results.systems[140].endpoint_condition"
+  },
+  {
+   "match": "#20324",
+   "path": "results.systems[146].endpoint_condition"
+  },
+  {
+   "match": "jevbench-v15-measure-20260925",
+   "path": "results.systems[152].cost.basis"
+  },
+  {
+   "match": "order 8c7dbe11",
+   "path": "results.systems[152].endpoint_condition"
+  },
+  {
+   "match": "order 46550a0f",
+   "path": "results.systems[155].endpoint_condition"
+  },
+  {
+   "match": "release owner",
+   "path": "results.systems[157].underlying"
+  },
+  {
+   "match": "/home/flori/",
+   "path": "results.systems[159].adapter_id"
+  },
+  {
+   "match": "Florian",
+   "path": "results.systems[162].cost.basis"
+  },
+  {
+   "match": "Florian",
+   "path": "results.systems[164].endpoint_condition"
+  },
+  {
+   "match": "Florian",
+   "path": "results.systems[173].author"
+  },
+  {
+   "match": "RELEASE-LANE",
+   "path": "results.systems[173].cost.basis"
+  },
+  {
+   "match": "release lane",
+   "path": "results.systems[173].endpoint_condition"
+  },
+  {
+   "match": "#19335",
+   "path": "results.systems[175].endpoint_condition"
+  },
+  {
+   "match": "order 66c7b6d2",
+   "path": "results.systems[179].endpoint_condition"
+  },
+  {
+   "match": "order 147c5e18",
+   "path": "results.systems[180].endpoint_condition"
+  },
+  {
+   "match": "order 4d9fef10",
+   "path": "results.systems[181].endpoint_condition"
+  },
+  {
+   "match": "LEAD DECISION",
+   "path": "results.systems[184].cost.basis"
+  },
+  {
+   "match": "#20324",
+   "path": "results.systems[189].endpoint_condition"
+  },
+  {
+   "match": "#20324",
+   "path": "results.systems[190].endpoint_condition"
+  },
+  {
+   "match": "deputy",
+   "path": "results.systems[191].cost.basis"
+  },
+  {
+   "match": "#19428",
+   "path": "results.systems[191].endpoint_condition"
+  },
+  {
+   "match": "deputy",
+   "path": "results.systems[191].not_ranked_because"
+  },
+  {
+   "match": "CoS",
+   "path": "results.systems[193].cost.basis"
+  },
+  {
+   "match": "#19428",
+   "path": "results.systems[193].endpoint_condition"
+  },
+  {
+   "match": "CoS",
+   "path": "results.systems[195].cost.basis"
+  },
+  {
+   "match": "CoS",
+   "path": "results.systems[195].endpoint_condition"
+  },
+  {
+   "match": "CoS",
+   "path": "results.systems[196].endpoint_condition"
+  },
+  {
+   "match": "#20150",
+   "path": "results.systems[200].endpoint_condition"
+  },
+  {
+   "match": "/home/flori/",
+   "path": "results.systems[204].adapter_id"
+  },
+  {
+   "match": "release-lane",
+   "path": "results.systems[215].cost.basis"
+  },
+  {
+   "match": "CoS",
+   "path": "results.systems[215].endpoint_condition"
+  },
+  {
+   "match": "release-lane",
+   "path": "results.systems[216].cost.basis"
+  },
+  {
+   "match": "CoS",
+   "path": "results.systems[221].cost.basis"
+  },
+  {
+   "match": "CoS",
+   "path": "results.systems[222].cost.basis"
+  },
+  {
+   "match": "order 3643732b",
+   "path": "results.systems[223].endpoint_condition"
+  },
+  {
+   "match": "order 3643732b",
+   "path": "results.systems[224].endpoint_condition"
+  },
+  {
+   "match": "order 3643732b",
+   "path": "results.systems[225].endpoint_condition"
+  },
+  {
+   "match": "order 3643732b",
+   "path": "results.systems[226].endpoint_condition"
+  },
+  {
+   "match": "order 3643732b",
+   "path": "results.systems[227].endpoint_condition"
+  },
+  {
+   "match": "Florian",
+   "path": "results.systems[237].cost.basis"
+  },
+  {
+   "match": "this job",
+   "path": "results.systems[237].endpoint_condition"
+  },
+  {
+   "match": "Florian",
+   "path": "results.systems[238].endpoint_condition"
+  },
+  {
+   "match": "CoS",
+   "path": "results.systems[239].endpoint_condition"
+  },
+  {
+   "match": "chief-of-staff",
+   "path": "results.systems[241].endpoint_condition"
+  },
+  {
+   "match": "#20324",
+   "path": "results.systems[242].endpoint_condition"
+  },
+  {
+   "match": "#20324",
+   "path": "results.systems[243].endpoint_condition"
+  },
+  {
+   "match": "board #",
+   "path": "results.systems[246].cost.basis"
+  },
+  {
+   "match": "CoS",
+   "path": "results.systems[246].endpoint_condition"
+  },
+  {
+   "match": "release-owner",
+   "path": "results.systems[249].underlying"
+  },
+  {
+   "match": "#20324",
+   "path": "results.systems[251].endpoint_condition"
+  },
+  {
+   "match": "Florian",
+   "path": "results.systems[261].endpoint_condition"
+  },
+  {
+   "match": "Florian",
+   "path": "results.systems[263].endpoint_condition"
+  },
+  {
+   "match": "order 3a081599",
+   "path": "results.systems[264].endpoint_condition"
+  },
+  {
+   "match": "order 3a081599",
+   "path": "results.systems[265].underlying"
+  },
+  {
+   "match": "Florian",
+   "path": "results.systems[272].cost.basis"
+  },
+  {
+   "match": "CoS",
+   "path": "results.systems[272].endpoint_condition"
+  },
+  {
+   "match": "release-lane",
+   "path": "results.systems[273].cost.basis"
+  },
+  {
+   "match": "deputy",
+   "path": "results.systems[277].cost.basis"
+  },
+  {
+   "match": "#20324",
+   "path": "results.systems[278].endpoint_condition"
+  },
+  {
+   "match": "order b113eac1",
+   "path": "results.systems[280].endpoint_condition"
+  },
+  {
+   "match": "order 529be5d5",
+   "path": "results.systems[283].endpoint_condition"
+  },
+  {
+   "match": "order 9494e9ea",
+   "path": "results.systems[285].underlying"
+  },
+  {
+   "match": "CoS",
+   "path": "results.systems[286].cost.basis"
+  },
+  {
+   "match": "#19732",
+   "path": "results.systems[286].endpoint_condition"
+  },
+  {
+   "match": "CoS",
+   "path": "results.systems[286].not_ranked_because"
+  },
+  {
+   "match": "release lane",
+   "path": "results.systems[289].endpoint_condition"
+  },
+  {
+   "match": "jevbench-v15-measure-20260925",
+   "path": "results.systems[291].cost.basis"
+  },
+  {
+   "match": "order 4b3cb7b8",
+   "path": "results.systems[291].endpoint_condition"
+  },
+  {
+   "match": "jevbench-v15-measure-20260925",
+   "path": "results.systems[295].cost.basis"
+  },
+  {
+   "match": "jevbench-v15-measure-20260925",
+   "path": "results.systems[296].cost.basis"
+  },
+  {
+   "match": "release-owner",
+   "path": "results.systems[297].cost.basis"
+  },
+  {
+   "match": "lead-reported",
+   "path": "results.systems[297].endpoint_condition"
+  },
+  {
+   "match": "lead Amendment",
+   "path": "results.systems[304].cost.basis"
+  },
+  {
+   "match": "deputy",
+   "path": "results.systems[307].cost.basis"
+  },
+  {
+   "match": "deputy",
+   "path": "results.systems[308].cost.basis"
+  },
+  {
+   "match": "release owner",
+   "path": "results.systems[313].licence"
+  },
+  {
+   "match": "release-lane",
+   "path": "results.systems[314].cost.basis"
+  },
+  {
+   "match": "Florian",
+   "path": "history.systems[2].author"
+  },
+  {
+   "match": "RELEASE-LANE",
+   "path": "history.systems[2].cost.basis"
+  },
+  {
+   "match": "release lane",
+   "path": "history.systems[2].endpoint_condition"
+  },
+  {
+   "match": "release-lane",
+   "path": "history.systems[3].cost.basis"
+  },
+  {
+   "match": "order 3643732b",
+   "path": "history.systems[5].endpoint_condition"
+  },
+  {
+   "match": "order b113eac1",
+   "path": "history.systems[9].endpoint_condition"
+  },
+  {
+   "match": "THIS JOB",
+   "path": "history.systems[14].endpoint_condition"
+  },
+  {
+   "match": "release-lane",
+   "path": "history.systems[16].cost.basis"
+  },
+  {
+   "match": "RELEASE-LANE",
+   "path": "history.systems[17].cost.basis"
+  },
+  {
+   "match": "Florian",
+   "path": "history.systems[18].endpoint_condition"
+  },
+  {
+   "match": "release-lane",
+   "path": "history.systems[21].cost.basis"
+  },
+  {
+   "match": "release-lane",
+   "path": "history.systems[22].cost.basis"
+  },
+  {
+   "match": "Florian",
+   "path": "history.systems[25].endpoint_condition"
+  },
+  {
+   "match": "release lane",
+   "path": "history.systems[26].cost.basis"
+  },
+  {
+   "match": "Florian",
+   "path": "history.systems[30].endpoint_condition"
+  },
+  {
+   "match": "order 3643732b",
+   "path": "history.systems[34].endpoint_condition"
+  },
+  {
+   "match": "/home/flori/",
+   "path": "history.systems[35].adapter_id"
+  },
+  {
+   "match": "/home/flori/",
+   "path": "history.systems[43].adapter_id"
+  },
+  {
+   "match": "Florian",
+   "path": "history.systems[49].cost.basis"
+  },
+  {
+   "match": "release lane",
+   "path": "history.systems[50].endpoint_condition"
+  },
+  {
+   "match": "release-lane",
+   "path": "history.systems[55].cost.basis"
+  },
+  {
+   "match": "/home/flori/",
+   "path": "history.systems[77].adapter_id"
+  },
+  {
+   "match": "RELEASE-LANE",
+   "path": "history.systems[97].cost.basis"
+  },
+  {
+   "match": "/home/flori/",
+   "path": "history.systems[99].adapter_id"
+  },
+  {
+   "match": "RELEASE-LANE",
+   "path": "history.systems[104].cost.basis"
+  },
+  {
+   "match": "RELEASE-LANE",
+   "path": "history.systems[106].cost.basis"
+  },
+  {
+   "match": "order 3643732b",
+   "path": "history.systems[111].endpoint_condition"
+  },
+  {
+   "match": "deputy",
+   "path": "history.systems[113].cost.basis"
+  },
+  {
+   "match": "order 3643732b",
+   "path": "history.systems[120].endpoint_condition"
+  },
+  {
+   "match": "deputy",
+   "path": "history.systems[121].cost.basis"
+  },
+  {
+   "match": "order 3643732b",
+   "path": "history.systems[122].endpoint_condition"
+  },
+  {
+   "match": "deputy",
+   "path": "history.systems[125].cost.basis"
+  },
+  {
+   "match": "release owner",
+   "path": "history.systems[128].underlying"
+  },
+  {
+   "match": "release lane",
+   "path": "history.systems[135].cost.basis"
+  },
+  {
+   "match": "deputy",
+   "path": "history.systems[136].cost.basis"
+  },
+  {
+   "match": "RELEASE-LANE",
+   "path": "history.systems[137].cost.basis"
+  },
+  {
+   "match": "Florian",
+   "path": "history.amendments[0].text"
+  },
+  {
+   "match": "Florian",
+   "path": "history.amendments[1].text"
+  },
+  {
+   "match": "deputy",
+   "path": "lib/jevbench-releases.mjs:v1.6.18.text"
+  },
+  {
+   "match": "Florian",
+   "path": "lib/jevbench-releases.mjs:v1.6.17.text"
+  },
+  {
+   "match": "CoS",
+   "path": "data/jevbench-architecture.json:/benchmarks/jevbench/reflex-instinct-0.6b/note"
+  },
+  {
+   "match": "order 4d9fef10",
+   "path": "data/jevbench-architecture.json:/benchmarks/jevbench/metask_jev_rain_31b_trained_v3/note"
+  },
+  {
+   "match": "CoS",
+   "path": "data/jevbench-architecture.json:/benchmarks/jevbench/subq-snap-preview/evidence/0/fact"
+  },
+  {
+   "match": "CoS",
+   "path": "data/jevbench-architecture.json:/benchmarks/jevbench/nimble-v4/evidence/0/fact"
+  },
+  {
+   "match": "CoS",
+   "path": "data/jevbench-architecture.json:/benchmarks/jevbench/nimble-v4-max/evidence/0/fact"
+  }
+ ]
+}

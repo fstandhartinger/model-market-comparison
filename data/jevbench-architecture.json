@@ -5404,7 +5404,7 @@
             "fact": "Pinned model card: a LoRA adapter plus a pointer head on Qwen/Qwen3-0.6B, Apache-2.0, served by the author own serve.py with native probabilities and no free-form generation."
           }
         ],
-        "note": "Listed but not ranked in v1.6.15: CoS deputy decision #18761 declares its Speed figure non-official, and the composite weights Speed."
+        "note": "Listed but not ranked in v1.6.15: its Speed figure was non-official, and the composite weights Speed."
       },
       "vllm-sr-d3": {
         "arch": "open-llm-decoder",
@@ -5466,7 +5466,7 @@
             "fact": "Config of the sibling revision da56acc0: architectures [\"Gemma4ForConditionalGeneration\"]; model_type \"gemma4\", 60 hidden layers; quantization_config format pack-quantized, 4-bit weights."
           }
         ],
-        "note": "Re-submission of the weights of metask_jev_rain_31b_trained with a changed service/ layer (paid fast-lane order 4d9fef10); timed on an RTX PRO 6000 96 GB, not the H100 of the earlier row."
+        "note": "Re-submission of the weights of metask_jev_rain_31b_trained with a changed serving layer (paid evaluation); timed on an RTX PRO 6000 96 GB, not the H100 of the earlier row."
       },
       "subq-snap-preview": {
         "arch": "closed-api",
@@ -5479,7 +5479,7 @@
           {
             "url": "https://raw.githubusercontent.com/fstandhartinger/model-market-comparison/main/data/raw/benchmarks/jevbench/v1.6/jevbench-v1.6.17-results.json",
             "kind": "artifact",
-            "fact": "Artifact key subq-snap-preview records a vendor-hosted API with no public evaluated weights; listed but not ranked (cost unpriced, CoS deputy decision #18975)."
+            "fact": "Artifact key subq-snap-preview records a vendor-hosted API with no public evaluated weights; listed but not ranked (cost unpriced in that artifact)."
           }
         ]
       },
@@ -5559,7 +5559,7 @@
           {
             "url": "https://raw.githubusercontent.com/fstandhartinger/model-market-comparison/main/data/raw/benchmarks/jevbench/v1.6/jevbench-v1.6.18-results.json",
             "kind": "artifact",
-            "fact": "Artifact key nimble-v4 records a Bespoke Labs vendor-hosted proprietary API with no public evaluated weights; listed but not ranked and unpriced under CoS deputy #19084. Hosting implementation and deployed weights were not independently inspected."
+            "fact": "Artifact key nimble-v4 records a Bespoke Labs vendor-hosted proprietary API with no public evaluated weights; listed but not ranked and unpriced in that artifact. Hosting implementation and deployed weights were not independently inspected."
           }
         ]
       },
@@ -5574,7 +5574,7 @@
           {
             "url": "https://raw.githubusercontent.com/fstandhartinger/model-market-comparison/main/data/raw/benchmarks/jevbench/v1.6/jevbench-v1.6.18-results.json",
             "kind": "artifact",
-            "fact": "Artifact key nimble-v4-max records a Bespoke Labs vendor-hosted proprietary API with no public evaluated weights; listed but not ranked and unpriced under CoS deputy #19084. Hosting implementation and deployed weights were not independently inspected."
+            "fact": "Artifact key nimble-v4-max records a Bespoke Labs vendor-hosted proprietary API with no public evaluated weights; listed but not ranked and unpriced in that artifact. Hosting implementation and deployed weights were not independently inspected."
           }
         ]
       },

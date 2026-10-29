@@ -1,0 +1,8 @@
+{
+ "status": "PASS",
+ "command": "suite-slot --max-wait 1800 -- node --test test/daily-clean-checkout-wait.test.mjs",
+ "tests": 2,
+ "pass": 2,
+ "fail": 0,
+ "reason": "This check requires the real owned git worktree; the disposable heavy snapshot omits .git"
+}

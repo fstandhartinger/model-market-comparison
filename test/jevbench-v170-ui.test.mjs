@@ -145,7 +145,7 @@ test('model-page panel: v1.6 values labelled v1.6; pending row says so; limit bl
   const cell = await importSeoModule('components/JevDecisionLimitCell.tsx');
   const d = html(h(cell.JevDecisionLimitDetail, { row: slow }));
   assert.match(d, /p95 31\.400 s/);
-  assert.match(d, /212 decisions over 10 s \(140 of them answered correctly, counted as wrong\)/);
+  assert.match(d, /212 decisions over 10 s \(140 of them answered without error, counted as wrong\)/);
   assert.match(d, /uses the measured time/);
   assert.match(html(h(cell.JevDecisionLimitDetail, { row: pending })), /not yet re-scored under the 10 s rule/);
 });
