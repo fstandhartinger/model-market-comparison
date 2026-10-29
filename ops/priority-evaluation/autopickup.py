@@ -4156,16 +4156,33 @@ def cycle(effects: Effects, synthetic_id: str | None = None, job_root: Path | No
 
 
 def systemd_last_success(effects: Effects, unit: str) -> datetime | None:
+    # systemd only reports the latest run, so one transient failure (a Gmail IMAP timeout) used to
+    # read as "never succeeded" and raised an urgent card (card 499, 29 Oct 2026). Remember the last
+    # observed success so the staleness limit fires on real outages only.
+    memo_path = STATE_ROOT / "unit-last-success.json"
+    try:
+        memo = json.loads(memo_path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        memo = {}
+    if not isinstance(memo, dict):
+        memo = {}
+    remembered = parse_ts(memo.get(unit))
     values = effects.unit_state(unit)
     if values.get("Result") != "success" or values.get("ExecMainStatus") not in ("0", None):
-        return None
+        return remembered
     stamp = values.get("ExecMainExitTimestamp") or ""
     if not stamp or stamp == "n/a":
-        return None
+        return remembered
     result = subprocess.run(["date", "-u", "-d", stamp, "+%s"], text=True, capture_output=True, timeout=10, check=False)
     if result.returncode or not result.stdout.strip().isdigit():
-        return None
-    return datetime.fromtimestamp(int(result.stdout.strip()), timezone.utc)
+        return remembered
+    last = datetime.fromtimestamp(int(result.stdout.strip()), timezone.utc)
+    if remembered is not None and remembered > last:
+        return remembered
+    if not effects.dry_run and remembered != last:
+        memo[unit] = iso(last)
+        atomic_write(memo_path, json.dumps(memo, indent=2) + "\n")
+    return last
 
 
 def health(effects: Effects) -> dict[str, Any]:
