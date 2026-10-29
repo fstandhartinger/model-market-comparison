@@ -9,6 +9,7 @@ import { jevbenchCategoryView } from '../lib/jevbench-categories.mjs';
 import { boardRankText, costBasisLabel, DatasetFaqJsonLd, JevFaq, JevReleaseStamp, one, usdPerThousand } from './JevBenchSeoBlocks';
 import { jevSystemPath } from '../lib/jev-system-slug.mjs';
 import { jevDecisionLimitText, jevMethodView, jevPreviousTitle } from '../lib/jev-decision-limit.mjs';
+import { DM_COMPARE_LINKS, DM_COMPARE_FALLBACK, DM_COMPARE_DISCLOSURE, dmCompareHref } from '../lib/dm-compare-links';
 
 export async function JevComparisonPage({rivalKey,path,label,priceNotes}: {rivalKey:string;path:string;label:string;priceNotes?:string[]}) {
   const data = await readJevbenchSeoData();
@@ -54,6 +55,11 @@ export async function JevComparisonPage({rivalKey,path,label,priceNotes}: {rival
       <p>{row.licence || 'Licence not stated'}</p>{row.repo && <a className="text-accent underline" href={row.repo}>Published source</a>}
       <dl className="mt-3 text-sm" data-bh-jev-pair-conditions={row.key}><dt>Measured on</dt><dd>{row.speed?.hardware ?? row.endpoint_condition ?? row.speed?.measured_where ?? 'not stated'}</dd><dt>Cost basis ({costBasisLabel(row.cost?.kind)})</dt><dd>{row.cost?.basis ?? 'not published'}</dd><dt>Latency adjustment</dt><dd>{row.speed?.adjustment ?? 'not stated'}</dd></dl>
     </article>)}</section>
+    <section className="bh-panel mt-6 p-5"><h2 className="text-xl font-semibold">Using these models through an API</h2>
+      <p className="mt-2">Decision Models offers a Jev-compatible API; its comparison page lists hosted options and prices, checked on the date shown there.</p>
+      <p className="mt-2"><a className="text-accent underline" href={dmCompareHref(rivalKey)} rel="noopener" data-cta="bh-compare-dm">{(DM_COMPARE_LINKS[rivalKey] ?? DM_COMPARE_FALLBACK).label}</a></p>
+      <p className="bh-muted mt-2 text-xs">{DM_COMPARE_DISCLOSURE}</p>
+    </section>
     <nav className="mt-6 flex flex-wrap gap-3">{data.comparisons.filter((p) => p.key !== rivalKey).map((p) => <Link key={p.slug} className="text-accent underline" href={`/jev-models/${p.slug}`}>Jev vs {p.label}</Link>)}</nav>
     <JevFaq items={faq}/>
   </>;

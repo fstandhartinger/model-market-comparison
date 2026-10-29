@@ -6,6 +6,18 @@ import {readJevbenchSeoData,readJevbenchSeoUrls} from '../lib/jevbench-seo.mjs';
 import {importSeoModule,renderSeo,parseJsonLd} from './jevbench-seo-render.mjs';
 const read=(p)=>readFileSync(new URL(`../${p}`,import.meta.url),'utf8');
 const data=await readJevbenchSeoData();
+test('Kev comparison uses the published main-board Kev 27B row and is discoverable',async()=>{
+ const pair=data.comparisons.find(p=>p.slug==='jev-vs-kev');
+ assert.ok(pair?.inCurrentRelease);
+ assert.equal(pair.rival,data.systems.find(r=>r.key==='kev-27b'));
+ assert.ok(pair.rival.ranked);
+ for(const axis of ['intelligence','calibration','speed','cost'])assert.ok(Number.isFinite(pair.rival.axes[axis]),axis);
+ const {urls}=await readJevbenchSeoUrls();assert.ok(urls.includes('/jev-models/jev-vs-kev'));
+ const page=await importSeoModule('app/jev-models/jev-vs-kev/page.tsx');const metadata=await page.generateMetadata();
+ assert.ok(metadata.description.length<=160);
+ assert.deepEqual(metadata.keywords,['jev vs kev','kev model','Kev benchmark','JevBench by Benchmark Heaven']);
+ assert.match(read('app/sitemap.ts'),/"\/jev-models\/jev-vs-kev"/);
+});
 test('SEO consumers do not import a frozen results reader',()=>{
  for(const p of ['app/jev-models/alternatives/page.tsx','app/jev-models/open-source-jev/page.tsx','app/jev-models/how-to-choose/page.tsx','components/JevComparisonPage.tsx','components/JevBenchSeoBlocks.tsx','components/JevBenchRelatedLinks.tsx','app/sitemap.ts']) assert.doesNotMatch(read(p),/from ['"][^'"]*jevbench-v1422/);
 });
