@@ -1,0 +1,14 @@
+# JevBench v1.7.20 PENDING candidate — Lychee-27B
+
+Base a30917baa (v1.7.19 PENDING), no publication authority. Original 13 Oct custody raw and original fast-lane handoff SHA-256 agree. Scores recalculated with frozen d1012 tools: B1000, seed16, O1S, fixed G_med 9.839526770355711, common1485 cost basis, 10 s share view. Aggregate-only reproducible inputs here; raw/gold/items never committed.
+
+`scoring/setup.py` and `scoring/run_scores_v1720.sh` capture the original raw with the frozen registry/reference; `scoring/cells_v1720.sh` builds exact family/language/topic/use-case cells. Those steps require Sandy-local private data. `prepare_v1720.py` binds raw/scorer outputs; `rebuild_v1720.sh` rebuilds entirely from retained aggregates. `check_source_v1720.py` verifies frozen tools, pricing, original custody and predecessor bytes; validator + helpers test refusal cases. No top-five changes in 580 lists, 2064 slider checkpoints, 368 grid states, four custom weightings. Carried rows/cells unchanged except independently recomputed and pinned rank/ranks and derived feed ranks.
+
+Costs: common1485 USD .21601434343434342/1000 (3.34415x cap); all1500 USD .5442374 (8.4254x). Brief's approximate 8x matches all-items only. New row is ranked_over_cap under either basis. Public paid-priority/customer-consent and non-commercial licence disclosures retained. Old-vs-new axes in receipts/OLD-VS-NEW.json.
+
+`heavy_v1720.sh` refuses outside disposable heavy-run snapshots. Synthetic fixtures pass predecessors only inside copies for visibility/build tests. Real manifests remain PENDING. `flip_verdict_v1720.py --dry-run` never writes; `freeze_v1720.py` refuses PENDING. `seal_v1720.py` targets d1012 frozen-release-v1.7.20 and is deliberately never run.
+
+The interactive preview was rendered in the isolated heavy lane with `heavy-run --in r198/v1720/preview --back page.png --back render.json --mem 4G --timeout 180 -- node render.cjs` (Playwright is provided by that lane's NODE_PATH). It contains all 283 ranked rows, 580 watched-list options and a working peer radar. The 1440x1200 page screenshot and 1440x900 card were both viewed. An initial review-only row-count check incorrectly required 300 ranked rows although 31 of 314 rows are unranked; the corrected exact 283 check passes. The wide peer selector was constrained after browser inspection.
+
+
+Full-suite STOP: the requested base omits explicit on-demand All data archive loaders for v1.7.16–v1.7.19. This release adds its own v1.7.20 entry via wire_v1720.py; check_alldata_v1720.mjs verifies PENDING hides it and isolated PASS returns all 314 rows, 313 previous keys and complete cells. repair_alldata_v1720.sh is only the disposable verification harness. The predecessor omissions remain for lead disposition. The earlier production-build receipt predates this own registration fix; a final production rebuild was not run under STOP.

@@ -1,0 +1,17 @@
+{
+ "status": "STOP",
+ "test": "test/jevbench-alldata-fetch.test.mjs:73",
+ "failure": "v1.7.16 needs an all-data loader",
+ "present_in_requested_base": true,
+ "base": "a30917baa",
+ "missing_predecessor_loaders": [
+  "v1.7.16",
+  "v1.7.17",
+  "v1.7.18",
+  "v1.7.19"
+ ],
+ "new_v1720_loader_added": true,
+ "production_build_passed_before_loader_fix": true,
+ "full_suite_invocations": 1,
+ "disposition": "Own new v1.7.20 loader fixed; predecessor registry gap requires lead disposition under brief STOP rule. No unrelated base fixes."
+}

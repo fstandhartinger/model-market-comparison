@@ -1,0 +1,27 @@
+"""Verify original custody, frozen tools and cost basis; capture aggregates only."""
+import pathlib,json,hashlib,copy,importlib.util
+from rows_v1720 import *
+J=pathlib.Path(__file__).resolve().parent;W=J.parents[1];B=pathlib.Path('/home/flori/jobs/jevbench-add-requests-20260919');F=B/'r198/v1720/score/field';D=pathlib.Path('/home/flori/jevbench-sealed/v1.6-run')/DRAW_ID
+L=lambda p:json.loads(p.read_text());sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest();put=lambda p,d:p.write_text(json.dumps(d,indent=1,sort_keys=True,ensure_ascii=False)+'\n')
+CB=B/'r154/v1636/batch/cost-basis-v1630.json';cb=L(CB);reg=L(F/'REGISTRY.json');k=KEYS[0];p=B/'r110/private-lychee/runs/lychee_27b.jsonl';setup=L(F.parent/'SETUP.json');assert sha(p)==setup['raw_sha256']=='692e430e1df69ded64c52022b2dff8697e001f106a2d4bd458fba15702242670'
+rows=[json.loads(l) for l in p.read_text().splitlines()];assert len(rows)==1500;ids=[json.loads(l)['task_id'] for l in (D/'inputs/input-selfhosted-1500.jsonl').read_text().splitlines()];assert [r['task_id'] for r in rows]==ids
+ex=set(cb['exclude_opaque_ids']);common=set(ids)-ex;assert len(common)==1485;ok=[r for r in rows if r.get('ok')];assert common<=set(r['task_id'] for r in ok);tc=sum(r['usage']['input_tokens'] for r in ok if r['task_id'] in common);ta=sum(r['usage']['input_tokens'] for r in ok);out=sum(r['usage']['output_tokens'] for r in ok);assert out==0
+cost=tc*.42/1e6*1000/1485;allcost=ta*.42/1e6*1000/1500;e=copy.deepcopy(reg[k]);e.update(disclosure=DISCLOSURE,licence=LICENCE,model_pin={'model':'LycheeAI/Lychee-27B','revision':e['revision'],'base':e['base_model']});e['cost_basis']=f'ESTIMATE (*est.), frozen 25 Sep 2026 base-model market reference qwen/qwen3.8-27b: USD 0.42 per million input and USD 3.00 per million output tokens. Measured output tokens: 0 (no generation). Common cost basis: the same 1,485 answered items as other rows on this draw, {tc:,} input tokens. USD {cost:.9f} per 1,000 decisions ({cost/CAP:.2f} times the official cap); all-items cost USD {allcost:.9f} per 1,000 decisions on 1,500 items ({ta:,} input tokens). Estimated model tariff, not charged usage or a host quote; GPU rental is separate.'
+d={};pp={'raw_sha256':sha(p),'raw_verified_in_place':True,'handoff_raw_sha256':setup['handoff_raw_sha256'],'gold_sha256':sha(D/'frozen/gold.jsonl'),'input_sha256':sha(D/'inputs/input-selfhosted-1500.jsonl'),'cost_basis_sha256':sha(CB),'registry_sha256':sha(F/'REGISTRY.json')}
+for mode in ['frozen','v17-off','v17-share']:
+ q=F/f'out-{mode}/jevbench-v1.6.0-results.json';r=L(q);assert r['G_med']==9.839526770355711 and r['bootstrap']['B']==1000 and r['bootstrap']['bootstrap_seed']==16 and r['v16']['cost_basis']['file_sha256']==sha(CB)
+ s=r['systems'][0];assert s['key']==k and s['cost']['common_basis']['n_items']==1485 and abs(s['cost']['usd_per_1000']-cost)<1e-12 and s['v16']['n_items']==1500
+ d[mode]=s;pp[mode]={'sha256':sha(q),'path':str(q)}
+for f in ['axes','capability','scores','composite_ci95','cost','speed','intelligence','calibration','views']:assert d['frozen'][f]==d['v17-off'][f],f
+assert d['v17-share']['axes']['intelligence']<=d['v17-off']['axes']['intelligence'] and d['v17-share']['axes']['calibration']<=d['v17-off']['axes']['calibration']
+prices={'kind':'estimate','listing':'qwen/qwen3.8-27b','in':.42,'out':3.};tokens={'input_tokens':ta,'output_tokens':0,'input_tokens_common':tc,'output_tokens_common':0,'n_common':1485}
+d.update(registry=reg[k],measured_on='2026-10-13',raw_sha256=sha(p),latency_max_s=max(r['latency_s'] for r in rows),usd_per_1000=cost,usd_per_1000_all_items=allcost,tokens=tokens,price_reference=prices)
+cells={}
+for mode in ['off','share']:
+ q=F/f'cells/{mode}/categories-with-topics.json';dp=F/f'cells/{mode}/decisive.json';cj=L(q);cells['cells_'+mode]=cj['systems'][k];cells['noul_'+mode]=L(dp)[k];cells['pool_'+mode]={dim:{x['key']:x['n'] for x in cj[dim]} for dim in ['families','languages','topics','usecases']};pp['cells_'+mode]={'categories_sha256':sha(q),'decisive_sha256':sha(dp)}
+co=L(W/'r198/v1719/src/carried-off.json')
+for kk,v in L(W/'r198/v1719/src/inputs.json').items():co[kk]={f:v['v17-off'][f] for f in ['axes','capability','jevbench_score','scores','speed','views']}
+old=L(B/'r110/private-lychee/LYCHEE-PRIVATE-RESULT.json');ov={a:{'old':old['axes'][a],'new':d['v17-share']['axes'][a],'delta':d['v17-share']['axes'][a]-old['axes'][a]} for a in old['axes']}
+for name,obj in [('src/inputs.json',{k:d}),('src/cells.json',{k:cells}),('inputs/ENTRIES.json',{k:{'entry':e}}),('receipts/INPUTS.json',{k:pp}),('src/recost.json',{}),('src/carried-off.json',co),('inputs/PRICES.json',{k:prices}),('inputs/FIELD-META.json',{'cost_basis_sha256':sha(CB)}),('receipts/OLD-VS-NEW.json',ov),('receipts/RAW-BINDING.json',{'sha256':sha(p),'verified_original_handoff':True,'n_items':1500,'n_answered':len(ok),'common_n':1485,'tokens':tokens,'n_over_10s':sum(r['latency_s']>10 for r in rows)}),('candidate-rows.json',{k:d['v17-share']})]:put(J/name,obj)
+put(J/'inputs/APPROVAL.json',{'status':'PENDING TOP-FIVE COMPARISON','fresh_baseline':'v1.7.19','button_tap':False,'top_five_effect':'PENDING','top_five_preview':{'path':'r198/v1720/receipts/topfive-diff.json','sha256':'a'*64},'consent':'Customer requested public publication in writing on 13 Oct 2026; accepted by the release owner.'})
+print('PASS pinned raw; 1500 items; common 1485; frozen/off equality; all cell dimensions; paid publication consent captured');print(json.dumps(ov))
