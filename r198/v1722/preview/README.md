@@ -1,0 +1,1 @@
+Open index.html locally for full before/after rankings, filters, model search and axis comparison. Card footer is controlled by preview_v1722.py --publication-status pending|published. No publication performed.

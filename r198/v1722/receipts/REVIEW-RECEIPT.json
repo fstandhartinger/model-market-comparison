@@ -1,0 +1,22 @@
+{
+ "verdict": "PASS",
+ "engine": "Claude Opus 5.5 (independent critic, 67c77182)",
+ "release": "v1.7.22",
+ "head_reviewed": "67c77182; final head 67c8fc3d applies the critic's non-blocking text findings F1 (neutral author wording) and F2 (capitalisation) and F3 (stray empty log removed); no number or other text changed; validator, public-text, row gates, v1.7.22 release + alldata tests (15/15), tsc 0 and a deterministic rebuild re-run by the lead",
+ "reviews": [
+  {
+   "path": "workers/r198-v1722-critic/RESULT.json",
+   "sha256": "453b9feec78bc88d83cae6fe0a86904b18355fdbd46e6cd1ba3db62347c65e49",
+   "verdict": "PASS",
+   "closed": [
+    "F1",
+    "F2",
+    "F3"
+   ],
+   "non_blocking": [
+    "F4",
+    "F5"
+   ]
+  }
+ ]
+}
