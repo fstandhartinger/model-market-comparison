@@ -1,0 +1,40 @@
+{
+ "assertion": "assert.ok(!a.scopes.open.includes(k))",
+ "captured": {
+  "after_rows": 313,
+  "before_rows": 311,
+  "carried_board_equal": true,
+  "carried_feed_equal": true,
+  "orders_equal": true,
+  "rows": {
+   "decisionnode-flash-0.9.1-rc1": {
+    "cost_axis": null,
+    "in_api": true,
+    "in_open_artifact": true,
+    "rank": null,
+    "ranked": false,
+    "usd_per_1000": null
+   },
+   "decisionnode-main-0.9.1-rc1": {
+    "cost_axis": null,
+    "in_api": true,
+    "in_open_artifact": true,
+    "rank": null,
+    "ranked": false,
+    "usd_per_1000": null
+   }
+  }
+ },
+ "diagnosis": "The checker incorrectly assumes the open artifact excludes API rows. Existing jevbenchScopeArtifact deliberately retains every row in open scope for the Show API offerings toggle. No release classification regression demonstrated.",
+ "failed_command": "node r198/v1719/check_visibility_v1719.mjs",
+ "full_suite": {
+  "invocations": 0,
+  "status": "NOT_RUN"
+ },
+ "needs": "Lead disposition of STOP; correct visibility assertion to check API classification/scope rather than exclusion from the toggle-capable open artifact, then run remaining gates.",
+ "postflip_suite": "NOT_RUN",
+ "production_next_build": "NOT_RUN",
+ "real_manifests_changed": false,
+ "source": "lib/jevbench-scope.mjs:67-75",
+ "status": "STOP"
+}

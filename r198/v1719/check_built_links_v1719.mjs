@@ -1,0 +1,6 @@
+import {createRequire} from 'node:module';import {readFileSync,writeFileSync} from 'node:fs';import assert from 'node:assert/strict';
+const require=createRequire(import.meta.url),compiled=require(process.cwd()+'/.next/server/app/api/jevbench/latest/route.js');
+const feed=await(await compiled.routeModule.userland.GET()).json();assert.equal(feed.latest_release,'v1.7.19');const page=readFileSync('.next/server/app/jev-models/v1.7.19.html','utf8');
+for(const key of ['decisionnode-flash-0.9.1-rc1','decisionnode-main-0.9.1-rc1']){const r=feed.systems.find(s=>s.key===key);assert.ok(r);assert.equal(r.ranked,false);assert.equal(r.rank,null);assert.equal(r.axes.cost,null);assert.equal(r.composite_score,null);assert.ok(page.includes(r.display));assert.match(r.not_ranked_because,/not yet equated/);}
+for(const t of ['NOT PRICED','harness resend bug','probabilities to two decimals','Calibration is computed on the reported values without adjustment','Output tokens reported as 0','/jev-models/v1.7.18'])assert.ok(page.includes(t),t);
+writeFileSync('r198/v1719/receipts/BUILT-LINKS.json',JSON.stringify({status:'PASS',latest:feed.latest_release,rows:feed.systems.length,new_rows_unranked_unpriced:true,page_disclosures:true,previous_link:true},null,1)+'\n');console.log('PASS compiled latest GET and prerendered release page; hosted unranked/unpriced rows and disclosures');

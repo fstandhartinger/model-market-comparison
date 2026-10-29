@@ -1,0 +1,8 @@
+Aggregate-only reproduction recipes. Actual fields/runs and all private files remain in the lead job directory, never here.
+
+1. `python3 -I scoring/setup.py` (from this directory or the job copy) pins the two complete custody raws, invokes frozen `pricing_v15.resolve()`, and prepares the job-local field registry and raw symlinks. Output directory is hardcoded to the job `r198/v1719/score`. Main's first incomplete raw is never opened.
+2. `suite-slot --max-wait 1800 -- timeout 1800 systemd-run --user --scope -p MemoryMax=4G bash scoring/run_scores_v1719.sh`: v16 frozen, v17 off and v17 10-second share, B1000 seed16 O1S, fixed reference G_med. Sealed-dependent steps stay on Sandy.
+3. The existing `r197/v1716/score/cells_v1716.sh` generates family/language/use-case cells and decisive diagnostics from the off/share outputs, using v1.5.7 category definitions. No topic labels exist for this draw.
+4. `prepare_v1719.py` captures only aggregate results, verifies every frozen scorer and cell-tool hash, raw hashes, exact input-order membership, served identity, 1,500 denominators, five preregistered misses (set sha 3a0cbf0c), the fixed 1,489-item cost-set hash, and unpriced fields. It never renders sealed record strings or ids.
+
+`REGISTRY.json` contains no vendor prices, base model, nominal output-token charge or cost override. `run_scores` references the original v1.7.16 private cost-basis file in place, with no new intersection or shrink. Both rows report 471,195 input tokens on that set and 473,406 on all 1,495 answered items, with zero output. The cost axis and cost-dependent composites stay absent.

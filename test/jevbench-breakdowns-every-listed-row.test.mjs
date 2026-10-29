@@ -23,7 +23,7 @@ const recorded = await readBreakdownExceptions();
 const v170Exceptions = board.method ? validateBreakdownExceptions(JSON.parse(readFileSync(new URL('./fixtures/jevbench-v170-breakdown-exceptions.json', import.meta.url), 'utf8'))).entries : [];
 // Stacked PENDING release exceptions apply only after their exact rows enter the live board.
 // Their candidate validators independently require and check the omitted dimensions.
-const exceptions = validateBreakdownExceptions({ ...recorded, entries: [...recorded.entries.filter(x => !['strike-1','chaoliangunsw-jev-style-2b-decision-v4','knowline-26b-a4b-gen2.5','knowline-4b-gen5.5'].includes(x.key) || board.published.systems.some(s => s.key === x.key)), ...v170Exceptions] });
+const exceptions = validateBreakdownExceptions({ ...recorded, entries: [...recorded.entries.filter(x => !['strike-1','chaoliangunsw-jev-style-2b-decision-v4','knowline-26b-a4b-gen2.5','knowline-4b-gen5.5','decisionnode-flash-0.9.1-rc1','decisionnode-main-0.9.1-rc1'].includes(x.key) || board.published.systems.some(s => s.key === x.key)), ...v170Exceptions] });
 
 test('gate: no listed row lacks topic, use-case or language cells without a recorded exception', () => {
   const { open, stale } = unexcusedBreakdownGaps(jevBreakdownGaps(board, previous), exceptions);
