@@ -1,0 +1,18 @@
+{
+ "visionjev-1.0.0-27b": {
+  "arch": "open-llm-decoder",
+  "badges": {
+   "derivation": "fine-tune",
+   "params": "27B",
+   "quant": "bf16"
+  },
+  "evidence": [
+   {
+    "fact": "26,085,330,160 BF16 parameters; Qwen/Qwen3.8-27B base; last-token decision readout, text-only measurement.",
+    "kind": "model-card",
+    "url": "https://huggingface.co/taoszhang/VisionJEV/tree/cd6353aaea57561bd8c9beee69311f104dd77528"
+   }
+  ],
+  "note": "Author HTTP server on one A100 80 GB; Apache-2.0 + NOTICE."
+ }
+}

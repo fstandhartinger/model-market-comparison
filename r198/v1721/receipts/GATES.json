@@ -1,0 +1,1196 @@
+{
+ "BUILD-POSTFLIP": {
+  "exit_code": 0
+ },
+ "FULLTEST-POSTFLIP": {
+  "reason": "Text and wiring fixes only versus a84361b60; full suite exempt per worker brief",
+  "status": "NOT_RUN"
+ },
+ "PENDING": {
+  "exit_code": 1
+ },
+ "POSTFLIP": {
+  "exit_code": 0
+ },
+ "TSC": {
+  "command": "suite-slot heavy-run tsc --noEmit",
+  "exit_code": 0
+ },
+ "all_data_pass": {
+  "previous_keys": 314,
+  "review": "PASS",
+  "row_count": 315,
+  "status": "PASS",
+  "version": "v1.7.21"
+ },
+ "all_data_pending": {
+  "previous_keys": null,
+  "review": "PENDING",
+  "row_count": null,
+  "status": "PASS",
+  "version": "v1.7.21"
+ },
+ "built_artifact": {
+  "compiled_route": ".next/server/app/api/jevbench/latest/route.js",
+  "draw_rows_in_feed": [
+   {
+    "composite_score": 75.66989716801469,
+    "cost_usd_per_1000": 0.01954180658159839,
+    "key": "arcbright-elf-1-12b-r2",
+    "listing": "unranked",
+    "note_exact": true,
+    "rank": null,
+    "ranked": false
+   },
+   {
+    "composite_score": 28.47918106314405,
+    "cost_usd_per_1000": 0.006607092008059101,
+    "key": "chaoliangunsw-jev-style-2b-decision-v4",
+    "listing": "unranked",
+    "note_exact": true,
+    "rank": null,
+    "ranked": false
+   },
+   {
+    "composite_score": 74.67659424956109,
+    "cost_usd_per_1000": 0.02161638683680323,
+    "key": "decisio-gemma-4-12b-tuned-commit-think",
+    "listing": "unranked",
+    "note_exact": true,
+    "rank": null,
+    "ranked": false
+   },
+   {
+    "composite_score": null,
+    "cost_usd_per_1000": null,
+    "key": "decisionnode-flash-0.9.1-rc1",
+    "listing": "unranked",
+    "note_exact": true,
+    "rank": null,
+    "ranked": false
+   },
+   {
+    "composite_score": null,
+    "cost_usd_per_1000": null,
+    "key": "decisionnode-main-0.9.1-rc1",
+    "listing": "unranked",
+    "note_exact": true,
+    "rank": null,
+    "ranked": false
+   },
+   {
+    "composite_score": 77.04257936486634,
+    "cost_usd_per_1000": 0.011187461383478847,
+    "key": "h2o-lightning-4b-v1.4.1",
+    "listing": "unranked",
+    "note_exact": true,
+    "rank": null,
+    "ranked": false
+   },
+   {
+    "composite_score": 71.57749064353953,
+    "cost_usd_per_1000": 0.040567629281396914,
+    "key": "jeff_1_1_large",
+    "listing": "unranked",
+    "note_exact": true,
+    "rank": null,
+    "ranked": false
+   },
+   {
+    "composite_score": 73.21882869773437,
+    "cost_usd_per_1000": 0.0190047481531229,
+    "key": "jeff_1_1_qwen_4b",
+    "listing": "unranked",
+    "note_exact": true,
+    "rank": null,
+    "ranked": false
+   },
+   {
+    "composite_score": 76.97858754817413,
+    "cost_usd_per_1000": 0.013173191403626596,
+    "key": "microsoft-decision-1-r2",
+    "listing": "unranked",
+    "note_exact": true,
+    "rank": null,
+    "ranked": false
+   },
+   {
+    "composite_score": 51.81470102195167,
+    "cost_usd_per_1000": 0.03398969778374748,
+    "key": "strike-1",
+    "listing": "unranked",
+    "note_exact": true,
+    "rank": null,
+    "ranked": false
+   },
+   {
+    "composite_score": 77.28255327361624,
+    "cost_usd_per_1000": 0.03389621222296844,
+    "key": "torchcast-decision-31b-v1.0",
+    "listing": "unranked",
+    "note_exact": true,
+    "rank": null,
+    "ranked": false
+   },
+   {
+    "composite_score": 28.78594982878189,
+    "cost_usd_per_1000": 0.15784722632639353,
+    "key": "visionjev-1.0.0-27b",
+    "listing": "unranked",
+    "note_exact": true,
+    "rank": null,
+    "ranked": false
+   }
+  ],
+  "feed_rows": 315,
+  "live_round1_rank": 41,
+  "main_board_html_shows": [
+   "arcbright-elf-1-12b-r2",
+   "chaoliangunsw-jev-style-2b-decision-v4",
+   "decisio-gemma-4-12b-tuned-commit-think",
+   "decisionnode-flash-0.9.1-rc1",
+   "decisionnode-main-0.9.1-rc1",
+   "h2o-lightning-4b-v1.4.1",
+   "jeff_1_1_large",
+   "jeff_1_1_qwen_4b",
+   "microsoft-decision-1-r2",
+   "strike-1",
+   "torchcast-decision-31b-v1.0",
+   "visionjev-1.0.0-27b"
+  ],
+  "status": "PASS",
+  "synthetic_latest": "v1.7.21",
+  "v1721_page_shows_new_row": true
+ },
+ "carried_rows": {
+  "base_commit": "ac469ee24cc2053deb40d33b5bec11a4a4cb510a",
+  "board_equal": true,
+  "carried_cells_equal": 319,
+  "carried_rows": 314,
+  "predecessor_bytes_equal": 61,
+  "rows_equal_including_ranks": 314,
+  "status": "PASS"
+ },
+ "common_set": {
+  "frozen_at": "v1.7.16",
+  "historical_membership_rows": 9,
+  "n_items": 1489,
+  "new_membership_rows": 1,
+  "per_row_membership": {
+   "arcbright-elf-1-12b-r2": {
+    "answered_not_in_common": 11,
+    "answered_ok": 1500,
+    "raw_sha256": "84f08ebb6ff92af453b75cda042f617ea89c5be6a2176c7c69e11f2521da6f08",
+    "rows": 1500
+   },
+   "chaoliangunsw-jev-style-2b-decision-v4": {
+    "answered_not_in_common": 6,
+    "answered_ok": 1495,
+    "raw_sha256": "96e11049d1593d75ee84fe258f6a6c4020c9e37ebe299c7d18a3b6846fbacf81",
+    "rows": 1500
+   },
+   "decisio-gemma-4-12b-tuned-commit-think": {
+    "answered_not_in_common": 11,
+    "answered_ok": 1500,
+    "raw_sha256": "d7396dd680e13af9ba26c4526007fee3647d03eee7673bf88075ac510f39cc3c",
+    "rows": 1500
+   },
+   "h2o-lightning-4b-v1.4.1": {
+    "answered_not_in_common": 11,
+    "answered_ok": 1500,
+    "raw_sha256": "96d26bb3c0486ecbee832e309db4099b3a616b1540b4a92eff09dec81b719335",
+    "rows": 1500
+   },
+   "jeff_1_1_large": {
+    "answered_not_in_common": 11,
+    "answered_ok": 1500,
+    "raw_sha256": "1f1fdc2df674da00128ae7b47d5ea3429cf1124383a077577e7c68c7d9cc0e72",
+    "rows": 1500
+   },
+   "jeff_1_1_qwen_4b": {
+    "answered_not_in_common": 11,
+    "answered_ok": 1500,
+    "raw_sha256": "c37fada15a2021cf744b2031acb964508caf48873a2bcda5da6d6ac4a5e7c288",
+    "rows": 1500
+   },
+   "microsoft-decision-1-r2": {
+    "answered_not_in_common": 0,
+    "answered_ok": 1489,
+    "raw_sha256": "1f069818cdc069a532a4c4965d306fbd302bb819dde4aa3c48a9bd676c4a981e",
+    "rows": 1493
+   },
+   "strike-1": {
+    "answered_not_in_common": 6,
+    "answered_ok": 1495,
+    "raw_sha256": "4c6c7ab25b11432f8934425a44806ec5a2499241a9c5790216a11651473f2027",
+    "rows": 1500
+   },
+   "torchcast-decision-31b-v1.0": {
+    "answered_not_in_common": 11,
+    "answered_ok": 1500,
+    "raw_sha256": "e51a1c22336050368336c996d7cb32181bad5e854024f07844b2a8577a0dda7d",
+    "rows": 1500
+   },
+   "visionjev-1.0.0-27b": {
+    "answered_not_in_common": 6,
+    "answered_ok": 1495,
+    "raw_sha256": "89a5de4e94a9b1feed12144db1c5879c7e59c149f0d1667cb3b12e4763b89496",
+    "rows": 1500
+   }
+  },
+  "set_sha256": "4e912731e63369e1b3066b0b4afa87b44f1094aea079c5b41dc6d02e7f235537",
+  "status": "PASS",
+  "unchanged": true
+ },
+ "fulltest-postflip": {
+  "reason": "Full suite exempt for text/wiring changes; existing fulltest log is historical, not rerun by this slice.",
+  "status": "NOT_RUN"
+ },
+ "helpers": {
+  "approval_negative_cases": 11,
+  "fixture_flip_refused": true,
+  "fixture_grants_no_authority": true,
+  "pending_freeze_refused": true,
+  "real_flip_dry_run_accepted_no_write": true,
+  "real_manifests_unchanged": [
+   "aa329edb76de10ef088450ea27ba54d830b88578d7ae74ba368ac5a9f4d167fb",
+   "6f2c8a22e4badcfe7c0db38a8b3a1ca231f429025e8d864cc695fd329d4d4c8b",
+   "feda24ae3f628225475523179fa3b7f1d7d6153a1cd454b7af8790e256e50582"
+  ],
+  "real_v1720_review": "PASS",
+  "seal_write_refused": true,
+  "stale_predecessor_binding_refused": true,
+  "standing_go_checked": true,
+  "status": "PASS",
+  "synthetic_flip_dry_run": true,
+  "synthetic_freeze_dry_run": true
+ },
+ "postflip-tests": {
+  "cancelled": 0,
+  "fail": 0,
+  "log_sha256": "6127fe60845cb76991c6a6027051c3f19382d3841c14fef96f67275d24a2416e",
+  "not_ok": [],
+  "pass": 222,
+  "skipped": 1,
+  "tests": 223
+ },
+ "preview": {
+  "footer": "Release review pending",
+  "html_script_syntax": true,
+  "png": [
+   1440,
+   900
+  ],
+  "png_sha256": "8655879a5b6805e60e9e6c97eff5649be9ecbf4965bb23cff85fcaabd7f398a3",
+  "ranking_models_resolve": true,
+  "status": "PASS",
+  "visual_inspection": "Card viewed; no clipping or overlap"
+ },
+ "pricing": {
+  "mismatch_negatives": 3,
+  "pricing_module_sha256": "645fd82eac728d597048bec0995ecd3ac896566e269fb6c9a1fdb84c171a9ac4",
+  "reference": {
+   "base": "Qwen/Qwen3.8-27B",
+   "in": 0.42,
+   "kind": "estimate",
+   "listing": "qwen/qwen3.8-27b",
+   "out": 3.0,
+   "rule": "frozen pricing_v15 reference() for the stated base model; output priced at 0 tokens as the vendor reports (9 Oct 2026 zero-output rule)"
+  },
+  "status": "PASS"
+ },
+ "public_text": {
+  "all_disclosures": true,
+  "exact_note": true,
+  "neutral_page_wording": true,
+  "no_cosmetic_state_tokens": true,
+  "old_paraphrase_negatives": 2,
+  "status": "PASS",
+  "texts": 5
+ },
+ "raw": {
+  "answered": 1495,
+  "fixed_common_basis": true,
+  "native_output_tokens": 0,
+  "raw_sha256": "89a5de4e94a9b1feed12144db1c5879c7e59c149f0d1667cb3b12e4763b89496",
+  "refused": 5,
+  "rows": 1500,
+  "status": "PASS"
+ },
+ "release-tests": {
+  "cancelled": 0,
+  "fail": 1,
+  "log_sha256": "0963c62e473663f2d33f0a350f06743e4a65ed6220d89d02fde357709c4a83e1",
+  "not_ok": [
+   "gate: no listed row lacks topic, use-case or language cells without a recorded exception"
+  ],
+  "pass": 207,
+  "skipped": 1,
+  "tests": 209
+ },
+ "repro": {
+  "files": {
+   "app/api/jevbench/v1.7.21/route.ts": "e54f2efd169972c86324c32156485317f3f0c167446d4547260924ef1d0f8aef",
+   "app/jev-models/v1.7.21/page.tsx": "24154de00c79eb2e0f30009b6e6e7af0b9951eb2f409f363296ef9d49ccface7",
+   "data/jevbench-architecture.json": "3246ff493bf89fa1b08a93adf9b6a7dfb1b720454c9e3adbebf3dc4c3bf82420",
+   "data/jevbench-breakdown-exceptions.json": "c384067f3b83816a51ab3eed5e6411fd08d43b2a711379f9f08ca276b21c81c8",
+   "data/jevbench-draw-equating.json": "e71fb754f2cd5ddefe1b3b999502c41c061c9141986f53e408b37f0962e4bc92",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.21-carry.json": "271d1fc77a136a04a1eb6deb5480c52d4211eb2b66b2ac8bb31e80867e69003a",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.21-categories.json": "ed111d7302a9b49c2d5f588be2be701e61722316bf3601b6ef0221bbdd4bf122",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.21-history-carry.json": "334e851944e92383ab3071e52b3012040c7023d0fe236395953169ebee8f0459",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.21-history.json": "5cd8c1332226ea9c179883d2285c0d8b8cc593ae38f2645197364a7ddd9c83c1",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.21-proof.json": "7f301081f9c8bae305ee46be1af3d60a59122363efac94fdeded1373fd103368",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.21-publication.json": "aa329edb76de10ef088450ea27ba54d830b88578d7ae74ba368ac5a9f4d167fb",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.21-results.json": "6367e470798aaa446a5567dd25bc97d11303a4cdbc0288d9961a64e1ef353d1b",
+   "lib/jevbench-alldata-input.mjs": "50f1af2833996c9badc2bdf4ce6209ec77530ef3d19ff02677897e8fa83118b4",
+   "lib/jevbench-live-board.mjs": "e34139ccaf49b8d4ce10d23c0b2d94ec4ddc21a351d14b135acf8a3611df445b",
+   "lib/jevbench-releases.mjs": "d38ae8d65b25fbe63b28ed536c5c6d076442209d4774e0422c6ce994d483433b",
+   "lib/jevbench-v1721-release.mjs": "50b48f7388e2617a81760438ae31df31e26a9581b1d5a3c6f21a25ab053d939e",
+   "test/jevbench-v1714-release.test.mjs": "a1ec49d8a431944c71ebde0c83bdbbe4ac34fb3f8195378e7d3c22137c9c9d23",
+   "test/jevbench-v1720-release.test.mjs": "b5a167b09781b25ae0cd206b1d00fb31db67ca0067c466976049fbeb767d7b14"
+  },
+  "status": "PASS",
+  "two_rebuilds_identical": true
+ },
+ "topfive": {
+  "base": "v1.7.20",
+  "candidate": "v1.7.21",
+  "changed": false,
+  "changed_labels": [],
+  "changed_lists": 0,
+  "comparison_scope": "40 primary site assembly lists plus supplementary frozen/off/share axis/weight/cap lists, slider boundaries, four custom weightings and a 368-state slider grid; before = v1.7.20 (PASS) tree with v1.7.21 wired but PENDING (equal to the same tree without v1.7.21), after = v1.7.21 synthetic PASS; real manifest PENDING",
+  "custom_changed_labels": [],
+  "custom_receipt_sha256": "8aa8fb009e8c3eeb5141782f8113b00a2fac312ef3acff5dd7f1469e174b7e65",
+  "custom_weight_example": {
+   "calibration": 50,
+   "cost": 0,
+   "intelligence": 50,
+   "speed": 0
+  },
+  "explicit_slider_grid_changed": 0,
+  "explicit_slider_grid_states": 368,
+  "extended_changed_labels": [],
+  "extended_changed_lists": 0,
+  "extended_lists": 540,
+  "lists": 580,
+  "primary_changed_labels": [],
+  "primary_changed_lists": 0,
+  "primary_lists": 40,
+  "rows": [
+   {
+    "after": [
+     "singularity-super-decider",
+     "launchables-myles-g-12b",
+     "kettei-fat",
+     "fastino-glide-api",
+     "torchcast-decision-4b-v1.3"
+    ],
+    "before": [
+     "singularity-super-decider",
+     "launchables-myles-g-12b",
+     "kettei-fat",
+     "fastino-glide-api",
+     "torchcast-decision-4b-v1.3"
+    ],
+    "changed": false,
+    "metric": "composites/A",
+    "view": "all"
+   },
+   {
+    "after": [
+     "singularity-super-decider",
+     "kettei-fat",
+     "fastino-glide-api",
+     "drex-max",
+     "subq-snap-1.1"
+    ],
+    "before": [
+     "singularity-super-decider",
+     "kettei-fat",
+     "fastino-glide-api",
+     "drex-max",
+     "subq-snap-1.1"
+    ],
+    "changed": false,
+    "metric": "composites/B",
+    "view": "all"
+   },
+   {
+    "after": [
+     "singularity-super-decider",
+     "kettei-fat",
+     "fastino-glide-api",
+     "torchcast-decision-4b-v1.3",
+     "liquid-d1-ultra"
+    ],
+    "before": [
+     "singularity-super-decider",
+     "kettei-fat",
+     "fastino-glide-api",
+     "torchcast-decision-4b-v1.3",
+     "liquid-d1-ultra"
+    ],
+    "changed": false,
+    "metric": "composites/C",
+    "view": "all"
+   },
+   {
+    "after": [
+     "kettei-fat",
+     "singularity-super-decider-thinking",
+     "singularity-super-decider",
+     "fastino-glide-api",
+     "h2o-lightning-31b"
+    ],
+    "before": [
+     "kettei-fat",
+     "singularity-super-decider-thinking",
+     "singularity-super-decider",
+     "fastino-glide-api",
+     "h2o-lightning-31b"
+    ],
+    "changed": false,
+    "metric": "capability/official_caps",
+    "view": "all"
+   },
+   {
+    "after": [
+     "gpt-6-luna",
+     "gpt-6-luna-low",
+     "gpt-5.6-luna",
+     "deepseek-flash",
+     "kettei-fat"
+    ],
+    "before": [
+     "gpt-6-luna",
+     "gpt-6-luna-low",
+     "gpt-5.6-luna",
+     "deepseek-flash",
+     "kettei-fat"
+    ],
+    "changed": false,
+    "metric": "capability/no_caps",
+    "view": "all"
+   },
+   {
+    "after": [
+     "kettei-fat",
+     "singularity-super-decider-thinking",
+     "mammoth-1",
+     "knowline-31b-gen1",
+     "fastino-glide-1.2-open"
+    ],
+    "before": [
+     "kettei-fat",
+     "singularity-super-decider-thinking",
+     "mammoth-1",
+     "knowline-31b-gen1",
+     "fastino-glide-1.2-open"
+    ],
+    "changed": false,
+    "metric": "capability/cost_off_latency_2x",
+    "view": "all"
+   },
+   {
+    "after": [
+     "kettei-fat",
+     "singularity-super-decider-thinking",
+     "singularity-super-decider",
+     "fastino-glide-api",
+     "h2o-lightning-31b"
+    ],
+    "before": [
+     "kettei-fat",
+     "singularity-super-decider-thinking",
+     "singularity-super-decider",
+     "fastino-glide-api",
+     "h2o-lightning-31b"
+    ],
+    "changed": false,
+    "metric": "capability/latency_none",
+    "view": "all"
+   },
+   {
+    "after": [
+     "kettei-fat",
+     "singularity-super-decider-thinking",
+     "mammoth-1",
+     "knowline-31b-gen1",
+     "fastino-glide-1.2-open"
+    ],
+    "before": [
+     "kettei-fat",
+     "singularity-super-decider-thinking",
+     "mammoth-1",
+     "knowline-31b-gen1",
+     "fastino-glide-1.2-open"
+    ],
+    "changed": false,
+    "metric": "extra_capability/cost_7x",
+    "view": "all"
+   },
+   {
+    "after": [
+     "kettei-fat",
+     "singularity-super-decider-thinking",
+     "mammoth-1",
+     "knowline-31b-gen1",
+     "fastino-glide-1.2-open"
+    ],
+    "before": [
+     "kettei-fat",
+     "singularity-super-decider-thinking",
+     "mammoth-1",
+     "knowline-31b-gen1",
+     "fastino-glide-1.2-open"
+    ],
+    "changed": false,
+    "metric": "extra_capability/cost_10x",
+    "view": "all"
+   },
+   {
+    "after": [
+     "gpt-6-luna",
+     "gpt-6-luna-low",
+     "gpt-5.6-luna",
+     "deepseek-flash",
+     "kettei-fat"
+    ],
+    "before": [
+     "gpt-6-luna",
+     "gpt-6-luna-low",
+     "gpt-5.6-luna",
+     "deepseek-flash",
+     "kettei-fat"
+    ],
+    "changed": false,
+    "metric": "extra_capability/rank_field",
+    "view": "all"
+   },
+   {
+    "after": [
+     "gpt-6-luna",
+     "gpt-6-luna-low",
+     "gpt-5.6-luna",
+     "kettei-fat",
+     "singularity-super-decider-thinking"
+    ],
+    "before": [
+     "gpt-6-luna",
+     "gpt-6-luna-low",
+     "gpt-5.6-luna",
+     "kettei-fat",
+     "singularity-super-decider-thinking"
+    ],
+    "changed": false,
+    "metric": "extra_capability/cost_7x_latency_none",
+    "view": "all"
+   },
+   {
+    "after": [
+     "gpt-6-luna",
+     "gpt-6-luna-low",
+     "gpt-5.6-luna",
+     "kettei-fat",
+     "singularity-super-decider-thinking"
+    ],
+    "before": [
+     "gpt-6-luna",
+     "gpt-6-luna-low",
+     "gpt-5.6-luna",
+     "kettei-fat",
+     "singularity-super-decider-thinking"
+    ],
+    "changed": false,
+    "metric": "extra_capability/cost_10x_latency_none",
+    "view": "all"
+   },
+   {
+    "after": [
+     "torchcast-decision-4b-v1.3",
+     "h2o-lightning-4b",
+     "h2o-lightning-31b",
+     "torchcast-decision-4b-v1.2",
+     "chon-1.0-e4b"
+    ],
+    "before": [
+     "torchcast-decision-4b-v1.3",
+     "h2o-lightning-4b",
+     "h2o-lightning-31b",
+     "torchcast-decision-4b-v1.2",
+     "chon-1.0-e4b"
+    ],
+    "changed": false,
+    "metric": "composites/A",
+    "view": "open"
+   },
+   {
+    "after": [
+     "h2o-lightning-31b",
+     "torchcast-decision-4b-v1.3",
+     "basal-omni-1.0-ultra",
+     "quyet-1-0-large",
+     "jeff_1_1_medium"
+    ],
+    "before": [
+     "h2o-lightning-31b",
+     "torchcast-decision-4b-v1.3",
+     "basal-omni-1.0-ultra",
+     "quyet-1-0-large",
+     "jeff_1_1_medium"
+    ],
+    "changed": false,
+    "metric": "composites/B",
+    "view": "open"
+   },
+   {
+    "after": [
+     "torchcast-decision-4b-v1.3",
+     "h2o-lightning-4b",
+     "h2o-lightning-31b",
+     "torchcast-decision-4b-v1.2",
+     "decisio-gemma-4-12b-tuned-commit"
+    ],
+    "before": [
+     "torchcast-decision-4b-v1.3",
+     "h2o-lightning-4b",
+     "h2o-lightning-31b",
+     "torchcast-decision-4b-v1.2",
+     "decisio-gemma-4-12b-tuned-commit"
+    ],
+    "changed": false,
+    "metric": "composites/C",
+    "view": "open"
+   },
+   {
+    "after": [
+     "h2o-lightning-31b",
+     "basal-omni-1.0-ultra",
+     "dopest-1.0-31b",
+     "jeff_1_1_medium",
+     "arcbright-elf-1-31b"
+    ],
+    "before": [
+     "h2o-lightning-31b",
+     "basal-omni-1.0-ultra",
+     "dopest-1.0-31b",
+     "jeff_1_1_medium",
+     "arcbright-elf-1-31b"
+    ],
+    "changed": false,
+    "metric": "capability/official_caps",
+    "view": "open"
+   },
+   {
+    "after": [
+     "mammoth-1",
+     "knowline-31b-gen1",
+     "fastino-glide-1.2-open",
+     "h2o-lightning-31b",
+     "pplx-decider-v1-1-27b"
+    ],
+    "before": [
+     "mammoth-1",
+     "knowline-31b-gen1",
+     "fastino-glide-1.2-open",
+     "h2o-lightning-31b",
+     "pplx-decider-v1-1-27b"
+    ],
+    "changed": false,
+    "metric": "capability/no_caps",
+    "view": "open"
+   },
+   {
+    "after": [
+     "mammoth-1",
+     "knowline-31b-gen1",
+     "fastino-glide-1.2-open",
+     "h2o-lightning-31b",
+     "pplx-decider-v1-1-27b"
+    ],
+    "before": [
+     "mammoth-1",
+     "knowline-31b-gen1",
+     "fastino-glide-1.2-open",
+     "h2o-lightning-31b",
+     "pplx-decider-v1-1-27b"
+    ],
+    "changed": false,
+    "metric": "capability/cost_off_latency_2x",
+    "view": "open"
+   },
+   {
+    "after": [
+     "h2o-lightning-31b",
+     "basal-omni-1.0-ultra",
+     "dopest-1.0-31b",
+     "jeff_1_1_medium",
+     "arcbright-elf-1-31b"
+    ],
+    "before": [
+     "h2o-lightning-31b",
+     "basal-omni-1.0-ultra",
+     "dopest-1.0-31b",
+     "jeff_1_1_medium",
+     "arcbright-elf-1-31b"
+    ],
+    "changed": false,
+    "metric": "capability/latency_none",
+    "view": "open"
+   },
+   {
+    "after": [
+     "mammoth-1",
+     "knowline-31b-gen1",
+     "fastino-glide-1.2-open",
+     "h2o-lightning-31b",
+     "pplx-decider-v1-1-27b"
+    ],
+    "before": [
+     "mammoth-1",
+     "knowline-31b-gen1",
+     "fastino-glide-1.2-open",
+     "h2o-lightning-31b",
+     "pplx-decider-v1-1-27b"
+    ],
+    "changed": false,
+    "metric": "extra_capability/cost_7x",
+    "view": "open"
+   },
+   {
+    "after": [
+     "mammoth-1",
+     "knowline-31b-gen1",
+     "fastino-glide-1.2-open",
+     "h2o-lightning-31b",
+     "pplx-decider-v1-1-27b"
+    ],
+    "before": [
+     "mammoth-1",
+     "knowline-31b-gen1",
+     "fastino-glide-1.2-open",
+     "h2o-lightning-31b",
+     "pplx-decider-v1-1-27b"
+    ],
+    "changed": false,
+    "metric": "extra_capability/cost_10x",
+    "view": "open"
+   },
+   {
+    "after": [
+     "mammoth-1",
+     "knowline-31b-gen1",
+     "fastino-glide-1.2-open",
+     "h2o-lightning-31b",
+     "pplx-decider-v1-1-27b"
+    ],
+    "before": [
+     "mammoth-1",
+     "knowline-31b-gen1",
+     "fastino-glide-1.2-open",
+     "h2o-lightning-31b",
+     "pplx-decider-v1-1-27b"
+    ],
+    "changed": false,
+    "metric": "extra_capability/rank_field",
+    "view": "open"
+   },
+   {
+    "after": [
+     "mammoth-1",
+     "knowline-31b-gen1",
+     "fastino-glide-1.2-open",
+     "h2o-lightning-31b",
+     "pplx-decider-v1-1-27b"
+    ],
+    "before": [
+     "mammoth-1",
+     "knowline-31b-gen1",
+     "fastino-glide-1.2-open",
+     "h2o-lightning-31b",
+     "pplx-decider-v1-1-27b"
+    ],
+    "changed": false,
+    "metric": "extra_capability/cost_7x_latency_none",
+    "view": "open"
+   },
+   {
+    "after": [
+     "mammoth-1",
+     "knowline-31b-gen1",
+     "fastino-glide-1.2-open",
+     "h2o-lightning-31b",
+     "pplx-decider-v1-1-27b"
+    ],
+    "before": [
+     "mammoth-1",
+     "knowline-31b-gen1",
+     "fastino-glide-1.2-open",
+     "h2o-lightning-31b",
+     "pplx-decider-v1-1-27b"
+    ],
+    "changed": false,
+    "metric": "extra_capability/cost_10x_latency_none",
+    "view": "open"
+   },
+   {
+    "after": [
+     "singularity-super-decider",
+     "launchables-myles-g-12b",
+     "kettei-fat",
+     "fastino-glide-api",
+     "liquid-d1-ultra"
+    ],
+    "before": [
+     "singularity-super-decider",
+     "launchables-myles-g-12b",
+     "kettei-fat",
+     "fastino-glide-api",
+     "liquid-d1-ultra"
+    ],
+    "changed": false,
+    "metric": "composites/A",
+    "view": "api"
+   },
+   {
+    "after": [
+     "singularity-super-decider",
+     "kettei-fat",
+     "fastino-glide-api",
+     "drex-max",
+     "subq-snap-1.1"
+    ],
+    "before": [
+     "singularity-super-decider",
+     "kettei-fat",
+     "fastino-glide-api",
+     "drex-max",
+     "subq-snap-1.1"
+    ],
+    "changed": false,
+    "metric": "composites/B",
+    "view": "api"
+   },
+   {
+    "after": [
+     "singularity-super-decider",
+     "kettei-fat",
+     "fastino-glide-api",
+     "liquid-d1-ultra",
+     "subq-snap-1.1"
+    ],
+    "before": [
+     "singularity-super-decider",
+     "kettei-fat",
+     "fastino-glide-api",
+     "liquid-d1-ultra",
+     "subq-snap-1.1"
+    ],
+    "changed": false,
+    "metric": "composites/C",
+    "view": "api"
+   },
+   {
+    "after": [
+     "kettei-fat",
+     "singularity-super-decider-thinking",
+     "singularity-super-decider",
+     "fastino-glide-api",
+     "drex-max"
+    ],
+    "before": [
+     "kettei-fat",
+     "singularity-super-decider-thinking",
+     "singularity-super-decider",
+     "fastino-glide-api",
+     "drex-max"
+    ],
+    "changed": false,
+    "metric": "capability/official_caps",
+    "view": "api"
+   },
+   {
+    "after": [
+     "gpt-6-luna",
+     "gpt-6-luna-low",
+     "gpt-5.6-luna",
+     "deepseek-flash",
+     "kettei-fat"
+    ],
+    "before": [
+     "gpt-6-luna",
+     "gpt-6-luna-low",
+     "gpt-5.6-luna",
+     "deepseek-flash",
+     "kettei-fat"
+    ],
+    "changed": false,
+    "metric": "capability/no_caps",
+    "view": "api"
+   },
+   {
+    "after": [
+     "kettei-fat",
+     "singularity-super-decider-thinking",
+     "singularity-super-decider",
+     "fastino-glide-api",
+     "drex-max"
+    ],
+    "before": [
+     "kettei-fat",
+     "singularity-super-decider-thinking",
+     "singularity-super-decider",
+     "fastino-glide-api",
+     "drex-max"
+    ],
+    "changed": false,
+    "metric": "capability/cost_off_latency_2x",
+    "view": "api"
+   },
+   {
+    "after": [
+     "kettei-fat",
+     "singularity-super-decider-thinking",
+     "singularity-super-decider",
+     "fastino-glide-api",
+     "drex-max"
+    ],
+    "before": [
+     "kettei-fat",
+     "singularity-super-decider-thinking",
+     "singularity-super-decider",
+     "fastino-glide-api",
+     "drex-max"
+    ],
+    "changed": false,
+    "metric": "capability/latency_none",
+    "view": "api"
+   },
+   {
+    "after": [
+     "kettei-fat",
+     "singularity-super-decider-thinking",
+     "singularity-super-decider",
+     "fastino-glide-api",
+     "drex-max"
+    ],
+    "before": [
+     "kettei-fat",
+     "singularity-super-decider-thinking",
+     "singularity-super-decider",
+     "fastino-glide-api",
+     "drex-max"
+    ],
+    "changed": false,
+    "metric": "extra_capability/cost_7x",
+    "view": "api"
+   },
+   {
+    "after": [
+     "kettei-fat",
+     "singularity-super-decider-thinking",
+     "singularity-super-decider",
+     "fastino-glide-api",
+     "drex-max"
+    ],
+    "before": [
+     "kettei-fat",
+     "singularity-super-decider-thinking",
+     "singularity-super-decider",
+     "fastino-glide-api",
+     "drex-max"
+    ],
+    "changed": false,
+    "metric": "extra_capability/cost_10x",
+    "view": "api"
+   },
+   {
+    "after": [
+     "gpt-6-luna",
+     "gpt-6-luna-low",
+     "gpt-5.6-luna",
+     "deepseek-flash",
+     "kettei-fat"
+    ],
+    "before": [
+     "gpt-6-luna",
+     "gpt-6-luna-low",
+     "gpt-5.6-luna",
+     "deepseek-flash",
+     "kettei-fat"
+    ],
+    "changed": false,
+    "metric": "extra_capability/rank_field",
+    "view": "api"
+   },
+   {
+    "after": [
+     "gpt-6-luna",
+     "gpt-6-luna-low",
+     "gpt-5.6-luna",
+     "kettei-fat",
+     "singularity-super-decider-thinking"
+    ],
+    "before": [
+     "gpt-6-luna",
+     "gpt-6-luna-low",
+     "gpt-5.6-luna",
+     "kettei-fat",
+     "singularity-super-decider-thinking"
+    ],
+    "changed": false,
+    "metric": "extra_capability/cost_7x_latency_none",
+    "view": "api"
+   },
+   {
+    "after": [
+     "gpt-6-luna",
+     "gpt-6-luna-low",
+     "gpt-5.6-luna",
+     "kettei-fat",
+     "singularity-super-decider-thinking"
+    ],
+    "before": [
+     "gpt-6-luna",
+     "gpt-6-luna-low",
+     "gpt-5.6-luna",
+     "kettei-fat",
+     "singularity-super-decider-thinking"
+    ],
+    "changed": false,
+    "metric": "extra_capability/cost_10x_latency_none",
+    "view": "api"
+   },
+   {
+    "after": [
+     "singularity-super-decider",
+     "launchables-myles-g-12b",
+     "kettei-fat",
+     "fastino-glide-api",
+     "torchcast-decision-4b-v1.3"
+    ],
+    "before": [
+     "singularity-super-decider",
+     "launchables-myles-g-12b",
+     "kettei-fat",
+     "fastino-glide-api",
+     "torchcast-decision-4b-v1.3"
+    ],
+    "changed": false,
+    "metric": "A",
+    "view": "release"
+   },
+   {
+    "after": [
+     "singularity-super-decider",
+     "kettei-fat",
+     "fastino-glide-api",
+     "drex-max",
+     "subq-snap-1.1"
+    ],
+    "before": [
+     "singularity-super-decider",
+     "kettei-fat",
+     "fastino-glide-api",
+     "drex-max",
+     "subq-snap-1.1"
+    ],
+    "changed": false,
+    "metric": "B",
+    "view": "release"
+   },
+   {
+    "after": [
+     "singularity-super-decider",
+     "kettei-fat",
+     "fastino-glide-api",
+     "torchcast-decision-4b-v1.3",
+     "liquid-d1-ultra"
+    ],
+    "before": [
+     "singularity-super-decider",
+     "kettei-fat",
+     "fastino-glide-api",
+     "torchcast-decision-4b-v1.3",
+     "liquid-d1-ultra"
+    ],
+    "changed": false,
+    "metric": "C",
+    "view": "release"
+   },
+   {
+    "after": [
+     "gpt-6-luna",
+     "gpt-6-luna-low",
+     "gpt-5.6-luna",
+     "deepseek-flash",
+     "kettei-fat"
+    ],
+    "before": [
+     "gpt-6-luna",
+     "gpt-6-luna-low",
+     "gpt-5.6-luna",
+     "deepseek-flash",
+     "kettei-fat"
+    ],
+    "changed": false,
+    "metric": "capability",
+    "view": "release"
+   }
+  ],
+  "slider_changed_states": 0,
+  "slider_states": 171,
+  "snapshots_sha256": {
+   "topfive-after.json": "d52ef6a2f28484c5d88d9490a296a31f0554dd37104f208ba649a86a014fe56d",
+   "topfive-before.json": "29794ff8205bddb6b9665db2fbb7858c9312a7ba1a8a23bbf823a85768789e3c",
+   "topfive-extended.json": "1fb5b88fb7884217fa528b1bc243b269675612987f46dd7d41779ea8e07b1b9d",
+   "topfive-sliders.json": "b862b9229d5db8f14398c9492cbbf46243c290c8475c1ef99a3a2c81e3a07f57"
+  },
+  "variant": "10-second share"
+ },
+ "validator": {
+  "log_sha256": "46c761b55d4c8f9d76ad81a90e3969504f0dba8fb1550394d39d4ab40d747590",
+  "status": "PASS"
+ },
+ "visibility": {
+  "all_carried_rows_equal": true,
+  "board_rows_after": 315,
+  "board_rows_before": 314,
+  "new_row": {
+   "board": {
+    "cost_axis": 34.05289135234683,
+    "draw": "v1.6-regular-20261027",
+    "intelligence": 78.78162736656175,
+    "listing": "unranked",
+    "not_ranked_because": "Measured on the 27 Oct 2026 draw, which is not yet equated to the reference scale; stronger anchor runs for that draw are being measured. Shown unranked until then.",
+    "rank": null,
+    "ranked": false,
+    "ranks": {
+     "A": null,
+     "B": null,
+     "C": null,
+     "capability": null
+    },
+    "score_A": 28.78594982878189,
+    "usd_per_1000": 0.15784722632639353
+   },
+   "feed": {
+    "api_board_rank": null,
+    "capability_rank": null,
+    "composite_score": 28.78594982878189,
+    "draw": "v1.6-regular-20261027",
+    "listing": "unranked",
+    "not_ranked_because": "Measured on the 27 Oct 2026 draw, which is not yet equated to the reference scale; stronger anchor runs for that draw are being measured. Shown unranked until then.",
+    "open_board_rank": null,
+    "open_capability_rank": null,
+    "rank": null,
+    "ranked": false
+   }
+  },
+  "new_row_open_scope": true,
+  "orders_equal": true,
+  "pending_hidden_in_real_tree": true,
+  "real_tree_restated_by": "v1.7.20",
+  "status": "PASS"
+ }
+}

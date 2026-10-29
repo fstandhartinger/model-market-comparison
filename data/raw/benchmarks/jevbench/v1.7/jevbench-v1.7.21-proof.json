@@ -1,0 +1,323 @@
+{
+ "carried_rows": 314,
+ "carried_rows_equal_except": [],
+ "cost_basis": {
+  "cost_basis_msft_view_sha256": "3bb4e58e15530a2688b561ab3fbaf9c8f956ec149853b6397c89d094779fb715",
+  "cost_basis_sha256": "b83bdfd14c263ffacfa572b304084154afca84c1f00083101a33783ae6f8b356",
+  "decisio_note": "Decisio is priced on its engine recount (totals only): the common-set engine count assumes the modal per-item engine-native delta 78 for the 6 further excluded items; exact to within 6 tokens (USD bound in rows)",
+  "frozen_at": "v1.7.16",
+  "h2o_note": "H2O is priced on processed tokens after its 32k trim; its only 5 trimmed states are the 5 longest items, all outside the common set, so processed = raw usage there",
+  "n_excluded_from_1500": 11,
+  "n_items": 1489,
+  "per_row_membership": {
+   "arcbright-elf-1-12b-r2": {
+    "answered_not_in_common": 11,
+    "answered_ok": 1500,
+    "raw_sha256": "84f08ebb6ff92af453b75cda042f617ea89c5be6a2176c7c69e11f2521da6f08",
+    "rows": 1500
+   },
+   "chaoliangunsw-jev-style-2b-decision-v4": {
+    "answered_not_in_common": 6,
+    "answered_ok": 1495,
+    "raw_sha256": "96e11049d1593d75ee84fe258f6a6c4020c9e37ebe299c7d18a3b6846fbacf81",
+    "rows": 1500
+   },
+   "decisio-gemma-4-12b-tuned-commit-think": {
+    "answered_not_in_common": 11,
+    "answered_ok": 1500,
+    "raw_sha256": "d7396dd680e13af9ba26c4526007fee3647d03eee7673bf88075ac510f39cc3c",
+    "rows": 1500
+   },
+   "h2o-lightning-4b-v1.4.1": {
+    "answered_not_in_common": 11,
+    "answered_ok": 1500,
+    "raw_sha256": "96d26bb3c0486ecbee832e309db4099b3a616b1540b4a92eff09dec81b719335",
+    "rows": 1500
+   },
+   "jeff_1_1_large": {
+    "answered_not_in_common": 11,
+    "answered_ok": 1500,
+    "raw_sha256": "1f1fdc2df674da00128ae7b47d5ea3429cf1124383a077577e7c68c7d9cc0e72",
+    "rows": 1500
+   },
+   "jeff_1_1_qwen_4b": {
+    "answered_not_in_common": 11,
+    "answered_ok": 1500,
+    "raw_sha256": "c37fada15a2021cf744b2031acb964508caf48873a2bcda5da6d6ac4a5e7c288",
+    "rows": 1500
+   },
+   "microsoft-decision-1-r2": {
+    "answered_not_in_common": 0,
+    "answered_ok": 1489,
+    "raw_sha256": "1f069818cdc069a532a4c4965d306fbd302bb819dde4aa3c48a9bd676c4a981e",
+    "rows": 1493
+   },
+   "strike-1": {
+    "answered_not_in_common": 6,
+    "answered_ok": 1495,
+    "raw_sha256": "4c6c7ab25b11432f8934425a44806ec5a2499241a9c5790216a11651473f2027",
+    "rows": 1500
+   },
+   "torchcast-decision-31b-v1.0": {
+    "answered_not_in_common": 11,
+    "answered_ok": 1500,
+    "raw_sha256": "e51a1c22336050368336c996d7cb32181bad5e854024f07844b2a8577a0dda7d",
+    "rows": 1500
+   },
+   "visionjev-1.0.0-27b": {
+    "answered_not_in_common": 6,
+    "answered_ok": 1495,
+    "raw_sha256": "89a5de4e94a9b1feed12144db1c5879c7e59c149f0d1667cb3b12e4763b89496",
+    "rows": 1500
+   }
+  },
+  "precedent": "v1.6.30 on v1.6-regular-20261012 (scorer flag --cost-basis)",
+  "rows": {},
+  "rule": "fixed-common-cost-basis-d1027: the 1,489-item v1.7.16 basis is frozen; later rows use this same denominator without shrinking the set; native refusals have no billed usage and remain scored misses",
+  "scorer_flag": "--cost-basis",
+  "set_hash_rule": "sha256 of the sorted opaque id list as compact JSON",
+  "set_sha256": "4e912731e63369e1b3066b0b4afa87b44f1094aea079c5b41dc6d02e7f235537"
+ },
+ "exceptions": {},
+ "link_fixed_rows": [],
+ "method": {
+  "decision_limit_s": 10,
+  "label": "v1.7",
+  "rule": "latency_s > 10.000 s -> failed",
+  "treatment": "share"
+ },
+ "new_rows": {
+  "visionjev-1.0.0-27b": {
+   "axes": {
+    "calibration": 94.3167842335138,
+    "cost": 34.05289135234683,
+    "intelligence": 78.78162736656175,
+    "speed": 84.80563168345245
+   },
+   "category_pool_bounds": {
+    "languages": {
+     "ar": 21,
+     "cs": 37,
+     "da": 36,
+     "de": 48,
+     "el": 28,
+     "en": 555,
+     "es": 37,
+     "fi": 52,
+     "fr": 32,
+     "hi": 37,
+     "id": 41,
+     "it": 45,
+     "ja": 44,
+     "ko": 43,
+     "mixed": 64,
+     "nl": 36,
+     "no": 51,
+     "pl": 57,
+     "pt": 47,
+     "sv": 46,
+     "tr": 46,
+     "uk": 56,
+     "zh": 41
+    },
+    "topics": {},
+    "usecases": {
+     "advertising": 48,
+     "code_linting": 69,
+     "customer_support": 66,
+     "demand_forecasting": 66,
+     "ecommerce_marketplaces": 62,
+     "feature_extraction": 72,
+     "financial_crime": 63,
+     "gaming": 58,
+     "insurance_claims": 62,
+     "knowledge_graphs": 67,
+     "lead_generation": 75,
+     "legal_compliance": 56,
+     "llm_guardrails": 71,
+     "model_routing": 148,
+     "moderation_trust_safety": 59,
+     "other": 32,
+     "recruiting": 65,
+     "risk_assessment": 48,
+     "scientific_discovery": 42,
+     "search_retrieval": 67
+    }
+   },
+   "composite_ci95": {
+    "A": [
+     28.30784057177504,
+     29.00678663254187
+    ],
+    "B": [
+     29.34745189245099,
+     30.46153780690099
+    ],
+    "C": [
+     28.30784057177504,
+     29.00678663254187
+    ]
+   },
+   "cost": {
+    "basis_items": 1489,
+    "input_tokens_all": 562151,
+    "input_tokens_common": 559606,
+    "kind": "estimate",
+    "output_tokens": 0,
+    "usd_per_1000": 0.15784722632639353,
+    "usd_per_1000_all_items": 0.15740227999999998
+   },
+   "decision_limit": {
+    "limit_s": 10.0,
+    "n_over_limit": 0,
+    "n_over_limit_answered_ok": 0,
+    "rule": "latency_s > limit -> failed",
+    "speed_basis": "all decisions given (lane items in the raw), measured latency_s",
+    "speed_n": 1500,
+    "treatment": "share"
+   },
+   "equated": {
+    "calibration": 94.3167842335138,
+    "capability": 86.54920580003778,
+    "intelligence": 78.78162736656175,
+    "offset": {
+     "C": 0,
+     "I": 0
+    },
+    "scores": {
+     "A": 28.78594982878189,
+     "B": 30.062094146779465,
+     "C": 28.78594982878189
+    }
+   },
+   "model_pin": {
+    "base": "Qwen/Qwen3.8-27B",
+    "model": "taoszhang/VisionJEV",
+    "revision": "cd6353aaea57561bd8c9beee69311f104dd77528",
+    "served_model": "VisionJEV 1.0.0"
+   },
+   "n_answered": 1495,
+   "n_items": 1500,
+   "n_refused_over_limit": 5,
+   "price_reference": {
+    "base": "Qwen/Qwen3.8-27B",
+    "in": 0.42,
+    "kind": "estimate",
+    "listing": "qwen/qwen3.8-27b",
+    "out": 3.0,
+    "rule": "frozen pricing_v15 reference() for the stated base model; output priced at 0 tokens as the vendor reports (9 Oct 2026 zero-output rule)"
+   },
+   "raw_sha256": "89a5de4e94a9b1feed12144db1c5879c7e59c149f0d1667cb3b12e4763b89496",
+   "refused_because": "input over the model limit of 8,192 tokens; scored as misses, kept in the denominator",
+   "scored_input_sha256": "5bb4e9cdc8f26059f0802ff17ba138ff8db9642b9a92ecf714f9d3804d040686",
+   "source_sha256": {
+    "cells_off": {
+     "categories_sha256": "1cb68095df8ea67c81c21356f1b110b2c3398f9503f2aab014644cefd0547d7a",
+     "decisive_sha256": "c2f0392912a9c1658a7f7742730507618d1d08688d3e3d52b61b0b9cd2dc7e4c"
+    },
+    "cells_share": {
+     "categories_sha256": "0d376308f3961d8d4d7a72a1caddde4e9343dac384967070b4cd5fd048245df1",
+     "decisive_sha256": "c2f0392912a9c1658a7f7742730507618d1d08688d3e3d52b61b0b9cd2dc7e4c"
+    },
+    "frozen": {
+     "path": "/home/flori/jobs/jevbench-add-requests-20260919/workers/r198-v1721-build/score/field/fnew/out-frozen/jevbench-v1.6.0-results.json",
+     "sha256": "330362b1bf76e2254e7352d7d2c2f5d75f431bd292fccbdda00d6a45ec5ffd5c"
+    },
+    "gold_sha256": "8aaf8ab4c58fe06e1f7494a965701ffc0c1a7879392b0bc2309f7f1724b5e200",
+    "input_sha256": "9b2f32edaccb29afd726af8cd54cf1a22d85e8b1824566924045d83c6f828426",
+    "kit_shas_sha256": "8c0435393f4872c7dffdea9be01a26473fd1594318fcb15e2cbf45d02aa6a2eb",
+    "manifest_sha256": "f5a5151a1a19923dec1434230dbc451d9ca879ce8ccba8f268b296cac9c1ee35",
+    "pull_receipt_sha256": "f9a4b1a3101168ac0f4346d9386b6bc8a97feb6c82292c12a5c2c70f0ed2f800",
+    "raw_sha256": "89a5de4e94a9b1feed12144db1c5879c7e59c149f0d1667cb3b12e4763b89496",
+    "raw_verified_in_place": true,
+    "registry_sha256": "9c11b4f3340a643d4fcbb85f24524e52f042b946bc022a18082ad7ffa1552f59",
+    "v17-off": {
+     "path": "/home/flori/jobs/jevbench-add-requests-20260919/workers/r198-v1721-build/score/field/fnew/out-v17-off/jevbench-v1.6.0-results.json",
+     "sha256": "cc8e6e02798a25f12a683b979c9a891fdc4bb3120294d7cf16dbec8ae148bd55"
+    },
+    "v17-share": {
+     "path": "/home/flori/jobs/jevbench-add-requests-20260919/workers/r198-v1721-build/score/field/fnew/out-v17-share/jevbench-v1.6.0-results.json",
+     "sha256": "5bb4e9cdc8f26059f0802ff17ba138ff8db9642b9a92ecf714f9d3804d040686"
+    }
+   },
+   "treatment": "unranked"
+  }
+ },
+ "predecessor": {
+  "publication_sha256": "6f2c8a22e4badcfe7c0db38a8b3a1ca231f429025e8d864cc695fd329d4d4c8b",
+  "revision": "v1.7.20"
+ },
+ "pricing_module_sha256": "645fd82eac728d597048bec0995ecd3ac896566e269fb6c9a1fdb84c171a9ac4",
+ "publication_approval": {
+  "asks": [
+   {
+    "handoff": "VisionJEV 1.0.0 measured on d1027, self-hosted, 1,495/1,500, five pre-registered over-limit refusals",
+    "key": "visionjev-1.0.0-27b",
+    "relay": "board #11 #32633"
+   }
+  ],
+  "button_tap": false,
+  "cost_basis": {
+   "decision": "Fixed common cost basis d1027, DECISIONS 2026-10-28",
+   "key": "v1.6-regular-20261027"
+  },
+  "fresh_baseline": "v1.7.20",
+  "release_owner_rulings": [
+   "d1027 rows remain unranked",
+   "VisionJEV pricing: frozen Qwen/Qwen3.8-27B 0.42/3.00 native input, zero output (DECISIONS 2026-10-28 rizzo-visionjev-pricing-32116)",
+   "Fixed 1489-item d1027 common basis, never shrunk; refusals unbilled in denominator",
+   "Temporary topics exception"
+  ],
+  "status": "GO (standing; no top-five change)",
+  "top_five_effect": "unchanged",
+  "top_five_preview": {
+   "path": "r198/v1721/receipts/topfive-diff.json",
+   "sha256": "da2f1540d5ad92c0a86818e1eb25a6ce4cb211606ebc78b7c1d1331e87263813"
+  },
+  "unranked_basis": {
+   "card": "#18781",
+   "decision": "d1027-strong-anchors-needed",
+   "handled_by": "rows published unranked (ranked false), no order list changes; draw not equated (offset 0)"
+  }
+ },
+ "remeasured_rows": {},
+ "repriced_rows": {},
+ "revision": "v1.7.21",
+ "same_draw": {
+  "drawn_on": "2026-10-27",
+  "equating": "not applied (draw stays anchor-runs-pending, offset 0)",
+  "g_med_rule": "reference G_med of the merged board (penalty 1.0 for the new row under the reference)",
+  "g_med_used": 2.573387642438244,
+  "id": "v1.6-regular-20261027",
+  "label": "Third regular draw",
+  "manifest_sha256": "f5a5151a1a19923dec1434230dbc451d9ca879ce8ccba8f268b296cac9c1ee35",
+  "offset": {
+   "C": 0,
+   "I": 0
+  },
+  "offset_ci95": null,
+  "status": "anchor-runs-pending"
+ },
+ "schema_version": 1,
+ "scorers": {
+  "a2_cells_v16": "afd034efe27bde12f2ebbfd12c4c0792c93214e1aa9a63deecb0e83a0184c990",
+  "build_categories_v16": "40eb50f3d7fea2693b4478c4b89f8bfb957dd17776add491935742e3b9354e73",
+  "build_topics_v16": "ec04ab598162bfc4340ffa7916a06573eb1222132c61e47ab772045bc67ced78",
+  "decisive_v16": "80b9ccf43e58dddb1b2a77e0a33aba8a9f7337a3a9a639afc7264218bbf8918f",
+  "noul_method_v16": "119e59486ab3300b972fbcbadb0fe1dceceb124287607375aa61c66063c607d0",
+  "pins_v17": "b50cc00dd2cb0ba46157eb6a2bda620255f3ff54404025e992bc7962dfff2f8b",
+  "run_under_v17": "efb194b2ea350db59be37e5e72af71f809f763a2476cd6f521adf6f4fd90a64f",
+  "score_v15": "0931e05c6410b1b971201834397cb609cdb25f942723c50375632952f6dcc447",
+  "score_v15_headlineA": "826f2cbcb57007ec8a161e6eb0111182b8a656c0638027c6c78022a858fd8e2c",
+  "score_v16": "02132271117653e6302c509232a581d0094f0e78eac8b1bfc67596fd5d5097e9",
+  "score_v17": "6363458d208a52f4ad5aaf73027cad1b7e0358ff962e581d57a3cc462c8f1978"
+ },
+ "source_inputs": {
+  "cells_sha256": "d03f3d9da47cb36473a0464d4bc08f7ae00f074207c91bb049b795a4b2f7119c",
+  "entry_sha256": "2f7be142801f38094c407d5a984da5dc46d8c9e8c0fc7f963210fce173b4c69c",
+  "recost_sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+  "scored_rows_sha256": "6faa3049d394b3d55de40b934a161880c05b978b8e7f9124702121a5c5b109de"
+ },
+ "text_fixed_rows": [],
+ "topfive_diff_sha256": "da2f1540d5ad92c0a86818e1eb25a6ce4cb211606ebc78b7c1d1331e87263813"
+}

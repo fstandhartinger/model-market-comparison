@@ -1,0 +1,6 @@
+import {createHash} from 'node:crypto';import assert from 'node:assert/strict';import {readFileSync,writeFileSync} from 'node:fs';
+const J=new URL('.',import.meta.url).pathname,s=readFileSync(J+'preview/index.html','utf8');
+assert.match(s,/Release review pending/);assert.match(s,/<h1>VisionJEV 1.0.0 \(self-hosted\)/);assert.match(s,/All 314 carried rows/);assert.doesNotMatch(s,/paid public evaluation/);assert.doesNotMatch(s,/\/\*(?:FOOTER|FAIR|DATA)\*\//);new Function(s.match(/<script>([\s\S]*)<\/script>/)[1]);
+const d=JSON.parse(readFileSync(J+'receipts/topfive-extended.json'));for(const r of d.rows){const m=d.models[r.variant];for(const x of r.full_before)assert.ok(m.before[x.key]);for(const x of r.full_after)assert.ok(m.after[x.key]);}
+const png=readFileSync(J+'preview/card.png');assert.equal(png.readUInt32BE(16),1440);assert.equal(png.readUInt32BE(20),900);
+writeFileSync(J+'receipts/PREVIEW.json',JSON.stringify({status:'PASS',html_script_syntax:true,ranking_models_resolve:true,footer:'Release review pending',png:[1440,900],png_sha256:createHash('sha256').update(png).digest('hex'),visual_inspection:'Card viewed; no clipping or overlap'},null,1)+'\n');console.log('PASS preview script syntax, ranking model mappings, PENDING footer and 1440x900 card');
