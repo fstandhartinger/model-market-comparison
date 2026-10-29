@@ -1,0 +1,21 @@
+{
+ "strike-1": {
+  "entry": {
+   "author": "Strike (strike-ai.eu)",
+   "cost_basis": "ESTIMATE (*est.), hosted API without a counted list price: the vendor's stated base Qwen/Qwen3.5-4B at its market reference deepinfra:Qwen/Qwen3.5-4B, USD 0.03 per million input tokens and USD 0.15 per million output tokens (frozen pricing module sha256 645fd82eac728d597048bec0995ecd3ac896566e269fb6c9a1fdb84c171a9ac4), x the vendor-reported usage: 1,687,022 input tokens and 0 output tokens on the 1,489 common items (output 0 as reported: no text is generated). COST FIGURES: USD 0.033990 per 1,000 decisions, 0.53x the official cost cap USD 0.064595. Cost on the 1,489 items every row on this draw answered (same-items rule); all-items cost USD 0.033853 per 1,000 decisions. Estimated model tariff, not charged usage or a host quote; the vendor reported no charge for these requests.",
+   "disclosure": "FIRST MEASUREMENT of Strike-1, a hosted decision API (EU, OVH Gravelines). The vendor describes it as a fine-tune of Qwen/Qwen3.5-4B; the weights are not published, so the base is the vendor's statement. The vendor describes the service as beta and states that its probabilities are uncalibrated during beta; Calibration is measured on the probabilities as returned. ITEMS: all 1,500 items of the draw were sent; 5 items over the provider's input limit were refused and are scored as misses (kept in the denominator). TOKENS: the API reports 0 output tokens on every answer (it returns a probability distribution and generates no text). DRAW: measured on the 27 Oct 2026 regular draw (fresh sealed items; not yet equated to the reference scale, so its numbers are shown as published, offset 0). This draw has no subject-topic labels yet, so the row has no topic cells; its use-case and language cells are measured on its own draw. LATENCY: p50 0.475 s, p95 0.987 s, maximum 2.225 s.",
+   "display": "Strike-1",
+   "endpoint_condition": "Vendor-hosted API in the EU (OVH Gravelines, France), native /v1/systemone; latency measured from our server in Germany. 1,495 of 1,500 requests answered (HTTP 200, served model strike-1 on every answer); 5 were refused by the server because the input exceeded its limit (8,192 tokens or 32,000 characters) and are scored as misses; no decision took longer than 10 s.",
+   "licence": "Hosted API; weights not published",
+   "model_pin": {
+    "model": "strike-1",
+    "provider": "Strike (strike-ai.eu), hosted API",
+    "region": "EU, OVH Gravelines (ovh-gra)",
+    "response_model": "strike-1",
+    "version": "v20261023 (vendor revision)"
+   },
+   "provider": "strike",
+   "repo": "https://strike-ai.eu"
+  }
+ }
+}

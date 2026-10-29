@@ -1,0 +1,830 @@
+{
+ "carried_rows": 307,
+ "carried_rows_equal_except": [
+  "arcbright-elf-1-12b-r2, decisio-gemma-4-12b-tuned-commit-think, h2o-lightning-4b-v1.4.1, jeff_1_1_large, jeff_1_1_qwen_4b, microsoft-decision-1-r2, torchcast-decision-31b-v1.0: cost fields only under the same-items cost rule (cost, Cost axis, composites: scores, views, jevbench_score, composite CIs, v16.ci95.composite; microsoft-decision-1-r2 also its disclosure ITEMS sentence); Intelligence, Calibration, Speed, Capability, cells, ranks, listing and notes unchanged"
+ ],
+ "cost_basis": {
+  "cost_basis_msft_view_sha256": "3bb4e58e15530a2688b561ab3fbaf9c8f956ec149853b6397c89d094779fb715",
+  "cost_basis_sha256": "b83bdfd14c263ffacfa572b304084154afca84c1f00083101a33783ae6f8b356",
+  "decisio_note": "Decisio is priced on its engine recount (totals only): the common-set engine count assumes the modal per-item engine-native delta 78 for the 6 further excluded items; exact to within 6 tokens (USD bound in rows)",
+  "h2o_note": "H2O is priced on processed tokens after its 32k trim; its only 5 trimmed states are the 5 longest items, all outside the common set, so processed = raw usage there",
+  "n_excluded_from_1500": 11,
+  "n_items": 1489,
+  "per_row_membership": {
+   "arcbright-elf-1-12b-r2": {
+    "answered_not_in_common": 11,
+    "answered_ok": 1500,
+    "raw_sha256": "84f08ebb6ff92af453b75cda042f617ea89c5be6a2176c7c69e11f2521da6f08",
+    "rows": 1500
+   },
+   "decisio-gemma-4-12b-tuned-commit-think": {
+    "answered_not_in_common": 11,
+    "answered_ok": 1500,
+    "raw_sha256": "d7396dd680e13af9ba26c4526007fee3647d03eee7673bf88075ac510f39cc3c",
+    "rows": 1500
+   },
+   "h2o-lightning-4b-v1.4.1": {
+    "answered_not_in_common": 11,
+    "answered_ok": 1500,
+    "raw_sha256": "96d26bb3c0486ecbee832e309db4099b3a616b1540b4a92eff09dec81b719335",
+    "rows": 1500
+   },
+   "jeff_1_1_large": {
+    "answered_not_in_common": 11,
+    "answered_ok": 1500,
+    "raw_sha256": "1f1fdc2df674da00128ae7b47d5ea3429cf1124383a077577e7c68c7d9cc0e72",
+    "rows": 1500
+   },
+   "jeff_1_1_qwen_4b": {
+    "answered_not_in_common": 11,
+    "answered_ok": 1500,
+    "raw_sha256": "c37fada15a2021cf744b2031acb964508caf48873a2bcda5da6d6ac4a5e7c288",
+    "rows": 1500
+   },
+   "microsoft-decision-1-r2": {
+    "answered_not_in_common": 0,
+    "answered_ok": 1489,
+    "raw_sha256": "1f069818cdc069a532a4c4965d306fbd302bb819dde4aa3c48a9bd676c4a981e",
+    "rows": 1493
+   },
+   "strike-1": {
+    "answered_not_in_common": 6,
+    "answered_ok": 1495,
+    "raw_sha256": "4c6c7ab25b11432f8934425a44806ec5a2499241a9c5790216a11651473f2027",
+    "rows": 1500
+   },
+   "torchcast-decision-31b-v1.0": {
+    "answered_not_in_common": 11,
+    "answered_ok": 1500,
+    "raw_sha256": "e51a1c22336050368336c996d7cb32181bad5e854024f07844b2a8577a0dda7d",
+    "rows": 1500
+   }
+  },
+  "precedent": "v1.6.30 on v1.6-regular-20261012 (scorer flag --cost-basis)",
+  "rows": {
+   "arcbright-elf-1-12b-r2": {
+    "changed_fields": [
+     "axes",
+     "composite_ci95",
+     "cost",
+     "jevbench_score",
+     "scores",
+     "v16",
+     "views"
+    ],
+    "common_input_tokens": 577488,
+    "common_output_tokens": 1489,
+    "cost_axis_after": 61.27105868604284,
+    "cost_axis_before": 60.64018322577787,
+    "field": "f14",
+    "scores_after": {
+     "A": 75.66989716801469,
+     "B": 73.71120573276143,
+     "C": 75.66989716801469
+    },
+    "scores_before": {
+     "A": 75.42761509888035,
+     "B": 73.52715437967998,
+     "C": 75.42761509888035
+    },
+    "token_basis": "raw usage (= the published priced basis)",
+    "usd_per_1000_after_common": 0.01954180658159839,
+    "usd_per_1000_before_all_items": 0.020511333333333333
+   },
+   "decisio-gemma-4-12b-tuned-commit-think": {
+    "changed_fields": [
+     "axes",
+     "composite_ci95",
+     "cost",
+     "jevbench_score",
+     "scores",
+     "v16",
+     "views"
+    ],
+    "common_input_tokens": 616406,
+    "common_output_tokens": 9110,
+    "cost_axis_after": 59.95650688961444,
+    "cost_axis_before": 56.10720068357701,
+    "engine_tokens_bound": [
+     616406,
+     616412
+    ],
+    "field": "f14",
+    "scores_after": {
+     "A": 74.67659424956109,
+     "B": 73.38156112783429,
+     "C": 74.67659424956109
+    },
+    "scores_before": {
+     "A": 73.11468195716678,
+     "B": 72.16957231800892,
+     "C": 73.11468195716678
+    },
+    "token_basis": "ENGINE recount (primary engine prompt), not raw usage",
+    "usd_per_1000_after_common": 0.02161638683680323,
+    "usd_per_1000_before_all_items": 0.02904646666666667,
+    "usd_per_1000_bound": [
+     0.02161638683680323,
+     0.021616588314304904
+    ]
+   },
+   "h2o-lightning-4b-v1.4.1": {
+    "changed_fields": [
+     "axes",
+     "composite_ci95",
+     "cost",
+     "jevbench_score",
+     "scores",
+     "v16",
+     "views"
+    ],
+    "common_input_tokens": 547826,
+    "common_output_tokens": 1489,
+    "cost_axis_after": 68.53805352271712,
+    "cost_axis_before": 65.2759342933949,
+    "field": "f13",
+    "scores_after": {
+     "A": 77.04257936486634,
+     "B": 74.13971463154068,
+     "C": 77.04257936486634
+    },
+    "scores_before": {
+     "A": 75.9755905301598,
+     "B": 73.34670857753824,
+     "C": 75.9755905301598
+    },
+    "token_basis": "processed input after the 32k trim; no common-set item is trimmed, so processed = raw usage there",
+    "usd_per_1000_after_common": 0.011187461383478847,
+    "usd_per_1000_before_all_items": 0.014370400000000004
+   },
+   "jeff_1_1_large": {
+    "changed_fields": [
+     "axes",
+     "composite_ci95",
+     "cost",
+     "jevbench_score",
+     "scores",
+     "v16",
+     "views"
+    ],
+    "common_input_tokens": 589108,
+    "common_output_tokens": 21722,
+    "cost_axis_after": 51.75461113447842,
+    "cost_axis_before": 51.25266260360077,
+    "field": "f14",
+    "scores_after": {
+     "A": 71.57749064353953,
+     "B": 73.83426787609706,
+     "C": 71.57749064353953
+    },
+    "scores_before": {
+     "A": 71.33593425029217,
+     "B": 73.62852359794118,
+     "C": 71.33593425029217
+    },
+    "token_basis": "raw usage (= the published priced basis)",
+    "usd_per_1000_after_common": 0.040567629281396914,
+    "usd_per_1000_before_all_items": 0.042161033333333334
+   },
+   "jeff_1_1_qwen_4b": {
+    "changed_fields": [
+     "axes",
+     "composite_ci95",
+     "cost",
+     "jevbench_score",
+     "scores",
+     "v16",
+     "views"
+    ],
+    "common_input_tokens": 598499,
+    "common_output_tokens": 68954,
+    "cost_axis_after": 61.6341364360232,
+    "cost_axis_before": 61.26091960325116,
+    "field": "f14",
+    "scores_after": {
+     "A": 73.21882869773437,
+     "B": 72.15002271463699,
+     "C": 73.21882869773437
+    },
+    "scores_before": {
+     "A": 73.0865905114461,
+     "B": 72.04725887427759,
+     "C": 73.0865905114461
+    },
+    "token_basis": "raw usage (= the published priced basis)",
+    "usd_per_1000_after_common": 0.0190047481531229,
+    "usd_per_1000_before_all_items": 0.019557019999999998
+   },
+   "microsoft-decision-1-r2": {
+    "changed_fields": [
+     "axes",
+     "composite_ci95",
+     "cost",
+     "disclosure",
+     "jevbench_score",
+     "scores",
+     "v16",
+     "views"
+    ],
+    "common_input_tokens": 467021,
+    "common_output_tokens": 1489,
+    "cost_axis_after": 66.40926993775184,
+    "cost_axis_before": 66.44422323693733,
+    "field": "fms",
+    "scores_after": {
+     "A": 76.97858754817413,
+     "B": 74.7793794772783,
+     "C": 76.97858754817413
+    },
+    "scores_before": {
+     "A": 76.99032431119126,
+     "B": 74.78823975641242,
+     "C": 76.99032431119126
+    },
+    "token_basis": "raw usage (= the published priced basis)",
+    "usd_per_1000_after_common": 0.013173191403626596,
+    "usd_per_1000_before_all_items": 0.013137898191560617
+   },
+   "torchcast-decision-31b-v1.0": {
+    "changed_fields": [
+     "axes",
+     "composite_ci95",
+     "cost",
+     "jevbench_score",
+     "scores",
+     "v16",
+     "views"
+    ],
+    "common_input_tokens": 560794,
+    "common_output_tokens": 0,
+    "cost_axis_after": 54.09546489689161,
+    "cost_axis_before": 52.36325864257654,
+    "field": "f14",
+    "scores_after": {
+     "A": 77.28255327361624,
+     "B": 79.26999019474194,
+     "C": 77.28255327361624
+    },
+    "scores_before": {
+     "A": 76.38012249209945,
+     "B": 78.50884160179682,
+     "C": 76.38012249209945
+    },
+    "token_basis": "raw usage (= the published priced basis)",
+    "usd_per_1000_after_common": 0.03389621222296844,
+    "usd_per_1000_before_all_items": 0.03871607999999999
+   }
+  },
+  "rule": "same-items: cost per 1,000 decisions on the items every row on the draw answered (HTTP 200, ok, no error); refused, failed or not-sent items count for no row's cost and still count as wrong answers",
+  "scorer_flag": "--cost-basis",
+  "set_hash_rule": "sha256 of the sorted opaque id list as compact JSON",
+  "set_sha256": "4e912731e63369e1b3066b0b4afa87b44f1094aea079c5b41dc6d02e7f235537"
+ },
+ "exceptions": {
+  "arcbright-elf-1-12b-r2": {
+   "axes": {
+    "after_sha256": "8b1446f98c074cc66665b8643701de3e78d09194c78a93113b5a871aade8b51b",
+    "before_sha256": "bba1311041c2584d1ab727e7d628e5e1bcc328f7b7b933ad20f80c18e6c550bd"
+   },
+   "composite_ci95": {
+    "after_sha256": "a62f90bdd35f64c433f690de15c3c79bf76496e537c6014f49ccbb6d4a222be8",
+    "before_sha256": "207f02f9a8b454774739805695154cb9d5b865ad3a97edfc3c7c55eba8bcf4f4"
+   },
+   "cost": {
+    "after_sha256": "3e7c4ac78fa0a4fcd73689a32a3f3ab4dfb2ca146299287cad6654b0a0f3eb23",
+    "before_sha256": "2e1528020f81804a777a961c1b0a0196771d1c2d00aa902385b4278b156e57fd"
+   },
+   "jevbench_score": {
+    "after_sha256": "0fc7d4bff0127a70376ea0c7ee31f8188c7eaedcad90316db5ceda60bc434792",
+    "before_sha256": "6127e95a4a68b04e28cb12cc555abdd6bc8d0a84ffba6faba2f5ff147a289278"
+   },
+   "scores": {
+    "after_sha256": "1361ca530bf30446ef42cbd390d476fd936af913e87406869af3735b6a30e791",
+    "before_sha256": "f4aceb7a2602acd14fdf2b8f0bf346066c54663d17464018ad56f5430ea6ed38"
+   },
+   "v16": {
+    "after_sha256": "92761f970aaaadbb1e0ef4ec26376a9e56bca66a77e50dfde1e56e0591cfe736",
+    "before_sha256": "fe6cf9cb73f16b3e88a9938327300d6b060be6f608267b453ec971e0e7beb7d5"
+   },
+   "views": {
+    "after_sha256": "3ebb2e29a7feefad89048a1cd2a7674996f2ffad459800deb2ea762e93ecd51b",
+    "before_sha256": "8340246394f3b3cbc2f4b393aa3610b0f64a416d6183390cb2876eb36db1acc7"
+   }
+  },
+  "decisio-gemma-4-12b-tuned-commit-think": {
+   "axes": {
+    "after_sha256": "a91e1466a1f84b3e1eb6849dc18e7ebda04cd01f7f748165facf2da22fd2722c",
+    "before_sha256": "b5c1d61c1dcbc98e869098f563abfb462a414d6e5da6d1363b61aa41074c227a"
+   },
+   "composite_ci95": {
+    "after_sha256": "f4d72a9466090f12efd71ac25ed1583307f01ef580a0cd6707eade397ad5fb82",
+    "before_sha256": "8095dcd87fa174cde1e765136fe95620bd3fcc0f5395b170d4b0fff31fd9e163"
+   },
+   "cost": {
+    "after_sha256": "fbe09f41711dbb9939d37740381cb1aed596737c0ed254cb1c05aee9841628cc",
+    "before_sha256": "90d64e044d99f7440a98d03255320071f6b334635c2c8007a82b41c63ba49543"
+   },
+   "jevbench_score": {
+    "after_sha256": "3557f0a0fbc32c27f1d33c1c830bcdcad49aa20100af41a7fe3a938d3176402e",
+    "before_sha256": "785653db55b4a9c6569f95500573f1c3066efa70e1b69aa4291c8ebf5b02813e"
+   },
+   "scores": {
+    "after_sha256": "2cc6388cba0293b3d3a68daea4dc56b89e3cc1ebc93df5398829594cb59e0401",
+    "before_sha256": "d36d686dd1aa2195b13a2b32392ca9985b8718358770dd134e3fffaf9a4ad0a4"
+   },
+   "v16": {
+    "after_sha256": "3e98b8477331ee5e74ad0b5ede4c03098c6b723ec71488f4e84a0c6f26404096",
+    "before_sha256": "dca3e0ec39ade013fd026f1c8aa52f0e2e28ff8e681e7ed8f025ca4e16024295"
+   },
+   "views": {
+    "after_sha256": "2053476f02f40b65aa44d42166dabc3bd2184ff2e88e5d869b8f2ce818760a08",
+    "before_sha256": "1e81f5be0efca75421fb6b57acabdada434ce259319cc1002ca1ba87ed5b805c"
+   }
+  },
+  "h2o-lightning-4b-v1.4.1": {
+   "axes": {
+    "after_sha256": "069ebdd3a54f654af5b4d3b87a53e2e7f9fa8207022c9cde1961591d89b51f23",
+    "before_sha256": "f905d70fd0b6c83cdbbdaf23ae7dcc49c525a8a755e97cf67336489ade1fcf28"
+   },
+   "composite_ci95": {
+    "after_sha256": "3c5d2fe2a8f47608deaa59b575793482785bda92ae99697077dbb5f12f43419d",
+    "before_sha256": "630dca2275b0c28691b4d148fc95428edbf0f905db804261d3ee6d8e5aa12268"
+   },
+   "cost": {
+    "after_sha256": "bfd7f8807e988cc78bbf7d1f9510b87558c262358fc5d7fcb691980bac959388",
+    "before_sha256": "db16da1d62b158c9da4f36d3463bfaad68e11ed72dfe6daaf27fcb7ff16cfcac"
+   },
+   "jevbench_score": {
+    "after_sha256": "af2f8d83b33171f2d86591a042a7c391dfa8716fe1461be64846c3b4f5882f33",
+    "before_sha256": "4e8ea0bf07efb3abbd770ce00e289e77b6ec5572462a0e87d1401c7c9f50b5d0"
+   },
+   "scores": {
+    "after_sha256": "3b2b771edd2d5b2fe051abaa24621b67f3a5fa0c7f991841877011aa269fcc61",
+    "before_sha256": "77d309d1b0bc8bc0bf60cc5730da18df05c5aadcd66f45e46a59f2bfe1647060"
+   },
+   "v16": {
+    "after_sha256": "4f99f1888c05603c24dbdd1d7462a999b65d7cb6bc852d843fca4ebf72a84dd6",
+    "before_sha256": "48b164292998d00de1d6265161cc3d9db437f9479ec0a398bf3b58d749a77ae1"
+   },
+   "views": {
+    "after_sha256": "6c5322dbffdb6cce64df9dc08c3a248670ca126e228795a1328b15db5080e1fe",
+    "before_sha256": "50e5c1e3c43876628b4e4ec9d90cdff323cfb6da1d50e376bb6214c39b4cef82"
+   }
+  },
+  "jeff_1_1_large": {
+   "axes": {
+    "after_sha256": "63a5da9ff68b0fa6d11a5478850fe7754e5ed540eccb238f4b459ac005d40c9a",
+    "before_sha256": "560c253f49d2734ffe23dc5736fd56421c19257333000ca78aae7621320587e2"
+   },
+   "composite_ci95": {
+    "after_sha256": "7c042872d34c3495c58f776c7793c954097c33199f2a8c6719614488f86c4e5a",
+    "before_sha256": "439e31f5968eb6c3a88d1f34be2203f2d74ce17795eb1b267e333ad8eb378057"
+   },
+   "cost": {
+    "after_sha256": "1fe91f40a37f112440fed880f2ed14d9edadc62b1c2d777016e313cd16140774",
+    "before_sha256": "11a201b8ce864c194e99324364833999d89fbbcdd3c9b62d40dd72c65ed6b931"
+   },
+   "jevbench_score": {
+    "after_sha256": "b05bfd6c237951ccffb3cc7eb5ecaeadef2df4b4b3c282a3b96197bb84a9e6e5",
+    "before_sha256": "c0802a83fef4280a42054b3a389598634bd7677e0a8bafaaf75def835cbeafe6"
+   },
+   "scores": {
+    "after_sha256": "87ed9fcbb533960d57f82b912fc58caf13eca5529c5f2e808641d487da84a2ca",
+    "before_sha256": "24f867e07774eb628f7ea4c6acfe892ecf286bf5a4cdf809d348c0586c08653f"
+   },
+   "v16": {
+    "after_sha256": "68bae1e894f19450f56a74bf7196ea0112a169cd86561b3c771f2d17e561546e",
+    "before_sha256": "31bd211490f27915865943a78d20c646be1116800b5be3c48db75b4b4a5a6e7a"
+   },
+   "views": {
+    "after_sha256": "05582e0bd75e37808d7961e0aac5c8627381d8a083854f6f406d18c42e63e263",
+    "before_sha256": "fbe439d96fea993185c2ce02c18613b8fd2baf2185cbcd03bfc987a5c1d2b2a1"
+   }
+  },
+  "jeff_1_1_qwen_4b": {
+   "axes": {
+    "after_sha256": "a303b9686d6f07b6691fc6be3ccb4b1cf54ad58894398927dcd3002c9c136a69",
+    "before_sha256": "ba6c7a5b82fe04dcaa19b9be7a945de3046d2d98666f6d3bbe000c422de73429"
+   },
+   "composite_ci95": {
+    "after_sha256": "2dc86e208888b66d47678121649470d5e4ec490e8ab2462cf82a0a71acc2e880",
+    "before_sha256": "ebc1cd150ff3f2a545c75e39a70a89ee3e614de033551b11143c28fa81446946"
+   },
+   "cost": {
+    "after_sha256": "ffcce35f9993f4dd5533f683bdc20cd9040dedc9b5625222a45a1a1868ad1490",
+    "before_sha256": "8797fd55f9d06685f178e15b98e6a4be728809517d308b0629f58a5fc4930e25"
+   },
+   "jevbench_score": {
+    "after_sha256": "212d32de32ad1fc3ff551c92fdb585475cb997bf66f800c0eecfc3bdbaba397f",
+    "before_sha256": "7b53a54289552ef05fb943417f5d3e03d3d841a379da52c2d463aeb40adeccbc"
+   },
+   "scores": {
+    "after_sha256": "b4ce24100fac57953aa9357d3a63004c9186ab0caca5fa01011dc4bbff5a659e",
+    "before_sha256": "d93e134c0b9e3904ae2d67f596a2eab308b9f6e3bf6f0a33f761a05e10ac3bb1"
+   },
+   "v16": {
+    "after_sha256": "5c3495a05f4b2bd2b6bf09d100a19c08235f79a5d41df3e5d91f3afd1ee5e3fe",
+    "before_sha256": "ccc6eda9a38bc0f401318d03dd6d900ab345dc47afdf587eafec4bb96de84317"
+   },
+   "views": {
+    "after_sha256": "270b0d8a1f541647ab455836d0b23be2f265ffd28398a6505a605f3da01e5d3e",
+    "before_sha256": "252a63539c472f86d7fd15ab62a51bd069b596b30d239c3c05d9cc51744caa70"
+   }
+  },
+  "microsoft-decision-1-r2": {
+   "axes": {
+    "after_sha256": "fdbebdf20b07599951a658db3e9fb50a28c4cd896874b8543cf6ac937ee6e35c",
+    "before_sha256": "7301ce0300afb8583c246641cec399faf2a49d86457d50f1b25c19e794ac8149"
+   },
+   "composite_ci95": {
+    "after_sha256": "b30ec1ef6664c84f6a8159846d314809897a04a4a810d246e06750603514840d",
+    "before_sha256": "05b3e58f2edee46cd64058f7320e86eb870ecfc61e3c77502bc1c5290f75aa72"
+   },
+   "cost": {
+    "after_sha256": "a387e3a0b39dac0feec4ed1d6c205710749b8ab94a79fbe212a31dfb0481b257",
+    "before_sha256": "948f925e285c7785a2a572af18e08bfad09f14b3bd894cd955a07ae9d730f37d"
+   },
+   "disclosure": {
+    "after_sha256": "b40f6e6f8edceb2c3d9e25de71c73d814487abc046b41487395f64aa27d3ad4a",
+    "before_sha256": "fd05de5da809b8e4f028ebd27dc17a03b1fb88adcbb3c56661c3a38002d860cb"
+   },
+   "jevbench_score": {
+    "after_sha256": "a69700da28c12591e0ddb4195464ea316070634e39329c7fd4d616644ea55771",
+    "before_sha256": "e7a0563c8347c4ff3bfa081b3e784da9b69c187f17a02a4bc5f8888f37012bfb"
+   },
+   "scores": {
+    "after_sha256": "f252c9c7576f859cb71d621939f81296c27cd83671ee03b37b65db8ba3acff1c",
+    "before_sha256": "ae0cf23776486318c1b145a144acf980cd0784c06b587a84324250b2d9ce5b6f"
+   },
+   "v16": {
+    "after_sha256": "4b77a9f1031d544d3afc68d5dacc9e6a782783bc275da49e65a09a6163ffc2a6",
+    "before_sha256": "236fd5125fa7b9acba375bc90c276c8676db54c7f85948bf77a8fc1164b6f683"
+   },
+   "views": {
+    "after_sha256": "547050806e9b973c860f491c4c3d0b5a5779e9802010ccd83886ed33a9d03703",
+    "before_sha256": "bc5c4556e58c013ae888d6e33aac2e324432531ad577f21ad80ce37ab37a4238"
+   }
+  },
+  "torchcast-decision-31b-v1.0": {
+   "axes": {
+    "after_sha256": "29c1d09f879809760d8a27f959c2adfa9717dcf9245649244f23b47cf3045799",
+    "before_sha256": "505ad5522132ec7dd9be5dc42f1cf6282175c49ecf563234ac8acb7dbc03baec"
+   },
+   "composite_ci95": {
+    "after_sha256": "e47459c91b657742a4316dc230278f58ccdd2c22084257d5461672c4007871e6",
+    "before_sha256": "8f2a0b270d4a33dabd0c2cd50c559f60f576f82565b040a8086382b0c55faaf3"
+   },
+   "cost": {
+    "after_sha256": "39a34fc0f53c4138450128f78da3361f28e90d4c3882bec0794314c5aa66d640",
+    "before_sha256": "4d6680e8541736702bdc491f842ea6464ae8e34c27fff883c4998999f6308af6"
+   },
+   "jevbench_score": {
+    "after_sha256": "c828edb3236e18e5335a67d9a09da24609468272a30f2bb56652f4a84792c4d4",
+    "before_sha256": "f1aad2a39c389f8ca6232a764b56eeefedf79def43356249b7e5e876a3d876ef"
+   },
+   "scores": {
+    "after_sha256": "06407c66f1edd500baeb5e39b1ae9b0e8a0274ae6dcee1cb704164e0e233003b",
+    "before_sha256": "5ec04097f86be3668684256cba5ec4b2c2da15817d259e09f38352d0bc733c05"
+   },
+   "v16": {
+    "after_sha256": "e46793abddf9b293bf0e4e36bd3d31f80d9225f19e68cecb10be731cd7d4e22e",
+    "before_sha256": "d91d22037a8ba9419c9e27ac6ae80e10f7597d34eacbde3559e059785e4301ae"
+   },
+   "views": {
+    "after_sha256": "b480c5546c4dc2d59629cfdd0f51d7850be3e5bcf418fb9e77fb25e8ef827bba",
+    "before_sha256": "0abb10191e70088135c6fce4cb0f3164965b4aee639adf488887d5becf35606f"
+   }
+  }
+ },
+ "files": {
+  "carry": "271d1fc77a136a04a1eb6deb5480c52d4211eb2b66b2ac8bb31e80867e69003a",
+  "categories": "c941eef9573f6e62ae863c6dde795f53e2fd19de2bd30c0b4bd4bb4466772d51",
+  "history": "5cd8c1332226ea9c179883d2285c0d8b8cc593ae38f2645197364a7ddd9c83c1",
+  "history-carry": "334e851944e92383ab3071e52b3012040c7023d0fe236395953169ebee8f0459",
+  "proof": "19263ff4083d4aa66a4c7e2b1a68a82a3773d9558a2d6e7e45022e5067acc452",
+  "results": "537565017c8bbd721a82b710a155afc234d7e37ced8659b8610d37b652b79a27"
+ },
+ "link_fixed_rows": [],
+ "method": {
+  "decision_limit_s": 10,
+  "label": "v1.7",
+  "rule": "latency_s > 10.000 s -> failed",
+  "treatment": "share"
+ },
+ "new_rows": {
+  "strike-1": {
+   "axes": {
+    "calibration": 91.35849542802363,
+    "cost": 54.05958090666912,
+    "intelligence": 45.347915471780475,
+    "speed": 83.29564724453803
+   },
+   "category_pool_bounds": {
+    "languages": {
+     "ar": 21,
+     "cs": 37,
+     "da": 36,
+     "de": 48,
+     "el": 28,
+     "en": 555,
+     "es": 37,
+     "fi": 52,
+     "fr": 32,
+     "hi": 37,
+     "id": 41,
+     "it": 45,
+     "ja": 44,
+     "ko": 43,
+     "mixed": 64,
+     "nl": 36,
+     "no": 51,
+     "pl": 57,
+     "pt": 47,
+     "sv": 46,
+     "tr": 46,
+     "uk": 56,
+     "zh": 41
+    },
+    "topics": {},
+    "usecases": {
+     "advertising": 48,
+     "code_linting": 69,
+     "customer_support": 66,
+     "demand_forecasting": 66,
+     "ecommerce_marketplaces": 62,
+     "feature_extraction": 72,
+     "financial_crime": 63,
+     "gaming": 58,
+     "insurance_claims": 62,
+     "knowledge_graphs": 67,
+     "lead_generation": 75,
+     "legal_compliance": 56,
+     "llm_guardrails": 71,
+     "model_routing": 148,
+     "moderation_trust_safety": 59,
+     "other": 32,
+     "recruiting": 65,
+     "risk_assessment": 48,
+     "scientific_discovery": 42,
+     "search_retrieval": 67
+    }
+   },
+   "composite_ci95": {
+    "A": [
+     36.46557694185339,
+     64.90036015309953
+    ],
+    "B": [
+     33.09562694594094,
+     61.38440159220277
+    ],
+    "C": [
+     25.32331732073152,
+     46.258659710436746
+    ]
+   },
+   "cost": {
+    "basis_items": 1489,
+    "input_tokens_all": 1692626,
+    "input_tokens_common": 1687022,
+    "kind": "estimate",
+    "output_tokens": 0,
+    "usd_per_1000": 0.03398969778374748,
+    "usd_per_1000_all_items": 0.033852520000000004
+   },
+   "decision_limit": {
+    "limit_s": 10.0,
+    "n_over_limit": 0,
+    "n_over_limit_answered_ok": 0,
+    "rule": "latency_s > limit -> failed",
+    "speed_basis": "all decisions given (lane items in the raw), measured latency_s",
+    "speed_n": 1500,
+    "treatment": "share"
+   },
+   "equated": {
+    "calibration": 91.35849542802363,
+    "capability": 68.35320544990205,
+    "intelligence": 45.347915471780475,
+    "offset": {
+     "C": 0,
+     "I": 0
+    },
+    "scores": {
+     "A": 51.81470102195167,
+     "B": 48.07396890608295,
+     "C": 35.982431265244216
+    }
+   },
+   "model_pin": {
+    "model": "strike-1",
+    "provider": "Strike (strike-ai.eu), hosted API",
+    "region": "EU, OVH Gravelines (ovh-gra)",
+    "response_model": "strike-1",
+    "version": "v20261023 (vendor revision)"
+   },
+   "n_answered": 1495,
+   "n_items": 1500,
+   "n_refused_over_limit": 5,
+   "price_reference": {
+    "base": "Qwen/Qwen3.5-4B",
+    "in": 0.03,
+    "kind": "estimate",
+    "listing": "deepinfra:Qwen/Qwen3.5-4B",
+    "out": 0.15,
+    "rule": "frozen pricing_v15 reference() for the stated base model; output priced at 0 tokens as the vendor reports (9 Oct 2026 zero-output rule)"
+   },
+   "raw_sha256": "4c6c7ab25b11432f8934425a44806ec5a2499241a9c5790216a11651473f2027",
+   "refused_because": "input over the provider limit (8,192 tokens or 32,000 characters); scored as misses, kept in the denominator",
+   "scored_input_sha256": "7b6ebfdfcc33e45e9eed6f92825d47ae90dd59c3ee750d0852a677f5fcfefe87",
+   "source_sha256": {
+    "cells_off": {
+     "categories_sha256": "47023d032e0cde5609632ead750d1a68cab6d69ad108398444b28906adee3182",
+     "decisive_sha256": "d12e63ec6479e958b236cd62422dc9242a5388f849fb4ce7eb30f702b1403a7e"
+    },
+    "cells_share": {
+     "categories_sha256": "b3ec3d32536cc40326f0ab7e6727c06fcde68529bd7feeeb4e2d6a8f9a8152e9",
+     "decisive_sha256": "d12e63ec6479e958b236cd62422dc9242a5388f849fb4ce7eb30f702b1403a7e"
+    },
+    "consumed_sha256": "497dfbd9f7703a2497a6d5d1b82f83e6a6891c82609a83e170e230f85933a52b",
+    "frozen": {
+     "path": "/home/flori/jobs/jevbench-add-requests-20260919/r197/v1716/score/field/fst/out-frozen/jevbench-v1.6.0-results.json",
+     "sha256": "59d9dc633bb8c1e5cdabfc33f327bf304198998ab3ba77aaae28245b63687450"
+    },
+    "gold_sha256": "8aaf8ab4c58fe06e1f7494a965701ffc0c1a7879392b0bc2309f7f1724b5e200",
+    "input_sha256": "9b2f32edaccb29afd726af8cd54cf1a22d85e8b1824566924045d83c6f828426",
+    "kit_shas_sha256": "456087be5202ed81464fd2411dc39f68ea4cff0e2c63aafe8cd82d6ce2acb415",
+    "manifest_sha256": "f5a5151a1a19923dec1434230dbc451d9ca879ce8ccba8f268b296cac9c1ee35",
+    "raw_sha256": "4c6c7ab25b11432f8934425a44806ec5a2499241a9c5790216a11651473f2027",
+    "raw_verified_in_place": true,
+    "registry_sha256": "abb79cd63ded569317ae70f9d264d40d168536caf68af2541bcae9aebaf392a9",
+    "v17-off": {
+     "path": "/home/flori/jobs/jevbench-add-requests-20260919/r197/v1716/score/field/fst/out-v17-off/jevbench-v1.6.0-results.json",
+     "sha256": "999b23ff858db66810f02dbf758fba14b2de1a2b1e0cae5435e171e41f71a7f3"
+    },
+    "v17-share": {
+     "path": "/home/flori/jobs/jevbench-add-requests-20260919/r197/v1716/score/field/fst/out-v17-share/jevbench-v1.6.0-results.json",
+     "sha256": "7b6ebfdfcc33e45e9eed6f92825d47ae90dd59c3ee750d0852a677f5fcfefe87"
+    }
+   },
+   "treatment": "unranked"
+  }
+ },
+ "predecessor": {
+  "publication_sha256": "2f97decd674fe57db9ac7dade51a7c6b1b10dcc2ee26817646b99db90e8298b8",
+  "revision": "v1.7.15"
+ },
+ "pricing_module_sha256": "645fd82eac728d597048bec0995ecd3ac896566e269fb6c9a1fdb84c171a9ac4",
+ "publication_approval": {
+  "asks": [
+   {
+    "handoff": "strike-1 measured on d1027 (hosted, 1,495/1,500, 5 pre-registered over-limit refusals); custody CONSUMED verified",
+    "key": "strike-1",
+    "relay": "board #31456 handoff, #31480 custody, #31488 same refused-id set (8d7957c3)"
+   },
+   {
+    "handoff": "release owner: same-items cost rule draw-wide on v1.6-regular-20261027 (v1.6.30 precedent)",
+    "key": "v1.6-regular-20261027",
+    "relay": "board #31465 (release owner), #31488 (intake: fine by me)"
+   }
+  ],
+  "button_tap": false,
+  "cost_basis": {
+   "decision": "same-items cost rule draw-wide on d1027 (board #31465; precedent v1.6.30, DECISIONS 2026-10-19 16:40Z, board #21769)",
+   "key": "v1.6-regular-20261027"
+  },
+  "fresh_baseline": "v1.7.15",
+  "release_owner_rulings": [
+   "d1027-strong-anchors-needed (all d1027 rows stay measured-but-unranked)",
+   "strike-1 pricing: declared base Qwen/Qwen3.5-4B through the frozen reference (0.03/0.15), output as the vendor reports (0), board #31196",
+   "same-items cost rule draw-wide on d1027 (board #31465)",
+   "v1713-topics-exception-h2o141 extended to every row on the draw (TEMPORARY topics exception)"
+  ],
+  "status": "GO (standing; no top-five change)",
+  "top_five_effect": "unchanged",
+  "top_five_preview": {
+   "path": "r197/v1716/receipts/topfive-diff.json",
+   "sha256": "742d619fc7dc37f130df22e6c3fa5e4a7d04cec664ae11fff49757eb13031ea9"
+  },
+  "unranked_basis": {
+   "card": "#18781",
+   "decision": "d1027-strong-anchors-needed",
+   "handled_by": "rows published unranked (ranked false), no order list changes; draw not equated (offset 0)"
+  }
+ },
+ "publication_review": {
+  "engine": "Claude Opus 5.5 (full critic, a65b7568) + Claude Sonnet 5.5 (delta critic, a98fa4a9)",
+  "receipt_sha256": "24b800de88835a35cb08fcc4fe6ec1391a0ceeb9e7c7c23875b923709d083d3d",
+  "verdict": "PASS"
+ },
+ "publication_sha256": "8a8ff006bbfd5b1fd09786d0acf00f79fc1f4bf34cca18a75be38e6de0922f42",
+ "release": "v1.7.16",
+ "remeasured_rows": {},
+ "repriced_rows": {
+  "arcbright-elf-1-12b-r2": {
+   "fields": [
+    "axes",
+    "composite_ci95",
+    "cost",
+    "jevbench_score",
+    "scores",
+    "v16",
+    "views"
+   ],
+   "usd_per_1000": 0.01954180658159839,
+   "usd_per_1000_all_items": 0.020511333333333333
+  },
+  "decisio-gemma-4-12b-tuned-commit-think": {
+   "fields": [
+    "axes",
+    "composite_ci95",
+    "cost",
+    "jevbench_score",
+    "scores",
+    "v16",
+    "views"
+   ],
+   "usd_per_1000": 0.02161638683680323,
+   "usd_per_1000_all_items": 0.02904646666666667
+  },
+  "h2o-lightning-4b-v1.4.1": {
+   "fields": [
+    "axes",
+    "composite_ci95",
+    "cost",
+    "jevbench_score",
+    "scores",
+    "v16",
+    "views"
+   ],
+   "usd_per_1000": 0.011187461383478847,
+   "usd_per_1000_all_items": 0.014370400000000004
+  },
+  "jeff_1_1_large": {
+   "fields": [
+    "axes",
+    "composite_ci95",
+    "cost",
+    "jevbench_score",
+    "scores",
+    "v16",
+    "views"
+   ],
+   "usd_per_1000": 0.040567629281396914,
+   "usd_per_1000_all_items": 0.042161033333333334
+  },
+  "jeff_1_1_qwen_4b": {
+   "fields": [
+    "axes",
+    "composite_ci95",
+    "cost",
+    "jevbench_score",
+    "scores",
+    "v16",
+    "views"
+   ],
+   "usd_per_1000": 0.0190047481531229,
+   "usd_per_1000_all_items": 0.019557019999999998
+  },
+  "microsoft-decision-1-r2": {
+   "fields": [
+    "axes",
+    "composite_ci95",
+    "cost",
+    "disclosure",
+    "jevbench_score",
+    "scores",
+    "v16",
+    "views"
+   ],
+   "usd_per_1000": 0.013173191403626596,
+   "usd_per_1000_all_items": 0.013137898191560617
+  },
+  "torchcast-decision-31b-v1.0": {
+   "fields": [
+    "axes",
+    "composite_ci95",
+    "cost",
+    "jevbench_score",
+    "scores",
+    "v16",
+    "views"
+   ],
+   "usd_per_1000": 0.03389621222296844,
+   "usd_per_1000_all_items": 0.03871607999999999
+  }
+ },
+ "scorers": {
+  "a2_cells_v16": "afd034efe27bde12f2ebbfd12c4c0792c93214e1aa9a63deecb0e83a0184c990",
+  "build_categories_v16": "40eb50f3d7fea2693b4478c4b89f8bfb957dd17776add491935742e3b9354e73",
+  "build_topics_v16": "ec04ab598162bfc4340ffa7916a06573eb1222132c61e47ab772045bc67ced78",
+  "decisive_v16": "80b9ccf43e58dddb1b2a77e0a33aba8a9f7337a3a9a639afc7264218bbf8918f",
+  "noul_method_v16": "119e59486ab3300b972fbcbadb0fe1dceceb124287607375aa61c66063c607d0",
+  "pins_v17": "b50cc00dd2cb0ba46157eb6a2bda620255f3ff54404025e992bc7962dfff2f8b",
+  "run_under_v17": "efb194b2ea350db59be37e5e72af71f809f763a2476cd6f521adf6f4fd90a64f",
+  "score_v15": "0931e05c6410b1b971201834397cb609cdb25f942723c50375632952f6dcc447",
+  "score_v15_headlineA": "826f2cbcb57007ec8a161e6eb0111182b8a656c0638027c6c78022a858fd8e2c",
+  "score_v16": "02132271117653e6302c509232a581d0094f0e78eac8b1bfc67596fd5d5097e9",
+  "score_v17": "6363458d208a52f4ad5aaf73027cad1b7e0358ff962e581d57a3cc462c8f1978"
+ },
+ "text_fixed_rows": []
+}

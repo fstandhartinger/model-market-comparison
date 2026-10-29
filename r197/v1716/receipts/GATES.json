@@ -1,0 +1,1117 @@
+{
+ "CARRIED-ROWS": {
+  "base_commit": "ba210893104cc0a8748c79415a50429df1e077d2",
+  "board_equal": true,
+  "carried_cells_equal": 312,
+  "carried_rows": 307,
+  "cost_only_exception": {
+   "arcbright-elf-1-12b-r2": [
+    "axes",
+    "composite_ci95",
+    "cost",
+    "jevbench_score",
+    "scores",
+    "v16",
+    "views"
+   ],
+   "decisio-gemma-4-12b-tuned-commit-think": [
+    "axes",
+    "composite_ci95",
+    "cost",
+    "jevbench_score",
+    "scores",
+    "v16",
+    "views"
+   ],
+   "h2o-lightning-4b-v1.4.1": [
+    "axes",
+    "composite_ci95",
+    "cost",
+    "jevbench_score",
+    "scores",
+    "v16",
+    "views"
+   ],
+   "jeff_1_1_large": [
+    "axes",
+    "composite_ci95",
+    "cost",
+    "jevbench_score",
+    "scores",
+    "v16",
+    "views"
+   ],
+   "jeff_1_1_qwen_4b": [
+    "axes",
+    "composite_ci95",
+    "cost",
+    "jevbench_score",
+    "scores",
+    "v16",
+    "views"
+   ],
+   "microsoft-decision-1-r2": [
+    "axes",
+    "composite_ci95",
+    "cost",
+    "disclosure",
+    "jevbench_score",
+    "scores",
+    "v16",
+    "views"
+   ],
+   "torchcast-decision-31b-v1.0": [
+    "axes",
+    "composite_ci95",
+    "cost",
+    "jevbench_score",
+    "scores",
+    "v16",
+    "views"
+   ]
+  },
+  "draw_entry_only_releases_extended": true,
+  "exception_rows_equal_outside_the_cost_fields": true,
+  "family_rows_equal": [
+   "microsoft-decision-1",
+   "h2o-lightning-4b",
+   "arcbright-elf-1-12b",
+   "decisio-gemma-4-12b-tuned-commit",
+   "jeff_1_1_medium",
+   "jeff_1_0_large"
+  ],
+  "immutable_bytes": [
+   "carry",
+   "history",
+   "history-carry"
+  ],
+  "live_round1_row_unchanged": true,
+  "n_ranked_equal": true,
+  "new_rows_unranked": [
+   "strike-1"
+  ],
+  "new_score_payloads_equal_to_sources": true,
+  "predecessor_files_equal_to_base": 21,
+  "predecessor_libs_equal_to_base": 4,
+  "predecessor_publication_sha256": "2f97decd674fe57db9ac7dade51a7c6b1b10dcc2ee26817646b99db90e8298b8",
+  "rows_equal_including_ranks": 300,
+  "status": "PASS"
+ },
+ "COMMON-SET-BINDING": {
+  "cost_basis_msft_view_sha256": "3bb4e58e15530a2688b561ab3fbaf9c8f956ec149853b6397c89d094779fb715",
+  "cost_basis_sha256": "b83bdfd14c263ffacfa572b304084154afca84c1f00083101a33783ae6f8b356",
+  "every_row_answered_every_common_item": true,
+  "excluded_from_1500": 11,
+  "excluded_from_msft_view": 4,
+  "exclusion_pattern_counts": {
+   "microsoft-decision-1-r2": 6,
+   "microsoft-decision-1-r2,strike-1": 5
+  },
+  "n_items": 1489,
+  "per_row_membership": {
+   "arcbright-elf-1-12b-r2": {
+    "answered_not_in_common": 11,
+    "answered_ok": 1500,
+    "raw_sha256": "84f08ebb6ff92af453b75cda042f617ea89c5be6a2176c7c69e11f2521da6f08",
+    "rows": 1500
+   },
+   "decisio-gemma-4-12b-tuned-commit-think": {
+    "answered_not_in_common": 11,
+    "answered_ok": 1500,
+    "raw_sha256": "d7396dd680e13af9ba26c4526007fee3647d03eee7673bf88075ac510f39cc3c",
+    "rows": 1500
+   },
+   "h2o-lightning-4b-v1.4.1": {
+    "answered_not_in_common": 11,
+    "answered_ok": 1500,
+    "raw_sha256": "96d26bb3c0486ecbee832e309db4099b3a616b1540b4a92eff09dec81b719335",
+    "rows": 1500
+   },
+   "jeff_1_1_large": {
+    "answered_not_in_common": 11,
+    "answered_ok": 1500,
+    "raw_sha256": "1f1fdc2df674da00128ae7b47d5ea3429cf1124383a077577e7c68c7d9cc0e72",
+    "rows": 1500
+   },
+   "jeff_1_1_qwen_4b": {
+    "answered_not_in_common": 11,
+    "answered_ok": 1500,
+    "raw_sha256": "c37fada15a2021cf744b2031acb964508caf48873a2bcda5da6d6ac4a5e7c288",
+    "rows": 1500
+   },
+   "microsoft-decision-1-r2": {
+    "answered_not_in_common": 0,
+    "answered_ok": 1489,
+    "raw_sha256": "1f069818cdc069a532a4c4965d306fbd302bb819dde4aa3c48a9bd676c4a981e",
+    "rows": 1493
+   },
+   "strike-1": {
+    "answered_not_in_common": 6,
+    "answered_ok": 1495,
+    "raw_sha256": "4c6c7ab25b11432f8934425a44806ec5a2499241a9c5790216a11651473f2027",
+    "rows": 1500
+   },
+   "torchcast-decision-31b-v1.0": {
+    "answered_not_in_common": 11,
+    "answered_ok": 1500,
+    "raw_sha256": "e51a1c22336050368336c996d7cb32181bad5e854024f07844b2a8577a0dda7d",
+    "rows": 1500
+   }
+  },
+  "raw_pins_match_earlier_releases": true,
+  "set_hash_rule": "sha256 of the sorted opaque id list as compact JSON",
+  "set_sha256": "4e912731e63369e1b3066b0b4afa87b44f1094aea079c5b41dc6d02e7f235537",
+  "status": "PASS"
+ },
+ "COST-KIND": {
+  "measured_without_bill": 0,
+  "negative_test": "r197/v1716/check_pricing_reference_v1716.py + validate_v1716.mjs",
+  "new_rows": {
+   "strike-1": {
+    "basis_items": 1489,
+    "input_tokens_common": 1687022,
+    "kind": "estimate",
+    "output_tokens": 0,
+    "reference": {
+     "base": "Qwen/Qwen3.5-4B",
+     "in": 0.03,
+     "kind": "estimate",
+     "listing": "deepinfra:Qwen/Qwen3.5-4B",
+     "out": 0.15,
+     "rule": "frozen pricing_v15 reference() for the stated base model; output priced at 0 tokens as the vendor reports (9 Oct 2026 zero-output rule)"
+    },
+    "usd_per_1000": 0.03398969778374748
+   }
+  },
+  "recosted_rows": {
+   "arcbright-elf-1-12b-r2": {
+    "kind": "estimate",
+    "usd_per_1000_all_items": 0.020511333333333333,
+    "usd_per_1000_common": 0.01954180658159839
+   },
+   "decisio-gemma-4-12b-tuned-commit-think": {
+    "kind": "estimate",
+    "usd_per_1000_all_items": 0.02904646666666667,
+    "usd_per_1000_common": 0.02161638683680323
+   },
+   "h2o-lightning-4b-v1.4.1": {
+    "kind": "estimate",
+    "usd_per_1000_all_items": 0.014370400000000004,
+    "usd_per_1000_common": 0.011187461383478847
+   },
+   "jeff_1_1_large": {
+    "kind": "estimate",
+    "usd_per_1000_all_items": 0.042161033333333334,
+    "usd_per_1000_common": 0.040567629281396914
+   },
+   "jeff_1_1_qwen_4b": {
+    "kind": "estimate",
+    "usd_per_1000_all_items": 0.019557019999999998,
+    "usd_per_1000_common": 0.0190047481531229
+   },
+   "microsoft-decision-1-r2": {
+    "kind": "tariff",
+    "usd_per_1000_all_items": 0.013137898191560617,
+    "usd_per_1000_common": 0.013173191403626596
+   },
+   "torchcast-decision-31b-v1.0": {
+    "kind": "estimate",
+    "usd_per_1000_all_items": 0.03871607999999999,
+    "usd_per_1000_common": 0.03389621222296844
+   }
+  },
+  "status": "PASS"
+ },
+ "HELPERS": {
+  "approval_negative_cases": 16,
+  "fixture_flip_refused": true,
+  "fixture_grants_no_authority": true,
+  "pending_freeze_refused": true,
+  "real_flip_dry_run_accepted_no_write": true,
+  "real_manifests_unchanged": [
+   "aad73dad129bfb849a6b1c2a3187472736d16a57bdf0c3bf67f108d2b9ccfe2d",
+   "2f97decd674fe57db9ac7dade51a7c6b1b10dcc2ee26817646b99db90e8298b8",
+   "61f6b9ec4aece1aa6ea6a592671a50c82ebda072f9bd8e067300dd3e1f20f81c"
+  ],
+  "real_v1715_review": "PASS",
+  "seal_write_refused": true,
+  "stale_predecessor_binding_refused": true,
+  "standing_go_checked": true,
+  "status": "PASS",
+  "synthetic_flip_dry_run": true,
+  "synthetic_freeze_dry_run": true
+ },
+ "PREVIEW": {
+  "footer": "Release review pending",
+  "html_script_syntax": true,
+  "png": [
+   1440,
+   900
+  ],
+  "ranking_models_resolve": true,
+  "status": "PASS",
+  "visual_inspection": "Card viewed; no clipping or overlap"
+ },
+ "PRICING-REFERENCES": {
+  "negatives_rejected": 3,
+  "pricing_module_sha256": "645fd82eac728d597048bec0995ecd3ac896566e269fb6c9a1fdb84c171a9ac4",
+  "recosted_rows_rates_unchanged": {
+   "arcbright-elf-1-12b-r2": {
+    "in": 0.05,
+    "kind": "estimate",
+    "out": 0.15
+   },
+   "decisio-gemma-4-12b-tuned-commit-think": {
+    "in": 0.05,
+    "kind": "estimate",
+    "out": 0.15
+   },
+   "h2o-lightning-4b-v1.4.1": {
+    "in": 0.030000000000000002,
+    "kind": "estimate",
+    "out": 0.15
+   },
+   "jeff_1_1_large": {
+    "in": 0.09,
+    "kind": "estimate",
+    "out": 0.34
+   },
+   "jeff_1_1_qwen_4b": {
+    "in": 0.03,
+    "kind": "estimate",
+    "out": 0.15
+   },
+   "microsoft-decision-1-r2": {
+    "in": 0.042,
+    "kind": "tariff",
+    "out": 0.0
+   },
+   "torchcast-decision-31b-v1.0": {
+    "in": 0.09,
+    "kind": "estimate",
+    "out": 0.34
+   }
+  },
+  "rows": {
+   "strike-1": {
+    "base": "Qwen/Qwen3.5-4B",
+    "in": 0.03,
+    "kind": "estimate",
+    "listing": "deepinfra:Qwen/Qwen3.5-4B",
+    "out": 0.15,
+    "rule": "frozen pricing_v15 reference() for the stated base model; output priced at 0 tokens as the vendor reports (9 Oct 2026 zero-output rule)"
+   }
+  },
+  "status": "PASS"
+ },
+ "PUBLIC-TEXT": {
+  "allowed_ranking_phrases": [
+   "unranked",
+   "NOT RANKED",
+   "no ranking or ranked order changes",
+   "No ranking or ranked order changes",
+   "No existing rank or ranking changed"
+  ],
+  "banned_pattern": "/home/|workers/|board\\s*#|#\\d{4,}|Florian|release.owner|\\blead\\b|deputy|custody|auto-intake|\\br59\\b|\\br65\\b|\\br19\\d\\b|9D88ECFA|\\bkit\\b|d2b677de|9cde338c|Anna|Roth|Gmail|h2o141|tc31b|d1027-|v171[3456]u?-|jevbench-add-requests|\\bfusion\\b|\\bworker\\b|fast-lane order|paid order|\\bPREREG\\b|(?-i:DECISIONS)|\\{[A-Za-z_][A-Za-z0-9_]*\\}|\\brank(?:ed|ing)?\\b|top[- ](?:five|5)",
+  "checked": [
+   "arcbright-elf-1-12b-r2.cost.basis",
+   "arcbright-elf-1-12b-r2.not_ranked_because",
+   "categories_note",
+   "decisio-gemma-4-12b-tuned-commit-think.cost.basis",
+   "decisio-gemma-4-12b-tuned-commit-think.not_ranked_because",
+   "draw_table_entry",
+   "h2o-lightning-4b-v1.4.1.cost.basis",
+   "h2o-lightning-4b-v1.4.1.not_ranked_because",
+   "history_line",
+   "jeff_1_1_large.cost.basis",
+   "jeff_1_1_large.not_ranked_because",
+   "jeff_1_1_qwen_4b.cost.basis",
+   "jeff_1_1_qwen_4b.not_ranked_because",
+   "label",
+   "microsoft-decision-1-r2.cost.basis",
+   "microsoft-decision-1-r2.disclosure",
+   "microsoft-decision-1-r2.not_ranked_because",
+   "new_measurement_note",
+   "page",
+   "source_note",
+   "strike-1.author",
+   "strike-1.cost.basis",
+   "strike-1.disclosure",
+   "strike-1.display",
+   "strike-1.endpoint_condition",
+   "strike-1.model_pin",
+   "strike-1.not_ranked_because",
+   "torchcast-decision-31b-v1.0.cost.basis",
+   "torchcast-decision-31b-v1.0.not_ranked_because"
+  ],
+  "common_set_attribution": "Microsoft-Decision-1 (updated weights) ran on 1,493 items and answered 1,489; Strike-1's 5 refused long items are among those it did not answer, so every row on this draw is costed on those 1,489 items",
+  "exact_history_sentence": true,
+  "exact_notes": [
+   "arcbright-elf-1-12b-r2",
+   "decisio-gemma-4-12b-tuned-commit-think",
+   "h2o-lightning-4b-v1.4.1",
+   "jeff_1_1_large",
+   "jeff_1_1_qwen_4b",
+   "microsoft-decision-1-r2",
+   "strike-1",
+   "torchcast-decision-31b-v1.0"
+  ],
+  "h2o_extra_sentence": true,
+  "no_equating_claim": true,
+  "release_draw_status": "The draw is not yet equated to the reference scale (stronger anchor runs for that draw are being measured), so its numbers are shown as published (offset 0) and no ranking or ranked order changes.",
+  "same_items_sentence_on_all_8": true,
+  "status": "PASS",
+  "strike_disclosures": [
+   "hosted EU",
+   "5 over-limit refusals scored as misses",
+   "output 0",
+   "stated base Qwen3.5-4B fine-tune",
+   "beta, uncalibrated probabilities"
+  ],
+  "topic_cell_sentence_kept": true
+ },
+ "R198-FIX2-DELTA": {
+  "all_308_rows_equal": true,
+  "base": "a65b7568",
+  "numbers_notes_orders_unchanged": true,
+  "only_results_change": "F2 substring in last measurement note",
+  "status": "PASS"
+ },
+ "R198-FIX2-GATES": {
+  "all_308_rows_equal_to_base": true,
+  "base": "a65b7568",
+  "build_exit": 0,
+  "build_pages": [
+   "640",
+   "640"
+  ],
+  "built_route": {
+   "compiled_route": ".next/server/app/api/jevbench/latest/route.js",
+   "draw_rows_in_feed": [
+    {
+     "composite_score": 75.66989716801469,
+     "key": "arcbright-elf-1-12b-r2",
+     "listing": "unranked",
+     "note_exact": true,
+     "rank": null,
+     "ranked": false
+    },
+    {
+     "composite_score": 74.67659424956109,
+     "key": "decisio-gemma-4-12b-tuned-commit-think",
+     "listing": "unranked",
+     "note_exact": true,
+     "rank": null,
+     "ranked": false
+    },
+    {
+     "composite_score": 77.04257936486634,
+     "key": "h2o-lightning-4b-v1.4.1",
+     "listing": "unranked",
+     "note_exact": true,
+     "rank": null,
+     "ranked": false
+    },
+    {
+     "composite_score": 71.57749064353953,
+     "key": "jeff_1_1_large",
+     "listing": "unranked",
+     "note_exact": true,
+     "rank": null,
+     "ranked": false
+    },
+    {
+     "composite_score": 73.21882869773437,
+     "key": "jeff_1_1_qwen_4b",
+     "listing": "unranked",
+     "note_exact": true,
+     "rank": null,
+     "ranked": false
+    },
+    {
+     "composite_score": 76.97858754817413,
+     "key": "microsoft-decision-1-r2",
+     "listing": "unranked",
+     "note_exact": true,
+     "rank": null,
+     "ranked": false
+    },
+    {
+     "composite_score": 51.81470102195167,
+     "key": "strike-1",
+     "listing": "unranked",
+     "note_exact": true,
+     "rank": null,
+     "ranked": false
+    },
+    {
+     "composite_score": 77.28255327361624,
+     "key": "torchcast-decision-31b-v1.0",
+     "listing": "unranked",
+     "note_exact": true,
+     "rank": null,
+     "ranked": false
+    }
+   ],
+   "feed_rows": 308,
+   "live_round1_rank": 41,
+   "main_board_html_shows": [
+    "arcbright-elf-1-12b-r2",
+    "decisio-gemma-4-12b-tuned-commit-think",
+    "h2o-lightning-4b-v1.4.1",
+    "jeff_1_1_large",
+    "jeff_1_1_qwen_4b",
+    "microsoft-decision-1-r2",
+    "strike-1",
+    "torchcast-decision-31b-v1.0"
+   ],
+   "status": "PASS",
+   "synthetic_latest": "v1.7.16",
+   "v1716_page_shows_new_row": true
+  },
+  "changed_lists_count": 0,
+  "cheap_gates": {
+   "compare": {
+    "sha256": "5c8a1673cdbda9bbe056e75a8df554ae4a2818c7d4149ebf33ea4ddcc609be4c",
+    "summary": "PASS 580 lists; 0 changed; sliders 0 ; grid 0 ; custom 0 ; entrants {} ; leavers {}"
+   },
+   "helpers": {
+    "sha256": "6d46afd9a36f75e879560dc9e2127fd3f39e2ab4f32a7e8fb45be3f78d0dee5e",
+    "summary": "PASS flip/freeze dry runs (real tree: v1.7.15 PASS, dry-run flip accepted without writing, freeze refused while PENDING; synthetic tree OK), stale-binding refusal, fixture non-dry flip refused, seal-write refusal, 16 approval negatives; real manifests unchanged"
+   },
+   "preview": {
+    "sha256": "16b7d5fd48c912266654eb99b3f2180e3309fcefa0c6a975fcafaf08704619c6",
+    "summary": "PASS deterministic preview HTML and 1440x900 card; footer pending"
+   },
+   "preview-check": {
+    "sha256": "8dc1970e979e55619b70fed6652c78c5722a242ccd10caf9be3e41392cc91b0b",
+    "summary": "PASS preview script syntax, ranking model mappings, PENDING footer and 1440x900 card"
+   },
+   "public-text": {
+    "sha256": "a244d42ceb71d698cc6bfa61a5b2c37fdd0991d09677e4fb426c8b2f2fdc4d01",
+    "summary": "PASS public text: 29 texts clean; exact history sentence, exact d1027 note and the same-items cost sentence on all 8 draw rows (H2O with its v1.1 sentence), topic-cell sentence kept; Strike-1: hosted EU, 5 over-limit refusals scored as misses, output 0, stated base, beta disclosed; no equating claim"
+   },
+   "repro": {
+    "sha256": "160c2f1dfb7cf11dd90090d2ea22a1d54c1b79b8c8927deef148dbd3039d3ae7",
+    "summary": "PASS two deterministic rebuilds, 17 artifact hashes"
+   },
+   "source": {
+    "sha256": "a62030ccd41b6471d5777dba8f19cbf6a366a41040df286b2066f8647fd72270",
+    "summary": "PASS 300 carried rows fully equal incl. ranks (live round-1 Microsoft and family rows included); the 7 draw rows differ only in cost fields (Microsoft r2 also its ITEMS sentence), hash-pinned, re-derived from the --cost-basis scorer views and the common-set arithmetic; common set 1489 items sha 4e912731 bound (membership of all 8 rows); board/n_ranked unchanged; new row unranked with published values and estimate cost; draw entry only gains v1.7.16; carry/history bytes, 21 predecessor files and 4 predecessor libs equal to ba210893"
+   },
+   "validator": {
+    "sha256": "c2e78118bae6375b64ef5ada25c3b157e07626659550df769c121cca54fb5378",
+    "summary": "PASS 307 carried rows/cells (300 fully equal incl. ranks; the 7 rows of the 27 Oct draw differ only in their pinned cost fields under the same-items rule), unchanged order lists, 1 exact UNRANKED new hosted row (strike-1, 1,495/1,500, estimate on the common set), all 8 rows of the draw unranked with the exact note, draw not equated (offset 0); 133 bundle negatives and 97 row-gate negatives rejected"
+   },
+   "visibility": {
+    "sha256": "2e8e66593cee456ca0e0be4204223a70cd89196415edeed7be9d9de8ca1c3d81",
+    "summary": "PASS new row visible unranked on merged board + feed (api scope, like the other hosted row); the 7 carried draw rows unranked, only their cost/Cost axis/composite moved; 307 -> 308 board rows; no row of any draw vanished or changed; orders identical; real PENDING tree shows the v1.7.15 board ( 307 rows, v1.7.15 )"
+   }
+  },
+  "full_suite": "not rerun (text-only; prior .git-only failure accepted by lead)",
+  "lists": 580,
+  "pending": {
+   "cancelled": 0,
+   "fail": 1,
+   "failures": [
+    "gate: no listed row lacks topic, use-case or language cells without a recorded exception"
+   ],
+   "pass": 169,
+   "sha256": "c339f32eeeb2ecba57ea78720a402c0fc4562c6caf536f65a1f193eb3fcd4a13",
+   "skipped": 1,
+   "tests": 171
+  },
+  "postflip": {
+   "cancelled": 0,
+   "fail": 0,
+   "failures": [],
+   "pass": 184,
+   "sha256": "2d35c2cc6716be90da2e5a475734ea528689ee2ea7ddbb521c4038f1951eefef",
+   "skipped": 1,
+   "tests": 185
+  },
+  "preview": "regenerated and visually inspected, no clipping/overlap",
+  "publication_review": "PENDING",
+  "status": "PASS_WITH_EXPECTED_PENDING_FAILURE",
+  "typescript_exit": 0
+ },
+ "RAW-BINDING": {
+  "carried_raw_pins_match": true,
+  "common_set_recomputed": {
+   "equals_proof": true,
+   "n": 1489,
+   "set_sha256": "4e912731e63369e1b3066b0b4afa87b44f1094aea079c5b41dc6d02e7f235537"
+  },
+  "consumed_sha256": "497dfbd9f7703a2497a6d5d1b82f83e6a6891c82609a83e170e230f85933a52b",
+  "http": {
+   "200": 1495,
+   "400": 5
+  },
+  "input_tokens_all": 1692626,
+  "latency_max_s": 2.225,
+  "output_tokens": 0,
+  "over_10s": 0,
+  "raw_order_equals_input_order": true,
+  "raw_sha256": "4c6c7ab25b11432f8934425a44806ec5a2499241a9c5790216a11651473f2027",
+  "refusals_are_the_5_longest_items": true,
+  "rows": 1500,
+  "status": "PASS"
+ },
+ "REPRO": {
+  "files": {
+   "app/api/jevbench/v1.7.16/route.ts": "28862b5bfffc88bf7c86cd1256a7ff81ed736431c05023713c74e7375f06bed5",
+   "app/jev-models/v1.7.16/page.tsx": "21c9090e1e72a13639b8ee99acd5dd50c60d855834113120e54a2239c1acddbc",
+   "data/jevbench-architecture.json": "13ec5af8eaaa0dd8be3bf33c2b1c001795f0ff83526d80429b53cb6264ed3b01",
+   "data/jevbench-breakdown-exceptions.json": "906ecdafd6b85b3bd0ea411bf8663510afc969411ce0eb94464c854c3dd05470",
+   "data/jevbench-draw-equating.json": "49a0a2cc59a0599b37fc168fd20b38770c17c138c12c4a4397b2a53f4313354e",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.16-carry.json": "271d1fc77a136a04a1eb6deb5480c52d4211eb2b66b2ac8bb31e80867e69003a",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.16-categories.json": "c941eef9573f6e62ae863c6dde795f53e2fd19de2bd30c0b4bd4bb4466772d51",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.16-history-carry.json": "334e851944e92383ab3071e52b3012040c7023d0fe236395953169ebee8f0459",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.16-history.json": "5cd8c1332226ea9c179883d2285c0d8b8cc593ae38f2645197364a7ddd9c83c1",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.16-proof.json": "19263ff4083d4aa66a4c7e2b1a68a82a3773d9558a2d6e7e45022e5067acc452",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.16-publication.json": "aad73dad129bfb849a6b1c2a3187472736d16a57bdf0c3bf67f108d2b9ccfe2d",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.16-results.json": "537565017c8bbd721a82b710a155afc234d7e37ced8659b8610d37b652b79a27",
+   "lib/jevbench-live-board.mjs": "6fc38f163cd5f8baa1e9bcac389e7f047685b4917212ef22a64f99eaf5a6efcc",
+   "lib/jevbench-releases.mjs": "b866d37ff7915d4b8f8fef7922e24cfe3ccf434f443b439f5f9355eedb2358b4",
+   "lib/jevbench-v1716-release.mjs": "765eadccf911bee37a0a70a668ff77981ffd652765552dfe203afc3acfbc3872",
+   "test/jevbench-v1714-release.test.mjs": "a1ec49d8a431944c71ebde0c83bdbbe4ac34fb3f8195378e7d3c22137c9c9d23",
+   "test/jevbench-v1715-release.test.mjs": "6a8c9f1c542adadc4811fd7391210b821d4e13ae77bc2d00d57cc6d63e1d79a1"
+  },
+  "status": "PASS",
+  "two_rebuilds_identical": true
+ },
+ "VISIBILITY-POSTFLIP": {
+  "baseline_restated_by": "v1.7.15",
+  "board_rows_after": 308,
+  "board_rows_before": 307,
+  "board_rows_real": 307,
+  "draw_rows": {
+   "arcbright-elf-1-12b-r2": {
+    "board": {
+     "cost_axis": 61.27105868604284,
+     "draw": "v1.6-regular-20261027",
+     "intelligence": 66.79530416169641,
+     "listing": "unranked",
+     "not_ranked_because": "Measured on the 27 Oct 2026 draw, which is not yet equated to the reference scale: its first anchor runs used models weaker than this row, and stronger anchors are being measured. Shown unranked until then.",
+     "rank": null,
+     "ranked": false,
+     "ranks": {
+      "A": null,
+      "B": null,
+      "C": null,
+      "capability": null
+     },
+     "score_A": 75.66989716801469,
+     "usd_per_1000": 0.01954180658159839
+    },
+    "feed": {
+     "api_board_rank": null,
+     "capability_rank": null,
+     "composite_score": 75.66989716801469,
+     "draw": "v1.6-regular-20261027",
+     "listing": "unranked",
+     "not_ranked_because": "Measured on the 27 Oct 2026 draw, which is not yet equated to the reference scale: its first anchor runs used models weaker than this row, and stronger anchors are being measured. Shown unranked until then.",
+     "open_board_rank": null,
+     "open_capability_rank": null,
+     "rank": null,
+     "ranked": false
+    }
+   },
+   "decisio-gemma-4-12b-tuned-commit-think": {
+    "board": {
+     "cost_axis": 59.95650688961444,
+     "draw": "v1.6-regular-20261027",
+     "intelligence": 68.62145857576381,
+     "listing": "unranked",
+     "not_ranked_because": "Measured on the 27 Oct 2026 draw, which is not yet equated to the reference scale: its first anchor runs used models weaker than this row, and stronger anchors are being measured. Shown unranked until then.",
+     "rank": null,
+     "ranked": false,
+     "ranks": {
+      "A": null,
+      "B": null,
+      "C": null,
+      "capability": null
+     },
+     "score_A": 74.67659424956109,
+     "usd_per_1000": 0.02161638683680323
+    },
+    "feed": {
+     "api_board_rank": null,
+     "capability_rank": null,
+     "composite_score": 74.67659424956109,
+     "draw": "v1.6-regular-20261027",
+     "listing": "unranked",
+     "not_ranked_because": "Measured on the 27 Oct 2026 draw, which is not yet equated to the reference scale: its first anchor runs used models weaker than this row, and stronger anchors are being measured. Shown unranked until then.",
+     "open_board_rank": null,
+     "open_capability_rank": null,
+     "rank": null,
+     "ranked": false
+    }
+   },
+   "h2o-lightning-4b-v1.4.1": {
+    "board": {
+     "cost_axis": 68.53805352271712,
+     "draw": "v1.6-regular-20261027",
+     "intelligence": 64.42926862934559,
+     "listing": "unranked",
+     "not_ranked_because": "Measured on the 27 Oct 2026 draw, which is not yet equated to the reference scale: its first anchor runs used models weaker than this row, and stronger anchors are being measured. On the 300 public items every draw shares, this version scores 57.2 Intelligence vs 61.1 for H2O-Lightning-4B v1.1. Shown unranked until then.",
+     "rank": null,
+     "ranked": false,
+     "ranks": {
+      "A": null,
+      "B": null,
+      "C": null,
+      "capability": null
+     },
+     "score_A": 77.04257936486634,
+     "usd_per_1000": 0.011187461383478847
+    },
+    "feed": {
+     "api_board_rank": null,
+     "capability_rank": null,
+     "composite_score": 77.04257936486634,
+     "draw": "v1.6-regular-20261027",
+     "listing": "unranked",
+     "not_ranked_because": "Measured on the 27 Oct 2026 draw, which is not yet equated to the reference scale: its first anchor runs used models weaker than this row, and stronger anchors are being measured. On the 300 public items every draw shares, this version scores 57.2 Intelligence vs 61.1 for H2O-Lightning-4B v1.1. Shown unranked until then.",
+     "open_board_rank": null,
+     "open_capability_rank": null,
+     "rank": null,
+     "ranked": false
+    }
+   },
+   "jeff_1_1_large": {
+    "board": {
+     "cost_axis": 51.75461113447842,
+     "draw": "v1.6-regular-20261027",
+     "intelligence": 84.4898380044484,
+     "listing": "unranked",
+     "not_ranked_because": "Measured on the 27 Oct 2026 draw, which is not yet equated to the reference scale: its first anchor runs used models weaker than this row, and stronger anchors are being measured. Shown unranked until then.",
+     "rank": null,
+     "ranked": false,
+     "ranks": {
+      "A": null,
+      "B": null,
+      "C": null,
+      "capability": null
+     },
+     "score_A": 71.57749064353953,
+     "usd_per_1000": 0.040567629281396914
+    },
+    "feed": {
+     "api_board_rank": null,
+     "capability_rank": null,
+     "composite_score": 71.57749064353953,
+     "draw": "v1.6-regular-20261027",
+     "listing": "unranked",
+     "not_ranked_because": "Measured on the 27 Oct 2026 draw, which is not yet equated to the reference scale: its first anchor runs used models weaker than this row, and stronger anchors are being measured. Shown unranked until then.",
+     "open_board_rank": null,
+     "open_capability_rank": null,
+     "rank": null,
+     "ranked": false
+    }
+   },
+   "jeff_1_1_qwen_4b": {
+    "board": {
+     "cost_axis": 61.6341364360232,
+     "draw": "v1.6-regular-20261027",
+     "intelligence": 68.16962043390559,
+     "listing": "unranked",
+     "not_ranked_because": "Measured on the 27 Oct 2026 draw, which is not yet equated to the reference scale: its first anchor runs used models weaker than this row, and stronger anchors are being measured. Shown unranked until then.",
+     "rank": null,
+     "ranked": false,
+     "ranks": {
+      "A": null,
+      "B": null,
+      "C": null,
+      "capability": null
+     },
+     "score_A": 73.21882869773437,
+     "usd_per_1000": 0.0190047481531229
+    },
+    "feed": {
+     "api_board_rank": null,
+     "capability_rank": null,
+     "composite_score": 73.21882869773437,
+     "draw": "v1.6-regular-20261027",
+     "listing": "unranked",
+     "not_ranked_because": "Measured on the 27 Oct 2026 draw, which is not yet equated to the reference scale: its first anchor runs used models weaker than this row, and stronger anchors are being measured. Shown unranked until then.",
+     "open_board_rank": null,
+     "open_capability_rank": null,
+     "rank": null,
+     "ranked": false
+    }
+   },
+   "microsoft-decision-1-r2": {
+    "board": {
+     "cost_axis": 66.40926993775184,
+     "draw": "v1.6-regular-20261027",
+     "intelligence": 67.11026330364345,
+     "listing": "unranked",
+     "not_ranked_because": "Measured on the 27 Oct 2026 draw, which is not yet equated to the reference scale: its first anchor runs used models weaker than this row, and stronger anchors are being measured. Shown unranked until then.",
+     "rank": null,
+     "ranked": false,
+     "ranks": {
+      "A": null,
+      "B": null,
+      "C": null,
+      "capability": null
+     },
+     "score_A": 76.97858754817413,
+     "usd_per_1000": 0.013173191403626596
+    },
+    "feed": {
+     "api_board_rank": null,
+     "capability_rank": null,
+     "composite_score": 76.97858754817413,
+     "draw": "v1.6-regular-20261027",
+     "listing": "unranked",
+     "not_ranked_because": "Measured on the 27 Oct 2026 draw, which is not yet equated to the reference scale: its first anchor runs used models weaker than this row, and stronger anchors are being measured. Shown unranked until then.",
+     "open_board_rank": null,
+     "open_capability_rank": null,
+     "rank": null,
+     "ranked": false
+    }
+   },
+   "strike-1": {
+    "board": {
+     "cost_axis": 54.05958090666912,
+     "draw": "v1.6-regular-20261027",
+     "intelligence": 45.347915471780475,
+     "listing": "unranked",
+     "not_ranked_because": "Measured on the 27 Oct 2026 draw, which is not yet equated to the reference scale; stronger anchor runs for that draw are being measured. Shown unranked until then.",
+     "rank": null,
+     "ranked": false,
+     "ranks": {
+      "A": null,
+      "B": null,
+      "C": null,
+      "capability": null
+     },
+     "score_A": 51.81470102195167,
+     "usd_per_1000": 0.03398969778374748
+    },
+    "feed": {
+     "api_board_rank": null,
+     "capability_rank": null,
+     "composite_score": 51.81470102195167,
+     "draw": "v1.6-regular-20261027",
+     "listing": "unranked",
+     "not_ranked_because": "Measured on the 27 Oct 2026 draw, which is not yet equated to the reference scale; stronger anchor runs for that draw are being measured. Shown unranked until then.",
+     "open_board_rank": null,
+     "open_capability_rank": null,
+     "rank": null,
+     "ranked": false
+    }
+   },
+   "torchcast-decision-31b-v1.0": {
+    "board": {
+     "cost_axis": 54.09546489689161,
+     "draw": "v1.6-regular-20261027",
+     "intelligence": 88.35914237381022,
+     "listing": "unranked",
+     "not_ranked_because": "Measured on the 27 Oct 2026 draw, which is not yet equated to the reference scale: its first anchor runs used models weaker than this row, and stronger anchors are being measured. Shown unranked until then.",
+     "rank": null,
+     "ranked": false,
+     "ranks": {
+      "A": null,
+      "B": null,
+      "C": null,
+      "capability": null
+     },
+     "score_A": 77.28255327361624,
+     "usd_per_1000": 0.03389621222296844
+    },
+    "feed": {
+     "api_board_rank": null,
+     "capability_rank": null,
+     "composite_score": 77.28255327361624,
+     "draw": "v1.6-regular-20261027",
+     "listing": "unranked",
+     "not_ranked_because": "Measured on the 27 Oct 2026 draw, which is not yet equated to the reference scale: its first anchor runs used models weaker than this row, and stronger anchors are being measured. Shown unranked until then.",
+     "open_board_rank": null,
+     "open_capability_rank": null,
+     "rank": null,
+     "ranked": false
+    }
+   }
+  },
+  "draw_rows_differ_only_in_cost": [
+   "arcbright-elf-1-12b-r2",
+   "decisio-gemma-4-12b-tuned-commit-think",
+   "h2o-lightning-4b-v1.4.1",
+   "jeff_1_1_large",
+   "jeff_1_1_qwen_4b",
+   "microsoft-decision-1-r2",
+   "torchcast-decision-31b-v1.0"
+  ],
+  "feed_latest_release": "v1.7.16",
+  "feed_rows_after": 308,
+  "feed_rows_before": 307,
+  "new_row_in_api_scope": true,
+  "order_lists_identical": true,
+  "other_rows_identical": true,
+  "pass_tree_restated_by": "v1.7.16",
+  "pending_hidden_in_real_tree": true,
+  "real_tree_latest": "v1.7.15",
+  "real_tree_restated_by": "v1.7.15",
+  "rows_per_draw_after": {
+   "None": 158,
+   "v1.6-fastlane-20261009": 6,
+   "v1.6-regular-20261010-a2": 16,
+   "v1.6-regular-20261012": 120,
+   "v1.6-regular-20261027": 8
+  },
+  "rows_per_draw_before": {
+   "None": 158,
+   "v1.6-fastlane-20261009": 6,
+   "v1.6-regular-20261010-a2": 16,
+   "v1.6-regular-20261012": 120,
+   "v1.6-regular-20261027": 7
+  },
+  "status": "PASS"
+ },
+ "approval": "GO (standing; no top-five change)",
+ "fulltest-postflip-once": {
+  "cancelled": 0,
+  "evidence_scope": "Historical prior fix; not rerun for text-only fix2. Lead accepted the .git-only failure.",
+  "exit": {
+   "command": "suite-slot heavy-run npm test (LeChonk synthetic PASS)",
+   "exit_code": 1
+  },
+  "fail": 1,
+  "log_sha256": "170a5fcd1caaf9f78a0a3fcf01b67d4399af0fe4872689ce9823dca13fd4ad4d",
+  "not_ok": [
+   "the supervisor's dated brief backups can never make the checkout dirty again"
+  ],
+  "pass": 3909,
+  "restored_byte_equal": true,
+  "skipped": 10,
+  "tests": 3920
+ },
+ "helpers": {
+  "log_sha256": "6d46afd9a36f75e879560dc9e2127fd3f39e2ab4f32a7e8fb45be3f78d0dee5e",
+  "status": "PASS",
+  "summary": "PASS flip/freeze dry runs (real tree: v1.7.15 PASS, dry-run flip accepted without writing, freeze refused while PENDING; synthetic tree OK), stale-binding refusal, fixture non-dry flip refused, seal-write refusal, 16 approval negatives; real manifests unchanged"
+ },
+ "open_items": [
+  "independent publication review PENDING (flip_verdict_v1716.py binds a real PASS receipt; then freeze/seal by the release owner)"
+ ],
+ "postflip-release-suites": {
+  "cancelled": 0,
+  "fail": 0,
+  "log_sha256": "2d35c2cc6716be90da2e5a475734ea528689ee2ea7ddbb521c4038f1951eefef",
+  "not_ok": [],
+  "pass": 184,
+  "skipped": 1,
+  "tests": 185
+ },
+ "preview-check": {
+  "log_sha256": "8dc1970e979e55619b70fed6652c78c5722a242ccd10caf9be3e41392cc91b0b",
+  "status": "PASS",
+  "summary": "PASS preview script syntax, ranking model mappings, PENDING footer and 1440x900 card"
+ },
+ "pricing-references": {
+  "log_sha256": "a723bc6de383ed82ff086a523ec30d897d6fb65e5eb8d6a69515a47ada361ee6",
+  "status": "PASS",
+  "summary": "PASS strike-1 reference deepinfra:Qwen/Qwen3.5-4B 0.03/0.15 (estimate, output 0) from the frozen module 645fd82e ; 7 re-costed rows keep their published rates (each reproduces its published all-items figure); 3 mismatch negatives rejected"
+ },
+ "prior_fix_history": {
+  "R198-DELTA": {
+   "base": "70c9bbeb",
+   "carried_rows_byte_equal": 307,
+   "note_new": "Measured on the 27 Oct 2026 draw, which is not yet equated to the reference scale; stronger anchor runs for that draw are being measured. Shown unranked until then.",
+   "note_old": "Measured on the 27 Oct 2026 draw, which is not yet equated to the reference scale: its first anchor runs used models weaker than this row, and stronger anchors are being measured. Shown unranked until then.",
+   "numbers_and_orders_unchanged": true,
+   "release_note_only_changed_suffix": "NOT RANKED",
+   "status": "PASS",
+   "strike_only_changed_field": "not_ranked_because"
+  },
+  "commit": "a65b7568",
+  "extra_skips_vs_previous": [
+   "ImageJevBench adapter accepts the read-only v0.2 core-headline artifact # SKIP",
+   "finalizer rejects the actual authenticated date-deferral reply in notify ledger # SKIP"
+  ],
+  "reason": "Full suite requires Git metadata that heavy-run excludes; unexpected failure triggers the brief STOP rule. No environment fix or suite retry performed.",
+  "v1713-supplement": {
+   "pending": {
+    "cancelled": 0,
+    "fail": 0,
+    "log_sha256": "cd637c112275d18ee8710dcebbbe334920d346ee305ac0cd4fbc0e2de3a0a267",
+    "not_ok": [],
+    "pass": 9,
+    "restored_byte_equal": false,
+    "skipped": 0,
+    "tests": 9
+   },
+   "postflip": {
+    "cancelled": 0,
+    "fail": 0,
+    "log_sha256": "58100fe173c9fe99340a5b4a52d76aa8ff594a78b9b1a36e52fc76824858bfed",
+    "not_ok": [],
+    "pass": 9,
+    "restored_byte_equal": true,
+    "skipped": 0,
+    "tests": 9
+   }
+  }
+ },
+ "production-build-postflip": {
+  "built_route": {
+   "compiled_route": ".next/server/app/api/jevbench/latest/route.js",
+   "draw_rows_in_feed": [
+    {
+     "composite_score": 75.66989716801469,
+     "key": "arcbright-elf-1-12b-r2",
+     "listing": "unranked",
+     "note_exact": true,
+     "rank": null,
+     "ranked": false
+    },
+    {
+     "composite_score": 74.67659424956109,
+     "key": "decisio-gemma-4-12b-tuned-commit-think",
+     "listing": "unranked",
+     "note_exact": true,
+     "rank": null,
+     "ranked": false
+    },
+    {
+     "composite_score": 77.04257936486634,
+     "key": "h2o-lightning-4b-v1.4.1",
+     "listing": "unranked",
+     "note_exact": true,
+     "rank": null,
+     "ranked": false
+    },
+    {
+     "composite_score": 71.57749064353953,
+     "key": "jeff_1_1_large",
+     "listing": "unranked",
+     "note_exact": true,
+     "rank": null,
+     "ranked": false
+    },
+    {
+     "composite_score": 73.21882869773437,
+     "key": "jeff_1_1_qwen_4b",
+     "listing": "unranked",
+     "note_exact": true,
+     "rank": null,
+     "ranked": false
+    },
+    {
+     "composite_score": 76.97858754817413,
+     "key": "microsoft-decision-1-r2",
+     "listing": "unranked",
+     "note_exact": true,
+     "rank": null,
+     "ranked": false
+    },
+    {
+     "composite_score": 51.81470102195167,
+     "key": "strike-1",
+     "listing": "unranked",
+     "note_exact": true,
+     "rank": null,
+     "ranked": false
+    },
+    {
+     "composite_score": 77.28255327361624,
+     "key": "torchcast-decision-31b-v1.0",
+     "listing": "unranked",
+     "note_exact": true,
+     "rank": null,
+     "ranked": false
+    }
+   ],
+   "feed_rows": 308,
+   "live_round1_rank": 41,
+   "main_board_html_shows": [
+    "arcbright-elf-1-12b-r2",
+    "decisio-gemma-4-12b-tuned-commit-think",
+    "h2o-lightning-4b-v1.4.1",
+    "jeff_1_1_large",
+    "jeff_1_1_qwen_4b",
+    "microsoft-decision-1-r2",
+    "strike-1",
+    "torchcast-decision-31b-v1.0"
+   ],
+   "status": "PASS",
+   "synthetic_latest": "v1.7.16",
+   "v1716_page_shows_new_row": true
+  },
+  "log_sha256": "a2e7c2e1fa417955f737ca3498ee662e35990bdbef580f29911f21b20039bb8f",
+  "pages": "640/640",
+  "status": "PASS"
+ },
+ "public-text": {
+  "log_sha256": "a244d42ceb71d698cc6bfa61a5b2c37fdd0991d09677e4fb426c8b2f2fdc4d01",
+  "status": "PASS",
+  "summary": "PASS public text: 29 texts clean; exact history sentence, exact d1027 note and the same-items cost sentence on all 8 draw rows (H2O with its v1.1 sentence), topic-cell sentence kept; Strike-1: hosted EU, 5 over-limit refusals scored as misses, output 0, stated base, beta disclosed; no equating claim"
+ },
+ "publication_review": "PENDING",
+ "raw": {
+  "log_sha256": "2ba472cb7af040e4853ea7fefc0bf117c2a0e628d37894044a8a7e2988245a94",
+  "status": "PASS",
+  "summary": "PASS raw/consumed/input/manifest binding for strike-1 (1,500 rows in input order, 1,495 x 200 + 5 x 400 = the 5 longest items, output 0, 0 over 10 s); common set recomputed from 8 raws: 1489 items, sha 4e912731 = proof"
+ },
+ "release-tests-pending": {
+  "cancelled": 0,
+  "fail": 1,
+  "log_sha256": "c339f32eeeb2ecba57ea78720a402c0fc4562c6caf536f65a1f193eb3fcd4a13",
+  "not_ok": [
+   "gate: no listed row lacks topic, use-case or language cells without a recorded exception"
+  ],
+  "pass": 169,
+  "skipped": 1,
+  "tests": 171
+ },
+ "repro": {
+  "log_sha256": "160c2f1dfb7cf11dd90090d2ea22a1d54c1b79b8c8927deef148dbd3039d3ae7",
+  "status": "PASS",
+  "summary": "PASS two deterministic rebuilds, 17 artifact hashes"
+ },
+ "source": {
+  "log_sha256": "a62030ccd41b6471d5777dba8f19cbf6a366a41040df286b2066f8647fd72270",
+  "status": "PASS",
+  "summary": "PASS 300 carried rows fully equal incl. ranks (live round-1 Microsoft and family rows included); the 7 draw rows differ only in cost fields (Microsoft r2 also its ITEMS sentence), hash-pinned, re-derived from the --cost-basis scorer views and the common-set arithmetic; common set 1489 items sha 4e912731 bound (membership of all 8 rows); board/n_ranked unchanged; new row unranked with published values and estimate cost; draw entry only gains v1.7.16; carry/history bytes, 21 predecessor files and "
+ },
+ "status": "PASS_WITH_OPEN_ITEMS",
+ "top-five": {
+  "changed": false,
+  "changed_lists": 0,
+  "custom_changed_labels": [],
+  "entrant_counts": {},
+  "leaver_counts": {},
+  "lists": 580,
+  "single_entrant_counts": {
+   "arcbright-elf-1-12b-r2": 0,
+   "decisio-gemma-4-12b-tuned-commit-think": 0,
+   "h2o-lightning-4b-v1.4.1": 0,
+   "jeff_1_1_large": 0,
+   "jeff_1_1_qwen_4b": 0,
+   "microsoft-decision-1-r2": 0,
+   "strike-1": 0,
+   "torchcast-decision-31b-v1.0": 0
+  },
+  "slider_changed_states": 0,
+  "slider_grid_changed": 0,
+  "slider_grid_states": 368,
+  "slider_states": 171
+ },
+ "typescript": {
+  "exit_code": 0,
+  "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "status": "PASS"
+ },
+ "validator": {
+  "log_sha256": "c2e78118bae6375b64ef5ada25c3b157e07626659550df769c121cca54fb5378",
+  "status": "PASS",
+  "summary": "PASS 307 carried rows/cells (300 fully equal incl. ranks; the 7 rows of the 27 Oct draw differ only in their pinned cost fields under the same-items rule), unchanged order lists, 1 exact UNRANKED new hosted row (strike-1, 1,495/1,500, estimate on the common set), all 8 rows of the draw unranked with the exact note, draw not equated (offset 0); 133 bundle negatives and 97 row-gate negatives rejected"
+ },
+ "visibility": {
+  "log_sha256": "2e8e66593cee456ca0e0be4204223a70cd89196415edeed7be9d9de8ca1c3d81",
+  "status": "PASS",
+  "summary": "PASS new row visible unranked on merged board + feed (api scope, like the other hosted row); the 7 carried draw rows unranked, only their cost/Cost axis/composite moved; 307 -> 308 board rows; no row of any draw vanished or changed; orders identical; real PENDING tree shows the v1.7.15 board ( 307 rows, v1.7.15 )"
+ }
+}

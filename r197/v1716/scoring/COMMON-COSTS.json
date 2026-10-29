@@ -1,0 +1,139 @@
+{
+ "common_n": 1489,
+ "common_set_sha256": "4e912731e63369e1b3066b0b4afa87b44f1094aea079c5b41dc6d02e7f235537",
+ "cost_basis_msft_sha256": "3bb4e58e15530a2688b561ab3fbaf9c8f956ec149853b6397c89d094779fb715",
+ "cost_basis_sha256": "b83bdfd14c263ffacfa572b304084154afca84c1f00083101a33783ae6f8b356",
+ "hashes": {
+  "/home/flori/jevbench-sealed/v1.6-run/v1.6-regular-20261027/runs-auto-intake/strike-1/CONSUMED.json": "497dfbd9f7703a2497a6d5d1b82f83e6a6891c82609a83e170e230f85933a52b",
+  "/home/flori/jevbench-sealed/v1.6-run/v1.6-regular-20261027/runs-auto-intake/strike-1/strike-1.raw.jsonl": "4c6c7ab25b11432f8934425a44806ec5a2499241a9c5790216a11651473f2027",
+  "/home/flori/jobs/jevbench-add-requests-20260919/r197/msft/score/field/A-tariff/REGISTRY.json": "55d969aa3de519039203789a7431caf3c5d6742ab4f0a983705d876185c0a4d5",
+  "/home/flori/jobs/jevbench-add-requests-20260919/r197/v1713/score/field/REGISTRY.json": "796903ef6d7de1ded43e39eb6f9b32955557b0982208de8c395b440479a24574",
+  "/home/flori/jobs/jevbench-add-requests-20260919/r197/v1714/score/field/REGISTRY.json": "d8282ee5f701997a73d63fb38cee1010cf09b61cc8e36851846d1763664745bd",
+  "/home/flori/jobs/jevbench-auto-intake/r47-decisio-think/state/engine-recount-20261027/engine-recount.json": "8c9f4691551a99a23c2763783278727f6f6fd7ca5c9fc24467c2dec8b144b646",
+  "/home/flori/jobs/jevbench-auto-intake/r65-strike1/SHAS.txt": "456087be5202ed81464fd2411dc39f68ea4cff0e2c63aafe8cd82d6ce2acb415",
+  "/home/flori/jobs/jevbench-v15-measure-20260925/harness/pricing_v15.py": "645fd82eac728d597048bec0995ecd3ac896566e269fb6c9a1fdb84c171a9ac4",
+  "/home/flori/jobs/jevbench-v16-run-20261001/harness/score_v16.py": "02132271117653e6302c509232a581d0094f0e78eac8b1bfc67596fd5d5097e9"
+ },
+ "registries": {
+  "f13": "b840328be6e70e7a8385663ac97cccaba5fba706ac2d2c899e2e149f442bb360",
+  "f14": "76e79f11f1bfb9eb083327311a9bd83c4544b7ecdd03ef0148fb725542ba0a78",
+  "fms": "55d969aa3de519039203789a7431caf3c5d6742ab4f0a983705d876185c0a4d5",
+  "fst": "abb79cd63ded569317ae70f9d264d40d168536caf68af2541bcae9aebaf392a9"
+ },
+ "rows": {
+  "arcbright-elf-1-12b-r2": {
+   "all_items_input_tokens": 610840,
+   "all_items_output_tokens": 1500,
+   "common_input_tokens": 577488,
+   "common_n": 1489,
+   "common_output_tokens": 1489,
+   "price_in_per_m": 0.05,
+   "price_out_per_m": 0.15,
+   "token_basis": "raw usage (= the published priced basis)",
+   "usd_per_1000_all_items_published": 0.020511333333333333,
+   "usd_per_1000_common": 0.01954180658159839
+  },
+  "decisio-gemma-4-12b-tuned-commit-think": {
+   "all_items_input_tokens": 844031,
+   "all_items_output_tokens": 9121,
+   "common_input_tokens": 616406,
+   "common_input_tokens_native": 500278,
+   "common_n": 1489,
+   "common_output_tokens": 9110,
+   "engine_rule": "recount common_engine - native(6 further excluded) - 6 x 78 (modal delta; <= 6 tokens high if any of the 6 has delta 77)",
+   "engine_tokens_bound": [
+    616406,
+    616412
+   ],
+   "native_common_usd_per_1000": 0.01771685695097381,
+   "price_in_per_m": 0.05,
+   "price_out_per_m": 0.15,
+   "token_basis": "ENGINE recount (primary engine prompt), not raw usage",
+   "usd_per_1000_all_items_published": 0.02904646666666667,
+   "usd_per_1000_bound": [
+    0.02161638683680323,
+    0.021616588314304904
+   ],
+   "usd_per_1000_common": 0.02161638683680323
+  },
+  "h2o-lightning-4b-v1.4.1": {
+   "all_items_input_tokens": 711020,
+   "all_items_output_tokens": 1500,
+   "common_input_tokens": 547826,
+   "common_n": 1489,
+   "common_output_tokens": 1489,
+   "price_in_per_m": 0.030000000000000002,
+   "price_out_per_m": 0.15,
+   "token_basis": "processed input after the 32k trim; no common-set item is trimmed, so processed = raw usage there",
+   "usd_per_1000_all_items_published": 0.014370400000000004,
+   "usd_per_1000_common": 0.011187461383478847
+  },
+  "jeff_1_1_large": {
+   "all_items_input_tokens": 620215,
+   "all_items_output_tokens": 21830,
+   "common_input_tokens": 589108,
+   "common_n": 1489,
+   "common_output_tokens": 21722,
+   "price_in_per_m": 0.09,
+   "price_out_per_m": 0.34,
+   "token_basis": "raw usage (= the published priced basis)",
+   "usd_per_1000_all_items_published": 0.042161033333333334,
+   "usd_per_1000_common": 0.040567629281396914
+  },
+  "jeff_1_1_qwen_4b": {
+   "all_items_input_tokens": 629951,
+   "all_items_output_tokens": 69580,
+   "common_input_tokens": 598499,
+   "common_n": 1489,
+   "common_output_tokens": 68954,
+   "price_in_per_m": 0.03,
+   "price_out_per_m": 0.15,
+   "token_basis": "raw usage (= the published priced basis)",
+   "usd_per_1000_all_items_published": 0.019557019999999998,
+   "usd_per_1000_common": 0.0190047481531229
+  },
+  "microsoft-decision-1-r2": {
+   "all_items_input_tokens": 467021,
+   "all_items_output_tokens": 1489,
+   "common_input_tokens": 467021,
+   "common_n": 1489,
+   "common_output_tokens": 1489,
+   "price_in_per_m": 0.042,
+   "price_out_per_m": 0.0,
+   "token_basis": "raw usage (= the published priced basis)",
+   "usd_per_1000_all_items_published": 0.013137898191560617,
+   "usd_per_1000_common": 0.013173191403626596
+  },
+  "strike-1": {
+   "all_items_input_tokens": 1692626,
+   "all_items_output_tokens": 0,
+   "common_input_tokens": 1687022,
+   "common_n": 1489,
+   "common_output_tokens": 0,
+   "price_in_per_m": 0.030000000000000002,
+   "price_out_per_m": 0.15,
+   "reference": [
+    "deepinfra:Qwen/Qwen3.5-4B",
+    [
+     0.030000000000000002,
+     0.15
+    ]
+   ],
+   "token_basis": "vendor usage input tokens; output reported 0 (9 Oct rule: zero output = 0)",
+   "usd_per_1000_all_items_published": 0.033852520000000004,
+   "usd_per_1000_common": 0.03398969778374748
+  },
+  "torchcast-decision-31b-v1.0": {
+   "all_items_input_tokens": 645268,
+   "all_items_output_tokens": 0,
+   "common_input_tokens": 560794,
+   "common_n": 1489,
+   "common_output_tokens": 0,
+   "price_in_per_m": 0.09,
+   "price_out_per_m": 0.34,
+   "token_basis": "raw usage (= the published priced basis)",
+   "usd_per_1000_all_items_published": 0.03871607999999999,
+   "usd_per_1000_common": 0.03389621222296844
+  }
+ }
+}

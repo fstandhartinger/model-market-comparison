@@ -1,0 +1,59 @@
+{
+ "measured_without_bill": 0,
+ "negative_test": "r197/v1716/check_pricing_reference_v1716.py + validate_v1716.mjs",
+ "new_rows": {
+  "strike-1": {
+   "basis_items": 1489,
+   "input_tokens_common": 1687022,
+   "kind": "estimate",
+   "output_tokens": 0,
+   "reference": {
+    "base": "Qwen/Qwen3.5-4B",
+    "in": 0.03,
+    "kind": "estimate",
+    "listing": "deepinfra:Qwen/Qwen3.5-4B",
+    "out": 0.15,
+    "rule": "frozen pricing_v15 reference() for the stated base model; output priced at 0 tokens as the vendor reports (9 Oct 2026 zero-output rule)"
+   },
+   "usd_per_1000": 0.03398969778374748
+  }
+ },
+ "recosted_rows": {
+  "arcbright-elf-1-12b-r2": {
+   "kind": "estimate",
+   "usd_per_1000_all_items": 0.020511333333333333,
+   "usd_per_1000_common": 0.01954180658159839
+  },
+  "decisio-gemma-4-12b-tuned-commit-think": {
+   "kind": "estimate",
+   "usd_per_1000_all_items": 0.02904646666666667,
+   "usd_per_1000_common": 0.02161638683680323
+  },
+  "h2o-lightning-4b-v1.4.1": {
+   "kind": "estimate",
+   "usd_per_1000_all_items": 0.014370400000000004,
+   "usd_per_1000_common": 0.011187461383478847
+  },
+  "jeff_1_1_large": {
+   "kind": "estimate",
+   "usd_per_1000_all_items": 0.042161033333333334,
+   "usd_per_1000_common": 0.040567629281396914
+  },
+  "jeff_1_1_qwen_4b": {
+   "kind": "estimate",
+   "usd_per_1000_all_items": 0.019557019999999998,
+   "usd_per_1000_common": 0.0190047481531229
+  },
+  "microsoft-decision-1-r2": {
+   "kind": "tariff",
+   "usd_per_1000_all_items": 0.013137898191560617,
+   "usd_per_1000_common": 0.013173191403626596
+  },
+  "torchcast-decision-31b-v1.0": {
+   "kind": "estimate",
+   "usd_per_1000_all_items": 0.03871607999999999,
+   "usd_per_1000_common": 0.03389621222296844
+  }
+ },
+ "status": "PASS"
+}
