@@ -10,7 +10,7 @@ const imp = (p) => import(pathToFileURL(path.join(root, p)).href);
 const { readJevbenchV161Release } = await imp('lib/jevbench-v16-release.mjs');
 const { readJevbenchV157Release } = await imp('lib/jevbench-v15-release.mjs');
 const { assembleJevBoard } = await imp('lib/jevbench-live-board.mjs');
-const { jevScopeClassifier, jevbenchScopeArtifact } = await imp('lib/jevbench-scope.mjs');
+const { jevScopeClassifier, jevbenchScopeArtifact, jevScopeRows } = await imp('lib/jevbench-scope.mjs');
 const { readJevbenchAgentFeed } = await imp('lib/jevbench-agent-feed.mjs');
 const [release, previous] = await Promise.all([readJevbenchV161Release(root), readJevbenchV157Release(root)]);
 const board = await assembleJevBoard({ release, previous, live: true, apiA4: JSON.parse(readFileSync(path.join(root, 'data/jevbench-api-a4-equated.json'), 'utf8')), root });
@@ -24,5 +24,7 @@ console.log(JSON.stringify({
   board: Object.fromEntries(published.systems.map((s) => [s.key, row(s)])),
   orders: Object.fromEntries(Object.entries(published.board ?? {}).map(([m, b]) => [m, b.order])),
   scopes,
+  classification: Object.fromEntries(published.systems.map(s => [s.key, {v16_lane:s.v16?.lane ?? null, api_flag:s.api_flag ?? null, endpoint_kind:s.endpoint_kind ?? null, is_api:isApi(s)}])),
+  open_weights_only: jevScopeRows(published.systems, 'open', isApi).map(s=>s.key).sort(),
   feed: Object.fromEntries(feed.systems.map((s) => [s.key, { draw: s.draw?.id ?? null, ranked: s.ranked, listing: s.listing, rank: s.rank, open_board_rank: s.open_board_rank, api_board_rank: s.api_board_rank, capability_rank: s.capability.rank, open_capability_rank: s.capability.open_board_rank, not_ranked_because: s.not_ranked_because, composite_score: s.composite_score }])),
 }, null, 1));

@@ -1,6 +1,6 @@
 # JevBench v1.7.19 — DecisionNode and DecisionNode Flash
 
-Base `5d0479f417c47e0c2f90a18976b9c52155ba2cbc` (v1.7.18 PENDING, stacked on flipped v1.7.17). This is a PENDING candidate only. No publication, push, seal write or deployment.
+Base `7992090a6359ae155b40d89cb117c3b240b8ff11` (v1.7.18 flipped PASS, stacked on flipped v1.7.17). This is a PENDING candidate only. No publication, push, seal write or deployment.
 
 Both hosted API rows use provider Bynn, the exact served model pins, native reported probabilities, and the 27 Oct regular full draw. Main uses only the complete second attempt. No first-attempt raw is opened or scored. Each row has 1,500 items, 1,495 answered and five preregistered over-limit errors counted as misses. The row disclosures cover those errors, reported two-decimal probabilities without adjustment, zero output tokens, and Main's incomplete first attempt caused by our harness resend bug. The preregistration states no hosting region; none is claimed.
 
@@ -10,6 +10,6 @@ Scoring scripts run in the job directory `r198/v1719/score`, with symlinks readi
 
 Rebuild: `bash r198/v1719/rebuild_v1719.sh`; preparation from local pinned scoring outputs: `python3 -B r198/v1719/prepare_v1719.py`. Source, public text, deterministic rebuild, validator negatives, helpers, preview and raw-binding receipts are under `receipts`. The exact 580-list comparison uses production scope, weighting and cap functions and retains frozen/off aggregate views for carried rows.
 
-`make_passtree_v1719.py` creates disposable synthetic PASS chains, including the PENDING predecessor, and rebinds only their hashes inside the copy. The real manifests stay unchanged. `heavy_v1719.sh` requires a heavy-run snapshot, runs TypeScript, PENDING and simulated post-flip release gates, the production build and compiled-route assertions, and one full suite, restoring synthetic bindings byte-for-byte before returning. Use `suite-slot --max-wait 1800 -- heavy-run ...` as in the worker result. A missing `.git/HEAD` full-suite failure is the sole accepted environment exception.
+`make_passtree_v1719.py` creates disposable synthetic PASS chains, preserving the accepted predecessor in the real worktree, and rebinds only their hashes inside the copy. The real manifests stay unchanged. `heavy_v1719.sh` requires a heavy-run snapshot, runs TypeScript, PENDING and simulated post-flip release gates, the production build and compiled-route assertions, and one full suite, restoring synthetic bindings byte-for-byte before returning. Use `suite-slot --max-wait 1800 -- heavy-run ...` as in the worker result. A missing `.git/HEAD` full-suite failure is the sole accepted environment exception.
 
-The release owner must rebind the candidate after v1.7.18's review flips, independently review it, and use the guarded helpers. `flip_verdict_v1719.py --dry-run` writes nothing; a real flip requires the predecessor PASS and its current manifest hash. `freeze_v1719.py` always refuses a seal write.
+The candidate binds the flipped v1.7.18 manifest. The release owner must independently review it and use the guarded helpers. `flip_verdict_v1719.py --dry-run` writes nothing; a real flip requires the predecessor PASS and its current manifest hash. `freeze_v1719.py` always refuses a seal write.

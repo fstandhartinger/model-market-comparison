@@ -20,6 +20,7 @@ for k,x in L('PRICING.json').items():assert not x['rankable'] and not x['countin
 for k,x in L('RAW-BINDING.json').items():assert x['rows']==1500 and x['answered']==1495 and x['over_limit_misses']==5 and x['refused_set_sha256'].startswith('3a0cbf0c') and x['frozen_common_n']==1489 and x['served_identity_matches'],k
 assert 'All synthetic bindings restored byte-equal' in (R/'heavy-fixture.log').read_text()
 for f,h in L('REPRO.json')['hashes'].items():assert hashlib.sha256((W/f).read_bytes()).hexdigest()==h,f
-for v in [18,19]:assert json.loads((W/f'data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.{v}-publication.json').read_text())['review']['verdict']=='PENDING'
+assert json.loads((W/'data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.18-publication.json').read_text())['review']['verdict']=='PASS'
+for v in [19]:assert json.loads((W/f'data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.{v}-publication.json').read_text())['review']['verdict']=='PENDING'
 assert json.loads((W/'data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.17-publication.json').read_text())['review']['verdict']=='PASS'
-(R/'GATES.json').write_text(json.dumps({'status':'PASS','gates':out,'synthetic_bindings_restored':True,'real_manifests_pending':True},indent=1,sort_keys=True)+'\n');print(json.dumps(out,indent=1))
+(R/'GATES.json').write_text(json.dumps({'status':'PASS','gates':out,'synthetic_bindings_restored':True,'real_candidate_pending':True,'real_predecessor_pass':True},indent=1,sort_keys=True)+'\n');print(json.dumps(out,indent=1))
