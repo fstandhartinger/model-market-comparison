@@ -1,7 +1,7 @@
 {
  "benchmark": "ImageJevBench",
  "track": "box",
- "revision": "box-v0.1.2",
+ "revision": "box-v0.1.3",
  "status": "preview",
  "built_utc": "2026-10-16T07:40:31+00:00",
  "measured_utc_date": "2026-10-14",
@@ -191,6 +191,90 @@
    "rank": 2
   },
   {
+   "key": "h2o_lightning_4b_v141_pkg",
+   "name": "H2O Lightning 4B v1.4.1 (H2O serving package)",
+   "author": "H2O.ai",
+   "licence": "Apache-2.0",
+   "params": "4B",
+   "access": "self-hosted, H2O serve.sh + shim, native box question",
+   "url": "https://huggingface.co/h2oai/h2o-lightning-4b/tree/d7f1b05aa0b4e789b3896116f309ef842440e260",
+   "kind": "gpu",
+   "prompt": "native",
+   "model_id": "h2o_lightning_4b_v141_pkg",
+   "weights": {
+    "repo": "h2oai/h2o-lightning-4b",
+    "revision": "d7f1b05aa0b4e789b3896116f309ef842440e260",
+    "files_identical_at": [
+     "cc18ee330e6895c41b9a60f37a0dd122dc4c3461"
+    ]
+   },
+   "n": 300,
+   "valid_share": 1.0,
+   "box_intelligence": 77.92444783440149,
+   "ci95": [
+    75.11413779295161,
+    80.60553189744728
+   ],
+   "acc50": 0.8633333333333333,
+   "acc75": 0.7,
+   "ece": 0.0406134633333334,
+   "calibration": 91.87730733333332,
+   "confidence_coverage": 1.0,
+   "auroc": 0.6407382992748847,
+   "capability": 84.90087758386741,
+   "p50_s": 0.27967481553787366,
+   "p95_s": 0.3469274309463799,
+   "cost_per_1000": 0.09575727521088322,
+   "cost_coverage": 1.0,
+   "by_kind": {
+    "doc": {
+     "n": 50,
+     "box_intelligence": 59.46987166637665,
+     "acc_at_0_5": 0.68
+    },
+    "ref": {
+     "n": 70,
+     "box_intelligence": 84.68532825267428,
+     "acc_at_0_5": 0.9428571428571428
+    },
+    "single": {
+     "n": 80,
+     "box_intelligence": 89.6854551027856,
+     "acc_at_0_5": 0.9625
+    },
+    "small": {
+     "n": 50,
+     "box_intelligence": 70.33510997424554,
+     "acc_at_0_5": 0.8
+    },
+    "ui": {
+     "n": 50,
+     "box_intelligence": 75.68551764758628,
+     "acc_at_0_5": 0.84
+    }
+   },
+   "by_size": {
+    "large": {
+     "n": 81,
+     "box_intelligence": 93.7521176773079,
+     "acc_at_0_5": 1.0
+    },
+    "medium": {
+     "n": 97,
+     "box_intelligence": 77.09348083457098,
+     "acc_at_0_5": 0.845360824742268
+    },
+    "small": {
+     "n": 122,
+     "box_intelligence": 68.07659981561591,
+     "acc_at_0_5": 0.7868852459016393
+    }
+   },
+   "added": "2026-10-29",
+   "ranked": true,
+   "rank": 3
+  },
+  {
    "key": "claude_haiku_5_5",
    "name": "Claude Haiku 5.5",
    "author": "Anthropic",
@@ -266,7 +350,7 @@
    },
    "added": "2026-10-15",
    "ranked": true,
-   "rank": 3
+   "rank": 4
   },
   {
    "key": "gemma_4_31b",
@@ -343,7 +427,7 @@
     }
    },
    "ranked": true,
-   "rank": 4
+   "rank": 5
   },
   {
    "key": "qwen3_vl_235b",
@@ -420,7 +504,7 @@
     }
    },
    "ranked": true,
-   "rank": 5
+   "rank": 6
   },
   {
    "key": "qwen3_vl_30b",
@@ -497,7 +581,7 @@
     }
    },
    "ranked": true,
-   "rank": 6
+   "rank": 7
   },
   {
    "key": "jev_1_14",
@@ -574,7 +658,7 @@
     }
    },
    "ranked": true,
-   "rank": 7
+   "rank": 8
   },
   {
    "key": "qwen3_5_397b",
@@ -651,7 +735,7 @@
     }
    },
    "ranked": true,
-   "rank": 8
+   "rank": 9
   },
   {
    "key": "qwen3_vl_8b",
@@ -728,7 +812,7 @@
     }
    },
    "ranked": true,
-   "rank": 9
+   "rank": 10
   },
   {
    "key": "gpt_6_luna",
@@ -806,7 +890,7 @@
    },
    "added": "2026-10-15",
    "ranked": true,
-   "rank": 10
+   "rank": 11
   },
   {
    "key": "qwen3_6_35b",
@@ -883,7 +967,7 @@
     }
    },
    "ranked": true,
-   "rank": 11
+   "rank": 12
   },
   {
    "key": "h2o_lightning_4b_image",
@@ -963,7 +1047,7 @@
     }
    },
    "ranked": true,
-   "rank": 12
+   "rank": 13
   },
   {
    "key": "imajev_4b",
@@ -1047,11 +1131,11 @@
     }
    },
    "ranked": true,
-   "rank": 13
+   "rank": 14
   },
   {
    "key": "h2o_lightning_4b_v141",
-   "name": "H2O Lightning 4B v1.4.1",
+   "name": "H2O Lightning 4B v1.4.1 (weights only)",
    "author": "H2O.ai",
    "licence": "Apache-2.0",
    "params": "4B",
@@ -1131,7 +1215,7 @@
    },
    "added": "2026-10-28",
    "ranked": true,
-   "rank": 14
+   "rank": 15
   },
   {
    "key": "qwen3_5_4b",
@@ -1211,7 +1295,7 @@
     }
    },
    "ranked": true,
-   "rank": 15
+   "rank": 16
   },
   {
    "key": "imajev_9b",
@@ -1295,7 +1379,7 @@
     }
    },
    "ranked": true,
-   "rank": 16
+   "rank": 17
   },
   {
    "key": "moondream3",
@@ -1378,7 +1462,7 @@
    "added": "2026-10-15",
    "no_confidence": true,
    "ranked": true,
-   "rank": 17
+   "rank": 18
   },
   {
    "key": "florence2_large",
@@ -1460,7 +1544,7 @@
    "added": "2026-10-15",
    "no_confidence": true,
    "ranked": true,
-   "rank": 18
+   "rank": 19
   },
   {
    "key": "florence2_large_ft",
@@ -1542,7 +1626,7 @@
    "added": "2026-10-15",
    "no_confidence": true,
    "ranked": true,
-   "rank": 19
+   "rank": 20
   }
  ],
  "baselines": [
@@ -1711,8 +1795,10 @@
   "Claude Haiku 5.5 and GPT-6 Luna were run with reasoning off at temperature 0; both are not fully deterministic at temperature 0. One GPT-6 Luna answer failed with a provider error and Moondream 3 returned no box for 6 items; these count as invalid.",
   "Moondream 3 (preview) is released under the Business Source License 1.1; we ran it only to measure it and do not offer it as a service.",
   "Molmo 2 (Ai2) answers with points, not boxes, so it cannot be scored on IoU and is not ranked; its point-in-box rate is shown below the table as a side metric.",
-  "H2O Lightning 4B v1.4.1 states a confidence on only 16 % of its answers (v1.1: 94 %); a missing confidence counts as no confidence, so its Calibration is low and its Box Capability falls below v1.1 although its boxes are better (Box Intelligence 76.5 against 70.2, documents 53 against 26).",
-  "H2O Lightning 4B v1.4.1 is listed at revision d7f1b05a. The files this track serves (weights, config, tokenizer, chat template) are byte-identical at cc18ee33, where they were loaded; the two revisions differ only in the H2O shim and its serve_config.json, which this track does not use (stock vLLM, temperature 0)."
+  "H2O Lightning 4B v1.4.1 (weights only) states a confidence on only 16 % of its answers (v1.1: 94 %); a missing confidence counts as no confidence, so its Calibration is low and its Box Capability falls below v1.1 although its boxes are better (Box Intelligence 76.5 against 70.2, documents 53 against 26).",
+  "Both H2O Lightning 4B v1.4.1 rows are listed at revision d7f1b05a. For the weights-only row, every file stock vLLM reads (weights, config, tokenizer, chat template) is byte-identical at cc18ee33, where it was loaded.",
+  "H2O Lightning 4B v1.4.1 has two rows. \"Weights only\" serves the weights on stock vLLM with the track's prompt and reads a self-stated confidence, which the model gives on 16 % of answers. \"H2O serving package\" runs the author's serve.sh and shim at d7f1b05a (vLLM 0.30.0 with the h2oai/vllm overlay) and asks the native box question, as the Jev 1.14 row does through its API: the box comes from one guided JSON generation and the confidence from that generation's token probabilities with the package's calibration, so every answer has one. The package also caps images at about 1 megapixel, so the two rows differ in more than the confidence; the Box Intelligence difference (77.9 against 76.5) is not attributed to either part. Calibration is not comparable between rows that state a confidence on every answer and rows that mostly do not, because confidence coverage multiplies it.",
+  "Fairness check for the serving-package row: its calibration constants ship with the package, and the public 300 items are published. On the 60 unpublished dev items its calibration error is 0.093 against 0.041 on the public set, within the sampling range of 60-item subsets of its public answers (24 % of such subsets are at 0.093 or above); Jev 1.14 shows a larger dev gap (0.156 against 0.066). The cc18ee33 package gives the same boxes within GPU run-to-run noise."
  ],
  "points_only": [
   {
@@ -1748,5 +1834,5 @@
   "name": "Image-centre point",
   "first_point_in_box": 0.25333333333333335
  },
- "measured_note": "First 13 systems measured 14 Oct 2026; Claude Haiku 5.5, GPT-6 Luna, Moondream 3, Florence-2 and Molmo 2 on 15 Oct 2026 with the same harness and scorer (re-scoring the 14 Oct systems reproduces their numbers exactly). H2O Lightning 4B v1.4.1 added on 28 Oct 2026 (same harness, scorer and GPU class; the v1.1 row stays as measured)."
+ "measured_note": "First 13 systems measured 14 Oct 2026; Claude Haiku 5.5, GPT-6 Luna, Moondream 3, Florence-2 and Molmo 2 on 15 Oct 2026 with the same harness and scorer (re-scoring the 14 Oct systems reproduces their numbers exactly). H2O Lightning 4B v1.4.1 added on 28 Oct 2026 (same harness, scorer and GPU class; the v1.1 row stays as measured). H2O Lightning 4B v1.4.1 through the H2O serving package added on 29 Oct 2026 (same items, scorer and GPU class)."
 }
