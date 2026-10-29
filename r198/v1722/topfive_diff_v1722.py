@@ -27,3 +27,5 @@ d.update(comparison_scope='40 primary site assembly lists plus supplementary fro
 custom=L(J/'receipts/topfive-custom.json');d.update(custom_changed_labels=[r['metric'] for r in custom['rows'] if r['changed']],custom_weight_example=custom['weights'],explicit_slider_grid_states=custom['slider_grid_states'],explicit_slider_grid_changed=custom['slider_grid_changed'],custom_receipt_sha256=hashlib.sha256((J/'receipts/topfive-custom.json').read_bytes()).hexdigest())
 (J/'receipts/topfive-diff.json').write_text(json.dumps(d,indent=1,sort_keys=True)+'\n')
 print('Compared',d['lists'],'primary plus supplementary lists;',d['changed_lists'],'changed;',d['slider_changed_states'],'of',d['slider_states'],'slider states changed;',d['explicit_slider_grid_changed'],'of',d['explicit_slider_grid_states'],'grid states changed; custom changed',d['custom_changed_labels'])
+
+assert d['lists']==580 and d['changed_lists']==0 and not d['changed'] and d['slider_changed_states']==0 and d['explicit_slider_grid_changed']==0 and d['custom_changed_labels']==[], 'STOP: comparison changed'

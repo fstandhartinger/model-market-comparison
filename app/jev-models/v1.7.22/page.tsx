@@ -9,7 +9,7 @@ export const metadata = {title:'JevBench v1.7.22: Umpire 35B-A3B on the 27 Oct r
 export default async function JevModelsV1722Page() {
  const release=await readJevbenchV1722ForBoard();if(!release)notFound();
  const board=v1722BoardInput(release);
- const notes=(release.artifact as unknown as {measurement_notes:string[]}).measurement_notes.slice(-2);
+ const notes=(release.artifact as unknown as {measurement_notes:string[]}).measurement_notes.slice(-1);
  return <><PageJsonLd meta={metadata}/><JevBenchReleaseVersionNav active="v1.7.22"/>
  <header className="bh-page-head" data-bh-jev16-release-header><div className="bh-eyebrow">JevBench v1.7.22: Umpire 35B-A3B on the 27 Oct regular draw, shown unranked</div>
  <h1 className="mt-1 text-3xl font-bold">JevBench v1.7.22: Umpire 35B-A3B on the 27 Oct regular draw, shown unranked</h1>

@@ -1,4 +1,4 @@
-"""Idempotent v1.7.22 integration: self-hosted unranked VisionJEV on the 27 Oct draw."""
+"""Idempotent v1.7.22 integration: self-hosted unranked Umpire on the 27 Oct draw."""
 import datetime, json, os, pathlib, re, sys
 J = pathlib.Path(__file__).resolve().parent; W = pathlib.Path(os.environ.get('WT', str(J.parents[1])))
 from rows_v1722 import ROW
@@ -27,7 +27,7 @@ s=s.replace('Umpire 35B-A3B on the 27 Oct regular draw, shown unranked',TITLE).r
 s=re.sub(r"description:'[^']*'", "description:'Umpire 35B-A3B measured on the 27 Oct regular draw, shown unranked.'",s)
 BODY=HIST+" A 35B-total, 3B-active MoE model measured through the author's unchanged Transformers server on one A100 80 GB GPU. All 1,500 items were sent; five exceeded its native 16,384-token input cap and returned HTTP 400, scored as misses and unbilled. Output tokens are zero. The cost estimate uses the unchanged 1,489-item basis and a labelled size/architecture-class Qwen3.5-35B-A3B reference: its declared Ornith base is unlisted with no declared parent. Weights are CC BY-NC 4.0 (non-commercial use only); serving code Apache-2.0. The author claims the BF16 weights are his served 4-bit weights dequantized; parity is unverified. Training-data overlap is unchecked. Stronger anchor runs are being measured; the draw is not yet equated to the reference scale."
 s=re.sub(r'<p className="mt-3 max-w-3xl">.*?</p>','<p className="mt-3 max-w-3xl">'+BODY.replace("'",'&apos;')+'</p>',s)
-s=s.replace('measurement_notes.slice(-2);','measurement_notes.slice(-2);')
+s=s.replace('measurement_notes.slice(-2);','measurement_notes.slice(-1);')
 p.write_text(s)
 # live board chain
 edit('lib/jevbench-live-board.mjs', "import { readJevbenchV1721ForBoard, withV1721Addendum } from './jevbench-v1721-release.mjs';",

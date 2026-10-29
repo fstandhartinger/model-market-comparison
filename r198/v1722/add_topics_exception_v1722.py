@@ -14,4 +14,11 @@ have={x['key']:x for x in d['entries']};added=0
 for e in entries:
  if e['key'] in have:assert have[e['key']]==e,('different entry exists',e['key']);continue
  d['entries'].append(e);added+=1
-p.write_text(json.dumps(d,indent=1,ensure_ascii=False)+'\n');print('topics exceptions: added',added,'of',len(entries))
+text=p.read_text()
+if added:
+ boundary=text.rfind('\n ]');assert boundary >= 0
+ encoded=',\n'.join(json.dumps(e,indent=1,ensure_ascii=False).replace('\n','\n  ') for e in entries if e['key'] not in have)
+ text=text[:boundary]+',\n  '+encoded+text[boundary:]
+ assert json.loads(text)==d
+ p.write_text(text)
+print('topics exceptions: added',added,'of',len(entries))

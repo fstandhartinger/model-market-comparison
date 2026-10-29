@@ -9,7 +9,7 @@ npx --no-install tsc --noEmit > "$R/tsc.log" 2>&1
 printf '%s\n' '{"exit_code":0,"command":"suite-slot heavy-run tsc --noEmit"}' > "$R/TSC-EXIT.json"
 python3 -B "$J/make_passtree_v1722.py" > "$R/heavy-fixture.log" 2>&1
 node "$J/ranks_fixture_v1722.mjs" "$PWD/$J/.pass" "$PWD/test/fixtures/jevbench-v1722-ranks.json" > "$R/heavy-ranks.log" 2>&1
-TESTS=(test/jevbench-v1722-release.test.mjs test/jevbench-v1721-release.test.mjs test/jevbench-v1720-release.test.mjs test/jevbench-v1719-release.test.mjs test/jevbench-v1718-release.test.mjs test/jevbench-v1717-release.test.mjs test/jevbench-v1716-release.test.mjs test/jevbench-v1715-release.test.mjs test/jevbench-v1714-release.test.mjs test/jevbench-v1713-release.test.mjs test/jevbench-v1712-release.test.mjs test/cr-303-feed-split.test.mjs test/jevbench-breakdowns-every-listed-row.test.mjs test/jevbench-v1630-open-fold.test.mjs test/jevbench-v1630-release.test.mjs test/cr-205-jev-page-structure.test.mjs test/jevbench-merged-board.test.mjs test/jevbench-feed-live-board.test.mjs test/jevbench-v1637-release.test.mjs test/jevbench-v170-release.test.mjs test/sitemap-releases-redirects.test.mjs test/jevbench-architecture-data.test.mjs test/release-page-seo.test.mjs)
+TESTS=(test/jevbench-v1722-release.test.mjs test/jevbench-v1721-release.test.mjs test/jevbench-v1720-release.test.mjs test/jevbench-v1719-release.test.mjs test/jevbench-v1718-release.test.mjs test/jevbench-v1717-release.test.mjs test/jevbench-v1716-release.test.mjs test/jevbench-v1715-release.test.mjs test/jevbench-v1714-release.test.mjs test/jevbench-v1713-release.test.mjs test/jevbench-v1712-release.test.mjs test/cr-303-feed-split.test.mjs test/jevbench-breakdowns-every-listed-row.test.mjs test/jevbench-v1630-open-fold.test.mjs test/jevbench-v1630-release.test.mjs test/cr-205-jev-page-structure.test.mjs test/jevbench-merged-board.test.mjs test/jevbench-feed-live-board.test.mjs test/jevbench-v1637-release.test.mjs test/jevbench-v170-release.test.mjs test/sitemap-releases-redirects.test.mjs test/jevbench-architecture-data.test.mjs test/release-page-seo.test.mjs test/jevbench-alldata-fetch.test.mjs)
 set +e
 node --test --test-concurrency=2 "${TESTS[@]}" > "$R/release-tests.log" 2>&1
 rc=$?
@@ -37,7 +37,7 @@ node "$J/check_alldata_v1722.mjs" >> "$R/build-postflip.log" 2>&1
 node "$J/check_built_links_v1722.mjs" >> "$R/build-postflip.log" 2>&1
 printf '%s\n' '{"exit_code":0}' > "$R/BUILD-POSTFLIP-EXIT.json"
 if [[ ${RUN_FULL:-1} == 0 ]]; then
- printf '%s\n' '{"status":"NOT_RUN","reason":"Only rebase, predecessor binding, text and their gate adaptations changed versus c82f6b74; exempt per brief"}' > "$R/FULLTEST-POSTFLIP-EXIT.json"
+ printf '%s\n' '{"status":"NOT_RUN","reason":"Only rebase, predecessor binding, text and their gate adaptations changed versus bfad928f; exempt per brief"}' > "$R/FULLTEST-POSTFLIP-EXIT.json"
  exit 0
 fi
 set +e

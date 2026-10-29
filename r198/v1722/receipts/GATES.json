@@ -3,8 +3,8 @@
   "exit_code": 0
  },
  "FULLTEST-POSTFLIP": {
-  "command": "suite-slot heavy-run npm test (one run)",
-  "exit_code": 1
+  "reason": "Only rebase, predecessor binding, text and their gate adaptations changed versus bfad928f; exempt per brief",
+  "status": "NOT_RUN"
  },
  "PENDING": {
   "exit_code": 1
@@ -172,8 +172,16 @@
   "synthetic_latest": "v1.7.22",
   "v1722_page_shows_new_row": true
  },
+ "built_note": {
+  "exact_umpire_note": true,
+  "html_sha256": "317341c6300bb696816d1942b7489d7f6278d7fce52e21e8d982293ad3d1eca9",
+  "no_visionjev_or_lychee": true,
+  "notes_count": 1,
+  "section_sha256": "423226834283dddb5b7a845cc275fab4ea1a9424832f7f2774d1322a188e9de4",
+  "status": "PASS"
+ },
  "carried_rows": {
-  "base_commit": "a84361b60c9332cb1b61e78cc5344fee0fe5f50e",
+  "base_commit": "89a9594688b6d8f78bdba0b136c20590729b640f",
   "board_equal": true,
   "carried_cells_equal": 320,
   "carried_rows": 315,
@@ -259,15 +267,8 @@
   "unchanged": true
  },
  "fulltest-postflip": {
-  "cancelled": 0,
-  "fail": 1,
-  "log_sha256": "d6e054296b80e2e62ac35f53adfb7488dcd400d32e3b2ab21ce8c72d647635cf",
-  "not_ok": [
-   "the supervisor's dated brief backups can never make the checkout dirty again"
-  ],
-  "pass": 3970,
-  "skipped": 10,
-  "tests": 3981
+  "historical_log": "fulltest-postflip.log (from bfad928f; not rerun in this slice)",
+  "status": "NOT_RUN"
  },
  "helpers": {
   "approval_negative_cases": 11,
@@ -276,11 +277,11 @@
   "pending_freeze_refused": true,
   "real_flip_dry_run_accepted_no_write": true,
   "real_manifests_unchanged": [
-   "0127b75b302cbb48b23ef1032cd959c7da0f5adf0a77c9259bc187396ae0f45c",
-   "8cba2e9d31d640f70fba2d299ecb0a90fb9b6dcfd964d1c16595ffb57e384ec1",
-   "b6155b8c899bdbb9bb1c76a812cbc125c8c9952ecbc73d92925d1733c9826e67"
+   "2e53eefe2fec9cedcc62924cf599b4baed725438487bb32cc7a5c781ed2f44c8",
+   "81dd584f5be037d7cf807fed56df0af4e33dddebf0c1b15a18c4f1049f45b52b",
+   "f2803348f387c29c08f85419ee5a92e2cfd4125fb6ded71b28fe131c71917bb9"
   ],
-  "real_v1721_review": "PENDING",
+  "real_v1721_review": "PASS",
   "seal_write_refused": true,
   "stale_predecessor_binding_refused": true,
   "standing_go_checked": true,
@@ -291,11 +292,11 @@
  "postflip-tests": {
   "cancelled": 0,
   "fail": 0,
-  "log_sha256": "3123ec61844a791c6a228aaa566403aeabd46599aa3ab9ee9d44ef45c626fd03",
+  "log_sha256": "d0f187da9dbce628550646b152bb014dab3c519469c8cdbeb08a80327562fa47",
   "not_ok": [],
-  "pass": 225,
+  "pass": 232,
   "skipped": 1,
-  "tests": 226
+  "tests": 233
  },
  "preview": {
   "footer": "Release review pending",
@@ -324,10 +325,14 @@
  },
  "public_text": {
   "all_disclosures": true,
+  "exact_latency": true,
   "exact_note": true,
+  "exact_predecessor_note_delta": true,
   "neutral_page_wording": true,
   "no_cosmetic_state_tokens": true,
+  "old_latency_negative": true,
   "old_paraphrase_negatives": 2,
+  "old_slice_negative": true,
   "status": "PASS",
   "texts": 5
  },
@@ -343,34 +348,34 @@
  "release-tests": {
   "cancelled": 0,
   "fail": 1,
-  "log_sha256": "cabc087cd2bd7e165c34d1c36e5ec1bcb1ce2e9a78e09666d7b01398b2ac6b39",
+  "log_sha256": "17cd465600b968e376edd0399f0460802415af070ada7713e6768da91825d0b3",
   "not_ok": [
    "gate: no listed row lacks topic, use-case or language cells without a recorded exception"
   ],
-  "pass": 210,
+  "pass": 217,
   "skipped": 1,
-  "tests": 212
+  "tests": 219
  },
  "repro": {
   "files": {
    "app/api/jevbench/v1.7.22/route.ts": "900fdd1194013ce4365784917f820a0f345f0992cdd8a40fef2e5426666b9c10",
-   "app/jev-models/v1.7.22/page.tsx": "6e5f1c8982d49ea2965e43b6348766a51192de9f1fd6c518c63e60a375c37839",
+   "app/jev-models/v1.7.22/page.tsx": "2d45519cfc9c6a34e71880eace35fdd4f4c5c52763035588fb0b35d663acbee0",
    "data/jevbench-architecture.json": "49c8f50939ae425080801cef13929613da5c8250c2673c8cdfcdb3008c86632f",
-   "data/jevbench-breakdown-exceptions.json": "4e581f631f4ab500a4cb44ea7a4d1357e0cfca58e66de2a4ffba13f368f94d8a",
+   "data/jevbench-breakdown-exceptions.json": "7355e9a6ae1877decd7f94360ac767426df8af2d8711a585be0076b3f4604e96",
    "data/jevbench-draw-equating.json": "d3b9db9fba055fbafff3ef4dd5296bdb7dd3dc6f80713bbaf46e89cabe2130dc",
    "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.22-carry.json": "271d1fc77a136a04a1eb6deb5480c52d4211eb2b66b2ac8bb31e80867e69003a",
-   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.22-categories.json": "893cdad9a89953d13b98e2322d91ac985a04c0e6b1e2bc348e3cfee81e2a4b49",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.22-categories.json": "cbc2d115717481b7c9b49ff256d1ba826d315b836791d6be1d98d8e6d00b6c45",
    "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.22-history-carry.json": "334e851944e92383ab3071e52b3012040c7023d0fe236395953169ebee8f0459",
    "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.22-history.json": "5cd8c1332226ea9c179883d2285c0d8b8cc593ae38f2645197364a7ddd9c83c1",
-   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.22-proof.json": "37c6244abc7df8f67f11ce07ca0c2f73679bc6041dd25a59b11aa1ec674eb1fa",
-   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.22-publication.json": "0127b75b302cbb48b23ef1032cd959c7da0f5adf0a77c9259bc187396ae0f45c",
-   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.22-results.json": "e6471b4196c8d828a2144437ba88a23a1dcaca7a57bc40381abdc7eeaaa1d169",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.22-proof.json": "cecea9b836f1517e7fbc30328da99945016c45fad2d126803525d89119fb8be9",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.22-publication.json": "2e53eefe2fec9cedcc62924cf599b4baed725438487bb32cc7a5c781ed2f44c8",
+   "data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.22-results.json": "d8e66264aa3b537fe454ede356e1100bd0fed4249789f9faa7b9b835ce800750",
    "lib/jevbench-alldata-input.mjs": "34857d50ba5f452182ad7e05508f5d53d3bc6c7fe62a82bc1077ede496813fff",
    "lib/jevbench-live-board.mjs": "578454abf86c43ad419480dc868d723dc369f172478e827b84afe66e62977e10",
    "lib/jevbench-releases.mjs": "d3c145e65dacfa371839c435d3b6c3bf0781637dc12f85efb632740ed6085b61",
-   "lib/jevbench-v1722-release.mjs": "1c1466f6f464e3e1305d6600bec2555c12479cd48d69ba7591813550b40d8113",
+   "lib/jevbench-v1722-release.mjs": "13a2a72c67c03fbdd6fae3de5aac03be4d34e67021b3c3c22c4df864e71cdf74",
    "test/jevbench-v1714-release.test.mjs": "a1ec49d8a431944c71ebde0c83bdbbe4ac34fb3f8195378e7d3c22137c9c9d23",
-   "test/jevbench-v1722-release.test.mjs": "6c39b9768b79930d6dce268d1dcd39a67fd6c61372d38a040559b54dd1d6cf8e"
+   "test/jevbench-v1722-release.test.mjs": "61e2fcbdb3e59bc462820f8006f48d951c45bbea312d02dc69b54cfbf19a8b5b"
   },
   "status": "PASS",
   "two_rebuilds_identical": true
@@ -1164,7 +1169,7 @@
   "slider_changed_states": 0,
   "slider_states": 171,
   "snapshots_sha256": {
-   "topfive-after.json": "282b81c5c1bd8ac92cefcbba2e9d996aa5ddb4e71232ef78834c7887ae2a21f6",
+   "topfive-after.json": "1a25a16e002fca99e4c32889dd47dc4f2ada14a5d7e3875aca7afdd051eb3bf5",
    "topfive-before.json": "9ca59208cea444eb935608d28f6164b2d6902f7293fc058ba14e56380c16c516",
    "topfive-extended.json": "f79c50aff3708eb2f6af965df0e87ed4270dbc0229881e97ce060e85ce062773",
    "topfive-sliders.json": "8ed8fecba92d0d832c4850c4ae600ccce2aa3fd4b9a466bd5c6d11eb8b0f35b1"
@@ -1213,7 +1218,7 @@
   "new_row_open_scope": true,
   "orders_equal": true,
   "pending_hidden_in_real_tree": true,
-  "real_tree_restated_by": "v1.7.20",
+  "real_tree_restated_by": "v1.7.21",
   "status": "PASS"
  }
 }

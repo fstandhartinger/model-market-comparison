@@ -52,7 +52,7 @@ res.update(revision=REV, label='JevBench v1.7.22: Umpire 35B-A3B on the 27 Oct r
            systems=sorted(out.values(), key=lambda s: s['key']), n_ranked=sum(bool(s['ranked']) for s in out.values()), roster_count=len(out),
            run_kind='same-draw-addendum', source_sha256=source_sha, source_note=HIST)
 assert res['n_ranked'] == old['results']['n_ranked'] and res['roster_count'] == len(prev) + 1
-res['measurement_notes'] = old['results']['measurement_notes'] + [HIST+' '+ns['disclosure']+' '+ns['not_ranked_because']]
+res['measurement_notes'] = old['results']['measurement_notes'] + [HIST+' '+ns['disclosure'].replace('The 27 Oct 2026 draw is not yet equated to the reference scale (offset 0). ', '')+' '+ns['not_ranked_because']]
 res['addendum'] = {'predecessor': PREV, 'new_keys': [STRIKE], 'remeasured_keys': [], 'repriced_keys': [], 'link_fixed_keys': [], 'text_fixed_keys': [], 'method_change': False, 'same_draw': DRAW_ID,
                    'cost_basis': {'rule': 'fixed-common-cost-basis-d1027 (frozen at v1.7.16)', 'n_items': N, 'set_sha256': CS['set_sha256']}}
 put(V / f'jevbench-{REV}-results.json', res)

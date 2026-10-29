@@ -6,7 +6,7 @@ sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
 V=W/'data/raw/benchmarks/jevbench/v1.7';pub=V/'jevbench-v1.7.22-publication.json';pub14=V/'jevbench-v1.7.21-publication.json';appr=J/'inputs/APPROVAL.json';before=(sha(pub),sha(pub14),sha(appr))
 pred_pending=json.loads(pub14.read_text())['review']['verdict']=='PENDING'
 fixture=R/'DRYRUN-REVIEW-FIXTURE.json';fixture.write_text(json.dumps({'verdict':'PASS','engine':'fixture-only: dry-run input, not an independent review'})+'\n')
-# Real tree: v1.7.21 is PENDING; dry-run plans the bound candidate without granting authority; freeze refuses while v1.7.22 is PENDING.
+# Real tree: v1.7.21 is PASS; dry-run plans the bound candidate without granting authority; freeze refuses while v1.7.22 is PENDING.
 x=run(['python3','-B',str(J/'flip_verdict_v1722.py'),str(fixture),'--dry-run']);(R/'flip-dry-run-real.log').write_text(x.stdout+x.stderr)
 assert x.returncode==0 and '"dry_run": true' in x.stdout,x.stderr
 assert (sha(pub),sha(pub14),sha(appr))==before,'dry run wrote'
@@ -42,4 +42,4 @@ for mut in [lambda d:d['publication_approval'].update(status='wrong'),lambda d:d
  else:raise AssertionError('bad approval accepted')
 assert (sha(pub),sha(pub14),sha(appr))==before,'real manifests/approval changed'
 (R/'HELPERS.json').write_text(json.dumps({'status':'PASS','real_v1721_review':json.loads(pub14.read_text())['review']['verdict'],'real_flip_dry_run_accepted_no_write':True,'synthetic_flip_dry_run':True,'stale_predecessor_binding_refused':True,'real_manifests_unchanged':before,'pending_freeze_refused':True,'fixture_flip_refused':True,'synthetic_freeze_dry_run':True,'seal_write_refused':True,'standing_go_checked':True,'approval_negative_cases':negatives,'fixture_grants_no_authority':True},indent=1)+'\n')
-print('PASS flip/freeze dry runs (real tree: v1.7.21 PENDING, dry-run flip accepted without writing, freeze refused while PENDING; synthetic tree OK), stale-binding refusal, fixture non-dry flip refused, seal-write refusal,',negatives,'approval negatives; real manifests unchanged')
+print('PASS flip/freeze dry runs (real tree: v1.7.21 PASS, dry-run flip accepted without writing, freeze refused while PENDING; synthetic tree OK), stale-binding refusal, fixture non-dry flip refused, seal-write refusal,',negatives,'approval negatives; real manifests unchanged')
