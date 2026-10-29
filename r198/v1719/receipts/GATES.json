@@ -1,76 +1,43 @@
 {
- "passed": [
-  "raw binding and refusal-set hash",
-  "frozen pricing resolve and aggregate recheck",
-  "311 carried rows/cells/ranks/orders equal",
-  "24 predecessor files byte equal",
-  "two deterministic rebuilds",
-  "72 validator negatives",
-  "7 approval negatives",
-  "dry flip and stale dry-run binding guard",
-  "PENDING freeze refusal",
-  "public text",
-  "preview viewed",
-  "architecture 4/4",
-  "tsc --noEmit",
-  "PENDING release suite 195 tests / 194 pass / 1 skipped / 0 fail"
- ],
- "status": "STOP",
- "top_five": {
-  "changed_lists": 0,
-  "custom_changed": 0,
-  "grid": 368,
-  "grid_changed": 0,
-  "lists": 580,
-  "slider_changed": 0,
-  "sliders": 2052
- },
- "unresolved": [
-  "visibility checker false-negative requires lead disposition",
-  "post-flip release suite not run",
-  "production next build not run",
-  "full suite not run",
-  "v1.7.18 predecessor still PENDING; rebind after flip",
-  "independent review PENDING"
- ],
- "visibility": {
-  "assertion": "assert.ok(!a.scopes.open.includes(k))",
-  "captured": {
-   "after_rows": 313,
-   "before_rows": 311,
-   "carried_board_equal": true,
-   "carried_feed_equal": true,
-   "orders_equal": true,
-   "rows": {
-    "decisionnode-flash-0.9.1-rc1": {
-     "cost_axis": null,
-     "in_api": true,
-     "in_open_artifact": true,
-     "rank": null,
-     "ranked": false,
-     "usd_per_1000": null
-    },
-    "decisionnode-main-0.9.1-rc1": {
-     "cost_axis": null,
-     "in_api": true,
-     "in_open_artifact": true,
-     "rank": null,
-     "ranked": false,
-     "usd_per_1000": null
-    }
-   }
-  },
-  "diagnosis": "The checker incorrectly assumes the open artifact excludes API rows. Existing jevbenchScopeArtifact deliberately retains every row in open scope for the Show API offerings toggle. No release classification regression demonstrated.",
-  "failed_command": "node r198/v1719/check_visibility_v1719.mjs",
+ "gates": {
+  "ASSEMBLED-TOPFIVE.json": "PASS",
+  "BUILD-POSTFLIP": "PASS",
+  "BUILT-LINKS.json": "PASS",
+  "CARRIED-ROWS.json": "PASS",
+  "HELPERS.json": "PASS",
+  "PENDING": "PASS",
+  "POSTFLIP": "PASS",
+  "PREVIEW.json": "PASS",
+  "PUBLIC-TEXT.json": "PASS",
+  "REPRO.json": "PASS",
+  "TSC": "PASS",
+  "VALIDATOR.json": "PASS",
+  "VISIBILITY-POSTFLIP.json": "PASS",
   "full_suite": {
-   "invocations": 0,
-   "status": "NOT_RUN"
+   "accepted_test": "test/daily-clean-checkout-wait.test.mjs",
+   "fail": 1,
+   "invocations": 1,
+   "pass": 3929,
+   "reason": "heavy snapshot has no .git/HEAD",
+   "skipped": 10,
+   "status": "PASS_EXCEPT_ACCEPTED_SNAPSHOT_ENVIRONMENT",
+   "tests": 3940
   },
-  "needs": "Lead disposition of STOP; correct visibility assertion to check API classification/scope rather than exclusion from the toggle-capable open artifact, then run remaining gates.",
-  "postflip_suite": "NOT_RUN",
-  "production_next_build": "NOT_RUN",
-  "real_manifests_changed": false,
-  "source": "lib/jevbench-scope.mjs:67-75",
-  "status": "STOP"
- }
+  "postflip-tests.log": {
+   "fail": 0,
+   "pass": 208,
+   "skipped": 1,
+   "tests": 209
+  },
+  "release-tests.log": {
+   "fail": 0,
+   "pass": 194,
+   "skipped": 1,
+   "tests": 195
+  }
+ },
+ "real_candidate_pending": true,
+ "real_predecessor_pass": true,
+ "status": "PASS",
+ "synthetic_bindings_restored": true
 }
