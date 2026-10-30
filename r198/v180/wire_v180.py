@@ -6,6 +6,9 @@ def edit(name,old,new):
  p=W/name;s=p.read_text()
  if new in s:return
  assert old in s,(name,old[:120]);p.write_text(s.replace(old,new))
+# Recreate the current release entry; discard stale duplicate notes deterministically.
+p=W/'lib/jevbench-releases.mjs'
+p.write_text(''.join(line for line in p.read_text().splitlines(keepends=True) if "{ version: 'v1.8.0'" not in line))
 # Routes and archive.
 for name in ['app/api/jevbench/v1.8.0/route.ts','app/jev-models/v1.8.0/page.tsx']:
  p=W/name;p.parent.mkdir(parents=True,exist_ok=True)

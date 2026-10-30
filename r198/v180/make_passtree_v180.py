@@ -38,7 +38,7 @@ if not (T/'receipts/topfive-diff.json').exists():put(T/'receipts/topfive-diff.js
 prp=D/'jevbench-v1.8.0-proof.json';pr=json.loads(prp.read_text());orig=sha(prp)
 pr['predecessor']['publication_sha256']=sha(P/f'data/raw/benchmarks/jevbench/v1.7/jevbench-{PREV}-publication.json')
 if not a.pending:pr['publication_approval']={'artifact_sha256':sha(D/'jevbench-v1.8.0-results.json'),'status':'GO','top_five_effect':'changed','card':1,'selection':'synthetic fixture only','recorded_at':'2026-10-29T00:00:00Z','go_quote':'SYNTHETIC; NOT AUTHORITY','preview_sha256':sha(T/'preview/manifest.json'),'comparison_sha256':sha(T/'receipts/topfive-diff.json')}
-pr['top_five_comparison']={'base':'v1.7.22','receipt_sha256':sha(T/'receipts/topfive-diff.json')}
+pr['top_five_comparison']={'base':'v1.7.23','receipt_sha256':sha(T/'receipts/topfive-diff.json')}
 put(prp,pr)
 mp=D/'jevbench-v1.8.0-publication.json';m=json.loads(mp.read_text());m['predecessor']=pr['predecessor'];m['files']['proof']['sha256']=sha(prp)
 if not a.pending:m['review']={'engine':'synthetic-preview-only','verdict':'PASS','receipt_sha256':'a'*64}

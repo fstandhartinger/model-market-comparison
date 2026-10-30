@@ -2,7 +2,7 @@
  "cost_changed": 210,
  "max_diff_pct": 1256.9018706924842,
  "newly_eligible": 46,
- "note": "Cost basis for self-hosted open weights changed from base-model list prices to GPU time on a monthly-rented RTX PRO 6000 with an efficient inference engine. 210 rows have verified scored usage and a resolvable architecture; 46 additional open-weight rows fall within both official caps. Intelligence, Calibration and latency are unchanged; API costs and both caps are unchanged. Encoders, unresolved architectures and rows without a verified token basis retain their old costs. Composite intervals affected by the cost change are withheld; the archived v1.7 intervals use the old cost. Old values remain available in v1.7.x.",
+ "note": "Cost basis for self-hosted open weights changed from base-model list prices to GPU time on a monthly-rented RTX PRO 6000 with an efficient inference engine. 210 rows have verified scored usage and a resolvable architecture; 46 additional open-weight rows fall within both official caps. Intelligence, Calibration and latency are unchanged; API costs and both caps are unchanged. Encoders, architectures outside the six calibrated Gemma/Qwen classes and rows without a verified token basis retain their old costs. Composite intervals affected by the cost change are withheld; the archived v1.7 intervals use the old cost. Old values remain available in v1.7.x. Throughput was calibrated on prompt processing (prefill); generated tokens are counted at the same rate. Three diffusion-readout rows are priced with the closest calibrated class (MoE Gemma); this is an approximation.",
  "restated": 210,
  "rows_over_2pct": [
   {

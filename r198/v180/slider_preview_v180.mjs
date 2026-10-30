@@ -3,8 +3,8 @@ import {readFileSync,writeFileSync} from 'node:fs';
 import {jevClassRows,JEV_V16_CLASS_OPTIONS} from '../../lib/jevbench-jev-class.mjs';
 import {jevScopeClassifier,jevbenchScopeArtifact} from '../../lib/jevbench-scope.mjs';
 const J=new URL('.',import.meta.url).pathname,load=p=>JSON.parse(readFileSync(p));
-const V='data/raw/benchmarks/jevbench/v1.7/',before=load(V+'jevbench-v1.7.22-results.json'),after=load('data/raw/benchmarks/jevbench/v1.8/jevbench-v1.8.0-results.json');
-const isApi=jevScopeClassifier(before.systems,load(V+'jevbench-v1.7.22-carry.json').rows,[],[]),KEYS=['umpire-35b-a3b','arcbright-elf-1-12b-r2','decisio-gemma-4-12b-tuned-commit-think','h2o-lightning-4b-v1.4.1','jeff_1_1_large','jeff_1_1_qwen_4b','microsoft-decision-1-r2','strike-1','torchcast-decision-31b-v1.0'];
+const V='data/raw/benchmarks/jevbench/v1.7/',before=load(V+'jevbench-v1.7.23-results.json'),after=load('data/raw/benchmarks/jevbench/v1.8/jevbench-v1.8.0-results.json');
+const isApi=jevScopeClassifier(before.systems,load(V+'jevbench-v1.7.23-carry.json').rows,[],[]),KEYS=['umpire-35b-a3b','arcbright-elf-1-12b-r2','decisio-gemma-4-12b-tuned-commit-think','h2o-lightning-4b-v1.4.1','jeff_1_1_large','jeff_1_1_qwen_4b','microsoft-decision-1-r2','strike-1','torchcast-decision-31b-v1.0'];
 const states=[];
 for(const scope of ['all','open','api'])for(const slider of ['cost','latency'])for(const other of [1,1.01,1.4,1.5,2,Infinity]){
  const pick=a=>(scope==='all'?a:jevbenchScopeArtifact(a,scope,isApi)).systems.filter(s=>s.ranked);

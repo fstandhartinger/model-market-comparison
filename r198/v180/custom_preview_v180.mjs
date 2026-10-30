@@ -1,11 +1,11 @@
-// Specific custom-weight and slider settings from prescore, recomputed against live v1.7.22.
+// Specific custom-weight and slider settings from prescore, recomputed against live v1.7.23.
 import {readFileSync,writeFileSync} from 'node:fs';
 import {jevV15BoardScore} from '../../lib/jevbench-v15-board.mjs';
 import {jevClassRows,JEV_V16_CLASS_OPTIONS} from '../../lib/jevbench-jev-class.mjs';
 import {jevScopeClassifier,jevbenchScopeArtifact} from '../../lib/jevbench-scope.mjs';
 const J=new URL('.',import.meta.url).pathname,V='data/raw/benchmarks/jevbench/v1.7/',load=p=>JSON.parse(readFileSync(p));
-const before=load(V+'jevbench-v1.7.22-results.json'),after=load('data/raw/benchmarks/jevbench/v1.8/jevbench-v1.8.0-results.json'),KEYS=['umpire-35b-a3b','arcbright-elf-1-12b-r2','decisio-gemma-4-12b-tuned-commit-think','h2o-lightning-4b-v1.4.1','jeff_1_1_large','jeff_1_1_qwen_4b','microsoft-decision-1-r2','strike-1','torchcast-decision-31b-v1.0'];
-const isApi=jevScopeClassifier(before.systems,load(V+'jevbench-v1.7.22-carry.json').rows,[],[]),pickScope=(a,scope)=>(scope==='all'?a:jevbenchScopeArtifact(a,scope,isApi)).systems.filter(s=>s.ranked),pick=a=>pickScope(a,'open'),weights={intelligence:50,calibration:50,speed:0,cost:0};
+const before=load(V+'jevbench-v1.7.23-results.json'),after=load('data/raw/benchmarks/jevbench/v1.8/jevbench-v1.8.0-results.json'),KEYS=['umpire-35b-a3b','arcbright-elf-1-12b-r2','decisio-gemma-4-12b-tuned-commit-think','h2o-lightning-4b-v1.4.1','jeff_1_1_large','jeff_1_1_qwen_4b','microsoft-decision-1-r2','strike-1','torchcast-decision-31b-v1.0'];
+const isApi=jevScopeClassifier(before.systems,load(V+'jevbench-v1.7.23-carry.json').rows,[],[]),pickScope=(a,scope)=>(scope==='all'?a:jevbenchScopeArtifact(a,scope,isApi)).systems.filter(s=>s.ranked),pick=a=>pickScope(a,'open'),weights={intelligence:50,calibration:50,speed:0,cost:0};
 const order=a=>pick(a).map(s=>({key:s.key,score:jevV15BoardScore(s.axes,weights)})).sort((a,b)=>b.score-a.score).map((s,i)=>({...s,rank:i+1}));
 const full_before=order(before),full_after=order(after),top=x=>x.slice(0,5).map(s=>s.key);
 const row={variant:'share',scope:'open',caps:'none',metric:'custom/Capability only',weights,full_before,full_after,before:top(full_before),after:top(full_after),changed:JSON.stringify(top(full_before))!==JSON.stringify(top(full_after))};
@@ -28,5 +28,5 @@ const allRows=[['custom/Capability only',weights],['custom/Intelligence only',we
  const order=a=>pickScope(a,'all').map(s=>({key:s.key,score:jevV15BoardScore(s.axes,w)})).sort((a,b)=>b.score-a.score).map((s,i)=>({...s,rank:i+1}));
  const full_before=order(before),full_after=order(after);return {variant:'share',scope:'all',caps:'none',metric:metric+' (all)',weights:w,full_before,full_after,before:top(full_before),after:top(full_after),changed:JSON.stringify(top(full_before))!==JSON.stringify(top(full_after))};
 });
-writeFileSync(J+'receipts/topfive-custom.json',JSON.stringify({status:'PASS',weights,rows:[row,row3,...legacy,...allRows],slider_grid:grid,slider_grid_states:grid.length,slider_grid_changed:grid.filter(s=>s.changed).length,method:'Production jevV15BoardScore and jevClassRows; specific custom-weight example and all 368 cost/latency grid settings from prescore checked against carried live v1.7.22 rows.'},null,1)+'\n');
+writeFileSync(J+'receipts/topfive-custom.json',JSON.stringify({status:'PASS',weights,rows:[row,row3,...legacy,...allRows],slider_grid:grid,slider_grid_states:grid.length,slider_grid_changed:grid.filter(s=>s.changed).length,method:'Production jevV15BoardScore and jevClassRows; specific custom-weight example and all 368 cost/latency grid settings from prescore checked against carried live v1.7.23 rows.'},null,1)+'\n');
 console.log('Custom weighting and slider grid:',grid.length,'states;',grid.filter(s=>s.changed).length,'changed');
