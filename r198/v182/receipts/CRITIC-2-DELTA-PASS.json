@@ -1,0 +1,27 @@
+{
+ "verdict": "PASS",
+ "engine": "Claude Opus 5.5 (worker, read-only)",
+ "head_sha": "17665972c6fb7bf4229c8d82c5e536fc43091a83",
+ "baseline_sha": "ef5c54155926b2f20fded6ecf21c513a9747d17e",
+ "live_v181": "a937793c",
+ "checks": {
+  "scope": "PASS: 18 non-preview/receipt paths, all mapped to F1-F5/F8 or their pins/helpers",
+  "F1": "PASS: 7 fields state the required minimum and the remaining time; X/Y equal v1.8.1 (1500/3433.95, 1500/3513.56, 1500/3452.127, 1500/~8275, 2002.57/8544.55, 1500 per row + 3600 pair/5384.768 x2); dking 'safety margins' confirmed by r83-dking11 ttl-fit.json and fit_gate.py:107-113",
+  "F2_F4_F8": "PASS",
+  "F5": "PASS: DE label 'öffentlicher Listenpreis' + test; receipt lists 54 current routes, 0/83 archived pages; the only DE caller is /de/jev-models/alternativen",
+  "numeric_equality": "PASS: 294296 leaves, 0 diffs, 0 structural diffs, order equal; 16/16 proof after-shas correct",
+  "public_text_grep": "PASS: 0 hits over 18 changed strings + DE label",
+  "gate_binding": "PASS: 18/18 FIX-SOURCE-CHECKPOINT hashes equal head files; suites 257/256/0/1 each"
+ },
+ "findings": [
+  {"id": "N1", "severity": "low", "blocking": false, "title": "sors-2b forecast sentence lost 'admission'", "evidence": "results sors-2b endpoint_condition: 'Forecasts are estimates, not scored latency observations.' (v1.8.1: 'forecasts are admission estimates, ...')", "requested_change": "Optional: 'Admission forecasts are estimates, not scored latency observations.'"},
+  {"id": "N2", "severity": "info", "blocking": false, "title": "oenogarum cleanup sentence no longer cites receipts", "evidence": "'Final receipts confirm provider closure ...' -> 'The rented GPU instance was closed and temporary measurement copies were deleted, with no cleanup errors reported.'", "requested_change": "None required"},
+  {"id": "N3", "severity": "info", "blocking": false, "title": "heavy-run wrapper exit 254 from a malformed footer", "evidence": "FIX-RUNNER-STATUS.json; journal shows the unit deactivated successfully; the script runs under set -euo pipefail", "requested_change": "None; already disclosed"}
+ ],
+ "tests": {
+  "tsc_noEmit": "exit 0",
+  "v182_release_and_tariff_label_tests": "8 tests, 8 pass, 0 fail",
+  "not_rerun": ["PENDING suite", "post-flip suite", "production build"]
+ },
+ "limitations": ["Suites and build not rerun (receipts hash-bound)", "Captures checked as HTML only", "Current-route count of 54 taken from the receipt; DE callers verified in source"]
+}
