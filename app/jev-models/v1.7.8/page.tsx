@@ -1,3 +1,4 @@
+import { seoTitle } from '../../../lib/seo';
 import { notFound } from 'next/navigation';
 import { readJevbenchV178ForBoard, v178BoardInput } from '../../../lib/jevbench-v178-release.mjs';
 import { JevBenchV16Board } from '../../../components/JevBenchV16Board';
@@ -5,7 +6,7 @@ import { JevBenchReleaseVersionNav } from '../../../components/JevBenchReleaseVe
 import { withPublicAdapterIds } from '../../../lib/jevbench-v15-release.mjs';
 import { JevHistoryLazy } from '../../../components/JevHistoryLazy';
 import { PageJsonLd } from '../../../components/PageJsonLd';
-export const metadata = {title:'JevBench v1.7.8 · One same-draw self-hosted addition',description:'Jeff-1.1-Medium joins as a self-hosted row. Same method; 295 carried rows retain their scores and confidence intervals.',alternates:{canonical:'/jev-models/v1.7.8'}};
+export const metadata = {title:seoTitle('JevBench v1.7.8 — Jeff-1.1-Medium'),description:'Jeff-1.1-Medium joins as a self-hosted row. Same method; 295 carried rows retain their scores and confidence intervals.',alternates:{canonical:'/jev-models/v1.7.8'}};
 export default async function JevModelsV178Page() {
  const release=await readJevbenchV178ForBoard();if(!release)notFound();
  const board=v178BoardInput(release);

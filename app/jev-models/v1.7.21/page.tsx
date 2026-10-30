@@ -1,3 +1,4 @@
+import { seoTitle } from '../../../lib/seo';
 import { notFound } from 'next/navigation';
 import { readJevbenchV1721ForBoard, v1721BoardInput } from '../../../lib/jevbench-v1721-release.mjs';
 import { JevBenchV16Board } from '../../../components/JevBenchV16Board';
@@ -5,7 +6,7 @@ import { JevBenchReleaseVersionNav } from '../../../components/JevBenchReleaseVe
 import { withPublicAdapterIds } from '../../../lib/jevbench-v15-release.mjs';
 import { JevHistoryLazy } from '../../../components/JevHistoryLazy';
 import { PageJsonLd } from '../../../components/PageJsonLd';
-export const metadata = {title:'JevBench v1.7.21: VisionJEV 1.0.0 on the 27 Oct regular draw, shown unranked',description:'VisionJEV 1.0.0 measured on the 27 Oct regular draw, shown unranked.',alternates:{canonical:'/jev-models/v1.7.21'}};
+export const metadata = {title:seoTitle('JevBench v1.7.21 — VisionJEV 1.0.0'),description:'VisionJEV 1.0.0 was measured on the 27 Oct regular draw and is shown unranked. Its release page includes the measurement setup and source notes.',alternates:{canonical:'/jev-models/v1.7.21'}};
 export default async function JevModelsV1721Page() {
  const release=await readJevbenchV1721ForBoard();if(!release)notFound();
  const board=v1721BoardInput(release);

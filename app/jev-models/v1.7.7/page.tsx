@@ -1,3 +1,4 @@
+import { seoTitle } from '../../../lib/seo';
 import { notFound } from 'next/navigation';
 import { readJevbenchV177ForBoard, v177BoardInput } from '../../../lib/jevbench-v177-release.mjs';
 import { JevBenchV16Board } from '../../../components/JevBenchV16Board';
@@ -5,7 +6,7 @@ import { JevBenchReleaseVersionNav } from '../../../components/JevBenchReleaseVe
 import { withPublicAdapterIds } from '../../../lib/jevbench-v15-release.mjs';
 import { JevHistoryLazy } from '../../../components/JevHistoryLazy';
 import { PageJsonLd } from '../../../components/PageJsonLd';
-export const metadata = {title:'JevBench v1.7.7 · Two same-draw self-hosted additions',description:'D1A Gemma 4 E4B and D1A Gemma 4 E2B join as self-hosted rows. Same method; 293 carried rows retain their scores and confidence intervals.',alternates:{canonical:'/jev-models/v1.7.7'}};
+export const metadata = {title:seoTitle('JevBench v1.7.7 — 2 Gemma additions'),description:'D1A Gemma 4 E4B and D1A Gemma 4 E2B join as self-hosted rows. Same method; 293 carried rows retain their scores and confidence intervals.',alternates:{canonical:'/jev-models/v1.7.7'}};
 export default async function JevModelsV177Page() {
  const release=await readJevbenchV177ForBoard();if(!release)notFound();
  const board=v177BoardInput(release);

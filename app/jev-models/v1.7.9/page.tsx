@@ -1,3 +1,4 @@
+import { seoTitle } from '../../../lib/seo';
 import { notFound } from 'next/navigation';
 import { readJevbenchV179ForBoard, v179BoardInput } from '../../../lib/jevbench-v179-release.mjs';
 import { JevBenchV16Board } from '../../../components/JevBenchV16Board';
@@ -5,7 +6,7 @@ import { JevBenchReleaseVersionNav } from '../../../components/JevBenchReleaseVe
 import { withPublicAdapterIds } from '../../../lib/jevbench-v15-release.mjs';
 import { JevHistoryLazy } from '../../../components/JevHistoryLazy';
 import { PageJsonLd } from '../../../components/PageJsonLd';
-export const metadata = {title:'JevBench v1.7.9: one same-draw self-hosted addition and one price correction',description:'GLiClass v4 9B joins as a self-hosted row. Same method; one new row, one price correction and vendor link fixes.',alternates:{canonical:'/jev-models/v1.7.9'}};
+export const metadata = {title:seoTitle('JevBench v1.7.9 — GLiClass addition'),description:'GLiClass v4 9B joins as a self-hosted row. Same method; one new row, one price correction and vendor link fixes.',alternates:{canonical:'/jev-models/v1.7.9'}};
 export default async function JevModelsV179Page() {
  const release=await readJevbenchV179ForBoard();if(!release)notFound();
  const board=v179BoardInput(release);
