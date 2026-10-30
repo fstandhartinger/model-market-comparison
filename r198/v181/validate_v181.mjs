@@ -2,7 +2,7 @@ import {readFileSync,writeFileSync} from 'node:fs';
 import {createHash} from 'node:crypto';
 import assert from 'node:assert/strict';
 import {fileURLToPath} from 'node:url';
-import {validateJevbenchV181Bundle,V181_NEW_KEYS,readJevbenchV181ForBoard} from '../../lib/jevbench-v181-release.mjs';
+import {validateJevbenchV181Bundle,validateV181PublicText,V181_NEW_KEYS,readJevbenchV181ForBoard} from '../../lib/jevbench-v181-release.mjs';
 import {readOptionalJevbenchV180Release} from '../../lib/jevbench-v180-release.mjs';
 const root=process.cwd(),J=fileURLToPath(new URL('.',import.meta.url)),D=root+'/data/raw/benchmarks/jevbench/v1.8/',load=n=>JSON.parse(readFileSync(D+'jevbench-v1.8.1-'+n+'.json'));
 const previous=await readOptionalJevbenchV180Release();
@@ -19,6 +19,18 @@ for(const k of V181_NEW_KEYS){
  neg(x=>x.categories.systems[k].topics={x:{n:1,competence:99}});
  neg(x=>delete x.categories.systems[k].languages);
 }
+// Check the prose guard directly as well as the full bundle so exact-row pins
+// cannot mask an ineffective wording rule. Every nested string is covered.
+const forbidden=['0.064595','x cap','cost cap USD','0.15 s','worker','lead','custody','custodian','release owner','measurement review','deputy','board','#123','Florian','CoS','order id','jevbench-add-requests','fastlane-native','r201-v181','Disposition is for'];
+let proseNegatives=0;
+for(const k of V181_NEW_KEYS){
+ const fresh=original.artifact.systems.find(s=>s.key===k);assert.equal(validateV181PublicText(fresh),true);
+ for(const field of ['disclosure','endpoint_condition','cost.basis'])for(const term of forbidden){
+  const bad=structuredClone(fresh);if(field==='cost.basis')bad.cost.basis+=' '+term;else bad[field]+=' '+term;
+  assert.throws(()=>validateV181PublicText(bad));proseNegatives++;
+  if(k===V181_NEW_KEYS[0]&&field==='disclosure')neg(x=>{x.artifact.systems.find(s=>s.key===k).disclosure+=' '+term;});
+ }
+}
 if(original.manifest.review.verdict==='PENDING'){assert.equal(await readJevbenchV181ForBoard(),null);assert.throws(()=>validateJevbenchV181Bundle(original));}
-writeFileSync(J+'receipts/VALIDATOR.json',JSON.stringify({status:'PASS',negative_controls:n,rows:V181_NEW_KEYS.length,public_reader_review_gated:true},null,1)+'\n');
+writeFileSync(J+'receipts/VALIDATOR.json',JSON.stringify({status:'PASS',negative_controls:n,prose_negative_controls:proseNegatives,rows:V181_NEW_KEYS.length,public_reader_review_gated:true},null,1)+'\n');
 console.log('PASS validator;',n,'negative controls rejected;',V181_NEW_KEYS.length,'unranked rows');

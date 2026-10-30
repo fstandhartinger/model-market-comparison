@@ -1,6 +1,6 @@
 """Verify immutable base row/data bytes and archived v1.7 source before heavy-run (which omits .git)."""
 import pathlib,json,subprocess,hashlib
-J=pathlib.Path(__file__).resolve().parent;W=J.parents[1];BASE='b05d2f618';L=lambda p:json.loads(p.read_text());sha=lambda b:hashlib.sha256(b).hexdigest()
+J=pathlib.Path(__file__).resolve().parent;W=J.parents[1];BASE='70b6f06d13eb8b49d7bab93a280c4bb9d29fde66';L=lambda p:json.loads(p.read_text());sha=lambda b:hashlib.sha256(b).hexdigest()
 def base(p):return subprocess.check_output(['git','show',BASE+':'+str(p)],cwd=W)
 D=pathlib.Path('data/raw/benchmarks/jevbench/v1.8');b=json.loads(base(D/'jevbench-v1.8.0-results.json'));a=L(W/D/'jevbench-v1.8.1-results.json');by={s['key']:s for s in a['systems']}
 for r in b['systems']:assert by[r['key']]==r

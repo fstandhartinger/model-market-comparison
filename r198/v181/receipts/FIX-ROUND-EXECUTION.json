@@ -1,0 +1,27 @@
+{
+ "cancelled_before_build": 1,
+ "full_npm_suite_run": false,
+ "production_builds": 1,
+ "runs": [
+  {
+   "cmd": "bash r198/v181/heavy_v181.sh",
+   "exit": "254",
+   "host": "lechonk",
+   "job": "jevbench-v181-fix-20261030",
+   "reason": "LeChonk 0.19/thread vs Sandy 0.50/thread, 0/8 heavy runs",
+   "run": "ws.v181_fix",
+   "secs": "200",
+   "ts": "2026-10-30T13:38:27Z"
+  },
+  {
+   "cmd": "bash r198/v181/heavy_v181.sh",
+   "exit": "0",
+   "host": "lechonk",
+   "job": "jevbench-v181-fix-20261030",
+   "reason": "LeChonk 0.11/thread vs Sandy 0.26/thread, 0/8 heavy runs",
+   "run": "ws.v181_fix",
+   "secs": "3950",
+   "ts": "2026-10-30T14:44:33Z"
+  }
+ ]
+}

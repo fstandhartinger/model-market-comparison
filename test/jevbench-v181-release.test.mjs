@@ -25,3 +25,10 @@ test('method label is per release and preserves v1.7 byte-for-byte',()=>{
 test('Joey uses the corrected handoff and billed native usage',()=>{
  const u=JSON.parse(readFileSync('r198/v181/src/usage.json'))['joey-1'];assert.equal(u.input_tokens_all,571556);assert.equal(u.input_tokens_common,568911);assert.equal(u.output_tokens_all,1495);assert.ok(V181_NEW_KEYS.includes('joey-1'));
 });
+
+test('d1027 pins its exact release history and latest release',()=>{
+ const draws=JSON.parse(readFileSync('data/jevbench-draw-equating.json')).draws;
+ const draw=draws.find(d=>d.draw==='v1.6-regular-20261027');
+ assert.deepEqual(draw.releases,['v1.7.13','v1.7.14','v1.7.15','v1.7.16','v1.7.17','v1.7.19','v1.7.21','v1.7.22','v1.8.1']);
+ assert.equal(draw.latest_release,'v1.8.1');
+});

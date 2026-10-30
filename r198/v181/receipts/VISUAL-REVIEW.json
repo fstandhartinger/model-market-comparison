@@ -1,20 +1,36 @@
 {
- "all_nine_base_model_disclosures_correct": true,
- "base_model_overlay_in_final_production_build": true,
- "candidate_pending_banner_visible": true,
- "contact_sheet": "private worker capture-contact-sheet-final.png",
- "final_nine_row_production_build": true,
- "layout_no_observed_clipping_in_reviewed_areas": true,
- "no_post_build_product_changes": true,
- "production_pages_reviewed": 13,
- "review_method": "13 top-of-page contact tiles (first 1080px) plus full WeMM and methodology captures; compiled DOM checks verify all nine base-model disclosures",
- "selected_full_pages": [
-  "wemm-jev",
-  "methodology"
+ "accepted_preexisting": [
+  "F6 tariff label (not published)",
+  "F7 row v1.7 badge",
+  "Shared latency help formula",
+  "Row template omits full disclosure field; exact WeMM licence statement is verified in the public results/API disclosure"
  ],
+ "checks": [
+  "Candidate banner visible",
+  "Main/all v1.8 method kicker",
+  "Methodology v1.8.1 and separate artifact anchor",
+  "All nine row headings, neutral unranked note and cost cards visible without layout overlap",
+  "Corrected common/all cost wording rendered",
+  "Qualitative new-row speed adjustment rendered"
+ ],
+ "inspection": "Four contact sheets covering the top 1000 pixels of each of 13 fresh full-page captures, plus full HTML cost/endpoint checks and public artifact disclosure checks.",
+ "pages_inspected": [
+  "main",
+  "all",
+  "open",
+  "methodology",
+  "cribl-decision-2",
+  "cribl-decision-2-mini",
+  "decide-1.1",
+  "decision-king-v1.1",
+  "iota-decide-4b-v0.4",
+  "joey-1",
+  "saif-4b",
+  "sors-2b",
+  "wemm-jev"
+ ],
+ "results_sha256": "e19f11dc591229081138814a00adf22e4a1214def27fad57d21302a80de49b40",
+ "reviewer": "Codex worker r201-v181-fix",
  "status": "PASS",
- "viewport": {
-  "height": 900,
-  "width": 1440
- }
+ "visual_blockers": []
 }

@@ -17,6 +17,15 @@ const fail=m=>{throw Error('JevBench v1.8.1: '+m);};
 const same=(a,b,m)=>{if(!equal(a,b))fail(m);};
 const hash=b=>createHash('sha256').update(b).digest('hex');
 const hex=s=>/^[a-f0-9]{64}$/.test(s??'');
+// Walk values rather than JSON keys so every nested public string is checked.
+export function validateV181PublicText(value){
+ if(typeof value==='string'){
+  if(/0\.0645|x cap|cost cap USD|0\.15 s/i.test(value))fail('release-level numbers in row prose');
+  if(/\bworker\b|\blead\b|custody|custodian|release.owner|measurement review|deputy|\bboard\b|#\d+|Florian|\bCoS\b|order.id|jevbench-add-requests|fastlane-native|r201-v181|Disposition is for/i.test(value))fail('internal public wording');
+ }else if(Array.isArray(value)){for(const v of value)validateV181PublicText(v);}
+ else if(value&&typeof value==='object'){for(const v of Object.values(value))validateV181PublicText(v);}
+ return true;
+}
 export function validateJevbenchV181Bundle({manifest,artifact,categories,carry,proof,previous,previousManifestSha256},{candidate=false}={}){
  if(manifest.revision!=='v1.8.1'||manifest.schema_version!==1||manifest.status!=='published'||manifest.provisional!==false)fail('manifest identity');
  if(!candidate&&(manifest.review?.verdict!=='PASS'||!manifest.review.engine||manifest.review.engine==='PENDING'||!hex(manifest.review.receipt_sha256)))fail('independent review PENDING');
@@ -31,7 +40,7 @@ export function validateJevbenchV181Bundle({manifest,artifact,categories,carry,p
  same([...by.keys()].sort(),[...previous.artifact.systems.map(s=>s.key),...V181_NEW_KEYS].sort(),'exact roster');
  for(const s of previous.artifact.systems){same(by.get(s.key),s,'carried row '+s.key);same(categories.systems[s.key],previous.categories.systems[s.key],'carried cells '+s.key);same(categories.lanes[s.key],previous.categories.lanes[s.key],'carried lane '+s.key);}
  for(const k of V181_NEW_KEYS){
-  const s=by.get(k);same(s,V181_NEW_ROWS[k],'new row '+k);
+  const s=by.get(k);validateV181PublicText(s);same(s,V181_NEW_ROWS[k],'new row '+k);
   if(s.ranked!==false||s.rank!==null||s.listing!=='unranked'||s.not_ranked_because!==V181_NOTE)fail('unranked '+k);
   same(s.ranks,{A:null,B:null,C:null,capability:null},'null ranks '+k);
   for(const b of Object.values(artifact.board))if(b.order?.includes(k))fail('unranked in list '+k);
