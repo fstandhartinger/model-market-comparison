@@ -1,0 +1,370 @@
+{
+ "verdict": "REVISE",
+ "engine": "claude-opus-5-5 (worker)",
+ "head_sha": "ef5c54155926b2f20fded6ecf21c513a9747d17e",
+ "base": "6c9b56320bd72aed249052ab1e370fcf6d99b025 (tree == live a937793c tree ebc3f41e; no drift)",
+ "findings": [
+  {
+   "id": "F1",
+   "severity": "medium",
+   "blocking": true,
+   "title": "Cleanup rewording makes 7 endpoint_condition fields false (1,500 s is the fit-gate minimum requirement, not an estimated run time / allowed budget)",
+   "evidence": "fit_gate required_s=max(1500,compute*1.25+600) (jevbench-auto-intake/r91-granite/fit_gate.py:50); joey-1, saif-4b, sors-2b, wemm-jev \"The estimated run time was 1,500 s\"; decision-king \"estimated run time 2,002.57 s\"; cribl x2 \"The time budget allowed 1,500 s per row\"; v1.8.1 said \"against 1,500 s required\"",
+   "requested_change": "Hand-edit the 7 fields to \"Admission required (at least) X s ..., with Y s remaining\" wording; text-only, no numbers change"
+  },
+  {
+   "id": "F2",
+   "severity": "low",
+   "blocking": false,
+   "title": "New rows say \"GPU-time estimate from v1.8.1\"; basis is from v1.8.0 (carried rows say v1.8.0)",
+   "evidence": "cost.basis of oenogarum, amber-4b, piccolo-4b, piccolo-9b",
+   "requested_change": "Use \"from v1.8.0\""
+  },
+  {
+   "id": "F3",
+   "severity": "low",
+   "blocking": false,
+   "title": "Internal file name smoke-stop.json in amber-4b disclosure + endpoint_condition; minor log-style phrases in new rows",
+   "evidence": "grep; oenogarum \"planned pair stopped ... during cleanup\", \"Final receipts confirm provider closure\"",
+   "requested_change": "Replace filename with plain wording; optional polish"
+  },
+  {
+   "id": "F4",
+   "severity": "low",
+   "blocking": false,
+   "title": "cribl x2 \"(revision ...)\" placed after \"wire shim\" but is the model/library revision",
+   "evidence": "entries-cribl2 code_revision: \"cribl-ai/cribl-decision-2 at 92ac09ec...\"",
+   "requested_change": "\"(model and library revision ...)\""
+  },
+  {
+   "id": "F5",
+   "severity": "low",
+   "blocking": false,
+   "title": "Tariff label change affects current pages not enumerated; German costBasisLabelDe lacks tariff",
+   "evidence": "callers app/jev-models/[system]/page.tsx:211, components/JevBenchRankingTable.tsx:20, JevComparisonPage.tsx:24, open-source-jev:94/106, alternatives, how-to-choose, JevV141SystemDetail:118; 21 tariff rows; components/JevBenchSeoDe.ts:14",
+   "requested_change": "List the affected current pages in the receipt; DE follow-up"
+  },
+  {
+   "id": "F6",
+   "severity": "info",
+   "blocking": false,
+   "title": "decision-king dropped \"not an infrastructure fault\"; substance kept",
+   "evidence": "\"HTTP 503 from the author's server\" retained",
+   "requested_change": "none"
+  },
+  {
+   "id": "F7",
+   "severity": "info",
+   "blocking": false,
+   "title": "Row pages show \"method v1.7 (10 s rule)\" kicker; pre-existing in v1.8.1",
+   "evidence": "preview saif-4b.html v181 and v182",
+   "requested_change": "follow-up"
+  },
+  {
+   "id": "F8",
+   "severity": "info",
+   "blocking": false,
+   "title": "\"SELF:\" tag in Piccolo rows only",
+   "evidence": "lead ruling #34744/#34339",
+   "requested_change": "optional rephrase \"Author-reported:\""
+  }
+ ],
+ "rows_recomputed": {
+  "oenogarum": {
+   "axes_max_abs_diff_vs_published": 3.47e-18,
+   "fields_over_1e9": 0
+  },
+  "amber-4b": {
+   "axes_max_abs_diff_vs_published": 0.0,
+   "fields_over_1e9": 0
+  },
+  "piccolo-4b": {
+   "axes_max_abs_diff_vs_published": 8.67e-19,
+   "fields_over_1e9": 0
+  },
+  "piccolo-9b": {
+   "axes_max_abs_diff_vs_published": 0.0,
+   "fields_over_1e9": 0
+  }
+ },
+ "cost_recomputed": {
+  "oenogarum": {
+   "entry_sha": "a0d7482b8227ae9f8e377a8166e4ef39f153a4e8c186beaf99c66387a20f6a23",
+   "raw_sha": "d91213504874e50dfafca7c72590bfc1df98c8d60ab6efdad857a896ca6dbc56",
+   "raw_sha_in_spec": true,
+   "expect_ok": true,
+   "ok": 1120,
+   "status": {
+    "200": 1120,
+    "422": 380
+   },
+   "tin": 739884,
+   "tc": 735102,
+   "oc": 0,
+   "ref": "google/gemma-4-31b-it",
+   "rin": 0.09,
+   "rout": 0.0,
+   "est_common": 0.044431954331766284,
+   "est_all": 0.04439304,
+   "ts": 10106.516129032258,
+   "rate": 0.05981917847306515,
+   "gpu_common": 0.029532033400877865,
+   "gpu_all": 0.029506168696910223,
+   "applied_common": 0.029532033400877865,
+   "applied_all": 0.029506168696910223,
+   "latency_max": 0.6282268219999878,
+   "over10": 0
+  },
+  "amber-4b": {
+   "entry_sha": "d53838362b4a0d11dd65b1d351e2cd1cc8e9825bfa473dece2d43b3dc64f613d",
+   "raw_sha": "04fa8a232285878b9f5b357232fb55c8dfb3fd300449cdede8a21aebc8810972",
+   "raw_sha_in_spec": true,
+   "expect_ok": true,
+   "ok": 1125,
+   "status": {
+    "200": 1125,
+    "422": 375
+   },
+   "tin": 826084,
+   "tc": 429428,
+   "oc": 0,
+   "ref": "deepinfra:Qwen/Qwen3.5-4B",
+   "rin": 0.030000000000000002,
+   "rout": 0.0,
+   "est_common": 0.008652008059100068,
+   "est_all": 0.01652168,
+   "ts": 61525.0,
+   "rate": 0.009826306250524048,
+   "gpu_common": 0.002833909362357314,
+   "gpu_all": 0.005411569581771938,
+   "applied_common": 0.002833909362357314,
+   "applied_all": 0.005411569581771938,
+   "latency_max": 16.939027456999952,
+   "over10": 1
+  },
+  "piccolo-4b": {
+   "entry_sha": "950f859320f8d4d9bd5ddba6cb2df872692e3c3e6bf08dcd11ec3bb61367cef8",
+   "raw_sha": "0b6d05c374571c75c16086771edc67e1c914e558febb28aed5b650ad91051590",
+   "raw_sha_in_spec": true,
+   "expect_ok": true,
+   "ok": 1495,
+   "status": {
+    "200": 1495,
+    "422": 5
+   },
+   "tin": 1080355,
+   "tc": 1075415,
+   "oc": 0,
+   "ref": "deepinfra:Qwen/Qwen3.5-4B",
+   "rin": 0.030000000000000002,
+   "rout": 0.0,
+   "est_common": 0.021667192746809942,
+   "est_all": 0.021607099999999997,
+   "ts": 61525.0,
+   "rate": 0.009826306250524048,
+   "gpu_common": 0.007096949050642927,
+   "gpu_all": 0.007077266059523271,
+   "applied_common": 0.007096949050642927,
+   "applied_all": 0.007077266059523271,
+   "latency_max": 0.30407365700000355,
+   "over10": 0
+  },
+  "piccolo-9b": {
+   "entry_sha": "950f859320f8d4d9bd5ddba6cb2df872692e3c3e6bf08dcd11ec3bb61367cef8",
+   "raw_sha": "9a3d964c7dec99faf20a8a68a98ce90f8bde223f086e9beebef72163f4f1c3bc",
+   "raw_sha_in_spec": true,
+   "expect_ok": true,
+   "ok": 1495,
+   "status": {
+    "200": 1495,
+    "422": 5
+   },
+   "tin": 1080355,
+   "tc": 1075415,
+   "oc": 0,
+   "ref": "qwen/qwen3.5-9b",
+   "rin": 0.09999999999999999,
+   "rout": 0.0,
+   "est_common": 0.07222397582269979,
+   "est_all": 0.07202366666666665,
+   "ts": 27344.444444444445,
+   "rate": 0.02210918906367911,
+   "gpu_common": 0.015968135363946586,
+   "gpu_all": 0.015923848633927363,
+   "applied_common": 0.015968135363946586,
+   "applied_all": 0.015923848633927363,
+   "latency_max": 0.3622496539999247,
+   "over10": 0
+  }
+ },
+ "carried": {
+  "rows": 325,
+  "numeric_leaves": 175914,
+  "numeric_diffs": 0,
+  "text_fields_changed": 16,
+  "order_equal": true
+ },
+ "overlay": {
+  "jeff_1_1_large": {
+   "repo": "jgeuter/Jeff-1.1-Large",
+   "rev": "970c21af246a44c5527f7109fca129ab6015c941",
+   "api_sha": "970c21af246a44c5527f7109fca129ab6015c941",
+   "card_base_model": "google/gemma-4-31B-it",
+   "tags": [
+    "base_model:google/gemma-4-31B-it",
+    "base_model:finetune:google/gemma-4-31B-it"
+   ],
+   "label": "google/gemma-4-31B-it"
+  },
+  "jeff_1_1_medium": {
+   "repo": "jgeuter/Jeff-1.1-Medium",
+   "rev": "540c40924dd67c715d3367309ba6744bac754b00",
+   "api_sha": "540c40924dd67c715d3367309ba6744bac754b00",
+   "card_base_model": "google/gemma-4-12B-it",
+   "tags": [
+    "base_model:google/gemma-4-12B-it",
+    "base_model:finetune:google/gemma-4-12B-it"
+   ],
+   "label": "google/gemma-4-12B-it"
+  },
+  "jeff_1_1_qwen_4b": {
+   "repo": "jgeuter/Jeff-1.1-Qwen-4B",
+   "rev": "5401940b5a8c959cba82187ebfa2dce5a21abc0a",
+   "api_sha": "5401940b5a8c959cba82187ebfa2dce5a21abc0a",
+   "card_base_model": "Qwen/Qwen3.5-4B",
+   "tags": [
+    "base_model:Qwen/Qwen3.5-4B",
+    "base_model:finetune:Qwen/Qwen3.5-4B"
+   ],
+   "label": "Qwen/Qwen3.5-4B"
+  },
+  "oenogarum": {
+   "repo": "plantwaterer/oenogarum",
+   "rev": "9b684d7da38eb200fe4c5d11c36e3ce819ea2cfb",
+   "api_sha": "9b684d7da38eb200fe4c5d11c36e3ce819ea2cfb",
+   "card_base_model": "google/gemma-4-31B-it",
+   "tags": [
+    "base_model:google/gemma-4-31B-it",
+    "base_model:finetune:google/gemma-4-31B-it"
+   ],
+   "label": "google/gemma-4-31B-it"
+  },
+  "amber-4b": {
+   "repo": "MLukauskas/amber-4b",
+   "rev": "71c37554758f6df3034aac5c632030a1216a7392",
+   "api_sha": "71c37554758f6df3034aac5c632030a1216a7392",
+   "card_base_model": [
+    "Qwen/Qwen3.5-4B"
+   ],
+   "tags": [
+    "base_model:Qwen/Qwen3.5-4B",
+    "base_model:adapter:Qwen/Qwen3.5-4B"
+   ],
+   "label": "Qwen/Qwen3.5-4B"
+  },
+  "piccolo-4b": {
+   "repo": "agentscope-ai/Piccolo-4B",
+   "rev": "fe6a7af0c6eaf363612c90051243b4e8aeacc90e",
+   "api_sha": "fe6a7af0c6eaf363612c90051243b4e8aeacc90e",
+   "card_base_model": "Qwen/Qwen3.5-4B",
+   "tags": [
+    "base_model:Qwen/Qwen3.5-4B",
+    "base_model:finetune:Qwen/Qwen3.5-4B"
+   ],
+   "label": "Qwen/Qwen3.5-4B"
+  },
+  "piccolo-9b": {
+   "repo": "agentscope-ai/Piccolo-9B",
+   "rev": "3e5e54b1554ad6ad85b46980719d6662a5980fd7",
+   "api_sha": "3e5e54b1554ad6ad85b46980719d6662a5980fd7",
+   "card_base_model": "Qwen/Qwen3.5-9B",
+   "tags": [
+    "base_model:Qwen/Qwen3.5-9B",
+    "base_model:finetune:Qwen/Qwen3.5-9B"
+   ],
+   "label": "Qwen/Qwen3.5-9B"
+  },
+  "cribl-decision-2": {
+   "repo": "cribl-ai/cribl-decision-2",
+   "rev": "92ac09eccd2a3c24d41ad31e659e4d681261b57b",
+   "api_sha": "92ac09eccd2a3c24d41ad31e659e4d681261b57b",
+   "card_base_model": [
+    "Qwen/Qwen3.5-4B"
+   ],
+   "tags": [
+    "base_model:Qwen/Qwen3.5-4B",
+    "base_model:finetune:Qwen/Qwen3.5-4B"
+   ],
+   "label": "Qwen/Qwen3.5-4B"
+  },
+  "cribl-decision-2-mini": {
+   "repo": "cribl-ai/cribl-decision-2-mini",
+   "rev": "d7969110d0858b27eac276e8f8c08192ec899d2b",
+   "api_sha": "d7969110d0858b27eac276e8f8c08192ec899d2b",
+   "card_base_model": [
+    "Qwen/Qwen3.5-0.8B"
+   ],
+   "tags": [
+    "base_model:Qwen/Qwen3.5-0.8B",
+    "base_model:finetune:Qwen/Qwen3.5-0.8B"
+   ],
+   "label": "Qwen/Qwen3.5-0.8B"
+  },
+  "iota-decide-4b-v0.4": {
+   "repo": "macrocosm-os/iota-decide-4b-v0.4",
+   "rev": "7c82bc488b80d0ab45408c4c1a652483d485725c",
+   "api_sha": "7c82bc488b80d0ab45408c4c1a652483d485725c",
+   "card_base_model": "Qwen/Qwen3.5-4B",
+   "tags": [
+    "base_model:Qwen/Qwen3.5-4B",
+    "base_model:finetune:Qwen/Qwen3.5-4B"
+   ],
+   "label": "Qwen/Qwen3.5-4B"
+  },
+  "saif-4b": {
+   "repo": "GyrTechnology/saif-4b",
+   "rev": "622e4c8e483a265abb1a9907bd3a3e142e2672ef",
+   "api_sha": "622e4c8e483a265abb1a9907bd3a3e142e2672ef",
+   "card_base_model": "Qwen/Qwen3.5-4B",
+   "tags": [
+    "base_model:Qwen/Qwen3.5-4B",
+    "base_model:finetune:Qwen/Qwen3.5-4B"
+   ],
+   "label": "Qwen/Qwen3.5-4B"
+  },
+  "sors-2b": {
+   "repo": "SakuraYuyuko/Sors-2B",
+   "rev": "3aa743877c9e37103649cb3a156d13fa6a026c39",
+   "api_sha": "3aa743877c9e37103649cb3a156d13fa6a026c39",
+   "card_base_model": "Qwen/Qwen3.5-2B-Base",
+   "tags": [
+    "base_model:Qwen/Qwen3.5-2B-Base",
+    "base_model:finetune:Qwen/Qwen3.5-2B-Base"
+   ],
+   "label": "Qwen/Qwen3.5-2B-Base"
+  },
+  "joey-1": {
+   "repo": "baselabs/joey-1",
+   "rev": "a5923ff876f14bae084ee1ae6e171b8df547039f",
+   "api_sha": "a5923ff876f14bae084ee1ae6e171b8df547039f",
+   "card_base_model": "Qwen/Qwen3.5-2B",
+   "tags": [
+    "base_model:Qwen/Qwen3.5-2B",
+    "base_model:finetune:Qwen/Qwen3.5-2B"
+   ],
+   "label": "Qwen/Qwen3.5-2B"
+  }
+ },
+ "tests": {
+  "tsc": 0,
+  "v182_release_and_tariff": "7/7 pass",
+  "overlay": "PASS 13",
+  "validator": "PASS 113 negatives",
+  "builder_receipts_bound": "head differs from gate tree e9c5ce98 only in r198/v182/{preview,receipts}; PENDING+synthetic 255/0/1 of 256; build exit 0; topfive changed_lists 0 bound to results ea41043c"
+ },
+ "limitations": [
+  "Did not rerun 256-test suites, production build or 580-list sweep (receipts tree-bound)",
+  "main/all inspected via HTML (capture 57k px tall)",
+  "archived-page tariff non-impact from builder receipt"
+ ]
+}

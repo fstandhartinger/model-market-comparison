@@ -1,0 +1,29 @@
+{
+ "baseline_json_verified_against_git": "ef5c54155926b2f20fded6ecf21c513a9747d17e",
+ "execution_runtime_bound_seconds": 5400,
+ "final_changed_source_files_byte_equal_to_tested_remote": {
+  "components/JevBenchSeoDe.ts": "c45b23e1b6f8980562ae902372c2abb4f90dfd946cefa69000772f94811be0cd",
+  "data/raw/benchmarks/jevbench/v1.8/jevbench-v1.8.2-categories.json": "dc17e610e8a8b197bb2a2403dbfee921db4fd0b73ecd8359b11cd58cd05a7f71",
+  "data/raw/benchmarks/jevbench/v1.8/jevbench-v1.8.2-proof.json": "994f90218fffa00f526d80c22b27164c26ac798e3eaa3f78e1ef8c8814403763",
+  "data/raw/benchmarks/jevbench/v1.8/jevbench-v1.8.2-publication.json": "63d5315a9e47f4c743503568f86fe1235040ffd286d863c3ed6f8a08f85d7204",
+  "data/raw/benchmarks/jevbench/v1.8/jevbench-v1.8.2-results.json": "6468462911beeac46335b9729b115bfde22b96c65bc1cbf2af36a8c056c40e34",
+  "lib/jevbench-v182-release.mjs": "a764fcfa340ed3476212301b721a14053754c437b1343fbe64bcdbccf6d4ac20",
+  "r198/v182/build_v182.py": "544f2a5d8175837f8f260df97b6f327febde10c545a3a30f92654913f7dcf0f8",
+  "r198/v182/check_fix_equality_v182.py": "1a9fd1e946ac03d59ad0383c6ab4efd8af7b66d0b0b041a6780be936ee682f53",
+  "r198/v182/check_public_text_v182.py": "7f8f7d11df6e8026e030da3dc241e7defab31763d41da7c0403f53f5e7c549df",
+  "r198/v182/check_tariff_rendered.py": "72c04236b1f9ae5173c084c74d2a43dc6de1e31e6126257651cce47ee80f91b2",
+  "r198/v182/fix_gates_v182.sh": "e78990843ff83a417791d467e082fada5cef5d13d46218dcc224f76c3f30f4ab",
+  "r198/v182/inputs/CLEANED-ROWS.json": "f03020aa59d5bbe63ffa4be7f91c3defd10276c871002d9c650ddfaff660ad8d",
+  "r198/v182/inputs/FIX-BASELINE.json": "c81905672a5713b8b6fccb76612d96984996127f214f7cf6f3df87f8ed93d46d",
+  "r198/v182/inputs/PUBLIC-ROWS.json": "513c8f12beaadea0b8936e0df2d2f90b07e87e1f3f93109905f89ed6e67cfddf",
+  "r198/v182/inputs/TEXT-EXCEPTIONS.json": "eafafc5905b46cefc145173ac847901af271286c15a208f6c3274c4e999e83fc",
+  "r198/v182/lib-v182.template.mjs": "bb9906486613296853ffccfbd93fc29338704523370e6c513bad0f7d0cdc6ff0",
+  "r198/v182/validate_v182.mjs": "a1e27c9c90fd744775436d724dcd201d71b0675071eba40bd1d169edd500ade2",
+  "test/jevbench-tariff-label.test.mjs": "06244afeb585bf69dd4b7153c00a3efd251f6d93c5736a6ca80dd4e6bf2b2db0"
+ },
+ "host": "lechonk",
+ "precision_update": "Only check_tariff_rendered.py receipt helper refined during PENDING suite to exclude ordinary release-note prose. Synthetic fixture recreated afterwards; application/data/test bytes unchanged.",
+ "source_upload_tree": "e0df106d65b416f087f28702346b5550b5294604",
+ "status": "PASS",
+ "unit": "heavy-r201-v182-fix--ws.gates.service"
+}

@@ -7587,6 +7587,70 @@
           }
         ],
         "note": "MIT declared on the model card; no LICENSE file in the repository"
+      },
+      "amber-4b": {
+        "arch": "open-llm-decoder",
+        "badges": {
+          "derivation": "adapter",
+          "params": "4B",
+          "quant": "BF16"
+        },
+        "evidence": [
+          {
+            "fact": "The card declares a Qwen3.5-4B decoder with a LoRA adapter and decision readout, measured with the adapter merged natively.",
+            "kind": "model-card",
+            "url": "https://huggingface.co/MLukauskas/amber-4b/blob/71c37554758f6df3034aac5c632030a1216a7392/README.md"
+          }
+        ],
+        "note": "Single decoder backbone with native probability readout; text-only measurement."
+      },
+      "oenogarum": {
+        "arch": "open-llm-decoder",
+        "badges": {
+          "derivation": "merge",
+          "params": "31B",
+          "quant": "BF16"
+        },
+        "evidence": [
+          {
+            "fact": "The card declares a Gemma-4-31B fine-tuned soup with a trained decision head and native option-order averaging; one decoder backbone, not a multi-model pipeline.",
+            "kind": "model-card",
+            "url": "https://huggingface.co/plantwaterer/oenogarum/blob/9b684d7da38eb200fe4c5d11c36e3ce819ea2cfb/README.md"
+          }
+        ],
+        "note": "Single decoder backbone with native probability readout; text-only measurement."
+      },
+      "piccolo-4b": {
+        "arch": "open-llm-decoder",
+        "badges": {
+          "derivation": "fine-tune",
+          "params": "4B",
+          "quant": "BF16"
+        },
+        "evidence": [
+          {
+            "fact": "The card declares a complete Qwen3.5-4B fine-tuned decoder checkpoint with native candidate readout.",
+            "kind": "model-card",
+            "url": "https://huggingface.co/agentscope-ai/Piccolo-4B/blob/fe6a7af0c6eaf363612c90051243b4e8aeacc90e/README.md"
+          }
+        ],
+        "note": "Single decoder backbone with native probability readout; text-only measurement."
+      },
+      "piccolo-9b": {
+        "arch": "open-llm-decoder",
+        "badges": {
+          "derivation": "fine-tune",
+          "params": "9B",
+          "quant": "BF16"
+        },
+        "evidence": [
+          {
+            "fact": "The card declares a complete Qwen3.5-9B fine-tuned decoder checkpoint with native candidate readout.",
+            "kind": "model-card",
+            "url": "https://huggingface.co/agentscope-ai/Piccolo-9B/blob/3e5e54b1554ad6ad85b46980719d6662a5980fd7/README.md"
+          }
+        ],
+        "note": "Single decoder backbone with native probability readout; text-only measurement."
       }
     },
     "imagejevbench": {

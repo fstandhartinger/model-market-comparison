@@ -67,6 +67,7 @@ export function usdPerThousand(value: number | null | undefined): string {
 }
 
 export function costBasisLabel(kind: string | null | undefined): string {
+  if (kind === 'tariff') return 'public list price';
   if (kind === 'measured') return 'measured';
   if (kind === 'estimate') return 'estimated';
   if (kind === 'announced') return 'self-reported announced price';

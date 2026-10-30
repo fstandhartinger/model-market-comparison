@@ -1,0 +1,13 @@
+{
+ "application_gate_tree_before_verification_helper_precision_update": "a2a6fb2f84d27a0c6d19d4e4e76c3e4e3a327331",
+ "final_verification_tree": "e9c5ce98141fb6c8197f33a5c1f0f5fe157a4ac3",
+ "helper_sha256": {
+  "check_source_v182.py": "8a10a2fb9ec3ce60edbf910ab986ec5115addafc7b3b4bf367df0f0f27a565b1",
+  "check_tariff_rendered.py": "a4f0fc0a43e4b900511da50af73adcca0fa2204163ccab2509f11fb00e4393a8"
+ },
+ "only_source_changes_between_checkpoints": [
+  "r198/v182/check_source_v182.py",
+  "r198/v182/check_tariff_rendered.py"
+ ],
+ "reason": "Add explicit existing-architecture equality assertion; match actual tariff labels rather than unrelated public-list-price prose. Both verification helpers were synced before the production rendering checks; application/data files are unchanged."
+}
