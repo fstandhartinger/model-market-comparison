@@ -14,3 +14,14 @@ test('public API tariffs render as public list price and other evidence labels s
  assert.equal(label('estimate'),'estimated');assert.equal(label('measured'),'measured');
  assert.equal(label('announced'),'self-reported announced price');assert.equal(label(null),'not published');
 });
+
+test('German public API tariffs render as öffentlicher Listenpreis',()=>{
+ const german=readFileSync('components/JevBenchSeoDe.ts','utf8');
+ const compiled=ts.transpileModule(german,{compilerOptions:{module:ts.ModuleKind.CommonJS}}).outputText;
+ const de={exports:{}};vm.runInNewContext(compiled,de);
+ const label=de.exports.costBasisLabelDe;
+ assert.equal(label('tariff'),'öffentlicher Listenpreis');
+ assert.equal(label('estimate'),'geschätzt');assert.equal(label('measured'),'gemessen');
+ assert.equal(label('announced'),'selbst angegebener Listenpreis');
+ assert.equal(label(null),'nicht veröffentlicht');assert.equal(label('unknown'),'nicht veröffentlicht');
+});

@@ -1,0 +1,45 @@
+{
+ "status": "PASS",
+ "grep_hits": [],
+ "changed_strings_read_end_to_end": true,
+ "gate_source": "/home/flori/jobs/jevbench-auto-intake/r91-granite/fit_gate.py",
+ "gate_sha256": "ae82d60c52e7baaf51cd76e80f86395c3ef6e743911a21eacc27fe13c1b3302a",
+ "gate_formula": "max(1500,compute*1.25+600)",
+ "row_gate_facts": {
+  "joey-1": {
+   "original_v181_sentence": "TTL-fit admitted with 3,433.95 s remaining against 1,500 s required, forecasting 0 items over 10 s; this was an admission estimate, not a scoring exclusion",
+   "fixed_sentence": "Before the sealed run, the pod had to have at least 1,500 s of time left; it had 3,433.95 s",
+   "original_v181_sha256": "f50daa950ab2cb70d20f212ea03bdbd11f2a14dbcc1991aa29a880bec98c0b4b"
+  },
+  "saif-4b": {
+   "original_v181_sentence": "TTL-fit admitted with 3,513.56 s remaining against 1,500 s required, forecasting 0 items over 10 s; this forecast was an admission estimate, not a scoring exclusion",
+   "fixed_sentence": "Before the sealed run, the pod had to have at least 1,500 s of time left; it had 3,513.56 s",
+   "original_v181_sha256": "e8ca39a033625e42396e36197cb8d63fa604cf0d9503f369f837dc2e63c288a0"
+  },
+  "sors-2b": {
+   "original_v181_sentence": "TTL-fit admitted with 3,452.127 s remaining against 1,500 s required; forecasts are admission estimates, not scored latency observations",
+   "fixed_sentence": "Before the sealed run, the pod had to have at least 1,500 s of time left; it had 3,452.127 s",
+   "original_v181_sha256": "90fdfc6d17cf396e8cc0ce3cd2749b31abc5740b96149fd3646c3d5c8fb3d448"
+  },
+  "wemm-jev": {
+   "original_v181_sentence": "TTL-fit receipt admitted the run with about 8,275 s remaining against 1,500 s required, forecasting 5 decisions over 10 s; that forecast was an admission estimate, not a scoring exclusion",
+   "fixed_sentence": "Before the sealed run, the pod had to have at least 1,500 s of time left; it had about 8,275 s",
+   "original_v181_sha256": "ee25237201f75633f482d339d58aab8f72c44c882091119bca9852a7564397ba"
+  },
+  "decision-king-v1.1": {
+   "original_v181_sentence": "TTL-fit admitted with 8,544.55 s remaining against 2,002.57 s required; the five long items were reserved separately and the forecast was not a scoring exclusion",
+   "fixed_sentence": "Before the sealed run, the pod had to have at least 2,002.57 s of time left, including safety margins; it had 8,544.55 s",
+   "original_v181_sha256": "1ee7f3d96abb75bbd16084faf4faf0964ba440505ad8ddaa056aee6c1892d4be"
+  },
+  "cribl-decision-2": {
+   "original_v181_sentence": "Fit required 1,500 s for each row; pair-fit required 3,600 s against 5,384.768 s remaining",
+   "fixed_sentence": "Before the sealed runs, the pod had to have at least 1,500 s of time left per row and 3,600 s for both rows; it had 5,384.768 s",
+   "original_v181_sha256": "0fd84b9c3638641250e2c7a26104f0c60955fa71658181a2ba2a27a7cdfc5045"
+  },
+  "cribl-decision-2-mini": {
+   "original_v181_sentence": "Fit required 1,500 s for each row; pair-fit required 3,600 s against 5,384.768 s remaining",
+   "fixed_sentence": "Before the sealed runs, the pod had to have at least 1,500 s of time left per row and 3,600 s for both rows; it had 5,384.768 s",
+   "original_v181_sha256": "b663774ff3e37654e6b8b3556e43fa655865282dc9029e43c4fe2e2dbf7388fd"
+  }
+ }
+}

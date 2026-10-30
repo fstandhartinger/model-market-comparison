@@ -12,6 +12,7 @@ export function usdPerThousandDe(value: number | null | undefined): string {
 }
 
 export function costBasisLabelDe(kind: string | null | undefined): string {
+  if (kind === 'tariff') return 'öffentlicher Listenpreis';
   if (kind === 'measured') return 'gemessen';
   if (kind === 'estimate') return 'geschätzt';
   if (kind === 'announced') return 'selbst angegebener Listenpreis';

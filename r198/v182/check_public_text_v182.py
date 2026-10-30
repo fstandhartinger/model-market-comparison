@@ -1,8 +1,8 @@
 import pathlib,json,re
 J=pathlib.Path(__file__).resolve().parent;W=J.parents[1];L=lambda p:json.loads(p.read_text());rows={s['key']:s for s in L(W/'data/raw/benchmarks/jevbench/v1.8/jevbench-v1.8.2-results.json')['systems'] if s.get('new_in')=='v1.8.2'}
-requirements={'oenogarum':['739,884','four reads','Apache-2.0','private new-domain','380','33 byte-identical'],'amber-4b':['826,084','375','CC-BY-NC','smoke-stop.json','34 byte-identical'],'piccolo-4b':['1,080,355','87.01%','read twice','65,535','49 byte-identical'],'piccolo-9b':['1,080,355','89.61%','read twice','65,535','49 byte-identical']}
+requirements={'oenogarum':['739,884','four reads','Apache-2.0','private new-domain','380','33 byte-identical'],'amber-4b':['826,084','375','CC-BY-NC','stop-diagnostic file','34 byte-identical'],'piccolo-4b':['1,080,355','87.01%','read twice','65,535','49 byte-identical'],'piccolo-9b':['1,080,355','89.61%','read twice','65,535','49 byte-identical']}
 result={}
-forbidden=re.compile(r'worker|\blead\b|custody|custodian|release.owner|measurement review|deputy|\bboard\b|#\d+|Florian|\bCoS\b|order.id|jevbench-add-requests|fastlane-native|r201-v182|Disposition is for|0\.0645|x cap|cost cap USD|0\.15 s',re.I)
+forbidden=re.compile(r'worker|\blead\b|custody|custodian|release.owner|measurement review|deputy|\bboard\b|#\d+|Florian|\bCoS\b|order.id|jevbench-add-requests|fastlane-native|r201-v182|Disposition is for|code_revision|smoke-stop|0\.0645|x cap|cost cap USD|0\.15 s',re.I)
 grep_hits=[]
 def public(v):
  if isinstance(v,dict):

@@ -1,0 +1,14 @@
+{
+ "wrapper_exit_code": 254,
+ "wrapper_footer": "2639324SERVICE_RESULT 2639324EXIT_CODE 2639324EXIT_STATUS",
+ "systemd_unit_result": "Deactivated successfully at 2026-10-30 18:20:30Z",
+ "journal_file": "HEAVY-JOURNAL.log",
+ "cpu": "3h 19min 4.109s",
+ "memory_peak": "8.6G",
+ "unit_runtime_bound_seconds": 5400,
+ "production_build_exit_code": 0,
+ "pending_exit_code": 0,
+ "postflip_exit_code": 0,
+ "captures": 9,
+ "interpretation": "All gate commands and final capture/cleanup completed; the wrapper reported 254 because its stop-footer record is malformed. The unit journal independently records successful deactivation. The malformed footer appeared after the own-unit runtime drop-in/reload; causality is not established."
+}

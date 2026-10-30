@@ -22,7 +22,7 @@ for(const k of V182_NEW_KEYS){
 }
 // Check the prose guard directly as well as the full bundle so exact-row pins
 // cannot mask an ineffective wording rule. Every nested string is covered.
-const forbidden=['0.064595','x cap','cost cap USD','0.15 s','worker','lead','custody','custodian','release owner','measurement review','deputy','board','#123','Florian','CoS','order id','jevbench-add-requests','fastlane-native','r201-v182','Disposition is for','code_revision','at the time of drafting','internally measured export','eligible for intake','class C deviation','TTL-fit','pair-fit','accepted root pricing reference','pre-registration review','provider decide (proxy aws)'];
+const forbidden=['0.064595','x cap','cost cap USD','0.15 s','worker','lead','custody','custodian','release owner','measurement review','deputy','board','#123','Florian','CoS','order id','jevbench-add-requests','fastlane-native','r201-v182','Disposition is for','code_revision','smoke-stop','at the time of drafting','internally measured export','eligible for intake','class C deviation','TTL-fit','pair-fit','accepted root pricing reference','pre-registration review','provider decide (proxy aws)'];
 let proseNegatives=0;
 for(const k of V182_NEW_KEYS){
  const fresh=original.artifact.systems.find(s=>s.key===k);assert.equal(validateV182PublicText(fresh),true);

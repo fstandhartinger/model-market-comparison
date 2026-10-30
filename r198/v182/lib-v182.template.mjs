@@ -22,7 +22,7 @@ const hex=s=>/^[a-f0-9]{64}$/.test(s??'');
 export function validateV182PublicText(value){
  if(typeof value==='string'){
   if(/0\.0645|x cap|cost cap USD|0\.15 s/i.test(value))fail('release-level numbers in row prose');
-  if(/\bworker\b|\blead\b|custody|custodian|release.owner|measurement review|deputy|\bboard\b|#\d+|Florian|\bCoS\b|order.id|jevbench-add-requests|fastlane-native|r201-v182|code_revision|at the time of drafting|internally measured export|eligible for intake|class C deviation|TTL-fit|pair-fit|accepted root pricing reference|pre-registration review|provider decide \(proxy aws\)|Disposition is for/i.test(value))fail('internal public wording');
+  if(/\bworker\b|\blead\b|custody|custodian|release.owner|measurement review|deputy|\bboard\b|#\d+|Florian|\bCoS\b|order.id|jevbench-add-requests|fastlane-native|r201-v182|code_revision|smoke-stop|at the time of drafting|internally measured export|eligible for intake|class C deviation|TTL-fit|pair-fit|accepted root pricing reference|pre-registration review|provider decide \(proxy aws\)|Disposition is for/i.test(value))fail('internal public wording');
  }else if(Array.isArray(value)){for(const v of value)validateV182PublicText(v);}
  else if(value&&typeof value==='object'){for(const v of Object.values(value))validateV182PublicText(v);}
  return true;
