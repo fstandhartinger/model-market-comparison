@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "checked_utc": "2026-10-08T00:00:00Z",
+  "checked_utc": "2026-10-30T00:00:00Z",
   "benchmarks": {
     "jevbench": {
       "cygnet": {
@@ -2273,6 +2273,1084 @@
           }
         ],
         "status": "disclosed"
+      },
+      "ajev-gemma4-31b-lm6q": {
+        "label": "google/gemma-4-31B-it",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/andyzhang232/ajev-gemma4-31b-lm6q/blob/bdcfb05db02f48729f5f5a0b6b1c8cf6d6406d06/README.md",
+            "title": "Author model card",
+            "evidence": "The model card metadata declares base_model: google/gemma-4-31B-it (base_model:adapter tag)."
+          }
+        ]
+      },
+      "amazon-strands-decider-26b-a4b": {
+        "label": "google/gemma-4-26B-A4B-it",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/amazon/strands-decider-26B-A4B-gemma4-v1-2610/blob/f08dc85955d008dc247fae5b4df53bc409704f8a/README.md",
+            "title": "Author model card",
+            "evidence": "The model card metadata declares base_model: google/gemma-4-26B-A4B-it (base_model:adapter tag)."
+          }
+        ]
+      },
+      "arcbright-elf-1-12b": {
+        "label": "google/gemma-4-12B-it",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/arcbright/elf-1-12b/blob/da29a170016f3a179821296bcc8221ac222a44c6/README.md",
+            "title": "Author model card",
+            "evidence": "The model card metadata declares base_model: google/gemma-4-12B-it (base_model:finetune tag)."
+          }
+        ]
+      },
+      "arcbright-elf-1-12b-r2": {
+        "label": "google/gemma-4-12B-it",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/arcbright/elf-1-12b/blob/1018696022ae3fdd9cb8a93e3e972f69c11184c1/README.md",
+            "title": "Author model card",
+            "evidence": "The model card metadata declares base_model: google/gemma-4-12B-it (base_model:finetune tag)."
+          }
+        ]
+      },
+      "arcbright-elf-1-31b": {
+        "label": "google/gemma-4-31B-it",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/arcbright/elf-1-31b/blob/8c7799280c8c04a3802af1feeb3a1ad40d6c4eeb/README.md",
+            "title": "Author model card",
+            "evidence": "The model card metadata declares base_model: google/gemma-4-31B-it (base_model:finetune tag)."
+          }
+        ]
+      },
+      "arsenelupin-v1.1": {
+        "label": "Qwen/Qwen3.5-4B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/IBOU-SEARCH/ArseneLupin-v1.1/blob/411a6aefab87a4c155372c2a0a20777c2f5e1317/README.md",
+            "title": "Author model card",
+            "evidence": "The model card metadata declares base_model: Qwen/Qwen3.5-4B (base_model:quantized tag)."
+          }
+        ]
+      },
+      "basal-omni-1.0-ultra": {
+        "label": "google/gemma-4-31B-it",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/Remek/basal-omni-1.0-ultra/blob/b8e214cb42d0a7a4cb2c3a93b0ba02c65d7590e4/README.md",
+            "title": "Author model card",
+            "evidence": "The model card metadata declares base_model: google/gemma-4-31B-it (base_model:finetune tag)."
+          }
+        ]
+      },
+      "blink-4b": {
+        "label": "Qwen/Qwen3.5-4B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/thegovind/blink-4b/blob/c243abdd2d79478db510dcdc60a88087c18547c0/README.md",
+            "title": "Author model card",
+            "evidence": "The model card metadata declares base_model: Qwen/Qwen3.5-4B (base_model:finetune tag)."
+          }
+        ]
+      },
+      "blink-v0-3-26b-a4b-nvfp4": {
+        "label": "google/gemma-4-26B-A4B-it",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/PixilabAI/Blink-v0.3-26B-A4B-NVFP4/blob/08caad20c1574fb76341ca809ff38fdb081f7d4a/README.md",
+            "title": "Author model card",
+            "evidence": "The model card metadata declares base_model: google/gemma-4-26B-A4B-it (base_model:quantized tag)."
+          }
+        ]
+      },
+      "bobcat-1.3": {
+        "label": "google/gemma-4-31B-it",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/sanghwa-na/bobcat-1.3/blob/4f25c70ece312ec4e74c47f1c5264cb2aeea956a/README.md",
+            "title": "Author model card",
+            "evidence": "The model card metadata declares base_model: google/gemma-4-31B-it (base_model:finetune tag)."
+          }
+        ]
+      },
+      "bongard-mini": {
+        "label": "google/t5gemma-2-4b-4b",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/AgentBull/bongard-mini/blob/c81c5b883a5983669be84be98658eac940489613/README.md",
+            "title": "Author model card",
+            "evidence": "The model card metadata declares base_model: google/t5gemma-2-4b-4b (base_model:finetune tag)."
+          }
+        ]
+      },
+      "chaoliangunsw-jev-style-2b-decision-v4": {
+        "label": "Qwen/Qwen3.5-2B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/chaoliangUNSW/Jev-Style-2B-Decision-v4/blob/c9504148dae7f7a43d67a5782f12a015a4b4022c/README.md",
+            "title": "Author model card",
+            "evidence": "The model card metadata declares base_model: Qwen/Qwen3.5-2B (base_model:finetune tag)."
+          }
+        ]
+      },
+      "chon-1.0-12b": {
+        "label": "google/gemma-4-12B-it",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/ninhnv/chon-1.0-12b/blob/cf3c0d3d5aa3230cbd36959cc4ed257b41000c5e/README.md",
+            "title": "Author model card",
+            "evidence": "The model card metadata declares base_model: google/gemma-4-12B-it (base_model:adapter tag)."
+          }
+        ]
+      },
+      "chon-1.0-12b-fast": {
+        "label": "google/gemma-4-12B-it",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/ninhnv/chon-1.0-12b-fast/blob/92c960ef1245f604642538c562ed9dec89bab48f/README.md",
+            "title": "Author model card",
+            "evidence": "The model card metadata declares base_model: google/gemma-4-12B-it (base_model:adapter tag)."
+          }
+        ]
+      },
+      "chon-1.0-e4b": {
+        "label": "google/gemma-4-E4B-it",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/ninhnv/chon-1.0-e4b/blob/b7b9ecdaa25d83696fb1c82c3b0acaff2923137a/README.md",
+            "title": "Author model card",
+            "evidence": "The model card metadata declares base_model: google/gemma-4-E4B-it (base_model:adapter tag)."
+          }
+        ]
+      },
+      "classone-gemma4-e4b": {
+        "label": "google/gemma-4-E4B-it",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/devops-thiago/classone-gemma4-e4b/blob/74d6e08152878a4956ce9ffc323f6c06f13ca9af/README.md",
+            "title": "Author model card",
+            "evidence": "The model card metadata declares base_model: google/gemma-4-E4B-it (base_model:finetune tag)."
+          }
+        ]
+      },
+      "classone-qwen3.5-2b": {
+        "label": "Qwen/Qwen3.5-2B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/devops-thiago/classone-qwen3.5-2b/blob/fc15401b6ae6d86b8fdf664b40bfdd8055edf374/README.md",
+            "title": "Author model card",
+            "evidence": "The model card metadata declares base_model: Qwen/Qwen3.5-2B (base_model:finetune tag)."
+          }
+        ]
+      },
+      "classone-qwen3.5-4b": {
+        "label": "Qwen/Qwen3.5-4B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/devops-thiago/classone-qwen3.5-4b/blob/6626fdea7a3e8786bad8d2d5cc8acded1756a17c/README.md",
+            "title": "Author model card",
+            "evidence": "The model card metadata declares base_model: Qwen/Qwen3.5-4B (base_model:finetune tag)."
+          }
+        ]
+      },
+      "clef-omni": {
+        "label": "Qwen/Qwen3-Omni-30B-A3B-Instruct",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/Cloudflare/clef-omni/blob/0db1cd2607d76a7bdb2a382f659e7b313079f84b/README.md",
+            "title": "Author model card",
+            "evidence": "The model card metadata declares base_model: Qwen/Qwen3-Omni-30B-A3B-Instruct (base_model:finetune tag)."
+          }
+        ]
+      },
+      "compass-0.2.0": {
+        "label": "Qwen/Qwen3.5-4B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/adimyth/compass-lora-v2/blob/bfa8af07916df491fde171d1da0d6d761304f2f3/README.md",
+            "title": "Author model card",
+            "evidence": "The model card metadata declares base_model: Qwen/Qwen3.5-4B (base_model:adapter tag)."
+          }
+        ]
+      },
+      "d1a-gemma4-e2b": {
+        "label": "google/gemma-4-E2B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/JohnP1/d1a-e2b/blob/42f61942442f06b9f4c572c071b63684f3ac0dea/README.md",
+            "title": "Author model card",
+            "evidence": "The model card metadata declares base_model: google/gemma-4-E2B (base_model:adapter tag)."
+          }
+        ]
+      },
+      "d1a-gemma4-e4b": {
+        "label": "google/gemma-4-E4B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/JohnP1/d1a-e4b/blob/93ee47b2c5ffa96fe7213da6a23c8f53f25a9778/README.md",
+            "title": "Author model card",
+            "evidence": "The model card metadata declares base_model: google/gemma-4-E4B (base_model:adapter tag)."
+          }
+        ]
+      },
+      "decisio-gemma-4-12b-tuned-commit": {
+        "label": "google/gemma-4-12B-it",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/tachara-ai/Decisio-12b-tuned-commit/blob/245e00dc45abad14d693b1ebae4d4c7aa9cf72f1/README.md",
+            "title": "Author model card",
+            "evidence": "The model card metadata declares base_model: google/gemma-4-12B-it (base_model:finetune tag)."
+          }
+        ]
+      },
+      "decisio-gemma-4-12b-tuned-commit-think": {
+        "label": "google/gemma-4-12B-it",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/tachara-ai/Decisio-12b-tuned-commit-think/blob/e36aeb243dea3008c593f454112840a1a29e5837/README.md",
+            "title": "Author model card",
+            "evidence": "The model card metadata declares base_model: google/gemma-4-12B-it (base_model:finetune tag)."
+          }
+        ]
+      },
+      "decision2-lux-9b": {
+        "label": "vllm-sr/Decision-1.0-Lux-9B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/vllm-sr/Decision-2.0-Lux-9B/blob/78bf3c03d9147aeb30b641edfe0e30ed04887ca5/README.md",
+            "title": "Author model card",
+            "evidence": "The model card metadata declares base_model: vllm-sr/Decision-1.0-Lux-9B (base_model:finetune tag)."
+          }
+        ]
+      },
+      "decisionnode-edge-0.9.2": {
+        "label": "Qwen/Qwen3.5-2B-Base",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/bynn-intelligence-com/decisionnode-edge/blob/7706b508ecc443dd6d7e97440406349c90e826fa/README.md",
+            "title": "Author model card",
+            "evidence": "The model card metadata declares base_model: Qwen/Qwen3.5-2B-Base (base_model:finetune tag)."
+          }
+        ]
+      },
+      "decisionnode-edge-mini-0.9.2": {
+        "label": "Qwen/Qwen3.5-0.8B-Base",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/bynn-intelligence-com/decisionnode-edge-mini/blob/0e77dfdcfd7417a4e22d229d7ad6f8e34ac4ff13/README.md",
+            "title": "Author model card",
+            "evidence": "The model card metadata declares base_model: Qwen/Qwen3.5-0.8B-Base (base_model:finetune tag)."
+          }
+        ]
+      },
+      "elephant-1": {
+        "label": "Qwen/Qwen3.5-9B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/baselabs/elephant-1/blob/c54a55c2d362a7e30ff30814d28e39054e954d58/README.md",
+            "title": "Author model card",
+            "evidence": "The model card metadata declares base_model: Qwen/Qwen3.5-9B (base_model:finetune tag)."
+          }
+        ]
+      },
+      "gutsy-0.8b-v0.3": {
+        "label": "Qwen/Qwen3.5-0.8B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/kouhxp/gutsy/blob/d325eb1742cc1c200e04b24417f192a0dbf74f91/README.md",
+            "title": "Author model card",
+            "evidence": "The model card metadata declares base_model: Qwen/Qwen3.5-0.8B (base_model:quantized tag)."
+          }
+        ]
+      },
+      "h2o-lightning-4b-v1.4.1": {
+        "label": "Qwen/Qwen3.5-4B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/h2oai/h2o-lightning-4b/blob/cc18ee330e6895c41b9a60f37a0dd122dc4c3461/README.md",
+            "title": "Author model card",
+            "evidence": "The model card metadata declares base_model: Qwen/Qwen3.5-4B (base_model:finetune tag)."
+          }
+        ]
+      },
+      "imajev-2b": {
+        "label": "Qwen/Qwen3.5-2B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/mohit67890/imajev-2b/blob/66e4b8c808bae45ca98bed5edd2de6323bdb0576/README.md",
+            "title": "Author model card",
+            "evidence": "The model card metadata declares base_model: Qwen/Qwen3.5-2B (base_model:adapter tag)."
+          }
+        ]
+      },
+      "imajev-9b": {
+        "label": "Qwen/Qwen3.5-9B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/mohit67890/imajev-9b/blob/7301600591665b941d324b1a297e097b56724f9b/README.md",
+            "title": "Author model card",
+            "evidence": "The model card metadata declares base_model: Qwen/Qwen3.5-9B (base_model:adapter tag)."
+          }
+        ]
+      },
+      "iota-decide-4b-v0.3": {
+        "label": "Qwen/Qwen3.5-4B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/macrocosm-os/iota-decide-4b-v0.3/blob/1da87f01c949e2f8a65e5958ef7cc43ec18da999/README.md",
+            "title": "Author model card",
+            "evidence": "The model card metadata declares base_model: Qwen/Qwen3.5-4B (base_model:finetune tag)."
+          }
+        ]
+      },
+      "jeb-35b-a3b": {
+        "label": "Qwen/Qwen3.6-35B-A3B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/szybkie-ai/jeb-35b-a3b/blob/dfac7afaed21ffff638ae4588402db560376aeac/README.md",
+            "title": "Author model card",
+            "evidence": "The model card metadata declares base_model: Qwen/Qwen3.6-35B-A3B (base_model:finetune tag)."
+          }
+        ]
+      },
+      "jebadiah-9b-v2": {
+        "label": "Qwen/Qwen3.5-9B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/frontier-infra/jebadiah-9b-v2/blob/bc63609af6434fdf18ed8b89e19df96db5a24944/README.md",
+            "title": "Author model card",
+            "evidence": "The model card metadata declares base_model: Qwen/Qwen3.5-9B (base_model:finetune tag)."
+          }
+        ]
+      },
+      "jebadiah-9b-v2-1": {
+        "label": "Qwen/Qwen3.5-9B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/frontier-infra/jebadiah-9b-v2-1/blob/c5e49fab7ec8e9923e1f907d85911a53fb8e9c32/README.md",
+            "title": "Author model card",
+            "evidence": "The model card metadata declares base_model: Qwen/Qwen3.5-9B (base_model:finetune tag)."
+          }
+        ]
+      },
+      "jeetu-decider-2b": {
+        "label": "Qwen/Qwen3.5-2B-Base",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/Jeetu456/decider-2b/blob/cd0216309bf590f387500d78d1970af15d04baf5/README.md",
+            "title": "Author model card",
+            "evidence": "The model card metadata declares base_model: Qwen/Qwen3.5-2B-Base (base_model:finetune tag)."
+          }
+        ]
+      },
+      "jeff_1_0_large": {
+        "label": "google/gemma-4-31B-it",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/jgeuter/Jeff-1.0-Large/blob/275325a5eab52cce4f109a09ee3832f2eb89fe2f/README.md",
+            "title": "Author model card",
+            "evidence": "The model card metadata declares base_model: google/gemma-4-31B-it (base_model:finetune tag)."
+          }
+        ]
+      },
+      "jeffan-31b-1710": {
+        "label": "google/gemma-4-31B-it",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/tattrongvu/Jeffan-31b-1710/blob/cebfa86c2bed2b5c83b12e44de4374b20c87fd79/README.md",
+            "title": "Author model card",
+            "evidence": "The model card metadata declares base_model: google/gemma-4-31B-it (base_model:finetune tag)."
+          }
+        ]
+      },
+      "jeffan-4b-2010": {
+        "label": "Qwen/Qwen3.5-4B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/tattrongvu/Jeffan-4B-2010/blob/937a008f86f4a20a903d628f22ffad3e3f431d2c/README.md",
+            "title": "Author model card",
+            "evidence": "The model card metadata declares base_model: Qwen/Qwen3.5-4B (base_model:finetune tag)."
+          }
+        ]
+      },
+      "jez-large-1.0.0": {
+        "label": "google/gemma-4-E4B-it",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/pragmaticfrontier/jez-large-1.0.0/blob/c6f511cf031cdcf8119fd67954e2fcbc6d3f2dbf/README.md",
+            "title": "Author model card",
+            "evidence": "The model card metadata declares base_model: google/gemma-4-E4B-it (base_model:finetune tag)."
+          }
+        ]
+      },
+      "jez-small-1.0.0": {
+        "label": "Qwen/Qwen3.5-0.8B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/pragmaticfrontier/jez-small-1.0.0/blob/4151ad0762ca95eae85b5a10c6dd6bfc10eb7627/README.md",
+            "title": "Author model card",
+            "evidence": "The model card metadata declares base_model: Qwen/Qwen3.5-0.8B (base_model:finetune tag)."
+          }
+        ]
+      },
+      "jiwo-0.8b": {
+        "label": "Qwen/Qwen3.5-0.8B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/eljiwo/jiwo-0.8b/blob/52d217f8d68114e853b31ca364f8cb7da1b3c64d/README.md",
+            "title": "Author model card",
+            "evidence": "The model card metadata declares base_model: Qwen/Qwen3.5-0.8B (base_model:finetune tag)."
+          }
+        ]
+      },
+      "jiwo-4b": {
+        "label": "Qwen/Qwen3.5-4B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/eljiwo/jiwo-4b/blob/9adc559ff7ec5baffade3998f7bca85da0d124ed/README.md",
+            "title": "Author model card",
+            "evidence": "The model card metadata declares base_model: Qwen/Qwen3.5-4B (base_model:finetune tag)."
+          }
+        ]
+      },
+      "jpt-4b": {
+        "label": "Qwen/Qwen3.5-4B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/kirp/jpt-4b/blob/05285d2d4f0cd954666ed88095f511c80665bc4c/README.md",
+            "title": "Author model card",
+            "evidence": "The model card metadata declares base_model: Qwen/Qwen3.5-4B (base_model:finetune tag)."
+          }
+        ]
+      },
+      "julia-1": {
+        "label": "jhu-clsp/mmBERT-small",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/SupersonicLabs/Julia-1/blob/a85b127321d580d65176c89ced8273f305745d85/README.md",
+            "title": "Author model card",
+            "evidence": "The model card metadata declares base_model: jhu-clsp/mmBERT-small (base_model:finetune tag)."
+          }
+        ]
+      },
+      "kev-9b-v2": {
+        "label": "Qwen/Qwen3.5-9B-Base",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/jaredpalmer/kev-9b/blob/b5d8c18e44c60888d138b65cb6507ff0a5a448a0/README.md",
+            "title": "Author model card",
+            "evidence": "The model card metadata declares base_model: Qwen/Qwen3.5-9B-Base (base_model:adapter tag)."
+          }
+        ]
+      },
+      "knowledgator_gliclass_v4_9b": {
+        "label": "Qwen/Qwen3.5-9B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/knowledgator/gliclass-v4-9b/blob/14d11a92b5e0bab4a166e1fce4cc0777cac27182/README.md",
+            "title": "Author model card",
+            "evidence": "The model card metadata declares base_model: Qwen/Qwen3.5-9B (base_model:finetune tag)."
+          }
+        ]
+      },
+      "knowline-26b-a4b-gen2.5": {
+        "label": "google/gemma-4-26B-A4B-it",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/PelaAI/KnowLine-26B-A4B-Gen2.5/blob/7486767f8546beb510e61aef07d0e74219ceb4e3/README.md",
+            "title": "Author model card",
+            "evidence": "The model card metadata declares base_model: google/gemma-4-26B-A4B-it (base_model:finetune tag)."
+          }
+        ]
+      },
+      "knowline-31b-gen1": {
+        "label": "google/gemma-4-31B-it",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/PelaAI/KnowLine-31B-Gen1/blob/986803e4037f7778d24623184729a31202e3d302/README.md",
+            "title": "Author model card",
+            "evidence": "The model card metadata declares base_model: google/gemma-4-31B-it (base_model:finetune tag)."
+          }
+        ]
+      },
+      "knowline-35b-a3b-gen1.5": {
+        "label": "Qwen/Qwen3.5-35B-A3B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/PelaAI/KnowLine-35B-A3B-Gen1.5/blob/9adcf717361b2f7d2946d093f1e85efdf1e59010/README.md",
+            "title": "Author model card",
+            "evidence": "The model card metadata declares base_model: Qwen/Qwen3.5-35B-A3B (base_model:finetune tag)."
+          }
+        ]
+      },
+      "knowline-4b-gen5.5": {
+        "label": "Qwen/Qwen3.5-4B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/PelaAI/KnowLine-4B-Gen5.5/blob/779944d2cc8ffa19cef386aee83c83bcb967ade2/README.md",
+            "title": "Author model card",
+            "evidence": "The model card metadata declares base_model: Qwen/Qwen3.5-4B (base_model:finetune tag)."
+          }
+        ]
+      },
+      "krino-2b": {
+        "label": "Qwen/Qwen3.5-2B-Base",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/Guru0381/krino-2b/blob/ff185abf129206174c67ebbe6058cab4cc9ccaed/README.md",
+            "title": "Author model card",
+            "evidence": "The model card metadata declares base_model: Qwen/Qwen3.5-2B-Base (base_model:adapter tag)."
+          }
+        ]
+      },
+      "liquid-d1-3b": {
+        "label": "LiquidAI/LFM2.5-VL-3B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/LiquidAI/d1-3B/blob/051bcc464b01b9f92942b364d9586b0ef5912432/README.md",
+            "title": "Author model card",
+            "evidence": "The model card metadata declares base_model: LiquidAI/LFM2.5-VL-3B (base_model:finetune tag)."
+          }
+        ]
+      },
+      "liquid-d1-omni-600m": {
+        "label": "LiquidAI/LFM2.5-Encoder-350M",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/LiquidAI/d1-omni-600M/blob/02b55d7076f15129e59ab3f94783f32c4b088674/README.md",
+            "title": "Author model card",
+            "evidence": "The model card metadata declares base_model: LiquidAI/LFM2.5-Encoder-350M (base_model:finetune tag)."
+          }
+        ]
+      },
+      "lumma-fev-27b": {
+        "label": "Qwen/Qwen3.8-27B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/FrontiersMind/Lumma-fev-27B/blob/2c080fb4b44bbad2a140353393d935e8b7af8bcb/README.md",
+            "title": "Author model card",
+            "evidence": "The model card metadata declares base_model: Qwen/Qwen3.8-27B (base_model:finetune tag)."
+          }
+        ]
+      },
+      "lychee-27b": {
+        "label": "Qwen/Qwen3.8-27B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/LycheeAI/Lychee-27B/blob/f3f95d18a3b1ef3c483c2a5d7e8e5272a2af31e2/README.md",
+            "title": "Author model card",
+            "evidence": "The model card metadata declares base_model: Qwen/Qwen3.8-27B (base_model:finetune tag)."
+          }
+        ]
+      },
+      "mammoth-1": {
+        "label": "Qwen/Qwen3.5-27B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/baselabs/mammoth-1/blob/03007ab3c4481bf01c71ef63adbbbc4b2093d71a/README.md",
+            "title": "Author model card",
+            "evidence": "The model card metadata declares base_model: Qwen/Qwen3.5-27B (base_model:finetune tag)."
+          }
+        ]
+      },
+      "metask-jev-rain-4b": {
+        "label": "Qwen/Qwen3.5-4B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/wayfind/metask-jev-4b-policy-mix/blob/ea20fe85b28733b1522721dec119bec50947a869/README.md",
+            "title": "Author model card",
+            "evidence": "The model card metadata declares base_model: Qwen/Qwen3.5-4B (base_model:finetune tag)."
+          }
+        ]
+      },
+      "metask_jev_rain_12b_trained": {
+        "label": "google/gemma-4-12B-it-qat-q4_0-unquantized",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/MeTask-Rain/metask-jev-rain-12B-trained/blob/cf3706fdd57e23025a8c97fbde86bd5b4a547010/README.md",
+            "title": "Author model card",
+            "evidence": "The model card metadata declares base_model: google/gemma-4-12B-it-qat-q4_0-unquantized (base_model:adapter tag)."
+          }
+        ]
+      },
+      "metask_jev_rain_31b_trained": {
+        "label": "google/gemma-4-31B-it",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/MeTask-Rain/metask-jev-rain-31B-trained/blob/da56acc0bb607cc214c184ad9f1e9231a0d63dee/README.md",
+            "title": "Author model card",
+            "evidence": "The model card metadata declares base_model: google/gemma-4-31B-it (base_model:adapter tag)."
+          }
+        ]
+      },
+      "metask_jev_rain_31b_trained_v3": {
+        "label": "google/gemma-4-31B-it",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/MeTask-Rain/metask-jev-rain-31B-trained/blob/2feff076f07711fe2fefe7a6fdcedfe4132b773e/README.md",
+            "title": "Author model card",
+            "evidence": "The model card metadata declares base_model: google/gemma-4-31B-it (base_model:adapter tag)."
+          }
+        ]
+      },
+      "nagi-enormous": {
+        "label": "Qwen/Qwen3.8-27B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/nagisanzeninz/Nagi-ENORMOUS/blob/0d8e052d698461ecd49c4f39a09f6bd0179a1d5c/README.md",
+            "title": "Author model card",
+            "evidence": "The model card metadata declares base_model: Qwen/Qwen3.8-27B (base_model:adapter tag)."
+          }
+        ]
+      },
+      "nagi-huge": {
+        "label": "google/gemma-4-12B-it",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/nagisanzeninz/Nagi-HUGE/blob/3e0a58b19116afca7abf7f854d82ba85f5de5c4b/README.md",
+            "title": "Author model card",
+            "evidence": "The model card metadata declares base_model: google/gemma-4-12B-it (base_model:adapter tag)."
+          }
+        ]
+      },
+      "nev-2b": {
+        "label": "Qwen/Qwen3.5-2B-Base",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/EryriLabs/Nev-2B-GGUF/blob/65d329f676d75cc538346e2687bed71187ae76b2/README.md",
+            "title": "Author model card",
+            "evidence": "The model card metadata declares base_model: Qwen/Qwen3.5-2B-Base (base_model:finetune tag)."
+          }
+        ]
+      },
+      "nimble-v4-max-open": {
+        "label": "Qwen/Qwen3.8-27B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/bespokelabs/Nimble-v4-max/blob/655aa7051c2ab39660193ebb70c8926d3d2cb7aa/README.md",
+            "title": "Author model card",
+            "evidence": "The model card metadata declares base_model: Qwen/Qwen3.8-27B (base_model:finetune tag)."
+          }
+        ]
+      },
+      "noma": {
+        "label": "Qwen/Qwen3.5-4B-Base",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/BlackdromeAILabs/noma/blob/fac0429688a137ce451a27ad34d05e9fd47fb624/README.md",
+            "title": "Author model card",
+            "evidence": "The model card metadata declares base_model: Qwen/Qwen3.5-4B-Base (base_model:finetune tag)."
+          }
+        ]
+      },
+      "phillylabs_philly_decider_v2": {
+        "label": "h2oai/h2o-lightning-4b",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/PhillyLabs/philly-decider-v2/blob/36e5ddde2c59021d37ed5974aa7c9f16062050e0/README.md",
+            "title": "Author model card",
+            "evidence": "The model card metadata declares base_model: h2oai/h2o-lightning-4b (base_model:finetune tag)."
+          }
+        ]
+      },
+      "pjev-2b": {
+        "label": "openbmb/MiniCPM5-2B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/Kailune-AI/pjev-2b/blob/ad60e59c7aa1f6a545c563bc404853f9a8067908/README.md",
+            "title": "Author model card",
+            "evidence": "The model card metadata declares base_model: openbmb/MiniCPM5-2B (base_model:finetune tag)."
+          }
+        ]
+      },
+      "pplx-decider-flash-v1.2": {
+        "label": "Qwen/Qwen3.5-4B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/perplexity-ai/pplx-decider-flash-v1.2/blob/6d771ad7b5ecff5e93b8fc7b90d4c5ccc341954d/README.md",
+            "title": "Author model card",
+            "evidence": "The model card metadata declares base_model: Qwen/Qwen3.5-4B (base_model:finetune tag)."
+          }
+        ]
+      },
+      "pplx-decider-v1.2": {
+        "label": "Qwen/Qwen3.8-27B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/perplexity-ai/pplx-decider-v1.2/blob/225c913ddc8761a8264f04f64548e1f97e443eb3/README.md",
+            "title": "Author model card",
+            "evidence": "The model card metadata declares base_model: Qwen/Qwen3.8-27B (base_model:finetune tag)."
+          }
+        ]
+      },
+      "purplemist-flash-1.0": {
+        "label": "Qwen/Qwen3.5-9B-Base",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/olaverse/PurpleMIST-Flash-1.0/blob/a48fe0206ee0d8a3f4458a3581468c24a7365ac5/README.md",
+            "title": "Author model card",
+            "evidence": "The model card metadata declares base_model: Qwen/Qwen3.5-9B-Base (base_model:finetune tag)."
+          }
+        ]
+      },
+      "purplemist-mini-1.0": {
+        "label": "Qwen/Qwen3.5-2B-Base",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/olaverse/PurpleMIST-Mini-1.0/blob/8072361ec4b632b3b8a73899022281d5de3c639b/README.md",
+            "title": "Author model card",
+            "evidence": "The model card metadata declares base_model: Qwen/Qwen3.5-2B-Base (base_model:finetune tag)."
+          }
+        ]
+      },
+      "reflex-instinct-0.6b": {
+        "label": "Qwen/Qwen3-0.6B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/Atlas-AI-research/reflex-instinct-0.6b/blob/ae04b843e7840d07776c3dc554b4cd064f66cbe5/README.md",
+            "title": "Author model card",
+            "evidence": "The model card metadata declares base_model: Qwen/Qwen3-0.6B (base_model:adapter tag)."
+          }
+        ]
+      },
+      "respan-span-02": {
+        "label": "google/gemma-4-26B-A4B-it",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/lihe07/span-02/blob/3f0fbdb9c03950f335e80845f51be39985d63fc0/README.md",
+            "title": "Author model card",
+            "evidence": "The model card metadata declares base_model: google/gemma-4-26B-A4B-it (base_model:finetune tag)."
+          }
+        ]
+      },
+      "rsi-jev-v6.1-vl-27b": {
+        "label": "Qwen/Qwen3.8-27B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/shgao/rsi-jev-v6.1-vl-27b/blob/d0dccc052ee844ab7481ddfacad1b7335ab394e0/README.md",
+            "title": "Author model card",
+            "evidence": "The model card metadata declares base_model: Qwen/Qwen3.8-27B (base_model:finetune tag)."
+          }
+        ]
+      },
+      "seb-9b-v2": {
+        "label": "Qwen/Qwen3.5-9B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/ironbcc/Seb-9B-v2/blob/ca903824a11dd763a8e0dec5bce5e13e3e4166db/README.md",
+            "title": "Author model card",
+            "evidence": "The model card metadata declares base_model: Qwen/Qwen3.5-9B (base_model:finetune tag)."
+          }
+        ]
+      },
+      "shisa-de-1": {
+        "label": "google/gemma-4-26B-A4B-it",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/shisa-ai/shisa-de-1/blob/9111f4746a96d6cdf9f1a23a88afd5b57244508b/README.md",
+            "title": "Author model card",
+            "evidence": "The model card metadata declares base_model: google/gemma-4-26B-A4B-it (base_model:finetune tag)."
+          }
+        ]
+      },
+      "sieve-31b-v2": {
+        "label": "google/gemma-4-31B-it",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/sthanika-ai/Sieve-31B-v2/blob/2c0d64310ac944b350a9e19f1f54dcd9a5bed3eb/README.md",
+            "title": "Author model card",
+            "evidence": "The model card metadata declares base_model: google/gemma-4-31B-it (base_model:finetune tag)."
+          }
+        ]
+      },
+      "standard_one_3b_sh": {
+        "label": "StandardThinking/StandardOne-3B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/StandardThinking/StandardOne-3B-SH/blob/bead20e94b7c96045a19dc4d43af48a66c8911ea/README.md",
+            "title": "Author model card",
+            "evidence": "The model card metadata declares base_model: StandardThinking/StandardOne-3B (base_model:finetune tag)."
+          }
+        ]
+      },
+      "standard_one_3b_sh_v4": {
+        "label": "StandardThinking/StandardOne-3B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/StandardThinking/StandardOne-3B-SH/blob/7f56f73be882bc3fb2b69abe609bab1de8297d77/README.md",
+            "title": "Author model card",
+            "evidence": "The model card metadata declares base_model: StandardThinking/StandardOne-3B (base_model:finetune tag)."
+          }
+        ]
+      },
+      "standard_one_8b_sh": {
+        "label": "StandardThinking/StandardOne-8B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/StandardThinking/StandardOne-8B-SH/blob/25e5739bd9635b54f925cf9ba2daa2ec42afd19e/README.md",
+            "title": "Author model card",
+            "evidence": "The model card metadata declares base_model: StandardThinking/StandardOne-8B (base_model:finetune tag)."
+          }
+        ]
+      },
+      "tern-35b-a3b": {
+        "label": "Qwen/Qwen3.6-35B-A3B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/matthewagi/Tern-35B-A3B/blob/ef783c939186c1363f1de46d63564e78bb22f1c5/README.md",
+            "title": "Author model card",
+            "evidence": "The model card metadata declares base_model: Qwen/Qwen3.6-35B-A3B (base_model:finetune tag)."
+          }
+        ]
+      },
+      "torchcast-decision-31b-v1.0": {
+        "label": "google/gemma-4-31B-it",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/torchcast-ai/torchcast-decision-31b/blob/1e267fc9409654a3ac91c123265c21cddce73a3b/README.md",
+            "title": "Author model card",
+            "evidence": "The model card metadata declares base_model: google/gemma-4-31B-it (base_model:finetune tag)."
+          }
+        ]
+      },
+      "torchcast-decision-4b-v1.1": {
+        "label": "Qwen/Qwen3.5-4B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/torchcast-ai/torchcast-decision-4b/blob/f4a34e7aedbf22917f6c85b8c4e03a3da49c1baf/README.md",
+            "title": "Author model card",
+            "evidence": "The model card metadata declares base_model: Qwen/Qwen3.5-4B (base_model:finetune tag)."
+          }
+        ]
+      },
+      "torchcast-decision-4b-v1.2": {
+        "label": "Qwen/Qwen3.5-4B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/torchcast-ai/torchcast-decision-4b/blob/d54b248f2643df847979ca15638ee502ec79b788/README.md",
+            "title": "Author model card",
+            "evidence": "The model card metadata declares base_model: Qwen/Qwen3.5-4B (base_model:finetune tag)."
+          }
+        ]
+      },
+      "turion-jev-31b": {
+        "label": "google/gemma-4-31B-it",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/turion-ai/turion-jev-31b/blob/9edd5783ed1735cbf9e3e8ae7a546126ae05b0ce/README.md",
+            "title": "Author model card",
+            "evidence": "The model card metadata declares base_model: google/gemma-4-31B-it (base_model:finetune tag)."
+          }
+        ]
+      },
+      "umpire-35b-a3b": {
+        "label": "ornith-ai/Ornith-1.5-35B-A3B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/ezoushen/umpire-35b-a3b-bf16/blob/c928afd208de9f85d2c194042364b1a62ca4d080/README.md",
+            "title": "Author model card",
+            "evidence": "The model card metadata declares base_model: ornith-ai/Ornith-1.5-35B-A3B (base_model:finetune tag)."
+          }
+        ]
+      },
+      "vegaml-0.8b": {
+        "label": "Qwen/Qwen3.5-0.8B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/nandakishorm/vega-08b-public-intents/blob/73a76a4f6c4fe672e0daa2d45ddc355afc5bc9dd/README.md",
+            "title": "Author model card",
+            "evidence": "The model card metadata declares base_model: Qwen/Qwen3.5-0.8B (base_model:finetune tag)."
+          }
+        ]
+      },
+      "vera-large": {
+        "label": "Qwen/Qwen3.8-27B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/scar-ai/vera-large/blob/cc5adb16238d9ebae887da71f994cd04963d251f/README.md",
+            "title": "Author model card",
+            "evidence": "The model card metadata declares base_model: Qwen/Qwen3.8-27B (base_model:finetune tag)."
+          }
+        ]
+      },
+      "verdin-4b": {
+        "label": "Qwen/Qwen3.5-4B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/victorbennett/Verdin-4B/blob/f35e9c184864a2fd6f286166783b0321d95f23b0/README.md",
+            "title": "Author model card",
+            "evidence": "The model card metadata declares base_model: Qwen/Qwen3.5-4B (base_model:finetune tag)."
+          }
+        ]
+      },
+      "visionjev-1.0.0-27b": {
+        "label": "Qwen/Qwen3.8-27B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/taoszhang/VisionJEV/blob/cd6353aaea57561bd8c9beee69311f104dd77528/README.md",
+            "title": "Author model card",
+            "evidence": "The model card metadata declares base_model: Qwen/Qwen3.8-27B (base_model:finetune tag)."
+          }
+        ]
+      },
+      "vllm-sr-d3": {
+        "label": "Qwen/Qwen3.8-27B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/vllm-sr/d3/blob/5ce995dfb7ff07da00fec4211eb7f0560f52eaf8/README.md",
+            "title": "Author model card",
+            "evidence": "The model card metadata declares base_model: Qwen/Qwen3.8-27B (base_model:finetune tag)."
+          }
+        ]
+      },
+      "vllm-sr-d3-mini": {
+        "label": "Qwen/Qwen3.5-4B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/vllm-sr/d3-mini/blob/bd0090dd758d32ba59ef5c749910a8e87fc4391f/README.md",
+            "title": "Author model card",
+            "evidence": "The model card metadata declares base_model: Qwen/Qwen3.5-4B (base_model:finetune tag)."
+          }
+        ]
+      },
+      "wald-26b-a4b": {
+        "label": "google/gemma-4-26B-A4B-it",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/org2ai/Wald-26B-A4B/blob/4a5d0b94bff26a8bba359ef311b3e535cefae901/README.md",
+            "title": "Author model card",
+            "evidence": "The model card metadata declares base_model: google/gemma-4-26B-A4B-it (base_model:finetune tag)."
+          }
+        ]
+      },
+      "wald-4b-v2": {
+        "label": "Qwen/Qwen3.5-4B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/org2ai/Wald-4B/blob/919a9d72a65379271005ed0945bfc72742dad3af/README.md",
+            "title": "Author model card",
+            "evidence": "The model card metadata declares base_model: Qwen/Qwen3.5-4B (base_model:finetune tag)."
+          }
+        ]
+      },
+      "wald-4b-v2-1": {
+        "label": "Qwen/Qwen3.5-4B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/org2ai/Wald-4B/blob/ce3286f7efd332530e5dccd8a17d6496e029f714/README.md",
+            "title": "Author model card",
+            "evidence": "The model card metadata declares base_model: Qwen/Qwen3.5-4B (base_model:finetune tag)."
+          }
+        ]
+      },
+      "xevn-4b": {
+        "label": "Qwen/Qwen3.5-4B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/quevirus/Xevn-4B/blob/ba11f0c2d8100a1e8b7789a1174ddee7c24dcab0/README.md",
+            "title": "Author model card",
+            "evidence": "The model card metadata declares base_model: Qwen/Qwen3.5-4B (base_model:finetune tag)."
+          }
+        ]
       }
     },
     "imagejevbench": {
