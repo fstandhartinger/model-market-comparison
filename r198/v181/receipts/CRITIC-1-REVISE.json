@@ -1,0 +1,56 @@
+{
+ "verdict": "REVISE",
+ "engine": "claude-opus-5-5 (Claude Code, worker r201-v181-critic)",
+ "head_sha": "15ba31bf331220095a2c5eee84b27ec7b4d670e1",
+ "base_checked": {"build_base": "b05d2f618", "origin_main": "70b6f06d1", "b05_is_ancestor_of_main": false, "content_drift": "PR #505 SEO metadata titles on 15 archived v1.7.x page.tsx files only (import + metadata lines; kicker literals untouched)", "merge": "conflicts (test/jevbench-v170-release.test.mjs)", "cherry_pick_onto_main": "clean; 7 selected test files 89 pass / 0 fail / 1 skip"},
+ "findings": [
+  {"id": "F1", "severity": "medium", "blocking": true, "title": "Row cost-basis prose carries the official cap value and cap multiples (and iota keeps the latency formula), contrary to #34729(b)/#34753",
+   "evidence": "build_v181.py:47 appends to every new row's cost.basis: 'COST FIGURES: USD x per 1,000 decisions, <m>x the official cost cap USD 0.064595 ... (<m>x cap)' -> present in all 9 new rows of data/raw/benchmarks/jevbench/v1.8/jevbench-v1.8.1-results.json (e.g. decide-1.1 '0.152293x the official cost cap USD 0.064595'). #34729(b): row prose carries no release-level numbers incl. 'the cap value' and 'the latency formula'; #34753: strip cap multiples because under v1.8 the cap position is release-level. iota-decide-4b-v0.4 endpoint_condition still says 'The standard self-hosted x2 + 0.15 s adjustment applies.' (the build_v181.py:28-29 regexes only catch the 'The v1.7 share view uses ...' form). Same sentence also says 'the 1,489 items every row on this draw answered', which is false for decision-king-v1.1 (1 HTTP 503 inside the frozen common set).",
+   "requested_change": "Drop the cap value and both cap multiples from all nine rows' cost.basis (keep the row's own USD common and all-items figures, phrased 'on the frozen 1,489-item common set of this draw'); remove iota's 'x2 + 0.15 s' sentence; add a validator negative for 0.064595 / 'x cap' / '0.15 s' in new-row prose."},
+  {"id": "F2", "severity": "medium", "blocking": true, "title": "Regex scrubber left internal-process wording and garbled sentences in public row text",
+   "evidence": "build_v181.py:13-22 public() maps lead/custody/release owner -> 'measurement review' and two code names -> 'measurement harness'. Result in v1.8.1-results.json: cribl-decision-2 and -mini endpoint_condition '(measurement review sealed artifact; the worker did not open it)' and 'the worker-accessible copies shredded'; sors-2b '(... the drafting worker did not open it)'; joey-1/saif-4b/wemm-jev/sors-2b/cribl x2 '(measurement review sealed artifact)'; disclosures 'equal to the measurement review offline count'; decide-1.1 endpoint_condition 'through the unchanged measurement harness (eceea17e) and the unchanged measurement harness (780f8794)'; wemm-jev disclosure 'Disposition is for the measurement review.' (source: 'Disposition is for the release owner.'). None of 'the worker'/'worker-accessible'/'Disposition is for' occur in any v1.8.0 row.",
+   "requested_change": "Hand-edit these fields (not regex): e.g. '(independently verified sealed artifact)', drop 'the worker did not open it' / 'the drafting worker ...', 'worker-accessible copies' -> 'measurement copies', 'equal to the independent offline count', decide-1.1 'through the unchanged measurement harness and API adapter (eceea17e / 780f8794)'. Optionally also replace receipt field names 'one_pod true and exact_id_teardown_confirmed true' with plain words. Add validator negatives for 'worker', 'Disposition is for', 'measurement review sealed'."},
+  {"id": "F3", "severity": "medium", "blocking": true, "title": "WeMM-JEV licence disposition was handed to the release owner and is still open; the public row says so",
+   "evidence": "wemm-jev entry disclosure: 'No root LICENSE is supplied; the MIT inference licence is not a weight licence. Disposition is for the release owner.' Published as 'Disposition is for the measurement review.' No ruling found in DECISIONS.md or board #11 since #34729.",
+   "requested_change": "Lead rules on the licence presentation (e.g. keep 'Apache-2.0 (model-card declaration); no root LICENSE file; the MIT licence covers only the inference kit') and the row states that fact without the disposition sentence."},
+  {"id": "F4", "severity": "medium", "blocking": false, "title": "Base drift: b05d2f618 is not an ancestor of origin/main; receipts pin pre-#505 archived page hashes",
+   "evidence": "git merge-base --is-ancestor b05d2f618 origin/main -> false; git diff b05d2f618 70b6f06d1 = 15 app/jev-models/v1.7.x/page.tsx (PR #505 seoTitle, metadata only). Trial merge conflicts in test/jevbench-v170-release.test.mjs; cherry-pick of 15ba31bf3 onto 70b6f06d1 is clean and 89/90 selected tests pass. But r198/v181/receipts/CARRIED-ROWS.json archived_v17_pages_source_byte_equal pins b05 hashes: 15 of 24 mismatch on the rebased tree, so check_archive_kickers.py:7 and check_source_v181.py would fail after rebase.",
+   "requested_change": "Rebase by cherry-pick onto origin/main, re-pin the 24 archived page hashes to origin/main (kicker literals are unchanged by #505), rerun the gate pipeline on the rebased tree."},
+  {"id": "F5", "severity": "low", "blocking": false, "title": "Historical-test widening is genuine but the exact d1027 release list is no longer pinned anywhere",
+   "evidence": "test/jevbench-v1713-release.test.mjs:78 and test/jevbench-v1714-release.test.mjs:108 widen every(r=>/^v1\\.7\\.\\d+$/) to /^v1\\.(?:7|8)\\.\\d+$/; releases[0..1], latest_release==releases.at(-1) and the deepEqual of all other fields are kept, so archived-release assertions keep their strength. Other historical edits are only the standard v181 ternary prefix and 'v1.8.1' appended to cr-205 versionDirs. test/jevbench-v181-release.test.mjs has no assertion on the draw entry's releases list.",
+   "requested_change": "Add to the v1.8.1 test: draws[d1027].releases deepEqual [...v1.7.13..v1.7.22 list, 'v1.8.1'] and latest_release 'v1.8.1'."},
+  {"id": "F6", "severity": "low", "blocking": false, "title": "Pre-existing: tariff-kind costs render '(not published)' on model pages",
+   "evidence": "components/JevBenchSeoBlocks.tsx:69-73 costBasisLabel has no 'tariff' case; app/jev-models/[system]/page.tsx:211. decide-1.1 page capture shows '$0.0098 per 1,000 decisions (not published)'. Same for the 20 existing tariff rows in v1.8.0, so not introduced by this build.",
+   "requested_change": "Follow-up CR: map 'tariff' to 'public list price'. Not required for v1.8.1."},
+  {"id": "F7", "severity": "low", "blocking": false, "title": "New model pages keep the 'method v1.7 (10 s rule)' badge while their cost uses the v1.8 GPU-time basis",
+   "evidence": "Builder's disclosed conservative scope (RESULT.json label_change.scope); decide-1.1 row page: 'method v1.7 (10 s rule), measured under the rule'. Release pages and the live board show the v1.8 label.",
+   "requested_change": "Lead decision; acceptable as is if the brief's label scope was release pages + live board only."},
+  {"id": "F8", "severity": "nit", "blocking": false, "title": "History sentence uses full display fields (nested parentheses); addendum.cost_basis drops the 'rule' field",
+   "evidence": "measurement_notes[-1]: '(WeMM-JEV (Rover00), ..., iota-decide-4b-v0.4 (Macrocosmos, letter-readout 4B, self-hosted), decide-1.1 (decide.sh, API), Sors-2B (SakuraYuyuko))'. v1.8.0 results addendum.cost_basis has rule 'fixed-common-cost-basis-d1027 (frozen at v1.7.16)'; v1.8.1 has only n_items and set_sha256.",
+   "requested_change": "Optional: use short names in the history sentence; carry the rule string."}
+ ],
+ "rows_recomputed": {
+  "axes_and_ci": "all 9 rows, own registry + own raw copies, score_v17 6363458d share/10 s and score_v16 02132271 frozen, B 1000, seed 16, O1S, G_med 2.573387642438244: max |diff| vs published v1.8.1-results 8.7e-19 over ~745-750 numeric fields per row (axes, capability, composites, CI95, cost); vs builder scored.json 0.0 for both variants",
+  "cost": "all 9 rows: GPU-time min() per r198/v180/build_v180.py:22-24 constants (dense qwen 317601, small qwen 246100, cap 100000, USD 1.5235/h, 70%) and decide-1.1 I-1 0.03/M input on own native common-set usage; equal to builder to full precision",
+  "joey-1": "entry 00e1e560 verified; input 571,556 all / 568,911 common, output 1,495",
+  "decide-1.1": "common 488,258 in + 19,926 out (output unbilled) -> USD 0.0098373002/1k; all items 888,995 -> 0.0177799/1k (pricing review C6 confirms common basis is the release figure)"
+ },
+ "tests": {
+  "rebuild_determinism": "rebuild_v181.sh -> git status clean",
+  "validator": "PASS 178 negatives (PENDING and synthetic PASS)",
+  "tsc": "exit 0",
+  "top_five": "40/40 primary lists fully identical (complete order, max score diff 0) pristine b05d2f618 vs synthetic-PASS v1.8.1; ranked counts all/open/api 283/235/48 unchanged",
+  "pending_suite": "248 tests: 247 pass, 0 fail, 1 skip",
+  "postflip_suite": "248 tests: 247 pass, 0 fail, 1 skip",
+  "next_build": "exit 0 (once, synthetic PASS fixture)",
+  "archive_kickers": "PASS 24 rendered archived v1.7 kickers byte-equal",
+  "built_check": "PASS",
+  "cherry_pick_onto_origin_main": "clean; 90 tests, 89 pass, 1 skip"
+ },
+ "limitations": [
+  "The 540 slider/grid/custom lists were not recomputed; I relied on the builder receipts for them, after verifying all 40 primary lists in full against a pristine base.",
+  "Screenshots inspected: main (top), decide-1.1 row page. I did not re-capture pages.",
+  "Archived kicker byte-equality was checked by rerunning the builder's script on my own build; I also confirmed independently that no archived v1.7.x page source differs from b05d2f618.",
+  "Board rulings were read from board #11 since #34728 plus the brief's cited ids; I did not reread every handoff (#33461..#34226) in full."
+ ]
+}

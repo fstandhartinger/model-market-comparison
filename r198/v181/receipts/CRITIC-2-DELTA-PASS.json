@@ -1,0 +1,69 @@
+{
+ "verdict": "PASS",
+ "engine": "claude-opus-5-5 (Claude Code, worker r201-v181-delta)",
+ "head_sha": "edbe4a9a3f73afc56086ad25539506de38416446",
+ "base_origin_main_sha": "70b6f06d13eb8b49d7bab93a280c4bb9d29fde66",
+ "compared_candidate": "15ba31bf331220095a2c5eee84b27ec7b4d670e1",
+ "checks": {
+  "1_rebase": "PASS: origin/main 70b6f06d1 is an ancestor of the head (2 commits on top). The v1.8.1 publication and proof predecessor are {v1.8.0, 909c59e3...}, which equals sha256 of the live origin/main v1.8.0 publication (that file is unchanged in the head). CARRIED-ROWS.json pins 24 archived v1.7 page hashes, 0 mismatches against origin/main bytes. The 24 archived pages have no diff against origin/main. The kicker literal of each of the 24 pages is identical at b05d2f618 and at the head.",
+  "2_numeric": "PASS: my own walker (scripts/numeq.py) checked all 7 artifacts (results, categories, proof, publication, carry, history, history-carry): 291,201 numeric/bool/null leaves, 0 differences against 15ba31bf3. The only string differences are the 35 enumerated results paths, categories.results_sha256, the proof's cost_basis.rule/topfive/PUBLIC-ROWS hash and the publication's three file hashes. Board order lists are unchanged against the critic-verified candidate. The topfive receipt is bound to the head results sha e19f11dc\u2026 with 0/580 lists changed. The USD figures in each new row's prose equal cost.usd_per_1000.",
+  "3_F1": "PASS: 0 hits in any string of the 9 new rows for 0.0645 | x cap | cost cap USD | 0.15 s | x2 +. The runtime validateV181PublicText walks all nested strings and validate_v181.mjs carries 540 direct plus full-bundle negatives. My own injection put 8 terms into speed.adjustment, a field the validator's own negatives do not cover, for all 9 rows: 72/72 rejected.",
+  "4_F2": "PASS with non-blocking wording findings: I read every string of the 9 new rows end to end. 0 hits for worker/lead/custody/custodian/release owner/measurement review/deputy/board/#digits/Florian/CoS/order id/job names/Sandy/LeChonk/handoff. I found no garbled sentence. The decide-1.1 harness sentence and the amendment sentence now read naturally.",
+  "5_F3_F5_F8": "PASS: the wemm-jev disclosure contains the exact ruled sentence and no 'Disposition' sentence. The test pins draws[d1027].releases to the exact list and latest_release 'v1.8.1' (test/jevbench-v181-release.test.mjs:32-33). The history sentence uses short names with no nested parentheses (releases.mjs, history.json, source_note, note 39, page.tsx), and the old long sentence is gone everywhere. addendum.cost_basis.rule is carried.",
+  "6_gates": "PASS: the fix receipts show tsc 0, PENDING 248/0/1 skipped, post-flip 248/0/1, one production build exit 0 on LeChonk (FIX-ROUND-EXECUTION run exit 0 at 14:44:33Z; commit at 14:46:50Z), and 13 captures with HTTP 200 whose hashes verify. The capture manifest results_sha256 equals the head results. I reran tsc (exit 0) and test/jevbench-v181-release.test.mjs (6/6 pass) on the head. I inspected the main and all captures and the decide-1.1 and wemm-jev row pages."
+ },
+ "findings": [
+  {
+   "id": "D1",
+   "severity": "medium",
+   "blocking": false,
+   "title": "Dangling 'code_revision' references in public row text",
+   "evidence": "7 new rows say '(see code_revision)' or 'as listed in code_revision' (cribl x2, decision-king, joey-1, saif-4b, sors-2b, wemm-jev), but no published new row has a code_revision field. ENTRIES.json has one, and the builder drops it. Saif: 'The extreme internal construction cap is disclosed in code_revision.' points readers to text they cannot see. The same pattern exists in 8 live v1.8.0 rows that passed review (e.g. elephant-1, mammoth-1, knowline-31b-gen1), so it is not new to this round.",
+   "requested_change": "Follow-up, or now if the lead prefers: publish code_revision for these rows (as 5 v1.8.0 rows do), or drop the pointers. At minimum, rewrite or remove the Saif sentence."
+  },
+  {
+   "id": "D2",
+   "severity": "low",
+   "blocking": false,
+   "title": "decide-1.1 log-style phrases",
+   "evidence": "endpoint_condition: 'from the measurement client with the customer's own key', '...exposure of 1,200 sealed items to provider decide (proxy aws) logged before the first request (pre-registration review)'. cost.basis: 'Frozen pricing module validates the operator standard launch list price.' Readable and with house precedent ('to provider `scira`' in 18 live rows), but stilted.",
+   "requested_change": "Optional rewording, e.g. 'with the evaluation client's own API key'; 'all 1,200 sealed items were logged as exposed to decide.sh (served via AWS) before the first request'; 'The frozen pricing module checks this against the operator's standard launch list price.'"
+  },
+  {
+   "id": "D3",
+   "severity": "low",
+   "blocking": false,
+   "title": "Residual internal-process jargon (not on the banned list)",
+   "evidence": "sors-2b: 'at the time of drafting', 'An earlier internally measured export'. saif-4b: 'eligible for intake with the non-commercial flag'. decision-king: 'record-only class C deviation'. 'TTL-fit admitted ...' (5 rows), 'pair-fit' (cribl x2), wemm 'accepted root pricing reference', and the redundant 'in this intake (our own intake)' (7 rows; 21 live precedents).",
+   "requested_change": "Optional polish: 'at publication', 'an earlier unpublished measurement', drop 'eligible for intake ...', 'deviation' without 'class C', 'pre-run time check' instead of TTL-fit."
+  },
+  {
+   "id": "D4",
+   "severity": "low",
+   "blocking": false,
+   "title": "Gate-to-head binding is by data hashes only",
+   "evidence": "The heavy gates ran on a .git-less LeChonk copy. The receipts bind the build and captures to the head through the artifact hashes (results e19f11dc\u2026, six core files, capture hashes) and timestamps, not a source-tree hash. workers/r201-v181-fix/heavy-run.log is 0 bytes. The head's only post-15ba source changes in lib/app are releases.mjs, v181-release.mjs, the v1.8.1 page and the re-pinned archived pages.",
+   "requested_change": "None for this release. In future, record `git write-tree` or a source manifest in FIX-ROUND-EXECUTION."
+  },
+  {
+   "id": "D5",
+   "severity": "info",
+   "blocking": false,
+   "title": "Pre-existing shared template text on row pages",
+   "evidence": "The row pages still show '(2 \u00d7 + 0.15 s)' in the shared 10 s help and '(not published)' for the decide-1.1 tariff (F6). Both are known, disclosed and out of scope.",
+   "requested_change": "Existing F6 follow-up."
+  }
+ ],
+ "tests": {
+  "tsc_noEmit": "exit 0 (logs/tsc.log, via suite-slot)",
+  "v181_release_test": "6 tests, 6 pass, 0 fail (logs/v181-test.log)",
+  "numeric_equality": "291,201 leaves, 0 diffs (logs/numeq.log; ALLOK=False only because 3 string paths were added: addendum/proof cost_basis.rule and source_inputs PUBLIC-ROWS)",
+  "prose_injection": "72/72 rejected (logs/injection.log)",
+  "fix_worker_suites_not_rerun": "PENDING and post-flip 249-test suites and the production build were not rerun by me (receipts reviewed)"
+ },
+ "limitations": [
+  "I did not rerun the PENDING and post-flip suites, the production build or the 580-list top-five sweep. I relied on the receipts, plus the numeric and board-order identity against the critic-verified 15ba31bf3.",
+  "I did not rescore. Numbers are compared against the critic-verified candidate only.",
+  "I visually inspected only the main/all top sections and two row pages (decide-1.1, wemm-jev); for the other rows I read the HTML/text."
+ ]
+}
