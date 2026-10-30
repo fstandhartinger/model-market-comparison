@@ -11,7 +11,8 @@ for(const s of a.systems){
  for(const k of Object.keys(s.views??{}))if(sorts[k])s.views[k]=jevV15BoardScore(s.axes,Object.fromEntries(['intelligence','calibration','speed','cost'].map((v,i)=>[v,sorts[k][i]])));
  s.jevbench_score=s.scores[a.headline];
 }
-for(const o of Object.keys(a.board)){
+// Capability and its historical tie ranks are carried unchanged from the predecessor.
+for(const o of ['A','B','C']){
  const rows=a.systems.filter(s=>s.ranked&&Number.isFinite(s.scores?.[o])).sort((x,y)=>y.scores[o]-x.scores[o]||x.key.localeCompare(y.key));
  a.board[o].order=rows.map(s=>s.key);
  for(const s of a.systems)if(s.ranks&&o in s.ranks)s.ranks[o]=s.ranked?(a.board[o].order.indexOf(s.key)+1||null):null;

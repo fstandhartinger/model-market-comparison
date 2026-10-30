@@ -2,7 +2,7 @@ import {createRequire} from 'node:module';import {readFileSync,writeFileSync} fr
 const require=createRequire(import.meta.url),W=process.cwd(),J='r198/v180/',get=()=>require(path.join(W,'.next/server/app/api/jevbench/latest/route.js')).routeModule.userland.GET();
 const feed=await(await get()).json();assert.equal(feed.latest_release,'v1.8.0');assert.equal(feed.systems.length,316);
 assert.equal(feed.capability_policy.cost_cap_usd_per_1000,.06459465517241379);assert.equal(feed.capability_policy.median_latency_cap_s,1.2329566404223442);
-const before=JSON.parse(readFileSync('data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.22-results.json')),by=new Map(before.systems.map(s=>[s.key,s]));
+const before=JSON.parse(readFileSync('data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.23-results.json')),by=new Map(before.systems.map(s=>[s.key,s]));
 for(const s of feed.systems){const b=by.get(s.key);if(b.api_flag)assert.equal(s.price.usd_per_1000_decisions,b.cost.usd_per_1000);else if(b.cost.usd_per_1000!==null)assert.ok(s.price.usd_per_1000_decisions<=b.cost.usd_per_1000);}
 const rank=scope=>feed.systems.filter(s=>s.capability.eligible&&(scope==='all'||s.board===scope)).sort((a,b)=>b.capability.score-a.capability.score).map(s=>s.key);
 const rankedOpen=rank('open');
@@ -20,3 +20,14 @@ if(leaks.length&&!config.fallback)assert.fail('Rendered public text gate failed:
 const method=readFileSync('.next/server/app/jev-models/methodology.html','utf8');assert.ok(method.includes('Cost of self-hosted open weights, from v1.8'));assert.ok(method.includes('trunk-equivalent'));
 const out={status:'PASS',rows:316,ranked_open_count:rankedOpen.length,main_top5:rank('all').slice(0,5),open_top5:rankedOpen.slice(0,5),main_top10:rank('all').slice(0,10),open_top10:rankedOpen.slice(0,10),source:'production-compiled latest API',API_costs_unchanged:true,caps_unchanged:true};
 writeFileSync(J+'receipts/BUILT-LINKS.json',JSON.stringify(out,null,1)+'\n');console.log(JSON.stringify(out));
+
+// One visible release-history link per built board; RSC payloads are excluded.
+for(const name of ['.next/server/app/jev-models.html','.next/server/app/jev-models/all.html']){
+ const html=readFileSync(name,'utf8').replace(/<script\b[^>]*>[\s\S]*?<\/script>/g,'');
+ const count=[...html.matchAll(/href="\/jev-models\/v1\.8\.0"/g)].length;
+ assert.equal(count,1,name+' has exactly one v1.8.0 history link');
+ assert.ok(!html.includes('208 rows'));
+}
+for(const sentence of ['Throughput was calibrated on prompt processing (prefill); generated tokens are counted at the same rate.','Three diffusion-readout rows are priced with the closest calibrated class (MoE Gemma); this is an approximation.'])assert.ok(method.includes(sentence),sentence);
+assert.ok(method.includes('architectures outside the six calibrated Gemma/Qwen classes'));
+console.log('PASS single v1.8.0 history entry on both boards and F7 method text');

@@ -12,7 +12,7 @@ for name,rows in groups:
  parts.append('<section><h2>'+html.escape(name)+'</h2><p>'+html.escape(str(counts[name]))+'</p>')
  for r in changed:
   before=r['before'];after=r['after']
-  parts.append('<h3>'+html.escape(r['label'])+'</h3><table><tr><th>Rank</th><th>v1.7.22</th><th>v1.8.0 candidate</th></tr>')
+  parts.append('<h3>'+html.escape(r['label'])+'</h3><table><tr><th>Rank</th><th>v1.7.23</th><th>v1.8.0 candidate</th></tr>')
   for i in range(max(len(before),len(after))):parts.append('<tr><td>'+str(i+1)+'</td><td>'+html.escape(before[i] if i<len(before) else '—')+'</td><td>'+html.escape(after[i] if i<len(after) else '—')+'</td></tr>')
   parts.append('</table>')
  parts.append('</section>')

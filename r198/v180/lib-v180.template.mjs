@@ -34,6 +34,8 @@ export function validateJevbenchV180Bundle({manifest,artifact,categories,carry,p
  same(proof.gpu_time_cost_basis.gpu_usd_h,1.5235,'GPU price');same(proof.gpu_time_cost_basis.load,.70,'load');same(proof.gpu_time_cost_basis.cap_tok_s,100000,'throughput cap');
  same(proof.gpu_time_cost_basis.cap_cost_unchanged,JEV_V16_FROZEN_LIMITS.cost,'cost cap');same(proof.gpu_time_cost_basis.cap_latency_unchanged,JEV_V16_FROZEN_LIMITS.latency,'latency cap');
  const expected=structuredClone(previous.artifact.systems),by=new Map(artifact.systems.map(s=>[s.key,s]));
+ same(artifact.board.capability,previous.artifact.board.capability,'capability board unchanged');
+ for(const s of previous.artifact.systems)same(by.get(s.key)?.ranks?.capability,s.ranks?.capability,'capability rank unchanged '+s.key);
  for(const c of V180_EXCEPTIONS){
   same(c.reason,'v1.8.0 GPU-time cost basis','exception reason');
   const ps=c.path.replace('results.systems','').replace(/\[(\d+)\]/g,'.$1').split('.').filter(Boolean),field=ps.pop(),obj=ps.reduce((v,k)=>v[k],expected);
@@ -47,7 +49,7 @@ export function validateJevbenchV180Bundle({manifest,artifact,categories,carry,p
  const board=structuredClone(previous.artifact.board);
  for(const c of V180_BOARD_EXCEPTIONS){const o=c.path.split('.')[2];same(board[o].order,c.old,'old board order');board[o].order=c.new;}
  same(artifact.board,board,'only pinned board orders changed');
- for(const o of Object.keys(board)){const order=artifact.systems.filter(s=>s.ranked&&Number.isFinite(s.scores?.[o])).sort((a,b)=>b.scores[o]-a.scores[o]||a.key.localeCompare(b.key)).map(s=>s.key);same(artifact.board[o].order,order,'sorted composite board '+o);}
+ for(const o of ['A','B','C']){const order=artifact.systems.filter(s=>s.ranked&&Number.isFinite(s.scores?.[o])).sort((a,b)=>b.scores[o]-a.scores[o]||a.key.localeCompare(b.key)).map(s=>s.key);same(artifact.board[o].order,order,'sorted composite board '+o);}
 
  for(const s of previous.artifact.systems){
   const n=by.get(s.key);if(!n)throw Error('v1.8.0 missing row');
@@ -59,7 +61,8 @@ export function validateJevbenchV180Bundle({manifest,artifact,categories,carry,p
    for(const part of ['EUR 999/month','730 hours','28 Oct 2026','1.5235/hour','70%','Architecture:','tokens/s','tokens/decision','old list-price cost','min('])if(!n.cost.basis.includes(part))throw Error('v1.8.0 missing cost basis '+part);
    if(spec.throughput_source==='D5'&&!n.cost.basis.includes('load_mode='+spec.load_mode))throw Error('v1.8.0 D5 mode disclosure');
    for(const f of ['intelligence','calibration','speed','capability','decision_limit','previous','draw','measured_in','ranked'])same(n[f],s[f],'fixed '+f+' '+s.key);
-   const strip=row=>{const z=structuredClone(row);for(const f of ['rank','ranks','scores','views','jevbench_score','composite_ci95'])delete z[f];if(z.axes)delete z.axes.cost;if(z.cost)for(const f of ['usd_per_1000','basis','composite_interval_note'])delete z.cost[f];if(z.v16?.ci95)delete z.v16.ci95.composite;return z;};
+   // Listing/underlying corrections are exact SHA-pinned exceptions, checked above.
+   const strip=row=>{const z=structuredClone(row);for(const f of ['rank','ranks','scores','views','jevbench_score','composite_ci95','listing','underlying'])delete z[f];if(z.axes)delete z.axes.cost;if(z.cost)for(const f of ['usd_per_1000','basis','composite_interval_note'])delete z.cost[f];if(z.v16?.ci95)delete z.v16.ci95.composite;return z;};
    same(strip(n),strip(s),'only cost-derived fields changed '+s.key);
    const axis=Math.min(100,Math.max(0,100-30*Math.log10(n.cost.usd_per_1000/.001)));
    if(Math.abs(n.axes.cost-axis)>1e-10)throw Error('v1.8.0 Cost axis');

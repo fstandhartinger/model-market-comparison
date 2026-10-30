@@ -41,10 +41,25 @@ put(J/'receipts/restatement.json',{'rows':restated,'unchanged':unchanged})
 put(J/'inputs/candidate-unscored.json',r)
 subprocess.run(['node',str(J/'score_v180.mjs')],cwd=W,check=True)
 r=json.loads((J/'inputs/candidate-scored.json').read_text())
+# Correct only the six stale in-cap annotations; pin their complete before/after values below.
+TEXT_FIXED=['knowline-31b-gen1','jeffan-31b-1710','knowline-35b-a3b-gen1.5','vera-large']
+LISTING_FIXED=['knowline-26b-a4b-gen2.5','lychee-27b']
+correction='Over the cost cap under the earlier list-price basis; inside both caps from v1.8.0 (GPU-time cost basis).'
+import re
+for row in r['systems']:
+ if row['key'] in TEXT_FIXED:
+  assert row['cost']['usd_per_1000']<=0.06459465517241379 and row['speed']['p50_s_adjusted']<=1.2329566404223442
+  text=row['underlying'];start=text.index('OVER COST CAP:')
+  # The historical over-cap annotation is the final paragraph/sentence on these four rows.
+  row['underlying']=text[:start]+correction
+ if row['key'] in LISTING_FIXED:
+  assert row['listing']=='ranked_over_cap'
+  assert row['cost']['usd_per_1000']<=0.06459465517241379 and row['speed']['p50_s_adjusted']<=1.2329566404223442
+  row['listing']='ranked'
 newly=sum(1 for s in r['systems'] if s['key'] in restated and restated[s['key']]['old_cost']>0.06459465517241379>=restated[s['key']]['new_cost'] and s['ranked'] and s['speed']['p50_s_adjusted'] is not None and s['speed']['p50_s_adjusted']<=1.2329566404223442)
-NOTE=f'Cost basis for self-hosted open weights changed from base-model list prices to GPU time on a monthly-rented RTX PRO 6000 with an efficient inference engine. {len(restated)} rows have verified scored usage and a resolvable architecture; {newly} additional open-weight rows fall within both official caps. Intelligence, Calibration and latency are unchanged; API costs and both caps are unchanged. Encoders, unresolved architectures and rows without a verified token basis retain their old costs. Composite intervals affected by the cost change are withheld; the archived v1.7 intervals use the old cost. Old values remain available in v1.7.x.'
+NOTE=f'Cost basis for self-hosted open weights changed from base-model list prices to GPU time on a monthly-rented RTX PRO 6000 with an efficient inference engine. {len(restated)} rows have verified scored usage and a resolvable architecture; {newly} additional open-weight rows fall within both official caps. Intelligence, Calibration and latency are unchanged; API costs and both caps are unchanged. Encoders, architectures outside the six calibrated Gemma/Qwen classes and rows without a verified token basis retain their old costs. Composite intervals affected by the cost change are withheld; the archived v1.7 intervals use the old cost. Old values remain available in v1.7.x. Throughput was calibrated on prompt processing (prefill); generated tokens are counted at the same rate. Three diffusion-readout rows are priced with the closest calibrated class (MoE Gemma); this is an approximation.'
 r.update(revision=REV,label='JevBench v1.8.0: GPU-time cost basis',source_note=NOTE,source_sha256=hj(restated));r['measurement_notes']=old['measurement_notes']+[NOTE]
-r['addendum']=copy.deepcopy(old['addendum']);r['addendum'].update(predecessor=PREV,new_keys=[],remeasured_keys=[],repriced_keys=sorted(restated),link_fixed_keys=[],text_fixed_keys=[],method_change=True)
+r['addendum']=copy.deepcopy(old['addendum']);r['addendum'].update(predecessor=PREV,new_keys=[],remeasured_keys=[],repriced_keys=sorted(restated),link_fixed_keys=[],text_fixed_keys=sorted(TEXT_FIXED+LISTING_FIXED),method_change=True)
 put(D/f'jevbench-{REV}-results.json',r)
 for n in ['carry','history','history-carry']:put(D/f'jevbench-{REV}-{n}.json',load(n))
 cat=load('categories');cat.update(revision=REV,results_sha256=sha(D/f'jevbench-{REV}-results.json'),source_results_sha256=r['source_sha256'],results_sha256_note='All category cells and lanes unchanged; GPU-time cost restatement.')
@@ -63,7 +78,7 @@ pr['board_exceptions']=board_changes
 pr['gpu_time_cost_basis']={'gpu_usd_h':1.5235,'load':0.70,'cap_tok_s':100000,'cap_cost_unchanged':0.06459465517241379,'cap_latency_unchanged':1.2329566404223442,'architecture_constants':{'dense_gemma':313302,'dense_qwen':317601,'small_gemma':322343,'small_qwen':246100,'moe_gemma':138650,'moe_qwen':113999},'unchanged':unchanged,'usage_receipt_sha256':sha(S/'usage.json'),'architecture_receipt_sha256':sha(S/'architecture.json'),'d5_receipt_sha256':sha(S/'measurements.json'),'bootstrap':'Affected composite intervals withheld; previous cost intervals are not repurposed.'}
 pr['gpu_time_cost_basis']['sources']={str(p.relative_to(W)):sha(p) for p in [J/'build_v180.py',J/'score_v180.mjs',S/'usage.json',S/'architecture.json',S/'measurements.json',S/'reference-rows.csv',S/'reference-boards.json',S/'reference-params.json',S/'class-calibration.csv']}
 pr.pop('top_five_comparison',None);pr.pop('topfive_diff_sha256',None)
-if (J/'receipts/topfive-diff.json').exists():pr['top_five_comparison']={'base':'v1.7.22','receipt_sha256':sha(J/'receipts/topfive-diff.json')}
+if (J/'receipts/topfive-diff.json').exists():pr['top_five_comparison']={'base':PREV,'receipt_sha256':sha(J/'receipts/topfive-diff.json')}
 put(D/f'jevbench-{REV}-proof.json',pr)
 md=load('publication');md.update(revision=REV,predecessor=pr['predecessor'],review={'engine':'PENDING','verdict':'PENDING','receipt_sha256':None});md['files']={n:{'path':f'data/raw/benchmarks/jevbench/v1.8/jevbench-{REV}-{n}.json','sha256':sha(D/f'jevbench-{REV}-{n}.json')} for n in ['results','categories','carry','proof','history','history-carry']};put(D/f'jevbench-{REV}-publication.json',md)
 # All rows, including unchanged rows, receive an explicit reference comparison.

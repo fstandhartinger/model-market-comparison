@@ -9,6 +9,8 @@ assert.equal(validateJevbenchV180Bundle(bundle,{candidate:true}),true);
 const failures=[];const negative=(name,mutate)=>{const b=structuredClone(bundle);mutate(b);assert.throws(()=>validateJevbenchV180Bundle(b,{candidate:true}),undefined,name);failures.push(name);};
 const r=(b,k)=>b.artifact.systems.find(s=>s.key===k),changed=Object.keys(V180_COST_SPEC),D5=changed.find(k=>V180_COST_SPEC[k].throughput_source==='D5');
 assert.equal(Object.values(V180_COST_SPEC).filter(s=>s.throughput_source==='D5').length,13);
+negative('wiped capability order',b=>b.artifact.board.capability.order=[]);
+negative('wiped capability rank',b=>r(b,'apus-openjev-v1-35b-a3b').ranks.capability=null);
 negative('API cost mutation',b=>r(b,'kettei-fat').cost.usd_per_1000+=.001);
 negative('cost cap mutation',b=>b.proof.gpu_time_cost_basis.cap_cost_unchanged*=1.1);
 negative('latency cap mutation',b=>b.proof.gpu_time_cost_basis.cap_latency_unchanged*=1.1);

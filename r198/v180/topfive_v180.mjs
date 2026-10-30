@@ -1,6 +1,6 @@
 // Usage: cd <site tree> && node topfive_v180.mjs  -> JSON of the top fives (and every watched row's position) of the live board, built with the site's own assembleJevBoard
-// so the before tree (v1.7.22 PASS, v1.8.0 PENDING) and the after tree (synthetic v1.8.0 PASS) are read by exactly the same code.
-// 36 merged variants (3 scopes x 12 lists, incl. cost caps of 7x/10x the reference cost (Jev 1.13.0; the official cap is 2x) with no latency cap) + 4 release-board lists (= the all-scope A/B/C/Capability lists, by definition for v1.7.22).
+// so the before tree (v1.7.23 PASS, v1.8.0 PENDING) and the after tree (synthetic v1.8.0 PASS) are read by exactly the same code.
+// 36 merged variants (3 scopes x 12 lists, incl. cost caps of 7x/10x the reference cost (Jev 1.13.0; the official cap is 2x) with no latency cap) + 4 release-board lists (= the all-scope A/B/C/Capability lists, by definition for v1.7.23).
 import { readFileSync } from 'node:fs';
 import path from 'node:path';
 const root = process.argv[2] ?? process.cwd();
@@ -53,7 +53,7 @@ for (const [name, art] of Object.entries(views)) {
   }
   out.full_rankings[name] = full;
 }
-// release-board lists: the all-scope official lists (for v1.7.22 the release board IS the merged all-scope board)
+// release-board lists: the all-scope official lists (for v1.7.23 the release board IS the merged all-scope board)
 const all = views.all;
 const rankedAll = all.systems.filter((s) => s.ranked);
 for (const o of ['A', 'B', 'C']) out.release_lists[o] = all.board[o].order.filter((k) => rankedAll.some((s) => s.key === k));

@@ -1,5 +1,5 @@
-// Supplement the exact v1.7.22 40-list site comparison with capped composites, axes and frozen/off values.
-// Off values use preserved previous blocks (src/carried-off.json, copied from v1.7.22), plus the already-scored off outputs of the carried rows.
+// Supplement the exact v1.7.23 40-list site comparison with capped composites, axes and frozen/off values.
+// Off values use preserved previous blocks (src/carried-off.json, copied from v1.7.22; numerically identical to v1.7.23), plus the already-scored off outputs of the carried rows.
 import {readFileSync,writeFileSync} from 'node:fs';
 import path from 'node:path';
 import {pathToFileURL} from 'node:url';
@@ -11,11 +11,11 @@ const {jevV15BoardScore}=await imp('lib/jevbench-v15-board.mjs');
 const {jevScopeClassifier,jevbenchScopeArtifact}=await imp('lib/jevbench-scope.mjs');
 const load=p=>JSON.parse(readFileSync(p));
 const data=path.join(root,'data/raw/benchmarks/jevbench/v1.7');
-const before=load(path.join(data,'jevbench-v1.7.22-results.json'));
+const before=load(path.join(data,'jevbench-v1.7.23-results.json'));
 const after=load(path.join(root,'data/raw/benchmarks/jevbench/v1.8/jevbench-v1.8.0-results.json'));
 const inputs=load(path.join(J,'src/inputs.json'));
 const carriedOff=load(path.join(J,'src/carried-off.json'));
-const isApi=jevScopeClassifier(before.systems,load(path.join(data,'jevbench-v1.7.22-carry.json')).rows,[],[]);
+const isApi=jevScopeClassifier(before.systems,load(path.join(data,'jevbench-v1.7.23-carry.json')).rows,[],[]);
 const oldOff=(s,variant,isAfter)=>{
  if(isAfter&&inputs[s.key])return {...s,...inputs[s.key][variant==='frozen'?'frozen':'v17-off']};
  if(carriedOff[s.key])return {...s,...carriedOff[s.key]};

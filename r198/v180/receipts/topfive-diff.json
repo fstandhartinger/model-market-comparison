@@ -1,7 +1,7 @@
 {
- "base": "v1.7.22",
+ "base": "v1.7.23",
  "candidate": "v1.8.0",
- "candidate_results_sha256": "e52318677e1872e2effce17d3bd010d06a73348120d3baafd0534096ce4f5f8e",
+ "candidate_results_sha256": "5d851f54ab2e0d0ed5ede47921c732855aaf411aca5fe0060ec8e990b900e97c",
  "changed": true,
  "changed_labels": [
   "all/composites/A",
@@ -17,7 +17,6 @@
   "release/A",
   "release/B",
   "release/C",
-  "release/capability",
   "frozen/all/official/A",
   "frozen/all/official/B",
   "frozen/all/official/C",
@@ -304,8 +303,8 @@
   "share/open/cost1.5/view/Capability only",
   "share/open/cost1.5/custom/Calibration 100"
  ],
- "changed_lists": 299,
- "changed_top10_count": 329,
+ "changed_lists": 298,
+ "changed_top10_count": 328,
  "custom": [
   {
    "after": [
@@ -1786,16 +1785,16 @@
   },
   {
    "after": [
-    "ajev-gemma4-31b-lm6q",
-    "aleria-judge-1.1.1",
-    "amazon-strands-decider-26b-a4b",
-    "amos-1-large",
-    "amos-1-medium",
-    "aplomb-1",
-    "apus-openjev-v1-9b",
-    "arcbright-elf-1-12b",
-    "arcbright-elf-1-31b",
-    "arsenelupin-v1.1"
+    "gpt-6-luna",
+    "gpt-6-luna-low",
+    "gpt-5.6-luna",
+    "deepseek-flash",
+    "kettei-fat",
+    "singularity-super-decider-thinking",
+    "mammoth-1",
+    "knowline-31b-gen1",
+    "fastino-glide-1.2-open",
+    "singularity-super-decider"
    ],
    "before": [
     "gpt-6-luna",
@@ -1809,8 +1808,8 @@
     "fastino-glide-1.2-open",
     "singularity-super-decider"
    ],
-   "changed_top10": true,
-   "changed_top5": true,
+   "changed_top10": false,
+   "changed_top5": false,
    "label": "release/capability",
    "view": "release"
   },
