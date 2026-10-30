@@ -1,0 +1,45 @@
+{
+ "verdict": "PASS",
+ "engine": "claude-opus-5-5 (Claude Code, worker)",
+ "head_sha": "1d9e11146",
+ "base_sha": "a4b01bef2",
+ "findings": [
+  {
+   "id": "N1",
+   "severity": "minor",
+   "blocking": false,
+   "title": "decisio disclosure: subject-less clause after semicolon; 2.77x figure dropped",
+   "evidence": "results.systems[56].disclosure: '...superseded by engine-basis billing, which was over the cost cap under the earlier list-price basis; inside both caps from v1.8.0 (GPU-time cost basis).' True: cost 0.01889<=0.06459, p50_adj 0.278<=1.233; old list-price 0.17894 (2.77x).",
+   "requested_change": "Optional: '...engine-basis billing, 2.77x the cap under the earlier list-price basis; the row is inside both caps from v1.8.0 (GPU-time cost basis).' Not required."
+  },
+  {
+   "id": "N2",
+   "severity": "cosmetic",
+   "blocking": false,
+   "title": "Disclosure fixes labelled F3 / reason 'v1.8.0 GPU-time cost basis' rather than D1",
+   "evidence": "r198/v180/FIX-ROUND-EQUALITY.json entries for systems[56|168].disclosure have finding 'F3'; proof exceptions reason fixed by validator line ~43.",
+   "requested_change": "None required."
+  },
+  {
+   "id": "N3",
+   "severity": "info",
+   "blocking": false,
+   "title": "fastino-glide-api underlying mentions historical key fastino-glide 'outside the cost cap' (outside delta)",
+   "evidence": "Historical description of a different key; listed in TEXT-CAP-SCAN reviewed_no_change.",
+   "requested_change": "None."
+  }
+ ],
+ "tests": {
+  "diff_scope": "results.json differs only at systems[56].disclosure, systems[168].disclosure, addendum.text_fixed_keys (+decisio); all other changed files are pins/hashes/receipts/logs/build+equality scripts/fixture",
+  "fixture": "566 changes all null->int at ranks tuple index 4; all-view 283/283 == v1.7.23 ranks.capability; open 235 and api 48 == v1.7.23 order re-ranked within scope; lists/_about/idx0-3 unchanged; 0 nulls left",
+  "exception_pins": "2 new proof exceptions: after/before sha256 == sha256(json.dumps(new/old)); new == committed text",
+  "text_scan": "own regex scan of all strings, 36 fields; no stale over-cap claim on any row inside both caps; only over-cost-cap row amos-1-large says so correctly",
+  "validator": "candidate validate PASS at 1d9e11146; 4/4 negatives threw ('carried rows except pinned cost fields'): third repriced row disclosure, non-repriced row disclosure, lychee beyond pin, decisio reverted",
+  "equality": "FIX-ROUND-EQUALITY PASS, 580 lists, 579 preview-equal, 0 unexpected, capability_equal_to_v1723 true, fixed_results_sha256 5f57847e... == committed",
+  "logs": "pending 234/233 pass/0 fail/1 skip (pre-existing); postflip 248/247/0/1 skip; validator PASS 19 negatives; fixture PASS; build no errors; rebuild-1==rebuild-2==tree sha256"
+ },
+ "limitations": [
+  "Did not rerun release suites/build/npm (per brief); relied on fix-round logs, which are bound to the head only via matching result/rebuild hashes",
+  "open/api fixture ranks checked as scope re-rank of v1.7.23 order, not against a separately rendered v1.7.23 scoped board"
+ ]
+}

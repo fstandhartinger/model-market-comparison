@@ -1,0 +1,112 @@
+{
+ "verdict": "REVISE",
+ "engine": "Claude Opus 5.5 (claude-opus-5-5)",
+ "head_sha": "254236610d5065ac48548e64aa926f5244f29a07",
+ "base_sha": "408ad888aecdd6ea8e8dd504249bc7d27cfab755",
+ "findings": [
+  {
+   "id": "F1",
+   "severity": "high",
+   "blocking": true,
+   "title": "Capability board order and every Capability rank wiped in the v1.8.0 results",
+   "evidence": "data/raw/benchmarks/jevbench/v1.8/jevbench-v1.8.0-results.json: board.capability.order has 0 entries (v1.7.23: 283, all ranked rows sorted by capability desc); ranks.capability is null on all 314 rows (v1.7.23: 285 non-null). Cause: r198/v180/score_v180.mjs:13-17 loops over every key of a.board including 'capability' and sorts by s.scores[o]; scores has no 'capability' key, so the filter is empty and every ranks.capability is set to null. lib/jevbench-v180-release.mjs (the 'sorted composite board' loop over Object.keys(board)) checks the same wrong rule, so validator + tests pass. Built output: /api/jevbench/v1.8.0 serves the empty capability order and null ranks. Capability itself is unchanged, so these fields should be byte-equal to v1.7.23. The page's headline Capability ranking is not affected because it is computed by jevClassRows; consumers of ranks.capability (lib/jevbench-scope.mjs:77-86, lib/jevbench-cohort-merge.mjs:285-290, the public JSON) are.",
+   "requested_change": "In score_v180.mjs recompute only A/B/C (skip 'capability'), or rebuild capability exactly like v1.7.23 (ranked rows by capability desc, the same tie rule). Keep the 2 unranked rows' carried capability ranks (apus-openjev-v1-35b-a3b 66, bb-qwen3.5-4b-lora 65) as they were. Fix the validator loop in lib/jevbench-v180-release.mjs to A/B/C plus an explicit capability equality with v1.7.23. Re-pin the exceptions."
+  },
+  {
+   "id": "F2",
+   "severity": "high",
+   "blocking": true,
+   "title": "Duplicate v1.8.0 release-history entry, one stale ('208 rows')",
+   "evidence": "lib/jevbench-releases.mjs:4 and :5 are both v1.8.0 entries; line 4 says '208 rows have verified scored usage', line 5 says '210 rows'. Built /jev-models.html and /jev-models/all.html each show both texts (208 x2, 210 x2); preview main.html/all.html/open.html show them too.",
+   "requested_change": "Delete lib/jevbench-releases.mjs line 4 (the 208 entry) and rebuild the preview."
+  },
+  {
+   "id": "F3",
+   "severity": "medium",
+   "blocking": true,
+   "title": "Stale 'OVER COST CAP' text and ranked_over_cap labels on rows that are now inside the caps (including the open #2)",
+   "evidence": "Six rows go from over the cap to inside both caps but keep over-cap claims. underlying text says 'OVER COST CAP' for knowline-31b-gen1 (now open Capability #2 at USD 0.0608), jeffan-31b-1710, knowline-35b-a3b-gen1.5 and vera-large; the built /jev-models.html renders 'OVER COST CAP: measured USD 0.093159212 ... ranked_over_cap, uncapped views only' for KnowLine. listing is still 'ranked_over_cap' for knowline-26b-a4b-gen2.5 (USD 0.0180, p50 0.31 s) and lychee-27b (USD 0.0264, p50 0.50 s). The SEO change (F7) works around the stale label but does not fix it.",
+   "requested_change": "Set listing to 'ranked' for the two rows. For the four underlying texts, add a pinned exception that replaces or annotates the over-cap sentence (e.g. 'Over the cost cap under the v1.7 list-price basis; inside both caps from v1.8.0'). The lead decides whether this is within the 'eligibility' scope of the ruling."
+  },
+  {
+   "id": "F4",
+   "severity": "medium",
+   "blocking": true,
+   "title": "Rebase onto origin/main needs a predecessor rebind (mechanical)",
+   "evidence": "v1.7.23 is live as 3d3a8481; its publication.json differs from 408ad888 (review PENDING -> PASS), sha256 bd9e3586... -> 7dbf6b79.... proof.predecessor.publication_sha256 is pinned to bd9e3586..., so after the cherry-pick the candidate validation fails with 'v1.8.0 predecessor binding'. A cherry-pick of 25423661 onto 3d3a8481 applies cleanly (sitemap.ts and jevbench-seo.mjs auto-merge; main added a jev-vs-kev comparison, kev-27b is a restated row). After rebinding proof/publication/lib hash in the scratch tree, the validation passes. proof.top_five_comparison.base says 'v1.7.22'. The numbers equal v1.7.23 because v1.7.23 was text-only.",
+   "requested_change": "Rebase onto origin/main, rerun rebuild_v180.sh so that predecessor, publication and V180_EXPECTED_HASHES bind to the live v1.7.23 manifest, and label the comparison base v1.7.23 (or state 'v1.7.22 = v1.7.23 numerically')."
+  },
+  {
+   "id": "F5",
+   "severity": "high",
+   "blocking": false,
+   "title": "Conflict of interest the GO card must disclose: the new open Capability #1 is mammoth-1, which Decision Models sells as s1-pro-5",
+   "evidence": "Open headline Capability before: h2o-lightning-31b, basal-omni-1.0-ultra, dopest-1.0-31b, jeff_1_1_medium, arcbright-elf-1-31b; after: mammoth-1 (85.233), knowline-31b-gen1 (85.213), fastino-glide-1.2-open, h2o-lightning-31b, pplx-decider-v1-1-27b. DECISIONS.md line 145: 'The new open #1 (mammoth-1 = our s1-pro-5)'. mammoth-1 enters only because the method changed (v1.7: USD 0.1036 = 1.60x the cap; v1.8: USD 0.0268, D5 base-arch measurement with the block-bidirectional attention left out). The page only has the general 'Decision Models is run by the same company' line under 'Use'. No row-level disclosure. The new open #1 and #2 differ by 0.02 Capability points.",
+   "requested_change": "The GO card must state that the method change makes a model our company sells the open #1, by 0.02 points over #2. Florian decides whether to add a public row-level disclosure."
+  },
+  {
+   "id": "F6",
+   "severity": "medium",
+   "blocking": false,
+   "title": "Top-five entries that rest on substitute-trunk or thin-margin estimates",
+   "evidence": "fastino-glide-1.2-open (open #3, A #5) and pplx-decider-v1-1-27b (open #5) use 'trunk-equivalent' D5 throughput: the stock Qwen3.8-27B trunk, not their own weights or readout. mammoth-1 uses base-arch. knowline-31b-gen1 (open #2) is eligible at 0.94x the cap (USD 0.0608 vs 0.0646): a 6 % margin that depends on the 70 % load assumption (the class value would give 0.956x). All token counts in the top five were verified: I recomputed them from published totals or raw run sums. None rests on an unverified token count.",
+   "requested_change": "Name these in the GO card (estimate basis + margin). No data change needed."
+  },
+  {
+   "id": "F7",
+   "severity": "medium",
+   "blocking": false,
+   "title": "Same rule, different treatment: diffusion rows and non-Gemma/Qwen small decoders",
+   "evidence": "Three DiffusionGemma rows (diffusion-jev: '48-step diffusion readout'; openjev-thinking: 365 generated tokens per decision; open-jev-json-canvas-joshuasp) are priced with the autoregressive MoE-Gemma prefill constant. nemotron-diffusion-8b is excluded as 'unresolvable'. Seven rows with verified usage (standard_one_3b_sh/_v4/_8b_sh and standardone-8b on Ministral-3, pjev-2b/jul-fast/decision-2b/smalljev on MiniCPM5, exaone-4.0-1.2b, liquid-d1-3b) keep their old cost. The reference model (model/out/rows.csv) restated several of them as small-Qwen proxies, e.g. standard_one_8b_sh 0.0782 -> 0.0102. Public text calls them 'unresolved architectures', but they are known dense decoders outside the six calibrated families. More generally, generated output tokens are charged at prefill throughput (calibration max_tokens=1). The text says 'scored inputs and outputs' but does not say throughput is prefill-only. None of these rows is near the top five.",
+   "requested_change": "Lead/Florian decision: either exclude diffusion rows like nemotron, or disclose them. Reword 'unresolved architectures' to 'architectures outside the six calibrated Gemma/Qwen classes'. Add one sentence that throughput was measured as prefill and that generated tokens are counted at that rate."
+  },
+  {
+   "id": "F8",
+   "severity": "low",
+   "blocking": false,
+   "title": "Missing-token-basis exclusions are correct but one has a newer usage that does not reproduce",
+   "evidence": "open-alternative-jev and jev-qwen3.5-9b-base-nvfp4: the v1.5 runs (P06/*-1624.jsonl) report 0 usage tokens, and the carried cost uses a proxy of 906,800 tokens/1,624 (I-2 proxy, not their own usage). torchcast-decision-12b: the carried v1.5.8 cost implies 925,276 tokens/1,624; no v1.5 run file was found; the v1.6 runs (781,441 in + 1,477 out over 1,477) do not reproduce the carried cost. The builder's exclusions follow 'never guess'.",
+   "requested_change": "None (informational). torchcast-decision-12b could be restated only after a deliberate re-cost on its v1.6 usage, which is outside this ruling."
+  },
+  {
+   "id": "F9",
+   "severity": "low",
+   "blocking": false,
+   "title": "Minor presentation notes",
+   "evidence": "The board eyebrow still reads 'Method v1.7 (10 s rule)' on v1.8.0. In dense Qwen the constant 317,601 is 27 x the rounded 11,763; the unrounded measurement gives 317,597 (1.3e-5 relative). That is spec-conformant. The per-row composite_interval_note is not rendered; the withheld CIs show as '—' and are disclosed in the methodology section, the release note and the page header text.",
+   "requested_change": "Optional."
+  }
+ ],
+ "top5_main_before_after": {
+  "board": "/jev-models (open weights), composite A",
+  "before_v1.7.23": ["torchcast-decision-4b-v1.3", "h2o-lightning-4b", "h2o-lightning-31b", "torchcast-decision-4b-v1.2", "chon-1.0-e4b"],
+  "after_v1.8.0": ["torchcast-decision-4b-v1.3", "h2o-lightning-4b", "wald-26b-a4b", "torchcast-decision-4b-v1.2", "fastino-glide-1.2-open"],
+  "all_board_A_after": ["torchcast-decision-4b-v1.3", "singularity-super-decider", "launchables-myles-g-12b", "h2o-lightning-4b", "kettei-fat"]
+ },
+ "top5_open_capability_before_after": {
+  "before_v1.7.23": ["h2o-lightning-31b", "basal-omni-1.0-ultra", "dopest-1.0-31b", "jeff_1_1_medium", "arcbright-elf-1-31b"],
+  "after_v1.8.0": ["mammoth-1", "knowline-31b-gen1", "fastino-glide-1.2-open", "h2o-lightning-31b", "pplx-decider-v1-1-27b"],
+  "eligible_open_before_after": [171, 217],
+  "all_capability_after": ["kettei-fat", "singularity-super-decider-thinking", "mammoth-1", "knowline-31b-gen1", "fastino-glide-1.2-open"]
+ },
+ "reproduced": {
+  "costs": "All 210 restated rows recomputed independently from v1.7.23 old costs, frozen usage, my own class constants (rederived from class-calibration.csv) and D5 tok/s (rederived from the remeasure CSVs, fresh pass); max relative diff 0, none > 1e-9. Old costs reproduce from tokens x rates for all 210; n_items equals common_basis.n_items where present. Raw run sums match the frozen usage for knowledgator_gliclass_v4_9b, pplx-decider-v1-1-27b, wald-4b-v2-1 and autojev-27b. Sample includes GLiClass v4 9B, VisionJEV, KnowLine 31B Gen1, mammoth-1, fastino-glide-1.2-open, torchcast-decision-4b-v1.3, wald-26b-a4b, jeffan-31b-1710 and pplx-decider-v1-1-27b (D5).",
+  "diff": "Own recursive diff of v1.7.23 vs v1.8.0 results: changed paths are limited to cost/axes.cost/composite_ci95/v16.ci95.composite/scores/jevbench_score/views/rank/ranks on the 210 rows, rank fields on others, board orders, and release metadata. All 3,817 field pins verify against my before/after sha256 (0 mismatches). The pins cover my diffs at cost-object granularity. carry/history/history-carry are byte-equal. Category cells are equal; only the binding metadata changed. No existing data file or older release page was modified.",
+  "top5": "Rerun with the site's assembleJevBoard in two scratch roots (live v1.7.23 PASS manifest; v1.8.0 PENDING vs SYNTHETIC PASS). The top-10 lists for open/all Capability (official caps) and composite A equal the builder's topfive-before/after receipts.",
+  "newly_eligible": "46 confirmed (open Capability in-class 171 -> 217)."
+ },
+ "tests": {
+  "tsc": "npx tsc --noEmit on the origin/main + v1.8.0 cherry-pick scratch tree: exit 0",
+  "pending_release_suite": "26 release test files (builder list), rebased tree, v1.8.0 PENDING: 232 tests, 231 pass, 0 fail, 1 skip",
+  "postflip_release_suite": "same + jevbench-v163-fresh-source, synthetic PASS: 246 tests, 245 pass, 0 fail, 1 skip",
+  "next_build": "npm run build (synthetic PASS, rebased tree): exit 0; /jev-models/v1.8.0 and /api/jevbench/v1.8.0 generated",
+  "full_npm_suite": "not rerun (no finding required it)"
+ },
+ "limitations": [
+  "Did not rerun all 580 top-five/top-ten lists; checked the open/all Capability and composite A lists against the builder's receipts.",
+  "Composite B/C, sliders and custom-weight receipts were not recomputed.",
+  "Raw-run usage sums checked for 4 rows; the other 206 rely on published totals or the builder's sums, cross-checked against old cost reproduction.",
+  "Architecture classes were checked against the reference CSV and base_model evidence, not re-fetched from Hugging Face.",
+  "Screenshots inspected visually at the top only (main.png = open.png byte-identical; all.png)."
+ ]
+}
