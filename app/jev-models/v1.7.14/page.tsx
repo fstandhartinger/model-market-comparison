@@ -1,3 +1,4 @@
+import { seoTitle } from '../../../lib/seo';
 import { notFound } from 'next/navigation';
 import { readJevbenchV1714ForBoard, v1714BoardInput } from '../../../lib/jevbench-v1714-release.mjs';
 import { JevBenchV16Board } from '../../../components/JevBenchV16Board';
@@ -5,7 +6,7 @@ import { JevBenchReleaseVersionNav } from '../../../components/JevBenchReleaseVe
 import { withPublicAdapterIds } from '../../../lib/jevbench-v15-release.mjs';
 import { JevHistoryLazy } from '../../../components/JevHistoryLazy';
 import { PageJsonLd } from '../../../components/PageJsonLd';
-export const metadata = {title:'JevBench v1.7.14: five more rows on the 27 Oct regular draw',description:'Five new self-hosted rows on the 27 Oct draw, shown unranked. Every existing score, rank, interval and category cell is unchanged.',alternates:{canonical:'/jev-models/v1.7.14'}};
+export const metadata = {title:seoTitle('JevBench v1.7.14 — 5 new rows'),description:'Five new self-hosted rows on the 27 Oct draw, shown unranked. Every existing score, rank, interval and category cell is unchanged.',alternates:{canonical:'/jev-models/v1.7.14'}};
 export default async function JevModelsV1714Page() {
  const release=await readJevbenchV1714ForBoard();if(!release)notFound();
  const board=v1714BoardInput(release);

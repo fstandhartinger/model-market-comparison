@@ -1,3 +1,4 @@
+import { seoTitle } from '../../../lib/seo';
 import { notFound } from 'next/navigation';
 import { readJevbenchV1711ForBoard, v1711BoardInput } from '../../../lib/jevbench-v1711-release.mjs';
 import { JevBenchV16Board } from '../../../components/JevBenchV16Board';
@@ -5,7 +6,7 @@ import { JevBenchReleaseVersionNav } from '../../../components/JevBenchReleaseVe
 import { withPublicAdapterIds } from '../../../lib/jevbench-v15-release.mjs';
 import { JevHistoryLazy } from '../../../components/JevHistoryLazy';
 import { PageJsonLd } from '../../../components/PageJsonLd';
-export const metadata = {title:'JevBench v1.7.11: Decisio Gemma cost correction',description:'Four existing Decisio Gemma rows receive corrected engine-input cost. Same measurements and method; four costs corrected.',alternates:{canonical:'/jev-models/v1.7.11'}};
+export const metadata = {title:seoTitle('JevBench v1.7.11 — cost correction'),description:'Four existing Decisio Gemma rows receive corrected engine-input cost. Same measurements and method; four costs corrected.',alternates:{canonical:'/jev-models/v1.7.11'}};
 export default async function JevModelsV1711Page() {
  const release=await readJevbenchV1711ForBoard();if(!release)notFound();
  const board=v1711BoardInput(release);

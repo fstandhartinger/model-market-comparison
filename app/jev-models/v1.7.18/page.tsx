@@ -1,3 +1,4 @@
+import { seoTitle } from '../../../lib/seo';
 import { notFound } from 'next/navigation';
 import { readJevbenchV1718ForBoard, v1718BoardInput } from '../../../lib/jevbench-v1718-release.mjs';
 import { JevBenchV16Board } from '../../../components/JevBenchV16Board';
@@ -5,7 +6,7 @@ import { JevBenchReleaseVersionNav } from '../../../components/JevBenchReleaseVe
 import { withPublicAdapterIds } from '../../../lib/jevbench-v15-release.mjs';
 import { JevHistoryLazy } from '../../../components/JevHistoryLazy';
 import { PageJsonLd } from '../../../components/PageJsonLd';
-export const metadata = {title:'JevBench v1.7.18: KnowLine 4B-Gen5.5 and KnowLine 26B-A4B-Gen2.5',description:'Two KnowLine models measured on 23 Oct on the 12 Oct regular draw, with retained scores and confidence intervals.',alternates:{canonical:'/jev-models/v1.7.18'}};
+export const metadata = {title:seoTitle('JevBench v1.7.18 — KnowLine updates'),description:'Two KnowLine models measured on 23 Oct on the 12 Oct regular draw, with retained scores and confidence intervals.',alternates:{canonical:'/jev-models/v1.7.18'}};
 export default async function JevModelsV1718Page() {
  const release=await readJevbenchV1718ForBoard();if(!release)notFound();
  const board=v1718BoardInput(release);

@@ -1,3 +1,4 @@
+import { seoTitle } from '../../../lib/seo';
 import { notFound } from 'next/navigation';
 import { readJevbenchV1710ForBoard, v1710BoardInput } from '../../../lib/jevbench-v1710-release.mjs';
 import { JevBenchV16Board } from '../../../components/JevBenchV16Board';
@@ -5,7 +6,7 @@ import { JevBenchReleaseVersionNav } from '../../../components/JevBenchReleaseVe
 import { withPublicAdapterIds } from '../../../lib/jevbench-v15-release.mjs';
 import { JevHistoryLazy } from '../../../components/JevHistoryLazy';
 import { PageJsonLd } from '../../../components/PageJsonLd';
-export const metadata = {title:'JevBench v1.7.10: three same-draw self-hosted additions',description:'Philly Decider v2, iota-decide-4b-v0.3 and Decisio 0.9.0 join as self-hosted rows. Same method; 297 carried rows retain their scores and confidence intervals.',alternates:{canonical:'/jev-models/v1.7.10'}};
+export const metadata = {title:seoTitle('JevBench v1.7.10 — 3 model additions'),description:'Philly Decider v2, iota-decide-4b-v0.3 and Decisio 0.9.0 join as self-hosted rows. Same method; 297 carried rows retain their scores and confidence intervals.',alternates:{canonical:'/jev-models/v1.7.10'}};
 export default async function JevModelsV1710Page() {
  const release=await readJevbenchV1710ForBoard();if(!release)notFound();
  const board=v1710BoardInput(release);

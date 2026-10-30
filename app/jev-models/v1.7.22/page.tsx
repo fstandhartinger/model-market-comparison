@@ -1,3 +1,4 @@
+import { seoTitle } from '../../../lib/seo';
 import { notFound } from 'next/navigation';
 import { readJevbenchV1722ForBoard, v1722BoardInput } from '../../../lib/jevbench-v1722-release.mjs';
 import { JevBenchV16Board } from '../../../components/JevBenchV16Board';
@@ -5,7 +6,7 @@ import { JevBenchReleaseVersionNav } from '../../../components/JevBenchReleaseVe
 import { withPublicAdapterIds } from '../../../lib/jevbench-v15-release.mjs';
 import { JevHistoryLazy } from '../../../components/JevHistoryLazy';
 import { PageJsonLd } from '../../../components/PageJsonLd';
-export const metadata = {title:'JevBench v1.7.22: Umpire 35B-A3B on the 27 Oct regular draw, shown unranked',description:'Umpire 35B-A3B measured on the 27 Oct regular draw, shown unranked.',alternates:{canonical:'/jev-models/v1.7.22'}};
+export const metadata = {title:seoTitle('JevBench v1.7.22 — Umpire 35B-A3B'),description:'Umpire 35B-A3B was measured on the 27 Oct regular draw and is shown unranked. Its release page includes the measurement setup and source notes.',alternates:{canonical:'/jev-models/v1.7.22'}};
 export default async function JevModelsV1722Page() {
  const release=await readJevbenchV1722ForBoard();if(!release)notFound();
  const board=v1722BoardInput(release);

@@ -1,3 +1,4 @@
+import { seoTitle } from '../../../lib/seo';
 import { notFound } from 'next/navigation';
 import { readJevbenchV1719ForBoard, v1719BoardInput } from '../../../lib/jevbench-v1719-release.mjs';
 import { JevBenchV16Board } from '../../../components/JevBenchV16Board';
@@ -5,7 +6,7 @@ import { JevBenchReleaseVersionNav } from '../../../components/JevBenchReleaseVe
 import { withPublicAdapterIds } from '../../../lib/jevbench-v15-release.mjs';
 import { JevHistoryLazy } from '../../../components/JevHistoryLazy';
 import { PageJsonLd } from '../../../components/PageJsonLd';
-export const metadata = {title:'JevBench v1.7.19: DecisionNode and DecisionNode Flash (hosted, unranked and not priced)',description:'DecisionNode and DecisionNode Flash measured on the 27 Oct regular draw, shown unranked and not priced.',alternates:{canonical:'/jev-models/v1.7.19'}};
+export const metadata = {title:seoTitle('JevBench v1.7.19 — DecisionNode models'),description:'DecisionNode and DecisionNode Flash measured on the 27 Oct regular draw, shown unranked and not priced.',alternates:{canonical:'/jev-models/v1.7.19'}};
 export default async function JevModelsV1719Page() {
  const release=await readJevbenchV1719ForBoard();if(!release)notFound();
  const board=v1719BoardInput(release);

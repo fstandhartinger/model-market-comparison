@@ -1,3 +1,4 @@
+import { seoTitle } from '../../../lib/seo';
 import { notFound } from 'next/navigation';
 import { readJevbenchV1715ForBoard, v1715BoardInput } from '../../../lib/jevbench-v1715-release.mjs';
 import { JevBenchV16Board } from '../../../components/JevBenchV16Board';
@@ -5,7 +6,7 @@ import { JevBenchReleaseVersionNav } from '../../../components/JevBenchReleaseVe
 import { withPublicAdapterIds } from '../../../lib/jevbench-v15-release.mjs';
 import { JevHistoryLazy } from '../../../components/JevHistoryLazy';
 import { PageJsonLd } from '../../../components/PageJsonLd';
-export const metadata = {title:'JevBench v1.7.15: Microsoft-Decision-1 with updated weights on the 27 Oct regular draw',description:'Microsoft-Decision-1 with updated weights on the 27 Oct draw, shown unranked. Every existing score, rank, interval and category cell is unchanged.',alternates:{canonical:'/jev-models/v1.7.15'}};
+export const metadata = {title:seoTitle('JevBench v1.7.15 — Decision-1 update'),description:'Microsoft-Decision-1 with updated weights on the 27 Oct draw, shown unranked. Every existing score, rank, interval and category cell is unchanged.',alternates:{canonical:'/jev-models/v1.7.15'}};
 export default async function JevModelsV1715Page() {
  const release=await readJevbenchV1715ForBoard();if(!release)notFound();
  const board=v1715BoardInput(release);

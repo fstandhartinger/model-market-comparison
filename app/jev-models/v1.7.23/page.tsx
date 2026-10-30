@@ -5,7 +5,7 @@ import { JevBenchReleaseVersionNav } from '../../../components/JevBenchReleaseVe
 import { withPublicAdapterIds } from '../../../lib/jevbench-v15-release.mjs';
 import { JevHistoryLazy } from '../../../components/JevHistoryLazy';
 import { PageJsonLd } from '../../../components/PageJsonLd';
-export const metadata = {title:'JevBench v1.7.23: Text-only corrections',description:'Text-only corrections; no score, cost or rank changed.',alternates:{canonical:'/jev-models/v1.7.23'}};
+export const metadata = {title:'JevBench v1.7.23: Text-only corrections',description:'JevBench v1.7.23 corrects release text only. Scores, costs, ranks and ranked order are unchanged from v1.7.22.',alternates:{canonical:'/jev-models/v1.7.23'}};
 export default async function JevModelsV1723Page() {
  const release=await readJevbenchV1723ForBoard();if(!release)notFound();
  const board=v1723BoardInput(release);

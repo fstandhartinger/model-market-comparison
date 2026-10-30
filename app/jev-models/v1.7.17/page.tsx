@@ -1,3 +1,4 @@
+import { seoTitle } from '../../../lib/seo';
 import { notFound } from 'next/navigation';
 import { readJevbenchV1717ForBoard, v1717BoardInput } from '../../../lib/jevbench-v1717-release.mjs';
 import { JevBenchV16Board } from '../../../components/JevBenchV16Board';
@@ -5,7 +6,7 @@ import { JevBenchReleaseVersionNav } from '../../../components/JevBenchReleaseVe
 import { withPublicAdapterIds } from '../../../lib/jevbench-v15-release.mjs';
 import { JevHistoryLazy } from '../../../components/JevHistoryLazy';
 import { PageJsonLd } from '../../../components/PageJsonLd';
-export const metadata = {title:'JevBench v1.7.17: Jev-Style-2B on the 27 Oct regular draw, shown unranked',description:'Jev-Style-2B on the 27 Oct draw, shown unranked. All existing rows and ranked orders are unchanged.',alternates:{canonical:'/jev-models/v1.7.17'}};
+export const metadata = {title:seoTitle('JevBench v1.7.17 — Jev-Style-2B'),description:'Jev-Style-2B on the 27 Oct draw, shown unranked. All existing rows and ranked orders are unchanged.',alternates:{canonical:'/jev-models/v1.7.17'}};
 export default async function JevModelsV1717Page() {
  const release=await readJevbenchV1717ForBoard();if(!release)notFound();
  const board=v1717BoardInput(release);

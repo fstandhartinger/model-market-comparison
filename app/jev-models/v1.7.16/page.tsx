@@ -1,3 +1,4 @@
+import { seoTitle } from '../../../lib/seo';
 import { notFound } from 'next/navigation';
 import { readJevbenchV1716ForBoard, v1716BoardInput } from '../../../lib/jevbench-v1716-release.mjs';
 import { JevBenchV16Board } from '../../../components/JevBenchV16Board';
@@ -5,7 +6,7 @@ import { JevBenchReleaseVersionNav } from '../../../components/JevBenchReleaseVe
 import { withPublicAdapterIds } from '../../../lib/jevbench-v15-release.mjs';
 import { JevHistoryLazy } from '../../../components/JevHistoryLazy';
 import { PageJsonLd } from '../../../components/PageJsonLd';
-export const metadata = {title:'JevBench v1.7.16: Strike-1 on the 27 Oct regular draw; same-items cost on that draw',description:'Strike-1 on the 27 Oct draw, shown unranked; that draw is now costed on the items every row answered. No ranking or ranked order changes.',alternates:{canonical:'/jev-models/v1.7.16'}};
+export const metadata = {title:seoTitle('JevBench v1.7.16 — Strike-1 costs'),description:'Strike-1 on the 27 Oct draw, shown unranked; that draw is now costed on the items every row answered. No ranking or ranked order changes.',alternates:{canonical:'/jev-models/v1.7.16'}};
 export default async function JevModelsV1716Page() {
  const release=await readJevbenchV1716ForBoard();if(!release)notFound();
  const board=v1716BoardInput(release);
