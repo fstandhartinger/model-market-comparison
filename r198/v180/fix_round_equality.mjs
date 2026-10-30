@@ -19,7 +19,7 @@ function diff(a,b,path){
 }
 diff(preview,fixed,'results');
 const oldBy=new Map(previous.systems.map(s=>[s.key,s])),previewBy=new Map(preview.systems.map(s=>[s.key,s]));
-const textKeys=['knowline-31b-gen1','jeffan-31b-1710','knowline-35b-a3b-gen1.5','vera-large'],listingKeys=['knowline-26b-a4b-gen2.5','lychee-27b'];
+const textKeys=['knowline-31b-gen1','jeffan-31b-1710','knowline-35b-a3b-gen1.5','vera-large'],listingKeys=['knowline-26b-a4b-gen2.5','lychee-27b'],disclosureKeys=['lychee-27b','decisio-qwen3.6-35b-a3b-v090'];
 const replacement='Over the cost cap under the earlier list-price basis; inside both caps from v1.8.0 (GPU-time cost basis).';
 const unexpected=[];
 for(const d of diffs){
@@ -28,10 +28,11 @@ for(const d of diffs){
  if(m){const s=fixed.systems[+m[1]],f=m[2];
   if(f==='ranks.capability'){allowed=eq(d.after,oldBy.get(s.key).ranks.capability);finding='F1';}
   if(f==='listing'&&listingKeys.includes(s.key)){allowed=d.before==='ranked_over_cap'&&d.after==='ranked';finding='F3';}
+  if(f==='disclosure'&&disclosureKeys.includes(s.key)){const o=s.key==='lychee-27b'?'The estimated cost exceeds the official cost cap, so this row is outside the default cost-capped Capability ranking.':'superseded by engine-basis billing, 2.77x the cap on the common basis.',n=s.key==='lychee-27b'?replacement:'superseded by engine-basis billing, which was over the cost cap under the earlier list-price basis; inside both caps from v1.8.0 (GPU-time cost basis).';allowed=d.before.split(o).length===2&&d.after===d.before.replace(o,n);finding='F3';}
   if(f==='underlying'&&textKeys.includes(s.key)){const i=d.before.indexOf('OVER COST CAP:');allowed=i>=0&&d.after===d.before.slice(0,i)+replacement;finding='F3';}
  }else if(d.path==='results.board.capability.order'){allowed=eq(d.after,previous.board.capability.order);finding='F1';}
  else if(d.path==='results.source_note'||/^results.measurement_notes\[\d+\]$/.test(d.path)){allowed=d.before.replace('unresolved architectures','architectures outside the six calibrated Gemma/Qwen classes')+' Throughput was calibrated on prompt processing (prefill); generated tokens are counted at the same rate. Three diffusion-readout rows are priced with the closest calibrated class (MoE Gemma); this is an approximation.'===d.after;finding='F7';}
- else if(d.path==='results.addendum.text_fixed_keys'){allowed=eq(d.after,[...textKeys,...listingKeys].sort());finding='F3';}
+ else if(d.path==='results.addendum.text_fixed_keys'){allowed=eq(d.after,[...new Set([...textKeys,...listingKeys,...disclosureKeys])].sort());finding='F3';}
  d.finding=finding;d.allowed=allowed;if(!allowed)unexpected.push(d);
 }
 assert.deepEqual(fixed.board.capability,previous.board.capability);
