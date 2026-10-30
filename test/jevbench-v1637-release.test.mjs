@@ -1,3 +1,5 @@
+import { V180_COST_SPEC } from '../lib/jevbench-v180-release.mjs';
+import { hasPublishedJevbenchV180Release } from '../lib/jevbench-v180-release.mjs';
 import { hasPublishedJevbenchV1723Release } from '../lib/jevbench-v1723-release.mjs';
 import { hasPublishedJevbenchV1722Release } from '../lib/jevbench-v1722-release.mjs';
 import { hasPublishedJevbenchV1721Release } from '../lib/jevbench-v1721-release.mjs';
@@ -111,22 +113,24 @@ import { readCurrentJevbench } from '../lib/jevbench-current.mjs';
 import { readJevbenchAgentFeed } from '../lib/jevbench-agent-feed.mjs';
 import { readJevbenchSeoData } from '../lib/jevbench-seo.mjs';
 import { jevbenchLlmsFull } from '../lib/jevbench-llms-full.mjs';
+function expectedLiveCostV180(key,gpuRestated) { return gpuRestated ? (V180_COST_SPEC[key]?.new_cost ?? V1637_ROW_SPEC[key].usd) : V1637_ROW_SPEC[key].usd; }
 test('live boards and the agent feed resolve each restated row exactly once with the corrected figures; the frozen archive keeps the published ones',async()=>{
  const {artifact}=await readCurrentJevbench();const m=jevWithCohortRows(artifact,await readCohortRows());
  for(const k of KEYS){const rows=m.systems.filter(s=>s.key===k);assert.equal(rows.length,1,k);assert.equal(rows[0].ranked,true);assert.equal(rows[0].draw.release,'v1.6.43');assert.equal(rows[0].cost.usd_per_1000,V1637_ROW_SPEC[k].usd);for(const b of Object.values(m.board))assert.equal(b.order.filter(x=>x===k).length,1,k);}
  assert.equal(artifact.systems.find(s=>s.key===H2O).cost.usd_per_1000,0.021055837438423645);assert.equal(artifact.systems.find(s=>s.key===KAHN).cost.usd_per_1000,0.06129480295566502);
  for(const k of ['localjev-qwen3.5-4b','metask-jev-4b'])assert.deepEqual(m.systems.find(s=>s.key===k),artifact.systems.find(s=>s.key===k),k);
- const {feed}=await readJevbenchAgentFeed();for(const k of KEYS){const f=feed.systems.filter(s=>s.key===k);assert.equal(f.length,1,k);assert.equal(f[0].price.usd_per_1000_decisions,V1637_ROW_SPEC[k].usd);}
+ const gpuRestated=await hasPublishedJevbenchV180Release();
+ const {feed}=await readJevbenchAgentFeed();for(const k of KEYS){const f=feed.systems.filter(s=>s.key===k);assert.equal(f.length,1,k);assert.equal(f[0].price.usd_per_1000_decisions,expectedLiveCostV180(k,gpuRestated));}
 });
 test('SEO model, comparison and full-text pages follow the merged feed with corrected costs and the re-measured Seb',async()=>{
- const data=await readJevbenchSeoData();
+ const data=await readJevbenchSeoData(),gpuRestated=await hasPublishedJevbenchV180Release();
  // v1.7.0 restates the v1.6.1 board once published (same rows, same costs); before that the board follows v1.6.40.
- assert.equal(data.artifact.revision,(await hasPublishedJevbenchV1723Release()) ? 'v1.7.23' : (await hasPublishedJevbenchV1722Release()) ? 'v1.7.22' : (await hasPublishedJevbenchV1721Release()) ? 'v1.7.21' : (await hasPublishedJevbenchV1720Release()) ? 'v1.7.20' : (await hasPublishedJevbenchV1719Release()) ? 'v1.7.19' : (await hasPublishedJevbenchV1718Release()) ? 'v1.7.18' : (await hasPublishedJevbenchV1717Release()) ? 'v1.7.17' : (await hasPublishedJevbenchV1716Release()) ? 'v1.7.16' : (await hasPublishedJevbenchV1715Release()) ? 'v1.7.15' : (await hasPublishedJevbenchV1714Release()) ? 'v1.7.14' : (await hasPublishedJevbenchV1713Release()) ? 'v1.7.13' : (await hasPublishedJevbenchV1712Release()) ? 'v1.7.12' : (await hasPublishedJevbenchV1711Release()) ? 'v1.7.11' : (await hasPublishedJevbenchV1710Release()) ? 'v1.7.10' : (await hasPublishedJevbenchV179Release()) ? 'v1.7.9' : (await hasPublishedJevbenchV178Release()) ? 'v1.7.8' : (await hasPublishedJevbenchV177Release()) ? 'v1.7.7' : (await hasPublishedJevbenchV176Release()) ? 'v1.7.6' : (await hasPublishedJevbenchV175Release()) ? 'v1.7.5' : (await hasPublishedJevbenchV174Release())?'v1.7.4':(await hasPublishedJevbenchV173Release())?'v1.7.3':(await hasPublishedJevbenchV172Release())?'v1.7.2':(await hasPublishedJevbenchV171Release())?'v1.7.1':(await hasPublishedJevbenchV170Release())?'v1.7.0':'v1.6.43');assert.equal(data.artifact.base_revision,'v1.6.1');
- for(const k of KEYS){const rows=data.systems.filter(s=>s.key===k);assert.equal(rows.length,1,k);assert.equal(rows[0].cost.usd_per_1000,V1637_ROW_SPEC[k].usd);}
+ assert.equal(data.artifact.revision,(await hasPublishedJevbenchV180Release()) ? 'v1.8.0' : (await hasPublishedJevbenchV1723Release()) ? 'v1.7.23' : (await hasPublishedJevbenchV1722Release()) ? 'v1.7.22' : (await hasPublishedJevbenchV1721Release()) ? 'v1.7.21' : (await hasPublishedJevbenchV1720Release()) ? 'v1.7.20' : (await hasPublishedJevbenchV1719Release()) ? 'v1.7.19' : (await hasPublishedJevbenchV1718Release()) ? 'v1.7.18' : (await hasPublishedJevbenchV1717Release()) ? 'v1.7.17' : (await hasPublishedJevbenchV1716Release()) ? 'v1.7.16' : (await hasPublishedJevbenchV1715Release()) ? 'v1.7.15' : (await hasPublishedJevbenchV1714Release()) ? 'v1.7.14' : (await hasPublishedJevbenchV1713Release()) ? 'v1.7.13' : (await hasPublishedJevbenchV1712Release()) ? 'v1.7.12' : (await hasPublishedJevbenchV1711Release()) ? 'v1.7.11' : (await hasPublishedJevbenchV1710Release()) ? 'v1.7.10' : (await hasPublishedJevbenchV179Release()) ? 'v1.7.9' : (await hasPublishedJevbenchV178Release()) ? 'v1.7.8' : (await hasPublishedJevbenchV177Release()) ? 'v1.7.7' : (await hasPublishedJevbenchV176Release()) ? 'v1.7.6' : (await hasPublishedJevbenchV175Release()) ? 'v1.7.5' : (await hasPublishedJevbenchV174Release())?'v1.7.4':(await hasPublishedJevbenchV173Release())?'v1.7.3':(await hasPublishedJevbenchV172Release())?'v1.7.2':(await hasPublishedJevbenchV171Release())?'v1.7.1':(await hasPublishedJevbenchV170Release())?'v1.7.0':'v1.6.43');assert.equal(data.artifact.base_revision,'v1.6.1');
+ for(const k of KEYS){const rows=data.systems.filter(s=>s.key===k);assert.equal(rows.length,1,k);assert.equal(rows[0].cost.usd_per_1000,expectedLiveCostV180(k,gpuRestated));}
  assert.equal(data.systems.filter(s=>s.key==='seb-9b').length,1);
  const llms=await jevbenchLlmsFull();
- for(const k of KEYS){const lines=llms.split('\n').filter(line=>line.includes(`| ${k} |`));assert.equal(lines.length,1,k);assert.ok(lines[0].includes(String(V1637_ROW_SPEC[k].usd)),k);}
- assert.equal(data.systems.find(s=>s.key===H2O).cost.usd_per_1000,V1637_ROW_SPEC[H2O].usd);assert.equal(data.systems.find(s=>s.key===KAHN).cost.usd_per_1000,V1637_ROW_SPEC[KAHN].usd);
+ for(const k of KEYS){const lines=llms.split('\n').filter(line=>line.includes(`| ${k} |`));assert.equal(lines.length,1,k);assert.ok(lines[0].includes(String(expectedLiveCostV180(k,gpuRestated))),k);}
+ assert.equal(data.systems.find(s=>s.key===H2O).cost.usd_per_1000,expectedLiveCostV180(H2O,gpuRestated));assert.equal(data.systems.find(s=>s.key===KAHN).cost.usd_per_1000,expectedLiveCostV180(KAHN,gpuRestated));
  assert.ok(data.comparisons.some(p=>p.key===H2O));assert.ok(data.modelKeys.includes(H2O));
  assert.ok(!JSON.stringify(data.systems.filter(s=>KEYS.includes(s.key))).includes('0.0210558'));assert.ok(!JSON.stringify(data.systems.filter(s=>KEYS.includes(s.key))).includes('0.0612948'));
 });

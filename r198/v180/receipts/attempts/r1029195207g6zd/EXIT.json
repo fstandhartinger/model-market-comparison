@@ -1,0 +1,13 @@
+{
+ "handle": "r1029195207g6zd",
+ "unit": "heavy-jevbench-r198-v180-build2--r1029195207g6zd.service",
+ "exit_code": 1,
+ "phase": "synthetic dry freeze",
+ "pending_fixes_tests": {
+  "tests": 14,
+  "pass": 14,
+  "fail": 0
+ },
+ "full_suite_started": false,
+ "fix": "Remove only inherited FREEZE-SYNTHETIC.json from newly created private fixture so the no-overwrite dry helper can write a fresh receipt; original old evidence retained."
+}

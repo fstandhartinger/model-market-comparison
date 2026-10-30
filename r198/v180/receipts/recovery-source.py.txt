@@ -1,0 +1,149 @@
+"""Recover ONLY aggregate usage; never export item ids, answers or other sealed fields."""
+import csv,hashlib,importlib.util,json,math,re
+from pathlib import Path
+J=Path(__file__).resolve().parent
+S=Path('/home/flori/jobs/jevbench-cost-basis-20261029')
+W=Path('/home/flori/wt/jevbench-v1723-20261029')
+D=json.loads((W/'data/raw/benchmarks/jevbench/v1.7/jevbench-v1.7.23-results.json').read_text())
+R={r['key']:r for r in csv.DictReader((J/'pipeline/inputs/published-basis.csv').open())}
+M={r['key']:r for r in csv.DictReader((J/'pipeline/inputs/reference-rows.csv').open())}
+ACTUAL=json.loads((J/'pipeline/inputs/architecture.json').read_text())
+for k,m in ACTUAL.items():
+ if m.get('verified_architecture') or m.get('cls')=='encoder':M[k].update({f:m[f] for f in ['cls','fam','active_b']})
+paths=[Path(p) for p in ((J/'vault-paths.txt').read_text()+(J/'job-raw-paths.txt').read_text()).splitlines() if p.endswith('.jsonl')]
+sp=importlib.util.spec_from_file_location('pricing','/home/flori/jobs/jevbench-v15-measure-20260925/harness/pricing_v15.py');P=importlib.util.module_from_spec(sp);sp.loader.exec_module(P);CAT=P.catalog_rates()
+sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
+CB={}
+for tag,fp in [('d1012','/home/flori/jevbench-sealed/v1.6-run/v1.6-regular-20261012/frozen-release-v1.6.43/cost-basis-v1630.json')]:
+ p=Path(fp);CB[tag]=set(json.loads(p.read_text())['exclude_opaque_ids'])
+B=json.loads(Path('/home/flori/jobs/jevbench-add-requests-20260919/r160/v170/src/bases.json').read_text())
+REG={}
+for cfg in B.values():
+ try:
+  reg=json.loads(Path(cfg['registry']).read_text());REG.update(reg)
+  paths.extend(Path(cfg['runs']).glob('*.jsonl'))
+  cp=Path(cfg['cost_basis']) if cfg.get('cost_basis') else None
+  if cp and cp.exists():
+   c=json.loads(cp.read_text());ids=c.get('exclude_opaque_ids')
+   if ids is not None:CB[str(cp)]=set(ids)
+ except (OSError,ValueError):pass
+for cp in [Path(p) for p in (J/'vault-paths.txt').read_text().splitlines() if ('cost-basis' in p or 'cost_basis' in p) and p.endswith('.json')]:
+ try:
+  cc=json.loads(cp.read_text())
+  for field in ['exclude_opaque_ids','a5_exclude_opaque_ids']:
+   if cc.get(field) is not None:CB[str(cp)+':'+field]=set(cc[field])
+ except (OSError,ValueError):pass
+# Deduplicate identical exclusion sets without exporting membership.
+CB=dict({tuple(sorted(ids)):(tag,ids) for tag,ids in CB.items()}.values())
+LEG=json.loads(Path('/home/flori/jobs/jevbench-v15-measure-20260925/harness/REGISTRY.json').read_text())
+# Numeric totals in the already-published cost basis are independently audited by basis/rows.csv.
+AGG={}
+for pp in sorted((W/'data/raw/benchmarks/jevbench').glob('v1.7/*proof.json')):
+ try:
+  dd=json.loads(pp.read_text());cb=dd.get('cost_basis') or {}
+  for k,rr in (cb.get('rows') or {}).items():
+   if 'common_input_tokens' in rr and 'common_output_tokens' in rr and cb.get('n_items'):AGG[k]=(rr['common_input_tokens'],rr['common_output_tokens'],cb['n_items'],pp,None)
+  for k,rr in (dd.get('new_rows') or {}).items():
+   cc=rr.get('cost') or {};pref=rr.get('price_reference') or {}
+   if 'input_tokens_common' in cc and 'output_tokens' in cc and cc.get('basis_items'):AGG[k]=(cc['input_tokens_common'],cc['output_tokens'],cc['basis_items'],pp,(pref.get('in'),pref.get('out')))
+ except (OSError,ValueError,AttributeError):pass
+NORMPATH=[(p,re.sub('[^a-z0-9]','',str(p).lower())) for p in paths]
+out={};missing={};raw_cache={}
+for s in D['systems']:
+ k=s['key'];r=R.get(k,{});m=M.get(k,{})
+ if re.search(r'bert|encoder|350m|150m',str(r.get('base_model',''))+' '+s['display'],re.I):continue
+ if not m or s['cost']['usd_per_1000'] is None or m['cls'] not in ('dense','small','moe'):continue
+ old=s['cost']['usd_per_1000']; rates=None
+ if r.get('in_rate') and r.get('out_rate'):rates=(float(r['in_rate']),float(r['out_rate']))
+ else:
+  try:ref=P.reference(k,{'base_model':r.get('base_model')},CAT);rates=ref[1] if ref else None
+  except ValueError:pass
+ if k in AGG and AGG[k][4] and all(x is not None for x in AGG[k][4]):rates=AGG[k][4]
+ if not rates:
+  for reg in [REG,LEG]:
+   try:
+    ref=P.reference(k,reg.get(k,{}),CAT)
+    if ref:rates=ref[1];break
+   except ValueError:pass
+ if not rates:
+  for reg in [REG,LEG]:
+   z=reg.get(k,{})
+   if z.get('price_in_per_m') is not None and z.get('price_out_per_m') is not None:rates=(z['price_in_per_m'],z['price_out_per_m']);break
+ # Already-published nearest-listed Gemma-12B estimate (the same explicit pair the
+ # modern Gemma-4-12B rows use); this is ONLY an original-cost reproduction check.
+ if not rates and k in P.RERANKER_PRICES:rates=CAT.get('deepinfra:'+P.RERANKER_PRICES[k])
+ if not rates and k=='plumb-4b' and 'deepinfra:Qwen/Qwen3.5-4B' in s['cost']['basis']:rates=CAT.get('deepinfra:Qwen/Qwen3.5-4B')
+ if not rates and r.get('base_model') in ('google/gemma-4-12B-it','google/gemma-4-12b-it'):
+  rates=CAT.get('google/gemma-3-12b-it') or CAT.get('deepinfra:google/gemma-3-12b-it')
+ if not rates:missing[k]='No independently resolved tariff to verify original scored usage';continue
+ rate_candidates=[rates]
+ for reg in [REG,LEG]:
+  z=reg.get(k,{})
+  if z.get('price_in_per_m') is not None and z.get('price_out_per_m') is not None:rate_candidates.append((z['price_in_per_m'],z['price_out_per_m']))
+  try:
+   ref=P.reference(k,z,CAT)
+   if ref:rate_candidates.append(ref[1])
+  except ValueError:pass
+ rate_candidates=list(dict.fromkeys(tuple(x) for x in rate_candidates))
+ pin,pout=rates
+ def accept(tin,tout,n,source):
+  matched=None
+  for ri,ro in rate_candidates:
+   candidate=(tin*ri+tout*ro)/n/1000
+   if math.isclose(candidate,old,rel_tol=1e-7,abs_tol=1e-10):matched=(ri,ro,candidate);break
+  if matched is None:return False
+  ri,ro,cost=matched
+  out[k]={'input_tokens':tin,'output_tokens':tout,'n_items':n,'tokens_per_decision':(tin+tout)/n,'rates_per_m':[ri,ro],'reproduced_old_cost':cost,'old_cost':old,**source};return True
+ if k=='kahn1':
+  mm=re.search(r'= ([0-9,]+) tokens / ([0-9,]+) decisions',s['cost']['basis'])
+  if mm and '0 output tokens' in s['cost']['basis']:
+   if accept(int(mm.group(1).replace(',','')),0,int(mm.group(2).replace(',','')),{'source':'published first-party prompt-builder token recount in cost.basis','basis_text_sha256':hashlib.sha256(s['cost']['basis'].encode()).hexdigest(),'usage_estimated_rows':'original documented exact recount; native usage unavailable'}):continue
+ if k in AGG:
+  ai,ao,an,ap,_=AGG[k]
+  if accept(ai,ao,an,{'source':str(ap),'source_sha256':sha(ap),'subset':'published scored cost-basis aggregate'}):continue
+ if r.get('common_in_tokens') and r.get('common_out_tokens') and r.get('common_items'):
+  if accept(int(float(r['common_in_tokens'])),int(float(r['common_out_tokens'])),int(float(r['common_items'])),{'source':'published usage totals; audited basis/rows.csv','source_sha256':sha(J/'pipeline/inputs/published-basis.csv'),'basis_text_sha256':hashlib.sha256(s['cost']['basis'].encode()).hexdigest()}):continue
+ # Exact key in filename, plus safe separator-equivalent spelling. Cost reproduction is mandatory.
+ norm=lambda x:re.sub('[^a-z0-9]','',x.lower())
+ aliases={'d1a-gemma4-e2b':['d1ae2b'],'d1a-gemma4-e4b':['d1ae4b'],'jeff_1_0_large':['jefflarge'],'decisor_4b':['decisor4b'],'imajev-4b-rtx5090-a2':['imajev4b'],'torchcast-decision-12b':['torchcast12b']}
+ nk=norm(k);nks=[nk]+aliases.get(k,[]);candidates=[]
+ for p,np in NORMPATH:
+  if not any(nk in np for nk in nks):continue
+  try:
+   if 0<p.stat().st_size<30_000_000:candidates.append(p)
+  except (PermissionError,FileNotFoundError):pass
+ candidates.sort(key=lambda p:(not ('1624' in p.name and not s['cost'].get('common_basis')),not ('runs-auto-intake' in str(p)),len(str(p))))
+ found=False
+ for p in candidates:
+  try:
+   if p not in raw_cache:
+    totals={};n=0;tin=tout=0;estimated=0;valid=True;commons={tag:[0,0,0] for tag in CB};commonvalid=True
+    for line in p.open():
+     x=json.loads(line);u=x.get('usage') or {};n+=1
+     if any(not isinstance(u.get(f),(int,float)) for f in ('input_tokens','output_tokens')):
+      ce=x.get('cost_estimate') or {}
+      if all(isinstance(ce.get(f),(int,float)) for f in ('input_tokens','output_tokens')):u=ce;estimated+=1
+     if k=='imajev-4b-rtx5090-a2' and isinstance(u.get('input_tokens'),(int,float)) and u.get('output_tokens') is None and 'zero generated output tokens' in s['cost']['basis']:u={**u,'output_tokens':0}
+     good=not x.get('error') and x.get('ok',True)
+     if good and any(not isinstance(u.get(f),(int,float)) for f in ('input_tokens','output_tokens')):valid=False
+     a=u.get('input_tokens') or 0;b=u.get('output_tokens') or 0
+     if not all(isinstance(v,(int,float)) and v>=0 and math.isfinite(v) for v in (a,b)):valid=False;break
+     tin+=int(a);tout+=int(b)
+     for tag,exclude in CB.items():
+      if (x.get('task_id') or x.get('id')) not in exclude:
+       cc=commons[tag];cc[0]+=int(a);cc[1]+=int(b);cc[2]+=1
+       if good and any(not isinstance(u.get(f),(int,float)) for f in ('input_tokens','output_tokens')):commonvalid=False
+    raw_cache[p]=dict(usage_estimated_rows=estimated,all=(tin,tout,n),valid=valid,commons=commons,commonvalid=commonvalid)
+   raw=raw_cache[p]
+   attempts=[]
+   cb=s['cost'].get('common_basis')
+   if cb:
+    for tag,cc in raw['commons'].items():attempts.append((tag,cc,raw['commonvalid'] and cc[2]==cb.get('n_items')))
+   if not cb:attempts.append(('original carried scored usage',raw['all'],raw['valid']))
+   for mode,(tin,tout,n),valid in attempts:
+    if valid and n and accept(tin,tout,n,{'source':str(p),'source_sha256':sha(p),'subset':mode,'usage_estimated_rows':raw['usage_estimated_rows']}):found=True;break
+   if found:break
+  except (ValueError,KeyError,TypeError,ZeroDivisionError,OSError):continue
+ if not found:missing[k]='No verified scored token basis reproducing carried cost; keep old cost'
+(J/'USAGE-RECOVERY.json').write_text(json.dumps({'verified':out,'unresolved':missing,'reference_rows':len(M),'verified_count':len(out)},indent=1,sort_keys=True)+'\n')
+print('Verified',len(out),'rows; unresolved',len(missing));print('Unresolved keys:',','.join(missing))

@@ -1,0 +1,25 @@
+{
+ "handle": "r1029191004wd1h",
+ "unit": "heavy-jevbench-r198-v180-build2--r1029191004wd1h.service",
+ "exit_code": 1,
+ "phase": "post-flip simulation",
+ "pending_suite": {
+  "tests": 232,
+  "pass": 231,
+  "fail": 0,
+  "skip": 1
+ },
+ "postflip_suite": {
+  "tests": 246,
+  "pass": 242,
+  "fail": 3,
+  "skip": 1
+ },
+ "failures": [
+  "not ok 54 - all historical and current JevBench and ImageJevBench artifact keys are covered",
+  "not ok 115 - live boards and the agent feed resolve each restated row exactly once with the corrected figures; the frozen archive keeps the published ones",
+  "not ok 116 - SEO model, comparison and full-text pages follow the merged feed with corrected costs and the re-measured Seb"
+ ],
+ "full_suite_started": false,
+ "fix": "Materialize historical fixture directory structures with cheap file symlinks; preserve archive assertions while live feed/SEO expect the validated v1.8 cost spec. No numerical/public code changed."
+}

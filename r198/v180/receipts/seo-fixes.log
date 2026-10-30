@@ -1,0 +1,140 @@
+TAP version 13
+# Subtest: SEO rank is the open-weights board rank; API rows and the reference have none
+ok 1 - SEO rank is the open-weights board rank; API rows and the reference have none
+  ---
+  duration_ms: 129422.874455
+  ...
+# Subtest: boardRankText words reference, API and open rows
+ok 2 - boardRankText words reference, API and open rows
+  ---
+  duration_ms: 0.863044
+  ...
+# Subtest: pages no longer print the Jev rank or the combined count
+ok 3 - pages no longer print the Jev rank or the combined count
+  ---
+  duration_ms: 0.631799
+  ...
+# Subtest: alternatives pages render open ranks, the reference row and the API note
+ok 4 - alternatives pages render open ranks, the reference row and the API note
+  ---
+  duration_ms: 236.46756
+  ...
+# Subtest: SEO consumers do not import a frozen results reader
+ok 5 - SEO consumers do not import a frozen results reader
+  ---
+  duration_ms: 2.148937
+  ...
+# Subtest: the system page resolves the current release before any older reader
+ok 6 - the system page resolves the current release before any older reader
+  ---
+  duration_ms: 0.310995
+  ...
+# Subtest: every comparison route renders current reference and valid matching FAQ/Breadcrumb
+ok 7 - every comparison route renders current reference and valid matching FAQ/Breadcrumb
+  ---
+  duration_ms: 547.441541
+  ...
+# Subtest: landing metadata and visible data stamp follow the release date; top 15 are visible
+ok 8 - landing metadata and visible data stamp follow the release date; top 15 are visible
+  ---
+  duration_ms: 80.379652
+  ...
+# Subtest: current model page renders SoftwareApplication/Breadcrumb and sanitized public fields
+ok 9 - current model page renders SoftwareApplication/Breadcrumb and sanitized public fields
+  ---
+  duration_ms: 118870.423258
+  ...
+# Subtest: sitemap URL helper covers all current models, comparisons and guides, excludes private and llms-full
+ok 10 - sitemap URL helper covers all current models, comparisons and guides, excludes private and llms-full
+  ---
+  duration_ms: 1.859987
+  ...
+# Subtest: IndexNow key and script are prepared without sending a ping
+ok 11 - IndexNow key and script are prepared without sending a ping
+  ---
+  duration_ms: 0.62732
+  ...
+# Subtest: SEO headline ranks match the open-weights board in the current public feed, not artifact-wide ranks
+ok 12 - SEO headline ranks match the open-weights board in the current public feed, not artifact-wide ranks
+  ---
+  duration_ms: 127291.934398
+  ...
+# Subtest: comparisons preserve legacy slugs and derive current top-eight rivals
+ok 13 - comparisons preserve legacy slugs and derive current top-eight rivals
+  ---
+  duration_ms: 1.248468
+  ...
+# Subtest: picks and open-weight classification use current measured evidence
+ok 14 - picks and open-weight classification use current measured evidence
+  ---
+  duration_ms: 0.863175
+  ...
+# Subtest: main server JSON-LD renders valid Dataset, Breadcrumb and visible matching FAQ
+ok 15 - main server JSON-LD renders valid Dataset, Breadcrumb and visible matching FAQ
+  ---
+  duration_ms: 124.316755
+  ...
+# Subtest: static model params include every current and historical public system; private keys never escape
+ok 16 - static model params include every current and historical public system; private keys never escape
+  ---
+  duration_ms: 119726.160804
+  ...
+# Subtest: CR-129 the current artifact really has semif-qwen3.5-4b and laya (the two Trends queries this targets)
+ok 17 - CR-129 the current artifact really has semif-qwen3.5-4b and laya (the two Trends queries this targets)
+  ---
+  duration_ms: 20.828456
+  ...
+# Subtest: CR-129 generateStaticParams is artifact-driven, not a hardcoded list
+ok 18 - CR-129 generateStaticParams is artifact-driven, not a hardcoded list
+  ---
+  duration_ms: 0.344552
+  ...
+# Subtest: CR-129 metadata is built only from row fields: main score, rank, and the not-ranked reason
+ok 19 - CR-129 metadata is built only from row fields: main score, rank, and the not-ranked reason
+  ---
+  duration_ms: 0.243329
+  ...
+# Subtest: CR-291 structured data is SoftwareApplication + BreadcrumbList, never Product/AggregateRating/Review
+ok 20 - CR-291 structured data is SoftwareApplication + BreadcrumbList, never Product/AggregateRating/Review
+  ---
+  duration_ms: 0.243549
+  ...
+# Subtest: CR-129 no GDPR-compliance claim (same rule CR-120 already follows on the parent page)
+ok 21 - CR-129 no GDPR-compliance claim (same rule CR-120 already follows on the parent page)
+  ---
+  duration_ms: 0.251946
+  ...
+# Subtest: CR-129 sitemap gets one entry per JevBench system and still excludes multimodal-preview
+ok 22 - CR-129 sitemap gets one entry per JevBench system and still excludes multimodal-preview
+  ---
+  duration_ms: 0.151033
+  ...
+# Subtest: CR-129 the board links out to the new per-system pages, including semif and laya
+ok 23 - CR-129 the board links out to the new per-system pages, including semif and laya
+  ---
+  duration_ms: 0.131604
+  ...
+# Subtest: CR-129 the hub HTML actually contains links for semif-qwen3.5-4b and laya once rendered data is substituted
+ok 24 - CR-129 the hub HTML actually contains links for semif-qwen3.5-4b and laya once rendered data is substituted
+  ---
+  duration_ms: 12.887261
+  ...
+# Subtest: CR-291 current per-system pages prefer the current release to historical measurements
+ok 25 - CR-291 current per-system pages prefer the current release to historical measurements
+  ---
+  duration_ms: 0.329762
+  ...
+# Subtest: CR-170 a renamed system keeps its artifact key, gets a clean public slug, and the old URL redirects permanently
+ok 26 - CR-170 a renamed system keeps its artifact key, gets a clean public slug, and the old URL redirects permanently
+  ---
+  duration_ms: 26.460842
+  ...
+1..26
+# tests 26
+# suites 0
+# pass 26
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 508939.423007
