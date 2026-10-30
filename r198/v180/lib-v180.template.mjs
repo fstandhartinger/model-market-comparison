@@ -61,8 +61,8 @@ export function validateJevbenchV180Bundle({manifest,artifact,categories,carry,p
    for(const part of ['EUR 999/month','730 hours','28 Oct 2026','1.5235/hour','70%','Architecture:','tokens/s','tokens/decision','old list-price cost','min('])if(!n.cost.basis.includes(part))throw Error('v1.8.0 missing cost basis '+part);
    if(spec.throughput_source==='D5'&&!n.cost.basis.includes('load_mode='+spec.load_mode))throw Error('v1.8.0 D5 mode disclosure');
    for(const f of ['intelligence','calibration','speed','capability','decision_limit','previous','draw','measured_in','ranked'])same(n[f],s[f],'fixed '+f+' '+s.key);
-   // Listing/underlying corrections are exact SHA-pinned exceptions, checked above.
-   const strip=row=>{const z=structuredClone(row);for(const f of ['rank','ranks','scores','views','jevbench_score','composite_ci95','listing','underlying'])delete z[f];if(z.axes)delete z.axes.cost;if(z.cost)for(const f of ['usd_per_1000','basis','composite_interval_note'])delete z.cost[f];if(z.v16?.ci95)delete z.v16.ci95.composite;return z;};
+   // Listing/underlying/disclosure corrections are exact SHA-pinned exceptions, checked above.
+   const strip=row=>{const z=structuredClone(row);for(const f of ['rank','ranks','scores','views','jevbench_score','composite_ci95','listing','underlying','disclosure'])delete z[f];if(z.axes)delete z.axes.cost;if(z.cost)for(const f of ['usd_per_1000','basis','composite_interval_note'])delete z.cost[f];if(z.v16?.ci95)delete z.v16.ci95.composite;return z;};
    same(strip(n),strip(s),'only cost-derived fields changed '+s.key);
    const axis=Math.min(100,Math.max(0,100-30*Math.log10(n.cost.usd_per_1000/.001)));
    if(Math.abs(n.axes.cost-axis)>1e-10)throw Error('v1.8.0 Cost axis');

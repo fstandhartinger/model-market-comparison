@@ -44,6 +44,7 @@ r=json.loads((J/'inputs/candidate-scored.json').read_text())
 # Correct only the six stale in-cap annotations; pin their complete before/after values below.
 TEXT_FIXED=['knowline-31b-gen1','jeffan-31b-1710','knowline-35b-a3b-gen1.5','vera-large']
 LISTING_FIXED=['knowline-26b-a4b-gen2.5','lychee-27b']
+DISCLOSURE_FIXED=['lychee-27b','decisio-qwen3.6-35b-a3b-v090']
 correction='Over the cost cap under the earlier list-price basis; inside both caps from v1.8.0 (GPU-time cost basis).'
 import re
 for row in r['systems']:
@@ -56,10 +57,19 @@ for row in r['systems']:
   assert row['listing']=='ranked_over_cap'
   assert row['cost']['usd_per_1000']<=0.06459465517241379 and row['speed']['p50_s_adjusted']<=1.2329566404223442
   row['listing']='ranked'
+for row in r['systems']:
+ if row['key'] in DISCLOSURE_FIXED:
+  assert row['cost']['usd_per_1000']<=0.06459465517241379 and row['speed']['p50_s_adjusted']<=1.2329566404223442
+  d=row['disclosure']
+  if row['key']=='lychee-27b':
+   old_c='The estimated cost exceeds the official cost cap, so this row is outside the default cost-capped Capability ranking.';assert d.count(old_c)==1;row['disclosure']=d.replace(old_c,correction)
+  else:
+   old_c='superseded by engine-basis billing, 2.77x the cap on the common basis.';assert d.count(old_c)==1
+   row['disclosure']=d.replace(old_c,'superseded by engine-basis billing, which was over the cost cap under the earlier list-price basis; inside both caps from v1.8.0 (GPU-time cost basis).')
 newly=sum(1 for s in r['systems'] if s['key'] in restated and restated[s['key']]['old_cost']>0.06459465517241379>=restated[s['key']]['new_cost'] and s['ranked'] and s['speed']['p50_s_adjusted'] is not None and s['speed']['p50_s_adjusted']<=1.2329566404223442)
 NOTE=f'Cost basis for self-hosted open weights changed from base-model list prices to GPU time on a monthly-rented RTX PRO 6000 with an efficient inference engine. {len(restated)} rows have verified scored usage and a resolvable architecture; {newly} additional open-weight rows fall within both official caps. Intelligence, Calibration and latency are unchanged; API costs and both caps are unchanged. Encoders, architectures outside the six calibrated Gemma/Qwen classes and rows without a verified token basis retain their old costs. Composite intervals affected by the cost change are withheld; the archived v1.7 intervals use the old cost. Old values remain available in v1.7.x. Throughput was calibrated on prompt processing (prefill); generated tokens are counted at the same rate. Three diffusion-readout rows are priced with the closest calibrated class (MoE Gemma); this is an approximation.'
 r.update(revision=REV,label='JevBench v1.8.0: GPU-time cost basis',source_note=NOTE,source_sha256=hj(restated));r['measurement_notes']=old['measurement_notes']+[NOTE]
-r['addendum']=copy.deepcopy(old['addendum']);r['addendum'].update(predecessor=PREV,new_keys=[],remeasured_keys=[],repriced_keys=sorted(restated),link_fixed_keys=[],text_fixed_keys=sorted(TEXT_FIXED+LISTING_FIXED),method_change=True)
+r['addendum']=copy.deepcopy(old['addendum']);r['addendum'].update(predecessor=PREV,new_keys=[],remeasured_keys=[],repriced_keys=sorted(restated),link_fixed_keys=[],text_fixed_keys=sorted(set(TEXT_FIXED+LISTING_FIXED+DISCLOSURE_FIXED)),method_change=True)
 put(D/f'jevbench-{REV}-results.json',r)
 for n in ['carry','history','history-carry']:put(D/f'jevbench-{REV}-{n}.json',load(n))
 cat=load('categories');cat.update(revision=REV,results_sha256=sha(D/f'jevbench-{REV}-results.json'),source_results_sha256=r['source_sha256'],results_sha256_note='All category cells and lanes unchanged; GPU-time cost restatement.')
