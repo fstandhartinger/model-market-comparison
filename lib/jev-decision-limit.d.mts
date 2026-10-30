@@ -1,4 +1,5 @@
 export const JEV_METHOD_LABEL: string;
+export function jevMethodLabel(release: string | { revision?: string; restated_by?: string } | null | undefined): string;
 export const JEV_LIMIT_S: number;
 export const JEV_REMEASURE_PENDING: string;
 export const JEV_REMEASURE_PENDING_LABEL: string;

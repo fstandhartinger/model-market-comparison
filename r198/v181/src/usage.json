@@ -1,0 +1,353 @@
+{
+ "cribl-decision-2": {
+  "active_b": 4,
+  "answered_not_in_common": 6,
+  "architecture_class": "small",
+  "cost_all": 0.0036434043824401397,
+  "cost_basis_kind": "gpu-time-min",
+  "cost_common": 0.00365368331470963,
+  "estimate_all": 0.01112342,
+  "estimate_common": 0.011154801880456682,
+  "expect": {
+   "failed": 5,
+   "input_tokens": 556171,
+   "ok": 1495,
+   "output_tokens": 0,
+   "status_counts": {
+    "200": 1495,
+    "422": 5
+   }
+  },
+  "family": "qwen",
+  "gpu_all": 0.0036434043824401397,
+  "gpu_common": 0.00365368331470963,
+  "input_tokens_all": 556171,
+  "input_tokens_common": 553650,
+  "latency_max": 0.15807697799999687,
+  "native_output_tokens_all": 0,
+  "output_tokens_all": 0,
+  "output_tokens_common": 0,
+  "over10": 0,
+  "raw_order_matches_input": true,
+  "raw_sha256": "a40e9fc858883f4949f5dcf92b2d71f4ae401e116794ea3d59ce9306dcedce8d",
+  "ref": {
+   "in": 0.030000000000000002,
+   "kind": "estimate",
+   "listing": "deepinfra:Qwen/Qwen3.5-4B",
+   "out": 0.0
+  },
+  "scoring_raw_sha256": "ecfe51ea2829dce34a07d2d6e41ddd4dadbe511f1936702e27247cd8428d71ed",
+  "throughput": 61525.0
+ },
+ "cribl-decision-2-mini": {
+  "active_b": 0.8,
+  "answered_not_in_common": 6,
+  "architecture_class": "small",
+  "cost_all": 0.0022416045462962963,
+  "cost_basis_kind": "gpu-time-min",
+  "cost_common": 0.0022479286593751,
+  "estimate_all": 0.0037078066666666664,
+  "estimate_common": 0.003718267293485561,
+  "expect": {
+   "failed": 5,
+   "input_tokens": 556171,
+   "ok": 1495,
+   "output_tokens": 0,
+   "status_counts": {
+    "200": 1495,
+    "422": 5
+   }
+  },
+  "family": "qwen",
+  "gpu_all": 0.0022416045462962963,
+  "gpu_common": 0.0022479286593751,
+  "input_tokens_all": 556171,
+  "input_tokens_common": 553650,
+  "latency_max": 0.10758586899999045,
+  "native_output_tokens_all": 0,
+  "output_tokens_all": 0,
+  "output_tokens_common": 0,
+  "over10": 0,
+  "raw_order_matches_input": true,
+  "raw_sha256": "b863a81ff82150671a7217d7c9c76b1220b9d8a7eeadb37df10cfd1ba73ca743",
+  "ref": {
+   "in": 0.01,
+   "kind": "estimate",
+   "listing": "deepinfra:Qwen/Qwen3.5-0.8B",
+   "out": 0.0
+  },
+  "scoring_raw_sha256": "d8cfec9ef50980e636a69495fe605ef0bb2c693e1d846d196df68997cc1a02d1",
+  "throughput": 100000
+ },
+ "decide-1.1": {
+  "answered_not_in_common": 11,
+  "cost_all": 0.0177799,
+  "cost_basis_kind": "api-launch-list-I-1",
+  "cost_common": 0.009837300201477502,
+  "estimate_all": 0.0177799,
+  "estimate_common": 0.009837300201477502,
+  "expect": {
+   "failed": 0,
+   "input_tokens": 888995,
+   "ok": 1500,
+   "output_tokens": 19926,
+   "status_counts": {
+    "200": 1500
+   }
+  },
+  "input_tokens_all": 888995,
+  "input_tokens_common": 488258,
+  "latency_max": 17.42660360003356,
+  "native_output_tokens_all": 19926,
+  "output_tokens_all": 19926,
+  "output_tokens_common": 19926,
+  "over10": 2,
+  "raw_order_matches_input": false,
+  "raw_sha256": "8a96dc58701c22addf35184c4c0c2b071d1bcc33b2927a1e01ef84ec1223c0a2",
+  "ref": {
+   "in": 0.03,
+   "kind": "measured",
+   "listing": "decide-1.1",
+   "out": 0.0,
+   "rule": "I-1 launch list price; https://decide.sh/pricing; applied since 2026-10-29; input-only billing"
+  },
+  "scoring_raw_sha256": "2cd12f362ee8f63c18e8959b650724a4e2a2802c18815e9073ee0ac702a5fc71"
+ },
+ "decision-king-v1.1": {
+  "active_b": 27,
+  "answered_not_in_common": 11,
+  "architecture_class": "dense",
+  "cost_all": 0.03330171927310412,
+  "cost_basis_kind": "gpu-time-min",
+  "cost_common": 0.019839778339703577,
+  "estimate_all": 0.27213984,
+  "estimate_common": 0.16212959032907992,
+  "expect": {
+   "failed": 1,
+   "input_tokens": 971928,
+   "ok": 1499,
+   "output_tokens": 0,
+   "status_counts": {
+    "200": 1499,
+    "503": 1
+   }
+  },
+  "family": "qwen",
+  "gpu_all": 0.03330171927310412,
+  "gpu_common": 0.019839778339703577,
+  "input_tokens_all": 971928,
+  "input_tokens_common": 574788,
+  "latency_max": 32.17347676099985,
+  "native_output_tokens_all": 0,
+  "output_tokens_all": 0,
+  "output_tokens_common": 0,
+  "over10": 5,
+  "raw_order_matches_input": true,
+  "raw_sha256": "101f416ebf72693142cf489a83e33ccf0a8db66d75212485459cbc1dd3831fcc",
+  "ref": {
+   "in": 0.42,
+   "kind": "estimate",
+   "listing": "qwen/qwen3.8-27b",
+   "out": 0.0
+  },
+  "scoring_raw_sha256": "a5c4711e9550c76116f0a947aafc87ec594843c731d7c5ba7fedb52000cb831a",
+  "throughput": 11763.0
+ },
+ "iota-decide-4b-v0.4": {
+  "active_b": 4,
+  "answered_not_in_common": 11,
+  "architecture_class": "small",
+  "cost_all": 0.004204126171449211,
+  "cost_basis_kind": "gpu-time-min",
+  "cost_common": 0.0036826804870835742,
+  "estimate_all": 0.012835320000000002,
+  "estimate_common": 0.011243331094694426,
+  "expect": {
+   "failed": 0,
+   "input_tokens": 641766,
+   "ok": 1500,
+   "output_tokens": 0,
+   "status_counts": {
+    "200": 1500
+   }
+  },
+  "family": "qwen",
+  "gpu_all": 0.004204126171449211,
+  "gpu_common": 0.0036826804870835742,
+  "input_tokens_all": 641766,
+  "input_tokens_common": 558044,
+  "latency_max": 1.3894451719999665,
+  "native_output_tokens_all": 0,
+  "output_tokens_all": 0,
+  "output_tokens_common": 0,
+  "over10": 0,
+  "raw_order_matches_input": true,
+  "raw_sha256": "b9f4f3b6bb53595b330cea621f5cbc99d81cd80a19b72924865051b28b47b1fa",
+  "ref": {
+   "in": 0.030000000000000002,
+   "kind": "estimate",
+   "listing": "deepinfra:Qwen/Qwen3.5-4B",
+   "out": 0.0
+  },
+  "scoring_raw_sha256": "b9f4f3b6bb53595b330cea621f5cbc99d81cd80a19b72924865051b28b47b1fa",
+  "throughput": 61525.0
+ },
+ "joey-1": {
+  "active_b": 2,
+  "answered_not_in_common": 6,
+  "architecture_class": "small",
+  "cost_all": 0.0023096380912698412,
+  "cost_basis_kind": "gpu-time-min",
+  "cost_common": 0.00231593697698466,
+  "estimate_all": 0.007720413333333333,
+  "estimate_common": 0.007741517797179314,
+  "expect": {
+   "failed": 5,
+   "input_tokens": 571556,
+   "ok": 1495,
+   "output_tokens": 1495,
+   "status_counts": {
+    "200": 1495,
+    "422": 5
+   }
+  },
+  "family": "qwen",
+  "gpu_all": 0.0023096380912698412,
+  "gpu_common": 0.00231593697698466,
+  "input_tokens_all": 571556,
+  "input_tokens_common": 568911,
+  "latency_max": 0.27490970600001674,
+  "native_output_tokens_all": 1495,
+  "output_tokens_all": 1495,
+  "output_tokens_common": 1489,
+  "over10": 0,
+  "raw_order_matches_input": true,
+  "raw_sha256": "e275672c1013d9662329c54cafd47f9803a6af3d4396dca912c078ebee248691",
+  "ref": {
+   "in": 0.02,
+   "kind": "estimate",
+   "listing": "deepinfra:Qwen/Qwen3.5-2B",
+   "out": 0.1
+  },
+  "scoring_raw_sha256": "e275672c1013d9662329c54cafd47f9803a6af3d4396dca912c078ebee248691",
+  "throughput": 100000
+ },
+ "saif-4b": {
+  "active_b": 4,
+  "answered_not_in_common": 11,
+  "architecture_class": "small",
+  "cost_all": 0.006822614057605524,
+  "cost_basis_kind": "gpu-time-min",
+  "cost_common": 0.004248382719727914,
+  "estimate_all": 0.020829640000000003,
+  "estimate_common": 0.012970436534586974,
+  "expect": {
+   "failed": 0,
+   "input_tokens": 1041482,
+   "ok": 1500,
+   "output_tokens": 0,
+   "status_counts": {
+    "200": 1500
+   }
+  },
+  "family": "qwen",
+  "gpu_all": 0.006822614057605524,
+  "gpu_common": 0.004248382719727914,
+  "input_tokens_all": 1041482,
+  "input_tokens_common": 643766,
+  "latency_max": 8.432097844999987,
+  "native_output_tokens_all": 0,
+  "output_tokens_all": 0,
+  "output_tokens_common": 0,
+  "over10": 0,
+  "raw_order_matches_input": true,
+  "raw_sha256": "1a7b04e171d8c23f88927b24810563618604f5d64bc2bfa4b333121aba1db243",
+  "ref": {
+   "in": 0.030000000000000002,
+   "kind": "estimate",
+   "listing": "deepinfra:Qwen/Qwen3.5-4B",
+   "out": 0.0
+  },
+  "scoring_raw_sha256": "1a7b04e171d8c23f88927b24810563618604f5d64bc2bfa4b333121aba1db243",
+  "throughput": 61525.0
+ },
+ "sors-2b": {
+  "active_b": 2,
+  "answered_not_in_common": 6,
+  "architecture_class": "small",
+  "cost_all": 0.0019789418611111114,
+  "cost_basis_kind": "gpu-time-min",
+  "cost_common": 0.001984210674576524,
+  "estimate_all": 0.00654668,
+  "estimate_common": 0.006564110141034253,
+  "expect": {
+   "failed": 5,
+   "input_tokens": 491001,
+   "ok": 1495,
+   "output_tokens": 0,
+   "status_counts": {
+    "200": 1495,
+    "422": 5
+   }
+  },
+  "family": "qwen",
+  "gpu_all": 0.0019789418611111114,
+  "gpu_common": 0.001984210674576524,
+  "input_tokens_all": 491001,
+  "input_tokens_common": 488698,
+  "latency_max": 0.436531097999989,
+  "native_output_tokens_all": 1495,
+  "output_tokens_all": 0,
+  "output_tokens_common": 0,
+  "over10": 0,
+  "raw_order_matches_input": true,
+  "raw_sha256": "2ec336dbb83376c9588c47bc17f305a9547839db3e90724097f89d7d699c2ded",
+  "ref": {
+   "in": 0.02,
+   "kind": "estimate",
+   "listing": "deepinfra:Qwen/Qwen3.5-2B",
+   "out": 0.0
+  },
+  "scoring_raw_sha256": "3704c7fb9b57e023257519afb84975ca0ed928937dcdbfb8ec67816b3af77b03",
+  "throughput": 100000
+ },
+ "wemm-jev": {
+  "active_b": 27,
+  "answered_not_in_common": 11,
+  "architecture_class": "dense",
+  "cost_all": 0.03303285306991207,
+  "cost_basis_kind": "gpu-time-min",
+  "cost_common": 0.019572722720911453,
+  "estimate_all": 0.26994267999999993,
+  "estimate_common": 0.15994722632639352,
+  "expect": {
+   "failed": 0,
+   "input_tokens": 964081,
+   "ok": 1500,
+   "output_tokens": 0,
+   "status_counts": {
+    "200": 1500
+   }
+  },
+  "family": "qwen",
+  "gpu_all": 0.03303285306991207,
+  "gpu_common": 0.019572722720911453,
+  "input_tokens_all": 964081,
+  "input_tokens_common": 567051,
+  "latency_max": 45.85338187400009,
+  "native_output_tokens_all": 0,
+  "output_tokens_all": 0,
+  "output_tokens_common": 0,
+  "over10": 5,
+  "raw_order_matches_input": true,
+  "raw_sha256": "53e6c817bc1eff35e2d49469869e05f941902c9492579e48dd625d77b37de7fe",
+  "ref": {
+   "in": 0.42,
+   "kind": "estimate",
+   "listing": "qwen/qwen3.8-27b",
+   "out": 0.0
+  },
+  "scoring_raw_sha256": "53e6c817bc1eff35e2d49469869e05f941902c9492579e48dd625d77b37de7fe",
+  "throughput": 11763.0
+ }
+}

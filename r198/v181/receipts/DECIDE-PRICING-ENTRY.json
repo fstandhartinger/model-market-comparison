@@ -1,0 +1,27 @@
+{
+ "entry": {
+  "api_subset": "S",
+  "author": "decide.sh (paid priority evaluation, public)",
+  "base_model": null,
+  "cost_basis": "API launch list price (I-1): https://decide.sh/pricing, applied since 2026-10-29. USD 0.03 per million input tokens; output free (input-only billing), no base model declared and no override.",
+  "disclosure": "FIRST MEASUREMENT (paid priority evaluation). NOUL FLOOR: by vendor default decide-1.1 reports an unsure yes/no answer at 0.801 (yes side) or 0.199 (no side), so no noul answer lies between 0.2 and 0.8; the vendor documents this default as its benchmark mode and the raw calibrated mode ('noul_floor': false) as not meant for benchmark runs. Measured at the vendor default; 61 of 375 noul answers sit exactly at 0.801/0.199. Choice and score answers are unaffected. LONG INPUTS: the vendor documents a 50,000-character document limit; the 5 items of this draw above that limit were all answered (HTTP 200), so they are scored as answered. Before the run these 5 positions had been pre-registered as expected HTTP 413 misses; custody amended that pre-registration because of the outcome (all answered), not the score. RETRIES: 2 requests returned a transient HTTP 503 ('the decision model didn't answer, try again') and were answered on the harness's single documented retry. Hosting implementation and deployed weights were not independently inspected; no weights are published. LIMITS: the vendor documents a 25-second request limit (HTTP 503 after it). HARNESS: the measurement client follows HTTP redirects as standard; every answer carried the vendor's model id decide-1.1.",
+  "display": "decide-1.1 (decide.sh, API)",
+  "endpoint_condition": "Vendor-hosted https://api.decide.sh/v1/systemone (AWS, CloudFront edge HEL51), model decide-1.1, measured 29 Oct 2026 23:46-23:58Z from Sandy (Germany) with the customer's own key, network included (p50 0.094 s, p95 0.88 s wall; 2 of 1,500 over 10 s). Full S1200+P300 set of v1.6-regular-20261027 (input sha256 9b2f32ed...) through the unchanged run_api_full_v161.py (eceea17e) and the unchanged jevbench.adapters.typesafe (780f8794); full-set exposure of 1,200 sealed items to provider decide (proxy aws) logged before the first request (custody #33979, deputy #33983). Native System One answer fields on all three question types; served model decide-1.1 on every row; 1,500/1,500 HTTP 200.",
+  "endpoint_kind": "api",
+  "lane": "api",
+  "licence": "Proprietary hosted API (no weights published)",
+  "price_in_per_m": 0.03,
+  "price_out_per_m": 0.0,
+  "ranked": false,
+  "repo": null,
+  "revision": null,
+  "source": "api",
+  "support": {
+   "choice": "native",
+   "noul": "native",
+   "score": "native"
+  }
+ },
+ "pricing_module_sha256": "455ee38b7070f2f076eec65d55c7bb2a69030c26c343c662ade2826f8afd6eaa",
+ "status": "PASS"
+}
