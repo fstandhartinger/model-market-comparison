@@ -435,7 +435,7 @@ function Guide({ a, ranked }: { a: JevV15Artifact; ranked: JevV15System[] }) {
 
 /** CR-205: the "What a decision costs" section, on the v1.5 price rules and per-row bases. */
 function Costs({ a }: { a: JevV15Artifact }) {
-  const gpuTime = a.revision === 'v1.8.0' || (a as JevV15Artifact & {restated_by?:string}).restated_by === 'v1.8.0';
+  const gpuTime = /^v1\.8\./.test(a.revision) || /^v1\.8\./.test((a as JevV15Artifact & {restated_by?:string}).restated_by ?? '');
   const estimated = a.systems.filter((r) => r.cost?.kind === 'estimate');
   const tariffs = a.systems.filter((r) => r.cost?.kind === 'tariff').length;
   return <section id="jev-costs-section" className="mt-10 max-w-4xl scroll-mt-6 text-sm" data-bh-jev-costs>

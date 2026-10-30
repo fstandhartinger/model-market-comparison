@@ -1,0 +1,27 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {readFileSync} from 'node:fs';
+import {hasPublishedJevbenchV181Release,readJevbenchV181ForBoard,V181_NEW_KEYS,V181_NOTE} from '../lib/jevbench-v181-release.mjs';
+import {readJevAllDataInput} from '../lib/jevbench-alldata-input.mjs';
+import {jevMethodLabel,JEV_METHOD_LABEL} from '../lib/jev-decision-limit.mjs';
+const d='data/raw/benchmarks/jevbench/v1.8/',load=(v,n)=>JSON.parse(readFileSync(d+`jevbench-${v}-${n}.json`));
+test('v1.8.1 carries all base rows, cells and order lists exactly',()=>{
+ const b=load('v1.8.0','results'),a=load('v1.8.1','results'),by=new Map(a.systems.map(s=>[s.key,s]));
+ for(const s of b.systems)assert.deepEqual(by.get(s.key),s);
+ assert.deepEqual(a.board,b.board);assert.equal(a.systems.length,b.systems.length+V181_NEW_KEYS.length);
+ const bc=load('v1.8.0','categories'),ac=load('v1.8.1','categories');for(const s of b.systems)assert.deepEqual(ac.systems[s.key],bc.systems[s.key]);
+});
+test('all additions unranked, common 1489 costs, zero draw offsets',()=>{
+ for(const s of load('v1.8.1','results').systems.filter(s=>V181_NEW_KEYS.includes(s.key))){assert.equal(s.ranked,false);assert.equal(s.rank,null);assert.equal(s.not_ranked_because,V181_NOTE);assert.deepEqual(s.ranks,{A:null,B:null,C:null,capability:null});assert.equal(s.cost.common_basis.n_items,1489);assert.deepEqual(s.draw.offset,{C:0,I:0});}
+});
+test('visibility and All data loader follow independent review',async()=>{
+ const visible=load('v1.8.1','publication').review.verdict==='PASS';assert.equal(await hasPublishedJevbenchV181Release(),visible);assert.equal(Boolean(await readJevbenchV181ForBoard()),visible);assert.equal(Boolean(await readJevAllDataInput('v1.8.1')),visible);
+ assert.equal(readFileSync('lib/jevbench-alldata-input.mjs','utf8').split("'v1.8.1':").length-1,1);
+});
+test('method label is per release and preserves v1.7 byte-for-byte',()=>{
+ for(let i=0;i<=23;i++)assert.equal(jevMethodLabel(`v1.7.${i}`),JEV_METHOD_LABEL);
+ assert.equal(jevMethodLabel('v1.8.0'),'method v1.8 (10 s rule, GPU-time cost basis)');assert.equal(jevMethodLabel({revision:'v1.6.1',restated_by:'v1.8.1'}),jevMethodLabel('v1.8.0'));
+});
+test('Joey uses the corrected handoff and billed native usage',()=>{
+ const u=JSON.parse(readFileSync('r198/v181/src/usage.json'))['joey-1'];assert.equal(u.input_tokens_all,571556);assert.equal(u.input_tokens_common,568911);assert.equal(u.output_tokens_all,1495);assert.ok(V181_NEW_KEYS.includes('joey-1'));
+});

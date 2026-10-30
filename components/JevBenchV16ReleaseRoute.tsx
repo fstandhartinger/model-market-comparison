@@ -1,3 +1,4 @@
+import { jevMethodLabel } from '../lib/jev-decision-limit.mjs';
 import { isJevbenchV16ExcludedKey } from '../lib/jevbench-v16-public-scope.mjs';
 import { readJevbenchV161Release } from '../lib/jevbench-v16-release.mjs';
 import { readJevbenchV157Release, withPublicAdapterIds } from '../lib/jevbench-v15-release.mjs';
@@ -63,7 +64,7 @@ export async function JevBenchV16ReleaseRoute({ live = false, release, versionPa
   // Florian 10 Oct 2026: one board, a filter on top, one line of text per idea; details live under "How it works".
   if (live) return <>
     <header className="bh-page-head" data-bh-jev16-release-header data-bh-jev16-live="true" data-bh-jev-board-scope={scope}>
-      <div className="bh-eyebrow flex flex-nowrap items-center" data-bh-jev-frozen-version>{(board as { method?: unknown }).method ? <>JevBench · method v1.7 (10 s rule) · updated {updated}</> : <>JevBench · board {JEV_BOARD_REVISIONS[0].version} · updated {updated}</>}</div>
+      <div className="bh-eyebrow flex flex-nowrap items-center" data-bh-jev-frozen-version>{(board as { method?: unknown }).method ? <>JevBench · {jevMethodLabel(published)} · updated {updated}</> : <>JevBench · board {JEV_BOARD_REVISIONS[0].version} · updated {updated}</>}</div>
       <h1 className="mt-1 text-3xl font-bold tracking-tight">{scope === 'api' ? 'JevBench — hosted decision API benchmark' : scope === 'all' ? 'JevBench — all decision models' : 'JevBench — decision model benchmark & leaderboard'}</h1>
       <p className="mt-2 max-w-3xl text-lg" data-bh-jev-own>A <b>benchmark for AI decision models</b>: state and rubric in, typed answer out. We compare accuracy, calibration, latency and cost, independently of TypeSafe AI.</p>
       <p className="bh-muted mt-3 max-w-4xl text-xs leading-relaxed" data-bh-jev-meta>

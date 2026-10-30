@@ -1,0 +1,1225 @@
+{
+ "carried_rows": 316,
+ "carried_rows_equal_except": [],
+ "cost_basis": {
+  "cost_basis_sha256": "b83bdfd14c263ffacfa572b304084154afca84c1f00083101a33783ae6f8b356",
+  "frozen_at": "v1.7.16",
+  "n_items": 1489,
+  "set_sha256": "4e912731e63369e1b3066b0b4afa87b44f1094aea079c5b41dc6d02e7f235537"
+ },
+ "exceptions": {},
+ "method": {
+  "decision_limit_s": 10,
+  "label": "v1.7",
+  "rule": "latency_s > 10.000 s -> failed",
+  "treatment": "share"
+ },
+ "new_rows": {
+  "cribl-decision-2": {
+   "axes": {
+    "calibration": 88.57994361694654,
+    "cost": 83.11807294295589,
+    "intelligence": 41.64204144719962,
+    "speed": 91.18391098931158
+   },
+   "category_pool_bounds": {
+    "languages": {
+     "ar": 21,
+     "cs": 37,
+     "da": 36,
+     "de": 48,
+     "el": 28,
+     "en": 555,
+     "es": 37,
+     "fi": 52,
+     "fr": 32,
+     "hi": 37,
+     "id": 41,
+     "it": 45,
+     "ja": 44,
+     "ko": 43,
+     "mixed": 64,
+     "nl": 36,
+     "no": 51,
+     "pl": 57,
+     "pt": 47,
+     "sv": 46,
+     "tr": 46,
+     "uk": 56,
+     "zh": 41
+    },
+    "topics": {},
+    "usecases": {
+     "advertising": 48,
+     "code_linting": 69,
+     "customer_support": 66,
+     "demand_forecasting": 66,
+     "ecommerce_marketplaces": 62,
+     "feature_extraction": 72,
+     "financial_crime": 63,
+     "gaming": 58,
+     "insurance_claims": 62,
+     "knowledge_graphs": 67,
+     "lead_generation": 75,
+     "legal_compliance": 56,
+     "llm_guardrails": 71,
+     "model_routing": 148,
+     "moderation_trust_safety": 59,
+     "other": 32,
+     "recruiting": 65,
+     "risk_assessment": 48,
+     "scientific_discovery": 42,
+     "search_retrieval": 67
+    }
+   },
+   "composite_ci95": {
+    "A": [
+     35.64587923891142,
+     62.78656749759974
+    ],
+    "B": [
+     30.946149133578153,
+     56.8372808960885
+    ],
+    "C": [
+     24.75408280479959,
+     43.601782984444256
+    ]
+   },
+   "cost": {
+    "active_b": 4,
+    "answered_not_in_common": 6,
+    "architecture_class": "small",
+    "cost_all": 0.0036434043824401397,
+    "cost_basis_kind": "gpu-time-min",
+    "cost_common": 0.00365368331470963,
+    "estimate_all": 0.01112342,
+    "estimate_common": 0.011154801880456682,
+    "expect": {
+     "failed": 5,
+     "input_tokens": 556171,
+     "ok": 1495,
+     "output_tokens": 0,
+     "status_counts": {
+      "200": 1495,
+      "422": 5
+     }
+    },
+    "family": "qwen",
+    "gpu_all": 0.0036434043824401397,
+    "gpu_common": 0.00365368331470963,
+    "input_tokens_all": 556171,
+    "input_tokens_common": 553650,
+    "latency_max": 0.15807697799999687,
+    "native_output_tokens_all": 0,
+    "output_tokens_all": 0,
+    "output_tokens_common": 0,
+    "over10": 0,
+    "raw_order_matches_input": true,
+    "raw_sha256": "a40e9fc858883f4949f5dcf92b2d71f4ae401e116794ea3d59ce9306dcedce8d",
+    "ref": {
+     "in": 0.030000000000000002,
+     "kind": "estimate",
+     "listing": "deepinfra:Qwen/Qwen3.5-4B",
+     "out": 0.0
+    },
+    "scoring_raw_sha256": "ecfe51ea2829dce34a07d2d6e41ddd4dadbe511f1936702e27247cd8428d71ed",
+    "throughput": 61525.0
+   },
+   "decision_limit": {
+    "limit_s": 10.0,
+    "n_over_limit": 0,
+    "n_over_limit_answered_ok": 0,
+    "rule": "latency_s > limit -> failed",
+    "speed_basis": "all decisions given (lane items in the raw), measured latency_s",
+    "speed_n": 1500,
+    "treatment": "share"
+   },
+   "model_pin": "92ac09eccd2a3c24d41ad31e659e4d681261b57b",
+   "price_reference": {
+    "in": 0.030000000000000002,
+    "kind": "estimate",
+    "listing": "deepinfra:Qwen/Qwen3.5-4B",
+    "out": 0.0
+   },
+   "raw_sha256": "a40e9fc858883f4949f5dcf92b2d71f4ae401e116794ea3d59ce9306dcedce8d",
+   "scored_input_sha256": "eb2807d7989d009ef8807eff4051200c91740bea1eb430eace34d4725fa44128",
+   "treatment": "unranked"
+  },
+  "cribl-decision-2-mini": {
+   "axes": {
+    "calibration": 84.94544856811552,
+    "cost": 89.44652427171069,
+    "intelligence": 21.501461054291646,
+    "speed": 93.102234850062
+   },
+   "category_pool_bounds": {
+    "languages": {
+     "ar": 21,
+     "cs": 37,
+     "da": 36,
+     "de": 48,
+     "el": 28,
+     "en": 555,
+     "es": 37,
+     "fi": 52,
+     "fr": 32,
+     "hi": 37,
+     "id": 41,
+     "it": 45,
+     "ja": 44,
+     "ko": 43,
+     "mixed": 64,
+     "nl": 36,
+     "no": 51,
+     "pl": 57,
+     "pt": 47,
+     "sv": 46,
+     "tr": 46,
+     "uk": 56,
+     "zh": 41
+    },
+    "topics": {},
+    "usecases": {
+     "advertising": 48,
+     "code_linting": 69,
+     "customer_support": 66,
+     "demand_forecasting": 66,
+     "ecommerce_marketplaces": 62,
+     "feature_extraction": 72,
+     "financial_crime": 63,
+     "gaming": 58,
+     "insurance_claims": 62,
+     "knowledge_graphs": 67,
+     "lead_generation": 75,
+     "legal_compliance": 56,
+     "llm_guardrails": 71,
+     "model_routing": 148,
+     "moderation_trust_safety": 59,
+     "other": 32,
+     "recruiting": 65,
+     "risk_assessment": 48,
+     "scientific_discovery": 42,
+     "search_retrieval": 67
+    }
+   },
+   "composite_ci95": {
+    "A": [
+     5.746760006028897,
+     12.31583765172069
+    ],
+    "B": [
+     4.428854977688423,
+     9.91944587108746
+    ],
+    "C": [
+     3.9908055597422902,
+     8.552665035917148
+    ]
+   },
+   "cost": {
+    "active_b": 0.8,
+    "answered_not_in_common": 6,
+    "architecture_class": "small",
+    "cost_all": 0.0022416045462962963,
+    "cost_basis_kind": "gpu-time-min",
+    "cost_common": 0.0022479286593751,
+    "estimate_all": 0.0037078066666666664,
+    "estimate_common": 0.003718267293485561,
+    "expect": {
+     "failed": 5,
+     "input_tokens": 556171,
+     "ok": 1495,
+     "output_tokens": 0,
+     "status_counts": {
+      "200": 1495,
+      "422": 5
+     }
+    },
+    "family": "qwen",
+    "gpu_all": 0.0022416045462962963,
+    "gpu_common": 0.0022479286593751,
+    "input_tokens_all": 556171,
+    "input_tokens_common": 553650,
+    "latency_max": 0.10758586899999045,
+    "native_output_tokens_all": 0,
+    "output_tokens_all": 0,
+    "output_tokens_common": 0,
+    "over10": 0,
+    "raw_order_matches_input": true,
+    "raw_sha256": "b863a81ff82150671a7217d7c9c76b1220b9d8a7eeadb37df10cfd1ba73ca743",
+    "ref": {
+     "in": 0.01,
+     "kind": "estimate",
+     "listing": "deepinfra:Qwen/Qwen3.5-0.8B",
+     "out": 0.0
+    },
+    "scoring_raw_sha256": "d8cfec9ef50980e636a69495fe605ef0bb2c693e1d846d196df68997cc1a02d1",
+    "throughput": 100000
+   },
+   "decision_limit": {
+    "limit_s": 10.0,
+    "n_over_limit": 0,
+    "n_over_limit_answered_ok": 0,
+    "rule": "latency_s > limit -> failed",
+    "speed_basis": "all decisions given (lane items in the raw), measured latency_s",
+    "speed_n": 1500,
+    "treatment": "share"
+   },
+   "model_pin": "d7969110d0858b27eac276e8f8c08192ec899d2b",
+   "price_reference": {
+    "in": 0.01,
+    "kind": "estimate",
+    "listing": "deepinfra:Qwen/Qwen3.5-0.8B",
+    "out": 0.0
+   },
+   "raw_sha256": "b863a81ff82150671a7217d7c9c76b1220b9d8a7eeadb37df10cfd1ba73ca743",
+   "scored_input_sha256": "eb2807d7989d009ef8807eff4051200c91740bea1eb430eace34d4725fa44128",
+   "treatment": "unranked"
+  },
+  "decide-1.1": {
+   "axes": {
+    "calibration": 92.27480074107658,
+    "cost": 70.21372225584122,
+    "intelligence": 75.73335437248423,
+    "speed": 90.54529257210464
+   },
+   "category_pool_bounds": {
+    "languages": {
+     "ar": 21,
+     "cs": 37,
+     "da": 36,
+     "de": 48,
+     "el": 28,
+     "en": 555,
+     "es": 37,
+     "fi": 52,
+     "fr": 32,
+     "hi": 37,
+     "id": 41,
+     "it": 45,
+     "ja": 44,
+     "ko": 43,
+     "mixed": 64,
+     "nl": 36,
+     "no": 51,
+     "pl": 57,
+     "pt": 47,
+     "sv": 46,
+     "tr": 46,
+     "uk": 56,
+     "zh": 41
+    },
+    "topics": {},
+    "usecases": {
+     "advertising": 48,
+     "code_linting": 69,
+     "customer_support": 66,
+     "demand_forecasting": 66,
+     "ecommerce_marketplaces": 62,
+     "feature_extraction": 72,
+     "financial_crime": 63,
+     "gaming": 58,
+     "insurance_claims": 62,
+     "knowledge_graphs": 67,
+     "lead_generation": 75,
+     "legal_compliance": 56,
+     "llm_guardrails": 71,
+     "model_routing": 148,
+     "moderation_trust_safety": 59,
+     "other": 32,
+     "recruiting": 65,
+     "risk_assessment": 48,
+     "scientific_discovery": 42,
+     "search_retrieval": 67
+    }
+   },
+   "composite_ci95": {
+    "A": [
+     79.23818805258598,
+     81.88820768085941
+    ],
+    "B": [
+     77.44510889308668,
+     81.22629841044666
+    ],
+    "C": [
+     79.23818805258598,
+     81.88820768085941
+    ]
+   },
+   "cost": {
+    "answered_not_in_common": 11,
+    "cost_all": 0.0177799,
+    "cost_basis_kind": "api-launch-list-I-1",
+    "cost_common": 0.009837300201477502,
+    "estimate_all": 0.0177799,
+    "estimate_common": 0.009837300201477502,
+    "expect": {
+     "failed": 0,
+     "input_tokens": 888995,
+     "ok": 1500,
+     "output_tokens": 19926,
+     "status_counts": {
+      "200": 1500
+     }
+    },
+    "input_tokens_all": 888995,
+    "input_tokens_common": 488258,
+    "latency_max": 17.42660360003356,
+    "native_output_tokens_all": 19926,
+    "output_tokens_all": 19926,
+    "output_tokens_common": 19926,
+    "over10": 2,
+    "raw_order_matches_input": false,
+    "raw_sha256": "8a96dc58701c22addf35184c4c0c2b071d1bcc33b2927a1e01ef84ec1223c0a2",
+    "ref": {
+     "in": 0.03,
+     "kind": "measured",
+     "listing": "decide-1.1",
+     "out": 0.0,
+     "rule": "I-1 launch list price; https://decide.sh/pricing; applied since 2026-10-29; input-only billing"
+    },
+    "scoring_raw_sha256": "2cd12f362ee8f63c18e8959b650724a4e2a2802c18815e9073ee0ac702a5fc71"
+   },
+   "decision_limit": {
+    "limit_s": 10.0,
+    "n_over_limit": 2,
+    "n_over_limit_answered_ok": 2,
+    "rule": "latency_s > limit -> failed",
+    "speed_basis": "all decisions given (lane items in the raw), measured latency_s",
+    "speed_n": 1500,
+    "treatment": "share"
+   },
+   "model_pin": null,
+   "price_reference": {
+    "in": 0.03,
+    "kind": "measured",
+    "listing": "decide-1.1",
+    "out": 0.0,
+    "rule": "I-1 launch list price; https://decide.sh/pricing; applied since 2026-10-29; input-only billing"
+   },
+   "raw_sha256": "8a96dc58701c22addf35184c4c0c2b071d1bcc33b2927a1e01ef84ec1223c0a2",
+   "scored_input_sha256": "eb2807d7989d009ef8807eff4051200c91740bea1eb430eace34d4725fa44128",
+   "treatment": "unranked"
+  },
+  "decision-king-v1.1": {
+   "axes": {
+    "calibration": 88.7891023300364,
+    "cost": 61.07389552953992,
+    "intelligence": 75.70417877168885,
+    "speed": 82.77728277705924
+   },
+   "category_pool_bounds": {
+    "languages": {
+     "ar": 21,
+     "cs": 37,
+     "da": 36,
+     "de": 48,
+     "el": 28,
+     "en": 555,
+     "es": 37,
+     "fi": 52,
+     "fr": 32,
+     "hi": 37,
+     "id": 41,
+     "it": 45,
+     "ja": 44,
+     "ko": 43,
+     "mixed": 64,
+     "nl": 36,
+     "no": 51,
+     "pl": 57,
+     "pt": 47,
+     "sv": 46,
+     "tr": 46,
+     "uk": 56,
+     "zh": 41
+    },
+    "topics": {},
+    "usecases": {
+     "advertising": 48,
+     "code_linting": 69,
+     "customer_support": 66,
+     "demand_forecasting": 66,
+     "ecommerce_marketplaces": 62,
+     "feature_extraction": 72,
+     "financial_crime": 63,
+     "gaming": 58,
+     "insurance_claims": 62,
+     "knowledge_graphs": 67,
+     "lead_generation": 75,
+     "legal_compliance": 56,
+     "llm_guardrails": 71,
+     "model_routing": 148,
+     "moderation_trust_safety": 59,
+     "other": 32,
+     "recruiting": 65,
+     "risk_assessment": 48,
+     "scientific_discovery": 42,
+     "search_retrieval": 67
+    }
+   },
+   "composite_ci95": {
+    "A": [
+     73.7654344724737,
+     76.6878726105228
+    ],
+    "B": [
+     73.13714388734203,
+     77.32689994223516
+    ],
+    "C": [
+     73.7654344724737,
+     76.6878726105228
+    ]
+   },
+   "cost": {
+    "active_b": 27,
+    "answered_not_in_common": 11,
+    "architecture_class": "dense",
+    "cost_all": 0.03330171927310412,
+    "cost_basis_kind": "gpu-time-min",
+    "cost_common": 0.019839778339703577,
+    "estimate_all": 0.27213984,
+    "estimate_common": 0.16212959032907992,
+    "expect": {
+     "failed": 1,
+     "input_tokens": 971928,
+     "ok": 1499,
+     "output_tokens": 0,
+     "status_counts": {
+      "200": 1499,
+      "503": 1
+     }
+    },
+    "family": "qwen",
+    "gpu_all": 0.03330171927310412,
+    "gpu_common": 0.019839778339703577,
+    "input_tokens_all": 971928,
+    "input_tokens_common": 574788,
+    "latency_max": 32.17347676099985,
+    "native_output_tokens_all": 0,
+    "output_tokens_all": 0,
+    "output_tokens_common": 0,
+    "over10": 5,
+    "raw_order_matches_input": true,
+    "raw_sha256": "101f416ebf72693142cf489a83e33ccf0a8db66d75212485459cbc1dd3831fcc",
+    "ref": {
+     "in": 0.42,
+     "kind": "estimate",
+     "listing": "qwen/qwen3.8-27b",
+     "out": 0.0
+    },
+    "scoring_raw_sha256": "a5c4711e9550c76116f0a947aafc87ec594843c731d7c5ba7fedb52000cb831a",
+    "throughput": 11763.0
+   },
+   "decision_limit": {
+    "limit_s": 10.0,
+    "n_over_limit": 5,
+    "n_over_limit_answered_ok": 5,
+    "rule": "latency_s > limit -> failed",
+    "speed_basis": "all decisions given (lane items in the raw), measured latency_s",
+    "speed_n": 1500,
+    "treatment": "share"
+   },
+   "model_pin": "e9afadc80608546e403b83c89027c6f91c6c2378",
+   "price_reference": {
+    "in": 0.42,
+    "kind": "estimate",
+    "listing": "qwen/qwen3.8-27b",
+    "out": 0.0
+   },
+   "raw_sha256": "101f416ebf72693142cf489a83e33ccf0a8db66d75212485459cbc1dd3831fcc",
+   "scored_input_sha256": "eb2807d7989d009ef8807eff4051200c91740bea1eb430eace34d4725fa44128",
+   "treatment": "unranked"
+  },
+  "iota-decide-4b-v0.4": {
+   "axes": {
+    "calibration": 87.75921087180224,
+    "cost": 83.01507877958139,
+    "intelligence": 60.20779008250262,
+    "speed": 92.23793413696737
+   },
+   "category_pool_bounds": {
+    "languages": {
+     "ar": 21,
+     "cs": 37,
+     "da": 36,
+     "de": 48,
+     "el": 28,
+     "en": 555,
+     "es": 37,
+     "fi": 52,
+     "fr": 32,
+     "hi": 37,
+     "id": 41,
+     "it": 45,
+     "ja": 44,
+     "ko": 43,
+     "mixed": 64,
+     "nl": 36,
+     "no": 51,
+     "pl": 57,
+     "pt": 47,
+     "sv": 46,
+     "tr": 46,
+     "uk": 56,
+     "zh": 41
+    },
+    "topics": {},
+    "usecases": {
+     "advertising": 48,
+     "code_linting": 69,
+     "customer_support": 66,
+     "demand_forecasting": 66,
+     "ecommerce_marketplaces": 62,
+     "feature_extraction": 72,
+     "financial_crime": 63,
+     "gaming": 58,
+     "insurance_claims": 62,
+     "knowledge_graphs": 67,
+     "lead_generation": 75,
+     "legal_compliance": 56,
+     "llm_guardrails": 71,
+     "model_routing": 148,
+     "moderation_trust_safety": 59,
+     "other": 32,
+     "recruiting": 65,
+     "risk_assessment": 48,
+     "scientific_discovery": 42,
+     "search_retrieval": 67
+    }
+   },
+   "composite_ci95": {
+    "A": [
+     75.48256826557282,
+     80.33700443979633
+    ],
+    "B": [
+     70.2155664843764,
+     76.58909305871519
+    ],
+    "C": [
+     62.68223724759552,
+     80.33700443979633
+    ]
+   },
+   "cost": {
+    "active_b": 4,
+    "answered_not_in_common": 11,
+    "architecture_class": "small",
+    "cost_all": 0.004204126171449211,
+    "cost_basis_kind": "gpu-time-min",
+    "cost_common": 0.0036826804870835742,
+    "estimate_all": 0.012835320000000002,
+    "estimate_common": 0.011243331094694426,
+    "expect": {
+     "failed": 0,
+     "input_tokens": 641766,
+     "ok": 1500,
+     "output_tokens": 0,
+     "status_counts": {
+      "200": 1500
+     }
+    },
+    "family": "qwen",
+    "gpu_all": 0.004204126171449211,
+    "gpu_common": 0.0036826804870835742,
+    "input_tokens_all": 641766,
+    "input_tokens_common": 558044,
+    "latency_max": 1.3894451719999665,
+    "native_output_tokens_all": 0,
+    "output_tokens_all": 0,
+    "output_tokens_common": 0,
+    "over10": 0,
+    "raw_order_matches_input": true,
+    "raw_sha256": "b9f4f3b6bb53595b330cea621f5cbc99d81cd80a19b72924865051b28b47b1fa",
+    "ref": {
+     "in": 0.030000000000000002,
+     "kind": "estimate",
+     "listing": "deepinfra:Qwen/Qwen3.5-4B",
+     "out": 0.0
+    },
+    "scoring_raw_sha256": "b9f4f3b6bb53595b330cea621f5cbc99d81cd80a19b72924865051b28b47b1fa",
+    "throughput": 61525.0
+   },
+   "decision_limit": {
+    "limit_s": 10.0,
+    "n_over_limit": 0,
+    "n_over_limit_answered_ok": 0,
+    "rule": "latency_s > limit -> failed",
+    "speed_basis": "all decisions given (lane items in the raw), measured latency_s",
+    "speed_n": 1500,
+    "treatment": "share"
+   },
+   "model_pin": "7c82bc488b80d0ab45408c4c1a652483d485725c",
+   "price_reference": {
+    "in": 0.030000000000000002,
+    "kind": "estimate",
+    "listing": "deepinfra:Qwen/Qwen3.5-4B",
+    "out": 0.0
+   },
+   "raw_sha256": "b9f4f3b6bb53595b330cea621f5cbc99d81cd80a19b72924865051b28b47b1fa",
+   "scored_input_sha256": "eb2807d7989d009ef8807eff4051200c91740bea1eb430eace34d4725fa44128",
+   "treatment": "unranked"
+  },
+  "joey-1": {
+   "axes": {
+    "calibration": 89.19805075552422,
+    "cost": 89.05819789393655,
+    "intelligence": 26.37304823278007,
+    "speed": 92.05436718949184
+   },
+   "category_pool_bounds": {
+    "languages": {
+     "ar": 21,
+     "cs": 37,
+     "da": 36,
+     "de": 48,
+     "el": 28,
+     "en": 555,
+     "es": 37,
+     "fi": 52,
+     "fr": 32,
+     "hi": 37,
+     "id": 41,
+     "it": 45,
+     "ja": 44,
+     "ko": 43,
+     "mixed": 64,
+     "nl": 36,
+     "no": 51,
+     "pl": 57,
+     "pt": 47,
+     "sv": 46,
+     "tr": 46,
+     "uk": 56,
+     "zh": 41
+    },
+    "topics": {},
+    "usecases": {
+     "advertising": 48,
+     "code_linting": 69,
+     "customer_support": 66,
+     "demand_forecasting": 66,
+     "ecommerce_marketplaces": 62,
+     "feature_extraction": 72,
+     "financial_crime": 63,
+     "gaming": 58,
+     "insurance_claims": 62,
+     "knowledge_graphs": 67,
+     "lead_generation": 75,
+     "legal_compliance": 56,
+     "llm_guardrails": 71,
+     "model_routing": 148,
+     "moderation_trust_safety": 59,
+     "other": 32,
+     "recruiting": 65,
+     "risk_assessment": 48,
+     "scientific_discovery": 42,
+     "search_retrieval": 67
+    }
+   },
+   "composite_ci95": {
+    "A": [
+     10.454460357576574,
+     20.305441251660632
+    ],
+    "B": [
+     8.329461789875182,
+     16.899051180763813
+    ],
+    "C": [
+     7.260041914983731,
+     14.101000869208772
+    ]
+   },
+   "cost": {
+    "active_b": 2,
+    "answered_not_in_common": 6,
+    "architecture_class": "small",
+    "cost_all": 0.0023096380912698412,
+    "cost_basis_kind": "gpu-time-min",
+    "cost_common": 0.00231593697698466,
+    "estimate_all": 0.007720413333333333,
+    "estimate_common": 0.007741517797179314,
+    "expect": {
+     "failed": 5,
+     "input_tokens": 571556,
+     "ok": 1495,
+     "output_tokens": 1495,
+     "status_counts": {
+      "200": 1495,
+      "422": 5
+     }
+    },
+    "family": "qwen",
+    "gpu_all": 0.0023096380912698412,
+    "gpu_common": 0.00231593697698466,
+    "input_tokens_all": 571556,
+    "input_tokens_common": 568911,
+    "latency_max": 0.27490970600001674,
+    "native_output_tokens_all": 1495,
+    "output_tokens_all": 1495,
+    "output_tokens_common": 1489,
+    "over10": 0,
+    "raw_order_matches_input": true,
+    "raw_sha256": "e275672c1013d9662329c54cafd47f9803a6af3d4396dca912c078ebee248691",
+    "ref": {
+     "in": 0.02,
+     "kind": "estimate",
+     "listing": "deepinfra:Qwen/Qwen3.5-2B",
+     "out": 0.1
+    },
+    "scoring_raw_sha256": "e275672c1013d9662329c54cafd47f9803a6af3d4396dca912c078ebee248691",
+    "throughput": 100000
+   },
+   "decision_limit": {
+    "limit_s": 10.0,
+    "n_over_limit": 0,
+    "n_over_limit_answered_ok": 0,
+    "rule": "latency_s > limit -> failed",
+    "speed_basis": "all decisions given (lane items in the raw), measured latency_s",
+    "speed_n": 1500,
+    "treatment": "share"
+   },
+   "model_pin": "a5923ff876f14bae084ee1ae6e171b8df547039f",
+   "price_reference": {
+    "in": 0.02,
+    "kind": "estimate",
+    "listing": "deepinfra:Qwen/Qwen3.5-2B",
+    "out": 0.1
+   },
+   "raw_sha256": "e275672c1013d9662329c54cafd47f9803a6af3d4396dca912c078ebee248691",
+   "scored_input_sha256": "eb2807d7989d009ef8807eff4051200c91740bea1eb430eace34d4725fa44128",
+   "treatment": "unranked"
+  },
+  "saif-4b": {
+   "axes": {
+    "calibration": 89.8605961938813,
+    "cost": 81.1532909895844,
+    "intelligence": 42.99955719216023,
+    "speed": 91.45599093286009
+   },
+   "category_pool_bounds": {
+    "languages": {
+     "ar": 21,
+     "cs": 37,
+     "da": 36,
+     "de": 48,
+     "el": 28,
+     "en": 555,
+     "es": 37,
+     "fi": 52,
+     "fr": 32,
+     "hi": 37,
+     "id": 41,
+     "it": 45,
+     "ja": 44,
+     "ko": 43,
+     "mixed": 64,
+     "nl": 36,
+     "no": 51,
+     "pl": 57,
+     "pt": 47,
+     "sv": 46,
+     "tr": 46,
+     "uk": 56,
+     "zh": 41
+    },
+    "topics": {},
+    "usecases": {
+     "advertising": 48,
+     "code_linting": 69,
+     "customer_support": 66,
+     "demand_forecasting": 66,
+     "ecommerce_marketplaces": 62,
+     "feature_extraction": 72,
+     "financial_crime": 63,
+     "gaming": 58,
+     "insurance_claims": 62,
+     "knowledge_graphs": 67,
+     "lead_generation": 75,
+     "legal_compliance": 56,
+     "llm_guardrails": 71,
+     "model_routing": 148,
+     "moderation_trust_safety": 59,
+     "other": 32,
+     "recruiting": 65,
+     "risk_assessment": 48,
+     "scientific_discovery": 42,
+     "search_retrieval": 67
+    }
+   },
+   "composite_ci95": {
+    "A": [
+     35.48503500334651,
+     65.72703813379383
+    ],
+    "B": [
+     30.858357877358454,
+     59.79461661361139
+    ],
+    "C": [
+     24.64238541899064,
+     45.643776481801275
+    ]
+   },
+   "cost": {
+    "active_b": 4,
+    "answered_not_in_common": 11,
+    "architecture_class": "small",
+    "cost_all": 0.006822614057605524,
+    "cost_basis_kind": "gpu-time-min",
+    "cost_common": 0.004248382719727914,
+    "estimate_all": 0.020829640000000003,
+    "estimate_common": 0.012970436534586974,
+    "expect": {
+     "failed": 0,
+     "input_tokens": 1041482,
+     "ok": 1500,
+     "output_tokens": 0,
+     "status_counts": {
+      "200": 1500
+     }
+    },
+    "family": "qwen",
+    "gpu_all": 0.006822614057605524,
+    "gpu_common": 0.004248382719727914,
+    "input_tokens_all": 1041482,
+    "input_tokens_common": 643766,
+    "latency_max": 8.432097844999987,
+    "native_output_tokens_all": 0,
+    "output_tokens_all": 0,
+    "output_tokens_common": 0,
+    "over10": 0,
+    "raw_order_matches_input": true,
+    "raw_sha256": "1a7b04e171d8c23f88927b24810563618604f5d64bc2bfa4b333121aba1db243",
+    "ref": {
+     "in": 0.030000000000000002,
+     "kind": "estimate",
+     "listing": "deepinfra:Qwen/Qwen3.5-4B",
+     "out": 0.0
+    },
+    "scoring_raw_sha256": "1a7b04e171d8c23f88927b24810563618604f5d64bc2bfa4b333121aba1db243",
+    "throughput": 61525.0
+   },
+   "decision_limit": {
+    "limit_s": 10.0,
+    "n_over_limit": 0,
+    "n_over_limit_answered_ok": 0,
+    "rule": "latency_s > limit -> failed",
+    "speed_basis": "all decisions given (lane items in the raw), measured latency_s",
+    "speed_n": 1500,
+    "treatment": "share"
+   },
+   "model_pin": "622e4c8e483a265abb1a9907bd3a3e142e2672ef",
+   "price_reference": {
+    "in": 0.030000000000000002,
+    "kind": "estimate",
+    "listing": "deepinfra:Qwen/Qwen3.5-4B",
+    "out": 0.0
+   },
+   "raw_sha256": "1a7b04e171d8c23f88927b24810563618604f5d64bc2bfa4b333121aba1db243",
+   "scored_input_sha256": "eb2807d7989d009ef8807eff4051200c91740bea1eb430eace34d4725fa44128",
+   "treatment": "unranked"
+  },
+  "sors-2b": {
+   "axes": {
+    "calibration": 78.40408025655901,
+    "cost": 91.07236654889317,
+    "intelligence": 34.23523816288155,
+    "speed": 93.09919217560679
+   },
+   "category_pool_bounds": {
+    "languages": {
+     "ar": 21,
+     "cs": 37,
+     "da": 36,
+     "de": 48,
+     "el": 28,
+     "en": 555,
+     "es": 37,
+     "fi": 52,
+     "fr": 32,
+     "hi": 37,
+     "id": 41,
+     "it": 45,
+     "ja": 44,
+     "ko": 43,
+     "mixed": 64,
+     "nl": 36,
+     "no": 51,
+     "pl": 57,
+     "pt": 47,
+     "sv": 46,
+     "tr": 46,
+     "uk": 56,
+     "zh": 41
+    },
+    "topics": {},
+    "usecases": {
+     "advertising": 48,
+     "code_linting": 69,
+     "customer_support": 66,
+     "demand_forecasting": 66,
+     "ecommerce_marketplaces": 62,
+     "feature_extraction": 72,
+     "financial_crime": 63,
+     "gaming": 58,
+     "insurance_claims": 62,
+     "knowledge_graphs": 67,
+     "lead_generation": 75,
+     "legal_compliance": 56,
+     "llm_guardrails": 71,
+     "model_routing": 148,
+     "moderation_trust_safety": 59,
+     "other": 32,
+     "recruiting": 65,
+     "risk_assessment": 48,
+     "scientific_discovery": 42,
+     "search_retrieval": 67
+    }
+   },
+   "composite_ci95": {
+    "A": [
+     21.35777738771784,
+     40.17976213669554
+    ],
+    "B": [
+     17.955408618226798,
+     35.18409989631504
+    ],
+    "C": [
+     14.831789852581828,
+     27.902612594927447
+    ]
+   },
+   "cost": {
+    "active_b": 2,
+    "answered_not_in_common": 6,
+    "architecture_class": "small",
+    "cost_all": 0.0019789418611111114,
+    "cost_basis_kind": "gpu-time-min",
+    "cost_common": 0.001984210674576524,
+    "estimate_all": 0.00654668,
+    "estimate_common": 0.006564110141034253,
+    "expect": {
+     "failed": 5,
+     "input_tokens": 491001,
+     "ok": 1495,
+     "output_tokens": 0,
+     "status_counts": {
+      "200": 1495,
+      "422": 5
+     }
+    },
+    "family": "qwen",
+    "gpu_all": 0.0019789418611111114,
+    "gpu_common": 0.001984210674576524,
+    "input_tokens_all": 491001,
+    "input_tokens_common": 488698,
+    "latency_max": 0.436531097999989,
+    "native_output_tokens_all": 1495,
+    "output_tokens_all": 0,
+    "output_tokens_common": 0,
+    "over10": 0,
+    "raw_order_matches_input": true,
+    "raw_sha256": "2ec336dbb83376c9588c47bc17f305a9547839db3e90724097f89d7d699c2ded",
+    "ref": {
+     "in": 0.02,
+     "kind": "estimate",
+     "listing": "deepinfra:Qwen/Qwen3.5-2B",
+     "out": 0.0
+    },
+    "scoring_raw_sha256": "3704c7fb9b57e023257519afb84975ca0ed928937dcdbfb8ec67816b3af77b03",
+    "throughput": 100000
+   },
+   "decision_limit": {
+    "limit_s": 10.0,
+    "n_over_limit": 0,
+    "n_over_limit_answered_ok": 0,
+    "rule": "latency_s > limit -> failed",
+    "speed_basis": "all decisions given (lane items in the raw), measured latency_s",
+    "speed_n": 1500,
+    "treatment": "share"
+   },
+   "model_pin": "3aa743877c9e37103649cb3a156d13fa6a026c39",
+   "price_reference": {
+    "in": 0.02,
+    "kind": "estimate",
+    "listing": "deepinfra:Qwen/Qwen3.5-2B",
+    "out": 0.0
+   },
+   "raw_sha256": "2ec336dbb83376c9588c47bc17f305a9547839db3e90724097f89d7d699c2ded",
+   "scored_input_sha256": "eb2807d7989d009ef8807eff4051200c91740bea1eb430eace34d4725fa44128",
+   "treatment": "unranked"
+  },
+  "wemm-jev": {
+   "axes": {
+    "calibration": 96.11246534948076,
+    "cost": 61.25046269001649,
+    "intelligence": 81.20807147715604,
+    "speed": 88.0997638122694
+   },
+   "category_pool_bounds": {
+    "languages": {
+     "ar": 21,
+     "cs": 37,
+     "da": 36,
+     "de": 48,
+     "el": 28,
+     "en": 555,
+     "es": 37,
+     "fi": 52,
+     "fr": 32,
+     "hi": 37,
+     "id": 41,
+     "it": 45,
+     "ja": 44,
+     "ko": 43,
+     "mixed": 64,
+     "nl": 36,
+     "no": 51,
+     "pl": 57,
+     "pt": 47,
+     "sv": 46,
+     "tr": 46,
+     "uk": 56,
+     "zh": 41
+    },
+    "topics": {},
+    "usecases": {
+     "advertising": 48,
+     "code_linting": 69,
+     "customer_support": 66,
+     "demand_forecasting": 66,
+     "ecommerce_marketplaces": 62,
+     "feature_extraction": 72,
+     "financial_crime": 63,
+     "gaming": 58,
+     "insurance_claims": 62,
+     "knowledge_graphs": 67,
+     "lead_generation": 75,
+     "legal_compliance": 56,
+     "llm_guardrails": 71,
+     "model_routing": 148,
+     "moderation_trust_safety": 59,
+     "other": 32,
+     "recruiting": 65,
+     "risk_assessment": 48,
+     "scientific_discovery": 42,
+     "search_retrieval": 67
+    }
+   },
+   "composite_ci95": {
+    "A": [
+     77.78785995153576,
+     79.9355435450341
+    ],
+    "B": [
+     77.57410396245606,
+     80.82872105132216
+    ],
+    "C": [
+     77.78785995153576,
+     79.9355435450341
+    ]
+   },
+   "cost": {
+    "active_b": 27,
+    "answered_not_in_common": 11,
+    "architecture_class": "dense",
+    "cost_all": 0.03303285306991207,
+    "cost_basis_kind": "gpu-time-min",
+    "cost_common": 0.019572722720911453,
+    "estimate_all": 0.26994267999999993,
+    "estimate_common": 0.15994722632639352,
+    "expect": {
+     "failed": 0,
+     "input_tokens": 964081,
+     "ok": 1500,
+     "output_tokens": 0,
+     "status_counts": {
+      "200": 1500
+     }
+    },
+    "family": "qwen",
+    "gpu_all": 0.03303285306991207,
+    "gpu_common": 0.019572722720911453,
+    "input_tokens_all": 964081,
+    "input_tokens_common": 567051,
+    "latency_max": 45.85338187400009,
+    "native_output_tokens_all": 0,
+    "output_tokens_all": 0,
+    "output_tokens_common": 0,
+    "over10": 5,
+    "raw_order_matches_input": true,
+    "raw_sha256": "53e6c817bc1eff35e2d49469869e05f941902c9492579e48dd625d77b37de7fe",
+    "ref": {
+     "in": 0.42,
+     "kind": "estimate",
+     "listing": "qwen/qwen3.8-27b",
+     "out": 0.0
+    },
+    "scoring_raw_sha256": "53e6c817bc1eff35e2d49469869e05f941902c9492579e48dd625d77b37de7fe",
+    "throughput": 11763.0
+   },
+   "decision_limit": {
+    "limit_s": 10.0,
+    "n_over_limit": 5,
+    "n_over_limit_answered_ok": 5,
+    "rule": "latency_s > limit -> failed",
+    "speed_basis": "all decisions given (lane items in the raw), measured latency_s",
+    "speed_n": 1500,
+    "treatment": "share"
+   },
+   "model_pin": "a463f840c9259ff9139ab02181e01f20aca91b4b",
+   "price_reference": {
+    "in": 0.42,
+    "kind": "estimate",
+    "listing": "qwen/qwen3.8-27b",
+    "out": 0.0
+   },
+   "raw_sha256": "53e6c817bc1eff35e2d49469869e05f941902c9492579e48dd625d77b37de7fe",
+   "scored_input_sha256": "eb2807d7989d009ef8807eff4051200c91740bea1eb430eace34d4725fa44128",
+   "treatment": "unranked"
+  }
+ },
+ "predecessor": {
+  "publication_sha256": "909c59e3a22cd641ee27525008a64a2b1a976ffaf4514b369e3c6b702403e77f",
+  "revision": "v1.8.0"
+ },
+ "pricing_module_sha256": "455ee38b7070f2f076eec65d55c7bb2a69030c26c343c662ade2826f8afd6eaa",
+ "publication_approval": {
+  "fresh_baseline": "v1.8.0",
+  "status": "GO (standing; no top-five change)",
+  "top_five_effect": "unchanged"
+ },
+ "remeasured_rows": {},
+ "repriced_rows": {},
+ "revision": "v1.8.1",
+ "schema_version": 1,
+ "scorers": {
+  "a2_cells_v16": "afd034efe27bde12f2ebbfd12c4c0792c93214e1aa9a63deecb0e83a0184c990",
+  "build_categories_v16": "40eb50f3d7fea2693b4478c4b89f8bfb957dd17776add491935742e3b9354e73",
+  "build_topics_v16": "ec04ab598162bfc4340ffa7916a06573eb1222132c61e47ab772045bc67ced78",
+  "decisive_v16": "80b9ccf43e58dddb1b2a77e0a33aba8a9f7337a3a9a639afc7264218bbf8918f",
+  "noul_method_v16": "119e59486ab3300b972fbcbadb0fe1dceceb124287607375aa61c66063c607d0",
+  "pins_v17": "b50cc00dd2cb0ba46157eb6a2bda620255f3ff54404025e992bc7962dfff2f8b",
+  "run_under_v17": "efb194b2ea350db59be37e5e72af71f809f763a2476cd6f521adf6f4fd90a64f",
+  "score_v15": "0931e05c6410b1b971201834397cb609cdb25f942723c50375632952f6dcc447",
+  "score_v15_headlineA": "826f2cbcb57007ec8a161e6eb0111182b8a656c0638027c6c78022a858fd8e2c",
+  "score_v16": "02132271117653e6302c509232a581d0094f0e78eac8b1bfc67596fd5d5097e9",
+  "score_v17": "6363458d208a52f4ad5aaf73027cad1b7e0358ff962e581d57a3cc462c8f1978"
+ },
+ "source_inputs": {
+  "inputs/ENTRIES.json": "bdcc237e5a287a3911955083e970fe2a09bd91795069dcaca64d8b5fcc2fe9d0",
+  "inputs/ENTRY-PINS.json": "1c9574799d81115d279bc5460f1311a929a25cc108043f869c956a033eaa1915",
+  "src/cells.json": "6799b5326c2388a5ee8c41c06fbf4bea2e3f9953634028ded4eab53ac0633a0e",
+  "src/scored.json": "92488a19d660779717642460806a90ce97ab09023bc362eec4bec4376c49b2c5",
+  "src/usage.json": "92abe468696b54949e4c76f9d1a8553c91503665ceed7aec3e6ba2c98a963b09"
+ },
+ "topfive_diff_sha256": "4726112fd01331744413ffd8e29a63034fdf0ac2a80b7c207672751da7edd306"
+}

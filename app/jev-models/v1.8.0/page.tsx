@@ -1,3 +1,4 @@
+import { jevMethodLabel } from '../../../lib/jev-decision-limit.mjs';
 import { notFound } from 'next/navigation';
 import { readJevbenchV180ForBoard, v180BoardInput } from '../../../lib/jevbench-v180-release.mjs';
 import { JevBenchV16Board } from '../../../components/JevBenchV16Board';
@@ -11,7 +12,7 @@ export default async function JevModelsV180Page() {
  const board=v180BoardInput(release);
  const notes=(release.artifact as unknown as {measurement_notes:string[]}).measurement_notes.slice(-1);
  return <><PageJsonLd meta={metadata}/><JevBenchReleaseVersionNav active="v1.8.0"/>
- <header className="bh-page-head" data-bh-jev16-release-header><div className="bh-eyebrow">JevBench v1.8.0: GPU-time cost basis</div>
+ <header className="bh-page-head" data-bh-jev16-release-header><div className="bh-eyebrow">JevBench v1.8.0 · {jevMethodLabel('v1.8.0')}</div>
  <h1 className="mt-1 text-3xl font-bold">JevBench v1.8.0: GPU-time cost basis</h1>
  <p className="mt-3 max-w-3xl">Cost basis for self-hosted open weights changed from base-model list prices to GPU time on a monthly-rented RTX PRO 6000 with an efficient inference engine. 210 rows have verified scored usage and a resolvable architecture; 46 additional open-weight rows fall within both official caps. Intelligence, Calibration and latency are unchanged; API costs and both caps are unchanged. Encoders, architectures outside the six calibrated Gemma/Qwen classes and rows without a verified token basis retain their old costs. Composite intervals affected by the cost change are withheld; the archived v1.7 intervals use the old cost. Old values remain available in v1.7.x. Throughput was calibrated on prompt processing (prefill); generated tokens are counted at the same rate. Three diffusion-readout rows are priced with the closest calibrated class (MoE Gemma); this is an approximation.</p>
  <p className="bh-muted mt-2 text-xs break-all"><a href="/api/jevbench/v1.8.0">Aggregate results JSON</a> · SHA-256 {release.sha256} · <a href="/jev-models/v1.7.23">Previous v1.7.23</a></p></header>

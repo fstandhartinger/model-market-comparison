@@ -1,0 +1,5204 @@
+{
+ "cribl-decision-2": {
+  "cells_off": {
+   "families": {
+    "composite_gen": {
+     "competence": 26.53,
+     "n": 19
+    },
+    "fairness": {
+     "competence": 63.15,
+     "n": 21
+    },
+    "jaggedness": {
+     "competence": 0.0,
+     "n": 22
+    },
+    "llm_router": {
+     "competence": 67.07,
+     "n": 90
+    },
+    "multilingual": {
+     "competence": 49.47,
+     "n": 921
+    },
+    "negation_pair_gen": {
+     "competence": 16.67,
+     "n": 22
+    },
+    "option_order": {
+     "competence": 85.71,
+     "n": 27
+    },
+    "perturb_pair": {
+     "competence": 84.32,
+     "n": 28
+    },
+    "usecase": {
+     "competence": 43.71,
+     "n": 325
+    }
+   },
+   "languages": {
+    "ar": {
+     "competence": 65.01,
+     "n": 21
+    },
+    "cs": {
+     "competence": 50.15,
+     "n": 37
+    },
+    "da": {
+     "competence": 16.14,
+     "n": 36
+    },
+    "de": {
+     "competence": 55.91,
+     "n": 48
+    },
+    "el": {
+     "competence": 34.77,
+     "n": 28
+    },
+    "en": {
+     "competence": 44.46,
+     "n": 555
+    },
+    "es": {
+     "competence": 66.93,
+     "n": 37
+    },
+    "fi": {
+     "competence": 56.86,
+     "n": 52
+    },
+    "fr": {
+     "competence": 64.46,
+     "n": 32
+    },
+    "hi": {
+     "competence": 34.38,
+     "n": 37
+    },
+    "id": {
+     "competence": 65.35,
+     "n": 41
+    },
+    "it": {
+     "competence": 41.79,
+     "n": 45
+    },
+    "ja": {
+     "competence": 40.7,
+     "n": 44
+    },
+    "ko": {
+     "competence": 27.17,
+     "n": 43
+    },
+    "mixed": {
+     "competence": 71.03,
+     "n": 64
+    },
+    "nl": {
+     "competence": 39.9,
+     "n": 36
+    },
+    "no": {
+     "competence": 34.96,
+     "n": 51
+    },
+    "pl": {
+     "competence": 39.89,
+     "n": 57
+    },
+    "pt": {
+     "competence": 37.14,
+     "n": 47
+    },
+    "sv": {
+     "competence": 48.97,
+     "n": 46
+    },
+    "tr": {
+     "competence": 53.75,
+     "n": 46
+    },
+    "uk": {
+     "competence": 62.85,
+     "n": 56
+    },
+    "zh": {
+     "competence": 64.18,
+     "n": 41
+    }
+   },
+   "usecases": {
+    "advertising": {
+     "competence": 11.19,
+     "n": 48
+    },
+    "code_linting": {
+     "competence": 53.78,
+     "n": 69
+    },
+    "customer_support": {
+     "competence": 36.52,
+     "n": 66
+    },
+    "demand_forecasting": {
+     "competence": 0.0,
+     "n": 66
+    },
+    "ecommerce_marketplaces": {
+     "competence": 39.26,
+     "n": 62
+    },
+    "feature_extraction": {
+     "competence": 48.63,
+     "n": 72
+    },
+    "financial_crime": {
+     "competence": 26.53,
+     "n": 63
+    },
+    "gaming": {
+     "competence": 20.99,
+     "n": 58
+    },
+    "insurance_claims": {
+     "competence": 17.2,
+     "n": 62
+    },
+    "knowledge_graphs": {
+     "competence": 35.07,
+     "n": 67
+    },
+    "lead_generation": {
+     "competence": 63.79,
+     "n": 75
+    },
+    "legal_compliance": {
+     "competence": 54.27,
+     "n": 56
+    },
+    "llm_guardrails": {
+     "competence": 85.8,
+     "n": 71
+    },
+    "model_routing": {
+     "competence": 61.61,
+     "n": 148
+    },
+    "moderation_trust_safety": {
+     "competence": 69.32,
+     "n": 59
+    },
+    "other": {
+     "competence": 58.33,
+     "n": 32
+    },
+    "recruiting": {
+     "competence": 61.08,
+     "n": 65
+    },
+    "risk_assessment": {
+     "competence": 27.44,
+     "n": 48
+    },
+    "scientific_discovery": {
+     "competence": 22.65,
+     "n": 42
+    },
+    "search_retrieval": {
+     "competence": 74.34,
+     "n": 67
+    }
+   }
+  },
+  "cells_share": {
+   "families": {
+    "composite_gen": {
+     "competence": 26.53,
+     "n": 19
+    },
+    "fairness": {
+     "competence": 63.15,
+     "n": 21
+    },
+    "jaggedness": {
+     "competence": 0.0,
+     "n": 22
+    },
+    "llm_router": {
+     "competence": 67.07,
+     "n": 90
+    },
+    "multilingual": {
+     "competence": 49.47,
+     "n": 921
+    },
+    "negation_pair_gen": {
+     "competence": 16.67,
+     "n": 22
+    },
+    "option_order": {
+     "competence": 85.71,
+     "n": 27
+    },
+    "perturb_pair": {
+     "competence": 84.32,
+     "n": 28
+    },
+    "usecase": {
+     "competence": 43.71,
+     "n": 325
+    }
+   },
+   "languages": {
+    "ar": {
+     "competence": 65.01,
+     "n": 21
+    },
+    "cs": {
+     "competence": 50.15,
+     "n": 37
+    },
+    "da": {
+     "competence": 16.14,
+     "n": 36
+    },
+    "de": {
+     "competence": 55.91,
+     "n": 48
+    },
+    "el": {
+     "competence": 34.77,
+     "n": 28
+    },
+    "en": {
+     "competence": 44.46,
+     "n": 555
+    },
+    "es": {
+     "competence": 66.93,
+     "n": 37
+    },
+    "fi": {
+     "competence": 56.86,
+     "n": 52
+    },
+    "fr": {
+     "competence": 64.46,
+     "n": 32
+    },
+    "hi": {
+     "competence": 34.38,
+     "n": 37
+    },
+    "id": {
+     "competence": 65.35,
+     "n": 41
+    },
+    "it": {
+     "competence": 41.79,
+     "n": 45
+    },
+    "ja": {
+     "competence": 40.7,
+     "n": 44
+    },
+    "ko": {
+     "competence": 27.17,
+     "n": 43
+    },
+    "mixed": {
+     "competence": 71.03,
+     "n": 64
+    },
+    "nl": {
+     "competence": 39.9,
+     "n": 36
+    },
+    "no": {
+     "competence": 34.96,
+     "n": 51
+    },
+    "pl": {
+     "competence": 39.89,
+     "n": 57
+    },
+    "pt": {
+     "competence": 37.14,
+     "n": 47
+    },
+    "sv": {
+     "competence": 48.97,
+     "n": 46
+    },
+    "tr": {
+     "competence": 53.75,
+     "n": 46
+    },
+    "uk": {
+     "competence": 62.85,
+     "n": 56
+    },
+    "zh": {
+     "competence": 64.18,
+     "n": 41
+    }
+   },
+   "usecases": {
+    "advertising": {
+     "competence": 11.19,
+     "n": 48
+    },
+    "code_linting": {
+     "competence": 53.78,
+     "n": 69
+    },
+    "customer_support": {
+     "competence": 36.52,
+     "n": 66
+    },
+    "demand_forecasting": {
+     "competence": 0.0,
+     "n": 66
+    },
+    "ecommerce_marketplaces": {
+     "competence": 39.26,
+     "n": 62
+    },
+    "feature_extraction": {
+     "competence": 48.63,
+     "n": 72
+    },
+    "financial_crime": {
+     "competence": 26.53,
+     "n": 63
+    },
+    "gaming": {
+     "competence": 20.99,
+     "n": 58
+    },
+    "insurance_claims": {
+     "competence": 17.2,
+     "n": 62
+    },
+    "knowledge_graphs": {
+     "competence": 35.07,
+     "n": 67
+    },
+    "lead_generation": {
+     "competence": 63.79,
+     "n": 75
+    },
+    "legal_compliance": {
+     "competence": 54.27,
+     "n": 56
+    },
+    "llm_guardrails": {
+     "competence": 85.8,
+     "n": 71
+    },
+    "model_routing": {
+     "competence": 61.61,
+     "n": 148
+    },
+    "moderation_trust_safety": {
+     "competence": 69.32,
+     "n": 59
+    },
+    "other": {
+     "competence": 58.33,
+     "n": 32
+    },
+    "recruiting": {
+     "competence": 61.08,
+     "n": 65
+    },
+    "risk_assessment": {
+     "competence": 27.44,
+     "n": 48
+    },
+    "scientific_discovery": {
+     "competence": 22.65,
+     "n": 42
+    },
+    "search_retrieval": {
+     "competence": 74.34,
+     "n": 67
+    }
+   }
+  },
+  "noul_off": {
+   "acc_among_decisive": 0.9775784753363229,
+   "decisive": 223,
+   "decisive_rate": 0.5962566844919787,
+   "n": 375,
+   "supported": true,
+   "valid": 374
+  },
+  "noul_share": {
+   "acc_among_decisive": 0.9775784753363229,
+   "decisive": 223,
+   "decisive_rate": 0.5962566844919787,
+   "n": 375,
+   "supported": true,
+   "valid": 374
+  },
+  "pool_off": {
+   "families": {
+    "calibration": 4,
+    "calibration_gen": 14,
+    "composite_gen": 19,
+    "fairness": 21,
+    "jaggedness": 22,
+    "llm_router": 90,
+    "long_state": 5,
+    "ml_usecase": 2,
+    "multilingual": 921,
+    "negation_pair_gen": 22,
+    "option_order": 27,
+    "perturb_pair": 28,
+    "usecase": 325
+   },
+   "languages": {
+    "ar": 21,
+    "cs": 37,
+    "da": 36,
+    "de": 48,
+    "el": 28,
+    "en": 555,
+    "es": 37,
+    "fi": 52,
+    "fr": 32,
+    "hi": 37,
+    "id": 41,
+    "it": 45,
+    "ja": 44,
+    "ko": 43,
+    "mixed": 64,
+    "nl": 36,
+    "no": 51,
+    "pl": 57,
+    "pt": 47,
+    "sv": 46,
+    "tr": 46,
+    "uk": 56,
+    "zh": 41
+   },
+   "usecases": {
+    "advertising": 48,
+    "code_linting": 69,
+    "customer_support": 66,
+    "demand_forecasting": 66,
+    "ecommerce_marketplaces": 62,
+    "feature_extraction": 72,
+    "financial_crime": 63,
+    "gaming": 58,
+    "insurance_claims": 62,
+    "knowledge_graphs": 67,
+    "lead_generation": 75,
+    "legal_compliance": 56,
+    "llm_guardrails": 71,
+    "model_routing": 148,
+    "moderation_trust_safety": 59,
+    "other": 32,
+    "recruiting": 65,
+    "risk_assessment": 48,
+    "scientific_discovery": 42,
+    "search_retrieval": 67
+   }
+  },
+  "pool_share": {
+   "families": {
+    "calibration": 4,
+    "calibration_gen": 14,
+    "composite_gen": 19,
+    "fairness": 21,
+    "jaggedness": 22,
+    "llm_router": 90,
+    "long_state": 5,
+    "ml_usecase": 2,
+    "multilingual": 921,
+    "negation_pair_gen": 22,
+    "option_order": 27,
+    "perturb_pair": 28,
+    "usecase": 325
+   },
+   "languages": {
+    "ar": 21,
+    "cs": 37,
+    "da": 36,
+    "de": 48,
+    "el": 28,
+    "en": 555,
+    "es": 37,
+    "fi": 52,
+    "fr": 32,
+    "hi": 37,
+    "id": 41,
+    "it": 45,
+    "ja": 44,
+    "ko": 43,
+    "mixed": 64,
+    "nl": 36,
+    "no": 51,
+    "pl": 57,
+    "pt": 47,
+    "sv": 46,
+    "tr": 46,
+    "uk": 56,
+    "zh": 41
+   },
+   "usecases": {
+    "advertising": 48,
+    "code_linting": 69,
+    "customer_support": 66,
+    "demand_forecasting": 66,
+    "ecommerce_marketplaces": 62,
+    "feature_extraction": 72,
+    "financial_crime": 63,
+    "gaming": 58,
+    "insurance_claims": 62,
+    "knowledge_graphs": 67,
+    "lead_generation": 75,
+    "legal_compliance": 56,
+    "llm_guardrails": 71,
+    "model_routing": 148,
+    "moderation_trust_safety": 59,
+    "other": 32,
+    "recruiting": 65,
+    "risk_assessment": 48,
+    "scientific_discovery": 42,
+    "search_retrieval": 67
+   }
+  }
+ },
+ "cribl-decision-2-mini": {
+  "cells_off": {
+   "families": {
+    "composite_gen": {
+     "competence": 0.0,
+     "n": 19
+    },
+    "fairness": {
+     "competence": 0.0,
+     "n": 21
+    },
+    "jaggedness": {
+     "competence": 0.0,
+     "n": 22
+    },
+    "llm_router": {
+     "competence": 34.09,
+     "n": 90
+    },
+    "multilingual": {
+     "competence": 3.51,
+     "n": 921
+    },
+    "negation_pair_gen": {
+     "competence": 11.67,
+     "n": 22
+    },
+    "option_order": {
+     "competence": 61.9,
+     "n": 27
+    },
+    "perturb_pair": {
+     "competence": 19.95,
+     "n": 28
+    },
+    "usecase": {
+     "competence": 0.0,
+     "n": 325
+    }
+   },
+   "languages": {
+    "ar": {
+     "competence": 11.1,
+     "n": 21
+    },
+    "cs": {
+     "competence": 0.0,
+     "n": 37
+    },
+    "da": {
+     "competence": 0.0,
+     "n": 36
+    },
+    "de": {
+     "competence": 17.85,
+     "n": 48
+    },
+    "el": {
+     "competence": 0.0,
+     "n": 28
+    },
+    "en": {
+     "competence": 2.55,
+     "n": 555
+    },
+    "es": {
+     "competence": 26.88,
+     "n": 37
+    },
+    "fi": {
+     "competence": 5.49,
+     "n": 52
+    },
+    "fr": {
+     "competence": 9.83,
+     "n": 32
+    },
+    "hi": {
+     "competence": 0.0,
+     "n": 37
+    },
+    "id": {
+     "competence": 18.07,
+     "n": 41
+    },
+    "it": {
+     "competence": 10.6,
+     "n": 45
+    },
+    "ja": {
+     "competence": 0.0,
+     "n": 44
+    },
+    "ko": {
+     "competence": 7.98,
+     "n": 43
+    },
+    "mixed": {
+     "competence": 23.77,
+     "n": 64
+    },
+    "nl": {
+     "competence": 0.0,
+     "n": 36
+    },
+    "no": {
+     "competence": 0.0,
+     "n": 51
+    },
+    "pl": {
+     "competence": 11.4,
+     "n": 57
+    },
+    "pt": {
+     "competence": 2.21,
+     "n": 47
+    },
+    "sv": {
+     "competence": 0.0,
+     "n": 46
+    },
+    "tr": {
+     "competence": 0.0,
+     "n": 46
+    },
+    "uk": {
+     "competence": 0.56,
+     "n": 56
+    },
+    "zh": {
+     "competence": 31.43,
+     "n": 41
+    }
+   },
+   "usecases": {
+    "advertising": {
+     "competence": 0.0,
+     "n": 48
+    },
+    "code_linting": {
+     "competence": 0.0,
+     "n": 69
+    },
+    "customer_support": {
+     "competence": 0.0,
+     "n": 66
+    },
+    "demand_forecasting": {
+     "competence": 0.0,
+     "n": 66
+    },
+    "ecommerce_marketplaces": {
+     "competence": 0.98,
+     "n": 62
+    },
+    "feature_extraction": {
+     "competence": 3.41,
+     "n": 72
+    },
+    "financial_crime": {
+     "competence": 5.0,
+     "n": 63
+    },
+    "gaming": {
+     "competence": 0.0,
+     "n": 58
+    },
+    "insurance_claims": {
+     "competence": 0.0,
+     "n": 62
+    },
+    "knowledge_graphs": {
+     "competence": 0.0,
+     "n": 67
+    },
+    "lead_generation": {
+     "competence": 4.54,
+     "n": 75
+    },
+    "legal_compliance": {
+     "competence": 4.4,
+     "n": 56
+    },
+    "llm_guardrails": {
+     "competence": 24.22,
+     "n": 71
+    },
+    "model_routing": {
+     "competence": 24.7,
+     "n": 148
+    },
+    "moderation_trust_safety": {
+     "competence": 3.44,
+     "n": 59
+    },
+    "other": {
+     "competence": 0.0,
+     "n": 32
+    },
+    "recruiting": {
+     "competence": 0.0,
+     "n": 65
+    },
+    "risk_assessment": {
+     "competence": 0.0,
+     "n": 48
+    },
+    "scientific_discovery": {
+     "competence": 0.0,
+     "n": 42
+    },
+    "search_retrieval": {
+     "competence": 36.62,
+     "n": 67
+    }
+   }
+  },
+  "cells_share": {
+   "families": {
+    "composite_gen": {
+     "competence": 0.0,
+     "n": 19
+    },
+    "fairness": {
+     "competence": 0.0,
+     "n": 21
+    },
+    "jaggedness": {
+     "competence": 0.0,
+     "n": 22
+    },
+    "llm_router": {
+     "competence": 34.09,
+     "n": 90
+    },
+    "multilingual": {
+     "competence": 3.51,
+     "n": 921
+    },
+    "negation_pair_gen": {
+     "competence": 11.67,
+     "n": 22
+    },
+    "option_order": {
+     "competence": 61.9,
+     "n": 27
+    },
+    "perturb_pair": {
+     "competence": 19.95,
+     "n": 28
+    },
+    "usecase": {
+     "competence": 0.0,
+     "n": 325
+    }
+   },
+   "languages": {
+    "ar": {
+     "competence": 11.1,
+     "n": 21
+    },
+    "cs": {
+     "competence": 0.0,
+     "n": 37
+    },
+    "da": {
+     "competence": 0.0,
+     "n": 36
+    },
+    "de": {
+     "competence": 17.85,
+     "n": 48
+    },
+    "el": {
+     "competence": 0.0,
+     "n": 28
+    },
+    "en": {
+     "competence": 2.55,
+     "n": 555
+    },
+    "es": {
+     "competence": 26.88,
+     "n": 37
+    },
+    "fi": {
+     "competence": 5.49,
+     "n": 52
+    },
+    "fr": {
+     "competence": 9.83,
+     "n": 32
+    },
+    "hi": {
+     "competence": 0.0,
+     "n": 37
+    },
+    "id": {
+     "competence": 18.07,
+     "n": 41
+    },
+    "it": {
+     "competence": 10.6,
+     "n": 45
+    },
+    "ja": {
+     "competence": 0.0,
+     "n": 44
+    },
+    "ko": {
+     "competence": 7.98,
+     "n": 43
+    },
+    "mixed": {
+     "competence": 23.77,
+     "n": 64
+    },
+    "nl": {
+     "competence": 0.0,
+     "n": 36
+    },
+    "no": {
+     "competence": 0.0,
+     "n": 51
+    },
+    "pl": {
+     "competence": 11.4,
+     "n": 57
+    },
+    "pt": {
+     "competence": 2.21,
+     "n": 47
+    },
+    "sv": {
+     "competence": 0.0,
+     "n": 46
+    },
+    "tr": {
+     "competence": 0.0,
+     "n": 46
+    },
+    "uk": {
+     "competence": 0.56,
+     "n": 56
+    },
+    "zh": {
+     "competence": 31.43,
+     "n": 41
+    }
+   },
+   "usecases": {
+    "advertising": {
+     "competence": 0.0,
+     "n": 48
+    },
+    "code_linting": {
+     "competence": 0.0,
+     "n": 69
+    },
+    "customer_support": {
+     "competence": 0.0,
+     "n": 66
+    },
+    "demand_forecasting": {
+     "competence": 0.0,
+     "n": 66
+    },
+    "ecommerce_marketplaces": {
+     "competence": 0.98,
+     "n": 62
+    },
+    "feature_extraction": {
+     "competence": 3.41,
+     "n": 72
+    },
+    "financial_crime": {
+     "competence": 5.0,
+     "n": 63
+    },
+    "gaming": {
+     "competence": 0.0,
+     "n": 58
+    },
+    "insurance_claims": {
+     "competence": 0.0,
+     "n": 62
+    },
+    "knowledge_graphs": {
+     "competence": 0.0,
+     "n": 67
+    },
+    "lead_generation": {
+     "competence": 4.54,
+     "n": 75
+    },
+    "legal_compliance": {
+     "competence": 4.4,
+     "n": 56
+    },
+    "llm_guardrails": {
+     "competence": 24.22,
+     "n": 71
+    },
+    "model_routing": {
+     "competence": 24.7,
+     "n": 148
+    },
+    "moderation_trust_safety": {
+     "competence": 3.44,
+     "n": 59
+    },
+    "other": {
+     "competence": 0.0,
+     "n": 32
+    },
+    "recruiting": {
+     "competence": 0.0,
+     "n": 65
+    },
+    "risk_assessment": {
+     "competence": 0.0,
+     "n": 48
+    },
+    "scientific_discovery": {
+     "competence": 0.0,
+     "n": 42
+    },
+    "search_retrieval": {
+     "competence": 36.62,
+     "n": 67
+    }
+   }
+  },
+  "noul_off": {
+   "acc_among_decisive": 0.8584905660377359,
+   "decisive": 106,
+   "decisive_rate": 0.28342245989304815,
+   "n": 375,
+   "supported": true,
+   "valid": 374
+  },
+  "noul_share": {
+   "acc_among_decisive": 0.8584905660377359,
+   "decisive": 106,
+   "decisive_rate": 0.28342245989304815,
+   "n": 375,
+   "supported": true,
+   "valid": 374
+  },
+  "pool_off": {
+   "families": {
+    "calibration": 4,
+    "calibration_gen": 14,
+    "composite_gen": 19,
+    "fairness": 21,
+    "jaggedness": 22,
+    "llm_router": 90,
+    "long_state": 5,
+    "ml_usecase": 2,
+    "multilingual": 921,
+    "negation_pair_gen": 22,
+    "option_order": 27,
+    "perturb_pair": 28,
+    "usecase": 325
+   },
+   "languages": {
+    "ar": 21,
+    "cs": 37,
+    "da": 36,
+    "de": 48,
+    "el": 28,
+    "en": 555,
+    "es": 37,
+    "fi": 52,
+    "fr": 32,
+    "hi": 37,
+    "id": 41,
+    "it": 45,
+    "ja": 44,
+    "ko": 43,
+    "mixed": 64,
+    "nl": 36,
+    "no": 51,
+    "pl": 57,
+    "pt": 47,
+    "sv": 46,
+    "tr": 46,
+    "uk": 56,
+    "zh": 41
+   },
+   "usecases": {
+    "advertising": 48,
+    "code_linting": 69,
+    "customer_support": 66,
+    "demand_forecasting": 66,
+    "ecommerce_marketplaces": 62,
+    "feature_extraction": 72,
+    "financial_crime": 63,
+    "gaming": 58,
+    "insurance_claims": 62,
+    "knowledge_graphs": 67,
+    "lead_generation": 75,
+    "legal_compliance": 56,
+    "llm_guardrails": 71,
+    "model_routing": 148,
+    "moderation_trust_safety": 59,
+    "other": 32,
+    "recruiting": 65,
+    "risk_assessment": 48,
+    "scientific_discovery": 42,
+    "search_retrieval": 67
+   }
+  },
+  "pool_share": {
+   "families": {
+    "calibration": 4,
+    "calibration_gen": 14,
+    "composite_gen": 19,
+    "fairness": 21,
+    "jaggedness": 22,
+    "llm_router": 90,
+    "long_state": 5,
+    "ml_usecase": 2,
+    "multilingual": 921,
+    "negation_pair_gen": 22,
+    "option_order": 27,
+    "perturb_pair": 28,
+    "usecase": 325
+   },
+   "languages": {
+    "ar": 21,
+    "cs": 37,
+    "da": 36,
+    "de": 48,
+    "el": 28,
+    "en": 555,
+    "es": 37,
+    "fi": 52,
+    "fr": 32,
+    "hi": 37,
+    "id": 41,
+    "it": 45,
+    "ja": 44,
+    "ko": 43,
+    "mixed": 64,
+    "nl": 36,
+    "no": 51,
+    "pl": 57,
+    "pt": 47,
+    "sv": 46,
+    "tr": 46,
+    "uk": 56,
+    "zh": 41
+   },
+   "usecases": {
+    "advertising": 48,
+    "code_linting": 69,
+    "customer_support": 66,
+    "demand_forecasting": 66,
+    "ecommerce_marketplaces": 62,
+    "feature_extraction": 72,
+    "financial_crime": 63,
+    "gaming": 58,
+    "insurance_claims": 62,
+    "knowledge_graphs": 67,
+    "lead_generation": 75,
+    "legal_compliance": 56,
+    "llm_guardrails": 71,
+    "model_routing": 148,
+    "moderation_trust_safety": 59,
+    "other": 32,
+    "recruiting": 65,
+    "risk_assessment": 48,
+    "scientific_discovery": 42,
+    "search_retrieval": 67
+   }
+  }
+ },
+ "decide-1.1": {
+  "cells_off": {
+   "families": {
+    "composite_gen": {
+     "competence": 66.15,
+     "n": 19
+    },
+    "fairness": {
+     "competence": 99.49,
+     "n": 21
+    },
+    "jaggedness": {
+     "competence": 74.34,
+     "n": 22
+    },
+    "llm_router": {
+     "competence": 78.86,
+     "n": 90
+    },
+    "multilingual": {
+     "competence": 81.13,
+     "n": 921
+    },
+    "negation_pair_gen": {
+     "competence": 83.33,
+     "n": 22
+    },
+    "option_order": {
+     "competence": 85.71,
+     "n": 27
+    },
+    "perturb_pair": {
+     "competence": 77.46,
+     "n": 28
+    },
+    "usecase": {
+     "competence": 74.77,
+     "n": 325
+    }
+   },
+   "languages": {
+    "ar": {
+     "competence": 83.16,
+     "n": 21
+    },
+    "cs": {
+     "competence": 70.99,
+     "n": 37
+    },
+    "da": {
+     "competence": 78.23,
+     "n": 36
+    },
+    "de": {
+     "competence": 83.1,
+     "n": 48
+    },
+    "el": {
+     "competence": 67.82,
+     "n": 28
+    },
+    "en": {
+     "competence": 75.7,
+     "n": 555
+    },
+    "es": {
+     "competence": 84.31,
+     "n": 37
+    },
+    "fi": {
+     "competence": 90.35,
+     "n": 52
+    },
+    "fr": {
+     "competence": 72.64,
+     "n": 32
+    },
+    "hi": {
+     "competence": 84.1,
+     "n": 37
+    },
+    "id": {
+     "competence": 84.16,
+     "n": 41
+    },
+    "it": {
+     "competence": 84.45,
+     "n": 45
+    },
+    "ja": {
+     "competence": 80.54,
+     "n": 44
+    },
+    "ko": {
+     "competence": 83.88,
+     "n": 43
+    },
+    "mixed": {
+     "competence": 83.78,
+     "n": 64
+    },
+    "nl": {
+     "competence": 84.83,
+     "n": 36
+    },
+    "no": {
+     "competence": 84.04,
+     "n": 51
+    },
+    "pl": {
+     "competence": 75.45,
+     "n": 57
+    },
+    "pt": {
+     "competence": 74.47,
+     "n": 47
+    },
+    "sv": {
+     "competence": 74.64,
+     "n": 46
+    },
+    "tr": {
+     "competence": 78.59,
+     "n": 46
+    },
+    "uk": {
+     "competence": 75.4,
+     "n": 56
+    },
+    "zh": {
+     "competence": 86.14,
+     "n": 41
+    }
+   },
+   "usecases": {
+    "advertising": {
+     "competence": 89.76,
+     "n": 48
+    },
+    "code_linting": {
+     "competence": 82.99,
+     "n": 69
+    },
+    "customer_support": {
+     "competence": 82.1,
+     "n": 66
+    },
+    "demand_forecasting": {
+     "competence": 46.65,
+     "n": 66
+    },
+    "ecommerce_marketplaces": {
+     "competence": 76.74,
+     "n": 62
+    },
+    "feature_extraction": {
+     "competence": 82.61,
+     "n": 72
+    },
+    "financial_crime": {
+     "competence": 66.15,
+     "n": 63
+    },
+    "gaming": {
+     "competence": 73.78,
+     "n": 58
+    },
+    "insurance_claims": {
+     "competence": 57.97,
+     "n": 62
+    },
+    "knowledge_graphs": {
+     "competence": 77.19,
+     "n": 67
+    },
+    "lead_generation": {
+     "competence": 90.07,
+     "n": 75
+    },
+    "legal_compliance": {
+     "competence": 77.31,
+     "n": 56
+    },
+    "llm_guardrails": {
+     "competence": 86.38,
+     "n": 71
+    },
+    "model_routing": {
+     "competence": 85.47,
+     "n": 148
+    },
+    "moderation_trust_safety": {
+     "competence": 89.05,
+     "n": 59
+    },
+    "other": {
+     "competence": 73.04,
+     "n": 32
+    },
+    "recruiting": {
+     "competence": 87.21,
+     "n": 65
+    },
+    "risk_assessment": {
+     "competence": 74.16,
+     "n": 48
+    },
+    "scientific_discovery": {
+     "competence": 71.76,
+     "n": 42
+    },
+    "search_retrieval": {
+     "competence": 92.79,
+     "n": 67
+    }
+   }
+  },
+  "cells_share": {
+   "families": {
+    "composite_gen": {
+     "competence": 66.15,
+     "n": 19
+    },
+    "fairness": {
+     "competence": 99.49,
+     "n": 21
+    },
+    "jaggedness": {
+     "competence": 74.34,
+     "n": 22
+    },
+    "llm_router": {
+     "competence": 77.98,
+     "n": 90
+    },
+    "multilingual": {
+     "competence": 81.03,
+     "n": 921
+    },
+    "negation_pair_gen": {
+     "competence": 83.33,
+     "n": 22
+    },
+    "option_order": {
+     "competence": 85.71,
+     "n": 27
+    },
+    "perturb_pair": {
+     "competence": 77.46,
+     "n": 28
+    },
+    "usecase": {
+     "competence": 74.77,
+     "n": 325
+    }
+   },
+   "languages": {
+    "ar": {
+     "competence": 83.16,
+     "n": 21
+    },
+    "cs": {
+     "competence": 70.99,
+     "n": 37
+    },
+    "da": {
+     "competence": 78.23,
+     "n": 36
+    },
+    "de": {
+     "competence": 81.56,
+     "n": 48
+    },
+    "el": {
+     "competence": 67.82,
+     "n": 28
+    },
+    "en": {
+     "competence": 75.7,
+     "n": 555
+    },
+    "es": {
+     "competence": 84.31,
+     "n": 37
+    },
+    "fi": {
+     "competence": 90.35,
+     "n": 52
+    },
+    "fr": {
+     "competence": 72.64,
+     "n": 32
+    },
+    "hi": {
+     "competence": 84.1,
+     "n": 37
+    },
+    "id": {
+     "competence": 84.16,
+     "n": 41
+    },
+    "it": {
+     "competence": 84.45,
+     "n": 45
+    },
+    "ja": {
+     "competence": 80.54,
+     "n": 44
+    },
+    "ko": {
+     "competence": 83.88,
+     "n": 43
+    },
+    "mixed": {
+     "competence": 83.78,
+     "n": 64
+    },
+    "nl": {
+     "competence": 84.83,
+     "n": 36
+    },
+    "no": {
+     "competence": 84.04,
+     "n": 51
+    },
+    "pl": {
+     "competence": 73.85,
+     "n": 57
+    },
+    "pt": {
+     "competence": 74.47,
+     "n": 47
+    },
+    "sv": {
+     "competence": 74.64,
+     "n": 46
+    },
+    "tr": {
+     "competence": 78.59,
+     "n": 46
+    },
+    "uk": {
+     "competence": 75.4,
+     "n": 56
+    },
+    "zh": {
+     "competence": 86.14,
+     "n": 41
+    }
+   },
+   "usecases": {
+    "advertising": {
+     "competence": 89.76,
+     "n": 48
+    },
+    "code_linting": {
+     "competence": 82.99,
+     "n": 69
+    },
+    "customer_support": {
+     "competence": 80.87,
+     "n": 66
+    },
+    "demand_forecasting": {
+     "competence": 46.65,
+     "n": 66
+    },
+    "ecommerce_marketplaces": {
+     "competence": 76.74,
+     "n": 62
+    },
+    "feature_extraction": {
+     "competence": 82.61,
+     "n": 72
+    },
+    "financial_crime": {
+     "competence": 66.15,
+     "n": 63
+    },
+    "gaming": {
+     "competence": 73.78,
+     "n": 58
+    },
+    "insurance_claims": {
+     "competence": 57.97,
+     "n": 62
+    },
+    "knowledge_graphs": {
+     "competence": 77.19,
+     "n": 67
+    },
+    "lead_generation": {
+     "competence": 90.07,
+     "n": 75
+    },
+    "legal_compliance": {
+     "competence": 77.31,
+     "n": 56
+    },
+    "llm_guardrails": {
+     "competence": 86.38,
+     "n": 71
+    },
+    "model_routing": {
+     "competence": 84.95,
+     "n": 148
+    },
+    "moderation_trust_safety": {
+     "competence": 89.05,
+     "n": 59
+    },
+    "other": {
+     "competence": 73.04,
+     "n": 32
+    },
+    "recruiting": {
+     "competence": 87.21,
+     "n": 65
+    },
+    "risk_assessment": {
+     "competence": 74.16,
+     "n": 48
+    },
+    "scientific_discovery": {
+     "competence": 71.76,
+     "n": 42
+    },
+    "search_retrieval": {
+     "competence": 92.79,
+     "n": 67
+    }
+   }
+  },
+  "noul_off": {
+   "acc_among_decisive": 0.9546666666666667,
+   "decisive": 375,
+   "decisive_rate": 1.0,
+   "n": 375,
+   "supported": true,
+   "valid": 375
+  },
+  "noul_share": {
+   "acc_among_decisive": 0.9546666666666667,
+   "decisive": 375,
+   "decisive_rate": 1.0,
+   "n": 375,
+   "supported": true,
+   "valid": 375
+  },
+  "pool_off": {
+   "families": {
+    "calibration": 4,
+    "calibration_gen": 14,
+    "composite_gen": 19,
+    "fairness": 21,
+    "jaggedness": 22,
+    "llm_router": 90,
+    "long_state": 5,
+    "ml_usecase": 2,
+    "multilingual": 921,
+    "negation_pair_gen": 22,
+    "option_order": 27,
+    "perturb_pair": 28,
+    "usecase": 325
+   },
+   "languages": {
+    "ar": 21,
+    "cs": 37,
+    "da": 36,
+    "de": 48,
+    "el": 28,
+    "en": 555,
+    "es": 37,
+    "fi": 52,
+    "fr": 32,
+    "hi": 37,
+    "id": 41,
+    "it": 45,
+    "ja": 44,
+    "ko": 43,
+    "mixed": 64,
+    "nl": 36,
+    "no": 51,
+    "pl": 57,
+    "pt": 47,
+    "sv": 46,
+    "tr": 46,
+    "uk": 56,
+    "zh": 41
+   },
+   "usecases": {
+    "advertising": 48,
+    "code_linting": 69,
+    "customer_support": 66,
+    "demand_forecasting": 66,
+    "ecommerce_marketplaces": 62,
+    "feature_extraction": 72,
+    "financial_crime": 63,
+    "gaming": 58,
+    "insurance_claims": 62,
+    "knowledge_graphs": 67,
+    "lead_generation": 75,
+    "legal_compliance": 56,
+    "llm_guardrails": 71,
+    "model_routing": 148,
+    "moderation_trust_safety": 59,
+    "other": 32,
+    "recruiting": 65,
+    "risk_assessment": 48,
+    "scientific_discovery": 42,
+    "search_retrieval": 67
+   }
+  },
+  "pool_share": {
+   "families": {
+    "calibration": 4,
+    "calibration_gen": 14,
+    "composite_gen": 19,
+    "fairness": 21,
+    "jaggedness": 22,
+    "llm_router": 90,
+    "long_state": 5,
+    "ml_usecase": 2,
+    "multilingual": 921,
+    "negation_pair_gen": 22,
+    "option_order": 27,
+    "perturb_pair": 28,
+    "usecase": 325
+   },
+   "languages": {
+    "ar": 21,
+    "cs": 37,
+    "da": 36,
+    "de": 48,
+    "el": 28,
+    "en": 555,
+    "es": 37,
+    "fi": 52,
+    "fr": 32,
+    "hi": 37,
+    "id": 41,
+    "it": 45,
+    "ja": 44,
+    "ko": 43,
+    "mixed": 64,
+    "nl": 36,
+    "no": 51,
+    "pl": 57,
+    "pt": 47,
+    "sv": 46,
+    "tr": 46,
+    "uk": 56,
+    "zh": 41
+   },
+   "usecases": {
+    "advertising": 48,
+    "code_linting": 69,
+    "customer_support": 66,
+    "demand_forecasting": 66,
+    "ecommerce_marketplaces": 62,
+    "feature_extraction": 72,
+    "financial_crime": 63,
+    "gaming": 58,
+    "insurance_claims": 62,
+    "knowledge_graphs": 67,
+    "lead_generation": 75,
+    "legal_compliance": 56,
+    "llm_guardrails": 71,
+    "model_routing": 148,
+    "moderation_trust_safety": 59,
+    "other": 32,
+    "recruiting": 65,
+    "risk_assessment": 48,
+    "scientific_discovery": 42,
+    "search_retrieval": 67
+   }
+  }
+ },
+ "decision-king-v1.1": {
+  "cells_off": {
+   "families": {
+    "composite_gen": {
+     "competence": 84.68,
+     "n": 19
+    },
+    "fairness": {
+     "competence": 99.94,
+     "n": 21
+    },
+    "jaggedness": {
+     "competence": 6.69,
+     "n": 22
+    },
+    "llm_router": {
+     "competence": 85.45,
+     "n": 90
+    },
+    "multilingual": {
+     "competence": 83.12,
+     "n": 921
+    },
+    "negation_pair_gen": {
+     "competence": 91.67,
+     "n": 22
+    },
+    "option_order": {
+     "competence": 71.43,
+     "n": 27
+    },
+    "perturb_pair": {
+     "competence": 77.89,
+     "n": 28
+    },
+    "usecase": {
+     "competence": 72.85,
+     "n": 325
+    }
+   },
+   "languages": {
+    "ar": {
+     "competence": 87.76,
+     "n": 21
+    },
+    "cs": {
+     "competence": 73.63,
+     "n": 37
+    },
+    "da": {
+     "competence": 77.24,
+     "n": 36
+    },
+    "de": {
+     "competence": 92.75,
+     "n": 48
+    },
+    "el": {
+     "competence": 83.02,
+     "n": 28
+    },
+    "en": {
+     "competence": 74.44,
+     "n": 555
+    },
+    "es": {
+     "competence": 82.61,
+     "n": 37
+    },
+    "fi": {
+     "competence": 90.59,
+     "n": 52
+    },
+    "fr": {
+     "competence": 86.22,
+     "n": 32
+    },
+    "hi": {
+     "competence": 81.49,
+     "n": 37
+    },
+    "id": {
+     "competence": 80.5,
+     "n": 41
+    },
+    "it": {
+     "competence": 84.29,
+     "n": 45
+    },
+    "ja": {
+     "competence": 83.18,
+     "n": 44
+    },
+    "ko": {
+     "competence": 64.02,
+     "n": 43
+    },
+    "mixed": {
+     "competence": 94.94,
+     "n": 64
+    },
+    "nl": {
+     "competence": 79.53,
+     "n": 36
+    },
+    "no": {
+     "competence": 75.24,
+     "n": 51
+    },
+    "pl": {
+     "competence": 76.88,
+     "n": 57
+    },
+    "pt": {
+     "competence": 85.32,
+     "n": 47
+    },
+    "sv": {
+     "competence": 85.73,
+     "n": 46
+    },
+    "tr": {
+     "competence": 80.29,
+     "n": 46
+    },
+    "uk": {
+     "competence": 76.57,
+     "n": 56
+    },
+    "zh": {
+     "competence": 88.08,
+     "n": 41
+    }
+   },
+   "usecases": {
+    "advertising": {
+     "competence": 62.81,
+     "n": 48
+    },
+    "code_linting": {
+     "competence": 97.16,
+     "n": 69
+    },
+    "customer_support": {
+     "competence": 94.88,
+     "n": 66
+    },
+    "demand_forecasting": {
+     "competence": 26.36,
+     "n": 66
+    },
+    "ecommerce_marketplaces": {
+     "competence": 83.44,
+     "n": 62
+    },
+    "feature_extraction": {
+     "competence": 70.59,
+     "n": 72
+    },
+    "financial_crime": {
+     "competence": 64.77,
+     "n": 63
+    },
+    "gaming": {
+     "competence": 64.45,
+     "n": 58
+    },
+    "insurance_claims": {
+     "competence": 69.81,
+     "n": 62
+    },
+    "knowledge_graphs": {
+     "competence": 90.29,
+     "n": 67
+    },
+    "lead_generation": {
+     "competence": 89.38,
+     "n": 75
+    },
+    "legal_compliance": {
+     "competence": 86.73,
+     "n": 56
+    },
+    "llm_guardrails": {
+     "competence": 91.11,
+     "n": 71
+    },
+    "model_routing": {
+     "competence": 86.1,
+     "n": 148
+    },
+    "moderation_trust_safety": {
+     "competence": 93.38,
+     "n": 59
+    },
+    "other": {
+     "competence": 59.9,
+     "n": 32
+    },
+    "recruiting": {
+     "competence": 84.93,
+     "n": 65
+    },
+    "risk_assessment": {
+     "competence": 72.34,
+     "n": 48
+    },
+    "scientific_discovery": {
+     "competence": 64.28,
+     "n": 42
+    },
+    "search_retrieval": {
+     "competence": 95.02,
+     "n": 67
+    }
+   }
+  },
+  "cells_share": {
+   "families": {
+    "composite_gen": {
+     "competence": 84.68,
+     "n": 19
+    },
+    "fairness": {
+     "competence": 99.94,
+     "n": 21
+    },
+    "jaggedness": {
+     "competence": 6.69,
+     "n": 22
+    },
+    "llm_router": {
+     "competence": 85.45,
+     "n": 90
+    },
+    "multilingual": {
+     "competence": 83.12,
+     "n": 921
+    },
+    "negation_pair_gen": {
+     "competence": 91.67,
+     "n": 22
+    },
+    "option_order": {
+     "competence": 71.43,
+     "n": 27
+    },
+    "perturb_pair": {
+     "competence": 77.89,
+     "n": 28
+    },
+    "usecase": {
+     "competence": 72.85,
+     "n": 325
+    }
+   },
+   "languages": {
+    "ar": {
+     "competence": 87.76,
+     "n": 21
+    },
+    "cs": {
+     "competence": 73.63,
+     "n": 37
+    },
+    "da": {
+     "competence": 77.24,
+     "n": 36
+    },
+    "de": {
+     "competence": 92.75,
+     "n": 48
+    },
+    "el": {
+     "competence": 83.02,
+     "n": 28
+    },
+    "en": {
+     "competence": 74.01,
+     "n": 555
+    },
+    "es": {
+     "competence": 82.61,
+     "n": 37
+    },
+    "fi": {
+     "competence": 90.59,
+     "n": 52
+    },
+    "fr": {
+     "competence": 86.22,
+     "n": 32
+    },
+    "hi": {
+     "competence": 81.49,
+     "n": 37
+    },
+    "id": {
+     "competence": 80.5,
+     "n": 41
+    },
+    "it": {
+     "competence": 84.29,
+     "n": 45
+    },
+    "ja": {
+     "competence": 83.18,
+     "n": 44
+    },
+    "ko": {
+     "competence": 64.02,
+     "n": 43
+    },
+    "mixed": {
+     "competence": 94.94,
+     "n": 64
+    },
+    "nl": {
+     "competence": 79.53,
+     "n": 36
+    },
+    "no": {
+     "competence": 75.24,
+     "n": 51
+    },
+    "pl": {
+     "competence": 76.88,
+     "n": 57
+    },
+    "pt": {
+     "competence": 85.32,
+     "n": 47
+    },
+    "sv": {
+     "competence": 85.73,
+     "n": 46
+    },
+    "tr": {
+     "competence": 80.29,
+     "n": 46
+    },
+    "uk": {
+     "competence": 76.57,
+     "n": 56
+    },
+    "zh": {
+     "competence": 88.08,
+     "n": 41
+    }
+   },
+   "usecases": {
+    "advertising": {
+     "competence": 62.81,
+     "n": 48
+    },
+    "code_linting": {
+     "competence": 97.16,
+     "n": 69
+    },
+    "customer_support": {
+     "competence": 94.88,
+     "n": 66
+    },
+    "demand_forecasting": {
+     "competence": 26.36,
+     "n": 66
+    },
+    "ecommerce_marketplaces": {
+     "competence": 83.44,
+     "n": 62
+    },
+    "feature_extraction": {
+     "competence": 70.59,
+     "n": 72
+    },
+    "financial_crime": {
+     "competence": 64.77,
+     "n": 63
+    },
+    "gaming": {
+     "competence": 64.45,
+     "n": 58
+    },
+    "insurance_claims": {
+     "competence": 69.81,
+     "n": 62
+    },
+    "knowledge_graphs": {
+     "competence": 90.29,
+     "n": 67
+    },
+    "lead_generation": {
+     "competence": 89.38,
+     "n": 75
+    },
+    "legal_compliance": {
+     "competence": 86.73,
+     "n": 56
+    },
+    "llm_guardrails": {
+     "competence": 91.11,
+     "n": 71
+    },
+    "model_routing": {
+     "competence": 86.1,
+     "n": 148
+    },
+    "moderation_trust_safety": {
+     "competence": 93.38,
+     "n": 59
+    },
+    "other": {
+     "competence": 59.9,
+     "n": 32
+    },
+    "recruiting": {
+     "competence": 84.93,
+     "n": 65
+    },
+    "risk_assessment": {
+     "competence": 72.34,
+     "n": 48
+    },
+    "scientific_discovery": {
+     "competence": 64.28,
+     "n": 42
+    },
+    "search_retrieval": {
+     "competence": 95.02,
+     "n": 67
+    }
+   }
+  },
+  "noul_off": {
+   "acc_among_decisive": 0.9544159544159544,
+   "decisive": 351,
+   "decisive_rate": 0.936,
+   "n": 375,
+   "supported": true,
+   "valid": 375
+  },
+  "noul_share": {
+   "acc_among_decisive": 0.9544159544159544,
+   "decisive": 351,
+   "decisive_rate": 0.936,
+   "n": 375,
+   "supported": true,
+   "valid": 375
+  },
+  "pool_off": {
+   "families": {
+    "calibration": 4,
+    "calibration_gen": 14,
+    "composite_gen": 19,
+    "fairness": 21,
+    "jaggedness": 22,
+    "llm_router": 90,
+    "long_state": 5,
+    "ml_usecase": 2,
+    "multilingual": 921,
+    "negation_pair_gen": 22,
+    "option_order": 27,
+    "perturb_pair": 28,
+    "usecase": 325
+   },
+   "languages": {
+    "ar": 21,
+    "cs": 37,
+    "da": 36,
+    "de": 48,
+    "el": 28,
+    "en": 555,
+    "es": 37,
+    "fi": 52,
+    "fr": 32,
+    "hi": 37,
+    "id": 41,
+    "it": 45,
+    "ja": 44,
+    "ko": 43,
+    "mixed": 64,
+    "nl": 36,
+    "no": 51,
+    "pl": 57,
+    "pt": 47,
+    "sv": 46,
+    "tr": 46,
+    "uk": 56,
+    "zh": 41
+   },
+   "usecases": {
+    "advertising": 48,
+    "code_linting": 69,
+    "customer_support": 66,
+    "demand_forecasting": 66,
+    "ecommerce_marketplaces": 62,
+    "feature_extraction": 72,
+    "financial_crime": 63,
+    "gaming": 58,
+    "insurance_claims": 62,
+    "knowledge_graphs": 67,
+    "lead_generation": 75,
+    "legal_compliance": 56,
+    "llm_guardrails": 71,
+    "model_routing": 148,
+    "moderation_trust_safety": 59,
+    "other": 32,
+    "recruiting": 65,
+    "risk_assessment": 48,
+    "scientific_discovery": 42,
+    "search_retrieval": 67
+   }
+  },
+  "pool_share": {
+   "families": {
+    "calibration": 4,
+    "calibration_gen": 14,
+    "composite_gen": 19,
+    "fairness": 21,
+    "jaggedness": 22,
+    "llm_router": 90,
+    "long_state": 5,
+    "ml_usecase": 2,
+    "multilingual": 921,
+    "negation_pair_gen": 22,
+    "option_order": 27,
+    "perturb_pair": 28,
+    "usecase": 325
+   },
+   "languages": {
+    "ar": 21,
+    "cs": 37,
+    "da": 36,
+    "de": 48,
+    "el": 28,
+    "en": 555,
+    "es": 37,
+    "fi": 52,
+    "fr": 32,
+    "hi": 37,
+    "id": 41,
+    "it": 45,
+    "ja": 44,
+    "ko": 43,
+    "mixed": 64,
+    "nl": 36,
+    "no": 51,
+    "pl": 57,
+    "pt": 47,
+    "sv": 46,
+    "tr": 46,
+    "uk": 56,
+    "zh": 41
+   },
+   "usecases": {
+    "advertising": 48,
+    "code_linting": 69,
+    "customer_support": 66,
+    "demand_forecasting": 66,
+    "ecommerce_marketplaces": 62,
+    "feature_extraction": 72,
+    "financial_crime": 63,
+    "gaming": 58,
+    "insurance_claims": 62,
+    "knowledge_graphs": 67,
+    "lead_generation": 75,
+    "legal_compliance": 56,
+    "llm_guardrails": 71,
+    "model_routing": 148,
+    "moderation_trust_safety": 59,
+    "other": 32,
+    "recruiting": 65,
+    "risk_assessment": 48,
+    "scientific_discovery": 42,
+    "search_retrieval": 67
+   }
+  }
+ },
+ "iota-decide-4b-v0.4": {
+  "cells_off": {
+   "families": {
+    "composite_gen": {
+     "competence": 20.9,
+     "n": 19
+    },
+    "fairness": {
+     "competence": 97.08,
+     "n": 21
+    },
+    "jaggedness": {
+     "competence": 17.15,
+     "n": 22
+    },
+    "llm_router": {
+     "competence": 74.68,
+     "n": 90
+    },
+    "multilingual": {
+     "competence": 69.0,
+     "n": 921
+    },
+    "negation_pair_gen": {
+     "competence": 58.33,
+     "n": 22
+    },
+    "option_order": {
+     "competence": 85.71,
+     "n": 27
+    },
+    "perturb_pair": {
+     "competence": 80.67,
+     "n": 28
+    },
+    "usecase": {
+     "competence": 60.75,
+     "n": 325
+    }
+   },
+   "languages": {
+    "ar": {
+     "competence": 87.17,
+     "n": 21
+    },
+    "cs": {
+     "competence": 51.15,
+     "n": 37
+    },
+    "da": {
+     "competence": 44.55,
+     "n": 36
+    },
+    "de": {
+     "competence": 66.93,
+     "n": 48
+    },
+    "el": {
+     "competence": 63.73,
+     "n": 28
+    },
+    "en": {
+     "competence": 60.68,
+     "n": 555
+    },
+    "es": {
+     "competence": 72.55,
+     "n": 37
+    },
+    "fi": {
+     "competence": 74.37,
+     "n": 52
+    },
+    "fr": {
+     "competence": 64.45,
+     "n": 32
+    },
+    "hi": {
+     "competence": 67.39,
+     "n": 37
+    },
+    "id": {
+     "competence": 72.63,
+     "n": 41
+    },
+    "it": {
+     "competence": 56.87,
+     "n": 45
+    },
+    "ja": {
+     "competence": 65.59,
+     "n": 44
+    },
+    "ko": {
+     "competence": 57.47,
+     "n": 43
+    },
+    "mixed": {
+     "competence": 83.55,
+     "n": 64
+    },
+    "nl": {
+     "competence": 56.8,
+     "n": 36
+    },
+    "no": {
+     "competence": 57.82,
+     "n": 51
+    },
+    "pl": {
+     "competence": 59.73,
+     "n": 57
+    },
+    "pt": {
+     "competence": 72.47,
+     "n": 47
+    },
+    "sv": {
+     "competence": 65.79,
+     "n": 46
+    },
+    "tr": {
+     "competence": 81.83,
+     "n": 46
+    },
+    "uk": {
+     "competence": 74.63,
+     "n": 56
+    },
+    "zh": {
+     "competence": 84.81,
+     "n": 41
+    }
+   },
+   "usecases": {
+    "advertising": {
+     "competence": 68.13,
+     "n": 48
+    },
+    "code_linting": {
+     "competence": 66.63,
+     "n": 69
+    },
+    "customer_support": {
+     "competence": 68.93,
+     "n": 66
+    },
+    "demand_forecasting": {
+     "competence": 38.02,
+     "n": 66
+    },
+    "ecommerce_marketplaces": {
+     "competence": 64.15,
+     "n": 62
+    },
+    "feature_extraction": {
+     "competence": 65.8,
+     "n": 72
+    },
+    "financial_crime": {
+     "competence": 42.68,
+     "n": 63
+    },
+    "gaming": {
+     "competence": 63.79,
+     "n": 58
+    },
+    "insurance_claims": {
+     "competence": 52.53,
+     "n": 62
+    },
+    "knowledge_graphs": {
+     "competence": 63.88,
+     "n": 67
+    },
+    "lead_generation": {
+     "competence": 71.21,
+     "n": 75
+    },
+    "legal_compliance": {
+     "competence": 78.29,
+     "n": 56
+    },
+    "llm_guardrails": {
+     "competence": 83.05,
+     "n": 71
+    },
+    "model_routing": {
+     "competence": 76.16,
+     "n": 148
+    },
+    "moderation_trust_safety": {
+     "competence": 69.84,
+     "n": 59
+    },
+    "other": {
+     "competence": 58.56,
+     "n": 32
+    },
+    "recruiting": {
+     "competence": 73.13,
+     "n": 65
+    },
+    "risk_assessment": {
+     "competence": 65.1,
+     "n": 48
+    },
+    "scientific_discovery": {
+     "competence": 46.69,
+     "n": 42
+    },
+    "search_retrieval": {
+     "competence": 85.02,
+     "n": 67
+    }
+   }
+  },
+  "cells_share": {
+   "families": {
+    "composite_gen": {
+     "competence": 20.9,
+     "n": 19
+    },
+    "fairness": {
+     "competence": 97.08,
+     "n": 21
+    },
+    "jaggedness": {
+     "competence": 17.15,
+     "n": 22
+    },
+    "llm_router": {
+     "competence": 74.68,
+     "n": 90
+    },
+    "multilingual": {
+     "competence": 69.0,
+     "n": 921
+    },
+    "negation_pair_gen": {
+     "competence": 58.33,
+     "n": 22
+    },
+    "option_order": {
+     "competence": 85.71,
+     "n": 27
+    },
+    "perturb_pair": {
+     "competence": 80.67,
+     "n": 28
+    },
+    "usecase": {
+     "competence": 60.75,
+     "n": 325
+    }
+   },
+   "languages": {
+    "ar": {
+     "competence": 87.17,
+     "n": 21
+    },
+    "cs": {
+     "competence": 51.15,
+     "n": 37
+    },
+    "da": {
+     "competence": 44.55,
+     "n": 36
+    },
+    "de": {
+     "competence": 66.93,
+     "n": 48
+    },
+    "el": {
+     "competence": 63.73,
+     "n": 28
+    },
+    "en": {
+     "competence": 60.68,
+     "n": 555
+    },
+    "es": {
+     "competence": 72.55,
+     "n": 37
+    },
+    "fi": {
+     "competence": 74.37,
+     "n": 52
+    },
+    "fr": {
+     "competence": 64.45,
+     "n": 32
+    },
+    "hi": {
+     "competence": 67.39,
+     "n": 37
+    },
+    "id": {
+     "competence": 72.63,
+     "n": 41
+    },
+    "it": {
+     "competence": 56.87,
+     "n": 45
+    },
+    "ja": {
+     "competence": 65.59,
+     "n": 44
+    },
+    "ko": {
+     "competence": 57.47,
+     "n": 43
+    },
+    "mixed": {
+     "competence": 83.55,
+     "n": 64
+    },
+    "nl": {
+     "competence": 56.8,
+     "n": 36
+    },
+    "no": {
+     "competence": 57.82,
+     "n": 51
+    },
+    "pl": {
+     "competence": 59.73,
+     "n": 57
+    },
+    "pt": {
+     "competence": 72.47,
+     "n": 47
+    },
+    "sv": {
+     "competence": 65.79,
+     "n": 46
+    },
+    "tr": {
+     "competence": 81.83,
+     "n": 46
+    },
+    "uk": {
+     "competence": 74.63,
+     "n": 56
+    },
+    "zh": {
+     "competence": 84.81,
+     "n": 41
+    }
+   },
+   "usecases": {
+    "advertising": {
+     "competence": 68.13,
+     "n": 48
+    },
+    "code_linting": {
+     "competence": 66.63,
+     "n": 69
+    },
+    "customer_support": {
+     "competence": 68.93,
+     "n": 66
+    },
+    "demand_forecasting": {
+     "competence": 38.02,
+     "n": 66
+    },
+    "ecommerce_marketplaces": {
+     "competence": 64.15,
+     "n": 62
+    },
+    "feature_extraction": {
+     "competence": 65.8,
+     "n": 72
+    },
+    "financial_crime": {
+     "competence": 42.68,
+     "n": 63
+    },
+    "gaming": {
+     "competence": 63.79,
+     "n": 58
+    },
+    "insurance_claims": {
+     "competence": 52.53,
+     "n": 62
+    },
+    "knowledge_graphs": {
+     "competence": 63.88,
+     "n": 67
+    },
+    "lead_generation": {
+     "competence": 71.21,
+     "n": 75
+    },
+    "legal_compliance": {
+     "competence": 78.29,
+     "n": 56
+    },
+    "llm_guardrails": {
+     "competence": 83.05,
+     "n": 71
+    },
+    "model_routing": {
+     "competence": 76.16,
+     "n": 148
+    },
+    "moderation_trust_safety": {
+     "competence": 69.84,
+     "n": 59
+    },
+    "other": {
+     "competence": 58.56,
+     "n": 32
+    },
+    "recruiting": {
+     "competence": 73.13,
+     "n": 65
+    },
+    "risk_assessment": {
+     "competence": 65.1,
+     "n": 48
+    },
+    "scientific_discovery": {
+     "competence": 46.69,
+     "n": 42
+    },
+    "search_retrieval": {
+     "competence": 85.02,
+     "n": 67
+    }
+   }
+  },
+  "noul_off": {
+   "acc_among_decisive": 0.8586666666666667,
+   "decisive": 375,
+   "decisive_rate": 1.0,
+   "n": 375,
+   "supported": true,
+   "valid": 375
+  },
+  "noul_share": {
+   "acc_among_decisive": 0.8586666666666667,
+   "decisive": 375,
+   "decisive_rate": 1.0,
+   "n": 375,
+   "supported": true,
+   "valid": 375
+  },
+  "pool_off": {
+   "families": {
+    "calibration": 4,
+    "calibration_gen": 14,
+    "composite_gen": 19,
+    "fairness": 21,
+    "jaggedness": 22,
+    "llm_router": 90,
+    "long_state": 5,
+    "ml_usecase": 2,
+    "multilingual": 921,
+    "negation_pair_gen": 22,
+    "option_order": 27,
+    "perturb_pair": 28,
+    "usecase": 325
+   },
+   "languages": {
+    "ar": 21,
+    "cs": 37,
+    "da": 36,
+    "de": 48,
+    "el": 28,
+    "en": 555,
+    "es": 37,
+    "fi": 52,
+    "fr": 32,
+    "hi": 37,
+    "id": 41,
+    "it": 45,
+    "ja": 44,
+    "ko": 43,
+    "mixed": 64,
+    "nl": 36,
+    "no": 51,
+    "pl": 57,
+    "pt": 47,
+    "sv": 46,
+    "tr": 46,
+    "uk": 56,
+    "zh": 41
+   },
+   "usecases": {
+    "advertising": 48,
+    "code_linting": 69,
+    "customer_support": 66,
+    "demand_forecasting": 66,
+    "ecommerce_marketplaces": 62,
+    "feature_extraction": 72,
+    "financial_crime": 63,
+    "gaming": 58,
+    "insurance_claims": 62,
+    "knowledge_graphs": 67,
+    "lead_generation": 75,
+    "legal_compliance": 56,
+    "llm_guardrails": 71,
+    "model_routing": 148,
+    "moderation_trust_safety": 59,
+    "other": 32,
+    "recruiting": 65,
+    "risk_assessment": 48,
+    "scientific_discovery": 42,
+    "search_retrieval": 67
+   }
+  },
+  "pool_share": {
+   "families": {
+    "calibration": 4,
+    "calibration_gen": 14,
+    "composite_gen": 19,
+    "fairness": 21,
+    "jaggedness": 22,
+    "llm_router": 90,
+    "long_state": 5,
+    "ml_usecase": 2,
+    "multilingual": 921,
+    "negation_pair_gen": 22,
+    "option_order": 27,
+    "perturb_pair": 28,
+    "usecase": 325
+   },
+   "languages": {
+    "ar": 21,
+    "cs": 37,
+    "da": 36,
+    "de": 48,
+    "el": 28,
+    "en": 555,
+    "es": 37,
+    "fi": 52,
+    "fr": 32,
+    "hi": 37,
+    "id": 41,
+    "it": 45,
+    "ja": 44,
+    "ko": 43,
+    "mixed": 64,
+    "nl": 36,
+    "no": 51,
+    "pl": 57,
+    "pt": 47,
+    "sv": 46,
+    "tr": 46,
+    "uk": 56,
+    "zh": 41
+   },
+   "usecases": {
+    "advertising": 48,
+    "code_linting": 69,
+    "customer_support": 66,
+    "demand_forecasting": 66,
+    "ecommerce_marketplaces": 62,
+    "feature_extraction": 72,
+    "financial_crime": 63,
+    "gaming": 58,
+    "insurance_claims": 62,
+    "knowledge_graphs": 67,
+    "lead_generation": 75,
+    "legal_compliance": 56,
+    "llm_guardrails": 71,
+    "model_routing": 148,
+    "moderation_trust_safety": 59,
+    "other": 32,
+    "recruiting": 65,
+    "risk_assessment": 48,
+    "scientific_discovery": 42,
+    "search_retrieval": 67
+   }
+  }
+ },
+ "joey-1": {
+  "cells_off": {
+   "families": {
+    "composite_gen": {
+     "competence": 15.73,
+     "n": 19
+    },
+    "fairness": {
+     "competence": 48.32,
+     "n": 21
+    },
+    "jaggedness": {
+     "competence": 0.0,
+     "n": 22
+    },
+    "llm_router": {
+     "competence": 41.09,
+     "n": 90
+    },
+    "multilingual": {
+     "competence": 13.54,
+     "n": 921
+    },
+    "negation_pair_gen": {
+     "competence": 41.67,
+     "n": 22
+    },
+    "option_order": {
+     "competence": 61.9,
+     "n": 27
+    },
+    "perturb_pair": {
+     "competence": 70.41,
+     "n": 28
+    },
+    "usecase": {
+     "competence": 25.85,
+     "n": 325
+    }
+   },
+   "languages": {
+    "ar": {
+     "competence": 36.82,
+     "n": 21
+    },
+    "cs": {
+     "competence": 15.72,
+     "n": 37
+    },
+    "da": {
+     "competence": 0.0,
+     "n": 36
+    },
+    "de": {
+     "competence": 29.75,
+     "n": 48
+    },
+    "el": {
+     "competence": 0.0,
+     "n": 28
+    },
+    "en": {
+     "competence": 28.11,
+     "n": 555
+    },
+    "es": {
+     "competence": 36.58,
+     "n": 37
+    },
+    "fi": {
+     "competence": 12.53,
+     "n": 52
+    },
+    "fr": {
+     "competence": 44.52,
+     "n": 32
+    },
+    "hi": {
+     "competence": 0.0,
+     "n": 37
+    },
+    "id": {
+     "competence": 34.64,
+     "n": 41
+    },
+    "it": {
+     "competence": 31.29,
+     "n": 45
+    },
+    "ja": {
+     "competence": 0.0,
+     "n": 44
+    },
+    "ko": {
+     "competence": 7.58,
+     "n": 43
+    },
+    "mixed": {
+     "competence": 44.02,
+     "n": 64
+    },
+    "nl": {
+     "competence": 0.0,
+     "n": 36
+    },
+    "no": {
+     "competence": 2.24,
+     "n": 51
+    },
+    "pl": {
+     "competence": 6.41,
+     "n": 57
+    },
+    "pt": {
+     "competence": 29.0,
+     "n": 47
+    },
+    "sv": {
+     "competence": 17.75,
+     "n": 46
+    },
+    "tr": {
+     "competence": 0.0,
+     "n": 46
+    },
+    "uk": {
+     "competence": 7.68,
+     "n": 56
+    },
+    "zh": {
+     "competence": 33.75,
+     "n": 41
+    }
+   },
+   "usecases": {
+    "advertising": {
+     "competence": 0.0,
+     "n": 48
+    },
+    "code_linting": {
+     "competence": 0.0,
+     "n": 69
+    },
+    "customer_support": {
+     "competence": 21.8,
+     "n": 66
+    },
+    "demand_forecasting": {
+     "competence": 0.0,
+     "n": 66
+    },
+    "ecommerce_marketplaces": {
+     "competence": 12.86,
+     "n": 62
+    },
+    "feature_extraction": {
+     "competence": 26.04,
+     "n": 72
+    },
+    "financial_crime": {
+     "competence": 16.29,
+     "n": 63
+    },
+    "gaming": {
+     "competence": 0.0,
+     "n": 58
+    },
+    "insurance_claims": {
+     "competence": 0.0,
+     "n": 62
+    },
+    "knowledge_graphs": {
+     "competence": 0.0,
+     "n": 67
+    },
+    "lead_generation": {
+     "competence": 24.33,
+     "n": 75
+    },
+    "legal_compliance": {
+     "competence": 26.28,
+     "n": 56
+    },
+    "llm_guardrails": {
+     "competence": 49.68,
+     "n": 71
+    },
+    "model_routing": {
+     "competence": 36.45,
+     "n": 148
+    },
+    "moderation_trust_safety": {
+     "competence": 26.23,
+     "n": 59
+    },
+    "other": {
+     "competence": 0.0,
+     "n": 32
+    },
+    "recruiting": {
+     "competence": 25.04,
+     "n": 65
+    },
+    "risk_assessment": {
+     "competence": 4.84,
+     "n": 48
+    },
+    "scientific_discovery": {
+     "competence": 12.56,
+     "n": 42
+    },
+    "search_retrieval": {
+     "competence": 32.4,
+     "n": 67
+    }
+   }
+  },
+  "cells_share": {
+   "families": {
+    "composite_gen": {
+     "competence": 15.73,
+     "n": 19
+    },
+    "fairness": {
+     "competence": 48.32,
+     "n": 21
+    },
+    "jaggedness": {
+     "competence": 0.0,
+     "n": 22
+    },
+    "llm_router": {
+     "competence": 41.09,
+     "n": 90
+    },
+    "multilingual": {
+     "competence": 13.54,
+     "n": 921
+    },
+    "negation_pair_gen": {
+     "competence": 41.67,
+     "n": 22
+    },
+    "option_order": {
+     "competence": 61.9,
+     "n": 27
+    },
+    "perturb_pair": {
+     "competence": 70.41,
+     "n": 28
+    },
+    "usecase": {
+     "competence": 25.85,
+     "n": 325
+    }
+   },
+   "languages": {
+    "ar": {
+     "competence": 36.82,
+     "n": 21
+    },
+    "cs": {
+     "competence": 15.72,
+     "n": 37
+    },
+    "da": {
+     "competence": 0.0,
+     "n": 36
+    },
+    "de": {
+     "competence": 29.75,
+     "n": 48
+    },
+    "el": {
+     "competence": 0.0,
+     "n": 28
+    },
+    "en": {
+     "competence": 28.11,
+     "n": 555
+    },
+    "es": {
+     "competence": 36.58,
+     "n": 37
+    },
+    "fi": {
+     "competence": 12.53,
+     "n": 52
+    },
+    "fr": {
+     "competence": 44.52,
+     "n": 32
+    },
+    "hi": {
+     "competence": 0.0,
+     "n": 37
+    },
+    "id": {
+     "competence": 34.64,
+     "n": 41
+    },
+    "it": {
+     "competence": 31.29,
+     "n": 45
+    },
+    "ja": {
+     "competence": 0.0,
+     "n": 44
+    },
+    "ko": {
+     "competence": 7.58,
+     "n": 43
+    },
+    "mixed": {
+     "competence": 44.02,
+     "n": 64
+    },
+    "nl": {
+     "competence": 0.0,
+     "n": 36
+    },
+    "no": {
+     "competence": 2.24,
+     "n": 51
+    },
+    "pl": {
+     "competence": 6.41,
+     "n": 57
+    },
+    "pt": {
+     "competence": 29.0,
+     "n": 47
+    },
+    "sv": {
+     "competence": 17.75,
+     "n": 46
+    },
+    "tr": {
+     "competence": 0.0,
+     "n": 46
+    },
+    "uk": {
+     "competence": 7.68,
+     "n": 56
+    },
+    "zh": {
+     "competence": 33.75,
+     "n": 41
+    }
+   },
+   "usecases": {
+    "advertising": {
+     "competence": 0.0,
+     "n": 48
+    },
+    "code_linting": {
+     "competence": 0.0,
+     "n": 69
+    },
+    "customer_support": {
+     "competence": 21.8,
+     "n": 66
+    },
+    "demand_forecasting": {
+     "competence": 0.0,
+     "n": 66
+    },
+    "ecommerce_marketplaces": {
+     "competence": 12.86,
+     "n": 62
+    },
+    "feature_extraction": {
+     "competence": 26.04,
+     "n": 72
+    },
+    "financial_crime": {
+     "competence": 16.29,
+     "n": 63
+    },
+    "gaming": {
+     "competence": 0.0,
+     "n": 58
+    },
+    "insurance_claims": {
+     "competence": 0.0,
+     "n": 62
+    },
+    "knowledge_graphs": {
+     "competence": 0.0,
+     "n": 67
+    },
+    "lead_generation": {
+     "competence": 24.33,
+     "n": 75
+    },
+    "legal_compliance": {
+     "competence": 26.28,
+     "n": 56
+    },
+    "llm_guardrails": {
+     "competence": 49.68,
+     "n": 71
+    },
+    "model_routing": {
+     "competence": 36.45,
+     "n": 148
+    },
+    "moderation_trust_safety": {
+     "competence": 26.23,
+     "n": 59
+    },
+    "other": {
+     "competence": 0.0,
+     "n": 32
+    },
+    "recruiting": {
+     "competence": 25.04,
+     "n": 65
+    },
+    "risk_assessment": {
+     "competence": 4.84,
+     "n": 48
+    },
+    "scientific_discovery": {
+     "competence": 12.56,
+     "n": 42
+    },
+    "search_retrieval": {
+     "competence": 32.4,
+     "n": 67
+    }
+   }
+  },
+  "noul_off": {
+   "acc_among_decisive": 0.8742857142857143,
+   "decisive": 175,
+   "decisive_rate": 0.4679144385026738,
+   "n": 375,
+   "supported": true,
+   "valid": 374
+  },
+  "noul_share": {
+   "acc_among_decisive": 0.8742857142857143,
+   "decisive": 175,
+   "decisive_rate": 0.4679144385026738,
+   "n": 375,
+   "supported": true,
+   "valid": 374
+  },
+  "pool_off": {
+   "families": {
+    "calibration": 4,
+    "calibration_gen": 14,
+    "composite_gen": 19,
+    "fairness": 21,
+    "jaggedness": 22,
+    "llm_router": 90,
+    "long_state": 5,
+    "ml_usecase": 2,
+    "multilingual": 921,
+    "negation_pair_gen": 22,
+    "option_order": 27,
+    "perturb_pair": 28,
+    "usecase": 325
+   },
+   "languages": {
+    "ar": 21,
+    "cs": 37,
+    "da": 36,
+    "de": 48,
+    "el": 28,
+    "en": 555,
+    "es": 37,
+    "fi": 52,
+    "fr": 32,
+    "hi": 37,
+    "id": 41,
+    "it": 45,
+    "ja": 44,
+    "ko": 43,
+    "mixed": 64,
+    "nl": 36,
+    "no": 51,
+    "pl": 57,
+    "pt": 47,
+    "sv": 46,
+    "tr": 46,
+    "uk": 56,
+    "zh": 41
+   },
+   "usecases": {
+    "advertising": 48,
+    "code_linting": 69,
+    "customer_support": 66,
+    "demand_forecasting": 66,
+    "ecommerce_marketplaces": 62,
+    "feature_extraction": 72,
+    "financial_crime": 63,
+    "gaming": 58,
+    "insurance_claims": 62,
+    "knowledge_graphs": 67,
+    "lead_generation": 75,
+    "legal_compliance": 56,
+    "llm_guardrails": 71,
+    "model_routing": 148,
+    "moderation_trust_safety": 59,
+    "other": 32,
+    "recruiting": 65,
+    "risk_assessment": 48,
+    "scientific_discovery": 42,
+    "search_retrieval": 67
+   }
+  },
+  "pool_share": {
+   "families": {
+    "calibration": 4,
+    "calibration_gen": 14,
+    "composite_gen": 19,
+    "fairness": 21,
+    "jaggedness": 22,
+    "llm_router": 90,
+    "long_state": 5,
+    "ml_usecase": 2,
+    "multilingual": 921,
+    "negation_pair_gen": 22,
+    "option_order": 27,
+    "perturb_pair": 28,
+    "usecase": 325
+   },
+   "languages": {
+    "ar": 21,
+    "cs": 37,
+    "da": 36,
+    "de": 48,
+    "el": 28,
+    "en": 555,
+    "es": 37,
+    "fi": 52,
+    "fr": 32,
+    "hi": 37,
+    "id": 41,
+    "it": 45,
+    "ja": 44,
+    "ko": 43,
+    "mixed": 64,
+    "nl": 36,
+    "no": 51,
+    "pl": 57,
+    "pt": 47,
+    "sv": 46,
+    "tr": 46,
+    "uk": 56,
+    "zh": 41
+   },
+   "usecases": {
+    "advertising": 48,
+    "code_linting": 69,
+    "customer_support": 66,
+    "demand_forecasting": 66,
+    "ecommerce_marketplaces": 62,
+    "feature_extraction": 72,
+    "financial_crime": 63,
+    "gaming": 58,
+    "insurance_claims": 62,
+    "knowledge_graphs": 67,
+    "lead_generation": 75,
+    "legal_compliance": 56,
+    "llm_guardrails": 71,
+    "model_routing": 148,
+    "moderation_trust_safety": 59,
+    "other": 32,
+    "recruiting": 65,
+    "risk_assessment": 48,
+    "scientific_discovery": 42,
+    "search_retrieval": 67
+   }
+  }
+ },
+ "saif-4b": {
+  "cells_off": {
+   "families": {
+    "composite_gen": {
+     "competence": 17.56,
+     "n": 19
+    },
+    "fairness": {
+     "competence": 95.33,
+     "n": 21
+    },
+    "jaggedness": {
+     "competence": 0.0,
+     "n": 22
+    },
+    "llm_router": {
+     "competence": 66.98,
+     "n": 90
+    },
+    "multilingual": {
+     "competence": 49.41,
+     "n": 921
+    },
+    "negation_pair_gen": {
+     "competence": 0.0,
+     "n": 22
+    },
+    "option_order": {
+     "competence": 71.43,
+     "n": 27
+    },
+    "perturb_pair": {
+     "competence": 71.07,
+     "n": 28
+    },
+    "usecase": {
+     "competence": 46.04,
+     "n": 325
+    }
+   },
+   "languages": {
+    "ar": {
+     "competence": 62.33,
+     "n": 21
+    },
+    "cs": {
+     "competence": 46.51,
+     "n": 37
+    },
+    "da": {
+     "competence": 26.19,
+     "n": 36
+    },
+    "de": {
+     "competence": 55.6,
+     "n": 48
+    },
+    "el": {
+     "competence": 48.78,
+     "n": 28
+    },
+    "en": {
+     "competence": 44.3,
+     "n": 555
+    },
+    "es": {
+     "competence": 58.08,
+     "n": 37
+    },
+    "fi": {
+     "competence": 49.48,
+     "n": 52
+    },
+    "fr": {
+     "competence": 66.29,
+     "n": 32
+    },
+    "hi": {
+     "competence": 21.22,
+     "n": 37
+    },
+    "id": {
+     "competence": 66.69,
+     "n": 41
+    },
+    "it": {
+     "competence": 57.56,
+     "n": 45
+    },
+    "ja": {
+     "competence": 33.53,
+     "n": 44
+    },
+    "ko": {
+     "competence": 29.63,
+     "n": 43
+    },
+    "mixed": {
+     "competence": 65.81,
+     "n": 64
+    },
+    "nl": {
+     "competence": 35.58,
+     "n": 36
+    },
+    "no": {
+     "competence": 42.39,
+     "n": 51
+    },
+    "pl": {
+     "competence": 26.96,
+     "n": 57
+    },
+    "pt": {
+     "competence": 51.33,
+     "n": 47
+    },
+    "sv": {
+     "competence": 45.7,
+     "n": 46
+    },
+    "tr": {
+     "competence": 51.36,
+     "n": 46
+    },
+    "uk": {
+     "competence": 54.46,
+     "n": 56
+    },
+    "zh": {
+     "competence": 63.57,
+     "n": 41
+    }
+   },
+   "usecases": {
+    "advertising": {
+     "competence": 39.08,
+     "n": 48
+    },
+    "code_linting": {
+     "competence": 45.36,
+     "n": 69
+    },
+    "customer_support": {
+     "competence": 49.36,
+     "n": 66
+    },
+    "demand_forecasting": {
+     "competence": 0.0,
+     "n": 66
+    },
+    "ecommerce_marketplaces": {
+     "competence": 47.44,
+     "n": 62
+    },
+    "feature_extraction": {
+     "competence": 38.52,
+     "n": 72
+    },
+    "financial_crime": {
+     "competence": 27.46,
+     "n": 63
+    },
+    "gaming": {
+     "competence": 33.38,
+     "n": 58
+    },
+    "insurance_claims": {
+     "competence": 27.72,
+     "n": 62
+    },
+    "knowledge_graphs": {
+     "competence": 11.17,
+     "n": 67
+    },
+    "lead_generation": {
+     "competence": 63.58,
+     "n": 75
+    },
+    "legal_compliance": {
+     "competence": 61.89,
+     "n": 56
+    },
+    "llm_guardrails": {
+     "competence": 78.03,
+     "n": 71
+    },
+    "model_routing": {
+     "competence": 59.54,
+     "n": 148
+    },
+    "moderation_trust_safety": {
+     "competence": 56.68,
+     "n": 59
+    },
+    "other": {
+     "competence": 70.33,
+     "n": 32
+    },
+    "recruiting": {
+     "competence": 53.99,
+     "n": 65
+    },
+    "risk_assessment": {
+     "competence": 34.94,
+     "n": 48
+    },
+    "scientific_discovery": {
+     "competence": 30.47,
+     "n": 42
+    },
+    "search_retrieval": {
+     "competence": 74.59,
+     "n": 67
+    }
+   }
+  },
+  "cells_share": {
+   "families": {
+    "composite_gen": {
+     "competence": 17.56,
+     "n": 19
+    },
+    "fairness": {
+     "competence": 95.33,
+     "n": 21
+    },
+    "jaggedness": {
+     "competence": 0.0,
+     "n": 22
+    },
+    "llm_router": {
+     "competence": 66.98,
+     "n": 90
+    },
+    "multilingual": {
+     "competence": 49.41,
+     "n": 921
+    },
+    "negation_pair_gen": {
+     "competence": 0.0,
+     "n": 22
+    },
+    "option_order": {
+     "competence": 71.43,
+     "n": 27
+    },
+    "perturb_pair": {
+     "competence": 71.07,
+     "n": 28
+    },
+    "usecase": {
+     "competence": 46.04,
+     "n": 325
+    }
+   },
+   "languages": {
+    "ar": {
+     "competence": 62.33,
+     "n": 21
+    },
+    "cs": {
+     "competence": 46.51,
+     "n": 37
+    },
+    "da": {
+     "competence": 26.19,
+     "n": 36
+    },
+    "de": {
+     "competence": 55.6,
+     "n": 48
+    },
+    "el": {
+     "competence": 48.78,
+     "n": 28
+    },
+    "en": {
+     "competence": 44.3,
+     "n": 555
+    },
+    "es": {
+     "competence": 58.08,
+     "n": 37
+    },
+    "fi": {
+     "competence": 49.48,
+     "n": 52
+    },
+    "fr": {
+     "competence": 66.29,
+     "n": 32
+    },
+    "hi": {
+     "competence": 21.22,
+     "n": 37
+    },
+    "id": {
+     "competence": 66.69,
+     "n": 41
+    },
+    "it": {
+     "competence": 57.56,
+     "n": 45
+    },
+    "ja": {
+     "competence": 33.53,
+     "n": 44
+    },
+    "ko": {
+     "competence": 29.63,
+     "n": 43
+    },
+    "mixed": {
+     "competence": 65.81,
+     "n": 64
+    },
+    "nl": {
+     "competence": 35.58,
+     "n": 36
+    },
+    "no": {
+     "competence": 42.39,
+     "n": 51
+    },
+    "pl": {
+     "competence": 26.96,
+     "n": 57
+    },
+    "pt": {
+     "competence": 51.33,
+     "n": 47
+    },
+    "sv": {
+     "competence": 45.7,
+     "n": 46
+    },
+    "tr": {
+     "competence": 51.36,
+     "n": 46
+    },
+    "uk": {
+     "competence": 54.46,
+     "n": 56
+    },
+    "zh": {
+     "competence": 63.57,
+     "n": 41
+    }
+   },
+   "usecases": {
+    "advertising": {
+     "competence": 39.08,
+     "n": 48
+    },
+    "code_linting": {
+     "competence": 45.36,
+     "n": 69
+    },
+    "customer_support": {
+     "competence": 49.36,
+     "n": 66
+    },
+    "demand_forecasting": {
+     "competence": 0.0,
+     "n": 66
+    },
+    "ecommerce_marketplaces": {
+     "competence": 47.44,
+     "n": 62
+    },
+    "feature_extraction": {
+     "competence": 38.52,
+     "n": 72
+    },
+    "financial_crime": {
+     "competence": 27.46,
+     "n": 63
+    },
+    "gaming": {
+     "competence": 33.38,
+     "n": 58
+    },
+    "insurance_claims": {
+     "competence": 27.72,
+     "n": 62
+    },
+    "knowledge_graphs": {
+     "competence": 11.17,
+     "n": 67
+    },
+    "lead_generation": {
+     "competence": 63.58,
+     "n": 75
+    },
+    "legal_compliance": {
+     "competence": 61.89,
+     "n": 56
+    },
+    "llm_guardrails": {
+     "competence": 78.03,
+     "n": 71
+    },
+    "model_routing": {
+     "competence": 59.54,
+     "n": 148
+    },
+    "moderation_trust_safety": {
+     "competence": 56.68,
+     "n": 59
+    },
+    "other": {
+     "competence": 70.33,
+     "n": 32
+    },
+    "recruiting": {
+     "competence": 53.99,
+     "n": 65
+    },
+    "risk_assessment": {
+     "competence": 34.94,
+     "n": 48
+    },
+    "scientific_discovery": {
+     "competence": 30.47,
+     "n": 42
+    },
+    "search_retrieval": {
+     "competence": 74.59,
+     "n": 67
+    }
+   }
+  },
+  "noul_off": {
+   "acc_among_decisive": 0.9402985074626866,
+   "decisive": 268,
+   "decisive_rate": 0.7146666666666667,
+   "n": 375,
+   "supported": true,
+   "valid": 375
+  },
+  "noul_share": {
+   "acc_among_decisive": 0.9402985074626866,
+   "decisive": 268,
+   "decisive_rate": 0.7146666666666667,
+   "n": 375,
+   "supported": true,
+   "valid": 375
+  },
+  "pool_off": {
+   "families": {
+    "calibration": 4,
+    "calibration_gen": 14,
+    "composite_gen": 19,
+    "fairness": 21,
+    "jaggedness": 22,
+    "llm_router": 90,
+    "long_state": 5,
+    "ml_usecase": 2,
+    "multilingual": 921,
+    "negation_pair_gen": 22,
+    "option_order": 27,
+    "perturb_pair": 28,
+    "usecase": 325
+   },
+   "languages": {
+    "ar": 21,
+    "cs": 37,
+    "da": 36,
+    "de": 48,
+    "el": 28,
+    "en": 555,
+    "es": 37,
+    "fi": 52,
+    "fr": 32,
+    "hi": 37,
+    "id": 41,
+    "it": 45,
+    "ja": 44,
+    "ko": 43,
+    "mixed": 64,
+    "nl": 36,
+    "no": 51,
+    "pl": 57,
+    "pt": 47,
+    "sv": 46,
+    "tr": 46,
+    "uk": 56,
+    "zh": 41
+   },
+   "usecases": {
+    "advertising": 48,
+    "code_linting": 69,
+    "customer_support": 66,
+    "demand_forecasting": 66,
+    "ecommerce_marketplaces": 62,
+    "feature_extraction": 72,
+    "financial_crime": 63,
+    "gaming": 58,
+    "insurance_claims": 62,
+    "knowledge_graphs": 67,
+    "lead_generation": 75,
+    "legal_compliance": 56,
+    "llm_guardrails": 71,
+    "model_routing": 148,
+    "moderation_trust_safety": 59,
+    "other": 32,
+    "recruiting": 65,
+    "risk_assessment": 48,
+    "scientific_discovery": 42,
+    "search_retrieval": 67
+   }
+  },
+  "pool_share": {
+   "families": {
+    "calibration": 4,
+    "calibration_gen": 14,
+    "composite_gen": 19,
+    "fairness": 21,
+    "jaggedness": 22,
+    "llm_router": 90,
+    "long_state": 5,
+    "ml_usecase": 2,
+    "multilingual": 921,
+    "negation_pair_gen": 22,
+    "option_order": 27,
+    "perturb_pair": 28,
+    "usecase": 325
+   },
+   "languages": {
+    "ar": 21,
+    "cs": 37,
+    "da": 36,
+    "de": 48,
+    "el": 28,
+    "en": 555,
+    "es": 37,
+    "fi": 52,
+    "fr": 32,
+    "hi": 37,
+    "id": 41,
+    "it": 45,
+    "ja": 44,
+    "ko": 43,
+    "mixed": 64,
+    "nl": 36,
+    "no": 51,
+    "pl": 57,
+    "pt": 47,
+    "sv": 46,
+    "tr": 46,
+    "uk": 56,
+    "zh": 41
+   },
+   "usecases": {
+    "advertising": 48,
+    "code_linting": 69,
+    "customer_support": 66,
+    "demand_forecasting": 66,
+    "ecommerce_marketplaces": 62,
+    "feature_extraction": 72,
+    "financial_crime": 63,
+    "gaming": 58,
+    "insurance_claims": 62,
+    "knowledge_graphs": 67,
+    "lead_generation": 75,
+    "legal_compliance": 56,
+    "llm_guardrails": 71,
+    "model_routing": 148,
+    "moderation_trust_safety": 59,
+    "other": 32,
+    "recruiting": 65,
+    "risk_assessment": 48,
+    "scientific_discovery": 42,
+    "search_retrieval": 67
+   }
+  }
+ },
+ "sors-2b": {
+  "cells_off": {
+   "families": {
+    "composite_gen": {
+     "competence": 40.26,
+     "n": 19
+    },
+    "fairness": {
+     "competence": 64.0,
+     "n": 21
+    },
+    "jaggedness": {
+     "competence": 0.0,
+     "n": 22
+    },
+    "llm_router": {
+     "competence": 49.89,
+     "n": 90
+    },
+    "multilingual": {
+     "competence": 38.62,
+     "n": 921
+    },
+    "negation_pair_gen": {
+     "competence": 15.0,
+     "n": 22
+    },
+    "option_order": {
+     "competence": 42.86,
+     "n": 27
+    },
+    "perturb_pair": {
+     "competence": 57.88,
+     "n": 28
+    },
+    "usecase": {
+     "competence": 43.57,
+     "n": 325
+    }
+   },
+   "languages": {
+    "ar": {
+     "competence": 48.34,
+     "n": 21
+    },
+    "cs": {
+     "competence": 13.34,
+     "n": 37
+    },
+    "da": {
+     "competence": 31.42,
+     "n": 36
+    },
+    "de": {
+     "competence": 42.99,
+     "n": 48
+    },
+    "el": {
+     "competence": 43.57,
+     "n": 28
+    },
+    "en": {
+     "competence": 39.63,
+     "n": 555
+    },
+    "es": {
+     "competence": 41.84,
+     "n": 37
+    },
+    "fi": {
+     "competence": 24.28,
+     "n": 52
+    },
+    "fr": {
+     "competence": 47.52,
+     "n": 32
+    },
+    "hi": {
+     "competence": 0.0,
+     "n": 37
+    },
+    "id": {
+     "competence": 58.1,
+     "n": 41
+    },
+    "it": {
+     "competence": 34.3,
+     "n": 45
+    },
+    "ja": {
+     "competence": 37.59,
+     "n": 44
+    },
+    "ko": {
+     "competence": 15.13,
+     "n": 43
+    },
+    "mixed": {
+     "competence": 64.39,
+     "n": 64
+    },
+    "nl": {
+     "competence": 29.83,
+     "n": 36
+    },
+    "no": {
+     "competence": 16.9,
+     "n": 51
+    },
+    "pl": {
+     "competence": 39.17,
+     "n": 57
+    },
+    "pt": {
+     "competence": 23.41,
+     "n": 47
+    },
+    "sv": {
+     "competence": 53.5,
+     "n": 46
+    },
+    "tr": {
+     "competence": 68.8,
+     "n": 46
+    },
+    "uk": {
+     "competence": 43.25,
+     "n": 56
+    },
+    "zh": {
+     "competence": 48.36,
+     "n": 41
+    }
+   },
+   "usecases": {
+    "advertising": {
+     "competence": 35.91,
+     "n": 48
+    },
+    "code_linting": {
+     "competence": 24.44,
+     "n": 69
+    },
+    "customer_support": {
+     "competence": 37.39,
+     "n": 66
+    },
+    "demand_forecasting": {
+     "competence": 0.0,
+     "n": 66
+    },
+    "ecommerce_marketplaces": {
+     "competence": 32.67,
+     "n": 62
+    },
+    "feature_extraction": {
+     "competence": 45.52,
+     "n": 72
+    },
+    "financial_crime": {
+     "competence": 38.22,
+     "n": 63
+    },
+    "gaming": {
+     "competence": 43.51,
+     "n": 58
+    },
+    "insurance_claims": {
+     "competence": 25.18,
+     "n": 62
+    },
+    "knowledge_graphs": {
+     "competence": 10.03,
+     "n": 67
+    },
+    "lead_generation": {
+     "competence": 53.96,
+     "n": 75
+    },
+    "legal_compliance": {
+     "competence": 41.31,
+     "n": 56
+    },
+    "llm_guardrails": {
+     "competence": 55.66,
+     "n": 71
+    },
+    "model_routing": {
+     "competence": 52.67,
+     "n": 148
+    },
+    "moderation_trust_safety": {
+     "competence": 49.59,
+     "n": 59
+    },
+    "other": {
+     "competence": 0.0,
+     "n": 32
+    },
+    "recruiting": {
+     "competence": 30.96,
+     "n": 65
+    },
+    "risk_assessment": {
+     "competence": 32.68,
+     "n": 48
+    },
+    "scientific_discovery": {
+     "competence": 62.91,
+     "n": 42
+    },
+    "search_retrieval": {
+     "competence": 53.85,
+     "n": 67
+    }
+   }
+  },
+  "cells_share": {
+   "families": {
+    "composite_gen": {
+     "competence": 40.26,
+     "n": 19
+    },
+    "fairness": {
+     "competence": 64.0,
+     "n": 21
+    },
+    "jaggedness": {
+     "competence": 0.0,
+     "n": 22
+    },
+    "llm_router": {
+     "competence": 49.89,
+     "n": 90
+    },
+    "multilingual": {
+     "competence": 38.62,
+     "n": 921
+    },
+    "negation_pair_gen": {
+     "competence": 15.0,
+     "n": 22
+    },
+    "option_order": {
+     "competence": 42.86,
+     "n": 27
+    },
+    "perturb_pair": {
+     "competence": 57.88,
+     "n": 28
+    },
+    "usecase": {
+     "competence": 43.57,
+     "n": 325
+    }
+   },
+   "languages": {
+    "ar": {
+     "competence": 48.34,
+     "n": 21
+    },
+    "cs": {
+     "competence": 13.34,
+     "n": 37
+    },
+    "da": {
+     "competence": 31.42,
+     "n": 36
+    },
+    "de": {
+     "competence": 42.99,
+     "n": 48
+    },
+    "el": {
+     "competence": 43.57,
+     "n": 28
+    },
+    "en": {
+     "competence": 39.63,
+     "n": 555
+    },
+    "es": {
+     "competence": 41.84,
+     "n": 37
+    },
+    "fi": {
+     "competence": 24.28,
+     "n": 52
+    },
+    "fr": {
+     "competence": 47.52,
+     "n": 32
+    },
+    "hi": {
+     "competence": 0.0,
+     "n": 37
+    },
+    "id": {
+     "competence": 58.1,
+     "n": 41
+    },
+    "it": {
+     "competence": 34.3,
+     "n": 45
+    },
+    "ja": {
+     "competence": 37.59,
+     "n": 44
+    },
+    "ko": {
+     "competence": 15.13,
+     "n": 43
+    },
+    "mixed": {
+     "competence": 64.39,
+     "n": 64
+    },
+    "nl": {
+     "competence": 29.83,
+     "n": 36
+    },
+    "no": {
+     "competence": 16.9,
+     "n": 51
+    },
+    "pl": {
+     "competence": 39.17,
+     "n": 57
+    },
+    "pt": {
+     "competence": 23.41,
+     "n": 47
+    },
+    "sv": {
+     "competence": 53.5,
+     "n": 46
+    },
+    "tr": {
+     "competence": 68.8,
+     "n": 46
+    },
+    "uk": {
+     "competence": 43.25,
+     "n": 56
+    },
+    "zh": {
+     "competence": 48.36,
+     "n": 41
+    }
+   },
+   "usecases": {
+    "advertising": {
+     "competence": 35.91,
+     "n": 48
+    },
+    "code_linting": {
+     "competence": 24.44,
+     "n": 69
+    },
+    "customer_support": {
+     "competence": 37.39,
+     "n": 66
+    },
+    "demand_forecasting": {
+     "competence": 0.0,
+     "n": 66
+    },
+    "ecommerce_marketplaces": {
+     "competence": 32.67,
+     "n": 62
+    },
+    "feature_extraction": {
+     "competence": 45.52,
+     "n": 72
+    },
+    "financial_crime": {
+     "competence": 38.22,
+     "n": 63
+    },
+    "gaming": {
+     "competence": 43.51,
+     "n": 58
+    },
+    "insurance_claims": {
+     "competence": 25.18,
+     "n": 62
+    },
+    "knowledge_graphs": {
+     "competence": 10.03,
+     "n": 67
+    },
+    "lead_generation": {
+     "competence": 53.96,
+     "n": 75
+    },
+    "legal_compliance": {
+     "competence": 41.31,
+     "n": 56
+    },
+    "llm_guardrails": {
+     "competence": 55.66,
+     "n": 71
+    },
+    "model_routing": {
+     "competence": 52.67,
+     "n": 148
+    },
+    "moderation_trust_safety": {
+     "competence": 49.59,
+     "n": 59
+    },
+    "other": {
+     "competence": 0.0,
+     "n": 32
+    },
+    "recruiting": {
+     "competence": 30.96,
+     "n": 65
+    },
+    "risk_assessment": {
+     "competence": 32.68,
+     "n": 48
+    },
+    "scientific_discovery": {
+     "competence": 62.91,
+     "n": 42
+    },
+    "search_retrieval": {
+     "competence": 53.85,
+     "n": 67
+    }
+   }
+  },
+  "noul_off": {
+   "acc_among_decisive": 0.889763779527559,
+   "decisive": 254,
+   "decisive_rate": 0.679144385026738,
+   "n": 375,
+   "supported": true,
+   "valid": 374
+  },
+  "noul_share": {
+   "acc_among_decisive": 0.889763779527559,
+   "decisive": 254,
+   "decisive_rate": 0.679144385026738,
+   "n": 375,
+   "supported": true,
+   "valid": 374
+  },
+  "pool_off": {
+   "families": {
+    "calibration": 4,
+    "calibration_gen": 14,
+    "composite_gen": 19,
+    "fairness": 21,
+    "jaggedness": 22,
+    "llm_router": 90,
+    "long_state": 5,
+    "ml_usecase": 2,
+    "multilingual": 921,
+    "negation_pair_gen": 22,
+    "option_order": 27,
+    "perturb_pair": 28,
+    "usecase": 325
+   },
+   "languages": {
+    "ar": 21,
+    "cs": 37,
+    "da": 36,
+    "de": 48,
+    "el": 28,
+    "en": 555,
+    "es": 37,
+    "fi": 52,
+    "fr": 32,
+    "hi": 37,
+    "id": 41,
+    "it": 45,
+    "ja": 44,
+    "ko": 43,
+    "mixed": 64,
+    "nl": 36,
+    "no": 51,
+    "pl": 57,
+    "pt": 47,
+    "sv": 46,
+    "tr": 46,
+    "uk": 56,
+    "zh": 41
+   },
+   "usecases": {
+    "advertising": 48,
+    "code_linting": 69,
+    "customer_support": 66,
+    "demand_forecasting": 66,
+    "ecommerce_marketplaces": 62,
+    "feature_extraction": 72,
+    "financial_crime": 63,
+    "gaming": 58,
+    "insurance_claims": 62,
+    "knowledge_graphs": 67,
+    "lead_generation": 75,
+    "legal_compliance": 56,
+    "llm_guardrails": 71,
+    "model_routing": 148,
+    "moderation_trust_safety": 59,
+    "other": 32,
+    "recruiting": 65,
+    "risk_assessment": 48,
+    "scientific_discovery": 42,
+    "search_retrieval": 67
+   }
+  },
+  "pool_share": {
+   "families": {
+    "calibration": 4,
+    "calibration_gen": 14,
+    "composite_gen": 19,
+    "fairness": 21,
+    "jaggedness": 22,
+    "llm_router": 90,
+    "long_state": 5,
+    "ml_usecase": 2,
+    "multilingual": 921,
+    "negation_pair_gen": 22,
+    "option_order": 27,
+    "perturb_pair": 28,
+    "usecase": 325
+   },
+   "languages": {
+    "ar": 21,
+    "cs": 37,
+    "da": 36,
+    "de": 48,
+    "el": 28,
+    "en": 555,
+    "es": 37,
+    "fi": 52,
+    "fr": 32,
+    "hi": 37,
+    "id": 41,
+    "it": 45,
+    "ja": 44,
+    "ko": 43,
+    "mixed": 64,
+    "nl": 36,
+    "no": 51,
+    "pl": 57,
+    "pt": 47,
+    "sv": 46,
+    "tr": 46,
+    "uk": 56,
+    "zh": 41
+   },
+   "usecases": {
+    "advertising": 48,
+    "code_linting": 69,
+    "customer_support": 66,
+    "demand_forecasting": 66,
+    "ecommerce_marketplaces": 62,
+    "feature_extraction": 72,
+    "financial_crime": 63,
+    "gaming": 58,
+    "insurance_claims": 62,
+    "knowledge_graphs": 67,
+    "lead_generation": 75,
+    "legal_compliance": 56,
+    "llm_guardrails": 71,
+    "model_routing": 148,
+    "moderation_trust_safety": 59,
+    "other": 32,
+    "recruiting": 65,
+    "risk_assessment": 48,
+    "scientific_discovery": 42,
+    "search_retrieval": 67
+   }
+  }
+ },
+ "wemm-jev": {
+  "cells_off": {
+   "families": {
+    "composite_gen": {
+     "competence": 89.79,
+     "n": 19
+    },
+    "fairness": {
+     "competence": 100.0,
+     "n": 21
+    },
+    "jaggedness": {
+     "competence": 41.08,
+     "n": 22
+    },
+    "llm_router": {
+     "competence": 88.2,
+     "n": 90
+    },
+    "multilingual": {
+     "competence": 86.06,
+     "n": 921
+    },
+    "negation_pair_gen": {
+     "competence": 100.0,
+     "n": 22
+    },
+    "option_order": {
+     "competence": 95.24,
+     "n": 27
+    },
+    "perturb_pair": {
+     "competence": 83.03,
+     "n": 28
+    },
+    "usecase": {
+     "competence": 80.86,
+     "n": 325
+    }
+   },
+   "languages": {
+    "ar": {
+     "competence": 92.81,
+     "n": 21
+    },
+    "cs": {
+     "competence": 79.74,
+     "n": 37
+    },
+    "da": {
+     "competence": 72.34,
+     "n": 36
+    },
+    "de": {
+     "competence": 85.47,
+     "n": 48
+    },
+    "el": {
+     "competence": 74.56,
+     "n": 28
+    },
+    "en": {
+     "competence": 83.12,
+     "n": 555
+    },
+    "es": {
+     "competence": 87.53,
+     "n": 37
+    },
+    "fi": {
+     "competence": 92.68,
+     "n": 52
+    },
+    "fr": {
+     "competence": 82.37,
+     "n": 32
+    },
+    "hi": {
+     "competence": 74.49,
+     "n": 37
+    },
+    "id": {
+     "competence": 87.72,
+     "n": 41
+    },
+    "it": {
+     "competence": 89.22,
+     "n": 45
+    },
+    "ja": {
+     "competence": 82.76,
+     "n": 44
+    },
+    "ko": {
+     "competence": 81.77,
+     "n": 43
+    },
+    "mixed": {
+     "competence": 90.05,
+     "n": 64
+    },
+    "nl": {
+     "competence": 69.32,
+     "n": 36
+    },
+    "no": {
+     "competence": 90.19,
+     "n": 51
+    },
+    "pl": {
+     "competence": 80.46,
+     "n": 57
+    },
+    "pt": {
+     "competence": 83.68,
+     "n": 47
+    },
+    "sv": {
+     "competence": 87.58,
+     "n": 46
+    },
+    "tr": {
+     "competence": 94.2,
+     "n": 46
+    },
+    "uk": {
+     "competence": 88.79,
+     "n": 56
+    },
+    "zh": {
+     "competence": 95.5,
+     "n": 41
+    }
+   },
+   "usecases": {
+    "advertising": {
+     "competence": 87.43,
+     "n": 48
+    },
+    "code_linting": {
+     "competence": 96.48,
+     "n": 69
+    },
+    "customer_support": {
+     "competence": 84.95,
+     "n": 66
+    },
+    "demand_forecasting": {
+     "competence": 24.54,
+     "n": 66
+    },
+    "ecommerce_marketplaces": {
+     "competence": 80.13,
+     "n": 62
+    },
+    "feature_extraction": {
+     "competence": 83.96,
+     "n": 72
+    },
+    "financial_crime": {
+     "competence": 76.97,
+     "n": 63
+    },
+    "gaming": {
+     "competence": 78.59,
+     "n": 58
+    },
+    "insurance_claims": {
+     "competence": 78.58,
+     "n": 62
+    },
+    "knowledge_graphs": {
+     "competence": 96.29,
+     "n": 67
+    },
+    "lead_generation": {
+     "competence": 91.48,
+     "n": 75
+    },
+    "legal_compliance": {
+     "competence": 80.68,
+     "n": 56
+    },
+    "llm_guardrails": {
+     "competence": 96.69,
+     "n": 71
+    },
+    "model_routing": {
+     "competence": 88.25,
+     "n": 148
+    },
+    "moderation_trust_safety": {
+     "competence": 93.76,
+     "n": 59
+    },
+    "other": {
+     "competence": 85.04,
+     "n": 32
+    },
+    "recruiting": {
+     "competence": 97.98,
+     "n": 65
+    },
+    "risk_assessment": {
+     "competence": 80.06,
+     "n": 48
+    },
+    "scientific_discovery": {
+     "competence": 66.25,
+     "n": 42
+    },
+    "search_retrieval": {
+     "competence": 99.86,
+     "n": 67
+    }
+   }
+  },
+  "cells_share": {
+   "families": {
+    "composite_gen": {
+     "competence": 89.79,
+     "n": 19
+    },
+    "fairness": {
+     "competence": 100.0,
+     "n": 21
+    },
+    "jaggedness": {
+     "competence": 41.08,
+     "n": 22
+    },
+    "llm_router": {
+     "competence": 88.2,
+     "n": 90
+    },
+    "multilingual": {
+     "competence": 86.06,
+     "n": 921
+    },
+    "negation_pair_gen": {
+     "competence": 100.0,
+     "n": 22
+    },
+    "option_order": {
+     "competence": 95.24,
+     "n": 27
+    },
+    "perturb_pair": {
+     "competence": 83.03,
+     "n": 28
+    },
+    "usecase": {
+     "competence": 80.86,
+     "n": 325
+    }
+   },
+   "languages": {
+    "ar": {
+     "competence": 92.81,
+     "n": 21
+    },
+    "cs": {
+     "competence": 79.74,
+     "n": 37
+    },
+    "da": {
+     "competence": 72.34,
+     "n": 36
+    },
+    "de": {
+     "competence": 85.47,
+     "n": 48
+    },
+    "el": {
+     "competence": 74.56,
+     "n": 28
+    },
+    "en": {
+     "competence": 82.83,
+     "n": 555
+    },
+    "es": {
+     "competence": 87.53,
+     "n": 37
+    },
+    "fi": {
+     "competence": 92.68,
+     "n": 52
+    },
+    "fr": {
+     "competence": 82.37,
+     "n": 32
+    },
+    "hi": {
+     "competence": 74.49,
+     "n": 37
+    },
+    "id": {
+     "competence": 87.72,
+     "n": 41
+    },
+    "it": {
+     "competence": 89.22,
+     "n": 45
+    },
+    "ja": {
+     "competence": 82.76,
+     "n": 44
+    },
+    "ko": {
+     "competence": 81.77,
+     "n": 43
+    },
+    "mixed": {
+     "competence": 90.05,
+     "n": 64
+    },
+    "nl": {
+     "competence": 69.32,
+     "n": 36
+    },
+    "no": {
+     "competence": 90.19,
+     "n": 51
+    },
+    "pl": {
+     "competence": 80.46,
+     "n": 57
+    },
+    "pt": {
+     "competence": 83.68,
+     "n": 47
+    },
+    "sv": {
+     "competence": 87.58,
+     "n": 46
+    },
+    "tr": {
+     "competence": 94.2,
+     "n": 46
+    },
+    "uk": {
+     "competence": 88.79,
+     "n": 56
+    },
+    "zh": {
+     "competence": 95.5,
+     "n": 41
+    }
+   },
+   "usecases": {
+    "advertising": {
+     "competence": 87.43,
+     "n": 48
+    },
+    "code_linting": {
+     "competence": 96.48,
+     "n": 69
+    },
+    "customer_support": {
+     "competence": 84.95,
+     "n": 66
+    },
+    "demand_forecasting": {
+     "competence": 24.54,
+     "n": 66
+    },
+    "ecommerce_marketplaces": {
+     "competence": 80.13,
+     "n": 62
+    },
+    "feature_extraction": {
+     "competence": 83.96,
+     "n": 72
+    },
+    "financial_crime": {
+     "competence": 76.97,
+     "n": 63
+    },
+    "gaming": {
+     "competence": 78.59,
+     "n": 58
+    },
+    "insurance_claims": {
+     "competence": 78.58,
+     "n": 62
+    },
+    "knowledge_graphs": {
+     "competence": 96.29,
+     "n": 67
+    },
+    "lead_generation": {
+     "competence": 91.48,
+     "n": 75
+    },
+    "legal_compliance": {
+     "competence": 80.68,
+     "n": 56
+    },
+    "llm_guardrails": {
+     "competence": 96.69,
+     "n": 71
+    },
+    "model_routing": {
+     "competence": 88.25,
+     "n": 148
+    },
+    "moderation_trust_safety": {
+     "competence": 93.76,
+     "n": 59
+    },
+    "other": {
+     "competence": 85.04,
+     "n": 32
+    },
+    "recruiting": {
+     "competence": 97.98,
+     "n": 65
+    },
+    "risk_assessment": {
+     "competence": 80.06,
+     "n": 48
+    },
+    "scientific_discovery": {
+     "competence": 66.25,
+     "n": 42
+    },
+    "search_retrieval": {
+     "competence": 99.86,
+     "n": 67
+    }
+   }
+  },
+  "noul_off": {
+   "acc_among_decisive": 0.9795918367346939,
+   "decisive": 343,
+   "decisive_rate": 0.9146666666666666,
+   "n": 375,
+   "supported": true,
+   "valid": 375
+  },
+  "noul_share": {
+   "acc_among_decisive": 0.9795918367346939,
+   "decisive": 343,
+   "decisive_rate": 0.9146666666666666,
+   "n": 375,
+   "supported": true,
+   "valid": 375
+  },
+  "pool_off": {
+   "families": {
+    "calibration": 4,
+    "calibration_gen": 14,
+    "composite_gen": 19,
+    "fairness": 21,
+    "jaggedness": 22,
+    "llm_router": 90,
+    "long_state": 5,
+    "ml_usecase": 2,
+    "multilingual": 921,
+    "negation_pair_gen": 22,
+    "option_order": 27,
+    "perturb_pair": 28,
+    "usecase": 325
+   },
+   "languages": {
+    "ar": 21,
+    "cs": 37,
+    "da": 36,
+    "de": 48,
+    "el": 28,
+    "en": 555,
+    "es": 37,
+    "fi": 52,
+    "fr": 32,
+    "hi": 37,
+    "id": 41,
+    "it": 45,
+    "ja": 44,
+    "ko": 43,
+    "mixed": 64,
+    "nl": 36,
+    "no": 51,
+    "pl": 57,
+    "pt": 47,
+    "sv": 46,
+    "tr": 46,
+    "uk": 56,
+    "zh": 41
+   },
+   "usecases": {
+    "advertising": 48,
+    "code_linting": 69,
+    "customer_support": 66,
+    "demand_forecasting": 66,
+    "ecommerce_marketplaces": 62,
+    "feature_extraction": 72,
+    "financial_crime": 63,
+    "gaming": 58,
+    "insurance_claims": 62,
+    "knowledge_graphs": 67,
+    "lead_generation": 75,
+    "legal_compliance": 56,
+    "llm_guardrails": 71,
+    "model_routing": 148,
+    "moderation_trust_safety": 59,
+    "other": 32,
+    "recruiting": 65,
+    "risk_assessment": 48,
+    "scientific_discovery": 42,
+    "search_retrieval": 67
+   }
+  },
+  "pool_share": {
+   "families": {
+    "calibration": 4,
+    "calibration_gen": 14,
+    "composite_gen": 19,
+    "fairness": 21,
+    "jaggedness": 22,
+    "llm_router": 90,
+    "long_state": 5,
+    "ml_usecase": 2,
+    "multilingual": 921,
+    "negation_pair_gen": 22,
+    "option_order": 27,
+    "perturb_pair": 28,
+    "usecase": 325
+   },
+   "languages": {
+    "ar": 21,
+    "cs": 37,
+    "da": 36,
+    "de": 48,
+    "el": 28,
+    "en": 555,
+    "es": 37,
+    "fi": 52,
+    "fr": 32,
+    "hi": 37,
+    "id": 41,
+    "it": 45,
+    "ja": 44,
+    "ko": 43,
+    "mixed": 64,
+    "nl": 36,
+    "no": 51,
+    "pl": 57,
+    "pt": 47,
+    "sv": 46,
+    "tr": 46,
+    "uk": 56,
+    "zh": 41
+   },
+   "usecases": {
+    "advertising": 48,
+    "code_linting": 69,
+    "customer_support": 66,
+    "demand_forecasting": 66,
+    "ecommerce_marketplaces": 62,
+    "feature_extraction": 72,
+    "financial_crime": 63,
+    "gaming": 58,
+    "insurance_claims": 62,
+    "knowledge_graphs": 67,
+    "lead_generation": 75,
+    "legal_compliance": 56,
+    "llm_guardrails": 71,
+    "model_routing": 148,
+    "moderation_trust_safety": 59,
+    "other": 32,
+    "recruiting": 65,
+    "risk_assessment": 48,
+    "scientific_discovery": 42,
+    "search_retrieval": 67
+   }
+  }
+ }
+}
