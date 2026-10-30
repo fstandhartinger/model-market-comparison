@@ -1,0 +1,162 @@
+{
+ "amber-4b": {
+  "active_b": 4,
+  "answered_not_in_common": 9,
+  "architecture_class": "small",
+  "cost_all": 0.005411569581771938,
+  "cost_basis_kind": "gpu-time-min",
+  "cost_common": 0.002833909362357314,
+  "estimate_all": 0.01652168,
+  "estimate_common": 0.008652008059100068,
+  "expect": {
+   "failed": 375,
+   "input_tokens": 826084,
+   "ok": 1125,
+   "output_tokens": 0,
+   "status_counts": {
+    "200": 1125,
+    "422": 375
+   }
+  },
+  "family": "qwen",
+  "gpu_all": 0.005411569581771938,
+  "gpu_common": 0.002833909362357314,
+  "input_tokens_all": 826084,
+  "input_tokens_common": 429428,
+  "latency_max": 16.939027456999952,
+  "native_output_tokens_all": 0,
+  "output_tokens_all": 0,
+  "output_tokens_common": 0,
+  "over10": 1,
+  "raw_order_matches_input": true,
+  "raw_sha256": "04fa8a232285878b9f5b357232fb55c8dfb3fd300449cdede8a21aebc8810972",
+  "ref": {
+   "in": 0.030000000000000002,
+   "kind": "estimate",
+   "listing": "deepinfra:Qwen/Qwen3.5-4B",
+   "out": 0.0
+  },
+  "scoring_raw_sha256": "53657c08df3eae9dbf3ce766fca08f82c7a6087a07da934373e87cce6ab20339",
+  "throughput": 61525.0
+ },
+ "oenogarum": {
+  "active_b": 31,
+  "answered_not_in_common": 4,
+  "architecture_class": "dense",
+  "cost_all": 0.029506168696910223,
+  "cost_basis_kind": "gpu-time-min",
+  "cost_common": 0.029532033400877865,
+  "estimate_all": 0.04439304,
+  "estimate_common": 0.044431954331766284,
+  "expect": {
+   "failed": 380,
+   "input_tokens": 739884,
+   "ok": 1120,
+   "output_tokens": 0,
+   "status_counts": {
+    "200": 1120,
+    "422": 380
+   }
+  },
+  "family": "gemma",
+  "gpu_all": 0.029506168696910223,
+  "gpu_common": 0.029532033400877865,
+  "input_tokens_all": 739884,
+  "input_tokens_common": 735102,
+  "latency_max": 0.6282268219999878,
+  "native_output_tokens_all": 0,
+  "output_tokens_all": 0,
+  "output_tokens_common": 0,
+  "over10": 0,
+  "raw_order_matches_input": true,
+  "raw_sha256": "d91213504874e50dfafca7c72590bfc1df98c8d60ab6efdad857a896ca6dbc56",
+  "ref": {
+   "in": 0.09,
+   "kind": "estimate",
+   "listing": "google/gemma-4-31b-it",
+   "out": 0.0
+  },
+  "scoring_raw_sha256": "30446ea05deda483753a8ed937805b5603b39f8bd40f9bdde54816e7263fa554",
+  "throughput": 10106.516129032258
+ },
+ "piccolo-4b": {
+  "active_b": 4,
+  "answered_not_in_common": 6,
+  "architecture_class": "small",
+  "cost_all": 0.007077266059523271,
+  "cost_basis_kind": "gpu-time-min",
+  "cost_common": 0.007096949050642927,
+  "estimate_all": 0.021607099999999997,
+  "estimate_common": 0.021667192746809942,
+  "expect": {
+   "failed": 5,
+   "input_tokens": 1080355,
+   "ok": 1495,
+   "output_tokens": 0,
+   "status_counts": {
+    "200": 1495,
+    "422": 5
+   }
+  },
+  "family": "qwen",
+  "gpu_all": 0.007077266059523271,
+  "gpu_common": 0.007096949050642927,
+  "input_tokens_all": 1080355,
+  "input_tokens_common": 1075415,
+  "latency_max": 0.30407365700000355,
+  "native_output_tokens_all": 0,
+  "output_tokens_all": 0,
+  "output_tokens_common": 0,
+  "over10": 0,
+  "raw_order_matches_input": true,
+  "raw_sha256": "0b6d05c374571c75c16086771edc67e1c914e558febb28aed5b650ad91051590",
+  "ref": {
+   "in": 0.030000000000000002,
+   "kind": "estimate",
+   "listing": "deepinfra:Qwen/Qwen3.5-4B",
+   "out": 0.0
+  },
+  "scoring_raw_sha256": "1c667be52840c990dacecca69a8b5f91f25a1804f1c8382a06e97b758b7318bd",
+  "throughput": 61525.0
+ },
+ "piccolo-9b": {
+  "active_b": 9,
+  "answered_not_in_common": 6,
+  "architecture_class": "small",
+  "cost_all": 0.015923848633927363,
+  "cost_basis_kind": "gpu-time-min",
+  "cost_common": 0.015968135363946586,
+  "estimate_all": 0.07202366666666665,
+  "estimate_common": 0.07222397582269979,
+  "expect": {
+   "failed": 5,
+   "input_tokens": 1080355,
+   "ok": 1495,
+   "output_tokens": 0,
+   "status_counts": {
+    "200": 1495,
+    "422": 5
+   }
+  },
+  "family": "qwen",
+  "gpu_all": 0.015923848633927363,
+  "gpu_common": 0.015968135363946586,
+  "input_tokens_all": 1080355,
+  "input_tokens_common": 1075415,
+  "latency_max": 0.3622496539999247,
+  "native_output_tokens_all": 0,
+  "output_tokens_all": 0,
+  "output_tokens_common": 0,
+  "over10": 0,
+  "raw_order_matches_input": true,
+  "raw_sha256": "9a3d964c7dec99faf20a8a68a98ce90f8bde223f086e9beebef72163f4f1c3bc",
+  "ref": {
+   "in": 0.09999999999999999,
+   "kind": "estimate",
+   "listing": "qwen/qwen3.5-9b",
+   "out": 0.0
+  },
+  "scoring_raw_sha256": "e59ea493718972ad01dc1135c35f5fcf576aa5c55dcc6cdd2c2739cc312e84df",
+  "throughput": 27344.444444444445
+ }
+}
