@@ -1,0 +1,61 @@
+{
+  "status": "FAIL_STOP",
+  "preview_commit": "254236610d5065ac48548e64aa926f5244f29a07",
+  "scope": "F1 restoration only, in memory; worktree artifacts untouched",
+  "preview_results_sha256": "e52318677e1872e2effce17d3bd010d06a73348120d3baafd0534096ce4f5f8e",
+  "live_v1723_results_sha256": "37e6b3ee849ea3fab4ed2037faf0e8eadabb7c7fcb34b64207f7419090790663",
+  "tracked_lists": 580,
+  "label": "release/capability",
+  "preview_top5": [
+    "ajev-gemma4-31b-lm6q",
+    "aleria-judge-1.1.1",
+    "amazon-strands-decider-26b-a4b",
+    "amos-1-large",
+    "amos-1-medium"
+  ],
+  "restored_top5": [
+    "gpt-6-luna",
+    "gpt-6-luna-low",
+    "gpt-5.6-luna",
+    "deepseek-flash",
+    "kettei-fat"
+  ],
+  "preview_top10": [
+    "ajev-gemma4-31b-lm6q",
+    "aleria-judge-1.1.1",
+    "amazon-strands-decider-26b-a4b",
+    "amos-1-large",
+    "amos-1-medium",
+    "aplomb-1",
+    "apus-openjev-v1-9b",
+    "arcbright-elf-1-12b",
+    "arcbright-elf-1-31b",
+    "arsenelupin-v1.1"
+  ],
+  "restored_top10": [
+    "gpt-6-luna",
+    "gpt-6-luna-low",
+    "gpt-5.6-luna",
+    "deepseek-flash",
+    "kettei-fat",
+    "singularity-super-decider-thinking",
+    "mammoth-1",
+    "knowline-31b-gen1",
+    "fastino-glide-1.2-open",
+    "singularity-super-decider"
+  ],
+  "reproduced_saved_preview": true,
+  "top5_equal": false,
+  "top10_equal": false,
+  "ranked_keys_same": true,
+  "restored_capability_order_entries": 283,
+  "restored_nonnull_capability_ranks": 285,
+  "other_579_lists": "not rerun; one failure already triggers mandatory STOP",
+  "explanation": "The required F1 repair changes release/capability, one of the 580 saved top-five/top-ten lists. The brief explicitly requires STOP when any previewed list changes. No numeric changes are needed, but all-580-list equality cannot hold.",
+  "all_580_lists_identical": false,
+  "numeric_release_artifacts_modified": false,
+  "capability_restoration_applied": false,
+  "other_fields_comparison": "not performed after mandatory STOP",
+  "finding": "F1",
+  "base_origin_main_sha": "3d3a848118537bd8331d64a05da33f01ebc2e345"
+}
