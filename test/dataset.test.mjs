@@ -335,7 +335,9 @@ test("current Copilot token catalog and legacy request table stay distinct", () 
   // The daily collector (R9.1) follows GitHub's catalog, so counts move with real retirements
   // (MAI-Code-1-Flash, 2026-09-10); assert a sane, duplicate-free catalog instead of a literal count.
   assert.ok(copilot.current_models.length >= 20, `current_models: ${copilot.current_models.length}`);
-  assert.ok(copilot.models.length >= 10, `legacy models: ${copilot.models.length}`);
+  // Official legacy table contracted to five rows (owner-reviewed 2026-10-31).
+  // Exact-set removal approval and shrink refusal are covered by the collector tests.
+  assert.ok(copilot.models.length >= 5, `legacy models: ${copilot.models.length}`);
   assert.equal(new Set(copilot.current_models.map((row) => row.model_name)).size, copilot.current_models.length);
   assert.equal(new Set(copilot.models.map((row) => row.model_name)).size, copilot.models.length);
 

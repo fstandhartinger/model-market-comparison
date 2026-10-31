@@ -83,3 +83,91 @@ test("intersects catalog and prices, drops retired rows, keeps curated fields, r
 test("fails closed when most previous rows disappear", () => {
   assert.throws(() => parseGithubCopilotCatalog(supportedPage([["Brand New", "OpenAI"]]), pricingPage([table(PLAIN, [["Brand New", "GA", "Versatile", "$1.00", "$0.10", "$2.00"]])]), multipliersPage([["Claude Sonnet 4.6", "9"], ["GPT-5.4", "6"]]), previous), /refusing/);
 });
+
+test("five-row legacy page is parsed completely but cannot replace twelve prior multipliers", () => {
+  // Shape of the official annual-plan page on 2026-10-31: one Model/Multiplier
+  // table, not provider tables or hidden rows. Keep this contraction fail-closed.
+  const rows = [
+    ["Claude Haiku 4.5", "0.33"],
+    ["Claude Opus 4.8", "27"],
+    ["Claude Sonnet 4.6", "9"],
+    ["GPT-5.3-Codex", "6"],
+    ["MAI-Code-1.1-Flash", "0.25"],
+  ];
+  const page = multipliersPage(rows);
+  assert.deepEqual(readMultipliers(page).rows, rows.map(([name, value]) => ({ name, multiplier: Number(value) })));
+  const old = {
+    ...previous,
+    models: [
+      ...rows.map(([model_name]) => ({ model_name })),
+      ...["Gemini 3 Pro", "GPT-4o", "GPT-4o mini", "GPT-5.1", "GPT-5.1-Codex", "GPT-5.1-Codex-Mini", "GPT-5.1-Codex-Max"].map((model_name) => ({ model_name })),
+    ],
+  };
+  const before = structuredClone(old);
+  assert.throws(() => parseGithubCopilotCatalog(
+    supportedPage([["GPT-5.4", "OpenAI"], ["Gemini 3.6 Flash", "Google"]]),
+    pricingPage([openai, plain]), page, old,
+  ), /Copilot legacy multipliers: only 5\/12 previous rows still listed; refusing to replace the snapshot/);
+  assert.deepEqual(old, before, "a refused refresh must leave its previous input unchanged");
+});
+
+const approvedLegacyRows = Array.from({ length: 5 }, (_, i) => [`Legacy ${i}`, "1"]);
+const approvedPrevious = {
+  ...previous,
+  models: Array.from({ length: 12 }, (_, i) => ({ model_name: `Legacy ${i}` })),
+};
+const legacyApproval = {
+  previous_names: approvedPrevious.models.map((m) => m.model_name).sort(),
+  current_names: approvedLegacyRows.map(([name]) => name).sort(),
+  removed: approvedPrevious.models.slice(5).map((m) => m.model_name).sort(),
+  reviewed_at: "2026-10-31", expires_at: "2026-11-03T00:00:00Z",
+};
+const approvedParse = (approval, options = {}) => parseGithubCopilotCatalog(
+  supportedPage([["GPT-5.4", "OpenAI"], ["Gemini 3.6 Flash", "Google"]]),
+  pricingPage([openai, plain]), multipliersPage(approvedLegacyRows), approvedPrevious,
+  { approval, now: Date.parse("2026-10-31T12:00:00Z"), ...options },
+);
+
+test("exact, unexpired legacy approval accepts and records only its seven removals", () => {
+  const before = structuredClone(approvedPrevious);
+  const result = approvedParse(legacyApproval);
+  assert.equal(result.models.length, 5);
+  assert.deepEqual([...result.diff.legacy_removed].sort(), legacyApproval.removed);
+  assert.deepEqual(result.diff.legacy_removal_approval, {
+    removed: legacyApproval.removed, accepted_by_approval: true, reviewed_at: "2026-10-31",
+  });
+  assert.deepEqual(approvedPrevious, before);
+  // The receipt cannot be reused against the refreshed snapshot.
+  const repeat = parseGithubCopilotCatalog(
+    supportedPage([["GPT-5.4", "OpenAI"], ["Gemini 3.6 Flash", "Google"]]),
+    pricingPage([openai, plain]), multipliersPage(approvedLegacyRows),
+    { ...approvedPrevious, models: result.models },
+    { approval: legacyApproval, now: Date.parse("2026-10-31T12:00:00Z") },
+  );
+  assert.equal(repeat.diff.legacy_removal_approval, undefined);
+});
+
+for (const [name, approval, options] of [
+  ["no approval", null],
+  ["expired approval", legacyApproval, { now: Date.parse("2026-11-03T00:00:00Z") }],
+  ["different previous set", { ...legacyApproval, previous_names: [...legacyApproval.previous_names.slice(1), "Other"] }],
+  ["different current set", { ...legacyApproval, current_names: [...legacyApproval.current_names.slice(1), "Other"] }],
+  ["extra removal", { ...legacyApproval, removed: [...legacyApproval.removed, "Legacy 0"] }],
+  ["missing removal", { ...legacyApproval, removed: legacyApproval.removed.slice(1) }],
+  ["approval longer than three days", { ...legacyApproval, expires_at: "2026-11-03T00:00:01Z" }],
+  ["future review", { ...legacyApproval, reviewed_at: "2026-11-01" }],
+  ["invalid expiry", { ...legacyApproval, expires_at: "invalid" }],
+  ["duplicate previous identity", { ...legacyApproval, previous_names: [...legacyApproval.previous_names, "Legacy 0"] }],
+]) {
+  test(`legacy shrink guard still rejects 5/12 with ${name}`, () => {
+    assert.throws(() => approvedParse(approval, options), /Copilot legacy multipliers: only 5\/12 previous rows still listed; refusing/);
+  });
+}
+
+test("legacy approval cannot relax the current-model shrink guard", () => {
+  assert.throws(() => parseGithubCopilotCatalog(
+    supportedPage([["GPT-5.4", "OpenAI"]]), pricingPage([openai, plain]),
+    multipliersPage(approvedLegacyRows), approvedPrevious,
+    { approval: legacyApproval, now: Date.parse("2026-10-31T12:00:00Z") },
+  ), /Copilot: only 1\/3 previous current models/);
+});

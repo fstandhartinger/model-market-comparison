@@ -1,8 +1,8 @@
 # GitHub Copilot pricing — collection method and caveats
 
-> **Current audit: 2026-09-24.** The adjacent JSON stores the current model/plan data, source dates, and response hashes. Earlier dated collection notes below are historical unless marked as the current snapshot.
+> **Current catalog refresh: 2026-10-31; plan audit: 2026-09-24.** The adjacent JSON stores the current model/plan data, source dates, and response hashes. Earlier dated collection notes below are historical unless marked as the current snapshot.
 
-Current catalog snapshot refreshed: 2026-09-24 (previous full audit: 2026-09-08).
+Current catalog snapshot refreshed: 2026-10-31 (plan allowances last checked: 2026-09-24; previous full audit: 2026-09-08).
 
 Output: `data/raw/github-copilot.json`
 
@@ -52,7 +52,7 @@ the collection date:
 - the supported-model catalog determines which models are currently offered;
 - the models-and-pricing table supplies USD prices per 1M tokens.
 
-Current result: **32 supported and priced models** and **18 legacy multiplier rows**. The adjacent JSON records current per-model values, availability gaps, retirement history, and source hashes. On 2026-09-24, Claude Sonnet 4 remained present in a pricing table but was absent from the supported-model catalog, so it stays out of `current_models[]` and is listed under `priced_not_supported`.
+Current result (2026-10-31): **28 supported and priced models** and **5 legacy multiplier rows**. The adjacent JSON records current per-model values, availability gaps, retirement history, and source hashes. On 2026-09-24, Claude Sonnet 4 remained present in a pricing table but was absent from the supported-model catalog, so it stays out of `current_models[]` and is listed under `priced_not_supported`.
 
 Current subscription terms were rechecked separately on 2026-09-24. Individual Pro, Pro+, and Max remain $10/$39/$100 per month with 1,500/7,000/20,000 monthly AI credits. Business and Enterprise remain $19/$39 per user per month with 1,900/3,900 monthly credits. Existing-customer promotional credits ended on 2026-09-01; the raw `plans[]` retains the dated promotion for historical clarity. The checked pages and hashes are stored in `plans_source_evidence`.
 
@@ -77,7 +77,7 @@ legacy annual plans do not receive new models and features.
   change and identifies MAI-Code-1-Flash's 0.33× multiplier as promotional;
   no promotion end date is published.
 
-The current captured legacy table contains 18 model rows. Rows remain in
+The current captured legacy table contains 5 model rows. Rows remain in
 `models[]` when GitHub still lists them for eligible legacy annual subscribers,
 even if they are absent from the current usage-based catalog.
 
@@ -147,3 +147,61 @@ allows all): supported-models, models-and-pricing, model-multipliers-for-annual-
   multiplier, unknown tier, duplicate rows, or fewer than 50 % of previous rows in either array.
 - First run 2026-09-14: 28 current and 18 legacy rows reproduced the 2026-09-08 snapshot field for field;
   **MAI-Code-1-Flash** removed from both (retired 2026-09-10, successor MAI-Code-1.1-Flash).
+
+## 2026-10-31: legacy contraction held for review
+
+The live official annual-plan page at
+https://docs.github.com/en/copilot/reference/copilot-billing/request-based-billing-legacy/model-multipliers-for-annual-plans
+returns HTTP 200 at the same URL and contains exactly **one** `Model` / `Multiplier`
+table with **five** rows: Claude Haiku 4.5 (0.33), Claude Opus 4.8 (27),
+Claude Sonnet 4.6 (9), GPT-5.3-Codex (6), and MAI-Code-1.1-Flash (0.25).
+The existing parser reads all five; there is no second multiplier table to recover.
+The page also states that legacy annual subscribers will not receive new models.
+
+Seven of the twelve legacy rows in the 2026-10-28 snapshot are absent from that
+live table. The existing official supported-models page at
+https://docs.github.com/en/copilot/reference/ai-models/supported-models
+lists these retirement dates:
+
+| Missing legacy model | Retirement date in supported-models history |
+| --- | --- |
+| Gemini 3 Pro | 2026-03-26 |
+| GPT-5.1 | 2026-04-15 |
+| GPT-5.1-Codex | 2026-04-01 |
+| GPT-5.1-Codex-Mini | 2026-04-01 |
+| GPT-5.1-Codex-Max | 2026-04-01 |
+| GPT-4o | No retirement entry found |
+| GPT-4o mini | No retirement entry found |
+
+Those historical dates do not establish when the models left legacy billing;
+Claude Sonnet 4.6 is itself in the retirement history but remains in the legacy
+table. No retirement date or replacement multiplier is inferred for the missing
+rows. The current supported catalog still has 28 rows. Both live collector runs
+refused the 5/12 legacy retention, below the unchanged 50% guard; the JSON snapshot
+remains unchanged at 28 current models and 12 legacy multipliers. This is an
+upstream table contraction requiring lead review, not a demonstrated parser
+layout failure. The source still exists, so it is not marked retired. A focused
+synthetic regression test covers this exact five-of-twelve refusal.
+
+
+## Approved legacy contraction (2026-10-31, Round 2)
+
+The lead reviewed the preceding evidence and accepted the official table's
+12-to-5 contraction once. The live collector succeeded with **28 current models
+and 5 legacy multipliers** (previously 28 and 12); there were no current-model
+additions, removals or price changes, and no legacy multiplier changes.
+
+Removed legacy names: **Gemini 3 Pro**, **GPT-4o**, **GPT-4o mini**, **GPT-5.1**,
+**GPT-5.1-Codex**, **GPT-5.1-Codex-Mini**, and **GPT-5.1-Codex-Max**. The official
+page serves one five-row table. Five of these seven names have retirement dates
+on the supported-models page; GPT-4o and GPT-4o mini have no listed date. This
+acceptance does not infer retirement dates or replacement multipliers.
+
+`data/raw/source-change-approvals.json` key `github_copilot_legacy` binds the
+exact prior 12 names, current 5 names and 7 removals. Reviewed on 2026-10-31,
+it expires at 2026-11-03T00:00:00Z (three days maximum). A mismatch or expiry
+ignores the approval; the 50% legacy guard and the current-model guard remain
+unchanged. The refreshed JSON records the removed names in `diff.legacy_removed`
+and the approval's `accepted_by_approval` flag and review date in
+`diff.legacy_removal_approval`. Once the new snapshot is stored, its prior set
+no longer matches the approval, so another transition cannot reuse it.

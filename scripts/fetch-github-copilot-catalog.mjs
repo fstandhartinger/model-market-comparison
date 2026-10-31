@@ -24,11 +24,17 @@ const get = async (url) => {
 };
 try {
   const previous = JSON.parse(await readFile(target, "utf8"));
+  let approval = null;
+  try {
+    approval = JSON.parse(await readFile(new URL("../data/raw/source-change-approvals.json", import.meta.url), "utf8")).github_copilot_legacy ?? null;
+  } catch (error) {
+    if (error.code !== "ENOENT") throw error;
+  }
   const supported = await get(supportedUrl);
   const pricing = await get(pricingUrl);
   const multipliers = await get(multipliersUrl);
   const collected_at = new Date().toISOString().slice(0, 10);
-  const r = parseGithubCopilotCatalog(supported, pricing, multipliers, previous, { today: collected_at });
+  const r = parseGithubCopilotCatalog(supported, pricing, multipliers, previous, { today: collected_at, approval });
   await captureLiveSource(supportedUrl, supported);
   await captureLiveSource(pricingUrl, pricing);
   await captureLiveSource(multipliersUrl, multipliers);
