@@ -92,6 +92,13 @@ class PipLines(unittest.TestCase):
         self.assertNotEqual(digest(README), digest(README.replace('5.8.1', '5.9.0')))
         self.assertNotEqual(digest(README), digest(README + '\npip install evil\n'))
 
+    def test_other_install_spellings_count_as_stack_changes(self):
+        for extra in ('sudo pip install x', 'RUN pip3 install x', '- uv pip install x', '!pip install x',
+                      'conda install x', 'python -m pip install x'):
+            with self.subTest(extra=extra):
+                self.assertNotEqual(digest(README), digest(README + '\n' + extra + '\n'))
+        self.assertEqual(digest(README), digest(README + '\npipx run tool\n'))
+
 
 class Evaluate(Base):
     def test_identical_stack_from_registered_repos_is_admitted(self):
@@ -155,6 +162,23 @@ class Receipt(Base):
         receipt = job / 'trusted-runner' / A.RECEIPT
         receipt.write_text(receipt.read_text().replace('"schema_version": 1', '"schema_version": 1 '))
         self.assertFalse(A.admitted(job, 'torchcast'))
+
+    def test_symlinked_bundle_or_temp_path_is_never_written_through(self):
+        job = self.order()
+        outside = self.root / 'outside'
+        outside.mkdir()
+        (job / 'runner-prepare').mkdir()
+        os.symlink(outside, job / 'runner-prepare' / 'trusted-runner')
+        with self.assertRaises(ValueError):
+            A.write_receipt(job, job / 'runner-prepare' / 'trusted-runner')
+        self.assertEqual(list(outside.iterdir()), [])
+        prep = self.root / 'prep'
+        prep.mkdir()
+        victim = self.root / 'victim.txt'
+        victim.write_text('keep')
+        os.symlink(victim, prep / (A.RECEIPT + '.tmp'))
+        self.assertIsNotNone(A.write_receipt(job, prep))
+        self.assertEqual(victim.read_text(), 'keep')
 
     def test_missing_receipt_is_not_admitted_even_with_identical_files(self):
         self.assertFalse(A.admitted(self.order(), 'torchcast'))
