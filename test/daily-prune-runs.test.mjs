@@ -32,9 +32,9 @@ test('a run that may still be executing is never touched, however it is dated', 
 test('recency is read from the run report, and from file activity only when there is none', () => {
   // retainStagingRuns: 1, so the investigation window cannot stand in for the recency rule here.
   const plan = planRunPruning({ now: NOW, retainStagingRuns: 1, runs: [
-    run('reported-recent', { started: hoursAgo(20), activity: daysAgo(40) }),
+    run('reported-recent', { started: hoursAgo(6), activity: daysAgo(40) }),
     run('reported-old', { started: daysAgo(9), activity: hoursAgo(1), finished: true }),
-    run('unreported-recent', { finished: false, activity: hoursAgo(20) }),
+    run('unreported-recent', { finished: false, activity: hoursAgo(8) }),
   ] });
   const kept = reasons(plan);
   assert.equal(kept['reported-recent'], 'recent');
@@ -47,9 +47,9 @@ test('the newest staging trees survive any age, so a quiet pipeline still leaves
   const runs = Array.from({ length: 6 }, (_, index) =>
     run(`run-${index}`, { started: daysAgo(30 + index), activity: daysAgo(30 + index) }));
   const plan = planRunPruning({ now: NOW, runs });
-  assert.deepEqual(plan.keep.map((k) => k.name), ['run-0', 'run-1', 'run-2']);
+  assert.deepEqual(plan.keep.map((k) => k.name), ['run-0', 'run-1']);
   assert.ok(plan.keep.every((k) => k.reason === 'investigation-window'));
-  assert.deepEqual(plan.prune.map((p) => p.name), ['run-3', 'run-4', 'run-5']);
+  assert.deepEqual(plan.prune.map((p) => p.name), ['run-2', 'run-3', 'run-4', 'run-5']);
   assert.equal(plan.keep.length, RETAIN_STAGING_RUNS);
 });
 
@@ -91,9 +91,9 @@ test('pruneStaleRuns removes only the staging bulk and only from the runs the pl
       return dir;
     };
     const stale = await make('2026-09-01T05-17-00-000Z-1', '2026-09-01T05:17:00.000Z');
-    const fresh = await make('2026-09-24T05-17-00-000Z-2', '2026-09-24T05:17:00.000Z');
+    const fresh = await make('2026-09-24T16-17-00-000Z-2', '2026-09-24T16:17:00.000Z');
     // Three more fresh runs, so the investigation window is filled by runs newer than `stale`.
-    for (const day of ['22', '23', '24']) await make(`2026-09-${day}T19-17-00-000Z-9`, `2026-09-${day}T19:17:00.000Z`);
+    for (const hour of ['17', '18', '19']) await make(`2026-09-24T${hour}-17-00-000Z-9`, `2026-09-24T${hour}:17:00.000Z`);
 
     const planned = await pruneStaleRuns({ home, now: NOW, dryRun: true });
     assert.deepEqual(planned.pruned.map((p) => p.name), ['2026-09-01T05-17-00-000Z-1']);
