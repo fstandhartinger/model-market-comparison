@@ -59,7 +59,8 @@ export function SimpleBenchmarks({ matrix: headline, data, ids: listIds }: { mat
   const nameOf = (id: string) => { const m = byId.get(id); return m ? collapsedName(m, true, preferred) : id; };
   const pickable = useMemo(() => listIds.filter((id) => !ids.includes(id)).map((id) => {
     const m = byId.get(id);
-    return { id, name: m ? collapsedName(m, true, preferred) : id, org: m?.org ?? "", released: m?.release_date ?? null, score: m && hasScoreEvidence(m, score) ? m.scores[score] ?? null : null, variants: [id], current: true };
+    return { id, name: m ? collapsedName(m, true, preferred) : id, org: m?.org ?? "", released: m?.release_date ?? null, score: m && hasScoreEvidence(m, score) ? m.scores[score] ?? null : null,
+      ...(score === "aa_intelligence_index" && m?.aa_intelligence_estimate ? { scoreEstimated: true } : {}), variants: [id], current: true };
   }), [listIds, ids, byId, preferred, score]);
   const [note, setNote] = useState(false);
   // CR-7.2: on small screens say once that the full version is built for larger screens.

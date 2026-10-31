@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
-import { IO_PROXY_TEXT, type PriceResult, type PriceSource } from "../lib/cost";
+import { IO_PROXY_TEXT, aaTaskVersionLabel, type PriceResult, type PriceSource } from "../lib/cost";
 import { AaCredit } from "./AaCredit";
 
 export function priceNumber(value: number | null | undefined): string {
@@ -64,7 +64,7 @@ export function PriceValue({ price, compact = false, showEstimate = true, contex
         <ul className="mt-2 list-disc space-y-1.5 pl-5 leading-relaxed" data-testid="cost-explanation">
           <li>{assumedTask
             ? <>Artificial Analysis publishes no Intelligence Index task-token measurement for this model, so this scenario uses {tokens(e.inputs.output_tokens_per_task ?? 0)} output tokens.</>
-            : <>Output tokens on an Artificial Analysis Intelligence Index task for this exact configuration: {tokens(e.inputs.output_tokens_per_task ?? 0)}, modeled with about {tokens(e.inputs.input_tokens_per_task)} input tokens. This benchmark task length is not a typical user task. <AaCredit /></>}</li>
+            : <>Output tokens on an Artificial Analysis Intelligence Index {price.aaTaskVersion ? `${aaTaskVersionLabel(price.aaTaskVersion)} ` : ""}task for this exact configuration: {tokens(e.inputs.output_tokens_per_task ?? 0)}, modeled with about {tokens(e.inputs.input_tokens_per_task)} input tokens. This benchmark task length is not a typical user task. <AaCredit /></>}</li>
           {price.priceCondition && <li>Price condition: {price.priceCondition}{price.conditionCheckedAt ? ` · checked ${price.conditionCheckedAt} (UTC)` : ""}. The prices below are the rates used in this estimate.</li>}
           <li>{cache?.kind === "observed"
             ? <>Cache-efficiency data from OpenRouter: {percent(cache.rate)} of input tokens are read from cache on this route.</>

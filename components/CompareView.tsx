@@ -1,7 +1,7 @@
 "use client";
 import { useMemo, useState } from "react";
 import Link from "next/link";
-import { hasScoreEvidence, type ClientData, type ClientModel } from "../lib/client-model";
+import { aaEstimateNote, hasScoreEvidence, type ClientData, type ClientModel } from "../lib/client-model";
 import { scoreLabel, scoreVersion } from "../lib/score-label";
 import type { ScoreKey } from "../lib/types";
 import { num, orgColor } from "../lib/format";
@@ -153,6 +153,8 @@ export function CompareView({ data }: { data: ClientData }) {
                             <div className="flex items-baseline justify-between">
                               <span className={`text-2xl font-bold tabular ${win ? "text-accent2" : "text-gray-200"}`}>
                                 {mt.key === "cost" ? (price ? <PriceValue price={price} /> : "—") : (v == null ? "—" : num(v, mt.digits ?? 1))}
+                                {/* CR-634: an AA Intelligence value estimated from v4 is never shown as a measurement. */}
+                                {v != null && mt.key === "aa_intelligence_index" && (slot === "A" ? A : B)?.aa_intelligence_estimate && <span className="ml-1 align-middle text-[10px] font-normal text-amber-300/90" title={aaEstimateNote((slot === "A" ? A : B)!.aa_intelligence_estimate!)} data-aa-estimate="true">est.</span>}
                               </span>
                               {win && <span className="text-[10px] font-bold text-accent2">★ better</span>}
                             </div>

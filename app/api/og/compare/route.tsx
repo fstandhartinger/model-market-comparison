@@ -24,7 +24,7 @@ export async function GET(request: Request) {
             <span style={{ fontSize: 21, color: '#8fa2b8' }}>{entry.org ?? 'Model'}</span>
             <span style={{ fontSize: 31, fontWeight: 700, marginTop: 6 }}>{entry.name}</span>
             {entry.kind === 'known' && typeof entry.score === 'number'
-              ? <span style={{ display: 'flex', fontSize: 40, fontWeight: 800, color: '#6ee7b7', marginTop: 14 }}>{entry.score.toFixed(1)}<span style={{ fontSize: 19, color: '#8fa2b8', marginLeft: 10, marginTop: 16 }}>AA Intelligence Index</span></span>
+              ? <span style={{ display: 'flex', fontSize: 40, fontWeight: 800, color: '#6ee7b7', marginTop: 14 }}>{entry.score.toFixed(1)}<span style={{ fontSize: 19, color: '#8fa2b8', marginLeft: 10, marginTop: 16 }}>{entry.scoreEstimated ? 'AA Intelligence Index (est. from v4)' : 'AA Intelligence Index'}</span></span>
               : <span style={{ display: 'flex', fontSize: 25, fontWeight: 700, color: '#f6c177', marginTop: 16 }}>{entry.kind === 'pending' ? 'Coming soon' : 'No index value yet'}</span>}
             {entry.kind === 'pending' && <span style={{ fontSize: 18, color: '#8fa2b8', marginTop: 10 }}>Numbers land here as soon as they are published</span>}
           </div>

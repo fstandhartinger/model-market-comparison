@@ -5,8 +5,8 @@ import { useRouter } from "next/navigation";
 import {
   ScatterChart, Scatter, XAxis, YAxis, ZAxis, CartesianGrid, Tooltip, ResponsiveContainer, Label, Customized,
 } from "recharts";
-import { compositeChartVisible, compositeCoverageLabel, coverageMarker, hasScoreEvidence, type ClientData, type ClientModel } from "../lib/client-model";
-import { SCORE_SHORT_LABELS } from "../lib/types";
+import { aaEstimateNote, compositeChartVisible, compositeCoverageLabel, coverageMarker, hasScoreEvidence, type ClientData, type ClientModel } from "../lib/client-model";
+import { SCORE_SHORT_LABELS, type AaIntelligenceRecord } from "../lib/types";
 import { scoreChartLabel } from "../lib/score-label";
 import { orgColor, counted } from "../lib/format";
 import { modelPrice, scopeFromSettings, priceLabel, type PriceResult, type PriceSettings } from "../lib/cost";
@@ -201,6 +201,8 @@ export function CostCapabilityScatter({ data, compact = false, advanced = false,
     .filter((x) => x.price.value != null && (x.price.value as number) >= 0 && comparableTaskCost(x.price))
     .map((x) => ({ x: x.price.value as number, y: x.sc as number, price: x.price, name: collapsedName(x.m, s.collapse, preferredId), org: x.m.org, id: x.m.id, open: x.m.open_weights, z: 100,
       coverage: x.coverage, compositeChart: score === "composite",
+      // CR-634: an AA Intelligence value estimated from v4 is labelled in the tooltip and the table.
+      aaEstimate: score === "aa_intelligence_index" ? x.m.aa_intelligence_estimate ?? null : null,
       pass: (x.sc as number) >= minScore && (maxCost == null || (x.price.value as number) <= maxCost) })),
   [plotted, minScore, maxCost, s.collapse, preferredId, score]);
   const shownIncomplete = allPoints.filter((p) => p.coverage).length;
@@ -396,7 +398,7 @@ export function CostCapabilityScatter({ data, compact = false, advanced = false,
               {[...allPoints].sort((a, b) => a.x - b.x).map((p) => (
                 <tr key={p.id}>
                   <td className="px-3 py-1"><Link href={`/models/${encodeURIComponent(p.id)}`} className="text-accent underline">{p.name}</Link> <span className="text-gray-500">{p.org}{p.open ? " · open" : ""}</span>{p.coverage && <span className="bh-thin-tag ml-1" data-incomplete-composite={p.coverage} title={`Incomplete Composite: ${p.coverage.replace("/", " of ")} inputs`}><span aria-hidden="true">{p.coverage}</span><span className="sr-only">Incomplete Composite: {p.coverage.replace("/", " of ")} inputs</span></span>}</td>
-                  <td className="px-3 py-1 text-right tabular">{p.y.toFixed(isElo ? 0 : 1)}</td>
+                  <td className="px-3 py-1 text-right tabular" title={p.aaEstimate ? aaEstimateNote(p.aaEstimate) : undefined}>{p.y.toFixed(isElo ? 0 : 1)}{p.aaEstimate && <span className="ml-1 text-[10px] text-amber-300/90" data-aa-estimate="true">est.<span className="sr-only"> {aaEstimateNote(p.aaEstimate)}</span></span>}</td>
                   <td className="px-3 py-1 text-right"><PriceValue price={p.price} compact /></td>
                 </tr>
               ))}
@@ -408,14 +410,14 @@ export function CostCapabilityScatter({ data, compact = false, advanced = false,
   );
 }
 
-function Dot({ active, payload }: { active?: boolean; payload?: { payload: { name: string; x: number; y: number; org: string; open: boolean; price: PriceResult; coverage?: string | null; compositeChart?: boolean } }[] }) {
+function Dot({ active, payload }: { active?: boolean; payload?: { payload: { name: string; x: number; y: number; org: string; open: boolean; price: PriceResult; coverage?: string | null; compositeChart?: boolean; aaEstimate?: AaIntelligenceRecord | null } }[] }) {
   if (!active || !payload?.length) return null;
   const p = payload[0].payload;
   return (
     <div className="card px-3 py-2 text-xs">
       <div className="font-semibold">{p.name}</div>
       <div className="text-gray-400">{p.org}{p.open ? " · open weights" : " · closed"}</div>
-      <div className="mt-1">Capability: <span className="font-semibold">{p.y.toFixed(1)}</span></div>
+      <div className="mt-1">Capability: <span className="font-semibold">{p.y.toFixed(1)}</span>{p.aaEstimate && <span className="ml-1 text-amber-300" data-aa-estimate="true">est. from v4 (≈{p.aaEstimate.interval?.[0]}–{p.aaEstimate.interval?.[1]})</span>}</div>
       <div>Cheapest price: <PriceValue price={p.price} compact /></div>
       {/* CR-211: the Composite's input count, stated on every Composite point; an incomplete one is never "7/7". */}
       {p.compositeChart && <div className={p.coverage ? "mt-1 text-amber-300" : "mt-1 text-gray-400"} data-bh-composite-inputs>{p.coverage ? `Incomplete Composite: ${p.coverage} inputs` : "Composite inputs: 7/7"}</div>}
