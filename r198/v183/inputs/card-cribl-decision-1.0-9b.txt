@@ -1,0 +1,286 @@
+---
+license: apache-2.0
+library_name: peft
+tags:
+  - lora
+  - structured-decisions
+  - typed-decisions
+  - system-one
+  - decision-model
+  - calibrated
+pipeline_tag: text-generation
+base_model: Qwen/Qwen3.5-9B
+---
+
+<p align="center">
+  <img src="cribl_decision_lockup.png" alt="cribl-decision" width="480"/>
+</p>
+
+# cribl-decision 9B
+
+A parameter-efficient **LoRA adapter** for structured decision prediction.
+Given a state, one or more typed questions, and a set of candidate options,
+cribl-decision returns **probability distributions** over the supplied candidates.
+
+| Property | Value |
+|---|---|
+| Base model | `Qwen/Qwen3.5-9B` @ `c20223623576` |
+| Adapter size | 138.2 MB, 608 tensors |
+| LoRA rank | 32 |
+| LoRA alpha | 64 |
+| Decision types | `choice`, `noul`, `score` |
+| Max candidates | 255 per question |
+| Readout | Hidden-state → lm_head → candidate softmax (no text generation) |
+
+## Highlights
+
+- **LoRA adapter** — separate from the 9 B base; swap or freeze independently.
+- **Structured candidate scoring** — probabilities come from projecting the
+  hidden state through the native `lm_head`, restricted to candidate-letter
+  tokens. No text is generated.
+- **Three decision types** — categorical choice (pick + distribution), noul
+  (Boolean probability), score (ordinal distribution + expected value).
+- **Up to 255 candidates** — labels A–Z, then two-letter single-token labels
+  (AA, AB, …).
+- **Multi-slot readout** — multiple questions packed in one forward pass, each
+  read at its own `Answer k: (` slot, conditionally independent.
+
+## Evaluation (26-task held-out)
+
+| Metric | Value |
+|---|---|
+| Records | 29,743 |
+| Tasks | 26 |
+| Overall accuracy | 78.41 % |
+| Task-macro accuracy | 79.51 % |
+| Task-macro Macro-F1 | 79.45 % |
+
+## Quick start
+
+### Requirements
+
+```bash
+pip install torch transformers peft
+```
+
+### Loading the adapter
+
+> **Important:** Use `Qwen3_5ForConditionalGeneration`, not
+> `AutoModelForCausalLM`. In transformers ≥ 5.19, `AutoModelForCausalLM`
+> resolves to `Qwen3_5ForCausalLM`, which silently ignores the LoRA adapter.
+
+```python
+import torch
+from transformers import AutoTokenizer, Qwen3_5ForConditionalGeneration
+from peft import PeftModel
+
+BASE_ID  = "Qwen/Qwen3.5-9B"
+BASE_REV = "c202236235762e1c871ad0ccb60c8ee5ba337b9a"
+ADAPTER  = "cribl-ai/cribl-decision-1.0-9B"
+
+tokenizer = AutoTokenizer.from_pretrained(BASE_ID, revision=BASE_REV)
+base = Qwen3_5ForConditionalGeneration.from_pretrained(
+    BASE_ID, revision=BASE_REV, torch_dtype=torch.bfloat16,
+)
+model = PeftModel.from_pretrained(base, ADAPTER, is_trainable=False)
+model = model.to("cuda").eval()
+```
+
+### Prompt format
+
+The model was trained on the following prompt layout. **Using a different format
+will degrade accuracy significantly.**
+
+```
+Context:
+<state — JSON object, plain text, or any string>
+
+Question: <question text>
+Options:
+(A) <candidate 1>
+(B) <candidate 2>
+(C) <candidate 3>
+Answer: (
+```
+
+For multiple questions in one pass:
+
+```
+Context:
+<state>
+
+Question 1: <text>
+Options:
+(A) ...
+(B) ...
+
+Question 2: <text>
+Options:
+(A) ...
+(B) ...
+Answer 1: (
+Answer 2: (
+```
+
+### Structured readout
+
+The model does **not** generate text. Instead:
+
+1. Run one forward pass through the transformer (`language_model`).
+2. Take the hidden state at the `(` token position (the last token of
+   `Answer: (`).
+3. Gather the `lm_head` weight rows for the candidate-letter token IDs only.
+4. Compute `logits = candidate_weights @ hidden_state`.
+5. Apply softmax to get a probability distribution over the candidates.
+
+```python
+# After loading the model as above:
+base_model     = model.get_base_model()
+language_model = base_model.model.language_model
+lm_head        = base_model.lm_head
+
+LETTERS = "ABCDEFGHIJ"
+
+@torch.inference_mode()
+def score(prompt, n_options):
+    ids = tokenizer.encode(prompt, add_special_tokens=False)
+    input_ids = torch.tensor([ids], dtype=torch.long, device="cuda")
+    mask = torch.ones_like(input_ids)
+
+    hidden = language_model(input_ids=input_ids, attention_mask=mask).last_hidden_state
+    h = hidden[0, -1]  # hidden state at the "(" token
+
+    letter_ids = [tokenizer.encode(LETTERS[i], add_special_tokens=False)[0]
+                  for i in range(n_options)]
+    cand_ids = torch.tensor(letter_ids, dtype=torch.long, device="cuda")
+    weights = lm_head.weight[cand_ids]
+    logits = (weights @ h).float()
+    probs = torch.softmax(logits, dim=-1).cpu().tolist()
+    return probs
+```
+
+### Complete example
+
+```python
+import json
+
+state = {"message": "My card was charged twice for the same purchase."}
+question = "Which department should handle this?"
+options = ["billing", "technical support", "sales"]
+
+prompt = (
+    f"Context:\n{json.dumps(state)}\n\n"
+    f"Question: {question}\n"
+    f"Options:\n"
+    + "\n".join(f"({LETTERS[i]}) {opt}" for i, opt in enumerate(options))
+    + "\nAnswer: ("
+)
+
+probs = score(prompt, len(options))
+for i, (opt, p) in enumerate(zip(options, probs)):
+    print(f"({LETTERS[i]}) {opt:20s}  {p:.4f}")
+```
+
+A standalone runnable script is provided in
+[`example_readout.py`](example_readout.py).
+
+### Triton workaround
+
+On some systems (e.g. DGX boxes without `Python.h` for Triton JIT), the first
+forward pass may fail with a Triton compilation error. Add this **before**
+importing transformers:
+
+```python
+from torch._native import triton_utils
+triton_utils.deregister_op_overrides()
+```
+
+## Decision types
+
+### Choice
+
+A categorical pick from the candidate set, plus the full probability
+distribution.
+
+```json
+{
+  "type": "choice",
+  "pick": "billing",
+  "probabilities": {"billing": 0.82, "technical support": 0.14, "sales": 0.04}
+}
+```
+
+### Noul
+
+A Boolean probability for a yes/no proposition (two candidates: the
+proposition and its negation).
+
+```json
+{
+  "type": "noul",
+  "probability": 0.91
+}
+```
+
+### Score
+
+An ordinal distribution over ordered levels, plus the expected score.
+
+```json
+{
+  "type": "score",
+  "distribution": {"low": 0.05, "medium": 0.30, "high": 0.65},
+  "expected": 2.60
+}
+```
+
+## Label table
+
+| Options | Labels |
+|---|---|
+| ≤ 10 | A, B, C, D, E, F, G, H, I, J |
+| 11–26 | A–Z |
+| 27–255 | A–Z, then AA, AB, AC, … (two-letter single-token labels) |
+
+Every label is guaranteed to be a single token in the Qwen3.5 tokenizer.
+
+## Training data
+
+Trained on a broad mixture of public decision datasets spanning classification,
+intent, preference, safety, knowledge, reasoning, agent/tool, and rule families.
+Max context length: 8,192 tokens. Max candidates per question: 255. Option order
+shuffled; large label sets sub-sampled to 10 with the gold always kept. Base
+transformer frozen; only LoRA parameters were trained.
+
+## Limitations
+
+- Can produce incorrect or overconfident decisions.
+- Accuracy varies by task family and domain.
+- Sensitive to prompt formatting, candidate wording, and option order.
+- Generic text generation (standard `model.generate()`) is not the intended
+  use — use the structured readout described above.
+- Calibration should be rechecked on your specific task distribution.
+
+## Security and responsible use
+
+- Deployers are responsible for protecting credentials (`DECISION_API_TOKEN`,
+  SSH keys, `.env` files) and keeping sensitive data out of logs.
+- Validate inputs and monitor calibration in production.
+- Add human review for high-impact decisions.
+
+## License
+
+Apache-2.0, where compatible with the base-model license. The Qwen3.5-9B
+model is subject to its own license terms.
+
+## Citation
+
+```bibtex
+@misc{cribl-decision-9b-2026,
+  title        = {cribl-decision 9B: A LoRA Adapter for Structured Decision Prediction},
+  author       = {{Cribl AI}},
+  year         = {2026},
+  publisher    = {Hugging Face},
+  howpublished = {\url{https://huggingface.co/cribl-ai/cribl-decision-1.0-9B}}
+}
+```

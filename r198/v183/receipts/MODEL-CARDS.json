@@ -1,0 +1,20 @@
+{
+ "allec-oavg": {
+  "url": "https://huggingface.co/plantwaterer/allec/raw/e54027aa1f865bdd25724e9b3c1acb51b2bbc3c3/README.md",
+  "sha256": "02537a6a8f8b527c34e467d0e6423930a4e30cc6d3057947473bc54455ee7238",
+  "base_model": "google/gemma-4-31B-it",
+  "header": "\nlicense: apache-2.0\nbase_model: google/gemma-4-31B-it\nlibrary_name: transformers\npipeline_tag: text-generation\ntags:\n- decision-making\n- multiple-choice\n"
+ },
+ "cribl-decision-1.0-9b": {
+  "url": "https://huggingface.co/cribl-ai/cribl-decision-1.0-9B/raw/73abdfbecf0619fdc02bd2d769460b353d3de30a/README.md",
+  "sha256": "048409851991deba6db8d7a2295645f3dbd97a4770ab6abf0391bd2c875cff65",
+  "base_model": "Qwen/Qwen3.5-9B",
+  "header": "\nlicense: apache-2.0\nlibrary_name: peft\ntags:\n  - lora\n  - structured-decisions\n  - typed-decisions\n  - system-one\n  - decision-model\n  - calibrated\npipeline_tag: text-generation\nbase_model: Qwen/Qwen3.5-9B\n"
+ },
+ "piccolo-27b": {
+  "url": "https://huggingface.co/agentscope-ai/Piccolo-27B/raw/9cab0ecef7372d29ac83b50ac5e49cead2caa173/README.md",
+  "sha256": "6c05173f67b8b2eb85ca7b170506babcd9fd8cd35e239d5e20f88fdf13fc14f9",
+  "base_model": "Qwen/Qwen3.5-27B",
+  "header": "\nbase_model: Qwen/Qwen3.5-27B\nlanguage:\n- en\n- zh\nlicense: apache-2.0\nlibrary_name: transformers\npipeline_tag: text-classification\ntags:\n- decision-model\n- bidirectional-attention\n- agentscope\n- qwenpaw\n"
+ }
+}
