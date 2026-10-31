@@ -232,6 +232,7 @@ export async function runDaily({ repo = ROOT, home = '/opt/benchmarkheaven-daily
         // board with its own date and lets every other contract publish. Any other failure — a
         // corroborated withdrawal, a malformed response, an HTTP or access change — still fails the
         // run closed, as does this one for any source other than DesignArena.
+        // CR-629: a new AA Intelligence Index major version keeps the published AA snapshot (see readAaIndexVersionChange).
         const aaIndex = source === 'aa' ? await readAaIndexVersionChange({ runDir, work, error }) : null;
         if (aaIndex) {
           for (const key of ['artificialanalysis', 'aa_efficiency']) report.retained_sources.push({ source: key, step, reason: aaIndex.reason, page_version: aaIndex.page_version, retained_collected_at: key === 'artificialanalysis' ? aaIndex.retained_collected_at : aaIndex.efficiency_collected_at });
