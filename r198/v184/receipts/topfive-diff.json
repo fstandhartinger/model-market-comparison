@@ -1,0 +1,797 @@
+{
+ "base": "v1.8.3",
+ "candidate": "v1.8.4",
+ "candidate_results_sha256": "6935094cf9338029d87d34650782be6034eca38d465b3637db8e26d855858495",
+ "changed": false,
+ "changed_labels": [],
+ "changed_lists": 0,
+ "comparison_scope": "40 primary site assembly lists plus supplementary frozen/off/share axis/weight/cap lists, slider boundaries, four custom weightings and a 368-state slider grid; before = v1.8.3 (PASS) tree with v1.8.4 wired but PENDING (carried rows, cells, costs and order lists equal to the base), after = v1.8.4 synthetic PASS; real manifest PENDING",
+ "custom_changed_labels": [],
+ "custom_receipt_sha256": "0117d7bf320fe89f27d29b8831e379c82111c0a591ef625c009b59668b67d86b",
+ "custom_weight_example": {
+  "calibration": 50,
+  "cost": 0,
+  "intelligence": 50,
+  "speed": 0
+ },
+ "explicit_slider_grid_changed": 0,
+ "explicit_slider_grid_states": 368,
+ "extended_changed_labels": [],
+ "extended_changed_lists": 0,
+ "extended_lists": 540,
+ "lists": 580,
+ "primary_changed_labels": [],
+ "primary_changed_lists": 0,
+ "primary_lists": 40,
+ "rows": [
+  {
+   "after": [
+    "torchcast-decision-4b-v1.3",
+    "singularity-super-decider",
+    "launchables-myles-g-12b",
+    "h2o-lightning-4b",
+    "kettei-fat"
+   ],
+   "before": [
+    "torchcast-decision-4b-v1.3",
+    "singularity-super-decider",
+    "launchables-myles-g-12b",
+    "h2o-lightning-4b",
+    "kettei-fat"
+   ],
+   "changed": false,
+   "metric": "composites/A",
+   "view": "all"
+  },
+  {
+   "after": [
+    "singularity-super-decider",
+    "kettei-fat",
+    "torchcast-decision-4b-v1.3",
+    "h2o-lightning-31b",
+    "fastino-glide-api"
+   ],
+   "before": [
+    "singularity-super-decider",
+    "kettei-fat",
+    "torchcast-decision-4b-v1.3",
+    "h2o-lightning-31b",
+    "fastino-glide-api"
+   ],
+   "changed": false,
+   "metric": "composites/B",
+   "view": "all"
+  },
+  {
+   "after": [
+    "torchcast-decision-4b-v1.3",
+    "singularity-super-decider",
+    "h2o-lightning-4b",
+    "kettei-fat",
+    "wald-26b-a4b"
+   ],
+   "before": [
+    "torchcast-decision-4b-v1.3",
+    "singularity-super-decider",
+    "h2o-lightning-4b",
+    "kettei-fat",
+    "wald-26b-a4b"
+   ],
+   "changed": false,
+   "metric": "composites/C",
+   "view": "all"
+  },
+  {
+   "after": [
+    "kettei-fat",
+    "singularity-super-decider-thinking",
+    "mammoth-1",
+    "knowline-31b-gen1",
+    "fastino-glide-1.2-open"
+   ],
+   "before": [
+    "kettei-fat",
+    "singularity-super-decider-thinking",
+    "mammoth-1",
+    "knowline-31b-gen1",
+    "fastino-glide-1.2-open"
+   ],
+   "changed": false,
+   "metric": "capability/official_caps",
+   "view": "all"
+  },
+  {
+   "after": [
+    "gpt-6-luna",
+    "gpt-6-luna-low",
+    "gpt-5.6-luna",
+    "deepseek-flash",
+    "kettei-fat"
+   ],
+   "before": [
+    "gpt-6-luna",
+    "gpt-6-luna-low",
+    "gpt-5.6-luna",
+    "deepseek-flash",
+    "kettei-fat"
+   ],
+   "changed": false,
+   "metric": "capability/no_caps",
+   "view": "all"
+  },
+  {
+   "after": [
+    "kettei-fat",
+    "singularity-super-decider-thinking",
+    "mammoth-1",
+    "knowline-31b-gen1",
+    "fastino-glide-1.2-open"
+   ],
+   "before": [
+    "kettei-fat",
+    "singularity-super-decider-thinking",
+    "mammoth-1",
+    "knowline-31b-gen1",
+    "fastino-glide-1.2-open"
+   ],
+   "changed": false,
+   "metric": "capability/cost_off_latency_2x",
+   "view": "all"
+  },
+  {
+   "after": [
+    "kettei-fat",
+    "singularity-super-decider-thinking",
+    "mammoth-1",
+    "knowline-31b-gen1",
+    "fastino-glide-1.2-open"
+   ],
+   "before": [
+    "kettei-fat",
+    "singularity-super-decider-thinking",
+    "mammoth-1",
+    "knowline-31b-gen1",
+    "fastino-glide-1.2-open"
+   ],
+   "changed": false,
+   "metric": "capability/latency_none",
+   "view": "all"
+  },
+  {
+   "after": [
+    "kettei-fat",
+    "singularity-super-decider-thinking",
+    "mammoth-1",
+    "knowline-31b-gen1",
+    "fastino-glide-1.2-open"
+   ],
+   "before": [
+    "kettei-fat",
+    "singularity-super-decider-thinking",
+    "mammoth-1",
+    "knowline-31b-gen1",
+    "fastino-glide-1.2-open"
+   ],
+   "changed": false,
+   "metric": "extra_capability/cost_7x",
+   "view": "all"
+  },
+  {
+   "after": [
+    "kettei-fat",
+    "singularity-super-decider-thinking",
+    "mammoth-1",
+    "knowline-31b-gen1",
+    "fastino-glide-1.2-open"
+   ],
+   "before": [
+    "kettei-fat",
+    "singularity-super-decider-thinking",
+    "mammoth-1",
+    "knowline-31b-gen1",
+    "fastino-glide-1.2-open"
+   ],
+   "changed": false,
+   "metric": "extra_capability/cost_10x",
+   "view": "all"
+  },
+  {
+   "after": [
+    "gpt-6-luna",
+    "gpt-6-luna-low",
+    "gpt-5.6-luna",
+    "deepseek-flash",
+    "kettei-fat"
+   ],
+   "before": [
+    "gpt-6-luna",
+    "gpt-6-luna-low",
+    "gpt-5.6-luna",
+    "deepseek-flash",
+    "kettei-fat"
+   ],
+   "changed": false,
+   "metric": "extra_capability/rank_field",
+   "view": "all"
+  },
+  {
+   "after": [
+    "gpt-6-luna",
+    "gpt-6-luna-low",
+    "gpt-5.6-luna",
+    "kettei-fat",
+    "singularity-super-decider-thinking"
+   ],
+   "before": [
+    "gpt-6-luna",
+    "gpt-6-luna-low",
+    "gpt-5.6-luna",
+    "kettei-fat",
+    "singularity-super-decider-thinking"
+   ],
+   "changed": false,
+   "metric": "extra_capability/cost_7x_latency_none",
+   "view": "all"
+  },
+  {
+   "after": [
+    "gpt-6-luna",
+    "gpt-6-luna-low",
+    "gpt-5.6-luna",
+    "kettei-fat",
+    "singularity-super-decider-thinking"
+   ],
+   "before": [
+    "gpt-6-luna",
+    "gpt-6-luna-low",
+    "gpt-5.6-luna",
+    "kettei-fat",
+    "singularity-super-decider-thinking"
+   ],
+   "changed": false,
+   "metric": "extra_capability/cost_10x_latency_none",
+   "view": "all"
+  },
+  {
+   "after": [
+    "torchcast-decision-4b-v1.3",
+    "h2o-lightning-4b",
+    "wald-26b-a4b",
+    "torchcast-decision-4b-v1.2",
+    "fastino-glide-1.2-open"
+   ],
+   "before": [
+    "torchcast-decision-4b-v1.3",
+    "h2o-lightning-4b",
+    "wald-26b-a4b",
+    "torchcast-decision-4b-v1.2",
+    "fastino-glide-1.2-open"
+   ],
+   "changed": false,
+   "metric": "composites/A",
+   "view": "open"
+  },
+  {
+   "after": [
+    "torchcast-decision-4b-v1.3",
+    "h2o-lightning-31b",
+    "fastino-glide-1.2-open",
+    "mammoth-1",
+    "startlux-decision-v1.1-27b-instant"
+   ],
+   "before": [
+    "torchcast-decision-4b-v1.3",
+    "h2o-lightning-31b",
+    "fastino-glide-1.2-open",
+    "mammoth-1",
+    "startlux-decision-v1.1-27b-instant"
+   ],
+   "changed": false,
+   "metric": "composites/B",
+   "view": "open"
+  },
+  {
+   "after": [
+    "torchcast-decision-4b-v1.3",
+    "h2o-lightning-4b",
+    "wald-26b-a4b",
+    "torchcast-decision-4b-v1.2",
+    "fastino-glide-1.2-open"
+   ],
+   "before": [
+    "torchcast-decision-4b-v1.3",
+    "h2o-lightning-4b",
+    "wald-26b-a4b",
+    "torchcast-decision-4b-v1.2",
+    "fastino-glide-1.2-open"
+   ],
+   "changed": false,
+   "metric": "composites/C",
+   "view": "open"
+  },
+  {
+   "after": [
+    "mammoth-1",
+    "knowline-31b-gen1",
+    "fastino-glide-1.2-open",
+    "h2o-lightning-31b",
+    "pplx-decider-v1-1-27b"
+   ],
+   "before": [
+    "mammoth-1",
+    "knowline-31b-gen1",
+    "fastino-glide-1.2-open",
+    "h2o-lightning-31b",
+    "pplx-decider-v1-1-27b"
+   ],
+   "changed": false,
+   "metric": "capability/official_caps",
+   "view": "open"
+  },
+  {
+   "after": [
+    "mammoth-1",
+    "knowline-31b-gen1",
+    "fastino-glide-1.2-open",
+    "h2o-lightning-31b",
+    "pplx-decider-v1-1-27b"
+   ],
+   "before": [
+    "mammoth-1",
+    "knowline-31b-gen1",
+    "fastino-glide-1.2-open",
+    "h2o-lightning-31b",
+    "pplx-decider-v1-1-27b"
+   ],
+   "changed": false,
+   "metric": "capability/no_caps",
+   "view": "open"
+  },
+  {
+   "after": [
+    "mammoth-1",
+    "knowline-31b-gen1",
+    "fastino-glide-1.2-open",
+    "h2o-lightning-31b",
+    "pplx-decider-v1-1-27b"
+   ],
+   "before": [
+    "mammoth-1",
+    "knowline-31b-gen1",
+    "fastino-glide-1.2-open",
+    "h2o-lightning-31b",
+    "pplx-decider-v1-1-27b"
+   ],
+   "changed": false,
+   "metric": "capability/cost_off_latency_2x",
+   "view": "open"
+  },
+  {
+   "after": [
+    "mammoth-1",
+    "knowline-31b-gen1",
+    "fastino-glide-1.2-open",
+    "h2o-lightning-31b",
+    "pplx-decider-v1-1-27b"
+   ],
+   "before": [
+    "mammoth-1",
+    "knowline-31b-gen1",
+    "fastino-glide-1.2-open",
+    "h2o-lightning-31b",
+    "pplx-decider-v1-1-27b"
+   ],
+   "changed": false,
+   "metric": "capability/latency_none",
+   "view": "open"
+  },
+  {
+   "after": [
+    "mammoth-1",
+    "knowline-31b-gen1",
+    "fastino-glide-1.2-open",
+    "h2o-lightning-31b",
+    "pplx-decider-v1-1-27b"
+   ],
+   "before": [
+    "mammoth-1",
+    "knowline-31b-gen1",
+    "fastino-glide-1.2-open",
+    "h2o-lightning-31b",
+    "pplx-decider-v1-1-27b"
+   ],
+   "changed": false,
+   "metric": "extra_capability/cost_7x",
+   "view": "open"
+  },
+  {
+   "after": [
+    "mammoth-1",
+    "knowline-31b-gen1",
+    "fastino-glide-1.2-open",
+    "h2o-lightning-31b",
+    "pplx-decider-v1-1-27b"
+   ],
+   "before": [
+    "mammoth-1",
+    "knowline-31b-gen1",
+    "fastino-glide-1.2-open",
+    "h2o-lightning-31b",
+    "pplx-decider-v1-1-27b"
+   ],
+   "changed": false,
+   "metric": "extra_capability/cost_10x",
+   "view": "open"
+  },
+  {
+   "after": [
+    "mammoth-1",
+    "knowline-31b-gen1",
+    "fastino-glide-1.2-open",
+    "h2o-lightning-31b",
+    "pplx-decider-v1-1-27b"
+   ],
+   "before": [
+    "mammoth-1",
+    "knowline-31b-gen1",
+    "fastino-glide-1.2-open",
+    "h2o-lightning-31b",
+    "pplx-decider-v1-1-27b"
+   ],
+   "changed": false,
+   "metric": "extra_capability/rank_field",
+   "view": "open"
+  },
+  {
+   "after": [
+    "mammoth-1",
+    "knowline-31b-gen1",
+    "fastino-glide-1.2-open",
+    "h2o-lightning-31b",
+    "pplx-decider-v1-1-27b"
+   ],
+   "before": [
+    "mammoth-1",
+    "knowline-31b-gen1",
+    "fastino-glide-1.2-open",
+    "h2o-lightning-31b",
+    "pplx-decider-v1-1-27b"
+   ],
+   "changed": false,
+   "metric": "extra_capability/cost_7x_latency_none",
+   "view": "open"
+  },
+  {
+   "after": [
+    "mammoth-1",
+    "knowline-31b-gen1",
+    "fastino-glide-1.2-open",
+    "h2o-lightning-31b",
+    "pplx-decider-v1-1-27b"
+   ],
+   "before": [
+    "mammoth-1",
+    "knowline-31b-gen1",
+    "fastino-glide-1.2-open",
+    "h2o-lightning-31b",
+    "pplx-decider-v1-1-27b"
+   ],
+   "changed": false,
+   "metric": "extra_capability/cost_10x_latency_none",
+   "view": "open"
+  },
+  {
+   "after": [
+    "singularity-super-decider",
+    "launchables-myles-g-12b",
+    "kettei-fat",
+    "fastino-glide-api",
+    "liquid-d1-ultra"
+   ],
+   "before": [
+    "singularity-super-decider",
+    "launchables-myles-g-12b",
+    "kettei-fat",
+    "fastino-glide-api",
+    "liquid-d1-ultra"
+   ],
+   "changed": false,
+   "metric": "composites/A",
+   "view": "api"
+  },
+  {
+   "after": [
+    "singularity-super-decider",
+    "kettei-fat",
+    "fastino-glide-api",
+    "drex-max",
+    "subq-snap-1.1"
+   ],
+   "before": [
+    "singularity-super-decider",
+    "kettei-fat",
+    "fastino-glide-api",
+    "drex-max",
+    "subq-snap-1.1"
+   ],
+   "changed": false,
+   "metric": "composites/B",
+   "view": "api"
+  },
+  {
+   "after": [
+    "singularity-super-decider",
+    "kettei-fat",
+    "fastino-glide-api",
+    "liquid-d1-ultra",
+    "subq-snap-1.1"
+   ],
+   "before": [
+    "singularity-super-decider",
+    "kettei-fat",
+    "fastino-glide-api",
+    "liquid-d1-ultra",
+    "subq-snap-1.1"
+   ],
+   "changed": false,
+   "metric": "composites/C",
+   "view": "api"
+  },
+  {
+   "after": [
+    "kettei-fat",
+    "singularity-super-decider-thinking",
+    "singularity-super-decider",
+    "fastino-glide-api",
+    "drex-max"
+   ],
+   "before": [
+    "kettei-fat",
+    "singularity-super-decider-thinking",
+    "singularity-super-decider",
+    "fastino-glide-api",
+    "drex-max"
+   ],
+   "changed": false,
+   "metric": "capability/official_caps",
+   "view": "api"
+  },
+  {
+   "after": [
+    "gpt-6-luna",
+    "gpt-6-luna-low",
+    "gpt-5.6-luna",
+    "deepseek-flash",
+    "kettei-fat"
+   ],
+   "before": [
+    "gpt-6-luna",
+    "gpt-6-luna-low",
+    "gpt-5.6-luna",
+    "deepseek-flash",
+    "kettei-fat"
+   ],
+   "changed": false,
+   "metric": "capability/no_caps",
+   "view": "api"
+  },
+  {
+   "after": [
+    "kettei-fat",
+    "singularity-super-decider-thinking",
+    "singularity-super-decider",
+    "fastino-glide-api",
+    "drex-max"
+   ],
+   "before": [
+    "kettei-fat",
+    "singularity-super-decider-thinking",
+    "singularity-super-decider",
+    "fastino-glide-api",
+    "drex-max"
+   ],
+   "changed": false,
+   "metric": "capability/cost_off_latency_2x",
+   "view": "api"
+  },
+  {
+   "after": [
+    "kettei-fat",
+    "singularity-super-decider-thinking",
+    "singularity-super-decider",
+    "fastino-glide-api",
+    "drex-max"
+   ],
+   "before": [
+    "kettei-fat",
+    "singularity-super-decider-thinking",
+    "singularity-super-decider",
+    "fastino-glide-api",
+    "drex-max"
+   ],
+   "changed": false,
+   "metric": "capability/latency_none",
+   "view": "api"
+  },
+  {
+   "after": [
+    "kettei-fat",
+    "singularity-super-decider-thinking",
+    "singularity-super-decider",
+    "fastino-glide-api",
+    "drex-max"
+   ],
+   "before": [
+    "kettei-fat",
+    "singularity-super-decider-thinking",
+    "singularity-super-decider",
+    "fastino-glide-api",
+    "drex-max"
+   ],
+   "changed": false,
+   "metric": "extra_capability/cost_7x",
+   "view": "api"
+  },
+  {
+   "after": [
+    "kettei-fat",
+    "singularity-super-decider-thinking",
+    "singularity-super-decider",
+    "fastino-glide-api",
+    "drex-max"
+   ],
+   "before": [
+    "kettei-fat",
+    "singularity-super-decider-thinking",
+    "singularity-super-decider",
+    "fastino-glide-api",
+    "drex-max"
+   ],
+   "changed": false,
+   "metric": "extra_capability/cost_10x",
+   "view": "api"
+  },
+  {
+   "after": [
+    "gpt-6-luna",
+    "gpt-6-luna-low",
+    "gpt-5.6-luna",
+    "deepseek-flash",
+    "kettei-fat"
+   ],
+   "before": [
+    "gpt-6-luna",
+    "gpt-6-luna-low",
+    "gpt-5.6-luna",
+    "deepseek-flash",
+    "kettei-fat"
+   ],
+   "changed": false,
+   "metric": "extra_capability/rank_field",
+   "view": "api"
+  },
+  {
+   "after": [
+    "gpt-6-luna",
+    "gpt-6-luna-low",
+    "gpt-5.6-luna",
+    "kettei-fat",
+    "singularity-super-decider-thinking"
+   ],
+   "before": [
+    "gpt-6-luna",
+    "gpt-6-luna-low",
+    "gpt-5.6-luna",
+    "kettei-fat",
+    "singularity-super-decider-thinking"
+   ],
+   "changed": false,
+   "metric": "extra_capability/cost_7x_latency_none",
+   "view": "api"
+  },
+  {
+   "after": [
+    "gpt-6-luna",
+    "gpt-6-luna-low",
+    "gpt-5.6-luna",
+    "kettei-fat",
+    "singularity-super-decider-thinking"
+   ],
+   "before": [
+    "gpt-6-luna",
+    "gpt-6-luna-low",
+    "gpt-5.6-luna",
+    "kettei-fat",
+    "singularity-super-decider-thinking"
+   ],
+   "changed": false,
+   "metric": "extra_capability/cost_10x_latency_none",
+   "view": "api"
+  },
+  {
+   "after": [
+    "torchcast-decision-4b-v1.3",
+    "singularity-super-decider",
+    "launchables-myles-g-12b",
+    "h2o-lightning-4b",
+    "kettei-fat"
+   ],
+   "before": [
+    "torchcast-decision-4b-v1.3",
+    "singularity-super-decider",
+    "launchables-myles-g-12b",
+    "h2o-lightning-4b",
+    "kettei-fat"
+   ],
+   "changed": false,
+   "metric": "A",
+   "view": "release"
+  },
+  {
+   "after": [
+    "singularity-super-decider",
+    "kettei-fat",
+    "torchcast-decision-4b-v1.3",
+    "h2o-lightning-31b",
+    "fastino-glide-api"
+   ],
+   "before": [
+    "singularity-super-decider",
+    "kettei-fat",
+    "torchcast-decision-4b-v1.3",
+    "h2o-lightning-31b",
+    "fastino-glide-api"
+   ],
+   "changed": false,
+   "metric": "B",
+   "view": "release"
+  },
+  {
+   "after": [
+    "torchcast-decision-4b-v1.3",
+    "singularity-super-decider",
+    "h2o-lightning-4b",
+    "kettei-fat",
+    "wald-26b-a4b"
+   ],
+   "before": [
+    "torchcast-decision-4b-v1.3",
+    "singularity-super-decider",
+    "h2o-lightning-4b",
+    "kettei-fat",
+    "wald-26b-a4b"
+   ],
+   "changed": false,
+   "metric": "C",
+   "view": "release"
+  },
+  {
+   "after": [
+    "gpt-6-luna",
+    "gpt-6-luna-low",
+    "gpt-5.6-luna",
+    "deepseek-flash",
+    "kettei-fat"
+   ],
+   "before": [
+    "gpt-6-luna",
+    "gpt-6-luna-low",
+    "gpt-5.6-luna",
+    "deepseek-flash",
+    "kettei-fat"
+   ],
+   "changed": false,
+   "metric": "capability",
+   "view": "release"
+  }
+ ],
+ "slider_changed_states": 0,
+ "slider_states": 76,
+ "snapshots_sha256": {
+  "topfive-after.json": "ef44582224d0348e09ad3a3502f3b700e63d96d4b57f21a74772372003008baf",
+  "topfive-before.json": "0f36e3338fb11471ae3fc9f05f3d7b30bb54e46fa4d66fe5eccbd9eac25c8438",
+  "topfive-extended.json": "dd7b03dfa1ffeb3a8df0813a8af0e0a3f03a72306ec7dccc620db8a82c9554b7",
+  "topfive-sliders.json": "9a89958c8582bef4984fb92ce47e5b608b7c84d56ca0d0daa05364f150960493"
+ },
+ "variant": "10-second share"
+}

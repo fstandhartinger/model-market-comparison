@@ -7731,6 +7731,22 @@
           }
         ],
         "note": "Single merged decoder body; author-declared ingredient provenance; text-only measurement."
+      },
+      "granite-switch-4.1-8b": {
+        "arch": "open-llm-decoder",
+        "badges": {
+          "derivation": "adapter",
+          "params": "8B",
+          "quant": "BF16"
+        },
+        "evidence": [
+          {
+            "fact": "The composed Granite Switch 4.1 8B checkpoint includes its decision adapter; config declares GraniteSwitchForCausalLM with full-attention layers.",
+            "kind": "model-card",
+            "url": "https://huggingface.co/ibm-granite/granite-switch-4.1-8b/blob/fb4aa7877e13e5fe09ca328713dc1db72a3f93ce/README.md"
+          }
+        ],
+        "note": "Composed Granite decoder; decision adapter only, no Guardian or audio measurement. Architecture is outside the six calibrated Gemma/Qwen cost classes."
       }
     },
     "imagejevbench": {
