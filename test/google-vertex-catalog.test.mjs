@@ -94,3 +94,26 @@ test("committed snapshot: every row names its place on the pricing page", () => 
     if (r.section === "Gemini 3") assert.equal(r.region, m.region === "global" ? "Global" : "Non-global", `${m.model_name} ${m.region}`);
   }
 });
+
+test("parseVertexCatalog: split Model Garden and partner pricing pages restore the mapped population", () => {
+  const google = '<h3>Gemini 3</h3>' + tabs('split-g', ['Standard Model'])
+    + panel('split-g', 0, table(G3, [
+      ['Gemini Example', 'Input (text)', 'Global', '$1', '$2', '$0.1'],
+      ['', 'Text output (response and reasoning)', 'Global', '$5', '$10', 'N/A'],
+    ])) + '<h3>Partner models</h3><a href="/model-garden/partner-models/pricing">Partner Models pricing section</a>';
+  const partner = '<h3>Anthropic&rsquo;s Claude models</h3>' + tabs('split-c', ['Global', 'EU Multi-Region (EU)'])
+    + panel('split-c', 0, table(PARTNER, [['Claude Example', 'Input', '$3', '$6'], ['', 'Output', '$15', '$30']]))
+    + panel('split-c', 1, table(PARTNER, [['Claude Example', 'Input', '$3.3', '$6.6'], ['', 'Output', '$16.5', '$33']]));
+  const previous = { models: [
+    { model_name: 'Gemini Example', price_ref: G3REF('Gemini Example', 'Global') },
+    { model_name: 'Claude Example', price_ref: ref(CLAUDE, 'Claude Example', { pane: 'Global' }) },
+    { model_name: 'Claude Example EU', price_ref: ref(CLAUDE, 'Claude Example', { pane: 'EU Multi-Region (EU)' }) },
+  ] };
+  assert.throws(() => parseVertexCatalog(google, previous), /only 1\/3 mapped rows readable/);
+  const result = parseVertexCatalog([google, partner], previous, { today: '2026-10-31' });
+  assert.equal(result.confirmed, 3);
+  assert.deepEqual(result.models.map((m) => [m.input_per_1m_usd, m.output_per_1m_usd]), [[1, 5], [3, 15], [3.3, 16.5]]);
+  assert.deepEqual(result.diff.unlisted, []);
+  assert.throws(() => parseVertexCatalog([google, '<p>unavailable</p>'], previous), /no standard price tables/);
+  assert.throws(() => parseVertexCatalog([partner.replace(/role="tabpanel"/g, '')], { models: previous.models.slice(1) }), /no region panes/);
+});

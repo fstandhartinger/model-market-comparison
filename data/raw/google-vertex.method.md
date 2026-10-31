@@ -7,8 +7,8 @@
 ## Executable collector (since 2026-09-14)
 
 `scripts/fetch-google-vertex-catalog.mjs` + `lib/google-vertex-catalog.mjs`, non-fatal daily step
-`fetch-google-vertex-catalog`. The browser steps under "How to refresh" are no longer needed: one plain GET of
-the pricing page (robots.txt allows it) now returns every table in the server-rendered HTML, including the
+`fetch-google-vertex-catalog`. The browser steps under "How to refresh" are no longer needed: plain GETs of
+the pricing pages (robots.txt allows them) return the tables in server-rendered HTML, including the
 partner sections and all seven Claude region panes (Material tab buttons with `track-metadata-eventdetail`
 labels + `role="tabpanel"` panels; the old `<devsite-selector>`/`data-tab` markup is gone).
 
@@ -29,6 +29,23 @@ Added by hand from the same page, then confirmed by the collector: **Grok 4.6** 
 ($1.40/$4.40, global). Google's US Multi-Region Claude pane lists "Input" twice for Claude Fable 5 with no output
 row; that pane is not referenced.
 
+## 2026-10-31 collector repair: partner pricing moved
+
+The original pricing URL now redirects to `https://cloud.google.com/model-garden/pricing`.
+Its "Partner models" section no longer embeds the partner tables and explicitly links to
+`https://cloud.google.com/model-garden/partner-models/pricing` ("Partner Models pricing section").
+The collector now makes two sequential public GETs: the original URL (following its redirect)
+and that linked partner-pricing page. Each document is parsed separately before combining tables;
+an empty/unrecognised document fails closed. The existing 50% readable-row guard, region-pane guard,
+exact references, duplicate-price checks and stale-row preservation remain unchanged.
+`response_sha256` still hashes the first response; `source_responses` records each final URL and hash.
+
+Live reproduction before the fix: **19/69** mapped rows readable, snapshot preserved.
+After the fix: **67/69** confirmed, **69 rows retained**, no price changes. This matches the committed
+2026-10-28 snapshot's confirmed population and exceptions: Claude Opus 4.1 is absent at its exact
+reference, and Gemini 3 Flash Preview has no standard text-output price row. Both retain their old
+prices/check dates; no retirement is inferred and no rows are added or removed.
+
 **Collected:** 2026-07-22 (comprehensive live re-scrape)
 **Output:** `google-vertex.json` (same shape as `aws-bedrock.json`) — 59 offer rows / 44 current model families
 
@@ -37,7 +54,8 @@ row; that pane is not referenced.
 Primary (authoritative), the official Vertex AI / "Agent Platform" pricing page:
 
 - https://cloud.google.com/vertex-ai/generative-ai/pricing
-  (redirects to `cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing`)
+  (redirects to `https://cloud.google.com/model-garden/pricing`)
+- https://cloud.google.com/model-garden/partner-models/pricing (linked successor for partner tables)
 - https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/model-versions
 - https://docs.cloud.google.com/gemini-enterprise-agent-platform/resources/locations
 - https://docs.cloud.google.com/gemini-enterprise-agent-platform/resources/data-residency

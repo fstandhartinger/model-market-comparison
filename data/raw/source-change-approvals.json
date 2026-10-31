@@ -530,5 +530,40 @@
       "review_basis": "Daily runs at 05:17Z and 05:48Z on 2026-10-02 failed closed because AA's API v2 returns artificial_analysis_coding_index=null for this one model (was 9.4 in the committed 2026-10-01 snapshot). Both runs received the byte-identical HTTP 200 body (sha256 12994e05...); it is complete: 689 models, all 688 prior identities present plus one new (Grok 4.7 Low), and this is the only prior numeric evaluation that became null across all models. In the same response AA newly reports scicode=0.244 for this model (null before), a coding-index component, so this is AA re-scoring the model rather than a truncated response; intelligence index 8.9 and pricing are unchanged. AA's leaderboard page payload does not expose a coding index for any model, so the API is the only primary for this field. Approves only this one field on this one model; the coding index is published as unknown until AA reports it again, not carried forward.",
       "owner_acceptance": "Operator: Benchmark Heaven self-heal repair agent (engine claude-opus-5-5), 2026-10-02, CR-261, following the 2026-09-30 aa_measurements precedent. Bounded to one field, one model, three days."
     }
-  ]
+  ],
+  "github_copilot_legacy": {
+    "previous_names": [
+      "Claude Haiku 4.5",
+      "Claude Opus 4.8",
+      "Claude Sonnet 4.6",
+      "GPT-4o",
+      "GPT-4o mini",
+      "GPT-5.1",
+      "GPT-5.1-Codex",
+      "GPT-5.1-Codex-Max",
+      "GPT-5.1-Codex-Mini",
+      "GPT-5.3-Codex",
+      "Gemini 3 Pro",
+      "MAI-Code-1.1-Flash"
+    ],
+    "current_names": [
+      "Claude Haiku 4.5",
+      "Claude Opus 4.8",
+      "Claude Sonnet 4.6",
+      "GPT-5.3-Codex",
+      "MAI-Code-1.1-Flash"
+    ],
+    "removed": [
+      "GPT-4o",
+      "GPT-4o mini",
+      "GPT-5.1",
+      "GPT-5.1-Codex",
+      "GPT-5.1-Codex-Max",
+      "GPT-5.1-Codex-Mini",
+      "Gemini 3 Pro"
+    ],
+    "reviewed_at": "2026-10-31",
+    "expires_at": "2026-11-03T00:00:00Z",
+    "review_basis": "The official page serves one 5-row table; 5 of the 7 removed models have retirement dates on the supported-models page, while GPT-4o and GPT-4o mini were removed without a listed date."
+  }
 }
