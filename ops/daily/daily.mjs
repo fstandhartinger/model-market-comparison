@@ -455,7 +455,8 @@ export async function runDaily({ repo = ROOT, home = '/opt/benchmarkheaven-daily
     // build 1099/1200 s, test killed twice at 900 s with zero failing tests, so every daily
     // publication had become a coin flip against the wall-clock. The 3 h run cap still bounds a
     // genuinely hung step.
-    await command('npm-build', 'npm', ['run', 'build'], work, 1_800_000, isolatedEnvironment);
+    // CR-636 (31 Oct 2026): the build takes 25-26 min on Sandy (05:17, 08:37) and hit the 30 min cap on a loaded host (10:01).
+    await command('npm-build', 'npm', ['run', 'build'], work, 3_600_000, isolatedEnvironment);
     // CR-631 (31 Oct 2026): the suite sums ~97 test-minutes (JevBench release-history and board tests take 2-7 min each)
     // and ran into the 30 min cap at concurrency 4 on a loaded Sandy; the cap is a hang guard, not a speed target.
     await command('npm-test', 'npm', ['test'], work, 3_600_000, isolatedEnvironment);
