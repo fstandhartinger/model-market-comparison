@@ -15,6 +15,7 @@ from pathlib import Path
 
 import measurement_dispatch
 import pod_runner
+import supplement_admission
 
 ORDER = 'a5d49ab5-d91f-4545-9f23-6fbce4a33021'
 BASE_IMAGE = 'pytorch/pytorch:2.14.0-cuda12.6-cudnn9-devel@sha256:0e968d2570373aeb781603c21925a030053b432945967da14f6f8423e1f0cc79'
@@ -67,6 +68,7 @@ FILES = {
     "wheels/typer-0.27.3-py3-none-any.whl": "e50022f28b82a86313e54501317a1db64bf8f8d036ff8cfe5ca7e47675454aff",
     "wheels/typing_inspection-0.4.4-py3-none-any.whl": "65b8397ba37ccbce054456aaccddfc91e6e3083c92824df348d96ca832f3f147"
 }
+FAMILY = 'lychee'
 MEMBER_LIMIT = 268435456
 CONTEXT_LIMIT = 536870912
 REMOTE_ROOT = '/runtime-supplement/lychee'
@@ -88,9 +90,11 @@ def sha256(path):
         return _sha256_stream(stream)
 
 def active(job, recipe):
-    """Only this order's reviewed http_typesafe recipe on the exact pinned base selects the supplement."""
-    return (Path(job).name == ORDER and isinstance(recipe, dict) and recipe.get('kind') == 'http_typesafe'
-            and recipe.get('image') == BASE_IMAGE)
+    """A listed order, or a host-admitted repeat of the reviewed stack (supplement_admission), with the
+    reviewed http_typesafe recipe on the exact pinned base selects the supplement."""
+    return (isinstance(recipe, dict) and recipe.get('kind') == 'http_typesafe'
+            and recipe.get('image') == BASE_IMAGE
+            and (Path(job).name == ORDER or supplement_admission.admitted(job, FAMILY)))
 
 def check_context(context=CONTEXT):
     """The context must be byte-identical to the pinned public-only inventory."""
