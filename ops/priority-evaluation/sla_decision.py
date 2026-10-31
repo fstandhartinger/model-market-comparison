@@ -31,14 +31,17 @@ def caption(row: dict, deadline: str) -> str:
     rid = str(uuid.UUID(str(row["id"])))
     amount = row.get("amount_total")
     money = f"USD {int(amount) / 100:.2f}" if isinstance(amount, int) and not isinstance(amount, bool) else "the full amount"
-    from autopickup import card_context_line
-    context = card_context_line(row, "has no result 40 hours after payment")
+    from autopickup import decision_context_line, eur_phrase
+    eur = eur_phrase(amount)
+    context = decision_context_line(row, "No result 40 h after payment for {customer}, model {model}: "
+                                         f"delay note or refund{f' ({eur})' if eur else ''}?")
     return (f"🧑 DU BIST DRAN\n{context}\n\n🧑 Für dich\n"
             f"- Decide the next step for this customer ({money}).\n"
             f"  Why: No result 40 hours after payment; the deadline is {deadline}.\n"
             "  Steps:\n  1. Tap Send delay note (mails the customer a new ETA of deadline + 24 h), "
             "Refund in full, or No action.\n"
-            "  Time: 1 minute. Buttons expire in 24 hours. A text reply does not decide.")
+            "  Time: 1 minute. Buttons expire in 24 hours so that an old card can never act. "
+            "A text reply does not decide.")
 
 
 def _attach(state: dict) -> None:
