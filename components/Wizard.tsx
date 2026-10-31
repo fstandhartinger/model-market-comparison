@@ -187,7 +187,7 @@ export function Wizard({ data, onFinish }: { data: ClientData; onFinish: () => v
           </div>
           <p className="mt-2 min-h-[2.5rem] text-xs text-gray-500">
             {intelFrontier
-              ? <>The best model available {intelMonths} month{intelMonths === 1 ? "" : "s"} ago was <b className="text-gray-300">{intelFrontier.model.family_name}</b> at {intelFrontier.value.toFixed(1)} — that becomes the floor.</>
+              ? <>The best model available {intelMonths} month{intelMonths === 1 ? "" : "s"} ago was <b className="text-gray-300">{intelFrontier.model.family_name}</b> at {intelFrontier.value.toFixed(1)}{intelFrontier.model.aa_intelligence_estimate ? " (estimated from v4; AA has not rescored it on v5.0)" : ""} — that becomes the floor.</>
               : "No minimum: every scored model stays in the running."}
           </p>
         </div>

@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import { mkdtemp, readFile, writeFile, rm } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { parseAaEfficiency, AA_EFFICIENCY_MIN_ROWS, AA_MIN_SCORED_DENOMINATOR, AA_EFFICIENCY_MODEL_SLUGS } from "../lib/aa-efficiency.mjs";
+import { parseAaEfficiency, AA_EFFICIENCY_ADOPTION_MIN_ROWS, AA_EFFICIENCY_MIN_ROWS, AA_MIN_SCORED_DENOMINATOR, AA_EFFICIENCY_MODEL_SLUGS } from "../lib/aa-efficiency.mjs";
 import { refreshAaEfficiency } from "../scripts/fetch-aa-efficiency.mjs";
 
 // Synthetic fixtures, deliberately not benchmark observations.
@@ -82,7 +82,7 @@ test("efficiency parse rejects missing, malformed, partial and invalid payloads"
 test("failed or partial refresh never overwrites the previous snapshot", async () => {
   const dir = await mkdtemp(join(tmpdir(), "aa-efficiency-test-"));
   const target = join(dir, "snapshot.json");
-  const original = JSON.stringify({ count: AA_EFFICIENCY_MIN_ROWS, previous: "retain byte for byte" });
+  const original = JSON.stringify({ count: AA_EFFICIENCY_MIN_ROWS, index_version: "5.0", previous: "retain byte for byte" });
   try {
     await writeFile(target, original);
     await assert.rejects(refreshAaEfficiency({ target, html: html([...carriers(3), ...scored(AA_MIN_SCORED_DENOMINATOR)]) }), /incomplete|denominator/);
@@ -206,8 +206,11 @@ test("CR-634: the efficiency snapshot names the page's index version and refuses
   assert.throws(() => parseAaEfficiency(html(items) + html([], "4.3.2")), /does not state Intelligence Index v5\.x/, "mixed statements are no version");
 });
 
-test("CR-634: a v4.x snapshot's row count never floors a v5 snapshot; a v5 one does", () => {
+test("CR-634: a v4.x snapshot's row count never floors a v5 snapshot; the adoption floor and a v5 count do", () => {
   const items = [...carriers(AA_EFFICIENCY_MIN_ROWS), ...scored(AA_MIN_SCORED_DENOMINATOR)];
-  assert.equal(parseAaEfficiency(html(items), { previous: { count: 226 } }).count, AA_EFFICIENCY_MIN_ROWS);
+  // First v5 snapshot after a v4.x one: the reviewed adoption coverage (88 rows) applies, not the v4 count of 226.
+  assert.throws(() => parseAaEfficiency(html(items), { previous: { count: 226 } }), /incomplete scrape: 80 rows \(minimum 88\)/);
+  const adoption = [...carriers(AA_EFFICIENCY_ADOPTION_MIN_ROWS), ...scored(AA_EFFICIENCY_ADOPTION_MIN_ROWS)];
+  assert.equal(parseAaEfficiency(html(adoption), { previous: { count: 226 } }).count, AA_EFFICIENCY_ADOPTION_MIN_ROWS);
   assert.throws(() => parseAaEfficiency(html(items), { previous: { count: AA_EFFICIENCY_MIN_ROWS + 1, index_version: "5.0" } }), /incomplete scrape/);
 });

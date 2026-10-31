@@ -8,7 +8,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
-import { AA_INDEX_PINNED_MAJOR, aaIndexRunMode } from '../lib/aa-index-version.mjs';
+import { AA_ADOPTION_MIN_SCORED, AA_INDEX_PINNED_MAJOR, aaIndexRunMode, assertAdoptionCoverage } from '../lib/aa-index-version.mjs';
 import { ISOTONIC_BRIDGE_POLICY, computeIsotonicBridge, predictIsotonic } from '../lib/benchmark-history.mjs';
 import { AA_V5_FIELD, aaBaseModel, aaIntelligenceRecords, frozenV4IndexValues } from '../lib/aa-index-surrogate.mjs';
 import { buildBenchmarkView, compareFamilies } from '../lib/benchmark-view.mjs';
@@ -212,8 +212,22 @@ test('critic r1 F1: shared compare text and OG entries keep the estimate status 
 test('critic r1 F2: every component that prints an AA Intelligence value carries the estimate marker', () => {
   // Source-level guard: the consumers named in review round 1 must reference the estimate field.
   for (const file of ['components/ModelExplorer.tsx', 'components/CostCapabilityScatter.tsx', 'components/CompareView.tsx', 'components/ProviderExplorer.tsx',
-    'components/ComparePicker.tsx', 'components/SimpleBenchmarks.tsx', 'app/models/[id]/page.tsx', 'app/api/og/compare/route.tsx']) {
+    'components/ComparePicker.tsx', 'components/SimpleBenchmarks.tsx', 'app/models/[id]/page.tsx', 'app/api/og/compare/route.tsx',
+    // critic round 2 F5/F6
+    'components/ShortlistColumns.tsx', 'components/ChartsBoard.tsx', 'components/Wizard.tsx', 'app/api/models/route.ts']) {
     const src = readFileSync(new URL(`../${file}`, import.meta.url), 'utf8');
-    assert.match(src, /aa_intelligence_estimate|scoreEstimated|aa_intelligence\?\.status/, file);
+    assert.match(src, /aa_intelligence_estimate|scoreEstimated|aa_intelligence\?\.status|aa_intelligence: m\.aa_intelligence/, file);
   }
+});
+
+test('critic r2 F7: an adoption run needs broad Intelligence Index coverage; an all-null or partial v5 payload fails closed', () => {
+  const models = (n, total = 100) => Array.from({ length: total }, (_, i) => ({ evaluations: { artificial_analysis_intelligence_index: i < n ? 40 : null } }));
+  assert.equal(AA_ADOPTION_MIN_SCORED, 80);
+  assert.throws(() => assertAdoptionCoverage(models(0)), /needs at least 80 scored models; the response has 0/);
+  assert.throws(() => assertAdoptionCoverage(models(79)), /the response has 79/);
+  assert.equal(assertAdoptionCoverage(models(80)), 80);
+  // The committed adoption snapshot itself passes the floor.
+  assert.ok(assertAdoptionCoverage(raw.models) >= AA_ADOPTION_MIN_SCORED);
+  // The collector and the live review both apply it.
+  for (const file of ['scripts/fetch-live.mjs', 'ops/daily/review-live.mjs']) assert.match(readFileSync(new URL(`../${file}`, import.meta.url), 'utf8'), /assertAdoptionCoverage\(/, file);
 });
