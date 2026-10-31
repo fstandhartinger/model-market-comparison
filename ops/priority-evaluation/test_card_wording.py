@@ -7,6 +7,8 @@ import sys
 import unittest
 from unittest import mock
 
+sys.path.insert(0, '/home/flori/bin')  # notify imports its sibling helpers (card_footer, repeat_lint)
+
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 spec = importlib.util.spec_from_file_location('card_wording_controller_test', HERE / 'autopickup.py')
@@ -136,6 +138,7 @@ class CardWording(unittest.TestCase):
                          c.refusal_approval.approval_caption(ROW, 'change_request')]:
             todos = notify.validate_format(card, 'now', ask_minutes=960)
             self.assertEqual(notify.card_lint(card), [])
+            self.assertEqual(notify.card_refusals(card, notify.STATUS_HUMAN), [])  # card v2 + repeat-lint
             short = notify.compact_immediate(card, todos, 'card-wording-test', dry_run=True)
             notify.validate_format(short, 'now', ask_minutes=960)
             self.assertEqual(notify.card_lint(short), [])
@@ -158,11 +161,12 @@ class CardWording(unittest.TestCase):
                 self.assertLessEqual(len(card.splitlines()[1].split(': ', 1)[1]), 220)
                 notify.validate_format(card, 'now', ask_minutes=960)
                 self.assertEqual(notify.card_lint(card), [])
+                self.assertEqual(notify.card_refusals(card, notify.STATUS_HUMAN), [])
             for reason in c.HOLD_REASON_LABELS:
                 card = c.rescue_card(row, reason)
                 self.assertLessEqual(len(card.splitlines()[1].split(': ', 1)[1]), 220)
                 notify.validate_format(card, 'urgent')
-        self.assertIn('model HS1 0.1.2,', c.refusal_approval.approval_caption(
+        self.assertIn('model HS1 0.1.2?', c.refusal_approval.approval_caption(
             dict(ROW, customer_name=None, email='gabriel.keith@example-company.com', model_link='',
                  model_name=long_name), 'change_request'))
 
