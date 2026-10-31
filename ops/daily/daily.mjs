@@ -84,6 +84,7 @@ export async function readCodingAgentVersionChange({ runDir, work, error, read =
 // only with the marker AND both staged files byte-identical to this run's copy of the published snapshot; any other
 // failure still fails the run closed. review-live.mjs re-derives the version change from the captured page bytes.
 export const AA_INDEX_FILES = ['artificialanalysis.json', 'aa-efficiency.json'];
+export const AA_INDEX_V4_FROZEN_FILES = ['artificialanalysis-v4.json', 'aa-efficiency-v4.json'];
 export async function readAaIndexVersionChange({ runDir, work, error, read = readFile }) {
   const match = String(error?.message ?? '').match(new RegExp(`\\b${AA_INDEX_VERSION_CHANGED} \\(page states v([0-9.]+), collector pinned to v([0-9]+)\\.x\\)`));
   if (!match || match[2] !== AA_INDEX_PINNED_MAJOR) return null;
@@ -211,6 +212,9 @@ export async function runDaily({ repo = ROOT, home = '/opt/benchmarkheaven-daily
     const legacy = hash(await readFile(join(work, 'data/raw/aa-coding-agents.json')));
     // CR-545: superseded Coding Agent versions (v1.5) are frozen like v1.4; nothing in the run may rewrite them.
     const frozenCoding = await Promise.all(FROZEN_CODING_AGENT_FILES.map(async (file) => [file, hash(await readFile(join(work, 'data/raw', file)))]));
+    // CR-634: the frozen AA Intelligence Index v4.x snapshot (and its token efficiency) feeds the v4→v5 estimates and
+    // the frozen Coding/Math Index; nothing in the run may rewrite it.
+    const frozenAaV4 = await Promise.all(AA_INDEX_V4_FROZEN_FILES.map(async (file) => [file, hash(await readFile(join(work, 'data/raw', file)))]));
     // Preserve independent source receipts even if worker selection or a core collector/review fails.
     // This phase uses the existing robots/rate-limited capturers and cannot update scores.
     if (full) await command('capture-benchmarks', process.execPath, ['ops/daily/phase-step.mjs', 'capture', runDir], work, 3_900_000);
@@ -449,6 +453,7 @@ export async function runDaily({ repo = ROOT, home = '/opt/benchmarkheaven-daily
     }
     if (hash(await readFile(join(work, 'data/raw/aa-coding-agents.json'))) !== legacy) throw new Error('Legacy Coding Agent v1.4 changed: refusing publication');
     for (const [file, sha] of frozenCoding) if (hash(await readFile(join(work, 'data/raw', file))) !== sha) throw new Error(`Frozen Coding Agent snapshot ${file} changed: refusing publication`);
+    for (const [file, sha] of frozenAaV4) if (hash(await readFile(join(work, 'data/raw', file))) !== sha) throw new Error(`Frozen AA v4.x snapshot ${file} changed: refusing publication`);
     await command('build-dataset', process.execPath, ['scripts/build-dataset.mjs']);
     // CR-592: 30 min for build and test. The suite needed 868 s of the 900 s cap on a quiet
     // 27 Oct run; on 28 Oct two publishes died at the cap under ordinary shared-host load —

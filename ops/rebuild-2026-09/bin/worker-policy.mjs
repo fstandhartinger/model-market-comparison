@@ -1,5 +1,8 @@
 // Pure policy: transport success is not benchmark qualification.
-export const MIN_INDEX = 34;
+// CR-634: AA Intelligence Index v5.0 scale. The v4.x floor of 34 maps to 23 through the monotone v4→v5 fit; on the 85
+// models measured on both versions it reproduces every v4 decision but one (GPT-6.1 Terra non-reasoning, 33.5 → 30.4).
+// For a model with only an estimated v5 value the decision equals its old v4 decision (the estimate is monotone in v4).
+export const MIN_INDEX = 23;
 export const SMOKE_TASK = 'Return exactly one JSON object: sum is 19 + 23; missing is null because no source value was supplied; versions_equal is whether benchmark v1.4 equals benchmark v1.5. Use keys sum, missing, versions_equal. No other text.';
 export const modelBase = (id) => String(id || '').replace(/:free$/, '');
 export const vendorFamily = (id) => {
@@ -42,7 +45,7 @@ export function assessModel(model, dataset) {
 }
 
 export function candidateList(catalog, dataset, minimum = MIN_INDEX, limit = 10) {
-  if (!Number.isFinite(minimum) || minimum < MIN_INDEX) throw new Error('Minimum AA index must be at least 34');
+  if (!Number.isFinite(minimum) || minimum < MIN_INDEX) throw new Error(`Minimum AA index must be at least ${MIN_INDEX}`);
   if (!Number.isSafeInteger(limit) || limit < 1) throw new Error('Limit must be a positive integer');
   if (!Array.isArray(catalog) || !catalog.length || !Array.isArray(dataset.models) || !dataset.models.length) throw new Error('Empty or invalid catalog/dataset');
   const candidates = catalog.map((m) => assessModel(m, dataset)).filter(Boolean);
@@ -91,7 +94,7 @@ export function composeFlorianGate({ agent = false } = {}) {
 // `reasoning_effort` low/high/max with default "max", and the call sends "max", so it runs kimi-k3::max whether Chutes
 // forwards the field or applies the template default. Qwen3.8 27B (best variant xhigh, AA 33.9) and Union Alpha (no
 // AA index) are listed so the rule, not an omission, keeps them out; they qualify automatically once AA measures them
-// at >= 34. `allowed_as` is the whitelist entry (Florian 2026-09-11: "Kimi K3 over Chutes is the normal path").
+// at >= MIN_INDEX (23 on v5.0; 34 on v4.x). `allowed_as` is the whitelist entry (Florian 2026-09-11: "Kimi K3 over Chutes is the normal path").
 export const FREE_ROUTER_WORKERS = [
   { id: 'chutes/moonshotai/Kimi-K3-TEE', router_model: 'fw-kimi-k3', provider_model: 'moonshotai/Kimi-K3-TEE', health: ['models', 'kimi-k3'], variant_model_id: 'kimi-k3::max', reasoning_effort: 'max', allowed_as: 'moonshotai/kimi-k3' },
   { id: 'chutes/Qwen/Qwen3.8-27B-TEE', router_model: 'fw-qwen3.8-27b', provider_model: 'Qwen/Qwen3.8-27B-TEE', health: ['models', 'qwen3.8-27b'], variant_model_id: 'qwen3.8-27b::xhigh', reasoning_effort: 'xhigh', allowed_as: null },

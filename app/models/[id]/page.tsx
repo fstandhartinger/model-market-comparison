@@ -8,7 +8,7 @@ import { benchmaxxingLevelInfo } from "../../../lib/benchmaxxing-levels.mjs";
 import { notFound } from "next/navigation";
 import { getDataset } from "../../../lib/data";
 import { num, pct, orgColor, usdPerM, counted } from "../../../lib/format";
-import { clientData, hasScoreEvidence, isThinComposite, thinCompositeNote } from "../../../lib/client-model";
+import { aaEstimateNote, clientData, hasScoreEvidence, isThinComposite, thinCompositeNote } from "../../../lib/client-model";
 import { compositeBenchmaxxingSignals } from "../../../lib/composite-signals";
 import { CompositeScoreValue } from "../../../components/CompositeScoreValue";
 import { cacheHitBaseline } from "../../../lib/effective-cost.mjs";
@@ -107,9 +107,10 @@ export default async function ModelDetail({ params }: { params: Promise<{ id: st
   const compositeInputs = clientModel.composite_coverage + clientModel.composite_attached;
   const compositeEligible = hasScoreEvidence(clientModel, "composite");
   const radarAxes = [
-    { label: "AA Coding", value: pctOf("aa_coding_index"), native: num(clientModel.scores.aa_coding_index), note: clientModel.composite_attachments.aa_coding_index?.note ?? null },
+    { label: ds.sources.artificialanalysis_v4 ? "AA Coding v4.x" : "AA Coding", value: pctOf("aa_coding_index"), native: num(clientModel.scores.aa_coding_index), note: clientModel.composite_attachments.aa_coding_index?.note ?? (ds.sources.artificialanalysis_v4 && clientModel.scores.aa_coding_index != null ? `Frozen v4.x value of ${ds.sources.artificialanalysis_v4}; Artificial Analysis withdrew the Coding Index with Intelligence Index v5.0.` : null) },
     { label: "Coding Agent v1.4", value: pctOf("aa_coding_agent"), native: num(clientModel.scores.aa_coding_agent), note: clientModel.composite_attachments.aa_coding_agent?.note ?? null },
-    { label: "AA Intelligence", value: pctOf("aa_intelligence_index"), native: num(clientModel.scores.aa_intelligence_index), note: clientModel.composite_attachments.aa_intelligence_index?.note ?? null },
+    // CR-634: an estimate from v4 says so wherever the number appears.
+    { label: clientModel.aa_intelligence_estimate ? "AA Intelligence (est.)" : "AA Intelligence", value: pctOf("aa_intelligence_index"), native: num(clientModel.scores.aa_intelligence_index), note: clientModel.composite_attachments.aa_intelligence_index?.note ?? (clientModel.aa_intelligence_estimate ? aaEstimateNote(clientModel.aa_intelligence_estimate) : null) },
     { label: "AA Agentic", value: pctOf("aa_agentic_index"), native: num(clientModel.scores.aa_agentic_index), note: model.aa_agentic_attachment_note ?? null },
     { label: "Epoch ECI", value: pctOf("epoch_eci"), native: num(clientModel.scores.epoch_eci), note: model.epoch_eci_attachment_note ?? null },
     { label: "Software ECI", value: pctOf("epoch_eci_software"), native: num(clientModel.scores.epoch_eci_software), note: model.epoch_eci_attachment_note ?? null },
@@ -187,7 +188,7 @@ export default async function ModelDetail({ params }: { params: Promise<{ id: st
       {variants.length > 1 && (
         <section className="card mt-6 overflow-x-auto p-4">
           <h2 className="font-semibold">Variants / reasoning settings</h2>
-          <p className="mb-3 text-xs text-gray-500">Artificial Analysis snapshot {ds.sources.artificialanalysis} · <AaCredit /> · <EpochCredit /></p>
+          <p className="mb-3 text-xs text-gray-500">Artificial Analysis snapshot {ds.sources.artificialanalysis}{ds.sources.artificialanalysis_v4 ? <> · Intelligence Index v5.0 (est. = estimated from v4, not measured) · Coding Index v4.x frozen {ds.sources.artificialanalysis_v4}</> : null} · <AaCredit /> · <EpochCredit /></p>
           <table className="dtable w-full text-sm">
             <thead><tr>
               <th className="px-2 py-1 text-left text-xs text-gray-400">Variant</th>
@@ -201,7 +202,7 @@ export default async function ModelDetail({ params }: { params: Promise<{ id: st
                     <Link href={`/models/${encodeURIComponent(v.id)}`} className="hover:text-accent">{v.display_name}</Link>
                   </td>
                   <td className="px-2 py-1 text-right tabular">{num(v.benchmarks?.aa_coding_index)}</td>
-                  <td className="px-2 py-1 text-right tabular">{num(v.benchmarks?.aa_intelligence_index)}</td>
+                  <td className="px-2 py-1 text-right tabular" title={v.aa_intelligence?.status === "estimated" ? aaEstimateNote(v.aa_intelligence) : undefined}>{num(v.benchmarks?.aa_intelligence_index)}{v.aa_intelligence?.status === "estimated" && <span className="ml-1 text-[10px] text-amber-300/90" data-aa-estimate="true">est.</span>}</td>
                 </tr>
               ))}
             </tbody>

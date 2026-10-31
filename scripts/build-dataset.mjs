@@ -542,6 +542,15 @@ async function build() {
   // even before phase 05 adds their scores to the consumer dataset.
   await import('./validate-benchmark-registry.mjs');
   const aa = await readJSON("artificialanalysis.json");
+  // CR-634: AA Intelligence Index v5.0 (Florian, card #19017). The v4.x snapshot of 2026-10-27 is frozen beside it: it feeds
+  // the labelled v4→v5 estimates for models AA has not rescored, and the Coding/Math Index AA withdrew with v5.
+  const aaV4 = await readJSON("artificialanalysis-v4.json");
+  const aaEfficiencyV4 = await readJSON("aa-efficiency-v4.json");
+  const { aaIntelligenceRecords, frozenV4IndexValues } = await import("../lib/aa-index-surrogate.mjs");
+  const aaIntelligence = aaIntelligenceRecords({ current: aa, frozenV4: aaV4 });
+  const aaFrozenV4 = frozenV4IndexValues(aaV4);
+  if (!aaIntelligence.fit.comparable) console.warn(`! AA v4→v5 fit failed its gate (${aaIntelligence.fit.reason}); v4-only models get no AA Intelligence value`);
+  console.log(`AA Intelligence Index v${aa.index_version}: ${[...aaIntelligence.byId.values()].filter((r) => r.status === "measured").length} measured, ${[...aaIntelligence.byId.values()].filter((r) => r.status === "estimated").length} estimated from v4 (isotonic fit on ${aaIntelligence.fit.bridge_count} models, leave-one-out MAE ${aaIntelligence.fit.loo?.mae?.toFixed(2) ?? "n/a"})`);
   const da = await readJSON("designarena.json");
   const or = await readJSON("openrouter.json");
   const aaEfficiency = await readJSON("aa-efficiency.json");
@@ -670,9 +679,11 @@ async function build() {
         ...(meta.retained_fields ? { retained_fields: meta.retained_fields } : {}),
       },
       benchmarks: {
-        aa_intelligence_index: num(ev.artificial_analysis_intelligence_index),
-        aa_coding_index: num(ev.artificial_analysis_coding_index),
-        aa_math_index: num(ev.artificial_analysis_math_index),
+        // CR-634: v5.0 measured, else the labelled v4→v5 estimate (row.aa_intelligence says which); Coding and Math
+        // Index are the frozen v4.x measurements (AA withdrew both with v5.0).
+        aa_intelligence_index: aaIntelligence.byId.get(m.id)?.value ?? null,
+        aa_coding_index: aaFrozenV4.get(m.id)?.aa_coding_index ?? null,
+        aa_math_index: aaFrozenV4.get(m.id)?.aa_math_index ?? null,
         aa_livecodebench: num(ev.livecodebench),
         aa_scicode: num(ev.scicode),
         aa_terminalbench_hard: num(ev.terminalbench_hard),
@@ -686,6 +697,7 @@ async function build() {
         aa_lcr: num(ev.lcr),
         aa_tau_banking: num(ev.tau_banking),
       },
+      aa_intelligence: aaIntelligence.byId.get(m.id) ?? null,
       aa_reference_price: {
         input_per_1m: num(pr.price_1m_input_tokens),
         output_per_1m: num(pr.price_1m_output_tokens),
@@ -1429,7 +1441,7 @@ async function build() {
 
   const generated_at = new Date().toISOString();
   const { attachEfficiency } = await import("../lib/efficiency.mjs");
-  const efficiency = attachEfficiency(modelRows, { aa, aaEfficiency, openrouter: or, openrouterEfficiency, chutesEfficiency, now: generated_at });
+  const efficiency = attachEfficiency(modelRows, { aa, aaEfficiency, aaEfficiencyV4, openrouter: or, openrouterEfficiency, chutesEfficiency, now: generated_at });
   const benchmarkRegistry = await readJSON("benchmarks/registry.json");
   const benchmarkScores = await readJSON("benchmarks/scores.json");
   const { verifyScoreEvidence } = await import("../lib/benchmark-score-evidence.mjs");
@@ -1440,6 +1452,7 @@ async function build() {
   const benchmarkHistory = await readHistory();
   const headlineObservations = buildHeadlineObservations({
     artificialanalysis: { ...aa, sha256: await rawFileSha256("artificialanalysis.json") },
+    artificialanalysisV4: { ...aaV4, sha256: await rawFileSha256("artificialanalysis-v4.json") },
     designarena: { ...da, sha256: await rawFileSha256("designarena.json") },
     epochEci,
     modelRows,
@@ -1469,7 +1482,7 @@ async function build() {
     counts: { models: modelRows.length, families: new Set(modelRows.map((row) => row.family_key)).size, providers: providers.length,
               offers: modelRows.reduce((s, r) => s + r.offers.length, 0) },
     sources: {
-      openrouter: or.collected_at, artificialanalysis: aa.collected_at, designarena: da.collected_at,
+      openrouter: or.collected_at, artificialanalysis: aa.collected_at, artificialanalysis_v4: aaV4.collected_at, designarena: da.collected_at,
       aws_bedrock: aws.collected_at, azure_foundry: azure.collected_at,
       google_vertex: vertex.collected_at, nebius: nebius.collected_at, inceptron: inceptron.collected_at,
       scaleway: scaleway.collected_at, ionos: ionos.collected_at, mistral: mistral.collected_at, tensorx: tensorx.collected_at,
@@ -1481,12 +1494,26 @@ async function build() {
       aa_coding_agents_v2_0: currentCodingAgents.collected_at,
       provider_meta: providerMeta.collected_at,
       aa_efficiency: aaEfficiency.collected_at,
+      aa_efficiency_v4: aaEfficiencyV4.collected_at,
       openrouter_efficiency: openrouterEfficiency.collected_at,
       chutes_efficiency: chutesEfficiency.collected_at,
       epoch_eci: epochEci.collected_at,
       openrouter_aa_relay: aaAgentic.snapshot_date,
     },
     source_status: {
+      // CR-634: which AA index version each AA headline value is on, and how the v4→v5 estimates were fitted.
+      aa_intelligence_index: {
+        version: aa.index_version, status: "collected", collected_at: aa.collected_at, path: "data/raw/artificialanalysis.json",
+        measured: [...aaIntelligence.byId.values()].filter((r) => r.status === "measured").length,
+        estimated: [...aaIntelligence.byId.values()].filter((r) => r.status === "estimated").length,
+        estimate_fit: aaIntelligence.fit,
+        note: `Artificial Analysis moved to Intelligence Index v${aa.index_version} on 2026-10-28. Models AA has rescored show the measured v${aa.index_version} value. Every other model shows an estimate of its v${aa.index_version} value from its frozen v4.x value (isotonic fit over the models measured on both versions), labelled "estimated from v4" with its interval; an estimate is never shown as a measurement and is replaced once AA rescores the model.`,
+      },
+      aa_index_v4: {
+        version: "4.x", status: "retained", collected_at: aaV4.collected_at, path: "data/raw/artificialanalysis-v4.json",
+        efficiency_path: "data/raw/aa-efficiency-v4.json", efficiency_collected_at: aaEfficiencyV4.collected_at,
+        note: "The last Intelligence Index v4.x capture, frozen with its own date. AA withdrew the Coding Index and the Math Index with v5.0; they are shown as these frozen v4.x measurements and never estimated.",
+      },
       aa_coding_agents: {
         version: "1.4", status: "retained", collected_at: codingAgents.collected_at,
         note: "AA now publishes v2.0. This dated v1.4 snapshot preserves the existing Composite definition; v1.5 and v2.0 are separate identities and never mixed into it.",
@@ -1514,9 +1541,9 @@ async function build() {
         note: "General ECI is source-published; software engineering ECI is refit from Epoch's official performance and difficulty exports with a two-benchmark minimum. Source rows are retained even when no current catalog family matches.",
       },
       composite: {
-        version: "composite-v2-epoch-eci", status: "recompute_required_on_definition_change",
+        version: "composite-v2-epoch-eci-aa5", status: "recompute_required_on_definition_change",
         collected_at: generated_at,
-        note: "Composite definition v2 adds general and Software Engineering ECI as equal percentile slots. Historical Composite values are never bridged; recompute from common source slots when comparing definitions.",
+        note: "Composite definition v2 adds general and Software Engineering ECI as equal percentile slots. CR-634: the AA Intelligence slot is on Intelligence Index v5.0 (measured, or estimated from v4.x where AA has not rescored); the AA Coding Index slot keeps the frozen v4.x values. Historical Composite values are never bridged; recompute from common source slots when comparing definitions.",
       },
     },
     build_diagnostics: {

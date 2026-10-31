@@ -440,7 +440,8 @@ test("GPT-5.6 Sol's observed-percentile mean ranks above GLM-5.2", async () => {
 
   // AA rescales its Coding Agent Index periodically (2026-07-22 and again by 2026-07-30),
   // so pin the ORDER, not a narrow absolute band.
-  assert.ok(sol > 82, `expected GPT-5.6 Sol clearly above the open-model band, got ${sol}`);
+  // CR-634 (31 Oct): the AA Intelligence slot moved to v5.0 (GPT-5.6 Sol carries its estimate from v4); it dropped below 82 (81.5).
+  assert.ok(sol > 80, `expected GPT-5.6 Sol clearly above the open-model band, got ${sol}`);
   assert.ok(sol > glm, `expected GPT-5.6 Sol (${sol}) above GLM-5.2 (${glm})`);
 });
 

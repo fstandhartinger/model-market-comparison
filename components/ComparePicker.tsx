@@ -76,7 +76,7 @@ export function ComparePicker({ families, picks, onPick, max = 4, topHeading = '
           <span className="flex min-w-0 items-center gap-2">
             <span aria-hidden="true" className="h-2 w-2 shrink-0 rounded-full" style={{ background: orgColor(f.org) }} />
             <span className="min-w-0 flex-1 truncate font-medium" data-option-name={f.name}><Highlight text={f.name} query={query.trim()} /></span>
-            <span className="tabular shrink-0 text-sm font-semibold">{f.score == null ? <span className="bh-muted font-normal">—</span> : f.score.toFixed(1)}</span>
+            <span className="tabular shrink-0 text-sm font-semibold">{f.score == null ? <span className="bh-muted font-normal">—</span> : f.score.toFixed(1)}{f.score != null && f.scoreEstimated ? <span className="ml-1 text-[10px] font-normal text-amber-300/90" title="Estimated from the v4.x score; AA has not rescored this model on v5.0">est.</span> : null}</span>
           </span>
           <span className="bh-muted block truncate pl-4 text-xs">{[f.org, month && `released ${month}`, f.variants.length > 1 && `best of ${f.variants.length} variants`, !f.current && 'retired'].filter(Boolean).join(' · ')}</span>
         </li></Fragment>;
@@ -84,7 +84,7 @@ export function ComparePicker({ families, picks, onPick, max = 4, topHeading = '
     </ul>
     {!options.length && <p className="bh-muted px-3 py-3 text-sm" role="status">No model matches “{query.trim()}”.</p>}
     {more > 0 && <p className="bh-muted px-3 py-2 text-xs">{more} more — keep typing to narrow the list.</p>}
-    {/* CR-63.17: no score footer under an empty result. */}{options.length > 0 && <p className="bh-muted border-t border-line px-3 py-1.5 text-[11px]">{footer ?? <>Score: AA Intelligence Index of the strongest variant · <AaCredit /></>}</p>}
+    {/* CR-63.17: no score footer under an empty result. */}{options.length > 0 && <p className="bh-muted border-t border-line px-3 py-1.5 text-[11px]">{footer ?? <>Score: AA Intelligence Index v5.0 of the strongest variant (est. = estimated from v4.x) · <AaCredit /></>}</p>}
   </div>;
 
   return <form className="relative flex min-w-[min(100%,16rem)] flex-1 items-center gap-2 sm:max-w-sm" onSubmit={(e) => { e.preventDefault(); if (open) choose(options[active]); else setOpen(true); }}>

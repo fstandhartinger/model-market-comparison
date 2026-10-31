@@ -9,7 +9,7 @@ import { enrichArtificialAnalysis, MAX_METADATA_ROLLOUT_LAG } from "../lib/aa-me
 import { parseArtificialAnalysisMetadata, parseArtificialAnalysisDeprecatedModels } from "../lib/aa-rsc.mjs";
 import { writeJSONAtomic } from "../lib/snapshot.mjs";
 import { refreshAaEfficiency } from "./fetch-aa-efficiency.mjs";
-import { AA_INDEX_FIELDS, aaIndexPageVersions, aaIndexVersionChangeMessage, changedAaIndexVersion } from "../lib/aa-index-version.mjs";
+import { AA_INDEX_FIELDS, aaIndexPageVersions, aaIndexRunMode, aaIndexVersionChangeMessage } from "../lib/aa-index-version.mjs";
 import { execFile } from "node:child_process";
 import { promisify } from "node:util";
 import { BOARD_REGISTRY_INCONSISTENT, absentIdentities, assertApprovedIdentityCoverage, assertIdentityCoverage, assertOpenRouterEndpointCoverage, assertMeasuredFields, captureLiveSource, classifyBoardAbsence, endpointIdentity, findBoardRekeys, planOpenRouterWithdrawals } from '../lib/live-source.mjs';
@@ -105,13 +105,17 @@ async function fetchArtificialAnalysis() {
   // CR-629: on a new Intelligence Index major version the composite indexes are not comparable with the
   // published ones, so they are left out of the withdrawal check; every single benchmark and price still has
   // to pass it. The run then stops before any write, with the marker, and the daily keeps the published snapshot.
-  const indexVersion = changedAaIndexVersion(aaIndexPageVersions(leaderboardHtml));
+  // CR-634: the snapshot records the index version it was collected under. The one reviewed adoption run (the
+  // previous snapshot is still on another major version) compares the index fields with nothing, exactly like the
+  // hold path; from then on v5 → v5 has the full withdrawal check. A page without a clean pinned statement is no
+  // adoption: the legacy snapshot then keeps its full check and fails closed.
+  const { changed: indexVersion, pinned: pinnedVersion, adoption, exemptIndexFields, indexVersion: snapshotVersion } = aaIndexRunMode(aaIndexPageVersions(leaderboardHtml), previous);
   for (const model of apiModels) {
     if (!model.evaluations || !model.pricing || typeof model.name !== 'string' || typeof model.slug !== 'string') throw new Error('AA missing model fields');
     const old = priorModels.get(model.id);
     const fields = [...new Set([...Object.keys(old?.evaluations || {}), ...Object.keys(model.evaluations)])];
-    if (indexVersion) assertMeasuredFields(null, model.evaluations, AA_INDEX_FIELDS, `AA ${model.id}`);
-    assertMeasuredFields(old?.evaluations, model.evaluations, indexVersion ? fields.filter((f) => !AA_INDEX_FIELDS.includes(f)) : fields, `AA ${model.id}`, { approvals: approvals.aa_measurements, modelId: model.id });
+    if (exemptIndexFields) assertMeasuredFields(null, model.evaluations, AA_INDEX_FIELDS, `AA ${model.id}`);
+    assertMeasuredFields(old?.evaluations, model.evaluations, exemptIndexFields ? fields.filter((f) => !AA_INDEX_FIELDS.includes(f)) : fields, `AA ${model.id}`, { approvals: approvals.aa_measurements, modelId: model.id });
     assertMeasuredFields(old?.pricing, model.pricing, ['price_1m_input_tokens', 'price_1m_output_tokens'], `AA ${model.id}`);
   }
   if (indexVersion) {
@@ -132,6 +136,8 @@ async function fetchArtificialAnalysis() {
     endpoint: "https://artificialanalysis.ai/api/v2/data/llms/models",
     metadata_endpoint: "https://artificialanalysis.ai/leaderboards/models",
     collected_at: new Date().toISOString().slice(0, 10),
+    // CR-634: the leaderboard's own statement when it is clean, else the pinned major version the run passed under.
+    index_version: snapshotVersion,
     count: models.length,
     metadata_sync: {
       api_count: apiModels.length,
@@ -143,6 +149,7 @@ async function fetchArtificialAnalysis() {
     },
     models,
   };
+  if (adoption) console.log(`  CR-634: adopting Intelligence Index v${pinnedVersion} (previous snapshot v${previous.index_version ?? '4.x'}); index fields start a new series`);
   const efficiency = await refreshAaEfficiency({ target: join(RAW, "aa-efficiency.json"), evidenceDir: process.env.BH_EVIDENCE_DIR });
   await writeJSONAtomic(target, snapshot);
   console.log(`  ${efficiency.count} AA token-efficiency benchmark rows`);
