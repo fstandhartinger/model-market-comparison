@@ -54,9 +54,9 @@ for r in v323:
     src=board[r['context']['model']+'|'+r['context']['effort']]
     assert src['n']=='23' and src['passed_of']=='23'
     assert float(r['combined_full_denominator'])==float(src['combined_33'])
-try:m.parse(source.replace('code-quality-maintenance-v3.23','code-quality-maintenance-v3.25'),recipe['parser'],None,entry)
+try:m.parse(source.replace('code-quality-maintenance-v3.23','code-quality-maintenance-v3.30'),recipe['parser'],None,entry)
 except ValueError:pass
-else:raise AssertionError('unreviewed revision v3.25 admitted')
+else:raise AssertionError('unreviewed revision v3.30 admitted')
 recipe['source']=next(r for r in receipts if r['url']==url)
 result=m.collect({'entries':[recipe]},{'entries':[entry]})
 assert len(result['observations'])==51 and len(result['rejected'])==4
