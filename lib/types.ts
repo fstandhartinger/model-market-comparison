@@ -48,6 +48,8 @@ export interface TokenEfficiency {
     source_model_id: string | null;
     source_slug: string | null;
     source_variant: string | null;
+    /** CR-634: the AA index version whose task tokens these are ("5.0", or "4.x" for a frozen row). */
+    index_version?: string | null;
     tokens_per_task: EfficiencyObservation<{ reasoning: number; answer: number; output: number }> | null;
     canonical_token_counts: EfficiencyObservation<{ input: number; output: number; answer: number; reasoning: number }> | null;
     benchmark_input_output_ratio: (EfficiencyObservation & { interpretation: "benchmark_proxy" }) | null;

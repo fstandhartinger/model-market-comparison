@@ -12,6 +12,7 @@ import { AA_INDEX_PINNED_MAJOR, aaIndexRunMode } from '../lib/aa-index-version.m
 import { ISOTONIC_BRIDGE_POLICY, computeIsotonicBridge, predictIsotonic } from '../lib/benchmark-history.mjs';
 import { AA_V5_FIELD, aaBaseModel, aaIntelligenceRecords, frozenV4IndexValues } from '../lib/aa-index-surrogate.mjs';
 import { buildBenchmarkView, compareFamilies } from '../lib/benchmark-view.mjs';
+import { compareDescription, resolveCompareIds } from '../lib/compare-ids.mjs';
 
 const read = (path) => JSON.parse(readFileSync(new URL(`../${path}`, import.meta.url), 'utf8'));
 
@@ -184,5 +185,35 @@ test('real data: token efficiency follows the index version of each row', () => 
     if (!aa?.tokens_per_task) continue;
     assert.ok(['5.0', '4.x'].includes(aa.index_version), m.id);
     assert.equal(aa.tokens_per_task.index_version, aa.index_version, m.id);
+  }
+});
+
+test('critic r1 F4: a leave-one-group-out check needs two groups; an empty fit is never read as a zero prediction', () => {
+  const one = computeIsotonicBridge(Array.from({ length: 30 }, (_, i) => ({ model_key: String(i), group: 'same', old_value: 10 + i, new_value: 10 + i })));
+  assert.equal(one.logo, null);
+  assert.ok(one.loo.mae < 0.1, 'leave-one-out still works with one group (only the two end points extrapolate flat)');
+  const two = computeIsotonicBridge(Array.from({ length: 30 }, (_, i) => ({ model_key: String(i), group: i % 2 ? 'a' : 'b', old_value: 10 + i, new_value: 10 + i })));
+  assert.equal(two.logo.n, 30);
+  assert.ok(two.logo.mae < 1);
+});
+
+test('critic r1 F1: shared compare text and OG entries keep the estimate status of an AA Intelligence value', () => {
+  const families = compareFamilies(buildBenchmarkView(ds));
+  const est = families.find((f) => f.scoreEstimated && f.current && Number.isFinite(f.score));
+  const measured = families.find((f) => !f.scoreEstimated && f.current && Number.isFinite(f.score));
+  const { entries } = resolveCompareIds([est.id, measured.id], families);
+  assert.equal(entries[0].scoreEstimated, true);
+  assert.equal(entries[1].scoreEstimated, undefined);
+  const text = compareDescription(entries);
+  assert.ok(text.includes(`${est.name} (AA Intelligence Index ${est.score.toFixed(1)}, estimated from v4)`), text);
+  assert.ok(text.includes(`${measured.name} (AA Intelligence Index ${measured.score.toFixed(1)})`), text);
+});
+
+test('critic r1 F2: every component that prints an AA Intelligence value carries the estimate marker', () => {
+  // Source-level guard: the consumers named in review round 1 must reference the estimate field.
+  for (const file of ['components/ModelExplorer.tsx', 'components/CostCapabilityScatter.tsx', 'components/CompareView.tsx', 'components/ProviderExplorer.tsx',
+    'components/ComparePicker.tsx', 'components/SimpleBenchmarks.tsx', 'app/models/[id]/page.tsx', 'app/api/og/compare/route.tsx']) {
+    const src = readFileSync(new URL(`../${file}`, import.meta.url), 'utf8');
+    assert.match(src, /aa_intelligence_estimate|scoreEstimated|aa_intelligence\?\.status/, file);
   }
 });
