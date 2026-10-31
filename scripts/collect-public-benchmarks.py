@@ -736,7 +736,11 @@ def parse(source,spec,load_source,entry=None):
                     'scored_on':('all 23 tasks; the '+str(denominator-judged)+' unfinished runs count as failed tasks and score 0 (the board\'s combined_timeouts_zero)') if judged<denominator else 'all 23 tasks, every run judged',
                     'combined_33_se':float(r['combined_33_se']),'code_quality':float(r['code_quality']),'mean_minutes':float(r['mean_minutes']),'mean_usd':float(r['mean_usd']),
                     'protocol':r['protocol'],'report':r['report'],'best_effort':r['best_effort']=='True'}})
-        if len(partial)>3:raise ValueError('VulcanBench Frontier: '+str(len(partial))+' rows without a score on the full 23 tasks ('+'; '.join(partial)+'); the suite may have changed')
+        # 2026-10-31: the cap was a flat 3 when the board had ~40 rows; at 80 rows it carries six disclosed partial
+        # cells (safety stops, an invalid probe) and the flat cap failed the whole arm from 2026-10-14 on. Each such
+        # row is only withheld, never published, so the cap guards a suite change, which moves most rows at once:
+        # it now scales with the board (a tenth of its rows, never below the original 3).
+        if len(partial)>max(3,len(parsed)//10):raise ValueError('VulcanBench Frontier: '+str(len(partial))+' rows without a score on the full 23 tasks ('+'; '.join(partial)+'); the suite may have changed')
     elif kind=='kernelbench_cuda_board':
         # KernelBench-CUDA (Elliot Arledge, kernelbench.com): the published per-hardware leaderboard JSON
         # (benchmarks/cuda/results/leaderboard.json) is the artifact the site bakes and renders. One row per
