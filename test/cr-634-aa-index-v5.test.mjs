@@ -222,12 +222,24 @@ test('critic r1 F2: every component that prints an AA Intelligence value carries
 
 test('critic r2 F7: an adoption run needs broad Intelligence Index coverage; an all-null or partial v5 payload fails closed', () => {
   const models = (n, total = 100) => Array.from({ length: total }, (_, i) => ({ evaluations: { artificial_analysis_intelligence_index: i < n ? 40 : null } }));
-  assert.equal(AA_ADOPTION_MIN_SCORED, 80);
-  assert.throws(() => assertAdoptionCoverage(models(0)), /needs at least 80 scored models; the response has 0/);
-  assert.throws(() => assertAdoptionCoverage(models(79)), /the response has 79/);
-  assert.equal(assertAdoptionCoverage(models(80)), 80);
+  // Critic round 3: the floor is the reviewed adoption's own coverage; 80–88 of 89 with every identity intact is partial.
+  assert.equal(AA_ADOPTION_MIN_SCORED, 89);
+  assert.throws(() => assertAdoptionCoverage(models(0)), /needs at least 89 scored models; the response has 0/);
+  for (const n of [79, 80, 88]) assert.throws(() => assertAdoptionCoverage(models(n)), new RegExp(`the response has ${n}$`));
+  assert.equal(assertAdoptionCoverage(models(89)), 89);
+  const partial = structuredClone(raw.models); let removed = 0;
+  for (const m of partial) if (removed < 9 && Number.isFinite(m.evaluations.artificial_analysis_intelligence_index)) { m.evaluations.artificial_analysis_intelligence_index = null; removed++; }
+  assert.throws(() => assertAdoptionCoverage(partial), /the response has 80/);
   // The committed adoption snapshot itself passes the floor.
   assert.ok(assertAdoptionCoverage(raw.models) >= AA_ADOPTION_MIN_SCORED);
   // The collector and the live review both apply it.
   for (const file of ['scripts/fetch-live.mjs', 'ops/daily/review-live.mjs']) assert.match(readFileSync(new URL(`../${file}`, import.meta.url), 'utf8'), /assertAdoptionCoverage\(/, file);
+});
+
+test('critic r3 F5: the open-vs-closed dot strip labels estimated points and counts them in its summary', () => {
+  const src = readFileSync(new URL('../components/ChartsBoard.tsx', import.meta.url), 'utf8');
+  assert.match(src, /estimated: score === "aa_intelligence_index" && !!x\.m\.aa_intelligence_estimate/);
+  assert.match(src, /r\.estimated \? " · estimated from v4, not measured" : ""/);
+  assert.match(src, /estimated from v4 \(not measured\), drawn as rings/);
+  assert.match(src, /data-aa-estimate=\{d\.est \|\| undefined\}/);
 });
