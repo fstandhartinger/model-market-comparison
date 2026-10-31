@@ -1,0 +1,15 @@
+"""Exact semantic equivalence for the sole new-row display-text delta; no ranking gate is weakened."""
+import pathlib,json,copy,hashlib
+J=pathlib.Path(__file__).resolve().parent;W=J.parents[1];L=lambda p:json.loads(p.read_text());sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest();hj=lambda x:hashlib.sha256(json.dumps(x,sort_keys=True,separators=(',',':'),ensure_ascii=False).encode()).hexdigest()
+def check(W):
+ J=W/'r198/v184';D=W/'data/raw/benchmarks/jevbench/v1.8';b=L(J/'inputs/VISIBLE-REPLAY-DELTA-BASE.json');assert b['key']=='granite-switch-4.1-8b' and b['field']=='endpoint_condition';a=L(D/'jevbench-v1.8.4-results.json');s=next(x for x in a['systems'] if x['key']==b['key']);assert s['endpoint_condition']==b['after'] and hashlib.sha256(s['endpoint_condition'].encode()).hexdigest()==b['after_sha256'];assert hashlib.sha256(s['disclosure'].encode()).hexdigest()==b['original_disclosure_sha256']
+ reconstructed=copy.deepcopy(a);next(x for x in reconstructed['systems'] if x['key']==b['key'])['endpoint_condition']=b['before'];assert hashlib.sha256((json.dumps(reconstructed,indent=1,sort_keys=True,ensure_ascii=False)+'\n').encode()).hexdigest()==b['results_sha256'],'exact pre-delta result reconstruction mismatch'
+ n=copy.deepcopy(a);del next(x for x in n['systems'] if x['key']==b['key'])['endpoint_condition'];assert hj(n)==b['results_except_endpoint_sha256'],'non-endpoint result change'
+ c=L(D/'jevbench-v1.8.4-categories.json');assert c.pop('results_sha256')==sha(D/'jevbench-v1.8.4-results.json');assert hj(c)==b['categories_except_results_binding_sha256'],'category change'
+ for f,h in b['numeric_sources'].items():assert sha(J/f)==h,('scoring/ranking source changed',f)
+ d=L(J/'receipts/topfive-diff.json');assert d.pop('candidate_results_sha256')==sha(D/'jevbench-v1.8.4-results.json');m=d.pop('metadata_only_delta');assert m['base_sha256']==sha(J/'inputs/VISIBLE-REPLAY-DELTA-BASE.json') and m['field']==b['key']+'.endpoint_condition' and m['prior_comparison_sha256']==b['topfive_before_sha256'];assert hj(d)==b['topfive_except_candidate_binding_sha256'],'comparison outcomes changed'
+ prior=J/'receipts/topfive-diff-before-visible-replay.json';assert sha(prior)==b['topfive_before_sha256'];p=L(prior);assert p['candidate_results_sha256']==b['results_sha256'] and p['lists']==580 and p['changed_lists']==0 and p['slider_changed_states']==0 and p['explicit_slider_grid_changed']==0 and not p['custom_changed_labels']
+ assert all(x in s['endpoint_condition'] for x in ['7 of 50','zero argmax flips','0.0312263773757529','5e-2','recorded only','not established','near-tie allowance','cross-backend'])
+ return {'status':'PASS','sole_changed_result_field':b['key']+'.endpoint_condition','all_numeric_other_fields_and_categories_identical':True,'original_580list_comparison_retained':True,'existing_comparison_sha256':b['topfive_before_sha256'],'original_disclosure_identical':True}
+if __name__=='__main__':
+ r=check(W);(J/'receipts/VISIBLE-REPLAY-EQUIVALENCE.json').write_text(json.dumps(r,indent=1)+'\n');print('PASS exact endpoint-only semantic equivalence;580-list outcomes and all numeric/category/ranking sources unchanged')

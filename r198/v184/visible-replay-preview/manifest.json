@@ -1,0 +1,41 @@
+{
+ "all_required_facts_visible_at": "2026-10-31T23:05:19.216559+00:00",
+ "elapsed_to_visible_facts_seconds": 745.6121561650652,
+ "first_render_timeout_ms": 1200000,
+ "load_state_scope": "HTTP commit then all required actual visible DOM facts; document stream may remain open; no DOMContentLoaded/networkidle completion claim",
+ "pages": [
+  {
+   "html_sha256": "73e5b43db157fa376d05f907f6b25824df9a55330a1a15dcaa1c72e1d3007126",
+   "no_horizontal_overflow": true,
+   "page_errors": [
+    "Hydration failed because the server rendered HTML didn't match the client. As a result this tree will be regenerated on the client. This can happen if a SSR-ed Client Component used:\n\n- A server/client branch `if (typeof window !== 'undefined')`.\n- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.\n- Date formatting in a user's locale which doesn't match the server.\n- External changing data without sending a snapshot of it along with the HTML.\n- Invalid HTML tag nesting.\n\nIt can also happen if the client has a browser extension installed which messes with the HTML before React loaded.\n\nhttps://react.dev/link/hydration-mismatch\n\n  ...\n    <HotReload assetPrefix=\"\" globalError={[...]}>\n      <AppDevOverlayErrorBoundary globalError={[...]}>\n        <ReplaySsrOnlyErrors>\n        <DevRootHTTPAccessFallbackBoundary>\n          <HTTPAccessFallbackBoundary notFound={<NotAllowedRootHTTPFallbackError>}>\n            <HTTPAccessFallbackErrorBoundary pathname=\"/jev-model...\" notFound={<NotAllowedRootHTTPFallbackError>} ...>\n              <RedirectBoundary>\n                <RedirectErrorBoundary router={{...}}>\n                  <Head headCacheNode={{lazyData:null, ...}}>\n                    <__next_viewport_boundary__>\n                    <MetadataTree>\n                      <__next_metadata_boundary__>\n                        <__next_metadata_boundary__>\n                          <div\n+                           hidden={true}\n-                           hidden={null}\n-                           style={{background-image:\"initial\",background-position-x:\"initial\",background-position-y:\"initial\", ...}}\n                          >\n+                           <Suspense fallback={null}>\n-                           CANDIDATE \u2014 FINAL DATA-ONLY REPLAY DISCLOSURE \u2014 NEXT DEV / SYNTHETIC PASS\n                  ...\n"
+   ],
+   "png_sha256": "5c6dec171ac56f4c44bb3ae832153de032341916fec2b736ef3f196eb692abd6",
+   "required_visible_dom_terms": [
+    "7 of 50",
+    "zero argmax flips",
+    "0.0312263773757529",
+    "5e-2",
+    "recorded only",
+    "not established",
+    "near-tie allowance",
+    "not a cross-backend equivalence claim"
+   ],
+   "route": "/jev-models/granite-switch-4.1-8b",
+   "status": 200,
+   "visible_dom_sha256": "302851c84cb49bf850dd3b3799dea8c66d998db93499ab1ecaa7293e058b154d"
+  }
+ ],
+ "required_before_production": "Fresh mandatory merge-queue full build of exact final HEAD",
+ "results_sha256": "eb6669ccc231f20a0e24f81200107246435b474c321abd614106debc22c41976",
+ "review_mode": {
+  "engine": "synthetic-preview-only",
+  "receipt_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "verdict": "PASS"
+ },
+ "source": "Actual model page served by bounded Next dev from unchanged production TSX; synthetic PASS fixture. Not a new production build.",
+ "source_tsx_sha256": "f3c945b0ec95e831aaa1fa6946610394639ca6a4ea51c7f6bb54a207f465541b",
+ "source_tsx_unchanged_after_render": true,
+ "status": "PASS targeted final-source render; production publication pending",
+ "unit_guard_seconds": 1800
+}

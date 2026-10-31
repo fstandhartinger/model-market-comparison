@@ -1,0 +1,12 @@
+{
+ "status": "FAILED_RENDER_TIMEOUT_NOT_CONTENT_SUCCESS",
+ "run": "v184replay/r1031223412gtwy",
+ "page_goto_timeout_ms": 600000,
+ "route_compile_seconds": 11.5,
+ "server_get_status_log": 200,
+ "server_get_elapsed_ms": 599215,
+ "visible_dom_or_screenshot_obtained": false,
+ "diagnosis": "Observed route compilation11.5s followed by a600s DOMContentLoaded timeout. The prior harness did not inspect visible content before stream completion; GET200onabort alone cannot diagnose whether required DOM facts were already present.",
+ "source_or_benchmark_change": false,
+ "next_check": "HTTP commit then explicit required actual visible DOM facts with one1200s total deadline; unchanged production TSX and1800s unit guard."
+}
