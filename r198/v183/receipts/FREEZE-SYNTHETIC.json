@@ -13,11 +13,11 @@
  },
  "files": {
   "carry": "271d1fc77a136a04a1eb6deb5480c52d4211eb2b66b2ac8bb31e80867e69003a",
-  "categories": "d888343a2eabf365cda5fa6bd283be937555588969467a2261e6b701188ba651",
+  "categories": "a6d867c8ae5a05e7f83ee5247fa6c8e5b18090b1c48e2c757e4fa0993676cce9",
   "history": "d5e91333d6acefef1506f2a6ce23f71220ac1eeac9ce2d4e817c88a0a979a38b",
   "history-carry": "f4d8ddfae4ac3b2741ca7cfdaa930b2afc1d9be612f4e6683a230aa23834e2ba",
-  "proof": "1b557a46d20c678a3910503eea4a0be269c055928646ca68030cc676a752a3e4",
-  "results": "4398aee0c5eb50320c917af7f0e8129c09dc168ee7d13bf83046e5249e1366f3"
+  "proof": "88b3058109902fe3bde580fffc9a4eb3b2ed9932f7eee41af791d1e4d78d63df",
+  "results": "c8527607695cf666c6845f125a989b2faca9f7b431adad3f6e62d6c88a44d4bf"
  },
  "link_fixed_rows": [],
  "method": {
@@ -156,6 +156,136 @@
    },
    "raw_sha256": "185c8f534d2e8b21d38a39af9a3152f0f4754c41bf921128bb4d2b768698aee7",
    "scored_input_sha256": "1b2a8906692be82952de401375f8f6dd602cada51019eae5330ae82234b160bd",
+   "treatment": "unranked"
+  },
+  "cribl-decision-1.0-27b": {
+   "axes": {
+    "calibration": 91.50007828031988,
+    "cost": 64.04033264630576,
+    "intelligence": 61.50058475949362,
+    "speed": 86.46160365936547
+   },
+   "category_pool_bounds": {
+    "languages": {
+     "ar": 21,
+     "cs": 37,
+     "da": 36,
+     "de": 48,
+     "el": 28,
+     "en": 555,
+     "es": 37,
+     "fi": 52,
+     "fr": 32,
+     "hi": 37,
+     "id": 41,
+     "it": 45,
+     "ja": 44,
+     "ko": 43,
+     "mixed": 64,
+     "nl": 36,
+     "no": 51,
+     "pl": 57,
+     "pt": 47,
+     "sv": 46,
+     "tr": 46,
+     "uk": 56,
+     "zh": 41
+    },
+    "topics": {},
+    "usecases": {
+     "advertising": 48,
+     "code_linting": 69,
+     "customer_support": 66,
+     "demand_forecasting": 66,
+     "ecommerce_marketplaces": 62,
+     "feature_extraction": 72,
+     "financial_crime": 63,
+     "gaming": 58,
+     "insurance_claims": 62,
+     "knowledge_graphs": 67,
+     "lead_generation": 75,
+     "legal_compliance": 56,
+     "llm_guardrails": 71,
+     "model_routing": 148,
+     "moderation_trust_safety": 59,
+     "other": 32,
+     "recruiting": 65,
+     "risk_assessment": 48,
+     "scientific_discovery": 42,
+     "search_retrieval": 67
+    }
+   },
+   "composite_ci95": {
+    "A": [
+     70.95613207609162,
+     75.032989146509
+    ],
+    "B": [
+     67.30405767110025,
+     73.0724004348302
+    ],
+    "C": [
+     61.34746830432237,
+     75.032989146509
+    ]
+   },
+   "cost": {
+    "active_b": 27,
+    "answered_not_in_common": 11,
+    "architecture_class": "dense",
+    "cost_all": 0.02925628855072875,
+    "cost_basis_kind": "gpu-time-min",
+    "cost_common": 0.015799945119666092,
+    "estimate_all": 0.1110018,
+    "estimate_common": 0.05994685023505708,
+    "expect": {
+     "failed": 0,
+     "input_tokens": 853860,
+     "ok": 1500,
+     "output_tokens": 0,
+     "status_counts": {
+      "200": 1500
+     }
+    },
+    "family": "qwen",
+    "gpu_all": 0.02925628855072875,
+    "gpu_common": 0.015799945119666092,
+    "input_tokens_all": 853860,
+    "input_tokens_common": 457748,
+    "latency_max": 28.90785338800015,
+    "native_output_tokens_all": 0,
+    "output_tokens_all": 0,
+    "output_tokens_common": 0,
+    "over10": 5,
+    "raw_order_matches_input": true,
+    "raw_sha256": "2c81b3c0962e372fa8fc52da637e566a84c49959e7ea9fd557ebcdb08202eb6d",
+    "ref": {
+     "in": 0.195,
+     "kind": "estimate",
+     "listing": "qwen/qwen3.5-27b",
+     "out": 0.0
+    },
+    "scoring_raw_sha256": "2c81b3c0962e372fa8fc52da637e566a84c49959e7ea9fd557ebcdb08202eb6d",
+    "throughput": 11763.0
+   },
+   "decision_limit": {
+    "limit_s": 10.0,
+    "n_over_limit": 5,
+    "n_over_limit_answered_ok": 5,
+    "rule": "latency_s > limit -> failed",
+    "speed_basis": "all decisions given (lane items in the raw), measured latency_s",
+    "speed_n": 1500,
+    "treatment": "share"
+   },
+   "model_pin": "cribl-ai/cribl-decision-1.0-27B@8fbb5af4e717ae499bc0edebc851f9bd99b9bf04",
+   "price_reference": {
+    "in": 0.195,
+    "kind": "estimate",
+    "listing": "qwen/qwen3.5-27b",
+    "out": 0.0
+   },
+   "raw_sha256": "2c81b3c0962e372fa8fc52da637e566a84c49959e7ea9fd557ebcdb08202eb6d",
+   "scored_input_sha256": "7a7eaf0ae53da0145e156f1d28669a0ee3ce17a7c6d0a99d862c862848050ed2",
    "treatment": "unranked"
   },
   "cribl-decision-1.0-9b": {
@@ -435,7 +565,7 @@
   "receipt_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
   "verdict": "PASS"
  },
- "publication_sha256": "c49de2aeba1e1748e9fba57a1714531e097f7d6e858bc4fa02a1c3bc36cfe0ef",
+ "publication_sha256": "1d789ced96235a94d83716a9f077a21ee3c08f77d7ec9ebe5734b19f770e6fda",
  "release": "v1.8.3",
  "remeasured_rows": {},
  "repriced_rows": {},

@@ -1,6 +1,6 @@
 # JevBench v1.8.3 candidate pipeline
 
-Three new, unranked rows: Piccolo 27B, allec-oavg and Cribl Decision 1.0 9B. Built on live v1.8.2 at f5716874d; no carried-row exceptions. Publication stays PENDING for independent review.
+Four new, unranked rows: Piccolo 27B, allec-oavg and Cribl Decision 1.0 9B and 27B. Built on live v1.8.2 at f5716874d; no carried-row exceptions. Publication stays PENDING for independent review.
 
 The lead authorised the exact allec disclosure clause; public_text_exception.py and the production loader enforce its single row/field/string binding. GPU-time costs retain the exact frozen v1.8.2 processed-token and architecture-throughput arithmetic; loop durations are disclosure only.
 

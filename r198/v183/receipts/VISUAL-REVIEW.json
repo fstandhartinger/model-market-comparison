@@ -1,21 +1,21 @@
 {
- "status": "PASS",
+ "images_unmodified": true,
+ "observations": [
+  "Main and all-system views render readable tables and controls.",
+  "All four new detail pages render unranked status, base-model labels, axes, cost and latency conditions.",
+  "No missing page, runtime error or overlapping layout observed.",
+  "Inherited per-row method v1.7 kicker is unchanged."
+ ],
  "reviewed_contact_sheets": [
   {
-   "path": "/home/flori/jobs/jevbench-add-requests-20260919/workers/r202-v183-build4/CAPTURE-REVIEW-top.png",
-   "sha256": "1047ea986c1a5a8611838f7edccb5125456f49f3842a40fae5bfd18abd2301c7"
+   "path": "/home/flori/jobs/jevbench-add-requests-20260919/workers/r202-v183-cribl27/CAPTURE-REVIEW-top.png",
+   "sha256": "9b4dec3c6038828a2594248c78b51ad643c15226dfdcf4230ceab16c9ad154d9"
   },
   {
-   "path": "/home/flori/jobs/jevbench-add-requests-20260919/workers/r202-v183-build4/CAPTURE-REVIEW-body.png",
-   "sha256": "055262c7a6222fb0cd4cf5189b0acdc08dae3ada200299580baa870eda97c4c7"
+   "path": "/home/flori/jobs/jevbench-add-requests-20260919/workers/r202-v183-cribl27/CAPTURE-REVIEW-body.png",
+   "sha256": "44135430d0b2340f47744d7977f65ee2ba76cf43e9522fe27f2edafc6fffa7d1"
   }
  ],
- "source_capture_manifest_sha256": "a07d319219ef44d58dbff8449592b4a5ebeb5bedc0fc2cf513e1a2f632f4b886",
- "observations": [
-  "Main/open and all-system ranking views render with sliders and readable table layout.",
-  "All three new row pages show unranked status, cited base models, axes and estimated cost/latency conditions.",
-  "No overlap, missing page or runtime error observed.",
-  "Inherited per-row method v1.7 label is unchanged, as noted in the v1.8.2 critic."
- ],
- "images_unmodified": true
+ "source_capture_manifest_sha256": "69f6a7815a2ab5446122bfdfc9be0b197a445d96905c6f1348bbce87afe42f14",
+ "status": "PASS"
 }

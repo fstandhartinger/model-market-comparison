@@ -39,6 +39,45 @@
   "scoring_raw_sha256": "c83b2c5b52a1820f557451882444f148591f31b21d8abc1585f47b273cbf331f",
   "throughput": 10106.516129032258
  },
+ "cribl-decision-1.0-27b": {
+  "active_b": 27,
+  "answered_not_in_common": 11,
+  "architecture_class": "dense",
+  "cost_all": 0.02925628855072875,
+  "cost_basis_kind": "gpu-time-min",
+  "cost_common": 0.015799945119666092,
+  "estimate_all": 0.1110018,
+  "estimate_common": 0.05994685023505708,
+  "expect": {
+   "failed": 0,
+   "input_tokens": 853860,
+   "ok": 1500,
+   "output_tokens": 0,
+   "status_counts": {
+    "200": 1500
+   }
+  },
+  "family": "qwen",
+  "gpu_all": 0.02925628855072875,
+  "gpu_common": 0.015799945119666092,
+  "input_tokens_all": 853860,
+  "input_tokens_common": 457748,
+  "latency_max": 28.90785338800015,
+  "native_output_tokens_all": 0,
+  "output_tokens_all": 0,
+  "output_tokens_common": 0,
+  "over10": 5,
+  "raw_order_matches_input": true,
+  "raw_sha256": "2c81b3c0962e372fa8fc52da637e566a84c49959e7ea9fd557ebcdb08202eb6d",
+  "ref": {
+   "in": 0.195,
+   "kind": "estimate",
+   "listing": "qwen/qwen3.5-27b",
+   "out": 0.0
+  },
+  "scoring_raw_sha256": "2c81b3c0962e372fa8fc52da637e566a84c49959e7ea9fd557ebcdb08202eb6d",
+  "throughput": 11763.0
+ },
  "cribl-decision-1.0-9b": {
   "active_b": 9,
   "answered_not_in_common": 11,

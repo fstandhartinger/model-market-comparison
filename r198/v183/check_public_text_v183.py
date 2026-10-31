@@ -4,11 +4,12 @@ from public_text_exception import check
 J=pathlib.Path(__file__).resolve().parent;W=J.parents[1]
 L=lambda p:json.loads(p.read_text())
 rows={s['key']:s for s in L(W/'data/raw/benchmarks/jevbench/v1.8/jevbench-v1.8.3-results.json')['systems'] if s.get('new_in')=='v1.8.3'}
-expected={'piccolo-27b','allec-oavg','cribl-decision-1.0-9b'}
+expected={'piccolo-27b','allec-oavg','cribl-decision-1.0-9b','cribl-decision-1.0-27b'}
 assert set(rows)==expected
 forbidden=re.compile(r'worker|lead|custody|custodian|release.owner|measurement review|deputy|board|#\d+|Florian|\bCoS\b|order.id|jevbench-add-requests|fastlane-native|r202-v183|Disposition is for|code_revision|smoke-stop|0\.0645|x cap|cost cap USD|0\.15 s|\bPREREG\b|\{',re.I)
 exception_receipt=check(rows,forbidden)
 requirements={'piccolo-27b':['1,064,693','92.21%','read twice','65,535'],'allec-oavg':['739,884','four reads','380','private new-domain'],'cribl-decision-1.0-9b':['853,860','861,216','0.86 %','56','PEFT','8,192']}
+requirements['cribl-decision-1.0-27b']=['853,860','861,216','0.86 %','56','PEFT','8,192','use_cache=False','empty_cache()','16,000','48,186']
 note='Measured on the 27 Oct 2026 draw, which is not yet equated to the reference scale; stronger anchor runs for that draw are being measured. Shown unranked until then.'
 def private_fields(v):
  if isinstance(v,dict):
@@ -27,4 +28,4 @@ for k,s in rows.items():
  for term in requirements[k]:assert term.lower() in text.lower(),(k,term)
 receipt={'status':'PASS','exception':exception_receipt,'all_new_row_strings_checked':True,'other_forbidden_hits':0,'neutral_draw_note':True,'model_pin_and_no_placeholder_gate':True,'rows':sorted(rows),'gate_source_sha256':hashlib.sha256(pathlib.Path(__file__).read_bytes()).hexdigest()}
 (J/'receipts/PUBLIC-TEXT.json').write_text(json.dumps(receipt,indent=1,sort_keys=True)+'\n')
-print('PASS public text and exact authorised allec clause on 3 rows')
+print('PASS public text and exact authorised allec clause on 4 rows')
