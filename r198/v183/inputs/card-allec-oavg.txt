@@ -1,0 +1,347 @@
+---
+license: apache-2.0
+base_model: google/gemma-4-31B-it
+library_name: transformers
+pipeline_tag: text-generation
+tags:
+- decision-making
+- multiple-choice
+---
+
+# allec
+
+allec is a fine-tune of [google/gemma-4-31B-it](https://huggingface.co/google/gemma-4-31B-it) that answers multiple-choice
+decision questions with a probability for each option. It includes a calibrated last-layer head (`vbll_head.safetensors`,
+`vbll_head.json`) whose output is the answer. For ordinary multiple-choice questions that output is the softmax of the option
+letters' logits at the answer position, divided by one fitted temperature (T = 1.031); no posterior is involved. For yes / no
+questions, a Bayesian last-layer residual on the model's hidden state (a Laplace posterior, integrated over) adjusts the two
+logits. (Corrected 2026-10-21: an earlier version of this card described the whole head as Bayesian.)
+
+**Inference engines** (added 2026-10-23). The repository includes these [Decision Index](https://github.com/apolinario/decision-index)
+engines; all use the same weights and head:
+- `lenavg_bayes_engine:LenAvgBayesEngine` (`lenavg_bayes_engine.py`, with `lenavg_engine.py` and `oavg_engine.py`): length-adaptive
+  option-order averaging. For a request whose length L (defined under Usage) is at most 939, every question is also scored with its
+  options in other orders, and the results are averaged; longer requests use the single pass. Adds a binary Bayesian correction on averaged yes/no predictions and retains the existing binary posterior on unaveraged yes/no. Ordinary choices use native scores with temperature calibration; their current Bayesian correction controls are zero.
+- `lenavg_engine:LenAvgEngine`: the same averaging without the correction on averaged yes / no questions.
+- `dikit_engine:DikitEngine`: the single pass of the original release (one forward pass per question).
+
+`config.json` is unchanged. Its `jev_requires_head` block holds training-time labels (for example
+`"readout": "posterior_predictive"`); the engines only check that the block is present, and the head's behaviour is as
+described above.
+
+Two parts of the model are not optional:
+- **Attention.** In the full-attention layers, each prompt's tokens attend to every token of the same prompt; the sliding-window
+  layers stay causal (window 1,024). transformers' stock attention would run the full-attention layers causally and give different
+  answers, so the model is served with the `jev_mem` attention function in `fullft_mem.py`. It registers with transformers'
+  attention interface and runs on PyTorch SDPA (memory-efficient and flash kernels). The engine refuses any other attention.
+- **The head.** The letter logits on their own are not the model's answer.
+
+The weights (`model-*.safetensors`, `vbll_head.safetensors`) are hosted here on the Hugging Face Hub; the GitHub mirror,
+[treewaterer/allec](https://github.com/treewaterer/allec), holds the code and this card only.
+
+## Usage
+
+The engines are `lenavg_bayes_engine.py`, `lenavg_engine.py` and `oavg_engine.py` on top of the single-pass engine `dikit_engine.py`, with `garas_vbll_engine.py`, `vbll_core.py`,
+`fullft_mem.py`, `garas_engine.py` and `garas_core.py`. They need the Decision Index kit:
+
+```bash
+pip install "git+https://github.com/apolinario/decision-index@9eb2dbe2a358004c8782c66e40a83ac07b953fec"
+REPO=$(python -c "from huggingface_hub import snapshot_download; print(snapshot_download('plantwaterer/allec'))")
+PYTHONPATH="$REPO" python -m decision_index run --engine lenavg_bayes_engine:LenAvgBayesEngine --option model="$REPO" --compact --out runs/allec-oavg
+```
+
+For the single pass of the original release, use `--engine dikit_engine:DikitEngine` instead.
+
+In Python:
+
+```python
+import sys
+from huggingface_hub import snapshot_download
+
+repo = snapshot_download("plantwaterer/allec")
+sys.path.insert(0, repo)
+from lenavg_bayes_engine import LenAvgBayesEngine          # needs the decision_index kit installed
+
+engine = LenAvgBayesEngine(model=repo)               # bf16 on "cuda"; the head runs on the CPU
+response, _ = engine(
+    "The forecast gives a 70% chance of heavy rain this afternoon. The match is outdoors, on grass.",
+    {"plan": {"type": "choice", "instructions": "What should the organisers do?",
+              "criteria": {"play": "Play as planned", "indoors": "Move it indoors", "postpone": "Postpone it"}},
+     "rain": {"type": "noul", "instructions": "Is heavy rain likely?"}})
+print(response["answers"])
+```
+
+The inference procedure is as follows:
+- **Prompts:** one prompt per question, with the model's chat template and the options lettered A-Z a-z. A choice question's
+  options are shown in one fixed non-identity order derived from a hash of the request. Yes / no questions use the options `Yes`
+  and `No`; when the request gives their definitions (its `criteria`), they are shown as `Yes: <definition>` / `No: <definition>`.
+- **Read-out:** one forward pass per prompt. The final hidden state and the option letters' logits (fp32, with the model's logit
+  soft-cap) go through the head, on the CPU in float64, which gives the probabilities.
+- **Order averaging** (`lenavg_bayes_engine:LenAvgBayesEngine`):
+  - *Which requests:* L = the sum over the request's questions of [len(state) + len(instructions) + the sum over the question's
+    criteria of (len(str(key)) + len(str(value)))], with Python's `len()`. A string state counts its characters; a dictionary state
+    counts its top-level keys, not its text; a missing state counts 0. The state is counted once per question. A request is averaged
+    if and only if L <= 939; otherwise every question takes the single pass described above.
+  - *Choice questions with up to 52 options:* scored in 4 option orders, the engine's own order and 3 re-letterings
+    `numpy.random.default_rng(20261021 + 1000 * j + K).permutation(K)` for j = 1, 2, 3 (K options). For each order the head's output
+    (the softmax of the letters' logits divided by T = 1.031) is mapped back to the options; the 4 vectors are averaged with equal
+    weight, then raised to the power 1 / 0.95438 and renormalised.
+  - *Yes / no:* the native letter softmax of the base order and of the swapped order (`No` first), averaged, then raised to the
+    power 1 / 0.93738 and renormalised (p). Then the binary Bayesian correction: the head's yes / no readout is computed from the base
+    prompt's hidden state and the log of the averaged native probabilities, once with its fitted residual and posterior variance and
+    once with both switched off (beta = 0, infl = 0); the difference of the two log-odds is added to the log-odds of p. No extra
+    temperature.
+  - *More than 52 options:* the single pass.
+  - The re-lettered prompts of a request are packed into the same forward passes as its other prompts.
+- **Batching:** the prompts of one request run in packed rows of up to 32,768 tokens, each prompt with its own positions, so a
+  prompt only attends to itself.
+- **More than 52 options:** handled in two rounds.
+- **No truncation:** a request that does not fit 32,768 tokens is reported as unsupported.
+
+Requirements: one GPU with at least 75 GB (the bf16 weights are 62 GB). Tested on 1 x H100 80GB and 1 x RTX PRO 6000 (96 GB) with
+torch 2.14.1 (CUDA 13.0), transformers 5.12.1, huggingface_hub, safetensors and numpy. bf16 results differ slightly between GPU types.
+
+## Evaluation
+
+**Decision Index 0.3, public panel (37 benchmarks), with order averaging (`lenavg_bayes_engine:LenAvgBayesEngine`).** The run used this repository's
+weights, head and engines, with the kit's runner and scorer at commit 9eb2dbe2, in bf16. The full public suite ran as 8 row shards on
+single H100 80GB GPUs, merged without changes. This is our own run of the public kit, not a leaderboard entry. The run files are at
+[plantwaterer/allec-oavg-decision-index](https://huggingface.co/datasets/plantwaterer/allec-oavg-decision-index). 94,198 of the 140,620 requests (67%) were averaged.
+
+| | public index | knowledge | language | retrieval | tools | arts |
+|---|---|---|---|---|---|---|
+| board rule (the test item listed below counted as wrong) | 62.03 | 50.71 | 65.21 | 64.82 | 77.61 | 48.98 |
+| as scored | 62.03 | 50.71 | 65.21 | 64.82 | 77.61 | 48.98 |
+
+140,620 requests were run and 140,178 scored after the official exclusions; all of them were answered (0 unsupported, 0 errors).
+Nothing was truncated. The listed trained-on test item was answered wrong, so the two rows are equal. That is +0.43 points over the single pass (61.60, below). Against the same averaging without the yes / no correction
+(`lenavg_engine:LenAvgEngine`, 62.04 on the same suite), the difference is -0.007 points (95% CI -0.034 to +0.017: a paired
+bootstrap over the suite's test items with the board's own metrics; it does not cover variation between training runs). The
+correction changes only the 2,700 averaged yes / no requests (all RAGTruth); its effect there is small (median |change| 0.004 in
+probability).
+
+**Latency** (our measurement; the board measures on its own private sample): the kit runner's per-request wall time for
+`lenavg_bayes_engine:LenAvgBayesEngine` on 1 x RTX PRO 6000, one request at a time, on 1,000 requests of the public suite (100 drawn from each tenth of
+the length L, so the sample includes the longest requests):
+
+| median | mean | 80th percentile | 95th percentile |
+|---|---|---|---|
+| 228 ms | 613 ms | 569 ms | 2,113 ms |
+
+These are sample statistics, not a per-request bound: the slowest request in the sample took 26.3 s.
+
+**Single pass (`dikit_engine:DikitEngine`, the original release), Decision Index 0.3, public panel (37 benchmarks).** The run used this repository's weights, head and engine, with the kit's runner
+and scorer at commit 9eb2dbe2, in bf16. The full public suite ran as 8 row shards on single GPUs (shards 0, 1, 6 and 7 on H100 80GB,
+2 to 5 on RTX PRO 6000), merged without changes. This is our own run of the public kit, not a leaderboard entry. The run files are at
+[plantwaterer/allec-decision-index](https://huggingface.co/datasets/plantwaterer/allec-decision-index).
+
+In that run, the engine's no-truncation check had a bug. Gemma 4's chat template trims the user message, so a state that starts with
+whitespace is shown without it, and the check, which looked for the untrimmed state in the prompt, reported every such request as too
+long. That hit 309 requests (MMLU-Pro 304, iSarcasmEval 5; the longest of their states is 172 tokens). The engine in this repository
+has the fix (`garas_engine.state_shown`). The 309 requests were run again with it in one resume pass of the kit runner (1 x H100 80GB);
+the other 140,311 result lines are unchanged, and their prompts are the same under both versions of the check.
+
+| | public index | knowledge | language | retrieval | tools | arts |
+|---|---|---|---|---|---|---|
+| board rule (the test item listed below counted as wrong) | 61.60 | 49.82 | 64.77 | 64.85 | 77.44 | 48.41 |
+| as scored | 61.60 | 49.82 | 64.77 | 64.85 | 77.44 | 48.41 |
+
+140,620 requests were run and 140,178 scored after the official exclusions; all of them were answered (0 unsupported, 0 errors). Nothing was truncated. The listed
+trained-on test item was already answered wrong, so the two rows are equal.
+
+**Latency** (our approximation of the board's check, which uses a private sample): the kit runner's per-request wall time on the
+four RTX PRO 6000 shards of the run above, one request at a time, 70,161 answered requests (before the fix; the fix does not change
+the work per request):
+
+| median | mean | 80th percentile |
+|---|---|---|
+| 102 ms | 484 ms | 363 ms |
+
+### Overlap with evaluation data
+
+No test split of any benchmark was used. The head's fit and calibration data include train-split rows of CLINC150, GSM8K,
+Amazon ESCI, BANKING77 and WinoGrande; the training data include Lichess puzzles (a different dataset from ChessBench's).
+
+An audit of the training text, the head's data included, against the Decision Index public suite found 1 test item that is an
+exact or near-exact duplicate of a CLINC150 train-split utterance in the head's fit data: `5:CLINC150+OOS:CLINC150+OOS:test:1591`.
+It is counted as wrong in the board-rule numbers above, as the board does for train-split duplicates of test items (see the
+Contamination section of the [Decision Index methodology](https://multimodalart-jev-decision-index.static.hf.space/methodology.html)).
+
+## Licence
+
+The weights and the head are released under Apache-2.0, and the base model, google/gemma-4-31B-it, is Apache-2.0. The training data
+come from the sources below, under the licences and terms listed. Some of these sources carry use conditions that apply to the data
+itself; they are repeated here: US Census PUMS (never use the data to identify any person or household), NVD (not endorsed or
+certified), California DMHC (modified; not official government data), MITRE CVE / CWE (copyright notices below) and XNLI (CC BY-NC
+4.0, non-commercial; its translations are part of AmericasNLI).
+
+## Data attribution
+
+allec was trained on decision questions built from the public data sources below, plus synthetic questions generated by the
+author (no third-party data). Thanks to everyone who builds and maintains them. Records were reformatted, and many were modified
+(fields selected, text clipped, identifiers masked), so none of the material should be read as an official copy of its source.
+
+### Open data and public records
+
+- **GDELT Project**: event data. Data from The GDELT Project, https://www.gdeltproject.org/.
+- **Wikipedia**: article text from the English Wikipedia dump of 2023-11-01, via
+  [wikimedia/wikipedia](https://huggingface.co/datasets/wikimedia/wikipedia) `20231101.en`, by Wikipedia contributors.
+  Licensed CC BY-SA 3.0/4.0 and GFDL. https://en.wikipedia.org/
+- **Wikipedia Articles for Deletion**: deletion debates by English Wikipedia contributors (CC BY-SA 3.0/4.0, GFDL), via the AfD
+  corpus of Mayfield & Black (2019), https://github.com/emayfield/AFD_Decision_Corpus (the repository's code is GPL-3.0; the
+  corpus files are distributed separately).
+- **Wikidata**: structured data (CC0 1.0), and Requests-for-deletion discussions by the Wikidata contributors (CC BY-SA 4.0).
+  https://www.wikidata.org/
+- **Swiss Judgment Prediction XL**: [rcds/swiss_judgment_prediction_xl](https://huggingface.co/datasets/rcds/swiss_judgment_prediction_xl)
+  (Rasiah et al., 2023), CC BY-SA 4.0. Decisions of the Swiss Federal Supreme Court, anonymised by the court.
+- **NHTSA** Office of Defects Investigation investigations and complaints (public domain), https://static.nhtsa.gov/odi/ffdd/
+- **OSHA** Severe Injury Reports and enforcement data, US Department of Labor (public domain), https://www.osha.gov/severe-injury-reports
+- **NTSB** aviation accident database (public domain), https://data.ntsb.gov/avdata
+  (Added 2026-10-22: the OSHA and NTSB records above were in this model's training and head data but missing from this list.)
+- **openFDA** enforcement reports and device recalls, CC0 1.0, https://open.fda.gov/
+- **ClinicalTrials.gov** (US National Library of Medicine), via the ClinicalTrials.gov API v2; data processed by ClinicalTrials.gov on
+  2026-10-01. Modified: selected registration fields only, free text clipped, trial ids masked, study-status sentences removed. Some
+  ClinicalTrials.gov data may be subject to third-party copyright outside the United States.
+- **ClinVar** (NCBI): Landrum et al., Nucleic Acids Research 2018, PMID 29165669.
+- **Orphanet** inheritance data, CC BY 4.0, https://www.orpha.net/
+- **CIViC** (civicdb.org), CC0 1.0: Griffith et al., Nature Genetics 2017, PMID 28138153.
+- **California Department of Managed Health Care**, "DMHC IMR Data, 2001 - Current", CC BY,
+  https://data.ca.gov/dataset/independent-medical-review-imr-determinations-trend. Modified; not official government data.
+- **NOAA / NWS Storm Prediction Center** text products (public domain), via the Iowa Environmental Mesonet, Iowa State University.
+- **LIGO / Virgo / KAGRA** public alerts and the GWOSC event catalogue, CC BY 4.0, by the LIGO Scientific, Virgo and KAGRA
+  Collaborations. This model uses data obtained from the Gravitational Wave Open Science Center (gwosc.org), a service of the LIGO
+  Scientific Collaboration, the Virgo Collaboration and KAGRA.
+- **USGS** PAGER and ComCat (public domain). Population exposure is from ORNL LandScan (CC BY 4.0).
+- **National Vulnerability Database** (NIST, public domain) and **CVE** records (CVE Terms of Use; Copyright The MITRE Corporation).
+  **CWE**: Copyright 2006-2026, The MITRE Corporation; CWE is a trademark of The MITRE Corporation. This product uses the NVD API
+  but is not endorsed or certified by the NVD.
+- **American Community Survey PUMS**, US Census Bureau (CC0 1.0), with task definitions from
+  [folktables](https://github.com/socialfoundations/folktables) (Ding et al., 2021; MIT). Never to be used to identify any person or
+  household.
+- **OpenReview** reviews and scores, CC BY 4.0 (titles and abstracts: CC0 1.0), https://openreview.net/
+- **Lichess** open database, CC0 1.0, https://database.lichess.org/
+- **Amazon ESCI** shopping queries, [amazon-science/esci-data](https://github.com/amazon-science/esci-data) (Reddy et al., 2022),
+  Apache-2.0. Copyright Amazon.com, Inc. or its affiliates.
+- **SWE-rebench**: [nebius/SWE-rebench-openhands-trajectories](https://huggingface.co/datasets/nebius/SWE-rebench-openhands-trajectories)
+  (Trofimova et al., 2025), CC BY 4.0.
+- **Open-Jev**: [ZefanCai/Open-Jev](https://huggingface.co/datasets/ZefanCai/Open-Jev), CC0 1.0.
+- **LLM Bayesian Teaching Data**: Qiu, L. (2025), Zenodo, doi:10.5281/zenodo.17677329, CC BY 4.0.
+
+### Research datasets
+
+| dataset | reference | licence |
+|---|---|---|
+| BANKING77 | Casanueva et al., 2020 | CC BY 4.0 |
+| CLINC150 | Larson et al., 2019 | CC BY 3.0 |
+| GoEmotions | Demszky et al., 2020 | Apache-2.0 |
+| GSM8K | Cobbe et al., 2021 | MIT |
+| HelpSteer2 | Wang et al., 2024 | CC BY 4.0 |
+| Measuring Hate Speech | Kennedy et al., 2020 | CC BY 4.0 |
+| IBM Debater ArgQ-Rank-30kArgs | Gretz et al., 2019 | CC BY 3.0 |
+| BBQ | Parrish et al., 2022 | CC BY 4.0 |
+| CaSiNo | Chawla et al., 2021 | CC BY 4.0 |
+| Circa | Louis et al., 2020 | CC BY 4.0 (dataset card; its README links CC BY-SA 4.0) |
+| CodeContests | Li et al., 2022 | CC BY 4.0 |
+| CosmosQA | Huang et al., 2019 | CC BY 4.0 |
+| CommonsenseQA | Talmor et al., 2019 | MIT |
+| e-CARE | Du et al., 2022 | MIT |
+| Social IQa | Sap et al., 2019 | CC BY 4.0 |
+| WinoGrande | Sakaguchi et al., 2019 | CC BY (code Apache-2.0) |
+| MedMCQA | Pal et al., 2022 | Apache-2.0 |
+| PubMedQA | Jin et al., 2019 | MIT |
+| Stanford Politeness Corpus, via ConvoKit | Danescu-Niculescu-Mizil et al., 2013 | CC BY 4.0 |
+| Scruples | Lourie et al., 2021 | Apache-2.0 |
+| TabFact | Chen et al., 2020 | CC BY 4.0 |
+| QASPER | Dasigi et al., 2021 | CC BY 4.0 |
+
+Through [tasksource](https://huggingface.co/tasksource) (Sileo, 2024), each dataset under its own licence as recorded on its
+dataset page:
+
+| dataset (Hugging Face) | licence |
+|---|---|
+| hope_edi/english | CC BY 4.0 |
+| [AndyChiang/cloth](https://huggingface.co/datasets/AndyChiang/cloth) | MIT |
+| [bogdanminko/wildguardmix-cleaned](https://huggingface.co/datasets/bogdanminko/wildguardmix-cleaned) | ODC-BY |
+| [cambridgeltl/xcopa](https://huggingface.co/datasets/cambridgeltl/xcopa) | CC BY 4.0 |
+| [copenlu/scientific-exaggeration-detection](https://huggingface.co/datasets/copenlu/scientific-exaggeration-detection) | GPL-3.0 |
+| [corypaik/prost](https://huggingface.co/datasets/corypaik/prost) | Apache-2.0 |
+| [declare-lab/cicero](https://huggingface.co/datasets/declare-lab/cicero) | MIT |
+| [dynabench/dynasent](https://huggingface.co/datasets/dynabench/dynasent) | CC BY 4.0 |
+| [fancyzhx/amazon_polarity](https://huggingface.co/datasets/fancyzhx/amazon_polarity) | Apache-2.0 |
+| [flaitenberger/wnut_17](https://huggingface.co/datasets/flaitenberger/wnut_17) | CC BY 4.0 |
+| [GGLab/PARADISE](https://huggingface.co/datasets/GGLab/PARADISE) | MIT |
+| [google-research-datasets/poem_sentiment](https://huggingface.co/datasets/google-research-datasets/poem_sentiment) | CC BY 4.0 |
+| [google/civil_comments](https://huggingface.co/datasets/google/civil_comments) | CC0 1.0 |
+| [jana4/turingbench-humanized](https://huggingface.co/datasets/jana4/turingbench-humanized) | Apache-2.0 |
+| [joey234/nan-nli](https://huggingface.co/datasets/joey234/nan-nli) | CC BY-SA 4.0 |
+| [juletxara/xstory_cloze](https://huggingface.co/datasets/juletxara/xstory_cloze) | CC BY-SA 4.0 (translations of the StoryCloze test) |
+| [lasha-nlp/CONDAQA](https://huggingface.co/datasets/lasha-nlp/CONDAQA) | Apache-2.0 |
+| [mteb/NusaX-senti](https://huggingface.co/datasets/mteb/NusaX-senti) | CC BY-SA 4.0 |
+| [mteb/tweet_sentiment_multilingual](https://huggingface.co/datasets/mteb/tweet_sentiment_multilingual) | CC BY 3.0 |
+| [nala-cub/americas_nli](https://huggingface.co/datasets/nala-cub/americas_nli) | CC BY-SA 4.0 (a translation of a subset of XNLI, whose licence is CC BY-NC 4.0) |
+| [nedjmaou/MLMA_hate_speech](https://huggingface.co/datasets/nedjmaou/MLMA_hate_speech) | MIT |
+| [nvidia/HelpSteer](https://huggingface.co/datasets/nvidia/HelpSteer) | CC BY 4.0 |
+| [nvidia/HelpSteer3](https://huggingface.co/datasets/nvidia/HelpSteer3) | CC BY 4.0 |
+| [oneonlee/cleansed_emocontext](https://huggingface.co/datasets/oneonlee/cleansed_emocontext) | MPL-2.0 |
+| [pietrolesci/breaking_nli](https://huggingface.co/datasets/pietrolesci/breaking_nli) | CC BY-SA 4.0 |
+| [pietrolesci/gen_debiased_nli](https://huggingface.co/datasets/pietrolesci/gen_debiased_nli) | CC BY-SA 4.0, OANC |
+| [pietrolesci/robust_nli](https://huggingface.co/datasets/pietrolesci/robust_nli) | CC BY-SA 4.0, MIT, OANC |
+| [pietrolesci/robust_nli_is_sd](https://huggingface.co/datasets/pietrolesci/robust_nli_is_sd) | OANC |
+| [pietrolesci/robust_nli_li_ts](https://huggingface.co/datasets/pietrolesci/robust_nli_li_ts) | OANC |
+| [pkavumba/balanced-copa](https://huggingface.co/datasets/pkavumba/balanced-copa) | CC BY 4.0, BSD-2-Clause |
+| [pushpdeep/UltraFeedback-paired](https://huggingface.co/datasets/pushpdeep/UltraFeedback-paired) | MIT |
+| [qbao775/PARARULE-Plus](https://huggingface.co/datasets/qbao775/PARARULE-Plus) | MIT |
+| [SemEvalWorkshop/sem_eval_2010_task_8](https://huggingface.co/datasets/SemEvalWorkshop/sem_eval_2010_task_8) | CC0 1.0 |
+| [sileod/discovery](https://huggingface.co/datasets/sileod/discovery) | Apache-2.0 |
+| [sileod/mindgames](https://huggingface.co/datasets/sileod/mindgames) | Apache-2.0 |
+| [sileod/probability_words_nli](https://huggingface.co/datasets/sileod/probability_words_nli) | Apache-2.0, CC BY-SA 4.0 |
+| [stanfordnlp/snli](https://huggingface.co/datasets/stanfordnlp/snli) | CC BY-SA 4.0 |
+| [tasksource/arct](https://huggingface.co/datasets/tasksource/arct) | Apache-2.0 |
+| [tasksource/autotnli](https://huggingface.co/datasets/tasksource/autotnli) | Apache-2.0 |
+| [tasksource/babi_nli](https://huggingface.co/datasets/tasksource/babi_nli) | BSD |
+| [tasksource/clcd-english](https://huggingface.co/datasets/tasksource/clcd-english) | Apache-2.0 |
+| [tasksource/conceptrules_v2](https://huggingface.co/datasets/tasksource/conceptrules_v2) | MIT, custom (see the dataset page) |
+| [tasksource/corr2cause](https://huggingface.co/datasets/tasksource/corr2cause) | MIT |
+| [tasksource/defeasible-nli](https://huggingface.co/datasets/tasksource/defeasible-nli) | Apache-2.0, MIT |
+| [tasksource/dynahate](https://huggingface.co/datasets/tasksource/dynahate) | GPL |
+| [tasksource/ethos](https://huggingface.co/datasets/tasksource/ethos) | AGPL-3.0 |
+| [tasksource/google_wellformed_query](https://huggingface.co/datasets/tasksource/google_wellformed_query) | CC BY-SA 4.0 |
+| [tasksource/hate_speech18](https://huggingface.co/datasets/tasksource/hate_speech18) | CC BY-SA 3.0 |
+| [tasksource/help-nli](https://huggingface.co/datasets/tasksource/help-nli) | Creative Commons (version not stated), CC BY-SA 4.0 |
+| [tasksource/I2D2](https://huggingface.co/datasets/tasksource/I2D2) | Apache-2.0 |
+| [tasksource/implicatures](https://huggingface.co/datasets/tasksource/implicatures) | GPL |
+| [tasksource/logical-entailment](https://huggingface.co/datasets/tasksource/logical-entailment) | Apache-2.0 |
+| [tasksource/lonli](https://huggingface.co/datasets/tasksource/lonli) | MIT |
+| [tasksource/monotonicity-entailment](https://huggingface.co/datasets/tasksource/monotonicity-entailment) | Apache-2.0 |
+| [tasksource/multilingual-sentiments](https://huggingface.co/datasets/tasksource/multilingual-sentiments) | Apache-2.0 |
+| [tasksource/recast](https://huggingface.co/datasets/tasksource/recast) | CC BY-SA 4.0 |
+| [tasksource/resnli](https://huggingface.co/datasets/tasksource/resnli) | CC BY 4.0 |
+| [tasksource/ruletaker](https://huggingface.co/datasets/tasksource/ruletaker) | Apache-2.0 |
+| [tasksource/scone](https://huggingface.co/datasets/tasksource/scone) | CC0 1.0 |
+| [tasksource/SDOH-NLI](https://huggingface.co/datasets/tasksource/SDOH-NLI) | CC BY 4.0 |
+| [tasksource/sherliic](https://huggingface.co/datasets/tasksource/sherliic) | CC BY 4.0 |
+| [tasksource/silicone](https://huggingface.co/datasets/tasksource/silicone) | CC BY-SA 4.0, CC BY 4.0 |
+| [tasksource/SpaceNLI](https://huggingface.co/datasets/tasksource/SpaceNLI) | MIT |
+| [tasksource/spartqa-mchoice](https://huggingface.co/datasets/tasksource/spartqa-mchoice) | MIT |
+| [tasksource/spartqa-yn](https://huggingface.co/datasets/tasksource/spartqa-yn) | Apache-2.0 |
+| [tasksource/starcon](https://huggingface.co/datasets/tasksource/starcon) | CC0 1.0 |
+| [tasksource/stepgame](https://huggingface.co/datasets/tasksource/stepgame) | MIT |
+| [tasksource/subjectivity](https://huggingface.co/datasets/tasksource/subjectivity) | MIT |
+| [tasksource/syntactic-augmentation-nli](https://huggingface.co/datasets/tasksource/syntactic-augmentation-nli) | MIT |
+| [tasksource/temporal-nli](https://huggingface.co/datasets/tasksource/temporal-nli) | Apache-2.0 |
+| [tasksource/tomi-nli](https://huggingface.co/datasets/tasksource/tomi-nli) | GPL-3.0 |
+| [tasksource/universal-joy](https://huggingface.co/datasets/tasksource/universal-joy) | GPL |
+| [tweets-hate-speech-detection/tweets_hate_speech_detection](https://huggingface.co/datasets/tweets-hate-speech-detection/tweets_hate_speech_detection) | GPL-3.0 |
+| [unigram/FOL-nli](https://huggingface.co/datasets/unigram/FOL-nli) | Apache-2.0 |
+| [webis/args_me](https://huggingface.co/datasets/webis/args_me) | CC BY 4.0 |
+| [zeroshot/twitter-financial-news-sentiment](https://huggingface.co/datasets/zeroshot/twitter-financial-news-sentiment) | MIT |
+| [Zhengping/UNLI](https://huggingface.co/datasets/Zhengping/UNLI) | MIT |
+
+### Community synthetic datasets
+
+- [tasksource/procedural-typed-decisions](https://huggingface.co/datasets/tasksource/procedural-typed-decisions)
+  (tasksource, Sileo, 2024), Apache-2.0
+- [frontier-infra/jebadiah-synth-v2](https://huggingface.co/datasets/frontier-infra/jebadiah-synth-v2), Apache-2.0
+- [kaivoss/system-one-270m-data](https://huggingface.co/datasets/kaivoss/system-one-270m-data), Apache-2.0
+- [vagmi/jevlite_dataset](https://huggingface.co/datasets/vagmi/jevlite_dataset), CC BY-SA 4.0
+- [mghafiri/decision-model-scenarios](https://huggingface.co/datasets/mghafiri/decision-model-scenarios), MIT

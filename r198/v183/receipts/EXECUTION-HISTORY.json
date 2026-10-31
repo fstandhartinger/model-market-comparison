@@ -1,0 +1,38 @@
+{
+ "base": "2ec6bd5f1b95b800d70ea6ee5cfe6f002799e5fb",
+ "compiled_api_receipt": "Read-only check passed. An initial attempt to save its receipt in the batch-owned remote folder was denied; saved the receipt locally without changing remote permissions.",
+ "continuation": "CONTINUATION.json; source mirror synchronized, successful snapshot hashes retained, resumed from compare onward",
+ "final_byte_binding": "FINAL-SOURCE-BINDING.json",
+ "heavy_runs": [
+  {
+   "failure": "comparison row-count assertion on stale four-row src/inputs.json mirror; snapshots contain correct 329/334 rows and no ranking change",
+   "production_build_count": 0,
+   "result": "exit-code",
+   "unit": "heavy-r202-v183-z3soup--r1031103657tt8a.service",
+   "wrapper_exit": 1
+  },
+  {
+   "production_build_count": 1,
+   "result": "success",
+   "units": [
+    "heavy-r202-v183-z3soup--r1031104604u6mb.service",
+    "heavy-r202-v183-z3soup--r1031104604u6mb.service"
+   ],
+   "wrapper_exit": 0
+  }
+ ],
+ "non_dry_flip_never_run": true,
+ "orchestrator_start_correction": "First systemd unit failed before executing any script because a relative script path had no WorkingDirectory. Reset and restarted the same owned unit with an absolute path.",
+ "preflight_correction": "Row-count edit accidentally changed the allec guard expectation from four reads to five reads. The gate rejected it; restored four reads. Public allec row bytes were unchanged, and all preflight checks reran before the only remote full-gate run. Failed log retained in worker/local-preflight-initial.log.",
+ "real_manifest_PENDING": true,
+ "scoring": {
+  "Sandy_only": true,
+  "exit_code": 0,
+  "max_wait_seconds": 3600,
+  "suite_slot_wait_lines": 125,
+  "suite_slot_wait_seconds": 1877,
+  "unit": "r202-v183-z3soup-score.scope"
+ },
+ "seal_never_run": true,
+ "source_upload": "SOURCE-UPLOAD.json"
+}
