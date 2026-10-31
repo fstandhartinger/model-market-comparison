@@ -9,6 +9,7 @@ import { enrichArtificialAnalysis, MAX_METADATA_ROLLOUT_LAG } from "../lib/aa-me
 import { parseArtificialAnalysisMetadata, parseArtificialAnalysisDeprecatedModels } from "../lib/aa-rsc.mjs";
 import { writeJSONAtomic } from "../lib/snapshot.mjs";
 import { refreshAaEfficiency } from "./fetch-aa-efficiency.mjs";
+import { AA_INDEX_FIELDS, aaIndexPageVersions, aaIndexVersionChangeMessage, changedAaIndexVersion } from "../lib/aa-index-version.mjs";
 import { execFile } from "node:child_process";
 import { promisify } from "node:util";
 import { BOARD_REGISTRY_INCONSISTENT, absentIdentities, assertApprovedIdentityCoverage, assertIdentityCoverage, assertOpenRouterEndpointCoverage, assertMeasuredFields, captureLiveSource, classifyBoardAbsence, endpointIdentity, findBoardRekeys, planOpenRouterWithdrawals } from '../lib/live-source.mjs';
@@ -101,11 +102,22 @@ async function fetchArtificialAnalysis() {
   // bound to both complete identity sets and the exact removed IDs.
   assertApprovedIdentityCoverage(previous.models, apiModels, (m) => m.id, 'Artificial Analysis models', { approval: approvals.aa_models });
   const priorModels = new Map((previous.models || []).map((m) => [m.id, m]));
+  // CR-629: on a new Intelligence Index major version the composite indexes are not comparable with the
+  // published ones, so they are left out of the withdrawal check; every single benchmark and price still has
+  // to pass it. The run then stops before any write, with the marker, and the daily keeps the published snapshot.
+  const indexVersion = changedAaIndexVersion(aaIndexPageVersions(leaderboardHtml));
   for (const model of apiModels) {
     if (!model.evaluations || !model.pricing || typeof model.name !== 'string' || typeof model.slug !== 'string') throw new Error('AA missing model fields');
     const old = priorModels.get(model.id);
-    assertMeasuredFields(old?.evaluations, model.evaluations, [...new Set([...Object.keys(old?.evaluations || {}), ...Object.keys(model.evaluations)])], `AA ${model.id}`, { approvals: approvals.aa_measurements, modelId: model.id });
+    const fields = [...new Set([...Object.keys(old?.evaluations || {}), ...Object.keys(model.evaluations)])];
+    if (indexVersion) assertMeasuredFields(null, model.evaluations, AA_INDEX_FIELDS, `AA ${model.id}`);
+    assertMeasuredFields(old?.evaluations, model.evaluations, indexVersion ? fields.filter((f) => !AA_INDEX_FIELDS.includes(f)) : fields, `AA ${model.id}`, { approvals: approvals.aa_measurements, modelId: model.id });
     assertMeasuredFields(old?.pricing, model.pricing, ['price_1m_input_tokens', 'price_1m_output_tokens'], `AA ${model.id}`);
+  }
+  if (indexVersion) {
+    const scored = (field) => apiModels.filter((m) => typeof m.evaluations[field] === 'number').length;
+    const before = (field) => (previous.models || []).filter((m) => typeof m.evaluations?.[field] === 'number').length;
+    throw new Error(`${aaIndexVersionChangeMessage(indexVersion)}: a new index methodology needs review before it replaces the published values; ${AA_INDEX_FIELDS.map((f) => `${f} ${before(f)}→${scored(f)}`).join(', ')}`);
   }
   const { models, missing, retiredCount, extraCount } = enrichArtificialAnalysis(apiModels, metadata, previous, parseArtificialAnalysisDeprecatedModels(leaderboardHtml));
   if (missing.length) {

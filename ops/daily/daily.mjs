@@ -7,6 +7,7 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 import { createHash } from 'node:crypto';
 import { writeJSONAtomic } from '../../lib/snapshot.mjs';
 import { BOARD_REGISTRY_INCONSISTENT } from '../../lib/live-source.mjs';
+import { AA_INDEX_PINNED_MAJOR, AA_INDEX_VERSION_CHANGED } from '../../lib/aa-index-version.mjs';
 import { CODING_AGENT_FILE, CODING_AGENT_SOURCE_KEY, CODING_AGENT_VERSION, CODING_AGENT_VERSION_CHANGED, FROZEN_CODING_AGENT_FILES } from '../../lib/aa-coding-agents.mjs';
 import { COMMIT_TRAILER, assessCommitScope, parseScope, parseStatusPorcelain, pricesScopeViolations, selectProducerCritic, sourceFreshnessErrors, staleCollectorDigestLines } from './policy.mjs';
 import { executeNotifications } from './notify.mjs';
@@ -75,6 +76,27 @@ export async function readCodingAgentVersionChange({ runDir, work, error, read =
   const retainedCollectedAt = JSON.parse(published.toString('utf8')).collected_at ?? null;
   return { page_version: match[1], pinned_version: match[2], retained_collected_at: retainedCollectedAt,
     reason: `AA Coding Agent Index page now states v${match[1]}; the v${match[2]} collector does not adopt a new index version without methodology review. The published v${match[2]} snapshot of ${retainedCollectedAt ?? 'unknown date'} stays with its own date.` };
+}
+
+// CR-629 (2026-10-31): the same withheld path for the AA Intelligence Index (v4.x → v5.0 on 2026-10-28). fetch-aa
+// stops before any write when the leaderboard names another major index version; the API snapshot and the
+// token-efficiency snapshot (measured on the same index tasks) both keep their published bytes and dates. Withhold
+// only with the marker AND both staged files byte-identical to this run's copy of the published snapshot; any other
+// failure still fails the run closed. review-live.mjs re-derives the version change from the captured page bytes.
+export const AA_INDEX_FILES = ['artificialanalysis.json', 'aa-efficiency.json'];
+export async function readAaIndexVersionChange({ runDir, work, error, read = readFile }) {
+  const match = String(error?.message ?? '').match(new RegExp(`\\b${AA_INDEX_VERSION_CHANGED} \\(page states v([0-9.]+), collector pinned to v([0-9]+)\\.x\\)`));
+  if (!match || match[2] !== AA_INDEX_PINNED_MAJOR) return null;
+  const dates = [];
+  for (const file of AA_INDEX_FILES) {
+    const staged = await read(join(work, 'data/raw', file)).catch(() => null);
+    const published = await read(join(runDir, 'before/raw', file)).catch(() => null);
+    if (!staged || !published || hash(staged) !== hash(published)) return null;
+    dates.push(JSON.parse(published.toString('utf8')).collected_at ?? null);
+  }
+  const retainedCollectedAt = dates[0];
+  return { page_version: match[1], pinned_version: `${match[2]}.x`, retained_collected_at: retainedCollectedAt, efficiency_collected_at: dates[1],
+    reason: `AA leaderboard now states Intelligence Index v${match[1]}; the v${match[2]}.x collector does not adopt a new index methodology without review. The published AA snapshot of ${retainedCollectedAt ?? 'unknown date'} (and its token-efficiency snapshot) stays with its own date.` };
 }
 
 export async function linkDryRunDependencies(repo, work) {
@@ -210,6 +232,15 @@ export async function runDaily({ repo = ROOT, home = '/opt/benchmarkheaven-daily
         // board with its own date and lets every other contract publish. Any other failure — a
         // corroborated withdrawal, a malformed response, an HTTP or access change — still fails the
         // run closed, as does this one for any source other than DesignArena.
+        // CR-629: a new AA Intelligence Index major version keeps the published AA snapshot (see readAaIndexVersionChange).
+        const aaIndex = source === 'aa' ? await readAaIndexVersionChange({ runDir, work, error }) : null;
+        if (aaIndex) {
+          for (const key of ['artificialanalysis', 'aa_efficiency']) report.retained_sources.push({ source: key, step, reason: aaIndex.reason, page_version: aaIndex.page_version, retained_collected_at: key === 'artificialanalysis' ? aaIndex.retained_collected_at : aaIndex.efficiency_collected_at });
+          report.warnings = report.warnings || [];
+          report.warnings.push(`${step} withheld: ${aaIndex.reason}`);
+          console.warn(`WARN ${step}: AA states Intelligence Index v${aaIndex.page_version}; keeping the published v${aaIndex.pinned_version} snapshot (${aaIndex.retained_collected_at ?? 'unknown date'})`);
+          continue;
+        }
         const retained = source === 'da' ? await readDesignArenaInconsistency({ sourcesDir: join(runDir, 'sources'), runDir, work, error }) : null;
         if (!retained) throw error;
         report.retained_sources.push({ source: 'designarena', step, reason: retained.reason, determination: retained.record.determination, sidecar: retained.file });

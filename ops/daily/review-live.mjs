@@ -32,6 +32,7 @@ import { fileURLToPath } from 'node:url';
 import { isDeepStrictEqual } from 'node:util';
 import { flightRecords, objects, resolveFlight, parseArtificialAnalysisMetadata } from '../../lib/aa-rsc.mjs';
 import { parseAaEfficiency } from '../../lib/aa-efficiency.mjs';
+import { AA_INDEX_PINNED_MAJOR, aaIndexPageVersions, changedAaIndexVersion } from '../../lib/aa-index-version.mjs';
 import { CODING_AGENT_FILE, CODING_AGENT_URL, CODING_AGENT_VERSION, changedCodingAgentVersion, codingAgentPageVersions, parseCodingAgents } from '../../lib/aa-coding-agents.mjs';
 import { parseOpenRouterPage, parseOpenRouterCache, parseOpenRouterRankings } from '../../lib/openrouter-efficiency.mjs';
 import { parseChutesUsage } from '../../lib/chutes-efficiency.mjs';
@@ -166,10 +167,29 @@ export function assertRetainedDate(collectedAt, runStart, where) {
 // object with its OWN field names (raw field projection) — never our renamed
 // staged shape — so a critic can audit the extraction rule without parsers.
 
+// CR-629 (2026-10-31): AA moved to Intelligence Index v5.0. The daily withholds today's AA capture (daily.mjs
+// readAaIndexVersionChange); as with CR-542 the withheld path is proven from the captured bytes: every index version
+// statement on the captured leaderboard names the same other major version, and both staged AA files equal the
+// snapshot this run started from with their own older dates. A withheld source contributes no packet row.
+export async function verifyWithheldAa({ staged, stagedEfficiency, src, runStart, lbReceipt }) {
+  const changed = changedAaIndexVersion(aaIndexPageVersions(lbReceipt.body));
+  if (!changed) return null;
+  eq(staged, await baseline(src, 'artificialanalysis.json'), 'aa withheld snapshot equals the snapshot this run started from');
+  assertRetainedDate(staged.collected_at, runStart, 'aa withheld snapshot');
+  eq(stagedEfficiency, await baseline(src, 'aa-efficiency.json'), 'aa-efficiency withheld snapshot equals the snapshot this run started from');
+  assertRetainedDate(stagedEfficiency.collected_at, runStart, 'aa-efficiency withheld snapshot');
+  return { retained_collected_at: staged.collected_at, efficiency_collected_at: stagedEfficiency.collected_at, page_version: changed,
+    pinned_version: `${AA_INDEX_PINNED_MAJOR}.x`, models: staged.models.length, source: loc(lbReceipt) };
+}
+
 async function verifyAa(rawDir, src, runStart, rows, report) {
   const staged = JSON.parse(await readFile(join(rawDir, 'artificialanalysis.json'), 'utf8'));
   const apiReceipt = src.requireGet(AA_API_URL, 'artificialanalysis models');
   const lbReceipt = src.requireGet(AA_LEADERBOARD_URL, 'artificialanalysis leaderboard metadata');
+  const withheld = changedAaIndexVersion(aaIndexPageVersions(lbReceipt.body))
+    ? await verifyWithheldAa({ staged, stagedEfficiency: JSON.parse(await readFile(join(rawDir, 'aa-efficiency.json'), 'utf8')), src, runStart, lbReceipt })
+    : null;
+  if (withheld) { report.aa = { withheld }; report.aa_efficiency = { withheld }; return; }
   const apiModels = jbody(apiReceipt, 'aa api').data;
   if (!Array.isArray(apiModels) || !apiModels.length) fail('aa source has no models');
   if (!Array.isArray(staged.models) || staged.count !== staged.models.length || staged.models.length !== apiModels.length) {
@@ -754,7 +774,7 @@ async function collectLiveRun({ runDir, rawDir = RAW_DEFAULT } = {}) {
   await verifyAa(rawDir, src, src.first, rows, report.datasets);
   Object.assign(report.datasets, await verifyDa(rawDir, src, src.first, rows));
   Object.assign(report.datasets, await verifyOr(rawDir, src, src.first, rows));
-  Object.assign(report.datasets, await verifyAaEfficiency(rawDir, src, src.first, rows));
+  if (!report.datasets.aa_efficiency?.withheld) Object.assign(report.datasets, await verifyAaEfficiency(rawDir, src, src.first, rows));
   Object.assign(report.datasets, await verifyOrEfficiency(rawDir, src, src.first, rows));
   Object.assign(report.datasets, await verifyChutes(rawDir, src, src.first, rows));
   Object.assign(report.datasets, await verifyCoding(rawDir, src, src.first, rows));
@@ -765,6 +785,8 @@ async function collectLiveRun({ runDir, rawDir = RAW_DEFAULT } = {}) {
     designarena_board: report.datasets.da?.withheld ?? null,
     // CR-542: null on an ordinary day; names the page's new index version and the retained snapshot date.
     aa_coding_current: report.datasets.aa_coding_current?.withheld ?? null,
+    // CR-629: null on an ordinary day; names the page's new Intelligence Index version and the retained AA dates.
+    aa_index: report.datasets.aa?.withheld ?? null,
   };
   const run = { sources_dir: join(runDir, 'sources'), receipts: receipts.length, first_receipt: src.first, last_receipt: src.last };
   return { run, rows, report };
@@ -806,6 +828,7 @@ export async function reviewLive({ runDir, rawDir = RAW_DEFAULT, batchSize = 25,
       'data/raw/aa-coding-agents.json (v1.4) and the frozen data/raw/aa-coding-agents-v1.5.json are intentionally untouched; the daily orchestrator validates them.',
       'A withheld DesignArena board (retained.designarena_board) stages no new byte: its rows are the previously published snapshot with its own older date, proven equal to it, and the withholding itself is re-derived from this run\u2019s captured board and registry bytes. Those rows are not in the critic packets, because there is no fresh value to check.',
       `A withheld Coding Agent v${CODING_AGENT_VERSION} snapshot (retained.aa_coding_current) stages no new byte: the captured page states a different index version for every statement, and the staged v${CODING_AGENT_VERSION} file is proven equal to the snapshot this run started from with its own older date. Its rows are not in the critic packets.`,
+      'A withheld AA snapshot (retained.aa_index) stages no new byte: the captured leaderboard names another Intelligence Index major version in every statement, and artificialanalysis.json and aa-efficiency.json are proven equal to the snapshot this run started from with their own older dates. Their rows are not in the critic packets.',
       'This report is the programmatic numeric/source check only. The separate live-step-result.json records adapter-contract gauntlet acceptance and exact model example coverage.',
     ],
     evidence: null,
