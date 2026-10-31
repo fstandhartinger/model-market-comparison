@@ -1,0 +1,456 @@
+{
+ "carried_rows": 329,
+ "carried_rows_equal_except": [],
+ "cost_basis": {
+  "cost_basis_sha256": "b83bdfd14c263ffacfa572b304084154afca84c1f00083101a33783ae6f8b356",
+  "frozen_at": "v1.7.16",
+  "n_items": 1489,
+  "rule": "fixed-common-cost-basis-d1027 (frozen at v1.7.16)",
+  "set_sha256": "4e912731e63369e1b3066b0b4afa87b44f1094aea079c5b41dc6d02e7f235537"
+ },
+ "exceptions": {
+  "text_only_sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+ },
+ "files": {
+  "carry": "271d1fc77a136a04a1eb6deb5480c52d4211eb2b66b2ac8bb31e80867e69003a",
+  "categories": "d888343a2eabf365cda5fa6bd283be937555588969467a2261e6b701188ba651",
+  "history": "d5e91333d6acefef1506f2a6ce23f71220ac1eeac9ce2d4e817c88a0a979a38b",
+  "history-carry": "f4d8ddfae4ac3b2741ca7cfdaa930b2afc1d9be612f4e6683a230aa23834e2ba",
+  "proof": "1b557a46d20c678a3910503eea4a0be269c055928646ca68030cc676a752a3e4",
+  "results": "4398aee0c5eb50320c917af7f0e8129c09dc168ee7d13bf83046e5249e1366f3"
+ },
+ "link_fixed_rows": [],
+ "method": {
+  "decision_limit_s": 10,
+  "label": "v1.7",
+  "rule": "latency_s > 10.000 s -> failed",
+  "treatment": "share"
+ },
+ "new_rows": {
+  "allec-oavg": {
+   "axes": {
+    "calibration": 92.93828736883084,
+    "cost": 55.89119947180174,
+    "intelligence": 73.39488447209101,
+    "speed": 84.95032191909448
+   },
+   "category_pool_bounds": {
+    "languages": {
+     "ar": 21,
+     "cs": 37,
+     "da": 36,
+     "de": 48,
+     "el": 28,
+     "en": 555,
+     "es": 37,
+     "fi": 52,
+     "fr": 32,
+     "hi": 37,
+     "id": 41,
+     "it": 45,
+     "ja": 44,
+     "ko": 43,
+     "mixed": 64,
+     "nl": 36,
+     "no": 51,
+     "pl": 57,
+     "pt": 47,
+     "sv": 46,
+     "tr": 46,
+     "uk": 56,
+     "zh": 41
+    },
+    "topics": {},
+    "usecases": {
+     "advertising": 48,
+     "code_linting": 69,
+     "customer_support": 66,
+     "demand_forecasting": 66,
+     "ecommerce_marketplaces": 62,
+     "feature_extraction": 72,
+     "financial_crime": 63,
+     "gaming": 58,
+     "insurance_claims": 62,
+     "knowledge_graphs": 67,
+     "lead_generation": 75,
+     "legal_compliance": 56,
+     "llm_guardrails": 71,
+     "model_routing": 148,
+     "moderation_trust_safety": 59,
+     "other": 32,
+     "recruiting": 65,
+     "risk_assessment": 48,
+     "scientific_discovery": 42,
+     "search_retrieval": 67
+    }
+   },
+   "composite_ci95": {
+    "A": [
+     71.9049856358321,
+     74.91544567497243
+    ],
+    "B": [
+     71.09781740189307,
+     75.50041389555244
+    ],
+    "C": [
+     71.9049856358321,
+     74.91544567497243
+    ]
+   },
+   "cost": {
+    "active_b": 31,
+    "answered_not_in_common": 4,
+    "architecture_class": "dense",
+    "cost_all": 0.029506168696910223,
+    "cost_basis_kind": "gpu-time-min",
+    "cost_common": 0.029532033400877865,
+    "estimate_all": 0.04439304,
+    "estimate_common": 0.044431954331766284,
+    "expect": {
+     "failed": 380,
+     "input_tokens": 739884,
+     "ok": 1120,
+     "output_tokens": 0,
+     "status_counts": {
+      "200": 1120,
+      "422": 380
+     }
+    },
+    "family": "gemma",
+    "gpu_all": 0.029506168696910223,
+    "gpu_common": 0.029532033400877865,
+    "input_tokens_all": 739884,
+    "input_tokens_common": 735102,
+    "latency_max": 0.6265862199999219,
+    "native_output_tokens_all": 0,
+    "output_tokens_all": 0,
+    "output_tokens_common": 0,
+    "over10": 0,
+    "raw_order_matches_input": true,
+    "raw_sha256": "185c8f534d2e8b21d38a39af9a3152f0f4754c41bf921128bb4d2b768698aee7",
+    "ref": {
+     "in": 0.09,
+     "kind": "estimate",
+     "listing": "google/gemma-4-31b-it",
+     "out": 0.0
+    },
+    "scoring_raw_sha256": "c83b2c5b52a1820f557451882444f148591f31b21d8abc1585f47b273cbf331f",
+    "throughput": 10106.516129032258
+   },
+   "decision_limit": {
+    "limit_s": 10.0,
+    "n_over_limit": 0,
+    "n_over_limit_answered_ok": 0,
+    "rule": "latency_s > limit -> failed",
+    "speed_basis": "all decisions given (lane items in the raw), measured latency_s",
+    "speed_n": 1500,
+    "treatment": "share"
+   },
+   "model_pin": "plantwaterer/allec@e54027aa1f865bdd25724e9b3c1acb51b2bbc3c3",
+   "price_reference": {
+    "in": 0.09,
+    "kind": "estimate",
+    "listing": "google/gemma-4-31b-it",
+    "out": 0.0
+   },
+   "raw_sha256": "185c8f534d2e8b21d38a39af9a3152f0f4754c41bf921128bb4d2b768698aee7",
+   "scored_input_sha256": "1b2a8906692be82952de401375f8f6dd602cada51019eae5330ae82234b160bd",
+   "treatment": "unranked"
+  },
+  "cribl-decision-1.0-9b": {
+   "axes": {
+    "calibration": 87.92120364481345,
+    "cost": 75.030862863614,
+    "intelligence": 43.80107211212287,
+    "speed": 91.13304559714123
+   },
+   "category_pool_bounds": {
+    "languages": {
+     "ar": 21,
+     "cs": 37,
+     "da": 36,
+     "de": 48,
+     "el": 28,
+     "en": 555,
+     "es": 37,
+     "fi": 52,
+     "fr": 32,
+     "hi": 37,
+     "id": 41,
+     "it": 45,
+     "ja": 44,
+     "ko": 43,
+     "mixed": 64,
+     "nl": 36,
+     "no": 51,
+     "pl": 57,
+     "pt": 47,
+     "sv": 46,
+     "tr": 46,
+     "uk": 56,
+     "zh": 41
+    },
+    "topics": {},
+    "usecases": {
+     "advertising": 48,
+     "code_linting": 69,
+     "customer_support": 66,
+     "demand_forecasting": 66,
+     "ecommerce_marketplaces": 62,
+     "feature_extraction": 72,
+     "financial_crime": 63,
+     "gaming": 58,
+     "insurance_claims": 62,
+     "knowledge_graphs": 67,
+     "lead_generation": 75,
+     "legal_compliance": 56,
+     "llm_guardrails": 71,
+     "model_routing": 148,
+     "moderation_trust_safety": 59,
+     "other": 32,
+     "recruiting": 65,
+     "risk_assessment": 48,
+     "scientific_discovery": 42,
+     "search_retrieval": 67
+    }
+   },
+   "composite_ci95": {
+    "A": [
+     36.482455350468314,
+     67.90185716316086
+    ],
+    "B": [
+     32.04733572208128,
+     62.28995489223197
+    ],
+    "C": [
+     25.335038437825222,
+     47.15406747441726
+    ]
+   },
+   "cost": {
+    "active_b": 9,
+    "answered_not_in_common": 11,
+    "architecture_class": "small",
+    "cost_all": 0.012585434782608696,
+    "cost_basis_kind": "gpu-time-min",
+    "cost_common": 0.006796801259584274,
+    "estimate_all": 0.056923999999999995,
+    "estimate_common": 0.03074197447951645,
+    "expect": {
+     "failed": 0,
+     "input_tokens": 853860,
+     "ok": 1500,
+     "output_tokens": 0,
+     "status_counts": {
+      "200": 1500
+     }
+    },
+    "family": "qwen",
+    "gpu_all": 0.012585434782608696,
+    "gpu_common": 0.006796801259584274,
+    "input_tokens_all": 853860,
+    "input_tokens_common": 457748,
+    "latency_max": 9.903756012999793,
+    "native_output_tokens_all": 0,
+    "output_tokens_all": 0,
+    "output_tokens_common": 0,
+    "over10": 0,
+    "raw_order_matches_input": true,
+    "raw_sha256": "6ccacaa3976d98611717ac669ab06710d0708d20fcdad889d3889836c9f88193",
+    "ref": {
+     "in": 0.09999999999999999,
+     "kind": "estimate",
+     "listing": "qwen/qwen3.5-9b",
+     "out": 0.0
+    },
+    "scoring_raw_sha256": "6ccacaa3976d98611717ac669ab06710d0708d20fcdad889d3889836c9f88193",
+    "throughput": 27344.444444444445
+   },
+   "decision_limit": {
+    "limit_s": 10.0,
+    "n_over_limit": 0,
+    "n_over_limit_answered_ok": 0,
+    "rule": "latency_s > limit -> failed",
+    "speed_basis": "all decisions given (lane items in the raw), measured latency_s",
+    "speed_n": 1500,
+    "treatment": "share"
+   },
+   "model_pin": "cribl-ai/cribl-decision-1.0-9B@73abdfbecf0619fdc02bd2d769460b353d3de30a",
+   "price_reference": {
+    "in": 0.09999999999999999,
+    "kind": "estimate",
+    "listing": "qwen/qwen3.5-9b",
+    "out": 0.0
+   },
+   "raw_sha256": "6ccacaa3976d98611717ac669ab06710d0708d20fcdad889d3889836c9f88193",
+   "scored_input_sha256": "1b2a8906692be82952de401375f8f6dd602cada51019eae5330ae82234b160bd",
+   "treatment": "unranked"
+  },
+  "piccolo-27b": {
+   "axes": {
+    "calibration": 93.28179008250069,
+    "cost": 53.102986669932804,
+    "intelligence": 78.63533101482005,
+    "speed": 81.6188831463648
+   },
+   "category_pool_bounds": {
+    "languages": {
+     "ar": 21,
+     "cs": 37,
+     "da": 36,
+     "de": 48,
+     "el": 28,
+     "en": 555,
+     "es": 37,
+     "fi": 52,
+     "fr": 32,
+     "hi": 37,
+     "id": 41,
+     "it": 45,
+     "ja": 44,
+     "ko": 43,
+     "mixed": 64,
+     "nl": 36,
+     "no": 51,
+     "pl": 57,
+     "pt": 47,
+     "sv": 46,
+     "tr": 46,
+     "uk": 56,
+     "zh": 41
+    },
+    "topics": {},
+    "usecases": {
+     "advertising": 48,
+     "code_linting": 69,
+     "customer_support": 66,
+     "demand_forecasting": 66,
+     "ecommerce_marketplaces": 62,
+     "feature_extraction": 72,
+     "financial_crime": 63,
+     "gaming": 58,
+     "insurance_claims": 62,
+     "knowledge_graphs": 67,
+     "lead_generation": 75,
+     "legal_compliance": 56,
+     "llm_guardrails": 71,
+     "model_routing": 148,
+     "moderation_trust_safety": 59,
+     "other": 32,
+     "recruiting": 65,
+     "risk_assessment": 48,
+     "scientific_discovery": 42,
+     "search_retrieval": 67
+    }
+   },
+   "composite_ci95": {
+    "A": [
+     71.88346574135672,
+     74.04318373889856
+    ],
+    "B": [
+     72.28568374466244,
+     75.54248223599345
+    ],
+    "C": [
+     71.88346574135672,
+     74.04318373889856
+    ]
+   },
+   "cost": {
+    "active_b": 27,
+    "answered_not_in_common": 6,
+    "architecture_class": "dense",
+    "cost_all": 0.036480178982433935,
+    "cost_basis_kind": "gpu-time-min",
+    "cost_common": 0.0365791641698085,
+    "estimate_all": 0.13841009,
+    "estimate_common": 0.13878565144392213,
+    "expect": {
+     "failed": 5,
+     "input_tokens": 1064693,
+     "ok": 1495,
+     "output_tokens": 0,
+     "status_counts": {
+      "200": 1495,
+      "422": 5
+     }
+    },
+    "family": "qwen",
+    "gpu_all": 0.036480178982433935,
+    "gpu_common": 0.0365791641698085,
+    "input_tokens_all": 1064693,
+    "input_tokens_common": 1059753,
+    "latency_max": 1.0362813490000917,
+    "native_output_tokens_all": 0,
+    "output_tokens_all": 0,
+    "output_tokens_common": 0,
+    "over10": 0,
+    "raw_order_matches_input": true,
+    "raw_sha256": "864f8d24a20f52515d3d53ac4eaa981745f3d2c529930ee626f72dd983a08a1f",
+    "ref": {
+     "in": 0.195,
+     "kind": "estimate",
+     "listing": "qwen/qwen3.5-27b",
+     "out": 0.0
+    },
+    "scoring_raw_sha256": "17bde2af4c709ed8258341b6dc2490b44485917876154f54370e81f01a099d53",
+    "throughput": 11763.0
+   },
+   "decision_limit": {
+    "limit_s": 10.0,
+    "n_over_limit": 0,
+    "n_over_limit_answered_ok": 0,
+    "rule": "latency_s > limit -> failed",
+    "speed_basis": "all decisions given (lane items in the raw), measured latency_s",
+    "speed_n": 1500,
+    "treatment": "share"
+   },
+   "model_pin": "agentscope-ai/Piccolo-27B@9cab0ecef7372d29ac83b50ac5e49cead2caa173",
+   "price_reference": {
+    "in": 0.195,
+    "kind": "estimate",
+    "listing": "qwen/qwen3.5-27b",
+    "out": 0.0
+   },
+   "raw_sha256": "864f8d24a20f52515d3d53ac4eaa981745f3d2c529930ee626f72dd983a08a1f",
+   "scored_input_sha256": "1b2a8906692be82952de401375f8f6dd602cada51019eae5330ae82234b160bd",
+   "treatment": "unranked"
+  }
+ },
+ "predecessor": {
+  "publication_sha256": "2dda2f1864c3374b645ed7f459b79f01d1ab53053ee074eb2516fad722c136ef",
+  "revision": "v1.8.2"
+ },
+ "pricing_module_sha256": "455ee38b7070f2f076eec65d55c7bb2a69030c26c343c662ade2826f8afd6eaa",
+ "publication_approval": {
+  "fresh_baseline": "v1.8.2",
+  "status": "GO (standing; no top-five change)",
+  "top_five_effect": "unchanged"
+ },
+ "publication_review": {
+  "engine": "synthetic-preview-only",
+  "receipt_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "verdict": "PASS"
+ },
+ "publication_sha256": "c49de2aeba1e1748e9fba57a1714531e097f7d6e858bc4fa02a1c3bc36cfe0ef",
+ "release": "v1.8.3",
+ "remeasured_rows": {},
+ "repriced_rows": {},
+ "scorers": {
+  "a2_cells_v16": "afd034efe27bde12f2ebbfd12c4c0792c93214e1aa9a63deecb0e83a0184c990",
+  "build_categories_v16": "40eb50f3d7fea2693b4478c4b89f8bfb957dd17776add491935742e3b9354e73",
+  "build_topics_v16": "ec04ab598162bfc4340ffa7916a06573eb1222132c61e47ab772045bc67ced78",
+  "decisive_v16": "80b9ccf43e58dddb1b2a77e0a33aba8a9f7337a3a9a639afc7264218bbf8918f",
+  "noul_method_v16": "119e59486ab3300b972fbcbadb0fe1dceceb124287607375aa61c66063c607d0",
+  "pins_v17": "b50cc00dd2cb0ba46157eb6a2bda620255f3ff54404025e992bc7962dfff2f8b",
+  "run_under_v17": "efb194b2ea350db59be37e5e72af71f809f763a2476cd6f521adf6f4fd90a64f",
+  "score_v15": "0931e05c6410b1b971201834397cb609cdb25f942723c50375632952f6dcc447",
+  "score_v15_headlineA": "826f2cbcb57007ec8a161e6eb0111182b8a656c0638027c6c78022a858fd8e2c",
+  "score_v16": "02132271117653e6302c509232a581d0094f0e78eac8b1bfc67596fd5d5097e9",
+  "score_v17": "6363458d208a52f4ad5aaf73027cad1b7e0358ff962e581d57a3cc462c8f1978"
+ },
+ "text_fixed_rows": []
+}

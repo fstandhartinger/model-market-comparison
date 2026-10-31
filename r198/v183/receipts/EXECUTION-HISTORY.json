@@ -1,0 +1,28 @@
+{
+ "scoring": {
+  "unit": "r202-v183-build4-score.scope",
+  "exit_code": 0,
+  "Sandy_only": true
+ },
+ "heavy_runs": [
+  {
+   "unit": "heavy-r202-v183-build4--r10310641520fw.service",
+   "wrapper_exit": 254,
+   "result": "intentional stop before build; inherited predecessor link corrected"
+  },
+  {
+   "unit": "heavy-r202-v183-build4--r1031064448xbic.service",
+   "wrapper_exit": 1,
+   "result": "three stale expected-latest test chains; corrected with no app/data change"
+  },
+  {
+   "unit": "heavy-r202-v183-build4--r1031071916w0sz.service",
+   "wrapper_exit": 0,
+   "result": "success",
+   "wall_seconds": 3625,
+   "production_build_count": 1
+  }
+ ],
+ "prior_app_gate_continuity": "SOURCE-UPLOAD.json",
+ "final_byte_binding": "FINAL-SOURCE-BINDING.json"
+}

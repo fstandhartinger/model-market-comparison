@@ -1,0 +1,50 @@
+{
+ "allec-oavg": {
+  "arch": "open-llm-decoder",
+  "badges": {
+   "derivation": "fine-tune",
+   "params": "31B",
+   "quant": "BF16"
+  },
+  "evidence": [
+   {
+    "fact": "The card declares google/gemma-4-31B-it as the decoder backbone with a native probability readout.",
+    "kind": "model-card",
+    "url": "https://huggingface.co/plantwaterer/allec/blob/e54027aa1f865bdd25724e9b3c1acb51b2bbc3c3/README.md"
+   }
+  ],
+  "note": "Single decoder backbone; text-only measurement."
+ },
+ "cribl-decision-1.0-9b": {
+  "arch": "open-llm-decoder",
+  "badges": {
+   "derivation": "adapter",
+   "params": "9B",
+   "quant": "BF16"
+  },
+  "evidence": [
+   {
+    "fact": "The card declares Qwen/Qwen3.5-9B as the decoder backbone with a native probability readout.",
+    "kind": "model-card",
+    "url": "https://huggingface.co/cribl-ai/cribl-decision-1.0-9B/blob/73abdfbecf0619fdc02bd2d769460b353d3de30a/README.md"
+   }
+  ],
+  "note": "Single decoder backbone; text-only measurement."
+ },
+ "piccolo-27b": {
+  "arch": "open-llm-decoder",
+  "badges": {
+   "derivation": "fine-tune",
+   "params": "27B",
+   "quant": "BF16"
+  },
+  "evidence": [
+   {
+    "fact": "The card declares Qwen/Qwen3.5-27B as the decoder backbone with a native probability readout.",
+    "kind": "model-card",
+    "url": "https://huggingface.co/agentscope-ai/Piccolo-27B/blob/9cab0ecef7372d29ac83b50ac5e49cead2caa173/README.md"
+   }
+  ],
+  "note": "Single decoder backbone; text-only measurement."
+ }
+}
