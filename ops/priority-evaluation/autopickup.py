@@ -1771,6 +1771,42 @@ def card_context_line(row: dict[str, Any], status: str) -> str:
     return "Worum geht's: " + about
 
 
+DECISION_HEADLINE_MAX = 120  # notify card v2: a 🧑 headline (links not counted) is the decision, at most 120 chars
+FX_FILE = HOME / ".notify/fx-usd-eur.json"  # USD->EUR cache that notify refreshes from the ECB
+FX_FALLBACK = 0.90
+
+
+def eur_phrase(amount_cents: object) -> str:
+    """Money cards show the EUR value in the headline (DECISIONS 26 Oct, board #27878); '' when the amount is unknown."""
+    if not isinstance(amount_cents, int) or isinstance(amount_cents, bool):
+        return ""
+    try:
+        rate = float(json.loads(FX_FILE.read_text())["rate"])
+    except (OSError, ValueError, KeyError, TypeError):
+        rate = FX_FALLBACK
+    return f"about EUR {round(amount_cents / 100 * rate)}"
+
+
+def decision_context_line(row: dict[str, Any], question: str) -> str:
+    """Headline of a 🧑 decision card: `question` with {customer} and {model}, shortened to the card v2 limit."""
+    customer, model, link = card_identity(row)
+
+    def visible(who: str, name: str) -> str:
+        return question.format(customer=who, model=name)
+    about = visible(customer, model)
+    if len(about) > DECISION_HEADLINE_MAX:
+        model = re.sub(r"\s*[\(\[][^\)\]]*[\)\]]\s*$", "", model).strip() or model
+        about = visible(customer, model)
+    if len(about) > DECISION_HEADLINE_MAX:
+        customer = "the customer"
+        about = visible(customer, model)
+    if len(about) > DECISION_HEADLINE_MAX:
+        budget = max(DECISION_HEADLINE_MAX - len(visible(customer, "")), 12)
+        model = (model[:budget - 1].rsplit(" ", 1)[0].rstrip(" ,;:-(") or model[:budget - 1]) + "…"
+        about = visible(customer, model)
+    return f"Worum geht's: {about} {link}"
+
+
 def agent_status_card(row: dict[str, Any], status: str, detail: str, *, urgent: bool = True) -> str:
     label = "🚨 DRINGEND" if urgent else "🤖 LÄUFT"
     return f"{label}\n{card_context_line(row, status)}\n\n🤖 Agenten\n- {detail}"

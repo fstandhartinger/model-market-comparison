@@ -139,21 +139,51 @@ class ApprovalCardSend(unittest.TestCase):
                          'exit 0: [DRY RUN] global immediate limit reached; message would be queued:')
         self.assertNotIn('example.com', path.read_text())
 
+    def test_preview_error_keeps_the_refusal_not_a_warning(self):
+        # 580d6afe (31 Oct): a repeat-lint warning printed first hid notify's card v2 refusal for 20 cycles.
+        stderr = ('repeat-lint warning (long-window): "in 12 hours" is a 12 h window\n'
+                  'notify: card v2 refused (not sent): headline is 126 characters; keep it at most 120\n'
+                  'READY FIX (copy this line):\n')
+        path = self.tmp / 'warned.json'
+        state = {}
+        with mock.patch('sys.stderr'):
+            ra.preview_failed(state, path, done([], 2, stderr=stderr), 'test')
+        self.assertTrue(state['preview_error'].startswith('exit 2: notify: card v2 refused'))
+
     @unittest.skipUnless(NOTIFY.is_file(), 'installed Sandy notifier is unavailable')
     def test_real_notify_accepts_every_approval_caption(self):
-        captions = [rf.caption(ROW, kind, '2026-10-12 12:00 UTC') for kind in rf.REASONS]
-        captions += [sd.caption(ROW, '2026-10-12 12:00 UTC')]
-        captions += [ra.approval_caption(ROW, kind) for kind in ra.KINDS]
+        rows = [ROW,
+                # 580d6afe shape: email only, pinned HF tree link (card v2 headline was 126 characters).
+                dict(ROW, customer_name=None, email='chenyuwang166@gmail.com', model_name='MetaDecision-31B-Rain',
+                     model_link='https://huggingface.co/MeTask-Rain/MetaDecision-31B-Rain/tree/' + '0' * 40,
+                     amount_total=9900),
+                dict(ROW, customer_name=None, email='gabriel.keith@example-company.com', model_link='',
+                     model_name='HS1 0.1.2 (Hyland, Gemma-4-26B-A4B-it + LoRA, option-letter logprob readout, FP8)'),
+                dict(ROW, customer_name=None, email='x' * 120 + '@example.com', model_name='Model ' * 60,
+                     amount_total=None)]
+        captions = []
+        for row in rows:
+            cards = [rf.caption(row, kind, '2026-10-12 12:00 UTC') for kind in rf.REASONS]
+            cards += [sd.caption(row, '2026-10-12 12:00 UTC')]
+            cards += [ra.approval_caption(row, kind) for kind in ra.KINDS]
+            # Without a known amount no EUR value exists; notify then only warns (money-eur).
+            captions += [(text, row.get('amount_total') is not None) for text in cards]
+        # notify's inbox freshness gate is not under test (the caller's inbox decides it, not the card text);
+        # NOTIFY_OUTBOX_REPLAY skips only that gate, every card lint still runs.
         env = {**os.environ, 'NOTIFY_SOURCE': 'approval-card-test', 'AGENT_BOARD_NAME': 'approval-card-test',
-               **ra.CALLER_BUTTONS_ENV}  # own empty inbox: notify's freshness gate is not under test
-        for text in captions:
-            with self.subTest(caption=text.splitlines()[3:4]):
+               'NOTIFY_OUTBOX_REPLAY': '1', **ra.CALLER_BUTTONS_ENV}
+        for text, strict in captions:
+            with self.subTest(caption=text.splitlines()[1]):
                 result = subprocess.run([str(NOTIFY), 'now', '--florian-only', 'approval card regression test',
-                                         '--ask', '1440', '--text-stdin', '--dry-run'],
+                                         '--ask', '720', '--text-stdin', '--dry-run'],
                                         input=text, text=True, capture_output=True, env=env, timeout=60)
                 self.assertEqual(result.returncode, 0, result.stderr)
-                self.assertIn('[DRY RUN]', result.stdout)
-
+                self.assertRegex(result.stdout, r'\[DRY RUN\] (would send to the|this open human action already exists)')
+                warnings = [l for l in result.stderr.splitlines() if l.startswith('repeat-lint')]
+                if not strict:
+                    warnings = [l for l in warnings if '(money-eur)' not in l]
+                self.assertEqual(warnings, [])  # no window/EUR warnings either
+                self.assertNotIn('reformatted automatically', result.stdout + result.stderr)
 
 if __name__ == '__main__':
     unittest.main()

@@ -71,6 +71,8 @@ def preview_failed(state, path, preview, source):
     # notify's error, else its last "[DRY RUN]" verdict line; never the echoed card text (customer data).
     stderr, stdout = getattr(preview, "stderr", None), getattr(preview, "stdout", None)
     lines = stderr.strip().splitlines() if isinstance(stderr, str) and stderr.strip() else []
+    # notify prints lint warnings before its refusal; the refusal line ("notify: ...") is the reason (580d6afe).
+    lines = [line for line in lines if line.startswith("notify:")][:1] or lines
     if not lines and isinstance(stdout, str):
         lines = [line for line in stdout.splitlines() if line.startswith("[DRY RUN]")][-1:]
     reason = (lines[0] if lines else "no output")[:240]
@@ -279,15 +281,15 @@ def card(path, draft, title_text="Refusal email — exact draft"):
 
 
 def approval_caption(row, kind):
-    from autopickup import card_context_line
-    status = ("is paused: the customer must correct the submitted source"
-              if kind == "change_request" else "needs email approval: the source review failed")
+    from autopickup import decision_context_line
     title = "change-request" if kind == "change_request" else "refusal"
-    return (f"🧑 DU BIST DRAN\n{card_context_line(row, status)}\n\n🧑 Für dich\n"
+    context = decision_context_line(row, f"Send the {title} email to {{customer}} about model {{model}}?")
+    return (f"🧑 DU BIST DRAN\n{context}\n\n🧑 Für dich\n"
             f"- Decide whether to send the {title} email to this customer.\n"
             f"  {KINDS[kind][1][1]}\n"
             "  Steps:\n  1. Read the email in the overview image.\n  2. Tap Send this email or Keep unsent.\n"
-            "  Time: 1 minute. Buttons expire in 12 hours. A text reply does not authorize sending.")
+            "  Time: 1 minute. Buttons expire in 12 hours so that an old draft is never sent. "
+            "A text reply does not authorize sending.")
 
 
 SEND_TIMEOUT = 180
