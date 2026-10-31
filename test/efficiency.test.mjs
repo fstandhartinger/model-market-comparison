@@ -9,6 +9,9 @@ const bare = (id, sku, offers = []) => ({ id, aa_model_id: null, aa_metadata: { 
 test("efficiency joins an exact workload SKU; sibling/ambiguous rows use labelled Chutes fallback", () => {
   const models = [bare("kimi", "moonshotai/kimi-k3"), bare("wrong-version", "moonshotai/kimi-k2"), bare("ambiguous", null, [{ or_model_id: "moonshotai/kimi-k3" }, { or_model_id: "moonshotai/kimi-k2" }])];
   const source = inputs();
+  // CR-631: judge the join on the day the kimi-k3 workload page was collected. On the live clock the page ages past the
+  // 30-day bound and the test silently became a staleness test (31 Oct: kimi-k3 left OpenRouter's weekly rankings).
+  source.now = new Date(Date.parse(source.openrouterEfficiency.models["moonshotai/kimi-k3"].provenance.collected_at) + 86400000).toISOString();
   delete source.openrouterEfficiency.models["moonshotai/kimi-k2"];
   source.openrouterEfficiency.rankings.rows = source.openrouterEfficiency.rankings.rows.filter((r) => r.variant_permaslug !== source.openrouter.models.find((m) => m.id === "moonshotai/kimi-k2")?.canonical_slug);
   attachEfficiency(models, source);

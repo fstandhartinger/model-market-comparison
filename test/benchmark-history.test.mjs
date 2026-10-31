@@ -365,11 +365,19 @@ test('identity churn is not a drop-out: a retained row whose source UUID is stil
 
 test('CR-545: older versions are never bridged onto a version that declares a definition change', async () => {
   const dataset = JSON.parse(await readFile(join(ROOT, 'data', 'dataset.json'), 'utf8'));
-  const onto = dataset.benchmark_results.historical.estimates.filter((e) => e.benchmark_id === 'aa-coding-agent-index::2.0');
+  const all = dataset.benchmark_results.historical.estimates.filter((e) => e.benchmark_id === 'aa-coding-agent-index::2.0');
+  // CR-631 (31 Oct 2026): since v2.0 has dated states of its own (23 Oct on), a v2.0 configuration that leaves the v2.0
+  // board gets the ordinary same-version drop-out estimate (`hist-state:<state>:aa-coding-agent-index::2.0:…`). Only an
+  // estimate carried over from v1.4/v1.5 (`hist:<older>->…::2.0`) crosses the definition change.
+  const onto = all.filter((e) => /^hist:aa-coding-agent-index::1\.[45]->aa-coding-agent-index::2\.0:/.test(e.id));
   assert.ok(onto.length > 0, 'v1.4/v1.5 configurations absent from v2.0 are listed');
   for (const e of onto) {
     assert.equal(e.status, 'not_comparable', `${e.id} must not become a v2.0 estimate`);
     assert.equal(e.value, null);
     assert.equal(e.comparison.cause, 'definition_change');
+  }
+  for (const e of all.filter((x) => !onto.includes(x))) {
+    assert.match(e.id, /^hist-state:[^:]+:aa-coding-agent-index::2\.0:/, `${e.id}: every other v2.0 estimate starts from a v2.0 state`);
+    assert.ok(e.comparison.path.every((hop) => hop.to === 'current' || /^\d{8}-/.test(hop.to)), `${e.id}: bridged within v2.0 states only`);
   }
 });

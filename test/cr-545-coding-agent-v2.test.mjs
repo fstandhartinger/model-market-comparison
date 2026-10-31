@@ -73,6 +73,8 @@ test('CR-545: the published dataset keeps versions apart and the Composite on v1
   const observations = ds.benchmark_results.observations.filter((o) => o.benchmark_id === 'aa-coding-agent-index::2.0');
   assert.equal(observations.length, (await json('data/raw/aa-coding-agents-v2.0.json')).count);
   for (const o of observations) assert.match(o.protocol, /^Coding Agent Index 2\.0;/);
+  // CR-631: no estimate from v1.4/v1.5 is bridged onto v2.0. A v2.0 drop-out estimated from a dated v2.0 state is the
+  // ordinary same-version mechanism (Kimi K3 in Kimi Code CLI left the v2.0 board on 31 Oct).
   const bridged = ds.benchmark_results.historical.estimates.filter((e) => e.benchmark_id === 'aa-coding-agent-index::2.0' && e.status === 'estimated');
-  assert.deepEqual(bridged, []);
+  assert.deepEqual(bridged.filter((e) => !/^hist-state:[^:]+:aa-coding-agent-index::2\.0:/.test(e.id)), []);
 });
