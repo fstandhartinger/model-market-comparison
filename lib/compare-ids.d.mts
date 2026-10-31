@@ -1,6 +1,6 @@
 import type { CompareFamily } from './benchmark-view.mjs';
 
-export interface CompareEntry { kind: 'known' | 'pending'; id: string; name: string; org: string | null; score: number | null }
+export interface CompareEntry { kind: 'known' | 'pending'; id: string; name: string; org: string | null; score: number | null; /** CR-634: the score is the labelled v4→v5 estimate. */ scoreEstimated?: boolean }
 export interface CompareResolution { entries: CompareEntry[]; picks: string[]; pending: CompareEntry[] }
 
 export function normalizeModelKey(raw: unknown): string;

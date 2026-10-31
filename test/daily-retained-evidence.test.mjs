@@ -25,7 +25,8 @@ test('CR-287: captured AA verification rejects a retained value when its source 
     const model = { id: 'uuid', slug: 'fixture-model', name: 'Fixture' };
     const retained = { collected_at: '2026-01-01T00:00:00Z' };
     const metadata = { is_open_weights: true, license_name: 'Old', retained_fields: { license_name: retained } };
-    const snapshot = { count: 1, collected_at: retained.collected_at, models: [{ ...model, metadata }] };
+    // CR-634: a staged AA snapshot names the index version it was collected under.
+    const snapshot = { count: 1, collected_at: retained.collected_at, index_version: '5.0', models: [{ ...model, metadata }] };
     await writeFile(join(dir, 'before', 'raw', 'artificialanalysis.json'), JSON.stringify(snapshot));
     await writeFile(join(rawDir, 'artificialanalysis.json'), JSON.stringify(snapshot));
     // Stop after AA at a deliberate, unrelated DA boundary. Reaching this error

@@ -1,5 +1,17 @@
 // Pure policy: transport success is not benchmark qualification.
-export const MIN_INDEX = 34;
+// CR-634: AA Intelligence Index v5.0 scale. The v4.x floor of 34 maps to 23 through the monotone v4→v5 fit; on the 85
+// models measured on both versions it reproduces every v4 decision but one (GPT-6.1 Terra non-reasoning, 33.5 → 30.4).
+// A model with only an estimated v5 value is judged on its measured v4.x value against the old floor (critic round 2:
+// the estimate near the boundary would admit six models below 34 on v4); an estimate never qualifies by itself.
+export const MIN_INDEX = 23;
+export const V4_MIN_INDEX = 34;
+/** The value a worker is qualified on: the measured v5 value, or (estimated rows) the estimate only when its v4.x value met V4_MIN_INDEX. */
+export function qualifyingAaIndex(row) {
+  const value = row?.benchmarks?.aa_intelligence_index;
+  if (typeof value !== 'number' || !Number.isFinite(value)) return null;
+  if (row.aa_intelligence?.status !== 'estimated') return value;
+  return Number.isFinite(row.aa_intelligence.v4_value) && row.aa_intelligence.v4_value >= V4_MIN_INDEX ? Math.max(value, MIN_INDEX) : null;
+}
 export const SMOKE_TASK = 'Return exactly one JSON object: sum is 19 + 23; missing is null because no source value was supplied; versions_equal is whether benchmark v1.4 equals benchmark v1.5. Use keys sum, missing, versions_equal. No other text.';
 export const modelBase = (id) => String(id || '').replace(/:free$/, '');
 export const vendorFamily = (id) => {
@@ -30,19 +42,19 @@ export function assessModel(model, dataset) {
     if (new Set(matches.map((m) => m.org)).size > 1 || matches.some((m) => orgKey(m.org) !== orgKey(base))) matches = [];
     join = matches.length ? 'exact_family_slug' : 'unknown';
   }
-  const scores = matches.map((m) => m.benchmarks?.aa_intelligence_index).filter((v) => typeof v === 'number' && Number.isFinite(v));
+  const scores = matches.map(qualifyingAaIndex).filter((v) => typeof v === 'number' && Number.isFinite(v));
   const index = scores.length && scores.length === matches.length ? Math.min(...scores) : null;
   return {
     id, family: vendorFamily(id), free: input === 0 && output === 0,
     input_per_1m: input, output_per_1m: output, context: model.context_length ?? null,
     aa_intelligence_index: index, aa_source: join,
     matched_model_ids: matches.map((m) => m.id).sort(),
-    aa_variant_scores: matches.map((m) => ({ id: m.id, index: m.benchmarks?.aa_intelligence_index ?? null })),
+    aa_variant_scores: matches.map((m) => ({ id: m.id, index: m.benchmarks?.aa_intelligence_index ?? null, ...(m.aa_intelligence?.status === 'estimated' ? { estimated_from_v4: m.aa_intelligence.v4_value } : {}) })),
   };
 }
 
 export function candidateList(catalog, dataset, minimum = MIN_INDEX, limit = 10) {
-  if (!Number.isFinite(minimum) || minimum < MIN_INDEX) throw new Error('Minimum AA index must be at least 34');
+  if (!Number.isFinite(minimum) || minimum < MIN_INDEX) throw new Error(`Minimum AA index must be at least ${MIN_INDEX}`);
   if (!Number.isSafeInteger(limit) || limit < 1) throw new Error('Limit must be a positive integer');
   if (!Array.isArray(catalog) || !catalog.length || !Array.isArray(dataset.models) || !dataset.models.length) throw new Error('Empty or invalid catalog/dataset');
   const candidates = catalog.map((m) => assessModel(m, dataset)).filter(Boolean);
@@ -91,7 +103,7 @@ export function composeFlorianGate({ agent = false } = {}) {
 // `reasoning_effort` low/high/max with default "max", and the call sends "max", so it runs kimi-k3::max whether Chutes
 // forwards the field or applies the template default. Qwen3.8 27B (best variant xhigh, AA 33.9) and Union Alpha (no
 // AA index) are listed so the rule, not an omission, keeps them out; they qualify automatically once AA measures them
-// at >= 34. `allowed_as` is the whitelist entry (Florian 2026-09-11: "Kimi K3 over Chutes is the normal path").
+// at >= MIN_INDEX (23 on v5.0; 34 on v4.x). `allowed_as` is the whitelist entry (Florian 2026-09-11: "Kimi K3 over Chutes is the normal path").
 export const FREE_ROUTER_WORKERS = [
   { id: 'chutes/moonshotai/Kimi-K3-TEE', router_model: 'fw-kimi-k3', provider_model: 'moonshotai/Kimi-K3-TEE', health: ['models', 'kimi-k3'], variant_model_id: 'kimi-k3::max', reasoning_effort: 'max', allowed_as: 'moonshotai/kimi-k3' },
   { id: 'chutes/Qwen/Qwen3.8-27B-TEE', router_model: 'fw-qwen3.8-27b', provider_model: 'Qwen/Qwen3.8-27B-TEE', health: ['models', 'qwen3.8-27b'], variant_model_id: 'qwen3.8-27b::xhigh', reasoning_effort: 'xhigh', allowed_as: null },
@@ -124,13 +136,15 @@ export function freeRouterRejections(dataset, health, { workers = FREE_ROUTER_WO
   const models = new Map((dataset?.models ?? []).map((m) => [m.id, m]));
   const out = [];
   for (const w of workers) {
-    const index = models.get(w.variant_model_id)?.benchmarks?.aa_intelligence_index;
+    const row = models.get(w.variant_model_id), index = row?.benchmarks?.aa_intelligence_index;
+    const qualifying = qualifyingAaIndex(row);
     const reasons = [];
     if (!routerRouteHealthy(health, w.health)) reasons.push(`route not healthy in ${w.health.join('.')}`);
     if (!w.allowed_as) reasons.push('not on Florian\'s scheduled-worker whitelist');
     else if (!FLORIAN_ALLOWED_SCHEDULED_WORKERS.includes(w.allowed_as)) reasons.push(`${w.allowed_as} not on Florian's scheduled-worker whitelist`);
     if (typeof index !== 'number' || !Number.isFinite(index)) reasons.push(`no AA index for ${w.variant_model_id}`);
-    else if (index < minimum) reasons.push(`${w.variant_model_id} AA ${index} below ${minimum}`);
+    else if (row.aa_intelligence?.status === 'estimated' && qualifying === null) reasons.push(`${w.variant_model_id} AA estimated from v4 ${row.aa_intelligence.v4_value} below ${V4_MIN_INDEX} on v4.x`);
+    else if (qualifying < minimum) reasons.push(`${w.variant_model_id} AA ${index} below ${minimum}`);
     if (reasons.length) out.push({ id: w.id, reasons });
   }
   return out;
@@ -141,7 +155,7 @@ export function freeRouterCandidates(dataset, health, { workers = FREE_ROUTER_WO
   const models = new Map((dataset?.models ?? []).map((m) => [m.id, m]));
   const rank = (w) => (w.health[0] === 'models' ? health?.models?.[w.health[1]]?.rank ?? 99 : -1);
   return workers.map((w) => {
-    const index = models.get(w.variant_model_id)?.benchmarks?.aa_intelligence_index;
+    const index = qualifyingAaIndex(models.get(w.variant_model_id));
     return { id: w.id, family: vendorFamily(w.id), free: true, input_per_1m: 0, output_per_1m: 0, context: null,
       aa_intelligence_index: typeof index === 'number' && Number.isFinite(index) ? index : null, aa_source: 'exact_variant',
       matched_model_ids: [w.variant_model_id], aa_variant_scores: [{ id: w.variant_model_id, index: index ?? null }],

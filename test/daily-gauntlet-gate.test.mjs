@@ -70,7 +70,7 @@ test('same-family critic and below-gate receipt cannot produce an acceptance fin
         const path = args[args.indexOf('--out') + 1] + '.meta.json';
         const meta = JSON.parse(await readFile(path, 'utf8'));
         if (mode === 'same-family' && args.includes('--critic')) { meta.actual_model = 'deepseek/other'; meta.qualification.id = meta.actual_model; }
-        if (mode === 'unqualified') meta.qualification.aa_intelligence_index = 33.9;
+        if (mode === 'unqualified') meta.qualification.aa_intelligence_index = 22.9; // CR-634: v5.0 floor 23
         await writeFile(path, JSON.stringify(meta));
       };
       const result = await reviewArtifact({ runDir: dir, artifactId: mode, rows, sources, criteria: ['fixture'], runner, maxRounds: 1 });

@@ -277,8 +277,8 @@ export default async function AboutPage() {
         model for being measured on a selective board. Each of them is therefore <b>linked</b> to the common
         scale through the models measured on both: a result that ranks at the same position among those
         models as a given AA Intelligence percentile counts as that percentile. Differences at the top are
-        rank differences, so 99 against 97 is not a 2 % capability gap. The composite uses seven slots: AA Coding, source-matched AA Coding Agent v1.4 (the pinned 9 September snapshot; AA now publishes v2.0, which the Benchmarks table shows as its own benchmark), AA
-        Intelligence, Epoch general ECI, Epoch Software Engineering ECI, DesignArena Web Apps (agentic) and
+        rank differences, so 99 against 97 is not a 2 % capability gap. The composite uses seven slots: AA Coding (the last v4.x values of 27 October 2026, frozen: AA withdrew the Coding Index with Intelligence Index v5.0), source-matched AA Coding Agent v1.4 (the pinned 9 September snapshot; AA now publishes v2.0, which the Benchmarks table shows as its own benchmark), AA
+        Intelligence v5.0 (for a model AA has not rescored yet, an estimate from its v4.x score, marked <i>est.</i> and never shown as a measurement), Epoch general ECI, Epoch Software Engineering ECI, DesignArena Web Apps (agentic) and
         DesignArena Full-Stack. The DesignArena inputs are its agentic{" "}
         <a className="text-accent underline" href="https://www.designarena.ai/leaderboard/webapps">Web Apps</a> and{" "}
         <a className="text-accent underline" href="https://www.designarena.ai/leaderboard/fullstack">Full-Stack</a> boards; the page

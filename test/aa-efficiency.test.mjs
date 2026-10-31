@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import { mkdtemp, readFile, writeFile, rm } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { parseAaEfficiency, AA_EFFICIENCY_MIN_ROWS, AA_MIN_SCORED_DENOMINATOR, AA_EFFICIENCY_MODEL_SLUGS } from "../lib/aa-efficiency.mjs";
+import { parseAaEfficiency, AA_EFFICIENCY_ADOPTION_MIN_ROWS, AA_EFFICIENCY_MIN_ROWS, AA_MIN_SCORED_DENOMINATOR, AA_EFFICIENCY_MODEL_SLUGS } from "../lib/aa-efficiency.mjs";
 import { refreshAaEfficiency } from "../scripts/fetch-aa-efficiency.mjs";
 
 // Synthetic fixtures, deliberately not benchmark observations.
@@ -15,7 +15,8 @@ const carriers = (n) => Array.from({ length: n }, (_, i) => ({
   canonicalIntelligenceIndexTokenCount: { input: 1000, output: 300, answer: 200, reasoning: 100 },
 }));
 const scored = (n) => Array.from({ length: n }, (_, i) => ({ id: uuid(10_000 + i), slug: `scored-${i}`, intelligenceIndex: 40 }));
-const html = (items) => `<script>self.__next_f.push(${JSON.stringify([1, `a:${JSON.stringify(items)}\n`])})</script>`;
+// CR-634: every model page states the index version its token counts belong to.
+const html = (items, version = "5.0") => `<script>self.__next_f.push(${JSON.stringify([1, `a:${JSON.stringify(items)}\n`])})</script><h2>Artificial Analysis Intelligence Index v${version}</h2>`;
 const validHtml = () => html([...carriers(AA_EFFICIENCY_MIN_ROWS), ...scored(AA_MIN_SCORED_DENOMINATOR)]);
 
 test("efficiency parse extracts slug, UUID, variant, measured fields and derived ratios", () => {
@@ -75,13 +76,13 @@ test("efficiency parse rejects missing, malformed, partial and invalid payloads"
   // Fetch without enough carriers or denominator is a partial scrape: reject.
   assert.throws(() => parseAaEfficiency(html([...carriers(AA_EFFICIENCY_MIN_ROWS - 1), ...scored(AA_MIN_SCORED_DENOMINATOR)])), /incomplete/);
   assert.throws(() => parseAaEfficiency(html([...carriers(AA_EFFICIENCY_MIN_ROWS), ...scored(AA_EFFICIENCY_MIN_ROWS - 1)])), /denominator/);
-  assert.throws(() => parseAaEfficiency(html([...carriers(AA_EFFICIENCY_MIN_ROWS), ...scored(AA_MIN_SCORED_DENOMINATOR)]), { previous: { count: AA_EFFICIENCY_MIN_ROWS + 5 } }), /incomplete/);
+  assert.throws(() => parseAaEfficiency(html([...carriers(AA_EFFICIENCY_MIN_ROWS), ...scored(AA_MIN_SCORED_DENOMINATOR)]), { previous: { count: AA_EFFICIENCY_MIN_ROWS + 5, index_version: "5.0" } }), /incomplete/);
 });
 
 test("failed or partial refresh never overwrites the previous snapshot", async () => {
   const dir = await mkdtemp(join(tmpdir(), "aa-efficiency-test-"));
   const target = join(dir, "snapshot.json");
-  const original = JSON.stringify({ count: AA_EFFICIENCY_MIN_ROWS, previous: "retain byte for byte" });
+  const original = JSON.stringify({ count: AA_EFFICIENCY_MIN_ROWS, index_version: "5.0", previous: "retain byte for byte" });
   try {
     await writeFile(target, original);
     await assert.rejects(refreshAaEfficiency({ target, html: html([...carriers(3), ...scored(AA_MIN_SCORED_DENOMINATOR)]) }), /incomplete|denominator/);
@@ -121,7 +122,7 @@ test("live fetcher records attempts and only accepts the first successful probe"
 test("live refresh accepts a smaller AA population only after a second page confirms the exact rows", async () => {
   const dir = await mkdtemp(join(tmpdir(), "aa-efficiency-shrink-test-"));
   const target = join(dir, "snapshot.json");
-  await writeFile(target, JSON.stringify({ count: AA_EFFICIENCY_MIN_ROWS + 5, keep: true }));
+  await writeFile(target, JSON.stringify({ count: AA_EFFICIENCY_MIN_ROWS + 5, index_version: "5.0", keep: true }));
   try {
     const seen = [];
     const fixture = validHtml();
@@ -139,7 +140,7 @@ test("live refresh accepts a smaller AA population only after a second page conf
 test("live refresh refuses a shrink when the confirming page disagrees", async () => {
   const dir = await mkdtemp(join(tmpdir(), "aa-efficiency-shrink-disagreement-test-"));
   const target = join(dir, "snapshot.json");
-  await writeFile(target, JSON.stringify({ count: AA_EFFICIENCY_MIN_ROWS + 5, keep: true }));
+  await writeFile(target, JSON.stringify({ count: AA_EFFICIENCY_MIN_ROWS + 5, index_version: "5.0", keep: true }));
   try {
     const seen = [];
     const fixture = validHtml();
@@ -159,7 +160,7 @@ test("live refresh refuses a shrink when the confirming page disagrees", async (
 test("live refresh fails closed, and stops probing, when no page can confirm the shrink", async () => {
   const dir = await mkdtemp(join(tmpdir(), "aa-efficiency-shrink-unconfirmed-test-"));
   const target = join(dir, "snapshot.json");
-  await writeFile(target, JSON.stringify({ count: AA_EFFICIENCY_MIN_ROWS + 5, keep: true }));
+  await writeFile(target, JSON.stringify({ count: AA_EFFICIENCY_MIN_ROWS + 5, index_version: "5.0", keep: true }));
   try {
     const seen = [];
     const fixture = validHtml();
@@ -192,4 +193,24 @@ test("AA stops on restrictive robots and 429 without probing alternate pages", a
     assert.equal(blocked.length, 1);
     assert.equal(await readFile(target, "utf8"), '{"count":138,"keep":true}');
   } finally { await rm(dir, { recursive: true, force: true }); }
+});
+
+// CR-634: token counts are measured on the index's own tasks, so the snapshot follows the index version.
+test("CR-634: the efficiency snapshot names the page's index version and refuses any other major version", () => {
+  const items = [...carriers(AA_EFFICIENCY_MIN_ROWS), ...scored(AA_MIN_SCORED_DENOMINATOR)];
+  assert.equal(parseAaEfficiency(html(items)).index_version, "5.0");
+  assert.throws(() => parseAaEfficiency(html(items, "6.0")), /AA_INDEX_VERSION_CHANGED \(page states v6\.0, collector pinned to v5\.x\)/);
+  assert.throws(() => parseAaEfficiency(html(items, "4.3.2")), /AA_INDEX_VERSION_CHANGED/);
+  const unstated = html(items).replace(/<h2>.*<\/h2>/, "");
+  assert.throws(() => parseAaEfficiency(unstated), /does not state Intelligence Index v5\.x/);
+  assert.throws(() => parseAaEfficiency(html(items) + html([], "4.3.2")), /does not state Intelligence Index v5\.x/, "mixed statements are no version");
+});
+
+test("CR-634: a v4.x snapshot's row count never floors a v5 snapshot; the adoption floor and a v5 count do", () => {
+  const items = [...carriers(AA_EFFICIENCY_MIN_ROWS), ...scored(AA_MIN_SCORED_DENOMINATOR)];
+  // First v5 snapshot after a v4.x one: the reviewed adoption coverage (88 rows) applies, not the v4 count of 226.
+  assert.throws(() => parseAaEfficiency(html(items), { previous: { count: 226 } }), /incomplete scrape: 80 rows \(minimum 88\)/);
+  const adoption = [...carriers(AA_EFFICIENCY_ADOPTION_MIN_ROWS), ...scored(AA_EFFICIENCY_ADOPTION_MIN_ROWS)];
+  assert.equal(parseAaEfficiency(html(adoption), { previous: { count: 226 } }).count, AA_EFFICIENCY_ADOPTION_MIN_ROWS);
+  assert.throws(() => parseAaEfficiency(html(items), { previous: { count: AA_EFFICIENCY_MIN_ROWS + 1, index_version: "5.0" } }), /incomplete scrape/);
 });

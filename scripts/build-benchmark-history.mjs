@@ -88,14 +88,16 @@ export async function appendState({ root = ROOT, from = null, source = null, col
   const load = async (name) => {
     try { return await readJSON(join(rawDir, name)); } catch (error) { if (error.code === "ENOENT") return null; throw error; }
   };
-  const [artificialanalysis, designarena, epochEci, dataset] = await Promise.all([
-    load("artificialanalysis.json"), load("designarena.json"), load("epoch-eci.json"), load("../dataset.json"),
+  // CR-634: the frozen v4.x AA snapshot keeps the v4 Intelligence/Coding boards in every state (never read as withdrawn).
+  const [artificialanalysis, artificialanalysisV4, designarena, epochEci, dataset] = await Promise.all([
+    load("artificialanalysis.json"), load("artificialanalysis-v4.json"), load("designarena.json"), load("epoch-eci.json"), load("../dataset.json"),
   ]);
   const withHash = async (payload, name) => payload ? { ...payload, sha256: await fileSha256(join(rawDir, name)) } : null;
   const { agenticAttachmentFromFiles } = await import("../lib/aa-agentic-index.mjs");
   const aaAgentic = artificialanalysis && dataset ? await agenticAttachmentFromFiles({ rawDir, aaModels: artificialanalysis.models, modelRows: dataset.models }) : null;
   const headlineObservations = buildHeadlineObservations({
     artificialanalysis: await withHash(artificialanalysis, "artificialanalysis.json"),
+    artificialanalysisV4: await withHash(artificialanalysisV4, "artificialanalysis-v4.json"),
     designarena: await withHash(designarena, "designarena.json"),
     epochEci,
     modelRows: dataset?.models || [],

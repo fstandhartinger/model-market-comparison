@@ -3,7 +3,8 @@
   "basis": "measured",
   "interpretation": "benchmark_proxy",
   "caveat": "AA Intelligence Index benchmark token accounting. Ratios are BENCHMARK PROXIES, never typical user I/O usage; usage ratios must come from OpenRouter/Chutes sources.",
-  "collected_at": "2026-10-27T05:29:24.667Z",
+  "collected_at": "2026-10-31T08:20:39.382Z",
+  "index_version": "5.0",
   "source_url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
   "data_fields": {
     "tokens_per_task": "intelligenceIndexOutputTokensPerTask {reasoning, answer, output} (measured)",
@@ -13,171 +14,39 @@
   "attempts": [
     {
       "url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
-      "fetched_at": "2026-10-27T05:29:24.487Z",
+      "fetched_at": "2026-10-31T08:20:39.069Z",
       "http_status": 200,
-      "bytes": 4516007,
-      "sha256": "561dbfb24aefcf62a1369c3ed044d0e55978099e1fc1bac5cce328b0d23d6364"
+      "bytes": 3907436,
+      "sha256": "dbd10409ad0abf30ab37cb9969420d880b78f4cc2854a616020b903c1dc598ad"
     }
   ],
   "coverage": {
-    "published_rows": 226,
-    "scored_denominator": 704,
+    "published_rows": 88,
+    "scored_denominator": 89,
     "denominator_source": "Leaderboard rows carrying a finite intelligenceIndex inside the same model-page Flight payload"
   },
-  "count": 226,
+  "count": 88,
   "rows": [
-    {
-      "source_id": "8215372b-66ff-457b-855e-e8abeafc9571",
-      "slug": "a-x-k2",
-      "name": "A.X-K2",
-      "variant": null,
-      "tokens_per_task": {
-        "reasoning": 37246.09415808941,
-        "answer": 57217.959312374056,
-        "output": 94464.05347046346
-      },
-      "canonical_token_counts": {
-        "input": 3223174897,
-        "output": 229148064,
-        "answer": 60187571,
-        "reasoning": 168960493
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 14.065904990582858,
-        "reasoning_output_share": 0.3942885445809852
-      }
-    },
-    {
-      "source_id": "08242385-ee91-4de6-be7f-271a6d9780ce",
-      "slug": "apodex-1-1",
-      "name": "Apodex 1.1",
-      "variant": null,
-      "tokens_per_task": {
-        "reasoning": 46172.90418115436,
-        "answer": 25261.583800757315,
-        "output": 71434.48798191168
-      },
-      "canonical_token_counts": {
-        "input": 5757448102,
-        "output": 232032805,
-        "answer": 44256906,
-        "reasoning": 187775899
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 24.81307805592403,
-        "reasoning_output_share": 0.6463671188186588
-      }
-    },
-    {
-      "source_id": "8014c311-fa23-4a4b-8485-8a864db8a113",
-      "slug": "celeris-1",
-      "name": "Celeris-1",
-      "variant": null,
-      "tokens_per_task": {
-        "reasoning": 63.39983374920362,
-        "answer": 5947.061174182054,
-        "output": 6010.461007931258
-      },
-      "canonical_token_counts": {
-        "input": 271400451,
-        "output": 8161114,
-        "answer": 8119689,
-        "reasoning": 41425
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 33.25531918804222,
-        "reasoning_output_share": 0.010548248073740558
-      }
-    },
-    {
-      "source_id": "a6340098-d7ae-462d-b372-0a0a67fc44b4",
-      "slug": "claude-4-5-haiku-reasoning",
-      "name": "Claude 4.5 Haiku (Reasoning)",
-      "variant": null,
-      "tokens_per_task": {
-        "reasoning": 7664.948570796869,
-        "answer": 10819.566842159622,
-        "output": 18484.51541295649
-      },
-      "canonical_token_counts": {
-        "input": 503758170,
-        "output": 77633689,
-        "answer": 14103219,
-        "reasoning": 63530470
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 6.488911920699788,
-        "reasoning_output_share": 0.4146686239566886
-      }
-    },
-    {
-      "source_id": "90e078f2-051b-4c63-8919-76618971cb3f",
-      "slug": "claude-4-5-sonnet-thinking",
-      "name": "Claude 4.5 Sonnet (Reasoning)",
-      "variant": null,
-      "tokens_per_task": {
-        "reasoning": 6586.674467260375,
-        "answer": 10236.900315319608,
-        "output": 16823.574782579984
-      },
-      "canonical_token_counts": {
-        "input": 826006908,
-        "output": 65143830,
-        "answer": 16554155,
-        "reasoning": 48589675
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 12.679741243338011,
-        "reasoning_output_share": 0.39151455932425044
-      }
-    },
-    {
-      "source_id": "cd55210d-358e-4df1-ba9c-9acb5f186cc9",
-      "slug": "claude-fable-5",
-      "name": "Claude Fable 5 (Max, Opus 4.8 Fallback)",
-      "variant": "max",
-      "tokens_per_task": {
-        "reasoning": 45041.401509187875,
-        "answer": 21806.974804706657,
-        "output": 66848.37631389454
-      },
-      "canonical_token_counts": {
-        "input": 3360275183,
-        "output": 125970391,
-        "answer": 30068173,
-        "reasoning": 95902218
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 26.67511910001137,
-        "reasoning_output_share": 0.6737845254115162
-      }
-    },
     {
       "source_id": "3e87c73e-a257-495e-9730-367a66229811",
       "slug": "claude-fable-5-1",
       "name": "Claude Fable 5.1 (Max, Default Fallback)",
       "variant": "max",
       "tokens_per_task": {
-        "reasoning": 47239.81546124743,
-        "answer": 30870.99075157802,
-        "output": 78110.80621282545
+        "reasoning": 71386.81875830896,
+        "answer": 46554.11921333431,
+        "output": 117940.93797164326
       },
       "canonical_token_counts": {
-        "input": 5630485614,
-        "output": 188465663,
-        "answer": 41121780,
-        "reasoning": 147343883
+        "input": 9461250929,
+        "output": 163073497,
+        "answer": 40749107,
+        "reasoning": 122324390
       },
       "derived": {
         "basis": "derived",
-        "input_output_ratio": 29.875392282996398,
-        "reasoning_output_share": 0.6047795145339424
+        "input_output_ratio": 58.01832365807425,
+        "reasoning_output_share": 0.6052759964947253
       }
     },
     {
@@ -186,20 +55,20 @@
       "name": "Claude Fable 5.1 (High, Default Fallback)",
       "variant": "high",
       "tokens_per_task": {
-        "reasoning": 18622.54895818041,
-        "answer": 19431.730066504435,
-        "output": 38054.279024684845
+        "reasoning": 34028.938500294986,
+        "answer": 32001.774966890796,
+        "output": 66030.71346718578
       },
       "canonical_token_counts": {
-        "input": 2443935298,
-        "output": 61994670,
-        "answer": 27804661,
-        "reasoning": 34190009
+        "input": 5124181774,
+        "output": 69641442,
+        "answer": 29918695,
+        "reasoning": 39722747
       },
       "derived": {
         "basis": "derived",
-        "input_output_ratio": 39.42170025261849,
-        "reasoning_output_share": 0.4893680667580231
+        "input_output_ratio": 73.57948983882326,
+        "reasoning_output_share": 0.5153501562148923
       }
     },
     {
@@ -208,20 +77,20 @@
       "name": "Claude Fable 5.1 (Low, Default Fallback)",
       "variant": "low",
       "tokens_per_task": {
-        "reasoning": 8289.274270012003,
-        "answer": 13272.568454756867,
-        "output": 21561.84272476887
+        "reasoning": 15533.676263980084,
+        "answer": 22302.83645718817,
+        "output": 37836.512721168256
       },
       "canonical_token_counts": {
-        "input": 1338003902,
-        "output": 32508373,
-        "answer": 20845317,
-        "reasoning": 11663056
+        "input": 2962132883,
+        "output": 36344445,
+        "answer": 22797388,
+        "reasoning": 13547057
       },
       "derived": {
         "basis": "derived",
-        "input_output_ratio": 41.15874707110073,
-        "reasoning_output_share": 0.38444182975557156
+        "input_output_ratio": 81.5016678064557,
+        "reasoning_output_share": 0.4105472504417542
       }
     },
     {
@@ -230,20 +99,20 @@
       "name": "Claude Fable 5.1 (Medium, Default Fallback)",
       "variant": "medium",
       "tokens_per_task": {
-        "reasoning": 12081.522329392306,
-        "answer": 15806.115480715269,
-        "output": 27887.637810107575
+        "reasoning": 22374.21060607847,
+        "answer": 26171.28504633282,
+        "output": 48545.49565241129
       },
       "canonical_token_counts": {
-        "input": 1766972607,
-        "output": 44205040,
-        "answer": 23716665,
-        "reasoning": 20488375
+        "input": 3640557177,
+        "output": 49158531,
+        "answer": 25779979,
+        "reasoning": 23378552
       },
       "derived": {
         "basis": "derived",
-        "input_output_ratio": 39.97219789870115,
-        "reasoning_output_share": 0.43322142992740276
+        "input_output_ratio": 74.05748509856814,
+        "reasoning_output_share": 0.46089158850656675
       }
     },
     {
@@ -252,20 +121,20 @@
       "name": "Claude Fable 5.1 (Xhigh, Default Fallback)",
       "variant": "xhigh",
       "tokens_per_task": {
-        "reasoning": 34067.40516593828,
-        "answer": 26470.208625081556,
-        "output": 60537.61379101984
+        "reasoning": 55942.339106808184,
+        "answer": 41116.44893811668,
+        "output": 97058.78804492486
       },
       "canonical_token_counts": {
-        "input": 4193251074,
-        "output": 120524006,
-        "answer": 36224523,
-        "reasoning": 84299483
+        "input": 7729073226,
+        "output": 114929206,
+        "answer": 36718561,
+        "reasoning": 78210645
       },
       "derived": {
         "basis": "derived",
-        "input_output_ratio": 34.791832873527284,
-        "reasoning_output_share": 0.562747737027452
+        "input_output_ratio": 67.25073195058879,
+        "reasoning_output_share": 0.5763758257615434
       }
     },
     {
@@ -274,20 +143,20 @@
       "name": "Claude Haiku 5.5 (Max)",
       "variant": "max",
       "tokens_per_task": {
-        "reasoning": 129046.55340843403,
-        "answer": 33117.63980014857,
-        "output": 162164.1932085826
+        "reasoning": 172814.47722152487,
+        "answer": 53151.48249444444,
+        "output": 225965.9597159693
       },
       "canonical_token_counts": {
-        "input": 7733951589,
-        "output": 435183286,
-        "answer": 37597675,
-        "reasoning": 397585611
+        "input": 14601345433,
+        "output": 297721915,
+        "answer": 40754337,
+        "reasoning": 256967578
       },
       "derived": {
         "basis": "derived",
-        "input_output_ratio": 17.771710995812462,
-        "reasoning_output_share": 0.7957771124137667
+        "input_output_ratio": 49.0435695101585,
+        "reasoning_output_share": 0.76478102028618
       }
     },
     {
@@ -296,20 +165,20 @@
       "name": "Claude Haiku 5.5 (High)",
       "variant": "high",
       "tokens_per_task": {
-        "reasoning": 36975.197053208336,
-        "answer": 18412.621942920476,
-        "output": 55387.818996128815
+        "reasoning": 57528.93429901537,
+        "answer": 30535.41350587533,
+        "output": 88064.3478048907
       },
       "canonical_token_counts": {
-        "input": 2817459714,
-        "output": 97096318,
-        "answer": 24244235,
-        "reasoning": 72852083
+        "input": 5516025284,
+        "output": 89814062,
+        "answer": 26876202,
+        "reasoning": 62937860
       },
       "derived": {
         "basis": "derived",
-        "input_output_ratio": 29.01716328728346,
-        "reasoning_output_share": 0.6675691103813389
+        "input_output_ratio": 61.41605402503675,
+        "reasoning_output_share": 0.6532602095285202
       }
     },
     {
@@ -318,20 +187,20 @@
       "name": "Claude Haiku 5.5 (Low)",
       "variant": "low",
       "tokens_per_task": {
-        "reasoning": 9231.375881062662,
-        "answer": 8054.286459229995,
-        "output": 17285.662340292656
+        "reasoning": 15279.673596870482,
+        "answer": 12880.876412319645,
+        "output": 28160.550009190127
       },
       "canonical_token_counts": {
-        "input": 844160517,
-        "output": 32289694,
-        "answer": 14226885,
-        "reasoning": 18062809
+        "input": 1467759170,
+        "output": 29899488,
+        "answer": 14466693,
+        "reasoning": 15432795
       },
       "derived": {
         "basis": "derived",
-        "input_output_ratio": 26.143342114050384,
-        "reasoning_output_share": 0.5340481434457067
+        "input_output_ratio": 49.08977605235247,
+        "reasoning_output_share": 0.5425914476771226
       }
     },
     {
@@ -340,20 +209,20 @@
       "name": "Claude Haiku 5.5 (Medium)",
       "variant": "medium",
       "tokens_per_task": {
-        "reasoning": 19690.171248342453,
-        "answer": 13122.38540438134,
-        "output": 32812.5566527238
+        "reasoning": 32091.42444466173,
+        "answer": 21243.69207510944,
+        "output": 53335.11651977117
       },
       "canonical_token_counts": {
-        "input": 1635720213,
-        "output": 53785057,
-        "answer": 19009683,
-        "reasoning": 34775374
+        "input": 3132095560,
+        "output": 52730406,
+        "answer": 20505324,
+        "reasoning": 32225082
       },
       "derived": {
         "basis": "derived",
-        "input_output_ratio": 30.412168439274872,
-        "reasoning_output_share": 0.6000803733990036
+        "input_output_ratio": 59.39828265308634,
+        "reasoning_output_share": 0.6016940908484851
       }
     },
     {
@@ -362,64 +231,20 @@
       "name": "Claude Haiku 5.5 (Xhigh)",
       "variant": "xhigh",
       "tokens_per_task": {
-        "reasoning": 65707.88425503818,
-        "answer": 23685.990532884036,
-        "output": 89393.87478792222
+        "reasoning": 97261.37035064911,
+        "answer": 38915.62037800411,
+        "output": 136176.9907286532
       },
       "canonical_token_counts": {
-        "input": 4454825207,
-        "output": 179986858,
-        "answer": 29496266,
-        "reasoning": 150490592
+        "input": 8761332607,
+        "output": 150911615,
+        "answer": 32294109,
+        "reasoning": 118617506
       },
       "derived": {
         "basis": "derived",
-        "input_output_ratio": 24.750836013816077,
-        "reasoning_output_share": 0.7350378805138874
-      }
-    },
-    {
-      "source_id": "992b7b84-5069-4c6a-9295-834252553d50",
-      "slug": "claude-opus-4-8",
-      "name": "Claude Opus 4.8 (Max)",
-      "variant": "max",
-      "tokens_per_task": {
-        "reasoning": 51815.3344482068,
-        "answer": 18734.397959790735,
-        "output": 70549.73240799754
-      },
-      "canonical_token_counts": {
-        "input": 3139350881,
-        "output": 172557257,
-        "answer": 29163929,
-        "reasoning": 143393328
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 18.193096804963698,
-        "reasoning_output_share": 0.7344511832951048
-      }
-    },
-    {
-      "source_id": "b8fc61f7-5e9a-49e6-8547-6ac56db24627",
-      "slug": "claude-opus-5",
-      "name": "Claude Opus 5 (Max)",
-      "variant": "max",
-      "tokens_per_task": {
-        "reasoning": 42792.72413667888,
-        "answer": 29718.724913377504,
-        "output": 72511.44905005638
-      },
-      "canonical_token_counts": {
-        "input": 5522853815,
-        "output": 140355897,
-        "answer": 39652358,
-        "reasoning": 100703539
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 39.34892607326645,
-        "reasoning_output_share": 0.5901512753818785
+        "input_output_ratio": 58.056052259463264,
+        "reasoning_output_share": 0.7142276373580063
       }
     },
     {
@@ -428,20 +253,20 @@
       "name": "Claude Opus 5.5 (Max, Default Fallback)",
       "variant": "max",
       "tokens_per_task": {
-        "reasoning": 83929.08191267242,
-        "answer": 35236.93384464381,
-        "output": 119166.01575731623
+        "reasoning": 120459.92423256325,
+        "answer": 52852.71462398103,
+        "output": 173312.63885654428
       },
       "canonical_token_counts": {
-        "input": 10978320412,
-        "output": 259888331,
-        "answer": 46031341,
-        "reasoning": 213856990
+        "input": 15580179708,
+        "output": 218145408,
+        "answer": 44781898,
+        "reasoning": 173363510
       },
       "derived": {
         "basis": "derived",
-        "input_output_ratio": 42.24245224769249,
-        "reasoning_output_share": 0.7043038351101335
+        "input_output_ratio": 71.42107574412017,
+        "reasoning_output_share": 0.6950440834974032
       }
     },
     {
@@ -450,20 +275,20 @@
       "name": "Claude Opus 5.5 (High, Default Fallback)",
       "variant": "high",
       "tokens_per_task": {
-        "reasoning": 18236.5871060743,
-        "answer": 17347.4717719098,
-        "output": 35584.058877984105
+        "reasoning": 31560.867647747993,
+        "answer": 28510.090907700214,
+        "output": 60070.958555448204
       },
       "canonical_token_counts": {
-        "input": 2619403169,
-        "output": 52515439,
-        "answer": 25542271,
-        "reasoning": 26973168
+        "input": 4743185827,
+        "output": 56144369,
+        "answer": 26535647,
+        "reasoning": 29608722
       },
       "derived": {
         "basis": "derived",
-        "input_output_ratio": 49.878725549642645,
-        "reasoning_output_share": 0.5124931691633777
+        "input_output_ratio": 84.48195093260377,
+        "reasoning_output_share": 0.5253931085287392
       }
     },
     {
@@ -472,20 +297,20 @@
       "name": "Claude Opus 5.5 (Low, Default Fallback)",
       "variant": "low",
       "tokens_per_task": {
-        "reasoning": 3376.0272567172387,
-        "answer": 6775.2490189060845,
-        "output": 10151.276275623324
+        "reasoning": 6863.85290444966,
+        "answer": 12195.70456126727,
+        "output": 19059.55746571693
       },
       "canonical_token_counts": {
-        "input": 661774688,
-        "output": 19566522,
-        "answer": 13946380,
-        "reasoning": 5620142
+        "input": 1174313288,
+        "output": 21114634,
+        "answer": 14659118,
+        "reasoning": 6455516
       },
       "derived": {
         "basis": "derived",
-        "input_output_ratio": 33.821784372306944,
-        "reasoning_output_share": 0.33257170478398185
+        "input_output_ratio": 55.61608541261004,
+        "reasoning_output_share": 0.3601265620566429
       }
     },
     {
@@ -494,20 +319,20 @@
       "name": "Claude Opus 5.5 (Medium, Default Fallback)",
       "variant": "medium",
       "tokens_per_task": {
-        "reasoning": 11695.71199538513,
-        "answer": 14049.574900056037,
-        "output": 25745.286895441168
+        "reasoning": 20676.284723533085,
+        "answer": 23140.261755258667,
+        "output": 43816.54647879175
       },
       "canonical_token_counts": {
-        "input": 1798544497,
-        "output": 38156195,
-        "answer": 21722760,
-        "reasoning": 16433435
+        "input": 3246136911,
+        "output": 42531163,
+        "answer": 22793378,
+        "reasoning": 19737785
       },
       "derived": {
         "basis": "derived",
-        "input_output_ratio": 47.13636925799336,
-        "reasoning_output_share": 0.45428555692095013
+        "input_output_ratio": 76.32372787454695,
+        "reasoning_output_share": 0.4718830301594147
       }
     },
     {
@@ -516,152 +341,20 @@
       "name": "Claude Opus 5.5 (Xhigh, Default Fallback)",
       "variant": "xhigh",
       "tokens_per_task": {
-        "reasoning": 40314.73065457981,
-        "answer": 25352.66441141809,
-        "output": 65667.3950659979
+        "reasoning": 63762.95637497571,
+        "answer": 39632.31061713469,
+        "output": 103395.2669921104
       },
       "canonical_token_counts": {
-        "input": 5958172789,
-        "output": 99668308,
-        "answer": 34880987,
-        "reasoning": 64787321
+        "input": 9015773466,
+        "output": 100823907,
+        "answer": 34789796,
+        "reasoning": 66034111
       },
       "derived": {
         "basis": "derived",
-        "input_output_ratio": 59.78001341208682,
-        "reasoning_output_share": 0.6139230985797773
-      }
-    },
-    {
-      "source_id": "712be54a-77ae-41b2-9a58-21181479d6ee",
-      "slug": "claude-opus-5-high",
-      "name": "Claude Opus 5 (High)",
-      "variant": "high",
-      "tokens_per_task": {
-        "reasoning": 25407.832479970297,
-        "answer": 20831.41095969314,
-        "output": 46239.243439663434
-      },
-      "canonical_token_counts": {
-        "input": 3143736543,
-        "output": 80530902,
-        "answer": 28853166,
-        "reasoning": 51677736
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 39.03764225812347,
-        "reasoning_output_share": 0.5494863364951984
-      }
-    },
-    {
-      "source_id": "20928ba9-3a3f-415f-9519-b84ff64ecf34",
-      "slug": "claude-opus-5-low",
-      "name": "Claude Opus 5 (Low)",
-      "variant": "low",
-      "tokens_per_task": {
-        "reasoning": 6543.850165278829,
-        "answer": 8124.155142910187,
-        "output": 14668.005308189016
-      },
-      "canonical_token_counts": {
-        "input": 941093239,
-        "output": 25592356,
-        "answer": 14627316,
-        "reasoning": 10965040
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 36.77243466760153,
-        "reasoning_output_share": 0.4461308833604973
-      }
-    },
-    {
-      "source_id": "ff51be8f-e362-4a7e-9043-687ba15de207",
-      "slug": "claude-opus-5-medium",
-      "name": "Claude Opus 5 (Medium)",
-      "variant": "medium",
-      "tokens_per_task": {
-        "reasoning": 14868.897240976565,
-        "answer": 14108.459544317355,
-        "output": 28977.35678529392
-      },
-      "canonical_token_counts": {
-        "input": 1828749325,
-        "output": 49413512,
-        "answer": 21311934,
-        "reasoning": 28101578
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 37.00909429388464,
-        "reasoning_output_share": 0.5131212398407079
-      }
-    },
-    {
-      "source_id": "1305c921-7aaa-4d6d-99b5-99b3acf15e19",
-      "slug": "claude-opus-5-xhigh",
-      "name": "Claude Opus 5 (Xhigh)",
-      "variant": "xhigh",
-      "tokens_per_task": {
-        "reasoning": 34995.05810024947,
-        "answer": 25659.979658440694,
-        "output": 60655.03775869017
-      },
-      "canonical_token_counts": {
-        "input": 4437573582,
-        "output": 110508092,
-        "answer": 34475699,
-        "reasoning": 76032393
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 40.15609627935663,
-        "reasoning_output_share": 0.5769522102924692
-      }
-    },
-    {
-      "source_id": "df8d14e0-3997-4e4d-b4ad-9c047acc9c69",
-      "slug": "claude-sonnet-4-6-adaptive",
-      "name": "Claude Sonnet 4.6 (Max)",
-      "variant": "max",
-      "tokens_per_task": {
-        "reasoning": 56209.76459281355,
-        "answer": 18707.64285552317,
-        "output": 74917.40744833671
-      },
-      "canonical_token_counts": {
-        "input": 3084837959,
-        "output": 232578896,
-        "answer": 30160182,
-        "reasoning": 202418714
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 13.263619408529655,
-        "reasoning_output_share": 0.7502897725281803
-      }
-    },
-    {
-      "source_id": "23c86e4a-c769-43c0-a056-79e3cd15834f",
-      "slug": "claude-sonnet-5",
-      "name": "Claude Sonnet 5 (Max)",
-      "variant": "max",
-      "tokens_per_task": {
-        "reasoning": 88392.29202190228,
-        "answer": 29395.02883974881,
-        "output": 117787.3208616511
-      },
-      "canonical_token_counts": {
-        "input": 12859330968,
-        "output": 366709180,
-        "answer": 39209026,
-        "reasoning": 327500154
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 35.06683679966779,
-        "reasoning_output_share": 0.7504397873666284
+        "input_output_ratio": 89.42098887320445,
+        "reasoning_output_share": 0.6166912493184157
       }
     },
     {
@@ -670,20 +363,20 @@
       "name": "Claude Sonnet 5.5 (Max, Default Fallback)",
       "variant": "max",
       "tokens_per_task": {
-        "reasoning": 146633.4888002458,
-        "answer": 50796.88280987353,
-        "output": 197430.37161011933
+        "reasoning": 206361.6940217798,
+        "answer": 79025.41932870955,
+        "output": 285387.11335048935
       },
       "canonical_token_counts": {
-        "input": 18668251191,
-        "output": 415769956,
-        "answer": 57824089,
-        "reasoning": 357945867
+        "input": 30617883701,
+        "output": 335221511,
+        "answer": 61185196,
+        "reasoning": 274036315
       },
       "derived": {
         "basis": "derived",
-        "input_output_ratio": 44.90043333241712,
-        "reasoning_output_share": 0.7427098860443521
+        "input_output_ratio": 91.33627376615458,
+        "reasoning_output_share": 0.7230939463210558
       }
     },
     {
@@ -692,20 +385,20 @@
       "name": "Claude Sonnet 5.5 (High, Default Fallback)",
       "variant": "high",
       "tokens_per_task": {
-        "reasoning": 18725.78874258922,
-        "answer": 18601.604271041695,
-        "output": 37327.39301363091
+        "reasoning": 31740.89245865702,
+        "answer": 26680.319554956302,
+        "output": 58421.21201361332
       },
       "canonical_token_counts": {
-        "input": 2010820239,
-        "output": 52052234,
-        "answer": 25216935,
-        "reasoning": 26835299
+        "input": 3783822612,
+        "output": 54656782,
+        "answer": 24244179,
+        "reasoning": 30412603
       },
       "derived": {
         "basis": "derived",
-        "input_output_ratio": 38.63081532677349,
-        "reasoning_output_share": 0.5016634495677501
+        "input_output_ratio": 69.22878503897284,
+        "reasoning_output_share": 0.5433110913765492
       }
     },
     {
@@ -714,20 +407,20 @@
       "name": "Claude Sonnet 5.5 (Low, Default Fallback)",
       "variant": "low",
       "tokens_per_task": {
-        "reasoning": 4588.167154662398,
-        "answer": 9665.055699466615,
-        "output": 14253.222854129013
+        "reasoning": 8558.660733170938,
+        "answer": 12297.711046579676,
+        "output": 20856.371779750614
       },
       "canonical_token_counts": {
-        "input": 717194126,
-        "output": 22674620,
-        "answer": 18075159,
-        "reasoning": 4599461
+        "input": 1087128505,
+        "output": 21348593,
+        "answer": 15130803,
+        "reasoning": 6217790
       },
       "derived": {
         "basis": "derived",
-        "input_output_ratio": 31.62981897822323,
-        "reasoning_output_share": 0.32190383898566866
+        "input_output_ratio": 50.9227238066696,
+        "reasoning_output_share": 0.41036191834097024
       }
     },
     {
@@ -736,20 +429,20 @@
       "name": "Claude Sonnet 5.5 (Medium, Default Fallback)",
       "variant": "medium",
       "tokens_per_task": {
-        "reasoning": 8190.173061281517,
-        "answer": 12747.454553298958,
-        "output": 20937.627614580473
+        "reasoning": 14368.65351360329,
+        "answer": 16377.2412605479,
+        "output": 30745.89477415119
       },
       "canonical_token_counts": {
-        "input": 974370320,
-        "output": 31078790,
-        "answer": 21277013,
-        "reasoning": 9801777
+        "input": 1662829802,
+        "output": 29396702,
+        "answer": 17997621,
+        "reasoning": 11399081
       },
       "derived": {
         "basis": "derived",
-        "input_output_ratio": 31.35161697093098,
-        "reasoning_output_share": 0.39117006052672715
+        "input_output_ratio": 56.565182107843256,
+        "reasoning_output_share": 0.4673356758406446
       }
     },
     {
@@ -758,108 +451,20 @@
       "name": "Claude Sonnet 5.5 (Xhigh, Default Fallback)",
       "variant": "xhigh",
       "tokens_per_task": {
-        "reasoning": 47953.30350339135,
-        "answer": 26856.34490468398,
-        "output": 74809.64840807533
+        "reasoning": 78998.94222470361,
+        "answer": 43205.9566350692,
+        "output": 122204.8988597728
       },
       "canonical_token_counts": {
-        "input": 5939402192,
-        "output": 105144665,
-        "answer": 34186602,
-        "reasoning": 70958063
+        "input": 11231204205,
+        "output": 110709101,
+        "answer": 35633256,
+        "reasoning": 75075845
       },
       "derived": {
         "basis": "derived",
-        "input_output_ratio": 56.48790827380543,
-        "reasoning_output_share": 0.6410042624691046
-      }
-    },
-    {
-      "source_id": "ba0224cf-0351-4f56-8508-b3f1a740ae4a",
-      "slug": "claude-sonnet-5-high",
-      "name": "Claude Sonnet 5 (High)",
-      "variant": "high",
-      "tokens_per_task": {
-        "reasoning": 28015.136450183745,
-        "answer": 16326.210929566934,
-        "output": 44341.34737975068
-      },
-      "canonical_token_counts": {
-        "input": 4165311647,
-        "output": 88823950,
-        "answer": 24206005,
-        "reasoning": 64617945
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 46.89401503761091,
-        "reasoning_output_share": 0.6318061607432658
-      }
-    },
-    {
-      "source_id": "142b93bf-09c4-42dc-9c3a-50b1a222cbd4",
-      "slug": "claude-sonnet-5-low",
-      "name": "Claude Sonnet 5 (Low)",
-      "variant": "low",
-      "tokens_per_task": {
-        "reasoning": 7100.177147120431,
-        "answer": 8068.200939915205,
-        "output": 15168.378087035635
-      },
-      "canonical_token_counts": {
-        "input": 1062374029,
-        "output": 25315768,
-        "answer": 13081434,
-        "reasoning": 12234334
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 41.964914080426084,
-        "reasoning_output_share": 0.4680907283811003
-      }
-    },
-    {
-      "source_id": "effcd151-7c31-4437-af3d-e88daeae9385",
-      "slug": "claude-sonnet-5-medium",
-      "name": "Claude Sonnet 5 (Medium)",
-      "variant": "medium",
-      "tokens_per_task": {
-        "reasoning": 15441.265439863024,
-        "answer": 11895.8126007476,
-        "output": 27337.078040610624
-      },
-      "canonical_token_counts": {
-        "input": 2224199615,
-        "output": 51122413,
-        "answer": 18622906,
-        "reasoning": 32499507
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 43.50732847841122,
-        "reasoning_output_share": 0.5648469604880315
-      }
-    },
-    {
-      "source_id": "99f376bf-cbcb-4124-bf3e-6b0a4e6e9bea",
-      "slug": "claude-sonnet-5-xhigh",
-      "name": "Claude Sonnet 5 (Xhigh)",
-      "variant": "xhigh",
-      "tokens_per_task": {
-        "reasoning": 43958.72513700623,
-        "answer": 21398.113523242846,
-        "output": 65356.83866024908
-      },
-      "canonical_token_counts": {
-        "input": 7024403059,
-        "output": 134736197,
-        "answer": 30163641,
-        "reasoning": 104572556
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 52.13449106775665,
-        "reasoning_output_share": 0.6725956462723238
+        "input_output_ratio": 101.4478855265928,
+        "reasoning_output_share": 0.6464466069838412
       }
     },
     {
@@ -868,108 +473,20 @@
       "name": "Command A+",
       "variant": null,
       "tokens_per_task": {
-        "reasoning": 13829.839592646882,
-        "answer": 8481.701336345193,
-        "output": 22311.540928992075
+        "reasoning": 20447.025157134267,
+        "answer": 15183.291057224811,
+        "output": 35630.316214359074
       },
       "canonical_token_counts": {
-        "input": 868082457,
-        "output": 66974426,
-        "answer": 11560104,
-        "reasoning": 55414322
+        "input": 2892369864,
+        "output": 53860327,
+        "answer": 12192846,
+        "reasoning": 41667481
       },
       "derived": {
         "basis": "derived",
-        "input_output_ratio": 12.96140196856633,
-        "reasoning_output_share": 0.6198513870763674
-      }
-    },
-    {
-      "source_id": "0e34f05c-387e-4968-be15-ccec4a55d8c1",
-      "slug": "deepseek-r1-0120",
-      "name": "DeepSeek R1 (Jan '25)",
-      "variant": null,
-      "tokens_per_task": {
-        "reasoning": 11391.837614160992,
-        "answer": 3373.178037828324,
-        "output": 14765.015651989315
-      },
-      "canonical_token_counts": {
-        "input": 143698501,
-        "output": 43334847,
-        "answer": 6183680,
-        "reasoning": 37151167
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 3.316003423295806,
-        "reasoning_output_share": 0.7715425355899402
-      }
-    },
-    {
-      "source_id": "43fc5506-c5ed-4dee-9b85-962bf7ae3986",
-      "slug": "deepseek-v3",
-      "name": "DeepSeek V3 (Dec '24)",
-      "variant": null,
-      "tokens_per_task": {
-        "reasoning": 0,
-        "answer": 2017.7134360310017,
-        "output": 2017.7134360310017
-      },
-      "canonical_token_counts": {
-        "input": 68896427,
-        "output": 3729300,
-        "answer": 3729300,
-        "reasoning": 0
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 18.474358994985653,
-        "reasoning_output_share": 0
-      }
-    },
-    {
-      "source_id": "75e1c197-f239-4361-a9d6-66dccfead236",
-      "slug": "deepseek-v3-0324",
-      "name": "DeepSeek V3 0324",
-      "variant": null,
-      "tokens_per_task": {
-        "reasoning": 0,
-        "answer": 1963.4404010246926,
-        "output": 1963.4404010246926
-      },
-      "canonical_token_counts": {
-        "input": 100377833,
-        "output": 3803890,
-        "answer": 3803890,
-        "reasoning": 0
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 26.388206020678833,
-        "reasoning_output_share": 0
-      }
-    },
-    {
-      "source_id": "dbe7c625-3100-4463-b479-a228c41f75dd",
-      "slug": "deepseek-v4-1-flash",
-      "name": "DeepSeek V4.1 Flash (Max)",
-      "variant": "max",
-      "tokens_per_task": {
-        "reasoning": 62669.56218734425,
-        "answer": 25904.436307344844,
-        "output": 88573.99849468909
-      },
-      "canonical_token_counts": {
-        "input": 9255883349,
-        "output": 253113556,
-        "answer": 33648446,
-        "reasoning": 219465110
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 36.568106012465016,
-        "reasoning_output_share": 0.7075390436517544
+        "input_output_ratio": 53.70130530399491,
+        "reasoning_output_share": 0.5738659470244635
       }
     },
     {
@@ -978,130 +495,42 @@
       "name": "DeepSeek V4.1 Flash 1017 (Max)",
       "variant": "max",
       "tokens_per_task": {
-        "reasoning": 59243.01214714186,
-        "answer": 30252.040082076124,
-        "output": 89495.05222921798
+        "reasoning": 90615.04503806597,
+        "answer": 48346.660848396656,
+        "output": 138961.70588646265
       },
       "canonical_token_counts": {
-        "input": 10279801278,
-        "output": 210859766,
-        "answer": 40137502,
-        "reasoning": 170722264
+        "input": 19783376740,
+        "output": 174355958,
+        "answer": 39888665,
+        "reasoning": 134467293
       },
       "derived": {
         "basis": "derived",
-        "input_output_ratio": 48.751838593997114,
-        "reasoning_output_share": 0.6619696918596852
+        "input_output_ratio": 113.46544716298138,
+        "reasoning_output_share": 0.6520864468381106
       }
     },
     {
-      "source_id": "73c96f99-0de3-4668-a4bd-b106a0fe18f2",
-      "slug": "deepseek-v4-1-flash-non-reasoning",
-      "name": "DeepSeek V4.1 Flash (Non-reasoning)",
+      "source_id": "5720fd2f-873a-4765-8640-a153b38bd64d",
+      "slug": "deepseek-v4-1-flash-1017-non-reasoning",
+      "name": "DeepSeek V4.1 Flash 1017 (Non-reasoning)",
       "variant": null,
       "tokens_per_task": {
         "reasoning": 0,
-        "answer": 33698.98527659433,
-        "output": 33698.98527659433
+        "answer": 65357.56974596415,
+        "output": 65357.56974596415
       },
       "canonical_token_counts": {
-        "input": 5855128147,
-        "output": 44506509,
-        "answer": 44506509,
+        "input": 17347677925,
+        "output": 51224944,
+        "answer": 51224944,
         "reasoning": 0
       },
       "derived": {
         "basis": "derived",
-        "input_output_ratio": 131.55667066585698,
+        "input_output_ratio": 338.65684509093853,
         "reasoning_output_share": 0
-      }
-    },
-    {
-      "source_id": "fe4c0848-e284-4e52-a79d-cdc28392f1a9",
-      "slug": "deepseek-v4-flash",
-      "name": "DeepSeek V4 Flash 0731 (Max)",
-      "variant": "max",
-      "tokens_per_task": {
-        "reasoning": 45478.944924421885,
-        "answer": 16575.47369485638,
-        "output": 62054.418619278265
-      },
-      "canonical_token_counts": {
-        "input": 4317353554,
-        "output": 242335641,
-        "answer": 24781642,
-        "reasoning": 217553999
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 17.81559466937841,
-        "reasoning_output_share": 0.732888099451037
-      }
-    },
-    {
-      "source_id": "d8ddb241-b3e4-4c25-a6a3-72eb1b30c541",
-      "slug": "deepseek-v4-flash-0420",
-      "name": "DeepSeek V4 Flash 0420 (Max)",
-      "variant": "max",
-      "tokens_per_task": {
-        "reasoning": 40555.079938171075,
-        "answer": 14593.143150139522,
-        "output": 55148.223088310595
-      },
-      "canonical_token_counts": {
-        "input": 2923254382,
-        "output": 250012040,
-        "answer": 21262038,
-        "reasoning": 228750002
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 11.692454419395162,
-        "reasoning_output_share": 0.7353832574664997
-      }
-    },
-    {
-      "source_id": "89a2c945-1fab-4ee4-9f45-83a9f46cb221",
-      "slug": "deepseek-v4-flash-0420-high",
-      "name": "DeepSeek V4 Flash 0420 (High)",
-      "variant": "high",
-      "tokens_per_task": {
-        "reasoning": 26378.58633168231,
-        "answer": 16025.600199113178,
-        "output": 42404.18653079549
-      },
-      "canonical_token_counts": {
-        "input": 2941694337,
-        "output": 128002521,
-        "answer": 21294075,
-        "reasoning": 106708446
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 22.98153437931117,
-        "reasoning_output_share": 0.6220750470599219
-      }
-    },
-    {
-      "source_id": "7707a46f-895f-4247-b7a8-ddab87c9a11d",
-      "slug": "deepseek-v4-flash-vision",
-      "name": "DeepSeek V4 Flash Vision (Max)",
-      "variant": "max",
-      "tokens_per_task": {
-        "reasoning": 45903.93874192563,
-        "answer": 23270.191905002044,
-        "output": 69174.13064692768
-      },
-      "canonical_token_counts": {
-        "input": 7093402270,
-        "output": 170297611,
-        "answer": 31042859,
-        "reasoning": 139254752
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 41.65297580128708,
-        "reasoning_output_share": 0.663599792474796
       }
     },
     {
@@ -1110,196 +539,20 @@
       "name": "DeepSeek V4 Pro 0813 (Max)",
       "variant": "max",
       "tokens_per_task": {
-        "reasoning": 38163.72070972756,
-        "answer": 16990.708662221845,
-        "output": 55154.4293719494
+        "reasoning": 60708.601006489625,
+        "answer": 38024.08981645744,
+        "output": 98732.69082294707
       },
       "canonical_token_counts": {
-        "input": 5438520642,
-        "output": 162876499,
-        "answer": 24730335,
-        "reasoning": 138146164
+        "input": 13018774693,
+        "output": 119481098,
+        "answer": 31652744,
+        "reasoning": 87828354
       },
       "derived": {
         "basis": "derived",
-        "input_output_ratio": 33.39045642183161,
-        "reasoning_output_share": 0.6919429888823576
-      }
-    },
-    {
-      "source_id": "bf220674-68bd-43cc-a1b8-ce5ed4d2f18d",
-      "slug": "deepseek-v4-pro-0424",
-      "name": "DeepSeek V4 Pro 0424 (Max)",
-      "variant": "max",
-      "tokens_per_task": {
-        "reasoning": 32731.610839445308,
-        "answer": 16164.721681998606,
-        "output": 48896.33252144391
-      },
-      "canonical_token_counts": {
-        "input": 4619889522,
-        "output": 212022865,
-        "answer": 23607563,
-        "reasoning": 188415302
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 21.78958161894473,
-        "reasoning_output_share": 0.6694083002051447
-      }
-    },
-    {
-      "source_id": "d4f5b250-be37-4801-85e6-32fda4179337",
-      "slug": "deepseek-v4-pro-non-reasoning",
-      "name": "DeepSeek V4 Pro 0813 (Non-reasoning)",
-      "variant": null,
-      "tokens_per_task": {
-        "reasoning": 0,
-        "answer": 29149.471989101257,
-        "output": 29149.471989101257
-      },
-      "canonical_token_counts": {
-        "input": 3030251053,
-        "output": 40243606,
-        "answer": 40243606,
-        "reasoning": 0
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 75.29770202501237,
-        "reasoning_output_share": 0
-      }
-    },
-    {
-      "source_id": "09f43999-b67b-4c1b-b050-44df41ed7e62",
-      "slug": "devstral-2",
-      "name": "Devstral 2",
-      "variant": null,
-      "tokens_per_task": {
-        "reasoning": 0,
-        "answer": 12544.288298302885,
-        "output": 12544.288298302885
-      },
-      "canonical_token_counts": {
-        "input": 926814213,
-        "output": 17659621,
-        "answer": 17659621,
-        "reasoning": 0
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 52.482112328458236,
-        "reasoning_output_share": 0
-      }
-    },
-    {
-      "source_id": "ce819310-af7c-49d3-9a02-6845111e1788",
-      "slug": "devstral-small-2",
-      "name": "Devstral Small 2",
-      "variant": null,
-      "tokens_per_task": {
-        "reasoning": 0,
-        "answer": 13060.27418852321,
-        "output": 13060.27418852321
-      },
-      "canonical_token_counts": {
-        "input": 940300567,
-        "output": 17895639,
-        "answer": 17895639,
-        "reasoning": 0
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 52.543559187799886,
-        "reasoning_output_share": 0
-      }
-    },
-    {
-      "source_id": "27202e5f-c82d-4710-92e9-4317877d4883",
-      "slug": "gemini-2-5-pro",
-      "name": "Gemini 2.5 Pro",
-      "variant": null,
-      "tokens_per_task": {
-        "reasoning": 6770.828935960761,
-        "answer": 3778.535992992429,
-        "output": 10549.36492895319
-      },
-      "canonical_token_counts": {
-        "input": 321226210,
-        "output": 54701029,
-        "answer": 7126782,
-        "reasoning": 47574247
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 5.872397939717002,
-        "reasoning_output_share": 0.6418233686634469
-      }
-    },
-    {
-      "source_id": "598190f8-dc9c-4fea-a7ea-4b81c402ab18",
-      "slug": "gemini-3-1-flash-lite-preview",
-      "name": "Gemini 3.1 Flash-Lite",
-      "variant": "high",
-      "tokens_per_task": {
-        "reasoning": 9850.873250269173,
-        "answer": 2111.5562400854083,
-        "output": 11962.429490354582
-      },
-      "canonical_token_counts": {
-        "input": 461013123,
-        "output": 53933777,
-        "answer": 4663169,
-        "reasoning": 49270608
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 8.547762620073874,
-        "reasoning_output_share": 0.8234843313569391
-      }
-    },
-    {
-      "source_id": "bbd93ebe-80da-4594-bb19-61e69d0331df",
-      "slug": "gemini-3-1-pro-preview",
-      "name": "Gemini 3.1 Pro Preview",
-      "variant": null,
-      "tokens_per_task": {
-        "reasoning": 12489.693521775413,
-        "answer": 5622.60726322975,
-        "output": 18112.30078500516
-      },
-      "canonical_token_counts": {
-        "input": 1210802196,
-        "output": 67075321,
-        "answer": 9423607,
-        "reasoning": 57651714
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 18.0513813120626,
-        "reasoning_output_share": 0.6895696836105658
-      }
-    },
-    {
-      "source_id": "0097ebf5-124f-42f6-9463-33b00e711f03",
-      "slug": "gemini-3-5-flash",
-      "name": "Gemini 3.5 Flash (High)",
-      "variant": "high",
-      "tokens_per_task": {
-        "reasoning": 36312.349377173494,
-        "answer": 18330.42235118367,
-        "output": 54642.77172835717
-      },
-      "canonical_token_counts": {
-        "input": 3194203816,
-        "output": 119761387,
-        "answer": 24071258,
-        "reasoning": 95690129
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 26.67139965571708,
-        "reasoning_output_share": 0.6645407659349937
+        "input_output_ratio": 108.96095625937419,
+        "reasoning_output_share": 0.6148784207183784
       }
     },
     {
@@ -1308,64 +561,20 @@
       "name": "Gemini 3.5 Flash-Lite",
       "variant": "high",
       "tokens_per_task": {
-        "reasoning": 10405.152566498009,
-        "answer": 7101.546561550058,
-        "output": 17506.699128048065
+        "reasoning": 16765.13114521019,
+        "answer": 13535.559094216287,
+        "output": 30300.690239426476
       },
       "canonical_token_counts": {
-        "input": 1296279040,
-        "output": 59475163,
-        "answer": 10635658,
-        "reasoning": 48839505
+        "input": 3883820509,
+        "output": 43842106,
+        "answer": 11399425,
+        "reasoning": 32442681
       },
       "derived": {
         "basis": "derived",
-        "input_output_ratio": 21.795300334023466,
-        "reasoning_output_share": 0.5943526241236172
-      }
-    },
-    {
-      "source_id": "78332c88-fe60-42c8-af9d-3617e44cf1f5",
-      "slug": "gemini-3-6-flash",
-      "name": "Gemini 3.6 Flash (High)",
-      "variant": "high",
-      "tokens_per_task": {
-        "reasoning": 20061.01488750788,
-        "answer": 21544.748517939388,
-        "output": 41605.76340544727
-      },
-      "canonical_token_counts": {
-        "input": 2982418954,
-        "output": 90324472,
-        "answer": 25721819,
-        "reasoning": 64602653
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 33.018947002535484,
-        "reasoning_output_share": 0.4821691334446558
-      }
-    },
-    {
-      "source_id": "b2331108-72ed-415a-82d1-188633875bbc",
-      "slug": "gemini-3-7-flash",
-      "name": "Gemini 3.7 Flash (High)",
-      "variant": "high",
-      "tokens_per_task": {
-        "reasoning": 21227.944166280493,
-        "answer": 37159.07777420606,
-        "output": 58387.02194048655
-      },
-      "canonical_token_counts": {
-        "input": 4122484871,
-        "output": 104138371,
-        "answer": 44244455,
-        "reasoning": 59893916
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 39.586608004459755,
-        "reasoning_output_share": 0.3635729903799165
+        "input_output_ratio": 88.58654073323942,
+        "reasoning_output_share": 0.5532920541656782
       }
     },
     {
@@ -1374,20 +583,20 @@
       "name": "Gemini 3.8 Flash (High)",
       "variant": "high",
       "tokens_per_task": {
-        "reasoning": 42727.142245899406,
-        "answer": 28275.424690494336,
-        "output": 71002.56693639373
+        "reasoning": 60067.26709911184,
+        "answer": 38872.246960065655,
+        "output": 98939.5140591775
       },
       "canonical_token_counts": {
-        "input": 5973510492,
-        "output": 172228415,
-        "answer": 36241494,
-        "reasoning": 135986921
+        "input": 10163543607,
+        "output": 125659345,
+        "answer": 27841966,
+        "reasoning": 97817379
       },
       "derived": {
         "basis": "derived",
-        "input_output_ratio": 34.68365247395443,
-        "reasoning_output_share": 0.6017689794817656
+        "input_output_ratio": 80.8817172093329,
+        "reasoning_output_share": 0.6071109977676313
       }
     },
     {
@@ -1396,20 +605,20 @@
       "name": "Gemini 3.8 Flash (Medium)",
       "variant": "medium",
       "tokens_per_task": {
-        "reasoning": 26955.82820005126,
-        "answer": 25642.973601599828,
-        "output": 52598.80180165109
+        "reasoning": 47227.60064880264,
+        "answer": 34840.41466225624,
+        "output": 82068.01531105887
       },
       "canonical_token_counts": {
-        "input": 4479285812,
-        "output": 95032920,
-        "answer": 32714482,
-        "reasoning": 62318438
+        "input": 8121908918,
+        "output": 83881685,
+        "answer": 25209836,
+        "reasoning": 58671849
       },
       "derived": {
         "basis": "derived",
-        "input_output_ratio": 47.134043781881054,
-        "reasoning_output_share": 0.512479890734034
+        "input_output_ratio": 96.82577213369045,
+        "reasoning_output_share": 0.5754690237091502
       }
     },
     {
@@ -1418,152 +627,42 @@
       "name": "Gemini 4 Argon (High)",
       "variant": "high",
       "tokens_per_task": {
-        "reasoning": 35546.44081471556,
-        "answer": 26011.185392932435,
-        "output": 61557.626207648
+        "reasoning": 68300.86793708248,
+        "answer": 48067.16113075121,
+        "output": 116368.02906783369
       },
       "canonical_token_counts": {
-        "input": 3146068939,
-        "output": 112847057,
-        "answer": 31335093,
-        "reasoning": 81511964
+        "input": 7553860287,
+        "output": 113329224,
+        "answer": 33695739,
+        "reasoning": 79633485
       },
       "derived": {
         "basis": "derived",
-        "input_output_ratio": 27.87905172396299,
-        "reasoning_output_share": 0.5774498304208363
+        "input_output_ratio": 66.65412521486955,
+        "reasoning_output_share": 0.5869384270250748
       }
     },
     {
-      "source_id": "2e6400f5-85ca-4ebc-ba8f-c2811a631138",
-      "slug": "gemma-3-12b",
-      "name": "Gemma 3 12B Instruct",
-      "variant": null,
+      "source_id": "909ed0ba-bcc5-4f38-8162-08a4e187a772",
+      "slug": "gemini-4-carbon",
+      "name": "Gemini 4 Carbon (High)",
+      "variant": "high",
       "tokens_per_task": {
-        "reasoning": 0,
-        "answer": 18737.031199134126,
-        "output": 18737.031199134126
+        "reasoning": 72177.8565768282,
+        "answer": 50589.93929747802,
+        "output": 122767.79587430622
       },
       "canonical_token_counts": {
-        "input": 2624564516,
-        "output": 26063136,
-        "answer": 26063136,
-        "reasoning": 0
+        "input": 7622675256,
+        "output": 204759670,
+        "answer": 36882628,
+        "reasoning": 167877042
       },
       "derived": {
         "basis": "derived",
-        "input_output_ratio": 100.70025786612939,
-        "reasoning_output_share": 0
-      }
-    },
-    {
-      "source_id": "2bfdd17a-e027-4068-a54e-b0e90a6df118",
-      "slug": "gemma-3-27b",
-      "name": "Gemma 3 27B Instruct",
-      "variant": null,
-      "tokens_per_task": {
-        "reasoning": 0,
-        "answer": 8893.943845424661,
-        "output": 8893.943845424661
-      },
-      "canonical_token_counts": {
-        "input": 1739694982,
-        "output": 10685759,
-        "answer": 10685759,
-        "reasoning": 0
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 162.80499887747797,
-        "reasoning_output_share": 0
-      }
-    },
-    {
-      "source_id": "cd26a386-4873-46ff-b853-d239050025a2",
-      "slug": "gemma-4-31b",
-      "name": "Gemma 4 31B (Reasoning)",
-      "variant": null,
-      "tokens_per_task": {
-        "reasoning": 7886.632082636706,
-        "answer": 4695.042333946847,
-        "output": 12581.674416583553
-      },
-      "canonical_token_counts": {
-        "input": 895081362,
-        "output": 48607603,
-        "answer": 9633980,
-        "reasoning": 38973623
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 18.414431215626905,
-        "reasoning_output_share": 0.6268348569123325
-      }
-    },
-    {
-      "source_id": "d80eb0f1-f62e-4d31-99d2-7a925eb126b0",
-      "slug": "gemma-4-e4b",
-      "name": "Gemma 4 E4B (Reasoning)",
-      "variant": null,
-      "tokens_per_task": {
-        "reasoning": 3399.0764105962685,
-        "answer": 5597.225544279264,
-        "output": 8996.301954875533
-      },
-      "canonical_token_counts": {
-        "input": 632584365,
-        "output": 20269259,
-        "answer": 8431900,
-        "reasoning": 11837359
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 31.209052338815148,
-        "reasoning_output_share": 0.3778304049425713
-      }
-    },
-    {
-      "source_id": "5aa1c578-af76-4b91-8699-cdd43582b3af",
-      "slug": "glm-5-1",
-      "name": "GLM-5.1 (Reasoning)",
-      "variant": null,
-      "tokens_per_task": {
-        "reasoning": 26906.330432812203,
-        "answer": 14388.473088772542,
-        "output": 41294.80352158475
-      },
-      "canonical_token_counts": {
-        "input": 1803668092,
-        "output": 142831007,
-        "answer": 19624873,
-        "reasoning": 123206134
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 12.627986946839911,
-        "reasoning_output_share": 0.6515669803041512
-      }
-    },
-    {
-      "source_id": "f7a4ea75-e548-4069-80d4-9be8bc7c009b",
-      "slug": "glm-5-2",
-      "name": "GLM-5.2 (Max)",
-      "variant": "max",
-      "tokens_per_task": {
-        "reasoning": 50734.846447808704,
-        "answer": 13582.181628947597,
-        "output": 64317.0280767563
-      },
-      "canonical_token_counts": {
-        "input": 2048384609,
-        "output": 177562341,
-        "answer": 20210658,
-        "reasoning": 157351683
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 11.536143291780547,
-        "reasoning_output_share": 0.788824483420805
+        "input_output_ratio": 37.227424990477864,
+        "reasoning_output_share": 0.5879217433432323
       }
     },
     {
@@ -1572,20 +671,20 @@
       "name": "GLM-5.3 (Max)",
       "variant": "max",
       "tokens_per_task": {
-        "reasoning": 48729.52069683591,
-        "answer": 22398.092941404666,
-        "output": 71127.61363824058
+        "reasoning": 84775.66753992185,
+        "answer": 34210.83730707367,
+        "output": 118986.50484699552
       },
       "canonical_token_counts": {
-        "input": 5405967611,
-        "output": 208643973,
-        "answer": 29141271,
-        "reasoning": 179502702
+        "input": 10296409355,
+        "output": 135067089,
+        "answer": 27420388,
+        "reasoning": 107646701
       },
       "derived": {
         "basis": "derived",
-        "input_output_ratio": 25.91001088250941,
-        "reasoning_output_share": 0.6850998958671277
+        "input_output_ratio": 76.23181510190095,
+        "reasoning_output_share": 0.712481366260272
       }
     },
     {
@@ -1594,20 +693,20 @@
       "name": "GLM-5.3-Flash",
       "variant": "max",
       "tokens_per_task": {
-        "reasoning": 46649.4851844942,
-        "answer": 22023.666872022226,
-        "output": 68673.15205651642
+        "reasoning": 102585.2726368363,
+        "answer": 31619.652746266514,
+        "output": 134204.92538310282
       },
       "canonical_token_counts": {
-        "input": 6481338955,
-        "output": 180681476,
-        "answer": 29224989,
-        "reasoning": 151456487
+        "input": 9742204174,
+        "output": 124286029,
+        "answer": 25129483,
+        "reasoning": 99156546
       },
       "derived": {
         "basis": "derived",
-        "input_output_ratio": 35.87162944695006,
-        "reasoning_output_share": 0.6792972768470384
+        "input_output_ratio": 78.38535233915954,
+        "reasoning_output_share": 0.7643927549156283
       }
     },
     {
@@ -1616,548 +715,20 @@
       "name": "GLM-5.3 (Low)",
       "variant": "low",
       "tokens_per_task": {
-        "reasoning": 20919.107903812885,
-        "answer": 9122.091190537685,
-        "output": 30041.19909435057
+        "reasoning": 35661.159078246186,
+        "answer": 16324.431369528342,
+        "output": 51985.59044777453
       },
       "canonical_token_counts": {
-        "input": 2077619112,
-        "output": 87587945,
-        "answer": 13315928,
-        "reasoning": 74272017
+        "input": 3231996891,
+        "output": 63285718,
+        "answer": 14632862,
+        "reasoning": 48652856
       },
       "derived": {
         "basis": "derived",
-        "input_output_ratio": 23.7203774103845,
-        "reasoning_output_share": 0.6963473008554725
-      }
-    },
-    {
-      "source_id": "ba242e40-83b7-4cd3-a0e0-b56237984914",
-      "slug": "gpt-5-4-mini",
-      "name": "GPT-5.4 mini (Xhigh)",
-      "variant": "xhigh",
-      "tokens_per_task": {
-        "reasoning": 44868.67070042957,
-        "answer": 6788.624926130197,
-        "output": 51657.29562655977
-      },
-      "canonical_token_counts": {
-        "input": 2587888578,
-        "output": 228194408,
-        "answer": 11569647,
-        "reasoning": 216624761
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 11.340718647233459,
-        "reasoning_output_share": 0.8685834238167163
-      }
-    },
-    {
-      "source_id": "d4fc3f33-f2b0-4da1-88ee-f1f82bd4de31",
-      "slug": "gpt-5-4-nano",
-      "name": "GPT-5.4 nano (Xhigh)",
-      "variant": "xhigh",
-      "tokens_per_task": {
-        "reasoning": 56947.044736702264,
-        "answer": 9583.025015968784,
-        "output": 66530.06975267104
-      },
-      "canonical_token_counts": {
-        "input": 2244038353,
-        "output": 186280210,
-        "answer": 12067137,
-        "reasoning": 174213073
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 12.04657409930985,
-        "reasoning_output_share": 0.8559594924280981
-      }
-    },
-    {
-      "source_id": "1f054429-397e-4fdb-9e71-67bc92c1735e",
-      "slug": "gpt-5-5",
-      "name": "GPT-5.5 (Xhigh)",
-      "variant": "xhigh",
-      "tokens_per_task": {
-        "reasoning": 15427.589289989548,
-        "answer": 8230.689200462515,
-        "output": 23658.278490452063
-      },
-      "canonical_token_counts": {
-        "input": 1716405774,
-        "output": 87605592,
-        "answer": 12726664,
-        "reasoning": 74878928
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 19.59242252480869,
-        "reasoning_output_share": 0.6521010941779118
-      }
-    },
-    {
-      "source_id": "b13c1257-d746-4027-8fc8-4892dc14701c",
-      "slug": "gpt-5-5-high",
-      "name": "GPT-5.5 (High)",
-      "variant": "high",
-      "tokens_per_task": {
-        "reasoning": 8892.942330487938,
-        "answer": 6718.141276265624,
-        "output": 15611.083606753562
-      },
-      "canonical_token_counts": {
-        "input": 1091623762,
-        "output": 54656794,
-        "answer": 11349298,
-        "reasoning": 43307496
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 19.972334308521646,
-        "reasoning_output_share": 0.5696556725018584
-      }
-    },
-    {
-      "source_id": "c4169d75-9d24-4794-a9c3-69e1fe364de5",
-      "slug": "gpt-5-5-instant-06-26",
-      "name": "GPT-5.5 Instant (June 2026)",
-      "variant": null,
-      "tokens_per_task": {
-        "reasoning": 1208.3164160751978,
-        "answer": 3832.170126214263,
-        "output": 5040.486542289461
-      },
-      "canonical_token_counts": {
-        "input": 638809981,
-        "output": 10597575,
-        "answer": 7926786,
-        "reasoning": 2670789
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 60.27888276327367,
-        "reasoning_output_share": 0.23972217878918556
-      }
-    },
-    {
-      "source_id": "6b79f899-e3c0-45f6-923c-243faccdb2fc",
-      "slug": "gpt-5-5-medium",
-      "name": "GPT-5.5 (Medium)",
-      "variant": "medium",
-      "tokens_per_task": {
-        "reasoning": 3594.827492526628,
-        "answer": 4958.914465038528,
-        "output": 8553.741957565155
-      },
-      "canonical_token_counts": {
-        "input": 704519309,
-        "output": 29788332,
-        "answer": 9436399,
-        "reasoning": 20351933
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 23.650847889032523,
-        "reasoning_output_share": 0.4202637290627253
-      }
-    },
-    {
-      "source_id": "426d24c8-49ae-482a-b4a8-20f1c53f21c1",
-      "slug": "gpt-5-6-luna",
-      "name": "GPT-5.6 Luna (Max)",
-      "variant": "max",
-      "tokens_per_task": {
-        "reasoning": 28098.251960992493,
-        "answer": 13136.33788999603,
-        "output": 41234.58985098852
-      },
-      "canonical_token_counts": {
-        "input": 4880927437,
-        "output": 153656724,
-        "answer": 18347818,
-        "reasoning": 135308906
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 31.765140567489908,
-        "reasoning_output_share": 0.6814243105735388
-      }
-    },
-    {
-      "source_id": "aa55297e-8fbf-4372-b4ab-9b068dc6396c",
-      "slug": "gpt-5-6-luna-high",
-      "name": "GPT-5.6 Luna (High)",
-      "variant": "high",
-      "tokens_per_task": {
-        "reasoning": 7231.444625076305,
-        "answer": 6630.658051274337,
-        "output": 13862.102676350642
-      },
-      "canonical_token_counts": {
-        "input": 1313771648,
-        "output": 49812339,
-        "answer": 12226670,
-        "reasoning": 37585669
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 26.374421968018808,
-        "reasoning_output_share": 0.5216701097888611
-      }
-    },
-    {
-      "source_id": "050c61cd-cddc-463a-a30a-a82aaa37be59",
-      "slug": "gpt-5-6-luna-low",
-      "name": "GPT-5.6 Luna (Low)",
-      "variant": "low",
-      "tokens_per_task": {
-        "reasoning": 558.7452576637828,
-        "answer": 1955.358913324883,
-        "output": 2514.104170988666
-      },
-      "canonical_token_counts": {
-        "input": 228143479,
-        "output": 10118765,
-        "answer": 4976669,
-        "reasoning": 5142096
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 22.546573519594535,
-        "reasoning_output_share": 0.2222442745656229
-      }
-    },
-    {
-      "source_id": "58b812bf-8498-46db-b834-f43ccc614b61",
-      "slug": "gpt-5-6-luna-medium",
-      "name": "GPT-5.6 Luna (Medium)",
-      "variant": "medium",
-      "tokens_per_task": {
-        "reasoning": 1549.1132301487414,
-        "answer": 2937.209736835318,
-        "output": 4486.322966984059
-      },
-      "canonical_token_counts": {
-        "input": 456195832,
-        "output": 17919951,
-        "answer": 7188460,
-        "reasoning": 10731491
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 25.45742630657863,
-        "reasoning_output_share": 0.34529685926515813
-      }
-    },
-    {
-      "source_id": "dc64f856-3ded-497d-9527-d41d31267ed5",
-      "slug": "gpt-5-6-luna-non-reasoning",
-      "name": "GPT-5.6 Luna (Non-reasoning)",
-      "variant": null,
-      "tokens_per_task": {
-        "reasoning": 0,
-        "answer": 2027.4761833867608,
-        "output": 2027.4761833867608
-      },
-      "canonical_token_counts": {
-        "input": 328270441,
-        "output": 4847490,
-        "answer": 4847490,
-        "reasoning": 0
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 67.71967368679461,
-        "reasoning_output_share": 0
-      }
-    },
-    {
-      "source_id": "87110ff0-1f79-41b4-9976-eda250597317",
-      "slug": "gpt-5-6-luna-xhigh",
-      "name": "GPT-5.6 Luna (Xhigh)",
-      "variant": "xhigh",
-      "tokens_per_task": {
-        "reasoning": 14723.232356740027,
-        "answer": 8901.299682240313,
-        "output": 23624.53203898034
-      },
-      "canonical_token_counts": {
-        "input": 2408470345,
-        "output": 85174201,
-        "answer": 14695373,
-        "reasoning": 70478828
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 28.276993699066225,
-        "reasoning_output_share": 0.6232179470241688
-      }
-    },
-    {
-      "source_id": "d93edfe8-bf35-49ad-b56e-b18116142a1c",
-      "slug": "gpt-5-6-sol",
-      "name": "GPT-5.6 Sol (Max)",
-      "variant": "max",
-      "tokens_per_task": {
-        "reasoning": 17280.445013860917,
-        "answer": 12028.929221184391,
-        "output": 29309.37423504531
-      },
-      "canonical_token_counts": {
-        "input": 2729472126,
-        "output": 89979207,
-        "answer": 17377727,
-        "reasoning": 72601480
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 30.334476341850845,
-        "reasoning_output_share": 0.5895876478044568
-      }
-    },
-    {
-      "source_id": "8afc250d-b538-45a2-812a-4605f4ffd87e",
-      "slug": "gpt-5-6-sol-high",
-      "name": "GPT-5.6 Sol (High)",
-      "variant": "high",
-      "tokens_per_task": {
-        "reasoning": 5875.322060305272,
-        "answer": 7374.652563547264,
-        "output": 13249.974623852537
-      },
-      "canonical_token_counts": {
-        "input": 1033898351,
-        "output": 33729509,
-        "answer": 12964230,
-        "reasoning": 20765279
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 30.652635678746464,
-        "reasoning_output_share": 0.4434213820854077
-      }
-    },
-    {
-      "source_id": "0904b596-8932-43bd-9b21-324f128e1723",
-      "slug": "gpt-5-6-sol-low",
-      "name": "GPT-5.6 Sol (Low)",
-      "variant": "low",
-      "tokens_per_task": {
-        "reasoning": 837.2365865043852,
-        "answer": 3137.161686445854,
-        "output": 3974.398272950239
-      },
-      "canonical_token_counts": {
-        "input": 339320257,
-        "output": 12646474,
-        "answer": 7849391,
-        "reasoning": 4797083
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 26.831214534580944,
-        "reasoning_output_share": 0.21065744522953794
-      }
-    },
-    {
-      "source_id": "6f174934-5b7d-4333-86cb-f5ebf4a862e3",
-      "slug": "gpt-5-6-sol-medium",
-      "name": "GPT-5.6 Sol (Medium)",
-      "variant": "medium",
-      "tokens_per_task": {
-        "reasoning": 2662.1995967613157,
-        "answer": 5211.832978830537,
-        "output": 7874.032575591853
-      },
-      "canonical_token_counts": {
-        "input": 633273298,
-        "output": 21267358,
-        "answer": 10644958,
-        "reasoning": 10622400
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 29.776773306773695,
-        "reasoning_output_share": 0.3380986262380571
-      }
-    },
-    {
-      "source_id": "d998db47-9b67-4727-a2bb-2e1261020ac0",
-      "slug": "gpt-5-6-sol-xhigh",
-      "name": "GPT-5.6 Sol (Xhigh)",
-      "variant": "xhigh",
-      "tokens_per_task": {
-        "reasoning": 10125.92665766193,
-        "answer": 9450.396010246131,
-        "output": 19576.32266790806
-      },
-      "canonical_token_counts": {
-        "input": 1471735486,
-        "output": 50998357,
-        "answer": 15027018,
-        "reasoning": 35971339
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 28.858488245023267,
-        "reasoning_output_share": 0.5172537676987521
-      }
-    },
-    {
-      "source_id": "bcf8db0a-3bb6-4d82-9516-0f57370c85a6",
-      "slug": "gpt-5-6-terra",
-      "name": "GPT-5.6 Terra (Max)",
-      "variant": "max",
-      "tokens_per_task": {
-        "reasoning": 26043.92167327328,
-        "answer": 12853.54225872057,
-        "output": 38897.46393199385
-      },
-      "canonical_token_counts": {
-        "input": 3404194513,
-        "output": 121832989,
-        "answer": 17566953,
-        "reasoning": 104266036
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 27.941484001512922,
-        "reasoning_output_share": 0.6695532058030059
-      }
-    },
-    {
-      "source_id": "81972fba-1219-477e-bbfb-18c656a63ff7",
-      "slug": "gpt-5-6-terra-high",
-      "name": "GPT-5.6 Terra (High)",
-      "variant": "high",
-      "tokens_per_task": {
-        "reasoning": 5441.443327078267,
-        "answer": 5852.216975309924,
-        "output": 11293.66030238819
-      },
-      "canonical_token_counts": {
-        "input": 869544031,
-        "output": 33205685,
-        "answer": 11108868,
-        "reasoning": 22096817
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 26.186601210003648,
-        "reasoning_output_share": 0.4818139718553075
-      }
-    },
-    {
-      "source_id": "cc4a20cd-09fe-4962-a430-119c815e85fa",
-      "slug": "gpt-5-6-terra-low",
-      "name": "GPT-5.6 Terra (Low)",
-      "variant": "low",
-      "tokens_per_task": {
-        "reasoning": 1023.5965077221342,
-        "answer": 2847.6993508074834,
-        "output": 3871.2958585296174
-      },
-      "canonical_token_counts": {
-        "input": 401632548,
-        "output": 11297248,
-        "answer": 6402384,
-        "reasoning": 4894864
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 35.551361535127846,
-        "reasoning_output_share": 0.26440668580440485
-      }
-    },
-    {
-      "source_id": "26e0f83a-ca98-4f34-94ac-7c5e251ee410",
-      "slug": "gpt-5-6-terra-medium",
-      "name": "GPT-5.6 Terra (Medium)",
-      "variant": "medium",
-      "tokens_per_task": {
-        "reasoning": 1877.1238117201892,
-        "answer": 3600.6617093438053,
-        "output": 5477.785521063995
-      },
-      "canonical_token_counts": {
-        "input": 486597297,
-        "output": 16684399,
-        "answer": 7790538,
-        "reasoning": 8893861
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 29.164808213948852,
-        "reasoning_output_share": 0.3426793189514255
-      }
-    },
-    {
-      "source_id": "9b97a35e-6ac7-44d9-91c6-422fa678963e",
-      "slug": "gpt-5-6-terra-non-reasoning",
-      "name": "GPT-5.6 Terra (Non-reasoning)",
-      "variant": null,
-      "tokens_per_task": {
-        "reasoning": 0,
-        "answer": 3129.3947847469058,
-        "output": 3129.3947847469058
-      },
-      "canonical_token_counts": {
-        "input": 347112842,
-        "output": 5818048,
-        "answer": 5818048,
-        "reasoning": 0
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 59.66139193076441,
-        "reasoning_output_share": 0
-      }
-    },
-    {
-      "source_id": "9e30696f-16fa-4b4f-ba53-161895a85fed",
-      "slug": "gpt-5-6-terra-xhigh",
-      "name": "GPT-5.6 Terra (Xhigh)",
-      "variant": "xhigh",
-      "tokens_per_task": {
-        "reasoning": 11511.650051749408,
-        "answer": 8855.697541233654,
-        "output": 20367.34759298306
-      },
-      "canonical_token_counts": {
-        "input": 1530965522,
-        "output": 51995246,
-        "answer": 14062667,
-        "reasoning": 37932579
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 29.44433654569112,
-        "reasoning_output_share": 0.5652012368913167
-      }
-    },
-    {
-      "source_id": "29855680-7469-43eb-8b88-cd3fb1d99da3",
-      "slug": "gpt-5-mini",
-      "name": "GPT-5 mini (High)",
-      "variant": "high",
-      "tokens_per_task": {
-        "reasoning": 11522.83689649851,
-        "answer": 5121.912340918456,
-        "output": 16644.749237416967
-      },
-      "canonical_token_counts": {
-        "input": 882509182,
-        "output": 74121231,
-        "answer": 9396514,
-        "reasoning": 64724717
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 11.906294189852298,
-        "reasoning_output_share": 0.6922805944468944
+        "input_output_ratio": 51.06992530289377,
+        "reasoning_output_share": 0.6859816108864224
       }
     },
     {
@@ -2166,20 +737,20 @@
       "name": "GPT-6.1 Sol (Max)",
       "variant": "max",
       "tokens_per_task": {
-        "reasoning": 25189.980723580382,
-        "answer": 12938.448190853393,
-        "output": 38128.428914433774
+        "reasoning": 49212.93730141593,
+        "answer": 18610.75443636227,
+        "output": 67823.6917377782
       },
       "canonical_token_counts": {
-        "input": 1383452045,
-        "output": 67198855,
-        "answer": 17360658,
-        "reasoning": 49838197
+        "input": 1916169604,
+        "output": 63661006,
+        "answer": 17049447,
+        "reasoning": 46611559
       },
       "derived": {
         "basis": "derived",
-        "input_output_ratio": 20.587434785905206,
-        "reasoning_output_share": 0.6606613868122047
+        "input_output_ratio": 30.099580958554128,
+        "reasoning_output_share": 0.7256009816110325
       }
     },
     {
@@ -2188,20 +759,20 @@
       "name": "GPT-6.1 Sol (High)",
       "variant": "high",
       "tokens_per_task": {
-        "reasoning": 5723.233188942028,
-        "answer": 7468.637030879253,
-        "output": 13191.870219821281
+        "reasoning": 10135.343936248304,
+        "answer": 12470.855135528855,
+        "output": 22606.19907177716
       },
       "canonical_token_counts": {
-        "input": 782097221,
-        "output": 25376903,
-        "answer": 12446594,
-        "reasoning": 12930309
+        "input": 1286467546,
+        "output": 24651130,
+        "answer": 12737195,
+        "reasoning": 11913935
       },
       "derived": {
         "basis": "derived",
-        "input_output_ratio": 30.819254067369844,
-        "reasoning_output_share": 0.4338454740361723
+        "input_output_ratio": 52.186960435485105,
+        "reasoning_output_share": 0.4483435673581161
       }
     },
     {
@@ -2210,20 +781,20 @@
       "name": "GPT-6.1 Sol (Low)",
       "variant": "low",
       "tokens_per_task": {
-        "reasoning": 1157.745645693312,
-        "answer": 2818.9553289838973,
-        "output": 3976.700974677209
+        "reasoning": 1585.0911146155215,
+        "answer": 4252.903561642771,
+        "output": 5837.994676258292
       },
       "canonical_token_counts": {
-        "input": 369938580,
-        "output": 9014298,
-        "answer": 6563441,
-        "reasoning": 2450857
+        "input": 456311809,
+        "output": 8177481,
+        "answer": 6215767,
+        "reasoning": 1961714
       },
       "derived": {
         "basis": "derived",
-        "input_output_ratio": 41.039089233570934,
-        "reasoning_output_share": 0.2911321854636774
+        "input_output_ratio": 55.801023444750285,
+        "reasoning_output_share": 0.27151294280238086
       }
     },
     {
@@ -2232,20 +803,20 @@
       "name": "GPT-6.1 Sol (Medium)",
       "variant": "medium",
       "tokens_per_task": {
-        "reasoning": 2894.894080277142,
-        "answer": 5174.948477214529,
-        "output": 8069.842557491671
+        "reasoning": 4804.5871643877435,
+        "answer": 8713.748770791233,
+        "output": 13518.335935178977
       },
       "canonical_token_counts": {
-        "input": 546325961,
-        "output": 15265677,
-        "answer": 9731609,
-        "reasoning": 5534068
+        "input": 852101014,
+        "output": 15120833,
+        "answer": 9936552,
+        "reasoning": 5184281
       },
       "derived": {
         "basis": "derived",
-        "input_output_ratio": 35.787863256899776,
-        "reasoning_output_share": 0.358729933038118
+        "input_output_ratio": 56.35278254842177,
+        "reasoning_output_share": 0.3554126179010459
       }
     },
     {
@@ -2254,20 +825,20 @@
       "name": "GPT-6.1 Sol (Xhigh)",
       "variant": "xhigh",
       "tokens_per_task": {
-        "reasoning": 9080.0312918106,
-        "answer": 8538.802498574274,
-        "output": 17618.833790384873
+        "reasoning": 15526.658464337335,
+        "answer": 14714.525483136498,
+        "output": 30241.183947473834
       },
       "canonical_token_counts": {
-        "input": 934466155,
-        "output": 36005814,
-        "answer": 13725359,
-        "reasoning": 22280455
+        "input": 1612933044,
+        "output": 33286283,
+        "answer": 14197462,
+        "reasoning": 19088821
       },
       "derived": {
         "basis": "derived",
-        "input_output_ratio": 25.953201752361437,
-        "reasoning_output_share": 0.5153593818885926
+        "input_output_ratio": 48.45638799622054,
+        "reasoning_output_share": 0.5134275989758113
       }
     },
     {
@@ -2276,20 +847,20 @@
       "name": "GPT-6.1 Terra (Max)",
       "variant": "max",
       "tokens_per_task": {
-        "reasoning": 24891.820026418292,
-        "answer": 10204.197474289615,
-        "output": 35096.01750070791
+        "reasoning": 39361.88425299784,
+        "answer": 20521.280464906326,
+        "output": 59883.16471790417
       },
       "canonical_token_counts": {
-        "input": 2348033907,
-        "output": 128152739,
-        "answer": 14990548,
-        "reasoning": 113162191
+        "input": 5567807688,
+        "output": 99386052,
+        "answer": 18062949,
+        "reasoning": 81323103
       },
       "derived": {
         "basis": "derived",
-        "input_output_ratio": 18.32215156166112,
-        "reasoning_output_share": 0.7092491342049339
+        "input_output_ratio": 56.022022969581286,
+        "reasoning_output_share": 0.6573113568466636
       }
     },
     {
@@ -2298,20 +869,20 @@
       "name": "GPT-6.1 Terra (High)",
       "variant": "high",
       "tokens_per_task": {
-        "reasoning": 3927.579130045172,
-        "answer": 5099.202524803887,
-        "output": 9026.78165484906
+        "reasoning": 7617.94638381854,
+        "answer": 9128.530938540987,
+        "output": 16746.477322359526
       },
       "canonical_token_counts": {
-        "input": 733544594,
-        "output": 22507031,
-        "answer": 9399112,
-        "reasoning": 13107919
+        "input": 1363969736,
+        "output": 20580034,
+        "answer": 10194984,
+        "reasoning": 10385050
       },
       "derived": {
         "basis": "derived",
-        "input_output_ratio": 32.59179738100507,
-        "reasoning_output_share": 0.4351029281776559
+        "input_output_ratio": 66.27635969891983,
+        "reasoning_output_share": 0.45489843847023437
       }
     },
     {
@@ -2320,20 +891,20 @@
       "name": "GPT-6.1 Terra (Low)",
       "variant": "low",
       "tokens_per_task": {
-        "reasoning": 472.1274145936141,
-        "answer": 2208.72042885585,
-        "output": 2680.847843449464
+        "reasoning": 950.1006046992582,
+        "answer": 3472.0716628085765,
+        "output": 4422.1722675078345
       },
       "canonical_token_counts": {
-        "input": 266608093,
-        "output": 7884067,
-        "answer": 5732928,
-        "reasoning": 2151139
+        "input": 373959702,
+        "output": 7189028,
+        "answer": 5646362,
+        "reasoning": 1542666
       },
       "derived": {
         "basis": "derived",
-        "input_output_ratio": 33.81606130440038,
-        "reasoning_output_share": 0.17611123128350498
+        "input_output_ratio": 52.018117331021664,
+        "reasoning_output_share": 0.21484929740982212
       }
     },
     {
@@ -2342,20 +913,20 @@
       "name": "GPT-6.1 Terra (Medium)",
       "variant": "medium",
       "tokens_per_task": {
-        "reasoning": 1939.9846465741039,
-        "answer": 3894.7828589955047,
-        "output": 5834.767505569609
+        "reasoning": 4054.781836721573,
+        "answer": 6820.680904068838,
+        "output": 10875.462740790412
       },
       "canonical_token_counts": {
-        "input": 507876520,
-        "output": 14475448,
-        "answer": 7913212,
-        "reasoning": 6562236
+        "input": 879072127,
+        "output": 13627217,
+        "answer": 8356080,
+        "reasoning": 5271137
       },
       "derived": {
         "basis": "derived",
-        "input_output_ratio": 35.08537490514974,
-        "reasoning_output_share": 0.3324870519214829
+        "input_output_ratio": 64.50855864407238,
+        "reasoning_output_share": 0.372837637658706
       }
     },
     {
@@ -2365,18 +936,18 @@
       "variant": null,
       "tokens_per_task": {
         "reasoning": 0,
-        "answer": 4736.737408685987,
-        "output": 4736.737408685987
+        "answer": 9488.030363821414,
+        "output": 9488.030363821414
       },
       "canonical_token_counts": {
-        "input": 679784160,
-        "output": 8283832,
-        "answer": 8283832,
+        "input": 1497203428,
+        "output": 9964792,
+        "answer": 9964792,
         "reasoning": 0
       },
       "derived": {
         "basis": "derived",
-        "input_output_ratio": 82.06155798427588,
+        "input_output_ratio": 150.24934067866144,
         "reasoning_output_share": 0
       }
     },
@@ -2386,20 +957,20 @@
       "name": "GPT-6.1 Terra (Xhigh)",
       "variant": "xhigh",
       "tokens_per_task": {
-        "reasoning": 8017.320278504038,
-        "answer": 6534.0290499172315,
-        "output": 14551.34932842127
+        "reasoning": 14193.395737099658,
+        "answer": 12006.263446065426,
+        "output": 26199.659183165084
       },
       "canonical_token_counts": {
-        "input": 1093347992,
-        "output": 40819645,
-        "answer": 11006247,
-        "reasoning": 29813398
+        "input": 2141453088,
+        "output": 34722763,
+        "answer": 12205846,
+        "reasoning": 22516917
       },
       "derived": {
         "basis": "derived",
-        "input_output_ratio": 26.784848128885002,
-        "reasoning_output_share": 0.5509674805789208
+        "input_output_ratio": 61.67288841616665,
+        "reasoning_output_share": 0.5417397088210903
       }
     },
     {
@@ -2408,20 +979,20 @@
       "name": "GPT-6 Astra (Max)",
       "variant": "max",
       "tokens_per_task": {
-        "reasoning": 16691.238044704474,
-        "answer": 10514.266871765667,
-        "output": 27205.50491647014
+        "reasoning": 35759.69683488444,
+        "answer": 16213.502141553043,
+        "output": 51973.19897643748
       },
       "canonical_token_counts": {
-        "input": 1172335977,
-        "output": 60007725,
-        "answer": 15559937,
-        "reasoning": 44447788
+        "input": 1680916109,
+        "output": 54327859,
+        "answer": 15453718,
+        "reasoning": 38874141
       },
       "derived": {
         "basis": "derived",
-        "input_output_ratio": 19.536417636229334,
-        "reasoning_output_share": 0.6135242884097197
+        "input_output_ratio": 30.940223670511294,
+        "reasoning_output_share": 0.6880410969333718
       }
     },
     {
@@ -2430,20 +1001,20 @@
       "name": "GPT-6 Astra (High)",
       "variant": "high",
       "tokens_per_task": {
-        "reasoning": 4712.29138992191,
-        "answer": 7100.518608638372,
-        "output": 11812.809998560282
+        "reasoning": 12091.51990835846,
+        "answer": 11041.949728129557,
+        "output": 23133.469636488015
       },
       "canonical_token_counts": {
-        "input": 742163538,
-        "output": 26227128,
-        "answer": 12195603,
-        "reasoning": 14031525
+        "input": 1034484385,
+        "output": 25584856,
+        "answer": 12031650,
+        "reasoning": 13553206
       },
       "derived": {
         "basis": "derived",
-        "input_output_ratio": 28.29755274767409,
-        "reasoning_output_share": 0.3989136700324676
+        "input_output_ratio": 40.43346521082628,
+        "reasoning_output_share": 0.5226851007808495
       }
     },
     {
@@ -2452,20 +1023,20 @@
       "name": "GPT-6 Astra (Low)",
       "variant": "low",
       "tokens_per_task": {
-        "reasoning": 937.6860175531208,
-        "answer": 3495.0627791575184,
-        "output": 4432.748796710639
+        "reasoning": 3304.4374595689696,
+        "answer": 5821.371540046026,
+        "output": 9125.808999614996
       },
       "canonical_token_counts": {
-        "input": 410696631,
-        "output": 9994716,
-        "answer": 7599665,
-        "reasoning": 2395051
+        "input": 552354629,
+        "output": 10270307,
+        "answer": 7460991,
+        "reasoning": 2809316
       },
       "derived": {
         "basis": "derived",
-        "input_output_ratio": 41.091375782963716,
-        "reasoning_output_share": 0.2115360153611545
+        "input_output_ratio": 53.78170574647866,
+        "reasoning_output_share": 0.362098029852299
       }
     },
     {
@@ -2474,20 +1045,20 @@
       "name": "GPT-6 Astra (Medium)",
       "variant": "medium",
       "tokens_per_task": {
-        "reasoning": 3421.700771671087,
-        "answer": 6167.899881984518,
-        "output": 9589.600653655605
+        "reasoning": 8580.704057163004,
+        "answer": 9470.920369968386,
+        "output": 18051.62442713139
       },
       "canonical_token_counts": {
-        "input": 689951701,
-        "output": 18913587,
-        "answer": 10809789,
-        "reasoning": 8103798
+        "input": 937930065,
+        "output": 18172704,
+        "answer": 10651314,
+        "reasoning": 7521390
       },
       "derived": {
         "basis": "derived",
-        "input_output_ratio": 36.479156544974785,
-        "reasoning_output_share": 0.3568136875821536
+        "input_output_ratio": 51.612025651218445,
+        "reasoning_output_share": 0.47534248741992996
       }
     },
     {
@@ -2496,20 +1067,20 @@
       "name": "GPT-6 Astra (Xhigh)",
       "variant": "xhigh",
       "tokens_per_task": {
-        "reasoning": 8582.48703099872,
-        "answer": 8318.693934893881,
-        "output": 16901.1809658926
+        "reasoning": 14692.868640794215,
+        "answer": 12030.88995460506,
+        "output": 26723.758595399275
       },
       "canonical_token_counts": {
-        "input": 934379760,
-        "output": 37901142,
-        "answer": 13409872,
-        "reasoning": 24491270
+        "input": 1163882214,
+        "output": 32284672,
+        "answer": 12836266,
+        "reasoning": 19448406
       },
       "derived": {
         "basis": "derived",
-        "input_output_ratio": 24.653076680380764,
-        "reasoning_output_share": 0.5078039841309666
+        "input_output_ratio": 36.05061293483174,
+        "reasoning_output_share": 0.5498054694792714
       }
     },
     {
@@ -2518,20 +1089,20 @@
       "name": "GPT-6 Luna (Max)",
       "variant": "max",
       "tokens_per_task": {
-        "reasoning": 38889.68045928154,
-        "answer": 11122.009971258729,
-        "output": 50011.69043054027
+        "reasoning": 57562.205532606444,
+        "answer": 17733.846833032265,
+        "output": 75296.05236563871
       },
       "canonical_token_counts": {
-        "input": 3146391012,
-        "output": 144380994,
-        "answer": 16144377,
-        "reasoning": 128236617
+        "input": 6011307698,
+        "output": 109588316,
+        "answer": 16287852,
+        "reasoning": 93300464
       },
       "derived": {
         "basis": "derived",
-        "input_output_ratio": 21.792279751170017,
-        "reasoning_output_share": 0.7776117968516629
+        "input_output_ratio": 54.85354568273501,
+        "reasoning_output_share": 0.7644783985896572
       }
     },
     {
@@ -2540,20 +1111,20 @@
       "name": "GPT-6 Luna (High)",
       "variant": "high",
       "tokens_per_task": {
-        "reasoning": 12744.489871262254,
-        "answer": 6958.744211013708,
-        "output": 19703.23408227596
+        "reasoning": 21618.13346863456,
+        "answer": 11221.007760547975,
+        "output": 32839.14122918254
       },
       "canonical_token_counts": {
-        "input": 1360228474,
-        "output": 46829428,
-        "answer": 11772353,
-        "reasoning": 35057075
+        "input": 2982538333,
+        "output": 40451607,
+        "answer": 12065275,
+        "reasoning": 28386332
       },
       "derived": {
         "basis": "derived",
-        "input_output_ratio": 29.04644647805649,
-        "reasoning_output_share": 0.6468222332457876
+        "input_output_ratio": 73.7310221816404,
+        "reasoning_output_share": 0.6583038611686831
       }
     },
     {
@@ -2562,20 +1133,20 @@
       "name": "GPT-6 Luna (Low)",
       "variant": "low",
       "tokens_per_task": {
-        "reasoning": 513.9529094338612,
-        "answer": 1573.2668457309953,
-        "output": 2087.2197551648565
+        "reasoning": 702.1578260752185,
+        "answer": 2593.7325093147338,
+        "output": 3295.8903353899523
       },
       "canonical_token_counts": {
-        "input": 194196096,
-        "output": 8160682,
-        "answer": 3791077,
-        "reasoning": 4369605
+        "input": 228133068,
+        "output": 5823065,
+        "answer": 3396836,
+        "reasoning": 2426229
       },
       "derived": {
         "basis": "derived",
-        "input_output_ratio": 23.79655229795745,
-        "reasoning_output_share": 0.2462380437719014
+        "input_output_ratio": 39.177489517977214,
+        "reasoning_output_share": 0.21304040930480259
       }
     },
     {
@@ -2584,20 +1155,20 @@
       "name": "GPT-6 Luna (Medium)",
       "variant": "medium",
       "tokens_per_task": {
-        "reasoning": 6329.116297849525,
-        "answer": 5127.339478262683,
-        "output": 11456.455776112209
+        "reasoning": 11042.646001229745,
+        "answer": 8780.592178787727,
+        "output": 19823.23818001747
       },
       "canonical_token_counts": {
-        "input": 847464770,
-        "output": 28532183,
-        "answer": 9806193,
-        "reasoning": 18725990
+        "input": 1778722031,
+        "output": 24887351,
+        "answer": 10152207,
+        "reasoning": 14735144
       },
       "derived": {
         "basis": "derived",
-        "input_output_ratio": 29.702065558741158,
-        "reasoning_output_share": 0.5524497647035246
+        "input_output_ratio": 71.47092637541054,
+        "reasoning_output_share": 0.5570556082184961
       }
     },
     {
@@ -2607,18 +1178,18 @@
       "variant": null,
       "tokens_per_task": {
         "reasoning": 0,
-        "answer": 3760.5390495238253,
-        "output": 3760.5390495238253
+        "answer": 10058.630588309104,
+        "output": 10058.630588309104
       },
       "canonical_token_counts": {
-        "input": 903361165,
-        "output": 6926643,
-        "answer": 6926643,
+        "input": 3924101437,
+        "output": 9201564,
+        "answer": 9201564,
         "reasoning": 0
       },
       "derived": {
         "basis": "derived",
-        "input_output_ratio": 130.41832313286537,
+        "input_output_ratio": 426.4602666459745,
         "reasoning_output_share": 0
       }
     },
@@ -2628,218 +1199,20 @@
       "name": "GPT-6 Luna (Xhigh)",
       "variant": "xhigh",
       "tokens_per_task": {
-        "reasoning": 18757.343458035717,
-        "answer": 8729.75266690935,
-        "output": 27487.096124945067
+        "reasoning": 30020.389632936014,
+        "answer": 13872.824470412539,
+        "output": 43893.21410334855
       },
       "canonical_token_counts": {
-        "input": 1995518108,
-        "output": 68515556,
-        "answer": 13273577,
-        "reasoning": 55241979
+        "input": 4274179795,
+        "output": 56118451,
+        "answer": 13716625,
+        "reasoning": 42401826
       },
       "derived": {
         "basis": "derived",
-        "input_output_ratio": 29.125037064575526,
-        "reasoning_output_share": 0.6824054229945763
-      }
-    },
-    {
-      "source_id": "c50ea08c-88c0-4eb7-85b8-27f2bbf6d527",
-      "slug": "gpt-6-sol",
-      "name": "GPT-6 Sol (Max)",
-      "variant": "max",
-      "tokens_per_task": {
-        "reasoning": 20844.546131786356,
-        "answer": 10155.099907878906,
-        "output": 30999.646039665262
-      },
-      "canonical_token_counts": {
-        "input": 2494962325,
-        "output": 76751405,
-        "answer": 14183887,
-        "reasoning": 62567518
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 32.50705736266326,
-        "reasoning_output_share": 0.6724123915839214
-      }
-    },
-    {
-      "source_id": "52eebe3e-6ede-4e46-92db-c5dea49fc410",
-      "slug": "gpt-6-sol-high",
-      "name": "GPT-6 Sol (High)",
-      "variant": "high",
-      "tokens_per_task": {
-        "reasoning": 4993.811224636504,
-        "answer": 5298.247035066358,
-        "output": 10292.058259702862
-      },
-      "canonical_token_counts": {
-        "input": 916617805,
-        "output": 25285300,
-        "answer": 9619187,
-        "reasoning": 15666113
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 36.251015609860275,
-        "reasoning_output_share": 0.4852101590008565
-      }
-    },
-    {
-      "source_id": "01459872-433a-4ab2-8e99-7083162172eb",
-      "slug": "gpt-6-sol-low",
-      "name": "GPT-6 Sol (Low)",
-      "variant": "low",
-      "tokens_per_task": {
-        "reasoning": 699.6557735344724,
-        "answer": 2673.1805322196647,
-        "output": 3372.836305754137
-      },
-      "canonical_token_counts": {
-        "input": 339713652,
-        "output": 8916608,
-        "answer": 6228000,
-        "reasoning": 2688608
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 38.09897799701411,
-        "reasoning_output_share": 0.20743840201816002
-      }
-    },
-    {
-      "source_id": "780a4a85-17ff-4175-a8dd-ebca4823e61b",
-      "slug": "gpt-6-sol-medium",
-      "name": "GPT-6 Sol (Medium)",
-      "variant": "medium",
-      "tokens_per_task": {
-        "reasoning": 2336.8040811197557,
-        "answer": 4160.861325450569,
-        "output": 6497.665406570324
-      },
-      "canonical_token_counts": {
-        "input": 592256635,
-        "output": 15901072,
-        "answer": 8231817,
-        "reasoning": 7669255
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 37.24633376919493,
-        "reasoning_output_share": 0.35963749052957095
-      }
-    },
-    {
-      "source_id": "d3e20e76-9e1a-45b6-b809-ad6aa37430cf",
-      "slug": "gpt-6-sol-non-reasoning",
-      "name": "GPT-6 Sol (Non-reasoning)",
-      "variant": null,
-      "tokens_per_task": {
-        "reasoning": 0,
-        "answer": 4974.907322254438,
-        "output": 4974.907322254438
-      },
-      "canonical_token_counts": {
-        "input": 1101112727,
-        "output": 8311056,
-        "answer": 8311056,
-        "reasoning": 0
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 132.48770396926696,
-        "reasoning_output_share": 0
-      }
-    },
-    {
-      "source_id": "da2642fe-9f73-4788-b5af-24edcd55b37e",
-      "slug": "gpt-6-sol-xhigh",
-      "name": "GPT-6 Sol (Xhigh)",
-      "variant": "xhigh",
-      "tokens_per_task": {
-        "reasoning": 9193.303119233082,
-        "answer": 6644.5515535901,
-        "output": 15837.854672823181
-      },
-      "canonical_token_counts": {
-        "input": 1266205391,
-        "output": 40159799,
-        "answer": 11146945,
-        "reasoning": 29012854
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 31.52917650309953,
-        "reasoning_output_share": 0.5804639144093325
-      }
-    },
-    {
-      "source_id": "f0083258-8646-45b8-8082-7aaf6c2ea82a",
-      "slug": "gpt-oss-120b",
-      "name": "gpt-oss-120b (High)",
-      "variant": "high",
-      "tokens_per_task": {
-        "reasoning": 15084.472343612117,
-        "answer": 11869.499232430167,
-        "output": 26953.971576042284
-      },
-      "canonical_token_counts": {
-        "input": 481409617,
-        "output": 84169255,
-        "answer": 9936128,
-        "reasoning": 74233127
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 5.719542331698196,
-        "reasoning_output_share": 0.5596382077148055
-      }
-    },
-    {
-      "source_id": "36f73aaf-d38a-4b56-a2b3-d04d17186910",
-      "slug": "gpt-oss-20b",
-      "name": "gpt-oss-20b (High)",
-      "variant": "high",
-      "tokens_per_task": {
-        "reasoning": 16108.126631449428,
-        "answer": 2000.674950298791,
-        "output": 18108.80158174822
-      },
-      "canonical_token_counts": {
-        "input": 269180384,
-        "output": 69793295,
-        "answer": 3995318,
-        "reasoning": 65797977
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 3.856822979915191,
-        "reasoning_output_share": 0.8895191964378657
-      }
-    },
-    {
-      "source_id": "1071dea1-43e7-4fe9-b936-3034bb622b2e",
-      "slug": "granite-4-2-30b",
-      "name": "Granite 4.2 30B",
-      "variant": null,
-      "tokens_per_task": {
-        "reasoning": 43889.7626460428,
-        "answer": 10012.068245513614,
-        "output": 53901.83089155641
-      },
-      "canonical_token_counts": {
-        "input": 837278030,
-        "output": 103823643,
-        "answer": 14637353,
-        "reasoning": 89186290
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 8.064425460393448,
-        "reasoning_output_share": 0.8142536518721115
+        "input_output_ratio": 76.1635383521188,
+        "reasoning_output_share": 0.6839414758338647
       }
     },
     {
@@ -2848,196 +1221,20 @@
       "name": "Granite 4.2 3B",
       "variant": null,
       "tokens_per_task": {
-        "reasoning": 11211.272447953186,
-        "answer": 7436.713103641413,
-        "output": 18647.9855515946
+        "reasoning": 19221.621649888468,
+        "answer": 15064.44587666618,
+        "output": 34286.067526554645
       },
       "canonical_token_counts": {
-        "input": 392525057,
-        "output": 92077463,
-        "answer": 12878603,
-        "reasoning": 79198860
+        "input": 1051494183,
+        "output": 58282582,
+        "answer": 11641458,
+        "reasoning": 46641124
       },
       "derived": {
         "basis": "derived",
-        "input_output_ratio": 4.262987317537191,
-        "reasoning_output_share": 0.601205552038542
-      }
-    },
-    {
-      "source_id": "adfae555-f489-4f3e-9064-c6b7fcdd0783",
-      "slug": "granite-4-2-8b",
-      "name": "Granite 4.2 8B",
-      "variant": null,
-      "tokens_per_task": {
-        "reasoning": 21819.994358376447,
-        "answer": 11578.71922892724,
-        "output": 33398.71358730369
-      },
-      "canonical_token_counts": {
-        "input": 1192878492,
-        "output": 125699559,
-        "answer": 20229572,
-        "reasoning": 105469987
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 9.48991787632286,
-        "reasoning_output_share": 0.6533184070500003
-      }
-    },
-    {
-      "source_id": "948892b5-db03-4118-a4a8-ccd51ed871ea",
-      "slug": "grok-4-3",
-      "name": "Grok 4.3 (High)",
-      "variant": "high",
-      "tokens_per_task": {
-        "reasoning": 11347.37684195656,
-        "answer": 6342.622187902203,
-        "output": 17689.999029858765
-      },
-      "canonical_token_counts": {
-        "input": 320642900,
-        "output": 87022323,
-        "answer": 7407856,
-        "reasoning": 79614467
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 3.6846051558517923,
-        "reasoning_output_share": 0.641457177176971
-      }
-    },
-    {
-      "source_id": "90c2a9cf-ad7e-4332-9be2-2fd1309833e2",
-      "slug": "grok-4-3-non-reasoning",
-      "name": "Grok 4.3 (Non-reasoning)",
-      "variant": null,
-      "tokens_per_task": {
-        "reasoning": 0,
-        "answer": 9121.855530808516,
-        "output": 9121.855530808516
-      },
-      "canonical_token_counts": {
-        "input": 485443932,
-        "output": 11964151,
-        "answer": 11964151,
-        "reasoning": 0
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 40.574875057996174,
-        "reasoning_output_share": 0
-      }
-    },
-    {
-      "source_id": "794f69b5-cede-482b-b1cc-d769478497cd",
-      "slug": "grok-4-5",
-      "name": "Grok 4.5 (High)",
-      "variant": "high",
-      "tokens_per_task": {
-        "reasoning": 9781.15881445639,
-        "answer": 17101.13537143534,
-        "output": 26882.29418589173
-      },
-      "canonical_token_counts": {
-        "input": 1284035080,
-        "output": 76610113,
-        "answer": 21125924,
-        "reasoning": 55484189
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 16.760647252928607,
-        "reasoning_output_share": 0.3638513419583699
-      }
-    },
-    {
-      "source_id": "c8adc5cf-fd5a-407b-af51-dc3bede3e49c",
-      "slug": "grok-4-6",
-      "name": "Grok 4.6 (High)",
-      "variant": "high",
-      "tokens_per_task": {
-        "reasoning": 18781.562301591235,
-        "answer": 17052.94754748812,
-        "output": 35834.50984907935
-      },
-      "canonical_token_counts": {
-        "input": 2098674870,
-        "output": 94186612,
-        "answer": 21580466,
-        "reasoning": 72606146
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 22.282093234227386,
-        "reasoning_output_share": 0.5241194139585466
-      }
-    },
-    {
-      "source_id": "c07e65e6-32fc-451e-938d-7477a1c3ffcc",
-      "slug": "grok-4-6-low",
-      "name": "Grok 4.6 (Low)",
-      "variant": "low",
-      "tokens_per_task": {
-        "reasoning": 2460.8077250036104,
-        "answer": 7803.206181322389,
-        "output": 10264.013906326
-      },
-      "canonical_token_counts": {
-        "input": 653614422,
-        "output": 20788229,
-        "answer": 11595593,
-        "reasoning": 9192636
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 31.441563492493756,
-        "reasoning_output_share": 0.23975101236826515
-      }
-    },
-    {
-      "source_id": "26614164-6840-4e17-a65a-2deb2fe7e87b",
-      "slug": "grok-4-6-medium",
-      "name": "Grok 4.6 (Medium)",
-      "variant": "medium",
-      "tokens_per_task": {
-        "reasoning": 13758.04273213306,
-        "answer": 14708.366242694778,
-        "output": 28466.40897482784
-      },
-      "canonical_token_counts": {
-        "input": 1617603501,
-        "output": 72892683,
-        "answer": 19164637,
-        "reasoning": 53728046
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 22.191575812897433,
-        "reasoning_output_share": 0.4833079839574766
-      }
-    },
-    {
-      "source_id": "d6f43d0a-e8c4-447c-9ff7-5cf0a9d59aa3",
-      "slug": "grok-4-6-xhigh",
-      "name": "Grok 4.6 (Xhigh)",
-      "variant": "xhigh",
-      "tokens_per_task": {
-        "reasoning": 19801.67585008191,
-        "answer": 17806.47553842945,
-        "output": 37608.15138851136
-      },
-      "canonical_token_counts": {
-        "input": 2467657139,
-        "output": 97250553,
-        "answer": 22633862,
-        "reasoning": 74616691
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 25.374222180515517,
-        "reasoning_output_share": 0.5265261683702693
+        "input_output_ratio": 18.041310918586277,
+        "reasoning_output_share": 0.5606248554168912
       }
     },
     {
@@ -3046,20 +1243,20 @@
       "name": "Grok 4.7 (Xhigh)",
       "variant": "xhigh",
       "tokens_per_task": {
-        "reasoning": 58543.633141273924,
-        "answer": 22017.731587256894,
-        "output": 80561.36472853081
+        "reasoning": 53901.93692117775,
+        "answer": 39067.56951380316,
+        "output": 92969.50643498091
       },
       "canonical_token_counts": {
-        "input": 4188838973,
-        "output": 240410045,
-        "answer": 27473948,
-        "reasoning": 212936097
+        "input": 7103324920,
+        "output": 142604745,
+        "answer": 28615901,
+        "reasoning": 113988844
       },
       "derived": {
         "basis": "derived",
-        "input_output_ratio": 17.423726920395527,
-        "reasoning_output_share": 0.7266961444676309
+        "input_output_ratio": 49.81128026279911,
+        "reasoning_output_share": 0.579780822638599
       }
     },
     {
@@ -3068,20 +1265,20 @@
       "name": "Grok 4.7 (High)",
       "variant": "high",
       "tokens_per_task": {
-        "reasoning": 46633.30527496027,
-        "answer": 19268.162473179156,
-        "output": 65901.46774813943
+        "reasoning": 58183.39604535456,
+        "answer": 30943.77972860822,
+        "output": 89127.17577396278
       },
       "canonical_token_counts": {
-        "input": 3169053487,
-        "output": 197670478,
-        "answer": 24826624,
-        "reasoning": 172843854
+        "input": 5726294102,
+        "output": 123196074,
+        "answer": 23764215,
+        "reasoning": 99431859
       },
       "derived": {
         "basis": "derived",
-        "input_output_ratio": 16.03200194112952,
-        "reasoning_output_share": 0.7076216489317395
+        "input_output_ratio": 46.48114112792263,
+        "reasoning_output_share": 0.6528131912640723
       }
     },
     {
@@ -3090,42 +1287,20 @@
       "name": "Grok 4.7 (Low)",
       "variant": "low",
       "tokens_per_task": {
-        "reasoning": 14426.374918027426,
-        "answer": 13585.507663508964,
-        "output": 28011.88258153639
+        "reasoning": 21673.57634154932,
+        "answer": 20996.008566073502,
+        "output": 42669.58490762282
       },
       "canonical_token_counts": {
-        "input": 1333942404,
-        "output": 75214855,
-        "answer": 17484914,
-        "reasoning": 57729941
+        "input": 2825944930,
+        "output": 51253468,
+        "answer": 17041137,
+        "reasoning": 34212331
       },
       "derived": {
         "basis": "derived",
-        "input_output_ratio": 17.73509240960446,
-        "reasoning_output_share": 0.5150091171500324
-      }
-    },
-    {
-      "source_id": "b23e6c69-96e5-44c9-8f58-4b42e0c399d5",
-      "slug": "hy3",
-      "name": "Hy3",
-      "variant": null,
-      "tokens_per_task": {
-        "reasoning": 35806.28289229658,
-        "answer": 10354.707136031948,
-        "output": 46160.990028328524
-      },
-      "canonical_token_counts": {
-        "input": 1218953619,
-        "output": 172934205,
-        "answer": 15439596,
-        "reasoning": 157494609
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 7.048655406256963,
-        "reasoning_output_share": 0.7756827327646706
+        "input_output_ratio": 55.13665787454617,
+        "reasoning_output_share": 0.5079397043226775
       }
     },
     {
@@ -3134,20 +1309,20 @@
       "name": "Inkling (Xhigh)",
       "variant": "xhigh",
       "tokens_per_task": {
-        "reasoning": 23399.155079379572,
-        "answer": 11256.82166532607,
-        "output": 34655.976744705644
+        "reasoning": 33873.817608067344,
+        "answer": 17381.85370860692,
+        "output": 51255.67131667426
       },
       "canonical_token_counts": {
-        "input": 2219568558,
-        "output": 136649836,
-        "answer": 12858458,
-        "reasoning": 123791378
+        "input": 4634454699,
+        "output": 80298842,
+        "answer": 12637941,
+        "reasoning": 67660901
       },
       "derived": {
         "basis": "derived",
-        "input_output_ratio": 16.242745860302385,
-        "reasoning_output_share": 0.6751838290910164
+        "input_output_ratio": 57.71508758494923,
+        "reasoning_output_share": 0.6608794058863037
       }
     },
     {
@@ -3156,240 +1331,64 @@
       "name": "Inkling Small",
       "variant": null,
       "tokens_per_task": {
-        "reasoning": 22885.84916952913,
-        "answer": 7273.831872711327,
-        "output": 30159.68104224046
+        "reasoning": 25133.63197510351,
+        "answer": 11584.010124722234,
+        "output": 36717.642099825745
       },
       "canonical_token_counts": {
-        "input": 962617758,
-        "output": 137277565,
-        "answer": 9722921,
-        "reasoning": 127554644
+        "input": 1927051013,
+        "output": 71550549,
+        "answer": 8751417,
+        "reasoning": 62799132
       },
       "derived": {
         "basis": "derived",
-        "input_output_ratio": 7.0122001217023335,
-        "reasoning_output_share": 0.7588226525829671
-      }
-    },
-    {
-      "source_id": "46f11cdf-1725-4abb-b39b-bd6bd948149c",
-      "slug": "jt-4-1-flash-236b-a21b",
-      "name": "JT-4.1 Flash 236B A21B (Reasoning)",
-      "variant": null,
-      "tokens_per_task": {
-        "reasoning": 54087.33877322922,
-        "answer": 31707.07015260061,
-        "output": 85794.40892582983
-      },
-      "canonical_token_counts": {
-        "input": 6110043660,
-        "output": 184566355,
-        "answer": 42603734,
-        "reasoning": 141962621
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 33.104861717619116,
-        "reasoning_output_share": 0.6304296451297694
-      }
-    },
-    {
-      "source_id": "9e9fb958-87f5-4835-a761-26102ef25898",
-      "slug": "k2-horizon-0-9b",
-      "name": "K2 Horizon 0.9B",
-      "variant": null,
-      "tokens_per_task": {
-        "reasoning": 9426.961700116737,
-        "answer": 22831.90881364575,
-        "output": 32258.870513762486
-      },
-      "canonical_token_counts": {
-        "input": 4213221448,
-        "output": 59591388,
-        "answer": 32281443,
-        "reasoning": 27309945
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 70.70185121380291,
-        "reasoning_output_share": 0.29222851110347914
-      }
-    },
-    {
-      "source_id": "31da3a71-0773-47d9-8560-9f19f069926b",
-      "slug": "k2-horizon-3-7b",
-      "name": "K2 Horizon 3.7B",
-      "variant": null,
-      "tokens_per_task": {
-        "reasoning": 48430.98982369936,
-        "answer": 23650.324095897675,
-        "output": 72081.31391959704
-      },
-      "canonical_token_counts": {
-        "input": 10766186482,
-        "output": 176817175,
-        "answer": 33577280,
-        "reasoning": 143239895
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 60.88880495913364,
-        "reasoning_output_share": 0.6718938264322097
+        "input_output_ratio": 26.932721550466372,
+        "reasoning_output_share": 0.6845110562048534
       }
     },
     {
       "source_id": "bb3d7e75-8e22-4082-b9d6-1db0803e042f",
       "slug": "k2-horizon-375b-a23b",
       "name": "K2 Horizon 375B A23B",
-      "variant": null,
+      "variant": "high",
       "tokens_per_task": {
-        "reasoning": 35767.52344738368,
-        "answer": 15749.933253652986,
-        "output": 51517.456701036666
+        "reasoning": 45443.258337926,
+        "answer": 18222.13885483527,
+        "output": 63665.39719276127
       },
       "canonical_token_counts": {
-        "input": 3718189028,
-        "output": 125854902,
-        "answer": 20396527,
-        "reasoning": 105458375
+        "input": 4743322159,
+        "output": 94266731,
+        "answer": 18006313,
+        "reasoning": 76260418
       },
       "derived": {
         "basis": "derived",
-        "input_output_ratio": 29.54345813244525,
-        "reasoning_output_share": 0.6942796818357678
-      }
-    },
-    {
-      "source_id": "122a1fa1-976a-4089-87a2-5a0a13e2a52c",
-      "slug": "k2-horizon-7b",
-      "name": "K2 Horizon 7B",
-      "variant": null,
-      "tokens_per_task": {
-        "reasoning": 49501.375402382466,
-        "answer": 22661.927400091412,
-        "output": 72163.30280247387
-      },
-      "canonical_token_counts": {
-        "input": 8271270890,
-        "output": 159994456,
-        "answer": 27538039,
-        "reasoning": 132456417
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 51.69723437167098,
-        "reasoning_output_share": 0.6859632732980381
-      }
-    },
-    {
-      "source_id": "53b9e276-e360-4a39-9076-1a19d72c25fe",
-      "slug": "k2-horizon-mova-36b-a4b",
-      "name": "K2 Horizon MoVA 36B A4B",
-      "variant": null,
-      "tokens_per_task": {
-        "reasoning": 37842.38186264047,
-        "answer": 17160.094457061008,
-        "output": 55002.476319701476
-      },
-      "canonical_token_counts": {
-        "input": 5208669169,
-        "output": 113698036,
-        "answer": 21623247,
-        "reasoning": 92074789
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 45.8114260566471,
-        "reasoning_output_share": 0.6880123295300726
-      }
-    },
-    {
-      "source_id": "0de67206-4d36-4d10-b8f6-cf37fa747a03",
-      "slug": "kimi-k2-6",
-      "name": "Kimi K2.6 (Reasoning)",
-      "variant": null,
-      "tokens_per_task": {
-        "reasoning": 36844.89079060351,
-        "answer": 10492.215745784366,
-        "output": 47337.10653638787
-      },
-      "canonical_token_counts": {
-        "input": 2339837296,
-        "output": 180582624,
-        "answer": 14029542,
-        "reasoning": 166553082
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 12.957156365166119,
-        "reasoning_output_share": 0.7783511390220053
-      }
-    },
-    {
-      "source_id": "8d0cb231-7303-452c-9923-a9620b948475",
-      "slug": "kimi-k2-7-code",
-      "name": "Kimi K2.7 Code",
-      "variant": null,
-      "tokens_per_task": {
-        "reasoning": 19180.65188561365,
-        "answer": 10705.071954383264,
-        "output": 29885.723839996914
-      },
-      "canonical_token_counts": {
-        "input": 2130212845,
-        "output": 122130503,
-        "answer": 15298691,
-        "reasoning": 106831812
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 17.44210326391598,
-        "reasoning_output_share": 0.6417998101134709
-      }
-    },
-    {
-      "source_id": "f7d2fc3e-1f7b-405f-818c-07952a4af78f",
-      "slug": "kimi-k3",
-      "name": "Kimi K3 (Max)",
-      "variant": "max",
-      "tokens_per_task": {
-        "reasoning": 32453.12751268007,
-        "answer": 16002.10458876525,
-        "output": 48455.23210144532
-      },
-      "canonical_token_counts": {
-        "input": 2563041687,
-        "output": 160780069,
-        "answer": 21477754,
-        "reasoning": 139302315
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 15.941289880899355,
-        "reasoning_output_share": 0.6697548666104121
+        "input_output_ratio": 50.31809323057994,
+        "reasoning_output_share": 0.7137826879542798
       }
     },
     {
       "source_id": "665c67ca-09eb-48f0-a7a3-0096e1d5de51",
       "slug": "kimi-k3-1-pro",
       "name": "Kimi K3.1 Pro",
-      "variant": null,
+      "variant": "max",
       "tokens_per_task": {
-        "reasoning": 34882.69965070279,
-        "answer": 20311.903392257733,
-        "output": 55194.603042960516
+        "reasoning": 44229.755230085815,
+        "answer": 28009.215001429086,
+        "output": 72238.9702315149
       },
       "canonical_token_counts": {
-        "input": 5394975309,
-        "output": 147973700,
-        "answer": 29631734,
-        "reasoning": 118341966
+        "input": 7010897686,
+        "output": 113178775,
+        "answer": 26655711,
+        "reasoning": 86523064
       },
       "derived": {
         "basis": "derived",
-        "input_output_ratio": 36.45901473707828,
-        "reasoning_output_share": 0.6319947554211408
+        "input_output_ratio": 61.94533989257261,
+        "reasoning_output_share": 0.612270012824604
       }
     },
     {
@@ -3398,130 +1397,20 @@
       "name": "Kimi K3 (Low)",
       "variant": "low",
       "tokens_per_task": {
-        "reasoning": 5891.506417923906,
-        "answer": 6330.173973735501,
-        "output": 12221.680391659407
+        "reasoning": 27126.463968271986,
+        "answer": 12539.807235351862,
+        "output": 39666.27120362385
       },
       "canonical_token_counts": {
-        "input": 1516936640,
-        "output": 21666644,
-        "answer": 11574636,
-        "reasoning": 10092008
+        "input": 2416810618,
+        "output": 32099171,
+        "answer": 13944395,
+        "reasoning": 18154776
       },
       "derived": {
         "basis": "derived",
-        "input_output_ratio": 70.01253355157357,
-        "reasoning_output_share": 0.4820537134929923
-      }
-    },
-    {
-      "source_id": "e33dc369-ae81-40e0-8c4e-28b002d02197",
-      "slug": "ling-3-0-flash",
-      "name": "Ling 3.0 Flash",
-      "variant": null,
-      "tokens_per_task": {
-        "reasoning": 33207.0669421994,
-        "answer": 15489.914338358092,
-        "output": 48696.98128055749
-      },
-      "canonical_token_counts": {
-        "input": 1476271560,
-        "output": 261278745,
-        "answer": 35978177,
-        "reasoning": 225300568
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 5.650178547818729,
-        "reasoning_output_share": 0.6819122267740544
-      }
-    },
-    {
-      "source_id": "6d6fa1c9-b833-40b2-8a58-fa810e24a84e",
-      "slug": "ling-3-0-flash-fin",
-      "name": "Ling-3.0-flash-Fin",
-      "variant": null,
-      "tokens_per_task": {
-        "reasoning": 43178.6808771672,
-        "answer": 23519.397643418808,
-        "output": 66698.07852058602
-      },
-      "canonical_token_counts": {
-        "input": 4712319247,
-        "output": 248534210,
-        "answer": 55975173,
-        "reasoning": 192559037
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 18.960445111359117,
-        "reasoning_output_share": 0.6473751843366871
-      }
-    },
-    {
-      "source_id": "433d5c5d-3092-4026-9727-1587ca07915d",
-      "slug": "ling-3-0-flash-vl",
-      "name": "Ling-3.0-flash-VL",
-      "variant": null,
-      "tokens_per_task": {
-        "reasoning": 29484.277654228772,
-        "answer": 20896.25407567186,
-        "output": 50380.53172990063
-      },
-      "canonical_token_counts": {
-        "input": 4155270060,
-        "output": 160782174,
-        "answer": 36134913,
-        "reasoning": 124647261
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 25.844096746695314,
-        "reasoning_output_share": 0.5852315694542378
-      }
-    },
-    {
-      "source_id": "7eaf926c-5f39-4e58-ae50-c38b5fc630fc",
-      "slug": "ling-3-0-tiny",
-      "name": "Ling 3.0 Tiny",
-      "variant": null,
-      "tokens_per_task": {
-        "reasoning": 39935.0719889828,
-        "answer": 30352.390728791637,
-        "output": 70287.46271777444
-      },
-      "canonical_token_counts": {
-        "input": 2607178931,
-        "output": 231700870,
-        "answer": 41770799,
-        "reasoning": 189930071
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 11.252348474133912,
-        "reasoning_output_share": 0.5681677847631842
-      }
-    },
-    {
-      "source_id": "a6043b9b-628a-4a76-a021-2834e0627d05",
-      "slug": "ling-3-1-flash",
-      "name": "Ling 3.1 Flash",
-      "variant": null,
-      "tokens_per_task": {
-        "reasoning": 67346.09015328897,
-        "answer": 35518.722187169915,
-        "output": 102864.81234045888
-      },
-      "canonical_token_counts": {
-        "input": 9259391335,
-        "output": 222440044,
-        "answer": 51996287,
-        "reasoning": 170443757
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 41.62645883580206,
-        "reasoning_output_share": 0.6547048365809378
+        "input_output_ratio": 75.29199486179877,
+        "reasoning_output_share": 0.6838672540965673
       }
     },
     {
@@ -3530,174 +1419,20 @@
       "name": "Ling 3.1 Flash 1019",
       "variant": null,
       "tokens_per_task": {
-        "reasoning": 93313.39477726251,
-        "answer": 51511.89885579588,
-        "output": 144825.29363305838
+        "reasoning": 151291.06414282057,
+        "answer": 73419.74173159922,
+        "output": 224710.8058744198
       },
       "canonical_token_counts": {
-        "input": 14134919467,
-        "output": 346800677,
-        "answer": 70934651,
-        "reasoning": 275866026
+        "input": 20710674930,
+        "output": 239670564,
+        "answer": 59233508,
+        "reasoning": 180437056
       },
       "derived": {
         "basis": "derived",
-        "input_output_ratio": 40.75805038581283,
-        "reasoning_output_share": 0.6443169727912945
-      }
-    },
-    {
-      "source_id": "922c69c7-9037-43c6-8bcf-a1c555e7f3eb",
-      "slug": "llama-4-maverick",
-      "name": "Llama 4 Maverick",
-      "variant": null,
-      "tokens_per_task": {
-        "reasoning": 0,
-        "answer": 2047.2595761136122,
-        "output": 2047.2595761136122
-      },
-      "canonical_token_counts": {
-        "input": 157038687,
-        "output": 5130370,
-        "answer": 5130370,
-        "reasoning": 0
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 30.609622113024987,
-        "reasoning_output_share": 0
-      }
-    },
-    {
-      "source_id": "adf9a85e-abc3-4f28-937b-db6655cc5238",
-      "slug": "llama-4-scout",
-      "name": "Llama 4 Scout",
-      "variant": null,
-      "tokens_per_task": {
-        "reasoning": 0,
-        "answer": 1918.1080615755395,
-        "output": 1918.1080615755395
-      },
-      "canonical_token_counts": {
-        "input": 394365542,
-        "output": 3901118,
-        "answer": 3901118,
-        "reasoning": 0
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 101.09039049831355,
-        "reasoning_output_share": 0
-      }
-    },
-    {
-      "source_id": "5c3bdc0d-abab-4526-8079-34de4089bb4a",
-      "slug": "longcat-2-0",
-      "name": "LongCat 2.0",
-      "variant": null,
-      "tokens_per_task": {
-        "reasoning": 14397.603104099471,
-        "answer": 10127.64712437838,
-        "output": 24525.250228477853
-      },
-      "canonical_token_counts": {
-        "input": 2036284077,
-        "output": 142563450,
-        "answer": 15861665,
-        "reasoning": 126701785
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 14.283352970203794,
-        "reasoning_output_share": 0.587052240852633
-      }
-    },
-    {
-      "source_id": "016d330a-2141-4afa-b2fc-62b314423dc1",
-      "slug": "mercury-2",
-      "name": "Mercury 2",
-      "variant": "high",
-      "tokens_per_task": {
-        "reasoning": 21638.208348551725,
-        "answer": 4517.518628698067,
-        "output": 26155.726977249793
-      },
-      "canonical_token_counts": {
-        "input": 682464132,
-        "output": 101026962,
-        "answer": 6694301,
-        "reasoning": 94332661
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 6.755267291913618,
-        "reasoning_output_share": 0.827283767236621
-      }
-    },
-    {
-      "source_id": "765c9f31-95ec-4f14-900a-80614c3b0777",
-      "slug": "mercury-2-5",
-      "name": "Mercury 2.5",
-      "variant": null,
-      "tokens_per_task": {
-        "reasoning": 8437.833446126484,
-        "answer": 660.1215780224895,
-        "output": 9097.955024148974
-      },
-      "canonical_token_counts": {
-        "input": 1098901142,
-        "output": 35253099,
-        "answer": 2594069,
-        "reasoning": 32659030
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 31.171760020303463,
-        "reasoning_output_share": 0.9274428620200573
-      }
-    },
-    {
-      "source_id": "22d09131-343b-4adf-8760-533e20a2155f",
-      "slug": "mimo-v2-5-0424",
-      "name": "MiMo-V2.5",
-      "variant": null,
-      "tokens_per_task": {
-        "reasoning": 20004.277476841482,
-        "answer": 10922.655836241394,
-        "output": 30926.933313082875
-      },
-      "canonical_token_counts": {
-        "input": 1387638898,
-        "output": 94845810,
-        "answer": 18821617,
-        "reasoning": 76024193
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 14.630471266996402,
-        "reasoning_output_share": 0.6468238306828555
-      }
-    },
-    {
-      "source_id": "00f1248e-78e3-4230-8dc8-5e13ba8645e2",
-      "slug": "mimo-v2-5-pro",
-      "name": "MiMo-V2.5-Pro (Reasoning)",
-      "variant": null,
-      "tokens_per_task": {
-        "reasoning": 17907.43917664586,
-        "answer": 11977.483503480798,
-        "output": 29884.92268012666
-      },
-      "canonical_token_counts": {
-        "input": 1439651142,
-        "output": 112122002,
-        "answer": 19421947,
-        "reasoning": 92700055
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 12.840041350670852,
-        "reasoning_output_share": 0.5992131673994334
+        "input_output_ratio": 86.41309380821585,
+        "reasoning_output_share": 0.6732700884325516
       }
     },
     {
@@ -3706,20 +1441,20 @@
       "name": "MiMo-V2.6-Flash",
       "variant": null,
       "tokens_per_task": {
-        "reasoning": 58021.70596054659,
-        "answer": 19831.38848094958,
-        "output": 77853.09444149617
+        "reasoning": 99712.41744227175,
+        "answer": 32093.80807835528,
+        "output": 131806.22552062702
       },
       "canonical_token_counts": {
-        "input": 5537710083,
-        "output": 244682440,
-        "answer": 26149270,
-        "reasoning": 218533170
+        "input": 10352463436,
+        "output": 162660962,
+        "answer": 25765454,
+        "reasoning": 136895508
       },
       "derived": {
         "basis": "derived",
-        "input_output_ratio": 22.63223336746192,
-        "reasoning_output_share": 0.7452716732299939
+        "input_output_ratio": 63.64442524322462,
+        "reasoning_output_share": 0.7565076463453333
       }
     },
     {
@@ -3728,64 +1463,20 @@
       "name": "MiMo-V2.6-Pro",
       "variant": null,
       "tokens_per_task": {
-        "reasoning": 37519.68181980028,
-        "answer": 26756.018691867608,
-        "output": 64275.70051166789
+        "reasoning": 86273.34533205075,
+        "answer": 34799.784499147805,
+        "output": 121073.12983119856
       },
       "canonical_token_counts": {
-        "input": 4427596878,
-        "output": 143690985,
-        "answer": 38703160,
-        "reasoning": 104987825
+        "input": 7473440440,
+        "output": 130574087,
+        "answer": 28741941,
+        "reasoning": 101832146
       },
       "derived": {
         "basis": "derived",
-        "input_output_ratio": 30.81332400915757,
-        "reasoning_output_share": 0.5837304225566453
-      }
-    },
-    {
-      "source_id": "641a073a-41c9-4773-9b02-d965c16607c5",
-      "slug": "minicpm5-2b",
-      "name": "MiniCPM5-2B",
-      "variant": null,
-      "tokens_per_task": {
-        "reasoning": 12485.087385433024,
-        "answer": 9349.171600909127,
-        "output": 21834.258986342153
-      },
-      "canonical_token_counts": {
-        "input": 1580676049,
-        "output": 74115794,
-        "answer": 13448509,
-        "reasoning": 60667285
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 21.327114825215258,
-        "reasoning_output_share": 0.5718118207374357
-      }
-    },
-    {
-      "source_id": "4bbceacb-cf47-464b-b60f-e1d1fe016d67",
-      "slug": "minimax-m2-7",
-      "name": "MiniMax-M2.7",
-      "variant": null,
-      "tokens_per_task": {
-        "reasoning": 9771.648403216212,
-        "answer": 11267.279105900026,
-        "output": 21038.927509116238
-      },
-      "canonical_token_counts": {
-        "input": 1189828426,
-        "output": 92289622,
-        "answer": 20899387,
-        "reasoning": 71390235
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 12.892331772688374,
-        "reasoning_output_share": 0.46445563344339313
+        "input_output_ratio": 57.23524944118506,
+        "reasoning_output_share": 0.712572190479704
       }
     },
     {
@@ -3794,240 +1485,108 @@
       "name": "MiniMax-M3",
       "variant": null,
       "tokens_per_task": {
-        "reasoning": 21818.245942773487,
-        "answer": 26373.78883392722,
-        "output": 48192.034776700704
+        "reasoning": 46071.024222617634,
+        "answer": 45380.561125448454,
+        "output": 91451.58534806609
       },
       "canonical_token_counts": {
-        "input": 5273003361,
-        "output": 117058967,
-        "answer": 29131816,
-        "reasoning": 87927151
+        "input": 10351164628,
+        "output": 104279634,
+        "answer": 32978293,
+        "reasoning": 71301341
       },
       "derived": {
         "basis": "derived",
-        "input_output_ratio": 45.045702145996216,
-        "reasoning_output_share": 0.4527355203794363
+        "input_output_ratio": 99.26353047997848,
+        "reasoning_output_share": 0.5037750198344909
       }
     },
     {
       "source_id": "d49c8680-e29b-400e-9511-824f7ddebe07",
       "slug": "minimax-m3-1-flash",
       "name": "MiniMax-M3.1-Flash",
-      "variant": null,
+      "variant": "max",
       "tokens_per_task": {
-        "reasoning": 54667.62530318885,
-        "answer": 23944.667116681252,
-        "output": 78612.2924198701
+        "reasoning": 102940.58190337746,
+        "answer": 35235.7763938493,
+        "output": 138176.35829722678
       },
       "canonical_token_counts": {
-        "input": 8003057663,
-        "output": 182566559,
-        "answer": 31807987,
-        "reasoning": 150758572
+        "input": 12628828115,
+        "output": 161297593,
+        "answer": 29191389,
+        "reasoning": 132106204
       },
       "derived": {
         "basis": "derived",
-        "input_output_ratio": 43.83638332691586,
-        "reasoning_output_share": 0.695408105022657
+        "input_output_ratio": 78.29520503136088,
+        "reasoning_output_share": 0.7449941739088625
       }
     },
     {
-      "source_id": "713fae11-c75c-4f10-ae2c-8e4074cd58af",
-      "slug": "ministral-3-14b",
-      "name": "Ministral 3 14B",
-      "variant": null,
+      "source_id": "ea5019ae-b0b7-49a5-80b3-0e584807af0f",
+      "slug": "mistral-large-4",
+      "name": "Mistral Large 4 (High)",
+      "variant": "high",
       "tokens_per_task": {
-        "reasoning": 0,
-        "answer": 6016.936604270011,
-        "output": 6016.936604270011
+        "reasoning": 54500.36342592841,
+        "answer": 27450.380959858256,
+        "output": 81950.74438578666
       },
       "canonical_token_counts": {
-        "input": 1234834401,
-        "output": 14531784,
-        "answer": 14531784,
-        "reasoning": 0
+        "input": 7471723649,
+        "output": 107091351,
+        "answer": 22074606,
+        "reasoning": 85016745
       },
       "derived": {
         "basis": "derived",
-        "input_output_ratio": 84.97472856739407,
-        "reasoning_output_share": 0
+        "input_output_ratio": 69.76962732499284,
+        "reasoning_output_share": 0.6650380522398381
       }
     },
     {
-      "source_id": "66f4ce73-9a9b-4b49-9c6e-bedb9bfdc720",
-      "slug": "ministral-3-3b",
-      "name": "Ministral 3 3B",
-      "variant": null,
+      "source_id": "27b24366-fd1a-44b7-8011-e24d7501318d",
+      "slug": "mistral-large-4-medium",
+      "name": "Mistral Large 4 (Medium)",
+      "variant": "medium",
       "tokens_per_task": {
-        "reasoning": 0,
-        "answer": 13088.251664646437,
-        "output": 13088.251664646437
+        "reasoning": 35760.46138680163,
+        "answer": 20564.010167649318,
+        "output": 56324.47155445095
       },
       "canonical_token_counts": {
-        "input": 585974746,
-        "output": 26833240,
-        "answer": 26833240,
-        "reasoning": 0
+        "input": 5133629800,
+        "output": 72535421,
+        "answer": 17410587,
+        "reasoning": 55124834
       },
       "derived": {
         "basis": "derived",
-        "input_output_ratio": 21.83764413093611,
-        "reasoning_output_share": 0
-      }
-    },
-    {
-      "source_id": "9741f3c2-cbb1-4a3f-99ee-7bd7384d9038",
-      "slug": "ministral-3-8b",
-      "name": "Ministral 3 8B",
-      "variant": null,
-      "tokens_per_task": {
-        "reasoning": 0,
-        "answer": 7896.288438630577,
-        "output": 7896.288438630577
-      },
-      "canonical_token_counts": {
-        "input": 1106759060,
-        "output": 19595409,
-        "answer": 19595409,
-        "reasoning": 0
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 56.48052867893699,
-        "reasoning_output_share": 0
-      }
-    },
-    {
-      "source_id": "4928e950-7f37-4475-b0dc-c5bad781a321",
-      "slug": "mistral-large-3",
-      "name": "Mistral Large 3",
-      "variant": null,
-      "tokens_per_task": {
-        "reasoning": 0,
-        "answer": 5566.44243010125,
-        "output": 5566.44243010125
-      },
-      "canonical_token_counts": {
-        "input": 230520197,
-        "output": 9784489,
-        "answer": 9784489,
-        "reasoning": 0
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 23.559758409458073,
-        "reasoning_output_share": 0
+        "input_output_ratio": 70.7741091073284,
+        "reasoning_output_share": 0.6349009657770276
       }
     },
     {
       "source_id": "34fc646a-0174-470e-9e62-d8df452210b3",
-      "slug": "mistral-large-4",
+      "slug": "mistral-large-4-preview",
       "name": "Mistral Large 4 Preview",
       "variant": null,
       "tokens_per_task": {
-        "reasoning": 52118.45163321809,
-        "answer": 17377.080073281093,
-        "output": 69495.53170649918
+        "reasoning": 101511.89634791404,
+        "answer": 33806.39770856328,
+        "output": 135318.29405647732
       },
       "canonical_token_counts": {
-        "input": 3656194389,
-        "output": 200168141,
-        "answer": 22311165,
-        "reasoning": 177856976
+        "input": 11174534177,
+        "output": 147945223,
+        "answer": 27086219,
+        "reasoning": 120859004
       },
       "derived": {
         "basis": "derived",
-        "input_output_ratio": 18.265615950342468,
-        "reasoning_output_share": 0.7499539949320799
-      }
-    },
-    {
-      "source_id": "05a32e26-e609-4377-951b-8fa23d329926",
-      "slug": "mistral-medium-3-1",
-      "name": "Mistral Medium 3.1",
-      "variant": null,
-      "tokens_per_task": {
-        "reasoning": 0,
-        "answer": 13193.973378542094,
-        "output": 13193.973378542094
-      },
-      "canonical_token_counts": {
-        "input": 925379251,
-        "output": 17859256,
-        "answer": 17859256,
-        "reasoning": 0
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 51.81510646356153,
-        "reasoning_output_share": 0
-      }
-    },
-    {
-      "source_id": "dd059b25-d82a-4ead-82a4-4adceaaec48b",
-      "slug": "mistral-medium-3-5",
-      "name": "Mistral Medium 3.5",
-      "variant": "high",
-      "tokens_per_task": {
-        "reasoning": 14019.756888235019,
-        "answer": 12065.772317071056,
-        "output": 26085.529205306077
-      },
-      "canonical_token_counts": {
-        "input": 1470239926,
-        "output": 100688467,
-        "answer": 17547340,
-        "reasoning": 83141127
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 14.601870202274506,
-        "reasoning_output_share": 0.5374534201661222
-      }
-    },
-    {
-      "source_id": "24ac5b00-5f03-4c47-8e37-522d1195383e",
-      "slug": "mistral-small-3-1",
-      "name": "Mistral Small 3.1",
-      "variant": null,
-      "tokens_per_task": {
-        "reasoning": 0,
-        "answer": 6312.017031300121,
-        "output": 6312.017031300121
-      },
-      "canonical_token_counts": {
-        "input": 334950465,
-        "output": 7549755,
-        "answer": 7549755,
-        "reasoning": 0
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 44.36573968294336,
-        "reasoning_output_share": 0
-      }
-    },
-    {
-      "source_id": "43da3718-3d6e-40dd-901a-05664179ff7f",
-      "slug": "mistral-small-3-2",
-      "name": "Mistral Small 3.2",
-      "variant": null,
-      "tokens_per_task": {
-        "reasoning": 0,
-        "answer": 7146.8895730909935,
-        "output": 7146.8895730909935
-      },
-      "canonical_token_counts": {
-        "input": 1599490699,
-        "output": 9088359,
-        "answer": 9088359,
-        "reasoning": 0
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 175.99334478314512,
-        "reasoning_output_share": 0
+        "input_output_ratio": 75.53156465890082,
+        "reasoning_output_share": 0.7501712688274534
       }
     },
     {
@@ -4036,20 +1595,20 @@
       "name": "Mistral Small 4 (Reasoning)",
       "variant": null,
       "tokens_per_task": {
-        "reasoning": 9420.43281242597,
-        "answer": 4969.996763633023,
-        "output": 14390.429576058992
+        "reasoning": 4152.155485759598,
+        "answer": 10248.235338144656,
+        "output": 14400.390823904254
       },
       "canonical_token_counts": {
-        "input": 308948797,
-        "output": 53922594,
-        "answer": 6122061,
-        "reasoning": 47800533
+        "input": 963347163,
+        "output": 23863423,
+        "answer": 8021837,
+        "reasoning": 15841586
       },
       "derived": {
         "basis": "derived",
-        "input_output_ratio": 5.729486919713098,
-        "reasoning_output_share": 0.6546317997413027
+        "input_output_ratio": 40.36919443618797,
+        "reasoning_output_share": 0.28833630534993077
       }
     },
     {
@@ -4058,64 +1617,20 @@
       "name": "Muse Glimmer (High)",
       "variant": "high",
       "tokens_per_task": {
-        "reasoning": 9547.864287008168,
-        "answer": 4377.332690535162,
-        "output": 13925.19697754333
+        "reasoning": 14408.964662368151,
+        "answer": 11658.284060669848,
+        "output": 26067.248723038
       },
       "canonical_token_counts": {
-        "input": 1165987198,
-        "output": 58642969,
-        "answer": 10530265,
-        "reasoning": 48112704
+        "input": 2235842692,
+        "output": 39453876,
+        "answer": 12885508,
+        "reasoning": 26568368
       },
       "derived": {
         "basis": "derived",
-        "input_output_ratio": 19.882813197947055,
-        "reasoning_output_share": 0.6856538045677679
-      }
-    },
-    {
-      "source_id": "d61493e2-43ff-460c-9054-eaf6ba317360",
-      "slug": "muse-spark-1-1",
-      "name": "Muse Spark 1.1 (Xhigh)",
-      "variant": "xhigh",
-      "tokens_per_task": {
-        "reasoning": 29866.08715551922,
-        "answer": 25716.192178266498,
-        "output": 55582.279333785715
-      },
-      "canonical_token_counts": {
-        "input": 4346343999,
-        "output": 172034246,
-        "answer": 32222278,
-        "reasoning": 139811968
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 25.264411592794147,
-        "reasoning_output_share": 0.5373310974918063
-      }
-    },
-    {
-      "source_id": "04ee6719-0327-463b-a1a1-70a6a78254f9",
-      "slug": "muse-spark-1-2",
-      "name": "Muse Spark 1.2 (Xhigh)",
-      "variant": "xhigh",
-      "tokens_per_task": {
-        "reasoning": 22660.411329538983,
-        "answer": 25214.06287864249,
-        "output": 47874.47420818148
-      },
-      "canonical_token_counts": {
-        "input": 3605840230,
-        "output": 125540681,
-        "answer": 33882531,
-        "reasoning": 91658150
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 28.722484228040788,
-        "reasoning_output_share": 0.47332971702207116
+        "input_output_ratio": 56.669785549080146,
+        "reasoning_output_share": 0.5527612375000526
       }
     },
     {
@@ -4124,42 +1639,20 @@
       "name": "Muse Spark 1.3 (Max)",
       "variant": "max",
       "tokens_per_task": {
-        "reasoning": 34125.929031308246,
-        "answer": 26074.228596099943,
-        "output": 60200.15762740819
+        "reasoning": 54517.012909499106,
+        "answer": 36596.820214055275,
+        "output": 91113.83312355439
       },
       "canonical_token_counts": {
-        "input": 5540446410,
-        "output": 167959769,
-        "answer": 33514391,
-        "reasoning": 134445378
+        "input": 7809764549,
+        "output": 122943979,
+        "answer": 29934573,
+        "reasoning": 93009406
       },
       "derived": {
         "basis": "derived",
-        "input_output_ratio": 32.98674702273495,
-        "reasoning_output_share": 0.5668744132286332
-      }
-    },
-    {
-      "source_id": "d5170215-69be-4129-849b-26d8d8825bfc",
-      "slug": "muse-spark-1-3-xhigh",
-      "name": "Muse Spark 1.3 (Xhigh)",
-      "variant": "xhigh",
-      "tokens_per_task": {
-        "reasoning": 32533.534814547762,
-        "answer": 21979.40538713003,
-        "output": 54512.94020167779
-      },
-      "canonical_token_counts": {
-        "input": 4564906048,
-        "output": 137080180,
-        "answer": 29675342,
-        "reasoning": 107404838
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 33.30099251401625,
-        "reasoning_output_share": 0.596803890859412
+        "input_output_ratio": 63.52295258802385,
+        "reasoning_output_share": 0.5983395829211974
       }
     },
     {
@@ -4168,20 +1661,20 @@
       "name": "Muse Spark Open (Xhigh)",
       "variant": "xhigh",
       "tokens_per_task": {
-        "reasoning": 18400.94492939213,
-        "answer": 22017.197953957617,
-        "output": 40418.14288334975
+        "reasoning": 32296.08393602539,
+        "answer": 34144.0030589771,
+        "output": 66440.0869950025
       },
       "canonical_token_counts": {
-        "input": 2961769834,
-        "output": 106223959,
-        "answer": 32356095,
-        "reasoning": 73867864
+        "input": 5720230010,
+        "output": 90571147,
+        "answer": 30698631,
+        "reasoning": 59872516
       },
       "derived": {
         "basis": "derived",
-        "input_output_ratio": 27.88231451625711,
-        "reasoning_output_share": 0.4552644831430986
+        "input_output_ratio": 63.15731002059629,
+        "reasoning_output_share": 0.4860933420881078
       }
     },
     {
@@ -4190,20 +1683,20 @@
       "name": "Muse Wonder (Max)",
       "variant": "max",
       "tokens_per_task": {
-        "reasoning": 28799.93283239195,
-        "answer": 25676.615045904913,
-        "output": 54476.547878296864
+        "reasoning": 58584.424173932006,
+        "answer": 37478.674917844786,
+        "output": 96063.09909177679
       },
       "canonical_token_counts": {
-        "input": 6580358236,
-        "output": 134759652,
-        "answer": 32693796,
-        "reasoning": 102065856
+        "input": 11448083415,
+        "output": 113389708,
+        "answer": 29180076,
+        "reasoning": 84209632
       },
       "derived": {
         "basis": "derived",
-        "input_output_ratio": 48.83032968948302,
-        "reasoning_output_share": 0.5286666272747741
+        "input_output_ratio": 100.96227970707888,
+        "reasoning_output_share": 0.6098535725769331
       }
     },
     {
@@ -4212,42 +1705,20 @@
       "name": "Muse Wonder Full (Max)",
       "variant": "max",
       "tokens_per_task": {
-        "reasoning": 29163.320673386737,
-        "answer": 24590.817407422208,
-        "output": 53754.138080808945
+        "reasoning": 54679.44059857935,
+        "answer": 33796.174385568695,
+        "output": 88475.61498414804
       },
       "canonical_token_counts": {
-        "input": 5892791110,
-        "output": 135359456,
-        "answer": 33285820,
-        "reasoning": 102073636
+        "input": 8601063103,
+        "output": 111539103,
+        "answer": 27627332,
+        "reasoning": 83911771
       },
       "derived": {
         "basis": "derived",
-        "input_output_ratio": 43.53438824399531,
-        "reasoning_output_share": 0.5425316396952609
-      }
-    },
-    {
-      "source_id": "7d2aa050-888e-4c27-a92d-10337a4dfb3a",
-      "slug": "nemotron-3-5-bolt-74b-a9b",
-      "name": "Nemotron 3.5 Bolt 74B-A9B",
-      "variant": null,
-      "tokens_per_task": {
-        "reasoning": 65120.70097346896,
-        "answer": 17041.64944738524,
-        "output": 82162.3504208542
-      },
-      "canonical_token_counts": {
-        "input": 2670356142,
-        "output": 228562965,
-        "answer": 23368773,
-        "reasoning": 205194192
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 11.683240729748146,
-        "reasoning_output_share": 0.7925856628967641
+        "input_output_ratio": 77.11253606728395,
+        "reasoning_output_share": 0.6180170729344592
       }
     },
     {
@@ -4256,86 +1727,42 @@
       "name": "Nemotron 3.5 Lightning",
       "variant": null,
       "tokens_per_task": {
-        "reasoning": 16979.66102132017,
-        "answer": 19818.7768327742,
-        "output": 36798.43785409437
+        "reasoning": 30602.0629751803,
+        "answer": 34424.1057545786,
+        "output": 65026.1687297589
       },
       "canonical_token_counts": {
-        "input": 1354853903,
-        "output": 120932222,
-        "answer": 24709346,
-        "reasoning": 96222876
+        "input": 3837689901,
+        "output": 77790023,
+        "answer": 24914908,
+        "reasoning": 52875115
       },
       "derived": {
         "basis": "derived",
-        "input_output_ratio": 11.203415273391736,
-        "reasoning_output_share": 0.4614234193485181
+        "input_output_ratio": 49.333960230349845,
+        "reasoning_output_share": 0.4706115026145684
       }
     },
     {
       "source_id": "e2c0623e-c855-4a61-bb66-be1f1ed43234",
       "slug": "nemotron-3-5-super-vl",
       "name": "Nemotron 3.5 Super VL",
-      "variant": null,
+      "variant": "high",
       "tokens_per_task": {
-        "reasoning": 35598.2665103271,
-        "answer": 13575.566435840135,
-        "output": 49173.83294616723
+        "reasoning": 56149.96674290771,
+        "answer": 25284.667671003197,
+        "output": 81434.63441391091
       },
       "canonical_token_counts": {
-        "input": 1970419384,
-        "output": 172316619,
-        "answer": 19013124,
-        "reasoning": 153303495
+        "input": 4651335463,
+        "output": 119398188,
+        "answer": 22885169,
+        "reasoning": 96513019
       },
       "derived": {
         "basis": "derived",
-        "input_output_ratio": 11.434877236072047,
-        "reasoning_output_share": 0.7239270233275916
-      }
-    },
-    {
-      "source_id": "1e9907e0-ffac-4595-b006-962e4f1da7cf",
-      "slug": "north-mini-code",
-      "name": "North Mini Code",
-      "variant": null,
-      "tokens_per_task": {
-        "reasoning": 10552.932382862688,
-        "answer": 7802.356050504403,
-        "output": 18355.28843336709
-      },
-      "canonical_token_counts": {
-        "input": 903747242,
-        "output": 81537442,
-        "answer": 9967973,
-        "reasoning": 71569469
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 11.08383118028157,
-        "reasoning_output_share": 0.5749259904670896
-      }
-    },
-    {
-      "source_id": "76dcf6ef-39ea-4be0-b693-b88da25b4caf",
-      "slug": "nvidia-nemotron-3-nano-30b-a3b-reasoning",
-      "name": "NVIDIA Nemotron 3 Nano 30B A3B (Reasoning)",
-      "variant": null,
-      "tokens_per_task": {
-        "reasoning": 23969.293663386088,
-        "answer": 3005.6923571856855,
-        "output": 26974.986020571774
-      },
-      "canonical_token_counts": {
-        "input": 560882587,
-        "output": 178496460,
-        "answer": 8564851,
-        "reasoning": 169931609
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 3.1422616840692528,
-        "reasoning_output_share": 0.8885748317017301
+        "input_output_ratio": 38.95649959947466,
+        "reasoning_output_share": 0.6895096557751108
       }
     },
     {
@@ -4344,42 +1771,20 @@
       "name": "NVIDIA Nemotron 3 Nano 4B",
       "variant": null,
       "tokens_per_task": {
-        "reasoning": 5816.208750632103,
-        "answer": 1122.2305423166338,
-        "output": 6938.439292948737
+        "reasoning": 9454.285707824443,
+        "answer": 2193.714914395726,
+        "output": 11648.00062222017
       },
       "canonical_token_counts": {
-        "input": 743724688,
-        "output": 25864665,
-        "answer": 2186943,
-        "reasoning": 23677722
+        "input": 592575084,
+        "output": 11171807,
+        "answer": 1643511,
+        "reasoning": 9528296
       },
       "derived": {
         "basis": "derived",
-        "input_output_ratio": 28.754468229145825,
-        "reasoning_output_share": 0.8382589376465234
-      }
-    },
-    {
-      "source_id": "63872e9c-3377-4a6b-b477-7bba244c38e9",
-      "slug": "nvidia-nemotron-3-super-120b-a12b",
-      "name": "Nemotron 3 Super 120B A12B (Reasoning)",
-      "variant": null,
-      "tokens_per_task": {
-        "reasoning": 67059.32778827878,
-        "answer": 46763.194876525566,
-        "output": 113822.52266480435
-      },
-      "canonical_token_counts": {
-        "input": 3878142540,
-        "output": 172413752,
-        "answer": 34715302,
-        "reasoning": 137698450
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 22.49323209438653,
-        "reasoning_output_share": 0.5891569279813067
+        "input_output_ratio": 53.0420086920585,
+        "reasoning_output_share": 0.8116659686460771
       }
     },
     {
@@ -4388,284 +1793,20 @@
       "name": "Nemotron 3 Ultra 550B A55B (Reasoning)",
       "variant": null,
       "tokens_per_task": {
-        "reasoning": 15050.268278299955,
-        "answer": 13315.828431664018,
-        "output": 28366.096709963975
+        "reasoning": 20714.20800114642,
+        "answer": 30753.406603488445,
+        "output": 51467.614604634866
       },
       "canonical_token_counts": {
-        "input": 1067010269,
-        "output": 112448129,
-        "answer": 18685000,
-        "reasoning": 93763129
+        "input": 5276007539,
+        "output": 60851489,
+        "answer": 21237089,
+        "reasoning": 39614400
       },
       "derived": {
         "basis": "derived",
-        "input_output_ratio": 9.488910829276671,
-        "reasoning_output_share": 0.5305724094571441
-      }
-    },
-    {
-      "source_id": "076f2674-bc4b-4925-be59-50832eb8c090",
-      "slug": "o3-mini-high",
-      "name": "o3-mini (High)",
-      "variant": "high",
-      "tokens_per_task": {
-        "reasoning": 14188.545062275443,
-        "answer": 2800.558416342179,
-        "output": 16989.103478617624
-      },
-      "canonical_token_counts": {
-        "input": 50859424,
-        "output": 68108448,
-        "answer": 5475768,
-        "reasoning": 62632680
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 0.7467417845140151,
-        "reasoning_output_share": 0.8351556090133334
-      }
-    },
-    {
-      "source_id": "f9739750-6d42-450f-ba1e-2f76c869b4fe",
-      "slug": "quasar-438b",
-      "name": "Quasar 438B (Max, Based on GLM-5.2)",
-      "variant": "max",
-      "tokens_per_task": {
-        "reasoning": 53379.13260879439,
-        "answer": 19143.32045347732,
-        "output": 72522.45306227171
-      },
-      "canonical_token_counts": {
-        "input": 3043132212,
-        "output": 376565703,
-        "answer": 30766908,
-        "reasoning": 345798795
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 8.081278214548393,
-        "reasoning_output_share": 0.7360359496245965
-      }
-    },
-    {
-      "source_id": "f6ccbe1d-bd7e-484b-9795-18cc9f91552d",
-      "slug": "qwen3-235b-a22b-instruct-2507-reasoning",
-      "name": "Qwen3 235B A22B 2507 (Reasoning)",
-      "variant": null,
-      "tokens_per_task": {
-        "reasoning": 22121.080690015577,
-        "answer": 2767.6882867867616,
-        "output": 24888.768976802337
-      },
-      "canonical_token_counts": {
-        "input": 153301610,
-        "output": 86721904,
-        "answer": 5161596,
-        "reasoning": 81560308
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 1.76773805612017,
-        "reasoning_output_share": 0.8887977027161772
-      }
-    },
-    {
-      "source_id": "5e0164b3-d902-4bcb-a1b2-83b4f4cd6143",
-      "slug": "qwen3-30b-a3b-2507-reasoning",
-      "name": "Qwen3 30B A3B 2507 (Reasoning)",
-      "variant": null,
-      "tokens_per_task": {
-        "reasoning": 21691.602023069147,
-        "answer": 2100.481062487814,
-        "output": 23792.083085556962
-      },
-      "canonical_token_counts": {
-        "input": 135115279,
-        "output": 67201239,
-        "answer": 3913539,
-        "reasoning": 63287700
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 2.01060696217223,
-        "reasoning_output_share": 0.9117151257864042
-      }
-    },
-    {
-      "source_id": "2236df45-0699-40d1-b5cc-69ee345d2257",
-      "slug": "qwen3-5-122b-a10b",
-      "name": "Qwen3.5 122B A10B (Reasoning)",
-      "variant": null,
-      "tokens_per_task": {
-        "reasoning": 7270.552730456905,
-        "answer": 9843.907107429015,
-        "output": 17114.45983788592
-      },
-      "canonical_token_counts": {
-        "input": 847294743,
-        "output": 100740507,
-        "answer": 18475678,
-        "reasoning": 82264829
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 8.410665860555973,
-        "reasoning_output_share": 0.4248192931197417
-      }
-    },
-    {
-      "source_id": "0e66bae9-41f1-42fc-9276-ce8cb6f72919",
-      "slug": "qwen3-5-397b-a17b",
-      "name": "Qwen3.5 397B A17B (Reasoning)",
-      "variant": null,
-      "tokens_per_task": {
-        "reasoning": 8741.65967164467,
-        "answer": 9924.316472722072,
-        "output": 18665.97614436674
-      },
-      "canonical_token_counts": {
-        "input": 997825822,
-        "output": 95075660,
-        "answer": 15458228,
-        "reasoning": 79617432
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 10.495071209602962,
-        "reasoning_output_share": 0.4683205209325653
-      }
-    },
-    {
-      "source_id": "2d28a13a-096e-475a-beb8-26bbd1c7d51c",
-      "slug": "qwen3-5-9b",
-      "name": "Qwen3.5 9B (Reasoning)",
-      "variant": null,
-      "tokens_per_task": {
-        "reasoning": 19844.71431545256,
-        "answer": 15050.061702356767,
-        "output": 34894.77601780932
-      },
-      "canonical_token_counts": {
-        "input": 2117050845,
-        "output": 215276742,
-        "answer": 23773189,
-        "reasoning": 191503553
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 9.834089950134976,
-        "reasoning_output_share": 0.568701581730296
-      }
-    },
-    {
-      "source_id": "8c29d66d-bf98-4ea3-8572-5409353ecc66",
-      "slug": "qwen3-6-27b",
-      "name": "Qwen3.6 27B (Reasoning)",
-      "variant": null,
-      "tokens_per_task": {
-        "reasoning": 18831.956735698463,
-        "answer": 13455.357283987629,
-        "output": 32287.31401968609
-      },
-      "canonical_token_counts": {
-        "input": 921957102,
-        "output": 164495155,
-        "answer": 18623243,
-        "reasoning": 145871912
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 5.60476752035645,
-        "reasoning_output_share": 0.5832617951501422
-      }
-    },
-    {
-      "source_id": "8665ca00-c687-44c7-875c-22618cb31c4f",
-      "slug": "qwen3-6-35b-a3b",
-      "name": "Qwen3.6 35B A3B (Reasoning)",
-      "variant": null,
-      "tokens_per_task": {
-        "reasoning": 12505.068873988728,
-        "answer": 22088.67015641846,
-        "output": 34593.73903040719
-      },
-      "canonical_token_counts": {
-        "input": 1423336138,
-        "output": 161172608,
-        "answer": 122858085,
-        "reasoning": 38314523
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 8.831129282216493,
-        "reasoning_output_share": 0.361483587044379
-      }
-    },
-    {
-      "source_id": "69534bed-2ffd-4235-832b-e20a810333ab",
-      "slug": "qwen3-7-max",
-      "name": "Qwen3.7 Max",
-      "variant": null,
-      "tokens_per_task": {
-        "reasoning": 21237.08995226386,
-        "answer": 10953.222636806182,
-        "output": 32190.312589070043
-      },
-      "canonical_token_counts": {
-        "input": 1104758352,
-        "output": 121894169,
-        "answer": 18989935,
-        "reasoning": 102904234
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 9.063258407381243,
-        "reasoning_output_share": 0.659735437284158
-      }
-    },
-    {
-      "source_id": "a87fce42-eea3-4e45-a96d-fe057814f371",
-      "slug": "qwen3-7-plus",
-      "name": "Qwen3.7 Plus",
-      "variant": null,
-      "tokens_per_task": {
-        "reasoning": 25172.707526253125,
-        "answer": 11173.130668987791,
-        "output": 36345.83819524092
-      },
-      "canonical_token_counts": {
-        "input": 1246598100,
-        "output": 134780616,
-        "answer": 17174036,
-        "reasoning": 117606580
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 9.249090388487318,
-        "reasoning_output_share": 0.6925884441302886
-      }
-    },
-    {
-      "source_id": "8df710d3-9dae-4498-9b4e-9818238e6f31",
-      "slug": "qwen3-8-2-4t-a95b",
-      "name": "Qwen3.8 2.4T A95B",
-      "variant": null,
-      "tokens_per_task": {
-        "reasoning": 46637.003652372056,
-        "answer": 21878.01163254913,
-        "output": 68515.01528492119
-      },
-      "canonical_token_counts": {
-        "input": 4532507817,
-        "output": 172130020,
-        "answer": 29367750,
-        "reasoning": 142762270
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 26.331884566097187,
-        "reasoning_output_share": 0.6806829635581494
+        "input_output_ratio": 86.70301459673402,
+        "reasoning_output_share": 0.4024707218368155
       }
     },
     {
@@ -4674,20 +1815,20 @@
       "name": "Qwen3.8 27B (Xhigh)",
       "variant": "xhigh",
       "tokens_per_task": {
-        "reasoning": 47691.613732874124,
-        "answer": 19091.61678506237,
-        "output": 66783.23051793649
+        "reasoning": 72364.43358898605,
+        "answer": 37437.69691998375,
+        "output": 109802.1305089698
       },
       "canonical_token_counts": {
-        "input": 4132399183,
-        "output": 198276418,
-        "answer": 27509112,
-        "reasoning": 170767306
+        "input": 9864565565,
+        "output": 127697260,
+        "answer": 30957789,
+        "reasoning": 96739471
       },
       "derived": {
         "basis": "derived",
-        "input_output_ratio": 20.84160700845423,
-        "reasoning_output_share": 0.7141255875614645
+        "input_output_ratio": 77.24962591209867,
+        "reasoning_output_share": 0.6590439844250068
       }
     },
     {
@@ -4696,20 +1837,20 @@
       "name": "Qwen3.8 27B (Low)",
       "variant": "low",
       "tokens_per_task": {
-        "reasoning": 25859.126023110635,
-        "answer": 19567.340810427126,
-        "output": 45426.466833537765
+        "reasoning": 50522.83508253755,
+        "answer": 29652.67636653955,
+        "output": 80175.51144907711
       },
       "canonical_token_counts": {
-        "input": 4572158985,
-        "output": 82439603,
-        "answer": 35646969,
-        "reasoning": 46792634
+        "input": 6193510529,
+        "output": 77254919,
+        "answer": 29559028,
+        "reasoning": 47695891
       },
       "derived": {
         "basis": "derived",
-        "input_output_ratio": 55.46071085519419,
-        "reasoning_output_share": 0.5692524166114363
+        "input_output_ratio": 80.16978865772936,
+        "reasoning_output_share": 0.6301529503135975
       }
     },
     {
@@ -4718,20 +1859,20 @@
       "name": "Qwen3.8 27B (Medium)",
       "variant": "medium",
       "tokens_per_task": {
-        "reasoning": 32211.394284360205,
-        "answer": 19731.905093093967,
-        "output": 51943.29937745417
+        "reasoning": 57200.51902607826,
+        "answer": 29206.82128902969,
+        "output": 86407.34031510795
       },
       "canonical_token_counts": {
-        "input": 4654384091,
-        "output": 112758417,
-        "answer": 32041654,
-        "reasoning": 80716763
+        "input": 6899175288,
+        "output": 87944708,
+        "answer": 27843815,
+        "reasoning": 60100893
       },
       "derived": {
         "basis": "derived",
-        "input_output_ratio": 41.27748699239011,
-        "reasoning_output_share": 0.6201260734380971
+        "input_output_ratio": 78.44901012122298,
+        "reasoning_output_share": 0.6619868036382205
       }
     },
     {
@@ -4741,107 +1882,41 @@
       "variant": null,
       "tokens_per_task": {
         "reasoning": 0,
-        "answer": 29975.33372218334,
-        "output": 29975.33372218334
+        "answer": 44867.10163696973,
+        "output": 44867.10163696973
       },
       "canonical_token_counts": {
-        "input": 11023377195,
-        "output": 43025832,
-        "answer": 43025832,
+        "input": 14800957580,
+        "output": 37531093,
+        "answer": 37531093,
         "reasoning": 0
       },
       "derived": {
         "basis": "derived",
-        "input_output_ratio": 256.20369630504763,
+        "input_output_ratio": 394.3652155294278,
         "reasoning_output_share": 0
-      }
-    },
-    {
-      "source_id": "9ac3908c-9eb2-44db-8c01-3ec7da6fc2ae",
-      "slug": "qwen3-8-flash-next",
-      "name": "Qwen3.8-Flash-Next",
-      "variant": null,
-      "tokens_per_task": {
-        "reasoning": 71807.29308158865,
-        "answer": 36077.41132975757,
-        "output": 107884.70441134622
-      },
-      "canonical_token_counts": {
-        "input": 12848131149,
-        "output": 244946977,
-        "answer": 43292769,
-        "reasoning": 201654208
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 52.452703464064385,
-        "reasoning_output_share": 0.6655928982091801
       }
     },
     {
       "source_id": "b112af07-3bd5-4647-b09f-b23204361bb2",
       "slug": "qwen3-8-max",
       "name": "Qwen3.8 Max (0902)",
-      "variant": null,
+      "variant": "xhigh",
       "tokens_per_task": {
-        "reasoning": 70829.88378234163,
-        "answer": 36900.3468741272,
-        "output": 107730.23065646883
+        "reasoning": 119697.63000886558,
+        "answer": 51096.33150528048,
+        "output": 170793.96151414607
       },
       "canonical_token_counts": {
-        "input": 9896761467,
-        "output": 191963342,
-        "answer": 43134084,
-        "reasoning": 148829258
+        "input": 14549957467,
+        "output": 150456551,
+        "answer": 38791483,
+        "reasoning": 111665068
       },
       "derived": {
         "basis": "derived",
-        "input_output_ratio": 51.5554759772832,
-        "reasoning_output_share": 0.6574745394187879
-      }
-    },
-    {
-      "source_id": "5e5b4ce7-bc54-47b2-b911-21b9cad8394c",
-      "slug": "qwen3-8-max-0803",
-      "name": "Qwen3.8 Max",
-      "variant": null,
-      "tokens_per_task": {
-        "reasoning": 43595.69055874371,
-        "answer": 19185.915932471282,
-        "output": 62781.60649121499
-      },
-      "canonical_token_counts": {
-        "input": 5303343570,
-        "output": 180081228,
-        "answer": 29188875,
-        "reasoning": 150892353
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 29.449730151773508,
-        "reasoning_output_share": 0.6944022779162881
-      }
-    },
-    {
-      "source_id": "fc92f822-04b7-420d-9c07-a21af5e9aac7",
-      "slug": "qwen3-coder-next",
-      "name": "Qwen3 Coder Next",
-      "variant": null,
-      "tokens_per_task": {
-        "reasoning": 0,
-        "answer": 15144.827849293042,
-        "output": 15144.827849293042
-      },
-      "canonical_token_counts": {
-        "input": 1244150540,
-        "output": 33980218,
-        "answer": 33980218,
-        "reasoning": 0
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 36.613965807988635,
-        "reasoning_output_share": 0
+        "input_output_ratio": 96.7053768698978,
+        "reasoning_output_share": 0.7008305735618855
       }
     },
     {
@@ -4850,108 +1925,20 @@
       "name": "Beam 1.0",
       "variant": null,
       "tokens_per_task": {
-        "reasoning": 19477.9622514087,
-        "answer": 6837.074829935174,
-        "output": 26315.03708134387
+        "reasoning": 21933.484130378525,
+        "answer": 12308.696301939308,
+        "output": 34242.18043231784
       },
       "canonical_token_counts": {
-        "input": 1983648536,
-        "output": 79217687,
-        "answer": 11747918,
-        "reasoning": 67469769
+        "input": 3701682373,
+        "output": 53737350,
+        "answer": 12982149,
+        "reasoning": 40755201
       },
       "derived": {
         "basis": "derived",
-        "input_output_ratio": 25.040475317084177,
-        "reasoning_output_share": 0.7401837280790937
-      }
-    },
-    {
-      "source_id": "eb4ba465-3fcd-4065-9fe2-e8225e7b2c6c",
-      "slug": "ring-2-6-1t",
-      "name": "Ring-2.6-1T",
-      "variant": "xhigh",
-      "tokens_per_task": {
-        "reasoning": 26105.508635934922,
-        "answer": 17669.475709649934,
-        "output": 43774.98434558486
-      },
-      "canonical_token_counts": {
-        "input": 925900145,
-        "output": 119132775,
-        "answer": 19208252,
-        "reasoning": 99924523
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 7.772001827372862,
-        "reasoning_output_share": 0.596356778333558
-      }
-    },
-    {
-      "source_id": "62ea3198-9866-4d9f-8406-a79ee78c7164",
-      "slug": "solar-mini4",
-      "name": "Solar Mini 4",
-      "variant": null,
-      "tokens_per_task": {
-        "reasoning": 72175.52537795817,
-        "answer": 16777.16092299021,
-        "output": 88952.68630094838
-      },
-      "canonical_token_counts": {
-        "input": 6156841811,
-        "output": 366450070,
-        "answer": 23528174,
-        "reasoning": 342921896
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 16.80131159751177,
-        "reasoning_output_share": 0.8113923072966113
-      }
-    },
-    {
-      "source_id": "b89c4faf-219e-4171-a1aa-e3bd2fd0a924",
-      "slug": "solar-pro-3",
-      "name": "Solar Pro 3",
-      "variant": "high",
-      "tokens_per_task": {
-        "reasoning": 29170.726708270166,
-        "answer": 13632.237577114041,
-        "output": 42802.96428538421
-      },
-      "canonical_token_counts": {
-        "input": 962412355,
-        "output": 144950756,
-        "answer": 17024974,
-        "reasoning": 127925782
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 6.6395814796578225,
-        "reasoning_output_share": 0.6815118344088846
-      }
-    },
-    {
-      "source_id": "15c4cbd7-b9aa-42c8-9ce5-5abbde0e6963",
-      "slug": "solar-pro4",
-      "name": "Solar Pro 4",
-      "variant": null,
-      "tokens_per_task": {
-        "reasoning": 252140.5524237703,
-        "answer": 35330.81040305349,
-        "output": 287471.3628268238
-      },
-      "canonical_token_counts": {
-        "input": 4327918765,
-        "output": 336926539,
-        "answer": 37060129,
-        "reasoning": 299866410
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 12.845288999332878,
-        "reasoning_output_share": 0.877097982715109
+        "input_output_ratio": 68.88472120415317,
+        "reasoning_output_share": 0.6405399379788812
       }
     },
     {
@@ -4960,42 +1947,20 @@
       "name": "Step 5 Preview",
       "variant": null,
       "tokens_per_task": {
-        "reasoning": 43447.65303762598,
-        "answer": 20696.636327496763,
-        "output": 64144.28936512275
+        "reasoning": 79907.37651851749,
+        "answer": 33565.50120326059,
+        "output": 113472.87772177807
       },
       "canonical_token_counts": {
-        "input": 5470391987,
-        "output": 156455616,
-        "answer": 26775170,
-        "reasoning": 129680446
+        "input": 9797530489,
+        "output": 128708466,
+        "answer": 27358058,
+        "reasoning": 101350408
       },
       "derived": {
         "basis": "derived",
-        "input_output_ratio": 34.96449745210808,
-        "reasoning_output_share": 0.6773424956088114
-      }
-    },
-    {
-      "source_id": "b6d2e43d-3082-43f5-9318-0f4dbcb54163",
-      "slug": "trinity-large-thinking",
-      "name": "Trinity Large Thinking",
-      "variant": null,
-      "tokens_per_task": {
-        "reasoning": 35332.8208741981,
-        "answer": 5777.461993446014,
-        "output": 41110.28286764411
-      },
-      "canonical_token_counts": {
-        "input": 1493810881,
-        "output": 160689317,
-        "answer": 9135446,
-        "reasoning": 151553871
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 9.296267535943288,
-        "reasoning_output_share": 0.8594643094029117
+        "input_output_ratio": 76.12188066168079,
+        "reasoning_output_share": 0.7041980261965403
       }
     }
   ]

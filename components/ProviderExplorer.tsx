@@ -1,8 +1,8 @@
 "use client";
 import { Fragment, useMemo, useState } from "react";
-import { hasScoreEvidence, type ClientData, type ClientOffer, type ProviderInfo } from "../lib/client-model";
+import { aaEstimateNote, hasScoreEvidence, type ClientData, type ClientOffer, type ProviderInfo } from "../lib/client-model";
 import { counted } from "../lib/format";
-import { SCORE_LABELS } from "../lib/types";
+import { SCORE_LABELS, type AaIntelligenceRecord } from "../lib/types";
 import { scoreLabel, scoreVersion } from "../lib/score-label";
 import { useSettings } from "./SettingsContext";
 import { createScope, rankedOffers, scopedCatalogOffers, scoreOf, offerPrice, priceContext, priceLabel, type PriceSettings, type PriceResult } from "../lib/cost";
@@ -105,7 +105,7 @@ export function ProviderExplorer({ data }: { data: ClientData }) {
   // Models the selected provider offers (within the global filter) + the full cross-provider field.
   const rows = useMemo(() => {
     if (!activeKey) return [];
-    const out: { modelId: string; name: string; org: string; score: number | null; mine: PricedOffer; ranked: PricedOffer[]; rank: number }[] = [];
+    const out: { modelId: string; name: string; org: string; score: number | null; scoreEstimate?: AaIntelligenceRecord | null; mine: PricedOffer; ranked: PricedOffer[]; rank: number }[] = [];
     for (const model of allowedModels) {
       const ctx = priceContext(model, data, priceSettings);
       const offers = data.offersByModel[model.id] || [];
@@ -121,6 +121,7 @@ export function ProviderExplorer({ data }: { data: ClientData }) {
         name: s.collapse ? model.family_name : model.display_name,
         org: model.org,
         score: scoreOf(model, s.score),
+        scoreEstimate: s.score === "aa_intelligence_index" ? model.aa_intelligence_estimate ?? null : null,
         mine,
         ranked: ordered,
         rank: priceRanked.findIndex((o) => o.key === activeKey),
@@ -226,7 +227,7 @@ export function ProviderExplorer({ data }: { data: ClientData }) {
                   <Fragment key={r.modelId}>
                     <tr className="cursor-pointer hover:bg-white/5" onClick={() => toggle(r.modelId)}>
                       <td className="px-3 py-2"><button type="button" aria-expanded={isOpen} className="text-left font-medium" onClick={(e) => { e.stopPropagation(); toggle(r.modelId); }}>{r.name}</button> <span className="text-[11px] text-gray-500">{r.org}</span></td>
-                      <td className="px-3 py-2 tabular text-gray-300">{r.score?.toFixed(s.score.startsWith("designarena") ? 0 : 1) ?? "—"}</td>
+                      <td className="px-3 py-2 tabular text-gray-300">{r.score?.toFixed(s.score.startsWith("designarena") ? 0 : 1) ?? "—"}{r.score != null && r.scoreEstimate && <span className="ml-1 text-[10px] text-amber-300/90" title={aaEstimateNote(r.scoreEstimate)} data-aa-estimate="true">est.</span>}</td>
                       <td className="px-3 py-2 tabular text-gray-400">{fmt(r.mine.input_per_1m)}</td>
                       <td className="px-3 py-2 tabular text-gray-400">{fmt(r.mine.output_per_1m)}</td>
                       <td className="px-3 py-2 tabular"><b><PriceValue price={r.mine.price} /></b>{r.mine.eu_policy_equivalent && <span title="Company-approved equivalent; Global inference may occur outside the EU" className="ml-1 rounded bg-sky-500/20 px-1 text-[10px] text-sky-300">EU equivalent</span>}{r.mine.tee && <span className="ml-1 rounded bg-purple-500/20 px-1 text-[10px] text-purple-300">TEE</span>}</td>

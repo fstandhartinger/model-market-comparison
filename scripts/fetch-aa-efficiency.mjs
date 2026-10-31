@@ -7,7 +7,7 @@ import { mkdir, readFile, appendFile, writeFile } from "node:fs/promises";
 import { createHash } from "node:crypto";
 import { resolve } from "node:path";
 import { fileURLToPath } from "node:url";
-import { AA_EFFICIENCY_MODEL_SLUGS, aaModelPageURL, parseAaEfficiency } from "../lib/aa-efficiency.mjs";
+import { AA_EFFICIENCY_MODEL_SLUGS, aaModelPageURL, parseAaEfficiency, previousEfficiencyCount } from "../lib/aa-efficiency.mjs";
 import { writeJSONAtomic } from "../lib/snapshot.mjs";
 import { captureLiveSource } from '../lib/live-source.mjs';
 
@@ -69,7 +69,7 @@ export async function refreshAaEfficiency({ html = undefined, fetchedAt = undefi
           continue;
         }
 
-        const priorCount = previous?.count || 0;
+        const priorCount = previousEfficiencyCount(previous);
         if (candidate.count >= priorCount) {
           response = body;
           usedUrl = url;

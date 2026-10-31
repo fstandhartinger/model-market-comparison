@@ -167,7 +167,9 @@ test('CR-78.3: the three level changes from the simulation, and Hy3 moving down'
   // the measured gap rises to 7.90 and blend to 9.40 (medium). The arithmetic checks remain unchanged.
   const expected = [
     { id: 'muse-spark-1.1::xhigh', gap: 17.2, score: 19.8, before: 'strong', after: 'strong' },     // 11.69 → 14.03 → 18.08 → 17.87 → 17.48 → 19.79
-    { id: 'qwen3.7-max::default', gap: 4.7, score: 5.9, before: 'light', after: 'light' },          // 5.38 → 6.78 → 6.56 → 5.92
+    // CR-634 (31 Oct): AA Intelligence v4.x values that AA has not rescored on v5.0 are estimates now, which the signal never uses;
+    // Qwen3.7 Max's blend moves 5.92 → 6.00 and crosses the medium threshold by 0.0001.
+    { id: 'qwen3.7-max::default', gap: 4.7, score: 6.0, before: 'light', after: 'medium' },          // 5.38 → 6.78 → 6.56 → 5.92 → 6.00
     { id: 'gemini-3.6-flash::high', gap: 7.9, score: 9.4, before: 'medium', after: 'medium' },       // 5.05 → 6.09 → 5.92 → 6.69
     { id: 'hy3::default', unscored: 'insufficient-coverage' },                                       // 5.82 → 4.22 → 4.20 → 5.13 → unscored (D253)
   ];

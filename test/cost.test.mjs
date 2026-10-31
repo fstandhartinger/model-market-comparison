@@ -553,3 +553,16 @@ test("CR-50.1: an AA reference price of $0 is not used as the fallback price", (
     if (p.value != null) assert.ok(p.value > 0, `${m.id} priced at $0 via ${p.provider}`);
   }
 });
+// CR-634: task tokens are measured on one AA index version's tasks; the cost explanation says which.
+test('CR-634: the task-token source names its AA index version, and a frozen v4.x row says so', () => {
+  assert.equal(cost.aaTaskVersionLabel('5.0'), 'v5.0');
+  assert.match(cost.aaTaskVersionLabel('4.x'), /^v4\.x \(frozen 27 Oct 2026; AA has not measured this model on v5\.0\)$/);
+  assert.equal(cost.aaTaskVersionLabel(null), '');
+  for (const version of ['5.0', '4.x']) {
+    const m = structuredClone(model); m.token_efficiency.aa.index_version = version;
+    const p = cost.modelPrice(m, telemetryData, null, adjusted);
+    assert.equal(p.aaTaskVersion, version);
+    const note = p.sources.find((s) => s.label === 'Output tokens/task').note;
+    assert.ok(note.startsWith(`AA Intelligence Index ${cost.aaTaskVersionLabel(version)} task;`), note);
+  }
+});

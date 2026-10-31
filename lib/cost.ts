@@ -51,6 +51,8 @@ export interface PriceResult {
   conditionCheckedAt?: string;
   /** True when the AA task-token measurement was missing and the 1,000-token example task was used. */
   assumedTask?: boolean;
+  /** CR-634: the AA index version whose task tokens were used ("5.0", or "4.x" for a frozen row). */
+  aaTaskVersion?: string | null;
 }
 
 // The typical cache-hit rate is a property of one dataset build; compute it once per dataset.
@@ -145,7 +147,8 @@ export function offerPrice(offer: ClientOffer, context: Pricing = 10, evaluatedA
   }
   const tokens = telemetry?.aa?.tokens_per_task;
   if (tokens && !tokens.stale) sources.push({ label: "Output tokens/task", source: tokens.source, url: tokens.url, date: tokens.collected_at, basis: tokens.basis,
-    note: `AA Intelligence Index task; exact configuration ${telemetry?.aa.source_slug} (${telemetry?.aa.source_variant || model.variant || "source default"}). Includes answer and reasoning tokens.` });
+    // CR-634: the task tokens are measured on one index version's tasks; a frozen v4.x row says so.
+    note: `AA Intelligence Index ${aaTaskVersionLabel(telemetry?.aa?.index_version) ? `${aaTaskVersionLabel(telemetry?.aa?.index_version)} ` : ""}task; exact configuration ${telemetry?.aa.source_slug} (${telemetry?.aa.source_variant || model.variant || "source default"}). Includes answer and reasoning tokens.` });
   if (tokens?.stale) extra.push("Stale AA task-token observation ignored.");
   const conditionCheckedAt = offer.platform === "OpenRouter" && conditionalRates.length ? evaluatedAt : undefined;
   const scenarioOutputTokens = tokens && !tokens.stale && valid(tokens.value.output) && tokens.value.output > 0
@@ -220,7 +223,8 @@ export function offerPrice(offer: ClientOffer, context: Pricing = 10, evaluatedA
   result.assumptions.push(...extra);
   result.estimated = true;
   return { ...base, ...retained, priceCondition, conditionCheckedAt: conditionCheckedAt?.toISOString(), value: result.effective_cost_per_task, unit: "$/task", assumptions: result.assumptions, effective: result, cache,
-    assumedTask: !(tokens && !tokens.stale && Number.isFinite(tokens.value.output) && tokens.value.output > 0) };
+    assumedTask: !(tokens && !tokens.stale && Number.isFinite(tokens.value.output) && tokens.value.output > 0),
+    aaTaskVersion: tokens && !tokens.stale ? telemetry?.aa?.index_version ?? null : null };
 }
 
 export const SCORE_OPTIONS: ScoreKey[] = [
@@ -491,3 +495,9 @@ export const PROVIDER_PRESETS: { label: string; match: (p: { platform: string; p
   { label: "Open-source market (OpenRouter)", match: (p) => p.platform === "OpenRouter" },
   { label: "Chutes / Nebius / DeepInfra", match: (p) => /chutes|nebius|deepinfra/i.test(p.provider) },
 ];
+
+/** CR-634: "v5.0" for a current AA task-token row, "v4.x (frozen …)" for a model AA has not measured on v5.0. */
+export function aaTaskVersionLabel(version: string | null | undefined): string {
+  if (!version) return "";
+  return version === "4.x" ? "v4.x (frozen 27 Oct 2026; AA has not measured this model on v5.0)" : `v${version}`;
+}

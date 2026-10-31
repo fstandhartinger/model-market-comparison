@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { attachEfficiency } from "../lib/efficiency.mjs";
 const read = (name) => JSON.parse(readFileSync(`data/raw/${name}.json`));
-const inputs = () => ({ aa: read("artificialanalysis"), aaEfficiency: read("aa-efficiency"), openrouter: read("openrouter"), openrouterEfficiency: read("openrouter-efficiency"), chutesEfficiency: read("chutes-efficiency"), now: new Date().toISOString() });
+const inputs = () => ({ aa: read("artificialanalysis"), aaEfficiency: read("aa-efficiency"), aaEfficiencyV4: read("aa-efficiency-v4"), openrouter: read("openrouter"), openrouterEfficiency: read("openrouter-efficiency"), chutesEfficiency: read("chutes-efficiency"), now: new Date().toISOString() });
 const bare = (id, sku, offers = []) => ({ id, aa_model_id: null, aa_metadata: { openrouter_api_id: sku }, offers });
 
 test("efficiency joins an exact workload SKU; sibling/ambiguous rows use labelled Chutes fallback", () => {
@@ -46,6 +46,8 @@ test("built efficiency observations match dated raw identities, exact values and
   const dataset = JSON.parse(readFileSync("data/dataset.json"));
   const source = inputs();
   const aa = new Map(source.aaEfficiency.rows.map((r) => [r.source_id, r]));
+  const aaV4 = new Map(source.aaEfficiencyV4.rows.map((r) => [r.source_id, r]));
+  assert.equal(source.aaEfficiency.index_version, "5.0");
   for (const model of dataset.models) {
     const item = model.token_efficiency;
     assert.ok(item, model.id);
@@ -54,8 +56,12 @@ test("built efficiency observations match dated raw identities, exact values and
     assert.ok(ratio.url && ratio.source && ratio.collected_at);
     assert.equal(ratio.basis, ratio.fallback ? "assumed" : "derived");
     if (item.aa.tokens_per_task) {
-      assert.deepEqual(item.aa.tokens_per_task.value, aa.get(model.aa_model_id).tokens_per_task);
-      assert.equal(item.aa.tokens_per_task.collected_at, source.aaEfficiency.collected_at);
+      // CR-634: the v5.0 row when AA published one for this exact configuration, else the frozen v4.x row, each with its version.
+      const current = aa.get(model.aa_model_id), frozen = aaV4.get(model.aa_model_id);
+      assert.deepEqual(item.aa.tokens_per_task.value, (current ?? frozen).tokens_per_task);
+      assert.equal(item.aa.tokens_per_task.collected_at, current ? source.aaEfficiency.collected_at : source.aaEfficiencyV4.collected_at);
+      assert.equal(item.aa.index_version, current ? source.aaEfficiency.index_version : "4.x");
+      assert.equal(item.aa.tokens_per_task.index_version, item.aa.index_version);
       assert.equal(item.aa.benchmark_input_output_ratio.interpretation, "benchmark_proxy");
     }
   }
@@ -76,4 +82,6 @@ test("built efficiency observations match dated raw identities, exact values and
   assert.equal(observed, dataset.efficiency.coverage.endpoint_pairs_with_cache_hit_rate);
   assert.equal(dataset.efficiency.coverage.openrouter_empirical_models + dataset.efficiency.coverage.global_fallback_models, dataset.models.length);
   assert.equal(dataset.efficiency.coverage.aa_matched_dataset_models + dataset.efficiency.aa_unmatched.value.length, source.aaEfficiency.count);
+  assert.equal(dataset.efficiency.coverage.aa_frozen_v4_models, dataset.models.filter((m) => m.token_efficiency.aa.index_version === "4.x").length);
+  assert.ok(dataset.efficiency.coverage.aa_frozen_v4_models > 0);
 });

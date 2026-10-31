@@ -15,12 +15,15 @@ const checked = await verifyScoreEvidence(snapshot, registry, { approvals });
 const dataset = await read('data/dataset.json');
 const history = await readHistory();
 const artificialanalysis = await read('data/raw/artificialanalysis.json');
+// CR-634: the frozen v4.x snapshot feeds the v4 Intelligence/Coding boards, exactly as in build-dataset.
+const artificialanalysisV4 = await read('data/raw/artificialanalysis-v4.json');
 const designarena = await read('data/raw/designarena.json');
 const epochEci = await read('data/raw/epoch-eci.json');
 const { agenticAttachmentFromFiles } = await import('../lib/aa-agentic-index.mjs');
 const aaAgentic = await agenticAttachmentFromFiles({ rawDir: 'data/raw', aaModels: artificialanalysis.models, modelRows: dataset.models });
 const headlineObservations = buildHeadlineObservations({
   artificialanalysis: { ...artificialanalysis, sha256: await sha256('data/raw/artificialanalysis.json') },
+  artificialanalysisV4: { ...artificialanalysisV4, sha256: await sha256('data/raw/artificialanalysis-v4.json') },
   designarena: { ...designarena, sha256: await sha256('data/raw/designarena.json') },
   epochEci,
   modelRows: dataset.models,

@@ -70,7 +70,10 @@ export function ShortlistColumns({ data, ids, tableIds, names, onToggle, full = 
     return { id, value: m && hasScoreEvidence(m, score) ? m.scores[score] ?? null : null };
   }), unit, { zeroBaseline }), [shownIds, byId, score, unit, zeroBaseline]);
   /** "3/7" suffix for a value from an incomplete Main Composite, spoken as "3 of 7 inputs". */
-  const covText = (id: string) => { const c = coverageOf.get(id); return c ? `, incomplete Composite, ${c.replace("/", " of ")} inputs` : ""; };
+  const coverageText = (id: string) => { const c = coverageOf.get(id); return c ? `, incomplete Composite, ${c.replace("/", " of ")} inputs` : ""; };
+  // CR-634: an AA Intelligence value estimated from v4 says so in the visible label, the accessible name and the summary.
+  const estOf = (id: string) => score === "aa_intelligence_index" && !!byId.get(id)?.aa_intelligence_estimate;
+  const covText = (id: string) => `${coverageText(id)}${estOf(id) ? " (estimated from v4, not measured)" : ""}`;
   if (ids.length < 2) return null;
   const label = score === "composite" ? "Benchmark Heaven Score (Main Composite Score)" : SCORE_SHORT_LABELS[score];
   const measured = columns.filter((c) => !c.noData).length;
@@ -127,7 +130,7 @@ export function ShortlistColumns({ data, ids, tableIds, names, onToggle, full = 
                   ? <span className="block h-3.5 rounded-t rounded-r border" data-incomplete-composite={coverageOf.get(c.id)} data-composite-marker={coverageMarker(coverageOf.get(c.id))} style={{ width: `${Math.round((c.height ?? 0) * 100)}%`, ...compositeBarStyle(coverageOf.get(c.id)!, j >= 0 ? seriesColor(j) : "rgb(var(--accent))") }} />
                   : <span className="block h-3.5 rounded-t rounded-r" style={{ width: `${Math.round((c.height ?? 0) * 100)}%`, background: j >= 0 ? seriesColor(j) : "rgb(var(--accent) / .45)" }} />}</>;
             return <div key={c.id} className="flex items-center gap-2 text-[11px] leading-tight" data-col={c.id} data-no-data={c.noData ? "1" : undefined}>
-              <span className="order-3 w-10 shrink-0 text-right font-semibold tabular" aria-hidden="true">{c.noData ? "" : valueText}{!c.noData && coverageOf.get(c.id) && <span className="bh-muted block font-normal">{coverageOf.get(c.id)}</span>}</span>
+              <span className="order-3 w-10 shrink-0 text-right font-semibold tabular" aria-hidden="true">{c.noData ? "" : valueText}{!c.noData && coverageOf.get(c.id) && <span className="bh-muted block font-normal">{coverageOf.get(c.id)}</span>}{!c.noData && estOf(c.id) && <span className="block font-normal text-amber-300/90" data-aa-estimate="true">est.</span>}</span>
               <Link href={`/models/${encodeURIComponent(c.id)}`} tabIndex={-1} aria-hidden="true" className="order-1 w-[38%] shrink-0 hover:underline">{names.get(c.id)}</Link>
               {onToggle
                 ? <button {...toggleProps(c.id, valueText)} className="bh-col-toggle order-2 flex h-6 min-h-0 flex-1 items-center rounded p-0">{bar}</button>
@@ -151,7 +154,7 @@ export function ShortlistColumns({ data, ids, tableIds, names, onToggle, full = 
                       {coverageOf.get(c.id)
                         ? <span className="absolute inset-x-0 bottom-0 rounded-t border" aria-hidden="true" data-incomplete-composite={coverageOf.get(c.id)} data-composite-marker={coverageMarker(coverageOf.get(c.id))} style={{ height: h, ...compositeBarStyle(coverageOf.get(c.id)!, j >= 0 ? seriesColor(j) : "rgb(var(--accent))") }} />
                         : <span className="absolute inset-x-0 bottom-0 rounded-t" aria-hidden="true" style={{ height: h, background: j >= 0 ? seriesColor(j) : "rgb(var(--accent) / .45)" }} />}
-                      <span className="absolute inset-x-0 text-center text-[10px] font-semibold leading-none tabular" aria-hidden="true" style={{ bottom: `calc(${h} + 3px)` }}>{formatValue(c.value as number, unit)}{coverageOf.get(c.id) && <span className="bh-muted block font-normal">{coverageOf.get(c.id)}</span>}</span>
+                      <span className="absolute inset-x-0 text-center text-[10px] font-semibold leading-none tabular" aria-hidden="true" style={{ bottom: `calc(${h} + 3px)` }}>{formatValue(c.value as number, unit)}{coverageOf.get(c.id) && <span className="bh-muted block font-normal">{coverageOf.get(c.id)}</span>}{estOf(c.id) && <span className="block font-normal text-amber-300/90" data-aa-estimate="true">est.</span>}</span>
                     </>;
                   return onToggle
                     ? <button key={c.id} {...toggleProps(c.id, c.noData ? "no data" : formatValue(c.value as number, unit))} className="bh-col-toggle relative block h-full min-h-0 min-w-[2.2rem] flex-1 rounded-t p-0" data-col={c.id} data-no-data={c.noData ? "1" : undefined}>{inner}</button>
