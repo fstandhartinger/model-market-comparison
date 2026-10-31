@@ -7,10 +7,10 @@ import { validatePrioritySubmission } from '../lib/priority-evaluation.mjs';
 import { encryptApiKey, parsePublicKey } from '../lib/submission-crypto.mjs';
 import { RATE_LIMITS, TOKEN_MAX_AGE_MS, clientIp, ipHash, issueFormToken, submissionSecret, verifyFormToken } from '../lib/submission-guard.mjs';
 import { followupOptions, followupOptionsFromData } from '../lib/submission-leaderboards.mjs';
+import { readJevbenchAgentFeed } from '../lib/jevbench-agent-feed.mjs';
 import { followupValue, outsideTopTen, slowScheduleNotice } from '../lib/submission-shared.mjs';
 import { isAdminEmail } from '../lib/admin-access.mjs';
 import { MODEL_SUBMISSIONS_SCHEMA_SQL } from '../lib/accounts-schema.mjs';
-import { readJevbenchV154Release } from '../lib/jevbench-v15-release.mjs';
 
 const read = (p) => readFile(new URL(p, import.meta.url), 'utf8');
 const followups = [
@@ -212,7 +212,7 @@ test('CR-251 API-key encryption: round trip, no plaintext, tamper fails, PEM wit
   assert.throws(() => encryptApiKey('', pem));
 });
 
-test('CR-251 follow-up options come from the live data and match what the pages rank', async () => {
+test('CR-251 follow-up options come from the current live JevBench board', async () => {
   const options = await followupOptions();
   for (const b of ['jevbench', 'imagejevbench', 'audiojevbench']) {
     const list = options.filter((o) => o.benchmark === b);
@@ -221,16 +221,13 @@ test('CR-251 follow-up options come from the live data and match what the pages 
     assert.ok(list.every((o) => o.key && o.name && Number.isInteger(o.rank) && o.rank >= 1));
     assert.equal(new Set(list.map((o) => o.key)).size, list.length, `${b} keys are unique`);
   }
-  const { artifact } = await readJevbenchV154Release();
-  const ranked = artifact.systems.filter((s) => s.ranked);
+  const { artifact } = await readJevbenchAgentFeed();
+  const ranked = artifact.systems.filter((s) => s.ranked === true && Number.isInteger(s.rank) && s.rank >= 1);
   const jev = options.filter((o) => o.benchmark === 'jevbench');
-  assert.equal(jev.length, ranked.length);
-  for (const s of ranked) {
-    assert.equal(jev.find((o) => o.key === s.key)?.rank, s.rank);
-    assert.equal(s.ranks.A, s.rank, 'composite rank is board A');
-  }
-  assert.equal(artifact.headline, 'A');
-  assert.ok(!jev.some((o) => o.name.includes('(')) || true);
+  const byKey = (rows) => rows.map(({ key, rank }) => [key, rank]).sort(([a], [b]) => a.localeCompare(b));
+  assert.deepEqual(byKey(jev), byKey(ranked));
+  const unranked = artifact.systems.find((s) => s.ranked !== true && s.key);
+  if (unranked) assert.ok(!jev.some((o) => o.key === unranked.key), 'unranked rows are not follow-up options');
   assert.equal(followupValue(jev[0]), `jevbench:${jev[0].key}`);
   assert.deepEqual(followupOptionsFromData({}), []);
 });
