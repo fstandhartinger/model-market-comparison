@@ -33,11 +33,13 @@ import { compactRunDirectory, STAGING_DIRECTORIES } from './compact-run.mjs';
 
 const exec = promisify(execFile);
 
-/** Runs started within this many days keep their staging tree, published or not. */
-export const RETAIN_STAGING_DAYS = 3;
+/** Runs started within this many days keep their staging tree, published or not.
+ *  31 Oct 2026 (disk-cleanup #36005): 3 days → 12 h. A failed run's tree is ~8 GB (work/ 4.6 GB, before/ 2.7 GB) and the
+ *  repair chain replays a failure the same UTC day; reports/, sources/, workers/ and gauntlet/ stay regardless. */
+export const RETAIN_STAGING_DAYS = 0.5;
 /** …and the newest this many staging trees survive regardless of age, so a quiet pipeline still
- *  leaves something to investigate. */
-export const RETAIN_STAGING_RUNS = 3;
+ *  leaves something to investigate. Two, because the self-heal repair prompt diagnoses the TWO newest run directories. */
+export const RETAIN_STAGING_RUNS = 2;
 /** A directory with no run report that was written this recently may still be a live run. */
 export const SETTLE_HOURS = 6;
 
