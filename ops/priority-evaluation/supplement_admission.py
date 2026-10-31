@@ -18,7 +18,9 @@ from __future__ import annotations
 
 import hashlib
 import json
+import os
 import re
+import tempfile
 from pathlib import Path
 from typing import Any
 
@@ -29,8 +31,9 @@ FILE_LIMIT = 4 * 1024 * 1024
 JSON_LIMIT = 200_000
 PIP_DIGEST = 'pip-install-lines'
 
-# Stack files relative to the order's source/ directory, with the reviewed precedent's SHA-256. Model behaviour
-# files (model.py, weights, configs) are deliberately not listed: they may change between versions.
+# Stack files relative to the order's source/ directory, with the reviewed precedent's SHA-256: the documented
+# install requirements plus the serving entry code the supplement was built for. Weights, configs and the model
+# definition of families that version it (torchcast, lychee model.py) are deliberately not listed.
 FAMILIES: dict[str, dict[str, Any]] = {
     'standardone': {
         'module': 'standardone_runtime_supplement',
@@ -51,6 +54,8 @@ FAMILIES: dict[str, dict[str, Any]] = {
         'receipts': ('model',),
         'files': {
             'model/requirements.txt': '823733e4297083be898c76f18a0c742dbb03e676aeaa351a6e55006c7cb043bd',
+            'model/lychee/server.py': 'b056daeef2776987a01acb9ec5dd801f4d570527f9a3bbadf0d14dd26f10f7bc',
+            'model/lychee/__init__.py': '861677702eca0d420c17105da6608dd84fefb76715e4a41de15e4e020abd85e5',
         },
     },
     'torchcast': {
@@ -88,8 +93,12 @@ def file_sha256(source: Path, relative: str) -> str:
     return hashlib.sha256(_regular(source / relative, source).read_bytes()).hexdigest()
 
 
+_INSTALL = re.compile(r'(?:^|[\s;&|(`!])(?:pip3?|uv\s+pip|conda|mamba|micromamba)\s+install\b')
+
+
 def pip_lines(text: str) -> list[str]:
-    """`pip install` commands (with backslash continuations), whitespace-normalized, in document order."""
+    """Every line that runs a package install (pip/pip3/uv pip/conda/mamba, any prefix such as sudo, RUN, `$`,
+    `!` or a list dash), with backslash continuations, whitespace-normalized, in document order."""
     lines, current = [], None
     for raw in text.splitlines():
         line = raw.strip()
@@ -99,7 +108,7 @@ def pip_lines(text: str) -> list[str]:
                 lines.append(current)
                 current = None
             continue
-        if re.match(r'(?:\$\s*)?(?:python3?\s+-m\s+)?pip\s+install\b', line):
+        if _INSTALL.search(line) or re.search(r'\bpython3?\s+-m\s+pip\s+install\b', line):
             line = re.sub(r'^\$\s*', '', line)
             if line.endswith('\\'):
                 current = line.rstrip('\\').strip()
@@ -156,7 +165,7 @@ def evaluate(job_dir: Path | str, family: str) -> dict[str, Any] | None:
             if digest != expected:
                 return None
             hashes[f'{relative}#{PIP_DIGEST}'] = digest
-    except (OSError, ValueError, UnicodeError):
+    except (OSError, ValueError, UnicodeError, RecursionError):
         return None
     return {'schema_version': 1, 'order': job_dir.name, 'family': family, 'module': spec['module'],
             'precedent_order': spec['precedent'], 'repositories': keys, 'stack_sha256': hashes}
@@ -172,7 +181,10 @@ def find(job_dir: Path | str) -> dict[str, Any] | None:
 
 def write_receipt(job_dir: Path | str, bundle_dir: Path | str) -> dict[str, Any] | None:
     """Host step before the bundle is frozen: write the receipt for an admitted order, remove any other copy."""
-    target = Path(bundle_dir) / RECEIPT
+    bundle_dir = Path(bundle_dir)
+    if bundle_dir.is_symlink() or not bundle_dir.is_dir():
+        raise ValueError('runner bundle directory is unsafe')
+    target = bundle_dir / RECEIPT
     if target.is_symlink() or (target.exists() and not target.is_file()):
         raise ValueError('admission receipt path is unsafe')
     record = find(job_dir)
@@ -180,9 +192,14 @@ def write_receipt(job_dir: Path | str, bundle_dir: Path | str) -> dict[str, Any]
         if target.exists():
             target.unlink()
         return None
-    tmp = target.with_name(RECEIPT + '.tmp')
-    tmp.write_text(json.dumps(record, indent=2, sort_keys=True) + '\n', encoding='utf-8')
-    tmp.replace(target)
+    fd, tmp = tempfile.mkstemp(dir=bundle_dir, prefix='.admission-', suffix='.tmp')
+    try:
+        with os.fdopen(fd, 'w', encoding='utf-8') as handle:
+            handle.write(json.dumps(record, indent=2, sort_keys=True) + '\n')
+        os.replace(tmp, target)
+    except BaseException:
+        Path(tmp).unlink(missing_ok=True)
+        raise
     return record
 
 
@@ -198,7 +215,7 @@ def admitted(job: Path | str, family: str) -> bool:
         if not isinstance(pinned, dict) \
                 or pinned.get('sha256') != hashlib.sha256(receipt_path.read_bytes()).hexdigest():
             return False
-    except (OSError, ValueError, AttributeError):
+    except (OSError, ValueError, AttributeError, RecursionError):
         return False
     return evaluate(job_dir, family) == receipt
 

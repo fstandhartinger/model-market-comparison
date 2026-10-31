@@ -3413,10 +3413,13 @@ def advance_xpost(row: dict[str, Any], state: dict[str, Any], job_dir: Path, sum
         effects.notify(completed_status_card(row, "is complete: the customer received the result", "The published top five did not change, so no X update was needed."),
                        mode="digest")
         return
-    release_result = job_dir / "release" / "RESULT.json"
-    if step(state, "xpost")["status"] == "pending" and not release_result.is_file():
-        # Native-route orders (delivered by their owner job) have no release/RESULT.json, so the X-post service
-        # could only block on result revalidation. Skip it explicitly; the release owner announces the row.
+    finalize = (state.get("steps") or {}).get("finalize")
+    host_finalized = isinstance(finalize, dict) and finalize.get("status") == "done"
+    if step(state, "xpost")["status"] == "pending" and not host_finalized \
+            and not (job_dir / "release" / "RESULT.json").is_file():
+        # Native-route orders (verified and delivered by their owner job, never by the host finalize step) have no
+        # release/RESULT.json, so the X-post service could only block on result revalidation. Skip it explicitly;
+        # the release owner announces the row.
         step(state, "xpost")["status"] = "skipped"
         step(state, "xpost")["reason"] = "native_route_no_release_result"
         step(state, "xpost_receipt")["status"] = "skipped"
