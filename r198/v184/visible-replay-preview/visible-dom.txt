@@ -1,0 +1,87 @@
+Skip to main content
+Benchmark Heaven
+BETA
+ — Work in progress
+Overview
+Benchmaxxing
+Benchmarks
+Compare
+Charts
+More ▾
+Options
+Back to JevBench
+Granite Switch 4.1 8B (revision 4.1.1, decision adapter)v1.7 · 10 s rule
+
+Data: JevBench v1.8.4, published 2026-10-31 · method v1.7 (10 s rule), measured under the rule
+
+Capability 57.1 · Not ranked in the current release
+
+Measured on the 27 Oct 2026 draw, which is not yet equated to the reference scale; stronger anchor runs for that draw are being measured. Shown unranked until then.
+
+Last measured: 2026-10-31 · measurement release: v1.8.4
+
+Apache-2.0 (model card and Granite Switch source LICENSE; no standalone Hugging Face LICENSE file)
+
+Base model: ibm-granite/granite-4.1-8bsource
+Jev alternatives
+How to choose
+Is Jev open source?
+Intelligence
+
+32.1
+
+Calibration
+
+82.1
+
+Speed
+
+92.7
+
+Cost
+
+59.4
+
+Composite (secondary)
+
+23.3 · Not ranked on this board
+
+Cost and measurement conditions
+
+$0.023 per 1,000 decisions (estimated)
+
+Sibling estimate (*est.): the declared measured base is ibm-granite/granite-4.1-8b; granite-4.2-8b is the sibling reference at USD 0.06 per million input tokens and USD 0.25 per million output tokens. This is not a listing or tariff for the measured base and not an author API quote. The frozen price catalog has no exact 4.1-8b listing. Native server usage includes every full-prompt chunk and every generated label-read token. On the frozen 1,489-decision common set: 554,274 input + 1,489 output tokens, yielding USD 0.0225847481531229 per 1,000 decisions. Across all 1,500 decisions: 818,484 input + 1,500 output tokens, yielding USD 0.03298936 per 1,000. Granite is outside the six calibrated Gemma/Qwen throughput classes; under the existing v1.8 method the sibling estimate is retained and the GPU-time component is unavailable. No cross-family throughput mapping, observed-loop extrapolation or pod bill is used. Estimated, not a bill. USD 0.0225847482 per 1,000 decisions on the frozen 1,489-item common set of this draw (USD 0.03298936 over all 1,500 items).
+
+p50 latency: 0.2 s
+
+Self-hosted latency estimate under the shared method (assumption, not measured)
+
+Measured 31 October 2026 on an evaluator-operated rented Verda GPU VM in FIN-03, Finland (EU), with one NVIDIA RTX PRO 6000 Blackwell Server Edition, nominal 96 GB, PAYG non-spot. The composed checkpoint and its pinned Granite Switch plugin ran in stock vLLM 0.30.0 with Torch 2.13.0+cu130, CUDA 13.0, Transformers 5.17.0, BF16, max-num-seqs=1, chunked prefill=2048 and gpu-memory-utilization=0.90. The local HTTP shim and backend communicated over loopback inside a read-only container with no external network and empty credentials. Only text and the decision adapter were evaluated; Guardian and speech-to-text were not evaluated. Audio limit zero and skip-mm-profiling prevented the optional ASR route from loading. The author Decision Index recipe uses a fixed system prompt; this measurement used no system prompt, followed by a State: user turn and a DECISION user turn containing the whole question, ordered option descriptions and an instruction to reply with one option label. Raw first-generated-position label logprobs, rather than the sampled answer token, determine the answer probabilities. Explicit label reads use chunks of at most 128 IDs over the same full prompt, joined by one stable global softmax. Every actual full prompt and generated label-read token is counted in usage. Native output is one generated token per actual call, not the tokenless convention. TRITON_ATTN was selected explicitly; FlashInfer sampling, all-reduce and autotune were disabled to avoid an unavailable nvcc path. This choice can change roundoff and performance relative to automatic backend selection; no cross-backend numerical equivalence is claimed. A local memory observer read CUDA allocator peaks without changing tensors or probabilities. Public typed, context-length and usage checks passed before the measurement, including the 255-label two-chunk route and the long wide-menu envelope. Public probes passed through 53,445 tokens; overflow at 131,073 tokens was refused. Peak reserved CUDA memory was 84.55078125 GiB of 94.97052001953125 GiB device memory; this is not a minimum-hardware guarantee. The 1,500-request loop took 103.27663707733154 seconds. Private inputs, outputs and logs on the rented VM and local staging were shredded, and provider deletion of the exact VM and its OS volume was verified. The retained raw copy has private permissions and the verified raw hash. The pod bill and elapsed loop time are separate from the estimated model price. Replay check: 7 of 50 repeated requests were bit-identical, with zero argmax flips and a maximum absolute probability difference of 0.0312263773757529. Exact probability reproducibility is not established. Repeats were recorded only; no scored answer was averaged, repaired, replaced or retried. Before measurement, the same-engine label re-extraction check was fixed at a 5e-2 absolute ceiling with exact label sets, own-winner consistency and a near-tie allowance; it passed. This is not a cross-backend equivalence claim.
+
+Measured latency over 1,500 decisions: p50 0.029 s · p95 0.055 s
+
+5 decisions over 10 s (5 of them answered without error, counted as wrong).
+
+A decision that takes longer than 10 seconds (measured time) counts as a wrong answer and as zero calibration for that item: each type's calibration is multiplied by the share of its decisions answered within 10 s. The limit uses the measured time (raw). The displayed adjusted time for self-hosted rows (2 × + 0.15 s) is an assumption and is not used for the limit.
+
+Published source
+
+Benchmark Heaven
+Sources & methodology
+Decision model benchmarks
+JevBench methodology
+Need custom eval on your data?
+Public API
+GitHub
+MIT licence
+Privacy
+Terms
+Impressum
+
+Benchmark results with their source and date, and a modeled cost per task that accounts for provider prices, caching and token efficiency. Data from OpenRouter, Artificial Analysis, Epoch AI, DesignArena, benchmark maintainers and provider catalogs. Data: Artificial Analysis · Data: Epoch AI (CC BY)
+
+Open source (MIT) and a hobby project — the code is on GitHub, built to give the world better tools to decide which LLM to choose for the job. The licence covers the code, not the third-party data (its own terms apply).
+
+Benchmark publishers can ask for their numbers to be removed or shown differently — data sources & removal on request.
+
+Support Benchmark Heaven · Payments go to productivity-boost.com Betriebs UG (haftungsbeschränkt) & Co. KG, the one-person company behind this project.

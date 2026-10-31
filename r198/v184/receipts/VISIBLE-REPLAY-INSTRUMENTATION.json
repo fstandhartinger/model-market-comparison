@@ -1,0 +1,17 @@
+{
+ "actual_HTTP_status": 200,
+ "all_required_facts_visible_at": "2026-10-31T23:05:19.216559+00:00",
+ "body_text_captured_before_banner_mutation": true,
+ "capture_scope": "Actual production TSX in Next dev with synthetic PASS and final endpoint data; not a fresh production build.",
+ "error_sha256": "6be260db26a47930638986ba7bc8787e2d70e0fe15824bf80c30a0179cc3fc47",
+ "helper_exit_code": 1,
+ "helper_exit_reason": "After capture and PASS marker, cleanup rm failed on .pass directory race. Exact normal heavy helper subsequently cleaned owned unit/workspace; source tree has no .pass.",
+ "interpretation": "Own evidence helper prepended a candidate banner to document.body after asserting no page errors and saving visible body text. React hydration then found that banner in its hidden metadata boundary. Trace explicitly names the injected candidate text; screenshot shows actual final page after React removed the banner. This is not a zero-page-error or end-to-end-helper PASS claim.",
+ "mandatory_fresh_final_HEAD_queue_build_before_production": true,
+ "page_errors_before_banner_assertion": 0,
+ "post_injection_page_errors_preserved_in_raw_manifest": [
+  "Hydration failed because the server rendered HTML didn't match the client. As a result this tree will be regenerated on the client. This can happen if a SSR-ed Client Component used:\n\n- A server/client branch `if (typeof window !== 'undefined')`.\n- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.\n- Date formatting in a user's locale which doesn't match the server.\n- External changing data without sending a snapshot of it along with the HTML.\n- Invalid HTML tag nesting.\n\nIt can also happen if the client has a browser extension installed which messes with the HTML before React loaded.\n\nhttps://react.dev/link/hydration-mismatch\n\n  ...\n    <HotReload assetPrefix=\"\" globalError={[...]}>\n      <AppDevOverlayErrorBoundary globalError={[...]}>\n        <ReplaySsrOnlyErrors>\n        <DevRootHTTPAccessFallbackBoundary>\n          <HTTPAccessFallbackBoundary notFound={<NotAllowedRootHTTPFallbackError>}>\n            <HTTPAccessFallbackErrorBoundary pathname=\"/jev-model...\" notFound={<NotAllowedRootHTTPFallbackError>} ...>\n              <RedirectBoundary>\n                <RedirectErrorBoundary router={{...}}>\n                  <Head headCacheNode={{lazyData:null, ...}}>\n                    <__next_viewport_boundary__>\n                    <MetadataTree>\n                      <__next_metadata_boundary__>\n                        <__next_metadata_boundary__>\n                          <div\n+                           hidden={true}\n-                           hidden={null}\n-                           style={{background-image:\"initial\",background-position-x:\"initial\",background-position-y:\"initial\", ...}}\n                          >\n+                           <Suspense fallback={null}>\n-                           CANDIDATE \u2014 FINAL DATA-ONLY REPLAY DISCLOSURE \u2014 NEXT DEV / SYNTHETIC PASS\n                  ...\n"
+ ],
+ "reviewer": "Independent reviewer inspected raw trace, actual screenshot and saved visible DOM; accepts visible-fact evidence with warnings, no third route retry.",
+ "status": "VISIBLE_FACTS_VERIFIED_WITH_INSTRUMENTATION_AND_CLEANUP_WARNINGS"
+}

@@ -1,53 +1,74 @@
 {
- "status": "PASS",
+ "active_repair_run": null,
+ "active_run_cleaned_only_after_finish": true,
+ "browsers": "Browser and dev server closed in capture finally; exact owned units/workspaces cleaned. Final capture helper cleanup race preserved as warning; no shared units touched.",
  "closed_runs": [
   {
-   "job": "jevbench-add-requests-20260919-v184",
-   "run": "r10312058334dio",
-   "LoadState": "not-found",
    "ActiveState": "inactive",
+   "LoadState": "not-found",
    "Result": "success",
-   "normal_helper_clean_invoked": true
+   "job": "jevbench-add-requests-20260919-v184",
+   "normal_helper_clean_invoked": true,
+   "run": "r10312058334dio"
   },
   {
-   "job": "jevbench-add-requests-20260919-v184",
-   "run": "r10312056491ko8",
-   "LoadState": "not-found",
    "ActiveState": "inactive",
+   "LoadState": "not-found",
    "Result": "success",
-   "normal_helper_clean_invoked": true
+   "job": "jevbench-add-requests-20260919-v184",
+   "normal_helper_clean_invoked": true,
+   "run": "r10312056491ko8"
   },
   {
+   "ActiveState": "inactive",
+   "LoadState": "not-found",
+   "Result": "success",
    "job": "jevbench-add-requests-20260919-v184repair",
-   "run": "r1031213446jlz5",
-   "LoadState": "not-found",
-   "ActiveState": "inactive",
-   "Result": "success",
-   "normal_helper_clean_invoked": true
+   "normal_helper_clean_invoked": true,
+   "run": "r1031213446jlz5"
   },
   {
+   "ActiveState": "inactive",
+   "LoadState": "not-found",
+   "Result": "success",
    "job": "jevbench-add-requests-20260919-v184extra",
-   "run": "r10312108542447",
-   "LoadState": "not-found",
-   "ActiveState": "inactive",
-   "Result": "success",
-   "normal_helper_clean_invoked": true
+   "normal_helper_clean_invoked": true,
+   "run": "r10312108542447"
   },
   {
-   "job": "jevbench-add-requests-20260919-v184plan",
-   "run": "r10312112127vhp",
-   "LoadState": "not-found",
    "ActiveState": "inactive",
+   "LoadState": "not-found",
    "Result": "success",
-   "normal_helper_clean_invoked": true
+   "job": "jevbench-add-requests-20260919-v184plan",
+   "normal_helper_clean_invoked": true,
+   "run": "r10312112127vhp"
+  },
+  {
+   "ActiveState": "vanished",
+   "LoadState": "not-found",
+   "job": "jevbench-add-requests-20260919-v184replay",
+   "normal_helper_clean_invoked": true,
+   "run": "r1031223412gtwy"
+  },
+  {
+   "ActiveState": "vanished",
+   "LoadState": "not-found",
+   "job": "jevbench-add-requests-20260919-v184replay",
+   "normal_helper_clean_invoked": true,
+   "run": "r1031224915ltlt"
+  },
+  {
+   "ActiveState": "vanished",
+   "LoadState": "not-found",
+   "job": "jevbench-add-requests-20260919-v184replay",
+   "normal_helper_clean_invoked": true,
+   "run": "r1031225118qz9u"
   }
  ],
  "failed_logs_preserved": [
   "workers/r208-v184-build/initial-synthetic-fail/postflip-tests.log",
   "r198/v184/receipts/postflip-tests-initial-version-selector-fail.log"
  ],
- "active_repair_run": null,
- "active_run_cleaned_only_after_finish": true,
  "shared_units_touched": false,
- "browsers": "Three pages closed, browser closed and preview server closed by capture finally; entire owned unit/workspace cleaned after success"
+ "status": "PASS"
 }
