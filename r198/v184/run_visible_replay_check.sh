@@ -12,4 +12,5 @@ cd "$J/.pass"
 python3 -B "$J/capture_visible_replay.py" "$W/$J/visible-replay-preview" > "$W/$R/visible-replay-render.log" 2>&1
 cd "$W"
 printf '%s\n' '{"status":"PASS","exit_code":0,"source":"One actual Granite model page; unchanged production TSX, final data-only replay delta; Next dev synthetic PASS, not a new production build"}' > "$R/VISIBLE-REPLAY-RENDER.json"
-rm -rf "$J/.pass" .next tsconfig.tsbuildinfo
+# Owned workspace cleanup is performed by the normal heavy-run helper after exit.
+# Do not race a still-shutting-down dev server by deleting its fixture here.
