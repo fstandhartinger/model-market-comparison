@@ -7,6 +7,8 @@ import { dirname, join } from "node:path";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ds = JSON.parse(await readFile(join(__dirname, "..", "data", "dataset.json"), "utf8"));
 const aa = JSON.parse(await readFile(join(__dirname, "..", "data", "raw", "artificialanalysis.json"), "utf8"));
+// CR-634: the frozen v4.x snapshot (Coding/Math Index, and the source of every v4→v5 estimate).
+const aaV4 = JSON.parse(await readFile(join(__dirname, "..", "data", "raw", "artificialanalysis-v4.json"), "utf8"));
 const designArena = JSON.parse(await readFile(join(__dirname, "..", "data", "raw", "designarena.json"), "utf8"));
 const openRouter = JSON.parse(await readFile(join(__dirname, "..", "data", "raw", "openrouter.json"), "utf8"));
 const providerMeta = JSON.parse(await readFile(join(__dirname, "..", "data", "raw", "provider-meta.json"), "utf8"));
@@ -497,9 +499,13 @@ test("GLM-5.2 keeps all qualified source evidence on the reasoning max row", () 
   assert.equal(glm.benchmarks.aa_coding_agent_index, 43.3); // 2026-08-26: AA re-scored
   // AA periodically re-scores this row (34 -> 33.7 on 2026-09-20). Pin the attachment to
   // today's exact source value instead of making normal source churn break publication.
+  // CR-634: v5.0 when AA rescored the row, else the labelled estimate from its frozen v4.x value.
   const aaGlm = aa.models.find((model) => model.slug === "glm-5-2" && model.name.toLowerCase() === "glm-5.2 (max)");
-  assert.ok(aaGlm);
-  assert.equal(glm.benchmarks.aa_intelligence_index, aaGlm.evaluations.artificial_analysis_intelligence_index);
+  const aaGlmV4 = aaV4.models.find((model) => model.id === aaGlm?.id);
+  assert.ok(aaGlm && aaGlmV4);
+  const v5 = aaGlm.evaluations.artificial_analysis_intelligence_index;
+  if (v5 != null) assert.deepEqual([glm.benchmarks.aa_intelligence_index, glm.aa_intelligence.status], [v5, "measured"]);
+  else assert.deepEqual([glm.aa_intelligence.status, glm.aa_intelligence.v4_value, glm.benchmarks.aa_intelligence_index], ["estimated", aaGlmV4.evaluations.artificial_analysis_intelligence_index, glm.aa_intelligence.value]);
   assert.equal(glm.designarena.frontend?.modelId, "glm-5.2");
   assert.equal(glm.designarena.fullstack?.modelId, "glm-5.2");
   assert.ok(glm.designarena.frontend?.battles >= 500);
@@ -509,7 +515,8 @@ test("GLM-5.2 keeps all qualified source evidence on the reasoning max row", () 
   const nonReasoning = ds.models.find((model) => model.id === "glm-5.2::non-reasoning");
   assert.equal(nonReasoning?.benchmarks.aa_coding_index, 46.5);
   // 2026-09-09: AA re-scored the non-reasoning row 26.5 -> 22.4 alongside the max row.
-  assert.equal(nonReasoning?.benchmarks.aa_intelligence_index, 22.4);
+  assert.equal(nonReasoning?.aa_intelligence?.v4_value, 22.4);
+  assert.equal(nonReasoning?.aa_intelligence?.status, "estimated");
   assert.equal(nonReasoning?.benchmarks.aa_coding_agent_index ?? null, null);
   assert.deepEqual(nonReasoning?.designarena || {}, {});
 });
@@ -560,7 +567,7 @@ test("family-scoped Intelligence.ai evidence attaches once to deterministic Over
   // AA can score a previously unmeasured preferred effort on a later refresh.
   // On 2026-09-11 Sonnet 5 high gained an Intelligence Index; high then owns
   // family evidence under the existing preference rule, rather than max.
-  const sonnetHighSource = aa.models.find((model) => model.slug === "claude-sonnet-5-high");
+  const sonnetHighSource = aaV4.models.find((model) => model.slug === "claude-sonnet-5-high");
   const sonnetHighMeasured = ["artificial_analysis_intelligence_index", "artificial_analysis_coding_index"]
     .some((key) => Number.isFinite(sonnetHighSource?.evaluations?.[key]));
   const sonnetOwner = `claude-sonnet-5::${sonnetHighMeasured ? "high" : "max"}`;

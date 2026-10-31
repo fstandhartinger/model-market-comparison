@@ -31,7 +31,9 @@ test('CR-117: MiMo-V2.6-Pro identity, licence and exact standard route are sourc
 });
 
 test('CR-117: AA values and efficiency attach by exact UUID, never by a borrowed model identity', () => {
-  assert.equal(model.benchmarks.aa_intelligence_index, 46.3);
+  // CR-634: AA rescored MiMo-V2.6-Pro on Intelligence Index v5.0 (46.3 on v4.x).
+  assert.equal(model.benchmarks.aa_intelligence_index, 29.9);
+  assert.equal(model.aa_intelligence.status, 'measured');
   assert.equal(model.benchmarks.aa_hle, 0.494);
   assert.equal(model.benchmarks.aa_scicode, 0.609);
   assert.equal(model.benchmarks.aa_lcr, 0.863333333333333);

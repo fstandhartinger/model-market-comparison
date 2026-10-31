@@ -185,6 +185,19 @@ export interface CopilotPricing {
   fast_mode?: CopilotTokenPricing;
 }
 
+export interface AaIntelligenceRecord {
+  version: string;
+  status: "measured" | "estimated";
+  value: number;
+  label?: string;
+  interval?: [number, number];
+  v4_value?: number;
+  v4_collected_at?: string | null;
+  method?: string;
+  bridge_count?: number;
+  loo_mae?: number;
+}
+
 export interface ModelRow {
   id: string;
   /** CR-25.6: category composite scores, only for models with a result on every anchor benchmark. */
@@ -198,6 +211,9 @@ export interface ModelRow {
   release_date: string | null;
   deprecated?: boolean;
   aa_model_id?: string | null;
+  /** CR-634: which AA Intelligence Index version `benchmarks.aa_intelligence_index` is on, and whether AA measured it or it
+   *  is the labelled v4→v5 estimate (never a measurement). */
+  aa_intelligence?: AaIntelligenceRecord | null;
   aa_metadata?: {
     available?: boolean;
     is_open_weights?: boolean | null;

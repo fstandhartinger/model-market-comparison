@@ -75,7 +75,8 @@ test('the health view carries the count and the markdown says the review did not
 test('every free router route that is not offered says why, in the catalog', async () => {
   const { freeRouterRejections, FREE_ROUTER_WORKERS } = await import('../ops/rebuild-2026-09/bin/worker-policy.mjs');
   const dataset = { models: [{ id: 'kimi-k3::max', benchmarks: { aa_intelligence_index: 43.8 } },
-    { id: 'qwen3.8-27b::xhigh', benchmarks: { aa_intelligence_index: 33.7 } }] };
+    // CR-634: AA Intelligence Index v5.0 scale (Qwen3.8 27B Xhigh measured 20.1 on v5.0; the floor is 23).
+    { id: 'qwen3.8-27b::xhigh', benchmarks: { aa_intelligence_index: 20.1 } }] };
   const healthy = { models: { 'kimi-k3': { usable: true, rank: 0 }, 'qwen3.8-27b': { usable: true, rank: 1 } } };
   // A qualified, healthy route is not a rejection and says nothing.
   const kimi = (r) => r.find((x) => x.id === 'chutes/moonshotai/Kimi-K3-TEE');
@@ -89,7 +90,7 @@ test('every free router route that is not offered says why, in the catalog', asy
     { id: 'chutes/moonshotai/Kimi-K3-TEE', reasons: ['route not healthy in models.kimi-k3'] });
   // Qwen is kept out by the rule, not by an omission (CR-66.3), and both halves of that are named.
   const qwen = freeRouterRejections(dataset, healthy).find((x) => x.id === 'chutes/Qwen/Qwen3.8-27B-TEE');
-  assert.deepEqual(qwen.reasons, ["not on Florian's scheduled-worker whitelist", 'qwen3.8-27b::xhigh AA 33.7 below 34']);
+  assert.deepEqual(qwen.reasons, ["not on Florian's scheduled-worker whitelist", 'qwen3.8-27b::xhigh AA 20.1 below 23']);
   // A route with no AA measurement at all is distinguished from one measured too low.
   const unscored = freeRouterRejections({ models: [] }, healthy)
     .find((x) => x.id === 'chutes/moonshotai/Kimi-K3-TEE');

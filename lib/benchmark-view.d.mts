@@ -36,7 +36,7 @@ export function normalize(value: number | null, stats: ViewStats, higherBetter: 
 export function profileAnomalies(view: BenchmarkView, modelId: string): { flags: ProfileFlag[]; eligibleFamilies: number };
 export function buildBenchmarkView(ds: Dataset): BenchmarkView;
 export function selectBenchmarkView(view: BenchmarkView, modelIds?: string[], axisId?: string | null): BenchmarkView;
-export interface CompareFamily { id: string; name: string; org: string; released: string | null; score: number | null; variants: string[]; current: boolean }
+export interface CompareFamily { id: string; name: string; org: string; released: string | null; score: number | null; /** CR-634: the score is the labelled v4→v5 estimate. */ scoreEstimated?: boolean; variants: string[]; current: boolean }
 export function familyDisplayName(m: Pick<ViewModel, 'name' | 'familyName'>, variants?: number): string;
 export function variantLabel(m: Pick<ViewModel, 'name' | 'variant'>): string;
 export function compareFamilies(view: BenchmarkView): CompareFamily[];

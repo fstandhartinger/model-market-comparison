@@ -14,7 +14,7 @@ import { join, relative, isAbsolute, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { observationDigest, unjoined } from '../../lib/benchmark-score-evidence.mjs';
 import { writeJSONAtomic } from '../../lib/snapshot.mjs';
-import { vendorFamily } from '../rebuild-2026-09/bin/worker-policy.mjs';
+import { MIN_INDEX, vendorFamily } from '../rebuild-2026-09/bin/worker-policy.mjs';
 
 const exec = promisify(execFile);
 const WORKER_SH = fileURLToPath(new URL('../rebuild-2026-09/bin/worker.sh', import.meta.url));
@@ -330,7 +330,7 @@ async function readWorkerReceipt(outPath) {
   if (typeof meta.actual_model !== 'string' || !meta.actual_model.trim()) throw new Error('worker receipt lacks the executed model identity');
   if (meta.output_sha256 !== sha256(text)) throw new Error('worker receipt output hash mismatch; the artifact is not the recorded completion');
   const q = meta.qualification;
-  if (!q || !Number.isFinite(q.aa_intelligence_index) || q.aa_intelligence_index < 34 || [q.input_per_1m, q.output_per_1m].some((p) => !Number.isFinite(p) || p < 0 || p > 4) || vendorFamily(q.id) !== vendorFamily(meta.actual_model)) throw new Error('Worker receipt is not qualified for unattended data work');
+  if (!q || !Number.isFinite(q.aa_intelligence_index) || q.aa_intelligence_index < MIN_INDEX || [q.input_per_1m, q.output_per_1m].some((p) => !Number.isFinite(p) || p < 0 || p > 4) || vendorFamily(q.id) !== vendorFamily(meta.actual_model)) throw new Error('Worker receipt is not qualified for unattended data work');
   return { text, meta };
 }
 

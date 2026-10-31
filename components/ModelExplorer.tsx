@@ -1,7 +1,7 @@
 "use client";
 import { Fragment, useEffect, useMemo, useState, type ReactNode } from "react";
 import Link from "next/link";
-import { compareByScore, hasScoreEvidence, isThinComposite, thinCompositeNote, type ClientData } from "../lib/client-model";
+import { aaEstimateNote, compareByScore, hasScoreEvidence, isThinComposite, thinCompositeNote, type ClientData } from "../lib/client-model";
 import { SCORE_PICKER_LABELS, SCORE_LABELS, SCORE_SHORT_LABELS, type ScoreKey } from "../lib/types";
 import { scoreLabel, scoreVersion } from "../lib/score-label";
 import { usdPerM, num, orgColor, counted } from "../lib/format";
@@ -564,7 +564,9 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple, gu
                   const thin = composite && isThinComposite(m);
                   const evidence = `${exact} exact + ${attached} attached of 7 Composite inputs`;
                   const note = thin ? thinCompositeNote(m) : undefined;
-                  const valueNum = <span className={`block text-right font-semibold ${thin ? "text-gray-500" : ""}`} title={note}>{num(sc, score.startsWith("designarena") ? 0 : 1)}</span>;
+                  // CR-634: an AA Intelligence value estimated from v4 is never shown as a measurement.
+                  const est = score === "aa_intelligence_index" ? m.aa_intelligence_estimate : null;
+                  const valueNum = <span className={`block text-right font-semibold ${thin ? "text-gray-500" : ""}`} title={est ? aaEstimateNote(est) : note} data-aa-estimate={est ? "true" : undefined}>{num(sc, score.startsWith("designarena") ? 0 : 1)}{est && <span className="ml-1 text-[10px] font-normal text-amber-300/90">est.<span className="sr-only"> {aaEstimateNote(est)}</span></span>}</span>;
                   const capTag = priceFraming ? capabilityTag(valueById.get(m.id), price.value, sc) : null;
                   return <MagnitudeBar frac={sc / maxScoreVal} tone="score" thin={thin}>
                     {capTag ? <span className="bh-cost-line flex items-center justify-end gap-1.5 whitespace-nowrap">{capTag}{valueNum}</span> : valueNum}
@@ -635,7 +637,7 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple, gu
                               return (
                                 <tr key={sr.key}>
                                   <td className="py-0.5 text-gray-400">{sr.label} · {scoreVersion(sr.key, data.sourceDates)}</td>
-                                  <td className="py-0.5 text-right tabular font-medium">{v != null ? num(v, sr.dp) : <span className="text-gray-600">—</span>}</td>
+                                  <td className="py-0.5 text-right tabular font-medium" title={sr.key === "aa_intelligence_index" && m.aa_intelligence_estimate ? aaEstimateNote(m.aa_intelligence_estimate) : undefined}>{v != null ? num(v, sr.dp) : <span className="text-gray-600">—</span>}{v != null && sr.key === "aa_intelligence_index" && m.aa_intelligence_estimate && <span className="ml-1 text-[10px] font-normal text-amber-300/90" data-aa-estimate="true">est.</span>}</td>
                                 </tr>
                               );
                             })}
@@ -653,7 +655,7 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple, gu
                                 <td className="py-0.5 text-right tabular">{(m.composite_raw ?? m.scores.composite)! > m.composite_base ? "+" : ""}{num((m.composite_raw ?? m.scores.composite)! - m.composite_base, 1)}</td>
                               </tr>
                             </>}
-                            <tr><td className="py-0.5 text-gray-400">Composite evidence</td><td className="py-0.5 text-right tabular font-medium">{m.composite_coverage} exact{m.composite_attached ? ` + ${m.composite_attached} attached` : ""} / 7</td></tr>
+                            <tr><td className="py-0.5 text-gray-400">Composite evidence</td><td className="py-0.5 text-right tabular font-medium">{m.composite_coverage} exact{m.composite_attached ? ` + ${m.composite_attached} attached` : ""} / 7{m.aa_intelligence_estimate ? " · AA Intelligence est. from v4" : ""}</td></tr>
                             <tr><td className="py-0.5 text-gray-400">Weights</td><td className="py-0.5 text-right">{m.open_weights ? "open" : "closed"}</td></tr>
                           </tbody>
                         </table>

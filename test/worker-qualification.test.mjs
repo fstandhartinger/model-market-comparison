@@ -16,8 +16,9 @@ test('AA fallback requires exact version and matching organization', () => {
 test('explicit maximum-effort mapping cannot hide a weak or missing sibling', () => {
   const model = catalogRow('example/product-v4.1');
   const high = aaRow('product-v4.1::max', 40, {aa_metadata: {openrouter_api_id: model.id}});
-  const low = aaRow('product-v4.1::low', 30);
-  assert.equal(assessModel(model, {models: [high, low]}).aa_intelligence_index, 30);
+  // CR-634: the floor is 23 on the AA Intelligence Index v5.0 scale (34 on v4.x).
+  const low = aaRow('product-v4.1::low', 20);
+  assert.equal(assessModel(model, {models: [high, low]}).aa_intelligence_index, 20);
   assert.throws(() => selectModel([model], {models: [high, low]}, {model: model.id}), /below AA/);
   assert.equal(assessModel(model, {models: [high, aaRow('missing', null)]}).aa_intelligence_index, null);
 });
@@ -28,7 +29,7 @@ test('missing or malformed prices never become free eligibility', () => {
     assert.equal(assessModel(catalogRow('example/product-v4.1', {prompt: missing, completion: '0'}), data), null);
   }
   assert.equal(assessModel(catalogRow('example/product-v4.1:batch'), data), null);
-  assert.throws(() => candidateList([catalogRow('example/product-v4.1')], data, 33), /at least 34/);
+  assert.throws(() => candidateList([catalogRow('example/product-v4.1')], data, 22), /at least 23/);
 });
 
 test('unscored transport smoke has a price ceiling and cannot select automatically', () => {
@@ -62,12 +63,12 @@ test('daily price ceiling is rechecked against live catalog even for explicit pi
 test('a failed worker is excluded while the next cheapest still needs AA qualification, price cap and a different family', () => {
   const ids = ['deepseek/producer', 'z-ai/reviewer', 'google/reviewer'];
   const catalog = ids.map((id, i) => catalogRow(id, { prompt: String((i + 1) / 1e6), completion: String((i + 1) / 1e6) }));
-  const data = { models: ids.map((id) => aaRow(id, 34, { family_key: id, aa_metadata: { openrouter_api_id: id } })) };
+  const data = { models: ids.map((id) => aaRow(id, 23, { family_key: id, aa_metadata: { openrouter_api_id: id } })) };
   const options = { critic: true, producers: ['deepseek/producer'], excludeModels: ['z-ai/reviewer'], maxPricePer1M: 4 };
   assert.equal(selectModel(catalog, data, options).id, 'google/reviewer');
   assert.throws(() => selectModel(catalog, data, { ...options, maxPricePer1M: 2 }), /No supported viable/);
   assert.throws(() => selectModel(catalog, data, { ...options, model: 'z-ai/reviewer' }), /excluded/);
-  data.models[2].benchmarks.aa_intelligence_index = 33.9;
+  data.models[2].benchmarks.aa_intelligence_index = 22.9;
   assert.throws(() => selectModel(catalog, data, options), /No supported viable/);
 });
 

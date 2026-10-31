@@ -26,7 +26,7 @@ test('headline source snapshots become stable, provenance-bearing history observ
     },
     modelRows: [{ id: 'model-a::default', aa_model_id: 'aa-a', display_name: 'Model A', benchmarks: { epoch_eci: 150, epoch_eci_software: 160 }, designarena: { frontend: { modelId: 'da_a' } } }],
   });
-  assert.equal(HEADLINE_REGISTRY.length, 7);
+  assert.equal(HEADLINE_REGISTRY.length, 8);
   assert.equal(observations.length, 6);
   assert.deepEqual([...new Set(observations.map((row) => row.benchmark_id))].sort(), [
     'aa-coding-index::snapshot', 'aa-intelligence-index::snapshot', 'designarena-frontend::snapshot', 'epoch-eci::general', 'epoch-eci::software',
@@ -68,4 +68,23 @@ test('history-only headline IDs attach to the current dated presentation axis', 
   assert.equal(view.axes.some((item) => item.benchmarkId === 'aa-intelligence-index::snapshot'), false);
   assert.equal(axis.estimates.length, 1);
   assert.equal(axis.estimates[0].benchmarkId, 'aa-intelligence-index::snapshot');
+});
+
+// CR-634: a v5 snapshot feeds its own board; the v4.x boards (Intelligence and Coding) come from the frozen snapshot, so their
+// history continues unchanged and the generic history bridge never maps a v4 value onto v5.
+test('CR-634: a v5.0 snapshot is its own headline board; v4.x Intelligence and Coding come from the frozen snapshot', () => {
+  const aa = (extra, models) => ({ endpoint: 'https://artificialanalysis.ai/api/v2/data/llms/models', collected_at: '2026-10-31', sha256: 'b'.repeat(64), ...extra, models });
+  const observations = buildHeadlineObservations({
+    artificialanalysis: aa({ index_version: '5.0' }, [{ id: 'aa-a', name: 'Model A', evaluations: { artificial_analysis_intelligence_index: 58, artificial_analysis_coding_index: null } },
+      { id: 'aa-b', name: 'Model B', evaluations: { artificial_analysis_intelligence_index: null } }]),
+    artificialanalysisV4: { ...aa({ collected_at: '2026-10-27', sha256: 'e'.repeat(64) }, [{ id: 'aa-a', name: 'Model A', evaluations: { artificial_analysis_intelligence_index: 57, artificial_analysis_coding_index: 70 } },
+      { id: 'aa-b', name: 'Model B', evaluations: { artificial_analysis_intelligence_index: 40 } }]) },
+  });
+  const by = (id) => observations.filter((o) => o.benchmark_id === id).map((o) => [o.subject.model_id, o.value, o.source.file, o.source.retrieved_at]);
+  assert.deepEqual(by('aa-intelligence-index-v5::5.0'), [['aa-a', 58, 'data/raw/artificialanalysis.json', '2026-10-31']]);
+  assert.deepEqual(by('aa-intelligence-index::snapshot'), [['aa-a', 57, 'data/raw/artificialanalysis-v4.json', '2026-10-27'], ['aa-b', 40, 'data/raw/artificialanalysis-v4.json', '2026-10-27']]);
+  assert.deepEqual(by('aa-coding-index::snapshot'), [['aa-a', 70, 'data/raw/artificialanalysis-v4.json', '2026-10-27']]);
+  const v5 = HEADLINE_REGISTRY.find((e) => e.id === 'aa-intelligence-index-v5::5.0');
+  assert.notEqual(v5.family, HEADLINE_REGISTRY.find((e) => e.id === 'aa-intelligence-index::snapshot').family, 'v4 and v5 are never one bridge family');
+  assert.equal(v5.scoring.bridge_break, true);
 });
