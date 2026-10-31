@@ -1,0 +1,48 @@
+{
+  "artifact_id": "protocol-weirdml-2",
+  "artifact_sha256": "6bd60c5766dad9d19f8ad87594eec4ade45889654f1ab0b2516e23568e5c4ae7",
+  "round": 2,
+  "verdict": "revise",
+  "coverage_checked": [
+    "weirdml::2",
+    "c1",
+    "c2"
+  ],
+  "errors_found": 4,
+  "findings": [
+    {
+      "id": "F1-version-mismatch",
+      "severity": "blocker",
+      "location": "row weirdml::2 field version and version_guard",
+      "evidence": "Primary protocol SOURCE 1 (https://htihle.github.io/weirdml.html) states 'WeirdML v3' and lists 'Previous versions: WeirdML v2 · WeirdML v1'. Row declares version '2' and version_guard 'Verify the published version 2 before reading results.'",
+      "repair": "Update row version to '3' (current published) or, if this row intentionally represents the retired v2 board, change status to retained and superseded_by to the v3 registry id, and ensure the metric matches v2 evidence if available; otherwise the identity cannot be established."
+    },
+    {
+      "id": "F2-metric-mismatch",
+      "severity": "blocker",
+      "location": "row weirdml::2 scoring.metric and scoring.notes",
+      "evidence": "Protocol SOURCE 1 scoring: 'official score is 80% normalized area under its line on a logarithmic token axis, plus 20% of its final value' and 'weights each of the 11 tasks equally' and 'Effective scores include normalization and hint penalties; they are not raw accuracy.' Row metric says 'Average Max Accuracy: per task, mean over runs of the maximum test accuracy across the 5 iterations per run, averaged over all 17 tasks' – conflicting metric and task count (17 vs 11).",
+      "repair": "Replace the metric with the protocol's scoring rule for the correct version, or supply evidence for a v2 metric if this row is for v2. The current protocol does not support the row's metric."
+    },
+    {
+      "id": "F3-status-mismatch",
+      "severity": "major",
+      "location": "row weirdml::2 status",
+      "evidence": "Protocol SOURCE 1 shows current version is v3 and lists v2 as a previous version, which indicates v2 is not the currently reported board. Although SOURCE 2 shows 2 changed values for 'avg_acc', that summary does not identify the version and cannot override the protocol's explicit versioning. Thus status 'active' is contradicted.",
+      "repair": "Set status to 'retained' for the v2 board, or demonstrate that the changed values correspond to v2 and the board is still reported separately; otherwise the status is unsupported."
+    },
+    {
+      "id": "F4-superseded_by-mismatch",
+      "severity": "major",
+      "location": "row weirdml::2 superseded_by",
+      "evidence": "Protocol SOURCE 1 names 'WeirdML v3' as current and 'WeirdML v2' as a previous version, naming a successor. Row sets superseded_by to null, which contradicts the protocol naming a successor.",
+      "repair": "Set superseded_by to the registry id for the successor board (likely the v3 registry entry) instead of null."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "I cannot execute hash verification or live transport checks; those are performed by the owner and are a limitation of this review, not a source of missing evidence.",
+    "The row description mentions 'write, run, and iteratively improve PyTorch code under fixed compute and time limits', whereas the protocol text says 'develop machine learning and data analysis pipelines ... limited data, unspecified goals and/or very limited feedback'; I treat this as a wording paraphrase rather than a decisive mismatch given the other blockers."
+  ],
+  "missing_evidence": []
+}

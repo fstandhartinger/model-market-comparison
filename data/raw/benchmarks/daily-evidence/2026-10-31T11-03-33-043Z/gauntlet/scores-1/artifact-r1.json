@@ -1,0 +1,26 @@
+[
+  {
+    "id": "public:17eb8c98015b719613012986",
+    "benchmark_id": "eqbench-longform-writing::v1.11",
+    "subject": {
+      "source_id": "kimi-k3.1-pro",
+      "name": "kimi-k3.1-pro",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 79.9,
+    "unit": "points",
+    "basis": "measured",
+    "source": {
+      "url": "https://eqbench.com/creative_writing_longform.js?v=1.0.9",
+      "retrieved_at": "2026-10-31T11:13:35.193981+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-10-31T11-03-33-043Z/f086435a9cb753d4d75b.gz",
+      "sha256": "f086435a9cb753d4d75b4949d8032d2f6a314da4f9048a8ed8d5a7833e465017",
+      "locator": "template_csv; source row 142; kimi-k3.1-pro; field overall_score_100"
+    },
+    "protocol": "Score (0-100): average of all chapter scores plus the final scored piece across 14 rubric dimensions, with the forced poetry/metaphor criterion weighted 5x and a long-context degradation penalty applied; source row: {\"display_badges_stripped\":[\"eqbench's own renderer treats a leading * as the 'new model' badge, strips it and prefixes the display name with 🆕 (creative_writing.js / creative_writing_longform.js: startsWith('*') then replace(/^\\\\*/,'')); the stripped name is the identity the board builds its HuggingFace and per-model report links from.\"]}",
+    "comparison_key": null
+  }
+]

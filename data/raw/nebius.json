@@ -1,7 +1,7 @@
 {
   "source": "Nebius Token Factory — tokenfactory.nebius.com/api/public/models_info (first-party, public catalog)",
   "region": "mixed (eu-north1 / eu-west2 / us-central1 / uk-south1)",
-  "collected_at": "2026-10-28",
+  "collected_at": "2026-10-31",
   "listing_url": "https://tokenfactory.nebius.com/models",
   "method": "scripts/fetch-nebius-catalog.mjs: one GET of the public catalog (allowed by robots.txt); prices are flavors[].input/output_price_per_million_tokens in native USD; region from flavors[].regions[].country_code (EU member state → eu, US → us, UK → uk); non-chat types and zero-output-price rows (embeddings) omitted; curated model_name/provider_org carried over by exact model_id; new ids marked mapping=derived; catalog status kept per row. See nebius.method.md.",
   "models": [
@@ -12,7 +12,7 @@
       "output_per_1m_usd": 1.2,
       "region": "us",
       "model_id": "deepseek-ai/DeepSeek-V4.1-Flash",
-      "context_length": 1048000,
+      "context_length": 1048576,
       "status": "active",
       "notes": "flavor: cheap; served region: us-north1 (US); id deepseek-ai/DeepSeek-V4.1-Flash"
     },
@@ -34,7 +34,7 @@
       "output_per_1m_usd": 0.28,
       "region": "us",
       "model_id": "deepseek-ai/DeepSeek-V4-Flash-0731",
-      "context_length": 1024000,
+      "context_length": 1048576,
       "status": "active",
       "notes": "flavor: cheap; served region: us-central1 (US); id deepseek-ai/DeepSeek-V4-Flash-0731"
     },
@@ -56,7 +56,7 @@
       "output_per_1m_usd": 3.96,
       "region": "uk",
       "model_id": "deepseek-ai/DeepSeek-V4-Pro-0813",
-      "context_length": 979000,
+      "context_length": 1048576,
       "status": "active",
       "notes": "flavor: cheap; served region: uk-south1 (UK); id deepseek-ai/DeepSeek-V4-Pro-0813"
     },
@@ -133,9 +133,9 @@
       "output_per_1m_usd": 15,
       "region": "eu",
       "model_id": "moonshotai/Kimi-K3",
-      "context_length": 1024000,
-      "status": "active",
-      "notes": "flavor: cheap; served region: eu-west2 (FR); id moonshotai/Kimi-K3"
+      "context_length": 1048576,
+      "status": "error",
+      "notes": "flavor: cheap; served region: eu-west2 (FR); id moonshotai/Kimi-K3; catalog status: error"
     },
     {
       "model_name": "Hermes 4 405B",
@@ -308,7 +308,7 @@
       "output_per_1m_usd": 4.4,
       "region": "us",
       "model_id": "zai-org/GLM-5.3",
-      "context_length": 1024000,
+      "context_length": 1048576,
       "status": "active",
       "notes": "flavor: cheap; served region: us-north1 (US); id zai-org/GLM-5.3"
     },
@@ -319,12 +319,12 @@
       "output_per_1m_usd": 0.5,
       "region": "us",
       "model_id": "zai-org/GLM-5.3-Flash",
-      "context_length": 1024000,
+      "context_length": 1048576,
       "status": "active",
       "notes": "flavor: cheap; served region: us-north1 (US); id zai-org/GLM-5.3-Flash"
     }
   ],
-  "response_sha256": "1bb263542944594c9df3d2b4fa3d1933432397ad847a6d5aa2a2e2941f94724c",
+  "response_sha256": "35cd596647375e05499a9fdcc9b9ef3d94913ad0288bdea1215f297a7cc5219d",
   "skipped": [
     "Qwen/Qwen3-Embedding-8B"
   ],

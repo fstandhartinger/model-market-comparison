@@ -1,0 +1,23 @@
+{
+  "artifact_id": "protocol-gso-opt1-102",
+  "artifact_sha256": "eedef18bb298a4ecee13a356eb383d9eb5c33428b80c95017bb7ef88b2383f9f",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": ["gso::opt1-102", "c1", "c2"],
+  "errors_found": 1,
+  "findings": [
+    {
+      "id": "f1",
+      "severity": "major",
+      "location": "gso::opt1-102.version_status",
+      "evidence": "Row states version_status \"published\", but SOURCE 1 page and SOURCE 2 leaderboard.json contain no release identifier/version field; leaderboard.json metadata has only last_updated and total_tasks 102. Criterion c2 says \"published\" requires the maintainer to publish a release identifier for this board, and \"snapshot\" applies when it publishes no release identifier.",
+      "repair": "Set version_status to \"snapshot\" and, per criterion, use a dated snapshot identity such as snapshot-<date> for version, because the captured protocol publishes no release identifier for this board."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "I cannot recompute hashes, fetch URLs, or execute transport/qualification checks; those are performed separately by the owner and their absence here is a limitation, not missing source evidence.",
+    "The row's version string may be an internal registry identifier, but the version_status field itself still mislabels it as \"published\" when no maintainer release identifier appears in the supplied source."
+  ],
+  "missing_evidence": []
+}

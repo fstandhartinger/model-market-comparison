@@ -1,0 +1,64 @@
+[
+  {
+    "id": "public:70bf2301abe96e0ece4ecb77",
+    "benchmark_id": "arc-agi::3",
+    "subject": {
+      "source_id": "meta-muse-spark-open-xhigh",
+      "name": "Muse Spark Open (XHigh)",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 0.13621973920554636,
+    "unit": "percent",
+    "basis": "derived",
+    "source": {
+      "url": "https://arcprize.org/media/data/leaderboard/v3.json",
+      "retrieved_at": "2026-10-31T11:13:23.269046+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-10-31T11-03-33-043Z/55c8e03e6962a2a873bc.gz",
+      "sha256": "55c8e03e6962a2a873bc32284fb09ae5ac3306e39f428ca0ea07d453a4ca5cda",
+      "locator": "json; source row 110; meta-muse-spark-open-xhigh; field score"
+    },
+    "protocol": "ARC-AGI 3; v3_Semi_Private; source system/configuration retained. Evaluation independence not assumed for board submissions.; modelType=CoT; modelGroup=meta-muse-spark-open; providerId=Meta AI; display=True; resultsUrl=/results/meta-muse-spark-open; cost=3908.42107525; modelReleaseDate=2026-10-15T00:00:00.000Z",
+    "comparison_key": null,
+    "source_basis": "self_reported",
+    "derivation": {
+      "formula": "Source value × 100 to registry units",
+      "inputs": [
+        0.0013621973920554635
+      ]
+    }
+  },
+  {
+    "id": "public:728d8c934af9df4a7e85e8ad",
+    "benchmark_id": "arc-agi::3",
+    "subject": {
+      "source_id": "meta-muse-spark-open-xhigh-provider-adapter",
+      "name": "Muse Spark Open - Provider Adapter (XHigh)",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 0.4179823483426319,
+    "unit": "percent",
+    "basis": "derived",
+    "source": {
+      "url": "https://arcprize.org/media/data/leaderboard/v3.json",
+      "retrieved_at": "2026-10-31T11:13:23.269046+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-10-31T11-03-33-043Z/55c8e03e6962a2a873bc.gz",
+      "sha256": "55c8e03e6962a2a873bc32284fb09ae5ac3306e39f428ca0ea07d453a4ca5cda",
+      "locator": "json; source row 111; meta-muse-spark-open-xhigh-provider-adapter; field score"
+    },
+    "protocol": "ARC-AGI 3; v3_Semi_Private; source system/configuration retained. Evaluation independence not assumed for board submissions.; modelType=CoT; modelGroup=meta-muse-spark-open-provider-adapter; providerId=Meta AI; display=True; resultsUrl=/results/meta-muse-spark-open; cost=2995.96480425; modelReleaseDate=2026-10-15T00:00:00.000Z",
+    "comparison_key": null,
+    "source_basis": "self_reported",
+    "derivation": {
+      "formula": "Source value × 100 to registry units",
+      "inputs": [
+        0.004179823483426319
+      ]
+    }
+  }
+]

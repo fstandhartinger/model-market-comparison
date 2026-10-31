@@ -1,0 +1,34 @@
+{
+  "artifact_id": "scores-9",
+  "artifact_sha256": "e4d0852a61d5b41e95f3bdae8d866b8381958cb14622574a92d2990c028f6d2d",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": ["vendor:DeepSeek-V3:aider-polyglot::snapshot-2026-09-10", "c1"],
+  "errors_found": 2,
+  "findings": [
+    {
+      "id": "f1",
+      "severity": "major",
+      "location": "vendor:DeepSeek-V3:aider-polyglot::snapshot-2026-09-10 -> source.published_at",
+      "evidence": "Primary source evidence does not include any publication date for arXiv 2412.19437v2; row sets published_at to null. Acceptance criterion c1 requires verification of source date.",
+      "repair": "Add the exact publication date of arXiv 2412.19437v2 from an authoritative source, or if the criterion accepts retrieved_at as the source date, document that explicitly."
+    },
+    {
+      "id": "f2",
+      "severity": "major",
+      "location": "vendor:DeepSeek-V3:aider-polyglot::snapshot-2026-09-10 -> benchmark_id",
+      "evidence": "The source table lists only 'Aider-Polyglot (Acc.)' with no snapshot version. The row's benchmark_id includes 'snapshot-2026-09-10', which is not present or derivable from the primary evidence.",
+      "repair": "Either remove the snapshot component if it is an internal label not tied to the benchmark version, or provide a verifiable definition/evidence for that snapshot version in the primary source or supporting material."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "The owner executes hash verification and transport/qualification checks; those are not independently executable here.",
+    "The primary evidence is a text extraction from the PDF; it may omit metadata like the publication date, but no inference is made from memory.",
+    "The subject identity 'DeepSeek V3 (Dec ''24)' is consistent with the paper's table but not explicitly labeled with 'December update' in the provided excerpt; accepted as prior fixed identity."
+  ],
+  "missing_evidence": [
+    "Publication date of arXiv 2412.19437v2",
+    "Snapshot version/date for Aider-Polyglot (snapshot-2026-09-10)"
+  ]
+}

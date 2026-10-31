@@ -1,0 +1,49 @@
+{
+  "artifact_id": "scores-7",
+  "artifact_sha256": "7c00e4131e987760b6442afeb758a97a80e73755ee1ff84eebdf22a3aa028939",
+  "round": 1,
+  "verdict": "blocked",
+  "coverage_checked": [
+    "vendor:mistralai/Devstral-2-123B-Instruct-2512:swe-bench-verified::snapshot-2026-09-10",
+    "vendor:mistralai/Devstral-Small-2-24B-Instruct-2512:swe-bench-verified::snapshot-2026-09-10",
+    "c1"
+  ],
+  "errors_found": 4,
+  "findings": [
+    {
+      "id": "f1",
+      "severity": "blocker",
+      "location": "ROW vendor:mistralai/Devstral-2-123B-Instruct-2512:swe-bench-verified::snapshot-2026-09-10 :: benchmark_id",
+      "evidence": "Primary source (385a7117e6d81664efbd.gz) states only 'SWE-bench Verified' with no version or snapshot. Row claims 'swe-bench-verified::snapshot-2026-09-10'. The specific snapshot is not present in source; no primary evidence supports that version.",
+      "repair": "Obtain primary evidence that explicitly records the benchmark version/snapshot for the SWE-bench Verified score, or amend the row to reflect the unverified version (e.g., mark version as unspecified and avoid unbacked snapshot claim)."
+    },
+    {
+      "id": "f2",
+      "severity": "blocker",
+      "location": "ROW vendor:mistralai/Devstral-Small-2-24B-Instruct-2512:swe-bench-verified::snapshot-2026-09-10 :: benchmark_id",
+      "evidence": "Primary source states only 'SWE-bench Verified' for Devstral Small 2, no version/snapshot. Row claims 'swe-bench-verified::snapshot-2026-09-10'; this version is not present in source and cannot be verified from provided evidence.",
+      "repair": "Provide primary evidence that specifies the benchmark version/snapshot, or correct the row to state the version is unspecified rather than asserting an unverified snapshot."
+    },
+    {
+      "id": "f3",
+      "severity": "minor",
+      "location": "ROW vendor:mistralai/Devstral-2-123B-Instruct-2512:swe-bench-verified::snapshot-2026-09-10 :: source.published_at",
+      "evidence": "Source contains 'December 9, 2025' as the article publication date, but row sets source.published_at to null.",
+      "repair": "Set source.published_at to '2025-12-09' based on the visible article date."
+    },
+    {
+      "id": "f4",
+      "severity": "minor",
+      "location": "ROW vendor:mistralai/Devstral-Small-2-24B-Instruct-2512:swe-bench-verified::snapshot-2026-09-10 :: source.published_at",
+      "evidence": "Same source page shows 'December 9, 2025', but row sets source.published_at to null.",
+      "repair": "Set source.published_at to '2025-12-09'."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "I cannot recompute the owner SHA-256 hashes or execute transport/qualification checks; those are separately owned and outside my read-only scope.",
+    "The snapshot suffix 'snapshot-2026-09-10' may originate from an external benchmark catalog not included in the packet; if so, the corresponding catalog entry should be cited as primary evidence to substantiate the benchmark version.",
+    "Harness is recorded as null consistently with the source not specifying one; no finding was raised because neither source nor row claims a harness."
+  ],
+  "missing_evidence": []
+}

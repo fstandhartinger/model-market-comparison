@@ -1,0 +1,31 @@
+{
+  "artifact_id": "protocol-kernelbench-cuda-deepseek-nsa-rtx-pro-6000",
+  "artifact_sha256": "106e3ed5770f2399032cd76ef25ac0ad13ad843f58eaa616992a43c991185a9c",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": ["kernelbench-cuda-deepseek-nsa::rtx-pro-6000", "c1", "c2"],
+  "errors_found": 2,
+  "findings": [
+    {
+      "id": "c2-version-status",
+      "severity": "blocker",
+      "location": "row.version / row.version_status",
+      "evidence": "None of the protocol sources publish a release identifier for the CUDA RTX PRO 6000 board: SPEC.md only carries 'Last updated: 2026-07-16'; leaderboard.json has schema_version 1 and environment v2_containerized; published_runs.json names only hardware 'RTX_PRO_6000'; /cuda page and robots.txt have no version. The row sets version_status 'published' and version 'rtx-pro-6000', but 'rtx-pro-6000' is a hardware name, not a published identifier it copies. Under the criterion, a page with no release identifier for this board supports 'snapshot', not 'published'.",
+      "repair": "Set version_status to 'snapshot' and version to 'snapshot-2026-10-31' (retrieved date). If some source is deemed to publish a release identifier such as 'v2', then version must copy that identifier rather than 'rtx-pro-6000'."
+    },
+    {
+      "id": "c1-muse-ranked-note",
+      "severity": "minor",
+      "location": "row.scoring.notes",
+      "evidence": "The notes claim the published per_problem ranked list 'still holds' the bug muse/muse-spark-1.3 [ultra] cell on 04 at peak_fraction 0.2056. The captured leaderboard.json shows that cell with correct:false, annotation_verdict:'bug', peak_fraction:null, and it is absent from the 04 ranked_passes list. The /cuda page lists the model without any numeric value, so 0.2056 is unsupported.",
+      "repair": "Remove or reword the claim so it does not assert that the current ranked list carries the muse 04 cell at 0.2056; state it as a rejected/unsupported cell consistent with the captured payload."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "Whether leaderboard.json 'generated_from_summary.tag':'v2' or 'environment':'v2_containerized' could be considered a published release identifier for this board; if so, the appropriate repair would be to copy that identifier instead of using snapshot-2026-10-31.",
+    "I cannot independently execute the owner's hash, transport, or qualification checks; row and source hash bindings are taken as given.",
+    "The generated value-scale summary reports served 'peak_fraction' values as 2.51..136.19, which appear to be leaderboard fractions ×100; this is consistent with unit 'percent of roofline' and range [0,null], but the multiplication itself was not directly verifiable from the raw excerpt."
+  ],
+  "missing_evidence": []
+}

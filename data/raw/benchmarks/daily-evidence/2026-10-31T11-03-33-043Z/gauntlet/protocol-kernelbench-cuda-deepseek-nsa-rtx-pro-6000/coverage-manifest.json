@@ -1,0 +1,151 @@
+{
+  "artifact_id": "protocol-kernelbench-cuda-deepseek-nsa-rtx-pro-6000",
+  "rounds_used": 1,
+  "rows": {
+    "total": 1,
+    "accepted": [],
+    "quarantined": [
+      "kernelbench-cuda-deepseek-nsa::rtx-pro-6000"
+    ]
+  },
+  "producer_flagged": [],
+  "second_opinion": null,
+  "criteria": [
+    "c1",
+    "c2"
+  ],
+  "coverage": {
+    "producer": null,
+    "critic": [
+      {
+        "round": 1,
+        "verdict": "revise",
+        "coverage_complete": true,
+        "missing_rows": [],
+        "missing_criteria": []
+      }
+    ],
+    "final": {
+      "rows_covered": 0,
+      "criteria_covered": 0,
+      "complete": false
+    }
+  },
+  "receipts": [
+    {
+      "round": 1,
+      "role": "producer",
+      "reused_from_round": null,
+      "requested_model": "z-ai/glm-5.3-flash",
+      "model": "z-ai/glm-5.3-flash",
+      "route": "openrouter",
+      "attempt": 1,
+      "cost_usd": 0.000502461135,
+      "out": "data/raw/benchmarks/daily-evidence/2026-10-31T11-03-33-043Z/gauntlet/protocol-kernelbench-cuda-deepseek-nsa-rtx-pro-6000/producer-r1.json",
+      "output_sha256": "2b1c04d75123c0d606e794fea89a8098402db4d6ea5502487b6b4a1542e8ee03",
+      "qualification": {
+        "id": "z-ai/glm-5.3-flash",
+        "family": "z-ai",
+        "free": false,
+        "input_per_1m": 0.016300000000000002,
+        "output_per_1m": 0.1479,
+        "context": 1048576,
+        "aa_intelligence_index": 41.8,
+        "aa_source": "exact_id_and_variants",
+        "matched_model_ids": [
+          "glm-5.3-flash::default"
+        ],
+        "aa_variant_scores": [
+          {
+            "id": "glm-5.3-flash::default",
+            "index": 41.8
+          }
+        ]
+      },
+      "usage": {
+        "prompt_tokens": 24185,
+        "completion_tokens": 2579,
+        "total_tokens": 26764,
+        "cost": 0.000502461135,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "audio_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.0005075365,
+          "upstream_inference_prompt_cost": 0.000415982,
+          "upstream_inference_completions_cost": 0.0000915545
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 2325,
+          "image_tokens": 0,
+          "audio_tokens": 0
+        }
+      },
+      "reasoning": {
+        "effort": "low",
+        "exclude": true
+      }
+    },
+    {
+      "round": 1,
+      "role": "critic",
+      "requested_model": "deepseek/deepseek-v4-flash-0731",
+      "model": "deepseek/deepseek-v4-flash-0731",
+      "route": "openrouter",
+      "attempt": 1,
+      "cost_usd": 0.00360633834,
+      "out": "data/raw/benchmarks/daily-evidence/2026-10-31T11-03-33-043Z/gauntlet/protocol-kernelbench-cuda-deepseek-nsa-rtx-pro-6000/review-r1.json",
+      "output_sha256": "b2958e2e2962be2a6bdb4eea74839aea44a0e7ecb1d56d3e32b418529c4169c6",
+      "qualification": {
+        "id": "deepseek/deepseek-v4-flash-0731",
+        "family": "deepseek",
+        "free": false,
+        "input_per_1m": 0.119,
+        "output_per_1m": 0.238,
+        "context": 1048576,
+        "aa_intelligence_index": 34.3,
+        "aa_source": "exact_id_and_variants",
+        "matched_model_ids": [
+          "deepseek-v4-flash-0731::max"
+        ],
+        "aa_variant_scores": [
+          {
+            "id": "deepseek-v4-flash-0731::max",
+            "index": 34.3
+          }
+        ]
+      },
+      "usage": {
+        "prompt_tokens": 24877,
+        "completion_tokens": 7333,
+        "total_tokens": 32210,
+        "cost": 0.00360633834,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "audio_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.003642766,
+          "upstream_inference_prompt_cost": 0.001442866,
+          "upstream_inference_completions_cost": 0.0021999
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 6576,
+          "image_tokens": 0,
+          "audio_tokens": 0
+        }
+      },
+      "reasoning": {
+        "effort": "low",
+        "exclude": true
+      }
+    }
+  ]
+}

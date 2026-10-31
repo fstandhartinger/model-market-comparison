@@ -1,0 +1,24 @@
+{
+  "artifact_id": "protocol-matharena-arxivmath-2026-08",
+  "artifact_sha256": "8233ce3906321b4665fc21479e364cfa1672bbd075101baf71ff57993a3cbc61",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": ["matharena-arxivmath::2026-08","c1","c2"],
+  "errors_found": 1,
+  "findings": [
+    {
+      "id": "F1",
+      "severity": "minor",
+      "location": "Row matharena-arxivmath::2026-08, field 'version'",
+      "evidence": "Row claims version '2026-08'. Primary source (matharena.ai/competitions, SOURCE 1) publishes the ArXivMath edition as '08/2026' (e.g., '08/2026' with '57 problems, 19 models'). The row's own version_guard also references '08/2026'. Thus the version does not exactly copy the maintainer's published release identifier, contrary to c2's requirement for version_status 'published'.",
+      "repair": "Change version to exactly '08/2026' to copy the published release identifier, or explicitly document the canonical conversion if '2026-08' is the intended registry format; ensure consistency with the version_guard text."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "I cannot execute the owner's hash verification, transport, or qualification checks; these are outside the read-only QA scope.",
+    "The value-scale summary (SOURCE 9) is accepted as supplied; I cannot independently recompute the lowest/highest served values.",
+    "The version formatting mismatch is minor and does not change the edition identity, but it does not satisfy the 'copies it' wording for version_status 'published'."
+  ],
+  "missing_evidence": []
+}

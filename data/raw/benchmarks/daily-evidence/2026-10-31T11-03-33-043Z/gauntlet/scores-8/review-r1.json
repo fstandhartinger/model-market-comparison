@@ -1,0 +1,44 @@
+{
+  "artifact_id": "scores-8",
+  "artifact_sha256": "eb6bdba7f6f624099cc5152169dca3f43fa016a8a120b9fd6c9df86f6c107d6e",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": [
+    "vendor:DeepSeek-V3:swe-bench-verified::snapshot-2026-09-10",
+    "c1"
+  ],
+  "errors_found": 3,
+  "findings": [
+    {
+      "id": "f1",
+      "severity": "major",
+      "location": "row vendor:DeepSeek-V3:swe-bench-verified::snapshot-2026-09-10 .benchmark_id",
+      "evidence": "Primary source only identifies 'SWE-Bench Verified (OpenAI, 2024d)' and Table 6; no 'snapshot-2026-09-10' appears anywhere in the captured evidence. The benchmark_id includes an unverified snapshot date.",
+      "repair": "Add primary evidence for a SWE-bench Verified snapshot dated 2026-09-10, or remove the snapshot component from benchmark_id so it matches the source's identification."
+    },
+    {
+      "id": "f2",
+      "severity": "major",
+      "location": "row vendor:DeepSeek-V3:swe-bench-verified::snapshot-2026-09-10 .subject.model_id / .subject.source_id",
+      "evidence": "Source text names only 'DeepSeek-V3' chat model; it does not state a checkpoint or update date. model_id 'deepseek-v3-dec-24::default' and source_id's 'December 2024 update per arXiv 2412.19437v2' add a date not present in the primary evidence.",
+      "repair": "Cite authoritative arXiv metadata confirming the version/date for DeepSeek-V3, or use a model identifier that does not assert an unreported checkpoint date."
+    },
+    {
+      "id": "f3",
+      "severity": "major",
+      "location": "row vendor:DeepSeek-V3:swe-bench-verified::snapshot-2026-09-10 .source.published_at",
+      "evidence": "source.published_at is null, but criterion c1 requires a source date. The primary packet contains no publication date for arXiv 2412.19437v2; the 'December 2024' claim in source_id is an unsupported inference from the arXiv ID.",
+      "repair": "Provide the arXiv v2 publication date from authoritative metadata, or explicitly document that the source date is unavailable with supporting evidence."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "Owner-computed row SHA-256 was used as binding; I could not independently execute hash or transport checks.",
+    "Value 42 vs source's 42.0 treated as numerically equivalent; no finding raised.",
+    "Unit 'percent' is inferred from SWE-bench Resolved convention; the table does not spell out '%'.",
+    "arXiv metadata such as exact v2 publication date may exist outside the supplied packet; inability to fetch it is a limitation."
+  ],
+  "missing_evidence": [
+    "arXiv v2 publication date for https://arxiv.org/pdf/2412.19437v2"
+  ]
+}

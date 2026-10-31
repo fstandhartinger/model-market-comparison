@@ -1,0 +1,17 @@
+{
+  "artifact_id": "protocol-eqbench-creative-writing-3",
+  "artifact_sha256": "80ef38506fe66e59005afe37521f7ac7be211cf056c6ab37452f547799bcc445",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": ["eqbench-creative-writing::3", "c1", "c2"],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Cannot independently recompute hashes or re-fetch sources; relied on owner-provided hashes, retrieval times and quoted excerpts.",
+    "Protocol page does not explicitly state that higher Elo is better; inferred from leaderboard/ranking convention rather than maintainer text.",
+    "version_status 'published' rests on the page title and nav identifying this board as Creative Writing v3; absence of the words 'published' or 'snapshot' was not treated as evidence.",
+    "The protocol excerpt contains no raw numeric model rows; the value-scale and activity summaries are this run's generated reads of the captured payload and were used only for unit/range and active-status checks as permitted."
+  ],
+  "missing_evidence": []
+}

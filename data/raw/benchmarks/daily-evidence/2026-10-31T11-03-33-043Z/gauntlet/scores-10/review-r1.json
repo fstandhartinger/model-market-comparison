@@ -1,0 +1,25 @@
+{
+  "artifact_id": "scores-10",
+  "artifact_sha256": "5a5f39ecffa354a3ff66ddb37d42538996cf03e209898cc43cf8c74028e10507",
+  "round": 1,
+  "verdict": "blocked",
+  "coverage_checked": ["vendor:DeepSeek-V3:longbench::2", "c1"],
+  "errors_found": 1,
+  "findings": [
+    {
+      "id": "vendor:DeepSeek-V3:longbench::2",
+      "severity": "blocker",
+      "location": "source.published_at",
+      "evidence": "Row sets published_at null; primary evidence for arXiv 2412.19437v2 supplies url, sha256, retrieved_at and table locator but no publication date, so criterion c1 source date cannot be verified.",
+      "repair": "Populate published_at from primary evidence of the arXiv publication date; if absent, obtain and include that source value before rerun."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "Could not independently execute sha256 or transport/qualification checks; relied on owner receipt and row hash as supplied.",
+    "arXiv ID 2412 implies December 2024, but no explicit publication date appears in the excerpt; treated as missing evidence rather than inferred."
+  ],
+  "missing_evidence": [
+    "Publication date for arXiv 2412.19437v2 (source for DeepSeek-V3 LongBench v2 Acc. 48.7)"
+  ]
+}

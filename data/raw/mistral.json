@@ -1,7 +1,7 @@
 {
   "source": "Mistral AI (La Plateforme) — docs.mistral.ai/inference/pricing (first-party, public; mistral.ai/pricing/api redirects here)",
   "region": "eu (France)",
-  "collected_at": "2026-10-28",
+  "collected_at": "2026-10-31",
   "method": "scripts/fetch-mistral-catalog.mjs: one GET of the server-rendered pricing page (Standard mode, global prices, the page's default); every row of its 'Model | Input | Cached input | Output' tables in a section labelled 'Prices /M Tokens' whose input and output are both bare USD amounts is a chat/text model (OCR per 1000 pages, transcription per minute, TTS per M characters, embeddings without output and free moderation drop out); a struck-through list price beside a sale price publishes the sale price and names the list price in notes; duplicate rows must agree; identity is the row's normalized model name (or the name the page last used, source_name) against the curated snapshot — a model the snapshot does not name has its id read from the docs model page the row links ('Click to copy: <id>'), recorded in docs_sources, mapping=derived, and that page must state the same input/output prices or the refresh fails closed. Region eu (Mistral hosts in the EU unless the US endpoint is chosen). See mistral.method.md.",
   "models": [
     {
@@ -38,17 +38,6 @@
       "source_name": "Z.ai GLM 5.3"
     },
     {
-      "model_name": "Mistral Medium 3.5",
-      "provider_org": "Mistral",
-      "input_per_1m_usd": 1.5,
-      "output_per_1m_usd": 7.5,
-      "region": "eu",
-      "notes": "open-weight, Modified MIT; 256k context",
-      "api_model_id": "mistral-medium-latest",
-      "source_name": "Mistral Medium 3.5",
-      "cache_read_per_1m_usd": 0.15
-    },
-    {
       "model_name": "Mistral Small 4",
       "provider_org": "Mistral",
       "input_per_1m_usd": 0.15,
@@ -63,23 +52,12 @@
       "model_name": "Mistral Large 4",
       "source_name": "Mistral Large 4",
       "provider_org": "Mistral",
-      "input_per_1m_usd": 1.36,
-      "output_per_1m_usd": 4.18,
-      "cache_read_per_1m_usd": 0.14,
+      "input_per_1m_usd": 0.7,
+      "output_per_1m_usd": 2.1,
+      "cache_read_per_1m_usd": 0.07,
       "region": "eu",
       "api_model_id": "mistral-large-4",
       "mapping": "derived"
-    },
-    {
-      "model_name": "Mistral Large 3",
-      "provider_org": "Mistral",
-      "input_per_1m_usd": 0.5,
-      "output_per_1m_usd": 1.5,
-      "region": "eu",
-      "notes": "open-weight",
-      "api_model_id": "mistral-large-latest",
-      "source_name": "Mistral Large 3",
-      "cache_read_per_1m_usd": 0.05
     },
     {
       "model_name": "Ministral 3 14B",
@@ -126,30 +104,17 @@
       "cache_read_per_1m_usd": 0.03
     }
   ],
-  "response_sha256": "baa2bfb3f33bacc0d3ddaee7d088de4bda5abb3e4632d736843b6b61b47e99cf",
+  "response_sha256": "17d95b707f118329d1a345752af125521c85c62f534dff96b64f95d806c08b59",
   "diff": {
-    "added": [
-      "zai-glm-5-3-flash",
-      "deepseek-v4-1-flash-1017"
+    "added": [],
+    "removed": [
+      "Mistral Medium 3.5",
+      "Mistral Large 3"
     ],
-    "removed": [],
     "price_changed": [
       "mistral-large-4"
     ],
     "cache_read_dropped": []
   },
-  "docs_sources": [
-    {
-      "model_name": "Z.ai GLM 5.3 Flash",
-      "reason": "api_id",
-      "url": "https://docs.mistral.ai/models/zai-glm-5-3-flash",
-      "response_sha256": "9b989abe5052a15ae0d12c495fc11af89f3d2a150be584e77fe47d187b64c52f"
-    },
-    {
-      "model_name": "DeepSeek V4.1 Flash 1017",
-      "reason": "api_id",
-      "url": "https://docs.mistral.ai/models/deepseek-v4-flash-1017",
-      "response_sha256": "1c5bd20ee593195d0d9c8e7840264ac1a182de703aed1cc094fcfd99d2336871"
-    }
-  ]
+  "docs_sources": []
 }

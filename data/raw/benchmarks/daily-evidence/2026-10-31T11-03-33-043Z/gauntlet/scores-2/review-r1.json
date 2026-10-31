@@ -1,0 +1,30 @@
+{
+  "artifact_id": "scores-2",
+  "artifact_sha256": "7310596090b7f39bde8ff8aaa7607781c8757347337fc9336104e661740dfe24",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "public:fa5a6fb4f58aa96b338cb323",
+    "public:94174acb54395a1a9e7e8985",
+    "public:54ecffa6519dd2b1b92d44bf",
+    "public:0b50aee3fd1edd9f5d2b0e8c",
+    "public:3f6f230c90d184ff164de9d4",
+    "public:285dad114cde14bcf4c3b5df",
+    "public:4a33d782ed6dbf15edee5b45",
+    "public:430bbd316a22df4068cbffb7",
+    "public:c5a7f7d6432745ea755f807b",
+    "public:b90528537b942e5e327600e1",
+    "c1"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "I cannot independently recompute the owner-canonical row SHA-256 hashes or verify capture transport/hash integrity; the owner separately executes those checks per instructions.",
+    "I cannot fetch the live MathArena pages; I rely solely on the frozen captured excerpts supplied in the packet.",
+    "Consistency check with SOURCE 7 (18 served accuracy values, min 11.31, max 86.31) and the 10 required rows is satisfied; all required row values fall within the served range and match the per-row native_source_row excerpts.",
+    "Rows with null model_id expose no catalog identity; comparison_key is null for every row, consistent with criterion c1's prohibition on inventing comparison keys for unknown configurations.",
+    "The join_note fields on rows 94174acb54395a1a9e7e8985, 0b50aee3fd1edd9f5d2b0e8c, and 285dad114cde14bcf4c3b5df reference prior reviewed identity maps; treated as retained context, not fresh measurements."
+  ],
+  "missing_evidence": []
+}

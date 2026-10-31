@@ -1,18 +1,8 @@
 {
   "source": "Chutes — llm.chutes.ai/v1/models (first-party, public catalog)",
-  "collected_at": "2026-10-28",
+  "collected_at": "2026-10-31",
   "method": "scripts/fetch-chutes-catalog.mjs: one GET of the public catalog; prices are price.{input,output,input_cache_read}.usd per 1M tokens; curated model_name/provider_org carried over by exact tee_model_id; new ids marked mapping=derived. See chutes.method.md.",
   "models": [
-    {
-      "model_name": "gemma-4-31B",
-      "provider_org": "Google",
-      "input_per_1m_usd": 0.12,
-      "output_per_1m_usd": 0.37,
-      "cache_read_per_1m_usd": 0.012,
-      "context_length": 131072,
-      "confidential_compute": true,
-      "tee_model_id": "google/gemma-4-31B-turbo-TEE"
-    },
     {
       "model_name": "Qwen3.8 27B",
       "provider_org": "Alibaba",
@@ -23,6 +13,16 @@
       "context_length": 262144,
       "tee_model_id": "Qwen/Qwen3.8-27B-TEE",
       "notes": "Added 2026-08-26 from llm.chutes.ai | 2026-09-08: price cut 0.35/2.75->0.32/2.50, cache-read 0.032 (live llm.chutes.ai)"
+    },
+    {
+      "model_name": "gemma-4-31B",
+      "provider_org": "Google",
+      "input_per_1m_usd": 0.12,
+      "output_per_1m_usd": 0.37,
+      "cache_read_per_1m_usd": 0.012,
+      "context_length": 131072,
+      "confidential_compute": true,
+      "tee_model_id": "google/gemma-4-31B-turbo-TEE"
     },
     {
       "model_name": "DeepSeek-V3.2",
@@ -45,16 +45,6 @@
       "tee_model_id": "zai-org/GLM-5.1-TEE"
     },
     {
-      "model_name": "Qwen3.6-27B",
-      "provider_org": "Alibaba",
-      "input_per_1m_usd": 0.25,
-      "output_per_1m_usd": 2,
-      "cache_read_per_1m_usd": 0.025,
-      "context_length": 262144,
-      "confidential_compute": true,
-      "tee_model_id": "Qwen/Qwen3.6-27B-TEE"
-    },
-    {
       "model_name": "Kimi-K2.6",
       "provider_org": "Moonshot AI",
       "input_per_1m_usd": 0.39,
@@ -64,27 +54,6 @@
       "confidential_compute": true,
       "tee_model_id": "moonshotai/Kimi-K2.6-TEE",
       "notes": "2026-08-26: price cut 0.66/3.5->0.58/3.4 (live llm.chutes.ai)."
-    },
-    {
-      "model_name": "Qwen3.5-397B-A17B",
-      "provider_org": "Alibaba",
-      "input_per_1m_usd": 0.45,
-      "output_per_1m_usd": 3,
-      "cache_read_per_1m_usd": 0.045,
-      "context_length": 262144,
-      "confidential_compute": true,
-      "tee_model_id": "Qwen/Qwen3.5-397B-A17B-TEE"
-    },
-    {
-      "model_name": "DeepSeek V4 Flash 0731",
-      "provider_org": "DeepSeek",
-      "input_per_1m_usd": 0.44,
-      "output_per_1m_usd": 1.32,
-      "cache_read_per_1m_usd": 0.044,
-      "confidential_compute": true,
-      "context_length": 1048576,
-      "tee_model_id": "deepseek-ai/DeepSeek-V4-Flash-0731-TEE",
-      "notes": "Added 2026-08-26 from llm.chutes.ai"
     },
     {
       "model_name": "GLM-5.2",
@@ -98,6 +67,37 @@
       "notes": " | 2026-07-31: price cut 1.40/4.40->1.25/3.95, cache-read 0.625 (live llm.chutes.ai)."
     },
     {
+      "model_name": "Qwen3.5-397B-A17B",
+      "provider_org": "Alibaba",
+      "input_per_1m_usd": 0.45,
+      "output_per_1m_usd": 3,
+      "cache_read_per_1m_usd": 0.045,
+      "context_length": 262144,
+      "confidential_compute": true,
+      "tee_model_id": "Qwen/Qwen3.5-397B-A17B-TEE"
+    },
+    {
+      "model_name": "Qwen3.6-27B",
+      "provider_org": "Alibaba",
+      "input_per_1m_usd": 0.25,
+      "output_per_1m_usd": 2,
+      "cache_read_per_1m_usd": 0.025,
+      "context_length": 262144,
+      "confidential_compute": true,
+      "tee_model_id": "Qwen/Qwen3.6-27B-TEE"
+    },
+    {
+      "model_name": "DeepSeek V4 Flash 0731",
+      "provider_org": "DeepSeek",
+      "input_per_1m_usd": 0.44,
+      "output_per_1m_usd": 1.32,
+      "cache_read_per_1m_usd": 0.044,
+      "confidential_compute": true,
+      "context_length": 1048576,
+      "tee_model_id": "deepseek-ai/DeepSeek-V4-Flash-0731-TEE",
+      "notes": "Added 2026-08-26 from llm.chutes.ai"
+    },
+    {
       "model_name": "Kimi K3",
       "provider_org": "Moonshot AI",
       "input_per_1m_usd": 1.85,
@@ -109,27 +109,19 @@
       "notes": "Added 2026-08-26 from llm.chutes.ai"
     }
   ],
-  "response_sha256": "a09a01aab1d513b6c2a732bccdb7e5ad79df0a46df44bf0c1bc8fdd6c1505292",
+  "response_sha256": "f20d438423115208fcba3cbfb5ea798b26bf0d17b98519671d8def01b357da9b",
   "diff": {
     "added": [],
-    "removed": [
-      "Qwen/Qwen3-32B-TEE",
-      "unsloth/Mistral-Nemo-Instruct-2407-TEE",
-      "Nemotron-3-Nano-Omni-30B-TEE",
-      "Qwen/Qwen3-235B-A22B-Thinking-2507-TEE"
-    ],
-    "price_changed": [
-      "zai-org/GLM-5.1-TEE",
-      "moonshotai/Kimi-K2.6-TEE"
-    ]
+    "removed": [],
+    "price_changed": []
   },
   "skipped_unpriced": [
     "deepseek-ai/DeepSeek-V4.1-Flash-1017",
+    "Qwen/Qwen3.8-Max-0902",
     "zai-org/GLM-5.3",
     "deepseek-ai/DeepSeek-V4-Pro-0813",
-    "moonshotai/Kimi-K2.7-Code",
-    "Qwen/Qwen3.8-Max-0902",
     "zai-org/GLM-5.2-Fast",
+    "moonshotai/Kimi-K2.7-Code",
     "Qwen/Qwen3.8-2.4T-A95B"
   ]
 }

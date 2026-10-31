@@ -1,0 +1,20 @@
+{
+  "artifact_id": "scores-0",
+  "artifact_sha256": "2eac46a8a89c32179d5f76d61af5d951c0313bbb9d7d1e6c5fa2b6f403f88b7d",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "public:70bf2301abe96e0ece4ecb77",
+    "public:728d8c934af9df4a7e85e8ad",
+    "c1"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Row 1 derived value 0.13621973920554636 corresponds to source score 0.0013621973920554635 × 100, with exact decimal product 0.13621973920554635; the 1e-17 difference is likely floating-point rounding in the producer's multiplication and is not treated as an error.",
+    "SHA-256 hashes, retrieval timestamps, and transport/qualification checks are owner-executed and cannot be independently verified in this read-only review.",
+    "The source does not publish a separate harness field; no harness inference was applied. Row 2's modelGroup includes 'provider-adapter' exactly as published."
+  ],
+  "missing_evidence": []
+}

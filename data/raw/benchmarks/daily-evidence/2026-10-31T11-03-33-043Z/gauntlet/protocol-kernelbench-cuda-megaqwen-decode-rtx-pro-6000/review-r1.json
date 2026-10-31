@@ -1,0 +1,24 @@
+{
+  "artifact_id": "protocol-kernelbench-cuda-megaqwen-decode-rtx-pro-6000",
+  "artifact_sha256": "281df10e55b53ee8409b58c066527c9940e0dcc645df63602f73a2c4c8533ee0",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": ["kernelbench-cuda-megaqwen-decode::rtx-pro-6000", "c1", "c2"],
+  "errors_found": 1,
+  "findings": [
+    {
+      "id": "kernelbench-cuda-megaqwen-decode::rtx-pro-6000-notes-muse04",
+      "severity": "major",
+      "location": "row kernelbench-cuda-megaqwen-decode::rtx-pro-6000, scoring.notes",
+      "evidence": "leaderboard.json SOURCE 2: muse/muse-spark-1.3 [ultra] 04_grid_mingru_sps has correct:false, peak_fraction:null, annotation_verdict:'bug' and is absent from per_problem.04_grid_mingru_sps.ranked_passes (20 entries, none muse, none 0.2056); no 0.2056 value exists anywhere in the capture (04 max served is 1.961). Notes claim the ranked list 'still holds' this cell at 0.2056, contradicting the primary source. The other cited example is verified: kinetic-claude/kinetic-0715[1m] 03 is in ranked_passes at 0.0622 with verdict 'suspect'.",
+      "repair": "Rewrite the notes so the muse/spark-1.3 [ultra] 04 example states the cell is absent from the ranked list with peak_fraction null in leaderboard.json (or delete the 0.2056 example), keeping only evidence-backed examples such as the suspect kinetic 03 cell at 0.0622."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "Owner-performed row/artifact SHA-256 binding (ff4983ac... and 281df10e...) could not be recomputed by me; accepted as supplied, inability to execute hash/transport checks is a review limitation.",
+    "version_status 'published' judged from the maintainer publishing the 'RTX PRO 6000'/'RTX_PRO_6000' board identifier; if that is not considered a release identifier the field would read 'snapshot' — interpretive, not contradicted by sources.",
+    "SOURCE 7 summary reports 23 finite peak_fraction values with low 0.97 and high 8.12 in percent, which matches problem 03's served scale (raw 0.0097–0.0812) and agrees with the row's unit 'percent of roofline' and range [0,null]; I did not independently recount every finite value from the truncated capture."
+  ],
+  "missing_evidence": []
+}

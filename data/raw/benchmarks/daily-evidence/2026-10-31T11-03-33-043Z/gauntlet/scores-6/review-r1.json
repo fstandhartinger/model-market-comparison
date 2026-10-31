@@ -1,0 +1,43 @@
+{
+  "artifact_id": "scores-6",
+  "artifact_sha256": "e6c5cbcbd2bc11bf9575d3d68eda2f2b355215cdaa3990f96520c89081099565",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": [
+    "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/retail",
+    "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/airline",
+    "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/telecom",
+    "c1"
+  ],
+  "errors_found": 3,
+  "findings": [
+    {
+      "id": "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/retail",
+      "severity": "minor",
+      "location": "row.protocol",
+      "evidence": "Source README footnote: 'For highly challenging tasks (including PolyMATH and all reasoning and coding tasks), we use an output length of 81,920 tokens. For all other tasks, we set the output length to 32,768.' TAU2-Retail is in the Agent section and is not explicitly classified by that footnote, so the protocol's 'output length 32,768 tokens (81,920 for highly challenging tasks)' leaves the precise output length for this row ambiguous.",
+      "repair": "Clarify from the vendor publication which output length applies to TAU2-Retail, or restate the protocol as the README policy without claiming a specific bucket for TAU2-Retail."
+    },
+    {
+      "id": "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/airline",
+      "severity": "minor",
+      "location": "row.protocol",
+      "evidence": "Source README footnote classifies 81,920-token output length for 'highly challenging tasks (including PolyMATH and all reasoning and coding tasks)' and 32,768 otherwise; TAU2-Airline is under the Agent section with no explicit classification. The protocol's output-length statement does not resolve which bucket applies.",
+      "repair": "Confirm the exact output length for TAU2-Airline from the vendor, or phrase the protocol so it does not assert a specific output-length bucket for TAU2-Airline."
+    },
+    {
+      "id": "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/telecom",
+      "severity": "minor",
+      "location": "row.protocol",
+      "evidence": "Source README footnote specifies output lengths only by broad category ('highly challenging tasks' vs 'all other tasks') and TAU2-Telecom is in the Agent section, not explicitly assigned to either bucket. The protocol's 'output length 32,768 tokens (81,920 for highly challenging tasks)' is therefore ambiguous for this row.",
+      "repair": "State the vendor-published output length for TAU2-Telecom explicitly, or reproduce the README policy without a specific bucket assignment."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "I cannot execute owner-side SHA-256 row hashing, transport checks, or qualification checks; those checks are outside my read-only capability.",
+    "The README table does not state units explicitly; percent is inferred from TAU benchmark convention and the 0-100 range of values.",
+    "The README has no explicit publication date; published_at=null is consistent with the captured evidence."
+  ],
+  "missing_evidence": []
+}
