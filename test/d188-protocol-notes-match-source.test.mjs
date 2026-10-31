@@ -39,8 +39,9 @@ const capturePool = await acceptedCaptures({
 const vulcanReview = JSON.parse(await readFile('test/fixtures/vulcanbench-frontier-2026-10-07/manifest.json', 'utf8'));
 const vulcanReview323 = JSON.parse(await readFile('test/fixtures/vulcanbench-frontier-2026-10-10/manifest.json', 'utf8'));
 const vulcanReview324 = JSON.parse(await readFile('test/fixtures/vulcanbench-frontier-2026-10-14/manifest.json', 'utf8'));
+const vulcanReview329 = JSON.parse(await readFile('test/fixtures/vulcanbench-frontier-2026-10-31/manifest.json', 'utf8'));
 const captures = capturePool.accepted;
-const reviewPool = { ...capturePool, accepted: [...capturePool.accepted, ...vulcanReview, ...vulcanReview323, ...vulcanReview324]
+const reviewPool = { ...capturePool, accepted: [...capturePool.accepted, ...vulcanReview, ...vulcanReview323, ...vulcanReview324, ...vulcanReview329]
   .sort((a, b) => a.retrieved_at.localeCompare(b.retrieved_at)) };
 const newestCapture = (url) => newestAccepted(reviewPool, url);
 const bytesOf = async (receipt) => {
@@ -134,12 +135,15 @@ test('D223: every reviewed VulcanBench revision really is the same protocol, jud
     }
     // The board row's protocol is one the bundle itself declares (v3.4's own pair is Muse v3.4
     // with Grok v3.3, so the row's id has to be *among* them, not all of them).
-    assert.ok(Object.values(bundles.get(revision).protocol_ids).includes(`code-quality-maintenance-v${revision}`),
+    // From v3.29 the bundle states one `protocol_id` (and one `protocol_sha256`) instead of a per-judge map.
+    const declared = (bundle) => (bundle.protocol_ids ? Object.values(bundle.protocol_ids) : [bundle.protocol_id]);
+    assert.ok(declared(bundles.get(revision)).includes(`code-quality-maintenance-v${revision}`),
       `the v${revision} bundle does not declare the protocol its board rows state`);
   }
   // A distinct protocol hash per revision is this family's norm, and the reason the notes cannot
   // be written as "one frozen file": if they ever collapse to one hash, the claim needs rewording.
-  const hashes = new Set([...bundles.values()].flatMap((b) => Object.values(b.protocol_sha256)));
+  const hashes = new Set([...bundles.values()].flatMap((b) =>
+    (typeof b.protocol_sha256 === 'string' ? [b.protocol_sha256] : Object.values(b.protocol_sha256))));
   assert.ok(hashes.size > 1, 'the reviewed revisions are expected to carry their own protocol hashes');
   // Every reviewed revision beyond the reference states the chain it amends, and the chain covers
   // the earlier reviewed revisions — that is what makes it a continuation rather than a new family.
@@ -147,21 +151,23 @@ test('D223: every reviewed VulcanBench revision really is the same protocol, jud
     const amends = Object.keys(bundles.get(revision).amends ?? {}).map((key) => key.replace(/^v/, ''));
     assert.ok(amends.includes(reference), `v${revision} does not amend v${reference}`);
   }
-  // Same task set: the v3.15/v3.4 historical pair, plus the newly reviewed v3.24 Haiku population.
+  // Same task set: the v3.15/v3.4 historical pair, plus the reviewed v3.24 Haiku and v3.29 Terra populations.
   const runExport = async (slug) => csv((await bytesOf(newestCapture(
     `https://raw.githubusercontent.com/morganlinton/VulcanBenchCOM/main/assets/data/${slug}/runs.csv`))).toString());
   const taskSet = async (slug) => {
     const rows = await runExport(slug);
     return [...new Set(rows.map((row) => row.task))].sort();
   };
-  const [newest, oldest, haiku] = await Promise.all([
+  const [newest, oldest, haiku, terra] = await Promise.all([
     taskSet('swe-v4-opus55-v315'),
     taskSet('swe-v4-astra-fable51-v34'),
     taskSet('swe-v4-haiku55-v324'),
+    taskSet('swe-v4-gpt61-terra-v329'),
   ]);
   assert.equal(oldest.length, 23, "the reference export covers the board's 23 tasks");
   assert.deepEqual(newest, oldest, 'the v3.15 population ran a different task set');
   assert.deepEqual(haiku, oldest, 'the v3.24 population ran a different task set');
+  assert.deepEqual(terra, oldest, 'the v3.29 population ran a different task set');
 
   const haikuRows = await runExport('swe-v4-haiku55-v324');
   assert.equal(haikuRows.length, 115, 'the v3.24 export has 23 runs at each of five effort levels');
