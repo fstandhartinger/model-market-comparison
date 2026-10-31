@@ -18,6 +18,7 @@ from pathlib import Path
 
 import measurement_dispatch
 import pod_runner
+import supplement_admission
 
 ORDER = '529be5d5-512f-463f-bdae-d7cd289fe970'
 ORDER_V12 = '39e2266a-0cdb-450c-a879-27ebe0da1a6f'
@@ -51,6 +52,7 @@ FILES = {
     "wheels/transformers-5.8.1-py3-none-any.whl": "5340fb95962162cdfdae5cc91d7f8fedd92ed75216c1154c5e1f590fcf56dd0e",
     "wheels/typer-0.27.3-py3-none-any.whl": "e50022f28b82a86313e54501317a1db64bf8f8d036ff8cfe5ca7e47675454aff"
 }
+FAMILY = 'torchcast'
 MEMBER_LIMIT = 268435456
 CONTEXT_LIMIT = 536870912
 REMOTE_ROOT = '/runtime-supplement/torchcast'
@@ -72,9 +74,11 @@ def sha256(path):
         return _sha256_stream(stream)
 
 def active(job, recipe):
-    """Only these orders' reviewed http_typesafe recipes on the exact pinned base select the supplement."""
-    return (Path(job).name in ORDERS and isinstance(recipe, dict) and recipe.get('kind') == 'http_typesafe'
-            and recipe.get('image') == BASE_IMAGE)
+    """A listed order, or a host-admitted repeat of the reviewed stack (supplement_admission), with the
+    reviewed http_typesafe recipe on the exact pinned base selects the supplement."""
+    return (isinstance(recipe, dict) and recipe.get('kind') == 'http_typesafe'
+            and recipe.get('image') == BASE_IMAGE
+            and (Path(job).name in ORDERS or supplement_admission.admitted(job, FAMILY)))
 
 def check_context(context=CONTEXT):
     """The context must be byte-identical to the pinned public-only inventory."""
