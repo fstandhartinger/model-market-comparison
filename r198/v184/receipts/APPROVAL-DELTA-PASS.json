@@ -1,0 +1,59 @@
+{
+ "changed_tracked_paths": [
+  "data/jevbench-breakdown-exceptions.json",
+  "data/raw/benchmarks/jevbench/v1.8/jevbench-v1.8.4-publication.json"
+ ],
+ "copied_critic_receipt_byte_equal": true,
+ "engine": "Codex independent critic",
+ "exception_delta": {
+  "actual_topics_absent_language_usecase_cells_present": true,
+  "added_entry": {
+   "decision": "DECISIONS 2026-10-27 18:20 UTC v1713-topics-exception-h2o141 (release owner), extended to every row on the 27 Oct draw (v1.8.4)",
+   "dims": [
+    "topics"
+   ],
+   "key": "granite-switch-4.1-8b",
+   "reason": "TEMPORARY: row on the 27 Oct 2026 regular draw (v1.6-regular-20261027, release v1.8.4). That draw has no ruled subject-topic labels yet, so no topic cells exist; its use-case and language cells are measured on the row's own draw. A follow-up release adds the topic cells once the draw's items are labelled and removes this entry."
+  },
+  "all_prior_entries_json_and_prefix_bytes_unchanged": true,
+  "exactly_one_granite_topics_exception": true,
+  "existing_d1027_rule_only": true,
+  "final_entries": 37,
+  "matches_existing_synthetic_helper_dry_run": true,
+  "prior_entries": 36
+ },
+ "existing_review_limits_preserved": [
+  "Final endpoint display check retains instrumentation warning/helper exit1.",
+  "Future capture-harness fix is SOURCE_ONLY_NOT_RERUN; original pre-delta full build is not final-hash proof."
+ ],
+ "must_fix": [],
+ "no_rescore_or_fulltest_repeat": true,
+ "original_reports_unchanged": true,
+ "original_review_md_sha256": "fdc7c4608d7f74933d18f3edfbf95c0449af52e9ff1bf00fe09daff997ec2ef1",
+ "original_review_sha256": "df48c1d579576ef5572b6e161c999171dd2d283a0cf9e7ba5e33445c6edeac00",
+ "publication_only_review_changed": true,
+ "publication_sha256": "6505f0eb0816f988dda32b2c8b91b6d53437e9b3ccf97e3013139df558a897e1",
+ "release_library_byte_equal": true,
+ "required_before_production": [
+  "Fresh mandatory exact-final/rebased-HEAD merge-queue build/tests and normal release gates.",
+  "Both-host live verification; this delta review does not grant a publication bypass."
+ ],
+ "review_binding": {
+  "engine": "Codex independent critic",
+  "receipt_sha256": "df48c1d579576ef5572b6e161c999171dd2d283a0cf9e7ba5e33445c6edeac00",
+  "verdict": "PASS"
+ },
+ "reviewed_at": "2026-10-31T23:15:35.282435+00:00",
+ "reviewed_base_commit": "7ae2f2d19d5cc9caf4aec7ce8a56da71e3bc951c",
+ "root_invariance_receipt_sha256": "28ecf99d58d7404c2df3bd1f6ae2ea9332da48d32d9b61ba10f449a4530b9a8a",
+ "scope": "Actual approval delta only; original review remains immutable",
+ "six_other_artifacts_sha256_unchanged": {
+  "carry": "271d1fc77a136a04a1eb6deb5480c52d4211eb2b66b2ac8bb31e80867e69003a",
+  "categories": "c22416026c4a492a06e2e9236abf66737b6a29aa5c3da37ffeab104949697c9d",
+  "history": "d5e91333d6acefef1506f2a6ce23f71220ac1eeac9ce2d4e817c88a0a979a38b",
+  "history-carry": "f4d8ddfae4ac3b2741ca7cfdaa930b2afc1d9be612f4e6683a230aa23834e2ba",
+  "proof": "37ef13bac1eb9da9c794adac7df6eb075d1ecfe85741cc2e7a4cd1e1031564d5",
+  "results": "eb6669ccc231f20a0e24f81200107246435b474c321abd614106debc22c41976"
+ },
+ "verdict": "PASS"
+}

@@ -1,0 +1,167 @@
+{
+ "base": "49183e72a14d65353e6a4d534a6fb404e17901c2",
+ "carry_and_ranks": {
+  "all_new_ranks_null": true,
+  "all_numeric_fields_unchanged": true,
+  "allowed_carried_text_fields": [
+   [
+    "allec-oavg",
+    "/disclosure"
+   ],
+   [
+    "zils-ai-z3-mini-soup-preview",
+    "/disclosure"
+   ],
+   [
+    "zils-ai-z3-mini-soup-preview",
+    "/endpoint_condition"
+   ]
+  ],
+  "carried_rows": 334,
+  "carry_history_byte_equal": true,
+  "final_topfive_binding": "Exact endpoint-only semantic equivalence to immutable a30d0da5; original comparison retained; numerical/ranking/renderer sources unchanged.",
+  "grid_changes": 0,
+  "jdi_excluded": true,
+  "new_row_ranked": false,
+  "original_topfive_lists": 580,
+  "slider_changes": 0,
+  "topfive_changes": 0
+ },
+ "commit": "7ae2f2d19d5cc9caf4aec7ce8a56da71e3bc951c",
+ "cost": {
+  "declared_base": "ibm-granite/granite-4.1-8b",
+  "gpu_time_component": null,
+  "input_per_million": 0.06,
+  "output_per_million": 0.25,
+  "reference": "granite-4.2-8b SIBLING ESTIMATE",
+  "rule": "Existing frozen v1.8 fallback for architectures outside six calibrated Gemma/Qwen classes; no invented Granite mapping or throughput.",
+  "usd_per_1000_all": 0.03298936,
+  "usd_per_1000_common": 0.022584748153122905
+ },
+ "engine": "Codex independent critic",
+ "evidence_files": {
+  "ARCHIVED-AGGREGATES.json": "ff6b384f1e2e7a1a830ea3b4d348abc3ce988a2467bee7a2f47ffa41221816d9",
+  "AXES-COMPARE.json": "82e368ac2ebfa50052529d314dabeae5d9aeac2af62422d1e8d54f5445409b5f",
+  "CLEANUP.json": "341117ede05239ef6ee42bddb652ccb4a55002149afda081a3541d560358cb00",
+  "LATEST-SELECTORS.json": "6e3b07552e86ed7e5258dd9355316132a2b09f84f53e99e8be5cb54c6407a061",
+  "PACKET-DELTA.json": "5efb36534cae40475dd891a1090d683693e4194c0699dd4d99150af29144bb58",
+  "PRIVACY-AUDIT.json": "69d5abeca3a71a4e421786b55dfd2d2f828094a921b82eac57ce8acffa47531c",
+  "SUMMARY.json": "eebd44fdabfaa89a255a2d18ece9fc472972374415f411691a74c24ce6cf4fb3",
+  "VISIBLE-DELTA-INDEPENDENT.json": "33d237cad66f794dc38688c45d7374c281a04053d1906033c7cf448140761059"
+ },
+ "final_categories_sha256": "c22416026c4a492a06e2e9236abf66737b6a29aa5c3da37ffeab104949697c9d",
+ "final_results_sha256": "eb6669ccc231f20a0e24f81200107246435b474c321abd614106debc22c41976",
+ "independent_scoring": {
+  "both_category_and_decisive_views_exact": true,
+  "capability": 57.14551912909233,
+  "common_items": 1489,
+  "entry_before_sha256": "fac162224095e877ec218739fd6088c339b387d477349a638b6c6bbbcc0c039f",
+  "frozen_off_share_numeric_fields_compared": [
+   743,
+   743,
+   753
+  ],
+  "input_tokens_all": 818484,
+  "input_tokens_common": 554274,
+  "max_abs_numeric_diff": 0.0,
+  "native_http200": 1500,
+  "official_share_axes": {
+   "calibration": 82.14288333020232,
+   "cost": 59.3855424393103,
+   "intelligence": 32.14815492798233,
+   "speed": 92.68935191738173
+  },
+  "output_tokens_all": 1500,
+  "output_tokens_common": 1489,
+  "over_ten_seconds": 5,
+  "packet_cost_only_supplement": {
+   "after_sha256": "23ed7cf15e1ffd47e678c1076b0b0168df70f31678d6a11cf67b564156e94b40",
+   "before_sha256": "fac162224095e877ec218739fd6088c339b387d477349a638b6c6bbbcc0c039f",
+   "changed_paths": [
+    "/granite-switch-4.1-8b/entry/cost_basis"
+   ],
+   "immutable_original": "/home/flori/jobs/jevbench-auto-intake/runs/20261031-evening/entries-granite8b/before-owner-cost-disposition/ENTRIES-GRANITE8B.json",
+   "raw_numeric_pin_recipe_replay_expect_unchanged": true,
+   "rescore_required": false,
+   "status": "PASS"
+  },
+  "published_numeric_fields_compared": 748,
+  "raw_sha256": "0218b22fe7ef2bc0df461c16855310d50d590680271ffe9ba19376a008cffce7"
+ },
+ "must_fix": [],
+ "nonblocking_followups": [
+  {
+   "finding": "29 uncached predecessor loaders imply435optional-loader visits per full cold assembly in the v170-v184 segment. Outer SEO data reader DOES memoize by root. Source-only evidence does not diagnose the observed build/SSR stall.",
+   "id": "PERF-INFO",
+   "receipt": "LOADER-STATIC-DIAGNOSIS.json"
+  }
+ ],
+ "privacy": {
+  "bytes_checked": 151902342,
+  "critic_cleanup": {
+   "aggregate_outputs_logs_reports_retained": true,
+   "cost_set_source_unchanged_sha256": "b83bdfd14c263ffacfa572b304084154afca84c1f00083101a33783ae6f8b356",
+   "private_cost_set_copy_shredded_bytes": 675,
+   "raw_copy_created": false,
+   "raw_source_unchanged_sha256": "0218b22fe7ef2bc0df461c16855310d50d590680271ffe9ba19376a008cffce7",
+   "read_only_raw_symlink_removed": true,
+   "single_link_distinct_inode_verified": true,
+   "status": "PASS"
+  },
+  "files_checked": 202,
+  "jsonl_files_in_diff": 0,
+  "opaque_task_id_hits": 0,
+  "sealed_material_sent_to_LeChonk": false,
+  "symlinks_in_diff": 0,
+  "transport_scope": "Builder worktree aggregates only, no extra private paths; private scorer copies outside upload root shredded."
+ },
+ "publication_review_at_review": "PENDING",
+ "quality_evidence": {
+  "bundle_negative_controls": 60,
+  "deterministic_rebuild": true,
+  "final_visible_check_manifest_sha256": "3b514dca6836beb6109b670ab5e24cc191c52411048f87115cf08f27f1fcf7c9",
+  "final_visible_fact_check": "Actual unchanged production TSX served in Next dev with synthetic PASS; all required replay facts captured in visible body text and final screenshot; HTTP200.",
+  "full_synthetic_unchanged_suite_not_repeated": true,
+  "future_capture_harness_fix": "Source-only, NOT RERUN; exact used harness snapshots/hash receipts retained.",
+  "initial_synthetic_suite": {
+   "fail": 3,
+   "pass": 256,
+   "reason": "Three inherited latest-release assertions stopped at v1.8.3; exact guarded v1.8.4 extension only.",
+   "skip": 1
+  },
+  "instrumentation_warning": {
+   "cause_evidence": "Hydration trace explicitly names injected candidate banner versus Next hidden metadata boundary. Screenshot retains actual final page after banner removal.",
+   "cleanup_race_retained": true,
+   "helper_exit_code": 1,
+   "not_a_zero_page_error_or_end_to_end_helper_pass": true,
+   "page_errors_before_injected_banner": 0,
+   "post_banner_hydration_warning_retained": true
+  },
+  "modified_v181_v182_tests_pass_each_view": 12,
+  "no_assertions_removed": true,
+  "no_fourth_stale_latest_selector": true,
+  "pending_suite": {
+   "fail": 0,
+   "pass": 259,
+   "skip": 1
+  },
+  "production_build_and_three_captures": "PASS at immutable pre-display-delta commit a30d0da5129692cdbca88f6e0b7d2006babe2375, results6935094c; not claimed for finaleb6669cc bytes.",
+  "three_repaired_cases_pass_both_views": true,
+  "typescript_passed": true,
+  "visible_delta_negative_controls": 10
+ },
+ "required_before_production": [
+  "Fresh mandatory merge-queue full build/tests of exact final/rebased HEAD; no publication bypass.",
+  "Normal seal/approval/hash-chain/CR/PR/merge gates and both-host live verification."
+ ],
+ "review_limits": [
+  "No new model execution, author-code execution, rental, spend, customer/author contact, publication or production verification by critic.",
+  "The final display-only bytes have focused actual Next dev visible-DOM evidence; no second local693-page production build is claimed.",
+  "The capture-helper instrumentation warning and exit1 are preserved and explicitly accepted for visible-fact scope only."
+ ],
+ "reviewed_at": "2026-10-31T23:13:05.581950+00:00",
+ "reviewed_commit": "7ae2f2d19d5cc9caf4aec7ce8a56da71e3bc951c",
+ "status": "PASS_SOURCE_REVIEW_NORMAL_PUBLICATION_GATES_REMAIN",
+ "unresolved_source_integrity_findings": [],
+ "verdict": "PASS"
+}
