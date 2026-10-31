@@ -9,7 +9,7 @@ import { enrichArtificialAnalysis, MAX_METADATA_ROLLOUT_LAG } from "../lib/aa-me
 import { parseArtificialAnalysisMetadata, parseArtificialAnalysisDeprecatedModels } from "../lib/aa-rsc.mjs";
 import { writeJSONAtomic } from "../lib/snapshot.mjs";
 import { refreshAaEfficiency } from "./fetch-aa-efficiency.mjs";
-import { AA_INDEX_FIELDS, aaIndexPageVersions, aaIndexRunMode, aaIndexVersionChangeMessage } from "../lib/aa-index-version.mjs";
+import { AA_INDEX_FIELDS, aaIndexPageVersions, aaIndexRunMode, aaIndexVersionChangeMessage, assertAdoptionCoverage } from "../lib/aa-index-version.mjs";
 import { execFile } from "node:child_process";
 import { promisify } from "node:util";
 import { BOARD_REGISTRY_INCONSISTENT, absentIdentities, assertApprovedIdentityCoverage, assertIdentityCoverage, assertOpenRouterEndpointCoverage, assertMeasuredFields, captureLiveSource, classifyBoardAbsence, endpointIdentity, findBoardRekeys, planOpenRouterWithdrawals } from '../lib/live-source.mjs';
@@ -118,6 +118,7 @@ async function fetchArtificialAnalysis() {
     assertMeasuredFields(old?.evaluations, model.evaluations, exemptIndexFields ? fields.filter((f) => !AA_INDEX_FIELDS.includes(f)) : fields, `AA ${model.id}`, { approvals: approvals.aa_measurements, modelId: model.id });
     assertMeasuredFields(old?.pricing, model.pricing, ['price_1m_input_tokens', 'price_1m_output_tokens'], `AA ${model.id}`);
   }
+  if (adoption) assertAdoptionCoverage(apiModels, `AA adoption of Intelligence Index v${pinnedVersion}`);
   if (indexVersion) {
     const scored = (field) => apiModels.filter((m) => typeof m.evaluations[field] === 'number').length;
     const before = (field) => (previous.models || []).filter((m) => typeof m.evaluations?.[field] === 'number').length;

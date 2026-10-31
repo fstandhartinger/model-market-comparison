@@ -40,6 +40,10 @@ export async function GET(req: Request) {
     composite_attached: client?.composite_attached ?? 0,
     release_date: m.release_date,
     benchmarks: m.benchmarks,
+    // CR-634: which AA Intelligence Index version `benchmarks.aa_intelligence_index` is on, and whether it is AA's
+    // measurement or the labelled estimate from v4 (method, v4 value, interval). `score_basis` says the same for `score`.
+    aa_intelligence: m.aa_intelligence ?? null,
+    score_basis: score === "aa_intelligence_index" && m.aa_intelligence ? m.aa_intelligence.status : null,
     designarena: m.designarena,
     cost_blended_10to1: modelCost(m),
     cheapest_offers: cheapestOffers(m, 5),

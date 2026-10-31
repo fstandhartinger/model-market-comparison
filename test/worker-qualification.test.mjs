@@ -97,3 +97,22 @@ test('critic retry reuses an excluded family only when no other scheduled candid
     scheduled: true, critic: true, producers: [deepseek.id, zai.id], excludeModels: [deepseek.id],
   }), /No supported viable/);
 });
+
+// CR-634 (critic round 2 F9): an estimated v5 value never qualifies by itself; it counts only when the model's measured
+// v4.x value met the old floor of 34, so no model below the former v4 floor becomes a worker through its estimate.
+test('CR-634: estimated AA values qualify only with a measured v4.x value at or above 34', async () => {
+  const { qualifyingAaIndex, V4_MIN_INDEX } = await import('../ops/rebuild-2026-09/bin/worker-policy.mjs');
+  const est = (value, v4) => ({ benchmarks: { aa_intelligence_index: value }, aa_intelligence: { status: 'estimated', value, v4_value: v4 } });
+  assert.equal(V4_MIN_INDEX, 34);
+  assert.equal(qualifyingAaIndex({ benchmarks: { aa_intelligence_index: 27.8 }, aa_intelligence: { status: 'measured', value: 27.8 } }), 27.8);
+  assert.equal(qualifyingAaIndex(est(23.4, 33.8)), null, 'GPT-5.5 (Medium): v4 33.8 stays below the floor');
+  assert.equal(qualifyingAaIndex(est(24.6, 34.5)), 24.6);
+  assert.equal(qualifyingAaIndex(est(22.9, 34.0)), 23, 'v4 at the floor stays qualified even where the estimate rounds below 23');
+  assert.equal(qualifyingAaIndex({ benchmarks: {} }), null);
+  // Every estimated row in the published dataset keeps its v4 decision.
+  const { readFileSync } = await import('node:fs');
+  const ds = JSON.parse(readFileSync(new URL('../data/dataset.json', import.meta.url), 'utf8'));
+  for (const row of ds.models.filter((m) => m.aa_intelligence?.status === 'estimated')) {
+    assert.equal(qualifyingAaIndex(row) !== null && qualifyingAaIndex(row) >= 23, row.aa_intelligence.v4_value >= 34, row.id);
+  }
+});

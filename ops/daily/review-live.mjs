@@ -32,7 +32,7 @@ import { fileURLToPath } from 'node:url';
 import { isDeepStrictEqual } from 'node:util';
 import { flightRecords, objects, resolveFlight, parseArtificialAnalysisMetadata } from '../../lib/aa-rsc.mjs';
 import { parseAaEfficiency } from '../../lib/aa-efficiency.mjs';
-import { AA_INDEX_PINNED_MAJOR, aaIndexPageVersions, changedAaIndexVersion, pinnedAaIndexVersion, snapshotIndexMajor } from '../../lib/aa-index-version.mjs';
+import { AA_INDEX_PINNED_MAJOR, aaIndexPageVersions, assertAdoptionCoverage, changedAaIndexVersion, pinnedAaIndexVersion, snapshotIndexMajor } from '../../lib/aa-index-version.mjs';
 import { CODING_AGENT_FILE, CODING_AGENT_URL, CODING_AGENT_VERSION, changedCodingAgentVersion, codingAgentPageVersions, parseCodingAgents } from '../../lib/aa-coding-agents.mjs';
 import { parseOpenRouterPage, parseOpenRouterCache, parseOpenRouterRankings } from '../../lib/openrouter-efficiency.mjs';
 import { parseChutesUsage } from '../../lib/chutes-efficiency.mjs';
@@ -202,6 +202,9 @@ async function verifyAa(rawDir, src, runStart, rows, report) {
   const pageVersion = pinnedAaIndexVersion(aaIndexPageVersions(lbReceipt.body));
   if (snapshotIndexMajor(staged) !== AA_INDEX_PINNED_MAJOR) fail(`aa staged index_version ${staged.index_version ?? 'missing'} is not v${AA_INDEX_PINNED_MAJOR}.x`);
   eq(staged.index_version, pageVersion ?? priorSnapshot.index_version, 'aa index_version (captured leaderboard statement)');
+  if (snapshotIndexMajor(priorSnapshot) !== AA_INDEX_PINNED_MAJOR) {
+    try { assertAdoptionCoverage(staged.models, 'aa adoption'); } catch (error) { fail(error.message); }
+  }
   const prior = new Map(priorSnapshot.models.map((m) => [m.id, m]));
   const byId = new Map(apiModels.map((m, i) => [m?.id, { model: m, index: i }]));
   let retained = 0;

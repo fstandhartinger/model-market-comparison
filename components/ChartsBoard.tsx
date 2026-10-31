@@ -193,7 +193,8 @@ export function ChartsBoard({ data }: { data: ClientData }) {
 
   const leaderboard = useMemo(() =>
     [...scoredShown].sort((a, b) => (b.sc as number) - (a.sc as number)).slice(0, 18)
-      .map((x) => ({ name: collapsedName(x.m, s.collapse, preferredId), value: x.sc as number, org: x.m.org, coverage: compositeCoverageLabel(x.m, score) })),
+      // CR-634: an AA Intelligence value estimated from v4 carries "(est.)" in its label, so the axis, tooltip and mobile bars say so.
+      .map((x) => ({ name: `${collapsedName(x.m, s.collapse, preferredId)}${score === "aa_intelligence_index" && x.m.aa_intelligence_estimate ? " (est.)" : ""}`, value: x.sc as number, org: x.m.org, coverage: compositeCoverageLabel(x.m, score) })),
     [scoredShown, s.collapse, preferredId, score]);
   const leaderIncomplete = leaderboard.filter((d) => d.coverage).length;
 
