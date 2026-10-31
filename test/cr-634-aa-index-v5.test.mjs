@@ -243,3 +243,15 @@ test('critic r3 F5: the open-vs-closed dot strip labels estimated points and cou
   assert.match(src, /estimated from v4 \(not measured\), drawn as rings/);
   assert.match(src, /data-aa-estimate=\{d\.est \|\| undefined\}/);
 });
+
+// Merge-queue gate 15:51Z 31 Oct: the build's own validator recomputed the headline observations without the frozen v4.x
+// snapshot and refused the dataset. Every caller of buildHeadlineObservations must pass it, and the validator must pass.
+test('every headline-observation caller passes the frozen v4.x snapshot; the build validator accepts the dataset', async () => {
+  for (const file of ['scripts/build-dataset.mjs', 'scripts/validate-benchmark-scores.mjs', 'scripts/build-benchmark-history.mjs']) {
+    assert.match(readFileSync(new URL(`../${file}`, import.meta.url), 'utf8'), /artificialanalysisV4:/, file);
+  }
+  const { execFileSync } = await import('node:child_process');
+  const root = new URL('..', import.meta.url).pathname;
+  const out = execFileSync(process.execPath, ['scripts/validate-benchmark-scores.mjs'], { cwd: root, encoding: 'utf8', timeout: 240000 });
+  assert.match(out, /Benchmark source\/build guard/);
+});
