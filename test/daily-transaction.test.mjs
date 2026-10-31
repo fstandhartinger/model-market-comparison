@@ -38,6 +38,9 @@ test('actual isolated daily transaction cannot alter main or remote after a part
       'data/dataset.json': JSON.stringify({ models: [], benchmark_results: { divergences: [] } }),
       'data/raw/aa-coding-agents.json': JSON.stringify({ version: '1.4', fixture: true }),
       'data/raw/aa-coding-agents-v1.5.json': JSON.stringify({ version: '1.5', fixture: true }),
+      // CR-634: the frozen AA v4.x snapshot and its token efficiency are hashed at the start of every run.
+      'data/raw/artificialanalysis-v4.json': JSON.stringify({ index: '4.x', fixture: true }),
+      'data/raw/aa-efficiency-v4.json': JSON.stringify({ index: '4.x', fixture: true }),
       'data/raw/artificialanalysis.json': 'ACCEPTED_FIXTURE_BYTES\n',
       'ops/rebuild-2026-09/bin/pick-worker-models.mjs': `console.log(JSON.stringify({free_verified:[],cheap_verified:[{id:'deepseek/fixture',family:'deepseek',aa_intelligence_index:34,input_per_1m:0,output_per_1m:0},{id:'z-ai/fixture',family:'z-ai',aa_intelligence_index:34,input_per_1m:0,output_per_1m:0}]}));`,
       'ops/daily/phase-step.mjs': `import {writeFileSync} from 'node:fs';import {join} from 'node:path';if(process.argv[2] !== 'capture') throw new Error('unexpected review');writeFileSync(join(process.argv[3], 'reports/captured-before-failure.json'), JSON.stringify({capture_only:true}));`,

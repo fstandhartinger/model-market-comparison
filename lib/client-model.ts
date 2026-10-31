@@ -1,4 +1,4 @@
-import type { Dataset, ModelRow, ScoreKey, TokenEfficiency, EfficiencyDataset } from "./types";
+import type { AaIntelligenceRecord, Dataset, ModelRow, ScoreKey, TokenEfficiency, EfficiencyDataset } from "./types";
 import { benchmaxxingAdjustedComposite, compositeEvidenceCount, computeCompositeScoreDetails } from "./composite.mjs";
 import { deterministicFamilyRepresentative } from "./family-representative.mjs";
 import type { BenchmarkComparison } from "./benchmark-comparison.mjs";
@@ -121,6 +121,8 @@ export interface ClientModel {
   composite_attached: number;
   /** Composite values used for this row but not measured on this exact configuration. */
   composite_attachments: Partial<Record<CompositeSlot, CompositeAttachment>>;
+  /** CR-634: set when `scores.aa_intelligence_index` is the v4→v5 estimate, not an AA v5 measurement. */
+  aa_intelligence_estimate?: AaIntelligenceRecord | null;
   /** Distinct registry benchmarks this model has a usable result for (R2.2). Not the
    *  same as `composite_coverage`, which counts the seven composite slots only. */
   benchmark_count: number;
@@ -292,6 +294,7 @@ export function clientData(ds: Dataset, benchmaxxing: Record<string, ClientBench
     return {
       id: m.id,
       token_efficiency: m.token_efficiency,
+      aa_intelligence_estimate: m.aa_intelligence?.status === "estimated" ? m.aa_intelligence : null,
       family_key: m.family_key,
       family_name: m.family_name,
       display_name: m.display_name,
@@ -475,4 +478,10 @@ export function clientData(ds: Dataset, benchmaxxing: Record<string, ClientBench
   const families = [...famMap.values()].sort((a, b) => a.name.localeCompare(b.name));
 
   return { generated_at: ds.generated_at, efficiency: ds.efficiency, sourceDates: ds.sources, models, offersByFamily, offersByModel, providers, families };
+}
+
+/** CR-634: the one-line disclosure for an AA Intelligence value estimated from v4 (tooltips, screen readers, model page). */
+export function aaEstimateNote(est: AaIntelligenceRecord): string {
+  const range = est.interval ? ` (80% range ${est.interval[0]}–${est.interval[1]})` : "";
+  return `Estimated from v4, not measured: AA has not rescored this model on Intelligence Index v${est.version}. Its v4.x score ${est.v4_value ?? "?"} maps to about ${est.value}${range} by a monotone fit over the ${est.bridge_count ?? "?"} models AA measured on both versions (typical error ±${est.loo_mae ?? "?"} points).`;
 }

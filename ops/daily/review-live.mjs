@@ -22,7 +22,7 @@
 // or re-derives. buildLiveEvidence() returns bounded packets: numbered row
 // ids, source locators + sha256, exact named-field source extracts — never a
 // whole multi-MB HTML page. ops/daily/gauntlet.mjs wires the packets into
-// ops/rebuild-2026-09/bin/worker.sh (cheap AA>=34 producer, different-family
+// ops/rebuild-2026-09/bin/worker.sh (cheap AA >= MIN_INDEX (23 on v5.0, was 34 on v4.x) producer, different-family
 // critic, at most 3 rounds). Malformed input or zero coverage is an error.
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { gunzipSync } from 'node:zlib';
@@ -32,7 +32,7 @@ import { fileURLToPath } from 'node:url';
 import { isDeepStrictEqual } from 'node:util';
 import { flightRecords, objects, resolveFlight, parseArtificialAnalysisMetadata } from '../../lib/aa-rsc.mjs';
 import { parseAaEfficiency } from '../../lib/aa-efficiency.mjs';
-import { AA_INDEX_PINNED_MAJOR, aaIndexPageVersions, changedAaIndexVersion } from '../../lib/aa-index-version.mjs';
+import { AA_INDEX_PINNED_MAJOR, aaIndexPageVersions, assertAdoptionCoverage, changedAaIndexVersion, pinnedAaIndexVersion, snapshotIndexMajor } from '../../lib/aa-index-version.mjs';
 import { CODING_AGENT_FILE, CODING_AGENT_URL, CODING_AGENT_VERSION, changedCodingAgentVersion, codingAgentPageVersions, parseCodingAgents } from '../../lib/aa-coding-agents.mjs';
 import { parseOpenRouterPage, parseOpenRouterCache, parseOpenRouterRankings } from '../../lib/openrouter-efficiency.mjs';
 import { parseChutesUsage } from '../../lib/chutes-efficiency.mjs';
@@ -197,6 +197,14 @@ async function verifyAa(rawDir, src, runStart, rows, report) {
   }
   const metadata = parseArtificialAnalysisMetadata(lbReceipt.body);
   const priorSnapshot = await baseline(src, 'artificialanalysis.json');
+  // CR-634: the staged snapshot names the index version it was collected under: the captured page's own pinned
+  // statement, or (page without a clean statement) the version of the snapshot this run started from.
+  const pageVersion = pinnedAaIndexVersion(aaIndexPageVersions(lbReceipt.body));
+  if (snapshotIndexMajor(staged) !== AA_INDEX_PINNED_MAJOR) fail(`aa staged index_version ${staged.index_version ?? 'missing'} is not v${AA_INDEX_PINNED_MAJOR}.x`);
+  eq(staged.index_version, pageVersion ?? priorSnapshot.index_version, 'aa index_version (captured leaderboard statement)');
+  if (snapshotIndexMajor(priorSnapshot) !== AA_INDEX_PINNED_MAJOR) {
+    try { assertAdoptionCoverage(staged.models, 'aa adoption'); } catch (error) { fail(error.message); }
+  }
   const prior = new Map(priorSnapshot.models.map((m) => [m.id, m]));
   const byId = new Map(apiModels.map((m, i) => [m?.id, { model: m, index: i }]));
   let retained = 0;
@@ -469,7 +477,9 @@ function aaCarrierExtracts(html) {
 async function verifyAaEfficiency(rawDir, src, runStart, rows) {
   const staged = JSON.parse(await readFile(join(rawDir, 'aa-efficiency.json'), 'utf8'));
   const receipt = src.requireGet(staged.source_url, 'aa efficiency model page');
-  const derived = parseAaEfficiency(receipt.body, { previous: { count: staged.count }, attempts: [], sourceUrl: staged.source_url, fetchedAt: receipt.fetched_at });
+  const derived = parseAaEfficiency(receipt.body, { previous: { count: staged.count, index_version: staged.index_version }, attempts: [], sourceUrl: staged.source_url, fetchedAt: receipt.fetched_at });
+  // CR-634: the token counts belong to the index version the captured page states.
+  eq(staged.index_version, derived.index_version, 'aa-efficiency index version');
   eq(staged.collected_at, receipt.fetched_at, 'aa-efficiency source capture timestamp');
   eq(staged.rows, derived.rows, 'aa-efficiency rows');
   eq(staged.coverage, derived.coverage, 'aa-efficiency coverage');

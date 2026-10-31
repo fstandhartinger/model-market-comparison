@@ -51,6 +51,13 @@ export function scoreTip(score: ScoreKey): React.ReactNode {
   if (score === "aa_agentic_index") {
     return <>The Artificial Analysis Agentic Index: a composite of agentic evaluations, published as one value per model, measured on that model&apos;s primary configuration. Artificial Analysis does not expose it in its free API; we read it from OpenRouter&apos;s Benchmarks API, which relays Artificial Analysis rows (the relay is named as the source), and attach it to the model family&apos;s representative. Shown on Artificial Analysis&apos; scale exactly as reported. <AaCredit className="mt-1 block text-gray-400" /></>;
   }
+  // CR-634: AA moved to Intelligence Index v5.0 on 2026-10-28 and has rescored only part of the catalog so far.
+  if (score === "aa_intelligence_index") {
+    return <>The Artificial Analysis Intelligence Index v5.0, shown on their scale exactly as reported where Artificial Analysis has measured the model. For models it has not rescored yet, we show an <b>estimate from the model&apos;s v4.x score</b>, marked <i>est.</i>: a monotone fit over the models Artificial Analysis measured on both versions maps the v4.x score to the v5.0 scale (typical error about ±3 points). An estimate is never shown as a measurement and is replaced as soon as Artificial Analysis publishes the v5.0 value. <AaCredit className="mt-1 block text-gray-400" /></>;
+  }
+  if (score === "aa_coding_index") {
+    return <>The Artificial Analysis Coding Index. Artificial Analysis withdrew it with Intelligence Index v5.0 (28 Oct 2026); we keep each model&apos;s last v4.x value with that snapshot&apos;s date, frozen. Models released since then have none. <AaCredit className="mt-1 block text-gray-400" /></>;
+  }
   if (score === "epoch_eci" || score === "epoch_eci_software") {
     return <>An Epoch AI Capabilities Index. General ECI is copied from Epoch’s published model scores; Software Engineering ECI is refit from Epoch’s published software-benchmark performance and difficulty exports, requiring at least two benchmarks. Epoch publishes the index on a 100–170-ish capability scale; the Composite percentile-normalizes it. Source and date are shown below the table. <EpochCredit className="mt-1 block text-gray-400" /></>;
   }

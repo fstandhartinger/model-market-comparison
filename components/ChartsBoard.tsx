@@ -46,7 +46,7 @@ const BAR_FILL = "rgb(var(--accent))";
  *  spread is the point, which two average bars hid. Missing values are not drawn. */
 /** CR-211: `incomplete[i]` holds the "N/7" of a value from a Main Composite with fewer than 7 of 7 inputs (null when
  *  complete) — CR-213: drawn half-filled at 4/7–6/7, hollow and dashed at 3/7 or fewer. */
-function DotStrip({ label, groups, format, log, composite = false }: { label: string; groups: { name: string; values: number[]; incomplete?: (string | null)[]; pointLabels?: string[] }[]; format: (v: number) => string; log?: boolean; composite?: boolean }) {
+function DotStrip({ label, groups, format, log, composite = false }: { label: string; groups: { name: string; values: number[]; incomplete?: (string | null)[]; pointLabels?: string[]; estimated?: boolean[] }[]; format: (v: number) => string; log?: boolean; composite?: boolean }) {
   const usable = (v: number) => Number.isFinite(v) && (!log || v > 0);
   const all = groups.flatMap((g) => g.values).filter(usable);
   if (!all.length) return <p className="mb-4 text-xs text-gray-500">{label}: no values in view.</p>;
@@ -58,18 +58,19 @@ function DotStrip({ label, groups, format, log, composite = false }: { label: st
     <div className="mb-5">
       <div className="mb-1 flex justify-between gap-2 text-[11px] text-gray-500"><span>{label}</span><span className="tabular">{format(lo)} – {format(hi)}{log ? " · log scale" : ""}</span></div>
       {groups.map((g) => {
-        const marks = g.values.map((v, i) => ({ v, thin: g.incomplete?.[i] ?? null, pointLabel: g.pointLabels?.[i] })).filter((d) => usable(d.v));
+        const marks = g.values.map((v, i) => ({ v, thin: g.incomplete?.[i] ?? null, pointLabel: g.pointLabels?.[i], est: g.estimated?.[i] ?? false })).filter((d) => usable(d.v));
+        const est = marks.filter((d) => d.est).length;
         const vals = marks.map((d) => d.v);
         const thin = marks.filter((d) => d.thin).length;
         const mean = vals.length ? vals.reduce((a, b) => a + b, 0) / vals.length : null;
         return (
           <div key={g.name} className="grid grid-cols-[5rem_1fr] items-center gap-2 pt-4">
             <span className="text-xs text-gray-400">{g.name} <span className="text-gray-600">({vals.length})</span></span>
-            <div className="relative h-6 rounded bg-line/40" role="img" aria-label={`${g.name}: ${counted(vals.length, "model")}${thin ? `, ${thin} with an incomplete Composite (fewer than 7 of 7 inputs), drawn half-filled or hollow` : ""}${mean != null ? `, mean ${format(mean)}` : ", no values"}`}>
-              {marks.map((d, i) => <span key={i} className={`absolute top-1/2 h-2 w-2 -translate-x-1/2 -translate-y-1/2 rounded-full ${d.thin ? "border" : "bg-accent/50"}`} data-incomplete-composite={d.thin || undefined} data-composite-marker={d.thin ? coverageMarker(d.thin) : undefined} title={`${d.pointLabel ? `${d.pointLabel} · ` : ""}${format(d.v)}${d.thin ? " · incomplete Composite" : composite ? " · Composite inputs 7/7" : ""}`} style={{ left: `${pos(d.v)}%`, ...(d.thin ? compositeBarStyle(d.thin, "rgb(var(--accent))") : {}) }} />)}
+            <div className="relative h-6 rounded bg-line/40" role="img" aria-label={`${g.name}: ${counted(vals.length, "model")}${thin ? `, ${thin} with an incomplete Composite (fewer than 7 of 7 inputs), drawn half-filled or hollow` : ""}${est ? `, ${est} estimated from v4 (not measured), drawn as rings` : ""}${mean != null ? `, mean ${format(mean)}` : ", no values"}`}>
+              {marks.map((d, i) => <span key={i} className={`absolute top-1/2 h-2 w-2 -translate-x-1/2 -translate-y-1/2 rounded-full ${d.thin ? "border" : d.est ? "border border-amber-300/80" : "bg-accent/50"}`} data-aa-estimate={d.est || undefined} data-incomplete-composite={d.thin || undefined} data-composite-marker={d.thin ? coverageMarker(d.thin) : undefined} title={`${d.pointLabel ? `${d.pointLabel} · ` : ""}${format(d.v)}${d.thin ? " · incomplete Composite" : composite ? " · Composite inputs 7/7" : ""}`} style={{ left: `${pos(d.v)}%`, ...(d.thin ? compositeBarStyle(d.thin, "rgb(var(--accent))") : {}) }} />)}
               {mean != null && <>
                 <span className="absolute top-0 h-6 w-0.5 -translate-x-1/2 bg-gray-400" style={{ left: `${pos(mean)}%` }} />
-                <span className="absolute -top-4 -translate-x-1/2 whitespace-nowrap text-[10px] tabular text-gray-400" style={{ left: `${clamp(pos(mean))}%` }}>mean {format(mean)}</span>
+                <span className="absolute -top-4 -translate-x-1/2 whitespace-nowrap text-[10px] tabular text-gray-400" style={{ left: `${clamp(pos(mean))}%` }}>mean {format(mean)}{est ? ` (${est} est.)` : ""}</span>
               </>}
             </div>
           </div>
@@ -193,7 +194,8 @@ export function ChartsBoard({ data }: { data: ClientData }) {
 
   const leaderboard = useMemo(() =>
     [...scoredShown].sort((a, b) => (b.sc as number) - (a.sc as number)).slice(0, 18)
-      .map((x) => ({ name: collapsedName(x.m, s.collapse, preferredId), value: x.sc as number, org: x.m.org, coverage: compositeCoverageLabel(x.m, score) })),
+      // CR-634: an AA Intelligence value estimated from v4 carries "(est.)" in its label, so the axis, tooltip and mobile bars say so.
+      .map((x) => ({ name: `${collapsedName(x.m, s.collapse, preferredId)}${score === "aa_intelligence_index" && x.m.aa_intelligence_estimate ? " (est.)" : ""}`, value: x.sc as number, org: x.m.org, coverage: compositeCoverageLabel(x.m, score) })),
     [scoredShown, s.collapse, preferredId, score]);
   const leaderIncomplete = leaderboard.filter((d) => d.coverage).length;
 
@@ -216,7 +218,9 @@ export function ChartsBoard({ data }: { data: ClientData }) {
       const incomplete = scoredRows.map((x) => compositeCoverageLabel(x.m, score));
       const priced = arr.filter((x) => comparableTaskCost(x.price));
       const costSum = priced.reduce((a, x) => a + (x.price.value as number), 0);
-      const scoreRows = scoredRows.map((x) => ({ id: x.m.id, name: collapsedName(x.m, s.collapse, preferredId), value: x.sc as number, coverage: compositeCoverageLabel(x.m, score) }));
+      // CR-634 (critic r3 F5): an AA Intelligence value estimated from v4 is labelled on its point and counted in the summary.
+      const scoreRows = scoredRows.map((x) => ({ id: x.m.id, name: collapsedName(x.m, s.collapse, preferredId), value: x.sc as number, coverage: compositeCoverageLabel(x.m, score),
+        estimated: score === "aa_intelligence_index" && !!x.m.aa_intelligence_estimate }));
       return { name: k, scores, incomplete, scoreRows, costs: priced.map((x) => x.price.value as number), avgCost: priced.length ? costSum / priced.length : null, costSum, priced };
     });
   }, [pool, score, includeIncomplete, s.collapse, preferredId]);
@@ -303,7 +307,8 @@ export function ChartsBoard({ data }: { data: ClientData }) {
         <Panel id="open-vs-closed" title="Open weights vs closed">
           <IncompleteCompositeToggle score={score} hidden={scoreHidden} shown={stripIncomplete} className="-mt-2 mb-2" />
           <DotStrip label={SCORE_SHORT_LABELS[score]} format={(v) => v.toFixed(isElo ? 0 : 1)} composite={score === "composite"}
-            groups={openVsClosed.map((g) => ({ name: g.name, values: g.scores, incomplete: g.incomplete, pointLabels: g.scoreRows.map((r) => `${r.name}${r.coverage ? ` · ${r.coverage}` : ""}`) }))} />
+            groups={openVsClosed.map((g) => ({ name: g.name, values: g.scores, incomplete: g.incomplete, estimated: g.scoreRows.map((r) => r.estimated),
+              pointLabels: g.scoreRows.map((r) => `${r.name}${r.coverage ? ` · ${r.coverage}` : ""}${r.estimated ? " · estimated from v4, not measured" : ""}`) }))} />
           {score === "composite" && includeIncomplete && stripIncomplete > 0 && <details className="mb-4 text-xs" data-bh-composite-strip-labels>
             <summary className="cursor-pointer text-gray-400">Composite points by model, with each input count</summary>
             <div className="mt-2 grid gap-4 sm:grid-cols-2">

@@ -13,7 +13,7 @@ const [page, value, offers, compare] = await Promise.all([
 ]);
 
 test('CR-139.4: the model page uses exact evidence to qualify the score', () => {
-  assert.match(page, /import \{ clientData, hasScoreEvidence, isThinComposite, thinCompositeNote \} from "\.\.\/\.\.\/\.\.\/lib\/client-model";/);
+  assert.match(page, /import \{ (?:aaEstimateNote, )?clientData, hasScoreEvidence, isThinComposite, thinCompositeNote \} from "\.\.\/\.\.\/\.\.\/lib\/client-model";/);
   assert.match(page, /const compositeEligible = hasScoreEvidence\(clientModel, "composite"\);/);
 });
 

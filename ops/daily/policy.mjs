@@ -7,15 +7,16 @@
 // never to "everything is fine".
 
 import { unreviewedFacts } from '../../lib/source-quarantine.mjs';
+import { MIN_INDEX } from '../rebuild-2026-09/bin/worker-policy.mjs';
 
 // --- Tunables (master brief §6 + phase 08 contract) ------------------------
 export const TOP_N = 5; // Composite top-N family watchlist
-export const NOTABLE_AA_INDEX = 55; // "meaningful new major model": AA index >= 55 ...
+export const NOTABLE_AA_INDEX = 53; // "meaningful new major model": AA index >= 53 (v5.0 scale; was 55 on v4.x, CR-634) ...
 export const DIVERGENCE_ALERT_PP = 10; // ... or new exact divergence >= 10 percentage points
 export const FAILURE_ALERT_INTERVAL_MS = 7 * 24 * 60 * 60 * 1000; // failure alert at most once / 7d
 export const ESCALATION_THRESHOLD = 3; // consecutive failures before an escalation request
 export const MAX_WORKER_USD_PER_MTOK = 4; // daily workers: <= $4 per million prompt AND completion
-export const MIN_WORKER_AA_INDEX = 34; // hard gate, same as worker-policy.mjs
+export const MIN_WORKER_AA_INDEX = MIN_INDEX; // hard gate, same as worker-policy.mjs (23 on the v5.0 scale, CR-634)
 export const COMMIT_TRAILER = 'Co-Authored-By: Codex GPT-6 Astra (Sandy rebuild) <noreply@openai.com>';
 // A daily commit may contain data, and only explicitly declared new source
 // evidence (refreshBenchmarks reports those paths). Nothing else. Ever.
@@ -324,12 +325,12 @@ export function planNotifications({
 
 // --- Cheap worker selection (producer + different-family critic) ------------
 // Input: parsed output of `node ops/rebuild-2026-09/bin/pick-worker-models.mjs --json`
-// (which already enforces the AA >= 34 gate against our own dataset). We
+// (which already enforces the AA >= MIN_INDEX gate (23 on v5.0) against our own dataset). We
 // defensively re-check the gate and additionally cap cost at <= $4 per million
 // prompt AND completion tokens. The critic must come from a different vendor
 // family than the producer. Astra (Codex) is never a daily worker.
 export function selectProducerCritic(catalog, { maxUsdPerMtok = MAX_WORKER_USD_PER_MTOK, minAa = MIN_WORKER_AA_INDEX, freeRouteRole = 'critic' } = {}) {
-  if (!Number.isFinite(minAa) || minAa < 34 || !Number.isFinite(maxUsdPerMtok) || maxUsdPerMtok <= 0 || maxUsdPerMtok > MAX_WORKER_USD_PER_MTOK) throw new Error('Invalid daily worker qualification/cost limits');
+  if (!Number.isFinite(minAa) || minAa < MIN_INDEX || !Number.isFinite(maxUsdPerMtok) || maxUsdPerMtok <= 0 || maxUsdPerMtok > MAX_WORKER_USD_PER_MTOK) throw new Error('Invalid daily worker qualification/cost limits');
   if (!catalog || typeof catalog !== 'object') throw new Error('worker catalog missing');
   // CR-66.3: qualified free router workers (health order) come before the OpenRouter pool; paid models stay the fallback.
   const free = catalog.free_router ?? [];
@@ -364,7 +365,7 @@ export const DAILY_SCOPES = ['full', 'prices'];
 export const DAILY_FRESH_SOURCES = ['artificialanalysis', 'designarena', 'openrouter', 'aa_coding_agents_v2_0', 'aa_efficiency', 'openrouter_efficiency', 'chutes_efficiency', 'epoch_eci'];
 export const PRICES_SCOPE_FRESH_SOURCES = ['openrouter'];
 // Raw files a prices run must never change: benchmark results, benchmark-derived snapshots and efficiency observations.
-export const PRICES_SCOPE_FORBIDDEN = [/^data\/raw\/benchmarks\//, /^data\/raw\/(artificialanalysis|designarena|epoch-eci|epoch-hub-provenance|openrouter-benchmarks|lumina-ledger)\.json$/,
+export const PRICES_SCOPE_FORBIDDEN = [/^data\/raw\/benchmarks\//, /^data\/raw\/(artificialanalysis(?:-v4)?|designarena|epoch-eci|epoch-hub-provenance|openrouter-benchmarks|lumina-ledger)\.json$/,
   /^data\/raw\/aa-/, /^data\/raw\/[a-z-]*efficiency\.json$/];
 
 export function parseScope(value = 'full') {

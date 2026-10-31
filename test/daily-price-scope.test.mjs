@@ -33,7 +33,7 @@ test('CR-66.7: a prices run needs today\'s OpenRouter and leaves every benchmark
 test('CR-66.7: a prices run may publish price files only', () => {
   assert.deepEqual(pricesScopeViolations(['data/dataset.json', 'data/raw/openrouter.json', 'data/raw/chutes.json', 'data/raw/aws-bedrock.json', 'data/raw/openrouter-data-policy.json']), []);
   const forbidden = ['data/raw/benchmarks/scores.json', 'data/raw/artificialanalysis.json', 'data/raw/designarena.json', 'data/raw/epoch-eci.json',
-    'data/raw/aa-efficiency.json', 'data/raw/aa-coding-agents-v1.5.json', 'data/raw/aa-coding-agents-v2.0.json', 'data/raw/openrouter-efficiency.json', 'data/raw/chutes-efficiency.json', 'data/raw/openrouter-benchmarks.json', 'data/raw/lumina-ledger.json'];
+    'data/raw/aa-efficiency.json', 'data/raw/artificialanalysis-v4.json', 'data/raw/aa-efficiency-v4.json', 'data/raw/aa-coding-agents-v1.5.json', 'data/raw/aa-coding-agents-v2.0.json', 'data/raw/openrouter-efficiency.json', 'data/raw/chutes-efficiency.json', 'data/raw/openrouter-benchmarks.json', 'data/raw/lumina-ledger.json'];
   assert.deepEqual(pricesScopeViolations(forbidden), forbidden);
 });
 
@@ -48,6 +48,9 @@ test('CR-66.7: runDaily --scope prices collects OpenRouter without efficiency an
       'data/dataset.json': JSON.stringify({ models: [], sources: {}, benchmark_results: { divergences: [] } }),
       'data/raw/aa-coding-agents.json': JSON.stringify({ version: '1.4', fixture: true }),
       'data/raw/aa-coding-agents-v1.5.json': JSON.stringify({ version: '1.5', fixture: true }),
+      // CR-634: the frozen AA v4.x snapshot and its token efficiency are hashed at the start of every run.
+      'data/raw/artificialanalysis-v4.json': JSON.stringify({ index: '4.x', fixture: true }),
+      'data/raw/aa-efficiency-v4.json': JSON.stringify({ index: '4.x', fixture: true }),
       'data/raw/openrouter.json': JSON.stringify({ withdrawal_run: null }),
       'ops/rebuild-2026-09/bin/pick-worker-models.mjs': `throw new Error('a prices run must not select workers');`,
       'scripts/fetch-live.mjs': `import {appendFileSync} from 'node:fs';appendFileSync('fetch-live-args.txt', process.argv.slice(2).join(' ') + '\\n');`,

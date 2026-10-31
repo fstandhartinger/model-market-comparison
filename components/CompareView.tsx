@@ -1,7 +1,7 @@
 "use client";
 import { useMemo, useState } from "react";
 import Link from "next/link";
-import { hasScoreEvidence, type ClientData, type ClientModel } from "../lib/client-model";
+import { aaEstimateNote, hasScoreEvidence, type ClientData, type ClientModel } from "../lib/client-model";
 import { scoreLabel, scoreVersion } from "../lib/score-label";
 import type { ScoreKey } from "../lib/types";
 import { num, orgColor } from "../lib/format";
@@ -100,7 +100,7 @@ export function CompareView({ data }: { data: ClientData }) {
                   <tr key={m.id} onClick={() => pick(m.id)} className={`cursor-pointer ${slot ? "bg-accent/15" : ""}`}>
                     <td className="px-2 py-2">{slot && <span className={`rounded px-1.5 py-0.5 text-[10px] font-bold ${slot === "A" ? "bg-accent text-black" : "bg-accent2 text-black"}`}>{slot}</span>}</td>
                     <td className="px-3 py-2 truncate"><span className="inline-block h-2 w-2 rounded-full" style={{ background: orgColor(m.org) }} /> <button type="button" aria-pressed={!!slot} aria-label={`Select ${m.display_name} for comparison`} className="inline-block max-w-[85%] truncate align-middle text-left font-medium focus-visible:outline focus-visible:outline-accent" onClick={(event) => { event.stopPropagation(); pick(m.id); }}>{m.display_name}</button>{m.open_weights && <span className="ml-1 text-[10px] text-accent2">open</span>}{retired.has(m.family_key) && <span className="ml-1 text-[10px] text-amber-300">deprecated</span>}</td>
-                    <td className="px-3 py-2">{sc != null ? <DataBar frac={sc / maxScore} color={orgColor(m.org)} align="right"><span className="block text-right font-semibold">{num(sc, s.score.startsWith("designarena") ? 0 : 1)}</span></DataBar> : <span className="block text-right text-gray-600">—</span>}</td>
+                    <td className="px-3 py-2">{sc != null ? <DataBar frac={sc / maxScore} color={orgColor(m.org)} align="right"><span className="block text-right font-semibold">{num(sc, s.score.startsWith("designarena") ? 0 : 1)}{s.score === "aa_intelligence_index" && m.aa_intelligence_estimate && <span className="ml-1 text-[10px] font-normal text-amber-300/90" title={aaEstimateNote(m.aa_intelligence_estimate)} data-aa-estimate="true">est.<span className="sr-only"> {aaEstimateNote(m.aa_intelligence_estimate)}</span></span>}</span></DataBar> : <span className="block text-right text-gray-600">—</span>}</td>
                   </tr>
                 );
               })}
@@ -153,6 +153,8 @@ export function CompareView({ data }: { data: ClientData }) {
                             <div className="flex items-baseline justify-between">
                               <span className={`text-2xl font-bold tabular ${win ? "text-accent2" : "text-gray-200"}`}>
                                 {mt.key === "cost" ? (price ? <PriceValue price={price} /> : "—") : (v == null ? "—" : num(v, mt.digits ?? 1))}
+                                {/* CR-634: an AA Intelligence value estimated from v4 is never shown as a measurement. */}
+                                {v != null && mt.key === "aa_intelligence_index" && (slot === "A" ? A : B)?.aa_intelligence_estimate && <span className="ml-1 align-middle text-[10px] font-normal text-amber-300/90" title={aaEstimateNote((slot === "A" ? A : B)!.aa_intelligence_estimate!)} data-aa-estimate="true">est.</span>}
                               </span>
                               {win && <span className="text-[10px] font-bold text-accent2">★ better</span>}
                             </div>
