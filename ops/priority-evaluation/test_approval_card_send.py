@@ -171,7 +171,8 @@ class ApprovalCardSend(unittest.TestCase):
         # notify's inbox freshness gate is not under test (the caller's inbox decides it, not the card text);
         # NOTIFY_OUTBOX_REPLAY skips only that gate, every card lint still runs.
         env = {**os.environ, 'NOTIFY_SOURCE': 'approval-card-test', 'AGENT_BOARD_NAME': 'approval-card-test',
-               'NOTIFY_OUTBOX_REPLAY': '1', **ra.CALLER_BUTTONS_ENV}
+               'NOTIFY_OUTBOX_REPLAY': '1', 'NOTIFY_QUIET_BYPASS': '1',  # Florian's quiet mode is not under test
+               **ra.CALLER_BUTTONS_ENV}
         for text, strict in captions:
             with self.subTest(caption=text.splitlines()[1]):
                 result = subprocess.run([str(NOTIFY), 'now', '--florian-only', 'approval card regression test',
