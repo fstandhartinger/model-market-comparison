@@ -24,7 +24,7 @@ test('method label is per release and preserves v1.7 byte-for-byte',()=>{
 });
 test('processed tokens retain both Piccolo reads, expanded allec forwards and server Cribl usage',()=>{
  const u=JSON.parse(readFileSync('r198/v183/src/usage.json'));
- assert.equal(u['piccolo-27b'].input_tokens_all,1064693);assert.equal(u['allec-oavg'].input_tokens_all,739884);assert.equal(u['cribl-decision-1.0-9b'].input_tokens_all,853860);
+ assert.equal(u['piccolo-27b'].input_tokens_all,1064693);assert.equal(u['allec-oavg'].input_tokens_all,739884);assert.equal(u['cribl-decision-1.0-9b'].input_tokens_all,853860);assert.equal(u['cribl-decision-1.0-27b'].input_tokens_all,853860);
 });
 
 test('d1027 pins its exact release history and latest release',()=>{

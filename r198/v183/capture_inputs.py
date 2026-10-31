@@ -1,8 +1,8 @@
 """Copy aggregate-only scorer artifacts. No sealed records or item data exported."""
 import pathlib,json,hashlib
-J=pathlib.Path(__file__).resolve().parent;S=pathlib.Path('/home/flori/jobs/jevbench-add-requests-20260919/workers/r202-v183-build4/score')
+J=pathlib.Path(__file__).resolve().parent;S=pathlib.Path('/home/flori/jobs/jevbench-add-requests-20260919/workers/r202-v183-cribl27/score')
 L=lambda p:json.loads(p.read_text());sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest();put=lambda p,x:p.write_text(json.dumps(x,indent=1,sort_keys=True,ensure_ascii=False)+'\n')
-sc={};cells={};reg=L(S/'REGISTRY.json');usage=L(J/'src/usage.json')
+sc=L(J/'src/scored.json');cells=L(J/'src/cells.json');reg=L(S/'REGISTRY.json');usage=L(J/'src/usage.json')
 for mode in ['frozen','v17-off','v17-share']:
  p=S/f'out-{mode}/jevbench-v1.6.0-results.json';d=L(p);assert d['G_med']==2.573387642438244 and d['bootstrap']['B']==1000 and d['bootstrap']['bootstrap_seed']==16
  for r in d['systems']:

@@ -15,6 +15,22 @@
   ],
   "note": "Single decoder backbone; text-only measurement."
  },
+ "cribl-decision-1.0-27b": {
+  "arch": "open-llm-decoder",
+  "badges": {
+   "derivation": "adapter",
+   "params": "27B",
+   "quant": "BF16"
+  },
+  "evidence": [
+   {
+    "fact": "The card declares Qwen/Qwen3.5-27B as the decoder backbone with a native probability readout.",
+    "kind": "model-card",
+    "url": "https://huggingface.co/cribl-ai/cribl-decision-1.0-27B/blob/8fbb5af4e717ae499bc0edebc851f9bd99b9bf04/README.md"
+   }
+  ],
+  "note": "Single decoder backbone; text-only measurement."
+ },
  "cribl-decision-1.0-9b": {
   "arch": "open-llm-decoder",
   "badges": {
