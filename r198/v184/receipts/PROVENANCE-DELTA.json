@@ -1,0 +1,46 @@
+{
+ "after_hashes": {
+  "data/raw/benchmarks/jevbench/v1.8/jevbench-v1.8.4-carry.json": "271d1fc77a136a04a1eb6deb5480c52d4211eb2b66b2ac8bb31e80867e69003a",
+  "data/raw/benchmarks/jevbench/v1.8/jevbench-v1.8.4-categories.json": "95b2cb9e2a23ac85b220d92e68f342a398cd166d628775bfedce607959920dc0",
+  "data/raw/benchmarks/jevbench/v1.8/jevbench-v1.8.4-history-carry.json": "f4d8ddfae4ac3b2741ca7cfdaa930b2afc1d9be612f4e6683a230aa23834e2ba",
+  "data/raw/benchmarks/jevbench/v1.8/jevbench-v1.8.4-history.json": "d5e91333d6acefef1506f2a6ce23f71220ac1eeac9ce2d4e817c88a0a979a38b",
+  "data/raw/benchmarks/jevbench/v1.8/jevbench-v1.8.4-proof.json": "59d424f32711a12acc7225297ed502066bcf19d621ed387318002046aa8aedc7",
+  "data/raw/benchmarks/jevbench/v1.8/jevbench-v1.8.4-publication.json": "2be0f02d49afa8aec769f78dec7eb0fe53b5871f81f34976ebc566271ca9a9f7",
+  "data/raw/benchmarks/jevbench/v1.8/jevbench-v1.8.4-results.json": "6935094cf9338029d87d34650782be6034eca38d465b3637db8e26d855858495",
+  "lib/jevbench-v184-release.mjs": "d4add9c943f302291cd8edb6062edddc1b4b7729d4fb57f97029bae1c8dd7a96"
+ },
+ "before_hashes": {
+  "data/raw/benchmarks/jevbench/v1.8/jevbench-v1.8.4-carry.json": "271d1fc77a136a04a1eb6deb5480c52d4211eb2b66b2ac8bb31e80867e69003a",
+  "data/raw/benchmarks/jevbench/v1.8/jevbench-v1.8.4-categories.json": "95b2cb9e2a23ac85b220d92e68f342a398cd166d628775bfedce607959920dc0",
+  "data/raw/benchmarks/jevbench/v1.8/jevbench-v1.8.4-history-carry.json": "f4d8ddfae4ac3b2741ca7cfdaa930b2afc1d9be612f4e6683a230aa23834e2ba",
+  "data/raw/benchmarks/jevbench/v1.8/jevbench-v1.8.4-history.json": "d5e91333d6acefef1506f2a6ce23f71220ac1eeac9ce2d4e817c88a0a979a38b",
+  "data/raw/benchmarks/jevbench/v1.8/jevbench-v1.8.4-proof.json": "8a1a71d2613b95d07c76bcac1b75eed02ba84b877c0838312ec4588e9a6a7335",
+  "data/raw/benchmarks/jevbench/v1.8/jevbench-v1.8.4-publication.json": "7ef1711339e4f089a3ca158081f16b9ba9d7bfcc5162976fd4da2552d8d1571e",
+  "data/raw/benchmarks/jevbench/v1.8/jevbench-v1.8.4-results.json": "6935094cf9338029d87d34650782be6034eca38d465b3637db8e26d855858495",
+  "lib/jevbench-v184-release.mjs": "b3a6c0cd574334122458f3dcf6f2b99ca4a7a7a74f751c8e4bacdfb9e7cfc405"
+ },
+ "changed_paths": [
+  "data/raw/benchmarks/jevbench/v1.8/jevbench-v1.8.4-proof.json",
+  "data/raw/benchmarks/jevbench/v1.8/jevbench-v1.8.4-publication.json",
+  "lib/jevbench-v184-release.mjs"
+ ],
+ "followup_checks": "Final bundle validator, raw/source/prose/pin/helper checks and independent delta review; no rescore or main test restart.",
+ "original_archive": "/home/flori/jobs/jevbench-auto-intake/runs/20261031-evening/entries-granite8b/before-owner-cost-disposition/ENTRIES-GRANITE8B.json",
+ "original_sha256": "fac162224095e877ec218739fd6088c339b387d477349a638b6c6bbbcc0c039f",
+ "proof_changed_fields": [
+  "source_inputs.inputs/ENTRY-PINS.json",
+  "source_inputs.inputs/ENTRY-COST-SUPPLEMENT.json",
+  "source_inputs.inputs/ENTRY-COST-DELTA.json"
+ ],
+ "reason": "Original accepted packet moved to immutable archive; one-field cost fallback supplement matches already-applied ruling. No scoring/public-row/numeric changes.",
+ "results_categories_carry_history_byte_equal": true,
+ "root_delta_receipt_sha256": "9a2870e1126453c3f6863bd34434e50ee1a6fc0104c328c35110610cf2d9e458",
+ "status": "PASS",
+ "supplement_exact_changed_path": "/granite-switch-4.1-8b/entry/cost_basis",
+ "supplement_sha256": "23ed7cf15e1ffd47e678c1076b0b0168df70f31678d6a11cf67b564156e94b40",
+ "supplement_source": "/home/flori/jobs/jevbench-auto-intake/runs/20261031-evening/entries-granite8b/ENTRIES-GRANITE8B.json",
+ "tested_before_delta": {
+  "extra_history_handle": "r10312108542447",
+  "heavy_handle": "r10312058334dio"
+ }
+}

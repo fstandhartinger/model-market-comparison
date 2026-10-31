@@ -1,0 +1,1380 @@
+{
+ "granite-switch-4.1-8b": {
+  "addendum": null,
+  "api_flag": false,
+  "api_subset": false,
+  "author": "IBM Granite (ibm-granite on Hugging Face)",
+  "axes": {
+   "calibration": 82.14288333020232,
+   "cost": 59.3855424393103,
+   "intelligence": 32.14815492798233,
+   "speed": 92.68935191738173
+  },
+  "calibration": {
+   "parts": {
+    "choice": {
+     "ece_hard": 0.09587259551964235,
+     "ece_score": 80.82548089607154,
+     "mean_tvd": null,
+     "n": 750,
+     "n_ece_hard": 354,
+     "n_tvd": 0,
+     "score": 80.39441166462582,
+     "score_before_time_limit": 80.82548089607154,
+     "time_limit_failed_share": 0.005333333333333333
+    },
+    "noul": {
+     "abstention_rate": 0.3813333333333333,
+     "brier": 0.15563119070052125,
+     "ece": 0.11982698252401655,
+     "n": 375,
+     "score": 75.83184455254282,
+     "score_before_time_limit": 76.03460349519668,
+     "time_limit_failed_share": 0.0026666666666666666
+    },
+    "score": {
+     "interval90_coverage": 0.984,
+     "interval90_width": 0.543777777777778,
+     "n": 375,
+     "nrps": 0.07920945976059542,
+     "score": 90.20239377343832,
+     "score_before_time_limit": 90.20239377343832,
+     "time_limit_failed_share": 0.0,
+     "top_ece": 0.058371332385319136
+    }
+   },
+   "score": 82.14288333020232
+  },
+  "capability": 57.14551912909233,
+  "composite_ci95": {
+   "A": [
+    17.84708066482101,
+    30.721588300052126
+   ],
+   "B": [
+    15.229143747712598,
+    27.30577244290635
+   ],
+   "C": [
+    12.393806017236813,
+    21.334436319480638
+   ]
+  },
+  "cost": {
+   "basis": "Sibling estimate (*est.): the declared measured base is ibm-granite/granite-4.1-8b; granite-4.2-8b is the sibling reference at USD 0.06 per million input tokens and USD 0.25 per million output tokens. This is not a listing or tariff for the measured base and not an author API quote. The frozen price catalog has no exact 4.1-8b listing. Native server usage includes every full-prompt chunk and every generated label-read token. On the frozen 1,489-decision common set: 554,274 input + 1,489 output tokens, yielding USD 0.0225847481531229 per 1,000 decisions. Across all 1,500 decisions: 818,484 input + 1,500 output tokens, yielding USD 0.03298936 per 1,000. Granite is outside the six calibrated Gemma/Qwen throughput classes; under the existing v1.8 method the sibling estimate is retained and the GPU-time component is unavailable. No cross-family throughput mapping, observed-loop extrapolation or pod bill is used. Estimated, not a bill. USD 0.0225847482 per 1,000 decisions on the frozen 1,489-item common set of this draw (USD 0.03298936 over all 1,500 items).",
+   "common_basis": {
+    "n_items": 1489,
+    "rule": "common",
+    "usd_per_1000_all_items": 0.03298936
+   },
+   "kind": "estimate",
+   "usage_estimated_rows": 0,
+   "usd_per_1000": 0.0225847481531229
+  },
+  "decision_limit": {
+   "limit_s": 10.0,
+   "n_over_limit": 5,
+   "n_over_limit_answered_ok": 5,
+   "rule": "latency_s > limit -> failed",
+   "speed_basis": "all decisions given (lane items in the raw), measured latency_s",
+   "speed_n": 1500,
+   "treatment": "share"
+  },
+  "disclosure": "Measured on the 27 Oct 2026 draw and shown unranked until that draw is equated to the reference scale. The composed checkpoint ibm-granite/granite-switch-4.1-8b@fb4aa7877e13e5fe09ca328713dc1db72a3f93ce identifies its decision adapter as revision 4.1.1. It ran with generative-computing/granite-switch@43ccd291a176507ae4ed5af293f8f2d947c0d451; no base-plus-adapter recomposition or direct PEFT substitute was used. The 27 October revision updated the decision adapter weights; archived Git/LFS metadata identifies the pinned 28 October HEAD change as README-only. This metadata is not tensor-level proof that every base tensor is unchanged. The source and tokenizer files were hash-verified before use. Upstream wheels were hash-locked, and Debian libgomp1 12.2.0-14+deb12u1 and libnuma1 2.0.16-1 were recorded. The plugin source was registered read-only without running author build scripts; composer and tutorial subtrees were excluded. Source checks and isolation are not an exhaustive audit of all upstream code or custom kernels. Training data and overlap with public or sealed evaluation data were not independently inspected; no contamination audit is claimed. The text-only composed decision recipe differs from the model card's public Decision Index system-prompt recipe, so its reported evaluation numbers are not transferred here. The semantic context limit is 131,072 tokens including the generated token; backend allocation had room for the measured draw and public envelope without lowering the semantic limit. Whole states and ordered options were preserved: no truncations or native refusals, 1,500/1,500 HTTP 200 responses, 818,484 input and 1,500 output tokens, zero usage mismatches and zero native-behavior deviations. No prompt permutation averaging, response repair or scored retry was used. REPLAY VARIABILITY: 7 of 50 repeat requests were bit-identical, with zero argmax flips and maximum absolute probability difference 0.0312263773757529. Exact probability reproducibility is not established and its cause was not independently diagnosed. Repeats were recorded only; no scored response was averaged, repaired or replaced. The public same-engine label re-extraction check was fixed before this measurement at a 5e-2 absolute ceiling, with exact label sets, own-winner consistency and an explicit near-tie allowance. This passed; it is not a cross-backend equivalence test or a post-score adjustment. Scored latency: p50 0.028615256 seconds, p95 0.054891614, p99 0.113791849 and maximum 10.999436637. Five decisions exceeded ten seconds; under the ten-second rule they count as wrong answers. Earlier setup, public parity and timing attempts stopped before any sealed input. This is the first completed use on this draw, with the declared backend selection, public repeat ceiling and typed-overhead corrections fixed beforehand. The measured base remains ibm-granite/granite-4.1-8b; its price uses the explicitly labelled granite-4.2-8b sibling estimate. Granite is outside the six calibrated Gemma/Qwen throughput classes, so the existing cost method keeps that estimate and supplies no GPU-time component.",
+  "display": "Granite Switch 4.1 8B (revision 4.1.1, decision adapter)",
+  "draw": {
+   "drawn_on": "2026-10-27",
+   "g_med": 2.573387642438244,
+   "id": "v1.6-regular-20261027",
+   "label": "Third regular draw",
+   "measured_on": "2026-10-31",
+   "offset": {
+    "C": 0,
+    "I": 0
+   },
+   "offset_ci95": null,
+   "release": "v1.8.4",
+   "results_sha256": "e69c78f27249688dd7dbe4082c305a00024d2f9dbff4f13de823b926c18deb6a",
+   "status": "anchor-runs-pending"
+  },
+  "endpoint_condition": "Measured 31 October 2026 on an evaluator-operated rented Verda GPU VM in FIN-03, Finland (EU), with one NVIDIA RTX PRO 6000 Blackwell Server Edition, nominal 96 GB, PAYG non-spot. The composed checkpoint and its pinned Granite Switch plugin ran in stock vLLM 0.30.0 with Torch 2.13.0+cu130, CUDA 13.0, Transformers 5.17.0, BF16, max-num-seqs=1, chunked prefill=2048 and gpu-memory-utilization=0.90. The local HTTP shim and backend communicated over loopback inside a read-only container with no external network and empty credentials. Only text and the decision adapter were evaluated; Guardian and speech-to-text were not evaluated. Audio limit zero and skip-mm-profiling prevented the optional ASR route from loading. The author Decision Index recipe uses a fixed system prompt; this measurement used no system prompt, followed by a State: user turn and a DECISION user turn containing the whole question, ordered option descriptions and an instruction to reply with one option label. Raw first-generated-position label logprobs, rather than the sampled answer token, determine the answer probabilities. Explicit label reads use chunks of at most 128 IDs over the same full prompt, joined by one stable global softmax. Every actual full prompt and generated label-read token is counted in usage. Native output is one generated token per actual call, not the tokenless convention. TRITON_ATTN was selected explicitly; FlashInfer sampling, all-reduce and autotune were disabled to avoid an unavailable nvcc path. This choice can change roundoff and performance relative to automatic backend selection; no cross-backend numerical equivalence is claimed. A local memory observer read CUDA allocator peaks without changing tensors or probabilities. Public typed, context-length and usage checks passed before the measurement, including the 255-label two-chunk route and the long wide-menu envelope. Public probes passed through 53,445 tokens; overflow at 131,073 tokens was refused. Peak reserved CUDA memory was 84.55078125 GiB of 94.97052001953125 GiB device memory; this is not a minimum-hardware guarantee. The 1,500-request loop took 103.27663707733154 seconds. Private inputs, outputs and logs on the rented VM and local staging were shredded, and provider deletion of the exact VM and its OS volume was verified. The retained raw copy has private permissions and the verified raw hash. The pod bill and elapsed loop time are separate from the estimated model price.",
+  "endpoint_kind": "gpu",
+  "full_coverage": true,
+  "intelligence": {
+   "I_open": 33.036515666086494,
+   "I_sealed": 31.259794189878168,
+   "base": 32.14815492798233,
+   "excess": -0.7966661662299175,
+   "gap": 1.7767214762083263,
+   "penalty": 1.0,
+   "per_type_split": {
+    "open|choice": {
+     "cc": 59.7961197292332,
+     "n": {
+      "easy": 33,
+      "hard": 68,
+      "judge": 32,
+      "standard": 17
+     },
+     "tiers": {
+      "easy": 68.86486486486487,
+      "hard": 49.040578798364265,
+      "judge": 64.40342781806197,
+      "standard": 69.8618668899121
+     }
+    },
+    "open|noul": {
+     "cc": 0.0,
+     "n": {
+      "easy": 14,
+      "hard": 23,
+      "judge": 20,
+      "standard": 18
+     },
+     "tiers": {
+      "easy": 42.85714285714286,
+      "hard": -21.739130434782606,
+      "judge": -9.999999999999998,
+      "standard": -11.111111111111116
+     }
+    },
+    "open|score": {
+     "cc": 39.31342726902629,
+     "n": {
+      "easy": 9,
+      "hard": 29,
+      "judge": 21,
+      "standard": 16
+     },
+     "tiers": {
+      "easy": 62.703186579966896,
+      "hard": 33.12862000535088,
+      "judge": 40.20404799484953,
+      "standard": 38.65223105217195
+     }
+    },
+    "sealed|choice": {
+     "cc": 52.596050020665324,
+     "n": {
+      "easy": 73,
+      "hard": 286,
+      "judge": 135,
+      "standard": 106
+     },
+     "tiers": {
+      "easy": 82.31247952833279,
+      "hard": 35.822945277836475,
+      "judge": 63.7618636755824,
+      "standard": 54.53532427011368
+     }
+    },
+    "sealed|noul": {
+     "cc": 0.0,
+     "n": {
+      "easy": 87,
+      "hard": 82,
+      "judge": 45,
+      "standard": 86
+     },
+     "tiers": {
+      "easy": 44.827586206896555,
+      "hard": -24.390243902439025,
+      "judge": 2.2222222222222143,
+      "standard": 18.60465116279071
+     }
+    },
+    "sealed|score": {
+     "cc": 41.18333254896919,
+     "n": {
+      "easy": 68,
+      "hard": 112,
+      "judge": 56,
+      "standard": 64
+     },
+     "tiers": {
+      "easy": 76.33189519459678,
+      "hard": 22.758435685267,
+      "judge": 46.358598114670905,
+      "standard": 52.69594660500721
+     }
+    }
+   }
+  },
+  "jevbench_score": 23.320533304023172,
+  "key": "granite-switch-4.1-8b",
+  "last_measured_on": "2026-10-31",
+  "licence": "Apache-2.0 (model card and Granite Switch source LICENSE; no standalone Hugging Face LICENSE file)",
+  "listing": "unranked",
+  "measured_in": "v1.8.4",
+  "measurement_date_status": "measured",
+  "method": "v1.7",
+  "model_pin": "ibm-granite/granite-switch-4.1-8b@fb4aa7877e13e5fe09ca328713dc1db72a3f93ce",
+  "new_in": "v1.8.4",
+  "not_ranked_because": "Measured on the 27 Oct 2026 draw, which is not yet equated to the reference scale; stronger anchor runs for that draw are being measured. Shown unranked until then.",
+  "noul_decisive": {
+   "acc_among_decisive": 0.8793103448275862,
+   "decisive": 232,
+   "decisive_rate": 0.6186666666666667,
+   "n": 375,
+   "supported": true,
+   "valid": 375
+  },
+  "paid_fast_lane": false,
+  "planned_weight_denominator": 1.0,
+  "rank": null,
+  "ranked": false,
+  "ranks": {
+   "A": null,
+   "B": null,
+   "C": null,
+   "capability": null
+  },
+  "repo": "https://huggingface.co/ibm-granite/granite-switch-4.1-8b",
+  "scores": {
+   "A": 23.320533304023172,
+   "B": 20.26205647597901,
+   "C": 16.194814794460537
+  },
+  "speed": {
+   "adjustment": "Self-hosted latency estimate under the shared method (assumption, not measured)",
+   "basis": "all decisions given (lane items in the raw), measured latency_s",
+   "n": 1500,
+   "p50_s_adjusted": 0.20723051200004647,
+   "p50_s_raw": 0.028615256000023237,
+   "p95_s_adjusted": 0.259783227600019,
+   "p95_s_raw": 0.0548916138000095
+  },
+  "status": {
+   "answered_ok": 1500,
+   "missing": 0,
+   "rows": 1500,
+   "status": "complete"
+  },
+  "support": {
+   "choice": "native",
+   "noul": "native",
+   "score": "native"
+  },
+  "v16": {
+   "api_subset": false,
+   "api_subset_tag": null,
+   "breakdowns": {
+    "family": {
+     "calibration": {
+      "accuracy": 0.25,
+      "cc": 0.0,
+      "cc_by_type": {
+       "choice": 100.0,
+       "noul": -100.0
+      },
+      "low_n": true,
+      "n": 4,
+      "n_by_type": {
+       "choice": 1,
+       "noul": 3
+      },
+      "score": 0.0
+     },
+     "calibration_gen": {
+      "accuracy": 0.35714285714285715,
+      "cc": 3.665108171513623,
+      "cc_by_type": {
+       "choice": 22.077922077922082,
+       "noul": 0.0,
+       "score": -11.082597563381213
+      },
+      "low_n": true,
+      "n": 14,
+      "n_by_type": {
+       "choice": 5,
+       "noul": 2,
+       "score": 7
+      },
+      "score": 3.665108171513623
+     },
+     "composite_gen": {
+      "accuracy": 0.47368421052631576,
+      "cc": 4.323034492747141,
+      "cc_by_type": {
+       "choice": 46.666666666666664,
+       "noul": -60.0,
+       "score": 26.302436811574758
+      },
+      "low_n": true,
+      "n": 19,
+      "n_by_type": {
+       "choice": 5,
+       "noul": 5,
+       "score": 9
+      },
+      "score": 4.323034492747141
+     },
+     "fairness": {
+      "accuracy": 0.8571428571428571,
+      "cc": 62.59246291136737,
+      "cc_by_type": {
+       "choice": 100.0,
+       "noul": 0.0,
+       "score": 87.77738873410212
+      },
+      "low_n": true,
+      "n": 21,
+      "n_by_type": {
+       "choice": 9,
+       "noul": 6,
+       "score": 6
+      },
+      "score": 62.59246291136737
+     },
+     "jaggedness": {
+      "accuracy": 0.45454545454545453,
+      "cc": -6.9339176930149335,
+      "cc_by_type": {
+       "choice": 50.617283950617285,
+       "noul": -100.0,
+       "score": 28.58096297033792
+      },
+      "low_n": true,
+      "n": 22,
+      "n_by_type": {
+       "choice": 11,
+       "noul": 3,
+       "score": 8
+      },
+      "score": 0.0
+     },
+     "llm_router": {
+      "accuracy": 0.7333333333333333,
+      "cc": 60.259592453251685,
+      "cc_by_type": {
+       "choice": 70.9165687426557,
+       "noul": 56.52173913043479,
+       "score": 53.340469486664574
+      },
+      "low_n": false,
+      "n": 90,
+      "n_by_type": {
+       "choice": 45,
+       "noul": 23,
+       "score": 22
+      },
+      "score": 60.259592453251685
+     },
+     "long_state": {
+      "accuracy": 0.0,
+      "cc": -64.51612903225806,
+      "cc_by_type": {
+       "choice": -29.032258064516128,
+       "noul": -100.0
+      },
+      "low_n": true,
+      "n": 5,
+      "n_by_type": {
+       "choice": 4,
+       "noul": 1
+      },
+      "score": 0.0
+     },
+     "ml_usecase": {
+      "accuracy": 0.0,
+      "cc": -66.66666666666667,
+      "cc_by_type": {
+       "choice": -33.333333333333336,
+       "noul": -100.0
+      },
+      "low_n": true,
+      "n": 2,
+      "n_by_type": {
+       "choice": 1,
+       "noul": 1
+      },
+      "score": 0.0
+     },
+     "multilingual": {
+      "accuracy": 0.6243213897937026,
+      "cc": 37.11188400872639,
+      "cc_by_type": {
+       "choice": 50.20478551411944,
+       "noul": 11.475409836065564,
+       "score": 49.65545667599417
+      },
+      "low_n": false,
+      "n": 921,
+      "n_by_type": {
+       "choice": 430,
+       "noul": 244,
+       "score": 247
+      },
+      "score": 37.11188400872639
+     },
+     "negation_pair_gen": {
+      "accuracy": 0.45454545454545453,
+      "cc": 6.666666666666664,
+      "cc_by_type": {
+       "choice": 46.666666666666664,
+       "noul": -33.333333333333336
+      },
+      "low_n": true,
+      "n": 22,
+      "n_by_type": {
+       "choice": 10,
+       "noul": 12
+      },
+      "score": 6.666666666666664
+     },
+     "option_order": {
+      "accuracy": 0.7777777777777778,
+      "cc": 71.42857142857144,
+      "cc_by_type": {
+       "choice": 71.42857142857144
+      },
+      "low_n": true,
+      "n": 27,
+      "n_by_type": {
+       "choice": 27
+      },
+      "score": 71.42857142857144
+     },
+     "perturb_pair": {
+      "accuracy": 0.6785714285714286,
+      "cc": 46.58777819904808,
+      "cc_by_type": {
+       "choice": 71.69811320754717,
+       "noul": 0.0,
+       "score": 68.0652213895971
+      },
+      "low_n": true,
+      "n": 28,
+      "n_by_type": {
+       "choice": 14,
+       "noul": 10,
+       "score": 4
+      },
+      "score": 46.58777819904808
+     },
+     "usecase": {
+      "accuracy": 0.6246153846153846,
+      "cc": 34.96734462851754,
+      "cc_by_type": {
+       "choice": 49.671772428884,
+       "noul": 10.769230769230775,
+       "score": 44.46103068743784
+      },
+      "low_n": false,
+      "n": 325,
+      "n_by_type": {
+       "choice": 188,
+       "noul": 65,
+       "score": 72
+      },
+      "score": 34.96734462851754
+     }
+    },
+    "lang": {
+     "ar": {
+      "accuracy": 0.5238095238095238,
+      "cc": 36.09908792546566,
+      "cc_by_type": {
+       "choice": -9.589041095890412,
+       "noul": 33.33333333333333,
+       "score": 84.55297153895407
+      },
+      "low_n": true,
+      "n": 21,
+      "n_by_type": {
+       "choice": 10,
+       "noul": 6,
+       "score": 5
+      },
+      "score": 36.09908792546566
+     },
+     "cs": {
+      "accuracy": 0.6486486486486487,
+      "cc": 28.595327977819306,
+      "cc_by_type": {
+       "choice": 67.91443850267379,
+       "noul": -33.333333333333336,
+       "score": 51.20487876411745
+      },
+      "low_n": false,
+      "n": 37,
+      "n_by_type": {
+       "choice": 17,
+       "noul": 9,
+       "score": 11
+      },
+      "score": 28.595327977819306
+     },
+     "da": {
+      "accuracy": 0.5555555555555556,
+      "cc": 21.70013876429037,
+      "cc_by_type": {
+       "choice": 40.372670807453424,
+       "noul": -9.090909090909093,
+       "score": 33.81865457632678
+      },
+      "low_n": false,
+      "n": 36,
+      "n_by_type": {
+       "choice": 19,
+       "noul": 11,
+       "score": 6
+      },
+      "score": 21.70013876429037
+     },
+     "de": {
+      "accuracy": 0.7083333333333334,
+      "cc": 54.31682482922066,
+      "cc_by_type": {
+       "choice": 62.953434525340874,
+       "noul": 50.0,
+       "score": 49.9970399623211
+      },
+      "low_n": false,
+      "n": 48,
+      "n_by_type": {
+       "choice": 30,
+       "noul": 8,
+       "score": 10
+      },
+      "score": 54.31682482922066
+     },
+     "el": {
+      "accuracy": 0.4642857142857143,
+      "cc": 18.688747468164113,
+      "cc_by_type": {
+       "choice": 30.76923076923077,
+       "noul": -19.999999999999996,
+       "score": 45.29701163526156
+      },
+      "low_n": true,
+      "n": 28,
+      "n_by_type": {
+       "choice": 12,
+       "noul": 10,
+       "score": 6
+      },
+      "score": 18.688747468164113
+     },
+     "en": {
+      "accuracy": 0.6234234234234234,
+      "cc": 33.959825773346104,
+      "cc_by_type": {
+       "choice": 54.87967914438502,
+       "noul": 1.6393442622950838,
+       "score": 45.360453913358214
+      },
+      "low_n": false,
+      "n": 555,
+      "n_by_type": {
+       "choice": 311,
+       "noul": 122,
+       "score": 122
+      },
+      "score": 33.959825773346104
+     },
+     "es": {
+      "accuracy": 0.6216216216216216,
+      "cc": 46.468806143491975,
+      "cc_by_type": {
+       "choice": 63.91339214113873,
+       "noul": 33.33333333333333,
+       "score": 42.159692956003866
+      },
+      "low_n": false,
+      "n": 37,
+      "n_by_type": {
+       "choice": 19,
+       "noul": 9,
+       "score": 9
+      },
+      "score": 46.468806143491975
+     },
+     "fi": {
+      "accuracy": 0.5576923076923077,
+      "cc": 33.132685874574115,
+      "cc_by_type": {
+       "choice": 38.285714285714285,
+       "noul": 15.789473684210531,
+       "score": 45.32286965379754
+      },
+      "low_n": false,
+      "n": 52,
+      "n_by_type": {
+       "choice": 21,
+       "noul": 19,
+       "score": 12
+      },
+      "score": 33.132685874574115
+     },
+     "fr": {
+      "accuracy": 0.625,
+      "cc": 46.6977386435456,
+      "cc_by_type": {
+       "choice": 48.979591836734706,
+       "noul": 33.33333333333333,
+       "score": 57.78029076056876
+      },
+      "low_n": false,
+      "n": 32,
+      "n_by_type": {
+       "choice": 14,
+       "noul": 9,
+       "score": 9
+      },
+      "score": 46.6977386435456
+     },
+     "hi": {
+      "accuracy": 0.5945945945945946,
+      "cc": 37.94298019517922,
+      "cc_by_type": {
+       "choice": 58.677685950413235,
+       "noul": 11.111111111111116,
+       "score": 44.040143524013295
+      },
+      "low_n": false,
+      "n": 37,
+      "n_by_type": {
+       "choice": 17,
+       "noul": 9,
+       "score": 11
+      },
+      "score": 37.94298019517922
+     },
+     "id": {
+      "accuracy": 0.6341463414634146,
+      "cc": 40.249077575797905,
+      "cc_by_type": {
+       "choice": 44.700460829493075,
+       "noul": 16.666666666666675,
+       "score": 59.38010523123396
+      },
+      "low_n": false,
+      "n": 41,
+      "n_by_type": {
+       "choice": 15,
+       "noul": 12,
+       "score": 14
+      },
+      "score": 40.249077575797905
+     },
+     "it": {
+      "accuracy": 0.6888888888888889,
+      "cc": 40.12622441647461,
+      "cc_by_type": {
+       "choice": 60.07098491570542,
+       "noul": 16.666666666666675,
+       "score": 43.64102166705172
+      },
+      "low_n": false,
+      "n": 45,
+      "n_by_type": {
+       "choice": 17,
+       "noul": 12,
+       "score": 16
+      },
+      "score": 40.12622441647461
+     },
+     "ja": {
+      "accuracy": 0.4090909090909091,
+      "cc": 2.029575780583792,
+      "cc_by_type": {
+       "choice": -1.0362694300518172,
+       "noul": -27.27272727272727,
+       "score": 34.39772404453046
+      },
+      "low_n": false,
+      "n": 44,
+      "n_by_type": {
+       "choice": 17,
+       "noul": 11,
+       "score": 16
+      },
+      "score": 2.029575780583792
+     },
+     "ko": {
+      "accuracy": 0.5813953488372093,
+      "cc": 31.67801320990053,
+      "cc_by_type": {
+       "choice": 55.88235294117647,
+       "noul": 0.0,
+       "score": 39.15168668852513
+      },
+      "low_n": false,
+      "n": 43,
+      "n_by_type": {
+       "choice": 18,
+       "noul": 10,
+       "score": 15
+      },
+      "score": 31.67801320990053
+     },
+     "mixed": {
+      "accuracy": 0.8125,
+      "cc": 62.44035173825929,
+      "cc_by_type": {
+       "choice": 78.3978397839784,
+       "noul": 39.99999999999999,
+       "score": 68.92321543079949
+      },
+      "low_n": false,
+      "n": 64,
+      "n_by_type": {
+       "choice": 26,
+       "noul": 20,
+       "score": 18
+      },
+      "score": 62.44035173825929
+     },
+     "nl": {
+      "accuracy": 0.6388888888888888,
+      "cc": 19.96331703247667,
+      "cc_by_type": {
+       "choice": 64.62264150943396,
+       "noul": -40.0,
+       "score": 35.26730958799605
+      },
+      "low_n": false,
+      "n": 36,
+      "n_by_type": {
+       "choice": 20,
+       "noul": 10,
+       "score": 6
+      },
+      "score": 19.96331703247667
+     },
+     "no": {
+      "accuracy": 0.5686274509803921,
+      "cc": 26.743956653109393,
+      "cc_by_type": {
+       "choice": 38.03786574870913,
+       "noul": 33.33333333333333,
+       "score": 8.860670877285715
+      },
+      "low_n": false,
+      "n": 51,
+      "n_by_type": {
+       "choice": 27,
+       "noul": 15,
+       "score": 9
+      },
+      "score": 26.743956653109393
+     },
+     "pl": {
+      "accuracy": 0.631578947368421,
+      "cc": 32.232596809532126,
+      "cc_by_type": {
+       "choice": 56.891963810537526,
+       "noul": 5.882352941176472,
+       "score": 33.92347367688237
+      },
+      "low_n": false,
+      "n": 57,
+      "n_by_type": {
+       "choice": 28,
+       "noul": 17,
+       "score": 12
+      },
+      "score": 32.232596809532126
+     },
+     "pt": {
+      "accuracy": 0.6382978723404256,
+      "cc": 37.380118428099564,
+      "cc_by_type": {
+       "choice": 52.07986688851914,
+       "noul": 0.0,
+       "score": 60.06048839577956
+      },
+      "low_n": false,
+      "n": 47,
+      "n_by_type": {
+       "choice": 23,
+       "noul": 12,
+       "score": 12
+      },
+      "score": 37.380118428099564
+     },
+     "sv": {
+      "accuracy": 0.5652173913043478,
+      "cc": 27.150384007482376,
+      "cc_by_type": {
+       "choice": 46.36871508379889,
+       "noul": -16.666666666666664,
+       "score": 51.74910360531491
+      },
+      "low_n": false,
+      "n": 46,
+      "n_by_type": {
+       "choice": 21,
+       "noul": 12,
+       "score": 13
+      },
+      "score": 27.150384007482376
+     },
+     "tr": {
+      "accuracy": 0.6086956521739131,
+      "cc": 32.22309076811413,
+      "cc_by_type": {
+       "choice": 58.950969213226905,
+       "noul": -19.999999999999996,
+       "score": 57.718303091115494
+      },
+      "low_n": false,
+      "n": 46,
+      "n_by_type": {
+       "choice": 20,
+       "noul": 10,
+       "score": 16
+      },
+      "score": 32.22309076811413
+     },
+     "uk": {
+      "accuracy": 0.6964285714285714,
+      "cc": 48.79750437867733,
+      "cc_by_type": {
+       "choice": 39.726027397260275,
+       "noul": 57.14285714285714,
+       "score": 49.52362859591456
+      },
+      "low_n": false,
+      "n": 56,
+      "n_by_type": {
+       "choice": 26,
+       "noul": 14,
+       "score": 16
+      },
+      "score": 48.79750437867733
+     },
+     "zh": {
+      "accuracy": 0.7804878048780488,
+      "cc": 66.06661503689976,
+      "cc_by_type": {
+       "choice": 69.00826446280992,
+       "noul": 75.0,
+       "score": 54.19158064788936
+      },
+      "low_n": false,
+      "n": 41,
+      "n_by_type": {
+       "choice": 22,
+       "noul": 8,
+       "score": 11
+      },
+      "score": 66.06661503689976
+     }
+    },
+    "type": {
+     "choice": {
+      "accuracy": 0.652,
+      "cc": 52.53154964585582,
+      "cc_by_type": {
+       "choice": 52.53154964585582
+      },
+      "low_n": false,
+      "n": 750,
+      "n_by_type": {
+       "choice": 750
+      },
+      "score": 52.53154964585582
+     },
+     "noul": {
+      "accuracy": 0.544,
+      "cc": 8.800000000000008,
+      "cc_by_type": {
+       "noul": 8.800000000000008
+      },
+      "low_n": false,
+      "n": 375,
+      "n_by_type": {
+       "noul": 375
+      },
+      "score": 8.800000000000008
+     },
+     "score": {
+      "accuracy": 0.6506666666666666,
+      "cc": 47.94951643213352,
+      "cc_by_type": {
+       "score": 47.94951643213352
+      },
+      "low_n": false,
+      "n": 375,
+      "n_by_type": {
+       "score": 375
+      },
+      "score": 47.94951643213352
+     }
+    },
+    "usecase": {
+     "advertising": {
+      "accuracy": 0.5416666666666666,
+      "cc": 17.68505609936874,
+      "cc_by_type": {
+       "choice": 37.73165307635285,
+       "noul": -42.85714285714286,
+       "score": 58.18065807889623
+      },
+      "low_n": false,
+      "n": 48,
+      "n_by_type": {
+       "choice": 31,
+       "noul": 7,
+       "score": 10
+      },
+      "score": 17.68505609936874
+     },
+     "code_linting": {
+      "accuracy": 0.4492753623188406,
+      "cc": 16.39377594171764,
+      "cc_by_type": {
+       "choice": 33.864053888548675,
+       "noul": 0.0,
+       "score": 15.317273936604236
+      },
+      "low_n": false,
+      "n": 69,
+      "n_by_type": {
+       "choice": 38,
+       "noul": 12,
+       "score": 19
+      },
+      "score": 16.39377594171764
+     },
+     "customer_support": {
+      "accuracy": 0.6666666666666666,
+      "cc": 36.102551009828666,
+      "cc_by_type": {
+       "choice": 59.40959409594095,
+       "noul": -6.666666666666665,
+       "score": 55.56472560021171
+      },
+      "low_n": false,
+      "n": 66,
+      "n_by_type": {
+       "choice": 38,
+       "noul": 15,
+       "score": 13
+      },
+      "score": 36.102551009828666
+     },
+     "demand_forecasting": {
+      "accuracy": 0.5,
+      "cc": -3.7135563668056215,
+      "cc_by_type": {
+       "choice": 31.76648976497347,
+       "noul": -69.23076923076923,
+       "score": 26.32361036537889
+      },
+      "low_n": false,
+      "n": 66,
+      "n_by_type": {
+       "choice": 30,
+       "noul": 13,
+       "score": 23
+      },
+      "score": 0.0
+     },
+     "ecommerce_marketplaces": {
+      "accuracy": 0.6451612903225806,
+      "cc": 37.19094405976973,
+      "cc_by_type": {
+       "choice": 61.99859254046446,
+       "noul": 5.882352941176472,
+       "score": 43.69188669766826
+      },
+      "low_n": false,
+      "n": 62,
+      "n_by_type": {
+       "choice": 33,
+       "noul": 17,
+       "score": 12
+      },
+      "score": 37.19094405976973
+     },
+     "feature_extraction": {
+      "accuracy": 0.6666666666666666,
+      "cc": 41.37667306389775,
+      "cc_by_type": {
+       "choice": 51.005025125628144,
+       "noul": 14.28571428571428,
+       "score": 58.839279780350815
+      },
+      "low_n": false,
+      "n": 72,
+      "n_by_type": {
+       "choice": 37,
+       "noul": 14,
+       "score": 21
+      },
+      "score": 41.37667306389775
+     },
+     "financial_crime": {
+      "accuracy": 0.6190476190476191,
+      "cc": 28.108394830193475,
+      "cc_by_type": {
+       "choice": 48.963317384370015,
+       "noul": -9.090909090909093,
+       "score": 44.45277619711951
+      },
+      "low_n": false,
+      "n": 63,
+      "n_by_type": {
+       "choice": 44,
+       "noul": 11,
+       "score": 8
+      },
+      "score": 28.108394830193475
+     },
+     "gaming": {
+      "accuracy": 0.6206896551724138,
+      "cc": 32.30084314983109,
+      "cc_by_type": {
+       "choice": 33.06772908366535,
+       "noul": 11.111111111111116,
+       "score": 52.72368925471681
+      },
+      "low_n": false,
+      "n": 58,
+      "n_by_type": {
+       "choice": 29,
+       "noul": 9,
+       "score": 20
+      },
+      "score": 32.30084314983109
+     },
+     "insurance_claims": {
+      "accuracy": 0.5161290322580645,
+      "cc": 14.221225149197176,
+      "cc_by_type": {
+       "choice": 28.730512249443212,
+       "noul": -5.882352941176472,
+       "score": 19.815516139324785
+      },
+      "low_n": false,
+      "n": 62,
+      "n_by_type": {
+       "choice": 31,
+       "noul": 17,
+       "score": 14
+      },
+      "score": 14.221225149197176
+     },
+     "knowledge_graphs": {
+      "accuracy": 0.5522388059701493,
+      "cc": 26.49698107834176,
+      "cc_by_type": {
+       "choice": 32.53373313343329,
+       "noul": 23.076923076923084,
+       "score": 23.88028702466891
+      },
+      "low_n": false,
+      "n": 67,
+      "n_by_type": {
+       "choice": 30,
+       "noul": 13,
+       "score": 24
+      },
+      "score": 26.49698107834176
+     },
+     "lead_generation": {
+      "accuracy": 0.7466666666666667,
+      "cc": 50.71178249753812,
+      "cc_by_type": {
+       "choice": 78.84344146685473,
+       "noul": 31.428571428571427,
+       "score": 41.863334597188185
+      },
+      "low_n": false,
+      "n": 75,
+      "n_by_type": {
+       "choice": 33,
+       "noul": 35,
+       "score": 7
+      },
+      "score": 50.71178249753812
+     },
+     "legal_compliance": {
+      "accuracy": 0.6071428571428571,
+      "cc": 31.398882194280464,
+      "cc_by_type": {
+       "choice": 63.89167502507522,
+       "noul": -14.28571428571429,
+       "score": 44.59068584348047
+      },
+      "low_n": false,
+      "n": 56,
+      "n_by_type": {
+       "choice": 23,
+       "noul": 14,
+       "score": 19
+      },
+      "score": 31.398882194280464
+     },
+     "llm_guardrails": {
+      "accuracy": 0.8309859154929577,
+      "cc": 68.87030460899916,
+      "cc_by_type": {
+       "choice": 79.63340122199591,
+       "noul": 61.53846153846154,
+       "score": 65.43905106654002
+      },
+      "low_n": false,
+      "n": 71,
+      "n_by_type": {
+       "choice": 34,
+       "noul": 26,
+       "score": 11
+      },
+      "score": 68.87030460899916
+     },
+     "model_routing": {
+      "accuracy": 0.6891891891891891,
+      "cc": 54.023245173573706,
+      "cc_by_type": {
+       "choice": 61.052449368184185,
+       "noul": 47.058823529411775,
+       "score": 53.95846262312516
+      },
+      "low_n": false,
+      "n": 148,
+      "n_by_type": {
+       "choice": 84,
+       "noul": 34,
+       "score": 30
+      },
+      "score": 54.023245173573706
+     },
+     "moderation_trust_safety": {
+      "accuracy": 0.6779661016949152,
+      "cc": 44.28527147977985,
+      "cc_by_type": {
+       "choice": 73.8562091503268,
+       "noul": 5.882352941176472,
+       "score": 53.117252347836285
+      },
+      "low_n": false,
+      "n": 59,
+      "n_by_type": {
+       "choice": 21,
+       "noul": 17,
+       "score": 21
+      },
+      "score": 44.28527147977985
+     },
+     "other": {
+      "accuracy": 0.5,
+      "cc": 11.67368599877148,
+      "cc_by_type": {
+       "choice": 33.40732519422864,
+       "noul": 0.0,
+       "score": 1.6137328020857988
+      },
+      "low_n": false,
+      "n": 32,
+      "n_by_type": {
+       "choice": 21,
+       "noul": 6,
+       "score": 5
+      },
+      "score": 11.67368599877148
+     },
+     "recruiting": {
+      "accuracy": 0.6615384615384615,
+      "cc": 40.10894479120259,
+      "cc_by_type": {
+       "choice": 56.741167988464305,
+       "noul": 28.000000000000004,
+       "score": 35.585666385143455
+      },
+      "low_n": false,
+      "n": 65,
+      "n_by_type": {
+       "choice": 32,
+       "noul": 25,
+       "score": 8
+      },
+      "score": 40.10894479120259
+     },
+     "risk_assessment": {
+      "accuracy": 0.5625,
+      "cc": 13.735537154945776,
+      "cc_by_type": {
+       "choice": 37.23849372384937,
+       "noul": -7.692307692307687,
+       "score": 11.66042543329564
+      },
+      "low_n": false,
+      "n": 48,
+      "n_by_type": {
+       "choice": 22,
+       "noul": 13,
+       "score": 13
+      },
+      "score": 13.735537154945776
+     },
+     "scientific_discovery": {
+      "accuracy": 0.42857142857142855,
+      "cc": 11.033808247973164,
+      "cc_by_type": {
+       "choice": 33.742331288343564,
+       "noul": -40.0,
+       "score": 39.35909345557593
+      },
+      "low_n": false,
+      "n": 42,
+      "n_by_type": {
+       "choice": 18,
+       "noul": 10,
+       "score": 14
+      },
+      "score": 11.033808247973164
+     },
+     "search_retrieval": {
+      "accuracy": 0.8656716417910447,
+      "cc": 77.86069752169035,
+      "cc_by_type": {
+       "choice": 81.10236220472441,
+       "noul": 71.42857142857142,
+       "score": 81.05115893177522
+      },
+      "low_n": false,
+      "n": 67,
+      "n_by_type": {
+       "choice": 14,
+       "noul": 14,
+       "score": 39
+      },
+      "score": 77.86069752169035
+     }
+    }
+   },
+   "breakdowns_equated": false,
+   "ci95": {
+    "B": 1000,
+    "C": [
+     76.2202104817091,
+     83.78722983411932
+    ],
+    "I": [
+     28.85495729085133,
+     36.05406372369448
+    ],
+    "capability": [
+     53.33376823259841,
+     59.02231770581881
+    ],
+    "composite": {
+     "A": [
+      17.84708066482101,
+      30.721588300052126
+     ],
+     "B": [
+      15.229143747712598,
+      27.30577244290635
+     ],
+     "C": [
+      12.393806017236813,
+      21.334436319480638
+     ]
+    },
+    "seed": 16
+   },
+   "ci95_n": 1200,
+   "complete": true,
+   "equated": null,
+   "equating_flag": null,
+   "equating_offset": null,
+   "full_set_api": false,
+   "g_med_used": 2.573387642438244,
+   "lane": "selfhosted",
+   "metric_basis": "S u P",
+   "n_items": 1500,
+   "n_public": 300,
+   "n_sealed_side": 1200,
+   "on_S": {
+    "calibration": 82.14288333020232,
+    "capability": 57.14551912909233,
+    "intelligence": 32.14815492798233
+   },
+   "per_type": {
+    "choice": {
+     "accuracy": 0.652,
+     "calibration": 80.39441166462582,
+     "cc": 52.53154964585582,
+     "cc_by_type": {
+      "choice": 52.53154964585582
+     },
+     "cc_tiered": 56.196084874949264,
+     "cc_tiered_open": 59.7961197292332,
+     "cc_tiered_sealed": 52.596050020665324,
+     "low_n": false,
+     "n": 750,
+     "n_by_type": {
+      "choice": 750
+     },
+     "score": 52.53154964585582
+    },
+    "noul": {
+     "accuracy": 0.544,
+     "calibration": 75.83184455254282,
+     "cc": 8.800000000000008,
+     "cc_by_type": {
+      "noul": 8.800000000000008
+     },
+     "cc_tiered": 0.0,
+     "cc_tiered_open": 0.0,
+     "cc_tiered_sealed": 0.0,
+     "low_n": false,
+     "n": 375,
+     "n_by_type": {
+      "noul": 375
+     },
+     "score": 8.800000000000008
+    },
+    "score": {
+     "accuracy": 0.6506666666666666,
+     "calibration": 90.20239377343832,
+     "cc": 47.94951643213352,
+     "cc_by_type": {
+      "score": 47.94951643213352
+     },
+     "cc_tiered": 40.24837990899774,
+     "cc_tiered_open": 39.31342726902629,
+     "cc_tiered_sealed": 41.18333254896919,
+     "low_n": false,
+     "n": 375,
+     "n_by_type": {
+      "score": 375
+     },
+     "score": 47.94951643213352
+    }
+   },
+   "raw_on_A": {
+    "calibration": 79.34516162750374,
+    "capability": 56.01796379448726,
+    "intelligence": 32.69076596147078
+   },
+   "set": "S+P"
+  },
+  "validity": {
+   "choice": {
+    "invalid_rate": 0.005333333333333301,
+    "n": 750
+   },
+   "noul": {
+    "invalid_rate": 0.002666666666666706,
+    "n": 375
+   },
+   "score": {
+    "invalid_rate": 0.0,
+    "n": 375
+   }
+  },
+  "views": {
+   "Balanced 33:33:33": 21.11567960593529,
+   "Emphasis on Accuracy 60:20:20": 17.090364745167463,
+   "Emphasis on Cost 20:20:60": 22.367295114078452,
+   "Emphasis on Speed 20:60:20": 25.7374531963169,
+   "Intelligence only": 13.290096951793126
+  }
+ }
+}

@@ -1,0 +1,175 @@
+TAP version 13
+# Subtest: feed key set equals the merged live board and the page shares the assembly
+ok 1 - feed key set equals the merged live board and the page shares the assembly # SKIP test name does not match pattern
+  ---
+  duration_ms: 1.272065
+  ...
+# Subtest: latest_release is the newest release of the draw table, not a hard-coded list
+ok 2 - latest_release is the newest release of the draw table, not a hard-coded list
+  ---
+  duration_ms: 17509.093509
+  ...
+# Subtest: feed ranks equal the ranks of the open and API Capability default views
+ok 3 - feed ranks equal the ranks of the open and API Capability default views # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.729375
+  ...
+# Subtest: rows carry their draw so agents can tell which draw a row was measured on
+ok 4 - rows carry their draw so agents can tell which draw a row was measured on # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.082446
+  ...
+# Subtest: v1.6.37 restates exactly the two v1.6.1 rows and adds nothing else
+ok 5 - v1.6.37 restates exactly the two v1.6.1 rows and adds nothing else # SKIP test name does not match pattern
+  ---
+  duration_ms: 1.231133
+  ...
+# Subtest: h2o-lightning-4b: price corrected to the frozen Qwen/Qwen3.5-4B reference, nothing else of the published row changes
+ok 6 - h2o-lightning-4b: price corrected to the frozen Qwen/Qwen3.5-4B reference, nothing else of the published row changes # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.105331
+  ...
+# Subtest: kahn1: same correction on its own-estimate tokens; the false snapshot attribution of 0.04 is gone
+ok 7 - kahn1: same correction on its own-estimate tokens; the false snapshot attribution of 0.04 is gone # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.100683
+  ...
+# Subtest: all 70 carried rows keep every stored value; only rank and ranks move, by the restated rows above them
+ok 8 - all 70 carried rows keep every stored value; only rank and ranks move, by the restated rows above them # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.114049
+  ...
+# Subtest: the two other Qwen3.5-4B rows with the USD 0.04 inherited basis are untouched
+ok 9 - the two other Qwen3.5-4B rows with the USD 0.04 inherited basis are untouched # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.102435
+  ...
+# Subtest: v1.6.37 rejects altered price, usage, markers, text, intervals, approval and carried rows
+ok 10 - v1.6.37 rejects altered price, usage, markers, text, intervals, approval and carried rows # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.090773
+  ...
+# Subtest: the corrected price is recomputed from tokens, the frozen tariff and the number of decisions
+ok 11 - the corrected price is recomputed from tokens, the frozen tariff and the number of decisions # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.166986
+  ...
+# Subtest: v1.6.37 archived route keeps shared board, method and history
+ok 12 - v1.6.37 archived route keeps shared board, method and history # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.098057
+  ...
+# Subtest: live boards and the agent feed resolve each restated row exactly once with the corrected figures; the frozen archive keeps the published ones
+ok 13 - live boards and the agent feed resolve each restated row exactly once with the corrected figures; the frozen archive keeps the published ones # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.177055
+  ...
+# Subtest: SEO model, comparison and full-text pages follow the merged feed with corrected costs and the re-measured Seb
+ok 14 - SEO model, comparison and full-text pages follow the merged feed with corrected costs and the re-measured Seb
+  ---
+  duration_ms: 178534.751333
+  ...
+# Subtest: the unreviewed build is not published: the reader rejects it, the board stays on the validated v1.6 chain
+ok 15 - the unreviewed build is not published: the reader rejects it, the board stays on the validated v1.6 chain # SKIP test name does not match pattern
+  ---
+  duration_ms: 1.217184
+  ...
+# Subtest: v1.7.0 restates exactly the live board of its base release: every row, the pending set, the carry
+ok 16 - v1.7.0 restates exactly the live board of its base release: every row, the pending set, the carry # SKIP test name does not match pattern
+  ---
+  duration_ms: 1.360473
+  ...
+# Subtest: every re-scored row shows its v1.6 values next to the v1.7 values and the time-limit evidence
+ok 17 - every re-scored row shows its v1.6 values next to the v1.7 values and the time-limit evidence # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.118228
+  ...
+# Subtest: pinned rows: chon-1.0-12b collapses under the limit, sage-1.3.0 and an A4 row follow the rule, the pending row keeps its v1.6 numbers
+ok 18 - pinned rows: chon-1.0-12b collapses under the limit, sage-1.3.0 and an A4 row follow the rule, the pending row keeps its v1.6 numbers # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.11437
+  ...
+# Subtest: fastino-glide-api (v1.6.40 row, scored on 1,497 of 1,500 items) is re-scored under the rule on the same 1,497 items; two answered decisions over 10 s count failed
+ok 19 - fastino-glide-api (v1.6.40 row, scored on 1,497 of 1,500 items) is re-scored under the rule on the same 1,497 items; two answered decisions over 10 s count failed # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.096674
+  ...
+# Subtest: the four intake handoffs retain their distinct identities, frozen costs and disclosures
+ok 20 - the four intake handoffs retain their distinct identities, frozen costs and disclosures # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.093999
+  ...
+# Subtest: R9 rows retain the zero-output price convention, timeout outcomes and serving disclosures
+ok 21 - R9 rows retain the zero-output price convention, timeout outcomes and serving disclosures # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.193408
+  ...
+# Subtest: v1.7.0 archive files and the base release stay byte-identical
+ok 22 - v1.7.0 archive files and the base release stay byte-identical # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.158909
+  ...
+# Subtest: v1.7.0 rejects altered evidence (bundle checks)
+ok 23 - v1.7.0 rejects altered evidence (bundle checks) # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.189951
+  ...
+# Subtest: a new row (measured first under v1.7.0) has its own shape: no previous, new_in, disclosure and licence, ranked with the re-scored rows
+ok 24 - a new row (measured first under v1.7.0) has its own shape: no previous, new_in, disclosure and licence, ranked with the re-scored rows # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.178448
+  ...
+# Subtest: v1.7.0 rejects a malformed new row (6+ mutations)
+ok 25 - v1.7.0 rejects a malformed new row (6+ mutations) # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.101343
+  ...
+# Subtest: the two Super Decider rows are ranked, priced at the launch list price of the provider's public product page, and say where the price comes from
+ok 26 - the two Super Decider rows are ranked, priced at the launch list price of the provider's public product page, and say where the price comes from # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.093188
+  ...
+# Subtest: a re-measured row (GPU, same items) replaces its CPU row in full: GPU scores and times, the CPU row as previous, disclosure on the row
+ok 27 - a re-measured row (GPU, same items) replaces its CPU row in full: GPU scores and times, the CPU row as previous, disclosure on the row # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.155913
+  ...
+# Subtest: the new row carries no board/issue number or custody reference in its public text
+ok 28 - the new row carries no board/issue number or custody reference in its public text # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.09946
+  ...
+# Subtest: v1.7.0 rejects a malformed re-measured row (GPU numbers with CPU times, still pending, no disclosure, wrong marks, ...)
+ok 29 - v1.7.0 rejects a malformed re-measured row (GPU numbers with CPU times, still pending, no disclosure, wrong marks, ...) # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.185001
+  ...
+# Subtest: the restatement is bound to the live v1.6 chain: it passes on the chain it was built for
+ok 30 - the restatement is bound to the live v1.6 chain: it passes on the chain it was built for # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.661118
+  ...
+# Subtest: v1.7.0 rejects a restatement that does not match the chain (previous, identity, cost, row set, newer release, feed hash, seeds)
+ok 31 - v1.7.0 rejects a restatement that does not match the chain (previous, identity, cost, row set, newer release, feed hash, seeds) # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.09484
+  ...
+# Subtest: a re-measured row is bound to the CPU row it replaces (previous == chain, same weights, same draw, another endpoint kind, same cost)
+ok 32 - a re-measured row is bound to the CPU row it replaces (previous == chain, same weights, same draw, another endpoint kind, same cost) # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.108417
+  ...
+# Subtest: a published v1.7.0 board is live: restated rows, v1.7.0 as the latest release, archive pages untouched
+ok 33 - a published v1.7.0 board is live: restated rows, v1.7.0 as the latest release, archive pages untouched
+  ---
+  duration_ms: 166958.632738
+  ...
+1..33
+# tests 33
+# suites 0
+# pass 3
+# fail 0
+# cancelled 0
+# skipped 30
+# todo 0
+# duration_ms 326953.329761

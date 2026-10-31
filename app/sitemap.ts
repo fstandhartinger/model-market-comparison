@@ -14,6 +14,7 @@ import { hasPublishedJevbenchV1719Release } from '../lib/jevbench-v1719-release.
 import { hasPublishedJevbenchV1720Release } from '../lib/jevbench-v1720-release.mjs';
 import { hasPublishedJevbenchV1721Release } from '../lib/jevbench-v1721-release.mjs';
 import { hasPublishedJevbenchV1722Release } from '../lib/jevbench-v1722-release.mjs';
+import { hasPublishedJevbenchV184Release } from '../lib/jevbench-v184-release.mjs';
 import { hasPublishedJevbenchV183Release } from '../lib/jevbench-v183-release.mjs';
 import { hasPublishedJevbenchV182Release } from '../lib/jevbench-v182-release.mjs';
 import { hasPublishedJevbenchV181Release } from '../lib/jevbench-v181-release.mjs';
@@ -49,8 +50,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const v181Visible = await hasPublishedJevbenchV181Release();
   const v182Visible = await hasPublishedJevbenchV182Release();
   const v183Visible = await hasPublishedJevbenchV183Release();
+  const v184Visible = await hasPublishedJevbenchV184Release();
   const releasePages = JEVBENCH_RELEASES
-    .filter((r: { version: string }) => (r.version !== 'v1.7.12' || v1712Visible) && (r.version !== 'v1.7.13' || v1713Visible) && (r.version !== 'v1.7.14' || v1714Visible) && (r.version !== 'v1.7.15' || v1715Visible) && (r.version !== 'v1.7.16' || v1716Visible) && (r.version !== 'v1.7.17' || v1717Visible) && (r.version !== 'v1.7.18' || v1718Visible) && (r.version !== 'v1.7.19' || v1719Visible) && (r.version !== 'v1.7.20' || v1720Visible) && (r.version !== 'v1.7.21' || v1721Visible) && (r.version !== 'v1.7.22' || v1722Visible) && (r.version !== 'v1.7.23' || v1723Visible) && (r.version !== 'v1.8.0' || v180Visible) && (r.version !== 'v1.8.1' || v181Visible) && (r.version !== 'v1.8.2' || v182Visible) && (r.version !== 'v1.8.3' || v183Visible))
+    .filter((r: { version: string }) => (r.version !== 'v1.7.12' || v1712Visible) && (r.version !== 'v1.7.13' || v1713Visible) && (r.version !== 'v1.7.14' || v1714Visible) && (r.version !== 'v1.7.15' || v1715Visible) && (r.version !== 'v1.7.16' || v1716Visible) && (r.version !== 'v1.7.17' || v1717Visible) && (r.version !== 'v1.7.18' || v1718Visible) && (r.version !== 'v1.7.19' || v1719Visible) && (r.version !== 'v1.7.20' || v1720Visible) && (r.version !== 'v1.7.21' || v1721Visible) && (r.version !== 'v1.7.22' || v1722Visible) && (r.version !== 'v1.7.23' || v1723Visible) && (r.version !== 'v1.8.0' || v180Visible) && (r.version !== 'v1.8.1' || v181Visible) && (r.version !== 'v1.8.2' || v182Visible) && (r.version !== 'v1.8.3' || v183Visible) && (r.version !== 'v1.8.4' || v184Visible))
     .map((r: { href: string }) => r.href);
   const urls = [...new Set([...PAGES, ...releasePages, ...current.urls, ...await readImageJevSitemapPaths()])];
   return [

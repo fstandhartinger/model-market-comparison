@@ -29,6 +29,6 @@ test('processed input includes expanded Oenogarum prompts and both Piccolo reads
 test('d1027 pins its exact release history and latest release',()=>{
  const draws=JSON.parse(readFileSync('data/jevbench-draw-equating.json')).draws;
  const draw=draws.find(d=>d.draw==='v1.6-regular-20261027');
- assert.deepEqual(draw.releases,['v1.7.13','v1.7.14','v1.7.15','v1.7.16','v1.7.17','v1.7.19','v1.7.21','v1.7.22','v1.8.1','v1.8.2','v1.8.3']);
- assert.equal(draw.latest_release,'v1.8.3');
+ assert.deepEqual(draw.releases,['v1.7.13','v1.7.14','v1.7.15','v1.7.16','v1.7.17','v1.7.19','v1.7.21','v1.7.22','v1.8.1','v1.8.2','v1.8.3','v1.8.4']);
+ assert.equal(draw.latest_release,'v1.8.4');
 });
