@@ -12,7 +12,8 @@ now starts that owner job itself, at the first unsupported runtime:
   deadline still raises the urgent card.
 
 The registry below tells the owner (and the generator prompt) which reviewed runtime supplement and precedent jobs
-belong to the same model repository. It widens no supplement: every `active()` still admits exact order ids only.
+belong to the same model repository. Admission itself lives in supplement_admission.py (Part 2): an `active()`
+admits its listed order ids, or a repeat order whose fetched stack files are byte-identical to the reviewed precedent.
 Stdlib only; nothing here imports a model stack or runs customer code.
 """
 from __future__ import annotations
@@ -105,8 +106,8 @@ def generator_hint(order: dict[str, Any]) -> str:
         return ""
     return (f"\nRuntime supplement note (host registry, not customer text): this repository matches the reviewed "
             f"`{entry['family']}` runtime supplement (`{entry['module']}` in the host runtime; precedent jobs "
-            f"{', '.join(entry['precedents'])} under /home/flori/jobs/). Supplements admit exact order ids only, so "
-            "this order still needs an owner to extend the allow-list. If no pinned image fits, write "
+            f"{', '.join(entry['precedents'])} under /home/flori/jobs/). Unless a host admission note follows, the "
+            "stack files differ from the reviewed precedent and this order needs an owner. If no pinned image fits, write "
             "{\"backend\":\"unsupported\"} with an honest PRICING-REVIEW.md; the host then starts that owner at once "
             "instead of retrying preparation.\n")
 
@@ -120,8 +121,10 @@ def prompt_text(rid: str, order: dict[str, Any], *, reason: str, deadline: str, 
                       f"~/.local/share/priority-evaluation/runtime/). Precedent jobs (restore archived ones with "
                       f"`~/bin/sandy-archive-safe restore /home/flori/jobs/<name>`): "
                       f"{', '.join(entry['precedents'])}. Diff this order's serving code and stack pins against the "
-                      "latest precedent; if the pins are unchanged, reuse the supplement context unchanged and only "
-                      "add this exact order id to `active()`.")
+                      "latest precedent. If trusted-runner/SUPPLEMENT-ADMISSION.json exists, the host already admitted this "
+                      "order (identical stack files): fix the recipe, do not change `active()`. Otherwise, if the "
+                      "pins are unchanged, reuse the supplement context and add this exact order id to `active()` "
+                      "(or its stack hashes to supplement_admission.FAMILIES).")
     else:
         supplement = ("- No reviewed supplement matches this repository. Build a new order-scoped supplement "
                       "following the existing *_runtime_supplement.py modules (exact order id, digest-pinned base, "

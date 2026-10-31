@@ -18,6 +18,7 @@ from pathlib import Path
 
 import measurement_dispatch
 import pod_runner
+import supplement_admission
 
 ORDER = 'a8731403-9731-4d57-98b4-0c5d93952ad2'
 # Standard One 3B SH (same customer): its model-repo code/ (requirements, server, head) is byte-identical to the
@@ -50,6 +51,7 @@ FILES = {
     'wheels/transformers-5.12.1-py3-none-any.whl': '2a5e109d2021265df7098ffbb738295acaf5ad256f12cbc586db2ea4dcbb1a8a',
     'wheels/typer-0.27.3-py3-none-any.whl': 'e50022f28b82a86313e54501317a1db64bf8f8d036ff8cfe5ca7e47675454aff',
 }
+FAMILY = 'standardone'
 MEMBER_LIMIT = 16 * 1024 * 1024
 CONTEXT_LIMIT = 64 * 1024 * 1024
 REMOTE_ROOT = '/runtime-supplement/standardone'
@@ -64,9 +66,11 @@ def sha256(path):
 
 
 def active(job, recipe):
-    """Only a listed order's reviewed http_typesafe recipe on the exact pinned base selects the supplement."""
-    return (Path(job).name in ORDERS and isinstance(recipe, dict) and recipe.get('kind') == 'http_typesafe'
-            and recipe.get('image') == BASE_IMAGE)
+    """A listed order, or a host-admitted repeat of the reviewed stack (supplement_admission), with the
+    reviewed http_typesafe recipe on the exact pinned base selects the supplement."""
+    return (isinstance(recipe, dict) and recipe.get('kind') == 'http_typesafe'
+            and recipe.get('image') == BASE_IMAGE
+            and (Path(job).name in ORDERS or supplement_admission.admitted(job, FAMILY)))
 
 
 def check_context(context=CONTEXT):

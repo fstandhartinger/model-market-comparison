@@ -1647,6 +1647,19 @@ class FinalizeTests(DatabaseTestCase):
         self.assertTrue(any("did not change" in note[2] for note in fx.notes))
         self.assertEqual(row(rid)["pickup_status"], "done")
 
+    def test_native_route_order_skips_the_post_with_a_reason(self):
+        rid, fx, job = self.prepare()
+        (job / "release" / "RESULT.json").unlink()
+        state = ap.load_state(rid)
+        summary = {"outcome": "delivered", "results": [{"top5_changed": True}]}
+        ap.advance_xpost(row(rid), state, job, summary, fx, datetime.now(timezone.utc))
+        state = ap.load_state(rid)
+        self.assertEqual(state["steps"]["xpost"]["status"], "skipped")
+        self.assertEqual(state["steps"]["xpost"]["reason"], "native_route_no_release_result")
+        self.assertEqual(state["steps"]["xpost_receipt"]["status"], "skipped")
+        self.assertNotIn(ap.XPOST_UNIT.format(rid), fx.started)
+        self.assertIn("X post skipped", (job / "STATE.md").read_text())
+
     def test_uncertain_post_is_never_retried(self):
         rid, fx, job = self.prepare()
         self.cycle_live_release(fx)

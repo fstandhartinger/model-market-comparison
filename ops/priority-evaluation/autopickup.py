@@ -33,6 +33,7 @@ import host_evidence
 import public_artifacts
 import measurement_dispatch
 import native_owner
+import supplement_admission
 import static_agent
 import source_metadata
 import native_source_selection
@@ -1357,6 +1358,7 @@ If the official run path is not clear, write a short blocker to `OUTPUT.md`; do 
     # The open-weights pod-recipe contract is appended verbatim (brief requirement).
     text += "\n" + (Path(__file__).resolve().parent / "PREP-OPEN-WEIGHTS-PROMPT.txt").read_text(encoding="utf-8")
     text += native_owner.generator_hint(row)
+    text += supplement_admission.generator_hint(job_dir)
     atomic_write(prompt, text)
     return prompt
 
@@ -3411,6 +3413,20 @@ def advance_xpost(row: dict[str, Any], state: dict[str, Any], job_dir: Path, sum
         effects.notify(completed_status_card(row, "is complete: the customer received the result", "The published top five did not change, so no X update was needed."),
                        mode="digest")
         return
+    release_result = job_dir / "release" / "RESULT.json"
+    if step(state, "xpost")["status"] == "pending" and not release_result.is_file():
+        # Native-route orders (delivered by their owner job) have no release/RESULT.json, so the X-post service
+        # could only block on result revalidation. Skip it explicitly; the release owner announces the row.
+        step(state, "xpost")["status"] = "skipped"
+        step(state, "xpost")["reason"] = "native_route_no_release_result"
+        step(state, "xpost_receipt")["status"] = "skipped"
+        save_state(state)
+        append_state(job_dir, f"\n\nX post skipped at {iso(now)}: native-route order without release/RESULT.json "
+                              "(no result revalidation possible); the release owner announces the public row.\n")
+        effects.notify(completed_status_card(row, "is complete: the customer received the result",
+                                             "Native-route order: no automatic X update; the release owner announces the row."),
+                       mode="digest")
+        return
     if text is None and step(state, "xpost")["status"] == "pending":
         step(state, "xpost")["status"] = "skipped"
         step(state, "xpost_receipt")["status"] = "skipped"
@@ -4823,6 +4839,12 @@ def evaluate(rid: str) -> int:
                 if prep_code != 0:
                     update_row(rid, "evaluation_status='failed'", "evaluation_status='running'")
                     return prep_code or 1
+                # INCIDENTS #25 Part 2: the host (not the generator) records a repeat-stack admission before the
+                # freeze, so the source review pins it; any generator-written copy is replaced or removed.
+                try:
+                    supplement_admission.write_receipt(job_dir, job_dir / "runner-prepare" / "trusted-runner")
+                except (OSError, ValueError) as exc:
+                    raise PickupError("supplement admission receipt could not be written") from exc
                 freeze_runner_bundle(job_dir)
                 try:
                     generated = load_json_file(job_dir / "trusted-runner/RUNTIME.json", 100_000)
