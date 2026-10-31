@@ -304,7 +304,8 @@
   "wity-1-always": "api",
   "wity-1-off": "api",
   "xor-26b-a4b": "selfhosted",
-  "zerank-2": "selfhosted"
+  "zerank-2": "selfhosted",
+  "zils-ai-z3-mini-soup-preview": "selfhosted"
  },
  "language_cells": {
   "drawn": "2026-10-07",
@@ -847,7 +848,7 @@
  "metric": "O1S chance-corrected competence: equal mean across the request types present, clipped to 0–100. Zero means the equal-weight mean across present request types was at or below baseline; negative means are clipped. It does not mean every type scored zero. Choice uses a random-option baseline; Noul uses a fixed 50% accuracy baseline (abstentions count as wrong); Score uses the midpoint-guess error (random-guess fallback when every gold is at the midpoint). Compare models within a category; row pools and supported types can differ.",
  "min_n": 15,
  "provisional": false,
- "results_sha256": "c8527607695cf666c6845f125a989b2faca9f7b431adad3f6e62d6c88a44d4bf",
+ "results_sha256": "9c3a68bea30d12c4c9a9e4527e6302aa4729979316dad11471c7c9cff396b708",
  "results_sha256_note": "All category cells and lanes unchanged; GPU-time cost restatement.",
  "revision": "v1.8.3",
  "rule_note": "Cells of re-scored rows are computed with the frozen category tools under the 10 s rule (a decision over 10 s counts as a wrong answer). Rows without cells are not yet re-scored under the rule or are re-measure pending; no v1.6 cell is shown for a v1.7 row.",
@@ -855,7 +856,7 @@
   "Official O1S; recorded failures count where supported; no missing response is imputed; stable identity dedupe parent first.",
   "S-based category cells pool recorded supported responses from S+P and the answered L1/L2/L3 supplements. API overlay category cells keep their separately recorded A4/A5+P union. Headline and per-type/tier scores are unchanged."
  ],
- "source_results_sha256": "070f7c15e5e29b1db44058fc5a1cc7d1bb867c2d01132aec2f18b86725c238df",
+ "source_results_sha256": "b36d44858e6e0d20944f3d85522984ea4d8197d000e692ad72f0f1e84c14ed67",
  "source_sha256": "aab1cba1fa4221f8cb026baba46e831b9c5c17c5869bf1a3b2995dfc399e2bce",
  "supplement": {
   "drawn": "2026-10-06",
@@ -130696,6 +130697,222 @@
      "operational_failure_n": 0,
      "refusal_n": 0,
      "response_n": 90
+    }
+   }
+  },
+  "zils-ai-z3-mini-soup-preview": {
+   "families": {
+    "composite_gen": {
+     "competence": 84.71,
+     "n": 19
+    },
+    "fairness": {
+     "competence": 99.93,
+     "n": 21
+    },
+    "jaggedness": {
+     "competence": 28.67,
+     "n": 22
+    },
+    "llm_router": {
+     "competence": 74.27,
+     "n": 90
+    },
+    "multilingual": {
+     "competence": 64.8,
+     "n": 921
+    },
+    "negation_pair_gen": {
+     "competence": 58.33,
+     "n": 22
+    },
+    "option_order": {
+     "competence": 85.71,
+     "n": 27
+    },
+    "perturb_pair": {
+     "competence": 84.86,
+     "n": 28
+    },
+    "usecase": {
+     "competence": 58.39,
+     "n": 325
+    }
+   },
+   "languages": {
+    "ar": {
+     "competence": 74.94,
+     "n": 21
+    },
+    "cs": {
+     "competence": 42.02,
+     "n": 37
+    },
+    "da": {
+     "competence": 34.01,
+     "n": 36
+    },
+    "de": {
+     "competence": 58.27,
+     "n": 48
+    },
+    "el": {
+     "competence": 55.15,
+     "n": 28
+    },
+    "en": {
+     "competence": 61.36,
+     "n": 555
+    },
+    "es": {
+     "competence": 76.81,
+     "n": 37
+    },
+    "fi": {
+     "competence": 71.94,
+     "n": 52
+    },
+    "fr": {
+     "competence": 73.19,
+     "n": 32
+    },
+    "hi": {
+     "competence": 48.19,
+     "n": 37
+    },
+    "id": {
+     "competence": 67.21,
+     "n": 41
+    },
+    "it": {
+     "competence": 60.01,
+     "n": 45
+    },
+    "ja": {
+     "competence": 70.2,
+     "n": 44
+    },
+    "ko": {
+     "competence": 66.61,
+     "n": 43
+    },
+    "mixed": {
+     "competence": 88.79,
+     "n": 64
+    },
+    "nl": {
+     "competence": 58.44,
+     "n": 36
+    },
+    "no": {
+     "competence": 56.0,
+     "n": 51
+    },
+    "pl": {
+     "competence": 51.55,
+     "n": 57
+    },
+    "pt": {
+     "competence": 71.02,
+     "n": 47
+    },
+    "sv": {
+     "competence": 54.99,
+     "n": 46
+    },
+    "tr": {
+     "competence": 62.92,
+     "n": 46
+    },
+    "uk": {
+     "competence": 69.03,
+     "n": 56
+    },
+    "zh": {
+     "competence": 70.86,
+     "n": 41
+    }
+   },
+   "usecases": {
+    "advertising": {
+     "competence": 62.55,
+     "n": 48
+    },
+    "code_linting": {
+     "competence": 62.17,
+     "n": 69
+    },
+    "customer_support": {
+     "competence": 56.44,
+     "n": 66
+    },
+    "demand_forecasting": {
+     "competence": 8.41,
+     "n": 66
+    },
+    "ecommerce_marketplaces": {
+     "competence": 57.82,
+     "n": 62
+    },
+    "feature_extraction": {
+     "competence": 64.49,
+     "n": 72
+    },
+    "financial_crime": {
+     "competence": 39.85,
+     "n": 63
+    },
+    "gaming": {
+     "competence": 53.05,
+     "n": 58
+    },
+    "insurance_claims": {
+     "competence": 40.08,
+     "n": 62
+    },
+    "knowledge_graphs": {
+     "competence": 63.79,
+     "n": 67
+    },
+    "lead_generation": {
+     "competence": 69.84,
+     "n": 75
+    },
+    "legal_compliance": {
+     "competence": 70.55,
+     "n": 56
+    },
+    "llm_guardrails": {
+     "competence": 88.75,
+     "n": 71
+    },
+    "model_routing": {
+     "competence": 70.56,
+     "n": 148
+    },
+    "moderation_trust_safety": {
+     "competence": 72.74,
+     "n": 59
+    },
+    "other": {
+     "competence": 66.89,
+     "n": 32
+    },
+    "recruiting": {
+     "competence": 81.79,
+     "n": 65
+    },
+    "risk_assessment": {
+     "competence": 50.75,
+     "n": 48
+    },
+    "scientific_discovery": {
+     "competence": 32.63,
+     "n": 42
+    },
+    "search_retrieval": {
+     "competence": 84.26,
+     "n": 67
     }
    }
   }

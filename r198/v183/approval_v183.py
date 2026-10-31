@@ -2,7 +2,7 @@
 import pathlib,json,hashlib
 sha=lambda p:hashlib.sha256(pathlib.Path(p).read_bytes()).hexdigest()
 def check_approval(W,proof):
- assert set(proof['new_rows'])=={'piccolo-27b','allec-oavg','cribl-decision-1.0-9b','cribl-decision-1.0-27b'},'REFUSED: exact four-row release required'
+ assert set(proof['new_rows'])=={'piccolo-27b','allec-oavg','cribl-decision-1.0-9b','cribl-decision-1.0-27b','zils-ai-z3-mini-soup-preview'},'REFUSED: exact five-row release required'
  a=proof['publication_approval'];assert a['status']=='GO (standing; no top-five change)' and a['fresh_baseline']=='v1.8.2' and a['top_five_effect']=='unchanged'
  p=W/'r198/v183/receipts/topfive-diff.json';d=json.loads(p.read_text());assert sha(p)==proof['topfive_diff_sha256']
  assert d['lists']==580 and d['changed_lists']==0 and not d['changed'] and d['slider_changed_states']==0 and d['explicit_slider_grid_changed']==0 and not d['custom_changed_labels'],'REFUSED: top-five change outside standing approval'

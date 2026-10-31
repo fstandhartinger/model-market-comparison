@@ -5364,5 +5364,1383 @@
    "Emphasis on Speed 20:60:20": 73.20165928745887,
    "Intelligence only": 78.63533101482005
   }
+ },
+ "zils-ai-z3-mini-soup-preview": {
+  "addendum": null,
+  "api_flag": false,
+  "api_subset": false,
+  "author": "Zils AI (zils-ai, Hugging Face)",
+  "axes": {
+   "calibration": 88.53723825429364,
+   "cost": 82.80646845066562,
+   "intelligence": 60.37854271707123,
+   "speed": 93.33840574950976
+  },
+  "calibration": {
+   "parts": {
+    "choice": {
+     "ece_hard": 0.08499474743444992,
+     "ece_score": 83.00105051311002,
+     "mean_tvd": null,
+     "n": 750,
+     "n_ece_hard": 354,
+     "n_tvd": 0,
+     "score": 82.55837824370677,
+     "score_before_time_limit": 83.00105051311002,
+     "time_limit_failed_share": 0.005333333333333333
+    },
+    "noul": {
+     "abstention_rate": 0.22399999999999998,
+     "brier": 0.07224552651595754,
+     "ece": 0.04657429281315774,
+     "n": 375,
+     "score": 90.44331439353547,
+     "score_before_time_limit": 90.68514143736846,
+     "time_limit_failed_share": 0.0026666666666666666
+    },
+    "score": {
+     "interval90_coverage": 0.9653333333333334,
+     "interval90_width": 0.20355555555555546,
+     "n": 375,
+     "nrps": 0.04756923674573589,
+     "score": 92.6100221256387,
+     "score_before_time_limit": 92.6100221256387,
+     "time_limit_failed_share": 0.0,
+     "top_ece": 0.050115160370745156
+    }
+   },
+   "score": 88.53723825429364
+  },
+  "capability": 74.45789048568244,
+  "composite_ci95": {
+   "A": [
+    75.61655166664968,
+    80.60803150799913
+   ],
+   "B": [
+    70.21122447519487,
+    76.7939527019316
+   ],
+   "C": [
+    62.49500664503328,
+    80.60803150799913
+   ]
+  },
+  "cost": {
+   "basis": "GPU-time estimate from v1.8.0: one monthly-rented RTX PRO 6000 96 GB, EUR 999/month / 730 hours, ECB USD 1.1133/EUR dated 28 Oct 2026, USD 1.5235/hour; average load 70%. Architecture: small qwen, 4B active parameters; throughput 61525 tokens/s (architecture-class calibration, 29 Oct 2026, efficient-engine prefill; capped at 100,000 tokens/s). The row's own scored cost basis: 567,051 input + 0 output tokens over 1,489 decisions. Generated tokens are counted at the same throughput as prefill. GPU-time cost USD 0.00374212007096435/1,000; old list-price estimate USD 0.0114248018804567/1,000 (deepinfra:Qwen/Qwen3.5-4B at USD 0.03/M input and USD 0/M output). Applied min(old list-price estimate, GPU-time cost) = USD 0.00374212007096435/1,000. Estimated, not a bill. Reference deepinfra:Qwen/Qwen3.5-4B is frozen at the 25 Sep cut-off and was deprecated afterwards (replaced by Qwen/Qwen3.5-9B); re-score if it changes (I-3). USD 0.00374212007 per 1,000 decisions on the frozen 1,489-item common set of this draw (USD 0.0063155701 over all 1,500 items).",
+   "common_basis": {
+    "n_items": 1489,
+    "rule": "common",
+    "usd_per_1000_all_items": 0.006315570104207651
+   },
+   "kind": "estimate",
+   "usage_estimated_rows": 0,
+   "usd_per_1000": 0.003742120070964346
+  },
+  "decision_limit": {
+   "limit_s": 10.0,
+   "n_over_limit": 5,
+   "n_over_limit_answered_ok": 5,
+   "rule": "latency_s > limit -> failed",
+   "speed_basis": "all decisions given (lane items in the raw), measured latency_s",
+   "speed_n": 1500,
+   "treatment": "share"
+  },
+  "disclosure": "Measured on the 27 Oct 2026 draw and shown unranked until that draw is equated to the reference scale. z3-mini-soup-preview is Zils AI's 4.5B decision-model merge at 1492185bb48347db2a9d88f8bf18cb0e9c17a55b, distinct from its ingredients and from the author's current z3-mini release. The pinned author README describes a uniform average of THREE decision models sharing Qwen/Qwen3.5-4B at 851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a: torchcast-ai/torchcast-decision-4b at 492bfb19662f3c6e601cc9c4bd2911ac95609ed4, perplexity-ai/pplx-decider-flash-v1.2 at 9ff7cf9838e59df461c276b7699d56b244d2af58 and vllm-sr/d3-mini at df99bf4ca4418bc6908ee68e9b7479af1f3b8800. Qwen is their shared base, not a fourth soup ingredient. According to that README, language_model.* and visual.* weights are uniformly averaged in FP32 and saved BF16; the answer layer is stated to be byte-identical to d3-mini, with tokenizer, prompt and runtime unchanged. These are the author's provenance claims; no tensor-content comparison was performed. The author's own native serving path was measured on rented hardware. Choice, noul and score return native probabilities without generated answer text or reasoning. Text only; image and video were not measured. CONFIGURATION DISCLOSURE: The soup's model.json profile (d3-mini-4.5b-v1, max_input_tokens: 8192) describes a different packaged profile, and the retained NOTICE-torchcast describes the torchcast_decision package's 16,384-token head/tail truncation, yes/no commit floor 0.801 and T=0.9. These settings are not read or applied by the selected native d3 runtime. Text inspection of pinned d3_runtime.py/d3_server.py finds no model.json or NOTICE-torchcast read and no torchcast commit-floor implementation. Native configuration is decision_config.json (max_length: null, temperature: 1.0); the native health response reports max_input_tokens null. No 8192/16384 cap, truncation or commit floor applies on this serving path. No configured input-length cap and no truncation; the preregistered refusal set was empty. Offline count: 1,500 items, 964,081 input tokens and maximum answered input 80,357 tokens. Successful public native and frozen-adapter probes through 81,965 tokens establish those probes only, not unlimited context. All 1,500 requests answered with zero refusals, zero errors and zero native deviations, without scored retry. Processed input: 964,081 measured server input tokens, equal to the offline count with zero mismatches; output zero. Five decisions exceeded 10 s and were answered; this observation does not change native completion accounting or selectively exclude items. Time-limit treatment follows the frozen scoring view. Scored loop: 110.09967112541199 s. Displayed self-hosted latency is an estimate under the shared method, not a measured hosted endpoint. Replay: 50 requests, 50 bit-identical, zero argmax flips and maximum absolute probability difference 0.0. Warm-up preceded timed public probes, the scored server passed a separate public pre-warm and post-run health was ready. Apache-2.0 is declared for the soup, shared base and three ingredients; LICENSE, LICENSE-pplx, LICENSE-torchcast, LICENSE-qwen-Apache-2.0, NOTICE, NOTICE-pplx and NOTICE-torchcast were retained. The card discloses possible third-party benchmark overlap. We did not inspect training data or verify overlap with JevBench public or sealed items; no clean-training claim is made. Zils' private exam figures are self-reported and are neither JevBench nor Decision Index measurements. One completed scored run on this draw; usage, native-deviation, replay, health and long-latency checks do not alter scored responses.",
+  "display": "z3-mini-soup-preview (Zils AI)",
+  "draw": {
+   "drawn_on": "2026-10-27",
+   "g_med": 2.573387642438244,
+   "id": "v1.6-regular-20261027",
+   "label": "Third regular draw",
+   "measured_on": "2026-10-31",
+   "offset": {
+    "C": 0,
+    "I": 0
+   },
+   "offset_ci95": null,
+   "release": "v1.8.3",
+   "results_sha256": "0993472811a8124ed255d64f901555d597cf14cbc5870e5471b368a8b50c2cdc",
+   "status": "anchor-runs-pending"
+  },
+  "endpoint_condition": "Measured 31 Oct 2026 on an evaluator-owned rented Verda VM in FIN-03 (Finland, EU), one NVIDIA RTX PRO 6000 Blackwell Server Edition, nominal 96 GB (97,887 MiB reported), PAYG non-spot instance type 1RTXPRO6000.30V, image 24.04.cuda13.0, driver 580.178.04. This is the measured device, without establishing a minimum. The author's native d3_server.py, d3_runtime.py and d3_format.py at model revision 1492185bb48347db2a9d88f8bf18cb0e9c17a55b ran unmodified in a pinned dependency container, with read-only source, model and input, private output, empty credentials and offline flags. The first-party launcher set D3_FAST=0 and checked NVIDIA CUDA without HIP, model.fast is None, inactive fast_report and no imported d3_kernels. Alternative modeling_d3, pipeline_d3 and d3_engine paths were not used. Native defaults: batch size 8, BF16 backbone, SDPA, noncausal full attention, float32 255-way readout, temperature 1.0, permutation averaging off and normal warm-up. One question per frozen adapter request gives one unpadded forward pass, without generated text, inference ensemble, host retry or answer repair. The shipped tokenizer/chat template uses thinking disabled, add_generation_prompt=True and add_special_tokens=False; state JSON serialization and option order are preserved. decision_config.json has max_length null, without cap, truncation or splitting. Native usage counts rendered input, with output_tokens zero. Runtime: torch 2.13.0+cu130, transformers 5.17.0, tokenizers 0.23.2, safetensors 0.8.0, accelerate 1.15.0 and hash-pinned fla-core/flash-linear-attention 0.5.2 overlay wheels. Base dependency image vllm/vllm-openai:v0.31.0@sha256:a4a4c0437bf7240089da5f08aa370c4aee17ae5290f7a3b468825ee26c4c3a6b; derived image sha256:c0d0cc0aa868be27d9502d8a1fff9537d378b530588a702b3f492991101c8097. The image supplies dependencies; the vLLM engine is not used and stock-vLLM equivalence is not claimed. All 31 pinned snapshot files, including five selected author-source files and tokenizer hashes, were verified on the measuring VM. Weight body: 4,539,265,536 BF16 parameters plus separate readout. Author source and weights ran only on the disposable rented VM, read-only, offline and without infrastructure credentials. No benchmark-item-specific branch or answer lookup was found in the reviewed serving closure. Dormant media-loading capabilities were confined by text-only requests, local-only loading and network isolation, proven before sealed input. Public native probes from 256 through 81,965 tokens and frozen-adapter probes covered the documented types, 255 choices, long state and Unicode JSON, with native usage equality. Unsupported 11-level score returned native HTTP 422 with healthy recovery. The API does not expose token IDs; no token-ID concordance is claimed. Separate public warm-ups and scored-server pre-warm passed. Complete 1,500-request run, driver exit 0, scored loop 110.09967112541199 s. Raw output sha256 65a4e01f340356f1e2d081e8124dee3ae860a18efd3089420a6293516b3e7848 was verified. Post-run health was ready. The VM was closed and temporary node and local copies deleted; provider deletion and guard release were confirmed before deadline. GPU rental spend is separate from the benchmark model-cost estimate.",
+  "endpoint_kind": "gpu",
+  "full_coverage": true,
+  "intelligence": {
+   "I_open": 61.65701809583451,
+   "I_sealed": 59.10006733830795,
+   "base": 60.37854271707123,
+   "excess": -0.016436884911686267,
+   "gap": 2.5569507575265575,
+   "penalty": 1.0,
+   "per_type_split": {
+    "open|choice": {
+     "cc": 79.73211095692285,
+     "n": {
+      "easy": 33,
+      "hard": 68,
+      "judge": 32,
+      "standard": 17
+     },
+     "tiers": {
+      "easy": 100.00000000000001,
+      "hard": 75.46398238439761,
+      "judge": 80.22412656558998,
+      "standard": 77.39640016743407
+     }
+    },
+    "open|noul": {
+     "cc": 55.73567977915805,
+     "n": {
+      "easy": 14,
+      "hard": 23,
+      "judge": 20,
+      "standard": 18
+     },
+     "tiers": {
+      "easy": 85.71428571428572,
+      "hard": 56.52173913043479,
+      "judge": 30.000000000000004,
+      "standard": 77.77777777777777
+     }
+    },
+    "open|score": {
+     "cc": 49.50326355142264,
+     "n": {
+      "easy": 9,
+      "hard": 29,
+      "judge": 21,
+      "standard": 16
+     },
+     "tiers": {
+      "easy": 42.36703552557173,
+      "hard": 58.774962181660825,
+      "judge": 49.28732325694908,
+      "standard": 34.85189074558206
+     }
+    },
+    "sealed|choice": {
+     "cc": 72.62381782226213,
+     "n": {
+      "easy": 73,
+      "hard": 286,
+      "judge": 135,
+      "standard": 106
+     },
+     "tiers": {
+      "easy": 96.06943989518508,
+      "hard": 58.64145362349462,
+      "judge": 74.11561691113029,
+      "standard": 86.62803655003343
+     }
+    },
+    "sealed|noul": {
+     "cc": 35.786283829157455,
+     "n": {
+      "easy": 87,
+      "hard": 82,
+      "judge": 45,
+      "standard": 86
+     },
+     "tiers": {
+      "easy": 72.41379310344827,
+      "hard": -4.878048780487809,
+      "judge": 64.44444444444444,
+      "standard": 55.81395348837211
+     }
+    },
+    "sealed|score": {
+     "cc": 68.89010036350427,
+     "n": {
+      "easy": 68,
+      "hard": 112,
+      "judge": 56,
+      "standard": 64
+     },
+     "tiers": {
+      "easy": 89.73001014549912,
+      "hard": 49.583639851209874,
+      "judge": 78.40672150709187,
+      "standard": 82.8081347817142
+     }
+    }
+   }
+  },
+  "jevbench_score": 78.9781609320561,
+  "key": "zils-ai-z3-mini-soup-preview",
+  "last_measured_on": "2026-10-31",
+  "licence": "Apache-2.0 declared for the soup, shared Qwen/Qwen3.5-4B base and all three decision-model ingredients; shipped ingredient licences and notices retained",
+  "listing": "unranked",
+  "measured_in": "v1.8.3",
+  "measurement_date_status": "measured",
+  "method": "v1.7",
+  "model_pin": "zils-ai/z3-mini-soup-preview@1492185bb48347db2a9d88f8bf18cb0e9c17a55b",
+  "new_in": "v1.8.3",
+  "not_ranked_because": "Measured on the 27 Oct 2026 draw, which is not yet equated to the reference scale; stronger anchor runs for that draw are being measured. Shown unranked until then.",
+  "noul_decisive": {
+   "acc_among_decisive": 0.9587628865979382,
+   "decisive": 291,
+   "decisive_rate": 0.776,
+   "n": 375,
+   "supported": true,
+   "valid": 375
+  },
+  "paid_fast_lane": false,
+  "planned_weight_denominator": 1.0,
+  "rank": null,
+  "ranked": false,
+  "ranks": {
+   "A": null,
+   "B": null,
+   "C": null,
+   "capability": null
+  },
+  "repo": "https://huggingface.co/zils-ai/z3-mini-soup-preview",
+  "scores": {
+   "A": 78.9781609320561,
+   "B": 74.39470137654632,
+   "C": 78.9781609320561
+  },
+  "speed": {
+   "adjustment": "Self-hosted latency estimate under the shared method (assumption, not measured)",
+   "basis": "all decisions given (lane items in the raw), measured latency_s",
+   "n": 1500,
+   "p50_s_adjusted": 0.20202233800002886,
+   "p50_s_raw": 0.026011169000014434,
+   "p95_s_adjusted": 0.2294880270001613,
+   "p95_s_raw": 0.03974401350008065
+  },
+  "status": {
+   "answered_ok": 1500,
+   "missing": 0,
+   "rows": 1500,
+   "status": "complete"
+  },
+  "support": {
+   "choice": "native",
+   "noul": "native",
+   "score": "native"
+  },
+  "v16": {
+   "api_subset": false,
+   "api_subset_tag": null,
+   "breakdowns": {
+    "family": {
+     "calibration": {
+      "accuracy": 0.75,
+      "cc": 66.66666666666666,
+      "cc_by_type": {
+       "choice": 100.0,
+       "noul": 33.33333333333333
+      },
+      "low_n": true,
+      "n": 4,
+      "n_by_type": {
+       "choice": 1,
+       "noul": 3
+      },
+      "score": 66.66666666666666
+     },
+     "calibration_gen": {
+      "accuracy": 0.42857142857142855,
+      "cc": 30.463015356108887,
+      "cc_by_type": {
+       "choice": 22.077922077922082,
+       "noul": 100.0,
+       "score": -30.688876009595422
+      },
+      "low_n": true,
+      "n": 14,
+      "n_by_type": {
+       "choice": 5,
+       "noul": 2,
+       "score": 7
+      },
+      "score": 30.463015356108887
+     },
+     "composite_gen": {
+      "accuracy": 0.8421052631578947,
+      "cc": 84.71273301679095,
+      "cc_by_type": {
+       "choice": 100.0,
+       "noul": 100.0,
+       "score": 54.13819905037286
+      },
+      "low_n": true,
+      "n": 19,
+      "n_by_type": {
+       "choice": 5,
+       "noul": 5,
+       "score": 9
+      },
+      "score": 84.71273301679095
+     },
+     "fairness": {
+      "accuracy": 1.0,
+      "cc": 99.9324569444144,
+      "cc_by_type": {
+       "choice": 100.0,
+       "noul": 100.0,
+       "score": 99.79737083324316
+      },
+      "low_n": true,
+      "n": 21,
+      "n_by_type": {
+       "choice": 9,
+       "noul": 6,
+       "score": 6
+      },
+      "score": 99.9324569444144
+     },
+     "jaggedness": {
+      "accuracy": 0.6363636363636364,
+      "cc": 28.673345053446695,
+      "cc_by_type": {
+       "choice": 75.30864197530866,
+       "noul": -33.333333333333336,
+       "score": 44.04472651836476
+      },
+      "low_n": true,
+      "n": 22,
+      "n_by_type": {
+       "choice": 11,
+       "noul": 3,
+       "score": 8
+      },
+      "score": 28.673345053446695
+     },
+     "llm_router": {
+      "accuracy": 0.8333333333333334,
+      "cc": 74.27245387786213,
+      "cc_by_type": {
+       "choice": 81.49236192714454,
+       "noul": 82.6086956521739,
+       "score": 58.71630405426793
+      },
+      "low_n": false,
+      "n": 90,
+      "n_by_type": {
+       "choice": 45,
+       "noul": 23,
+       "score": 22
+      },
+      "score": 74.27245387786213
+     },
+     "long_state": {
+      "accuracy": 0.0,
+      "cc": -64.51612903225806,
+      "cc_by_type": {
+       "choice": -29.032258064516128,
+       "noul": -100.0
+      },
+      "low_n": true,
+      "n": 5,
+      "n_by_type": {
+       "choice": 4,
+       "noul": 1
+      },
+      "score": 0.0
+     },
+     "ml_usecase": {
+      "accuracy": 0.0,
+      "cc": -66.66666666666667,
+      "cc_by_type": {
+       "choice": -33.333333333333336,
+       "noul": -100.0
+      },
+      "low_n": true,
+      "n": 2,
+      "n_by_type": {
+       "choice": 1,
+       "noul": 1
+      },
+      "score": 0.0
+     },
+     "multilingual": {
+      "accuracy": 0.7915309446254072,
+      "cc": 64.80370892748115,
+      "cc_by_type": {
+       "choice": 72.51562836818282,
+       "noul": 47.54098360655738,
+       "score": 74.35451480770328
+      },
+      "low_n": false,
+      "n": 921,
+      "n_by_type": {
+       "choice": 430,
+       "noul": 244,
+       "score": 247
+      },
+      "score": 64.80370892748115
+     },
+     "negation_pair_gen": {
+      "accuracy": 0.7727272727272727,
+      "cc": 58.333333333333336,
+      "cc_by_type": {
+       "choice": 100.0,
+       "noul": 16.666666666666675
+      },
+      "low_n": true,
+      "n": 22,
+      "n_by_type": {
+       "choice": 10,
+       "noul": 12
+      },
+      "score": 58.333333333333336
+     },
+     "option_order": {
+      "accuracy": 0.8888888888888888,
+      "cc": 85.71428571428571,
+      "cc_by_type": {
+       "choice": 85.71428571428571
+      },
+      "low_n": true,
+      "n": 27,
+      "n_by_type": {
+       "choice": 27
+      },
+      "score": 85.71428571428571
+     },
+     "perturb_pair": {
+      "accuracy": 0.9285714285714286,
+      "cc": 84.86284370342919,
+      "cc_by_type": {
+       "choice": 100.0,
+       "noul": 80.0,
+       "score": 74.58853111028759
+      },
+      "low_n": true,
+      "n": 28,
+      "n_by_type": {
+       "choice": 14,
+       "noul": 10,
+       "score": 4
+      },
+      "score": 84.86284370342919
+     },
+     "usecase": {
+      "accuracy": 0.7569230769230769,
+      "cc": 58.388081798178746,
+      "cc_by_type": {
+       "choice": 70.82421590080233,
+       "noul": 38.46153846153846,
+       "score": 65.87849103219547
+      },
+      "low_n": false,
+      "n": 325,
+      "n_by_type": {
+       "choice": 188,
+       "noul": 65,
+       "score": 72
+      },
+      "score": 58.388081798178746
+     }
+    },
+    "lang": {
+     "ar": {
+      "accuracy": 0.8095238095238095,
+      "cc": 74.93842231856065,
+      "cc_by_type": {
+       "choice": 58.904109589041084,
+       "noul": 66.66666666666667,
+       "score": 99.2444906999742
+      },
+      "low_n": true,
+      "n": 21,
+      "n_by_type": {
+       "choice": 10,
+       "noul": 6,
+       "score": 5
+      },
+      "score": 74.93842231856065
+     },
+     "cs": {
+      "accuracy": 0.6756756756756757,
+      "cc": 42.017488778500805,
+      "cc_by_type": {
+       "choice": 59.89304812834225,
+       "noul": 11.111111111111116,
+       "score": 55.04830709604905
+      },
+      "low_n": false,
+      "n": 37,
+      "n_by_type": {
+       "choice": 17,
+       "noul": 9,
+       "score": 11
+      },
+      "score": 42.017488778500805
+     },
+     "da": {
+      "accuracy": 0.6944444444444444,
+      "cc": 34.009486797199784,
+      "cc_by_type": {
+       "choice": 77.63975155279502,
+       "noul": 9.090909090909083,
+       "score": 15.297799747895258
+      },
+      "low_n": false,
+      "n": 36,
+      "n_by_type": {
+       "choice": 19,
+       "noul": 11,
+       "score": 6
+      },
+      "score": 34.009486797199784
+     },
+     "de": {
+      "accuracy": 0.8125,
+      "cc": 58.27024277652182,
+      "cc_by_type": {
+       "choice": 76.84589657833804,
+       "noul": 25.0,
+       "score": 72.9648317512274
+      },
+      "low_n": false,
+      "n": 48,
+      "n_by_type": {
+       "choice": 30,
+       "noul": 8,
+       "score": 10
+      },
+      "score": 58.27024277652182
+     },
+     "el": {
+      "accuracy": 0.7142857142857143,
+      "cc": 55.15309245190755,
+      "cc_by_type": {
+       "choice": 65.38461538461539,
+       "noul": 19.999999999999996,
+       "score": 80.07466197110725
+      },
+      "low_n": true,
+      "n": 28,
+      "n_by_type": {
+       "choice": 12,
+       "noul": 10,
+       "score": 6
+      },
+      "score": 55.15309245190755
+     },
+     "en": {
+      "accuracy": 0.7747747747747747,
+      "cc": 61.35516791204956,
+      "cc_by_type": {
+       "choice": 75.5061115355233,
+       "noul": 47.54098360655738,
+       "score": 61.018408594068006
+      },
+      "low_n": false,
+      "n": 555,
+      "n_by_type": {
+       "choice": 311,
+       "noul": 122,
+       "score": 122
+      },
+      "score": 61.35516791204956
+     },
+     "es": {
+      "accuracy": 0.8378378378378378,
+      "cc": 76.81366262833109,
+      "cc_by_type": {
+       "choice": 78.34803528468322,
+       "noul": 77.77777777777777,
+       "score": 74.31517482253227
+      },
+      "low_n": false,
+      "n": 37,
+      "n_by_type": {
+       "choice": 19,
+       "noul": 9,
+       "score": 9
+      },
+      "score": 76.81366262833109
+     },
+     "fi": {
+      "accuracy": 0.8076923076923077,
+      "cc": 71.93571139999516,
+      "cc_by_type": {
+       "choice": 58.85714285714286,
+       "noul": 68.42105263157893,
+       "score": 88.52893871126366
+      },
+      "low_n": false,
+      "n": 52,
+      "n_by_type": {
+       "choice": 21,
+       "noul": 19,
+       "score": 12
+      },
+      "score": 71.93571139999516
+     },
+     "fr": {
+      "accuracy": 0.8125,
+      "cc": 73.18629639567628,
+      "cc_by_type": {
+       "choice": 69.38775510204081,
+       "noul": 77.77777777777777,
+       "score": 72.39335630721028
+      },
+      "low_n": false,
+      "n": 32,
+      "n_by_type": {
+       "choice": 14,
+       "noul": 9,
+       "score": 9
+      },
+      "score": 73.18629639567628
+     },
+     "hi": {
+      "accuracy": 0.6756756756756757,
+      "cc": 48.187913660434646,
+      "cc_by_type": {
+       "choice": 66.94214876033057,
+       "noul": 11.111111111111116,
+       "score": 66.51048110986225
+      },
+      "low_n": false,
+      "n": 37,
+      "n_by_type": {
+       "choice": 17,
+       "noul": 9,
+       "score": 11
+      },
+      "score": 48.187913660434646
+     },
+     "id": {
+      "accuracy": 0.8048780487804879,
+      "cc": 67.21360401998716,
+      "cc_by_type": {
+       "choice": 72.35023041474655,
+       "noul": 50.0,
+       "score": 79.29058164521496
+      },
+      "low_n": false,
+      "n": 41,
+      "n_by_type": {
+       "choice": 15,
+       "noul": 12,
+       "score": 14
+      },
+      "score": 67.21360401998716
+     },
+     "it": {
+      "accuracy": 0.7555555555555555,
+      "cc": 60.014571162909114,
+      "cc_by_type": {
+       "choice": 76.04259094942324,
+       "noul": 50.0,
+       "score": 54.00112253930411
+      },
+      "low_n": false,
+      "n": 45,
+      "n_by_type": {
+       "choice": 17,
+       "noul": 12,
+       "score": 16
+      },
+      "score": 60.014571162909114
+     },
+     "ja": {
+      "accuracy": 0.8181818181818182,
+      "cc": 70.20061533866532,
+      "cc_by_type": {
+       "choice": 61.139896373057,
+       "noul": 81.81818181818181,
+       "score": 67.64376782475713
+      },
+      "low_n": false,
+      "n": 44,
+      "n_by_type": {
+       "choice": 17,
+       "noul": 11,
+       "score": 16
+      },
+      "score": 70.20061533866532
+     },
+     "ko": {
+      "accuracy": 0.7906976744186046,
+      "cc": 66.61203065021427,
+      "cc_by_type": {
+       "choice": 77.94117647058825,
+       "noul": 39.99999999999999,
+       "score": 81.89491548005456
+      },
+      "low_n": false,
+      "n": 43,
+      "n_by_type": {
+       "choice": 18,
+       "noul": 10,
+       "score": 15
+      },
+      "score": 66.61203065021427
+     },
+     "mixed": {
+      "accuracy": 0.9375,
+      "cc": 88.79269004125943,
+      "cc_by_type": {
+       "choice": 100.0,
+       "noul": 80.0,
+       "score": 86.37807012377827
+      },
+      "low_n": false,
+      "n": 64,
+      "n_by_type": {
+       "choice": 26,
+       "noul": 20,
+       "score": 18
+      },
+      "score": 88.79269004125943
+     },
+     "nl": {
+      "accuracy": 0.8333333333333334,
+      "cc": 58.435744006807504,
+      "cc_by_type": {
+       "choice": 78.77358490566037,
+       "noul": 60.00000000000001,
+       "score": 36.533647114762125
+      },
+      "low_n": false,
+      "n": 36,
+      "n_by_type": {
+       "choice": 20,
+       "noul": 10,
+       "score": 6
+      },
+      "score": 58.435744006807504
+     },
+     "no": {
+      "accuracy": 0.7254901960784313,
+      "cc": 55.996266712983946,
+      "cc_by_type": {
+       "choice": 58.691910499139425,
+       "noul": 46.66666666666666,
+       "score": 62.63022297314576
+      },
+      "low_n": false,
+      "n": 51,
+      "n_by_type": {
+       "choice": 27,
+       "noul": 15,
+       "score": 9
+      },
+      "score": 55.996266712983946
+     },
+     "pl": {
+      "accuracy": 0.7368421052631579,
+      "cc": 51.549190895030385,
+      "cc_by_type": {
+       "choice": 71.26130920702501,
+       "noul": 17.647058823529417,
+       "score": 65.73920465453672
+      },
+      "low_n": false,
+      "n": 57,
+      "n_by_type": {
+       "choice": 28,
+       "noul": 17,
+       "score": 12
+      },
+      "score": 51.549190895030385
+     },
+     "pt": {
+      "accuracy": 0.8085106382978723,
+      "cc": 71.01519483978855,
+      "cc_by_type": {
+       "choice": 70.04991680532446,
+       "noul": 66.66666666666667,
+       "score": 76.32900104737452
+      },
+      "low_n": false,
+      "n": 47,
+      "n_by_type": {
+       "choice": 23,
+       "noul": 12,
+       "score": 12
+      },
+      "score": 71.01519483978855
+     },
+     "sv": {
+      "accuracy": 0.7608695652173914,
+      "cc": 54.98755465877631,
+      "cc_by_type": {
+       "choice": 66.4804469273743,
+       "noul": 16.666666666666675,
+       "score": 81.81555038228797
+      },
+      "low_n": false,
+      "n": 46,
+      "n_by_type": {
+       "choice": 21,
+       "noul": 12,
+       "score": 13
+      },
+      "score": 54.98755465877631
+     },
+     "tr": {
+      "accuracy": 0.7608695652173914,
+      "cc": 62.9186169331488,
+      "cc_by_type": {
+       "choice": 58.950969213226905,
+       "noul": 39.99999999999999,
+       "score": 89.8048815862195
+      },
+      "low_n": false,
+      "n": 46,
+      "n_by_type": {
+       "choice": 20,
+       "noul": 10,
+       "score": 16
+      },
+      "score": 62.9186169331488
+     },
+     "uk": {
+      "accuracy": 0.8571428571428571,
+      "cc": 69.0319087128396,
+      "cc_by_type": {
+       "choice": 83.56164383561644,
+       "noul": 71.42857142857142,
+       "score": 52.10551087433093
+      },
+      "low_n": false,
+      "n": 56,
+      "n_by_type": {
+       "choice": 26,
+       "noul": 14,
+       "score": 16
+      },
+      "score": 69.0319087128396
+     },
+     "zh": {
+      "accuracy": 0.8536585365853658,
+      "cc": 70.86145522484077,
+      "cc_by_type": {
+       "choice": 81.40495867768595,
+       "noul": 50.0,
+       "score": 81.17940699683635
+      },
+      "low_n": false,
+      "n": 41,
+      "n_by_type": {
+       "choice": 22,
+       "noul": 8,
+       "score": 11
+      },
+      "score": 70.86145522484077
+     }
+    },
+    "type": {
+     "choice": {
+      "accuracy": 0.8066666666666666,
+      "cc": 73.62863869214212,
+      "cc_by_type": {
+       "choice": 73.62863869214212
+      },
+      "low_n": false,
+      "n": 750,
+      "n_by_type": {
+       "choice": 750
+      },
+      "score": 73.62863869214212
+     },
+     "noul": {
+      "accuracy": 0.7413333333333333,
+      "cc": 48.26666666666666,
+      "cc_by_type": {
+       "noul": 48.26666666666666
+      },
+      "low_n": false,
+      "n": 375,
+      "n_by_type": {
+       "noul": 375
+      },
+      "score": 48.26666666666666
+     },
+     "score": {
+      "accuracy": 0.784,
+      "cc": 69.58384416595884,
+      "cc_by_type": {
+       "score": 69.58384416595884
+      },
+      "low_n": false,
+      "n": 375,
+      "n_by_type": {
+       "score": 375
+      },
+      "score": 69.58384416595884
+     }
+    },
+    "usecase": {
+     "advertising": {
+      "accuracy": 0.7708333333333334,
+      "cc": 62.54857085107674,
+      "cc_by_type": {
+       "choice": 68.86582653817642,
+       "noul": 42.85714285714286,
+       "score": 75.92274315791096
+      },
+      "low_n": false,
+      "n": 48,
+      "n_by_type": {
+       "choice": 31,
+       "noul": 7,
+       "score": 10
+      },
+      "score": 62.54857085107674
+     },
+     "code_linting": {
+      "accuracy": 0.7971014492753623,
+      "cc": 62.171673174089364,
+      "cc_by_type": {
+       "choice": 81.62890385793018,
+       "noul": 50.0,
+       "score": 54.8861156643379
+      },
+      "low_n": false,
+      "n": 69,
+      "n_by_type": {
+       "choice": 38,
+       "noul": 12,
+       "score": 19
+      },
+      "score": 62.171673174089364
+     },
+     "customer_support": {
+      "accuracy": 0.8181818181818182,
+      "cc": 56.44476794192369,
+      "cc_by_type": {
+       "choice": 88.92988929889299,
+       "noul": -6.666666666666665,
+       "score": 87.07108119354476
+      },
+      "low_n": false,
+      "n": 66,
+      "n_by_type": {
+       "choice": 38,
+       "noul": 15,
+       "score": 13
+      },
+      "score": 56.44476794192369
+     },
+     "demand_forecasting": {
+      "accuracy": 0.5454545454545454,
+      "cc": 8.41339621997031,
+      "cc_by_type": {
+       "choice": 49.96209249431388,
+       "noul": -69.23076923076923,
+       "score": 44.50886539636627
+      },
+      "low_n": false,
+      "n": 66,
+      "n_by_type": {
+       "choice": 30,
+       "noul": 13,
+       "score": 23
+      },
+      "score": 8.41339621997031
+     },
+     "ecommerce_marketplaces": {
+      "accuracy": 0.7580645161290323,
+      "cc": 57.816380030470064,
+      "cc_by_type": {
+       "choice": 66.22097114707952,
+       "noul": 41.176470588235304,
+       "score": 66.05169835609534
+      },
+      "low_n": false,
+      "n": 62,
+      "n_by_type": {
+       "choice": 33,
+       "noul": 17,
+       "score": 12
+      },
+      "score": 57.816380030470064
+     },
+     "feature_extraction": {
+      "accuracy": 0.7777777777777778,
+      "cc": 64.49070867310026,
+      "cc_by_type": {
+       "choice": 69.84924623115577,
+       "noul": 57.14285714285714,
+       "score": 66.48002264528787
+      },
+      "low_n": false,
+      "n": 72,
+      "n_by_type": {
+       "choice": 37,
+       "noul": 14,
+       "score": 21
+      },
+      "score": 64.49070867310026
+     },
+     "financial_crime": {
+      "accuracy": 0.7619047619047619,
+      "cc": 39.84587853896874,
+      "cc_by_type": {
+       "choice": 80.86124401913877,
+       "noul": -27.27272727272727,
+       "score": 65.94911887049473
+      },
+      "low_n": false,
+      "n": 63,
+      "n_by_type": {
+       "choice": 44,
+       "noul": 11,
+       "score": 8
+      },
+      "score": 39.84587853896874
+     },
+     "gaming": {
+      "accuracy": 0.6551724137931034,
+      "cc": 53.048624684294566,
+      "cc_by_type": {
+       "choice": 47.41035856573706,
+       "noul": 55.55555555555556,
+       "score": 56.179959931591064
+      },
+      "low_n": false,
+      "n": 58,
+      "n_by_type": {
+       "choice": 29,
+       "noul": 9,
+       "score": 20
+      },
+      "score": 53.048624684294566
+     },
+     "insurance_claims": {
+      "accuracy": 0.6774193548387096,
+      "cc": 40.07754483742274,
+      "cc_by_type": {
+       "choice": 64.36525612472161,
+       "noul": 5.882352941176472,
+       "score": 49.98502544637012
+      },
+      "low_n": false,
+      "n": 62,
+      "n_by_type": {
+       "choice": 31,
+       "noul": 17,
+       "score": 14
+      },
+      "score": 40.07754483742274
+     },
+     "knowledge_graphs": {
+      "accuracy": 0.7761194029850746,
+      "cc": 63.78983045451344,
+      "cc_by_type": {
+       "choice": 68.51574212893554,
+       "noul": 69.23076923076923,
+       "score": 53.62298000383557
+      },
+      "low_n": false,
+      "n": 67,
+      "n_by_type": {
+       "choice": 30,
+       "noul": 13,
+       "score": 24
+      },
+      "score": 63.78983045451344
+     },
+     "lead_generation": {
+      "accuracy": 0.7866666666666666,
+      "cc": 69.84421442793199,
+      "cc_by_type": {
+       "choice": 57.686882933709455,
+       "noul": 71.42857142857142,
+       "score": 80.41718892151508
+      },
+      "low_n": false,
+      "n": 75,
+      "n_by_type": {
+       "choice": 33,
+       "noul": 35,
+       "score": 7
+      },
+      "score": 69.84421442793199
+     },
+     "legal_compliance": {
+      "accuracy": 0.8392857142857143,
+      "cc": 70.55211316688862,
+      "cc_by_type": {
+       "choice": 69.90972918756269,
+       "noul": 57.14285714285714,
+       "score": 84.60375317024604
+      },
+      "low_n": false,
+      "n": 56,
+      "n_by_type": {
+       "choice": 23,
+       "noul": 14,
+       "score": 19
+      },
+      "score": 70.55211316688862
+     },
+     "llm_guardrails": {
+      "accuracy": 0.9577464788732394,
+      "cc": 88.7498950727282,
+      "cc_by_type": {
+       "choice": 100.0,
+       "noul": 76.92307692307692,
+       "score": 89.32660829510766
+      },
+      "low_n": false,
+      "n": 71,
+      "n_by_type": {
+       "choice": 34,
+       "noul": 26,
+       "score": 11
+      },
+      "score": 88.7498950727282
+     },
+     "model_routing": {
+      "accuracy": 0.8108108108108109,
+      "cc": 70.55996212888175,
+      "cc_by_type": {
+       "choice": 81.30517569672841,
+       "noul": 76.47058823529412,
+       "score": 53.90412245462273
+      },
+      "low_n": false,
+      "n": 148,
+      "n_by_type": {
+       "choice": 84,
+       "noul": 34,
+       "score": 30
+      },
+      "score": 70.55996212888175
+     },
+     "moderation_trust_safety": {
+      "accuracy": 0.8135593220338984,
+      "cc": 72.73850984927157,
+      "cc_by_type": {
+       "choice": 73.8562091503268,
+       "noul": 64.70588235294117,
+       "score": 79.65343804454672
+      },
+      "low_n": false,
+      "n": 59,
+      "n_by_type": {
+       "choice": 21,
+       "noul": 17,
+       "score": 21
+      },
+      "score": 72.73850984927157
+     },
+     "other": {
+      "accuracy": 0.71875,
+      "cc": 66.89425372434732,
+      "cc_by_type": {
+       "choice": 46.72586015538292,
+       "noul": 66.66666666666667,
+       "score": 87.29023435099238
+      },
+      "low_n": false,
+      "n": 32,
+      "n_by_type": {
+       "choice": 21,
+       "noul": 6,
+       "score": 5
+      },
+      "score": 66.89425372434732
+     },
+     "recruiting": {
+      "accuracy": 0.8923076923076924,
+      "cc": 81.79470053326277,
+      "cc_by_type": {
+       "choice": 82.69646719538572,
+       "noul": 84.00000000000001,
+       "score": 78.68763440440259
+      },
+      "low_n": false,
+      "n": 65,
+      "n_by_type": {
+       "choice": 32,
+       "noul": 25,
+       "score": 8
+      },
+      "score": 81.79470053326277
+     },
+     "risk_assessment": {
+      "accuracy": 0.75,
+      "cc": 50.750482490010455,
+      "cc_by_type": {
+       "choice": 62.34309623430962,
+       "noul": 23.076923076923084,
+       "score": 66.83142815879866
+      },
+      "low_n": false,
+      "n": 48,
+      "n_by_type": {
+       "choice": 22,
+       "noul": 13,
+       "score": 13
+      },
+      "score": 50.750482490010455
+     },
+     "scientific_discovery": {
+      "accuracy": 0.6190476190476191,
+      "cc": 32.626747786114855,
+      "cc_by_type": {
+       "choice": 55.8282208588957,
+       "noul": -19.999999999999996,
+       "score": 62.05202249944885
+      },
+      "low_n": false,
+      "n": 42,
+      "n_by_type": {
+       "choice": 18,
+       "noul": 10,
+       "score": 14
+      },
+      "score": 32.626747786114855
+     },
+     "search_retrieval": {
+      "accuracy": 0.9552238805970149,
+      "cc": 84.26413369466859,
+      "cc_by_type": {
+       "choice": 100.0,
+       "noul": 57.14285714285714,
+       "score": 95.64954394114862
+      },
+      "low_n": false,
+      "n": 67,
+      "n_by_type": {
+       "choice": 14,
+       "noul": 14,
+       "score": 39
+      },
+      "score": 84.26413369466859
+     }
+    }
+   },
+   "breakdowns_equated": false,
+   "ci95": {
+    "B": 1000,
+    "C": [
+     83.75052873570678,
+     89.40953637828751
+    ],
+    "I": [
+     54.5770645220429,
+     64.65608496363897
+    ],
+    "capability": [
+     69.74294023751452,
+     76.4928325476728
+    ],
+    "composite": {
+     "A": [
+      75.61655166664968,
+      80.60803150799913
+     ],
+     "B": [
+      70.21122447519487,
+      76.7939527019316
+     ],
+     "C": [
+      62.49500664503328,
+      80.60803150799913
+     ]
+    },
+    "seed": 16
+   },
+   "ci95_n": 1200,
+   "complete": true,
+   "equated": null,
+   "equating_flag": null,
+   "equating_offset": null,
+   "full_set_api": false,
+   "g_med_used": 2.573387642438244,
+   "lane": "selfhosted",
+   "metric_basis": "S u P",
+   "n_items": 1500,
+   "n_public": 300,
+   "n_sealed_side": 1200,
+   "on_S": {
+    "calibration": 88.53723825429364,
+    "capability": 74.45789048568244,
+    "intelligence": 60.37854271707123
+   },
+   "per_type": {
+    "choice": {
+     "accuracy": 0.8066666666666666,
+     "calibration": 82.55837824370677,
+     "cc": 73.62863869214212,
+     "cc_by_type": {
+      "choice": 73.62863869214212
+     },
+     "cc_tiered": 76.17796438959249,
+     "cc_tiered_open": 79.73211095692285,
+     "cc_tiered_sealed": 72.62381782226213,
+     "low_n": false,
+     "n": 750,
+     "n_by_type": {
+      "choice": 750
+     },
+     "score": 73.62863869214212
+    },
+    "noul": {
+     "accuracy": 0.7413333333333333,
+     "calibration": 90.44331439353547,
+     "cc": 48.26666666666666,
+     "cc_by_type": {
+      "noul": 48.26666666666666
+     },
+     "cc_tiered": 45.76098180415775,
+     "cc_tiered_open": 55.73567977915805,
+     "cc_tiered_sealed": 35.786283829157455,
+     "low_n": false,
+     "n": 375,
+     "n_by_type": {
+      "noul": 375
+     },
+     "score": 48.26666666666666
+    },
+    "score": {
+     "accuracy": 0.784,
+     "calibration": 92.6100221256387,
+     "cc": 69.58384416595884,
+     "cc_by_type": {
+      "score": 69.58384416595884
+     },
+     "cc_tiered": 59.196681957463454,
+     "cc_tiered_open": 49.50326355142264,
+     "cc_tiered_sealed": 68.89010036350427,
+     "low_n": false,
+     "n": 375,
+     "n_by_type": {
+      "score": 375
+     },
+     "score": 69.58384416595884
+    }
+   },
+   "raw_on_A": {
+    "calibration": 83.35479321145907,
+    "capability": 70.57937028780219,
+    "intelligence": 57.803947364145316
+   },
+   "set": "S+P"
+  },
+  "validity": {
+   "choice": {
+    "invalid_rate": 0.005333333333333301,
+    "n": 750
+   },
+   "noul": {
+    "invalid_rate": 0.002666666666666706,
+    "n": 375
+   },
+   "score": {
+    "invalid_rate": 0.0,
+    "n": 375
+   }
+  },
+  "views": {
+   "Balanced 33:33:33": 76.2345617971446,
+   "Emphasis on Accuracy 60:20:20": 68.98780251034225,
+   "Emphasis on Cost 20:20:60": 78.7340417659019,
+   "Emphasis on Speed 20:60:20": 82.26439421241435,
+   "Intelligence only": 60.37854271707123
+  }
  }
 }

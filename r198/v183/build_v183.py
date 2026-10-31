@@ -1,13 +1,13 @@
-"""Deterministic four-row addition from pinned aggregate scoring. No sealed reads or publication."""
+"""Deterministic five-row addition from pinned aggregate scoring. No sealed reads or publication."""
 import pathlib,json,copy,hashlib,shutil,re,subprocess
 J=pathlib.Path(__file__).resolve().parent;W=J.parents[1];D=W/'data/raw/benchmarks/jevbench/v1.8';REV='v1.8.3';PREV='v1.8.2'
 L=lambda p:json.loads(pathlib.Path(p).read_text());sha=lambda p:hashlib.sha256(pathlib.Path(p).read_bytes()).hexdigest();cp=copy.deepcopy
 put=lambda p,v:pathlib.Path(p).write_text(json.dumps(v,indent=1,sort_keys=True,ensure_ascii=False)+'\n')
 NOTE='Measured on the 27 Oct 2026 draw, which is not yet equated to the reference scale; stronger anchor runs for that draw are being measured. Shown unranked until then.'
 entries=L(J/'inputs/ENTRIES.json');usage=L(J/'src/usage.json');scored=L(J/'src/scored.json');cells=L(J/'src/cells.json');old={n:L(D/f'jevbench-{PREV}-{n}.json') for n in ['results','categories','proof','publication']}
-keys=sorted(entries);assert len(keys)==4 and 'allec-oavg' in keys
-names='Piccolo 27B, allec-oavg, Cribl Decision 1.0 9B and 27B'
-HIST=f'Added four rows measured on the 27 Oct regular draw ({names}), shown unranked until that draw is equated to the reference scale.'
+keys=sorted(entries);assert len(keys)==5 and 'allec-oavg' in keys
+names='Piccolo 27B, allec-oavg, Cribl Decision 1.0 9B and 27B, and z3-mini-soup-preview'
+HIST=f'Added five rows measured on the 27 Oct regular draw ({names}), shown unranked until that draw is equated to the reference scale.'
 CAP=.06459465517241379;LCAP=1.2329566404223442
 # Literal, individually reviewed public fields; never map internal words into public prose.
 public_rows=L(J/'inputs/PUBLIC-ROWS.json')
@@ -18,7 +18,7 @@ for k in keys:
  en=entries[k]['entry'];u=usage[k];s=cp(scored[k]['v17-share']);assert s['v16']['n_items']==(1125 if k in ['allec-oavg'] else 1500) and s['v16']['g_med_used']==2.573387642438244
  assert abs(s['cost']['usd_per_1000']-u['cost_common'])<1e-12 and s['cost']['common_basis']['n_items']==1489
  for f in ['display','author','repo','licence','endpoint_condition','disclosure']:s[f]=public_rows[k][f]
- s['model_pin']=en['repo'].removeprefix('https://huggingface.co/')+'@'+en['revision'];s.update(method='v1.7',new_in=REV,measured_in=REV,last_measured_on=('2026-10-31' if k=='cribl-decision-1.0-27b' else '2026-10-30'),measurement_date_status='measured',paid_fast_lane=False,ranked=False,rank=None,ranks={'A':None,'B':None,'C':None,'capability':None},listing='unranked',not_ranked_because=NOTE)
+ s['model_pin']=en['repo'].removeprefix('https://huggingface.co/')+'@'+en['revision'];s.update(method='v1.7',new_in=REV,measured_in=REV,last_measured_on=('2026-10-31' if k in ['cribl-decision-1.0-27b','zils-ai-z3-mini-soup-preview'] else '2026-10-30'),measurement_date_status='measured',paid_fast_lane=False,ranked=False,rank=None,ranks={'A':None,'B':None,'C':None,'capability':None},listing='unranked',not_ranked_because=NOTE)
  s['draw']={**{f:draw[f] for f in ['id','label','drawn_on','status','offset','offset_ci95']},'release':REV,'measured_on':s['last_measured_on'],'g_med':2.573387642438244,'results_sha256':scored[k]['pins']['v17-share']}
  nd=cells[k]['noul_share'];s['noul_decisive']={f:nd[f] for f in ['acc_among_decisive','decisive','decisive_rate','n','supported','valid']}
  if k=='decide-1.1':basis='API launch list price (I-1): https://decide.sh/pricing, applied since 2026-10-29. USD 0.03 per million input tokens; output free (input-only billing), no base model declared and no override. Frozen pricing module validates the operator standard launch list price. Native server usage; 19,926 reported output tokens are unbilled.'
@@ -32,7 +32,7 @@ for k in keys:
  new[k]=s;cat['systems'][k]=cells[k]['cells_share'];cat['lanes'][k]=en['lane'];bounds[k]={**{dim:cells[k]['pool_share'][dim] for dim in ['usecases','languages']},'topics':{}}
  proofrows[k]={'raw_sha256':u['raw_sha256'],'scored_input_sha256':scored[k]['pins']['v17-share'],'model_pin':s['model_pin'],'axes':s['axes'],'composite_ci95':s['composite_ci95'],'decision_limit':s['decision_limit'],'treatment':'unranked','cost':u,'price_reference':u['ref'],'category_pool_bounds':bounds[k]}
 assert not set(keys)&set(baseby)
-res.update(revision=REV,label='JevBench v1.8.3: four unranked rows on the 27 Oct draw',systems=sorted(res['systems']+list(new.values()),key=lambda r:r['key']),roster_count=len(baseby)+len(keys),run_kind='same-draw-addendum',source_note=HIST,source_sha256=sha(J/'src/scored.json'))
+res.update(revision=REV,label='JevBench v1.8.3: five unranked rows on the 27 Oct draw',systems=sorted(res['systems']+list(new.values()),key=lambda r:r['key']),roster_count=len(baseby)+len(keys),run_kind='same-draw-addendum',source_note=HIST,source_sha256=sha(J/'src/scored.json'))
 res['measurement_notes']=old['results']['measurement_notes']+[HIST]
 res['addendum']={'predecessor':PREV,'new_keys':keys,'remeasured_keys':[],'repriced_keys':[],'link_fixed_keys':[],'text_fixed_keys':sorted(cleaned),'method_change':False,'same_draw':'v1.6-regular-20261027','cost_basis':{'rule':old['results']['addendum']['cost_basis']['rule'],'n_items':1489,'set_sha256':'4e912731e63369e1b3066b0b4afa87b44f1094aea079c5b41dc6d02e7f235537'}}
 put(D/f'jevbench-{REV}-results.json',res)
@@ -45,4 +45,4 @@ put(D/f'jevbench-{REV}-proof.json',proof)
 pub=cp(old['publication']);pub.update(revision=REV,predecessor=proof['predecessor'],review={'engine':'PENDING','verdict':'PENDING','receipt_sha256':None});pub['files']={n:{'path':f'data/raw/benchmarks/jevbench/v1.8/jevbench-{REV}-{n}.json','sha256':sha(D/f'jevbench-{REV}-{n}.json')} for n in ['results','categories','carry','proof','history','history-carry']};put(D/f'jevbench-{REV}-publication.json',pub)
 put(J/'receipts/NEW-ROWS.json',new);put(J/'receipts/BOUNDS.json',bounds);put(J/'inputs/history.json',HIST)
 subprocess.run(['python3','-B',str(J/'make_lib_v183.py')],check=True)
-print('Built PENDING v1.8.3: four UNRANKED new rows;',len(baseby),'carried rows and all order lists unchanged')
+print('Built PENDING v1.8.3: five UNRANKED new rows;',len(baseby),'carried rows and all order lists unchanged')
