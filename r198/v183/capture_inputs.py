@@ -1,6 +1,6 @@
 """Copy aggregate-only scorer artifacts. No sealed records or item data exported."""
 import pathlib,json,hashlib
-J=pathlib.Path(__file__).resolve().parent;S=pathlib.Path('/home/flori/jobs/jevbench-add-requests-20260919/workers/r202-v183-cribl27/score')
+J=pathlib.Path(__file__).resolve().parent;S=pathlib.Path('/home/flori/jobs/jevbench-add-requests-20260919/workers/r202-v183-z3soup/score')
 L=lambda p:json.loads(p.read_text());sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest();put=lambda p,x:p.write_text(json.dumps(x,indent=1,sort_keys=True,ensure_ascii=False)+'\n')
 sc=L(J/'src/scored.json');cells=L(J/'src/cells.json');reg=L(S/'REGISTRY.json');usage=L(J/'src/usage.json')
 for mode in ['frozen','v17-off','v17-share']:

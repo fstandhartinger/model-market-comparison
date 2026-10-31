@@ -1,4 +1,4 @@
-// Four measured but unranked rows; independent review gates every public reader.
+// Five measured but unranked rows; independent review gates every public reader.
 import {createHash} from 'node:crypto';
 import {readFile} from 'node:fs/promises';
 import {isDeepStrictEqual as equal} from 'node:util';

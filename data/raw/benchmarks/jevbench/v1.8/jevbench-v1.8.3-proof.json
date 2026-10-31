@@ -539,6 +539,136 @@
    "raw_sha256": "864f8d24a20f52515d3d53ac4eaa981745f3d2c529930ee626f72dd983a08a1f",
    "scored_input_sha256": "1b2a8906692be82952de401375f8f6dd602cada51019eae5330ae82234b160bd",
    "treatment": "unranked"
+  },
+  "zils-ai-z3-mini-soup-preview": {
+   "axes": {
+    "calibration": 88.53723825429364,
+    "cost": 82.80646845066562,
+    "intelligence": 60.37854271707123,
+    "speed": 93.33840574950976
+   },
+   "category_pool_bounds": {
+    "languages": {
+     "ar": 21,
+     "cs": 37,
+     "da": 36,
+     "de": 48,
+     "el": 28,
+     "en": 555,
+     "es": 37,
+     "fi": 52,
+     "fr": 32,
+     "hi": 37,
+     "id": 41,
+     "it": 45,
+     "ja": 44,
+     "ko": 43,
+     "mixed": 64,
+     "nl": 36,
+     "no": 51,
+     "pl": 57,
+     "pt": 47,
+     "sv": 46,
+     "tr": 46,
+     "uk": 56,
+     "zh": 41
+    },
+    "topics": {},
+    "usecases": {
+     "advertising": 48,
+     "code_linting": 69,
+     "customer_support": 66,
+     "demand_forecasting": 66,
+     "ecommerce_marketplaces": 62,
+     "feature_extraction": 72,
+     "financial_crime": 63,
+     "gaming": 58,
+     "insurance_claims": 62,
+     "knowledge_graphs": 67,
+     "lead_generation": 75,
+     "legal_compliance": 56,
+     "llm_guardrails": 71,
+     "model_routing": 148,
+     "moderation_trust_safety": 59,
+     "other": 32,
+     "recruiting": 65,
+     "risk_assessment": 48,
+     "scientific_discovery": 42,
+     "search_retrieval": 67
+    }
+   },
+   "composite_ci95": {
+    "A": [
+     75.61655166664968,
+     80.60803150799913
+    ],
+    "B": [
+     70.21122447519487,
+     76.7939527019316
+    ],
+    "C": [
+     62.49500664503328,
+     80.60803150799913
+    ]
+   },
+   "cost": {
+    "active_b": 4,
+    "answered_not_in_common": 11,
+    "architecture_class": "small",
+    "cost_all": 0.006315570104207651,
+    "cost_basis_kind": "gpu-time-min",
+    "cost_common": 0.003742120070964346,
+    "estimate_all": 0.019281620000000003,
+    "estimate_common": 0.011424801880456685,
+    "expect": {
+     "failed": 0,
+     "input_tokens": 964081,
+     "ok": 1500,
+     "output_tokens": 0,
+     "status_counts": {
+      "200": 1500
+     }
+    },
+    "family": "qwen",
+    "gpu_all": 0.006315570104207651,
+    "gpu_common": 0.003742120070964346,
+    "input_tokens_all": 964081,
+    "input_tokens_common": 567051,
+    "latency_max": 17.585216270999922,
+    "native_output_tokens_all": 0,
+    "output_tokens_all": 0,
+    "output_tokens_common": 0,
+    "over10": 5,
+    "raw_order_matches_input": true,
+    "raw_sha256": "65a4e01f340356f1e2d081e8124dee3ae860a18efd3089420a6293516b3e7848",
+    "ref": {
+     "in": 0.030000000000000002,
+     "kind": "estimate",
+     "listing": "deepinfra:Qwen/Qwen3.5-4B",
+     "out": 0.0
+    },
+    "scoring_raw_sha256": "65a4e01f340356f1e2d081e8124dee3ae860a18efd3089420a6293516b3e7848",
+    "throughput": 61525.0
+   },
+   "decision_limit": {
+    "limit_s": 10.0,
+    "n_over_limit": 5,
+    "n_over_limit_answered_ok": 5,
+    "rule": "latency_s > limit -> failed",
+    "speed_basis": "all decisions given (lane items in the raw), measured latency_s",
+    "speed_n": 1500,
+    "treatment": "share"
+   },
+   "model_pin": "zils-ai/z3-mini-soup-preview@1492185bb48347db2a9d88f8bf18cb0e9c17a55b",
+   "price_reference": {
+    "in": 0.030000000000000002,
+    "kind": "estimate",
+    "listing": "deepinfra:Qwen/Qwen3.5-4B",
+    "out": 0.0
+   },
+   "raw_sha256": "65a4e01f340356f1e2d081e8124dee3ae860a18efd3089420a6293516b3e7848",
+   "scored_input_sha256": "0993472811a8124ed255d64f901555d597cf14cbc5870e5471b368a8b50c2cdc",
+   "treatment": "unranked"
   }
  },
  "predecessor": {
@@ -569,15 +699,15 @@
   "score_v17": "6363458d208a52f4ad5aaf73027cad1b7e0358ff962e581d57a3cc462c8f1978"
  },
  "source_inputs": {
-  "inputs/ARCHITECTURE.json": "680ba56c9e666405e43bdba17d8298d9440dd2593f95874c350d9b955935fd8b",
+  "inputs/ARCHITECTURE.json": "a40b9b1adfb9330a653bfca0993327ec59d763ed7d856eca0ea65cbbc598a1c4",
   "inputs/CLEANED-ROWS.json": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
-  "inputs/ENTRIES.json": "af2e1781c6ffbd5c7e09e5392740f90b3dd04330b47bee954ca9145f59857193",
-  "inputs/ENTRY-PINS.json": "775c2f501525d0a3d7d2fa1d2b8f9ead950a1ef53382b21ebb0b35637e01dbd5",
-  "inputs/PUBLIC-ROWS.json": "bf1133014c7fb2c35380052311a26baea743bb6f754b56a89d2851a560d69335",
+  "inputs/ENTRIES.json": "518db5c4e46a136b87422870ff06c794c90c22b12e38804d64d468429f9bcbf4",
+  "inputs/ENTRY-PINS.json": "0c583260a46c99fb4b502d1c0fc1d1dfac2511e41d6f255fc52e310470e5195c",
+  "inputs/PUBLIC-ROWS.json": "b297f05a7e826b5efa0da6b7f6bdfcd2990514353e1166c6903f6153203f085d",
   "inputs/TEXT-EXCEPTIONS.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
-  "src/cells.json": "ee02df66d936d94b8d7be2841f31938bdc6992712e9903c4cc76898e518ce437",
-  "src/scored.json": "070f7c15e5e29b1db44058fc5a1cc7d1bb867c2d01132aec2f18b86725c238df",
-  "src/usage.json": "f384a096e5eadb952fb131129575ff1886d4169f0798672d831f512238b38882"
+  "src/cells.json": "3f4056b01a15712a5433c124d7cac58c9f77d8834e92b4e96c2611c87f8486cb",
+  "src/scored.json": "b36d44858e6e0d20944f3d85522984ea4d8197d000e692ad72f0f1e84c14ed67",
+  "src/usage.json": "7808e56e0de16b46224a558d719e64ca7fd3bd8859b5714fea23b70f85484f05"
  },
- "topfive_diff_sha256": "c407921985ce43fe3022707ced87af2ce90696994076ec4209015460516d5bcf"
+ "topfive_diff_sha256": "f2bfd2150a4706884e0a91b870f29ded304b89b766f3607b6996063de73214d0"
 }

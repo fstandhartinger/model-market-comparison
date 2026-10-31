@@ -11,6 +11,6 @@ for k,s in rows.items():
   elif isinstance(v,list):
    for x in v:walk(x)
  walk(s);assert '{REF}' not in s['cost']['basis']
-assert len(rows)==4
+assert len(rows)==5
 (J/'receipts/REF-PIN.json').write_text(json.dumps({'status':'PASS','rows':sorted(rows),'all_strings_no_brace_placeholders':True,'model_pin_composed_from_repo_and_revision':True,'cost_basis_composed_identically_to_v182':True},indent=1)+'\n')
-print('PASS 4 exact repo@revision pins, no literal placeholders in any new-row string')
+print('PASS 5 exact repo@revision pins, no literal placeholders in any new-row string')

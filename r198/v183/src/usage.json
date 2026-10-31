@@ -156,5 +156,44 @@
   },
   "scoring_raw_sha256": "17bde2af4c709ed8258341b6dc2490b44485917876154f54370e81f01a099d53",
   "throughput": 11763.0
+ },
+ "zils-ai-z3-mini-soup-preview": {
+  "active_b": 4,
+  "answered_not_in_common": 11,
+  "architecture_class": "small",
+  "cost_all": 0.006315570104207651,
+  "cost_basis_kind": "gpu-time-min",
+  "cost_common": 0.003742120070964346,
+  "estimate_all": 0.019281620000000003,
+  "estimate_common": 0.011424801880456685,
+  "expect": {
+   "failed": 0,
+   "input_tokens": 964081,
+   "ok": 1500,
+   "output_tokens": 0,
+   "status_counts": {
+    "200": 1500
+   }
+  },
+  "family": "qwen",
+  "gpu_all": 0.006315570104207651,
+  "gpu_common": 0.003742120070964346,
+  "input_tokens_all": 964081,
+  "input_tokens_common": 567051,
+  "latency_max": 17.585216270999922,
+  "native_output_tokens_all": 0,
+  "output_tokens_all": 0,
+  "output_tokens_common": 0,
+  "over10": 5,
+  "raw_order_matches_input": true,
+  "raw_sha256": "65a4e01f340356f1e2d081e8124dee3ae860a18efd3089420a6293516b3e7848",
+  "ref": {
+   "in": 0.030000000000000002,
+   "kind": "estimate",
+   "listing": "deepinfra:Qwen/Qwen3.5-4B",
+   "out": 0.0
+  },
+  "scoring_raw_sha256": "65a4e01f340356f1e2d081e8124dee3ae860a18efd3089420a6293516b3e7848",
+  "throughput": 61525.0
  }
 }

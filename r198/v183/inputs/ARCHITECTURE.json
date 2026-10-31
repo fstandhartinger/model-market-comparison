@@ -62,5 +62,21 @@
    }
   ],
   "note": "Single decoder backbone; text-only measurement."
+ },
+ "zils-ai-z3-mini-soup-preview": {
+  "arch": "open-llm-decoder",
+  "badges": {
+   "derivation": "merge",
+   "params": "4.5B",
+   "quant": "BF16"
+  },
+  "evidence": [
+   {
+    "fact": "The author describes three merged decision-model bodies sharing Qwen/Qwen3.5-4B, with the d3-mini answer layer and runtime; tensor contents were not compared.",
+    "kind": "model-card",
+    "url": "https://huggingface.co/zils-ai/z3-mini-soup-preview/blob/1492185bb48347db2a9d88f8bf18cb0e9c17a55b/README.md"
+   }
+  ],
+  "note": "Single merged decoder body; author-declared ingredient provenance; text-only measurement."
  }
 }

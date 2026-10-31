@@ -9,7 +9,7 @@ def edit(f,a,b):
 for f in ['app/api/jevbench/v1.8.3/route.ts','app/jev-models/v1.8.3/page.tsx']:
  p=W/f;p.parent.mkdir(parents=True,exist_ok=True);s=(W/f.replace('v1.8.3','v1.8.2')).read_text().replace('V182','V183').replace('v182','v183').replace('v1.8.2','v1.8.3')
  if f.endswith('page.tsx'):
-  s=re.sub(r"description:'[^']*'","description:'Four measured decision models added on the 27 Oct draw, shown unranked until equated.'",s)
+  s=re.sub(r"description:'[^']*'","description:'Five measured decision models added on the 27 Oct draw, shown unranked until equated.'",s)
   s=re.sub(r'<p className="mt-3 max-w-3xl">.*?</p>','<p className="mt-3 max-w-3xl">'+HIST.replace("'",'&apos;')+'</p>',s)
   s=s.replace('/jev-models/v1.8.1','/jev-models/v1.8.2').replace('Previous v1.8.1','Previous v1.8.2')
  p.write_text(s)
@@ -51,7 +51,7 @@ for key,value in incoming.items():
  d['benchmarks']['jevbench'][key]=value
 p.write_text(json.dumps(d,indent=2,ensure_ascii=False)+'\n')
 
-# Required architecture coverage for the four new artifact keys only.
+# Required architecture coverage for the five new artifact keys only.
 p=W/'data/jevbench-architecture.json';d=json.loads(p.read_text());incoming=json.loads((J/'inputs/ARCHITECTURE.json').read_text())
 for key,value in incoming.items():
  if key in d['benchmarks']['jevbench']:assert d['benchmarks']['jevbench'][key]==value
