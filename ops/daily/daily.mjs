@@ -521,7 +521,9 @@ export async function runDaily({ repo = ROOT, home = '/opt/benchmarkheaven-daily
       if (!gated.published) throw new Error(gated.error);
       const sha = gated.commit;
       report.published = true; report.commit = sha;
-      const deadline = Date.now() + 600_000;
+      // CR-636: a Coolify webhook build of the site takes ~19 min (31 Oct: 02:37->02:56, 07:57->08:16, 12:30->12:4x); the
+      // 10 min wait failed a run whose data then went live as gated. Wait up to 30 min.
+      const deadline = Date.now() + 1_800_000;
       let last = '';
       const pending = new Set(['benchmarkheaven.com', 'model-market-comparison.app.mintapis.com']);
       while (pending.size && Date.now() < deadline) {
