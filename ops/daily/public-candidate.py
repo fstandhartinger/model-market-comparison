@@ -20,6 +20,59 @@ if sys.argv[1] == 'text':
             raw='\n'.join(f'PDF page {i+1}\n'+pages[i] for i in range(max(0,index-1),index+1))
     else:
         raw=data.decode('utf-8-sig')
+    # Keep the current Frontier introduction and ALL its footnotes (including
+    # coverage, fallbacks and excluded judge panels), without the numeric result
+    # table or the unrelated Routine board. New text inside these paragraphs stays
+    # visible. Missing structural boundaries fail closed instead of yielding empty
+    # protocol evidence.
+    if len(sys.argv)>3 and sys.argv[3]=='vulcanbench-frontier-notes':
+        class FrontierNotes(HTMLParser):
+            def __init__(self):
+                super().__init__(); self.parts=[]; self.selected=False; self.stopped=False; self.boundary=False
+            def handle_starttag(self,tag,attrs):
+                attrs=dict(attrs)
+                if tag=='section' and attrs.get('id')=='routine-v1-board':
+                    self.stopped=True; self.boundary=True
+                if tag=='p':
+                    self.selected=not self.stopped and bool(set(attrs.get('class','').split()) & {'byline','lb-context'})
+            def handle_endtag(self,tag):
+                if tag=='p': self.selected=False
+            def handle_data(self,data):
+                if self.selected: self.parts.append(data)
+        notes=FrontierNotes(); notes.feed(raw)
+        text=' '.join(' '.join(notes.parts).split())
+        if not notes.boundary or not all(s in text for s in ['VulcanBench Frontier v4','Combined score','Code quality','judged']):
+            raise ValueError('VulcanBench Frontier protocol paragraphs or Routine boundary changed')
+        print(text)
+        sys.exit(0)
+    # Protocol packets need every native judge field, but not JSON indentation.
+    # No key, value, array element or order is projected away.
+    if len(sys.argv)>3 and sys.argv[3]=='json-compact':
+        print(json.dumps(json.loads(raw),ensure_ascii=False,separators=(',',':')))
+        sys.exit(0)
+    # The protocol review checks task-set and revision continuity. Scores are checked
+    # separately against their native result rows; carrying all six historical run
+    # CSVs here overflowed the packet bound. Keep every distinct native task/protocol
+    # pair, including unexpected revisions, with its exact occurrence count.
+    if len(sys.argv)>3 and sys.argv[3]=='vulcanbench-task-protocols':
+        import csv, io
+        from collections import Counter
+        reader=csv.DictReader(io.StringIO(raw))
+        if not {'task','judged_under'}.issubset(reader.fieldnames or []):
+            raise ValueError('VulcanBench run export missing task or judged_under')
+        counts=Counter()
+        for row in reader:
+            if None in row: raise ValueError('VulcanBench run export has surplus CSV fields')
+            if not row.get('task') or not row.get('judged_under'):
+                raise ValueError('VulcanBench run export has empty task or judged_under')
+            # Count exported runs, including unjudged/timeout runs. This describes
+            # task/revision coverage, never the number of scored judge calls.
+            counts[(row['task'],row['judged_under'])]+=1
+        if not counts: raise ValueError('VulcanBench run export has no task/protocol pairs')
+        print(json.dumps({'native_task_protocol_counts':[
+            {'task':task,'judged_under':protocol,'run_count':count}
+            for (task,protocol),count in counts.items()]},ensure_ascii=False,separators=(',',':')))
+        sys.exit(0)
     # frontiercode-meta (CR-173, 2026-09-26): the leaderboard data file is 78 KB of values, over the review
     # bound, but its board-level keys are what the FrontierCode registry version guard names (v1_1, the
     # subset task counts, the per-model harness and published efforts). Print only those keys, verbatim;

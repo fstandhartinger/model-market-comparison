@@ -1,0 +1,327 @@
+{
+  "note": "Original registry evidence for the packet-overflow regression and historical receipt preservation. Live references are superseded by the newest capture per URL; no underlying capture is deleted.",
+  "evidence": [
+    {
+      "url": "https://vulcanbench.com/robots.txt",
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82-2/vulcanbench.com-robots.txt",
+      "sha256": "617a7b8e26cc7bdf505881ba9ccafbb24f7fe12ca1cb82f6b615e4b9d8daad29",
+      "fetched_at": "2026-09-18T20:46:40.000000+00:00",
+      "excerpt": "User-agent: *\nAllow: /\n# VulcanBench: everything here is meant to be read, indexed, and cited."
+    },
+    {
+      "url": "https://vulcanbench.com/leaderboard.html",
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-29-d256-1/da47b468911bf2637fb2.gz",
+      "sha256": "838a8357ece8d6ab3bb6e0d02b6fec9f14b607e5ea0e6945395e64afa62dea08",
+      "fetched_at": "2026-09-29T09:07:56.652206+00:00",
+      "excerpt": "GPT-6 Luna at extra-high and max is judged on 21 and 19 of 23 tasks: the other 2 and 4 runs hit the flat 3-hour task bound while still working, have no finished code to judge, count as failed tasks and are unpriced ($/task covers the finished runs; Min/task covers all 23). Counting each timeout as a combined score of 0 over all 23 runs gives 71.94 at extra-high and 67.26 at max; its best tag and effort suggestions use these figures."
+    },
+    {
+      "url": "https://vulcanbench.com/methodology.html",
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82-2/993b82ab4fa73979772f.gz",
+      "sha256": "0713466c01ef099537193bbae9dd8e27c43062b99cc2ed8f56370ad99d84f9de",
+      "fetched_at": "2026-09-18T20:46:37.424462+00:00",
+      "excerpt": "For each run, the combined score is 100 × (0.50F + 0.085Q + 0.085S + 0.33C), with each factor on a 0 to 1 scale. F is the partial-credit functional score, not the binary solved indicator used by pass@1."
+    },
+    {
+      "url": "https://vulcanbench.com/assets/data/swe-v4-board.csv",
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-29-d256-1/d10593f11f9ba4546da9.gz",
+      "sha256": "55ebd230543cf49a9b58a48667606413034fc46717d7b7f14f4096f1d2cb2b6b",
+      "fetched_at": "2026-09-29T09:07:53.787249+00:00",
+      "excerpt": "rank,model,lab,harness,effort,best_effort,n,combined_33,combined_33_se,code_quality,passed,mean_minutes,mean_usd,mean_raw_tokens,median_output_tokens,mean_output_tokens,report,protocol,passed_of,combined_timeouts_zero\n1,Fable 5.1,Anthropic,Claude Code,max,True,23,91.8365,0.4651,82.4337,23,27.0964,9.058763,3823313.3,91462.0,101244.1,benchmarks/swe-v4-astra-fable51-v34.html,code-quality-maintenance-v3.4,23,"
+    },
+    {
+      "url": "https://vulcanbench.com/",
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82-2/73f3beff085b459efda4.gz",
+      "sha256": "9ee80f3c13471bea7767343f96ec74304b3c9acb2414b611c9f5a03cab99c818",
+      "fetched_at": "2026-09-18T20:55:46.795204+00:00",
+      "excerpt": "VulcanBench | an open-source coding benchmark for frontier models { \"@context\": \"https://schema.org\", \"@graph\": [ { \"@type\": \"Organization\", \"@id\": \"https://vulcanbench.com/#org\", \"name\": \"VulcanBench\", \"url\": \"https://v"
+    },
+    {
+      "url": "https://vulcanbench.com/benchmarks/swe-v4-opus55-v315.html",
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-27-d223/f03ac24adfc51c3327a8.gz",
+      "sha256": "45c3765dcd42bb85012bc797664331dc0fcebb5569966d7afe0ae1d10f82b9dc",
+      "fetched_at": "2026-09-27T03:55:10.306417+00:00",
+      "excerpt": "Both judges, Muse Spark 1.3 and Grok 4.6, passed the full calibration exam under v3.15 with no allowance used, and no review fell back to another judge model."
+    },
+    {
+      "url": "https://raw.githubusercontent.com/morganlinton/VulcanBenchCOM/main/assets/data/swe-v4-opus55-v315/judge-protocols.json",
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-27-d223/ad68f5dd14806a9f7c03.gz",
+      "sha256": "1248570497a5d97767fb333b66921a2fe640fd2fbd04da6347e11b9d9e2a743d",
+      "fetched_at": "2026-09-27T03:55:12.952240+00:00",
+      "excerpt": "\"protocol_ids\": { \"muse\": \"code-quality-maintenance-v3.15\", \"grok\": \"code-quality-maintenance-v3.15\" }, \"protocol_sha256\": { \"muse\": \"7bfc6dac0a73d8b6d3e9eb8ecae2d29d4c11d524e3a2503adfe1efe149a54f06\","
+    },
+    {
+      "url": "https://raw.githubusercontent.com/morganlinton/VulcanBenchCOM/main/assets/data/swe-v4-astra-fable51-v34/judge-protocols.json",
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-27-d223/a16b182515897a098b0a.gz",
+      "sha256": "6e49803938dc108f843660b8462bb0a979a8eb497ad4aabdd06dbb31695ba3b2",
+      "fetched_at": "2026-09-27T03:55:20.573937+00:00",
+      "excerpt": "\"protocol_ids\": { \"muse\": \"code-quality-maintenance-v3.4\", \"grok\": \"code-quality-maintenance-v3.3\" }, \"protocol_sha256\": { \"muse\": \"1d80e0974526f8d825f14921c9102c8eda47ec312a0981783475149e31fd8524\","
+    },
+    {
+      "url": "https://raw.githubusercontent.com/morganlinton/VulcanBenchCOM/main/assets/data/swe-v4-gpt55-luna-v35/judge-protocols.json",
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-27-d223/40810f6dd6d93f7ab846.gz",
+      "sha256": "05c6891dd47d5d45da7907604c3f1ee84562ed36f9701d4a92f1072ecd98ce58",
+      "fetched_at": "2026-09-27T03:55:25.659102+00:00",
+      "excerpt": "\"protocol_ids\": { \"muse\": \"code-quality-maintenance-v3.5\", \"grok\": \"code-quality-maintenance-v3.5\" }, \"protocol_sha256\": { \"muse\": \"e2c2afdb5149cd3999ce10b79daa7830f768c56147d75c6e88958777405a65fb\","
+    },
+    {
+      "url": "https://raw.githubusercontent.com/morganlinton/VulcanBenchCOM/main/assets/data/swe-v4-terra-v36/judge-protocols.json",
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-27-d223/e690a6f0e4776f3acc13.gz",
+      "sha256": "b8cb59a9688f71c1af6ec89e36543dccbf8ce2a4fd1adefe7ee1f663b86ca5fa",
+      "fetched_at": "2026-09-27T03:55:28.172586+00:00",
+      "excerpt": "\"protocol_ids\": { \"muse\": \"code-quality-maintenance-v3.6\", \"grok\": \"code-quality-maintenance-v3.6\" }, \"protocol_sha256\": { \"muse\": \"f6214c5c99d75e61a5803811700cec86ddbcd3c0ef727d1af5d276c2998ac486\","
+    },
+    {
+      "url": "https://raw.githubusercontent.com/morganlinton/VulcanBenchCOM/main/assets/data/swe-v4-sol-v37/judge-protocols.json",
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-27-d223/a9b3f33aa27072c93cd1.gz",
+      "sha256": "9311f96a56e92bd583f2d2d1c756824a8fe9465e302e0513ab15c5a9ca1a2854",
+      "fetched_at": "2026-09-27T03:55:30.709619+00:00",
+      "excerpt": "\"protocol_ids\": { \"muse\": \"code-quality-maintenance-v3.7\", \"grok\": \"code-quality-maintenance-v3.7\" }, \"protocol_sha256\": { \"muse\": \"6f78884f8164f60ad93e3f981cf61fb6edb91882c2fdad3416112f520468e771\","
+    },
+    {
+      "url": "https://raw.githubusercontent.com/morganlinton/VulcanBenchCOM/main/assets/data/swe-v4-gpt6-luna-v316/judge-protocols.json",
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-29-d256-1/7cfff1e0c517002bd129.gz",
+      "sha256": "281dedd421e1816d92e9155e2b53965a23348313880b1c9d03baf8b9ce8b6577",
+      "fetched_at": "2026-09-29T09:08:04.378240+00:00",
+      "excerpt": "\"protocol_ids\": { \"muse\": \"code-quality-maintenance-v3.16\", \"grok\": \"code-quality-maintenance-v3.16\" }, \"protocol_sha256\": { \"muse\": \"db301bf8"
+    },
+    {
+      "url": "https://vulcanbench.com/leaderboard.html",
+      "file": "test/fixtures/vulcanbench-frontier-2026-10-07/leaderboard.html.gz",
+      "sha256": "9f02f1e2b64d0ac4078dea4cc94dd8de07f6015a4a19749c966dc3905582a3dc",
+      "fetched_at": "2026-10-07T11:02:59.039201+00:00",
+      "excerpt": "its Code quality and combined score are not strictly comparable with the other columns"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/morganlinton/VulcanBenchCOM/main/assets/data/swe-v4-gpt6-sol-v317/judge-protocols.json",
+      "file": "test/fixtures/vulcanbench-frontier-2026-10-07/swe-v4-gpt6-sol-v317-judge-protocols.json.gz",
+      "sha256": "9bf5b926bdd808ae8b98988fbcaf82fe18948730288259a20a4909f5cb141388",
+      "fetched_at": "2026-10-07T11:03:21.640550+00:00",
+      "excerpt": "{\"muse\": {\"model\": \"muse-spark-1.3\", \"effort\": \"medium\", \"binary_sha256\": \"4c0f960028b603174af7df7bd5051d8c35d6c1aa372a37d18bc770926a0577a7\", \"timeout\": 900, \"lab\": \"Meta\", \"tier\": \"standard (no training on prompts or completions)\", \"prompt_delivery\": \"prompt file\", \"system_prompt\": \"folded into prompt\", \"sandbox\": \"adapter kernel profile, empty workspace\", \"identity\": \"session log model_completed events, audited by the adapter's collect_usage\"}, \"grok\": {\"model\": \"cursor-grok-4.6-medium\", \"display_name\": \"Cursor Grok 4.6 Medium\", \"effort\": \"medium\", \"timeout\": 900, \"lab\": \"xAI\", \"prompt_delivery\": \"stdin\", \"system_prompt\": \"folded into prompt\", \"identity\": \"requested-only, display name checked\"}}"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/morganlinton/VulcanBenchCOM/main/assets/data/swe-v4-gpt6-sol-v317/runs.csv",
+      "file": "test/fixtures/vulcanbench-frontier-2026-10-07/swe-v4-gpt6-sol-v317-runs.csv.gz",
+      "sha256": "95dfcdcbdc1b1eefac09fa417299a5f8f582b6bd5ca3be2cf5f786adb607d212",
+      "fetched_at": "2026-10-07T11:03:21.888249+00:00",
+      "excerpt": "model,effort,task,run_id,judged_under,judged,combined_33,combined_20_profile,functional_pct,automated_quality_pct,security_pct,code_quality,reviewed_score,intent_recovery,intent_recovery_redistributed,muse_reviewed,muse_readability,muse_maintainability,muse_intent_recovery,grok_reviewed,grok_readability,grok_maintainability,grok_intent_recovery,passed_quirk_families,duration_s,raw_tokens,estimated_usd,started_at,finished_at,solver_cli_version,evidence_sha256"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/morganlinton/VulcanBenchCOM/main/assets/data/swe-v4-gpt61-sol-v318/judge-protocols.json",
+      "file": "test/fixtures/vulcanbench-frontier-2026-10-07/swe-v4-gpt61-sol-v318-judge-protocols.json.gz",
+      "sha256": "7c0055a78756cbeb224d79b7570a77fd25bac60ed8ac7b5899e5a0797c6af657",
+      "fetched_at": "2026-10-07T11:03:22.113215+00:00",
+      "excerpt": "{\"muse\": {\"model\": \"muse-spark-1.3\", \"effort\": \"medium\", \"binary_sha256\": \"4c0f960028b603174af7df7bd5051d8c35d6c1aa372a37d18bc770926a0577a7\", \"timeout\": 900, \"lab\": \"Meta\", \"tier\": \"standard (no training on prompts or completions)\", \"prompt_delivery\": \"prompt file\", \"system_prompt\": \"folded into prompt\", \"sandbox\": \"adapter kernel profile, empty workspace\", \"identity\": \"session log model_completed events, audited by the adapter's collect_usage\"}, \"grok\": {\"model\": \"cursor-grok-4.6-medium\", \"display_name\": \"Cursor Grok 4.6 Medium\", \"effort\": \"medium\", \"timeout\": 900, \"lab\": \"xAI\", \"prompt_delivery\": \"stdin\", \"system_prompt\": \"folded into prompt\", \"identity\": \"requested-only, display name checked\"}}"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/morganlinton/VulcanBenchCOM/main/assets/data/swe-v4-gpt61-sol-v318/runs.csv",
+      "file": "test/fixtures/vulcanbench-frontier-2026-10-07/swe-v4-gpt61-sol-v318-runs.csv.gz",
+      "sha256": "e7b7edd3e6f5776475754745ed747f8272d162bf62e778f3391f78a1e3260b50",
+      "fetched_at": "2026-10-07T11:03:22.370308+00:00",
+      "excerpt": "model,effort,task,run_id,judged_under,judged,scored_panels,combined_33,combined_20_profile,functional_pct,automated_quality_pct,security_pct,hidden_behaviours_fixed,hidden_behaviours,code_quality,reviewed_score,intent_recovery,intent_recovery_redistributed,muse_reviewed,muse_readability,muse_maintainability,muse_intent_recovery,grok_reviewed,grok_readability,grok_maintainability,grok_intent_recovery,passed_quirk_families,evidence_rebuilt_from_index_diff,duration_s,raw_tokens,estimated_usd,started_at,finished_at,solver_cli_version,evidence_sha256"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/morganlinton/VulcanBenchCOM/main/assets/data/swe-v4-grok47-cursor-v320/judge-protocols.json",
+      "file": "test/fixtures/vulcanbench-frontier-2026-10-07/swe-v4-grok47-cursor-v320-judge-protocols.json.gz",
+      "sha256": "1811c21286191218d12063ae99894c53df8dfbe059d108f1a8379cdc3c28255f",
+      "fetched_at": "2026-10-07T11:03:22.625555+00:00",
+      "excerpt": "{\"muse\": {\"model\": \"muse-spark-1.3\", \"effort\": \"medium\", \"binary_sha256\": \"4c0f960028b603174af7df7bd5051d8c35d6c1aa372a37d18bc770926a0577a7\", \"timeout\": 900, \"lab\": \"Meta\", \"tier\": \"standard (no training on prompts or completions)\", \"prompt_delivery\": \"prompt file\", \"system_prompt\": \"folded into prompt\", \"sandbox\": \"adapter kernel profile, empty workspace\", \"identity\": \"session log model_completed events, audited by the adapter's collect_usage\"}, \"sol\": {\"model\": \"gpt-6.1-sol\", \"effort\": \"medium\", \"codex_version\": \"0.159.0\", \"binary_sha256\": \"61b0194f3bb6534439c8d26a3ed57d0805f84b884588b761795323eeb92fcf70\", \"timeout\": 900, \"lab\": \"OpenAI\", \"prompt_delivery\": \"stdin\", \"system_prompt\": \"model_instructions_file\", \"identity\": \"requested-only\", \"neutrality\": \"neutral for xAI submissions\", \"seat\": \"fills the seat Grok 4.6 holds for non-xAI submissions; Grok 4.6 is not neutral for Grok 4.7\"}}"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/morganlinton/VulcanBenchCOM/main/assets/data/swe-v4-grok47-cursor-v320/runs.csv",
+      "file": "test/fixtures/vulcanbench-frontier-2026-10-07/swe-v4-grok47-cursor-v320-runs.csv.gz",
+      "sha256": "8dddd2bc6b6ed70e232ea2256b89679d3dac637ce8b297907119618c5b056c08",
+      "fetched_at": "2026-10-07T11:03:22.864606+00:00",
+      "excerpt": "model,effort,task,run_id,judged_under,judged,finished,combined_33,combined_20_profile,functional_pct,automated_quality_pct,security_pct,hidden_behaviours_fixed,hidden_behaviours,code_quality,reviewed_score,intent_recovery,muse_reviewed,muse_readability,muse_maintainability,muse_intent_recovery,sol_reviewed,sol_readability,sol_maintainability,sol_intent_recovery,passed_quirk_families,duration_s,raw_tokens,output_tokens,cache_read_tokens,estimated_usd,started_at,finished_at,solver_cli_version,evidence_sha256"
+    },
+    {
+      "url": "https://vulcanbench.com/leaderboard.html",
+      "file": "test/fixtures/vulcanbench-frontier-2026-10-10/leaderboard.html.gz",
+      "sha256": "d9e9c69eeeb7958376f2a9ff2d4d9ccc587c7a3823685382f6032eb6155bf12c",
+      "fetched_at": "2026-10-10T06:15:55.666448+00:00",
+      "excerpt": "v3.4 to v3.7, v3.15 to v3.18, v3.20 and v3.23 apply the same rubric, controls and gates to each population; v3.20 seats GPT-6.1 Sol in place of Grok 4.6 to judge Grok 4.7, see ◊; v3.23 judges Grok 4.6 through a newer Cursor CLI, see ††"
+    },
+    {
+      "url": "https://vulcanbench.com/benchmarks/swe-v4-sonnet55-v323.html",
+      "file": "test/fixtures/vulcanbench-frontier-2026-10-10/swe-v4-sonnet55-v323-report.html.gz",
+      "sha256": "c4e5959bc42406665dfca13f83a9b80665dd622a586bcfc161f088bd52b4e674",
+      "fetched_at": "2026-10-10T06:16:01.016826+00:00",
+      "excerpt": "Protocol v3.23 changes nothing in the rubric, controls, quirk keys, gates, repeats, seed, weights or judge settings from v3.15; it applies the protocol to this population, and both judges retook the calibration exam under it before any counted call."
+    },
+    {
+      "url": "https://raw.githubusercontent.com/morganlinton/VulcanBenchCOM/main/assets/data/swe-v4-sonnet55-v323/judge-protocols.json",
+      "file": "test/fixtures/vulcanbench-frontier-2026-10-10/swe-v4-sonnet55-v323-judge-protocols.json.gz",
+      "sha256": "ec3f3d49a02eca082bf921cb4a2527a6bd33442baf5f288437bcd564e75b9237",
+      "fetched_at": "2026-10-10T06:16:03.589525+00:00",
+      "excerpt": "\"protocol_ids\": { \"muse\": \"code-quality-maintenance-v3.23\", \"grok\": \"code-quality-maintenance-v3.23\" }; \"judge_pins\": { \"settings_match_v3_4_bundle\": true, \"originals_checked_by_this_export\": true, \"cursor\": \"every v3.23 Grok call ran on Cursor CLI 2026.10.01-e373342 ... Grok 4.6 passed calibration under v3.23\" }"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/morganlinton/VulcanBenchCOM/main/assets/data/swe-v4-sonnet55-v323/runs.csv",
+      "file": "test/fixtures/vulcanbench-frontier-2026-10-10/swe-v4-sonnet55-v323-runs.csv.gz",
+      "sha256": "a8cabfafb9c7a553695bc1eb5ef8693496626c2491d1958a26016f165aacfff3",
+      "fetched_at": "2026-10-10T06:16:06.337186+00:00",
+      "excerpt": "model,effort,task,run_id,judged_under,judged,scored_panels,combined_33,combined_20_profile,functional_pct,automated_quality_pct,security_pct,hidden_behaviours_fixed,hidden_behaviours,code_quality,reviewed_score,intent_recovery,intent_recovery_redistributed,muse_reviewed,muse_readability,muse_maintainability,muse_intent_recovery,grok_reviewed,grok_readability,grok_maintainability,grok_intent_recovery,passed_quirk_families,solver_fallback,all_replies,duration_s,raw_tokens,output_tokens,estimated_usd,started_at,finished_at,solver_cli_version,evidence_sha256"
+    },
+    {
+      "url": "https://vulcanbench.com/assets/data/swe-v4-board.csv",
+      "file": "test/fixtures/vulcanbench-frontier-2026-10-14/board.csv.gz",
+      "sha256": "3e7ed3540a2fd01372c842000bfc65e767d8f239822b9a44210b95db0901a26d",
+      "fetched_at": "2026-10-14T00:48:47.399580+00:00",
+      "excerpt": "rank,model,lab,harness,effort,best_effort,n,combined_33,combined_33_se,code_quality,passed,mean_minutes,mean_usd,mean_raw_tokens,median_output_tokens,mean_output_tokens,report,protocol,passed_of,combined_timeouts_zero"
+    },
+    {
+      "url": "https://vulcanbench.com/leaderboard.html",
+      "file": "test/fixtures/vulcanbench-frontier-2026-10-14/leaderboard.html.gz",
+      "sha256": "43e2423dae526679883146bfb35d8c872db57882cc1fb0c2922f8ec4446770ef",
+      "fetched_at": "2026-10-14T00:48:39.316992+00:00",
+      "excerpt": "v3.24 apply the same rubric, controls and gates to each population"
+    },
+    {
+      "url": "https://vulcanbench.com/benchmarks/swe-v4-haiku55-v324.html",
+      "file": "test/fixtures/vulcanbench-frontier-2026-10-14/haiku55-v324-report.html.gz",
+      "sha256": "96427255121b451d8834563bb4895b2438ebb847e9dcaf1670aabad16909ac8a",
+      "fetched_at": "2026-10-14T02:05:00.620675+00:00",
+      "excerpt": "Protocol v3.24 changes nothing in the rubric, controls, quirk keys, gates, repeats, seed, weights or judge settings from v3.23"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/morganlinton/VulcanBenchCOM/main/assets/data/swe-v4-haiku55-v324/judge-protocols.json",
+      "file": "test/fixtures/vulcanbench-frontier-2026-10-14/haiku55-v324-judge-protocols.json.gz",
+      "sha256": "576d08a80049a9d0826ac86a5ca2340a058a563e9050727743dd1767c52bce2e",
+      "fetched_at": "2026-10-14T02:05:00.664675+00:00",
+      "excerpt": "\"protocol_ids\": {\"muse\": \"code-quality-maintenance-v3.24\", \"grok\": \"code-quality-maintenance-v3.24\"}"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/morganlinton/VulcanBenchCOM/main/assets/data/swe-v4-haiku55-v324/runs.csv",
+      "file": "test/fixtures/vulcanbench-frontier-2026-10-14/haiku55-v324-runs.csv.gz",
+      "sha256": "ea5b79f371a895f43a5506e2f0e9eb68b5b991c7cbc11d28f19d723279a773c8",
+      "fetched_at": "2026-10-14T02:05:00.716674+00:00",
+      "excerpt": "model,effort,task,run_id,judged_under,judged,combined_33,combined_20_profile"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/morganlinton/VulcanBenchCOM/main/assets/data/swe-v4-haiku55-v324/calibration.json",
+      "file": "test/fixtures/vulcanbench-frontier-2026-10-14/haiku55-v324-calibration.json.gz",
+      "sha256": "e5b6c8a8d70f5edd970432497152582afe2f45cc036628460107dc2462bac13c",
+      "fetched_at": "2026-10-14T02:05:00.656675+00:00",
+      "excerpt": "\"muse\": {\"passed\": true, \"failing_gates\": [], \"call_count\": 80"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/morganlinton/VulcanBenchCOM/main/assets/data/swe-v4-haiku55-v324/provenance.json",
+      "file": "test/fixtures/vulcanbench-frontier-2026-10-14/haiku55-v324-provenance.json.gz",
+      "sha256": "c41d385d17218262b2731fa581279f84b6ffad1472d0aec8e3b67c657d8e7cdf",
+      "fetched_at": "2026-10-14T02:05:00.688674+00:00",
+      "excerpt": "\"v3.24/protocol.json\": \"15c04683b3056999bec21cd99b148fc40c2289953360fb1106da05a5d1b800ed\""
+    },
+    {
+      "url": "https://raw.githubusercontent.com/morganlinton/VulcanBenchCOM/main/assets/data/swe-v4-haiku55-v324/REPRODUCING.md",
+      "file": "test/fixtures/vulcanbench-frontier-2026-10-14/haiku55-v324-REPRODUCING.md.gz",
+      "sha256": "44ed14fd21e5487e5097ea187fef25efaf83782ffd0d4493355ef1270b39bf91",
+      "fetched_at": "2026-10-14T02:10:51.602456+00:00",
+      "excerpt": "The export script recomputes every row from the frozen summary and refuses to write if any value differs."
+    },
+    {
+      "url": "https://raw.githubusercontent.com/morganlinton/VulcanBench/main/harness/maintenance_review_v3_resume.py",
+      "file": "test/fixtures/vulcanbench-frontier-2026-10-14/maintenance_review_v3_resume.py.gz",
+      "sha256": "0bd3117bc41088b694c1896aff7c743cef44e0b9a1a8c39c0c21d3e918fa674e",
+      "fetched_at": "2026-10-14T02:10:51.042466+00:00",
+      "excerpt": "Scores and text are untouched; the original excerpt is recorded."
+    },
+    {
+      "url": "https://raw.githubusercontent.com/morganlinton/VulcanBench/main/harness/maintenance_review_v324.py",
+      "file": "test/fixtures/vulcanbench-frontier-2026-10-14/maintenance_review_v324.py.gz",
+      "sha256": "b62bfef38d638bd79095467175f3b016b20edfaa5275fb1cafa9c6fb506dc184",
+      "fetched_at": "2026-10-14T02:10:51.010466+00:00",
+      "excerpt": "line-level excerpt rule with elision markers; both judges retake the exam under this protocol"
+    },
+    {
+      "url": "https://vulcanbench.com/assets/data/swe-v4-board.csv",
+      "file": "test/fixtures/vulcanbench-frontier-2026-10-31/board.csv.gz",
+      "sha256": "6e9ec6f321755a0a8fa9208541bfbb0248f4beefa8c3f65f1b371757803e6846",
+      "fetched_at": "2026-10-31T10:05:52.751427+00:00",
+      "excerpt": "rank,model,lab,harness,effort,best_effort,n,combined_33,combined_33_se,code_quality,passed,mean_minutes,mean_usd,mean_raw_tokens,median_output_tokens,mean_output_tokens,report,protocol,passed_of,combined_timeouts_zero"
+    },
+    {
+      "url": "https://vulcanbench.com/leaderboard.html",
+      "file": "test/fixtures/vulcanbench-frontier-2026-10-31/leaderboard.html.gz",
+      "sha256": "c0e2c2c8d95244f1afd26b06cf7ffa06db5aa8d7f4b1af3859a8d3ebb636ff0e",
+      "fetched_at": "2026-10-31T10:05:52.864891+00:00",
+      "excerpt": "v3.26, v3.27, v3.28 and v3.29 apply the same rubric, controls and gates to each population"
+    },
+    {
+      "url": "https://vulcanbench.com/benchmarks/swe-v4-gpt61-terra-v329.html",
+      "file": "test/fixtures/vulcanbench-frontier-2026-10-31/gpt61-terra-v329-report.html.gz",
+      "sha256": "603f651224cdde2665623213897d993c317f4a39930e00e3af8c16f995110b5a",
+      "fetched_at": "2026-10-31T10:05:52.919245+00:00",
+      "excerpt": "Protocol v3.29 changes nothing in the rubric, controls, quirk keys, gates, repeats, seed, weights or judges from v3.24"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/morganlinton/VulcanBenchCOM/main/assets/data/swe-v4-gpt61-terra-v329/judge-protocols.json",
+      "file": "test/fixtures/vulcanbench-frontier-2026-10-31/gpt61-terra-v329-judge-protocols.json.gz",
+      "sha256": "404dc39c20ac73e2915a7701c136d3364e7bbd5d7e2f97a217658d9788a6df4b",
+      "fetched_at": "2026-10-31T10:05:52.948132+00:00",
+      "excerpt": "\"protocol_id\": \"code-quality-maintenance-v3.29\""
+    },
+    {
+      "url": "https://raw.githubusercontent.com/morganlinton/VulcanBenchCOM/main/assets/data/swe-v4-gpt61-terra-v329/runs.csv",
+      "file": "test/fixtures/vulcanbench-frontier-2026-10-31/gpt61-terra-v329-runs.csv.gz",
+      "sha256": "1d2775ab41942cb41bf59573eb0016a085d214ac073e5d1583f481c2ee19cdd4",
+      "fetched_at": "2026-10-31T10:05:52.980946+00:00",
+      "excerpt": "model,effort,task,run_id,judged_under,combined_33,combined_20_profile,combined_muse_only,combined_grok_only,functional_pct,automated_quality_pct,security_pct,hidden_behaviours_fixed,hidden_behaviours,"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/morganlinton/VulcanBenchCOM/main/assets/data/swe-v4-gpt61-terra-v329/calibration.json",
+      "file": "test/fixtures/vulcanbench-frontier-2026-10-31/gpt61-terra-v329-calibration.json.gz",
+      "sha256": "8ec945b1025b23a2210747a95a5e60dbd9d9b78c775e803c7d2ef2e0a98b3086",
+      "fetched_at": "2026-10-31T10:05:53.009042+00:00",
+      "excerpt": "{"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/morganlinton/VulcanBenchCOM/main/assets/data/swe-v4-gpt61-terra-v329/provenance.json",
+      "file": "test/fixtures/vulcanbench-frontier-2026-10-31/gpt61-terra-v329-provenance.json.gz",
+      "sha256": "737d607593baa4eb58498bbbaa78616ad2d0b77b1f54b36ed2f4ea86f343e48e",
+      "fetched_at": "2026-10-31T10:05:53.033067+00:00",
+      "excerpt": "\"v3.29/protocol.json\": \"c02807ed8c25bebb01654a7f0cb843aa55ce19807f70a1afba9ef8686955a256\""
+    },
+    {
+      "url": "https://raw.githubusercontent.com/morganlinton/VulcanBenchCOM/main/assets/data/swe-v4-gpt61-terra-v329/REPRODUCING.md",
+      "file": "test/fixtures/vulcanbench-frontier-2026-10-31/gpt61-terra-v329-REPRODUCING.md.gz",
+      "sha256": "8b303682a9b179ebf486507427e015d9c3f0d2ffa58d35be8c4a11f65b9143e6",
+      "fetched_at": "2026-10-31T10:05:53.057613+00:00",
+      "excerpt": "summary and run summaries and refuses to write if any value differs from them"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/morganlinton/VulcanBench/main/harness/maintenance_review_v329.py",
+      "file": "test/fixtures/vulcanbench-frontier-2026-10-31/maintenance_review_v329.py.gz",
+      "sha256": "83c41db779d851ce5a1eb96e699d632e2db5d60cd8ea42c773c1373cddc0766b",
+      "fetched_at": "2026-10-31T10:05:53.083875+00:00",
+      "excerpt": "CURSOR_VERSION = \"2026.10.01-e373342\""
+    },
+    {
+      "url": "https://raw.githubusercontent.com/morganlinton/VulcanBench/main/docs/judging/code-quality-maintenance-v3.md",
+      "file": "test/fixtures/vulcanbench-frontier-2026-10-31/code-quality-maintenance-v3.md.gz",
+      "sha256": "9f604eeb2efadc98602a1202ec8f854443335c59523f49e5e9d65c8ecb4bc7f1",
+      "fetched_at": "2026-10-31T10:05:53.118129+00:00",
+      "excerpt": "## Amendment v3.29, October 28, 2026: GPT-6.1 Terra, judged by Muse Spark 1.3 and Grok 4.6"
+    },
+    {
+      "url": "https://vulcanbench.com/benchmarks/swe-v4-musewonder-full-v326.html",
+      "file": "test/fixtures/vulcanbench-frontier-2026-10-31/musewonder-full-v326-report.html.gz",
+      "sha256": "da70d63094d6649401cad752c1dfdfc7a726e0cd98889d28d5b218c81c38a16c",
+      "fetched_at": "2026-10-31T10:05:53.161977+00:00",
+      "excerpt": "<!doctype html>"
+    },
+    {
+      "url": "https://vulcanbench.com/benchmarks/swe-v4-deepseek-flash-v327.html",
+      "file": "test/fixtures/vulcanbench-frontier-2026-10-31/deepseek-flash-v327-report.html.gz",
+      "sha256": "f6df08540c33806b2c6d06b5f21dd760c7dec23dc2e7a879a9f008e94f5f6a63",
+      "fetched_at": "2026-10-31T10:05:53.207038+00:00",
+      "excerpt": "<!doctype html>"
+    },
+    {
+      "url": "https://vulcanbench.com/benchmarks/swe-v4-beam-v328.html",
+      "file": "test/fixtures/vulcanbench-frontier-2026-10-31/beam-v328-report.html.gz",
+      "sha256": "7834172e03a1663aa0faf125a9f979fcd928fe93e32f832030b005cb65519716",
+      "fetched_at": "2026-10-31T10:05:53.446293+00:00",
+      "excerpt": "<!doctype html>"
+    }
+  ]
+}
