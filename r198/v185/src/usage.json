@@ -1,0 +1,45 @@
+{
+ "granite-switch-4.1-30b": {
+  "active_b": 30,
+  "answered_not_in_common": 11,
+  "architecture_class": "uncalibrated",
+  "cost_all": 0.08795496000000001,
+  "cost_basis_kind": "sibling-estimate-uncalibrated-architecture",
+  "cost_common": 0.06020932840832774,
+  "estimate_all": 0.08795496000000001,
+  "estimate_common": 0.06020932840832774,
+  "expect": {
+   "failed": 0,
+   "input_tokens": 818484,
+   "ok": 1500,
+   "output_tokens": 1500,
+   "status_counts": {
+    "200": 1500
+   }
+  },
+  "fallback": "Existing v1.8 method: architectures outside six calibrated Gemma/Qwen classes retain list-price estimate; no invented family mapping.",
+  "family": "granite",
+  "gpu_all": null,
+  "gpu_common": null,
+  "input_tokens_all": 818484,
+  "input_tokens_common": 554274,
+  "latency_max": 21.930013085999917,
+  "native_output_tokens_all": 1500,
+  "output_tokens_all": 1500,
+  "output_tokens_common": 1489,
+  "over10": 5,
+  "raw_order_matches_input": true,
+  "raw_sha256": "403758bc7c5ad9b6bc19f0191e299d66613ab272a4c5886249fd54df8275e7de",
+  "ref": {
+   "admission": "release-owner33687",
+   "declared_base": "ibm-granite/granite-4.1-30b",
+   "in": 0.16,
+   "kind": "estimate",
+   "listing": "granite-4.2-30b",
+   "out": 0.65,
+   "reference_kind": "sibling"
+  },
+  "scoring_raw_sha256": "403758bc7c5ad9b6bc19f0191e299d66613ab272a4c5886249fd54df8275e7de",
+  "throughput": null
+ }
+}
