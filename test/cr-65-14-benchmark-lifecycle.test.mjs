@@ -59,8 +59,19 @@ test('a page that publishes LLM prompts is reviewed on its excerpt only', () => 
   const flagged = registry.entries.flatMap((e) => e.evidence.filter((s) => s.review_content === 'excerpt').map((s) => [e.id, s.url]));
   // Iteration 146: both ArXivMath editions quote the page's methodology passages as excerpt-only evidence
   // (answer-parsing, edition recency, the contamination note, percent display), BrokenArXiv keeps its two.
-  assert.deepEqual(flagged.map(([, url]) => url).sort(),
+  assert.deepEqual(flagged.filter(([id]) => id !== 'vulcanbench-frontier::4').map(([, url]) => url).sort(),
     [...Array(8).fill('https://matharena.ai/arxivmath'), 'https://matharena.ai/brokenarxiv', 'https://matharena.ai/brokenarxiv']);
+  // CR-647: VulcanBench reviews its methodology, report, provenance, REPRODUCING and harness pages on their
+  // verified excerpts so the protocol packet stays under its byte bound; the set is pinned exactly.
+  const vulcanReports = ['opus55-v315', 'sonnet55-v323', 'haiku55-v324', 'gpt61-terra-v329', 'musewonder-full-v326', 'deepseek-flash-v327', 'beam-v328'];
+  const vulcanBundles = ['haiku55-v324', 'gpt61-terra-v329'];
+  assert.deepEqual(flagged.filter(([id]) => id === 'vulcanbench-frontier::4').map(([, url]) => url).sort(), [
+    'https://vulcanbench.com/methodology.html',
+    'https://vulcanbench.com/assets/data/swe-v4-board.csv',
+    ...vulcanReports.map((r) => `https://vulcanbench.com/benchmarks/swe-v4-${r}.html`),
+    ...vulcanBundles.flatMap((b) => ['provenance.json', 'REPRODUCING.md'].map((f) => `https://raw.githubusercontent.com/morganlinton/VulcanBenchCOM/main/assets/data/swe-v4-${b}/${f}`)),
+    ...['maintenance_review_v3_resume.py', 'maintenance_review_v324.py', 'maintenance_review_v329.py'].map((f) => `https://raw.githubusercontent.com/morganlinton/VulcanBench/main/harness/${f}`),
+  ].sort());
   const reference = { excerpt: 'Unlike our other benchmarks,  BrokenArXiv does not admit rule-based verification.', review_content: 'excerpt' };
   const page = 'BrokenArXiv\nUnlike our other benchmarks, BrokenArXiv does not admit\n rule-based verification. ## Output Format Respond only with a JSON object: {"keep": boolean}';
   assert.equal(protocolSourceContent('x', reference, page), 'Unlike our other benchmarks, BrokenArXiv does not admit rule-based verification.');

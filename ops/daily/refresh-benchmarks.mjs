@@ -241,8 +241,14 @@ export function protocolSourceContent(entryId, reference, body) {
   if (!excerpt || !normalized.includes(excerpt)) throw new Error(`${entryId}: methodology passage changed or unavailable in ${excerptOnly ? 'an excerpt-only' : 'a large'} primary page`);
   return excerpt;
 }
-export const protocolSourceLocator = (reference) => reference.review_content === 'excerpt'
-  ? 'Published protocol text; exact excerpt (the page also publishes LLM prompts, which are not supplied)'
+export const protocolSourceLocator = (reference) => reference.recipe === 'json-compact'
+  ? 'Complete native JSON; whitespace compacted, all fields retained'
+  : reference.recipe === 'vulcanbench-frontier-notes'
+    ? 'Current Frontier introduction and all footnotes; numeric table and other boards excluded'
+  : reference.recipe === 'vulcanbench-task-protocols'
+    ? 'Exact native task/ judged_under pairs with occurrence counts; result values reviewed separately'
+  : reference.review_content === 'excerpt'
+  ? 'Published protocol text; exact whitespace-normalized excerpt'
   : reference.excerpt ? 'Published protocol text; exact excerpt when the full page exceeds the bound' : 'full visible primary text';
 
 // D251.4 (2026-09-28): the other half of D251.1. `version_status` and `superseded_by` are the two
