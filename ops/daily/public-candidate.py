@@ -24,22 +24,36 @@ if sys.argv[1] == 'text':
     # coverage, fallbacks and excluded judge panels), without the numeric result
     # table or the unrelated Routine board. New text inside these paragraphs stays
     # visible. Missing structural boundaries fail closed instead of yielding empty
-    # protocol evidence.
+    # protocol evidence. Since 1 Nov 2026 the page carries the Frontier board alone: its
+    # header (suite label, byline, run metadata) and one closed "lb-notes" disclosure holding
+    # the intro and every footnote; a fully read, closed disclosure is then the boundary.
     if len(sys.argv)>3 and sys.argv[3]=='vulcanbench-frontier-notes':
         class FrontierNotes(HTMLParser):
             def __init__(self):
-                super().__init__(); self.parts=[]; self.selected=False; self.stopped=False; self.boundary=False
+                super().__init__(); self.parts=[]; self.selected=None; self.stopped=False; self.boundary=False
+                self.notes=0; self.closed=False; self.code=0
             def handle_starttag(self,tag,attrs):
-                attrs=dict(attrs)
+                attrs=dict(attrs); classes=set(attrs.get('class','').split())
+                if tag in ('script','style'): self.code+=1
                 if tag=='section' and attrs.get('id')=='routine-v1-board':
                     self.stopped=True; self.boundary=True
-                if tag=='p':
-                    self.selected=not self.stopped and bool(set(attrs.get('class','').split()) & {'byline','lb-context'})
+                if tag=='details' and not self.stopped:
+                    # Notes split across a second disclosure would otherwise be dropped silently.
+                    if self.closed: raise ValueError('VulcanBench Frontier notes disclosure is not unique')
+                    if self.notes or 'lb-notes' in classes: self.notes+=1; self.selected=None
+                if tag in ('p','div') and self.selected is None and not (self.notes or self.closed or self.stopped) \
+                        and classes & ({'byline','lb-context'} if tag=='p' else {'rno','runmeta'}):
+                    self.selected=tag
             def handle_endtag(self,tag):
-                if tag=='p': self.selected=False
+                if tag in ('script','style') and self.code: self.code-=1
+                if tag==self.selected: self.selected=None
+                if tag=='details' and self.notes:
+                    self.notes-=1
+                    if not self.notes: self.boundary=self.closed=True
             def handle_data(self,data):
-                if self.selected: self.parts.append(data)
+                if (self.selected or self.notes) and not self.code: self.parts.append(data)
         notes=FrontierNotes(); notes.feed(raw)
+        if notes.notes: raise ValueError('VulcanBench Frontier notes disclosure is not closed')
         text=' '.join(' '.join(notes.parts).split())
         if not notes.boundary or not all(s in text for s in ['VulcanBench Frontier v4','Combined score','Code quality','judged']):
             raise ValueError('VulcanBench Frontier protocol paragraphs or Routine boundary changed')

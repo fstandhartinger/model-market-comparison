@@ -67,6 +67,7 @@ test('a page that publishes LLM prompts is reviewed on its excerpt only', () => 
   const vulcanBundles = ['haiku55-v324', 'gpt61-terra-v329'];
   assert.deepEqual(flagged.filter(([id]) => id === 'vulcanbench-frontier::4').map(([, url]) => url).sort(), [
     'https://vulcanbench.com/methodology.html',
+    'https://vulcanbench.com/benchmarks.html',
     'https://vulcanbench.com/assets/data/swe-v4-board.csv',
     ...vulcanReports.map((r) => `https://vulcanbench.com/benchmarks/swe-v4-${r}.html`),
     ...vulcanBundles.flatMap((b) => ['provenance.json', 'REPRODUCING.md'].map((f) => `https://raw.githubusercontent.com/morganlinton/VulcanBenchCOM/main/assets/data/swe-v4-${b}/${f}`)),
