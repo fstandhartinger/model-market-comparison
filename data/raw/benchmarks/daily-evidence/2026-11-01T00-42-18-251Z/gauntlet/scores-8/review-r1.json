@@ -1,0 +1,52 @@
+{
+  "artifact_id": "scores-8",
+  "artifact_sha256": "eaa9a9bd1b7cc58f2172c6ec92904aaec448023f7d580eb2cf11abc42d0e3683",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": [
+    "vendor:mistralai/Devstral-2-123B-Instruct-2512:swe-bench-verified::snapshot-2026-09-10",
+    "vendor:mistralai/Devstral-Small-2-24B-Instruct-2512:swe-bench-verified::snapshot-2026-09-10",
+    "c1"
+  ],
+  "errors_found": 4,
+  "findings": [
+    {
+      "id": "f1",
+      "severity": "major",
+      "location": "vendor:mistralai/Devstral-2-123B-Instruct-2512:swe-bench-verified::snapshot-2026-09-10 -> source.published_at",
+      "evidence": "Primary source contains 'December 9, 2025' and 'By Mistral'; candidate row sets published_at null and fails to record the source publication date.",
+      "repair": "Set published_at to the source publication date (e.g., '2025-12-09') and verify against primary evidence."
+    },
+    {
+      "id": "f2",
+      "severity": "major",
+      "location": "vendor:mistralai/Devstral-2-123B-Instruct-2512:swe-bench-verified::snapshot-2026-09-10 -> benchmark_id",
+      "evidence": "Primary source names only 'SWE-bench Verified'; no 'snapshot-2026-09-10' appears in the source evidence.",
+      "repair": "Either provide source evidence for the snapshot suffix or adjust benchmark_id to only 'swe-bench-verified', noting the required row id constraint."
+    },
+    {
+      "id": "f3",
+      "severity": "major",
+      "location": "vendor:mistralai/Devstral-Small-2-24B-Instruct-2512:swe-bench-verified::snapshot-2026-09-10 -> source.published_at",
+      "evidence": "Primary source contains 'December 9, 2025' and 'By Mistral'; candidate row sets published_at null and fails to record the source publication date.",
+      "repair": "Set published_at to the source publication date (e.g., '2025-12-09') and verify against primary evidence."
+    },
+    {
+      "id": "f4",
+      "severity": "major",
+      "location": "vendor:mistralai/Devstral-Small-2-24B-Instruct-2512:swe-bench-verified::snapshot-2026-09-10 -> benchmark_id",
+      "evidence": "Primary source names only 'SWE-bench Verified'; no 'snapshot-2026-09-10' appears in the source evidence.",
+      "repair": "Either provide source evidence for the snapshot suffix or adjust benchmark_id to only 'swe-bench-verified', noting the required row id constraint."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "I cannot independently execute SHA-256 hash, transport, or qualification checks; those are owner-side and outside my read-only scope.",
+    "The snapshot suffix in benchmark_id may be a fixed registry identity component rather than a version claim needing fresh evidence; the supplied source does not mention it.",
+    "The checkpoint naming 'Instruct-2512' is not stated in the source; subject identity is treated as fixed per instructions, so I did not challenge it.",
+    "Source date is textual 'December 9, 2025'; ISO conversion is inferred."
+  ],
+  "missing_evidence": [
+    "snapshot-2026-09-10 for swe-bench-verified benchmark version (not present in primary source)"
+  ]
+}

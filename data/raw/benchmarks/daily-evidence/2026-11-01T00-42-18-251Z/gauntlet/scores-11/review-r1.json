@@ -1,0 +1,24 @@
+{
+  "artifact_id": "scores-11",
+  "artifact_sha256": "6f3e3569c7b76713257f741d6daad62f6ab6e5ecf1fe6913307477219e81e62e",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": ["vendor:DeepSeek-V3:longbench::2", "c1"],
+  "errors_found": 1,
+  "findings": [
+    {
+      "id": "f1",
+      "severity": "major",
+      "location": "vendor:DeepSeek-V3:longbench::2 -> subject.source_id / subject.name / subject.model_id",
+      "evidence": "Primary evidence pages 30-31 and Table 6 identify the model only as 'DeepSeek-V3'; there is no 'DeepSeek V3 (Dec '24)', 'deepseek-v3-dec-24', or 'December 2024 update' label. The only date signal is the arXiv URL 2412.19437v2; the 'update' checkpoint qualifier is not present in the supplied primary text.",
+      "repair": "Align identity fields to the evidenced label: use 'DeepSeek-V3' without the unsupported 'Dec '24'/'deepseek-v3-dec-24' alias, or add a separate authoritative reference verifying the exact December 2024 update checkpoint."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "I cannot execute the owner's hash or transport/qualification checks; the row-level sha256 was accepted as provided.",
+    "The 'Dec '24' date may be inferable from arXiv id 2412, but that inference is not an explicit primary-source statement, hence the finding.",
+    "source.published_at is null; the source date is represented by retrieved_at, which is present and matches source metadata."
+  ],
+  "missing_evidence": []
+}

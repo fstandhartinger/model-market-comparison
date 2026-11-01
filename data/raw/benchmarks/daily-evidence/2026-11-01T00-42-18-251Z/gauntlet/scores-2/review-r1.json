@@ -1,0 +1,34 @@
+{
+  "artifact_id": "scores-2",
+  "artifact_sha256": "2fa0880df7340c0daf98b515a67e731986fdaa0ee4f0bd446dbb13e0624bf9db",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "public:25f76ad62749047ba6dc9e75",
+    "public:9edc50497c0f4783fb4b11cf",
+    "public:1d230716e6f194d8a80e9177",
+    "public:c3491d938488c2c079ff2bd0",
+    "public:786338758a97a21f86f2678d",
+    "public:b333c6d67e79274ecc984033",
+    "public:27837f3bf1d6f1f45dedc690",
+    "public:696e47f5d512e17ff5f49be0",
+    "public:3475d439d23f550b49b893bb",
+    "public:a23c5e3bf02b693ed9906797",
+    "public:e8abb432083ff4fbfefc385b",
+    "public:2a29f11589dea897f8e857a3",
+    "public:e94cd52fa3388e2ad22b6a93",
+    "public:0011edf7699c2a5109ab8fb9",
+    "public:c5d55055832067f71a875f19",
+    "c1"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "I cannot recompute SHA-256 hashes or execute transport/qualification checks; owner-verified row hashes and the source sha256 are trusted as stated.",
+    "Rows with non-null model_id (1d230716..., c3491d93..., b333c6d6..., e8abb432..., e94cd52f..., c5d55055...) rely on retained catalog metadata/identity maps referenced only in join_note text, which is not fully reproduced in this packet; treated as immutable prior accepted context and checked for internal consistency only.",
+    "Source 2 (creative_writing.html) is an excerpt; it corroborates the 'Creative Writing v3 Leaderboard' title and Elo Score column but does not enumerate task subsets or judge revisions, which the registry explicitly leaves separate from this observation.",
+    "basis 'measured' is inferred from the leaderboard serving elo_score values directly; this matches the claimed basis and the applied metadata design."
+  ],
+  "missing_evidence": []
+}

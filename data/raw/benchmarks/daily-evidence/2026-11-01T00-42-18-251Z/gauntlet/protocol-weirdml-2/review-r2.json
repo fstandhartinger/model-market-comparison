@@ -1,0 +1,39 @@
+{
+  "artifact_id": "protocol-weirdml-2",
+  "artifact_sha256": "6bd60c5766dad9d19f8ad87594eec4ade45889654f1ab0b2516e23568e5c4ae7",
+  "round": 2,
+  "verdict": "revise",
+  "coverage_checked": ["weirdml::2", "c1", "c2"],
+  "errors_found": 3,
+  "findings": [
+    {
+      "id": "weirdml::2-version-continuity",
+      "severity": "blocker",
+      "location": "row weirdml::2 version, version_guard, status",
+      "evidence": "SOURCE 1 page is headed 'WeirdML v3' and says 'WeirdML (v3) is an agentic benchmark…' with 'Previous versions: WeirdML v2 · WeirdML v1'. Row claims version '2', version_guard 'Verify the published version 2 before reading results.', and status 'active'. The current protocol release is v3, so a version-2 row presented as the current published board cannot establish continuity under c1.",
+      "repair": "If this row is meant to be the current board, change version/version_guard to v3 and align identity, or if it intentionally represents WeirdML v2, class it as a previous/retained board and adjust the lifecycle fields accordingly. Do not keep a v2 active row against a v3 protocol page."
+    },
+    {
+      "id": "weirdml::2-metric-task-mismatch",
+      "severity": "blocker",
+      "location": "row weirdml::2 scoring.metric and description",
+      "evidence": "SOURCE 1 states WeirdML v3 has '11 complex hand-made tasks' and that the 'official score is 80% normalized area under its line on a logarithmic token axis, plus 20% of its final value'. Row scoring.metric instead says 'Average Max Accuracy: per task, mean over runs of the maximum test accuracy across the 5 iterations per run, averaged over all 17 tasks'. The 17-task count and Average Max Accuracy scoring rule are not in the protocol; the page's stated task count is 11 and its scoring rule is area-under-curve based.",
+      "repair": "Replace the metric with the protocol's official scoring definition and correct the task count to 11 (or, if this row is truly for v2, supply the v2 protocol evidence that establishes 17 tasks and Average Max Accuracy; the packet does not provide it)."
+    },
+    {
+      "id": "weirdml::2-superseded-by",
+      "severity": "major",
+      "location": "row weirdml::2 superseded_by",
+      "evidence": "SOURCE 1 names 'WeirdML v3' as the current version and lists 'WeirdML v2' under 'Previous versions'. Under c2 this names a successor board for v2, so superseded_by should hold our registry id for that successor. Row has superseded_by: null, which is a mismatch because the protocol names a successor.",
+      "repair": "Set superseded_by to our registry id for the WeirdML v3 successor board, leaving the exact id to be taken from the successor's own registry entry."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "I cannot recompute the owner's hashes or re-fetch the maintainer pages; hash verification and transport/qualification are owner-side checks outside my read-only scope.",
+    "SOURCE 1 is an excerpt of the current WeirdML page and does not contain a separate protocol passage for WeirdML v2, so the row's v2-specific metric/description cannot be independently confirmed beyond the contradictions noted.",
+    "The generated activity summary (SOURCE 2) supports status 'active' for this board because it reports 2 changed avg_acc model rows today; I did not treat the v3 page alone as a retirement because c2 allows a board to be superseded while still reported.",
+    "The generated value-scale summary (SOURCE 3) is consistent with unit 'percent' and range [0,100], so I found no unit/range error."
+  ],
+  "missing_evidence": []
+}

@@ -1,0 +1,16 @@
+{
+  "artifact_id": "protocol-eqbench-creative-writing-3",
+  "artifact_sha256": "80ef38506fe66e59005afe37521f7ac7be211cf056c6ab37452f547799bcc445",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": ["eqbench-creative-writing::3", "c1", "c2"],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Row sha256 cf6b1f97... and artifact/transport hashes are owner-executed; I accepted them as binding per packet and did not recompute.",
+    "higher_better=true is not explicitly stated in the excerpt; it rests on standard Elo convention and the leaderboard framing, which I judge adequate rather than contradicted.",
+    "SOURCE 3's served values (146 finite values, low 200, high 2176.9) are consistent with an Elo-style scale and with unit 'Elo'; per its own caveat the summary cannot establish metric meaning or computation, and range [null,null] claims no bounds so no served value can contradict it."
+  ],
+  "missing_evidence": []
+}

@@ -1,0 +1,28 @@
+{
+  "artifact_id": "scores-6",
+  "artifact_sha256": "a788f9f4c819dc01a1700afedde31f433ed48dbcb8804dcd85f17886f7a722b2",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "public:54d2a92a3f2a7521dec328a0",
+    "public:4e1d377a19615ff3cef67f7d",
+    "public:b08620fa42f5378a6c092bf1",
+    "public:ccc30acc315634bb4a758a9a",
+    "public:f0e2663745f4a46cace82e58",
+    "public:a06e951ec88c8a593bd81718",
+    "public:41ab205415ef05b5236025c4",
+    "public:6705e67a9c432e3f10a5700f",
+    "public:6d642ab6d1e126aa2dc3dfde",
+    "public:9cefdbaa77ea21148287fdba",
+    "c1"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "I cannot recompute per-row SHA-256 hashes or execute transport/qualification checks; owner-performed hash and transport verification were not repeated and are treated as a stated limitation, not a missing source value.",
+    "Row public:6705e67a9c432e3f10a5700f stores value 38.6 while source states '38.60% ± 12.64%'; numeric values are equal, so this is a formatting difference, not a value mismatch.",
+    "Rows public:4e1d377a19615ff3cef67f7d, public:ccc30acc315634bb4a758a9a and public:a06e951ec88c8a593bd81718 carry model_id values supported only by join_notes referencing retained identity maps not present in the primary source; accepted as prior fixed identities per instructions, not as fresh source claims."
+  ],
+  "missing_evidence": []
+}

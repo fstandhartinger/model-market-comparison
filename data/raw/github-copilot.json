@@ -1,7 +1,7 @@
 {
   "source": "GitHub Copilot (current usage-based billing plus annual-plan legacy request billing)",
-  "collected_at": "2026-10-28",
-  "method": "scripts/fetch-github-copilot-catalog.mjs (2026-10-28): current_models[] = the intersection of the supported-models catalog table (https://docs.github.com/en/copilot/reference/ai-models/supported-models) and the per-token pricing tables (https://docs.github.com/en/copilot/reference/copilot-billing/models-and-pricing), matched by exact name after footnote markers are removed; Default and Long context tiers are folded into one row (long_context carries the threshold and higher price); promotion end dates come from the pricing footnotes. models[] = the legacy annual-plan multiplier table (https://docs.github.com/en/copilot/reference/copilot-billing/request-based-billing-legacy/model-multipliers-for-annual-plans) with effective USD per request = multiplier × per_premium_request_usd; the page's \"subject to change\" list sets the note. Plan allowances (plans[]) are documented on separate billing pages and keep plans_checked_at. See github-copilot.method.md.",
+  "collected_at": "2026-11-01",
+  "method": "scripts/fetch-github-copilot-catalog.mjs (2026-11-01): current_models[] = the intersection of the supported-models catalog table (https://docs.github.com/en/copilot/reference/ai-models/supported-models) and the per-token pricing tables (https://docs.github.com/en/copilot/reference/copilot-billing/models-and-pricing), matched by exact name after footnote markers are removed; Default and Long context tiers are folded into one row (long_context carries the threshold and higher price); promotion end dates come from the pricing footnotes. models[] = the legacy annual-plan multiplier table (https://docs.github.com/en/copilot/reference/copilot-billing/request-based-billing-legacy/model-multipliers-for-annual-plans) with effective USD per request = multiplier × per_premium_request_usd; the page's \"subject to change\" list sets the note. Plan allowances (plans[]) are documented on separate billing pages and keep plans_checked_at. See github-copilot.method.md.",
   "pricing_model": "ai_credits_per_token_with_legacy_per_premium_request",
   "ai_credit_usd": 0.01,
   "per_premium_request_usd": 0.04,
@@ -447,55 +447,6 @@
       "notes": "GitHub marks this multiplier as subject to change."
     },
     {
-      "model_name": "Gemini 3 Pro",
-      "provider_org": "Google",
-      "premium_request_multiplier": 6,
-      "effective_usd_per_request": 0.24,
-      "notes": "Legacy annual-plan model; not in the current usage-based supported-model catalog."
-    },
-    {
-      "model_name": "GPT-4o",
-      "provider_org": "OpenAI",
-      "premium_request_multiplier": 0.33,
-      "effective_usd_per_request": 0.0132,
-      "notes": "Legacy annual-plan model; not in the current usage-based supported-model catalog."
-    },
-    {
-      "model_name": "GPT-4o mini",
-      "provider_org": "OpenAI",
-      "premium_request_multiplier": 0.33,
-      "effective_usd_per_request": 0.0132,
-      "notes": "Legacy annual-plan model; not in the current usage-based supported-model catalog."
-    },
-    {
-      "model_name": "GPT-5.1",
-      "provider_org": "OpenAI",
-      "premium_request_multiplier": 3,
-      "effective_usd_per_request": 0.12,
-      "notes": "Legacy annual-plan model; not in the current usage-based supported-model catalog."
-    },
-    {
-      "model_name": "GPT-5.1-Codex",
-      "provider_org": "OpenAI",
-      "premium_request_multiplier": 3,
-      "effective_usd_per_request": 0.12,
-      "notes": "Legacy annual-plan model; not in the current usage-based supported-model catalog."
-    },
-    {
-      "model_name": "GPT-5.1-Codex-Mini",
-      "provider_org": "OpenAI",
-      "premium_request_multiplier": 0.33,
-      "effective_usd_per_request": 0.0132,
-      "notes": "Legacy annual-plan model; not in the current usage-based supported-model catalog."
-    },
-    {
-      "model_name": "GPT-5.1-Codex-Max",
-      "provider_org": "OpenAI",
-      "premium_request_multiplier": 3,
-      "effective_usd_per_request": 0.12,
-      "notes": "Legacy annual-plan model; not in the current usage-based supported-model catalog."
-    },
-    {
       "model_name": "GPT-5.3-Codex",
       "provider_org": "OpenAI",
       "premium_request_multiplier": 6,
@@ -734,16 +685,37 @@
     "Claude Sonnet 4.6 (2026-09-01)"
   ],
   "response_sha256": {
-    "supported": "3b07b9e0ad497dc09f30b242ba24ea6cc4f1995526368be4121672ca94bf8812",
-    "pricing": "20b4d2e811716f3ebb2b78a5c70b47e3fe4d4ec89b945518b2feb1d167f430ed",
-    "multipliers": "dfe0cd6cb7e4b0b61aed41a7ee12d9032f4a8c3737709ac4c8f3000ddc4a6333"
+    "supported": "3a3a98f32ec7e0d4925a3585ee0adeeca71572e4756c3ac2895a233215d483d6",
+    "pricing": "27b8932a8f151d65d3636817b3622f2101eec82d6947ea0a90c9a36bdbf30479",
+    "multipliers": "f7aa03847e1d7ba99e7cc526f07a7ad25661a7862a902e947b6198205d38eb1f"
   },
   "diff": {
     "current_added": [],
     "current_removed": [],
     "current_price_changed": [],
     "legacy_added": [],
-    "legacy_removed": [],
+    "legacy_removed": [
+      "Gemini 3 Pro",
+      "GPT-4o",
+      "GPT-4o mini",
+      "GPT-5.1",
+      "GPT-5.1-Codex",
+      "GPT-5.1-Codex-Mini",
+      "GPT-5.1-Codex-Max"
+    ],
+    "legacy_removal_approval": {
+      "removed": [
+        "GPT-4o",
+        "GPT-4o mini",
+        "GPT-5.1",
+        "GPT-5.1-Codex",
+        "GPT-5.1-Codex-Max",
+        "GPT-5.1-Codex-Mini",
+        "Gemini 3 Pro"
+      ],
+      "accepted_by_approval": true,
+      "reviewed_at": "2026-10-31"
+    },
     "legacy_multiplier_changed": []
   },
   "plans_source_url": "https://github.com/features/copilot/plans",

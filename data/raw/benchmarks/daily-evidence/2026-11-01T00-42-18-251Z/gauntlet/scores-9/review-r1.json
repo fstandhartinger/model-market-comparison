@@ -1,0 +1,45 @@
+{
+  "artifact_id": "scores-9",
+  "artifact_sha256": "987c8521531183ae1bc4ffb9f29f5c0bb9a4fcf78145b6ca252e7657e50f832d",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": [
+    "vendor:DeepSeek-V3:swe-bench-verified::snapshot-2026-09-10",
+    "c1"
+  ],
+  "errors_found": 3,
+  "findings": [
+    {
+      "id": "benchmark-version-snapshot",
+      "severity": "blocker",
+      "location": "row vendor:DeepSeek-V3:swe-bench-verified::snapshot-2026-09-10; id and benchmark_id",
+      "evidence": "Primary source only identifies 'SWE-Bench Verified' (Table 6, arXiv 2412.19437v2); no 'snapshot-2026-09-10' appears. Artifact adds this snapshot date to id and benchmark_id without source support.",
+      "repair": "Remove the unsupported snapshot date from id and benchmark_id, or supply primary evidence that explicitly names the SWE-bench Verified version/snapshot. Do not fabricate version identifiers."
+    },
+    {
+      "id": "subject-alias",
+      "severity": "major",
+      "location": "row; subject.source_id, subject.name, subject.model_id",
+      "evidence": "Source names the model only as 'DeepSeek V3' (chat model). Artifact infers 'December 2024 update' from arXiv 2412 and adds 'dec-24' and 'default' variant, violating the no-alias-inference rule.",
+      "repair": "Use only the exact model identity as in the source ('DeepSeek V3'); remove 'Dec \\'24', 'deepseek-v3-dec-24', and 'default' unless explicit evidence is provided."
+    },
+    {
+      "id": "source-date-missing",
+      "severity": "blocker",
+      "location": "row; source.published_at",
+      "evidence": "Artifact sets published_at to null; primary evidence includes no publication date for arXiv 2412.19437v2. Criterion c1 requires verification of source date.",
+      "repair": "Obtain and record the actual arXiv publication date from authoritative metadata or otherwise provide a verifiable source date. Without it, the row fails c1."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "Cannot independently recompute SHA-256 hashes or execute transport/qualification checks; hashes are taken from owner-provided values.",
+    "The arXiv PDF excerpt does not include the paper's publication date, so the source date cannot be independently verified beyond retrieved_at.",
+    "The SWE-bench Verified version is not explicit in the primary evidence; only the benchmark name is given."
+  ],
+  "missing_evidence": [
+    "publication date of arXiv 2412.19437v2",
+    "specific SWE-bench Verified benchmark version or snapshot identifier",
+    "explicit DeepSeek V3 checkpoint version/date (e.g., December 2024 update) as stated by source"
+  ]
+}

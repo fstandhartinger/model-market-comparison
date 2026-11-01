@@ -1,0 +1,28 @@
+{
+  "artifact_id": "scores-10",
+  "artifact_sha256": "29279c579b9cea9b7760f79668601f137009663a6c58ba3f5ffbd375a0c9fadb",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": [
+    "vendor:DeepSeek-V3:aider-polyglot::snapshot-2026-09-10",
+    "c1"
+  ],
+  "errors_found": 1,
+  "findings": [
+    {
+      "id": "f1",
+      "severity": "blocker",
+      "location": "vendor:DeepSeek-V3:aider-polyglot::snapshot-2026-09-10",
+      "evidence": "Primary source PDF Table 6 lists 'Aider-Polyglot (Acc.)' with DeepSeek-V3 value 49.6, but the source text (pages 30-31) contains no snapshot or version identifier such as 'snapshot-2026-09-10'. The row's benchmark_id includes 'snapshot-2026-09-10' without any supporting primary evidence.",
+      "repair": "Remove the unsupported snapshot suffix from benchmark_id, or include primary evidence that documents the specific benchmark snapshot/version date and update benchmark_id accordingly."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "The owner separately executes hash verification and transport checks; as a read-only validator I cannot recompute SHA-256 hashes or confirm retrieval timestamps. These are limitations, not missing source values.",
+    "The benchmark snapshot date in benchmark_id appears to be an internally assigned reference; its absence in the source is the basis for the finding."
+  ],
+  "missing_evidence": [
+    "benchmark version 'snapshot-2026-09-10' absent from primary evidence"
+  ]
+}

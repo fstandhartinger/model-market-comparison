@@ -1,0 +1,33 @@
+{
+  "artifact_id": "scores-5",
+  "artifact_sha256": "f3ea16efce1b9b382a8766d5b9bf01a0a1e0cedbc446601b65fada8bf66387b0",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "public:dbd92f84441908982e744cb0",
+    "public:1ebf35580659c8394ebf442f",
+    "public:062dd2b49cea0eb31494b26e",
+    "public:57c9044b24f0aa088bf4b992",
+    "public:fab7a3535e310b0f953f62d8",
+    "public:46282c0b32f7d399ca98cc87",
+    "public:c70b7f4933b9f05692b08571",
+    "public:d21c23406ad8ecb550a8f352",
+    "public:b85f8dbbef85f38d5fc07611",
+    "public:700611e8f14e140f80322692",
+    "public:476f576ebe61d4b6546c876f",
+    "public:c60c66046637a1f2a387c2bd",
+    "public:cdcfde63a59cad83d419c696",
+    "public:2c19c66764d7db71599e25b1",
+    "c1"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Owner-computed row SHA-256 hashes, transport, and qualification checks are executed by the owner; I cannot independently recompute or execute them (limitation, not missing source evidence).",
+    "Model_id values (e.g. gpt-4o-mini::default) are derived from retained catalog metadata not present in this packet; per instructions they are accepted as immutable prior accepted identity, and join notes document the mapping.",
+    "The board does not explicitly publish effort/harness or a publication date; null harness and null published_at are consistent with the source, and retrieved_at is used as the source date.",
+    "Numeric conversions from string values (e.g. '759.0' to 759, '750.0' to 750) are exact; no rounding loss."
+  ],
+  "missing_evidence": []
+}

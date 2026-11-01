@@ -1,7 +1,7 @@
 {
   "source": "ArtificialAnalysis Coding Agent Index",
   "version": "2.0",
-  "collected_at": "2026-10-31",
+  "collected_at": "2026-11-01",
   "endpoint": "https://artificialanalysis.ai/agents/coding-agents",
   "methodology_url": "https://artificialanalysis.ai/methodology/coding-agents-benchmarking",
   "method": "Decode Flight JSON and resolve benchmarkRows references on the full coding-agents page; validate version, row count, identities, components and index arithmetic before atomic replacement.",
@@ -24,58 +24,6 @@
   ],
   "completeness_note": "Complete v2.0 benchmarkRows only. v1.4 and v1.5 remain separate dated snapshots (v1.4 feeds the unchanged Composite); versions use different components and must never be combined or compared as one scale.",
   "rows": [
-    {
-      "source_id": "f8b3c23615b8b60e23364c27e8494d6d",
-      "model_name": "Claude Opus 5.5 (Max, Default Fallback)",
-      "harness": "Claude Code",
-      "score": 0.616528649505811,
-      "eval_count": 3,
-      "index_component_count": 3,
-      "complete": true,
-      "components": [
-        {
-          "id": "frontiercode-v1.1-main",
-          "score": 0.559670666666667,
-          "weight": 0.333333333333333
-        },
-        {
-          "id": "swe-atlas-qna",
-          "score": 0.658602150537634,
-          "weight": 0.333333333333333
-        },
-        {
-          "id": "terminal-bench-v4",
-          "score": 0.631313131313131,
-          "weight": 0.333333333333333
-        }
-      ]
-    },
-    {
-      "source_id": "96d7404e06194027474a6cc3bb31c068",
-      "model_name": "GLM-5.3 (Max)",
-      "harness": "Opencode",
-      "score": 0.489161690344303,
-      "eval_count": 3,
-      "index_component_count": 3,
-      "complete": true,
-      "components": [
-        {
-          "id": "frontiercode-v1.1-main",
-          "score": 0.482473666666667,
-          "weight": 0.333333333333333
-        },
-        {
-          "id": "swe-atlas-qna",
-          "score": 0.586021505376344,
-          "weight": 0.333333333333333
-        },
-        {
-          "id": "terminal-bench-v4",
-          "score": 0.398989898989899,
-          "weight": 0.333333333333333
-        }
-      ]
-    },
     {
       "source_id": "ee454ece0aab8dacb7127770643dcb6b",
       "model_name": "Gemini 4 Argon (High)",
@@ -852,6 +800,58 @@
         {
           "id": "terminal-bench-v4",
           "score": 0.575757575757576,
+          "weight": 0.333333333333333
+        }
+      ]
+    },
+    {
+      "source_id": "f8b3c23615b8b60e23364c27e8494d6d",
+      "model_name": "Claude Opus 5.5 (Max, Default Fallback)",
+      "harness": "Claude Code",
+      "score": 0.616528649505811,
+      "eval_count": 3,
+      "index_component_count": 3,
+      "complete": true,
+      "components": [
+        {
+          "id": "frontiercode-v1.1-main",
+          "score": 0.559670666666667,
+          "weight": 0.333333333333333
+        },
+        {
+          "id": "swe-atlas-qna",
+          "score": 0.658602150537634,
+          "weight": 0.333333333333333
+        },
+        {
+          "id": "terminal-bench-v4",
+          "score": 0.631313131313131,
+          "weight": 0.333333333333333
+        }
+      ]
+    },
+    {
+      "source_id": "96d7404e06194027474a6cc3bb31c068",
+      "model_name": "GLM-5.3 (Max)",
+      "harness": "Opencode",
+      "score": 0.489161690344303,
+      "eval_count": 3,
+      "index_component_count": 3,
+      "complete": true,
+      "components": [
+        {
+          "id": "frontiercode-v1.1-main",
+          "score": 0.482473666666667,
+          "weight": 0.333333333333333
+        },
+        {
+          "id": "swe-atlas-qna",
+          "score": 0.586021505376344,
+          "weight": 0.333333333333333
+        },
+        {
+          "id": "terminal-bench-v4",
+          "score": 0.398989898989899,
           "weight": 0.333333333333333
         }
       ]

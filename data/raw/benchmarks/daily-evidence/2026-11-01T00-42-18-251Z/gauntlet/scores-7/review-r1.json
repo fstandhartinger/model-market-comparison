@@ -1,0 +1,23 @@
+{
+  "artifact_id": "scores-7",
+  "artifact_sha256": "94ddd7188b5d922e1033d4229354ff17b7585abf3775b93482f23a17b1965c87",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/retail",
+    "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/airline",
+    "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/telecom",
+    "c1"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "I cannot execute SHA-256, transport, or qualification checks; all supplied hashes including source sha256 9aa7860622381d0ca3ea and per-row hashes are owner-provided values I accepted as given.",
+    "The README does not explicitly name an evaluation harness for TAU2; the artifact records harness:null and only transcribes the published sampling/output-length settings, so no unclaimed harness is invented.",
+    "benchmark_id 'tau2-bench::2' is the required canonical identity; the README itself labels the rows TAU2-Retail/TAU2-Airline/TAU2-Telecom, and I assume the internal version mapping is correct because it is the required row identity.",
+    "Airline value is recorded as 58 while the source shows 58.0; numerically identical, so I treat it as an exact value transcription.",
+    "README provides no explicit publication timestamp; published_at is null and retrieved_at is used as the source date, which I consider acceptable for this evidence packet."
+  ],
+  "missing_evidence": []
+}

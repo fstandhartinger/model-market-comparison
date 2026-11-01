@@ -1,0 +1,34 @@
+{
+  "artifact_id": "scores-4",
+  "artifact_sha256": "2999e13d36faa1610db87cbc0891bd8c8545cb64500f23b2c560b44238ac8f6e",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "public:b900fe83c7ac0bdda4d5ea3f",
+    "public:615efcaa8e33887174ff8d54",
+    "public:ad1f7f5c684d3f49403ab277",
+    "public:1e4c73f96c8f6ce534f52bfb",
+    "public:2f8827a60a71ffb95c73ac6a",
+    "public:c5cf9b5a59a43f08d0586fe5",
+    "public:d69d59dc7c88cde284bd4c38",
+    "public:fb63620b4a9161750caa0193",
+    "public:230bac5cc36baf648da41793",
+    "public:e4bc13baa5fac9cc33156a2d",
+    "public:eb50d97bc55ea3be6dfd057c",
+    "public:34c65b4acb64ade1d1b0889d",
+    "public:8f6f3d942cce87735697f9d1",
+    "public:9238cadd9933d21e539fee66",
+    "public:f2570c7343c3536e13fcedeb",
+    "c1"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "I cannot recompute row or artifact SHA-256 hashes; they are taken from the packet's owner-computed bindings.",
+    "Row public:615efcaa8e33887174ff8d54 stores numeric 1134 for source string \"1134.0\"; row public:8f6f3d942cce87735697f9d1 stores numeric 956 for source string \"956.0\"; numerically identical under scale 1, so not treated as an error.",
+    "Regex badge-stripping semantics and exact locator arithmetic for the two 'new model' rows rely on the captured parser/name_markers metadata in the source objects; I did not independently run the renderer.",
+    "I could not perform live network retrieval or transport checks; evidence is the supplied owner hash-verified captured payloads."
+  ],
+  "missing_evidence": []
+}
