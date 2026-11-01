@@ -102,12 +102,43 @@ test('every bounded report excerpt is checked against its capture and rejects ch
 test('Frontier notes include all current coverage/fallback/judge footnotes and reject a missing boundary', () => {
   const reference=entry.evidence.find(r => r.recipe==='vulcanbench-frontier-notes');
   const notes=extract(reference);
-  for (const text of ['71.94','67.26','11 disclosed Opus 4.8 fallbacks','not strictly comparable','v3.29','formerly VulcanBench-SWE v4']) assert.ok(notes.includes(text),text);
+  for (const text of ['71.94','67.26','11 disclosed Opus 4.8 fallbacks','not strictly comparable','v3.29','VulcanBench Frontier v4 · current suite','23 tasks']) assert.ok(notes.includes(text),text);
+  // The former name left leaderboard.html on 1 Nov 2026; benchmarks.html now carries it, verified like any excerpt.
+  assert.match(entry.evidence.find(r => r.url==='https://vulcanbench.com/benchmarks.html').excerpt, /formerly published as VulcanBench-SWE v4/);
   const dir=mkdtempSync(join(tmpdir(),'vulcan-notes-')); const path=join(dir,'page.html');
   const project=html => {writeFileSync(path,html);return execFileSync('python3',['ops/daily/public-candidate.py','text',path,reference.recipe],{cwd:root,encoding:'utf8',stdio:['ignore','pipe','pipe']});};
   const html='<p class="byline">VulcanBench Frontier v4</p><p class="lb-context">Combined score; Code quality judged. NEW JUDGE CLAIM</p><section id="routine-v1-board"><p class="lb-context">UNRELATED ROUTINE</p></section>';
+  const folded='<div class="rno">VulcanBench Frontier v4</div><p class="byline">Every model.</p><div v4app>CHART 93.1</div>'
+    +'<details class="lb-notes"><summary>Notes</summary><p>Combined score; Code quality judged. NEW JUDGE CLAIM</p><ul><li>NEW FOOTNOTE</li></ul>'
+    +'<details><summary>more</summary><p>NESTED NOTE</p></details><p>AFTER NESTED</p></details><p>UNRELATED SHARE TEXT</p>';
   try {
     const projected=project(html); assert.ok(projected.includes('NEW JUDGE CLAIM')); assert.ok(!projected.includes('UNRELATED ROUTINE'));
     assert.throws(() => project(html.replace('routine-v1-board','changed-board')));
+    const notesOnly=project(folded);
+    for (const text of ['NEW JUDGE CLAIM','NEW FOOTNOTE','NESTED NOTE','AFTER NESTED']) assert.ok(notesOnly.includes(text),text);
+    for (const text of ['CHART','UNRELATED SHARE TEXT']) assert.ok(!notesOnly.includes(text),text);
+    assert.throws(() => project(folded.replace('class="lb-notes"','class="other"')), /Routine boundary changed/);
+    assert.throws(() => project(folded.replace(/<\/details><p>UNRELATED.*$/,'')), /not closed/);
+    assert.throws(() => project(folded.replace('NEW JUDGE CLAIM','').replace('Combined score;','')), /Routine boundary changed/);
+    for (const second of ['<details><p>SPLIT NOTE</p></details>', '<details class="lb-notes"><p>SPLIT NOTE</p></details>'])
+      assert.throws(() => project(folded+second), /not unique/);
+    const later=project(folded+'<p class="byline">LATER BYLINE</p><div class="runmeta">LATER META</div>');
+    assert.ok(!later.includes('LATER BYLINE') && !later.includes('LATER META'));
+    const wrapped=project(folded.replace('<details class="lb-notes">','<div class="runmeta">META <details class="lb-notes">').replace('<p>UNRELATED','TRAILING</div><p>UNRELATED'));
+    assert.ok(wrapped.includes('META') && wrapped.includes('NEW FOOTNOTE') && !wrapped.includes('TRAILING'));
+    const scripted=project(folded.replace('<ul>','<script>window.DATA={"combined":93.1}</script><style>.x{}</style><ul>'));
+    assert.ok(scripted.includes('NEW FOOTNOTE') && !scripted.includes('93.1') && !scripted.includes('.x{}'));
   } finally {rmSync(dir,{recursive:true,force:true});}
+});
+
+test('the 1 Nov leaderboard redesign keeps every Frontier footnote; the old layout still projects', () => {
+  const recipe='vulcanbench-frontier-notes';
+  const project=file => execFileSync('python3',['ops/daily/public-candidate.py','text',file,recipe],{cwd:root,encoding:'utf8'}).trim();
+  const before=project('test/fixtures/vulcanbench-frontier-2026-10-31/leaderboard.html.gz');
+  const after=extract(entry.evidence.find(r => r.recipe===recipe));
+  assert.ok(before.includes('formerly VulcanBench-SWE v4') && before.includes('VulcanBench Frontier v4 · current suite'));
+  // From the first footnote to the CSV link the notes are verbatim, except one chart-legend sentence.
+  const footnotes=before.slice(before.indexOf('† Fable 5.1')).replace('The best tag marks each model’s','A dot marked best is that model’s');
+  assert.ok(footnotes.length > 10_000);
+  assert.ok(after.includes(footnotes));
 });
