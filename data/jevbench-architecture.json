@@ -7747,6 +7747,22 @@
           }
         ],
         "note": "Composed Granite decoder; decision adapter only, no Guardian or audio measurement. Architecture is outside the six calibrated Gemma/Qwen cost classes."
+      },
+      "granite-switch-4.1-30b": {
+        "arch": "open-llm-decoder",
+        "badges": {
+          "derivation": "adapter",
+          "params": "30B",
+          "quant": "BF16"
+        },
+        "evidence": [
+          {
+            "fact": "Composed Granite Switch 4.1 30B decision-adapter checkpoint; pinned config declares GraniteSwitchForCausalLM.",
+            "kind": "model-card",
+            "url": "https://huggingface.co/ibm-granite/granite-switch-4.1-30b/blob/eb206725d03c0f1c409ce3aa512afe325fdf8731/README.md"
+          }
+        ],
+        "note": "Composed Granite decoder; decision adapter only, no Guardian or audio measurement. Architecture is outside the six calibrated Gemma/Qwen cost classes."
       }
     },
     "imagejevbench": {

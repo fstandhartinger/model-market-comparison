@@ -1,0 +1,16 @@
+{
+ "path": "r198/v185/postflip_real_r209.sh",
+ "sha256": "83a0610beb4b65a43363da5b12411b93d13ab0109cb9a67ce9128c9fef33f0b3",
+ "source": "root r209/postflip_real_r209.sh",
+ "scope": "Unused operational helper added after heavy start; current build did not invoke it. bash-n and independent exact-byte static/precondition review PASS; source data/artifacts unchanged.",
+ "current_heavy_source_inventory_excludes_this_unused_helper": true,
+ "no_public_artifact_change": true,
+ "requires_real_review_receipt_argument": true,
+ "requires_actual_public_loader": true,
+ "supersedes_precondition_missing_sha256": "f504932fa5514ea5968b53a09ddc490ffe56441087f8c846b82d8a1c669e5985",
+ "independent_static_precondition_review": {
+  "path": "/home/flori/jobs/jevbench-add-requests-20260919/workers/r209-v185-critic/POSTFLIP-HELPER-DELTA.json",
+  "sha256": "49cd3f0becd177ba66a6cc935e263caceeff8af39da669548685b8498d099d22",
+  "scope": "Exact corrected helper;1positive+8negativepreconditions; fullhelperbeforefliprefusal; no actualPASS/flip/build/npm/test execution"
+ }
+}
