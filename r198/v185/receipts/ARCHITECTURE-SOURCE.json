@@ -1,0 +1,32 @@
+{
+ "status": "PASS",
+ "source": "/home/flori/jobs/jevbench-auto-intake/r91-granite/attempts/granite30b7-d1027g-call3-complete/evidence/files/config.json",
+ "sha256": "aff59d46125eba294a6c825c0aa77f2361c0fabc1457a1ea4f062a7a4edf1627",
+ "pinned_repo": "ibm-granite/granite-switch-4.1-30b",
+ "revision": "eb206725d03c0f1c409ce3aa512afe325fdf8731",
+ "selected_public_config": {
+  "architectures": [
+   "GraniteSwitchForCausalLM"
+  ],
+  "model_type": "granite_switch",
+  "hidden_size": 4096,
+  "intermediate_size": 32768,
+  "num_hidden_layers": 66,
+  "num_attention_heads": 32,
+  "num_key_value_heads": 8,
+  "num_local_experts": 0,
+  "num_experts_per_tok": 2,
+  "dtype": "bfloat16",
+  "max_position_embeddings": 131072,
+  "adapter_names": [
+   "guardian-core",
+   "decision"
+  ],
+  "adapter_ranks": [
+   16,
+   64
+  ]
+ },
+ "no_quantitative_throughput_inferred": true,
+ "gpu_component": null
+}
