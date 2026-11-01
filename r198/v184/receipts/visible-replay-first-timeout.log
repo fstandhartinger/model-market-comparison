@@ -1,0 +1,40 @@
+Traceback (most recent call last):
+  File "/srv/heavy/jobs/jevbench-add-requests-20260919-v184replay--r1031223412gtwy/work/r198/v184/.pass/r198/v184/capture_visible_replay.py", line 46, in <module>
+    asyncio.run(main())
+  File "/usr/lib/python3.12/asyncio/runners.py", line 194, in run
+    return runner.run(main)
+           ^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/asyncio/base_events.py", line 687, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "/srv/heavy/jobs/jevbench-add-requests-20260919-v184replay--r1031223412gtwy/work/r198/v184/.pass/r198/v184/capture_visible_replay.py", line 24, in main
+    response=await page.goto(f'http://127.0.0.1:{port}/jev-models/{MODEL}',wait_until='domcontentloaded',timeout=600000);assert response.status==200,response.status
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/playwright/async_api/_generated.py", line 9041, in goto
+    await self._impl_obj.goto(
+  File "/usr/local/lib/python3.12/dist-packages/playwright/_impl/_page.py", line 552, in goto
+    return await self._main_frame.goto(**locals_to_params(locals()))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/playwright/_impl/_frame.py", line 153, in goto
+    await self._channel.send(
+  File "/usr/local/lib/python3.12/dist-packages/playwright/_impl/_connection.py", line 69, in send
+    return await self._connection.wrap_api_call(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/playwright/_impl/_connection.py", line 559, in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+playwright._impl._errors.TimeoutError: Page.goto: Timeout 600000ms exceeded.
+Call log:
+  - navigating to "http://127.0.0.1:43331/jev-models/granite-switch-4.1-8b", waiting until "domcontentloaded"
+
+Exception ignored in: <function BaseSubprocessTransport.__del__ at 0x71f5ab822fc0>
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/asyncio/base_subprocess.py", line 126, in __del__
+  File "/usr/lib/python3.12/asyncio/base_subprocess.py", line 104, in close
+  File "/usr/lib/python3.12/asyncio/unix_events.py", line 568, in close
+  File "/usr/lib/python3.12/asyncio/unix_events.py", line 592, in _close
+  File "/usr/lib/python3.12/asyncio/base_events.py", line 795, in call_soon
+  File "/usr/lib/python3.12/asyncio/base_events.py", line 541, in _check_closed
+RuntimeError: Event loop is closed
