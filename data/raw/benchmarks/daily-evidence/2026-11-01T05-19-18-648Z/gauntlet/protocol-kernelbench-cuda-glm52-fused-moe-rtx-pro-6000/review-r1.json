@@ -1,0 +1,26 @@
+{
+  "artifact_id": "protocol-kernelbench-cuda-glm52-fused-moe-rtx-pro-6000",
+  "artifact_sha256": "6aafe8f39bf09b836a09a197e283d2d81bad768a70baedba626edb70633514b9",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": ["kernelbench-cuda-glm52-fused-moe::rtx-pro-6000", "c1", "c2"],
+  "errors_found": 1,
+  "findings": [
+    {
+      "id": "kernelbench-cuda-glm52-fused-moe::rtx-pro-6000-scoring-notes-0.2056",
+      "severity": "major",
+      "location": "row kernelbench-cuda-glm52-fused-moe::rtx-pro-6000, scoring.notes",
+      "evidence": "notes claim the published per_problem ranked list 'still holds' the muse/muse-spark-1.3 [ultra] 04 cell with peak_fraction 0.2056. Primary leaderboard.json source 2 shows muse/muse-spark-1.3 04_grid_mingru_sps run 20260903_014633 as correct:false, peak_fraction:null, annotation_verdict:bug, and the 04 ranked_passes list (20 entries) contains no muse entry and no 0.2056 value anywhere in the payload. The claim is contradicted by the primary evidence.",
+      "repair": "Correct the note: the per_problem ranked list does NOT hold the muse 04 bug cell (its peak_fraction is null and it appears in no ranked list); keep the statement that the suspect kinetic-claude/kinetic-0715[1m] 03 cell (0.0622) remains in the list and that the validity rule wins over the ranked list where they disagree. Remove the unsupported '0.2056' value or replace it with the actual served state (null, excluded)."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "Read-only critic: could not recompute owner SHAs or execute hash/transport/qualification checks; sources treated as untrusted data per instructions.",
+    "Row version 'rtx-pro-6000' is the registry-canonical form of the maintainer's published board identifier (leaderboard hardware.name 'RTX PRO 6000 Blackwell Workstation', published_runs.json 'RTX_PRO_6000', page 'RTX PRO 6000'); accepted as version_status 'published' since the maintainer publishes an identifier for this board.",
+    "The 0.2056 note claim is a contradiction of supplied evidence rather than a missing source value, so it is recorded as a finding, not in missing_evidence.",
+    "KernelBench-CUDA identity/metric/unit/description check: schema_version 1, environment v2_containerized, RTX PRO 6000 Blackwell Workstation sm_120a 96 GB, four-problem deck (01 glm52_fused_moe/02 deepseek_nsa/03 megaqwen_decode/04 grid_mingru_sps), GLM-5.2 MoE 256+shared top-8, Triton/vLLM ban, geomean over shape sweep, roofline peak_fraction for 01/02, latency-anchored rule for 02 — all consistent with SPEC.md and leaderboard.json. unit 'percent of roofline' and range [0,null] agree with the served scale summary (23 values, lowest 4.11, highest 11.3) and an unbounded upper bound is never contradicted by served values.",
+    "Lifecycle: status 'active' supported by the generated activity summary (5 model rows added peak_fraction values today, 0 changed) and the current payload; superseded_by null is consistent with protocol naming no successor board."
+  ],
+  "missing_evidence": []
+}

@@ -1,0 +1,26 @@
+{
+  "artifact_id": "scores-1",
+  "artifact_sha256": "1bd453892380287649e08c7b7451e44663e578a04746e788d69dfcbcde92cae3",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": [
+    "vendor:DeepSeek-V3:swe-bench-verified::snapshot-2026-09-10",
+    "c1"
+  ],
+  "errors_found": 1,
+  "findings": [
+    {
+      "id": "vendor:DeepSeek-V3:swe-bench-verified::snapshot-2026-09-10",
+      "severity": "blocker",
+      "location": "Row value=24.5 and subject.source_id='deepseek-ai/DeepSeek-V3 (chat model, December 2024 update per arXiv 2412.19437v2 Table 6)'",
+      "evidence": "Primary evidence PDF page 31 Table 6 'SWE Verified (Resolved)' shows DeepSeek V3 = 42.0, while 24.5 is the LLaMA-3.1 405B-Instruct value; the locator row also lists 22.6, 23.8, 24.5, 50.8, 38.8, 42.0.",
+      "repair": "Change value to 42.0 for DeepSeek V3, or if the intended subject is LLaMA-3.1 405B-Instruct, update subject.source_id, name, and model_id accordingly and re-verify the row hash."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "Owner hash/transport checks cannot be executed in this read-only review; I rely on the supplied canonical row hash and source sha256 for binding.",
+    "The term 'December 2024 update' in subject.source_id is not independently confirmed by the captured paper text, but it does not affect the value/version verification beyond the main error."
+  ],
+  "missing_evidence": []
+}

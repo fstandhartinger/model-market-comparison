@@ -1,0 +1,45 @@
+{
+  "artifact_id": "scores-0",
+  "artifact_sha256": "43681c0df39a01082cd3a12210c8d7f4dbb0b02296eee276b1318478da8fd860",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": [
+    "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/retail",
+    "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/airline",
+    "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/telecom",
+    "c1"
+  ],
+  "errors_found": 3,
+  "findings": [
+    {
+      "id": "F1",
+      "severity": "major",
+      "location": "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/retail protocol field",
+      "evidence": "Primary README 'Best Practices' says 'We suggest using Temperature=0.6, TopP=0.95, TopK=20, and MinP=0' (advisory) and the output-length footnote says 'we set/use' 32,768/81,920 tokens. No statement that TAU2 evaluations used the suggested sampling parameters. Row protocol asserts those parameters as used harness.",
+      "repair": "Qualify the sampling parameters as advisory recommendations rather than confirmed evaluation harness, or cite explicit published eval settings for TAU2; keep the output-length footnote as the published effort."
+    },
+    {
+      "id": "F2",
+      "severity": "major",
+      "location": "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/airline protocol field",
+      "evidence": "Same primary README text as F1; the source recommends sampling parameters but does not state they were used for TAU2-Airline. Row protocol asserts 'temperature 0.6, TopP 0.95, TopK 20, MinP 0' as used.",
+      "repair": "Qualify sampling parameters as recommendations, not confirmed eval config; cite only the explicit output-length footnote as published effort, or provide explicit eval settings."
+    },
+    {
+      "id": "F3",
+      "severity": "major",
+      "location": "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/telecom protocol field",
+      "evidence": "Same primary README text as F1; source recommends sampling parameters but does not confirm they were used for TAU2-Telecom. Row protocol asserts those parameters as used harness.",
+      "repair": "Qualify sampling parameters as advisory; retain only explicitly published effort (output-length footnote), or document the basis for the asserted eval config."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "Cannot recompute row SHA-256 hashes; owner-provided hashes are taken as binding for row identity.",
+    "Cannot execute hash, transport, or qualification checks; treated as owner-verified per instructions.",
+    "Mapping of id 'tau2-bench::2' to source label 'TAU2' is plausible but the source does not explicitly define a version designator; not treated as a failure.",
+    "Source does not explicitly confirm that TAU2 evaluations used the recommended sampling parameters; treated as protocol over-claim rather than missing evidence.",
+    "published_at is null in source evidence; only retrieved_at is available for source date."
+  ],
+  "missing_evidence": []
+}

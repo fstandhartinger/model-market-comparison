@@ -1,0 +1,31 @@
+{
+  "artifact_id": "protocol-kernelbench-cuda-deepseek-nsa-rtx-pro-6000",
+  "artifact_sha256": "106e3ed5770f2399032cd76ef25ac0ad13ad843f58eaa616992a43c991185a9c",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": ["kernelbench-cuda-deepseek-nsa::rtx-pro-6000", "c1", "c2"],
+  "errors_found": 2,
+  "findings": [
+    {
+      "id": "c2-version-status-published",
+      "severity": "major",
+      "location": "row kernelbench-cuda-deepseek-nsa::rtx-pro-6000, fields version / version_status",
+      "evidence": "version_status is \"published\" and version is \"rtx-pro-6000\". The packet sources (SPEC.md, leaderboard.json, kernelbench.com/cuda, published_runs.json) show no release identifier published for this board: SPEC.md has no board version, leaderboard.json carries only schema_version:1 (JSON schema) and an internal generated_from_summary tag \"v2\", neither of which is a board release identifier the version \"rtx-pro-6000\" copies. Under criterion c2, \"published\" requires the maintainer to publish a release identifier for this board; none exists, so \"snapshot\" (version snapshot-<date>) is the supported value.",
+      "repair": "Set version_status to \"snapshot\" and change version to snapshot-<capture-date> to freeze the observed methodology, since the protocol publishes no board release identifier; drop the \"published\" claim."
+    },
+    {
+      "id": "c1-notes-muse-02056",
+      "severity": "major",
+      "location": "row kernelbench-cuda-deepseek-nsa::rtx-pro-6000, notes/scoring text",
+      "evidence": "The row claims the published per_problem ranked list \"still holds the two audited-but-excluded cells the rule rejects, the suspect kinetic-claude/kinetic-0715[1m] cell on 03 (peak_fraction 0.0622) and the bug muse/muse-spark-1.3 [ultra] cell on 04 (0.2056)\". leaderboard.json shows muse/muse-spark-1.3 [ultra] 04_grid_mingru_sps has correct:false, peak_fraction null, annotation_verdict \"bug\"; the 04 ranked_passes list does not include muse, and the value 0.2056 appears nowhere in the capture. The claim is contradicted by the evidence and by the row's own statement that cells marked correct:false are absent from the ranked list.",
+      "repair": "Remove the 0.2056 value and the assertion that the ranked list holds the muse 04 bug cell; state that muse 04 is correct:false with peak_fraction null and is absent from the 04 ranked list (excluded by both the validity rule and the ranked list)."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "I could not independently execute SHA-256 hash verification, transport checks, or owner qualification gates; those are outside read-only review scope and my per-row hash binding is taken on the owner's value.",
+    "Another reading might treat leaderboard schema_version:1 or generated_from_summary tag \"v2\" as a maintainer release identifier; however neither is copied by version \"rtx-pro-6000\", so \"published\" remains unsupported on the supplied evidence.",
+    "SOURCE 7 reports 17 served finite values (lowest 2.51, highest 136.19), which I inferred to be the 17 ranked peak_fraction values for problem 02 deepseek_nsa; this matches row unit \"percent of roofline\" and range [0,null] (all served values >= 0, upper bound unbounded), so no mismatch is raised on unit/range."
+  ],
+  "missing_evidence": []
+}

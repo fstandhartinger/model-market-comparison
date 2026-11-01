@@ -1,0 +1,26 @@
+{
+  "artifact_id": "scores-3",
+  "artifact_sha256": "74eb7efea00606d5f32bff86c63f6caf3d09159af323980a1c63d25d4c344acf",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": [
+    "vendor:DeepSeek-V3:longbench::2",
+    "c1"
+  ],
+  "errors_found": 1,
+  "findings": [
+    {
+      "id": "vendor:DeepSeek-V3:longbench::2-value",
+      "severity": "blocker",
+      "location": "row vendor:DeepSeek-V3:longbench::2 .value",
+      "evidence": "Primary Table 6 'LongBench v2 (Acc.)' values in column order are DeepSeek V2-0506=31.6, DeepSeek V2.5-0905=35.4, Qwen2.5 72B-Inst=39.4, LLaMA-3.1 405B-Inst=36.1, Claude-3.5-Sonnet-1022=41.0, GPT-4o=0513=48.1, DeepSeek V3=48.7. The candidate stores 36.1, which is the LLaMA-3.1 405B-Inst column value, not the DeepSeek V3 value.",
+      "repair": "Set value to 48.7 percent, keep basis self_reported for DeepSeek V3, and align the locator selection to the DeepSeek V3 column; re-validate the row hash after correction."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "I cannot independently execute owner hash verification, PDF parsing, or transport checks; I rely on the supplied sha256 and transcript.",
+    "The PDF transcript does not contain an explicit publication date; I treated source.retrieved_at as the available source-date evidence, but did not independently verify the arXiv version publication date."
+  ],
+  "missing_evidence": []
+}

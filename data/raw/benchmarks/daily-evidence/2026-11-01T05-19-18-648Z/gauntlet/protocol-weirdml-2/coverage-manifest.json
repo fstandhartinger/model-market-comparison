@@ -1,0 +1,152 @@
+{
+  "artifact_id": "protocol-weirdml-2",
+  "rounds_used": 1,
+  "rows": {
+    "total": 1,
+    "accepted": [],
+    "quarantined": [
+      "weirdml::2"
+    ]
+  },
+  "producer_flagged": [],
+  "second_opinion": null,
+  "criteria": [
+    "c1",
+    "c2"
+  ],
+  "coverage": {
+    "producer": null,
+    "critic": [
+      {
+        "round": 1,
+        "verdict": "revise",
+        "coverage_complete": true,
+        "missing_rows": [],
+        "missing_criteria": []
+      }
+    ],
+    "final": {
+      "rows_covered": 0,
+      "criteria_covered": 0,
+      "complete": false
+    }
+  },
+  "receipts": [
+    {
+      "round": 1,
+      "role": "producer",
+      "reused_from_round": null,
+      "requested_model": "z-ai/glm-5.3-flash",
+      "model": "z-ai/glm-5.3-flash",
+      "route": "openrouter",
+      "attempt": 1,
+      "cost_usd": 0.000340386354,
+      "out": "data/raw/benchmarks/daily-evidence/2026-11-01T05-19-18-648Z/gauntlet/protocol-weirdml-2/producer-r1.json",
+      "output_sha256": "edb4fe04e239c9c550d4f9f846ed43c256be89f61d14ddc6d750056c9a262d37",
+      "qualification": {
+        "id": "z-ai/glm-5.3-flash",
+        "family": "z-ai",
+        "free": false,
+        "input_per_1m": 0.0108,
+        "output_per_1m": 0.1702,
+        "context": 1048576,
+        "aa_intelligence_index": 27.8,
+        "aa_source": "exact_id_and_variants",
+        "matched_model_ids": [
+          "glm-5.3-flash::default"
+        ],
+        "aa_variant_scores": [
+          {
+            "id": "glm-5.3-flash::default",
+            "index": 27.8
+          }
+        ]
+      },
+      "usage": {
+        "prompt_tokens": 3138,
+        "completion_tokens": 1821,
+        "total_tokens": 4959,
+        "cost": 0.000340386354,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "audio_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.0003438246,
+          "upstream_inference_prompt_cost": 0.0000338904,
+          "upstream_inference_completions_cost": 0.0003099342
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 1762,
+          "image_tokens": 0,
+          "audio_tokens": 0
+        }
+      },
+      "reasoning": {
+        "effort": "low",
+        "exclude": true
+      }
+    },
+    {
+      "round": 1,
+      "role": "critic",
+      "requested_model": "deepseek/deepseek-v4-flash-0731",
+      "model": "deepseek/deepseek-v4-flash-0731",
+      "route": "openrouter",
+      "attempt": 1,
+      "cost_usd": 0.002876813676,
+      "out": "data/raw/benchmarks/daily-evidence/2026-11-01T05-19-18-648Z/gauntlet/protocol-weirdml-2/review-r1.json",
+      "output_sha256": "52d73e02124b0f4fd9874294b3ae33b7d1c60260374414f301398ac67d29338f",
+      "qualification": {
+        "id": "deepseek/deepseek-v4-flash-0731",
+        "family": "deepseek",
+        "free": false,
+        "input_per_1m": 0.119,
+        "output_per_1m": 0.238,
+        "context": 1048576,
+        "aa_intelligence_index": 24,
+        "aa_source": "exact_id_and_variants",
+        "matched_model_ids": [
+          "deepseek-v4-flash-0731::max"
+        ],
+        "aa_variant_scores": [
+          {
+            "id": "deepseek-v4-flash-0731::max",
+            "index": 24,
+            "estimated_from_v4": 34.3
+          }
+        ]
+      },
+      "usage": {
+        "prompt_tokens": 3686,
+        "completion_tokens": 9153,
+        "total_tokens": 12839,
+        "cost": 0.002876813676,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "audio_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.0029058724,
+          "upstream_inference_prompt_cost": 0.0001599724,
+          "upstream_inference_completions_cost": 0.0027459
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 8253,
+          "image_tokens": 0,
+          "audio_tokens": 0
+        }
+      },
+      "reasoning": {
+        "effort": "low",
+        "exclude": true
+      }
+    }
+  ]
+}
