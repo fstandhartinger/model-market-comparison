@@ -4,7 +4,6 @@ import { mkdtemp, mkdir, readFile, rm, writeFile } from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 import { spawnSync } from 'node:child_process';
-import { existsSync } from 'node:fs';
 import {
   readJevbenchV16Release, readJevbenchV161Release, JEVBENCH_V16_RELEASE_RESULTS,
   JEVBENCH_V16_RELEASE_CATEGORIES, JEVBENCH_V16_RELEASE_CARRY,
@@ -154,13 +153,46 @@ else: raise AssertionError('timing deferral was accepted as release GO')`;
   assert.equal(result.status, 0, result.stderr || result.stdout);
 });
 
-test('finalizer rejects the actual authenticated date-deferral reply in notify ledger', {
-  skip: !existsSync('/home/flori/.notify/reply-actions.sqlite3'),
-}, () => {
-  const result = spawnSync('python3', ['scripts/finalize-jevbench-v16-release.py', '--release-go-ask-id', '16238'], { encoding: 'utf8' });
-  assert.notEqual(result.status, 0);
-  assert.match(result.stderr, /trusted notification record contains no exact GO reply/);
-});
+// Exercise the SQLite reader without depending on a host's private notify history.
+// The production CLI still reads only its fixed trusted ledger path.
+for (const [scenario, expectedError] of [
+  ['missing', 'no authenticated Telegram reply is recorded for that release ask'],
+  ['deferral', 'trusted notification record contains no exact GO reply'],
+  ['go', null],
+]) {
+  test(`release GO ledger reader handles ${scenario} using an isolated fixture`, () => {
+    const source = `import importlib.util,sqlite3,tempfile,sys
+from pathlib import Path
+s=importlib.util.spec_from_file_location('finalizer','scripts/finalize-jevbench-v16-release.py')
+m=importlib.util.module_from_spec(s);s.loader.exec_module(m)
+with tempfile.TemporaryDirectory(prefix='jevbench-notify-test-') as root:
+ m.NOTIFY_REPLY_DB=Path(root)/'reply-actions.sqlite3'
+ with sqlite3.connect(m.NOTIFY_REPLY_DB) as db:
+  db.execute('CREATE TABLE actions (ask_id INTEGER, channel TEXT, status TEXT, job_dir TEXT, ask_text TEXT, matched_reply_id INTEGER, matched_at REAL, reply_text TEXT, ack_at REAL)')
+  if sys.argv[1] != 'missing':
+   is_go=sys.argv[1]=='go'
+   db.execute('INSERT INTO actions VALUES (?,?,?,?,?,?,?,?,?)', (
+    16238,'telegram','acknowledged',str(m.JOB_DIR),
+    'JevBench v1.6.0 preview card #16238 source '+m.SOURCE_SHA256,
+    16244 if is_go else 16243,1791201600.0,
+    'GO' if is_go else "let's releae 1.6.0 not before monday",1791201601.0))
+ if sys.argv[1]=='go':
+  assert m.load_release_go(16238)==16244
+ else:
+  # main must reject before reading or writing any release artifacts.
+  sys.argv=['finalizer','--release-go-ask-id','16238']
+  m.main()
+`;
+    const result = spawnSync('python3', ['-c', source, scenario], { encoding: 'utf8', timeout: 30_000 });
+    assert.equal(result.error, undefined);
+    if (expectedError) {
+      assert.equal(result.status, 1, result.stderr || result.stdout);
+      assert.equal(result.stderr.trim(), expectedError);
+    } else {
+      assert.equal(result.status, 0, result.stderr || result.stdout);
+    }
+  });
+}
 
 test('the live and archived pages use the approved full-page route and keep version navigation', async () => {
   const live = await read('app/jev-models/page.tsx');
