@@ -1,0 +1,258 @@
+{
+ "base": "dc2de08fab3a5afcfe4771b50e4650685b9cd607",
+ "builder_gate_receipts_sha256": {
+  "ARCHIVE-KICKERS.json": "172c04fd1837c125d3612e2a407a1e1b5071f4c946bc13cd6cdac641e2d49226",
+  "BUILD-POSTFLIP-EXIT.json": "d24219f6de94b955cf36d25bd2aca88e2d35eef45b9317b7083f55ec8fe9653c",
+  "BUILT-LINKS.json": "1453d472e62a72d2861f59f0789dccf15786c7bf8c4dee1e59a93536be791557",
+  "FINAL-TRANSPORT-BINDING.json": "e65815886b44b4ed45e2fca891622416eb8af5c62d61dd20e9e4a0a904cfe668",
+  "PENDING-EXIT.json": "d24219f6de94b955cf36d25bd2aca88e2d35eef45b9317b7083f55ec8fe9653c",
+  "POSTFLIP-EXIT.json": "d24219f6de94b955cf36d25bd2aca88e2d35eef45b9317b7083f55ec8fe9653c",
+  "REBUILD.json": "86c8e0334bf2f59b94111e9c6e138be5b105daf80a744c4162d8db103de1d735",
+  "TSC-EXIT.json": "d24219f6de94b955cf36d25bd2aca88e2d35eef45b9317b7083f55ec8fe9653c",
+  "VALIDATOR.json": "cff6639ce01346d919f85f41b9aaf8a13848c2ad16e05d598ea61c80785bdba7",
+  "topfive-diff.json": "7ef5e983219fdaabed49acac60a10e3121fd9a47edc3eadd7878c3109b53f75c"
+ },
+ "carry_and_ranks": {
+  "all_carried_values_equal": true,
+  "all_new_ranks_null": true,
+  "carried_rows": 335,
+  "carry_history_byte_equal": true,
+  "changed_lists": 0,
+  "custom_changes": [],
+  "grid_changes": 0,
+  "grid_states": 368,
+  "historical_artifacts_and_loaders_byte_equal": 582,
+  "jdi_excluded": true,
+  "new_row_ranked": false,
+  "nullspan_not_ingested_or_scored": true,
+  "slider_changes": 0,
+  "slider_states": 76,
+  "topfive_lists": 580
+ },
+ "commit": "a58de8d5f26a0e8f4eac6628a2004c9fd0380e1c",
+ "cost": {
+  "declared_base": "ibm-granite/granite-4.1-30b",
+  "gpu_time_component": null,
+  "input_per_million": 0.16,
+  "output_per_million": 0.65,
+  "reference": "granite-4.2-30b SIBLING ESTIMATE",
+  "rule": "Existing frozen outside-six-calibrated-classes fallback; no cross-family throughput, loop extrapolation or pod bill",
+  "usd_per_1000_all": 0.08795496000000001,
+  "usd_per_1000_common": 0.06020932840832774
+ },
+ "engine": "Codex independent review",
+ "evidence_files": {
+  "ACTUAL-FIXTURE-INDEPENDENT.json": "9bdf9188fc1370d70aaafbd2ca9110560c9c2afb13217d519ef58b30ebafa42f",
+  "ARCHIVED-AGGREGATES.json": "a4604739eed9d1e3a81d69635395a505dfa2e66fc48269d3970259aa8192a05e",
+  "AXES-COMPARE.json": "c15342f63c515ab2f0c3ccd2935e268845d9efc79b406bf9f7fae10e160e1f50",
+  "CAPTURES-INDEPENDENT.json": "7c45b4d76bd1e332d4ce7d433434f7ea05ea33250731f8d0fbc3e352828e2902",
+  "CLEANUP.json": "b80fe56eb07e9fdc7260570b9e1c5c05bad1fb2be470bc3d9c8201f37315aec5",
+  "CRITICAL-FACTS.json": "a2d22030b80bba88a3bba710d9a0353874b0724b8107190f29320adfc99936c4",
+  "EVIDENCE-BINDINGS.json": "d1a7a090ef345a230e93dcf631f273fede608cadb8d1e5b9d5ec8c4be415a9a8",
+  "FINAL-BINDING.json": "2b4b909bf28feba44b0d715d11ed7c9f0db344c179a41afb6d93c4e294b7d4f2",
+  "HISTORICAL-INVARIANCE.json": "cda3980d154c1fa1f8d087cf2dc18759584877c825319f3037b84df586410c31",
+  "POSTFLIP-HELPER-DELTA.json": "49cd3f0becd177ba66a6cc935e263caceeff8af39da669548685b8498d099d22",
+  "PRIVACY-AUDIT.json": "f73984bc1691ec795205f55e0424da2521f8a9460b60235ab967c8cf87364977",
+  "SCORE-CHECKPOINT.json": "eccaf82d997d5a3d5c5dd74f357bebbca542898664b3ff70273440de1321a7bf",
+  "SUMMARY.json": "9a26178959cdde3f86d2c8967b80028d051655570bf61ec67388ff6e9fd3c8a1"
+ },
+ "final_binding": {
+  "all_manifest_source_and_predecessor_links_verified": true,
+  "base": "dc2de08fab3a5afcfe4771b50e4650685b9cd607",
+  "commit": "a58de8d5f26a0e8f4eac6628a2004c9fd0380e1c",
+  "files_sha256": {
+   "carry": "271d1fc77a136a04a1eb6deb5480c52d4211eb2b66b2ac8bb31e80867e69003a",
+   "categories": "93a309bb53e1f42379bffdf2d8f5a0bef8455aff497cdfda09feb19e0c8892cc",
+   "history": "d5e91333d6acefef1506f2a6ce23f71220ac1eeac9ce2d4e817c88a0a979a38b",
+   "history-carry": "f4d8ddfae4ac3b2741ca7cfdaa930b2afc1d9be612f4e6683a230aa23834e2ba",
+   "proof": "b57b08728626a9945eb8f8c6c216c7b06bbdaf27321d24b0616e842b84925e1d",
+   "publication": "6732a2842102424a1cd758763a4ce28dbcf01932db206447fe14da05e0b0431b",
+   "results": "19497a97b9b8be3732017e8dad6b26c8dd3d000f3424472a08dd026498d3001a"
+  },
+  "independent_comparison_commit": "a58de8d5f26a0e8f4eac6628a2004c9fd0380e1c",
+  "loader_sha256": "ed36c036c20f7e60aa9e93078d08b95b36a0b7ed527b39fa139cd7a47e85bd04",
+  "privacy_audit_commit": "a58de8d5f26a0e8f4eac6628a2004c9fd0380e1c",
+  "publication_review_at_review": {
+   "engine": "PENDING",
+   "receipt_sha256": null,
+   "verdict": "PENDING"
+  },
+  "required_before_publication": "Actual approval delta review, seal, normal exact-final/rebasedHEAD mergequeue gates, and both-host exact live proof remain",
+  "status": "PASS",
+  "worktree_clean": true
+ },
+ "final_categories_sha256": "93a309bb53e1f42379bffdf2d8f5a0bef8455aff497cdfda09feb19e0c8892cc",
+ "final_pending_publication_sha256": "6732a2842102424a1cd758763a4ce28dbcf01932db206447fe14da05e0b0431b",
+ "final_results_sha256": "19497a97b9b8be3732017e8dad6b26c8dd3d000f3424472a08dd026498d3001a",
+ "independent_scoring": {
+  "both_category_and_decisive_views_exact": true,
+  "capability": 64.45890233411444,
+  "common_input_tokens": 554274,
+  "common_items": 1489,
+  "common_output_tokens": 1489,
+  "common_set_sha256": "4e912731e63369e1b3066b0b4afa87b44f1094aea079c5b41dc6d02e7f235537",
+  "entry_sha256": "67c37726a7346ac3badfee23502df9cab5ccc2170993a174fe596c283fffe48f",
+  "input_tokens_all": 818484,
+  "max_abs_numeric_diff": 0,
+  "native_http200": 1500,
+  "official_share_axes": {
+   "calibration": 81.43854303431047,
+   "cost": 46.610086510235,
+   "intelligence": 47.47926163391841,
+   "speed": 88.34207613347354
+  },
+  "output_tokens_all": 1500,
+  "over_ten_seconds": 5,
+  "published_numeric_fields_compared": 748,
+  "raw_sha256": "403758bc7c5ad9b6bc19f0191e299d66613ab272a4c5886249fd54df8275e7de",
+  "scorer_numeric_fields_compared": [
+   743,
+   743,
+   753
+  ],
+  "scores": {
+   "A": 47.40739646531533,
+   "B": 44.94231589985117,
+   "C": 32.92180310091343
+  }
+ },
+ "must_fix": [],
+ "nonblocking_limits": [
+  {
+   "declared_semantic_context_tokens": 131072,
+   "id": "CONTEXT-ENVELOPE",
+   "largest_draw_tokens": 52915,
+   "largest_public_probe_tokens": 53445,
+   "qualification": "Literal architectural semantic limit is not a full-capacity or minimum-hardware verification; no truncation/refusal occurred on this draw; root accepts existing wording without a source change.",
+   "server_allocation_tokens": 53510
+  },
+  {
+   "id": "CAPTURE-INSTRUMENTATION",
+   "qualification": "Page errors checked before manual preview-banner injection; post-injection zero-errors/end-to-end browser pass not established."
+  },
+  {
+   "id": "HISTORICAL-STRUCTURE-TEST-DEBT",
+   "qualification": "CR205 enumerates all versioned routes but direct shared-board structure assertions stop at v1.7.9. New page source retains shared board/method/history, runtime comparisons and production captures inspected. No source bug found."
+  }
+ ],
+ "privacy": {
+  "bytes_checked": 101782766,
+  "critic_cleanup": {
+   "aggregate_outputs_logs_reports_retained": true,
+   "cost_set_source_unchanged_sha256": "b83bdfd14c263ffacfa572b304084154afca84c1f00083101a33783ae6f8b356",
+   "private_cost_set_copy_shredded_bytes": 675,
+   "raw_copy_created": false,
+   "raw_source_unchanged_sha256": "403758bc7c5ad9b6bc19f0191e299d66613ab272a4c5886249fd54df8275e7de",
+   "read_only_raw_symlink_removed": true,
+   "single_link_distinct_inode_verified": true,
+   "status": "PASS"
+  },
+  "files_checked": 148,
+  "jsonl_files_in_diff": 0,
+  "opaque_sealed_ids_found": 0,
+  "sealed_material_sent_to_LeChonk": false,
+  "source_transport": "Only public source and aggregate outputs; directly bound built fixture and postbuild root snapshot",
+  "symlinks_in_diff": 0
+ },
+ "publication_review_at_review": "PENDING",
+ "quality_evidence": {
+  "archive_kickers_PASS": true,
+  "bundle_negative_controls": 61,
+  "capture_scope": {
+   "all_HTTP200_and_hashes_valid": true,
+   "instrumentation_scope": "Capture helper checked page errors BEFORE manual candidate-banner injection. No post-injection error count or end-to-end zero-error guarantee is claimed.",
+   "main_png_visual_scope": "overview of complete section layout only; full-page image is too tall to read individual values at tool scale",
+   "manifest_sha256": "06f8eaca27c1b1ac01e8fe154f0a81405a8e902aaae351ee839920fee23786ce",
+   "model_png_visually_inspected": true,
+   "normal_model_visible_facts_checked": [
+    "Capability 64.5",
+    "Not ranked in the current release",
+    "47.5",
+    "81.4",
+    "88.3",
+    "46.6",
+    "47.4",
+    "ONE argmax flip",
+    "0.031222338329561394",
+    "7 of 50",
+    "5e-2",
+    "no system prompt",
+    "USD 0.16",
+    "USD 0.65",
+    "554,274 input + 1,489 output",
+    "five decisions exceeded ten seconds",
+    "wrong answers"
+   ],
+   "not_live_publication_evidence": true,
+   "pages": 3,
+   "results_sha256": "19497a97b9b8be3732017e8dad6b26c8dd3d000f3424472a08dd026498d3001a",
+   "status": "PASS",
+   "synthetic_PASS_fixture_only": true
+  },
+  "compiled_API_and_visible_HTML_PASS": true,
+  "deterministic_double_rebuild": true,
+  "direct_built_fixture_binding": {
+   "actual_fixture_paths": 83,
+   "direct_actual_fixture_receipt_sha256": "09a36f06ba54e22ade20d426ff00b92ad3737320394cb5f23d56a18b5bfd11a9",
+   "final_own_sources_equal": true,
+   "fixture_renderer_sha256": "f3c945b0ec95e831aaa1fa6946610394639ca6a4ea51c7f6bb54a207f465541b",
+   "not_an_actual_review_or_publication_claim": true,
+   "only_synthetic_review_and_topic_delta": true,
+   "postbuild_root_paths": 80,
+   "postbuild_root_receipt_sha256": "016f3e023791461f8f1856c448c4d2b158f50e3262e2c5b67999b3104c851174",
+   "status": "PASS",
+   "unused_local_helper_separate_delta_sha256": "83a0610beb4b65a43363da5b12411b93d13ab0109cb9a67ce9128c9fef33f0b3"
+  },
+  "first_production_build": {
+   "exit": 0,
+   "fixture": "isolated synthetic PASS only",
+   "pages": 696,
+   "second_local_build": false
+  },
+  "independent_critical_fact_mutations_rejected": 7,
+  "pending_suite": {
+   "fail": 0,
+   "pass": 145,
+   "skip": 1,
+   "tests": 146
+  },
+  "prose_negative_controls": 103,
+  "resolved_review_finding": {
+   "fixed_precondition_delta_receipt_sha256": "49cd3f0becd177ba66a6cc935e263caceeff8af39da669548685b8498d099d22",
+   "id": "HELPER-ACTUAL-PASS",
+   "original_static_REVISE_retained": true,
+   "status": "CLOSED"
+  },
+  "skip_reason": "Historical v1.7.0 unreviewed-build branch is inapplicable to the already-reviewed predecessor",
+  "synthetic_suite": {
+   "fail": 0,
+   "pass": 145,
+   "skip": 1,
+   "tests": 146
+  },
+  "three_production_captures_HTTP200_and_hashed": true,
+  "typescript_exit": 0,
+  "unused_local_postflip_helper": {
+   "actual_manifest_tests_not_run_by_critic": true,
+   "not_in_initial_heavy_source80": true,
+   "review": "Static + exact JS precondition positive and eight negatives; ordinary workspace refusal",
+   "sha256": "83a0610beb4b65a43363da5b12411b93d13ab0109cb9a67ce9128c9fef33f0b3"
+  }
+ },
+ "required_before_production": [
+  "Review actual approval delta; run corrected helper against the exact real frozen review receipt, then freeze/seal through normal release owner path.",
+  "Prerequisite v1.8.4 must land/live before v1.8.5 is merge-ready; preserve its sealed data and resolve only owned source changes on rebase.",
+  "Mandatory fresh exact-final/rebasedHEAD merge-queue production build and full tests; no bypass.",
+  "Verify exact deployed revision and v1.8.5 artifact on both public hosts before author/customer delivery."
+ ],
+ "review_limits": [
+  "No model or author-code execution, rental, spending, actual flip/seal/PR/push/deploy, or author/customer contact by critic.",
+  "Production build and captures are isolated synthetic-review evidence; actual review-binding and live publication remain separate.",
+  "No independent full npm suite rerun: inspected appropriate16file suites in both views; normal merge queue full checks remain required."
+ ],
+ "reviewed_at": "2026-11-01T02:14:58.338072+00:00",
+ "reviewed_commit": "a58de8d5f26a0e8f4eac6628a2004c9fd0380e1c",
+ "status": "PASS_SOURCE_REVIEW_NORMAL_PUBLICATION_GATES_REMAIN",
+ "unresolved_source_integrity_findings": [],
+ "verdict": "PASS"
+}

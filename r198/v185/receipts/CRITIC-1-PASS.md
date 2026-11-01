@@ -1,0 +1,19 @@
+# JevBench v1.8.5 independent review — PASS
+
+Reviewed exact clean candidate `a58de8d5f26a0e8f4eac6628a2004c9fd0380e1c`, from sealed v1.8.4 `dc2de08fab3a5afcfe4771b50e4650685b9cd607`. No source-integrity MUST remains. Granite Switch4.1 30B alone is added, unranked with every rank null; Nullspan remains unscored/unpriced and JDI is excluded.
+
+Independent frozen/off/share scoring matches743/743/753 numerical fields and748 published numerical fields exactly. Both category and decisive views match. All335 carried rows retain every value;582 historical artifacts/loaders and carry/history payloads remain byte-equal. Official axes: Intelligence47.47926163391841, Calibration81.43854303431047, Cost46.610086510235, Speed88.34207613347354; Capability64.45890233411444, compositeA47.40739646531533. Five decisions over ten seconds retain standard failure treatment.
+
+Native usage is818,484 input/1,500 output, with554,274 input/1,489 output on the frozen1,489 common set. Declared Granite4.1base is preserved; admitted sibling4.2-30B estimate is0.16/0.65USD per million. Common costUSD0.06020932840832774/1,000; all-itemsUSD0.08795496000000001. Granite lies outside six calibrated classes, so the existing estimate fallback applies with no GPU component or invented throughput.
+
+The actual model-page PNG visibly renders the unranked score, correct axes, sibling estimate, source/base, native output billing, no-system-prompt/backend recipe and replay7/50 identical with ONE argmax flip and maximum difference0.031222338329561394. Visible HTML is checked after stripping scripts; three capture PNG/HTML hashes match. Main-page overview retains the complete layout; individual values are checked by HTML/runtime comparisons. Capture scope is precise: the helper checked errors before inserting its candidate banner; no post-injection zero-error/end-to-end browser claim is made.
+
+Both targeted16-file suites passed145/0/1 of146 tests. The one historical v1.7.0 unreviewed-branch skip is inapplicable. TypeScript,61 bundle negatives,103 prose negatives, seven independent critical-fact mutations, deterministic double rebuild, unchanged580 top-five lists/76 slider states/368 grid states/custom comparisons, compiled API/visible HTML and archived kicker checks passed. The first production build completed696 pages with exit0. This is an isolated synthetic PASS fixture, not publication evidence.
+
+Direct evidence binds83 actual built-fixture paths against source, with exactly the expected synthetic review-object and one topic-exception differences; the normal model renderer and shared board are byte-equal. A separate post-build snapshot binds80 source/artifact paths. All match the final candidate. The unused postflip helper was added later as a separate reviewed operational delta: its missing real-PASS precondition was fixed, then checked with one positive/eight negative cases and ordinary-workspace refusal. Original REVISE evidence is retained; the finding is closed.
+
+The actual configured/tested envelope is53,510 allocation,53,445 public probe and52,915 draw maximum. The declared131,072 semantic architectural limit is not a full-capacity or minimum-hardware claim; no scored truncation/refusal occurred. Existing literal semantic-context wording is accepted without altering the tested source.
+
+Privacy audit finds no sealed opaque IDs, JSONL or symlinks in the final diff. Sealed material remained on Sandy. Critic created no raw copy; its read-only link was removed and own675-byte private cost-set copy shredded with source hashes unchanged. Aggregate evidence remains.
+
+Normal gates remain: actual approval delta review/testing, freeze/seal, predecessor-aware queue/rebase, mandatory fresh exact-final/rebasedHEAD full build/tests and both-host live proof before delivery. No model execution, rental, spending, publication or external contact was performed by critic. These reports are immutable once their hashes are handed to the release owner.
