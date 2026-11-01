@@ -1,0 +1,241 @@
+{
+ "verdict": "PASS",
+ "engine": "claude-opus-5-5 (Claude Code worker, critic)",
+ "head_sha": "0ea0f0f0212911db6da633d2856a127cc889aec0",
+ "base_sha": "f5716874d4784ed89da8ab9edbc32fd5adb5a22b",
+ "origin_main_now": "52f8c0f5933816ff9ff248d0114e797030fbf221",
+ "rebase_disjoint": true,
+ "findings": [
+  {
+   "id": "F1",
+   "severity": "low",
+   "blocking": false,
+   "title": "allec mandatory-sentence gate is substring-based, so a prefix edit still passes",
+   "evidence": "r198/v183/public_text_exception.py:18-19 checks SENTENCE and SENTENCE+\" \"+CLAUSE with count()/in. Mutation replacing \"same weights as the earlier allec entry\" with \"the same weights as the earlier allec entry\" in results.json: check_public_text_v183.py exit 0 (it should fail). The committed text is correct (results.json:4470 = entry sentence verbatim after the \"Serving description:\" label).",
+   "requested_change": "Optional hardening before the flip: also assert the exact \"Serving description: \"+SENTENCE+\" \"+CLAUSE span, or a word boundary before SENTENCE. The current candidate does not need to change."
+  },
+  {
+   "id": "F2",
+   "severity": "low",
+   "blocking": false,
+   "title": "z3 endpoint text keeps internal operations wording (\"guard release ... before deadline\")",
+   "evidence": "results.json:304676 zils endpoint_condition ends \"provider deletion and guard release were confirmed before deadline\". To an outside reader, \"guard release\" and \"deadline\" mean nothing. The sentence is true and contains no forbidden token.",
+   "requested_change": "Optional: change it to \"the rented VM deletion was confirmed by the provider\", or drop the clause."
+  },
+  {
+   "id": "F3",
+   "severity": "low",
+   "blocking": false,
+   "title": "z3 disclosure on the five >10 s decisions does not say plainly that they are scored as wrong",
+   "evidence": "results.json:304659 says \"Five decisions exceeded 10 s and were answered; this observation does not change native completion accounting ... Time-limit treatment follows the frozen scoring view.\" The row page (preview/zils-ai-z3-mini-soup-preview.png) states \"5 of them answered without error, counted as wrong\". The text is true but opaque.",
+   "requested_change": "Optional: \"...were answered; under the 10-second rule they count as wrong answers.\""
+  },
+  {
+   "id": "F4",
+   "severity": "info",
+   "blocking": false,
+   "title": "allec 1,125 scored items vs 1,120 answered / 380 refused is truthful but implicit",
+   "evidence": "Scorer aggregates: v16.n_items=1125 (375 score-type items excluded under the supported-type rule, support.score=unsupported); calibration n choice 746 + noul 374 = 1,120 answered; so 5 supported-type refusals count as misses and 375 = all score items (open|score n=0). Public text (results.json:4470): \"Refusals remain misses where their question type is supported; unsupported score questions follow the frozen scorer's supported-type rule.\" It never states 1,125. The wording is identical to the accepted v1.8.2 oenogarum row. The intake NOTES line \"380 refusals remain misses in the 1,500 denominator\" is wrong but was not published.",
+   "requested_change": "None required. A later plain-language pass could say \"Intelligence and Calibration cover its 1,125 choice and true/false items.\""
+  },
+  {
+   "id": "F5",
+   "severity": "info",
+   "blocking": false,
+   "title": "allec \"Each choice item is read ... (four reads)\" overgeneralises slightly",
+   "evidence": "Same wording as accepted oenogarum. The endpoint text limits four-order averaging to short requests and menus of at most 52 options. The preceding author sentence (\"short requests are read in several option orders\") qualifies it.",
+   "requested_change": "None for this release."
+  },
+  {
+   "id": "F6",
+   "severity": "info",
+   "blocking": false,
+   "title": "Builder suites and production build ran before the final proof/publication/lib regeneration",
+   "evidence": "SOURCE-UPLOAD.json has 46,776 entries: 46,772 match the final bytes, 3 differ and 1 is absent. The 3 that differ are proof/publication/lib, regenerated after topfive-diff.json was bound (FINAL-SOURCE-BINDING deterministically_regenerated_paths). Results sha 9c3a68be is unchanged and equals the compiled API body. The final chain is consistent: proof.topfive_diff_sha256 = sha(topfive-diff.json) f2bfd215, publication file hashes = final files, and lib V183_NEW_ROWS equals the results rows. On the final bytes I reran tsc (exit 0), the v183+v182 release tests (13/13) and 107/107 synthetic post-flip tests.",
+   "requested_change": "None. This is the same pattern as earlier releases."
+  }
+ ],
+ "rows_recomputed": [
+  {
+   "key": "piccolo-27b",
+   "group": "g1",
+   "entry_sha256": "d155df3340e81449e5ec69d13db21633b53f959409574223ef1bea0bfdd932bf",
+   "raw_sha256": "864f8d24a20f52515d3d53ac4eaa981745f3d2c529930ee626f72dd983a08a1f",
+   "answered": 1495,
+   "refused": 5,
+   "server_input_tokens_all": 1064693,
+   "input_tokens_common": 1059753,
+   "pricing_reference": "qwen/qwen3.5-27b",
+   "estimate_common": 0.13878565144392213,
+   "estimate_all": 0.13841009,
+   "arch": [
+    "dense",
+    "qwen",
+    27.0
+   ],
+   "throughput_tok_s": 11763.0,
+   "gpu_usd_per_m": 0.05139534915102373,
+   "gpu_common": 0.0365791641698085,
+   "gpu_all": 0.036480178982433935,
+   "applied_common": 0.0365791641698085,
+   "applied_all": 0.036480178982433935,
+   "published_cost_diff_max": 3.5e-18,
+   "axes_fields_compared": {
+    "v17-share": 753,
+    "frozen": 743,
+    "v17-off": 743
+   },
+   "published_fields_compared": 748,
+   "max_abs_diff": 0.0,
+   "n_over_1e-9": 0
+  },
+  {
+   "key": "allec-oavg",
+   "group": "g1",
+   "entry_sha256": "d155df3340e81449e5ec69d13db21633b53f959409574223ef1bea0bfdd932bf",
+   "raw_sha256": "185c8f534d2e8b21d38a39af9a3152f0f4754c41bf921128bb4d2b768698aee7",
+   "answered": 1120,
+   "refused": 380,
+   "server_input_tokens_all": 739884,
+   "input_tokens_common": 735102,
+   "pricing_reference": "google/gemma-4-31b-it",
+   "estimate_common": 0.044431954331766284,
+   "estimate_all": 0.04439304,
+   "arch": [
+    "dense",
+    "gemma",
+    31.0
+   ],
+   "throughput_tok_s": 10106.516129032258,
+   "gpu_usd_per_m": 0.05981917847306515,
+   "gpu_common": 0.029532033400877865,
+   "gpu_all": 0.029506168696910223,
+   "applied_common": 0.029532033400877865,
+   "applied_all": 0.029506168696910223,
+   "published_cost_diff_max": 3.5e-18,
+   "axes_fields_compared": {
+    "v17-share": 610,
+    "frozen": 602,
+    "v17-off": 602
+   },
+   "published_fields_compared": 610,
+   "max_abs_diff": 3.469446951953614e-18,
+   "n_over_1e-9": 0
+  },
+  {
+   "key": "cribl-decision-1.0-9b",
+   "group": "g1",
+   "entry_sha256": "d155df3340e81449e5ec69d13db21633b53f959409574223ef1bea0bfdd932bf",
+   "raw_sha256": "6ccacaa3976d98611717ac669ab06710d0708d20fcdad889d3889836c9f88193",
+   "answered": 1500,
+   "refused": 0,
+   "server_input_tokens_all": 853860,
+   "input_tokens_common": 457748,
+   "pricing_reference": "qwen/qwen3.5-9b",
+   "estimate_common": 0.03074197447951645,
+   "estimate_all": 0.056923999999999995,
+   "arch": [
+    "small",
+    "qwen",
+    9.0
+   ],
+   "throughput_tok_s": 27344.444444444445,
+   "gpu_usd_per_m": 0.02210918906367911,
+   "gpu_common": 0.006796801259584274,
+   "gpu_all": 0.012585434782608696,
+   "applied_common": 0.006796801259584274,
+   "applied_all": 0.012585434782608696,
+   "published_cost_diff_max": 3.5e-18,
+   "axes_fields_compared": {
+    "v17-share": 753,
+    "frozen": 743,
+    "v17-off": 743
+   },
+   "published_fields_compared": 748,
+   "max_abs_diff": 0.0,
+   "n_over_1e-9": 0
+  },
+  {
+   "key": "cribl-decision-1.0-27b",
+   "group": "g2",
+   "entry_sha256": "2c64d11de0139df6e2490d31ff21cdcbd32ae134295aade4a765895e07934383",
+   "raw_sha256": "2c81b3c0962e372fa8fc52da637e566a84c49959e7ea9fd557ebcdb08202eb6d",
+   "answered": 1500,
+   "refused": 0,
+   "server_input_tokens_all": 853860,
+   "input_tokens_common": 457748,
+   "pricing_reference": "qwen/qwen3.5-27b",
+   "estimate_common": 0.05994685023505708,
+   "estimate_all": 0.1110018,
+   "arch": [
+    "dense",
+    "qwen",
+    27.0
+   ],
+   "throughput_tok_s": 11763.0,
+   "gpu_usd_per_m": 0.05139534915102373,
+   "gpu_common": 0.015799945119666092,
+   "gpu_all": 0.02925628855072875,
+   "applied_common": 0.015799945119666092,
+   "applied_all": 0.02925628855072875,
+   "published_cost_diff_max": 3.5e-18,
+   "axes_fields_compared": {
+    "v17-share": 753,
+    "frozen": 743,
+    "v17-off": 743
+   },
+   "published_fields_compared": 748,
+   "max_abs_diff": 0.0,
+   "n_over_1e-9": 0
+  },
+  {
+   "key": "zils-ai-z3-mini-soup-preview",
+   "group": "g3",
+   "entry_sha256": "a8ab4a8a5e5e3e69904e5f96093398c71b3e4c074f88ef6caf6be9e881d7a9e4",
+   "raw_sha256": "65a4e01f340356f1e2d081e8124dee3ae860a18efd3089420a6293516b3e7848",
+   "answered": 1500,
+   "refused": 0,
+   "server_input_tokens_all": 964081,
+   "input_tokens_common": 567051,
+   "pricing_reference": "deepinfra:Qwen/Qwen3.5-4B",
+   "estimate_common": 0.011424801880456685,
+   "estimate_all": 0.019281620000000003,
+   "arch": [
+    "small",
+    "qwen",
+    4.0
+   ],
+   "throughput_tok_s": 61525.0,
+   "gpu_usd_per_m": 0.009826306250524048,
+   "gpu_common": 0.003742120070964346,
+   "gpu_all": 0.006315570104207651,
+   "applied_common": 0.003742120070964346,
+   "applied_all": 0.006315570104207651,
+   "published_cost_diff_max": 3.5e-18,
+   "axes_fields_compared": {
+    "v17-share": 753,
+    "frozen": 743,
+    "v17-off": 743
+   },
+   "published_fields_compared": 748,
+   "max_abs_diff": 0.0,
+   "n_over_1e-9": 0
+  }
+ ],
+ "tests": {
+  "scorer": "3 groups x frozen/off/share, B1000 seed16 O1S G_med 2.573387642438244; 0 fields >1e-9 vs scored.json and the published rows",
+  "tsc": "exit 0",
+  "v183_v182_release_tests_pending": "13/13 pass",
+  "synthetic_postflip_subset": "107/107 pass (13 test files; publication set to synthetic PASS + topics exception, then restored)",
+  "builder_gates_rerun": "check_source (329 carried), check_raw_pricing (5), validate_v183 (136 negatives), check_base_overlay (5), check_build4_rows, check_cribl27_rows, check_helpers, check_ref_pin, check_public_text: all PASS",
+  "mutations": "8 mutations: missing pin, bare-sha pin, {REF} in basis, {X} in endpoint, wrong revision, extra \"board\", internal term all fail at least one gate; allec sentence prefix edit passes (F1)",
+  "production_build": "not rerun; builder receipt BUILD-POSTFLIP-EXIT 0 plus compiled API sha = final results sha",
+  "captures": "7 PNGs inspected (main, all, 5 rows): render, unranked, base labels, cost/latency"
+ },
+ "limitations": [
+  "Production build not rerun by the critic (brief allowed receipts + tsc + release test).",
+  "Full PENDING/post-flip 258-test suites not rerun; a 13-file post-flip subset ran.",
+  "Top-five 0/580 taken from the builder receipt topfive-diff.json (bound to final results sha); I independently confirmed that all 5 new rows are ranked:false with null ranks and that all 329 carried rows are identical, so no list can change.",
+  "No sealed item fields were printed; only aggregates."
+ ]
+}
