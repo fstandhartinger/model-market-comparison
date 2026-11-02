@@ -1,0 +1,26 @@
+{
+ "metadecision-31b-rain": {
+  "author": "MeTask-Rain",
+  "base_model": "google/gemma-4-31B-it",
+  "code_revision": "MeTask-Rain/MetaDecision-31B-Rain@068cb1420d40b06e48895f2fc75f29e6da37748b; only service/ differs from the earlier serving revisions.",
+  "cost_basis": "Frozen v1.8 GPU-time estimate; dense gemma, 31B active parameters.",
+  "cost_kind": "estimate",
+  "display": "MetaDecision-31B-Rain",
+  "endpoint_kind": "gpu",
+  "lane": "selfhosted",
+  "licence": "Weights: Apache-2.0 per the model card (Gemma 4 base under the Gemma 4 licence); ordered serving code in service/ is MIT.",
+  "measured_on": "2026-10-27",
+  "price_in_per_m": 0.059819178473256074,
+  "price_kind": "estimate",
+  "price_out_per_m": 0.059819178473256074,
+  "provider": "self-hosted",
+  "ranked": false,
+  "repo": "https://huggingface.co/MeTask-Rain/MetaDecision-31B-Rain",
+  "revision": "068cb1420d40b06e48895f2fc75f29e6da37748b",
+  "support": {
+   "choice": "native",
+   "noul": "native",
+   "score": "native"
+  }
+ }
+}

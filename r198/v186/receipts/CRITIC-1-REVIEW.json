@@ -1,0 +1,48 @@
+{
+ "verdict": "PASS_WITH_CONDITIONS",
+ "reviewed_commit": "dc1fe2b616a75e3f35c037dd0aece5976168df32",
+ "base": "ceb672bb79f7a19ac362b6fe5be6afa1a6b2c4e0",
+ "axes": {
+  "intelligence": 87.93453896297933,
+  "calibration": 93.35954564806238,
+  "speed": 71.85456280157676,
+  "capability": 90.64704230552086,
+  "composite_A": 73.80643952287792,
+  "composite_B": 76.25681658848407,
+  "cost_axis": 54.95882754829502
+ },
+ "cost_usd_per_1000": {
+  "builder_published_gpu_time": 0.03172286587842991,
+  "critic_with_1_5235_rule": 0.03171962,
+  "critic_with_builder_rate_reproduces_published": true,
+  "list_price_common": 0.059822310275352585,
+  "gpu_all_items_builder": 0.03294730872866403,
+  "gpu_all_items_1_5235": 0.03294636965,
+  "selected": "gpu_time"
+ },
+ "rescore": {
+  "numeric_fields_matched_share_with_builder_rate": 746,
+  "mismatches": 0,
+  "categories_cells_decisive_equal": true
+ },
+ "invariance": {
+  "carried_rows_unchanged": 336,
+  "top_five_lists_changed": "0/580",
+  "sliders": "0/76",
+  "grid": "0/368"
+ },
+ "gates": {
+  "validator": "PASS",
+  "tsc_exit": 0,
+  "pending_tests": "145/144 pass/0 fail/1 skip",
+  "synthetic_pass_tests": "145/144/0/1",
+  "deterministic_rebuild": "PASS (byte-equal to commit)",
+  "source_binding_81_paths_equal_commit": true
+ },
+ "privacy": "PASS",
+ "helpers": "only approval status text differs (expected)",
+ "conditions": [
+  "C1 hourly rate 1.52354342 vs v1.8.x precedent 1.5235: cost 0.031722866 vs 0.031721962; fix HOURLY_USD, rescore, rebuild or accept and document",
+  "C2 add one sentence on W4A16 base/LoRA, stateful drafting quota and leaderboard-priced cost fuse"
+ ]
+}
