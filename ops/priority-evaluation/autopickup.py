@@ -152,6 +152,7 @@ STEP_LIMITS = {
     "evaluation_start": MAX_PREPARATION_ATTEMPTS + MAX_SOURCE_REVIEW_ATTEMPTS + MAX_EVALUATION_ATTEMPTS,
     "finalize": 30,
     "result_mail": 10, "xpost": 1, "xpost_receipt": 6, "refund_notice": 10,
+    "sla24_handoff": 8, "sla36_handoff": 8,
 }
 BACKOFF_BASE_SECONDS = 300
 BACKOFF_CAP_SECONDS = 7200
@@ -318,6 +319,26 @@ def owner_for(rid: str) -> str:
     return "fastlane-eval-" + order_ref(rid)
 
 
+WAKE_FALLBACK = "cos"
+
+
+def wake_owner(row: dict[str, Any], state: dict[str, Any] | None = None) -> str:
+    """Board address that reaches a real agent for this order.
+
+    owner_for() is a placeholder name without a job folder, so job-wake has nothing to wake (d2b677de, Oct 2026:
+    the owner handoff and the customer's access key sat unread for ~15 h). Prefer the named hold owner, then the
+    automatic native owner, then the recorded pickup owner, as long as ~/jobs/<name>/PROMPT.md exists; else @cos."""
+    rid = request_id(row.get("id"))
+    state = state if state is not None else load_state(rid)
+    operational = state.get("operational_hold")
+    candidates = (operational.get("owner") if isinstance(operational, dict) else None,
+                  native_owner.owner_name(rid), row.get("pickup_owner"), owner_for(rid))
+    for name in candidates:
+        if isinstance(name, str) and OWNER_JOB_RE.fullmatch(name) and (HOME / "jobs" / name / "PROMPT.md").is_file():
+            return name
+    return WAKE_FALLBACK
+
+
 def sql_text(value: str) -> str:
     return "'" + value.replace("'", "''") + "'"
 
@@ -445,7 +466,7 @@ ROW_FIELDS = (
     "evaluation_attempts", "release_attempts", "release_status", "delivery_email_status", "customer_hold_started_at",
     "sla_paused_seconds", "refund_reason", "refund_status", "refund_id", "refunded_at", "result_url", "review_email_status", "refusal_email_status",
     "customer_hold_reason", "amount_total", "refund_decision", "refund_decided_at", "change_request_email_status",
-    "resubmission_count",
+    "resubmission_count", "sla_24h_alerted_at", "sla_36h_alerted_at",
 )
 
 
@@ -1643,7 +1664,7 @@ def advance_intake(row: dict[str, Any], state: dict[str, Any], job_dir: Path, ef
             resume(rid)
             (job_dir / "release" / "WAITING.json").unlink(missing_ok=True)
             effects.board(f"Fast-lane order {order_ref(rid)}: the customer replied, so the hold ended and the "
-                          f"48-hour clock runs again. The evaluation service restarts automatically.", owner_for(rid), kind="note")
+                          f"48-hour clock runs again. The evaluation service restarts automatically.", wake_owner(row, state), kind="handoff")
         row = load_row(rid) or row
 
     waiting_path = job_dir / "release" / "WAITING.json"
@@ -1863,7 +1884,7 @@ def operational_escalate(row: dict[str, Any], state: dict[str, Any], effects: Ef
                          f"{deadline_for(row).isoformat()} continues; customer hold is not set. "
                          f"Request evidence: {job_directory(rid, JOB_ROOT)}/STATE.md. "
                          "Use the pinned runtime/review contract; never reuse another order's run.",
-                         owner_for(rid), thread=BOARD_HANDOFF_THREAD):
+                         wake_owner(row, state), thread=BOARD_HANDOFF_THREAD):
             finish_ok(state, "operational_handoff", now)
     if covered:
         return  # a live native owner with more than 12 h left owns the hold; no urgent card
@@ -4148,6 +4169,34 @@ def refund_decisions(synthetic_id: str | None, job_root: Path, effects: Effects)
     return asked
 
 
+def advance_sla_handoffs(row: dict[str, Any], state: dict[str, Any], effects: Effects, now: datetime,
+                         job_root: Path) -> None:
+    """The 24 h / 36 h notices also go to an agent that can act: notify keeps the 24 h line on board #28 only, and
+    for d2b677de (Oct 2026) nobody was woken. A bounded, retried step per order, outside the SLA sweep."""
+    if row.get("status") not in ("paid", "review_passed") or row.get("result_delivered_at") or active_hold(row):
+        return
+    rid = request_id(row.get("id"))
+    for hours in (24, 36):
+        name = f"sla{hours}_handoff"
+        if not row.get(f"sla_{hours}h_alerted_at") or step_done(state, name) or not step_due(state, name, now):
+            continue
+        if hours == 24 and measurement_started(rid, job_root):
+            finish_ok(state, name, now, skipped="measurement_started")
+            continue
+        begin_attempt(state, name, now)
+        if effects.board(sla_handoff(row, hours), wake_owner(row, state), thread=BOARD_HANDOFF_THREAD):
+            finish_ok(state, name, now)
+        else:
+            finish_fail(state, name, "board_post_failed")
+
+
+def sla_handoff(row: dict[str, Any], hours: int) -> str:
+    rid = request_id(row.get("id"))
+    return (f"Fast-lane order {order_ref(rid)} has no result {hours} hours after payment; the result deadline is "
+            f"{deadline_for(row).isoformat()}. Owner: start or unblock the measurement now, or say on this thread "
+            f"who owns it. Evidence: {job_directory(rid, JOB_ROOT)}/STATE.md. Refunds need Florian's button.")
+
+
 def sla_message(row: dict[str, Any], hours: int) -> str:
     due = deadline_for(row).strftime("%d %b %H:%M UTC")
     context = card_context_line(row, f"has no result {hours} hours after payment")
@@ -4177,6 +4226,7 @@ def process_row(row: dict[str, Any], effects: Effects, job_root: Path, now: date
             state["baseline_page_ids"] = structural_ids(page)
             save_state(state)
     row = advance_intake(row, state, job_dir, effects, now)
+    advance_sla_handoffs(row, state, effects, now, job_root)
     advance_change_request(row, state, job_dir, effects, now)
     advance_delivery(row, state, job_dir, effects, now)
     row = load_row(rid) or row

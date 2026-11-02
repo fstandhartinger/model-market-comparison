@@ -479,7 +479,7 @@ class SlaTests(DatabaseTestCase):
         ap.sla_sweep(None, ap.JOB_ROOT, fx)
         ap.sla_sweep(None, ap.JOB_ROOT, fx)
         texts = [note[2] for note in fx.notes]
-        self.assertEqual(sum("24 hours since payment" in text for text in texts), 1)
+        self.assertEqual(sum("24 hours after payment" in text for text in texts), 1)
         self.assertEqual(sum("36 hours after payment" in text for text in texts), 1)
         self.assertTrue(ap.sql(f"SELECT 1 FROM {ap.TABLE} WHERE id='{rid}' AND sla_36h_alerted_at IS NOT NULL AND sla_24h_alerted_at IS NOT NULL"))
 
@@ -2284,7 +2284,38 @@ class SlaCardsTests(DatabaseTestCase):
         fx = FakeEffects()
         counts = ap.sla_sweep(None, ap.JOB_ROOT, fx)
         self.assertEqual(counts["alert24"], 1)
-        self.assertEqual(sum("24 hours since payment" in n[2] for n in fx.notes), 1)
+        self.assertEqual(sum("24 hours after payment" in n[2] for n in fx.notes), 1)
+
+    def test_24h_notice_is_also_a_retried_handoff_to_a_wakeable_owner(self):
+        # d2b677de (Oct 2026): the placeholder fastlane-eval-<ref> has no job folder, so nobody was woken.
+        rid = insert_order(paid_ago="25 hours", received_ago="25 hours")
+        with tempfile.TemporaryDirectory() as home, mock.patch.object(ap, "HOME", Path(home)):
+            fx = FakeEffects()
+            ap.sla_sweep(None, ap.JOB_ROOT, fx)
+            self.assertEqual(fx.boards, [])  # the sweep itself never posts
+            now = datetime.now(timezone.utc)
+            with mock.patch.object(fx, "board", return_value=False) as failing:
+                ap.advance_sla_handoffs(row(rid), ap.load_state(rid), fx, now, ap.JOB_ROOT)
+            self.assertEqual(failing.call_args.args[1], "cos")
+            self.assertFalse(ap.step_done(ap.load_state(rid), "sla24_handoff"))
+            later = now + timedelta(hours=1)
+            ap.advance_sla_handoffs(row(rid), ap.load_state(rid), fx, later, ap.JOB_ROOT)
+            self.assertTrue(ap.step_done(ap.load_state(rid), "sla24_handoff"))
+            self.assertIn("24 hours after payment", fx.boards[-1])
+            ap.advance_sla_handoffs(row(rid), ap.load_state(rid), fx, later + timedelta(hours=1), ap.JOB_ROOT)
+            self.assertEqual(len(fx.boards), 1)  # once
+
+    def test_wake_owner_prefers_an_existing_hold_owner_job(self):
+        rid = insert_order(paid_ago="5 hours", received_ago="5 hours")
+        with tempfile.TemporaryDirectory() as home, mock.patch.object(ap, "HOME", Path(home)):
+            row_ = row(rid)
+            self.assertEqual(ap.wake_owner(row_, {}), "cos")
+            for name in ("manual-owner-20261010", ap.native_owner.owner_name(rid)):
+                (Path(home) / "jobs" / name).mkdir(parents=True)
+                (Path(home) / "jobs" / name / "PROMPT.md").write_text("x")
+            self.assertEqual(ap.wake_owner(row_, {}), ap.native_owner.owner_name(rid))
+            state = {"operational_hold": {"reason": "x", "owner": "manual-owner-20261010"}}
+            self.assertEqual(ap.wake_owner(row_, state), "manual-owner-20261010")
 
     def _decide(self, rid: str, decision: str) -> None:
         root = ap.STATE_ROOT / "sla-decisions"
