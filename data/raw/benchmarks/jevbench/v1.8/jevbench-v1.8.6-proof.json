@@ -21,7 +21,7 @@
   "metadecision-31b-rain": {
    "axes": {
     "calibration": 93.35954564806238,
-    "cost": 54.95882754829502,
+    "cost": 54.959198906753414,
     "intelligence": 87.93453896297933,
     "speed": 71.85456280157676
    },
@@ -77,35 +77,35 @@
    },
    "composite_ci95": {
     "A": [
-     72.60888073241445,
-     74.49883076151185
+     72.60904277752432,
+     74.49900135222464
     ],
     "B": [
-     74.46599165487353,
-     77.33663971985249
+     74.46612800709342,
+     77.33678678741175
     ],
     "C": [
-     72.60888073241445,
-     74.49883076151185
+     72.60904277752432,
+     74.49900135222464
     ]
    },
    "cost": {
     "common_n": 1489,
     "common_set_sha256": "4e912731e63369e1b3066b0b4afa87b44f1094aea079c5b41dc6d02e7f235537",
-    "cost_all": 0.03294730872866403,
+    "cost_all": 0.03294636965100135,
     "cost_basis_rule": "v1.7.16 same-items cost rule on draw v1.6-regular-20261027: cost per 1,000 decisions on the items every row on this draw answered (HTTP 200, ok, no error, for all 8 d1027 rows); refused/failed/not-sent items count for no row's cost and still count as wrong answers.",
     "cost_basis_sha256": "b83bdfd14c263ffacfa572b304084154afca84c1f00083101a33783ae6f8b356",
-    "cost_common": 0.03172286587842991,
+    "cost_common": 0.031721961700337906,
     "cost_components": {
      "all": {
-      "gpu_time": 0.03294730872866403,
+      "gpu_time": 0.03294636965100135,
       "list_price": 0.06166927333333334,
-      "selected": 0.03294730872866403
+      "selected": 0.03294636965100135
      },
      "common": {
-      "gpu_time": 0.03172286587842991,
+      "gpu_time": 0.031721961700337906,
       "list_price": 0.059822310275352585,
-      "selected": 0.03172286587842991
+      "selected": 0.031721961700337906
      }
     },
     "expect": {
@@ -121,12 +121,12 @@
      "active_parameters_b": 31,
      "architecture_class": "dense gemma",
      "average_load": 0.7,
-     "hourly_usd": 1.5235434246575343,
+     "hourly_usd": 1.5235,
      "throughput_tokens_s": 10106.516129
     },
-    "gpu_all": 0.03294730872866403,
-    "gpu_common": 0.03172286587842991,
-    "gpu_rate_per_m": 0.059820883512533514,
+    "gpu_all": 0.03294636965100135,
+    "gpu_common": 0.031721961700337906,
+    "gpu_rate_per_m": 0.059819178473256074,
     "host_receipt_sha256": "92b107dbe96db114e09d34d2c794e88b0e31738888e60323ccfa403b32b31cc7",
     "initial_prompt_tokens": 597680,
     "initial_prompt_trimmed_items": 5,
@@ -176,7 +176,7 @@
     "out": 0.34
    },
    "raw_sha256": "468550e45a233ea1182e61c564bc3d60a92e05b6545a392db0283739ff15477a",
-   "scored_input_sha256": "63713daa3532fd5d6c92996ade48b919d3cd9d21e061a0d4959c7a25ae7f41ac",
+   "scored_input_sha256": "30c9e2007bb26c8b8e5790bd9269a62863f66c3d088eb8540192b2878bfa4c92",
    "treatment": "unranked"
   }
  },
@@ -213,11 +213,11 @@
   "inputs/ENTRIES.json": "397d1ae028459e627e79134b248606e18ebcda8f33f3fa7f7d3b758c3ecfde13",
   "inputs/ENTRY-PINS.json": "2246c8bdfa96ae600d5691169df7581f6f8a2920d22cf2747bbc3af03b76a58d",
   "inputs/PROVENANCE.json": "e975c477371f2504452852bd3966164615b886749d1fb7014329379487b6867c",
-  "inputs/PUBLIC-ROWS.json": "df50c06cc44916a44b6ad0d5682fb1521a4956d963ad710cc0ca20158e31e306",
+  "inputs/PUBLIC-ROWS.json": "3ca171ad2a10314f8c3e78f8b12cd6a5a38579bb94e5cffd072c48654f7f5d34",
   "inputs/TEXT-EXCEPTIONS.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
   "src/cells.json": "7ec10c936aeb69e1a32caf749256f24ba1b7f1c867515faf38fd782d9aa6fb73",
-  "src/scored.json": "14fca63031c15b6ed25314ae871211d759ba828a80ffefa306c15427986d6729",
-  "src/usage.json": "b03a0dad2790be6f15e87540141e1abb8a7924222560e4ea2cef45f85c16e9c8"
+  "src/scored.json": "7c2b8468e717adefb443d4e401e3bec3058096b875aee0a7aa755080ec8b42b2",
+  "src/usage.json": "4e91af50ee35c47957d560e9f895da10e34dbcd78cdcd4e6f52aaee16f3a64f4"
  },
- "topfive_diff_sha256": "8c22801681ae0d9d50a3c898c352417d82f2e80b39dee788a495877a963e030d"
+ "topfive_diff_sha256": "10d5d9688bc31463a5eb72b9f04e23ec297a2156685ca8febf1291f5a0161cac"
 }

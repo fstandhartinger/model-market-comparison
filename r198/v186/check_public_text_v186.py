@@ -34,6 +34,12 @@ for row in rows.values():
         'vllm/vllm-openai@sha256:a4a4c0437bf7240089da5f08aa370c4aee17ae5290f7a3b468825ee26c4c3a6b',
         'google/gemma-4-31b-it via frozen pricing_v15 reference at USD 0.09/M input and USD 0.34/M output',
         'Applied min(old list-price estimate, GPU-time cost)',
+        'W4A16 4-bit QAT checkpoint',
+        'unmerged rank-16 LoRA adapter',
+        'capped at 49% of all decisions',
+        '101st decision',
+        'USD 0.0646 per 1,000 decisions',
+        'depend on the order of decisions',
     ]
     for term in required:
         assert term in all_text, term

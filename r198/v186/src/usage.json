@@ -2,20 +2,20 @@
  "metadecision-31b-rain": {
   "common_n": 1489,
   "common_set_sha256": "4e912731e63369e1b3066b0b4afa87b44f1094aea079c5b41dc6d02e7f235537",
-  "cost_all": 0.03294730872866403,
+  "cost_all": 0.03294636965100135,
   "cost_basis_rule": "v1.7.16 same-items cost rule on draw v1.6-regular-20261027: cost per 1,000 decisions on the items every row on this draw answered (HTTP 200, ok, no error, for all 8 d1027 rows); refused/failed/not-sent items count for no row's cost and still count as wrong answers.",
   "cost_basis_sha256": "b83bdfd14c263ffacfa572b304084154afca84c1f00083101a33783ae6f8b356",
-  "cost_common": 0.03172286587842991,
+  "cost_common": 0.031721961700337906,
   "cost_components": {
    "all": {
-    "gpu_time": 0.03294730872866403,
+    "gpu_time": 0.03294636965100135,
     "list_price": 0.06166927333333334,
-    "selected": 0.03294730872866403
+    "selected": 0.03294636965100135
    },
    "common": {
-    "gpu_time": 0.03172286587842991,
+    "gpu_time": 0.031721961700337906,
     "list_price": 0.059822310275352585,
-    "selected": 0.03172286587842991
+    "selected": 0.031721961700337906
    }
   },
   "expect": {
@@ -31,12 +31,12 @@
    "active_parameters_b": 31,
    "architecture_class": "dense gemma",
    "average_load": 0.7,
-   "hourly_usd": 1.5235434246575343,
+   "hourly_usd": 1.5235,
    "throughput_tokens_s": 10106.516129
   },
-  "gpu_all": 0.03294730872866403,
-  "gpu_common": 0.03172286587842991,
-  "gpu_rate_per_m": 0.059820883512533514,
+  "gpu_all": 0.03294636965100135,
+  "gpu_common": 0.031721961700337906,
+  "gpu_rate_per_m": 0.059819178473256074,
   "host_receipt_sha256": "92b107dbe96db114e09d34d2c794e88b0e31738888e60323ccfa403b32b31cc7",
   "initial_prompt_tokens": 597680,
   "initial_prompt_trimmed_items": 5,

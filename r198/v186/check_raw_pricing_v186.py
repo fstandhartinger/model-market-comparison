@@ -4,7 +4,7 @@ import collections, hashlib, importlib.util, json, math
 
 J = Path(__file__).resolve().parent
 W = J.parents[1]
-S = Path('/home/flori/jobs/jevbench-add-requests-20260919/workers/r226-v186-build/score')
+S = Path('/home/flori/jobs/jevbench-add-requests-20260919/workers/r227-v186-delta/score')
 RAW = Path('/home/flori/jevbench-sealed/v1.6-run/v1.6-regular-20261027/runs-fastlane/metadecision-31b-rain.raw.jsonl')
 HOST = Path('/home/flori/jobs/fastlane-native-580d6afe/receipts/HOST-RECEIPT-sealed.json')
 DRAW = Path('/home/flori/jevbench-sealed/v1.6-run/v1.6-regular-20261027')
@@ -15,7 +15,7 @@ RAW_SHA = '468550e45a233ea1182e61c564bc3d60a92e05b6545a392db0283739ff15477a'
 COMMON_SHA = '4e912731e63369e1b3066b0b4afa87b44f1094aea079c5b41dc6d02e7f235537'
 PRICING_SHA = '455ee38b7070f2f076eec65d55c7bb2a69030c26c343c662ade2826f8afd6eaa'
 THROUGHPUT = 10106.516129
-HOURLY_USD = 999 / 730 * 1.1133
+HOURLY_USD = 1.5235
 LOAD = 0.70
 sha = lambda p: hashlib.sha256(Path(p).read_bytes()).hexdigest()
 load = lambda p: json.loads(Path(p).read_text())
@@ -68,7 +68,7 @@ list_all = cost(tin, tout, 1500, *rates)
 gpu_common = cost(tin_common, tout_common, 1489, gpu_rate, gpu_rate)
 gpu_all = cost(tin, tout, 1500, gpu_rate, gpu_rate)
 assert abs(gpu_common - 0.033) <= 0.033 * 0.05, f'GPU-time component {gpu_common:.9f} differs from expected 0.033 by >5%'
-assert math.isclose(gpu_common, 0.03172286587842991, abs_tol=1e-12)
+assert math.isclose(gpu_common, 0.031721961700337906, abs_tol=1e-12)
 assert list_common > gpu_common and min(list_common, gpu_common) == gpu_common
 assert math.isclose(list_common, 0.059822309614, abs_tol=1e-9)
 
