@@ -1,0 +1,362 @@
+{
+  "hashes": {
+    "data/raw/benchmarks/jevbench/v1.8/jevbench-v1.8.5-results.json": "19497a97b9b8be3732017e8dad6b26c8dd3d000f3424472a08dd026498d3001a",
+    "data/raw/benchmarks/jevbench/v1.8/jevbench-v1.8.5-categories.json": "93a309bb53e1f42379bffdf2d8f5a0bef8455aff497cdfda09feb19e0c8892cc",
+    "data/raw/benchmarks/jevbench/v1.8/jevbench-v1.8.5-carry.json": "271d1fc77a136a04a1eb6deb5480c52d4211eb2b66b2ac8bb31e80867e69003a",
+    "data/raw/benchmarks/jevbench/v1.8/jevbench-v1.8.5-proof.json": "b57b08728626a9945eb8f8c6c216c7b06bbdaf27321d24b0616e842b84925e1d",
+    "data/raw/benchmarks/jevbench/v1.8/jevbench-v1.8.5-history.json": "d5e91333d6acefef1506f2a6ce23f71220ac1eeac9ce2d4e817c88a0a979a38b",
+    "data/raw/benchmarks/jevbench/v1.8/jevbench-v1.8.5-history-carry.json": "f4d8ddfae4ac3b2741ca7cfdaa930b2afc1d9be612f4e6683a230aa23834e2ba",
+    "lib/jevbench-v185-release.mjs": "ed36c036c20f7e60aa9e93078d08b95b36a0b7ed527b39fa139cd7a47e85bd04"
+  },
+  "publication": {
+    "files": {
+      "carry": {
+        "path": "data/raw/benchmarks/jevbench/v1.8/jevbench-v1.8.5-carry.json",
+        "sha256": "271d1fc77a136a04a1eb6deb5480c52d4211eb2b66b2ac8bb31e80867e69003a"
+      },
+      "categories": {
+        "path": "data/raw/benchmarks/jevbench/v1.8/jevbench-v1.8.5-categories.json",
+        "sha256": "93a309bb53e1f42379bffdf2d8f5a0bef8455aff497cdfda09feb19e0c8892cc"
+      },
+      "history": {
+        "path": "data/raw/benchmarks/jevbench/v1.8/jevbench-v1.8.5-history.json",
+        "sha256": "d5e91333d6acefef1506f2a6ce23f71220ac1eeac9ce2d4e817c88a0a979a38b"
+      },
+      "history-carry": {
+        "path": "data/raw/benchmarks/jevbench/v1.8/jevbench-v1.8.5-history-carry.json",
+        "sha256": "f4d8ddfae4ac3b2741ca7cfdaa930b2afc1d9be612f4e6683a230aa23834e2ba"
+      },
+      "proof": {
+        "path": "data/raw/benchmarks/jevbench/v1.8/jevbench-v1.8.5-proof.json",
+        "sha256": "b57b08728626a9945eb8f8c6c216c7b06bbdaf27321d24b0616e842b84925e1d"
+      },
+      "results": {
+        "path": "data/raw/benchmarks/jevbench/v1.8/jevbench-v1.8.5-results.json",
+        "sha256": "19497a97b9b8be3732017e8dad6b26c8dd3d000f3424472a08dd026498d3001a"
+      }
+    },
+    "historical_carry_sha256": "334e851944e92383ab3071e52b3012040c7023d0fe236395953169ebee8f0459",
+    "historical_results_sha256": "5cd8c1332226ea9c179883d2285c0d8b8cc593ae38f2645197364a7ddd9c83c1",
+    "historical_revision": "v1.6.1",
+    "predecessor": {
+      "publication_sha256": "6505f0eb0816f988dda32b2c8b91b6d53437e9b3ccf97e3013139df558a897e1",
+      "revision": "v1.8.4"
+    },
+    "provisional": false,
+    "review": {
+      "engine": "PENDING",
+      "receipt_sha256": null,
+      "verdict": "PENDING"
+    },
+    "revision": "v1.8.5",
+    "schema_version": 1,
+    "status": "published"
+  },
+  "topics": {
+    "schema_version": 1,
+    "kind": "jevbench-breakdown-exceptions",
+    "note": "Rows the live JevBench boards may show without topic, use-case or language cells. Florian's standing rule (DECISIONS 2026-10-16 13:30 UTC): every listed row has them; an exception needs a reason and a recorded decision. test/jevbench-breakdowns-every-listed-row.test.mjs fails on any other gap and on stale entries.",
+    "entries": [
+      {
+        "key": "drex_v1_5",
+        "dims": [
+          "languages"
+        ],
+        "reason": "Dated v1.5-method row (measured 2 Oct 2026 on the v1.5 pool) with no run on the current item pools; the only Drex credential is the customer-supplied key of a private paid order with no re-use terms, so no supplementary run is possible without Nace.ai's consent.",
+        "decision": "board #20097 (cos-deputy ruling on #20093, 16 Oct 2026; correction #20099)"
+      },
+      {
+        "board": "imagejevbench",
+        "key": "basal_omni_1_0_ultra",
+        "dims": [
+          "typesafe"
+        ],
+        "reason": "TEMPORARY: basal-omni-1.0-ultra was measured on the ImageJevBench v0.3 core pool on one rented H200 on 17 Oct 2026; the TypeSafe-20 bank (600 sealed items) was not run in that session and the pod is gone, so a follow-up release adds the TypeSafe-20 cells and removes this entry.",
+        "decision": "board #20750 (DECISIONS 2026-10-17 11:05 UTC, release-owner Agent \u00a73 decision, jevbench-release-adopted-rows-20261008)"
+      },
+      {
+        "key": "h2o-lightning-4b-v1.4.1",
+        "dims": [
+          "topics"
+        ],
+        "reason": "TEMPORARY: first row on the 27 Oct 2026 regular draw (v1.6-regular-20261027, release v1.7.13). That draw has no ruled subject-topic labels yet, so no topic cells exist; its use-case and language cells are measured on the row's own draw. A follow-up release adds the topic cells once the draw's items are labelled and removes this entry.",
+        "decision": "DECISIONS 2026-10-27 18:20 UTC v1713-topics-exception-h2o141 (release owner)"
+      },
+      {
+        "key": "arcbright-elf-1-12b-r2",
+        "dims": [
+          "topics"
+        ],
+        "reason": "TEMPORARY: row on the 27 Oct 2026 regular draw (v1.6-regular-20261027, release v1.7.14). That draw has no ruled subject-topic labels yet, so no topic cells exist; its use-case and language cells are measured on the row's own draw. A follow-up release adds the topic cells once the draw's items are labelled and removes this entry.",
+        "decision": "DECISIONS 2026-10-27 18:20 UTC v1713-topics-exception-h2o141 (release owner), extended to every row on the 27 Oct draw (v1.7.14)"
+      },
+      {
+        "key": "decisio-gemma-4-12b-tuned-commit-think",
+        "dims": [
+          "topics"
+        ],
+        "reason": "TEMPORARY: row on the 27 Oct 2026 regular draw (v1.6-regular-20261027, release v1.7.14). That draw has no ruled subject-topic labels yet, so no topic cells exist; its use-case and language cells are measured on the row's own draw. A follow-up release adds the topic cells once the draw's items are labelled and removes this entry.",
+        "decision": "DECISIONS 2026-10-27 18:20 UTC v1713-topics-exception-h2o141 (release owner), extended to every row on the 27 Oct draw (v1.7.14)"
+      },
+      {
+        "key": "jeff_1_1_large",
+        "dims": [
+          "topics"
+        ],
+        "reason": "TEMPORARY: row on the 27 Oct 2026 regular draw (v1.6-regular-20261027, release v1.7.14). That draw has no ruled subject-topic labels yet, so no topic cells exist; its use-case and language cells are measured on the row's own draw. A follow-up release adds the topic cells once the draw's items are labelled and removes this entry.",
+        "decision": "DECISIONS 2026-10-27 18:20 UTC v1713-topics-exception-h2o141 (release owner), extended to every row on the 27 Oct draw (v1.7.14)"
+      },
+      {
+        "key": "jeff_1_1_qwen_4b",
+        "dims": [
+          "topics"
+        ],
+        "reason": "TEMPORARY: row on the 27 Oct 2026 regular draw (v1.6-regular-20261027, release v1.7.14). That draw has no ruled subject-topic labels yet, so no topic cells exist; its use-case and language cells are measured on the row's own draw. A follow-up release adds the topic cells once the draw's items are labelled and removes this entry.",
+        "decision": "DECISIONS 2026-10-27 18:20 UTC v1713-topics-exception-h2o141 (release owner), extended to every row on the 27 Oct draw (v1.7.14)"
+      },
+      {
+        "key": "torchcast-decision-31b-v1.0",
+        "dims": [
+          "topics"
+        ],
+        "reason": "TEMPORARY: row on the 27 Oct 2026 regular draw (v1.6-regular-20261027, release v1.7.14). That draw has no ruled subject-topic labels yet, so no topic cells exist; its use-case and language cells are measured on the row's own draw. A follow-up release adds the topic cells once the draw's items are labelled and removes this entry.",
+        "decision": "DECISIONS 2026-10-27 18:20 UTC v1713-topics-exception-h2o141 (release owner), extended to every row on the 27 Oct draw (v1.7.14)"
+      },
+      {
+        "key": "microsoft-decision-1-r2",
+        "dims": [
+          "topics"
+        ],
+        "reason": "TEMPORARY: row on the 27 Oct 2026 regular draw (v1.6-regular-20261027, release v1.7.15). That draw has no ruled subject-topic labels yet, so no topic cells exist; its use-case and language cells are measured on the row's own 1,493 items of the draw. A follow-up release adds the topic cells once the draw's items are labelled and removes this entry.",
+        "decision": "DECISIONS 2026-10-27 18:20 UTC v1713-topics-exception-h2o141 (release owner), extended to every row on the 27 Oct draw (v1.7.15)"
+      },
+      {
+        "board": "imagejevbench",
+        "key": "h2o_lightning_4b_v141_d7f1_image",
+        "dims": [
+          "typesafe"
+        ],
+        "reason": "Permanent revision-specific exception: not measured for this revision (temperature refit); ranked TS20 is on the @cc18ee33 row.",
+        "decision": "board #31072"
+      },
+      {
+        "key": "strike-1",
+        "dims": [
+          "topics"
+        ],
+        "reason": "TEMPORARY: row on the 27 Oct 2026 regular draw (v1.6-regular-20261027, release v1.7.16). That draw has no ruled subject-topic labels yet, so no topic cells exist; its use-case and language cells are measured on the row's own draw. A follow-up release adds the topic cells once the draw's items are labelled and removes this entry.",
+        "decision": "DECISIONS 2026-10-27 18:20 UTC v1713-topics-exception-h2o141 (release owner), extended to every row on the 27 Oct draw (v1.7.16)"
+      },
+      {
+        "key": "chaoliangunsw-jev-style-2b-decision-v4",
+        "dims": [
+          "topics"
+        ],
+        "reason": "TEMPORARY: row on the 27 Oct 2026 regular draw (v1.6-regular-20261027, release v1.7.17). That draw has no ruled subject-topic labels yet, so no topic cells exist; its use-case and language cells are measured on the row's own draw. A follow-up release adds the topic cells once the draw's items are labelled and removes this entry.",
+        "decision": "DECISIONS 2026-10-27 18:20 UTC v1713-topics-exception-h2o141 (release owner), extended to every row on the 27 Oct draw (v1.7.17)"
+      },
+      {
+        "key": "knowline-26b-a4b-gen2.5",
+        "dims": [
+          "topics",
+          "usecases"
+        ],
+        "reason": "The answer file was lost on 26 Oct 2026 after scoring. The retained 23 Oct summaries preserve family and language cells but not subject-topic or use-case cells; those breakdowns cannot be reconstructed.",
+        "decision": "board #31728; refined by DECISIONS 2026-10-28 17:5xZ knowline-r8c-lost-raw-omissions (release-owner ruling)"
+      },
+      {
+        "key": "knowline-4b-gen5.5",
+        "dims": [
+          "topics",
+          "usecases"
+        ],
+        "reason": "The answer file was lost on 26 Oct 2026 after scoring. The retained 23 Oct summaries preserve family and language cells but not subject-topic or use-case cells; those breakdowns cannot be reconstructed.",
+        "decision": "board #31728; refined by DECISIONS 2026-10-28 17:5xZ knowline-r8c-lost-raw-omissions (release-owner ruling)"
+      },
+      {
+        "key": "decisionnode-flash-0.9.1-rc1",
+        "dims": [
+          "topics"
+        ],
+        "reason": "TEMPORARY: row on the 27 Oct 2026 regular draw (v1.6-regular-20261027, release v1.7.19). That draw has no ruled subject-topic labels yet, so no topic cells exist; its use-case and language cells are measured on the row's own draw. A follow-up release adds the topic cells once the draw's items are labelled and removes this entry.",
+        "decision": "DECISIONS 2026-10-27 18:20 UTC v1713-topics-exception-h2o141 (release owner), extended to every row on the 27 Oct draw (v1.7.19)"
+      },
+      {
+        "key": "decisionnode-main-0.9.1-rc1",
+        "dims": [
+          "topics"
+        ],
+        "reason": "TEMPORARY: row on the 27 Oct 2026 regular draw (v1.6-regular-20261027, release v1.7.19). That draw has no ruled subject-topic labels yet, so no topic cells exist; its use-case and language cells are measured on the row's own draw. A follow-up release adds the topic cells once the draw's items are labelled and removes this entry.",
+        "decision": "DECISIONS 2026-10-27 18:20 UTC v1713-topics-exception-h2o141 (release owner), extended to every row on the 27 Oct draw (v1.7.19)"
+      },
+      {
+        "key": "visionjev-1.0.0-27b",
+        "dims": [
+          "topics"
+        ],
+        "reason": "TEMPORARY: row on the 27 Oct 2026 regular draw (v1.6-regular-20261027, release v1.7.21). That draw has no ruled subject-topic labels yet, so no topic cells exist; its use-case and language cells are measured on the row's own draw. A follow-up release adds the topic cells once the draw's items are labelled and removes this entry.",
+        "decision": "DECISIONS 2026-10-27 18:20 UTC v1713-topics-exception-h2o141 (release owner), extended to every row on the 27 Oct draw (v1.7.21)"
+      },
+      {
+        "key": "umpire-35b-a3b",
+        "dims": [
+          "topics"
+        ],
+        "reason": "TEMPORARY: row on the 27 Oct 2026 regular draw (v1.6-regular-20261027, release v1.7.22). That draw has no ruled subject-topic labels yet, so no topic cells exist; its use-case and language cells are measured on the row's own draw. A follow-up release adds the topic cells once the draw's items are labelled and removes this entry.",
+        "decision": "DECISIONS 2026-10-27 18:20 UTC v1713-topics-exception-h2o141 (release owner), extended to every row on the 27 Oct draw (v1.7.22)"
+      },
+      {
+        "key": "cribl-decision-2",
+        "dims": [
+          "topics"
+        ],
+        "reason": "TEMPORARY: row on the 27 Oct 2026 regular draw (v1.6-regular-20261027, release v1.8.1). That draw has no ruled subject-topic labels yet, so no topic cells exist; its use-case and language cells are measured on the row's own draw. A follow-up release adds the topic cells once the draw's items are labelled and removes this entry.",
+        "decision": "DECISIONS 2026-10-27 18:20 UTC v1713-topics-exception-h2o141 (release owner), extended to every row on the 27 Oct draw (v1.8.1)"
+      },
+      {
+        "key": "cribl-decision-2-mini",
+        "dims": [
+          "topics"
+        ],
+        "reason": "TEMPORARY: row on the 27 Oct 2026 regular draw (v1.6-regular-20261027, release v1.8.1). That draw has no ruled subject-topic labels yet, so no topic cells exist; its use-case and language cells are measured on the row's own draw. A follow-up release adds the topic cells once the draw's items are labelled and removes this entry.",
+        "decision": "DECISIONS 2026-10-27 18:20 UTC v1713-topics-exception-h2o141 (release owner), extended to every row on the 27 Oct draw (v1.8.1)"
+      },
+      {
+        "key": "decide-1.1",
+        "dims": [
+          "topics"
+        ],
+        "reason": "TEMPORARY: row on the 27 Oct 2026 regular draw (v1.6-regular-20261027, release v1.8.1). That draw has no ruled subject-topic labels yet, so no topic cells exist; its use-case and language cells are measured on the row's own draw. A follow-up release adds the topic cells once the draw's items are labelled and removes this entry.",
+        "decision": "DECISIONS 2026-10-27 18:20 UTC v1713-topics-exception-h2o141 (release owner), extended to every row on the 27 Oct draw (v1.8.1)"
+      },
+      {
+        "key": "decision-king-v1.1",
+        "dims": [
+          "topics"
+        ],
+        "reason": "TEMPORARY: row on the 27 Oct 2026 regular draw (v1.6-regular-20261027, release v1.8.1). That draw has no ruled subject-topic labels yet, so no topic cells exist; its use-case and language cells are measured on the row's own draw. A follow-up release adds the topic cells once the draw's items are labelled and removes this entry.",
+        "decision": "DECISIONS 2026-10-27 18:20 UTC v1713-topics-exception-h2o141 (release owner), extended to every row on the 27 Oct draw (v1.8.1)"
+      },
+      {
+        "key": "iota-decide-4b-v0.4",
+        "dims": [
+          "topics"
+        ],
+        "reason": "TEMPORARY: row on the 27 Oct 2026 regular draw (v1.6-regular-20261027, release v1.8.1). That draw has no ruled subject-topic labels yet, so no topic cells exist; its use-case and language cells are measured on the row's own draw. A follow-up release adds the topic cells once the draw's items are labelled and removes this entry.",
+        "decision": "DECISIONS 2026-10-27 18:20 UTC v1713-topics-exception-h2o141 (release owner), extended to every row on the 27 Oct draw (v1.8.1)"
+      },
+      {
+        "key": "joey-1",
+        "dims": [
+          "topics"
+        ],
+        "reason": "TEMPORARY: row on the 27 Oct 2026 regular draw (v1.6-regular-20261027, release v1.8.1). That draw has no ruled subject-topic labels yet, so no topic cells exist; its use-case and language cells are measured on the row's own draw. A follow-up release adds the topic cells once the draw's items are labelled and removes this entry.",
+        "decision": "DECISIONS 2026-10-27 18:20 UTC v1713-topics-exception-h2o141 (release owner), extended to every row on the 27 Oct draw (v1.8.1)"
+      },
+      {
+        "key": "saif-4b",
+        "dims": [
+          "topics"
+        ],
+        "reason": "TEMPORARY: row on the 27 Oct 2026 regular draw (v1.6-regular-20261027, release v1.8.1). That draw has no ruled subject-topic labels yet, so no topic cells exist; its use-case and language cells are measured on the row's own draw. A follow-up release adds the topic cells once the draw's items are labelled and removes this entry.",
+        "decision": "DECISIONS 2026-10-27 18:20 UTC v1713-topics-exception-h2o141 (release owner), extended to every row on the 27 Oct draw (v1.8.1)"
+      },
+      {
+        "key": "sors-2b",
+        "dims": [
+          "topics"
+        ],
+        "reason": "TEMPORARY: row on the 27 Oct 2026 regular draw (v1.6-regular-20261027, release v1.8.1). That draw has no ruled subject-topic labels yet, so no topic cells exist; its use-case and language cells are measured on the row's own draw. A follow-up release adds the topic cells once the draw's items are labelled and removes this entry.",
+        "decision": "DECISIONS 2026-10-27 18:20 UTC v1713-topics-exception-h2o141 (release owner), extended to every row on the 27 Oct draw (v1.8.1)"
+      },
+      {
+        "key": "wemm-jev",
+        "dims": [
+          "topics"
+        ],
+        "reason": "TEMPORARY: row on the 27 Oct 2026 regular draw (v1.6-regular-20261027, release v1.8.1). That draw has no ruled subject-topic labels yet, so no topic cells exist; its use-case and language cells are measured on the row's own draw. A follow-up release adds the topic cells once the draw's items are labelled and removes this entry.",
+        "decision": "DECISIONS 2026-10-27 18:20 UTC v1713-topics-exception-h2o141 (release owner), extended to every row on the 27 Oct draw (v1.8.1)"
+      },
+      {
+        "key": "amber-4b",
+        "dims": [
+          "topics"
+        ],
+        "reason": "TEMPORARY: row on the 27 Oct 2026 regular draw (v1.6-regular-20261027, release v1.8.2). That draw has no ruled subject-topic labels yet, so no topic cells exist; its use-case and language cells are measured on the row's own draw. A follow-up release adds the topic cells once the draw's items are labelled and removes this entry.",
+        "decision": "DECISIONS 2026-10-27 18:20 UTC v1713-topics-exception-h2o141 (release owner), extended to every row on the 27 Oct draw (v1.8.2)"
+      },
+      {
+        "key": "oenogarum",
+        "dims": [
+          "topics"
+        ],
+        "reason": "TEMPORARY: row on the 27 Oct 2026 regular draw (v1.6-regular-20261027, release v1.8.2). That draw has no ruled subject-topic labels yet, so no topic cells exist; its use-case and language cells are measured on the row's own draw. A follow-up release adds the topic cells once the draw's items are labelled and removes this entry.",
+        "decision": "DECISIONS 2026-10-27 18:20 UTC v1713-topics-exception-h2o141 (release owner), extended to every row on the 27 Oct draw (v1.8.2)"
+      },
+      {
+        "key": "piccolo-4b",
+        "dims": [
+          "topics"
+        ],
+        "reason": "TEMPORARY: row on the 27 Oct 2026 regular draw (v1.6-regular-20261027, release v1.8.2). That draw has no ruled subject-topic labels yet, so no topic cells exist; its use-case and language cells are measured on the row's own draw. A follow-up release adds the topic cells once the draw's items are labelled and removes this entry.",
+        "decision": "DECISIONS 2026-10-27 18:20 UTC v1713-topics-exception-h2o141 (release owner), extended to every row on the 27 Oct draw (v1.8.2)"
+      },
+      {
+        "key": "piccolo-9b",
+        "dims": [
+          "topics"
+        ],
+        "reason": "TEMPORARY: row on the 27 Oct 2026 regular draw (v1.6-regular-20261027, release v1.8.2). That draw has no ruled subject-topic labels yet, so no topic cells exist; its use-case and language cells are measured on the row's own draw. A follow-up release adds the topic cells once the draw's items are labelled and removes this entry.",
+        "decision": "DECISIONS 2026-10-27 18:20 UTC v1713-topics-exception-h2o141 (release owner), extended to every row on the 27 Oct draw (v1.8.2)"
+      },
+      {
+        "key": "allec-oavg",
+        "dims": [
+          "topics"
+        ],
+        "reason": "TEMPORARY: row on the 27 Oct 2026 regular draw (v1.6-regular-20261027, release v1.8.3). That draw has no ruled subject-topic labels yet, so no topic cells exist; its use-case and language cells are measured on the row's own draw. A follow-up release adds the topic cells once the draw's items are labelled and removes this entry.",
+        "decision": "DECISIONS 2026-10-27 18:20 UTC v1713-topics-exception-h2o141 (release owner), extended to every row on the 27 Oct draw (v1.8.3)"
+      },
+      {
+        "key": "cribl-decision-1.0-27b",
+        "dims": [
+          "topics"
+        ],
+        "reason": "TEMPORARY: row on the 27 Oct 2026 regular draw (v1.6-regular-20261027, release v1.8.3). That draw has no ruled subject-topic labels yet, so no topic cells exist; its use-case and language cells are measured on the row's own draw. A follow-up release adds the topic cells once the draw's items are labelled and removes this entry.",
+        "decision": "DECISIONS 2026-10-27 18:20 UTC v1713-topics-exception-h2o141 (release owner), extended to every row on the 27 Oct draw (v1.8.3)"
+      },
+      {
+        "key": "cribl-decision-1.0-9b",
+        "dims": [
+          "topics"
+        ],
+        "reason": "TEMPORARY: row on the 27 Oct 2026 regular draw (v1.6-regular-20261027, release v1.8.3). That draw has no ruled subject-topic labels yet, so no topic cells exist; its use-case and language cells are measured on the row's own draw. A follow-up release adds the topic cells once the draw's items are labelled and removes this entry.",
+        "decision": "DECISIONS 2026-10-27 18:20 UTC v1713-topics-exception-h2o141 (release owner), extended to every row on the 27 Oct draw (v1.8.3)"
+      },
+      {
+        "key": "piccolo-27b",
+        "dims": [
+          "topics"
+        ],
+        "reason": "TEMPORARY: row on the 27 Oct 2026 regular draw (v1.6-regular-20261027, release v1.8.3). That draw has no ruled subject-topic labels yet, so no topic cells exist; its use-case and language cells are measured on the row's own draw. A follow-up release adds the topic cells once the draw's items are labelled and removes this entry.",
+        "decision": "DECISIONS 2026-10-27 18:20 UTC v1713-topics-exception-h2o141 (release owner), extended to every row on the 27 Oct draw (v1.8.3)"
+      },
+      {
+        "key": "zils-ai-z3-mini-soup-preview",
+        "dims": [
+          "topics"
+        ],
+        "reason": "TEMPORARY: row on the 27 Oct 2026 regular draw (v1.6-regular-20261027, release v1.8.3). That draw has no ruled subject-topic labels yet, so no topic cells exist; its use-case and language cells are measured on the row's own draw. A follow-up release adds the topic cells once the draw's items are labelled and removes this entry.",
+        "decision": "DECISIONS 2026-10-27 18:20 UTC v1713-topics-exception-h2o141 (release owner), extended to every row on the 27 Oct draw (v1.8.3)"
+      },
+      {
+        "key": "granite-switch-4.1-8b",
+        "dims": [
+          "topics"
+        ],
+        "reason": "TEMPORARY: row on the 27 Oct 2026 regular draw (v1.6-regular-20261027, release v1.8.4). That draw has no ruled subject-topic labels yet, so no topic cells exist; its use-case and language cells are measured on the row's own draw. A follow-up release adds the topic cells once the draw's items are labelled and removes this entry.",
+        "decision": "DECISIONS 2026-10-27 18:20 UTC v1713-topics-exception-h2o141 (release owner), extended to every row on the 27 Oct draw (v1.8.4)"
+      }
+    ]
+  }
+}

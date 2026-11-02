@@ -1,0 +1,199 @@
+{
+ "carried_rows": 335,
+ "carried_rows_equal_except": [],
+ "cost_basis": {
+  "cost_basis_sha256": "b83bdfd14c263ffacfa572b304084154afca84c1f00083101a33783ae6f8b356",
+  "frozen_at": "v1.7.16",
+  "n_items": 1489,
+  "rule": "fixed-common-cost-basis-d1027 (frozen at v1.7.16)",
+  "set_sha256": "4e912731e63369e1b3066b0b4afa87b44f1094aea079c5b41dc6d02e7f235537"
+ },
+ "exceptions": {
+  "text_only_sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+ },
+ "method": {
+  "decision_limit_s": 10,
+  "label": "v1.7",
+  "rule": "latency_s > 10.000 s -> failed",
+  "treatment": "share"
+ },
+ "new_rows": {
+  "granite-switch-4.1-30b": {
+   "axes": {
+    "calibration": 81.43854303431047,
+    "cost": 46.610086510235,
+    "intelligence": 47.47926163391841,
+    "speed": 88.34207613347354
+   },
+   "category_pool_bounds": {
+    "languages": {
+     "ar": 21,
+     "cs": 37,
+     "da": 36,
+     "de": 48,
+     "el": 28,
+     "en": 555,
+     "es": 37,
+     "fi": 52,
+     "fr": 32,
+     "hi": 37,
+     "id": 41,
+     "it": 45,
+     "ja": 44,
+     "ko": 43,
+     "mixed": 64,
+     "nl": 36,
+     "no": 51,
+     "pl": 57,
+     "pt": 47,
+     "sv": 46,
+     "tr": 46,
+     "uk": 56,
+     "zh": 41
+    },
+    "topics": {},
+    "usecases": {
+     "advertising": 48,
+     "code_linting": 69,
+     "customer_support": 66,
+     "demand_forecasting": 66,
+     "ecommerce_marketplaces": 62,
+     "feature_extraction": 72,
+     "financial_crime": 63,
+     "gaming": 58,
+     "insurance_claims": 62,
+     "knowledge_graphs": 67,
+     "lead_generation": 75,
+     "legal_compliance": 56,
+     "llm_guardrails": 71,
+     "model_routing": 148,
+     "moderation_trust_safety": 59,
+     "other": 32,
+     "recruiting": 65,
+     "risk_assessment": 48,
+     "scientific_discovery": 42,
+     "search_retrieval": 67
+    }
+   },
+   "composite_ci95": {
+    "A": [
+     37.10786889789431,
+     54.13378128198163
+    ],
+    "B": [
+     34.61579178056861,
+     52.134663399692386
+    ],
+    "C": [
+     25.769353401315495,
+     41.001573190382004
+    ]
+   },
+   "cost": {
+    "active_b": 30,
+    "answered_not_in_common": 11,
+    "architecture_class": "uncalibrated",
+    "cost_all": 0.08795496000000001,
+    "cost_basis_kind": "sibling-estimate-uncalibrated-architecture",
+    "cost_common": 0.06020932840832774,
+    "estimate_all": 0.08795496000000001,
+    "estimate_common": 0.06020932840832774,
+    "expect": {
+     "failed": 0,
+     "input_tokens": 818484,
+     "ok": 1500,
+     "output_tokens": 1500,
+     "status_counts": {
+      "200": 1500
+     }
+    },
+    "fallback": "Existing v1.8 method: architectures outside six calibrated Gemma/Qwen classes retain list-price estimate; no invented family mapping.",
+    "family": "granite",
+    "gpu_all": null,
+    "gpu_common": null,
+    "input_tokens_all": 818484,
+    "input_tokens_common": 554274,
+    "latency_max": 21.930013085999917,
+    "native_output_tokens_all": 1500,
+    "output_tokens_all": 1500,
+    "output_tokens_common": 1489,
+    "over10": 5,
+    "raw_order_matches_input": true,
+    "raw_sha256": "403758bc7c5ad9b6bc19f0191e299d66613ab272a4c5886249fd54df8275e7de",
+    "ref": {
+     "admission": "release-owner33687",
+     "declared_base": "ibm-granite/granite-4.1-30b",
+     "in": 0.16,
+     "kind": "estimate",
+     "listing": "granite-4.2-30b",
+     "out": 0.65,
+     "reference_kind": "sibling"
+    },
+    "scoring_raw_sha256": "403758bc7c5ad9b6bc19f0191e299d66613ab272a4c5886249fd54df8275e7de",
+    "throughput": null
+   },
+   "decision_limit": {
+    "limit_s": 10.0,
+    "n_over_limit": 5,
+    "n_over_limit_answered_ok": 5,
+    "rule": "latency_s > limit -> failed",
+    "speed_basis": "all decisions given (lane items in the raw), measured latency_s",
+    "speed_n": 1500,
+    "treatment": "share"
+   },
+   "model_pin": "ibm-granite/granite-switch-4.1-30b@eb206725d03c0f1c409ce3aa512afe325fdf8731",
+   "price_reference": {
+    "admission": "release-owner33687",
+    "declared_base": "ibm-granite/granite-4.1-30b",
+    "in": 0.16,
+    "kind": "estimate",
+    "listing": "granite-4.2-30b",
+    "out": 0.65,
+    "reference_kind": "sibling"
+   },
+   "raw_sha256": "403758bc7c5ad9b6bc19f0191e299d66613ab272a4c5886249fd54df8275e7de",
+   "scored_input_sha256": "e170ed5ff1e40f35dd0059b0a90b047bad5ded3707a9ba2e4053690033a3736f",
+   "treatment": "unranked"
+  }
+ },
+ "predecessor": {
+  "publication_sha256": "6505f0eb0816f988dda32b2c8b91b6d53437e9b3ccf97e3013139df558a897e1",
+  "revision": "v1.8.4"
+ },
+ "pricing_module_sha256": "455ee38b7070f2f076eec65d55c7bb2a69030c26c343c662ade2826f8afd6eaa",
+ "publication_approval": {
+  "fresh_baseline": "v1.8.4",
+  "status": "GO (standing; no top-five change)",
+  "top_five_effect": "unchanged"
+ },
+ "remeasured_rows": {},
+ "repriced_rows": {},
+ "revision": "v1.8.5",
+ "schema_version": 1,
+ "scorers": {
+  "a2_cells_v16": "afd034efe27bde12f2ebbfd12c4c0792c93214e1aa9a63deecb0e83a0184c990",
+  "build_categories_v16": "40eb50f3d7fea2693b4478c4b89f8bfb957dd17776add491935742e3b9354e73",
+  "build_topics_v16": "ec04ab598162bfc4340ffa7916a06573eb1222132c61e47ab772045bc67ced78",
+  "decisive_v16": "80b9ccf43e58dddb1b2a77e0a33aba8a9f7337a3a9a639afc7264218bbf8918f",
+  "noul_method_v16": "119e59486ab3300b972fbcbadb0fe1dceceb124287607375aa61c66063c607d0",
+  "pins_v17": "b50cc00dd2cb0ba46157eb6a2bda620255f3ff54404025e992bc7962dfff2f8b",
+  "run_under_v17": "efb194b2ea350db59be37e5e72af71f809f763a2476cd6f521adf6f4fd90a64f",
+  "score_v15": "0931e05c6410b1b971201834397cb609cdb25f942723c50375632952f6dcc447",
+  "score_v15_headlineA": "826f2cbcb57007ec8a161e6eb0111182b8a656c0638027c6c78022a858fd8e2c",
+  "score_v16": "02132271117653e6302c509232a581d0094f0e78eac8b1bfc67596fd5d5097e9",
+  "score_v17": "6363458d208a52f4ad5aaf73027cad1b7e0358ff962e581d57a3cc462c8f1978"
+ },
+ "source_inputs": {
+  "inputs/ARCHITECTURE.json": "3397eb65ec69ab06bb6976bc102b64fa136e2098ffbc70ee6040bde51e9285f6",
+  "inputs/CLEANED-ROWS.json": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+  "inputs/ENTRIES.json": "64430a05226910dd5cc883bd0597e648258e49e930f431517cd7e62591cd438b",
+  "inputs/ENTRY-PINS.json": "80a9ae8f0e26de303f714de0a5a5beac36181a3e6b6c20be0245420ae318aa9b",
+  "inputs/PROVENANCE.json": "f9495b78edc7e6791390b248f4817518c91d7f01375dd5186a95f2a9b2536f02",
+  "inputs/PUBLIC-ROWS.json": "398f133b6128f51b70cafadee55dcc4a7ad5a4167c715de6722061dc94b39fe0",
+  "inputs/TEXT-EXCEPTIONS.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+  "src/cells.json": "a5c35c36882c456c90f855100f4d4d8c007db717e09d8b3ae3ade78b194a17cf",
+  "src/scored.json": "bb05f84819e9045c3a7dc8ae9171163fbd6b9830359aca23dd70725ebc6170c9",
+  "src/usage.json": "7256f370f69c887a196c4de7084515e7e10c8ed12e843a4c4f20ab27056c0cb4"
+ },
+ "topfive_diff_sha256": "7ef5e983219fdaabed49acac60a10e3121fd9a47edc3eadd7878c3109b53f75c"
+}
