@@ -227,11 +227,16 @@ test('critic r2 F7: an adoption run needs broad Intelligence Index coverage; an 
   assert.throws(() => assertAdoptionCoverage(models(0)), /needs at least 89 scored models; the response has 0/);
   for (const n of [79, 80, 88]) assert.throws(() => assertAdoptionCoverage(models(n)), new RegExp(`the response has ${n}$`));
   assert.equal(assertAdoptionCoverage(models(89)), 89);
+  const rawScored = assertAdoptionCoverage(raw.models);
+  const belowFloor = AA_ADOPTION_MIN_SCORED - 1;
+  assert.ok(rawScored > belowFloor, 'the committed adoption snapshot must have enough scored models to exercise the floor');
   const partial = structuredClone(raw.models); let removed = 0;
-  for (const m of partial) if (removed < 9 && Number.isFinite(m.evaluations.artificial_analysis_intelligence_index)) { m.evaluations.artificial_analysis_intelligence_index = null; removed++; }
-  assert.throws(() => assertAdoptionCoverage(partial), /the response has 80/);
+  const removeCount = rawScored - belowFloor;
+  for (const m of partial) if (removed < removeCount && Number.isFinite(m.evaluations.artificial_analysis_intelligence_index)) { m.evaluations.artificial_analysis_intelligence_index = null; removed++; }
+  assert.equal(removed, removeCount);
+  assert.throws(() => assertAdoptionCoverage(partial), new RegExp(`the response has ${belowFloor}$`));
   // The committed adoption snapshot itself passes the floor.
-  assert.ok(assertAdoptionCoverage(raw.models) >= AA_ADOPTION_MIN_SCORED);
+  assert.equal(assertAdoptionCoverage(raw.models), rawScored);
   // The collector and the live review both apply it.
   for (const file of ['scripts/fetch-live.mjs', 'ops/daily/review-live.mjs']) assert.match(readFileSync(new URL(`../${file}`, import.meta.url), 'utf8'), /assertAdoptionCoverage\(/, file);
 });
