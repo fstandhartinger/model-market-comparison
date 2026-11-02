@@ -129,6 +129,9 @@ test('VulcanBench Frontier joins: every model x effort column the board publishe
   assert.deepEqual(parseVulcanbenchFrontierLabel('GPT-6 Astra [ultra]'), { family: 'gpt-6-astra', effort: 'ultra' }, 'an unreviewed setting is refused downstream');
   assert.deepEqual(parseVulcanbenchFrontierLabel('Opus 5.5 [high]'), { family: 'claude-opus-5.5', effort: 'high' }, 'D224: the board spells Claude Opus 5.5 "Opus 5.5"');
   assert.deepEqual(parseVulcanbenchFrontierLabel('GPT-6 Luna [max]'), { family: 'gpt-6-luna', effort: 'max' }, 'D256.1: the v3.16 population, five effort columns');
+  assert.deepEqual(parseVulcanbenchFrontierLabel('GPT-6.1 Sol [extra-high]'), { family: 'gpt-6.1-sol', effort: 'xhigh' }, 'self-heal 2026-11-02: "GPT-6.1 Sol" is not "GPT-6 Sol"');
+  assert.deepEqual(parseVulcanbenchFrontierLabel('Sonnet 5.5 [max]'), { family: 'claude-sonnet-5.5', effort: 'max' }, 'self-heal 2026-11-02: the board spells Claude Sonnet 5.5 "Sonnet 5.5"');
+  assert.deepEqual(parseVulcanbenchFrontierLabel('Grok 4.7 [high]'), { family: null, effort: 'high' }, 'an excluded population is refused by excluded_rows, never mapped');
 
   // The newest capture of the board the collector *accepted*, whatever run took it — the same rule
   // the D188/D223 protocol suites use, so a fresher board in a daily run is what this reads, not a
@@ -150,8 +153,16 @@ test('VulcanBench Frontier joins: every model x effort column the board publishe
   assert.ok(rows.length, 'the capture carries board rows');
 
   const configurations = new Set(JSON.parse(readFileSync('data/dataset.json', 'utf8')).models.map((m) => m.id));
+  // Self-heal 2026-11-02: a population the registry's reviewed excluded_rows refuse (a different judge
+  // panel) is not a column of this benchmark — the collector rejects it before any join, matching the
+  // exact (protocol, model, harness, report) quadruple as collect-public-benchmarks.py and the D188
+  // suite do. Anything not matched exactly — a new Cursor protocol, a new report — is still checked.
+  const registry = JSON.parse(readFileSync('data/raw/benchmarks/registry.json', 'utf8'));
+  const excluded = registry.entries.find((e) => e.id === 'vulcanbench-frontier::4').how_to_collect.excluded_rows ?? [];
+  const isExcluded = (row) => excluded.some((x) => ['protocol', 'model', 'harness', 'report'].every((k) => x[k] === row[k]));
   const columns = new Map();
   for (const row of rows) {
+    if (isExcluded(row)) continue;
     const label = `${row.model} [${row.effort}]`;
     const parsed = parseVulcanbenchFrontierLabel(label);
     assert.ok(parsed.family && parsed.effort,
