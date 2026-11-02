@@ -22,7 +22,7 @@ test('CR-664: every currency row points at a live v0.3 row and has a dated vendo
 test('CR-664: the newer-version rows promise no landing date and claim no measurement', () => {
   const newer = c.api.filter(e => e.status === 'newer-version');
   assert.ok(newer.some(e => e.key === 'sage_1_4_images'));
-  assert.match(c.queue_note, /no landing date/);
+  assert.match(c.queue_note, /there is no date/);
   const all = JSON.stringify(c);
   assert.doesNotMatch(all, /\b(will land|lands on|ETA|top 5|top five|rank #)/i);
 });
