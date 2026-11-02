@@ -172,7 +172,7 @@ class EnsureOwnerTests(unittest.TestCase):
         with mock.patch.object(ap, "alert") as alert:
             ap.operational_escalate(self.row, self.state, self.effects, self.now, "unsupported_measurement_backend", exhausted=False)
         self.assertTrue(alert.call_args.kwargs["urgent"])
-        self.assertEqual(self.effects.board.call_args.args[1], ap.owner_for(RID))  # old handoff, no "started" claim
+        self.assertEqual(self.effects.board.call_args.args[1], ap.WAKE_FALLBACK)  # old handoff (no owner job folder -> @cos), no "started" claim
         self.assertFalse(ap.native_owner_starting(self.state, self.now + timedelta(minutes=5)))
         with mock.patch.object(ap, "alert") as alert:
             self.assertFalse(ap.ensure_native_owner(self.row, self.state, self.effects, self.now + timedelta(minutes=5),
@@ -207,7 +207,7 @@ class EnsureOwnerTests(unittest.TestCase):
             ap.operational_escalate(self.row, state, self.effects, self.now, "official_method_retired_requires_admission", exhausted=False)
         self.effects.start_unit.assert_not_called()
         self.assertTrue(alert.call_args.kwargs["urgent"])
-        self.assertEqual(self.effects.board.call_args.args[1], ap.owner_for(RID))
+        self.assertEqual(self.effects.board.call_args.args[1], ap.WAKE_FALLBACK)  # placeholder owner has no job folder
         self.assertNotIn("native_owner", state)
 
     def test_whole_order_unsupported_runtime_counts(self) -> None:

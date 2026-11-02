@@ -415,8 +415,30 @@ def notify_florian(event: dict, row: dict, metadata: dict) -> bool:
     return record_delivery(event["gmail_message_id"], "notification_status", code)
 
 
+AUTOPICKUP_STATE = Path(os.environ.get("FASTLANE_STATE_ROOT") or HOME / ".local/state/fastlane-autopickup") / "requests"
+OWNER_JOB_RE = re.compile(r"[a-z0-9][a-z0-9-]{2,100}")
+
+
+def board_address(event: dict) -> str:
+    """Address a job that exists, so job-wake can wake it (d2b677de, Oct 2026: the customer's access key went to the
+    placeholder fastlane-eval-<ref>, which has no job folder, and sat unread ~15 h). Same order as the pickup's
+    wake_owner(): hold owner, automatic native owner, recorded owner; else @cos."""
+    rid = str(event.get("request_id") or "")
+    hold_owner = None
+    try:
+        state = json.loads((AUTOPICKUP_STATE / f"{rid}.json").read_text(encoding="utf-8"))
+        hold = state.get("operational_hold") if isinstance(state, dict) else None
+        hold_owner = hold.get("owner") if isinstance(hold, dict) else None
+    except (OSError, ValueError):
+        pass
+    for name in (hold_owner, "fastlane-native-" + rid[:8], event.get("owner")):
+        if isinstance(name, str) and OWNER_JOB_RE.fullmatch(name) and (HOME / "jobs" / name / "PROMPT.md").is_file():
+            return name
+    return "cos"
+
+
 def post_board(event: dict, row: dict, metadata: dict) -> bool:
-    owner = event["owner"]
+    owner = board_address(event)
     summary = ACCESS_SUMMARY if is_access_event(event) else REPLY_SUMMARY
     kind = "access reply" if is_access_event(event) else "reply"
     body = (f"Customer {kind} recorded for paid request {event['request_id']}. {summary}\n"

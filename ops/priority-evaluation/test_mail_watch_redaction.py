@@ -97,6 +97,26 @@ class MailWatchRedactionTest(unittest.TestCase):
             self.assertIn("'sent'", sqls[-1])
         self.assertIn("digest", self.run_delivery(mw.notify_florian, legacy)[1][0][0])
 
+    def test_board_address_reaches_a_real_job_or_cos(self):
+        import json, tempfile
+        rid = EVENT["request_id"]
+        with tempfile.TemporaryDirectory() as home, mock.patch.object(mw, "HOME", Path(home)), \
+                mock.patch.object(mw, "AUTOPICKUP_STATE", Path(home) / "state"):
+            event = {**EVENT, "owner": "fastlane-eval-" + rid[:8]}
+            self.assertEqual(mw.board_address(event), "cos")
+            for name in ("fastlane-native-" + rid[:8], "manual-owner-20261010"):
+                (Path(home) / "jobs" / name).mkdir(parents=True)
+                (Path(home) / "jobs" / name / "PROMPT.md").write_text("x")
+            self.assertEqual(mw.board_address(event), "fastlane-native-" + rid[:8])
+            (Path(home) / "state").mkdir()
+            (Path(home) / "state" / f"{rid}.json").write_text(json.dumps({"operational_hold": {"owner": "manual-owner-20261010"}}))
+            self.assertEqual(mw.board_address(event), "manual-owner-20261010")
+            calls = []
+            with mock.patch.object(mw.subprocess, "run", lambda argv, **kw: calls.append(argv) or mock.Mock(returncode=0)), \
+                    mock.patch.object(mw, "sql", lambda s: ""):
+                mw.post_board({**event, "summary": mw.REPLY_SUMMARY}, {}, META)
+            self.assertIn("manual-owner-20261010", calls[0])
+
     def test_failed_delivery_stays_failed(self):
         ok, _, sqls = self.run_delivery(mw.notify_florian, mw.ACCESS_SUMMARY, rc=1)
         self.assertFalse(ok)
