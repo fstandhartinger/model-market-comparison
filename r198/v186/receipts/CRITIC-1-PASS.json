@@ -1,0 +1,31 @@
+{
+ "verdict": "PASS",
+ "engine": "Claude Sonnet independent review (r227-v186-critic) + Codex independent delta review (r227-v186-delta-critic)",
+ "commit": "81cfab681162dc14327ccf2a60bdd276f88d00fb",
+ "reviewed_commit": "81cfab681162dc14327ccf2a60bdd276f88d00fb",
+ "base": "ceb672bb79f7a19ac362b6fe5be6afa1a6b2c4e0",
+ "first_review": {
+  "reviewed_commit": "dc1fe2b616a75e3f35c037dd0aece5976168df32",
+  "verdict": "PASS_WITH_CONDITIONS",
+  "conditions": [
+   "C1 hourly rate 1.52354342 vs v1.8.x precedent 1.5235: cost 0.031722866 vs 0.031721962; fix HOURLY_USD, rescore, rebuild or accept and document",
+   "C2 add one sentence on W4A16 base/LoRA, stateful drafting quota and leaderboard-priced cost fuse"
+  ],
+  "receipt": "r198/v186/receipts/CRITIC-1-REVIEW.json",
+  "sha256": "8760e9fad8475a35e41abed974a3466f1369992beacd8ca6a30bc2308ffdb3fe"
+ },
+ "delta_review": {
+  "reviewed_commit": "81cfab681162dc14327ccf2a60bdd276f88d00fb",
+  "base_reviewed_commit": "dc1fe2b616a75e3f35c037dd0aece5976168df32",
+  "verdict": "PASS",
+  "engine": "Codex independent delta review",
+  "receipt": "r198/v186/receipts/CRITIC-2-DELTA.json",
+  "sha256": "a44e3304d04a2a2832a392282767af6135478d11f7ddb47449c4fc8cd3b30de8"
+ },
+ "conditions_resolution": {
+  "C1": "hourly rate set to exactly 1.5235; GPU-time cost 0.031721962 USD/1k common (delta review recomputed 0.03172196170033791)",
+  "C2": "disclosure sentence on W4A16 QAT base, unmerged LoRA, 49% stateful drafting quota and cost fuse added to disclosure and endpoint_condition (leaderboard->benchmark for the public-text gate)"
+ },
+ "lead": "claude:jevbench-add-requests-20260919 run 227",
+ "bound_at": "2026-11-02T06:52:57Z"
+}

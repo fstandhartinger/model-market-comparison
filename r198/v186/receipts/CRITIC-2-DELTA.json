@@ -1,0 +1,40 @@
+{
+ "verdict": "PASS",
+ "engine": "Codex independent delta review",
+ "requested_engine_label": "Claude independent delta review",
+ "engine_note": "This worker ran as Codex. The requested Claude label would misidentify the reviewer, so actual engine is reported.",
+ "reviewed_commit": "81cfab681162dc14327ccf2a60bdd276f88d00fb",
+ "base_reviewed_commit": "dc1fe2b616a75e3f35c037dd0aece5976168df32",
+ "cost": {
+  "rate_per_m": 0.059819178473256074,
+  "gpu_common": 0.03172196170033791,
+  "gpu_all": 0.03294636965100135,
+  "list_common": 0.059822310275352585,
+  "selected": "GPU-time"
+ },
+ "findings": [],
+ "conditions": {
+  "C1": "satisfied",
+  "C2": "satisfied"
+ },
+ "gates": {
+  "validator": "PASS; 61 negative controls",
+  "invariance": "336 rows / 184764 numeric-bool-null leaves / 590 historical files unchanged",
+  "topfive": "0/580 lists, 0/76 slider states, 0/368 grid states; custom unchanged",
+  "deterministic_rebuild": "15 generated hashes match reviewed commit across two rebuilds",
+  "tsc_exit": 0,
+  "PENDING_tests": "145 tests / 144 pass / 0 fail / 1 historical skip",
+  "remote_source_binding": "81/81 per-file hashes match; exact inventory coverage",
+  "fixture_source_binding": "84/84 root hashes match; actual fixture matches outside explicit two synthetic differences",
+  "preview_manifest": "all 6 HTML/PNG hashes and results hash match"
+ },
+ "limits": [
+  "No fresh private re-score; every cost-dependent field checked from the frozen scorer formula, including CI reciprocal transformations (max error 5.69e-14).",
+  "No reviewer production build/capture; committed LeChonk receipts independently bound to current per-file source hashes and preview bytes.",
+  "Synthetic PASS assembly rerun in disposable copy; full synthetic PASS test suite not rerun (builder recorded 145/144/0/1)."
+ ],
+ "nonblocking_notes": [
+  "Worker-local score paths remain in two scripts; recreate private scoring setup before re-running raw-pricing/capture.",
+  "Initial gate wrapper stopped before TSC because source dependencies were cleaned up; shared existing dependencies used and remaining gates rerun successfully."
+ ]
+}
