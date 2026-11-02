@@ -1,4 +1,4 @@
-import { readJevbenchAgentFeed } from '../../../lib/jevbench-agent-feed.mjs';
+import { readJevbenchMcpFeed } from '../../../lib/jevbench-mcp-feed.mjs';
 import { createJevbenchTools, handleMcpMessage, MCP_MAX_BODY_BYTES, MCP_PROTOCOL_VERSIONS } from '../../../lib/jevbench-mcp-tools.mjs';
 
 // CR-335 (A34, Florian, 7 Oct 2026): hosted read-only MCP server for the JevBench leaderboard. Streamable HTTP, stateless:
@@ -8,7 +8,7 @@ export const dynamic = 'force-dynamic';
 
 // The release only changes with a deploy, so one parsed feed per process is enough.
 let feed: Promise<unknown> | null = null;
-const getFeed = () => (feed ??= readJevbenchAgentFeed().then((r) => r.feed).catch((e) => { feed = null; throw e; }));
+const getFeed = () => (feed ??= readJevbenchMcpFeed().catch((e) => { feed = null; throw e; }));
 const tools = createJevbenchTools(getFeed);
 
 const HEADERS = { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'no-store', 'X-Content-Type-Options': 'nosniff' };
