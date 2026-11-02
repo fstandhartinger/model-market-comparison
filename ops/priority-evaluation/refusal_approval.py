@@ -103,11 +103,15 @@ KINDS = {
     # kind: (card title, Florian caption lines, callback-status file prefix)
     "refusal": ("Refusal email — exact draft",
                 ("Decide the refusal email for order {ref}.",
-                 "Why: Source review failed; the full refund succeeded."),
+                 "Why: Source review failed; the full refund succeeded.",
+                 "Effect: Send this email = mails the customer the refusal shown in the overview image, final. "
+                 "Keep unsent = no email goes out, the customer hears nothing."),
                 "fastlane-refusal-"),
     "change_request": ("Change-request email — exact draft",
                        ("Decide the change-request email for order {ref}.",
-                        "Why: Source review found fixable problems; the order stays paid and open, no refund."),
+                        "Why: Source review found fixable problems; the order stays paid and open, no refund.",
+                        "Effect: Send this email = mails the customer the fixes shown in the overview image, no cost. "
+                        "Keep unsent = no email goes out, the customer keeps waiting."),
                        "fastlane-change-"),
 }
 CHANGE_HOLD_REASON = "customer_changes"
@@ -142,11 +146,27 @@ def envelope(row, to, subject, body, kind="refusal"):
     return draft, digest
 
 
-def callback_rows(message_id, chat_id):
+def callback_rows(keys, chat_id):
+    """Taps on exactly these secret keys by Florian in his private chat, on whatever message showed them."""
+    keys = list(keys)
+    marks = ",".join("?" * len(keys))
     with sqlite3.connect(f"file:{CALLBACK_DB}?mode=ro", uri=True, timeout=5) as db:
         return db.execute("SELECT update_id,chat_id,message_id,sender_id,received_at,data "
-                          "FROM callback_events WHERE message_id=? AND chat_id=? AND sender_id=? "
-                          "ORDER BY update_id", (message_id, chat_id, chat_id)).fetchall()
+                          f"FROM callback_events WHERE chat_id=? AND sender_id=? AND data IN ({marks}) "
+                          "ORDER BY update_id", (chat_id, chat_id, *keys)).fetchall()
+
+
+def register_keyboard(message_id, keyboard, carryable=False):
+    """Tell notify this card's buttons. carryable: a tap on a follow-up counts too, so notify may show them there
+    (Florian, 2 Nov 2026, card 19156: he could not find the older card). Best effort: the card works without it."""
+    if os.environ.get("FASTLANE_DB") or os.environ.get("FASTLANE_STATE_ROOT"):
+        return
+    try:
+        subprocess.run([str(HOME / "bin/notify"), "card-keyboard", str(message_id),
+                        json.dumps({"inline_keyboard": keyboard}), *(["--carryable"] if carryable else [])],
+                       capture_output=True, timeout=20, check=False)
+    except (OSError, subprocess.SubprocessError):
+        pass
 
 
 def apply_callbacks(state, rows, now):
@@ -157,6 +177,7 @@ def apply_callbacks(state, rows, now):
             received = float(received)
         except (ValueError, TypeError):
             continue
+        # the exact draft is on this one photo card: a tap on any other message would be a blind approval
         if (chat != state["chat_id"] or sender != state["chat_id"] or message != state["message_id"]
                 or not state["created_at"] <= received <= min(now, state["expires_at"])):
             continue
@@ -238,13 +259,17 @@ def telegram_config():
     return token, chat
 
 
+def _keyboard(state):
+    return [[{"text": "Send this email", "callback_data": state["send_key"]},
+             {"text": "Keep unsent", "callback_data": state["keep_key"]}]]
+
+
 def attach(state):
     token, chat = telegram_config()
     if chat != state["chat_id"]:
         raise ValueError("approval chat changed")
     pending = state.get("decision") is None
-    keyboard = [[{"text": "Send this email", "callback_data": state["send_key"]},
-                 {"text": "Keep unsent", "callback_data": state["keep_key"]}]] if pending else []
+    keyboard = _keyboard(state) if pending else []
     payload = {"chat_id": chat, "message_id": state["message_id"],
                "reply_markup": {"inline_keyboard": keyboard}}
     request = urllib.request.Request(f"https://api.telegram.org/bot{token}/editMessageReplyMarkup",
@@ -287,6 +312,7 @@ def approval_caption(row, kind):
     return (f"🧑 DU BIST DRAN\n{context}\n\n🧑 Für dich\n"
             f"- Decide whether to send the {title} email to this customer.\n"
             f"  {KINDS[kind][1][1]}\n"
+            f"  {KINDS[kind][1][2]}\n"
             "  Steps:\n  1. Read the email in the overview image.\n  2. Tap Send this email or Keep unsent.\n"
             "  Time: 1 minute. Buttons expire in 12 hours so that an old draft is never sent. "
             "A text reply does not authorize sending.")
@@ -388,9 +414,10 @@ def advance(row, to, subject, body, root, effects, now, kind="refusal"):
                         for key in ("send", "keep")}
             atomic(CALLBACK_STATUS / (KINDS[kind][2] + draft["request_id"] + ".json"), statuses)
             attach(state)
+            register_keyboard(state["message_id"], _keyboard(state))
             state["buttons_attached"] = True
             atomic(path, state)
-        apply_callbacks(state, callback_rows(state["message_id"], state["chat_id"]), now)
+        apply_callbacks(state, callback_rows((state["send_key"], state["keep_key"]), state["chat_id"]), now)
         if state.get("decision") in ("send", "keep") and not state.get("reply_action_resolved"):
             if not close_durable_reply_action(state):
                 state["reply_action_resolution_hold"] = "durable reply action could not be closed"

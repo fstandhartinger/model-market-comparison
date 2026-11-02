@@ -38,20 +38,25 @@ def caption(row: dict, deadline: str) -> str:
     return (f"🧑 DU BIST DRAN\n{context}\n\n🧑 Für dich\n"
             f"- Decide the next step for this customer ({money}).\n"
             f"  Why: No result 40 hours after payment; the deadline is {deadline}.\n"
+            f"  Effect: Send delay note = mails a new date (deadline + 24 h), no cost. Refund in full = pays {money} back, final. "
+            "No action = nothing goes out.\n"
             "  Steps:\n  1. Tap Send delay note (mails the customer a new ETA of deadline + 24 h), "
             "Refund in full, or No action.\n"
             "  Time: 1 minute. Buttons expire in 24 hours so that an old card can never act. "
             "A text reply does not decide.")
 
 
+def _keyboard(state: dict) -> list:
+    return [[{"text": "Send delay note", "callback_data": state["delay_key"]},
+             {"text": "Refund in full", "callback_data": state["refund_key"]},
+             {"text": "No action", "callback_data": state["noaction_key"]}]]
+
+
 def _attach(state: dict) -> None:
     token, chat = ra.telegram_config()
     if chat != state["chat_id"]:
         raise ValueError("approval chat changed")
-    keyboard = ([[{"text": "Send delay note", "callback_data": state["delay_key"]},
-                  {"text": "Refund in full", "callback_data": state["refund_key"]},
-                  {"text": "No action", "callback_data": state["noaction_key"]}]]
-                if state.get("decision") is None else [])
+    keyboard = _keyboard(state) if state.get("decision") is None else []
     payload = {"chat_id": chat, "message_id": state["message_id"], "reply_markup": {"inline_keyboard": keyboard}}
     request = urllib.request.Request(f"https://api.telegram.org/bot{token}/editMessageReplyMarkup",
                                      data=json.dumps(payload).encode(), headers={"Content-Type": "application/json"})
@@ -76,17 +81,17 @@ def apply_callbacks(state: dict, rows, now: float) -> None:
             received = float(received)
         except (TypeError, ValueError):
             continue
-        if (chat != state["chat_id"] or sender != state["chat_id"] or message != state["message_id"]
+        if (chat != state["chat_id"] or sender != state["chat_id"]
                 or not state["created_at"] <= received <= min(now, state["expires_at"])):
             continue
         if data == state["delay_key"]:
-            state.update(decision="delay_note", update_id=update, decided_at=received)
+            state.update(decision="delay_note", update_id=update, decided_at=received, tap_message_id=message)
             return
         if data == state["refund_key"]:
-            state.update(decision="refund", update_id=update, decided_at=received)
+            state.update(decision="refund", update_id=update, decided_at=received, tap_message_id=message)
             return
         if data == state["noaction_key"]:
-            state.update(decision="no_action", update_id=update, decided_at=received)
+            state.update(decision="no_action", update_id=update, decided_at=received, tap_message_id=message)
             return
     if now > state["expires_at"]:
         state.update(decision="expired", decided_at=now)
@@ -188,9 +193,10 @@ def advance(row: dict, root: Path, effects, now: float, deadline: str) -> str:
                         for key in ("delay_key", "refund_key", "noaction_key")}
             ra.atomic(ra.CALLBACK_STATUS / f"fastlane-sla40-{rid}.json", statuses)
             _attach(state)
+            ra.register_keyboard(state["message_id"], _keyboard(state), carryable=True)
             state["buttons_attached"] = True
             ra.atomic(path, state)
-        apply_callbacks(state, ra.callback_rows(state["message_id"], state["chat_id"]), now)
+        apply_callbacks(state, ra.callback_rows((state["delay_key"], state["refund_key"], state["noaction_key"]), state["chat_id"]), now)
         ra.atomic(path, state)
         decision = state.get("decision")
         if decision is None:

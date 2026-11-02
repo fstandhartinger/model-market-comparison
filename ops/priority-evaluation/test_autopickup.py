@@ -1053,7 +1053,7 @@ class RefundApprovalCardTests(unittest.TestCase):
                 ([(1, 7, 50, 7, 1500, "rf_a_refund")], "refund"),
                 ([(1, 7, 50, 7, 1500, "rf_b_decline")], "decline"),
                 ([(1, 7, 50, 8, 1500, "rf_a_refund")], None),     # another sender
-                ([(1, 7, 51, 7, 1500, "rf_a_refund")], None),     # another message
+                ([(1, 7, 51, 7, 1500, "rf_a_refund")], "refund"),  # a follow-up carrying the same key
                 ([(1, 7, 50, 7, 999, "rf_a_refund")], None),      # before the card
                 ([(1, 7, 50, 7, 1500, "fr_x_send")], None)):      # another card's key
             state = self.state()
@@ -2357,7 +2357,7 @@ class SlaDecisionCardTests(unittest.TestCase):
         state = {"chat_id": 42, "message_id": 99, "created_at": 100.0, "expires_at": 200.0,
                  "delay_key": "k_delay", "refund_key": "k_refund", "noaction_key": "k_noaction"}
         sd.apply_callbacks(state, [(1, 7, 99, 7, 150.0, "k_refund")], 160.0)   # foreign chat
-        sd.apply_callbacks(state, [(2, 42, 98, 42, 150.0, "k_refund")], 160.0)  # other message
+        sd.apply_callbacks(state, [(2, 42, 99, 7, 150.0, "k_refund")], 160.0)   # foreign sender
         sd.apply_callbacks(state, [(3, 42, 99, 42, 250.0, "k_refund")], 160.0)  # after expiry
         self.assertIsNone(state.get("decision"))
         sd.apply_callbacks(state, [], 300.0)
