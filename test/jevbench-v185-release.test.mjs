@@ -30,8 +30,10 @@ test('Granite native token billing and existing uncalibrated-architecture fallba
 test('d1027 pins its exact release history and latest release',()=>{
  const draws=JSON.parse(readFileSync('data/jevbench-draw-equating.json')).draws;
  const draw=draws.find(d=>d.draw==='v1.6-regular-20261027');
- assert.deepEqual(draw.releases,['v1.7.13','v1.7.14','v1.7.15','v1.7.16','v1.7.17','v1.7.19','v1.7.21','v1.7.22','v1.8.1','v1.8.2','v1.8.3','v1.8.4','v1.8.5']);
- assert.equal(draw.latest_release,'v1.8.5');
+ const throughV185=['v1.7.13','v1.7.14','v1.7.15','v1.7.16','v1.7.17','v1.7.19','v1.7.21','v1.7.22','v1.8.1','v1.8.2','v1.8.3','v1.8.4','v1.8.5'];
+ assert.deepEqual(draw.releases.slice(0,throughV185.length),throughV185);
+ assert.deepEqual(draw.releases.slice(throughV185.length),['v1.8.6']);
+ assert.equal(draw.latest_release,'v1.8.6');
 });
 
 test('release navigation links its immediate predecessor',()=>{const page=readFileSync('app/jev-models/v1.8.5/page.tsx','utf8');assert.ok(page.includes('href="/jev-models/v1.8.4">Previous v1.8.4</a>'));});
