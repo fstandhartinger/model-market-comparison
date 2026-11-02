@@ -298,7 +298,7 @@ class ApprovalCardSend(unittest.TestCase):
             captions += [(text, row.get('amount_total') is not None) for text in cards]
         # notify's inbox freshness gate is not under test (the caller's inbox decides it, not the card text);
         # NOTIFY_OUTBOX_REPLAY skips only that gate, every card lint still runs.
-        env = {**os.environ, 'NOTIFY_SOURCE': 'approval-card-test', 'AGENT_BOARD_NAME': 'approval-card-test',
+        env = {**os.environ, 'NOTIFY_SOURCE': 'fastlane-refund-approval', 'AGENT_BOARD_NAME': 'approval-card-test',
                'NOTIFY_OUTBOX_REPLAY': '1', 'NOTIFY_QUIET_BYPASS': '1',  # Florian's quiet mode is not under test
                **ra.CALLER_BUTTONS_ENV}
         for text, strict in captions:
@@ -312,6 +312,7 @@ class ApprovalCardSend(unittest.TestCase):
                 if not strict:
                     warnings = [l for l in warnings if '(money-eur)' not in l]
                 self.assertEqual(warnings, [])  # no window/EUR warnings either
+                self.assertNotIn('card clarity warning', result.stderr)  # notify prints it for every sender that fails the lint
                 self.assertNotIn('reformatted automatically', result.stdout + result.stderr)
 
 if __name__ == '__main__':
