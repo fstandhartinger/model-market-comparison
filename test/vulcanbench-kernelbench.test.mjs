@@ -2,7 +2,6 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { execFileSync } from 'node:child_process';
 import { readFileSync, readdirSync } from 'node:fs';
-import { gunzipSync } from 'node:zlib';
 import { parseVulcanbenchFrontierLabel, parseKernelbenchCudaLabel } from '../lib/board-identity.mjs';
 import { acceptedCaptures, newestAccepted } from '../lib/source-quarantine.mjs';
 
@@ -121,14 +120,17 @@ print('ok')
 // which stayed green while the board grew past the reviewed label map — GPT-5.6 Sol's four
 // publishable columns and, from 2026-09-26, Claude Opus 5.5's four were silently refused as unknown
 // labels for days, and a correct rebuild that finally joined them would have turned the count red.
-// The board itself is the expectation now: every column it publishes has to resolve to an exact
-// catalog configuration, and every join the map holds has to be a column the board really carries.
+// The board itself is the expectation now: every column the collector admits has to resolve to an
+// exact catalog configuration, and every join the map holds has to be a column the board really carries.
 test('VulcanBench Frontier joins: every model x effort column the board publishes is an exact catalog configuration', async () => {
   assert.deepEqual(parseVulcanbenchFrontierLabel('Fable 5.1 [max]'), { family: 'claude-fable-5.1', effort: 'max' });
   assert.deepEqual(parseVulcanbenchFrontierLabel('GPT-5.5 [extra-high]'), { family: 'gpt-5.5', effort: 'xhigh' }, "VulcanBench's own spelling of the xhigh tier");
   assert.deepEqual(parseVulcanbenchFrontierLabel('GPT-6 Astra [ultra]'), { family: 'gpt-6-astra', effort: 'ultra' }, 'an unreviewed setting is refused downstream');
   assert.deepEqual(parseVulcanbenchFrontierLabel('Opus 5.5 [high]'), { family: 'claude-opus-5.5', effort: 'high' }, 'D224: the board spells Claude Opus 5.5 "Opus 5.5"');
   assert.deepEqual(parseVulcanbenchFrontierLabel('GPT-6 Luna [max]'), { family: 'gpt-6-luna', effort: 'max' }, 'D256.1: the v3.16 population, five effort columns');
+  assert.deepEqual(parseVulcanbenchFrontierLabel('Sonnet 5.5 [extra-high]'), { family: 'claude-sonnet-5.5', effort: 'xhigh' }, 'CR-659: the v3.23 population');
+  assert.deepEqual(parseVulcanbenchFrontierLabel('GPT-6.1 Terra [max]'), { family: 'gpt-6.1-terra', effort: 'max' }, 'CR-659: the v3.29 population');
+  assert.deepEqual(parseVulcanbenchFrontierLabel('Grok 4.7 [high]'), { family: null, effort: 'high' }, 'CR-659: the excluded v3.20 population has no label rule');
 
   // The newest capture of the board the collector *accepted*, whatever run took it — the same rule
   // the D188/D223 protocol suites use, so a fresher board in a daily run is what this reads, not a
@@ -144,15 +146,27 @@ test('VulcanBench Frontier joins: every model x effort column the board publishe
   });
   // Throws — naming the quarantined newer capture — rather than quietly falling back to nothing.
   const newest = newestAccepted(pool, BOARD);
-  const lines = gunzipSync(readFileSync(newest.file)).toString('utf8').trim().split('\n');
-  const head = lines[0].split(',');
-  const rows = lines.slice(1).map((line) => Object.fromEntries(line.split(',').map((cell, i) => [head[i], cell])));
-  assert.ok(rows.length, 'the capture carries board rows');
+  // CR-659 (2026-11-02): this read every CSV row, including the populations the collector refuses
+  // before any label is read (Grok 4.7 / Cursor v3.20, the v3.26-v3.28 judge panels). The arm had
+  // stayed quarantined since 29 Sep, so the check kept reading that day's capture; the first accepted
+  // capture after it (2 Nov) went red on an excluded Grok row and took the publish gate with it — the
+  // D256 blast radius again. The expectation is now the collector's own output for that capture: every
+  // row it admits has a value on the full denominator and must resolve; refused and withheld rows never do.
+  const admitted = JSON.parse(execFileSync('python3', ['-B', '-c', String.raw`
+import importlib.util,gzip,json,sys
+from pathlib import Path
+s=importlib.util.spec_from_file_location('collector','scripts/collect-public-benchmarks.py');m=importlib.util.module_from_spec(s);s.loader.exec_module(m)
+entries={e['benchmark_id']:e for e in json.loads(Path('data/raw/benchmarks/collection-plan.json').read_text())['entries']}
+reg={e['id']:e for e in json.loads(Path('data/raw/benchmarks/registry.json').read_text())['entries']}
+e=entries['vulcanbench-frontier::4']
+rows=m.parse(gzip.decompress(Path(sys.argv[1]).read_bytes()).decode('utf-8'),e['parser'],None,reg['vulcanbench-frontier::4'])
+print(json.dumps([r['id'] for r in rows if not r.get('reject_reason') and r[e['parser']['value_field']] is not None]))
+`, newest.file]).toString());
+  assert.ok(admitted.length, 'the collector admits board rows from the capture');
 
   const configurations = new Set(JSON.parse(readFileSync('data/dataset.json', 'utf8')).models.map((m) => m.id));
   const columns = new Map();
-  for (const row of rows) {
-    const label = `${row.model} [${row.effort}]`;
+  for (const label of admitted) {
     const parsed = parseVulcanbenchFrontierLabel(label);
     assert.ok(parsed.family && parsed.effort,
       `the board publishes ${label}, which no reviewed label rule resolves — review the model and extend the map`);
