@@ -638,7 +638,10 @@ class Effects:
             command = [str(HOME / "bin/notify"), "urgent"] + (["--dry-run"] if self.dry_run else []) + [message]
             stdin = None
         else:
-            command = [str(HOME / "bin/notify"), "now", "--text-stdin"]
+            # Worker cards report the customer's order deadline; they are not an agent's promise. Without this, notify's
+            # promised-times gate refuses every 24 h notice, and the retry never gets through.
+            command = [str(HOME / "bin/notify"), "now", "--no-promise", "order deadline reported by the fast-lane worker",
+                       "--text-stdin"]
             if requested:
                 command.append("--requested")
             if self.dry_run:
