@@ -105,6 +105,7 @@ def _send_card(state: dict, path: Path, text: str, now: float) -> None:
     state["chat_id"] = chat
     command = [str(ra.HOME / "bin/notify"), "now", "--florian-only",
                "Florian's 4 Oct decision: every fast-lane SLA/refund step needs his explicit button.",
+               "--topic", ra.order_topic(state["request_id"], "sla40"),
                "--ask", str(WINDOW // 60), "--text-stdin"]
     reply_job_dir = str(ra.HOME / "jobs" / "fastlane-refusal-reply-guard-20260929")
     env = {**os.environ, "NOTIFY_SOURCE": SOURCE, "AGENT_BOARD_JOBDIR": reply_job_dir,
@@ -173,6 +174,8 @@ def advance(row: dict, root: Path, effects, now: float, deadline: str) -> str:
         if state.get("decision") == "expired":
             if state.get("card", 1) >= MAX_CARDS:
                 return "exhausted"
+            if not ra.close_expired(state, path, _resolve_ask):
+                return "pending"
             history = state.pop("history", [])
             history.append({k: state.get(k) for k in ("card", "message_id", "created_at", "expires_at", "decision")})
             state = {"request_id": rid, "kind": state["kind"], "history": history, **_new_card(state.get("card", 1))}
