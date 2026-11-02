@@ -32,7 +32,9 @@ test('CR-599: every existing row, rank, score and field statistic stays byte-ide
   const existing = a.ranking.filter(r => r.key !== key);
   assert.equal(existing.length, 66);
   const hash = createHash('sha256').update(JSON.stringify(existing)).digest('hex');
-  assert.equal(hash, '5c5c616d61af4c9028be0126e567fe24a146564608b2a1002b1b93925b41b249');
+  // CR-664 (2 Nov 2026): re-pinned after the wording fix in the measurement_source of the two Jev rows (alias jev-latest/jev-preview now point to 1.14.0).
+  // test/cr-664-imagejev-currency.test.mjs proves that reverting exactly those two strings restores the previous pin 5c5c616d....
+  assert.equal(hash, '298e5ebb577b094b2df40c9b88c2c2e75f6c0834d4a9b6703030cdd6c9fcb124');
   assert.equal(existing.filter(r => r.ranked).length, 64);
 });
 
