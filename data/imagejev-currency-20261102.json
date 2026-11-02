@@ -1,14 +1,14 @@
 {
   "checked_utc": "2026-11-02T10:01:00Z",
   "scope": "Hosted-API rows of the core track (v0.3.0) and the two H2O-Lightning-4B rows plus H2O-Lightning-31B among the open-weights rows; the other open-weights rows were not checked in this addendum. Metadata only: no score, rank or measurement on this page changed. Vendor facts come from the vendors' own public pages, fetched on 2 Nov 2026 between 09:51 and 10:01 UTC. The Sage facts come from the public Levanto model list plus a direct check of the Levanto API on 2 Nov 2026 (synthetic requests only, no benchmark item).",
-  "queue_note": "A newer vendor version is not a measurement. Rows marked requested wait for review, an item-exposure check and the normal queue; there is no landing date, and the existing score stays on the page as the dated result for the version named in the third column.",
+  "queue_note": "A newer vendor version is not a measurement. Measuring one needs review, an item-exposure check and, for a provider that has already seen this release's API test items, a fresh set of items; there is no date. The existing score stays on the page as the dated result for the version named in the third column.",
   "api": [
     {
       "key": "sage_1_4_images",
       "measured": "levanto-sage-v1.4 (Sage 1.4 + images), 16 Oct 2026",
       "vendor_now": "levanto-sage-2 (Sage 2.0). The public model list shows only levanto-sage-2. In our direct API check on 2 Nov 2026 the API accepted levanto-sage-2 and the alias sage-latest and refused levanto-sage-v1.4 and v1.3 as unknown models (HTTP 422).",
       "status": "newer-version",
-      "status_label": "Newer version, requested",
+      "status_label": "Newer version, not yet measured",
       "evidence": [
         [
           "https://sage.levanto.ai/models",
@@ -21,7 +21,7 @@
       "measured": "drex-max, 21 Oct 2026",
       "vendor_now": "drex-max-v1.1 (28 Oct 2026) is offered next to the original drex-max, which is still served as a separate version.",
       "status": "newer-version",
-      "status_label": "Newer version, requested",
+      "status_label": "Newer version, not yet measured",
       "evidence": [
         [
           "https://drex.nace.ai/docs/drex/reference/models",
@@ -34,7 +34,7 @@
       "measured": "celeris-1-decision, 16 Oct 2026",
       "vendor_now": "The Celeris models page lists celeris-1, celeris-1-magnus and celeris-1.1-decision; the docs name celeris-1.1-decision as the decision model. No release date is given.",
       "status": "newer-version",
-      "status_label": "Newer version, requested",
+      "status_label": "Newer version, not yet measured",
       "evidence": [
         [
           "https://docs.celeris.ai/models.md",
