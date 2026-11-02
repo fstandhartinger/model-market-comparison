@@ -1,0 +1,213 @@
+{
+  "checked_utc": "2026-11-02T10:01:00Z",
+  "scope": "Hosted-API rows of the core track (v0.3.0) and the two H2O-Lightning-4B rows plus H2O-Lightning-31B among the open-weights rows; the other open-weights rows were not checked in this addendum. Metadata only: no score, rank or measurement on this page changed. Vendor facts come from the vendors' own public pages, fetched on 2 Nov 2026 between 09:51 and 10:01 UTC. The Sage facts come from the public Levanto model list plus a direct check of the Levanto API on 2 Nov 2026 (synthetic requests only, no benchmark item).",
+  "queue_note": "A newer vendor version is not a measurement. Measuring one needs review, an item-exposure check and, for a provider that has already seen this release's API test items, a fresh set of items; there is no date. The existing score stays on the page as the dated result for the version named in the third column.",
+  "api": [
+    {
+      "key": "sage_1_4_images",
+      "measured": "levanto-sage-v1.4 (Sage 1.4 + images), 16 Oct 2026",
+      "vendor_now": "levanto-sage-2 (Sage 2.0). The public model list shows only levanto-sage-2. In our direct API check on 2 Nov 2026 the API accepted levanto-sage-2 and the alias sage-latest and refused levanto-sage-v1.4 and v1.3 as unknown models (HTTP 422).",
+      "status": "newer-version",
+      "status_label": "Newer version, not yet measured",
+      "evidence": [
+        [
+          "https://sage.levanto.ai/models",
+          "Levanto public model list"
+        ]
+      ]
+    },
+    {
+      "key": "drex_max",
+      "measured": "drex-max, 21 Oct 2026",
+      "vendor_now": "drex-max-v1.1 (28 Oct 2026) is offered next to the original drex-max, which is still served as a separate version.",
+      "status": "newer-version",
+      "status_label": "Newer version, not yet measured",
+      "evidence": [
+        [
+          "https://drex.nace.ai/docs/drex/reference/models",
+          "Nace model reference"
+        ]
+      ]
+    },
+    {
+      "key": "celeris_1_decision",
+      "measured": "celeris-1-decision, 16 Oct 2026",
+      "vendor_now": "The Celeris models page lists celeris-1, celeris-1-magnus and celeris-1.1-decision; the docs name celeris-1.1-decision as the decision model. No release date is given.",
+      "status": "newer-version",
+      "status_label": "Newer version, not yet measured",
+      "evidence": [
+        [
+          "https://docs.celeris.ai/models.md",
+          "Celeris models page"
+        ]
+      ]
+    },
+    {
+      "key": "gpt56_luna",
+      "measured": "openai/gpt-5.6-luna via OpenRouter, 7 Oct 2026",
+      "vendor_now": "OpenAI's models overview now shows gpt-6-luna as its Luna model. GPT-5.6 Luna is still listed under all models and is not deprecated. GPT-6 Luna is already measured on this board (two rows).",
+      "status": "newer-version",
+      "status_label": "Newer model, already measured",
+      "evidence": [
+        [
+          "https://developers.openai.com/api/docs/models",
+          "OpenAI models"
+        ],
+        [
+          "https://developers.openai.com/api/docs/models/all",
+          "OpenAI all models"
+        ]
+      ]
+    },
+    {
+      "key": "gemini31_flash_lite",
+      "measured": "google/gemini-3.1-flash-lite via OpenRouter, 7 Oct 2026",
+      "vendor_now": "Google lists gemini-3.5-flash-lite above 3.1 Flash-Lite.",
+      "status": "newer-version",
+      "status_label": "Newer version, not planned",
+      "evidence": [
+        [
+          "https://ai.google.dev/gemini-api/docs/models",
+          "Gemini API models"
+        ]
+      ]
+    },
+    {
+      "key": "gpt6_luna_decisions",
+      "measured": "gpt-6-luna on the OpenAI Decisions API (beta), 6 Oct 2026",
+      "vendor_now": "Same model id. The Decisions API became generally available on 22 Oct 2026 with changes (for example more questions per request); the effect on results is unknown.",
+      "status": "current-endpoint-changed",
+      "status_label": "Current model, endpoint changed",
+      "evidence": [
+        [
+          "https://developers.openai.com/api/docs/changelog",
+          "OpenAI changelog"
+        ]
+      ]
+    },
+    {
+      "key": "gpt6_luna",
+      "measured": "openai/gpt-6-luna via OpenRouter (low reasoning effort), 7 Oct 2026",
+      "vendor_now": "gpt-6-luna is the current Luna model id.",
+      "status": "current",
+      "status_label": "Current",
+      "evidence": [
+        [
+          "https://developers.openai.com/api/docs/models",
+          "OpenAI models"
+        ]
+      ]
+    },
+    {
+      "key": "wity_1",
+      "measured": "wity-1, endpoint build 47ac68ed844f, 7 Oct 2026 (reasoning auto; the reasoning-off row is the same model)",
+      "vendor_now": "Same model id. The public health endpoint now reports build b461b598c881 and a default reasoning setting of off; the effect on results is unknown.",
+      "status": "current-endpoint-changed",
+      "status_label": "Current model, endpoint changed",
+      "evidence": [
+        [
+          "https://api.wity.alphanimble.com/health",
+          "Wity health endpoint"
+        ]
+      ]
+    },
+    {
+      "key": "kettei_fat",
+      "measured": "kettei-fat v1.0, 16 Oct 2026 (kettei-chub v1.0 likewise)",
+      "vendor_now": "kettei-fat v1.0 and kettei-chub v1.0 are the current versions.",
+      "status": "current",
+      "status_label": "Current",
+      "evidence": [
+        [
+          "https://docs.sqwish.ai/guides/models-and-fallback.md",
+          "Sqwish models"
+        ]
+      ]
+    },
+    {
+      "key": "jev_1_13_images",
+      "measured": "jev-1.13.0, 14 Oct 2026 (Jev 1.14.0 + images: jev-1.14.0, 14 Oct 2026)",
+      "vendor_now": "jev-1.13.0 and jev-1.14.0 are both current; no newer Jev version is listed. The moving alias jev-latest (and jev-preview) now points to jev-1.14.0, so the Jev 1.13.0 reference rows are named by version, not by alias.",
+      "status": "current",
+      "status_label": "Current",
+      "evidence": [
+        [
+          "https://docs.typesafe.ai/models",
+          "TypeSafe models"
+        ]
+      ]
+    },
+    {
+      "key": "gemini38_flash",
+      "measured": "google/gemini-3.8-flash via OpenRouter, 7 Oct 2026",
+      "vendor_now": "gemini-3.8-flash is the newest Flash model.",
+      "status": "current",
+      "status_label": "Current",
+      "evidence": [
+        [
+          "https://ai.google.dev/gemini-api/docs/models",
+          "Gemini API models"
+        ]
+      ]
+    },
+    {
+      "key": "kushal_gemma4_31b_it_autoloops",
+      "measured": "gemma-4-31b-it via api.autoloops.ai, 7 Oct 2026",
+      "vendor_now": "Autoloops still lists gemma-4-31b-it; Google lists no newer Gemma 4 31B. The quantization served at measurement time is not recorded.",
+      "status": "current",
+      "status_label": "Current",
+      "evidence": [
+        [
+          "https://api.autoloops.ai/v1/models",
+          "Autoloops model list"
+        ],
+        [
+          "https://ai.google.dev/gemma/docs/releases",
+          "Gemma releases"
+        ]
+      ]
+    }
+  ],
+  "open_weights": [
+    {
+      "key": "h2o_lightning_4b_v141_image",
+      "measured": "h2oai/h2o-lightning-4b at revision cc18ee33, 27 Oct 2026",
+      "vendor_now": "The repository head is 659fc412 (1 Nov 2026). The weight file is identical; serving files changed, and the author lists a v1.4.2 candidate. The unranked @d7f1b05a row is behind the same head.",
+      "status": "repository-moved",
+      "status_label": "Repository moved, weights unchanged",
+      "evidence": [
+        [
+          "https://huggingface.co/h2oai/h2o-lightning-4b/commits/main",
+          "Hugging Face commits"
+        ]
+      ]
+    },
+    {
+      "key": "h2o_lightning_4b_image",
+      "measured": "h2oai/h2o-lightning-4b at tag image (revision 9e9928c7), 12 Oct 2026",
+      "vendor_now": "The tag image now points to 32f5e305 (moved 13 Oct 2026); the main branch head is 659fc412. The weight file is identical; serving files changed. The measured revision is named above.",
+      "status": "repository-moved",
+      "status_label": "Repository moved, weights unchanged",
+      "evidence": [
+        [
+          "https://huggingface.co/api/models/h2oai/h2o-lightning-4b/refs",
+          "Hugging Face refs"
+        ]
+      ]
+    },
+    {
+      "key": "h2o_lightning_31b_image",
+      "measured": "h2oai/h2o-lightning-31b at revision ca6e6f6e, 22 Oct 2026",
+      "vendor_now": "The repository head is f28212fc (29 Oct 2026). No weight file is in the changed list; serving files and the model card changed.",
+      "status": "repository-moved",
+      "status_label": "Repository moved, weights unchanged",
+      "evidence": [
+        [
+          "https://huggingface.co/h2oai/h2o-lightning-31b",
+          "Hugging Face repository"
+        ]
+      ]
+    }
+  ],
+  "box_note": "The Box track is not part of this addendum."
+}
