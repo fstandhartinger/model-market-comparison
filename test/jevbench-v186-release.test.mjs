@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
+import {assertReleaseHistory} from './helpers/release-history.mjs';
 import {
   hasPublishedJevbenchV186Release,
   readJevbenchV186ForBoard,
@@ -66,12 +67,11 @@ test('method labels preserve v1.7 behavior and label v1.8.6 consistently',()=>{
   assert.equal(jevMethodLabel('v1.8.6'),'method v1.8 (10 s rule, GPU-time cost basis)');
 });
 
-test('the 27 Oct draw release registry points at v1.8.6',()=>{
+test('the 27 Oct draw release registry lists v1.8.6 right after v1.8.5',()=>{
   const draw=JSON.parse(readFileSync('data/jevbench-draw-equating.json')).draws.find(item=>item.draw==='v1.6-regular-20261027');
   const previous=load('v1.8.5','proof').revision;
   assert.equal(previous,'v1.8.5');
-  assert.equal(draw.latest_release,'v1.8.6');
-  assert.deepEqual(draw.releases.slice(-2),[previous,'v1.8.6']);
+  assertReleaseHistory(assert,draw,['v1.7.13','v1.7.14','v1.7.15','v1.7.16','v1.7.17','v1.7.19','v1.7.21','v1.7.22','v1.8.1','v1.8.2','v1.8.3','v1.8.4',previous,'v1.8.6']);
 });
 
 test('release page names its one-row addition and links v1.8.5',()=>{

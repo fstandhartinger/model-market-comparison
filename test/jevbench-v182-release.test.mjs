@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
+import {assertReleaseHistory} from './helpers/release-history.mjs';
 import {hasPublishedJevbenchV182Release,readJevbenchV182ForBoard,V182_NEW_KEYS,V182_NOTE} from '../lib/jevbench-v182-release.mjs';
 import {readJevAllDataInput} from '../lib/jevbench-alldata-input.mjs';
 import {jevMethodLabel,JEV_METHOD_LABEL} from '../lib/jev-decision-limit.mjs';
@@ -26,11 +27,8 @@ test('processed input includes expanded Oenogarum prompts and both Piccolo reads
  const u=JSON.parse(readFileSync('r198/v182/src/usage.json'));assert.equal(u.oenogarum.input_tokens_all,739884);for(const k of ['piccolo-4b','piccolo-9b'])assert.equal(u[k].input_tokens_all,1080355);
 });
 
-test('d1027 pins its exact release history and latest release',()=>{
+test('d1027 release history keeps this release in order and ends at its latest release',()=>{
  const draws=JSON.parse(readFileSync('data/jevbench-draw-equating.json')).draws;
  const draw=draws.find(d=>d.draw==='v1.6-regular-20261027');
- const throughV185=['v1.7.13','v1.7.14','v1.7.15','v1.7.16','v1.7.17','v1.7.19','v1.7.21','v1.7.22','v1.8.1','v1.8.2','v1.8.3','v1.8.4','v1.8.5'];
- assert.deepEqual(draw.releases.slice(0,throughV185.length),throughV185);
- assert.deepEqual(draw.releases.slice(throughV185.length),['v1.8.6']);
- assert.equal(draw.latest_release,'v1.8.6');
+ assertReleaseHistory(assert,draw,['v1.7.13','v1.7.14','v1.7.15','v1.7.16','v1.7.17','v1.7.19','v1.7.21','v1.7.22','v1.8.1','v1.8.2']);
 });

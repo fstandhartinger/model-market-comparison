@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import {assertReleaseHistory} from './helpers/release-history.mjs';
 import {readFile} from 'node:fs/promises';
 import {createHash} from 'node:crypto';
 import {validateJevbenchV1716Bundle,readJevbenchV1716ForBoard,readOptionalJevbenchV1716Release,V1716_NEW_KEYS,V1716_DRAW_KEYS,V1716_DRAW,V1716_REPRICED,V1716_NOT_RANKED_BECAUSE,V1716_H2O_EXTRA} from '../lib/jevbench-v1716-release.mjs';
@@ -92,7 +93,7 @@ test('v1.7.16 every row of the draw is unranked: no rank, in no order list, ever
 });
 test('v1.7.16 extends the 27 Oct draw entry (still not equated) without touching the v1.6 chain v1.7.0 is bound to',async()=>{
  const t=await readDrawEquating();const d=t.draws.find(x=>x.draw===V1716_DRAW);
- assert.deepEqual(d.releases.slice(0,4),['v1.7.13','v1.7.14','v1.7.15','v1.7.16']);assert.equal(d.latest_release,d.releases.at(-1));
+ assertReleaseHistory(assert,d,['v1.7.13','v1.7.14','v1.7.15','v1.7.16']);
  assert.deepEqual({...d,releases:undefined,latest_release:undefined},{draw:V1716_DRAW,label:'Third regular draw',drawn_on:'2026-10-27',releases:undefined,latest_release:undefined,status:'anchor-runs-pending',offset:{I:0,C:0},offset_ci95:null,anchors:[],joins_via:'v1.7-addendum'});
  assert.equal(await readChainLatestRelease('v1.6.1'),'v1.6.43');
  const cohort=await readCohortRows(process.cwd(),()=>{});assert.ok(!cohort.rows.some(r=>r.draw.id===V1716_DRAW));
