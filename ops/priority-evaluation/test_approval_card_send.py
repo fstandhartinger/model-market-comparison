@@ -221,6 +221,68 @@ class ApprovalCardSend(unittest.TestCase):
                 resolve.assert_not_called()
                 send.assert_called_once()
 
+    def settle_calls(self, run):
+        return [c.args[0] for c in run.call_args_list if c.args[0][1:2] == ['settle']]
+
+    def test_settle_card_is_bounded_and_stops_once_settled(self):
+        # board #41061 point 4: notify-resolve closes only the todo; the card itself must stop saying DU BIST DRAN
+        path = self.tmp / 'settle.json'
+        state = {'message_id': 41}
+        with mock.patch.object(subprocess, 'run', return_value=done([], 3)) as run:
+            for _ in range(ra.PREVIEW_ALERT_AFTER + 2):
+                ra.settle_card(state, path, 'The buttons expired unanswered; nothing was refunded.', 'src')
+        self.assertEqual(run.call_count, ra.PREVIEW_ALERT_AFTER)  # a refused settle is not retried forever
+        self.assertFalse(state['settled'])
+        self.assertEqual(run.call_args.args[0][1:], ['settle', '41', 'The buttons expired unanswered; nothing was '
+                                                     'refunded.', '--by', 'src', '--drop-buttons'])
+        state = {'message_id': 42}
+        with mock.patch.object(subprocess, 'run', return_value=done([])) as run:
+            ra.settle_card(state, path, 'reason', 'src')
+            ra.settle_card(state, path, 'reason', 'src')
+        run.assert_called_once()
+        self.assertTrue(json.loads(path.read_text())['settled'])
+        os.environ['FASTLANE_STATE_ROOT'] = str(self.tmp)
+        with mock.patch.object(subprocess, 'run') as run:
+            ra.settle_card({'message_id': 43}, path, 'reason', 'src')
+        run.assert_not_called()  # fixtures never edit a Telegram card
+
+    def test_expired_card_is_settled_before_the_reask(self):
+        for name, module in (('refund', rf), ('sla', sd)):
+            with self.subTest(card=name):
+                step, path = self.expired_card(module, name, resolved=True)
+                with mock.patch.object(module, '_send_card'), \
+                        mock.patch.object(subprocess, 'run', return_value=done([])) as run:
+                    step()
+                calls = self.settle_calls(run)
+                self.assertEqual(len(calls), 1)
+                self.assertEqual(calls[0][2:4], ['41', module.SETTLED['expired']])
+                self.assertEqual(json.loads(path.read_text())['card'], 2)
+
+    def test_card_is_settled_when_its_window_ends_or_a_tap_is_recorded(self):
+        for name, module, tap in (('refund', rf, 'refund_key'), ('sla', sd, 'delay_key')):
+            for decision in ('expired', tap):
+                with self.subTest(card=name, decision=decision):
+                    root = self.tmp / f'{name}-{decision}'
+                    root.mkdir()
+                    path = root / f"{ORDER_A}.json"
+                    state = {'request_id': ORDER_A, 'kind': 'sla_missed', 'history': [], 'card': 1,
+                             **module._new_card(0), 'notification': 'sent', 'message_id': 41, 'chat_id': 99,
+                             'buttons_attached': True, 'created_at': 0, 'expires_at': 500}
+                    path.write_text(json.dumps(state))
+                    rows = [] if decision == 'expired' else [(7, 99, 41, 99, 100, state[tap])]
+                    row = dict(ROW, stripe_mode='live', synthetic_test=False)
+                    with mock.patch.object(ra, 'callback_rows', return_value=rows), \
+                            mock.patch.object(module, '_attach'), \
+                            mock.patch.object(module, '_resolve_ask', return_value=True), \
+                            mock.patch.object(ra, 'close_durable_reply_action', return_value=True), \
+                            mock.patch.object(subprocess, 'run', return_value=done([])) as run:
+                        module.advance(row, root, types.SimpleNamespace(dry_run=False), 1000.0, 'x')
+                    recorded = json.loads(path.read_text())
+                    calls = self.settle_calls(run)
+                    self.assertEqual(len(calls), 1)
+                    self.assertEqual(calls[0][3], module.SETTLED[recorded['decision']])
+                    self.assertTrue(recorded['settled'])
+
     def test_refused_preview_is_recorded_and_alerted_once(self):
         rejection = 'notify: decision cards need buttons: add --choices with 2-5 options'
         for name, send in card_senders(self.tmp):

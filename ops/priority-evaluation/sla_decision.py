@@ -27,6 +27,13 @@ WINDOW = 24 * 3600
 MAX_CARDS = 3  # an expired card is asked again at most twice; then the order waits for an operator
 
 
+# the ↳ line on the card once its decision is recorded (notify settle, board #41061)
+SETTLED = {"delay_note": "You tapped Send delay note; the worker sends the fixed delay email.",
+           "refund": "You tapped Refund in full; the refund worker pays it back.",
+           "no_action": "You tapped No action; nothing was sent or refunded.",
+           "expired": "The buttons expired unanswered; nothing was sent or refunded."}
+
+
 def caption(row: dict, deadline: str) -> str:
     rid = str(uuid.UUID(str(row["id"])))
     amount = row.get("amount_total")
@@ -179,6 +186,7 @@ def advance(row: dict, root: Path, effects, now: float, deadline: str) -> str:
         if state.get("decision") == "expired":
             if state.get("card", 1) >= MAX_CARDS:
                 return "exhausted"
+            ra.settle_card(state, path, SETTLED["expired"], SOURCE)  # the old card, before a re-ask replaces it
             if not ra.close_expired(state, path, _resolve_ask):
                 return "pending"
             history = state.pop("history", [])
@@ -214,6 +222,7 @@ def advance(row: dict, root: Path, effects, now: float, deadline: str) -> str:
         if not state.get("resolved"):
             state["resolved"] = _resolve_ask(state, path, decision)
             ra.atomic(path, state)
+        ra.settle_card(state, path, SETTLED[decision], SOURCE)
         if decision == "expired":
             return "exhausted" if state.get("card", 1) >= MAX_CARDS else "pending"
         return decision
