@@ -1,0 +1,1377 @@
+{
+ "nvidia/nemotron-3.5-super-vl": {
+  "addendum": null,
+  "api_flag": true,
+  "api_subset": false,
+  "author": "NVIDIA",
+  "axes": {
+   "calibration": 58.762888995605785,
+   "cost": 47.22136754775445,
+   "intelligence": 60.374558990020276,
+   "speed": 81.97747198900981
+  },
+  "calibration": {
+   "parts": {
+    "choice": {
+     "ece_hard": 0.3026836158192089,
+     "ece_score": 39.46327683615822,
+     "mean_tvd": null,
+     "n": 750,
+     "n_ece_hard": 354,
+     "n_tvd": 0,
+     "score": 39.358041431261796,
+     "score_before_time_limit": 39.46327683615822,
+     "time_limit_failed_share": 0.0026666666666666666
+    },
+    "noul": {
+     "abstention_rate": 0.0,
+     "brier": 0.11803280000000001,
+     "ece": 0.11501333333333333,
+     "n": 375,
+     "score": 76.99733333333334,
+     "score_before_time_limit": 76.99733333333334,
+     "time_limit_failed_share": 0.0
+    },
+    "score": {
+     "interval90_coverage": 0.664,
+     "interval90_width": 0.01511111111111111,
+     "n": 375,
+     "nrps": 0.1264008222222223,
+     "score": 59.93329222222222,
+     "score_before_time_limit": 59.93329222222222,
+     "time_limit_failed_share": 0.0,
+     "top_ece": 0.3374666666666666
+    }
+   },
+   "score": 58.762888995605785
+  },
+  "capability": 59.568723992813034,
+  "composite_ci95": {
+   "A": [
+    51.00631665264938,
+    54.97505560271135
+   ],
+   "B": [
+    50.4498454922785,
+    55.57902228681105
+   ],
+   "C": [
+    41.13699627513369,
+    54.97505560271135
+   ]
+  },
+  "cost": {
+   "basis": "Published OpenRouter tariff for the Crusoe bf16 endpoint of nvidia/nemotron-3.5-super-vl: USD 0.10 per million input tokens and USD 0.40 per million output tokens (fetched 2026-11-03T05:45:33Z; frozen pricing module sha256 2f52370fe1dba73d75a770a386df350cc76a0898304aeba9e29c91f6e4d3738b), counted from day 1 as the operator launch list price under the standing launch-list-price interpretation (I-1; the authority is recorded in the release proof). Hosted list price, so no GPU-time estimate applies. Cost = tariff x the engine-reported usage on the frozen 1,489-item common set of this draw: 607,138 input and 62,072 output tokens = 449.435863 tokens/decision. COST FIGURES: USD 0.057450 per 1,000 decisions. Cost on the 1,489 items every row on this draw answered (same-items rule); all-items cost USD 0.084429 per 1,000 decisions over all 1,500 decisions (1,015,566 input and 62,716 output tokens, reasoning disabled so no reasoning tokens). Tariff-based figure from engine-reported usage, not a bill.",
+   "common_basis": {
+    "n_items": 1489,
+    "rule": "common",
+    "usd_per_1000_all_items": 0.08442866666666667
+   },
+   "kind": "tariff",
+   "usage_estimated_rows": 0,
+   "usd_per_1000": 0.05744969778374748
+  },
+  "decision_limit": {
+   "limit_s": 10.0,
+   "n_over_limit": 2,
+   "n_over_limit_answered_ok": 2,
+   "rule": "latency_s > limit -> failed",
+   "speed_basis": "all decisions given (lane items in the raw), measured latency_s",
+   "speed_n": 1500,
+   "treatment": "share"
+  },
+  "disclosure": "FIRST MEASUREMENT of NVIDIA Nemotron 3.5 Super VL on the text JevBench (the image benchmark is a separate lane), as a hosted API with no weights pin. REASONING DISABLED: reasoning.enabled=false, as required by the holder of the sealed items for this use; a reasoning-on configuration could score differently. SERVING: OpenRouter, provider Crusoe (bf16), provider order Crusoe only, fallbacks off; all 1,500 responses were checked for provider Crusoe and the exact model id. Strict json_schema output, temperature 0, max_tokens 4096, and the shared calibration system prompt (quoted in the measurement conditions). LATENCY: hosted-API latency from our server in Germany over OpenRouter (network round trip included): p50 0.63 s, p95 1.01 s, maximum 31.2 s; 56 HTTP 429 upstream rate-limit responses were re-sent and are not counted as answers. TOKENS: engine-reported usage, 1,015,566 input and 62,716 output tokens over all 1,500 decisions (no reasoning tokens). COST: the published OpenRouter tariff for this endpoint, USD 0.10 per million input tokens and USD 0.40 per million output tokens, counted from day 1 as a launch list price; no GPU-time estimate applies. DRAW: measured on the 27 Oct 2026 regular draw (fresh sealed items; not yet equated to the reference scale, so its numbers are shown as published, offset 0). This draw has no subject-topic labels yet, so the row has no topic cells; its use-case and language cells are measured on its own draw.",
+  "display": "NVIDIA Nemotron 3.5 Super VL",
+  "draw": {
+   "drawn_on": "2026-10-27",
+   "g_med": 2.573387642438244,
+   "id": "v1.6-regular-20261027",
+   "label": "Third regular draw",
+   "measured_on": "2026-11-03",
+   "offset": {
+    "C": 0,
+    "I": 0
+   },
+   "offset_ci95": null,
+   "release": "v1.8.7",
+   "results_sha256": "079647e48a4b33d0a0aaf50a301cd23e6717d302c235af9b3e51d8b0767e68a5",
+   "status": "anchor-runs-pending"
+  },
+  "endpoint_condition": "Hosted API through OpenRouter, served by Crusoe (bf16): provider order Crusoe only, fallbacks off, bf16 quantization only. Every one of the 1,500 responses was checked for provider Crusoe and the exact model id nvidia/nemotron-3.5-super-vl. Reasoning disabled (reasoning.enabled=false). Strict json_schema output, temperature 0, max_tokens 4096, with the shared calibration system prompt: \"You are a calibration engine. You never answer in prose. You output only a JSON object with the key 'probabilities' mapping every given option to a probability, all options included, values in [0,1], summing to 1.\" Latency is hosted-API latency measured from our server in Germany over OpenRouter (network round trip included): p50 0.63 s, p95 1.01 s, maximum 31.2 s; 2 decisions took longer than 10 s. 1,500 of 1,500 requests answered (HTTP 200). 56 upstream rate-limit responses (HTTP 429) were re-sent and are not counted as answers.",
+  "endpoint_kind": "api",
+  "full_coverage": true,
+  "intelligence": {
+   "I_open": 59.53148671540577,
+   "I_sealed": 61.217631264634775,
+   "base": 60.374558990020276,
+   "excess": -4.259532191667249,
+   "gap": -1.686144549229006,
+   "penalty": 1.0,
+   "per_type_split": {
+    "open|choice": {
+     "cc": 73.75386951874387,
+     "n": {
+      "easy": 33,
+      "hard": 68,
+      "judge": 32,
+      "standard": 17
+     },
+     "tiers": {
+      "easy": 84.43243243243244,
+      "hard": 58.47750865051904,
+      "judge": 88.13447593935399,
+      "standard": 77.39640016743407
+     }
+    },
+    "open|noul": {
+     "cc": 66.15458937198068,
+     "n": {
+      "easy": 14,
+      "hard": 23,
+      "judge": 20,
+      "standard": 18
+     },
+     "tiers": {
+      "easy": 100.0,
+      "hard": 82.6086956521739,
+      "judge": 39.99999999999999,
+      "standard": 55.55555555555556
+     }
+    },
+    "open|score": {
+     "cc": 38.68600125549278,
+     "n": {
+      "easy": 9,
+      "hard": 29,
+      "judge": 21,
+      "standard": 16
+     },
+     "tiers": {
+      "easy": 52.0,
+      "hard": 44.44444444444444,
+      "judge": 42.23728813559322,
+      "standard": 15.18518518518519
+     }
+    },
+    "sealed|choice": {
+     "cc": 73.0080295374089,
+     "n": {
+      "easy": 73,
+      "hard": 286,
+      "judge": 135,
+      "standard": 106
+     },
+     "tiers": {
+      "easy": 92.13887979037014,
+      "hard": 59.5922248045637,
+      "judge": 77.22174288179464,
+      "standard": 83.95364386004013
+     }
+    },
+    "sealed|noul": {
+     "cc": 71.43888747628455,
+     "n": {
+      "easy": 87,
+      "hard": 82,
+      "judge": 45,
+      "standard": 86
+     },
+     "tiers": {
+      "easy": 95.40229885057472,
+      "hard": 51.21951219512195,
+      "judge": 82.22222222222221,
+      "standard": 83.72093023255813
+     }
+    },
+    "sealed|score": {
+     "cc": 39.20597678021088,
+     "n": {
+      "easy": 68,
+      "hard": 112,
+      "judge": 56,
+      "standard": 64
+     },
+     "tiers": {
+      "easy": 83.4909090909091,
+      "hard": 10.687258687258694,
+      "judge": 58.35227272727273,
+      "standard": 45.38150289017339
+     }
+    }
+   }
+  },
+  "jevbench_score": 53.28521292727241,
+  "key": "nvidia/nemotron-3.5-super-vl",
+  "last_measured_on": "2026-11-03",
+  "licence": "Hosted API through OpenRouter; the weights licence is not assessed here (see the model page).",
+  "listing": "unranked",
+  "measured_in": "v1.8.7",
+  "measurement_date_status": "measured",
+  "method": "v1.7",
+  "model_pin": "https://openrouter.ai/nvidia/nemotron-3.5-super-vl",
+  "new_in": "v1.8.7",
+  "not_ranked_because": "Measured on the 27 Oct 2026 draw, which is not yet equated to the reference scale; stronger anchor runs for that draw are being measured. Shown unranked until then.",
+  "noul_decisive": {
+   "acc_among_decisive": 0.88,
+   "decisive": 375,
+   "decisive_rate": 1.0,
+   "n": 375,
+   "supported": true,
+   "valid": 375
+  },
+  "paid_fast_lane": false,
+  "planned_weight_denominator": 1.0,
+  "rank": null,
+  "ranked": false,
+  "ranks": {
+   "A": null,
+   "B": null,
+   "C": null,
+   "capability": null
+  },
+  "repo": "https://openrouter.ai/nvidia/nemotron-3.5-super-vl",
+  "scores": {
+   "A": 53.28521292727241,
+   "B": 53.39735165434901,
+   "C": 53.28521292727241
+  },
+  "speed": {
+   "adjustment": "none (API)",
+   "basis": "all decisions given (lane items in the raw), measured latency_s",
+   "n": 1500,
+   "p50_s_adjusted": 0.6272735850070603,
+   "p50_s_raw": 0.6272735850070603,
+   "p95_s_adjusted": 1.0111039375420658,
+   "p95_s_raw": 1.0111039375420658
+  },
+  "status": {
+   "answered_ok": 1500,
+   "missing": 0,
+   "rows": 1500,
+   "status": "complete"
+  },
+  "support": {
+   "choice": "native",
+   "noul": "native",
+   "score": "native"
+  },
+  "underlying": "FIRST MEASUREMENT of NVIDIA Nemotron 3.5 Super VL on the text JevBench (the image benchmark is a separate lane), as a hosted API with no weights pin. REASONING DISABLED: reasoning.enabled=false, as required by the holder of the sealed items for this use; a reasoning-on configuration could score differently. SERVING: OpenRouter, provider Crusoe (bf16), provider order Crusoe only, fallbacks off; all 1,500 responses were checked for provider Crusoe and the exact model id. Strict json_schema output, temperature 0, max_tokens 4096, and the shared calibration system prompt (quoted in the measurement conditions). LATENCY: hosted-API latency from our server in Germany over OpenRouter (network round trip included): p50 0.63 s, p95 1.01 s, maximum 31.2 s; 56 HTTP 429 upstream rate-limit responses were re-sent and are not counted as answers. TOKENS: engine-reported usage, 1,015,566 input and 62,716 output tokens over all 1,500 decisions (no reasoning tokens). COST: the published OpenRouter tariff for this endpoint, USD 0.10 per million input tokens and USD 0.40 per million output tokens, counted from day 1 as a launch list price; no GPU-time estimate applies. DRAW: measured on the 27 Oct 2026 regular draw (fresh sealed items; not yet equated to the reference scale, so its numbers are shown as published, offset 0). This draw has no subject-topic labels yet, so the row has no topic cells; its use-case and language cells are measured on its own draw.",
+  "v16": {
+   "api_subset": false,
+   "api_subset_tag": null,
+   "breakdowns": {
+    "family": {
+     "calibration": {
+      "accuracy": 0.75,
+      "cc": 66.66666666666666,
+      "cc_by_type": {
+       "choice": 100.0,
+       "noul": 33.33333333333333
+      },
+      "low_n": true,
+      "n": 4,
+      "n_by_type": {
+       "choice": 1,
+       "noul": 3
+      },
+      "score": 66.66666666666666
+     },
+     "calibration_gen": {
+      "accuracy": 0.5,
+      "cc": 41.34199134199134,
+      "cc_by_type": {
+       "choice": 74.02597402597404,
+       "noul": 100.0,
+       "score": -50.00000000000002
+      },
+      "low_n": true,
+      "n": 14,
+      "n_by_type": {
+       "choice": 5,
+       "noul": 2,
+       "score": 7
+      },
+      "score": 41.34199134199134
+     },
+     "composite_gen": {
+      "accuracy": 0.5789473684210527,
+      "cc": 31.111111111111114,
+      "cc_by_type": {
+       "choice": 73.33333333333334,
+       "noul": 19.999999999999996,
+       "score": 0.0
+      },
+      "low_n": true,
+      "n": 19,
+      "n_by_type": {
+       "choice": 5,
+       "noul": 5,
+       "score": 9
+      },
+      "score": 31.111111111111114
+     },
+     "fairness": {
+      "accuracy": 1.0,
+      "cc": 100.0,
+      "cc_by_type": {
+       "choice": 100.0,
+       "noul": 100.0,
+       "score": 100.0
+      },
+      "low_n": true,
+      "n": 21,
+      "n_by_type": {
+       "choice": 9,
+       "noul": 6,
+       "score": 6
+      },
+      "score": 100.0
+     },
+     "jaggedness": {
+      "accuracy": 0.45454545454545453,
+      "cc": 9.876543209876544,
+      "cc_by_type": {
+       "choice": 62.96296296296297,
+       "noul": -33.333333333333336,
+       "score": 0.0
+      },
+      "low_n": true,
+      "n": 22,
+      "n_by_type": {
+       "choice": 11,
+       "noul": 3,
+       "score": 8
+      },
+      "score": 9.876543209876544
+     },
+     "llm_router": {
+      "accuracy": 0.8666666666666667,
+      "cc": 81.33898403035965,
+      "cc_by_type": {
+       "choice": 81.49236192714454,
+       "noul": 100.0,
+       "score": 62.524590163934434
+      },
+      "low_n": false,
+      "n": 90,
+      "n_by_type": {
+       "choice": 45,
+       "noul": 23,
+       "score": 22
+      },
+      "score": 81.33898403035965
+     },
+     "long_state": {
+      "accuracy": 0.0,
+      "cc": -64.51612903225806,
+      "cc_by_type": {
+       "choice": -29.032258064516128,
+       "noul": -100.0
+      },
+      "low_n": true,
+      "n": 5,
+      "n_by_type": {
+       "choice": 4,
+       "noul": 1
+      },
+      "score": 0.0
+     },
+     "ml_usecase": {
+      "accuracy": 1.0,
+      "cc": 100.0,
+      "cc_by_type": {
+       "choice": 100.0,
+       "noul": 100.0
+      },
+      "low_n": true,
+      "n": 2,
+      "n_by_type": {
+       "choice": 1,
+       "noul": 1
+      },
+      "score": 100.0
+     },
+     "multilingual": {
+      "accuracy": 0.7904451682953312,
+      "cc": 67.2908248075456,
+      "cc_by_type": {
+       "choice": 71.22224617374437,
+       "noul": 80.32786885245902,
+       "score": 50.32235939643341
+      },
+      "low_n": false,
+      "n": 921,
+      "n_by_type": {
+       "choice": 430,
+       "noul": 244,
+       "score": 247
+      },
+      "score": 67.2908248075456
+     },
+     "negation_pair_gen": {
+      "accuracy": 0.6818181818181818,
+      "cc": 43.333333333333336,
+      "cc_by_type": {
+       "choice": 86.66666666666667,
+       "noul": 0.0
+      },
+      "low_n": true,
+      "n": 22,
+      "n_by_type": {
+       "choice": 10,
+       "noul": 12
+      },
+      "score": 43.333333333333336
+     },
+     "option_order": {
+      "accuracy": 0.7777777777777778,
+      "cc": 71.42857142857144,
+      "cc_by_type": {
+       "choice": 71.42857142857144
+      },
+      "low_n": true,
+      "n": 27,
+      "n_by_type": {
+       "choice": 27
+      },
+      "score": 71.42857142857144
+     },
+     "perturb_pair": {
+      "accuracy": 0.8214285714285714,
+      "cc": 74.80846197827331,
+      "cc_by_type": {
+       "choice": 71.69811320754717,
+       "noul": 80.0,
+       "score": 72.72727272727273
+      },
+      "low_n": true,
+      "n": 28,
+      "n_by_type": {
+       "choice": 14,
+       "noul": 10,
+       "score": 4
+      },
+      "score": 74.80846197827331
+     },
+     "usecase": {
+      "accuracy": 0.7753846153846153,
+      "cc": 64.45399481285695,
+      "cc_by_type": {
+       "choice": 70.82421590080233,
+       "noul": 75.38461538461539,
+       "score": 47.15315315315315
+      },
+      "low_n": false,
+      "n": 325,
+      "n_by_type": {
+       "choice": 188,
+       "noul": 65,
+       "score": 72
+      },
+      "score": 64.45399481285695
+     }
+    },
+    "lang": {
+     "ar": {
+      "accuracy": 0.8571428571428571,
+      "cc": 79.10287402632285,
+      "cc_by_type": {
+       "choice": 72.6027397260274,
+       "noul": 100.0,
+       "score": 64.70588235294117
+      },
+      "low_n": true,
+      "n": 21,
+      "n_by_type": {
+       "choice": 10,
+       "noul": 6,
+       "score": 5
+      },
+      "score": 79.10287402632285
+     },
+     "cs": {
+      "accuracy": 0.6486486486486487,
+      "cc": 39.347065425496794,
+      "cc_by_type": {
+       "choice": 59.89304812834225,
+       "noul": 33.33333333333333,
+       "score": 24.814814814814802
+      },
+      "low_n": false,
+      "n": 37,
+      "n_by_type": {
+       "choice": 17,
+       "noul": 9,
+       "score": 11
+      },
+      "score": 39.347065425496794
+     },
+     "da": {
+      "accuracy": 0.8611111111111112,
+      "cc": 64.72802559759081,
+      "cc_by_type": {
+       "choice": 85.09316770186335,
+       "noul": 100.0,
+       "score": 9.090909090909093
+      },
+      "low_n": false,
+      "n": 36,
+      "n_by_type": {
+       "choice": 19,
+       "noul": 11,
+       "score": 6
+      },
+      "score": 64.72802559759081
+     },
+     "de": {
+      "accuracy": 0.7708333333333334,
+      "cc": 72.83633002696547,
+      "cc_by_type": {
+       "choice": 62.953434525340874,
+       "noul": 75.0,
+       "score": 80.55555555555554
+      },
+      "low_n": false,
+      "n": 48,
+      "n_by_type": {
+       "choice": 30,
+       "noul": 8,
+       "score": 10
+      },
+      "score": 72.83633002696547
+     },
+     "el": {
+      "accuracy": 0.7857142857142857,
+      "cc": 65.7948717948718,
+      "cc_by_type": {
+       "choice": 65.38461538461539,
+       "noul": 80.0,
+       "score": 51.99999999999999
+      },
+      "low_n": true,
+      "n": 28,
+      "n_by_type": {
+       "choice": 12,
+       "noul": 10,
+       "score": 6
+      },
+      "score": 65.7948717948718
+     },
+     "en": {
+      "accuracy": 0.7621621621621621,
+      "cc": 60.43993901340733,
+      "cc_by_type": {
+       "choice": 72.49809014514895,
+       "noul": 65.57377049180329,
+       "score": 43.24795640326978
+      },
+      "low_n": false,
+      "n": 555,
+      "n_by_type": {
+       "choice": 311,
+       "noul": 122,
+       "score": 122
+      },
+      "score": 60.43993901340733
+     },
+     "es": {
+      "accuracy": 0.918918918918919,
+      "cc": 90.3448275862069,
+      "cc_by_type": {
+       "choice": 99.99999999999999,
+       "noul": 100.0,
+       "score": 71.0344827586207
+      },
+      "low_n": false,
+      "n": 37,
+      "n_by_type": {
+       "choice": 19,
+       "noul": 9,
+       "score": 9
+      },
+      "score": 90.3448275862069
+     },
+     "fi": {
+      "accuracy": 0.8461538461538461,
+      "cc": 73.46845374305327,
+      "cc_by_type": {
+       "choice": 65.71428571428571,
+       "noul": 89.4736842105263,
+       "score": 65.21739130434783
+      },
+      "low_n": false,
+      "n": 52,
+      "n_by_type": {
+       "choice": 21,
+       "noul": 19,
+       "score": 12
+      },
+      "score": 73.46845374305327
+     },
+     "fr": {
+      "accuracy": 0.75,
+      "cc": 59.527245241530956,
+      "cc_by_type": {
+       "choice": 79.59183673469389,
+       "noul": 77.77777777777777,
+       "score": 21.212121212121204
+      },
+      "low_n": false,
+      "n": 32,
+      "n_by_type": {
+       "choice": 14,
+       "noul": 9,
+       "score": 9
+      },
+      "score": 59.527245241530956
+     },
+     "hi": {
+      "accuracy": 0.7837837837837838,
+      "cc": 72.87765667212307,
+      "cc_by_type": {
+       "choice": 66.94214876033057,
+       "noul": 77.77777777777777,
+       "score": 73.91304347826086
+      },
+      "low_n": false,
+      "n": 37,
+      "n_by_type": {
+       "choice": 17,
+       "noul": 9,
+       "score": 11
+      },
+      "score": 72.87765667212307
+     },
+     "id": {
+      "accuracy": 0.8292682926829268,
+      "cc": 71.04454685099846,
+      "cc_by_type": {
+       "choice": 63.13364055299538,
+       "noul": 83.33333333333333,
+       "score": 66.66666666666666
+      },
+      "low_n": false,
+      "n": 41,
+      "n_by_type": {
+       "choice": 15,
+       "noul": 12,
+       "score": 14
+      },
+      "score": 71.04454685099846
+     },
+     "it": {
+      "accuracy": 0.8444444444444444,
+      "cc": 76.27345624240034,
+      "cc_by_type": {
+       "choice": 76.04259094942324,
+       "noul": 83.33333333333333,
+       "score": 69.44444444444444
+      },
+      "low_n": false,
+      "n": 45,
+      "n_by_type": {
+       "choice": 17,
+       "noul": 12,
+       "score": 16
+      },
+      "score": 76.27345624240034
+     },
+     "ja": {
+      "accuracy": 0.7272727272727273,
+      "cc": 57.5620191552834,
+      "cc_by_type": {
+       "choice": 53.36787564766839,
+       "noul": 81.81818181818181,
+       "score": 37.500000000000014
+      },
+      "low_n": false,
+      "n": 44,
+      "n_by_type": {
+       "choice": 17,
+       "noul": 11,
+       "score": 16
+      },
+      "score": 57.5620191552834
+     },
+     "ko": {
+      "accuracy": 0.627906976744186,
+      "cc": 43.68712702472293,
+      "cc_by_type": {
+       "choice": 63.23529411764706,
+       "noul": 19.999999999999996,
+       "score": 47.82608695652174
+      },
+      "low_n": false,
+      "n": 43,
+      "n_by_type": {
+       "choice": 18,
+       "noul": 10,
+       "score": 15
+      },
+      "score": 43.68712702472293
+     },
+     "mixed": {
+      "accuracy": 0.9375,
+      "cc": 85.11648664866486,
+      "cc_by_type": {
+       "choice": 94.5994599459946,
+       "noul": 89.99999999999999,
+       "score": 70.74999999999999
+      },
+      "low_n": false,
+      "n": 64,
+      "n_by_type": {
+       "choice": 26,
+       "noul": 20,
+       "score": 18
+      },
+      "score": 85.11648664866486
+     },
+     "nl": {
+      "accuracy": 0.7222222222222222,
+      "cc": 34.874213836477985,
+      "cc_by_type": {
+       "choice": 64.62264150943396,
+       "noul": 60.00000000000001,
+       "score": -20.000000000000018
+      },
+      "low_n": false,
+      "n": 36,
+      "n_by_type": {
+       "choice": 20,
+       "noul": 10,
+       "score": 6
+      },
+      "score": 34.874213836477985
+     },
+     "no": {
+      "accuracy": 0.7450980392156863,
+      "cc": 50.207245020180984,
+      "cc_by_type": {
+       "choice": 58.691910499139425,
+       "noul": 86.66666666666667,
+       "score": 5.263157894736869
+      },
+      "low_n": false,
+      "n": 51,
+      "n_by_type": {
+       "choice": 27,
+       "noul": 15,
+       "score": 9
+      },
+      "score": 50.207245020180984
+     },
+     "pl": {
+      "accuracy": 0.7368421052631579,
+      "cc": 53.97361524963816,
+      "cc_by_type": {
+       "choice": 71.26130920702501,
+       "noul": 88.23529411764706,
+       "score": 2.4242424242424288
+      },
+      "low_n": false,
+      "n": 57,
+      "n_by_type": {
+       "choice": 28,
+       "noul": 17,
+       "score": 12
+      },
+      "score": 53.97361524963816
+     },
+     "pt": {
+      "accuracy": 0.8297872340425532,
+      "cc": 82.99697871967773,
+      "cc_by_type": {
+       "choice": 58.06988352745424,
+       "noul": 100.0,
+       "score": 90.92105263157895
+      },
+      "low_n": false,
+      "n": 47,
+      "n_by_type": {
+       "choice": 23,
+       "noul": 12,
+       "score": 12
+      },
+      "score": 82.99697871967773
+     },
+     "sv": {
+      "accuracy": 0.8695652173913043,
+      "cc": 78.07040879666577,
+      "cc_by_type": {
+       "choice": 86.59217877094974,
+       "noul": 83.33333333333333,
+       "score": 64.28571428571428
+      },
+      "low_n": false,
+      "n": 46,
+      "n_by_type": {
+       "choice": 21,
+       "noul": 12,
+       "score": 13
+      },
+      "score": 78.07040879666577
+     },
+     "tr": {
+      "accuracy": 0.8043478260869565,
+      "cc": 76.56045441108155,
+      "cc_by_type": {
+       "choice": 65.79247434435577,
+       "noul": 100.0,
+       "score": 63.888888888888886
+      },
+      "low_n": false,
+      "n": 46,
+      "n_by_type": {
+       "choice": 20,
+       "noul": 10,
+       "score": 16
+      },
+      "score": 76.56045441108155
+     },
+     "uk": {
+      "accuracy": 0.7142857142857143,
+      "cc": 40.563738112404295,
+      "cc_by_type": {
+       "choice": 78.08219178082192,
+       "noul": 85.71428571428572,
+       "score": -42.105263157894754
+      },
+      "low_n": false,
+      "n": 56,
+      "n_by_type": {
+       "choice": 26,
+       "noul": 14,
+       "score": 16
+      },
+      "score": 40.563738112404295
+     },
+     "zh": {
+      "accuracy": 0.7804878048780488,
+      "cc": 61.73553719008265,
+      "cc_by_type": {
+       "choice": 75.20661157024794,
+       "noul": 50.0,
+       "score": 60.0
+      },
+      "low_n": false,
+      "n": 41,
+      "n_by_type": {
+       "choice": 22,
+       "noul": 8,
+       "score": 11
+      },
+      "score": 61.73553719008265
+     }
+    },
+    "type": {
+     "choice": {
+      "accuracy": 0.7933333333333333,
+      "cc": 71.80992411918639,
+      "cc_by_type": {
+       "choice": 71.80992411918639
+      },
+      "low_n": false,
+      "n": 750,
+      "n_by_type": {
+       "choice": 750
+      },
+      "score": 71.80992411918639
+     },
+     "noul": {
+      "accuracy": 0.88,
+      "cc": 76.0,
+      "cc_by_type": {
+       "noul": 76.0
+      },
+      "low_n": false,
+      "n": 375,
+      "n_by_type": {
+       "noul": 375
+      },
+      "score": 76.0
+     },
+     "score": {
+      "accuracy": 0.656,
+      "cc": 47.98828828828832,
+      "cc_by_type": {
+       "score": 47.98828828828832
+      },
+      "low_n": false,
+      "n": 375,
+      "n_by_type": {
+       "score": 375
+      },
+      "score": 47.98828828828832
+     }
+    },
+    "usecase": {
+     "advertising": {
+      "accuracy": 0.6041666666666666,
+      "cc": 46.02959864449857,
+      "cc_by_type": {
+       "choice": 37.73165307635285,
+       "noul": 42.85714285714286,
+       "score": 57.49999999999999
+      },
+      "low_n": false,
+      "n": 48,
+      "n_by_type": {
+       "choice": 31,
+       "noul": 7,
+       "score": 10
+      },
+      "score": 46.02959864449857
+     },
+     "code_linting": {
+      "accuracy": 0.7681159420289855,
+      "cc": 51.8261872276118,
+      "cc_by_type": {
+       "choice": 85.30312308634416,
+       "noul": 100.0,
+       "score": -29.824561403508774
+      },
+      "low_n": false,
+      "n": 69,
+      "n_by_type": {
+       "choice": 38,
+       "noul": 12,
+       "score": 19
+      },
+      "score": 51.8261872276118
+     },
+     "customer_support": {
+      "accuracy": 0.8636363636363636,
+      "cc": 64.49903972723938,
+      "cc_by_type": {
+       "choice": 92.619926199262,
+       "noul": 46.66666666666666,
+       "score": 54.21052631578947
+      },
+      "low_n": false,
+      "n": 66,
+      "n_by_type": {
+       "choice": 38,
+       "noul": 15,
+       "score": 13
+      },
+      "score": 64.49903972723938
+     },
+     "demand_forecasting": {
+      "accuracy": 0.5454545454545454,
+      "cc": 24.55934260331531,
+      "cc_by_type": {
+       "choice": 36.31539044730857,
+       "noul": 23.076923076923084,
+       "score": 14.28571428571428
+      },
+      "low_n": false,
+      "n": 66,
+      "n_by_type": {
+       "choice": 30,
+       "noul": 13,
+       "score": 23
+      },
+      "score": 24.55934260331531
+     },
+     "ecommerce_marketplaces": {
+      "accuracy": 0.8064516129032258,
+      "cc": 67.55048937025175,
+      "cc_by_type": {
+       "choice": 74.66572836030966,
+       "noul": 76.47058823529412,
+       "score": 51.515151515151516
+      },
+      "low_n": false,
+      "n": 62,
+      "n_by_type": {
+       "choice": 33,
+       "noul": 17,
+       "score": 12
+      },
+      "score": 67.55048937025175
+     },
+     "feature_extraction": {
+      "accuracy": 0.7777777777777778,
+      "cc": 67.95272659594268,
+      "cc_by_type": {
+       "choice": 66.08040201005025,
+       "noul": 100.0,
+       "score": 37.77777777777776
+      },
+      "low_n": false,
+      "n": 72,
+      "n_by_type": {
+       "choice": 37,
+       "noul": 14,
+       "score": 21
+      },
+      "score": 67.95272659594268
+     },
+     "financial_crime": {
+      "accuracy": 0.746031746031746,
+      "cc": 51.62147793726743,
+      "cc_by_type": {
+       "choice": 64.9122807017544,
+       "noul": 63.63636363636365,
+       "score": 26.315789473684227
+      },
+      "low_n": false,
+      "n": 63,
+      "n_by_type": {
+       "choice": 44,
+       "noul": 11,
+       "score": 8
+      },
+      "score": 51.62147793726743
+     },
+     "gaming": {
+      "accuracy": 0.7068965517241379,
+      "cc": 71.28596724214255,
+      "cc_by_type": {
+       "choice": 52.19123505976096,
+       "noul": 100.0,
+       "score": 61.66666666666668
+      },
+      "low_n": false,
+      "n": 58,
+      "n_by_type": {
+       "choice": 29,
+       "noul": 9,
+       "score": 20
+      },
+      "score": 71.28596724214255
+     },
+     "insurance_claims": {
+      "accuracy": 0.6774193548387096,
+      "cc": 40.791592063700016,
+      "cc_by_type": {
+       "choice": 51.0022271714922,
+       "noul": 64.70588235294117,
+       "score": 6.666666666666654
+      },
+      "low_n": false,
+      "n": 62,
+      "n_by_type": {
+       "choice": 31,
+       "noul": 17,
+       "score": 14
+      },
+      "score": 40.791592063700016
+     },
+     "knowledge_graphs": {
+      "accuracy": 0.7611940298507462,
+      "cc": 53.60781147887595,
+      "cc_by_type": {
+       "choice": 68.51574212893554,
+       "noul": 53.846153846153854,
+       "score": 38.46153846153847
+      },
+      "low_n": false,
+      "n": 67,
+      "n_by_type": {
+       "choice": 30,
+       "noul": 13,
+       "score": 24
+      },
+      "score": 53.60781147887595
+     },
+     "lead_generation": {
+      "accuracy": 0.8666666666666667,
+      "cc": 66.42174312131999,
+      "cc_by_type": {
+       "choice": 83.07475317348378,
+       "noul": 82.85714285714285,
+       "score": 33.333333333333336
+      },
+      "low_n": false,
+      "n": 75,
+      "n_by_type": {
+       "choice": 33,
+       "noul": 35,
+       "score": 7
+      },
+      "score": 66.42174312131999
+     },
+     "legal_compliance": {
+      "accuracy": 0.7142857142857143,
+      "cc": 57.50237726165509,
+      "cc_by_type": {
+       "choice": 69.90972918756269,
+       "noul": 57.14285714285714,
+       "score": 45.454545454545446
+      },
+      "low_n": false,
+      "n": 56,
+      "n_by_type": {
+       "choice": 23,
+       "noul": 14,
+       "score": 19
+      },
+      "score": 57.50237726165509
+     },
+     "llm_guardrails": {
+      "accuracy": 0.9014084507042254,
+      "cc": 73.67334238515501,
+      "cc_by_type": {
+       "choice": 91.85336048879836,
+       "noul": 100.0,
+       "score": 29.166666666666675
+      },
+      "low_n": false,
+      "n": 71,
+      "n_by_type": {
+       "choice": 34,
+       "noul": 26,
+       "score": 11
+      },
+      "score": 73.67334238515501
+     },
+     "model_routing": {
+      "accuracy": 0.8783783783783784,
+      "cc": 82.06545275530135,
+      "cc_by_type": {
+       "choice": 87.53678379781894,
+       "noul": 100.0,
+       "score": 58.65957446808512
+      },
+      "low_n": false,
+      "n": 148,
+      "n_by_type": {
+       "choice": 84,
+       "noul": 34,
+       "score": 30
+      },
+      "score": 82.06545275530135
+     },
+     "moderation_trust_safety": {
+      "accuracy": 0.8813559322033898,
+      "cc": 86.09625343762276,
+      "cc_by_type": {
+       "choice": 86.92810457516339,
+       "noul": 100.0,
+       "score": 71.36065573770492
+      },
+      "low_n": false,
+      "n": 59,
+      "n_by_type": {
+       "choice": 21,
+       "noul": 17,
+       "score": 21
+      },
+      "score": 86.09625343762276
+     },
+     "other": {
+      "accuracy": 0.78125,
+      "cc": 66.67899864348254,
+      "cc_by_type": {
+       "choice": 66.70366259711432,
+       "noul": 66.66666666666667,
+       "score": 66.66666666666666
+      },
+      "low_n": false,
+      "n": 32,
+      "n_by_type": {
+       "choice": 21,
+       "noul": 6,
+       "score": 5
+      },
+      "score": 66.67899864348254
+     },
+     "recruiting": {
+      "accuracy": 0.8923076923076924,
+      "cc": 78.23215573179523,
+      "cc_by_type": {
+       "choice": 82.69646719538572,
+       "noul": 100.0,
+       "score": 52.0
+      },
+      "low_n": false,
+      "n": 65,
+      "n_by_type": {
+       "choice": 32,
+       "noul": 25,
+       "score": 8
+      },
+      "score": 78.23215573179523
+     },
+     "risk_assessment": {
+      "accuracy": 0.8125,
+      "cc": 76.38128956120588,
+      "cc_by_type": {
+       "choice": 56.06694560669455,
+       "noul": 100.0,
+       "score": 73.07692307692308
+      },
+      "low_n": false,
+      "n": 48,
+      "n_by_type": {
+       "choice": 22,
+       "noul": 13,
+       "score": 13
+      },
+      "score": 76.38128956120588
+     },
+     "scientific_discovery": {
+      "accuracy": 0.7142857142857143,
+      "cc": 54.62849352419905,
+      "cc_by_type": {
+       "choice": 70.55214723926382,
+       "noul": 60.00000000000001,
+       "score": 33.333333333333336
+      },
+      "low_n": false,
+      "n": 42,
+      "n_by_type": {
+       "choice": 18,
+       "noul": 10,
+       "score": 14
+      },
+      "score": 54.62849352419905
+     },
+     "search_retrieval": {
+      "accuracy": 0.9402985074626866,
+      "cc": 90.77896512935882,
+      "cc_by_type": {
+       "choice": 90.55118110236221,
+       "noul": 85.71428571428572,
+       "score": 96.07142857142857
+      },
+      "low_n": false,
+      "n": 67,
+      "n_by_type": {
+       "choice": 14,
+       "noul": 14,
+       "score": 39
+      },
+      "score": 90.77896512935882
+     }
+    }
+   },
+   "breakdowns_equated": false,
+   "ci95": {
+    "B": 1000,
+    "C": [
+     54.189091075486495,
+     62.55744807784056
+    ],
+    "I": [
+     53.77866961040525,
+     65.4646009945964
+    ],
+    "capability": [
+     54.72830312319232,
+     63.50696618895616
+    ],
+    "composite": {
+     "A": [
+      51.00631665264938,
+      54.97505560271135
+     ],
+     "B": [
+      50.4498454922785,
+      55.57902228681105
+     ],
+     "C": [
+      41.13699627513369,
+      54.97505560271135
+     ]
+    },
+    "seed": 16
+   },
+   "ci95_n": 1200,
+   "complete": true,
+   "equated": null,
+   "equating_flag": null,
+   "equating_offset": null,
+   "full_set_api": true,
+   "g_med_used": 2.573387642438244,
+   "lane": "api",
+   "metric_basis": "S u P (full set, API lane, v1.6.1 amendment; not equated)",
+   "n_items": 1500,
+   "n_public": 300,
+   "n_sealed_side": 1200,
+   "on_S": {
+    "calibration": 58.762888995605785,
+    "capability": 59.568723992813034,
+    "intelligence": 60.374558990020276
+   },
+   "per_type": {
+    "choice": {
+     "accuracy": 0.7933333333333333,
+     "calibration": 39.358041431261796,
+     "cc": 71.80992411918639,
+     "cc_by_type": {
+      "choice": 71.80992411918639
+     },
+     "cc_tiered": 73.38094952807639,
+     "cc_tiered_open": 73.75386951874387,
+     "cc_tiered_sealed": 73.0080295374089,
+     "low_n": false,
+     "n": 750,
+     "n_by_type": {
+      "choice": 750
+     },
+     "score": 71.80992411918639
+    },
+    "noul": {
+     "accuracy": 0.88,
+     "calibration": 76.99733333333334,
+     "cc": 76.0,
+     "cc_by_type": {
+      "noul": 76.0
+     },
+     "cc_tiered": 68.79673842413261,
+     "cc_tiered_open": 66.15458937198068,
+     "cc_tiered_sealed": 71.43888747628455,
+     "low_n": false,
+     "n": 375,
+     "n_by_type": {
+      "noul": 375
+     },
+     "score": 76.0
+    },
+    "score": {
+     "accuracy": 0.656,
+     "calibration": 59.93329222222222,
+     "cc": 47.98828828828832,
+     "cc_by_type": {
+      "score": 47.98828828828832
+     },
+     "cc_tiered": 38.94598901785183,
+     "cc_tiered_open": 38.68600125549278,
+     "cc_tiered_sealed": 39.20597678021088,
+     "low_n": false,
+     "n": 375,
+     "n_by_type": {
+      "score": 375
+     },
+     "score": 47.98828828828832
+    }
+   },
+   "raw_on_A": null,
+   "set": "S+P"
+  },
+  "validity": {
+   "choice": {
+    "invalid_rate": 0.002666666666666706,
+    "n": 750
+   },
+   "noul": {
+    "invalid_rate": 0.0,
+    "n": 375
+   },
+   "score": {
+    "invalid_rate": 0.0,
+    "n": 375
+   }
+  },
+  "views": {
+   "Balanced 33:33:33": 53.582385681053815,
+   "Emphasis on Accuracy 60:20:20": 53.689376614265285,
+   "Emphasis on Cost 20:20:60": 48.321636458521255,
+   "Emphasis on Speed 20:60:20": 59.9943850301143,
+   "Intelligence only": 53.85066655111111
+  }
+ }
+}

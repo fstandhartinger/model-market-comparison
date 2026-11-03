@@ -1,0 +1,225 @@
+{
+ "carried_rows": 337,
+ "carried_rows_equal_except": [],
+ "cost_basis": {
+  "cost_basis_sha256": "b83bdfd14c263ffacfa572b304084154afca84c1f00083101a33783ae6f8b356",
+  "frozen_at": "v1.7.16",
+  "n_items": 1489,
+  "rule": "fixed-common-cost-basis-d1027 (frozen at v1.7.16)",
+  "set_sha256": "4e912731e63369e1b3066b0b4afa87b44f1094aea079c5b41dc6d02e7f235537"
+ },
+ "exceptions": {
+  "text_only_sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+ },
+ "method": {
+  "decision_limit_s": 10,
+  "label": "v1.7",
+  "rule": "latency_s > 10.000 s -> failed",
+  "treatment": "share"
+ },
+ "new_rows": {
+  "nvidia/nemotron-3.5-super-vl": {
+   "axes": {
+    "calibration": 58.762888995605785,
+    "cost": 47.22136754775445,
+    "intelligence": 60.374558990020276,
+    "speed": 81.97747198900981
+   },
+   "category_pool_bounds": {
+    "languages": {
+     "ar": 21,
+     "cs": 37,
+     "da": 36,
+     "de": 48,
+     "el": 28,
+     "en": 555,
+     "es": 37,
+     "fi": 52,
+     "fr": 32,
+     "hi": 37,
+     "id": 41,
+     "it": 45,
+     "ja": 44,
+     "ko": 43,
+     "mixed": 64,
+     "nl": 36,
+     "no": 51,
+     "pl": 57,
+     "pt": 47,
+     "sv": 46,
+     "tr": 46,
+     "uk": 56,
+     "zh": 41
+    },
+    "topics": {},
+    "usecases": {
+     "advertising": 48,
+     "code_linting": 69,
+     "customer_support": 66,
+     "demand_forecasting": 66,
+     "ecommerce_marketplaces": 62,
+     "feature_extraction": 72,
+     "financial_crime": 63,
+     "gaming": 58,
+     "insurance_claims": 62,
+     "knowledge_graphs": 67,
+     "lead_generation": 75,
+     "legal_compliance": 56,
+     "llm_guardrails": 71,
+     "model_routing": 148,
+     "moderation_trust_safety": 59,
+     "other": 32,
+     "recruiting": 65,
+     "risk_assessment": 48,
+     "scientific_discovery": 42,
+     "search_retrieval": 67
+    }
+   },
+   "composite_ci95": {
+    "A": [
+     51.00631665264938,
+     54.97505560271135
+    ],
+    "B": [
+     50.4498454922785,
+     55.57902228681105
+    ],
+    "C": [
+     41.13699627513369,
+     54.97505560271135
+    ]
+   },
+   "cost": {
+    "common_n": 1489,
+    "common_set_sha256": "4e912731e63369e1b3066b0b4afa87b44f1094aea079c5b41dc6d02e7f235537",
+    "cost_all": 0.08442866666666667,
+    "cost_basis_rule": "v1.7.16 same-items cost rule on draw v1.6-regular-20261027: cost per 1,000 decisions on the items every row on this draw answered (HTTP 200, ok, no error, for all 8 d1027 rows); refused/failed/not-sent items count for no row's cost and still count as wrong answers.",
+    "cost_basis_sha256": "b83bdfd14c263ffacfa572b304084154afca84c1f00083101a33783ae6f8b356",
+    "cost_common": 0.05744969778374748,
+    "cost_components": {
+     "all": {
+      "list_price": 0.08442866666666667,
+      "selected": 0.08442866666666667
+     },
+     "common": {
+      "list_price": 0.05744969778374748,
+      "selected": 0.05744969778374748
+     }
+    },
+    "dispatch_sha256": "cf08b16d27eec308d4755e22ddf1d1de6f054a374422bf4b5aab41f3ec767747",
+    "expect": {
+     "failed": 0,
+     "input_tokens": 1015566,
+     "ok": 1500,
+     "output_tokens": 62716,
+     "status_counts": {
+      "200": 1500
+     }
+    },
+    "guard_responses_200_crusoe_exact_model": 1500,
+    "guard_sha256": "8883b837a0c1622058cc90a3b64587ebbcc3729b5623575e4128c0100e293ffa",
+    "input_tokens_all": 1015566,
+    "input_tokens_common": 607138,
+    "latency": {
+     "max": 31.24053295503836,
+     "n": 1500,
+     "over_10_s": 2,
+     "p50": 0.6272735850070603,
+     "p95": 1.0111039375420658
+    },
+    "latency_max_s": 31.24053295503836,
+    "latency_over_10_s": 2,
+    "list_all": 0.08442866666666667,
+    "list_common": 0.05744969778374748,
+    "model_pin": "https://openrouter.ai/nvidia/nemotron-3.5-super-vl",
+    "output_tokens_all": 62716,
+    "output_tokens_common": 62072,
+    "pricing_resolve": {
+     "counting_list_price": true,
+     "floor_binds": false,
+     "note": "operator standard launch list price (interpretation I-1); no exact base-model floor applies",
+     "rankable": true,
+     "usd_per_1000": 0.08442866666666667
+    },
+    "rate_limited_429_resent": 56,
+    "raw_order_matches_input": true,
+    "raw_sha256": "5b54e44b0340746d759d9433858b69f7c8c3b931cb901421ac03933bfb39ddbb",
+    "reasoning_tokens": 0,
+    "ref": {
+     "authority": "deputy #27032/#27088; independent review and v1.8.6 merge required",
+     "endpoint": "OpenRouter Crusoe crusoe/bf16",
+     "fetched_at": "2026-11-03T05:45:33.770410+00:00",
+     "in": 0.1,
+     "kind": "published tariff",
+     "module_sha256": "2f52370fe1dba73d75a770a386df350cc76a0898304aeba9e29c91f6e4d3738b",
+     "out": 0.4
+    },
+    "scoring_raw_sha256": "5b54e44b0340746d759d9433858b69f7c8c3b931cb901421ac03933bfb39ddbb",
+    "usage_estimated_rows": 0
+   },
+   "decision_limit": {
+    "limit_s": 10.0,
+    "n_over_limit": 2,
+    "n_over_limit_answered_ok": 2,
+    "rule": "latency_s > limit -> failed",
+    "speed_basis": "all decisions given (lane items in the raw), measured latency_s",
+    "speed_n": 1500,
+    "treatment": "share"
+   },
+   "model_pin": "https://openrouter.ai/nvidia/nemotron-3.5-super-vl",
+   "price_reference": {
+    "authority": "deputy #27032/#27088; independent review and v1.8.6 merge required",
+    "endpoint": "OpenRouter Crusoe crusoe/bf16",
+    "fetched_at": "2026-11-03T05:45:33.770410+00:00",
+    "in": 0.1,
+    "kind": "published tariff",
+    "module_sha256": "2f52370fe1dba73d75a770a386df350cc76a0898304aeba9e29c91f6e4d3738b",
+    "out": 0.4
+   },
+   "raw_sha256": "5b54e44b0340746d759d9433858b69f7c8c3b931cb901421ac03933bfb39ddbb",
+   "scored_input_sha256": "079647e48a4b33d0a0aaf50a301cd23e6717d302c235af9b3e51d8b0767e68a5",
+   "treatment": "unranked"
+  }
+ },
+ "predecessor": {
+  "publication_sha256": "42c82e7b1879e6cc73e28cc151c263d2ee7cf7af7b18e15fd6c4fb287de2161d",
+  "revision": "v1.8.6"
+ },
+ "pricing_authority": "deputy #27032/#27088; independent review and v1.8.6 merge required",
+ "pricing_module_sha256": "2f52370fe1dba73d75a770a386df350cc76a0898304aeba9e29c91f6e4d3738b",
+ "publication_approval": {
+  "fresh_baseline": "v1.8.6",
+  "status": "GO (standing; no top-five change; Florian work order #20965)",
+  "top_five_effect": "unchanged"
+ },
+ "remeasured_rows": {},
+ "repriced_rows": {},
+ "revision": "v1.8.7",
+ "schema_version": 1,
+ "scorers": {
+  "a2_cells_v16": "afd034efe27bde12f2ebbfd12c4c0792c93214e1aa9a63deecb0e83a0184c990",
+  "build_categories_v16": "40eb50f3d7fea2693b4478c4b89f8bfb957dd17776add491935742e3b9354e73",
+  "build_topics_v16": "ec04ab598162bfc4340ffa7916a06573eb1222132c61e47ab772045bc67ced78",
+  "decisive_v16": "80b9ccf43e58dddb1b2a77e0a33aba8a9f7337a3a9a639afc7264218bbf8918f",
+  "noul_method_v16": "119e59486ab3300b972fbcbadb0fe1dceceb124287607375aa61c66063c607d0",
+  "pins_v17": "b50cc00dd2cb0ba46157eb6a2bda620255f3ff54404025e992bc7962dfff2f8b",
+  "run_under_v17": "efb194b2ea350db59be37e5e72af71f809f763a2476cd6f521adf6f4fd90a64f",
+  "score_v15": "0931e05c6410b1b971201834397cb609cdb25f942723c50375632952f6dcc447",
+  "score_v15_headlineA": "826f2cbcb57007ec8a161e6eb0111182b8a656c0638027c6c78022a858fd8e2c",
+  "score_v16": "02132271117653e6302c509232a581d0094f0e78eac8b1bfc67596fd5d5097e9",
+  "score_v17": "6363458d208a52f4ad5aaf73027cad1b7e0358ff962e581d57a3cc462c8f1978"
+ },
+ "source_inputs": {
+  "inputs/ARCHITECTURE.json": "65d6ff1161d76dc88c3053c2bea70f5aea7eb82d49bf1abd5d84e3bc47abf7e0",
+  "inputs/CLEANED-ROWS.json": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+  "inputs/ENTRIES.json": "69c2180f5082d663f17fc0643e9f5507342af9f6c3e25fc6b4f27da02ac22f1f",
+  "inputs/ENTRY-PINS.json": "5d9f323b6b713602d492f3ffd2f78b63ec50f7659a177c5538228c0bd4fbfc0f",
+  "inputs/PROVENANCE.json": "48cdd465d2bfa1bde008c5e3db122334c3e1f5b90eaa0d87930bdfe958ca41aa",
+  "inputs/PUBLIC-ROWS.json": "5d94646e2d5ce5a44f196aa19d9c76bc17ee3b576dbc4b2c945bf258c751d334",
+  "inputs/TEXT-EXCEPTIONS.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+  "src/cells.json": "26e27c37a1b987bc5ca04b0c206bbf7e763890580a9433b98260ba2590ed28b4",
+  "src/scored.json": "8c38196b9dae88b41b4e0b1432bfb4c678fcaddd21df20b095e56b51f78a0f02",
+  "src/usage.json": "88b014c504ea649d5b6d10c9fcadce40378ece2265ab5e13898e6daa28bcb378"
+ },
+ "topfive_diff_sha256": "ac176c9126947921fa0149e3ad781898e597a36a2b993ddb150b54ddcaaa99f8"
+}
