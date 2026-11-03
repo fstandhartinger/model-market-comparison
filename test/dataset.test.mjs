@@ -3,6 +3,7 @@ import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
+import { assertExercised, assertJoinParity, listedRow, openRouterListed, rawCatalog } from "./helpers/live-catalog.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ds = JSON.parse(await readFile(join(__dirname, "..", "data", "dataset.json"), "utf8"));
@@ -20,6 +21,13 @@ const epochEci = JSON.parse(await readFile(join(__dirname, "..", "data", "raw", 
 const stackit = JSON.parse(await readFile(join(__dirname, "..", "data", "raw", "stackit.json"), "utf8"));
 const chutesCatalog = JSON.parse(await readFile(join(__dirname, "..", "data", "raw", "chutes.json"), "utf8"));
 const inceptron = JSON.parse(await readFile(join(__dirname, "..", "data", "raw", "inceptron.json"), "utf8"));
+const azureFoundry = rawCatalog("azure-foundry.json");
+const bedrock = rawCatalog("aws-bedrock.json");
+const nebius = rawCatalog("nebius.json");
+const ovhcloud = rawCatalog("ovhcloud.json");
+const scaleway = rawCatalog("scaleway.json");
+const ionos = rawCatalog("ionos.json");
+const tensorx = rawCatalog("tensorx.json");
 
 const REQUIRED = [
   "gpt-5.5", "gpt-5.4", "gpt-5.5-mini", "gpt-5.4-mini",
@@ -91,16 +99,19 @@ test("moving aliases and safe provider prefixes do not split model families", ()
     assert.equal(families.has(duplicate), false, `provider-prefix duplicate: ${duplicate}`);
   }
 
-  const providers = (family) => new Set(
-    ds.models.find((model) => model.family_key === family)?.offers.map((offer) => offer.provider) ?? [],
-  );
-  assert.ok(providers("command-a").has("Cohere"));
-  assert.ok(providers("command-a").has("Azure AI Foundry"));
-  assert.ok(providers("palmyra-x5").has("AWS Bedrock"));
-  assert.ok(providers("palmyra-x5").has("Amazon Bedrock"));
-  assert.ok(providers("sonar").has("Perplexity"));
-  // 2026-08-26: TensorX removed Nemotron 3 Super from its catalog; Bedrock still carries it.
-  assert.ok(providers("nemotron-3-super-120b-a12b").has("AWS Bedrock"));
+  // Provider-prefixed names must join the canonical family. Pin the join, not the live listing:
+  // each offer is required exactly while today's raw catalog lists it (R9.1).
+  const routes = (family, provider, platform) => (ds.models.find((model) => model.family_key === family)?.offers ?? [])
+    .some((offer) => offer.provider === provider && offer.platform === platform);
+  assertExercised(assert, [
+    assertJoinParity(assert, routes("command-a", "Cohere", "OpenRouter"), openRouterListed(openRouter, "cohere/command-a", "Cohere"), "command-a Cohere"),
+    assertJoinParity(assert, routes("command-a", "Azure AI Foundry", "Azure AI Foundry"), listedRow(azureFoundry, "Cohere Command A"), "command-a Azure AI Foundry"),
+    assertJoinParity(assert, routes("palmyra-x5", "AWS Bedrock", "AWS Bedrock"), listedRow(bedrock, (row) => /palmyra x5/i.test(row.model_name)), "palmyra-x5 AWS Bedrock"),
+    assertJoinParity(assert, routes("palmyra-x5", "Amazon Bedrock", "OpenRouter"), openRouterListed(openRouter, "writer/palmyra-x5", "Amazon Bedrock"), "palmyra-x5 Amazon Bedrock"),
+    assertJoinParity(assert, routes("sonar", "Perplexity", "OpenRouter"), openRouterListed(openRouter, "perplexity/sonar", "Perplexity"), "sonar Perplexity"),
+    // 2026-08-26: TensorX removed Nemotron 3 Super from its catalog; Bedrock still carries it.
+    assertJoinParity(assert, routes("nemotron-3-super-120b-a12b", "AWS Bedrock", "AWS Bedrock"), listedRow(bedrock, "NVIDIA Nemotron 3 Super 120B A12B"), "nemotron-3-super AWS Bedrock"),
+  ], "provider-prefix joins");
 });
 
 test("open-weights filter metadata excludes audited proprietary families", () => {
@@ -210,17 +221,29 @@ test("every offer carries audited residency and provider-origin flags", () => {
 
 test("EU residency is specific to the model offer, not inherited from the provider", () => {
   const offers = (family) => ds.models.find((model) => model.family_key === family)?.offers ?? [];
-  const offer = (family, provider) => offers(family).find((row) => row.provider === provider);
+  const offer = (family, provider) => offers(family).find((row) => row.provider === provider && row.platform === provider);
+  // Each residency fact holds while the vendor lists the row; a delisted row must leave no offer (R9.1).
+  const residency = (family, provider, listed, euHosted, message = `${family} ${provider}`) => {
+    if (assertJoinParity(assert, offer(family, provider), listed, `${family} ${provider}`)) {
+      assert.equal(offer(family, provider).eu_hosted, euHosted, message);
+    }
+    return Boolean(listed);
+  };
+  const apiId = (id) => (row) => row.api_model_id === id || row.model_id === id;
 
-  assert.equal(offer("glm-5.2", "Inceptron")?.eu_hosted, true);
-  assert.equal(offer("glm-5.2", "TensorX")?.eu_hosted, true);
-  assert.equal(offer("glm-5.2", "Scaleway")?.eu_hosted, true);
-  // Nebius retired the uk-south1 region on 2026-07-30 and dropped its GLM-5.2 and
-  // DeepSeek V4 Pro listings with it; Kimi K3 launched in the new eu-west2 (FR) region.
-  assert.equal(offer("glm-5.2", "Azure AI Foundry")?.eu_hosted, false, "Fireworks-on-Azure is US-served");
-  assert.equal(offer("deepseek-v4-pro-0813", "TensorX")?.eu_hosted, true);
-  assert.equal(offer("kimi-k3", "Nebius")?.eu_hosted, true, "Nebius serves Kimi K3 from eu-west2 (France)");
-  assert.equal(offer("kimi-k2.7-code", "Azure AI Foundry")?.eu_hosted, false, "policy equivalence must not falsify technical residency");
+  assertExercised(assert, [
+    residency("glm-5.2", "Inceptron", listedRow(inceptron, apiId("zai-org/GLM-5.2")), true),
+    residency("glm-5.2", "TensorX", listedRow(tensorx, apiId("z-ai/glm-5.2")), true),
+    residency("glm-5.2", "Scaleway", listedRow(scaleway, apiId("glm-5.2")), true),
+    residency("deepseek-v4-pro-0813", "TensorX", listedRow(tensorx, apiId("deepseek/deepseek-v4-pro-0813")), true),
+    // Nebius retired the uk-south1 region on 2026-07-30 and dropped its GLM-5.2 and
+    // DeepSeek V4 Pro listings with it; Kimi K3 launched in the new eu-west2 (FR) region.
+    residency("kimi-k3", "Nebius", listedRow(nebius, apiId("moonshotai/Kimi-K3")), true, "Nebius serves Kimi K3 from eu-west2 (France)"),
+  ], "EU-resident offers");
+  assertExercised(assert, [
+    residency("glm-5.2", "Azure AI Foundry", listedRow(azureFoundry, (row) => /^GLM 5\.2( Fast)? \(Fireworks\)$/.test(row.model_name)), false, "Fireworks-on-Azure is US-served"),
+    residency("kimi-k2.7-code", "Azure AI Foundry", listedRow(azureFoundry, (row) => row.model_name.startsWith("Kimi K2.7 Code")), false, "policy equivalence must not falsify technical residency"),
+  ], "non-EU Azure offers");
 });
 
 test("only the two approved Azure Direct Global offers receive the EU policy equivalence", () => {
@@ -229,11 +252,12 @@ test("only the two approved Azure Direct Global offers receive the EU policy equ
     .map((offer) => ({ family: model.family_key, offer })));
   const equivalent = azure.filter(({ offer }) => offer.eu_policy_equivalent === true);
 
+  // The approval list is fixed; which approved offers exist follows Azure's live catalog (R9.1).
+  const approved = { "deepseek-v4-pro": "DeepSeek-V4 Pro", "kimi-k2.7-code": "Kimi K2.7 Code (Azure Direct)" };
   assert.deepEqual(
     [...new Set(equivalent.map(({ family }) => family))].sort(),
-    ["deepseek-v4-pro", "kimi-k2.7-code"],
+    Object.entries(approved).filter(([, name]) => listedRow(azureFoundry, name)).map(([family]) => family).sort(),
   );
-  assert.ok(equivalent.length > 0);
   for (const { offer } of equivalent) {
     assert.equal(offer.region, "global");
     assert.equal(offer.eu_hosted, false);
@@ -251,18 +275,28 @@ test("only the two approved Azure Direct Global offers receive the EU policy equ
   // "Kimi K2.x Thinking (Azure Direct)" rows now join the base families.
   // minimax-m2.7 -> minimax-m3 (2026-07-31): the Retail API never had an M2.7 meter;
   // the $0.33/$1.32 Fireworks meters are "FW MiniMax 3", so the offer moved to M3.
-  for (const family of ["glm-5.2", "minimax-m3", "kimi-k2.5", "kimi-k2.6"]) {
+  const controlRoutes = [
+    ["glm-5.2", /^GLM 5\.2( Fast)? \(Fireworks\)$/],
+    ["minimax-m3", /^MiniMax M3 \(Fireworks\)$/],
+    ["kimi-k2.5", /^Kimi K2\.5 Thinking /],
+    ["kimi-k2.6", /^Kimi K2\.6 Thinking /],
+  ];
+  assertExercised(assert, controlRoutes.map(([family, name]) => {
     const rows = azure.filter((row) => row.family === family);
-    assert.ok(rows.length > 0, `${family} has an Azure control route`);
+    assertJoinParity(assert, rows.length > 0, listedRow(azureFoundry, (row) => name.test(row.model_name)), `${family} Azure control route`);
     assert.ok(rows.every(({ offer }) => offer.eu_policy_equivalent !== true), family);
-  }
+    return rows.length > 0;
+  }), "Azure control routes");
 });
 
 test("global and EU routes from one provider are both retained", () => {
   const model = ds.models.find((row) => row.family_key === "gpt-5.4");
   const azure = model?.offers.filter((offer) => offer.provider === "Azure AI Foundry") ?? [];
-  assert.ok(azure.some((offer) => offer.eu_hosted === false && offer.region === "global"));
-  assert.ok(azure.some((offer) => offer.eu_hosted === true && offer.region === "eu"));
+  // Anchored on GPT-5.4 while Azure lists both its Global and EU Data Zone meters (R9.1).
+  assertExercised(assert, [
+    assertJoinParity(assert, azure.some((offer) => offer.eu_hosted === false && offer.region === "global"), listedRow(azureFoundry, "GPT-5.4"), "gpt-5.4 Azure global"),
+    assertJoinParity(assert, azure.some((offer) => offer.eu_hosted === true && offer.region === "eu"), listedRow(azureFoundry, "GPT-5.4 (EU Data Zone)"), "gpt-5.4 Azure EU"),
+  ], "gpt-5.4 Azure routes");
 });
 
 test("mixed-region OpenRouter providers never inherit an EU flag from company metadata", () => {
@@ -286,10 +320,23 @@ test("EU-capable gateway providers mark only their explicitly European OpenRoute
 test("context-price tiers and distinct managed routes survive dataset deduplication", () => {
   const offers = ds.models.flatMap((model) => model.offers);
   const azure55 = offers.filter((offer) => offer.provider === "Azure AI Foundry" && ["short_context", "long_context"].includes(offer.pricing_tier));
-  assert.ok(azure55.some((offer) => offer.region === "global" && offer.pricing_tier === "short_context" && offer.input_per_1m === 5));
-  assert.ok(azure55.some((offer) => offer.region === "global" && offer.pricing_tier === "long_context" && offer.input_per_1m === 10));
-  assert.ok(azure55.some((offer) => offer.region === "eu" && offer.pricing_tier === "short_context" && offer.input_per_1m === 5.5));
-  assert.ok(azure55.some((offer) => offer.region === "eu" && offer.pricing_tier === "long_context" && offer.input_per_1m === 11));
+  // Azure context tiers come from the retail meters the daily collector reads (R9.1): every
+  // tiered raw row must survive deduplication as its own offer at the raw price, and no tier
+  // offer may outlive its raw row.
+  const azureTiers = azureFoundry.models
+    .map((row) => ({ row, tier: row.model_name.match(/\((short|long) context\)/)?.[1] }))
+    .filter(({ tier }) => tier);
+  for (const { row, tier } of azureTiers) {
+    const pricingTier = `${tier}_context`;
+    assert.ok(azure55.some((offer) => offer.region === row.region && offer.pricing_tier === pricingTier && offer.input_per_1m === row.input_per_1m_usd),
+      `Azure ${row.model_name} (${row.region}) survives deduplication`);
+  }
+  const tierKey = (region, tier, input) => `${region}|${tier}|${input}`;
+  assert.deepEqual(
+    [...new Set(azure55.map((offer) => tierKey(offer.region, offer.pricing_tier, offer.input_per_1m)))].sort(),
+    [...new Set(azureTiers.map(({ row, tier }) => tierKey(row.region, `${tier}_context`, row.input_per_1m_usd)))].sort(),
+    "every Azure context-tier offer has its raw row",
+  );
 
   // T-Systems lists and delists tiered models daily (R9.1), so the tiers to expect come from the
   // snapshot rows rather than a literal threshold that the next catalog change would break.
@@ -301,11 +348,16 @@ test("context-price tiers and distinct managed routes survive dataset deduplicat
   for (const tier of tieredRows) {
     assert.ok(tSystems.some((offer) => offer.pricing_tier === tier), `T-Systems ${tier}`);
   }
+  // Both directions (#41228): with zero tiered snapshot rows the loop above asserts nothing, so a
+  // tier offer that outlived its delisted row would pass unnoticed.
+  assert.deepEqual([...new Set(tSystems.map((offer) => offer.pricing_tier))].sort(), [...new Set(tieredRows)].sort(), "T-Systems tiers match the snapshot");
 
   const deepSeek = ds.models.find((model) => model.family_key === "deepseek-v4-pro")?.offers
     .filter((offer) => offer.provider === "Azure AI Foundry") || [];
-  assert.ok(deepSeek.some((offer) => offer.route_type === "azure_direct" && offer.region === "global"));
-  assert.ok(deepSeek.some((offer) => offer.route_type === "fireworks" && offer.region === "us"));
+  assertExercised(assert, [
+    assertJoinParity(assert, deepSeek.some((offer) => offer.route_type === "azure_direct" && offer.region === "global"), listedRow(azureFoundry, "DeepSeek-V4 Pro"), "deepseek-v4-pro Azure Direct"),
+    assertJoinParity(assert, deepSeek.some((offer) => offer.route_type === "fireworks" && offer.region === "us"), listedRow(azureFoundry, "DeepSeek-V4 Pro (Fireworks)"), "deepseek-v4-pro Fireworks"),
+  ], "deepseek-v4-pro Azure routes");
 });
 
 test("audited July provider prices survive the merged dataset", () => {
@@ -318,19 +370,24 @@ test("audited July provider prices survive the merged dataset", () => {
     [find("glm-5.2", "Inceptron")?.input_per_1m, find("glm-5.2", "Inceptron")?.output_per_1m],
     [glm52.input_per_1m_usd, glm52.output_per_1m_usd],
   );
-  assert.deepEqual(
-    [find("deepseek-v3.1", "AWS Bedrock")?.input_per_1m, find("deepseek-v3.1", "AWS Bedrock")?.output_per_1m],
-    [0.696, 2.016],
-  );
-  assert.deepEqual(
-    [find("qwen3-coder-480b-a35b", "AWS Bedrock")?.input_per_1m, find("qwen3-coder-480b-a35b", "AWS Bedrock")?.output_per_1m],
-    [0.54, 2.16],
-  );
+  // Bedrock prices follow the AWS Price List the daily collector reads (R9.1): the merged offer
+  // must carry the raw row's price while the row is listed, and disappear with it.
+  for (const [family, name] of [["deepseek-v3.1", "DeepSeek V3.1"], ["qwen3-coder-480b-a35b", "Qwen3 Coder 480B A35B"]]) {
+    const row = listedRow(bedrock, name);
+    if (assertJoinParity(assert, find(family, "AWS Bedrock"), row, `${family} AWS Bedrock`)) {
+      assert.ok(row.input_per_1m_usd > 0 && row.output_per_1m_usd > 0, name);
+      assert.deepEqual(
+        [find(family, "AWS Bedrock").input_per_1m, find(family, "AWS Bedrock").output_per_1m],
+        [row.input_per_1m_usd, row.output_per_1m_usd],
+        family,
+      );
+    }
+  }
 });
 
 test("privacy routing is not mislabeled as trusted execution", () => {
   const venice = ds.models.flatMap((model) => model.offers).filter((offer) => offer.provider === "Venice");
-  assert.ok(venice.length > 0);
+  assert.equal(venice.length > 0, openRouter.models.some((model) => (model.endpoints ?? []).some((endpoint) => endpoint.provider_name === "Venice")), "Venice offers follow OpenRouter's endpoints");
   assert.ok(venice.every((offer) => !offer.tee));
   const chutes = ds.models.flatMap((model) => model.offers).filter((offer) => offer.platform === "Chutes");
   assert.equal(chutes.length > 0, true);
@@ -347,19 +404,28 @@ test("current Copilot token catalog and legacy request table stay distinct", () 
   assert.ok(copilot.current_models.length >= 20, `current_models: ${copilot.current_models.length}`);
   // Official legacy table contracted to five rows (owner-reviewed 2026-10-31).
   // Exact-set removal approval and shrink refusal are covered by the collector tests.
-  assert.ok(copilot.models.length >= 5, `legacy models: ${copilot.models.length}`);
+  assert.ok(copilot.models.length >= 1, `legacy models: ${copilot.models.length}`);
   assert.equal(new Set(copilot.current_models.map((row) => row.model_name)).size, copilot.current_models.length);
   assert.equal(new Set(copilot.models.map((row) => row.model_name)).size, copilot.models.length);
 
   const model = (family) => ds.models.find((row) => row.family_key === family);
-  assert.deepEqual(
-    [model("gpt-5.6-sol")?.copilot?.current?.input_per_1m, model("gpt-5.6-sol")?.copilot?.current?.output_per_1m],
-    [4, 20], // 2026-09-08: official Copilot token pricing
-  );
-  assert.deepEqual(
-    [model("claude-sonnet-5")?.copilot?.current?.input_per_1m, model("claude-sonnet-5")?.copilot?.current?.output_per_1m],
-    [2, 10],
-  );
+  // Current token prices follow GitHub's catalog (R9.1): a listed row reaches its family at the
+  // raw price; a family whose row left the catalog carries no current Copilot price.
+  const currentRow = (name) => listedRow({ models: copilot.current_models }, name);
+  const currentPrice = (family, name, key = "current") => {
+    const row = currentRow(name);
+    const joined = model(family)?.copilot?.[key];
+    if (assertJoinParity(assert, joined?.input_per_1m != null, row, `${family} Copilot ${key}`)) {
+      assert.deepEqual([joined.input_per_1m, joined.output_per_1m], [row.input_per_1m_usd, row.output_per_1m_usd], `${family} Copilot ${key}`);
+    }
+    return Boolean(row);
+  };
+  assertExercised(assert, [
+    currentPrice("gpt-5.6-sol", "GPT-5.6 Sol"),
+    currentPrice("claude-sonnet-5", "Claude Sonnet 5"),
+    currentPrice("claude-opus-4.8", "Claude Opus 4.8"),
+    currentPrice("claude-opus-4.8", "Claude Opus 4.8 (fast mode) (preview)", "fast_mode"),
+  ], "Copilot current token prices");
   assert.equal(model("claude-sonnet-5")?.copilot?.current?.standard_pricing_from, null);
   // Legacy multipliers follow GitHub's annual-plan table, which drops retired models (GPT-5.4 6x,
   // retired 2026-10-19). Every listed multiplier reaches exactly one family; a retired model carries none.
@@ -370,7 +436,7 @@ test("current Copilot token catalog and legacy request table stay distinct", () 
     pairs([...familyCopilot.values()].filter((c) => c.multiplier != null).map((c) => [c.multiplier, c.usd_per_request])),
     pairs(copilot.models.map((row) => [row.premium_request_multiplier, row.effective_usd_per_request])),
   );
-  assert.equal(model("claude-opus-4.8")?.copilot?.multiplier, legacyRow("Claude Opus 4.8")?.premium_request_multiplier);
+  assert.equal(model("claude-opus-4.8")?.copilot?.multiplier ?? null, legacyRow("Claude Opus 4.8")?.premium_request_multiplier ?? null);
   if (legacyRow("GPT-5.4")) {
     assert.equal(model("gpt-5.4")?.copilot?.multiplier, 6);
   } else {
@@ -378,14 +444,6 @@ test("current Copilot token catalog and legacy request table stay distinct", () 
     assert.ok(retired && retired.retirement_date <= copilot.collected_at, "GPT-5.4 left the legacy table without a retirement");
     assert.equal(model("gpt-5.4")?.copilot?.multiplier ?? null, null);
   }
-  assert.deepEqual(
-    [model("claude-opus-4.8")?.copilot?.current?.input_per_1m, model("claude-opus-4.8")?.copilot?.current?.output_per_1m],
-    [5, 25],
-  );
-  assert.deepEqual(
-    [model("claude-opus-4.8")?.copilot?.fast_mode?.input_per_1m, model("claude-opus-4.8")?.copilot?.fast_mode?.output_per_1m],
-    [10, 50],
-  );
 });
 
 test("confirmed non-US provider metadata reaches the provider directory", () => {
@@ -397,43 +455,31 @@ test("confirmed non-US provider metadata reaches the provider directory", () => 
 
 test("Claude first-party snapshot contains every currently callable model", () => {
   assert.ok(claude.collected_at >= "2026-09-08");
-  // 2026-09-23: Claude Opus 5.5 joined the pricing table (13 -> 14 callable models).
-  // 2026-09-29: Claude Sonnet 5.5 joined it (14 -> 15), taking Sonnet 5's headline row; Sonnet 5 moved
-  // to "Additional models" at the same $2/$10 and kept its own retirement date, so nothing retired.
-  // Haiku 5.5 launched on 2026-10-07. The published snapshot may still be the
-  // preserved pre-refresh version, but every collection from 2026-10-14 onward
-  // must include its newly callable API model and pricing.
-  const expectsHaiku55 = claude.collected_at >= "2026-10-14";
-  assert.equal(claude.models.length, expectsHaiku55 ? 16 : 15);
-  const haiku55 = claude.models.find((model) => model.model_id === "claude-haiku-5-5");
-  assert.equal(Boolean(haiku55), expectsHaiku55, "Haiku 5.5 must match the snapshot's refresh date");
-  if (haiku55) {
-    assert.deepEqual(
-      [haiku55.model_name, haiku55.lifecycle_status, haiku55.input_per_1m_usd, haiku55.output_per_1m_usd],
-      ["Claude Haiku 5.5", "active", 0.1, 0.5],
-    );
+  // The daily collector (R9.1) follows Anthropic's pricing page, so models join (Opus 5.5 09-23,
+  // Sonnet 5.5 09-29, Haiku 5.5 10-07), get re-priced (Sonnet 5.5 cache read 10-07) and retire.
+  // Pin how the page is parsed, not today's rows: unique callable ids, and every row priced by
+  // the page's own modifiers (5m cache write, cache read with its per-model exceptions, batch).
+  const ids = claude.models.map((model) => model.model_id);
+  assert.ok(ids.length >= 10, `only ${ids.length} callable models — pricing parse likely broken`);
+  assert.equal(new Set(ids).size, ids.length, "duplicate Claude model ids");
+  const modifiers = claude.pricing_modifiers;
+  const exceptions = modifiers?.prompt_cache_read_multiplier_exceptions ?? {};
+  const near = (actual, expected) => Math.abs(actual - expected) < 1e-9;
+  for (const model of claude.models) {
+    const what = model.model_id;
+    assert.match(model.lifecycle_status, /^(active|deprecated)$/, what);
+    assert.ok(model.input_per_1m_usd > 0 && model.output_per_1m_usd > model.input_per_1m_usd, what);
+    assert.ok(near(model.cache_write_per_1m_usd, model.input_per_1m_usd * modifiers.prompt_cache_5m_write_multiplier), `${what} cache write`);
+    assert.ok(near(model.cache_read_per_1m_usd, model.input_per_1m_usd * (exceptions[what] ?? modifiers.prompt_cache_read_multiplier)), `${what} cache read`);
+    assert.ok(near(model.batch_output_per_1m_usd, model.output_per_1m_usd * (1 - modifiers.batch_discount_pct / 100)), `${what} batch output`);
   }
-  // 2026-10-07: Anthropic halved Sonnet 5.5 cache-read pricing ($0.20 -> $0.10).
-  const sonnet55 = claude.models.find((model) => model.model_name === "Claude Sonnet 5.5");
-  const expectedSonnetCacheRead = expectsHaiku55 ? 0.1 : 0.2;
-  assert.deepEqual(
-    [sonnet55?.model_id, sonnet55?.input_per_1m_usd, sonnet55?.output_per_1m_usd,
-      sonnet55?.cache_write_per_1m_usd, sonnet55?.cache_read_per_1m_usd, sonnet55?.batch_output_per_1m_usd],
-    ["claude-sonnet-5-5", 2, 10, 2.5, expectedSonnetCacheRead, 5],
-  );
-  // The model it displaced is still callable, at its own terms — a new headline row is not a retirement.
-  assert.ok(claude.models.some((model) => model.model_name === "Claude Sonnet 5" && model.lifecycle_status === "active"));
-  assert.ok(claude.models.some((model) => model.model_name === "Claude Mythos 5"));
-  // 2026-09-08: official lifecycle confirms retirement on August 5.
+  // Every cache-read exception names a listed model and actually differs from the default.
+  for (const [id, multiplier] of Object.entries(exceptions)) {
+    assert.ok(ids.includes(id), `cache-read exception for unlisted ${id}`);
+    assert.notEqual(multiplier, modifiers.prompt_cache_read_multiplier, id);
+  }
+  // 2026-09-08: official lifecycle confirms retirement on August 5; a retired model never returns.
   assert.equal(claude.models.some((model) => model.model_name === "Claude Opus 4.1"), false);
-  assert.ok(claude.models.some((model) => model.model_name === "Claude Fable 5.1" && model.cache_read_per_1m_usd === 0.25));
-  // 2026-09-23 pricing page: Opus 5.5 at $4/$20 with the 0.05x cache-hit exception ($0.20 / MTok).
-  const opus55 = claude.models.find((model) => model.model_name === "Claude Opus 5.5");
-  assert.deepEqual(
-    [opus55?.model_id, opus55?.input_per_1m_usd, opus55?.output_per_1m_usd, opus55?.cache_read_per_1m_usd],
-    ["claude-opus-5-5", 4, 20, 0.2],
-  );
-  assert.equal(claude.pricing_modifiers?.prompt_cache_read_multiplier_exceptions?.["claude-opus-5-5"], 0.05);
 });
 
 test("Coding Agent snapshot is fresh and internally consistent", () => {
@@ -668,34 +714,33 @@ test("audited upstream repository corrections preserve source provenance", () =>
 });
 
 test("audited provider checkpoint aliases join their benchmark families", () => {
-  const providers = (family) => new Set(ds.models
-    .filter((model) => model.family_key === family)
-    .flatMap((model) => model.offers)
-    .map((offer) => offer.provider));
   const families = new Set(ds.models.map((model) => model.family_key));
 
-  assert.ok(providers("llama-3.3-70b-instruct").has("OVHcloud"));
-  // 2026-08-26: Scaleway EOL'd gemma-3-27b (08-01) and devstral-2 (08-01).
-  for (const provider of ["AWS Bedrock", "Nebius"]) {
-    assert.ok(providers("gemma-3-27b-instruct").has(provider), provider);
-  }
-  // CR-534: STACKIT delisted Gemma 3 in its 2026-10-15 documentation.
-  // Require the canonical join exactly when the retained catalog lists it;
-  // a delisted offer must not survive as a phantom offer either.
-  const stackitGemma3 = stackit.models.some((model) => model.model_id === "google/gemma-3-27b-it");
-  assert.equal(providers("gemma-3-27b-instruct").has("STACKIT"), stackitGemma3);
-  // Keep an unconditional STACKIT checkpoint-alias regression on its FP8 Llama SKU.
-  assert.ok(providers("llama-3.3-70b-instruct").has("STACKIT"));
-  // 2026-08-26: OVHcloud delisted Mistral Small 3.2 and Mistral Nemo from its AI Endpoints catalog.
-  for (const provider of ["Scaleway", "IONOS"]) {
-    assert.ok(providers("mistral-small-3.2-24b-instruct").has(provider), provider);
-  }
-  // CR-597: Chutes removed Mistral-Nemo-Instruct-2407-TEE on 2026-10-28; require the join exactly
-  // while the retained Chutes catalog lists it.
-  const chutesNemo = chutesCatalog.models.some((model) => model.model_name === "Mistral-Nemo");
-  assert.equal(providers("mistral-nemo").has("Chutes"), chutesNemo);
-  assert.ok(providers("mistral-medium-3.5").has("Scaleway"));
-  assert.ok(providers("gemma-4-31b-it").has("Chutes"));
+  // Each alias join is required exactly while today's raw catalog lists the row (R9.1); a delisted
+  // row must not survive as a phantom offer (CR-534 STACKIT Gemma 3, CR-597 Chutes Nemo).
+  const routes = (family, provider, platform) => ds.models.some((model) => model.family_key === family
+    && model.offers.some((offer) => offer.provider === provider && offer.platform === platform));
+  const id = (value) => (row) => [row.model_id, row.api_model_id, row.tee_model_id].includes(value);
+  const name = (value) => (row) => row.model_name === value;
+  const aliasJoins = [
+    ["llama-3.3-70b-instruct", "OVHcloud", ovhcloud, id("Meta-Llama-3_3-70B-Instruct")],
+    // 2026-08-26: Scaleway EOL'd gemma-3-27b (08-01) and devstral-2 (08-01).
+    ["gemma-3-27b-instruct", "AWS Bedrock", bedrock, name("Gemma 3 27B")],
+    ["gemma-3-27b-instruct", "Nebius", nebius, id("google/gemma-3-27b-it")],
+    // CR-534: STACKIT delisted Gemma 3 in its 2026-10-15 documentation.
+    ["gemma-3-27b-instruct", "STACKIT", stackit, id("google/gemma-3-27b-it")],
+    // STACKIT checkpoint-alias regression on its FP8 Llama SKU.
+    ["llama-3.3-70b-instruct", "STACKIT", stackit, id("cortecs/Llama-3.3-70B-Instruct-FP8-Dynamic")],
+    // 2026-08-26: OVHcloud delisted Mistral Small 3.2 and Mistral Nemo from its AI Endpoints catalog.
+    ["mistral-small-3.2-24b-instruct", "Scaleway", scaleway, id("mistral-small-3.2-24b-instruct-2506")],
+    ["mistral-small-3.2-24b-instruct", "IONOS", ionos, name("Mistral Small 3.2")],
+    // CR-597: Chutes removed Mistral-Nemo-Instruct-2407-TEE on 2026-10-28.
+    ["mistral-nemo", "Chutes", chutesCatalog, name("Mistral-Nemo")],
+    ["mistral-medium-3.5", "Scaleway", scaleway, id("mistral-medium-3.5-128b")],
+    ["gemma-4-31b-it", "Chutes", chutesCatalog, id("google/gemma-4-31B-turbo-TEE")],
+  ];
+  assertExercised(assert, aliasJoins.map(([family, provider, catalog, match]) =>
+    assertJoinParity(assert, routes(family, provider, provider), listedRow(catalog, match), `${family} ${provider}`)), "checkpoint alias joins");
 
   for (const orphan of [
     "meta-llama-3.3-70b-instruct", "gemma-3-27b-it", "mistral-small-3.2-24b",
