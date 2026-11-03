@@ -40,6 +40,12 @@ def reason_key(row: dict) -> str:
     return reason if reason in REASONS else "operator_refusal"
 
 
+# the ↳ line on the card once its decision is recorded (notify settle, board #41061)
+SETTLED = {"refund": "You tapped Refund in full; the refund worker pays it back.",
+           "decline": "You tapped No refund; nothing is paid back.",
+           "expired": "The buttons expired unanswered; nothing was refunded."}
+
+
 def caption(row: dict, kind: str, deadline: str) -> str:
     rid = str(uuid.UUID(str(row["id"])))
     amount = row.get("amount_total")
@@ -181,6 +187,7 @@ def advance(row: dict, root: Path, effects, now: float, deadline: str) -> str:
         if state.get("decision") == "expired":
             if state.get("card", 1) >= MAX_CARDS:
                 return "exhausted"
+            ra.settle_card(state, path, SETTLED["expired"], SOURCE)  # the old card, before a re-ask replaces it
             if not ra.close_expired(state, path, _resolve_ask):
                 return "pending"
             history = state.pop("history", [])
@@ -216,6 +223,7 @@ def advance(row: dict, root: Path, effects, now: float, deadline: str) -> str:
         if not state.get("resolved"):
             state["resolved"] = _resolve_ask(state, path, decision)
             ra.atomic(path, state)
+        ra.settle_card(state, path, SETTLED[decision], SOURCE)
         if decision == "expired":
             return "exhausted" if state.get("card", 1) >= MAX_CARDS else "pending"
         return decision

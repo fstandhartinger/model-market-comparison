@@ -169,6 +169,30 @@ def register_keyboard(message_id, keyboard, carryable=False):
         pass
 
 
+def settle_card(state, path, reason, source=SOURCE):
+    """Make a decided or expired card look closed: ✅ ERLEDIGT, no buttons, one ↳ line (board #41061 point 4).
+    notify-resolve --message-id closes only the todo, so an expired card kept showing 🧑 DU BIST DRAN. Call it only
+    after the decision is recorded, hence --drop-buttons. Bounded like close_expired: a refused settle (a text-reply
+    pickup still in flight, a card notify no longer knows) must not run every cycle forever."""
+    if state.get("settled") or not state.get("message_id") or state.get("settle_tries", 0) >= PREVIEW_ALERT_AFTER:
+        return
+    if os.environ.get("FASTLANE_DB") or os.environ.get("FASTLANE_STATE_ROOT"):
+        return
+    try:
+        result = subprocess.run([str(HOME / "bin/notify"), "settle", str(state["message_id"]), reason,
+                                 "--by", source, "--drop-buttons"], capture_output=True, timeout=60, check=False)
+        state["settled"] = result.returncode == 0
+    except (OSError, subprocess.SubprocessError):
+        state["settled"] = False
+    state["settle_tries"] = state.get("settle_tries", 0) + 1
+    atomic(path, state)
+
+
+SETTLED = {"sent": "You tapped Send this email; it was sent.",
+           "keep": "You tapped Keep unsent; the email was not sent.",
+           "expired": "The buttons expired unanswered; the email stays unsent."}
+
+
 def apply_callbacks(state, rows, now):
     if state.get("decision"):
         return
@@ -453,6 +477,7 @@ def advance(row, to, subject, body, root, effects, now, kind="refusal"):
             atomic(path, state)
             with contextlib.suppress(ValueError):
                 attach(state)
+            settle_card(state, path, SETTLED[decision])
             return "held" if state["resolved"] else "pending"
         if decision != "send":
             return "pending"
@@ -476,5 +501,6 @@ def advance(row, to, subject, body, root, effects, now, kind="refusal"):
             atomic(path, state)
             with contextlib.suppress(ValueError):
                 attach(state)
+            settle_card(state, path, SETTLED["sent"])
             return "sent" if state["resolved"] else "pending"
         return "pending" if state["mail"] == "gate_blocked" else "unknown"
