@@ -1,0 +1,87 @@
+{
+ "verdict": "PASS",
+ "must_fixes": [],
+ "conditions": [],
+ "reviewed_commit": "0d3770043cf63dc2c4ff3523c3ea1065254476f4",
+ "base": "0d8675604",
+ "row": "nvidia/nemotron-3.5-super-vl",
+ "computed": {
+  "intelligence": 60.3746,
+  "intelligence_ci95": [
+   53.78,
+   65.46
+  ],
+  "calibration": 58.7629,
+  "calibration_ci95": [
+   54.19,
+   62.56
+  ],
+  "speed": 81.9775,
+  "p50_s": 0.6273,
+  "p95_s": 1.0111,
+  "max_s": 31.24,
+  "over_10s": 2,
+  "capability": 59.5687,
+  "capability_ci95": [
+   54.73,
+   63.51
+  ],
+  "composite": {
+   "A": 53.285,
+   "B": 53.397,
+   "C": 53.285
+  },
+  "composite_ci95": {
+   "A": [
+    51.01,
+    54.98
+   ],
+   "B": [
+    50.45,
+    55.58
+   ],
+   "C": [
+    41.14,
+    54.98
+   ]
+  },
+  "cost_usd_per_1k_common_1489": 0.057449698,
+  "cost_usd_per_1k_all_1500": 0.084428667,
+  "cost_axis": 47.22,
+  "tokens_in": 1015566,
+  "tokens_out": 62716,
+  "common_in": 607138,
+  "common_out": 62072,
+  "dropped_in": 408428,
+  "dropped_out": 644
+ },
+ "matches_published_row": true,
+ "row_field_diffs": [
+  "cost.basis",
+  "listing",
+  "not_ranked_because (expected public-text replacements)"
+ ],
+ "invariance": {
+  "carried_rows": 337,
+  "leaf_diffs": 0,
+  "top_five": "0/580 lists, 0/76 sliders, 0/368 grid states",
+  "pricing_constants_changed": [
+   "LAUNCH_LIST_PRICE_API (+1 key)"
+  ]
+ },
+ "gates": {
+  "validator": "PASS 64 neg",
+  "pending_tests": "172 tests / 171 pass / 0 fail / 1 skip",
+  "pass_tree_tests": "172 / 171 / 0 / 1",
+  "tsc": 0,
+  "rebuild": "byte-equal, matches committed",
+  "lechonk_binding": "78/78 blobs match commit"
+ },
+ "privacy": "clean",
+ "flip_scripts": "version-only changes; approval text exact",
+ "notes": [
+  "published cost is common-set 0.0574, brief ~0.0844 is full-set; row states both",
+  "check_raw_pricing_v187.py:7 hard-codes the deleted private path",
+  "proof pricing_authority text says v1.8.6 merge required (already merged)"
+ ]
+}
