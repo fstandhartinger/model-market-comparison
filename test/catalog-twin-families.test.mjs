@@ -5,6 +5,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
+import { assertExercised, assertJoinParity, listedRow, rawCatalog } from './helpers/live-catalog.mjs';
 
 const dataset = JSON.parse(readFileSync(new URL('../data/dataset.json', import.meta.url), 'utf8'));
 const byId = new Map(dataset.models.map((m) => [m.id, m]));
@@ -17,7 +18,14 @@ test('no benchmark-less twin family is left beside its canonical family', () => 
 });
 
 test('the twins\' offers and Epoch ECI now belong to the canonical family', () => {
-  assert.ok(providers('nemotron-3-ultra-550b-a55b::reasoning').has('Azure AI Foundry'));
+  // R9.1: each twin offer is required exactly while today's raw catalog lists the row (join parity, direct platform only).
+  const direct = (id, platform) => byId.get(id).offers.some((o) => o.platform === platform && o.provider === platform);
+  assertExercised(assert, [
+    assertJoinParity(assert, direct('nemotron-3-ultra-550b-a55b::reasoning', 'Azure AI Foundry'), listedRow(rawCatalog('azure-foundry.json'), (r) => /nemotron 3 ultra/i.test(r.model_name)), 'nemotron-3-ultra Azure AI Foundry'),
+    assertJoinParity(assert, direct('llama-4-maverick::default', 'AWS Bedrock'), listedRow(rawCatalog('aws-bedrock.json'), (r) => /llama 4 maverick/i.test(r.model_name)), 'llama-4-maverick AWS Bedrock'),
+    assertJoinParity(assert, direct('llama-4-maverick::default', 'Azure AI Foundry'), listedRow(rawCatalog('azure-foundry.json'), (r) => /llama 4 maverick/i.test(r.model_name)), 'llama-4-maverick Azure AI Foundry'),
+    assertJoinParity(assert, direct('llama-4-scout::default', 'AWS Bedrock'), listedRow(rawCatalog('aws-bedrock.json'), (r) => /llama 4 scout/i.test(r.model_name)), 'llama-4-scout AWS Bedrock'),
+  ], 'twin-family offers');
   // Epoch refits ECI (2026-09-22: 146.27 → 146.2), so compare with today's capture rather than a pinned number.
   const eci = JSON.parse(readFileSync(new URL('../data/raw/epoch-eci.json', import.meta.url), 'utf8')).models.find((m) => m.source_model_name === 'Nemotron 3 Ultra');
   assert.ok(Number.isFinite(eci?.general));
@@ -29,9 +37,6 @@ test('the twins\' offers and Epoch ECI now belong to the canonical family', () =
   assert.equal(providers('nemotron-3.5-lightning::default').has('TrustedTokens'), lightningListed);
   assert.ok(!dataset.models.some((m) => m.family_key.startsWith('nemotron-3.5-lightning') && m.id !== 'nemotron-3.5-lightning::default'
     && m.offers.some((o) => o.provider === 'TrustedTokens')));
-  assert.ok(providers('llama-4-maverick::default').has('AWS Bedrock'));
-  assert.ok(providers('llama-4-maverick::default').has('Azure AI Foundry'));
-  assert.ok(providers('llama-4-scout::default').has('AWS Bedrock'));
 });
 
 test('board rows labelled Nemotron 3 Ultra without a setting stay unjoined, not withheld', () => {
