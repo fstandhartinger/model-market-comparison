@@ -1,8 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
-import { assertJoinParity, rawCatalog } from './helpers/live-catalog.mjs';
-import { endpointPrices, openRouterEndpoint, openRouterModel } from './helpers/live-catalog-extra-01.mjs';
+import { assertJoinParity, endpointPrices, openRouterEndpoint, openRouterModel, rawCatalog } from './helpers/live-catalog.mjs';
 import { buildBenchmarkView } from '../lib/benchmark-view.mjs';
 import { benchmaxxingSignals } from '../lib/benchmax.mjs';
 import { BENCHMAXX_TAG_MIN_COMPARISONS, benchmaxxingLevelFor, benchmaxxingUncertaintyNote } from '../lib/benchmaxxing-levels.mjs';

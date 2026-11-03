@@ -1,8 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
-import { assertExercised, assertJoinParity, rawCatalog } from './helpers/live-catalog.mjs';
-import { endpointPrices, openRouterEndpoint } from './helpers/live-catalog-extra-01.mjs';
+import { assertExercised, assertJoinParity, endpointPrices, openRouterEndpoint, rawCatalog } from './helpers/live-catalog.mjs';
 
 const dataset = JSON.parse(await readFile(new URL('../data/dataset.json', import.meta.url), 'utf8'));
 const registry = JSON.parse(await readFile(new URL('../data/raw/benchmarks/registry.json', import.meta.url), 'utf8'));

@@ -5,6 +5,7 @@
 import { readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+import { perMillion } from "../../lib/openrouter-endpoints.mjs";
 
 const RAW = join(dirname(fileURLToPath(import.meta.url)), "..", "..", "data", "raw");
 
@@ -21,6 +22,22 @@ export function openRouterListed(openRouter, id, providerName) {
   return openRouter.models.some((model) => model.id === id
     && (model.endpoints ?? []).some((endpoint) => endpoint.provider_name === providerName));
 }
+
+// OpenRouter model `id`, or undefined when the retained catalog no longer lists it.
+export const openRouterModel = (openRouter, id) => openRouter.models.find((model) => model.id === id);
+
+// First endpoint of `id` matching `match` (an endpoint tag string, or a predicate), else undefined.
+export function openRouterEndpoint(openRouter, id, match) {
+  const test = typeof match === "function" ? match : (endpoint) => endpoint.tag === match;
+  return (openRouterModel(openRouter, id)?.endpoints ?? []).find(test);
+}
+
+// The endpoint's list prices as the dataset stores them (USD per 1M tokens; null when unpriced).
+export const endpointPrices = (endpoint) => ({
+  input: perMillion(endpoint.pricing?.prompt),
+  output: perMillion(endpoint.pricing?.completion),
+  cacheRead: perMillion(endpoint.pricing?.input_cache_read),
+});
 
 // Join parity: fails both when a listed row did not join (the regression the pin protected) and
 // when a delisted row survives as a phantom offer. Returns `listed` for assertExercised.
