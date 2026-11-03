@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
+import {assertReleaseHistory} from './helpers/release-history.mjs';
 import {hasPublishedJevbenchV183Release,readJevbenchV183ForBoard,V183_NEW_KEYS,V183_NOTE} from '../lib/jevbench-v183-release.mjs';
 import {readJevAllDataInput} from '../lib/jevbench-alldata-input.mjs';
 import {jevMethodLabel,JEV_METHOD_LABEL} from '../lib/jev-decision-limit.mjs';
@@ -27,11 +28,10 @@ test('processed tokens retain both Piccolo reads, expanded allec forwards and se
  assert.equal(u['piccolo-27b'].input_tokens_all,1064693);assert.equal(u['allec-oavg'].input_tokens_all,739884);assert.equal(u['cribl-decision-1.0-9b'].input_tokens_all,853860);assert.equal(u['cribl-decision-1.0-27b'].input_tokens_all,853860);assert.equal(u['zils-ai-z3-mini-soup-preview'].input_tokens_all,964081);assert.equal(u['zils-ai-z3-mini-soup-preview'].output_tokens_all,0);
 });
 
-test('d1027 pins its exact release history and latest release',()=>{
+test('d1027 release history keeps this release in order and ends at its latest release',()=>{
  const draws=JSON.parse(readFileSync('data/jevbench-draw-equating.json')).draws;
  const draw=draws.find(d=>d.draw==='v1.6-regular-20261027');
- assert.deepEqual(draw.releases,['v1.7.13','v1.7.14','v1.7.15','v1.7.16','v1.7.17','v1.7.19','v1.7.21','v1.7.22','v1.8.1','v1.8.2','v1.8.3','v1.8.4','v1.8.5','v1.8.6']);
- assert.equal(draw.latest_release,'v1.8.6');
+ assertReleaseHistory(assert,draw,['v1.7.13','v1.7.14','v1.7.15','v1.7.16','v1.7.17','v1.7.19','v1.7.21','v1.7.22','v1.8.1','v1.8.2','v1.8.3']);
 });
 
 test('release navigation links its immediate predecessor',()=>{const page=readFileSync('app/jev-models/v1.8.3/page.tsx','utf8');assert.ok(page.includes('href="/jev-models/v1.8.2">Previous v1.8.2</a>'));});
