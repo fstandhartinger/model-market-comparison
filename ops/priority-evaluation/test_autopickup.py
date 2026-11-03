@@ -3101,5 +3101,17 @@ class PodRuntimeSpecTests(unittest.TestCase):
             ap.measurement_dispatch.validate_api_meta("jevbench", meta, self.GPU_RUNTIME)
 
 
+class NotifyPromiseGateTests(unittest.TestCase):
+    """A worker card naming the order deadline is a report; notify's promise gate refused it forever (580d6afe, 2 Nov)."""
+
+    def test_worker_now_card_declares_its_deadline_is_not_a_promise(self):
+        done = subprocess.CompletedProcess([], 0, "", "")
+        with mock.patch.object(ap.subprocess, "run", return_value=done) as run:
+            self.assertTrue(ap.Effects().notify("the result deadline is 03 Nov 14:59 UTC"))
+        command = run.call_args.args[0]
+        self.assertEqual(command[1:2], ["now"])
+        self.assertTrue(command[command.index("--no-promise") + 1].strip())
+
+
 if __name__ == "__main__":
     unittest.main()
