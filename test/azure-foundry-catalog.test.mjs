@@ -67,8 +67,9 @@ test("a vanished meter drops its row; swapped input/output keeps the previous pr
 
 test("committed snapshot: every priced row except documented non-Retail billing names its meters", () => {
   const snapshot = JSON.parse(readFileSync(new URL("../data/raw/azure-foundry.json", import.meta.url)));
+  // R9.1: pin the rule (only Claude rows lack Retail meters), not the live list of Claude models Foundry carries today.
   const unmapped = snapshot.models.filter((m) => !m.retail_meters).map((m) => m.model_name);
-  assert.deepEqual(unmapped, ["Claude Opus 5"], "Claude on Foundry bills through Marketplace CCUs, not Retail token meters");
+  assert.deepEqual(unmapped.filter((name) => !/^Claude /.test(name)), [], "Claude on Foundry bills through Marketplace CCUs, not Retail token meters");
   for (const m of snapshot.models.filter((x) => x.retail_meters)) {
     assert.ok(m.retail_meters.product && m.retail_meters.input && m.retail_meters.output, m.model_name);
     assert.ok(Number.isFinite(m.input_per_1m_usd) && Number.isFinite(m.output_per_1m_usd), `${m.model_name} has meters but no price`);

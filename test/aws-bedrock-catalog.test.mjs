@@ -65,8 +65,10 @@ test("vanished meters drop their row; swapped prices keep the old row; a missing
 
 test("committed snapshot: every row except the Bedrock Mantle GPT-5.x models names its Price List meters", () => {
   const snapshot = JSON.parse(readFileSync(new URL("../data/raw/aws-bedrock.json", import.meta.url)));
+  // R9.1: which GPT-5.x rows Bedrock Mantle lists changes with the catalog, so pin the rule (only OpenAI GPT rows may lack
+  // a meter), not today's set: a new or delisted Mantle model must not fail the daily publish.
   const unmapped = snapshot.models.filter((m) => !m.price_meters).map((m) => m.model_name).sort();
-  assert.deepEqual(unmapped, ["GPT-5.4", "GPT-5.5", "GPT-5.6 Luna", "GPT-5.6 Sol", "GPT-5.6 Terra"], "OpenAI models on Bedrock Mantle have no public Price List meter");
+  assert.deepEqual(unmapped.filter((name) => !/^GPT-5/.test(name)), [], "only OpenAI models on Bedrock Mantle lack a public Price List meter");
   for (const m of snapshot.models.filter((x) => x.price_meters)) {
     const p = m.price_meters;
     assert.ok(["AmazonBedrock", "AmazonBedrockFoundationModels"].includes(p.offer) && p.region && p.input && p.output, m.model_name);

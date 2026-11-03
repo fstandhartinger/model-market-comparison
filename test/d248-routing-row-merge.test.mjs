@@ -18,6 +18,9 @@ import { stableHuggingFaceId, weightsHuggingFaceId, sameHuggingFaceModel } from 
 
 const dataset = JSON.parse(readFileSync(new URL('../data/dataset.json', import.meta.url), 'utf8'));
 const openRouter = JSON.parse(readFileSync(new URL('../data/raw/openrouter.json', import.meta.url), 'utf8'));
+const OPENROUTER_ROUTE = { 'command-a+': 'cohere/command-a-plus', 'nemotron-3-super-120b-a12b': 'nvidia/nemotron-3-super-120b-a12b' };
+// Independent of the library's own list so loosening the library rule cannot loosen this check.
+const CLOSED_PRECISION_SUFFIX = /-(?:bf16|fp16|fp32|fp8|fp4|nvfp4|mxfp4|int8|int4|w8a8|w4a16|awq|gptq|gguf)$/;
 const rowsOf = (familyKey) => dataset.models.filter((m) => m.family_key === familyKey);
 
 test('a serving-precision suffix is not part of the model identity', () => {
@@ -37,7 +40,9 @@ test('a serving-precision suffix is not part of the model identity', () => {
   assert.equal(sameHuggingFaceModel('meta/llama-4-scout', 'meta/llama-4-maverick'), false);
 });
 
-test('dropping the precision suffix collapses exactly one pair in the live catalog', () => {
+test('dropping the precision suffix collapses only spellings that differ by a precision suffix', () => {
+  // R9.1: which pairs exist depends on today's AA and OpenRouter listings (Nemotron 3 Super BF16/FP8 on 2026-09-28), so pin
+  // the closed-suffix rule over whatever pairs are listed, not their number or names.
   const byWeights = new Map();
   const note = (id) => {
     if (!id) return;
@@ -50,8 +55,12 @@ test('dropping the precision suffix collapses exactly one pair in the live catal
     note(m.openrouter_metadata?.hugging_face_id);
   }
   for (const route of openRouter.models || []) note(route.hugging_face_id);
-  const collapsed = [...byWeights].filter(([, spellings]) => spellings.size > 1).map(([key]) => key);
-  assert.deepEqual(collapsed, ['nvidia/nvidia-nemotron-3-super-120b-a12b']);
+  const collapsed = [...byWeights].filter(([, spellings]) => spellings.size > 1);
+  for (const [key, spellings] of collapsed) {
+    for (const spelling of spellings) {
+      assert.ok(spelling === key || (spelling.startsWith(key) && CLOSED_PRECISION_SUFFIX.test(spelling)), `${spelling} is not ${key} plus a precision suffix`);
+    }
+  }
 });
 
 test('D248: the two HuggingFace-caused routing rows are gone and their prices moved to the benchmarked row', () => {
@@ -61,8 +70,12 @@ test('D248: the two HuggingFace-caused routing rows are gone and their prices mo
     assert.ok(!rows[0].id.endsWith('::openrouter'), rows[0].id);
     // The row that carries the benchmarks now carries the price, which is the whole point.
     assert.ok(Object.values(rows[0].benchmarks || {}).some((v) => v != null), `${familyKey} has benchmarks`);
-    assert.ok(rows[0].offers.length > 0, `${familyKey} has offers`);
-    assert.equal(rows[0].has_pricing, true, `${familyKey} has pricing`);
+    // R9.1: priced exactly while OpenRouter lists a route of the family (a delisted route leaves no price to carry).
+    const routeListed = (openRouter.models || []).some((route) => route.id === OPENROUTER_ROUTE[familyKey]);
+    if (routeListed) {
+      assert.ok(rows[0].offers.length > 0, `${familyKey} has offers`);
+      assert.equal(rows[0].has_pricing, true, `${familyKey} has pricing`);
+    }
   }
 });
 
@@ -70,11 +83,10 @@ test('D248: every OpenRouter route of the two repaired families is still reachab
   const reachable = (familyKey) => new Set(
     rowsOf(familyKey).flatMap((r) => r.offers).filter((o) => o.or_model_id).map((o) => o.or_model_id),
   );
-  assert.deepEqual([...reachable('command-a+')].sort(), ['cohere/command-a-plus']);
+  assert.deepEqual([...reachable('command-a+')].sort(), ['cohere/command-a-plus'].filter((id) => openRouter.models.some((m) => m.id === id)));
   // CR-597: OpenRouter withdrew the :free route on 2026-10-28; every route the retained catalog
   // still lists must stay reachable, and a withdrawn route must not survive as a phantom offer.
   const listed = new Set((openRouter.models || []).map((m) => m.id));
-  assert.ok(listed.has('nvidia/nemotron-3-super-120b-a12b'));
   assert.deepEqual([...reachable('nemotron-3-super-120b-a12b')].sort(), [
     'nvidia/nemotron-3-super-120b-a12b', 'nvidia/nemotron-3-super-120b-a12b:free',
   ].filter((id) => listed.has(id)));

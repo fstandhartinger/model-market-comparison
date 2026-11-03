@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
+import { assertJoinParity, listedRow, rawCatalog } from './helpers/live-catalog.mjs';
 
 const dataset = JSON.parse(await readFile(new URL('../data/dataset.json', import.meta.url), 'utf8'));
 const registry = JSON.parse(await readFile(new URL('../data/raw/benchmarks/registry.json', import.meta.url), 'utf8'));
@@ -16,8 +17,14 @@ test('CR-123: Claude Opus 5.5 is in the catalog at its evaluated configuration a
   // Launch-post pricing table: input 4, output 20, cache read 0.20, cache write 5 per 1M tokens.
   // CR-125: once OpenRouter lists the model its endpoints join the launch-post offer; the Anthropic row keeps the list price.
   const anthropic = model.offers.filter((offer) => offer.platform === 'Anthropic');
-  assert.deepEqual(anthropic.map((offer) => [offer.input_per_1m, offer.output_per_1m, offer.cache_read_per_1m, offer.cache_write_per_1m]),
-    [[4, 20, 0.2, 5]]);
+  // R9.1: the Anthropic price list is a live catalog (data/raw/claude-code.json); the offer must carry today's listed row
+  // (join parity, then its prices) instead of the 2026-09-22 launch numbers.
+  const listed = listedRow(rawCatalog('claude-code.json'), (row) => row.model_id === 'claude-opus-5-5');
+  assertJoinParity(assert, anthropic.length > 0, listed, 'Claude Opus 5.5 Anthropic API');
+  if (listed) {
+    assert.deepEqual(anthropic.map((offer) => [offer.input_per_1m, offer.output_per_1m, offer.cache_read_per_1m, offer.cache_write_per_1m]),
+      [[listed.input_per_1m_usd, listed.output_per_1m_usd, listed.cache_read_per_1m_usd, listed.cache_write_per_1m_usd]]);
+  }
 });
 
 test('CR-123: all 16 Anthropic claims stay self-reported with reviewable provenance', () => {

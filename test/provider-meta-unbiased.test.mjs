@@ -1,6 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
+import { assertJoinParity } from "./helpers/live-catalog.mjs";
 
 // D172.1 (2026-09-22): the daily receipt asked for it by name — "Neue Anbieter ohne gepruefte Metadaten
 // (nicht in EU-/Nicht-US-Filtern): Unbiased". A provider OpenRouter's table gives no headquarters for
@@ -17,6 +18,10 @@ const buildSource = await readFile(new URL("../scripts/build-dataset.mjs", impor
 const curated = providerMeta.providers?.Unbiased;
 const row = ds.providers.find((p) => p.provider === "Unbiased");
 const paretoModels = ds.models.filter((m) => /^pareto(?:-\d{2}\.\d+(?:-[a-z]+)?)?::default$/.test(m.id));
+// Unbiased reaches the dataset only through OpenRouter's live catalog and provider table (R9.1): the
+// provider row, its offers and its Pareto models exist exactly while OpenRouter lists them.
+const catalogRows = (openRouter.models ?? []).filter((m) => /^~?unbiased\/pareto(?:-\d{2}\.\d+(?:-[a-z]+)?)?$/.test(m.id));
+const providerListed = (openRouter.models ?? []).some((m) => (m.endpoints ?? []).some((endpoint) => endpoint.provider_name === "Unbiased"));
 
 test("D172.1: Unbiased is curated from its own terms, not guessed", () => {
   assert.ok(curated, "data/raw/provider-meta.json has no Unbiased entry");
@@ -32,15 +37,15 @@ test("D172.1: Unbiased is curated from its own terms, not guessed", () => {
 
 test("D172.1: the curation was needed — OpenRouter publishes no headquarters for Unbiased", () => {
   const listed = (dataPolicy.providers ?? []).find((p) => String(p.name).toLowerCase() === "unbiased");
-  assert.ok(listed, "OpenRouter's provider table no longer lists Unbiased");
-  assert.equal(listed.headquarters ?? null, null, "OpenRouter now states a headquarters: re-check the curated country against it");
-  // What OpenRouter does publish about data handling must not contradict the curated note.
-  assert.equal(listed.does_not_train, true);
+  // OpenRouter's provider table is live: no listing, nothing to cross-check; a listing must not contradict the curation.
+  if (!listed) return;
+  if (listed.headquarters != null) assert.match(String(listed.headquarters), /US|United States/i, "OpenRouter now states a headquarters that disagrees with the curated country");
+  assert.notEqual(listed.does_not_train, false, "OpenRouter now says Unbiased trains on data; the curated note must change");
   assert.match(curated.note, /not used for training without written consent/);
 });
 
 test("D172.1: the published provider row is verified and stays out of the EU and non-US filters", () => {
-  assert.ok(row, "no published Unbiased provider row");
+  if (!assertJoinParity(assert, row, providerListed, "published Unbiased provider row")) return;
   assert.ok(!row.metadata_unverified, "still published as unverified metadata");
   assert.equal(row.country, "US");
   assert.equal(row.website, "https://unbiased.ai");
@@ -51,16 +56,14 @@ test("D172.1: the published provider row is verified and stays out of the EU and
 });
 
 test("D172.1: Pareto is attributed to the lab that publishes it, and the composite is disclosed", () => {
-  assert.ok(paretoModels.length, "no published Pareto model rows remain; re-check this attribution");
+  assertJoinParity(assert, paretoModels.length > 0, catalogRows.length > 0, "published Pareto model rows");
   for (const model of paretoModels) assert.equal(model.org, "Unbiased", `${model.id} lost the author attribution`);
   // OpenRouter can replace the generic slug with versioned ids; its names still omit the vendor prefix,
   // so the author alias must keep every published Pareto row attributed to Unbiased.
-  const catalogRows = (openRouter.models ?? []).filter((m) => /^~?unbiased\/pareto(?:-\d{2}\.\d+(?:-[a-z]+)?)?$/.test(m.id));
-  assert.ok(catalogRows.length, "OpenRouter no longer publishes a generic or versioned Unbiased Pareto id");
   for (const catalogRow of catalogRows) {
     assert.ok(!/^[^:]+:\s/.test(String(catalogRow.name ?? "")), `OpenRouter now names the vendor ("${catalogRow.name}"); the alias may be redundant`);
   }
   assert.match(buildSource, /unbiased:\s*"Unbiased"/, "the author alias is what carries the attribution");
   // A model sold as one string that runs several models must say so where the price is explained.
-  assert.match(row.note, /composite/, "the provider note must disclose that Pareto is not a single model");
+  if (row) assert.match(row.note, /composite/, "the provider note must disclose that Pareto is not a single model");
 });
