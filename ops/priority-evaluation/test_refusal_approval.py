@@ -53,7 +53,7 @@ class ApprovalTests(unittest.TestCase):
 
     def run_advance(self, callbacks=(), **kwargs):
         with patch.object(approval, "callback_rows", return_value=callbacks), \
-             patch.object(approval, "attach"), patch.object(approval, "notify_card") as notify, \
+             patch.object(approval, "attach"), patch.object(approval, "register_keyboard"), patch.object(approval, "notify_card") as notify, \
              patch.object(approval, "close_durable_reply_action", return_value=True), \
              patch.object(approval, "resolve_ask", return_value=True):
             result = approval.advance(kwargs.get("row", ROW), TO, SUBJECT, kwargs.get("body", BODY),
@@ -279,7 +279,7 @@ class ApprovalTests(unittest.TestCase):
         parsed=module.validate_format(caption,'now',ask_minutes=720)
         self.assertEqual(len(parsed),1)
         self.assertEqual(len(parsed[0]['steps']),2)
-        self.assertLessEqual(len(caption),500)
+        self.assertLessEqual(len(caption),700)  # the visible card limit is tested through real notify in test_approval_card_send
 
     def test_unread_board_entry_blocks_ask(self):
         state = prepared()
@@ -350,7 +350,8 @@ class ApprovalTests(unittest.TestCase):
             db.execute("CREATE TABLE callback_events(update_id,chat_id,message_id,sender_id,received_at,data)")
             db.executemany("INSERT INTO callback_events VALUES(?,?,?,?,?,?)", [click(), click(sender=999)])
         with patch.object(approval, "CALLBACK_DB", dbpath):
-            self.assertEqual(approval.callback_rows(123, 456), [click()])
+            self.assertEqual(approval.callback_rows((click()[5],), 456), [click()])
+            self.assertEqual(approval.callback_rows(("another_key",), 456), [])
 
     def test_card_renders_the_fixed_preview(self):
         path = self.root / "preview.png"
