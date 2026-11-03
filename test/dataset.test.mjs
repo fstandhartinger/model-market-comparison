@@ -7,6 +7,7 @@ import { dirname, join } from "node:path";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ds = JSON.parse(await readFile(join(__dirname, "..", "data", "dataset.json"), "utf8"));
 const aa = JSON.parse(await readFile(join(__dirname, "..", "data", "raw", "artificialanalysis.json"), "utf8"));
+const tSystemsSnapshot = JSON.parse(await readFile(join(__dirname, "..", "data", "raw", "t-systems-llm-hub.json"), "utf8"));
 // CR-634: the frozen v4.x snapshot (Coding/Math Index, and the source of every v4→v5 estimate).
 const aaV4 = JSON.parse(await readFile(join(__dirname, "..", "data", "raw", "artificialanalysis-v4.json"), "utf8"));
 const designArena = JSON.parse(await readFile(join(__dirname, "..", "data", "raw", "designarena.json"), "utf8"));
@@ -290,9 +291,16 @@ test("context-price tiers and distinct managed routes survive dataset deduplicat
   assert.ok(azure55.some((offer) => offer.region === "eu" && offer.pricing_tier === "short_context" && offer.input_per_1m === 5.5));
   assert.ok(azure55.some((offer) => offer.region === "eu" && offer.pricing_tier === "long_context" && offer.input_per_1m === 11));
 
+  // T-Systems lists and delists tiered models daily (R9.1), so the tiers to expect come from the
+  // snapshot rows rather than a literal threshold that the next catalog change would break.
   const tSystems = offers.filter((offer) => offer.provider === "T-Systems LLM Hub" && offer.pricing_tier);
-  assert.ok(tSystems.some((offer) => offer.pricing_tier === "up_to_200k_input"));
-  assert.ok(tSystems.some((offer) => offer.pricing_tier === "above_200k_input"));
+  const tieredRows = tSystemsSnapshot.models
+    .map((row) => row.model_name.match(/\((≤|>)(\d+)k\)/))
+    .filter(Boolean)
+    .map(([, side, size]) => `${side === "≤" ? "up_to" : "above"}_${size}k_input`);
+  for (const tier of tieredRows) {
+    assert.ok(tSystems.some((offer) => offer.pricing_tier === tier), `T-Systems ${tier}`);
+  }
 
   const deepSeek = ds.models.find((model) => model.family_key === "deepseek-v4-pro")?.offers
     .filter((offer) => offer.provider === "Azure AI Foundry") || [];
