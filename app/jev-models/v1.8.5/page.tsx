@@ -6,7 +6,7 @@ import { JevBenchReleaseVersionNav } from '../../../components/JevBenchReleaseVe
 import { withPublicAdapterIds } from '../../../lib/jevbench-v15-release.mjs';
 import { JevHistoryLazy } from '../../../components/JevHistoryLazy';
 import { PageJsonLd } from '../../../components/PageJsonLd';
-export const metadata = {title:'JevBench v1.8.5: one unranked row on the 27 Oct draw',description:'Granite Switch 4.1 30B measured on the 27 Oct draw, shown unranked until equated.',alternates:{canonical:'/jev-models/v1.8.5'}};
+export const metadata = {title:'JevBench v1.8.5: one unranked row',description:'Granite Switch 4.1 30B measured on the 27 Oct draw, shown unranked until equated.',alternates:{canonical:'/jev-models/v1.8.5'}};
 export default async function JevModelsV185Page() {
  const release=await readJevbenchV185ForBoard();if(!release)notFound();
  const board=v185BoardInput(release);

@@ -6,7 +6,7 @@ import { JevBenchReleaseVersionNav } from '../../../components/JevBenchReleaseVe
 import { withPublicAdapterIds } from '../../../lib/jevbench-v15-release.mjs';
 import { JevHistoryLazy } from '../../../components/JevHistoryLazy';
 import { PageJsonLd } from '../../../components/PageJsonLd';
-export const metadata = {title:'JevBench v1.8.2: four unranked rows on the 27 Oct draw',description:'Four measured decision models added on the 27 Oct draw, shown unranked until equated.',alternates:{canonical:'/jev-models/v1.8.2'}};
+export const metadata = {title:'JevBench v1.8.2: four unranked rows',description:'Four measured decision models added on the 27 Oct draw, shown unranked until equated.',alternates:{canonical:'/jev-models/v1.8.2'}};
 export default async function JevModelsV182Page() {
  const release=await readJevbenchV182ForBoard();if(!release)notFound();
  const board=v182BoardInput(release);
