@@ -19,6 +19,7 @@ const epochEci = JSON.parse(await readFile(join(__dirname, "..", "data", "raw", 
 const stackit = JSON.parse(await readFile(join(__dirname, "..", "data", "raw", "stackit.json"), "utf8"));
 const chutesCatalog = JSON.parse(await readFile(join(__dirname, "..", "data", "raw", "chutes.json"), "utf8"));
 const inceptron = JSON.parse(await readFile(join(__dirname, "..", "data", "raw", "inceptron.json"), "utf8"));
+const tSystemsCatalog = JSON.parse(await readFile(join(__dirname, "..", "data", "raw", "t-systems-llm-hub.json"), "utf8"));
 
 const REQUIRED = [
   "gpt-5.5", "gpt-5.4", "gpt-5.5-mini", "gpt-5.4-mini",
@@ -290,9 +291,30 @@ test("context-price tiers and distinct managed routes survive dataset deduplicat
   assert.ok(azure55.some((offer) => offer.region === "eu" && offer.pricing_tier === "short_context" && offer.input_per_1m === 5.5));
   assert.ok(azure55.some((offer) => offer.region === "eu" && offer.pricing_tier === "long_context" && offer.input_per_1m === 11));
 
+  // CR-670: T-Systems retires and adds tiered models (Gemini 3/3.1 Pro's 200k tiers left the catalog on 2026-11-03),
+  // so the tier names come from the current snapshot: every tiered catalog row must survive deduplication with its
+  // own tier and price, and the snapshot must still hold at least one model priced in both an up_to and an above tier.
   const tSystems = offers.filter((offer) => offer.provider === "T-Systems LLM Hub" && offer.pricing_tier);
-  assert.ok(tSystems.some((offer) => offer.pricing_tier === "up_to_200k_input"));
-  assert.ok(tSystems.some((offer) => offer.pricing_tier === "above_200k_input"));
+  const tierOf = (name) => {
+    const match = String(name).match(/\(\s*([<>≤≥])=?\s*(\d+(?:\.\d+)?)\s*([km])\s*\)/i);
+    return match ? `${/[>≥]/.test(match[1]) ? "above" : "up_to"}_${match[2]}${match[3].toLowerCase()}_input` : null;
+  };
+  const tieredRows = tSystemsCatalog.models.filter((row) => tierOf(row.model_name) && row.input_per_1m_usd != null);
+  for (const row of tieredRows) {
+    assert.ok(
+      tSystems.some((offer) => offer.pricing_tier === tierOf(row.model_name) && offer.input_per_1m === row.input_per_1m_usd),
+      `T-Systems ${row.model_name} keeps its ${tierOf(row.model_name)} offer`,
+    );
+  }
+  const tiersByModel = new Map();
+  for (const row of tieredRows) {
+    const base = row.model_name.replace(/\s*\([^)]*\)\s*$/, "");
+    tiersByModel.set(base, (tiersByModel.get(base) || new Set()).add(tierOf(row.model_name)));
+  }
+  assert.ok(
+    [...tiersByModel.values()].some((tiers) => [...tiers].some((tier) => tier.startsWith("up_to_") && tiers.has(`above_${tier.slice("up_to_".length)}`))),
+    "the T-Systems snapshot still holds one model with both an up_to and an above context tier",
+  );
 
   const deepSeek = ds.models.find((model) => model.family_key === "deepseek-v4-pro")?.offers
     .filter((offer) => offer.provider === "Azure AI Foundry") || [];
