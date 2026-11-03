@@ -41,6 +41,10 @@ MAIL_AUDIT = MAIL_TOOL.parent / "sent-audit.log"
 MAIL_SECRET_FILE = Path(os.environ.get("BH_MAIL_SECRET_FILE", HOME / ".config/dev-secrets.env"))
 NOTIFY = Path(os.environ.get("BH_NOTIFY", HOME / "bin/notify"))
 TEMPLATE = HERE / "submission-confirmation-template.txt"
+# AGENTS.md section 4: mail to outside people comes From the brand's own domain, never a personal mailbox.
+# Verified Gmail send-as identity (mail_tool GMAIL_SEND_AS); replies reach the monitored Gmail via forwarding.
+SENDER_FROM = "Benchmark Heaven <info@benchmarkheaven.com>"
+REPLY_TO = "info@benchmarkheaven.com"
 
 SECTION = "## From benchmarkheaven.com/submit"
 TABLE_HEAD = "| Request | Source/date | Action | Link |\n|---|---|---|---|"
@@ -199,6 +203,7 @@ def send_mail(to: str, subject: str, body: str, dry_run: bool) -> tuple[bool, st
         spec.loader.exec_module(module)
         import argparse as ap
         args = ap.Namespace(account="gmail", to=to, subject=subject, body=body, body_file=None, cc=None,
+                            sender_from=SENDER_FROM, reply_to=REPLY_TO,
                             dry_run=dry_run, fastlane_outbox_id=None, attach=None)
         with contextlib.redirect_stdout(out), contextlib.redirect_stderr(err):
             module.cmd_send(args)
