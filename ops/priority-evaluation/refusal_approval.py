@@ -295,6 +295,26 @@ def approval_caption(row, kind):
 SEND_TIMEOUT = 180
 
 
+def close_expired(state, path, resolve):
+    """True when an expired card may be asked again. Its open action would block the next card's same-key preview,
+    so a failed resolve is retried each cycle. The retries are bounded because a card whose action row is gone can
+    never resolve; a card that then still collides is refused by the preview, which raises the preview alert."""
+    if state.get("resolved") or not state.get("message_id"):
+        return True
+    state["resolved"] = resolve(state, path, "expired")
+    state["resolve_retries"] = state.get("resolve_retries", 0) + 1
+    atomic(path, state)
+    return state["resolved"] or state["resolve_retries"] >= PREVIEW_ALERT_AFTER
+
+
+def order_topic(order_id, kind):
+    """notify --topic for one approval card: its dedup and replacement key (N48, board #40743).
+
+    The kind stays in the key: the 40 h card stays open past the 48 h refund card, and notify's replacement
+    looks at the topic alone, so a bare order key would strip the older card's buttons across sources."""
+    return f"order:{uuid.UUID(str(order_id))}:{kind}"
+
+
 def notify_card(state, path, now, kind="refusal", row=None):
     # Freshness evidence immediately before asking; data is never executed as instructions.
     if state.get("freshness_hold"):
@@ -320,6 +340,7 @@ def notify_card(state, path, now, kind="refusal", row=None):
     # exact button callback below can authorize the email.
     command = [str(HOME / "bin/notify"), "now", "--florian-only",
                "Florian's fast-lane decision requires the exact refusal Send button.",
+               "--topic", order_topic(state["draft"]["request_id"], kind),
                "--ask", str(WINDOW // 60), "--photo", str(image_path), "--text-stdin"]
     reply_job_dir = str(HOME / "jobs" / "fastlane-refusal-reply-guard-20260929")
     env = {**os.environ, "NOTIFY_SOURCE": SOURCE,
