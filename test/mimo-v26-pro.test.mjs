@@ -1,6 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
+import { assertJoinParity, rawCatalog } from './helpers/live-catalog.mjs';
+import { endpointPrices, openRouterEndpoint, openRouterModel } from './helpers/live-catalog-extra-01.mjs';
 import { buildBenchmarkView } from '../lib/benchmark-view.mjs';
 import { benchmaxxingSignals } from '../lib/benchmax.mjs';
 import { BENCHMAXX_TAG_MIN_COMPARISONS, benchmaxxingLevelFor, benchmaxxingUncertaintyNote } from '../lib/benchmaxxing-levels.mjs';
@@ -17,29 +19,46 @@ test('CR-117: MiMo-V2.6-Pro identity, licence and exact standard route are sourc
   assert.equal(model.aa_metadata.license_name, 'MIT');
   assert.equal(model.aa_metadata.huggingface_url, 'https://huggingface.co/XiaomiMiMo/MiMo-V2.6-Pro-RL');
   assert.equal(model.aa_metadata.openrouter_api_id, 'xiaomi/mimo-v2.6-pro');
-  // Every route must be the exact standard OpenRouter identity, never a borrowed one. The number of
-  // routes is a live fact and grows: on 2026-09-23 DeepInfra joined Xiaomi's own endpoint, both under
-  // xiaomi/mimo-v2.6-pro (openrouter.ai/api/v1/models/xiaomi/mimo-v2.6-pro/endpoints).
-  assert.ok(model.offers.length >= 1);
-  assert.deepEqual([...new Set(model.offers.map((offer) => offer.or_model_id))], ['xiaomi/mimo-v2.6-pro']);
-  assert.deepEqual([...new Set(model.offers.map((offer) => offer.or_canonical_slug))], ['xiaomi/mimo-v2.6-pro-20260921']);
+  // Every route must be the exact standard OpenRouter identity, never a borrowed one. The routes are
+  // live facts and come and go (2026-09-23 DeepInfra joined Xiaomi's own endpoint, both under
+  // xiaomi/mimo-v2.6-pro): each exists exactly while OpenRouter lists it, at the raw price (R9.1).
+  const openRouter = rawCatalog('openrouter.json');
+  const slug = 'xiaomi/mimo-v2.6-pro';
+  const listedModel = openRouterModel(openRouter, slug);
+  const routesListed = (listedModel?.endpoints ?? []).length > 0;
+  if (assertJoinParity(assert, model.offers.length > 0, routesListed && listedModel, `${slug} routes`)) {
+    assert.deepEqual([...new Set(model.offers.map((offer) => offer.or_model_id))], [slug]);
+    assert.deepEqual([...new Set(model.offers.map((offer) => offer.or_canonical_slug))], [listedModel.canonical_slug]);
+    assert.equal(model.offers.length, listedModel.endpoints.length, 'one offer per listed endpoint');
+  }
+  const endpoint = openRouterEndpoint(openRouter, slug, (e) => e.provider_name === 'Xiaomi');
   const firstParty = model.offers.find((offer) => offer.or_provider_slug === 'xiaomi');
-  assert.ok(firstParty);
-  assert.deepEqual([firstParty.input_per_1m, firstParty.output_per_1m, firstParty.cache_read_per_1m], [0.435, 0.87, 0.0036]);
-  assert.equal(firstParty.context_length, 1048576);
-  assert.equal(firstParty.max_completion_tokens, 131072);
+  if (assertJoinParity(assert, firstParty, endpoint, `${slug} first-party route`)) {
+    const price = endpointPrices(endpoint);
+    assert.deepEqual([firstParty.input_per_1m, firstParty.output_per_1m, firstParty.cache_read_per_1m ?? null], [price.input, price.output, price.cacheRead]);
+    assert.equal(firstParty.context_length, endpoint.context_length);
+    assert.equal(firstParty.max_completion_tokens, endpoint.max_completion_tokens);
+  }
 });
 
 test('CR-117: AA values and efficiency attach by exact UUID, never by a borrowed model identity', () => {
-  // CR-634: AA rescored MiMo-V2.6-Pro on Intelligence Index v5.0 (46.3 on v4.x).
-  assert.equal(model.benchmarks.aa_intelligence_index, 29.9);
-  assert.equal(model.aa_intelligence.status, 'measured');
-  assert.equal(model.benchmarks.aa_hle, 0.494);
-  assert.equal(model.benchmarks.aa_scicode, 0.609);
-  assert.equal(model.benchmarks.aa_lcr, 0.863333333333333);
-  assert.equal(model.token_efficiency.aa.source_model_id, '24d8fdfe-6241-424e-b7b7-1b6efb06e4fb');
-  assert.equal(model.token_efficiency.aa.source_slug, 'mimo-v2-6-pro');
-  assert.equal(model.token_efficiency.aa.status, 'available');
+  // CR-634: AA rescored MiMo-V2.6-Pro on Intelligence Index v5.0 (46.3 on v4.x), so the values are AA's
+  // live numbers: the row carries them exactly while AA lists them, and the efficiency join follows the
+  // AA efficiency page by the same UUID (R9.1).
+  const aa = rawCatalog('artificialanalysis.json').models.find((row) => row.id === '24d8fdfe-6241-424e-b7b7-1b6efb06e4fb');
+  const evaluations = aa?.evaluations ?? {};
+  const scored = evaluations.artificial_analysis_intelligence_index != null;
+  assertJoinParity(assert, model.benchmarks.aa_intelligence_index != null, scored && aa, 'MiMo AA Intelligence Index');
+  if (scored) {
+    assert.equal(model.benchmarks.aa_intelligence_index, evaluations.artificial_analysis_intelligence_index);
+    assert.equal(model.aa_intelligence.status, 'measured');
+    for (const [field, key] of [['aa_hle', 'hle'], ['aa_scicode', 'scicode'], ['aa_lcr', 'lcr']]) assert.equal(model.benchmarks[field] ?? null, evaluations[key] ?? null, field);
+  }
+  const efficiency = rawCatalog('aa-efficiency.json').rows.find((row) => row.source_id === '24d8fdfe-6241-424e-b7b7-1b6efb06e4fb');
+  if (assertJoinParity(assert, model.token_efficiency.aa.status === 'available', efficiency, 'MiMo AA efficiency')) {
+    assert.equal(model.token_efficiency.aa.source_model_id, efficiency.source_id);
+    assert.equal(model.token_efficiency.aa.source_slug, efficiency.slug);
+  }
 });
 
 test('CR-117: all 17 Xiaomi claims remain self-reported with reviewable provenance', () => {

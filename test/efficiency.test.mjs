@@ -4,16 +4,19 @@ import { readFileSync } from "node:fs";
 import { attachEfficiency } from "../lib/efficiency.mjs";
 const read = (name) => JSON.parse(readFileSync(`data/raw/${name}.json`));
 const inputs = () => ({ aa: read("artificialanalysis"), aaEfficiency: read("aa-efficiency"), aaEfficiencyV4: read("aa-efficiency-v4"), openrouter: read("openrouter"), openrouterEfficiency: read("openrouter-efficiency"), chutesEfficiency: read("chutes-efficiency"), now: new Date().toISOString() });
+// The exact-SKU join is exercised on whichever OpenRouter model the retained workload page covers today:
+// OpenRouter's weekly rankings reshuffle (31 Oct: kimi-k3 left them), so no single slug may be pinned (R9.1).
+const workloadSku = (source = inputs()) => Object.keys(source.openrouterEfficiency.models)
+  .find((id) => source.openrouterEfficiency.models[id].provenance?.collected_at && source.openrouter.models.some((m) => m.id === id && m.endpoints?.[0]));
 const bare = (id, sku, offers = []) => ({ id, aa_model_id: null, aa_metadata: { openrouter_api_id: sku }, offers });
 
 test("efficiency joins an exact workload SKU; sibling/ambiguous rows use labelled Chutes fallback", () => {
-  const models = [bare("kimi", "moonshotai/kimi-k3"), bare("wrong-version", "moonshotai/kimi-k2"), bare("ambiguous", null, [{ or_model_id: "moonshotai/kimi-k3" }, { or_model_id: "moonshotai/kimi-k2" }])];
-  const source = inputs();
-  // CR-631: judge the join on the day the kimi-k3 workload page was collected. On the live clock the page ages past the
+  const source = inputs(); const sku = workloadSku(source), older = `${sku}-older`;
+  assert.ok(sku, "no OpenRouter model has a retained workload page and a listed endpoint any more");
+  const models = [bare("exact", sku), bare("wrong-version", older), bare("ambiguous", null, [{ or_model_id: sku }, { or_model_id: older }])];
+  // CR-631: judge the join on the day the workload page was collected. On the live clock the page ages past the
   // 30-day bound and the test silently became a staleness test (31 Oct: kimi-k3 left OpenRouter's weekly rankings).
-  source.now = new Date(Date.parse(source.openrouterEfficiency.models["moonshotai/kimi-k3"].provenance.collected_at) + 86400000).toISOString();
-  delete source.openrouterEfficiency.models["moonshotai/kimi-k2"];
-  source.openrouterEfficiency.rankings.rows = source.openrouterEfficiency.rankings.rows.filter((r) => r.variant_permaslug !== source.openrouter.models.find((m) => m.id === "moonshotai/kimi-k2")?.canonical_slug);
+  source.now = new Date(Date.parse(source.openrouterEfficiency.models[sku].provenance.collected_at) + 86400000).toISOString();
   attachEfficiency(models, source);
   assert.equal(models[0].token_efficiency.input_output_ratio.fallback, false);
   assert.equal(models[0].token_efficiency.input_output_ratio.basis, "derived");
@@ -26,14 +29,14 @@ test("efficiency joins an exact workload SKU; sibling/ambiguous rows use labelle
 });
 test("stale workload observations fall back without changing retained source dates", () => {
   const source = inputs(); source.now = new Date(Date.now() + 90 * 86400000).toISOString();
-  const model = bare("kimi", "moonshotai/kimi-k3");
+  const model = bare("exact", workloadSku(source));
   attachEfficiency([model], source);
   assert.equal(model.token_efficiency.input_output_ratio.fallback, true);
   assert.equal(model.token_efficiency.input_output_ratio.collected_at, source.chutesEfficiency.ratio_provenance.collected_at);
   assert.equal(model.token_efficiency.input_output_ratio.stale, true);
 });
 test("duplicate endpoint tags and mismatched provider identities never receive a cache rate", () => {
-  const source = inputs(); const kimi = source.openrouter.models.find((m) => m.id === "moonshotai/kimi-k3");
+  const source = inputs(); const kimi = source.openrouter.models.find((m) => m.id === workloadSku(source));
   const endpoint = kimi.endpoints[0]; kimi.endpoints.push({ ...endpoint });
   const registry = attachEfficiency([], source).openrouter_endpoints;
   assert.equal(registry[kimi.id][endpoint.tag].status, "ambiguous_endpoint_tag");

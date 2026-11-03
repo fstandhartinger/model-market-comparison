@@ -1,6 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
+import { assertExercised, assertJoinParity, rawCatalog } from './helpers/live-catalog.mjs';
+import { endpointPrices, openRouterEndpoint } from './helpers/live-catalog-extra-01.mjs';
 
 const dataset = JSON.parse(await readFile(new URL('../data/dataset.json', import.meta.url), 'utf8'));
 const registry = JSON.parse(await readFile(new URL('../data/raw/benchmarks/registry.json', import.meta.url), 'utf8'));
@@ -87,10 +89,19 @@ test('CR-126.2: the two launch models carry OpenAI\'s published release date and
     assert.equal(model.org, 'OpenAI');
     assert.equal(model.release_date, '2026-09-22');
   }
-  const sol = dataset.models.find((row) => row.id === 'gpt-6-sol::max');
-  const luna = dataset.models.find((row) => row.id === 'gpt-6-luna::max');
-  assert.ok(sol.offers.some((offer) => offer.input_per_1m === 2 && offer.output_per_1m === 10), 'GPT-6 Sol USD 2 / 10 per 1M tokens');
-  assert.ok(luna.offers.some((offer) => offer.input_per_1m === 0.1 && offer.output_per_1m === 0.5), 'GPT-6 Luna USD 0.10 / 0.50 per 1M tokens');
+  // OpenAI's first-party OpenRouter route carries the launch price while OpenRouter lists it (R9.1);
+  // the price itself is a live fact (OpenAI re-prices), so it is compared with the raw endpoint.
+  const openRouter = rawCatalog('openrouter.json');
+  const firstParty = (id, slug) => {
+    const offer = dataset.models.find((row) => row.id === id).offers.find((o) => o.or_model_id === slug && o.endpoint_tag === 'openai');
+    const endpoint = openRouterEndpoint(openRouter, slug, 'openai');
+    if (assertJoinParity(assert, offer, endpoint, `${slug} first-party route`)) {
+      const price = endpointPrices(endpoint);
+      assert.deepEqual([offer.input_per_1m, offer.output_per_1m, offer.cache_read_per_1m ?? null], [price.input, price.output, price.cacheRead], slug);
+    }
+    return Boolean(endpoint);
+  };
+  assertExercised(assert, [firstParty('gpt-6-sol::max', 'openai/gpt-6-sol'), firstParty('gpt-6-luna::max', 'openai/gpt-6-luna')], 'GPT-6 first-party routes');
 });
 
 test('CR-126.3: the competitor cells of the same post stay refused as secondary quotes', () => {

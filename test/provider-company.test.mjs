@@ -3,6 +3,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
+import { assertExercised } from './helpers/live-catalog.mjs';
 import { providerCompanies, providerCompanyName, providerRouteLabel } from '../lib/provider-company.mjs';
 
 const dataset = JSON.parse(readFileSync(new URL('../data/dataset.json', import.meta.url), 'utf8'));
@@ -54,11 +55,18 @@ test('the shipped catalog shows every company once, and no key is lost or duplic
   const keys = rows.flatMap((r) => r.keys);
   assert.equal(keys.length, catalog.length);
   assert.deepEqual([...keys].sort(), catalog.map((p) => `${p.platform}::${p.provider}`).sort());
-  // The folding is real on the live catalog: the known double routes are one row each.
-  for (const name of ['Anthropic', 'Chutes', 'Mistral', 'Nebius', 'Inceptron', 'AWS Bedrock', 'Azure AI Foundry', 'Google Vertex AI']) {
+  // The folding is real on the live catalog (R9.1): a company folds exactly when the catalog carries both
+  // its direct key and a gateway key spelling it. Which vendors do is live (a vendor can drop off
+  // OpenRouter or retire its own route), so each pair is checked only while both keys are published.
+  const gatewaySpelling = { 'AWS Bedrock': 'Amazon Bedrock', 'Azure AI Foundry': 'Azure', 'Google Vertex AI': 'Google' };
+  const folded = ['Anthropic', 'Chutes', 'Mistral', 'Nebius', 'Inceptron', 'AWS Bedrock', 'Azure AI Foundry', 'Google Vertex AI'].map((name) => {
+    const hasKey = (platform, provider) => catalog.some((p) => p.platform === platform && p.provider === provider);
+    if (!(hasKey(name, name) && hasKey('OpenRouter', gatewaySpelling[name] ?? name))) return false;
     const row = rows.find((r) => r.label === name);
     assert.ok(row, `${name} missing`);
     assert.ok(row.keys.length >= 2, `${name} should fold at least two catalog keys`);
     assert.ok(row.sub?.includes('direct'), `${name} should name its direct route`);
-  }
+    return true;
+  });
+  assertExercised(assert, folded, 'live provider folds');
 });
