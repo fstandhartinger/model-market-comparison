@@ -6,7 +6,7 @@ import { JevBenchReleaseVersionNav } from '../../../components/JevBenchReleaseVe
 import { withPublicAdapterIds } from '../../../lib/jevbench-v15-release.mjs';
 import { JevHistoryLazy } from '../../../components/JevHistoryLazy';
 import { PageJsonLd } from '../../../components/PageJsonLd';
-export const metadata = {title:'JevBench v1.8.6: one unranked row on the 27 Oct draw',description:'MetaDecision-31B-Rain measured on the 27 Oct draw, shown unranked until equated.',alternates:{canonical:'/jev-models/v1.8.6'}};
+export const metadata = {title:'JevBench v1.8.6: one unranked row',description:'MetaDecision-31B-Rain measured on the 27 Oct draw, shown unranked until equated.',alternates:{canonical:'/jev-models/v1.8.6'}};
 export default async function JevModelsV186Page() {
  const release=await readJevbenchV186ForBoard();if(!release)notFound();
  const board=v186BoardInput(release);
