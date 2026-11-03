@@ -36,7 +36,7 @@ def caption(row: dict, deadline: str) -> str:
     context = decision_context_line(row, "No result 40 h after payment for {customer}, model {model}: "
                                          f"delay note or refund{f' ({eur})' if eur else ''}?")
     return (f"🧑 DU BIST DRAN\n{context}\n\n🧑 Für dich\n"
-            f"- Decide the next step for this customer ({money}).\n"
+            "- Decide the next step for this customer.\n"
             f"  Why: No result 40 hours after payment; the deadline is {deadline}.\n"
             f"  Effect: Send delay note = mails a new date (deadline + 24 h), no cost. Refund in full = pays {money} back, final. "
             "No action = nothing goes out.\n"
