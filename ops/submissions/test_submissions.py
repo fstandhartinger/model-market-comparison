@@ -46,7 +46,7 @@ def cmd_send(args):
     if os.environ.get("STUB_MAIL_REFUSE") == "1":
         print("BLOCKED BY OUTBOUND GATE", file=sys.stderr); sys.exit(3)
     with open(os.environ["STUB_MAIL_LOG"], "a") as fh:
-        fh.write(args.to + "\\t" + args.subject + "\\t" + ("dry" if args.dry_run else "real") + "\\n")
+        fh.write(args.to + "\\t" + args.subject + "\\t" + ("dry" if args.dry_run else "real") + "\\t" + args.sender_from + "\\t" + args.reply_to + "\\n")
     print("DRY RUN" if args.dry_run else "sent from stub to " + args.to)
 '''
 
@@ -227,6 +227,8 @@ def test_confirmation_sent_once_per_recipient_and_template(env):
     assert states == {a: "sent", b: "pending", c: "sent"}  # deferred, not terminally skipped
     sent = [l.split("\t") for l in (env["tmp"] / "mail.log").read_text().splitlines()]
     assert [s[0] for s in sent] == ["owner@example.invalid", "other@example.invalid"] and all(s[2] == "real" for s in sent)
+    # Brand sender, never the personal Gmail default (AGENTS.md section 4).
+    assert all(s[3] == "Benchmark Heaven <info@benchmarkheaven.com>" and s[4] == "info@benchmarkheaven.com" for s in sent)
     assert sent[0][1] == "We received your model submission: Mine"
     # Body checks through the module directly.
     import intake_bridge as ib

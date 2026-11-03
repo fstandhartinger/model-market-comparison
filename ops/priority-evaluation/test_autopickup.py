@@ -659,6 +659,7 @@ class CustomerDataTests(DatabaseTestCase):
             "import json, os\n"
             "def cmd_send(args):\n"
             "    open(os.environ['FAKE_MAIL_LOG'], 'w').write(json.dumps({'to': args.to, 'dry': args.dry_run,\n"
+            "        'from': args.sender_from, 'reply_to': args.reply_to,\n"
             "        'approved': os.environ.get('MAIL_APPROVED_BY_FLORIAN'), 'cooldown': os.environ.get('MAIL_DOMAIN_COOLDOWN_HOURS')}))\n"
             "    print('DRY RUN - nichts gesendet' if args.dry_run else 'sent from x to y')\n")
         log = TMP / "fake_mail.json"
@@ -676,6 +677,8 @@ class CustomerDataTests(DatabaseTestCase):
         self.assertTrue(ok)
         record = json.loads(log.read_text())
         self.assertEqual((record["dry"], record["approved"], record["cooldown"]), (True, "1", "1"))
+        self.assertEqual((record["from"], record["reply_to"]),
+                         ("Benchmark Heaven <info@benchmarkheaven.com>", "info@benchmarkheaven.com"))
         self.assertNotIn("MAIL_APPROVED_BY_FLORIAN", os.environ)
         self.assertEqual(effects.mail("a@b.example\nBcc: x@y.example", "S", "B"), (False, "invalid_recipient"))
 

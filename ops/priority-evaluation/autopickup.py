@@ -69,6 +69,10 @@ STATE_ROOT = Path(os.environ.get("FASTLANE_STATE_ROOT") or HOME / ".local/state/
 JOB_ROOT = Path(os.environ.get("FASTLANE_JOB_ROOT") or HOME / "jobs/fastlane-evaluations")
 SHARE_ROOT = Path(os.environ.get("FASTLANE_SHARE_ROOT") or HOME / ".local/share/priority-evaluation")
 MAIL_TOOL = HOME / ".claude/skills/email-access/mail_tool.py"
+# AGENTS.md section 4: customer mail comes From the brand's own domain, never a personal mailbox.
+# Verified Gmail send-as identity (mail_tool GMAIL_SEND_AS); replies reach the watched Gmail via forwarding.
+MAIL_SENDER_FROM = "Benchmark Heaven <info@benchmarkheaven.com>"
+MAIL_REPLY_TO = "info@benchmarkheaven.com"
 MAIL_SECRET_FILE = HOME / ".config/dev-secrets.env"
 AUTHOR_MESSAGE_GUARD = HOME / "bin/author-message-guard"
 AUTHOR_GUARD_TIMEOUT_S = 60
@@ -693,7 +697,8 @@ class Effects:
             module = importlib.util.module_from_spec(spec)
             spec.loader.exec_module(module)
             args = argparse.Namespace(account="gmail", to=to, subject=subject, body=body,
-                                      body_file=None, cc=None, dry_run=self.dry_run, fastlane_outbox_id=outbox_id)
+                                      body_file=None, cc=None, sender_from=MAIL_SENDER_FROM, reply_to=MAIL_REPLY_TO,
+                                      dry_run=self.dry_run, fastlane_outbox_id=outbox_id)
             with contextlib.redirect_stdout(out), contextlib.redirect_stderr(err):
                 module.cmd_send(args)
         except SystemExit:
