@@ -1,0 +1,368 @@
+[
+  {
+    "id": "public:64da456029104be74a28d22d",
+    "benchmark_id": "vulcanbench-frontier::4",
+    "subject": {
+      "source_id": "GPT-5.6 Luna [max]",
+      "name": "GPT-5.6 Luna [max]",
+      "model_id": "gpt-5.6-luna::max",
+      "variant": null,
+      "harness": "Codex"
+    },
+    "value": 84.1469,
+    "unit": "percent",
+    "basis": "measured",
+    "source": {
+      "url": "https://vulcanbench.com/assets/data/swe-v4-board.csv",
+      "retrieved_at": "2026-11-03T07:26:45.233337+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-11-03T07-18-43-322Z/dcae26e2be38520512f8.gz",
+      "sha256": "dcae26e2be38520512f8a996cc74a8fa40d1cae240e3aa6539f2451e6129771f",
+      "locator": "vulcanbench_frontier_csv; source row 45; GPT-5.6 Luna [max]; field combined_full_denominator"
+    },
+    "protocol": "VulcanBench Frontier v4 (formerly VulcanBench-SWE v4): 23 behavioural-reconstruction tasks; combined score = 100 × (0.50 functional hidden tests + 0.085 lint/complexity + 0.085 security + 0.33 judged Code quality, judged for a human reader by Muse Spark 1.3 and Grok 4.6 under the frozen protocol family the reviewed code-quality-maintenance revisions v3.4, v3.5, v3.6, v3.7, v3.15, v3.16, v3.17, v3.18 and v3.23); one column per model × effort in its own agent harness (Codex or Claude Code); Fable 5.1’s columns include 11 disclosed Opus 4.8 fallback cells the operator keeps in the population; not a Composite input. The source-stated Grok 4.7 / Cursor v3.20 population uses a changed judge panel and is explicitly rejected, never compared under this identity.; source row: {\"model\":\"GPT-5.6 Luna\",\"lab\":\"OpenAI\",\"harness\":\"Codex\",\"effort\":\"max\",\"n_tasks\":23,\"runs_judged\":23,\"unfinished_runs\":0,\"tasks_passed\":19,\"combined_33\":84.1469,\"scored_on\":\"all 23 tasks, every run judged\",\"combined_33_se\":1.3494,\"code_quality\":65.3505,\"mean_minutes\":44.0992,\"mean_usd\":0.448386,\"protocol\":\"code-quality-maintenance-v3.5\",\"report\":\"benchmarks/swe-v4-gpt55-luna-v35.html\",\"best_effort\":true}",
+    "comparison_key": null,
+    "join_note": "Reviewed identity map 2026-09-18: label states model gpt-5.6-luna and setting max; exact catalog configuration gpt-5.6-luna::max"
+  },
+  {
+    "id": "public:8b7d27dd650711fd101ec1f2",
+    "benchmark_id": "vulcanbench-frontier::4",
+    "subject": {
+      "source_id": "Sonnet 5.5 [medium]",
+      "name": "Sonnet 5.5 [medium]",
+      "model_id": null,
+      "variant": null,
+      "harness": "Claude Code"
+    },
+    "value": 84.0956,
+    "unit": "percent",
+    "basis": "measured",
+    "source": {
+      "url": "https://vulcanbench.com/assets/data/swe-v4-board.csv",
+      "retrieved_at": "2026-11-03T07:26:45.233337+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-11-03T07-18-43-322Z/dcae26e2be38520512f8.gz",
+      "sha256": "dcae26e2be38520512f8a996cc74a8fa40d1cae240e3aa6539f2451e6129771f",
+      "locator": "vulcanbench_frontier_csv; source row 46; Sonnet 5.5 [medium]; field combined_full_denominator"
+    },
+    "protocol": "VulcanBench Frontier v4 (formerly VulcanBench-SWE v4): 23 behavioural-reconstruction tasks; combined score = 100 × (0.50 functional hidden tests + 0.085 lint/complexity + 0.085 security + 0.33 judged Code quality, judged for a human reader by Muse Spark 1.3 and Grok 4.6 under the frozen protocol family the reviewed code-quality-maintenance revisions v3.4, v3.5, v3.6, v3.7, v3.15, v3.16, v3.17, v3.18 and v3.23); one column per model × effort in its own agent harness (Codex or Claude Code); Fable 5.1’s columns include 11 disclosed Opus 4.8 fallback cells the operator keeps in the population; not a Composite input. The source-stated Grok 4.7 / Cursor v3.20 population uses a changed judge panel and is explicitly rejected, never compared under this identity.; source row: {\"model\":\"Sonnet 5.5\",\"lab\":\"Anthropic\",\"harness\":\"Claude Code\",\"effort\":\"medium\",\"n_tasks\":23,\"runs_judged\":23,\"unfinished_runs\":0,\"tasks_passed\":17,\"combined_33\":84.0956,\"scored_on\":\"all 23 tasks, every run judged\",\"combined_33_se\":1.1952,\"code_quality\":65.35,\"mean_minutes\":20.822,\"mean_usd\":3.002214,\"protocol\":\"code-quality-maintenance-v3.23\",\"report\":\"benchmarks/swe-v4-sonnet55-v323.html\",\"best_effort\":false}",
+    "comparison_key": null
+  },
+  {
+    "id": "public:7aa0e7cb92ad1beea0d2d0f8",
+    "benchmark_id": "vulcanbench-frontier::4",
+    "subject": {
+      "source_id": "GPT-6.1 Terra [extra-high]",
+      "name": "GPT-6.1 Terra [extra-high]",
+      "model_id": null,
+      "variant": null,
+      "harness": "Codex"
+    },
+    "value": 83.6751,
+    "unit": "percent",
+    "basis": "measured",
+    "source": {
+      "url": "https://vulcanbench.com/assets/data/swe-v4-board.csv",
+      "retrieved_at": "2026-11-03T07:26:45.233337+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-11-03T07-18-43-322Z/dcae26e2be38520512f8.gz",
+      "sha256": "dcae26e2be38520512f8a996cc74a8fa40d1cae240e3aa6539f2451e6129771f",
+      "locator": "vulcanbench_frontier_csv; source row 48; GPT-6.1 Terra [extra-high]; field combined_full_denominator"
+    },
+    "protocol": "VulcanBench Frontier v4 (formerly VulcanBench-SWE v4): 23 behavioural-reconstruction tasks; combined score = 100 × (0.50 functional hidden tests + 0.085 lint/complexity + 0.085 security + 0.33 judged Code quality, judged for a human reader by Muse Spark 1.3 and Grok 4.6 under the frozen protocol family the reviewed code-quality-maintenance revisions v3.4, v3.5, v3.6, v3.7, v3.15, v3.16, v3.17, v3.18 and v3.23); one column per model × effort in its own agent harness (Codex or Claude Code); Fable 5.1’s columns include 11 disclosed Opus 4.8 fallback cells the operator keeps in the population; not a Composite input. The source-stated Grok 4.7 / Cursor v3.20 population uses a changed judge panel and is explicitly rejected, never compared under this identity.; source row: {\"model\":\"GPT-6.1 Terra\",\"lab\":\"OpenAI\",\"harness\":\"Codex\",\"effort\":\"extra-high\",\"n_tasks\":23,\"runs_judged\":23,\"unfinished_runs\":0,\"tasks_passed\":16,\"combined_33\":83.6751,\"scored_on\":\"all 23 tasks, every run judged\",\"combined_33_se\":2.0925,\"code_quality\":70.9415,\"mean_minutes\":4.9492,\"mean_usd\":0.240495,\"protocol\":\"code-quality-maintenance-v3.29\",\"report\":\"benchmarks/swe-v4-gpt61-terra-v329.html\",\"best_effort\":false}",
+    "comparison_key": null
+  },
+  {
+    "id": "public:a1bce0289c1d5b45301c1448",
+    "benchmark_id": "vulcanbench-frontier::4",
+    "subject": {
+      "source_id": "GPT-5.6 Terra [extra-high]",
+      "name": "GPT-5.6 Terra [extra-high]",
+      "model_id": "gpt-5.6-terra::xhigh",
+      "variant": null,
+      "harness": "Codex"
+    },
+    "value": 83.4578,
+    "unit": "percent",
+    "basis": "measured",
+    "source": {
+      "url": "https://vulcanbench.com/assets/data/swe-v4-board.csv",
+      "retrieved_at": "2026-11-03T07:26:45.233337+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-11-03T07-18-43-322Z/dcae26e2be38520512f8.gz",
+      "sha256": "dcae26e2be38520512f8a996cc74a8fa40d1cae240e3aa6539f2451e6129771f",
+      "locator": "vulcanbench_frontier_csv; source row 49; GPT-5.6 Terra [extra-high]; field combined_full_denominator"
+    },
+    "protocol": "VulcanBench Frontier v4 (formerly VulcanBench-SWE v4): 23 behavioural-reconstruction tasks; combined score = 100 × (0.50 functional hidden tests + 0.085 lint/complexity + 0.085 security + 0.33 judged Code quality, judged for a human reader by Muse Spark 1.3 and Grok 4.6 under the frozen protocol family the reviewed code-quality-maintenance revisions v3.4, v3.5, v3.6, v3.7, v3.15, v3.16, v3.17, v3.18 and v3.23); one column per model × effort in its own agent harness (Codex or Claude Code); Fable 5.1’s columns include 11 disclosed Opus 4.8 fallback cells the operator keeps in the population; not a Composite input. The source-stated Grok 4.7 / Cursor v3.20 population uses a changed judge panel and is explicitly rejected, never compared under this identity.; source row: {\"model\":\"GPT-5.6 Terra\",\"lab\":\"OpenAI\",\"harness\":\"Codex\",\"effort\":\"extra-high\",\"n_tasks\":23,\"runs_judged\":23,\"unfinished_runs\":0,\"tasks_passed\":14,\"combined_33\":83.4578,\"scored_on\":\"all 23 tasks, every run judged\",\"combined_33_se\":2.7227,\"code_quality\":73.1344,\"mean_minutes\":19.2392,\"mean_usd\":2.117749,\"protocol\":\"code-quality-maintenance-v3.6\",\"report\":\"benchmarks/swe-v4-terra-v36.html\",\"best_effort\":false}",
+    "comparison_key": null,
+    "join_note": "Reviewed identity map 2026-09-18: label states model gpt-5.6-terra and setting xhigh; exact catalog configuration gpt-5.6-terra::xhigh"
+  },
+  {
+    "id": "public:d4344073776f34915906884a",
+    "benchmark_id": "vulcanbench-frontier::4",
+    "subject": {
+      "source_id": "GPT-6 Sol [high]",
+      "name": "GPT-6 Sol [high]",
+      "model_id": null,
+      "variant": null,
+      "harness": "Codex"
+    },
+    "value": 82.8261,
+    "unit": "percent",
+    "basis": "measured",
+    "source": {
+      "url": "https://vulcanbench.com/assets/data/swe-v4-board.csv",
+      "retrieved_at": "2026-11-03T07:26:45.233337+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-11-03T07-18-43-322Z/dcae26e2be38520512f8.gz",
+      "sha256": "dcae26e2be38520512f8a996cc74a8fa40d1cae240e3aa6539f2451e6129771f",
+      "locator": "vulcanbench_frontier_csv; source row 50; GPT-6 Sol [high]; field combined_full_denominator"
+    },
+    "protocol": "VulcanBench Frontier v4 (formerly VulcanBench-SWE v4): 23 behavioural-reconstruction tasks; combined score = 100 × (0.50 functional hidden tests + 0.085 lint/complexity + 0.085 security + 0.33 judged Code quality, judged for a human reader by Muse Spark 1.3 and Grok 4.6 under the frozen protocol family the reviewed code-quality-maintenance revisions v3.4, v3.5, v3.6, v3.7, v3.15, v3.16, v3.17, v3.18 and v3.23); one column per model × effort in its own agent harness (Codex or Claude Code); Fable 5.1’s columns include 11 disclosed Opus 4.8 fallback cells the operator keeps in the population; not a Composite input. The source-stated Grok 4.7 / Cursor v3.20 population uses a changed judge panel and is explicitly rejected, never compared under this identity.; source row: {\"model\":\"GPT-6 Sol\",\"lab\":\"OpenAI\",\"harness\":\"Codex\",\"effort\":\"high\",\"n_tasks\":23,\"runs_judged\":23,\"unfinished_runs\":0,\"tasks_passed\":15,\"combined_33\":82.8261,\"scored_on\":\"all 23 tasks, every run judged\",\"combined_33_se\":2.4345,\"code_quality\":70.0851,\"mean_minutes\":23.7716,\"mean_usd\":2.330342,\"protocol\":\"code-quality-maintenance-v3.17\",\"report\":\"benchmarks/swe-v4-gpt6-sol-v317.html\",\"best_effort\":false}",
+    "comparison_key": null
+  },
+  {
+    "id": "public:016e616004917096fe02633a",
+    "benchmark_id": "vulcanbench-frontier::4",
+    "subject": {
+      "source_id": "GPT-5.6 Sol [medium]",
+      "name": "GPT-5.6 Sol [medium]",
+      "model_id": "gpt-5.6-sol::medium",
+      "variant": null,
+      "harness": "Codex"
+    },
+    "value": 82.5602,
+    "unit": "percent",
+    "basis": "measured",
+    "source": {
+      "url": "https://vulcanbench.com/assets/data/swe-v4-board.csv",
+      "retrieved_at": "2026-11-03T07:26:45.233337+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-11-03T07-18-43-322Z/dcae26e2be38520512f8.gz",
+      "sha256": "dcae26e2be38520512f8a996cc74a8fa40d1cae240e3aa6539f2451e6129771f",
+      "locator": "vulcanbench_frontier_csv; source row 51; GPT-5.6 Sol [medium]; field combined_full_denominator"
+    },
+    "protocol": "VulcanBench Frontier v4 (formerly VulcanBench-SWE v4): 23 behavioural-reconstruction tasks; combined score = 100 × (0.50 functional hidden tests + 0.085 lint/complexity + 0.085 security + 0.33 judged Code quality, judged for a human reader by Muse Spark 1.3 and Grok 4.6 under the frozen protocol family the reviewed code-quality-maintenance revisions v3.4, v3.5, v3.6, v3.7, v3.15, v3.16, v3.17, v3.18 and v3.23); one column per model × effort in its own agent harness (Codex or Claude Code); Fable 5.1’s columns include 11 disclosed Opus 4.8 fallback cells the operator keeps in the population; not a Composite input. The source-stated Grok 4.7 / Cursor v3.20 population uses a changed judge panel and is explicitly rejected, never compared under this identity.; source row: {\"model\":\"GPT-5.6 Sol\",\"lab\":\"OpenAI\",\"harness\":\"Codex\",\"effort\":\"medium\",\"n_tasks\":23,\"runs_judged\":23,\"unfinished_runs\":0,\"tasks_passed\":12,\"combined_33\":82.5602,\"scored_on\":\"all 23 tasks, every run judged\",\"combined_33_se\":1.2458,\"code_quality\":68.1922,\"mean_minutes\":11.0511,\"mean_usd\":1.715194,\"protocol\":\"code-quality-maintenance-v3.7\",\"report\":\"benchmarks/swe-v4-sol-v37.html\",\"best_effort\":false}",
+    "comparison_key": null,
+    "join_note": "Reviewed identity map 2026-09-27: label states model gpt-5.6-sol and setting medium; exact catalog configuration gpt-5.6-sol::medium"
+  },
+  {
+    "id": "public:604343debae528227c9d07c0",
+    "benchmark_id": "vulcanbench-frontier::4",
+    "subject": {
+      "source_id": "Sonnet 5.5 [low]",
+      "name": "Sonnet 5.5 [low]",
+      "model_id": null,
+      "variant": null,
+      "harness": "Claude Code"
+    },
+    "value": 81.6257,
+    "unit": "percent",
+    "basis": "measured",
+    "source": {
+      "url": "https://vulcanbench.com/assets/data/swe-v4-board.csv",
+      "retrieved_at": "2026-11-03T07:26:45.233337+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-11-03T07-18-43-322Z/dcae26e2be38520512f8.gz",
+      "sha256": "dcae26e2be38520512f8a996cc74a8fa40d1cae240e3aa6539f2451e6129771f",
+      "locator": "vulcanbench_frontier_csv; source row 52; Sonnet 5.5 [low]; field combined_full_denominator"
+    },
+    "protocol": "VulcanBench Frontier v4 (formerly VulcanBench-SWE v4): 23 behavioural-reconstruction tasks; combined score = 100 × (0.50 functional hidden tests + 0.085 lint/complexity + 0.085 security + 0.33 judged Code quality, judged for a human reader by Muse Spark 1.3 and Grok 4.6 under the frozen protocol family the reviewed code-quality-maintenance revisions v3.4, v3.5, v3.6, v3.7, v3.15, v3.16, v3.17, v3.18 and v3.23); one column per model × effort in its own agent harness (Codex or Claude Code); Fable 5.1’s columns include 11 disclosed Opus 4.8 fallback cells the operator keeps in the population; not a Composite input. The source-stated Grok 4.7 / Cursor v3.20 population uses a changed judge panel and is explicitly rejected, never compared under this identity.; source row: {\"model\":\"Sonnet 5.5\",\"lab\":\"Anthropic\",\"harness\":\"Claude Code\",\"effort\":\"low\",\"n_tasks\":23,\"runs_judged\":23,\"unfinished_runs\":0,\"tasks_passed\":15,\"combined_33\":81.6257,\"scored_on\":\"all 23 tasks, every run judged\",\"combined_33_se\":1.3818,\"code_quality\":61.6683,\"mean_minutes\":19.9548,\"mean_usd\":2.876155,\"protocol\":\"code-quality-maintenance-v3.23\",\"report\":\"benchmarks/swe-v4-sonnet55-v323.html\",\"best_effort\":false}",
+    "comparison_key": null
+  },
+  {
+    "id": "public:e46dda6b7d56c829be58d39c",
+    "benchmark_id": "vulcanbench-frontier::4",
+    "subject": {
+      "source_id": "GPT-6 Luna [max]",
+      "name": "GPT-6 Luna [max]",
+      "model_id": null,
+      "variant": null,
+      "harness": "Codex"
+    },
+    "value": 67.2629,
+    "unit": "percent",
+    "basis": "measured",
+    "source": {
+      "url": "https://vulcanbench.com/assets/data/swe-v4-board.csv",
+      "retrieved_at": "2026-11-03T07:26:45.233337+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-11-03T07-18-43-322Z/dcae26e2be38520512f8.gz",
+      "sha256": "dcae26e2be38520512f8a996cc74a8fa40d1cae240e3aa6539f2451e6129771f",
+      "locator": "vulcanbench_frontier_csv; source row 53; GPT-6 Luna [max]; field combined_full_denominator"
+    },
+    "protocol": "VulcanBench Frontier v4 (formerly VulcanBench-SWE v4): 23 behavioural-reconstruction tasks; combined score = 100 × (0.50 functional hidden tests + 0.085 lint/complexity + 0.085 security + 0.33 judged Code quality, judged for a human reader by Muse Spark 1.3 and Grok 4.6 under the frozen protocol family the reviewed code-quality-maintenance revisions v3.4, v3.5, v3.6, v3.7, v3.15, v3.16, v3.17, v3.18 and v3.23); one column per model × effort in its own agent harness (Codex or Claude Code); Fable 5.1’s columns include 11 disclosed Opus 4.8 fallback cells the operator keeps in the population; not a Composite input. The source-stated Grok 4.7 / Cursor v3.20 population uses a changed judge panel and is explicitly rejected, never compared under this identity.; source row: {\"model\":\"GPT-6 Luna\",\"lab\":\"OpenAI\",\"harness\":\"Codex\",\"effort\":\"max\",\"n_tasks\":23,\"runs_judged\":19,\"unfinished_runs\":4,\"tasks_passed\":12,\"combined_33\":81.4235,\"scored_on\":\"all 23 tasks; the 4 unfinished runs count as failed tasks and score 0 (the board's combined_timeouts_zero)\",\"combined_33_se\":2.8822,\"code_quality\":71.5117,\"mean_minutes\":60.5342,\"mean_usd\":0.097529,\"protocol\":\"code-quality-maintenance-v3.16\",\"report\":\"benchmarks/swe-v4-gpt6-luna-v316.html\",\"best_effort\":false}",
+    "comparison_key": null
+  },
+  {
+    "id": "public:adaea5ac76c31ba6f6ca655b",
+    "benchmark_id": "vulcanbench-frontier::4",
+    "subject": {
+      "source_id": "GPT-6.1 Terra [medium]",
+      "name": "GPT-6.1 Terra [medium]",
+      "model_id": null,
+      "variant": null,
+      "harness": "Codex"
+    },
+    "value": 80.0953,
+    "unit": "percent",
+    "basis": "measured",
+    "source": {
+      "url": "https://vulcanbench.com/assets/data/swe-v4-board.csv",
+      "retrieved_at": "2026-11-03T07:26:45.233337+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-11-03T07-18-43-322Z/dcae26e2be38520512f8.gz",
+      "sha256": "dcae26e2be38520512f8a996cc74a8fa40d1cae240e3aa6539f2451e6129771f",
+      "locator": "vulcanbench_frontier_csv; source row 55; GPT-6.1 Terra [medium]; field combined_full_denominator"
+    },
+    "protocol": "VulcanBench Frontier v4 (formerly VulcanBench-SWE v4): 23 behavioural-reconstruction tasks; combined score = 100 × (0.50 functional hidden tests + 0.085 lint/complexity + 0.085 security + 0.33 judged Code quality, judged for a human reader by Muse Spark 1.3 and Grok 4.6 under the frozen protocol family the reviewed code-quality-maintenance revisions v3.4, v3.5, v3.6, v3.7, v3.15, v3.16, v3.17, v3.18 and v3.23); one column per model × effort in its own agent harness (Codex or Claude Code); Fable 5.1’s columns include 11 disclosed Opus 4.8 fallback cells the operator keeps in the population; not a Composite input. The source-stated Grok 4.7 / Cursor v3.20 population uses a changed judge panel and is explicitly rejected, never compared under this identity.; source row: {\"model\":\"GPT-6.1 Terra\",\"lab\":\"OpenAI\",\"harness\":\"Codex\",\"effort\":\"medium\",\"n_tasks\":23,\"runs_judged\":23,\"unfinished_runs\":0,\"tasks_passed\":12,\"combined_33\":80.0953,\"scored_on\":\"all 23 tasks, every run judged\",\"combined_33_se\":2.6116,\"code_quality\":67.2941,\"mean_minutes\":3.1121,\"mean_usd\":0.138802,\"protocol\":\"code-quality-maintenance-v3.29\",\"report\":\"benchmarks/swe-v4-gpt61-terra-v329.html\",\"best_effort\":false}",
+    "comparison_key": null
+  },
+  {
+    "id": "public:cf1421531c2851fcbb778308",
+    "benchmark_id": "vulcanbench-frontier::4",
+    "subject": {
+      "source_id": "GPT-6.1 Terra [high]",
+      "name": "GPT-6.1 Terra [high]",
+      "model_id": null,
+      "variant": null,
+      "harness": "Codex"
+    },
+    "value": 79.1898,
+    "unit": "percent",
+    "basis": "measured",
+    "source": {
+      "url": "https://vulcanbench.com/assets/data/swe-v4-board.csv",
+      "retrieved_at": "2026-11-03T07:26:45.233337+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-11-03T07-18-43-322Z/dcae26e2be38520512f8.gz",
+      "sha256": "dcae26e2be38520512f8a996cc74a8fa40d1cae240e3aa6539f2451e6129771f",
+      "locator": "vulcanbench_frontier_csv; source row 56; GPT-6.1 Terra [high]; field combined_full_denominator"
+    },
+    "protocol": "VulcanBench Frontier v4 (formerly VulcanBench-SWE v4): 23 behavioural-reconstruction tasks; combined score = 100 × (0.50 functional hidden tests + 0.085 lint/complexity + 0.085 security + 0.33 judged Code quality, judged for a human reader by Muse Spark 1.3 and Grok 4.6 under the frozen protocol family the reviewed code-quality-maintenance revisions v3.4, v3.5, v3.6, v3.7, v3.15, v3.16, v3.17, v3.18 and v3.23); one column per model × effort in its own agent harness (Codex or Claude Code); Fable 5.1’s columns include 11 disclosed Opus 4.8 fallback cells the operator keeps in the population; not a Composite input. The source-stated Grok 4.7 / Cursor v3.20 population uses a changed judge panel and is explicitly rejected, never compared under this identity.; source row: {\"model\":\"GPT-6.1 Terra\",\"lab\":\"OpenAI\",\"harness\":\"Codex\",\"effort\":\"high\",\"n_tasks\":23,\"runs_judged\":23,\"unfinished_runs\":0,\"tasks_passed\":15,\"combined_33\":79.1898,\"scored_on\":\"all 23 tasks, every run judged\",\"combined_33_se\":3.3765,\"code_quality\":69.9617,\"mean_minutes\":3.2048,\"mean_usd\":0.128332,\"protocol\":\"code-quality-maintenance-v3.29\",\"report\":\"benchmarks/swe-v4-gpt61-terra-v329.html\",\"best_effort\":false}",
+    "comparison_key": null
+  },
+  {
+    "id": "public:2d98542a779da9b68910fab5",
+    "benchmark_id": "vulcanbench-frontier::4",
+    "subject": {
+      "source_id": "GPT-5.6 Luna [extra-high]",
+      "name": "GPT-5.6 Luna [extra-high]",
+      "model_id": "gpt-5.6-luna::xhigh",
+      "variant": null,
+      "harness": "Codex"
+    },
+    "value": 79.1139,
+    "unit": "percent",
+    "basis": "measured",
+    "source": {
+      "url": "https://vulcanbench.com/assets/data/swe-v4-board.csv",
+      "retrieved_at": "2026-11-03T07:26:45.233337+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-11-03T07-18-43-322Z/dcae26e2be38520512f8.gz",
+      "sha256": "dcae26e2be38520512f8a996cc74a8fa40d1cae240e3aa6539f2451e6129771f",
+      "locator": "vulcanbench_frontier_csv; source row 57; GPT-5.6 Luna [extra-high]; field combined_full_denominator"
+    },
+    "protocol": "VulcanBench Frontier v4 (formerly VulcanBench-SWE v4): 23 behavioural-reconstruction tasks; combined score = 100 × (0.50 functional hidden tests + 0.085 lint/complexity + 0.085 security + 0.33 judged Code quality, judged for a human reader by Muse Spark 1.3 and Grok 4.6 under the frozen protocol family the reviewed code-quality-maintenance revisions v3.4, v3.5, v3.6, v3.7, v3.15, v3.16, v3.17, v3.18 and v3.23); one column per model × effort in its own agent harness (Codex or Claude Code); Fable 5.1’s columns include 11 disclosed Opus 4.8 fallback cells the operator keeps in the population; not a Composite input. The source-stated Grok 4.7 / Cursor v3.20 population uses a changed judge panel and is explicitly rejected, never compared under this identity.; source row: {\"model\":\"GPT-5.6 Luna\",\"lab\":\"OpenAI\",\"harness\":\"Codex\",\"effort\":\"extra-high\",\"n_tasks\":23,\"runs_judged\":23,\"unfinished_runs\":0,\"tasks_passed\":13,\"combined_33\":79.1139,\"scored_on\":\"all 23 tasks, every run judged\",\"combined_33_se\":3.0681,\"code_quality\":68.0512,\"mean_minutes\":25.4294,\"mean_usd\":0.274706,\"protocol\":\"code-quality-maintenance-v3.5\",\"report\":\"benchmarks/swe-v4-gpt55-luna-v35.html\",\"best_effort\":false}",
+    "comparison_key": null,
+    "join_note": "Reviewed identity map 2026-09-18: label states model gpt-5.6-luna and setting xhigh; exact catalog configuration gpt-5.6-luna::xhigh"
+  },
+  {
+    "id": "public:cd3f934e371abd64b2add5a6",
+    "benchmark_id": "vulcanbench-frontier::4",
+    "subject": {
+      "source_id": "GPT-6 Luna [extra-high]",
+      "name": "GPT-6 Luna [extra-high]",
+      "model_id": null,
+      "variant": null,
+      "harness": "Codex"
+    },
+    "value": 71.9354,
+    "unit": "percent",
+    "basis": "measured",
+    "source": {
+      "url": "https://vulcanbench.com/assets/data/swe-v4-board.csv",
+      "retrieved_at": "2026-11-03T07:26:45.233337+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-11-03T07-18-43-322Z/dcae26e2be38520512f8.gz",
+      "sha256": "dcae26e2be38520512f8a996cc74a8fa40d1cae240e3aa6539f2451e6129771f",
+      "locator": "vulcanbench_frontier_csv; source row 58; GPT-6 Luna [extra-high]; field combined_full_denominator"
+    },
+    "protocol": "VulcanBench Frontier v4 (formerly VulcanBench-SWE v4): 23 behavioural-reconstruction tasks; combined score = 100 × (0.50 functional hidden tests + 0.085 lint/complexity + 0.085 security + 0.33 judged Code quality, judged for a human reader by Muse Spark 1.3 and Grok 4.6 under the frozen protocol family the reviewed code-quality-maintenance revisions v3.4, v3.5, v3.6, v3.7, v3.15, v3.16, v3.17, v3.18 and v3.23); one column per model × effort in its own agent harness (Codex or Claude Code); Fable 5.1’s columns include 11 disclosed Opus 4.8 fallback cells the operator keeps in the population; not a Composite input. The source-stated Grok 4.7 / Cursor v3.20 population uses a changed judge panel and is explicitly rejected, never compared under this identity.; source row: {\"model\":\"GPT-6 Luna\",\"lab\":\"OpenAI\",\"harness\":\"Codex\",\"effort\":\"extra-high\",\"n_tasks\":23,\"runs_judged\":21,\"unfinished_runs\":2,\"tasks_passed\":11,\"combined_33\":78.7864,\"scored_on\":\"all 23 tasks; the 2 unfinished runs count as failed tasks and score 0 (the board's combined_timeouts_zero)\",\"combined_33_se\":3.016,\"code_quality\":71.4878,\"mean_minutes\":52.5745,\"mean_usd\":0.159686,\"protocol\":\"code-quality-maintenance-v3.16\",\"report\":\"benchmarks/swe-v4-gpt6-luna-v316.html\",\"best_effort\":true}",
+    "comparison_key": null
+  },
+  {
+    "id": "public:a921036bc43aec4048e5a0c4",
+    "benchmark_id": "vulcanbench-frontier::4",
+    "subject": {
+      "source_id": "GPT-5.5 [extra-high]",
+      "name": "GPT-5.5 [extra-high]",
+      "model_id": "gpt-5.5::xhigh",
+      "variant": null,
+      "harness": "Codex"
+    },
+    "value": 78.4562,
+    "unit": "percent",
+    "basis": "measured",
+    "source": {
+      "url": "https://vulcanbench.com/assets/data/swe-v4-board.csv",
+      "retrieved_at": "2026-11-03T07:26:45.233337+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-11-03T07-18-43-322Z/dcae26e2be38520512f8.gz",
+      "sha256": "dcae26e2be38520512f8a996cc74a8fa40d1cae240e3aa6539f2451e6129771f",
+      "locator": "vulcanbench_frontier_csv; source row 59; GPT-5.5 [extra-high]; field combined_full_denominator"
+    },
+    "protocol": "VulcanBench Frontier v4 (formerly VulcanBench-SWE v4): 23 behavioural-reconstruction tasks; combined score = 100 × (0.50 functional hidden tests + 0.085 lint/complexity + 0.085 security + 0.33 judged Code quality, judged for a human reader by Muse Spark 1.3 and Grok 4.6 under the frozen protocol family the reviewed code-quality-maintenance revisions v3.4, v3.5, v3.6, v3.7, v3.15, v3.16, v3.17, v3.18 and v3.23); one column per model × effort in its own agent harness (Codex or Claude Code); Fable 5.1’s columns include 11 disclosed Opus 4.8 fallback cells the operator keeps in the population; not a Composite input. The source-stated Grok 4.7 / Cursor v3.20 population uses a changed judge panel and is explicitly rejected, never compared under this identity.; source row: {\"model\":\"GPT-5.5\",\"lab\":\"OpenAI\",\"harness\":\"Codex\",\"effort\":\"extra-high\",\"n_tasks\":23,\"runs_judged\":23,\"unfinished_runs\":0,\"tasks_passed\":11,\"combined_33\":78.4562,\"scored_on\":\"all 23 tasks, every run judged\",\"combined_33_se\":2.5078,\"code_quality\":67.6666,\"mean_minutes\":20.7838,\"mean_usd\":4.56257,\"protocol\":\"code-quality-maintenance-v3.5\",\"report\":\"benchmarks/swe-v4-gpt55-luna-v35.html\",\"best_effort\":true}",
+    "comparison_key": null,
+    "join_note": "Reviewed identity map 2026-09-18: label states model gpt-5.5 and setting xhigh; exact catalog configuration gpt-5.5::xhigh"
+  },
+  {
+    "id": "public:782c02c217742186e2172e8d",
+    "benchmark_id": "vulcanbench-frontier::4",
+    "subject": {
+      "source_id": "GPT-5.6 Terra [high]",
+      "name": "GPT-5.6 Terra [high]",
+      "model_id": "gpt-5.6-terra::high",
+      "variant": null,
+      "harness": "Codex"
+    },
+    "value": 76.6793,
+    "unit": "percent",
+    "basis": "measured",
+    "source": {
+      "url": "https://vulcanbench.com/assets/data/swe-v4-board.csv",
+      "retrieved_at": "2026-11-03T07:26:45.233337+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-11-03T07-18-43-322Z/dcae26e2be38520512f8.gz",
+      "sha256": "dcae26e2be38520512f8a996cc74a8fa40d1cae240e3aa6539f2451e6129771f",
+      "locator": "vulcanbench_frontier_csv; source row 60; GPT-5.6 Terra [high]; field combined_full_denominator"
+    },
+    "protocol": "VulcanBench Frontier v4 (formerly VulcanBench-SWE v4): 23 behavioural-reconstruction tasks; combined score = 100 × (0.50 functional hidden tests + 0.085 lint/complexity + 0.085 security + 0.33 judged Code quality, judged for a human reader by Muse Spark 1.3 and Grok 4.6 under the frozen protocol family the reviewed code-quality-maintenance revisions v3.4, v3.5, v3.6, v3.7, v3.15, v3.16, v3.17, v3.18 and v3.23); one column per model × effort in its own agent harness (Codex or Claude Code); Fable 5.1’s columns include 11 disclosed Opus 4.8 fallback cells the operator keeps in the population; not a Composite input. The source-stated Grok 4.7 / Cursor v3.20 population uses a changed judge panel and is explicitly rejected, never compared under this identity.; source row: {\"model\":\"GPT-5.6 Terra\",\"lab\":\"OpenAI\",\"harness\":\"Codex\",\"effort\":\"high\",\"n_tasks\":23,\"runs_judged\":23,\"unfinished_runs\":0,\"tasks_passed\":11,\"combined_33\":76.6793,\"scored_on\":\"all 23 tasks, every run judged\",\"combined_33_se\":3.4669,\"code_quality\":73.8953,\"mean_minutes\":12.5891,\"mean_usd\":1.183321,\"protocol\":\"code-quality-maintenance-v3.6\",\"report\":\"benchmarks/swe-v4-terra-v36.html\",\"best_effort\":false}",
+    "comparison_key": null,
+    "join_note": "Reviewed identity map 2026-09-18: label states model gpt-5.6-terra and setting high; exact catalog configuration gpt-5.6-terra::high"
+  },
+  {
+    "id": "public:481943c31326730323cc330b",
+    "benchmark_id": "vulcanbench-frontier::4",
+    "subject": {
+      "source_id": "GPT-6.1 Terra [low]",
+      "name": "GPT-6.1 Terra [low]",
+      "model_id": null,
+      "variant": null,
+      "harness": "Codex"
+    },
+    "value": 74.9479,
+    "unit": "percent",
+    "basis": "measured",
+    "source": {
+      "url": "https://vulcanbench.com/assets/data/swe-v4-board.csv",
+      "retrieved_at": "2026-11-03T07:26:45.233337+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-11-03T07-18-43-322Z/dcae26e2be38520512f8.gz",
+      "sha256": "dcae26e2be38520512f8a996cc74a8fa40d1cae240e3aa6539f2451e6129771f",
+      "locator": "vulcanbench_frontier_csv; source row 61; GPT-6.1 Terra [low]; field combined_full_denominator"
+    },
+    "protocol": "VulcanBench Frontier v4 (formerly VulcanBench-SWE v4): 23 behavioural-reconstruction tasks; combined score = 100 × (0.50 functional hidden tests + 0.085 lint/complexity + 0.085 security + 0.33 judged Code quality, judged for a human reader by Muse Spark 1.3 and Grok 4.6 under the frozen protocol family the reviewed code-quality-maintenance revisions v3.4, v3.5, v3.6, v3.7, v3.15, v3.16, v3.17, v3.18 and v3.23); one column per model × effort in its own agent harness (Codex or Claude Code); Fable 5.1’s columns include 11 disclosed Opus 4.8 fallback cells the operator keeps in the population; not a Composite input. The source-stated Grok 4.7 / Cursor v3.20 population uses a changed judge panel and is explicitly rejected, never compared under this identity.; source row: {\"model\":\"GPT-6.1 Terra\",\"lab\":\"OpenAI\",\"harness\":\"Codex\",\"effort\":\"low\",\"n_tasks\":23,\"runs_judged\":23,\"unfinished_runs\":0,\"tasks_passed\":13,\"combined_33\":74.9479,\"scored_on\":\"all 23 tasks, every run judged\",\"combined_33_se\":3.9008,\"code_quality\":66.5532,\"mean_minutes\":2.7847,\"mean_usd\":0.113881,\"protocol\":\"code-quality-maintenance-v3.29\",\"report\":\"benchmarks/swe-v4-gpt61-terra-v329.html\",\"best_effort\":false}",
+    "comparison_key": null
+  }
+]

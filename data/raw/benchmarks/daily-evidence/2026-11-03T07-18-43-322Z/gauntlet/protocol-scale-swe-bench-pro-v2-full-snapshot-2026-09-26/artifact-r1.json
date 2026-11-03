@@ -1,0 +1,22 @@
+[
+  {
+    "id": "scale-swe-bench-pro-v2-full::snapshot-2026-09-26",
+    "version": "snapshot-2026-09-26",
+    "version_guard": "labs.scale.com page titled \"SWE-Bench Pro V2\" (require_text swe_bench_pro_public_v2 and \"SWE-Bench Pro V2 Full\") with exactly one embedded variant keyed \"full\". V2 = 642 tasks, locked protocol (Update September 22, 2026). A new task set, protocol or grade needs a new identity.",
+    "status": "active",
+    "version_status": "snapshot",
+    "superseded_by": null,
+    "scoring": {
+      "metric": "Resolve rate on the full V2 public split (percent); ± is the published confidence half-width",
+      "unit": "percent",
+      "range": [
+        0,
+        100
+      ],
+      "higher_better": true,
+      "notes": "Run by Scale AI under the V2 locked protocol (model-endpoint-only network, re-grading on a pristine image); the harness and reasoning effort are part of each label. Separate from SWE-Bench Pro Public v1 (731 tasks, swe-bench-pro-public) and from the V2 HARD subset (scale-swe-bench-pro-v2-hard); never ranked together."
+    },
+    "description": "Scale AI’s refreshed public SWE-Bench Pro split (642 long-horizon tasks in 11 copyleft repositories) run under a locked protocol, scored by resolve rate.",
+    "maintainer": "Scale AI"
+  }
+]

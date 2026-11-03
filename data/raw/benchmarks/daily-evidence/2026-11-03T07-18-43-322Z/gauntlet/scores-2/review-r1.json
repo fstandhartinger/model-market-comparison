@@ -1,0 +1,20 @@
+{
+  "artifact_id": "scores-2",
+  "artifact_sha256": "05d31fee93682dd6c061065a8c8a605364614d17a660a820e64b8783d4b219b7",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "public:3039be4103dd09cc70dddba7",
+    "public:b6453b107813e34ce1cb50bb",
+    "c1"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Owner-computed per-row SHA-256 hashes and transport/qualification checks are not independently executable in this read-only review; they are treated as trusted binding values.",
+    "No published_at date is supplied by the source; retrieved_at is used as the source date. This is consistent across both rows and the primary captures.",
+    "No explicit harness/checkpoint beyond the source model identifier is published by the source; rows correctly leave harness/model_id null and comparison_key null."
+  ],
+  "missing_evidence": []
+}

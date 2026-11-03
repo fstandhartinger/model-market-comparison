@@ -1,0 +1,33 @@
+{
+  "artifact_id": "scores-1",
+  "artifact_sha256": "3f1d3fdcf76d14471a111d41bfa9024e9ec20f0b68ea31019fb1307a38eb8f4c",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "public:b311636f38189300c7ede210",
+    "public:906c33aca7292b9baec9f13a",
+    "public:1b376b4c358caadd2892feaa",
+    "public:a834fc47da03a523394eef6f",
+    "public:a1eea4492f8995bcfa384ff4",
+    "public:e9fa60ad6aedb3acd1ee12b0",
+    "public:6d7bac8cc62a3b32fca0cd9a",
+    "public:882377b4bdd8822b23a05155",
+    "public:ee5a727b0f2aab504a0efad4",
+    "public:15a1ca123b4ef58752ebbdb3",
+    "public:937d85ce51b58015a522503e",
+    "public:dfd3f8e25563335464d1e0e9",
+    "public:a8199f65e0e3cdd726e9ea03",
+    "public:6a17e2bfc490ec510514805d",
+    "public:8ab72ae4081296decb3139fe",
+    "c1"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Owner row-level SHA-256 bindings, file hashes, and transport/qualification checks cannot be independently executed in this read-only review; treated as owner-executed per instructions.",
+    "Row public:b311636f38189300c7ede210 model_id 'inkling::xhigh' and row public:ee5a727b0f2aab504a0efad4 model_id 'minimax-m3::default' rely on retained catalog identity metadata not reproduced in this packet; accepted as the immutable prior accepted identity per instructions, with no alias inference performed.",
+    "Source published_at is null for the board; retrieved_at (2026-11-03T07:29:00.324539+00:00) is the available source date and matches the candidate source fields."
+  ],
+  "missing_evidence": []
+}

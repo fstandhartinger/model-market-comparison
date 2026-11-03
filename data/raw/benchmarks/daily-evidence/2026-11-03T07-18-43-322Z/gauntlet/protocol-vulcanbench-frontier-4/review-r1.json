@@ -1,0 +1,16 @@
+{
+  "artifact_id": "protocol-vulcanbench-frontier-4",
+  "artifact_sha256": "8390350b685c91ee22a4afaeb22dc9d483c02d8f665fe3903aae2fac39b8ef21",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": ["vulcanbench-frontier::4", "c1", "c2"],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "I cannot recompute SHA-256 hashes or execute transport/qualification checks; those are owner-side verifications and their absence is a limitation, not missing evidence.",
+    "The generated value-scale summary names the source field 'combined_full_denominator' while the row narrative uses the CSV column 'combined_timeouts_zero'; the captured CSV header confirms the public column, and the served values (40.831..92.0184) are within the row's stated range [0,100], so this internal naming difference does not affect the c1 range/unit judgement.",
+    "Protocol page leaderboard.html was captured with its numeric table excluded; identity, metric, ranges, protocol revisions and lifecycle statements are established by the published text excerpts and judge-protocols bundles, so no relevant numeric observation was required for this identity row."
+  ],
+  "missing_evidence": []
+}

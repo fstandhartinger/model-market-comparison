@@ -1,7 +1,7 @@
 {
   "source": "Nebius Token Factory — tokenfactory.nebius.com/api/public/models_info (first-party, public catalog)",
   "region": "mixed (eu-north1 / eu-west2 / us-central1 / uk-south1)",
-  "collected_at": "2026-11-01",
+  "collected_at": "2026-11-03",
   "listing_url": "https://tokenfactory.nebius.com/models",
   "method": "scripts/fetch-nebius-catalog.mjs: one GET of the public catalog (allowed by robots.txt); prices are flavors[].input/output_price_per_million_tokens in native USD; region from flavors[].regions[].country_code (EU member state → eu, US → us, UK → uk); non-chat types and zero-output-price rows (embeddings) omitted; curated model_name/provider_org carried over by exact model_id; new ids marked mapping=derived; catalog status kept per row. See nebius.method.md.",
   "models": [
@@ -134,8 +134,8 @@
       "region": "eu",
       "model_id": "moonshotai/Kimi-K3",
       "context_length": 1048576,
-      "status": "error",
-      "notes": "flavor: cheap; served region: eu-west2 (FR); id moonshotai/Kimi-K3; catalog status: error"
+      "status": "active",
+      "notes": "flavor: cheap; served region: eu-west2 (FR); id moonshotai/Kimi-K3"
     },
     {
       "model_name": "Hermes 4 405B",
@@ -324,7 +324,7 @@
       "notes": "flavor: cheap; served region: us-north1 (US); id zai-org/GLM-5.3-Flash"
     }
   ],
-  "response_sha256": "35cd596647375e05499a9fdcc9b9ef3d94913ad0288bdea1215f297a7cc5219d",
+  "response_sha256": "a374be15fcbe77881620bb1c35e5f9546e15b71ea27c4a3d9d7f245be2dd1b15",
   "skipped": [
     "Qwen/Qwen3-Embedding-8B"
   ],

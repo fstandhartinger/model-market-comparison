@@ -1,0 +1,16 @@
+{
+  "artifact_id": "protocol-eqbench-creative-writing-3",
+  "artifact_sha256": "80ef38506fe66e59005afe37521f7ac7be211cf056c6ab37452f547799bcc445",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": ["eqbench-creative-writing::3", "c1", "c2"],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Cannot independently verify the owner's SHA-256 hashes, network retrieval, or transport/qualification checks; these are the owner's responsibility per the packet.",
+    "The protocol excerpt does not state the direction of 'higher_better'; the row claims true, which is not contradicted by any evidence, but the direction is not explicitly confirmed.",
+    "The maintainer field lists 'EQ-bench (Sam Paech)'; the protocol excerpt shows 'EQ-Bench' but not the person name, which is outside the c1/c2 scope and is accepted as registry metadata."
+  ],
+  "missing_evidence": []
+}

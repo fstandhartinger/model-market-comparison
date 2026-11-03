@@ -1,0 +1,30 @@
+{
+  "artifact_id": "scores-10",
+  "artifact_sha256": "5dde24378af49d41d40e6a984d84f338be412cbca881fbc59de75d5b25f4a489",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": [
+    "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/retail",
+    "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/airline",
+    "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/telecom",
+    "c1"
+  ],
+  "errors_found": 1,
+  "findings": [
+    {
+      "id": "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/retail",
+      "severity": "minor",
+      "location": "protocol field of retail row (same issue applies to airline and telecom rows)",
+      "evidence": "Row protocol claims 'temperature 0.6, TopP 0.95, TopK 20, MinP 0' for TAU2 evaluation. Primary source README presents these only as Best Practices recommendations ('We suggest using Temperature=0.6, TopP=0.95, TopK=20, and MinP=0') and documents output length 32,768/81,920 as actually used; it does not state that the published TAU2 scores were generated under these sampling parameters.",
+      "repair": "Restrict protocol to evidence-supported claims (own-column self-reported vendor table; output length 32,768 for non-reasoning/coding tasks per footnote), or label the sampling parameters as vendor-recommended settings rather than confirmed evaluation harness configuration."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "Unit percent is inferred; the README performance table does not explicitly label TAU2 cells with a '%' unit, though all values are plausibly accuracy percentages.",
+    "Cannot independently verify row/artifact SHA-256 hashes, transport, or qualification checks; these are owner-executed and outside my read-only scope.",
+    "Vendor README presents sampling parameters (temp 0.6, TopP 0.95, TopK 20, MinP 0) as recommendations; whether the reported TAU2 scores used them is not explicitly published, hence protocol overreach noted as minor finding.",
+    "TAU2 listed under 'Agent' section is not among 'reasoning and coding tasks' in the footnote, supporting the 32,768 output-length claim; no 'published_at' date exists in source."
+  ],
+  "missing_evidence": []
+}

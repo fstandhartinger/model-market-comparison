@@ -1,0 +1,38 @@
+{
+  "artifact_id": "protocol-weirdml-2",
+  "artifact_sha256": "6bd60c5766dad9d19f8ad87594eec4ade45889654f1ab0b2516e23568e5c4ae7",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": ["weirdml::2", "c1", "c2"],
+  "errors_found": 3,
+  "findings": [
+    {
+      "id": "ver-identity-mismatch",
+      "severity": "blocker",
+      "location": "row weirdml::2 version, version_guard, description",
+      "evidence": "SOURCE 1 identifies the current protocol as 'WeirdML v3' and lists 'WeirdML v2' only under 'Previous versions'; the row claims version '2' and version_guard 'Verify the published version 2 before reading results.' A changed release version cannot silently reuse the existing identity. The current excerpt describes 11 agentic tasks with limited data/feedback and does not state the row's description of writing, running and iteratively improving PyTorch code.",
+      "repair": "Set version to '3' and align version_guard and description with v3, or split/retain v2 as a separate entry with its own evidence; do not present v2 as the current protocol."
+    },
+    {
+      "id": "metric-mismatch",
+      "severity": "blocker",
+      "location": "row weirdml::2 scoring.metric",
+      "evidence": "SOURCE 1 defines the official score as '80% normalized area under its line on a logarithmic token axis, plus 20% of its final value' across 11 tasks; the row states metric 'Average Max Accuracy: per task, mean over runs of the maximum test accuracy across the 5 iterations per run, averaged over all 17 tasks'. No source text mentions Average Max Accuracy, 17 tasks, or 5 iterations. The generated served-value summary (162 values, 1.73–93.57) cannot establish the metric's meaning.",
+      "repair": "Replace scoring.metric with the protocol's stated normalized-area-plus-final-value scoring for v3 with 11 tasks, or supply separate v2 source evidence if the v2 metric is intended."
+    },
+    {
+      "id": "c2-lifecycle-mismatch",
+      "severity": "major",
+      "location": "row weirdml::2 status, superseded_by",
+      "evidence": "For a row claiming version '2', SOURCE 1 presents v3 as current and lists v2 under 'Previous versions', indicating v2 is replaced or superseded; the row nonetheless has status 'active' and superseded_by null. The generated activity summary reports changed 'avg_acc' values in today's capture but does not tie them to v2, so it cannot establish that v2 remains reported.",
+      "repair": "Set status to 'retained' and superseded_by to the registry id of the WeirdML v3 successor once established, or provide explicit evidence that v2 is still separately published; otherwise the null superseded_by is contradictory."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "The exact successor registry id for WeirdML v3 is not present in the packet; finding 3 assumes the standard successor mapping from the current v3 page.",
+    "The row's unit percent and range [0,100] are consistent with the served finite values (lowest 1.729411764705882, highest 93.57264705882352), so no finding is raised on range/unit.",
+    "This reviewer cannot execute SHA-256 verification or live retrieval; all comparisons use only the supplied source excerpts and generated summaries."
+  ],
+  "missing_evidence": []
+}

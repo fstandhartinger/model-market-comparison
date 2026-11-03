@@ -1,0 +1,36 @@
+{
+  "artifact_id": "scores-12",
+  "artifact_sha256": "9e4d818a4acb480828bde5e41bb73a31fc5b65a23c8f10cefeb67cbe6e9eb24a",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": [
+    "vendor:DeepSeek-V3:swe-bench-verified::snapshot-2026-09-10",
+    "c1"
+  ],
+  "errors_found": 2,
+  "findings": [
+    {
+      "id": "missing-source-date",
+      "severity": "blocker",
+      "location": "row vendor:DeepSeek-V3:swe-bench-verified::snapshot-2026-09-10 -> source.published_at",
+      "evidence": "Primary evidence (arXiv 2412.19437v2 PDF pages 30-31) contains no publication date; row sets source.published_at to null. Criterion c1 explicitly requires verifying source date.",
+      "repair": "Supply the publication date of arXiv:2412.19437v2 from authoritative metadata, or explicitly document that no source date is available and adjust the criterion to accept a null with basis."
+    },
+    {
+      "id": "unsupported-benchmark-version",
+      "severity": "major",
+      "location": "row vendor:DeepSeek-V3:swe-bench-verified::snapshot-2026-09-10 -> benchmark_id",
+      "evidence": "benchmark_id is 'swe-bench-verified::snapshot-2026-09-10' but primary evidence only states 'SWE-Bench Verified (OpenAI, 2024d)' without any snapshot identifier. The added snapshot suffix is not present in the source.",
+      "repair": "Remove the unverifiable snapshot suffix from benchmark_id, or clearly mark it as an internal identifier distinct from the source-claimed benchmark version; do not use it to imply source-provided versioning."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "Cannot independently recompute row SHA-256 29493d673b1c487f0dd5c381a05977f34ecf5cfae84b8ed711864e7abc67af1d; relies on owner-provided hash.",
+    "The paper's 'output limited to 8K' matches 'maximum of 8192 tokens' in the evidence; no discrepancy.",
+    "The snapshot suffix was reviewed as an unsupported claim rather than a missing source value; the missing source date is the only entry in missing_evidence."
+  ],
+  "missing_evidence": [
+    "publication date of arXiv:2412.19437v2"
+  ]
+}

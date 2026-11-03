@@ -1,0 +1,28 @@
+{
+  "artifact_id": "scores-11",
+  "artifact_sha256": "55f5bced025742d1e94353b36f2f7fae728177047b1ab5a2af9d5c50f05a85e4",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": [
+    "vendor:mistralai/Devstral-2-123B-Instruct-2512:swe-bench-verified::snapshot-2026-09-10",
+    "vendor:mistralai/Devstral-Small-2-24B-Instruct-2512:swe-bench-verified::snapshot-2026-09-10",
+    "c1"
+  ],
+  "errors_found": 1,
+  "findings": [
+    {
+      "id": "f1",
+      "severity": "major",
+      "location": "Rows vendor:mistralai/Devstral-2-123B-Instruct-2512:swe-bench-verified::snapshot-2026-09-10 and vendor:mistralai/Devstral-Small-2-24B-Instruct-2512:swe-bench-verified::snapshot-2026-09-10; field source.published_at",
+      "evidence": "Both rows set source.published_at=null, but SOURCE 1 and SOURCE 2 (https://mistral.ai/news/devstral-2-vibe-cli/) content states 'December 9, 2025' as the blog publication date. Criterion c1 requires verifying source date, and the exact date is present in the packet evidence, so the null value misreports a verifiable primary field.",
+      "repair": "Set source.published_at to 2025-12-09 in both rows to match the primary evidence date 'December 9, 2025'."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "The benchmark_id label 'snapshot-2026-09-10' is not stated in either SOURCE (which only names 'SWE-bench Verified'); the snapshot carving is asserted by the output and cannot be verified against primary evidence. I did not treat it as a finding since the source also does not contradict it and instructions discourage demanding versions beyond what the output labels.",
+    "Harness is null and comparison_key is null in both rows; the source does not specify an evaluation harness for the 72.2%/68.0% SWE-bench Verified figures (Cline scaffolding is explicitly used only for the separate human evaluations), so the null representations are accurate.",
+    "Model identity, values (72.2 and 68 percent), units, basis (self_reported), benchmark identity (swe-bench-verified), locator strings and source URL/sha256/retrieved_at all match primary evidence exactly; the only verified defect is the unpublished source publication date."
+  ],
+  "missing_evidence": []
+}

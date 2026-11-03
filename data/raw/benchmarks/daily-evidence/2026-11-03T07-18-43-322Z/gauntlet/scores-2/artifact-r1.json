@@ -1,0 +1,50 @@
+[
+  {
+    "id": "public:3039be4103dd09cc70dddba7",
+    "benchmark_id": "eq-bench::4",
+    "subject": {
+      "source_id": "qwen/qwen3.6-27b",
+      "name": "qwen3.6-27b",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 1015.3,
+    "unit": "Elo",
+    "basis": "measured",
+    "source": {
+      "url": "https://eqbench.com/eqbench4/eqbench4_data.js?v=20260725-neighbours",
+      "retrieved_at": "2026-11-03T07:29:00.324539+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-11-03T07-18-43-322Z/81c0f396e1a60eca5a17.gz",
+      "sha256": "81c0f396e1a60eca5a175811b0cfe01a89f580eec2b95f58764313ec03cc2382",
+      "locator": "json_assignment; source row 30; qwen/qwen3.6-27b; field elo"
+    },
+    "protocol": "Ranked Elo score from blind, bidirectional pairwise judging of multi-turn persona-chat transcripts by a three-judge LLM panel (soft Bradley–Terry fit, normalised against anchor models)",
+    "comparison_key": null
+  },
+  {
+    "id": "public:b6453b107813e34ce1cb50bb",
+    "benchmark_id": "eq-bench::4",
+    "subject": {
+      "source_id": "mistralai/mistral-medium-3-5",
+      "name": "mistral-medium-3-5",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 983.1,
+    "unit": "Elo",
+    "basis": "measured",
+    "source": {
+      "url": "https://eqbench.com/eqbench4/eqbench4_data.js?v=20260725-neighbours",
+      "retrieved_at": "2026-11-03T07:29:00.324539+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-11-03T07-18-43-322Z/81c0f396e1a60eca5a17.gz",
+      "sha256": "81c0f396e1a60eca5a175811b0cfe01a89f580eec2b95f58764313ec03cc2382",
+      "locator": "json_assignment; source row 31; mistralai/mistral-medium-3-5; field elo"
+    },
+    "protocol": "Ranked Elo score from blind, bidirectional pairwise judging of multi-turn persona-chat transcripts by a three-judge LLM panel (soft Bradley–Terry fit, normalised against anchor models)",
+    "comparison_key": null
+  }
+]

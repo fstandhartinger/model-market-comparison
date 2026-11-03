@@ -1,0 +1,33 @@
+{
+  "artifact_id": "scores-0",
+  "artifact_sha256": "e395b79a6d96492cff4780fbc98234d0caa4089ef28dff4f7b9677b76800d409",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "public:b0cdd310f814faada2bad8df",
+    "public:055c991f9f9592355c4fc874",
+    "public:ff716078d9357c238c2fe4c3",
+    "public:6d996ebed11fbb1648aee35c",
+    "public:7973014386258ed8a4f45160",
+    "public:9f0c356adf10d4e03febc520",
+    "public:a6ed809a476fe07a42e105a0",
+    "public:53ac152cd86595675a66b2c6",
+    "public:1facb14c3e79222ddd5fc497",
+    "public:cbf3b113094d1a30eb8080c9",
+    "public:827e9c5def20de2d932f1406",
+    "public:4c59751ab8bf04e9a35fe997",
+    "public:3feb4777d1e77eda1fbd120b",
+    "public:491bb9bb174926967eb76a9f",
+    "public:f7e072c4d605d81c87506174",
+    "c1"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "I cannot independently recompute hashes or execute transfer/qualification checks; row SHA-256 bindings and owner hash checks are accepted as supplied and outside my read-only scope.",
+    "Each row's elo was verified against its designated primary source row (sources 1,5-18) for id, value, source_id/name, url, retrieved_at, sha256, file, locator, protocol and comparison_key; all matched exactly for the 15 required rows.",
+    "JSON.stringify of the frozen artifact was not separately shown; I reviewed the supplied row objects directly."
+  ],
+  "missing_evidence": []
+}

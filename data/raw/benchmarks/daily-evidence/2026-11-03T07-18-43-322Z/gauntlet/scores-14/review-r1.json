@@ -1,0 +1,20 @@
+{
+  "artifact_id": "scores-14",
+  "artifact_sha256": "275420a7e8ae86502c98f85e4d3c281c16ec177c652659c20d5a260fbdaf3726",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "vendor:DeepSeek-V3:longbench::2",
+    "c1"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "I cannot recompute hashes or re-fetch the primary PDF; hash and transport checks are outside my read-only scope and are owned by the producer.",
+    "The percent unit for LongBench v2 (Acc.) is not explicitly spelled out in the source snippet, but the table's numeric scale and context make it consistent; no contrary evidence exists.",
+    "The source publication date is not present in the captured evidence; the row records published_at as null, which is not contradicted by the packet.",
+    "'overall' in protocol is a descriptive label not verbatim in the table, but it does not alter the numeric value or basis."
+  ],
+  "missing_evidence": []
+}

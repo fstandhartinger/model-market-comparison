@@ -1,0 +1,24 @@
+{
+  "artifact_id": "protocol-arc-agi-3",
+  "artifact_sha256": "95716ef98d721e5a0c3f9c69bd5024d97b8aa40916a61e38fdf901ea9069d450",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": ["arc-agi::3", "c1", "c2"],
+  "errors_found": 1,
+  "findings": [
+    {
+      "id": "arc-agi-3-desc-scoring",
+      "severity": "major",
+      "location": "arc-agi::3.description",
+      "evidence": "Row description says the benchmark is \"scored against cost-per-task\", but Source 1 defines the score as action efficiency relative to the human baseline (\"how many actions it took relative to the human baseline\"; \"100% means the player solved the level in the same number of actions as the median human\") and Source 2 uses cost-per-task only as a leaderboard axis (\"critical relationship between cost-per-task and performance\"), not as the scoring rule. The row's own scoring.metric also states action efficiency relative to the human baseline.",
+      "repair": "Change the description to say results are reported/plotted against cost-per-task, and that scoring is action efficiency relative to the human baseline; or remove the \"scored against cost-per-task\" clause."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "I could not execute the owner's hash, transport, or qualification checks; I relied on the supplied row and source hashes.",
+    "The qualifier 'Semi-private' is not explicitly present in the supplied protocol excerpts; I treated it as a Board label and judged the metric's substantive components (action efficiency, human baseline, percent scale) against the protocol.",
+    "Source excerpts are bounded captures of the pages; I did not consult content beyond the supplied excerpts."
+  ],
+  "missing_evidence": []
+}

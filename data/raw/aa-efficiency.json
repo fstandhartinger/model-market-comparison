@@ -3,7 +3,7 @@
   "basis": "measured",
   "interpretation": "benchmark_proxy",
   "caveat": "AA Intelligence Index benchmark token accounting. Ratios are BENCHMARK PROXIES, never typical user I/O usage; usage ratios must come from OpenRouter/Chutes sources.",
-  "collected_at": "2026-11-01T05:30:57.494Z",
+  "collected_at": "2026-11-03T07:30:28.319Z",
   "index_version": "5.0",
   "source_url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
   "data_fields": {
@@ -14,18 +14,18 @@
   "attempts": [
     {
       "url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
-      "fetched_at": "2026-11-01T05:30:57.321Z",
+      "fetched_at": "2026-11-03T07:30:28.157Z",
       "http_status": 200,
-      "bytes": 3907436,
-      "sha256": "dbd10409ad0abf30ab37cb9969420d880b78f4cc2854a616020b903c1dc598ad"
+      "bytes": 3902647,
+      "sha256": "81cbfe4cb1cd457946c4bfbaa38b04693351ba4db415f527abb9a1d773eea412"
     }
   ],
   "coverage": {
-    "published_rows": 88,
-    "scored_denominator": 89,
+    "published_rows": 92,
+    "scored_denominator": 94,
     "denominator_source": "Leaderboard rows carrying a finite intelligenceIndex inside the same model-page Flight payload"
   },
-  "count": 88,
+  "count": 92,
   "rows": [
     {
       "source_id": "3e87c73e-a257-495e-9730-367a66229811",
@@ -512,6 +512,28 @@
       }
     },
     {
+      "source_id": "c3b66080-fdcb-48e4-8ade-6baf77921c7c",
+      "slug": "deepseek-v4-1-flash-1017-high",
+      "name": "DeepSeek V4.1 Flash 1017 (High)",
+      "variant": "high",
+      "tokens_per_task": {
+        "reasoning": 74847.4482007694,
+        "answer": 35582.642787936195,
+        "output": 110430.0909887056
+      },
+      "canonical_token_counts": {
+        "input": 13860682327,
+        "output": 133752797,
+        "answer": 31209878,
+        "reasoning": 102542919
+      },
+      "derived": {
+        "basis": "derived",
+        "input_output_ratio": 103.62910262728936,
+        "reasoning_output_share": 0.6777812780071378
+      }
+    },
+    {
       "source_id": "5720fd2f-873a-4765-8640-a153b38bd64d",
       "slug": "deepseek-v4-1-flash-1017-non-reasoning",
       "name": "DeepSeek V4.1 Flash 1017 (Non-reasoning)",
@@ -663,6 +685,28 @@
         "basis": "derived",
         "input_output_ratio": 37.227424990477864,
         "reasoning_output_share": 0.5879217433432323
+      }
+    },
+    {
+      "source_id": "0d3eaafd-54ed-4f78-bdd7-05a2db883986",
+      "slug": "gemini-4-carbon-medium",
+      "name": "Gemini 4 Carbon (Medium)",
+      "variant": "medium",
+      "tokens_per_task": {
+        "reasoning": 56204.29841863973,
+        "answer": 46808.197019624364,
+        "output": 103012.4954382641
+      },
+      "canonical_token_counts": {
+        "input": 6451556980,
+        "output": 124003699,
+        "answer": 34096586,
+        "reasoning": 89907113
+      },
+      "derived": {
+        "basis": "derived",
+        "input_output_ratio": 52.02713331962783,
+        "reasoning_output_share": 0.5456066099507632
       }
     },
     {
@@ -1238,25 +1282,47 @@
       }
     },
     {
+      "source_id": "adfae555-f489-4f3e-9064-c6b7fcdd0783",
+      "slug": "granite-4-2-8b",
+      "name": "Granite 4.2 8B",
+      "variant": null,
+      "tokens_per_task": {
+        "reasoning": 37063.95807709277,
+        "answer": 14451.112153114467,
+        "output": 51515.07023020724
+      },
+      "canonical_token_counts": {
+        "input": 1555606920,
+        "output": 77704714,
+        "answer": 13759739,
+        "reasoning": 63944975
+      },
+      "derived": {
+        "basis": "derived",
+        "input_output_ratio": 20.019466515248997,
+        "reasoning_output_share": 0.7194779685141404
+      }
+    },
+    {
       "source_id": "59627802-1546-422c-9a65-65b61c022d36",
       "slug": "grok-4-7",
       "name": "Grok 4.7 (Xhigh)",
       "variant": "xhigh",
       "tokens_per_task": {
-        "reasoning": 53901.93692117775,
-        "answer": 39067.56951380316,
-        "output": 92969.50643498091
+        "reasoning": 69440.50334974918,
+        "answer": 35090.43737094602,
+        "output": 104530.9407206952
       },
       "canonical_token_counts": {
-        "input": 7103324920,
-        "output": 142604745,
-        "answer": 28615901,
-        "reasoning": 113988844
+        "input": 7226768001,
+        "output": 148000081,
+        "answer": 26759906,
+        "reasoning": 121240175
       },
       "derived": {
         "basis": "derived",
-        "input_output_ratio": 49.81128026279911,
-        "reasoning_output_share": 0.579780822638599
+        "input_output_ratio": 48.82948679602412,
+        "reasoning_output_share": 0.6643057344647166
       }
     },
     {
@@ -1719,6 +1785,28 @@
         "basis": "derived",
         "input_output_ratio": 77.11253606728395,
         "reasoning_output_share": 0.6180170729344592
+      }
+    },
+    {
+      "source_id": "4cef9716-27a3-4ac3-9620-cd75135d7bbf",
+      "slug": "nanbeige4-3-33b",
+      "name": "Nanbeige4.3-33B",
+      "variant": null,
+      "tokens_per_task": {
+        "reasoning": 102025.52618338336,
+        "answer": 56432.22227591966,
+        "output": 158457.74845930302
+      },
+      "canonical_token_counts": {
+        "input": 15437065105,
+        "output": 159667233,
+        "answer": 43553661,
+        "reasoning": 116113572
+      },
+      "derived": {
+        "basis": "derived",
+        "input_output_ratio": 96.68273705851719,
+        "reasoning_output_share": 0.643865807607299
       }
     },
     {
