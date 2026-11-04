@@ -656,6 +656,20 @@ class Effects:
         self.record("notify", mode=mode, requested=requested, dry_run=self.dry_run, ok=result.returncode == 0)
         return result.returncode == 0
 
+    def agent_handoff(self, message: str) -> bool:
+        """Start the urgent-autofix fix agent for this alert without a Telegram card. False = caller sends urgent."""
+        if self.dry_run:
+            self.record("agent_handoff", dry_run=True, ok=True)
+            return True
+        try:
+            result = subprocess.run([str(HOME / "bin/urgent-autofix"), "agent", "fastlane-autopickup", message],
+                                    text=True, capture_output=True, timeout=60, check=False)
+            ok = result.returncode == 0
+        except (OSError, subprocess.SubprocessError):
+            ok = False
+        self.record("agent_handoff", dry_run=False, ok=ok)
+        return ok
+
     # -- board #9 ------------------------------------------------------------
     def board(self, message: str, owner: str, kind: str = "handoff", thread: str = "9") -> bool:
         if self.dry_run:
@@ -1592,7 +1606,13 @@ def alert(state: dict[str, Any], key: str, effects: Effects, *, text: str, urgen
     previous = parse_ts(state["alerts"].get(key))
     if previous is not None and (once or utcnow() - previous < ALERT_REPEAT):
         return False
-    sent = effects.notify(text, mode="urgent" if urgent else ("digest" if digest else "now"))
+    if urgent:
+        # Urgent gate noise cut (3 Nov 2026, urgent-triage-gate-1103): 39 of 104 urgent cards in 30 days came from these
+        # step failures and agents fixed them; hand them to the fix agent without ringing Florian. If no agent can
+        # start, fall back to `notify urgent`. The 36 h deadline notice (sla_message) still uses notify urgent.
+        sent = effects.agent_handoff(text) or effects.notify(text, mode="urgent")
+    else:
+        sent = effects.notify(text, mode="digest" if digest else "now")
     if sent:
         state["alerts"][key] = iso(utcnow())
         save_state(state)
@@ -4381,7 +4401,9 @@ def health(effects: Effects) -> dict[str, Any]:
         message = ("🚨 DRINGEND\nWorum geht's: Benchmark Heaven fast-lane delivery is blocked by service or order problems. https://benchmarkheaven.com/submit\n\n"
                    f"🤖 Agenten\n- Agents are investigating {len(fresh)} new problems; paid orders may miss their 48-hour deadline.\n"
                    "- Refunds require a separate approval card.")
-        if effects.notify(message) and not effects.dry_run:
+        # Urgent gate noise cut (3 Nov 2026): the fix agent gets the problem list directly; no card unless it cannot start.
+        handoff = message + "\n\nProblems:\n" + "\n".join("- " + text for _, text in fresh)[:2500]
+        if (effects.agent_handoff(handoff) or effects.notify(message)) and not effects.dry_run:
             for key, _ in fresh:
                 sent_before[key] = iso(now)
             atomic_write(alerts_path, json.dumps(sent_before, indent=2) + "\n")
