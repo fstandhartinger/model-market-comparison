@@ -235,6 +235,9 @@ def _run_notify(argv):
         process.kill()
         process.communicate()
         return process.pid, '', 'timeout'
+    except BaseException:
+        process.kill()  # the alert alarm: no notify left running behind a receipt that says failed
+        raise
 
 
 def _log_size():

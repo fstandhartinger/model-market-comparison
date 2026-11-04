@@ -151,11 +151,8 @@ class VerdaProvider(pod_runner.Provider):
                 if not delete_and_confirm(row['id']):
                     raise measurement_dispatch.OperationalHold('gpu_pod_cleanup_uncertain')
             raise pod_runner.PodCapacityError(f'Verda create unclear ({status}); {len(rows)} instance(s) removed')
-        try:
-            self._volumes[instance_id] = verda_deadman.row_volume_ids(verda_deadman.instance(instance_id) or {})
-        except RuntimeError:
-            self._volumes[instance_id] = set()
-        if not self._arm_deadman(instance_id, ttl_hours):
+        self._volumes[instance_id] = set()
+        if not self._arm_deadman(instance_id, ttl_hours):  # first, before any further network call can hang
             self._cleanup_or_hold(instance_id, 'dead-man timer could not be armed')
         try:
             ip = self._ready(instance_id)
@@ -166,6 +163,7 @@ class VerdaProvider(pod_runner.Provider):
 
     def _ready(self, instance_id):
         deadline = time.time() + CREATE_WAIT_S
+        # The bare timer reads the volumes from the row when it fires; once they are known here they are passed too.
         ip = None
         while time.time() < deadline:
             try:

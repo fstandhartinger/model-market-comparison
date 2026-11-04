@@ -94,8 +94,10 @@ class Tests(unittest.TestCase):
         delay = calendar_module.timegm(time.strptime(calendar, '%Y-%m-%d %H:%M:%S UTC')) - time.time()
         self.assertAlmostEqual(delay, 2 * 3600 + V.DEADMAN_GRACE_S, delta=5)
         self.assertFalse([a for a in timer if a.startswith('--on-active')])
-        self.assertEqual(timer[-4:], ['delete', ID, '--volume-id', VOL])
-        self.assertTrue(timer[-5].endswith('verda_deadman.py'))
+        self.assertEqual(timer[-2:], ['delete', ID])  # armed before any further network call
+        self.assertTrue(timer[-3].endswith('verda_deadman.py'))
+        rearmed = [a for a in self.systemd if a[0] == 'systemd-run'][1]
+        self.assertEqual(rearmed[-4:], ['delete', ID, '--volume-id', VOL])
         self.assertFalse(self.deletes(fake))
 
     def test_unavailable_unknown_or_over_cap_is_capacity_without_create(self):
@@ -184,6 +186,14 @@ class Tests(unittest.TestCase):
         self.assertEqual(stops[0][3], 'verda-deadman-12345678.timer')
         self.assertLess(self.systemd.index(arms[1]), self.systemd.index(stops[0]))
         self.assertIn('--property=TimeoutStopSec=300', arms[1])
+
+    def test_stop_covers_every_timer_generation(self):
+        fake = FakeApi()
+        provider = self.provider(fake)
+        provider.create('RTX6000', 2.0, 10.0)
+        self.systemd.clear()
+        provider.rm(ID)
+        self.assertEqual(self.systemd[-1][3], 'verda-deadman-12345678*.timer')
 
     def test_rearm_failure_keeps_the_old_timer_and_cleans_up(self):
         fake = FakeApi()
@@ -445,6 +455,12 @@ class DeadmanCli(unittest.TestCase):
         self.assertEqual(len(self.notify_calls), D.ALERT_TRIES)
         self.assertFalse(self.receipt()['alert']['delivered'])
 
+    def test_log_line_without_sent_or_at_another_level_is_not_delivery(self):
+        self.log.write_text(json.dumps({'pid': 5, 'sent': False, 'level': 'urgent', 'message_id': 1}) + '\n'
+                            + json.dumps({'pid': 5, 'sent': True, 'level': 'digest', 'message_id': 2}) + '\n')
+        self.assertEqual(D._delivered_card(5, 0)[0], None)
+        self.assertEqual(D._delivered_card(None, 0)[0], None)
+
     def test_alert_kinds_are_recorded(self):
         self.notify_out = ['merged:88']
         self.assertEqual(self.run_with(ScriptedVerda(self.clock, row=None), ID), 3)
@@ -538,6 +554,14 @@ class RealProcess(unittest.TestCase):
         self.assertLess(time.time() - started, 15)
         self.assertEqual(process.returncode, 1, out)
         self.assertIn('SIGALRM', self.receipt()['error'])
+
+    def test_a_hung_alert_is_cut_and_still_leaves_a_receipt(self):
+        process = self.start(self.tmp.name, 1, 'D.ALERT_BOUND_S = 1; D._send_alert = lambda *a: time.sleep(300)')
+        started = time.time()
+        out, _ = process.communicate(timeout=30)
+        self.assertLess(time.time() - started, 15)
+        self.assertEqual(process.returncode, 4, out)
+        self.assertEqual(self.receipt()['alert']['state'], 'failed')
 
     def test_no_credentials_ends_at_the_deadline_with_alert(self):
         process = self.start(self.tmp.name, 2)
