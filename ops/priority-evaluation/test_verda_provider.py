@@ -179,7 +179,31 @@ class Tests(unittest.TestCase):
         self.assertEqual(arms[0][-2:], ['delete', ID])
         self.assertEqual(arms[1][-4:], ['delete', ID, '--volume-id', VOL])
         self.assertEqual([a for a in arms[0] if a.startswith('--on-calendar')], [a for a in arms[1] if a.startswith('--on-calendar')])
-        self.assertTrue([a for a in self.systemd if a[:3] == ['systemctl', '--user', 'stop']])
+        self.assertEqual(arms[1][arms[1].index('--unit') + 1], 'verda-deadman-12345678-2')
+        stops = [a for a in self.systemd if a[:3] == ['systemctl', '--user', 'stop']]
+        self.assertEqual(stops[0][3], 'verda-deadman-12345678.timer')
+        self.assertLess(self.systemd.index(arms[1]), self.systemd.index(stops[0]))
+        self.assertIn('--property=TimeoutStopSec=300', arms[1])
+
+    def test_rearm_failure_keeps_the_old_timer_and_cleans_up(self):
+        fake = FakeApi()
+        answers = iter([None])
+
+        def instance(pod_id):
+            return {'id': ID, 'status': 'provisioning'} if next(answers, 'row') is None else {
+                'id': ID, 'status': 'discontinued', 'os_volume_id': VOL}
+        provider = self.provider(fake)
+        arms = []
+
+        def run(argv, **kwargs):
+            self.systemd.append(argv)
+            if argv[0] == 'systemd-run':
+                arms.append(argv)
+            return done(rc=1 if argv[0] == 'systemd-run' and len(arms) == 2 else 0)
+        with patch.object(V.subprocess, 'run', run), patch.object(D, 'instance', instance), patch.object(D, 'cleanup', lambda *a: {'confirmed': False}):
+            with self.assertRaises(measurement_dispatch.OperationalHold):
+                provider.create('RTX6000', 2.0, 10.0)
+        self.assertFalse([a for a in self.systemd if a[:3] == ['systemctl', '--user', 'stop']])
 
     def test_rm_failure_raises(self):
         fake = FakeApi(delete_status=500)
@@ -258,20 +282,37 @@ class DeadmanCli(unittest.TestCase):
         self.tmp = tempfile.TemporaryDirectory()
         self.addCleanup(self.tmp.cleanup)
         self.notify_calls = []
-        self.notify_out = ['MESSAGE_ID=4242\n']
+        self.notify_out = ['card:4242']
+        self.log = Path(self.tmp.name) / 'log.jsonl'
         for item in (patch.object(D.time, 'time', self.clock.time), patch.object(D.time, 'sleep', self.clock.sleep),
                      patch.object(D, 'RECEIPTS', Path(self.tmp.name) / 'receipts'),
                      patch.object(D.signal, 'signal', lambda *a: None), patch.object(D.signal, 'alarm', lambda s: None),
-                     patch.dict(D._DEADLINE, {'at': None}), patch.object(D.subprocess, 'run', self.notify)):
+                     patch.dict(D._DEADLINE, {'at': None}), patch.dict(D._SIGNALS, {'armed': False}),
+                     patch.object(D, 'NOTIFY_LOG', self.log), patch.object(D, '_run_notify', self.notify)):
             item.start()
             self.addCleanup(item.stop)
 
-    def notify(self, argv, **kwargs):
+    def notify(self, argv):
+        """Like the real notify on a plain send: no card id on stdout, the proof is its log line with its own pid."""
         self.notify_calls.append(argv)
+        pid = 1000 + len(self.notify_calls)
         out = self.notify_out.pop(0) if len(self.notify_out) > 1 else self.notify_out[0]
         if isinstance(out, BaseException):
             raise out
-        return subprocess.CompletedProcess(argv, 75 if out.startswith(('NOT SENT', 'QUEUED')) else 0, out, '')
+        if out.startswith('card:'):
+            with self.log.open('a') as handle:
+                handle.write('not json\n' + json.dumps({'pid': 999, 'sent': True, 'level': 'urgent', 'message_id': 1}) + '\n')
+                handle.write(json.dumps({'pid': pid, 'sent': True, 'level': 'urgent', 'message_id': int(out[5:])}) + '\n')
+            return pid, '', 0
+        if out.startswith('merged:'):
+            with self.log.open('a') as handle:
+                handle.write(json.dumps({'pid': pid, 'sent': True, 'level': 'urgent', 'merged_into': int(out[7:])}) + '\n')
+            return pid, 'UPDATED open card #%s (same problem, seen 2x; no new message)\n' % out[7:], 0
+        if out.startswith('duplicate:'):
+            with self.log.open('a') as handle:
+                handle.write(json.dumps({'pid': pid, 'sent': False, 'level': 'urgent', 'note': 'duplicate urgent alert: card 5 still open'}) + '\n')
+            return pid, '', 0
+        return pid, out, 75 if out.startswith(('NOT SENT', 'QUEUED')) else 0
 
     def run_with(self, fake, *args):
         with patch.object(D, 'api', fake):
@@ -393,23 +434,61 @@ class DeadmanCli(unittest.TestCase):
                 path.unlink()
 
     def test_alert_refused_once_is_retried_and_exit_0_without_card_is_not_delivered(self):
-        self.notify_out = ['agent-board inbox has unread entries\n', 'MESSAGE_ID=7\n']
+        self.notify_out = ['agent-board inbox has unread entries\n', 'card:7']
         self.assertEqual(self.run_with(ScriptedVerda(self.clock, row=None), ID), 3)
         self.assertEqual(len(self.notify_calls), 2)
         self.assertEqual(self.receipt()['alert']['card'], '7')
         (next((Path(self.tmp.name) / 'receipts').glob('*.json'))).unlink()
         self.notify_calls.clear()
-        self.notify_out = ['ok\n']
+        self.notify_out = ['']  # exit 0 and nothing logged is not delivery
         self.assertEqual(self.run_with(ScriptedVerda(self.clock, row=None), ID), 4)
         self.assertEqual(len(self.notify_calls), D.ALERT_TRIES)
         self.assertFalse(self.receipt()['alert']['delivered'])
+
+    def test_alert_kinds_are_recorded(self):
+        self.notify_out = ['merged:88']
+        self.assertEqual(self.run_with(ScriptedVerda(self.clock, row=None), ID), 3)
+        alert = self.receipt()['alert']
+        self.assertEqual((alert['delivered'], alert['card'], alert['kind']), (True, '88', 'updated'))
+        self.assertEqual(len(self.notify_calls), 1)
+
+    def test_duplicate_suppressed_alert_is_not_delivered_and_keeps_the_note(self):
+        self.notify_out = ['duplicate:x']
+        self.assertEqual(self.run_with(ScriptedVerda(self.clock, row=None), ID), 4)
+        self.assertIn('still open', self.receipt()['alert']['attempts'][0]['note'])
+
+    def test_repeat_held_form_is_held(self):
+        self.notify_out = ['HELD: repeat of urgent gate abc (the triage agent already works on it)\n']
+        self.assertEqual(self.run_with(ScriptedVerda(self.clock, row=None), ID), 4)
+        self.assertEqual(self.receipt()['alert']['state'], 'held')
+        self.assertEqual(len(self.notify_calls), 1)
+
+    def test_volumes_read_in_one_round_survive_into_the_next(self):
+        answers = [(200, row()), (500, ''), (404, '')]
+        fake = ScriptedVerda(self.clock, row=None, volumes={VOL: {'id': VOL}})
+
+        def on_call(method, path, body):
+            if method == 'GET' and path == '/instances/' + ID:
+                return answers.pop(0) if len(answers) > 1 else answers[0]
+            if method == 'PUT' and path == '/instances':
+                return 500, ''
+            return None
+        fake.on_call = on_call
+        self.assertEqual(self.run_with(fake, ID), 0)
+        self.assertEqual(self.receipt()['report']['volumes'], [VOL])
+
+    def test_uppercase_instance_id_is_normalised(self):
+        self.assertEqual(D.parse_args(['x', 'delete', ID.upper()]), (ID, []))
+
+    def test_deleted_status_counts_as_gone(self):
+        self.assertTrue(D._gone_status({'status': 'deleted'}))
 
     def test_alert_rings_past_the_gate(self):
         self.run_with(ScriptedVerda(self.clock, row=None), ID)
         self.assertEqual(self.notify_calls[0][1:4], ['urgent', '--bypass-gate', 'money-loss'])
 
     def test_notify_timeout_is_not_a_crash(self):
-        self.notify_out = [subprocess.TimeoutExpired('notify', 45)]
+        self.notify_out = [subprocess.TimeoutExpired('notify', 45)]  # Popen itself failing, as OSError would
         self.assertEqual(self.run_with(ScriptedVerda(self.clock, row=None), ID), 4)
         self.assertEqual(self.receipt()['alert']['state'], 'not-sent')
 
@@ -417,10 +496,10 @@ class DeadmanCli(unittest.TestCase):
 class RealProcess(unittest.TestCase):
     """The real signal path in a real process; HOME has no credentials, so no request ever leaves."""
 
-    def start(self, home, deadline):
-        code = ('import sys, pathlib; sys.path.insert(0, %r); import verda_deadman as D; D.CLEANUP_DEADLINE_S = %d; '
-                'D.ALERT_BOUND_S = 5; sys.exit(D.main(["verda_deadman.py", "delete", %r, "--volume-id", %r]))'
-                % (str(Path(D.__file__).parent), deadline, ID, VOL))
+    def start(self, home, deadline, setup=''):
+        code = ('import sys, pathlib, time; sys.path.insert(0, %r); import verda_deadman as D; D.CLEANUP_DEADLINE_S = %d; '
+                'D.ALERT_BOUND_S = 5; %s; sys.exit(D.main(["verda_deadman.py", "delete", %r, "--volume-id", %r]))'
+                % (str(Path(D.__file__).parent), deadline, setup or 'pass', ID, VOL))
         return subprocess.Popen([sys.executable, '-c', code], env={'HOME': home, 'PATH': '/usr/bin:/bin'},
                                 stdout=subprocess.PIPE, text=True)
 
@@ -430,7 +509,10 @@ class RealProcess(unittest.TestCase):
         bin_dir = Path(self.tmp.name) / 'bin'
         bin_dir.mkdir()
         self.log = Path(self.tmp.name) / 'notify.log'
-        (bin_dir / 'notify').write_text('#!/bin/sh\necho "$@" >> %s\necho MESSAGE_ID=99\n' % self.log)
+        (Path(self.tmp.name) / '.notify').mkdir()
+        (bin_dir / 'notify').write_text(
+            '#!/bin/sh\necho "$@" >> %s\necho "{\\"pid\\": $$, \\"sent\\": true, \\"level\\": \\"urgent\\", \\"message_id\\": 99}" >> %s/.notify/log.jsonl\n'
+            % (self.log, self.tmp.name))
         (bin_dir / 'notify').chmod(0o755)
 
     def receipt(self):
@@ -448,6 +530,14 @@ class RealProcess(unittest.TestCase):
         receipt = self.receipt()
         self.assertIn('SIGTERM', receipt['error'])
         self.assertEqual(receipt['alert']['card'], '99')
+
+    def test_a_call_that_hangs_past_the_deadline_is_cut_by_the_alarm(self):
+        process = self.start(self.tmp.name, 1, 'D.HANG_MARGIN_S = 1; D.cleanup = lambda *a: time.sleep(300)')
+        started = time.time()
+        out, _ = process.communicate(timeout=30)
+        self.assertLess(time.time() - started, 15)
+        self.assertEqual(process.returncode, 1, out)
+        self.assertIn('SIGALRM', self.receipt()['error'])
 
     def test_no_credentials_ends_at_the_deadline_with_alert(self):
         process = self.start(self.tmp.name, 2)

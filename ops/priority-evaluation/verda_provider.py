@@ -40,7 +40,7 @@ CREATE_WAIT_S = 900
 
 def _stop_deadman(instance_id):
     try:
-        subprocess.run(['systemctl', '--user', 'stop', 'verda-deadman-' + instance_id[:8] + '.timer'],
+        subprocess.run(['systemctl', '--user', 'stop', 'verda-deadman-' + instance_id[:8] + '*.timer'],
                        capture_output=True, text=True, timeout=60)
     except (OSError, subprocess.TimeoutExpired):
         pass  # a leftover timer only re-deletes an instance that is already gone
@@ -57,6 +57,7 @@ class VerdaProvider(pod_runner.Provider):
         self._known = {}
         self._volumes = {}
         self._deadman_at = {}
+        self._deadman_unit = {}
         self._tmp = tempfile.TemporaryDirectory(prefix='verda-known-hosts-')
 
     # -- accounting (identical fields to LiumProvider, provider verda) --
@@ -172,10 +173,7 @@ class VerdaProvider(pod_runner.Provider):
             except RuntimeError:
                 row = None
             if row and not verda_deadman.row_volume_ids(row) <= self._volumes[instance_id]:
-                self._volumes[instance_id] |= verda_deadman.row_volume_ids(row)
-                _stop_deadman(instance_id)
-                if not self._arm_deadman(instance_id):
-                    raise pod_runner.PodRunError('dead-man timer could not be re-armed with the volume ids')
+                self._rearm_deadman(instance_id, verda_deadman.row_volume_ids(row))
             if row and row.get('status') == 'running' and row.get('ip'):
                 ip = row['ip']
                 break
@@ -195,20 +193,35 @@ class VerdaProvider(pod_runner.Provider):
             raise pod_runner.PodRunError('Verda instance lacks GPU or docker nvidia runtime')
         return ip
 
+    def _rearm_deadman(self, instance_id, new_volumes):
+        # The new timer first, same time, its own unit: if it cannot be armed the old one is still there.
+        old_unit = self._deadman_unit.get(instance_id)
+        self._volumes[instance_id] |= new_volumes
+        if not self._arm_deadman(instance_id):
+            raise pod_runner.PodRunError('dead-man timer could not be re-armed with the volume ids')
+        try:
+            subprocess.run(['systemctl', '--user', 'stop', old_unit + '.timer'], capture_output=True, text=True, timeout=60)
+        except (OSError, subprocess.TimeoutExpired):
+            pass  # two timers only delete the same instance twice, which is harmless
+
     def _arm_deadman(self, instance_id, ttl_hours=None):
         # An absolute time: a `systemctl --user daemon-reload` restarts an --on-active count (board #45517).
         if ttl_hours is not None:
             self._deadman_at[instance_id] = time.strftime('%Y-%m-%d %H:%M:%S UTC', time.gmtime(
                 time.time() + int(ttl_hours * 3600) + DEADMAN_GRACE_S))
         volumes = [arg for volume in sorted(self._volumes.get(instance_id, ())) for arg in ('--volume-id', volume)]
+        unit = 'verda-deadman-' + instance_id[:8] + ('-' + str(len(volumes)) if instance_id in self._deadman_unit else '')
         try:
-            result = subprocess.run(['systemd-run', '--user', '--unit', 'verda-deadman-' + instance_id[:8],
+            result = subprocess.run(['systemd-run', '--user', '--unit', unit,
                                      f'--on-calendar={self._deadman_at[instance_id]}', '--timer-property=AccuracySec=30s',
+                                     '--property=TimeoutStopSec=300',  # room for the alert after a stop
                                      sys.executable, '-I', str(Path(verda_deadman.__file__).resolve()),
                                      'delete', instance_id, *volumes],
                                     capture_output=True, text=True, timeout=60)
         except (OSError, subprocess.TimeoutExpired):
             return False
+        if result.returncode == 0:
+            self._deadman_unit[instance_id] = unit
         return result.returncode == 0
 
     def _ip(self, pod_id):
@@ -252,7 +265,8 @@ class VerdaProvider(pod_runner.Provider):
             raise pod_runner.PodRunError('scp download failed')
 
     def rm(self, pod_id):
-        # Also succeeds when the dead-man already removed it: success means confirmed gone.
+        # Also succeeds when the dead-man already removed it, if this process knows the volumes: success means confirmed
+        # gone. An absent instance with unknown volumes is a failure on purpose (board #45759).
         if not delete_and_confirm(pod_id, volume_ids=self._volumes.get(pod_id)):
             raise pod_runner.PodRunError('provider removal failed')
         _stop_deadman(pod_id)

@@ -27,13 +27,16 @@ from pathlib import Path
 API = 'https://api.verda.com/v1'
 ENV_FILE = Path.home() / '.config/verda.env'
 NOTIFY = Path.home() / 'bin/notify'
+NOTIFY_LOG = Path.home() / '.notify/log.jsonl'
 RECEIPTS = Path.home() / '.local/state/priority-evaluation/verda-deadman'
-CLEANUP_DEADLINE_S = 1200  # all rounds together; a hung call is cut by the alarm 60 s later
+CLEANUP_DEADLINE_S = 1200  # all rounds together
+HANG_MARGIN_S = 60  # a call that hangs past the deadline (DNS has no socket timeout) is cut by the alarm
 ROUND_WAIT_S = 300
 ALERT_TRIES = 3
 ALERT_BOUND_S = 240
 _TOKEN = {'value': None, 'expires': 0.0}
 _DEADLINE = {'at': None}
+_SIGNALS = {'armed': False}
 
 
 class _Abort(BaseException):
@@ -147,7 +150,7 @@ def _volume_state(volume_id, instance_id):
 
 
 def _gone_status(row):
-    return row is None or str(row.get('status')).lower() in ('discontinued', 'notfound')
+    return row is None or str(row.get('status')).lower() in ('discontinued', 'notfound', 'deleted')
 
 
 def cleanup(instance_id, volume_ids=(), wait_s=600):
@@ -220,12 +223,56 @@ def parse_args(argv):
         if flag != '--volume-id' or not valid_id(value):
             return None
         volumes.append(value.lower())
-    return argv[2], sorted(set(volumes))
+    return argv[2].lower(), sorted(set(volumes))
+
+
+def _run_notify(argv):
+    """(pid, exit, output) of one notify process; killed at 45 s, and it may have sent before that."""
+    process = subprocess.Popen(argv, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True)
+    try:
+        return process.pid, process.communicate(timeout=45)[0] or '', process.returncode
+    except subprocess.TimeoutExpired:
+        process.kill()
+        process.communicate()
+        return process.pid, '', 'timeout'
+
+
+def _log_size():
+    try:
+        return NOTIFY_LOG.stat().st_size
+    except OSError:
+        return 0
+
+
+def _delivered_card(pid, offset):
+    """(card id, kind, note) from what this notify process logged. notify prints no card id on a plain send and a held
+    alert exits 0, so neither its output nor its exit code is proof; the log line it writes after sending is."""
+    note = None
+    if pid is None:
+        return None, None, None
+    try:
+        with NOTIFY_LOG.open(encoding='utf-8', errors='replace') as handle:
+            handle.seek(offset)
+            for line in handle:
+                try:
+                    entry = json.loads(line)
+                except ValueError:
+                    continue
+                if not isinstance(entry, dict) or entry.get('pid') != pid:
+                    continue
+                if entry.get('sent') and entry.get('level') in ('urgent', 'merged'):
+                    card = entry.get('merged_into') or entry.get('message_id')
+                    if card:
+                        return str(card), 'updated' if entry.get('merged_into') else 'new', None
+                note = str(entry.get('note') or note or '')[:200] or None
+    except OSError:
+        pass
+    return None, None, note
 
 
 def _send_alert(instance_id, report):
-    """Ring at once: a return code alone proves nothing (a held alert exits 0), so `delivered` needs the card id notify
-    printed. A refusal is retried: notify refuses once on an unread board inbox and reading it clears that."""
+    """Ring at once, past the urgent gate. A refusal is retried: notify refuses once on an unread board inbox and reading
+    it clears that. A queued or held alert is owned by the outbox or the gate and never resent."""
     left = ', '.join(report['volumes_left']) or 'none known'
     if report['instance_gone'] and report['storage_unknown']:
         what = 'its instance is gone, but its storage is unknown. Check the Verda volumes list for a leftover OS volume'
@@ -233,23 +280,21 @@ def _send_alert(instance_id, report):
         what = f'it could not confirm the delete. Delete by exact id in the Verda console: instance {instance_id}, volumes {left}'
     text = ("🚨 DRINGEND\n\nWorum geht's: Verda GPU dead-man failed, the machine or its disk may still cost money\n"
             f'- Dead-man timer for {instance_id}: {what}.\n  Time: 5 minutes')
-    result = {'state': 'not-sent', 'delivered': False, 'card': None, 'attempts': []}
+    result = {'state': 'not-sent', 'delivered': False, 'card': None, 'kind': None, 'attempts': []}
     for attempt in range(ALERT_TRIES):
+        offset = _log_size()
         try:
-            done = subprocess.run([str(NOTIFY), 'urgent', '--bypass-gate', 'money-loss', '--problem',
-                                   'verda-deadman-' + instance_id[:8], text],
-                                  capture_output=True, text=True, timeout=45, check=False)
-            output, code = done.stdout + '\n' + done.stderr, done.returncode
+            pid, output, code = _run_notify([str(NOTIFY), 'urgent', '--bypass-gate', 'money-loss', '--problem',
+                                             'verda-deadman-' + instance_id[:8], text])
         except (OSError, subprocess.SubprocessError) as exc:
-            output, code = '', type(exc).__name__
-        sent = re.search(r'^(?:MESSAGE_ID=|GATE_FORWARDED=|UPDATED open card #)(\d+)', output, re.M)
-        waiting = re.search(r'^(QUEUED: outbox|HELD: urgent gate) (\S+)', output, re.M)
-        result['attempts'].append({'exit': code, 'card': sent.group(1) if sent else None,
-                                   'waiting': waiting.group(0)[:80] if waiting else None})
-        if code == 0 and sent:
-            result.update(state='delivered', delivered=True, card=sent.group(1))
+            pid, output, code = None, '', type(exc).__name__
+        card, kind, note = _delivered_card(pid, offset)
+        waiting = re.search(r'^(QUEUED: outbox|HELD: (?:repeat of )?urgent gate) (\S+)', output, re.M)
+        result['attempts'].append({'exit': code, 'card': card, 'note': note, 'waiting': waiting.group(0)[:80] if waiting else None})
+        if card:
+            result.update(state='delivered', delivered=True, card=card, kind=kind)
             return result
-        if waiting:  # the outbox or the gate now owns it: never resend
+        if waiting:
             result['state'] = 'queued' if waiting.group(1).startswith('QUEUED') else 'held'
             return result
         if attempt + 1 < ALERT_TRIES:
@@ -275,7 +320,9 @@ def _write_receipt(instance_id, receipt):
 
 
 def _abort(signum, _frame):
-    raise _Abort(signal.Signals(signum).name)
+    if _SIGNALS['armed']:  # one shot, so it cannot fire again while the first one is being handled
+        _SIGNALS['armed'] = False
+        raise _Abort(signal.Signals(signum).name)
 
 
 def main(argv):
@@ -289,21 +336,26 @@ def main(argv):
               'volumes_left': volumes, 'foreign_volumes': [], 'storage_unknown': not volumes}
     error = None
     _DEADLINE['at'] = started + CLEANUP_DEADLINE_S
+    _SIGNALS['armed'] = True
     signal.signal(signal.SIGTERM, _abort)
     signal.signal(signal.SIGALRM, _abort)
-    signal.alarm(CLEANUP_DEADLINE_S + 60)
+    signal.alarm(CLEANUP_DEADLINE_S + HANG_MARGIN_S)
     try:
-        while time.time() < _DEADLINE['at']:
-            report = cleanup(instance_id, volumes, min(ROUND_WAIT_S, _DEADLINE['at'] - time.time()))
-            volumes = report['volumes']  # the set seen so far survives every later round
-            if report['confirmed'] or (report['instance_gone'] and report['storage_unknown']):
-                break
-            if report['instance_gone'] and report['volumes_left'] == report['foreign_volumes']:
-                break
-            time.sleep(max(0, min(60, _DEADLINE['at'] - time.time())))
-    except (_Abort, Exception) as exc:  # noqa: BLE001  whatever went wrong, the alert below still runs
-        error = f'{type(exc).__name__}: {str(exc)[:80]}'
-    signal.signal(signal.SIGTERM, signal.SIG_IGN)
+        try:
+            while time.time() < _DEADLINE['at']:
+                report = cleanup(instance_id, volumes, min(ROUND_WAIT_S, _DEADLINE['at'] - time.time()))
+                volumes = report['volumes']  # the set seen so far survives every later round
+                if report['confirmed'] or (report['instance_gone'] and report['storage_unknown']):
+                    break
+                if report['instance_gone'] and report['volumes_left'] == report['foreign_volumes']:
+                    break
+                time.sleep(max(0, min(60, _DEADLINE['at'] - time.time())))
+        except Exception as exc:  # noqa: BLE001  whatever went wrong, the alert below still runs
+            error = f'{type(exc).__name__}: {str(exc)[:80]}'
+        finally:
+            _SIGNALS['armed'] = False
+    except _Abort as exc:
+        error = f'_Abort: {exc}'
     signal.alarm(0)
     receipt = {'instance_id': instance_id, 'report': report, 'error': error, 'started': started, 'argv_volumes': parsed[1]}
     if report['confirmed']:
@@ -311,11 +363,16 @@ def main(argv):
         print('verda dead-man: deleted and confirmed', instance_id, 'volumes', ','.join(volumes),
               'receipt', _write_receipt(instance_id, receipt), flush=True)
         return 0
-    signal.alarm(ALERT_BOUND_S)
     try:
-        alert = _send_alert(instance_id, report)
+        _SIGNALS['armed'] = True  # only the alarm can end the alert now: SIGTERM no longer aborts anything
+        signal.signal(signal.SIGTERM, signal.SIG_IGN)
+        signal.alarm(ALERT_BOUND_S)
+        try:
+            alert = _send_alert(instance_id, report)
+        finally:
+            _SIGNALS['armed'] = False
     except (_Abort, Exception) as exc:  # noqa: BLE001
-        alert = {'state': 'failed', 'delivered': False, 'card': None, 'attempts': [], 'error': type(exc).__name__}
+        alert = {'state': 'failed', 'delivered': False, 'card': None, 'kind': None, 'attempts': [], 'error': type(exc).__name__}
     signal.alarm(0)
     receipt.update(alert=alert, finished=time.time())
     path = _write_receipt(instance_id, receipt)
