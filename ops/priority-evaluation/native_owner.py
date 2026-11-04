@@ -58,6 +58,9 @@ SUPPLEMENTS: tuple[dict[str, Any], ...] = (
     {"family": "chon", "module": "chon_runtime_supplement.py",
      "repos": ("huggingface.co/ninhnv/chon-1.0-12b", "github.com/xoai/chon"),
      "precedents": ("fastlane-chon12b-native-20261019",)},
+    {"family": "cue_reflex", "module": "cue_reflex_runtime_supplement.py",
+     "repos": ("huggingface.co/oidlabs/cue-reflex-4b",),
+     "precedents": ("fastlane-native-1dedbcf2",)},
 )
 
 _SEGMENT = re.compile(r"[A-Za-z0-9][A-Za-z0-9._-]{0,95}")
