@@ -442,8 +442,13 @@ test("GPT-5.6 Sol's observed-percentile mean ranks above GLM-5.2", async () => {
   // so pin the ORDER, not a narrow absolute band.
   // CR-634 (31 Oct): the AA Intelligence slot moved to v5.0 (GPT-5.6 Sol carries its estimate from v4); it dropped below 82 (81.5).
   // CR-680 (4 Nov): a percentile mean slides as new models are scored: 81.5, 80.4, then 79.6 in four days although Sol's own
-  // AA estimate rose (32.4 to 32.6), so the floor is a sanity bound and the order below is what this test pins.
-  assert.ok(sol > 75, `expected GPT-5.6 Sol clearly above the open-model band, got ${sol}`);
+  // AA estimate rose (32.4 to 32.6). An absolute floor therefore breaks on population drift alone, and "above every open
+  // model" would break the day a strong new open model ships. Pin Sol's place in the scored population instead: it must
+  // stay in the top decile (4 Nov: rank 40 of 924). This fails if Sol's own evidence collapses, not when the field moves.
+  const ranked = [...scores.values()].filter(Number.isFinite);
+  const above = ranked.filter((score) => score > sol).length;
+  assert.ok(ranked.length >= 100, `expected a real scored population, got ${ranked.length}`);
+  assert.ok(above < ranked.length / 10, `expected GPT-5.6 Sol (${sol}) in the top decile, but ${above} of ${ranked.length} score higher`);
   assert.ok(sol > glm, `expected GPT-5.6 Sol (${sol}) above GLM-5.2 (${glm})`);
 });
 
