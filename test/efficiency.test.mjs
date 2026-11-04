@@ -50,7 +50,7 @@ test("built efficiency observations match dated raw identities, exact values and
   const source = inputs();
   const aa = new Map(source.aaEfficiency.rows.map((r) => [r.source_id, r]));
   const aaV4 = new Map(source.aaEfficiencyV4.rows.map((r) => [r.source_id, r]));
-  assert.equal(source.aaEfficiency.index_version, "5.0");
+  assert.match(source.aaEfficiency.index_version, /^5(\.\d+)*$/); // CR-680: minor versions roll in (AA v5.0.1, 2026-11-04)
   for (const model of dataset.models) {
     const item = model.token_efficiency;
     assert.ok(item, model.id);

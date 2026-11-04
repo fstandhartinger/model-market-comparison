@@ -1507,7 +1507,7 @@ async function build() {
         measured: [...aaIntelligence.byId.values()].filter((r) => r.status === "measured").length,
         estimated: [...aaIntelligence.byId.values()].filter((r) => r.status === "estimated").length,
         estimate_fit: aaIntelligence.fit,
-        note: `Artificial Analysis moved to Intelligence Index v${aa.index_version} on 2026-10-28. Models AA has rescored show the measured v${aa.index_version} value. Every other model shows an estimate of its v${aa.index_version} value from its frozen v4.x value (isotonic fit over the models measured on both versions), labelled "estimated from v4" with its interval; an estimate is never shown as a measurement and is replaced once AA rescores the model.`,
+        note: `Artificial Analysis moved to Intelligence Index v5 on 2026-10-28 (this snapshot: v${aa.index_version}). Models AA has rescored show the measured v${aa.index_version} value. Every other model shows an estimate of its v${aa.index_version} value from its frozen v4.x value (isotonic fit over the models measured on both versions), labelled "estimated from v4" with its interval; an estimate is never shown as a measurement and is replaced once AA rescores the model.`,
       },
       aa_index_v4: {
         version: "4.x", status: "retained", collected_at: aaV4.collected_at, path: "data/raw/artificialanalysis-v4.json",
