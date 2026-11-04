@@ -37,6 +37,16 @@ class InstallerInventory(unittest.TestCase):
                     missing[name] = sorted(absent)
         self.assertEqual(missing, {})
 
+    def test_operator_commands_are_installed(self):
+        # N69 (4 Nov 2026): ~/bin/jevbench-review.py stayed at its 24 Sep copy and kept announcing an automatic refund after CR-276.
+        text = (HERE / 'install-autopickup.sh').read_text()
+        for source, target in (('jevbench-autopickup', 'jevbench-autopickup'), ('review.py', 'jevbench-review.py'),
+                               ('jevbench-review', 'jevbench-review'), ('jevbench-refund', 'jevbench-refund'),
+                               ('worker.py', 'jevbench-priority-worker.py')):
+            self.assertRegex(text, rf'install -m \d+ "\$SRC/{re.escape(source)}" "\$BIN/{re.escape(target)}"\n')
+        commands = {path.name for path in HERE.glob('jevbench-*') if path.is_file() and path.suffix != '.service' and path.suffix != '.timer'}
+        self.assertEqual({c for c in commands if f'"$SRC/{c}"' not in text}, set())
+
 
 if __name__ == '__main__':
     unittest.main()
