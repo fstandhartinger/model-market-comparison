@@ -3,8 +3,8 @@
   "basis": "measured",
   "interpretation": "benchmark_proxy",
   "caveat": "AA Intelligence Index benchmark token accounting. Ratios are BENCHMARK PROXIES, never typical user I/O usage; usage ratios must come from OpenRouter/Chutes sources.",
-  "collected_at": "2026-11-03T07:30:28.319Z",
-  "index_version": "5.0",
+  "collected_at": "2026-11-04T08:51:51.964Z",
+  "index_version": "5.0.1",
   "source_url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
   "data_fields": {
     "tokens_per_task": "intelligenceIndexOutputTokensPerTask {reasoning, answer, output} (measured)",
@@ -14,18 +14,18 @@
   "attempts": [
     {
       "url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
-      "fetched_at": "2026-11-03T07:30:28.157Z",
+      "fetched_at": "2026-11-04T08:51:51.774Z",
       "http_status": 200,
-      "bytes": 3902647,
-      "sha256": "81cbfe4cb1cd457946c4bfbaa38b04693351ba4db415f527abb9a1d773eea412"
+      "bytes": 3574928,
+      "sha256": "dcd8431ca3b3a2d5c05ac4ba32232b744622d23329627d121e42c26823bba7ef"
     }
   ],
   "coverage": {
-    "published_rows": 92,
-    "scored_denominator": 94,
+    "published_rows": 96,
+    "scored_denominator": 97,
     "denominator_source": "Leaderboard rows carrying a finite intelligenceIndex inside the same model-page Flight payload"
   },
-  "count": 92,
+  "count": 96,
   "rows": [
     {
       "source_id": "3e87c73e-a257-495e-9730-367a66229811",
@@ -578,6 +578,28 @@
       }
     },
     {
+      "source_id": "598190f8-dc9c-4fea-a7ea-4b81c402ab18",
+      "slug": "gemini-3-1-flash-lite-preview",
+      "name": "Gemini 3.1 Flash-Lite",
+      "variant": "high",
+      "tokens_per_task": {
+        "reasoning": 10745.781584302074,
+        "answer": 5164.925242469402,
+        "output": 15910.706826771477
+      },
+      "canonical_token_counts": {
+        "input": 1114580986,
+        "output": 32376789,
+        "answer": 5514003,
+        "reasoning": 26862786
+      },
+      "derived": {
+        "basis": "derived",
+        "input_output_ratio": 34.42530962536155,
+        "reasoning_output_share": 0.6753805284263764
+      }
+    },
+    {
       "source_id": "093b9df2-ebee-4309-943f-5a7e88360adf",
       "slug": "gemini-3-5-flash-lite",
       "name": "Gemini 3.5 Flash-Lite",
@@ -688,6 +710,28 @@
       }
     },
     {
+      "source_id": "b3866703-a9f7-4ea2-8f3f-b361c90aaf0e",
+      "slug": "gemini-4-carbon-low",
+      "name": "Gemini 4 Carbon (Low)",
+      "variant": "low",
+      "tokens_per_task": {
+        "reasoning": 32395.786253268423,
+        "answer": 53769.45183242579,
+        "output": 86165.2380856942
+      },
+      "canonical_token_counts": {
+        "input": 8232840027,
+        "output": 83943646,
+        "answer": 56799823,
+        "reasoning": 27143823
+      },
+      "derived": {
+        "basis": "derived",
+        "input_output_ratio": 98.07579750586483,
+        "reasoning_output_share": 0.37597280496166835
+      }
+    },
+    {
       "source_id": "0d3eaafd-54ed-4f78-bdd7-05a2db883986",
       "slug": "gemini-4-carbon-medium",
       "name": "Gemini 4 Carbon (Medium)",
@@ -773,6 +817,28 @@
         "basis": "derived",
         "input_output_ratio": 51.06992530289377,
         "reasoning_output_share": 0.6859816108864224
+      }
+    },
+    {
+      "source_id": "bcf8db0a-3bb6-4d82-9516-0f57370c85a6",
+      "slug": "gpt-5-6-terra",
+      "name": "GPT-5.6 Terra (Max)",
+      "variant": "max",
+      "tokens_per_task": {
+        "reasoning": 41227.894217976165,
+        "answer": 25021.37560262606,
+        "output": 66249.26982060223
+      },
+      "canonical_token_counts": {
+        "input": 7703467034,
+        "output": 102062659,
+        "answer": 20432763,
+        "reasoning": 81629896
+      },
+      "derived": {
+        "basis": "derived",
+        "input_output_ratio": 75.47782028684948,
+        "reasoning_output_share": 0.6223146961410749
       }
     },
     {
@@ -1257,6 +1323,28 @@
         "basis": "derived",
         "input_output_ratio": 76.1635383521188,
         "reasoning_output_share": 0.6839414758338647
+      }
+    },
+    {
+      "source_id": "c50ea08c-88c0-4eb7-85b8-27f2bbf6d527",
+      "slug": "gpt-6-sol",
+      "name": "GPT-6 Sol (Max)",
+      "variant": "max",
+      "tokens_per_task": {
+        "reasoning": 35370.01778779281,
+        "answer": 18519.666945519777,
+        "output": 53889.684733312584
+      },
+      "canonical_token_counts": {
+        "input": 4747131415,
+        "output": 65076396,
+        "answer": 15853213,
+        "reasoning": 49223183
+      },
+      "derived": {
+        "basis": "derived",
+        "input_output_ratio": 72.94705464328418,
+        "reasoning_output_share": 0.656341152538389
       }
     },
     {

@@ -1,0 +1,18 @@
+{
+  "artifact_id": "scores-0",
+  "artifact_sha256": "3af2dd92553ead1ca5dac203f089c5b6ef8b531403f57aba3eb5cb8d905b8c2c",
+  "round": 2,
+  "verdict": "pass",
+  "coverage_checked": ["public:c06114fde5b8138f6f34c123","public:6359de36bd05d2ac5f6c639c","public:ecd95d72093995ec1f9b260f","public:29402166d276db3e187b4ca9","public:15d7d7ad5e165066894ec5af","c1"],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Row public:6359de36bd05d2ac5f6c639c and public:29402166d276db3e187b4ca9 carry model_id values (claude-fable-5.1::max, claude-fable-5.1::xhigh) sourced from a join_note citing a reviewed identity map dated 2026-09-18; that map itself is not reproduced in this packet, but it is retained prior accepted context (immutable prior accepted observation), not a fresh measurement claim, so it is accepted without alias inference.",
+    "Rows with tasks_passed=22 (Fable 5.1 extra-high, Opus 5.5 extra-high) still publish at combined_33 because runs_judged=23 and unfinished_runs=0, matching the full-denominator rule in SOURCE 1; the packet does not include the board's combined_timeouts_zero column values for these rows, but the stated rule makes them unnecessary here.",
+    "Owner hash binding of rows, artifact file sha256, and transport/qualification checks are executed separately by the owner; I could not recompute them. The per-row sha256 values and the artifact sha256 are taken as stated.",
+    "SOURCE 1's registry narrative and SOURCE 43's current footnotes agree on the reviewed protocol family set (v3.4–v3.7, v3.15–v3.18, v3.23, v3.24, v3.29) and on exclusion of v3.20/v3.26–v3.28 panels; the rows use only v3.4, v3.15, v3.23, all inside the reviewed family.",
+    "SOURCE 46's judge-protocols.json extract is omitted by packet bound; per c1, protocol verification for the judged panel relies on SOURCE 1/43/45/49/52, which is sufficient for the rows reviewed here since none uses v3.29."
+  ],
+  "missing_evidence": []
+}

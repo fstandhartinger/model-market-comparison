@@ -1,0 +1,18 @@
+{
+  "artifact_id": "scores-2",
+  "artifact_sha256": "6c58a9bc44ff64b97374eb2cc36f815ac9a54f5d2163f2d32238f4fa2065c1d9",
+  "round": 2,
+  "verdict": "pass",
+  "coverage_checked": ["public:64da456029104be74a28d22d", "public:8b7d27dd650711fd101ec1f2", "public:7aa0e7cb92ad1beea0d2d0f8", "public:a1bce0289c1d5b45301c1448", "public:d4344073776f34915906884a", "c1"],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Owner-computed row sha256 values and artifact hash cannot be recomputed here; binding relies on the stated owner-computed hashes.",
+    "Registry/scoring text (SOURCE 1) is transcribed as the packet's protocol authority; per-row protocol fields in the artifact match the corresponding source context rows exactly (v3.5, v3.23, v3.29, v3.6, v3.17) and all five revisions are within the source-stated reviewed family with the Muse Spark 1.3 / Grok 4.6 panel, so no comparison-key or alias judgment was needed.",
+    "All five rows are full-denominator rows (n_tasks=23, runs_judged=23, unfinished_runs=0, combined_33 = combined_full_denominator), so the combined_timeouts_zero withholding rule does not apply; values 84.1469, 84.0956, 83.6751, 83.4578 and 82.8261 match their source context rows and combined_full_denominator strings exactly.",
+    "model_id fields on rows public:64da456029104be74a28d22d and public:a1bce0289c1d5b45301c1448 come from join_notes described as a reviewed 2026-09-18 identity map (retained prior accepted identity); the other three rows leave model_id null, which the criterion permits since unknown configurations cannot create comparison_key values and comparison_key is null on all rows.",
+    "Basis 'measured', unit 'percent', benchmark_id vulcanbench-frontier::4, harness and effort labels were verified against source context fields for each row; published_at is null in the artifact, matching the source evidence which carries no separate publish timestamp, with retrieved_at 2026-11-04 serving as the source date."
+  ],
+  "missing_evidence": []
+}

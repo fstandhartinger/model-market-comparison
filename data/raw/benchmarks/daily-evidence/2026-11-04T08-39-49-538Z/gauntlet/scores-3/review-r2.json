@@ -1,0 +1,29 @@
+{
+  "artifact_id": "scores-3",
+  "artifact_sha256": "bbf9e56220812f5e4029745121377baa1995bcfb73bd16f2eedfc870a7744c51",
+  "round": 2,
+  "verdict": "revise",
+  "coverage_checked": ["public:e9cc482c6d95449b1f6a6008", "public:411f80f135cde98edc5cecc8", "public:86c94008e6f555e2d82c7143", "public:9144c8d495d95f404adf44c1", "public:9ef1d73a4d76a610f525419e", "public:7d387e4dda33804c8ddf5177", "c1"],
+  "errors_found": 1,
+  "findings": [
+    {
+      "id": "F1",
+      "severity": "major",
+      "location": "row public:9144c8d495d95f404adf44c1 (GPT-6 Sol [low], source row 65 / SOURCE 5)",
+      "evidence": "Subject has model_id null and no join_note identity-map entry, unlike the five sibling rows which each carry a reviewed identity map (e.g. 'exact catalog configuration gpt-5.5::high'). Criterion c1 requires verifying model/checkpoint; the packet's primary row (SOURCE 5) supplies only name/id 'GPT-6 Sol [low]', harness Codex, effort low, and no catalog configuration or reviewed mapping. Without the accepted subject identity this row's model identity is unverified and cannot be confirmed under c1.",
+      "repair": "Supply the reviewed identity-map entry for GPT-6 Sol [low] (or the packet's accepted prior identity for this subject) with the exact catalog configuration, mirroring the join_note pattern of the other rows; do not infer an alias. If no accepted prior identity exists, the row must be withheld rather than published with model_id null."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "Hashes (artifact sha256, per-row sha256s, source sha256 dcae26e2be...) are owner-computed; I cannot recompute or verify them, and I cannot execute transport/qualification checks — this is a tooling limitation, not missing source evidence.",
+    "SOURCE 2 serves the value as string '71.2160' while the artifact records 71.216 for row public:e9cc482c6d95449b1f6a6008; numerically equal, so accepted as an exact projection, but the differing precision is a wording/format point.",
+    "Rows 1, 2 and 6 transcribe the source report path 'benchmarks/swe-v4-gpt55-luna-v35.html' exactly as the CSV serves it (SOURCE 2/3/7 context); the path's 'gpt55-luna' fragment is maintainer text, not an artifact error.",
+    "All six rows' values, names, harness (Codex), effort, n_tasks=23, runs_judged=23, unfinished_runs=0, protocol revision (v3.5/v3.5/v3.7/v3.17/v3.6/v3.5) and SE were compared field-by-field against SOURCE 2–7 and match; full-denominator publication rule is satisfied (n=passed_of=23, no combined_timeouts_zero discrepancy in evidence).",
+    "All rows' protocol strings match SOURCE 1 registry text; benchmark_id vulcanbench-frontier::4 matches registry id/version 4.",
+    "Per-row sha256 binding values could not be independently recomputed; review relies on the owner-supplied canonical hashes."
+  ],
+  "missing_evidence": [
+    "Reviewed identity-map / accepted prior subject identity entry (exact catalog configuration) for GPT-6 Sol [low], required to satisfy criterion c1 for row public:9144c8d495d95f404adf44c1; absent from both the artifact and the primary source rows."
+  ]
+}

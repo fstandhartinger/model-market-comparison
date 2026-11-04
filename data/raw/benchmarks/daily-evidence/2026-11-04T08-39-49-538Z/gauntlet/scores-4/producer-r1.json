@@ -1,0 +1,16 @@
+{
+  "rows": {
+    "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/retail": {
+      "status": "match",
+      "note": "Value 71.9 matches TAU2-Retail row last column (Qwen3-235B-A22B-Thinking-2507 column) in SOURCE 1; model/name/source URL/locator/sha256/retrieved_at, self_reported basis, and protocol (32,768 tokens, temperature 0.6, TopP 0.95, TopK 20, MinP 0) all consistent with README. Harness null and comparison_key null consistent with absent source info."
+    },
+    "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/airline": {
+      "status": "match",
+      "note": "Value 58 matches TAU2-Airline row last column in SOURCE 2; model/name/source URL/locator/sha256/retrieved_at, self_reported basis, and protocol (32,768 tokens for non-challenging tasks, temperature 0.6, TopP 0.95, TopK 20, MinP 0) all consistent with README. Harness null and comparison_key null consistent."
+    },
+    "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/telecom": {
+      "status": "match",
+      "note": "Value 45.6 matches TAU2-Telecom row last column in SOURCE 3; model/name/source URL/locator/sha256/retrieved_at, self_reported basis, and protocol (32,768 tokens for non-challenging tasks, temperature 0.6, TopP 0.95, TopK 20, MinP 0) all consistent with README. Harness null and comparison_key null consistent."
+    }
+  }
+}

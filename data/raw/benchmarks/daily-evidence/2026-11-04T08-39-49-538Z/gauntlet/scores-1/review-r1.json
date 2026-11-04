@@ -1,0 +1,39 @@
+{
+  "artifact_id": "scores-1",
+  "artifact_sha256": "01ec05340e144888ddd1dea5cbed2360fc652a132dd3e2b1077bbe0b897e3343",
+  "round": 1,
+  "verdict": "blocked",
+  "coverage_checked": ["public:2be1d02ce2784c5b8471722e","public:76142ac9757a36864604adab","public:7dfc48db13203dbd5608353c","public:aa970c3e030ab27d5b4f45af","public:28a7b03c4a3399656dd0a276","public:8f64e0d6207573279310f4db","public:d2603dac33dacff591b6aec8","public:cd9b2d2bbd3008d886a4d2a1","public:374335195f6eb24276c7df22","public:599943249ded64302da775d6","public:58e979db146b2bd891f6720e","public:c2e07dd974fe0854c6d84924","public:a82904f22b752bce950aa8ec","public:86c9eb01075123b4fd4b9e37","public:802f1108ec3b0c3270f2cd9b","c1"],
+  "errors_found": 10,
+  "findings": [
+    {"id":"f1","severity":"blocker","location":"row public:8f64e0d6207573279310f4db (source row 33, GPT-6 Astra [low])","evidence":"SOURCE 7 for source row 33 is present in the packet but its content block is empty; no primary combined_full_denominator value, model, effort or context fields are supplied, so the claimed value 87.4325 and all identity fields cannot be verified against primary evidence.","repair":"Supply the SOURCE 7 row-33 projection (combined_full_denominator, model, effort, harness, context fields) or re-capture and re-transcribe it; do not fill from memory."},
+    {"id":"f2","severity":"blocker","location":"row public:d2603dac33dacff591b6aec8 (source row 36, GPT-6 Sol [max])","evidence":"No SOURCE block for source row 36 is present in the packet; claimed value 86.8189 and identity fields (model, effort, protocol v3.17, best_effort true) have no primary transcription to compare against.","repair":"Provide the per-row primary projection for source row 36 with exact combined_full_denominator and context fields."},
+    {"id":"f3","severity":"blocker","location":"row public:cd9b2d2bbd3008d886a4d2a1 (source row 37, Sonnet 5.5 [high])","evidence":"No SOURCE block for source row 37 is present; claimed value 86.7923 and identity fields cannot be verified against primary evidence.","repair":"Provide the per-row primary projection for source row 37."},
+    {"id":"f4","severity":"blocker","location":"row public:374335195f6eb24276c7df22 (source row 38, GPT-5.6 Sol [extra-high])","evidence":"No SOURCE block for source row 38 is present; claimed value 86.4669, effort extra-high and join_note model_id gpt-5.6-sol::xhigh cannot be checked against primary evidence.","repair":"Provide the per-row primary projection for source row 38; the join_note's catalog configuration also lacks its own primary evidence in this packet."},
+    {"id":"f5","severity":"blocker","location":"row public:599943249ded64302da775d6 (source row 39, GPT-6.1 Sol [medium])","evidence":"No SOURCE block for source row 39 is present; claimed value 86.441 and identity fields cannot be verified against primary evidence.","repair":"Provide the per-row primary projection for source row 39."},
+    {"id":"f6","severity":"blocker","location":"row public:58e979db146b2bd891f6720e (source row 40, Opus 5.5 [low])","evidence":"No SOURCE block for source row 40 is present; claimed value 86.3631 and identity fields cannot be verified against primary evidence.","repair":"Provide the per-row primary projection for source row 40."},
+    {"id":"f7","severity":"blocker","location":"row public:c2e07dd974fe0854c6d84924 (source row 41, GPT-6.1 Sol [low])","evidence":"No SOURCE block for source row 41 is present; claimed value 86.2213 and identity fields cannot be verified against primary evidence.","repair":"Provide the per-row primary projection for source row 41."},
+    {"id":"f8","severity":"blocker","location":"row public:a82904f22b752bce950aa8ec (source row 42, GPT-6 Sol [extra-high])","evidence":"No SOURCE block for source row 42 is present; claimed value 85.9384 and identity fields cannot be verified against primary evidence.","repair":"Provide the per-row primary projection for source row 42."},
+    {"id":"f9","severity":"blocker","location":"row public:86c9eb01075123b4fd4b9e37 (source row 43, GPT-5.6 Sol [high])","evidence":"No SOURCE block for source row 43 is present; claimed value 85.7577, effort high and join_note model_id gpt-5.6-sol::high cannot be checked against primary evidence.","repair":"Provide the per-row primary projection for source row 43; the join_note's catalog configuration also lacks its own primary evidence in this packet."},
+    {"id":"f10","severity":"blocker","location":"row public:802f1108ec3b0c3270f2cd9b (source row 44, Haiku 5.5 [low])","evidence":"No SOURCE block for source row 44 is present; claimed value 84.4242 and identity fields cannot be verified against primary evidence.","repair":"Provide the per-row primary projection for source row 44."}
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "Owner transport/qualification/hash execution checks were not performed by this reviewer; per the instructions this is a limitation, not missing numeric source evidence.",
+    "For the five rows with supplied per-row projections (rows 25, 27, 29, 30, 31), all claimed fields (name, id, combined_full_denominator value, harness, model, lab, effort, n_tasks, runs_judged, unfinished_runs, protocol, report) matched the primary evidence exactly; row 29's primary string '88.1580' equals artifact '88.158' numerically.",
+    "SOURCE 1 registry confirms benchmark identity vulcanbench-frontier::4 version 4, unit percent, and that rows with full denominators (n_tasks=23, runs_judged=23, unfinished_runs=0) publish at combined_full_denominator, which all 15 rows satisfy in their claimed context fields.",
+    "join_note catalog configurations (gpt-6-astra::high/medium/low, gpt-5.6-sol::xhigh/high) reference a reviewed identity map whose catalog evidence is not itself in this packet; treated as an accepted prior identity, not verified fresh."
+  ],
+  "missing_evidence": [
+    "source row 33 (GPT-6 Astra [low]) combined_full_denominator and context projection: SOURCE 7 content block is empty in the packet",
+    "source row 36 (GPT-6 Sol [max]) combined_full_denominator and context projection: not present in packet",
+    "source row 37 (Sonnet 5.5 [high]) combined_full_denominator and context projection: not present in packet",
+    "source row 38 (GPT-5.6 Sol [extra-high]) combined_full_denominator and context projection: not present in packet",
+    "source row 39 (GPT-6.1 Sol [medium]) combined_full_denominator and context projection: not present in packet",
+    "source row 40 (Opus 5.5 [low]) combined_full_denominator and context projection: not present in packet",
+    "source row 41 (GPT-6.1 Sol [low]) combined_full_denominator and context projection: not present in packet",
+    "source row 42 (GPT-6 Sol [extra-high]) combined_full_denominator and context projection: not present in packet",
+    "source row 43 (GPT-5.6 Sol [high]) combined_full_denominator and context projection: not present in packet",
+    "source row 44 (Haiku 5.5 [low]) combined_full_denominator and context projection: not present in packet"
+  ]
+}

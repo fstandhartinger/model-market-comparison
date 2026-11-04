@@ -1,0 +1,25 @@
+{
+  "artifact_id": "protocol-kernelbench-cuda-deepseek-nsa-rtx-pro-6000",
+  "artifact_sha256": "106e3ed5770f2399032cd76ef25ac0ad13ad843f58eaa616992a43c991185a9c",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": ["kernelbench-cuda-deepseek-nsa::rtx-pro-6000", "c1", "c2"],
+  "errors_found": 1,
+  "findings": [
+    {
+      "id": "F1",
+      "severity": "major",
+      "location": "row kernelbench-cuda-deepseek-nsa::rtx-pro-6000, field version_status",
+      "evidence": "The row claims version_status 'published', i.e. the maintainer publishes a release identifier and version 'rtx-pro-6000' copies it. Primary evidence (SOURCE 2 leaderboard.json, sha b2fb5a3e...) contains schema_version: 1, environment: v2_containerized, hardware.name 'RTX PRO 6000 Blackwell Workstation', and generated_from_summary.tag 'v2', but publishes no release identifier for the board itself; 'rtx-pro-6000' is the board/hardware identity, not a copied maintainer release identifier. Per criterion c2, a page publishing no release identifier supports 'snapshot'. SOURCE 2 also shows today's payload is being refreshed (SOURCE 6: 5 new values), so the board is live, which supports status 'active' but does not establish a release identifier.",
+      "repair": "Re-derive version_status from the actual maintainer payload: if no board release identifier is published, set version_status to 'snapshot' with a dated snapshot-<date> version, or supply evidence that the maintainer publishes a release identifier that the version copies. Do not retain 'published' on the current evidence."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "I cannot recompute row or artifact hashes; owner-computed SHA-256 values are used as binding.",
+    "generated_from_summary.tag 'v2' and environment 'v2_containerized' could arguably be read as versioning identifiers; this ambiguity is why F1 is reported rather than a definitive 'snapshot' correction.",
+    "SPEC.md excerpt is bounded; metric description for problem 02 (latency-anchored standing rule, peak_fraction as context column) is consistent with the row, but full DEVLOG.md rationale was not supplied.",
+    "Owner separately executes transport/qualification checks; not executed here by design."
+  ],
+  "missing_evidence": []
+}

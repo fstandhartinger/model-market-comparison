@@ -1,0 +1,33 @@
+{
+  "artifact_id": "scores-3",
+  "artifact_sha256": "a58a74e8fe8624fac711c6713922224656a311c3713b29bf46ca225766b3a1b0",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": ["public:e9cc482c6d95449b1f6a6008","public:411f80f135cde98edc5cecc8","public:86c94008e6f555e2d82c7143","public:9144c8d495d95f404adf44c1","public:9ef1d73a4d76a610f525419e","public:7d387e4dda33804c8ddf5177","public:c51a473f2e47a625febda83e","public:9266394ba7e1f7e6bbd7b64f","public:241bcf04d8e24c1300054dad","public:800f8ed3c6fb1f7f3767b530","public:59cbb5cbe22d993515aaed4e","public:2ad00dd7caac013b4ca27afc","public:41a482ab5d60632458cccb6a","c1"],
+  "errors_found": 7,
+  "findings": [
+    {"id":"f1","severity":"major","location":"public:c51a473f2e47a625febda83e (source row 70, GPT-5.6 Terra [low])","evidence":"Claimed value 59.6999 with full source-row context, but the packet supplies no per-row primary evidence excerpt for source row 70; primary sources in the packet cover only rows 62-66 and 69. The claim cannot be verified against actual corresponding primary fields.","repair":"Supply the owner-captured primary row excerpt for source row 70 (GPT-5.6 Terra [low], field combined_full_denominator) with the same sha256-bound capture, then re-verify value, model, effort, harness, n/passed_of, protocol and locator."},
+    {"id":"f2","severity":"major","location":"public:9266394ba7e1f7e6bbd7b64f (source row 71, GPT-6 Luna [high])","evidence":"Claimed value 57.3514 with full source-row context, but no per-row primary evidence for source row 71 is present in the packet (primary excerpts stop at row 69). Value, subject identity and context are unverifiable.","repair":"Supply the primary row excerpt for source row 71 from the same hash-verified capture and re-verify all claimed fields, including the null model_id identity handling."},
+    {"id":"f3","severity":"major","location":"public:241bcf04d8e24c1300054dad (source row 73, GPT-5.6 Luna [medium])","evidence":"Claimed value 53.2781; packet contains no primary evidence excerpt for source row 73. Unverifiable against corresponding primary fields.","repair":"Supply the primary row excerpt for source row 73 from the same sha256-bound capture and re-verify all claimed fields."},
+    {"id":"f4","severity":"major","location":"public:800f8ed3c6fb1f7f3767b530 (source row 74, GPT-5.5 [low])","evidence":"Claimed value 49.8034; packet contains no primary evidence excerpt for source row 74. Unverifiable against corresponding primary fields.","repair":"Supply the primary row excerpt for source row 74 from the same sha256-bound capture and re-verify all claimed fields."},
+    {"id":"f5","severity":"major","location":"public:59cbb5cbe22d993515aaed4e (source row 75, GPT-6 Luna [medium])","evidence":"Claimed value 45.7192; packet contains no primary evidence excerpt for source row 75. Unverifiable against corresponding primary fields.","repair":"Supply the primary row excerpt for source row 75 from the same sha256-bound capture and re-verify all claimed fields, including the null model_id identity handling."},
+    {"id":"f6","severity":"major","location":"public:2ad00dd7caac013b4ca27afc (source row 77, GPT-5.6 Luna [low])","evidence":"Claimed value 41.2869; packet contains no primary evidence excerpt for source row 77. Unverifiable against corresponding primary fields.","repair":"Supply the primary row excerpt for source row 77 from the same sha256-bound capture and re-verify all claimed fields."},
+    {"id":"f7","severity":"major","location":"public:41a482ab5d60632458cccb6a (source row 78, GPT-6 Luna [low])","evidence":"Claimed value 40.831; packet contains no primary evidence excerpt for source row 78. Unverifiable against corresponding primary fields.","repair":"Supply the primary row excerpt for source row 78 from the same sha256-bound capture and re-verify all claimed fields, including the null model_id identity handling."}
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "Owner-executed SHA-256 row binding, transport and qualification checks cannot be executed by this reviewer; their absence is a limitation, not missing evidence.",
+    "SOURCE 44 (judge-protocols.json) content is omitted in the packet, so the v3.29 judge-panel invariants were accepted via the packet's own statement of the gauntlet acceptance; not independently verifiable here.",
+    "Row values 66.348 vs primary '66.3480' match numerically after trailing-zero normalization; exact string transcription may differ and is assumed intentional by the value parser.",
+    "The GPT-6 rows carry model_id null with no join_note; criteria forbid alias inference, so no identity was inferred; confirming the prior accepted identity binding for these rows requires evidence not supplied in the packet."
+  ],
+  "missing_evidence": [
+    "Primary combined_full_denominator value for source row 70 (GPT-5.6 Terra [low])",
+    "Primary combined_full_denominator value for source row 71 (GPT-6 Luna [high])",
+    "Primary combined_full_denominator value for source row 73 (GPT-5.6 Luna [medium])",
+    "Primary combined_full_denominator value for source row 74 (GPT-5.5 [low])",
+    "Primary combined_full_denominator value for source row 75 (GPT-6 Luna [medium])",
+    "Primary combined_full_denominator value for source row 77 (GPT-5.6 Luna [low])",
+    "Primary combined_full_denominator value for source row 78 (GPT-6 Luna [low])"
+  ]
+}

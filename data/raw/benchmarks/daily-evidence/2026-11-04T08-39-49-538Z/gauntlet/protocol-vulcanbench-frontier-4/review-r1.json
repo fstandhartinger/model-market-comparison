@@ -1,0 +1,18 @@
+{
+  "artifact_id": "protocol-vulcanbench-frontier-4",
+  "artifact_sha256": "8390350b685c91ee22a4afaeb22dc9d483c02d8f665fe3903aae2fac39b8ef21",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": ["vulcanbench-frontier::4", "c1", "c2"],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Hash verification and transport/qualification checks are owner-executed; I cannot recompute the artifact or source sha256 values, which is a limitation not missing evidence.",
+    "Some row-note figures (GPT-6 Luna combined_timeouts_zero footnotes 71.94/67.26, GPT-5.6 Sol max 22-of-23 board update, Fable 5.1's 11 Opus 4.8 fallback cells) are not directly evidenced in this packet but are not contradicted by any supplied source; leaderboard.html itself was not captured in the packet.",
+    "v3.20 exclusion and the 2026-10-07/10-14/10-31 review chains rely on cited manifests (test/fixtures/...) not included in the packet; no supplied source contradicts them.",
+    "Per-run export row counts (115 rows) for v3.5/v3.15/v3.24/v3.29 were checked only for v3.29 (SOURCE 31: 23 tasks x 5 runs); other bundles' exports are not supplied.",
+    "SOURCE 6 (swe-v4-terra-v36 judge-protocols.json) is empty in the packet; v3.6-specific claims rest on the board note that v3.4-v3.7 apply the same rubric/controls/judges (SOURCE 1) and are not contradicted."
+  ],
+  "missing_evidence": []
+}
