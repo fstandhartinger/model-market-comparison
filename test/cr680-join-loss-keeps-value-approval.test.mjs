@@ -11,6 +11,7 @@ import { mkdtemp, writeFile, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { verifyScoreEvidence, sha256, observationDigest } from '../lib/benchmark-score-evidence.mjs';
+import { aaIndexRunMode } from '../lib/aa-index-version.mjs';
 
 const registry = { entries: [{ id: 'bench::1', version: '1', family: 'bench', scoring: { unit: 'fraction', range: [0, 1] } }] };
 const collections = [{ benchmark_id: 'bench::1', status: 'collected', reason: 'Captured source', source_url: 'https://vendor.example.org/release' }];
@@ -81,4 +82,12 @@ inRoot('CR-680: a row approved unjoined is not rescued by the join-loss path', a
   const approvals = await fixture(root, left(bridged));
   assert.equal((await verifyScoreEvidence(snapshot([left(bridged)]), registry, { root, approvals })).self_reported_verified, 1);
   await assert.rejects(verifyScoreEvidence(snapshot([left({ ...bridged, value: 0.9 })]), registry, { root, approvals }), /Unreviewed vendor score/);
+});
+
+test('CR-680: an AA minor version rolls in with its values; only another major version holds the snapshot', () => {
+  const minor = aaIndexRunMode(['5.0.1', '5.0.1'], { index_version: '5.0' });
+  assert.equal(minor.changed, null);
+  assert.equal(minor.adoption, false);
+  assert.equal(minor.indexVersion, '5.0.1');
+  assert.equal(aaIndexRunMode(['6.0'], { index_version: '5.0.1' }).changed, '6.0');
 });

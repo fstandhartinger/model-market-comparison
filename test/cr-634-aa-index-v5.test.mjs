@@ -161,7 +161,7 @@ test('real data: no estimate is presented as a measurement in raw files, headlin
   // View: the AA Intelligence axis scores only measured rows; every estimate is in `estimates`, labelled.
   const view = buildBenchmarkView(ds);
   const axis = view.axes.find((a) => a.family === 'aa_intelligence_index');
-  assert.match(axis.version, /^v5\.0 · snapshot-/);
+  assert.match(axis.version, /^v5(\.\d+)* · snapshot-/); // CR-680: minor versions roll in (AA v5.0.1, 2026-11-04)
   const estimatedRows = new Set(ds.models.filter((m) => m.aa_intelligence?.status === 'estimated').map((m) => m.id));
   assert.equal(axis.scores.filter((r) => estimatedRows.has(r.modelId)).length, 0);
   assert.equal(axis.estimates.length, estimatedRows.size);
@@ -183,7 +183,7 @@ test('real data: token efficiency follows the index version of each row', () => 
   for (const m of ds.models) {
     const aa = m.token_efficiency?.aa;
     if (!aa?.tokens_per_task) continue;
-    assert.ok(['5.0', '4.x'].includes(aa.index_version), m.id);
+    assert.match(aa.index_version, /^(5(\.\d+)*|4\.x)$/, m.id);
     assert.equal(aa.tokens_per_task.index_version, aa.index_version, m.id);
   }
 });
