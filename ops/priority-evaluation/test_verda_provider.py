@@ -187,6 +187,11 @@ class Tests(unittest.TestCase):
         self.assertLess(self.systemd.index(arms[1]), self.systemd.index(stops[0]))
         self.assertIn('--property=TimeoutStopSec=300', arms[1])
 
+    def test_fast_lane_keeps_counting_lium_through_the_guard(self):
+        # --no-lium is only for the Attempt 15 path (board #45803): no change for this production path.
+        source = Path(V.__file__).read_text()
+        self.assertNotIn('--no-lium', source)
+
     def test_stop_covers_every_timer_generation(self):
         fake = FakeApi()
         provider = self.provider(fake)
