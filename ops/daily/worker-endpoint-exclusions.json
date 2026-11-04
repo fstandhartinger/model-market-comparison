@@ -9,6 +9,14 @@
       "measurement": "Identical request, one question, max_tokens 32768, reasoning { effort: 'low', exclude: true }, provider pinned with provider.only: Wafer answered 879 completion tokens of which 792 reasoning in 17.0 s; Together answered 82 tokens of which 3 reasoning in 0.9 s. With no reasoning block at all Wafer answered 91 tokens in 2.0 s. The endpoint therefore acts on `low` by switching reasoning on, where the same model id elsewhere reasons three tokens; on a 40 KB critic packet that is the 11,901-token, 191.9-second median the 2026-09-28 05:17 run recorded over 86 calls.",
       "also": "Wafer is the most expensive prompt price of the 33 endpoints of this model on 2026-09-28: $1.00/M against a $0.045/M cheapest endpoint and a $0.15/M catalog headline. Excluding it lowers the run's cost as well as its latency.",
       "evidence": "/opt/benchmarkheaven/state/ux-evidence/iter262-d249/profile-failed-run.md; runs/2026-09-28T08-23-33-730Z-3294234/workers/"
+    },
+    {
+      "model": "z-ai/glm-5.3-flash",
+      "provider": "OpenInference",
+      "measured_at": "2026-11-04",
+      "recorded_by": "bh-daily-quarantine-reply-2026-10-31-e1c1002257 (claude-opus)",
+      "measurement": "Identical producer request (worker-runner system text, producerTaskFor task, json_object, reasoning { effort: 'low', exclude: true }, max_tokens 16384, 235,569-byte task = the 2026-11-04 05:17 run's scores-0 packet of 15 VulcanBench Frontier rows), provider pinned with provider.only and allow_fallbacks false: OpenInference returned 5 match + 10 missing_evidence in 2 of 2 calls, each time saying SOURCE 7 onward was 'empty' although the packet carries every native row; Morph (2 calls), DeepInfra and Together each returned 15 of 15 match on the same bytes. The endpoint drops the middle of a long prompt that the other endpoints read, which our request cannot change. As the cheapest endpoint under sort: price it served all 18 producer calls of the 2026-11-04 run, and every one of the 37 changed VulcanBench rows was quarantined as producer-disputed.",
+      "evidence": "ops/daily-repair-2026-11-04/endpoints/openinference-probe.md; runs/2026-11-04T05-17-01-174Z-2658864 daily-evidence/2026-11-04T05-18-22-740Z/gauntlet/scores-0..3"
     }
   ]
 }

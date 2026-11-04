@@ -22,7 +22,7 @@ test('every exclusion names one model, one provider and the measurement behind i
 });
 
 test('an exclusion applies to the model it was measured on and to no other', () => {
-  assert.deepEqual(ignoredProvidersFor(doc, 'z-ai/glm-5.3-flash'), ['Wafer']);
+  assert.deepEqual(ignoredProvidersFor(doc, 'z-ai/glm-5.3-flash'), ['Wafer', 'OpenInference']);
   for (const other of ['deepseek/deepseek-v4-flash-0731', 'deepseek/deepseek-v4.1-flash', 'moonshotai/kimi-k3']) {
     assert.deepEqual(ignoredProvidersFor(doc, other), [], other);
   }
