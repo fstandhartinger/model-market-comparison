@@ -63,6 +63,9 @@ ln -sfn "$SHARE/runtime/autopickup.py" "$BIN/jevbench-autopickup.py"
 install -m 644 "$SRC/jevbench-priority-worker.service" "$UNITS/jevbench-priority-worker.service"
 install -m 644 "$SRC/jevbench-priority-worker.timer" "$UNITS/jevbench-priority-worker.timer"
 install -m 755 "$SRC/jevbench-autopickup" "$BIN/jevbench-autopickup"
+install -m 700 "$SRC/review.py" "$BIN/jevbench-review.py"
+install -m 755 "$SRC/jevbench-review" "$BIN/jevbench-review"
+install -m 755 "$SRC/jevbench-refund" "$BIN/jevbench-refund"
 # Tracked mail watcher: keep the previous copy for rollback, install mode 0700, prove the binding by hash.
 WATCH="$BIN/jevbench-priority-mail-watch.py"
 if [ -f "$WATCH" ] && ! cmp -s "$SRC/jevbench-priority-mail-watch.py" "$WATCH"; then

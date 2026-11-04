@@ -2079,6 +2079,7 @@ class OperationalHoldRetryTests(DatabaseTestCase):
         urgent = [note for note in fx.notes if note[0] == "urgent"]
         self.assertEqual(len(urgent), 1)
         self.assertIn(ap.hold_reason_label(reason).capitalize(), urgent[0][2])
+        self.assertNotIn(reason, urgent[0][2])  # card v2: plain words, no internal codes
         self.assertNotIn("🧑 Für dich", urgent[0][2])
         self.assertEqual(len(fx.boards) - boards_before, 1)
         # The escalation posts to the JevBench releases thread (#11), not the stale ops thread.
