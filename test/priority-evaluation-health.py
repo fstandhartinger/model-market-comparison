@@ -21,9 +21,19 @@ class Health(unittest.TestCase):
    return copy.deepcopy(self.state)
   self.ns=dict(Any=object,Effects=object,datetime=dt.datetime,timedelta=dt.timedelta,utcnow=lambda:NOW,iso=lambda d:d.isoformat(),PICKUP_TIMERS=[],WORKER_UNIT='worker',MAIL_WATCH_UNIT='mail',systemd_last_success=lambda *a:NOW,managed_predicate=lambda *a:'TRUE',JOB_ROOT=Path('/fake'),TABLE='fake',row_json_sql=lambda *a:'fake',sql_rows=lambda *a:[self.row],request_id=lambda r:r,order_ref=lambda r:r[:8],parse_ts=lambda v:dt.datetime.fromisoformat(v) if v else None,active_hold=lambda r:bool(r.get('customer_hold_started_at')),load_state=load,PickupError=ValueError,deadline_for=lambda r:dt.datetime.fromisoformat(r['paid_at'])+dt.timedelta(hours=48),STATE_ROOT=Path('/nonexistent-fixture'),json=json,ALERT_REPEAT=dt.timedelta(hours=24),owner_job_live=lambda owner,rid,now:owner in self.live,OWNED_HOLD_DEADLINE_MARGIN=dt.timedelta(hours=12))
   self.live=set()
+  self.pin_failure=None
+  class Hold(RuntimeError):pass
+  def fails(name):
+   if self.pin_failure==name:raise Hold('official_measurement_pin_changed')
+  self.mounted=[]
+  def mounts(profile,benchmark):self.mounted.append(benchmark);fails(benchmark)
+  def code_pins():fails('code');return dict(profile=dict(inputs=dict(jevbench={},imagejevbench={})))
+  def scoring_pins(benchmarks):
+   if self.pin_failure=='scoring':raise ValueError('official reference pin changed')
+  self.ns.update(measurement_dispatch=SimpleNamespace(OperationalHold=Hold,pins=code_pins,input_mounts=mounts),official_scoring=SimpleNamespace(pins=scoring_pins))
   # INCIDENTS #25 native owner: a plain owner counts as live exactly like owner_job_live; no native owner is starting.
   self.ns.update(hold_owner_live=self.ns['owner_job_live'],native_owner_starting=lambda *a:False,native_owner=SimpleNamespace(owner_name=lambda rid:'fastlane-native-'+rid[:8]))
-  tree=ast.parse((ROOT/'ops/priority-evaluation/autopickup.py').read_text());nodes=[n for n in tree.body if isinstance(n,ast.FunctionDef) and n.name in ['health','step','step_done']]
+  tree=ast.parse((ROOT/'ops/priority-evaluation/autopickup.py').read_text());nodes=[n for n in tree.body if isinstance(n,ast.FunctionDef) and n.name in ['health','step','step_done','measurement_pin_problems']]
   exec(compile(ast.Module(body=nodes,type_ignores=[]),'actual-health','exec'),self.ns)
   self.effects=SimpleNamespace(dry_run=True,notify=lambda text:True,agent_handoff=lambda text:True)
  def call(self):return self.ns['health'](self.effects)
@@ -51,6 +61,14 @@ class Health(unittest.TestCase):
   self.live={'fastlane-holds-x'};r=self.call();self.assertEqual(r['problems'],[]);self.assertEqual(r['held_orders'][0]['kind'],'owned_manual_run')
   now=dt.datetime(2026,10,9,12,tzinfo=dt.timezone.utc);self.ns["utcnow"]=lambda:now;self.ns["systemd_last_success"]=lambda *a:now;r=self.call();self.assertIn('under 12 h to the deadline',r['problems'][0]);self.assertEqual(r['held_orders'],[])
   self.state['operational_hold']['transient']=True;self.assertNotIn('under 12 h',self.call()['problems'][0])
+ def test_every_benchmark_pin_is_checked_with_no_order_in_flight(self):
+  self.ns['sql_rows']=lambda *a:[];self.assertEqual(self.call()['problems'],[]);self.assertEqual(self.mounted,['imagejevbench','jevbench'])
+ def test_missing_pin_is_a_problem_and_does_not_hide_other_benchmarks(self):
+  self.ns['sql_rows']=lambda *a:[];self.pin_failure='imagejevbench';r=self.call();self.assertEqual(r['problems'],['official imagejevbench input pins fail: official_measurement_pin_changed']);self.assertEqual(self.mounted,['imagejevbench','jevbench'])
+ def test_code_and_scoring_pin_failures_are_problems(self):
+  self.ns['sql_rows']=lambda *a:[];self.pin_failure='code';self.assertIn('official measurement code pins fail',self.call()['problems'][0]);self.pin_failure='scoring';self.assertIn('official scoring pins fail',self.call()['problems'][0])
+ def test_missing_pin_reaches_the_fix_agent(self):
+  self.ns['sql_rows']=lambda *a:[];self.pin_failure='jevbench';seen=[];self.effects.agent_handoff=lambda text:seen.append(text) or True;self.call();self.assertIn('official jevbench input pins fail',seen[0])
  def test_corrupt_state_fails_closed(self):
   self.state=None;r=self.call();self.assertEqual(len(r['problems']),2);self.assertIn('pickup state is unreadable',r['problems'][0])
 unittest.main()
