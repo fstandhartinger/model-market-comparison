@@ -4319,6 +4319,26 @@ def systemd_last_success(effects: Effects, unit: str) -> datetime | None:
     return last
 
 
+def measurement_pin_problems() -> list[tuple[str, str]]:
+    # A pinned official input can vanish while no order needs it (N72: archived for 13 days unnoticed); the first paid
+    # order would then hold on it. Hash-check what dispatch reads for every benchmark, with no order in flight.
+    problems: list[tuple[str, str]] = []
+    try:
+        official_scoring.pins(["jevbench", "imagejevbench"])
+    except (OSError, ValueError, KeyError) as exc:
+        problems.append(("pin:official-scoring", f"official scoring pins fail: {exc}"))
+    try:
+        profile = measurement_dispatch.pins()["profile"]
+    except (OSError, ValueError, KeyError, measurement_dispatch.OperationalHold) as exc:
+        return problems + [("pin:measurement-code", f"official measurement code pins fail: {exc}")]
+    for benchmark in sorted(profile["inputs"]):
+        try:
+            measurement_dispatch.input_mounts(profile, benchmark)
+        except (OSError, ValueError, KeyError, measurement_dispatch.OperationalHold) as exc:
+            problems.append((f"pin:input:{benchmark}", f"official {benchmark} input pins fail: {exc}"))
+    return problems
+
+
 def health(effects: Effects) -> dict[str, Any]:
     now = utcnow()
     problems: list[tuple[str, str]] = []
@@ -4388,6 +4408,7 @@ def health(effects: Effects) -> dict[str, Any]:
         for name, item in state["steps"].items():
             if item.get("status") == "exhausted":
                 problems.append((f"exhausted:{rid}:{name}", f"order {ref}: step {name} exhausted"))
+    problems.extend(measurement_pin_problems())
     report = {"checked_at": iso(now), "problems": [text for _, text in problems], "held_orders": held_orders}
     if not effects.dry_run:
         atomic_write(STATE_ROOT / "health.json", json.dumps(report, indent=2) + "\n")
