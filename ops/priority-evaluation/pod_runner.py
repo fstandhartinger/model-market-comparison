@@ -1027,6 +1027,13 @@ def _lifecycle(provider, job, recipe, staging_path, output, state, gpu_choice, t
                 state['runtime_supplement'] = jeva_runtime_supplement.build(provider, pod_id)
                 image = state['runtime_supplement']['effective_image']
                 save_state()
+            import cue_reflex_runtime_supplement
+            if cue_reflex_runtime_supplement.active(job_dir or job, recipe):
+                # Fixed-order offline build of CueReflex-E4B's torch 2.9.1/transformers 5.20/peft 0.21.2/fastapi stack
+                # plus the receipted no-unpickle head.safetensors conversion.
+                state['runtime_supplement'] = cue_reflex_runtime_supplement.build(provider, pod_id)
+                image = state['runtime_supplement']['effective_image']
+                save_state()
             import chon_runtime_supplement
             if chon_runtime_supplement.active(job_dir or job, recipe):
                 # Fixed-order offline build of Chon-1.0-12B's documented torch 2.9.1/transformers 5.20/peft 0.18.1
