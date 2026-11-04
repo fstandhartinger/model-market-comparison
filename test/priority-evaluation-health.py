@@ -25,7 +25,7 @@ class Health(unittest.TestCase):
   self.ns.update(hold_owner_live=self.ns['owner_job_live'],native_owner_starting=lambda *a:False,native_owner=SimpleNamespace(owner_name=lambda rid:'fastlane-native-'+rid[:8]))
   tree=ast.parse((ROOT/'ops/priority-evaluation/autopickup.py').read_text());nodes=[n for n in tree.body if isinstance(n,ast.FunctionDef) and n.name in ['health','step','step_done']]
   exec(compile(ast.Module(body=nodes,type_ignores=[]),'actual-health','exec'),self.ns)
-  self.effects=SimpleNamespace(dry_run=True,notify=lambda text:True)
+  self.effects=SimpleNamespace(dry_run=True,notify=lambda text:True,agent_handoff=lambda text:True)
  def call(self):return self.ns['health'](self.effects)
  def test_acknowledged_review_hold_reported_without_false_eval_alarm(self):
   r=self.call();self.assertEqual(r['problems'],[]);self.assertEqual(r['held_orders'][0]['owner'],self.state['operational_hold']['owner']);self.assertFalse(r['held_orders'][0]['sla_paused']);self.assertEqual(r['held_orders'][0]['deadline'],'2026-10-09T23:31:27+00:00');self.assertEqual(self.state,self.before)
