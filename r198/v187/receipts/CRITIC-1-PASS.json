@@ -1,0 +1,21 @@
+{
+ "verdict": "PASS",
+ "engine": "Claude Sonnet independent review (r252-v187-critic)",
+ "commit": "0d3770043cf63dc2c4ff3523c3ea1065254476f4",
+ "reviewed_commit": "0d3770043cf63dc2c4ff3523c3ea1065254476f4",
+ "base": "0d8675604",
+ "first_review": {
+  "reviewed_commit": "0d3770043cf63dc2c4ff3523c3ea1065254476f4",
+  "verdict": "PASS",
+  "conditions": [],
+  "receipt": "r198/v187/receipts/CRITIC-1-REVIEW.json",
+  "sha256": "53e40b2736de7a608cf83400fdc754bbc391622ff8156ed94c18a20531d3e3d9"
+ },
+ "notes": [
+  "published cost is the d1027 common-set figure 0.057449698 USD/1k (full set 0.084428667 stated on the row)",
+  "check_raw_pricing_v187.py:7 points at the builder's removed private copy; result reproduced PASS by the critic",
+  "proof.pricing_authority text predates the v1.8.6 merge; v1.8.6 is merged and this review is the independent half"
+ ],
+ "lead": "claude:jevbench-add-requests-20260919 run 252",
+ "bound_at": "2026-11-03T23:11:02Z"
+}

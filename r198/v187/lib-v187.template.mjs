@@ -1,0 +1,124 @@
+// One measured but unranked row; independent review gates every public reader.
+import {createHash} from 'node:crypto';
+import {readFile} from 'node:fs/promises';
+import {isDeepStrictEqual as equal} from 'node:util';
+import {readOptionalJevbenchV186Release} from './jevbench-v186-release.mjs';
+import {apiFullAddendumCategoryBounds,withRowPoolCategoryRows} from './jevbench-api-full-addenda.mjs';
+export const V187_ROOT='data/raw/benchmarks/jevbench/v1.8';
+export const V187_MANIFEST=`${V187_ROOT}/jevbench-v1.8.7-publication.json`;
+export const V187_FILE_KEYS=['results','categories','carry','proof','history','history-carry'];
+export const V187_EXPECTED_HASHES=/*HASHES*/;
+export const V187_NEW_ROWS=/*ROWS*/;
+export const V187_NEW_ROW_BOUNDS=/*BOUNDS*/;
+export const V187_EXPECTED_PROOF=/*PROOF*/;
+export const V187_TEXT_EXCEPTIONS=/*TEXT_EXCEPTIONS*/;
+export const V187_NEW_KEYS=Object.keys(V187_NEW_ROWS).sort();
+export const V187_NOTE='Measured on the 27 Oct 2026 draw, which is not yet equated to the reference scale; stronger anchor runs for that draw are being measured. Shown unranked until then.';
+const fail=m=>{throw Error('JevBench v1.8.7: '+m);};
+const same=(a,b,m)=>{if(!equal(a,b))fail(m);};
+const hash=b=>createHash('sha256').update(b).digest('hex');
+const hex=s=>/^[a-f0-9]{64}$/.test(s??'');
+// Strict path-aware public text validation: one exact clause exception only.
+export const V187_ALLEC_CLAUSE='(The allec weights are plantwaterer/allec@e54027aa; no separate allec row is published on this board.)';
+export const V187_ALLEC_SENTENCE='same weights as the earlier allec entry; short requests are read in several option orders and averaged.';
+export const V187_ALLEC_CLAUSE_SHA256=hash(V187_ALLEC_CLAUSE);
+export function validateV187PublicText(value){
+ if(!value?.model_pin||typeof value.model_pin!=='string'||!/@|^https:\/\/openrouter\.ai\/[a-z0-9-]+\/[a-z0-9.-]+$/.test(value.model_pin))fail('missing model pin');
+ const allec=value?.key==='allec-oavg';
+ if(allec){
+  const text=value.disclosure;
+  if(typeof text!=='string'||text.split(V187_ALLEC_CLAUSE).length!==2||text.split(V187_ALLEC_SENTENCE).length!==2||!text.includes('Serving description: '+V187_ALLEC_SENTENCE+' '+V187_ALLEC_CLAUSE))fail('mandatory allec clause binding');
+ }
+ let allowed=0;
+ function walk(v,path){
+  if(typeof v==='string'){
+   if(/0\.0645|x cap|cost cap USD|0\.15 s/i.test(v))fail('release-level numbers in row prose');
+   const forbidden=/worker|lead|custody|custodian|release.owner|measurement review|deputy|board|#\d+|Florian|\bCoS\b|order.id|jevbench-add-requests|fastlane-native|r251-v187|code_revision|smoke-stop|at the time of drafting|internally measured export|eligible for intake|class C deviation|TTL-fit|pair-fit|accepted root pricing reference|pre-registration review|provider decide \(proxy aws\)|Disposition is for|\bPREREG\b|\{/ig;
+   const start=allec&&path.length===1&&path[0]==='disclosure'?v.indexOf(V187_ALLEC_CLAUSE):-1;
+   const board=start>=0?start+V187_ALLEC_CLAUSE.indexOf('board'):-1;
+   for(const match of v.matchAll(forbidden)){
+    if(start>=0&&match[0]==='board'&&match.index===board)allowed++;
+    else fail('internal public wording at '+path.join('.'));
+   }
+  }else if(Array.isArray(v)){v.forEach((x,i)=>walk(x,[...path,i]));}
+  else if(v&&typeof v==='object'){for(const[k,x]of Object.entries(v))walk(x,[...path,k]);}
+ }
+ walk(value,[]);
+ if(allowed!==(allec?1:0))fail('allec exception count');
+ return true;
+}
+export function validateJevbenchV187Bundle({manifest,artifact,categories,carry,proof,previous,previousManifestSha256},{candidate=false}={}){
+ if(manifest.revision!=='v1.8.7'||manifest.schema_version!==1||manifest.status!=='published'||manifest.provisional!==false)fail('manifest identity');
+ if(!candidate&&(manifest.review?.verdict!=='PASS'||!manifest.review.engine||manifest.review.engine==='PENDING'||!hex(manifest.review.receipt_sha256)))fail('independent review PENDING');
+ same(manifest.predecessor,{revision:'v1.8.6',publication_sha256:previousManifestSha256},'predecessor binding');
+ if(previous?.artifact.revision!=='v1.8.6'||(!candidate&&previous.manifest.review.verdict!=='PASS'))fail('validated predecessor');
+ for(const f of V187_FILE_KEYS){same(manifest.files[f]?.path,`${V187_ROOT}/jevbench-v1.8.7-${f}.json`,'file path '+f);same(manifest.files[f]?.sha256,V187_EXPECTED_HASHES[f],'pinned hash '+f);}
+ for(const f of ['historical_revision','historical_results_sha256','historical_carry_sha256'])same(manifest[f],previous.manifest[f],'historical binding '+f);
+ if(artifact.revision!=='v1.8.7'||artifact.run_kind!=='same-draw-addendum'||artifact.provisional!==false)fail('artifact identity');
+ for(const f of ['method','G_med','n_ranked','board'])same(artifact[f],previous.artifact[f],'unchanged '+f);
+ const by=new Map(artifact.systems.map(s=>[s.key,s]));
+ if(by.size!==artifact.systems.length||artifact.roster_count!==by.size)fail('roster counts');
+ same([...by.keys()].sort(),[...previous.artifact.systems.map(s=>s.key),...V187_NEW_KEYS].sort(),'exact roster');
+ for(const s of previous.artifact.systems){const expected=structuredClone(s);for(const e of V187_TEXT_EXCEPTIONS.filter(e=>e.key===s.key)){const path=e.path.split('.');let o=expected;for(const f of path.slice(0,-1))o=o[f];const f=path.at(-1);if(o[f]!==e.before||hash(o[f])!==e.before_sha256||hash(e.after)!==e.after_sha256)fail('text exception hash '+s.key);o[f]=e.after;}same(by.get(s.key),expected,'carried row '+s.key);same(categories.systems[s.key],previous.categories.systems[s.key],'carried cells '+s.key);same(categories.lanes[s.key],previous.categories.lanes[s.key],'carried lane '+s.key);}
+ for(const k of V187_NEW_KEYS){
+  const s=by.get(k);validateV187PublicText(s);same(s,V187_NEW_ROWS[k],'new row '+k);
+  if(s.ranked!==false||s.rank!==null||s.listing!=='unranked'||s.not_ranked_because!==V187_NOTE)fail('unranked '+k);
+  same(s.ranks,{A:null,B:null,C:null,capability:null},'null ranks '+k);
+  for(const b of Object.values(artifact.board))if(b.order?.includes(k))fail('unranked in list '+k);
+  if(s.draw?.status!=='anchor-runs-pending'||s.draw.offset.I!==0||s.draw.offset.C!==0||s.draw.release!=='v1.8.7'||s.v16.equating_offset!==null)fail('not equated '+k);
+  if(s.v16.n_items!==( ['allec-oavg'].includes(k)?1125:1500)||s.status.rows!==1500||s.decision_limit.limit_s!==10||s.decision_limit.treatment!=='share'||s.v16.g_med_used!==2.573387642438244)fail('scoring method '+k);
+  if(s.cost.common_basis?.n_items!==1489||s.cost.common_basis.rule!=='common')fail('common cost basis '+k);
+  if(s.paid_fast_lane!==false)fail('hosted row is not a paid fast-lane row '+k);
+  const p=proof.new_rows[k],u=p.cost;
+  for(const f of ['axes','decision_limit','model_pin','composite_ci95'])same(p[f],s[f],'proof '+f+' '+k);
+  if(Math.abs(s.cost.usd_per_1000-u.cost_common)>1e-12||Math.abs(s.cost.common_basis.usd_per_1000_all_items-u.cost_all)>1e-12)fail('cost binding '+k);
+  const estimate=(ti,to,n,ri,ro)=>1000*(ti*ri+to*ro)/1e6/n;
+  const listCommon=estimate(u.input_tokens_common,u.output_tokens_common,1489,u.ref.in,u.ref.out);
+  const listAll=estimate(u.input_tokens_all,u.output_tokens_all,1500,u.ref.in,u.ref.out);
+  if(Math.abs(u.list_common-listCommon)>1e-12||Math.abs(u.list_all-listAll)>1e-12)fail('token cost arithmetic '+k);
+  if(u.ref.in!==.1||u.ref.out!==.4||u.ref.module_sha256!=='2f52370fe1dba73d75a770a386df350cc76a0898304aeba9e29c91f6e4d3738b'||u.ref.fetched_at!=='2026-11-03T05:45:33.770410+00:00'||u.ref.kind!=='published tariff'||Math.abs(u.cost_common-u.list_common)>1e-12||Math.abs(u.cost_all-u.list_all)>1e-12||u.usage_estimated_rows!==0||u.reasoning_tokens!==0)fail('hosted tariff cost '+k);
+  if(u.input_tokens_all!==1015566||u.output_tokens_all!==62716||u.guard_responses_200_crusoe_exact_model!==1500||u.rate_limited_429_resent!==56)fail('hosted usage binding '+k);
+  for(const term of ['provider Crusoe','nvidia/nemotron-3.5-super-vl','reasoning.enabled=false','Strict json_schema','temperature 0','max_tokens 4096','You are a calibration engine.','from our server in Germany over OpenRouter','56 upstream rate-limit responses','not counted as answers','fallbacks off','Every one of the 1,500 responses'])if(!s.endpoint_condition.includes(term))fail('hosted run disclosure '+k+' '+term);
+  for(const term of ['REASONING DISABLED','a reasoning-on configuration could score differently','published OpenRouter tariff','USD 0.10 per million input tokens','USD 0.40 per million output tokens','1,015,566 input and 62,716 output tokens'])if(!s.disclosure.includes(term))fail('public disclosure '+k+' '+term);
+ if(s.api_flag!==true||s.endpoint_kind!=='api'||s.cost.kind!=='tariff'||s.model_pin!=='https://openrouter.ai/nvidia/nemotron-3.5-super-vl'||s.repo!==s.model_pin)fail('hosted identity '+k);
+  same(p.category_pool_bounds,V187_NEW_ROW_BOUNDS[k],'pool bounds '+k);
+  if(categories.systems[k]?.topics!==undefined)fail('topics absent on draw '+k);
+  for(const dim of ['families','languages','usecases']){
+   const cells=categories.systems[k]?.[dim];if(!cells||!Object.keys(cells).length)fail('missing cells '+k+' '+dim);
+   for(const [c,x]of Object.entries(cells))if(!Number.isInteger(x.n)||x.n<1||x.n>1500||!Number.isFinite(x.competence)||(dim!=='families'&&x.n>(V187_NEW_ROW_BOUNDS[k][dim][c]??0)))fail('cell bounds '+k);
+  }
+  if(/\/home\/|workers\/|#\d{4,}|\bPREREG\b|custody|deputy|release.owner|Florian|Sandy|\b[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\b|\{[A-Z_]+\}/i.test(JSON.stringify(s)))fail('internal public text '+k);
+ }
+ same(carry,previous.carry,'immutable carry');
+ same(Object.keys(categories.systems).sort(),[...Object.keys(previous.categories.systems),...V187_NEW_KEYS].sort(),'category roster');
+ if(categories.revision!=='v1.8.7'||categories.results_sha256!==manifest.files.results.sha256)fail('category binding');
+ same(proof,V187_EXPECTED_PROOF,'exact proof');
+ if(proof.carried_rows!==previous.artifact.systems.length||!equal(proof.carried_rows_equal_except,V187_TEXT_EXCEPTIONS)||!hex(proof.exceptions.text_only_sha256))fail('enumerated text-only carry exceptions');
+ if(proof.publication_approval.status!=='GO (standing; no top-five change; Florian work order #20965)'||proof.publication_approval.top_five_effect!=='unchanged')fail('standing approval');
+ same(proof.predecessor,manifest.predecessor,'proof predecessor');
+ same(artifact.addendum.new_keys,V187_NEW_KEYS,'addendum keys');
+ return true;
+}
+async function load(p,root){const bytes=await readFile(`${root}/${p}`);return {bytes,value:JSON.parse(bytes),sha256:hash(bytes)};}
+export async function readOptionalJevbenchV187Release(root=process.cwd()){
+ let publication;try{publication=await load(V187_MANIFEST,root);}catch(e){if(e.code==='ENOENT')return null;throw e;}
+ const previous=await readOptionalJevbenchV186Release(root);if(!previous)fail('validated predecessor');
+ const predecessor=await load(`${V187_ROOT}/jevbench-v1.8.6-publication.json`,root);
+ const b=Object.fromEntries(await Promise.all(V187_FILE_KEYS.map(async k=>[k,await load(`${V187_ROOT}/jevbench-v1.8.7-${k}.json`,root)])));
+ for(const[k,v]of Object.entries(b))if(v.sha256!==publication.value.files[k]?.sha256)fail('bytes hash '+k);
+ for(const k of ['carry','history','history-carry'])if(b[k].sha256!==previous.manifest.files[k].sha256)fail('immutable '+k);
+ validateJevbenchV187Bundle({manifest:publication.value,artifact:b.results.value,categories:b.categories.value,carry:b.carry.value,proof:b.proof.value,previous,previousManifestSha256:predecessor.sha256});
+ return {artifact:b.results.value,bytes:b.results.bytes,sha256:b.results.sha256,categories:b.categories.value,categoriesSha256:b.categories.sha256,carry:b.carry.value,carrySha256:b.carry.sha256,proof:b.proof.value,manifest:publication.value,historical:previous.historical};
+}
+export async function readJevbenchV187ForBoard(root=process.cwd()){
+ let p;try{p=(await load(V187_MANIFEST,root)).value;}catch(e){if(e.code==='ENOENT')return null;throw e;}
+ return p?.review?.verdict==='PASS'?readOptionalJevbenchV187Release(root):null;
+}
+export async function hasPublishedJevbenchV187Release(root=process.cwd(),log=console.error){try{return Boolean(await readJevbenchV187ForBoard(root));}catch{log('JevBench v1.8.7 navigation omitted: publication validation failed');return false;}}
+export function v187BoardInput(release){return {artifact:release.artifact,categories:release.categories};}
+export function withV187Addendum(chain,release){
+ const bounds={...apiFullAddendumCategoryBounds(chain.categories),...structuredClone(V187_NEW_ROW_BOUNDS)};
+ const update=a=>({...a,systems:release.artifact.systems,board:release.artifact.board,n_ranked:release.artifact.n_ranked,roster_count:release.artifact.roster_count,measurement_notes:release.artifact.measurement_notes,restated_by:'v1.8.7',v187_sha256:release.sha256});
+ const categories=withRowPoolCategoryRows({...release.categories,revision:chain.published.revision,restated_by:'v1.8.7',systems:{}},release.categories.systems,bounds);
+ return {...chain,published:update(chain.published),merged:update(chain.merged),categories,publishedCarry:release.carry};
+}

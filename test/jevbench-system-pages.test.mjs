@@ -84,7 +84,7 @@ test('CR-170 a renamed system keeps its artifact key, gets a clean public slug, 
   assert.equal(jevSystemSlug('kushal-gemma4-31b-it-autoloops'), 'autoloops-gemma-4-31b-it');
   assert.equal(jevSystemKeyFromSlug('autoloops-gemma-4-31b-it'), 'kushal-gemma4-31b-it-autoloops');
   assert.equal(jevSystemPath('laya'), '/jev-models/laya');
-  assert.deepEqual(JEV_SYSTEM_SLUG_REDIRECTS, [{ source: '/jev-models/kushal-gemma4-31b-it-autoloops', destination: '/jev-models/autoloops-gemma-4-31b-it', permanent: true }]);
+  assert.deepEqual(JEV_SYSTEM_SLUG_REDIRECTS, [{ source: '/jev-models/kushal-gemma4-31b-it-autoloops', destination: '/jev-models/autoloops-gemma-4-31b-it', permanent: true }, { source: '/jev-models/nvidia/nemotron-3.5-super-vl', destination: '/jev-models/nemotron-3.5-super-vl', permanent: true }]);
   const { artifact } = await readJevbenchV1422();
   const row = artifact.systems.find((s) => s.key === 'kushal-gemma4-31b-it-autoloops');
   assert.equal(row.display, 'Autoloops – Gemma 4 31B IT');

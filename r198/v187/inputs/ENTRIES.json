@@ -1,0 +1,29 @@
+{
+ "nvidia/nemotron-3.5-super-vl": {
+  "entry": {
+   "author": "NVIDIA",
+   "cost_basis": "Published OpenRouter tariff (Crusoe, bf16) from the installed frozen pricing_v15 (2f52370f); see build_v187.py.",
+   "display": "NVIDIA Nemotron 3.5 Super VL",
+   "endpoint_kind": "api",
+   "lane": "api",
+   "licence": "Hosted API through OpenRouter; the weights licence is not assessed here (see the model page).",
+   "ranked": false,
+   "repo": "https://openrouter.ai/nvidia/nemotron-3.5-super-vl",
+   "revision": null,
+   "support": {
+    "choice": "native",
+    "noul": "native",
+    "score": "native"
+   }
+  },
+  "expect": {
+   "failed": 0,
+   "input_tokens": 1015566,
+   "ok": 1500,
+   "output_tokens": 62716,
+   "status_counts": {
+    "200": 1500
+   }
+  }
+ }
+}
