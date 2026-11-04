@@ -61,6 +61,12 @@ SUPPLEMENTS: tuple[dict[str, Any], ...] = (
     {"family": "cue_reflex", "module": "cue_reflex_runtime_supplement.py",
      "repos": ("huggingface.co/oidlabs/cue-reflex-4b",),
      "precedents": ("fastlane-native-1dedbcf2",)},
+    {"family": "wps_decision", "module": "wps_decision_runtime_supplement.py",
+     "repos": ("huggingface.co/kingsoft-office/wps-decision-1",),
+     "precedents": ("fastlane-native-114b6e41",)},
+    {"family": "wps_decision", "module": "wps_decision_runtime_supplement.py",
+     "repos": ("huggingface.co/kingsoft-office/wps-decision-1",),
+     "precedents": ("fastlane-native-114b6e41",)},
 )
 
 _SEGMENT = re.compile(r"[A-Za-z0-9][A-Za-z0-9._-]{0,95}")

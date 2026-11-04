@@ -1034,6 +1034,19 @@ def _lifecycle(provider, job, recipe, staging_path, output, state, gpu_choice, t
                 state['runtime_supplement'] = cue_reflex_runtime_supplement.build(provider, pod_id)
                 image = state['runtime_supplement']['effective_image']
                 save_state()
+            import wps_decision_runtime_supplement
+            if wps_decision_runtime_supplement.active(job_dir or job, recipe):
+                # Fixed-order offline overlay of wps-decision-1's recorded transformers 5.17/accelerate/numpy stack on the
+                # official torch 2.14.0+cu130 image; the customer's d3_server.py is mounted unchanged.
+                state['runtime_supplement'] = wps_decision_runtime_supplement.build(provider, pod_id)
+                image = state['runtime_supplement']['effective_image']
+                save_state()
+            import wps_decision_runtime_supplement
+            if wps_decision_runtime_supplement.active(job_dir or job, recipe):
+                # Fixed-order offline build of wps-decision-1's documented torch 2.14/transformers 5.17 stack for the customer's own d3_server.py.
+                state['runtime_supplement'] = wps_decision_runtime_supplement.build(provider, pod_id)
+                image = state['runtime_supplement']['effective_image']
+                save_state()
             import chon_runtime_supplement
             if chon_runtime_supplement.active(job_dir or job, recipe):
                 # Fixed-order offline build of Chon-1.0-12B's documented torch 2.9.1/transformers 5.20/peft 0.18.1
