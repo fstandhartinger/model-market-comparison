@@ -114,6 +114,8 @@ class FakeEffects(ap.Effects):
         super().__init__(dry_run=dry_run)
         self.mails: list[tuple[str, str, str]] = []
         self.notes: list[tuple[str, bool, str]] = []
+        self.handoffs: list[str] = []
+        self.handoff_ok = False  # no real fix agent from a test; False = the alert falls back to notify
         self.boards: list[str] = []
         self.board_threads: list[tuple[str, str, str]] = []
         self.started: list[str] = []
@@ -127,6 +129,10 @@ class FakeEffects(ap.Effects):
         self.github: dict[str, object] = {}
         self.files: dict[tuple[str, str], bytes] = {}
         self.pages: dict[str, bytes] = {}
+
+    def agent_handoff(self, message):
+        self.handoffs.append(message)
+        return self.handoff_ok
 
     def notify(self, message, *, mode="now", requested=False):
         self.notes.append((mode, requested, message))
@@ -367,6 +373,30 @@ class OwnershipAndClaimTests(DatabaseTestCase):
         self.assertEqual((current["confirmation_status"], current["board_status"], current["pickup_status"],
                           current["evaluation_status"]), ("sent", "sent", "started", "starting"))
         self.assertEqual(current["pickup_owner"], ap.owner_for(rid))
+
+
+class UrgentAlertRoutingTests(unittest.TestCase):
+    def test_urgent_alert_goes_to_the_fix_agent_without_a_card(self):
+        fx = FakeEffects()
+        fx.handoff_ok = True
+        with mock.patch.object(ap, "save_state"):
+            self.assertTrue(ap.alert({"alerts": {}}, "k", fx, text="x", urgent=True))
+        self.assertEqual(fx.handoffs, ["x"])
+        self.assertEqual(fx.notes, [])
+
+    def test_urgent_alert_falls_back_to_notify_urgent_when_no_agent_starts(self):
+        fx = FakeEffects()
+        with mock.patch.object(ap, "save_state"):
+            self.assertTrue(ap.alert({"alerts": {}}, "k", fx, text="x", urgent=True))
+        self.assertEqual(fx.handoffs, ["x"])
+        self.assertEqual([note[0] for note in fx.notes], ["urgent"])
+
+    def test_non_urgent_alert_never_starts_an_agent(self):
+        fx = FakeEffects()
+        with mock.patch.object(ap, "save_state"):
+            ap.alert({"alerts": {}}, "k", fx, text="x")
+        self.assertEqual(fx.handoffs, [])
+        self.assertEqual(len(fx.notes), 1)
 
 
 class RetryAndRecoveryTests(DatabaseTestCase):
