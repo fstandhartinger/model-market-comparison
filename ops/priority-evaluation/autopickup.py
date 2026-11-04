@@ -3428,8 +3428,9 @@ def advance_delivery(row: dict[str, Any], state: dict[str, Any], job_dir: Path, 
         finish_ok(state, "finalize", now, outcome=summary["outcome"])
         if summary["outcome"] == "refused":
             update_row(rid, "release_status='refused'")
-            alert(state, "refused", effects, digest=True, text=(
-                agent_status_card(row, 'is paused: the submitted source failed review', 'Agents are checking the failed source review; any refund requires separate approval.', urgent=False)))
+            # The card says agents are checking, so hand it to one; digest only reached the board and nothing moved until 36 h.
+            alert(state, "refused", effects, urgent=True, text=(
+                agent_status_card(row, 'is paused: the submitted source failed review', 'Agents are checking the failed source review; any refund requires separate approval.')))
         else:
             update_row(rid, "release_status='verified'")
         row = load_row(rid) or row

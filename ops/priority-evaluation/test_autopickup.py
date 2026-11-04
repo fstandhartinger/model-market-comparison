@@ -424,7 +424,7 @@ class RetryAndRecoveryTests(DatabaseTestCase):
             ap.sql(f"UPDATE {ap.TABLE} SET updated_at=now()-interval '1 hour' WHERE id='{rid}'")
             ap.cycle(fx)
         self.assertEqual(len(fx.mails), ap.STEP_LIMITS["confirmation"])
-        self.assertEqual(sum("confirmation" in note[2] for note in fx.notes), 1)
+        self.assertEqual(sum("automatic customer email failed" in note[2] for note in fx.notes), 1)
 
     def test_crash_after_smtp_is_recovered_from_the_audit_log_without_resending(self):
         rid = insert_order()
@@ -472,7 +472,7 @@ class RetryAndRecoveryTests(DatabaseTestCase):
             ap.cycle(fx)
         self.assertEqual(len(fx.started), ap.MAX_EVALUATION_ATTEMPTS)
         self.assertEqual(row(rid)["evaluation_status"], "exhausted")
-        self.assertEqual(sum("Rescue" in note[2] for note in fx.notes), 1)
+        self.assertEqual(sum("Automatic retries are used up" in note[2] for note in fx.notes), 1)
 
     def test_state_survives_a_restart_of_the_process(self):
         rid = insert_order()
@@ -1712,7 +1712,7 @@ class FinalizeTests(DatabaseTestCase):
         ap.save_state(state)
         make_due(rid)
         self.cycle_live_release(fx)
-        self.assertTrue(any("never retried" in note[2] for note in fx.notes))
+        self.assertTrue(any("no automatic retry is permitted" in note[2] for note in fx.notes))
         self.assertEqual(fx.started.count(ap.XPOST_UNIT.format(rid)), 1)
 
     def test_request_folder_receipt_cannot_claim_an_x_post(self):
@@ -1729,7 +1729,7 @@ class FinalizeTests(DatabaseTestCase):
         self.cycle_live_release(fx)
         state = ap.load_state(rid)
         self.assertEqual(state["steps"]["xpost_receipt"]["post_status"], "uncertain")
-        self.assertTrue(any("never retried" in note[2] for note in fx.notes))
+        self.assertTrue(any("no automatic retry is permitted" in note[2] for note in fx.notes))
 
     def test_tampered_or_inconsistent_results_are_not_delivered(self):
         cases = {
@@ -1907,13 +1907,17 @@ class FinalizeTests(DatabaseTestCase):
         self.assertEqual(row(rid)["delivery_email_status"], "not_due")
         self.assertFalse(any("your result" in mail[1] for mail in fx.mails))
 
-    def test_refused_review_is_not_mailed_and_asks_florian(self):
+    def test_refused_review_is_not_mailed_and_gets_an_agent_at_once(self):
         rid, fx, job = self.prepare()
         (job / "release" / "RESULT.json").write_text(json.dumps({"request_id": rid, "outcome": "refused"}))
         self.cycle_live_release(fx)
         self.assertEqual(row(rid)["release_status"], "refused")
-        self.assertTrue(any("refusal email" in note[2] for note in fx.notes))
+        self.assertEqual(len([h for h in fx.handoffs if "failed review" in h]), 1)
+        self.assertTrue(any(note[0] == "urgent" and "failed review" in note[2] for note in fx.notes))  # no agent could start
         self.assertFalse(any("your result" in mail[1] for mail in fx.mails))
+        # The order stays open, so the 40 h decision card still covers it.
+        ap.sql(f"UPDATE {ap.TABLE} SET paid_at=now()-interval '41 hours' WHERE id='{rid}'")
+        self.assertIn(rid, [r["id"] for r in ap.sla_decision_rows(None, ap.JOB_ROOT)])
 
 
 class PureFunctionTests(unittest.TestCase):
@@ -2074,7 +2078,7 @@ class OperationalHoldRetryTests(DatabaseTestCase):
         ap.manage_evaluation(row(rid), ap.load_state(rid), fx, datetime.now(timezone.utc))
         urgent = [note for note in fx.notes if note[0] == "urgent"]
         self.assertEqual(len(urgent), 1)
-        self.assertIn(reason, urgent[0][2])
+        self.assertIn(ap.hold_reason_label(reason).capitalize(), urgent[0][2])
         self.assertNotIn("🧑 Für dich", urgent[0][2])
         self.assertEqual(len(fx.boards) - boards_before, 1)
         # The escalation posts to the JevBench releases thread (#11), not the stale ops thread.
@@ -2277,7 +2281,7 @@ class SourceFetchPolicyTests(DatabaseTestCase):
         self.assertIn("preparation", ap.load_state(rid)["evaluation_exhausted"]["reason"])
         # The cycle escalates once and never restarts the unit again.
         ap.manage_evaluation(row(rid), ap.load_state(rid), fx, datetime.now(timezone.utc))
-        self.assertEqual(len([n for n in fx.notes if n[0] == "urgent" and "Rescue" in n[2]]), 1)
+        self.assertEqual(len([n for n in fx.notes if n[0] == "urgent" and "Automatic retries are used up" in n[2]]), 1)
         starts = len(fx.started)
         ap.manage_evaluation(row(rid), ap.load_state(rid), fx, datetime.now(timezone.utc))
         self.assertEqual(len(fx.started), starts)
