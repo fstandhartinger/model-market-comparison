@@ -9,9 +9,9 @@ import {fileURLToPath} from 'node:url';
 const dir = fileURLToPath(new URL('../ops/priority-evaluation/', import.meta.url));
 
 // N68: the fast-lane worker's own suite. HOME is an empty directory, so an unstubbed side effect finds no ~/bin tool
-// (N65: a by-hand run reached the real urgent-autofix). A timeout kills python before it stops its private PostgreSQL.
-// The fixtures copy the official scorer from a job folder that exists only on Sandy, so this file fails at once in the
-// LeChonk lane and bh-merge-queue re-runs it on Sandy, whose result decides. A skip there would leave it in no gate.
+// (N65: a by-hand run reached the real urgent-autofix). Scoring and measurement pins plus the site checkout are bound
+// to test-local synthetic fixtures; tests must not read host job paths or the live deploy checkout. The merge queue
+// still confirms any LeChonk-only file failure on Sandy, and the minimum-count/skip checks keep this suite in the gate.
 function unittest(file, minimumRan) {
   const sandbox = mkdtempSync(join(tmpdir(), 'fastlane-gate-'));
   try {
@@ -40,5 +40,5 @@ function unittest(file, minimumRan) {
   }
 }
 
-test('fast-lane autopickup suite passes', () => unittest('test_autopickup.py', 169));
+test('fast-lane autopickup suite passes', () => unittest('test_autopickup.py', 170));
 test('fast-lane installer inventory covers modules and operator commands', () => unittest('test_installer_inventory.py', 2));
