@@ -1,0 +1,22 @@
+[
+  {
+    "id": "eqbench-slop-score::snapshot-2026-09-10",
+    "version": "snapshot-2026-09-10",
+    "version_guard": "No public version was verified: this identity freezes the observed methodology/source snapshot. Review task set, harness, judges, metric and configuration before importing any later result; a changed protocol needs a new identity.",
+    "status": "active",
+    "version_status": "snapshot",
+    "superseded_by": null,
+    "scoring": {
+      "metric": "Weighted composite of slop-word frequency (60%), 'not-x-but-y' contrast patterns (25%), and slop trigram frequency (15%) on outputs from a standardized prompt set; lower is better",
+      "unit": "unknown",
+      "range": [
+        null,
+        null
+      ],
+      "higher_better": false,
+      "notes": "Values retain this source implementation and score convention; different harnesses, subsets, judge revisions and versions must remain separate."
+    },
+    "description": "Leaderboard and analysis tool scoring how much model writing resembles AI slop via overused words, contrast patterns, and trigrams.",
+    "maintainer": "Sam Paech (EQ-Bench)"
+  }
+]

@@ -1,0 +1,22 @@
+{
+  "artifact_id": "protocol-eqbench-slop-score-snapshot-2026-09-10",
+  "artifact_sha256": "676f8349477e260c719aa9a2fb27a45e54754eaf6c58c29502bbee6cf341557c",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "eqbench-slop-score::snapshot-2026-09-10",
+    "c1",
+    "c2"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Row hash c30eb9c405079b36c007addc106c2c2c6b269e092b88a54f876f108de29959ef is taken as owner-supplied binding; I cannot recompute row or artifact SHA-256, transport, or producer qualification checks.",
+    "c1: metric wording compared against SOURCE 1 excerpt; excerpts may omit context, but 60/25/15 weights, standardized prompt set, and lower-is-better all match the captured text.",
+    "c1: SOURCE 3 summary (23 finite values, min 10.384410105110899, max 85.23387975443494) is this run's generated read; row unit='unknown' with range [null,null] claims no scale and no bound, so no served value contradicts it; it settles nothing about metric meaning or provenance.",
+    "c2: status='active' is supported by SOURCE 2 nonzero activity (3 changed values, 0 removed) and the leaderboard remaining live on SOURCE 1; I cannot independently rerun the capture comparison.",
+    "c2: version_status='snapshot' rests on SOURCE 1 publishing no release identifier for this board; a release identifier outside the excerpt bounds would change this, though none appears in the captured text."
+  ],
+  "missing_evidence": []
+}

@@ -1,0 +1,132 @@
+[
+  {
+    "id": "public:acff852f4b867ca2c0fb12db",
+    "benchmark_id": "eqbench-slop-score::snapshot-2026-09-10",
+    "subject": {
+      "source_id": "human-baseline",
+      "name": "human-baseline",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 10.384410105110899,
+    "unit": "unknown",
+    "basis": "derived",
+    "source": {
+      "url": "https://eqbench.com/data/leaderboard_results.json",
+      "retrieved_at": "2026-11-05T17:04:18.395475+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-11-05T16-53-47-135Z/16925b79d955a1cacef4.gz",
+      "sha256": "16925b79d955a1cacef4d2ac91b696e73f976a4a3ceb45122544a9cf661b04de",
+      "locator": "slop_composite; source row 1; human-baseline; field value"
+    },
+    "protocol": "Published Slop Score composite reconstructed from the three measured metrics and published source formula; raw precision retained, not source display rounding.",
+    "comparison_key": null,
+    "source_basis": "measured",
+    "derivation": {
+      "formula": "Source composite: 0.6 words + 0.25 contrast + 0.15 trigrams, each min-max normalized with 10% extended bounds and clipped 0..1; ×100. Bounds=[[2.1214882577844882, 43.924784489934034], [-0.0323480255696472, 0.8881555162544392], [-0.027052241145113065, 1.2293612202273094]]",
+      "inputs": [
+        6.898569416278464,
+        0.044360602915693347,
+        0.09394566577031677
+      ]
+    },
+    "supporting_sources": [
+      {
+        "url": "https://eqbench.com/slop-score.html",
+        "file": "data/raw/benchmarks/daily-evidence/2026-11-05T16-53-47-135Z/73ae51e46c0890288a7d.gz",
+        "sha256": "73ae51e46c0890288a7d07c029fd0d30cb0e64c088627f95fa2fb51718fe054e",
+        "retrieved_at": "2026-11-05T16:55:10.088457+00:00",
+        "published_at": null,
+        "locator": "method_source"
+      }
+    ]
+  },
+  {
+    "id": "public:6300f512965ad7e01559d407",
+    "benchmark_id": "eqbench-slop-score::snapshot-2026-09-10",
+    "subject": {
+      "source_id": "moonshotai/kimi-k2",
+      "name": "moonshotai/kimi-k2",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 23.68230974891229,
+    "unit": "unknown",
+    "basis": "derived",
+    "source": {
+      "url": "https://eqbench.com/data/leaderboard_results.json",
+      "retrieved_at": "2026-11-05T17:04:18.395475+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-11-05T16-53-47-135Z/16925b79d955a1cacef4.gz",
+      "sha256": "16925b79d955a1cacef4d2ac91b696e73f976a4a3ceb45122544a9cf661b04de",
+      "locator": "slop_composite; source row 4; moonshotai/kimi-k2; field value"
+    },
+    "protocol": "Published Slop Score composite reconstructed from the three measured metrics and published source formula; raw precision retained, not source display rounding.",
+    "comparison_key": null,
+    "source_basis": "measured",
+    "derivation": {
+      "formula": "Source composite: 0.6 words + 0.25 contrast + 0.15 trigrams, each min-max normalized with 10% extended bounds and clipped 0..1; ×100. Bounds=[[2.1214882577844882, 43.924784489934034], [-0.0323480255696472, 0.8881555162544392], [-0.027052241145113065, 1.2293612202273094]]",
+      "inputs": [
+        12.946588436217393,
+        0.1961294156977824,
+        0.135434169811494
+      ]
+    },
+    "supporting_sources": [
+      {
+        "url": "https://eqbench.com/slop-score.html",
+        "file": "data/raw/benchmarks/daily-evidence/2026-11-05T16-53-47-135Z/73ae51e46c0890288a7d.gz",
+        "sha256": "73ae51e46c0890288a7d07c029fd0d30cb0e64c088627f95fa2fb51718fe054e",
+        "retrieved_at": "2026-11-05T16:55:10.088457+00:00",
+        "published_at": null,
+        "locator": "method_source"
+      }
+    ]
+  },
+  {
+    "id": "public:1ac553967f4db3071f664a53",
+    "benchmark_id": "eqbench-slop-score::snapshot-2026-09-10",
+    "subject": {
+      "source_id": "mistralai/Mistral-Small-3.2-24B-Instruct-2506",
+      "name": "mistralai/Mistral-Small-3.2-24B-Instruct-2506",
+      "model_id": "mistral-small-3.2-24b-instruct::default",
+      "variant": null,
+      "harness": null
+    },
+    "value": 52.687891411934004,
+    "unit": "unknown",
+    "basis": "derived",
+    "source": {
+      "url": "https://eqbench.com/data/leaderboard_results.json",
+      "retrieved_at": "2026-11-05T17:04:18.395475+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-11-05T16-53-47-135Z/16925b79d955a1cacef4.gz",
+      "sha256": "16925b79d955a1cacef4d2ac91b696e73f976a4a3ceb45122544a9cf661b04de",
+      "locator": "slop_composite; source row 15; mistralai/Mistral-Small-3.2-24B-Instruct-2506; field value"
+    },
+    "protocol": "Published Slop Score composite reconstructed from the three measured metrics and published source formula; raw precision retained, not source display rounding.",
+    "comparison_key": null,
+    "source_basis": "measured",
+    "derivation": {
+      "formula": "Source composite: 0.6 words + 0.25 contrast + 0.15 trigrams, each min-max normalized with 10% extended bounds and clipped 0..1; ×100. Bounds=[[2.1214882577844882, 43.924784489934034], [-0.0323480255696472, 0.8881555162544392], [-0.027052241145113065, 1.2293612202273094]]",
+      "inputs": [
+        26.047923842354127,
+        0.15083710168057302,
+        1.0929398369436494
+      ]
+    },
+    "supporting_sources": [
+      {
+        "url": "https://eqbench.com/slop-score.html",
+        "file": "data/raw/benchmarks/daily-evidence/2026-11-05T16-53-47-135Z/73ae51e46c0890288a7d.gz",
+        "sha256": "73ae51e46c0890288a7d07c029fd0d30cb0e64c088627f95fa2fb51718fe054e",
+        "retrieved_at": "2026-11-05T16:55:10.088457+00:00",
+        "published_at": null,
+        "locator": "method_source"
+      }
+    ],
+    "join_note": "Unique exact Hugging Face checkpoint URL in retained catalog metadata; source effort remains as published."
+  }
+]

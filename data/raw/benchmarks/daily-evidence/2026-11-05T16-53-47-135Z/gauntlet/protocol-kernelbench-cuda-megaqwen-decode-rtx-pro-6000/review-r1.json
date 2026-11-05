@@ -1,0 +1,30 @@
+{
+  "artifact_id": "protocol-kernelbench-cuda-megaqwen-decode-rtx-pro-6000",
+  "artifact_sha256": "281df10e55b53ee8409b58c066527c9940e0dcc645df63602f73a2c4c8533ee0",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": [
+    "kernelbench-cuda-megaqwen-decode::rtx-pro-6000",
+    "c1",
+    "c2"
+  ],
+  "errors_found": 1,
+  "findings": [
+    {
+      "id": "f1-unit-scale-mismatch",
+      "severity": "blocker",
+      "location": "row kernelbench-cuda-megaqwen-decode::rtx-pro-6000, scoring.unit and scoring.range vs SOURCE 7",
+      "evidence": "SOURCE 7 (the run's generated value-scale summary) reports 23 finite served peak_fraction values, lowest 0.97 and highest 8.12, i.e. the board is served on a fraction scale where peak_fraction is a decimal like 0.0540 (matching leaderboard.json values such as 0.0540/0.0812 for 03_megaqwen_decode). The row's scoring.unit is 'percent of roofline' with notes saying values are 'peak_fraction × 100' and range [0,null] expressing percent. A stored value of 5.40 (percent) vs served 0.0540 would disagree with the served scale; more critically, the summary's served max 8.12 exceeds 100% is not the issue, the issue is unit/range describe a percent scale while the board serves 0-~8 fraction values per SOURCE 7's own bounds (min 0.97, max 8.12 on that served scale), and the row claims values are ×100 of these, meaning stored row values would run ~97-812 on a 'percent of roofline' scale, which SOURCE 7's served-scale bounds (0.97-8.12) do not support. Per c1, a row whose unit/range disagree with served values is a mismatch.",
+      "repair": "Either store values on the served fraction scale (drop the ×100 claim, set unit to 'fraction of problem 03 decode-only ceiling (peak_fraction)' with range [0,null]) or, if keeping the percent conversion, restate unit/range so the row's stored values (peak_fraction × 100, e.g. 5.4%) are explicitly labeled as the row's own rescaling and the range/unit judgement is anchored to the served 0.97-8.12 fraction scale rather than the multiplied percent scale. Confirm which scale the stored row values use and align unit/range/notes accordingly."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "Hash binding and transport/qualification checks are executed by the owner, not this reviewer; the owner-computed row SHA-256 (ff4983ac...) and artifact SHA-256 are accepted as binding values per instructions, not recomputed.",
+    "SOURCE 7 says 23 finite values with min 0.97 and max 8.12; leaderboard.json excerpt for problem 03 shows values like 0.0540, 0.0812, 0.0281, which are on a 0-1-ish scale, while SOURCE 7's min 0.97/max 8.12 is stated as read 'exactly as the maintainer serves them' for the field across the board. If the summary is per-board (all four problems' peak_fraction values pooled), values above 1 for problems 02/04 (e.g. 1.3619, 1.961) are consistent with max 8.12 only if the summary is on the ×100 scale, but then min 0.97 would contradict per-problem 03 values like 0.054. This internal tension in SOURCE 7 vs SOURCE 2 could not be resolved from the packet alone; treated as authoritative per c1 for the unit/range judgement, but flagged as an uncertainty since the excerpt does not show a value equal to 8.12 anywhere in the visible JSON (max visible is 1.961 on problem 04).",
+    "c1 protocol-continuity: SPEC.md (SOURCE 3, last updated 2026-07-16) confirms problem 03 is megaqwen_decode, decode-only tok/s at ctx 2k/8k/32k/128k, prefill untimed, and leaderboard.json (SOURCE 2) schema_version is 1, environment v2_containerized, hardware RTX PRO 6000 Blackwell Workstation, sm_120a, 96 GB VRAM — all match the row's version_guard and notes. No evidence of a changed task set, harness, judges or release version was found in the supplied excerpts; judged continuous on the excerpt evidence available.",
+    "c2 lifecycle: status 'active' is supported by SOURCE 6 (5 newly-published model rows for peak_fraction, nonzero added values) and SOURCE 2 showing continued publication; version_status 'published' is supported because the maintainer publishes a versioned schema (schema_version 1 in leaderboard.json) and the row's version 'rtx-pro-6000' copies the board identity rather than a snapshot date; superseded_by null is not contradicted — no supplied protocol text names a successor board for this row. Judged consistent on excerpt evidence.",
+    "SOURCE 4 (kernelbench.com/cuda) is a rendered page with placeholder '0' values in the visible excerpt; it neither contradicts nor supplies the served scale, so it was not used for the c1 unit/range judgement beyond confirming the board exists under kernelbench.com built by Elliot Arledge, independent of Stanford."
+  ],
+  "missing_evidence": []
+}

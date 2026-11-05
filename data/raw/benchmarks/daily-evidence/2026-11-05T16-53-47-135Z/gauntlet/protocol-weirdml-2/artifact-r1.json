@@ -1,0 +1,22 @@
+[
+  {
+    "id": "weirdml::2",
+    "version": "2",
+    "version_guard": "Verify the published version 2 before reading results.",
+    "status": "active",
+    "version_status": "published",
+    "superseded_by": null,
+    "scoring": {
+      "metric": "Average Max Accuracy: per task, mean over runs of the maximum test accuracy across the 5 iterations per run, averaged over all 17 tasks",
+      "unit": "percent",
+      "range": [
+        0,
+        100
+      ],
+      "higher_better": true,
+      "notes": "Values retain this source implementation and score convention; different harnesses, subsets, judge revisions and versions must remain separate."
+    },
+    "description": "Presents LLMs with unusual machine-learning tasks where they must write, run, and iteratively improve PyTorch code under fixed compute and time limits.",
+    "maintainer": "Håvard Tveit Ihle"
+  }
+]

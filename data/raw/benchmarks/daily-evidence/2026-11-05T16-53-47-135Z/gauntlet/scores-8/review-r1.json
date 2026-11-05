@@ -1,0 +1,17 @@
+{
+"artifact_id": "scores-8",
+"artifact_sha256": "254766f848e99c328ab432e2e63521559635e80e8985e0a12d78946754ccf319",
+"round": 1,
+"verdict": "pass",
+"coverage_checked": ["vendor:DeepSeek-V3:aider-polyglot::snapshot-2026-09-10", "c1"],
+"errors_found": 0,
+"findings": [],
+"fixed": [],
+"uncertainties": [
+"Could not recompute the artifact file SHA-256 or per-row canonical SHA-256; owner executes hashes, so binding was accepted via supplied hash strings, not independently verified.",
+"Could not re-verify retrieval hash of the source file or transport/qualification checks; owner limitation, not missing source evidence.",
+"Source PDF text extraction may have minor whitespace/OCR artifacts; locator transcription compared field-by-field and matched (49.6 under DeepSeek-V3 column, 45.3 under Claude-3.5-Sonnet-1022).",
+"Row published_at is null; no publication timestamp is claimed or required for the prior accepted snapshot identity."
+],
+"missing_evidence": []
+}

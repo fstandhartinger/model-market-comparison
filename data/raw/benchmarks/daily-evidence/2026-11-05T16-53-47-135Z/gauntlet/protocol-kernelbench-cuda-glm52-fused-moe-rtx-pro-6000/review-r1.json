@@ -1,0 +1,50 @@
+{
+  "artifact_id": "protocol-kernelbench-cuda-glm52-fused-moe-rtx-pro-6000",
+  "artifact_sha256": "6aafe8f39bf09b836a09a197e283d2d81bad768a70baedba626edb70633514b9",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": ["kernelbench-cuda-glm52-fused-moe::rtx-pro-6000", "c1", "c2"],
+  "errors_found": 2,
+  "findings": [
+    {
+      "id": "f1",
+      "severity": "major",
+      "location": "row kernelbench-cuda-glm52-fused-moe::rtx-pro-6000 scoring.range upper bound [0,null]",
+      "evidence": "Criterion c1: the packet's value-scale summary (SOURCE 7) reports 23 served peak_fraction values, lowest 4.109999999999999 and highest 11.3. The row's scoring.metric explains values are stored ×100 as percentages (leaderboard peak_fraction 0.0411..0.1130 → 4.11..11.30), so these are exactly the served scale. The row's upper range bound is null, i.e. the row declines to claim an upper bound; per the criterion an unbounded bound is never contradicted by served values, and the lower bound 0 is not contradicted by any served value (min 4.11 > 0). Unit 'percent of roofline' and range [0,null] agree with the scale the board is served on; no c1 range/unit mismatch.",
+      "repair": "None required on the [0,null] bound itself. Residual mismatch risk is limited to the methodology identity in f2."
+    },
+    {
+      "id": "f2",
+      "severity": "major",
+      "location": "row kernelbench-cuda-glm52-fused-moe::rtx-pro-6000 scoring.metric sentence: 'that context column is the number published here for 02'",
+      "evidence": "The row id and version bind this row to problem 01_glm52_fused_moe (registry id, artifact id, description, version_guard). SOURCE 3 (SPEC.md) states peak_fraction is the actual roofline metric for 01; the latency-anchored rule names 02 as its example and makes milliseconds the headline there, with peak_fraction as context. The quoted sentence describes 02, but the packet gives no registry text for problem 02 rows, so nothing here establishes what such a row does or does not publish.",
+      "repair": "Either amend the metric note to describe 01 only (where peak_fraction is the scored roofline metric), or supply registry text for the 02 row(s) showing the note is actually carried there. As written in this row it is unverifiable against the artifact's own scope."
+    },
+    {
+      "id": "f3",
+      "severity": "minor",
+      "location": "row scoring.notes: 'still holds the two audited-but-excluded cells ... kinetic-claude/kinetic-0715[1m] cell on 03 (peak_fraction 0.0622) and the bug muse/muse-spark-1.3 [ultra] cell on 04 (0.2056)'",
+      "evidence": "SOURCE 2 leaderboard.json: kinetic-claude/kinetic-0715[1m] 03 value is 0.0622 and muse 04 peak_fraction is null with annotation_verdict 'bug' and correct:false; 0.2056 appears nowhere in the packet. The excluded-cells framing is itself corroborated: kinetic 03 0.0622 does appear in SOURCE 2 ranked_passes despite 'suspect', while muse 04 is correctly absent from ranked_passes (correct:false cells are excluded).",
+      "repair": "Correct 0.2056 to null/correct:false, or supply the primary row actually carrying 0.2056."
+    },
+    {
+      "id": "f4",
+      "severity": "minor",
+      "location": "row scoring.notes: exclusion rationale 'cells the maintainer marks correct:false are absent from the ranked list anyway'",
+      "evidence": "SOURCE 2: muse 04 (correct:false) is absent from 04 ranked_passes; deepseek-claude/deepseek-v4-pro 04 (correct:false, reward_hack) is also absent; however gpt-6-astra-pro 02 has correct:false and is absent from 02 ranked_passes, consistent. No counterexample found in the packet; the statement is corroborated on 04 by muse and deepseek-v4-pro and survives audit for 02 via astra-pro.",
+      "repair": "None required; retained as verified context, not a finding."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "Self-execution limits: I cannot recompute row/artifact SHA-256 hashes, fetch URLs, or run the owner's transport/qualification checks; I rely on the supplied owner-computed hashes and receipts and treat hash/transport/qualification as owner-executed, per instructions.",
+    "The packet is an exact field projection: only rows' claimed fields plus leaderboard/SPEC excerpts are supplied; unrelated response fields are not required to compare these fields, and the excerpted sources may omit context outside the excerpt bounds.",
+    "SOURCE 6 activity summary is a generated comparison, not maintainer text; per c1/c2 it settles only status evidence (nonzero added values support status 'active'), never methodology, task set, harness, judges or version identity.",
+    "SOURCE 7 value-scale summary is a generated read of the capture, not maintainer text; per c1 it can settle only whether unit/range match the served scale, never what the metric means or how it is computed.",
+    "The 'Peak fraction of problem 01's own ceiling' wording is a registry/row text choice; the SPEC.md roofline for 01 is consistent with it but SPEC.md does not define a numeric ceiling value, so I treat the phrasing as not contradicted rather than verified numerically.",
+    "Opus 5 04 value 1.961 = 196.1% > 100% is consistent with the row's claim that values above 100% are possible; I treat this as consistent, not as independent confirmation of the ×100 storage convention beyond SOURCE 7's scale summary.",
+    "F2 repair requires the producer to either amend wording or supply the affected row; until then the mismatch risk is unresolved on methodology identity, driving the 'revise' verdict."
+  ],
+  "missing_evidence": [],
+  "coverage_notes": "Checked the single REQUIRED row against c1 (unit 'percent of roofline', range [0,null], metric 'Peak fraction of problem 01's own ceiling ×100') and c2 (status 'active', version_status 'published', superseded_by null). c1: SOURCE 7 confirms 23 served values on scale 4.11–11.30, consistent with the row's claimed percent-of-roofline ×100 framing and [0,null] range (null upper bound is a decline, not a false claim; unbounded bounds cannot be contradicted). c2: status 'active' is affirmative via SOURCE 6's nonzero (5) added values on the maintainer's own field today, which is valid active-only evidence and does not overreach to methodology. version_status 'published' requires the maintainer to publish a release identifier that the row's version copies — SOURCE 2/3/4 contain no release identifier of any kind for the CUDA board (no version field, no tag, no dated release in SPEC.md's 'Last updated: 2026-07-16' or sitemap robots.txt), so the row's version 'rtx-pro-6000' cannot be shown to copy any published identifier, and no packet text supplies one; per the criteria, missing_evidence must remain empty and the uncertainty is recorded instead, but the row still claims 'published' without an identifiable published identifier to copy, which is an unresolved finding preventing pass under the strict reading that every row claim must be verifiable against the packet. If the intended reading is that SPEC.md's 'Last updated: 2026-07-16' plus the row's own version string suffices, the producer should state so explicitly in the row to close f5; until then the row overclaims on version_status."
+}

@@ -1,0 +1,22 @@
+{
+  "artifact_id": "protocol-arc-agi-3",
+  "artifact_sha256": "95716ef98d721e5a0c3f9c69bd5024d97b8aa40916a61e38fdf901ea9069d450",
+  "round": 1,
+  "coverage_checked": ["arc-agi::3", "c1", "c2"],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "c1 identity/version: I cannot recompute the row hash or the packet SHA-256s; the owner executes those transport/qualification checks, which is a limitation of this read-only review, not missing source evidence.",
+    "c1 identity/version: The excerpt shows the page 'Measuring Human Performance on ARC-AGI-3' (Published 14 Apr 2026) and its ARC-AGI-3 scoring update; the row's version '3' matches the ARC-AGI-3 protocol identity, and the page publishes no other release identifier for this board that would contradict version '3'.",
+    "c1 metric/units: SOURCE 1 defines efficiency as 'how many actions it took relative to the human baseline', now normalized to the median human per level, with per-level cap 115%; the row's metric 'Semi-private interactive game action efficiency relative to the human baseline' and scoring notes (median human actions, 115% cap) transcribe this; 'unit': 'percent' and range [0, null] are consistent with a percentage-style efficiency score (observed served scale 0.01 to 99.9457... in SOURCE 4, all finite, all within [0,∞)) though the protocol excerpt itself never states the numeric scale.",
+    "c1 harness/description: SOURCE 2 confirms 'Standard harness' and 'Provider Adapter harness' and cost-per-task framing; the row's description copies this phrasing for the interactive ARC-AGI-3 board.",
+    "c2 status: SOURCE 3 reports 2 model rows gained score values today vs the prior snapshot (0 changed, 0 removed); per c1/c2 rules this nonzero added/changed count is affirmative evidence for status 'active', and no excerpt contradicts it.",
+    "c2 version_status: The row claims 'published' with version '3'. SOURCE 1 and SOURCE 2 contain no literal word 'published' release identifier; per c2 rules, 'published' requires the maintainer to publish a release identifier for this board that version '3' copies. The excerpt does not clearly exhibit such a release identifier distinct from the series name 'ARC-AGI-3' (the scorecards/leaderboard URL references v3.json), so I read version '3' as copying the series-level ARC-AGI-3 identity the maintainer publishes (leaderboard payload 'v3.json'); this is plausible but not explicitly confirmed by a 'release v3' style statement in the excerpts, hence an uncertainty rather than a mismatch, since neither source contradicts it.",
+    "c2 superseded_by: The row sets superseded_by null; neither SOURCE 1 nor SOURCE 2 names a successor board for ARC-AGI-3, so null is consistent, and per c2 rules a page naming no successor never contradicts it.",
+    "Range bound [0,null]: I read 'null' as the row declining to claim an upper bound, which per c1 cannot be contradicted by any served value; the served max 99.94571232125699 does not exceed it.",
+    "row-guard: version_guard 'Verify the published version 3 before reading results.' is a directive for the Benchmark Heaven producer, not a claim I can execute; owner-side, not a QA blocker here."
+  ],
+  "missing_evidence": [],
+  "verdict": "pass"
+}

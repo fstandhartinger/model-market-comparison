@@ -1,0 +1,84 @@
+{
+  "started_at": "2026-11-05T17:10:43.031Z",
+  "mode": "critic",
+  "requested_model": "z-ai/glm-5.3-flash",
+  "producers": [
+    "deepseek/deepseek-v4-flash-0731"
+  ],
+  "qualification": {
+    "id": "z-ai/glm-5.3-flash",
+    "family": "z-ai",
+    "free": false,
+    "input_per_1m": 0.15,
+    "output_per_1m": 0.5,
+    "context": 1048576,
+    "aa_intelligence_index": 27.8,
+    "aa_source": "exact_id_and_variants",
+    "matched_model_ids": [
+      "glm-5.3-flash::default"
+    ],
+    "aa_variant_scores": [
+      {
+        "id": "glm-5.3-flash::default",
+        "index": 27.8
+      }
+    ]
+  },
+  "input_sha256": "5bf6d435f46d7bffbe4eba6afe186ecefaf13a0b76183f3a3a36b45d0d22f5e7",
+  "route": "openrouter",
+  "attempt": 1,
+  "free_route_role": "critic",
+  "free_routes_offered": [],
+  "excluded_models": [],
+  "hard_excluded_models": [],
+  "catalog": {
+    "source": "run-cache",
+    "fetched_at": "2026-11-05T17:08:49.650Z"
+  },
+  "request_limits": {
+    "max_tokens": 32768,
+    "timeout_seconds": 600,
+    "input_bytes": 29813
+  },
+  "reasoning": {
+    "effort": "low",
+    "exclude": true
+  },
+  "ignored_providers": [
+    "Wafer",
+    "OpenInference"
+  ],
+  "response_format_mode": "json_object",
+  "response_schema_sha256": "376bde7986cc2f8fd182f04e745c607933760bea7c306ea6e8e992b7f70be25a",
+  "images": [],
+  "actual_model": "z-ai/glm-5.3-flash",
+  "usage": {
+    "prompt_tokens": 7919,
+    "completion_tokens": 462,
+    "total_tokens": 8381,
+    "cost": 0.00059949846,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.000605554,
+      "upstream_inference_prompt_cost": 0.000490978,
+      "upstream_inference_completions_cost": 0.000114576
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "provider": "Morph",
+  "finish_reason": "stop",
+  "price_context": "OpenRouter catalog reference prices; usage.cost records the actual charge when returned.",
+  "session_id": null,
+  "finished_at": "2026-11-05T17:11:09.623Z",
+  "output_sha256": "673fe5a3f0034c84069ffc3f89daf73864cb87109e9de50e2041697a3df3f9e3"
+}

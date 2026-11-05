@@ -1,0 +1,21 @@
+{
+  "artifact_id": "protocol-researchclawbench-40-tasks",
+  "artifact_sha256": "323b823336884461e76c46e6b967872723e976d0d6d9dcfa89f7b54356a18cb5",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": ["researchclawbench::40-tasks", "c1", "c2"],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Row is a registry/identity row; no per-observation values exist, so row-by-row field checks are limited to the single row's claimed fields.",
+    "I cannot execute hash verification (artifact sha256 323b8233...; row sha256 c5fdb566...), so I rely on the supplied hashes binding content; mismatch here would be invisible to me.",
+    "Identity guard: version '40-tasks' and its version_guard (exact 40 task ids, ten domains x four tasks) match README Sources (tasks badge 'Tasks-40', '40 tasks across 10 scientific domains', project structure '10 domains x 4 tasks'); the excerpt cannot enumerate the individual 40 task ids, so exact key-set continuity is plausible but not fully enumerable from the packet.",
+    "Scoring: README rubric 0–100 with 50=match, 70+ = surpass matches row scoring.metric/range[0,100]/higher_better; SOURCE 2 app.js computes plain mean of finite entry scores, matching the claimed aggregation; SOURCE 1 shows '50 = matches original paper, 100 = surpasses it'.",
+    "Unit/range vs served scale: SOURCE 5 summary gives min 12.41, max 21.12 over 21 finite values — within [0,100] 'points' with room to spare; row bounds are not contradicted and are not contradicted by any served value per criterion c1, so no mismatch.",
+    "Lifecycle (c2): README news shows ongoing additions/updates (2026-10-28, 2026-09-17, 2026-09-09) and SOURCE 4 shows 10 changed model-row values today, supporting status 'active'; README publishes no release identifier for this board and no successor is named, so version_status 'published' with version '40-tasks' (a stable id, not a snapshot-<date>) and superseded_by null are consistent with the protocol text; note c2 says 'published' means the maintainer publishes a release identifier — the '40-tasks' naming aligns with the maintained fixed 40-task task-set identity, though no literal string 'version: 40-tasks' appears in the excerpts, so 'published' rests on the fixed task-set identity rather than a quoted release tag (a wording caveat, not a value conflict).",
+    "value_status 'published' and version '40-tasks': the row treats the maintained task-set size as a release identifier; the README doesn't use the word 'version' for it, so this is a borderline reading, judged acceptable because c2 says 'published' means the maintainer publishes a release identifier and the maintainer does publish a stable task-set identity for this board; if a stricter reading is desired, 'snapshot' would be the alternative and is not contradicted either — I flag this as interpretive uncertainty, not a mismatch.",
+    "Maintainer string 'ResearchClawBench team (InternScience)' matches README/website branding."
+  ],
+  "missing_evidence": []
+}

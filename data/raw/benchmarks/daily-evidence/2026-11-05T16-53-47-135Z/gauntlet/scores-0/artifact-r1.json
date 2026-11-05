@@ -1,0 +1,64 @@
+[
+  {
+    "id": "public:b72c6e9b2dffa0972eabf641",
+    "benchmark_id": "arc-agi::3",
+    "subject": {
+      "source_id": "deepseek-v4-1-flash-1017-max",
+      "name": "DeepSeek V4.1 Flash 1017 (Max)",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 0.21958291788019066,
+    "unit": "percent",
+    "basis": "derived",
+    "source": {
+      "url": "https://arcprize.org/media/data/leaderboard/v3.json",
+      "retrieved_at": "2026-11-05T17:04:03.950885+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-11-05T16-53-47-135Z/7002c58fe9bd4c06b180.gz",
+      "sha256": "7002c58fe9bd4c06b18063e9e533272a9500d6ed8d868a5723300a1faea8c339",
+      "locator": "json; source row 112; deepseek-v4-1-flash-1017-max; field score"
+    },
+    "protocol": "ARC-AGI 3; v3_Semi_Private; source system/configuration retained. Evaluation independence not assumed for board submissions.; modelType=CoT; modelGroup=deepseek-v4-1-flash-1017; providerId=DeepSeek; display=True; resultsUrl=/results/deepseek-v4-1-flash-1017; cost=1003.8696329999999; modelReleaseDate=2026-10-17T00:00:00.000Z",
+    "comparison_key": null,
+    "source_basis": "self_reported",
+    "derivation": {
+      "formula": "Source value × 100 to registry units",
+      "inputs": [
+        0.0021958291788019067
+      ]
+    }
+  },
+  {
+    "id": "public:35218a8ba66a76c628c7e679",
+    "benchmark_id": "arc-agi::3",
+    "subject": {
+      "source_id": "deepseek-v4-1-flash-1017-max-provider-adapter",
+      "name": "DeepSeek V4.1 Flash 1017 - Provider Adapter (Max)",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 5.80827100843473,
+    "unit": "percent",
+    "basis": "derived",
+    "source": {
+      "url": "https://arcprize.org/media/data/leaderboard/v3.json",
+      "retrieved_at": "2026-11-05T17:04:03.950885+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-11-05T16-53-47-135Z/7002c58fe9bd4c06b180.gz",
+      "sha256": "7002c58fe9bd4c06b18063e9e533272a9500d6ed8d868a5723300a1faea8c339",
+      "locator": "json; source row 113; deepseek-v4-1-flash-1017-max-provider-adapter; field score"
+    },
+    "protocol": "ARC-AGI 3; v3_Semi_Private; source system/configuration retained. Evaluation independence not assumed for board submissions.; modelType=CoT; modelGroup=deepseek-v4-1-flash-1017-provider-adapter; providerId=DeepSeek; display=True; resultsUrl=/results/deepseek-v4-1-flash-1017; cost=1179.1379751; modelReleaseDate=2026-10-17T00:00:00.000Z",
+    "comparison_key": null,
+    "source_basis": "self_reported",
+    "derivation": {
+      "formula": "Source value × 100 to registry units",
+      "inputs": [
+        0.058082710084347296
+      ]
+    }
+  }
+]

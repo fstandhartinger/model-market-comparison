@@ -1,0 +1,18 @@
+{
+  "artifact_id": "protocol-vulcanbench-frontier-4",
+  "artifact_sha256": "8390350b685c91ee22a4afaeb22dc9d483c02d8f665fe3903aae2fac39b8ef21",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": ["vulcanbench-frontier::4", "c1", "c2"],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Row id vulcanbench-frontier::4: I could not recompute artifact or row SHA-256 hashes; binding relies on owner-supplied values (row sha 350bd7a3...83dcd) per packet design.",
+    "c1: The scale check against SOURCE 41 uses the run's own generated summary (58 served values, 40.831-92.0184 on combined_full_denominator); it settles unit/range only, not metric meaning, computation, task set, harness, judges or version, and I treated it accordingly.",
+    "c1: Continuity of identity (23-task set, harnesses, judge panel, protocol revision list) is corroborated by the cited evidence (leaderboard, methodology, per-revision judge-protocols.json and runs.csv exports) but I cannot execute fetches or recompute cross-bundle hash equality myself; I relied on the transcribed bundle contents supplied.",
+    "c2: I cannot independently verify that the 24 added rows in SOURCE 40's summary are within the same protocol revision; the summary itself makes no such claim and was used only as affirmative evidence for status:\"active\" per criterion.",
+    "c2: Minor wording: SOURCE 27 footnote \u2020 states GPT-5.6 Sol max 'judged on 22 of 23 tasks' without naming paddockcore explicitly; the row guard text already handles that population, so this did not affect any judgment here."
+  ],
+  "missing_evidence": []
+}

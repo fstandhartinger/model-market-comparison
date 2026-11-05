@@ -1,0 +1,158 @@
+{
+  "artifact_id": "protocol-researchclawbench-40-tasks",
+  "rounds_used": 1,
+  "rows": {
+    "total": 1,
+    "accepted": [],
+    "quarantined": [
+      "researchclawbench::40-tasks"
+    ]
+  },
+  "producer_flagged": [
+    "researchclawbench::40-tasks"
+  ],
+  "second_opinion": null,
+  "criteria": [
+    "c1",
+    "c2"
+  ],
+  "coverage": {
+    "producer": {
+      "complete": true,
+      "model": "deepseek/deepseek-v4-flash-0731",
+      "rows_covered": 1
+    },
+    "critic": [
+      {
+        "round": 1,
+        "verdict": "pass",
+        "coverage_complete": true,
+        "missing_rows": [],
+        "missing_criteria": []
+      }
+    ],
+    "final": {
+      "rows_covered": 1,
+      "criteria_covered": 2,
+      "complete": true
+    }
+  },
+  "receipts": [
+    {
+      "round": 1,
+      "role": "producer",
+      "reused_from_round": null,
+      "requested_model": "deepseek/deepseek-v4-flash-0731",
+      "model": "deepseek/deepseek-v4-flash-0731",
+      "route": "openrouter",
+      "attempt": 1,
+      "cost_usd": 0.00184166136,
+      "out": "data/raw/benchmarks/daily-evidence/2026-11-05T16-53-47-135Z/gauntlet/protocol-researchclawbench-40-tasks/producer-r1.json",
+      "output_sha256": "226680bf25dc85330fd52415fba44fc4f079b587322eb8a965dfd9e5fb81b2e6",
+      "qualification": {
+        "id": "deepseek/deepseek-v4-flash-0731",
+        "family": "deepseek",
+        "free": false,
+        "input_per_1m": 0.0448,
+        "output_per_1m": 0.3,
+        "context": 1048576,
+        "aa_intelligence_index": 24.1,
+        "aa_source": "exact_id_and_variants",
+        "matched_model_ids": [
+          "deepseek-v4-flash-0731::max"
+        ],
+        "aa_variant_scores": [
+          {
+            "id": "deepseek-v4-flash-0731::max",
+            "index": 24.1,
+            "estimated_from_v4": 34.3
+          }
+        ]
+      },
+      "usage": {
+        "prompt_tokens": 12930,
+        "completion_tokens": 4270,
+        "total_tokens": 17200,
+        "cost": 0.00184166136,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "audio_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.001860264,
+          "upstream_inference_prompt_cost": 0.000579264,
+          "upstream_inference_completions_cost": 0.001281
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 4145,
+          "image_tokens": 0,
+          "audio_tokens": 0
+        }
+      },
+      "reasoning": {
+        "effort": "low",
+        "exclude": true
+      }
+    },
+    {
+      "round": 1,
+      "role": "critic",
+      "requested_model": "z-ai/glm-5.3-flash",
+      "model": "z-ai/glm-5.3-flash",
+      "route": "openrouter",
+      "attempt": 1,
+      "cost_usd": 0.00101234034,
+      "out": "data/raw/benchmarks/daily-evidence/2026-11-05T16-53-47-135Z/gauntlet/protocol-researchclawbench-40-tasks/review-r1.json",
+      "output_sha256": "e98520bd4e5742406a613e6fcd67c5ac3f2422e0c22bdc5664e3471031b5bbfe",
+      "qualification": {
+        "id": "z-ai/glm-5.3-flash",
+        "family": "z-ai",
+        "free": false,
+        "input_per_1m": 0.15,
+        "output_per_1m": 0.5,
+        "context": 1048576,
+        "aa_intelligence_index": 27.8,
+        "aa_source": "exact_id_and_variants",
+        "matched_model_ids": [
+          "glm-5.3-flash::default"
+        ],
+        "aa_variant_scores": [
+          {
+            "id": "glm-5.3-flash::default",
+            "index": 27.8
+          }
+        ]
+      },
+      "usage": {
+        "prompt_tokens": 13381,
+        "completion_tokens": 778,
+        "total_tokens": 14159,
+        "cost": 0.00101234034,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "audio_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.001022566,
+          "upstream_inference_prompt_cost": 0.000829622,
+          "upstream_inference_completions_cost": 0.000192944
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "image_tokens": 0,
+          "audio_tokens": 0
+        }
+      },
+      "reasoning": {
+        "effort": "low",
+        "exclude": true
+      }
+    }
+  ]
+}

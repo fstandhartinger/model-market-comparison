@@ -1,0 +1,40 @@
+{
+  "artifact_id": "protocol-weirdml-2",
+  "artifact_sha256": "6bd60c5766dad9d19f8ad87594eec4ade45889654f1ab0b2516e23568e5c4ae7",
+  "round": 1,
+  "verdict": "blocked",
+  "coverage_checked": ["weirdml::2", "c1", "c2"],
+  "errors_found": 3,
+  "findings": [
+    {
+      "id": "F1",
+      "severity": "blocker",
+      "location": "weirdml::2.version / version_guard / version_status vs SOURCE 1",
+      "evidence": "Row claims version '2', guard 'Verify the published version 2', version_status 'published'. SOURCE 1 page shows 'WeirdML v3' heading and 'WeirdML (v3) is an agentic benchmark featuring 11 complex hand-made tasks', linking v2 and v1 only under 'Previous versions'. No release identifier '2' is published as the current board identity on the current protocol text.",
+      "repair": "Row identity must reflect the current published version (v3) or the row must be re-scoped as the retained prior version with version_status 'retained'; as written it silently reuses identity v2 against a page publishing v3."
+    },
+    {
+      "id": "F2",
+      "severity": "blocker",
+      "location": "weirdml::2.scoring.metric vs SOURCE 1",
+      "evidence": "Row metric: 'Average Max Accuracy: per task, mean over runs of the maximum test accuracy across the 5 iterations per run, averaged over all 17 tasks'. SOURCE 1 current scoring text: official score is '80% normalized area under its line on a logarithmic token axis, plus 20% of its final value' over 500k–50M tokens, averaging 11 tasks (15 configurations; Ship Detect scaled). Task count 17 and per-run max-accuracy aggregation do not match the current page.",
+      "repair": "Update metric to the current v3 AUC-based scoring rule (or, if the row is retained as v2, cite v2's own protocol page; the supplied excerpt is the v3 page and does not state v2's scoring rule)."
+    },
+    {
+      "id": "F3",
+      "severity": "blocker",
+      "location": "weirdml::2.description vs SOURCE 1",
+      "evidence": "Row description: 'Presents LLMs with unusual machine-learning tasks where they must write, run, and iteratively improve PyTorch code under fixed compute and time limits.' SOURCE 1 describes v3 as '11 complex hand-made tasks' with 'limited data, unspecified goals and/or very limited feedback'; no PyTorch phrasing appears in the excerpt, and the task set (11 tasks, 15 configurations incl. Ship Detect) differs from the row's 17-task metric.",
+      "repair": "Align description with the current protocol text or the specific retained version's own page; do not carry the v2-era description forward against a page that publishes v3."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "I cannot recompute or execute hash checks; row and source sha256 values are taken as given from the owner receipt.",
+    "SOURCE 1 is an excerpt of the current v3 page; it does not contain v2's own scoring text, so I cannot independently confirm the row's v2-era metric description is a faithful transcription of a v2 page — only that it contradicts the current primary protocol for identity continuity.",
+    "SOURCE 2/3 are generated summaries of the maintainer's served 'avg_acc' field; they establish scale (min 1.729411764705882, max 93.57264705882352 over 162 values) and activity (2 changed rows) but nothing about methodology, task set, harness, judges or version, per their own framing.",
+    "SOURCE 3 scale [1.73, 93.57] is consistent with the row's stated range [0,100] and unit 'percent' as far as bounds agreement goes, but this does not independently validate the metric definition itself.",
+    "SOURCE 2 activity (2 changed rows) supports status 'active' but cannot distinguish whether the maintainer is reporting under v2 or v3 identity; SOURCE 1's v3 heading is the stronger identity signal."
+  ],
+  "missing_evidence": []
+}

@@ -1,10 +1,21 @@
 {
   "source": "TensorX — tensorx.ai/pricing (first-party, public)",
   "region": "eu (Ireland)",
-  "collected_at": "2026-11-04",
+  "collected_at": "2026-11-05",
   "listing_url": "https://tensorx.ai/pricing/",
   "method": "scripts/fetch-tensorx-catalog.mjs: one GET of the server-rendered pricing table; columns located by header (Model Name, Context, Input Price, Cache Read, Output Price), native USD per 1M tokens; rows without both token prices (embeddings) omitted; curated names kept by api_model_id or normalized slug tail; new slugs mapping=derived; rows no longer listed are dropped. EU-sovereign (Dublin HQ, EU regions, zero data retention). See tensorx.method.md.",
   "models": [
+    {
+      "model_name": "Kimi K3.1 Pro",
+      "provider_org": "Moonshot AI",
+      "input_per_1m_usd": 3,
+      "output_per_1m_usd": 15,
+      "cache_read_per_1m_usd": 0.75,
+      "region": "eu",
+      "api_model_id": "moonshotai/kimi-k3.1-pro",
+      "notes": "tensorx.ai/pricing moonshotai/kimi-k3.1-pro; 1M ctx",
+      "mapping": "derived"
+    },
     {
       "model_name": "Deepseek V4.1 Flash 1017",
       "provider_org": "DeepSeek",
@@ -25,16 +36,6 @@
       "region": "eu",
       "notes": "tensorx.ai/pricing z-ai/glm-5.3; 1M ctx",
       "api_model_id": "z-ai/glm-5.3"
-    },
-    {
-      "model_name": "Kimi K3",
-      "provider_org": "Moonshot AI",
-      "input_per_1m_usd": 3,
-      "output_per_1m_usd": 15,
-      "cache_read_per_1m_usd": 0.75,
-      "region": "eu",
-      "notes": "tensorx.ai/pricing moonshotai/kimi-k3; 1M ctx",
-      "api_model_id": "moonshotai/kimi-k3"
     },
     {
       "model_name": "Minimax M3.1 Flash",
@@ -66,6 +67,16 @@
       "region": "eu",
       "notes": "tensorx.ai/pricing qwen/qwen3.8-2.4t-a95b; 256K ctx",
       "api_model_id": "qwen/qwen3.8-2.4t-a95b"
+    },
+    {
+      "model_name": "Kimi K3",
+      "provider_org": "Moonshot AI",
+      "input_per_1m_usd": 3,
+      "output_per_1m_usd": 15,
+      "cache_read_per_1m_usd": 0.75,
+      "region": "eu",
+      "notes": "tensorx.ai/pricing moonshotai/kimi-k3; 1M ctx",
+      "api_model_id": "moonshotai/kimi-k3"
     },
     {
       "model_name": "Deepseek V4.1 Flash",
@@ -117,29 +128,22 @@
       "region": "eu",
       "notes": "tensorx.ai/pricing z-ai/glm-5.2; 1M ctx",
       "api_model_id": "z-ai/glm-5.2"
-    },
-    {
-      "model_name": "Kimi K2.7 Code",
-      "provider_org": "Moonshot AI",
-      "input_per_1m_usd": 1.25,
-      "output_per_1m_usd": 4.5,
-      "cache_read_per_1m_usd": 0.31,
-      "region": "eu",
-      "notes": "tensorx.ai/pricing moonshotai/kimi-k2.7-code; 256K ctx",
-      "api_model_id": "moonshotai/kimi-k2.7-code"
     }
   ],
-  "response_sha256": "792410bf485d81239450e781d5256efe83f1587e57bcdac6f6a3f7276d877459",
+  "response_sha256": "59901401d0f71b18fde4c90360735d7712fd6b482018f03d8ed03366b9996291",
   "skipped": [
     "qwen/qwen3-embedding-8b"
   ],
   "diff": {
     "added": [
+      "moonshotai/kimi-k3.1-pro",
       "deepseek/deepseek-v4.1-flash-1017",
       "minimax/minimax-m3.1-flash",
       "deepseek/deepseek-v4.1-flash"
     ],
-    "removed": [],
+    "removed": [
+      "Kimi K2.7 Code"
+    ],
     "price_changed": []
   }
 }

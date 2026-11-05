@@ -1,0 +1,23 @@
+{
+  "artifact_id": "scores-6",
+  "artifact_sha256": "9e9674165a34030e439494976fb48faf4302da8903917a0950a783ba86b25f1b",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "vendor:mistralai/Devstral-2-123B-Instruct-2512:swe-bench-verified::snapshot-2026-09-10",
+    "vendor:mistralai/Devstral-Small-2-24B-Instruct-2512:swe-bench-verified::snapshot-2026-09-10",
+    "c1"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Row hashes (cfe9ffc9..., 3c443a05...) and artifact SHA-256 are owner-computed; I cannot recompute or verify file/row hash binding or transport/qualification checks.",
+    "source.published_at is null in both rows; source text shows page date December 9, 2025, but the rows do not claim a published_at, so this is a transcription-presence question rather than a claimed-field mismatch.",
+    "Subject ids in rows (e.g., mistralai/Devstral-2-123B-Instruct-2512) differ from model naming style in the page text (Devstral 2 (123B)); no alias inference is permitted under c1, so subject ids are accepted as the fixed prior accepted subject identity, verified only against prior acceptance, not against this page.",
+    "Both rows correctly annotate harness as unspecified (protocol notes) and set harness:null; the page mentions Cline scaffolding only for separate human evaluations, which the row for Devstral 2 explicitly notes, so no harness is being wrongly attached.",
+    "Benchmark version string snapshot-2026-09-10 is the artifact's declared benchmark snapshot id; the source page does not itself state a snapshot version, so this version key is presumably established by prior accepted benchmark registry rather than derivable from this page.",
+    "I cannot execute hash verification, transport checks, or any command; source content used as untrusted data only."
+  ],
+  "missing_evidence": []
+}

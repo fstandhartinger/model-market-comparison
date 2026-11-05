@@ -1,0 +1,18 @@
+{
+  "artifact_id": "protocol-gso-opt1-102",
+  "artifact_sha256": "eedef18bb298a4ecee13a356eb383d9eb5c33428b80c95017bb7ef88b2383f9f",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": ["gso::opt1-102", "c1", "c2"],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Cannot recompute row/artifact SHA-256 or verify transport; owner executes hash and qualification checks. Per instructions this is a limitation, not missing source evidence.",
+    "SOURCE 1 excerpt contains no release identifier wording; per c2, 'published' is supported because the row's version_guard requires leaderboard.json metadata (a maintainer-served published artifact) to state total_tasks 102, and the packet's leaderboard.json serves metadata.total_tasks 102, so a release-defining identifier is being published. This is an inference from the packet, not maintainer vocabulary.",
+    "Row version_guard demands every row name a model, scaffold, setting, run date with setting in known set, and total_tasks 102; SOURCE 2 shows 34 rows all with name/scaffold/setting/date and metadata.total_tasks 102, consistent with the guard as of retrieval. Any payload differing from this captured one cannot be validated from the packet.",
+    "The 2026-09-27 changelog (improved elicitation) is noted in the page but the row's scoring notes only name 2026-04-27 and 2026-07-12 run-date variants; SOURCE 2 includes 2026-09-27 runs. The notes say runs from those two dates have specific configs and the changelog is referenced; the 09-27 change is elicitation-only, not clearly a scoring-config change the row misstates, but the row does not enumerate it."
+  ],
+  "missing_evidence": [],
+  "findings_detail_note": "No findings; errors_found intentionally equals findings.length (0)."
+}
