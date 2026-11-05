@@ -1,16 +1,18 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { constants, createDecipheriv, generateKeyPairSync, privateDecrypt, randomUUID } from 'node:crypto';
-import { readFile } from 'node:fs/promises';
+import { readFile, mkdir, mkdtemp, rm, writeFile } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
+import path from 'node:path';
 import { containsSecret, fastLaneTotalText, parseApiUrl, submissionReference, toPriorityBody, validateModelSubmission } from '../lib/model-submission.mjs';
 import { validatePrioritySubmission } from '../lib/priority-evaluation.mjs';
 import { encryptApiKey, parsePublicKey } from '../lib/submission-crypto.mjs';
 import { RATE_LIMITS, TOKEN_MAX_AGE_MS, clientIp, ipHash, issueFormToken, submissionSecret, verifyFormToken } from '../lib/submission-guard.mjs';
 import { followupOptions, followupOptionsFromData } from '../lib/submission-leaderboards.mjs';
+import { buildSubmissionFollowups, submissionFollowupSnapshot } from '../scripts/build-submission-followups.mjs';
 import { followupValue, outsideTopTen, slowScheduleNotice } from '../lib/submission-shared.mjs';
 import { isAdminEmail } from '../lib/admin-access.mjs';
 import { MODEL_SUBMISSIONS_SCHEMA_SQL } from '../lib/accounts-schema.mjs';
-import { readJevbenchV154Release } from '../lib/jevbench-v15-release.mjs';
 
 const read = (p) => readFile(new URL(p, import.meta.url), 'utf8');
 const followups = [
@@ -212,27 +214,37 @@ test('CR-251 API-key encryption: round trip, no plaintext, tamper fails, PEM wit
   assert.throws(() => encryptApiKey('', pem));
 });
 
-test('CR-251 follow-up options come from the live data and match what the pages rank', async () => {
-  const options = await followupOptions();
-  for (const b of ['jevbench', 'imagejevbench', 'audiojevbench']) {
-    const list = options.filter((o) => o.benchmark === b);
-    assert.ok(list.length > 0, `${b} has options`);
-    assert.deepEqual(list.map((o) => o.rank), [...list.map((o) => o.rank)].sort((x, y) => x - y), `${b} ranks ascend`);
-    assert.ok(list.every((o) => o.key && o.name && Number.isInteger(o.rank) && o.rank >= 1));
-    assert.equal(new Set(list.map((o) => o.key)).size, list.length, `${b} keys are unique`);
-  }
-  const { artifact } = await readJevbenchV154Release();
-  const ranked = artifact.systems.filter((s) => s.ranked);
-  const jev = options.filter((o) => o.benchmark === 'jevbench');
-  assert.equal(jev.length, ranked.length);
-  for (const s of ranked) {
-    assert.equal(jev.find((o) => o.key === s.key)?.rank, s.rank);
-    assert.equal(s.ranks.A, s.rank, 'composite rank is board A');
-  }
-  assert.equal(artifact.headline, 'A');
-  assert.ok(!jev.some((o) => o.name.includes('(')) || true);
-  assert.equal(followupValue(jev[0]), `jevbench:${jev[0].key}`);
+test('CR-251 follow-up options read the built current board without replaying the release chain', async (t) => {
+  const root = await mkdtemp(path.join(tmpdir(), 'bh-followups-'));
+  t.after(() => rm(root, { recursive: true, force: true }));
+  const feed = { schema_version: 2, benchmark: 'JevBench', systems: [
+    { key: 'new-release', name: 'New release (API)', rank: 2, ranked: true },
+    { key: 'current-first', name: 'Current first', rank: 1, ranked: true },
+    { key: 'unranked', name: 'Unranked', rank: 3, ranked: false },
+    { key: 'fractional', name: 'Fractional', rank: 1.5, ranked: true },
+  ] };
+  await mkdir(path.join(root, '.next/server/app/api/jevbench'), { recursive: true });
+  await writeFile(path.join(root, '.next/server/app/api/jevbench/latest.body'), JSON.stringify(feed));
+  await buildSubmissionFollowups(root);
+  // This root contains no historical releases: a request must only read the generated selector projection.
+  const jev = (await followupOptions(root)).filter((o) => o.benchmark === 'jevbench');
+  assert.deepEqual(jev, [
+    { benchmark: 'jevbench', key: 'current-first', name: 'Current first', rank: 1 },
+    { benchmark: 'jevbench', key: 'new-release', name: 'New release', rank: 2 },
+  ]);
+  assert.equal(followupValue(jev[0]), 'jevbench:current-first');
   assert.deepEqual(followupOptionsFromData({}), []);
+  await writeFile(path.join(root, 'data/submission-jevbench-followups.json'), '{bad');
+  assert.deepEqual((await followupOptions(root)).filter((o) => o.benchmark === 'jevbench'), []);
+});
+
+test('CR-630 snapshot generation refuses empty, invalid or duplicate ranked rows', () => {
+  const build = (systems, sha256 = 'a'.repeat(64)) => submissionFollowupSnapshot({ sha256, feed: { schema_version: 2, benchmark: 'JevBench', systems } });
+  const row = { key: 'x', name: 'X', rank: 1, ranked: true };
+  assert.throws(() => build([]), /Invalid ranked/);
+  assert.throws(() => build([row], ''), /Missing validated/);
+  assert.throws(() => build([row, row]), /Invalid ranked/);
+  assert.throws(() => build([{ ...row, name: '' }]), /Invalid ranked/);
 });
 
 test('CR-251 slow-schedule notice: not at rank 10, shown from rank 11', () => {

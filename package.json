@@ -18,6 +18,7 @@
     "db:seed": "node scripts/seed-db.mjs",
     "test": "node --test --test-concurrency=4 test/",
     "prebuild": "node scripts/validate-benchmark-scores.mjs",
+    "postbuild": "node scripts/build-submission-followups.mjs",
     "data:benchmarks": "node scripts/ingest-benchmark-scores.mjs && node scripts/build-benchmark-history.mjs",
     "data:history": "node scripts/build-benchmark-history.mjs"
   },
