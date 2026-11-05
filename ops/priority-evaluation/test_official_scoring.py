@@ -15,11 +15,14 @@ class OfficialScoringTests(unittest.TestCase):
         meta['system']['support']=dict.fromkeys(('choice','noul','score'),'native')
         scorer.validate_meta('jevbench',meta)
 
-    def test_real_frozen_scorer_on_synthetic_references_and_changed_raw(self):
+    def test_synthetic_scorer_is_reproducible_and_reference_pinned(self):
         with tempfile.TemporaryDirectory(prefix='official-score-fixture-') as tmp:
-            manifest, raw, meta = create(Path(tmp), scorer.MANIFEST)
+            manifest, raw, meta = create(Path(tmp))
             with patch.object(scorer, 'MANIFEST', manifest):
                 pins = scorer.pins(['jevbench'])
+                root = Path(tmp).resolve()
+                self.assertTrue(all(Path(pin['path']).resolve().is_relative_to(root)
+                                    for pin in pins['profiles']['jevbench']['files'].values()))
                 good = scorer.run('jevbench', raw, meta, pins)
                 self.assertGreater(good['score'], 60)
                 rows = [json.loads(line) for line in raw.read_text().splitlines()]
@@ -40,7 +43,7 @@ class OfficialScoringTests(unittest.TestCase):
         import shutil
         with tempfile.TemporaryDirectory(prefix='official-isolation-') as tmp:
             root = Path(tmp)
-            manifest, raw, meta = create(root / 'fixture', scorer.MANIFEST)
+            manifest, raw, meta = create(root / 'fixture')
             probe = root / 'official_score.py'
             probe.write_text('''import json, os
 from pathlib import Path

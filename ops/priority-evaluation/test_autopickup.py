@@ -50,7 +50,7 @@ sys.path.insert(0, str(HERE))
 ap = importlib.reload(sys.modules["autopickup"]) if "autopickup" in sys.modules else importlib.import_module("autopickup")
 assert ap.DB_NAME == "fastlane_test" and ap.STATE_ROOT == TMP / "state"
 from scoring_fixtures import create as create_scoring_fixture
-_fixture_manifest, _fixture_raw, _fixture_meta = create_scoring_fixture(TMP / "official-fixtures", ap.official_scoring.MANIFEST)
+_fixture_manifest, _fixture_raw, _fixture_meta = create_scoring_fixture(TMP / "synthetic-scoring-fixtures")
 _original_scoring_manifest = ap.official_scoring.MANIFEST
 ap.official_scoring.MANIFEST = _fixture_manifest
 ap.SEALED_ROOT = TMP / "sealed"
