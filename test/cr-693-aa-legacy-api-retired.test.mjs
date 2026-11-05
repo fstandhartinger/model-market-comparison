@@ -12,7 +12,7 @@ import assert from 'node:assert/strict';
 import { mkdtemp, mkdir, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { AA_LEGACY_API_RETIRED, AA_LEGACY_API_URL, aaLegacyApiRetiredMessage, isAaLegacyApiRetirement } from '../lib/aa-legacy-api.mjs';
+import { AA_LEGACY_API_RETIRED, AA_LEGACY_API_URL, aaLegacyApiRetiredMessage, isAaLegacyApiRetirement, AA_RETENTION_BASELINE } from '../lib/aa-legacy-api.mjs';
 import { aaIndexVersionChangeMessage } from '../lib/aa-index-version.mjs';
 import { readAaLegacyApiRetired } from '../ops/daily/daily.mjs';
 import { verifyRetiredAa } from '../ops/daily/review-live.mjs';
@@ -27,9 +27,11 @@ async function runFixture({ staged = {}, before = {} }) {
   const work = join(runDir, 'work');
   await mkdir(join(work, 'data/raw'), { recursive: true });
   await mkdir(join(runDir, 'before/raw'), { recursive: true });
+  await mkdir(join(runDir, 'reports'));
+  await writeFile(join(runDir, 'reports/dataset-before.json'), JSON.stringify({ generated_at: AA_RETENTION_BASELINE }));
   for (const [file, bytes] of Object.entries(staged)) await writeFile(join(work, 'data/raw', file), bytes);
   for (const [file, bytes] of Object.entries(before)) await writeFile(join(runDir, 'before/raw', file), bytes);
-  return { runDir, work };
+  return { runDir, work, runStart: RUN_START };
 }
 // Shaped like the step error daily.mjs builds from the collector's stderr tail.
 const stepError = (detail) => new Error(`fetch-aa FAILED: → ArtificialAnalysis models …\n\nError: ${detail}\n    at fetchArtificialAnalysis (file:///x/scripts/fetch-live.mjs:91:9) {\n  status: 410\n}`);
@@ -50,6 +52,7 @@ test('the daily withholds only with the marker and both staged files byte-identi
     assert.match(retained.reason, /HTTP 410/);
     // The pre-CR-693 error (plain HTTP 410, no marker), any other HTTP failure, and other AA markers fail closed here.
     for (const other of [`HTTP 410 for ${AA_LEGACY_API_URL}`, `HTTP 500 for ${AA_LEGACY_API_URL}`, `HTTP 403 for ${AA_LEGACY_API_URL}`,
+      aaLegacyApiRetiredMessage().replace(AA_LEGACY_API_URL, 'https://example.org/other'),
       'AA m0: prior measurement gpqa absent; partial response or withdrawal requires review', aaIndexVersionChangeMessage('6.0')]) {
       assert.equal(await readAaLegacyApiRetired({ ...same, error: stepError(other) }), null, other);
     }
@@ -63,7 +66,8 @@ test('the daily withholds only with the marker and both staged files byte-identi
 });
 
 test('the live review proves the withholding from the captured 410 and the starting snapshots', async () => {
-  const beforeDir = await mkdtemp(join(tmpdir(), 'cr693-before-'));
+  const fixture = await runFixture({});
+  const beforeDir = join(fixture.runDir, 'before/raw');
   try {
     await writeFile(join(beforeDir, 'artificialanalysis.json'), JSON.stringify(snapshot()));
     await writeFile(join(beforeDir, 'aa-efficiency.json'), JSON.stringify(efficiency()));
@@ -86,5 +90,35 @@ test('the live review proves the withholding from the captured 410 and the start
     const redated = { ...snapshot(), collected_at: '2026-11-05T02:00:00Z' };
     await writeFile(join(beforeDir, 'artificialanalysis.json'), JSON.stringify(redated));
     await assert.rejects(verifyRetiredAa(args(receipt(), redated)), /claims this run's freshness/);
-  } finally { await rm(beforeDir, { recursive: true, force: true }); }
+  } finally { await rm(fixture.runDir, { recursive: true, force: true }); }
+});
+
+
+test('one publication only: another baseline, missing proof or another UTC day fails closed in daily and review', async () => {
+  const aa = JSON.stringify(snapshot()), eff = JSON.stringify(efficiency());
+  const files = { 'artificialanalysis.json': aa, 'aa-efficiency.json': eff };
+  const fixture = await runFixture({ staged: files, before: files });
+  const proof = join(fixture.runDir, 'reports/dataset-before.json');
+  const apiReceipt = { url: AA_LEGACY_API_URL, status: 410, method: 'GET', fetched_at: RUN_START };
+  const error = stepError(aaLegacyApiRetiredMessage());
+  const verify = (runStart = RUN_START) => verifyRetiredAa({ staged: snapshot(), stagedEfficiency: efficiency(),
+    src: { beforeDir: join(fixture.runDir, 'before/raw') }, runStart, apiReceipt });
+  try {
+    assert.ok(await readAaLegacyApiRetired({ ...fixture, error }));
+    // Failed attempts have not published: the same baseline remains eligible.
+    assert.ok(await readAaLegacyApiRetired({ ...fixture, error }));
+    for (const runStart of ['2026-11-04T23:59:59Z', '2026-11-06T00:00:00Z', undefined, 'invalid']) {
+      assert.equal(await readAaLegacyApiRetired({ ...fixture, error, runStart }), null);
+      if (runStart) await assert.rejects(verify(runStart), /one-publication exception/);
+    }
+    // The first successful daily advances generated_at; a second same-day run is denied.
+    for (const generated_at of ['2026-11-05T09:00:00Z', '2026-11-04T10:00:00Z', null]) {
+      await writeFile(proof, JSON.stringify({ generated_at }));
+      assert.equal(await readAaLegacyApiRetired({ ...fixture, error }), null);
+      await assert.rejects(verify(), /one-publication exception/);
+    }
+    await rm(proof);
+    assert.equal(await readAaLegacyApiRetired({ ...fixture, error }), null);
+    await assert.rejects(verify(), /ENOENT/);
+  } finally { await rm(fixture.runDir, { recursive: true, force: true }); }
 });

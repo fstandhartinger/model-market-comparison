@@ -8,7 +8,7 @@ import { createHash } from 'node:crypto';
 import { writeJSONAtomic } from '../../lib/snapshot.mjs';
 import { BOARD_REGISTRY_INCONSISTENT } from '../../lib/live-source.mjs';
 import { AA_INDEX_PINNED_MAJOR, AA_INDEX_VERSION_CHANGED } from '../../lib/aa-index-version.mjs';
-import { AA_LEGACY_API_RETIRED } from '../../lib/aa-legacy-api.mjs';
+import { aaLegacyApiRetiredMessage, aaRetirementRetentionAllowed } from '../../lib/aa-legacy-api.mjs';
 import { CODING_AGENT_FILE, CODING_AGENT_SOURCE_KEY, CODING_AGENT_VERSION, CODING_AGENT_VERSION_CHANGED, FROZEN_CODING_AGENT_FILES } from '../../lib/aa-coding-agents.mjs';
 import { COMMIT_TRAILER, assessCommitScope, parseScope, parseStatusPorcelain, pricesScopeViolations, selectProducerCritic, sourceFreshnessErrors, staleCollectorDigestLines } from './policy.mjs';
 import { executeNotifications } from './notify.mjs';
@@ -104,8 +104,10 @@ export async function readAaIndexVersionChange({ runDir, work, error, read = rea
 // CR-693 (2026-11-05): AA retired its legacy Data API route (410 Gone since 2026-11-04 23:59 UTC). The same withheld path
 // as CR-629: only with the collector's marker AND both staged AA files byte-identical to this run's copy of the published
 // snapshot. Any other failure still fails the run closed. review-live.mjs re-derives the retirement from the captured 410.
-export async function readAaLegacyApiRetired({ runDir, work, error, read = readFile }) {
-  if (!new RegExp(`\\b${AA_LEGACY_API_RETIRED} \\(HTTP 410 at `).test(String(error?.message ?? ''))) return null;
+export async function readAaLegacyApiRetired({ runDir, work, error, runStart, read = readFile }) {
+  if (!String(error?.message ?? '').includes(aaLegacyApiRetiredMessage())) return null;
+  const before = await read(join(runDir, 'reports/dataset-before.json'), 'utf8').then(JSON.parse).catch(() => null);
+  if (!aaRetirementRetentionAllowed(runStart, before?.generated_at)) return null;
   const dates = [];
   for (const file of AA_INDEX_FILES) {
     const staged = await read(join(work, 'data/raw', file)).catch(() => null);
@@ -262,7 +264,7 @@ export async function runDaily({ repo = ROOT, home = '/opt/benchmarkheaven-daily
           console.warn(`WARN ${step}: AA states Intelligence Index v${aaIndex.page_version}; keeping the published v${aaIndex.pinned_version} snapshot (${aaIndex.retained_collected_at ?? 'unknown date'})`);
           continue;
         }
-        const aaRetired = source === 'aa' ? await readAaLegacyApiRetired({ runDir, work, error }) : null;
+        const aaRetired = source === 'aa' ? await readAaLegacyApiRetired({ runDir, work, error, runStart: started }) : null;
         if (aaRetired) {
           for (const key of ['artificialanalysis', 'aa_efficiency']) report.retained_sources.push({ source: key, step, reason: aaRetired.reason, retained_collected_at: key === 'artificialanalysis' ? aaRetired.retained_collected_at : aaRetired.efficiency_collected_at });
           report.warnings = report.warnings || [];
