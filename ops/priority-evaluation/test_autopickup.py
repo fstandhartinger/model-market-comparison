@@ -50,11 +50,94 @@ sys.path.insert(0, str(HERE))
 ap = importlib.reload(sys.modules["autopickup"]) if "autopickup" in sys.modules else importlib.import_module("autopickup")
 assert ap.DB_NAME == "fastlane_test" and ap.STATE_ROOT == TMP / "state"
 from scoring_fixtures import create as create_scoring_fixture
-_fixture_manifest, _fixture_raw, _fixture_meta = create_scoring_fixture(TMP / "official-fixtures", ap.official_scoring.MANIFEST)
+_fixture_manifest, _fixture_raw, _fixture_meta = create_scoring_fixture(TMP / "synthetic-scoring-fixtures")
 _original_scoring_manifest = ap.official_scoring.MANIFEST
 ap.official_scoring.MANIFEST = _fixture_manifest
+
+
+def create_measurement_profile_fixture(root: Path) -> Path:
+    """Write a test-only pinned profile so integration tests never read host or JevBench files."""
+    code_names = (
+        "run_v15.py", "evaluate_api.py", "jevbench/adapters/base.py",
+        "jevbench/adapters/typesafe.py", "jevbench/adapters/openai_compat.py",
+        "pod_drivers/pod_driver.py", "pod_drivers/pod_entry.sh",
+        "pod_drivers/pod_order_driver.py", "pod_drivers/native_image.py",
+        "pod_drivers/aplomb_loader.py", "pod_drivers/scored_marker.py",
+    )
+    code = {}
+    for name in code_names:
+        path = root / "code" / name
+        path.parent.mkdir(parents=True, exist_ok=True)
+        body = ("#!/bin/sh\n# synthetic test fixture only\n" if name.endswith(".sh")
+                else f"# synthetic test fixture only: {name}\n")
+        path.write_text(body)
+        code[name] = {"path": str(path.resolve()),
+                      "sha256": hashlib.sha256(path.read_bytes()).hexdigest()}
+
+    inputs = root / "inputs"
+    inputs.mkdir(parents=True, exist_ok=True)
+    items = inputs / "jevbench.jsonl"
+    items.write_text('{"task_id":"fixture-only","state":{},"question":{},"labels":[]}\n')
+    image_root = inputs / "imagejevbench"
+    image_root.mkdir(exist_ok=True)
+    image_manifest = inputs / "imagejevbench-manifest.json"
+    image_manifest.write_text(json.dumps({"fixture_only": True}))
+    profile = {
+        "schema_version": 1,
+        "code": code,
+        "inputs": {
+            "jevbench": {"count": 1, "items": {
+                "path": str(items.resolve()),
+                "sha256": hashlib.sha256(items.read_bytes()).hexdigest(),
+            }},
+            "imagejevbench": {"count": 1, "root": str(image_root.resolve()), "manifest": {
+                "path": str(image_manifest.resolve()),
+                "sha256": hashlib.sha256(image_manifest.read_bytes()).hexdigest(),
+            }},
+        },
+    }
+    manifest = root / "measurement-profiles.json"
+    manifest.write_text(json.dumps(profile, sort_keys=True) + "\n")
+    return manifest
+
+
+def create_site_checkout_fixture(root: Path) -> Path:
+    """Create a tiny committed site fixture for trusted baseline reads; never use the deploy checkout."""
+    root.mkdir(parents=True, exist_ok=True)
+    jevbench = root / "data/raw/benchmarks/jevbench/v1.5/jevbench-v1.5.0-results.json"
+    jevbench.parent.mkdir(parents=True, exist_ok=True)
+    jevbench.write_text(json.dumps({"headline": "A", "systems": [], "board": {
+        option: {"order": [], "markers": []} for option in ("A", "B", "C")}}) + "\n")
+    image = root / "data/raw/benchmarks/jevbench/multimodal-preview/preview.json"
+    image.parent.mkdir(parents=True, exist_ok=True)
+    image.write_text(json.dumps({"revision": "v0.1.0", "benchmark": "Image JevBench v0.1.0", "ranking": []}) + "\n")
+
+    env = {"HOME": str(TMP), "PATH": "/usr/bin:/bin", "LANG": "C.UTF-8",
+           "GIT_CONFIG_GLOBAL": "/dev/null", "GIT_CONFIG_NOSYSTEM": "1",
+           "GIT_AUTHOR_NAME": "Synthetic site fixture", "GIT_AUTHOR_EMAIL": "fixture@example.invalid",
+           "GIT_COMMITTER_NAME": "Synthetic site fixture", "GIT_COMMITTER_EMAIL": "fixture@example.invalid"}
+    for command in (["git", "-C", str(root), "init", "-q"],
+                    ["git", "-C", str(root), "add", "."],
+                    ["git", "-C", str(root), "commit", "-q", "-m", "synthetic site baseline"]):
+        result = subprocess.run(command, env=env, capture_output=True, text=True)
+        if result.returncode:
+            raise RuntimeError("synthetic site checkout setup failed")
+    return root
+
+
+_fixture_measurement_root = TMP / "synthetic-measurement-profile"
+_fixture_measurement_manifest = create_measurement_profile_fixture(_fixture_measurement_root)
+_original_measurement_manifest = ap.measurement_dispatch.MANIFEST
+ap.measurement_dispatch.MANIFEST = _fixture_measurement_manifest
 ap.SEALED_ROOT = TMP / "sealed"
 ap.SEALED_ROOT.mkdir()
+
+_fixture_scoring_profile = json.loads(_fixture_manifest.read_text())
+# Release-flow fixtures use v1.5.x result labels; the scorer and references remain synthetic.
+_fixture_scoring_profile["profiles"]["jevbench"]["version_prefix"] = "v1.5."
+_fixture_manifest.write_text(json.dumps(_fixture_scoring_profile, sort_keys=True) + "\n")
+_original_site_checkout = ap.SITE_CHECKOUT
+ap.SITE_CHECKOUT = create_site_checkout_fixture(TMP / "synthetic-site-checkout")
 
 FIXTURE_RUNTIME = {'backend':'openrouter','credential':'openrouter','model':'fixture/model',
                    'price_input_per_m':1.,'price_output_per_m':1.}
@@ -106,6 +189,8 @@ class Cluster:
 
 def tearDownModule() -> None:
     ap.official_scoring.MANIFEST = _original_scoring_manifest
+    ap.measurement_dispatch.MANIFEST = _original_measurement_manifest
+    ap.SITE_CHECKOUT = _original_site_checkout
     Cluster.stop()
 
 
@@ -247,6 +332,25 @@ class DatabaseTestCase(unittest.TestCase):
         shutil.rmtree(ap.STATE_ROOT, ignore_errors=True)
         shutil.rmtree(ap.JOB_ROOT, ignore_errors=True)
         set_cutover(datetime.now(timezone.utc) - timedelta(days=1))
+
+
+class PortableMeasurementFixtureTests(unittest.TestCase):
+    def test_local_measurement_fixture_pins_are_checked_and_fail_closed(self):
+        pins = ap.measurement_dispatch.pins()
+        profile = pins["profile"]
+        root = _fixture_measurement_root.resolve()
+        self.assertEqual(profile["inputs"]["jevbench"]["count"], 1)
+        self.assertTrue(all(Path(pin["path"]).resolve().is_relative_to(root)
+                            for pin in profile["code"].values()))
+        pinned = Path(profile["code"]["run_v15.py"]["path"])
+        original = pinned.read_bytes()
+        try:
+            pinned.write_bytes(original + b"# changed after pinning\n")
+            with self.assertRaisesRegex(ap.measurement_dispatch.OperationalHold,
+                                        "official_measurement_pin_changed"):
+                ap.measurement_dispatch.pins()
+        finally:
+            pinned.write_bytes(original)
 
 
 class PaymentMatchingTests(DatabaseTestCase):
@@ -637,7 +741,10 @@ class PublicPrTests(DatabaseTestCase):
         pr = {'number':99, 'state':'open', 'base':{'ref':'main'}, 'head':{'ref':branch,'sha':'a'*40}, 'labels':[]}
         fx.github[f'repos/{ap.REPO}/pulls/99'] = pr
         fx.github[f'repos/{ap.REPO}/pulls/99/files?per_page=100'] = [{'filename':'data/fixture.json'}]
-        with mock.patch.object(ap, 'site_command', return_value='') as command:
+        site_checkout = TMP / "site-checkout-fixture"
+        site_checkout.mkdir(exist_ok=True)
+        with mock.patch.object(ap, "SITE_CHECKOUT", site_checkout), \
+                mock.patch.object(ap, 'site_command', return_value='') as command:
             record = ap.open_public_release_pr(rid, row(rid), job, state, fx)
         self.assertEqual(record['status'], 'queued')
         self.assertIn('labels[]=bh-merge-ready', command.call_args.args[0])
