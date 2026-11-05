@@ -3,7 +3,8 @@ import assert from "node:assert/strict";
 import { topFamilies } from "../scripts/top5.mjs";
 
 const model = (id, benchmarks, extra = {}) => ({ id, family_key: id, family_name: id,
-  display_name: id, variant: "default", offers: [], benchmarks, ...extra });
+  display_name: id, variant: "default", offers: [{ unit: "per_1m_token", platform: "Test",
+    provider: "Test", region: "US", input_per_1m: 1, output_per_1m: 1, data_private: true }], benchmarks, ...extra });
 const dataset = (models) => ({ models, providers: [], sources: {}, benchmark_results: { observations: [], registry: [], details: {}, coverage: { by_model: {} } } });
 
 for (const slot of ["epoch_eci", "epoch_eci_software"]) {
@@ -50,4 +51,14 @@ test("family-scoped Epoch evidence reaches a measured sibling before ranking", (
     .find((r) => r.family_key === "family");
   assert.equal(row.name, "family-high");
   assert.ok(row.composite > withoutDonor.composite);
+});
+
+test("default chart scope excludes unavailable and training-enabled-only routes", () => {
+  const rows = topFamilies(dataset([
+    model("unavailable", { aa_intelligence_index: 100 }, { offers: [] }),
+    model("training", { aa_intelligence_index: 99 }, { offers: [{ unit: "per_1m_token",
+      platform: "Test", provider: "Test", input_per_1m: 1, output_per_1m: 1, data_private: false }] }),
+    model("available", { aa_intelligence_index: 80 }),
+  ]));
+  assert.deepEqual(rows.map((r) => r.family_key), ["available"]);
 });
