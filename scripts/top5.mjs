@@ -16,6 +16,8 @@ const variantsUrl = await compileTsModule(new URL("../lib/variants.ts", import.m
   "./client-model": clientUrl,
 });
 const { selectableModels, preferredVariantIds, collapseModels } = await import(variantsUrl);
+const { createScope, scopedCatalogOffers } = await import(await compileTsModule(
+  new URL("../lib/cost.ts", import.meta.url)));
 
 export function topFamilies(ds, n = 5) {
   // Same family-level penalty used by compositeBenchmaxxingSignals in page-data.
@@ -24,10 +26,16 @@ export function topFamilies(ds, n = 5) {
   const byFamily = new Map(benchmaxxingFamilySignals(view).reports.map(([id, report]) =>
     [familyOf.get(id) ?? id, report.score ?? null]));
   const signals = new Map(ds.models.map((m) => [m.id, byFamily.get(m.family_key) ?? null]));
-  const models = clientData(ds, {}, signals).models;
+  const data = clientData(ds, {}, signals);
+  const models = data.models;
+  // Default provider scope allows all regions and excludes training-enabled routes.
+  // Charts therefore requires an eligible paid offer even for an excellent score.
+  const scope = createScope(null, data.providers, {}, true);
   const candidates = selectableModels(models, true, "composite");
   const preferred = preferredVariantIds(candidates, "composite");
-  const rows = topCandidates(collapseModels(candidates, preferred), (m) => m, SIMPLE_LIMIT)
+  const rows = topCandidates(collapseModels(candidates, preferred)
+    .filter((m) => scopedCatalogOffers(data.offersByModel[m.id], scope).length > 0),
+    (m) => m, SIMPLE_LIMIT)
     .filter((m) => hasScoreEvidence(m, "composite") && Number.isFinite(m.scores.composite));
   return rows.sort((a, b) => b.scores.composite - a.scores.composite || a.family_key.localeCompare(b.family_key))
     .slice(0, n)
