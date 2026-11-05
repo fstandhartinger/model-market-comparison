@@ -10,6 +10,7 @@ import { parseArtificialAnalysisMetadata, parseArtificialAnalysisDeprecatedModel
 import { writeJSONAtomic } from "../lib/snapshot.mjs";
 import { refreshAaEfficiency } from "./fetch-aa-efficiency.mjs";
 import { AA_INDEX_FIELDS, aaIndexPageVersions, aaIndexRunMode, aaIndexVersionChangeMessage, assertAdoptionCoverage } from "../lib/aa-index-version.mjs";
+import { AA_LEGACY_API_URL, aaLegacyApiRetiredMessage } from "../lib/aa-legacy-api.mjs";
 import { execFile } from "node:child_process";
 import { promisify } from "node:util";
 import { BOARD_REGISTRY_INCONSISTENT, absentIdentities, assertApprovedIdentityCoverage, assertIdentityCoverage, assertOpenRouterEndpointCoverage, assertMeasuredFields, captureLiveSource, classifyBoardAbsence, endpointIdentity, findBoardRekeys, planOpenRouterWithdrawals } from '../lib/live-source.mjs';
@@ -41,6 +42,8 @@ async function getJSON(url, opts = {}, tries = 3) {
       if (!res.ok) {
         if (stopStatuses.includes(res.status)) stoppedHosts.add(host);
         if (res.status === 404 && url.endsWith('/endpoints')) await captureLiveSource(url, await res.text(), { status: 404 });
+        // CR-693: the retired AA route's 410 is the evidence review-live re-derives the withholding from.
+        if (res.status === 410 && url === AA_LEGACY_API_URL) await captureLiveSource(url, await res.text(), { status: 410 });
         throw Object.assign(new Error(`HTTP ${res.status} for ${url}`), { status: res.status });
       }
       const body = await res.text();
@@ -52,7 +55,7 @@ async function getJSON(url, opts = {}, tries = 3) {
       await captureLiveSource(url, body, { method: opts.method, requestBody: opts.body ? JSON.parse(opts.body) : null });
       return parsed;
     } catch (e) {
-      if ([401, 403, 404, 429].includes(e.status) || i === tries - 1) throw e;
+      if ([401, 403, 404, 410, 429].includes(e.status) || i === tries - 1) throw e;
       await sleep(800 * (i + 1));
     }
   }
@@ -85,9 +88,10 @@ async function getText(url, opts = {}, tries = 3) {
 async function fetchArtificialAnalysis() {
   console.log("→ ArtificialAnalysis models …");
   if (!AA_KEY) throw new Error("Set ARTIFICIAL_ANALYSIS_API_KEY to fetch ArtificialAnalysis data");
-  const data = await getJSON("https://artificialanalysis.ai/api/v2/data/llms/models", {
+  // CR-693: the legacy route answers 410 since 2026-11-04 23:59 UTC; stop before any write with the marker (lib/aa-legacy-api.mjs).
+  const data = await getJSON(AA_LEGACY_API_URL, {
     headers: { "x-api-key": AA_KEY },
-  });
+  }).catch((error) => { throw error.status === 410 ? Object.assign(new Error(aaLegacyApiRetiredMessage()), { status: 410 }) : error; });
   const leaderboardHtml = await getText("https://artificialanalysis.ai/leaderboards/models");
   const metadata = parseArtificialAnalysisMetadata(leaderboardHtml);
   const apiModels = data.data || [];

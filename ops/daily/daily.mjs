@@ -8,6 +8,7 @@ import { createHash } from 'node:crypto';
 import { writeJSONAtomic } from '../../lib/snapshot.mjs';
 import { BOARD_REGISTRY_INCONSISTENT } from '../../lib/live-source.mjs';
 import { AA_INDEX_PINNED_MAJOR, AA_INDEX_VERSION_CHANGED } from '../../lib/aa-index-version.mjs';
+import { aaLegacyApiRetiredMessage, aaRetirementRetentionAllowed } from '../../lib/aa-legacy-api.mjs';
 import { CODING_AGENT_FILE, CODING_AGENT_SOURCE_KEY, CODING_AGENT_VERSION, CODING_AGENT_VERSION_CHANGED, FROZEN_CODING_AGENT_FILES } from '../../lib/aa-coding-agents.mjs';
 import { COMMIT_TRAILER, assessCommitScope, parseScope, parseStatusPorcelain, pricesScopeViolations, selectProducerCritic, sourceFreshnessErrors, staleCollectorDigestLines } from './policy.mjs';
 import { executeNotifications } from './notify.mjs';
@@ -98,6 +99,24 @@ export async function readAaIndexVersionChange({ runDir, work, error, read = rea
   const retainedCollectedAt = dates[0];
   return { page_version: match[1], pinned_version: `${match[2]}.x`, retained_collected_at: retainedCollectedAt, efficiency_collected_at: dates[1],
     reason: `AA leaderboard now states Intelligence Index v${match[1]}; the v${match[2]}.x collector does not adopt a new index methodology without review. The published AA snapshot of ${retainedCollectedAt ?? 'unknown date'} (and its token-efficiency snapshot) stays with its own date.` };
+}
+
+// CR-693 (2026-11-05): AA retired its legacy Data API route (410 Gone since 2026-11-04 23:59 UTC). The same withheld path
+// as CR-629: only with the collector's marker AND both staged AA files byte-identical to this run's copy of the published
+// snapshot. Any other failure still fails the run closed. review-live.mjs re-derives the retirement from the captured 410.
+export async function readAaLegacyApiRetired({ runDir, work, error, runStart, read = readFile }) {
+  if (!String(error?.message ?? '').includes(aaLegacyApiRetiredMessage())) return null;
+  const before = await read(join(runDir, 'reports/dataset-before.json'), 'utf8').then(JSON.parse).catch(() => null);
+  if (!aaRetirementRetentionAllowed(runStart, before?.generated_at)) return null;
+  const dates = [];
+  for (const file of AA_INDEX_FILES) {
+    const staged = await read(join(work, 'data/raw', file)).catch(() => null);
+    const published = await read(join(runDir, 'before/raw', file)).catch(() => null);
+    if (!staged || !published || hash(staged) !== hash(published)) return null;
+    dates.push(JSON.parse(published.toString('utf8')).collected_at ?? null);
+  }
+  return { retained_collected_at: dates[0], efficiency_collected_at: dates[1],
+    reason: `AA retired its legacy Data API route (HTTP 410); the supported replacement needs a Pro key or a reviewed Free-tier migration. The published AA snapshot of ${dates[0] ?? 'unknown date'} (and its token-efficiency snapshot) stays with its own date.` };
 }
 
 export async function linkDryRunDependencies(repo, work) {
@@ -243,6 +262,14 @@ export async function runDaily({ repo = ROOT, home = '/opt/benchmarkheaven-daily
           report.warnings = report.warnings || [];
           report.warnings.push(`${step} withheld: ${aaIndex.reason}`);
           console.warn(`WARN ${step}: AA states Intelligence Index v${aaIndex.page_version}; keeping the published v${aaIndex.pinned_version} snapshot (${aaIndex.retained_collected_at ?? 'unknown date'})`);
+          continue;
+        }
+        const aaRetired = source === 'aa' ? await readAaLegacyApiRetired({ runDir, work, error, runStart: started }) : null;
+        if (aaRetired) {
+          for (const key of ['artificialanalysis', 'aa_efficiency']) report.retained_sources.push({ source: key, step, reason: aaRetired.reason, retained_collected_at: key === 'artificialanalysis' ? aaRetired.retained_collected_at : aaRetired.efficiency_collected_at });
+          report.warnings = report.warnings || [];
+          report.warnings.push(`${step} withheld: ${aaRetired.reason}`);
+          console.warn(`WARN ${step}: AA legacy Data API answers 410; keeping the published AA snapshot (${aaRetired.retained_collected_at ?? 'unknown date'})`);
           continue;
         }
         const retained = source === 'da' ? await readDesignArenaInconsistency({ sourcesDir: join(runDir, 'sources'), runDir, work, error }) : null;
