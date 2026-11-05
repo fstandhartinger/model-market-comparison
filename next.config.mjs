@@ -3,6 +3,9 @@ import { JEV_SYSTEM_SLUG_REDIRECTS, JEV_SUPERSEDED_SLUG_REDIRECTS } from './lib/
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  // Next's memory-cache sizing JSON-expands large prerendered RSC Buffers.
+  // Keep the default disk cache without that transient heap allocation.
+  cacheMaxMemorySize: 0,
   // This app lives inside a monorepo with sibling lockfiles; pin the tracing root.
   outputFileTracingRoot: import.meta.dirname,
   // CR-518: the JevBench board pages are heavy; on the shared 12-core build host under load (~40) the default worker
