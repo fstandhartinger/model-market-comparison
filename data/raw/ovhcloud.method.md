@@ -10,9 +10,11 @@
 `test/ovhcloud-catalog.test.mjs`), non-fatal daily step `fetch-ovhcloud-catalog` in
 `ops/daily/daily.mjs`. One GET of the catalog (no robots.txt rule covers it) plus the ECB daily XML.
 
-- Cards are split on `data-tc-clic="public-cloud::ai-endpoints::link-discover-catalog-ai-endpoints-<slug>"`;
-  title from `h3.Models_modelTitle__*`, each price from `h2.Models_priceMain__*` ("0.4<!-- -->€")
-  paired with the following unit span ("/Mtoken(input)", "/Mtoken(output)").
+- Active cards are located by `data-tc-clic="public-cloud::ai-endpoints::link-discover-catalog-ai-endpoints-<slug>"`
+  and bounded by their matching closing `a` (current layout) or `div` (legacy layout).
+  Retired articles have no discovery marker and are excluded. Title comes from the card's `h3`;
+  each plain-text/comment EUR value in `b` or `h2` is paired with its following unit span
+  ("/Mtoken(input)", "/Mtoken(output)"). Prices cannot cross the card boundary.
 - Scope by structure: only cards with both an input- and an output-token EUR price. Embeddings,
   guards, Whisper (per second), image generation and TTS carry other units and land in `skipped`.
 - Curated rows are kept by `model_id` (= card title) or normalized name; the card slug is added as

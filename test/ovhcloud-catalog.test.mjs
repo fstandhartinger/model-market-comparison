@@ -1,5 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
 import { readCards, parseOvhcloudCatalog } from "../lib/ovhcloud-catalog.mjs";
 
 const price = (value, unit) => `<div class="d-flex"><h2 class="_text--heading-2 Models_priceMain__yxl2K" data-ods="text">${value}<!-- -->€</h2><span class="_text--caption m-2" data-ods="text">/<!-- -->${unit}</span></div>`;
@@ -12,6 +13,25 @@ const previous = { models: [
   { model_name: "gpt-oss-120b", model_id: "gpt-oss-120b", provider_org: "OpenAI", input_per_1m_eur: 0.08, output_per_1m_eur: 0.4, input_per_1m_usd: 0.09, output_per_1m_usd: 0.46, currency: "EUR", region: "eu", eu_hosted: true, notes: "Apache 2.0; FP4" },
   { model_name: "Llama 3.3 70B", model_id: "Meta-Llama-3_3-70B-Instruct", provider_org: "Meta", input_per_1m_eur: 0.67, output_per_1m_eur: 0.67, currency: "EUR", region: "eu", eu_hosted: true, notes: "Llama licence" },
 ] };
+
+test("captured free TTS card cannot inherit prices from the following retired article", () => {
+  const html = readFileSync(new URL("./fixtures/ovhcloud-free-before-retired.html", import.meta.url), "utf8");
+  const cards = readCards(html);
+  assert.equal(cards.length, 1);
+  assert.equal(cards[0].title, "nvr-tts-en-us");
+  assert.equal(cards[0].inputEur, null);
+  assert.equal(cards[0].outputEur, null);
+  const { models, skipped } = parseOvhcloudCatalog(page(html, currentChat("served", "Served", "1", "2")), { models: [] }, fx);
+  assert.deepEqual(models.map((m) => [m.model_id, m.input_per_1m_eur, m.output_per_1m_eur]), [["Served", 1, 2]]);
+  assert.deepEqual(skipped, ["nvr-tts-en-us"]);
+});
+
+test("card boundaries also isolate legacy divs and reject unclosed cards", () => {
+  const retired = '<article><h3>Retired</h3>' + price("99", "Mtoken(input)") + price("88", "Mtoken(output)") + '</article>';
+  const cards = readCards(page(card("free", "Free", "", "TTS"), retired, chat("live", "Live", "1", "2")));
+  assert.deepEqual(cards.map((c) => [c.title, c.inputEur, c.outputEur]), [["Free", null, null], ["Live", 1, 2]]);
+  assert.throws(() => readCards(currentChat("bad", "Bad", "1", "2").replace("</a>", "")), /no closing card element/);
+});
 
 test("reads cards: title, category, context and unit-labelled EUR prices", () => {
   const cards = readCards(page(chat("gpt-oss-120b", "gpt-oss-120b", "0.08", "0.4"), card("bge-m3", "bge-m3", price("0.01", "Mtoken"), "EMBEDDINGS", "8<!-- -->K")));

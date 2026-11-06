@@ -1,5 +1,27 @@
 # Inceptron — data collection method
 
+## Direct-price availability check (2026-11-06)
+
+Ordinary public HTTPS captures at 07:51–07:54 UTC found six model cards on
+`https://www.inceptron.io/models`, with input/output/cache labels but no rendered dollar
+values. The page's referenced Framer model module also has empty price elements;
+static inspection of directly referenced assets identified no supported direct-price
+fetch. `https://www.inceptron.io/pricing` still directs serverless users to the models
+page; its dedicated-GPU hourly rates are not token prices.
+
+The linked official Models API docs (`https://docs.inceptron.io/`) do not establish
+direct-route provenance for the API's pricing fields. All six records returned by
+`https://api.inceptron.io/v1/models` carry `openrouter.slug`; they are not accepted as
+a replacement direct-price source. This bounded check establishes unavailable direct
+prices from the inspected sources, not retirement of Inceptron's direct service.
+
+Keep the previous dated snapshot, collector failure and staleness alerts until verified
+direct prices return. Do not redate retained prices, copy feed prices or report a
+successful refresh. Capture receipts: models HTML SHA-256
+`1bc877e3aa834c9dd6de9693416466415effe1ee93e4da62f76389b6442b4356`;
+referenced model module SHA-256
+`16dd4c069014e11c1a01d9c8a169431b50281e9548bd1c48536830214a4351a6`.
+
 ## CR-329.1 (2026-10-07): the direct price comes from the published list, not the API catalog
 
 User report (Simon, 7 Oct 2026): our GLM-5.3 table showed Inceptron via OpenRouter **and** Inceptron direct
