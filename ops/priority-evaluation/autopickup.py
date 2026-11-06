@@ -4072,6 +4072,8 @@ def sla_decision_rows(synthetic_id: str | None, job_root: Path) -> list[dict[str
 
 
 def delay_note_message(row: dict[str, Any]) -> tuple[str, str]:
+    if sla_decision.owner_managed(row):
+        raise ValueError("40h decision is owner-managed; no fixed result ETA")
     new_eta = (deadline_for(row) + timedelta(hours=24)).strftime("%d %b %H:%M UTC")
     rid = request_id(row["id"])
     subject = f"Benchmark Heaven evaluation order {order_ref(rid)}: delayed"
@@ -4092,6 +4094,8 @@ def sla_decisions(synthetic_id: str | None, job_root: Path, effects: Effects) ->
     asked = 0
     root = STATE_ROOT / "sla-decisions"
     for row in sla_decision_rows(synthetic_id, job_root):
+        if sla_decision.owner_managed(row):
+            continue  # exact-order owner/deputy route; keep the paid clock and 48h refund path
         rid = request_id(row["id"])
         state = load_state(rid)
         try:

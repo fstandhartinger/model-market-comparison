@@ -24,6 +24,16 @@ import refusal_approval as ra
 
 SOURCE = "fastlane-sla40-decision"
 WINDOW = 24 * 3600
+# DECISIONS 6 Nov 00:55Z, wps-order-114b6e41-customer-path-after-cleanup-failure-1106.
+# The native owner + deputy handle the no-ETA note choice at 40h. The normal 48h
+# refund card remains active; this mapping grants no contact/refund/run authority.
+OWNER_MANAGED_40H = frozenset({"114b6e41-14c5-42b1-9a35-386ab83b62e9"})
+
+
+def owner_managed(row: dict) -> bool:
+    return str(uuid.UUID(str(row["id"]))) in OWNER_MANAGED_40H
+
+
 MAX_CARDS = 3  # an expired card is asked again at most twice; then the order waits for an operator
 
 
@@ -35,6 +45,8 @@ SETTLED = {"delay_note": "You tapped Send delay note; the worker sends the fixed
 
 
 def caption(row: dict, deadline: str) -> str:
+    if owner_managed(row):
+        raise ValueError("40h decision is owner-managed; no generic ETA card")
     rid = str(uuid.UUID(str(row["id"])))
     amount = row.get("amount_total")
     money = f"USD {int(amount) / 100:.2f}" if isinstance(amount, int) and not isinstance(amount, bool) else "the full amount"
@@ -169,6 +181,8 @@ def advance(row: dict, root: Path, effects, now: float, deadline: str) -> str:
     rid = str(uuid.UUID(str(row["id"])))
     if row.get("stripe_mode") != "live" or row.get("synthetic_test") is not False:
         raise ValueError("the SLA decision card is for real live orders only")
+    if owner_managed(row):
+        return "owner_managed"  # before reading stale decisions or creating callback state
     root.mkdir(parents=True, exist_ok=True, mode=0o700)
     path = root / f"{rid}.json"
     with path.with_suffix(".lock").open("a+") as lock:
