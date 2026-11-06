@@ -8,7 +8,7 @@ import { createHash } from 'node:crypto';
 import { writeJSONAtomic } from '../../lib/snapshot.mjs';
 import { BOARD_REGISTRY_INCONSISTENT } from '../../lib/live-source.mjs';
 import { AA_INDEX_PINNED_MAJOR, AA_INDEX_VERSION_CHANGED } from '../../lib/aa-index-version.mjs';
-import { aaLegacyApiRetiredMessage, aaRetirementRetentionAllowed } from '../../lib/aa-legacy-api.mjs';
+import { aaLegacyApiRetiredMessage, aaRetirementRetentionAllowed, isAaRetainedSnapshot } from '../../lib/aa-legacy-api.mjs';
 import { CODING_AGENT_FILE, CODING_AGENT_SOURCE_KEY, CODING_AGENT_VERSION, CODING_AGENT_VERSION_CHANGED, FROZEN_CODING_AGENT_FILES } from '../../lib/aa-coding-agents.mjs';
 import { COMMIT_TRAILER, assessCommitScope, parseScope, parseStatusPorcelain, pricesScopeViolations, selectProducerCritic, sourceFreshnessErrors, staleCollectorDigestLines } from './policy.mjs';
 import { executeNotifications } from './notify.mjs';
@@ -115,6 +115,7 @@ export async function readAaLegacyApiRetired({ runDir, work, error, runStart, re
     if (!staged || !published || hash(staged) !== hash(published)) return null;
     dates.push(JSON.parse(published.toString('utf8')).collected_at ?? null);
   }
+  if (!isAaRetainedSnapshot(dates[0], dates[1])) return null;
   return { retained_collected_at: dates[0], efficiency_collected_at: dates[1],
     reason: `AA retired its legacy Data API route (HTTP 410); the supported replacement needs a Pro key or a reviewed Free-tier migration. The published AA snapshot of ${dates[0] ?? 'unknown date'} (and its token-efficiency snapshot) stays with its own date.` };
 }

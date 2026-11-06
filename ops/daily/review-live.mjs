@@ -33,7 +33,7 @@ import { isDeepStrictEqual } from 'node:util';
 import { flightRecords, objects, resolveFlight, parseArtificialAnalysisMetadata } from '../../lib/aa-rsc.mjs';
 import { parseAaEfficiency } from '../../lib/aa-efficiency.mjs';
 import { AA_INDEX_PINNED_MAJOR, aaIndexPageVersions, assertAdoptionCoverage, changedAaIndexVersion, pinnedAaIndexVersion, snapshotIndexMajor } from '../../lib/aa-index-version.mjs';
-import { AA_LEGACY_API_URL, isAaLegacyApiRetirement, aaRetirementRetentionAllowed } from '../../lib/aa-legacy-api.mjs';
+import { AA_LEGACY_API_URL, isAaLegacyApiRetirement, aaRetirementRetentionAllowed, isAaRetainedSnapshot } from '../../lib/aa-legacy-api.mjs';
 import { CODING_AGENT_FILE, CODING_AGENT_URL, CODING_AGENT_VERSION, changedCodingAgentVersion, codingAgentPageVersions, parseCodingAgents } from '../../lib/aa-coding-agents.mjs';
 import { parseOpenRouterPage, parseOpenRouterCache, parseOpenRouterRankings } from '../../lib/openrouter-efficiency.mjs';
 import { parseChutesUsage } from '../../lib/chutes-efficiency.mjs';
@@ -189,11 +189,12 @@ export async function verifyWithheldAa({ staged, stagedEfficiency, src, runStart
 export async function verifyRetiredAa({ staged, stagedEfficiency, src, runStart, apiReceipt }) {
   if (!isAaLegacyApiRetirement(apiReceipt)) return null;
   const before = JSON.parse(await readFile(join(src.beforeDir, '../../reports/dataset-before.json'), 'utf8'));
-  if (!aaRetirementRetentionAllowed(runStart, before?.generated_at)) fail('AA retirement one-publication exception expired or already consumed');
+  if (!aaRetirementRetentionAllowed(runStart, before?.generated_at)) fail('AA retirement retention window (CR-705) expired or the run did not start from a published dataset');
   eq(staged, await baseline(src, 'artificialanalysis.json'), 'aa withheld snapshot equals the snapshot this run started from');
   assertRetainedDate(staged.collected_at, runStart, 'aa withheld snapshot');
   eq(stagedEfficiency, await baseline(src, 'aa-efficiency.json'), 'aa-efficiency withheld snapshot equals the snapshot this run started from');
   assertRetainedDate(stagedEfficiency.collected_at, runStart, 'aa-efficiency withheld snapshot');
+  if (!isAaRetainedSnapshot(staged.collected_at, stagedEfficiency.collected_at)) fail('AA retirement retention covers only the pinned 4 Nov AA snapshot');
   return { cause: 'legacy_api_retired', retained_collected_at: staged.collected_at, efficiency_collected_at: stagedEfficiency.collected_at,
     models: staged.models.length, source: loc(apiReceipt) };
 }

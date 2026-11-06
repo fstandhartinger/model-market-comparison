@@ -12,7 +12,7 @@ import assert from 'node:assert/strict';
 import { mkdtemp, mkdir, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { AA_LEGACY_API_RETIRED, AA_LEGACY_API_URL, aaLegacyApiRetiredMessage, isAaLegacyApiRetirement, AA_RETENTION_BASELINE } from '../lib/aa-legacy-api.mjs';
+import { AA_LEGACY_API_RETIRED, AA_LEGACY_API_URL, aaLegacyApiRetiredMessage, isAaLegacyApiRetirement, AA_RETENTION_BASELINE, AA_RETAINED_EFFICIENCY_COLLECTED_AT } from '../lib/aa-legacy-api.mjs';
 import { aaIndexVersionChangeMessage } from '../lib/aa-index-version.mjs';
 import { readAaLegacyApiRetired } from '../ops/daily/daily.mjs';
 import { verifyRetiredAa } from '../ops/daily/review-live.mjs';
@@ -20,7 +20,7 @@ import { verifyRetiredAa } from '../ops/daily/review-live.mjs';
 const RUN_START = '2026-11-05T01:16:01.859Z';
 const snapshot = () => ({ source: 'ArtificialAnalysis API v2', collected_at: '2026-11-04', index_version: '5.0', count: 1,
   models: [{ id: 'm0', name: 'Fixture 0', slug: 'fixture-0', evaluations: { artificial_analysis_intelligence_index: 50, gpqa: 0.5 }, pricing: { price_1m_input_tokens: 1, price_1m_output_tokens: 2 } }] });
-const efficiency = () => ({ source_url: 'https://artificialanalysis.ai/models/fixture-0', collected_at: '2026-11-04T08:50:00.000Z', count: 1, rows: [{ source_id: 'm0' }] });
+const efficiency = () => ({ source_url: 'https://artificialanalysis.ai/models/fixture-0', collected_at: AA_RETAINED_EFFICIENCY_COLLECTED_AT, count: 1, rows: [{ source_id: 'm0' }] });
 
 async function runFixture({ staged = {}, before = {} }) {
   const runDir = await mkdtemp(join(tmpdir(), 'cr693-'));
@@ -48,7 +48,7 @@ test('the daily withholds only with the marker and both staged files byte-identi
   try {
     const retained = await readAaLegacyApiRetired({ ...same, error });
     assert.equal(retained.retained_collected_at, '2026-11-04');
-    assert.equal(retained.efficiency_collected_at, '2026-11-04T08:50:00.000Z');
+    assert.equal(retained.efficiency_collected_at, AA_RETAINED_EFFICIENCY_COLLECTED_AT);
     assert.match(retained.reason, /HTTP 410/);
     // The pre-CR-693 error (plain HTTP 410, no marker), any other HTTP failure, and other AA markers fail closed here.
     for (const other of [`HTTP 410 for ${AA_LEGACY_API_URL}`, `HTTP 500 for ${AA_LEGACY_API_URL}`, `HTTP 403 for ${AA_LEGACY_API_URL}`,
@@ -76,7 +76,7 @@ test('the live review proves the withholding from the captured 410 and the start
     const args = (apiReceipt, staged = snapshot(), stagedEfficiency = efficiency()) => ({ staged, stagedEfficiency, src, runStart: RUN_START, apiReceipt });
     const withheld = await verifyRetiredAa(args(receipt()));
     assert.deepEqual({ ...withheld, source: undefined }, { cause: 'legacy_api_retired', retained_collected_at: '2026-11-04',
-      efficiency_collected_at: '2026-11-04T08:50:00.000Z', models: 1, source: undefined });
+      efficiency_collected_at: AA_RETAINED_EFFICIENCY_COLLECTED_AT, models: 1, source: undefined });
     // No receipt, a 200, another status, or a 410 from another URL is the ordinary path, which requires a usable capture.
     for (const r of [undefined, receipt({ status: 200 }), receipt({ status: 404 }), receipt({ url: 'https://artificialanalysis.ai/api/v2/data/media/text-to-image' }), receipt({ method: 'POST' })]) {
       assert.equal(isAaLegacyApiRetirement(r), false);
@@ -94,7 +94,7 @@ test('the live review proves the withholding from the captured 410 and the start
 });
 
 
-test('one publication only: another baseline, missing proof or another UTC day fails closed in daily and review', async () => {
+test('CR-705 window: 5 Nov to 6 Dec from any published dataset since the baseline; outside it fails closed', async () => {
   const aa = JSON.stringify(snapshot()), eff = JSON.stringify(efficiency());
   const files = { 'artificialanalysis.json': aa, 'aa-efficiency.json': eff };
   const fixture = await runFixture({ staged: files, before: files });
@@ -105,20 +105,36 @@ test('one publication only: another baseline, missing proof or another UTC day f
     src: { beforeDir: join(fixture.runDir, 'before/raw') }, runStart, apiReceipt });
   try {
     assert.ok(await readAaLegacyApiRetired({ ...fixture, error }));
-    // Failed attempts have not published: the same baseline remains eligible.
-    assert.ok(await readAaLegacyApiRetired({ ...fixture, error }));
-    for (const runStart of ['2026-11-04T23:59:59Z', '2026-11-06T00:00:00Z', undefined, 'invalid']) {
-      assert.equal(await readAaLegacyApiRetired({ ...fixture, error, runStart }), null);
-      if (runStart) await assert.rejects(verify(runStart), /one-publication exception/);
+    // Later dailies in the window start from a dataset a previous daily published.
+    await writeFile(proof, JSON.stringify({ generated_at: '2026-11-05T17:19:30.190Z' }));
+    for (const runStart of ['2026-11-06T01:14:00Z', '2026-12-06T23:59:59Z']) {
+      assert.ok(await readAaLegacyApiRetired({ ...fixture, error, runStart }));
+      assert.ok(await verify(runStart));
     }
-    // The first successful daily advances generated_at; a second same-day run is denied.
-    for (const generated_at of ['2026-11-05T09:00:00Z', '2026-11-04T10:00:00Z', null]) {
+    for (const runStart of ['2026-11-04T23:59:59Z', '2026-12-07T00:00:00Z', undefined, 'invalid']) {
+      assert.equal(await readAaLegacyApiRetired({ ...fixture, error, runStart }), null);
+      if (runStart) await assert.rejects(verify(runStart), /retention window/);
+    }
+    // A dataset older than the baseline, from the future, or no valid proof is denied.
+    for (const generated_at of ['2026-11-04T09:00:00Z', '2026-11-06T09:00:00Z', null, 'invalid']) {
       await writeFile(proof, JSON.stringify({ generated_at }));
-      assert.equal(await readAaLegacyApiRetired({ ...fixture, error }), null);
-      await assert.rejects(verify(), /one-publication exception/);
+      assert.equal(await readAaLegacyApiRetired({ ...fixture, error, runStart: '2026-11-06T01:14:00Z' }), null);
+      await assert.rejects(verify('2026-11-06T01:14:00Z'), /retention window/);
     }
     await rm(proof);
     assert.equal(await readAaLegacyApiRetired({ ...fixture, error }), null);
     await assert.rejects(verify(), /ENOENT/);
+  } finally { await rm(fixture.runDir, { recursive: true, force: true }); }
+});
+
+test('CR-705 pins the 4 Nov snapshot: any other retained AA date fails closed in daily and review', async () => {
+  const other = { ...snapshot(), collected_at: '2026-11-03' };
+  const files = { 'artificialanalysis.json': JSON.stringify(other), 'aa-efficiency.json': JSON.stringify(efficiency()) };
+  const fixture = await runFixture({ staged: files, before: files });
+  try {
+    assert.equal(await readAaLegacyApiRetired({ ...fixture, error: stepError(aaLegacyApiRetiredMessage()) }), null);
+    await assert.rejects(verifyRetiredAa({ staged: other, stagedEfficiency: efficiency(),
+      src: { beforeDir: join(fixture.runDir, 'before/raw') }, runStart: RUN_START,
+      apiReceipt: { url: AA_LEGACY_API_URL, status: 410, method: 'GET', fetched_at: RUN_START } }), /pinned 4 Nov AA snapshot/);
   } finally { await rm(fixture.runDir, { recursive: true, force: true }); }
 });
