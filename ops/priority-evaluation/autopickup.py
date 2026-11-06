@@ -653,8 +653,11 @@ class Effects:
             stdin = message
         result = subprocess.run(command, input=stdin, text=True, capture_output=True, timeout=60,
                                 env={**os.environ, "NOTIFY_SOURCE": "fastlane-autopickup"}, check=False)
-        self.record("notify", mode=mode, requested=requested, dry_run=self.dry_run, ok=result.returncode == 0)
-        return result.returncode == 0
+        # Exit 75 with "QUEUED: outbox" means notify holds the card and delivers it later: never resend. Treating it as
+        # unsent re-fired the same urgent alert every cycle (card q1793925002, 6 Nov 2026).
+        ok = result.returncode == 0 or (result.returncode == 75 and "QUEUED: outbox" in (result.stdout or ""))
+        self.record("notify", mode=mode, requested=requested, dry_run=self.dry_run, ok=ok)
+        return ok
 
     def agent_handoff(self, message: str) -> bool:
         """Start the urgent-autofix fix agent for this alert without a Telegram card. False = caller sends urgent."""

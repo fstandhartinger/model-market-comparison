@@ -495,6 +495,14 @@ class UrgentAlertRoutingTests(unittest.TestCase):
         self.assertEqual(fx.handoffs, ["x"])
         self.assertEqual([note[0] for note in fx.notes], ["urgent"])
 
+    def test_notify_queued_in_outbox_counts_as_sent(self):
+        # Exit 75 "QUEUED: outbox" must not be resent, or the SLA sweep re-fires the alert every cycle (card q1793925002).
+        for rc, out, expected in ((75, "QUEUED: outbox ob-1 (cap: limit). Do not resend", True),
+                                  (75, "NOT SENT: per-source immediate limit reached", False), (0, "", True), (2, "", False)):
+            done = subprocess.CompletedProcess([], rc, stdout=out, stderr="")
+            with mock.patch.object(ap.subprocess, "run", return_value=done):
+                self.assertEqual(ap.Effects().notify("x", mode="urgent"), expected)
+
     def test_non_urgent_alert_never_starts_an_agent(self):
         fx = FakeEffects()
         with mock.patch.object(ap, "save_state"):
