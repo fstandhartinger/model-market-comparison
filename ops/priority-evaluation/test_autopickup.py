@@ -1277,6 +1277,54 @@ class RefundDecisionTests(DatabaseTestCase):
             ap.apply_refund_decision(row(rid), "approved", "text reply: yes", FakeEffects())
 
 
+class RefundLeaseIsolationTests(DatabaseTestCase):
+    def _refund_row(self, status, *, age="10 minutes", approved=True):
+        rid = insert_order(status=status)
+        if approved:
+            self.assertTrue(ap.apply_refund_decision(
+                row(rid), "approved", "telegram:16300:900003", FakeEffects()))
+        ap.sql(f"UPDATE {ap.TABLE} SET pickup_status='started', "
+               f"updated_at=now()-interval '{age}' WHERE id='{rid}'")
+        return rid
+
+    def test_repeated_pickup_cycles_leave_due_and_pending_refunds_claimable(self):
+        import worker
+        for status in ("refund_due", "refund_pending"):
+            with self.subTest(status=status):
+                rid = self._refund_row(status)
+                before = ap.sql(f"SELECT updated_at::text FROM {ap.TABLE} WHERE id='{rid}'")
+                fx = FakeEffects()
+                for _ in range(3):
+                    make_due(rid)
+                    counts = ap.cycle(fx)
+                    self.assertEqual(counts["claimed"], 0)
+                    self.assertEqual(counts["errors"], 0)
+                self.assertEqual(ap.sql(f"SELECT updated_at::text FROM {ap.TABLE} WHERE id='{rid}'"), before)
+                self.assertEqual(fx.mails, [])
+                self.assertEqual(fx.started, [])
+                with mock.patch.object(worker, "sql_json", side_effect=ap.sql_json):
+                    self.assertEqual(worker.claim_refund()["id"], rid)
+                # Keep the previous subtest's now-pending row out of later claims.
+                ap.sql(f"UPDATE {ap.TABLE} SET status='refunded', pickup_status='done' WHERE id='{rid}'")
+
+    def test_pickup_does_not_shorten_refund_worker_backoff(self):
+        import worker
+        for status in ("refund_due", "refund_pending"):
+            rid = self._refund_row(status, age="1 minute")
+            self.assertEqual(ap.claim_rows(None, ap.JOB_ROOT), [])
+            with mock.patch.object(worker, "sql_json", side_effect=ap.sql_json):
+                self.assertIsNone(worker.claim_refund())
+
+    def test_unapproved_queued_refunds_still_reach_the_separate_card_sweep(self):
+        import worker
+        ids = {self._refund_row(status, approved=False)
+               for status in ("refund_due", "refund_pending")}
+        self.assertEqual(ap.claim_rows(None, ap.JOB_ROOT), [])
+        self.assertEqual({r["id"] for r in ap.refund_decision_rows(None, ap.JOB_ROOT)}, ids)
+        with mock.patch.object(worker, "sql_json", side_effect=ap.sql_json):
+            self.assertIsNone(worker.claim_refund())
+
+
 class AgentToolBoundaryTests(unittest.TestCase):
     def test_static_claude_access_and_prompt_paths_are_fixed_and_do_not_include_home(self):
         rid = str(uuid.uuid4())
