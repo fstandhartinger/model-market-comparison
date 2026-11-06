@@ -998,7 +998,11 @@ def claim_rows(synthetic_id: str | None, job_root: Path, limit: int = MAX_ROWS_P
           WHERE r.id=(
             SELECT r2.id FROM {TABLE} AS r2
             WHERE {predicate} {exclusion}
-              AND r2.status IN ('paid','review_passed','refund_due','refund_pending','refunded','completed')
+              -- Queued refunds belong to the refund worker: its retry lease uses
+              -- updated_at. Intake also writes that timestamp, so merely preserving
+              -- it in this claim would still starve the worker on every cycle.
+              -- Approval cards run separately; refunded rows return for their notice.
+              AND r2.status IN ('paid','review_passed','refunded','completed')
               AND r2.pickup_status IS DISTINCT FROM 'done'
               AND r2.payment_intent_id IS NOT NULL AND r2.checkout_session_id IS NOT NULL
               AND (r2.pickup_attempts < {MAX_PICKUP_ATTEMPTS} OR r2.pickup_status NOT IN ('not_due','pending','starting','failed'))
