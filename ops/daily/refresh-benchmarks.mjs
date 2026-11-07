@@ -697,7 +697,10 @@ export async function refreshBenchmarks({ runDir, review = reviewArtifact, runne
   const codingId = `aa-coding-agent-index::${CODING_AGENT_VERSION}`;
   checks.push(codingWithheld
     ? { id: codingId, status: 'source_changed_retained', rows: coding.rows.length, collected_at: coding.collected_at,
-      reason: `AA Coding Agent Index page now states v${codingWithheld.page_version}; the v${CODING_AGENT_VERSION} snapshot of ${coding.collected_at} is retained with its own date until the new version is reviewed and registered separately.` }
+      reason: codingWithheld.removed
+        // CR-709: a small pure removal of published rows; the full snapshot stays until the removal is reviewed.
+        ? `AA Coding Agent v${CODING_AGENT_VERSION} board no longer lists ${codingWithheld.removed.length} published row(s) (${codingWithheld.removed.join(', ')}); the v${CODING_AGENT_VERSION} snapshot of ${coding.collected_at} is retained with its own date until the removal is reviewed.`
+        : `AA Coding Agent Index page now states v${codingWithheld.page_version}; the v${CODING_AGENT_VERSION} snapshot of ${coding.collected_at} is retained with its own date until the new version is reviewed and registered separately.` }
     : { id: codingId, status: codingRetained ? 'retained_after_dispute' : 'updated', rows: coding.rows.length, ...(codingRetained ? { collected_at: coding.collected_at } : {}) });
   // CR-545: the frozen v1.5 identity gets no check here; like v1.4 it falls through to the registry's
   // retained-protocol check below (no adapter), so it is not reported as an open source change.

@@ -34,7 +34,7 @@ import { flightRecords, objects, resolveFlight, parseArtificialAnalysisMetadata 
 import { parseAaEfficiency } from '../../lib/aa-efficiency.mjs';
 import { AA_INDEX_PINNED_MAJOR, aaIndexPageVersions, assertAdoptionCoverage, changedAaIndexVersion, pinnedAaIndexVersion, snapshotIndexMajor } from '../../lib/aa-index-version.mjs';
 import { AA_LEGACY_API_URL, isAaLegacyApiRetirement, aaRetirementRetentionAllowed, isAaRetainedSnapshot } from '../../lib/aa-legacy-api.mjs';
-import { CODING_AGENT_FILE, CODING_AGENT_URL, CODING_AGENT_VERSION, changedCodingAgentVersion, codingAgentPageVersions, parseCodingAgents } from '../../lib/aa-coding-agents.mjs';
+import { CODING_AGENT_FILE, CODING_AGENT_ROSTER_SHRANK, CODING_AGENT_URL, CODING_AGENT_VERSION, changedCodingAgentVersion, codingAgentPageVersions, codingAgentShrinkRetentionAllowed, parseCodingAgents } from '../../lib/aa-coding-agents.mjs';
 import { parseOpenRouterPage, parseOpenRouterCache, parseOpenRouterRankings } from '../../lib/openrouter-efficiency.mjs';
 import { parseChutesUsage } from '../../lib/chutes-efficiency.mjs';
 import { absentIdentities, classifyBoardAbsence, endpointIdentity, BOARD_REGISTRY_INCONSISTENT } from '../../lib/live-source.mjs';
@@ -699,12 +699,33 @@ function codingSourceRows(html) {
 // older date. It contributes no packet row — there is no fresh value to check.
 export async function verifyWithheldCoding({ staged, src, runStart, receipt }) {
   const changed = changedCodingAgentVersion(codingAgentPageVersions(receipt.body));
-  if (!changed) return null;
+  if (!changed) return verifyShrunkCoding({ staged, src, runStart, receipt });
   const label = `coding v${CODING_AGENT_VERSION} withheld snapshot`;
   eq(staged.version, CODING_AGENT_VERSION, `${label} version`);
   eq(staged, await baseline(src, CODING_AGENT_FILE), `${label} equals the snapshot this run started from`);
   assertRetainedDate(staged.collected_at, runStart, label);
   return { retained_collected_at: staged.collected_at, page_version: changed, pinned_version: CODING_AGENT_VERSION, rows: staged.rows.length, source: loc(receipt) };
+}
+
+// CR-709 (2026-11-07): the roster-shrink withholding, proven the same way. The captured page, parsed against the
+// snapshot this run started from, must raise the collector's roster-shrink marker (every captured row valid, a small
+// pure removal of known identities); the staged file must equal that snapshot with its own older date, inside the
+// retention window. Any other parse outcome returns null and the ordinary path fails closed on the shrink.
+async function verifyShrunkCoding({ staged, src, runStart, receipt }) {
+  const start = await baseline(src, CODING_AGENT_FILE).catch(() => null);
+  if (!start) return null;
+  let removed = null;
+  try { parseCodingAgents(receipt.body, start); } catch (error) {
+    const match = String(error?.message ?? '').match(new RegExp(`^${CODING_AGENT_ROSTER_SHRANK} \\(([0-9]+) of ([0-9]+) published rows; removed ([^)]+)\\)`));
+    if (match) removed = { rows: Number(match[1]), previous_count: Number(match[2]), ids: match[3].split(',') };
+  }
+  if (!removed) return null;
+  const label = `coding v${CODING_AGENT_VERSION} withheld snapshot (roster shrink)`;
+  eq(staged.version, CODING_AGENT_VERSION, `${label} version`);
+  eq(staged, start, `${label} equals the snapshot this run started from`);
+  assertRetainedDate(staged.collected_at, runStart, label);
+  if (!codingAgentShrinkRetentionAllowed(runStart, staged.collected_at)) fail(`${label}: retained snapshot ${staged.collected_at} is past the retention window`);
+  return { retained_collected_at: staged.collected_at, removed: removed.ids, page_rows: removed.rows, pinned_version: CODING_AGENT_VERSION, rows: staged.rows.length, source: loc(receipt) };
 }
 
 async function verifyCoding(rawDir, src, runStart, rows) {
@@ -860,7 +881,7 @@ export async function reviewLive({ runDir, rawDir = RAW_DEFAULT, batchSize = 25,
       'Rotated/retained OpenRouter page, cache and rankings entries and AA retained metadata are prior accepted observations republished with original dates; they are checked for original dates AND equality to the prior accepted snapshot, not re-verified against this run\u2019s sources.',
       'data/raw/aa-coding-agents.json (v1.4) and the frozen data/raw/aa-coding-agents-v1.5.json are intentionally untouched; the daily orchestrator validates them.',
       'A withheld DesignArena board (retained.designarena_board) stages no new byte: its rows are the previously published snapshot with its own older date, proven equal to it, and the withholding itself is re-derived from this run\u2019s captured board and registry bytes. Those rows are not in the critic packets, because there is no fresh value to check.',
-      `A withheld Coding Agent v${CODING_AGENT_VERSION} snapshot (retained.aa_coding_current) stages no new byte: the captured page states a different index version for every statement, and the staged v${CODING_AGENT_VERSION} file is proven equal to the snapshot this run started from with its own older date. Its rows are not in the critic packets.`,
+      `A withheld Coding Agent v${CODING_AGENT_VERSION} snapshot (retained.aa_coding_current) stages no new byte: the captured page states a different index version for every statement (or, CR-709, re-derives a small pure removal of published rows against the starting snapshot), and the staged v${CODING_AGENT_VERSION} file is proven equal to the snapshot this run started from with its own older date. Its rows are not in the critic packets.`,
       'A withheld AA snapshot (retained.aa_index) stages no new byte: the captured leaderboard names another Intelligence Index major version in every statement, and artificialanalysis.json and aa-efficiency.json are proven equal to the snapshot this run started from with their own older dates. Their rows are not in the critic packets.',
       'A withheld AA snapshot (retained.aa_api_retired) stages no new byte: this run\u2019s last capture of the legacy AA Data API route is its 410 Gone, and artificialanalysis.json and aa-efficiency.json are proven equal to the snapshot this run started from with their own older dates. Their rows are not in the critic packets.',
       'This report is the programmatic numeric/source check only. The separate live-step-result.json records adapter-contract gauntlet acceptance and exact model example coverage.',
