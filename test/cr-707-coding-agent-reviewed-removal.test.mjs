@@ -1,4 +1,4 @@
-// CR-706 (2026-11-07): AA dropped one Coding Agent v2.0 row (Mistral Vibe - Mistral Large 4 (High)). A shrink still
+// CR-707 (2026-11-07): AA dropped one Coding Agent v2.0 row (Mistral Vibe - Mistral Large 4 (High)). A shrink still
 // fails closed; only an unexpired owner-reviewed approval bound to the exact previous/current/removed id sets lowers
 // the floor, and only by the named removals.
 import test from "node:test";
@@ -25,7 +25,7 @@ const approval = (over = {}) => ({
   current_identity_sha256: codingAgentIdentityDigest(current.map((r) => r.id)), ...over,
 });
 
-test("CR-706: an exact unexpired approval accepts the named removal and records it", () => {
+test("CR-707: an exact unexpired approval accepts the named removal and records it", () => {
   assert.throws(() => parseCodingAgents(html(current), previous, { now }), /incomplete scrape: 14 rows \(minimum 15\)/);
   const parsed = parseCodingAgents(html(current), previous, { approval: approval(), now });
   assert.equal(parsed.count, 14);
@@ -33,7 +33,7 @@ test("CR-706: an exact unexpired approval accepts the named removal and records 
   assert.deepEqual(parsed.reviewed_removal.removed_rows, previous.rows.filter((r) => r.source_id === "synthetic-3"));
 });
 
-test("CR-706: expired, overlong, mismatched or broader removals keep the floor", () => {
+test("CR-707: expired, overlong, mismatched or broader removals keep the floor", () => {
   const bad = [
     approval({ expires_at: "2026-11-07T01:59:00Z" }),
     approval({ reviewed_at: "2026-11-06T00:00:00Z" }),
@@ -50,7 +50,7 @@ test("CR-706: expired, overlong, mismatched or broader removals keep the floor",
   assert.throws(() => parseCodingAgents(html(two), previous, { approval: approval({ current_identity_sha256: codingAgentIdentityDigest(two.map((r) => r.id)) }), now }), /incomplete scrape/);
 });
 
-test("CR-706: the committed approval binds the retained 2026-11-07 capture", async () => {
+test("CR-707: the committed approval binds the retained 2026-11-07 capture", async () => {
   const approvals = JSON.parse(await readFile(new URL("../data/raw/source-change-approvals.json", import.meta.url), "utf8"));
   const a = approvals[CODING_AGENT_APPROVAL_KEY];
   assert.equal(CODING_AGENT_APPROVAL_KEY, "aa_coding_agents_v2_0");
