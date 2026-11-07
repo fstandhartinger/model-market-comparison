@@ -9,7 +9,7 @@ import { writeJSONAtomic } from '../../lib/snapshot.mjs';
 import { BOARD_REGISTRY_INCONSISTENT } from '../../lib/live-source.mjs';
 import { AA_INDEX_PINNED_MAJOR, AA_INDEX_VERSION_CHANGED } from '../../lib/aa-index-version.mjs';
 import { aaLegacyApiRetiredMessage, aaRetirementRetentionAllowed, isAaRetainedSnapshot } from '../../lib/aa-legacy-api.mjs';
-import { CODING_AGENT_FILE, CODING_AGENT_SOURCE_KEY, CODING_AGENT_VERSION, CODING_AGENT_VERSION_CHANGED, FROZEN_CODING_AGENT_FILES } from '../../lib/aa-coding-agents.mjs';
+import { CODING_AGENT_FILE, CODING_AGENT_ROSTER_SHRANK, CODING_AGENT_SOURCE_KEY, CODING_AGENT_VERSION, CODING_AGENT_VERSION_CHANGED, FROZEN_CODING_AGENT_FILES, codingAgentShrinkRetentionAllowed } from '../../lib/aa-coding-agents.mjs';
 import { COMMIT_TRAILER, assessCommitScope, parseScope, parseStatusPorcelain, pricesScopeViolations, selectProducerCritic, sourceFreshnessErrors, staleCollectorDigestLines } from './policy.mjs';
 import { executeNotifications } from './notify.mjs';
 import { compactPublishedRun } from './compact-run.mjs';
@@ -77,6 +77,24 @@ export async function readCodingAgentVersionChange({ runDir, work, error, read =
   const retainedCollectedAt = JSON.parse(published.toString('utf8')).collected_at ?? null;
   return { page_version: match[1], pinned_version: match[2], retained_collected_at: retainedCollectedAt,
     reason: `AA Coding Agent Index page now states v${match[1]}; the v${match[2]} collector does not adopt a new index version without methodology review. The published v${match[2]} snapshot of ${retainedCollectedAt ?? 'unknown date'} stays with its own date.` };
+}
+
+// CR-709 (2026-11-07): AA's v2.0 board lost a published row (pure removal, no new identity). The collector refuses
+// it before its atomic write; withhold only with the collector's roster-shrink marker AND a staged file byte-identical
+// to this run's copy of the published snapshot AND that snapshot at most CODING_AGENT_SHRINK_RETENTION_DAYS old.
+// Any other failure (larger drop, new identities, invalid rows, older snapshot) still fails the run closed.
+// review-live.mjs re-derives the removal from the captured page bytes and the starting snapshot.
+export async function readCodingAgentRosterShrink({ runDir, work, error, runStart, read = readFile }) {
+  const match = String(error?.message ?? '').match(new RegExp(`\\b${CODING_AGENT_ROSTER_SHRANK} \\(([0-9]+) of ([0-9]+) published rows; removed ([0-9a-zA-Z_,.:-]+)\\)`));
+  if (!match) return null;
+  const staged = await read(join(work, 'data/raw', CODING_AGENT_FILE)).catch(() => null);
+  const published = await read(join(runDir, 'before/raw', CODING_AGENT_FILE)).catch(() => null);
+  if (!staged || !published || hash(staged) !== hash(published)) return null;
+  const retainedCollectedAt = JSON.parse(published.toString('utf8')).collected_at ?? null;
+  if (!codingAgentShrinkRetentionAllowed(runStart, retainedCollectedAt)) return null;
+  const removed = match[3].split(',');
+  return { rows: Number(match[1]), previous_count: Number(match[2]), removed, retained_collected_at: retainedCollectedAt,
+    reason: `AA Coding Agent v${CODING_AGENT_VERSION} board now lists ${match[1]} of the ${match[2]} published rows (removed ${removed.join(', ')}); a removal is reviewed, not published as a smaller board. The published v${CODING_AGENT_VERSION} snapshot of ${retainedCollectedAt} stays with its own date.` };
 }
 
 // CR-629 (2026-10-31): the same withheld path for the AA Intelligence Index (v4.x → v5.0 on 2026-10-28). fetch-aa
@@ -288,11 +306,19 @@ export async function runDaily({ repo = ROOT, home = '/opt/benchmarkheaven-daily
         await command(`fetch-coding-v${CODING_AGENT_VERSION}`, process.execPath, ['scripts/fetch-aa-coding-agents.mjs']);
       } catch (error) {
         const changed = await readCodingAgentVersionChange({ runDir, work, error });
-        if (!changed) throw error;
-        report.retained_sources.push({ source: CODING_AGENT_SOURCE_KEY, step: `fetch-coding-v${CODING_AGENT_VERSION}`, reason: changed.reason, page_version: changed.page_version, retained_collected_at: changed.retained_collected_at });
-        report.warnings = report.warnings || [];
-        report.warnings.push(`fetch-coding-v${CODING_AGENT_VERSION} withheld: ${changed.reason}`);
-        console.warn(`WARN fetch-coding-v${CODING_AGENT_VERSION}: AA states v${changed.page_version}; keeping the published v${changed.pinned_version} snapshot (${changed.retained_collected_at ?? 'unknown date'})`);
+        const shrank = changed ? null : await readCodingAgentRosterShrink({ runDir, work, error, runStart: started });
+        if (!changed && !shrank) throw error;
+        if (shrank) {
+          report.retained_sources.push({ source: CODING_AGENT_SOURCE_KEY, step: `fetch-coding-v${CODING_AGENT_VERSION}`, reason: shrank.reason, removed: shrank.removed, retained_collected_at: shrank.retained_collected_at });
+          report.warnings = report.warnings || [];
+          report.warnings.push(`fetch-coding-v${CODING_AGENT_VERSION} withheld: ${shrank.reason}`);
+          console.warn(`WARN fetch-coding-v${CODING_AGENT_VERSION}: AA board lost ${shrank.removed.length} published row(s); keeping the published snapshot (${shrank.retained_collected_at})`);
+        } else {
+          report.retained_sources.push({ source: CODING_AGENT_SOURCE_KEY, step: `fetch-coding-v${CODING_AGENT_VERSION}`, reason: changed.reason, page_version: changed.page_version, retained_collected_at: changed.retained_collected_at });
+          report.warnings = report.warnings || [];
+          report.warnings.push(`fetch-coding-v${CODING_AGENT_VERSION} withheld: ${changed.reason}`);
+          console.warn(`WARN fetch-coding-v${CODING_AGENT_VERSION}: AA states v${changed.page_version}; keeping the published v${changed.pinned_version} snapshot (${changed.retained_collected_at ?? 'unknown date'})`);
+        }
       }
       // Epoch is an independently dated attachment. Its collector writes atomically, so any network,
       // HTTP, layout or validation failure leaves the last verified snapshot byte-for-byte intact.
