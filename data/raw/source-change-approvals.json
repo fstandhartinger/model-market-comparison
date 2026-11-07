@@ -565,5 +565,20 @@
     "reviewed_at": "2026-10-31",
     "expires_at": "2026-11-03T00:00:00Z",
     "review_basis": "The official page serves one 5-row table; 5 of the 7 removed models have retirement dates on the supported-models page, while GPT-4o and GPT-4o mini were removed without a listed date."
+  },
+  "aa_coding_agents_v2_0": {
+    "version": "2.0",
+    "previous_identity_sha256": "89c57db42025a74de9360224dffab13ec2e755a60ac0f209552461ae2e421743",
+    "current_identity_sha256": "23f63efdaadda061c9585715b4f47c926a2e4be3c8c456af529100a40ffe3989",
+    "removed": [
+      "9fcf1e000a8ac75cca614977bcac25da"
+    ],
+    "reviewed_at": "2026-11-07T01:37:00Z",
+    "expires_at": "2026-11-10T01:30:00Z",
+    "primary_url": "https://artificialanalysis.ai/agents/coding-agents",
+    "primary_capture_sha256": "f565fa79f82784bbe60d21e555672a1a81c1b8389523c3c9115022c38882585e",
+    "evidence_file": "ops/daily-repair-2026-11-07/aa-coding-agents/evidence/f565fa79f82784bbe60d21e555672a1a81c1b8389523c3c9115022c38882585e.gz",
+    "review_basis": "Both 2026-11-07 daily captures (00:56Z sha256 e6504850..., 01:31Z sha256 f565fa79...) serve the same 33 benchmarkRows. The only absence from the 2026-11-05 34-row snapshot is 9fcf1e000a8ac75cca614977bcac25da (Mistral Vibe - Mistral Large 4 (High), 0.4828, rank 15). AA now labels the former Mistral Large 4 (Medium) row 730b8ffd93e83875305984c999467c69 as (High) with identical component scores (0.3541), and the page's model list still names both settings: an upstream consolidation of the Mistral Vibe rows, not a partial response. No other row changed; neither row is in the top five. Approves only this exact one-identity removal, expiring within three days.",
+    "owner_acceptance": "Operator: Benchmark Heaven self-heal repair agent (claude-opus-5-5, job self-heal-2026-11-07-a1), 2026-11-07, CR-707, following the CR-632 / aa_models reviewed-contraction precedent. Identity sets were re-derived from the retained captures with the repository parser, not taken from the error text."
   }
 }

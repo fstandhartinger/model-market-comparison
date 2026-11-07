@@ -23,6 +23,10 @@ The collector (`lib/aa-coding-agents.mjs`, `CODING_AGENT_CONTRACTS`) is pinned t
 
 The Benchmarks matrix merges "best of" across versions only for v1.4 and v1.5 (`data/benchmark-taxonomy.json`); v2.0 is a separate row.
 
+## Reviewed removals (CR-707)
+
+A smaller `benchmarkRows` array than the previous snapshot fails as an incomplete scrape. An owner-reviewed entry `aa_coding_agents_v2_0` in `data/raw/source-change-approvals.json` may accept one exact removal: it binds version 2.0, the SHA-256 of the sorted previous and current source-id sets and the exact removed ids, and expires within three days of review. The accepted removal is recorded in the snapshot's `reviewed_removal` (removed rows kept verbatim). On 2026-11-07 AA dropped `9fcf1e000a8ac75cca614977bcac25da` (Mistral Vibe - Mistral Large 4 (High), 0.4828) and relabelled the former (Medium) row `730b8ffd93e83875305984c999467c69` as (High) with unchanged scores; capture `ops/daily-repair-2026-11-07/aa-coding-agents/evidence/`.
+
 ## Handling and limits
 
 AA-derived values remain subject to the repository's source-permission hold. Do not refresh, remove, or alter numeric AA rows until the written-permission question is resolved. The v1.4, v1.5 and v2.0 captures are separate dated snapshots, not a single continuous series. Any median or other display transform must follow an explicit permission decision and a reviewed change request.
