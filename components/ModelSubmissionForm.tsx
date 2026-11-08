@@ -8,7 +8,13 @@ import {
 
 type Tier = 'api_or_small_open' | 'large_open_gpu';
 type Visibility = 'public' | 'private';
-type Done = { reference: string; queuePosition: number | null; fastLane?: boolean };
+type Done = { reference: string; queuePosition: number | null; fastLane?: boolean; reviewFirst?: { message: string; reason: string } };
+type Advice = { message: string; reviewLabel: string };
+type Duplicate = { existingStatus: string; createdAt: string };
+const DUPLICATE_STATUS_TEXT: Record<string, string> = {
+  paid: 'paid, evaluation in progress', review_passed: 'paid, evaluation in progress', completed: 'completed',
+  checkout_pending: 'payment started but not completed',
+};
 
 const BENCH_HELP: Record<FollowupBenchmark, string> = {
   jevbench: 'Text-based Jev-class decisions',
@@ -33,6 +39,10 @@ export function ModelSubmissionForm({ followups, formToken, prices, testMode }: 
   const [fieldError, setFieldError] = useState('');
   const [done, setDone] = useState<Done | null>(null);
   const [retryable, setRetryable] = useState(false);
+  const [apiPublic, setApiPublic] = useState(false);
+  const [advice, setAdvice] = useState<Advice | null>(null);
+  const [duplicate, setDuplicate] = useState<Duplicate | null>(null);
+  const formRef = useRef<HTMLFormElement>(null);
   const idRef = useRef<string | null>(null);
   const fastBox = useRef<HTMLDivElement>(null);
 
@@ -57,11 +67,16 @@ export function ModelSubmissionForm({ followups, formToken, prices, testMode }: 
     setBenchmarks((c) => c.includes(name) ? c.filter((x) => x !== name) : [...c, name]);
   }
 
-  async function submit(event: React.FormEvent<HTMLFormElement>) {
+  function submit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    if (busy) return;
-    setBusy(true); setError(''); setFieldError(''); setRetryable(false);
-    const form = new FormData(event.currentTarget);
+    void send({});
+  }
+
+  // extra: confirmDuplicate / requestReview, set only by the explicit buttons below.
+  async function send(extra: { confirmDuplicate?: boolean; requestReview?: boolean }) {
+    if (busy || !formRef.current) return;
+    setBusy(true); setError(''); setFieldError(''); setRetryable(false); setAdvice(null); setDuplicate(null);
+    const form = new FormData(formRef.current);
     idRef.current ??= crypto.randomUUID();
     const body = {
       submissionId: idRef.current,
@@ -80,6 +95,8 @@ export function ModelSubmissionForm({ followups, formToken, prices, testMode }: 
       pricingTier: fastActive ? tier : undefined,
       visibility: fastActive ? visibility : undefined,
       termsAccepted: fastActive ? terms : undefined,
+      apiPublic: fastActive && !apiKey.trim() && apiPublic,
+      ...extra,
       website: form.get('website'),
     };
     // The key lives only in this request body; clear it from the page right away.
@@ -88,7 +105,28 @@ export function ModelSubmissionForm({ followups, formToken, prices, testMode }: 
       const response = await fetch('/api/submissions', {
         method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body),
       });
-      const result = await response.json().catch(() => ({})) as { ok?: boolean; url?: string; error?: string; field?: string; reference?: string; queuePosition?: number | null; fastLane?: boolean };
+      const result = await response.json().catch(() => ({})) as {
+        ok?: boolean; url?: string; error?: string; field?: string; reference?: string; queuePosition?: number | null; fastLane?: boolean;
+        duplicate?: boolean; existing_status?: string; created_at?: string; message?: string;
+        reviewFirst?: boolean; intake?: { message?: string; code?: string; reviewLabel?: string };
+      };
+      if (response.status === 409 && result.duplicate) {
+        // Nothing was charged. The same submission id is kept so "Pay again anyway" resubmits the same order.
+        setDuplicate({ existingStatus: result.existing_status ?? '', createdAt: result.created_at ?? '' });
+        setBusy(false);
+        return;
+      }
+      if (response.ok && result.reviewFirst) {
+        setDone({ reference: result.reference ?? '', queuePosition: null, fastLane: true, reviewFirst: { message: result.message ?? '', reason: result.intake?.message ?? '' } });
+        setBusy(false);
+        return;
+      }
+      if (response.ok && result.intake && !result.url) {
+        // The automatic check did not pass: no payment was started. Offer manual review first.
+        setAdvice({ message: result.intake.message ?? '', reviewLabel: result.intake.reviewLabel ?? 'Request manual review first (pay only after we confirm)' });
+        setBusy(false);
+        return;
+      }
       if (response.ok && fastActive && result.url?.startsWith('https://checkout.stripe.com/')) {
         window.location.assign(result.url);
         return;
@@ -125,12 +163,13 @@ export function ModelSubmissionForm({ followups, formToken, prices, testMode }: 
 
   if (done) {
     return <div className="rounded-xl border border-line bg-panel p-5" role="status" data-bh-submit-done>
-      <h2 className="text-xl font-semibold">Thanks — your submission is in</h2>
+      <h2 className="text-xl font-semibold">{done.reviewFirst ? 'Thanks — we will review your model first' : 'Thanks — your submission is in'}</h2>
+      {done.reviewFirst && <p className="mt-3 text-sm" data-bh-review-first>{done.reviewFirst.message} You have not been charged.{done.reviewFirst.reason ? <> What we found: {done.reviewFirst.reason}</> : null}</p>}
       <p className="mt-3 text-sm">Reference: <b className="tabular-nums">{done.reference}</b>{done.queuePosition ? <> · Position in the regular queue: <b>#{done.queuePosition}</b></> : null}</p>
       <ul className="mt-3 list-disc space-y-1.5 pl-5 text-sm">
         <li>We&apos;ll email you a confirmation.</li>
         <li>We review the submission and evaluate it in the order received. We email you when results are published.</li>
-        {done.fastLane && <li>This submission is in the fast lane: results within 48 hours of payment, or a full refund on request.</li>}
+        {done.fastLane && !done.reviewFirst && <li>This submission is in the fast lane: results within 48 hours of payment, or a full refund on request.</li>}
       </ul>
       <p className="mt-4 text-sm"><a className="text-accent underline" href="/submit">Submit another model</a> · <a className="text-accent underline" href="/jev-models">Back to JevBench</a></p>
     </div>;
@@ -140,7 +179,7 @@ export function ModelSubmissionForm({ followups, formToken, prices, testMode }: 
   const choice = 'flex gap-3 rounded-lg border border-line bg-surface/60 p-3';
   const bad = (name: string) => fieldError === name ? { 'aria-invalid': true as const } : {};
 
-  return <form className="space-y-7" onSubmit={submit} noValidate={false}>
+  return <form ref={formRef} className="space-y-7" onSubmit={submit} noValidate={false}>
     {testMode && <div className="rounded-lg border border-amber-500/50 bg-amber-500/10 px-4 py-3 text-sm" role="status"><b>TEST MODE.</b> The fast lane uses Stripe test payments; no real charge will be made.</div>}
 
     <div className="grid gap-4 sm:grid-cols-2">
@@ -150,9 +189,13 @@ export function ModelSubmissionForm({ followups, formToken, prices, testMode }: 
       <label className="block text-sm font-medium sm:col-span-2">API URL<input className={field} name="apiUrl" type="url" maxLength={2048} placeholder="https://api.example.com/v1" value={apiUrl} onChange={(e) => setApiUrl(e.target.value)} {...bad('apiUrl')} /></label>
       <p className="bh-muted -mt-2 text-xs sm:col-span-2">Add at least one of the three. An API URL must be a public https address.</p>
       <label className="block text-sm font-medium sm:col-span-2">API key (optional)
-        <input className={field} name="apiKey" type="password" autoComplete="off" maxLength={4096} value={apiKey} onChange={(e) => setApiKey(e.target.value)} disabled={!apiUrl.trim()} spellCheck={false} {...bad('apiKey')} />
+        <input className={field} name="apiKey" type="password" autoComplete="off" maxLength={4096} value={apiKey} onChange={(e) => { setApiKey(e.target.value); if (e.target.value) setApiPublic(false); }} disabled={!apiUrl.trim()} spellCheck={false} {...bad('apiKey')} />
         <span className="bh-muted mt-1 block text-xs font-normal">Stored encrypted, never shown again, used only for this evaluation and deleted afterwards.{!apiUrl.trim() && ' Add an API URL to enable this field.'}</span>
       </label>
+      {fastActive && apiUrl.trim() && !apiKey.trim() && <label className="flex gap-3 text-sm sm:col-span-2" data-bh-api-public>
+        <input className="mt-1 accent-current" type="checkbox" checked={apiPublic} onChange={(e) => setApiPublic(e.target.checked)} />
+        <span>Endpoint is public, no key needed<span className="bh-muted block text-xs">We test it once before payment. Without this we review your endpoint first and email you a payment link.</span></span>
+      </label>}
       <label className="block text-sm font-medium sm:col-span-2">Description / notes (optional)<textarea className={field} name="description" rows={4} maxLength={2000} placeholder="Anything we should know: model version, serving setup, rate limits, special prompts." {...bad('description')} /></label>
       <label className="block text-sm font-medium">Contact email<input className={field} name="email" type="email" autoComplete="email" maxLength={254} required {...bad('email')} /></label>
       <label className="block text-sm font-medium">X handle (optional)<input className={field} name="xHandle" maxLength={16} placeholder="@name" autoComplete="off" {...bad('xHandle')} /></label>
@@ -214,6 +257,17 @@ export function ModelSubmissionForm({ followups, formToken, prices, testMode }: 
 
     <div className="sr-only" aria-hidden="true"><label>Leave this field blank<input name="website" tabIndex={-1} autoComplete="off" /></label></div>
 
+    {duplicate && <div className="rounded-lg border border-amber-500/50 bg-amber-500/10 px-3 py-2 text-sm" role="alert" data-bh-duplicate>
+      <p>You already ordered an evaluation of this model in the last 24 hours (status: {DUPLICATE_STATUS_TEXT[duplicate.existingStatus] ?? duplicate.existingStatus}). Pay again anyway?</p>
+      <p className="mt-2 flex flex-wrap gap-2">
+        <button type="button" className="bh-button bh-button-primary" onClick={() => void send({ confirmDuplicate: true })} disabled={busy}>Yes, pay again</button>
+        <button type="button" className="bh-button" onClick={() => setDuplicate(null)} disabled={busy}>No, cancel</button>
+      </p>
+    </div>}
+    {advice && <div className="rounded-lg border border-amber-500/50 bg-amber-500/10 px-3 py-2 text-sm" role="alert" data-bh-intake-advice>
+      <p>We have not charged you. {advice.message}</p>
+      <p className="mt-2"><button type="button" className="bh-button bh-button-primary" onClick={() => void send({ requestReview: true })} disabled={busy}>{advice.reviewLabel}</button></p>
+    </div>}
     {error && <div className="rounded-lg border border-red-500/50 bg-red-500/10 px-3 py-2 text-sm" role="alert">
       <p>{error}</p>
       {retryable && <p className="mt-2"><button type="button" className="bh-button" onClick={regularQueueInstead} disabled={busy}>Send it to the regular queue without fast lane</button></p>}

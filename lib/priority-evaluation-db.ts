@@ -1,11 +1,13 @@
 import { Pool, type PoolClient } from 'pg';
-import { ACCOUNTS_SCHEMA_SQL, MODEL_SUBMISSIONS_SCHEMA_SQL } from './accounts-schema.mjs';
+import { ACCOUNTS_SCHEMA_SQL, INTAKE_REVIEW_SCHEMA_SQL, MODEL_SUBMISSIONS_SCHEMA_SQL } from './accounts-schema.mjs';
+import { DUPLICATE_STATUSES, DUPLICATE_WINDOW_HOURS, findDuplicate, payableRow } from './priority-intake.mjs';
 
 type Submission = {
   submissionId: string; email: string; modelName: string; modelLink: string; codeLink: string;
   accessType: 'open_weights' | 'api_endpoint'; accessInstructions: string; notes: string;
   pricingTier: 'api_or_small_open' | 'large_open_gpu'; benchmarks: string[];
   visibility: 'public' | 'private'; quote: { currency: 'usd'; unitAmount: number; quantity: number; totalAmount: number };
+  apiUrl?: string; apiPublic?: boolean; confirmDuplicate?: boolean; requestReview?: boolean;
 };
 
 let pool: Pool | null = null;
@@ -63,6 +65,76 @@ export async function preparePriorityRequest(input: Submission, stripeMode: 'tes
   if (row.status !== 'checkout_pending' && row.status !== 'checkout_failed') throw new PrioritySubmissionConflict('This request is already paid or closed. Contact us if you need help.');
   await p.query("UPDATE bh_priority_evaluation_requests SET status='checkout_pending', updated_at=now() WHERE id=$1", [row.id]);
   return { id: row.id as string, checkoutUrl: null, status: 'checkout_pending' };
+}
+
+/** Duplicate-payment guard: same lower(email) + same normalised model link, ordered/paid in the last 24 h. */
+export async function findRecentDuplicate(input: Submission) {
+  const p = await accountsDb();
+  const rows = await p.query(
+    `SELECT submission_id, email, model_name, model_link, code_link, status, checkout_session_id, created_at
+     FROM bh_priority_evaluation_requests
+     WHERE lower(email) = lower($1) AND created_at > now() - make_interval(hours => $2) AND status = ANY($3::text[])`,
+    [input.email, DUPLICATE_WINDOW_HOURS, DUPLICATE_STATUSES],
+  );
+  return findDuplicate(rows.rows, input);
+}
+
+/** Stores a request that needs manual review: no Stripe session, status awaiting_review. Idempotent on submission_id. */
+export async function holdPriorityRequestForReview(input: Submission, stripeMode: 'test' | 'live', intake: Record<string, unknown>) {
+  const p = await accountsDb();
+  const check = JSON.stringify({ ...intake, checkedAt: new Date().toISOString() });
+  const inserted = await p.query(
+    `INSERT INTO bh_priority_evaluation_requests
+      (submission_id, email, model_name, model_link, code_link, access_type, access_instructions, notes,
+       benchmarks, visibility, pricing_tier, unit_amount, quantity, base_amount, stripe_mode, status, intake_check)
+     VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,'awaiting_review',$16::jsonb)
+     ON CONFLICT (submission_id) DO NOTHING
+     RETURNING id`,
+    [input.submissionId, input.email, input.modelName, input.modelLink, input.codeLink, input.accessType,
+      input.accessInstructions, input.notes, input.benchmarks, input.visibility, input.pricingTier,
+      input.quote.unitAmount, input.quote.quantity, input.quote.totalAmount, stripeMode, check],
+  );
+  if (inserted.rows[0]) return { id: inserted.rows[0].id as string };
+  const existing = await p.query('SELECT * FROM bh_priority_evaluation_requests WHERE submission_id = $1', [input.submissionId]);
+  const row = existing.rows[0] as Record<string, unknown> | undefined;
+  if (!row || !sameSubmission(row, input) || row.stripe_mode !== stripeMode || row.status !== 'awaiting_review') {
+    throw new PrioritySubmissionConflict('This submission ID belongs to a different request. Refresh and try again.');
+  }
+  await p.query("UPDATE bh_priority_evaluation_requests SET intake_check=$2::jsonb, updated_at=now() WHERE id=$1 AND intake_approved_at IS NULL", [row.id, check]);
+  return { id: row.id as string };
+}
+
+/** Approved review-first request for /pay/<id>?token=. null unless the id, token and approval all match (payableRow). */
+export async function findPayableRequest(id: string, token: string) {
+  if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(id)) return null;
+  const p = await accountsDb();
+  const res = await p.query('SELECT * FROM bh_priority_evaluation_requests WHERE id=$1', [id]);
+  return payableRow(res.rows[0] as Record<string, unknown> | undefined ?? null, id, token) as Record<string, unknown> | null;
+}
+
+/** awaiting_review -> checkout_pending for an approved request (idempotent: an existing live session is returned). */
+export async function prepareApprovedRequest(row: Record<string, unknown>) {
+  const p = await accountsDb();
+  const id = row.id as string;
+  if (row.status === 'checkout_pending' && row.checkout_url) return { id, checkoutUrl: row.checkout_url as string, status: 'checkout_pending' };
+  const moved = await p.query(
+    `UPDATE bh_priority_evaluation_requests SET status='checkout_pending', updated_at=now()
+     WHERE id=$1 AND status IN ('awaiting_review','checkout_pending') AND checkout_session_id IS NULL AND intake_approved_at IS NOT NULL
+     RETURNING id`, [id]);
+  if (!moved.rows[0]) {
+    const again = await p.query('SELECT status, checkout_url FROM bh_priority_evaluation_requests WHERE id=$1', [id]);
+    if (again.rows[0]?.checkout_url && again.rows[0].status === 'checkout_pending') return { id, checkoutUrl: again.rows[0].checkout_url as string, status: 'checkout_pending' };
+    throw new PrioritySubmissionConflict('This payment link is no longer valid. Contact us if you need help.');
+  }
+  return { id, checkoutUrl: null, status: 'checkout_pending' };
+}
+
+/** A failed session creation puts an approved request back so the same link can be tried again. */
+export async function revertApprovedRequest(requestId: string) {
+  const p = await accountsDb();
+  await p.query(
+    `UPDATE bh_priority_evaluation_requests SET status='awaiting_review', updated_at=now()
+     WHERE id=$1 AND status='checkout_pending' AND checkout_session_id IS NULL AND intake_approved_at IS NOT NULL`, [requestId]);
 }
 
 export async function saveCheckoutSession(requestId: string, sessionId: string, checkoutUrl: string) {
@@ -159,4 +231,12 @@ export async function recordPaidCheckout(input: CheckoutEvent): Promise<'recorde
   } finally {
     client.release();
   }
+}
+
+/** The /submit record linked to a priority request (for the success/cancel URLs), or null. */
+export async function linkedSubmissionUuid(requestId: string): Promise<string | null> {
+  const p = await accountsDb();
+  const res = await p.query(
+    'SELECT s.submission_id FROM bh_model_submissions s JOIN bh_priority_evaluation_requests r ON r.model_submission_id = s.id WHERE r.id=$1', [requestId]);
+  return (res.rows[0]?.submission_id as string | undefined) ?? null;
 }

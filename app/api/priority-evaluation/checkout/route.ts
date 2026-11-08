@@ -1,9 +1,10 @@
 import { randomUUID } from 'node:crypto';
 import { NextResponse, type NextRequest } from 'next/server';
 import { isJsonRequest, publicOrigin, sameOrigin } from '../../../../lib/account-sync.mjs';
-import { markCheckoutFailed, preparePriorityRequest, PrioritySubmissionConflict, saveCheckoutSession } from '../../../../lib/priority-evaluation-db';
+import { findRecentDuplicate, holdPriorityRequestForReview, markCheckoutFailed, preparePriorityRequest, PrioritySubmissionConflict, saveCheckoutSession } from '../../../../lib/priority-evaluation-db';
 import { activeStripeConfig, createCheckoutSession } from '../../../../lib/priority-checkout';
 import { startPriorityCheckout, validatePrioritySubmission } from '../../../../lib/priority-evaluation.mjs';
+import { runIntakeCheck } from '../../../../lib/priority-intake.mjs';
 
 export const dynamic = 'force-dynamic';
 export const runtime = 'nodejs';
@@ -35,6 +36,9 @@ export async function POST(req: NextRequest) {
     saveSession: saveCheckoutSession,
     markFailed: markCheckoutFailed,
     isConflict: (error) => error instanceof PrioritySubmissionConflict,
+    findDuplicate: findRecentDuplicate,
+    checkIntake: (s) => runIntakeCheck(s),
+    holdForReview: holdPriorityRequestForReview,
     // Keep customer data and Stripe details out of logs; this ID joins the error to a request.
     logFailure: (failure) => console.error('priority_evaluation_checkout_failed', JSON.stringify(failure)),
   });

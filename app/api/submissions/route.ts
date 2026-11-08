@@ -4,8 +4,9 @@ import { isJsonRequest, publicOrigin, sameOrigin } from '../../../lib/account-sy
 import { insertSubmission, linkPriorityRequest, queuePosition } from '../../../lib/model-submission-db';
 import { submissionReference, toPriorityBody, validateModelSubmission } from '../../../lib/model-submission.mjs';
 import { activeStripeConfig, createCheckoutSession } from '../../../lib/priority-checkout';
-import { markCheckoutFailed, preparePriorityRequest, PrioritySubmissionConflict, saveCheckoutSession } from '../../../lib/priority-evaluation-db';
+import { findRecentDuplicate, holdPriorityRequestForReview, markCheckoutFailed, preparePriorityRequest, PrioritySubmissionConflict, saveCheckoutSession } from '../../../lib/priority-evaluation-db';
 import { startPriorityCheckout, validatePrioritySubmission, type PrioritySubmission } from '../../../lib/priority-evaluation.mjs';
+import { runIntakeCheck } from '../../../lib/priority-intake.mjs';
 import { encryptApiKey, parsePublicKey } from '../../../lib/submission-crypto.mjs';
 import { clientIp, ipHash, submissionSecret, verifyFormToken } from '../../../lib/submission-guard.mjs';
 import { followupOptions } from '../../../lib/submission-leaderboards.mjs';
@@ -86,9 +87,18 @@ export async function POST(req: NextRequest) {
       saveSession: saveCheckoutSession,
       markFailed: markCheckoutFailed,
       isConflict: (error) => error instanceof PrioritySubmissionConflict,
+      findDuplicate: findRecentDuplicate,
+      checkIntake: (s) => runIntakeCheck(s),
+      holdForReview: async (s, mode, intake) => {
+        const held = await holdPriorityRequestForReview(s, mode, intake);
+        await linkPriorityRequest(submissionId, held.id); // so the later payment queues this submission
+        return held;
+      },
       logFailure: (failure) => console.error('model_submission_checkout_failed', JSON.stringify(failure)),
     });
-    return json({ ...result.body, reference: ref, submissionId }, result.status);
+    // A review-first order is stored and confirmed, not charged: the form shows the confirmation screen.
+    const reviewFirst = 'reviewFirst' in result.body;
+    return json({ ...result.body, ...(reviewFirst ? { ok: true, fastLane: true } : {}), reference: ref, submissionId }, result.status);
   } catch (err) {
     // Never log the body: it may carry an API key.
     console.error('model_submission_failed', err instanceof Error ? err.name : 'unknown');

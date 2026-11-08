@@ -345,7 +345,7 @@ def step_purge(db: Db, dry: bool, counts: dict) -> None:
 
 def step_abandoned(db: Db, dry: bool, counts: dict) -> None:
     where = ("s.status='awaiting_payment' AND s.created_at < now() - interval '48 hours' AND NOT EXISTS ("
-             "SELECT 1 FROM bh_priority_evaluation_requests p WHERE p.id=s.priority_request_id AND p.paid_at IS NOT NULL)")
+             "SELECT 1 FROM bh_priority_evaluation_requests p WHERE p.id=s.priority_request_id AND (p.paid_at IS NOT NULL OR p.status='awaiting_review'))")
     found = db.rows(f"SELECT s.id::text FROM bh_model_submissions s WHERE {where}")
     counts["abandoned" if not dry else "abandoned_would_withdraw"] = len(found)
     if dry or not found:

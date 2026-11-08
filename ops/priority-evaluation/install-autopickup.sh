@@ -58,6 +58,8 @@ print('Official scorer/reference pins verified')
 VERIFY_PROFILES
 # Apply the repository's idempotent schema before either worker can see new columns.
 psql -X -q --single-transaction -v ON_ERROR_STOP=1 -d benchmarkheaven_accounts -f "$REPO_ROOT/db/accounts/001_init.sql" >/dev/null
+# Review-first queue columns/statuses (intake_review.py reads them); idempotent.
+psql -X -q --single-transaction -v ON_ERROR_STOP=1 -d benchmarkheaven_accounts -f "$REPO_ROOT/db/accounts/003_intake_review.sql" >/dev/null
 install -m 700 "$SRC/worker.py" "$BIN/jevbench-priority-worker.py"
 ln -sfn "$SHARE/runtime/autopickup.py" "$BIN/jevbench-autopickup.py"
 install -m 644 "$SRC/jevbench-priority-worker.service" "$UNITS/jevbench-priority-worker.service"
