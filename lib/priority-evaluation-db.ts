@@ -29,7 +29,8 @@ export async function accountsDb(): Promise<Pool> {
       connectionTimeoutMillis: 5_000,
     });
   }
-  ready ??= pool.query(ACCOUNTS_SCHEMA_SQL).then(() => pool!.query(MODEL_SUBMISSIONS_SCHEMA_SQL)).then(() => undefined).catch((err) => { ready = null; throw err; });
+  ready ??= pool.query(ACCOUNTS_SCHEMA_SQL).then(() => pool!.query(MODEL_SUBMISSIONS_SCHEMA_SQL))
+    .then(() => pool!.query(INTAKE_REVIEW_SCHEMA_SQL)).then(() => undefined).catch((err) => { ready = null; throw err; });
   await ready;
   return pool;
 }
