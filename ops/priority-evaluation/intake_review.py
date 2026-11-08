@@ -245,8 +245,46 @@ def handoff_text(row: dict, reminder: bool) -> str:
         f"- Approve (mails the fixed pay-link template): python3 {script} approve {ref} --by <agent> --mail\n"
         f"- Decline (fixed template, code one of {', '.join(DECLINE_REASONS)}): python3 {script} decline {ref} --by <agent> "
         f"--code <code> --reason \"<internal note>\" --mail\n"
-        "Nothing has been charged and the customer has no pay link until an agent approves."
+        "Nothing has been charged and the customer has no pay link until an agent approves.\n"
+        f"Key: {handoff_key(row['id'], reminder)}"
     )
+
+
+def handoff_key(rid: str, reminder: bool) -> str:
+    """Unique per order and handoff kind; lets a retry find a post whose marker write was lost (crash after post)."""
+    return f"intake-review:{rid}:{'reminder' if reminder else 'first'}"
+
+
+def already_posted(key: str) -> bool | None:
+    """True if the board already holds an entry with this key, False if not, None if the search failed (fail closed)."""
+    try:
+        result = subprocess.run([AGENT_BOARD, "search", "--json", key],
+                                text=True, capture_output=True, timeout=60, check=False)
+    except (OSError, subprocess.SubprocessError):
+        return None
+    if result.returncode != 0:
+        return None
+    start = result.stdout.find("[")
+    if start < 0:
+        return False if "No matches" in result.stdout else None
+    try:
+        entries = json.loads(result.stdout[start:])
+    except ValueError:
+        return None
+    return any(isinstance(e, dict) and str(e.get("thread_id")) == str(BOARD_THREAD)
+               and f"Key: {key}" in str(e.get("body") or "") for e in entries)
+
+
+def ensure_posted(row: dict, reminder: bool) -> str:
+    """Post the handoff once: search for its key first, so a lost marker never causes a duplicate.
+
+    Returns 'posted', 'recovered' (found on the board, not reposted) or 'failed' (retry next pass)."""
+    found = already_posted(handoff_key(row["id"], reminder))
+    if found is None:
+        return "failed"
+    if found:
+        return "recovered"
+    return "posted" if post_board(handoff_text(row, reminder)) else "failed"
 
 
 def post_board(text: str) -> bool:
@@ -267,9 +305,11 @@ def cmd_watch(_args, now: datetime | None = None) -> int:
         rid = row["id"]
         marker = read_marker(rid)
         if marker is None:
-            if post_board(handoff_text(row, reminder=False)):
-                write_marker(rid, {"posted_at": now.isoformat(timespec="seconds"), "reminded_at": None})
-                print(f"handoff posted for {rid[:8]}")
+            outcome = ensure_posted(row, reminder=False)
+            if outcome != "failed":
+                write_marker(rid, {"posted_at": now.isoformat(timespec="seconds"), "reminded_at": None,
+                                   **({"recovered": True} if outcome == "recovered" else {})})
+                print(f"handoff {outcome} for {rid[:8]}")
             else:
                 failed += 1
                 print(f"handoff for {rid[:8]} NOT posted; will retry next pass", file=sys.stderr)
@@ -283,9 +323,10 @@ def cmd_watch(_args, now: datetime | None = None) -> int:
         if posted.tzinfo is None:
             posted = posted.replace(tzinfo=timezone.utc)
         if now - posted >= timedelta(hours=REMINDER_AFTER_HOURS):
-            if post_board(handoff_text(row, reminder=True)):
+            outcome = ensure_posted(row, reminder=True)
+            if outcome != "failed":
                 write_marker(rid, {**marker, "reminded_at": now.isoformat(timespec="seconds")})
-                print(f"reminder posted for {rid[:8]}")
+                print(f"reminder {outcome} for {rid[:8]}")
             else:
                 failed += 1
                 print(f"reminder for {rid[:8]} NOT posted; will retry next pass", file=sys.stderr)
