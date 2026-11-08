@@ -10,6 +10,7 @@ from __future__ import annotations
 import contextlib
 import hashlib
 import io
+import json
 import os
 import re
 import shutil
@@ -19,7 +20,9 @@ import sys
 import tempfile
 import unittest
 import uuid
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
+from unittest import mock
 
 HERE = Path(__file__).resolve().parent
 PG_BIN = next((p for p in sorted(Path("/usr/lib/postgresql").glob("*/bin"), reverse=True) if (p / "initdb").exists()), None)
@@ -149,6 +152,206 @@ class IntakeReviewCli(unittest.TestCase):
         self.assertEqual(run("approve", str(uuid.uuid4()), "--by", "a")[0], 1)
         self.assertEqual(run("approve", "not-an-id", "--by", "a")[0], 1)
         self.assertEqual(run("approve", rid, "--by", "bad name; rm")[0], 2)
+
+
+class FakeMail:
+    """Replaces intake_review.send_mail: records what would be sent, never touches SMTP."""
+    def __init__(self, ok=True):
+        self.ok, self.sent = ok, []
+
+    def __call__(self, to, subject, body):
+        self.sent.append({"to": to, "subject": subject, "body": body})
+        return (True, "ok") if self.ok else (False, "gate_refused")
+
+
+@unittest.skipIf(PG_BIN is None, "no PostgreSQL binaries")
+class CustomerMail(unittest.TestCase):
+    def test_approve_mail_sends_the_fixed_template_with_ref_and_pay_url_only(self):
+        rid = insert()
+        fake = FakeMail()
+        with mock.patch.object(ir, "send_mail", fake):
+            code, out, _ = run("approve", rid, "--by", "a", "--mail")
+        self.assertEqual(code, 0, out)
+        self.assertEqual(len(fake.sent), 1)
+        mail = fake.sent[0]
+        self.assertEqual(mail["to"], "a@example.com")
+        token = re.search(r"token=([A-Za-z0-9_-]{20,})", mail["body"]).group(1)
+        self.assertEqual(row(rid)["pay_token_hash"], hashlib.sha256(token.encode()).hexdigest())
+        self.assertIn(f"/api/priority-evaluation/pay/{rid}?token=", mail["body"])
+        self.assertIn(f"order {rid[:8]}", mail["body"])
+        self.assertIn("The 48-hour clock starts when you pay.", mail["body"])
+        self.assertNotIn("{{", mail["body"])
+        self.assertNotIn(token, out)  # not echoed to the agent once it was mailed
+        self.assertIn("payLinkMailedAt", row(rid)["intake_check"])
+        self.assertNotRegex(mail["body"].lower(), r"top.?5|top five|rank|#1")
+
+    def test_approve_mail_failure_keeps_approval_prints_link_and_fails(self):
+        rid = insert()
+        with mock.patch.object(ir, "send_mail", FakeMail(ok=False)):
+            code, out, _ = run("approve", rid, "--by", "a", "--mail")
+        self.assertEqual(code, 1)
+        self.assertIn("NOT sent", out)
+        self.assertIn(f"/pay/{rid}?token=", out)
+        self.assertIsNotNone(row(rid)["intake_approved_at"])
+        self.assertNotIn("payLinkMailedAt", row(rid)["intake_check"])
+
+    def test_approve_without_mail_never_sends(self):
+        rid = insert()
+        fake = FakeMail()
+        with mock.patch.object(ir, "send_mail", fake):
+            self.assertEqual(run("approve", rid, "--by", "a")[0], 0)
+        self.assertEqual(fake.sent, [])
+
+    def test_decline_mail_uses_the_paragraph_for_the_code_and_no_free_text(self):
+        for code in ir.DECLINE_REASONS:
+            rid = insert()
+            fake = FakeMail()
+            secret = f"INTERNAL-NOTE-{code}-do-not-leak"
+            with mock.patch.object(ir, "send_mail", fake):
+                rc, out, _ = run("decline", rid, "--by", "a", "--code", code, "--reason", secret, "--mail")
+            self.assertEqual(rc, 0, out)
+            body = fake.sent[0]["body"]
+            self.assertIn(ir.DECLINE_REASONS[code], body)
+            self.assertNotIn(secret, body + fake.sent[0]["subject"])
+            self.assertIn(f"order {rid[:8]}", body)
+            self.assertIn("Nothing was charged", body)
+            self.assertEqual(row(rid)["status"], "intake_declined")
+            self.assertEqual(row(rid)["intake_check"]["declineReason"], secret)
+            self.assertEqual(row(rid)["intake_check"]["declineCode"], code)
+            self.assertNotRegex(body.lower(), r"top.?5|top five|rank|refund")
+
+    def test_decline_mail_needs_a_known_code_and_changes_nothing_otherwise(self):
+        rid = insert()
+        fake = FakeMail()
+        with mock.patch.object(ir, "send_mail", fake):
+            self.assertEqual(run("decline", rid, "--by", "a", "--reason", "x", "--mail")[0], 1)  # no code
+            self.assertEqual(run("decline", rid, "--by", "a", "--reason", "x", "--code", "free text", "--mail")[0], 2)
+        self.assertEqual(fake.sent, [])
+        self.assertEqual(row(rid)["status"], "awaiting_review")
+
+    def test_decline_without_mail_sends_nothing(self):
+        rid = insert()
+        fake = FakeMail()
+        with mock.patch.object(ir, "send_mail", fake):
+            self.assertEqual(run("decline", rid, "--by", "a", "--reason", "x")[0], 0)
+        self.assertEqual(fake.sent, [])
+
+    def test_templates_have_only_the_expected_placeholders_and_render_through_autopickup(self):
+        for name, keys in ((ir.APPROVED_TEMPLATE, {"ORDER_REF", "PAY_URL"}), (ir.DECLINED_TEMPLATE, {"ORDER_REF", "REASON_PARAGRAPH"})):
+            self.assertEqual(set(re.findall(r"\{\{([A-Z0-9_]+)\}\}", (HERE / name).read_text())), keys)
+        body = ir.render_mail(ir.APPROVED_TEMPLATE, {"ORDER_REF": "abcd1234", "PAY_URL": "https://x/{{ORDER_REF}}"})
+        self.assertIn("https://x/{{ORDER_REF}}", body)  # single-pass: values are never re-scanned
+
+    def test_send_mail_is_the_autopickup_effects_mail(self):
+        import autopickup
+        with mock.patch.object(autopickup.Effects, "mail", return_value=(True, "ok")) as m:
+            self.assertEqual(ir.send_mail("a@example.com", "s", "b"), (True, "ok"))
+        m.assert_called_once_with("a@example.com", "s", "b")
+
+
+FAKE_BOARD = """#!/bin/sh
+printf '%s\\0' "$@" >> "$FAKE_BOARD_LOG"
+printf '\\n--\\n' >> "$FAKE_BOARD_LOG"
+if [ -n "$FAKE_BOARD_FAIL" ]; then echo "boom" >&2; exit 1; fi
+if [ -n "$FAKE_BOARD_SILENT" ]; then exit 0; fi
+echo "Posted entry 42 to thread 11"
+"""
+
+
+@unittest.skipIf(PG_BIN is None, "no PostgreSQL binaries")
+class Watch(unittest.TestCase):
+    def setUp(self):
+        self.dir = Path(tempfile.mkdtemp(dir=TMP))
+        self.board = self.dir / "agent-board"
+        self.board.write_text(FAKE_BOARD)
+        self.board.chmod(0o755)
+        self.log = self.dir / "board.log"
+        self.log.write_text("")
+        env = {"FAKE_BOARD_LOG": str(self.log)}
+        self.patches = [mock.patch.object(ir, "AGENT_BOARD", str(self.board)), mock.patch.object(ir, "STATE_DIR", self.dir / "state"),
+                        mock.patch.dict(os.environ, env)]
+        for p in self.patches:
+            p.start()
+        ir.sql("DELETE FROM bh_priority_evaluation_requests")
+
+    def tearDown(self):
+        for p in self.patches:
+            p.stop()
+
+    def posts(self):
+        return [e for e in self.log.read_text().split("\n--\n") if e.strip("\n")]
+
+    def test_one_handoff_per_row_with_all_fields_and_a_marker_after_success(self):
+        rid = insert()
+        code, out, _ = run("watch")
+        self.assertEqual(code, 0)
+        posts = self.posts()
+        self.assertEqual(len(posts), 1)
+        args = posts[0].split("\0")
+        self.assertEqual(args[:4], ["post", "11", "--kind", "handoff"])
+        text = args[4]
+        self.assertTrue(text.startswith("@fastlane-sla-20261004 "))
+        for needle in (rid[:8], "open_weights", "https://huggingface.co/o/m", "custom_code: needs review", "Age:", f"approve {rid[:8]} --by", f"decline {rid[:8]}",
+                       "--mail", "unsupported_runtime", "private_endpoint"):
+            self.assertIn(needle, text)
+        self.assertNotIn("a@example.com", text)  # no customer e-mail on the board
+        marker = json.loads((self.dir / "state" / f"{rid}.json").read_text())
+        self.assertIsNone(marker["reminded_at"])
+        # a second pass posts nothing new
+        run("watch")
+        self.assertEqual(len(self.posts()), 1)
+
+    def test_failed_post_leaves_no_marker_and_is_retried(self):
+        rid = insert()
+        with mock.patch.dict(os.environ, {"FAKE_BOARD_FAIL": "1"}):
+            code, _, err = run("watch")
+        self.assertEqual(code, 1)
+        self.assertIn("NOT posted", err)
+        self.assertFalse((self.dir / "state" / f"{rid}.json").exists())
+        with mock.patch.dict(os.environ, {"FAKE_BOARD_SILENT": "1"}):  # exit 0 but no 'Posted entry'
+            self.assertEqual(run("watch")[0], 1)
+        self.assertFalse((self.dir / "state" / f"{rid}.json").exists())
+        self.assertEqual(run("watch")[0], 0)  # board is back
+        self.assertTrue((self.dir / "state" / f"{rid}.json").exists())
+
+    def test_only_awaiting_review_rows_are_handed_off(self):
+        insert("paid"), insert("intake_declined")
+        waiting = insert()
+        self.assertEqual(run("watch")[0], 0)
+        self.assertEqual(len(self.posts()), 1)
+        self.assertIn(waiting[:8], self.posts()[0])
+
+    def test_one_reminder_after_12_hours_and_never_a_second(self):
+        rid = insert()
+        run("watch")
+        marker_file = self.dir / "state" / f"{rid}.json"
+        now = datetime.now(timezone.utc)
+        ir.cmd_watch(None, now=now + timedelta(hours=11, minutes=59))
+        self.assertEqual(len(self.posts()), 1)
+        ir.cmd_watch(None, now=now + timedelta(hours=12, minutes=1))
+        posts = self.posts()
+        self.assertEqual(len(posts), 2)
+        self.assertIn("REMINDER", posts[1])
+        self.assertIsNotNone(json.loads(marker_file.read_text())["reminded_at"])
+        ir.cmd_watch(None, now=now + timedelta(hours=40))
+        self.assertEqual(len(self.posts()), 2)
+
+    def test_reminder_skipped_when_the_row_left_review_and_retried_when_the_post_fails(self):
+        rid = insert()
+        run("watch")
+        later = datetime.now(timezone.utc) + timedelta(hours=13)
+        with mock.patch.dict(os.environ, {"FAKE_BOARD_FAIL": "1"}):
+            self.assertEqual(ir.cmd_watch(None, now=later), 1)
+        self.assertIsNone(json.loads((self.dir / "state" / f"{rid}.json").read_text())["reminded_at"])
+        ir.sql(f"UPDATE bh_priority_evaluation_requests SET status='paid' WHERE id='{rid}'")
+        self.assertEqual(ir.cmd_watch(None, now=later), 0)
+        self.assertEqual(len(self.posts()), 2)  # first handoff + the failed attempt only (the failed one is logged too)
+
+    def test_watch_does_not_write_the_database(self):
+        rid = insert()
+        before = row(rid)
+        run("watch")
+        self.assertEqual(row(rid), before)
 
 
 class RegistryMirror(unittest.TestCase):

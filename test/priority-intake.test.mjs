@@ -5,7 +5,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import { randomUUID } from 'node:crypto';
 import {
-  checkApiEndpoint, checkOpenWeights, classifyHfModel, DUPLICATE_STATUSES, estimateGpuCost, findDuplicate, hashPayToken,
+  checkApiEndpoint, checkOpenWeights, classifyAdapter, classifyHfModel, DUPLICATE_STATUSES, estimateGpuCost, findDuplicate, hashPayToken,
   hfRepoFromLink, isPublicAddress, modelsProbeUrl, normalizeModelLink, payableRow, resolvePublicHost, runIntakeCheck,
 } from '../lib/priority-intake.mjs';
 import { ARCHITECTURES, MAX_GPUS } from '../lib/priority-intake-runtime.mjs';
@@ -123,6 +123,115 @@ test('ImageJevBench on open weights always goes to review; api orders use the en
   assert.equal(v.code, 'image_open_weights');
   const api = await runIntakeCheck({ accessType: 'api_endpoint', benchmarks: ['jevbench'], apiUrl: 'https://api.example.com/v1', apiPublic: false });
   assert.equal(api.code, 'api_private');
+});
+
+test('architectures seen in real orders through 8 Nov 2026 (and the Qwen3.5 MoE siblings) are allowlisted', () => {
+  for (const arch of ['Qwen3_5ForConditionalGeneration', 'Gemma4ForConditionalGeneration', 'Qwen3_5ForCausalLM', 'Gemma4UnifiedForConditionalGeneration',
+    'Mistral3ForConditionalGeneration', 'Gemma4ForCausalLM', 'Qwen3_5Model', 'Qwen3_5MoeForConditionalGeneration', 'Qwen3_5MoeForCausalLM', 'Qwen3_5MoeModel']) {
+    assert.ok(ARCHITECTURES.includes(arch), arch);
+    assert.equal(classifyHfModel({ repo: 'o/m', info: goodInfo(), config: goodConfig({ architectures: [arch] }) }).outcome, 'ok', arch);
+  }
+  assert.ok(ARCHITECTURES.includes('Qwen3ForCausalLM')); // existing ones stay
+});
+
+// ---------- LoRA adapters ----------
+const adapterInfo = (files = ['README.md', 'adapter_config.json', 'adapter_model.safetensors'], over = {}) => ({ id: 'o/adapter', private: false, gated: false, siblings: files.map((rfilename) => ({ rfilename })), ...over });
+const adapterCfg = (base = 'Qwen/Qwen3.5-4B', over = {}) => ({ peft_type: 'LORA', base_model_name_or_path: base, ...over });
+const baseOk = () => ({ info: goodInfo({ safetensors: ST({ BF16: 4e9 }) }), config: goodConfig({ architectures: ['Qwen3_5ForConditionalGeneration'] }) });
+
+test('adapter on a supported public base: ok, cost estimated from the base model', () => {
+  assert.deepEqual(classifyAdapter({ repo: 'o/adapter', info: adapterInfo(), adapterConfig: adapterCfg() }), { pending: 'base', baseRepo: 'Qwen/Qwen3.5-4B' });
+  const v = classifyAdapter({ repo: 'o/adapter', info: adapterInfo(), adapterConfig: adapterCfg(), base: baseOk() });
+  assert.equal(v.outcome, 'ok');
+  assert.equal(v.code, 'supported_adapter');
+  assert.equal(v.baseModel, 'Qwen/Qwen3.5-4B');
+  assert.deepEqual(v.estimate, estimateGpuCost(ST({ BF16: 4e9 })));
+});
+
+test('adapter on an unsupported, custom-code, gated, missing or oversized base needs review / over_cap', () => {
+  const run = (base) => classifyAdapter({ repo: 'o/adapter', info: adapterInfo(), adapterConfig: adapterCfg(), base });
+  const weird = run({ info: goodInfo(), config: goodConfig({ architectures: ['FancyNewForCausalLM'] }) });
+  assert.equal(weird.outcome, 'needs_review');
+  assert.equal(weird.code, 'adapter_base_unsupported');
+  assert.equal(weird.baseCode, 'unsupported_architecture');
+  assert.equal(run({ info: goodInfo(), config: goodConfig({ auto_map: { A: 'b.C' } }) }).baseCode, 'custom_code');
+  assert.equal(run({ info: goodInfo({ gated: 'auto' }), config: goodConfig() }).baseCode, 'gated_or_private');
+  assert.equal(run(null).code, 'adapter_base_unavailable');
+  const big = run({ info: goodInfo({ safetensors: ST({ BF16: 200e9 }) }), config: goodConfig() });
+  assert.equal(big.outcome, 'over_cap');
+});
+
+test('adapter with extra head files, code, sub-folder layout, non-LoRA config or a local-path base needs review', () => {
+  const run = (files, cfg = adapterCfg(), over = {}) => classifyAdapter({ repo: 'o/adapter', info: adapterInfo(files, over), adapterConfig: cfg, base: baseOk() });
+  const head = run(['adapter_config.json', 'adapter_model.safetensors', 'decision_head.pt']);
+  assert.equal(head.outcome, 'needs_review');
+  assert.equal(head.code, 'adapter_custom_files');
+  assert.match(head.message, /decision_head\.pt/);
+  assert.equal(run(['adapter_config.json', 'adapter_model.safetensors', 'inference/serve.py']).code, 'adapter_custom_files');
+  assert.equal(run(['adapter_config.json', 'adapter_model.safetensors', 'old/pytorch_model.bin']).code, 'adapter_custom_files');
+  assert.equal(run(['adapter_config.json', 'adapter_model.safetensors', 'backbone/model.safetensors']).code, 'adapter_custom_files');
+  assert.equal(run(['adapter_config.json', 'adapter_model.safetensors', 'assets/chart.png', 'LICENSE']).outcome, 'ok'); // harmless extras
+  assert.equal(run(['adapter_config.json', 'adapter_model.safetensors'], adapterCfg('/workspace/hf/hub/models--Qwen--Qwen3.5-4B/snapshots/abc')).code, 'adapter_base_unresolvable');
+  assert.equal(run(['adapter_config.json', 'adapter_model.safetensors'], adapterCfg('../../etc/passwd')).code, 'adapter_base_unresolvable');
+  assert.equal(run(['adapter_config.json', 'adapter_model.safetensors'], adapterCfg('')).code, 'adapter_base_unresolvable');
+  assert.equal(run(['adapter_config.json', 'adapter_model.safetensors'], adapterCfg('Qwen/Qwen3.5-4B', { peft_type: 'PREFIX_TUNING' })).code, 'adapter_unsupported');
+  assert.equal(run(['adapter_config.json', 'adapter_model.safetensors'], null).code, 'adapter_unsupported');
+  assert.equal(run(['adapter_config.json', 'adapter_model.bin']).code, 'adapter_custom_files');
+  assert.equal(run(['adapter_config.json', 'README.md']).code, 'no_safetensors');
+  assert.equal(run(['adapter_config.json', 'adapter_model.safetensors'], adapterCfg('Qwen/Qwen3.5-4B', { auto_mapping: { parent_library: 'evil_pkg.models', base_model_class: 'X' } })).code, 'custom_code');
+  assert.equal(run(undefined, adapterCfg(), { gated: 'manual' }).code, 'gated_or_private');
+});
+
+test('a repo with a reviewed runtime supplement may carry extra head files next to its adapter', () => {
+  const v = classifyAdapter({ repo: 'oidlabs/cue-reflex-4B', info: adapterInfo(['adapter_config.json', 'adapter_model.safetensors', 'decision_head.pt', 'inference/serve.py']), adapterConfig: adapterCfg(), base: baseOk() });
+  assert.equal(v.outcome, 'ok');
+});
+
+test('checkOpenWeights follows a root adapter_config.json to the base model (same signal, no other hosts)', async () => {
+  const seen = [];
+  const fetchImpl = async (url) => {
+    seen.push(String(url));
+    if (url === 'https://huggingface.co/api/models/o/adapter') return res(200, adapterInfo());
+    if (url === 'https://huggingface.co/o/adapter/resolve/main/config.json') return res(404);
+    if (url === 'https://huggingface.co/o/adapter/resolve/main/adapter_config.json') return res(200, adapterCfg('Qwen/Qwen3.5-4B'));
+    if (url === 'https://huggingface.co/api/models/Qwen/Qwen3.5-4B') return res(200, baseOk().info);
+    if (url === 'https://huggingface.co/Qwen/Qwen3.5-4B/resolve/main/config.json') return res(200, baseOk().config);
+    throw new Error(`unexpected ${url}`);
+  };
+  const v = await checkOpenWeights('https://huggingface.co/o/adapter', { fetchImpl });
+  assert.equal(v.code, 'supported_adapter');
+  assert.ok(seen.every((u) => u.startsWith('https://huggingface.co/')));
+  // unreadable base (404) and gated adapter file fail closed
+  const missing = await checkOpenWeights('https://huggingface.co/o/adapter', { fetchImpl: async (u) => (String(u).includes('Qwen/Qwen3.5-4B') ? res(404) : fetchImpl(u)) });
+  assert.equal(missing.code, 'adapter_base_unavailable');
+  const gatedBase = await checkOpenWeights('https://huggingface.co/o/adapter', { fetchImpl: async (u) => (String(u).includes('/api/models/Qwen/') ? res(401) : fetchImpl(u)) });
+  assert.equal(gatedBase.code, 'adapter_base_unsupported');
+  assert.equal(gatedBase.baseCode, 'gated_or_private');
+  const noAdapterFile = await checkOpenWeights('https://huggingface.co/o/adapter', { fetchImpl: async (u) => (String(u).endsWith('adapter_config.json') ? res(404) : fetchImpl(u)) });
+  assert.equal(noAdapterFile.code, 'adapter_unsupported');
+  // a repo with neither config.json nor adapter files stays no_config
+  const plain = await checkOpenWeights('https://huggingface.co/o/m', { fetchImpl: fakeHf(() => res(200, goodInfo()), () => res(404)) });
+  assert.equal(plain.code, 'no_config');
+});
+
+test('dry run on the 33 live paid open-weights repos (recorded Hugging Face metadata, no network)', async () => {
+  const fx = JSON.parse(fs.readFileSync(new URL('./fixtures/priority-intake-hf.json', import.meta.url), 'utf8'));
+  const lower = Object.fromEntries(Object.entries(fx).map(([k, v]) => [k.toLowerCase(), v]));
+  const fetchImpl = async (url) => {
+    const m = String(url).match(/^https:\/\/huggingface\.co\/(?:api\/models\/([^/]+\/[^/]+)|([^/]+\/[^/]+)\/resolve\/main\/(.+))$/);
+    const e = lower[(m[1] || m[2]).toLowerCase()];
+    if (!e) return res(404);
+    const f = m[1] ? e.api : m[3] === 'config.json' ? e.config : e.adapter;
+    return f.status === 200 ? res(200, f.body) : res(f.status);
+  };
+  const code = async (repo) => (await checkOpenWeights(`https://huggingface.co/${repo}`, { fetchImpl }));
+  for (const repo of ['crh225/plumb-4b', 'h2oai/h2o-lightning-4b', 'org2ai/Wald-4B', 'MeTask-Rain/metask-jev-rain-31B-trained', 'torchcast-ai/torchcast-decision-12b',
+    'jgeuter/Jeff-1.0-Large', 'cyankiwi/gemma-4-12B-it-qat-AWQ-INT4', 'macrocosm-os/iota-decide-4b-v0.4']) assert.equal((await code(repo)).outcome, 'ok', repo);
+  assert.equal((await code('krishna765/deck-4b-v1.0')).code, 'supported_adapter'); // LoRA on alibiserikbay/JevK5 (Qwen3_5ForCausalLM)
+  assert.equal((await code('ninhnv/chon-1.0-12b')).code, 'supported_adapter');     // LoRA on google/gemma-4-12B-it
+  assert.equal((await code('mohit67890/imajev-4b')).code, 'adapter_custom_files');
+  assert.equal((await code('MeTask-Rain/MetaDecision-31B-Rain')).code, 'no_config'); // service/ sub-folder layout
+  assert.equal((await code('h2oai/h2o-lightning-31b')).code, 'gated_or_private');   // gated today
 });
 
 // ---------- SSRF guard ----------

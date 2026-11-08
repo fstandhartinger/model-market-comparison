@@ -1,0 +1,11 @@
+[Unit]
+Description=Fast-lane review-first queue handoff every 10 minutes
+
+[Timer]
+OnCalendar=*-*-* *:00/10:00 UTC
+AccuracySec=30s
+Persistent=true
+Unit=jevbench-intake-review-watch.service
+
+[Install]
+WantedBy=timers.target

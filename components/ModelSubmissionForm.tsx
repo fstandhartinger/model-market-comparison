@@ -167,7 +167,7 @@ export function ModelSubmissionForm({ followups, formToken, prices, testMode }: 
       {done.reviewFirst && <p className="mt-3 text-sm" data-bh-review-first>{done.reviewFirst.message} You have not been charged.{done.reviewFirst.reason ? <> What we found: {done.reviewFirst.reason}</> : null}</p>}
       <p className="mt-3 text-sm">Reference: <b className="tabular-nums">{done.reference}</b>{done.queuePosition ? <> · Position in the regular queue: <b>#{done.queuePosition}</b></> : null}</p>
       <ul className="mt-3 list-disc space-y-1.5 pl-5 text-sm">
-        <li>We&apos;ll email you a confirmation.</li>
+        {!done.reviewFirst && <li>We&apos;ll email you a confirmation.</li>}
         <li>We review the submission and evaluate it in the order received. We email you when results are published.</li>
         {done.fastLane && !done.reviewFirst && <li>This submission is in the fast lane: results within 48 hours of payment, or a full refund on request.</li>}
       </ul>
