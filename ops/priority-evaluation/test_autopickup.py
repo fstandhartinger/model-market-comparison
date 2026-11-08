@@ -643,7 +643,7 @@ class SlaTests(DatabaseTestCase):
         rid = insert_order()
         fx = FakeEffects()
         ap.cycle(fx)
-        ap.hold(rid, "customer_access")
+        ap.hold(rid, "customer_reply")  # customer_access holds no longer end on a reply (DECISIONS 8 Nov 11:05Z)
         ap.sql(f"UPDATE {ap.TABLE} SET customer_hold_started_at=now()-interval '2 hours', evaluation_status='failed', "
                f"evaluation_attempts=1 WHERE id='{rid}'")
         make_due(rid, "evaluation_start")
@@ -657,6 +657,57 @@ class SlaTests(DatabaseTestCase):
         self.assertIsNone(current["customer_hold_started_at"])
         self.assertGreaterEqual(current["sla_paused_seconds"], 2 * 3600 - 5)
         self.assertEqual(len(fx.started), 2)
+
+    def _access_hold_with_reply(self, hold_ago: str, reply_ago: str) -> str:
+        rid = insert_order()
+        fx = FakeEffects()
+        ap.cycle(fx)
+        ap.hold(rid, "customer_access")
+        ap.sql(f"UPDATE {ap.TABLE} SET customer_hold_started_at=now()-interval '{hold_ago}' WHERE id='{rid}'")
+        ap.sql(f"INSERT INTO bh_priority_eval_customer_mail_events (gmail_message_id, request_id, sender_email, subject, "
+               f"received_at, summary, body_file) VALUES ('m-acc-{rid[:8]}', '{rid}', 'author@example.com', 's', "
+               f"now()-interval '{reply_ago}', 'x', '/dev/null')")
+        make_due(rid, "evaluation_start")
+        return rid
+
+    def test_access_hold_survives_a_customer_reply_and_hands_off_once(self):
+        rid = self._access_hold_with_reply("3 hours", "1 hour")
+        fx = FakeEffects()
+        ap.cycle(fx)
+        make_due(rid, "evaluation_start")
+        ap.cycle(fx)
+        current = row(rid)
+        self.assertIsNotNone(current["customer_hold_started_at"])  # a reply alone never ends the access pause
+        self.assertEqual(current["customer_hold_reason"], "customer_access")
+        handoffs = [b for b in fx.boards if "access-ok" in b]
+        self.assertEqual(len(handoffs), 1)
+        self.assertIn("reply + 6 h", handoffs[0])
+
+    def test_access_ok_ends_the_access_pause(self):
+        rid = self._access_hold_with_reply("3 hours", "1 hour")
+        ap.access_ok(rid)
+        current = row(rid)
+        self.assertIsNone(current["customer_hold_started_at"])
+        self.assertGreaterEqual(current["sla_paused_seconds"], 3 * 3600 - 5)
+        with self.assertRaises(ap.PickupError):
+            ap.access_ok(rid)  # no longer on hold
+
+    def test_access_ok_refuses_other_hold_reasons(self):
+        rid = insert_order()
+        ap.hold(rid, "customer_request")
+        with self.assertRaises(ap.PickupError):
+            ap.access_ok(rid)
+
+    def test_unattended_access_hold_resumes_at_reply_plus_six_hours(self):
+        rid = self._access_hold_with_reply("10 hours", "7 hours")
+        fx = FakeEffects()
+        ap.cycle(fx)
+        current = row(rid)
+        self.assertIsNone(current["customer_hold_started_at"])
+        # paused from hold start (10 h ago) until reply + 6 h (1 h ago) = 9 h, not the full 10 h
+        self.assertGreaterEqual(current["sla_paused_seconds"], 9 * 3600 - 60)
+        self.assertLess(current["sla_paused_seconds"], 9 * 3600 + 60)
+        self.assertTrue(any("within 6 h" in b for b in fx.boards))
 
     def test_unrelated_sender_cannot_resume_a_customer_hold(self):
         rid = insert_order()
