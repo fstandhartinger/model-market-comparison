@@ -114,6 +114,11 @@ HOLD_REASONS = ("customer_access", "customer_reply", "customer_request")
 # Florian, 3 Oct 2026: a fixable customer-source review failure keeps the order and its payment.
 # The order waits on this hold (the 48-hour clock is paused) until the customer resubmits.
 CHANGE_HOLD_REASON = refusal_approval.CHANGE_HOLD_REASON
+# Florian 8 Nov 2026 (DECISIONS 11:05Z, board #53114): a "waiting for customer access" pause ends only when an owner
+# confirms the access probe passes (`access-ok`), never on a customer reply alone. If no owner acts within 6 h of the
+# customer's reply, the clock resumes anyway, counted from reply + 6 h.
+ACCESS_HOLD_REASON = "customer_access"
+ACCESS_UNATTENDED_RESUME = timedelta(hours=6)
 MAX_CHANGE_FINDINGS = 8
 BENCHMARK_NAMES = {"jevbench": "JevBench", "imagejevbench": "ImageJevBench"}
 SCORE_FIELDS = ("jevbench_score", "score", "composite")
@@ -1639,6 +1644,43 @@ def customer_replied_since_hold(rid: str) -> bool:
     """))
 
 
+def first_reply_since_hold(rid: str) -> datetime | None:
+    """Earliest customer mail received after the current hold started (None without a hold or reply)."""
+    return parse_ts(sql(f"""
+      SELECT min(e.received_at) FROM bh_priority_eval_customer_mail_events AS e JOIN {TABLE} AS r ON r.id=e.request_id
+      WHERE r.id='{request_id(rid)}'::uuid AND r.customer_hold_started_at IS NOT NULL
+        AND lower(e.sender_email)=lower(r.email)
+        AND e.received_at > r.customer_hold_started_at
+    """) or None)
+
+
+def advance_access_hold(row: dict[str, Any], state: dict[str, Any], job_dir: Path, effects: Effects,
+                        now: datetime) -> None:
+    """customer_access hold: a reply hands off to the owner; only `access-ok` or reply + 6 h ends the pause."""
+    rid = request_id(row.get("id"))
+    reply_at = first_reply_since_hold(rid)
+    if reply_at is None:
+        return
+    deadline = reply_at + ACCESS_UNATTENDED_RESUME
+    step_name = f"access_reply_handoff:{row.get('customer_hold_started_at')}"
+    if now < deadline and not step_done(state, step_name):
+        if effects.board(f"Fast-lane order {order_ref(rid)}: the customer replied while we wait for model access. "
+                         "The 48-hour clock stays paused until the access works. Owner: read the reply in "
+                         f"{job_dir}/mail/, test the access (endpoint key probe or model download), then run "
+                         f"`~/bin/jevbench-autopickup access-ok {rid}`. If nobody does by "
+                         f"{deadline.strftime('%d %b %H:%M UTC')} (reply + 6 h), the clock resumes automatically.",
+                         wake_owner(row, state), kind="handoff"):
+            finish_ok(state, step_name, now)
+    if now >= deadline:
+        with contextlib.suppress(PickupError):
+            resume(rid, ended_at=deadline)
+            (job_dir / "release" / "WAITING.json").unlink(missing_ok=True)
+            effects.board(f"Fast-lane order {order_ref(rid)}: nobody confirmed the customer's access within 6 h of "
+                          f"their reply, so the 48-hour clock runs again from {deadline.strftime('%d %b %H:%M UTC')}. "
+                          "Owner: check the access now; the evaluation service restarts automatically.",
+                          wake_owner(row, state), kind="handoff")
+
+
 def advance_intake(row: dict[str, Any], state: dict[str, Any], job_dir: Path, effects: Effects, now: datetime) -> dict[str, Any]:
     rid = request_id(row.get("id"))
     open_order = row.get("status") in ("paid", "review_passed")
@@ -1694,6 +1736,9 @@ def advance_intake(row: dict[str, Any], state: dict[str, Any], job_dir: Path, ef
                              "to restart the review and the 48-hour clock. No refund.",
                              owner_for(rid), kind="handoff"):
                 finish_ok(state, "change_reply_handoff", now)
+    elif active_hold(row) and row.get("customer_hold_reason") == ACCESS_HOLD_REASON:
+        advance_access_hold(row, state, job_dir, effects, now)
+        row = load_row(rid) or row
     elif active_hold(row) and customer_replied_since_hold(rid):
         with contextlib.suppress(PickupError):
             resume(rid)
@@ -2041,6 +2086,7 @@ def manage_evaluation(row: dict[str, Any], state: dict[str, Any], effects: Effec
         if isinstance(operational, dict):
             reason = str(operational.get("reason") or "infrastructure")
             transient = bool(operational.get("transient")) or reason in TRANSIENT_HOLD_REASONS
+            post_gpu_capacity_handoff_once(row, state, effects, now)
             if transient:
                 retries = hold_retries(state, reason)
                 if retries < HOLD_MAX_RETRIES:
@@ -4104,6 +4150,52 @@ def post_sla40_outcome_once(state: dict[str, Any], outcome: str, effects: Effect
     return True
 
 
+GPU_CAPACITY_HANDOFF_HOURS = 24  # hand off when this many hours remain before the paid_at + 48 h deadline
+
+
+def gpu_capacity_handoff_text(rid: str) -> str:
+    offer = None
+    try:
+        pod_state = json.loads((pod_runner.PODS_DIR / f"{request_id(rid)}.json").read_text())
+        offer = pod_state.get("cheapest_offer") if isinstance(pod_state, dict) else None
+    except (OSError, ValueError):
+        pass
+    if isinstance(offer, dict) and isinstance(offer.get("hourly_usd"), (int, float)) \
+            and not isinstance(offer.get("hourly_usd"), bool):
+        seen = (f"{str(offer.get('provider'))[:20]} {str(offer.get('gpu'))[:20]} at USD {offer['hourly_usd']:.2f}/h "
+                f"(cap USD {pod_runner.MAX_HOURLY_USD:.2f}/h)")
+    else:
+        seen = "no priced offer from any admitted provider"
+    return (f"Fast-lane order {order_ref(rid)}: still waiting for GPU capacity with 24 h left on the 48 h clock. "
+            f"Reason: no admitted sealed-custody provider (Verda) had a GPU within the cap "
+            f"(USD {pod_runner.MAX_HOURLY_USD:.2f}/h, USD {pod_runner.PER_ORDER_CAP_USD:.0f} per order). "
+            f"Cheapest offer seen: {seen}. Owner: pick another admitted provider, raise the cap, or hand the order to Florian. "
+            f"No refund is triggered by this note.")
+
+
+def post_gpu_capacity_handoff_once(row: dict[str, Any], state: dict[str, Any], effects: Effects, now: datetime) -> bool:
+    """One board handoff per order when a GPU capacity hold is still open 24 h before the deadline.
+
+    The marker is written only after the board accepted the note, so a failed post is retried next cycle.
+    """
+    operational = state.get("operational_hold")
+    if not isinstance(operational, dict) or operational.get("reason") != "gpu_pod_capacity":
+        return False
+    if state.get("gpu_capacity_handoff_posted"):
+        return False
+    try:
+        if now < deadline_for(row) - timedelta(hours=GPU_CAPACITY_HANDOFF_HOURS):
+            return False
+    except PickupError:
+        return False
+    rid = request_id(row["id"])
+    if not effects.board(gpu_capacity_handoff_text(rid), owner_for(rid), kind="handoff"):
+        return False
+    state["gpu_capacity_handoff_posted"] = iso(now)
+    save_state(state)
+    return True
+
+
 def sla_decisions(synthetic_id: str | None, job_root: Path, effects: Effects) -> int:
     """Advance each open order's 40 h decision card and apply Florian's exact button.
 
@@ -4207,7 +4299,8 @@ def refund_decisions(synthetic_id: str | None, job_root: Path, effects: Effects)
         state = load_state(rid)
         try:
             outcome = refund_approval.advance(row, root, effects, utcnow().timestamp(),
-                                              deadline_for(row).strftime("%d %b %H:%M UTC"))
+                                              deadline_for(row).strftime("%d %b %H:%M UTC"),
+                                              sla_root=STATE_ROOT / "sla-decisions")
         except Exception as exc:
             print(f"fast-lane refund approval: order {order_ref(rid)}: {type(exc).__name__}", file=sys.stderr)
             continue
@@ -5403,17 +5496,28 @@ def hold(rid: str, reason: str) -> str:
     return f"Order {order_ref(rid)} is on hold; the 48-hour clock is paused."
 
 
-def resume(rid: str) -> str:
+def resume(rid: str, ended_at: datetime | None = None) -> str:
     rid = request_id(rid)
     row = load_row(rid) or {}
     if row.get("customer_hold_reason") == CHANGE_HOLD_REASON:
         raise PickupError("this order waits for customer changes; use `resubmit` instead")
+    end = f"LEAST(now(), {sql_text(iso(ended_at))}::timestamptz)" if ended_at is not None else "now()"
     if not update_row(rid, "sla_paused_seconds=COALESCE(sla_paused_seconds,0) + GREATEST(0, "
-                           "extract(epoch FROM now()-customer_hold_started_at))::int, "
+                           f"extract(epoch FROM {end}-customer_hold_started_at))::int, "
                            "customer_hold_started_at=NULL, customer_hold_reason=NULL",
                       "customer_hold_started_at IS NOT NULL"):
         raise PickupError("the order is not on hold")
     return f"Order {order_ref(rid)} resumed; the 48-hour clock runs again."
+
+
+def access_ok(rid: str) -> str:
+    """Owner confirmed the customer's access works (probe passed): end the customer_access pause now."""
+    rid = request_id(rid)
+    row = load_row(rid) or {}
+    if row.get("customer_hold_reason") != ACCESS_HOLD_REASON or not active_hold(row):
+        raise PickupError("this order is not waiting for customer access")
+    resume(rid)
+    return f"Order {order_ref(rid)}: access confirmed; the 48-hour clock runs again."
 
 
 def migrate_source_recovery_projection(journal_path: Path, journal: dict[str, Any], row: dict[str, Any],
@@ -5932,7 +6036,7 @@ def main(argv: list[str] | None = None) -> int:
     cycle_parser.add_argument("--synthetic")
     cycle_parser.add_argument("--job-root", type=Path)
     sub.add_parser("health")
-    for name in ("evaluate", "xpost", "adopt", "resume", "gate", "status", "recover-source-access", "native-owner"):
+    for name in ("evaluate", "xpost", "adopt", "resume", "access-ok", "gate", "status", "recover-source-access", "native-owner"):
         sub.add_parser(name).add_argument("request_id")
     resubmit_parser = sub.add_parser("resubmit")
     resubmit_parser.add_argument("request_id")
@@ -5993,6 +6097,8 @@ def main(argv: list[str] | None = None) -> int:
                 print(hold(args.request_id, args.reason))
             elif args.command == "resume":
                 print(resume(args.request_id))
+            elif args.command == "access-ok":
+                print(access_ok(args.request_id))
             elif args.command == "recover-source-access":
                 print(recover_source_access(args.request_id))
             elif args.command == "resubmit":

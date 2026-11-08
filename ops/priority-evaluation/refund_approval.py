@@ -21,6 +21,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 import refusal_approval as ra
+import sla_decision
 
 SOURCE = "fastlane-refund-approval"
 WINDOW = 24 * 3600
@@ -166,10 +167,35 @@ def _new_card(cards: int) -> dict:
             "notification": "pending", "card": cards + 1}
 
 
-def advance(row: dict, root: Path, effects, now: float, deadline: str) -> str:
+def sla40_card_live(sla_root: Path | None, row: dict, now: float) -> bool:
+    """True while the order's 40 h card still carries its one live Refund button (one decision card per order).
+
+    Needs: not owner-managed, notification sent, int message_id, late button attached, first decision delay_note or
+    no_action with no refund tap yet, not closed, and now before the card's own expires_at."""
+    if sla_root is None or sla_decision.owner_managed(row):
+        return False
+    try:
+        sla = json.loads((sla_root / f"{uuid.UUID(str(row['id']))}.json").read_text())
+    except (OSError, ValueError):
+        return False
+    return (isinstance(sla, dict) and sla.get("kind") == "sla_40h" and sla.get("notification") == "sent"
+            and type(sla.get("message_id")) is int and sla.get("late_attached") is True
+            and sla.get("decision") in sla_decision.LATE_KEEP and not sla.get("late_refund")
+            and not sla.get("late_closed") and isinstance(sla.get("expires_at"), (int, float))
+            and now < sla["expires_at"])
+
+
+def _note_deferred(root: Path, rid: str, now: float) -> None:
+    note = root / f"{rid}.deferred_to_sla40_card.json"
+    if not note.exists():
+        ra.atomic(note, {"note": "deferred_to_sla40_card", "at": int(now)})
+
+
+def advance(row: dict, root: Path, effects, now: float, deadline: str, sla_root: Path | None = None) -> str:
     """Return pending/refund/decline/unknown/exhausted. Caller holds the pickup-cycle lock.
 
-    'refund' and 'decline' carry an exact Florian button; the caller writes them to the row.
+    'refund' and 'decline' carry an exact Florian button; the caller writes them to the row. With sla_root, no
+    48 h card is sent while the order's 40 h card still has its live Refund button (returns 'pending').
     """
     if effects.dry_run or not live_runtime():
         return "pending"  # fixtures never contact Telegram and never approve a refund
@@ -178,6 +204,9 @@ def advance(row: dict, root: Path, effects, now: float, deadline: str) -> str:
         raise ValueError("refund approval is for real live orders only")
     root.mkdir(parents=True, exist_ok=True, mode=0o700)
     path = root / f"{rid}.json"
+    if not path.exists() and sla40_card_live(sla_root, row, now):
+        _note_deferred(root, rid, now)
+        return "pending"
     with path.with_suffix(".lock").open("a+") as lock:
         fcntl.flock(lock, fcntl.LOCK_EX)
         state = json.loads(path.read_text()) if path.exists() else {

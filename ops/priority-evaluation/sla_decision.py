@@ -5,6 +5,10 @@ exact Telegram button: "Send delay note" (one fixed-template delay email to the 
 "Refund in full" (identical to the refund card's approval) or "No action". A text reply, an
 expired card or any other signal is never a decision. Built on the refund_approval.py
 mechanism: exact callback keys, his private chat only, 24-hour expiry.
+
+One card per order (N91): after "Send delay note" or "No action" the same card keeps exactly one live
+"Refund in full" button (via editMessageReplyMarkup, caption untouched) until the card's own expires_at; an
+exact later tap is the refund decision, once. Expiry removes the button and settles the card.
 """
 from __future__ import annotations
 
@@ -71,11 +75,16 @@ def _keyboard(state: dict) -> list:
              {"text": "No action", "callback_data": state["noaction_key"]}]]
 
 
-def _attach(state: dict) -> None:
+def _late_keyboard(state: dict) -> list:
+    return [[{"text": "Refund in full", "callback_data": state["refund_key"]}]]
+
+
+def _attach(state: dict, keyboard: list | None = None) -> None:
     token, chat = ra.telegram_config()
     if chat != state["chat_id"]:
         raise ValueError("approval chat changed")
-    keyboard = _keyboard(state) if state.get("decision") is None else []
+    if keyboard is None:
+        keyboard = _keyboard(state) if state.get("decision") is None else []
     payload = {"chat_id": chat, "message_id": state["message_id"], "reply_markup": {"inline_keyboard": keyboard}}
     request = urllib.request.Request(f"https://api.telegram.org/bot{token}/editMessageReplyMarkup",
                                      data=json.dumps(payload).encode(), headers={"Content-Type": "application/json"})
@@ -173,6 +182,70 @@ def _new_card(cards: int) -> dict:
             "notification": "pending", "card": cards + 1}
 
 
+LATE_KEEP = ("delay_note", "no_action")  # decisions after which the Refund button stays live until expires_at
+
+
+def _finish(state: dict, path: Path, decision: str) -> None:
+    """Close the card for good: no buttons, reply action and ask resolved, settled line. Every step is idempotent."""
+    try:
+        _attach(state, [])
+    except ValueError:
+        pass
+    if not state.get("reply_action_resolved"):
+        state["reply_action_resolved"] = ra.close_durable_reply_action(state)
+        ra.atomic(path, state)
+    if not state.get("resolved"):
+        state["resolved"] = _resolve_ask(state, path, decision)
+        ra.atomic(path, state)
+    ra.settle_card(state, path, SETTLED[decision], SOURCE)
+
+
+def apply_late_refund(state: dict, rows, now: float) -> None:
+    """A later tap on the one remaining Refund button: newer than the first decision, same chat/sender, in window."""
+    if state.get("late_refund"):
+        return
+    floor = float(state.get("decided_at") or state["created_at"])
+    for update, chat, message, sender, received, data in rows:
+        try:
+            received = float(received)
+        except (TypeError, ValueError):
+            continue
+        if (data != state["refund_key"] or chat != state["chat_id"] or sender != state["chat_id"]
+                or type(update) is not int or update <= int(state.get("update_id") or 0)
+                or not floor <= received <= min(now, state["expires_at"])):
+            continue
+        state.update(late_refund=True, late_update_id=update, late_decided_at=received, late_tap_message_id=message)
+        return
+
+
+def _late_followup(state: dict, path: Path, now: float) -> str:
+    """After delay note / no action: one live "Refund in full" button on this card until its existing expires_at."""
+    first = state["decision"]
+    if state.get("late_refund"):
+        _finish(state, path, "refund")
+        return "refund"
+    if state.get("late_closed"):
+        return first
+    if not state.get("late_attached") and now <= state["expires_at"]:
+        try:  # a failed edit is retried next cycle and never blocks the decision the caller applies
+            _attach(state, _late_keyboard(state))
+        except ValueError:
+            return first
+        ra.register_keyboard(state["message_id"], _late_keyboard(state), carryable=True)
+        state["late_attached"] = True
+        ra.atomic(path, state)
+    apply_late_refund(state, ra.callback_rows((state["refund_key"],), state["chat_id"]), now)
+    if state.get("late_refund"):
+        ra.atomic(path, state)
+        _finish(state, path, "refund")
+        return "refund"
+    if now > state["expires_at"]:
+        state["late_closed"] = True
+        ra.atomic(path, state)
+        _finish(state, path, first)
+    return first
+
+
 def advance(row: dict, root: Path, effects, now: float, deadline: str) -> str:
     """Return pending/delay_note/refund/no_action/unknown/exhausted. Caller holds the cycle lock.
 
@@ -188,15 +261,23 @@ def advance(row: dict, root: Path, effects, now: float, deadline: str) -> str:
     with path.with_suffix(".lock").open("a+") as lock:
         fcntl.flock(lock, fcntl.LOCK_EX)
         if path.exists():
-            recorded = json.loads(path.read_text()).get("decision")
-            if recorded in ("delay_note", "refund", "no_action"):
+            saved = json.loads(path.read_text())
+            recorded = saved.get("decision")
+            if recorded in LATE_KEEP and saved.get("late_refund"):
+                if not effects.dry_run and live_runtime():
+                    _late_followup(saved, path, now)  # closes the card
+                return "refund"  # the exact later tap is recorded: apply it (reference() names that tap)
+            if recorded in ("delay_note", "refund", "no_action") and (
+                    recorded not in LATE_KEEP or effects.dry_run or not live_runtime()):
                 return recorded  # an exact button already recorded; apply it (also in dry runs)
         if effects.dry_run or not live_runtime():
             return "pending"  # fixtures never contact Telegram and never decide
         state = json.loads(path.read_text()) if path.exists() else {
             "request_id": rid, "kind": "sla_40h", "history": [], **_new_card(0)}
-        if state.get("decision") in ("delay_note", "refund", "no_action"):
-            return state["decision"]
+        if state.get("decision") == "refund":
+            return "refund"
+        if state.get("decision") in LATE_KEEP:
+            return _late_followup(state, path, now)
         if state.get("decision") == "expired":
             if state.get("card", 1) >= MAX_CARDS:
                 return "exhausted"
@@ -226,6 +307,8 @@ def advance(row: dict, root: Path, effects, now: float, deadline: str) -> str:
         decision = state.get("decision")
         if decision is None:
             return "pending"
+        if decision in LATE_KEEP:
+            return _late_followup(state, path, now)
         try:
             _attach(state)  # remove the buttons once decided or expired
         except ValueError:
@@ -245,6 +328,9 @@ def advance(row: dict, root: Path, effects, now: float, deadline: str) -> str:
 def reference(root: Path, rid: str) -> str:
     """The audit reference written next to a decision: telegram:<message_id>:<update_id>."""
     state = json.loads((root / f"{uuid.UUID(rid)}.json").read_text())
+    if state.get("late_refund") and state.get("decision") in LATE_KEEP and type(state.get("late_update_id")) is int \
+            and type(state.get("message_id")) is int:
+        return f"telegram:{state['message_id']}:{state['late_update_id']}"  # the Refund tap after the first decision
     if state.get("decision") not in ("delay_note", "refund", "no_action") \
             or type(state.get("update_id")) is not int or type(state.get("message_id")) is not int:
         raise ValueError("no exact button decision recorded")
