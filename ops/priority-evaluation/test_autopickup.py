@@ -2563,6 +2563,48 @@ class SlaCardsTests(DatabaseTestCase):
         self.assertEqual(row(rid)["status"], "paid")
         self.assertIsNone(row(rid)["refund_decision"])
 
+    def _outcome_notes(self, fx, phrase):
+        return [m for m in fx.boards if phrase in m]
+
+    def test_40h_delay_note_board_note_is_posted_once_over_two_cycles(self):
+        rid = insert_order(paid_ago="41 hours", received_ago="41 hours")
+        self._decide(rid, "delay_note")
+        fx = FakeEffects()
+        self.assertEqual(ap.sla_decisions(None, ap.JOB_ROOT, fx), 1)
+        self.assertEqual(ap.sla_decisions(None, ap.JOB_ROOT, fx), 1)
+        self.assertEqual(len(fx.mails), 1)
+        self.assertEqual(len(self._outcome_notes(fx, "sent the delay note")), 1)
+        self.assertIn("delay_note", ap.load_state(rid)["sla40_outcome_posted"])
+
+    def test_40h_no_action_board_note_is_posted_once_over_two_cycles(self):
+        rid = insert_order(paid_ago="41 hours", received_ago="41 hours")
+        self._decide(rid, "no_action")
+        fx = FakeEffects()
+        self.assertEqual(ap.sla_decisions(None, ap.JOB_ROOT, fx), 1)
+        self.assertEqual(ap.sla_decisions(None, ap.JOB_ROOT, fx), 1)
+        self.assertEqual(len(self._outcome_notes(fx, "chose 'No action'")), 1)
+
+    def test_40h_refund_board_note_is_posted_once_over_two_cycles(self):
+        rid = insert_order(paid_ago="41 hours", received_ago="41 hours")
+        self._decide(rid, "refund")
+        fx = FakeEffects()
+        ap.sla_decisions(None, ap.JOB_ROOT, fx)
+        ap.sla_decisions(None, ap.JOB_ROOT, fx)
+        self.assertEqual(len(self._outcome_notes(fx, "approved a full refund")), 1)
+
+    def test_40h_outcome_note_retries_after_a_failed_board_post(self):
+        rid = insert_order(paid_ago="41 hours", received_ago="41 hours")
+        self._decide(rid, "no_action")
+        fx = FakeEffects()
+        fx.board_ok = False
+        ap.sla_decisions(None, ap.JOB_ROOT, fx)
+        self.assertNotIn("no_action", ap.load_state(rid).get("sla40_outcome_posted", {}))
+        fx.board_ok = True
+        ap.sla_decisions(None, ap.JOB_ROOT, fx)
+        ap.sla_decisions(None, ap.JOB_ROOT, fx)
+        self.assertEqual(len(self._outcome_notes(fx, "chose 'No action'")), 2)  # one rejected post, then one accepted; none after
+        self.assertIn("no_action", ap.load_state(rid)["sla40_outcome_posted"])
+
     def test_40h_card_never_fires_for_held_or_decided_orders(self):
         rid = insert_order(paid_ago="49 hours", received_ago="49 hours")
         ap.sql(f"UPDATE {ap.TABLE} SET customer_hold_started_at=now() WHERE id='{rid}'")

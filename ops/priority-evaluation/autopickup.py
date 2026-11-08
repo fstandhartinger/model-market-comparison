@@ -4089,6 +4089,21 @@ def delay_note_message(row: dict[str, Any]) -> tuple[str, str]:
     return subject, body
 
 
+def post_sla40_outcome_once(state: dict[str, Any], outcome: str, effects: Effects, text: str, owner: str) -> bool:
+    """Post the board note for a 40 h card outcome once per order; the pickup runs every 5 minutes.
+
+    The marker is written only after the board accepted the note, so a failed post is retried next cycle.
+    """
+    posted = state.setdefault("sla40_outcome_posted", {})
+    if posted.get(outcome):
+        return False
+    if not effects.board(text, owner, kind="note"):
+        return False
+    posted[outcome] = utcnow().isoformat()
+    save_state(state)
+    return True
+
+
 def sla_decisions(synthetic_id: str | None, job_root: Path, effects: Effects) -> int:
     """Advance each open order's 40 h decision card and apply Florian's exact button.
 
@@ -4114,8 +4129,9 @@ def sla_decisions(synthetic_id: str | None, job_root: Path, effects: Effects) ->
         asked += 1
         if outcome == "refund":
             if apply_refund_decision(row, "approved", sla_decision.reference(root, rid), effects):
-                effects.board(f"Fast-lane order {order_ref(rid)}: Florian approved a full refund on the "
-                              "40-hour decision card; the refund worker pays it back now.", owner_for(rid), kind="note")
+                post_sla40_outcome_once(state, "refund", effects, (
+                    f"Fast-lane order {order_ref(rid)}: Florian approved a full refund on the "
+                    "40-hour decision card; the refund worker pays it back now."), owner_for(rid))
         elif outcome == "delay_note":
             if state.get("delay_email_status") != "sent":
                 subject, body = delay_note_message(row)
@@ -4126,11 +4142,13 @@ def sla_decisions(synthetic_id: str | None, job_root: Path, effects: Effects) ->
                     alert(state, "delay_note_failed", effects, digest=True, text=(
                         agent_status_card(row, 'is blocked: the approved delay email failed', 'Agents must repair the approved customer delay notification; delivery is not confirmed.', urgent=False)))
             if state.get("delay_email_status") == "sent":
-                effects.board(f"Fast-lane order {order_ref(rid)}: Florian sent the delay note on the "
-                              "40-hour decision card; the customer was told the new ETA.", owner_for(rid), kind="note")
+                post_sla40_outcome_once(state, "delay_note", effects, (
+                    f"Fast-lane order {order_ref(rid)}: Florian sent the delay note on the "
+                    "40-hour decision card; the customer was told the new ETA."), owner_for(rid))
         elif outcome == "no_action":
-            effects.board(f"Fast-lane order {order_ref(rid)}: Florian chose 'No action' on the 40-hour "
-                          "decision card; the order keeps running.", owner_for(rid), kind="note")
+            post_sla40_outcome_once(state, "no_action", effects, (
+                f"Fast-lane order {order_ref(rid)}: Florian chose 'No action' on the 40-hour "
+                "decision card; the order keeps running."), owner_for(rid))
         elif outcome == "exhausted":
             alert(state, "sla40_card_exhausted", effects, digest=True, text=(
                 agent_status_card(row, 'awaits a decision: the delay or refund cards expired', 'No refund or delay email was authorized; agents are following up.', urgent=False)))
