@@ -4424,6 +4424,13 @@ def systemd_last_success(effects: Effects, unit: str) -> datetime | None:
         memo = {}
     remembered = parse_ts(memo.get(unit))
     values = effects.unit_state(unit)
+    # The health timer (hh:05:00) and the five-minute worker timer can fire in the same second; a unit that is
+    # mid-run shows no exit result, so the check fell back to a six-hour-old memo and raised a false urgent
+    # card (card a1794161102, 8 Nov 2026). Wait for an in-flight run to finish before judging it.
+    deadline = time.monotonic() + 180
+    while values.get("ActiveState") in ("activating", "deactivating", "reloading") and time.monotonic() < deadline:
+        time.sleep(3)
+        values = effects.unit_state(unit)
     if values.get("Result") != "success" or values.get("ExecMainStatus") not in ("0", None):
         return remembered
     stamp = values.get("ExecMainExitTimestamp") or ""
