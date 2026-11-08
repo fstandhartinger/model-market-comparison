@@ -118,9 +118,13 @@ class VerdaProvider(pod_runner.Provider):
             raise pod_runner.PodCapacityError('no Verda instance type for ' + gpu)
         hourly, location = self._quote(instance_type)
         if not 0 < hourly <= max_hourly:
-            raise pod_runner.PodCapacityError('Verda price above the cap')
+            error = pod_runner.PodCapacityError('Verda price above the cap')
+            error.offer_usd_h = hourly
+            raise error
         if location is None:
-            raise pod_runner.PodCapacityError('Verda has no ' + instance_type + ' now')
+            error = pod_runner.PodCapacityError('Verda has no ' + instance_type + ' now')
+            error.offer_usd_h = hourly
+            raise error
         hostname = f'{self._label}-{int(time.time())}'
         status, body = api('POST', '/instances', {
             'instance_type': instance_type, 'image': IMAGE, 'ssh_key_ids': [SSH_KEY_ID], 'location_code': location,

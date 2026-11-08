@@ -112,7 +112,30 @@ class PodRunError(Exception):
 
 
 class PodCapacityError(Exception):
-    """No provider could offer a suitable pod."""
+    """No provider could offer a suitable pod.
+
+    A provider may set `offer_usd_h` (the cheapest hourly price it did quote) so the T-24h handoff can name it."""
+    offer_usd_h = None
+
+
+# Fixed fallback order for fast-lane (sealed) orders. Only providers that are implemented AND flagged
+# sealed_custody_ok may appear here (DECISIONS 17 Oct 2026 lium-sealed-data-ban, custody #21023(3): Verda EU non-spot only).
+# Lium and the RunPod stub are deliberately absent; Sandy/LeChonk are never GPU providers.
+ADMITTED_PROVIDER_ORDER = ("verda",)
+
+
+def provider_chain(primary, fallbacks=()):
+    """[primary, *admitted fallbacks] in ADMITTED_PROVIDER_ORDER, no duplicates; everything else is dropped."""
+    chain = [primary]
+    seen = {getattr(primary, 'name', None)}
+    extras = [f for f in fallbacks if getattr(f, 'sealed_custody_ok', False) is True
+              and getattr(f, 'name', None) in ADMITTED_PROVIDER_ORDER]
+    extras.sort(key=lambda f: ADMITTED_PROVIDER_ORDER.index(f.name))
+    for extra in extras:
+        if extra.name not in seen:
+            seen.add(extra.name)
+            chain.append(extra)
+    return chain
 
 
 # ---------------------------------------------------------------------------
@@ -821,6 +844,17 @@ WEIGHTS_SNIPPET = (
 )
 
 
+def _note_capacity_offer(state, provider, gpu_choice, exc):
+    """Remember the cheapest offer any provider quoted but we could not take (cap/capacity), for the T-24h handoff."""
+    price = getattr(exc, 'offer_usd_h', None)
+    if type(price) not in (int, float) or not 0 < price < 1000:
+        return
+    best = state.get('cheapest_offer')
+    if not isinstance(best, dict) or type(best.get('hourly_usd')) not in (int, float) or price < best['hourly_usd']:
+        state['cheapest_offer'] = {'provider': getattr(provider, 'name', 'provider'), 'gpu': gpu_choice[0],
+                                   'hourly_usd': round(float(price), 4), 'at': datetime.now(timezone.utc).isoformat()}
+
+
 def _exec(provider, pod_id, command, timeout=600):
     result = provider.exec(pod_id, command, timeout=timeout)
     if result.returncode:
@@ -1263,7 +1297,7 @@ def default_alert(text: str) -> None:
 
 
 def run(rid: str, job_dir: Path, recipe: dict, output: Path, expected_pins: dict, max_usd: float,
-        *, provider: Provider | None = None, alert=None, benchmarks=('jevbench',), native_source_pins=None, measurement_pins_factory=None, pre_upload_gate=None, allocation_gate=None, runtime_preflight=None, image_context_provider=None, weights_streamer=None) -> dict:
+        *, provider: Provider | None = None, alert=None, benchmarks=('jevbench',), native_source_pins=None, measurement_pins_factory=None, pre_upload_gate=None, allocation_gate=None, runtime_preflight=None, image_context_provider=None, weights_streamer=None, fallback_providers=()) -> dict:
     """Measure the reviewed recipe on one disposable GPU pod; idempotent via receipt + pod state."""
     validate_recipe(recipe, job_dir)
     current = measurement_pins_factory() if measurement_pins_factory is not None else measurement_dispatch.pins()
@@ -1404,6 +1438,8 @@ def run(rid: str, job_dir: Path, recipe: dict, output: Path, expected_pins: dict
     try:
         run_error: Exception | None = None
         quote_budget = {'remaining': 2}
+        chain = provider_chain(provider, fallback_providers)
+        provider_index = 0  # advances only after a capacity miss; the attempt budget below is unchanged
         for attempt in range(1 if scoped or (rid == '3687485f-5a51-4964-bd9a-73973f3494d7' and allocation_gate is not None) else 2):
             gpu_choice = candidates[attempt % len(candidates)]
             run_spend = state.get('spent_upper_bound_usd', 0.0) - prior_spend
@@ -1413,12 +1449,15 @@ def run(rid: str, job_dir: Path, recipe: dict, output: Path, expected_pins: dict
             ttl = min(ttl_cap, remaining / _attempt_rate(recipe, job_dir),
                       allocation_gate.max_ttl_hours if allocation_gate is not None else ttl_cap)
             try:
-                state = _lifecycle(provider, job, recipe, staging_path, output, state,
+                state = _lifecycle(chain[provider_index % len(chain)], job, recipe, staging_path, output, state,
                                    gpu_choice, ttl, remaining, alert, save_state, benchmarks, quote_budget,
                                    current['profile']['inputs']['jevbench']['count'], pre_upload_gate, allocation_gate, runtime_preflight,
                                    job_dir=job_dir, image_context_provider=image_context_provider, weights_streamer=weights_streamer, native_code_archive=code_tar, candidate_pins=current)
                 break
-            except PodCapacityError:
+            except PodCapacityError as exc:
+                _note_capacity_offer(state, chain[provider_index % len(chain)], gpu_choice, exc)
+                save_state()
+                provider_index += 1  # next attempt: next admitted provider (wraps to the primary when there is none)
                 continue  # try the next GPU candidate; capacity only if every attempt was capacity
             except PodRunError as exc:
                 run_error = exc

@@ -2041,6 +2041,7 @@ def manage_evaluation(row: dict[str, Any], state: dict[str, Any], effects: Effec
         if isinstance(operational, dict):
             reason = str(operational.get("reason") or "infrastructure")
             transient = bool(operational.get("transient")) or reason in TRANSIENT_HOLD_REASONS
+            post_gpu_capacity_handoff_once(row, state, effects, now)
             if transient:
                 retries = hold_retries(state, reason)
                 if retries < HOLD_MAX_RETRIES:
@@ -4100,6 +4101,52 @@ def post_sla40_outcome_once(state: dict[str, Any], outcome: str, effects: Effect
     if not effects.board(text, owner, kind="note"):
         return False
     posted[outcome] = utcnow().isoformat()
+    save_state(state)
+    return True
+
+
+GPU_CAPACITY_HANDOFF_HOURS = 24  # hand off when this many hours remain before the paid_at + 48 h deadline
+
+
+def gpu_capacity_handoff_text(rid: str) -> str:
+    offer = None
+    try:
+        pod_state = json.loads((pod_runner.PODS_DIR / f"{request_id(rid)}.json").read_text())
+        offer = pod_state.get("cheapest_offer") if isinstance(pod_state, dict) else None
+    except (OSError, ValueError):
+        pass
+    if isinstance(offer, dict) and isinstance(offer.get("hourly_usd"), (int, float)) \
+            and not isinstance(offer.get("hourly_usd"), bool):
+        seen = (f"{str(offer.get('provider'))[:20]} {str(offer.get('gpu'))[:20]} at USD {offer['hourly_usd']:.2f}/h "
+                f"(cap USD {pod_runner.MAX_HOURLY_USD:.2f}/h)")
+    else:
+        seen = "no priced offer from any admitted provider"
+    return (f"Fast-lane order {order_ref(rid)}: still waiting for GPU capacity with 24 h left on the 48 h clock. "
+            f"Reason: no admitted sealed-custody provider (Verda) had a GPU within the cap "
+            f"(USD {pod_runner.MAX_HOURLY_USD:.2f}/h, USD {pod_runner.PER_ORDER_CAP_USD:.0f} per order). "
+            f"Cheapest offer seen: {seen}. Owner: pick another admitted provider, raise the cap, or hand the order to Florian. "
+            f"No refund is triggered by this note.")
+
+
+def post_gpu_capacity_handoff_once(row: dict[str, Any], state: dict[str, Any], effects: Effects, now: datetime) -> bool:
+    """One board handoff per order when a GPU capacity hold is still open 24 h before the deadline.
+
+    The marker is written only after the board accepted the note, so a failed post is retried next cycle.
+    """
+    operational = state.get("operational_hold")
+    if not isinstance(operational, dict) or operational.get("reason") != "gpu_pod_capacity":
+        return False
+    if state.get("gpu_capacity_handoff_posted"):
+        return False
+    try:
+        if now < deadline_for(row) - timedelta(hours=GPU_CAPACITY_HANDOFF_HOURS):
+            return False
+    except PickupError:
+        return False
+    rid = request_id(row["id"])
+    if not effects.board(gpu_capacity_handoff_text(rid), owner_for(rid), kind="handoff"):
+        return False
+    state["gpu_capacity_handoff_posted"] = iso(now)
     save_state(state)
     return True
 

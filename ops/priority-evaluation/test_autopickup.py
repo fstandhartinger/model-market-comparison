@@ -2253,6 +2253,65 @@ class OperationalHoldRetryTests(DatabaseTestCase):
         self.assertEqual(len([n for n in fx.notes if n[0] == "urgent"]), 1)  # exactly one card
         self.assertEqual(len(fx.started), starts)
 
+    def _capacity_hold_order(self, paid_hours_ago):
+        rid = insert_order()
+        fx = FakeEffects()
+        ap.cycle(fx)
+        ap.sql(f"UPDATE {ap.TABLE} SET evaluation_status='pending', "
+               f"paid_at=now() - interval '{paid_hours_ago} hours' WHERE id='{rid}'")
+        _set_operational_hold(rid, "gpu_pod_capacity", transient=True)
+        return rid, fx
+
+    def _gpu_handoffs(self, fx):
+        return [b for b in fx.boards if "waiting for GPU capacity" in b]
+
+    def test_gpu_capacity_handoff_waits_for_t_minus_24h_then_posts_once(self):
+        rid, fx = self._capacity_hold_order(23)
+        now = datetime.now(timezone.utc)
+        ap.manage_evaluation(row(rid), ap.load_state(rid), fx, now)
+        self.assertEqual(self._gpu_handoffs(fx), [])  # 23 h after payment: still before T-24h
+        self.assertNotIn("gpu_capacity_handoff_posted", ap.load_state(rid))
+        later = now + timedelta(hours=2)  # 25 h after payment
+        ap.manage_evaluation(row(rid), ap.load_state(rid), fx, later)
+        ap.manage_evaluation(row(rid), ap.load_state(rid), fx, later + timedelta(minutes=5))
+        ap.manage_evaluation(row(rid), ap.load_state(rid), fx, later + timedelta(hours=1))
+        posted = self._gpu_handoffs(fx)
+        self.assertEqual(len(posted), 1)
+        self.assertIn(ap.order_ref(rid), posted[0])
+        self.assertIn("cheapest offer seen", posted[0].lower())
+        self.assertIn("no refund", posted[0].lower())
+        self.assertEqual(fx.board_threads[fx.boards.index(posted[0])][1:], (ap.owner_for(rid), "handoff"))
+        self.assertIn("gpu_capacity_handoff_posted", ap.load_state(rid))
+
+    def test_gpu_capacity_handoff_names_cheapest_offer_from_pod_state(self):
+        rid, fx = self._capacity_hold_order(25)
+        pods = Path(tempfile.mkdtemp())
+        (pods / f"{rid}.json").write_text(json.dumps({"cheapest_offer": {"provider": "verda", "gpu": "H100", "hourly_usd": 6.25}}))
+        with mock.patch.object(ap.pod_runner, "PODS_DIR", pods):
+            ap.manage_evaluation(row(rid), ap.load_state(rid), fx, datetime.now(timezone.utc))
+        self.assertIn("verda H100 at USD 6.25/h", self._gpu_handoffs(fx)[0])
+
+    def test_failed_gpu_capacity_handoff_is_retried_next_cycle(self):
+        rid, fx = self._capacity_hold_order(25)
+        fx.board_ok = False
+        now = datetime.now(timezone.utc)
+        ap.manage_evaluation(row(rid), ap.load_state(rid), fx, now)
+        self.assertNotIn("gpu_capacity_handoff_posted", ap.load_state(rid))
+        fx.board_ok = True
+        ap.manage_evaluation(row(rid), ap.load_state(rid), fx, now + timedelta(minutes=5))
+        ap.manage_evaluation(row(rid), ap.load_state(rid), fx, now + timedelta(minutes=10))
+        self.assertEqual(len(self._gpu_handoffs(fx)), 2)  # the failed attempt plus exactly one accepted post
+        self.assertIn("gpu_capacity_handoff_posted", ap.load_state(rid))
+
+    def test_other_holds_get_no_gpu_capacity_handoff(self):
+        rid = insert_order()
+        fx = FakeEffects()
+        ap.cycle(fx)
+        ap.sql(f"UPDATE {ap.TABLE} SET evaluation_status='pending', paid_at=now() - interval '30 hours' WHERE id='{rid}'")
+        _set_operational_hold(rid, "gpu_pod_run_failed", transient=True)
+        ap.manage_evaluation(row(rid), ap.load_state(rid), fx, datetime.now(timezone.utc))
+        self.assertEqual(self._gpu_handoffs(fx), [])
+
     def test_non_transient_hold_escalates_immediately_and_never_idles(self):
         rid = insert_order()
         fx = FakeEffects()
@@ -3039,6 +3098,64 @@ class PodRunnerLifecycleTests(unittest.TestCase):
             self._run(provider)
         self.assertEqual(str(ctx.exception), "partial_measurement_requires_reconciliation")
         self.assertEqual(provider.removed, ["pod-1"])
+
+    def test_primary_without_offer_falls_back_to_next_admitted_provider(self):
+        primary = _FakeProvider({"capacity": True})
+        primary.name = "verda"
+        fallback = _FakeProvider()
+        fallback.name = "verda2"
+        rid = str(uuid.uuid4())
+        output = self.tmp / "out-fallback"
+        with mock.patch.object(pod_runner, "ADMITTED_PROVIDER_ORDER", ("verda", "verda2")), \
+                mock.patch.object(pod_runner.measurement_dispatch, "pins", return_value=self.pins):
+            receipt = pod_runner.run(rid, self.job, self.recipe, output, self.pins, 20.0, provider=primary,
+                                     fallback_providers=[fallback], alert=self.alerts.append)
+        self.assertEqual(receipt["rows"], 1624)
+        self.assertEqual([c for c in primary.calls if c[0] == "create"], [])
+        self.assertEqual(fallback.removed, ["pod-1"])  # exact-id teardown on the fallback host
+        self.assertEqual(fallback.releases, 1)
+        self.assertIn(("create", "A100", 3.0, 20.0), fallback.calls)  # attempt 2 = next GPU candidate; same TTL/budget caps
+
+    def test_fallback_that_is_not_admitted_is_never_used(self):
+        primary = _FakeProvider({"capacity": True})
+        primary.name = "verda"
+        lium_like = _FakeProvider()
+        lium_like.name = "lium"
+        unsealed = _FakeProvider()
+        unsealed.name = "verda"
+        unsealed.sealed_custody_ok = False
+        stub = pod_runner.RunPodProvider()
+        self.assertEqual(pod_runner.provider_chain(primary, [lium_like, unsealed, stub]), [primary])
+        with self.assertRaises(ap.measurement_dispatch.OperationalHold) as ctx:
+            rid = str(uuid.uuid4())
+            with mock.patch.object(pod_runner.measurement_dispatch, "pins", return_value=self.pins):
+                pod_runner.run(rid, self.job, self.recipe, self.tmp / "out-na", self.pins, 20.0, provider=primary,
+                               fallback_providers=[lium_like, unsealed, stub], alert=self.alerts.append)
+        self.assertEqual(str(ctx.exception), "gpu_pod_capacity")
+        self.assertEqual(lium_like.calls, [])
+        self.assertEqual(unsealed.calls, [])
+
+    def test_all_providers_empty_is_capacity_hold_and_records_cheapest_offer(self):
+        class Priced(_FakeProvider):
+            def __init__(self, name, price):
+                super().__init__()
+                self.name, self.price = name, price
+
+            def create(self, gpu, ttl_hours, budget):
+                error = pod_runner.PodCapacityError("price above the cap")
+                error.offer_usd_h = self.price
+                raise error
+        first, second = Priced("verda", 7.5), Priced("verda2", 6.25)
+        rid = str(uuid.uuid4())
+        with mock.patch.object(pod_runner, "ADMITTED_PROVIDER_ORDER", ("verda", "verda2")), \
+                mock.patch.object(pod_runner.measurement_dispatch, "pins", return_value=self.pins):
+            with self.assertRaises(ap.measurement_dispatch.OperationalHold) as ctx:
+                pod_runner.run(rid, self.job, self.recipe, self.tmp / "out-all", self.pins, 20.0, provider=first,
+                               fallback_providers=[second], alert=self.alerts.append)
+        self.assertEqual(str(ctx.exception), "gpu_pod_capacity")
+        saved = json.loads((pod_runner.PODS_DIR / f"{rid}.json").read_text())
+        self.assertEqual(saved["cheapest_offer"]["hourly_usd"], 6.25)
+        self.assertEqual(saved["cheapest_offer"]["provider"], "verda2")
 
     def test_no_capacity_is_a_capacity_hold_without_retry(self):
         provider = _FakeProvider({"capacity": True})
