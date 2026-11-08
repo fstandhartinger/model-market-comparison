@@ -5,6 +5,7 @@ export type PrioritySubmission = {
   submissionId: string; email: string; modelName: string; modelLink: string; codeLink: string;
   accessType: 'open_weights' | 'api_endpoint'; accessInstructions: string; notes: string;
   pricingTier: PriorityTier; benchmarks: PriorityBenchmark[]; visibility: 'public' | 'private'; quote: PriorityQuote;
+  apiUrl: string; apiPublic: boolean; confirmDuplicate: boolean; requestReview: boolean;
 };
 export function quotePriorityEvaluation(input: { benchmarks: PriorityBenchmark[]; pricingTier: PriorityTier }): PriorityQuote | null;
 export function validatePrioritySubmission(body: unknown): { ok: true; value: PrioritySubmission } | { ok: false; error: string };
@@ -22,9 +23,15 @@ export function startPriorityCheckout(input: {
   saveSession: (requestId: string, sessionId: string, url: string) => Promise<unknown>;
   markFailed: (requestId: string) => Promise<unknown>;
   isConflict: (error: unknown) => boolean;
-  logFailure: (failure: { requestId: string; phase: 'prepare' | 'stripe' | 'save'; errorType: string; markFailedError?: true }) => void;
+  findDuplicate?: (submission: PrioritySubmission) => Promise<{ existing_status: string; created_at: string } | null>;
+  checkIntake?: (submission: PrioritySubmission) => Promise<{ outcome: 'ok' | 'needs_review' | 'over_cap'; code: string; message: string }>;
+  holdForReview?: (submission: PrioritySubmission, mode: 'test' | 'live', intake: Record<string, unknown>) => Promise<unknown>;
+  logFailure: (failure: { requestId: string; phase: 'duplicate' | 'intake' | 'hold' | 'prepare' | 'stripe' | 'save'; errorType: string; markFailedError?: true }) => void;
 }): Promise<
   | { status: 200; body: { url: string } }
+  | { status: 200; body: { intake: { outcome: string; code: string; message: string; canRequestReview: true; reviewLabel: string } } }
+  | { status: 200; body: { reviewFirst: true; intake: { outcome: string; code: string; message: string }; message: string } }
+  | { status: 409; body: { duplicate: true; existing_status: string; created_at: string } }
   | { status: 409; body: { error: string } }
   | { status: 502; body: { error: string; requestId: string } }
 >;

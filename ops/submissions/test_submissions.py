@@ -26,7 +26,7 @@ PG_BIN = next((p for p in sorted(Path("/usr/lib/postgresql").glob("*/bin"), reve
 pytestmark = pytest.mark.skipif(PG_BIN is None, reason="PostgreSQL server binaries unavailable")
 
 DDL = """
-CREATE TABLE bh_priority_evaluation_requests (id uuid PRIMARY KEY DEFAULT gen_random_uuid(), paid_at timestamptz);
+CREATE TABLE bh_priority_evaluation_requests (id uuid PRIMARY KEY DEFAULT gen_random_uuid(), paid_at timestamptz, status text NOT NULL DEFAULT 'checkout_pending');
 CREATE TABLE bh_model_submissions (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(), submission_id uuid UNIQUE DEFAULT gen_random_uuid(),
   created_at timestamptz NOT NULL DEFAULT now(), updated_at timestamptz NOT NULL DEFAULT now(),
@@ -303,9 +303,12 @@ def test_abandoned_checkout(env):
     a = insert(env["db"], status="awaiting_payment", created_at="now() - interval '49 hours'", priority_request_id=unpaid, fast_lane=True, queued_at=None)
     b = insert(env["db"], status="awaiting_payment", created_at="now() - interval '49 hours'", priority_request_id=paid, fast_lane=True, queued_at=None)
     c = insert(env["db"], status="awaiting_payment", created_at="now() - interval '47 hours'", priority_request_id=unpaid, fast_lane=True, queued_at=None)
+    # a review-first order (intake check could not clear it) waits for an agent, not for payment: never withdrawn as abandoned
+    review = sql(env["db"], "INSERT INTO bh_priority_evaluation_requests (paid_at, status) VALUES (NULL, 'awaiting_review') RETURNING id")
+    d = insert(env["db"], status="awaiting_payment", created_at="now() - interval '200 hours'", priority_request_id=review, fast_lane=True, queued_at=None)
     assert bridge(env)["abandoned"] == 1
     got = dict(line.split("|") for line in sql(env["db"], "SELECT id||'|'||status FROM bh_model_submissions").splitlines())
-    assert got == {a: "withdrawn", b: "awaiting_payment", c: "awaiting_payment"}
+    assert got == {a: "withdrawn", b: "awaiting_payment", c: "awaiting_payment", d: "awaiting_payment"}
 
 
 def test_second_instance_exits_while_locked(env):

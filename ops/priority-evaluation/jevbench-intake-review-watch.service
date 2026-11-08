@@ -1,0 +1,22 @@
+[Unit]
+Description=Hand fast-lane orders held for manual review (awaiting_review) to their owning job on the agent board
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+Environment=AGENT_BOARD_NAME=fastlane-autopickup
+Environment=AGENT_BOARD_JOBDIR=%h/jobs/fastlane-refusal-reply-guard-20260929
+Environment=NOTIFY_REPLY_JOB_DIR=%h/jobs/fastlane-refusal-reply-guard-20260929
+Environment=GH_NO_UPDATE_NOTIFIER=1
+ExecStart=/usr/bin/python3 %h/.local/share/priority-evaluation/runtime/intake_review.py watch
+TimeoutStartSec=300
+UMask=0077
+NoNewPrivileges=true
+PrivateTmp=true
+PrivateUsers=true
+ProtectSystem=strict
+ProtectHome=read-only
+ReadWritePaths=%h/.local/state/fastlane-autopickup
+ReadWritePaths=%h/.agent-board %h/.notify
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6 AF_NETLINK

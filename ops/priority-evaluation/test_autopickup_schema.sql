@@ -1,4 +1,4 @@
--- Schema-only snapshot of the live fast-lane tables (29 Sep 2026) for test_autopickup.py; no data.
+-- Schema-only snapshot of the live fast-lane tables (29 Sep 2026; 8 Nov 2026: + intake review columns and statuses of db/accounts/003) for test_autopickup.py; no data.
 
 CREATE TABLE public.bh_priority_eval_customer_mail_events (
     gmail_message_id text NOT NULL,
@@ -96,6 +96,10 @@ CREATE TABLE public.bh_priority_evaluation_requests (
     refund_decision_ref text,
     change_request_email_status text DEFAULT 'not_due'::text NOT NULL,
     resubmission_count integer DEFAULT 0 NOT NULL,
+    intake_check jsonb,
+    intake_approved_at timestamp with time zone,
+    intake_approved_by text,
+    pay_token_hash text,
     CONSTRAINT bh_priority_evaluation_requests_access_instructions_check CHECK (((length(access_instructions) >= 4) AND (length(access_instructions) <= 800))),
     CONSTRAINT bh_priority_evaluation_requests_access_type_check CHECK ((access_type = ANY (ARRAY['open_weights'::text, 'api_endpoint'::text]))),
     CONSTRAINT bh_priority_evaluation_requests_benchmarks_check CHECK ((((cardinality(benchmarks) >= 1) AND (cardinality(benchmarks) <= 2)) AND (benchmarks <@ ARRAY['jevbench'::text, 'imagejevbench'::text]))),
@@ -113,7 +117,7 @@ CREATE TABLE public.bh_priority_evaluation_requests (
     CONSTRAINT bh_priority_evaluation_requests_refund_attempts_check CHECK ((refund_attempts >= 0)),
     CONSTRAINT bh_priority_evaluation_requests_refusal_email_status_check CHECK ((refusal_email_status = ANY (ARRAY['not_due'::text, 'approval_required'::text, 'held'::text, 'expired'::text, 'sent'::text]))),
     CONSTRAINT bh_priority_evaluation_requests_release_attempts_check CHECK ((release_attempts >= 0)),
-    CONSTRAINT bh_priority_evaluation_requests_status_check CHECK ((status = ANY (ARRAY['checkout_pending'::text, 'checkout_failed'::text, 'paid'::text, 'review_passed'::text, 'refund_due'::text, 'refund_pending'::text, 'refunded'::text, 'completed'::text, 'expired'::text]))),
+    CONSTRAINT bh_priority_evaluation_requests_status_check CHECK ((status = ANY (ARRAY['checkout_pending'::text, 'checkout_failed'::text, 'paid'::text, 'review_passed'::text, 'refund_due'::text, 'refund_pending'::text, 'refunded'::text, 'completed'::text, 'expired'::text, 'awaiting_review'::text, 'intake_declined'::text]))),
     CONSTRAINT bh_priority_evaluation_requests_stripe_mode_check CHECK ((stripe_mode = ANY (ARRAY['test'::text, 'live'::text]))),
     CONSTRAINT bh_priority_evaluation_requests_unit_amount_check CHECK ((unit_amount = ANY (ARRAY[4900, 9900]))),
     CONSTRAINT bh_priority_evaluation_requests_visibility_check CHECK ((visibility = ANY (ARRAY['public'::text, 'private'::text])))

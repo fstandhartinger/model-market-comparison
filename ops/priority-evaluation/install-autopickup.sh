@@ -41,7 +41,7 @@ install -d -m 700 "$REPLY_GUARD"
 install -m 600 "$SRC/refusal-reply-prompt-template.md" "$REPLY_GUARD/PROMPT.md"
 install -d -m 700 "$SHARE/runtime" "$HOME/wt" "$HOME/.local/state/bh" \
   "$HOME/.local/state/telegram-reply-broker/callback-status.d"
-for f in autopickup.py hf_git_credential.py refusal_approval.py refund_approval.py sla_decision.py pod_runner.py pod_capacity.py lium_bounded_up.py recover_wald_capacity.py execution_source.py source_metadata.py native_source_selection.py ryotide-native-source-policy.json native_admission.py v16_allocation.py scoped_native_topup.py scoped_native_topup_operator.py v16_profiles.py v16_adoption.py jeff_runtime_preflight.py jeff_runtime_inspector.py ryotide_runtime_preflight.py ryotide_runtime_inspector.py ryotide_runtime_supplement.py ryotide_native_proof.py ryotide_supplement_metadata.py standardone_runtime_supplement.py krino_runtime_supplement.py torchcast_runtime_supplement.py lychee_runtime_supplement.py jeva_runtime_supplement.py chon_runtime_supplement.py cue_reflex_runtime_supplement.py sieve_runtime_supplement.py wps_decision_runtime_supplement.py verda_provider.py verda_deadman.py host_evidence.py decisor_runtime_inspector.py decisor_runtime_preflight.py decisor_shim.py decisor_native_preinput.py decisor_native_proof.py decisor_late_completion.py decisor_preprovider_reconcile.py official_score_v16.py official_scoring_v16.py PREP-OPEN-WEIGHTS-PROMPT.txt official_scoring.py official_score.py official-profiles.json release_render.py host_github.py public_artifacts.py measurement_dispatch.py measurement_driver.py measurement-profiles.json static_agent.py MEASUREMENT-CONTRACT.md METHOD-v1.5-ADDENDUM-PRICING.md METHOD-v1.5-ADDENDUM-PRICING-INTERPRETATION-1.md lfs_exact_fetch.py lfs_stream_to_pod.py pod_weights_streamer.py host_staging_glue.py build_model_dir_manifest.py aplomb_5090_preflight.py native_owner.py supplement_admission.py; do
+for f in autopickup.py hf_git_credential.py refusal_approval.py refund_approval.py sla_decision.py pod_runner.py pod_capacity.py lium_bounded_up.py recover_wald_capacity.py execution_source.py source_metadata.py native_source_selection.py ryotide-native-source-policy.json native_admission.py v16_allocation.py scoped_native_topup.py scoped_native_topup_operator.py v16_profiles.py v16_adoption.py jeff_runtime_preflight.py jeff_runtime_inspector.py ryotide_runtime_preflight.py ryotide_runtime_inspector.py ryotide_runtime_supplement.py ryotide_native_proof.py ryotide_supplement_metadata.py standardone_runtime_supplement.py krino_runtime_supplement.py torchcast_runtime_supplement.py lychee_runtime_supplement.py jeva_runtime_supplement.py chon_runtime_supplement.py cue_reflex_runtime_supplement.py sieve_runtime_supplement.py wps_decision_runtime_supplement.py verda_provider.py verda_deadman.py host_evidence.py decisor_runtime_inspector.py decisor_runtime_preflight.py decisor_shim.py decisor_native_preinput.py decisor_native_proof.py decisor_late_completion.py decisor_preprovider_reconcile.py official_score_v16.py official_scoring_v16.py PREP-OPEN-WEIGHTS-PROMPT.txt official_scoring.py official_score.py official-profiles.json release_render.py host_github.py public_artifacts.py measurement_dispatch.py measurement_driver.py measurement-profiles.json static_agent.py MEASUREMENT-CONTRACT.md METHOD-v1.5-ADDENDUM-PRICING.md METHOD-v1.5-ADDENDUM-PRICING-INTERPRETATION-1.md lfs_exact_fetch.py lfs_stream_to_pod.py pod_weights_streamer.py host_staging_glue.py build_model_dir_manifest.py aplomb_5090_preflight.py native_owner.py supplement_admission.py intake_review.py; do
   install -m 600 "$SRC/$f" "$SHARE/runtime/$f"
 done
 install -d -m 700 "$SHARE/runtime/pod_drivers"
@@ -58,6 +58,8 @@ print('Official scorer/reference pins verified')
 VERIFY_PROFILES
 # Apply the repository's idempotent schema before either worker can see new columns.
 psql -X -q --single-transaction -v ON_ERROR_STOP=1 -d benchmarkheaven_accounts -f "$REPO_ROOT/db/accounts/001_init.sql" >/dev/null
+# Review-first queue columns/statuses (intake_review.py reads them); idempotent.
+psql -X -q --single-transaction -v ON_ERROR_STOP=1 -d benchmarkheaven_accounts -f "$REPO_ROOT/db/accounts/003_intake_review.sql" >/dev/null
 install -m 700 "$SRC/worker.py" "$BIN/jevbench-priority-worker.py"
 ln -sfn "$SHARE/runtime/autopickup.py" "$BIN/jevbench-autopickup.py"
 install -m 644 "$SRC/jevbench-priority-worker.service" "$UNITS/jevbench-priority-worker.service"
@@ -75,13 +77,13 @@ install -m 700 "$SRC/jevbench-priority-mail-watch.py" "$WATCH"
 [ "$(sha256sum < "$SRC/jevbench-priority-mail-watch.py")" = "$(sha256sum < "$WATCH")" ] \
   || { echo "mail watcher install binding mismatch" >&2; exit 1; }
 for f in autopickup-prompt-template.md autopickup-review-prompt-template.md autopickup-confirmation-template.txt \
-         autopickup-result-public-template.txt autopickup-result-private-template.txt autopickup-refund-template.txt autopickup-refusal-template.txt autopickup-review-passed-template.txt autopickup-change-request-template.txt autopickup-delay-template.txt; do
+         autopickup-result-public-template.txt autopickup-result-private-template.txt autopickup-refund-template.txt autopickup-refusal-template.txt autopickup-review-passed-template.txt autopickup-change-request-template.txt autopickup-delay-template.txt autopickup-intake-approved-template.txt autopickup-intake-declined-template.txt; do
   install -m 600 "$SRC/$f" "$SHARE/$f"
 done
 for u in jevbench-priority-autopickup.service jevbench-priority-autopickup.timer \
          jevbench-priority-autopickup-health.service jevbench-priority-autopickup-health.timer \
          jevbench-priority-autopickup-evaluation@.service jevbench-priority-autopickup-xpost@.service \
-         jevbench-native-owner@.service; do
+         jevbench-native-owner@.service jevbench-intake-review-watch.service jevbench-intake-review-watch.timer; do
   install -m 644 "$SRC/$u" "$UNITS/$u"
 done
 
@@ -139,9 +141,10 @@ systemctl --user daemon-reload
 if [[ "$ENABLE" == 1 ]]; then
   systemd-analyze --user verify "$UNITS/jevbench-priority-autopickup.service" \
     "$UNITS/jevbench-priority-autopickup-health.service" "$UNITS/jevbench-priority-autopickup.timer" \
-    "$UNITS/jevbench-priority-autopickup-health.timer"
+    "$UNITS/jevbench-priority-autopickup-health.timer" "$UNITS/jevbench-intake-review-watch.service" \
+    "$UNITS/jevbench-intake-review-watch.timer"
   systemctl --user enable --now jevbench-priority-worker.timer jevbench-priority-mail-watcher.timer \
-    jevbench-priority-autopickup.timer jevbench-priority-autopickup-health.timer
+    jevbench-priority-autopickup.timer jevbench-priority-autopickup-health.timer jevbench-intake-review-watch.timer
   register_desired_state
   systemctl --user list-timers 'jevbench-priority-autopickup*' --no-pager
 else

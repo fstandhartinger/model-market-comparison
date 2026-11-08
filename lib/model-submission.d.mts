@@ -5,6 +5,7 @@ export type ModelSubmission = {
   followup: FollowupOption | null; fastLane: boolean; fastLaneBenchmarks: ('jevbench' | 'imagejevbench')[];
   pricingTier: 'api_or_small_open' | 'large_open_gpu' | null; visibility: 'public' | 'private' | null;
   quote: { currency: 'usd'; unitAmount: number; quantity: number; totalAmount: number } | null;
+  apiPublic: boolean; confirmDuplicate: boolean; requestReview: boolean;
 };
 export const SECRET_MESSAGE: string;
 export function containsSecret(s: unknown): boolean;
