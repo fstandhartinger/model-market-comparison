@@ -138,8 +138,10 @@ export const DAILY_BOARD_IDENTITY = 'ops:benchmarkheaven-daily';
 export async function sendBoardHandoff(text, { thread, to, bin = agentBoardBinary(), execImpl = execFileAsync, env = process.env } = {}) {
   if (!Number.isSafeInteger(thread) || typeof to !== 'string' || !to) return { sent: false, reason: 'board_target_missing' };
   try {
-    await execImpl(bin, ['--as', DAILY_BOARD_IDENTITY, 'post', String(thread), '--kind', 'handoff', '--to', to, String(text).slice(0, 4000)],
-      { timeout: NOTIFY_TIMEOUT_MS, env });
+    // CR-711: identity via AGENT_BOARD_NAME, not a leading `--as`: on LeChonk agent-board is the Sandy relay client and
+    // the relay only accepts the subcommand first (it refused every handoff with "subcommand not allowed: '--as'").
+    await execImpl(bin, ['post', String(thread), '--kind', 'handoff', '--to', to, String(text).slice(0, 4000)],
+      { timeout: NOTIFY_TIMEOUT_MS, env: { ...env, AGENT_BOARD_NAME: DAILY_BOARD_IDENTITY } });
     return { sent: true };
   } catch (error) {
     return { sent: false, reason: error?.code === 'ENOENT' ? 'agent_board_missing' : `agent_board_failed:${String(error?.stderr || error?.message || 'unknown error').slice(0, 200)}` };

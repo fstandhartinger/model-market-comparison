@@ -128,7 +128,7 @@ test('days 3-6 are one board handoff to the owning job per failure episode; day 
 
 async function stubBoard(dir, { fail = false } = {}) {
   const bin = join(dir, 'agent-board'), log = join(dir, 'board.jsonl');
-  await writeFile(bin, `#!/usr/bin/env node\nrequire('node:fs').appendFileSync(${JSON.stringify(log)}, JSON.stringify({ argv: process.argv.slice(2) }) + '\\n');\n${fail ? "process.stderr.write('board locked'); process.exit(1);\n" : ''}`);
+  await writeFile(bin, `#!/usr/bin/env node\nrequire('node:fs').appendFileSync(${JSON.stringify(log)}, JSON.stringify({ argv: process.argv.slice(2), as: process.env.AGENT_BOARD_NAME }) + '\\n');\n${fail ? "process.stderr.write('board locked'); process.exit(1);\n" : ''}`);
   await chmod(bin, 0o755);
   return { bin, calls: async () => (await readFile(log, 'utf8').catch(() => '')).trim().split('\n').filter(Boolean).map(JSON.parse) };
 }
@@ -160,8 +160,11 @@ test('a collector handoff is posted to the board, not sent to Telegram; a failed
     result = await executeNotifications({ stateDir, env, now: Date.parse('2026-10-25T05:17:00Z'), context: context(4) });
     assert.deepEqual(result.sent, ['collector-handoff']);
     const [call] = await up.calls();
-    assert.deepEqual(call.argv.slice(0, 8), ['--as', 'ops:benchmarkheaven-daily', 'post', '8', '--kind', 'handoff', '--to', COLLECTOR_OWNER_JOB]);
-    assert.match(call.argv[8], /fetch-ovhcloud-catalog: failing for 4 days/);
+    // CR-711: subcommand first (the LeChonk relay rejects global options such as --as); identity via AGENT_BOARD_NAME.
+    assert.deepEqual(call.argv.slice(0, 6), ['post', '8', '--kind', 'handoff', '--to', COLLECTOR_OWNER_JOB]);
+    assert.ok(!call.argv.includes('--as'));
+    assert.equal(call.as, 'ops:benchmarkheaven-daily');
+    assert.match(call.argv[6], /fetch-ovhcloud-catalog: failing for 4 days/);
     assert.deepEqual(await notifyStub.calls(), [], 'no Telegram message for days 3-6');
     state = JSON.parse(await readFile(join(stateDir, 'daily-state.json'), 'utf8'));
     assert.ok(state.notified['collector-handoff:fetch-ovhcloud-catalog@2026-09-23']);
