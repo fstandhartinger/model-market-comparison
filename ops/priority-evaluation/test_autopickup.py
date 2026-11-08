@@ -2538,6 +2538,27 @@ class SlaCardsTests(DatabaseTestCase):
         self.assertEqual(ap.refund_decision_rows(None, ap.JOB_ROOT), [])
         self.assertEqual(ap.sla_decision_rows(None, ap.JOB_ROOT), [])
 
+    def test_delay_note_then_refund_press_on_the_same_card_writes_the_decision_once(self):
+        rid = insert_order(paid_ago="41 hours", received_ago="41 hours")
+        root = ap.STATE_ROOT / "sla-decisions"
+        root.mkdir(parents=True, exist_ok=True)
+        (root / f"{rid}.json").write_text(json.dumps({
+            "request_id": rid, "kind": "sla_40h", "decision": "delay_note", "message_id": 777001, "update_id": 888001,
+            "late_refund": True, "late_update_id": 888005, "card": 1,
+            "delay_key": "sla_x_delay", "refund_key": "sla_x_refund", "noaction_key": "sla_x_noaction"}))
+        ap.save_state({**ap.load_state(rid), "delay_email_status": "sent"})
+        fx = FakeEffects()
+        self.assertEqual(ap.sla_decisions(None, ap.JOB_ROOT, fx), 1)
+        current = row(rid)
+        self.assertEqual((current["status"], current["refund_decision"]), ("refund_due", "approved"))
+        self.assertEqual(ap.sql(f"SELECT refund_decision_ref FROM {ap.TABLE} WHERE id='{rid}'"), "telegram:777001:888005")
+        self.assertEqual(fx.mails, [])  # the delay note was already sent; the refund press sends no second mail
+        # exactly once: the order left both card queues and a second pass changes nothing
+        self.assertEqual(ap.sla_decisions(None, ap.JOB_ROOT, fx), 0)
+        self.assertEqual(ap.sla_decision_rows(None, ap.JOB_ROOT), [])
+        self.assertEqual(ap.refund_decision_rows(None, ap.JOB_ROOT), [])
+        self.assertEqual(ap.sql(f"SELECT refund_decision_ref FROM {ap.TABLE} WHERE id='{rid}'"), "telegram:777001:888005")
+
     def test_40h_card_delay_note_sends_one_template_mail(self):
         rid = insert_order(paid_ago="41 hours", received_ago="41 hours")
         self._decide(rid, "delay_note")

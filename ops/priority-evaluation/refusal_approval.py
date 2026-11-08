@@ -312,6 +312,73 @@ def attach(state):
         raise ValueError("button attachment failed") from None
 
 
+def extend_ask(message_id, expires_at, actions=None):
+    """Keep this card's notify ask open until expires_at (one card per order: the same message asks again at 48 h).
+
+    Only moves the expiry later, only for this message's own telegram action of the reply guard job, only while the
+    action is still open. Best effort: False when anything is unexpected; the buttons themselves never depend on it."""
+    try:
+        if type(message_id) is not int or message_id <= 0:
+            return False
+        if actions is None:
+            spec = importlib.util.spec_from_file_location("fastlane_notify_reply_actions", HOME / "bin" / "notify_reply_actions.py")
+            actions = importlib.util.module_from_spec(spec)
+            spec.loader.exec_module(actions)
+        job_dir = str((HOME / "jobs" / "fastlane-refusal-reply-guard-20260929").resolve())
+        db = actions.connect()
+        try:
+            db.execute("BEGIN IMMEDIATE")
+            changed = db.execute(
+                "UPDATE actions SET expires_at=? WHERE ask_id=? AND channel='telegram' AND job_dir=? "
+                "AND status IN ('waiting','matched','acknowledged') AND (expires_at IS NULL OR expires_at<?)",
+                (float(expires_at), message_id, job_dir, float(expires_at)))
+            db.commit()
+            return changed.rowcount == 1
+        finally:
+            db.close()
+    except Exception:
+        return False
+
+
+def edit_card_text(state, text):
+    """Rewrite the caption of the card already on screen (editMessageText) for a one-card-per-order flow.
+
+    Same chat check as the keyboard edits. The text goes out HTML-escaped with notify's "#<card>" footer, and
+    notify's remembered card text is replaced (best effort) so a later `notify settle` builds on this caption,
+    not on the superseded one. "message is not modified" counts as done, so a retry is safe."""
+    import html
+    token, chat = telegram_config()
+    if chat != state["chat_id"]:
+        raise ValueError("approval chat changed")
+    body = html.escape(text, quote=False) + f"\n#{state['message_id']}"
+    payload = {"chat_id": chat, "message_id": state["message_id"], "text": body, "parse_mode": "HTML",
+               "disable_web_page_preview": True}
+    request = urllib.request.Request(f"https://api.telegram.org/bot{token}/editMessageText",
+                                     data=json.dumps(payload).encode(), headers={"Content-Type": "application/json"})
+    try:
+        with urllib.request.urlopen(request, timeout=20) as response:
+            if not json.load(response).get("ok"):
+                raise ValueError("caption edit failed")
+    except urllib.error.HTTPError as exc:
+        if exc.code != 400 or b"message is not modified" not in exc.read(4096):
+            raise ValueError("caption edit failed") from None
+    except ValueError:
+        raise
+    except Exception:
+        raise ValueError("caption edit failed") from None
+    try:
+        spec = importlib.util.spec_from_file_location("fastlane_notify_settle", HOME / "bin" / "notify_settle.py")
+        module = importlib.util.module_from_spec(spec)
+        sys.path.insert(0, str(HOME / "bin"))
+        spec.loader.exec_module(module)
+        known = module.load_card(state["message_id"])
+        if known is not None:
+            known.update(text=body, parse_mode="HTML", captioned=False)
+            module.save_card(state["message_id"], known)
+    except Exception:
+        pass
+
+
 def card(path, draft, title_text="Refusal email — exact draft"):
     from PIL import Image, ImageDraw, ImageFont
     font = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", 24)

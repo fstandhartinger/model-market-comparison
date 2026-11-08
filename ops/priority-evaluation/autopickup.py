@@ -4122,7 +4122,8 @@ def sla_decisions(synthetic_id: str | None, job_root: Path, effects: Effects) ->
         state = load_state(rid)
         try:
             outcome = sla_decision.advance(row, root, effects, utcnow().timestamp(),
-                                           deadline_for(row).strftime("%d %b %H:%M UTC"))
+                                           deadline_for(row).strftime("%d %b %H:%M UTC"),
+                                           deadline_ts=deadline_for(row).timestamp())
         except Exception as exc:
             print(f"fast-lane SLA decision: order {order_ref(rid)}: {type(exc).__name__}", file=sys.stderr)
             continue
@@ -4207,7 +4208,8 @@ def refund_decisions(synthetic_id: str | None, job_root: Path, effects: Effects)
         state = load_state(rid)
         try:
             outcome = refund_approval.advance(row, root, effects, utcnow().timestamp(),
-                                              deadline_for(row).strftime("%d %b %H:%M UTC"))
+                                              deadline_for(row).strftime("%d %b %H:%M UTC"),
+                                              sla_root=STATE_ROOT / "sla-decisions")
         except Exception as exc:
             print(f"fast-lane refund approval: order {order_ref(rid)}: {type(exc).__name__}", file=sys.stderr)
             continue

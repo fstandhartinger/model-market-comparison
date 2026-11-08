@@ -21,6 +21,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 import refusal_approval as ra
+import sla_decision
 
 SOURCE = "fastlane-refund-approval"
 WINDOW = 24 * 3600
@@ -149,13 +150,14 @@ def _send_card(state: dict, path: Path, text: str, now: float) -> None:
 
 
 def _resolve_ask(state: dict, path: Path, decision: str) -> bool:
+    source = state.get("ask_source", SOURCE)  # an adopted 40 h card keeps the ask its first sender registered
     receipt = path.with_name(f"{path.stem}.card{state.get('card', 1)}.completed.json")
     if not receipt.exists():
-        ra.atomic(receipt, {"message_id": state["message_id"], "source": SOURCE, "action_completed": True,
+        ra.atomic(receipt, {"message_id": state["message_id"], "source": source, "action_completed": True,
                             "action": "completed" if decision == "refund" else "declined",
                             "completed_at": datetime.now(timezone.utc).isoformat()})
     result = subprocess.run([str(ra.HOME / "bin/notify-resolve"), "--message-id", str(state["message_id"]),
-                             "--source", SOURCE, "--receipt", str(receipt)],
+                             "--source", source, "--receipt", str(receipt)],
                             capture_output=True, timeout=20, check=False)
     return result.returncode == 0
 
@@ -166,10 +168,60 @@ def _new_card(cards: int) -> dict:
             "notification": "pending", "card": cards + 1}
 
 
-def advance(row: dict, root: Path, effects, now: float, deadline: str) -> str:
+def _adoptable_sla_card(sla_root: Path | None, row: dict) -> tuple[Path, dict] | None:
+    """The order's own 40 h card message when it can carry the 48 h question too (one card per order, N91).
+
+    Needs a delivered 40 h card for this order that no refund decision has consumed. No 40 h card, an unknown
+    delivery or an owner-managed order -> None, and the caller sends a fresh 48 h card as before."""
+    if sla_root is None or sla_decision.owner_managed(row):
+        return None
+    path = sla_root / f"{uuid.UUID(str(row['id']))}.json"
+    try:
+        sla = json.loads(path.read_text())
+    except (OSError, ValueError):
+        return None
+    if (not isinstance(sla, dict) or sla.get("kind") != "sla_40h" or sla.get("notification") != "sent"
+            or type(sla.get("message_id")) is not int or type(sla.get("chat_id")) is not int
+            or sla.get("decision") == "refund" or sla.get("late_refund") or sla.get("superseded_by")):
+        return None
+    return path, sla
+
+
+def _adopt_sla_card(state: dict, path: Path, row: dict, deadline: str, now: float, sla_root: Path | None) -> str | None:
+    """Turn the 40 h card into the 48 h card: edit the caption and buttons of the same message, send nothing.
+
+    Returns None (no usable 40 h card: send a fresh card), 'retry' (edit failed, same message next cycle) or 'adopted'."""
+    found = _adoptable_sla_card(sla_root, row)
+    if found is None or state.get("adopt_failures", 0) >= 3:
+        return None
+    sla_path, _ = found
+    with sla_path.with_suffix(".lock").open("a+") as lock:
+        fcntl.flock(lock, fcntl.LOCK_EX)
+        found = _adoptable_sla_card(sla_root, row)  # re-read under the 40 h card's own lock
+        if found is None:
+            return None
+        sla = found[1]
+        state.update(chat_id=sla["chat_id"], message_id=sla["message_id"], created_at=int(now),
+                     expires_at=int(now) + WINDOW)
+        try:
+            ra.edit_card_text(state, caption(row, state["kind"], deadline))
+        except ValueError:
+            state["adopt_failures"] = state.get("adopt_failures", 0) + 1
+            ra.atomic(path, state)
+            return "retry"
+        state.update(notification="sent", adopted_from=sla_decision.SOURCE, ask_source=sla_decision.SOURCE)
+        ra.atomic(path, state)
+        sla["superseded_by"] = SOURCE  # its 40 h keys can no longer decide; this card's own keys do
+        ra.atomic(sla_path, sla)
+    ra.extend_ask(state["message_id"], state["expires_at"])
+    return "adopted"
+
+
+def advance(row: dict, root: Path, effects, now: float, deadline: str, sla_root: Path | None = None) -> str:
     """Return pending/refund/decline/unknown/exhausted. Caller holds the pickup-cycle lock.
 
-    'refund' and 'decline' carry an exact Florian button; the caller writes them to the row.
+    'refund' and 'decline' carry an exact Florian button; the caller writes them to the row. With sla_root, an
+    order whose 40 h card message exists gets its 48 h question on that same message (no second card).
     """
     if effects.dry_run or not live_runtime():
         return "pending"  # fixtures never contact Telegram and never approve a refund
@@ -195,7 +247,11 @@ def advance(row: dict, root: Path, effects, now: float, deadline: str) -> str:
             state = {"request_id": rid, "kind": state["kind"], "history": history, **_new_card(state.get("card", 1))}
         ra.atomic(path, state)
         if state["notification"] == "pending":
-            _send_card(state, path, caption(row, state["kind"], deadline), now)
+            adopted = _adopt_sla_card(state, path, row, deadline, now, sla_root)
+            if adopted == "retry":
+                return "pending"
+            if adopted is None:
+                _send_card(state, path, caption(row, state["kind"], deadline), now)
         if not state.get("message_id"):
             return "pending" if state["notification"] == "pending" else "unknown"
         if not state.get("buttons_attached"):
