@@ -1,0 +1,122 @@
+[
+  {
+    "id": "public:8a0a422e39ab337f72d60b6c",
+    "benchmark_id": "matharena-arxivmath::2026-08",
+    "subject": {
+      "source_id": "DeepSeek-V4.1-Flash-1017 (Max, DSH)",
+      "name": "DeepSeek-V4.1-Flash-1017 (Max, DSH)",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 43.86,
+    "unit": "percent",
+    "basis": "measured",
+    "source": {
+      "url": "https://matharena.ai/competition_tables/arxiv--august",
+      "retrieved_at": "2026-11-08T00:46:01.481196+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-11-08T00-42-03-915Z/0a2c35dd4466a40b8f53.gz",
+      "sha256": "0a2c35dd4466a40b8f539055d5a680f431e0450bf44be56cbe8c307805bb655b",
+      "locator": "matharena_table; source row 15; DeepSeek-V4.1-Flash-1017 (Max, DSH); field accuracy"
+    },
+    "protocol": "ArXivMath 08/2026 (MathArena): 57 problems from arXiv papers submitted in August 2026; accuracy in percent as published by MathArena (point estimate; the 95% CI is kept in the source row); a model flagged as released after the competition may have seen the problems; not a Composite input.; source row: {\"rank\":\"15\",\"model\":\"DeepSeek-V4.1-Flash-1017 (Max, DSH)\",\"provider\":\"DeepSeek\",\"accuracy\":\"43.86% ± 9.11%\",\"cost\":\"$0.32\",\"output_tokens\":\"177710\",\"released_after_competition\":true,\"open_weights\":\"✔️\"}",
+    "comparison_key": null
+  },
+  {
+    "id": "public:41ab205415ef05b5236025c4",
+    "benchmark_id": "matharena-arxivmath::2026-08",
+    "subject": {
+      "source_id": "Gemini 3.8 Flash",
+      "name": "Gemini 3.8 Flash",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 40.35,
+    "unit": "percent",
+    "basis": "measured",
+    "source": {
+      "url": "https://matharena.ai/competition_tables/arxiv--august",
+      "retrieved_at": "2026-11-08T00:46:01.481196+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-11-08T00-42-03-915Z/0a2c35dd4466a40b8f53.gz",
+      "sha256": "0a2c35dd4466a40b8f539055d5a680f431e0450bf44be56cbe8c307805bb655b",
+      "locator": "matharena_table; source row 17; Gemini 3.8 Flash; field accuracy"
+    },
+    "protocol": "ArXivMath 08/2026 (MathArena): 57 problems from arXiv papers submitted in August 2026; accuracy in percent as published by MathArena (point estimate; the 95% CI is kept in the source row); a model flagged as released after the competition may have seen the problems; not a Composite input.; source row: {\"rank\":\"17\",\"model\":\"Gemini 3.8 Flash\",\"provider\":\"Google\",\"accuracy\":\"40.35% ± 9.05%\",\"cost\":\"$0.92\",\"output_tokens\":\"95160\",\"released_after_competition\":true,\"open_weights\":\"❌\"}",
+    "comparison_key": null
+  },
+  {
+    "id": "public:6705e67a9c432e3f10a5700f",
+    "benchmark_id": "matharena-arxivmath::2026-08",
+    "subject": {
+      "source_id": "Kimi K3 (Think)",
+      "name": "Kimi K3 (Think)",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 38.6,
+    "unit": "percent",
+    "basis": "measured",
+    "source": {
+      "url": "https://matharena.ai/competition_tables/arxiv--august",
+      "retrieved_at": "2026-11-08T00:46:01.481196+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-11-08T00-42-03-915Z/0a2c35dd4466a40b8f53.gz",
+      "sha256": "0a2c35dd4466a40b8f539055d5a680f431e0450bf44be56cbe8c307805bb655b",
+      "locator": "matharena_table; source row 18; Kimi K3 (Think); field accuracy"
+    },
+    "protocol": "ArXivMath 08/2026 (MathArena): 57 problems from arXiv papers submitted in August 2026; accuracy in percent as published by MathArena (point estimate; the 95% CI is kept in the source row); a model flagged as released after the competition may have seen the problems; not a Composite input.; source row: {\"rank\":\"18\",\"model\":\"Kimi K3 (Think)\",\"provider\":\"Moonshot AI\",\"accuracy\":\"38.60% ± 12.64%\",\"cost\":\"$5.77\",\"output_tokens\":\"332043\",\"released_after_competition\":false,\"open_weights\":\"✔️\"}",
+    "comparison_key": null
+  },
+  {
+    "id": "public:6d642ab6d1e126aa2dc3dfde",
+    "benchmark_id": "matharena-arxivmath::2026-08",
+    "subject": {
+      "source_id": "Muse Spark Open",
+      "name": "Muse Spark Open",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 29.82,
+    "unit": "percent",
+    "basis": "measured",
+    "source": {
+      "url": "https://matharena.ai/competition_tables/arxiv--august",
+      "retrieved_at": "2026-11-08T00:46:01.481196+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-11-08T00-42-03-915Z/0a2c35dd4466a40b8f53.gz",
+      "sha256": "0a2c35dd4466a40b8f539055d5a680f431e0450bf44be56cbe8c307805bb655b",
+      "locator": "matharena_table; source row 19; Muse Spark Open; field accuracy"
+    },
+    "protocol": "ArXivMath 08/2026 (MathArena): 57 problems from arXiv papers submitted in August 2026; accuracy in percent as published by MathArena (point estimate; the 95% CI is kept in the source row); a model flagged as released after the competition may have seen the problems; not a Composite input.; source row: {\"rank\":\"19\",\"model\":\"Muse Spark Open\",\"provider\":\"Meta AI\",\"accuracy\":\"29.82% ± 11.88%\",\"cost\":\"$0.87\",\"output_tokens\":\"79044\",\"released_after_competition\":true,\"open_weights\":\"✔️\"}",
+    "comparison_key": null
+  },
+  {
+    "id": "public:9cefdbaa77ea21148287fdba",
+    "benchmark_id": "matharena-arxivmath::2026-08",
+    "subject": {
+      "source_id": "Mistral Large 4",
+      "name": "Mistral Large 4",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 24.56,
+    "unit": "percent",
+    "basis": "measured",
+    "source": {
+      "url": "https://matharena.ai/competition_tables/arxiv--august",
+      "retrieved_at": "2026-11-08T00:46:01.481196+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-11-08T00-42-03-915Z/0a2c35dd4466a40b8f53.gz",
+      "sha256": "0a2c35dd4466a40b8f539055d5a680f431e0450bf44be56cbe8c307805bb655b",
+      "locator": "matharena_table; source row 20; Mistral Large 4; field accuracy"
+    },
+    "protocol": "ArXivMath 08/2026 (MathArena): 57 problems from arXiv papers submitted in August 2026; accuracy in percent as published by MathArena (point estimate; the 95% CI is kept in the source row); a model flagged as released after the competition may have seen the problems; not a Composite input.; source row: {\"rank\":\"20\",\"model\":\"Mistral Large 4\",\"provider\":\"Mistral\",\"accuracy\":\"24.56% ± 11.17%\",\"cost\":\"$1.59\",\"output_tokens\":\"153000\",\"released_after_competition\":true,\"open_weights\":\"❌\"}",
+    "comparison_key": null
+  }
+]

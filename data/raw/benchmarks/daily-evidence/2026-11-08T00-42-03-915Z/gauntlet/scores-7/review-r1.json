@@ -1,0 +1,54 @@
+{
+  "artifact_id": "scores-7",
+  "artifact_sha256": "844a7c9ea8bcb9e3c0b9cf2d09b874e511a4b20a9dfbbffd7f2ee947fdf2f1a0",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": [
+    "vendor:DeepSeek-V3:swe-bench-verified::snapshot-2026-09-10",
+    "c1"
+  ],
+  "errors_found": 4,
+  "findings": [
+    {
+      "id": "vendor:DeepSeek-V3:swe-bench-verified::snapshot-2026-09-10",
+      "severity": "blocker",
+      "location": "benchmark_id / row id",
+      "evidence": "Primary source Table 6 identifies the benchmark only as 'SWE-Bench Verified'; no 'snapshot-2026-09-10' or any version string appears in the supplied PDF. Candidate claims benchmark_id 'swe-bench-verified::snapshot-2026-09-10'.",
+      "repair": "Provide primary evidence for the 'snapshot-2026-09-10' benchmark version, or align benchmark_id/row id to the source's stated 'SWE-Bench Verified' version; do not assign an unverified snapshot."
+    },
+    {
+      "id": "vendor:DeepSeek-V3:swe-bench-verified::snapshot-2026-09-10",
+      "severity": "major",
+      "location": "subject.model_id / subject.source_id",
+      "evidence": "Source evidence names the model as 'DeepSeek V3' and the paper as arXiv 2412.19437v2, but contains no text saying 'December 2024 update'; candidate asserts 'December 2024 update per arXiv 2412.19437v2 Table 6' and model_id 'deepseek-v3-dec-24::default'.",
+      "repair": "Cite an explicit source statement for the December 2024 update/checkpoint, or revise subject identity to match source text 'DeepSeek V3' with only supported arXiv identification."
+    },
+    {
+      "id": "vendor:DeepSeek-V3:swe-bench-verified::snapshot-2026-09-10",
+      "severity": "major",
+      "location": "source.published_at / source date",
+      "evidence": "Criterion requires source date verification; supplied source object has published_at null and the PDF snippet contains no publication date, only arXiv id 2412.19437v2.",
+      "repair": "Add explicit arXiv publication/submission date from evidence or set and verify published_at; cannot claim source date unverified."
+    },
+    {
+      "id": "vendor:DeepSeek-V3:swe-bench-verified::snapshot-2026-09-10",
+      "severity": "minor",
+      "location": "unit",
+      "evidence": "Table header is 'SWE Verified (Resolved)' with value 42.0; no percent sign or unit statement is present in supplied evidence. Candidate unit 'percent' is inferred.",
+      "repair": "Cite source documentation that the 'Resolved' metric is expressed as percent, or mark unit as inferred and verify benchmark definition."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "Owner hash/transport/qualification checks were not independently executable; relied on supplied sha256 and retrieved_at.",
+    "Numeric equality accepted for 42.0 vs 42; no rounding/tolerance issue found in the value itself.",
+    "Self_reported basis is consistent with the paper reporting its own model evaluation.",
+    "Internal default variant and null comparison_key are not contradicted by the supplied source."
+  ],
+  "missing_evidence": [
+    "SWE-bench Verified benchmark version/snapshot identifier 'snapshot-2026-09-10'",
+    "Explicit publication date for arXiv 2412.19437v2",
+    "Explicit statement of a 'December 2024 update' or checkpoint identifier for DeepSeek V3",
+    "Explicit unit indicator (percent) for 'SWE Verified (Resolved)'"
+  ]
+}

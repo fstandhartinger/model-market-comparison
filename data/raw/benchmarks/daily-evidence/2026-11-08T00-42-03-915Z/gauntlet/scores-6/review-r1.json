@@ -1,0 +1,40 @@
+{
+  "artifact_id": "scores-6",
+  "artifact_sha256": "da63dec1eb7caf9428399b402594b3e7b6551f7ce3c6389f8a748b42729201b0",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": [
+    "vendor:mistralai/Devstral-2-123B-Instruct-2512:swe-bench-verified::snapshot-2026-09-10",
+    "vendor:mistralai/Devstral-Small-2-24B-Instruct-2512:swe-bench-verified::snapshot-2026-09-10",
+    "c1"
+  ],
+  "errors_found": 2,
+  "findings": [
+    {
+      "id": "row1-missing-benchmark-version-and-source-date",
+      "severity": "major",
+      "location": "Row 1 benchmark_id and source.published_at",
+      "evidence": "Source text contains 'SWE-bench Verified' and 'December 9, 2025', but does not contain 'snapshot-2026-09-10'. Row claims benchmark version snapshot-2026-09-10 with no primary evidence support. Row sets source.published_at to null while the source page shows a publication date.",
+      "repair": "Either provide primary evidence for the snapshot date or remove snapshot from benchmark_id; populate source.published_at with the source page date (December 9, 2025)."
+    },
+    {
+      "id": "row2-missing-benchmark-version-and-source-date",
+      "severity": "major",
+      "location": "Row 2 benchmark_id and source.published_at",
+      "evidence": "Same as row 1: source states 'SWE-bench Verified' and 'December 9, 2025', but snapshot-2026-09-10 is not present. published_at is null despite a visible publication date.",
+      "repair": "Provide evidence for the snapshot date or drop the snapshot component; record the publication date in source.published_at."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "I cannot recompute SHA-256 hashes or run transport/qualification checks; owner-provided hashes are accepted as binding.",
+    "The snapshot date might be a system-level benchmark version not expected in the vendor source; however, the artifact explicitly claims it and no evidence in the packet verifies it.",
+    "published_at may be omitted by producer convention, but the acceptance criterion requires source date verification and the source clearly provides a date."
+  ],
+  "missing_evidence": [
+    "snapshot-2026-09-10 benchmark version for vendor:mistralai/Devstral-2-123B-Instruct-2512:swe-bench-verified::snapshot-2026-09-10",
+    "published_at source date (December 9, 2025) for vendor:mistralai/Devstral-2-123B-Instruct-2512:swe-bench-verified::snapshot-2026-09-10",
+    "snapshot-2026-09-10 benchmark version for vendor:mistralai/Devstral-Small-2-24B-Instruct-2512:swe-bench-verified::snapshot-2026-09-10",
+    "published_at source date (December 9, 2025) for vendor:mistralai/Devstral-Small-2-24B-Instruct-2512:swe-bench-verified::snapshot-2026-09-10"
+  ]
+}

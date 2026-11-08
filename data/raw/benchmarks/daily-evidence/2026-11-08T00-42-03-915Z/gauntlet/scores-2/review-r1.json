@@ -1,0 +1,25 @@
+{
+  "artifact_id": "scores-2",
+  "artifact_sha256": "de042c501005e9fb79de4ce43c6450c3bb099ed67d314ff240d5b6536d9d8356",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "public:2feb9deeac1fa1996a29477a",
+    "public:285dad114cde14bcf4c3b5df",
+    "public:4a33d782ed6dbf15edee5b45",
+    "public:430bbd316a22df4068cbffb7",
+    "public:c5a7f7d6432745ea755f807b",
+    "public:b90528537b942e5e327600e1",
+    "c1"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Owner separately executes hash verification and transport/qualification checks; as a read-only reviewer without execution tools I cannot recompute row hashes or capture checksums. This is a methodological limit, not missing evidence.",
+    "The source.file path field (data/raw/benchmarks/daily-evidence/2026-11-08T00-42-03-915Z/46448f058ce05dc82d91.gz) is not present in the primary evidence excerpts, so I could not independently cross-check it; it is not one of the required comparison fields and no contradiction exists.",
+    "For Grok 4.7 (xhigh), model_id grok-4.7::xhigh derives from the published internal identity map (join_note 2026-09-25). The source label itself supports the model and xhigh effort, and no conflicting catalog configuration is in the packet.",
+    "BrokenArXiv general methodology page states a 0-2 grading scale while the August 2026 edition note states 0-3; the rows record the edition-specific 0-3 scale as directed by the registry, which agrees with SOURCE 2."
+  ],
+  "missing_evidence": []
+}

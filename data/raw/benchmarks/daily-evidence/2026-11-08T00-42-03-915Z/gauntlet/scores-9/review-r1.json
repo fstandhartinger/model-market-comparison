@@ -1,0 +1,16 @@
+{
+  "artifact_id": "scores-9",
+  "artifact_sha256": "b9671234500648a608fb621210a9f27466402a4af28164202bf7cc3d89eac4e4",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": ["vendor:DeepSeek-V3:longbench::2", "c1"],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Owner-performed SHA-256 hashing and transport/qualification checks cannot be independently re-executed in this read-only review; they are accepted as provided.",
+    "The internal model identifier 'deepseek-v3-dec-24::default' is an assigned ID; the source names the model simply as DeepSeek-V3 with no explicit variant, so 'default' is an interpretation.",
+    "The table does not explicitly annotate the unit for accuracy; '%' is inferred from the 'Acc.' metric label."
+  ],
+  "missing_evidence": []
+}

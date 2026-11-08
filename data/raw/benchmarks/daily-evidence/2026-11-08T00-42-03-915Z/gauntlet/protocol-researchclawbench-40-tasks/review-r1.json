@@ -1,0 +1,24 @@
+{
+  "artifact_id": "protocol-researchclawbench-40-tasks",
+  "artifact_sha256": "323b823336884461e76c46e6b967872723e976d0d6d9dcfa89f7b54356a18cb5",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": ["researchclawbench::40-tasks","c1","c2"],
+  "errors_found": 1,
+  "findings": [
+    {
+      "id": "f1",
+      "severity": "major",
+      "location": "researchclawbench::40-tasks.version_status (and version)",
+      "evidence": "Criterion c2: version_status \"published\" requires the maintainer to publish a release identifier for this board and the version to copy it. The protocol excerpts (homepage, README, app.js) contain no release identifier for ResearchClawBench-40-tasks: README refers only to \"ResearchClawBench\", \"40 tasks\", and agent-level versions (e.g., EvoScientist v0.1.1), never a board version. The activity summary (SOURCE 4) confirms the board is still served but introduces no version. Row declares version_status \"published\" and version \"40-tasks\", implying a maintainer-published release identifier that does not exist.",
+      "repair": "Set version_status to \"snapshot\" and change version to the dated identity snapshot-<retrieval-date> (or otherwise align version with the snapshot vocabulary) because the protocol publishes no release identifier for this board. If a maintainer release identifier is later evidenced, update to \"published\" and copy that identifier."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "The full leaderboard.json payload was not excerpted; the value-scale (lowest 12.412894736842105, highest 21.11692307692308) and 10 changed-row activity summary are owner-generated reads of the hash-verified capture, used for the range and status checks.",
+    "The version_guard's claims about leaderboard.json keys and the exact 40 task ids could not be independently verified against the raw JSON; they were checked only against README structure (10 domains x 4 tasks) and the guard text itself.",
+    "We are read-only and cannot re-execute the owner's hash, transport, or qualification checks; those are outside this review's scope."
+  ],
+  "missing_evidence": []
+}

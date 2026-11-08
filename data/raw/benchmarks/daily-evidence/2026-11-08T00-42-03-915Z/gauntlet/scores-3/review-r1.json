@@ -1,0 +1,33 @@
+{
+  "artifact_id": "scores-3",
+  "artifact_sha256": "62714b2f4784a602a1c04c351d4be742a5c8b420dbac1c3eb2a9351f6a78ba64",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "public:8f64e0d6207573279310f4db",
+    "public:d2603dac33dacff591b6aec8",
+    "public:cd9b2d2bbd3008d886a4d2a1",
+    "public:374335195f6eb24276c7df22",
+    "public:599943249ded64302da775d6",
+    "public:58e979db146b2bd891f6720e",
+    "public:c2e07dd974fe0854c6d84924",
+    "public:a82904f22b752bce950aa8ec",
+    "public:86c9eb01075123b4fd4b9e37",
+    "public:802f1108ec3b0c3270f2cd9b",
+    "public:016e616004917096fe02633a",
+    "public:604343debae528227c9d07c0",
+    "public:e46dda6b7d56c829be58d39c",
+    "public:adaea5ac76c31ba6f6ca655b",
+    "public:cf1421531c2851fcbb778308",
+    "c1"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "model_id values (e.g., gpt-6-astra::low, gpt-5.6-sol::xhigh) are asserted via join_note prior identity reviews, not directly present in the captured board payload; they are accepted as fixed prior accepted identity and are internally consistent with the source label and effort, but the exact catalog configuration is not independently verifiable from the packet.",
+    "Row-level sha256 bindings and source sha256 equality cannot be recomputed by this reviewer; these are owner-executed checks and are not independently verifiable here.",
+    "Each row's protocol field appends an embedded source-row JSON to the shared protocol text; the shared part matches SOURCE 1 exactly and the appended source row matches the corresponding row's primary source context, so no mismatch was found."
+  ],
+  "missing_evidence": []
+}

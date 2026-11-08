@@ -1,0 +1,16 @@
+{
+  "artifact_id": "scores-0",
+  "artifact_sha256": "6b6fe943956c54d4a6ae50dfbcb8362385fb2e5cb02a38a2ae89a913ce15bf5a",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": ["public:1ac553967f4db3071f664a53", "c1"],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Cannot independently recompute row/package SHA-256 or re-fetch sources; hash binding and transport/qualification checks are owner-executed.",
+    "join_note and model_id 'mistral-small-3.2-24b-instruct::default' rely on retained catalog metadata not present in this packet; treated as immutable prior context per instructions, not fresh evidence.",
+    "source_basis 'measured' is supported only by the protocol text describing the three metrics as measured; no deeper measurement log was provided."
+  ],
+  "missing_evidence": []
+}

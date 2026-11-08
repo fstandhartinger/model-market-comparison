@@ -1,0 +1,40 @@
+{
+  "artifact_id": "scores-8",
+  "artifact_sha256": "6bbf5a4a8879e35ceebb0481f1033ad3d35853cb687efea911b3d968b1497183",
+  "round": 1,
+  "verdict": "blocked",
+  "coverage_checked": [
+    "vendor:DeepSeek-V3:aider-polyglot::snapshot-2026-09-10",
+    "c1"
+  ],
+  "errors_found": 3,
+  "findings": [
+    {
+      "id": "f1",
+      "severity": "blocker",
+      "location": "row vendor:DeepSeek-V3:aider-polyglot::snapshot-2026-09-10, field benchmark_id",
+      "evidence": "Primary source Table 6 lists only 'Aider-Polyglot (Acc.)' with no snapshot or version; paper is arXiv 2412.19437v2 (December 2024), so claimed snapshot-2026-09-10 is unsupported and inconsistent with source date.",
+      "repair": "Remove or correct the unsupported snapshot-2026-09-10 version in benchmark_id, replacing it with the version actually evidenced by the source (or state that no source version exists)."
+    },
+    {
+      "id": "f2",
+      "severity": "major",
+      "location": "row vendor:DeepSeek-V3:aider-polyglot::snapshot-2026-09-10, field source.published_at",
+      "evidence": "Row sets published_at to null, but the source is a December 2024 arXiv paper (2412.19437v2) and the row's own subject.source_id describes it as 'December 2024 update'. The source date is therefore known, not null.",
+      "repair": "Set published_at to the actual arXiv publication date from the source, or document explicitly why it is left null."
+    },
+    {
+      "id": "f3",
+      "severity": "minor",
+      "location": "row vendor:DeepSeek-V3:aider-polyglot::snapshot-2026-09-10, field protocol",
+      "evidence": "The protocol begins with 'overall', but the primary source describes Table 6 as a per-benchmark chat-model evaluation and does not apply an 'overall' descriptor to this row.",
+      "repair": "Remove 'overall' or replace it with the exact protocol described in the paper for this benchmark (diff format, 8K token limit) without inventing an aggregate label."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "The owner executes SHA-256 and transport/qualification checks independently; I cannot recompute hashes or verify retrieval, so I assume the supplied source SHA-256 and retrieved_at are correct.",
+    "The snapshot-2026-09-10 string could be an internal catalog version rather than a source benchmark version, but as presented in benchmark_id it is indistinguishable from a claimed version and conflicts with the source date."
+  ],
+  "missing_evidence": []
+}
