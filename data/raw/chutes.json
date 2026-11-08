@@ -67,6 +67,16 @@
       "notes": "Added 2026-08-26 from llm.chutes.ai"
     },
     {
+      "model_name": "Qwen3.6-27B",
+      "provider_org": "Alibaba",
+      "input_per_1m_usd": 0.25,
+      "output_per_1m_usd": 2,
+      "cache_read_per_1m_usd": 0.025,
+      "context_length": 262144,
+      "confidential_compute": true,
+      "tee_model_id": "Qwen/Qwen3.6-27B-TEE"
+    },
+    {
       "model_name": "GLM-5.2",
       "provider_org": "Z.ai",
       "input_per_1m_usd": 1.25,
@@ -76,16 +86,6 @@
       "confidential_compute": true,
       "tee_model_id": "zai-org/GLM-5.2-TEE",
       "notes": " | 2026-07-31: price cut 1.40/4.40->1.25/3.95, cache-read 0.625 (live llm.chutes.ai)."
-    },
-    {
-      "model_name": "Qwen3.6-27B",
-      "provider_org": "Alibaba",
-      "input_per_1m_usd": 0.25,
-      "output_per_1m_usd": 2,
-      "cache_read_per_1m_usd": 0.025,
-      "context_length": 262144,
-      "confidential_compute": true,
-      "tee_model_id": "Qwen/Qwen3.6-27B-TEE"
     },
     {
       "model_name": "Qwen3.5-397B-A17B",
@@ -109,7 +109,7 @@
       "notes": "Added 2026-08-26 from llm.chutes.ai"
     }
   ],
-  "response_sha256": "b3edb4628c9e43d59ec649f041c385e75df722047f3eb8628e682e5189b69497",
+  "response_sha256": "c38f9b48c628e96f9cc857718acf0423d6448756be286c7a6a0d983684e8b608",
   "diff": {
     "added": [],
     "removed": [],
@@ -121,8 +121,8 @@
     "deepseek-ai/DeepSeek-V4-Pro-0813",
     "zai-org/GLM-5.2-Fast",
     "moonshotai/Kimi-K2.7-Code",
-    "tencent/Hy4",
     "Qwen/Qwen3.8-Max-0902",
+    "tencent/Hy4",
     "Qwen/Qwen3.8-2.4T-A95B"
   ]
 }

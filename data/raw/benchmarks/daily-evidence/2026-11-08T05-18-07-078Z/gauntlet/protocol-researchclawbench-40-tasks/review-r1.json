@@ -1,0 +1,24 @@
+{
+  "artifact_id": "protocol-researchclawbench-40-tasks",
+  "artifact_sha256": "323b823336884461e76c46e6b967872723e976d0d6d9dcfa89f7b54356a18cb5",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": ["researchclawbench::40-tasks", "c1", "c2"],
+  "errors_found": 1,
+  "findings": [
+    {
+      "id": "f1",
+      "severity": "major",
+      "location": "row researchclawbench::40-tasks / version_status",
+      "evidence": "Criterion c2: version_status 'published' requires the maintainer to publish a release identifier for this board and the row's version to copy it. Primary evidence (homepage SOURCE 1 and README SOURCE 3) publishes no release identifier for the benchmark: the README badges count tasks (Tasks-40) and domains (Domains-10) but no version or tag appears, and no benchmark release version string is present. Per the criterion, this is the 'snapshot' case, not 'published'.",
+      "repair": "Set version_status to 'snapshot' and change version to the dated snapshot-<date> identity used for boards without a published release identifier, keeping status 'active' and superseded_by null."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "The scoring notes contain an unsupported coverage-date claim ('33 to 40 of 40 on 2026-09-21'); primary evidence mentions 33 retained tasks only for 2026-10-28 (jiutian), so this date is not verifiable from the packet. It is outside the c1/c2 required checks.",
+    "I cannot execute hash verification or transport/qualification checks; row binding and source hashes are taken from the packet as authoritative.",
+    "The exact snapshot date to use in a repaired version field is not derivable from the packet and would follow registry policy."
+  ],
+  "missing_evidence": []
+}

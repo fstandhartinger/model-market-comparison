@@ -56290,6 +56290,34 @@
       "review_row": "vendor:DeepSeek-V3:longbench::2",
       "verdict": "accepted",
       "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-11-08T00-42-03-915Z/gauntlet/scores-9/packet-r1.md#vendor:DeepSeek-V3:longbench::2"
+    },
+    {
+      "id": "vendor:DeepSeek-V3:swe-bench-verified::snapshot-2026-09-10",
+      "observation_sha256": "9cfd2ec8fbe7b7459df497f0df9ea8a3b44f0051a88d5aa1534f73f09e8ae69b",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "z-ai/glm-5.3-flash"
+      ],
+      "review_file": "data/raw/benchmarks/daily-evidence/2026-11-08T05-18-07-078Z/gauntlet/scores-1/review-r1.json",
+      "review_sha256": "c664af190adf8fe426b125a9263002d7a2d788716ca09bc14fe93e710f8cdf6d",
+      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-11-08T05-18-07-078Z/gauntlet/scores-1/artifact-r1.json",
+      "review_row": "vendor:DeepSeek-V3:swe-bench-verified::snapshot-2026-09-10",
+      "verdict": "accepted",
+      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-11-08T05-18-07-078Z/gauntlet/scores-1/packet-r1.md#vendor:DeepSeek-V3:swe-bench-verified::snapshot-2026-09-10"
+    },
+    {
+      "id": "vendor:DeepSeek-V3:longbench::2",
+      "observation_sha256": "8b4fa91692ee87056433e068ac961bc7828a4cc31e158ecd548da1438bcb1020",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "z-ai/glm-5.3-flash"
+      ],
+      "review_file": "data/raw/benchmarks/daily-evidence/2026-11-08T05-18-07-078Z/gauntlet/scores-3/review-r1.json",
+      "review_sha256": "a1d600361279245c24534ab26a094825e0cdb8bf0e040e07fe2037cc580441d9",
+      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-11-08T05-18-07-078Z/gauntlet/scores-3/artifact-r1.json",
+      "review_row": "vendor:DeepSeek-V3:longbench::2",
+      "verdict": "accepted",
+      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-11-08T05-18-07-078Z/gauntlet/scores-3/packet-r1.md#vendor:DeepSeek-V3:longbench::2"
     }
   ]
 }

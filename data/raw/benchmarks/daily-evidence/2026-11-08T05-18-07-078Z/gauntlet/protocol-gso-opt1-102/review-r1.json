@@ -1,0 +1,34 @@
+{ 
+  "artifact_id": "protocol-gso-opt1-102",
+  "artifact_sha256": "eedef18bb298a4ecee13a356eb383d9eb5c33428b80c95017bb7ef88b2383f9f",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": ["gso::opt1-102", "c1", "c2"],
+  "errors_found": 2,
+  "findings": [
+    {
+      "id": "F1-version_status-published-unsupported",
+      "severity": "major",
+      "location": "gso::opt1-102: version=\"opt1-102\", version_status=\"published\"",
+      "evidence": "Criterion c2: \"published\" requires the maintainer to publish a release identifier for this board and the version to copy it; a page publishing no release identifier supports \"snapshot\" with version snapshot-<date>. Neither SOURCE 1 (page excerpt) nor SOURCE 2 (leaderboard.json) publishes any release identifier: leaderboard.json metadata contains only last_updated \"2026-09-27\" and total_tasks 102, and the string \"opt1-102\" appears nowhere in either source. The version copies nothing the maintainer publishes, so version_status \"published\" is contradicted; \"snapshot\" is the supported value.",
+      "repair": "Set version_status to \"snapshot\" and version to a \"snapshot-<date>\" identity (e.g., snapshot-2026-11-08, the capture date). Alternatively, if a maintainer release identifier is asserted, copy that identifier verbatim into version; no such identifier exists in the supplied sources."
+    },
+    {
+      "id": "F2-notes-omit-2026-09-27-changelog",
+      "severity": "minor",
+      "location": "gso::opt1-102: scoring.notes",
+      "evidence": "SOURCE 1 changelog includes \"2026-09-27: Improved elicitation to explicitly ask models to keep measuring and improving after their first speedup\", and SOURCE 2 ingests four runs dated 2026-09-27 (Claude Fable 5.1, GPT-6 Astra, Claude Fable 5, GPT-5.6 Sol) under this identity. The notes document the 2026-04-27 iteration-budget and 2026-07-12 network-isolation changes but omit the 2026-09-27 elicitation change. Criterion c1 requires that a changed configuration not silently reuse the identity; the disclosure gap leaves the newest configuration change undocumented even though new runs under it are included.",
+      "repair": "Add the 2026-09-27 elicitation change (\"explicitly ask models to keep measuring and improving after their first speedup\") to scoring.notes alongside the existing 2026-04-27 and 2026-07-12 entries, so all changelog configuration changes affecting ingested runs are disclosed."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "I cannot execute hash recomputation or transport/qualification checks; the owner performs those separately. Source transcriptions and the owner-computed per-row sha256 were accepted as packet data for field-level comparison.",
+    "Row description (\"real codebase\", \"make the code as fast as an expert developer's optimization\") paraphrases the page text (\"a codebase... improve runtime efficiency to match an expert developer's optimization\"); judged a consistent wording approximation, not an error.",
+    "Whether metadata.last_updated could be construed as a release identifier is ambiguous, but even under that reading the version \"opt1-102\" does not copy it, so F1 stands either way.",
+    "Unit \"percent\" and range [0,100] were judged only against SOURCE 4's admissible summary (32 finite values, min 0, max 88.24); all served values fit the stated bounds, so no mismatch was reported on this point.",
+    "SOURCE 4's count of 32 values matches the 32 Opt@1 rows in SOURCE 2; the 2 Opt@10 rows are a separate protocol per the version_guard and were correctly excluded from this identity.",
+    "status \"active\" is supported by SOURCE 3 (4 added score values), and superseded_by null is uncontradicted because no protocol text names a successor board."
+  ],
+  "missing_evidence": []
+}

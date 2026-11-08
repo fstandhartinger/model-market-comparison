@@ -2,18 +2,18 @@
   "schema_version": 1,
   "source": {
     "url": "https://openrouter.ai/providers",
-    "retrieved_at": "2026-11-08T00:56:06.781Z",
-    "sha256": "37f7687045967c1da06f23651d3f7625066ff0facdc9eca916e15ad9efa621a2"
+    "retrieved_at": "2026-11-08T05:31:19.396Z",
+    "sha256": "1c3fb79994261a4c4bd267d8fded635d98e142fdb777041382ec9ad546e4244d"
   },
   "basis": "OpenRouter's published provider table. 'private' = the provider survives OpenRouter's own 'Does not train' + 'Zero retention' filter.",
   "facet_crosscheck": {
     "zero_retention": {
-      "page": 60,
-      "parsed": 60
+      "page": 59,
+      "parsed": 59
     },
     "does_not_train": {
-      "page": 94,
-      "parsed": 94
+      "page": 93,
+      "parsed": 93
     }
   },
   "overrides": {
@@ -24,8 +24,8 @@
     }
   },
   "counts": {
-    "providers": 98,
-    "private": 61,
+    "providers": 97,
+    "private": 60,
     "not_private": 37,
     "unknown": 0
   },
@@ -600,15 +600,6 @@
     {
       "slug": "akashml",
       "name": "AkashML",
-      "does_not_train": true,
-      "zero_retention": true,
-      "headquarters": null,
-      "override": null,
-      "private": true
-    },
-    {
-      "slug": "inception",
-      "name": "Inception",
       "does_not_train": true,
       "zero_retention": true,
       "headquarters": null,

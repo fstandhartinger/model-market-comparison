@@ -1,0 +1,19 @@
+{
+  "artifact_id": "scores-1",
+  "artifact_sha256": "6318cdea11c1d45cfc0e25e85a96b8ab8bd35b135a91c9e3dc65dec7531f1cf2",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "vendor:DeepSeek-V3:swe-bench-verified::snapshot-2026-09-10",
+    "c1"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Cannot independently recompute row hash 9cfd2ec8fbe7b7459df497f0df9ea8a3b44f0051a88d5aa1534f73f09e8ae69b or artifact hash; owner executes hash verification separately.",
+    "Source label 'December 2024 update' is inferred from arXiv version date and Table 6 content; paper does not explicitly use that phrase but the subject identity matches the paper's DeepSeek-V3 column.",
+    "Transport and qualification checks (e.g., API access, file retrieval integrity) are outside my read-only scope; I verified only the supplied evidence fields."
+  ],
+  "missing_evidence": []
+}

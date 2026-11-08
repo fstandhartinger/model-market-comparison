@@ -1,0 +1,31 @@
+{
+  "artifact_id": "protocol-kernelbench-cuda-deepseek-nsa-rtx-pro-6000",
+  "artifact_sha256": "106e3ed5770f2399032cd76ef25ac0ad13ad843f58eaa616992a43c991185a9c",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": ["kernelbench-cuda-deepseek-nsa::rtx-pro-6000", "c1", "c2"],
+  "errors_found": 2,
+  "findings": [
+    {
+      "id": "c2-version-status-mismatch",
+      "severity": "major",
+      "location": "row kernelbench-cuda-deepseek-nsa::rtx-pro-6000, fields version/version_status",
+      "evidence": "Row sets version \"rtx-pro-6000\" with version_status \"published\". Protocol publishes release identifiers: leaderboard.json has schema_version 1, environment v2_containerized, hardware RTX PRO 6000 (source 2); SPEC.md has \"## Perfect stack (v1)\" (source 3). None equals \"rtx-pro-6000\"; the row's version is the hardware board identity, not a copied maintainer release identifier, contradicting the c2 definition of \"published\" (version copies the maintainer's published identifier).",
+      "repair": "Either change version to a maintainer-published identifier (e.g., schema_version 1, v1, or v2_containerized) and keep version_status \"published\", or set version_status \"snapshot\" with version e.g. \"snapshot-2026-11-08\" since the row's version does not copy any published release identifier."
+    },
+    {
+      "id": "notes-muse-cell-false-claim",
+      "severity": "major",
+      "location": "row kernelbench-cuda-deepseek-nsa::rtx-pro-6000, field notes",
+      "evidence": "Notes state the published per_problem ranked list still holds the `bug` muse/muse-spark-1.3 [ultra] cell on 04 at peak_fraction 0.2056. Source 2 shows that cell has \"correct\": false, \"peak_fraction\": null, \"annotation_verdict\": \"bug\", and the 04 ranked_passes list does not contain muse/muse-spark-1.3 [ultra]. The value 0.2056 appears nowhere in the captured payload; the claim is contradicted by primary evidence.",
+      "repair": "Correct the notes to state the muse 04 cell is absent from the ranked list (correct:false, peak_fraction null, annotation bug), or remove the 0.2056 claim entirely."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "Cannot recompute row/protocol SHA-256 or execute hash/transport/qualification checks; these are owner-executed and my inability is a limitation, not missing numeric evidence.",
+    "Whether schema_version 1 / Perfect stack v1 / environment v2_containerized count as the maintainer's release identifier is interpretive; either way the row's version 'rtx-pro-6000' does not copy any published identifier, so the version_status 'published' label is inconsistent.",
+    "Source 7's value-scale summary (17 served values, 2.51 to 136.19) is consistent with the row's unit 'percent of roofline' and range [0,null] for the problem-02 served values, so no mismatch is flagged on that point."
+  ],
+  "missing_evidence": []
+}
