@@ -259,8 +259,7 @@ class ApprovalCardSend(unittest.TestCase):
                 self.assertEqual(json.loads(path.read_text())['card'], 2)
 
     def test_card_is_settled_when_its_window_ends_or_a_tap_is_recorded(self):
-        for name, module, tap in (('refund', rf, 'refund_key'), ('sla', sd, 'noaction_key')):
-            # 'Send delay note' no longer settles: the card keeps its Refund button (test_one_card_per_order.py)
+        for name, module, tap in (('refund', rf, 'refund_key'), ('sla', sd, 'delay_key')):
             for decision in ('expired', tap):
                 with self.subTest(card=name, decision=decision):
                     root = self.tmp / f'{name}-{decision}'

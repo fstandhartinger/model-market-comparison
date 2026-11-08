@@ -134,7 +134,6 @@ class CardWording(unittest.TestCase):
         for card in [c.refund_approval.caption(ROW, kind, '10 Oct 12:00 UTC')
                      for kind in c.refund_approval.REASONS] + [
                          c.sla_decision.caption(ROW, '10 Oct 12:00 UTC'),
-                         c.sla_decision.delay_sent_caption(ROW, '10 Oct 12:00 UTC'),
                          c.refusal_approval.approval_caption(ROW, 'refusal'),
                          c.refusal_approval.approval_caption(ROW, 'change_request')]:
             todos = notify.validate_format(card, 'now', ask_minutes=960)

@@ -150,14 +150,13 @@ def _send_card(state: dict, path: Path, text: str, now: float) -> None:
 
 
 def _resolve_ask(state: dict, path: Path, decision: str) -> bool:
-    source = state.get("ask_source", SOURCE)  # an adopted 40 h card keeps the ask its first sender registered
     receipt = path.with_name(f"{path.stem}.card{state.get('card', 1)}.completed.json")
     if not receipt.exists():
-        ra.atomic(receipt, {"message_id": state["message_id"], "source": source, "action_completed": True,
+        ra.atomic(receipt, {"message_id": state["message_id"], "source": SOURCE, "action_completed": True,
                             "action": "completed" if decision == "refund" else "declined",
                             "completed_at": datetime.now(timezone.utc).isoformat()})
     result = subprocess.run([str(ra.HOME / "bin/notify-resolve"), "--message-id", str(state["message_id"]),
-                             "--source", source, "--receipt", str(receipt)],
+                             "--source", SOURCE, "--receipt", str(receipt)],
                             capture_output=True, timeout=20, check=False)
     return result.returncode == 0
 
@@ -168,60 +167,35 @@ def _new_card(cards: int) -> dict:
             "notification": "pending", "card": cards + 1}
 
 
-def _adoptable_sla_card(sla_root: Path | None, row: dict) -> tuple[Path, dict] | None:
-    """The order's own 40 h card message when it can carry the 48 h question too (one card per order, N91).
+def sla40_card_live(sla_root: Path | None, row: dict, now: float) -> bool:
+    """True while the order's 40 h card still carries its one live Refund button (one decision card per order).
 
-    Needs a delivered 40 h card for this order that no refund decision has consumed. No 40 h card, an unknown
-    delivery or an owner-managed order -> None, and the caller sends a fresh 48 h card as before."""
+    Needs: not owner-managed, notification sent, int message_id, late button attached, first decision delay_note or
+    no_action with no refund tap yet, not closed, and now before the card's own expires_at."""
     if sla_root is None or sla_decision.owner_managed(row):
-        return None
-    path = sla_root / f"{uuid.UUID(str(row['id']))}.json"
+        return False
     try:
-        sla = json.loads(path.read_text())
+        sla = json.loads((sla_root / f"{uuid.UUID(str(row['id']))}.json").read_text())
     except (OSError, ValueError):
-        return None
-    if (not isinstance(sla, dict) or sla.get("kind") != "sla_40h" or sla.get("notification") != "sent"
-            or type(sla.get("message_id")) is not int or type(sla.get("chat_id")) is not int
-            or sla.get("decision") == "refund" or sla.get("late_refund") or sla.get("superseded_by")):
-        return None
-    return path, sla
+        return False
+    return (isinstance(sla, dict) and sla.get("kind") == "sla_40h" and sla.get("notification") == "sent"
+            and type(sla.get("message_id")) is int and sla.get("late_attached") is True
+            and sla.get("decision") in sla_decision.LATE_KEEP and not sla.get("late_refund")
+            and not sla.get("late_closed") and isinstance(sla.get("expires_at"), (int, float))
+            and now < sla["expires_at"])
 
 
-def _adopt_sla_card(state: dict, path: Path, row: dict, deadline: str, now: float, sla_root: Path | None) -> str | None:
-    """Turn the 40 h card into the 48 h card: edit the caption and buttons of the same message, send nothing.
-
-    Returns None (no usable 40 h card: send a fresh card), 'retry' (edit failed, same message next cycle) or 'adopted'."""
-    found = _adoptable_sla_card(sla_root, row)
-    if found is None or state.get("adopt_failures", 0) >= 3:
-        return None
-    sla_path, _ = found
-    with sla_path.with_suffix(".lock").open("a+") as lock:
-        fcntl.flock(lock, fcntl.LOCK_EX)
-        found = _adoptable_sla_card(sla_root, row)  # re-read under the 40 h card's own lock
-        if found is None:
-            return None
-        sla = found[1]
-        state.update(chat_id=sla["chat_id"], message_id=sla["message_id"], created_at=int(now),
-                     expires_at=int(now) + WINDOW)
-        try:
-            ra.edit_card_text(state, caption(row, state["kind"], deadline))
-        except ValueError:
-            state["adopt_failures"] = state.get("adopt_failures", 0) + 1
-            ra.atomic(path, state)
-            return "retry"
-        state.update(notification="sent", adopted_from=sla_decision.SOURCE, ask_source=sla_decision.SOURCE)
-        ra.atomic(path, state)
-        sla["superseded_by"] = SOURCE  # its 40 h keys can no longer decide; this card's own keys do
-        ra.atomic(sla_path, sla)
-    ra.extend_ask(state["message_id"], state["expires_at"])
-    return "adopted"
+def _note_deferred(root: Path, rid: str, now: float) -> None:
+    note = root / f"{rid}.deferred_to_sla40_card.json"
+    if not note.exists():
+        ra.atomic(note, {"note": "deferred_to_sla40_card", "at": int(now)})
 
 
 def advance(row: dict, root: Path, effects, now: float, deadline: str, sla_root: Path | None = None) -> str:
     """Return pending/refund/decline/unknown/exhausted. Caller holds the pickup-cycle lock.
 
-    'refund' and 'decline' carry an exact Florian button; the caller writes them to the row. With sla_root, an
-    order whose 40 h card message exists gets its 48 h question on that same message (no second card).
+    'refund' and 'decline' carry an exact Florian button; the caller writes them to the row. With sla_root, no
+    48 h card is sent while the order's 40 h card still has its live Refund button (returns 'pending').
     """
     if effects.dry_run or not live_runtime():
         return "pending"  # fixtures never contact Telegram and never approve a refund
@@ -230,6 +204,9 @@ def advance(row: dict, root: Path, effects, now: float, deadline: str, sla_root:
         raise ValueError("refund approval is for real live orders only")
     root.mkdir(parents=True, exist_ok=True, mode=0o700)
     path = root / f"{rid}.json"
+    if not path.exists() and sla40_card_live(sla_root, row, now):
+        _note_deferred(root, rid, now)
+        return "pending"
     with path.with_suffix(".lock").open("a+") as lock:
         fcntl.flock(lock, fcntl.LOCK_EX)
         state = json.loads(path.read_text()) if path.exists() else {
@@ -247,11 +224,7 @@ def advance(row: dict, root: Path, effects, now: float, deadline: str, sla_root:
             state = {"request_id": rid, "kind": state["kind"], "history": history, **_new_card(state.get("card", 1))}
         ra.atomic(path, state)
         if state["notification"] == "pending":
-            adopted = _adopt_sla_card(state, path, row, deadline, now, sla_root)
-            if adopted == "retry":
-                return "pending"
-            if adopted is None:
-                _send_card(state, path, caption(row, state["kind"], deadline), now)
+            _send_card(state, path, caption(row, state["kind"], deadline), now)
         if not state.get("message_id"):
             return "pending" if state["notification"] == "pending" else "unknown"
         if not state.get("buttons_attached"):
