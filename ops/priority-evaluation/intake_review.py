@@ -229,6 +229,32 @@ def one_line(value: object, limit: int) -> str:
     return re.sub(r"\s+", " ", str(value or "")).strip()[:limit]
 
 
+def safe_link(value: object) -> str:
+    """Customer-supplied link for the board: scheme, host and path only.
+
+    Userinfo (user:token@), port, query and fragment can carry secrets, so they are dropped; anything that
+    does not parse as an http(s) URL with a plain host is replaced by '-'."""
+    import urllib.parse
+    text = str(value or "").strip()
+    try:
+        parts = urllib.parse.urlsplit(text)
+        host = parts.hostname or ""
+    except ValueError:
+        return "-"
+    if parts.scheme not in ("http", "https") or not re.fullmatch(r"[a-z0-9.-]{1,253}", host):
+        return "-"
+    path = urllib.parse.quote(urllib.parse.unquote(parts.path), safe="/-._~")[:200]
+    return f"{parts.scheme}://{host}{path}"
+
+
+URL_RE = re.compile(r'[A-Za-z][A-Za-z0-9+.-]*://[^\s"<>]+')
+
+
+def redact_urls(text: str) -> str:
+    """Any URL inside a finding is reduced to scheme, host and path (see safe_link)."""
+    return URL_RE.sub(lambda m: safe_link(m.group(0)), text)
+
+
 def handoff_text(row: dict, reminder: bool) -> str:
     check = row.get("intake_check") or {}
     ref = row["id"][:8]
@@ -239,8 +265,8 @@ def handoff_text(row: dict, reminder: bool) -> str:
         f"@{OWNER_JOB} {lead}fast-lane order {ref} was held for manual review before payment ({state}).\n"
         f"- Order ref: {ref} (id {row['id']})\n"
         f"- Access type: {one_line(row.get('access_type'), 40)}\n"
-        f"- Link: {one_line(row.get('model_link'), 300) or '-'}\n"
-        f"- Intake finding: {one_line(check.get('code'), 60) or '?'}: {one_line(check.get('message'), 400)}\n"
+        f"- Link (host and path only): {safe_link(row.get('model_link'))}\n"
+        f"- Intake finding: {one_line(check.get('code'), 60) or '?'}: {redact_urls(one_line(check.get('message'), 400))}\n"
         f"- Age: {age(row['created_at'])}\n"
         f"- Approve (mails the fixed pay-link template): python3 {script} approve {ref} --by <agent> --mail\n"
         f"- Decline (fixed template, code one of {', '.join(DECLINE_REASONS)}): python3 {script} decline {ref} --by <agent> "

@@ -408,6 +408,28 @@ class Watch(unittest.TestCase):
         self.assertEqual(row(rid), before)
 
 
+class SafeLink(unittest.TestCase):
+    def test_userinfo_query_fragment_and_port_never_reach_the_board(self):
+        for raw, expected in (
+                ("https://user:hf_SECRET@huggingface.co/o/m?token=abc#frag", "https://huggingface.co/o/m"),
+                ("https://api.example.com:8443/v1?key=sk-123", "https://api.example.com/v1"),
+                ("http://huggingface.co/o/m", "http://huggingface.co/o/m"),
+                ("ftp://x/y", "-"), ("not a url", "-"), ("", "-"), (None, "-"),
+                ("https://h\u00f6st.example/x", "-")):
+            with self.subTest(raw=raw):
+                self.assertEqual(ir.safe_link(raw), expected)
+
+    def test_handoff_text_redacts_link_and_urls_inside_the_finding(self):
+        row = {"id": "12345678-0000-4000-8000-000000000000", "created_at": "2026-11-08T10:00:00+00:00",
+               "access_type": "api_endpoint", "model_link": "https://u:p4ss@api.example.com/v1?key=sk-live-1",
+               "intake_check": {"code": "private_endpoint",
+                                "message": "Probe of https://u:p4ss@api.example.com/v1/models?key=sk-live-1 failed"}}
+        text = ir.handoff_text(row, reminder=False)
+        for secret in ("p4ss", "sk-live-1", "u:"):
+            self.assertNotIn(secret, text)
+        self.assertIn("https://api.example.com/v1", text)
+
+
 class RegistryMirror(unittest.TestCase):
     def test_reviewed_supplement_list_matches_native_owner(self):
         import native_owner
