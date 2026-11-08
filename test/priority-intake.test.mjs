@@ -499,5 +499,11 @@ test('migration 003 equals the runtime copy, is idempotent and adds the columns 
   assert.match(sql, /'awaiting_review', 'intake_declined'/);
   assert.match(sql, /pg_get_constraintdef\(oid\) LIKE '%awaiting_review%'/);
   for (const line of sql.split('\n').filter((l) => /^(CREATE|ALTER)/.test(l))) assert.match(line, /IF NOT EXISTS/, line);
-  assert.match(fs.readFileSync(new URL('../lib/priority-evaluation-db.ts', import.meta.url), 'utf8'), /INTAKE_REVIEW_SCHEMA_SQL/);
+  // The runtime copy must actually run at boot (in the accountsDb() ready chain), not merely be imported: after #585 the import
+  // alone satisfied the old check while the live database never got the columns or the awaiting_review status.
+  const dbSrc = fs.readFileSync(new URL('../lib/priority-evaluation-db.ts', import.meta.url), 'utf8');
+  const readyChain = dbSrc.match(/ready \?\?= ([\s\S]*?);\n/);
+  assert.ok(readyChain, 'accountsDb() ready chain not found');
+  assert.match(readyChain[1], /\.query\(INTAKE_REVIEW_SCHEMA_SQL\)/);
+  assert.ok(readyChain[1].indexOf('INTAKE_REVIEW_SCHEMA_SQL') > readyChain[1].indexOf('ACCOUNTS_SCHEMA_SQL'), 'intake schema must run after the base schema');
 });
