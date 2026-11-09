@@ -62,6 +62,14 @@ psql -X -q --single-transaction -v ON_ERROR_STOP=1 -d benchmarkheaven_accounts -
 psql -X -q --single-transaction -v ON_ERROR_STOP=1 -d benchmarkheaven_accounts -f "$REPO_ROOT/db/accounts/003_intake_review.sql" >/dev/null
 install -m 700 "$SRC/worker.py" "$BIN/jevbench-priority-worker.py"
 ln -sfn "$SHARE/runtime/autopickup.py" "$BIN/jevbench-autopickup.py"
+# N95: the entry point must stay a symlink (a regular-file copy cannot import its runtime siblings); record the
+# installed hash so the health check can flag later hand edits of the runtime.
+[ -L "$BIN/jevbench-autopickup.py" ] && [ "$(readlink -f "$BIN/jevbench-autopickup.py")" = "$(readlink -f "$SHARE/runtime/autopickup.py")" ] \
+  || { echo "install-autopickup: $BIN/jevbench-autopickup.py is not a symlink to the runtime" >&2; exit 1; }
+printf '{\n  "sha256": "%s",\n  "source": "install-autopickup.sh %s",\n  "reason": "install from merged main",\n  "recorded_at": "%s"\n}\n' \
+  "$(sha256sum < "$SHARE/runtime/autopickup.py" | cut -d' ' -f1)" "$HEAD_SHA" "$(date -u +%Y-%m-%dT%H:%M:%SZ)" \
+  > "$SHARE/runtime/autopickup-install.json.tmp" && chmod 600 "$SHARE/runtime/autopickup-install.json.tmp" \
+  && mv -f "$SHARE/runtime/autopickup-install.json.tmp" "$SHARE/runtime/autopickup-install.json"
 install -m 644 "$SRC/jevbench-priority-worker.service" "$UNITS/jevbench-priority-worker.service"
 install -m 644 "$SRC/jevbench-priority-worker.timer" "$UNITS/jevbench-priority-worker.timer"
 install -m 755 "$SRC/jevbench-autopickup" "$BIN/jevbench-autopickup"
