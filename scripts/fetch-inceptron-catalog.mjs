@@ -8,7 +8,7 @@
 import { readFile } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 import { createHash } from "node:crypto";
-import { parseInceptronCatalog, parseInceptronModelsPage, INCEPTRON_LIST_URL } from "../lib/inceptron-catalog.mjs";
+import { parseInceptronCatalog, inspectInceptronModelsPage, INCEPTRON_LIST_URL, INCEPTRON_WITHDRAWN_SINCE, INCEPTRON_WITHDRAWN_NOTE } from "../lib/inceptron-catalog.mjs";
 import { writeJSONAtomic } from "../lib/snapshot.mjs";
 import { captureLiveSource } from "../lib/live-source.mjs";
 
@@ -24,12 +24,17 @@ try {
   const text = await get(url);
   const html = await get(INCEPTRON_LIST_URL);
   const collected_at = new Date().toISOString().slice(0, 10);
-  const listPrices = parseInceptronModelsPage(html);
-  const { models, skipped, diff } = parseInceptronCatalog(JSON.parse(text), previous, { listPrices, collectedAt: collected_at });
+  const page = inspectInceptronModelsPage(html);
+  if (page.state === "unrecognised") throw new Error("Inceptron models page: no model cards (page layout changed?)");
+  const listWithdrawn = page.state === "list_prices_withdrawn_by_source";
+  const listPrices = page.prices;
+  const { models, skipped, diff } = parseInceptronCatalog(JSON.parse(text), previous, { listPrices, listWithdrawn, collectedAt: collected_at });
+  const { availability: _stale, ...previousRest } = previous;
   await captureLiveSource(url, text);
   await captureLiveSource(INCEPTRON_LIST_URL, html);
   await writeJSONAtomic(target, {
-    ...previous,
+    ...previousRest,
+    ...(listWithdrawn ? { availability: { state: page.state, observed_since: INCEPTRON_WITHDRAWN_SINCE, checked_at: new Date().toISOString(), url: INCEPTRON_LIST_URL, note: INCEPTRON_WITHDRAWN_NOTE } } : {}),
     source: "Inceptron",
     collected_at,
     listing_url: INCEPTRON_LIST_URL,
