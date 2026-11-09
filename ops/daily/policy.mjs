@@ -8,6 +8,7 @@
 
 import { unreviewedFacts } from '../../lib/source-quarantine.mjs';
 import { MIN_INDEX } from '../rebuild-2026-09/bin/worker-policy.mjs';
+import { AA_RETENTION_FIRST_DAY, AA_RETENTION_LAST_DAY } from '../../lib/aa-legacy-api.mjs';
 
 // --- Tunables (master brief §6 + phase 08 contract) ------------------------
 export const TOP_N = 5; // Composite top-N family watchlist
@@ -168,6 +169,22 @@ export function staleCollectorDigestLines(stale, { minDays = COLLECTOR_DIGEST_DA
 export const COLLECTOR_OWNER_JOB = 'bh-daily-collectors-fix-20261007';
 export const COLLECTOR_HANDOFF_THREAD = 8;
 
+// CR-717 (9 Nov 2026): a collector whose failure Florian already decided on is not handed off or carded again
+// while that decision's dated window runs. fetch-aa: AA retired its legacy API (CR-693); Florian card 19348
+// ("Keep", 6 Nov) retains the 4 Nov snapshot through AA_RETENTION_LAST_DAY (DECISIONS
+// bh-aa-retained-snapshot-window-1206), so the day-7 card on 11 Nov would re-ask a decided question. The collector
+// stays in stale_sources and the run summary; after the last day it is handed off/carded again as usual.
+export const COLLECTOR_DECIDED_RETENTION = Object.freeze([
+  Object.freeze({ id: 'fetch-aa', first_day: AA_RETENTION_FIRST_DAY, last_day: AA_RETENTION_LAST_DAY,
+    decision: 'bh-aa-retained-snapshot-window-1206 (Florian card 19348)' }),
+]);
+
+/** The decided-retention entry covering collector `id` on UTC day `day` (YYYY-MM-DD), or null. */
+export function decidedCollectorRetention(id, day, windows = COLLECTOR_DECIDED_RETENTION) {
+  if (typeof id !== 'string' || typeof day !== 'string') return null;
+  return windows.find((w) => w.id === id && day >= w.first_day && day <= w.last_day) ?? null;
+}
+
 /** The one board handoff for collectors failing `minDays`..`cardAfter`-1 days, or null. */
 export function staleCollectorHandoff(stale, { minDays = COLLECTOR_DIGEST_DAYS, cardAfter = COLLECTOR_CARD_DAYS, owner = COLLECTOR_OWNER_JOB } = {}) {
   const due = (Array.isArray(stale) ? stale : []).filter((x) => x?.kind === 'collector' && typeof x.id === 'string'
@@ -309,13 +326,20 @@ export function planNotifications({
     if (known[todo.key]) skips.push({ kind: 'quarantine', key: todo.key, reason: 'duplicate' });
     else sends.push({ kind: 'quarantine', key: todo.key, text: todo.text, onSent: { notified_key: todo.key } });
   }
-  const collectorHandoff = staleCollectorHandoff(staleSourceList);
+  const day = iso.slice(0, 10);
+  const staleList = Array.isArray(staleSourceList) ? staleSourceList : [];
+  const escalatable = staleList.filter((x) => {
+    const retained = x?.kind === 'collector' ? decidedCollectorRetention(x.id, day) : null;
+    if (retained) skips.push({ kind: 'collector-retained', key: `collector-retained:${x.id}`, reason: `decided retention through ${retained.last_day}: ${retained.decision}` });
+    return !retained;
+  });
+  const collectorHandoff = staleCollectorHandoff(escalatable);
   if (collectorHandoff) {
     if (known[collectorHandoff.key]) skips.push({ kind: 'collector-handoff', key: collectorHandoff.key, reason: 'duplicate' });
     else sends.push({ kind: 'collector-handoff', key: collectorHandoff.key, text: collectorHandoff.text,
       board: { thread: collectorHandoff.thread, to: collectorHandoff.owner }, onSent: { notified_key: collectorHandoff.key } });
   }
-  const collectorTodo = staleCollectorHumanTodo(staleSourceList);
+  const collectorTodo = staleCollectorHumanTodo(escalatable);
   if (collectorTodo) {
     if (known[collectorTodo.key]) skips.push({ kind: 'collector-stale', key: collectorTodo.key, reason: 'duplicate' });
     else sends.push({ kind: 'collector-stale', key: collectorTodo.key, text: collectorTodo.text, onSent: { notified_key: collectorTodo.key } });
