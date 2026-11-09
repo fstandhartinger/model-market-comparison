@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 // R9.1: refresh data/raw/azure-foundry.json from the Azure Retail Prices API (public, unauthenticated,
 // native USD; prices.azure.com serves no robots.txt). One filtered query per EU billing region, following
-// NextPageLink with a one-second pause between pages. Re-reads the exact meters each curated row names in
+// NextPageLink strictly one request at a time with a two-second pause between pages; HTTP 429/5xx is retried
+// (Retry-After honoured, exponential backoff, at most 5 retries per request and 300 s of waiting per run). Re-reads the exact meters each curated row names in
 // `retail_meters`; never adds rows (lifecycle and region availability stay a documented human check).
 // Fails closed: on an empty response, an unreadable price or a large loss of mapped meters the previous
 // snapshot stays untouched.
@@ -11,11 +12,14 @@ import { createHash } from "node:crypto";
 import { parseAzureRetail } from "../lib/azure-foundry-catalog.mjs";
 import { writeJSONAtomic } from "../lib/snapshot.mjs";
 import { captureLiveSource } from "../lib/live-source.mjs";
+import { createRetailFetcher } from "../lib/azure-retail-fetch.mjs";
 
 const target = fileURLToPath(new URL("../data/raw/azure-foundry.json", import.meta.url));
 const REGIONS = ["swedencentral", "westeurope", "francecentral", "germanywestcentral", "polandcentral", "spaincentral"];
 const filter = (region) => `armRegionName eq '${region}' and (contains(productName,'OpenAI') or contains(productName,'Models') or productName eq 'Azure Kimi')`;
 const headers = { "User-Agent": "BenchmarkHeaven/1.0 (+https://github.com/fstandhartinger/model-market-comparison)" };
+const PAUSE_MS = 2000;
+const retail = createRetailFetcher();
 const pause = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 try {
@@ -26,8 +30,9 @@ try {
     let url = `https://prices.azure.com/api/retail/prices?currencyCode=USD&$filter=${encodeURIComponent(filter(region))}`;
     for (let page = 0; url; page++) {
       if (page >= 40) throw new Error(`Azure Retail: more than 40 pages for ${region}`);
-      const response = await fetch(url, { headers, signal: AbortSignal.timeout(90000) });
-      if (!response.ok) throw new Error(`Azure Retail HTTP ${response.status} (${region}, page ${page})`);
+      let response;
+      try { response = await retail.get(url, headers); }
+      catch (error) { throw new Error(`Azure Retail ${error.message} (${region}, page ${page})`); }
       const text = await response.text();
       const body = JSON.parse(text);
       if (!Array.isArray(body.Items)) throw new Error("Azure Retail: response without Items");
@@ -36,7 +41,7 @@ try {
       items.push(...body.Items);
       pages++;
       url = body.NextPageLink || null;
-      await pause(1000);
+      await pause(PAUSE_MS);
     }
   }
   const collected_at = new Date().toISOString().slice(0, 10);
@@ -50,7 +55,7 @@ try {
     diff,
     models,
   });
-  console.log(`Azure Foundry: ${models.length} rows (removed ${diff.removed.length}, price changes ${diff.price_changed.length}, suspicious ${diff.suspicious.length}, unmetered ${diff.unmetered.length}, cache-read meters missing ${diff.cache_read_missing.length}, uncovered meters effective in the last 90 days: ${diff.new_meters.length})`);
+  console.log(`Azure Foundry: ${retail.state.requests} HTTP requests (${retail.state.retries} retries, ${Math.round(retail.state.waitedMs / 1000)} s backoff); ${models.length} rows (removed ${diff.removed.length}, price changes ${diff.price_changed.length}, suspicious ${diff.suspicious.length}, unmetered ${diff.unmetered.length}, cache-read meters missing ${diff.cache_read_missing.length}, uncovered meters effective in the last 90 days: ${diff.new_meters.length})`);
   for (const line of [...diff.price_changed, ...diff.removed, ...diff.suspicious, ...diff.cache_read_missing, ...diff.new_meters]) console.log(`  ${line}`);
 } catch (error) {
   console.error(`Azure Foundry catalog refresh failed; previous snapshot preserved: ${error.message}`);
