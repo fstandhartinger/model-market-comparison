@@ -7,7 +7,8 @@ Wants=network-online.target
 Type=oneshot
 Environment=AGENT_BOARD_NAME=fastlane-autopickup
 Environment=GH_NO_UPDATE_NOTIFIER=1
-ExecStart=/usr/bin/python3 %h/bin/jevbench-autopickup.py health
+# Run the runtime directly, not the ~/bin entry point: the check must still run when that entry point is broken (N95).
+ExecStart=/usr/bin/python3 %h/.local/share/priority-evaluation/runtime/autopickup.py health
 TimeoutStartSec=1200
 UMask=0077
 NoNewPrivileges=true

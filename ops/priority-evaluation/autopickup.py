@@ -68,6 +68,11 @@ DB_NAME = os.environ.get("FASTLANE_DB") or "benchmarkheaven_accounts"
 STATE_ROOT = Path(os.environ.get("FASTLANE_STATE_ROOT") or HOME / ".local/state/fastlane-autopickup")
 JOB_ROOT = Path(os.environ.get("FASTLANE_JOB_ROOT") or HOME / "jobs/fastlane-evaluations")
 SHARE_ROOT = Path(os.environ.get("FASTLANE_SHARE_ROOT") or HOME / ".local/share/priority-evaluation")
+BIN_ROOT = Path(os.environ.get("FASTLANE_BIN_ROOT") or HOME / "bin")
+# N95 (8 Nov 2026): a hand edit replaced the ~/bin entry-point symlink with a regular-file copy; the copy could not
+# import its sibling modules and the pickup was down for 10 minutes. install-autopickup.sh writes this record.
+ENTRY_POINT_NAME = "jevbench-autopickup.py"
+INSTALL_RECORD_NAME = "autopickup-install.json"
 MAIL_TOOL = HOME / ".claude/skills/email-access/mail_tool.py"
 # AGENTS.md section 4: customer mail comes From the brand's own domain, never a personal mailbox.
 # Verified Gmail send-as identity (mail_tool GMAIL_SEND_AS); replies reach the watched Gmail via forwarding.
@@ -4468,6 +4473,69 @@ def measurement_pin_problems() -> list[tuple[str, str]]:
     return problems
 
 
+def file_sha256(path: Path) -> str:
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def install_record_path() -> Path:
+    return SHARE_ROOT / "runtime" / INSTALL_RECORD_NAME
+
+
+def write_install_record(source: str, reason: str, now: datetime | None = None) -> dict[str, Any]:
+    """Record the runtime autopickup.py hash as installed (installer, or a deliberate hot-fix with a reason)."""
+    runtime = SHARE_ROOT / "runtime" / "autopickup.py"
+    record = {"sha256": file_sha256(runtime), "source": source, "reason": reason,
+              "recorded_at": iso(now or utcnow())}
+    atomic_write(install_record_path(), json.dumps(record, indent=2) + "\n")
+    return record
+
+
+def install_problems() -> tuple[list[tuple[str, str]], list[str], dict[str, Any]]:
+    """Entry point and runtime drift (N95).
+
+    Problem (alerts): ~/bin/jevbench-autopickup.py is not a symlink that resolves to runtime/autopickup.py.
+    Warning (health.json only): the runtime hash differs from the install record, or there is no record.
+    Deliberate hot-fixes are common, so drift is flagged but does not page."""
+    runtime = SHARE_ROOT / "runtime" / "autopickup.py"
+    entry = BIN_ROOT / ENTRY_POINT_NAME
+    problems: list[tuple[str, str]] = []
+    warnings: list[str] = []
+    info: dict[str, Any] = {"entry_point": str(entry), "runtime": str(runtime)}
+    if not entry.is_symlink():
+        kind = "missing" if not entry.exists() else "a regular file" if entry.is_file() else "not a symlink"
+        problems.append(("install:entry-point", f"{entry} is {kind}, not a symlink to {runtime}; "
+                         "rerun install-autopickup.sh or `ln -sfn` it back"))
+    else:
+        try:
+            target_ok = entry.resolve(strict=True) == runtime.resolve(strict=True)
+        except OSError:
+            target_ok = False
+        if not target_ok:
+            problems.append(("install:entry-point", f"{entry} points to {os.readlink(entry)}, not {runtime}"))
+    try:
+        actual = file_sha256(runtime)
+    except OSError as exc:
+        problems.append(("install:runtime", f"runtime autopickup.py unreadable: {type(exc).__name__}"))
+        return problems, warnings, info
+    info["runtime_sha256"] = actual
+    try:
+        record = json.loads(install_record_path().read_text(encoding="utf-8"))
+        recorded = record.get("sha256") if isinstance(record, dict) else None
+    except (OSError, json.JSONDecodeError):
+        record, recorded = None, None
+    if not recorded:
+        warnings.append(f"runtime autopickup.py {actual[:12]} has no install record ({install_record_path()})")
+    else:
+        info["recorded_sha256"] = recorded
+        info["recorded_source"] = record.get("source")
+        if recorded != actual:
+            warnings.append(f"runtime autopickup.py drifted: {actual[:12]} differs from the installed record "
+                            f"{recorded[:12]} ({record.get('source')}); repo-carry the hot-fix or run "
+                            "`jevbench-autopickup record-install --reason ...`")
+    info["drift"] = bool(recorded) and recorded != actual
+    return problems, warnings, info
+
+
 def health(effects: Effects) -> dict[str, Any]:
     now = utcnow()
     problems: list[tuple[str, str]] = []
@@ -4538,7 +4606,10 @@ def health(effects: Effects) -> dict[str, Any]:
             if item.get("status") == "exhausted":
                 problems.append((f"exhausted:{rid}:{name}", f"order {ref}: step {name} exhausted"))
     problems.extend(measurement_pin_problems())
-    report = {"checked_at": iso(now), "problems": [text for _, text in problems], "held_orders": held_orders}
+    entry_problems, warnings, install = install_problems()
+    problems.extend(entry_problems)
+    report = {"checked_at": iso(now), "problems": [text for _, text in problems], "held_orders": held_orders,
+              "warnings": warnings, "install": install}
     if not effects.dry_run:
         atomic_write(STATE_ROOT / "health.json", json.dumps(report, indent=2) + "\n")
     alerts_path = STATE_ROOT / "health-alerts.json"
@@ -6043,6 +6114,9 @@ def main(argv: list[str] | None = None) -> int:
     cycle_parser.add_argument("--synthetic")
     cycle_parser.add_argument("--job-root", type=Path)
     sub.add_parser("health")
+    record_parser = sub.add_parser("record-install")
+    record_parser.add_argument("--source", default="hotfix")
+    record_parser.add_argument("--reason", required=True)
     for name in ("evaluate", "xpost", "adopt", "resume", "access-ok", "gate", "status", "recover-source-access", "native-owner"):
         sub.add_parser(name).add_argument("request_id")
     resubmit_parser = sub.add_parser("resubmit")
@@ -6075,6 +6149,9 @@ def main(argv: list[str] | None = None) -> int:
                 counts = cycle(effects)
                 report = health(effects)
             print(json.dumps({"cycle": counts, "health": report}, sort_keys=True, default=str))
+            return 0
+        if args.command == "record-install":
+            print(json.dumps(write_install_record(args.source, args.reason), sort_keys=True))
             return 0
         if args.command == "evaluate":
             return evaluate(args.request_id)
