@@ -101,3 +101,22 @@ test("parseTSystemsCatalog works end-to-end on the 2026-11-05 layout", () => {
   assert.deepEqual(diff.eur_price_changed, []);
   assert.deepEqual(diff.added.sort(), ["Claude Opus 5.5", "GLM 5.3 Flash"]);
 });
+
+// "Free on any active plan" at €0.00 (seen 2026-11-09 for d3, DiffusionGemma, DeepSeek V4.1 Flash) is included in a
+// paid plan, not free per token: no per-token price and price_status "n/a", so it never ranks as the cheapest route.
+test("plan-included €0.00 rows get no per-token price and price_status n/a; a priced row clears it again", () => {
+  const free = page(row("GPT-OSS 120B", "OpenAI", TELEKOM, "128K", "€0.00", "€0.00", "€0.00", "Free on any active plan"));
+  const { models } = parseTSystemsCatalog({ llms: free }, { models: [] }, fx, { day: "2026-11-09" });
+  const m = models.find((x) => x.model_name === "GPT-OSS 120B");
+  assert.equal(m.price_status, "n/a");
+  assert.equal(m.input_per_1m_eur, null); assert.equal(m.output_per_1m_usd, null);
+  assert.equal(m.cache_read_per_1m_eur, undefined);
+  assert.match(m.notes, /Free on any active plan/);
+  const priced = page(row("GPT-OSS 120B", "OpenAI", TELEKOM, "128K", "€0.20", "€0.65", "€0.03"));
+  const again = parseTSystemsCatalog({ llms: priced }, { models }, fx, { day: "2026-11-10" }).models[0];
+  assert.equal(again.price_status, undefined);
+  assert.equal(again.input_per_1m_eur, 0.2);
+  // A €0.00 row without the plan wording keeps the literal price (no silent reinterpretation).
+  const zero = page(row("GPT-OSS 120B", "OpenAI", TELEKOM, "128K", "€0.00", "€0.00", "n/a"));
+  assert.equal(parseTSystemsCatalog({ llms: zero }, { models: [] }, fx, { day: "d" }).models[0].input_per_1m_eur, 0);
+});
