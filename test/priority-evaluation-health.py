@@ -33,6 +33,9 @@ class Health(unittest.TestCase):
   self.ns.update(measurement_dispatch=SimpleNamespace(OperationalHold=Hold,pins=code_pins,input_mounts=mounts),official_scoring=SimpleNamespace(pins=scoring_pins))
   # INCIDENTS #25 native owner: a plain owner counts as live exactly like owner_job_live; no native owner is starting.
   self.ns.update(hold_owner_live=self.ns['owner_job_live'],native_owner_starting=lambda *a:False,native_owner=SimpleNamespace(owner_name=lambda rid:'fastlane-native-'+rid[:8]))
+  # CR-716 (N95): install_problems() reads the real entry point/runtime; health() only needs its result here.
+  self.install=([],[],{})
+  self.ns.update(install_problems=lambda:copy.deepcopy(self.install))
   tree=ast.parse((ROOT/'ops/priority-evaluation/autopickup.py').read_text());nodes=[n for n in tree.body if isinstance(n,ast.FunctionDef) and n.name in ['health','step','step_done','measurement_pin_problems']]
   exec(compile(ast.Module(body=nodes,type_ignores=[]),'actual-health','exec'),self.ns)
   self.effects=SimpleNamespace(dry_run=True,notify=lambda text:True,agent_handoff=lambda text:True)
@@ -69,6 +72,13 @@ class Health(unittest.TestCase):
   self.ns['sql_rows']=lambda *a:[];self.pin_failure='code';self.assertIn('official measurement code pins fail',self.call()['problems'][0]);self.pin_failure='scoring';self.assertIn('official scoring pins fail',self.call()['problems'][0])
  def test_missing_pin_reaches_the_fix_agent(self):
   self.ns['sql_rows']=lambda *a:[];self.pin_failure='jevbench';seen=[];self.effects.agent_handoff=lambda text:seen.append(text) or True;self.call();self.assertIn('official jevbench input pins fail',seen[0])
+ def test_entry_point_problem_alarms_and_drift_only_warns(self):
+  self.ns['sql_rows']=lambda *a:[]
+  self.install=([('install:entry-point','/fake/bin/jevbench-autopickup.py is a regular file, not a symlink')],['runtime autopickup.py drifted'],dict(drift=True))
+  report=self.call()
+  self.assertIn('/fake/bin/jevbench-autopickup.py is a regular file, not a symlink',report['problems'])
+  self.assertEqual(report['warnings'],['runtime autopickup.py drifted']);self.assertEqual(report['install'],dict(drift=True))
+  self.assertFalse(any('drifted' in t for t in report['problems']))
  def test_corrupt_state_fails_closed(self):
   self.state=None;r=self.call();self.assertEqual(len(r['problems']),2);self.assertIn('pickup state is unreadable',r['problems'][0])
 unittest.main()
