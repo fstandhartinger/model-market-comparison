@@ -28,8 +28,11 @@ class FakeEffects:
     def __init__(self, dry_run: bool = False) -> None:
         self.dry_run = dry_run
         self.state: dict[str, str] = {}
+        self.sequence: list[dict[str, str]] = []
 
     def unit_state(self, unit: str) -> dict[str, str]:
+        if self.sequence:
+            self.state = self.sequence.pop(0)
         return self.state
 
 
@@ -67,6 +70,22 @@ class UnitLastSuccessTests(unittest.TestCase):
         self.assertIsNone(ap.systemd_last_success(effects, UNIT))
         effects.state = OK
         self.assertEqual(ap.systemd_last_success(effects, UNIT), SUCCESS_AT)
+
+    def test_in_flight_run_is_awaited_not_judged_stale(self) -> None:
+        # card a1794161102: the health check ran while the worker unit was activating (no exit result yet).
+        effects = FakeEffects()
+        activating = {"ActiveState": "activating", "Result": "success", "ExecMainStatus": "0", "ExecMainExitTimestamp": ""}
+        effects.sequence = [activating, activating, dict(OK, ActiveState="inactive")]
+        with mock.patch.object(ap.time, "sleep") as sleep:
+            self.assertEqual(ap.systemd_last_success(effects, UNIT), SUCCESS_AT)
+        self.assertEqual(sum(1 for c in sleep.call_args_list if c.args == (3,)), 2)
+
+    def test_wait_is_bounded(self) -> None:
+        effects = FakeEffects()
+        effects.state = {"ActiveState": "activating", "Result": "success", "ExecMainStatus": "0", "ExecMainExitTimestamp": ""}
+        clock = iter(range(0, 10_000, 60))
+        with mock.patch.object(ap.time, "sleep"), mock.patch.object(ap.time, "monotonic", lambda: next(clock)):
+            self.assertIsNone(ap.systemd_last_success(effects, UNIT))
 
 
 if __name__ == "__main__":
