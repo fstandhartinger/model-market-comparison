@@ -1,0 +1,35 @@
+{
+  "artifact_id": "protocol-kernelbench-cuda-deepseek-nsa-rtx-pro-6000",
+  "artifact_sha256": "106e3ed5770f2399032cd76ef25ac0ad13ad843f58eaa616992a43c991185a9c",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": [
+    "kernelbench-cuda-deepseek-nsa::rtx-pro-6000",
+    "c1",
+    "c2"
+  ],
+  "errors_found": 2,
+  "findings": [
+    {
+      "id": "finding-1",
+      "severity": "major",
+      "location": "row kernelbench-cuda-deepseek-nsa::rtx-pro-6000, field `version` and `version_status`",
+      "evidence": "Row claims version='rtx-pro-6000' with version_status='published'. The captured primary protocol (leaderboard.json sha256 b2fb5a3e264ba15798fa45c321f1f238a31300e8474b8436ff97439631fdc265) publishes a build tag 'v2' (generated_from_summary.tag='v2', environment='v2_containerized', published_runs.json comment 'build_v2_leaderboard.py') and no release identifier 'rtx-pro-6000'; 'rtx-pro-6000' is the hardware/board name, not a version copied from the maintainer. Per criterion c2, version_status='published' requires the version to copy the maintainer's release identifier.",
+      "repair": "Either set version to the published release identifier (e.g. 'v2') and keep version_status='published', or, if no board-level release identifier is deemed published, set version_status='snapshot' and version='snapshot-2026-11-09'. Make the version/version_status pair consistent with the actual identifier the maintainer publishes."
+    },
+    {
+      "id": "finding-2",
+      "severity": "minor",
+      "location": "row kernelbench-cuda-deepseek-nsa::rtx-pro-6000, `scoring.notes`",
+      "evidence": "The notes assert the published per_problem ranked list 'still holds' the excluded `bug` muse/muse-spark-1.3 [ultra] cell on 04 with peak_fraction 0.2056. The captured leaderboard.json shows muse/muse-spark-1.3 04 has correct=false, peak_fraction=null, annotation_verdict='bug', and the 04 ranked_passes list contains 20 entries without that model; the value 0.2056 appears nowhere in the packet. The kinetic-claude/kinetic-0715[1m] 03 claim (0.0622, suspect, present in 03 ranked_passes) is corroborated, but the 04 claim is contradicted by the evidence.",
+      "repair": "Remove the 0.2056 value and the statement that the 04 ranked list holds the muse bug cell; state instead that the excluded 04 bug cell has no published peak_fraction and is absent from the ranked list."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "I cannot recompute SHA-256 hashes or execute transport/qualification checks; those are owner-side responsibilities and were not independently verifiable in this read-only review.",
+    "Whether the 'v2' tag in generated_from_summary / build_v2_leaderboard.py constitutes the maintainer's released identifier for this board is inferred from leaderboard metadata and a script comment; the primary protocol text does not expose an explicit version field for the board.",
+    "Whether each per-model peak_fraction value in leaderboard.json's ranked_passes is itself the geomean over the frozen shape sweep is not independently verifiable from the supplied excerpts."
+  ],
+  "missing_evidence": []
+}

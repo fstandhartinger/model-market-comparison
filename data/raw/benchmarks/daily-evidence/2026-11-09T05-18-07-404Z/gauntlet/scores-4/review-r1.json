@@ -1,0 +1,61 @@
+{
+  "artifact_id": "scores-4",
+  "artifact_sha256": "65cde965b397567ba6ae26bbf44a0f1ce5314e5b80ecf037cea20c8fe2d7d92f",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": [
+    "vendor:mistralai/Devstral-2-123B-Instruct-2512:swe-bench-verified::snapshot-2026-09-10",
+    "vendor:mistralai/Devstral-Small-2-24B-Instruct-2512:swe-bench-verified::snapshot-2026-09-10",
+    "c1"
+  ],
+  "errors_found": 5,
+  "findings": [
+    {
+      "id": "f1",
+      "severity": "major",
+      "location": "vendor:mistralai/Devstral-2-123B-Instruct-2512:swe-bench-verified::snapshot-2026-09-10 → subject.model_id",
+      "evidence": "Source only names 'Devstral 2' and 'devstral-2512' (pricing card); it never contains 'devstral-2-123b' or 'Instruct'. Artifact claims model_id 'devstral-2-123b::default'.",
+      "repair": "Align model_id to the exact identifier present in the primary source (e.g., devstral-2512) or document that the source does not provide a model_id and remove the unsupported string."
+    },
+    {
+      "id": "f2",
+      "severity": "major",
+      "location": "vendor:mistralai/Devstral-Small-2-24B-Instruct-2512:swe-bench-verified::snapshot-2026-09-10 → subject.model_id",
+      "evidence": "Source says 'Devstral Small 2' and '24B' but contains no identifier like 'devstral-small-2'; the claimed model_id 'devstral-small-2::default' is absent.",
+      "repair": "Use an identifier that can be traced to the source or remove the unverified model_id."
+    },
+    {
+      "id": "f3",
+      "severity": "major",
+      "location": "vendor:mistralai/Devstral-2-123B-Instruct-2512:swe-bench-verified::snapshot-2026-09-10 → benchmark_id",
+      "evidence": "Artifact sets benchmark_id 'swe-bench-verified::snapshot-2026-09-10'; primary source only references 'SWE-bench Verified' and gives no snapshot version.",
+      "repair": "Either add primary evidence for the snapshot version or change benchmark_id to what the source actually specifies."
+    },
+    {
+      "id": "f4",
+      "severity": "major",
+      "location": "vendor:mistralai/Devstral-Small-2-24B-Instruct-2512:swe-bench-verified::snapshot-2026-09-10 → benchmark_id",
+      "evidence": "Same as f3: source provides no snapshot version for the SWE-bench Verified claim.",
+      "repair": "Verify the snapshot version against source or remove the unsupported suffix."
+    },
+    {
+      "id": "f5",
+      "severity": "minor",
+      "location": "both rows → source.published_at",
+      "evidence": "Primary source includes 'December 9, 2025' as the publication date; both rows set published_at to null.",
+      "repair": "Set published_at to 2025-12-09 (or the appropriate date) using the source caption."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "Owner-performed SHA-256 row hashes and transport/qualification checks were not independently executable in this review; the packet's canonical row hashes are taken at face value.",
+    "The snapshot date 'snapshot-2026-09-10' might be an internal benchmark tag that the system normally adds without primary-source evidence; nevertheless the acceptance criteria explicitly require version verification, so this remains a finding.",
+    "The model_id strings (e.g., 'devstral-2-123b') might be internal alias conventions, but the criteria forbid alias inference, so they cannot be accepted without explicit source support."
+  ],
+  "missing_evidence": [
+    "SWE-bench Verified snapshot version for row 1 (claimed 'snapshot-2026-09-10' absent from source)",
+    "SWE-bench Verified snapshot version for row 2 (claimed 'snapshot-2026-09-10' absent from source)",
+    "Exact model identifier 'devstral-2-123b' for row 1 (source has only 'devstral-2512')",
+    "Exact model identifier 'devstral-small-2' for row 2 (source has only 'Devstral Small 2' and '24B')"
+  ]
+}

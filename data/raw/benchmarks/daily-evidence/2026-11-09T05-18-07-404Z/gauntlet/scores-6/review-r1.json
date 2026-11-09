@@ -1,0 +1,28 @@
+{
+  "artifact_id": "scores-6",
+  "artifact_sha256": "2cd3ecd69942b25d0a435f340ec0735c012d9df4f04a7d99deb5f127f2d0533a",
+  "round": 1,
+  "verdict": "blocked",
+  "coverage_checked": [
+    "vendor:DeepSeek-V3:aider-polyglot::snapshot-2026-09-10",
+    "c1"
+  ],
+  "errors_found": 1,
+  "findings": [
+    {
+      "id": "benchmark-version-unsupported",
+      "severity": "blocker",
+      "location": "row vendor:DeepSeek-V3:aider-polyglot::snapshot-2026-09-10, benchmark_id and row id",
+      "evidence": "Primary source Table 6 lists 'Aider-Polyglot (Acc.)' with DeepSeek V3 value 49.6 and footnote 1 only links to https://aider.chat; the captured PDF pages 30-31 contain no Aider-Polyglot version or snapshot identifier. The row claims benchmark_id 'aider-polyglot::snapshot-2026-09-10' and embeds 'snapshot-2026-09-10' in the row id, which is unsupported by the supplied evidence.",
+      "repair": "Supply primary evidence that identifies the Aider-Polyglot version/snapshot as '2026-09-10', or revise the benchmark_id and row id to avoid asserting an unverified snapshot (e.g. benchmark_id 'aider-polyglot' with an explicit 'version: unknown' or source-derived version) and adjust comparison_key accordingly."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "I cannot locally recompute hashes or independently verify the transport/retrieval and qualification checks; those are owned by the operator.",
+    "The December 2024 source date is inferred from the arXiv ID 2412.19437v2 and the subject's 'Dec '24' label; the captured PDF excerpt does not include a title-page publication date."
+  ],
+  "missing_evidence": [
+    "Explicit Aider-Polyglot benchmark version or snapshot identifier ('snapshot-2026-09-10') supported by the primary source"
+  ]
+}

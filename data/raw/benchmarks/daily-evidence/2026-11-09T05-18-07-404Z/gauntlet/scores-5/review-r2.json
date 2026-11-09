@@ -1,0 +1,29 @@
+{
+  "artifact_id": "scores-5",
+  "artifact_sha256": "599be0281f2dd948f6edf08f261c1d005aba258e60651a273b7aa3a232e1e428",
+  "round": 2,
+  "verdict": "blocked",
+  "coverage_checked": [
+    "vendor:DeepSeek-V3:swe-bench-verified::snapshot-2026-09-10",
+    "c1"
+  ],
+  "errors_found": 1,
+  "findings": [
+    {
+      "id": "benchmark-version-unsupported",
+      "severity": "blocker",
+      "location": "ROW vendor:DeepSeek-V3:swe-bench-verified::snapshot-2026-09-10, field benchmark_id/id",
+      "evidence": "Primary source reports only 'SWE-Bench Verified (OpenAI, 2024d)' and table metric 'SWE Verified (Resolved)'; captured PDF text and locator contain no string 'snapshot-2026-09-10' and no other packet metadata supports that snapshot identifier.",
+      "repair": "Remove the unsupported 'snapshot-2026-09-10' suffix from benchmark_ids/row id, or add primary evidence that explicitly records that SWE-bench Verified snapshot version."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "I cannot independently recompute row or artifact SHA-256 hashes or re-execute transport/qualification checks; the owner executes those separately.",
+    "The 'snapshot-2026-09-10' suffix could be an internal packaging label not printed on the PDF page; if so, it still lacks primary evidence in this packet and was treated as an unverified claimed benchmark version.",
+    "published_at is null in the row; I used retrieved_at as the source capture date and did not fail on the absence of a publication date."
+  ],
+  "missing_evidence": [
+    "Primary evidence for benchmark snapshot version 'snapshot-2026-09-10' (source evidence names only SWE-Bench Verified and SWE Verified)."
+  ]
+}

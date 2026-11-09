@@ -1,0 +1,22 @@
+{
+  "artifact_id": "scores-2",
+  "artifact_sha256": "cf1b827db3c3ddc928f84d0f6f8db2b81f11c1f4b633cb9b844f43112a35136d",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "public:7608a1c53e43a40d10a72066",
+    "public:2dc82061aebb515d1bc1c41c",
+    "public:f7283ea1be47a99c2dfd5f4d",
+    "c1"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "The source publishes no configuration for 'Grok 4.20 Reasoning'; row public:f7283ea1be47a99c2dfd5f4d assigns model_id grok-4.20-reasoning::default based on the artifact's join_note (catalog has exactly one configuration). I could not independently verify that catalog mapping from packet contents; it is treated as a specified mapping and does not contradict source.",
+    "The served value 0.000 is a printed representation for scores at or below the random baseline (marked **); numeric parsing yields 0, so equality holds. The true underlying value may be non-zero but is not served.",
+    "I cannot recompute SHA-256 hashes or re-execute transport/quali checks; owner-conducted identity/qualification evidence is taken as provided.",
+    "Source page does not publish a concrete published_at date; retrieved_at is used as the observation date, consistent with the rows."
+  ],
+  "missing_evidence": []
+}

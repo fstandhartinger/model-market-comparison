@@ -1,0 +1,37 @@
+{
+  "artifact_id": "protocol-weirdml-2",
+  "artifact_sha256": "6bd60c5766dad9d19f8ad87594eec4ade45889654f1ab0b2516e23568e5c4ae7",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": ["weirdml::2", "c1", "c2"],
+  "errors_found": 3,
+  "findings": [
+    {
+      "id": "weirdml::2-c1-version-mismatch",
+      "severity": "blocker",
+      "location": "row weirdml::2 version, version_guard",
+      "evidence": "SOURCE1 presents the current protocol as 'WeirdML v3' and lists 'Previous versions: WeirdML v2 · WeirdML v1'; row claims version '2' and version_guard 'Verify the published version 2 before reading results.'",
+      "repair": "Align the row to the v3 identity: set version to 3 and update version_guard to verify v3, or clearly represent this as the non-current v2 board and adjust status accordingly."
+    },
+    {
+      "id": "weirdml::2-c1-metric-mismatch",
+      "severity": "blocker",
+      "location": "row weirdml::2 scoring.metric",
+      "evidence": "SOURCE1 defines the official score as '80% normalized area under its line on a logarithmic token axis, plus 20% of its final value' over 11 tasks (15 configurations) with hinted/hintless twins receiving half weight, and says effective scores are not raw accuracy; row states 'Average Max Accuracy ... maximum test accuracy across the 5 iterations per run, averaged over all 17 tasks'.",
+      "repair": "Replace scoring.metric with the protocol's area-under-curve scoring over 11 tasks (15 configurations) and correct the task count; do not state a max-accuracy metric without source evidence."
+    },
+    {
+      "id": "weirdml::2-c2-lifecycle-mismatch",
+      "severity": "major",
+      "location": "row weirdml::2 status, superseded_by",
+      "evidence": "SOURCE1 labels v2 as a 'Previous version' and presents v3 as current, meaning v2 is replaced going forward; row has status 'active' and superseded_by null.",
+      "repair": "Set status to 'retained' and superseded_by to the registry id of the WeirdML v3 successor rather than null; version_status 'published' remains consistent because the page names 'WeirdML v2'."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "I cannot independently recompute hashes or execute the producer's transport/qualification checks; those are owner-side per the instructions.",
+    "The packet does not supply the successor v3 registry id, so the exact superseded_by value cannot be named, only that it must be non-null because the protocol names v3."
+  ],
+  "missing_evidence": []
+}

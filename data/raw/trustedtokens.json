@@ -200,8 +200,8 @@
     }
   ],
   "source": "TrustedTokens — trustedtokens.eu/api/public/models (first-party, public; the endpoint the /models page itself loads)",
-  "collected_at": "2026-11-08",
-  "method": "scripts/fetch-trustedtokens-catalog.mjs (2026-11-08): one unauthenticated GET of /api/public/models plus the ECB daily EUR/USD rate; EUR per-token prices normalized to EUR per 1M tokens (USD = EUR × ECB rate, nearest cent); rows without both token prices skipped; lifecycle from the catalog's attributes (deprecated kept); hosting audited sovereign Germany (see trustedtokens.method.md).",
+  "collected_at": "2026-11-09",
+  "method": "scripts/fetch-trustedtokens-catalog.mjs (2026-11-09): one unauthenticated GET of /api/public/models plus the ECB daily EUR/USD rate; EUR per-token prices normalized to EUR per 1M tokens (USD = EUR × ECB rate, nearest cent); rows without both token prices skipped; lifecycle from the catalog's attributes (deprecated kept); hosting audited sovereign Germany (see trustedtokens.method.md).",
   "currency": "EUR",
   "currency_note": "Native prices are EUR per token without VAT, shown here per 1M tokens; USD = EUR × ECB 2026-11-06: 1 EUR = 1.1165 USD, rounded to the nearest cent. Access is B2B: plans include monthly usage credit (Starter €50 / Pro €200 / Enterprise €2,000, all without VAT, marked indicative) against which these per-token prices are billed.",
   "usd_normalization": {
@@ -211,7 +211,7 @@
     "source": "https://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml",
     "rounding": "nearest USD cent"
   },
-  "response_sha256": "099abe8b00e20b67961989da96dee370fc9ee87c370fbdf5eaff585a114eca9a",
+  "response_sha256": "d440838c0e6a9ffa398a3dd72479503a916752567afba41b1db38ff52246bab0",
   "skipped": [],
   "diff": {
     "added": [],

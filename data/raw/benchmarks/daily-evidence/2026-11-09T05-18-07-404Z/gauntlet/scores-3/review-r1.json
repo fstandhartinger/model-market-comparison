@@ -1,0 +1,22 @@
+{
+  "artifact_id": "scores-3",
+  "artifact_sha256": "071e5711dfd0be0b6f5a1f646488d11e02e49925cb2d61730da3660c4bca994a",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/retail",
+    "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/airline",
+    "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/telecom",
+    "c1"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "I cannot recompute SHA-256 hashes or re-execute transport/qualification checks; per instructions these are owner-executed and my inability is a review limitation, not missing evidence.",
+    "The airline source cell is '58.0' while the row value is 58; per c1 numeric equality the values are equal and this is accepted.",
+    "The source README does not state an evaluation harness or detailed effort level beyond output length and sampling settings; harness is recorded as null without inference, consistent with the evidence.",
+    "published_at is null in the source; retrieved_at provides the capture date used as the source date, so no separate publication date value is expected."
+  ],
+  "missing_evidence": []
+}

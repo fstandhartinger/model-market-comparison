@@ -1,0 +1,20 @@
+{
+  "artifact_id": "scores-7",
+  "artifact_sha256": "11687f4b42e482548a87242f427f45f5253ef8ccaa56cf1b01d994fe0d888d4b",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "vendor:DeepSeek-V3:longbench::2",
+    "c1"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "The captured PDF text shows the LongBench v2 (Acc.) row values ending in 48.7 for the DeepSeek V3 column, and the table is described as chat-model evaluation; exact numeric equality with the row value 48.7 is verified.",
+    "The source text labels the metric '(Acc.)' but does not explicitly print 'percent'; the 'percent' unit is inferred from the accuracy metric rather than an explicit source string.",
+    "The captured excerpt does not include the arXiv title/version header, so the 'December 2024 update' descriptor is accepted from the packet's fixed subject identity rather than re-verified from this excerpt.",
+    "I cannot independently recompute hashes or execute transport/qualification checks; those are outside read-only review scope."
+  ],
+  "missing_evidence": []
+}

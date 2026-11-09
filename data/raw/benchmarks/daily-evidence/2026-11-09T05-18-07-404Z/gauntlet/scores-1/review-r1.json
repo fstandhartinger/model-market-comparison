@@ -1,0 +1,33 @@
+{
+  "artifact_id": "scores-1",
+  "artifact_sha256": "600f817cd4bc3a17630e7c6d35fd7328e225bcbb828595ecdae2fcc2af5c66ad",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "public:3bba519f2ed8bd5823af5aa6",
+    "public:2fce3c680e43279c2e7cdb41",
+    "public:d5e23672da6637a22c8730fe",
+    "public:c7025131b6d18e25b59e60a6",
+    "public:cdc727c8b178e6c315c5446e",
+    "public:c6f882dec399bac675abea18",
+    "public:bb3c1c6763147595927e0f92",
+    "public:7191a825d02fa49204162f36",
+    "public:20f6fb71c8d4d1d7c8b53245",
+    "public:7f7e9afb85a532530522056d",
+    "public:0ce1e427ddf2bbf883948f5b",
+    "public:f75ec3e872f56b50d31a7516",
+    "public:c0aa301171e7f9923a009261",
+    "public:79ea654b79d413cc6f357799",
+    "public:b3e400c7b489b660d91cafdf",
+    "c1"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "For row public:79ea654b79d413cc6f357799, the internal model_id gemini-3-flash::default is asserted via a retained join_note and is not independently confirmed by the supplied primary source capture; comparison_key is null and the source model label matches, so this is a caveat, not a numeric or identity mismatch.",
+    "I cannot execute owner-side hash verification, transport, or qualification checks; those are separately owned and were not independently reproduced here.",
+    "Row values 0 for Gemini 3 Flash and Grok 4.3 correspond to the served cell 0.000 with the ** marker (at or below random baseline). Numeric equality after parsing is satisfied; the underlying hidden value is indeterminate and is treated as the served value."
+  ],
+  "missing_evidence": []
+}

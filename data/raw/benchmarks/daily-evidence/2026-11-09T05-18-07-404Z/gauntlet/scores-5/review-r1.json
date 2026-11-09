@@ -1,0 +1,54 @@
+{
+  "artifact_id": "scores-5",
+  "artifact_sha256": "599be0281f2dd948f6edf08f261c1d005aba258e60651a273b7aa3a232e1e428",
+  "round": 1,
+  "verdict": "blocked",
+  "coverage_checked": [
+    "vendor:DeepSeek-V3:swe-bench-verified::snapshot-2026-09-10",
+    "c1"
+  ],
+  "errors_found": 4,
+  "findings": [
+    {
+      "id": 1,
+      "severity": "blocker",
+      "location": "row vendor:DeepSeek-V3:swe-bench-verified::snapshot-2026-09-10 -> benchmark_id/id",
+      "evidence": "Primary source names only 'SWE-Bench Verified' (PDF p.30-31); it does not contain dataset version 'snapshot-2026-09-10'.",
+      "repair": "Remove 'snapshot-2026-09-10' from benchmark_id and row id unless a verified primary source documenting that exact dataset snapshot is supplied."
+    },
+    {
+      "id": 2,
+      "severity": "blocker",
+      "location": "row vendor:DeepSeek-V3:swe-bench-verified::snapshot-2026-09-10 -> source.published_at / source date",
+      "evidence": "Candidate sets source.published_at to null; captured PDF pages and metadata do not provide the paper's publication date, while criterion c1 requires verifying source date.",
+      "repair": "Provide the actual arXiv 2412.19437v2 publication date or other primary-source dated metadata; an unverified null cannot satisfy c1."
+    },
+    {
+      "id": 3,
+      "severity": "major",
+      "location": "row vendor:DeepSeek-V3:swe-bench-verified::snapshot-2026-09-10 -> subject.source_id/name/model_id",
+      "evidence": "Candidate claims 'December 2024 update', 'Dec '24', and 'dec-24' checkpoint in source_id/name/model_id. Primary evidence only labels the model 'DeepSeek V3' in Table 6; no checkpoint version/date appears in the captured text.",
+      "repair": "Align model descriptor to what the source shows, e.g. 'DeepSeek-V3' as evaluated in Table 6, or supply primary evidence for a distinct December 2024 checkpoint."
+    },
+    {
+      "id": 4,
+      "severity": "minor",
+      "location": "row vendor:DeepSeek-V3:swe-bench-verified::snapshot-2026-09-10 -> subject.variant",
+      "evidence": "Candidate sets variant to 'default' but the primary source does not describe a 'default' variant for this benchmark observation.",
+      "repair": "Remove the unsupported 'default' variant label or provide source evidence for it."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "Row-level canonical SHA-256 and owner-side transport/hash checks cannot be independently executed by this reviewer; this is a stated limitation, not an evidentiary gap.",
+    "The numeric value 42 equals source cell 42.0 after numeric parsing; no numeric mismatch found.",
+    "The unit 'percent' is implied by 'SWE Verified (Resolved)' rather than spelled out in the source; I treated it as consistent.",
+    "The captured PDF excerpt is assumed to be the relevant owner-generated projection; unrelated response fields were not required to be compared."
+  ],
+  "missing_evidence": [
+    "Benchmark version 'snapshot-2026-09-10' (not present in arXiv 2412.19437v2 evidence)",
+    "Source publication date (candidate published_at null and no date in captured PDF)",
+    "DeepSeek-V3 checkpoint/version 'December 2024 update' / 'Dec '24' (not present in Table 6 evidence)",
+    "Variant label 'default' (not present in primary source)"
+  ]
+}
