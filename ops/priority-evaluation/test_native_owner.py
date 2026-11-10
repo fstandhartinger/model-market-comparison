@@ -157,6 +157,33 @@ class EnsureOwnerTests(unittest.TestCase):
         self.assertTrue(alert.call_args.kwargs["urgent"])
         self.assertIn("custom runtime", alert.call_args.kwargs["text"])
 
+    def test_parked_owner_with_pending_sched_is_not_restarted(self) -> None:
+        # N102 (10 Nov 2026, order 5666e730): a PARKED owner with a 7 h old STATE.md and a pending sched wake for
+        # the order is live: no restart (starts stay at 1), no urgent card while the deadline is > 12 h away.
+        self.state["native_owner"] = {"job": no.owner_name(RID), "requested_at": ap.iso(self.now - timedelta(hours=9)),
+                                      "starts": 1, "start_ok": True}
+        self.state["operational_hold"]["owner"] = no.owner_name(RID)
+        self.owner_state(f"# STATE\n- {RID} waiting for the customer\n- PARKED\n")
+        path = self.tmp / "jobs" / no.owner_name(RID) / "STATE.md"
+        old = self.now.timestamp() - 7 * 3600
+        os.utime(path, (old, old))
+        (self.tmp / "schedule").mkdir()
+        wake = (self.now + timedelta(hours=3)).strftime("%Y-%m-%dT%H:%MZ")
+        (self.tmp / "schedule" / "events.jsonl").write_text(json.dumps(
+            {"id": f"fl{RID[:4]}-heartbeat", "at": wake, "owner": [no.owner_name(RID)], "status": "active",
+             "recurrence": "none", "what": f"Order {RID[:8]}: check in"}) + "\n", encoding="utf-8")
+        (self.tmp / "schedule" / "state.json").write_text(json.dumps({"done": {}, "snooze": {}}), encoding="utf-8")
+        with mock.patch.object(ap, "alert") as alert:
+            ap.operational_escalate(self.row, self.state, self.effects, self.now, "unsupported_measurement_backend", exhausted=False)
+        self.effects.start_unit.assert_not_called()
+        alert.assert_not_called()
+        self.assertEqual(self.state["native_owner"]["starts"], 1)
+        # The same owner without the pending wake is dead again and gets its one restart.
+        (self.tmp / "schedule" / "state.json").write_text(json.dumps({"done": {f"fl{RID[:4]}-heartbeat|{wake}": {}}}), encoding="utf-8")
+        self.assertTrue(ap.ensure_native_owner(self.row, self.state, self.effects, self.now, "unsupported_measurement_backend"))
+        self.effects.start_unit.assert_called_once()
+        self.assertEqual(self.state["native_owner"]["starts"], 2)
+
     def test_hand_started_owner_is_kept(self) -> None:
         self.state["operational_hold"]["owner"] = "fastlane-torchcast4b-v14-native-20261101"
         path = self.tmp / "jobs" / "fastlane-torchcast4b-v14-native-20261101" / "STATE.md"
