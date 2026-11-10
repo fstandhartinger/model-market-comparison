@@ -7,8 +7,8 @@ import {
   type UseModelBenchmark, type UseModelTarget,
 } from '../lib/use-model';
 
-// Preview flag. The server snapshot is always "off" so the HTML every visitor and crawler gets never changes.
-// Only the unpublished ?bh-pv=<token> link turns it on, for this tab only; it never persists in localStorage.
+// Public Use links are rendered in the initial HTML. The unpublished preview still stays off on the server
+// and turns on only in the tab carrying its private token after hydration.
 
 let legacyCleared = false;
 function readFlag(): boolean {
@@ -23,7 +23,7 @@ function readFlag(): boolean {
 }
 const listeners = new Set<() => void>();
 const subscribe = (cb: () => void) => { listeners.add(cb); return () => { listeners.delete(cb); }; };
-const usePreviewEnabled = () => useSyncExternalStore(subscribe, readFlag, () => false);
+const useModelEnabled = () => useSyncExternalStore(subscribe, readFlag, () => USE_MODEL_PUBLIC);
 
 /** Drops the token from the address bar, so a copied or shared URL never carries the preview to anyone else. */
 function stripParam() {
@@ -120,7 +120,7 @@ function UseModelPopover({ pos, name, modelKey, benchmark, onEnter, onLeave, onN
 export function UseModelButton({ modelKey, name, benchmark = 'jevbench', className = '', label = 'Use' }: {
   modelKey: string; name: string; benchmark?: UseModelBenchmark; className?: string; label?: string;
 }) {
-  const enabled = usePreviewEnabled();
+  const enabled = useModelEnabled();
   const anchor = useRef<HTMLSpanElement>(null);
   const [pos, setPos] = useState<Pos | null>(null);
   const timer = useRef<ReturnType<typeof setTimeout>>(undefined);
@@ -170,7 +170,7 @@ export function UseModelButton({ modelKey, name, benchmark = 'jevbench', classNa
 
 /** Page-level disclosure under a ranking: renders only while the buttons are visible. */
 export function UseModelNote({ className = '' }: { className?: string }) {
-  const enabled = usePreviewEnabled();
+  const enabled = useModelEnabled();
   if (!enabled) return null;
   return <p className={`bh-muted text-[11.5px] leading-snug ${className}`} data-bh-use-model-note>
     <b>Use</b> = run this open-weights model yourself: own endpoint, API, local install or hardware, on Decision Models. {USE_MODEL_DISCLOSURE} <a href="/independence" className="text-accent underline">Independence</a>
