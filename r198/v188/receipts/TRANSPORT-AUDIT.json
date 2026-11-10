@@ -1,0 +1,20 @@
+{
+ "heavy_run_extra_paths": [
+  "source path inventory and read-only binding helpers only"
+ ],
+ "jsonl_files_only_public_endpoint_manifests": [
+  "ops/daily-repair-2026-09-16/evidence/live-manifest.jsonl",
+  "ops/daily-repair-2026-09-16/endpoints/live-manifest.jsonl",
+  "ops/daily-repair-2026-09-15/evidence/live-manifest.jsonl",
+  "ops/daily-repair-2026-09-15/endpoints/evidence/live-manifest.jsonl",
+  "data/raw/benchmarks/daily-evidence/2026-09-24-cr139/live-manifest.jsonl",
+  "data/raw/benchmarks/daily-evidence/2026-09-15-openrouter-benchmarks/live-manifest.jsonl",
+  "data/raw/benchmarks/daily-evidence/2026-09-12T08-31-06-000Z/live-manifest.jsonl"
+ ],
+ "no_private_inputs_or_gold_staged": true,
+ "private_score_copies_outside_transport": "/home/flori/jobs/jevbench-add-requests-20260919/workers/r265b-v188-build/score",
+ "remote_work": "aggregate validation, top-five comparison, tests, production build and captures only; no scorer/model execution and no per-item sealed inputs",
+ "sealed_source_outside_transport": "/home/flori/jevbench-sealed",
+ "status": "PASS",
+ "workspace": "/home/flori/wt/jevbench-v188-20261110"
+}

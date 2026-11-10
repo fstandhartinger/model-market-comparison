@@ -1,0 +1,77 @@
+{
+ "sd-jev-4b-v12.1.0-aligned-s42-step0256": {
+  "active_b": 4,
+  "architecture_class": "small",
+  "common_n": 1489,
+  "common_set_sha256": "4e912731e63369e1b3066b0b4afa87b44f1094aea079c5b41dc6d02e7f235537",
+  "cost_all": 0.0035085940115537834,
+  "cost_basis_kind": "gpu-time-min",
+  "cost_basis_sha256": "b83bdfd14c263ffacfa572b304084154afca84c1f00083101a33783ae6f8b356",
+  "cost_common": 0.0035183917737814947,
+  "cost_components": {
+   "all": {
+    "gpu_time": 0.0035085940115537834,
+    "list_price": 0.010711840000000002,
+    "selected": 0.0035085940115537834
+   },
+   "common": {
+    "gpu_time": 0.0035183917737814947,
+    "list_price": 0.010741752854264609,
+    "selected": 0.0035183917737814947
+   }
+  },
+  "estimate_all": 0.010711840000000002,
+  "estimate_common": 0.010741752854264609,
+  "expect": {
+   "failed": 5,
+   "input_tokens": 535592,
+   "ok": 1495,
+   "output_tokens": 0,
+   "status_counts": {
+    "200": 1495,
+    "422": 5
+   }
+  },
+  "family": "qwen",
+  "gpu_all": 0.0035085940115537834,
+  "gpu_common": 0.0035183917737814947,
+  "input_tokens_all": 535592,
+  "input_tokens_common": 533149,
+  "latency": {
+   "max": 10.54356654197909,
+   "n": 1500,
+   "over_10_s": 1,
+   "p50": 0.5435741060646251,
+   "p95": 1.242176762537565
+  },
+  "latency_max_s": 10.54356654197909,
+  "latency_over_10_s": 1,
+  "list_all": 0.010711840000000002,
+  "list_common": 0.010741752854264609,
+  "model_pin": null,
+  "output_tokens_all": 0,
+  "output_tokens_common": 0,
+  "raw_order_matches_input": true,
+  "raw_sha256": "e6fd0cb2c967494e89c8255f4e6c82235acf49cc9d7bebdbb686a479b4f84701",
+  "reasoning_tokens": 0,
+  "ref": {
+   "authority": "declared base; frozen market reference and v1.8 GPU-time min",
+   "in": 0.030000000000000002,
+   "kind": "estimate",
+   "listing": "deepinfra:Qwen/Qwen3.5-4B",
+   "module_sha256": "2f52370fe1dba73d75a770a386df350cc76a0898304aeba9e29c91f6e4d3738b",
+   "out": 0.15
+  },
+  "refused_422_positions": [
+   19,
+   85,
+   397,
+   455,
+   1179
+  ],
+  "scoring_raw_sha256": "e6fd0cb2c967494e89c8255f4e6c82235acf49cc9d7bebdbb686a479b4f84701",
+  "served_model_id": "SD-JEV-4B-v12.1.0-aligned-s42-step0256",
+  "throughput": 61525.0,
+  "usage_estimated_rows": 0
+ }
+}
