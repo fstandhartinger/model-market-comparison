@@ -369,7 +369,7 @@ test("audited July provider prices survive the merged dataset", () => {
   const glm52Offer = find("glm-5.2", "Inceptron");
   assert.ok(glm52Offer, "GLM 5.2 Inceptron offer is merged");
   if (inceptron.availability?.state === "list_prices_withdrawn_by_source") {
-    // CR-721 / CR-726: while Inceptron's models page shows its cards without prices, every
+    // CR-721 / CR-727: while Inceptron's models page shows its cards without prices, every
     // snapshot row is unpriced (price_status "n/a") and the merged direct offer carries no price;
     // the OpenRouter feed price (api_catalog_price) must never be copied into the direct offer.
     assert.equal(glm52.price_status, "n/a");
