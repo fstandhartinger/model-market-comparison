@@ -365,11 +365,24 @@ test("audited July provider prices survive the merged dataset", () => {
   // Inceptron re-prices intraday and is refreshed by the daily collector (R9.1), so the merged
   // offer must equal the snapshot row rather than a literal that the next run would break.
   const glm52 = inceptron.models.find((model) => model.model_name === "GLM 5.2");
-  assert.ok(glm52 && glm52.input_per_1m_usd > 0 && glm52.output_per_1m_usd > 0);
-  assert.deepEqual(
-    [find("glm-5.2", "Inceptron")?.input_per_1m, find("glm-5.2", "Inceptron")?.output_per_1m],
-    [glm52.input_per_1m_usd, glm52.output_per_1m_usd],
-  );
+  assert.ok(glm52, "GLM 5.2 stays in the Inceptron snapshot");
+  const glm52Offer = find("glm-5.2", "Inceptron");
+  assert.ok(glm52Offer, "GLM 5.2 Inceptron offer is merged");
+  if (inceptron.availability?.state === "list_prices_withdrawn_by_source") {
+    // CR-721 / CR-725: while Inceptron's models page shows its cards without prices, every
+    // snapshot row is unpriced (price_status "n/a") and the merged direct offer carries no price;
+    // the OpenRouter feed price (api_catalog_price) must never be copied into the direct offer.
+    assert.equal(glm52.price_status, "n/a");
+    assert.ok(glm52.input_per_1m_usd == null && glm52.output_per_1m_usd == null, "withdrawn snapshot row has no direct price");
+    assert.equal(glm52Offer.price_status, "n/a");
+    assert.deepEqual([glm52Offer.input_per_1m ?? null, glm52Offer.output_per_1m ?? null], [null, null], "withdrawn Inceptron price is not published");
+  } else {
+    assert.ok(glm52.input_per_1m_usd > 0 && glm52.output_per_1m_usd > 0);
+    assert.deepEqual(
+      [glm52Offer.input_per_1m, glm52Offer.output_per_1m],
+      [glm52.input_per_1m_usd, glm52.output_per_1m_usd],
+    );
+  }
   // Bedrock prices follow the AWS Price List the daily collector reads (R9.1): the merged offer
   // must carry the raw row's price while the row is listed, and disappear with it.
   for (const [family, name] of [["deepseek-v3.1", "DeepSeek V3.1"], ["qwen3-coder-480b-a35b", "Qwen3 Coder 480B A35B"]]) {
