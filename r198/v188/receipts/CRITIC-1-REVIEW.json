@@ -1,0 +1,128 @@
+{
+ "verdict": "PASS",
+ "must_fixes": [],
+ "reviewed_commit": "734ba1d5e5b4cc6f0aebc34535465ea339e0f611",
+ "base": "3bd5ce11a66c008ebcdc6cdb7e273d77880054f4",
+ "worktree_modified": false,
+ "numbers": {
+  "calibration": 88.83412685565627,
+  "calibration_ci95": [
+   84.15069079291625,
+   89.98297070544841
+  ],
+  "calibration_parts_n": {
+   "choice": 746,
+   "noul": 374,
+   "score": 375
+  },
+  "capability": 77.52790544723499,
+  "capability_ci95": [
+   72.90372828680327,
+   79.57956350206719
+  ],
+  "composite": {
+   "A": 79.11840917389077,
+   "B": 76.1522663992996,
+   "C": 79.11840917389077
+  },
+  "composite_ci95": {
+   "A": [
+    76.33472869022857,
+    80.4311801589695
+   ],
+   "B": [
+    72.39483183514623,
+    78.2286977656997
+   ],
+   "C": [
+    76.12965418597841,
+    80.4311801589695
+   ]
+  },
+  "cost_axis": 83.60967410168716,
+  "cost_usd_per_1000": 0.0035183917737814947,
+  "decision_limit": {
+   "limit_s": 10.0,
+   "n_over_limit": 1,
+   "n_over_limit_answered_ok": 0,
+   "rule": "latency_s > limit -> failed",
+   "speed_basis": "all decisions given (lane items in the raw), measured latency_s",
+   "speed_n": 1500,
+   "treatment": "share"
+  },
+  "intelligence": 66.22168403881372,
+  "intelligence_ci95": [
+   60.27500249365557,
+   70.51193771241033
+  ],
+  "off_view": {
+   "A": 78.97582124521637,
+   "calibration": 88.87167949567964,
+   "intelligence": 66.22168403881372,
+   "speed": 81.06945492223866
+  },
+  "p50": 0.5435741060646251,
+  "p95": 1.242176762537565,
+  "speed": 81.70557839072836,
+  "status": {
+   "answered_ok": 1495,
+   "missing": 0,
+   "rows": 1500,
+   "status": "complete"
+  }
+ },
+ "cost": {
+  "list_usd_per_1000_common": 0.010741752854264609,
+  "gpu_usd_per_1000_common": 0.0035183917737814947,
+  "binding_side": "gpu-time",
+  "tokens_common_in": 533149,
+  "tokens_all_in": 535592,
+  "rate_per_M_gpu": 0.009826306250524048,
+  "throughput": 61525
+ },
+ "checks": {
+  "1_rescore": "PASS (all published numbers match; no numeric leaf differs from candidate row)",
+  "2_422": "PASS (I n=1500, Cal n=1495=746+374+375, frozen scorer standard)",
+  "3_cost": "PASS",
+  "4_row_facts": "PASS",
+  "5_public_text": "PASS",
+  "6_invariance": "PASS (338 rows exact; 0/580 lists, 0/76 sliders, 0/368 grid)",
+  "7_gates": "PASS (validator 64 neg ctl; tests 222/221/0/1 in PENDING and PASS; tsc 0; rebuild 436 files equal x2; binding 158/158)",
+  "8_privacy": "PASS",
+  "9_flip": "PASS (only key + approval text differ)"
+ },
+ "tests": {
+  "pending": {
+   "tests": 222,
+   "pass": 221,
+   "fail": 0,
+   "skipped": 1
+  },
+  "synthetic_pass": {
+   "tests": 222,
+   "pass": 221,
+   "fail": 0,
+   "skipped": 1
+  }
+ },
+ "topfive": {
+  "lists": 580,
+  "changed": 0,
+  "sliders": 76,
+  "sliders_changed": 0,
+  "grid": 368,
+  "grid_changed": 0,
+  "topfive_diff_sha256": "610738cc2278261712ff6481e2e0b5e7cdc3f8220bd5d119dc346557edf88800"
+ },
+ "notes": [
+  "over-10s decision is one of the 5 refused; share view applies 1/750 choice factor (Cal 88.834 vs 88.872 off)",
+  "PREREG addendum header timestamp typo (file mtime 09:07:20Z); main PREREG 9 Nov carries the 5 positions",
+  "76-80k token figure from order owner tokenizer, unverifiable from raw",
+  "LoRA sha also in lib expected-proof and r198 inputs (server/repo only)",
+  "check_raw_pricing_v188 hardcodes deleted builder path",
+  "tsc needs .pass excluded in a scratch tree",
+  "main moved to dad863c8f; no path overlap",
+  "p95 interpolation differs at 1e-5, same rounding",
+  "LeChonk build verified by hash binding only"
+ ]
+}
