@@ -1,14 +1,14 @@
 {
   "source": "OVHcloud AI Endpoints",
   "region": "eu",
-  "collected_at": "2026-11-09",
+  "collected_at": "2026-11-10",
   "listing_url": "https://www.ovhcloud.com/en/public-cloud/ai-endpoints/catalog/",
-  "method": "scripts/fetch-ovhcloud-catalog.mjs (2026-11-09): one GET of the server-rendered AI Endpoints catalog; every card with both a '/Mtoken(input)' and a '/Mtoken(output)' EUR price is a text-generating LLM/VLM (embeddings, guards, speech, TTS and image generation have other units and are listed in skipped); curated rows kept by model_id or normalized name, new cards mapping=derived; USD = EUR × ECB daily reference rate, rounded to cents. EU-hosted, zero data retention apart from billing. See ovhcloud.method.md.",
-  "currency_note": "Original prices are EUR per 1 million tokens. USD = EUR * 1.1165, rounded to the nearest USD cent consistently across all rows. The official ECB reference-rate date is 2026-11-06, the latest rate published at collection time on 2026-11-09.",
+  "method": "scripts/fetch-ovhcloud-catalog.mjs (2026-11-10): one GET of the server-rendered AI Endpoints catalog; every card with both a '/Mtoken(input)' and a '/Mtoken(output)' EUR price is a text-generating LLM/VLM (embeddings, guards, speech, TTS and image generation have other units and are listed in skipped); curated rows kept by model_id or normalized name, new cards mapping=derived; USD = EUR × ECB daily reference rate, rounded to cents. EU-hosted, zero data retention apart from billing. See ovhcloud.method.md.",
+  "currency_note": "Original prices are EUR per 1 million tokens. USD = EUR * 1.1214, rounded to the nearest USD cent consistently across all rows. The official ECB reference-rate date is 2026-11-10, the latest rate published at collection time on 2026-11-10.",
   "usd_normalization": {
     "status": "applied",
-    "eur_to_usd": 1.1165,
-    "fx_rate_date": "2026-11-06",
+    "eur_to_usd": 1.1214,
+    "fx_rate_date": "2026-11-10",
     "source": "https://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml",
     "rounding": "nearest USD cent"
   },
@@ -20,7 +20,7 @@
       "input_per_1m_eur": 0.4,
       "output_per_1m_eur": 2.7,
       "input_per_1m_usd": 0.45,
-      "output_per_1m_usd": 3.01,
+      "output_per_1m_usd": 3.03,
       "currency": "EUR",
       "region": "eu",
       "eu_hosted": true,
@@ -34,7 +34,7 @@
       "input_per_1m_eur": 0.6,
       "output_per_1m_eur": 3.6,
       "input_per_1m_usd": 0.67,
-      "output_per_1m_usd": 4.02,
+      "output_per_1m_usd": 4.04,
       "currency": "EUR",
       "region": "eu",
       "eu_hosted": true,
@@ -48,7 +48,7 @@
       "input_per_1m_eur": 0.4,
       "output_per_1m_eur": 2.7,
       "input_per_1m_usd": 0.45,
-      "output_per_1m_usd": 3.01,
+      "output_per_1m_usd": 3.03,
       "currency": "EUR",
       "region": "eu",
       "eu_hosted": true,
@@ -98,6 +98,21 @@
       "catalog_slug": "gpt-oss-20b"
     },
     {
+      "model_name": "Mistral-Small-3.2-24B-Instruct-2506",
+      "model_id": "Mistral-Small-3.2-24B-Instruct-2506",
+      "provider_org": "Mistral",
+      "input_per_1m_eur": 0.09,
+      "output_per_1m_eur": 0.28,
+      "input_per_1m_usd": 0.1,
+      "output_per_1m_usd": 0.31,
+      "currency": "EUR",
+      "region": "eu",
+      "eu_hosted": true,
+      "catalog_slug": "mistral-small-3-2-24b-instruct-2506",
+      "mapping": "derived",
+      "notes": "Text Generation; 128K context"
+    },
+    {
       "model_name": "Qwen2.5 VL 72B",
       "model_id": "Qwen2.5-VL-72B-Instruct",
       "provider_org": "Alibaba",
@@ -126,7 +141,7 @@
       "catalog_slug": "llama-3-3-70b-instruct"
     }
   ],
-  "response_sha256": "99942b433ced3c4f8c83e07416b60f0b5262f3bb675c8136da547b3abc0833f1",
+  "response_sha256": "d7584397269965002e66db5bf46bf45a1e1701199140e5bbc8a11e6731bd147e",
   "skipped": [
     "Qwen3-Embedding-8B",
     "Qwen3Guard-Gen-0.6B",
@@ -142,7 +157,9 @@
     "nvr-tts-en-us"
   ],
   "diff": {
-    "added": [],
+    "added": [
+      "Mistral-Small-3.2-24B-Instruct-2506"
+    ],
     "removed": [],
     "eur_price_changed": []
   }

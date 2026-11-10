@@ -1,0 +1,31 @@
+{
+  "artifact_id": "protocol-kernelbench-cuda-glm52-fused-moe-rtx-pro-6000",
+  "artifact_sha256": "6aafe8f39bf09b836a09a197e283d2d81bad768a70baedba626edb70633514b9",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": ["kernelbench-cuda-glm52-fused-moe::rtx-pro-6000", "c1", "c2"],
+  "errors_found": 2,
+  "findings": [
+    {
+      "id": "f1",
+      "severity": "blocker",
+      "location": "Row kernelbench-cuda-glm52-fused-moe::rtx-pro-6000, version_guard",
+      "evidence": "version_guard requires 'the problem must stay in the stated four-problem deck', but current protocol SPEC.md states 'Problem 04 (grid + MinGRU RL sim SPS) was retired 2026-11-09' and 'deck stays at three since 2026-11-09'; leaderboard.json problems array is [01_glm52_fused_moe, 02_deepseek_nsa, 03_megaqwen_decode] with no 04. The task-set continuity statement misstates the current deck, violating criterion c1 (changed task set cannot silently reuse identity).",
+      "repair": "Change version_guard and any notes to the three-problem deck (01, 02, 03) and drop all problem-04 references."
+    },
+    {
+      "id": "f2",
+      "severity": "major",
+      "location": "Row kernelbench-cuda-glm52-fused-moe::rtx-pro-6000, scoring.notes",
+      "evidence": "Notes assert problem-04 cells unmatched by evidence: 'the `bug` muse/muse-spark-1.3 [ultra] cell on 04 (0.2056)', 'the `reward_hack` deepseek-claude/deepseek-v4-pro cell on 04', and 'Opus 5 reaches 196.10% on 04'. Captured leaderboard.json contains no problem 04 for any model (muse-spark-1.3 has 01/02/03; deepseek-v4-pro has 01/02/03; claude-opus-5 max has 03=0.0655 with 01/02 correct:false), and published_runs.json excludes all _04_ runs as 'problem 04 retired 2026-11-09'. Claim that the published ranked list 'still holds' the muse 04 cell is contradicted by per_problem containing only 01/02/03.",
+      "repair": "Delete the 0.2056, reward_hack-on-04, and 196.10% assertions; keep only the problem-03 suspect cross-check (kinetic-claude/kinetic-0715[1m] 0.0622, present in ranked_passes and models as suspect)."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "I cannot recompute row hashes or execute transport/qualification checks; those are owner responsibilities and I did not treat them as failures.",
+    "version_status 'published' with version 'rtx-pro-6000' copies the published hardware identifier rather than schema_version/environment identifiers; the protocol does publish identifiers (schema_version 1, environment v2_containerized), so I accepted it.",
+    "The generated value-scale summary (24 values, lowest 4.11, highest 11.3) aligns with problem 01's 24 ranked pass values (0.0411 to 0.113) times 100, supporting unit 'percent of roofline' and range [0,null]."
+  ],
+  "missing_evidence": []
+}

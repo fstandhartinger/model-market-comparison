@@ -1,0 +1,21 @@
+{
+  "artifact_id": "scores-14",
+  "artifact_sha256": "7e84470a7929641167f6b8fc842255551d49d22e6d11a7b03ac041669a875806",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/retail",
+    "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/airline",
+    "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/telecom",
+    "c1"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Owner-performed hash verification, transport checks and qualification checks could not be independently executed in this read-only review; binding row and source SHA-256 values were taken as given.",
+    "The source footnote defines 81,920-token output for 'highly challenging tasks (including PolyMATH and all reasoning and coding tasks)'; TAU2 rows are agent tasks and thus the 32,768-token default was treated as consistent, but the source does not explicitly enumerate TAU2 in either bucket.",
+    "Variant label 'reasoning' maps to a model described as supporting only thinking mode; treated as fixed prior accepted identity per instructions, no alias inference applied."
+  ],
+  "missing_evidence": []
+}

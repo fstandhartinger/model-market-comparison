@@ -1,0 +1,28 @@
+{
+  "artifact_id": "scores-16",
+  "artifact_sha256": "6d1ebbf77b24f0170caa830f6d6252b94212562d964ee538587f305fb32f3619",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": [
+    "vendor:DeepSeek-V3:swe-bench-verified::snapshot-2026-09-10",
+    "c1"
+  ],
+  "errors_found": 1,
+  "findings": [
+    {
+      "id": "vendor:DeepSeek-V3:swe-bench-verified::snapshot-2026-09-10",
+      "severity": "major",
+      "location": "benchmark_id / benchmark version",
+      "evidence": "Primary evidence (arXiv 2412.19437v2 Table 6) lists only 'SWE Verified (Resolved)' with no snapshot date. The row claims benchmark_id 'swe-bench-verified::snapshot-2026-09-10', but no snapshot is present in the source or locator. The snapshot date appears invented and unsupported.",
+      "repair": "Change benchmark_id to the exact benchmark name used in the paper (e.g., 'swe-bench-verified') without an invented snapshot, or supply explicit primary evidence that identifies the snapshot version and verify it."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "The unit 'percent' is inferred from the metric name 'Resolved'; the table does not explicitly label units.",
+    "The exact meaning of 'overall' in the protocol field is not defined in the source text.",
+    "I cannot execute the owner's SHA-256 or transport/qualification checks.",
+    "The snapshot date 2026-09-10 is not present in the primary evidence; its provenance is unclear and is the basis of the major finding."
+  ],
+  "missing_evidence": []
+}

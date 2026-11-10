@@ -1,0 +1,25 @@
+{
+  "artifact_id": "protocol-mcp-atlas-snapshot-2026-09-21",
+  "artifact_sha256": "9349407c23d58eee8dd28185ec59bb20ba00b2091b27da5f7a95958eb3e0e518",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": ["mcp-atlas::snapshot-2026-09-21", "c1", "c2"],
+  "errors_found": 1,
+  "findings": [
+    {
+      "id": "mcp-atlas::snapshot-2026-09-21.scoring.notes.top-row-value",
+      "severity": "minor",
+      "location": "Row mcp-atlas::snapshot-2026-09-21, scoring.notes (stat-card sentence)",
+      "evidence": "The row states the board's own top row is 88.1%, but SOURCE 1's performance comparison table lists rank 1 Gemini-4-Argon at 90.70 ± 1.80 and rank 2 Muse Spark 1.1 at 88.10 ± 1.95. The served top value today is therefore 90.70, not 88.1. The 'Key Metrics at a Glance' card's 83.6% is indeed stale relative to the board, so the intended point holds, but the specific cited value is inaccurate against the captured page.",
+      "repair": "Change the note to cite 90.70 as the board's top value, or qualify the 88.1 figure as the top value as of the snapshot date if that was the intended reference; otherwise remove the specific 88.1 number."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "I cannot execute owner hash/transport/qualification checks; row sha and producer receipt are trusted as given in the packet.",
+    "The excerpt is rendered page text rather than the raw embedded JSON, so the literal claim of exactly one entries array with model and score cannot be directly observed; the single visible performance table is consistent with it.",
+    "The identity date 2026-09-21 is our own snapshot label; the page publishes only an 'Updated April 8, 2026' date and no release version, which supports version_status 'snapshot'.",
+    "The stat-card top-row sentence is ambiguous about which point in time it describes (current capture vs. snapshot date), but the current captured page clearly shows 90.70 as the top served value."
+  ],
+  "missing_evidence": []
+}

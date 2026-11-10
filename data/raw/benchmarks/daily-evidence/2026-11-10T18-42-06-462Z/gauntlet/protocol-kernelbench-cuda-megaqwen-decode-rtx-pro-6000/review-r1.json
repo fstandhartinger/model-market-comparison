@@ -1,0 +1,35 @@
+{
+  "artifact_id": "protocol-kernelbench-cuda-megaqwen-decode-rtx-pro-6000",
+  "artifact_sha256": "281df10e55b53ee8409b58c066527c9940e0dcc645df63602f73a2c4c8533ee0",
+  "round": 1,
+  "verdict": "blocked",
+  "coverage_checked": [
+    "kernelbench-cuda-megaqwen-decode::rtx-pro-6000",
+    "c1",
+    "c2"
+  ],
+  "errors_found": 2,
+  "findings": [
+    {
+      "id": "rtx-pro-6000-version-guard-four-problem",
+      "severity": "blocker",
+      "location": "row kernelbench-cuda-megaqwen-decode::rtx-pro-6000, field version_guard",
+      "evidence": "SPEC.md (updated 2026-11-09) states 'Problem 04 ... retired 2026-11-09' and 'deck stays at three since 2026-11-09'; leaderboard.json 'problems' lists only [\"01_glm52_fused_moe\",\"02_deepseek_nsa\",\"03_megaqwen_decode\"]. The row's version_guard says 'the problem must stay in the stated four-problem deck', which is stale and contradicts the current protocol's three-problem deck.",
+      "repair": "Change version_guard to reference the current three-problem deck (e.g., 'the problem must stay in the stated three-problem deck') consistent with SPEC.md and the leaderboard 'problems' array."
+    },
+    {
+      "id": "rtx-pro-6000-notes-stale-problem-04-refs",
+      "severity": "major",
+      "location": "row kernelbench-cuda-megaqwen-decode::rtx-pro-6000, field scoring.notes",
+      "evidence": "Notes claim the ranked list 'still holds ... the bug muse/muse-spark-1.3 [ultra] cell on 04 (0.2056)', reference a 'reward_hack deepseek-claude/deepseek-v4-pro cell on 04', and cite 'Opus 5 reaches 196.10% on 04'. But the current protocol (SPEC.md 2026-11-09) retired problem 04, and leaderboard.json has no problem 04, so these examples are stale and misdescribe the current board.",
+      "repair": "Remove the problem-04 examples from the notes (muse/muse-spark-1.3 on 04, deepseek-v4-pro reward_hack on 04, Opus 5 196.10% on 04) and keep only the current three-problem deck facts (e.g., the suspect kinetic-0715[1m] cell on 03 remains as the audited-but-excluded example)."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "version_status: 'published' relies on interpreting the maintainer's published board label 'RTX PRO 6000' and leaderboard schema_version 1 as a release identifier; the protocol does not literally use the word 'published', which is allowed by the criteria.",
+    "The generated value-scale summary (SOURCE 7) reports 24 values in range 0.97–8.12, which matches the ×100 stored scale of the 24 clean/interesting cells on problem 03; I could not independently recompute the count or multiplicatively verify the summary, but it is consistent with the row's unit/range.",
+    "The activity summary (SOURCE 6) reporting 6 added peak_fraction values supports status 'active'; I did not verify the count independently."
+  ],
+  "missing_evidence": []
+}

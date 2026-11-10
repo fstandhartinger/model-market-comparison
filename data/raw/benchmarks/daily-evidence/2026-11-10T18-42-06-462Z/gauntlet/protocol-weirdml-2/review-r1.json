@@ -1,0 +1,38 @@
+{
+  "artifact_id": "protocol-weirdml-2",
+  "artifact_sha256": "6bd60c5766dad9d19f8ad87594eec4ade45889654f1ab0b2516e23568e5c4ae7",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": ["weirdml::2", "c1", "c2"],
+  "errors_found": 3,
+  "findings": [
+    {
+      "id": "f1",
+      "severity": "blocker",
+      "location": "row weirdml::2 version/identity",
+      "evidence": "SOURCE 1 (protocol) states current version is 'WeirdML v3' with 11 tasks and lists 'Previous versions: WeirdML v2 · WeirdML v1'. Row claims version '2' and metric over 17 tasks, so the row's identity does not match the actual current protocol version.",
+      "repair": "Update the row to reference v3 with correct task count and version, or mark it as a retained prior version with superseded_by set to the v3 registry id."
+    },
+    {
+      "id": "f2",
+      "severity": "blocker",
+      "location": "row weirdml::2 scoring.metric",
+      "evidence": "Protocol (SOURCE 1) defines official score as '80% normalized area under its line on a logarithmic token axis, plus 20% of its final value'. Row states metric is 'Average Max Accuracy ... averaged over all 17 tasks', which contradicts the protocol's scoring rule and task count (11 tasks).",
+      "repair": "Correct the scoring metric to match the protocol's area-under-curve rule and 11-task count, or change the row to a retained snapshot with an explicit different identity."
+    },
+    {
+      "id": "f3",
+      "severity": "blocker",
+      "location": "row weirdml::2 lifecycle fields (status, version_status, superseded_by)",
+      "evidence": "Protocol (SOURCE 1) shows v3 as current and v2 as a previous version. Row declares status 'active' and superseded_by null; the protocol names v3 as the successor to v2, and the current published identifier is v3, not '2'. Thus status, supersession, and version_status are not supported.",
+      "repair": "Set status to 'retained', set superseded_by to the registry id of the v3 board, and adjust version_status to reflect that the published identifier 'v3' is now current rather than '2'."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "I cannot execute hashes or transport checks; those are owner-side limitations.",
+    "The bounded protocol excerpt may omit some page text, but it sufficiently establishes the current version (v3) and its scoring/task count for the mismatches found.",
+    "The row's id 'weirdml::2' could represent a historical board, but the row itself claims status 'active' and version_status 'published', so I judged it against the current protocol as required."
+  ],
+  "missing_evidence": []
+}

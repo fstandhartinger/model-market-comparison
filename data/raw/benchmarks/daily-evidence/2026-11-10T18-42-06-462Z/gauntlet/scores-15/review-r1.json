@@ -1,0 +1,67 @@
+{
+  "artifact_id": "scores-15",
+  "artifact_sha256": "947e1daf84a6a3f416119f2a1a3b0a9f00b52f28f66baf875c7d56e17af913b4",
+  "round": 1,
+  "verdict": "blocked",
+  "coverage_checked": [
+    "vendor:mistralai/Devstral-2-123B-Instruct-2512:swe-bench-verified::snapshot-2026-09-10",
+    "vendor:mistralai/Devstral-Small-2-24B-Instruct-2512:swe-bench-verified::snapshot-2026-09-10",
+    "c1"
+  ],
+  "errors_found": 6,
+  "findings": [
+    {
+      "id": "row1-benchmark-version",
+      "severity": "blocker",
+      "location": "row vendor:mistralai/Devstral-2-123B-Instruct-2512:swe-bench-verified::snapshot-2026-09-10 / benchmark_id",
+      "evidence": "benchmark_id claims 'swe-bench-verified::snapshot-2026-09-10'; primary source only says 'SWE-bench Verified' and contains no snapshot date or '2026-09-10'.",
+      "repair": "Provide primary evidence identifying the SWE-bench Verified snapshot, or remove the unsupported snapshot component from benchmark_id and row id."
+    },
+    {
+      "id": "row2-benchmark-version",
+      "severity": "blocker",
+      "location": "row vendor:mistralai/Devstral-Small-2-24B-Instruct-2512:swe-bench-verified::snapshot-2026-09-10 / benchmark_id",
+      "evidence": "benchmark_id claims 'swe-bench-verified::snapshot-2026-09-10'; primary source only says 'SWE-bench Verified' and contains no snapshot date or '2026-09-10'.",
+      "repair": "Provide primary evidence identifying the SWE-bench Verified snapshot, or remove the unsupported snapshot component from benchmark_id and row id."
+    },
+    {
+      "id": "row1-published-date",
+      "severity": "major",
+      "location": "row vendor:mistralai/Devstral-2-123B-Instruct-2512:swe-bench-verified::snapshot-2026-09-10 / source.published_at",
+      "evidence": "source.published_at is null, but captured source content includes 'December 9, 2025' as the blog publication date.",
+      "repair": "Set published_at to 2025-12-09, or cite a source where publication date is genuinely absent."
+    },
+    {
+      "id": "row2-published-date",
+      "severity": "major",
+      "location": "row vendor:mistralai/Devstral-Small-2-24B-Instruct-2512:swe-bench-verified::snapshot-2026-09-10 / source.published_at",
+      "evidence": "source.published_at is null, but captured source content includes 'December 9, 2025' as the blog publication date.",
+      "repair": "Set published_at to 2025-12-09, or cite a source where publication date is genuinely absent."
+    },
+    {
+      "id": "row1-model-identity",
+      "severity": "major",
+      "location": "row vendor:mistralai/Devstral-2-123B-Instruct-2512:swe-bench-verified::snapshot-2026-09-10 / subject",
+      "evidence": "subject.model_id 'devstral-2-123b::default' and source_id 'mistralai/Devstral-2-123B-Instruct-2512' are not verbatim in primary source; source says 'Devstral 2 (123B)' and shows API slug 'devstral-2512'.",
+      "repair": "Add primary evidence matching the exact model/checkpoint identifiers, or align subject identifiers to source-visible names."
+    },
+    {
+      "id": "row2-model-identity",
+      "severity": "major",
+      "location": "row vendor:mistralai/Devstral-Small-2-24B-Instruct-2512:swe-bench-verified::snapshot-2026-09-10 / subject",
+      "evidence": "subject.model_id 'devstral-small-2::default' and source_id 'mistralai/Devstral-Small-2-24B-Instruct-2512' are not verbatim in primary source; source says 'Devstral Small 2' and '24B' but provides no such exact slug.",
+      "repair": "Add primary evidence matching the exact model/checkpoint identifiers, or align subject identifiers to source-visible names."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "Cannot execute SHA-256 or transport checks; row hashes and source sha256 are taken from owner-provided evidence.",
+    "Numeric values 72.2 and 68 are consistent with the source's '72.2%' and '68.0%'; numeric equality itself is not in doubt.",
+    "The source does not specify an evaluation harness for the SWE-bench Verified numbers; the protocol fields correctly record that as not specified."
+  ],
+  "missing_evidence": [
+    "SWE-bench Verified snapshot version '2026-09-10' for both rows; not present in primary source.",
+    "Exact model/checkpoint identifiers 'Devstral-2-123B-Instruct-2512' and 'devstral-2-123b::default' for row1; not present in primary source.",
+    "Exact model/checkpoint identifiers 'Devstral-Small-2-24B-Instruct-2512' and 'devstral-small-2::default' for row2; not present in primary source."
+  ]
+}

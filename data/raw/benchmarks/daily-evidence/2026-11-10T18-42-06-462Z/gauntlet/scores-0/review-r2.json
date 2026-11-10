@@ -1,0 +1,23 @@
+{
+  "artifact_id": "scores-0",
+  "artifact_sha256": "115ab27655c8df1c7d1a2a6b7d2caee3da70af39e6788803b50a885ab3dd1435",
+  "round": 2,
+  "verdict": "pass",
+  "coverage_checked": [
+    "public:3ea74de3c6e90f7a0c10813b",
+    "public:e2fd2b3bfccfc1ebcf4e87d5",
+    "public:17e202bc80e0049b3cff3314",
+    "public:13f32b5c786464229ffad53a",
+    "public:8e7852ba3b8357937ec096be",
+    "public:6832b5f7d2392faa7dd626d0",
+    "c1"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "I could not independently recompute owner-bound row SHA-256 values or execute transport/qualification checks; I treated the supplied row hashes as binding and compared row fields directly against the row-specific primary source projections.",
+    "SOURCE 5's broad scale summary (0.01-99.9457) was not used for datum-level values; each required row was compared against its exact served source cell, and the documented parser scale 100 supports the ×100 derivation shown in each row."
+  ],
+  "missing_evidence": []
+}

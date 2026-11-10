@@ -2,18 +2,18 @@
   "schema_version": 1,
   "source": {
     "url": "https://openrouter.ai/providers",
-    "retrieved_at": "2026-11-09T05:32:11.145Z",
-    "sha256": "0b4887be0f0eae861f3b3ee7323a64f3908c707d6d10f2a7160fcf671f206d56"
+    "retrieved_at": "2026-11-10T18:56:46.056Z",
+    "sha256": "ad01d95d47dcc1c4990c6eec7ce1b29fd202cb4b83bcdadb78a901e779cb9806"
   },
   "basis": "OpenRouter's published provider table. 'private' = the provider survives OpenRouter's own 'Does not train' + 'Zero retention' filter.",
   "facet_crosscheck": {
     "zero_retention": {
-      "page": 59,
-      "parsed": 59
+      "page": 60,
+      "parsed": 60
     },
     "does_not_train": {
-      "page": 93,
-      "parsed": 93
+      "page": 94,
+      "parsed": 94
     }
   },
   "overrides": {
@@ -24,8 +24,8 @@
     }
   },
   "counts": {
-    "providers": 97,
-    "private": 60,
+    "providers": 98,
+    "private": 61,
     "not_private": 37,
     "unknown": 0
   },
@@ -36,15 +36,6 @@
       "does_not_train": true,
       "zero_retention": true,
       "headquarters": "China",
-      "override": null,
-      "private": true
-    },
-    {
-      "slug": "wafer",
-      "name": "Wafer",
-      "does_not_train": true,
-      "zero_retention": true,
-      "headquarters": "United States",
       "override": null,
       "private": true
     },
@@ -67,13 +58,13 @@
       "private": true
     },
     {
-      "slug": "stepfun",
-      "name": "StepFun",
+      "slug": "wafer",
+      "name": "Wafer",
       "does_not_train": true,
-      "zero_retention": false,
-      "headquarters": null,
+      "zero_retention": true,
+      "headquarters": "United States",
       "override": null,
-      "private": false
+      "private": true
     },
     {
       "slug": "relace",
@@ -103,22 +94,13 @@
       "private": false
     },
     {
-      "slug": "stealth",
-      "name": "Stealth",
-      "does_not_train": false,
+      "slug": "stepfun",
+      "name": "StepFun",
+      "does_not_train": true,
       "zero_retention": false,
       "headquarters": null,
       "override": null,
       "private": false
-    },
-    {
-      "slug": "morph",
-      "name": "Morph",
-      "does_not_train": true,
-      "zero_retention": true,
-      "headquarters": "United States",
-      "override": null,
-      "private": true
     },
     {
       "slug": "deepseek",
@@ -139,13 +121,31 @@
       "private": true
     },
     {
-      "slug": "digitalocean",
-      "name": "DigitalOcean",
+      "slug": "google-vertex",
+      "name": "Google Vertex",
       "does_not_train": true,
       "zero_retention": true,
       "headquarters": "United States",
       "override": null,
       "private": true
+    },
+    {
+      "slug": "morph",
+      "name": "Morph",
+      "does_not_train": true,
+      "zero_retention": true,
+      "headquarters": "United States",
+      "override": null,
+      "private": true
+    },
+    {
+      "slug": "xiaomi",
+      "name": "Xiaomi",
+      "does_not_train": true,
+      "zero_retention": false,
+      "headquarters": "China",
+      "override": null,
+      "private": false
     },
     {
       "slug": "typesafe",
@@ -155,6 +155,42 @@
       "headquarters": null,
       "override": null,
       "private": true
+    },
+    {
+      "slug": "digitalocean",
+      "name": "DigitalOcean",
+      "does_not_train": true,
+      "zero_retention": true,
+      "headquarters": "United States",
+      "override": null,
+      "private": true
+    },
+    {
+      "slug": "claude-on-aws",
+      "name": "Claude Platform on AWS",
+      "does_not_train": true,
+      "zero_retention": false,
+      "headquarters": "United States",
+      "override": null,
+      "private": false
+    },
+    {
+      "slug": "alibaba",
+      "name": "Alibaba Cloud Int.",
+      "does_not_train": true,
+      "zero_retention": false,
+      "headquarters": "Singapore",
+      "override": null,
+      "private": false
+    },
+    {
+      "slug": "anthropic",
+      "name": "Anthropic",
+      "does_not_train": true,
+      "zero_retention": false,
+      "headquarters": "United States",
+      "override": null,
+      "private": false
     },
     {
       "slug": "minimax",
@@ -184,15 +220,6 @@
       "private": false
     },
     {
-      "slug": "google-vertex",
-      "name": "Google Vertex",
-      "does_not_train": true,
-      "zero_retention": true,
-      "headquarters": "United States",
-      "override": null,
-      "private": true
-    },
-    {
       "slug": "coreweave",
       "name": "CoreWeave",
       "does_not_train": true,
@@ -202,22 +229,22 @@
       "private": true
     },
     {
-      "slug": "claude-on-aws",
-      "name": "Claude Platform on AWS",
+      "slug": "fireworks",
+      "name": "Fireworks",
       "does_not_train": true,
-      "zero_retention": false,
+      "zero_retention": true,
       "headquarters": "United States",
       "override": null,
-      "private": false
+      "private": true
     },
     {
-      "slug": "alibaba",
-      "name": "Alibaba Cloud Int.",
+      "slug": "azure",
+      "name": "Azure",
       "does_not_train": true,
-      "zero_retention": false,
-      "headquarters": "Singapore",
+      "zero_retention": true,
+      "headquarters": "United States",
       "override": null,
-      "private": false
+      "private": true
     },
     {
       "slug": "moonshotai",
@@ -229,35 +256,8 @@
       "private": true
     },
     {
-      "slug": "xiaomi",
-      "name": "Xiaomi",
-      "does_not_train": true,
-      "zero_retention": false,
-      "headquarters": "China",
-      "override": null,
-      "private": false
-    },
-    {
       "slug": "open-inference",
       "name": "Open Inference",
-      "does_not_train": true,
-      "zero_retention": true,
-      "headquarters": "United States",
-      "override": null,
-      "private": true
-    },
-    {
-      "slug": "anthropic",
-      "name": "Anthropic",
-      "does_not_train": true,
-      "zero_retention": false,
-      "headquarters": "United States",
-      "override": null,
-      "private": false
-    },
-    {
-      "slug": "azure",
-      "name": "Azure",
       "does_not_train": true,
       "zero_retention": true,
       "headquarters": "United States",
@@ -274,62 +274,17 @@
       "private": false
     },
     {
-      "slug": "fireworks",
-      "name": "Fireworks",
+      "slug": "primeintellect",
+      "name": "Prime Intellect",
       "does_not_train": true,
       "zero_retention": true,
-      "headquarters": "United States",
-      "override": null,
-      "private": true
-    },
-    {
-      "slug": "modal",
-      "name": "Modal",
-      "does_not_train": true,
-      "zero_retention": true,
-      "headquarters": "United States",
-      "override": null,
-      "private": true
-    },
-    {
-      "slug": "upstage",
-      "name": "Upstage",
-      "does_not_train": true,
-      "zero_retention": false,
       "headquarters": null,
       "override": null,
-      "private": false
-    },
-    {
-      "slug": "baidu",
-      "name": "Baidu Qianfan",
-      "does_not_train": true,
-      "zero_retention": false,
-      "headquarters": "China",
-      "override": null,
-      "private": false
-    },
-    {
-      "slug": "particle-ai",
-      "name": "Particle AI",
-      "does_not_train": true,
-      "zero_retention": true,
-      "headquarters": "United States",
-      "override": null,
       "private": true
     },
     {
-      "slug": "cohere",
-      "name": "Cohere",
-      "does_not_train": true,
-      "zero_retention": false,
-      "headquarters": "United States",
-      "override": null,
-      "private": false
-    },
-    {
-      "slug": "baseten",
-      "name": "Baseten",
+      "slug": "parasail",
+      "name": "Parasail",
       "does_not_train": true,
       "zero_retention": true,
       "headquarters": "United States",
@@ -346,6 +301,24 @@
       "private": false
     },
     {
+      "slug": "cohere",
+      "name": "Cohere",
+      "does_not_train": true,
+      "zero_retention": false,
+      "headquarters": "United States",
+      "override": null,
+      "private": false
+    },
+    {
+      "slug": "modal",
+      "name": "Modal",
+      "does_not_train": true,
+      "zero_retention": true,
+      "headquarters": "United States",
+      "override": null,
+      "private": true
+    },
+    {
       "slug": "crusoe",
       "name": "Crusoe",
       "does_not_train": true,
@@ -355,13 +328,22 @@
       "private": true
     },
     {
-      "slug": "parasail",
-      "name": "Parasail",
+      "slug": "baseten",
+      "name": "Baseten",
       "does_not_train": true,
       "zero_retention": true,
       "headquarters": "United States",
       "override": null,
       "private": true
+    },
+    {
+      "slug": "upstage",
+      "name": "Upstage",
+      "does_not_train": true,
+      "zero_retention": false,
+      "headquarters": null,
+      "override": null,
+      "private": false
     },
     {
       "slug": "novita",
@@ -382,6 +364,15 @@
       "private": true
     },
     {
+      "slug": "particle-ai",
+      "name": "Particle AI",
+      "does_not_train": true,
+      "zero_retention": true,
+      "headquarters": "United States",
+      "override": null,
+      "private": true
+    },
+    {
       "slug": "atlas-cloud",
       "name": "AtlasCloud",
       "does_not_train": true,
@@ -389,15 +380,6 @@
       "headquarters": "United States",
       "override": null,
       "private": false
-    },
-    {
-      "slug": "primeintellect",
-      "name": "Prime Intellect",
-      "does_not_train": true,
-      "zero_retention": true,
-      "headquarters": null,
-      "override": null,
-      "private": true
     },
     {
       "slug": "gmicloud",
@@ -418,11 +400,11 @@
       "private": true
     },
     {
-      "slug": "makora",
-      "name": "Makora",
+      "slug": "cloudflare",
+      "name": "Cloudflare",
       "does_not_train": true,
       "zero_retention": true,
-      "headquarters": null,
+      "headquarters": "United States",
       "override": null,
       "private": true
     },
@@ -436,62 +418,17 @@
       "private": true
     },
     {
+      "slug": "makora",
+      "name": "Makora",
+      "does_not_train": true,
+      "zero_retention": true,
+      "headquarters": null,
+      "override": null,
+      "private": true
+    },
+    {
       "slug": "venice",
       "name": "Venice",
-      "does_not_train": true,
-      "zero_retention": true,
-      "headquarters": "United States",
-      "override": null,
-      "private": true
-    },
-    {
-      "slug": "nebius",
-      "name": "Nebius Token Factory",
-      "does_not_train": true,
-      "zero_retention": true,
-      "headquarters": "Netherlands",
-      "override": null,
-      "private": true
-    },
-    {
-      "slug": "cloudflare",
-      "name": "Cloudflare",
-      "does_not_train": true,
-      "zero_retention": true,
-      "headquarters": "United States",
-      "override": null,
-      "private": true
-    },
-    {
-      "slug": "modelrun",
-      "name": "ModelRun [by Modular]",
-      "does_not_train": true,
-      "zero_retention": true,
-      "headquarters": "United States",
-      "override": null,
-      "private": true
-    },
-    {
-      "slug": "dekallm",
-      "name": "DekaLLM",
-      "does_not_train": true,
-      "zero_retention": true,
-      "headquarters": "Indonesia",
-      "override": null,
-      "private": true
-    },
-    {
-      "slug": "siliconflow",
-      "name": "SiliconFlow",
-      "does_not_train": true,
-      "zero_retention": true,
-      "headquarters": "Singapore",
-      "override": null,
-      "private": true
-    },
-    {
-      "slug": "phala",
-      "name": "Phala",
       "does_not_train": true,
       "zero_retention": true,
       "headquarters": "United States",
@@ -508,20 +445,20 @@
       "private": false
     },
     {
-      "slug": "mistral",
-      "name": "Mistral",
+      "slug": "modelrun",
+      "name": "ModelRun [by Modular]",
       "does_not_train": true,
       "zero_retention": true,
-      "headquarters": "France",
+      "headquarters": "United States",
       "override": null,
       "private": true
     },
     {
-      "slug": "inceptron",
-      "name": "Inceptron",
+      "slug": "siliconflow",
+      "name": "SiliconFlow",
       "does_not_train": true,
       "zero_retention": true,
-      "headquarters": "Sweden",
+      "headquarters": "Singapore",
       "override": null,
       "private": true
     },
@@ -535,20 +472,47 @@
       "private": true
     },
     {
-      "slug": "voyageai",
-      "name": "Voyage AI by MongoDB",
-      "does_not_train": true,
-      "zero_retention": false,
-      "headquarters": null,
-      "override": null,
-      "private": false
-    },
-    {
-      "slug": "near-ai",
-      "name": "NEAR AI",
+      "slug": "nebius",
+      "name": "Nebius Token Factory",
       "does_not_train": true,
       "zero_retention": true,
-      "headquarters": null,
+      "headquarters": "Netherlands",
+      "override": null,
+      "private": true
+    },
+    {
+      "slug": "dekallm",
+      "name": "DekaLLM",
+      "does_not_train": true,
+      "zero_retention": true,
+      "headquarters": "Indonesia",
+      "override": null,
+      "private": true
+    },
+    {
+      "slug": "mistral",
+      "name": "Mistral",
+      "does_not_train": true,
+      "zero_retention": true,
+      "headquarters": "France",
+      "override": null,
+      "private": true
+    },
+    {
+      "slug": "phala",
+      "name": "Phala",
+      "does_not_train": true,
+      "zero_retention": true,
+      "headquarters": "United States",
+      "override": null,
+      "private": true
+    },
+    {
+      "slug": "inceptron",
+      "name": "Inceptron",
+      "does_not_train": true,
+      "zero_retention": true,
+      "headquarters": "Sweden",
       "override": null,
       "private": true
     },
@@ -562,8 +526,44 @@
       "private": false
     },
     {
+      "slug": "voyageai",
+      "name": "Voyage AI by MongoDB",
+      "does_not_train": true,
+      "zero_retention": false,
+      "headquarters": null,
+      "override": null,
+      "private": false
+    },
+    {
       "slug": "reka",
       "name": "Reka AI",
+      "does_not_train": true,
+      "zero_retention": true,
+      "headquarters": null,
+      "override": null,
+      "private": true
+    },
+    {
+      "slug": "baidu",
+      "name": "Baidu Qianfan",
+      "does_not_train": true,
+      "zero_retention": false,
+      "headquarters": "China",
+      "override": null,
+      "private": false
+    },
+    {
+      "slug": "nextbit",
+      "name": "NextBit",
+      "does_not_train": true,
+      "zero_retention": true,
+      "headquarters": "Spain",
+      "override": null,
+      "private": true
+    },
+    {
+      "slug": "near-ai",
+      "name": "NEAR AI",
       "does_not_train": true,
       "zero_retention": true,
       "headquarters": null,
@@ -580,6 +580,15 @@
       "private": false
     },
     {
+      "slug": "primalabs",
+      "name": "PrimaLabs",
+      "does_not_train": true,
+      "zero_retention": true,
+      "headquarters": "United States",
+      "override": null,
+      "private": true
+    },
+    {
       "slug": "liquid",
       "name": "Liquid",
       "does_not_train": false,
@@ -587,15 +596,6 @@
       "headquarters": null,
       "override": null,
       "private": false
-    },
-    {
-      "slug": "akashml",
-      "name": "AkashML",
-      "does_not_train": true,
-      "zero_retention": true,
-      "headquarters": null,
-      "override": null,
-      "private": true
     },
     {
       "slug": "groq",
@@ -607,29 +607,11 @@
       "private": true
     },
     {
-      "slug": "primalabs",
-      "name": "PrimaLabs",
+      "slug": "akashml",
+      "name": "AkashML",
       "does_not_train": true,
       "zero_retention": true,
-      "headquarters": "United States",
-      "override": null,
-      "private": true
-    },
-    {
-      "slug": "tenstorrent",
-      "name": "Tenstorrent",
-      "does_not_train": true,
-      "zero_retention": true,
-      "headquarters": "United States",
-      "override": null,
-      "private": true
-    },
-    {
-      "slug": "nextbit",
-      "name": "NextBit",
-      "does_not_train": true,
-      "zero_retention": true,
-      "headquarters": "Spain",
+      "headquarters": null,
       "override": null,
       "private": true
     },
@@ -661,15 +643,6 @@
       "private": true
     },
     {
-      "slug": "parallel",
-      "name": "Parallel",
-      "does_not_train": true,
-      "zero_retention": false,
-      "headquarters": "United States",
-      "override": null,
-      "private": false
-    },
-    {
       "slug": "io-net",
       "name": "io.net",
       "does_not_train": true,
@@ -677,6 +650,15 @@
       "headquarters": "United States",
       "override": null,
       "private": true
+    },
+    {
+      "slug": "respan",
+      "name": "Respan",
+      "does_not_train": true,
+      "zero_retention": false,
+      "headquarters": null,
+      "override": null,
+      "private": false
     },
     {
       "slug": "chutes",
@@ -688,11 +670,29 @@
       "private": true
     },
     {
-      "slug": "respan",
-      "name": "Respan",
-      "does_not_train": true,
+      "slug": "thinkingmachines",
+      "name": "Thinking Machines",
+      "does_not_train": false,
       "zero_retention": false,
       "headquarters": null,
+      "override": null,
+      "private": false
+    },
+    {
+      "slug": "tenstorrent",
+      "name": "Tenstorrent",
+      "does_not_train": true,
+      "zero_retention": true,
+      "headquarters": "United States",
+      "override": null,
+      "private": true
+    },
+    {
+      "slug": "parallel",
+      "name": "Parallel",
+      "does_not_train": true,
+      "zero_retention": false,
+      "headquarters": "United States",
       "override": null,
       "private": false
     },
@@ -715,6 +715,15 @@
       "private": true
     },
     {
+      "slug": "featherless",
+      "name": "Featherless",
+      "does_not_train": true,
+      "zero_retention": true,
+      "headquarters": "United States",
+      "override": null,
+      "private": true
+    },
+    {
       "slug": "aion-labs",
       "name": "AionLabs",
       "does_not_train": true,
@@ -724,17 +733,17 @@
       "private": false
     },
     {
-      "slug": "sambanova",
-      "name": "SambaNova",
+      "slug": "mancer",
+      "name": "Mancer",
       "does_not_train": true,
       "zero_retention": true,
-      "headquarters": "United States",
+      "headquarters": null,
       "override": null,
       "private": true
     },
     {
-      "slug": "pareto-alpha",
-      "name": "Pareto Alpha",
+      "slug": "sambanova",
+      "name": "SambaNova",
       "does_not_train": true,
       "zero_retention": true,
       "headquarters": "United States",
@@ -760,33 +769,6 @@
       "private": false
     },
     {
-      "slug": "featherless",
-      "name": "Featherless",
-      "does_not_train": true,
-      "zero_retention": true,
-      "headquarters": "United States",
-      "override": null,
-      "private": true
-    },
-    {
-      "slug": "mancer",
-      "name": "Mancer",
-      "does_not_train": true,
-      "zero_retention": true,
-      "headquarters": null,
-      "override": null,
-      "private": true
-    },
-    {
-      "slug": "sakana",
-      "name": "Sakana",
-      "does_not_train": true,
-      "zero_retention": false,
-      "headquarters": null,
-      "override": null,
-      "private": false
-    },
-    {
       "slug": "unbiased",
       "name": "Unbiased",
       "does_not_train": true,
@@ -796,13 +778,13 @@
       "private": false
     },
     {
-      "slug": "recraft",
-      "name": "Recraft",
+      "slug": "pareto-alpha",
+      "name": "Pareto Alpha",
       "does_not_train": true,
-      "zero_retention": false,
-      "headquarters": null,
+      "zero_retention": true,
+      "headquarters": "United States",
       "override": null,
-      "private": false
+      "private": true
     },
     {
       "slug": "nex-agi",
@@ -823,8 +805,35 @@
       "private": false
     },
     {
+      "slug": "recraft",
+      "name": "Recraft",
+      "does_not_train": true,
+      "zero_retention": false,
+      "headquarters": null,
+      "override": null,
+      "private": false
+    },
+    {
+      "slug": "sakana",
+      "name": "Sakana",
+      "does_not_train": true,
+      "zero_retention": false,
+      "headquarters": null,
+      "override": null,
+      "private": false
+    },
+    {
       "slug": "perceptron",
       "name": "Perceptron",
+      "does_not_train": true,
+      "zero_retention": true,
+      "headquarters": "United States",
+      "override": null,
+      "private": true
+    },
+    {
+      "slug": "river",
+      "name": "River",
       "does_not_train": true,
       "zero_retention": true,
       "headquarters": "United States",

@@ -1,0 +1,33 @@
+{
+  "artifact_id": "scores-8",
+  "artifact_sha256": "9e2ad6a3bb84c64ec693b8222c965a98900656f818c154d47ad21c2ad14b984f",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "public:298b2520c9e41c9944568cca",
+    "public:d365ec7d25a75db28e44e05c",
+    "public:02177de2d04f54b1887f7dbc",
+    "public:38445fbe869503a262f36d85",
+    "public:fe1b3d4953ae9320aa09c1d3",
+    "public:a9f3015e2aaa339ced7fd5f6",
+    "public:b82d40d64097e84b251d4e46",
+    "public:d46aa0309a0f3fa6c52ac770",
+    "public:3473ff04c6b113d7c351c6a4",
+    "public:0514534c7da01983f6735120",
+    "public:80294afa848c744ace002e2c",
+    "public:a2fe71667a6b0fa7e5ed9d77",
+    "public:60f9c009781a2c12761ad47b",
+    "public:dabacc3fc84361d5267fc338",
+    "public:6131db35dbad4f8c154c5107",
+    "c1"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Cannot independently execute SHA-256 hashing, transport, or qualification checks; these are owner-side and assumed per instructions. I did a field-level comparison against the supplied primary evidence only.",
+    "Rows where served text had trailing zeros (Sonnet 5.5 High $1.20 and DeepSeek V4.1 Flash 1017 Medium $0.80) are recorded as 1.2 and 0.8 respectively; numeric equality after parsing is accepted under criterion c1.",
+    "Candidate protocol fields append a source-row cells transcription not present as literal text in the standalone registry protocol; the appended cells exactly match the primary evidence context, so no factual or protocol-meaning conflict was found."
+  ],
+  "missing_evidence": []
+}

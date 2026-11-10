@@ -1,0 +1,23 @@
+{
+  "artifact_id": "protocol-gso-opt1-102",
+  "artifact_sha256": "eedef18bb298a4ecee13a356eb383d9eb5c33428b80c95017bb7ef88b2383f9f",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": ["gso::opt1-102", "c1", "c2"],
+  "errors_found": 1,
+  "findings": [
+    {
+      "id": "gso::opt1-102-version-status",
+      "severity": "blocker",
+      "location": "gso::opt1-102 / version / version_status",
+      "evidence": "Sources 1-2 contain no release identifier for this board: leaderboard.json metadata only has last_updated and total_tasks 102, and the page text names no version. Candidate version_status='published' and version='opt1-102' assert a maintainer-published identifier that does not appear in the captured protocol.",
+      "repair": "Set version_status='snapshot' and version='snapshot-2026-11-10' (capture date), since the maintainer publishes no release identifier; or, if a release identifier is later found in source, cite it and copy it exactly."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "I could not independently verify SHA-256 hashes or network transport; owner receipt accepted as binding.",
+    "The snapshot date for the repair is inferred from retrieved_at (2026-11-10); if registry convention uses last_updated (2026-09-27), adjust the date accordingly."
+  ],
+  "missing_evidence": []
+}

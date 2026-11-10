@@ -1,23 +1,22 @@
 {
   "source": "Anthropic Claude API and Claude Code Enterprise",
-  "collected_at": "2026-11-09",
-  "method": "scripts/fetch-claude-api-catalog.mjs (2026-11-09): models[] from the server-rendered model and batch price tables on https://platform.claude.com/docs/en/about-claude/pricing; rows labelled retired there, or Retired in the lifecycle table on https://platform.claude.com/docs/en/about-claude/model-deprecations, are excluded; lifecycle_status and tentative retirement dates come from that table by API model id. Pricing modifiers are derived from the current tables and text. Claude Code Enterprise seat pricing comes from https://claude.com/pricing; seat minimums, usage billing, limits, and legacy-plan terms come from https://support.claude.com/en/articles/9797531-what-is-the-enterprise-plan. See claude-code.method.md.",
+  "collected_at": "2026-11-10",
+  "method": "scripts/fetch-claude-api-catalog.mjs (2026-11-10): models[] from the server-rendered model and batch price tables on https://platform.claude.com/docs/en/about-claude/pricing; rows labelled retired there, or Retired in the lifecycle table on https://platform.claude.com/docs/en/about-claude/model-deprecations, are excluded; lifecycle_status and tentative retirement dates come from that table by API model id. Pricing modifiers are derived from the current tables and text. Claude Code Enterprise seat pricing comes from https://claude.com/pricing; seat minimums, usage billing, limits, and legacy-plan terms come from https://support.claude.com/en/articles/9797531-what-is-the-enterprise-plan. See claude-code.method.md.",
   "models": [
     {
-      "model_name": "Claude Fable 5.1",
-      "model_id": "claude-fable-5-1",
+      "model_name": "Claude Fable 5.2",
+      "model_id": "claude-fable-5-2",
       "provider_org": "Anthropic",
       "lifecycle_status": "active",
-      "availability": "generally_available",
-      "input_per_1m_usd": 10,
-      "cache_write_per_1m_usd": 12.5,
-      "cache_write_1h_per_1m_usd": 20,
-      "cache_read_per_1m_usd": 0.25,
-      "output_per_1m_usd": 50,
-      "batch_input_per_1m_usd": 5,
-      "batch_output_per_1m_usd": 25,
-      "notes": "Official pricing: cache hits are 0.025x base input ($0.25/MTok); 5m/1h writes $12.50/$20. Mythos remains limited availability.",
-      "tentative_retirement": "Not sooner than September 1, 2027"
+      "input_per_1m_usd": 8,
+      "output_per_1m_usd": 40,
+      "cache_write_per_1m_usd": 10,
+      "cache_write_1h_per_1m_usd": 16,
+      "cache_read_per_1m_usd": 0.2,
+      "batch_input_per_1m_usd": 4,
+      "batch_output_per_1m_usd": 20,
+      "mapping": "derived",
+      "model_id_source": "derived from the pricing-table name; not listed in the deprecations table"
     },
     {
       "model_name": "Claude Opus 5.5",
@@ -76,6 +75,37 @@
       "mapping": "derived",
       "model_id_source": "derived from the pricing-table name; not listed in the deprecations table",
       "tentative_retirement": "Not sooner than October 7, 2027"
+    },
+    {
+      "model_name": "Claude Mythos 5.2",
+      "model_id": "claude-mythos-5-2",
+      "provider_org": "Anthropic",
+      "lifecycle_status": "active",
+      "input_per_1m_usd": 8,
+      "output_per_1m_usd": 40,
+      "cache_write_per_1m_usd": 10,
+      "cache_write_1h_per_1m_usd": 16,
+      "cache_read_per_1m_usd": 0.2,
+      "batch_input_per_1m_usd": 4,
+      "batch_output_per_1m_usd": 20,
+      "mapping": "derived",
+      "model_id_source": "derived from the pricing-table name; not listed in the deprecations table"
+    },
+    {
+      "model_name": "Claude Fable 5.1",
+      "model_id": "claude-fable-5-1",
+      "provider_org": "Anthropic",
+      "lifecycle_status": "active",
+      "availability": "generally_available",
+      "input_per_1m_usd": 10,
+      "cache_write_per_1m_usd": 12.5,
+      "cache_write_1h_per_1m_usd": 20,
+      "cache_read_per_1m_usd": 0.25,
+      "output_per_1m_usd": 50,
+      "batch_input_per_1m_usd": 5,
+      "batch_output_per_1m_usd": 25,
+      "notes": "Official pricing: cache hits are 0.025x base input ($0.25/MTok); 5m/1h writes $12.50/$20. Mythos remains limited availability.",
+      "tentative_retirement": "Not sooner than September 1, 2027"
     },
     {
       "model_name": "Claude Mythos 5.1",
@@ -282,8 +312,8 @@
     "sales_assisted_minimum_seats": 50,
     "sales_assisted_options": "Invoicing, multi-currency billing, and HIPAA-readiness/BAA are available through sales.",
     "legacy_note": "Some organizations remain on older seat-based Enterprise plans with Standard and Premium seats and per-seat limits until they migrate to usage-based billing.",
-    "seat_and_usage_checked_at": "2026-11-09",
-    "other_terms_checked_at": "2026-11-09"
+    "seat_and_usage_checked_at": "2026-11-10",
+    "other_terms_checked_at": "2026-11-10"
   },
   "pricing_modifiers": {
     "prompt_cache_5m_write_multiplier": 1.25,
@@ -293,9 +323,11 @@
     "us_only_inference_multiplier": 1.1,
     "us_only_inference_applies_to": "Claude Opus 4.6, Claude Sonnet 4.6, and later models; global routing is standard price.",
     "prompt_cache_read_multiplier_exceptions": {
-      "claude-fable-5-1": 0.025,
+      "claude-fable-5-2": 0.025,
       "claude-opus-5-5": 0.05,
       "claude-sonnet-5-5": 0.05,
+      "claude-mythos-5-2": 0.025,
+      "claude-fable-5-1": 0.025,
       "claude-mythos-5-1": 0.025
     }
   },
@@ -306,13 +338,16 @@
     "Claude Sonnet 4 (Retired)"
   ],
   "response_sha256": {
-    "pricing": "bef86898ce64105d8e4ead08f93a2fde72a9bc89bf69fd663fe635f6d55fe49d",
-    "deprecations": "05c48e3c25da5a39acea4e8e3015a100793dc9ec2659b3b7c9a3f46ed34c4a20",
-    "enterprise": "422c74220863afa0f65d57ac8ee7d8b7667f70432d7b765adbc6f482426f1414",
-    "enterprise_terms": "785ec1cfd9430fc26ec66c5a21850922739289d5bb5320bee5dae9d2ff95d354"
+    "pricing": "39ff1fed651b91719d6268733921f6dbfe261604f2e288cdcc14e06b94c4ba03",
+    "deprecations": "30eff7518cb818225f089b859333312851590770310af0f2afff7c0a467b982f",
+    "enterprise": "d976df8efa759e41a4d97fdfc762db77bcd919489997944e458fb97c46ed8e2a",
+    "enterprise_terms": "8d2e70ee98971efcdc460a618b457c5a65fcc64efdfc8fd40a9e5ea9918b88de"
   },
   "diff": {
-    "added": [],
+    "added": [
+      "Claude Fable 5.2",
+      "Claude Mythos 5.2"
+    ],
     "removed": [],
     "price_changed": [],
     "lifecycle_changed": [],

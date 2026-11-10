@@ -1,0 +1,32 @@
+{
+  "artifact_id": "scores-7",
+  "artifact_sha256": "e853f2c71a5c7b94956e6553c235fa12d9f4f25d45bc29a1ba6af9f77a6f6aef",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "public:390759411aac43e0709dd407",
+    "public:de34e4c14fe6917066cfa1e5",
+    "public:abe0be1b3a3320ae6c755bcc",
+    "public:18a486db6591e33e841a5afa",
+    "public:369b7f6b0a69c94d5c379f4d",
+    "public:dd30912ca46c97240bc5fd83",
+    "public:58f1fe09f35aa3604c343f62",
+    "public:5afa088f8f1f4e77764ff3cd",
+    "public:739643bd52e5308c83987da3",
+    "public:e1c125c2795c8781bbceb5c1",
+    "public:526de728b25b086b2e8b5e37",
+    "public:db4229a0c5eaff7da0192c02",
+    "public:d627852c2fdd914465fdedda",
+    "public:38866b4e2f4f6e4b092ac4d8",
+    "public:c79fa6004af1dd60cedda4cb",
+    "c1"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "I cannot independently execute SHA-256 hash verification or transport/qualification checks; these are owner-side operations considered verified by the owner per instructions.",
+    "Trailing decimal zero normalization applied per criterion (e.g., cell '$ 9.70' parsed as 9.7), which is an accepted numeric equality, not a mismatch."
+  ],
+  "missing_evidence": []
+}

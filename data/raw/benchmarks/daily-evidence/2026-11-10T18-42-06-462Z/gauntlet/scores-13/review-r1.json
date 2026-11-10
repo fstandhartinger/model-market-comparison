@@ -1,0 +1,22 @@
+{
+  "artifact_id": "scores-13",
+  "artifact_sha256": "125bddf972d21964b790a2e180db28f6b325d0d4bfae82a825e144fbe67131ed",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "public:45dabd4ca47f3bce13cf2410",
+    "public:d20abbbb6a9ca382d11c59e3",
+    "public:bd2374a7beccdfc777654586",
+    "public:5fe1bfe0e099f0bf5ab27ea9",
+    "public:39e328e776199e7941561f46",
+    "c1"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Could not independently recompute row SHA-256 hashes or verify transport/qualification checks; these are owner-executed and outside my read-only capability.",
+    "The 'measured' basis is consistent with the source protocol describing percent accuracy averaged over 5 runs, though the leaderboard itself does not carry an explicit 'measured' label."
+  ],
+  "missing_evidence": []
+}

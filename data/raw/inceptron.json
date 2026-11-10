@@ -1,9 +1,9 @@
 {
   "source": "Inceptron",
   "region": "eu (Finland; HQ Sweden)",
-  "collected_at": "2026-11-04",
+  "collected_at": "2026-11-10",
   "listing_url": "https://www.inceptron.io/models",
-  "method": "scripts/fetch-inceptron-catalog.mjs (2026-11-04): the served model list comes from Inceptron's unauthenticated OpenAI-compatible catalog https://api.inceptron.io/v1/models (text output, chat feature, both token prices); the DIRECT price of each model comes from Inceptron's published list https://www.inceptron.io/models (server-rendered; input / output / cache read in USD per 1M tokens; the pricing page www.inceptron.io/pricing says \"Serverless inference: see models page\"). CR-329.1 (7 Oct 2026): the API catalog prices carry an openrouter.slug and equal the OpenRouter Inceptron route, so they are the OpenRouter feed, not the direct price; they are kept per model as api_catalog_price for reference only. A served model missing from the list page gets price_status \"n/a\" and no direct price. Curated rows kept by api_model_id, the id in their notes, or name; new ids mapping=derived; ids no longer listed are dropped. HQ Sweden (SE), datacenter Finland (FI) per OpenRouter provider metadata. See inceptron.method.md.",
+  "method": "scripts/fetch-inceptron-catalog.mjs (2026-11-10): the served model list comes from Inceptron's unauthenticated OpenAI-compatible catalog https://api.inceptron.io/v1/models (text output, chat feature, both token prices); the DIRECT price of each model comes from Inceptron's published list https://www.inceptron.io/models (server-rendered; input / output / cache read in USD per 1M tokens; the pricing page www.inceptron.io/pricing says \"Serverless inference: see models page\"). CR-329.1 (7 Oct 2026): the API catalog prices carry an openrouter.slug and equal the OpenRouter Inceptron route, so they are the OpenRouter feed, not the direct price; they are kept per model as api_catalog_price for reference only. A served model missing from the list page gets price_status \"n/a\" and no direct price. Curated rows kept by api_model_id, the id in their notes, or name; new ids mapping=derived; ids no longer listed are dropped. HQ Sweden (SE), datacenter Finland (FI) per OpenRouter provider metadata. See inceptron.method.md.",
   "models": [
     {
       "model_name": "GLM 5.2",
@@ -16,17 +16,15 @@
       "api_catalog_price": {
         "input_per_1m_usd": 1.4,
         "output_per_1m_usd": 4.4,
-        "cache_read_per_1m_usd": 0.19,
+        "cache_read_per_1m_usd": 0.26,
         "url": "https://api.inceptron.io/v1/models",
         "note": "provider feed ingested by OpenRouter; equals the OpenRouter route"
       },
-      "input_per_1m_usd": 1.2,
-      "output_per_1m_usd": 4.2,
-      "cache_read_per_1m_usd": 0.26,
+      "price_status": "n/a",
       "price_source": {
         "url": "https://www.inceptron.io/models",
-        "date": "2026-11-04",
-        "basis": "Inceptron list price (direct API)"
+        "date": "2026-11-10",
+        "basis": "Inceptron's models page currently shows no prices; the OpenRouter feed price is not copied"
       }
     },
     {
@@ -38,19 +36,17 @@
       "context_length": 1048576,
       "quantization": "fp4",
       "api_catalog_price": {
-        "input_per_1m_usd": 1.4,
-        "output_per_1m_usd": 3.96,
+        "input_per_1m_usd": 1,
+        "output_per_1m_usd": 4.9,
         "cache_read_per_1m_usd": 0.14,
         "url": "https://api.inceptron.io/v1/models",
         "note": "provider feed ingested by OpenRouter; equals the OpenRouter route"
       },
-      "input_per_1m_usd": 1.4,
-      "output_per_1m_usd": 4.4,
-      "cache_read_per_1m_usd": 0.26,
+      "price_status": "n/a",
       "price_source": {
         "url": "https://www.inceptron.io/models",
-        "date": "2026-11-04",
-        "basis": "Inceptron list price (direct API)"
+        "date": "2026-11-10",
+        "basis": "Inceptron's models page currently shows no prices; the OpenRouter feed price is not copied"
       }
     },
     {
@@ -62,19 +58,17 @@
       "context_length": 262144,
       "quantization": "int4",
       "api_catalog_price": {
-        "input_per_1m_usd": 0.78,
+        "input_per_1m_usd": 0.799,
         "output_per_1m_usd": 3.75,
-        "cache_read_per_1m_usd": 0.156,
+        "cache_read_per_1m_usd": 0.2092,
         "url": "https://api.inceptron.io/v1/models",
         "note": "provider feed ingested by OpenRouter; equals the OpenRouter route"
       },
-      "input_per_1m_usd": 0.73,
-      "output_per_1m_usd": 3.5,
-      "cache_read_per_1m_usd": 0.25,
+      "price_status": "n/a",
       "price_source": {
         "url": "https://www.inceptron.io/models",
-        "date": "2026-11-04",
-        "basis": "Inceptron list price (direct API)"
+        "date": "2026-11-10",
+        "basis": "Inceptron's models page currently shows no prices; the OpenRouter feed price is not copied"
       }
     },
     {
@@ -88,17 +82,15 @@
       "api_catalog_price": {
         "input_per_1m_usd": 0.6,
         "output_per_1m_usd": 3.5,
-        "cache_read_per_1m_usd": 0.15,
+        "cache_read_per_1m_usd": 0.16,
         "url": "https://api.inceptron.io/v1/models",
         "note": "provider feed ingested by OpenRouter; equals the OpenRouter route"
       },
-      "input_per_1m_usd": 0.75,
-      "output_per_1m_usd": 3.5,
-      "cache_read_per_1m_usd": 0.2,
+      "price_status": "n/a",
       "price_source": {
         "url": "https://www.inceptron.io/models",
-        "date": "2026-11-04",
-        "basis": "Inceptron list price (direct API)"
+        "date": "2026-11-10",
+        "basis": "Inceptron's models page currently shows no prices; the OpenRouter feed price is not copied"
       }
     },
     {
@@ -116,13 +108,11 @@
         "url": "https://api.inceptron.io/v1/models",
         "note": "provider feed ingested by OpenRouter; equals the OpenRouter route"
       },
-      "input_per_1m_usd": 0.13,
-      "output_per_1m_usd": 0.28,
-      "cache_read_per_1m_usd": 0.03,
+      "price_status": "n/a",
       "price_source": {
         "url": "https://www.inceptron.io/models",
-        "date": "2026-11-04",
-        "basis": "Inceptron list price (direct API)"
+        "date": "2026-11-10",
+        "basis": "Inceptron's models page currently shows no prices; the OpenRouter feed price is not copied"
       }
     },
     {
@@ -135,28 +125,40 @@
       "mapping": "derived",
       "notes": "Listed by api.inceptron.io/v1/models as zai-org/GLM-5.3-Flash; fp8 quant; 1,048,576 context; text",
       "api_catalog_price": {
-        "input_per_1m_usd": 0.16,
-        "output_per_1m_usd": 0.6,
-        "cache_read_per_1m_usd": 0.04,
+        "input_per_1m_usd": 0.175,
+        "output_per_1m_usd": 0.45,
+        "cache_read_per_1m_usd": 0.03,
         "url": "https://api.inceptron.io/v1/models",
         "note": "provider feed ingested by OpenRouter; equals the OpenRouter route"
       },
-      "input_per_1m_usd": 0.15,
-      "output_per_1m_usd": 0.5,
-      "cache_read_per_1m_usd": 0.07,
+      "price_status": "n/a",
       "price_source": {
         "url": "https://www.inceptron.io/models",
-        "date": "2026-11-04",
-        "basis": "Inceptron list price (direct API)"
+        "date": "2026-11-10",
+        "basis": "Inceptron's models page currently shows no prices; the OpenRouter feed price is not copied"
       }
     }
   ],
-  "response_sha256": "63409013302fbd29fea3e71470283863dc81a59550e4498cebe3bb3e1972aae0",
+  "response_sha256": "ca12b361c64f76c93f4e6b6625f1f760603b395f6e64bc1115318ad2074a93de",
   "skipped": [],
   "diff": {
     "added": [],
     "removed": [],
-    "price_changed": []
+    "price_changed": [
+      "GLM 5.2: 1.2/4.2 (cache 0.26) -> n/a/n/a (cache —)",
+      "GLM 5.3: 1.4/4.4 (cache 0.26) -> n/a/n/a (cache —)",
+      "Kimi K2.6: 0.73/3.5 (cache 0.25) -> n/a/n/a (cache —)",
+      "Kimi K2.7 Code: 0.75/3.5 (cache 0.2) -> n/a/n/a (cache —)",
+      "DeepSeek V4 Flash 0731: 0.13/0.28 (cache 0.03) -> n/a/n/a (cache —)",
+      "GLM 5.3 Flash: 0.15/0.5 (cache 0.07) -> n/a/n/a (cache —)"
+    ]
   },
-  "listing_sha256": "c8e44b0d4c5dd1ab16244843d5aba90ad658d7c1370fe1c8520062c51c2419a4"
+  "listing_sha256": "1bc877e3aa834c9dd6de9693416466415effe1ee93e4da62f76389b6442b4356",
+  "availability": {
+    "state": "list_prices_withdrawn_by_source",
+    "observed_since": "2026-11-05",
+    "checked_at": "2026-11-10T18:56:58.955Z",
+    "url": "https://www.inceptron.io/models",
+    "note": "Inceptron's models page lists the models without prices; its pricing page points to the models page. Direct prices are not published until they reappear."
+  }
 }
