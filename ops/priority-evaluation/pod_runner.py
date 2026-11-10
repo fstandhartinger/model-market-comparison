@@ -1082,6 +1082,13 @@ def _lifecycle(provider, job, recipe, staging_path, output, state, gpu_choice, t
                 state['runtime_supplement'] = wps_decision_runtime_supplement.build(provider, pod_id)
                 image = state['runtime_supplement']['effective_image']
                 save_state()
+            import karpo_decision_runtime_supplement
+            if karpo_decision_runtime_supplement.active(job_dir or job, recipe):
+                # Fixed-order offline overlay of Karpo-Decision-31B's recorded transformers 5.21 stack on the official
+                # torch 2.14.1+cu130 image; the customer's karpo_decision.serve.server is mounted unchanged.
+                state['runtime_supplement'] = karpo_decision_runtime_supplement.build(provider, pod_id)
+                image = state['runtime_supplement']['effective_image']
+                save_state()
             import chon_runtime_supplement
             if chon_runtime_supplement.active(job_dir or job, recipe):
                 # Fixed-order offline build of Chon-1.0-12B's documented torch 2.9.1/transformers 5.20/peft 0.18.1
