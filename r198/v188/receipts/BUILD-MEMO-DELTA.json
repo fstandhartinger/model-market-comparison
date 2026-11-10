@@ -1,0 +1,48 @@
+{
+ "kind": "v1.8.8 build-time memo delta (CR-729)",
+ "reason": "merge-queue npm run build gate timed out at 2,400 s three times (LeChonk 13:15Z and 15:01Z, Sandy 13:56Z, 10 Nov 2026) at about 664-680 of 705 static pages: every live page re-assembled the board and every release reader re-validates its whole predecessor chain (cost grows with the square of the release count)",
+ "change": "inside next build only (NEXT_PHASE=phase-production-build): memo of the validated v1.8.8 bundle (lib/jevbench-v188-release.mjs via r198/v188/lib-v188.template.mjs) and of assembleJevBoard per exact input fingerprint (lib/jevbench-live-board.mjs); deep copies to every caller; failures not cached; tests, gates and the runtime server keep the uncached path; no data, manifest, proof or seal input changed",
+ "files_after": {
+  "lib/jevbench-v188-release.mjs": "cb9fbe33f759be9e018c9333882c66590b4a0715f604661150112ad50c4d90a2",
+  "r198/v188/lib-v188.template.mjs": "51f5ca9122349d1b19467ff5534ef6cc73e4df0263f415de7f5cd2676a5349ad",
+  "lib/jevbench-live-board.mjs": "8b635453ecb133e9ea3c3ca9f004a1e1d3db524da039cb4c928ddfb2d58d252d"
+ },
+ "files_before_at_ca294df11": {
+  "lib/jevbench-v188-release.mjs": "a839b2966f8c7f0f0c5bfb9985e4256748d31690d98885281616b8632d785bae",
+  "lib/jevbench-live-board.mjs": "729eda17c580d99bdf328b0db0b7758fd7fee24b38e12f78ab3812d3d247212a"
+ },
+ "diffs": {
+  "loader-memo": "83a7af247b52837a4db0a4ff6bde9e7890e2c75be456f4156dd378c2c1a13c0b",
+  "liveboard-memo": "54a53fb57127577ad9b9a5290aff1cdb14302823c75b8352159f2327bd13d48b",
+  "combined": "4d05d7f111a410172887677f43d6643b1e7a376581f4f750ec6b252f402358ca"
+ },
+ "reviews": [
+  {
+   "engine": "Claude Sonnet independent delta review (r266-v188-memo-critic)",
+   "verdict": "PASS_WITH_CONDITIONS",
+   "conditions": "C1 receipts pin pre-memo lib hash (this receipt); C2 needs a timed build with margin (below)",
+   "result_sha256": "fe92e75766d6ecc7e68e137940f8be021e25a3ad4164f15c4944139c092fd8c2"
+  },
+  {
+   "engine": "Claude Sonnet independent delta review (r266-v188-boardmemo-critic)",
+   "verdict": "PASS_WITH_CONDITIONS",
+   "conditions": "C1 receipts pin pre-memo live-board hash (this receipt); C2 optional shared key not taken; C3 timed build with comfortable margin (below)",
+   "result_sha256": "f36f70475a1da07f9e9895471ba1443b4ac5e32042db9343668e90acefb3b801"
+  }
+ ],
+ "equivalence": "assembleJevBoard cached vs uncached deepStrictEqual true (339 systems); cached repeat 146 ms vs uncached 166,803 ms on Sandy; mutation of a returned board does not reach the cache",
+ "timed_builds_lechonk": [
+  {
+   "change": "v1.8.8 loader memo only",
+   "npm_run_build_s": 2375,
+   "pages": "705/705"
+  },
+  {
+   "change": "loader memo + assembleJevBoard memo",
+   "npm_run_build_s": 1628,
+   "pages": "705/705"
+  }
+ ],
+ "stale_receipts_note": "REBUILD.json, FINAL-TRANSPORT-BINDING.json, REMOTE-SOURCE-BINDING.json and ACTUAL-FIXTURE-SOURCE-BINDING.json describe the reviewed pre-memo source at ca294df11; this receipt binds the two changed lib files after the memo. No test or gate reads those receipts.",
+ "checks_after_change": "validate_v188.mjs PASS (64 negative controls); v188/v187/feed-live-board tests 16/16 (lead) and reviewer reruns; wire_v188.py idempotent"
+}

@@ -1,0 +1,30 @@
+{
+ "sd-jev-4b-v12.1.0-aligned-s42-step0256": {
+  "entry": {
+   "author": "Kego",
+   "display": "SD-JEV-4B-v12.1.0 (Kego, author-hosted API)",
+   "endpoint_kind": "api",
+   "lane": "api",
+   "licence": "Author-hosted research API (no weights published)",
+   "pricing_base": "Qwen/Qwen3.5-4B",
+   "ranked": false,
+   "repo": null,
+   "revision": null,
+   "support": {
+    "choice": "native",
+    "noul": "native",
+    "score": "native"
+   }
+  },
+  "expect": {
+   "failed": 5,
+   "input_tokens": 535592,
+   "ok": 1495,
+   "output_tokens": 0,
+   "status_counts": {
+    "200": 1495,
+    "422": 5
+   }
+  }
+ }
+}

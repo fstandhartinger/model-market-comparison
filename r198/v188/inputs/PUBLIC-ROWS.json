@@ -1,0 +1,10 @@
+{
+ "sd-jev-4b-v12.1.0-aligned-s42-step0256": {
+  "author": "Kego",
+  "disclosure": "Measured through the author's own hosted endpoint (one NVIDIA A10, author-operated). The author states the base is Torchcast Decision 4B v1.3 with a LoRA adapter; we could not verify the weights. The author used the 231 public JevBench items during development, which the rules allow; the sealed draw was not available to them. The author's endpoint logs request bodies, so the author's systems received the items of this run. Speed is end-to-end latency to the author's endpoint, including network. Requests over the endpoint's 16,384-token input limit, which the author raised from 4,096 before the run, were refused and are counted as wrong answers. Calibration is computed on the 1,495 answered items, as for every row with refused requests. Exactly 5 of 1,500 items (about 76,000-80,000 tokens each) were refused; this count was registered before the run.",
+  "display": "SD-JEV-4B-v12.1.0 (Kego, author-hosted API)",
+  "endpoint_condition": "10 Nov 2026 09:07-09:29 UTC from our server in Germany, network included, author endpoint behind a Cloudflare tunnel. API end-to-end latency: p50 0.544 s, p95 1.242 s, maximum 10.544 s; 1 decision over 10 s. Server-reported usage: 535,592 input / 0 output tokens over 1,495 answered requests. Served model id: SD-JEV-4B-v12.1.0-aligned-s42-step0256.",
+  "licence": "Author-hosted research API (no weights published)",
+  "repo": null
+ }
+}

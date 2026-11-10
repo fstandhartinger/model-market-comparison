@@ -1,0 +1,22 @@
+{
+ "verdict": "PASS",
+ "engine": "Claude Sonnet independent review (r266-v188-critic)",
+ "commit": "734ba1d5e5b4cc6f0aebc34535465ea339e0f611",
+ "reviewed_commit": "734ba1d5e5b4cc6f0aebc34535465ea339e0f611",
+ "base": "3bd5ce11a",
+ "first_review": {
+  "reviewed_commit": "734ba1d5e5b4cc6f0aebc34535465ea339e0f611",
+  "verdict": "PASS",
+  "conditions": [],
+  "receipt": "r198/v188/receipts/CRITIC-1-REVIEW.json",
+  "sha256": "7ce1ab8cc9e06933ff0527e4edc1eb0823bf93ea51710de208b32e56aa700dee"
+ },
+ "notes": [
+  "all published numbers re-scored exactly from the sealed raw (share/off/frozen views)",
+  "5 HTTP 422: wrong for Intelligence, excluded from Calibration by the frozen scorer, as on every live row with refused requests (DECISIONS key v188-sdjev-422-calibration-frozen-scorer)",
+  "cost = min(list 0.0107418, GPU-time 0.0035184) USD/1k on the d1027 common set; GPU-time binds",
+  "check_raw_pricing_v188.py points at the builder's removed private copy; result reproduced by the critic's own arithmetic"
+ ],
+ "lead": "claude:jevbench-add-requests-20260919",
+ "bound_at": "2026-11-10T12:02:03Z"
+}
