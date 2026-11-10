@@ -178,9 +178,64 @@ OWNED_HOLD_STATE_FRESH = timedelta(hours=6)
 OWNER_JOB_RE = re.compile(r"[a-z0-9][a-z0-9-]{2,100}")
 
 
+def sched_utc(value: object) -> datetime | None:
+    """A ~/bin/sched timestamp ("2026-11-10T22:20Z"); anything else is None."""
+    if not isinstance(value, str):
+        return None
+    try:
+        stamp = datetime.fromisoformat(value.strip().replace("Z", "+00:00"))
+    except ValueError:
+        return None
+    return stamp.astimezone(timezone.utc) if stamp.tzinfo else None
+
+
+def owner_has_pending_sched(owner: str, rid: str, now: datetime) -> bool:
+    """~/bin/sched holds an active entry owned by `owner` that names the order and will still wake it: a one-off
+    occurrence not marked done whose (snoozed) time is in the future or at most OWNED_HOLD_STATE_FRESH ago, or a
+    recurring entry whose end date (if any) has not passed. Unreadable sched files count as no entry."""
+    try:
+        lines = (HOME / "schedule" / "events.jsonl").read_text(encoding="utf-8").splitlines()
+        sched_state = json.loads((HOME / "schedule" / "state.json").read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return False
+    done = sched_state.get("done") if isinstance(sched_state, dict) else None
+    snooze = sched_state.get("snooze") if isinstance(sched_state, dict) else None
+    done = done if isinstance(done, dict) else {}
+    snooze = snooze if isinstance(snooze, dict) else {}
+    for line in lines:
+        try:
+            event = json.loads(line) if line.strip() and not line.lstrip().startswith("#") else None
+        except ValueError:
+            continue
+        if not isinstance(event, dict) or event.get("status") != "active":
+            continue
+        owners = event.get("owner")
+        if not isinstance(owners, list) or owner not in owners:
+            continue
+        if rid[:8] not in f"{event.get('id', '')} {event.get('what', '')}":
+            continue
+        recurrence = event.get("recurrence") or "none"
+        if recurrence != "none":
+            until = sched_utc(recurrence.get("until")) if isinstance(recurrence, dict) else None
+            if isinstance(recurrence, dict) and (until is None or until > now):
+                return True
+            continue
+        at = sched_utc(event.get("at"))
+        if at is None:
+            continue
+        key = f"{event.get('id')}|{at.strftime('%Y-%m-%dT%H:%MZ')}"
+        if key in done:
+            continue
+        due = sched_utc(snooze.get(key)) or at
+        if due >= now - OWNED_HOLD_STATE_FRESH:
+            return True
+    return False
+
+
 def owner_job_live(owner: object, rid: str, now: datetime) -> bool:
     """A named owner job counts as live for an order when its STATE.md names the order, does not end with
-    FINAL DONE, and either moved recently or belongs to a running unit. Any doubt counts as not live."""
+    FINAL DONE, and either moved recently, ends with "- PARKED" while a sched entry of its own for the order is
+    pending, or belongs to a running unit. Any doubt counts as not live."""
     if not isinstance(owner, str) or not OWNER_JOB_RE.fullmatch(owner):
         return False
     state_path = HOME / "jobs" / owner / "STATE.md"
@@ -193,6 +248,11 @@ def owner_job_live(owner: object, rid: str, now: datetime) -> bool:
     if (lines and lines[-1] == "- FINAL DONE") or rid[:8] not in text:
         return False
     if now - mtime <= OWNED_HOLD_STATE_FRESH:
+        return True
+    # N102 (10 Nov 2026): a correctly PARKED owner waits for its next sched wake and leaves STATE.md alone, so
+    # the 6 h freshness rule restarted 5666e730's owner until its starts ran out. PARKED plus a pending sched
+    # entry of its own for this order counts as live.
+    if lines and lines[-1] == "- PARKED" and owner_has_pending_sched(owner, rid, now):
         return True
     # Hand-started owners run as <owner>.service; ~/bin/job-start (automatic native owners) uses job-<owner>.service.
     for unit in (f"{owner}.service", f"job-{owner}.service"):
