@@ -7,10 +7,13 @@ import { readFile } from 'node:fs/promises';
 
 const read = (path) => readFile(new URL(path, import.meta.url), 'utf8');
 
-test('CR-377 / CR-577: the entry is public since Florian\'s GO; the server snapshot stays off', async () => {
+test('CR-377 / CR-577 / CR-722: the entry is public since Florian\'s GO; the server snapshot follows the public gate', async () => {
   const [lib, button] = await Promise.all([read('../lib/use-model.ts'), read('../components/UseModelButton.tsx')]);
   assert.match(lib, /export const USE_MODEL_PUBLIC = true;/, 'CR-577: Florian tapped Live on the Use-buttons card');
-  assert.match(button, /useSyncExternalStore\(subscribe, readFlag, \(\) => false\)/, 'the server snapshot is always off, so crawlers and visitors get the unchanged HTML');
+  // CR-722 (10 Nov 2026): the server snapshot is USE_MODEL_PUBLIC, so crawlers get the same disclosed links visitors see.
+  // A preview-only state (USE_MODEL_PUBLIC = false) still renders nothing on the server; the private token works after hydration.
+  assert.match(button, /useSyncExternalStore\(subscribe, readFlag, \(\) => USE_MODEL_PUBLIC\)/, 'server HTML shows the links only while they are public');
+  assert.match(button, /if \(USE_MODEL_PUBLIC \|\| document\.getElementById\(BANNER_ID\)\) return;/, 'the PREVIEW banner never shows once the links are public');
   assert.match(button, /if \(!enabled\) return null;/, 'a disabled button renders nothing, not even a wrapper that would shift the row layout');
 });
 
