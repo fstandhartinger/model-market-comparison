@@ -1,0 +1,25 @@
+{
+ "status": "PASS",
+ "raw_sha256": "e6fd0cb2c967494e89c8255f4e6c82235acf49cc9d7bebdbb686a479b4f84701",
+ "rows": 1500,
+ "answered": 1495,
+ "refused": 5,
+ "common_n": 1489,
+ "pricing_module_sha256": "2f52370fe1dba73d75a770a386df350cc76a0898304aeba9e29c91f6e4d3738b",
+ "cost_components": {
+  "all": {
+   "gpu_time": 0.0035085940115537834,
+   "list_price": 0.010711840000000002,
+   "selected": 0.0035085940115537834
+  },
+  "common": {
+   "gpu_time": 0.0035183917737814947,
+   "list_price": 0.010741752854264609,
+   "selected": 0.0035183917737814947
+  }
+ },
+ "scorer_cost_equal_in_three_views": true,
+ "failure_treatment": "wrong for Intelligence; excluded from Calibration by the frozen scorer (no Calibration value exists for a refused request)",
+ "private_scoring_copy_mode": "0600",
+ "no_item_identifiers_exported": true
+}

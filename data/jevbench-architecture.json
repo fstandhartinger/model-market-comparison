@@ -7800,6 +7800,22 @@
           }
         ],
         "note": "Hosted API measured on the 27 Oct 2026 draw with reasoning disabled; no architecture or parameter count is inferred."
+      },
+      "sd-jev-4b-v12.1.0-aligned-s42-step0256": {
+        "arch": "closed-api",
+        "badges": {
+          "derivation": null,
+          "params": null,
+          "quant": null
+        },
+        "evidence": [
+          {
+            "fact": "Author-hosted API measurement with no public weights or model page; the declared base is unverified.",
+            "kind": "artifact",
+            "url": "https://benchmarkheaven.com/api/jevbench/v1.8.8"
+          }
+        ],
+        "note": "Author-hosted API; the author declares Torchcast Decision 4B v1.3 with a LoRA adapter. We could not verify the weights; no architecture or parameter count is independently established."
       }
     },
     "imagejevbench": {
