@@ -365,11 +365,25 @@ test("audited July provider prices survive the merged dataset", () => {
   // Inceptron re-prices intraday and is refreshed by the daily collector (R9.1), so the merged
   // offer must equal the snapshot row rather than a literal that the next run would break.
   const glm52 = inceptron.models.find((model) => model.model_name === "GLM 5.2");
-  assert.ok(glm52 && glm52.input_per_1m_usd > 0 && glm52.output_per_1m_usd > 0);
-  assert.deepEqual(
-    [find("glm-5.2", "Inceptron")?.input_per_1m, find("glm-5.2", "Inceptron")?.output_per_1m],
-    [glm52.input_per_1m_usd, glm52.output_per_1m_usd],
-  );
+  assert.ok(glm52, "Inceptron lists GLM 5.2");
+  const glm52Direct = ds.models.find((model) => model.family_key === "glm-5.2")?.offers
+    .find((offer) => offer.provider === "Inceptron" && offer.platform === "Inceptron");
+  assert.ok(glm52Direct, "glm-5.2 Inceptron direct offer");
+  if (glm52.price_status === "n/a") {
+    // CR-721: Inceptron's models page withdrew its list prices. The direct offer must then carry no price:
+    // neither the last list price nor the OpenRouter feed price (api_catalog_price) may stand in for it.
+    assert.equal(glm52.input_per_1m_usd ?? null, null);
+    assert.deepEqual(
+      [glm52Direct.input_per_1m, glm52Direct.output_per_1m, glm52Direct.price_status],
+      [null, null, "n/a"],
+    );
+  } else {
+    assert.ok(glm52.input_per_1m_usd > 0 && glm52.output_per_1m_usd > 0);
+    assert.deepEqual(
+      [glm52Direct.input_per_1m, glm52Direct.output_per_1m],
+      [glm52.input_per_1m_usd, glm52.output_per_1m_usd],
+    );
+  }
   // Bedrock prices follow the AWS Price List the daily collector reads (R9.1): the merged offer
   // must carry the raw row's price while the row is listed, and disappear with it.
   for (const [family, name] of [["deepseek-v3.1", "DeepSeek V3.1"], ["qwen3-coder-480b-a35b", "Qwen3 Coder 480B A35B"]]) {
