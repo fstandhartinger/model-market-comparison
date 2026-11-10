@@ -1,34 +1,15 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
-import { spawn } from 'node:child_process';
-import { createServer } from 'node:net';
-import { setTimeout as pause } from 'node:timers/promises';
+import { startNextServer } from './helpers/next-server.mjs';
 
 // Production HTML is the regression boundary: an indexable page with a menu and a full roster.
 // Like test/production/prerender.mjs, this runs after the production build.
 test('ImageJevBench production page keeps the shared section order, full roster, pricing and site menu', { timeout: 45000 }, async () => {
-  const socket = createServer();
-  await new Promise((resolve) => socket.listen(0, '127.0.0.1', resolve));
-  const port = socket.address().port;
-  await new Promise((resolve) => socket.close(resolve));
-  const server = spawn(process.execPath, ['node_modules/next/dist/bin/next', 'start', '-p', String(port), '--hostname', '127.0.0.1'], {
-    env: { ...process.env, OPENAI_API_KEY: '' }, stdio: ['ignore', 'pipe', 'pipe'],
-  });
-  let log = '';
-  server.stdout.on('data', (chunk) => { log += chunk; });
-  server.stderr.on('data', (chunk) => { log += chunk; });
+  const { base, server, log, firstResponse } = await startNextServer('/image-jev-bench');
   try {
-    let html;
-    for (let i = 0; i < 100; i++) {
-      if (server.exitCode !== null) throw new Error(`Production server exited: ${log}`);
-      try {
-        const response = await fetch(`http://127.0.0.1:${port}/image-jev-bench`);
-        if (response.ok) { html = await response.text(); break; }
-      } catch { /* Wait for Next's listener. */ }
-      await pause(200);
-    }
-    assert.ok(html, `Production page must render: ${log}`);
+    let html = firstResponse ? await firstResponse.text() : undefined;
+    assert.ok(html, `Production page must render: ${log()}`);
     html = html.replace(/<!--[\s\S]*?-->/g, '');
     const shared3d = await readFile('components/JevCapabilityChart.tsx', 'utf8');
     assert.match(shared3d, /<JevCapability3D[^>]*benchmarkName=\{benchName\}/, 'the 3D view uses the page benchmark name');
@@ -56,7 +37,7 @@ test('ImageJevBench production page keeps the shared section order, full roster,
       assert.equal((history?.match(/scope="row"/g) ?? []).length, count, `${revision} contains its frozen roster`);
       assert.ok(history.includes(frozen.ranking[0].name), `${revision} contains its recorded winner`);
     }
-    const linked = (await (await fetch(`http://127.0.0.1:${port}/jev-models`)).text()).replace(/<!--[\s\S]*?-->/g, '');
+    const linked = (await (await fetch(`${base}/jev-models`)).text()).replace(/<!--[\s\S]*?-->/g, '');
     assert.match(linked, /Explore ImageJevBench v0\.3\.0/); // CR-371: consistent ImageJevBench name; frozen roster/order checks remain above
   } finally {
     server.kill('SIGTERM');
