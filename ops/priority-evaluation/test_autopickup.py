@@ -692,6 +692,28 @@ class SlaTests(DatabaseTestCase):
         with self.assertRaises(ap.PickupError):
             ap.access_ok(rid)  # no longer on hold
 
+    def test_access_ok_is_not_undone_by_the_agents_pause_marker(self):
+        rid = self._access_hold_with_reply("3 hours", "1 hour")
+        waiting = ap.job_directory(rid, ap.JOB_ROOT) / "release" / "WAITING.json"
+        waiting.parent.mkdir(parents=True, exist_ok=True)
+        waiting.write_text('{"reason":"customer_access"}')
+        ap.access_ok(rid)
+        self.assertFalse(waiting.exists())
+        fx = FakeEffects()
+        ap.cycle(fx)
+        current = row(rid)
+        self.assertIsNone(current["customer_hold_started_at"])  # the next cycle must not hold the order again
+        self.assertFalse(any("paused while customer input is needed" in b for b in fx.boards))
+
+    def test_manual_resume_also_drops_the_pause_marker(self):
+        rid = insert_order()
+        ap.hold(rid, "customer_request")
+        waiting = ap.job_directory(rid, ap.JOB_ROOT) / "release" / "WAITING.json"
+        waiting.parent.mkdir(parents=True, exist_ok=True)
+        waiting.write_text('{"reason":"customer_request"}')
+        ap.resume(rid)
+        self.assertFalse(waiting.exists())
+
     def test_access_ok_refuses_other_hold_reasons(self):
         rid = insert_order()
         ap.hold(rid, "customer_request")

@@ -4568,10 +4568,14 @@ def install_problems() -> tuple[list[tuple[str, str]], list[str], dict[str, Any]
     else:
         try:
             target_ok = entry.resolve(strict=True) == runtime.resolve(strict=True)
-        except OSError:
+        except (OSError, RuntimeError):  # RuntimeError: symlink loop on Python 3.10
             target_ok = False
         if not target_ok:
-            problems.append(("install:entry-point", f"{entry} points to {os.readlink(entry)}, not {runtime}"))
+            try:
+                where = os.readlink(entry)
+            except OSError:
+                where = "an unreadable target"
+            problems.append(("install:entry-point", f"{entry} points to {where}, not {runtime}"))
     try:
         actual = file_sha256(runtime)
     except OSError as exc:
@@ -4581,7 +4585,8 @@ def install_problems() -> tuple[list[tuple[str, str]], list[str], dict[str, Any]
     try:
         record = json.loads(install_record_path().read_text(encoding="utf-8"))
         recorded = record.get("sha256") if isinstance(record, dict) else None
-    except (OSError, json.JSONDecodeError):
+        recorded = recorded if isinstance(recorded, str) else None
+    except (OSError, ValueError):  # ValueError covers JSONDecodeError and a non-UTF-8 record
         record, recorded = None, None
     if not recorded:
         warnings.append(f"runtime autopickup.py {actual[:12]} has no install record ({install_record_path()})")
@@ -5645,6 +5650,11 @@ def resume(rid: str, ended_at: datetime | None = None) -> str:
                            "customer_hold_started_at=NULL, customer_hold_reason=NULL",
                       "customer_hold_started_at IS NOT NULL"):
         raise PickupError("the order is not on hold")
+    # Every exit from a pause (reply, reply + 6 h, `access-ok`, manual `resume`) must drop the agent's pause marker;
+    # otherwise the next cycle sees WAITING.json on an unheld open order and holds it again with a fresh start time,
+    # so the earlier customer reply no longer counts and the order stays paused (CR-732, review of CR-712, B1).
+    with contextlib.suppress(OSError, PickupError):
+        (job_directory(rid, JOB_ROOT) / "release" / "WAITING.json").unlink(missing_ok=True)
     return f"Order {order_ref(rid)} resumed; the 48-hour clock runs again."
 
 
