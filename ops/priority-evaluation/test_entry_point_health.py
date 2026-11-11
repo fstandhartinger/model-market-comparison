@@ -92,6 +92,21 @@ class EntryPointHealth(unittest.TestCase):
         self.assertFalse(info["drift"])
 
 
+    def test_symlink_loop_is_a_problem_not_a_crash(self):
+        # CR-732 (N7): Path.resolve(strict=True) raises RuntimeError on a loop in Python 3.10
+        loop = self.bin / "loop.py"
+        loop.symlink_to(self.entry)
+        self.entry.symlink_to(loop)
+        self.assertEqual(self.keys(), ["install:entry-point"])
+
+    def test_non_utf8_install_record_is_a_warning_not_a_crash(self):
+        self.entry.symlink_to(self.runtime)
+        ap.install_record_path().parent.mkdir(parents=True, exist_ok=True)
+        ap.install_record_path().write_bytes(b"\xff\xfe not json")
+        problems, warnings, _ = ap.install_problems()
+        self.assertEqual(problems, [])
+        self.assertIn("no install record", warnings[0])
+
 class InstallerAndUnit(unittest.TestCase):
     def test_health_unit_runs_runtime_not_entry_point(self):
         unit = (HERE / "jevbench-priority-autopickup-health.service").read_text()

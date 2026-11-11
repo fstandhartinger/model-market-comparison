@@ -205,8 +205,12 @@ def advance(row: dict, root: Path, effects, now: float, deadline: str, sla_root:
     root.mkdir(parents=True, exist_ok=True, mode=0o700)
     path = root / f"{rid}.json"
     if not path.exists() and sla40_card_live(sla_root, row, now):
-        _note_deferred(root, rid, now)
-        return "pending"
+        if row.get("status") in ("paid", "review_passed"):
+            _note_deferred(root, rid, now)  # the 40 h sweep still polls this card; its Refund button decides
+            return "pending"
+        # The order left the open set (late delivery, refusal): the 40 h sweep stops polling its card, so close it
+        # and ask with the 48 h card now instead of waiting up to its expiry (CR-732, review of CR-712, S1).
+        sla_decision.close_superseded(sla_root, row)
     with path.with_suffix(".lock").open("a+") as lock:
         fcntl.flock(lock, fcntl.LOCK_EX)
         state = json.loads(path.read_text()) if path.exists() else {

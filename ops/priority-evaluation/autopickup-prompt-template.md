@@ -45,8 +45,9 @@ your final result with its own raw-input scoring record.
 If you need customer input (for example a working API key), write exactly
 `{"reason":"customer_access"}` to `release/WAITING.json`, record only the missing item type in
 `STATE.md`, and stop. Do not copy access material from the quoted request into any additional prompt, file, command or log. The pickup service puts
-the order on hold and asks the owner to obtain the access securely. When a customer reply arrives,
-the pickup ends the hold and restarts this evaluation from `STATE.md`.
+the order on hold and asks the owner to obtain the access securely. The hold ends when the owner confirms
+the access works (`access-ok`) or, at the latest, 6 h after the customer's reply; the pickup then restarts this
+evaluation from `STATE.md`.
 
 ## Step 2 — release (public orders only)
 

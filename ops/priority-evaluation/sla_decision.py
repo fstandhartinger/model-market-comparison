@@ -45,7 +45,9 @@ MAX_CARDS = 3  # an expired card is asked again at most twice; then the order wa
 SETTLED = {"delay_note": "You tapped Send delay note; the worker sends the fixed delay email.",
            "refund": "You tapped Refund in full; the refund worker pays it back.",
            "no_action": "You tapped No action; nothing was sent or refunded.",
-           "expired": "The buttons expired unanswered; nothing was sent or refunded."}
+           "expired": "The buttons expired unanswered; nothing was sent or refunded.",
+           "superseded": "The order changed after your choice; a new card asks about the refund instead."}
+CLOSEOUT_TRIES = 12  # close-out steps after a final decision are retried each cycle, at most this often (~1 h)
 
 
 def caption(row: dict, deadline: str) -> str:
@@ -186,11 +188,14 @@ LATE_KEEP = ("delay_note", "no_action")  # decisions after which the Refund butt
 
 
 def _finish(state: dict, path: Path, decision: str) -> None:
-    """Close the card for good: no buttons, reply action and ask resolved, settled line. Every step is idempotent."""
-    try:
-        _attach(state, [])
-    except ValueError:
-        pass
+    """Close the card for good: no buttons, reply action and ask resolved, settled line. Every step is idempotent;
+    closeout_done records that all of them succeeded so a caller can retry a failed step (bounded by CLOSEOUT_TRIES)."""
+    if not state.get("buttons_removed"):
+        try:
+            _attach(state, [])
+            state["buttons_removed"] = True
+        except ValueError:
+            pass
     if not state.get("reply_action_resolved"):
         state["reply_action_resolved"] = ra.close_durable_reply_action(state)
         ra.atomic(path, state)
@@ -198,6 +203,34 @@ def _finish(state: dict, path: Path, decision: str) -> None:
         state["resolved"] = _resolve_ask(state, path, decision)
         ra.atomic(path, state)
     ra.settle_card(state, path, SETTLED[decision], SOURCE)
+    state["closeout_tries"] = state.get("closeout_tries", 0) + 1
+    state["closeout_done"] = bool(state.get("buttons_removed") and state.get("reply_action_resolved")
+                                  and state.get("resolved") and state.get("settled"))
+    ra.atomic(path, state)
+
+
+def _closeout_pending(state: dict) -> bool:
+    return not state.get("closeout_done") and state.get("closeout_tries", 0) < CLOSEOUT_TRIES
+
+
+def close_superseded(root: Path, row: dict) -> bool:
+    """The order left the open set (late delivery, refusal) while its 40 h card still shows a live Refund button.
+    The 40 h sweep no longer polls that card, so a tap on it would be lost: close it, and let the 48 h refund card
+    ask instead. Never records or applies a refund. Caller holds the cycle lock. Returns True if a card was closed."""
+    path = root / f"{uuid.UUID(str(row['id']))}.json"
+    if not path.exists():
+        return False
+    with path.with_suffix(".lock").open("a+") as lock:
+        fcntl.flock(lock, fcntl.LOCK_EX)
+        state = json.loads(path.read_text())
+        if state.get("decision") not in LATE_KEEP or state.get("late_refund") or state.get("late_closed"):
+            return False
+        state["late_closed"] = True
+        state["superseded"] = True
+        ra.atomic(path, state)
+        if live_runtime():
+            _finish(state, path, "superseded")
+        return True
 
 
 def apply_late_refund(state: dict, rows, now: float) -> None:
@@ -225,6 +258,8 @@ def _late_followup(state: dict, path: Path, now: float) -> str:
         _finish(state, path, "refund")
         return "refund"
     if state.get("late_closed"):
+        if _closeout_pending(state):
+            _finish(state, path, first)  # a failed button removal / ask resolve / settle is retried, bounded
         return first
     if not state.get("late_attached") and now <= state["expires_at"]:
         try:  # a failed edit is retried next cycle and never blocks the decision the caller applies

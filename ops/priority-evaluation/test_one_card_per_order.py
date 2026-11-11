@@ -212,6 +212,58 @@ class OneCard(unittest.TestCase):
         self.assertEqual(self.sla(NOW + 90), "refund")
         self.assertEqual(self.resolved, ["refund"])
 
+    def test_48h_card_not_deferred_once_the_order_left_the_open_set(self):
+        # CR-732 (S1): a late delivery or refusal moves the row to refund_due/refund_pending; the 40 h sweep stops
+        # polling its card, so the 40 h card is closed (never a refund) and the 48 h card asks now.
+        self.decided("no_action", "sla_n")
+        self.f.runs.clear()
+        for status in ("refund_due", "refund_pending"):
+            with self.subTest(status):
+                self.assertEqual(self.refund(NOW + 60, row={**ROW, "status": status}), "pending")
+        st = self.state()
+        self.assertTrue(st["late_closed"] and st["superseded"])
+        self.assertNotIn("late_refund", st)
+        # no dead Refund button left on the 40 h card (the later edit is the new 48 h card's keyboard)
+        cleared = [p for m, p in self.f.http if m == "editMessageReplyMarkup" and p.get("message_id") == MSG
+                   and p["reply_markup"]["inline_keyboard"] == []]
+        self.assertEqual(len(cleared), 1)
+        self.assertTrue(st["buttons_removed"])
+        self.assertEqual(st["settled_reason"], sd.SETTLED["superseded"])
+        self.assertTrue(any("now" in r and "--dry-run" not in r for r in self.f.runs))  # one 48 h card
+        self.assertEqual(len([r for r in self.f.runs if "now" in r and "--dry-run" not in r]), 1)
+        self.assertFalse(list(self.rf_root.glob("*.deferred_to_sla40_card.json")))
+        self.assertEqual(sd.close_superseded(self.sla_root, ROW), False)  # idempotent
+
+    def test_open_order_is_still_deferred(self):
+        self.decided("delay_note", "sla_d")
+        self.assertEqual(self.refund(NOW + 60, row={**ROW, "status": "review_passed"}), "pending")
+        self.assertFalse(self.state().get("late_closed"))
+        self.assertTrue(list(self.rf_root.glob("*.deferred_to_sla40_card.json")))
+
+    def test_failed_closeout_after_expiry_is_retried_and_bounded(self):
+        # CR-732 (S2): late_closed is saved before the close-out; a failed settle must be retried, not dropped.
+        self.decided("no_action", "sla_n")
+        fails = {"n": 0}
+
+        def flaky(state, path, reason, source=None):
+            fails["n"] += 1
+            state["settled"] = fails["n"] >= 3
+            ra.atomic(path, state)
+        with mock.patch.object(ra, "settle_card", flaky):
+            self.sla(EXPIRES + 10)
+            self.assertFalse(self.state()["closeout_done"])
+            self.sla(EXPIRES + 20)
+            self.sla(EXPIRES + 30)
+            self.assertTrue(self.state()["closeout_done"])
+            self.sla(EXPIRES + 40)
+        self.assertEqual(fails["n"], 3)  # no further attempts once done
+        with mock.patch.object(ra, "settle_card", lambda *a, **k: None):  # never succeeds: bounded
+            self.seed_card(decision="no_action", update_id=1, decided_at=NOW - 5, late_attached=True,
+                           late_closed=True, closeout_tries=0)
+            for i in range(sd.CLOSEOUT_TRIES + 5):
+                self.sla(EXPIRES + 100 + i)
+            self.assertEqual(self.state()["closeout_tries"], sd.CLOSEOUT_TRIES)
+
     def test_no_edit_message_text_anywhere(self):
         self.assertFalse(hasattr(ra, "edit_card_text"))
         self.assertFalse(hasattr(ra, "extend_ask"))
