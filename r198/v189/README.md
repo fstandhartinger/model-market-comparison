@@ -1,0 +1,1 @@
+v1.8.9 candidate pipeline: one unranked self-hosted row. Inputs contain permitted public aggregates only. Private scoring remains outside this repository. Review gates every public reader.

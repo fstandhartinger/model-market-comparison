@@ -1,0 +1,119 @@
+{
+ "carried_rows": 339,
+ "carried_rows_equal_except": [],
+ "cost_basis": {
+  "cost_basis_sha256": "b83bdfd14c263ffacfa572b304084154afca84c1f00083101a33783ae6f8b356",
+  "frozen_at": "v1.7.16",
+  "n_items": 1489,
+  "rule": "fixed-common-cost-basis-d1027 (frozen at v1.7.16)",
+  "set_sha256": "4e912731e63369e1b3066b0b4afa87b44f1094aea079c5b41dc6d02e7f235537"
+ },
+ "exceptions": {
+  "text_only_sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+ },
+ "method": {
+  "decision_limit_s": 10,
+  "label": "v1.7",
+  "rule": "latency_s > 10.000 s -> failed",
+  "treatment": "share"
+ },
+ "new_rows": {
+  "karpo_decision_31b": {
+   "axes": {
+    "calibration": 95.99730713206564,
+    "cost": 57.9400170643567,
+    "intelligence": 83.06083634077379,
+    "speed": 88.29089098203782
+   },
+   "code_commit": "25c38826",
+   "composite_ci95": {
+    "A": [
+     76.97183408288284,
+     78.89052096129261
+    ],
+    "B": [
+     77.34935119229758,
+     80.2301519727583
+    ],
+    "C": [
+     76.97183408288284,
+     78.89052096129261
+    ]
+   },
+   "cost": {
+    "active_b": 31,
+    "architecture_class": "dense",
+    "cost_common": 0.025234774673846376,
+    "family": "gemma",
+    "gpu_common": 0.025234774673846376,
+    "list_common": 0.03796658159838818,
+    "ref": {
+     "authority": "frozen market reference and v1.8 GPU-time min",
+     "in": 0.09,
+     "listing": "google/gemma-4-31b-it",
+     "module_sha256": "2f52370fe1dba73d75a770a386df350cc76a0898304aeba9e29c91f6e4d3738b",
+     "out": 0.33999999999999997
+    },
+    "throughput": 10106.516129032258
+   },
+   "decision_limit": {
+    "limit_s": 10.0,
+    "rule": "latency_s > limit -> failed",
+    "treatment": "share"
+   },
+   "failure_treatment": "Failed or unanswered requests count as wrong answers.",
+   "model_pin": "MachinePulseAI/karpo-decision-31B@221bf1a011093807e29b77859f09499c2c365e34",
+   "price_reference": {
+    "authority": "frozen market reference and v1.8 GPU-time min",
+    "in": 0.09,
+    "listing": "google/gemma-4-31b-it",
+    "module_sha256": "2f52370fe1dba73d75a770a386df350cc76a0898304aeba9e29c91f6e4d3738b",
+    "out": 0.33999999999999997
+   },
+   "scored_input_sha256": "52d18a627513d68abf7bf706bd1f1e65088d755e76af71b3000330082f4e7730",
+   "treatment": "unranked"
+  }
+ },
+ "predecessor": {
+  "publication_sha256": "aa7ae8f0437d44d0afaa29c91367cec86c5868ece027ddd9d6ce2ed5420500df",
+  "revision": "v1.8.8"
+ },
+ "pricing_authority": "frozen market reference and v1.8 GPU-time min",
+ "pricing_module_sha256": "2f52370fe1dba73d75a770a386df350cc76a0898304aeba9e29c91f6e4d3738b",
+ "publication_approval": {
+  "fresh_baseline": "v1.8.8",
+  "status": "GO (standing; no top-five change; paid evaluation published with the author's written consent)",
+  "top_five_effect": "unchanged"
+ },
+ "remeasured_rows": {},
+ "repriced_rows": {},
+ "revision": "v1.8.9",
+ "schema_version": 1,
+ "scorers": {
+  "a2_cells_v16": "afd034efe27bde12f2ebbfd12c4c0792c93214e1aa9a63deecb0e83a0184c990",
+  "build_categories_v16": "40eb50f3d7fea2693b4478c4b89f8bfb957dd17776add491935742e3b9354e73",
+  "build_topics_v16": "ec04ab598162bfc4340ffa7916a06573eb1222132c61e47ab772045bc67ced78",
+  "decisive_v16": "80b9ccf43e58dddb1b2a77e0a33aba8a9f7337a3a9a639afc7264218bbf8918f",
+  "noul_method_v16": "119e59486ab3300b972fbcbadb0fe1dceceb124287607375aa61c66063c607d0",
+  "pins_v17": "b50cc00dd2cb0ba46157eb6a2bda620255f3ff54404025e992bc7962dfff2f8b",
+  "run_under_v17": "efb194b2ea350db59be37e5e72af71f809f763a2476cd6f521adf6f4fd90a64f",
+  "score_v15": "0931e05c6410b1b971201834397cb609cdb25f942723c50375632952f6dcc447",
+  "score_v15_headlineA": "826f2cbcb57007ec8a161e6eb0111182b8a656c0638027c6c78022a858fd8e2c",
+  "score_v16": "02132271117653e6302c509232a581d0094f0e78eac8b1bfc67596fd5d5097e9",
+  "score_v17": "6363458d208a52f4ad5aaf73027cad1b7e0358ff962e581d57a3cc462c8f1978"
+ },
+ "source_inputs": {
+  "inputs/ARCHITECTURE.json": "1a8a15bcd9be85e28d7e1a8e77e6e2278f108e0c4723771195d74597f0be44af",
+  "inputs/BREAKDOWN-POLICY.json": "f3fa5881ae40c8b925191f12ad152f6a92cd2db51c0fe636f675c12409ed245b",
+  "inputs/CLEANED-ROWS.json": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+  "inputs/ENTRIES.json": "8ea17f60667faa5ae7cbf31dd5df255c006061786516fe5905d357a18af93c09",
+  "inputs/ENTRY-PINS.json": "790abd6b982200d63fd96ce5ed0b3686581f9d406829a3d97cca1d95effa9807",
+  "inputs/PROVENANCE.json": "c5df2c6c7298c42341aa62c17de2c840cf4ef9dbc1b7e50f44dacfd8b9415a45",
+  "inputs/PUBLIC-ROWS.json": "540ffd7a9eb008c8f7c3ec587f22000db9cfb66807d52a227a1b237bfe191c7e",
+  "inputs/TEXT-EXCEPTIONS.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+  "src/cells.json": "710be6a57933caf7a362bc6fe8c8c988e7b23648042902abb96907cc8bc9c050",
+  "src/scored.json": "183731ba7421ce7a1bd692113ef27212a635247fd5a60c3bbeba1b9d3764cb74",
+  "src/usage.json": "b1f85b54e0bc63746c7d193dded52848ff31db2c437950965a98c83650dfcdfd"
+ },
+ "topfive_diff_sha256": "2056b2f702210efa70074dd85d22b0112f485d67a7553163698bd98bd9542bfa"
+}
