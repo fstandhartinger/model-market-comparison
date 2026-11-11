@@ -1008,7 +1008,7 @@
     }
   ],
   "price_collection": "scripts/fetch-google-vertex-catalog.mjs (2026-11-11): two GETs of https://cloud.google.com/model-garden/pricing and https://cloud.google.com/model-garden/partner-models/pricing (server-rendered); each row's price_ref (section heading, Claude region pane, model label, Gemini 3 Region column) re-read from the standard on-demand table (Priority and Flex/Batch tables ignored). 64/69 rows confirmed today; rows not listed or unreadable on the page keep their prices and price_checked_at. Rows are never added by the script.",
-  "response_sha256": "68a4b2637dc602876e7a26f923556f94c74435a4e27e4e0a27d3fe2869d32043",
+  "response_sha256": "a27750827948afc4686922cf416f7208c32c83ff52e300c043b52669d0db0c5a",
   "diff": {
     "price_changed": [],
     "unlisted": [
@@ -1045,11 +1045,11 @@
   "source_responses": [
     {
       "url": "https://cloud.google.com/model-garden/pricing",
-      "sha256": "68a4b2637dc602876e7a26f923556f94c74435a4e27e4e0a27d3fe2869d32043"
+      "sha256": "a27750827948afc4686922cf416f7208c32c83ff52e300c043b52669d0db0c5a"
     },
     {
       "url": "https://cloud.google.com/model-garden/partner-models/pricing",
-      "sha256": "a9c1c2b2441f8528604ac5daf8f7c9fb5c0228ca4589eb15625c0027dbc8266a"
+      "sha256": "f56884f16aa983a4283bfad0b577a194432c81ea5443661ed69919da580862d0"
     }
   ]
 }

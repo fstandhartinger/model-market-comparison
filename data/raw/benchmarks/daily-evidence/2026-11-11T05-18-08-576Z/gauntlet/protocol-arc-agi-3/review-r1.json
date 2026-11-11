@@ -1,0 +1,17 @@
+{
+  "artifact_id": "protocol-arc-agi-3",
+  "artifact_sha256": "95716ef98d721e5a0c3f9c69bd5024d97b8aa40916a61e38fdf901ea9069d450",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": ["arc-agi::3", "c1", "c2"],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Row metric wording 'Semi-private' is registry phrasing, not protocol text; it is structurally supported by SOURCE 1 (135 environments total, 25-environment public demo) and contradicts nothing, so not a finding.",
+    "I cannot recompute row or artifact SHA-256 values or execute transport/qualification checks; row binding relied on the owner-supplied hash c77722bf..., a limitation only.",
+    "Unit/range agreement (percent, [0,null]) was judged against this run's generated served-value summary (SOURCE 4: 129 finite values, min 0.01, max 99.9457), admissible per c1 for scale only; I cannot independently read the captured payload.",
+    "scoring.notes contains registry policy statements (e.g., 'A scoring revision requires a new protocol identity') that are our vocabulary and not verifiable against source text; the factual claims (median human baseline, 115% per-level cap) match SOURCE 1."
+  ],
+  "missing_evidence": []
+}

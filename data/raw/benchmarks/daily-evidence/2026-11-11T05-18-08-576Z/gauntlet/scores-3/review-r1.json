@@ -1,0 +1,37 @@
+{
+  "artifact_id": "scores-3",
+  "artifact_sha256": "87bc40e3269491676b8d6dd20299dbf22a40dc34c800be47daf295f32d8b7a84",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": [
+    "vendor:DeepSeek-V3:swe-bench-verified::snapshot-2026-09-10",
+    "c1"
+  ],
+  "errors_found": 2,
+  "findings": [
+    {
+      "id": "f1",
+      "severity": "blocker",
+      "location": "row vendor:DeepSeek-V3:swe-bench-verified::snapshot-2026-09-10 field benchmark_id",
+      "evidence": "Primary source (arXiv 2412.19437v2 page 31) labels the dataset only as SWE-Bench Verified / SWE Verified (Resolved) with value 42.0; no snapshot-2026-09-10 or any snapshot/version appears. Criterion c1 requires benchmark version verification.",
+      "repair": "Remove ':snapshot-2026-09-10' from benchmark_id or provide primary evidence supporting that snapshot version."
+    },
+    {
+      "id": "f2",
+      "severity": "major",
+      "location": "row vendor:DeepSeek-V3:swe-bench-verified::snapshot-2026-09-10 subject.source_id/name/model_id",
+      "evidence": "Primary source identifies the model only as DeepSeek V3 in Table 6; no December 2024 update, Dec '24, or deepseek-v3-dec-24 checkpoint label appears in the supplied source evidence.",
+      "repair": "Align model labels exactly with source evidence or add primary evidence for the December 2024 update/checkpoint."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "Owner hash/transport/qualification checks were not independently re-executed; supplied row/source sha256 and retrieval timestamps are accepted as stated.",
+    "Source table does not explicitly annotate unit percent; percentage interpretation is inferred from the Resolved metric and values rather than an explicit unit label.",
+    "published_at is null and no publication date appears in the primary evidence; no source date beyond retrieved_at was assessed."
+  ],
+  "missing_evidence": [
+    "Explicit source evidence for benchmark snapshot version snapshot-2026-09-10",
+    "Explicit source evidence for DeepSeek-V3 December 2024 update / deepseek-v3-dec-24 model checkpoint label"
+  ]
+}

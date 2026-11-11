@@ -1,0 +1,38 @@
+{
+  "artifact_id": "scores-2",
+  "artifact_sha256": "337bc630bc97e8f7bf76f6523fb32e8a231610eeb1c7a1195050ae77b480b007",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": [
+    "vendor:mistralai/Devstral-2-123B-Instruct-2512:swe-bench-verified::snapshot-2026-09-10",
+    "vendor:mistralai/Devstral-Small-2-24B-Instruct-2512:swe-bench-verified::snapshot-2026-09-10",
+    "c1"
+  ],
+  "errors_found": 2,
+  "findings": [
+    {
+      "id": "vendor:mistralai/Devstral-2-123B-Instruct-2512:swe-bench-verified::snapshot-2026-09-10",
+      "severity": "minor",
+      "location": "source.published_at",
+      "evidence": "Primary source text (SOURCE 1) explicitly dates the article 'December 9, 2025'; candidate row records published_at:null, contradicting the available source date that criterion c1 requires verifying.",
+      "repair": "Set source.published_at to 2025-12-09 (or otherwise record the source publication date present in the evidence), and reselect protocol/source fields accordingly."
+    },
+    {
+      "id": "vendor:mistralai/Devstral-Small-2-24B-Instruct-2512:swe-bench-verified::snapshot-2026-09-10",
+      "severity": "minor",
+      "location": "source.published_at",
+      "evidence": "Primary source text (SOURCE 2) explicitly dates the article 'December 9, 2025'; candidate row records published_at:null, contradicting the available source date that criterion c1 requires verifying.",
+      "repair": "Set source.published_at to 2025-12-09 (or otherwise record the source publication date present in the evidence), and reselect protocol/source fields accordingly."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "Numeric equality verified for both rows: row1 value 72.2 matches source '72.2%'; row2 value 68 matches source '68.0%' (trailing zero does not change value) with unit percent and self_reported basis consistent with vendor blog figures.",
+    "Benchmark version 'snapshot-2026-09-10' is not stated in either source text, which says only 'SWE-bench Verified'; treated as accepted packaged identity per prior accepted subject, not independently verifiable from source.",
+    "Model/checkpoint identifiers (devstral-2-123b::default, devstral-small-2::default, -2512 suffixes) were not re-derived; subject identity is fixed and prior accepted, and no alias inference was applied.",
+    "Harness fields are null and protocols note the harness is not specified in source; the Cline scaffolding mentioned in source is described as used only for the separate human evaluations, which the row protocols reflect correctly.",
+    "Read-only review: could not recompute row/candidate SHA-256 values or execute transport/hash/qualification checks; owner-supplied hashes were treated as binding.",
+    "Source url, sha256, retrieved_at, locator values in both rows match the corresponding primary evidence fields exactly."
+  ],
+  "missing_evidence": []
+}

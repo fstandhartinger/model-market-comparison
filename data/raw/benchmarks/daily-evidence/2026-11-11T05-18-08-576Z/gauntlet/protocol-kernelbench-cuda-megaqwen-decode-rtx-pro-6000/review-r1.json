@@ -1,0 +1,42 @@
+{
+  "artifact_id": "protocol-kernelbench-cuda-megaqwen-decode-rtx-pro-6000",
+  "artifact_sha256": "281df10e55b53ee8409b58c066527c9940e0dcc645df63602f73a2c4c8533ee0",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": [
+    "kernelbench-cuda-megaqwen-decode::rtx-pro-6000",
+    "c1",
+    "c2"
+  ],
+  "errors_found": 3,
+  "findings": [
+    {
+      "id": "f1",
+      "severity": "blocker",
+      "location": "kernelbench-cuda-megaqwen-decode::rtx-pro-6000.version_guard",
+      "evidence": "Row guard says 'the problem must stay in the stated four-problem deck'. SPEC.md (SOURCE 3) states 'Problem 04 ... was retired 2026-11-09' and 'Deck stays at three since 2026-11-09'; leaderboard.json (SOURCE 2) lists only three problems. The changed task set cannot silently reuse the existing four-problem identity.",
+      "repair": "Update version_guard to state the current three-problem deck and remove any four-problem assumptions; verify benchmark identity continuity against the retired-04 protocol before serving the row."
+    },
+    {
+      "id": "f2",
+      "severity": "blocker",
+      "location": "kernelbench-cuda-megaqwen-decode::rtx-pro-6000.version / version_status",
+      "evidence": "Row claims version_status 'published' and version 'rtx-pro-6000'. The captured protocol contains no release identifier for this board; leaderboard.json only exposes schema_version 1 and environment v2_containerized, and the page/spec do not publish the string 'rtx-pro-6000' as a release tag. The row's version is a hardware label, not a copied published release identifier.",
+      "repair": "Set version_status to 'snapshot' and version to 'snapshot-2026-11-11', or identify and copy an actual published release identifier for this board if one exists in the protocol."
+    },
+    {
+      "id": "f3",
+      "severity": "major",
+      "location": "kernelbench-cuda-megaqwen-decode::rtx-pro-6000.scoring.notes",
+      "evidence": "Notes claim the per_problem ranked list 'still holds' a 'bug' muse/muse-spark-1.3 [ultra] cell on 04 (0.2056) and cite Opus 5 at 196.10% on 04; however the captured leaderboard.json (SOURCE 2) has no problem 04 and no such ranked list, and SPEC.md states problem 04 was retired 2026-11-09. The referenced 04 values and lists are not present in the current protocol.",
+      "repair": "Remove 04-era references (muse 04 cell, Opus 5 196.10% on 04, four-problem ranked list) from the notes, or rewrite them to reflect the current three-problem deck and the current per_problem data."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "I cannot execute the owner's hashes, transport or qualification checks; row sha256 values are taken as bound from the packet.",
+    "The served value-scale summary (0.97..8.12) was used only to confirm the row's unit/range; it cannot establish the metric's meaning beyond the row's own explicit definition.",
+    "The protocol text contains no explicit string such as 'snapshot' or 'published', consistent with the criteria that absence of our vocabulary is not itself missing evidence."
+  ],
+  "missing_evidence": []
+}

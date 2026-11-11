@@ -1,0 +1,28 @@
+{
+  "artifact_id": "scores-4",
+  "artifact_sha256": "146a0efdbf7f3036788b466a80dae6e7681e2f23b1eb1b9d5ebca79f372f98a4",
+  "round": 1,
+  "verdict": "blocked",
+  "coverage_checked": [
+    "vendor:DeepSeek-V3:aider-polyglot::snapshot-2026-09-10",
+    "c1"
+  ],
+  "errors_found": 1,
+  "findings": [
+    {
+      "id": "f1",
+      "severity": "blocker",
+      "location": "row vendor:DeepSeek-V3:aider-polyglot::snapshot-2026-09-10, fields id and benchmark_id",
+      "evidence": "Primary source (arXiv 2412.19437v2 Table 6) identifies the benchmark only as 'Aider-Polyglot (Acc.)' with no snapshot or version identifier; the served locator and table row contain no 'snapshot-2026-09-10' or any version label/date. Artifact claims benchmark_id 'aider-polyglot::snapshot-2026-09-10'.",
+      "repair": "Remove or qualify the unsupported 'snapshot-2026-09-10' version unless primary evidence can document that exact Aider-Polyglot snapshot; recalculate row id and hashes accordingly."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "I cannot execute SHA-256/hash, transport, or qualification checks; owner-provided hashes are accepted as binding.",
+    "The source does not separately label a DeepSeek-V3 checkpoint beyond 'DeepSeek V3'; 'December 2024 update' is inferred from arXiv 2412.19437v2 and was not treated as an alias."
+  ],
+  "missing_evidence": [
+    "Primary source value for the Aider-Polyglot benchmark version/snapshot claimed as 'snapshot-2026-09-10' is absent; the PDF evidence provides no version identifier or date for the Aider-Polyglot benchmark."
+  ]
+}

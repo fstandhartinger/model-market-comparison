@@ -1,0 +1,25 @@
+{
+  "artifact_id": "protocol-mcp-atlas-snapshot-2026-09-21",
+  "artifact_sha256": "9349407c23d58eee8dd28185ec59bb20ba00b2091b27da5f7a95958eb3e0e518",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": ["mcp-atlas::snapshot-2026-09-21", "c1", "c2"],
+  "errors_found": 1,
+  "findings": [
+    {
+      "id": "mcp-atlas::snapshot-2026-09-21|scoring.notes",
+      "severity": "minor",
+      "location": "row mcp-atlas::snapshot-2026-09-21, field scoring.notes ('the stat card is stale and is never ingested' parenthetical)",
+      "evidence": "SOURCE 1 Performance Comparison lists rank 1 Gemini-4-Argon at 90.70 ± 1.80 and rank 2 Muse Spark 1.1 at 88.10 ± 1.95; no 88.1% top row exists. SOURCE 4 confirms highest served value is 90.7. The stat card's 83.6% matches rank 9 Gemini 3.5 Flash (83.60). The note's claim 'the board's own top row is 88.1 %' is therefore factually wrong.",
+      "repair": "Correct the parenthetical to name the actual top row (Gemini-4-Argon 90.70), or state that the card's 83.6% matches rank-9 Gemini 3.5 Flash, or drop the specific top-row figure while keeping that the stat card is stale and never ingested."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "Cannot verify owner-side SHA-256 hash computations, transport or qualification checks; treated as executed by the owner per instructions. My inability to run them is a limitation, not missing evidence.",
+    "The version_guard claim 'exactly one embedded entries array with model and score' cannot be verified from the plain-text excerpt; treated as a producer-side check confirmed by the owner.",
+    "SOURCE 3 (3 model rows added) and SOURCE 4 (37 values, 40.2-90.7) are this run's generated summaries; accepted per instructions only for judging status 'active' and the unit/range scale, and settle nothing about methodology.",
+    "The protocol page text names no successor board and no release version identifier; the row's superseded_by:null and version_status 'snapshot' are consistent with the excerpt's silence."
+  ],
+  "missing_evidence": []
+}

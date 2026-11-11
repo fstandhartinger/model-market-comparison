@@ -1,0 +1,33 @@
+{
+  "artifact_id": "scores-5",
+  "artifact_sha256": "3600abfcab7e2d96c2bf65645cb9c3d10fb448c3980291ee58d4053bbcf61f88",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": ["vendor:DeepSeek-V3:longbench::2", "c1"],
+  "errors_found": 2,
+  "findings": [
+    {
+      "id": "unit-not-verified",
+      "severity": "blocker",
+      "location": "vendor:DeepSeek-V3:longbench::2 / source.unit",
+      "evidence": "Primary source Table 6 lists LongBench v2 (Acc.) with value 48.7 but no explicit unit or '%' indicator. The artifact claims unit \"percent\", yet the captured PDF text does not state that accuracy is measured in percent.",
+      "repair": "Provide explicit evidence from the paper (e.g., a unit column or a sentence stating percentages) that LongBench v2 accuracy is reported as percent, or change the unit to match the source's actual unit if different."
+    },
+    {
+      "id": "source-date-missing",
+      "severity": "blocker",
+      "location": "vendor:DeepSeek-V3:longbench::2 / source.published_at",
+      "evidence": "The artifact sets source.published_at to null, but the primary evidence packet contains no publication date for arXiv 2412.19437v2. The source is an arXiv paper with an implicit submission/update date that is not captured.",
+      "repair": "Populate source.published_at with the actual arXiv version date from metadata or the paper header, and include it in the primary evidence packet."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "Unable to independently recompute SHA-256 hashes or execute retrieval/qualification checks; review relies on supplied hashes and receipts.",
+    "The paper may conventionally report accuracy in percent, but the captured excerpt does not contain an explicit unit; this is treated as missing evidence rather than assumed."
+  ],
+  "missing_evidence": [
+    "explicit unit for LongBench v2 (Acc.) value 48.7 in arXiv 2412.19437v2 Table 6",
+    "publication date (published_at) for arXiv 2412.19437v2"
+  ]
+}

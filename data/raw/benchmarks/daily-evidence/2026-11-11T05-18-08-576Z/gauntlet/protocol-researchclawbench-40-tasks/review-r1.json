@@ -1,0 +1,22 @@
+{
+  "artifact_id": "protocol-researchclawbench-40-tasks",
+  "artifact_sha256": "323b823336884461e76c46e6b967872723e976d0d6d9dcfa89f7b54356a18cb5",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": ["researchclawbench::40-tasks", "c1", "c2"],
+  "errors_found": 1,
+  "findings": [
+    {
+      "id": "researchclawbench::40-tasks",
+      "severity": "blocker",
+      "location": "version_status / version",
+      "evidence": "Protocol sources (home page, README, app.js) publish no release identifier for this board; they name tasks, domains and agents but no version tag or release. The row declares version_status \"published\" with version \"40-tasks\", which requires a maintainer-published release identifier being copied. Per criterion c2, a board with no published release identifier must have version_status \"snapshot\" and a dated snapshot identity.",
+      "repair": "Change version_status to \"snapshot\" and set version to the dated snapshot identity (e.g., snapshot-2026-11-11) reflecting the captured methodology, or else produce evidence of an actual published release identifier to keep \"published\"."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "I could not execute hashes or full page retrieval; the SOURCE 1 excerpt may not contain the entire page, so the absence of a release identifier is judged from the provided excerpt only. The leaderboard.json payload itself is not in the packet, only generated summaries (activity and value scale), so judgements about the row's notes on coverage or costs rely on those summaries and not raw content."
+  ],
+  "missing_evidence": []
+}

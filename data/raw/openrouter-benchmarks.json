@@ -3,18 +3,18 @@
   "collected_at": "2026-11-11",
   "method": "scripts/fetch-openrouter-benchmarks.mjs (2026-11-11): two authenticated GETs of /api/v1/benchmarks (source=openrouter&include_run_config=true, kept as own_data, and unfiltered). Terms evaluated 2026-09-15 — see openrouter-benchmarks.method.md: the payload's meta.citation is documented as \"Required attribution when republishing this data\" (per-source). Display attribution: \"OpenRouter Benchmarks\" linked to openrouter.ai/benchmarks.",
   "terms": "Source: OpenRouter evals (openrouter.ai) via OpenRouter (openrouter.ai/rankings).",
-  "as_of": "2026-11-11T00:00:57.157Z",
-  "own_as_of": "2026-11-10T19:46:03.094Z",
+  "as_of": "2026-11-11T02:34:15.627Z",
+  "own_as_of": "2026-11-11T02:34:15.627Z",
   "own_citation": "Source: OpenRouter evals (openrouter.ai) via OpenRouter (openrouter.ai/rankings).",
   "counts": {
-    "total_rows": 1716,
-    "own_rows": 304,
+    "total_rows": 1718,
+    "own_rows": 306,
     "aa_rows": 177,
     "design_arena_rows": 1235,
     "models": 285
   },
-  "response_sha256": "345fbaaad47371d636ca864219ecc39c1d409f1b83a1a9d132675fd39728de6b",
-  "own_response_sha256": "62f4ca696f5d60d39f2cf33bd5617433c60c2104c9b70148eb3ba61cb732ec72",
+  "response_sha256": "8a42f9809d49d86ea1363442c9699d4e7aa8c3a2a8188e749d465068f9f4bb3e",
+  "own_response_sha256": "455caa2b30668350fe2f4abca162aa7793fe9720411473dc182af38c21a35e5c",
   "own_data": [
     {
       "source": "openrouter",
@@ -950,6 +950,17 @@
       "avg_cost_per_task": 0.23625982323232325,
       "total_tasks": 1584,
       "last_run_timestamp": "2026-10-31T16:12:28.230Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "upstage/solar-pro4-20260810",
+      "display_name": "Upstage: Solar Pro 4",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.808081,
+      "accuracy_stddev": null,
+      "avg_cost_per_task": 0.05294089393939394,
+      "total_tasks": 198,
+      "last_run_timestamp": "2026-11-11T02:02:05.405Z"
     },
     {
       "source": "openrouter",
@@ -2757,6 +2768,17 @@
     },
     {
       "source": "openrouter",
+      "model_permaslug": "upstage/solar-pro4-20260810",
+      "display_name": "Upstage: Solar Pro 4",
+      "benchmark_type": "tau_bench_verified_airline",
+      "accuracy": 0.66,
+      "accuracy_stddev": null,
+      "avg_cost_per_task": 0.0747839,
+      "total_tasks": 50,
+      "last_run_timestamp": "2026-11-11T02:34:15.627Z"
+    },
+    {
+      "source": "openrouter",
       "model_permaslug": "nvidia/nemotron-3.5-lightning-20260807",
       "display_name": "NVIDIA: Nemotron 3.5 Lightning",
       "benchmark_type": "tau_bench_verified_airline",
@@ -3791,8 +3813,8 @@
       "coding_index": null,
       "agentic_index": null,
       "pricing": {
-        "prompt": "0.0000000825",
-        "completion": "0.0000002475"
+        "prompt": "0.0000003",
+        "completion": "0.0000012"
       }
     },
     {
@@ -3851,8 +3873,8 @@
       "coding_index": null,
       "agentic_index": null,
       "pricing": {
-        "prompt": "0.000000165",
-        "completion": "0.00000033"
+        "prompt": "0.00000014",
+        "completion": "0.00000028"
       }
     },
     {
@@ -4793,8 +4815,8 @@
       "coding_index": 41.9,
       "agentic_index": 13.1,
       "pricing": {
-        "prompt": "0.000000011",
-        "completion": "0.000000103"
+        "prompt": "0.000000012",
+        "completion": "0.000000108"
       }
     },
     {
@@ -4946,8 +4968,8 @@
       "coding_index": 28.7,
       "agentic_index": 1.2,
       "pricing": {
-        "prompt": "0.000000044",
-        "completion": "0.000000064"
+        "prompt": "0.000000161",
+        "completion": "0.000000236"
       }
     },
     {
@@ -6335,8 +6357,8 @@
         "total": 0
       },
       "pricing": {
-        "prompt": "0.0000000825",
-        "completion": "0.0000002475"
+        "prompt": "0.0000003",
+        "completion": "0.0000012"
       }
     },
     {
@@ -8132,8 +8154,8 @@
         "total": 0
       },
       "pricing": {
-        "prompt": "0.0000000825",
-        "completion": "0.0000002475"
+        "prompt": "0.0000003",
+        "completion": "0.0000012"
       }
     },
     {
@@ -8258,8 +8280,8 @@
         "total": 0
       },
       "pricing": {
-        "prompt": "0.0000000825",
-        "completion": "0.0000002475"
+        "prompt": "0.0000003",
+        "completion": "0.0000012"
       }
     },
     {
@@ -8615,8 +8637,8 @@
         "total": 0
       },
       "pricing": {
-        "prompt": "0.0000000825",
-        "completion": "0.0000002475"
+        "prompt": "0.0000003",
+        "completion": "0.0000012"
       }
     },
     {
@@ -10370,8 +10392,8 @@
         "total": 0
       },
       "pricing": {
-        "prompt": "0.0000000825",
-        "completion": "0.0000002475"
+        "prompt": "0.0000003",
+        "completion": "0.0000012"
       }
     },
     {
@@ -10538,8 +10560,8 @@
         "total": 0
       },
       "pricing": {
-        "prompt": "0.0000000825",
-        "completion": "0.0000002475"
+        "prompt": "0.0000003",
+        "completion": "0.0000012"
       }
     },
     {
@@ -11567,8 +11589,8 @@
         "total": 0
       },
       "pricing": {
-        "prompt": "0.0000000825",
-        "completion": "0.0000002475"
+        "prompt": "0.0000003",
+        "completion": "0.0000012"
       }
     },
     {
@@ -12872,8 +12894,8 @@
         "total": 0
       },
       "pricing": {
-        "prompt": "0.0000000825",
-        "completion": "0.0000002475"
+        "prompt": "0.0000003",
+        "completion": "0.0000012"
       }
     },
     {
@@ -31765,6 +31787,17 @@
     },
     {
       "source": "openrouter",
+      "model_permaslug": "upstage/solar-pro4-20260810",
+      "display_name": "Upstage: Solar Pro 4",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.808081,
+      "accuracy_stddev": null,
+      "avg_cost_per_task": 0.05294089393939394,
+      "total_tasks": 198,
+      "last_run_timestamp": "2026-11-11T02:02:05.405Z"
+    },
+    {
+      "source": "openrouter",
       "model_permaslug": "meta/muse-glimmer-30b-20260810",
       "display_name": "Meta: Muse Glimmer 30B",
       "benchmark_type": "gpqa_diamond",
@@ -33566,6 +33599,17 @@
       "avg_cost_per_task": 0.11598973272727274,
       "total_tasks": 550,
       "last_run_timestamp": "2026-10-31T12:42:18.189Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "upstage/solar-pro4-20260810",
+      "display_name": "Upstage: Solar Pro 4",
+      "benchmark_type": "tau_bench_verified_airline",
+      "accuracy": 0.66,
+      "accuracy_stddev": null,
+      "avg_cost_per_task": 0.0747839,
+      "total_tasks": 50,
+      "last_run_timestamp": "2026-11-11T02:34:15.627Z"
     },
     {
       "source": "openrouter",

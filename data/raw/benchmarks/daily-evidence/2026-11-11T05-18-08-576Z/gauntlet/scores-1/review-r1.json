@@ -1,0 +1,21 @@
+{
+  "artifact_id": "scores-1",
+  "artifact_sha256": "1807fc57362bd6bafaf4aa0b22d7f81445bdfa6b3970ae200ec8af7e133be55c",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/retail",
+    "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/airline",
+    "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/telecom",
+    "c1"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "TAU2 agent tasks are not reasoning/coding, so the README's 32,768-token output length applies; protocol field states this consistently and is not contradicted by source.",
+    "Wording of the protocol (Own-column self-reported vendor evaluation) is an interpretive summary; README footnote demonstrates vendor-reported scores via the \u201cthinking model\u201d colon, so no mismatch found.",
+    "I cannot re-execute owner hash verification or transport/qualification checks; row sha256 bindings and producer receipt were read only."
+  ],
+  "missing_evidence": []
+}
