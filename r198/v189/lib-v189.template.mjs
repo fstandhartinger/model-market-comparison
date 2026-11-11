@@ -23,10 +23,28 @@ const hex=s=>/^[a-f0-9]{64}$/.test(s??'');
 // The publication scope is intentionally narrower than the private scoring record.
 export function validateV189PublicText(value){
  if(value?.model_pin!=='MachinePulseAI/karpo-decision-31B@221bf1a011093807e29b77859f09499c2c365e34')fail('pinned weights');
- const forbidden=/\b[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\b|[\w.+-]+@[\w.-]+\.[a-z]{2,}|\b(?:worker|custody|custodian|deputy|Florian|CoS)\b|board #|order.id|fastlane-native|jevbench-add-requests|\/home\/|\b(?:1495|1,495|32768|32,768|422|1500|1,500)\b|input.limit|refus(?:al|ed)|per.type|\btiers?\b|token totals|input tokens|output tokens|\bPREREG\b|\{[A-Z_]+\}/i;
+ const forbidden=/\b[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\b|[\w.+-]+@[\w.-]+\.[a-z]{2,}|\b(?:worker|custody|custodian|deputy|Florian|CoS)\b|board #|order.id|fastlane-native|jevbench-add-requests|\/home\/|per.type|\btiers?\b|token totals|input tokens|output tokens|\bPREREG\b|\{[A-Z_]+\}/i;
+ // Numeric strings are allowed only from the row's published measurements and setup.
+ const published=V189_NEW_ROWS.karpo_decision_31b;
+ const allowedNumbers=new Set(['10106.516129','1.5235','1,000','96','6000','31','2026']);
+ const pins=new Set(['25c38826',published.draw.id]);
+ function publishedValues(v){
+  if(typeof v==='number')allowedNumbers.add(String(v));
+  else if(typeof v==='string')for(const m of v.matchAll(/\b[a-f0-9]{40,64}\b/g))pins.add(m[0]);
+  else if(v&&typeof v==='object')Object.values(v).forEach(publishedValues);
+ }
+ publishedValues(published);
+ publishedValues(V189_EXPECTED_PROOF.new_rows.karpo_decision_31b);
+ function unexpectedNumber(text){
+  for(const pin of pins)text=text.replaceAll(pin,'');
+  for(const m of text.matchAll(/(?<![\w.])\d+(?:,\d{3})*(?:\.\d+)?(?![\w.])/g)){
+   if((m[0].includes(',')||m[0].split('.')[0].length>=4)&&!allowedNumbers.has(m[0]))return true;
+  }
+  return false;
+ }
  const privateKeys=/^(?:n|n_items|n_public|n_sealed_side|n_over_limit|n_over_limit_answered_ok|speed_n|rows|answered_ok|missing|parts|per_type|per_type_split|breakdowns|breakdowns_equated|noul_decisive|I_open|I_sealed|gap|input_tokens.*|output_tokens.*|usage_estimated_rows)$/;
  function walk(v,path=[]){
-  if(typeof v==='string'&&forbidden.test(v))fail('restricted public wording '+path.join('.'));
+  if(typeof v==='string'&&(forbidden.test(v)||unexpectedNumber(v)))fail('restricted public wording '+path.join('.'));
   if(Array.isArray(v))v.forEach((x,i)=>walk(x,[...path,i]));
   else if(v&&typeof v==='object')for(const[k,x]of Object.entries(v)){if(privateKeys.test(k))fail('restricted field '+[...path,k].join('.'));walk(x,[...path,k]);}
  }

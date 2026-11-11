@@ -11,30 +11,34 @@ Benchmark source/build guard: {
 > benchmark-heaven@1.0.0 build
 > next build
 
+Attention: Next.js now collects completely anonymous telemetry regarding usage.
+This information is used to shape Next.js' roadmap and prioritize features.
+You can learn more, including how to opt-out if you'd not like to participate in this anonymous program, by visiting the following URL:
+https://nextjs.org/telemetry
+
    ▲ Next.js 15.5.25
    - Experiments (use with caution):
      · cpus: 4
 
    Creating an optimized production build ...
- ✓ Compiled successfully in 47s
+ ✓ Compiled successfully in 46s
    Linting and checking validity of types ...
    Collecting page data ...
    Generating static pages (0/708) ...
-   Generating static pages (31/708) 
+   Generating static pages (71/708) 
    Generating static pages (177/708) 
    Generating static pages (354/708) 
-   Generating static pages (428/708) 
-   Generating static pages (447/708) 
-   Generating static pages (461/708) 
-   Generating static pages (469/708) 
-   Generating static pages (516/708) 
+   Generating static pages (425/708) 
+   Generating static pages (435/708) 
+   Generating static pages (455/708) 
+   Generating static pages (491/708) 
    Generating static pages (531/708) 
-   Generating static pages (603/708) 
-   Generating static pages (628/708) 
-   Generating static pages (642/708) 
-   Generating static pages (653/708) 
-   Generating static pages (675/708) 
-   Generating static pages (699/708) 
+   Generating static pages (587/708) 
+   Generating static pages (617/708) 
+   Generating static pages (633/708) 
+   Generating static pages (644/708) 
+   Generating static pages (666/708) 
+   Generating static pages (691/708) 
  ✓ Generating static pages (708/708)
    Finalizing page optimization ...
    Collecting build traces ...
@@ -58,7 +62,7 @@ Route (app)                                                  Size  First Load JS
 ├ ƒ /api/fastlane-banner-event                              479 B         104 kB
 ├ ƒ /api/health                                             479 B         104 kB
 ├ ○ /api/jevbench                                           479 B         104 kB
-├ ƒ /api/jevbench-alldata/[version]                         710 B         113 kB
+├ ƒ /api/jevbench-alldata/[version]                         708 B         113 kB
 ├ ƒ /api/jevbench/api-addenda                               479 B         104 kB
 ├ ○ /api/jevbench/base-models                               479 B         104 kB
 ├ ○ /api/jevbench/latest                                    479 B         104 kB
@@ -181,10 +185,10 @@ Route (app)                                                  Size  First Load JS
 ├ ○ /audio-jev-bench/opengraph-image                        479 B         104 kB
 ├ ƒ /benchmarks                                             17 kB         158 kB
 ├ ƒ /benchmarks/result                                      193 B         107 kB
-├ ○ /benchmaxxing                                         9.65 kB         135 kB
+├ ○ /benchmaxxing                                         9.66 kB         135 kB
 ├ ○ /charts                                               8.88 kB         255 kB
 ├ ƒ /compare                                              1.88 kB         155 kB
-├ ○ /de/jev-models/alternativen                             673 B         107 kB
+├ ○ /de/jev-models/alternativen                             675 B         107 kB
 ├ ○ /decision-model-benchmarks                              479 B         104 kB
 ├ ○ /eu                                                   2.49 kB         126 kB
 ├ ○ /gateways                                             1.61 kB         105 kB
@@ -198,21 +202,21 @@ Route (app)                                                  Size  First Load JS
 ├ ○ /image-jev-bench/opengraph-image                        479 B         104 kB
 ├ ○ /impressum                                              479 B         104 kB
 ├ ○ /independence                                           479 B         104 kB
-├ ○ /jev-models                                             779 B         287 kB
+├ ○ /jev-models                                             777 B         287 kB
 ├ ● /jev-models/[system]                                    697 B         179 kB
 ├   ├ /jev-models/ajev-gemma4-31b-lm6q
 ├   ├ /jev-models/aleria-judge-1.1.1
 ├   ├ /jev-models/allec-oavg
 ├   └ [+384 more paths]
 ├ ○ /jev-models/all                                         453 B         287 kB
-├ ○ /jev-models/alternatives                                673 B         107 kB
+├ ○ /jev-models/alternatives                                675 B         107 kB
 ├ ○ /jev-models/api                                         453 B         287 kB
 ├ ○ /jev-models/api/opengraph-image                         479 B         104 kB
 ├ ○ /jev-models/calibration-reliability                     479 B         104 kB
 ├ ○ /jev-models/custom-evaluation                           479 B         104 kB
 ├ ○ /jev-models/data                                        479 B         104 kB
 ├ ○ /jev-models/evaluate-alternatives                       479 B         104 kB
-├ ○ /jev-models/how-to-choose                               673 B         107 kB
+├ ○ /jev-models/how-to-choose                               675 B         107 kB
 ├ ○ /jev-models/jev-vs-cygnet                               761 B         179 kB
 ├ ○ /jev-models/jev-vs-decider-4b-v2                        761 B         179 kB
 ├ ○ /jev-models/jev-vs-decisio-gemma-4-31b-v080             761 B         179 kB
@@ -238,24 +242,24 @@ Route (app)                                                  Size  First Load JS
 ├ ○ /jev-models/jev-vs-xor-26b-a4b                          761 B         179 kB
 ├ ○ /jev-models/methodology                                 479 B         104 kB
 ├ ○ /jev-models/methodology/v1.6.1                          479 B         104 kB
-├ ○ /jev-models/multimodal-preview                          236 B         262 kB
-├ ○ /jev-models/open-source-jev                             673 B         107 kB
+├ ○ /jev-models/multimodal-preview                          237 B         262 kB
+├ ○ /jev-models/open-source-jev                             675 B         107 kB
 ├ ○ /jev-models/opengraph-image                             479 B         104 kB
 ├ ○ /jev-models/request-evaluation/cancel                   193 B         107 kB
 ├ ○ /jev-models/request-evaluation/success                  193 B         107 kB
 ├ ○ /jev-models/v1                                        6.65 kB         110 kB
-├ ○ /jev-models/v1.4                                        774 B         219 kB
+├ ○ /jev-models/v1.4                                        773 B         219 kB
 ├ ○ /jev-models/v1.4.1                                      524 B         228 kB
 ├ ○ /jev-models/v1.4.2                                      524 B         228 kB
 ├ ○ /jev-models/v1.4.2.1                                    524 B         228 kB
 ├ ○ /jev-models/v1.4.2.2                                  3.78 kB         253 kB
-├ ○ /jev-models/v1.5.0                                    2.03 kB         277 kB
-├ ○ /jev-models/v1.5.1                                    2.03 kB         277 kB
-├ ○ /jev-models/v1.5.2                                    2.03 kB         277 kB
-├ ○ /jev-models/v1.5.3                                    2.03 kB         277 kB
-├ ○ /jev-models/v1.5.4                                    2.03 kB         277 kB
-├ ○ /jev-models/v1.5.5                                    2.03 kB         277 kB
-├ ○ /jev-models/v1.5.6                                    2.03 kB         277 kB
+├ ○ /jev-models/v1.5.0                                    2.04 kB         277 kB
+├ ○ /jev-models/v1.5.1                                    2.04 kB         277 kB
+├ ○ /jev-models/v1.5.2                                    2.04 kB         277 kB
+├ ○ /jev-models/v1.5.3                                    2.04 kB         277 kB
+├ ○ /jev-models/v1.5.4                                    2.04 kB         277 kB
+├ ○ /jev-models/v1.5.5                                    2.04 kB         277 kB
+├ ○ /jev-models/v1.5.6                                    2.04 kB         277 kB
 ├ ○ /jev-models/v1.5.7                                    3.76 kB         278 kB
 ├ ○ /jev-models/v1.6                                        479 B         104 kB
 ├ ○ /jev-models/v1.6.0                                      453 B         287 kB
@@ -340,7 +344,7 @@ Route (app)                                                  Size  First Load JS
 ├ ƒ /models/[id]                                          9.36 kB         135 kB
 ├ ○ /privacy                                                193 B         107 kB
 ├ ○ /provider-explorer                                    6.17 kB         126 kB
-├ ○ /providers                                             6.5 kB         127 kB
+├ ○ /providers                                            6.49 kB         127 kB
 ├ ○ /radar                                                  194 B         153 kB
 ├ ○ /robots.txt                                             479 B         104 kB
 ├ ○ /scatter                                              1.14 kB         242 kB
