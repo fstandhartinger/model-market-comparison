@@ -1,0 +1,60 @@
+TAP version 13
+# Subtest: every changed public data artifact and release page is scanned in the new row scope
+ok 1 - every changed public data artifact and release page is scanned in the new row scope
+  ---
+  duration_ms: 629.642201
+  ...
+# Subtest: all new public artifacts retain only approved Karpo fields
+ok 2 - all new public artifacts retain only approved Karpo fields
+  ---
+  duration_ms: 601.187393
+  ...
+# Subtest: restricted fields and wording are rejected recursively
+ok 3 - restricted fields and wording are rejected recursively
+  ---
+  duration_ms: 5.575699
+  ...
+# Subtest: missing breakdowns use existing empty-cell handling and an exception
+ok 4 - missing breakdowns use existing empty-cell handling and an exception
+  ---
+  duration_ms: 1.033476
+  ...
+# Subtest: board and feed projections omit withheld count fields; compare values stay empty
+ok 5 - board and feed projections omit withheld count fields; compare values stay empty
+  ---
+  duration_ms: 123.374056
+  ...
+# Subtest: v1.8.9 carries all 339 predecessor rows and cells byte-equivalently
+ok 6 - v1.8.9 carries all 339 predecessor rows and cells byte-equivalently
+  ---
+  duration_ms: 323.85281
+  ...
+# Subtest: self-hosted restricted row retains approved scores, pin and standard speed adjustment
+ok 7 - self-hosted restricted row retains approved scores, pin and standard speed adjustment
+  ---
+  duration_ms: 89.88672
+  ...
+# Subtest: v1.8.9 visibility and alldata follow independent review in either state
+ok 8 - v1.8.9 visibility and alldata follow independent review in either state
+  ---
+  duration_ms: 30553.523559
+  ...
+# Subtest: draw registry and release page describe one self-hosted addition
+ok 9 - draw registry and release page describe one self-hosted addition
+  ---
+  duration_ms: 1.337065
+  ...
+# Subtest: release date is 11 November while measurement remains 10 November
+ok 10 - release date is 11 November while measurement remains 10 November
+  ---
+  duration_ms: 72.246774
+  ...
+1..10
+# tests 10
+# suites 0
+# pass 10
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 31425.304079

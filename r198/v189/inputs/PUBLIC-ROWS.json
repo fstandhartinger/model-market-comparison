@@ -1,0 +1,10 @@
+{
+ "karpo_decision_31b": {
+  "author": "MachinePulse AI",
+  "disclosure": "Paid evaluation, published with the author's consent. Measured by us on an evaluator-owned rented GPU with the author's own serving code at the pinned commit, offline (no network) during the sealed run. As agreed for this evaluation, this row shows the standard scores only; the per-category breakdowns are not published. Failed or unanswered requests count as wrong answers.",
+  "display": "Karpo-Decision-31B",
+  "endpoint_condition": "Evaluator-owned Verda GPU VM (RTX PRO 6000), offline read-only container (--network none); author's karpo_decision.serve.server unchanged at code commit 25c38826 (github.com/machinepulse-ai/karpo-decision), bf16 backbone + fp32 readout, one forward pass, no generation.",
+  "licence": "Apache-2.0 (LICENSE in model and code repos); base google/gemma-4-31B-it Apache-2.0",
+  "repo": "https://huggingface.co/MachinePulseAI/karpo-decision-31B"
+ }
+}

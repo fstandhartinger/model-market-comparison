@@ -496,7 +496,7 @@ const rosterCapability = (s: { capability?: number | null; axes?: { intelligence
 };
 const ENDPOINT_TAG: Record<string, string> = { api: 'hosted API', demo: 'author-hosted demo' };
 // Review 6 Oct 2026: the roster says per row which score basis it is, and marks estimated costs like the charts do.
-const basisLine = (s: { a4?: { n_items: number; subset?: string } }, fullItems: number) => s.a4 ? `${s.a4.subset ?? 'A4'} ∪ P (${s.a4.n_items} items, equated)` : `full set (${fullItems.toLocaleString('en-US')} items)`;
+const basisLine = (s: { publication_scope?: string; a4?: { n_items: number; subset?: string } }, fullItems: number) => s.publication_scope === 'standard-axes-only' ? 'Published scores; private breakdowns withheld' : s.a4 ? `${s.a4.subset ?? 'A4'} ∪ P (${s.a4.n_items} items, equated)` : `full set (${fullItems.toLocaleString('en-US')} items)`;
 const costCell = (cost: { usd_per_1000?: number | null; kind?: string | null } | null | undefined) => <>{cost?.kind === 'estimate' && <span className="bh-thin-tag bh-est-tag mr-1 align-middle" data-bh-jev14-est>est.</span>}{usd(cost?.usd_per_1000)}</>;
 const rosterStatus = (listing: string | null, reason: string | null) => listing === 'listed' ? 'configuration variant · not ranked'
   : listing ? `${NOT_RANKED[listing] ?? listing.replace(/_/g, ' ')} · not ranked` : reason ?? 'not ranked';

@@ -1,0 +1,30 @@
+TAP version 13
+# Subtest: all new public artifacts retain only approved Karpo fields
+ok 1 - all new public artifacts retain only approved Karpo fields
+  ---
+  duration_ms: 160.158769
+  ...
+# Subtest: restricted fields and wording are rejected recursively
+ok 2 - restricted fields and wording are rejected recursively
+  ---
+  duration_ms: 4.806596
+  ...
+# Subtest: missing breakdowns use existing empty-cell handling and an exception
+ok 3 - missing breakdowns use existing empty-cell handling and an exception
+  ---
+  duration_ms: 1.439085
+  ...
+# Subtest: board and feed projections omit withheld count fields; compare values stay empty
+ok 4 - board and feed projections omit withheld count fields; compare values stay empty
+  ---
+  duration_ms: 118.283482
+  ...
+1..4
+# tests 4
+# suites 0
+# pass 4
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 648.137613
