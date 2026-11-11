@@ -1,0 +1,50 @@
+{
+ "base": "269acedca",
+ "chain": [
+  {
+   "engine": "Claude Sonnet (r272-v189-critic)",
+   "private_result_sha256": "5156748a2ba28bd34982e232a4e2d3ade12aec2a91f96a0e4a8d92b72991d65f",
+   "reviewed_commit": "ad224f87c053cf41a7c95f65a2a2370f0a0421ab",
+   "step": "independent review",
+   "summary": "every published number re-scored exactly from the sealed raw (three scorer views, identical output hashes); cost min rule verified (GPU-time binds); 339 carried rows and historical files unchanged; top five 0 of 580 lists. Conditions: C1 generalise the public-scope guard so committed code names no withheld fact; C2 decision-reference wording; C3 post-deploy check of the release page.",
+   "verdict": "PASS_WITH_CONDITIONS"
+  },
+  {
+   "closes": [
+    "C1",
+    "C2"
+   ],
+   "commit": "3d780229b96aa5e2cc996bfa54b86b852e0e7ddc",
+   "step": "fix round 1"
+  },
+  {
+   "engine": "Claude Sonnet (r272-v189-delta-critic)",
+   "private_result_sha256": "abd8e49d020f486c2a12e58761cea82622dc21f31ce610d9bb1e0f55a0edda95",
+   "reviewed_commit": "3d780229b96aa5e2cc996bfa54b86b852e0e7ddc",
+   "step": "delta review 1",
+   "summary": "one boundary gap in the generic number guard",
+   "verdict": "REVISE"
+  },
+  {
+   "closes": [
+    "guard boundary gap"
+   ],
+   "commit": "d54cfe7b3ac8c768f077bcc9153cb5d45965a077",
+   "step": "fix round 2"
+  },
+  {
+   "engine": "Claude Sonnet (r272-v189-delta2)",
+   "private_result_sha256": "68b1ef903bd1fd7d9b02eea87d6849ac95e011f3aa68a6d986356b524e3553ef",
+   "reviewed_commit": "d54cfe7b3ac8c768f077bcc9153cb5d45965a077",
+   "step": "delta review 2",
+   "summary": "gap closed in every copy; data byte-identical to the reviewed candidate; build binding matches the commit",
+   "verdict": "PASS"
+  }
+ ],
+ "final_commit": "d54cfe7b3ac8c768f077bcc9153cb5d45965a077",
+ "open_after_deploy": [
+  "C3: check /jev-models/v1.8.9, the API and the model page for the restricted row"
+ ],
+ "public_scope": "standard-axes-only (DECISIONS 2026-11-11 09:12 UTC v189-karpo-public-scope)",
+ "release": "v1.8.9"
+}

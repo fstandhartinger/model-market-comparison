@@ -1,0 +1,19 @@
+{
+ "verdict": "PASS",
+ "engine": "Claude Sonnet independent review chain (r272-v189-critic, r272-v189-delta-critic, r272-v189-delta2)",
+ "commit": "d54cfe7b3ac8c768f077bcc9153cb5d45965a077",
+ "reviewed_commit": "d54cfe7b3ac8c768f077bcc9153cb5d45965a077",
+ "base": "269acedca",
+ "first_review": {
+  "reviewed_commit": "ad224f87c053cf41a7c95f65a2a2370f0a0421ab",
+  "verdict": "PASS_WITH_CONDITIONS",
+  "conditions_closed": [
+   "C1",
+   "C2"
+  ],
+  "receipt": "r198/v189/receipts/CRITIC-1-REVIEW.json",
+  "sha256": "dcb975dff04f0093fad54d5973fb0a97d38c2534222a9d016c8ad3659db1b4e8"
+ },
+ "lead": "claude:jevbench-add-requests-20260919",
+ "bound_at": "2026-11-11T15:48:18Z"
+}
