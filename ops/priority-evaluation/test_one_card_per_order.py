@@ -215,11 +215,18 @@ class OneCard(unittest.TestCase):
     def test_48h_card_not_deferred_once_the_order_left_the_open_set(self):
         # CR-732 (S1): a late delivery or refusal moves the row to refund_due/refund_pending; the 40 h sweep stops
         # polling its card, so the 40 h card is closed (never a refund) and the 48 h card asks now.
-        self.decided("no_action", "sla_n")
-        self.f.runs.clear()
-        for status in ("refund_due", "refund_pending"):
+        for status in ("refund_pending", "refund_due"):  # each status alone closes the card (fresh state per status)
             with self.subTest(status):
+                self.f.http.clear()
+                self.f.runs.clear()
+                self.f.taps.clear()
+                for d in (self.sla_root, self.rf_root):
+                    for f in d.glob("*"):
+                        f.unlink()
+                self.decided("no_action", "sla_n")
+                self.f.runs.clear()
                 self.assertEqual(self.refund(NOW + 60, row={**ROW, "status": status}), "pending")
+                self.assertTrue(self.state()["superseded"])
         st = self.state()
         self.assertTrue(st["late_closed"] and st["superseded"])
         self.assertNotIn("late_refund", st)
@@ -233,6 +240,24 @@ class OneCard(unittest.TestCase):
         self.assertEqual(len([r for r in self.f.runs if "now" in r and "--dry-run" not in r]), 1)
         self.assertFalse(list(self.rf_root.glob("*.deferred_to_sla40_card.json")))
         self.assertEqual(sd.close_superseded(self.sla_root, ROW), False)  # idempotent
+
+    def test_failed_superseded_closeout_is_retried_by_the_refund_sweep(self):
+        # CR-732 review F1: the 40 h sweep never reaches a non-open row, so the 48 h sweep retries the close-out
+        self.decided("no_action", "sla_n")
+        late = {**ROW, "status": "refund_due"}
+        with mock.patch.object(ra, "settle_card", lambda *a, **k: None), \
+                mock.patch.object(sd, "_attach", side_effect=ValueError("telegram down")):
+            self.refund(NOW + 60, row=late)
+        st = self.state()
+        self.assertTrue(st["late_closed"] and st["superseded"])
+        self.assertFalse(st.get("buttons_removed"))
+        self.assertEqual(st["closeout_tries"], 1)
+        self.refund(NOW + 120, row=late)  # Telegram back: the next cycle finishes the close-out
+        st = self.state()
+        self.assertTrue(st["buttons_removed"] and st["closeout_done"])
+        self.assertEqual(st["settled_reason"], sd.SETTLED["superseded"])
+        self.refund(NOW + 180, row=late)
+        self.assertEqual(self.state()["closeout_tries"], 2)  # nothing more once done
 
     def test_open_order_is_still_deferred(self):
         self.decided("delay_note", "sla_d")

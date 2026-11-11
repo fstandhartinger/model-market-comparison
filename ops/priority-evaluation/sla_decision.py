@@ -233,6 +233,19 @@ def close_superseded(root: Path, row: dict) -> bool:
         return True
 
 
+def retry_superseded(root: Path, row: dict) -> None:
+    """Retry a failed close-out of a superseded 40 h card (the 40 h sweep no longer reaches it). Bounded by
+    CLOSEOUT_TRIES; never records or applies a refund. Caller holds the cycle lock."""
+    path = root / f"{uuid.UUID(str(row['id']))}.json"
+    if not path.exists() or not live_runtime():
+        return
+    with path.with_suffix(".lock").open("a+") as lock:
+        fcntl.flock(lock, fcntl.LOCK_EX)
+        state = json.loads(path.read_text())
+        if state.get("superseded") and state.get("late_closed") and _closeout_pending(state):
+            _finish(state, path, "superseded")
+
+
 def apply_late_refund(state: dict, rows, now: float) -> None:
     """A later tap on the one remaining Refund button: newer than the first decision, same chat/sender, in window."""
     if state.get("late_refund"):

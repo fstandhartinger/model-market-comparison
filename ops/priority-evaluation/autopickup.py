@@ -4585,6 +4585,7 @@ def install_problems() -> tuple[list[tuple[str, str]], list[str], dict[str, Any]
     try:
         record = json.loads(install_record_path().read_text(encoding="utf-8"))
         recorded = record.get("sha256") if isinstance(record, dict) else None
+        recorded = recorded if isinstance(recorded, str) else None
     except (OSError, ValueError):  # ValueError covers JSONDecodeError and a non-UTF-8 record
         record, recorded = None, None
     if not recorded:

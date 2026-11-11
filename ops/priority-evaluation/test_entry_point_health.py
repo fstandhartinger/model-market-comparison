@@ -107,6 +107,14 @@ class EntryPointHealth(unittest.TestCase):
         self.assertEqual(problems, [])
         self.assertIn("no install record", warnings[0])
 
+    def test_non_string_record_hash_is_a_warning_not_a_crash(self):
+        self.entry.symlink_to(self.runtime)
+        ap.install_record_path().parent.mkdir(parents=True, exist_ok=True)
+        ap.install_record_path().write_text('{"sha256": 5}')
+        problems, warnings, _ = ap.install_problems()
+        self.assertEqual(problems, [])
+        self.assertIn("no install record", warnings[0])
+
 class InstallerAndUnit(unittest.TestCase):
     def test_health_unit_runs_runtime_not_entry_point(self):
         unit = (HERE / "jevbench-priority-autopickup-health.service").read_text()
