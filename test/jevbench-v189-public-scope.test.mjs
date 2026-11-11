@@ -30,7 +30,7 @@ test('restricted fields and wording are rejected recursively',()=>{
  for(const f of ['n','n_items','answered_ok','missing','rows','n_over_limit','speed_n','parts','per_type_split','breakdowns','input_tokens_all','output_tokens_all']){
   assert.throws(()=>validateV189PublicText({...restricted,extra:{[f]:1}}),f);
  }
- for(const term of ['98765','98,765','87654','87,654','tier','per-type','test@example.com','12345678-abcd-abcd-abcd-123456789abc','board #123','custodian'])assert.throws(()=>validateV189PublicText({...restricted,extra:term}),term);
+ for(const term of ['98765','98765.','98765,','The synthetic number is 98765','98,765','87654','87,654','tier','per-type','test@example.com','12345678-abcd-abcd-abcd-123456789abc','board #123','custodian'])assert.throws(()=>validateV189PublicText({...restricted,extra:term}),term);
 });
 test('missing breakdowns use existing empty-cell handling and an exception',()=>{
  const pub=load('publication');const ex=JSON.parse(readFileSync('data/jevbench-breakdown-exceptions.json')).entries.find(e=>e.key===key);
@@ -46,4 +46,11 @@ test('board and feed projections omit withheld count fields; compare values stay
  const feed=projectJevbenchFeed(load('results'),'a'.repeat(64));const row=feed.systems.find(s=>s.key===key);
  assert.ok(row);assert.equal(Object.hasOwn(row.latency,'n'),false);assert.equal(row.capability.rank,null);assert.equal(row.rank,null);
  validateV189PublicText({...row,model_pin:restricted.model_pin});
+});
+
+test('allow-listed decimals remain whole tokens with sentence punctuation',()=>{
+ const values=['10106.516129','1.5235'];
+ function collect(v){if(typeof v==='number')values.push(String(v));else if(v&&typeof v==='object')for(const x of Object.values(v))collect(x);}
+ collect(restricted);
+ for(const value of new Set(values))for(const suffix of ['.',',',''])assert.equal(validateV189PublicText({...restricted,extra:'Published value '+value+suffix}),true,value+suffix);
 });

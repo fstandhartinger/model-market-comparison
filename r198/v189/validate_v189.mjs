@@ -14,10 +14,15 @@ for(const fn of [s=>s.ranked=true,s=>s.rank=1,s=>s.ranks.A=1,s=>s.not_ranked_bec
 for(const m of ['A','B','C','capability'])neg(x=>x.artifact.board[m].order.push('karpo_decision_31b'));
 for(const dim of ['topics','usecases','languages','families'])neg(x=>x.categories.systems.karpo_decision_31b[dim]={x:{n:1,competence:99}});
 let prose=0;
-for(const term of ['12345678-abcd-abcd-abcd-123456789abc','test@example.com','custody','board #123','/home/private','98765','98,765','87654','87,654','per-type','tier','input tokens','output tokens','PREREG','{PLACEHOLDER}'])for(const field of ['disclosure','endpoint_condition','cost']){
+for(const term of ['12345678-abcd-abcd-abcd-123456789abc','test@example.com','custody','board #123','/home/private','98765','98765.','98765,','The synthetic number is 98765','98,765','87654','87,654','per-type','tier','input tokens','output tokens','PREREG','{PLACEHOLDER}'])for(const field of ['disclosure','endpoint_condition','cost']){
  const bad=structuredClone(row(original));if(field==='cost')bad.cost.basis+=' '+term;else bad[field]+=' '+term;
  assert.throws(()=>validateV189PublicText(bad),term);prose++;
 }
+let positive=0;
+const decimals=['10106.516129','1.5235'];
+function collectNumbers(v){if(typeof v==='number')decimals.push(String(v));else if(v&&typeof v==='object')for(const x of Object.values(v))collectNumbers(x);}
+collectNumbers(row(original));
+for(const value of new Set(decimals))for(const suffix of ['.',',','']){assert.equal(validateV189PublicText({...row(original),extra:'Published value '+value+suffix}),true,value+suffix);positive++;}
 if(original.manifest.review.verdict==='PENDING'){assert.equal(await readJevbenchV189ForBoard(),null);assert.throws(()=>validateJevbenchV189Bundle(original));}
-writeFileSync('r198/v189/receipts/VALIDATOR.json',JSON.stringify({status:'PASS',negative_controls:n,prose_negative_controls:prose,public_reader_review_gated:true},null,1)+'\n');
-console.log('PASS validator;',n,'negative controls;',prose,'public wording negatives');
+writeFileSync('r198/v189/receipts/VALIDATOR.json',JSON.stringify({status:'PASS',negative_controls:n,prose_negative_controls:prose,positive_number_controls:positive,public_reader_review_gated:true},null,1)+'\n');
+console.log('PASS validator;',n,'negative controls;',prose,'public wording negatives;',positive,'positive number controls');

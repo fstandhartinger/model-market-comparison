@@ -37,7 +37,7 @@ export function validateV189PublicText(value){
  publishedValues(V189_EXPECTED_PROOF.new_rows.karpo_decision_31b);
  function unexpectedNumber(text){
   for(const pin of pins)text=text.replaceAll(pin,'');
-  for(const m of text.matchAll(/(?<![\w.])\d+(?:,\d{3})*(?:\.\d+)?(?![\w.])/g)){
+  for(const m of text.matchAll(/(?<![\w]|\d\.)\d+(?:,\d{3})*(?:\.\d+)?(?!\w|\.\d)/g)){
    if((m[0].includes(',')||m[0].split('.')[0].length>=4)&&!allowedNumbers.has(m[0]))return true;
   }
   return false;
