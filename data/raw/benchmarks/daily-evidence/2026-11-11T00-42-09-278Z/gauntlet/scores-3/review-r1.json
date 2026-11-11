@@ -1,0 +1,19 @@
+{
+  "artifact_id": "scores-3",
+  "artifact_sha256": "e90456baf791a4fd70c5b5469db7fd0678d4b0ef17c7d18f0c8cf197f15f78d2",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "vendor:DeepSeek-V3:swe-bench-verified::snapshot-2026-09-10",
+    "c1"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "I cannot recompute row or source hashes or execute transport/qualification checks; owner-provided hashes and producer qualification receipt are accepted as binding.",
+    "The source excerpt names the model as DeepSeek V3; the 'Dec 24' descriptor and snapshot-2026-09-10 suffix are retained/internal labels not quoted verbatim in the excerpt, but they do not conflict with the evidenced fields.",
+    "published_at is null; source date was checked through retrieved_at and the evidence capture metadata in the packet."
+  ],
+  "missing_evidence": []
+}

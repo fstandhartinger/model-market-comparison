@@ -1,0 +1,45 @@
+{
+  "artifact_id": "protocol-weirdml-2",
+  "artifact_sha256": "6bd60c5766dad9d19f8ad87594eec4ade45889654f1ab0b2516e23568e5c4ae7",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": ["weirdml::2", "c1", "c2"],
+  "errors_found": 4,
+  "findings": [
+    {
+      "id": "F1",
+      "severity": "blocker",
+      "location": "weirdml::2 version/identity and version_guard",
+      "evidence": "Row has version \"2\" and version_guard \"Verify the published version 2...\"; SOURCE 1 titles the current protocol \"WeirdML v3\" and lists \"Previous versions: WeirdML v2 · WeirdML v1\". The current release differs, so the v2 identity cannot be reused with continuity.",
+      "repair": "Update the row to the current v3 identity and version \"3\" (and adjust version_guard), or create a separate v3 registry entry and mark v2 as superseded; do not silently reuse weirdml::2."
+    },
+    {
+      "id": "F2",
+      "severity": "blocker",
+      "location": "weirdml::2 scoring.metric",
+      "evidence": "Row claims \"Average Max Accuracy ... across the 5 iterations per run, averaged over all 17 tasks\". SOURCE 1 says the official score is \"80% normalized area under its line on a logarithmic token axis, plus 20% of its final value\" over 500k-50M tokens, with \"11 tasks\", and notes effective scores are \"not raw accuracy\".",
+      "repair": "Replace the metric with the v3 official scoring rule and 11-task count, or supply evidence for the claimed v2 scoring if the entry is intentionally v2; the current page does not support the stated metric."
+    },
+    {
+      "id": "F3",
+      "severity": "minor",
+      "location": "weirdml::2 description",
+      "evidence": "Row says models must \"write, run, and iteratively improve PyTorch code under fixed compute and time limits\". SOURCE 1 describes an \"agentic benchmark featuring 11 complex hand-made tasks\" and \"develop machine learning and data analysis pipelines\" with \"limited data, unspecified goals and/or very limited feedback\"; the PyTorch and fixed compute/time-limit phrasing is not in the primary excerpt.",
+      "repair": "Align the description with the protocol excerpt (11 agentic tasks, data-analysis pipelines, limited data/feedback) or add primary evidence supporting the current wording."
+    },
+    {
+      "id": "F4",
+      "severity": "major",
+      "location": "weirdml::2 superseded_by",
+      "evidence": "Row has superseded_by null, but SOURCE 1 presents \"WeirdML v3\" as current and lists \"Previous versions: WeirdML v2\", naming v3 as the successor for this v2 board.",
+      "repair": "Set superseded_by to the registry id of the WeirdML v3 successor board instead of null."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "I cannot independently execute owner hash, transport, or qualification checks; those are out of scope for this read-only review.",
+    "SOURCE 1 is a bounded excerpt; unshown page content might contain additional v2 details, but the shown v3 identity, scoring rule, and previous-version list suffice for the cited mismatches.",
+    "The relation of SOURCE 2/3 generated summaries to row weirdml::2 depends on the owner's capture comparison; I cannot re-run that comparison."
+  ],
+  "missing_evidence": []
+}

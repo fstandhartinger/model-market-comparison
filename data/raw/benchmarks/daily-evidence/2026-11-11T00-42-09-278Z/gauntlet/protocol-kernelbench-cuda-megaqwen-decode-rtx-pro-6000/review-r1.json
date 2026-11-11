@@ -1,0 +1,42 @@
+{
+  "artifact_id": "protocol-kernelbench-cuda-megaqwen-decode-rtx-pro-6000",
+  "artifact_sha256": "281df10e55b53ee8409b58c066527c9940e0dcc645df63602f73a2c4c8533ee0",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": ["kernelbench-cuda-megaqwen-decode::rtx-pro-6000", "c1", "c2"],
+  "errors_found": 3,
+  "findings": [
+    {
+      "id": "kernelbench-cuda-megaqwen-decode::rtx-pro-6000",
+      "severity": "blocker",
+      "location": "version_status",
+      "evidence": "SPEC.md, leaderboard.json, published_runs.json, and /cuda page publish no release identifier for this board. Row claims version_status 'published' and version 'rtx-pro-6000' as a published identifier, but criterion c2 requires 'snapshot' when no release identifier exists.",
+      "repair": "Set version_status to 'snapshot' and version to 'snapshot-2026-11-11' (the retrieval date), or supply a published release identifier from the protocol."
+    },
+    {
+      "id": "kernelbench-cuda-megaqwen-decode::rtx-pro-6000",
+      "severity": "blocker",
+      "location": "version_guard",
+      "evidence": "version_guard states 'the problem must stay in the stated four-problem deck', but SPEC.md dated 2026-11-09 says 'Problem 04 ... was retired 2026-11-09' and 'deck stays at three since 2026-11-09'. The task set changed; the guard is stale.",
+      "repair": "Update version_guard to reference the three-problem deck (01_glm52_fused_moe, 02_deepseek_nsa, 03_megaqwen_decode) and remove any four-problem wording."
+    },
+    {
+      "id": "kernelbench-cuda-megaqwen-decode::rtx-pro-6000",
+      "severity": "major",
+      "location": "scoring.notes",
+      "evidence": "Row cites 'muse/muse-spark-1.3 [ultra]' cell on 04 with peak_fraction 0.2056 and 'Opus 5 reaches 196.10% on 04'. The captured leaderboard.json has only three problems; problem 04 is retired and absent, and published_runs.json excludes all 04 runs with reason 'problem 04 retired 2026-11-09'. These exact values are not present in any primary source.",
+      "repair": "Remove the 04-based examples and values from scoring.notes, or replace them with verified current-data examples from the three-problem deck."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "I cannot execute hash/transport checks; I rely on the owner-provided row SHA and source hashes.",
+    "The generated summaries (SOURCE 6 and 7) are accepted per instructions as the run's own reads; I used them only for unit/range and activity as specified.",
+    "The determination that no release identifier exists is based on the four captured sources; if a release identifier exists outside this packet, version_status would need reconsideration.",
+    "I treated the row's scoring.notes as claimed fields and therefore checked the 04-specific citations against the captured payload."
+  ],
+  "missing_evidence": [
+    "muse/muse-spark-1.3 [ultra] problem 04 peak_fraction 0.2056, claimed in scoring.notes but absent from the captured leaderboard.json",
+    "Opus 5 problem 04 peak_fraction 196.10% (as 196.10%), claimed in scoring.notes but absent from the captured leaderboard.json"
+  ]
+}

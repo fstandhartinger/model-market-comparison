@@ -1,0 +1,22 @@
+{
+  "artifact_id": "protocol-gso-opt1-102",
+  "artifact_sha256": "eedef18bb298a4ecee13a356eb383d9eb5c33428b80c95017bb7ef88b2383f9f",
+  "round": 2,
+  "verdict": "revise",
+  "coverage_checked": ["gso::opt1-102", "c1", "c2"],
+  "errors_found": 1,
+  "findings": [
+    {
+      "id": "f1",
+      "severity": "major",
+      "location": "gso::opt1-102 (version_status, version)",
+      "evidence": "Protocol page (source 1) and leaderboard.json (source 2) contain no release identifier for this board: no version field or version string appears. Per criterion c2, when the maintainer publishes no release identifier, version_status must be 'snapshot' and version must be a dated snapshot-<date> identity. The row declares version_status 'published' and version 'opt1-102', which is not a maintainer-published identifier.",
+      "repair": "Change version_status to 'snapshot' and set version to the dated snapshot identity (e.g., 'snapshot-2026-11-11') per criterion c2."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "Cannot recompute hashes or verify transport/qualification; relies on supplied owner hashes and evidence."
+  ],
+  "missing_evidence": []
+}

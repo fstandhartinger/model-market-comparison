@@ -1,0 +1,15 @@
+{
+  "artifact_id": "scores-5",
+  "artifact_sha256": "8b402d2feddade25896b8a7faac92851da7a0b0ba2b3aadb64949bdf7065ca56",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": ["vendor:DeepSeek-V3:longbench::2", "c1"],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "published_at is null in the row; the primary evidence does not include an explicit publication date for the arXiv paper, so source date cannot be independently verified beyond the arXiv ID indicating December 2024.",
+    "Cannot recompute file hashes or transport/qualification checks; relying on owner-provided hashes and the supplied primary evidence excerpt."
+  ],
+  "missing_evidence": []
+}

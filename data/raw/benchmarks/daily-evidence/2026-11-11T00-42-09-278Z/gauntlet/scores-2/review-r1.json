@@ -1,0 +1,35 @@
+{
+  "artifact_id": "scores-2",
+  "artifact_sha256": "97c1153be6880c23c16ba03855e60f00a94c7ce0ab4f4fee2b0ebd983250fdca",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": [
+    "vendor:mistralai/Devstral-2-123B-Instruct-2512:swe-bench-verified::snapshot-2026-09-10",
+    "vendor:mistralai/Devstral-Small-2-24B-Instruct-2512:swe-bench-verified::snapshot-2026-09-10",
+    "c1"
+  ],
+  "errors_found": 2,
+  "findings": [
+    {
+      "id": "published-at-row-1",
+      "severity": "major",
+      "location": "Row vendor:mistralai/Devstral-2-123B-Instruct-2512:swe-bench-verified::snapshot-2026-09-10, field source.published_at",
+      "evidence": "Primary evidence page contains explicit article date 'December 9, 2025' in the header; the candidate row sets source.published_at to null, so the required source date is claimed absent despite being present in the captured source.",
+      "repair": "Populate source.published_at with the article publication date shown in the primary evidence (e.g., 2025-12-09) or document an explicit justified exemption; then re-verify the row."
+    },
+    {
+      "id": "published-at-row-2",
+      "severity": "major",
+      "location": "Row vendor:mistralai/Devstral-Small-2-24B-Instruct-2512:swe-bench-verified::snapshot-2026-09-10, field source.published_at",
+      "evidence": "Primary evidence page contains explicit article date 'December 9, 2025' in the header; the candidate row sets source.published_at to null, so the required source date is claimed absent despite being present in the captured source.",
+      "repair": "Populate source.published_at with the article publication date shown in the primary evidence (e.g., 2025-12-09) or document an explicit justified exemption; then re-verify the row."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "I am read-only and cannot execute the owner's hash/transport/qualification checks; artifact and row hashes are accepted as given.",
+    "The benchmark_id includes snapshot-2026-09-10, which is not verbatim in the source; the source states only 'SWE-bench Verified'. I treated the snapshot suffix as an internal row/snapshot identifier rather than a source-claimed version and did not fail on it, but it is not independently verified from this packet.",
+    "source_id/model_id details such as 'Instruct-2512' and ':default' are not in the article text; I accepted them as specified mappings consistent with the required row identity."
+  ],
+  "missing_evidence": []
+}
