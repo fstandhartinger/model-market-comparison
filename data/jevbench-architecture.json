@@ -7816,6 +7816,22 @@
           }
         ],
         "note": "Author-hosted API; the author declares Torchcast Decision 4B v1.3 with a LoRA adapter. We could not verify the weights; no architecture or parameter count is independently established."
+      },
+      "karpo_decision_31b": {
+        "arch": "open-llm-decoder",
+        "badges": {
+          "derivation": "fine-tune",
+          "params": "31B",
+          "quant": "bf16"
+        },
+        "evidence": [
+          {
+            "fact": "Gemma-4-31B-it fine-tune with a linear readout, bf16 backbone + fp32 readout; one forward pass, no generation.",
+            "kind": "model-card",
+            "url": "https://huggingface.co/MachinePulseAI/karpo-decision-31B/tree/221bf1a011093807e29b77859f09499c2c365e34"
+          }
+        ],
+        "note": "Gemma-4-31B-it fine-tune with a linear readout; measured with the pinned serving code on an evaluator-owned RTX PRO 6000."
       }
     },
     "imagejevbench": {
