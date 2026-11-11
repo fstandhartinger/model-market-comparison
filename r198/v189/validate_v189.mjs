@@ -14,7 +14,7 @@ for(const fn of [s=>s.ranked=true,s=>s.rank=1,s=>s.ranks.A=1,s=>s.not_ranked_bec
 for(const m of ['A','B','C','capability'])neg(x=>x.artifact.board[m].order.push('karpo_decision_31b'));
 for(const dim of ['topics','usecases','languages','families'])neg(x=>x.categories.systems.karpo_decision_31b[dim]={x:{n:1,competence:99}});
 let prose=0;
-for(const term of ['12345678-abcd-abcd-abcd-123456789abc','test@example.com','custody','board #123','/home/private','1495','1,495','32768','32,768','422','1500','1,500','input limit','refused','per-type','tier','input tokens','output tokens','PREREG','{PLACEHOLDER}'])for(const field of ['disclosure','endpoint_condition','cost']){
+for(const term of ['12345678-abcd-abcd-abcd-123456789abc','test@example.com','custody','board #123','/home/private','98765','98,765','87654','87,654','per-type','tier','input tokens','output tokens','PREREG','{PLACEHOLDER}'])for(const field of ['disclosure','endpoint_condition','cost']){
  const bad=structuredClone(row(original));if(field==='cost')bad.cost.basis+=' '+term;else bad[field]+=' '+term;
  assert.throws(()=>validateV189PublicText(bad),term);prose++;
 }

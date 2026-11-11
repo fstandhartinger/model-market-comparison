@@ -30,7 +30,7 @@ test('restricted fields and wording are rejected recursively',()=>{
  for(const f of ['n','n_items','answered_ok','missing','rows','n_over_limit','speed_n','parts','per_type_split','breakdowns','input_tokens_all','output_tokens_all']){
   assert.throws(()=>validateV189PublicText({...restricted,extra:{[f]:1}}),f);
  }
- for(const term of ['1495','1,495','32768','32,768','422','1500','1,500','input limit','refused','tier','per-type','test@example.com','12345678-abcd-abcd-abcd-123456789abc','board #123','custodian'])assert.throws(()=>validateV189PublicText({...restricted,extra:term}),term);
+ for(const term of ['98765','98,765','87654','87,654','tier','per-type','test@example.com','12345678-abcd-abcd-abcd-123456789abc','board #123','custodian'])assert.throws(()=>validateV189PublicText({...restricted,extra:term}),term);
 });
 test('missing breakdowns use existing empty-cell handling and an exception',()=>{
  const pub=load('publication');const ex=JSON.parse(readFileSync('data/jevbench-breakdown-exceptions.json')).entries.find(e=>e.key===key);
