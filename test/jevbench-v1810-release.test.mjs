@@ -3,20 +3,22 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {jevComposite} from '../lib/jevbench-cohort-merge.mjs';
-import {hasPublishedJevbenchV1810Release,readJevbenchV1810ForBoard,V1810_EQUATED_KEYS,V1810_RANKED_KEYS,V1810_UNRANKED,V1810_HELD,V1810_NOTE,V1810_NOTE_UNPRICED,V1810_HELD_TEXT,V1810_H2O_HELD_TEXT,V1810_BOUNDARY,V1810_META_KEY,V1810_META_NOTE,V1810_HIST,V1810_RENAMES,V1810_OFFSET,V1810_EQUATING,V1810_FAIR_PATH,V1810_FAIR_DELTA_PATH,V1810_NEW_KEYS,V1810_GEMINI_SELF_REPORT,V1810_PRICING} from '../lib/jevbench-v1810-release.mjs';
+import {hasPublishedJevbenchV1810Release,readJevbenchV1810ForBoard,V1810_EQUATED_KEYS,V1810_RANKED_KEYS,V1810_UNRANKED,V1810_HELD,V1810_NOTE,V1810_NOTE_UNPRICED,V1810_HELD_TEXT,V1810_H2O_HELD_TEXT,V1810_BOUNDARY,V1810_META_KEY,V1810_META_NOTE,V1810_HIST,V1810_RENAMES,V1810_OFFSET,V1810_EQUATING,V1810_FAIR_PATH,V1810_FAIR_DELTA_PATH,V1810_NEW_KEYS,V1810_GEMINI_SELF_REPORT,V1810_PRICING,V1810_REMOVED_KEYS} from '../lib/jevbench-v1810-release.mjs';
 import {readJevAllDataInput} from '../lib/jevbench-alldata-input.mjs';
 import {assertReleaseHistory} from './helpers/release-history.mjs';
 const root='data/raw/benchmarks/jevbench/v1.8/';const load=(v,n)=>JSON.parse(readFileSync(`${root}jevbench-${v}-${n}.json`));
 const AX=['intelligence','calibration','speed','cost'],clip=x=>Math.min(100,Math.max(0,x));
 test('v1.8.10 carries every row not on the 27 Oct draw unchanged except rank/ranks (and the one vendor-renamed display name), with the same cells',()=>{
  const a=load('v1.8.10','results'),b=load('v1.8.9','results'),by=new Map(a.systems.map(s=>[s.key,s]));
- assert.equal(b.systems.length,340);assert.equal(a.systems.length,341);assert.deepEqual(V1810_NEW_KEYS,['gemini-decision-1']);
- for(const s of b.systems){if(V1810_EQUATED_KEYS.includes(s.key))continue;const {rank,ranks,display,...rest}=s,{rank:r2,ranks:k2,display:d2,...now}=by.get(s.key);assert.deepEqual(now,rest,s.key);if(V1810_RENAMES[s.key])assert.equal(d2,V1810_RENAMES[s.key].after);else assert.equal(d2,display);}
+ assert.equal(b.systems.length,340);assert.equal(a.systems.length,340);assert.deepEqual(V1810_NEW_KEYS,['gemini-decision-1']);
+ // r278 corrections: the preliminary unranked A2 re-run listing of Microsoft-Decision-1 leaves the boards (kept in v1.8.9 and earlier).
+ assert.deepEqual(V1810_REMOVED_KEYS,['microsoft-decision-1-a2-20261012']);assert.equal(by.has('microsoft-decision-1-a2-20261012'),false);assert.equal(b.systems.find(s=>s.key==='microsoft-decision-1-a2-20261012').listing,'preliminary');
+ for(const s of b.systems){if(V1810_EQUATED_KEYS.includes(s.key)||V1810_REMOVED_KEYS.includes(s.key))continue;const {rank,ranks,display,...rest}=s,{rank:r2,ranks:k2,display:d2,...now}=by.get(s.key);assert.deepEqual(now,rest,s.key);if(V1810_RENAMES[s.key])assert.equal(d2,V1810_RENAMES[s.key].after);else assert.equal(d2,display);}
  assert.deepEqual(Object.keys(V1810_RENAMES),['jev-27b-autotrust']);assert.equal(by.get('jev-27b-autotrust').display,'AutoTrust-Decider-Pro-27B (AutoTrust, Qwen3.8-27B)');assert.equal(by.get('jev-27b-autotrust').repo,b.systems.find(s=>s.key==='jev-27b-autotrust').repo);
  assert.equal(a.systems.filter(s=>/^JEV-(9B|27B)/.test(s.display)).length,0);
  for(const m of ['A','B','C','capability'])assert.deepEqual(a.board[m].order.filter(k=>!V1810_RANKED_KEYS.includes(k)&&!V1810_NEW_KEYS.includes(k)),b.board[m].order,m);
- const ac=load('v1.8.10','categories'),bc=load('v1.8.9','categories'),drop=(o)=>Object.fromEntries(Object.entries(o).filter(([k])=>!V1810_NEW_KEYS.includes(k)));
- assert.deepEqual(drop(ac.systems),bc.systems);assert.deepEqual(drop(ac.lanes),bc.lanes);assert.equal(ac.lanes['gemini-decision-1'],'api');assert.equal(ac.systems['gemini-decision-1'].topics,undefined);
+ const ac=load('v1.8.10','categories'),bc=load('v1.8.9','categories'),drop=(o)=>Object.fromEntries(Object.entries(o).filter(([k])=>!V1810_NEW_KEYS.includes(k)&&!V1810_REMOVED_KEYS.includes(k)));
+ assert.deepEqual(drop(ac.systems),drop(bc.systems));assert.deepEqual(drop(ac.lanes),drop(bc.lanes));assert.equal(ac.lanes['gemini-decision-1'],'api');assert.equal(ac.systems['gemini-decision-1'].topics,undefined);
  assert.equal(a.n_ranked,b.n_ranked+V1810_RANKED_KEYS.length+1);
 });
 test('every row of the draw is published + offset (clipped), composites follow from the equated axes, published numbers are kept',()=>{
@@ -76,5 +78,5 @@ test('Gemini Decision 1 (Google, hosted API) joins the 27 Oct draw: measured = p
  assert.match(s.endpoint_condition,/request-pinned/);assert.match(s.disclosure,/3 of 1,500 requests failed in transport/);assert.equal(s.model_pin,null);
  for(const m of ['A','B','C','capability'])assert.equal(s.ranks[m],a.board[m].order.indexOf('gemini-decision-1')+1);
  assert.deepEqual(Object.keys(proof.new_rows),['gemini-decision-1']);assert.equal(proof.pricing_module_sha256,V1810_PRICING.new);assert.equal(load('v1.8.9','proof').pricing_module_sha256,V1810_PRICING.old);
- assert.deepEqual(a.addendum.new_keys,['gemini-decision-1']);assert.ok(V1810_HIST.endsWith('; added Gemini Decision 1 (Google, hosted API) on the same draw.'));
+ assert.deepEqual(a.addendum.new_keys,['gemini-decision-1']);assert.ok(V1810_HIST.endsWith('; added Gemini Decision 1 (Google, hosted API) on the same draw; removed the preliminary A2 re-run listing of Microsoft-Decision-1 (its regular rows stay).'));
 });

@@ -64,7 +64,7 @@ function categorySpokes(pair: JevCompareV15Row[], dim: CategoryDim, cats: Compar
     return {
       key: c.key, lines: lines(c.short),
       thin: cells.map((v) => v.thin),
-      low: cells.map((v) => v.low),
+      low: cells.map((v) => Boolean(v.low)),
       values: cells.map((v) => v.value),
       texts: cells.map((v, i) => !cats.systems[pair[i].key]?.[dim.key] && dimMissing(cats, pair[i].key, dim.key) ? dimMissing(cats, pair[i].key, dim.key)! : v.text),
       tip: `${c.label}: ${c.covers}. ${c.n} items (${c.split.a} ${cats.splitNames[0]}, ${c.split.b} ${cats.splitNames[1]}).`,

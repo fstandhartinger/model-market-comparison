@@ -39,9 +39,10 @@ assert eq['behaviour_diffs'] == [] and eq['unexpected_behaviour_diffs'] == [] an
 p9 = json.loads((V / 'jevbench-v1.8.9-proof.json').read_text()); p10 = json.loads((V / 'jevbench-v1.8.10-proof.json').read_text())
 assert p9['pricing_module_sha256'] == OLD_SHA and p10['pricing_module_sha256'] == NEW_SHA
 assert p10['pricing_refreeze']['old_sha256'] == OLD_SHA and p10['pricing_refreeze']['new_sha256'] == NEW_SHA and p10['pricing_refreeze']['equivalence_receipt_sha256'] == EQUIV_SHA
+REMOVED_R278 = json.loads((J / 'src/removed-keys.json').read_text()) if (J / 'src/removed-keys.json').exists() else []
 rows10 = {s['key']: s for s in json.loads((V / 'jevbench-v1.8.10-results.json').read_text())['systems']}
 # the carried rows' cost blocks are byte-identical to v1.8.9 (no pricing path moved)
-assert all(rows10[s['key']]['cost'] == s['cost'] for s in prev)
+assert all(rows10[s['key']]['cost'] == s['cost'] for s in prev if s['key'] not in REMOVED_R278)   # r278: the removed unranked A2 listing has no row in v1.8.10
 json.dump({'status': 'PASS', 'old_sha256': OLD_SHA, 'new_sha256': NEW_SHA, 'changed_module_constants': changed, 'added_set_members': sorted(KEYS),
            'added_non_comment_lines': len(non_comment), 'functions_bytecode_equal': len(funcs), 'catalog_rates_equal': True, 'carried_rows_checked': len(prev),
            'carried_cost_blocks_equal': len(prev), 'carried_keys_whose_pricing_path_changes': touched, 'equivalence_receipt': {'name': 'PRICING-EQUIV-R278.json', 'sha256': EQUIV_SHA,
