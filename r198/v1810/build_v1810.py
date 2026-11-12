@@ -60,8 +60,12 @@ META_NOTE = ('On this draw it scores 13.3 points higher on the sealed items than
              'its #2 Capability places hold even if that gap is set to the reference-draw median.')
 META_KEY = 'metadecision-31b-rain'
 RENAMES = {'JEV-27B (AutoTrust, Qwen3.8-27B)': 'AutoTrust-Decider-Pro-27B (AutoTrust, Qwen3.8-27B)', 'JEV-9B': 'AutoTrust-Decider-Mini-9B', 'JEV-27B-VL': 'AutoTrust-Decider-Pro-Vision-27B'}
+# r278 corrections (DECISIONS jevbench-v1810-preview-corrections-1112): the preliminary, unranked A2 re-run listing of Microsoft-Decision-1 leaves every
+# board view of v1.8.10; its data stays in v1.8.9 and every earlier release (frozen files). It is unranked, so no rank or order list changes.
+REMOVED = {'microsoft-decision-1-a2-20261012': 'Removed from the boards: a preliminary, unranked A2 re-run listing of Microsoft-Decision-1 shown next to its regular ranked rows; its data stays in v1.8.9 and earlier releases.'}
+REMOVED_HIST = 'removed the preliminary A2 re-run listing of Microsoft-Decision-1 (its regular rows stay)'
 HIST = (f'Equated the 27 Oct regular draw with four strong anchor systems ({POINTS}) and ranked 31 of its rows; four stay unranked because their top-five places lie within the uncertainty of the shift; '
-        'renamed AutoTrust\'s JEV-27B to AutoTrust-Decider-Pro-27B at the vendor\'s request; added Gemini Decision 1 (Google, hosted API) on the same draw.')
+        'renamed AutoTrust\'s JEV-27B to AutoTrust-Decider-Pro-27B at the vendor\'s request; added Gemini Decision 1 (Google, hosted API) on the same draw; ' + REMOVED_HIST + '.')
 MEASURE_NOTE = ('The anchors are scored without the 10-second rule on both draws, so the shift measures only the difference between the draws; with the rule applied on both draws it would be Intelligence -3.3, Calibration -2.4. '
                 'Places of four rows from that draw are within the shift\'s uncertainty and they stay unranked until more anchor runs narrow it. '
                 'Gemini Decision 1 (Google, hosted API) was measured on the same draw on 11 Nov 2026 (all 1,500 items, one per request, Google\'s native probabilities) and is shown and ranked the same way.')
@@ -162,6 +166,10 @@ assert all(g['scores'][o] is not None for o in OPTIONS) and 'not_ranked_because'
 for f, v in g.items():
     if isinstance(v, str): assert not STALE.search(v), ('stale wording on the added row', f)
 out[GK] = g; NEW_KEYS = [GK]; NEWLY = RANKED + NEW_KEYS
+for k in REMOVED:
+    p = prev[k]
+    assert p['ranked'] is False and p.get('rank') is None and p['listing'] == 'preliminary' and k not in DRAW_ROWS and all(k not in old['results']['board'][m]['order'] for m in ['A', 'B', 'C', 'capability']), k
+    del out[k]
 # ---- ranks: stable insertion of the newly ranked rows into every order list of the merged field (v1.7.10/v1.7.15 rule)
 for metric in ['A', 'B', 'C', 'capability']:
     order0 = list(old['results']['board'][metric]['order'])
@@ -184,6 +192,7 @@ for k, row in out.items():
 # ---- carried-row equality
 rank_shift = {}
 for k, p in prev.items():
+    if k in REMOVED: continue
     a = {f: v for f, v in out[k].items() if f not in ('rank', 'ranks') and not (k in RENAMED and f == 'display')}; b = {f: v for f, v in p.items() if f not in ('rank', 'ranks') and not (k in RENAMED and f == 'display')}
     if k in DRAW_ROWS:
         assert {f: v for f, v in a.items() if f not in EQ_ROW_FIELDS} == {f: v for f, v in b.items() if f not in EQ_ROW_FIELDS}, k
@@ -197,19 +206,20 @@ for k, p in prev.items():
 res.update(revision=REV, label='JevBench v1.8.10: the 27 Oct regular draw equated with four strong anchors and ranked; Gemini Decision 1 added',
            systems=sorted(out.values(), key=lambda s: s['key']), n_ranked=sum(bool(s['ranked']) for s in out.values()),
            roster_count=len(out), run_kind='same-draw-addendum', source_sha256=EQ_SHA, source_note=HIST)
-assert res['n_ranked'] == old['results']['n_ranked'] + len(RANKED) + len(NEW_KEYS) and res['roster_count'] == len(prev) + len(NEW_KEYS) and len(RANKED) == 31 and len(DRAW_ROWS) == 37 and sorted(STAY) == sorted(HELD + ['decisionnode-flash-0.9.1-rc1', 'decisionnode-main-0.9.1-rc1'])
+assert res['n_ranked'] == old['results']['n_ranked'] + len(RANKED) + len(NEW_KEYS) and res['roster_count'] == len(prev) + len(NEW_KEYS) - len(REMOVED) and len(RANKED) == 31 and len(DRAW_ROWS) == 37 and sorted(STAY) == sorted(HELD + ['decisionnode-flash-0.9.1-rc1', 'decisionnode-main-0.9.1-rc1'])
 res['measurement_notes'] = old['results']['measurement_notes'] + [HIST + ' Four strong anchor systems answered both the reference draw and the 27 Oct draw; '
     f'the offset is the median over anchors of (reference minus new draw): Intelligence {OFFSET["I"]:.2f} (95% CI {OFFSET_CI["I"][0]:.2f} to {OFFSET_CI["I"][1]:+.2f}), '
     f'Calibration {OFFSET["C"]:.2f} (95% CI {OFFSET_CI["C"][0]:.2f} to {OFFSET_CI["C"][1]:+.2f}). '
     f'Every row on that draw is shown as published plus the offset; Capability and the composites follow from the equated axes; confidence intervals are the ones {CI_LABEL}. '
-    f'{len(RANKED)} of its {len(DRAW_ROWS)} rows are now ranked; two rows have no price and stay unranked, and four rows are held unranked. Every other score is unchanged and other rows move down only where a newly ranked row now sits above them. ' + MEASURE_NOTE]
+    f'{len(RANKED)} of its {len(DRAW_ROWS)} earlier rows are now ranked; two rows have no price and stay unranked, and four rows are held unranked. Every other score is unchanged and other rows move down only where a newly ranked row now sits above them. ' + MEASURE_NOTE]
 res['addendum'] = {**old['results']['addendum'], 'predecessor': PREV, 'new_keys': list(NEW_KEYS), 'remeasured_keys': [], 'repriced_keys': [], 'link_fixed_keys': [],
                    'text_fixed_keys': sorted(k for k in DRAW_ROWS if SENT_PIN[k]), 'method_change': False, 'same_draw': DRAW_ID,
-                   'equated_keys': DRAW_ROWS, 'equated_draw': DRAW_ID, 'ranked_keys': sorted(RANKED), 'unranked_keys': sorted(STAY), 'held_keys': sorted(HELD), 'display_renamed_keys': sorted(RENAMED)}
+                   'equated_keys': DRAW_ROWS, 'equated_draw': DRAW_ID, 'ranked_keys': sorted(RANKED), 'unranked_keys': sorted(STAY), 'held_keys': sorted(HELD), 'display_renamed_keys': sorted(RENAMED), 'removed_keys': sorted(REMOVED)}
 put(V / f'jevbench-{REV}-results.json', res)
 cat = cp(old['categories'])
 assert GK not in cat['systems'] and GK not in cat['lanes']
 cat['systems'][GK] = cp(GEM.CELLS); cat['lanes'][GK] = 'api'
+for k in REMOVED: cat['systems'].pop(k); cat['lanes'].pop(k, None); (cat.get('unavailable') or {}).pop(k, None)
 cat.update(revision=REV, results_sha256=sha(V / f'jevbench-{REV}-results.json'), source_results_sha256=res['source_sha256'])
 put(V / f'jevbench-{REV}-categories.json', cat)
 for n in ['carry', 'history', 'history-carry']: shutil.copyfile(V / f'jevbench-{PREV}-{n}.json', V / f'jevbench-{REV}-{n}.json')
@@ -239,9 +249,10 @@ proof = {'schema_version': 1, 'revision': REV, 'predecessor': {'revision': PREV,
              'every row: rank and ranks only where a newly ranked row now sits above it (removing the newly ranked rows from the order lists gives back the v1.8.9 lists exactly)',
              f'the {len(DRAW_ROWS)} rows of the 27 Oct draw: equated axes/scores/views/capability (published numbers in published_scores), ranked/rank/ranks/listing, not_ranked_because, listing_note, draw status/offset/interval, and the not-yet-equated sentence of the disclosure/underlying text',
              'the row AutoTrust-Decider-Pro-27B (key jev-27b-autotrust): the display name only (vendor rename of JEV-27B; key, repo, model pin and every score unchanged)',
-             'one added row, Gemini Decision 1 (key gemini-decision-1, hosted API, same draw): not a carried row; carried rows move down only where it now sits above them'],
+             'one added row, Gemini Decision 1 (key gemini-decision-1, hosted API, same draw): not a carried row; carried rows move down only where it now sits above them',
+             'one removed row, the preliminary unranked A2 re-run listing of Microsoft-Decision-1 (key microsoft-decision-1-a2-20261012): not on any board of this release; it was in no order list, so no rank changes'],
          'exceptions': {}, 'equating': equating, 'equated_rows': eq_rows, 'rank_shifted_rows': len(rank_shift), 'ranked_rows': sorted(RANKED), 'unranked_rows': STAY, 'held_rows': sorted(HELD), 'display_renames': RENAMED, 'fairness_basis': 'FAIR_SUBSET (recommendation b of the independent fairness review): 31 rows ranked, 4 held unranked, 2 unpriced rows unranked',
-         'same_draw': {'id': DRAW_ID, 'g_med_used': GMED}, 'new_rows': {GK: GEM.proof_entry(out[GK])}, 'remeasured_rows': {}, 'repriced_rows': {}, 'link_fixed_rows': [], 'text_fixed_rows': sorted(k for k in DRAW_ROWS if SENT_PIN[k]),
+         'same_draw': {'id': DRAW_ID, 'g_med_used': GMED}, 'new_rows': {GK: GEM.proof_entry(out[GK])}, 'removed_rows': dict(REMOVED), 'remeasured_rows': {}, 'repriced_rows': {}, 'link_fixed_rows': [], 'text_fixed_rows': sorted(k for k in DRAW_ROWS if SENT_PIN[k]),
          'cost_basis': old['proof']['cost_basis'], 'publication_approval': a, 'topfive_diff_sha256': a['top_five_preview']['sha256'],
          'source_inputs': {'equating_sha256': EQ_SHA, 'gemini': {f'inputs/gemini/{n}': h for n, h in GEM.PINS.items()}}}
 put(V / f'jevbench-{REV}-proof.json', proof)
@@ -251,7 +262,7 @@ put(V / f'jevbench-{REV}-publication.json', pub)
 put(J / 'src/held-keys.json', sorted(HELD)); put(J / 'src/display-renames.json', RENAMED); put(J / 'src/equated-keys.json', DRAW_ROWS); put(J / 'src/ranked-keys.json', sorted(RANKED)); put(J / 'src/unranked-keys.json', STAY)
 put(J / 'receipts/EQUATED-ROW-SPEC.json', {k: {f: out[k][f] for f in EQ_ROW_FIELDS if f in out[k]} for k in DRAW_ROWS})
 put(J / 'receipts/RANK-SHIFT.json', rank_shift); put(J / 'inputs/history.json', HIST)
-put(J / 'src/new-keys.json', NEW_KEYS); put(J / 'receipts/NEW-ROWS.json', {GK: out[GK]}); put(J / 'receipts/BOUNDS.json', GEM.BOUNDS)
+put(J / 'src/new-keys.json', NEW_KEYS); put(J / 'src/removed-keys.json', sorted(REMOVED)); put(J / 'receipts/NEW-ROWS.json', {GK: out[GK]}); put(J / 'receipts/BOUNDS.json', GEM.BOUNDS)
 put(J / 'receipts/BUILD.json', {'revision': REV, 'base': PREV, 'base_publication_sha256': proof['predecessor']['publication_sha256'], 'equated_rows': DRAW_ROWS, 'ranked_rows': sorted(RANKED), 'new_rows': NEW_KEYS, 'new_row_ranks': {GK: out[GK]['ranks']}, 'unranked_rows': STAY, 'held_rows': sorted(HELD), 'display_renames': RENAMED,
                                 'carried_equal_except_ranks': len(prev) - len(DRAW_ROWS), 'rank_shifted_rows': len(rank_shift), 'roster_count': len(out), 'n_ranked': res['n_ranked'], 'files': pub['files']})
 subprocess.run([sys.executable, '-B', str(J / 'make_lib_v1810.py')], check=True)

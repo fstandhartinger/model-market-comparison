@@ -118,13 +118,20 @@ def cost_gate(row):
     return True
 
 
+# F5 (delta fairness review r278-delta-fair): the provenance peers carry (v1.8.7 Nemotron entry). raw = sha256 of the sealed raw run the scorer read
+# (runs-auto-intake gemini-decision-1 attempt 2); cost basis = the 27 Oct draw's common-set cost basis every d1027 row carries; common input tokens
+# reproduce the scorer's usd_per_1000 exactly at USD 0.10/M input over the 1,489-item common set (asserted below).
+RAW_SHA256 = 'd68c7d967d700cdfffceb78cc2385efcc068eafbc66359dfaffacb3247f610b0'
+COST_BASIS_SHA256 = 'b83bdfd14c263ffacfa572b304084154afca84c1f00083101a33783ae6f8b356'
+INPUT_TOKENS_COMMON = 569658
 def proof_entry(row):
-    return {'scored_input_sha256': PINS['scored.json'], 'scorer_results_sha256': SCORER_RESULTS_SHA, 'cells_sha256': PINS['cells.json'], 'registry_sha256': PINS['REGISTRY.json'],
+    assert abs(1000 * INPUT_TOKENS_COMMON * 0.10 / 1e6 / 1489 - COST_NUMBERS['usd_per_1000']) < 1e-12, 'common input tokens must reproduce the scorer cost'
+    return {'scored_input_sha256': PINS['scored.json'], 'raw_sha256': RAW_SHA256, 'scorer_results_sha256': SCORER_RESULTS_SHA, 'cells_sha256': PINS['cells.json'], 'registry_sha256': PINS['REGISTRY.json'],
             'published': row['published_scores'], 'equated': {'axes': row['axes'], 'scores': row['scores'], 'capability': row['capability']}, 'ranks': row['ranks'], 'treatment': 'ranked',
             'composite_ci95': row['composite_ci95'], 'decision_limit': row['decision_limit'], 'model_pin': None, 'served_model': 'request-pinned (the API returns no model field)',
             'failure_treatment': f'{FAILED} transport failures (one HTTP 503, two network errors) are wrong for Intelligence and excluded from Calibration by the frozen scorer',
             'answered_n': scored['status']['answered_ok'], 'scored_n': 1500, 'accuracy_yesno_rule': round(100 * ACC, 4),
             'cost': {**COST_NUMBERS, 'kind_scored': scored['cost']['kind'], 'kind_shown': 'tariff', 'input_tokens_all': INPUT_TOKENS_ALL, 'output_tokens_all': 0, 'rate_in_usd_per_m': 0.10, 'rate_out_usd_per_m': 0.0,
-                     'zero_token_failed_items_in_common_set': FAILED, 'pricing_module_sha256': PRICING_NEW, 'resolve_proof_sha256': RESOLVE_PROOF_SHA,
+                     'zero_token_failed_items_in_common_set': FAILED, 'input_tokens_common': INPUT_TOKENS_COMMON, 'cost_basis_sha256': COST_BASIS_SHA256, 'pricing_module_sha256': PRICING_NEW, 'resolve_proof_sha256': RESOLVE_PROOF_SHA,
                      'resolve_entry': {'source': 'api', 'base_model': None}, 'note': 'scorer common-membership usd_per_1000 (same rule as every d1027 row); the failed items count as zero-token items in the 1,489 denominator'},
             'category_pool_bounds': BOUNDS[GK], 'image_label': IMAGE_LABEL}

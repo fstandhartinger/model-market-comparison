@@ -28,6 +28,9 @@ export const V1810_SCORERS=/*SCORERS*/;
 export const V1810_NEW_ROWS=/*NEWROWS*/;
 export const V1810_NEW_ROW_BOUNDS=/*NEWBOUNDS*/;
 export const V1810_NEW_KEYS=Object.keys(V1810_NEW_ROWS).sort();
+// r278 corrections: the preliminary, unranked A2 re-run listing of Microsoft-Decision-1 leaves every board view of this release (its data stays in v1.8.9 and earlier).
+export const V1810_REMOVED=/*REMOVED*/;
+export const V1810_REMOVED_KEYS=Object.keys(V1810_REMOVED).sort();
 export const V1810_PRICING=Object.freeze({old:'2f52370fe1dba73d75a770a386df350cc76a0898304aeba9e29c91f6e4d3738b',new:'1b3c52fbeb5543c44c5d2c093002c60b469e4356a7f96116fc4228a345bd10b2'});
 export const V1810_DRAW='v1.6-regular-20261027';
 export const V1810_OFFSET=Object.freeze({I:-2.884891186577587,C:-1.8542447151797177});
@@ -111,13 +114,16 @@ export function validateJevbenchV1810Bundle({manifest,artifact,categories,carry,
  for(const f of ['method','G_med','options','noul_method','protocol','types','tier_weights','headline'])same(artifact[f],previous.artifact[f],'unchanged '+f);
  const rows=artifact.systems,by=new Map(rows.map(s=>[s.key,s]));
  if(by.size!==rows.length)fail('duplicate key');
- same([...by.keys()].sort(),[...previous.artifact.systems.map(s=>s.key),...V1810_NEW_KEYS].sort(),'exact roster');
+ same([...by.keys()].sort(),[...previous.artifact.systems.map(s=>s.key).filter(k=>!V1810_REMOVED_KEYS.includes(k)),...V1810_NEW_KEYS].sort(),'exact roster');
+ same(V1810_REMOVED_KEYS,['microsoft-decision-1-a2-20261012'],'removed rows');
+ for(const k of V1810_REMOVED_KEYS){const p=previous.artifact.systems.find(s=>s.key===k);if(!p||p.ranked!==false||p.rank!=null||p.listing!=='preliminary'||by.has(k)||categories.systems[k]!==undefined||categories.lanes[k]!==undefined||Object.values(previous.artifact.board).some(b=>b.order.includes(k)))fail('removed row must be an unranked preliminary listing, absent from this release '+k);}
  if(V1810_NEW_KEYS.some(k=>previous.artifact.systems.some(s=>s.key===k)))fail('added row already carried');
- if(artifact.roster_count!==rows.length||artifact.n_ranked!==rows.filter(s=>s.ranked).length||artifact.n_ranked!==previous.artifact.n_ranked+V1810_RANKED_KEYS.length+V1810_NEW_KEYS.length)fail('counts');
+ if(artifact.roster_count!==previous.artifact.systems.length+V1810_NEW_KEYS.length-V1810_REMOVED_KEYS.length||artifact.roster_count!==rows.length||artifact.n_ranked!==rows.filter(s=>s.ranked).length||artifact.n_ranked!==previous.artifact.n_ranked+V1810_RANKED_KEYS.length+V1810_NEW_KEYS.length)fail('counts');
  same(previous.artifact.systems.filter(s=>s.draw?.id===V1810_DRAW).map(s=>s.key).sort(),V1810_EQUATED_KEYS,'rows of the equated draw');
  same([...V1810_RANKED_KEYS,...Object.keys(V1810_UNRANKED)].sort(),V1810_EQUATED_KEYS,'ranked + unranked partition');
  if(!V1810_HELD.every(k=>k in V1810_UNRANKED)||V1810_HELD.length!==4||V1810_RANKED_KEYS.length!==31)fail('31 ranked, 4 held');
  for(const p of previous.artifact.systems){
+  if(V1810_REMOVED_KEYS.includes(p.key))continue;
   const now=by.get(p.key);
   if(V1810_EQUATED_KEYS.includes(p.key)){
    same(omit(now,EQ_FIELDS),omit(p,EQ_FIELDS),'carried row '+p.key);
@@ -166,8 +172,8 @@ export function validateJevbenchV1810Bundle({manifest,artifact,categories,carry,
  }
  same(artifact.board,Object.fromEntries(Object.entries(artifact.board).map(([m,b])=>[m,{...previous.artifact.board[m],order:b.order}])),'board metadata');
  same(carry,previous.carry,'dated carry');
- same(Object.keys(categories.systems).sort(),[...Object.keys(previous.categories.systems),...V1810_NEW_KEYS].sort(),'category roster');
- const carriedCells=c=>({...omit(c,['revision','results_sha256','source_results_sha256','systems','lanes']),systems:omit(c.systems,V1810_NEW_KEYS),lanes:omit(c.lanes,V1810_NEW_KEYS)});
+ same(Object.keys(categories.systems).sort(),[...Object.keys(previous.categories.systems).filter(k=>!V1810_REMOVED_KEYS.includes(k)),...V1810_NEW_KEYS].sort(),'category roster');
+ const carriedCells=c=>({...omit(c,['revision','results_sha256','source_results_sha256','systems','lanes']),systems:omit(c.systems,[...V1810_NEW_KEYS,...V1810_REMOVED_KEYS]),lanes:omit(c.lanes,[...V1810_NEW_KEYS,...V1810_REMOVED_KEYS])});
  same(carriedCells(categories),carriedCells(previous.categories),'cells unchanged');
  if(categories.revision!=='v1.8.10'||categories.results_sha256!==manifest.files.results.sha256)fail('category binding');
  if(proof.revision!=='v1.8.10'||proof.carried_rows!==previous.artifact.systems.length)fail('proof identity');
@@ -181,7 +187,7 @@ export function validateJevbenchV1810Bundle({manifest,artifact,categories,carry,
  same(proof.ranked_rows,[...V1810_RANKED_KEYS].sort(),'ranked rows');same(proof.unranked_rows,V1810_UNRANKED,'unranked rows');
  same(artifact.addendum.equated_keys,V1810_EQUATED_KEYS,'addendum equated keys');
  same(artifact.addendum.ranked_keys,[...V1810_RANKED_KEYS].sort(),'addendum ranked keys');
- same(artifact.addendum.new_keys,V1810_NEW_KEYS,'addendum keys');
+ same(artifact.addendum.new_keys,V1810_NEW_KEYS,'addendum keys');same(artifact.addendum.removed_keys,V1810_REMOVED_KEYS,'addendum removed keys');same(proof.removed_rows,V1810_REMOVED,'proof removed rows');
  same(artifact.addendum.same_draw,V1810_DRAW,'addendum draw');
  if(!hex(proof.source_inputs?.equating_sha256)||proof.source_inputs.equating_sha256!==V1810_EQUATING.files.equating.sha256||artifact.source_sha256!==proof.source_inputs.equating_sha256)fail('input provenance');
  same(proof.predecessor,manifest.predecessor,'proof predecessor');

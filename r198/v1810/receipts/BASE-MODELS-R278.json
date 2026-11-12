@@ -1,0 +1,105 @@
+{
+ "applied": {
+  "amos-1-large": {
+   "after": "Qwen/Qwen3.8-27B [disclosed: author self-report, model card]",
+   "before": "undisclosed (no entry) [no entry]"
+  },
+  "amos-1-medium": {
+   "after": "Qwen/Qwen3.5-9B [disclosed: model card]",
+   "before": "undisclosed (no entry) [no entry]"
+  },
+  "decision-machine-1": {
+   "after": "Qwen2.5-1.5B-Instruct (choices) + GLiNER2.5 (spans) [disclosed: vendor statement]",
+   "before": "undisclosed [undisclosed]"
+  },
+  "drex-max": {
+   "after": "Qwen3.8-27B [disclosed: vendor statement]",
+   "before": "undisclosed [undisclosed]"
+  },
+  "gemini-3.1-flash-lite": {
+   "after": "Gemini 3 Pro (Google) [disclosed: model card]",
+   "before": "undisclosed [undisclosed]"
+  },
+  "jevact": {
+   "after": "Qwen3.5-2B [disclosed: author self-report]",
+   "before": "undisclosed [undisclosed]"
+  },
+  "kushal-gemma4-31b-it-autoloops": {
+   "after": "google/gemma-4-31B-it [disclosed: vendor statement]",
+   "before": "undisclosed [undisclosed]"
+  },
+  "launchables-myles-g-12b": {
+   "after": "google/gemma-4-12B-it [disclosed: model card]",
+   "before": "google/gemma-4-12B-it [self-reported]"
+  },
+  "launchables-myles-g-31b": {
+   "after": "google/gemma-4-31B-it [disclosed: model card]",
+   "before": "google/gemma-4-31B-it [self-reported]"
+  },
+  "microsoft-decision-1-r2": {
+   "after": "Qwen3.5-9B [disclosed: model card, vendor statement]",
+   "before": "undisclosed (no entry) [no entry]"
+  },
+  "nimble-v4-max": {
+   "after": "Qwen/Qwen3.8-27B [disclosed: model card]",
+   "before": "undisclosed (no entry) [no entry]"
+  },
+  "nvidia/nemotron-3.5-super-vl": {
+   "after": "Nemotron 3 Super Base (NVIDIA) [disclosed: model card]",
+   "before": "undisclosed (no entry) [no entry]"
+  },
+  "qwen3.8-27b": {
+   "after": "Qwen/Qwen3.8-27B [disclosed: model card]",
+   "before": "undisclosed [undisclosed]"
+  },
+  "simplejev-qwen3.6-35b-a3b": {
+   "after": "Qwen/Qwen3.6-35B-A3B [disclosed: vendor statement]",
+   "before": "undisclosed [undisclosed]"
+  },
+  "singularity-super-decider": {
+   "after": "google/diffusiongemma-26B-A4B-it [disclosed: model card]",
+   "before": "undisclosed (no entry) [no entry]"
+  },
+  "singularity-super-decider-thinking": {
+   "after": "google/diffusiongemma-26B-A4B-it [disclosed: model card]",
+   "before": "undisclosed (no entry) [no entry]"
+  },
+  "spx-cd-flash": {
+   "after": "Qwen/Qwen3.6-35B-A3B [disclosed: model card]",
+   "before": "Undisclosed [undisclosed]"
+  },
+  "spx-cd-pro": {
+   "after": "Qwen/Qwen3.8-27B [disclosed: model card]",
+   "before": "Undisclosed [undisclosed]"
+  }
+ },
+ "group_a": [
+  "microsoft-decision-1-r2",
+  "singularity-super-decider-thinking",
+  "singularity-super-decider",
+  "drex-max",
+  "nimble-v4-max",
+  "spx-cd-pro",
+  "spx-cd-flash",
+  "amos-1-large",
+  "amos-1-medium",
+  "kushal-gemma4-31b-it-autoloops",
+  "simplejev-qwen3.6-35b-a3b",
+  "decision-machine-1",
+  "jevact",
+  "gemini-3.1-flash-lite",
+  "nvidia/nemotron-3.5-super-vl",
+  "qwen3.8-27b"
+ ],
+ "group_b": [
+  "launchables-myles-g-31b",
+  "launchables-myles-g-12b"
+ ],
+ "group_c": "unchanged (undisclosed), not in the input",
+ "input": "r198/v1810/inputs/base-models/PROPOSED-ENTRIES.json",
+ "input_sha256": "f07dece155895135c7c008c7dc25b93acc34678c4015773b6a8033a4fc8a0b5e",
+ "overlay_sha256": "9b22f4854995955685578855428da7fe0b9045b7db170216fa6f4bfdbc21a2f3",
+ "second_source_added": {
+  "microsoft-decision-1": "https://techcommunity.microsoft.com/blog/azure-ai-foundry-blog/introducing-microsoft-decision-1-in-microsoft-foundry-for-decision-and-classific/4562742"
+ }
+}

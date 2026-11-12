@@ -265,10 +265,18 @@
         ]
       },
       "kushal-gemma4-31b-it-autoloops": {
-        "label": "undisclosed",
-        "status": "undisclosed",
-        "sources": [],
-        "note": "No verified public base-model disclosure recorded."
+        "label": "google/gemma-4-31B-it",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://autoloops.ai/jev",
+            "title": "Autoloops model page",
+            "evidence": "Autoloops lists the model as Gemma 4 31B (Google DeepMind, Apache 2.0), model ID gemma-4-31b-it.",
+            "kind": "vendor statement"
+          }
+        ],
+        "note": "Vendor page.",
+        "checked_utc": "2026-11-12T20:00:00Z"
       },
       "gpt-6-luna-low": {
         "label": "undisclosed",
@@ -433,10 +441,18 @@
         ]
       },
       "gemini-3.1-flash-lite": {
-        "label": "undisclosed",
-        "status": "undisclosed",
-        "sources": [],
-        "note": "No verified public base-model disclosure recorded."
+        "label": "Gemini 3 Pro (Google)",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://deepmind.google/models/model-cards/gemini-3-1-flash-lite/",
+            "title": "Google DeepMind model card",
+            "evidence": "Gemini 3.1 Flash-Lite is based on Gemini 3 Pro.",
+            "kind": "model card"
+          }
+        ],
+        "note": "Google's own model.",
+        "checked_utc": "2026-11-12T20:00:00Z"
       },
       "ninfer-qwen3.8-27b": {
         "label": "Qwen3.8-27B",
@@ -609,10 +625,18 @@
         ]
       },
       "decision-machine-1": {
-        "label": "undisclosed",
-        "status": "undisclosed",
-        "sources": [],
-        "note": "No verified public base-model disclosure recorded."
+        "label": "Qwen2.5-1.5B-Instruct (choices) + GLiNER2.5 (spans)",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://milliseconds.ai/blog/why-we-built-decision-machine-1/",
+            "title": "milliseconds.ai blog",
+            "evidence": "Our Qwen-based runner uses a small instruction-following model for choices and GLiNER for spans (Qwen2.5-1.5B-Instruct; GLiNER2.5).",
+            "kind": "vendor statement"
+          }
+        ],
+        "note": "Vendor blog (19 Sep 2026); the vendor says the backend can change.",
+        "checked_utc": "2026-11-12T20:00:00Z"
       },
       "gliner2.5-multi": {
         "label": "mDeBERTa-v3-base",
@@ -637,16 +661,18 @@
         ]
       },
       "jevact": {
-        "label": "undisclosed",
-        "status": "undisclosed",
+        "label": "Qwen3.5-2B",
+        "status": "disclosed",
         "sources": [
           {
-            "url": "https://raw.githubusercontent.com/fstandhartinger/jevbench/HEAD/README.md",
-            "title": "Reviewed author README",
-            "evidence": "No verified base-model identity for this evaluated variant is recorded from this source."
+            "url": "https://github.com/fstandhartinger/jevbench/issues/66",
+            "title": "Author's submission (issue title)",
+            "evidence": "The author's issue title: 'Add JevAct (Qwen3.5-2B base API access available)'.",
+            "kind": "author self-report"
           }
         ],
-        "note": "No verified public base-model disclosure recorded."
+        "note": "Author's issue title only; not otherwise documented.",
+        "checked_utc": "2026-11-12T20:00:00Z"
       },
       "clm-8b": {
         "label": "Qwen/Qwen3-8B",
@@ -936,10 +962,18 @@
         ]
       },
       "qwen3.8-27b": {
-        "label": "undisclosed",
-        "status": "undisclosed",
-        "sources": [],
-        "note": "No verified public base-model disclosure recorded."
+        "label": "Qwen/Qwen3.8-27B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/Qwen/Qwen3.8-27B",
+            "title": "Qwen model card",
+            "evidence": "The row is Qwen's open-weight Qwen3.8-27B itself, served by Chutes (FP8).",
+            "kind": "model card"
+          }
+        ],
+        "note": "The open model itself, not a fine-tune.",
+        "checked_utc": "2026-11-12T20:00:00Z"
       },
       "verdict-small": {
         "label": "intfloat/multilingual-e5-small",
@@ -1097,16 +1131,18 @@
         ]
       },
       "simplejev-qwen3.6-35b-a3b": {
-        "label": "undisclosed",
-        "status": "undisclosed",
+        "label": "Qwen/Qwen3.6-35B-A3B",
+        "status": "disclosed",
         "sources": [
           {
-            "url": "https://raw.githubusercontent.com/featherless-ai/simple-jev/main/README.md",
-            "title": "Reviewed author README",
-            "evidence": "No verified base-model identity for this evaluated variant is recorded from this source."
+            "url": "https://github.com/featherless-ai/simple-jev/blob/main/README.md",
+            "title": "Featherless README",
+            "evidence": "The README names Qwen/Qwen3.6-35B-A3B as the Qwen MoE model of this recipe.",
+            "kind": "vendor statement"
           }
         ],
-        "note": "No verified public base-model disclosure recorded."
+        "note": "Vendor README.",
+        "checked_utc": "2026-11-12T20:00:00Z"
       },
       "nemotron-diffusion-8b": {
         "label": "nvidia/Nemotron-Labs-Diffusion-8B",
@@ -1960,30 +1996,32 @@
         "cr": "CR-338"
       },
       "spx-cd-flash": {
-        "label": "Undisclosed",
-        "status": "undisclosed",
+        "label": "Qwen/Qwen3.6-35B-A3B",
+        "status": "disclosed",
         "sources": [
           {
-            "url": "https://surd.ai",
-            "title": "Provider endpoint",
-            "evidence": "Underlying base not disclosed in measurement record."
+            "url": "https://huggingface.co/SurdAI/SPX-CD-Flash",
+            "title": "SurdAI model card",
+            "evidence": "SPX-CD-Flash is a LoRA adapter for Qwen/Qwen3.6-35B-A3B.",
+            "kind": "model card"
           }
         ],
-        "checked_utc": "2026-10-08T00:00:00Z",
-        "cr": "CR-338"
+        "note": "Vendor model card for the published adapter (9 Oct); the hosted Oct-4 checkpoint measured here is not stated to be identical.",
+        "checked_utc": "2026-11-12T20:00:00Z"
       },
       "spx-cd-pro": {
-        "label": "Undisclosed",
-        "status": "undisclosed",
+        "label": "Qwen/Qwen3.8-27B",
+        "status": "disclosed",
         "sources": [
           {
-            "url": "https://surd.ai",
-            "title": "Provider endpoint",
-            "evidence": "Underlying base not disclosed in measurement record."
+            "url": "https://huggingface.co/SurdAI/SPX-CD-Pro",
+            "title": "SurdAI model card",
+            "evidence": "SPX-CD-Pro is a LoRA adapter for Qwen/Qwen3.8-27B.",
+            "kind": "model card"
           }
         ],
-        "checked_utc": "2026-10-08T00:00:00Z",
-        "cr": "CR-338"
+        "note": "Vendor model card for the published adapter (9 Oct); the hosted Oct-4 checkpoint measured here is not stated to be identical.",
+        "checked_utc": "2026-11-12T20:00:00Z"
       },
       "microsoft-decision-1": {
         "label": "Qwen3.5-9B",
@@ -1992,17 +2030,31 @@
           {
             "url": "https://commandline.microsoft.com/microsoft-decision-1-model-foundry/",
             "title": "Microsoft launch announcement, 9 October 2026",
-            "evidence": "Microsoft identifies Decision-1 as a post-trained Qwen3.5-9B model."
+            "evidence": "Microsoft identifies Decision-1 as a post-trained Qwen3.5-9B model.",
+            "kind": "vendor statement"
+          },
+          {
+            "url": "https://techcommunity.microsoft.com/blog/azure-ai-foundry-blog/introducing-microsoft-decision-1-in-microsoft-foundry-for-decision-and-classific/4562742",
+            "title": "Microsoft Foundry launch blog (Microsoft Tech Community)",
+            "evidence": "Microsoft-Decision-1 is a decision model built on Qwen3.5-9B.",
+            "kind": "vendor statement"
           }
         ],
         "note": "Base model disclosed by Microsoft; the Decision-1 endpoint is evaluated as a hosted API offering."
       },
       "launchables-myles-g-31b": {
         "label": "google/gemma-4-31B-it",
-        "status": "self-reported",
-        "sources": [],
-        "note": "Customer statement (order notes, 21 Oct 2026): a merged LoRA adapter on google/gemma-4-31B-it. Not publicly documented by the vendor and not independently verified.",
-        "checked_utc": "2026-10-21T00:00:00Z"
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/launchables/myles-g-31b",
+            "title": "Vendor Hugging Face repo metadata (gated weights)",
+            "evidence": "The repo's public metadata names google/gemma-4-31B-it as base; repo revision 0093c518 equals the measured adapter.",
+            "kind": "model card"
+          }
+        ],
+        "note": "Public model-card metadata; weights gated, deployed endpoint not inspected.",
+        "checked_utc": "2026-11-12T20:00:00Z"
       },
       "hyland-hs1": {
         "label": "google/gemma-4-26B-A4B-it",
@@ -2036,18 +2088,32 @@
         "checked_utc": "2026-10-21T00:00:00Z"
       },
       "drex-max": {
-        "label": "undisclosed",
-        "status": "undisclosed",
-        "sources": [],
-        "note": "No public base model declared; proprietary vendor-hosted API.",
-        "checked_utc": "2026-10-21T00:00:00Z"
+        "label": "Qwen3.8-27B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://arxiv.org/abs/2611.07854",
+            "title": "Nace AI technical report (arXiv 2611.07854, 5 Nov 2026)",
+            "evidence": "The report says Drex Max was trained starting from the Qwen3.8-27B base model.",
+            "kind": "vendor statement"
+          }
+        ],
+        "note": "Vendor's technical report. The vendor updated the model behind this API id after our 21 Oct measurement.",
+        "checked_utc": "2026-11-12T20:00:00Z"
       },
       "launchables-myles-g-12b": {
         "label": "google/gemma-4-12B-it",
-        "status": "self-reported",
-        "sources": [],
-        "note": "Customer states merged LoRA on Gemma 4 12B; not independently verified.",
-        "checked_utc": "2026-10-21T00:00:00Z"
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/launchables/myles-g-12b",
+            "title": "Vendor Hugging Face repo metadata (gated weights)",
+            "evidence": "The repo's public metadata names google/gemma-4-12B-it as base.",
+            "kind": "model card"
+          }
+        ],
+        "note": "Public model-card metadata; weights gated, deployed endpoint not inspected.",
+        "checked_utc": "2026-11-12T20:00:00Z"
       },
       "iota-decide-4b": {
         "label": "Qwen/Qwen3.5-4B-Base",
@@ -3457,6 +3523,116 @@
         "note": "Google does not disclose a base model for this hosted API.",
         "sources": [],
         "status": "undisclosed"
+      },
+      "microsoft-decision-1-r2": {
+        "label": "Qwen3.5-9B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://ai.azure.com/catalog/models/Microsoft-Decision-1",
+            "title": "Microsoft Foundry model card (Version 1)",
+            "evidence": "Microsoft states the model is built on Alibaba's open-weight Qwen3.5-9B and post-trained by Microsoft.",
+            "kind": "model card"
+          },
+          {
+            "url": "https://techcommunity.microsoft.com/blog/azure-ai-foundry-blog/introducing-microsoft-decision-1-in-microsoft-foundry-for-decision-and-classific/4562742",
+            "title": "Microsoft Foundry launch blog",
+            "evidence": "Microsoft-Decision-1 is a decision model built on Qwen3.5-9B.",
+            "kind": "vendor statement"
+          }
+        ],
+        "note": "Base model disclosed by Microsoft. The October weights update keeps the served model id and the model card's Version 1; Microsoft has announced a rebase only for future iterations.",
+        "checked_utc": "2026-11-12T20:00:00Z"
+      },
+      "singularity-super-decider-thinking": {
+        "label": "google/diffusiongemma-26B-A4B-it",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/Singularity-Compute/super-decider/blob/7f8b3f76e88aba6aa1159da75eb577ea990d2af1/README.md",
+            "title": "Vendor model card at the pinned revision",
+            "evidence": "The card names google/diffusiongemma-26B-A4B-it as the base (fine-tune), served from NVIDIA's NVFP4 checkpoint.",
+            "kind": "model card"
+          }
+        ],
+        "note": "Vendor model card; the hosted endpoint was not inspected.",
+        "checked_utc": "2026-11-12T20:00:00Z"
+      },
+      "singularity-super-decider": {
+        "label": "google/diffusiongemma-26B-A4B-it",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/Singularity-Compute/super-decider/blob/7f8b3f76e88aba6aa1159da75eb577ea990d2af1/README.md",
+            "title": "Vendor model card at the pinned revision",
+            "evidence": "The card names google/diffusiongemma-26B-A4B-it as the base (fine-tune), served from NVIDIA's NVFP4 checkpoint.",
+            "kind": "model card"
+          }
+        ],
+        "note": "Vendor model card; the hosted endpoint was not inspected.",
+        "checked_utc": "2026-11-12T20:00:00Z"
+      },
+      "nimble-v4-max": {
+        "label": "Qwen/Qwen3.8-27B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/bespokelabs/Nimble-v4-max",
+            "title": "Bespoke Labs model card",
+            "evidence": "Nimble-v4-max is a decision model made by Bespoke Labs, a fine-tune of Qwen/Qwen3.8-27B.",
+            "kind": "model card"
+          }
+        ],
+        "note": "Vendor model card (published 18 Oct, after our 14 Oct measurement of the hosted API).",
+        "checked_utc": "2026-11-12T20:00:00Z"
+      },
+      "amos-1-large": {
+        "label": "Qwen/Qwen3.8-27B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://github.com/fstandhartinger/jevbench/issues/218",
+            "title": "Scira's submission",
+            "evidence": "It's an open decision model on Qwen3.8-27B.",
+            "kind": "author self-report"
+          },
+          {
+            "url": "https://huggingface.co/mukaddamzaid/amos-1-large",
+            "title": "Author model card",
+            "evidence": "base_model: Qwen/Qwen3.8-27B",
+            "kind": "model card"
+          }
+        ],
+        "note": "Vendor statement and model card; the hosted endpoint was not inspected.",
+        "checked_utc": "2026-11-12T20:00:00Z"
+      },
+      "amos-1-medium": {
+        "label": "Qwen/Qwen3.5-9B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/mukaddamzaid/amos-1-medium",
+            "title": "Author model card",
+            "evidence": "base_model: Qwen/Qwen3.5-9B",
+            "kind": "model card"
+          }
+        ],
+        "note": "Model card; the hosted endpoint was not inspected.",
+        "checked_utc": "2026-11-12T20:00:00Z"
+      },
+      "nvidia/nemotron-3.5-super-vl": {
+        "label": "Nemotron 3 Super Base (NVIDIA)",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Super-VL-120B-A12B-BF16",
+            "title": "NVIDIA model card",
+            "evidence": "The language backbone is initialized from Nemotron 3 Super Base.",
+            "kind": "model card"
+          }
+        ],
+        "note": "NVIDIA's own model.",
+        "checked_utc": "2026-11-12T20:00:00Z"
       }
     },
     "imagejevbench": {
