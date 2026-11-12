@@ -4195,6 +4195,8 @@ def sla_decision_rows(synthetic_id: str | None, job_root: Path) -> list[dict[str
 SLA40_LEFT_FOR_GOOD_SQL = ("NOT (r.status IN ('paid','review_passed') AND r.result_delivered_at IS NULL "
                            "AND COALESCE(r.delivery_email_status,'not_due') <> 'sent' "
                            "AND r.refund_id IS NULL AND r.refund_decision IS NULL)")
+NO_HAND_WRITE = ("Never write refund_decision by hand: a refund needs Florian's exact button, so for a delivered "
+                 "order it needs his decision through the lead and a reviewed change.")
 
 
 def sla40_stray_reason(row: dict[str, Any]) -> str:
@@ -4205,13 +4207,45 @@ def sla40_stray_reason(row: dict[str, Any]) -> str:
     return "order_changed"
 
 
+def sla40_handoff_text(rid: str, kind: str, card: dict[str, Any]) -> str:
+    """Owner handoff for a Refund tap on the 40 h card that was not applied. Says per case what already happens."""
+    head = f"Fast-lane order {order_ref(rid)}: "
+    if kind == "refund_tap_unapplied":
+        reason = card.get("stray_reason")
+        tap = ("Florian tapped Refund in full on the 40-hour card, but no sweep read the tap before the order left the "
+               "40 h step. Nothing was refunded by that tap and no decision was recorded; the card now tells him an "
+               "agent follows up. ")
+        if reason == "decided_elsewhere":
+            return head + tap + ("His decision on the 48-hour refund card stands (see the order row). Owner: tell "
+                                 "Florian that his 48 h card decision is the one that counts. " + NO_HAND_WRITE)
+        if reason == "order_changed":
+            return head + tap + ("The order is no longer open (refund queued, refunded or refused). If a refund is "
+                                 "still undecided, the 48-hour refund card asks him. Owner: check the row and tell "
+                                 "Florian. " + NO_HAND_WRITE)
+        return head + tap + ("The result was delivered. Owner: tell Florian his tap refunded nothing and ask what he "
+                             "wants. " + NO_HAND_WRITE)
+    why = (card.get("refund_refused") or {}).get("why")
+    tap = "Florian tapped Refund in full on the 40-hour card, but the order changed before it was written. "
+    if why == "hold":
+        return head + tap + ("The order is on customer hold, so nothing is refunded yet. When the hold ends the "
+                             "40 h sweep applies the recorded tap automatically and the refund worker pays it back. "
+                             "Owner: nothing to do unless the hold never ends.")
+    if why == "delivered":
+        return head + tap + ("The result was delivered (or its mail was being sent), so nothing was refunded, while "
+                             "his card says the refund worker pays it back. Owner: tell Florian and ask what he "
+                             "wants. " + NO_HAND_WRITE)
+    return head + tap + ("Nothing was refunded by this tap. If the order now waits for a refund decision, the 48-hour "
+                         "refund card asks him. Owner: check the row and tell Florian. " + NO_HAND_WRITE)
+
+
 def sla40_stray_closeouts(synthetic_id: str | None, job_root: Path, effects: Effects) -> int:
     """Close 40 h cards whose order left the 40 h set for good while the card still shows buttons (re-review S1).
 
     sla_decisions polls only open rows and refund_approval closes only refund_due/refund_pending cards with a live
     late Refund button. Every other exit (on-time delivery, a 48 h card decided first, a late button that never
-    attached) left live buttons nobody read. Never records a decision; a Refund tap that can no longer be applied is
-    handed to the order's owner once. Owner-managed orders are skipped. Bounded per card by CLOSEOUT_TRIES."""
+    attached) left live buttons nobody read. Never records a decision. Owner handoffs for a Refund tap that was not
+    applied are kept on the card and posted each cycle until the board accepts them. Owner-managed orders are
+    skipped. Close-outs are bounded per card by CLOSEOUT_TRIES."""
     if effects.dry_run:
         return 0
     root = STATE_ROOT / "sla-decisions"
@@ -4227,26 +4261,20 @@ def sla40_stray_closeouts(synthetic_id: str | None, job_root: Path, effects: Eff
         rid = path.stem
         try:
             card = json.loads(path.read_text())
-            if not isinstance(card, dict) or not (sla_decision.stray_card_live(card)
-                                                  or sla_decision.stray_closeout_pending(card)):
+            if not isinstance(card, dict) or sla_decision.owner_managed({"id": rid}):
                 continue
-            row = sql_json(f"SELECT {row_json_sql('r')} FROM {TABLE} AS r WHERE {predicate} "
-                           f"AND r.id='{rid}'::uuid AND {SLA40_LEFT_FOR_GOOD_SQL}")
-            if not row or sla_decision.owner_managed(row):
-                continue
-            outcome = sla_decision.close_stray(root, rid, sla40_stray_reason(row), utcnow().timestamp())
+            if sla_decision.stray_card_live(card) or sla_decision.stray_closeout_pending(card):
+                row = sql_json(f"SELECT {row_json_sql('r')} FROM {TABLE} AS r WHERE {predicate} "
+                               f"AND r.id='{rid}'::uuid AND {SLA40_LEFT_FOR_GOOD_SQL}")
+                if row and sla_decision.close_stray(root, rid, sla40_stray_reason(row), utcnow().timestamp()):
+                    closed += 1
+                    card = json.loads(path.read_text())
+            for kind in sla_decision.pending_handoffs(card):
+                if effects.board(sla40_handoff_text(rid, kind, card), owner_for(rid), kind="handoff"):
+                    sla_decision.mark_handoff_posted(root, rid, kind, utcnow().timestamp())
         except Exception as exc:
-            print(f"fast-lane SLA 40 h close-out: {path.name[:8]}: {type(exc).__name__}", file=sys.stderr)
+            print(f"fast-lane SLA 40 h close-out: {rid[:8]}: {type(exc).__name__}", file=sys.stderr)
             continue
-        if outcome is None:
-            continue
-        closed += 1
-        if outcome == "refund_tap_unapplied":
-            post_sla40_outcome_once(load_state(rid), "refund_tap_unapplied", effects, (
-                f"Fast-lane order {order_ref(rid)}: Florian tapped Refund in full on the 40-hour card after the "
-                "order had left the open set (result delivered or decided elsewhere). Nothing was refunded and no "
-                "decision was recorded; his card now says an agent follows up. Owner: check the order and ask him "
-                "on a new refund card whether he still wants the refund."), owner_for(rid), kind="handoff")
     return closed
 
 
@@ -4261,8 +4289,7 @@ def delay_note_message(row: dict[str, Any]) -> tuple[str, str]:
     return subject, body
 
 
-def post_sla40_outcome_once(state: dict[str, Any], outcome: str, effects: Effects, text: str, owner: str,
-                            kind: str = "note") -> bool:
+def post_sla40_outcome_once(state: dict[str, Any], outcome: str, effects: Effects, text: str, owner: str) -> bool:
     """Post the board note for a 40 h card outcome once per order; the pickup runs every 5 minutes.
 
     The marker is written only after the board accepted the note, so a failed post is retried next cycle.
@@ -4270,7 +4297,7 @@ def post_sla40_outcome_once(state: dict[str, Any], outcome: str, effects: Effect
     posted = state.setdefault("sla40_outcome_posted", {})
     if posted.get(outcome):
         return False
-    if not effects.board(text, owner, kind=kind):
+    if not effects.board(text, owner, kind="note"):
         return False
     posted[outcome] = utcnow().isoformat()
     save_state(state)
@@ -4352,14 +4379,21 @@ def sla_decisions(synthetic_id: str | None, job_root: Path, effects: Effects) ->
                     f"Fast-lane order {order_ref(rid)}: Florian approved a full refund on the "
                     "40-hour decision card; the refund worker pays it back now."), owner_for(rid))
             else:
-                # The tap lost a race with delivery or a hold (re-review S1 c): the row guard refused it, nothing was
-                # refunded, yet the card already reads "pays it back". After a hold the next cycle applies it.
-                post_sla40_outcome_once(state, "refund_refused", effects, (
-                    f"Fast-lane order {order_ref(rid)}: Florian tapped Refund in full on the 40-hour card, but the "
-                    "order changed first (result delivered or customer hold), so nothing was refunded. His card "
-                    "says the refund worker pays it back. Owner: check the order; if it was delivered, tell Florian "
-                    "and ask him on a new refund card whether he still wants the refund."),
-                    owner_for(rid), kind="handoff")
+                # The tap lost a race with delivery, a hold or a refusal (re-review S1 c): the row guard refused it and
+                # nothing was refunded. Kept on the card; sla40_stray_closeouts posts the owner handoff until accepted.
+                try:
+                    current = load_row(rid) or {}
+                    if current.get("customer_hold_started_at") and current.get("status") in ("paid", "review_passed"):
+                        why = "hold"
+                    elif current.get("result_delivered_at") or \
+                            current.get("delivery_email_status") in ("sending", "sent"):
+                        why = "delivered"
+                    else:
+                        why = "changed"
+                    sla_decision.note_refund_refused(root, rid, why, utcnow().timestamp())
+                except Exception as exc:  # retried next cycle while the order is still in the 40 h set
+                    print(f"fast-lane SLA decision: order {order_ref(rid)}: refused tap: {type(exc).__name__}",
+                          file=sys.stderr)
         elif outcome == "delay_note":
             if state.get("delay_email_status") != "sent":
                 subject, body = delay_note_message(row)
