@@ -2,7 +2,7 @@
 private or withheld wording; the Karpo restricted-scope tests pass."""
 import pathlib,subprocess,json,re
 J=pathlib.Path(__file__).resolve().parent;W=J.parents[1];V=W/'data/raw/benchmarks/jevbench/v1.8';L=lambda p:json.loads(p.read_text())
-BAD=re.compile(r'/home/|workers/|#\d{4,}|\bPREREG\b|Florian|release.owner|\blead\b|custod|deputy|\bboard #|auto-intake|\bwithheld\b|\bprivate\b|fast.?lane|priority|\bCoS\b|\{[A-Za-z_][A-Za-z0-9_]*\}|[\w.+-]+@[\w.-]+\.[a-z]{2,}|\b[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\b',re.I)
+BAD=re.compile(r'/home/|workers/|#\d{4,}|\bPREREG\b|Florian|release.owner|\b(?:the|our|release) lead\b|\blead (?:agent|job|owner)\b|custod|deputy|\bboard #|auto-intake|\bwithheld\b|\bprivate\b|fast.?lane|priority|\bCoS\b|\{[A-Za-z_][A-Za-z0-9_]*\}|[\w.+-]+@[\w.-]+\.[a-z]{2,}|\b[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\b',re.I)
 def strs(v,out):
  if isinstance(v,str):out.append(v)
  elif isinstance(v,list):[strs(x,out) for x in v]

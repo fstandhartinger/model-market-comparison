@@ -33,6 +33,8 @@ export type JevBoardRow = {
   endpoint_kind?: string; endpoint_condition?: string;
   // F-223: the headline option's paired-bootstrap 95% interval, when the release publishes one (v1.5 onwards).
   ci?: [number, number] | null;
+  // v1.8.10: a row of an equated draw says its interval was measured on the draw before equating (the interval is not shifted).
+  draw_tag?: { release: string; measured_on: string; label: string; ci_basis?: string } | null;
   alt?: { axes: { cost: number }; label: string; note: string };
 };
 
@@ -144,7 +146,7 @@ export function JevScoreBar({ row, viewRank, reference = false, metric = 'score'
   const usd = row.cost?.usd_per_1000;
   const kind = row.cost?.kind;
   const level = (column: HeatColumn) => heat ? heatLevel(heat, column, row) : null;
-  const label = `${row.display}: ${one(s)}${viewRank != null ? `, view position ${viewRank}` : ''}${row.rank ? `, official rank ${row.rank}` : `, ${NOT_RANKED[row.listing] ?? row.listing}, not ranked`}. Intelligence ${one(row.axes?.intelligence)}, calibration ${row.axes?.calibration == null ? 'none' : one(row.axes.calibration)}, speed ${one(row.axes?.speed)}, cost ${one(row.axes?.cost)}.${ciLo != null && ciHi != null ? ` 95% interval ${one(ciLo)} to ${one(ciHi)}.` : ''}${alternative ? ` ${alternative.label}: ${one(alternative.score)} (would be #${alternative.rank}). ${alternative.note}` : ''}${gate?.gates.length ? ` ${gateSentence(gate, s)}` : ''}`;
+  const label = `${row.display}: ${one(s)}${viewRank != null ? `, view position ${viewRank}` : ''}${row.rank ? `, official rank ${row.rank}` : `, ${NOT_RANKED[row.listing] ?? row.listing}, not ranked`}. Intelligence ${one(row.axes?.intelligence)}, calibration ${row.axes?.calibration == null ? 'none' : one(row.axes.calibration)}, speed ${one(row.axes?.speed)}, cost ${one(row.axes?.cost)}.${ciLo != null && ciHi != null ? ` 95% interval ${one(ciLo)} to ${one(ciHi)}${row.draw_tag?.ci_basis ? ` (${row.draw_tag.ci_basis})` : ''}.` : ''}${alternative ? ` ${alternative.label}: ${one(alternative.score)} (would be #${alternative.rank}). ${alternative.note}` : ''}${gate?.gates.length ? ` ${gateSentence(gate, s)}` : ''}`;
   return <li style={typeVar(jevRowArch(row))} className="grid grid-cols-[1.4rem_minmax(0,1fr)_3.3rem] items-center gap-x-2 text-sm sm:grid-cols-[1.6rem_14rem_minmax(0,1fr)_3.2rem_21rem]"
     data-bh-jev14-bar={row.key} data-bh-jev14-bar-score={s == null ? '' : s.toFixed(3)} data-bh-jev14-bar-metric={metric === 'score' ? undefined : metric} data-bh-jev14-reference={reference ? '1' : undefined} aria-label={label}>
     <span className="bh-muted tabular col-start-1 row-start-1 text-right text-xs" data-bh-jev-row-number title={viewRank != null ? 'Position in the current view' : 'Official rank'}>{viewRank ?? row.rank ?? ''}</span>
@@ -175,7 +177,7 @@ export function JevScoreBar({ row, viewRank, reference = false, metric = 'score'
     </span>
     <span className="bh-jevc-grid relative col-start-2 row-start-2 mt-1 flex h-4 sm:col-start-3 sm:row-start-1 sm:mt-0 sm:h-6" aria-hidden="true">
       {value != null && <span className={`bh-jevc-bar ${row.ranked ? '' : 'is-partial'} ${reference ? 'is-reference' : ''}`} style={{ width: `${Math.max(0, Math.min(100, value)).toFixed(4)}%` }} />}
-      {ciLo != null && ciHi != null && <span className="bh-jevc-ci" data-bh-jev14-ci={row.key} data-bh-jev14-ci-lo={ciLo.toFixed(3)} data-bh-jev14-ci-hi={ciHi.toFixed(3)} style={{ left: `${ciLo.toFixed(3)}%`, width: `${(ciHi - ciLo).toFixed(3)}%` }} />}
+      {ciLo != null && ciHi != null && <span className="bh-jevc-ci" data-bh-jev14-ci={row.key} title={row.draw_tag?.ci_basis ? `95% interval, ${row.draw_tag.ci_basis}` : undefined} data-bh-jev14-ci-lo={ciLo.toFixed(3)} data-bh-jev14-ci-hi={ciHi.toFixed(3)} style={{ left: `${ciLo.toFixed(3)}%`, width: `${(ciHi - ciLo).toFixed(3)}%` }} />}
     </span>
     {alternative && <>
       <span className="col-start-2 row-start-3 mt-1 block h-[6px] sm:col-start-3 sm:row-start-2" aria-hidden="true" data-bh-jev-alt={row.key} data-bh-jev-alt-score={alternative.score.toFixed(3)} data-bh-jev-alt-rank={alternative.rank}>

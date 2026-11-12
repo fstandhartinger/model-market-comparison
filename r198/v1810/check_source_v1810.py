@@ -6,7 +6,7 @@ J=pathlib.Path(__file__).resolve().parent;W=J.parents[1];BASE='c1a2a24086be72f82
 def base(p):return subprocess.check_output(['git','show',BASE+':'+str(p)],cwd=W)
 assert subprocess.run(['git','merge-base','--is-ancestor','a3fe26c6c',BASE],cwd=W).returncode==0,'base must contain the v1.8.9 merge a3fe26c6'
 D=pathlib.Path('data/raw/benchmarks/jevbench/v1.8');b=json.loads(base(D/'jevbench-v1.8.9-results.json'));a=L(W/D/'jevbench-v1.8.10-results.json');by={s['key']:s for s in a['systems']}
-DRAW=set(json.loads((J/'src/equated-keys.json').read_text()));RANKED=set(json.loads((J/'src/ranked-keys.json').read_text()))
+DRAW=set(json.loads((J/'src/equated-keys.json').read_text()));HELD=set(json.loads((J/'src/held-keys.json').read_text()));REN=json.loads((J/'src/display-renames.json').read_text());RANKED=set(json.loads((J/'src/ranked-keys.json').read_text()))
 EQF=['axes','scores','views','jevbench_score','capability','published_scores','ranked','rank','ranks','listing','not_ranked_because','listing_note','disclosure','underlying','draw']
 assert DRAW=={r['key'] for r in b['systems'] if (r.get('draw') or {}).get('id')=='v1.6-regular-20261027'},'draw rows enumerated from the base data'
 assert [r['key'] for r in b['systems']]==[r['key'] for r in a['systems']] or sorted(r['key'] for r in b['systems'])==sorted(by)
@@ -16,10 +16,13 @@ for r in b['systems']:
  now=by[r['key']]
  if r['key'] in DRAW:
   assert {f:v for f,v in now.items() if f not in EQF}=={f:v for f,v in r.items() if f not in EQF},('draw row outside the equated fields',r['key'])
-  assert {f:v for f,v in now['draw'].items() if f not in('status','offset','offset_ci95')}=={f:v for f,v in r['draw'].items() if f not in('status','offset','offset_ci95')}
+  assert {f:v for f,v in now['draw'].items() if f not in('status','offset','offset_ci95','ci_basis')}=={f:v for f,v in r['draw'].items() if f not in('status','offset','offset_ci95')} and now['draw']['ci_basis']=='measured on the draw before equating'
+  assert (r['key'] in HELD)==(not now['ranked'] and now['listing']=='unranked' and all(x is not None for x in now['scores'].values())),('held rows are the priced unranked rows',r['key'])
   assert now['published_scores']=={'axes':r['axes'],'scores':r['scores'],'capability':r['capability']},'published numbers kept '+r['key']
  else:
-  assert {f:v for f,v in now.items() if f not in('rank','ranks')}=={f:v for f,v in r.items() if f not in('rank','ranks')},('carried row changed',r['key'])
+  skip=('rank','ranks')+(('display',) if r['key'] in REN else ())
+  assert {f:v for f,v in now.items() if f not in skip}=={f:v for f,v in r.items() if f not in skip},('carried row changed',r['key'])
+  if r['key'] in REN:assert r['display']==REN[r['key']]['before'] and now['display']==REN[r['key']]['after'] and now['display']=='AutoTrust-Decider-Pro-27B (AutoTrust, Qwen3.8-27B)'
   n+=1
   if now.get('ranks')!=r.get('ranks'):shift+=1
 # 2. ranks without the draw rows == v1.8.9 ranks; every list without the newly ranked rows == the v1.8.9 list
@@ -42,7 +45,7 @@ assert {k:v for k,v in ca.items() if k not in('revision','results_sha256','sourc
 for f in ['carry','history','history-carry']:assert (W/D/f'jevbench-v1.8.10-{f}.json').read_bytes()==base(D/f'jevbench-v1.8.9-{f}.json')
 # 5. every historical data/loader file and archived page byte-equal to the base
 files=subprocess.check_output(['git','ls-tree','-r','--name-only',BASE,'data/raw/benchmarks/jevbench','lib','app/jev-models','app/api/jevbench'],cwd=W,text=True).splitlines();count=0
-CHANGED_ON_PURPOSE={'lib/jevbench-live-board.mjs','lib/jevbench-releases.mjs','lib/jevbench-categories.mjs','lib/jevbench-alldata-input.mjs','lib/jevbench-cohort-merge.mjs'}
+CHANGED_ON_PURPOSE={'lib/jevbench-v15-board.mjs','lib/jevbench-live-board.mjs','lib/jevbench-releases.mjs','lib/jevbench-categories.mjs','lib/jevbench-alldata-input.mjs','lib/jevbench-cohort-merge.mjs'}
 for f in files:
  if f.startswith('data/raw/benchmarks/jevbench/') or (f.startswith('lib/jevbench-v') and f.endswith('-release.mjs')) or (f.startswith('app/jev-models/v1.') and f.endswith('page.tsx')) or (f.startswith('app/api/jevbench/v1.')):
   assert (W/f).read_bytes()==base(f),f;count+=1
@@ -51,15 +54,16 @@ diffs={}
 for f in sorted(CHANGED_ON_PURPOSE):
  x=base(f).decode().splitlines();y=(W/f).read_text().splitlines();add=[l for l in y if l not in x];rem=[l for l in x if l not in y]
  diffs[f]={'added_lines':len(add),'removed_lines':len(rem)}
- for l in add:assert re.search(r'1810|v1\.8\.10|at least 4 anchors|< 4|V1810|v1810',l) or l.strip()=="" or 'throughV189' in l,(f,l[:160])
+ for l in add:assert re.search(r'1810|v1\.8\.10|at least 4 anchors|< 4|V1810|v1810|ci_basis',l) or l.strip()=="" or 'throughV189' in l,(f,l[:160])
 # 7. draw table: only the 27 Oct draw changed
 tb=json.loads(base('data/jevbench-draw-equating.json'));ta=L(W/'data/jevbench-draw-equating.json')
-assert {k:v for k,v in ta.items() if k!='draws'}=={k:v for k,v in tb.items() if k!='draws'}
+assert {k:v for k,v in ta.items() if k not in('draws','method')}=={k:v for k,v in tb.items() if k not in('draws','method')}
+assert ta['method']==tb['method'].replace('with fixed anchor systems measured on both draws','with anchor systems measured on both draws (each draw lists its own anchor set)') and ta['method']!=tb['method'],'T5 is the only change of the table text'
 for x,y in zip(tb['draws'],ta['draws']):
  if x['draw']!='v1.6-regular-20261027':assert x==y,x['draw']
  else:assert {k:v for k,v in y.items() if k not in('status','offset','offset_ci95','anchors','releases','latest_release','anchor_evidence','equating_receipt')}=={k:v for k,v in x.items() if k not in('status','offset','offset_ci95','anchors','releases','latest_release')} and y['releases'][:-1]==x['releases'] and y['releases'][-1]=='v1.8.10'
 assert len(tb['draws'])==len(ta['draws'])
-receipt={'status':'PASS','base':BASE,'base_contains_merge':'a3fe26c6c','carried_rows_equal_except_rank_ranks':n,'carried_rows_rank_shifted':shift,'equated_rows':len(DRAW),'ranked_rows':len(RANKED),
+receipt={'status':'PASS','base':BASE,'base_contains_merge':'a3fe26c6c','carried_rows_equal_except_rank_ranks':n,'carried_rows_rank_shifted':shift,'equated_rows':len(DRAW),'ranked_rows':len(RANKED),'held_rows':sorted(HELD),'display_renamed_rows':REN,
  'ranks_without_newly_ranked_equal_v189':True,'order_lists_without_newly_ranked_equal_v189':True,'board_metadata_equal':True,'historical_files_byte_equal':count,'loader_edits':diffs,'other_draws_unchanged':True,
  'categories_carry_history_unchanged':True,'measurement_notes_append_only':True}
 (J/'receipts/CARRIED-ROWS.json').write_text(json.dumps(receipt,indent=1,sort_keys=True)+'\n');print('PASS',n,'carried rows equal except rank/ranks (',shift,'rank-shifted, all explained by the inserted rows);',len(DRAW),'draw rows =',len(RANKED),'ranked +',len(DRAW)-len(RANKED),'unranked;',count,'historical files byte-equal')

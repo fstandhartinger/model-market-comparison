@@ -3,11 +3,16 @@ fast-lane row appears or leaks (a private order's model name must not gain a sin
 import pathlib,json,glob,re,hashlib
 J=pathlib.Path(__file__).resolve().parent;W=J.parents[1];V=W/'data/raw/benchmarks/jevbench/v1.8';L=lambda p:json.loads(pathlib.Path(p).read_text())
 b=L(J/'receipts/topfive-before.json');a=L(J/'receipts/topfive-after.json');res=L(V/'jevbench-v1.8.10-results.json');old=L(V/'jevbench-v1.8.9-results.json')
-RK=set(L(J/'src/ranked-keys.json'));UN=set(L(J/'src/unranked-keys.json'))
+RK=set(L(J/'src/ranked-keys.json'));UN=set(L(J/'src/unranked-keys.json'));HELD=set(L(J/'src/held-keys.json'))
+assert len(RK)==31 and len(HELD)==4 and len(UN)==6 and HELD<=UN
 assert b['restated_by']=='v1.8.9' and a['restated_by']=='v1.8.10' and b['merged_rows']==a['merged_rows']==340
 assert L(V/'jevbench-v1.8.10-publication.json')['review']['verdict']=='PENDING' and L(V/'jevbench-v1.8.9-publication.json')['review']['verdict']=='PASS'
-exp={'all':(283,283+35),'open':(235,235+30),'api':(48,48+5)}
-for v,(x,y) in exp.items():assert b['views'][v]['ranked']==x and a['views'][v]['ranked']==y,(v,b['views'][v]['ranked'],a['views'][v]['ranked'])
+exp={}
+for v in ['all','open','api']:
+ x=b['views'][v]['ranked'];nin=sum(1 for r in a['full_rankings'][v]['composites']['A'] if r['key'] in RK);exp[v]=(x,x+nin)
+ assert b['views'][v]['ranked']==x and a['views'][v]['ranked']==x+nin,(v,x,nin,a['views'][v]['ranked'])
+assert exp['all']==(283,283+31) and sum(y-x for x,y in exp.values())>=31,exp
+assert not [r for v in ['all','open','api'] for m in ['A','B','C'] for r in a['full_rankings'][v]['composites'][m] if r['key'] in UN]
 # the PENDING tree's lists are exactly the v1.8.9 lists; the PASS tree's lists minus the newly ranked rows equal them
 for m in ['A','B','C','capability']:
  assert b['release_lists'][m]==old['board'][m]['order'],('PENDING tree must show the v1.8.9 board',m)

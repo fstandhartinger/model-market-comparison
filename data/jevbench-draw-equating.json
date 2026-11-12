@@ -8,7 +8,7 @@
     "drawn_on": "2026-10-01",
     "G_med": 2.573387642438244
   },
-  "method": "Every draw shares the same 300 public items (P, manifest 6b2321f8...). A fresh draw is equated to the reference draw with fixed anchor systems measured on both draws: offset = median over anchors of (metric on the reference S u P) - (metric on the new draw S u P), for Intelligence and Calibration, with a bootstrap 95% interval over anchors and items. A row from that draw is shown as published plus the offset; Capability and Composite follow from the equated axes. Until the anchor runs of a draw are complete its offset is 0 and the draw is marked 'anchor runs pending'.",
+  "method": "Every draw shares the same 300 public items (P, manifest 6b2321f8...). A fresh draw is equated to the reference draw with anchor systems measured on both draws (each draw lists its own anchor set): offset = median over anchors of (metric on the reference S u P) - (metric on the new draw S u P), for Intelligence and Calibration, with a bootstrap 95% interval over anchors and items. A row from that draw is shown as published plus the offset; Capability and Composite follow from the equated axes. Until the anchor runs of a draw are complete its offset is 0 and the draw is marked 'anchor runs pending'.",
   "anchor_pool": [
     "hopper",
     "kev-0.6b",

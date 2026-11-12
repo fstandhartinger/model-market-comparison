@@ -14,6 +14,7 @@ for m,key in (('I','I_post_rel'),('C','C')):
  assert CI[m][0]<OFF[m]<CI[m][1] or CI[m][0]<OFF[m]
 # draw table
 t=L(W/'data/jevbench-draw-equating.json');d=next(x for x in t['draws'] if x['draw']==DRAW)
+assert 'with anchor systems measured on both draws (each draw lists its own anchor set)' in t['method'] and 'fixed anchor systems' not in t['method'],'T5 method wording'
 assert d['status']=='equated' and d['offset']==OFF and d['offset_ci95']=={'I':CI['I'],'C':CI['C']} and d['anchors']==sorted(eq['anchors']) and d['latest_release']=='v1.8.10' and d['releases'][-1]=='v1.8.10' and d['joins_via']=='v1.7-addendum'
 assert d['equating_receipt']=={'name':'EQUATING-STRONG4-D1027.json','sha256':EQ_SHA} and EQ_SHA in d['anchor_evidence']
 for x in t['draws']:
@@ -44,7 +45,7 @@ for s in rows:
   x=comp(ax,dict(zip(AX,w)),50);assert (x is None and s['views'][nme] is None) or abs(x-s['views'][nme])<1e-9,(s['key'],nme);n+=1
  assert s['draw']['status']=='equated' and s['draw']['offset']==OFF and s['draw']['offset_ci95']=={'I':CI['I'],'C':CI['C']}
  assert s['composite_ci95']==L(V/'jevbench-v1.8.9-results.json')['systems'][[x['key'] for x in L(V/'jevbench-v1.8.9-results.json')['systems']].index(s['key'])]['composite_ci95']
-assert sum(1 for s in rows if s['ranked'])==35
+assert sum(1 for s in rows if s['ranked'])==31 and sum(1 for s in rows if not s['ranked'])==6 and all(s['draw']['ci_basis']=='measured on the draw before equating' for s in rows)
 receipt={'status':'PASS','equating_receipt_sha256':EQ_SHA,'offset':OFF,'offset_ci95':CI,'anchors':d['anchors'],'median_of_four_anchor_differences_equals_offset':True,'draw_table_proof_lib_rows_agree':True,
  'rows_checked':len(rows),'composite_values_rechecked_independently':n,'max_abs_composite_error':maxerr,'other_draws_pending_offset_zero':True,'confidence_intervals_unchanged_from_v189':True,'sealed_bytes_read':False}
 (J/'receipts/EQUATING-BINDING.json').write_text(json.dumps(receipt,indent=1,sort_keys=True)+'\n');print('PASS equating binding:',len(rows),'rows;',n,'composite/view values rederived independently, max error',maxerr)

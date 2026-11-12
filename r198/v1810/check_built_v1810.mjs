@@ -15,8 +15,10 @@ const allData=await(await require(path.join(root,'.next/server/app/api/jevbench-
 assert.equal(allData.artifact.revision,'v1.8.10');assert.equal(allData.artifact.n_ranked,a.n_ranked);
 const html=p=>readFileSync(p,'utf8').replace(/<script\b[^>]*>[\s\S]*?<\/script>/g,'');
 for(const p of ['.next/server/app/jev-models.html','.next/server/app/jev-models/all.html']){const t=html(p);assert.equal([...t.matchAll(/href="\/jev-models\/v1\.8\.10"/g)].length,1);}
-const page=html('.next/server/app/jev-models/v1.8.10.html').replace(/<[^>]*>/g,' ');assert.ok(page.includes('four strong anchor systems'));assert.ok(page.includes('ranked its rows'));
+const page=html('.next/server/app/jev-models/v1.8.10.html').replace(/<[^>]*>/g,' ');assert.ok(page.includes('four strong anchor systems'));assert.ok(page.includes('ranked 31 of its rows'));assert.ok(page.includes('four stay unranked'));assert.ok(page.includes('AutoTrust-Decider-Pro-27B'));
 for(const s of feed.systems)assert.ok(!/not yet equated|until (that|the) draw is equated|stronger anchor|first anchor runs/i.test(s.not_ranked_because??''),'stale reason '+s.key);
-const board=html('.next/server/app/jev-models.html');for(const k of ['Torchcast Decision 31B v1.0','H2O-Lightning-4B v1.4.1','decide-1.1'])assert.ok(board.includes(k),'ranked row on the board html '+k);
+const board=html('.next/server/app/jev-models.html');assert.equal(feed.systems.find(s=>s.key==='jev-27b-autotrust').name,'AutoTrust-Decider-Pro-27B (AutoTrust, Qwen3.8-27B)');assert.ok(!feed.systems.some(s=>/^JEV-(9B|27B)/.test(s.display)));
+for(const k of a.addendum.held_keys){const s=by.get(k);assert.equal(s.ranked,false);assert.equal(s.not_ranked_because,a.systems.find(x=>x.key===k).not_ranked_because);}
+for(const k of ['Torchcast Decision 31B v1.0','Karpo-Decision-31B','decide-1.1'])assert.ok(board.includes(k),'ranked row on the board html '+k);
 writeFileSync(J+'receipts/BUILT-LINKS.json',JSON.stringify({status:'PASS',source:'production-compiled latest API, All-data route and static HTML of the synthetic PASS tree',rows:feed.systems.length,ranked_rows_in_feed:feed.systems.filter(s=>s.ranked).length,newly_ranked:ranked.length,unranked_kept:unranked,carried_costs_unchanged:true,caps_unchanged:true,single_history_entry:true,release_page_equated_wording:true,no_stale_unranked_reason_in_feed:true,newly_ranked_rows_on_board_html:true},null,1)+'\n');
 console.log('PASS compiled API, ranked/unranked rows, carried costs, caps, single history entry, release page wording and no stale unranked reason in the feed');

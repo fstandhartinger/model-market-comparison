@@ -1,12 +1,12 @@
 """Fail-closed approval binding shared by release-owner helpers (flip, freeze, seal).
 v1.8.10 ranks the 27 Oct draw's priced rows, so top fives change: the fair top-five GO (Florian rule 25 Oct 2026, '3 ja') applies only with a bound
-independent FAIR fairness receipt (workers/r276-v1810-fair/RESULT.json, bound by bind_fair_v1810.py). While the receipt is PENDING (or not FAIR)
+independent FAIR fairness receipt (workers/r276-v1810-recheck/RESULT.json, bound by bind_fair_v1810.py). While the receipt is PENDING (or not FAIR)
 every helper refuses."""
 import hashlib,json,os,pathlib
 # JEV_FAIR_ROOT exists only for the synthetic .pass tree's dry runs; the default is the job directory.
 JOB=pathlib.Path(os.environ.get('JEV_FAIR_ROOT','/home/flori/jobs/jevbench-add-requests-20260919'))
 STATUS='GO (fair top-five change, Florian rule 25 Oct 2026; strong-anchor equating of the 27 Oct draw)'
-REL='workers/r276-v1810-fair/RESULT.json'
+REL='workers/r276-v1810-recheck/RESULT.json'
 def check_approval(W,proof):
  sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
  a=proof['publication_approval']

@@ -28,8 +28,8 @@ def rewrite(p):b=p.read_bytes();p.unlink();p.write_bytes(b)   # break the hardli
 q=V/'jevbench-v1.8.10-proof.json';rewrite(q);pr=json.loads(q.read_text());old_proof=sha(q)
 assert pr['publication_approval']['fairness_check']['verdict'] in ('PENDING','FAIR')
 if pr['publication_approval']['fairness_check']['verdict']=='PENDING':
- fr=P/'workers/r276-v1810-fair/RESULT.json';fr.parent.mkdir(parents=True,exist_ok=True);fr.write_text(json.dumps({'fairness':'FAIR','engine':'synthetic-preview-only'})+'\n')
- pr['publication_approval']['fairness_check']={'path':'workers/r276-v1810-fair/RESULT.json','verdict':'FAIR','sha256':sha(fr),'engine':'synthetic-preview-only'};put(q,pr)
+ fr=P/'workers/r276-v1810-recheck/RESULT.json';fr.parent.mkdir(parents=True,exist_ok=True);fr.write_text(json.dumps({'fairness':'FAIR','engine':'synthetic-preview-only'})+'\n')
+ pr['publication_approval']['fairness_check']={'path':'workers/r276-v1810-recheck/RESULT.json','verdict':'FAIR','sha256':sha(fr),'engine':'synthetic-preview-only'};put(q,pr)
 proof_sha=sha(q)
 m=V/'jevbench-v1.8.10-publication.json';rewrite(m);md=json.loads(m.read_text());md['files']['proof']['sha256']=proof_sha;
 if not A.keep_review_pending:md['review']={'engine':'synthetic-preview-only','verdict':'PASS','receipt_sha256':'a'*64}

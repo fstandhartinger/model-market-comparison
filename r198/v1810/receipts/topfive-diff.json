@@ -1,7 +1,7 @@
 {
  "base": "v1.8.9",
  "candidate": "v1.8.10",
- "candidate_results_sha256": "8b83111f2f754d087feb61344590dc366548cfc99182a935e837dfca159b4cec",
+ "candidate_results_sha256": "5506f779647df350b0931fa1e2aaa4f8cd7ddd283516140eb9bf7d43aa8cc5ff",
  "changed": true,
  "changed_labels": [
   "all/composites/A",
@@ -485,7 +485,7 @@
   "custom/I0 Calibration50 Speed10 Cost5 (all)",
   "custom/I10 Calibration60 Speed0 Cost20 (all)"
  ],
- "custom_receipt_sha256": "1c1de6e671f878cd245fd228692179b1a1dc912249c108e84a2fe8790a8ad093",
+ "custom_receipt_sha256": "d803bf8abf8c69b02ec8f0c8326211507431494890fb816c8bbfceb8aa4350d9",
  "custom_rows": 8,
  "custom_weight_example": {
   "calibration": 50,
@@ -977,9 +977,9 @@
    "after": [
     "torchcast-decision-4b-v1.3",
     "decide-1.1",
-    "h2o-lightning-4b-v1.4.1",
     "torchcast-decision-31b-v1.0",
-    "singularity-super-decider"
+    "singularity-super-decider",
+    "launchables-myles-g-12b"
    ],
    "before": [
     "torchcast-decision-4b-v1.3",
@@ -997,8 +997,8 @@
     "torchcast-decision-31b-v1.0",
     "singularity-super-decider",
     "decide-1.1",
-    "wemm-jev",
-    "kettei-fat"
+    "kettei-fat",
+    "karpo_decision_31b"
    ],
    "before": [
     "singularity-super-decider",
@@ -1015,9 +1015,9 @@
    "after": [
     "torchcast-decision-4b-v1.3",
     "decide-1.1",
-    "h2o-lightning-4b-v1.4.1",
     "torchcast-decision-31b-v1.0",
-    "singularity-super-decider"
+    "singularity-super-decider",
+    "h2o-lightning-4b"
    ],
    "before": [
     "torchcast-decision-4b-v1.3",
@@ -1036,7 +1036,7 @@
     "metadecision-31b-rain",
     "karpo_decision_31b",
     "kettei-fat",
-    "wemm-jev"
+    "singularity-super-decider-thinking"
    ],
    "before": [
     "kettei-fat",
@@ -1074,7 +1074,7 @@
     "metadecision-31b-rain",
     "karpo_decision_31b",
     "kettei-fat",
-    "wemm-jev"
+    "singularity-super-decider-thinking"
    ],
    "before": [
     "kettei-fat",
@@ -1093,7 +1093,7 @@
     "metadecision-31b-rain",
     "karpo_decision_31b",
     "kettei-fat",
-    "wemm-jev"
+    "singularity-super-decider-thinking"
    ],
    "before": [
     "kettei-fat",
@@ -1112,7 +1112,7 @@
     "metadecision-31b-rain",
     "karpo_decision_31b",
     "kettei-fat",
-    "wemm-jev"
+    "singularity-super-decider-thinking"
    ],
    "before": [
     "kettei-fat",
@@ -1131,7 +1131,7 @@
     "metadecision-31b-rain",
     "karpo_decision_31b",
     "kettei-fat",
-    "wemm-jev"
+    "singularity-super-decider-thinking"
    ],
    "before": [
     "kettei-fat",
@@ -1204,10 +1204,10 @@
   {
    "after": [
     "torchcast-decision-4b-v1.3",
-    "h2o-lightning-4b-v1.4.1",
     "torchcast-decision-31b-v1.0",
-    "wemm-jev",
-    "h2o-lightning-4b"
+    "h2o-lightning-4b",
+    "arcbright-elf-1-12b-r2",
+    "wald-26b-a4b"
    ],
    "before": [
     "torchcast-decision-4b-v1.3",
@@ -1223,10 +1223,10 @@
   {
    "after": [
     "torchcast-decision-31b-v1.0",
-    "wemm-jev",
     "karpo_decision_31b",
     "torchcast-decision-4b-v1.3",
-    "visionjev-1.0.0-27b"
+    "h2o-lightning-31b",
+    "fastino-glide-1.2-open"
    ],
    "before": [
     "torchcast-decision-4b-v1.3",
@@ -1242,10 +1242,10 @@
   {
    "after": [
     "torchcast-decision-4b-v1.3",
-    "h2o-lightning-4b-v1.4.1",
     "torchcast-decision-31b-v1.0",
-    "wemm-jev",
-    "h2o-lightning-4b"
+    "h2o-lightning-4b",
+    "arcbright-elf-1-12b-r2",
+    "wald-26b-a4b"
    ],
    "before": [
     "torchcast-decision-4b-v1.3",
@@ -1263,8 +1263,8 @@
     "torchcast-decision-31b-v1.0",
     "metadecision-31b-rain",
     "karpo_decision_31b",
-    "wemm-jev",
-    "jeff_1_1_large"
+    "mammoth-1",
+    "knowline-31b-gen1"
    ],
    "before": [
     "mammoth-1",
@@ -1282,8 +1282,8 @@
     "torchcast-decision-31b-v1.0",
     "metadecision-31b-rain",
     "karpo_decision_31b",
-    "wemm-jev",
-    "jeff_1_1_large"
+    "mammoth-1",
+    "knowline-31b-gen1"
    ],
    "before": [
     "mammoth-1",
@@ -1301,8 +1301,8 @@
     "torchcast-decision-31b-v1.0",
     "metadecision-31b-rain",
     "karpo_decision_31b",
-    "wemm-jev",
-    "jeff_1_1_large"
+    "mammoth-1",
+    "knowline-31b-gen1"
    ],
    "before": [
     "mammoth-1",
@@ -1320,8 +1320,8 @@
     "torchcast-decision-31b-v1.0",
     "metadecision-31b-rain",
     "karpo_decision_31b",
-    "wemm-jev",
-    "jeff_1_1_large"
+    "mammoth-1",
+    "knowline-31b-gen1"
    ],
    "before": [
     "mammoth-1",
@@ -1339,8 +1339,8 @@
     "torchcast-decision-31b-v1.0",
     "metadecision-31b-rain",
     "karpo_decision_31b",
-    "wemm-jev",
-    "jeff_1_1_large"
+    "mammoth-1",
+    "knowline-31b-gen1"
    ],
    "before": [
     "mammoth-1",
@@ -1358,8 +1358,8 @@
     "torchcast-decision-31b-v1.0",
     "metadecision-31b-rain",
     "karpo_decision_31b",
-    "wemm-jev",
-    "jeff_1_1_large"
+    "mammoth-1",
+    "knowline-31b-gen1"
    ],
    "before": [
     "mammoth-1",
@@ -1377,8 +1377,8 @@
     "torchcast-decision-31b-v1.0",
     "metadecision-31b-rain",
     "karpo_decision_31b",
-    "wemm-jev",
-    "jeff_1_1_large"
+    "mammoth-1",
+    "knowline-31b-gen1"
    ],
    "before": [
     "mammoth-1",
@@ -1396,8 +1396,8 @@
     "torchcast-decision-31b-v1.0",
     "metadecision-31b-rain",
     "karpo_decision_31b",
-    "wemm-jev",
-    "jeff_1_1_large"
+    "mammoth-1",
+    "knowline-31b-gen1"
    ],
    "before": [
     "mammoth-1",
@@ -1415,8 +1415,8 @@
     "torchcast-decision-31b-v1.0",
     "metadecision-31b-rain",
     "karpo_decision_31b",
-    "wemm-jev",
-    "jeff_1_1_large"
+    "mammoth-1",
+    "knowline-31b-gen1"
    ],
    "before": [
     "mammoth-1",
@@ -1661,9 +1661,9 @@
    "after": [
     "torchcast-decision-4b-v1.3",
     "decide-1.1",
-    "h2o-lightning-4b-v1.4.1",
     "torchcast-decision-31b-v1.0",
-    "singularity-super-decider"
+    "singularity-super-decider",
+    "launchables-myles-g-12b"
    ],
    "before": [
     "torchcast-decision-4b-v1.3",
@@ -1681,8 +1681,8 @@
     "torchcast-decision-31b-v1.0",
     "singularity-super-decider",
     "decide-1.1",
-    "wemm-jev",
-    "kettei-fat"
+    "kettei-fat",
+    "karpo_decision_31b"
    ],
    "before": [
     "singularity-super-decider",
@@ -1699,9 +1699,9 @@
    "after": [
     "torchcast-decision-4b-v1.3",
     "decide-1.1",
-    "h2o-lightning-4b-v1.4.1",
     "torchcast-decision-31b-v1.0",
-    "singularity-super-decider"
+    "singularity-super-decider",
+    "h2o-lightning-4b"
    ],
    "before": [
     "torchcast-decision-4b-v1.3",
@@ -1737,10 +1737,10 @@
  "slider_changed_states": 62,
  "slider_states": 88,
  "snapshots_sha256": {
-  "topfive-after.json": "673c3f3ccfc76ca7f59fe04ad18c3546526bab9c32a0f5b28b290562832bc163",
-  "topfive-before.json": "6d0a765fef31e8cbf11b5bb325fc300be583345d9b7e0ea99501f5a0e9d07ebd",
-  "topfive-extended.json": "588dd96f997aa3f143ed2539b2499035bcc8c39f25d8a5a309758000c72b9769",
-  "topfive-sliders.json": "e8f93b4292517462f9fd975ad0a209bd2057230eb2b46beb6ec7e9562f2f1689"
+  "topfive-after.json": "5dd9ae53eee61bba724a1dcf5b4c58f45b6e7f730aaa5b37f56594904e292721",
+  "topfive-before.json": "5120c764d0a78b060a6a2a002edb9744bbceca970ef1338964af8997b8fa2a23",
+  "topfive-extended.json": "b96a3adaadde0cfd75455c8bc5b462fe8a2659606c3a7850f8a3cee467c3ed77",
+  "topfive-sliders.json": "917b79199751f57159c9dee10c2b82b5ff6858a6840dd08b770fab2d31a953d9"
  },
  "variant": "10-second share"
 }

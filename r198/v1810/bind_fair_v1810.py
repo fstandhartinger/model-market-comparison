@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-"""Release-owner helper: bind the independent fairness receipt workers/r276-v1810-fair/RESULT.json into inputs/APPROVAL.json and
+"""Release-owner helper: bind the independent fairness receipt workers/r276-v1810-recheck/RESULT.json into inputs/APPROVAL.json and
 rebuild (rebuild_v1810.sh). Only a FAIR verdict binds; PENDING, SUSPICIOUS or anything else is refused (a non-FAIR verdict needs the
 release owner's decision, not this helper). --dry-run prints what would be bound and changes nothing."""
 import argparse,hashlib,json,os,pathlib,subprocess
 ap=argparse.ArgumentParser(description=__doc__);ap.add_argument('--dry-run',action='store_true');A=ap.parse_args()
-J=pathlib.Path(__file__).resolve().parent;JOB=pathlib.Path(os.environ.get('JEV_FAIR_ROOT','/home/flori/jobs/jevbench-add-requests-20260919'));REL='workers/r276-v1810-fair/RESULT.json'
+J=pathlib.Path(__file__).resolve().parent;JOB=pathlib.Path(os.environ.get('JEV_FAIR_ROOT','/home/flori/jobs/jevbench-add-requests-20260919'));REL='workers/r276-v1810-recheck/RESULT.json'
 fp=JOB/REL
 if not fp.is_file():ap.error('REFUSED: fairness receipt missing: '+str(fp))
 r=json.loads(fp.read_text());v=r.get('fairness',r.get('verdict'))
