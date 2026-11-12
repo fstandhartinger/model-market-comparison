@@ -16,6 +16,8 @@ const nextConfig = {
   // Bundle the committed dataset.json as a runtime fallback when no DB is set.
   outputFileTracingIncludes: {
     "/**": ["./data/dataset.json"],
+    // Request-time v0.4 feed (absent until release), with opt-in local fixture preview.
+    "/image-jev-bench/v0.4": ["./data/imagejev-v04.json", "./data/fixtures/imagejev-v04.fixture.json"],
   },
   // CR-56.3: WebMCP tools may register only in this site's own top-level pages and same-origin frames
   // (a cross-origin frame never gets them; unknown to browsers without WebMCP).
