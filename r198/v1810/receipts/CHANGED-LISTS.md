@@ -1,6 +1,6 @@
 # Top-five comparison v1.8.9 → v1.8.10
 
-32 rows of the 27 Oct draw are now ranked (equated with four strong anchors: Intelligence -2.9, Calibration -1.9). Lists compared: 580 (40 primary + 540 supplementary); changed: 468. Slider states: 62 of 88 changed. Slider grid: 368 of 368 changed. Custom weightings: 8 of 8 changed.
+32 rows of the 27 Oct draw are newly ranked (equated with four strong anchors: Intelligence -2.9, Calibration -1.9): 31 rows measured earlier plus 1 added row (Gemini Decision 1, Google, hosted API). Lists compared: 580 (40 primary + 540 supplementary); changed: 468. Slider states: 62 of 88 changed. Slider grid: 368 of 368 changed. Custom weightings: 8 of 8 changed.
 
 ## Entrants (number of changed lists/states each row enters)
 
