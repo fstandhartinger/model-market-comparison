@@ -14,7 +14,7 @@ import { jevV15LeaderSentence } from '../lib/jevbench-v15-preview.mjs';
 import { jevV15SliderPresets, jevV16ChartRow, jevV15BoardRow, jevV15CompareRow } from '../lib/jevbench-v15-board.mjs';
 import type { JevV16ReleaseArtifact, JevV16Categories, JevV16Carry } from '../lib/jevbench-v16-release.mjs';
 import type { JevV14System } from '../lib/jevbench-v14.mjs';
-import { JEVBENCH_LANGUAGE_META, jevLanguageRows, languagePoolNote, jevbenchCategoryView, isFreshJevbenchV16Revision, freshJevbenchCategoryRows, JEVBENCH_S_CATEGORY_CELLS_ARTIFACT, L3_EXPOSURE_NOTES } from '../lib/jevbench-categories.mjs';
+import { JEVBENCH_LANGUAGE_META, jevLanguageRows, languagePoolNote, jevbenchCategoryView, isFreshJevbenchV16Revision, freshJevbenchCategoryRows, JEVBENCH_S_CATEGORY_CELLS_ARTIFACT, L3_EXPOSURE_NOTES, BREAKDOWN_MIN_SHOWN_N } from '../lib/jevbench-categories.mjs';
 import { jevV15FilterRows } from '../lib/jevbench-v15-filter-rows.mjs';
 import { JevBenchV16Charts } from './JevBenchV16Charts';
 import { jevClassView } from './jevClassView';
@@ -130,7 +130,8 @@ function heat(competence: number): CSSProperties {
 function LanguageView({ a, categories, hiddenApi, scope, carry }: { carry: JevV16Carry; scope: JevScope; a: JevV16ReleaseArtifact; categories: JevV16Categories; hiddenApi: ReadonlySet<string> }) {
   const systems = ['v1.6.3', 'v1.6.4'].includes(a.revision) ? freshJevbenchCategoryRows(a.systems.filter(s => categories.systems[s.key])) : categories.language_cells ? jevLanguageRows(languageRoster(a.systems, a.not_measured, carry.rows, categories.systems, jevScopeClassifier(a.systems, carry.rows, a.not_measured), scope), scope) : a.systems.filter((s) => listedRow(s) && categories.systems[s.key]).sort(byBoard);
   const belowRanking = (s: { listing?: string } | undefined) => s?.listing === 'wrapper' || s?.listing === 'subsidized';
-  const minN = categories.language_cells?.min_n ?? categories.min_n;
+  // v1.8.10 fast path: the live language table shows every published cell with at least BREAKDOWN_MIN_SHOWN_N completed responses (low n marked †).
+  const minN = categories.language_cells ? Math.min(categories.language_cells.min_n, BREAKDOWN_MIN_SHOWN_N) : categories.min_n;
   const allLangs = categories.languages.filter((l) => l.key !== 'en').sort((x, y) => y.n - x.n);
   const en = categories.languages.find((l) => l.key === 'en');
   // CR-290 (Florian 5 Oct 2026): a language column in which no system reaches the reporting minimum was all dashes.

@@ -52,17 +52,21 @@ function series(A: JevCompareV15Row, B: JevCompareV15Row): Series[] {
  *  CR-290 correction (Florian 5 Oct 2026 ~20:30): only well-measured categories (radarMinN = 30 items) are spokes; smaller ones go to the
  *  low-sample table. A system that answered fewer than radarMinN items of a spoke's category is printed as n=… and not plotted. */
 const completedN = (cell: [number, number, number?]) => cell[2] ?? cell[1];
+/** Why a row has no cells for one dimension: its per-dimension reason (v1.8.10: unlabelled subject topics), else its row reason. */
+const dimMissing = (cats: CompareCategories, key: string, dim: string): string | undefined => cats.missingDims?.[key]?.[dim] ?? cats.missing[key];
 
 function categorySpokes(pair: JevCompareV15Row[], dim: CategoryDim, cats: CompareCategories): Spoke[] {
   return dim.cats.filter((c) => c.plotted).map((c) => {
     // Radar display fix (9 Oct 2026): lib/radar-shape.mjs categoryCell — no cell or a non-finite competence is a gap (never
     // clamped to 0), an under-radarMinN cell keeps its value for the tables but is thin (printed n=…, not drawn).
-    const cells = pair.map((r) => categoryCell(cats.systems[r.key]?.[dim.key]?.[c.key] ?? null, cats.radarMinN));
+    // v1.8.10 (drawLowN): a published cell under radarMinN is drawn as a hollow point and printed "value (n=…)".
+    const cells = pair.map((r) => categoryCell(cats.systems[r.key]?.[dim.key]?.[c.key] ?? null, cats.radarMinN, { drawLowN: Boolean(cats.drawLowN) }));
     return {
       key: c.key, lines: lines(c.short),
       thin: cells.map((v) => v.thin),
+      low: cells.map((v) => v.low),
       values: cells.map((v) => v.value),
-      texts: cells.map((v, i) => !cats.systems[pair[i].key]?.[dim.key] && cats.missing[pair[i].key] ? cats.missing[pair[i].key] : v.text),
+      texts: cells.map((v, i) => !cats.systems[pair[i].key]?.[dim.key] && dimMissing(cats, pair[i].key, dim.key) ? dimMissing(cats, pair[i].key, dim.key)! : v.text),
       tip: `${c.label}: ${c.covers}. ${c.n} items (${c.split.a} ${cats.splitNames[0]}, ${c.split.b} ${cats.splitNames[1]}).`,
     };
   });
@@ -82,6 +86,13 @@ function CategoryKey({ dim, cats }: { dim: CategoryDim; cats: CompareCategories 
 /** CR-290 correction (Florian 5 Oct 2026 ~20:30): categories with fewer than radarMinN items are never spokes. They are listed here with their
  *  item count and both systems' values, marked indicative: with 16 items one answer moves a category by about six points. */
 function LowSampleTable({ dim, cats, pair }: { dim: CategoryDim; cats: CompareCategories; pair: JevCompareV15Row[] }) {
+  // v1.8.10 fast path (drawLowN): every published cell is on the radar, low-sample ones hollow and marked n=…; only the reasons remain.
+  if (cats.drawLowN) {
+    const absent = pair.filter((r) => !cats.systems[r.key]?.[dim.key]);
+    const anyLow = pair.some((r) => Object.values(cats.systems[r.key]?.[dim.key] ?? {}).some((v) => completedN(v) < cats.radarMinN));
+    return <>{absent.length > 0 && <p className="bh-muted mt-2 text-[11px]" data-bh-jev15-low-sample-none={dim.key}>{absent.map((r) => `${r.name}: ${dimMissing(cats, r.key, dim.key) ?? 'no per-category values'}`).join(" ")}</p>}
+      {anyLow && <p className="bh-muted mt-2 text-[11px]" data-bh-jev15-low-sample-drawn={dim.key}>Hollow, lighter points (printed &quot;value (n=…)&quot;): fewer than {cats.radarMinN} answered items in that category, indicative only; with so few items one answer moves the value by several points. Cells need at least {cats.minN} answered items.</p>}</>;
+  }
   // A value below the artifact's own reporting minimum (min_n) is not shown at all, not even as indicative.
   const cellOf = (r: JevCompareV15Row, key: string) => { const v = cats.systems[r.key]?.[dim.key]?.[key]; return v && completedN(v) >= cats.minN ? v : null; };
   // Pool-level low-sample categories, plus a well-measured category in which one of the two systems answered fewer than
@@ -213,9 +224,10 @@ export function JevCompareV15({ rows, openDecisions, sealedDecisions, heading, a
   const categoryFigures = (categories?.dims ?? []).map((dim) => {
     const spokes = categorySpokes(pair, dim, categories!);
     const absent = pair.filter((r) => !categories!.systems[r.key]?.[dim.key]);
+    const lowNote = categories!.drawLowN ? `every category with at least ${categories!.minN} items is a spoke; points under ${categories!.radarMinN} answered items are hollow and marked n=…` : `only categories with at least ${categories!.radarMinN} items are spokes, smaller ones are listed below`;
     return { key: `cat-${dim.key}`, title: dim.title, dim,
-      note: `${dim.note} Chance-corrected competence per category (${clippedMetric ? "0 = at or below chance; negative averages are reported as 0" : "0 = chance, below chance negative"}, 100 = perfect), ${(dim as { poolNote?: string }).poolNote ?? `${pair.map((r) => `${r.name}: ${categories!.categoryPools?.[r.key] ?? categories!.splitNames.join("+")}`).join("; ")} items pooled`}; only categories with at least ${categories!.radarMinN} items are spokes, smaller ones are listed below. Hover a category for its definition and item count.`,
-      spokes, domain: RADAR_SIGNED_DOMAIN as RadarDomain, missing: [...pair.filter((r) => categories!.spokeExceptions?.[r.key]).map((r) => `${r.name}: ${categories!.spokeExceptions![r.key]}`), ...pair.filter((r) => categories!.exposureNotes?.[r.key]).map((r) => `${r.name}: ${categories!.exposureNotes![r.key]}`), ...pair.filter((r) => categories!.coverageNotes?.[r.key]).map((r) => `${r.name}: ${categories!.coverageNotes![r.key]}`), ...absent.map((r) => `${r.name}: ${categories!.missing[r.key] ?? "no per-category values"}`)], size: { w: 500, h: 400, r: 112 } };
+      note: `${dim.note} Chance-corrected competence per category (${clippedMetric ? "0 = at or below chance; negative averages are reported as 0" : "0 = chance, below chance negative"}, 100 = perfect), ${(dim as { poolNote?: string }).poolNote ?? `${pair.map((r) => `${r.name}: ${categories!.categoryPools?.[r.key] ?? categories!.splitNames.join("+")}`).join("; ")} items pooled`}; ${lowNote}. Hover a category for its definition and item count.`,
+      spokes, domain: RADAR_SIGNED_DOMAIN as RadarDomain, missing: [...pair.filter((r) => categories!.spokeExceptions?.[r.key]).map((r) => `${r.name}: ${categories!.spokeExceptions![r.key]}`), ...pair.filter((r) => categories!.exposureNotes?.[r.key]).map((r) => `${r.name}: ${categories!.exposureNotes![r.key]}`), ...pair.filter((r) => categories!.coverageNotes?.[r.key]).map((r) => `${r.name}: ${categories!.coverageNotes![r.key]}`), ...absent.map((r) => `${r.name}: ${dimMissing(categories!, r.key, dim.key) ?? "no per-category values"}`)], size: { w: 500, h: 400, r: 112 } };
   });
   const figures: { key: string; title: string; note: string; spokes: Spoke[]; missing: string[]; size: { w: number; h: number; r: number }; dim?: CategoryDim; domain?: RadarDomain }[] = [
     { key: "axes", title: "The four score axes", note: "0–100, the values in the table. An axis a system has no published value for is left as a gap (it counts as 0 in the composite).", spokes: axisSpokes, missing: [], size: { w: 420, h: 320, r: 96 } },

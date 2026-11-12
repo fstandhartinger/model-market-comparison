@@ -10,7 +10,7 @@ if A.publication_status=='published':
  assert proof['publication_approval']['fairness_check']['verdict']=='FAIR' and proof['publication_approval']['fairness_check_delta']['verdict']=='FAIR','published footer requires both bound FAIR verdicts'
  assert L(V/'jevbench-v1.8.10-publication.json')['review']['verdict']=='PASS','published footer requires publication PASS'
 footer='Published · independent review complete' if A.publication_status=='published' else 'Release review pending'
-fair=proof['publication_approval']['fairness_check']['verdict']+' / added-row delta '+proof['publication_approval']['fairness_check_delta']['verdict']
+fc=proof['publication_approval']['fairness_check'];fair=f"fairness: {fc.get('receipt_fairness',fc['verdict'])} ({len(RK)} ranked, {len(HELD)} held); added-row delta {proof['publication_approval']['fairness_check_delta']['verdict']}"   # TF3 (r278-delta-fair)
 order=sorted(RK+NEW,key=lambda k:by[k]['ranks']['A'])+sorted(UN)
 def row_html(k):
  s=by[k];a=s['axes'];p=s['published_scores'];sc=lambda x:'n/a' if x is None else f'{x:.2f}'
@@ -63,7 +63,7 @@ cands=[k for k in RK if by[k]['ranked']]
 radar(2190,500,190,by[KEY]['axes'],by[top_old]['axes'],lab(KEY),lab(top_old),'Head-to-head: best newly ranked row vs previous leader')
 OAI='openai-decisions';assert by[OAI]['ranked'] and by[OAI]['api_flag'];radar(2190,1130,190,by[GKs]['axes'],by[OAI]['axes'],lab(GKs),lab(OAI),'Head-to-head: Gemini Decision 1 vs OpenAI Decisions (hosted APIs)')
 H2O='h2o-lightning-4b-v1.4.1';radar(2190,1760,190,by[H2O]['axes'],by['h2o-lightning-4b']['axes'],lab(H2O),lab('h2o-lightning-4b'),'Head-to-head: H2O-Lightning-4B v1.4.1 vs v1.1')
-txt(50,HT-45,footer+' · fairness check '+fair+' · equated axes = published + anchor offset; confidence intervals measured on the draw before equating',20,'#a3b8d3')
+txt(50,HT-45,footer+' · '+fair+' · equated axes = published + anchor offset; confidence intervals measured on the draw before equating',20,'#a3b8d3')
 im.save(J/'preview/card.png',optimize=True)
 (J/'preview/README.md').write_text(f'Open index.html locally for full before/after rankings, filters, model search and the head-to-head radar. card.png ({WD}x{HT}): full merged Composite A ranking + two head-to-head radars. Footer is controlled by preview_v1810.py --publication-status pending|published (published refused until FAIR is bound and the review is PASS). No publication performed.\n')
 (J/'receipts/PREVIEW.json').write_text(json.dumps({'status':'PASS','footer':footer,'png':[WD,HT],'ranked_rows_in_card':len(full),'highlighted_equated_rows':len(RK),'highlighted_added_rows':NEW,'added_row_rank_A':gs['ranks']['A'],'held_rows_in_footnote':len(HELD)},indent=1)+'\n')

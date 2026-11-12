@@ -5,6 +5,10 @@ export type CompareCategories = {
   revision: string; minN: number; radarMinN: number; metric: string; labelling: string; rules: string[]; splitNames: [string, string] | string[];
   categoryPools?: Record<string, string>; spokeExceptions?: Record<string, string>; exposureNotes?: Record<string, string>; coverageNotes?: Record<string, string>;
   dims: CategoryDim[]; systems: Record<string, Record<string, Record<string, [number, number, number?]>>>; missing: Record<string, string>;
+  /** v1.8.10: per row, the reason for each dimension the row has no cells for (the row keeps its other dimensions). */
+  missingDims?: Record<string, Record<string, string>>;
+  /** v1.8.10: live boards draw published cells under radarMinN as marked low-sample points. */
+  drawLowN?: boolean;
 };
 export const JEVBENCH_CATEGORY_ARTIFACT: string;
 export const L3_EXPOSURE_NOTES: Record<string, string>;
@@ -20,6 +24,8 @@ export const JEVBENCH_CELL_SUPPLEMENT_ARTIFACT: string;
 export function withJevCellSupplement<T extends { revision: string; systems: Record<string, unknown> }>(base: T, supplement?: unknown): T & { supplement: { revision: string; pools: Record<string, number>; pool_items: number; drawn: string; note: string; source_sha256: string } };
 export function imageJevCategoryView(revision: string, keys: string[]): CompareCategories | null;
 export const RADAR_MIN_N: number;
+export const BREAKDOWN_MIN_SHOWN_N: number;
+export const UNLABELLED_TOPICS_NOTE: string;
 export const CATEGORY_SHORT: Record<string, string>;
 
 export const JEVBENCH_LANGUAGE_CELLS_ARTIFACT: string;
