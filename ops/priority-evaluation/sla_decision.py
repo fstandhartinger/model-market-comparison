@@ -344,14 +344,41 @@ def note_refund_refused(root: Path, rid: str, why: str, now: float) -> None:
             ra.atomic(path, state)
 
 
+REFUSED_OUTCOMES = ("applied", "delivered", "decided_elsewhere", "order_changed")
+
+
+def hold_refusal_open(state: dict) -> bool:
+    """A Refund tap refused during a customer hold whose final outcome is not known yet (applied after the hold, or the
+    order left the 40 h set first and the tap was never applied)."""
+    refused = state.get("refund_refused")
+    return isinstance(refused, dict) and refused.get("why") == "hold" and "outcome" not in refused
+
+
+def note_refused_outcome(root: Path, rid: str, outcome: str) -> None:
+    """Record how a hold-refused 40 h Refund tap ended; anything but "applied" raises a second owner handoff."""
+    if outcome not in REFUSED_OUTCOMES:
+        raise ValueError("unknown refused-tap outcome")
+    path = root / f"{uuid.UUID(rid)}.json"
+    with path.with_suffix(".lock").open("a+") as lock:
+        fcntl.flock(lock, fcntl.LOCK_EX)
+        state = json.loads(path.read_text())
+        if hold_refusal_open(state):
+            state["refund_refused"]["outcome"] = outcome
+            ra.atomic(path, state)
+
+
 def pending_handoffs(state: dict) -> list[str]:
-    """Owner handoffs recorded on this card and not yet accepted by the board: refund_tap_unapplied, refund_refused."""
+    """Owner handoffs recorded on this card and not yet accepted by the board: refund_tap_unapplied, refund_refused,
+    refund_refused_final (a hold-refused tap that was never applied)."""
     posted = state.get("handoffs_posted") or {}
+    refused = state.get("refund_refused") if isinstance(state.get("refund_refused"), dict) else {}
     kinds = []
     if state.get("stray_refund_tap") and not posted.get("refund_tap_unapplied"):
         kinds.append("refund_tap_unapplied")
-    if state.get("refund_refused") and not posted.get("refund_refused"):
+    if refused and not posted.get("refund_refused"):
         kinds.append("refund_refused")
+    if refused.get("outcome") not in (None, "applied") and not posted.get("refund_refused_final"):
+        kinds.append("refund_refused_final")
     return kinds
 
 
