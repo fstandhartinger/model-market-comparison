@@ -107,7 +107,8 @@ test('v1.7.14 extends the 27 Oct draw entry without touching the v1.6 chain v1.7
  const t=await readDrawEquating();const d=t.draws.find(x=>x.draw===V1714_DRAW);
  // Later same-draw addenda (v1.7.15+) append to releases; the first two releases stay v1.7.13 and v1.7.14 and the latest release is the newest entry.
  assertReleaseHistory(assert,d,['v1.7.13','v1.7.14']);
- assert.deepEqual({...d,releases:undefined,latest_release:undefined},{draw:V1714_DRAW,label:'Third regular draw',drawn_on:'2026-10-27',releases:undefined,latest_release:undefined,status:'anchor-runs-pending',offset:{I:0,C:0},offset_ci95:null,anchors:[],joins_via:'v1.7-addendum'});
+ assert.ok(d.status==='anchor-runs-pending'?(d.offset.I===0&&d.offset.C===0&&d.anchors.length===0&&d.offset_ci95===null):(d.status==='equated'&&d.anchors.length>=4)); // v1.8.10 equates the draw with four strong anchors; this release's own rows keep the pending block they were published with.
+ assert.deepEqual({draw:d.draw,label:d.label,drawn_on:d.drawn_on,joins_via:d.joins_via},{draw:V1714_DRAW,label:'Third regular draw',drawn_on:'2026-10-27',joins_via:'v1.7-addendum'});
  assert.equal(await readChainLatestRelease('v1.6.1'),'v1.6.43');
  const cohort=await readCohortRows(process.cwd(),()=>{});assert.ok(!cohort.rows.some(r=>r.draw.id===V1714_DRAW));
 });

@@ -1,0 +1,54 @@
+"""Idempotent v1.8.10 wiring (the 27 Oct draw equated with four strong anchors and ranked), stacked on v1.8.9 (PASS). Preserves every archived page.
+The draw entry in data/jevbench-draw-equating.json becomes status "equated" with the anchor offset, its 95% interval and the four anchor
+keys from the pinned equating receipt; it gains v1.8.10 (releases + latest_release). Other draws are untouched."""
+import pathlib,json,re,os
+J=pathlib.Path(__file__).resolve().parent;W=pathlib.Path(os.environ.get('WT',str(J.parents[1])));HIST=json.loads((J/'inputs/history.json').read_text())
+V=W/'data/raw/benchmarks/jevbench/v1.8';proof=json.loads((V/'jevbench-v1.8.10-proof.json').read_text());EQ=proof['equating']
+DATE=os.environ.get('V1810_RELEASE_DATE','2026-11-12')
+def edit(f,a,b):
+ p=W/f;s=p.read_text()
+ if b in s:return
+ assert a in s,(f,a[:100]);p.write_text(s.replace(a,b,1))
+# API and release page, derived from the immediate predecessor.
+for f in ['app/api/jevbench/v1.8.10/route.ts','app/jev-models/v1.8.10/page.tsx']:
+ p=W/f;p.parent.mkdir(parents=True,exist_ok=True);s=(W/f.replace('v1.8.10','v1.8.9')).read_text().replace('V189','V1810').replace('v189','v1810').replace('v1.8.9','v1.8.10')
+ if f.endswith('page.tsx'):
+  s=re.sub(r"title:'[^']*'","title:'JevBench v1.8.10: the 27 Oct draw equated and ranked'",s,count=1)
+  s=re.sub(r"description:'[^']*'","description:'The 27 Oct regular draw is equated to the reference scale with four strong anchor systems and its rows are ranked.'",s,count=1)
+  s=s.replace('JevBench v1.8.10: one unranked row on the 27 Oct draw','JevBench v1.8.10: the 27 Oct draw equated with four strong anchors and ranked')
+  s=re.sub(r'<p className="mt-3 max-w-3xl">.*?</p>','<p className="mt-3 max-w-3xl">'+HIST.replace("'",'&apos;')+'</p>',s,count=1,flags=re.S)
+  s=s.replace('<a href="/jev-models/v1.8.8">Previous v1.8.8</a>','<a href="/jev-models/v1.8.9">Previous v1.8.9</a>')
+  assert 'Karpo' not in s and 'one unranked row' not in s,'stale predecessor text in the page'
+ p.write_text(s)
+edit('lib/jevbench-live-board.mjs',"import { readJevbenchV189ForBoard, withV189Addendum } from './jevbench-v189-release.mjs';","import { readJevbenchV1810ForBoard, withV1810Addendum } from './jevbench-v1810-release.mjs';\nimport { readJevbenchV189ForBoard, withV189Addendum } from './jevbench-v189-release.mjs';")
+edit('lib/jevbench-live-board.mjs','  return v189 ? withV189Addendum(throughV188, v189) : throughV188;','  const throughV189 = v189 ? withV189Addendum(throughV188, v189) : throughV188;\n  const v1810 = await readJevbenchV1810ForBoard(root);\n  return v1810 ? withV1810Addendum(throughV189, v1810) : throughV189;')
+edit('lib/jevbench-live-board.mjs',"return (await readJevbenchV189ForBoard(root)) ? 'v1.8.9'","return (await readJevbenchV1810ForBoard(root)) ? 'v1.8.10' : (await readJevbenchV189ForBoard(root)) ? 'v1.8.9'")
+edit('components/JevBenchReleaseVersionNav.tsx',"type JevRelease = 'v1.8.9'","type JevRelease = 'v1.8.10' | 'v1.8.9'")
+edit('lib/jevbench-categories.mjs',"'v1.8.8', 'v1.8.9'];","'v1.8.8', 'v1.8.9', 'v1.8.10'];")
+p=W/'lib/jevbench-releases.mjs';s=''.join(l for l in p.read_text().splitlines(keepends=True) if "{ version: 'v1.8.10'" not in l);p.write_text(s)
+edit('lib/jevbench-releases.mjs',"  { version: 'v1.8.9'","  { version: 'v1.8.10', date: '"+DATE+"', href: '/jev-models/v1.8.10', text: "+json.dumps(HIST)+" },\n  { version: 'v1.8.9'")
+for f in ['components/JevReleaseHistory.tsx','app/sitemap.ts']:
+ edit(f,"import { hasPublishedJevbenchV189Release } from '../lib/jevbench-v189-release.mjs';","import { hasPublishedJevbenchV1810Release } from '../lib/jevbench-v1810-release.mjs';\nimport { hasPublishedJevbenchV189Release } from '../lib/jevbench-v189-release.mjs';")
+edit('components/JevReleaseHistory.tsx','v189] = await Promise.all([','v189, v1810] = await Promise.all([')
+edit('components/JevReleaseHistory.tsx','hasPublishedJevbenchV189Release()]);','hasPublishedJevbenchV189Release(), hasPublishedJevbenchV1810Release()]);')
+edit('components/JevReleaseHistory.tsx',"!v189 && 'v1.8.9'].filter(Boolean)","!v189 && 'v1.8.9', !v1810 && 'v1.8.10'].filter(Boolean)")
+edit('app/sitemap.ts','  const v189Visible = await hasPublishedJevbenchV189Release();','  const v189Visible = await hasPublishedJevbenchV189Release();\n  const v1810Visible = await hasPublishedJevbenchV1810Release();')
+edit('app/sitemap.ts',"(r.version !== 'v1.8.9' || v189Visible))","(r.version !== 'v1.8.9' || v189Visible) && (r.version !== 'v1.8.10' || v1810Visible))")
+edit('lib/jevbench-alldata-input.mjs',"import { readJevbenchV189ForBoard, v189BoardInput } from './jevbench-v189-release.mjs';","import { readJevbenchV1810ForBoard, v1810BoardInput } from './jevbench-v1810-release.mjs';\nimport { readJevbenchV189ForBoard, v189BoardInput } from './jevbench-v189-release.mjs';")
+edit('lib/jevbench-alldata-input.mjs',"  'v1.8.9': { read: readJevbenchV189ForBoard, board: v189BoardInput },","  'v1.8.9': { read: readJevbenchV189ForBoard, board: v189BoardInput },\n  'v1.8.10': { read: readJevbenchV1810ForBoard, board: v1810BoardInput },")
+assert (W/'lib/jevbench-alldata-input.mjs').read_text().count("'v1.8.10':")==1
+edit('test/cr-205-jev-page-structure.test.mjs',"'v1.8.8', 'v1.8.9'].sort());","'v1.8.8', 'v1.8.9', 'v1.8.10'].sort());")
+# Older release tests that pin the newest published release.
+for f in ['test/jevbench-feed-live-board.test.mjs','test/jevbench-v170-release.test.mjs','test/jevbench-v1637-release.test.mjs']:
+ edit(f,"import { hasPublishedJevbenchV189Release } from '../lib/jevbench-v189-release.mjs';","import { hasPublishedJevbenchV1810Release } from '../lib/jevbench-v1810-release.mjs';\nimport { hasPublishedJevbenchV189Release } from '../lib/jevbench-v189-release.mjs';")
+ edit(f,"(await hasPublishedJevbenchV189Release()) ? 'v1.8.9' :","(await hasPublishedJevbenchV1810Release()) ? 'v1.8.10' : (await hasPublishedJevbenchV189Release()) ? 'v1.8.9' :")
+# Draw table: the 27 Oct draw becomes equated (offset, interval and anchors from the pinned receipt) and gains v1.8.10.
+p=W/'data/jevbench-draw-equating.json';t=json.loads(p.read_text())
+d=next(x for x in t['draws'] if x['draw']=='v1.6-regular-20261027')
+if 'v1.8.10' not in d['releases']:d['releases'].append('v1.8.10')
+d.update(latest_release='v1.8.10',status='equated',offset=EQ['offset'],offset_ci95=EQ['offset_ci95'],anchors=EQ['anchors'])
+d['anchor_evidence']=('Four strong anchor systems answered both the reference draw and this draw: Intelligence '+f"{EQ['offset']['I']:.2f}"+' (95% CI '+f"{EQ['offset_ci95']['I'][0]:.2f} to {EQ['offset_ci95']['I'][1]:+.2f}"+'), Calibration '+f"{EQ['offset']['C']:.2f}"+' (95% CI '+f"{EQ['offset_ci95']['C'][0]:.2f} to {EQ['offset_ci95']['C'][1]:+.2f}"+'), median over anchors, frozen scorer, B=1000. '
+  'A fifth planned anchor could not be staged and is skipped as pre-registered. Receipt EQUATING-STRONG4-D1027.json, sha256 '+EQ['files']['equating']['sha256']+'; applied in v1.8.10.')
+d['equating_receipt']={'name':'EQUATING-STRONG4-D1027.json','sha256':EQ['files']['equating']['sha256']}
+p.write_text(json.dumps(t,indent=2,ensure_ascii=False)+'\n')
+print('Wired v1.8.10; 27 Oct draw entry equated (4 strong anchors); one All-data loader; public visibility review-gated')

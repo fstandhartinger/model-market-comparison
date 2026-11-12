@@ -1,0 +1,28 @@
+{
+ "approval_negatives": 11,
+ "bind_fair_refuses_non_fair_verdicts": true,
+ "log": [
+  "flip dry run on the real tree: AssertionError: REFUSED: fairness check PENDING or non-FAIR; bind a FAIR receipt with bind_fair_v1810.py first",
+  "freeze on the real tree: AssertionError: REFUSED: publication review PENDING or non-PASS",
+  "seal helper on the real tree: refused",
+  "bind_fair without a receipt: refused",
+  "approval while PENDING: REFUSED: fairness check PENDING or non-FAIR; bind a FAIR receipt with bind_fair_",
+  "bind_fair --dry-run PENDING: refused",
+  "bind_fair --dry-run SUSPICIOUS: refused",
+  "bind_fair --dry-run UNFAIR: refused",
+  "bind_fair --dry-run FAIR: would bind",
+  "flip dry run (synthetic FAIR bound, review PENDING): would set review PASS, manifest unchanged on disk",
+  "freeze dry run (synthetic PASS tree): addendum JSON written inside the fixture only, no seal",
+  "freeze --write: refused (never writes a seal)",
+  "seal helper without --write (synthetic tree): dry run only"
+ ],
+ "non_dry_flip_never_invoked": true,
+ "real_tree_flip_freeze_seal_bind_refused_while_fairness_pending": true,
+ "real_tree_unchanged": {
+  "approval": "865e7d8bbf63059e0b48bbc0c24dbe82470b40199965d660f46b9aaa09035d5f",
+  "manifest": "7365dee55552359a895b8b6cfa86f7160a04d0b901f297c7c43943246776bea0",
+  "proof": "ed2438cab4060ab10e4d0701c2ae2bc0aa78e0d81da745470773bbdcc1bec2de"
+ },
+ "seal_helper_never_run_for_real": true,
+ "status": "PASS"
+}
