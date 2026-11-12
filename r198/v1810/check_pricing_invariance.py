@@ -42,10 +42,11 @@ assert p10['pricing_refreeze']['old_sha256'] == OLD_SHA and p10['pricing_refreez
 REMOVED_R278 = json.loads((J / 'src/removed-keys.json').read_text()) if (J / 'src/removed-keys.json').exists() else []
 rows10 = {s['key']: s for s in json.loads((V / 'jevbench-v1.8.10-results.json').read_text())['systems']}
 # the carried rows' cost blocks are byte-identical to v1.8.9 (no pricing path moved)
-assert all(rows10[s['key']]['cost'] == s['cost'] for s in prev if s['key'] not in REMOVED_R278)   # r278: the removed unranked A2 listing has no row in v1.8.10
+compared = [s for s in prev if s['key'] not in REMOVED_R278]   # r278: the removed unranked A2 listing has no row in v1.8.10
+assert all(rows10[s['key']]['cost'] == s['cost'] for s in compared)
 json.dump({'status': 'PASS', 'old_sha256': OLD_SHA, 'new_sha256': NEW_SHA, 'changed_module_constants': changed, 'added_set_members': sorted(KEYS),
-           'added_non_comment_lines': len(non_comment), 'functions_bytecode_equal': len(funcs), 'catalog_rates_equal': True, 'carried_rows_checked': len(prev),
-           'carried_cost_blocks_equal': len(prev), 'carried_keys_whose_pricing_path_changes': touched, 'equivalence_receipt': {'name': 'PRICING-EQUIV-R278.json', 'sha256': EQUIV_SHA,
+           'added_non_comment_lines': len(non_comment), 'functions_bytecode_equal': len(funcs), 'catalog_rates_equal': True, 'carried_rows_checked': len(compared),
+           'carried_cost_blocks_equal': len(compared), 'carried_rows_skipped_removed': len(prev) - len(compared), 'carried_keys_whose_pricing_path_changes': touched, 'equivalence_receipt': {'name': 'PRICING-EQUIV-R278.json', 'sha256': EQUIV_SHA,
            'files_swept': len(eq['files_swept']), 'entries': eq['entries'], 'behaviour_diffs': 0}, 'proof_pricing_module_sha256': NEW_SHA, 'predecessor_proof_pricing_module_sha256': OLD_SHA},
           open(J / 'receipts/PRICING-INVARIANCE.json', 'w'), indent=1, sort_keys=True)
-print('PASS pricing re-freeze 2f52370f -> 1b3c52fb adds two set members (subq-snap-1.2, gemini-decision-1) plus comments; %d functions byte-identical; %d carried cost blocks equal; equivalence receipt %s' % (len(funcs), len(prev), EQUIV_SHA[:8]))
+print('PASS pricing re-freeze 2f52370f -> 1b3c52fb adds two set members (subq-snap-1.2, gemini-decision-1) plus comments; %d functions byte-identical; %d of %d carried cost blocks compared and equal (%d removed row skipped); equivalence receipt %s' % (len(funcs), len(compared), len(prev), len(prev) - len(compared), EQUIV_SHA[:8]))
