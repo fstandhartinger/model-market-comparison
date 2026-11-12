@@ -63,9 +63,11 @@ RENAMES = {'JEV-27B (AutoTrust, Qwen3.8-27B)': 'AutoTrust-Decider-Pro-27B (AutoT
 # r278 corrections (DECISIONS jevbench-v1810-preview-corrections-1112): the preliminary, unranked A2 re-run listing of Microsoft-Decision-1 leaves every
 # board view of v1.8.10; its data stays in v1.8.9 and every earlier release (frozen files). It is unranked, so no rank or order list changes.
 REMOVED = {'microsoft-decision-1-a2-20261012': 'Removed from the boards: a preliminary, unranked A2 re-run listing of Microsoft-Decision-1 shown next to its regular ranked rows; its data stays in v1.8.9 and earlier releases.'}
+# r278 pre-flip T4: the release sentence names the display change and the sourced base models.
+T4_HIST = '; all published breakdown cells are now shown, small samples marked; 18 API base models added with sources'
 REMOVED_HIST = 'removed the preliminary A2 re-run listing of Microsoft-Decision-1 (its regular rows stay)'
 HIST = (f'Equated the 27 Oct regular draw with four strong anchor systems ({POINTS}) and ranked 31 of its rows; four stay unranked because their top-five places lie within the uncertainty of the shift; '
-        'renamed AutoTrust\'s JEV-27B to AutoTrust-Decider-Pro-27B at the vendor\'s request; added Gemini Decision 1 (Google, hosted API) on the same draw; ' + REMOVED_HIST + '.')
+        'renamed AutoTrust\'s JEV-27B to AutoTrust-Decider-Pro-27B at the vendor\'s request; added Gemini Decision 1 (Google, hosted API) on the same draw; ' + REMOVED_HIST + T4_HIST + '.')
 MEASURE_NOTE = ('The anchors are scored without the 10-second rule on both draws, so the shift measures only the difference between the draws; with the rule applied on both draws it would be Intelligence -3.3, Calibration -2.4. '
                 'Places of four rows from that draw are within the shift\'s uncertainty and they stay unranked until more anchor runs narrow it. '
                 'Gemini Decision 1 (Google, hosted API) was measured on the same draw on 11 Nov 2026 (all 1,500 items, one per request, Google\'s native probabilities) and is shown and ranked the same way.')

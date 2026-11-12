@@ -43,7 +43,7 @@ export const V1810_H2O_HELD_TEXT='Measured on the 27 Oct 2026 draw and shown on 
 export const V1810_BOUNDARY={karpo_decision_31b:'Its #5 place on Composite B among all systems is within the uncertainty of the draw shift.','arcbright-elf-1-12b-r2':'Its #4 place on the open-weights Composite A and C lists is within the uncertainty of the draw shift.'};
 export const V1810_META_KEY='metadecision-31b-rain';
 export const V1810_META_NOTE='On this draw it scores 13.3 points higher on the sealed items than on the 300 public items, more than any row measured on the reference draw; its #2 Capability places hold even if that gap is set to the reference-draw median.';
-export const V1810_HIST='Equated the 27 Oct regular draw with four strong anchor systems (Intelligence -2.9, Calibration -1.9 points) and ranked 31 of its rows; four stay unranked because their top-five places lie within the uncertainty of the shift; renamed AutoTrust\'s JEV-27B to AutoTrust-Decider-Pro-27B at the vendor\'s request; added Gemini Decision 1 (Google, hosted API) on the same draw; removed the preliminary A2 re-run listing of Microsoft-Decision-1 (its regular rows stay).';
+export const V1810_HIST='Equated the 27 Oct regular draw with four strong anchor systems (Intelligence -2.9, Calibration -1.9 points) and ranked 31 of its rows; four stay unranked because their top-five places lie within the uncertainty of the shift; renamed AutoTrust\'s JEV-27B to AutoTrust-Decider-Pro-27B at the vendor\'s request; added Gemini Decision 1 (Google, hosted API) on the same draw; removed the preliminary A2 re-run listing of Microsoft-Decision-1 (its regular rows stay); all published breakdown cells are now shown, small samples marked; 18 API base models added with sources.';
 export const V1810_GEMINI_SELF_REPORT='Google reports 92.2 % (self-reported; accuracy on the 231 public v1.2 items, vendor-run; none of those items is in this draw). Our accuracy on all 1,500 items of the 27 Oct draw: 86.3 % (a yes/no answer between 20 % and 80 % counts as unsure, i.e. wrong).';
 export const V1810_NEW_NOTES={'gemini-decision-1':V1810_GEMINI_SELF_REPORT};
 export const V1810_NO_PRICE_NOTE=/*NOPRICE*/;
@@ -238,7 +238,14 @@ export async function readJevbenchV1810ForBoard(root=process.cwd()){
  return p?.review?.verdict==='PASS'?readOptionalJevbenchV1810Release(root):null;
 }
 export async function hasPublishedJevbenchV1810Release(root=process.cwd(),log=console.error){try{return Boolean(await readJevbenchV1810ForBoard(root));}catch{log('JevBench v1.8.10 navigation omitted: publication validation failed');return false;}}
-export function v1810BoardInput(release){return {artifact:release.artifact,categories:release.categories};}
+// r278 pre-flip (critic C2): with the assembled live chain, the release page gets the same row-pool-bounded categories as
+// withV1810Addendum (bounds of the chain plus this release's new rows), so the board takes the artifact path and every row shows
+// its published v1.8.10 category cells instead of the frozen v1.6.1 view. The categories keep this release's own revision.
+export function v1810BoardInput(release,chain){
+ if(!chain)return {artifact:release.artifact,categories:release.categories};
+ const bounds={...apiFullAddendumCategoryBounds(chain.categories),...structuredClone(V1810_NEW_ROW_BOUNDS)};
+ return {artifact:release.artifact,categories:withRowPoolCategoryRows({...release.categories,systems:{}},release.categories.systems,bounds)};
+}
 export function withV1810Addendum(chain,release){
  const bounds={...apiFullAddendumCategoryBounds(chain.categories),...structuredClone(V1810_NEW_ROW_BOUNDS)};
  const update=a=>({...a,systems:release.artifact.systems,board:release.artifact.board,n_ranked:release.artifact.n_ranked,roster_count:release.artifact.roster_count,measurement_notes:release.artifact.measurement_notes,restated_by:'v1.8.10',v1810_sha256:release.sha256});

@@ -78,5 +78,5 @@ test('Gemini Decision 1 (Google, hosted API) joins the 27 Oct draw: measured = p
  assert.match(s.endpoint_condition,/request-pinned/);assert.match(s.disclosure,/3 of 1,500 requests failed in transport/);assert.equal(s.model_pin,null);
  for(const m of ['A','B','C','capability'])assert.equal(s.ranks[m],a.board[m].order.indexOf('gemini-decision-1')+1);
  assert.deepEqual(Object.keys(proof.new_rows),['gemini-decision-1']);assert.equal(proof.pricing_module_sha256,V1810_PRICING.new);assert.equal(load('v1.8.9','proof').pricing_module_sha256,V1810_PRICING.old);
- assert.deepEqual(a.addendum.new_keys,['gemini-decision-1']);assert.ok(V1810_HIST.endsWith('; added Gemini Decision 1 (Google, hosted API) on the same draw; removed the preliminary A2 re-run listing of Microsoft-Decision-1 (its regular rows stay).'));
+ assert.deepEqual(a.addendum.new_keys,['gemini-decision-1']);assert.ok(V1810_HIST.endsWith('; added Gemini Decision 1 (Google, hosted API) on the same draw; removed the preliminary A2 re-run listing of Microsoft-Decision-1 (its regular rows stay); all published breakdown cells are now shown, small samples marked; 18 API base models added with sources.'));
 });

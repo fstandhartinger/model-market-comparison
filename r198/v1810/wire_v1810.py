@@ -19,6 +19,13 @@ for f in ['app/api/jevbench/v1.8.10/route.ts','app/jev-models/v1.8.10/page.tsx']
   s=re.sub(r'<p className="mt-3 max-w-3xl">.*?</p>','<p className="mt-3 max-w-3xl">'+HIST.replace("'",'&apos;')+'</p>',s,count=1,flags=re.S)
   s=s.replace('<a href="/jev-models/v1.8.8">Previous v1.8.8</a>','<a href="/jev-models/v1.8.9">Previous v1.8.9</a>')
   assert 'Karpo' not in s and 'one unranked row' not in s,'stale predecessor text in the page'
+  # r278 pre-flip (critic C2): the release page passes the assembled live chain (same inputs as the live boards, so the build memo is
+  # reused) to v1810BoardInput, which bounds the release categories by row pool like withV1810Addendum; the board then takes the artifact path.
+  s=s.replace("import { withPublicAdapterIds } from '../../../lib/jevbench-v15-release.mjs';","import { readJevbenchV157Release, withPublicAdapterIds } from '../../../lib/jevbench-v15-release.mjs';\nimport { readJevbenchV161Release } from '../../../lib/jevbench-v16-release.mjs';\nimport { assembleJevBoard } from '../../../lib/jevbench-live-board.mjs';\nimport apiA4 from '../../../data/jevbench-api-a4-equated.json';",1)
+  a_=" const board=v1810BoardInput(release);"
+  assert s.count(a_)==1,'release page board input'
+  s=s.replace(a_," const [base,previous]=await Promise.all([readJevbenchV161Release(),readJevbenchV157Release()]);\n const chain=await assembleJevBoard({release:{artifact:base.artifact,categories:base.categories,carry:base.carry},previous,live:true,apiA4});\n const board=v1810BoardInput(release,chain);")
+  assert 'v1810BoardInput(release,chain)' in s and 'readJevbenchV157Release, withPublicAdapterIds' in s
  p.write_text(s)
 edit('lib/jevbench-live-board.mjs',"import { readJevbenchV189ForBoard, withV189Addendum } from './jevbench-v189-release.mjs';","import { readJevbenchV1810ForBoard, withV1810Addendum } from './jevbench-v1810-release.mjs';\nimport { readJevbenchV189ForBoard, withV189Addendum } from './jevbench-v189-release.mjs';")
 edit('lib/jevbench-live-board.mjs','  return v189 ? withV189Addendum(throughV188, v189) : throughV188;','  const throughV189 = v189 ? withV189Addendum(throughV188, v189) : throughV188;\n  const v1810 = await readJevbenchV1810ForBoard(root);\n  return v1810 ? withV1810Addendum(throughV189, v1810) : throughV189;')

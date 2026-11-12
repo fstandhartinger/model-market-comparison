@@ -138,7 +138,7 @@ function A4Breakdowns({ s, page }: { s: any; page: A4Page }) {
       return <div key={d.key} data-bh-jev-a4-dim={d.key}><h3 className="text-sm font-semibold">{d.title}</h3>
         {!cell[d.key] && <p className="bh-muted mt-1 text-sm" data-bh-jev-a4-dim-missing={d.key}>{cats.missingDims?.[s.key]?.[d.key] ?? 'No per-category values are published for this system.'}</p>}
         <table className="bh-table mt-1 text-sm"><tbody>{rows.map((c) => { const [v, n] = cell[d.key][c.key]; return <tr key={c.key}><th scope="row" className="font-normal" title={c.covers}>{c.short}</th><td className="tabular">{pct(v)}</td><td className="bh-muted tabular">n={n}{n < cats.radarMinN ? ' †' : ''}</td></tr>; })}</tbody></table></div>;
-    })}<p className="bh-muted text-xs sm:col-span-2">Cells need at least {cats.minN} answered items; † fewer than {cats.radarMinN} (indicative only, listed below the radar in the compare view).</p></div>
+    })}<p className="bh-muted text-xs sm:col-span-2">Cells need at least {cats.minN} answered items; † fewer than {cats.radarMinN} ({cats.drawLowN ? 'indicative only; drawn as hollow, lighter points on the compare radars' : 'indicative only, listed below the radar in the compare view'}).</p></div>
       : <p className="bh-muted mt-3 text-sm">{cats.missing[s.key] ?? 'No per-category values are published for this system.'}</p>)}
   </section>;
 }

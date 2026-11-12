@@ -21,10 +21,10 @@ const artifact = () => ({
   },
 });
 
-test('one minimum shown n of 10, under the radar minimum of 30', () => {
-  assert.equal(BREAKDOWN_MIN_SHOWN_N, 10);
+test('one minimum shown n of 15, under the radar minimum of 30', () => {
+  assert.equal(BREAKDOWN_MIN_SHOWN_N, 15);
   assert.equal(RADAR_MIN_N, 30);
-  assert.match(src('lib/radar-shape.mjs'), /export const BREAKDOWN_MIN_SHOWN_N = 10;/);
+  assert.match(src('lib/radar-shape.mjs'), /export const BREAKDOWN_MIN_SHOWN_N = 15;/);
 });
 
 test('a row without subject-topic labels keeps its use-case cells and says why topics are empty', () => {
@@ -35,7 +35,7 @@ test('a row without subject-topic labels keeps its use-case cells and says why t
   assert.equal(v.missingDims.draw.topics, UNLABELLED_TOPICS_NOTE);
   assert.equal(UNLABELLED_TOPICS_NOTE, 'subject topics: not labelled for this draw yet (top-up pending)');
   assert.equal(v.drawLowN, true);
-  assert.equal(v.minN, 10);
+  assert.equal(v.minN, 15);
   assert.ok(v.dims.find((d) => d.key === 'usecases').cats.every((c) => c.plotted), 'a 17-item category is a spoke');
   const model = buildAllDataModel({ artifact: { revision: 'v1.6.1', systems: [{ key: 'draw', display: 'Draw', axes: {}, cost: {}, speed: {} }], not_measured: [] }, categoryView: v });
   assert.equal(model.rows[0].values.categoryNote, UNLABELLED_TOPICS_NOTE);
