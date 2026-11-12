@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "benchmark": "ImageJevBench",
+  "scale": "v0.4",
+  "revision": "v0.4-A",
+  "data_kind": "fixture",
+  "built_utc": "2026-11-12T12:00:00.000Z",
+  "items": 300,
+  "method_disclosure": null,
+  "rows": [
+    {
+      "id": "fixture-amber",
+      "name": "Fixture Amber (fictional)",
+      "n": 300,
+      "measured_utc": "2026-11-12T11:00:00.000Z",
+      "intelligence": 80,
+      "calibration": 70,
+      "composite": 72,
+      "latency_p50_s": 0.25,
+      "usd_per_1000": 0.08
+    },
+    {
+      "id": "fixture-cobalt",
+      "name": "Fixture Cobalt (fictional)",
+      "n": 300,
+      "measured_utc": "2026-11-12T11:00:00.000Z",
+      "intelligence": 64,
+      "calibration": 60,
+      "composite": 65,
+      "latency_p50_s": 0.4,
+      "usd_per_1000": 0.04
+    }
+  ]
+}
