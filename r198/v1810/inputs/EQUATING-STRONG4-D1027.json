@@ -1,0 +1,206 @@
+{
+ "schema_version": 1,
+ "kind": "jevbench-draw-equating-result",
+ "generated_utc": "2026-11-12T02:21Z",
+ "by": "claude:jevbench-add-requests-20260919 run 276 (equating lead, ruling #56415 point 5)",
+ "draw": "v1.6-regular-20261027",
+ "status": "equated",
+ "anchor_set": "strong (Florian cards 19224/19536/19547)",
+ "anchors": [
+  "quyet-1-0-large",
+  "torchcast-decision-27b",
+  "decider-12b",
+  "h2o-lightning-4b-v1.1"
+ ],
+ "n_anchors": 4,
+ "anchors_not_used": {
+  "decision-2-0-vega-27b": "STAGE_FAILED in the anchor kit (offline public smoke at staging, before any sealed byte; custody word spent). The kit pre-registers a STAGE_FAILED anchor as skipped with no retry; the equating uses the COMPLETE anchors only."
+ },
+ "offset": {
+  "I": -2.884891186577587,
+  "C": -1.8542447151797177
+ },
+ "offset_ci95": {
+  "I": [
+   -5.851030683979731,
+   1.0608488496147923
+  ],
+  "C": [
+   -5.447551660176162,
+   1.9718407968151896
+  ]
+ },
+ "offset_ci95_independent_items": {
+  "I": [
+   -8.253666488669571,
+   3.189140875897631
+  ],
+  "C": [
+   -5.698741700420654,
+   1.8919272371911515
+  ]
+ },
+ "offset_intelligence_base": {
+  "value": -2.884891186577587,
+  "ci95": [
+   -5.820977129818431,
+   1.0608488496147923
+  ]
+ },
+ "offset_info": {
+  "I_open": -7.105427357601002e-15,
+  "I_sealed": -5.582136051180097
+ },
+ "sensitivity_leave_one_out": {
+  "quyet-1-0-large": {
+   "I": -2.1607102631948862,
+   "C": -0.6653895513820487
+  },
+  "torchcast-decision-27b": {
+   "I": -3.6090721099602874,
+   "C": -3.0430998789773867
+  },
+  "decider-12b": {
+   "I": -3.6090721099602874,
+   "C": -0.6653895513820487
+  },
+  "h2o-lightning-4b-v1.1": {
+   "I": -2.1607102631948862,
+   "C": -3.0430998789773867
+  }
+ },
+ "mean_instead_of_median": {
+  "I": -2.609694629464121,
+  "C": -2.055450428516103
+ },
+ "per_anchor": {
+  "quyet-1-0-large": {
+   "reference_published_base": 73.40135940607429,
+   "reference_recomputed_base": 73.40135940607429,
+   "new_draw_base": 77.8538217964334,
+   "reference_C": 89.97624968733336,
+   "new_draw_C": 93.01934956631075,
+   "diff": {
+    "C": -3.0430998789773867,
+    "I_open": -1.4210854715202004e-14,
+    "I_post_pool": -4.452462390359102,
+    "I_post_rel": -4.452462390359102,
+    "I_sealed": -8.90492478071819,
+    "base": -4.452462390359102
+   }
+  },
+  "torchcast-decision-27b": {
+   "reference_published_base": 71.75187578095783,
+   "reference_recomputed_base": 71.75187578095783,
+   "new_draw_base": 71.96840953530004,
+   "reference_C": 91.379440941337,
+   "new_draw_C": 92.04483049271904,
+   "diff": {
+    "C": -0.6653895513820487,
+    "I_open": 0.7761846288595393,
+    "I_post_pool": -0.21653375434220834,
+    "I_post_rel": -0.21653375434220834,
+    "I_sealed": -1.209252137543956,
+    "base": -0.21653375434220834
+   }
+  },
+  "decider-12b": {
+   "reference_published_base": 63.01250112161242,
+   "reference_recomputed_base": 63.01250112161242,
+   "new_draw_base": 65.1732113848073,
+   "reference_C": 81.98845142422223,
+   "new_draw_C": 86.01264897200252,
+   "diff": {
+    "C": -4.02419754778029,
+    "I_open": 0.0,
+    "I_post_pool": -2.1607102631948862,
+    "I_post_rel": -2.1607102631948862,
+    "I_sealed": -4.321420526389765,
+    "base": -2.1607102631948862
+   }
+  },
+  "h2o-lightning-4b-v1.1": {
+   "reference_published_base": 60.03839906196252,
+   "reference_recomputed_base": 60.03839906196252,
+   "new_draw_base": 63.64747117192281,
+   "reference_C": 89.95399367673842,
+   "new_draw_C": 90.44310841266311,
+   "diff": {
+    "C": -0.48911473592468724,
+    "I_open": -0.3752926439501394,
+    "I_post_pool": -3.6090721099602874,
+    "I_post_rel": -3.6090721099602874,
+    "I_sealed": -6.842851575970428,
+    "base": -3.6090721099602874
+   }
+  }
+ },
+ "g_med": {
+  "reference": 2.573387642438244,
+  "new_draw_rel": 2.573387642438244,
+  "new_draw_anchor_pool": -4.438035502660156
+ },
+ "offset_basis": "median over anchors of (metric on v1.6.0 S u P) - (metric on d1027 S u P); applied by ADDING to a d1027 row (merged-board convention); I = post-penalty Intelligence at the reference G_med, C = Calibration",
+ "bootstrap": {
+  "B": 1000,
+  "seed": 16,
+  "primary": "paired public items + independent sealed, anchors resampled",
+  "conservative": "all independent"
+ },
+ "scorer": {
+  "file": "/home/flori/jobs/jevbench-v16-run-20261001/harness/score_v16.py",
+  "sha256": "02132271117653e6302c509232a581d0094f0e78eac8b1bfc67596fd5d5097e9",
+  "noul_method": "O1S"
+ },
+ "equate_tool": {
+  "file": "/home/flori/jobs/jevbench-auto-intake/r64-anchors-strong/tools/equate.py",
+  "sha256": "c9604b9dc72fd23570b856a6f475c570c36958bef21204863369e81f11ac2b9d"
+ },
+ "inputs": {
+  "new_raws": {
+   "quyet-1-0-large": {
+    "path": "/home/flori/jevbench-sealed/v1.6-run/v1.6-regular-20261027/runs-anchors/quyet-1-0-large/quyet-1-0-large.jsonl",
+    "sha256": "60901344af432989a06f73ba6f0664e2c9c3a7f07dfad49f8dcb6dbacaf9ab42",
+    "lines": 1500
+   },
+   "torchcast-decision-27b": {
+    "path": "/home/flori/jevbench-sealed/v1.6-run/v1.6-regular-20261027/runs-anchors/torchcast-decision-27b/torchcast-decision-27b.jsonl",
+    "sha256": "5dfa234af9e35ce8f552bf84bde514c8de982cd07c257c2c13b8f6dea21aee5b",
+    "lines": 1500
+   },
+   "decider-12b": {
+    "path": "/home/flori/jevbench-sealed/v1.6-run/v1.6-regular-20261027/runs-anchors/decider-12b/decider-12b.jsonl",
+    "sha256": "9f467fcd9e3948666d3345ac6d89c222819c67151e9f18fc7da3877f181b50ee",
+    "lines": 1500
+   },
+   "h2o-lightning-4b-v1.1": {
+    "path": "/home/flori/jevbench-sealed/v1.6-run/v1.6-regular-20261027/runs-anchors/h2o-lightning-4b-v1.1/h2o-lightning-4b-v1.1.jsonl",
+    "sha256": "76ee19dc9f74dffc4811e5eb79a05e781961dc34993866a195d4a5a59e2d2475",
+    "lines": 1500
+   }
+  },
+  "reference_raws": {
+   "quyet-1-0-large": {
+    "path": "/home/flori/jevbench-sealed/v1.6-run/v1.6.0/score-v161-3/runs/quyet-1-0-large.jsonl",
+    "sha256": "b9f8d6aefccad03fe97de9fac1c05e8356c487cf99d386dc51351073094a8072"
+   },
+   "torchcast-decision-27b": {
+    "path": "/home/flori/jobs/jevbench-hf-decision-index-intake-20261006/outputs/torchcast-decision-27b-1500.jsonl",
+    "sha256": "c399b8943a5b862eed2678422d8fa4a1687b67f084dd32e4711a2d2fb25516a4"
+   },
+   "decider-12b": {
+    "path": "/home/flori/jevbench-sealed/v1.6-run/v1.6.0/score-v161-3/runs/decider-12b.jsonl",
+    "sha256": "8bce97638c4a20cf0a51d47559a3c5930749ea91a718bde6c04cb5cccc285456"
+   },
+   "h2o-lightning-4b-v1.1": {
+    "path": "/home/flori/jevbench-sealed/v1.6-run/v1.6.0/score-v161-3/runs/h2o-lightning-4b.jsonl",
+    "sha256": "4b19dbf4aa30baf2cf003b507340ecd863328c7185dd03cbe92bd71c3f95fd7f"
+   }
+  },
+  "registry_sha256": "53a3122cb668f7dce5753b433e5b9b9759485de1e33343ac2cb182a80783a546",
+  "equate_out_sha256": "1f755af1ac6e00223ae3fdb97e7895cbea2488f450f6007fb09172403e066bb0",
+  "anchor_score_out_sha256": "ca21cce745220aee8cd5ec6c121a5cf37c7cd6b4ef25e2f3b58fa56a69aa7d36"
+ },
+ "supersedes": "12-anchor d1027 equating (r62, I -1.16 / C -0.69), never published; judged SUSPICIOUS for strong rows (DECISIONS 2026-10-28 06:48Z)",
+ "coverage_note": "anchor reference Intelligence-base 60.0-73.4; d1027 rows above ~78 on the reference scale are extrapolated"
+}

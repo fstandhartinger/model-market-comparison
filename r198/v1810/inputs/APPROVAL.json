@@ -1,0 +1,36 @@
+{
+ "asks": [
+  {
+   "handoff": "strong-anchor equating of the 27 Oct draw, 4 COMPLETE anchors (board #11 #57394, #57424)",
+   "key": "v1.6-regular-20261027",
+   "relay": "release owner run 276 (DECISIONS 2026-11-12 d1027-equated-strong4-57394)"
+  }
+ ],
+ "button_tap": false,
+ "equating_basis": {
+  "decision": "d1027-equated-strong4-57394",
+  "equating_receipt": "EQUATING-STRONG4-D1027.json 7888a080 (frozen O1S scorer, 4 anchors, B=1000, seed 16)",
+  "rule": "the 27 Oct draw rows rank only after the v1.8.10 candidate passes an independent fairness review; a top-five change goes to Florian as a preview"
+ },
+ "fairness_check": {
+  "path": "workers/r276-v1810-fair/RESULT.json",
+  "verdict": "PENDING"
+ },
+ "fresh_baseline": "v1.8.9",
+ "go": {
+  "channel": "laptop chat",
+  "date": "2026-10-25",
+  "quote": "3 ja",
+  "recorded_in": "DECISIONS.md 2026-10-25 setup-review-open-questions-answered"
+ },
+ "release_owner_rulings": [
+  "d1027-equated-strong4-57394 (equate on the 4 COMPLETE strong anchors; the fifth anchor is skipped as pre-registered, no retry)",
+  "v1713-topics-exception-h2o141 extended to every row on the draw (TEMPORARY topics exception, unchanged)"
+ ],
+ "status": "GO (fair top-five change, Florian rule 25 Oct 2026; strong-anchor equating of the 27 Oct draw)",
+ "top_five_effect": "changed",
+ "top_five_preview": {
+  "path": "r198/v1810/receipts/topfive-diff.json",
+  "sha256": "66af3b99c40b419dc9d0f833f7871b7e46402c3f58d9956580d14a561745eb16"
+ }
+}

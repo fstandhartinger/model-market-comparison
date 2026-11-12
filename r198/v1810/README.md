@@ -1,0 +1,1 @@
+v1.8.10 candidate pipeline: the 27 Oct draw (v1.6-regular-20261027) equated with four strong anchors (inputs/EQUATING-STRONG4-D1027.json, sha256 pinned) and its priced rows ranked. No new row; no sealed byte read. Review and a bound FAIR fairness verdict gate every public reader (approval_v1810.py, bind_fair_v1810.py, flip_verdict_v1810.py).
