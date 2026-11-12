@@ -531,7 +531,9 @@ function ApiRoster({ a, carry, listed, eligibility }: { a: JevV16ReleaseArtifact
         {head(ranked.some((s) => (s as { a4?: unknown }).a4) ? `Ranked on the ${a.revision} scale (full set, or A4 ∪ P re-run equated)` : `Ranked on ${a.revision}`, ranked.length)}
         {ranked.map((s) => { const e = eligibility.get(s.key); return <tr key={s.key} className="border-t border-line">
           <th scope="row" className="p-2 font-normal">{name(s.display, s.repo, s.key, s.endpoint_kind)}</th>
-          <td className="p-2">Composite #{s.rank}<span className="bh-muted block text-xs" data-bh-jev-api-roster-basis>{basisLine(s as { a4?: { n_items: number } }, a.v16.counts.selfhosted_input)}</span>{e?.status === 'outside' && <span className="bh-muted block text-xs">outside Jev-class caps: {e.reason}</span>}</td>
+          <td className="p-2">Composite #{s.rank}<span className="bh-muted block text-xs" data-bh-jev-api-roster-basis>{basisLine(s as { a4?: { n_items: number } }, a.v16.counts.selfhosted_input)}</span>{e?.status === 'outside' && <span className="bh-muted block text-xs">outside Jev-class caps: {e.reason}</span>}
+            {/* v1.8.10: a vendor's own (self-reported) figure, shown beside its row with its basis; only rows that carry one. */}
+            {typeof (s as { self_reported?: unknown }).self_reported === 'string' && <span className="bh-muted block max-w-md text-xs" data-bh-jev-api-roster-self-reported={s.key}>{(s as { self_reported: string }).self_reported}</span>}</td>
           <td className="p-2">{one(s.jevbench_score)}</td><td className="p-2">{rosterCapability(s)}</td>
           <td className="p-2">{costCell(s.cost)}</td><td className="p-2"><JevLatencyValue speed={s.speed} kind={(s as { endpoint_kind?: string | null }).endpoint_kind} /></td></tr>; })}
         {configVariants.length > 0 && head(`Also measured on ${a.revision}, listed, not ranked`, configVariants.length)}

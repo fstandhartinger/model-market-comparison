@@ -14,7 +14,7 @@ for f in ['app/api/jevbench/v1.8.10/route.ts','app/jev-models/v1.8.10/page.tsx']
  p=W/f;p.parent.mkdir(parents=True,exist_ok=True);s=(W/f.replace('v1.8.10','v1.8.9')).read_text().replace('V189','V1810').replace('v189','v1810').replace('v1.8.9','v1.8.10')
  if f.endswith('page.tsx'):
   s=re.sub(r"title:'[^']*'","title:'JevBench v1.8.10: the 27 Oct draw equated and ranked'",s,count=1)
-  s=re.sub(r"description:'[^']*'","description:'The 27 Oct regular draw is equated to the reference scale with four strong anchor systems and its rows are ranked; Gemini Decision 1 (Google, hosted API) joins on the same draw.'",s,count=1)
+  s=re.sub(r"description:'[^']*'","description:'The 27 Oct draw is equated with four strong anchor systems and its rows are ranked; Gemini Decision 1 (Google, hosted API) joins on the same draw.'",s,count=1)
   s=s.replace('JevBench v1.8.10: one unranked row on the 27 Oct draw','JevBench v1.8.10: the 27 Oct draw equated with four strong anchors and ranked')
   s=re.sub(r'<p className="mt-3 max-w-3xl">.*?</p>','<p className="mt-3 max-w-3xl">'+HIST.replace("'",'&apos;')+'</p>',s,count=1,flags=re.S)
   s=s.replace('<a href="/jev-models/v1.8.8">Previous v1.8.8</a>','<a href="/jev-models/v1.8.9">Previous v1.8.9</a>')

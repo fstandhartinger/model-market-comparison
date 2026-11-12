@@ -64,7 +64,7 @@ for f in sorted(CHANGED_ON_PURPOSE):
 NR=L(J/'receipts/NEW-ROWS.json');SC=L(J/'inputs/gemini/scored.json')
 for k in NEW:
  assert by[k]==NR[k] and by[k]['published_scores']=={'axes':SC['axes'],'scores':SC['scores'],'capability':SC['capability']} and by[k]['ranked'] and by[k]['api_flag'] and by[k]['endpoint_kind']=='api'
- assert {f:v for f,v in by[k].items() if f not in EQF+['display','author','licence','repo','model_pin','endpoint_condition','new_in','measured_in','last_measured_on','measurement_date_status','method','paid_fast_lane','cost']}=={f:v for f,v in SC.items() if f not in EQF+['display','author','not_ranked_because','cost']},'added row: every scorer field kept'
+ assert {f:v for f,v in by[k].items() if f not in EQF+['display','author','licence','repo','model_pin','endpoint_condition','new_in','measured_in','last_measured_on','measurement_date_status','method','paid_fast_lane','cost','noul_decisive','self_reported']}=={f:v for f,v in SC.items() if f not in EQF+['display','author','not_ranked_because','cost']},'added row: every scorer field kept'
  assert {f:v for f,v in by[k]['cost'].items() if f not in('basis','kind')}=={f:v for f,v in SC['cost'].items() if f not in('basis','kind')},'added row cost numbers = scorer'
 # 7. draw table: only the 27 Oct draw changed
 tb=json.loads(base('data/jevbench-draw-equating.json'));ta=L(W/'data/jevbench-draw-equating.json')

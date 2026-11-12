@@ -139,6 +139,7 @@ export function validateJevbenchV1810Bundle({manifest,artifact,categories,carry,
   checkEquatedRow(s,s.published_scores,artifact.options);
   if(s.api_flag!==true||s.endpoint_kind!=='api'||s.speed.adjustment!=='none (API)'||s.model_pin!==null||s.repo!==null||s.new_in!=='v1.8.10'||s.measured_in!=='v1.8.10'||s.underlying!==s.disclosure)fail('hosted API identity '+k);
   if(s.draw.release!=='v1.8.10'||s.v16.n_items!==1500||s.status.rows!==1500||s.v16.g_med_used!==REFERENCE_G_MED||s.decision_limit.limit_s!==10||s.decision_limit.treatment!=='share'||s.v16.equating_offset!==null)fail('scoring method '+k);
+  if(s.self_reported!==V1810_NEW_NOTES[k]||s.noul_decisive?.supported!==true||s.noul_decisive.n!==375||!Number.isInteger(s.noul_decisive.decisive)||s.noul_decisive.decisive>s.noul_decisive.valid)fail('self-reported figure / Noul decisiveness '+k);
   if(s.cost.kind!=='tariff'||s.cost.common_basis?.n_items!==1489||s.cost.common_basis.rule!=='common'||!Number.isFinite(s.cost.usd_per_1000))fail('common cost basis '+k);
   const p=proof.new_rows?.[k];if(!p)fail('added row proof '+k);
   same(p.published,s.published_scores,'proof published '+k);same(p.equated,{axes:s.axes,scores:s.scores,capability:s.capability},'proof equated '+k);same(p.ranks,s.ranks,'proof ranks '+k);

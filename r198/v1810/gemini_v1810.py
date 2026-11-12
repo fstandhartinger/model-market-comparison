@@ -4,6 +4,7 @@ Inputs (byte copies in inputs/gemini/, pinned by sha256; the intake originals mu
   scored.json   the frozen scorer's row (score_v17 6363458d, view v1.8.8-share, O1S, B 1000, seed 16, G_med 2.5734, d1027, common cost basis 1,489)
   cells.json    the frozen category tool's cells for that row (families / use cases / languages; no topic labels exist on this draw)
   REGISTRY.json the intake registry entry (identity only; its free-text base model is never used for pricing)
+  decisive.json the frozen Noul decisive-rate tool's aggregate for that row (decisive_v16 80b9ccf4 over the same scored raw, O1S; as v1.8.8's rows)
 The row is a d1027 row like decide-1.1 (template): published = measured (kept in published_scores), shown as measured + the draw's anchor offset,
 ranked, API board only. Cost = the scorer's own cost block (Google list price USD 0.10/M input, output free, x API-reported usage), numbers
 byte-equal to the scored row; only the public basis text and the presentation kind ('tariff' = public list price, as decide-1.1) are set here.
@@ -16,9 +17,11 @@ L = lambda p: json.loads(pathlib.Path(p).read_text())
 sha = lambda p: hashlib.sha256(pathlib.Path(p).read_bytes()).hexdigest()
 PINS = {'scored.json': 'd9fd871f2cd5c940f496fa088c6f0a1bef53fdb199fe154fc279e72d212422e8',
         'cells.json': '38454c3b3b98975a0c487cb292a2db6baca9e60efac76475a4744a06d48ad404',
-        'REGISTRY.json': '61646b81eaa73e6a59639b7269002009291557dba5d25d0329d8cbab8ea46d5c'}
+        'REGISTRY.json': '61646b81eaa73e6a59639b7269002009291557dba5d25d0329d8cbab8ea46d5c',
+        'decisive.json': '6931cc1f29324ea0295781ea50224a4b17b043e333d1926234854a8ca9b80b91'}
 ORIG = pathlib.Path('/home/flori/jobs/jevbench-auto-intake/r66-gemini/private-score')
-ORIG_FILES = {'scored.json': ORIG / 'out-v17-share/gemini-decision-1.json', 'cells.json': ORIG / 'cells/categories.json', 'REGISTRY.json': ORIG / 'REGISTRY.json'}
+ORIG_FILES = {'scored.json': ORIG / 'out-v17-share/gemini-decision-1.json', 'cells.json': ORIG / 'cells/categories.json', 'REGISTRY.json': ORIG / 'REGISTRY.json',
+              'decisive.json': pathlib.Path('/home/flori/jobs/jevbench-add-requests-20260919/r278/gemini-decisive/decisive.json')}
 SCORER_RESULTS_SHA = '2a8a451e33ce89ccae2d7abf8c30d3832850127f27169185791c65ab4b1fff79'   # the scorer's jevbench-v1.6.0-results.json (out-v17-share.log)
 # Pricing re-freeze 2f52370f -> 1b3c52fb (adds exactly subq-snap-1.2 and gemini-decision-1 to the launch list-price set), installed 12 Nov 2026 15:06Z.
 PRICING_OLD = '2f52370fe1dba73d75a770a386df350cc76a0898304aeba9e29c91f6e4d3738b'
@@ -31,6 +34,11 @@ for n, h in PINS.items():
     assert sha(G / n) == h, ('GEMINI INPUT HASH MISMATCH', n)
     if ORIG_FILES[n].exists(): assert sha(ORIG_FILES[n]) == h, ('intake original differs from the pinned copy', n)
 scored, cells, registry = L(G / 'scored.json'), L(G / 'cells.json'), L(G / 'REGISTRY.json')
+ND = L(G / 'decisive.json')[GK]
+NOUL_DECISIVE = {f: ND[f] for f in ['acc_among_decisive', 'decisive', 'decisive_rate', 'n', 'supported', 'valid']}
+# consistent with the scorer's own aggregates: 375 yes/no items, 373 valid (2 transport failures), 62 unsure answers = the calibration abstentions, 305 correct
+assert NOUL_DECISIVE['supported'] is True and NOUL_DECISIVE['n'] == scored['v16']['per_type']['noul']['n'] == 375 and NOUL_DECISIVE['valid'] == scored['calibration']['parts']['noul']['n'] == 373
+assert round(373 * scored['calibration']['parts']['noul']['abstention_rate']) == 373 - NOUL_DECISIVE['decisive'] and round(NOUL_DECISIVE['acc_among_decisive'] * NOUL_DECISIVE['decisive']) == round(scored['v16']['per_type']['noul']['accuracy'] * 375) == 305
 assert list(registry) == [GK] and registry[GK]['display'] == 'Gemini Decision 1' and registry[GK]['author'] == 'Google' and registry[GK]['lane'] == 'api'
 assert scored['key'] == GK and scored['api_flag'] is True and scored['endpoint_kind'] == 'api' and scored['speed']['adjustment'] == 'none (API)'
 assert scored['v16']['n_items'] == 1500 and scored['v16']['g_med_used'] == 2.573387642438244 and scored['v16']['equating_offset'] is None
@@ -95,7 +103,8 @@ def measured_row(draw_template, measured_on='2026-11-11', release='v1.8.10'):
     s = copy.deepcopy(scored)
     s.pop('not_ranked_because', None)
     s.update(display=DISPLAY, author=AUTHOR, licence=LICENCE, repo=None, model_pin=None, endpoint_condition=ENDPOINT, disclosure=DISCLOSURE, underlying=DISCLOSURE,
-             method='v1.7', new_in=release, measured_in=release, last_measured_on=measured_on, measurement_date_status='measured', paid_fast_lane=False)
+             method='v1.7', new_in=release, measured_in=release, last_measured_on=measured_on, measurement_date_status='measured', paid_fast_lane=False,
+             noul_decisive=copy.deepcopy(NOUL_DECISIVE), self_reported=SELF_REPORT)
     s['cost'] = {**copy.deepcopy(scored['cost']), 'basis': COST_BASIS, 'kind': 'tariff'}
     s['draw'] = {**{f: draw_template[f] for f in ['id', 'label', 'drawn_on']}, 'release': release, 'measured_on': measured_on, 'g_med': 2.573387642438244, 'results_sha256': SCORER_RESULTS_SHA}
     return s
