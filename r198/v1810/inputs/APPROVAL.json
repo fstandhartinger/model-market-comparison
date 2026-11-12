@@ -4,6 +4,11 @@
    "handoff": "strong-anchor equating of the 27 Oct draw, 4 COMPLETE anchors (board #11 #57394, #57424)",
    "key": "v1.6-regular-20261027",
    "relay": "release owner run 276 (DECISIONS 2026-11-12 d1027-equated-strong4-57394)"
+  },
+  {
+   "handoff": "combined candidate: v1.8.10 + gemini-decision-1 (Google, hosted API, same draw) + low-sample caveat fix, release today with a preview card first",
+   "key": "gemini-decision-1",
+   "relay": "release owner run 278"
   }
  ],
  "button_tap": false,
@@ -13,7 +18,15 @@
   "rule": "the 27 Oct draw rows rank only after the v1.8.10 candidate passes an independent fairness review; a top-five change goes to Florian as a preview"
  },
  "fairness_check": {
+  "engine": "claude-opus-5-5 (account C, xhigh)",
   "path": "workers/r276-v1810-recheck/RESULT.json",
+  "receipt_fairness": "FAIR_SUBSET",
+  "sha256": "fac8cb9cf529b1d44ff8708a947dcaa5a9a4d7824271d1d3483b7fc76ebb0a03",
+  "verdict": "FAIR"
+ },
+ "fairness_check_delta": {
+  "path": "workers/r278-delta-fair/RESULT.json",
+  "scope": "the added row gemini-decision-1 (and the carried rows it moves) on top of the reviewed configuration bound in fairness_check",
   "verdict": "PENDING"
  },
  "fresh_baseline": "v1.8.9",
@@ -27,12 +40,15 @@
   "d1027-equated-strong4-57394 (equate on the 4 COMPLETE strong anchors; the fifth anchor is skipped as pre-registered, no retry)",
   "v1713-topics-exception-h2o141 extended to every row on the draw (TEMPORARY topics exception, unchanged)",
   "fairness-subset-v1810: FAIR_SUBSET (recommendation b of the independent fairness review workers/r276-v1810-fair): 31 rows of the draw ranked; h2o-lightning-4b-v1.4.1, jeff_1_1_large, wemm-jev and visionjev-1.0.0-27b stay equated but unranked; the two unpriced DecisionNode rows stay unranked",
-  "validator-anchor-minimum-v1810: lib/jevbench-cohort-merge.mjs readDrawEquating now requires at least 4 anchors for an equated draw (was 5), justified by the pre-registered STAGE_FAILED skip of the fifth planned anchor system (no retry), so this draw has four complete anchors; no other validator rule changed"
+  "validator-anchor-minimum-v1810: lib/jevbench-cohort-merge.mjs readDrawEquating now requires at least 4 anchors for an equated draw (was 5), justified by the pre-registered STAGE_FAILED skip of the fifth planned anchor system (no retry), so this draw has four complete anchors; no other validator rule changed",
+  "gemini-decision-1-in-v1810: one added hosted-API row on the 27 Oct draw (template decide-1.1): published = measured, shown measured + the draw offset, ranked, API board only; self-reported vendor figure shown beside the row with its basis",
+  "gemini-decision-1-price-basis: Google list price USD 0.10 per 1M input tokens, output free (paid tier; free tier, batch and caching not counted), launch list price counted from day 1 (I-1); pricing re-freeze 2f52370f -> 1b3c52fb adds only gemini-decision-1 and subq-snap-1.2 (equivalence sweep PASS, no carried pricing path changes)",
+  "lowsample-caveat-v1810: carried rows keep their category cells on live pages built by next build (CR-729 memo copy keeps the row-pool bounds); the compare view says so when a pair has no per-category values"
  ],
  "status": "GO (fair top-five change, Florian rule 25 Oct 2026; strong-anchor equating of the 27 Oct draw)",
  "top_five_effect": "changed",
  "top_five_preview": {
   "path": "r198/v1810/receipts/topfive-diff.json",
-  "sha256": "27bd4c636d748d1f5e1a81d60a6ba23f94d65265d3a677fe5237e2bfe662f45e"
+  "sha256": "cb7a0c08eafb28206d4c588969497560182ffdc3b9c8520e848c2354e5fa3c4e"
  }
 }

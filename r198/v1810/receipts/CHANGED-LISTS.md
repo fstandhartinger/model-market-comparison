@@ -1,6 +1,6 @@
 # Top-five comparison v1.8.9 → v1.8.10
 
-31 rows of the 27 Oct draw are now ranked (equated with four strong anchors: Intelligence -2.9, Calibration -1.9). Lists compared: 580 (40 primary + 540 supplementary); changed: 468. Slider states: 62 of 88 changed. Slider grid: 368 of 368 changed. Custom weightings: 8 of 8 changed.
+32 rows of the 27 Oct draw are now ranked (equated with four strong anchors: Intelligence -2.9, Calibration -1.9). Lists compared: 580 (40 primary + 540 supplementary); changed: 468. Slider states: 62 of 88 changed. Slider grid: 368 of 368 changed. Custom weightings: 8 of 8 changed.
 
 ## Entrants (number of changed lists/states each row enters)
 
@@ -987,6 +987,7 @@
 - decide-1.1 (decide.sh, API) (`decide-1.1`): 187 of 588 lists change
 - Decisio 12B tuned commit-think (variant of the Decisio family) (`decisio-gemma-4-12b-tuned-commit-think`): 74 of 588 lists change
 - Decision-King v1.1 (xsdfasfgsa) (`decision-king-v1.1`): 8 of 588 lists change
+- Gemini Decision 1 (`gemini-decision-1`): 0 of 588 lists change
 - Granite Switch 4.1 30B (revision 4.1.1, decision adapter) (`granite-switch-4.1-30b`): 0 of 588 lists change
 - Granite Switch 4.1 8B (revision 4.1.1, decision adapter) (`granite-switch-4.1-8b`): 0 of 588 lists change
 - iota-decide-4b-v0.4 (Macrocosmos, letter-readout 4B, self-hosted) (`iota-decide-4b-v0.4`): 90 of 588 lists change

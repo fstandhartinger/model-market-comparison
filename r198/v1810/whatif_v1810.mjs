@@ -14,8 +14,11 @@ const {jevScopeClassifier,jevbenchScopeArtifact}=await imp('lib/jevbench-scope.m
 const load=p=>JSON.parse(readFileSync(p));
 const V='data/raw/benchmarks/jevbench/v1.8/',a=load(V+'jevbench-v1.8.10-results.json'),before=load(V+'jevbench-v1.8.9-results.json'),proof=load(V+'jevbench-v1.8.10-proof.json');
 const J=path.join(root,'r198/v1810/'),topfive=load(J+'receipts/topfive-after.json').full_rankings;
-const eq=proof.equating,DRAW=Object.keys(proof.equated_rows).sort(),RANKED=new Set(proof.ranked_rows);
-const isApi=jevScopeClassifier(before.systems,load(V+'jevbench-v1.8.9-carry.json').rows,[],[]);
+// The added hosted-API row (gemini-decision-1) is on the same draw: it is equated per scenario like every ranked row of the draw, and it is an API row
+// (as in the site assembly and in the lead's what-if r277/gemini/whatif_gemini.mjs); the v1.8.9 classifier does not know its key.
+const NEW=Object.keys(proof.new_rows??{}).sort();
+const eq=proof.equating,DRAW=[...Object.keys(proof.equated_rows),...NEW].sort(),RANKED=new Set([...proof.ranked_rows,...NEW]);
+const isApi0=jevScopeClassifier(before.systems,load(V+'jevbench-v1.8.9-carry.json').rows,[],[]),isApi=r=>NEW.includes(r.key)?true:isApi0(r);
 const AX=['intelligence','calibration','speed','cost'],clip=x=>Math.min(100,Math.max(0,x));
 const scen={point:eq.offset,I_ci_low:{I:eq.offset_ci95.I[0],C:eq.offset.C},I_ci_high:{I:eq.offset_ci95.I[1],C:eq.offset.C},C_ci_low:{I:eq.offset.I,C:eq.offset_ci95.C[0]},C_ci_high:{I:eq.offset.I,C:eq.offset_ci95.C[1]},
  joint_ci_low:{I:eq.offset_ci95.I[0],C:eq.offset_ci95.C[0]},joint_ci_high:{I:eq.offset_ci95.I[1],C:eq.offset_ci95.C[1]}};
@@ -40,7 +43,7 @@ const lists=art=>{
  return r;
 };
 const HELD=new Set(proof.held_rows);
-const result={configuration:'FAIR_SUBSET: '+RANKED.size+' ranked rows, '+HELD.size+' held unranked rows ('+[...HELD].sort().join(', ')+'), 2 unpriced rows unranked',method:'Offset what-if on the v1.8.10 artifact: the '+RANKED.size+' ranked rows of the 27 Oct draw are re-derived as published + offset (clipped) with the frozen composite (jevComposite); every other row is unchanged; lists are re-sorted (stable) and scoped with the production helpers. Ranks are 1-based positions in the named list of the named board. capability_caps = Capability class list with the official cost/latency caps. Rows that are not ranked (two unpriced, four held) have null ranks; their equated axes and composites are still shown.',
+const result={added_rows:NEW,configuration:'FAIR_SUBSET: '+RANKED.size+' ranked rows (incl. '+NEW.length+' added hosted-API row), '+HELD.size+' held unranked rows ('+[...HELD].sort().join(', ')+'), 2 unpriced rows unranked',method:'Offset what-if on the v1.8.10 artifact: the '+RANKED.size+' ranked rows of the 27 Oct draw are re-derived as published + offset (clipped) with the frozen composite (jevComposite); every other row is unchanged; lists are re-sorted (stable) and scoped with the production helpers. Ranks are 1-based positions in the named list of the named board. capability_caps = Capability class list with the official cost/latency caps. Rows that are not ranked (two unpriced, four held) have null ranks; their equated axes and composites are still shown.',
  board_sizes:{},offset_point:eq.offset,offset_ci95:eq.offset_ci95,scenarios:Object.fromEntries(Object.entries(scen).map(([k,v])=>[k,v])),offsets_source:'r198/v1810/inputs/EQUATING-STRONG4-D1027.json (sha256 '+eq.files.equating.sha256+')',rows:{},top_fives:{}};
 for(const k of DRAW)result.rows[k]={display:a.systems.find(s=>s.key===k).display,ranked:RANKED.has(k),held:HELD.has(k),published:a.systems.find(s=>s.key===k).published_scores,scenarios:{}};
 let first=true;

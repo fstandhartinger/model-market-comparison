@@ -1,7 +1,7 @@
 import {readFileSync,writeFileSync} from 'node:fs';
 import {createHash} from 'node:crypto';
 import assert from 'node:assert/strict';
-import {validateJevbenchV1810Bundle,readJevbenchV1810ForBoard,V1810_RANKED_KEYS,V1810_UNRANKED,V1810_EQUATED_KEYS,V1810_OFFSET,V1810_HELD,V1810_BOUNDARY,V1810_META_KEY} from '../../lib/jevbench-v1810-release.mjs';
+import {validateJevbenchV1810Bundle,readJevbenchV1810ForBoard,V1810_RANKED_KEYS,V1810_UNRANKED,V1810_EQUATED_KEYS,V1810_OFFSET,V1810_HELD,V1810_BOUNDARY,V1810_META_KEY,V1810_NEW_KEYS,V1810_NEW_ROW_BOUNDS,V1810_PRICING} from '../../lib/jevbench-v1810-release.mjs';
 import {readOptionalJevbenchV189Release} from '../../lib/jevbench-v189-release.mjs';
 const D='data/raw/benchmarks/jevbench/v1.8/',load=n=>JSON.parse(readFileSync(D+'jevbench-v1.8.10-'+n+'.json'));
 const previous=await readOptionalJevbenchV189Release();
@@ -9,6 +9,7 @@ const original={manifest:load('publication'),artifact:load('results'),categories
 assert.equal(validateJevbenchV1810Bundle(original,{candidate:true}),true);
 let n=0;const neg=(fn,opts={candidate:true})=>{const x=structuredClone(original);fn(x);assert.throws(()=>validateJevbenchV1810Bundle(x,opts));n++;};
 const row=(x,k)=>x.artifact.systems.find(s=>s.key===k);
+const GK=V1810_NEW_KEYS[0];assert.deepEqual(V1810_NEW_KEYS,['gemini-decision-1']);
 const R0=V1810_RANKED_KEYS[0],R1=V1810_RANKED_KEYS.at(-1),U0=Object.keys(V1810_UNRANKED).find(k=>!V1810_HELD.includes(k)),H0=V1810_HELD[0],H2O='h2o-lightning-4b-v1.4.1',KARPO='karpo_decision_31b';
 // bundle-level negatives
 for(const fn of [x=>x.manifest.predecessor.publication_sha256='b'.repeat(64),x=>x.proof.publication_approval.status='PENDING',x=>x.proof.pricing_module_sha256='0'.repeat(64),
@@ -28,7 +29,18 @@ for(const [name,fn] of Object.entries({
  note:s=>s.listing_note='other',noteStale:s=>s.listing_note+=' stronger anchors are being measured',drawStatus:s=>s.draw.status='anchor-runs-pending',drawOffset:s=>s.draw.offset.I=0,drawCi:s=>s.draw.offset_ci95.C[1]+=1,
  disclosure:s=>s.disclosure+=' This draw is not yet equated to the reference scale.',internal:s=>s.disclosure+=' See workers/r276-v1810-build2.',gmed:s=>s.v16.g_med_used+=0.1,ci:s=>s.composite_ci95.A[0]+=1,cost:s=>s.cost.usd_per_1000*=2})){
  neg(x=>fn(row(x,R0)));if(name!=='drawStatus')neg(x=>fn(row(x,R1)));
+ neg(x=>fn(row(x,GK)));   // the added row obeys the same equating rule
 }
+// the added hosted-API row (gemini-decision-1): identity, note, cost binding, cells, proof, pricing re-freeze, delta fairness gate
+for(const fn of [x=>{const s=row(x,GK);s.listing_note=s.listing_note.split(' Google reports')[0]},x=>{row(x,GK).listing_note=row(x,GK).listing_note.replace('86.3 %','92.2 %')},
+ x=>{row(x,GK).api_flag=false},x=>{row(x,GK).endpoint_kind='open'},x=>{row(x,GK).cost.kind='list'},x=>{row(x,GK).cost.basis+=' x'},x=>{row(x,GK).cost.common_basis.n_items=1500},
+ x=>{row(x,GK).model_pin='gemini-decision-1'},x=>{row(x,GK).repo='https://ai.google.dev'},x=>{row(x,GK).underlying='x'},x=>{row(x,GK).disclosure+=' see #58276'},x=>{row(x,GK).display='Gemini'},
+ x=>{delete x.categories.systems[GK]},x=>{x.categories.systems[GK].usecases.advertising.n=V1810_NEW_ROW_BOUNDS[GK].usecases.advertising+1},x=>{x.categories.lanes[GK]='open'},x=>{x.categories.systems[GK].topics={}},
+ x=>{delete x.proof.new_rows[GK]},x=>{x.proof.new_rows[GK].cost.usd_per_1000*=2},x=>{x.proof.new_rows[GK].cost.input_tokens_all+=1},x=>{x.proof.new_rows[GK].published.axes.intelligence+=1},
+ x=>{x.proof.new_rows[GK].category_pool_bounds.usecases.advertising+=1},x=>{x.proof.pricing_module_sha256=V1810_PRICING.old},x=>{delete x.proof.pricing_refreeze},x=>{x.proof.pricing_refreeze.carried_keys_whose_pricing_path_changes=['decide-1.1']},
+ x=>{x.proof.pricing_refreeze.added_launch_list_price_keys.pop()},x=>{x.artifact.addendum.new_keys=[]},x=>{for(const m of ['A','B','C','capability'])x.artifact.board[m].order=x.artifact.board[m].order.filter(k=>k!==GK)},
+ x=>{const s=row(x,GK);s.ranked=false;s.listing='unranked'},x=>{x.artifact.systems=x.artifact.systems.filter(s=>s.key!==GK);x.artifact.roster_count-=1},
+ x=>{x.proof.publication_approval.fairness_check_delta.verdict='SUSPICIOUS'},x=>{x.proof.publication_approval.fairness_check_delta.path='workers/other/RESULT.json'},x=>{delete x.proof.publication_approval.fairness_check_delta}])neg(fn);
 neg(x=>{const s=row(x,U0);s.ranked=true;s.listing='ranked';delete s.not_ranked_because});
 neg(x=>{row(x,U0).not_ranked_because='Measured on the 27 Oct 2026 draw, which is not yet equated to the reference scale; stronger anchor runs for that draw are being measured. Shown unranked until then.'});
 neg(x=>{row(x,U0).axes.intelligence+=1});
@@ -58,6 +70,7 @@ neg(x=>{const s=x.artifact.systems.find(s=>!V1810_EQUATED_KEYS.includes(s.key)&&
 if(original.manifest.review.verdict==='PENDING'){assert.equal(await readJevbenchV1810ForBoard(),null);assert.throws(()=>validateJevbenchV1810Bundle(original));n++;}
 neg(x=>{x.manifest.review={engine:'synthetic',verdict:'PASS',receipt_sha256:'a'.repeat(64)}},{candidate:false});   // fairness PENDING while the review says PASS
 neg(x=>{x.manifest.review={engine:'e',verdict:'PASS',receipt_sha256:'a'.repeat(64)};x.proof.publication_approval.fairness_check={path:'workers/r276-v1810-recheck/RESULT.json',verdict:'FAIR'}},{candidate:false});   // FAIR without receipt pin
-assert.equal(original.proof.publication_approval.fairness_check.verdict,'PENDING');
-writeFileSync('r198/v1810/receipts/VALIDATOR.json',JSON.stringify({status:'PASS',negative_controls:n,equated_rows:V1810_EQUATED_KEYS.length,ranked_rows:V1810_RANKED_KEYS.length,unranked_rows:Object.keys(V1810_UNRANKED),offset:V1810_OFFSET,public_reader_review_gated:true,fairness_gate:'PENDING refused by every public reader until a FAIR receipt is bound'},null,1)+'\n');
-console.log('PASS validator;',n,'negative controls rejected;',V1810_EQUATED_KEYS.length,'equated rows,',V1810_RANKED_KEYS.length,'ranked');
+neg(x=>{x.manifest.review={engine:'e',verdict:'PASS',receipt_sha256:'a'.repeat(64)};x.proof.publication_approval.fairness_check={path:'workers/r276-v1810-recheck/RESULT.json',verdict:'FAIR',sha256:'a'.repeat(64)}},{candidate:false});   // earlier FAIR bound but the added row's delta still PENDING
+assert.ok(['PENDING','FAIR'].includes(original.proof.publication_approval.fairness_check.verdict));assert.equal(original.proof.publication_approval.fairness_check_delta.verdict,'PENDING');
+writeFileSync('r198/v1810/receipts/VALIDATOR.json',JSON.stringify({status:'PASS',negative_controls:n,equated_rows:V1810_EQUATED_KEYS.length,ranked_rows:V1810_RANKED_KEYS.length,unranked_rows:Object.keys(V1810_UNRANKED),added_rows:V1810_NEW_KEYS,offset:V1810_OFFSET,public_reader_review_gated:true,fairness_gate:'PENDING refused by every public reader until a FAIR receipt is bound (earlier review and the added-row delta review)'},null,1)+'\n');
+console.log('PASS validator;',n,'negative controls rejected;',V1810_EQUATED_KEYS.length,'equated rows,',V1810_RANKED_KEYS.length,'ranked; added row',GK,'ranked',JSON.stringify(row(original,GK).ranks));

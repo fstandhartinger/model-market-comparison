@@ -3,7 +3,7 @@
 import json,pathlib
 J=pathlib.Path(__file__).resolve().parent;L=lambda n:json.loads((J/'receipts'/n).read_text())
 a=L('topfive-after.json');b=L('topfive-before.json');d=L('topfive-diff.json');ext=L('topfive-extended.json');sl=L('topfive-sliders.json');cu=L('topfive-custom.json')
-keys=json.loads((J.parents[1]/'data/raw/benchmarks/jevbench/v1.8/jevbench-v1.8.10-results.json').read_text())['addendum']['ranked_keys']
+_ad=json.loads((J.parents[1]/'data/raw/benchmarks/jevbench/v1.8/jevbench-v1.8.10-results.json').read_text())['addendum'];keys=sorted(_ad['ranked_keys']+_ad['new_keys'])   # the 31 newly ranked draw rows + the added row
 def delta(label,before,after):
  return {'list':label,'before':before,'after':after,'entrants':[k for k in after if k not in before],'leavers':[k for k in before if k not in after],'order_only':set(before)==set(after)}
 changed=[]

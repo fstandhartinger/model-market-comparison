@@ -11,7 +11,7 @@ def strs(v,out):
 changed=[];n=0
 old=L(V/'jevbench-v1.8.9-results.json');new=L(V/'jevbench-v1.8.10-results.json');ob={s['key']:s for s in old['systems']}
 for s in new['systems']:
- before={x for t in strs(ob[s['key']],[]) for x in re.split(r'(?<=[.;])\s+',t)}
+ before={x for t in strs(ob.get(s['key'],{}),[]) for x in re.split(r'(?<=[.;])\s+',t)}   # the added row: every string is new
  for t in strs(s,[]):
   for x in re.split(r'(?<=[.;])\s+',t):
    if x not in before:changed.append(x);n+=1

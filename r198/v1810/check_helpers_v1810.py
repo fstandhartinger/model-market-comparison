@@ -17,10 +17,14 @@ except AssertionError as e:assert 'PENDING' in str(e) or 'FAIR' in str(e);log.ap
 else:raise AssertionError('PENDING approval accepted')
 # --- bind_fair verdicts on fixtures (dry run only; nothing is bound)
 with tempfile.TemporaryDirectory() as t:
- tp=pathlib.Path(t);(tp/'workers/r276-v1810-recheck').mkdir(parents=True)
- for verdict,ok in [('PENDING',False),('SUSPICIOUS',False),('UNFAIR',False),('FAIR',True)]:
-  (tp/'workers/r276-v1810-recheck/RESULT.json').write_text(json.dumps({'verdict':verdict,'engine':'fixture'}))
-  r=run(['python3','-B',str(J/'bind_fair_v1810.py'),'--dry-run'],{'JEV_FAIR_ROOT':str(tp)});assert (r.returncode==0)==ok,(verdict,r.stderr,r.stdout);log.append(f'bind_fair --dry-run {verdict}: '+('would bind' if ok else 'refused'))
+ tp=pathlib.Path(t);(tp/'workers/r276-v1810-recheck').mkdir(parents=True);(tp/'workers/r278-delta-fair').mkdir(parents=True)
+ held=json.loads((J/'src/held-keys.json').read_text());good={'ranked_d1027':31,'held':held};bad={'ranked_d1027':26,'held':held+['x']}
+ for verdict,cfg,ok in [('PENDING',None,False),('SUSPICIOUS',None,False),('UNFAIR',None,False),('FAIR',None,True),('FAIR_SUBSET',good,True),('FAIR_SUBSET',bad,False),('FAIR_SUBSET',None,False)]:
+  (tp/'workers/r276-v1810-recheck/RESULT.json').write_text(json.dumps({'fairness':verdict,'engine':'fixture',**({'configuration':cfg} if cfg else {})}))
+  r=run(['python3','-B',str(J/'bind_fair_v1810.py'),'--dry-run'],{'JEV_FAIR_ROOT':str(tp)});assert (r.returncode==0)==ok,(verdict,cfg,r.stderr,r.stdout);log.append(f'bind_fair earlier --dry-run {verdict}{"/config "+("match" if cfg==good else "mismatch") if cfg else ""}: '+('would bind' if ok else 'refused'))
+ for verdict,ok in [('PENDING',False),('SUSPICIOUS',False),('FAIR_SUBSET',False),('FAIR',True)]:
+  (tp/'workers/r278-delta-fair/RESULT.json').write_text(json.dumps({'fairness':verdict,'engine':'fixture','configuration':good}))
+  r=run(['python3','-B',str(J/'bind_fair_v1810.py'),'--which','delta','--dry-run'],{'JEV_FAIR_ROOT':str(tp)});assert (r.returncode==0)==ok,(verdict,r.stderr,r.stdout);log.append(f'bind_fair delta --dry-run {verdict}: '+('would bind' if ok else 'refused'))
 assert before=={'manifest':sha(P),'proof':sha(D/'jevbench-v1.8.10-proof.json'),'approval':sha(J/'inputs/APPROVAL.json')},'a dry run changed the real tree'
 # --- approval negatives (synthetic PASS tree has a FAIR receipt)
 FP=J/'.pass-fp'
@@ -37,11 +41,12 @@ import shutil;shutil.copyfile(PT/'r198/v1810/receipts/FREEZE-SYNTHETIC-DRYRUN.js
 n=0
 mods=[lambda p:p['publication_approval'].update(status='PENDING'),lambda p:p['publication_approval'].update(fresh_baseline='v1.8.8'),lambda p:p['publication_approval'].update(top_five_effect='unchanged'),lambda p:p.update(topfive_diff_sha256='a'*64),
  lambda p:p['publication_approval']['fairness_check'].update(verdict='SUSPICIOUS'),lambda p:p['publication_approval']['go'].update(quote='no'),lambda p:p['publication_approval']['equating_basis'].update(decision='x'),lambda p:p.update(new_rows={'x':1}),lambda p:p['equated_rows'].pop(next(iter(p['equated_rows']))),
- lambda p:p['publication_approval']['top_five_preview'].update(sha256='b'*64),lambda p:p['publication_approval']['fairness_check'].update(path='other.json')]
+ lambda p:p['publication_approval']['top_five_preview'].update(sha256='b'*64),lambda p:p['publication_approval']['fairness_check'].update(path='other.json'),
+ lambda p:p['publication_approval']['fairness_check_delta'].update(verdict='SUSPICIOUS'),lambda p:p['publication_approval']['fairness_check_delta'].update(path='other.json'),lambda p:p['publication_approval'].pop('fairness_check_delta'),lambda p:p.update(new_rows={})]
 for change in mods:
  p=copy.deepcopy(pr);change(p)
  try:check_approval(W,p)
  except (AssertionError,KeyError):n+=1
  else:raise AssertionError('bad approval accepted')
-out={'status':'PASS','real_tree_flip_freeze_seal_bind_refused_while_fairness_pending':True,'bind_fair_refuses_non_fair_verdicts':True,'approval_negatives':n,'non_dry_flip_never_invoked':True,'seal_helper_never_run_for_real':True,'log':log,'real_tree_unchanged':before}
+out={'status':'PASS','real_tree_flip_freeze_seal_bind_refused_while_fairness_pending':True,'real_tree_state':{'earlier_review':pr['publication_approval']['fairness_check']['verdict'],'delta_review':pr['publication_approval']['fairness_check_delta']['verdict']},'bind_fair_refuses_non_fair_verdicts':True,'approval_negatives':n,'non_dry_flip_never_invoked':True,'seal_helper_never_run_for_real':True,'log':log,'real_tree_unchanged':before}
 (R/'HELPERS.json').write_text(json.dumps(out,indent=1,sort_keys=True)+'\n');print('PASS helper dry-runs;',n,'approval negatives; '+'; '.join(log))

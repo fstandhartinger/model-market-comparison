@@ -1,0 +1,29 @@
+{
+ "gemini-decision-1": {
+  "api_subset": "S",
+  "author": "Google",
+  "base_model": "undisclosed (closed, hosted only)",
+  "cost_basis": "Google list price USD 0.10 per 1M input tokens, output free (Gemini API pricing, 11 Nov 2026), x API-reported usage.",
+  "cost_kind": "list",
+  "display": "Gemini Decision 1",
+  "endpoint_condition": "Google Gemini Decisions API v1beta (paid project), one item per request, native probabilities; latency measured from our server in Germany.",
+  "endpoint_kind": "api",
+  "file": "gemini-decision-1.jsonl",
+  "lane": "api",
+  "licence": "proprietary (hosted API)",
+  "measured_on": "2026-11-11",
+  "notes": "PROVISIONAL intake score, not a release.",
+  "open": "no",
+  "price_in_per_m": 0.1,
+  "price_kind": "list",
+  "price_out_per_m": 0.0,
+  "ranked": false,
+  "repo": "https://ai.google.dev/api/decisions",
+  "revision": "gemini-decision-1 (models.get version, 2026-11-11)",
+  "support": {
+   "choice": "native",
+   "noul": "native",
+   "score": "native"
+  }
+ }
+}

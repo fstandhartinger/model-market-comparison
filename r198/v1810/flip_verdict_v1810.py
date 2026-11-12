@@ -46,4 +46,6 @@ if A.dry_run:
                       'manifest_unchanged_on_disk_sha256': sha(MAN)}, indent=1))
 else:
     MAN.write_text(data)
-    print('Review bound; release owner must freeze and seal separately')
+    import subprocess
+    subprocess.run(['python3','-B',str(W/'r198/v1810/add_topics_exception_v1810.py')],check=True,cwd=W)
+    print('Review bound; visible-row topic exception applied; release owner must freeze and seal separately')

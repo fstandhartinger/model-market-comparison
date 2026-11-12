@@ -4,7 +4,8 @@ L=lambda p:json.loads(p.read_text())
 b=L(J/'receipts/topfive-before.json');a=L(J/'receipts/topfive-after.json')
 assert b['restated_by']=='v1.8.9' and a['restated_by']=='v1.8.10'
 pre=json.loads((J.parents[1]/'data/raw/benchmarks/jevbench/v1.8/jevbench-v1.8.9-results.json').read_text())
-assert b['merged_rows']==len(pre['systems'])==340 and a['merged_rows']==len(pre['systems'])
+NEW=json.loads((J/'src/new-keys.json').read_text())
+assert b['merged_rows']==len(pre['systems'])==340 and a['merged_rows']==len(pre['systems'])+len(NEW)
 assert not b['cohort_log'] and not a['cohort_log']
 rows=[]
 for view,groups in a['full_rankings'].items():

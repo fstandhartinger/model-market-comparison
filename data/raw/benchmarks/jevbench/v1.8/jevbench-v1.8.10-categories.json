@@ -176,6 +176,7 @@
   "evalengine-decision-4b": "selfhosted",
   "exaone-4.0-1.2b-jev-v0.3": "selfhosted",
   "fastino-gliner-2-5-decide": "api",
+  "gemini-decision-1": "api",
   "gev-26b-decide": "selfhosted",
   "granite-switch-4.1-30b": "selfhosted",
   "granite-switch-4.1-8b": "selfhosted",
@@ -854,7 +855,7 @@
  "metric": "O1S chance-corrected competence: equal mean across the request types present, clipped to 0–100. Zero means the equal-weight mean across present request types was at or below baseline; negative means are clipped. It does not mean every type scored zero. Choice uses a random-option baseline; Noul uses a fixed 50% accuracy baseline (abstentions count as wrong); Score uses the midpoint-guess error (random-guess fallback when every gold is at the midpoint). Compare models within a category; row pools and supported types can differ.",
  "min_n": 15,
  "provisional": false,
- "results_sha256": "5506f779647df350b0931fa1e2aaa4f8cd7ddd283516140eb9bf7d43aa8cc5ff",
+ "results_sha256": "b2c36232dbb52c81de05ac1ba9f3276d63b536b720588b25cfaad7495d1c4325",
  "results_sha256_note": "All category cells and lanes unchanged; GPU-time cost restatement.",
  "revision": "v1.8.10",
  "rule_note": "Cells of re-scored rows are computed with the frozen category tools under the 10 s rule (a decision over 10 s counts as a wrong answer). Rows without cells are not yet re-scored under the rule or are re-measure pending; no v1.6 cell is shown for a v1.7 row.",
@@ -35355,6 +35356,222 @@
      "operational_failure_n": 0,
      "refusal_n": 0,
      "response_n": 84
+    }
+   }
+  },
+  "gemini-decision-1": {
+   "families": {
+    "composite_gen": {
+     "competence": 71.6,
+     "n": 19
+    },
+    "fairness": {
+     "competence": 98.8,
+     "n": 21
+    },
+    "jaggedness": {
+     "competence": 14.7,
+     "n": 22
+    },
+    "llm_router": {
+     "competence": 73.75,
+     "n": 90
+    },
+    "multilingual": {
+     "competence": 76.05,
+     "n": 921
+    },
+    "negation_pair_gen": {
+     "competence": 91.67,
+     "n": 22
+    },
+    "option_order": {
+     "competence": 85.71,
+     "n": 27
+    },
+    "perturb_pair": {
+     "competence": 80.87,
+     "n": 28
+    },
+    "usecase": {
+     "competence": 72.24,
+     "n": 325
+    }
+   },
+   "languages": {
+    "ar": {
+     "competence": 79.23,
+     "n": 21
+    },
+    "cs": {
+     "competence": 67.51,
+     "n": 37
+    },
+    "da": {
+     "competence": 77.52,
+     "n": 36
+    },
+    "de": {
+     "competence": 71.81,
+     "n": 48
+    },
+    "el": {
+     "competence": 64.16,
+     "n": 28
+    },
+    "en": {
+     "competence": 72.63,
+     "n": 555
+    },
+    "es": {
+     "competence": 81.66,
+     "n": 37
+    },
+    "fi": {
+     "competence": 86.26,
+     "n": 52
+    },
+    "fr": {
+     "competence": 77.78,
+     "n": 32
+    },
+    "hi": {
+     "competence": 73.54,
+     "n": 37
+    },
+    "id": {
+     "competence": 85.37,
+     "n": 41
+    },
+    "it": {
+     "competence": 77.69,
+     "n": 45
+    },
+    "ja": {
+     "competence": 60.13,
+     "n": 44
+    },
+    "ko": {
+     "competence": 61.65,
+     "n": 43
+    },
+    "mixed": {
+     "competence": 93.49,
+     "n": 64
+    },
+    "nl": {
+     "competence": 65.66,
+     "n": 36
+    },
+    "no": {
+     "competence": 79.01,
+     "n": 51
+    },
+    "pl": {
+     "competence": 68.93,
+     "n": 57
+    },
+    "pt": {
+     "competence": 67.48,
+     "n": 47
+    },
+    "sv": {
+     "competence": 67.91,
+     "n": 46
+    },
+    "tr": {
+     "competence": 90.71,
+     "n": 46
+    },
+    "uk": {
+     "competence": 64.09,
+     "n": 56
+    },
+    "zh": {
+     "competence": 75.08,
+     "n": 41
+    }
+   },
+   "usecases": {
+    "advertising": {
+     "competence": 59.67,
+     "n": 48
+    },
+    "code_linting": {
+     "competence": 86.37,
+     "n": 69
+    },
+    "customer_support": {
+     "competence": 81.24,
+     "n": 66
+    },
+    "demand_forecasting": {
+     "competence": 8.74,
+     "n": 66
+    },
+    "ecommerce_marketplaces": {
+     "competence": 73.38,
+     "n": 62
+    },
+    "feature_extraction": {
+     "competence": 68.38,
+     "n": 72
+    },
+    "financial_crime": {
+     "competence": 48.72,
+     "n": 63
+    },
+    "gaming": {
+     "competence": 55.99,
+     "n": 58
+    },
+    "insurance_claims": {
+     "competence": 68.03,
+     "n": 62
+    },
+    "knowledge_graphs": {
+     "competence": 76.31,
+     "n": 67
+    },
+    "lead_generation": {
+     "competence": 91.82,
+     "n": 75
+    },
+    "legal_compliance": {
+     "competence": 79.32,
+     "n": 56
+    },
+    "llm_guardrails": {
+     "competence": 86.54,
+     "n": 71
+    },
+    "model_routing": {
+     "competence": 76.55,
+     "n": 148
+    },
+    "moderation_trust_safety": {
+     "competence": 92.98,
+     "n": 59
+    },
+    "other": {
+     "competence": 74.11,
+     "n": 32
+    },
+    "recruiting": {
+     "competence": 88.36,
+     "n": 65
+    },
+    "risk_assessment": {
+     "competence": 68.71,
+     "n": 48
+    },
+    "scientific_discovery": {
+     "competence": 60.03,
+     "n": 42
+    },
+    "search_retrieval": {
+     "competence": 94.22,
+     "n": 67
     }
    }
   },
