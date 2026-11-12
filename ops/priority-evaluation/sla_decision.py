@@ -207,7 +207,7 @@ def _finish(state: dict, path: Path, decision: str) -> None:
         try:
             _attach(state, [])
             state["buttons_removed"] = True
-        except ValueError:
+        except Exception:  # noqa: BLE001 - incl. telegram_config errors: a failed step, retried and bounded
             pass
     if not state.get("reply_action_resolved"):
         state["reply_action_resolved"] = ra.close_durable_reply_action(state)
@@ -285,8 +285,7 @@ def _unapplied_refund_tap(state: dict, now: float) -> dict | None:
         if probe.get("decision") == "refund":
             return {"update_id": probe.get("update_id"), "received": probe.get("decided_at")}
         return None
-    if not probe.get("late_attached"):
-        return None  # the late Refund button was never shown; the original three were removed at the decision
+    # With or without the late keyboard: if its edit failed, the original Refund button (same key) is still shown.
     apply_late_refund(probe, ra.callback_rows((probe["refund_key"],), probe["chat_id"]), now)
     if probe.get("late_refund"):
         return {"update_id": probe.get("late_update_id"), "received": probe.get("late_decided_at")}
@@ -320,12 +319,49 @@ def close_stray(root: Path, rid: str, reason: str, now: float) -> str | None:
             return None
         tap = _unapplied_refund_tap(state, now)
         key = "refund_tap_unapplied" if tap else reason
-        state.update(stray_closed=key, stray_closed_at=int(now), late_closed=True)
+        state.update(stray_closed=key, stray_reason=reason, stray_closed_at=int(now), late_closed=True)
         if tap:
-            state["stray_refund_tap"] = tap
+            state["stray_refund_tap"] = tap  # pending_handoffs() keeps asking the caller to post it until marked
         ra.atomic(path, state)
         _finish(state, path, key)
         return "refund_tap_unapplied" if tap else "closed"
+
+
+REFUSED_WHY = ("hold", "delivered", "changed")
+
+
+def note_refund_refused(root: Path, rid: str, why: str, now: float) -> None:
+    """The caller could not write a recorded 40 h Refund tap to the row (delivery, a hold or a refusal got there
+    first). Kept on the card so the owner handoff survives a failed board post. Never changes the decision."""
+    if why not in REFUSED_WHY:
+        raise ValueError("unknown refusal class")
+    path = root / f"{uuid.UUID(rid)}.json"
+    with path.with_suffix(".lock").open("a+") as lock:
+        fcntl.flock(lock, fcntl.LOCK_EX)
+        state = json.loads(path.read_text())
+        if not state.get("refund_refused"):
+            state["refund_refused"] = {"why": why, "at": int(now)}
+            ra.atomic(path, state)
+
+
+def pending_handoffs(state: dict) -> list[str]:
+    """Owner handoffs recorded on this card and not yet accepted by the board: refund_tap_unapplied, refund_refused."""
+    posted = state.get("handoffs_posted") or {}
+    kinds = []
+    if state.get("stray_refund_tap") and not posted.get("refund_tap_unapplied"):
+        kinds.append("refund_tap_unapplied")
+    if state.get("refund_refused") and not posted.get("refund_refused"):
+        kinds.append("refund_refused")
+    return kinds
+
+
+def mark_handoff_posted(root: Path, rid: str, kind: str, now: float) -> None:
+    path = root / f"{uuid.UUID(rid)}.json"
+    with path.with_suffix(".lock").open("a+") as lock:
+        fcntl.flock(lock, fcntl.LOCK_EX)
+        state = json.loads(path.read_text())
+        state.setdefault("handoffs_posted", {})[kind] = int(now)
+        ra.atomic(path, state)
 
 
 def apply_late_refund(state: dict, rows, now: float) -> None:
@@ -392,6 +428,8 @@ def advance(row: dict, root: Path, effects, now: float, deadline: str) -> str:
         fcntl.flock(lock, fcntl.LOCK_EX)
         if path.exists():
             saved = json.loads(path.read_text())
+            if saved.get("stray_closed"):
+                return "closed"  # closed by close_stray: it told Florian nothing was decided here, so it stays so
             recorded = saved.get("decision")
             if recorded in LATE_KEEP and saved.get("late_refund"):
                 if not effects.dry_run and live_runtime():
