@@ -72,6 +72,7 @@ test('Gemini Decision 1 (Google, hosted API) joins the 27 Oct draw: measured = p
  assert.equal(s.cost.kind,'tariff');assert.equal(s.cost.usd_per_1000,0.03825775688381464);assert.equal(s.cost.common_basis.usd_per_1000_all_items,0.06472946666666668);assert.equal(s.cost.common_basis.n_items,1489);
  assert.match(s.cost.basis,/^Google list price USD 0\.10 per 1M input tokens, output free/);assert.doesNotMatch(JSON.stringify(s),/#\d{4,}|private|withheld|priority/i);
  assert.ok(s.listing_note.endsWith(V1810_GEMINI_SELF_REPORT));assert.ok(s.disclosure.includes(V1810_GEMINI_SELF_REPORT));assert.ok(s.disclosure.includes('ImageJevBench: requested, no date.'));assert.doesNotMatch(s.disclosure,/plain accuracy/i);
+ assert.equal(s.self_reported,V1810_GEMINI_SELF_REPORT);assert.deepEqual(s.noul_decisive,{acc_among_decisive:0.9807073954983923,decisive:311,decisive_rate:0.8337801608579088,n:375,supported:true,valid:373});
  assert.match(s.endpoint_condition,/request-pinned/);assert.match(s.disclosure,/3 of 1,500 requests failed in transport/);assert.equal(s.model_pin,null);
  for(const m of ['A','B','C','capability'])assert.equal(s.ranks[m],a.board[m].order.indexOf('gemini-decision-1')+1);
  assert.deepEqual(Object.keys(proof.new_rows),['gemini-decision-1']);assert.equal(proof.pricing_module_sha256,V1810_PRICING.new);assert.equal(load('v1.8.9','proof').pricing_module_sha256,V1810_PRICING.old);
