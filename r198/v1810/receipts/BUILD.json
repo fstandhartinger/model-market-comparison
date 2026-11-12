@@ -54,7 +54,7 @@
   },
   "categories": {
    "path": "data/raw/benchmarks/jevbench/v1.8/jevbench-v1.8.10-categories.json",
-   "sha256": "d7528b14c4b27aeb4500cb9747cbd59296b5cacc38e8b8101a20067fca2f1ba1"
+   "sha256": "3ec5ddbf6771a4509d995c39fb57d737afe784a08949a3cb0cb216de32061b50"
   },
   "history": {
    "path": "data/raw/benchmarks/jevbench/v1.8/jevbench-v1.8.10-history.json",
@@ -66,11 +66,11 @@
   },
   "proof": {
    "path": "data/raw/benchmarks/jevbench/v1.8/jevbench-v1.8.10-proof.json",
-   "sha256": "8069e3882221c2cb1643c12ecb1f1dc81d4bbd498154a67ba144e99e6696c525"
+   "sha256": "aae46a1409cc8c717de4fae74fa79915fc38befa1088143cfaaa518521b5b9f1"
   },
   "results": {
    "path": "data/raw/benchmarks/jevbench/v1.8/jevbench-v1.8.10-results.json",
-   "sha256": "5506f779647df350b0931fa1e2aaa4f8cd7ddd283516140eb9bf7d43aa8cc5ff"
+   "sha256": "b2c36232dbb52c81de05ac1ba9f3276d63b536b720588b25cfaad7495d1c4325"
   }
  },
  "held_rows": [
@@ -79,7 +79,18 @@
   "visionjev-1.0.0-27b",
   "wemm-jev"
  ],
- "n_ranked": 314,
+ "n_ranked": 315,
+ "new_row_ranks": {
+  "gemini-decision-1": {
+   "A": 86,
+   "B": 65,
+   "C": 67,
+   "capability": 52
+  }
+ },
+ "new_rows": [
+  "gemini-decision-1"
+ ],
  "rank_shifted_rows": 283,
  "ranked_rows": [
   "allec-oavg",
@@ -115,7 +126,7 @@
   "zils-ai-z3-mini-soup-preview"
  ],
  "revision": "v1.8.10",
- "roster_count": 340,
+ "roster_count": 341,
  "unranked_rows": {
   "decisionnode-flash-0.9.1-rc1": "unpriced: no cost axis, no composite",
   "decisionnode-main-0.9.1-rc1": "unpriced: no cost axis, no composite",

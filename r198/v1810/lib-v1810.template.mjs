@@ -5,6 +5,9 @@
 // and four rows whose top-five places lie within the uncertainty of the draw shift (or depend on the draw's item mix) are held unranked (FAIR_SUBSET).
 // Every other row is unchanged except rank/ranks (and the display name of the one row its vendor renamed), which move only because the newly ranked rows join the order lists (removing them
 // gives back v1.8.9's lists exactly). Independent review AND a bound FAIR fairness verdict gate every public reader.
+// Combined candidate: ONE added hosted-API row on the same draw (Gemini Decision 1, Google), shown measured + the draw's offset and ranked like the
+// draw's ranked rows; the frozen pricing module is re-frozen 2f52370f -> 1b3c52fb (adds only its key and subq-snap-1.2; no carried pricing path changes).
+// A second fairness verdict (the delta review of the added row) must also be bound before any public reader shows the release.
 import {createHash} from 'node:crypto';
 import {readFile} from 'node:fs/promises';
 import {isDeepStrictEqual as equal} from 'node:util';
@@ -22,6 +25,10 @@ export const V1810_UNRANKED=/*UNRANKED*/;
 export const V1810_HELD=/*HELD*/;
 export const V1810_RENAMES=/*RENAMES*/;
 export const V1810_SCORERS=/*SCORERS*/;
+export const V1810_NEW_ROWS=/*NEWROWS*/;
+export const V1810_NEW_ROW_BOUNDS=/*NEWBOUNDS*/;
+export const V1810_NEW_KEYS=Object.keys(V1810_NEW_ROWS).sort();
+export const V1810_PRICING=Object.freeze({old:'2f52370fe1dba73d75a770a386df350cc76a0898304aeba9e29c91f6e4d3738b',new:'1b3c52fbeb5543c44c5d2c093002c60b469e4356a7f96116fc4228a345bd10b2'});
 export const V1810_DRAW='v1.6-regular-20261027';
 export const V1810_OFFSET=Object.freeze({I:-2.884891186577587,C:-1.8542447151797177});
 export const V1810_EQUATED_KEYS=Object.keys(V1810_EQUATED_ROWS).sort();
@@ -33,10 +40,13 @@ export const V1810_H2O_HELD_TEXT='Measured on the 27 Oct 2026 draw and shown on 
 export const V1810_BOUNDARY={karpo_decision_31b:'Its #5 place on Composite B among all systems is within the uncertainty of the draw shift.','arcbright-elf-1-12b-r2':'Its #4 place on the open-weights Composite A and C lists is within the uncertainty of the draw shift.'};
 export const V1810_META_KEY='metadecision-31b-rain';
 export const V1810_META_NOTE='On this draw it scores 13.3 points higher on the sealed items than on the 300 public items, more than any row measured on the reference draw; its #2 Capability places hold even if that gap is set to the reference-draw median.';
-export const V1810_HIST='Equated the 27 Oct regular draw with four strong anchor systems (Intelligence -2.9, Calibration -1.9 points) and ranked 31 of its rows; four stay unranked because their top-five places lie within the uncertainty of the shift; renamed AutoTrust\'s JEV-27B to AutoTrust-Decider-Pro-27B at the vendor\'s request.';
+export const V1810_HIST='Equated the 27 Oct regular draw with four strong anchor systems (Intelligence -2.9, Calibration -1.9 points) and ranked 31 of its rows; four stay unranked because their top-five places lie within the uncertainty of the shift; renamed AutoTrust\'s JEV-27B to AutoTrust-Decider-Pro-27B at the vendor\'s request; added Gemini Decision 1 (Google, hosted API) on the same draw.';
+export const V1810_GEMINI_SELF_REPORT='Google reports 92.2 % (self-reported; accuracy on the 231 public v1.2 items, vendor-run; none of those items is in this draw). Our accuracy on all 1,500 items of the 27 Oct draw: 86.3 % (a yes/no answer between 20 % and 80 % counts as unsure, i.e. wrong).';
+export const V1810_NEW_NOTES={'gemini-decision-1':V1810_GEMINI_SELF_REPORT};
 export const V1810_NO_PRICE_NOTE=/*NOPRICE*/;
 export const V1810_APPROVAL_STATUS='GO (fair top-five change, Florian rule 25 Oct 2026; strong-anchor equating of the 27 Oct draw)';
 export const V1810_FAIR_PATH='workers/r276-v1810-recheck/RESULT.json';
+export const V1810_FAIR_DELTA_PATH='workers/r278-delta-fair/RESULT.json';
 const H2O='h2o-lightning-4b-v1.4.1',KARPO='karpo_decision_31b';
 const REFERENCE_G_MED=2.573387642438244;
 const EQ_FIELDS=['axes','scores','views','jevbench_score','capability','published_scores','ranked','rank','ranks','listing','not_ranked_because','listing_note','disclosure','underlying','draw'];
@@ -73,9 +83,9 @@ export function checkEquatedRow(s,published,options){
  if(s.draw.ci_basis!=='measured on the draw before equating')fail('interval basis label '+s.key);
  same(s.draw.offset,{...V1810_OFFSET},'draw offset '+s.key);same(s.draw.offset_ci95,V1810_EQUATING.offset_ci95,'draw offset interval '+s.key);
  const priced=Object.keys(options).every(o=>s.scores[o]!=null);
- if(V1810_RANKED_KEYS.includes(s.key)){
+ if(V1810_RANKED_KEYS.includes(s.key)||V1810_NEW_KEYS.includes(s.key)){
   if(!priced||s.ranked!==true||s.listing!=='ranked'||'not_ranked_because' in s||V1810_HELD.includes(s.key))fail('equated row ranked '+s.key);
-  if(s.listing_note!==[V1810_NOTE,V1810_BOUNDARY[s.key],s.key===V1810_META_KEY?V1810_META_NOTE:null].filter(Boolean).join(' '))fail('public note '+s.key);
+  if(s.listing_note!==[V1810_NOTE,V1810_BOUNDARY[s.key],s.key===V1810_META_KEY?V1810_META_NOTE:null,V1810_NEW_NOTES[s.key]].filter(Boolean).join(' '))fail('public note '+s.key);
  }else if(V1810_HELD.includes(s.key)){
   if(!priced||s.ranked!==false||s.listing!=='unranked'||s.rank!==null||'listing_note' in s||s.not_ranked_because!==(s.key===H2O?V1810_H2O_HELD_TEXT:V1810_HELD_TEXT)||!(s.key in V1810_UNRANKED))fail('held row stays unranked '+s.key);
   same(s.ranks,{A:null,B:null,C:null,capability:null},'null ranks '+s.key);
@@ -101,8 +111,9 @@ export function validateJevbenchV1810Bundle({manifest,artifact,categories,carry,
  for(const f of ['method','G_med','options','noul_method','protocol','types','tier_weights','headline'])same(artifact[f],previous.artifact[f],'unchanged '+f);
  const rows=artifact.systems,by=new Map(rows.map(s=>[s.key,s]));
  if(by.size!==rows.length)fail('duplicate key');
- same([...by.keys()].sort(),previous.artifact.systems.map(s=>s.key).sort(),'exact roster');
- if(artifact.roster_count!==rows.length||artifact.n_ranked!==rows.filter(s=>s.ranked).length||artifact.n_ranked!==previous.artifact.n_ranked+V1810_RANKED_KEYS.length)fail('counts');
+ same([...by.keys()].sort(),[...previous.artifact.systems.map(s=>s.key),...V1810_NEW_KEYS].sort(),'exact roster');
+ if(V1810_NEW_KEYS.some(k=>previous.artifact.systems.some(s=>s.key===k)))fail('added row already carried');
+ if(artifact.roster_count!==rows.length||artifact.n_ranked!==rows.filter(s=>s.ranked).length||artifact.n_ranked!==previous.artifact.n_ranked+V1810_RANKED_KEYS.length+V1810_NEW_KEYS.length)fail('counts');
  same(previous.artifact.systems.filter(s=>s.draw?.id===V1810_DRAW).map(s=>s.key).sort(),V1810_EQUATED_KEYS,'rows of the equated draw');
  same([...V1810_RANKED_KEYS,...Object.keys(V1810_UNRANKED)].sort(),V1810_EQUATED_KEYS,'ranked + unranked partition');
  if(!V1810_HELD.every(k=>k in V1810_UNRANKED)||V1810_HELD.length!==4||V1810_RANKED_KEYS.length!==31)fail('31 ranked, 4 held');
@@ -123,20 +134,40 @@ export function validateJevbenchV1810Bundle({manifest,artifact,categories,carry,
   same(categories.systems[p.key],previous.categories.systems[p.key],'carried cells '+p.key);
   same(categories.lanes[p.key],previous.categories.lanes[p.key],'carried lane '+p.key);
  }
+ for(const k of V1810_NEW_KEYS){
+  const s=by.get(k);same(s,V1810_NEW_ROWS[k],'added row '+k);
+  checkEquatedRow(s,s.published_scores,artifact.options);
+  if(s.api_flag!==true||s.endpoint_kind!=='api'||s.speed.adjustment!=='none (API)'||s.model_pin!==null||s.repo!==null||s.new_in!=='v1.8.10'||s.measured_in!=='v1.8.10'||s.underlying!==s.disclosure)fail('hosted API identity '+k);
+  if(s.draw.release!=='v1.8.10'||s.v16.n_items!==1500||s.status.rows!==1500||s.v16.g_med_used!==REFERENCE_G_MED||s.decision_limit.limit_s!==10||s.decision_limit.treatment!=='share'||s.v16.equating_offset!==null)fail('scoring method '+k);
+  if(s.cost.kind!=='tariff'||s.cost.common_basis?.n_items!==1489||s.cost.common_basis.rule!=='common'||!Number.isFinite(s.cost.usd_per_1000))fail('common cost basis '+k);
+  const p=proof.new_rows?.[k];if(!p)fail('added row proof '+k);
+  same(p.published,s.published_scores,'proof published '+k);same(p.equated,{axes:s.axes,scores:s.scores,capability:s.capability},'proof equated '+k);same(p.ranks,s.ranks,'proof ranks '+k);
+  for(const f of ['composite_ci95','decision_limit'])same(p[f],s[f],'proof '+f+' '+k);
+  if(p.cost.usd_per_1000!==s.cost.usd_per_1000||p.cost.common_basis.usd_per_1000_all_items!==s.cost.common_basis.usd_per_1000_all_items||p.cost.pricing_module_sha256!==V1810_PRICING.new)fail('added row cost binding '+k);
+  if(Math.abs(1000*p.cost.input_tokens_all*p.cost.rate_in_usd_per_m/1e6/1500-p.cost.common_basis.usd_per_1000_all_items)>1e-12||p.cost.output_tokens_all!==0||p.cost.rate_out_usd_per_m!==0)fail('added row token cost arithmetic '+k);
+  same(p.category_pool_bounds,V1810_NEW_ROW_BOUNDS[k],'pool bounds '+k);
+  if(categories.systems[k]?.topics!==undefined||categories.lanes[k]!=='api')fail('added row cells/lane '+k);
+  for(const dim of ['families','languages','usecases']){
+   const cells=categories.systems[k]?.[dim];if(!cells||!Object.keys(cells).length)fail('missing cells '+k+' '+dim);
+   for(const [c,x] of Object.entries(cells))if(!Number.isInteger(x.n)||x.n<1||x.n>1500||!Number.isFinite(x.competence)||(dim!=='families'&&x.n>(V1810_NEW_ROW_BOUNDS[k][dim][c]??0)))fail('cell bounds '+k);
+  }
+  const j=JSON.stringify(omit(s,['published_scores']));if(INTERNAL.test(j)||INTERNAL_CS.test(j)||STALE.test(j))fail('internal text '+k);
+ }
  if(by.get(KARPO)&&V1810_EQUATED_KEYS.includes(KARPO))validateV189PublicText(by.get(KARPO));
  for(const k of V1810_EQUATED_KEYS){const j=JSON.stringify(omit(by.get(k),['published_scores']));if(INTERNAL.test(j)||INTERNAL_CS.test(j))fail('internal text '+k);}
  // Ranks: every order list is sorted, holds exactly the ranked rows, gives each its rank, and minus the newly ranked rows equals v1.8.9's.
  for(const m of ['A','B','C','capability']){
   const ord=artifact.board[m].order;
   same([...ord].sort(),rows.filter(s=>s.ranked).map(s=>s.key).sort(),'order membership '+m);
-  same(ord.filter(k=>!V1810_RANKED_KEYS.includes(k)),previous.artifact.board[m].order,'order lists without the newly ranked rows '+m);
+  same(ord.filter(k=>!V1810_RANKED_KEYS.includes(k)&&!V1810_NEW_KEYS.includes(k)),previous.artifact.board[m].order,'order lists without the newly ranked rows '+m);
   const val=k=>m==='capability'?by.get(k).capability:by.get(k).scores[m];
   ord.forEach((k,i)=>{if(by.get(k).ranks[m]!==i+1||(m==='A'&&by.get(k).rank!==i+1))fail('rank '+k);if(i&&val(ord[i-1])<val(k))fail('sort '+m)});
  }
  same(artifact.board,Object.fromEntries(Object.entries(artifact.board).map(([m,b])=>[m,{...previous.artifact.board[m],order:b.order}])),'board metadata');
  same(carry,previous.carry,'dated carry');
- same(Object.keys(categories.systems).sort(),Object.keys(previous.categories.systems).sort(),'category roster');
- same(omit(categories,['revision','results_sha256','source_results_sha256']),omit(previous.categories,['revision','results_sha256','source_results_sha256']),'cells unchanged');
+ same(Object.keys(categories.systems).sort(),[...Object.keys(previous.categories.systems),...V1810_NEW_KEYS].sort(),'category roster');
+ const carriedCells=c=>({...omit(c,['revision','results_sha256','source_results_sha256','systems','lanes']),systems:omit(c.systems,V1810_NEW_KEYS),lanes:omit(c.lanes,V1810_NEW_KEYS)});
+ same(carriedCells(categories),carriedCells(previous.categories),'cells unchanged');
  if(categories.revision!=='v1.8.10'||categories.results_sha256!==manifest.files.results.sha256)fail('category binding');
  if(proof.revision!=='v1.8.10'||proof.carried_rows!==previous.artifact.systems.length)fail('proof identity');
  same(proof.equating,V1810_EQUATING,'equating binding');
@@ -149,14 +180,19 @@ export function validateJevbenchV1810Bundle({manifest,artifact,categories,carry,
  same(proof.ranked_rows,[...V1810_RANKED_KEYS].sort(),'ranked rows');same(proof.unranked_rows,V1810_UNRANKED,'unranked rows');
  same(artifact.addendum.equated_keys,V1810_EQUATED_KEYS,'addendum equated keys');
  same(artifact.addendum.ranked_keys,[...V1810_RANKED_KEYS].sort(),'addendum ranked keys');
- same(artifact.addendum.new_keys,[],'addendum keys');
+ same(artifact.addendum.new_keys,V1810_NEW_KEYS,'addendum keys');
  same(artifact.addendum.same_draw,V1810_DRAW,'addendum draw');
  if(!hex(proof.source_inputs?.equating_sha256)||proof.source_inputs.equating_sha256!==V1810_EQUATING.files.equating.sha256||artifact.source_sha256!==proof.source_inputs.equating_sha256)fail('input provenance');
  same(proof.predecessor,manifest.predecessor,'proof predecessor');
- same(proof.pricing_module_sha256,previous.proof.pricing_module_sha256,'pricing pin');
+ // Pricing re-freeze: the predecessor pinned the old module, this release the new one; the two differ only by the two added launch list-price keys.
+ if(previous.proof.pricing_module_sha256!==V1810_PRICING.old||proof.pricing_module_sha256!==V1810_PRICING.new)fail('pricing pin');
+ const rf=proof.pricing_refreeze;
+ if(rf?.old_sha256!==V1810_PRICING.old||rf.new_sha256!==V1810_PRICING.new||!hex(rf.equivalence_receipt_sha256)||!hex(rf.install_receipt_sha256))fail('pricing re-freeze binding');
+ same(rf.added_launch_list_price_keys,['gemini-decision-1','subq-snap-1.2'],'re-freeze keys');same(rf.carried_keys_whose_pricing_path_changes,[],'carried pricing paths');
  same(proof.scorers,V1810_SCORERS,'scorer pins (v1.8.9 tools, byte-identical)');
  same(proof.scorers,previous.proof.scorers,'scorer pins equal the predecessor');
- for(const f of ['new_rows','remeasured_rows','repriced_rows','exceptions'])same(proof[f],{},'no '+f);
+ same(Object.keys(proof.new_rows??{}).sort(),V1810_NEW_KEYS,'added row proof roster');
+ for(const f of ['remeasured_rows','repriced_rows','exceptions'])same(proof[f],{},'no '+f);
  const a=proof.publication_approval;
  if(a?.fresh_baseline!=='v1.8.9'||a.button_tap!==false||a.top_five_preview?.sha256!==proof.topfive_diff_sha256||!hex(proof.topfive_diff_sha256)||!a.top_five_preview?.path)fail('top-five preview binding');
  if(a.equating_basis?.decision!=='d1027-equated-strong4-57394')fail('release basis');
@@ -164,6 +200,9 @@ export function validateJevbenchV1810Bundle({manifest,artifact,categories,carry,
  const fair=a.fairness_check;
  if(fair?.path!==V1810_FAIR_PATH||(fair.verdict!=='FAIR'&&!(candidate&&fair.verdict==='PENDING')))fail('bound FAIR verdict required');
  if(fair.verdict==='FAIR'&&!hex(fair.sha256))fail('FAIR receipt pin');
+ const delta=a.fairness_check_delta;
+ if(delta?.path!==V1810_FAIR_DELTA_PATH||(delta.verdict!=='FAIR'&&!(candidate&&delta.verdict==='PENDING')))fail('bound FAIR delta verdict required (added row)');
+ if(delta.verdict==='FAIR'&&!hex(delta.sha256))fail('FAIR delta receipt pin');
  return true;
 }
 async function load(p,root){const bytes=await readFile(`${root}/${p}`);return {bytes,value:JSON.parse(bytes),sha256:hash(bytes)};}
@@ -194,7 +233,7 @@ export async function readJevbenchV1810ForBoard(root=process.cwd()){
 export async function hasPublishedJevbenchV1810Release(root=process.cwd(),log=console.error){try{return Boolean(await readJevbenchV1810ForBoard(root));}catch{log('JevBench v1.8.10 navigation omitted: publication validation failed');return false;}}
 export function v1810BoardInput(release){return {artifact:release.artifact,categories:release.categories};}
 export function withV1810Addendum(chain,release){
- const bounds={...apiFullAddendumCategoryBounds(chain.categories)};
+ const bounds={...apiFullAddendumCategoryBounds(chain.categories),...structuredClone(V1810_NEW_ROW_BOUNDS)};
  const update=a=>({...a,systems:release.artifact.systems,board:release.artifact.board,n_ranked:release.artifact.n_ranked,roster_count:release.artifact.roster_count,measurement_notes:release.artifact.measurement_notes,restated_by:'v1.8.10',v1810_sha256:release.sha256});
  const categories=withRowPoolCategoryRows({...release.categories,revision:chain.published.revision,restated_by:'v1.8.10',systems:{}},release.categories.systems,bounds);
  return {...chain,published:update(chain.published),merged:update(chain.merged),categories,publishedCarry:release.carry};

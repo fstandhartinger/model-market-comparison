@@ -59,7 +59,9 @@
   ],
   "link_fixed_keys": [],
   "method_change": false,
-  "new_keys": [],
+  "new_keys": [
+   "gemini-decision-1"
+  ],
   "predecessor": "v1.8.9",
   "ranked_keys": [
    "allec-oavg",
@@ -339,6 +341,7 @@
     "jev-1.13.0",
     "jeffan-31b-1710",
     "kev-27b",
+    "gemini-decision-1",
     "jev-omni",
     "celeris-1-decision",
     "gev-26b-decide",
@@ -638,6 +641,7 @@
     "knowline-35b-a3b-gen1.5",
     "metask_jev_rain_31b_trained_v3",
     "metask_jev_rain_12b_trained",
+    "gemini-decision-1",
     "liquid-d1",
     "phillylabs_philly_decider_v2",
     "piccolo-9b",
@@ -960,6 +964,7 @@
     "jev-1.13.0",
     "jeffan-31b-1710",
     "kev-27b",
+    "gemini-decision-1",
     "launchables-myles-g-12b",
     "winnow-12b",
     "zils-ai-z3-mini-soup-preview",
@@ -1263,6 +1268,7 @@
     "launchables-myles-g-31b",
     "startlux-decision-v1.1-27b-autothink",
     "sage-1.3.0",
+    "gemini-decision-1",
     "spx-cd-pro",
     "amos-1-large",
     "bobcat-1.3",
@@ -1535,7 +1541,7 @@
   "g_med_fixed": true
  },
  "headline": "A",
- "label": "JevBench v1.8.10: the 27 Oct regular draw equated with four strong anchors and ranked",
+ "label": "JevBench v1.8.10: the 27 Oct regular draw equated with four strong anchors and ranked; Gemini Decision 1 added",
  "measurement_notes": [
   "Method v1.7: from v1.7.0 a decision that takes longer than 10 seconds (the measured time, strictly more than 10.000 s) counts as a wrong answer and as zero calibration for that item (each item type's calibration is multiplied by the share of its decisions answered within 10 s). Every row is re-scored from its recorded per-decision times: Intelligence, Calibration, Capability, the composites and their intervals are recomputed with the same frozen scorer plus the rule; the Speed axis now uses all decisions given (it replaces the 124-item subset of v1.6). Cost, tokens, the draws, the raw outputs and the field median are unchanged; no model was run again for the re-scored rows. Every re-scored row shows its v1.6 values next to the new ones.",
   "Time limit on measured time: the limit uses the measured latency, not the displayed estimate (x2 + 0.15 s for self-hosted rows), so a self-hosted row can show an adjusted p95 above 10 s with no decision over the limit. In total 1,455 decisions across 59 rows are over the limit.",
@@ -1585,7 +1591,7 @@
   "One more row on the 27 Oct regular draw (NVIDIA Nemotron 3.5 Super VL, hosted, reasoning off), shown unranked until the draw is equated to the reference scale.",
   "One more row on the 27 Oct regular draw (SD-JEV-4B-v12.1.0, an author-hosted API), shown unranked until the draw is equated to the reference scale.",
   "One more row on the 27 Oct regular draw (Karpo-Decision-31B, self-hosted), shown unranked until the draw is equated to the reference scale.",
-  "Equated the 27 Oct regular draw with four strong anchor systems (Intelligence -2.9, Calibration -1.9 points) and ranked 31 of its rows; four stay unranked because their top-five places lie within the uncertainty of the shift; renamed AutoTrust's JEV-27B to AutoTrust-Decider-Pro-27B at the vendor's request. Four strong anchor systems answered both the reference draw and the 27 Oct draw; the offset is the median over anchors of (reference minus new draw): Intelligence -2.88 (95% CI -5.85 to +1.06), Calibration -1.85 (95% CI -5.45 to +1.97). Every row on that draw is shown as published plus the offset; Capability and the composites follow from the equated axes; confidence intervals are the ones measured on the draw before equating. 31 of its 37 rows are now ranked; two rows have no price and stay unranked, and four rows are held unranked. Every other score is unchanged and other rows move down only where a newly ranked row now sits above them. The anchors are scored without the 10-second rule on both draws, so the shift measures only the difference between the draws; with the rule applied on both draws it would be Intelligence -3.3, Calibration -2.4. Places of four rows from that draw are within the shift's uncertainty and they stay unranked until more anchor runs narrow it."
+  "Equated the 27 Oct regular draw with four strong anchor systems (Intelligence -2.9, Calibration -1.9 points) and ranked 31 of its rows; four stay unranked because their top-five places lie within the uncertainty of the shift; renamed AutoTrust's JEV-27B to AutoTrust-Decider-Pro-27B at the vendor's request; added Gemini Decision 1 (Google, hosted API) on the same draw. Four strong anchor systems answered both the reference draw and the 27 Oct draw; the offset is the median over anchors of (reference minus new draw): Intelligence -2.88 (95% CI -5.85 to +1.06), Calibration -1.85 (95% CI -5.45 to +1.97). Every row on that draw is shown as published plus the offset; Capability and the composites follow from the equated axes; confidence intervals are the ones measured on the draw before equating. 31 of its 37 rows are now ranked; two rows have no price and stay unranked, and four rows are held unranked. Every other score is unchanged and other rows move down only where a newly ranked row now sits above them. The anchors are scored without the 10-second rule on both draws, so the shift measures only the difference between the draws; with the rule applied on both draws it would be Intelligence -3.3, Calibration -2.4. Places of four rows from that draw are within the shift's uncertainty and they stay unranked until more anchor runs narrow it. Gemini Decision 1 (Google, hosted API) was measured on the same draw on 11 Nov 2026 (all 1,500 items, one per request, Google's native probabilities) and is shown and ranked the same way."
  ],
  "method": {
   "decision_limit_s": 10,
@@ -1593,7 +1599,7 @@
   "rule": "latency_s > 10.000 s -> failed",
   "treatment": "share"
  },
- "n_ranked": 314,
+ "n_ranked": 315,
  "not_measured": [
   {
    "addendum": null,
@@ -1950,7 +1956,7 @@
    "summary": "Rotating item draw (1,200 sealed + 300 public); hosted APIs on API subsets equated to the self-hosted scale; /jev-models/v1.6.0 stays available unchanged."
   }
  ],
- "roster_count": 340,
+ "roster_count": 341,
  "run_kind": "same-draw-addendum",
  "sample": {
   "open": 300,
@@ -1959,7 +1965,7 @@
   "total": 1500
  },
  "sealed_share_of_intelligence": 0.5,
- "source_note": "Equated the 27 Oct regular draw with four strong anchor systems (Intelligence -2.9, Calibration -1.9 points) and ranked 31 of its rows; four stay unranked because their top-five places lie within the uncertainty of the shift; renamed AutoTrust's JEV-27B to AutoTrust-Decider-Pro-27B at the vendor's request.",
+ "source_note": "Equated the 27 Oct regular draw with four strong anchor systems (Intelligence -2.9, Calibration -1.9 points) and ranked 31 of its rows; four stay unranked because their top-five places lie within the uncertainty of the shift; renamed AutoTrust's JEV-27B to AutoTrust-Decider-Pro-27B at the vendor's request; added Gemini Decision 1 (Google, hosted API) on the same draw.",
  "source_sha256": "7888a0803466daac872f46809b12015af6c3686109276ab89e1028c206103146",
  "status": "published",
  "systems": [
@@ -2171,12 +2177,12 @@
    },
    "paid_fast_lane": false,
    "planned_weight_denominator": 1,
-   "rank": 139,
+   "rank": 140,
    "ranked": true,
    "ranks": {
-    "A": 139,
-    "B": 133,
-    "C": 118,
+    "A": 140,
+    "B": 134,
+    "C": 119,
     "capability": 33
    },
    "repo": "https://huggingface.co/andyzhang232/ajev-gemma4-31b-lm6q",
@@ -3508,13 +3514,13 @@
    },
    "paid_fast_lane": false,
    "planned_weight_denominator": 1,
-   "rank": 159,
+   "rank": 160,
    "ranked": true,
    "ranks": {
-    "A": 159,
-    "B": 144,
-    "C": 132,
-    "capability": 66
+    "A": 160,
+    "B": 145,
+    "C": 133,
+    "capability": 67
    },
    "repo": "https://github.com/ALERIA-ML/aleria-judge",
    "scores": {
@@ -6101,13 +6107,13 @@
    },
    "paid_fast_lane": false,
    "planned_weight_denominator": 1,
-   "rank": 129,
+   "rank": 130,
    "ranked": true,
    "ranks": {
-    "A": 129,
-    "B": 130,
-    "C": 134,
-    "capability": 140
+    "A": 130,
+    "B": 131,
+    "C": 135,
+    "capability": 141
    },
    "repo": "https://huggingface.co/amazon/strands-decider-26B-A4B-gemma4-v1-2610",
    "scores": {
@@ -7466,13 +7472,13 @@
      "C": 12.090599875889447
     }
    },
-   "rank": 240,
+   "rank": 241,
    "ranked": true,
    "ranks": {
-    "A": 240,
-    "B": 241,
-    "C": 240,
-    "capability": 233
+    "A": 241,
+    "B": 242,
+    "C": 241,
+    "capability": 234
    },
    "repo": "https://huggingface.co/MLukauskas/amber-4b",
    "scores": {
@@ -8763,13 +8769,13 @@
      "Intelligence only": 25.18364392366508
     }
    },
-   "rank": 213,
+   "rank": 214,
    "ranked": true,
    "ranks": {
-    "A": 213,
-    "B": 206,
-    "C": 195,
-    "capability": 53
+    "A": 214,
+    "B": 207,
+    "C": 196,
+    "capability": 54
    },
    "repo": "https://huggingface.co/mukaddamzaid/amos-1-large",
    "rescored_in": "v1.7.0",
@@ -10178,13 +10184,13 @@
      "Intelligence only": 21.46731530678655
     }
    },
-   "rank": 184,
+   "rank": 185,
    "ranked": true,
    "ranks": {
-    "A": 184,
-    "B": 185,
-    "C": 186,
-    "capability": 167
+    "A": 185,
+    "B": 186,
+    "C": 187,
+    "capability": 168
    },
    "repo": "https://huggingface.co/mukaddamzaid/amos-1-medium",
    "rescored_in": "v1.7.0",
@@ -11574,13 +11580,13 @@
     "carried_metadata_from": "Pinned author release; add-requests r61/score/withrows/REGISTRY.json measurement record",
     "kind": "v1.6.1 addendum a11 (scorer output sha256 4d2833926c2d, method option B / O1S)"
    },
-   "rank": 136,
+   "rank": 137,
    "ranked": true,
    "ranks": {
-    "A": 136,
-    "B": 139,
-    "C": 143,
-    "capability": 138
+    "A": 137,
+    "B": 140,
+    "C": 144,
+    "capability": 139
    },
    "repo": "https://huggingface.co/empiriolabsai/aplomb-1",
    "rescored_in": "v1.7.0",
@@ -12388,13 +12394,13 @@
     "carried_metadata_from": "Pinned author release; add-requests r61/score/withrows/REGISTRY.json measurement record",
     "kind": "v1.6.1 addendum a11 (scorer output sha256 4d2833926c2d, method option B / O1S)"
    },
-   "rank": 135,
+   "rank": 136,
    "ranked": true,
    "ranks": {
-    "A": 135,
-    "B": 134,
-    "C": 141,
-    "capability": 212
+    "A": 136,
+    "B": 135,
+    "C": 142,
+    "capability": 213
    },
    "repo": "https://huggingface.co/apus-ailab/APUS-OpenJev-v1-9B",
    "rescored_in": "v1.7.0",
@@ -12809,13 +12815,13 @@
      "Intelligence only": 33.50703306610661
     }
    },
-   "rank": 141,
+   "rank": 142,
    "ranked": true,
    "ranks": {
-    "A": 141,
-    "B": 142,
-    "C": 147,
-    "capability": 150
+    "A": 142,
+    "B": 143,
+    "C": 148,
+    "capability": 151
    },
    "repo": "https://huggingface.co/arcbright/elf-1-12b",
    "rescored_in": "v1.7.0",
@@ -14181,7 +14187,7 @@
     "A": 7,
     "B": 22,
     "C": 6,
-    "capability": 57
+    "capability": 58
    },
    "repo": "https://huggingface.co/arcbright/elf-1-12b",
    "scores": {
@@ -16920,13 +16926,13 @@
      "Intelligence only": 8.739821181204116
     }
    },
-   "rank": 222,
+   "rank": 223,
    "ranked": true,
    "ranks": {
-    "A": 222,
-    "B": 225,
-    "C": 223,
-    "capability": 224
+    "A": 223,
+    "B": 226,
+    "C": 224,
+    "capability": 225
    },
    "repo": "https://huggingface.co/IBOU-SEARCH/ArseneLupin-v1.1",
    "rescored_in": "v1.7.0",
@@ -18326,13 +18332,13 @@
      "Intelligence only": 65.23849472031306
     }
    },
-   "rank": 114,
+   "rank": 115,
    "ranked": true,
    "ranks": {
-    "A": 114,
-    "B": 94,
-    "C": 85,
-    "capability": 123
+    "A": 115,
+    "B": 95,
+    "C": 86,
+    "capability": 124
    },
    "repo": "https://attest.engineering/model",
    "rescored_in": "v1.7.0",
@@ -19718,13 +19724,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 110,
+   "rank": 111,
    "ranked": true,
    "ranks": {
-    "A": 110,
-    "B": 110,
-    "C": 107,
-    "capability": 99
+    "A": 111,
+    "B": 111,
+    "C": 108,
+    "capability": 100
    },
    "repo": "https://huggingface.co/denis-pplx/autojev-27b",
    "rescored_in": "v1.7.0",
@@ -21923,13 +21929,13 @@
     "carried_metadata_from": "author model card + config.json",
     "kind": "v1.6.1 addendum a6 (scorer output sha256 9d512dc13d7d, method option B / O1S)"
    },
-   "rank": 97,
+   "rank": 98,
    "ranked": true,
    "ranks": {
-    "A": 97,
-    "B": 99,
-    "C": 100,
-    "capability": 139
+    "A": 98,
+    "B": 100,
+    "C": 101,
+    "capability": 140
    },
    "repo": "https://huggingface.co/bespokelabs/Bespoke-Nimble-9B-v3",
    "rescored_in": "v1.7.0",
@@ -22331,13 +22337,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 146,
+   "rank": 147,
    "ranked": true,
    "ranks": {
-    "A": 146,
-    "B": 146,
-    "C": 151,
-    "capability": 145
+    "A": 147,
+    "B": 147,
+    "C": 152,
+    "capability": 146
    },
    "repo": "https://huggingface.co/Reza2kn/Bev",
    "rescored_in": "v1.7.0",
@@ -22752,13 +22758,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 310,
+   "rank": 311,
    "ranked": true,
    "ranks": {
-    "A": 310,
-    "B": 310,
-    "C": 310,
-    "capability": 261
+    "A": 311,
+    "B": 311,
+    "C": 311,
+    "capability": 262
    },
    "repo": "https://huggingface.co/BAAI/bge-reranker-v2-m3",
    "rescored_in": "v1.7.0",
@@ -23185,13 +23191,13 @@
      "Intelligence only": 17.58206451384755
     }
    },
-   "rank": 188,
+   "rank": 189,
    "ranked": true,
    "ranks": {
-    "A": 188,
-    "B": 191,
-    "C": 190,
-    "capability": 183
+    "A": 189,
+    "B": 192,
+    "C": 191,
+    "capability": 184
    },
    "repo": "https://huggingface.co/thegovind/blink-4b",
    "rescored_in": "v1.7.0",
@@ -24575,13 +24581,13 @@
      "Intelligence only": 46.97811680206471
     }
    },
-   "rank": 107,
+   "rank": 108,
    "ranked": true,
    "ranks": {
-    "A": 107,
-    "B": 120,
-    "C": 126,
-    "capability": 121
+    "A": 108,
+    "B": 121,
+    "C": 127,
+    "capability": 122
    },
    "repo": "https://huggingface.co/PixilabAI/Blink-v0.3-26B-A4B-NVFP4",
    "rescored_in": "v1.7.0",
@@ -25916,7 +25922,7 @@
     "A": 73,
     "B": 57,
     "C": 56,
-    "capability": 54
+    "capability": 55
    },
    "repo": "https://huggingface.co/sanghwa-na/bobcat-1.3",
    "scores": {
@@ -27303,7 +27309,7 @@
     "A": 20,
     "B": 33,
     "C": 17,
-    "capability": 91
+    "capability": 92
    },
    "repo": "https://huggingface.co/sanghwa-na/bobcat-flash-1.2",
    "rescored_in": "v1.7.0",
@@ -29119,13 +29125,13 @@
      "Intelligence only": 58.89019286287232
     }
    },
-   "rank": 87,
+   "rank": 88,
    "ranked": true,
    "ranks": {
-    "A": 87,
-    "B": 87,
-    "C": 83,
-    "capability": 85
+    "A": 88,
+    "B": 88,
+    "C": 84,
+    "capability": 86
    },
    "repo": "https://docs.celeris.ai",
    "rescored_in": "v1.7.0",
@@ -30523,13 +30529,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 308,
+   "rank": 309,
    "ranked": true,
    "ranks": {
-    "A": 308,
-    "B": 308,
-    "C": 308,
-    "capability": 266
+    "A": 309,
+    "B": 309,
+    "C": 309,
+    "capability": 267
    },
    "repo": "https://huggingface.co/altslate/certo-decision-model",
    "rescored_in": "v1.7.0",
@@ -30931,13 +30937,13 @@
      "C": 20.497798730566885
     }
    },
-   "rank": 206,
+   "rank": 207,
    "ranked": true,
    "ranks": {
-    "A": 206,
-    "B": 209,
-    "C": 208,
-    "capability": 196
+    "A": 207,
+    "B": 210,
+    "C": 209,
+    "capability": 197
    },
    "repo": "https://huggingface.co/chaoliangUNSW/Jev-Style-2B-Decision-v4",
    "scores": {
@@ -32340,13 +32346,13 @@
      "Intelligence only": 76.65679978603575
     }
    },
-   "rank": 237,
+   "rank": 238,
    "ranked": true,
    "ranks": {
-    "A": 237,
-    "B": 236,
-    "C": 237,
-    "capability": 268
+    "A": 238,
+    "B": 237,
+    "C": 238,
+    "capability": 269
    },
    "repo": "https://huggingface.co/ninhnv/chon-1.0-12b",
    "rescored_in": "v1.7.0",
@@ -33681,9 +33687,9 @@
    "ranked": true,
    "ranks": {
     "A": 75,
-    "B": 76,
+    "B": 77,
     "C": 58,
-    "capability": 119
+    "capability": 120
    },
    "repo": "https://huggingface.co/ninhnv/chon-1.0-12b-fast",
    "scores": {
@@ -36364,9 +36370,9 @@
    "ranked": true,
    "ranks": {
     "A": 32,
-    "B": 71,
-    "C": 93,
-    "capability": 132
+    "B": 72,
+    "C": 94,
+    "capability": 133
    },
    "remeasure": {
     "disclosure": "Chon family, same author as the 12B sibling. This uses the author's documented --no-think mode; the author's GPU default thinks first on up to 45 % of questions, while that think pass never runs here. GPU re-time in the same --no-think serving configuration as the previous CPU measurement; the default think pass is not exercised. The yes/no commit rule [0.199, 0.801] moves P(yes) just outside the scorer's decisive band: the author's own mechanism. Fifteen states over 6,000 tokens are truncated keeping the start, answered rather than refused. The 231-public-item check was a sanity gate, not an independence check: the author used public items to choose serving settings. ATTEMPT HISTORY: an earlier think-on GPU attempt stopped at the public projection gate before any sealed byte and contributes no scored output. This no-think GPU run is the sole successful replacement measurement. All 1,500 items answered, zero output tokens and zero thinking items. GPU telemetry sampler produced an empty CSV; utilisation and clock samples are unavailable. Scores AND times both come from this GPU run, replacing the CPU measurement in full (scores and times). CPU and GPU probabilities differ on 1,049 of 1,500 items (9 top answers changed), attributed to device numerics; Intelligence and Calibration therefore moved slightly.",
@@ -38016,13 +38022,13 @@
     "carried_metadata_from": "Pinned author release; add-requests r61/score/withrows/REGISTRY.json measurement record",
     "kind": "v1.6.1 addendum a11 (scorer output sha256 4d2833926c2d, method option B / O1S)"
    },
-   "rank": 279,
+   "rank": 280,
    "ranked": true,
    "ranks": {
-    "A": 279,
-    "B": 277,
-    "C": 279,
-    "capability": 311
+    "A": 280,
+    "B": 278,
+    "C": 280,
+    "capability": 312
    },
    "repo": "https://huggingface.co/devops-thiago/classone-gemma4-e2b",
    "rescored_in": "v1.7.0",
@@ -38432,13 +38438,13 @@
      "Intelligence only": 8.95354562245959
     }
    },
-   "rank": 230,
+   "rank": 231,
    "ranked": true,
    "ranks": {
-    "A": 230,
-    "B": 228,
-    "C": 230,
-    "capability": 280
+    "A": 231,
+    "B": 229,
+    "C": 231,
+    "capability": 281
    },
    "repo": "https://huggingface.co/devops-thiago/classone-gemma4-e4b",
    "rescored_in": "v1.7.0",
@@ -39820,13 +39826,13 @@
      "Intelligence only": 0.0786327227711625
     }
    },
-   "rank": 284,
+   "rank": 285,
    "ranked": true,
    "ranks": {
-    "A": 284,
-    "B": 284,
-    "C": 284,
-    "capability": 308
+    "A": 285,
+    "B": 285,
+    "C": 285,
+    "capability": 309
    },
    "repo": "https://huggingface.co/devops-thiago/classone-qwen3.5-2b",
    "rescored_in": "v1.7.0",
@@ -41208,13 +41214,13 @@
      "Intelligence only": 8.172749758440709
     }
    },
-   "rank": 234,
+   "rank": 235,
    "ranked": true,
    "ranks": {
-    "A": 234,
-    "B": 235,
-    "C": 234,
-    "capability": 281
+    "A": 235,
+    "B": 236,
+    "C": 235,
+    "capability": 282
    },
    "repo": "https://huggingface.co/devops-thiago/classone-qwen3.5-4b",
    "rescored_in": "v1.7.0",
@@ -42593,13 +42599,13 @@
     "carried_metadata_from": "Pinned author release; add-requests r61/score/withrows/REGISTRY.json measurement record",
     "kind": "v1.6.1 addendum a11 (scorer output sha256 4d2833926c2d, method option B / O1S)"
    },
-   "rank": 164,
+   "rank": 165,
    "ranked": true,
    "ranks": {
-    "A": 164,
-    "B": 160,
-    "C": 169,
-    "capability": 241
+    "A": 165,
+    "B": 161,
+    "C": 170,
+    "capability": 242
    },
    "repo": "https://huggingface.co/devops-thiago/classone-qwen3.5-9b",
    "rescored_in": "v1.7.0",
@@ -43014,13 +43020,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 103,
+   "rank": 104,
    "ranked": true,
    "ranks": {
-    "A": 103,
-    "B": 103,
-    "C": 88,
-    "capability": 73
+    "A": 104,
+    "B": 104,
+    "C": 89,
+    "capability": 74
    },
    "repo": "https://huggingface.co/Cloudflare/clef",
    "rescored_in": "v1.7.0",
@@ -43435,13 +43441,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 147,
+   "rank": 148,
    "ranked": true,
    "ranks": {
-    "A": 147,
-    "B": 153,
-    "C": 152,
-    "capability": 158
+    "A": 148,
+    "B": 154,
+    "C": 153,
+    "capability": 159
    },
    "repo": "https://huggingface.co/Cloudflare/clef-flash",
    "rescored_in": "v1.7.0",
@@ -43851,13 +43857,13 @@
      "Intelligence only": 4.70710504931535
     }
    },
-   "rank": 198,
+   "rank": 199,
    "ranked": true,
    "ranks": {
-    "A": 198,
-    "B": 196,
-    "C": 200,
-    "capability": 199
+    "A": 199,
+    "B": 197,
+    "C": 201,
+    "capability": 200
    },
    "repo": "https://huggingface.co/Cloudflare/clef-omni",
    "rescored_in": "v1.7.0",
@@ -45232,13 +45238,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 309,
+   "rank": 310,
    "ranked": true,
    "ranks": {
-    "A": 309,
-    "B": 309,
-    "C": 309,
-    "capability": 307
+    "A": 310,
+    "B": 310,
+    "C": 310,
+    "capability": 308
    },
    "repo": "https://github.com/Contrastive-LM/CLM",
    "rescored_in": "v1.7.0",
@@ -45645,13 +45651,13 @@
     "carried_metadata_from": "Pinned author release; add-requests r61/score/withrows/REGISTRY.json measurement record",
     "kind": "v1.6.1 addendum a11 (scorer output sha256 4d2833926c2d, method option B / O1S)"
    },
-   "rank": 201,
+   "rank": 202,
    "ranked": true,
    "ranks": {
-    "A": 201,
-    "B": 202,
-    "C": 203,
-    "capability": 211
+    "A": 202,
+    "B": 203,
+    "C": 204,
+    "capability": 212
    },
    "repo": "https://huggingface.co/corners-ai/CoCo-Decision-4B-Ko",
    "rescored_in": "v1.7.0",
@@ -46065,13 +46071,13 @@
      "Intelligence only": 9.672511174017334
     }
    },
-   "rank": 218,
+   "rank": 219,
    "ranked": true,
    "ranks": {
-    "A": 218,
-    "B": 220,
-    "C": 219,
-    "capability": 219
+    "A": 219,
+    "B": 221,
+    "C": 220,
+    "capability": 220
    },
    "repo": "https://huggingface.co/adimyth/compass-lora-v2",
    "rescored_in": "v1.7.0",
@@ -47444,9 +47450,9 @@
    "ranked": true,
    "ranks": {
     "A": 72,
-    "B": 80,
-    "C": 79,
-    "capability": 81
+    "B": 81,
+    "C": 80,
+    "capability": 82
    },
    "repo": "https://huggingface.co/cribl-ai/cribl-decision-1.0-27B",
    "scores": {
@@ -48842,13 +48848,13 @@
      "C": 36.43619613030385
     }
    },
-   "rank": 154,
+   "rank": 155,
    "ranked": true,
    "ranks": {
-    "A": 154,
-    "B": 163,
-    "C": 159,
-    "capability": 162
+    "A": 155,
+    "B": 164,
+    "C": 160,
+    "capability": 163
    },
    "repo": "https://huggingface.co/cribl-ai/cribl-decision-1.0-9B",
    "scores": {
@@ -50244,13 +50250,13 @@
      "C": 33.04782404645297
     }
    },
-   "rank": 173,
+   "rank": 174,
    "ranked": true,
    "ranks": {
-    "A": 173,
-    "B": 175,
-    "C": 175,
-    "capability": 169
+    "A": 174,
+    "B": 176,
+    "C": 176,
+    "capability": 170
    },
    "repo": "https://huggingface.co/cribl-ai/cribl-decision-2",
    "scores": {
@@ -51646,13 +51652,13 @@
      "C": 6.404881321962771
     }
    },
-   "rank": 257,
+   "rank": 258,
    "ranked": true,
    "ranks": {
-    "A": 257,
-    "B": 257,
-    "C": 257,
-    "capability": 240
+    "A": 258,
+    "B": 258,
+    "C": 258,
+    "capability": 241
    },
    "repo": "https://huggingface.co/cribl-ai/cribl-decision-2-mini",
    "scores": {
@@ -53060,9 +53066,9 @@
    "ranked": true,
    "ranks": {
     "A": 79,
-    "B": 92,
-    "C": 105,
-    "capability": 109
+    "B": 93,
+    "C": 106,
+    "capability": 110
    },
    "repo": "https://github.com/blockbrain-ai/cygnet-recipe",
    "rescored_in": "v1.7.0",
@@ -53412,13 +53418,13 @@
    },
    "paid_fast_lane": false,
    "planned_weight_denominator": 1,
-   "rank": 271,
+   "rank": 272,
    "ranked": true,
    "ranks": {
-    "A": 271,
-    "B": 271,
-    "C": 271,
-    "capability": 257
+    "A": 272,
+    "B": 272,
+    "C": 272,
+    "capability": 258
    },
    "repo": "https://huggingface.co/JohnP1/d1a-e2b",
    "scores": {
@@ -54741,13 +54747,13 @@
    },
    "paid_fast_lane": false,
    "planned_weight_denominator": 1,
-   "rank": 253,
+   "rank": 254,
    "ranked": true,
    "ranks": {
-    "A": 253,
-    "B": 255,
-    "C": 254,
-    "capability": 239
+    "A": 254,
+    "B": 256,
+    "C": 255,
+    "capability": 240
    },
    "repo": "https://huggingface.co/JohnP1/d1a-e4b",
    "scores": {
@@ -57527,7 +57533,7 @@
     "A": 50,
     "B": 59,
     "C": 42,
-    "capability": 102
+    "capability": 103
    },
    "repo": "https://huggingface.co/Mapika/decider-12b",
    "rescored_in": "v1.7.0",
@@ -57934,9 +57940,9 @@
    "ranked": true,
    "ranks": {
     "A": 58,
-    "B": 69,
+    "B": 70,
     "C": 57,
-    "capability": 108
+    "capability": 109
    },
    "repo": "https://huggingface.co/Mapika/decider-12b",
    "rescored_in": "v1.7.0",
@@ -58339,13 +58345,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 252,
+   "rank": 253,
    "ranked": true,
    "ranks": {
-    "A": 252,
-    "B": 253,
-    "C": 253,
-    "capability": 259
+    "A": 253,
+    "B": 254,
+    "C": 254,
+    "capability": 260
    },
    "repo": "https://huggingface.co/Mapika/decider-2b",
    "rescored_in": "v1.7.0",
@@ -58748,13 +58754,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 122,
+   "rank": 123,
    "ranked": true,
    "ranks": {
-    "A": 122,
-    "B": 124,
-    "C": 130,
-    "capability": 144
+    "A": 123,
+    "B": 125,
+    "C": 131,
+    "capability": 145
    },
    "repo": "https://huggingface.co/Mapika/decider-35b-a3b",
    "rescored_in": "v1.7.0",
@@ -59157,13 +59163,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 162,
+   "rank": 163,
    "ranked": true,
    "ranks": {
-    "A": 162,
-    "B": 170,
-    "C": 167,
-    "capability": 151
+    "A": 163,
+    "B": 171,
+    "C": 168,
+    "capability": 152
    },
    "repo": "https://github.com/Mapika/decider",
    "rescored_in": "v1.7.0",
@@ -59570,13 +59576,13 @@
     "carried_metadata_from": "author model card + config.json",
     "kind": "v1.6.1 addendum a6 (scorer output sha256 9d512dc13d7d, method option B / O1S)"
    },
-   "rank": 113,
+   "rank": 114,
    "ranked": true,
    "ranks": {
-    "A": 113,
-    "B": 106,
-    "C": 91,
-    "capability": 115
+    "A": 114,
+    "B": 107,
+    "C": 92,
+    "capability": 116
    },
    "repo": "https://github.com/Mapika/decider",
    "rescored_in": "v1.7.0",
@@ -59933,7 +59939,7 @@
     "A": 27,
     "B": 48,
     "C": 24,
-    "capability": 72
+    "capability": 73
    },
    "repo": "https://huggingface.co/tachara-ai/Decisio-12b-tuned-commit",
    "scores": {
@@ -61298,7 +61304,7 @@
     "A": 14,
     "B": 23,
     "C": 12,
-    "capability": 69
+    "capability": 70
    },
    "repo": "https://huggingface.co/tachara-ai/Decisio-12b-tuned-commit-think",
    "scores": {
@@ -62693,13 +62699,13 @@
     "carried_metadata_from": "r54/r55/r61 registry and pinned author package",
     "kind": "v1.6.1 addendum a11 (scorer output sha256 4d2833926c2d, method option B / O1S)"
    },
-   "rank": 89,
+   "rank": 90,
    "ranked": true,
    "ranks": {
-    "A": 89,
-    "B": 105,
-    "C": 113,
-    "capability": 111
+    "A": 90,
+    "B": 106,
+    "C": 114,
+    "capability": 112
    },
    "repo": "https://github.com/aminry/decisio",
    "rescored_in": "v1.7.0",
@@ -63106,13 +63112,13 @@
     "carried_metadata_from": "r54/r55/r61 registry and pinned author package",
     "kind": "v1.6.1 addendum a11 (scorer output sha256 4d2833926c2d, method option B / O1S)"
    },
-   "rank": 96,
+   "rank": 97,
    "ranked": true,
    "ranks": {
-    "A": 96,
-    "B": 109,
-    "C": 114,
-    "capability": 120
+    "A": 97,
+    "B": 110,
+    "C": 115,
+    "capability": 121
    },
    "repo": "https://github.com/aminry/decisio",
    "rescored_in": "v1.7.0",
@@ -63872,13 +63878,13 @@
    },
    "paid_fast_lane": false,
    "planned_weight_denominator": 1,
-   "rank": 197,
+   "rank": 198,
    "ranked": true,
    "ranks": {
-    "A": 197,
-    "B": 198,
-    "C": 199,
-    "capability": 182
+    "A": 198,
+    "B": 199,
+    "C": 200,
+    "capability": 183
    },
    "repo": "https://github.com/aminry/decisio",
    "scores": {
@@ -65258,13 +65264,13 @@
     "carried_metadata_from": "author model card + config.json",
     "kind": "v1.6.1 addendum a6 (scorer output sha256 9d512dc13d7d, method option B / O1S)"
    },
-   "rank": 108,
+   "rank": 109,
    "ranked": true,
    "ranks": {
-    "A": 108,
-    "B": 100,
-    "C": 80,
-    "capability": 103
+    "A": 109,
+    "B": 101,
+    "C": 81,
+    "capability": 104
    },
    "repo": "https://huggingface.co/vllm-sr/Decision-2.0-Vega-27B",
    "rescored_in": "v1.7.0",
@@ -65679,13 +65685,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 245,
+   "rank": 246,
    "ranked": true,
    "ranks": {
-    "A": 245,
-    "B": 245,
-    "C": 245,
-    "capability": 226
+    "A": 246,
+    "B": 246,
+    "C": 246,
+    "capability": 227
    },
    "repo": "https://huggingface.co/flymy-ai/decision-2b-preview",
    "rescored_in": "v1.7.0",
@@ -66101,13 +66107,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 215,
+   "rank": 216,
    "ranked": true,
    "ranks": {
-    "A": 215,
-    "B": 217,
-    "C": 216,
-    "capability": 206
+    "A": 216,
+    "B": 218,
+    "C": 217,
+    "capability": 207
    },
    "repo": "https://benchmarkheaven.com/jev-models/decision-4b-v11",
    "rescored_in": "v1.7.0",
@@ -66510,13 +66516,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 202,
+   "rank": 203,
    "ranked": true,
    "ranks": {
-    "A": 202,
-    "B": 205,
-    "C": 204,
-    "capability": 187
+    "A": 203,
+    "B": 206,
+    "C": 205,
+    "capability": 188
    },
    "repo": "https://benchmarkheaven.com/jev-models/decision-4b-v12",
    "rescored_in": "v1.7.0",
@@ -66919,13 +66925,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 282,
+   "rank": 283,
    "ranked": true,
    "ranks": {
-    "A": 282,
-    "B": 282,
-    "C": 282,
-    "capability": 277
+    "A": 283,
+    "B": 283,
+    "C": 283,
+    "capability": 278
    },
    "repo": "https://huggingface.co/flymy-ai/decision-fast-preview",
    "rescored_in": "v1.7.0",
@@ -68684,13 +68690,13 @@
     },
     "views": null
    },
-   "rank": 267,
+   "rank": 268,
    "ranked": true,
    "ranks": {
-    "A": 267,
-    "B": 267,
-    "C": 267,
-    "capability": 255
+    "A": 268,
+    "B": 268,
+    "C": 268,
+    "capability": 256
    },
    "repo": "https://www.milliseconds.ai",
    "rescored_in": "v1.7.0",
@@ -68993,13 +68999,13 @@
      "Intelligence only": 17.265698468557986
     }
    },
-   "rank": 185,
+   "rank": 186,
    "ranked": true,
    "ranks": {
-    "A": 185,
-    "B": 187,
-    "C": 187,
-    "capability": 180
+    "A": 186,
+    "B": 188,
+    "C": 188,
+    "capability": 181
    },
    "repo": "https://huggingface.co/vllm-sr/Decision-2.0-Lux-9B",
    "rescored_in": "v1.7.0",
@@ -70330,13 +70336,13 @@
    },
    "paid_fast_lane": false,
    "planned_weight_denominator": 1,
-   "rank": 232,
+   "rank": 233,
    "ranked": true,
    "ranks": {
-    "A": 232,
-    "B": 234,
-    "C": 232,
-    "capability": 237
+    "A": 233,
+    "B": 235,
+    "C": 233,
+    "capability": 238
    },
    "repo": "https://huggingface.co/bynn-intelligence-com/decisionnode-edge",
    "scores": {
@@ -71667,13 +71673,13 @@
    },
    "paid_fast_lane": false,
    "planned_weight_denominator": 1,
-   "rank": 258,
+   "rank": 259,
    "ranked": true,
    "ranks": {
-    "A": 258,
-    "B": 258,
-    "C": 258,
-    "capability": 252
+    "A": 259,
+    "B": 259,
+    "C": 259,
+    "capability": 253
    },
    "repo": "https://huggingface.co/bynn-intelligence-com/decisionnode-edge-mini",
    "scores": {
@@ -75814,13 +75820,13 @@
      "Intelligence only": 24.851733846686635
     }
    },
-   "rank": 180,
+   "rank": 181,
    "ranked": true,
    "ranks": {
-    "A": 180,
-    "B": 178,
-    "C": 181,
-    "capability": 256
+    "A": 181,
+    "B": 179,
+    "C": 182,
+    "capability": 257
    },
    "repo": "https://huggingface.co/underlabs/decisor-4b",
    "rescored_in": "v1.7.0",
@@ -77223,13 +77229,13 @@
     "carried_metadata_from": null,
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 177,
+   "rank": 178,
    "ranked": true,
    "ranks": {
-    "A": 177,
-    "B": 177,
-    "C": 178,
-    "capability": 161
+    "A": 178,
+    "B": 178,
+    "C": 179,
+    "capability": 162
    },
    "repo": "https://github.com/krishna-gogineni-765/deck",
    "rescored_in": "v1.7.0",
@@ -77634,7 +77640,7 @@
     "A": 78,
     "B": 50,
     "C": 60,
-    "capability": 55
+    "capability": 56
    },
    "repo": "https://github.com/krishna-gogineni-765/deck31b",
    "rescored_in": "v1.7.0",
@@ -78035,13 +78041,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 281,
+   "rank": 282,
    "ranked": true,
    "ranks": {
-    "A": 281,
-    "B": 281,
-    "C": 281,
-    "capability": 309
+    "A": 282,
+    "B": 282,
+    "C": 282,
+    "capability": 310
    },
    "repo": "https://huggingface.co/LibertAIDAI/deem-0.8-v1",
    "rescored_in": "v1.7.0",
@@ -78398,12 +78404,12 @@
     },
     "views": null
    },
-   "rank": 255,
+   "rank": 256,
    "ranked": true,
    "ranks": {
-    "A": 255,
-    "B": 247,
-    "C": 246,
+    "A": 256,
+    "B": 248,
+    "C": 247,
     "capability": 4
    },
    "repo": "https://benchmarkheaven.com/jev-models/deepseek-flash",
@@ -78700,13 +78706,13 @@
     "carried_metadata_from": "Pinned author release; add-requests r61/score/withrows/REGISTRY.json measurement record",
     "kind": "v1.6.1 addendum a11 (scorer output sha256 4d2833926c2d, method option B / O1S)"
    },
-   "rank": 123,
+   "rank": 124,
    "ranked": true,
    "ranks": {
-    "A": 123,
-    "B": 118,
-    "C": 112,
-    "capability": 202
+    "A": 124,
+    "B": 119,
+    "C": 113,
+    "capability": 203
    },
    "repo": "https://huggingface.co/google/diffusiongemma-26B-A4B-it",
    "rescored_in": "v1.7.0",
@@ -81860,9 +81866,9 @@
    "ranked": true,
    "ranks": {
     "A": 82,
-    "B": 68,
+    "B": 69,
     "C": 63,
-    "capability": 61
+    "capability": 62
    },
    "repo": "https://huggingface.co/caiovicentino1/eikos-27b",
    "rescored_in": "v1.7.0",
@@ -82223,9 +82229,9 @@
    "ranked": true,
    "ranks": {
     "A": 76,
-    "B": 89,
-    "C": 99,
-    "capability": 116
+    "B": 90,
+    "C": 100,
+    "capability": 117
    },
    "repo": "https://huggingface.co/baselabs/elephant-1",
    "scores": {
@@ -83602,13 +83608,13 @@
     "carried_metadata_from": "Current inventory + r20 source metadata; unresolved runtime join",
     "kind": "v1.6.1 addendum a11 (scorer output sha256 4d2833926c2d, method option B / O1S)"
    },
-   "rank": 179,
+   "rank": 180,
    "ranked": true,
    "ranks": {
-    "A": 179,
-    "B": 180,
-    "C": 180,
-    "capability": 194
+    "A": 180,
+    "B": 181,
+    "C": 181,
+    "capability": 195
    },
    "repo": "https://huggingface.co/evalengine/decision-4b-gguf",
    "rescored_in": "v1.7.0",
@@ -84027,13 +84033,13 @@
     "carried_metadata_from": "Pinned author release; add-requests r61/score/withrows/REGISTRY.json measurement record",
     "kind": "v1.6.1 addendum a11 (scorer output sha256 4d2833926c2d, method option B / O1S)"
    },
-   "rank": 264,
+   "rank": 265,
    "ranked": true,
    "ranks": {
-    "A": 264,
-    "B": 265,
-    "C": 265,
-    "capability": 250
+    "A": 265,
+    "B": 266,
+    "C": 266,
+    "capability": 251
    },
    "repo": "https://huggingface.co/carrtesy/EXAONE-4.0-1.2B-JEV",
    "rescored_in": "v1.7.0",
@@ -84403,13 +84409,13 @@
     },
     "views": null
    },
-   "rank": 189,
+   "rank": 190,
    "ranked": true,
    "ranks": {
-    "A": 189,
-    "B": 182,
-    "C": 163,
-    "capability": 63
+    "A": 190,
+    "B": 183,
+    "C": 164,
+    "capability": 64
    },
    "repo": null,
    "rescored_in": "v1.7.0",
@@ -87482,13 +87488,13 @@
     "carried_metadata_from": "v1.6.0 release row",
     "kind": "v1.6.1 full-set re-score (score-v161-3/out-O1S, O1S, hosted API on S u P, not equated)"
    },
-   "rank": 280,
+   "rank": 281,
    "ranked": true,
    "ranks": {
-    "A": 280,
-    "B": 280,
-    "C": 280,
-    "capability": 290
+    "A": 281,
+    "B": 281,
+    "C": 281,
+    "capability": 291
    },
    "repo": "https://fastino.ai/",
    "rescored_in": "v1.7.0",
@@ -87854,13 +87860,13 @@
     },
     "views": null
    },
-   "rank": 223,
+   "rank": 224,
    "ranked": true,
    "ranks": {
-    "A": 223,
-    "B": 213,
-    "C": 209,
-    "capability": 190
+    "A": 224,
+    "B": 214,
+    "C": 210,
+    "capability": 191
    },
    "repo": "https://benchmarkheaven.com/jev-models/gemini-3.1-flash-lite",
    "rescored_in": "v1.7.0",
@@ -87896,6 +87902,1397 @@
     "n_items": 600,
     "round": "score-a4-2",
     "run_sha256": "96adf8183eaf9826b99e72a821469fa1fcc61783bc7b04ec2a95f0abcea883e8"
+   }
+  },
+  {
+   "addendum": null,
+   "api_flag": true,
+   "api_subset": false,
+   "author": "Google",
+   "axes": {
+    "calibration": 89.6397534987547,
+    "cost": 52.5184149091935,
+    "intelligence": 67.4004381377088,
+    "speed": 90.06659217686632
+   },
+   "calibration": {
+    "parts": {
+     "choice": {
+      "ece_hard": 0.050224309196551596,
+      "ece_score": 89.95513816068969,
+      "mean_tvd": null,
+      "n": 749,
+      "n_ece_hard": 353,
+      "n_tvd": 0,
+      "score": 89.95513816068969,
+      "score_before_time_limit": 89.95513816068969,
+      "time_limit_failed_share": 0.0
+     },
+     "noul": {
+      "abstention_rate": 0.16621983914209115,
+      "brier": 0.04526949184917015,
+      "ece": 0.04711286021799262,
+      "n": 373,
+      "score": 90.57742795640148,
+      "score_before_time_limit": 90.57742795640148,
+      "time_limit_failed_share": 0.0
+     },
+     "score": {
+      "interval90_coverage": 0.9813333333333333,
+      "interval90_width": 0.19999999999999996,
+      "n": 375,
+      "nrps": 0.03181854670884315,
+      "score": 93.9494285247121,
+      "score_before_time_limit": 93.9494285247121,
+      "time_limit_failed_share": 0.0,
+      "top_ece": 0.044596441398457434
+     }
+    },
+    "score": 91.49399821393442
+   },
+   "capability": 78.52009581823175,
+   "composite_ci95": {
+    "A": [
+     70.67214501436558,
+     73.07525989618502
+    ],
+    "B": [
+     69.60428483051408,
+     73.2487823221307
+    ],
+    "C": [
+     70.67214501436558,
+     73.07525989618502
+    ]
+   },
+   "cost": {
+    "basis": "Google list price USD 0.10 per 1M input tokens, output free (Gemini API paid tier; free tier, batch and caching not counted), times API-reported usage; launch list price counted from day 1; frozen pricing 1b3c52fb, page re-fetched 12 Nov 2026 15:06Z. USD 0.0382578 per 1,000 decisions on the frozen 1,489-item common set of this draw (USD 0.0647295 over all 1,500 items); the 3 failed requests count as zero-token items.",
+    "common_basis": {
+     "n_items": 1489,
+     "rule": "common",
+     "usd_per_1000_all_items": 0.06472946666666668
+    },
+    "kind": "tariff",
+    "usage_estimated_rows": 0,
+    "usd_per_1000": 0.03825775688381464
+   },
+   "decision_limit": {
+    "limit_s": 10.0,
+    "n_over_limit": 0,
+    "n_over_limit_answered_ok": 0,
+    "rule": "latency_s > limit -> failed",
+    "speed_basis": "all decisions given (lane items in the raw), measured latency_s",
+    "speed_n": 1500,
+    "treatment": "share"
+   },
+   "disclosure": "FIRST MEASUREMENT on the 27 Oct 2026 draw: all 1,500 items (1,200 sealed and 300 public), one item per request, with Google's native probabilities for the choice, yes/no and score questions; model id gemini-decision-1, request-pinned. 3 of 1,500 requests failed in transport (one HTTP 503, two network errors) and count as wrong answers; Calibration is computed on the 1,497 answered items, as for every row with failed requests. No refusals. Latency was measured from our server in Germany. SELF-REPORTED FIGURE: Google reports 92.2 % (self-reported; accuracy on the 231 public v1.2 items, vendor-run; none of those items is in this draw). Our accuracy on all 1,500 items of the 27 Oct draw: 86.3 % (a yes/no answer between 20 % and 80 % counts as unsure, i.e. wrong). ImageJevBench: requested, no date.",
+   "display": "Gemini Decision 1",
+   "draw": {
+    "ci_basis": "measured on the draw before equating",
+    "drawn_on": "2026-10-27",
+    "g_med": 2.573387642438244,
+    "id": "v1.6-regular-20261027",
+    "label": "Third regular draw",
+    "measured_on": "2026-11-11",
+    "offset": {
+     "C": -1.8542447151797177,
+     "I": -2.884891186577587
+    },
+    "offset_ci95": {
+     "C": [
+      -5.447551660176162,
+      1.9718407968151896
+     ],
+     "I": [
+      -5.851030683979731,
+      1.0608488496147923
+     ]
+    },
+    "release": "v1.8.10",
+    "results_sha256": "2a8a451e33ce89ccae2d7abf8c30d3832850127f27169185791c65ab4b1fff79",
+    "status": "equated"
+   },
+   "endpoint_condition": "Google's Gemini API (Decisions API v1beta, paid tier), model id gemini-decision-1, request-pinned (the API returns no model field). Measured on 11 Nov 2026: all 1,500 items of the 27 Oct 2026 draw, one item per request, with Google's native probabilities; latency measured from our server in Germany, network time included (p50 0.234 s, p95 0.421 s; no request over 10 s).",
+   "endpoint_kind": "api",
+   "full_coverage": true,
+   "intelligence": {
+    "I_open": 68.49302774423606,
+    "I_sealed": 72.07763090433673,
+    "base": 70.2853293242864,
+    "excess": -6.157990802538913,
+    "gap": -3.58460316010067,
+    "penalty": 1.0,
+    "per_type_split": {
+     "open|choice": {
+      "cc": 83.7293704346896,
+      "n": {
+       "easy": 33,
+       "hard": 68,
+       "judge": 32,
+       "standard": 17
+      },
+      "tiers": {
+       "easy": 100.00000000000001,
+       "hard": 81.12614029569046,
+       "judge": 96.044825313118,
+       "standard": 62.32733361239012
+      }
+     },
+     "open|noul": {
+      "cc": 58.868875086266385,
+      "n": {
+       "easy": 14,
+       "hard": 23,
+       "judge": 20,
+       "standard": 18
+      },
+      "tiers": {
+       "easy": 57.14285714285714,
+       "hard": 82.6086956521739,
+       "judge": 30.000000000000004,
+       "standard": 55.55555555555556
+      }
+     },
+     "open|score": {
+      "cc": 62.8808377117522,
+      "n": {
+       "easy": 9,
+       "hard": 29,
+       "judge": 21,
+       "standard": 16
+      },
+      "tiers": {
+       "easy": 69.76772408776652,
+       "hard": 68.1891304056309,
+       "judge": 61.984493989170474,
+       "standard": 50.16532471986017
+      }
+     },
+     "sealed|choice": {
+      "cc": 85.80557862563506,
+      "n": {
+       "easy": 73,
+       "hard": 286,
+       "judge": 135,
+       "standard": 106
+      },
+      "tiers": {
+       "easy": 94.1041598427776,
+       "hard": 77.65687724487638,
+       "judge": 90.6816220880069,
+       "standard": 90.63962558502342
+      }
+     },
+     "sealed|noul": {
+      "cc": 54.309829770310536,
+      "n": {
+       "easy": 87,
+       "hard": 82,
+       "judge": 45,
+       "standard": 86
+      },
+      "tiers": {
+       "easy": 88.50574712643677,
+       "hard": 29.268292682926834,
+       "judge": 64.44444444444444,
+       "standard": 72.09302325581395
+      }
+     },
+     "sealed|score": {
+      "cc": 76.11748431706457,
+      "n": {
+       "easy": 68,
+       "hard": 112,
+       "judge": 56,
+       "standard": 64
+      },
+      "tiers": {
+       "easy": 92.20920557160093,
+       "hard": 57.31633003253308,
+       "judge": 90.69322137062595,
+       "standard": 83.8103266785173
+      }
+     }
+    }
+   },
+   "jevbench_score": 71.25514187539062,
+   "key": "gemini-decision-1",
+   "last_measured_on": "2026-11-11",
+   "licence": "Proprietary hosted API (no weights published)",
+   "listing": "ranked",
+   "listing_note": "Measured on the 27 Oct 2026 draw; shown on the reference scale by anchor equating with four strong anchor systems (Intelligence -2.9, Calibration -1.9 points; 95% interval of the Intelligence shift -5.9 to +1.1). Google reports 92.2 % (self-reported; accuracy on the 231 public v1.2 items, vendor-run; none of those items is in this draw). Our accuracy on all 1,500 items of the 27 Oct draw: 86.3 % (a yes/no answer between 20 % and 80 % counts as unsure, i.e. wrong).",
+   "measured_in": "v1.8.10",
+   "measurement_date_status": "measured",
+   "method": "v1.7",
+   "model_pin": null,
+   "new_in": "v1.8.10",
+   "paid_fast_lane": false,
+   "planned_weight_denominator": 1.0,
+   "published_scores": {
+    "axes": {
+     "calibration": 91.49399821393442,
+     "cost": 52.5184149091935,
+     "intelligence": 70.2853293242864,
+     "speed": 90.06659217686632
+    },
+    "capability": 80.8896637691104,
+    "scores": {
+     "A": 72.33111515367575,
+     "B": 71.91248570249243,
+     "C": 72.33111515367575
+    }
+   },
+   "rank": 86,
+   "ranked": true,
+   "ranks": {
+    "A": 86,
+    "B": 65,
+    "C": 67,
+    "capability": 52
+   },
+   "repo": null,
+   "scores": {
+    "A": 71.25514187539062,
+    "B": 70.44932727633879,
+    "C": 71.25514187539062
+   },
+   "speed": {
+    "adjustment": "none (API)",
+    "basis": "all decisions given (lane items in the raw), measured latency_s",
+    "n": 1500,
+    "p50_s_adjusted": 0.23401184054091573,
+    "p50_s_raw": 0.23401184054091573,
+    "p95_s_adjusted": 0.42082637383136895,
+    "p95_s_raw": 0.42082637383136895
+   },
+   "status": {
+    "answered_ok": 1497,
+    "missing": 0,
+    "rows": 1500,
+    "status": "complete"
+   },
+   "support": {
+    "choice": "native",
+    "noul": "native",
+    "score": "native"
+   },
+   "underlying": "FIRST MEASUREMENT on the 27 Oct 2026 draw: all 1,500 items (1,200 sealed and 300 public), one item per request, with Google's native probabilities for the choice, yes/no and score questions; model id gemini-decision-1, request-pinned. 3 of 1,500 requests failed in transport (one HTTP 503, two network errors) and count as wrong answers; Calibration is computed on the 1,497 answered items, as for every row with failed requests. No refusals. Latency was measured from our server in Germany. SELF-REPORTED FIGURE: Google reports 92.2 % (self-reported; accuracy on the 231 public v1.2 items, vendor-run; none of those items is in this draw). Our accuracy on all 1,500 items of the 27 Oct draw: 86.3 % (a yes/no answer between 20 % and 80 % counts as unsure, i.e. wrong). ImageJevBench: requested, no date.",
+   "v16": {
+    "api_subset": false,
+    "api_subset_tag": null,
+    "breakdowns": {
+     "family": {
+      "calibration": {
+       "accuracy": 0.75,
+       "cc": 66.66666666666666,
+       "cc_by_type": {
+        "choice": 100.0,
+        "noul": 33.33333333333333
+       },
+       "low_n": true,
+       "n": 4,
+       "n_by_type": {
+        "choice": 1,
+        "noul": 3
+       },
+       "score": 66.66666666666666
+      },
+      "calibration_gen": {
+       "accuracy": 0.8571428571428571,
+       "cc": 79.12075942192223,
+       "cc_by_type": {
+        "choice": 74.02597402597404,
+        "noul": 100.0,
+        "score": 63.33630423979264
+       },
+       "low_n": true,
+       "n": 14,
+       "n_by_type": {
+        "choice": 5,
+        "noul": 2,
+        "score": 7
+       },
+       "score": 79.12075942192223
+      },
+      "composite_gen": {
+       "accuracy": 0.8421052631578947,
+       "cc": 71.59570417397373,
+       "cc_by_type": {
+        "choice": 100.0,
+        "noul": 60.00000000000001,
+        "score": 54.78711252192118
+       },
+       "low_n": true,
+       "n": 19,
+       "n_by_type": {
+        "choice": 5,
+        "noul": 5,
+        "score": 9
+       },
+       "score": 71.59570417397373
+      },
+      "fairness": {
+       "accuracy": 1.0,
+       "cc": 98.80350090268337,
+       "cc_by_type": {
+        "choice": 100.0,
+        "noul": 100.0,
+        "score": 96.41050270805013
+       },
+       "low_n": true,
+       "n": 21,
+       "n_by_type": {
+        "choice": 9,
+        "noul": 6,
+        "score": 6
+       },
+       "score": 98.80350090268337
+      },
+      "jaggedness": {
+       "accuracy": 0.6363636363636364,
+       "cc": 14.699683833549917,
+       "cc_by_type": {
+        "choice": 87.65432098765433,
+        "noul": -100.0,
+        "score": 56.444730512995434
+       },
+       "low_n": true,
+       "n": 22,
+       "n_by_type": {
+        "choice": 11,
+        "noul": 3,
+        "score": 8
+       },
+       "score": 14.699683833549917
+      },
+      "llm_router": {
+       "accuracy": 0.8888888888888888,
+       "cc": 73.75163673692485,
+       "cc_by_type": {
+        "choice": 92.06815511163339,
+        "noul": 65.21739130434783,
+        "score": 63.96936379479331
+       },
+       "low_n": false,
+       "n": 90,
+       "n_by_type": {
+        "choice": 45,
+        "noul": 23,
+        "score": 22
+       },
+       "score": 73.75163673692485
+      },
+      "long_state": {
+       "accuracy": 0.6,
+       "cc": -16.12903225806452,
+       "cc_by_type": {
+        "choice": 67.74193548387096,
+        "noul": -100.0
+       },
+       "low_n": true,
+       "n": 5,
+       "n_by_type": {
+        "choice": 4,
+        "noul": 1
+       },
+       "score": 0.0
+      },
+      "ml_usecase": {
+       "accuracy": 0.5,
+       "cc": 0.0,
+       "cc_by_type": {
+        "choice": 100.0,
+        "noul": -100.0
+       },
+       "low_n": true,
+       "n": 2,
+       "n_by_type": {
+        "choice": 1,
+        "noul": 1
+       },
+       "score": 0.0
+      },
+      "multilingual": {
+       "accuracy": 0.8664495114006515,
+       "cc": 76.05065479795464,
+       "cc_by_type": {
+        "choice": 84.1560681181289,
+        "noul": 63.934426229508205,
+        "score": 80.0614700462268
+       },
+       "low_n": false,
+       "n": 921,
+       "n_by_type": {
+        "choice": 430,
+        "noul": 244,
+        "score": 247
+       },
+       "score": 76.05065479795464
+      },
+      "negation_pair_gen": {
+       "accuracy": 0.9545454545454546,
+       "cc": 91.66666666666666,
+       "cc_by_type": {
+        "choice": 100.0,
+        "noul": 83.33333333333333
+       },
+       "low_n": true,
+       "n": 22,
+       "n_by_type": {
+        "choice": 10,
+        "noul": 12
+       },
+       "score": 91.66666666666666
+      },
+      "option_order": {
+       "accuracy": 0.8888888888888888,
+       "cc": 85.71428571428571,
+       "cc_by_type": {
+        "choice": 85.71428571428571
+       },
+       "low_n": true,
+       "n": 27,
+       "n_by_type": {
+        "choice": 27
+       },
+       "score": 85.71428571428571
+      },
+      "perturb_pair": {
+       "accuracy": 0.8928571428571429,
+       "cc": 80.8692210824654,
+       "cc_by_type": {
+        "choice": 90.56603773584905,
+        "noul": 80.0,
+        "score": 72.04162551154714
+       },
+       "low_n": true,
+       "n": 28,
+       "n_by_type": {
+        "choice": 14,
+        "noul": 10,
+        "score": 4
+       },
+       "score": 80.8692210824654
+      },
+      "usecase": {
+       "accuracy": 0.8523076923076923,
+       "cc": 72.2435338019601,
+       "cc_by_type": {
+        "choice": 83.22392414296132,
+        "noul": 60.00000000000001,
+        "score": 73.50667726291897
+       },
+       "low_n": false,
+       "n": 325,
+       "n_by_type": {
+        "choice": 188,
+        "noul": 65,
+        "score": 72
+       },
+       "score": 72.2435338019601
+      }
+     },
+     "lang": {
+      "ar": {
+       "accuracy": 0.8571428571428571,
+       "cc": 79.23108598398362,
+       "cc_by_type": {
+        "choice": 72.6027397260274,
+        "noul": 66.66666666666667,
+        "score": 98.42385155925678
+       },
+       "low_n": true,
+       "n": 21,
+       "n_by_type": {
+        "choice": 10,
+        "noul": 6,
+        "score": 5
+       },
+       "score": 79.23108598398362
+      },
+      "cs": {
+       "accuracy": 0.8108108108108109,
+       "cc": 67.5115442142666,
+       "cc_by_type": {
+        "choice": 75.93582887700535,
+        "noul": 55.55555555555556,
+        "score": 71.04324821023891
+       },
+       "low_n": false,
+       "n": 37,
+       "n_by_type": {
+        "choice": 17,
+        "noul": 9,
+        "score": 11
+       },
+       "score": 67.5115442142666
+      },
+      "da": {
+       "accuracy": 0.8611111111111112,
+       "cc": 77.5177587330025,
+       "cc_by_type": {
+        "choice": 77.63975155279502,
+        "noul": 63.63636363636365,
+        "score": 91.27716100984881
+       },
+       "low_n": false,
+       "n": 36,
+       "n_by_type": {
+        "choice": 19,
+        "noul": 11,
+        "score": 6
+       },
+       "score": 77.5177587330025
+      },
+      "de": {
+       "accuracy": 0.875,
+       "cc": 71.80933395607944,
+       "cc_by_type": {
+        "choice": 90.73835863133522,
+        "noul": 50.0,
+        "score": 74.68964323690311
+       },
+       "low_n": false,
+       "n": 48,
+       "n_by_type": {
+        "choice": 30,
+        "noul": 8,
+        "score": 10
+       },
+       "score": 71.80933395607944
+      },
+      "el": {
+       "accuracy": 0.7857142857142857,
+       "cc": 64.15679274162575,
+       "cc_by_type": {
+        "choice": 65.38461538461539,
+        "noul": 39.99999999999999,
+        "score": 87.08576284026185
+       },
+       "low_n": true,
+       "n": 28,
+       "n_by_type": {
+        "choice": 12,
+        "noul": 10,
+        "score": 6
+       },
+       "score": 64.15679274162575
+      },
+      "en": {
+       "accuracy": 0.8612612612612612,
+       "cc": 72.62982477919005,
+       "cc_by_type": {
+        "choice": 86.67876241405652,
+        "noul": 59.01639344262295,
+        "score": 72.19431848089066
+       },
+       "low_n": false,
+       "n": 555,
+       "n_by_type": {
+        "choice": 311,
+        "noul": 122,
+        "score": 122
+       },
+       "score": 72.62982477919005
+      },
+      "es": {
+       "accuracy": 0.8918918918918919,
+       "cc": 81.66127410097437,
+       "cc_by_type": {
+        "choice": 92.78267842822774,
+        "noul": 77.77777777777777,
+        "score": 74.42336609691758
+       },
+       "low_n": false,
+       "n": 37,
+       "n_by_type": {
+        "choice": 19,
+        "noul": 9,
+        "score": 9
+       },
+       "score": 81.66127410097437
+      },
+      "fi": {
+       "accuracy": 0.9038461538461539,
+       "cc": 86.25597031455611,
+       "cc_by_type": {
+        "choice": 93.14285714285714,
+        "noul": 89.4736842105263,
+        "score": 76.15136959028487
+       },
+       "low_n": false,
+       "n": 52,
+       "n_by_type": {
+        "choice": 21,
+        "noul": 19,
+        "score": 12
+       },
+       "score": 86.25597031455611
+      },
+      "fr": {
+       "accuracy": 0.84375,
+       "cc": 77.7762850176847,
+       "cc_by_type": {
+        "choice": 69.38775510204081,
+        "noul": 77.77777777777777,
+        "score": 86.1633221732355
+       },
+       "low_n": false,
+       "n": 32,
+       "n_by_type": {
+        "choice": 14,
+        "noul": 9,
+        "score": 9
+       },
+       "score": 77.7762850176847
+      },
+      "hi": {
+       "accuracy": 0.8378378378378378,
+       "cc": 73.54422328859904,
+       "cc_by_type": {
+        "choice": 75.20661157024793,
+        "noul": 55.55555555555556,
+        "score": 89.87050273999367
+       },
+       "low_n": false,
+       "n": 37,
+       "n_by_type": {
+        "choice": 17,
+        "noul": 9,
+        "score": 11
+       },
+       "score": 73.54422328859904
+      },
+      "id": {
+       "accuracy": 0.926829268292683,
+       "cc": 85.37098802689955,
+       "cc_by_type": {
+        "choice": 90.78341013824885,
+        "noul": 83.33333333333333,
+        "score": 81.99622060911646
+       },
+       "low_n": false,
+       "n": 41,
+       "n_by_type": {
+        "choice": 15,
+        "noul": 12,
+        "score": 14
+       },
+       "score": 85.37098802689955
+      },
+      "it": {
+       "accuracy": 0.8888888888888888,
+       "cc": 77.69425113896317,
+       "cc_by_type": {
+        "choice": 100.0,
+        "noul": 66.66666666666667,
+        "score": 66.41608675022283
+       },
+       "low_n": false,
+       "n": 45,
+       "n_by_type": {
+        "choice": 17,
+        "noul": 12,
+        "score": 16
+       },
+       "score": 77.69425113896317
+      },
+      "ja": {
+       "accuracy": 0.8181818181818182,
+       "cc": 60.130809570258144,
+       "cc_by_type": {
+        "choice": 84.45595854922279,
+        "noul": 27.27272727272727,
+        "score": 68.66374288882437
+       },
+       "low_n": false,
+       "n": 44,
+       "n_by_type": {
+        "choice": 17,
+        "noul": 11,
+        "score": 16
+       },
+       "score": 60.130809570258144
+      },
+      "ko": {
+       "accuracy": 0.8372093023255814,
+       "cc": 61.64976104376719,
+       "cc_by_type": {
+        "choice": 85.29411764705883,
+        "noul": 19.999999999999996,
+        "score": 79.65516548424274
+       },
+       "low_n": false,
+       "n": 43,
+       "n_by_type": {
+        "choice": 18,
+        "noul": 10,
+        "score": 15
+       },
+       "score": 61.64976104376719
+      },
+      "mixed": {
+       "accuracy": 0.96875,
+       "cc": 93.49285591940804,
+       "cc_by_type": {
+        "choice": 89.1989198919892,
+        "noul": 100.0,
+        "score": 91.27964786623497
+       },
+       "low_n": false,
+       "n": 64,
+       "n_by_type": {
+        "choice": 26,
+        "noul": 20,
+        "score": 18
+       },
+       "score": 93.49285591940804
+      },
+      "nl": {
+       "accuracy": 0.8888888888888888,
+       "cc": 65.65639379078347,
+       "cc_by_type": {
+        "choice": 92.92452830188678,
+        "noul": 60.00000000000001,
+        "score": 44.04465307046364
+       },
+       "low_n": false,
+       "n": 36,
+       "n_by_type": {
+        "choice": 20,
+        "noul": 10,
+        "score": 6
+       },
+       "score": 65.65639379078347
+      },
+      "no": {
+       "accuracy": 0.9019607843137255,
+       "cc": 79.0147922261584,
+       "cc_by_type": {
+        "choice": 89.67297762478483,
+        "noul": 73.33333333333334,
+        "score": 74.03806572035703
+       },
+       "low_n": false,
+       "n": 51,
+       "n_by_type": {
+        "choice": 27,
+        "noul": 15,
+        "score": 9
+       },
+       "score": 79.0147922261584
+      },
+      "pl": {
+       "accuracy": 0.8421052631578947,
+       "cc": 68.92917295029667,
+       "cc_by_type": {
+        "choice": 90.42043640234168,
+        "noul": 52.941176470588225,
+        "score": 63.4259059779601
+       },
+       "low_n": false,
+       "n": 57,
+       "n_by_type": {
+        "choice": 28,
+        "noul": 17,
+        "score": 12
+       },
+       "score": 68.92917295029667
+      },
+      "pt": {
+       "accuracy": 0.851063829787234,
+       "cc": 67.48325241434121,
+       "cc_by_type": {
+        "choice": 82.02995008319466,
+        "noul": 33.33333333333333,
+        "score": 87.08647382649565
+       },
+       "low_n": false,
+       "n": 47,
+       "n_by_type": {
+        "choice": 23,
+        "noul": 12,
+        "score": 12
+       },
+       "score": 67.48325241434121
+      },
+      "sv": {
+       "accuracy": 0.8043478260869565,
+       "cc": 67.90605659779538,
+       "cc_by_type": {
+        "choice": 73.18435754189943,
+        "noul": 50.0,
+        "score": 80.53381225148671
+       },
+       "low_n": false,
+       "n": 46,
+       "n_by_type": {
+        "choice": 21,
+        "noul": 12,
+        "score": 13
+       },
+       "score": 67.90605659779538
+      },
+      "tr": {
+       "accuracy": 0.9130434782608695,
+       "cc": 90.70895511904268,
+       "cc_by_type": {
+        "choice": 79.47548460661345,
+        "noul": 100.0,
+        "score": 92.65138075051462
+       },
+       "low_n": false,
+       "n": 46,
+       "n_by_type": {
+        "choice": 20,
+        "noul": 10,
+        "score": 16
+       },
+       "score": 90.70895511904268
+      },
+      "uk": {
+       "accuracy": 0.8035714285714286,
+       "cc": 64.08723117661897,
+       "cc_by_type": {
+        "choice": 72.6027397260274,
+        "noul": 57.14285714285714,
+        "score": 62.51609666097235
+       },
+       "low_n": false,
+       "n": 56,
+       "n_by_type": {
+        "choice": 26,
+        "noul": 14,
+        "score": 16
+       },
+       "score": 64.08723117661897
+      },
+      "zh": {
+       "accuracy": 0.8292682926829268,
+       "cc": 75.07841785192447,
+       "cc_by_type": {
+        "choice": 81.40495867768595,
+        "noul": 75.0,
+        "score": 68.83029487808744
+       },
+       "low_n": false,
+       "n": 41,
+       "n_by_type": {
+        "choice": 22,
+        "noul": 8,
+        "score": 11
+       },
+       "score": 75.07841785192447
+      }
+     },
+     "type": {
+      "choice": {
+       "accuracy": 0.8906666666666667,
+       "cc": 85.08654050176314,
+       "cc_by_type": {
+        "choice": 85.08654050176314
+       },
+       "low_n": false,
+       "n": 750,
+       "n_by_type": {
+        "choice": 750
+       },
+       "score": 85.08654050176314
+      },
+      "noul": {
+       "accuracy": 0.8133333333333334,
+       "cc": 62.66666666666667,
+       "cc_by_type": {
+        "noul": 62.66666666666667
+       },
+       "low_n": false,
+       "n": 375,
+       "n_by_type": {
+        "noul": 375
+       },
+       "score": 62.66666666666667
+      },
+      "score": {
+       "accuracy": 0.8586666666666667,
+       "cc": 76.884652593452,
+       "cc_by_type": {
+        "score": 76.884652593452
+       },
+       "low_n": false,
+       "n": 375,
+       "n_by_type": {
+        "score": 375
+       },
+       "score": 76.884652593452
+      }
+     },
+     "usecase": {
+      "advertising": {
+       "accuracy": 0.7916666666666666,
+       "cc": 59.66584136554709,
+       "cc_by_type": {
+        "choice": 68.86582653817642,
+        "noul": 14.28571428571428,
+        "score": 95.84598327275056
+       },
+       "low_n": false,
+       "n": 48,
+       "n_by_type": {
+        "choice": 31,
+        "noul": 7,
+        "score": 10
+       },
+       "score": 59.66584136554709
+      },
+      "code_linting": {
+       "accuracy": 0.9420289855072463,
+       "cc": 86.36729328087625,
+       "cc_by_type": {
+        "choice": 92.6515615431721,
+        "noul": 83.33333333333333,
+        "score": 83.11698496612334
+       },
+       "low_n": false,
+       "n": 69,
+       "n_by_type": {
+        "choice": 38,
+        "noul": 12,
+        "score": 19
+       },
+       "score": 86.36729328087625
+      },
+      "customer_support": {
+       "accuracy": 0.9090909090909091,
+       "cc": 81.24134023244449,
+       "cc_by_type": {
+        "choice": 88.92988929889299,
+        "noul": 60.00000000000001,
+        "score": 94.79413139844048
+       },
+       "low_n": false,
+       "n": 66,
+       "n_by_type": {
+        "choice": 38,
+        "noul": 15,
+        "score": 13
+       },
+       "score": 81.24134023244449
+      },
+      "demand_forecasting": {
+       "accuracy": 0.5,
+       "cc": 8.739610049506261,
+       "cc_by_type": {
+        "choice": 49.96209249431388,
+        "noul": -53.84615384615385,
+        "score": 30.10289150035875
+       },
+       "low_n": false,
+       "n": 66,
+       "n_by_type": {
+        "choice": 30,
+        "noul": 13,
+        "score": 23
+       },
+       "score": 8.739610049506261
+      },
+      "ecommerce_marketplaces": {
+       "accuracy": 0.8225806451612904,
+       "cc": 73.38026268241731,
+       "cc_by_type": {
+        "choice": 74.66572836030966,
+        "noul": 64.70588235294117,
+        "score": 80.76917733400109
+       },
+       "low_n": false,
+       "n": 62,
+       "n_by_type": {
+        "choice": 33,
+        "noul": 17,
+        "score": 12
+       },
+       "score": 73.38026268241731
+      },
+      "feature_extraction": {
+       "accuracy": 0.8333333333333334,
+       "cc": 68.37720126782351,
+       "cc_by_type": {
+        "choice": 73.6180904522613,
+        "noul": 57.14285714285714,
+        "score": 74.37065620835212
+       },
+       "low_n": false,
+       "n": 72,
+       "n_by_type": {
+        "choice": 37,
+        "noul": 14,
+        "score": 21
+       },
+       "score": 68.37720126782351
+      },
+      "financial_crime": {
+       "accuracy": 0.8412698412698413,
+       "cc": 48.72083782387316,
+       "cc_by_type": {
+        "choice": 93.62041467304626,
+        "noul": -9.090909090909093,
+        "score": 61.63300788948233
+       },
+       "low_n": false,
+       "n": 63,
+       "n_by_type": {
+        "choice": 44,
+        "noul": 11,
+        "score": 8
+       },
+       "score": 48.72083782387316
+      },
+      "gaming": {
+       "accuracy": 0.7586206896551724,
+       "cc": 55.98557739716239,
+       "cc_by_type": {
+        "choice": 80.87649402390439,
+        "noul": 33.33333333333333,
+        "score": 53.74690483424946
+       },
+       "low_n": false,
+       "n": 58,
+       "n_by_type": {
+        "choice": 29,
+        "noul": 9,
+        "score": 20
+       },
+       "score": 55.98557739716239
+      },
+      "insurance_claims": {
+       "accuracy": 0.8387096774193549,
+       "cc": 68.03099044501256,
+       "cc_by_type": {
+        "choice": 77.728285077951,
+        "noul": 52.941176470588225,
+        "score": 73.42350978649847
+       },
+       "low_n": false,
+       "n": 62,
+       "n_by_type": {
+        "choice": 31,
+        "noul": 17,
+        "score": 14
+       },
+       "score": 68.03099044501256
+      },
+      "knowledge_graphs": {
+       "accuracy": 0.8955223880597015,
+       "cc": 76.30663284710961,
+       "cc_by_type": {
+        "choice": 86.50674662668666,
+        "noul": 84.61538461538463,
+        "score": 57.79776729925757
+       },
+       "low_n": false,
+       "n": 67,
+       "n_by_type": {
+        "choice": 30,
+        "noul": 13,
+        "score": 24
+       },
+       "score": 76.30663284710961
+      },
+      "lead_generation": {
+       "accuracy": 0.96,
+       "cc": 91.82118424777717,
+       "cc_by_type": {
+        "choice": 95.76868829337094,
+        "noul": 88.57142857142857,
+        "score": 91.12343587853199
+       },
+       "low_n": false,
+       "n": 75,
+       "n_by_type": {
+        "choice": 33,
+        "noul": 35,
+        "score": 7
+       },
+       "score": 91.82118424777717
+      },
+      "legal_compliance": {
+       "accuracy": 0.875,
+       "cc": 79.322346773859,
+       "cc_by_type": {
+        "choice": 87.96389167502507,
+        "noul": 71.42857142857142,
+        "score": 78.5745772179805
+       },
+       "low_n": false,
+       "n": 56,
+       "n_by_type": {
+        "choice": 23,
+        "noul": 14,
+        "score": 19
+       },
+       "score": 79.322346773859
+      },
+      "llm_guardrails": {
+       "accuracy": 0.9295774647887324,
+       "cc": 86.53750199132735,
+       "cc_by_type": {
+        "choice": 95.92668024439918,
+        "noul": 84.61538461538463,
+        "score": 79.07044111419825
+       },
+       "low_n": false,
+       "n": 71,
+       "n_by_type": {
+        "choice": 34,
+        "noul": 26,
+        "score": 11
+       },
+       "score": 86.53750199132735
+      },
+      "model_routing": {
+       "accuracy": 0.8986486486486487,
+       "cc": 76.55218373935544,
+       "cc_by_type": {
+        "choice": 92.21048987363685,
+        "noul": 64.70588235294117,
+        "score": 72.7401789914883
+       },
+       "low_n": false,
+       "n": 148,
+       "n_by_type": {
+        "choice": 84,
+        "noul": 34,
+        "score": 30
+       },
+       "score": 76.55218373935544
+      },
+      "moderation_trust_safety": {
+       "accuracy": 0.9661016949152542,
+       "cc": 92.97705788473542,
+       "cc_by_type": {
+        "choice": 100.0,
+        "noul": 88.23529411764706,
+        "score": 90.69587953655919
+       },
+       "low_n": false,
+       "n": 59,
+       "n_by_type": {
+        "choice": 21,
+        "noul": 17,
+        "score": 21
+       },
+       "score": 92.97705788473542
+      },
+      "other": {
+       "accuracy": 0.8125,
+       "cc": 74.1133312142334,
+       "cc_by_type": {
+        "choice": 66.70366259711432,
+        "noul": 100.0,
+        "score": 55.63633104558588
+       },
+       "low_n": false,
+       "n": 32,
+       "n_by_type": {
+        "choice": 21,
+        "noul": 6,
+        "score": 5
+       },
+       "score": 74.1133312142334
+      },
+      "recruiting": {
+       "accuracy": 0.9230769230769231,
+       "cc": 88.36432752796647,
+       "cc_by_type": {
+        "choice": 91.34823359769285,
+        "noul": 84.00000000000001,
+        "score": 89.74474898620655
+       },
+       "low_n": false,
+       "n": 65,
+       "n_by_type": {
+        "choice": 32,
+        "noul": 25,
+        "score": 8
+       },
+       "score": 88.36432752796647
+      },
+      "risk_assessment": {
+       "accuracy": 0.8125,
+       "cc": 68.71213917249611,
+       "cc_by_type": {
+        "choice": 68.61924686192468,
+        "noul": 53.846153846153854,
+        "score": 83.6710168094098
+       },
+       "low_n": false,
+       "n": 48,
+       "n_by_type": {
+        "choice": 22,
+        "noul": 13,
+        "score": 13
+       },
+       "score": 68.71213917249611
+      },
+      "scientific_discovery": {
+       "accuracy": 0.8333333333333334,
+       "cc": 60.033032748628095,
+       "cc_by_type": {
+        "choice": 92.63803680981594,
+        "noul": 19.999999999999996,
+        "score": 67.46106143606833
+       },
+       "low_n": false,
+       "n": 42,
+       "n_by_type": {
+        "choice": 18,
+        "noul": 10,
+        "score": 14
+       },
+       "score": 60.033032748628095
+      },
+      "search_retrieval": {
+       "accuracy": 0.9850746268656716,
+       "cc": 94.22203283590825,
+       "cc_by_type": {
+        "choice": 100.0,
+        "noul": 85.71428571428572,
+        "score": 96.95181279343905
+       },
+       "low_n": false,
+       "n": 67,
+       "n_by_type": {
+        "choice": 14,
+        "noul": 14,
+        "score": 39
+       },
+       "score": 94.22203283590825
+      }
+     }
+    },
+    "breakdowns_equated": false,
+    "ci95": {
+     "B": 1000,
+     "C": [
+      87.42465734597094,
+      91.74096837934115
+     ],
+     "I": [
+      65.42652184623108,
+      74.09560875326852
+     ],
+     "capability": [
+      77.38608726634227,
+      82.17277863696627
+     ],
+     "composite": {
+      "A": [
+       70.67214501436558,
+       73.07525989618502
+      ],
+      "B": [
+       69.60428483051408,
+       73.2487823221307
+      ],
+      "C": [
+       70.67214501436558,
+       73.07525989618502
+      ]
+     },
+     "seed": 16
+    },
+    "ci95_n": 1200,
+    "complete": true,
+    "equated": null,
+    "equating_flag": null,
+    "equating_offset": null,
+    "full_set_api": true,
+    "g_med_used": 2.573387642438244,
+    "lane": "api",
+    "metric_basis": "S u P (full set, API lane, v1.6.1 amendment; not equated)",
+    "n_items": 1500,
+    "n_public": 300,
+    "n_sealed_side": 1200,
+    "on_S": {
+     "calibration": 91.49399821393442,
+     "capability": 80.8896637691104,
+     "intelligence": 70.2853293242864
+    },
+    "per_type": {
+     "choice": {
+      "accuracy": 0.8906666666666667,
+      "calibration": 89.95513816068969,
+      "cc": 85.08654050176314,
+      "cc_by_type": {
+       "choice": 85.08654050176314
+      },
+      "cc_tiered": 84.76747453016233,
+      "cc_tiered_open": 83.7293704346896,
+      "cc_tiered_sealed": 85.80557862563506,
+      "low_n": false,
+      "n": 750,
+      "n_by_type": {
+       "choice": 750
+      },
+      "score": 85.08654050176314
+     },
+     "noul": {
+      "accuracy": 0.8133333333333334,
+      "calibration": 90.57742795640148,
+      "cc": 62.66666666666667,
+      "cc_by_type": {
+       "noul": 62.66666666666667
+      },
+      "cc_tiered": 56.589352428288464,
+      "cc_tiered_open": 58.868875086266385,
+      "cc_tiered_sealed": 54.309829770310536,
+      "low_n": false,
+      "n": 375,
+      "n_by_type": {
+       "noul": 375
+      },
+      "score": 62.66666666666667
+     },
+     "score": {
+      "accuracy": 0.8586666666666667,
+      "calibration": 93.9494285247121,
+      "cc": 76.884652593452,
+      "cc_by_type": {
+       "score": 76.884652593452
+      },
+      "cc_tiered": 69.49916101440839,
+      "cc_tiered_open": 62.8808377117522,
+      "cc_tiered_sealed": 76.11748431706457,
+      "low_n": false,
+      "n": 375,
+      "n_by_type": {
+       "score": 375
+      },
+      "score": 76.884652593452
+     }
+    },
+    "raw_on_A": null,
+    "set": "S+P"
+   },
+   "validity": {
+    "choice": {
+     "invalid_rate": 0.0013333333333332975,
+     "n": 750
+    },
+    "noul": {
+     "invalid_rate": 0.005333333333333301,
+     "n": 375
+    },
+    "score": {
+     "invalid_rate": 0.0,
+     "n": 375
+    }
+   },
+   "views": {
+    "Balanced 33:33:33": 66.69551620838499,
+    "Emphasis on Accuracy 60:20:20": 66.97570812817685,
+    "Emphasis on Cost 20:20:60": 60.19569707497833,
+    "Emphasis on Speed 20:60:20": 74.419904085942,
+    "Intelligence only": 67.4004381377088
    }
   },
   {
@@ -88156,13 +89553,13 @@
     "carried_metadata_from": "author model card + config.json",
     "kind": "v1.6.1 addendum a6 (scorer output sha256 9d512dc13d7d, method option B / O1S)"
    },
-   "rank": 88,
+   "rank": 89,
    "ranked": true,
    "ranks": {
-    "A": 88,
-    "B": 112,
-    "C": 122,
-    "capability": 118
+    "A": 89,
+    "B": 113,
+    "C": 123,
+    "capability": 119
    },
    "repo": "https://huggingface.co/autotrust/GEV-26B-Decide",
    "rescored_in": "v1.7.0",
@@ -88577,13 +89974,13 @@
      "Intelligence only": 8.22044918523227
     }
    },
-   "rank": 225,
+   "rank": 226,
    "ranked": true,
    "ranks": {
-    "A": 225,
-    "B": 229,
-    "C": 225,
-    "capability": 236
+    "A": 226,
+    "B": 230,
+    "C": 226,
+    "capability": 237
    },
    "repo": "https://huggingface.co/Goddragon/Arbiter-4B",
    "rescored_in": "v1.7.0",
@@ -89915,12 +91312,12 @@
     },
     "views": null
    },
-   "rank": 209,
+   "rank": 210,
    "ranked": true,
    "ranks": {
-    "A": 209,
-    "B": 199,
-    "C": 191,
+    "A": 210,
+    "B": 200,
+    "C": 192,
     "capability": 3
    },
    "repo": "https://benchmarkheaven.com/jev-models/gpt-5.6-luna",
@@ -90167,12 +91564,12 @@
     },
     "views": null
    },
-   "rank": 176,
+   "rank": 177,
    "ranked": true,
    "ranks": {
-    "A": 176,
-    "B": 151,
-    "C": 142,
+    "A": 177,
+    "B": 152,
+    "C": 143,
     "capability": 1
    },
    "repo": "https://benchmarkheaven.com/jev-models/gpt-6-luna",
@@ -90419,12 +91816,12 @@
     },
     "views": null
    },
-   "rank": 169,
+   "rank": 170,
    "ranked": true,
    "ranks": {
-    "A": 169,
-    "B": 148,
-    "C": 138,
+    "A": 170,
+    "B": 149,
+    "C": 139,
     "capability": 2
    },
    "repo": "https://benchmarkheaven.com/jev-models/gpt-6-luna-low",
@@ -90709,13 +92106,13 @@
      "C": 32.92180310091343
     }
    },
-   "rank": 167,
+   "rank": 168,
    "ranked": true,
    "ranks": {
-    "A": 167,
-    "B": 166,
-    "C": 172,
-    "capability": 172
+    "A": 168,
+    "B": 167,
+    "C": 173,
+    "capability": 173
    },
    "repo": "https://huggingface.co/ibm-granite/granite-switch-4.1-30b",
    "scores": {
@@ -92111,13 +93508,13 @@
      "C": 16.194814794460537
     }
    },
-   "rank": 219,
+   "rank": 220,
    "ranked": true,
    "ranks": {
-    "A": 219,
-    "B": 219,
-    "C": 220,
-    "capability": 227
+    "A": 220,
+    "B": 220,
+    "C": 221,
+    "capability": 228
    },
    "repo": "https://huggingface.co/ibm-granite/granite-switch-4.1-8b",
    "scores": {
@@ -93533,13 +94930,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 311,
+   "rank": 312,
    "ranked": true,
    "ranks": {
-    "A": 311,
-    "B": 311,
-    "C": 311,
-    "capability": 274
+    "A": 312,
+    "B": 312,
+    "C": 312,
+    "capability": 275
    },
    "repo": "https://huggingface.co/Alibaba-NLP/gte-reranker-modernbert-base",
    "rescored_in": "v1.7.0",
@@ -93961,13 +95358,13 @@
      "Intelligence only": 0.25450928339078893
     }
    },
-   "rank": 273,
+   "rank": 274,
    "ranked": true,
    "ranks": {
-    "A": 273,
-    "B": 273,
-    "C": 273,
-    "capability": 273
+    "A": 274,
+    "B": 274,
+    "C": 274,
+    "capability": 274
    },
    "repo": "https://huggingface.co/kouhxp/gutsy",
    "rescored_in": "v1.7.0",
@@ -96759,7 +98156,7 @@
     "A": 6,
     "B": 30,
     "C": 5,
-    "capability": 76
+    "capability": 77
    },
    "repo": "https://huggingface.co/h2oai/h2o-lightning-4b",
    "repriced_in": "v1.6.37",
@@ -98544,13 +99941,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 195,
+   "rank": 196,
    "ranked": true,
    "ranks": {
-    "A": 195,
-    "B": 197,
-    "C": 198,
-    "capability": 184
+    "A": 196,
+    "B": 198,
+    "C": 199,
+    "capability": 185
    },
    "repo": "https://huggingface.co/HopitAI/hopper",
    "rescored_in": "v1.7.0",
@@ -98957,13 +100354,13 @@
     "carried_metadata_from": "Pinned author release; add-requests r61/score/withrows/REGISTRY.json measurement record",
     "kind": "v1.6.1 addendum a11 (scorer output sha256 4d2833926c2d, method option B / O1S)"
    },
-   "rank": 106,
+   "rank": 107,
    "ranked": true,
    "ranks": {
-    "A": 106,
-    "B": 116,
-    "C": 120,
-    "capability": 134
+    "A": 107,
+    "B": 117,
+    "C": 121,
+    "capability": 135
    },
    "repo": "https://huggingface.co/HopitAI/hopper",
    "rescored_in": "v1.7.0",
@@ -99390,13 +100787,13 @@
      "Intelligence only": 51.66752129933851
     }
    },
-   "rank": 127,
+   "rank": 128,
    "ranked": true,
    "ranks": {
-    "A": 127,
-    "B": 128,
-    "C": 128,
-    "capability": 153
+    "A": 128,
+    "B": 129,
+    "C": 129,
+    "capability": 154
    },
    "repo": "https://www.hyland.com",
    "rescored_in": "v1.7.0",
@@ -100794,13 +102191,13 @@
      "Intelligence only": 3.789999234949207
     }
    },
-   "rank": 251,
+   "rank": 252,
    "ranked": true,
    "ranks": {
-    "A": 251,
-    "B": 252,
-    "C": 252,
-    "capability": 231
+    "A": 252,
+    "B": 253,
+    "C": 253,
+    "capability": 232
    },
    "repo": "https://huggingface.co/mohit67890/imajev-2b",
    "rescored_in": "v1.7.0",
@@ -102177,13 +103574,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 192,
+   "rank": 193,
    "ranked": true,
    "ranks": {
-    "A": 192,
-    "B": 193,
-    "C": 194,
-    "capability": 173
+    "A": 193,
+    "B": 194,
+    "C": 195,
+    "capability": 174
    },
    "repo": "https://github.com/fstandhartinger/jevbench/issues/110",
    "rescored_in": "v1.7.0",
@@ -102597,13 +103994,13 @@
      "Intelligence only": 7.519195208738335
     }
    },
-   "rank": 190,
+   "rank": 191,
    "ranked": true,
    "ranks": {
-    "A": 190,
-    "B": 188,
-    "C": 192,
-    "capability": 171
+    "A": 191,
+    "B": 189,
+    "C": 193,
+    "capability": 172
    },
    "repo": "https://huggingface.co/mohit67890/imajev-9b",
    "rescored_in": "v1.7.0",
@@ -103934,13 +105331,13 @@
     },
     "views": null
    },
-   "rank": 126,
+   "rank": 127,
    "ranked": true,
    "ranks": {
-    "A": 126,
-    "B": 129,
-    "C": 133,
-    "capability": 114
+    "A": 127,
+    "B": 130,
+    "C": 134,
+    "capability": 115
    },
    "repo": "https://github.com/fstandhartinger/jevbench/issues/69",
    "rescored_in": "v1.7.0",
@@ -104186,13 +105583,13 @@
     },
     "views": null
    },
-   "rank": 221,
+   "rank": 222,
    "ranked": true,
    "ranks": {
-    "A": 221,
-    "B": 223,
-    "C": 222,
-    "capability": 204
+    "A": 222,
+    "B": 224,
+    "C": 223,
+    "capability": 205
    },
    "repo": "https://github.com/fstandhartinger/jevbench/issues/123",
    "rescored_in": "v1.7.0",
@@ -104496,13 +105893,13 @@
      "Intelligence only": 10.17945694092124
     }
    },
-   "rank": 214,
+   "rank": 215,
    "ranked": true,
    "ranks": {
-    "A": 214,
-    "B": 216,
-    "C": 215,
-    "capability": 208
+    "A": 215,
+    "B": 217,
+    "C": 216,
+    "capability": 209
    },
    "repo": "https://huggingface.co/macrocosm-os/iota-decide-4b",
    "rescored_in": "v1.7.0",
@@ -105832,9 +107229,9 @@
    "ranked": true,
    "ranks": {
     "A": 66,
-    "B": 93,
-    "C": 110,
-    "capability": 130
+    "B": 94,
+    "C": 111,
+    "capability": 131
    },
    "repo": "https://huggingface.co/macrocosm-os/iota-decide-4b-v0.3",
    "scores": {
@@ -107207,8 +108604,8 @@
    "ranks": {
     "A": 16,
     "B": 52,
-    "C": 73,
-    "capability": 100
+    "C": 74,
+    "capability": 101
    },
    "repo": "https://huggingface.co/macrocosm-os/iota-decide-4b-v0.4",
    "scores": {
@@ -108606,13 +110003,13 @@
     "carried_metadata_from": "author model card + config.json",
     "kind": "v1.6.1 addendum a6 (scorer output sha256 9d512dc13d7d, method option B / O1S)"
    },
-   "rank": 137,
+   "rank": 138,
    "ranked": true,
    "ranks": {
-    "A": 137,
-    "B": 138,
-    "C": 145,
-    "capability": 245
+    "A": 138,
+    "B": 139,
+    "C": 146,
+    "capability": 246
    },
    "repo": "https://huggingface.co/theunnecessarythings/JADE",
    "rescored_in": "v1.7.0",
@@ -109015,13 +110412,13 @@
     "carried_metadata_from": "run 47 author metadata + current P83 staged pin/measurement receipt",
     "kind": "v1.6.1 addendum a11 (scorer output sha256 4d2833926c2d, method option B / O1S)"
    },
-   "rank": 181,
+   "rank": 182,
    "ranked": true,
    "ranks": {
-    "A": 181,
-    "B": 181,
-    "C": 182,
-    "capability": 166
+    "A": 182,
+    "B": 182,
+    "C": 183,
+    "capability": 167
    },
    "repo": "https://huggingface.co/cmxu/janus-4b",
    "rescored_in": "v1.7.0",
@@ -109435,13 +110832,13 @@
      "Intelligence only": 10.816061538150686
     }
    },
-   "rank": 199,
+   "rank": 200,
    "ranked": true,
    "ranks": {
-    "A": 199,
-    "B": 200,
-    "C": 201,
-    "capability": 181
+    "A": 200,
+    "B": 201,
+    "C": 202,
+    "capability": 182
    },
    "repo": "https://huggingface.co/szybkie-ai/jeb-35b-a3b",
    "rescored_in": "v1.7.0",
@@ -110822,13 +112219,13 @@
     "carried_metadata_from": "author model card + config.json",
     "kind": "v1.6.1 addendum a6 (scorer output sha256 9d512dc13d7d, method option B / O1S)"
    },
-   "rank": 112,
+   "rank": 113,
    "ranked": true,
    "ranks": {
-    "A": 112,
-    "B": 107,
-    "C": 98,
-    "capability": 117
+    "A": 113,
+    "B": 108,
+    "C": 99,
+    "capability": 118
    },
    "repo": "https://huggingface.co/frontier-infra/jebadiah-27b",
    "rescored_in": "v1.7.0",
@@ -111242,13 +112639,13 @@
      "Intelligence only": 10.92887170611703
     }
    },
-   "rank": 210,
+   "rank": 211,
    "ranked": true,
    "ranks": {
-    "A": 210,
-    "B": 212,
-    "C": 212,
-    "capability": 210
+    "A": 211,
+    "B": 213,
+    "C": 213,
+    "capability": 211
    },
    "repo": "https://huggingface.co/frontier-infra/jebadiah-9b-v2",
    "rescored_in": "v1.7.0",
@@ -112636,13 +114033,13 @@
      "Intelligence only": 19.581330456126626
     }
    },
-   "rank": 182,
+   "rank": 183,
    "ranked": true,
    "ranks": {
-    "A": 182,
-    "B": 183,
-    "C": 184,
-    "capability": 163
+    "A": 183,
+    "B": 184,
+    "C": 185,
+    "capability": 164
    },
    "repo": "https://huggingface.co/frontier-infra/jebadiah-9b-v2-1",
    "rescored_in": "v1.7.0",
@@ -113973,13 +115370,13 @@
    },
    "paid_fast_lane": false,
    "planned_weight_denominator": 1,
-   "rank": 269,
+   "rank": 270,
    "ranked": true,
    "ranks": {
-    "A": 269,
-    "B": 269,
-    "C": 269,
-    "capability": 275
+    "A": 270,
+    "B": 270,
+    "C": 270,
+    "capability": 276
    },
    "repo": "https://huggingface.co/Jeetu456/decider-2b",
    "scores": {
@@ -119436,7 +120833,7 @@
     "A": 11,
     "B": 21,
     "C": 10,
-    "capability": 60
+    "capability": 61
    },
    "repo": "https://huggingface.co/jgeuter/Jeff-1.1-Qwen-4B",
    "scores": {
@@ -122118,13 +123515,13 @@
    },
    "paid_fast_lane": false,
    "planned_weight_denominator": 1,
-   "rank": 163,
+   "rank": 164,
    "ranked": true,
    "ranks": {
-    "A": 163,
-    "B": 171,
-    "C": 168,
-    "capability": 157
+    "A": 164,
+    "B": 172,
+    "C": 169,
+    "capability": 158
    },
    "repo": "https://huggingface.co/tattrongvu/Jeffan-4B-2010",
    "scores": {
@@ -123521,9 +124918,9 @@
    "ranked": true,
    "ranks": {
     "A": 83,
-    "B": 72,
+    "B": 73,
     "C": 64,
-    "capability": 62
+    "capability": 63
    },
    "repo": "https://docs.typesafe.ai",
    "rescored_in": "v1.7.0",
@@ -123959,13 +125356,13 @@
      "Intelligence only": 59.94298184843013
     }
    },
-   "rank": 94,
+   "rank": 95,
    "ranked": true,
    "ranks": {
-    "A": 94,
-    "B": 90,
-    "C": 76,
-    "capability": 75
+    "A": 95,
+    "B": 91,
+    "C": 77,
+    "capability": 76
    },
    "repo": "https://docs.typesafe.ai/models",
    "rescored_in": "v1.7.0",
@@ -125355,13 +126752,13 @@
     "carried_metadata_from": "author model card + config.json",
     "kind": "v1.6.1 addendum a6 (scorer output sha256 9d512dc13d7d, method option B / O1S)"
    },
-   "rank": 98,
+   "rank": 99,
    "ranked": true,
    "ranks": {
-    "A": 98,
-    "B": 101,
-    "C": 97,
-    "capability": 82
+    "A": 99,
+    "B": 102,
+    "C": 98,
+    "capability": 83
    },
    "repo": "https://huggingface.co/autotrust/JEV-27B",
    "rescored_in": "v1.7.0",
@@ -125764,13 +127161,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 158,
+   "rank": 159,
    "ranked": true,
    "ranks": {
-    "A": 158,
-    "B": 158,
-    "C": 164,
-    "capability": 203
+    "A": 159,
+    "B": 159,
+    "C": 165,
+    "capability": 204
    },
    "repo": "https://github.com/us/jev-local",
    "rescored_in": "v1.7.0",
@@ -126173,13 +127570,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 86,
+   "rank": 87,
    "ranked": true,
    "ranks": {
-    "A": 86,
-    "B": 96,
-    "C": 102,
-    "capability": 104
+    "A": 87,
+    "B": 97,
+    "C": 103,
+    "capability": 105
    },
    "repo": "https://huggingface.co/akhilaaa3/Jev-Omni",
    "rescored_in": "v1.7.0",
@@ -126594,13 +127991,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 231,
+   "rank": 232,
    "ranked": true,
    "ranks": {
-    "A": 231,
-    "B": 227,
-    "C": 231,
-    "capability": 207
+    "A": 232,
+    "B": 228,
+    "C": 232,
+    "capability": 208
    },
    "repo": "https://huggingface.co/WIlfLin/JEV-Qwen3.5-9B-Base-NVFP4",
    "rescored_in": "v1.7.0",
@@ -126970,13 +128367,13 @@
     },
     "views": null
    },
-   "rank": 270,
+   "rank": 271,
    "ranked": true,
    "ranks": {
-    "A": 270,
-    "B": 270,
-    "C": 270,
-    "capability": 303
+    "A": 271,
+    "B": 271,
+    "C": 271,
+    "capability": 304
    },
    "repo": "https://github.com/fstandhartinger/jevbench/issues/66",
    "rescored_in": "v1.7.0",
@@ -127268,13 +128665,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 175,
+   "rank": 176,
    "ranked": true,
    "ranks": {
-    "A": 175,
-    "B": 176,
-    "C": 177,
-    "capability": 154
+    "A": 176,
+    "B": 177,
+    "C": 178,
+    "capability": 155
    },
    "repo": "https://huggingface.co/alibiserikbay/JevK5",
    "rescored_in": "v1.7.0",
@@ -127677,13 +129074,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 183,
+   "rank": 184,
    "ranked": true,
    "ranks": {
-    "A": 183,
-    "B": 184,
-    "C": 185,
-    "capability": 168
+    "A": 184,
+    "B": 185,
+    "C": 186,
+    "capability": 169
    },
    "repo": "https://github.com/allebee/jevk5",
    "rescored_in": "v1.7.0",
@@ -128086,13 +129483,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 132,
+   "rank": 133,
    "ranked": true,
    "ranks": {
-    "A": 132,
-    "B": 132,
-    "C": 137,
-    "capability": 127
+    "A": 133,
+    "B": 133,
+    "C": 138,
+    "capability": 128
    },
    "repo": "https://huggingface.co/juspay/jev-one",
    "rescored_in": "v1.7.0",
@@ -129838,13 +131235,13 @@
    },
    "paid_fast_lane": false,
    "planned_weight_denominator": 1,
-   "rank": 236,
+   "rank": 237,
    "ranked": true,
    "ranks": {
-    "A": 236,
-    "B": 237,
-    "C": 236,
-    "capability": 228
+    "A": 237,
+    "B": 238,
+    "C": 237,
+    "capability": 229
    },
    "repo": "https://huggingface.co/pragmaticfrontier/jez-large-1.0.0",
    "scores": {
@@ -131175,13 +132572,13 @@
    },
    "paid_fast_lane": false,
    "planned_weight_denominator": 1,
-   "rank": 293,
+   "rank": 294,
    "ranked": true,
    "ranks": {
-    "A": 293,
-    "B": 293,
-    "C": 293,
-    "capability": 265
+    "A": 294,
+    "B": 294,
+    "C": 294,
+    "capability": 266
    },
    "repo": "https://huggingface.co/pragmaticfrontier/jez-small-1.0.0",
    "scores": {
@@ -132565,13 +133962,13 @@
      "Intelligence only": 1.599423855434685
     }
    },
-   "rank": 261,
+   "rank": 262,
    "ranked": true,
    "ranks": {
-    "A": 261,
-    "B": 262,
-    "C": 261,
-    "capability": 254
+    "A": 262,
+    "B": 263,
+    "C": 262,
+    "capability": 255
    },
    "repo": "https://huggingface.co/eljiwo/jiwo-0.8b",
    "rescored_in": "v1.7.0",
@@ -133953,13 +135350,13 @@
      "Intelligence only": 16.835004451338282
     }
    },
-   "rank": 191,
+   "rank": 192,
    "ranked": true,
    "ranks": {
-    "A": 191,
-    "B": 192,
-    "C": 193,
-    "capability": 188
+    "A": 192,
+    "B": 193,
+    "C": 194,
+    "capability": 189
    },
    "repo": "https://huggingface.co/eljiwo/jiwo-4b",
    "rescored_in": "v1.7.0",
@@ -135326,13 +136723,13 @@
      "C": 10.851120168602943
     }
    },
-   "rank": 243,
+   "rank": 244,
    "ranked": true,
    "ranks": {
-    "A": 243,
-    "B": 243,
-    "C": 243,
-    "capability": 222
+    "A": 244,
+    "B": 244,
+    "C": 244,
+    "capability": 223
    },
    "repo": "https://huggingface.co/baselabs/joey-1",
    "scores": {
@@ -136744,9 +138141,9 @@
    "ranked": true,
    "ranks": {
     "A": 74,
-    "B": 102,
-    "C": 115,
-    "capability": 112
+    "B": 103,
+    "C": 116,
+    "capability": 113
    },
    "repo": "https://huggingface.co/kirp/jpt-35b-a3b",
    "rescored_in": "v1.7.0",
@@ -137160,13 +138557,13 @@
      "Intelligence only": 27.06799772975727
     }
    },
-   "rank": 157,
+   "rank": 158,
    "ranked": true,
    "ranks": {
-    "A": 157,
-    "B": 164,
-    "C": 162,
-    "capability": 159
+    "A": 158,
+    "B": 165,
+    "C": 163,
+    "capability": 160
    },
    "repo": "https://huggingface.co/kirp/jpt-4b",
    "rescored_in": "v1.7.0",
@@ -138543,13 +139940,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 200,
+   "rank": 201,
    "ranked": true,
    "ranks": {
-    "A": 200,
-    "B": 201,
-    "C": 202,
-    "capability": 174
+    "A": 201,
+    "B": 202,
+    "C": 203,
+    "capability": 175
    },
    "repo": "https://github.com/Octalab-Inc/jqv",
    "rescored_in": "v1.7.0",
@@ -138968,13 +140365,13 @@
     "carried_metadata_from": "Pinned author release; add-requests r61/score/withrows/REGISTRY.json measurement record",
     "kind": "v1.6.1 addendum a11 (scorer output sha256 4d2833926c2d, method option B / O1S)"
    },
-   "rank": 277,
+   "rank": 278,
    "ranked": true,
    "ranks": {
-    "A": 277,
-    "B": 278,
-    "C": 277,
-    "capability": 271
+    "A": 278,
+    "B": 279,
+    "C": 278,
+    "capability": 272
    },
    "repo": "https://huggingface.co/usejul/jul-decision-minicpm5-2b",
    "rescored_in": "v1.7.0",
@@ -139413,13 +140810,13 @@
      "Intelligence only": 0.005819814930094012
     }
    },
-   "rank": 302,
+   "rank": 303,
    "ranked": true,
    "ranks": {
-    "A": 302,
-    "B": 302,
-    "C": 302,
-    "capability": 312
+    "A": 303,
+    "B": 303,
+    "C": 303,
+    "capability": 313
    },
    "repo": "https://huggingface.co/SupersonicLabs/Julia-1",
    "rescored_in": "v1.7.0",
@@ -140824,13 +142221,13 @@
     "carried_metadata_from": "author model card + config.json",
     "kind": "v1.6.1 addendum a8 (scorer output sha256 7a5b4d4c7b7c, method option B / O1S)"
    },
-   "rank": 174,
+   "rank": 175,
    "ranked": true,
    "ranks": {
-    "A": 174,
-    "B": 173,
-    "C": 176,
-    "capability": 177
+    "A": 175,
+    "B": 174,
+    "C": 177,
+    "capability": 178
    },
    "repo": "https://huggingface.co/Okura66/Kahn1-Qwen3.5-4B",
    "repriced_in": "v1.6.37",
@@ -141432,7 +142829,7 @@
     "A": 52,
     "B": 61,
     "C": 43,
-    "capability": 90
+    "capability": 91
    },
    "repo": "https://docs.sqwish.ai",
    "rescored_in": "v1.7.0",
@@ -144234,13 +145631,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 292,
+   "rank": 293,
    "ranked": true,
    "ranks": {
-    "A": 292,
-    "B": 292,
-    "C": 292,
-    "capability": 293
+    "A": 293,
+    "B": 293,
+    "C": 293,
+    "capability": 294
    },
    "repo": "https://github.com/jaredpalmer/kev",
    "rescored_in": "v1.7.0",
@@ -144643,13 +146040,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 276,
+   "rank": 277,
    "ranked": true,
    "ranks": {
-    "A": 276,
-    "B": 276,
-    "C": 276,
-    "capability": 284
+    "A": 277,
+    "B": 277,
+    "C": 277,
+    "capability": 285
    },
    "repo": "https://github.com/jaredpalmer/kev",
    "rescored_in": "v1.7.0",
@@ -145060,7 +146457,7 @@
    "ranked": true,
    "ranks": {
     "A": 85,
-    "B": 73,
+    "B": 74,
     "C": 66,
     "capability": 47
    },
@@ -145465,13 +146862,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 256,
+   "rank": 257,
    "ranked": true,
    "ranks": {
-    "A": 256,
-    "B": 256,
-    "C": 256,
-    "capability": 262
+    "A": 257,
+    "B": 257,
+    "C": 257,
+    "capability": 263
    },
    "repo": "https://github.com/jaredpalmer/kev",
    "rescored_in": "v1.7.0",
@@ -145874,13 +147271,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 217,
+   "rank": 218,
    "ranked": true,
    "ranks": {
-    "A": 217,
-    "B": 218,
-    "C": 218,
-    "capability": 242
+    "A": 218,
+    "B": 219,
+    "C": 219,
+    "capability": 243
    },
    "repo": "https://github.com/jaredpalmer/kev",
    "rescored_in": "v1.7.0",
@@ -147620,13 +149017,13 @@
    },
    "paid_fast_lane": false,
    "planned_weight_denominator": 1,
-   "rank": 170,
+   "rank": 171,
    "ranked": true,
    "ranks": {
-    "A": 170,
-    "B": 172,
-    "C": 173,
-    "capability": 164
+    "A": 171,
+    "B": 173,
+    "C": 174,
+    "capability": 165
    },
    "repo": "https://huggingface.co/knowledgator/gliclass-v4-9b",
    "scores": {
@@ -148969,7 +150366,7 @@
     "A": 37,
     "B": 46,
     "C": 32,
-    "capability": 59
+    "capability": 60
    },
    "repo": "https://huggingface.co/PelaAI/KnowLine-26B-A4B-Gen2.5",
    "scores": {
@@ -150299,12 +151696,12 @@
    },
    "paid_fast_lane": false,
    "planned_weight_denominator": 1,
-   "rank": 128,
+   "rank": 129,
    "ranked": true,
    "ranks": {
-    "A": 128,
-    "B": 123,
-    "C": 104,
+    "A": 129,
+    "B": 124,
+    "C": 105,
     "capability": 11
    },
    "repo": "https://huggingface.co/PelaAI/KnowLine-31B-Gen1",
@@ -151642,7 +153039,7 @@
     "A": 40,
     "B": 62,
     "C": 34,
-    "capability": 68
+    "capability": 69
    },
    "repo": "https://huggingface.co/PelaAI/KnowLine-35B-A3B-Gen1.5",
    "scores": {
@@ -152979,13 +154376,13 @@
    "paid_fast_lane": false,
    "planned_weight_denominator": 1,
    "provider": "self-hosted",
-   "rank": 131,
+   "rank": 132,
    "ranked": true,
    "ranks": {
-    "A": 131,
-    "B": 131,
-    "C": 136,
-    "capability": 143
+    "A": 132,
+    "B": 132,
+    "C": 137,
+    "capability": 144
    },
    "repo": "https://huggingface.co/PelaAI/KnowLine-4B-Gen5.5",
    "scores": {
@@ -154372,13 +155769,13 @@
      "Intelligence only": 4.258556788204026
     }
    },
-   "rank": 247,
+   "rank": 248,
    "ranked": true,
    "ranks": {
-    "A": 247,
-    "B": 248,
-    "C": 248,
-    "capability": 272
+    "A": 248,
+    "B": 249,
+    "C": 249,
+    "capability": 273
    },
    "repo": "https://huggingface.co/Guru0381/krino-2b",
    "rescored_in": "v1.7.0",
@@ -155709,13 +157106,13 @@
     },
     "views": null
    },
-   "rank": 171,
+   "rank": 172,
    "ranked": true,
    "ranks": {
-    "A": 171,
-    "B": 159,
-    "C": 144,
-    "capability": 92
+    "A": 172,
+    "B": 160,
+    "C": 145,
+    "capability": 93
    },
    "repo": "https://benchmarkheaven.com/jev-models/kushal-gemma4-31b-it-autoloops",
    "rescored_in": "v1.7.0",
@@ -156036,8 +157433,8 @@
    "ranks": {
     "A": 5,
     "B": 43,
-    "C": 67,
-    "capability": 113
+    "C": 68,
+    "capability": 114
    },
    "repo": "https://www.launchables.ai/licensing",
    "rescored_in": "v1.7.0",
@@ -157448,12 +158845,12 @@
      "Intelligence only": 73.64186833978687
     }
    },
-   "rank": 90,
+   "rank": 91,
    "ranked": true,
    "ranks": {
-    "A": 90,
+    "A": 91,
     "B": 58,
-    "C": 70,
+    "C": 71,
     "capability": 49
    },
    "repo": "https://www.launchables.ai/licensing",
@@ -158853,13 +160250,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 305,
+   "rank": 306,
    "ranked": true,
    "ranks": {
-    "A": 305,
-    "B": 305,
-    "C": 305,
-    "capability": 295
+    "A": 306,
+    "B": 306,
+    "C": 306,
+    "capability": 296
    },
    "repo": "https://huggingface.co/convaiinnovations/laya",
    "rescored_in": "v1.7.0",
@@ -159286,13 +160683,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 307,
+   "rank": 308,
    "ranked": true,
    "ranks": {
-    "A": 307,
-    "B": 307,
-    "C": 307,
-    "capability": 310
+    "A": 308,
+    "B": 308,
+    "C": 308,
+    "capability": 311
    },
    "repo": "https://huggingface.co/convaiinnovations/laya/tree/1c5edc17a7acd8701df6fc341c0d179f1c62c982/multilingual",
    "rescored_in": "v1.7.0",
@@ -159719,13 +161116,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 285,
+   "rank": 286,
    "ranked": true,
    "ranks": {
-    "A": 285,
-    "B": 285,
-    "C": 285,
-    "capability": 260
+    "A": 286,
+    "B": 286,
+    "C": 286,
+    "capability": 261
    },
    "repo": "https://huggingface.co/convaiinnovations/laya/tree/1c5edc17a7acd8701df6fc341c0d179f1c62c982/typed-decisions",
    "rescored_in": "v1.7.0",
@@ -160141,13 +161538,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 155,
+   "rank": 156,
    "ranked": true,
    "ranks": {
-    "A": 155,
-    "B": 162,
-    "C": 160,
-    "capability": 179
+    "A": 156,
+    "B": 163,
+    "C": 161,
+    "capability": 180
    },
    "repo": "https://huggingface.co/interfaze-ai/lev",
    "rescored_in": "v1.7.0",
@@ -160562,13 +161959,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 290,
+   "rank": 291,
    "ranked": true,
    "ranks": {
-    "A": 290,
-    "B": 291,
-    "C": 290,
-    "capability": 264
+    "A": 291,
+    "B": 292,
+    "C": 291,
+    "capability": 265
    },
    "repo": "https://github.com/franckverrot/lev",
    "rescored_in": "v1.7.0",
@@ -160998,9 +162395,9 @@
    "ranked": true,
    "ranks": {
     "A": 64,
-    "B": 65,
+    "B": 66,
     "C": 52,
-    "capability": 78
+    "capability": 79
    },
    "repo": "https://www.liquid.ai/blog/d1-decision-model",
    "rescored_in": "v1.7.0",
@@ -161431,13 +162828,13 @@
      "Intelligence only": 4.340556958274228
     }
    },
-   "rank": 248,
+   "rank": 249,
    "ranked": true,
    "ranks": {
-    "A": 248,
-    "B": 249,
-    "C": 249,
-    "capability": 243
+    "A": 249,
+    "B": 250,
+    "C": 250,
+    "capability": 244
    },
    "repo": "https://huggingface.co/LiquidAI/d1-3B",
    "rescored_in": "v1.7.0",
@@ -162844,13 +164241,13 @@
      "Intelligence only": 0.013878616661020313
     }
    },
-   "rank": 299,
+   "rank": 300,
    "ranked": true,
    "ranks": {
-    "A": 299,
-    "B": 299,
-    "C": 299,
-    "capability": 294
+    "A": 300,
+    "B": 300,
+    "C": 300,
+    "capability": 295
    },
    "repo": "https://huggingface.co/LiquidAI/d1-omni-600M",
    "rescored_in": "v1.7.0",
@@ -165653,13 +167050,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 150,
+   "rank": 151,
    "ranked": true,
    "ranks": {
-    "A": 150,
-    "B": 152,
-    "C": 155,
-    "capability": 141
+    "A": 151,
+    "B": 153,
+    "C": 156,
+    "capability": 142
    },
    "repo": "https://github.com/zhengxuyu/litjev",
    "rescored_in": "v1.7.0",
@@ -166062,13 +167459,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 242,
+   "rank": 243,
    "ranked": true,
    "ranks": {
-    "A": 242,
-    "B": 242,
-    "C": 242,
-    "capability": 225
+    "A": 243,
+    "B": 243,
+    "C": 243,
+    "capability": 226
    },
    "repo": "https://github.com/amithgc/local-jev",
    "rescored_in": "v1.7.0",
@@ -166425,13 +167822,13 @@
    },
    "paid_fast_lane": false,
    "planned_weight_denominator": 1,
-   "rank": 118,
+   "rank": 119,
    "ranked": true,
    "ranks": {
-    "A": 118,
-    "B": 114,
-    "C": 108,
-    "capability": 95
+    "A": 119,
+    "B": 115,
+    "C": 109,
+    "capability": 96
    },
    "repo": "https://huggingface.co/FrontiersMind/Lumma-fev-27B",
    "scores": {
@@ -169150,13 +170547,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 259,
+   "rank": 260,
    "ranked": true,
    "ranks": {
-    "A": 259,
-    "B": 261,
-    "C": 259,
-    "capability": 251
+    "A": 260,
+    "B": 262,
+    "C": 260,
+    "capability": 252
    },
    "repo": "https://github.com/newfull5/malkuth",
    "rescored_in": "v1.7.0",
@@ -169559,13 +170956,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 194,
+   "rank": 195,
    "ranked": true,
    "ranks": {
-    "A": 194,
-    "B": 195,
-    "C": 197,
-    "capability": 185
+    "A": 195,
+    "B": 196,
+    "C": 198,
+    "capability": 186
    },
    "repo": "https://github.com/newfull5/malkuth",
    "rescored_in": "v1.7.0",
@@ -171304,13 +172701,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 203,
+   "rank": 204,
    "ranked": true,
    "ranks": {
-    "A": 203,
-    "B": 204,
-    "C": 205,
-    "capability": 200
+    "A": 204,
+    "B": 205,
+    "C": 206,
+    "capability": 201
    },
    "repo": "https://github.com/nschlaepfer/manchego-serve",
    "rescored_in": "v1.7.0",
@@ -171735,7 +173132,7 @@
     "A": 70,
     "B": 60,
     "C": 55,
-    "capability": 84
+    "capability": 85
    },
    "repo": "https://openrouter.ai/inception/mercury-decide:free",
    "rescored_in": "v1.7.0",
@@ -172152,13 +173549,13 @@
     "carried_metadata_from": "Pinned author release; add-requests r61/score/withrows/REGISTRY.json measurement record",
     "kind": "v1.6.1 addendum a11 (scorer output sha256 4d2833926c2d, method option B / O1S)"
    },
-   "rank": 144,
+   "rank": 145,
    "ranked": true,
    "ranks": {
-    "A": 144,
-    "B": 149,
-    "C": 149,
-    "capability": 201
+    "A": 145,
+    "B": 150,
+    "C": 150,
+    "capability": 202
    },
    "repo": "https://huggingface.co/agentmessier/messier-one",
    "rescored_in": "v1.7.0",
@@ -172572,13 +173969,13 @@
      "Intelligence only": 52.02542301918905
     }
    },
-   "rank": 100,
+   "rank": 101,
    "ranked": true,
    "ranks": {
-    "A": 100,
-    "B": 111,
-    "C": 116,
-    "capability": 170
+    "A": 101,
+    "B": 112,
+    "C": 117,
+    "capability": 171
    },
    "repo": "https://huggingface.co/agentmessier/messier-one",
    "rescored_in": "v1.7.0",
@@ -175358,13 +176755,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 172,
+   "rank": 173,
    "ranked": true,
    "ranks": {
-    "A": 172,
-    "B": 174,
-    "C": 174,
-    "capability": 176
+    "A": 173,
+    "B": 175,
+    "C": 175,
+    "capability": 177
    },
    "repo": "https://github.com/metask-ai/metask-jev",
    "rescored_in": "v1.7.0",
@@ -175768,13 +177165,13 @@
      "Intelligence only": 51.08240263971605
     }
    },
-   "rank": 116,
+   "rank": 117,
    "ranked": true,
    "ranks": {
-    "A": 116,
-    "B": 119,
-    "C": 123,
-    "capability": 146
+    "A": 117,
+    "B": 120,
+    "C": 124,
+    "capability": 147
    },
    "repo": "https://huggingface.co/wayfind/metask-jev-4b-policy-mix",
    "rescored_in": "v1.7.0",
@@ -178549,7 +179946,7 @@
     "A": 80,
     "B": 64,
     "C": 61,
-    "capability": 65
+    "capability": 66
    },
    "repo": "https://huggingface.co/MeTask-Rain/metask-jev-rain-12B-trained",
    "rescored_in": "v1.7.0",
@@ -181331,12 +182728,12 @@
      "Intelligence only": 70.5102505244786
     }
    },
-   "rank": 95,
+   "rank": 96,
    "ranked": true,
    "ranks": {
-    "A": 95,
+    "A": 96,
     "B": 63,
-    "C": 75,
+    "C": 76,
     "capability": 44
    },
    "repo": "https://huggingface.co/MeTask-Rain/metask-jev-rain-31B-trained",
@@ -183124,13 +184521,13 @@
     },
     "views": null
    },
-   "rank": 102,
+   "rank": 103,
    "ranked": true,
    "ranks": {
-    "A": 102,
-    "B": 104,
-    "C": 96,
-    "capability": 110
+    "A": 103,
+    "B": 105,
+    "C": 97,
+    "capability": 111
    },
    "repo": "https://commandline.microsoft.com/microsoft-decision-1-model-foundry/",
    "rescored_in": "v1.7.0",
@@ -184945,7 +186342,7 @@
     "A": 23,
     "B": 38,
     "C": 20,
-    "capability": 58
+    "capability": 59
    },
    "repo": "https://commandline.microsoft.com/microsoft-decision-1-model-foundry/",
    "scores": {
@@ -186357,13 +187754,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 312,
+   "rank": 313,
    "ranked": true,
    "ranks": {
-    "A": 312,
-    "B": 312,
-    "C": 312,
-    "capability": 305
+    "A": 313,
+    "B": 313,
+    "C": 313,
+    "capability": 306
    },
    "repo": "https://github.com/Bluusun/Decision-API",
    "rescored_in": "v1.7.0",
@@ -188189,13 +189586,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 306,
+   "rank": 307,
    "ranked": true,
    "ranks": {
-    "A": 306,
-    "B": 306,
-    "C": 306,
-    "capability": 263
+    "A": 307,
+    "B": 307,
+    "C": 307,
+    "capability": 264
    },
    "repo": "https://huggingface.co/mixedbread-ai/mxbai-rerank-base-v2",
    "rescored_in": "v1.7.0",
@@ -188622,13 +190019,13 @@
      "Intelligence only": 22.442101625156123
     }
    },
-   "rank": 92,
+   "rank": 93,
    "ranked": true,
    "ranks": {
-    "A": 92,
-    "B": 83,
-    "C": 72,
-    "capability": 83
+    "A": 93,
+    "B": 84,
+    "C": 73,
+    "capability": 84
    },
    "repo": "https://huggingface.co/nagisanzeninz/Nagi-ENORMOUS",
    "rescored_in": "v1.7.0",
@@ -192795,13 +194192,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 254,
+   "rank": 255,
    "ranked": true,
    "ranks": {
-    "A": 254,
-    "B": 254,
-    "C": 255,
-    "capability": 253
+    "A": 255,
+    "B": 255,
+    "C": 256,
+    "capability": 254
    },
    "repo": "https://github.com/pst2154/Nemotron_Jev",
    "rescored_in": "v1.7.0",
@@ -194596,13 +195993,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 151,
+   "rank": 152,
    "ranked": true,
    "ranks": {
-    "A": 151,
-    "B": 154,
-    "C": 157,
-    "capability": 215
+    "A": 152,
+    "B": 155,
+    "C": 158,
+    "capability": 216
    },
    "repo": "https://github.com/bespokelabsai/nimble",
    "rescored_in": "v1.7.0",
@@ -195029,13 +196426,13 @@
      "Intelligence only": 28.393660603216478
     }
    },
-   "rank": 161,
+   "rank": 162,
    "ranked": true,
    "ranks": {
-    "A": 161,
-    "B": 165,
-    "C": 166,
-    "capability": 156
+    "A": 162,
+    "B": 166,
+    "C": 167,
+    "capability": 157
    },
    "repo": "https://bespokelabs.ai",
    "repriced_in": "v1.6.23",
@@ -199175,13 +200572,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 120,
+   "rank": 121,
    "ranked": true,
    "ranks": {
-    "A": 120,
-    "B": 121,
-    "C": 121,
-    "capability": 136
+    "A": 121,
+    "B": 122,
+    "C": 122,
+    "capability": 137
    },
    "repo": "https://github.com/igorls/ninfer",
    "rescored_in": "v1.7.0",
@@ -199584,13 +200981,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 115,
+   "rank": 116,
    "ranked": true,
    "ranks": {
-    "A": 115,
-    "B": 122,
-    "C": 129,
-    "capability": 122
+    "A": 116,
+    "B": 123,
+    "C": 130,
+    "capability": 123
    },
    "repo": "https://github.com/igorls/ninfer",
    "rescored_in": "v1.7.0",
@@ -200004,13 +201401,13 @@
      "Intelligence only": 6.2886612524076995
     }
    },
-   "rank": 239,
+   "rank": 240,
    "ranked": true,
    "ranks": {
-    "A": 239,
-    "B": 239,
-    "C": 239,
-    "capability": 229
+    "A": 240,
+    "B": 240,
+    "C": 240,
+    "capability": 230
    },
    "repo": "https://huggingface.co/BlackdromeAILabs/noma",
    "rescored_in": "v1.7.0",
@@ -201379,13 +202776,13 @@
      "C": 53.28521292727241
     }
    },
-   "rank": 140,
+   "rank": 141,
    "ranked": true,
    "ranks": {
-    "A": 140,
-    "B": 136,
-    "C": 125,
-    "capability": 205
+    "A": 141,
+    "B": 137,
+    "C": 126,
+    "capability": 206
    },
    "repo": "https://openrouter.ai/nvidia/nemotron-3.5-super-vl",
    "scores": {
@@ -204054,13 +205451,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 246,
+   "rank": 247,
    "ranked": true,
    "ranks": {
-    "A": 246,
-    "B": 246,
-    "C": 247,
-    "capability": 246
+    "A": 247,
+    "B": 247,
+    "C": 248,
+    "capability": 247
    },
    "repo": "https://github.com/ikermoel/open-alternative-jev",
    "rescored_in": "v1.7.0",
@@ -204488,13 +205885,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 301,
+   "rank": 302,
    "ranked": true,
    "ranks": {
-    "A": 301,
-    "B": 301,
-    "C": 301,
-    "capability": 288
+    "A": 302,
+    "B": 302,
+    "C": 302,
+    "capability": 289
    },
    "repo": "https://github.com/kotoba-lang/typed-decisions",
    "rescored_in": "v1.7.0",
@@ -204879,13 +206276,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 313,
+   "rank": 314,
    "ranked": true,
    "ranks": {
-    "A": 313,
-    "B": 313,
-    "C": 313,
-    "capability": 299
+    "A": 314,
+    "B": 314,
+    "C": 314,
+    "capability": 300
    },
    "repo": "https://github.com/JoshuaSP/open-jev",
    "rescored_in": "v1.7.0",
@@ -205288,13 +206685,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 168,
+   "rank": 169,
    "ranked": true,
    "ranks": {
-    "A": 168,
-    "B": 161,
-    "C": 156,
-    "capability": 137
+    "A": 169,
+    "B": 162,
+    "C": 157,
+    "capability": 138
    },
    "repo": "https://huggingface.co/ZefanCai/Open-Jev-27B-v1.1",
    "rescored_in": "v1.7.0",
@@ -205697,13 +207094,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 249,
+   "rank": 250,
    "ranked": true,
    "ranks": {
-    "A": 249,
-    "B": 250,
-    "C": 250,
-    "capability": 249
+    "A": 250,
+    "B": 251,
+    "C": 251,
+    "capability": 250
    },
    "repo": "https://github.com/Zefan-Cai/Open-Jev",
    "rescored_in": "v1.7.0",
@@ -206106,13 +207503,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 149,
+   "rank": 150,
    "ranked": true,
    "ranks": {
-    "A": 149,
-    "B": 150,
-    "C": 154,
-    "capability": 175
+    "A": 150,
+    "B": 151,
+    "C": 155,
+    "capability": 176
    },
    "repo": "https://github.com/Zefan-Cai/Open-Jev",
    "rescored_in": "v1.7.0",
@@ -206469,13 +207866,13 @@
     },
     "views": null
    },
-   "rank": 125,
+   "rank": 126,
    "ranked": true,
    "ranks": {
-    "A": 125,
-    "B": 126,
-    "C": 109,
-    "capability": 86
+    "A": 126,
+    "B": 127,
+    "C": 110,
+    "capability": 87
    },
    "repo": null,
    "rescored_in": "v1.7.0",
@@ -206779,13 +208176,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 278,
+   "rank": 279,
    "ranked": true,
    "ranks": {
-    "A": 278,
-    "B": 279,
-    "C": 278,
-    "capability": 282
+    "A": 279,
+    "B": 280,
+    "C": 279,
+    "capability": 283
    },
    "repo": "https://github.com/deepanwadhwa/OpenDecision",
    "rescored_in": "v1.7.0",
@@ -207155,13 +208552,13 @@
     },
     "views": null
    },
-   "rank": 233,
+   "rank": 234,
    "ranked": true,
    "ranks": {
-    "A": 233,
-    "B": 224,
-    "C": 233,
-    "capability": 197
+    "A": 234,
+    "B": 225,
+    "C": 234,
+    "capability": 198
    },
    "repo": "https://github.com/ekzhang/openjev-sglang",
    "rescored_in": "v1.7.0",
@@ -207453,13 +208850,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 111,
+   "rank": 112,
    "ranked": true,
    "ranks": {
-    "A": 111,
-    "B": 81,
-    "C": 82,
-    "capability": 71
+    "A": 112,
+    "B": 82,
+    "C": 83,
+    "capability": 72
    },
    "repo": "https://github.com/razorback16/openjev",
    "rescored_in": "v1.7.0",
@@ -207874,13 +209271,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 294,
+   "rank": 295,
    "ranked": true,
    "ranks": {
-    "A": 294,
-    "B": 294,
-    "C": 294,
-    "capability": 304
+    "A": 295,
+    "B": 295,
+    "C": 295,
+    "capability": 305
    },
    "repo": "https://github.com/Heman10x-NGU/openJev-verdict-2.0",
    "rescored_in": "v1.7.0",
@@ -208308,13 +209705,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 288,
+   "rank": 289,
    "ranked": true,
    "ranks": {
-    "A": 288,
-    "B": 289,
-    "C": 288,
-    "capability": 278
+    "A": 289,
+    "B": 290,
+    "C": 289,
+    "capability": 279
    },
    "repo": "https://huggingface.co/heman10x/rlcd-modernbert-151m",
    "rescored_in": "v1.7.0",
@@ -208730,13 +210127,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 244,
+   "rank": 245,
    "ranked": true,
    "ranks": {
-    "A": 244,
-    "B": 244,
-    "C": 244,
-    "capability": 248
+    "A": 245,
+    "B": 245,
+    "C": 245,
+    "capability": 249
    },
    "repo": "https://github.com/sabeel111/OpenSourceJev",
    "rescored_in": "v1.7.0",
@@ -209091,9 +210488,9 @@
    "ranked": true,
    "ranks": {
     "A": 29,
-    "B": 66,
-    "C": 89,
-    "capability": 125
+    "B": 67,
+    "C": 90,
+    "capability": 126
    },
    "repo": "https://huggingface.co/PhillyLabs/philly-decider-v2",
    "scores": {
@@ -210482,13 +211879,13 @@
      "Intelligence only": 0.018814714977998477
     }
    },
-   "rank": 298,
+   "rank": 299,
    "ranked": true,
    "ranks": {
-    "A": 298,
-    "B": 298,
-    "C": 298,
-    "capability": 300
+    "A": 299,
+    "B": 299,
+    "C": 299,
+    "capability": 301
    },
    "repo": "https://huggingface.co/Phocinae/Phocinae-Largha-150M-v1",
    "rescored_in": "v1.7.0",
@@ -213276,9 +214673,9 @@
    "ranked": true,
    "ranks": {
     "A": 46,
-    "B": 74,
-    "C": 90,
-    "capability": 106
+    "B": 75,
+    "C": 91,
+    "capability": 107
    },
    "repo": "https://huggingface.co/agentscope-ai/Piccolo-4B",
    "scores": {
@@ -214678,9 +216075,9 @@
    "ranked": true,
    "ranks": {
     "A": 63,
-    "B": 67,
+    "B": 68,
     "C": 51,
-    "capability": 80
+    "capability": 81
    },
    "repo": "https://huggingface.co/agentscope-ai/Piccolo-9B",
    "scores": {
@@ -216107,13 +217504,13 @@
      "Intelligence only": 9.380636713101017
     }
    },
-   "rank": 220,
+   "rank": 221,
    "ranked": true,
    "ranks": {
-    "A": 220,
-    "B": 221,
-    "C": 221,
-    "capability": 216
+    "A": 221,
+    "B": 222,
+    "C": 222,
+    "capability": 217
    },
    "remeasure": {
     "disclosure": "Re-measure on the same items: this GPU row replaces the earlier loaded-CPU row of the same weights in full (scores and times) and is the second and last use of these weights on draw v1.6-regular-20261012.",
@@ -217513,13 +218910,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 142,
+   "rank": 143,
    "ranked": true,
    "ranks": {
-    "A": 142,
-    "B": 143,
-    "C": 148,
-    "capability": 149
+    "A": 143,
+    "B": 144,
+    "C": 149,
+    "capability": 150
    },
    "repo": "https://huggingface.co/crh225/plumb-4b",
    "rescored_in": "v1.7.0",
@@ -217934,13 +219331,13 @@
      "Intelligence only": 39.81196500845765
     }
    },
-   "rank": 134,
+   "rank": 135,
    "ranked": true,
    "ranks": {
-    "A": 134,
-    "B": 137,
-    "C": 140,
-    "capability": 178
+    "A": 135,
+    "B": 138,
+    "C": 141,
+    "capability": 179
    },
    "repo": "https://huggingface.co/perplexity-ai/pplx-decider-flash-v1.2",
    "rescored_in": "v1.7.0",
@@ -222525,13 +223922,13 @@
      "Intelligence only": 0.23537033944273675
     }
    },
-   "rank": 275,
+   "rank": 276,
    "ranked": true,
    "ranks": {
-    "A": 275,
-    "B": 275,
-    "C": 275,
-    "capability": 267
+    "A": 276,
+    "B": 276,
+    "C": 276,
+    "capability": 268
    },
    "remeasure": {
     "disclosure": "Re-measure on the same items: this GPU row replaces the earlier loaded-CPU row of the same weights in full (scores and times) and is the second and last use of these weights on draw v1.6-regular-20261012.",
@@ -224323,13 +225720,13 @@
     "carried_metadata_from": "author submission",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 148,
+   "rank": 149,
    "ranked": true,
    "ranks": {
-    "A": 148,
-    "B": 155,
-    "C": 153,
-    "capability": 193
+    "A": 149,
+    "B": 156,
+    "C": 154,
+    "capability": 194
    },
    "repo": "https://huggingface.co/chinhnc/Quyet-1.0-Medium",
    "rescored_in": "v1.7.0",
@@ -224742,13 +226139,13 @@
     "carried_metadata_from": "author submission",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 295,
+   "rank": 296,
    "ranked": true,
    "ranks": {
-    "A": 295,
-    "B": 295,
-    "C": 295,
-    "capability": 296
+    "A": 296,
+    "B": 296,
+    "C": 296,
+    "capability": 297
    },
    "repo": "https://huggingface.co/chinhnc/Quyet-1.0-Small",
    "rescored_in": "v1.7.0",
@@ -225174,13 +226571,13 @@
     "carried_metadata_from": "author submission",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 283,
+   "rank": 284,
    "ranked": true,
    "ranks": {
-    "A": 283,
-    "B": 283,
-    "C": 283,
-    "capability": 279
+    "A": 284,
+    "B": 284,
+    "C": 284,
+    "capability": 280
    },
    "repo": "https://huggingface.co/chinhnc/Quyet-1.0-Small-EN",
    "rescored_in": "v1.7.0",
@@ -225606,13 +227003,13 @@
     "carried_metadata_from": "author submission",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 297,
+   "rank": 298,
    "ranked": true,
    "ranks": {
-    "A": 297,
-    "B": 297,
-    "C": 297,
-    "capability": 297
+    "A": 298,
+    "B": 298,
+    "C": 298,
+    "capability": 298
    },
    "repo": "https://huggingface.co/chinhnc/Quyet-1.0-Tiny",
    "rescored_in": "v1.7.0",
@@ -226028,13 +227425,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 260,
+   "rank": 261,
    "ranked": true,
    "ranks": {
-    "A": 260,
-    "B": 260,
-    "C": 260,
-    "capability": 258
+    "A": 261,
+    "B": 261,
+    "C": 261,
+    "capability": 259
    },
    "repo": "https://huggingface.co/Qwen/Qwen3-Reranker-4B",
    "rescored_in": "v1.7.0",
@@ -226391,13 +227788,13 @@
     },
     "views": null
    },
-   "rank": 314,
+   "rank": 315,
    "ranked": true,
    "ranks": {
-    "A": 314,
-    "B": 314,
-    "C": 314,
-    "capability": 247
+    "A": 315,
+    "B": 315,
+    "C": 315,
+    "capability": 248
    },
    "repo": "https://benchmarkheaven.com/jev-models/qwen3.8-27b",
    "rescored_in": "v1.7.0",
@@ -226689,13 +228086,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 153,
+   "rank": 154,
    "ranked": true,
    "ranks": {
-    "A": 153,
-    "B": 157,
-    "C": 158,
-    "capability": 186
+    "A": 154,
+    "B": 158,
+    "C": 159,
+    "capability": 187
    },
    "repo": "https://huggingface.co/jsaurabh/qwen3.5-9b-jev-data-mix-v2",
    "rescored_in": "v1.7.0",
@@ -227110,13 +228507,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 266,
+   "rank": 267,
    "ranked": true,
    "ranks": {
-    "A": 266,
-    "B": 266,
-    "C": 266,
-    "capability": 289
+    "A": 267,
+    "B": 267,
+    "C": 267,
+    "capability": 290
    },
    "repo": "https://huggingface.co/microsoft/Phi-4-mini-instruct",
    "rescored_in": "v1.7.0",
@@ -227532,13 +228929,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 289,
+   "rank": 290,
    "ranked": true,
    "ranks": {
-    "A": 289,
-    "B": 288,
-    "C": 289,
-    "capability": 314
+    "A": 290,
+    "B": 289,
+    "C": 290,
+    "capability": 315
    },
    "repo": "https://huggingface.co/Qwen/Qwen3-0.6B",
    "rescored_in": "v1.7.0",
@@ -227941,13 +229338,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 291,
+   "rank": 292,
    "ranked": true,
    "ranks": {
-    "A": 291,
-    "B": 290,
-    "C": 291,
-    "capability": 313
+    "A": 292,
+    "B": 291,
+    "C": 292,
+    "capability": 314
    },
    "repo": "https://huggingface.co/Qwen/Qwen3-1.7B",
    "rescored_in": "v1.7.0",
@@ -228350,13 +229747,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 207,
+   "rank": 208,
    "ranked": true,
    "ranks": {
-    "A": 207,
-    "B": 207,
-    "C": 210,
-    "capability": 291
+    "A": 208,
+    "B": 208,
+    "C": 211,
+    "capability": 292
    },
    "repo": "https://huggingface.co/Qwen/Qwen3-4B-Instruct-2507",
    "rescored_in": "v1.7.0",
@@ -228759,13 +230156,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 241,
+   "rank": 242,
    "ranked": true,
    "ranks": {
-    "A": 241,
-    "B": 240,
-    "C": 241,
-    "capability": 301
+    "A": 242,
+    "B": 241,
+    "C": 242,
+    "capability": 302
    },
    "repo": "https://huggingface.co/Qwen/Qwen3-8B",
    "rescored_in": "v1.7.0",
@@ -229168,13 +230565,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 211,
+   "rank": 212,
    "ranked": true,
    "ranks": {
-    "A": 211,
-    "B": 211,
-    "C": 213,
-    "capability": 195
+    "A": 212,
+    "B": 212,
+    "C": 214,
+    "capability": 196
    },
    "repo": "https://github.com/kshetrajna12/reflex",
    "rescored_in": "v1.7.0",
@@ -230960,13 +232357,13 @@
     "carried_metadata_from": "Pinned author release; add-requests r61/score/withrows/REGISTRY.json measurement record",
     "kind": "v1.6.1 addendum a12 (scorer output sha256 4d2833926c2d, method option B / O1S)"
    },
-   "rank": 109,
+   "rank": 110,
    "ranked": true,
    "ranks": {
-    "A": 109,
-    "B": 97,
-    "C": 81,
-    "capability": 70
+    "A": 110,
+    "B": 98,
+    "C": 82,
+    "capability": 71
    },
    "repo": "https://huggingface.co/salfatigroup/rene-1-31b-fp8",
    "rescored_in": "v1.7.0",
@@ -231380,13 +232777,13 @@
      "Intelligence only": 49.49258431639605
     }
    },
-   "rank": 119,
+   "rank": 120,
    "ranked": true,
    "ranks": {
-    "A": 119,
-    "B": 108,
-    "C": 87,
-    "capability": 124
+    "A": 120,
+    "B": 109,
+    "C": 88,
+    "capability": 125
    },
    "repo": "https://huggingface.co/lihe07/span-02",
    "rescored_in": "v1.7.0",
@@ -232775,13 +234172,13 @@
      "Intelligence only": 7.933031176045365
     }
    },
-   "rank": 227,
+   "rank": 228,
    "ranked": true,
    "ranks": {
-    "A": 227,
-    "B": 231,
-    "C": 227,
-    "capability": 213
+    "A": 228,
+    "B": 232,
+    "C": 228,
+    "capability": 214
    },
    "repo": "https://huggingface.co/roudone/Decider-4B",
    "rescored_in": "v1.7.0",
@@ -234166,13 +235563,13 @@
      "Intelligence only": 23.882030176915077
     }
    },
-   "rank": 91,
+   "rank": 92,
    "ranked": true,
    "ranks": {
-    "A": 91,
-    "B": 85,
-    "C": 71,
-    "capability": 88
+    "A": 92,
+    "B": 86,
+    "C": 72,
+    "capability": 89
    },
    "repo": "https://huggingface.co/shgao/rsi-jev-v6.1-vl-27b",
    "rescored_in": "v1.7.0",
@@ -236947,13 +238344,13 @@
      "Intelligence only": 6.571813520246787
     }
    },
-   "rank": 238,
+   "rank": 239,
    "ranked": true,
    "ranks": {
-    "A": 238,
-    "B": 238,
-    "C": 238,
-    "capability": 218
+    "A": 239,
+    "B": 239,
+    "C": 239,
+    "capability": 219
    },
    "repo": "https://github.com/csabag/ryotide",
    "rescored_in": "v1.7.0",
@@ -238333,13 +239730,13 @@
      "Intelligence only": 9.189428059162678
     }
    },
-   "rank": 229,
+   "rank": 230,
    "ranked": true,
    "ranks": {
-    "A": 229,
-    "B": 230,
-    "C": 229,
-    "capability": 234
+    "A": 230,
+    "B": 231,
+    "C": 230,
+    "capability": 235
    },
    "repo": "https://github.com/csabag/ryotide/tree/94c71a3d9f044ffaba87981e985b66f47de3be80",
    "rescored_in": "v1.7.0",
@@ -240169,13 +241566,13 @@
      "Intelligence only": 65.88206323551285
     }
    },
-   "rank": 117,
+   "rank": 118,
    "ranked": true,
    "ranks": {
-    "A": 117,
-    "B": 98,
-    "C": 86,
-    "capability": 89
+    "A": 118,
+    "B": 99,
+    "C": 87,
+    "capability": 90
    },
    "repo": "https://levanto.ai/",
    "repriced_in": "v1.6.23",
@@ -241554,13 +242951,13 @@
      "C": 35.64134536115042
     }
    },
-   "rank": 160,
+   "rank": 161,
    "ranked": true,
    "ranks": {
-    "A": 160,
-    "B": 169,
-    "C": 165,
-    "capability": 155
+    "A": 161,
+    "B": 170,
+    "C": 166,
+    "capability": 156
    },
    "repo": "https://huggingface.co/GyrTechnology/saif-4b",
    "scores": {
@@ -242924,13 +244321,13 @@
    },
    "paid_fast_lane": false,
    "planned_weight_denominator": 1,
-   "rank": 250,
+   "rank": 251,
    "ranked": true,
    "ranks": {
-    "A": 250,
-    "B": 251,
-    "C": 251,
-    "capability": 235
+    "A": 251,
+    "B": 252,
+    "C": 252,
+    "capability": 236
    },
    "repo": "https://scaledown.ai",
    "scores": {
@@ -244313,7 +245710,7 @@
     "A": 8,
     "B": 24,
     "C": 7,
-    "capability": 74
+    "capability": 75
    },
    "repo": null,
    "scores": {
@@ -245726,13 +247123,13 @@
      "Intelligence only": 21.50556650674145
     }
    },
-   "rank": 178,
+   "rank": 179,
    "ranked": true,
    "ranks": {
-    "A": 178,
-    "B": 179,
-    "C": 179,
-    "capability": 165
+    "A": 179,
+    "B": 180,
+    "C": 180,
+    "capability": 166
    },
    "repo": "https://huggingface.co/ironbcc/seb-9b",
    "rescored_in": "v1.7.0",
@@ -247065,13 +248462,13 @@
    },
    "paid_fast_lane": false,
    "planned_weight_denominator": 1,
-   "rank": 133,
+   "rank": 134,
    "ranked": true,
    "ranks": {
-    "A": 133,
-    "B": 135,
-    "C": 139,
-    "capability": 152
+    "A": 134,
+    "B": 136,
+    "C": 140,
+    "capability": 153
    },
    "repo": "https://huggingface.co/ironbcc/Seb-9B-v2",
    "scores": {
@@ -248448,13 +249845,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 228,
+   "rank": 229,
    "ranked": true,
    "ranks": {
-    "A": 228,
-    "B": 233,
-    "C": 228,
-    "capability": 223
+    "A": 229,
+    "B": 234,
+    "C": 229,
+    "capability": 224
    },
    "repo": "https://github.com/TheoLeeCJ/openjev",
    "rescored_in": "v1.7.0",
@@ -248868,13 +250265,13 @@
      "Intelligence only": 49.23369255351228
     }
    },
-   "rank": 101,
+   "rank": 102,
    "ranked": true,
    "ranks": {
-    "A": 101,
-    "B": 117,
-    "C": 124,
-    "capability": 148
+    "A": 102,
+    "B": 118,
+    "C": 125,
+    "capability": 149
    },
    "repo": "https://huggingface.co/shisa-ai/shisa-de-1",
    "rescored_in": "v1.7.0",
@@ -251581,13 +252978,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 268,
+   "rank": 269,
    "ranked": true,
    "ranks": {
-    "A": 268,
-    "B": 268,
-    "C": 268,
-    "capability": 298
+    "A": 269,
+    "B": 269,
+    "C": 269,
+    "capability": 299
    },
    "repo": "https://github.com/featherless-ai/simple-jev",
    "rescored_in": "v1.7.0",
@@ -251945,13 +253342,13 @@
     },
     "views": null
    },
-   "rank": 196,
+   "rank": 197,
    "ranked": true,
    "ranks": {
-    "A": 196,
-    "B": 186,
-    "C": 183,
-    "capability": 133
+    "A": 197,
+    "B": 187,
+    "C": 184,
+    "capability": 134
    },
    "repo": "https://github.com/featherless-ai/simple-jev",
    "rescored_in": "v1.7.0",
@@ -252197,13 +253594,13 @@
     },
     "views": null
    },
-   "rank": 265,
+   "rank": 266,
    "ranked": true,
    "ranks": {
-    "A": 265,
-    "B": 259,
-    "C": 264,
-    "capability": 101
+    "A": 266,
+    "B": 260,
+    "C": 265,
+    "capability": 102
    },
    "repo": "https://github.com/featherless-ai/simple-jev",
    "rescored_in": "v1.7.0",
@@ -252499,13 +253896,13 @@
     "carried_metadata_from": "author repository + base config.json",
     "kind": "v1.6.1 addendum a6 (scorer output sha256 9d512dc13d7d, method option B / O1S)"
    },
-   "rank": 152,
+   "rank": 153,
    "ranked": true,
    "ranks": {
-    "A": 152,
-    "B": 145,
-    "C": 135,
-    "capability": 77
+    "A": 153,
+    "B": 146,
+    "C": 136,
+    "capability": 78
    },
    "repo": "https://github.com/featherless-ai/simple-jev",
    "rescored_in": "v1.7.0",
@@ -255638,13 +257035,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 272,
+   "rank": 273,
    "ranked": true,
    "ranks": {
-    "A": 272,
-    "B": 272,
-    "C": 272,
-    "capability": 269
+    "A": 273,
+    "B": 273,
+    "C": 273,
+    "capability": 270
    },
    "repo": "https://github.com/isHeSatoshi/smalljev",
    "rescored_in": "v1.7.0",
@@ -256052,13 +257449,13 @@
      "C": 20.448564438889086
     }
    },
-   "rank": 205,
+   "rank": 206,
    "ranked": true,
    "ranks": {
-    "A": 205,
-    "B": 208,
-    "C": 207,
-    "capability": 232
+    "A": 206,
+    "B": 209,
+    "C": 208,
+    "capability": 233
    },
    "repo": "https://huggingface.co/SakuraYuyuko/Sors-2B",
    "scores": {
@@ -257462,13 +258859,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 145,
+   "rank": 146,
    "ranked": true,
    "ranks": {
-    "A": 145,
-    "B": 147,
-    "C": 150,
-    "capability": 230
+    "A": 146,
+    "B": 148,
+    "C": 151,
+    "capability": 231
    },
    "repo": "https://github.com/abhishek085/open-spark-jev",
    "rescored_in": "v1.7.0",
@@ -257887,13 +259284,13 @@
     "carried_metadata_from": "Current-pool API measurement registry",
     "kind": "v1.6.1 addendum a12 (scorer output sha256 4d2833926c2d, method option B / O1S)"
    },
-   "rank": 121,
+   "rank": 122,
    "ranked": true,
    "ranks": {
-    "A": 121,
-    "B": 113,
-    "C": 95,
-    "capability": 79
+    "A": 122,
+    "B": 114,
+    "C": 96,
+    "capability": 80
    },
    "repo": "https://surd.ai",
    "rescored_in": "v1.7.0",
@@ -258310,13 +259707,13 @@
     "carried_metadata_from": "r53 PREREG-R53.md, dl_r53.sh and current registry",
     "kind": "v1.6.1 addendum a11 (scorer output sha256 4d2833926c2d, method option B / O1S)"
    },
-   "rank": 124,
+   "rank": 125,
    "ranked": true,
    "ranks": {
-    "A": 124,
-    "B": 125,
-    "C": 131,
-    "capability": 135
+    "A": 125,
+    "B": 126,
+    "C": 132,
+    "capability": 136
    },
    "repo": "https://huggingface.co/SurdAI/SPX-CD-Omni",
    "rescored_in": "v1.7.0",
@@ -258735,13 +260132,13 @@
     "carried_metadata_from": "Current-pool API measurement registry",
     "kind": "v1.6.1 addendum a12 (scorer output sha256 4d2833926c2d, method option B / O1S)"
    },
-   "rank": 143,
+   "rank": 144,
    "ranked": true,
    "ranks": {
-    "A": 143,
-    "B": 140,
-    "C": 127,
-    "capability": 52
+    "A": 144,
+    "B": 141,
+    "C": 128,
+    "capability": 53
    },
    "repo": "https://surd.ai",
    "rescored_in": "v1.7.0",
@@ -259177,13 +260574,13 @@
      "Intelligence only": 13.341942508299013
     }
    },
-   "rank": 208,
+   "rank": 209,
    "ranked": true,
    "ranks": {
-    "A": 208,
-    "B": 210,
-    "C": 211,
-    "capability": 221
+    "A": 209,
+    "B": 211,
+    "C": 212,
+    "capability": 222
    },
    "repo": "https://huggingface.co/StandardThinking/StandardOne-3B-SH",
    "rescored_in": "v1.7.0",
@@ -260540,13 +261937,13 @@
    },
    "paid_fast_lane": false,
    "planned_weight_denominator": 1,
-   "rank": 204,
+   "rank": 205,
    "ranked": true,
    "ranks": {
-    "A": 204,
-    "B": 203,
-    "C": 206,
-    "capability": 220
+    "A": 205,
+    "B": 204,
+    "C": 207,
+    "capability": 221
    },
    "repo": "https://huggingface.co/StandardThinking/StandardOne-3B-SH",
    "scores": {
@@ -261955,13 +263352,13 @@
      "Intelligence only": 12.230517698051182
     }
    },
-   "rank": 216,
+   "rank": 217,
    "ranked": true,
    "ranks": {
-    "A": 216,
-    "B": 215,
-    "C": 217,
-    "capability": 189
+    "A": 217,
+    "B": 216,
+    "C": 218,
+    "capability": 190
    },
    "repo": "https://huggingface.co/StandardThinking/StandardOne-8B-SH",
    "rescored_in": "v1.7.0",
@@ -263361,13 +264758,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 224,
+   "rank": 225,
    "ranked": true,
    "ranks": {
-    "A": 224,
-    "B": 222,
-    "C": 224,
-    "capability": 198
+    "A": 225,
+    "B": 223,
+    "C": 225,
+    "capability": 199
    },
    "repo": "https://huggingface.co/StandardThinking/StandardOne-8B",
    "rescored_in": "v1.7.0",
@@ -263794,12 +265191,12 @@
      "Intelligence only": 15.258250914248908
     }
    },
-   "rank": 93,
+   "rank": 94,
    "ranked": true,
    "ranks": {
-    "A": 93,
-    "B": 75,
-    "C": 74,
+    "A": 94,
+    "B": 76,
+    "C": 75,
     "capability": 50
    },
    "repo": "https://huggingface.co/startlux-models/StartLux-Decision-v1.1-27B-AutoThink",
@@ -266569,13 +267966,13 @@
      "C": 35.982431265244216
     }
    },
-   "rank": 156,
+   "rank": 157,
    "ranked": true,
    "ranks": {
-    "A": 156,
-    "B": 156,
-    "C": 161,
-    "capability": 147
+    "A": 157,
+    "B": 157,
+    "C": 162,
+    "capability": 148
    },
    "repo": "https://strike-ai.eu",
    "scores": {
@@ -270816,9 +272213,9 @@
    "ranked": true,
    "ranks": {
     "A": 53,
-    "B": 79,
-    "C": 92,
-    "capability": 87
+    "B": 80,
+    "C": 93,
+    "capability": 88
    },
    "repo": "https://huggingface.co/surogate/rune-26b-a4b-GGUF",
    "rescored_in": "v1.7.0",
@@ -271225,9 +272622,9 @@
    "ranked": true,
    "ranks": {
     "A": 68,
-    "B": 84,
-    "C": 94,
-    "capability": 94
+    "B": 85,
+    "C": 95,
+    "capability": 95
    },
    "repo": "https://github.com/blockbrain-ai/swanone-recipe",
    "rescored_in": "v1.7.0",
@@ -271584,13 +272981,13 @@
     },
     "views": null
    },
-   "rank": 226,
+   "rank": 227,
    "ranked": true,
    "ranks": {
-    "A": 226,
-    "B": 226,
-    "C": 226,
-    "capability": 238
+    "A": 227,
+    "B": 227,
+    "C": 227,
+    "capability": 239
    },
    "repo": "https://github.com/mithalouni/system-one-open",
    "rescored_in": "v1.7.0",
@@ -271882,13 +273279,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 235,
+   "rank": 236,
    "ranked": true,
    "ranks": {
-    "A": 235,
-    "B": 232,
-    "C": 235,
-    "capability": 302
+    "A": 236,
+    "B": 233,
+    "C": 236,
+    "capability": 303
    },
    "repo": "https://github.com/sgoedecke/system-one",
    "rescored_in": "v1.7.0",
@@ -272307,13 +273704,13 @@
     "carried_metadata_from": "Pinned author release; add-requests r61/score/withrows/REGISTRY.json measurement record",
     "kind": "v1.6.1 addendum a11 (scorer output sha256 4d2833926c2d, method option B / O1S)"
    },
-   "rank": 304,
+   "rank": 305,
    "ranked": true,
    "ranks": {
-    "A": 304,
-    "B": 304,
-    "C": 304,
-    "capability": 306
+    "A": 305,
+    "B": 305,
+    "C": 305,
+    "capability": 307
    },
    "repo": "https://huggingface.co/codepawl/tacet-sonata",
    "rescored_in": "v1.7.0",
@@ -274072,13 +275469,13 @@
    },
    "paid_fast_lane": false,
    "planned_weight_denominator": 1,
-   "rank": 138,
+   "rank": 139,
    "ranked": true,
    "ranks": {
-    "A": 138,
-    "B": 141,
-    "C": 146,
-    "capability": 142
+    "A": 139,
+    "B": 142,
+    "C": 147,
+    "capability": 143
    },
    "repo": "https://huggingface.co/matthewagi/Tern-35B-A3B",
    "scores": {
@@ -275465,13 +276862,13 @@
     "carried_metadata_from": "author submission",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 99,
+   "rank": 100,
    "ranked": true,
    "ranks": {
-    "A": 99,
-    "B": 91,
-    "C": 77,
-    "capability": 98
+    "A": 100,
+    "B": 92,
+    "C": 78,
+    "capability": 99
    },
    "repo": "https://huggingface.co/torchcast-ai/torchcast-decision-12b",
    "rescored_in": "v1.7.0",
@@ -277695,9 +279092,9 @@
    "ranked": true,
    "ranks": {
     "A": 38,
-    "B": 78,
-    "C": 103,
-    "capability": 129
+    "B": 79,
+    "C": 104,
+    "capability": 130
    },
    "repo": "https://huggingface.co/torchcast-ai/torchcast-decision-4b",
    "rescored_in": "v1.7.0",
@@ -279092,7 +280489,7 @@
     "A": 15,
     "B": 42,
     "C": 13,
-    "capability": 93
+    "capability": 94
    },
    "repo": "https://huggingface.co/torchcast-ai/torchcast-decision-4b",
    "rescored_in": "v1.7.0",
@@ -280487,7 +281884,7 @@
     "A": 1,
     "B": 6,
     "C": 1,
-    "capability": 56
+    "capability": 57
    },
    "repo": "https://huggingface.co/torchcast-ai/torchcast-decision-4b",
    "rescored_in": "v1.7.0",
@@ -283204,12 +284601,12 @@
    },
    "paid_fast_lane": false,
    "planned_weight_denominator": 1,
-   "rank": 130,
+   "rank": 131,
    "ranked": true,
    "ranks": {
-    "A": 130,
-    "B": 127,
-    "C": 106,
+    "A": 131,
+    "B": 128,
+    "C": 107,
     "capability": 36
    },
    "repo": "https://huggingface.co/turion-ai/turion-jev-31b",
@@ -284587,13 +285984,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 212,
+   "rank": 213,
    "ranked": true,
    "ranks": {
-    "A": 212,
-    "B": 214,
-    "C": 214,
-    "capability": 214
+    "A": 213,
+    "B": 215,
+    "C": 215,
+    "capability": 215
    },
    "repo": "https://github.com/mihail-gribov/typecastlm",
    "rescored_in": "v1.7.0",
@@ -285000,13 +286397,13 @@
     "carried_metadata_from": "Pinned author release; add-requests r61/score/withrows/REGISTRY.json measurement record",
     "kind": "v1.6.1 addendum a11 (scorer output sha256 4d2833926c2d, method option B / O1S)"
    },
-   "rank": 187,
+   "rank": 188,
    "ranked": true,
    "ranks": {
-    "A": 187,
-    "B": 190,
-    "C": 189,
-    "capability": 217
+    "A": 188,
+    "B": 191,
+    "C": 190,
+    "capability": 218
    },
    "repo": "https://huggingface.co/mihailgribov/typecastlm-qwen3.5-3.8b",
    "rescored_in": "v1.7.0",
@@ -285399,9 +286796,9 @@
    "ranked": true,
    "ranks": {
     "A": 67,
-    "B": 86,
-    "C": 101,
-    "capability": 96
+    "B": 87,
+    "C": 102,
+    "capability": 97
    },
    "repo": "https://huggingface.co/ezoushen/umpire-35b-a3b-bf16",
    "scores": {
@@ -286803,13 +288200,13 @@
      "Intelligence only": 15.932855168800014
     }
    },
-   "rank": 193,
+   "rank": 194,
    "ranked": true,
    "ranks": {
-    "A": 193,
-    "B": 194,
-    "C": 196,
-    "capability": 209
+    "A": 194,
+    "B": 195,
+    "C": 197,
+    "capability": 210
    },
    "repo": "https://huggingface.co/Uniphore/uniphore-4b-decider",
    "rescored_in": "v1.7.0",
@@ -288140,13 +289537,13 @@
     },
     "views": null
    },
-   "rank": 165,
+   "rank": 166,
    "ranked": true,
    "ranks": {
-    "A": 165,
-    "B": 167,
-    "C": 170,
-    "capability": 160
+    "A": 166,
+    "B": 168,
+    "C": 171,
+    "capability": 161
    },
    "repo": "https://vansa.org",
    "rescored_in": "v1.7.0",
@@ -288450,13 +289847,13 @@
      "Intelligence only": 0.06667416738798192
     }
    },
-   "rank": 286,
+   "rank": 287,
    "ranked": true,
    "ranks": {
-    "A": 286,
-    "B": 286,
-    "C": 286,
-    "capability": 286
+    "A": 287,
+    "B": 287,
+    "C": 287,
+    "capability": 287
    },
    "repo": "https://huggingface.co/nandakishorm/vega-U",
    "rescored_in": "v1.7.0",
@@ -289845,13 +291242,13 @@
      "Intelligence only": 0.27274108540540976
     }
    },
-   "rank": 274,
+   "rank": 275,
    "ranked": true,
    "ranks": {
-    "A": 274,
-    "B": 274,
-    "C": 274,
-    "capability": 270
+    "A": 275,
+    "B": 275,
+    "C": 275,
+    "capability": 271
    },
    "remeasure": {
     "disclosure": "Re-measure on the same items: this GPU row replaces the earlier loaded-CPU row of the same weights in full (scores and times) and is the second and last use of these weights on draw v1.6-regular-20261012. Fifteen items reach the author's 73,728-token context limit and are answered on a right-truncated state; they take 13.8-14.3 s each on this GPU and count as failed under the 10 s rule.",
@@ -291245,13 +292642,13 @@
      "Intelligence only": 0.011385887829608154
     }
    },
-   "rank": 300,
+   "rank": 301,
    "ranked": true,
    "ranks": {
-    "A": 300,
-    "B": 300,
-    "C": 300,
-    "capability": 292
+    "A": 301,
+    "B": 301,
+    "C": 301,
+    "capability": 293
    },
    "repo": "https://huggingface.co/nandakishorm/vega-08b-public-intents",
    "rescored_in": "v1.7.0",
@@ -292633,13 +294030,13 @@
      "Intelligence only": 1.654208859284027
     }
    },
-   "rank": 263,
+   "rank": 264,
    "ranked": true,
    "ranks": {
-    "A": 263,
-    "B": 264,
-    "C": 263,
-    "capability": 285
+    "A": 264,
+    "B": 265,
+    "C": 264,
+    "capability": 286
    },
    "repo": "https://huggingface.co/nandakishorm/vega-08b-public-intents",
    "rescored_in": "v1.7.0",
@@ -295363,13 +296760,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 303,
+   "rank": 304,
    "ranked": true,
    "ranks": {
-    "A": 303,
-    "B": 303,
-    "C": 303,
-    "capability": 283
+    "A": 304,
+    "B": 304,
+    "C": 304,
+    "capability": 284
    },
    "repo": "https://github.com/Manavarya09/verdict",
    "rescored_in": "v1.7.0",
@@ -295796,13 +297193,13 @@
      "Intelligence only": 15.078600269727296
     }
    },
-   "rank": 186,
+   "rank": 187,
    "ranked": true,
    "ranks": {
-    "A": 186,
-    "B": 189,
-    "C": 188,
-    "capability": 191
+    "A": 187,
+    "B": 190,
+    "C": 189,
+    "capability": 192
    },
    "remeasure": {
     "disclosure": "Re-measure on the same items: this GPU row replaces the earlier loaded-CPU row of the same weights in full (scores and times) and is the second and last use of these weights on draw v1.6-regular-20261012.",
@@ -299924,9 +301321,9 @@
    "ranked": true,
    "ranks": {
     "A": 59,
-    "B": 95,
-    "C": 117,
-    "capability": 128
+    "B": 96,
+    "C": 118,
+    "capability": 129
    },
    "repo": "https://huggingface.co/vllm-sr/d3-mini",
    "scores": {
@@ -302658,7 +304055,7 @@
     "A": 10,
     "B": 18,
     "C": 9,
-    "capability": 67
+    "capability": 68
    },
    "repo": "https://huggingface.co/org2ai/Wald-26B-A4B",
    "scores": {
@@ -304036,13 +305433,13 @@
      "Intelligence only": 27.7941118378976
     }
    },
-   "rank": 166,
+   "rank": 167,
    "ranked": true,
    "ranks": {
-    "A": 166,
-    "B": 168,
-    "C": 171,
-    "capability": 192
+    "A": 167,
+    "B": 169,
+    "C": 172,
+    "capability": 193
    },
    "repo": "https://huggingface.co/org2ai/Wald-4B",
    "rescored_in": "v1.7.0",
@@ -305424,13 +306821,13 @@
      "Intelligence only": 44.522489120413574
     }
    },
-   "rank": 105,
+   "rank": 106,
    "ranked": true,
    "ranks": {
-    "A": 105,
-    "B": 115,
-    "C": 119,
-    "capability": 126
+    "A": 106,
+    "B": 116,
+    "C": 120,
+    "capability": 127
    },
    "repo": "https://huggingface.co/org2ai/Wald-4B",
    "rescored_in": "v1.7.0",
@@ -306821,13 +308218,13 @@
     "carried_metadata_from": "Pinned author release; add-requests r61/score/withrows/REGISTRY.json measurement record",
     "kind": "v1.6.1 addendum a11 (scorer output sha256 4d2833926c2d, method option B / O1S)"
    },
-   "rank": 287,
+   "rank": 288,
    "ranked": true,
    "ranks": {
-    "A": 287,
-    "B": 287,
-    "C": 287,
-    "capability": 287
+    "A": 288,
+    "B": 288,
+    "C": 288,
+    "capability": 288
    },
    "repo": "https://huggingface.co/samratduttaofficial/WaterSheep",
    "rescored_in": "v1.7.0",
@@ -307259,13 +308656,13 @@
     "carried_metadata_from": "Pinned author release; add-requests r61/score/withrows/REGISTRY.json measurement record",
     "kind": "v1.6.1 addendum a11 (scorer output sha256 4d2833926c2d, method option B / O1S)"
    },
-   "rank": 296,
+   "rank": 297,
    "ranked": true,
    "ranks": {
-    "A": 296,
-    "B": 296,
-    "C": 296,
-    "capability": 276
+    "A": 297,
+    "B": 297,
+    "C": 297,
+    "capability": 277
    },
    "repo": "https://huggingface.co/zaitlabs/watt-flash-0.1",
    "rescored_in": "v1.7.0",
@@ -309087,9 +310484,9 @@
    "ranked": true,
    "ranks": {
     "A": 71,
-    "B": 77,
-    "C": 68,
-    "capability": 105
+    "B": 78,
+    "C": 69,
+    "capability": 106
    },
    "repo": "https://huggingface.co/EldanRing/Winnow-12B",
    "rescored_in": "v1.7.0",
@@ -309518,13 +310915,13 @@
     "carried_metadata_from": "v1.6.0 release row",
     "kind": "v1.6.1 full-set re-score (score-v161-3/out-O1S, O1S, hosted API on S u P, not equated)"
    },
-   "rank": 104,
+   "rank": 105,
    "ranked": true,
    "ranks": {
-    "A": 104,
-    "B": 82,
-    "C": 78,
-    "capability": 64
+    "A": 105,
+    "B": 83,
+    "C": 79,
+    "capability": 65
    },
    "repo": "https://wity.alphanimble.com/",
    "rescored_in": "v1.7.0",
@@ -310763,9 +312160,9 @@
    "ranked": true,
    "ranks": {
     "A": 51,
-    "B": 88,
-    "C": 111,
-    "capability": 131
+    "B": 89,
+    "C": 112,
+    "capability": 132
    },
    "repo": "https://huggingface.co/quevirus/Xevn-4B",
    "scores": {
@@ -312150,9 +313547,9 @@
    "ranked": true,
    "ranks": {
     "A": 42,
-    "B": 70,
-    "C": 84,
-    "capability": 107
+    "B": 71,
+    "C": 85,
+    "capability": 108
    },
    "repo": "https://huggingface.co/juspay/Xor-26B-A4B",
    "rescored_in": "v1.7.0",
@@ -312555,13 +313952,13 @@
     "carried_metadata_from": "v1.5.7",
     "kind": "v1.6.0 full re-measure (score-overnight-12/out-O1S, O1S)"
    },
-   "rank": 262,
+   "rank": 263,
    "ranked": true,
    "ranks": {
-    "A": 262,
-    "B": 263,
-    "C": 262,
-    "capability": 244
+    "A": 263,
+    "B": 264,
+    "C": 263,
+    "capability": 245
    },
    "repo": "https://huggingface.co/zeroentropy/zerank-2-reranker",
    "rescored_in": "v1.7.0",
@@ -312961,8 +314358,8 @@
    "ranks": {
     "A": 13,
     "B": 47,
-    "C": 69,
-    "capability": 97
+    "C": 70,
+    "capability": 98
    },
    "repo": "https://huggingface.co/zils-ai/z3-mini-soup-preview",
    "scores": {

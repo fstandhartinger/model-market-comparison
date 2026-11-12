@@ -34,7 +34,7 @@ def comp(ax,w,gate):
  return s
 VIEWS={'Intelligence only':(1,0,0,0),'Emphasis on Accuracy 60:20:20':(.6,0,.2,.2),'Emphasis on Speed 20:60:20':(.2,0,.6,.2),'Emphasis on Cost 20:20:60':(.2,0,.2,.6),'Balanced 33:33:33':(1/3,0,1/3,1/3)}
 AX=('intelligence','calibration','speed','cost');clip=lambda x:min(100,max(0,x));rows=[s for s in a['systems'] if (s.get('draw') or {}).get('id')==DRAW];maxerr=0;n=0
-assert len(rows)==37==len(pr['equated_rows'])
+NEW=json.loads((J/'src/new-keys.json').read_text());assert len(rows)==37+len(NEW)==len(pr['equated_rows'])+len(pr['new_rows']) and sorted(pr['new_rows'])==NEW
 for s in rows:
  p=s['published_scores'];ax=s['axes']
  assert abs(ax['intelligence']-clip(p['axes']['intelligence']+OFF['I']))<1e-12 and abs(ax['calibration']-clip(p['axes']['calibration']+OFF['C']))<1e-12 and ax['speed']==p['axes']['speed'] and ax['cost']==p['axes']['cost']
@@ -44,8 +44,8 @@ for s in rows:
  for nme,w in VIEWS.items():
   x=comp(ax,dict(zip(AX,w)),50);assert (x is None and s['views'][nme] is None) or abs(x-s['views'][nme])<1e-9,(s['key'],nme);n+=1
  assert s['draw']['status']=='equated' and s['draw']['offset']==OFF and s['draw']['offset_ci95']=={'I':CI['I'],'C':CI['C']}
- assert s['composite_ci95']==L(V/'jevbench-v1.8.9-results.json')['systems'][[x['key'] for x in L(V/'jevbench-v1.8.9-results.json')['systems']].index(s['key'])]['composite_ci95']
-assert sum(1 for s in rows if s['ranked'])==31 and sum(1 for s in rows if not s['ranked'])==6 and all(s['draw']['ci_basis']=='measured on the draw before equating' for s in rows)
+ assert s['composite_ci95']==(L(J/'inputs/gemini/scored.json')['composite_ci95'] if s['key'] in NEW else L(V/'jevbench-v1.8.9-results.json')['systems'][[x['key'] for x in L(V/'jevbench-v1.8.9-results.json')['systems']].index(s['key'])]['composite_ci95'])
+assert sum(1 for s in rows if s['ranked'])==31+len(NEW) and sum(1 for s in rows if not s['ranked'])==6 and all(s['draw']['ci_basis']=='measured on the draw before equating' for s in rows)
 receipt={'status':'PASS','equating_receipt_sha256':EQ_SHA,'offset':OFF,'offset_ci95':CI,'anchors':d['anchors'],'median_of_four_anchor_differences_equals_offset':True,'draw_table_proof_lib_rows_agree':True,
  'rows_checked':len(rows),'composite_values_rechecked_independently':n,'max_abs_composite_error':maxerr,'other_draws_pending_offset_zero':True,'confidence_intervals_unchanged_from_v189':True,'sealed_bytes_read':False}
 (J/'receipts/EQUATING-BINDING.json').write_text(json.dumps(receipt,indent=1,sort_keys=True)+'\n');print('PASS equating binding:',len(rows),'rows;',n,'composite/view values rederived independently, max error',maxerr)

@@ -1,16 +1,23 @@
 {
- "approval_negatives": 11,
+ "approval_negatives": 15,
  "bind_fair_refuses_non_fair_verdicts": true,
  "log": [
-  "flip dry run on the real tree: AssertionError: REFUSED: fairness check PENDING or non-FAIR; bind a FAIR receipt with bind_fair_v1810.py first",
+  "flip dry run on the real tree: AssertionError: REFUSED: delta fairness check (added row) PENDING or non-FAIR; bind it with bind_fair_v1810.py --which delta first",
   "freeze on the real tree: AssertionError: REFUSED: publication review PENDING or non-PASS",
   "seal helper on the real tree: refused",
   "bind_fair without a receipt: refused",
-  "approval while PENDING: REFUSED: fairness check PENDING or non-FAIR; bind a FAIR receipt with bind_fair_",
-  "bind_fair --dry-run PENDING: refused",
-  "bind_fair --dry-run SUSPICIOUS: refused",
-  "bind_fair --dry-run UNFAIR: refused",
-  "bind_fair --dry-run FAIR: would bind",
+  "approval while PENDING: REFUSED: delta fairness check (added row) PENDING or non-FAIR; bind it with bind",
+  "bind_fair earlier --dry-run PENDING: refused",
+  "bind_fair earlier --dry-run SUSPICIOUS: refused",
+  "bind_fair earlier --dry-run UNFAIR: refused",
+  "bind_fair earlier --dry-run FAIR: would bind",
+  "bind_fair earlier --dry-run FAIR_SUBSET/config match: would bind",
+  "bind_fair earlier --dry-run FAIR_SUBSET/config mismatch: refused",
+  "bind_fair earlier --dry-run FAIR_SUBSET: refused",
+  "bind_fair delta --dry-run PENDING: refused",
+  "bind_fair delta --dry-run SUSPICIOUS: refused",
+  "bind_fair delta --dry-run FAIR_SUBSET: refused",
+  "bind_fair delta --dry-run FAIR: would bind",
   "flip dry run (synthetic FAIR bound, review PENDING): would set review PASS, manifest unchanged on disk",
   "freeze dry run (synthetic PASS tree): addendum JSON written inside the fixture only, no seal",
   "freeze --write: refused (never writes a seal)",
@@ -18,10 +25,14 @@
  ],
  "non_dry_flip_never_invoked": true,
  "real_tree_flip_freeze_seal_bind_refused_while_fairness_pending": true,
+ "real_tree_state": {
+  "delta_review": "PENDING",
+  "earlier_review": "FAIR"
+ },
  "real_tree_unchanged": {
-  "approval": "b75c33ade9ec5b51956977d9d58fbb0695afe3b4def6606ef4414c1e7d27f5e5",
-  "manifest": "0c3ea1881d3efd0cadc1e718c478843c0016ccb13785381f4c8d1689218288de",
-  "proof": "8069e3882221c2cb1643c12ecb1f1dc81d4bbd498154a67ba144e99e6696c525"
+  "approval": "ad0d0d70bf29d7a01210258082b0925d66d8f44048e1ba1e3a32e608ac81198e",
+  "manifest": "5d7205822f9e6b64566e78ac8dc986a24452863edf53800612ad560a5535f185",
+  "proof": "aae46a1409cc8c717de4fae74fa79915fc38befa1088143cfaaa518521b5b9f1"
  },
  "seal_helper_never_run_for_real": true,
  "status": "PASS"
