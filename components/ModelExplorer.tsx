@@ -540,7 +540,8 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple, gu
                     at md), and the org moves here as an 11 px muted line. F-56: the name wraps only
                     at spaces ("GLM-5.3" stays whole) and below md the badges sit on the org line. */}
                 <td className="px-3 py-2 md:truncate">
-                  <span aria-hidden="true" className={`bh-row-chevron mr-1 ${isOpen ? "is-open" : ""}`}>›</span>
+                  <button type="button" aria-label={`${isOpen ? "Collapse" : "Expand"} details for ${m.display_name}`} aria-expanded={isOpen} aria-controls={`model-details-${encodeURIComponent(m.id)}`}
+                    className={`bh-row-chevron mr-1 border-0 bg-transparent p-0 ${isOpen ? "is-open" : ""}`} onClick={(e) => { e.stopPropagation(); setExpanded(isOpen ? null : m.id); }}>›</button>
                   <Link href={`/models/${encodeURIComponent(m.id)}`} onClick={(e) => e.stopPropagation()} className="font-medium hover:text-accent">{String(collapsedName(m, s.collapse, preferredId)).split(" ").map((token, i) => <Fragment key={i}>{i > 0 && " "}<span className="whitespace-nowrap">{token}</span></Fragment>)}</Link>
                   {m.open_weights && <span className="ml-2 hidden rounded bg-accent2/15 px-1.5 py-0.5 text-[10px] text-accent2 md:inline">open</span>}
                   {retired.has(m.family_key) && <span title={DEPRECATED_NOTE} className="ml-1 hidden rounded bg-amber-500/15 px-1.5 py-0.5 text-[10px] text-amber-300 md:inline">deprecated</span>}
@@ -607,7 +608,7 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple, gu
               </tr>
               {isOpen && (
                 <tr>
-                  <td colSpan={6} className="bg-[#0c0f14] px-4 py-3">
+                  <td id={`model-details-${encodeURIComponent(m.id)}`} colSpan={6} className="bg-[#0c0f14] px-4 py-3">
                     <div className="grid gap-4 md:grid-cols-[minmax(220px,280px)_1fr]">
                       {/* model details */}
                       <div data-pane="benchmarks">
