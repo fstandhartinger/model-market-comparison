@@ -70,6 +70,9 @@ SUPPLEMENTS: tuple[dict[str, Any], ...] = (
     {"family": "karpo_decision", "module": "karpo_decision_runtime_supplement.py",
      "repos": ("huggingface.co/machinepulseai/karpo-decision-31b", "github.com/machinepulse-ai/karpo-decision"),
      "precedents": ("fastlane-native-a597df0b",)},
+    {"family": "starlord", "module": "starlord_runtime_supplement.py",
+     "repos": ("huggingface.co/xsdfasfgsa/starlord-27b-preview",),
+     "precedents": ("fastlane-native-2d2f81c6",)},
 )
 
 _SEGMENT = re.compile(r"[A-Za-z0-9][A-Za-z0-9._-]{0,95}")
