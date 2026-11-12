@@ -1,7 +1,8 @@
 export type BaseModelBenchmark = 'jevbench' | 'imagejevbench';
 export type BaseModelStatus = 'disclosed' | 'self-reported' | 'undisclosed';
 
-export type BaseModelSource = { url: string; title: string; evidence: string };
+export type BaseModelSourceKind = 'vendor statement' | 'model card' | 'credible report' | 'author self-report';
+export type BaseModelSource = { url: string; title: string; evidence: string; kind?: BaseModelSourceKind };
 
 export type BaseModelEntry = {
   benchmark: string | null;
@@ -21,6 +22,7 @@ export type BaseModelsMetadata = {
 export declare const BASE_MODEL_SCHEMA_VERSION: number;
 export declare const BASE_MODEL_BENCHMARKS: readonly string[];
 export declare const BASE_MODEL_METADATA: BaseModelsMetadata;
+export declare const BASE_MODEL_SOURCE_KINDS: readonly BaseModelSourceKind[];
 
 export declare function baseModelFor(benchmark: string, key: string | null | undefined, overlay?: BaseModelsMetadata): BaseModelEntry;
 export declare function isBaseModelDisclosed(entry: BaseModelEntry): boolean;

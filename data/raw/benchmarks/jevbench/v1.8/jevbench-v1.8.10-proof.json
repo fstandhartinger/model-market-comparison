@@ -4,7 +4,8 @@
   "every row: rank and ranks only where a newly ranked row now sits above it (removing the newly ranked rows from the order lists gives back the v1.8.9 lists exactly)",
   "the 37 rows of the 27 Oct draw: equated axes/scores/views/capability (published numbers in published_scores), ranked/rank/ranks/listing, not_ranked_because, listing_note, draw status/offset/interval, and the not-yet-equated sentence of the disclosure/underlying text",
   "the row AutoTrust-Decider-Pro-27B (key jev-27b-autotrust): the display name only (vendor rename of JEV-27B; key, repo, model pin and every score unchanged)",
-  "one added row, Gemini Decision 1 (key gemini-decision-1, hosted API, same draw): not a carried row; carried rows move down only where it now sits above them"
+  "one added row, Gemini Decision 1 (key gemini-decision-1, hosted API, same draw): not a carried row; carried rows move down only where it now sits above them",
+  "one removed row, the preliminary unranked A2 re-run listing of Microsoft-Decision-1 (key microsoft-decision-1-a2-20261012): not on any board of this release; it was in no order list, so no rank changes"
  ],
  "cost_basis": {
   "cost_basis_sha256": "b83bdfd14c263ffacfa572b304084154afca84c1f00083101a33783ae6f8b356",
@@ -1854,7 +1855,9 @@
      "rule": "common",
      "usd_per_1000_all_items": 0.06472946666666668
     },
+    "cost_basis_sha256": "b83bdfd14c263ffacfa572b304084154afca84c1f00083101a33783ae6f8b356",
     "input_tokens_all": 970942,
+    "input_tokens_common": 569658,
     "kind_scored": "list",
     "kind_shown": "tariff",
     "note": "scorer common-membership usd_per_1000 (same rule as every d1027 row); the failed items count as zero-token items in the 1,489 denominator",
@@ -1917,6 +1920,7 @@
     "C": 67,
     "capability": 52
    },
+   "raw_sha256": "d68c7d967d700cdfffceb78cc2385efcc068eafbc66359dfaffacb3247f610b0",
    "registry_sha256": "61646b81eaa73e6a59639b7269002009291557dba5d25d0329d8cbab8ea46d5c",
    "scored_input_sha256": "d9fd871f2cd5c940f496fa088c6f0a1bef53fdb199fe154fc279e72d212422e8",
    "scored_n": 1500,
@@ -2033,6 +2037,9 @@
   "zils-ai-z3-mini-soup-preview"
  ],
  "remeasured_rows": {},
+ "removed_rows": {
+  "microsoft-decision-1-a2-20261012": "Removed from the boards: a preliminary, unranked A2 re-run listing of Microsoft-Decision-1 shown next to its regular ranked rows; its data stays in v1.8.9 and earlier releases."
+ },
  "repriced_rows": {},
  "revision": "v1.8.10",
  "same_draw": {

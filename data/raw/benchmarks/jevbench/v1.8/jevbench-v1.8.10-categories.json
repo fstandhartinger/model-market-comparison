@@ -855,7 +855,7 @@
  "metric": "O1S chance-corrected competence: equal mean across the request types present, clipped to 0–100. Zero means the equal-weight mean across present request types was at or below baseline; negative means are clipped. It does not mean every type scored zero. Choice uses a random-option baseline; Noul uses a fixed 50% accuracy baseline (abstentions count as wrong); Score uses the midpoint-guess error (random-guess fallback when every gold is at the midpoint). Compare models within a category; row pools and supported types can differ.",
  "min_n": 15,
  "provisional": false,
- "results_sha256": "67eaf92a2d75851642a2522bc24b5144391452f293d79c7686a9f447711fd5a7",
+ "results_sha256": "985783e7d7eb81c5e0e931507332b810c4a19b6c990a7f1e3826a3950dfab55f",
  "results_sha256_note": "All category cells and lanes unchanged; GPU-time cost restatement.",
  "revision": "v1.8.10",
  "rule_note": "Cells of re-scored rows are computed with the frozen category tools under the 10 s rule (a decision over 10 s counts as a wrong answer). Rows without cells are not yet re-scored under the rule or are re-measure pending; no v1.6 cell is shown for a v1.7 row.",
@@ -76169,58 +76169,6 @@
      "operational_failure_n": 0,
      "refusal_n": 0,
      "response_n": 90
-    }
-   }
-  },
-  "microsoft-decision-1-a2-20261012": {
-   "category_pools": "A2+P (draw v1.6-regular-20261012)",
-   "coverage": "A2+P (draw v1.6-regular-20261012)",
-   "coverage_note": "Preliminary A2 re-run of Microsoft-Decision-1 (300 sealed A2 items + 300 public items). Language cells come from the scorer's A2 breakdowns; subject-topic and use-case cells cover its labelled public items only, because the A2 sealed items are a separate subset that was not part of this draw's labelling run.",
-   "language_coverage": "A2+P (draw v1.6-regular-20261012)",
-   "languages": {
-    "en": {
-     "competence": 58.59,
-     "n": 365
-    },
-    "pl": {
-     "competence": 52.96,
-     "n": 20
-    }
-   },
-   "topics": {
-    "coding": {
-     "competence": 68.61,
-     "n": 62
-    },
-    "law_policy": {
-     "competence": 75.22,
-     "n": 151
-    },
-    "math": {
-     "competence": 52.66,
-     "n": 37
-    },
-    "support_ops": {
-     "competence": 58.18,
-     "n": 21
-    }
-   },
-   "usecases": {
-    "customer_support": {
-     "competence": 60.32,
-     "n": 37
-    },
-    "legal_compliance": {
-     "competence": 78.65,
-     "n": 74
-    },
-    "model_routing": {
-     "competence": 78.83,
-     "n": 86
-    },
-    "other": {
-     "competence": 80.54,
-     "n": 24
     }
    }
   },
