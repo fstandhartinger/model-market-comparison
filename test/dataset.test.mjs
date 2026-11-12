@@ -405,7 +405,15 @@ test("privacy routing is not mislabeled as trusted execution", () => {
   assert.ok(venice.every((offer) => !offer.tee));
   const chutes = ds.models.flatMap((model) => model.offers).filter((offer) => offer.platform === "Chutes");
   assert.equal(chutes.length > 0, true);
-  assert.ok(chutes.every((offer) => offer.tee && !offer.eu_hosted));
+  // CR-743: since 12 Nov 2026 the public Chutes catalog also lists priced non-TEE models (confidential_compute false),
+  // so "every Chutes offer is TEE" no longer holds. Each direct Chutes offer must carry exactly its catalog row's flag:
+  // a non-TEE chute labelled TEE (or a TEE chute labelled non-TEE) fails, and none is EU-hosted.
+  const chutesFlag = new Map((chutesCatalog.models || []).map((row) => [row.tee_model_id, row.confidential_compute]));
+  for (const offer of chutes) {
+    assert.ok(chutesFlag.has(offer.provider_model_id), `Chutes offer ${offer.provider_model_id} has a catalog row`);
+    assert.equal(offer.tee, chutesFlag.get(offer.provider_model_id) === true, `Chutes offer ${offer.provider_model_id} tee follows confidential_compute`);
+    assert.ok(!offer.eu_hosted, `Chutes offer ${offer.provider_model_id} is not EU-hosted`);
+  }
   const routedChutes = ds.models.flatMap((model) => model.offers).filter((offer) => offer.platform === "OpenRouter" && offer.provider === "Chutes");
   assert.ok(routedChutes.length > 0);
   assert.ok(routedChutes.every((offer) => !offer.tee));
