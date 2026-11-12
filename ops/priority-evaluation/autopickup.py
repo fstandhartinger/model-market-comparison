@@ -4189,6 +4189,67 @@ def sla_decision_rows(synthetic_id: str | None, job_root: Path) -> list[dict[str
     """)
 
 
+# The order can never come back into sla_decision_rows: delivered, decided, refunded or no longer open. A customer
+# hold, a 'sending' delivery mail or a paused clock are temporary and keep the card (the 40 h sweep reads taps made
+# meanwhile once the order is back).
+SLA40_LEFT_FOR_GOOD_SQL = ("NOT (r.status IN ('paid','review_passed') AND r.result_delivered_at IS NULL "
+                           "AND COALESCE(r.delivery_email_status,'not_due') <> 'sent' "
+                           "AND r.refund_id IS NULL AND r.refund_decision IS NULL)")
+
+
+def sla40_stray_reason(row: dict[str, Any]) -> str:
+    if row.get("refund_decision") in ("approved", "declined"):
+        return "decided_elsewhere"
+    if row.get("result_delivered_at") or row.get("delivery_email_status") == "sent":
+        return "delivered"
+    return "order_changed"
+
+
+def sla40_stray_closeouts(synthetic_id: str | None, job_root: Path, effects: Effects) -> int:
+    """Close 40 h cards whose order left the 40 h set for good while the card still shows buttons (re-review S1).
+
+    sla_decisions polls only open rows and refund_approval closes only refund_due/refund_pending cards with a live
+    late Refund button. Every other exit (on-time delivery, a 48 h card decided first, a late button that never
+    attached) left live buttons nobody read. Never records a decision; a Refund tap that can no longer be applied is
+    handed to the order's owner once. Owner-managed orders are skipped. Bounded per card by CLOSEOUT_TRIES."""
+    if effects.dry_run:
+        return 0
+    root = STATE_ROOT / "sla-decisions"
+    try:
+        paths = sorted(root.glob("*.json"))
+    except OSError:
+        return 0
+    predicate = managed_predicate("r", synthetic_id, job_root)
+    closed = 0
+    for path in paths:
+        if not re.fullmatch(r"[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\.json", path.name):
+            continue  # receipts such as <rid>.card1.completed.json
+        rid = path.stem
+        try:
+            card = json.loads(path.read_text())
+            if not isinstance(card, dict) or not (sla_decision.stray_card_live(card)
+                                                  or sla_decision.stray_closeout_pending(card)):
+                continue
+            row = sql_json(f"SELECT {row_json_sql('r')} FROM {TABLE} AS r WHERE {predicate} "
+                           f"AND r.id='{rid}'::uuid AND {SLA40_LEFT_FOR_GOOD_SQL}")
+            if not row or sla_decision.owner_managed(row):
+                continue
+            outcome = sla_decision.close_stray(root, rid, sla40_stray_reason(row), utcnow().timestamp())
+        except Exception as exc:
+            print(f"fast-lane SLA 40 h close-out: {path.name[:8]}: {type(exc).__name__}", file=sys.stderr)
+            continue
+        if outcome is None:
+            continue
+        closed += 1
+        if outcome == "refund_tap_unapplied":
+            post_sla40_outcome_once(load_state(rid), "refund_tap_unapplied", effects, (
+                f"Fast-lane order {order_ref(rid)}: Florian tapped Refund in full on the 40-hour card after the "
+                "order had left the open set (result delivered or decided elsewhere). Nothing was refunded and no "
+                "decision was recorded; his card now says an agent follows up. Owner: check the order and ask him "
+                "on a new refund card whether he still wants the refund."), owner_for(rid), kind="handoff")
+    return closed
+
+
 def delay_note_message(row: dict[str, Any]) -> tuple[str, str]:
     if sla_decision.owner_managed(row):
         raise ValueError("40h decision is owner-managed; no fixed result ETA")
@@ -4200,7 +4261,8 @@ def delay_note_message(row: dict[str, Any]) -> tuple[str, str]:
     return subject, body
 
 
-def post_sla40_outcome_once(state: dict[str, Any], outcome: str, effects: Effects, text: str, owner: str) -> bool:
+def post_sla40_outcome_once(state: dict[str, Any], outcome: str, effects: Effects, text: str, owner: str,
+                            kind: str = "note") -> bool:
     """Post the board note for a 40 h card outcome once per order; the pickup runs every 5 minutes.
 
     The marker is written only after the board accepted the note, so a failed post is retried next cycle.
@@ -4208,7 +4270,7 @@ def post_sla40_outcome_once(state: dict[str, Any], outcome: str, effects: Effect
     posted = state.setdefault("sla40_outcome_posted", {})
     if posted.get(outcome):
         return False
-    if not effects.board(text, owner, kind="note"):
+    if not effects.board(text, owner, kind=kind):
         return False
     posted[outcome] = utcnow().isoformat()
     save_state(state)
@@ -4289,6 +4351,15 @@ def sla_decisions(synthetic_id: str | None, job_root: Path, effects: Effects) ->
                 post_sla40_outcome_once(state, "refund", effects, (
                     f"Fast-lane order {order_ref(rid)}: Florian approved a full refund on the "
                     "40-hour decision card; the refund worker pays it back now."), owner_for(rid))
+            else:
+                # The tap lost a race with delivery or a hold (re-review S1 c): the row guard refused it, nothing was
+                # refunded, yet the card already reads "pays it back". After a hold the next cycle applies it.
+                post_sla40_outcome_once(state, "refund_refused", effects, (
+                    f"Fast-lane order {order_ref(rid)}: Florian tapped Refund in full on the 40-hour card, but the "
+                    "order changed first (result delivered or customer hold), so nothing was refunded. His card "
+                    "says the refund worker pays it back. Owner: check the order; if it was delivered, tell Florian "
+                    "and ask him on a new refund card whether he still wants the refund."),
+                    owner_for(rid), kind="handoff")
         elif outcome == "delay_note":
             if state.get("delay_email_status") != "sent":
                 subject, body = delay_note_message(row)
@@ -4462,6 +4533,7 @@ def cycle(effects: Effects, synthetic_id: str | None = None, job_root: Path | No
     counts["sla"] = sla_sweep(synthetic_id, root, effects)
     counts["sla40_cards"] = sla_decisions(synthetic_id, root, effects)
     counts["refund_cards"] = refund_decisions(synthetic_id, root, effects)
+    counts["sla40_closeouts"] = sla40_stray_closeouts(synthetic_id, root, effects)
     if not kill:
         for row in claim_rows(synthetic_id, root):
             counts["claimed"] += 1
