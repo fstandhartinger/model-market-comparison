@@ -39,9 +39,10 @@ const lists=art=>{
  r.capability=rk.slice().sort((x,y)=>y.capability-x.capability||x.ranks.capability-y.ranks.capability).map(s=>s.key);
  return r;
 };
-const result={method:'Offset what-if on the v1.8.10 artifact: the 35 ranked rows of the 27 Oct draw are re-derived as published + offset (clipped) with the frozen composite (jevComposite); every other row is unchanged; lists are re-sorted (stable) and scoped with the production helpers. Ranks are 1-based positions in the named list of the named board. capability_caps = Capability class list with the official cost/latency caps. Row ranks in the two unranked rows are null.',
+const HELD=new Set(proof.held_rows);
+const result={configuration:'FAIR_SUBSET: '+RANKED.size+' ranked rows, '+HELD.size+' held unranked rows ('+[...HELD].sort().join(', ')+'), 2 unpriced rows unranked',method:'Offset what-if on the v1.8.10 artifact: the '+RANKED.size+' ranked rows of the 27 Oct draw are re-derived as published + offset (clipped) with the frozen composite (jevComposite); every other row is unchanged; lists are re-sorted (stable) and scoped with the production helpers. Ranks are 1-based positions in the named list of the named board. capability_caps = Capability class list with the official cost/latency caps. Rows that are not ranked (two unpriced, four held) have null ranks; their equated axes and composites are still shown.',
  board_sizes:{},offset_point:eq.offset,offset_ci95:eq.offset_ci95,scenarios:Object.fromEntries(Object.entries(scen).map(([k,v])=>[k,v])),offsets_source:'r198/v1810/inputs/EQUATING-STRONG4-D1027.json (sha256 '+eq.files.equating.sha256+')',rows:{},top_fives:{}};
-for(const k of DRAW)result.rows[k]={display:a.systems.find(s=>s.key===k).display,ranked:RANKED.has(k),published:a.systems.find(s=>s.key===k).published_scores,scenarios:{}};
+for(const k of DRAW)result.rows[k]={display:a.systems.find(s=>s.key===k).display,ranked:RANKED.has(k),held:HELD.has(k),published:a.systems.find(s=>s.key===k).published_scores,scenarios:{}};
 let first=true;
 for(const [name,off] of Object.entries(scen)){
  const art=field(off),views={all:jevLiveAllArtifact(art,isApi),open:jevbenchScopeArtifact(art,'open',isApi),api:jevbenchScopeArtifact(art,'api',isApi)};

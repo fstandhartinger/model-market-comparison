@@ -21,7 +21,7 @@ function files(dir){return readdirSync(dir).flatMap(n=>{const p=dir+'/'+n;return
 test('all v1.8.10 public artifacts retain only approved Karpo fields (equated, standard axes only)',()=>{
  for(const n of ['results','categories','proof','carry','history','history-carry','publication'])scoped(load(n));
  for(const p of [...files('r198/v189/inputs'),...files('r198/v189/src'),...files('r198/v189/receipts'),...files(V+'inputs'),...files(V+'src'),V+'receipts/EQUATED-ROW-SPEC.json',V+'receipts/EQUATING-BINDING.json',V+'receipts/BUILD.json'])scoped(JSON.parse(readFileSync(p)));
- assert.equal(validateV189PublicText(restricted),true);assert.equal(restricted.ranked,true);assert.equal(restricted.listing_note,'Measured on the 27 Oct 2026 draw; shown on the reference scale by anchor equating with four strong anchor systems (Intelligence -2.9, Calibration -1.9 points).');
+ assert.equal(validateV189PublicText(restricted),true);assert.equal(restricted.ranked,true);assert.equal(restricted.listing_note,'Measured on the 27 Oct 2026 draw; shown on the reference scale by anchor equating with four strong anchor systems (Intelligence -2.9, Calibration -1.9 points; 95% interval of the Intelligence shift -5.9 to +1.1). Its #5 place on Composite B among all systems is within the uncertainty of the draw shift.');
  assert.deepEqual(restricted.status,{status:'complete'});
  assert.equal(restricted.publication_scope,'standard-axes-only');
  for(const k of ['intelligence','calibration','noul_decisive'])assert.equal(Object.hasOwn(restricted,k),false);

@@ -17,9 +17,9 @@ except AssertionError as e:assert 'PENDING' in str(e) or 'FAIR' in str(e);log.ap
 else:raise AssertionError('PENDING approval accepted')
 # --- bind_fair verdicts on fixtures (dry run only; nothing is bound)
 with tempfile.TemporaryDirectory() as t:
- tp=pathlib.Path(t);(tp/'workers/r276-v1810-fair').mkdir(parents=True)
+ tp=pathlib.Path(t);(tp/'workers/r276-v1810-recheck').mkdir(parents=True)
  for verdict,ok in [('PENDING',False),('SUSPICIOUS',False),('UNFAIR',False),('FAIR',True)]:
-  (tp/'workers/r276-v1810-fair/RESULT.json').write_text(json.dumps({'verdict':verdict,'engine':'fixture'}))
+  (tp/'workers/r276-v1810-recheck/RESULT.json').write_text(json.dumps({'verdict':verdict,'engine':'fixture'}))
   r=run(['python3','-B',str(J/'bind_fair_v1810.py'),'--dry-run'],{'JEV_FAIR_ROOT':str(tp)});assert (r.returncode==0)==ok,(verdict,r.stderr,r.stdout);log.append(f'bind_fair --dry-run {verdict}: '+('would bind' if ok else 'refused'))
 assert before=={'manifest':sha(P),'proof':sha(D/'jevbench-v1.8.10-proof.json'),'approval':sha(J/'inputs/APPROVAL.json')},'a dry run changed the real tree'
 # --- approval negatives (synthetic PASS tree has a FAIR receipt)

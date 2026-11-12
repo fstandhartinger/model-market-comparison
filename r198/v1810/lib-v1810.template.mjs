@@ -1,8 +1,9 @@
 // v1.8.10: the 27 Oct 2026 regular draw (v1.6-regular-20261027) is EQUATED with four strong anchor systems and its rows are RANKED.
 // Each row of the draw = published + the draw's anchor offset (Intelligence/Calibration, clipped 0..100); Capability = mean of the equated
 // axes; composites and sort views follow from the equated axes by the frozen formula (jevComposite = score_v15.composite); the published
-// numbers stay in published_scores and the confidence intervals are the ones measured on the draw. Rows without a price stay unranked.
-// Every other row is unchanged except rank/ranks, which move only because the newly ranked rows join the order lists (removing them
+// numbers stay in published_scores and the confidence intervals are the ones measured on the draw before equating. Rows without a price stay unranked,
+// and four rows whose top-five places lie within the uncertainty of the draw shift (or depend on the draw's item mix) are held unranked (FAIR_SUBSET).
+// Every other row is unchanged except rank/ranks (and the display name of the one row its vendor renamed), which move only because the newly ranked rows join the order lists (removing them
 // gives back v1.8.9's lists exactly). Independent review AND a bound FAIR fairness verdict gate every public reader.
 import {createHash} from 'node:crypto';
 import {readFile} from 'node:fs/promises';
@@ -18,15 +19,24 @@ export const V1810_EQUATED_ROWS=/*EQROWS*/;
 export const V1810_EQUATING=/*EQUATING*/;
 export const V1810_RANKED_KEYS=/*RANKED*/;
 export const V1810_UNRANKED=/*UNRANKED*/;
+export const V1810_HELD=/*HELD*/;
+export const V1810_RENAMES=/*RENAMES*/;
 export const V1810_SCORERS=/*SCORERS*/;
 export const V1810_DRAW='v1.6-regular-20261027';
 export const V1810_OFFSET=Object.freeze({I:-2.884891186577587,C:-1.8542447151797177});
 export const V1810_EQUATED_KEYS=Object.keys(V1810_EQUATED_ROWS).sort();
-export const V1810_NOTE='Measured on the 27 Oct 2026 draw; shown on the reference scale by anchor equating with four strong anchor systems (Intelligence -2.9, Calibration -1.9 points).';
+export const V1810_NOTE_UNPRICED='Measured on the 27 Oct 2026 draw; shown on the reference scale by anchor equating with four strong anchor systems (Intelligence -2.9, Calibration -1.9 points).';
+export const V1810_NOTE='Measured on the 27 Oct 2026 draw; shown on the reference scale by anchor equating with four strong anchor systems (Intelligence -2.9, Calibration -1.9 points; 95% interval of the Intelligence shift -5.9 to +1.1).';
 export const V1810_H2O_EXTRA='On the 300 public items every draw shares, this version scores 57.2 Intelligence vs 61.1 for H2O-Lightning-4B v1.1.';
+export const V1810_HELD_TEXT='Measured on the 27 Oct 2026 draw and shown on the reference scale by anchor equating with four strong anchor systems (Intelligence -2.9, Calibration -1.9 points). Not ranked yet: its top-five places lie within the uncertainty of that shift (95% interval -5.9 to +1.1 Intelligence points). Ranking follows when more anchor runs narrow the interval.';
+export const V1810_H2O_HELD_TEXT='Measured on the 27 Oct 2026 draw and shown on the reference scale by anchor equating with four strong anchor systems (Intelligence -2.9, Calibration -1.9 points). Not ranked: on that draw it scores 5.8 points above H2O-Lightning-4B v1.1 on the sealed items but 4.2 points below it on the 300 public items both answered, so its higher score there depends on how that draw\'s items are built, which the anchor shift cannot correct. '+V1810_H2O_EXTRA;
+export const V1810_BOUNDARY={karpo_decision_31b:'Its #5 place on Composite B among all systems is within the uncertainty of the draw shift.','arcbright-elf-1-12b-r2':'Its #4 place on the open-weights Composite A and C lists is within the uncertainty of the draw shift.'};
+export const V1810_META_KEY='metadecision-31b-rain';
+export const V1810_META_NOTE='On this draw it scores 13.3 points higher on the sealed items than on the 300 public items, more than any row measured on the reference draw; its #2 Capability places hold even if that gap is set to the reference-draw median.';
+export const V1810_HIST='Equated the 27 Oct regular draw with four strong anchor systems (Intelligence -2.9, Calibration -1.9 points) and ranked 31 of its rows; four stay unranked because their top-five places lie within the uncertainty of the shift; renamed AutoTrust\'s JEV-27B to AutoTrust-Decider-Pro-27B at the vendor\'s request.';
 export const V1810_NO_PRICE_NOTE=/*NOPRICE*/;
 export const V1810_APPROVAL_STATUS='GO (fair top-five change, Florian rule 25 Oct 2026; strong-anchor equating of the 27 Oct draw)';
-export const V1810_FAIR_PATH='workers/r276-v1810-fair/RESULT.json';
+export const V1810_FAIR_PATH='workers/r276-v1810-recheck/RESULT.json';
 const H2O='h2o-lightning-4b-v1.4.1',KARPO='karpo_decision_31b';
 const REFERENCE_G_MED=2.573387642438244;
 const EQ_FIELDS=['axes','scores','views','jevbench_score','capability','published_scores','ranked','rank','ranks','listing','not_ranked_because','listing_note','disclosure','underlying','draw'];
@@ -60,13 +70,17 @@ export function checkEquatedRow(s,published,options){
  for(const [n,w] of Object.entries(SORT_VIEWS))if(!near(s.views[n],jevComposite(s.axes,Object.fromEntries(AXES.map((a,k)=>[a,w[k]])),50)))fail('equated view '+n+' '+s.key);
  if(s.jevbench_score!==s.scores.A)fail('headline '+s.key);
  if(s.draw?.id!==V1810_DRAW||s.draw.status!=='equated')fail('equated draw '+s.key);
+ if(s.draw.ci_basis!=='measured on the draw before equating')fail('interval basis label '+s.key);
  same(s.draw.offset,{...V1810_OFFSET},'draw offset '+s.key);same(s.draw.offset_ci95,V1810_EQUATING.offset_ci95,'draw offset interval '+s.key);
- if(s.listing_note!==V1810_NOTE+(s.key===H2O?' '+V1810_H2O_EXTRA:''))fail('public note '+s.key);
  const priced=Object.keys(options).every(o=>s.scores[o]!=null);
  if(V1810_RANKED_KEYS.includes(s.key)){
-  if(!priced||s.ranked!==true||s.listing!=='ranked'||'not_ranked_because' in s)fail('equated row ranked '+s.key);
+  if(!priced||s.ranked!==true||s.listing!=='ranked'||'not_ranked_because' in s||V1810_HELD.includes(s.key))fail('equated row ranked '+s.key);
+  if(s.listing_note!==[V1810_NOTE,V1810_BOUNDARY[s.key],s.key===V1810_META_KEY?V1810_META_NOTE:null].filter(Boolean).join(' '))fail('public note '+s.key);
+ }else if(V1810_HELD.includes(s.key)){
+  if(!priced||s.ranked!==false||s.listing!=='unranked'||s.rank!==null||'listing_note' in s||s.not_ranked_because!==(s.key===H2O?V1810_H2O_HELD_TEXT:V1810_HELD_TEXT)||!(s.key in V1810_UNRANKED))fail('held row stays unranked '+s.key);
+  same(s.ranks,{A:null,B:null,C:null,capability:null},'null ranks '+s.key);
  }else{
-  if(priced||s.ranked!==false||s.listing!=='unranked'||s.rank!==null||s.not_ranked_because!==V1810_NO_PRICE_NOTE||!(s.key in V1810_UNRANKED))fail('row stays unranked for its price '+s.key);
+  if(priced||s.ranked!==false||s.listing!=='unranked'||s.rank!==null||s.not_ranked_because!==V1810_NO_PRICE_NOTE||s.listing_note!==V1810_NOTE_UNPRICED||!(s.key in V1810_UNRANKED))fail('row stays unranked for its price '+s.key);
   same(s.ranks,{A:null,B:null,C:null,capability:null},'null ranks '+s.key);
  }
  for(const t of [s.listing_note,s.not_ranked_because,s.disclosure,s.underlying])if(typeof t==='string'&&(INTERNAL.test(t)||INTERNAL_CS.test(t)||STALE.test(t)))fail('public text '+s.key);
@@ -91,16 +105,20 @@ export function validateJevbenchV1810Bundle({manifest,artifact,categories,carry,
  if(artifact.roster_count!==rows.length||artifact.n_ranked!==rows.filter(s=>s.ranked).length||artifact.n_ranked!==previous.artifact.n_ranked+V1810_RANKED_KEYS.length)fail('counts');
  same(previous.artifact.systems.filter(s=>s.draw?.id===V1810_DRAW).map(s=>s.key).sort(),V1810_EQUATED_KEYS,'rows of the equated draw');
  same([...V1810_RANKED_KEYS,...Object.keys(V1810_UNRANKED)].sort(),V1810_EQUATED_KEYS,'ranked + unranked partition');
+ if(!V1810_HELD.every(k=>k in V1810_UNRANKED)||V1810_HELD.length!==4||V1810_RANKED_KEYS.length!==31)fail('31 ranked, 4 held');
  for(const p of previous.artifact.systems){
   const now=by.get(p.key);
   if(V1810_EQUATED_KEYS.includes(p.key)){
    same(omit(now,EQ_FIELDS),omit(p,EQ_FIELDS),'carried row '+p.key);
    same(Object.fromEntries(EQ_FIELDS.filter(f=>f in now&&f!=='rank'&&f!=='ranks').map(f=>[f,now[f]])),omit(V1810_EQUATED_ROWS[p.key],['ranks','rank']),'equated row spec '+p.key);
    checkEquatedRow(now,{axes:p.axes,scores:p.scores,capability:p.capability},artifact.options);
-   same(omit(now.draw,['status','offset','offset_ci95']),omit(p.draw,['status','offset','offset_ci95']),'draw block '+p.key);
+   same(omit(now.draw,['status','offset','offset_ci95','ci_basis']),omit(p.draw,['status','offset','offset_ci95']),'draw block '+p.key);
    const pins=proof.equated_rows?.[p.key]?.disclosure_draw_sentence;
    if(!pins)fail('draw sentence pin '+p.key);
    for(const f of ['disclosure','underlying'])for(const x of pins[f]??[])if(!hex(x.before_sha256)||!hex(x.after_sha256))fail('draw sentence pin hash '+p.key);
+  }else if(p.key in V1810_RENAMES){
+   same(omit(now,['rank','ranks','display']),omit(p,['rank','ranks','display']),'carried row '+p.key);
+   if(p.display!==V1810_RENAMES[p.key].before||now.display!==V1810_RENAMES[p.key].after||now.key!==p.key)fail('display rename '+p.key);
   }else same(omit(now,['rank','ranks']),omit(p,['rank','ranks']),'carried row '+p.key);
   same(categories.systems[p.key],previous.categories.systems[p.key],'carried cells '+p.key);
   same(categories.lanes[p.key],previous.categories.lanes[p.key],'carried lane '+p.key);
@@ -125,7 +143,9 @@ export function validateJevbenchV1810Bundle({manifest,artifact,categories,carry,
  if(!hex(V1810_EQUATING.files?.equating?.sha256)||V1810_EQUATING.anchors?.length!==4||V1810_EQUATING.status!=='equated')fail('equating provenance');
  same(V1810_EQUATING.offset,{...V1810_OFFSET},'equating offset');
  same(Object.keys(proof.equated_rows).sort(),V1810_EQUATED_KEYS,'equated row proof roster');
- for(const [k,r] of Object.entries(proof.equated_rows))if(r.treatment!==(V1810_RANKED_KEYS.includes(k)?'ranked':'unranked'))fail('treatment '+k);
+ for(const [k,r] of Object.entries(proof.equated_rows))if(r.treatment!==(V1810_RANKED_KEYS.includes(k)?'ranked':V1810_HELD.includes(k)?'held':'unranked'))fail('treatment '+k);
+ same(proof.held_rows,[...V1810_HELD].sort(),'held rows');same(proof.display_renames,V1810_RENAMES,'display renames');
+ same(artifact.addendum.held_keys,[...V1810_HELD].sort(),'addendum held keys');same(artifact.addendum.display_renamed_keys,Object.keys(V1810_RENAMES).sort(),'addendum renamed keys');
  same(proof.ranked_rows,[...V1810_RANKED_KEYS].sort(),'ranked rows');same(proof.unranked_rows,V1810_UNRANKED,'unranked rows');
  same(artifact.addendum.equated_keys,V1810_EQUATED_KEYS,'addendum equated keys');
  same(artifact.addendum.ranked_keys,[...V1810_RANKED_KEYS].sort(),'addendum ranked keys');

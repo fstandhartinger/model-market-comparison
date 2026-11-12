@@ -13,7 +13,7 @@
   "rule": "the 27 Oct draw rows rank only after the v1.8.10 candidate passes an independent fairness review; a top-five change goes to Florian as a preview"
  },
  "fairness_check": {
-  "path": "workers/r276-v1810-fair/RESULT.json",
+  "path": "workers/r276-v1810-recheck/RESULT.json",
   "verdict": "PENDING"
  },
  "fresh_baseline": "v1.8.9",
@@ -25,12 +25,14 @@
  },
  "release_owner_rulings": [
   "d1027-equated-strong4-57394 (equate on the 4 COMPLETE strong anchors; the fifth anchor is skipped as pre-registered, no retry)",
-  "v1713-topics-exception-h2o141 extended to every row on the draw (TEMPORARY topics exception, unchanged)"
+  "v1713-topics-exception-h2o141 extended to every row on the draw (TEMPORARY topics exception, unchanged)",
+  "fairness-subset-v1810: FAIR_SUBSET (recommendation b of the independent fairness review workers/r276-v1810-fair): 31 rows of the draw ranked; h2o-lightning-4b-v1.4.1, jeff_1_1_large, wemm-jev and visionjev-1.0.0-27b stay equated but unranked; the two unpriced DecisionNode rows stay unranked",
+  "validator-anchor-minimum-v1810: lib/jevbench-cohort-merge.mjs readDrawEquating now requires at least 4 anchors for an equated draw (was 5), justified by the pre-registered STAGE_FAILED skip of the fifth planned anchor system (no retry), so this draw has four complete anchors; no other validator rule changed"
  ],
  "status": "GO (fair top-five change, Florian rule 25 Oct 2026; strong-anchor equating of the 27 Oct draw)",
  "top_five_effect": "changed",
  "top_five_preview": {
   "path": "r198/v1810/receipts/topfive-diff.json",
-  "sha256": "66af3b99c40b419dc9d0f833f7871b7e46402c3f58d9956580d14a561745eb16"
+  "sha256": "27bd4c636d748d1f5e1a81d60a6ba23f94d65265d3a677fe5237e2bfe662f45e"
  }
 }

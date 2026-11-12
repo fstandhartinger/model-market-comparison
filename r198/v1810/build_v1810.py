@@ -9,7 +9,9 @@ score_v15.composite. The published numbers stay in published_scores. Confidence 
 Every other v1.8.9 row is unchanged in every field except rank/ranks, which move only because the newly ranked rows join the order
 lists (stable insertion; removing them gives back v1.8.9's order lists exactly, asserted below).
 
-Rows of the draw that stay unranked keep an OTHER reason (no price) and are still equated (axes shown on the reference scale)."""
+Rows of the draw that stay unranked are still equated (axes shown on the reference scale): the two without a price keep that reason, and four rows
+whose top-five places lie within the uncertainty of the draw shift (or, for H2O-Lightning-4B v1.4.1, depend on the draw's item mix) are HELD unranked
+(FAIR_SUBSET, independent fairness review r276-v1810-fair, recommendation b). Renamed display names (vendor request) change display fields only."""
 import os, pathlib, json, hashlib, copy, shutil, re, sys, importlib.util, subprocess
 J = pathlib.Path(__file__).resolve().parent
 W = pathlib.Path(os.environ.get('WT', str(J.parents[1])))
@@ -40,8 +42,27 @@ LOO = eq['sensitivity_leave_one_out']
 I1, C1 = f'{OFFSET["I"]:.1f}', f'{OFFSET["C"]:.1f}'
 assert (I1, C1) == ('-2.9', '-1.9')
 POINTS = f'Intelligence {I1}, Calibration {C1} points'
-NOTE = f'Measured on the 27 Oct 2026 draw; shown on the reference scale by anchor equating with four strong anchor systems ({POINTS}).'
-HIST = f'Equated the 27 Oct regular draw with four strong anchor systems ({POINTS}) and ranked its rows.'
+CI_TXT = f'{OFFSET_CI["I"][0]:.1f} to {OFFSET_CI["I"][1]:+.1f}'
+assert CI_TXT == '-5.9 to +1.1'
+NOTE_UNPRICED = f'Measured on the 27 Oct 2026 draw; shown on the reference scale by anchor equating with four strong anchor systems ({POINTS}).'
+NOTE = f'Measured on the 27 Oct 2026 draw; shown on the reference scale by anchor equating with four strong anchor systems ({POINTS}; 95% interval of the Intelligence shift {CI_TXT}).'
+HELD = ['h2o-lightning-4b-v1.4.1', 'jeff_1_1_large', 'visionjev-1.0.0-27b', 'wemm-jev']
+HELD_BASIS = f'Measured on the 27 Oct 2026 draw and shown on the reference scale by anchor equating with four strong anchor systems ({POINTS}).'
+HELD_TEXT = HELD_BASIS + f' Not ranked yet: its top-five places lie within the uncertainty of that shift (95% interval {CI_TXT} Intelligence points). Ranking follows when more anchor runs narrow the interval.'
+H2O_HELD_TEXT = HELD_BASIS + ' Not ranked: on that draw it scores 5.8 points above H2O-Lightning-4B v1.1 on the sealed items but 4.2 points below it on the 300 public items both answered, so its higher score there depends on how that draw\'s items are built, which the anchor shift cannot correct.'
+BOUNDARY = {'karpo_decision_31b': 'Its #5 place on Composite B among all systems is within the uncertainty of the draw shift.',
+            'arcbright-elf-1-12b-r2': 'Its #4 place on the open-weights Composite A and C lists is within the uncertainty of the draw shift.'}
+META_NOTE = ('On this draw it scores 13.3 points higher on the sealed items than on the 300 public items, more than any row measured on the reference draw; '
+             'its #2 Capability places hold even if that gap is set to the reference-draw median.')
+META_KEY = 'metadecision-31b-rain'
+RENAMES = {'JEV-27B (AutoTrust, Qwen3.8-27B)': 'AutoTrust-Decider-Pro-27B (AutoTrust, Qwen3.8-27B)', 'JEV-9B': 'AutoTrust-Decider-Mini-9B', 'JEV-27B-VL': 'AutoTrust-Decider-Pro-Vision-27B'}
+HIST = (f'Equated the 27 Oct regular draw with four strong anchor systems ({POINTS}) and ranked 31 of its rows; four stay unranked because their top-five places lie within the uncertainty of the shift; '
+        'renamed AutoTrust\'s JEV-27B to AutoTrust-Decider-Pro-27B at the vendor\'s request.')
+MEASURE_NOTE = ('The anchors are scored without the 10-second rule on both draws, so the shift measures only the difference between the draws; with the rule applied on both draws it would be Intelligence -3.3, Calibration -2.4. '
+                'Places of four rows from that draw are within the shift\'s uncertainty and they stay unranked until more anchor runs narrow it.')
+CI_LABEL = 'measured on the draw before equating'
+METHOD_OLD = 'with fixed anchor systems measured on both draws'
+METHOD_NEW = 'with anchor systems measured on both draws (each draw lists its own anchor set)'
 EQ_PHRASE = f'equated to the reference scale with four strong anchor systems ({POINTS})'
 NO_PRICE = ('Not ranked because it has no price: under the frozen pricing rules a hosted model\'s own tariff counts only once it is admitted to the '
             'frozen list-price set, and this model declares no base model, so it has no cost axis and no composite.')
@@ -83,11 +104,12 @@ SENT = [
 STALE = re.compile(r'not yet equated|until (?:that|the) draw is equated|shown as published, offset 0|\(offset 0\)|stronger anchor|first anchor runs|Shown unranked until', re.I)
 res = cp(old['results']); out = {s['key']: s for s in res['systems']}; prev = cp(out)
 DRAW_ROWS = sorted(k for k, s in prev.items() if (s.get('draw') or {}).get('id') == DRAW_ID)
-assert len(DRAW_ROWS) >= 7 and {H2O, 'karpo_decision_31b', 'microsoft-decision-1-r2', 'torchcast-decision-31b-v1.0'} <= set(DRAW_ROWS)
+assert len(DRAW_ROWS) >= 7 and {H2O, 'karpo_decision_31b', 'microsoft-decision-1-r2', 'torchcast-decision-31b-v1.0', META_KEY, *HELD, *BOUNDARY} <= set(DRAW_ROWS)
 h2o_i, v11_i = prev[H2O]['intelligence']['I_open'], prev[H2O_V11]['intelligence']['I_open']
 H2O_EXTRA = f'On the 300 public items every draw shares, this version scores {h2o_i:.1f} Intelligence vs {v11_i:.1f} for H2O-Lightning-4B v1.1.'
+H2O_HELD_TEXT += ' ' + H2O_EXTRA
 assert H2O_EXTRA == 'On the 300 public items every draw shares, this version scores 57.2 Intelligence vs 61.1 for H2O-Lightning-4B v1.1.' and prev[H2O_V11]['display'].startswith('H2O-Lightning-4B v1.1')
-EQ_DRAW = {'status': 'equated', 'offset': dict(OFFSET), 'offset_ci95': cp(OFFSET_CI)}
+EQ_DRAW = {'status': 'equated', 'offset': dict(OFFSET), 'offset_ci95': cp(OFFSET_CI), 'ci_basis': CI_LABEL}
 EQ_ROW_FIELDS = ['axes', 'scores', 'views', 'jevbench_score', 'capability', 'published_scores', 'ranked', 'rank', 'ranks', 'listing', 'not_ranked_because', 'listing_note', 'disclosure', 'underlying', 'draw']
 RANKED, STAY, SENT_PIN = [], {}, {}
 for k in DRAW_ROWS:
@@ -113,12 +135,16 @@ for k in DRAW_ROWS:
         walk(v, f)
     SENT_PIN[k] = pins
     e['draw'] = {**s['draw'], **cp(EQ_DRAW)}
-    e['listing_note'] = NOTE + (' ' + H2O_EXTRA if k == H2O else '')
     priced = all(e['scores'][o] is not None for o in OPTIONS)
-    if priced:
+    if priced and k in HELD:
+        e['not_ranked_because'] = H2O_HELD_TEXT if k == H2O else HELD_TEXT; e.pop('listing_note', None)
+        STAY[k] = ('held: row-specific draw-mix signature that no offset can remove (FAIR_SUBSET)' if k == H2O else 'held: top-five places within the uncertainty of the draw shift (FAIR_SUBSET)')
+    elif priced:
+        e['listing_note'] = ' '.join([NOTE] + ([BOUNDARY[k]] if k in BOUNDARY else []) + ([META_NOTE] if k == META_KEY else []))
         e.pop('not_ranked_because'); e.update(ranked=True, listing='ranked'); RANKED.append(k)
     else:
-        assert e['cost']['kind'] == 'unpriced' and e['axes']['cost'] is None and 'NOT PRICED' in e['cost']['basis'], k
+        assert k not in HELD and e['cost']['kind'] == 'unpriced' and e['axes']['cost'] is None and 'NOT PRICED' in e['cost']['basis'], k
+        e['listing_note'] = NOTE_UNPRICED
         e['not_ranked_because'] = NO_PRICE; STAY[k] = 'unpriced: no cost axis, no composite'
     out[k] = e
 assert set(RANKED) | set(STAY) == set(DRAW_ROWS) and not set(RANKED) & set(STAY)
@@ -130,6 +156,13 @@ for metric in ['A', 'B', 'C', 'capability']:
     order = sorted(order0 + sorted(RANKED, key=lambda k: -val(k)), key=lambda k: -val(k))   # stable: predecessor ties kept, new rows after equal scores
     assert [k for k in order if k not in RANKED] == order0, 'removing the newly ranked rows must give v1.8.9 back'
     res['board'][metric] = {**res['board'][metric], 'order': order}
+RENAMED = {}
+for k, row in out.items():
+    for old_name, new_name in RENAMES.items():
+        if row['display'] == old_name or row['display'].startswith(old_name + ' ('):
+            RENAMED[k] = {'before': row['display'], 'after': new_name + row['display'][len(old_name):]}; row['display'] = RENAMED[k]['after']
+assert list(RENAMED) == ['jev-27b-autotrust'] and RENAMED['jev-27b-autotrust']['after'] == 'AutoTrust-Decider-Pro-27B (AutoTrust, Qwen3.8-27B)', RENAMED
+assert not [k for k, r in out.items() if re.match(r'JEV-(9B|27B)', r['display'])]
 for k, row in out.items():
     if row['ranked']:
         row['ranks'] = {m: res['board'][m]['order'].index(k) + 1 for m in ['A', 'B', 'C', 'capability']}; row['rank'] = row['ranks']['A']
@@ -137,7 +170,7 @@ for k, row in out.items():
 # ---- carried-row equality
 rank_shift = {}
 for k, p in prev.items():
-    a = {f: v for f, v in out[k].items() if f not in ('rank', 'ranks')}; b = {f: v for f, v in p.items() if f not in ('rank', 'ranks')}
+    a = {f: v for f, v in out[k].items() if f not in ('rank', 'ranks') and not (k in RENAMED and f == 'display')}; b = {f: v for f, v in p.items() if f not in ('rank', 'ranks') and not (k in RENAMED and f == 'display')}
     if k in DRAW_ROWS:
         assert {f: v for f, v in a.items() if f not in EQ_ROW_FIELDS} == {f: v for f, v in b.items() if f not in EQ_ROW_FIELDS}, k
         continue
@@ -150,15 +183,15 @@ for k, p in prev.items():
 res.update(revision=REV, label='JevBench v1.8.10: the 27 Oct regular draw equated with four strong anchors and ranked',
            systems=sorted(out.values(), key=lambda s: s['key']), n_ranked=sum(bool(s['ranked']) for s in out.values()),
            roster_count=len(out), run_kind='same-draw-addendum', source_sha256=EQ_SHA, source_note=HIST)
-assert res['n_ranked'] == old['results']['n_ranked'] + len(RANKED) and res['roster_count'] == len(prev)
+assert res['n_ranked'] == old['results']['n_ranked'] + len(RANKED) and res['roster_count'] == len(prev) and len(RANKED) == 31 and len(DRAW_ROWS) == 37 and sorted(STAY) == sorted(HELD + ['decisionnode-flash-0.9.1-rc1', 'decisionnode-main-0.9.1-rc1'])
 res['measurement_notes'] = old['results']['measurement_notes'] + [HIST + ' Four strong anchor systems answered both the reference draw and the 27 Oct draw; '
     f'the offset is the median over anchors of (reference minus new draw): Intelligence {OFFSET["I"]:.2f} (95% CI {OFFSET_CI["I"][0]:.2f} to {OFFSET_CI["I"][1]:+.2f}), '
     f'Calibration {OFFSET["C"]:.2f} (95% CI {OFFSET_CI["C"][0]:.2f} to {OFFSET_CI["C"][1]:+.2f}). '
-    'Every row on that draw is shown as published plus the offset; Capability and the composites follow from the equated axes; confidence intervals are the ones measured on the draw. '
-    f'{len(RANKED)} of its {len(DRAW_ROWS)} rows are now ranked; the others have no price and stay unranked. Every other score is unchanged and other rows move down only where a newly ranked row now sits above them.']
+    f'Every row on that draw is shown as published plus the offset; Capability and the composites follow from the equated axes; confidence intervals are the ones {CI_LABEL}. '
+    f'{len(RANKED)} of its {len(DRAW_ROWS)} rows are now ranked; two rows have no price and stay unranked, and four rows are held unranked. Every other score is unchanged and other rows move down only where a newly ranked row now sits above them. ' + MEASURE_NOTE]
 res['addendum'] = {**old['results']['addendum'], 'predecessor': PREV, 'new_keys': [], 'remeasured_keys': [], 'repriced_keys': [], 'link_fixed_keys': [],
                    'text_fixed_keys': sorted(k for k in DRAW_ROWS if SENT_PIN[k]), 'method_change': False, 'same_draw': DRAW_ID,
-                   'equated_keys': DRAW_ROWS, 'equated_draw': DRAW_ID, 'ranked_keys': sorted(RANKED), 'unranked_keys': sorted(STAY)}
+                   'equated_keys': DRAW_ROWS, 'equated_draw': DRAW_ID, 'ranked_keys': sorted(RANKED), 'unranked_keys': sorted(STAY), 'held_keys': sorted(HELD), 'display_renamed_keys': sorted(RENAMED)}
 put(V / f'jevbench-{REV}-results.json', res)
 cat = cp(old['categories'])
 cat.update(revision=REV, results_sha256=sha(V / f'jevbench-{REV}-results.json'), source_results_sha256=res['source_sha256'])
@@ -173,10 +206,10 @@ equating = {'draw': DRAW_ID, 'status': 'equated', 'offset': OFFSET, 'offset_ci95
             'scorer': {'name': 'score_v16', 'sha256': eq['scorer']['sha256'], 'noul_method': eq['scorer']['noul_method']}, 'equate_tool_sha256': eq['equate_tool']['sha256'],
             'files': {'equating': {'name': 'EQUATING-STRONG4-D1027.json', 'sha256': EQ_SHA}}, 'anchor_output_sha256': {k: v['sha256'] for k, v in eq['inputs']['new_raws'].items()},
             'reference_output_sha256': {k: v['sha256'] for k, v in eq['inputs']['reference_raws'].items()},
-            'applied_as': 'published + offset on Intelligence and Calibration (clipped 0..100); Capability = mean of the equated axes; composites and sort views by the frozen score_v15.composite; confidence intervals as measured on the draw; published numbers kept in published_scores',
-            'method': L(W / 'data/jevbench-draw-equating.json')['method']}
+            'applied_as': 'published + offset on Intelligence and Calibration (clipped 0..100); Capability = mean of the equated axes; composites and sort views by the frozen score_v15.composite; confidence intervals as ' + CI_LABEL + ' (not shifted); published numbers kept in published_scores',
+            'method': L(W / 'data/jevbench-draw-equating.json')['method'].replace(METHOD_OLD, METHOD_NEW)}
 eq_rows = {k: {'published': out[k]['published_scores'], 'equated': {'axes': out[k]['axes'], 'scores': out[k]['scores'], 'capability': out[k]['capability']}, 'ranks': out[k]['ranks'],
-               'treatment': 'ranked' if k in RANKED else 'unranked', 'unranked_reason': STAY.get(k), 'disclosure_draw_sentence': SENT_PIN[k]} for k in DRAW_ROWS}
+               'treatment': 'ranked' if k in RANKED else 'held' if k in HELD else 'unranked', 'unranked_reason': STAY.get(k), 'disclosure_draw_sentence': SENT_PIN[k]} for k in DRAW_ROWS}
 tf = J / 'receipts/topfive-diff.json'; a = L(J / 'inputs/APPROVAL.json')
 a['top_five_preview']['sha256'] = sha(tf) if tf.exists() else shab(b'comparison bootstrap')
 a['top_five_effect'] = 'changed'
@@ -184,8 +217,9 @@ proof = {'schema_version': 1, 'revision': REV, 'predecessor': {'revision': PREV,
          'pricing_module_sha256': old['proof']['pricing_module_sha256'], 'pricing_authority': old['proof']['pricing_authority'], 'scorers': old['proof']['scorers'],
          'carried_rows': len(prev), 'carried_rows_equal_except': [
              'every row: rank and ranks only where a newly ranked row now sits above it (removing the newly ranked rows from the order lists gives back the v1.8.9 lists exactly)',
-             f'the {len(DRAW_ROWS)} rows of the 27 Oct draw: equated axes/scores/views/capability (published numbers in published_scores), ranked/rank/ranks/listing, not_ranked_because, listing_note, draw status/offset/interval, and the not-yet-equated sentence of the disclosure/underlying text'],
-         'exceptions': {}, 'equating': equating, 'equated_rows': eq_rows, 'rank_shifted_rows': len(rank_shift), 'ranked_rows': sorted(RANKED), 'unranked_rows': STAY,
+             f'the {len(DRAW_ROWS)} rows of the 27 Oct draw: equated axes/scores/views/capability (published numbers in published_scores), ranked/rank/ranks/listing, not_ranked_because, listing_note, draw status/offset/interval, and the not-yet-equated sentence of the disclosure/underlying text',
+             'the row AutoTrust-Decider-Pro-27B (key jev-27b-autotrust): the display name only (vendor rename of JEV-27B; key, repo, model pin and every score unchanged)'],
+         'exceptions': {}, 'equating': equating, 'equated_rows': eq_rows, 'rank_shifted_rows': len(rank_shift), 'ranked_rows': sorted(RANKED), 'unranked_rows': STAY, 'held_rows': sorted(HELD), 'display_renames': RENAMED, 'fairness_basis': 'FAIR_SUBSET (recommendation b of the independent fairness review): 31 rows ranked, 4 held unranked, 2 unpriced rows unranked',
          'same_draw': {'id': DRAW_ID, 'g_med_used': GMED}, 'new_rows': {}, 'remeasured_rows': {}, 'repriced_rows': {}, 'link_fixed_rows': [], 'text_fixed_rows': sorted(k for k in DRAW_ROWS if SENT_PIN[k]),
          'cost_basis': old['proof']['cost_basis'], 'publication_approval': a, 'topfive_diff_sha256': a['top_five_preview']['sha256'],
          'source_inputs': {'equating_sha256': EQ_SHA}}
@@ -193,10 +227,10 @@ put(V / f'jevbench-{REV}-proof.json', proof)
 pub = cp(old['publication']); pub.update(revision=REV, predecessor=proof['predecessor'], review={'engine': 'PENDING', 'verdict': 'PENDING', 'receipt_sha256': None})
 pub['files'] = {n: {'path': f'data/raw/benchmarks/jevbench/v1.8/jevbench-{REV}-{n}.json', 'sha256': sha(V / f'jevbench-{REV}-{n}.json')} for n in ['results', 'categories', 'carry', 'proof', 'history', 'history-carry']}
 put(V / f'jevbench-{REV}-publication.json', pub)
-put(J / 'src/equated-keys.json', DRAW_ROWS); put(J / 'src/ranked-keys.json', sorted(RANKED)); put(J / 'src/unranked-keys.json', STAY)
+put(J / 'src/held-keys.json', sorted(HELD)); put(J / 'src/display-renames.json', RENAMED); put(J / 'src/equated-keys.json', DRAW_ROWS); put(J / 'src/ranked-keys.json', sorted(RANKED)); put(J / 'src/unranked-keys.json', STAY)
 put(J / 'receipts/EQUATED-ROW-SPEC.json', {k: {f: out[k][f] for f in EQ_ROW_FIELDS if f in out[k]} for k in DRAW_ROWS})
 put(J / 'receipts/RANK-SHIFT.json', rank_shift); put(J / 'inputs/history.json', HIST)
-put(J / 'receipts/BUILD.json', {'revision': REV, 'base': PREV, 'base_publication_sha256': proof['predecessor']['publication_sha256'], 'equated_rows': DRAW_ROWS, 'ranked_rows': sorted(RANKED), 'unranked_rows': STAY,
+put(J / 'receipts/BUILD.json', {'revision': REV, 'base': PREV, 'base_publication_sha256': proof['predecessor']['publication_sha256'], 'equated_rows': DRAW_ROWS, 'ranked_rows': sorted(RANKED), 'unranked_rows': STAY, 'held_rows': sorted(HELD), 'display_renames': RENAMED,
                                 'carried_equal_except_ranks': len(prev) - len(DRAW_ROWS), 'rank_shifted_rows': len(rank_shift), 'roster_count': len(out), 'n_ranked': res['n_ranked'], 'files': pub['files']})
 subprocess.run([sys.executable, '-B', str(J / 'make_lib_v1810.py')], check=True)
 print(f'Built PENDING {REV}: {len(out)} rows; {len(DRAW_ROWS)} equated ({len(RANKED)} ranked, {len(STAY)} stay unranked); ranks shifted on {len(rank_shift)} carried rows (all explained by the insertion); n_ranked {res["n_ranked"]}')

@@ -534,10 +534,10 @@ export function JevAxesTable({ rows, publicDecisions, sealedDecisions, newLabel,
   </>;
 }
 
-type JevDrawTagData = { release: string; measured_on: string; label: string };
+type JevDrawTagData = { release: string; measured_on: string; label: string; ci_basis?: string };
 /** Florian 10 Oct 2026 (merged board): a row measured on a fresh draw after v1.6.1 names its draw and date. */
 function JevDrawTag({ tag, rowKey, className = 'ml-2 align-middle' }: { tag?: JevDrawTagData | null; rowKey: string; className?: string }) {
   if (!tag) return null;
   return <span className={`bh-thin-tag ${className}`} data-bh-jev-draw-tag={rowKey}
-    title={`Measured on the ${tag.label} (${tag.release}), ${tag.measured_on}; put on the v1.6.1 scale by the draw's anchor offset (see How it works).`}>{tag.release} draw</span>;
+    title={`Measured on the ${tag.label} (${tag.release}), ${tag.measured_on}; put on the v1.6.1 scale by the draw's anchor offset (see How it works).${tag.ci_basis ? ` Its confidence intervals were ${tag.ci_basis}.` : ''}`}>{tag.release} draw</span>;
 }

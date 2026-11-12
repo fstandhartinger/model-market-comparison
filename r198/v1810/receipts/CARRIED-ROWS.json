@@ -5,7 +5,19 @@
  "carried_rows_equal_except_rank_ranks": 303,
  "carried_rows_rank_shifted": 283,
  "categories_carry_history_unchanged": true,
+ "display_renamed_rows": {
+  "jev-27b-autotrust": {
+   "after": "AutoTrust-Decider-Pro-27B (AutoTrust, Qwen3.8-27B)",
+   "before": "JEV-27B (AutoTrust, Qwen3.8-27B)"
+  }
+ },
  "equated_rows": 37,
+ "held_rows": [
+  "h2o-lightning-4b-v1.4.1",
+  "jeff_1_1_large",
+  "visionjev-1.0.0-27b",
+  "wemm-jev"
+ ],
  "historical_files_byte_equal": 808,
  "loader_edits": {
   "lib/jevbench-alldata-input.mjs": {
@@ -27,12 +39,16 @@
   "lib/jevbench-releases.mjs": {
    "added_lines": 1,
    "removed_lines": 0
+  },
+  "lib/jevbench-v15-board.mjs": {
+   "added_lines": 1,
+   "removed_lines": 1
   }
  },
  "measurement_notes_append_only": true,
  "order_lists_without_newly_ranked_equal_v189": true,
  "other_draws_unchanged": true,
- "ranked_rows": 35,
+ "ranked_rows": 31,
  "ranks_without_newly_ranked_equal_v189": true,
  "status": "PASS"
 }

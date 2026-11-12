@@ -46,9 +46,16 @@ for f in ['test/jevbench-feed-live-board.test.mjs','test/jevbench-v170-release.t
 p=W/'data/jevbench-draw-equating.json';t=json.loads(p.read_text())
 d=next(x for x in t['draws'] if x['draw']=='v1.6-regular-20261027')
 if 'v1.8.10' not in d['releases']:d['releases'].append('v1.8.10')
+t['method']=t['method'].replace('with fixed anchor systems measured on both draws','with anchor systems measured on both draws (each draw lists its own anchor set)')
+assert 'each draw lists its own anchor set' in t['method'] and 'fixed anchor systems' not in t['method']
 d.update(latest_release='v1.8.10',status='equated',offset=EQ['offset'],offset_ci95=EQ['offset_ci95'],anchors=EQ['anchors'])
 d['anchor_evidence']=('Four strong anchor systems answered both the reference draw and this draw: Intelligence '+f"{EQ['offset']['I']:.2f}"+' (95% CI '+f"{EQ['offset_ci95']['I'][0]:.2f} to {EQ['offset_ci95']['I'][1]:+.2f}"+'), Calibration '+f"{EQ['offset']['C']:.2f}"+' (95% CI '+f"{EQ['offset_ci95']['C'][0]:.2f} to {EQ['offset_ci95']['C'][1]:+.2f}"+'), median over anchors, frozen scorer, B=1000. '
   'A fifth planned anchor could not be staged and is skipped as pre-registered. Receipt EQUATING-STRONG4-D1027.json, sha256 '+EQ['files']['equating']['sha256']+'; applied in v1.8.10.')
 d['equating_receipt']={'name':'EQUATING-STRONG4-D1027.json','sha256':EQ['files']['equating']['sha256']}
 p.write_text(json.dumps(t,indent=2,ensure_ascii=False)+'\n')
+# Vendor rename (display field only; key, repo and URLs stay): the live context-length board names the system.
+p=W/'data/jevbench-context-length-board.json';s=p.read_text();old='"system": "JEV-27B (AutoTrust, Qwen3.8-27B)"';new='"system": "AutoTrust-Decider-Pro-27B (AutoTrust, Qwen3.8-27B)"'
+if old in s:
+ assert s.count(old)==1;p.write_text(s.replace(old,new))
+assert new in p.read_text() and old not in p.read_text()
 print('Wired v1.8.10; 27 Oct draw entry equated (4 strong anchors); one All-data loader; public visibility review-gated')
