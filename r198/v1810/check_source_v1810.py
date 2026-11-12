@@ -9,10 +9,13 @@ D=pathlib.Path('data/raw/benchmarks/jevbench/v1.8');b=json.loads(base(D/'jevbenc
 DRAW=set(json.loads((J/'src/equated-keys.json').read_text()));NEW=json.loads((J/'src/new-keys.json').read_text());assert NEW==['gemini-decision-1'] and not set(NEW)&{r['key'] for r in b['systems']};HELD=set(json.loads((J/'src/held-keys.json').read_text()));REN=json.loads((J/'src/display-renames.json').read_text());RANKED=set(json.loads((J/'src/ranked-keys.json').read_text()))
 EQF=['axes','scores','views','jevbench_score','capability','published_scores','ranked','rank','ranks','listing','not_ranked_because','listing_note','disclosure','underlying','draw']
 assert DRAW=={r['key'] for r in b['systems'] if (r.get('draw') or {}).get('id')=='v1.6-regular-20261027'},'draw rows enumerated from the base data'
-assert sorted([r['key'] for r in b['systems']]+NEW)==sorted(by)
+REMOVED=json.loads((J/'src/removed-keys.json').read_text());assert REMOVED==['microsoft-decision-1-a2-20261012'] and not set(REMOVED)&set(by)   # r278: the preliminary unranked A2 listing leaves the boards
+assert all(r['ranked'] is False and r.get('rank') is None and r['listing']=='preliminary' for r in b['systems'] if r['key'] in REMOVED)
+assert sorted([r['key'] for r in b['systems'] if r['key'] not in REMOVED]+NEW)==sorted(by)
 # 1. field-level equality
 n=0;shift=0
 for r in b['systems']:
+ if r['key'] in REMOVED:continue
  now=by[r['key']]
  if r['key'] in DRAW:
   assert {f:v for f,v in now.items() if f not in EQF}=={f:v for f,v in r.items() if f not in EQF},('draw row outside the equated fields',r['key'])
@@ -37,13 +40,13 @@ for r in b['systems']:
 # 3. everything else of the artifact
 for f in b:
  if f in ('systems','board','revision','label','n_ranked','source_note','source_sha256','measurement_notes','addendum'):continue
- if f=='roster_count':assert a[f]==b[f]+len(NEW);continue
+ if f=='roster_count':assert a[f]==b[f]+len(NEW)-len(REMOVED);continue
  assert a[f]==b[f],f
 assert a['measurement_notes'][:len(b['measurement_notes'])]==b['measurement_notes'] and len(a['measurement_notes'])==len(b['measurement_notes'])+1
 # 4. categories, carry, history files: unchanged bytes except revision binding
 ca=L(W/D/'jevbench-v1.8.10-categories.json');cb=json.loads(base(D/'jevbench-v1.8.9-categories.json'))
-drop=lambda c:{**{k:v for k,v in c.items() if k not in('revision','results_sha256','source_results_sha256','systems','lanes')},'systems':{k:v for k,v in c['systems'].items() if k not in NEW},'lanes':{k:v for k,v in c['lanes'].items() if k not in NEW}}
-assert drop(ca)==drop(cb) and sorted(ca['systems'])==sorted([*cb['systems'],*NEW]) and all(ca['lanes'][k]=='api' for k in NEW)
+drop=lambda c:{**{k:v for k,v in c.items() if k not in('revision','results_sha256','source_results_sha256','systems','lanes')},'systems':{k:v for k,v in c['systems'].items() if k not in NEW and k not in REMOVED},'lanes':{k:v for k,v in c['lanes'].items() if k not in NEW and k not in REMOVED}}
+assert drop(ca)==drop(cb) and sorted(ca['systems'])==sorted([*[k for k in cb['systems'] if k not in REMOVED],*NEW]) and all(ca['lanes'][k]=='api' for k in NEW) and not set(REMOVED)&set(ca['systems'])
 GEM=L(J/'inputs/gemini/cells.json');assert all(ca['systems'][k]==GEM['systems'][k] for k in NEW),'added row cells are the frozen tool output byte for byte'
 for f in ['carry','history','history-carry']:assert (W/D/f'jevbench-v1.8.10-{f}.json').read_bytes()==base(D/f'jevbench-v1.8.9-{f}.json')
 # 5. every historical data/loader file and archived page byte-equal to the base
@@ -55,6 +58,8 @@ for f in files:
 # 6. the four edited loader files differ from the base only by the v1.8.10 wiring (and the 4-anchor minimum)
 # the low-sample caveat fix (commit dd3b51eab: the CR-729 memo copy keeps the row-pool bounds) adds exactly its own lines
 LOWSAMPLE={f:{l[1:] for l in subprocess.check_output(['git','show','dd3b51eab','--',f],cwd=W,text=True).splitlines() if l.startswith('+') and not l.startswith('+++')} for f in ['lib/jevbench-live-board.mjs']}
+# r278 fast path (DECISIONS jevbench-v1810-fast-path-tonight-1112): the breakdown display fix (commit 69db1d3c9: per-dimension view, min shown n 10) adds exactly its own lines
+for f in ['lib/jevbench-categories.mjs']:LOWSAMPLE.setdefault(f,set()).update(l[1:] for l in subprocess.check_output(['git','show','69db1d3c9','--',f],cwd=W,text=True).splitlines() if l.startswith('+') and not l.startswith('+++'))
 diffs={}
 for f in sorted(CHANGED_ON_PURPOSE):
  x=base(f).decode().splitlines();y=(W/f).read_text().splitlines();add=[l for l in y if l not in x];rem=[l for l in x if l not in y]

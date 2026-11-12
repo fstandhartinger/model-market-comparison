@@ -10,7 +10,10 @@ if A.publication_status=='published':
  assert proof['publication_approval']['fairness_check']['verdict']=='FAIR' and proof['publication_approval']['fairness_check_delta']['verdict']=='FAIR','published footer requires both bound FAIR verdicts'
  assert L(V/'jevbench-v1.8.10-publication.json')['review']['verdict']=='PASS','published footer requires publication PASS'
 footer='Published · independent review complete' if A.publication_status=='published' else 'Release review pending'
-fc=proof['publication_approval']['fairness_check'];fair=f"fairness: {fc.get('receipt_fairness',fc['verdict'])} ({len(RK)} ranked, {len(HELD)} held); added-row delta {proof['publication_approval']['fairness_check_delta']['verdict']}"   # TF3 (r278-delta-fair)
+fc=proof['publication_approval']['fairness_check'];fd=proof['publication_approval']['fairness_check_delta']
+# TF3 (r278-delta-fair): the delta receipt binds together with the publication review (release test 9); until then the card states the receipt's own verdict.
+dv=fd['verdict'] if fd['verdict']!='PENDING' else json.loads((pathlib.Path('/home/flori/jobs/jevbench-add-requests-20260919')/fd['path']).read_text()).get('fairness','PENDING')
+fair=f"fairness: {fc.get('receipt_fairness',fc['verdict'])} ({len(RK)} ranked, {len(HELD)} held); added-row delta {dv}"
 order=sorted(RK+NEW,key=lambda k:by[k]['ranks']['A'])+sorted(UN)
 def row_html(k):
  s=by[k];a=s['axes'];p=s['published_scores'];sc=lambda x:'n/a' if x is None else f'{x:.2f}'

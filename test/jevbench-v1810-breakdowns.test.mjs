@@ -44,7 +44,7 @@ test('a row without subject-topic labels keeps its use-case cells and says why t
 
 test('a published cell under the radar minimum is drawn, marked low, with its n; never blanked', () => {
   assert.deepEqual(categoryCell([61.2, 17], 30, { drawLowN: true }), { value: 61.2, thin: false, low: true, n: 17, text: '61.2 (n=17)' });
-  assert.deepEqual(categoryCell([61.2, 40], 30, { drawLowN: true }), { value: 61.2, thin: false, low: false, n: 40, text: '61.2' });
+  assert.deepEqual(categoryCell([61.2, 40], 30, { drawLowN: true }), { value: 61.2, thin: false, n: 40, text: '61.2' });
   assert.equal(categoryCell([61.2, 9], 30, { drawLowN: true }).thin, true, 'under the shown minimum stays undrawn');
   assert.equal(categoryCell([61.2, 17], 30).thin, true, 'historical views keep their rule');
   const radar = src('components/JevRadars.tsx');
