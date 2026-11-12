@@ -171,6 +171,11 @@ const FAMILY_ALIASES = {
   "llama-4-maverick-17b": "llama-4-maverick",
   "llama-4-scout-17b": "llama-4-scout",
   "devstral-2": "devstral-2-123b",
+  // 2026-11-12 (self-heal): OpenRouter's mistralai/mistral-large-2407 now carries HF
+  // mistralai/Mistral-Large-Instruct-2407, the checkpoint AA names for "Mistral Large 2
+  // (Jul '24)", so the HF join folds it into mistral-large-2-jul-24. Pinned here so the
+  // family no longer flips whenever OpenRouter blanks or restores that HF field.
+  "mistral-large-2407": "mistral-large-2-jul-24",
   "mistral-small-3.2": "mistral-small-3.2-24b",
   // Managed-cloud catalogs write "Kimi K2.5 Thinking" without parentheses, so the
   // reasoning mode leaks into the family key and creates a benchmark-less twin

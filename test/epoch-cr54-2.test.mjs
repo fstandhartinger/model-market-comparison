@@ -19,6 +19,9 @@ const IDS = {
   'epoch-swe-bench-verified::snapshot-2026-09-18': 35,
 };
 const json = (p) => JSON.parse(readFileSync(p, 'utf8'));
+// 2026-11-12 (self-heal, see build-dataset FAMILY_ALIASES): the one slug the catalog folds into another family
+// because both name the same Hugging Face checkpoint. Every other join still re-derives its family from the slug.
+const FOLDED_SLUGS = { 'mistral-large-2407': 'mistral-large-2-jul-24' };
 
 test('CR-54.2: the collector reproduces the committed observations from the committed evidence alone', () => {
   const out = execFileSync('python3', ['-B', '-c', String.raw`
@@ -129,7 +132,7 @@ test('CR-54.2: every join re-derives from the slug and lands on an existing conf
     const { family, effort } = parseDeepSweId(e.source_id);
     const model = catalog.get(e.model_id);
     assert.ok(model, e.model_id);
-    assert.equal(model.family_key, family, e.source_id);
+    assert.equal(model.family_key, FOLDED_SLUGS[family] ?? family, e.source_id);
     assert.equal(model.variant, effort ?? 'default', e.source_id);
     assert.match(e.rule, /./, 'every join names its reviewed rule');
   }
