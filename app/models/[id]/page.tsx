@@ -24,6 +24,7 @@ import { MiniRadar } from '../../../components/MiniRadar';
 import { InfoTip } from '../../../components/InfoTip';
 import { SpeedLine } from '../../../components/SpeedContext';
 import type { ScoreKey } from '../../../lib/types';
+import { findModel, modelCanonicalPath } from "../../../lib/model-canonical.mjs";
 import { AaCredit } from '../../../components/AaCredit';
 import { EpochCredit } from '../../../components/EpochCredit';
 
@@ -37,13 +38,7 @@ function catalogPercentile(values: number[], value: number | null): number | nul
 
 export const dynamic = "force-dynamic";
 
-// F-228 (Fable pass 43): an exact id, a family key, or a variant id whose variant has left the data while its family is still here —
-// a launch-day "::default" row gains real variants a day later, and the link shared on launch day must not 404.
-function findModel<T extends { id: string; family_key: string }>(models: T[], raw: string): T | undefined {
-  const id = decodeURIComponent(raw);
-  const family = id.split("::")[0];
-  return models.find((m) => m.id === id || m.family_key === id) ?? (family !== id ? models.find((m) => m.family_key === family) : undefined);
-}
+// F-228 (Fable pass 43) family/variant resolution and the sitemap-aligned canonical live in lib/model-canonical.mjs.
 
 // CR-62.2: each model page previews as itself.
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
@@ -51,7 +46,7 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
   const ds = await getDataset();
   const model = findModel(ds.models, id);
   if (!model) return { title: "Model not found" };
-  return previewMetadata({ path: `/models/${encodeURIComponent(model.id)}`, documentTitle: `${model.display_name} — benchmarks & cost`, title: `${model.display_name} — Benchmark Heaven`,
+  return previewMetadata({ path: modelCanonicalPath(ds.models, model), documentTitle: `${model.display_name} — benchmarks & cost`, title: `${model.display_name} — Benchmark Heaven`,
     description: `${model.display_name} by ${model.org}: every benchmark result with its source, and what it actually costs per task across providers.` });
 }
 
