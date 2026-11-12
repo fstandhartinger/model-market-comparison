@@ -89,7 +89,12 @@ function LowSampleTable({ dim, cats, pair }: { dim: CategoryDim; cats: CompareCa
   const lowCell = (r: JevCompareV15Row, key: string) => { const v = cellOf(r, key); return v !== null && completedN(v) < cats.radarMinN; };
   const low = dim.cats.filter((c) => (c.lowSample && pair.some((r) => cellOf(r, c.key))) || (c.plotted && pair.some((r) => lowCell(r, c.key))));
   const unreported = dim.cats.filter((c) => c.lowSample && !pair.some((r) => cellOf(r, c.key)));
-  if (!low.length && !unreported.length) return null;
+  // Nothing to list: say so when the pair has no per-category values to compare (a selected system has none published for
+  // this dimension), so a missing caveat is visible instead of silently absent. A pair whose values are all well measured
+  // needs no low-sample table and keeps none.
+  if (!low.length && !unreported.length) return pair.some((r) => !cats.systems[r.key]?.[dim.key])
+    ? <p className="bh-muted mt-2 text-[11px]" data-bh-jev15-low-sample-none={dim.key}>No per-category values are published for this pair.</p>
+    : null;
   const cell = (r: JevCompareV15Row, key: string) => {
     const v = cellOf(r, key);
     return v ? <>{one(v[0])} <span className="bh-muted text-[11px]">n={completedN(v)}</span></> : <span className="bh-muted" title={`No published value: fewer than ${cats.minN} answered items, or no per-category values for this system`}>—</span>;
