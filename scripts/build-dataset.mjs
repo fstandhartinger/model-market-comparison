@@ -972,7 +972,7 @@ async function build() {
     }
   }
 
-  // --- Chutes (first-party, all confidential-compute / TEE) ---
+  // --- Chutes (first-party; tee per catalog row from confidential_compute; priced non-TEE rows since 2026-11-12) ---
   for (const m of chutes.models || []) {
     if (EXCLUDE_RE.test(m.model_name || "")) continue;
 
