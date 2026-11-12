@@ -252205,7 +252205,7 @@
         "subject": {
           "source_id": "mistral-large-2407",
           "name": "mistral-large-2407",
-          "model_id": "mistral-large-2407::default",
+          "model_id": "mistral-large-2-jul-24::default",
           "variant": null,
           "harness": null
         },
@@ -252222,7 +252222,7 @@
         },
         "protocol": "GPQA Diamond run by Epoch AI (inspect-ai), separate identity from the AA and OpenRouter runs; value = Best score (across scorers). mean_score, stderr, Started at and the Epoch run id stay in the protocol; CC BY 4.0, attribute Epoch AI.; mean_score=0.49021464646464646; stderr=0.025918840988656967; Started at=2025-01-27T00:00:00.000Z; id=ZQPNnicTuhuscJvni85PFY",
         "comparison_key": null,
-        "join_note": "Reviewed identity map 2026-09-19: label names mistral-large-2407 without an effort; the catalog has exactly one configuration, the default (mistral-large-2407::default)"
+        "join_note": "Reviewed identity map 2026-11-12: label names mistral-large-2407 without an effort; the catalog folds that slug into mistral-large-2-jul-24 (OpenRouter mistralai/mistral-large-2407 and AA Mistral Large 2 (Jul '24) both name HF mistralai/Mistral-Large-Instruct-2407), which has exactly one configuration, the default (mistral-large-2-jul-24::default)"
       },
       {
         "id": "public:2808947c47d3f4cd8128e52a",
@@ -568709,14 +568709,14 @@
         "mistral-large-2-jul-24::default": {
           "total_benchmarks": 319,
           "total_capability_benchmarks": 300,
-          "available": 10,
-          "capability_available": 10,
-          "unknown": 308,
+          "available": 11,
+          "capability_available": 11,
+          "unknown": 307,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
           "contested": 1,
-          "measured": 10,
+          "measured": 11,
           "self_reported": 0
         },
         "mistral-large-2-nov-24::default": {
@@ -572880,19 +572880,6 @@
           "measured": 0,
           "self_reported": 0
         },
-        "mistral-large-2407::default": {
-          "total_benchmarks": 319,
-          "total_capability_benchmarks": 300,
-          "available": 1,
-          "capability_available": 1,
-          "unknown": 318,
-          "not_tested": 0,
-          "not_published": 0,
-          "source_unreachable": 0,
-          "contested": 0,
-          "measured": 1,
-          "self_reported": 0
-        },
         "unslopnemo-12b::default": {
           "total_benchmarks": 319,
           "total_capability_benchmarks": 300,
@@ -573910,9 +573897,9 @@
       },
       "by_benchmark": {
         "aa-aime::2025": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 270,
-          "unknown": 660,
+          "unknown": 659,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -573923,9 +573910,9 @@
           "unmatched_observations": 0
         },
         "aa-analystagent::snapshot-2026-09-10": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 32,
-          "unknown": 898,
+          "unknown": 897,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -573936,9 +573923,9 @@
           "unmatched_observations": 0
         },
         "aa-apex-agents::snapshot-2026-09-10": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 30,
-          "unknown": 900,
+          "unknown": 899,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -573949,9 +573936,9 @@
           "unmatched_observations": 0
         },
         "aa-automationbench::1.0.6": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 169,
-          "unknown": 761,
+          "unknown": 760,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -573962,9 +573949,9 @@
           "unmatched_observations": 3
         },
         "aa-briefcase::1.1": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 5,
-          "unknown": 925,
+          "unknown": 924,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -573975,9 +573962,9 @@
           "unmatched_observations": 0
         },
         "aa-briefcase::snapshot-2026-09-10": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 153,
-          "unknown": 777,
+          "unknown": 776,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -573988,9 +573975,9 @@
           "unmatched_observations": 2
         },
         "aa-coding-agent-index::1.4": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 62,
-          "unknown": 868,
+          "unknown": 867,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -574001,9 +573988,9 @@
           "unmatched_observations": 0
         },
         "aa-coding-agent-index::1.5": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 14,
-          "unknown": 916,
+          "unknown": 915,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -574014,9 +574001,9 @@
           "unmatched_observations": 28
         },
         "aa-coding-agent-index::2.0": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 29,
-          "unknown": 901,
+          "unknown": 900,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -574027,9 +574014,9 @@
           "unmatched_observations": 6
         },
         "aa-critpt::snapshot-2026-09-10": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 537,
-          "unknown": 393,
+          "unknown": 392,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -574040,9 +574027,9 @@
           "unmatched_observations": 3
         },
         "aa-enterpriseops-gym::snapshot-2026-09-10": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 48,
-          "unknown": 882,
+          "unknown": 881,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -574053,9 +574040,9 @@
           "unmatched_observations": 0
         },
         "aa-gdp-pdf::snapshot-2026-09-10": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 151,
-          "unknown": 779,
+          "unknown": 778,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -574066,9 +574053,9 @@
           "unmatched_observations": 2
         },
         "aa-gdp-pdf::snapshot-2026-09-21": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 10,
-          "unknown": 920,
+          "unknown": 919,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -574079,9 +574066,9 @@
           "unmatched_observations": 0
         },
         "aa-gdpval::2": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 238,
-          "unknown": 692,
+          "unknown": 691,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -574092,9 +574079,9 @@
           "unmatched_observations": 3
         },
         "aa-gdpval::2.1": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 5,
-          "unknown": 925,
+          "unknown": 924,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -574105,9 +574092,9 @@
           "unmatched_observations": 0
         },
         "aa-gpqa-diamond::snapshot-2026-09-10": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 610,
-          "unknown": 320,
+          "unknown": 319,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -574118,9 +574105,9 @@
           "unmatched_observations": 3
         },
         "aa-harvey-lab::snapshot-2026-09-10": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 48,
-          "unknown": 882,
+          "unknown": 881,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -574131,9 +574118,9 @@
           "unmatched_observations": 0
         },
         "aa-hle::snapshot-2026-09-10": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 623,
-          "unknown": 307,
+          "unknown": 306,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -574144,9 +574131,9 @@
           "unmatched_observations": 3
         },
         "aa-ifbench::snapshot-2026-09-10": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 450,
-          "unknown": 480,
+          "unknown": 479,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -574157,9 +574144,9 @@
           "unmatched_observations": 0
         },
         "aa-itbench::snapshot-2026-09-10": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 33,
-          "unknown": 897,
+          "unknown": 896,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -574170,9 +574157,9 @@
           "unmatched_observations": 0
         },
         "aa-lcr::1.1": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 533,
-          "unknown": 397,
+          "unknown": 396,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -574183,9 +574170,9 @@
           "unmatched_observations": 3
         },
         "aa-livecodebench::snapshot-2026-09-10": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 0,
-          "unknown": 287,
+          "unknown": 286,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -574196,9 +574183,9 @@
           "unmatched_observations": 0
         },
         "aa-mlcr::snapshot-2026-09-10": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 84,
-          "unknown": 846,
+          "unknown": 845,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -574209,9 +574196,9 @@
           "unmatched_observations": 0
         },
         "aa-mmmu-pro::snapshot-2026-09-10": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 276,
-          "unknown": 654,
+          "unknown": 653,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -574222,9 +574209,9 @@
           "unmatched_observations": 1
         },
         "aa-omniscience::snapshot-2026-09-10": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 535,
-          "unknown": 395,
+          "unknown": 394,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -574235,9 +574222,9 @@
           "unmatched_observations": 3
         },
         "aa-scicode::1.0.1": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 183,
-          "unknown": 747,
+          "unknown": 746,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -574248,9 +574235,9 @@
           "unmatched_observations": 3
         },
         "aa-tau2-telecom::snapshot-2026-09-10": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 440,
-          "unknown": 490,
+          "unknown": 489,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -574261,9 +574248,9 @@
           "unmatched_observations": 0
         },
         "aa-tau3-banking::1.0.1": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 202,
-          "unknown": 728,
+          "unknown": 727,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -574274,9 +574261,9 @@
           "unmatched_observations": 3
         },
         "aa-terminal-bench-hard::74221fb": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 432,
-          "unknown": 498,
+          "unknown": 497,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -574287,9 +574274,9 @@
           "unmatched_observations": 0
         },
         "aa-terminal-bench::2.1": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 234,
-          "unknown": 696,
+          "unknown": 695,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -574300,9 +574287,9 @@
           "unmatched_observations": 3
         },
         "aa-terminal-bench::4.0": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 148,
-          "unknown": 782,
+          "unknown": 781,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -574314,9 +574301,9 @@
           "preliminary": 1
         },
         "aa-terminal-bench::4.0-upstream-timeouts": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 22,
-          "unknown": 908,
+          "unknown": 907,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -574327,9 +574314,9 @@
           "unmatched_observations": 0
         },
         "aider-polyglot::snapshot-2026-09-10": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 6,
-          "unknown": 924,
+          "unknown": 923,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -574340,9 +574327,9 @@
           "unmatched_observations": 64
         },
         "apprenticebench-api-cost::snapshot-2026-09-14": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 19,
-          "unknown": 911,
+          "unknown": 910,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -574353,9 +574340,9 @@
           "unmatched_observations": 8
         },
         "apprenticebench-api::snapshot-2026-09-14": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 19,
-          "unknown": 911,
+          "unknown": 910,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -574366,9 +574353,9 @@
           "unmatched_observations": 8
         },
         "apprenticebench-cua-cost::snapshot-2026-09-14": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 26,
-          "unknown": 904,
+          "unknown": 903,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -574379,9 +574366,9 @@
           "unmatched_observations": 3
         },
         "apprenticebench-cua::snapshot-2026-09-14": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 26,
-          "unknown": 904,
+          "unknown": 903,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -574392,9 +574379,9 @@
           "unmatched_observations": 3
         },
         "arc-agi::1": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 34,
-          "unknown": 896,
+          "unknown": 895,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -574405,9 +574392,9 @@
           "unmatched_observations": 263
         },
         "arc-agi::2": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 34,
-          "unknown": 896,
+          "unknown": 895,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -574418,9 +574405,9 @@
           "unmatched_observations": 252
         },
         "arc-agi::3": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 0,
-          "unknown": 930,
+          "unknown": 929,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -574431,9 +574418,9 @@
           "unmatched_observations": 120
         },
         "blueprint-bench::2": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 2,
-          "unknown": 928,
+          "unknown": 927,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -574444,9 +574431,9 @@
           "unmatched_observations": 35
         },
         "bu-bench-v1::snapshot-2026-09-09": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 0,
-          "unknown": 930,
+          "unknown": 929,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -574457,9 +574444,9 @@
           "unmatched_observations": 9
         },
         "bullshitbench-v1::snapshot-2026-09-10": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 69,
-          "unknown": 861,
+          "unknown": 860,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -574470,9 +574457,9 @@
           "unmatched_observations": 125
         },
         "bullshitbench-v2::snapshot-2026-09-10": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 75,
-          "unknown": 855,
+          "unknown": 854,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -574483,9 +574470,9 @@
           "unmatched_observations": 139
         },
         "buzzbench::snapshot-2026-09-10": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 6,
-          "unknown": 924,
+          "unknown": 923,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -574496,9 +574483,9 @@
           "unmatched_observations": 20
         },
         "chess-puzzles::snapshot-2026-09-18": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 59,
-          "unknown": 871,
+          "unknown": 870,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -574509,9 +574496,9 @@
           "unmatched_observations": 165
         },
         "context-arena-mrcr-v2::8-needle": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 47,
-          "unknown": 883,
+          "unknown": 882,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -574522,9 +574509,9 @@
           "unmatched_observations": 136
         },
         "critpt::snapshot-2026-09-10": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 1,
-          "unknown": 929,
+          "unknown": 928,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -574535,9 +574522,9 @@
           "unmatched_observations": 12
         },
         "cursorbench-cost::4.0": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 39,
-          "unknown": 891,
+          "unknown": 890,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -574548,9 +574535,9 @@
           "unmatched_observations": 50
         },
         "cursorbench::4.0": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 39,
-          "unknown": 891,
+          "unknown": 890,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -574561,9 +574548,9 @@
           "unmatched_observations": 50
         },
         "deepseek-agents-last-exam::snapshot-2026-09-10": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 1,
-          "unknown": 929,
+          "unknown": 928,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -574574,9 +574561,9 @@
           "unmatched_observations": 0
         },
         "deepseek-automationbench::snapshot-2026-09-10": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 1,
-          "unknown": 929,
+          "unknown": 928,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -574587,9 +574574,9 @@
           "unmatched_observations": 0
         },
         "deepseek-babyvision-w-tools::snapshot-2026-09-10": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 1,
-          "unknown": 929,
+          "unknown": 928,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -574600,9 +574587,9 @@
           "unmatched_observations": 0
         },
         "deepseek-chartography-w-tools::snapshot-2026-09-10": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 1,
-          "unknown": 929,
+          "unknown": 928,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -574613,9 +574600,9 @@
           "unmatched_observations": 0
         },
         "deepseek-codeforces-rating::snapshot-2026-09-10": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 1,
-          "unknown": 929,
+          "unknown": 928,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -574626,9 +574613,9 @@
           "unmatched_observations": 0
         },
         "deepseek-cybergym::snapshot-2026-09-10": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 1,
-          "unknown": 929,
+          "unknown": 928,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -574639,9 +574626,9 @@
           "unmatched_observations": 0
         },
         "deepseek-deepswe-v1-1::1.1": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 1,
-          "unknown": 929,
+          "unknown": 928,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -574652,9 +574639,9 @@
           "unmatched_observations": 0
         },
         "deepseek-exploitgym::snapshot-2026-09-10": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 1,
-          "unknown": 929,
+          "unknown": 928,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -574665,9 +574652,9 @@
           "unmatched_observations": 0
         },
         "deepseek-gpqa-diamond::snapshot-2026-09-10": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 1,
-          "unknown": 929,
+          "unknown": 928,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -574678,9 +574665,9 @@
           "unmatched_observations": 0
         },
         "deepseek-hle-w-tools::snapshot-2026-09-10": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 1,
-          "unknown": 929,
+          "unknown": 928,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -574691,9 +574678,9 @@
           "unmatched_observations": 0
         },
         "deepseek-hle::snapshot-2026-09-10": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 1,
-          "unknown": 929,
+          "unknown": 928,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -574704,9 +574691,9 @@
           "unmatched_observations": 0
         },
         "deepseek-matharena-apex::snapshot-2026-09-10": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 1,
-          "unknown": 929,
+          "unknown": 928,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -574717,9 +574704,9 @@
           "unmatched_observations": 0
         },
         "deepseek-nl2repo-bench::snapshot-2026-09-10": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 1,
-          "unknown": 929,
+          "unknown": 928,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -574730,9 +574717,9 @@
           "unmatched_observations": 0
         },
         "deepseek-programbench-almost-at-1::snapshot-2026-09-10": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 1,
-          "unknown": 929,
+          "unknown": 928,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -574743,9 +574730,9 @@
           "unmatched_observations": 0
         },
         "deepseek-sec-bench-pro::snapshot-2026-09-10": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 1,
-          "unknown": 929,
+          "unknown": 928,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -574756,9 +574743,9 @@
           "unmatched_observations": 0
         },
         "deepseek-terminal-bench-v2-1::2.1": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 1,
-          "unknown": 929,
+          "unknown": 928,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -574769,9 +574756,9 @@
           "unmatched_observations": 0
         },
         "deepseek-terminal-bench-v3::3.0": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 1,
-          "unknown": 929,
+          "unknown": 928,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -574782,9 +574769,9 @@
           "unmatched_observations": 0
         },
         "deepseek-terminal-bench-v4::4.0": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 1,
-          "unknown": 929,
+          "unknown": 928,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -574795,9 +574782,9 @@
           "unmatched_observations": 0
         },
         "deepseek-zerobench-main-w-tools::snapshot-2026-09-10": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 1,
-          "unknown": 929,
+          "unknown": 928,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -574808,9 +574795,9 @@
           "unmatched_observations": 0
         },
         "deepswe::snapshot-2026-09-15": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 64,
-          "unknown": 866,
+          "unknown": 865,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -574822,9 +574809,9 @@
           "preliminary": 1
         },
         "ebr-bench::snapshot-2026-09-18": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 16,
-          "unknown": 914,
+          "unknown": 913,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -574835,9 +574822,9 @@
           "unmatched_observations": 7
         },
         "epoch-gpqa-diamond::snapshot-2026-09-18": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 63,
-          "unknown": 867,
+          "unknown": 866,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -574848,9 +574835,9 @@
           "unmatched_observations": 250
         },
         "epoch-swe-bench-verified::snapshot-2026-09-18": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 9,
-          "unknown": 921,
+          "unknown": 920,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -574861,9 +574848,9 @@
           "unmatched_observations": 26
         },
         "eq-bench::4": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 2,
-          "unknown": 928,
+          "unknown": 927,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -574874,9 +574861,9 @@
           "unmatched_observations": 30
         },
         "eqbench-creative-writing::3": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 44,
-          "unknown": 886,
+          "unknown": 885,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -574887,9 +574874,9 @@
           "unmatched_observations": 102
         },
         "eqbench-judgemark::4": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 4,
-          "unknown": 926,
+          "unknown": 925,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -574900,9 +574887,9 @@
           "unmatched_observations": 38
         },
         "eqbench-longform-writing::v1.11": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 38,
-          "unknown": 892,
+          "unknown": 891,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -574913,9 +574900,9 @@
           "unmatched_observations": 105
         },
         "eqbench-slop-score::snapshot-2026-09-10": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 4,
-          "unknown": 926,
+          "unknown": 925,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -574926,9 +574913,9 @@
           "unmatched_observations": 19
         },
         "frontiercode-cost::1.1": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 85,
-          "unknown": 845,
+          "unknown": 844,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -574939,9 +574926,9 @@
           "unmatched_observations": 30
         },
         "frontiercode::1.1": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 85,
-          "unknown": 845,
+          "unknown": 844,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -574952,9 +574939,9 @@
           "unmatched_observations": 59
         },
         "frontiermath-tier-4::v2": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 35,
-          "unknown": 895,
+          "unknown": 894,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -574965,9 +574952,9 @@
           "unmatched_observations": 29
         },
         "frontiermath-tiers-1-3::v2": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 36,
-          "unknown": 894,
+          "unknown": 893,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -574978,9 +574965,9 @@
           "unmatched_observations": 72
         },
         "frontierswe::2": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 8,
-          "unknown": 922,
+          "unknown": 921,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -574991,9 +574978,9 @@
           "unmatched_observations": 6
         },
         "gso::opt1-102": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 10,
-          "unknown": 920,
+          "unknown": 919,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -575004,9 +574991,9 @@
           "unmatched_observations": 18
         },
         "helmet::snapshot-2026-09-10": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 0,
-          "unknown": 930,
+          "unknown": 929,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -575017,9 +575004,9 @@
           "unmatched_observations": 0
         },
         "hle::snapshot-2026-09-10": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 0,
-          "unknown": 930,
+          "unknown": 929,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -575030,9 +575017,9 @@
           "unmatched_observations": 0
         },
         "hyper-tau-bench::release-v1": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 4,
-          "unknown": 926,
+          "unknown": 925,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -575043,9 +575030,9 @@
           "unmatched_observations": 2
         },
         "ifbench::snapshot-2026-09-10": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 0,
-          "unknown": 930,
+          "unknown": 929,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -575056,9 +575043,9 @@
           "unmatched_observations": 0
         },
         "japanese-rp-bench-aratako::snapshot-2026-09-10": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 3,
-          "unknown": 927,
+          "unknown": 926,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -575069,9 +575056,9 @@
           "unmatched_observations": 29
         },
         "japanese-rp-bench-tegnike::2": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 6,
-          "unknown": 924,
+          "unknown": 923,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -575082,9 +575069,9 @@
           "unmatched_observations": 9
         },
         "jevbench::v1": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 0,
-          "unknown": 930,
+          "unknown": 929,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -575095,9 +575082,9 @@
           "unmatched_observations": 0
         },
         "jevbench::v1.1": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 0,
-          "unknown": 930,
+          "unknown": 929,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -575108,9 +575095,9 @@
           "unmatched_observations": 0
         },
         "kernelbench-cuda-deepseek-nsa::rtx-pro-6000": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 7,
-          "unknown": 923,
+          "unknown": 922,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -575121,9 +575108,9 @@
           "unmatched_observations": 5
         },
         "kernelbench-cuda-glm52-fused-moe::rtx-pro-6000": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 7,
-          "unknown": 923,
+          "unknown": 922,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -575134,9 +575121,9 @@
           "unmatched_observations": 11
         },
         "kernelbench-cuda-grid-mingru-sps::rtx-pro-6000": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 8,
-          "unknown": 922,
+          "unknown": 921,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -575147,9 +575134,9 @@
           "unmatched_observations": 8
         },
         "kernelbench-cuda-megaqwen-decode::rtx-pro-6000": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 10,
-          "unknown": 920,
+          "unknown": 919,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -575160,9 +575147,9 @@
           "unmatched_observations": 8
         },
         "lisanbench::0.2.0": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 52,
-          "unknown": 878,
+          "unknown": 877,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -575173,9 +575160,9 @@
           "unmatched_observations": 102
         },
         "livebench::2026-06-25": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 36,
-          "unknown": 894,
+          "unknown": 893,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -575186,9 +575173,9 @@
           "unmatched_observations": 27
         },
         "long-horizon-terminal-bench::1.0": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 6,
-          "unknown": 924,
+          "unknown": 923,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -575199,9 +575186,9 @@
           "unmatched_observations": 16
         },
         "longbench::2": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 3,
-          "unknown": 927,
+          "unknown": 926,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -575212,9 +575199,9 @@
           "unmatched_observations": 66
         },
         "matharena-arxivmath::2026-06": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 17,
-          "unknown": 913,
+          "unknown": 912,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -575225,9 +575212,9 @@
           "unmatched_observations": 14
         },
         "matharena-arxivmath::2026-08": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 9,
-          "unknown": 921,
+          "unknown": 920,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -575238,9 +575225,9 @@
           "unmatched_observations": 11
         },
         "matharena-brokenarxiv::2026-06": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 16,
-          "unknown": 914,
+          "unknown": 913,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -575251,9 +575238,9 @@
           "unmatched_observations": 14
         },
         "matharena-brokenarxiv::2026-08": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 9,
-          "unknown": 921,
+          "unknown": 920,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -575264,9 +575251,9 @@
           "unmatched_observations": 10
         },
         "mazur-creative-story-writing::snapshot-2026-09-10": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 8,
-          "unknown": 922,
+          "unknown": 921,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -575277,9 +575264,9 @@
           "unmatched_observations": 52
         },
         "mazur-divergent-thinking::snapshot-2026-09-10": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 8,
-          "unknown": 922,
+          "unknown": 921,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -575290,9 +575277,9 @@
           "unmatched_observations": 11
         },
         "mazur-elimination-game::snapshot-2026-09-10": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 13,
-          "unknown": 917,
+          "unknown": 916,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -575303,9 +575290,9 @@
           "unmatched_observations": 48
         },
         "mcp-atlas::snapshot-2026-09-21": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 15,
-          "unknown": 915,
+          "unknown": 914,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -575316,9 +575303,9 @@
           "unmatched_observations": 19
         },
         "mirrorcode::snapshot-2026-09-18": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 5,
-          "unknown": 925,
+          "unknown": 924,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -575329,9 +575316,9 @@
           "unmatched_observations": 3
         },
         "mmmu::snapshot-2026-09-10": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 13,
-          "unknown": 917,
+          "unknown": 916,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -575342,9 +575329,9 @@
           "unmatched_observations": 231
         },
         "mystery-game-puzzles::snapshot-2026-09-18": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 38,
-          "unknown": 892,
+          "unknown": 891,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -575355,9 +575342,9 @@
           "unmatched_observations": 91
         },
         "openrouter-gpqa-diamond-cost::snapshot-2026-09-15": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 120,
-          "unknown": 810,
+          "unknown": 809,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -575368,9 +575355,9 @@
           "unmatched_observations": 1
         },
         "openrouter-gpqa-diamond::snapshot-2026-09-15": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 120,
-          "unknown": 810,
+          "unknown": 809,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -575381,9 +575368,9 @@
           "unmatched_observations": 1
         },
         "openrouter-search-browsecomp-cost::snapshot-2026-09-15": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 3,
-          "unknown": 927,
+          "unknown": 926,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -575394,9 +575381,9 @@
           "unmatched_observations": 1
         },
         "openrouter-search-browsecomp::snapshot-2026-09-15": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 3,
-          "unknown": 927,
+          "unknown": 926,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -575407,9 +575394,9 @@
           "unmatched_observations": 1
         },
         "openrouter-search-dsqa-cost::snapshot-2026-09-15": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 3,
-          "unknown": 927,
+          "unknown": 926,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -575420,9 +575407,9 @@
           "unmatched_observations": 1
         },
         "openrouter-search-dsqa::snapshot-2026-09-15": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 3,
-          "unknown": 927,
+          "unknown": 926,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -575433,9 +575420,9 @@
           "unmatched_observations": 1
         },
         "openrouter-search-hle-cost::snapshot-2026-09-15": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 2,
-          "unknown": 928,
+          "unknown": 927,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -575446,9 +575433,9 @@
           "unmatched_observations": 0
         },
         "openrouter-search-hle::snapshot-2026-09-15": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 2,
-          "unknown": 928,
+          "unknown": 927,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -575459,9 +575446,9 @@
           "unmatched_observations": 0
         },
         "openrouter-search-widesearch-cost::snapshot-2026-09-15": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 3,
-          "unknown": 927,
+          "unknown": 926,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -575472,9 +575459,9 @@
           "unmatched_observations": 1
         },
         "openrouter-search-widesearch::snapshot-2026-09-15": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 3,
-          "unknown": 927,
+          "unknown": 926,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -575485,9 +575472,9 @@
           "unmatched_observations": 1
         },
         "openrouter-tau2-bench-airline-cost::snapshot-2026-09-15": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 115,
-          "unknown": 815,
+          "unknown": 814,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -575498,9 +575485,9 @@
           "unmatched_observations": 1
         },
         "openrouter-tau2-bench-airline::snapshot-2026-09-15": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 115,
-          "unknown": 815,
+          "unknown": 814,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -575511,9 +575498,9 @@
           "unmatched_observations": 1
         },
         "osworld-2::v2026.06.24": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 4,
-          "unknown": 926,
+          "unknown": 925,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -575524,9 +575511,9 @@
           "unmatched_observations": 6
         },
         "osworld-2::v2026.08.08": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 6,
-          "unknown": 924,
+          "unknown": 923,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -575537,9 +575524,9 @@
           "unmatched_observations": 0
         },
         "otis-mock-aime::2024-2025": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 0,
-          "unknown": 930,
+          "unknown": 929,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -575550,9 +575537,9 @@
           "unmatched_observations": 0
         },
         "pingpong-english::2": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 0,
-          "unknown": 930,
+          "unknown": 929,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -575563,9 +575550,9 @@
           "unmatched_observations": 64
         },
         "posttrainbench::1.1": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 7,
-          "unknown": 923,
+          "unknown": 922,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -575576,9 +575563,9 @@
           "unmatched_observations": 6
         },
         "programbench::1": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 6,
-          "unknown": 924,
+          "unknown": 923,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -575589,9 +575576,9 @@
           "unmatched_observations": 15
         },
         "react-native-evals::91-evals": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 3,
-          "unknown": 927,
+          "unknown": 926,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -575602,9 +575589,9 @@
           "unmatched_observations": 24
         },
         "realswe-cost::snapshot-2026-09-12": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 0,
-          "unknown": 930,
+          "unknown": 929,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -575615,9 +575602,9 @@
           "unmatched_observations": 8
         },
         "realswe::snapshot-2026-09-12": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 0,
-          "unknown": 930,
+          "unknown": 929,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -575628,9 +575615,9 @@
           "unmatched_observations": 8
         },
         "researchclawbench::40-tasks": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 5,
-          "unknown": 925,
+          "unknown": 924,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -575641,9 +575628,9 @@
           "unmatched_observations": 16
         },
         "rp-bench-community::snapshot-2026-09-10": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 0,
-          "unknown": 930,
+          "unknown": 929,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -575654,9 +575641,9 @@
           "unmatched_observations": 11
         },
         "rsi-exam::0.1": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 11,
-          "unknown": 919,
+          "unknown": 918,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -575667,9 +575654,9 @@
           "unmatched_observations": 4
         },
         "ruler::snapshot-2026-09-10": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 0,
-          "unknown": 930,
+          "unknown": 929,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -575680,9 +575667,9 @@
           "unmatched_observations": 44
         },
         "scicode::snapshot-2026-09-10": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 1,
-          "unknown": 929,
+          "unknown": 928,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -575693,9 +575680,9 @@
           "unmatched_observations": 19
         },
         "simple-bench::snapshot-2026-09-10": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 18,
-          "unknown": 912,
+          "unknown": 911,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -575706,9 +575693,9 @@
           "unmatched_observations": 83
         },
         "simpleqa-verified::snapshot-2026-09-16": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 34,
-          "unknown": 896,
+          "unknown": 895,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -575719,9 +575706,9 @@
           "unmatched_observations": 46
         },
         "slop-index::snapshot-2026-09-10": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 11,
-          "unknown": 919,
+          "unknown": 918,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -575732,9 +575719,9 @@
           "unmatched_observations": 47
         },
         "slopbench::snapshot-2026-09-10": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 0,
-          "unknown": 930,
+          "unknown": 929,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -575745,9 +575732,9 @@
           "unmatched_observations": 25
         },
         "spiral-bench::1.2": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 1,
-          "unknown": 929,
+          "unknown": 928,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -575758,9 +575745,9 @@
           "unmatched_observations": 22
         },
         "stepfun-aa-briefcase::snapshot-2026-09-20": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 1,
-          "unknown": 929,
+          "unknown": 928,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -575771,9 +575758,9 @@
           "unmatched_observations": 0
         },
         "stepfun-aa-lcr-v1-1::1.1": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 1,
-          "unknown": 929,
+          "unknown": 928,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -575784,9 +575771,9 @@
           "unmatched_observations": 0
         },
         "stepfun-agents-last-exam-ale-cli::snapshot-2026-09-20": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 1,
-          "unknown": 929,
+          "unknown": 928,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -575797,9 +575784,9 @@
           "unmatched_observations": 0
         },
         "stepfun-apex-agents::snapshot-2026-09-20": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 1,
-          "unknown": 929,
+          "unknown": 928,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -575810,9 +575797,9 @@
           "unmatched_observations": 0
         },
         "stepfun-automationbench-aa::snapshot-2026-09-20": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 1,
-          "unknown": 929,
+          "unknown": 928,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -575823,9 +575810,9 @@
           "unmatched_observations": 0
         },
         "stepfun-automationbench-public::snapshot-2026-09-20": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 1,
-          "unknown": 929,
+          "unknown": 928,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -575836,9 +575823,9 @@
           "unmatched_observations": 0
         },
         "stepfun-browsecomp::snapshot-2026-09-20": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 1,
-          "unknown": 929,
+          "unknown": 928,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -575849,9 +575836,9 @@
           "unmatched_observations": 0
         },
         "stepfun-critpt::snapshot-2026-09-20": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 1,
-          "unknown": 929,
+          "unknown": 928,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -575862,9 +575849,9 @@
           "unmatched_observations": 0
         },
         "stepfun-cybergym::snapshot-2026-09-20": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 1,
-          "unknown": 929,
+          "unknown": 928,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -575875,9 +575862,9 @@
           "unmatched_observations": 0
         },
         "stepfun-deepswe-v1-1::1.1": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 1,
-          "unknown": 929,
+          "unknown": 928,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -575888,9 +575875,9 @@
           "unmatched_observations": 0
         },
         "stepfun-draco::snapshot-2026-09-20": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 1,
-          "unknown": 929,
+          "unknown": 928,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -575901,9 +575888,9 @@
           "unmatched_observations": 0
         },
         "stepfun-finstepbench-corporatevaluation::snapshot-2026-09-20": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 1,
-          "unknown": 929,
+          "unknown": 928,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -575914,9 +575901,9 @@
           "unmatched_observations": 0
         },
         "stepfun-finstepbench-financedr::snapshot-2026-09-20": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 1,
-          "unknown": 929,
+          "unknown": 928,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -575927,9 +575914,9 @@
           "unmatched_observations": 0
         },
         "stepfun-finstepbench-livesearch::snapshot-2026-09-20": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 1,
-          "unknown": 929,
+          "unknown": 928,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -575940,9 +575927,9 @@
           "unmatched_observations": 0
         },
         "stepfun-frontierfinance::snapshot-2026-09-20": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 1,
-          "unknown": 929,
+          "unknown": 928,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -575953,9 +575940,9 @@
           "unmatched_observations": 0
         },
         "stepfun-gdp-pdf::snapshot-2026-09-20": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 1,
-          "unknown": 929,
+          "unknown": 928,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -575966,9 +575953,9 @@
           "unmatched_observations": 0
         },
         "stepfun-gdpval-aa-v2::2": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 1,
-          "unknown": 929,
+          "unknown": 928,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -575979,9 +575966,9 @@
           "unmatched_observations": 0
         },
         "stepfun-gpqa-diamond::snapshot-2026-09-20": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 1,
-          "unknown": 929,
+          "unknown": 928,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -575992,9 +575979,9 @@
           "unmatched_observations": 0
         },
         "stepfun-hle-w-tools::snapshot-2026-09-20": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 1,
-          "unknown": 929,
+          "unknown": 928,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -576005,9 +575992,9 @@
           "unmatched_observations": 0
         },
         "stepfun-hle::snapshot-2026-09-20": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 1,
-          "unknown": 929,
+          "unknown": 928,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -576018,9 +576005,9 @@
           "unmatched_observations": 0
         },
         "stepfun-jobbench::snapshot-2026-09-20": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 1,
-          "unknown": 929,
+          "unknown": 928,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -576031,9 +576018,9 @@
           "unmatched_observations": 0
         },
         "stepfun-mcp-atlas::snapshot-2026-09-20": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 1,
-          "unknown": 929,
+          "unknown": 928,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -576044,9 +576031,9 @@
           "unmatched_observations": 0
         },
         "stepfun-mls-bench-lite::snapshot-2026-09-20": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 1,
-          "unknown": 929,
+          "unknown": 928,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -576057,9 +576044,9 @@
           "unmatched_observations": 0
         },
         "stepfun-mmmu-pro::snapshot-2026-09-20": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 1,
-          "unknown": 929,
+          "unknown": 928,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -576070,9 +576057,9 @@
           "unmatched_observations": 0
         },
         "stepfun-officeqa-pro::snapshot-2026-09-20": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 1,
-          "unknown": 929,
+          "unknown": 928,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -576083,9 +576070,9 @@
           "unmatched_observations": 0
         },
         "stepfun-presentbench::snapshot-2026-09-20": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 1,
-          "unknown": 929,
+          "unknown": 928,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -576096,9 +576083,9 @@
           "unmatched_observations": 0
         },
         "stepfun-programbench-pass-rate::snapshot-2026-09-20": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 1,
-          "unknown": 929,
+          "unknown": 928,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -576109,9 +576096,9 @@
           "unmatched_observations": 0
         },
         "stepfun-roadmapbench::snapshot-2026-09-20": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 1,
-          "unknown": 929,
+          "unknown": 928,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -576122,9 +576109,9 @@
           "unmatched_observations": 0
         },
         "stepfun-scicode::snapshot-2026-09-20": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 1,
-          "unknown": 929,
+          "unknown": 928,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -576135,9 +576122,9 @@
           "unmatched_observations": 0
         },
         "stepfun-speadsheet-v2::2": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 1,
-          "unknown": 929,
+          "unknown": 928,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -576148,9 +576135,9 @@
           "unmatched_observations": 0
         },
         "stepfun-stepcode-bench-daily::snapshot-2026-09-20": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 1,
-          "unknown": 929,
+          "unknown": 928,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -576161,9 +576148,9 @@
           "unmatched_observations": 0
         },
         "stepfun-stepcode-bench-general::snapshot-2026-09-20": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 1,
-          "unknown": 929,
+          "unknown": 928,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -576174,9 +576161,9 @@
           "unmatched_observations": 0
         },
         "stepfun-stepcodebench::snapshot-2026-09-20": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 1,
-          "unknown": 929,
+          "unknown": 928,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -576187,9 +576174,9 @@
           "unmatched_observations": 0
         },
         "stepfun-swe-atlas-qna::snapshot-2026-09-20": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 1,
-          "unknown": 929,
+          "unknown": 928,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -576200,9 +576187,9 @@
           "unmatched_observations": 0
         },
         "stepfun-swe-atlas-test-writing::snapshot-2026-09-20": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 1,
-          "unknown": 929,
+          "unknown": 928,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -576213,9 +576200,9 @@
           "unmatched_observations": 0
         },
         "stepfun-swe-marathon-v1-1-partial-score::1.1": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 1,
-          "unknown": 929,
+          "unknown": 928,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -576226,9 +576213,9 @@
           "unmatched_observations": 0
         },
         "stepfun-tau3-banking::snapshot-2026-09-20": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 1,
-          "unknown": 929,
+          "unknown": 928,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -576239,9 +576226,9 @@
           "unmatched_observations": 0
         },
         "stepfun-terminal-bench-v2-1::2.1": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 1,
-          "unknown": 929,
+          "unknown": 928,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -576252,9 +576239,9 @@
           "unmatched_observations": 0
         },
         "stepfun-terminal-bench-v4::4.0": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 1,
-          "unknown": 929,
+          "unknown": 928,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -576265,9 +576252,9 @@
           "unmatched_observations": 0
         },
         "stepfun-toolathlon-verified::snapshot-2026-09-20": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 1,
-          "unknown": 929,
+          "unknown": 928,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -576278,9 +576265,9 @@
           "unmatched_observations": 0
         },
         "swe-atlas-qna::snapshot-2026-09-15": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 10,
-          "unknown": 920,
+          "unknown": 919,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -576291,9 +576278,9 @@
           "unmatched_observations": 14
         },
         "swe-atlas-refactoring::snapshot-2026-09-15": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 6,
-          "unknown": 924,
+          "unknown": 923,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -576304,9 +576291,9 @@
           "unmatched_observations": 11
         },
         "swe-atlas-test-writing::snapshot-2026-09-15": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 10,
-          "unknown": 920,
+          "unknown": 919,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -576317,9 +576304,9 @@
           "unmatched_observations": 14
         },
         "swe-bench-multilingual::snapshot-2026-09-10": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 7,
-          "unknown": 923,
+          "unknown": 922,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -576330,9 +576317,9 @@
           "unmatched_observations": 20
         },
         "swe-bench-multimodal::snapshot-2026-09-10": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 5,
-          "unknown": 925,
+          "unknown": 924,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -576343,9 +576330,9 @@
           "unmatched_observations": 22
         },
         "swe-bench-pro-public::snapshot-2026-09-10": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 3,
-          "unknown": 927,
+          "unknown": 926,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -576356,9 +576343,9 @@
           "unmatched_observations": 22
         },
         "swe-bench-verified::snapshot-2026-09-10": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 8,
-          "unknown": 922,
+          "unknown": 921,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -576369,9 +576356,9 @@
           "unmatched_observations": 186
         },
         "swe-rebench::2026-05-15..2026-07-01": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 8,
-          "unknown": 922,
+          "unknown": 921,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -576382,9 +576369,9 @@
           "unmatched_observations": 5
         },
         "tau2-bench::2": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 1,
-          "unknown": 929,
+          "unknown": 928,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -576395,9 +576382,9 @@
           "unmatched_observations": 3
         },
         "tau3-banking::1.0.1": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 0,
-          "unknown": 930,
+          "unknown": 929,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -576408,9 +576395,9 @@
           "unmatched_observations": 3
         },
         "tau3-voice::snapshot-2026-09-10": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 0,
-          "unknown": 930,
+          "unknown": 929,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -576421,9 +576408,9 @@
           "unmatched_observations": 3
         },
         "terminal-bench::4.0": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 19,
-          "unknown": 911,
+          "unknown": 910,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -576434,9 +576421,9 @@
           "unmatched_observations": 17
         },
         "toolathlon-verified::2026-06-30": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 17,
-          "unknown": 913,
+          "unknown": 912,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -576447,9 +576434,9 @@
           "unmatched_observations": 8
         },
         "toolathlon::pre-verified": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 12,
-          "unknown": 918,
+          "unknown": 917,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -576460,9 +576447,9 @@
           "unmatched_observations": 24
         },
         "towards-ai-editorial-writing::snapshot-2026-09-10": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 0,
-          "unknown": 930,
+          "unknown": 929,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -576473,9 +576460,9 @@
           "unmatched_observations": 0
         },
         "ugi-natint::snapshot-2026-09-10": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 100,
-          "unknown": 830,
+          "unknown": 829,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -576486,9 +576473,9 @@
           "unmatched_observations": 1229
         },
         "ugi-willingness::snapshot-2026-09-10": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 100,
-          "unknown": 830,
+          "unknown": 829,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -576499,9 +576486,9 @@
           "unmatched_observations": 1229
         },
         "ugi-writing::snapshot-2026-09-10": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 97,
-          "unknown": 833,
+          "unknown": 832,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -576512,9 +576499,9 @@
           "unmatched_observations": 1175
         },
         "ugi::snapshot-2026-09-10": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 100,
-          "unknown": 830,
+          "unknown": 829,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -576525,9 +576512,9 @@
           "unmatched_observations": 1229
         },
         "vals-index-code-migration::2": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 41,
-          "unknown": 889,
+          "unknown": 888,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -576538,9 +576525,9 @@
           "unmatched_observations": 24
         },
         "vals-index-cost::2": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 38,
-          "unknown": 892,
+          "unknown": 891,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -576551,9 +576538,9 @@
           "unmatched_observations": 26
         },
         "vals-index-emb::2": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 40,
-          "unknown": 890,
+          "unknown": 889,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -576564,9 +576551,9 @@
           "unmatched_observations": 25
         },
         "vals-index-finance-agent::2": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 38,
-          "unknown": 892,
+          "unknown": 891,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -576577,9 +576564,9 @@
           "unmatched_observations": 27
         },
         "vals-index-hlab::2": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 40,
-          "unknown": 890,
+          "unknown": 889,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -576590,9 +576577,9 @@
           "unmatched_observations": 25
         },
         "vals-index-legal-research::2": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 40,
-          "unknown": 890,
+          "unknown": 889,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -576603,9 +576590,9 @@
           "unmatched_observations": 25
         },
         "vals-index-terminal-bench-2.1::2": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 38,
-          "unknown": 892,
+          "unknown": 891,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -576616,9 +576603,9 @@
           "unmatched_observations": 27
         },
         "vals-index-vibe-code-bench::2": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 39,
-          "unknown": 891,
+          "unknown": 890,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -576629,9 +576616,9 @@
           "unmatched_observations": 26
         },
         "vals-index::2": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 38,
-          "unknown": 892,
+          "unknown": 891,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -576642,9 +576629,9 @@
           "unmatched_observations": 27
         },
         "vending-bench::2": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 0,
-          "unknown": 930,
+          "unknown": 929,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -576655,9 +576642,9 @@
           "unmatched_observations": 7
         },
         "vulcanbench-frontier::4": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 28,
-          "unknown": 902,
+          "unknown": 901,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -576668,9 +576655,9 @@
           "unmatched_observations": 30
         },
         "weirdml::2": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 4,
-          "unknown": 926,
+          "unknown": 925,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -576681,9 +576668,9 @@
           "unmatched_observations": 157
         },
         "weirdml::3": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 4,
-          "unknown": 926,
+          "unknown": 925,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -576694,9 +576681,9 @@
           "unmatched_observations": 9
         },
         "xiaomi-agents-last-exam::snapshot-2026-09-22": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 1,
-          "unknown": 929,
+          "unknown": 928,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -576707,9 +576694,9 @@
           "unmatched_observations": 0
         },
         "xiaomi-automationbench-v1-0-6::1.0.6": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 1,
-          "unknown": 929,
+          "unknown": 928,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -576720,9 +576707,9 @@
           "unmatched_observations": 0
         },
         "xiaomi-cybergym::snapshot-2026-09-22": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 1,
-          "unknown": 929,
+          "unknown": 928,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -576733,9 +576720,9 @@
           "unmatched_observations": 0
         },
         "xiaomi-deepswe-v1-1::1.1": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 1,
-          "unknown": 929,
+          "unknown": 928,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -576746,9 +576733,9 @@
           "unmatched_observations": 0
         },
         "xiaomi-exploitbench::snapshot-2026-09-22": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 1,
-          "unknown": 929,
+          "unknown": 928,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -576759,9 +576746,9 @@
           "unmatched_observations": 0
         },
         "xiaomi-exploitgym::snapshot-2026-09-22": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 1,
-          "unknown": 929,
+          "unknown": 928,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -576772,9 +576759,9 @@
           "unmatched_observations": 0
         },
         "xiaomi-gdpval-aa-2-1::2.1": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 1,
-          "unknown": 929,
+          "unknown": 928,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -576785,9 +576772,9 @@
           "unmatched_observations": 0
         },
         "xiaomi-jobbench::snapshot-2026-09-22": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 1,
-          "unknown": 929,
+          "unknown": 928,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -576798,9 +576785,9 @@
           "unmatched_observations": 0
         },
         "xiaomi-mimo-code-bench::snapshot-2026-09-22": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 1,
-          "unknown": 929,
+          "unknown": 928,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -576811,9 +576798,9 @@
           "unmatched_observations": 0
         },
         "xiaomi-mimo-cyber-bench::snapshot-2026-09-22": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 1,
-          "unknown": 929,
+          "unknown": 928,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -576824,9 +576811,9 @@
           "unmatched_observations": 0
         },
         "xiaomi-mimo-visual-coding::snapshot-2026-09-22": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 1,
-          "unknown": 929,
+          "unknown": 928,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -576837,9 +576824,9 @@
           "unmatched_observations": 0
         },
         "xiaomi-osworld-verified::snapshot-2026-09-22": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 1,
-          "unknown": 929,
+          "unknown": 928,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -576850,9 +576837,9 @@
           "unmatched_observations": 0
         },
         "xiaomi-programbench::snapshot-2026-09-22": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 1,
-          "unknown": 929,
+          "unknown": 928,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -576863,9 +576850,9 @@
           "unmatched_observations": 0
         },
         "xiaomi-sec-bench-pro::snapshot-2026-09-22": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 1,
-          "unknown": 929,
+          "unknown": 928,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -576876,9 +576863,9 @@
           "unmatched_observations": 0
         },
         "xiaomi-terminal-bench-2-1::2.1": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 1,
-          "unknown": 929,
+          "unknown": 928,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -576889,9 +576876,9 @@
           "unmatched_observations": 0
         },
         "xiaomi-terminal-bench-4-0::4.0": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 1,
-          "unknown": 929,
+          "unknown": 928,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -576902,9 +576889,9 @@
           "unmatched_observations": 0
         },
         "xiaomi-toolathlon-verified::snapshot-2026-09-22": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 1,
-          "unknown": 929,
+          "unknown": 928,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -576915,9 +576902,9 @@
           "unmatched_observations": 0
         },
         "matharena-hmmt::2026-02": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 7,
-          "unknown": 923,
+          "unknown": 922,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -576928,9 +576915,9 @@
           "unmatched_observations": 24
         },
         "matharena-hmmt::2025-11": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 10,
-          "unknown": 920,
+          "unknown": 919,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -576941,9 +576928,9 @@
           "unmatched_observations": 13
         },
         "matharena-apex::2025": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 16,
-          "unknown": 914,
+          "unknown": 913,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -576954,9 +576941,9 @@
           "unmatched_observations": 32
         },
         "matharena-apex-shortlist::2025": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 13,
-          "unknown": 917,
+          "unknown": 916,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -576967,9 +576954,9 @@
           "unmatched_observations": 25
         },
         "matharena-aime::2026": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 7,
-          "unknown": 923,
+          "unknown": 922,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -576980,9 +576967,9 @@
           "unmatched_observations": 24
         },
         "matharena-usamo::2026": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 4,
-          "unknown": 926,
+          "unknown": 925,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -576993,9 +576980,9 @@
           "unmatched_observations": 5
         },
         "mls-bench-lite::30-tasks": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 12,
-          "unknown": 918,
+          "unknown": 917,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -577006,9 +576993,9 @@
           "unmatched_observations": 3
         },
         "surge-chartography::100-tasks": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 46,
-          "unknown": 884,
+          "unknown": 883,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -577019,9 +577006,9 @@
           "unmatched_observations": 24
         },
         "surge-gdp-pdf::100-tasks": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 36,
-          "unknown": 894,
+          "unknown": 893,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -577032,9 +577019,9 @@
           "unmatched_observations": 17
         },
         "interfaze-sob::text-image-audio": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 5,
-          "unknown": 925,
+          "unknown": 924,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -577045,9 +577032,9 @@
           "unmatched_observations": 24
         },
         "interfaze-sob-value-accuracy::text-image-audio": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 5,
-          "unknown": 925,
+          "unknown": 924,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -577058,9 +577045,9 @@
           "unmatched_observations": 24
         },
         "vitabench::2026-01-22": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 8,
-          "unknown": 922,
+          "unknown": 921,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -577071,9 +577058,9 @@
           "unmatched_observations": 18
         },
         "mcpmark::verified": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 7,
-          "unknown": 923,
+          "unknown": 922,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -577084,9 +577071,9 @@
           "unmatched_observations": 1
         },
         "charxiv-reasoning::val-v1.0": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 15,
-          "unknown": 915,
+          "unknown": 914,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -577097,9 +577084,9 @@
           "unmatched_observations": 80
         },
         "anthropic-terminal-bench-4-0::4.0": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 5,
-          "unknown": 925,
+          "unknown": 924,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -577110,9 +577097,9 @@
           "unmatched_observations": 0
         },
         "anthropic-frontiercode-v1-1-main::1.1": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 1,
-          "unknown": 929,
+          "unknown": 928,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -577123,9 +577110,9 @@
           "unmatched_observations": 0
         },
         "anthropic-cursorbench-4-0::4.0": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 1,
-          "unknown": 929,
+          "unknown": 928,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -577136,9 +577123,9 @@
           "unmatched_observations": 0
         },
         "anthropic-gdpval-aa-v2-1::2.1": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 1,
-          "unknown": 929,
+          "unknown": 928,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -577149,9 +577136,9 @@
           "unmatched_observations": 0
         },
         "anthropic-automationbench::snapshot-2026-09-22": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 1,
-          "unknown": 929,
+          "unknown": 928,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -577162,9 +577149,9 @@
           "unmatched_observations": 0
         },
         "anthropic-hle-with-tools::snapshot-2026-09-22": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 1,
-          "unknown": 929,
+          "unknown": 928,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -577175,9 +577162,9 @@
           "unmatched_observations": 0
         },
         "anthropic-terminal-bench-science-0-1::0.1": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 1,
-          "unknown": 929,
+          "unknown": 928,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -577188,9 +577175,9 @@
           "unmatched_observations": 0
         },
         "anthropic-osworld-2-0-partial::2.0": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 1,
-          "unknown": 929,
+          "unknown": 928,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -577201,9 +577188,9 @@
           "unmatched_observations": 0
         },
         "anthropic-chartography-with-tools::snapshot-2026-09-22": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 1,
-          "unknown": 929,
+          "unknown": 928,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -577214,9 +577201,9 @@
           "unmatched_observations": 0
         },
         "anthropic-swe-bench-pro::snapshot-2026-09-22": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 1,
-          "unknown": 929,
+          "unknown": 928,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -577227,9 +577214,9 @@
           "unmatched_observations": 0
         },
         "anthropic-swe-bench-multilingual::snapshot-2026-09-22": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 1,
-          "unknown": 929,
+          "unknown": 928,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -577240,9 +577227,9 @@
           "unmatched_observations": 0
         },
         "anthropic-swe-bench-multimodal::snapshot-2026-09-22": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 1,
-          "unknown": 929,
+          "unknown": 928,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -577253,9 +577240,9 @@
           "unmatched_observations": 0
         },
         "anthropic-hle-no-tools::snapshot-2026-09-22": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 1,
-          "unknown": 929,
+          "unknown": 928,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -577266,9 +577253,9 @@
           "unmatched_observations": 0
         },
         "anthropic-osworld-2-0-strict::2.0": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 1,
-          "unknown": 929,
+          "unknown": 928,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -577279,9 +577266,9 @@
           "unmatched_observations": 0
         },
         "anthropic-healthbench-professional::snapshot-2026-09-22": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 1,
-          "unknown": 929,
+          "unknown": 928,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -577292,9 +577279,9 @@
           "unmatched_observations": 0
         },
         "anthropic-aa-briefcase-v1-1::1.1": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 1,
-          "unknown": 929,
+          "unknown": 928,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -577305,9 +577292,9 @@
           "unmatched_observations": 0
         },
         "openai-automationbench::1.0.6": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 15,
-          "unknown": 915,
+          "unknown": 914,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -577318,9 +577305,9 @@
           "unmatched_observations": 0
         },
         "openai-automationbench-cost::1.0.6": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 15,
-          "unknown": 915,
+          "unknown": 914,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -577331,9 +577318,9 @@
           "unmatched_observations": 0
         },
         "openai-agents-last-exam::v1": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 15,
-          "unknown": 915,
+          "unknown": 914,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -577344,9 +577331,9 @@
           "unmatched_observations": 0
         },
         "openai-deepswe-v1-1::1.1": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 15,
-          "unknown": 915,
+          "unknown": 914,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -577357,9 +577344,9 @@
           "unmatched_observations": 0
         },
         "openai-osworld-2-offline::v2026.08.08": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 15,
-          "unknown": 915,
+          "unknown": 914,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -577370,9 +577357,9 @@
           "unmatched_observations": 0
         },
         "aa-intelligence-index-cost::4.3.2": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 22,
-          "unknown": 908,
+          "unknown": 907,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -577383,9 +577370,9 @@
           "unmatched_observations": 0
         },
         "aa-intelligence-index-cost-per-task::4.3.2": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 22,
-          "unknown": 908,
+          "unknown": 907,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -577396,9 +577383,9 @@
           "unmatched_observations": 0
         },
         "lmarena-text::snapshot-2026-09-22": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 1,
-          "unknown": 929,
+          "unknown": 928,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -577409,9 +577396,9 @@
           "unmatched_observations": 0
         },
         "lmarena-vision::snapshot-2026-09-22": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 1,
-          "unknown": 929,
+          "unknown": 928,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -577422,9 +577409,9 @@
           "unmatched_observations": 0
         },
         "scale-drug-discovery-bench::snapshot-2026-09-22": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 1,
-          "unknown": 929,
+          "unknown": 928,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -577435,9 +577422,9 @@
           "unmatched_observations": 0
         },
         "scale-swe-bench-pro-v2-hard::snapshot-2026-09-22": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 10,
-          "unknown": 920,
+          "unknown": 919,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -577448,9 +577435,9 @@
           "unmatched_observations": 1
         },
         "scale-seal-hle::snapshot-2026-09-22": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 0,
-          "unknown": 930,
+          "unknown": 929,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -577461,9 +577448,9 @@
           "unmatched_observations": 1
         },
         "scale-seal-hle-text-only::snapshot-2026-09-22": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 0,
-          "unknown": 930,
+          "unknown": 929,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -577474,9 +577461,9 @@
           "unmatched_observations": 1
         },
         "scale-seal-rli::snapshot-2026-09-22": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 0,
-          "unknown": 930,
+          "unknown": 929,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -577487,9 +577474,9 @@
           "unmatched_observations": 1
         },
         "balrog::snapshot-2026-09-22": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 1,
-          "unknown": 929,
+          "unknown": 928,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -577500,9 +577487,9 @@
           "unmatched_observations": 0
         },
         "vals-biomysterybench::snapshot-2026-09-21": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 2,
-          "unknown": 928,
+          "unknown": 927,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -577513,9 +577500,9 @@
           "unmatched_observations": 0
         },
         "vals-cua-bench::snapshot-2026-09-18": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 3,
-          "unknown": 927,
+          "unknown": 926,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -577526,9 +577513,9 @@
           "unmatched_observations": 0
         },
         "vals-ioi::snapshot-2026-09-21": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 2,
-          "unknown": 928,
+          "unknown": 927,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -577539,9 +577526,9 @@
           "unmatched_observations": 0
         },
         "vals-medscribe::snapshot-2026-09-21": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 2,
-          "unknown": 928,
+          "unknown": 927,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -577552,9 +577539,9 @@
           "unmatched_observations": 0
         },
         "vals-mysterymechanism::snapshot-2026-09-21": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 2,
-          "unknown": 928,
+          "unknown": 927,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -577565,9 +577552,9 @@
           "unmatched_observations": 0
         },
         "vals-programbench::snapshot-2026-09-21": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 2,
-          "unknown": 928,
+          "unknown": 927,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -577578,9 +577565,9 @@
           "unmatched_observations": 0
         },
         "vals-proofbench-v1-1::1.1": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 11,
-          "unknown": 919,
+          "unknown": 918,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -577591,9 +577578,9 @@
           "unmatched_observations": 5
         },
         "vals-public-benefits-bench-v1-1::1.1": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 8,
-          "unknown": 922,
+          "unknown": 921,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -577604,9 +577591,9 @@
           "unmatched_observations": 4
         },
         "vals-sre-bench::snapshot-2026-09-22": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 2,
-          "unknown": 928,
+          "unknown": 927,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -577617,9 +577604,9 @@
           "unmatched_observations": 0
         },
         "vals-terminal-bench-4-0::snapshot-2026-09-21": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 2,
-          "unknown": 928,
+          "unknown": 927,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -577630,9 +577617,9 @@
           "unmatched_observations": 0
         },
         "vals-terminal-bench-science::snapshot-2026-09-21": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 2,
-          "unknown": 928,
+          "unknown": 927,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -577643,9 +577630,9 @@
           "unmatched_observations": 0
         },
         "vals-time-horizon-index-ksp::snapshot-2026-09-14": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 4,
-          "unknown": 926,
+          "unknown": 925,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -577656,9 +577643,9 @@
           "unmatched_observations": 0
         },
         "vals-vibe-code-bench-1-100::snapshot-2026-09-22": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 7,
-          "unknown": 923,
+          "unknown": 922,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -577669,9 +577656,9 @@
           "unmatched_observations": 3
         },
         "vals-vibe-code-bench::1.1": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 12,
-          "unknown": 918,
+          "unknown": 917,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -577682,9 +577669,9 @@
           "unmatched_observations": 7
         },
         "vals-rsi-index::snapshot-2026-09-21": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 0,
-          "unknown": 930,
+          "unknown": 929,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -577695,9 +577682,9 @@
           "unmatched_observations": 2
         },
         "vals-code-migration::snapshot-2026-09-21": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 2,
-          "unknown": 928,
+          "unknown": 927,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -577708,9 +577695,9 @@
           "unmatched_observations": 0
         },
         "vals-emb::snapshot-2026-09-21": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 1,
-          "unknown": 929,
+          "unknown": 928,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -577721,9 +577708,9 @@
           "unmatched_observations": 0
         },
         "openai-mentalhealthbench::snapshot-2026-09-23": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 0,
-          "unknown": 930,
+          "unknown": 929,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -577734,9 +577721,9 @@
           "unmatched_observations": 17
         },
         "frontiercode-extended::1.1": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 85,
-          "unknown": 845,
+          "unknown": 844,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -577747,9 +577734,9 @@
           "unmatched_observations": 51
         },
         "frontiercode-extended-cost::1.1": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 85,
-          "unknown": 845,
+          "unknown": 844,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -577760,9 +577747,9 @@
           "unmatched_observations": 30
         },
         "simple-bench::snapshot-2026-09-26": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 20,
-          "unknown": 910,
+          "unknown": 909,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -577773,9 +577760,9 @@
           "unmatched_observations": 91
         },
         "openai-agents-last-exam-cost::v1": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 15,
-          "unknown": 915,
+          "unknown": 914,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -577786,9 +577773,9 @@
           "unmatched_observations": 0
         },
         "openai-deepswe-v1-1-cost::1.1": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 15,
-          "unknown": 915,
+          "unknown": 914,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -577799,9 +577786,9 @@
           "unmatched_observations": 0
         },
         "openai-osworld-2-offline-cost::v2026.08.08": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 15,
-          "unknown": 915,
+          "unknown": 914,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -577812,9 +577799,9 @@
           "unmatched_observations": 0
         },
         "vals-biomysterybench::snapshot-2026-09-22": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 7,
-          "unknown": 923,
+          "unknown": 922,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -577825,9 +577812,9 @@
           "unmatched_observations": 2
         },
         "vals-ioi::snapshot-2026-09-23": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 11,
-          "unknown": 919,
+          "unknown": 918,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -577838,9 +577825,9 @@
           "unmatched_observations": 4
         },
         "vals-medscribe::snapshot-2026-09-22": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 11,
-          "unknown": 919,
+          "unknown": 918,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -577851,9 +577838,9 @@
           "unmatched_observations": 7
         },
         "vals-mysterymechanism::snapshot-2026-09-23": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 7,
-          "unknown": 923,
+          "unknown": 922,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -577864,9 +577851,9 @@
           "unmatched_observations": 2
         },
         "vals-programbench::snapshot-2026-09-23": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 12,
-          "unknown": 918,
+          "unknown": 917,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -577877,9 +577864,9 @@
           "unmatched_observations": 5
         },
         "vals-terminal-bench-4-0::snapshot-2026-09-22": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 9,
-          "unknown": 921,
+          "unknown": 920,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -577890,9 +577877,9 @@
           "unmatched_observations": 4
         },
         "vals-terminal-bench-science::snapshot-2026-09-23": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 9,
-          "unknown": 921,
+          "unknown": 920,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -577903,9 +577890,9 @@
           "unmatched_observations": 4
         },
         "vals-code-migration::snapshot-2026-09-22": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 13,
-          "unknown": 917,
+          "unknown": 916,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -577916,9 +577903,9 @@
           "unmatched_observations": 5
         },
         "vals-emb::snapshot-2026-09-22": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 12,
-          "unknown": 918,
+          "unknown": 917,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -577929,9 +577916,9 @@
           "unmatched_observations": 5
         },
         "vals-cyberbench-v1-1::1.1": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 3,
-          "unknown": 927,
+          "unknown": 926,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -577942,9 +577929,9 @@
           "unmatched_observations": 1
         },
         "vals-medcode::snapshot-2026-09-22": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 11,
-          "unknown": 919,
+          "unknown": 918,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -577955,9 +577942,9 @@
           "unmatched_observations": 6
         },
         "vals-sage::snapshot-2026-09-22": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 8,
-          "unknown": 922,
+          "unknown": 921,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -577968,9 +577955,9 @@
           "unmatched_observations": 3
         },
         "vals-tax-agent-bench::snapshot-2026-09-23": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 10,
-          "unknown": 920,
+          "unknown": 919,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -577981,9 +577968,9 @@
           "unmatched_observations": 2
         },
         "furniture-assembly::snapshot-2026-09-26": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 21,
-          "unknown": 909,
+          "unknown": 908,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -577994,9 +577981,9 @@
           "unmatched_observations": 6
         },
         "frontiermath-erdos::snapshot-2026-09-26": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 5,
-          "unknown": 925,
+          "unknown": 924,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -578007,9 +577994,9 @@
           "unmatched_observations": 0
         },
         "scale-swe-bench-pro-v2-full::snapshot-2026-09-26": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 10,
-          "unknown": 920,
+          "unknown": 919,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -578020,9 +578007,9 @@
           "unmatched_observations": 8
         },
         "lmarena-webdev::snapshot-2026-09-26": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 21,
-          "unknown": 909,
+          "unknown": 908,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -578033,9 +578020,9 @@
           "unmatched_observations": 113
         },
         "lmarena-agent::snapshot-2026-09-26": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 20,
-          "unknown": 910,
+          "unknown": 909,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -578046,9 +578033,9 @@
           "unmatched_observations": 24
         },
         "scale-hss::snapshot-2026-10-07": {
-          "total_models": 930,
+          "total_models": 929,
           "available": 0,
-          "unknown": 930,
+          "unknown": 929,
           "not_tested": 0,
           "not_published": 0,
           "source_unreachable": 0,
@@ -1094830,7 +1094817,7 @@
       "frozen_since": "2026-09-18"
     }
   ],
-  "generated_at": "2026-11-11T05:52:37.314Z",
+  "generated_at": "2026-11-12T08:58:17.794Z",
   "efficiency": {
     "schema_version": 1,
     "global_io_ratio": {
@@ -1101563,7 +1101550,7 @@
               "last": "2026-10-13 00:00:00"
             },
             "definition": "OpenRouter reported cacheHitRate as a fraction. Underlying numerator/denominator and exact summary interval are not published in this response.",
-            "stale": false
+            "stale": true
           },
           "cache_read_per_1m": {
             "value": 0.19999999999999998,
@@ -1152498,7 +1152485,7 @@
               "last": "2026-10-13 00:00:00"
             },
             "definition": "OpenRouter reported cacheHitRate as a fraction. Underlying numerator/denominator and exact summary interval are not published in this response.",
-            "stale": false
+            "stale": true
           },
           "cache_read_per_1m": null,
           "cache_write_per_1m": null,
@@ -1155824,15 +1155811,15 @@
       "reason": "Source UUID absent from the current built model catalog; not attached by name or family."
     },
     "coverage": {
-      "dataset_models": 930,
+      "dataset_models": 929,
       "aa_catalog_models": 723,
       "aa_published_efficiency_rows": 96,
       "aa_page_scored_models": 97,
       "aa_matched_dataset_models": 96,
       "aa_frozen_v4_models": 138,
       "aa_unmatched_rows": 0,
-      "openrouter_empirical_models": 136,
-      "global_fallback_models": 794,
+      "openrouter_empirical_models": 134,
+      "global_fallback_models": 795,
       "openrouter_catalog_models": 469,
       "openrouter_collected_model_pages": 201,
       "openrouter_weekly_ranked_models": 20,
@@ -1155844,8 +1155831,8 @@
     }
   },
   "counts": {
-    "models": 930,
-    "families": 709,
+    "models": 929,
+    "families": 708,
     "providers": 99,
     "offers": 3523
   },
@@ -1156188,7 +1156175,7 @@
     "composite": {
       "version": "composite-v2-epoch-eci-aa5",
       "status": "recompute_required_on_definition_change",
-      "collected_at": "2026-11-11T05:52:37.314Z",
+      "collected_at": "2026-11-12T08:58:17.794Z",
       "note": "Composite definition v2 adds general and Software Engineering ECI as equal percentile slots. CR-634: the AA Intelligence slot is on Intelligence Index v5.0 (measured, or estimated from v4.x where AA has not rescored); the AA Coding Index slot keeps the frozen v4.x values. Historical Composite values are never bridged; recompute from common source slots when comparing definitions."
     }
   },
@@ -1321386,22 +1321373,22 @@
           "benchmark_input_output_ratio": null
         },
         "input_output_ratio": {
-          "value": 24.721339702575623,
-          "source": "OpenRouter model-page usage",
-          "url": "https://openrouter.ai/minimax/minimax-m1",
-          "collected_at": "2026-10-13T05:28:48.484Z",
-          "basis": "derived",
-          "source_basis": "measured",
-          "formula": "sum(total_prompt_tokens) / sum(total_completion_tokens)",
-          "scope": "openrouter_model_workload_all_apps",
-          "fallback": false,
-          "or_model_id": "minimax/minimax-m1",
+          "value": 21.867426925849752,
+          "source": "Chutes LLM usage statistics",
+          "url": "https://api.chutes.ai/invocations/stats/llm?start_date=2026-11-04&end_date=2026-11-10",
+          "collected_at": "2026-11-11T05:31:08.210Z",
+          "basis": "assumed",
+          "formula": "sum(total_input_tokens) / sum(total_output_tokens)",
+          "scope": "chutes_global_workload_fallback",
+          "source_basis": "derived",
+          "fallback": true,
+          "fallback_reason": "openrouter_observation_stale",
+          "evidence_ref": "efficiency.global_io_ratio",
           "window": {
-            "start_date": "2026-10-06",
-            "end_date": "2026-10-12"
+            "start_date": "2026-11-04",
+            "end_date": "2026-11-10"
           },
-          "source_updated_at": "2026-10-13T05:28:34.371Z",
-          "configuration_scope": "All reasoning configurations routed to this exact OpenRouter SKU; not effort-specific or coding-agent-only."
+          "stale": false
         },
         "attempts": [
           {
@@ -1321424,6 +1321411,20 @@
             "collected_at": "2026-11-11T05:30:53.457Z",
             "basis": "measured",
             "status": "not_in_weekly_top_models"
+          },
+          {
+            "source": "OpenRouter model-page usage",
+            "url": "https://openrouter.ai/minimax/minimax-m1",
+            "collected_at": "2026-10-13T05:28:48.484Z",
+            "basis": "measured",
+            "status": "stale_over_30_days"
+          },
+          {
+            "source": "Chutes LLM usage statistics",
+            "url": "https://api.chutes.ai/invocations/stats/llm?start_date=2026-11-04&end_date=2026-11-10",
+            "collected_at": "2026-11-11T05:31:08.210Z",
+            "status": "available",
+            "http_status": 200
           },
           {
             "source": "Artificial Analysis Intelligence Index token efficiency (website Flight payload)",
@@ -1323898,12 +1323899,85 @@
         "output_tps": null,
         "ttft_s": null
       },
-      "offers": [],
+      "offers": [
+        {
+          "source": "OpenRouter",
+          "provider": "Mistral",
+          "platform": "OpenRouter",
+          "input_per_1m": 2,
+          "output_per_1m": 6,
+          "cache_read_per_1m": 0.2,
+          "cache_write_per_1m": null,
+          "internal_reasoning_per_1m": null,
+          "region": "global",
+          "unit": "per_1m_token",
+          "or_model_id": "mistralai/mistral-large-2407",
+          "or_canonical_slug": "mistralai/mistral-large-2407",
+          "or_hugging_face_id": null,
+          "endpoint_tag": "mistral/zdr",
+          "quantization": "unknown",
+          "context_length": 131072,
+          "max_completion_tokens": 104857,
+          "status": 0,
+          "eu_hosted": true,
+          "non_us": true,
+          "or_provider_slug": "mistral",
+          "data_private": true
+        },
+        {
+          "source": "OpenRouter",
+          "provider": "Mistral",
+          "platform": "OpenRouter",
+          "input_per_1m": 2,
+          "output_per_1m": 6,
+          "cache_read_per_1m": 0.2,
+          "cache_write_per_1m": null,
+          "internal_reasoning_per_1m": null,
+          "region": "global",
+          "unit": "per_1m_token",
+          "or_model_id": "mistralai/mistral-large-2407",
+          "or_canonical_slug": "mistralai/mistral-large-2407",
+          "or_hugging_face_id": null,
+          "endpoint_tag": "mistral",
+          "quantization": "unknown",
+          "context_length": 131072,
+          "max_completion_tokens": 104857,
+          "status": 0,
+          "eu_hosted": true,
+          "non_us": true,
+          "or_provider_slug": "mistral",
+          "data_private": true
+        },
+        {
+          "source": "OpenRouter",
+          "provider": "Mistral",
+          "platform": "OpenRouter",
+          "input_per_1m": 2.2,
+          "output_per_1m": 6.6,
+          "cache_read_per_1m": 0.22,
+          "cache_write_per_1m": null,
+          "internal_reasoning_per_1m": null,
+          "region": "eu",
+          "unit": "per_1m_token",
+          "or_model_id": "mistralai/mistral-large-2407",
+          "or_canonical_slug": "mistralai/mistral-large-2407",
+          "or_hugging_face_id": null,
+          "endpoint_tag": "mistral/eu",
+          "quantization": "unknown",
+          "context_length": 131072,
+          "max_completion_tokens": 104857,
+          "status": 0,
+          "eu_hosted": true,
+          "non_us": true,
+          "or_provider_slug": "mistral",
+          "data_private": true
+        }
+      ],
       "designarena": {},
       "copilot": null,
       "featured": false,
       "has_benchmark": true,
-      "has_pricing": false,
+      "has_pricing": true,
       "token_efficiency": {
         "aa": {
           "status": "not_published_in_collected_payload",
@@ -1383649,150 +1383723,6 @@
             "collected_at": "2026-11-11T05:31:08.210Z",
             "status": "available",
             "http_status": 200
-          }
-        ]
-      }
-    },
-    {
-      "id": "mistral-large-2407::default",
-      "family_key": "mistral-large-2407",
-      "family_name": "Mistral Large 2407",
-      "display_name": "Mistral Large 2407",
-      "org": "Mistral",
-      "variant": "default",
-      "open_weights": false,
-      "release_date": null,
-      "benchmarks": {},
-      "aa_reference_price": {},
-      "aa_speed": {},
-      "offers": [
-        {
-          "source": "OpenRouter",
-          "provider": "Mistral",
-          "platform": "OpenRouter",
-          "input_per_1m": 2,
-          "output_per_1m": 6,
-          "cache_read_per_1m": 0.2,
-          "cache_write_per_1m": null,
-          "internal_reasoning_per_1m": null,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "mistralai/mistral-large-2407",
-          "or_canonical_slug": "mistralai/mistral-large-2407",
-          "or_hugging_face_id": null,
-          "endpoint_tag": "mistral/zdr",
-          "quantization": "unknown",
-          "context_length": 131072,
-          "max_completion_tokens": 104857,
-          "status": 0,
-          "eu_hosted": true,
-          "non_us": true,
-          "or_provider_slug": "mistral",
-          "data_private": true
-        },
-        {
-          "source": "OpenRouter",
-          "provider": "Mistral",
-          "platform": "OpenRouter",
-          "input_per_1m": 2,
-          "output_per_1m": 6,
-          "cache_read_per_1m": 0.2,
-          "cache_write_per_1m": null,
-          "internal_reasoning_per_1m": null,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "mistralai/mistral-large-2407",
-          "or_canonical_slug": "mistralai/mistral-large-2407",
-          "or_hugging_face_id": null,
-          "endpoint_tag": "mistral",
-          "quantization": "unknown",
-          "context_length": 131072,
-          "max_completion_tokens": 104857,
-          "status": 0,
-          "eu_hosted": true,
-          "non_us": true,
-          "or_provider_slug": "mistral",
-          "data_private": true
-        },
-        {
-          "source": "OpenRouter",
-          "provider": "Mistral",
-          "platform": "OpenRouter",
-          "input_per_1m": 2.2,
-          "output_per_1m": 6.6,
-          "cache_read_per_1m": 0.22,
-          "cache_write_per_1m": null,
-          "internal_reasoning_per_1m": null,
-          "region": "eu",
-          "unit": "per_1m_token",
-          "or_model_id": "mistralai/mistral-large-2407",
-          "or_canonical_slug": "mistralai/mistral-large-2407",
-          "or_hugging_face_id": null,
-          "endpoint_tag": "mistral/eu",
-          "quantization": "unknown",
-          "context_length": 131072,
-          "max_completion_tokens": 104857,
-          "status": 0,
-          "eu_hosted": true,
-          "non_us": true,
-          "or_provider_slug": "mistral",
-          "data_private": true
-        }
-      ],
-      "designarena": {},
-      "copilot": null,
-      "featured": false,
-      "has_pricing": true,
-      "token_efficiency": {
-        "aa": {
-          "status": "not_in_aa",
-          "source_model_id": null,
-          "source_slug": null,
-          "source_variant": null,
-          "index_version": null,
-          "tokens_per_task": null,
-          "canonical_token_counts": null,
-          "benchmark_input_output_ratio": null
-        },
-        "input_output_ratio": {
-          "value": 15.269388568293884,
-          "source": "OpenRouter model-page usage",
-          "url": "https://openrouter.ai/mistralai/mistral-large-2407",
-          "collected_at": "2026-10-18T03:36:27.288Z",
-          "basis": "derived",
-          "source_basis": "measured",
-          "formula": "sum(total_prompt_tokens) / sum(total_completion_tokens)",
-          "scope": "openrouter_model_workload_all_apps",
-          "fallback": false,
-          "or_model_id": "mistralai/mistral-large-2407",
-          "window": {
-            "start_date": "2026-10-11",
-            "end_date": "2026-10-17"
-          },
-          "source_updated_at": "2026-10-18T03:36:16.625Z",
-          "configuration_scope": "All reasoning configurations routed to this exact OpenRouter SKU; not effort-specific or coding-agent-only."
-        },
-        "attempts": [
-          {
-            "source": "OpenRouter public model/endpoint API",
-            "url": "https://openrouter.ai/api/v1/models/mistralai/mistral-large-2407/endpoints",
-            "collected_at": "2026-11-11",
-            "status": "no_usage_fields_in_public_api",
-            "or_model_id": "mistralai/mistral-large-2407"
-          },
-          {
-            "source": "OpenRouter model page",
-            "url": "https://openrouter.ai/mistralai/mistral-large-2407",
-            "collected_at": "2026-10-18T03:36:27.288Z",
-            "status": "available",
-            "http_status": 200
-          },
-          {
-            "source": "OpenRouter weekly model rankings",
-            "url": "https://openrouter.ai/rankings?view=week",
-            "collected_at": "2026-11-11T05:30:53.457Z",
-            "basis": "measured",
-            "status": "not_in_weekly_top_models"
           }
         ]
       }
