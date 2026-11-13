@@ -1,0 +1,21 @@
+{
+  "artifact_id": "scores-2",
+  "artifact_sha256": "e412f0bf5ef7a7394bbd8c9e09cd89f21f975690c2429a2e8ac7d92427f7ed9d",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/retail",
+    "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/airline",
+    "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/telecom",
+    "c1"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Could not independently recompute row hashes or verify transport/qualification; relied on owner-provided canonical row hashes and source sha256 9aa7860622381d0ca3ead2f16cc9ce52472b8effa3e9614ede6acdef008282d3.",
+    "Source README table does not explicitly label TAU2 values as percent; unit 'percent' is consistent with the benchmark's standard scoring but is not literally stated in the captured content.",
+    "The README's output-length footnote categorizes only reasoning/coding/PolyMATH as 81,920 tokens; the row protocol maps TAU2 (Agent) tasks to the 32,768-token setting, which is an inference from the footnote rather than an explicit TAU2-specific statement."
+  ],
+  "missing_evidence": []
+}

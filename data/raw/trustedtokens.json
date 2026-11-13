@@ -91,24 +91,6 @@
       "notes": "trustedtokens.eu/api/public/models zai-org/GLM-5.2; 230000 ctx; TNG-operated GPU inference in Germany; business accounts priced with included monthly credit (see trustedtokens.method.md)"
     },
     {
-      "model_name": "DeepSeek TNG R1T2 Chimera",
-      "provider_org": "TNG Technology Consulting",
-      "api_model_id": "tngtech/DeepSeek-TNG-R1T2-Chimera",
-      "model_id": "tngtech/DeepSeek-TNG-R1T2-Chimera",
-      "input_per_1m_eur": 1,
-      "output_per_1m_eur": 3,
-      "input_per_1m_usd": 1.11,
-      "output_per_1m_usd": 3.32,
-      "cache_read_per_1m_eur": 0.2,
-      "cache_read_per_1m_usd": 0.22,
-      "context_length": 65536,
-      "status": "production",
-      "eu_hosted": true,
-      "hosting_class": "sovereign_germany",
-      "region": "eu",
-      "notes": "trustedtokens.eu/api/public/models tngtech/DeepSeek-TNG-R1T2-Chimera; 65536 ctx; TNG-operated GPU inference in Germany; business accounts priced with included monthly credit (see trustedtokens.method.md)"
-    },
-    {
       "model_name": "Qwen3.8 27B",
       "provider_org": "Alibaba",
       "api_model_id": "Qwen/Qwen3.8-27B",
@@ -125,6 +107,24 @@
       "hosting_class": "sovereign_germany",
       "region": "eu",
       "notes": "trustedtokens.eu/api/public/models Qwen/Qwen3.8-27B; 1000000 ctx; TNG-operated GPU inference in Germany; business accounts priced with included monthly credit (see trustedtokens.method.md)"
+    },
+    {
+      "model_name": "DeepSeek TNG R1T2 Chimera",
+      "provider_org": "TNG Technology Consulting",
+      "api_model_id": "tngtech/DeepSeek-TNG-R1T2-Chimera",
+      "model_id": "tngtech/DeepSeek-TNG-R1T2-Chimera",
+      "input_per_1m_eur": 1,
+      "output_per_1m_eur": 3,
+      "input_per_1m_usd": 1.11,
+      "output_per_1m_usd": 3.32,
+      "cache_read_per_1m_eur": 0.2,
+      "cache_read_per_1m_usd": 0.22,
+      "context_length": 65536,
+      "status": "production",
+      "eu_hosted": true,
+      "hosting_class": "sovereign_germany",
+      "region": "eu",
+      "notes": "trustedtokens.eu/api/public/models tngtech/DeepSeek-TNG-R1T2-Chimera; 65536 ctx; TNG-operated GPU inference in Germany; business accounts priced with included monthly credit (see trustedtokens.method.md)"
     },
     {
       "model_name": "Gpt Oss 120b",
@@ -211,7 +211,7 @@
     "source": "https://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml",
     "rounding": "nearest USD cent"
   },
-  "response_sha256": "39e22504c92d71dee674e6921169bc2cc33cab2c2e4a40a982f96a82d8c9c24e",
+  "response_sha256": "e5dd0312d65ab7862933b67ed76a4977d307c71162df658d47d81b148d618b34",
   "skipped": [],
   "diff": {
     "added": [],

@@ -1,0 +1,31 @@
+{
+  "artifact_id": "protocol-weirdml-2",
+  "artifact_sha256": "6bd60c5766dad9d19f8ad87594eec4ade45889654f1ab0b2516e23568e5c4ae7",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": ["weirdml::2", "c1", "c2"],
+  "errors_found": 2,
+  "findings": [
+    {
+      "id": "c1-version-metric-mismatch",
+      "severity": "blocker",
+      "location": "row weirdml::2, fields version, version_guard, scoring.metric, scoring.unit, scoring.range, description",
+      "evidence": "Primary protocol (SOURCE 1) shows 'WeirdML v3' and 'Previous versions: WeirdML v2 · WeirdML v1'; page describes 11 tasks and scoring as '80% normalized area under its line on a logarithmic token axis, plus 20% of its final value' with hinted/hintless weighting and Ship Detect token scaling. Row claims version '2', 'version_guard' says verify published version 2, and metric describes '17 tasks' with 'Average Max Accuracy... maximum test accuracy across the 5 iterations per run'. These contradict the current protocol's version and scoring.",
+      "repair": "Update row to reflect the actual current version (3) and its scoring rule (normalized area under curve, 11 tasks, percent scale 0-100) and correct the description; or if the row is meant to represent the older v2, change status to 'retained' and superseded_by to the successor registry id, and adjust version_status accordingly."
+    },
+    {
+      "id": "c2-lifecycle-mismatch",
+      "severity": "blocker",
+      "location": "row weirdml::2, fields status, version_status, superseded_by",
+      "evidence": "Primary protocol (SOURCE 1) names 'WeirdML v3' as current and 'Previous versions: WeirdML v2 · WeirdML v1', indicating v2 is superseded by v3. Row states 'status':'active', 'version_status':'published', and 'superseded_by':null. The null superseded_by contradicts the named successor v3, and 'active' is not supported because the page reports v3, not v2. No release identifier for v2 is published; the page publishes v3.",
+      "repair": "Set superseded_by to the registry id of the v3 successor board, change status to 'retained' if v2 no longer receives fresh reporting, and reassess version_status (likely 'retained' rather than 'published') based on whether the maintainer publishes a release identifier for v2."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "Hashing and transport/qualification checks are performed by the owner; I cannot execute them in this environment.",
+    "The generated activity summary (SOURCE 2) applies to the captured payload which appears to be for v3, not v2; it does not rescue the version mismatch.",
+    "The exact successor registry id for v3 is not present in the packet, but the protocol clearly names v3 as the current version."
+  ],
+  "missing_evidence": []
+}

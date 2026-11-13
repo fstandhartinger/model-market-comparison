@@ -1,0 +1,30 @@
+{
+  "artifact_id": "scores-3",
+  "artifact_sha256": "94f09c66426221ebef9b3eb883f2bd8b5dbe72bccb6d55b81aa4d4f81158498c",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": [
+    "vendor:mistralai/Devstral-2-123B-Instruct-2512:swe-bench-verified::snapshot-2026-09-10",
+    "vendor:mistralai/Devstral-Small-2-24B-Instruct-2512:swe-bench-verified::snapshot-2026-09-10",
+    "c1"
+  ],
+  "errors_found": 1,
+  "findings": [
+    {
+      "id": "vendor:mistralai/Devstral-2-123B-Instruct-2512:swe-bench-verified::snapshot-2026-09-10",
+      "severity": "minor",
+      "location": "source.published_at (both rows)",
+      "evidence": "Primary evidence for both rows is the blog 'December 9, 2025' by Mistral; both candidate rows record published_at:null for the same source URL while the source text clearly carries the date December 9, 2025.",
+      "repair": "Set published_at to the blog post date (e.g. 2025-12-09) in both rows, or document why the source date is intentionally omitted."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "Cannot recompute row or artifact SHA-256 hashes in read-only review; owner hash-binding accepted as given.",
+    "Source names only 'SWE-bench Verified' with no dated snapshot; the 'snapshot-2026-09-10' suffix in benchmark_id cannot be confirmed from the source text and is treated as internal keying.",
+    "Evaluation harness for the SWE-bench Verified figures is not stated in source; the protocol field and null harness accurately reflect that.",
+    "Whether 'December 9, 2025' is the publication date vs a blog listing date is a minor interpretation; reflected as a minor finding.",
+    "No live browsing/execution possible; verification limited to the supplied transcript and exact primary fields."
+  ],
+  "missing_evidence": []
+}

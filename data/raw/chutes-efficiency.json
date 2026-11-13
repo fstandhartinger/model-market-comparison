@@ -1,5 +1,5 @@
 {
-  "collected_at": "2026-11-13T00:56:12.969Z",
+  "collected_at": "2026-11-13T05:31:13.986Z",
   "window": {
     "start_date": "2026-11-06",
     "end_date": "2026-11-12"
@@ -265,7 +265,7 @@
       "chute_id": "1c64b601-d207-5ec8-8e25-655edf3a4a06",
       "name": "[private]",
       "date": "2026-11-12",
-      "total_requests": 43,
+      "total_requests": 44,
       "total_input_tokens": 0,
       "total_output_tokens": 0
     },
@@ -465,7 +465,7 @@
       "chute_id": "47d7e35d-641d-532d-8668-fdaf0ed9950d",
       "name": "[private]",
       "date": "2026-11-12",
-      "total_requests": 19,
+      "total_requests": 20,
       "total_input_tokens": 0,
       "total_output_tokens": 0
     },
@@ -529,7 +529,7 @@
       "chute_id": "5c2a31d9-e831-5d03-a1a4-6f23c505d1ee",
       "name": "[private]",
       "date": "2026-11-12",
-      "total_requests": 24,
+      "total_requests": 25,
       "total_input_tokens": 0,
       "total_output_tokens": 0
     },
@@ -561,7 +561,7 @@
       "chute_id": "5f9c6826-a8ec-5b5a-8f86-301d99acc455",
       "name": "[private]",
       "date": "2026-11-12",
-      "total_requests": 45,
+      "total_requests": 46,
       "total_input_tokens": 0,
       "total_output_tokens": 0
     },
@@ -585,7 +585,7 @@
       "chute_id": "6922390d-0e63-554d-96f9-f3eda916e91d",
       "name": "[private]",
       "date": "2026-11-12",
-      "total_requests": 7,
+      "total_requests": 8,
       "total_input_tokens": 0,
       "total_output_tokens": 0
     },
@@ -833,7 +833,7 @@
       "chute_id": "a10cf2dd-e0f4-5ab8-91d7-f1fbd6066f24",
       "name": "[private]",
       "date": "2026-11-12",
-      "total_requests": 10,
+      "total_requests": 11,
       "total_input_tokens": 0,
       "total_output_tokens": 0
     },
@@ -849,7 +849,7 @@
       "chute_id": "a34ad4c4-c6e1-541e-9efd-51438f3c823f",
       "name": "[private]",
       "date": "2026-11-12",
-      "total_requests": 45,
+      "total_requests": 46,
       "total_input_tokens": 0,
       "total_output_tokens": 0
     },
@@ -1113,7 +1113,7 @@
       "chute_id": "ec9851a0-9fef-5caa-8105-d74c7ddce34a",
       "name": "[private]",
       "date": "2026-11-12",
-      "total_requests": 28,
+      "total_requests": 29,
       "total_input_tokens": 0,
       "total_output_tokens": 0
     },
@@ -1201,7 +1201,7 @@
       "chute_id": "fc21f35c-4a4e-5875-bd9e-43eec85ac0fb",
       "name": "[private]",
       "date": "2026-11-12",
-      "total_requests": 5,
+      "total_requests": 6,
       "total_input_tokens": 0,
       "total_output_tokens": 0
     },
@@ -1713,7 +1713,7 @@
       "chute_id": "5c2a31d9-e831-5d03-a1a4-6f23c505d1ee",
       "name": "[private]",
       "date": "2026-11-11",
-      "total_requests": 26,
+      "total_requests": 27,
       "total_input_tokens": 0,
       "total_output_tokens": 0
     },
@@ -7856,23 +7856,23 @@
   "provenance": {
     "source": "Chutes LLM usage statistics",
     "url": "https://api.chutes.ai/invocations/stats/llm?start_date=2026-11-06&end_date=2026-11-12",
-    "collected_at": "2026-11-13T00:56:12.969Z",
+    "collected_at": "2026-11-13T05:31:13.986Z",
     "basis": "self_reported"
   },
   "ratio_provenance": {
     "source": "Chutes LLM usage statistics",
     "url": "https://api.chutes.ai/invocations/stats/llm?start_date=2026-11-06&end_date=2026-11-12",
-    "collected_at": "2026-11-13T00:56:12.969Z",
+    "collected_at": "2026-11-13T05:31:13.986Z",
     "basis": "derived",
     "formula": "sum(total_input_tokens) / sum(total_output_tokens)",
     "scope": "Global Chutes token-positive chute/day usage, not a coding-agent-only cohort."
   },
-  "response_sha256": "a1294ac058f8a762925adf8d4a99504b2fc8e4a616970342f1439f2d5daca510",
+  "response_sha256": "361faeecf188d72856d2d157d047dec363212169f9a699c032c347a1f129c17a",
   "attempts": [
     {
       "source": "Chutes LLM usage statistics",
       "url": "https://api.chutes.ai/invocations/stats/llm?start_date=2026-11-06&end_date=2026-11-12",
-      "collected_at": "2026-11-13T00:56:12.969Z",
+      "collected_at": "2026-11-13T05:31:13.986Z",
       "status": "available",
       "http_status": 200
     }

@@ -1,0 +1,32 @@
+{
+  "artifact_id": "protocol-kernelbench-cuda-glm52-fused-moe-rtx-pro-6000",
+  "artifact_sha256": "6aafe8f39bf09b836a09a197e283d2d81bad768a70baedba626edb70633514b9",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": ["kernelbench-cuda-glm52-fused-moe::rtx-pro-6000", "c1", "c2"],
+  "errors_found": 2,
+  "findings": [
+    {
+      "id": "version_guard-four-problem-deck-mismatch",
+      "severity": "blocker",
+      "location": "row kernelbench-cuda-glm52-fused-moe::rtx-pro-6000, field version_guard (criterion c1)",
+      "evidence": "version_guard states \"the problem must stay in the stated four-problem deck\", but SPEC.md (sha256 ab27e...71e) says \"Problem 04 (grid + MinGRU RL sim SPS) was retired 2026-11-09\" and \"deck stays at three since 2026-11-09\"; captured leaderboard.json (sha256 273006...8e5d) problems array lists only 01_glm52_fused_moe, 02_deepseek_nsa, 03_megaqwen_decode with no 04; published_runs.json excludes all 04 runs as \"problem 04 retired 2026-11-09\".",
+      "repair": "Rewrite version_guard to bind identity to the actual current three-problem deck (01_glm52_fused_moe, 02_deepseek_nsa, 03_megaqwen_decode), removing the four-problem deck claim that contradicts the current protocol."
+    },
+    {
+      "id": "fabricated-problem-04-values-in-notes",
+      "severity": "blocker",
+      "location": "row kernelbench-cuda-glm52-fused-moe::rtx-pro-6000, field scoring.notes (criterion c1)",
+      "evidence": "notes assert a `bug` muse/muse-spark-1.3 [ultra] cell on 04 (peak_fraction 0.2056), a `reward_hack` deepseek-claude/deepseek-v4-pro cell on 04, and \"Opus 5 reaches 196.10% on 04\". Captured leaderboard.json contains no problem 04 and no `reward_hack` verdict; muse-spark-1.3 verdicts are interesting/clean/clean (01/02/03), never `bug`; claude-opus-5 peak_fraction values are null/null/0.0655 (01/02/03), never 1.961. published_runs.json lists 04 runs only in \"excluded\" with reason \"problem 04 retired 2026-11-09\". The only verifiable ranked-list exclusion claim is kinetic-0715[1m] on 03 (0.0622, verdict suspect), which is confirmed in leaderboard.json.",
+      "repair": "Delete all problem-04 cell/value references (0.2056, reward_hack, 196.10%) that are not present in the captured payload, retaining only claims actually supported by leaderboard.json and SPEC.md, or substantiate them with real capture evidence."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "Cannot execute owner hash, transport, or producer-qualification checks; owner receipt asserts model z-ai/glm-5.3-flash with output_sha256 2d74257c8038df03d31e17793af9bfc592b76531de310d6d040a8017cc155d50; treated as a limitation, not evidence of error.",
+    "version_status \"published\" is arguable: the protocol publishes the RTX PRO 6000 board identity and leaderboard.json carries \"tag\": \"v2\", but it does not clearly publish a per-board release identifier of the form the row's version copies; no protocol contradiction found, so not a finding.",
+    "The generated value-scale summary (SOURCE 7, 25 served peak_fraction values, lowest 11.3) was used only to confirm the row's unit \"percent of roofline\" and range [0,null] match the served scale; no further numeric judgement drawn from it.",
+    "Row-level canonical SHA-256s are owner-computed and could not be independently recalculated in this read-only review."
+  ],
+  "missing_evidence": []
+}

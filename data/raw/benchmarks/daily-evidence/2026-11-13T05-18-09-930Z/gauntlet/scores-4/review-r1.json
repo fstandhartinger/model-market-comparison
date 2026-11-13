@@ -1,0 +1,27 @@
+{
+  "artifact_id": "scores-4",
+  "artifact_sha256": "307034e1747b48abaaaaebd2d557e1a8b61db5d4c368840ca5d0008cae42f521",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": [
+    "vendor:DeepSeek-V3:swe-bench-verified::snapshot-2026-09-10",
+    "c1"
+  ],
+  "errors_found": 1,
+  "findings": [
+    {
+      "id": "vendor:DeepSeek-V3:swe-bench-verified::snapshot-2026-09-10",
+      "severity": "major",
+      "location": "benchmark_id and row id suffix snapshot-2026-09-10",
+      "evidence": "Primary source arXiv 2412.19437v2 Table 6 identifies the benchmark only as 'SWE-Bench Verified' and contains no occurrence of 'snapshot-2026-09-10'. The candidate benchmark_id 'swe-bench-verified::snapshot-2026-09-10' adds a snapshot version not present in the supplied primary evidence, so the claimed benchmark version cannot be verified.",
+      "repair": "Provide authoritative primary evidence for the snapshot-2026-09-10 benchmark version, or remove the unsupported snapshot suffix from benchmark_id (and align the row id accordingly) so the benchmark version is the source-verified 'swe-bench-verified' identity."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "Cannot independently recompute the owner-provided SHA-256 hashes or run transport/qualification checks; those are trusted from the packet.",
+    "Source value 42.0 and candidate value 42 are treated as numerically equal per the stated trailing-zero rule.",
+    "All other observed fields (value, unit, basis, url, source sha256, retrieved_at, locator, harness, protocol, model identity) match the primary evidence."
+  ],
+  "missing_evidence": []
+}

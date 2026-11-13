@@ -3,8 +3,8 @@
   "collected_at": "2026-11-13",
   "method": "scripts/fetch-openrouter-benchmarks.mjs (2026-11-13): two authenticated GETs of /api/v1/benchmarks (source=openrouter&include_run_config=true, kept as own_data, and unfiltered). Terms evaluated 2026-09-15 — see openrouter-benchmarks.method.md: the payload's meta.citation is documented as \"Required attribution when republishing this data\" (per-source). Display attribution: \"OpenRouter Benchmarks\" linked to openrouter.ai/benchmarks.",
   "terms": "Source: OpenRouter evals (openrouter.ai) via OpenRouter (openrouter.ai/rankings).",
-  "as_of": "2026-11-13T00:15:45.631Z",
-  "own_as_of": "2026-11-13T00:15:45.631Z",
+  "as_of": "2026-11-13T03:43:05.942Z",
+  "own_as_of": "2026-11-13T03:43:05.942Z",
   "own_citation": "Source: OpenRouter evals (openrouter.ai) via OpenRouter (openrouter.ai/rankings).",
   "counts": {
     "total_rows": 1735,
@@ -13,8 +13,8 @@
     "design_arena_rows": 1246,
     "models": 287
   },
-  "response_sha256": "ebffcc278590b6da7f0cd7a52e8456b7478627f60da4021efb2c752b6d6afb9d",
-  "own_response_sha256": "287f18a041366d5f3babc83bcfc4f133a17eb54df935e8300ee8a6f6cdc3ee8d",
+  "response_sha256": "1c7e346a34505aee4d321f184696bf65ac24b39f174cdfaa4476da8ff08c94ff",
+  "own_response_sha256": "9c0671f1bc4e52667ff7eb023333d766976885193afb9298e9f55744b0be5455",
   "own_data": [
     {
       "source": "openrouter",
@@ -227,17 +227,6 @@
     },
     {
       "source": "openrouter",
-      "model_permaslug": "thinkingmachines/inkling-2-small-20261107",
-      "display_name": "Thinking Machines: Inkling 2 Small",
-      "benchmark_type": "gpqa_diamond",
-      "accuracy": 0.9141410000000001,
-      "accuracy_stddev": null,
-      "avg_cost_per_task": 0.030628545454545457,
-      "total_tasks": 198,
-      "last_run_timestamp": "2026-11-13T00:01:53.399Z"
-    },
-    {
-      "source": "openrouter",
       "model_permaslug": "openai/gpt-6.1-terra-20261026",
       "display_name": "OpenAI: GPT-6.1 Terra",
       "benchmark_type": "gpqa_diamond",
@@ -246,6 +235,17 @@
       "avg_cost_per_task": 0.011462444444444444,
       "total_tasks": 198,
       "last_run_timestamp": "2026-10-28T00:00:04.598Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "thinkingmachines/inkling-2-small-20261107",
+      "display_name": "Thinking Machines: Inkling 2 Small",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.910774,
+      "accuracy_stddev": null,
+      "avg_cost_per_task": 0.01510519191919192,
+      "total_tasks": 198,
+      "last_run_timestamp": "2026-11-13T03:01:57.471Z"
     },
     {
       "source": "openrouter",
@@ -2856,6 +2856,17 @@
     },
     {
       "source": "openrouter",
+      "model_permaslug": "thinkingmachines/inkling-2-small-20261107",
+      "display_name": "Thinking Machines: Inkling 2 Small",
+      "benchmark_type": "tau_bench_verified_airline",
+      "accuracy": 0.633333,
+      "accuracy_stddev": null,
+      "avg_cost_per_task": 0.01754236,
+      "total_tasks": 50,
+      "last_run_timestamp": "2026-11-13T03:43:05.942Z"
+    },
+    {
+      "source": "openrouter",
       "model_permaslug": "google/gemini-nano-banana-2.1-20261006",
       "display_name": "Google: Nano Banana 2.1",
       "benchmark_type": "tau_bench_verified_airline",
@@ -2864,17 +2875,6 @@
       "avg_cost_per_task": 0.9708985208333334,
       "total_tasks": 48,
       "last_run_timestamp": "2026-11-12T21:07:31.630Z"
-    },
-    {
-      "source": "openrouter",
-      "model_permaslug": "thinkingmachines/inkling-2-small-20261107",
-      "display_name": "Thinking Machines: Inkling 2 Small",
-      "benchmark_type": "tau_bench_verified_airline",
-      "accuracy": 0.626667,
-      "accuracy_stddev": null,
-      "avg_cost_per_task": 0.0507923,
-      "total_tasks": 50,
-      "last_run_timestamp": "2026-11-13T00:15:45.631Z"
     },
     {
       "source": "openrouter",
@@ -3843,8 +3843,8 @@
       "coding_index": null,
       "agentic_index": null,
       "pricing": {
-        "prompt": "0.0000003",
-        "completion": "0.000001"
+        "prompt": "0.00000015",
+        "completion": "0.0000005"
       }
     },
     {
@@ -4431,8 +4431,8 @@
       "coding_index": 68.8,
       "agentic_index": 38.4,
       "pricing": {
-        "prompt": "0.000000322",
-        "completion": "0.000000989"
+        "prompt": "0.000000298",
+        "completion": "0.000000916"
       }
     },
     {
@@ -4884,8 +4884,8 @@
       "coding_index": 41.9,
       "agentic_index": 13.1,
       "pricing": {
-        "prompt": "0.000000019",
-        "completion": "0.000000176"
+        "prompt": "0.000000014",
+        "completion": "0.000000128"
       }
     },
     {
@@ -5037,8 +5037,8 @@
       "coding_index": 28.7,
       "agentic_index": 1.2,
       "pricing": {
-        "prompt": "0.000000086",
-        "completion": "0.000000127"
+        "prompt": "0.000000089",
+        "completion": "0.00000013"
       }
     },
     {
@@ -8790,8 +8790,8 @@
         "total": 0
       },
       "pricing": {
-        "prompt": "0.000000322",
-        "completion": "0.000000989"
+        "prompt": "0.000000298",
+        "completion": "0.000000916"
       }
     },
     {
@@ -8997,8 +8997,8 @@
         "total": 0
       },
       "pricing": {
-        "prompt": "0.000000322",
-        "completion": "0.000000989"
+        "prompt": "0.000000298",
+        "completion": "0.000000916"
       }
     },
     {
@@ -9372,8 +9372,8 @@
         "total": 0
       },
       "pricing": {
-        "prompt": "0.000000322",
-        "completion": "0.000000989"
+        "prompt": "0.000000298",
+        "completion": "0.000000916"
       }
     },
     {
@@ -9393,8 +9393,8 @@
         "total": 0
       },
       "pricing": {
-        "prompt": "0.000000322",
-        "completion": "0.000000989"
+        "prompt": "0.000000298",
+        "completion": "0.000000916"
       }
     },
     {
@@ -9978,8 +9978,8 @@
         "total": 0
       },
       "pricing": {
-        "prompt": "0.000000322",
-        "completion": "0.000000989"
+        "prompt": "0.000000298",
+        "completion": "0.000000916"
       }
     },
     {
@@ -11070,8 +11070,8 @@
         "total": 0
       },
       "pricing": {
-        "prompt": "0.000000322",
-        "completion": "0.000000989"
+        "prompt": "0.000000298",
+        "completion": "0.000000916"
       }
     },
     {
@@ -15585,8 +15585,8 @@
         "total": 0
       },
       "pricing": {
-        "prompt": "0.000000322",
-        "completion": "0.000000989"
+        "prompt": "0.000000298",
+        "completion": "0.000000916"
       }
     },
     {
@@ -16533,8 +16533,8 @@
         "total": 0
       },
       "pricing": {
-        "prompt": "0.000000322",
-        "completion": "0.000000989"
+        "prompt": "0.000000298",
+        "completion": "0.000000916"
       }
     },
     {
@@ -31361,17 +31361,6 @@
     },
     {
       "source": "openrouter",
-      "model_permaslug": "thinkingmachines/inkling-2-small-20261107",
-      "display_name": "Thinking Machines: Inkling 2 Small",
-      "benchmark_type": "gpqa_diamond",
-      "accuracy": 0.9141410000000001,
-      "accuracy_stddev": null,
-      "avg_cost_per_task": 0.030628545454545457,
-      "total_tasks": 198,
-      "last_run_timestamp": "2026-11-13T00:01:53.399Z"
-    },
-    {
-      "source": "openrouter",
       "model_permaslug": "openai/gpt-6.1-terra-20261026",
       "display_name": "OpenAI: GPT-6.1 Terra",
       "benchmark_type": "gpqa_diamond",
@@ -31380,6 +31369,17 @@
       "avg_cost_per_task": 0.011462444444444444,
       "total_tasks": 198,
       "last_run_timestamp": "2026-10-28T00:00:04.598Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "thinkingmachines/inkling-2-small-20261107",
+      "display_name": "Thinking Machines: Inkling 2 Small",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.910774,
+      "accuracy_stddev": null,
+      "avg_cost_per_task": 0.01510519191919192,
+      "total_tasks": 198,
+      "last_run_timestamp": "2026-11-13T03:01:57.471Z"
     },
     {
       "source": "openrouter",
@@ -33990,6 +33990,17 @@
     },
     {
       "source": "openrouter",
+      "model_permaslug": "thinkingmachines/inkling-2-small-20261107",
+      "display_name": "Thinking Machines: Inkling 2 Small",
+      "benchmark_type": "tau_bench_verified_airline",
+      "accuracy": 0.633333,
+      "accuracy_stddev": null,
+      "avg_cost_per_task": 0.01754236,
+      "total_tasks": 50,
+      "last_run_timestamp": "2026-11-13T03:43:05.942Z"
+    },
+    {
+      "source": "openrouter",
       "model_permaslug": "google/gemini-nano-banana-2.1-20261006",
       "display_name": "Google: Nano Banana 2.1",
       "benchmark_type": "tau_bench_verified_airline",
@@ -33998,17 +34009,6 @@
       "avg_cost_per_task": 0.9708985208333334,
       "total_tasks": 48,
       "last_run_timestamp": "2026-11-12T21:07:31.630Z"
-    },
-    {
-      "source": "openrouter",
-      "model_permaslug": "thinkingmachines/inkling-2-small-20261107",
-      "display_name": "Thinking Machines: Inkling 2 Small",
-      "benchmark_type": "tau_bench_verified_airline",
-      "accuracy": 0.626667,
-      "accuracy_stddev": null,
-      "avg_cost_per_task": 0.0507923,
-      "total_tasks": 50,
-      "last_run_timestamp": "2026-11-13T00:15:45.631Z"
     },
     {
       "source": "openrouter",

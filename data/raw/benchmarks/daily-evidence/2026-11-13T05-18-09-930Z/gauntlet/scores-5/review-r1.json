@@ -1,0 +1,19 @@
+{
+  "artifact_id": "scores-5",
+  "artifact_sha256": "d2460ee4b4930eab2bf28a08574876b1b2c715c0293b9d71a90a9d8ea57cf38d",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "vendor:DeepSeek-V3:aider-polyglot::snapshot-2026-09-10",
+    "c1"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Could not independently execute SHA-256, transport, or qualification checks; those are owner-side checks and were not verified here.",
+    "The primary evidence contains no explicit publication date; the row's published_at is null, and the snapshot identifier in benchmark_id is not independently justified by the source text.",
+    "The December 2024 model attribution is inferred from the arXiv URL 2412.19437v2; the source table itself only labels the column 'DeepSeek V3'."
+  ],
+  "missing_evidence": []
+}

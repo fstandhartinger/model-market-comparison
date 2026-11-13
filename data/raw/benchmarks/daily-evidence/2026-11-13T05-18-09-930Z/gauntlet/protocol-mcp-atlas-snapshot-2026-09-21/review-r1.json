@@ -1,0 +1,28 @@
+{
+  "artifact_id": "protocol-mcp-atlas-snapshot-2026-09-21",
+  "artifact_sha256": "9349407c23d58eee8dd28185ec59bb20ba00b2091b27da5f7a95958eb3e0e518",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": [
+    "mcp-atlas::snapshot-2026-09-21",
+    "c1",
+    "c2"
+  ],
+  "errors_found": 1,
+  "findings": [
+    {
+      "id": "finding-1",
+      "severity": "minor",
+      "location": "mcp-atlas::snapshot-2026-09-21 -> scoring.notes / version_guard",
+      "evidence": "Row states \"the board's own top row is 88.1 %\" and contrasts it with the stale Key Metrics card 83.6%. SOURCE 1 Performance Comparison lists the top row as Gemini-4-Argon 90.70 ± 1.80; Muse Spark 1.1 with 88.10 ± 1.95 is the second row. SOURCE 4 confirms the highest served value is 90.7.",
+      "repair": "Correct the statement to say the board's own top row is 90.7% (Gemini-4-Argon), or if referring to the second row, say 88.1% is Muse Spark 1.1. The conclusion that the stat card is stale remains valid."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "The claim \"exactly one embedded entries array\" in version_guard cannot be verified from the excerpted page text alone, which shows two tables (coverage and Performance Comparison).",
+    "The label \"confidence half-width\" for the published ± is inferred from the source's Legend referencing lower and upper CI bounds; the protocol does not use that exact wording.",
+    "Owner-side hashes, transport, and robot checks cannot be independently re-executed here; SOURCE 2 robots.txt content was reviewed as supplied."
+  ],
+  "missing_evidence": []
+}

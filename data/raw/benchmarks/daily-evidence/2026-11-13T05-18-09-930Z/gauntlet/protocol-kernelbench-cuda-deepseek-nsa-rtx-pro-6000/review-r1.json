@@ -1,0 +1,42 @@
+{
+  "artifact_id": "protocol-kernelbench-cuda-deepseek-nsa-rtx-pro-6000",
+  "artifact_sha256": "106e3ed5770f2399032cd76ef25ac0ad13ad843f58eaa616992a43c991185a9c",
+  "round": 1,
+  "verdict": "blocked",
+  "coverage_checked": [
+    "kernelbench-cuda-deepseek-nsa::rtx-pro-6000",
+    "c1",
+    "c2"
+  ],
+  "errors_found": 3,
+  "findings": [
+    {
+      "id": "kernelbench-cuda-deepseek-nsa::rtx-pro-6000::c1-four-problem-deck",
+      "severity": "blocker",
+      "location": "version_guard",
+      "evidence": "SPEC.md (Source 3) says the deck has only 01/02/03: 'Problem 04 ... was retired 2026-11-09' and 'deck stays at three since 2026-11-09'; candidate version_guard requires 'the problem must stay in the stated four-problem deck'.",
+      "repair": "Update version_guard to the current three-problem deck and reconcile identity so the row does not silently reuse an identity tied to a retired fourth problem."
+    },
+    {
+      "id": "kernelbench-cuda-deepseek-nsa::rtx-pro-6000::c2-version-status",
+      "severity": "major",
+      "location": "version_status / version",
+      "evidence": "No release identifier for the RTX PRO 6000 CUDA board appears in leaderboard.json, SPEC.md, or published_runs.json; schema_version 1, environment v2_containerized, and tag v2 are schema/generator descriptors, not board release IDs. version 'rtx-pro-6000' is hardware name, not a published identifier, contradicting version_status 'published'.",
+      "repair": "Set version_status to 'snapshot' with a dated version (e.g. snapshot-2026-11-13) unless a genuine published board release identifier is identified; otherwise correct the version to the maintainer's actual release identifier."
+    },
+    {
+      "id": "kernelbench-cuda-deepseek-nsa::rtx-pro-6000::c2-unsupported-04-example",
+      "severity": "minor",
+      "location": "scoring.notes",
+      "evidence": "Notes claim 'Opus 5 reaches 196.10% on 04' and cite 04 cells (e.g. muse-spark 0.2056), but problem 04 is retired and absent from leaderboard.json; no supporting value appears in any supplied source.",
+      "repair": "Remove or source the 04/196.10% example and 04 cell references, or clearly mark them as historical/retired with a documented source."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "I cannot execute hash verification, transport, or qualification checks; those are owner responsibilities and my inability is a limitation.",
+    "Whether schema_version 1 / tag v2 could be interpreted as a published board release identifier is ambiguous; I treated them as descriptors, which supports the version_status finding.",
+    "The producer receipt was not independently verified; it is included as identity/qualification evidence only."
+  ],
+  "missing_evidence": []
+}

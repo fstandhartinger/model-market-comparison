@@ -1,0 +1,86 @@
+{
+  "started_at": "2026-11-13T05:41:09.399Z",
+  "mode": "oneshot",
+  "requested_model": "z-ai/glm-5.3-flash",
+  "producers": [],
+  "qualification": {
+    "id": "z-ai/glm-5.3-flash",
+    "family": "z-ai",
+    "free": false,
+    "input_per_1m": 0.0399,
+    "output_per_1m": 0.0784,
+    "context": 1048576,
+    "aa_intelligence_index": 27.8,
+    "aa_source": "exact_id_and_variants",
+    "matched_model_ids": [
+      "glm-5.3-flash::default"
+    ],
+    "aa_variant_scores": [
+      {
+        "id": "glm-5.3-flash::default",
+        "index": 27.8
+      }
+    ]
+  },
+  "input_sha256": "25654d9d5c733123575a63ef6fc46735589722490f44000eb6e721293a62f3c9",
+  "route": "openrouter",
+  "attempt": 1,
+  "free_route_role": "critic",
+  "free_routes_offered": [
+    "chutes/moonshotai/Kimi-K3-TEE"
+  ],
+  "excluded_models": [
+    "chutes/moonshotai/Kimi-K3-TEE"
+  ],
+  "hard_excluded_models": [],
+  "catalog": {
+    "source": "run-cache",
+    "fetched_at": "2026-11-13T05:32:25.139Z"
+  },
+  "request_limits": {
+    "max_tokens": 16384,
+    "timeout_seconds": 600,
+    "input_bytes": 68215
+  },
+  "reasoning": {
+    "effort": "low",
+    "exclude": true
+  },
+  "ignored_providers": [
+    "Wafer",
+    "OpenInference"
+  ],
+  "response_format_mode": "json_object",
+  "response_schema_sha256": "376bde7986cc2f8fd182f04e745c607933760bea7c306ea6e8e992b7f70be25a",
+  "images": [],
+  "actual_model": "z-ai/glm-5.3-flash",
+  "usage": {
+    "prompt_tokens": 22642,
+    "completion_tokens": 1605,
+    "total_tokens": 24247,
+    "cost": 0.002078406,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.0020994,
+      "upstream_inference_prompt_cost": 0.00169815,
+      "upstream_inference_completions_cost": 0.00040125
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 1375,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "provider": "GMICloud",
+  "finish_reason": "stop",
+  "price_context": "OpenRouter catalog reference prices; usage.cost records the actual charge when returned.",
+  "session_id": null,
+  "finished_at": "2026-11-13T05:41:46.183Z",
+  "output_sha256": "4dbd54e5c564e600b79a31208abdac53287deaebac0e8f6b9886580422aa65d1"
+}

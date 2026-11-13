@@ -1,0 +1,26 @@
+{
+  "artifact_id": "scores-0",
+  "artifact_sha256": "fd189df476955e17f0de3003bf405dbac8e8134a89a6091fb628b75f56b74cfe",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "public:140ed623f195522a95b6fdc3",
+    "public:3c9606d38e0c6076e414e482",
+    "public:2703bd7bf0578c11b6359893",
+    "public:8489b8201a0b75a27268243e",
+    "public:c38f6c7d1451919023f670c2",
+    "public:897080f8122af3555af3955e",
+    "public:3f26b9e16abe772a8ae6baea",
+    "public:c03d03cd13bc6a38251c9249",
+    "public:ade29a6b4eec1052336315ab",
+    "c1"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "I cannot independently recompute SHA-256 hashes or execute transport/qualification checks; owner-provided source and row hashes were used as binding evidence.",
+    "A few derived percent values differ by 1 in the last decimal place from exact decimal multiplication of the source fraction (e.g. 0.7926322871141722×100 rendered as 79.26322871141723). The derivation inputs and formulas match the source numerics exactly; this is interpreted as binary floating-point representation of the registered numeric cell, not a substantive value mismatch."
+  ],
+  "missing_evidence": []
+}
