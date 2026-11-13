@@ -1,0 +1,33 @@
+{
+  "artifact_id": "scores-0",
+  "artifact_sha256": "6a5ac3b6f4f6cc89121b708659e021544884335dba341e811d2775a42ae4c2c0",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "public:84ba736d28c9568a38fa73e3",
+    "public:249dba84820c3c0fe9b67593",
+    "public:5fce381a6e6cb20d71c38d81",
+    "public:489d1c3eacdc78c94511e458",
+    "public:6f77aff1ffbc213a4c7a56be",
+    "public:419681c1adf824db08b06d94",
+    "public:f0ca29385c4968898345ebe4",
+    "public:4bd5ea7d7d32b8820a83aa67",
+    "public:e9d5a019e7fa8ef0298b4933",
+    "public:491639545a68c7678c49919c",
+    "public:d642f7197a1b062dde33b56f",
+    "public:85a753465e2ba022eee3ef61",
+    "public:040be19d42e890da4d90e95f",
+    "public:5a66616fd273bf4edac53195",
+    "public:5f9785779758476807ed3888",
+    "c1"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "I cannot independently recompute the owner-provided per-row SHA-256 hashes or verify transport/qualification checks; these are owner-executed responsibilities and were not independently reproducible from the packet.",
+    "I compared the supplied primary source rows as the authoritative numeric evidence; I have no browsing capability to re-check the live Andon Labs page, so verification is limited to the packet's captured evidence.",
+    "The activity summary notes one value changed versus the prior snapshot but does not identify which row; this does not affect this review because every candidate value matches today's captured primary row for its subject."
+  ],
+  "missing_evidence": []
+}

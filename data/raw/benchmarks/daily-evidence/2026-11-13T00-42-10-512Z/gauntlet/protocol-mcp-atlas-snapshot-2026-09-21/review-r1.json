@@ -1,0 +1,30 @@
+{
+  "artifact_id": "protocol-mcp-atlas-snapshot-2026-09-21",
+  "artifact_sha256": "9349407c23d58eee8dd28185ec59bb20ba00b2091b27da5f7a95958eb3e0e518",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": ["mcp-atlas::snapshot-2026-09-21", "c1", "c2"],
+  "errors_found": 2,
+  "findings": [
+    {
+      "id": "f1",
+      "severity": "major",
+      "location": "scoring.notes of row mcp-atlas::snapshot-2026-09-21",
+      "evidence": "Row states 'the board's own top row is 88.1 %', but SOURCE 1 Performance Comparison table shows rank 1 Gemini-4-Argon 90.70 ± 1.80 and rank 2 Muse Spark 1.1 88.10 ± 1.95. The stat card says 83.6% Top Pass Rate, so the claimed 88.1% top row does not match the evidence.",
+      "repair": "Correct the note to state the actual top row value (90.70%) or remove the specific top-value claim; the stat card is stale relative to the board's actual top value 90.70."
+    },
+    {
+      "id": "f2",
+      "severity": "minor",
+      "location": "version_guard of row mcp-atlas::snapshot-2026-09-21",
+      "evidence": "Guard claims 'exactly one embedded entries array with model and score', but SOURCE 1 shows two model tables: the coverage table (Model, Pass Rate % (All 1000), Pass Rate % (Public 500)) and the Performance Comparison table (Rank, Model, Score). The row's own scoring.notes also reference the coverage table as a second table.",
+      "repair": "Revise the version_guard to acknowledge the second model table (e.g., 'one leaderboard entries array plus a coverage table') or clarify what constitutes an embedded entries array, so the identity guard accurately describes the page."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "The exact internal JSON structure ('embedded entries array') is not directly visible in the excerpt; the array-count claim is judged from the two rendered tables shown in SOURCE 1.",
+    "The protocol does not explicitly define 'confidence half-width' for the ± figures, but the Legend's reference to lower/upper CI bounds supports this interpretation."
+  ],
+  "missing_evidence": []
+}

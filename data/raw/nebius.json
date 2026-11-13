@@ -1,7 +1,7 @@
 {
   "source": "Nebius Token Factory — tokenfactory.nebius.com/api/public/models_info (first-party, public catalog)",
   "region": "mixed (eu-north1 / eu-west2 / us-central1 / uk-south1)",
-  "collected_at": "2026-11-11",
+  "collected_at": "2026-11-13",
   "listing_url": "https://tokenfactory.nebius.com/models",
   "method": "scripts/fetch-nebius-catalog.mjs: one GET of the public catalog (allowed by robots.txt); prices are flavors[].input/output_price_per_million_tokens in native USD; region from flavors[].regions[].country_code (EU member state → eu, US → us, UK → uk); non-chat types and zero-output-price rows (embeddings) omitted; curated model_name/provider_org carried over by exact model_id; new ids marked mapping=derived; catalog status kept per row. See nebius.method.md.",
   "models": [
@@ -214,6 +214,17 @@
       "notes": "flavor: cheap; served region: us-north1 (US); id reflection/beam"
     },
     {
+      "model_name": "Inkling 2 Small",
+      "input_per_1m_usd": 0.3,
+      "output_per_1m_usd": 1,
+      "region": "eu",
+      "model_id": "thinkingmachines/Inkling-2-Small",
+      "context_length": 1048576,
+      "status": "active",
+      "notes": "flavor: cheap; served region: eu-west2 (FR); id thinkingmachines/Inkling-2-Small",
+      "mapping": "derived"
+    },
+    {
       "model_name": "GLM 5.2",
       "provider_org": "Z.ai",
       "input_per_1m_usd": 1.4,
@@ -247,12 +258,14 @@
       "notes": "flavor: cheap; served region: us-north1 (US); id zai-org/GLM-5.3-Flash"
     }
   ],
-  "response_sha256": "c1a62624019cc8840784d5f1336b14d6b03b97052d14101f211be100e9cb203a",
+  "response_sha256": "c6516de7efd44c78b89e2ba71c4269e12a85f49419375eeff847f256700556cd",
   "skipped": [
     "Qwen/Qwen3-Embedding-8B"
   ],
   "diff": {
-    "added": [],
+    "added": [
+      "thinkingmachines/Inkling-2-Small"
+    ],
     "removed": [],
     "price_changed": [],
     "region_changed": []

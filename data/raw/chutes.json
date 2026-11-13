@@ -1,6 +1,6 @@
 {
   "source": "Chutes — llm.chutes.ai/v1/models (first-party, public catalog)",
-  "collected_at": "2026-11-11",
+  "collected_at": "2026-11-13",
   "method": "scripts/fetch-chutes-catalog.mjs: one GET of the public catalog; prices are price.{input,output,input_cache_read}.usd per 1M tokens; curated model_name/provider_org carried over by exact tee_model_id; new ids marked mapping=derived. See chutes.method.md.",
   "models": [
     {
@@ -23,17 +23,6 @@
       "context_length": 131072,
       "confidential_compute": true,
       "tee_model_id": "google/gemma-4-31B-turbo-TEE"
-    },
-    {
-      "model_name": "Qwen3.5-27B",
-      "provider_org": "Alibaba",
-      "input_per_1m_usd": 0.2,
-      "output_per_1m_usd": 1.75,
-      "cache_read_per_1m_usd": 0.02,
-      "context_length": 262144,
-      "confidential_compute": true,
-      "tee_model_id": "Qwen/Qwen3.5-27B-TEE",
-      "mapping": "derived"
     },
     {
       "model_name": "Kimi-K2.6",
@@ -67,16 +56,6 @@
       "tee_model_id": "zai-org/GLM-5.1-TEE"
     },
     {
-      "model_name": "Qwen3.6-27B",
-      "provider_org": "Alibaba",
-      "input_per_1m_usd": 0.25,
-      "output_per_1m_usd": 2,
-      "cache_read_per_1m_usd": 0.025,
-      "context_length": 262144,
-      "confidential_compute": true,
-      "tee_model_id": "Qwen/Qwen3.6-27B-TEE"
-    },
-    {
       "model_name": "GLM-5.2",
       "provider_org": "Z.ai",
       "input_per_1m_usd": 1.25,
@@ -86,6 +65,27 @@
       "confidential_compute": true,
       "tee_model_id": "zai-org/GLM-5.2-TEE",
       "notes": " | 2026-07-31: price cut 1.40/4.40->1.25/3.95, cache-read 0.625 (live llm.chutes.ai)."
+    },
+    {
+      "model_name": "Qwen3.5-27B",
+      "provider_org": "Alibaba",
+      "input_per_1m_usd": 0.2,
+      "output_per_1m_usd": 1.75,
+      "cache_read_per_1m_usd": 0.02,
+      "context_length": 262144,
+      "confidential_compute": true,
+      "tee_model_id": "Qwen/Qwen3.5-27B-TEE",
+      "mapping": "derived"
+    },
+    {
+      "model_name": "Qwen3.6-27B",
+      "provider_org": "Alibaba",
+      "input_per_1m_usd": 0.25,
+      "output_per_1m_usd": 2,
+      "cache_read_per_1m_usd": 0.025,
+      "context_length": 262144,
+      "confidential_compute": true,
+      "tee_model_id": "Qwen/Qwen3.6-27B-TEE"
     },
     {
       "model_name": "Kimi K3",
@@ -110,6 +110,17 @@
       "notes": "Added 2026-08-26 from llm.chutes.ai"
     },
     {
+      "model_name": "DeepSeek-V4.1-Flash-1017",
+      "provider_org": "DeepSeek",
+      "input_per_1m_usd": 0.3,
+      "output_per_1m_usd": 1.2,
+      "cache_read_per_1m_usd": 0.03,
+      "context_length": 1000000,
+      "confidential_compute": false,
+      "tee_model_id": "deepseek-ai/DeepSeek-V4.1-Flash-1017",
+      "mapping": "derived"
+    },
+    {
       "model_name": "Qwen3.5-397B-A17B",
       "provider_org": "Alibaba",
       "input_per_1m_usd": 0.45,
@@ -118,22 +129,98 @@
       "context_length": 262144,
       "confidential_compute": true,
       "tee_model_id": "Qwen/Qwen3.5-397B-A17B-TEE"
+    },
+    {
+      "model_name": "DeepSeek-V4-Pro-0813",
+      "provider_org": "DeepSeek",
+      "input_per_1m_usd": 0.85,
+      "output_per_1m_usd": 2.65,
+      "cache_read_per_1m_usd": 0.15,
+      "context_length": 1000000,
+      "confidential_compute": false,
+      "tee_model_id": "deepseek-ai/DeepSeek-V4-Pro-0813",
+      "mapping": "derived"
+    },
+    {
+      "model_name": "GLM-5.3",
+      "provider_org": "Z.ai",
+      "input_per_1m_usd": 1.225,
+      "output_per_1m_usd": 3.85,
+      "cache_read_per_1m_usd": 0.245,
+      "context_length": 1048576,
+      "confidential_compute": false,
+      "tee_model_id": "zai-org/GLM-5.3",
+      "mapping": "derived"
+    },
+    {
+      "model_name": "Qwen3.8-2.4T-A95B",
+      "provider_org": "Alibaba",
+      "input_per_1m_usd": 2,
+      "output_per_1m_usd": 6,
+      "cache_read_per_1m_usd": 0.25,
+      "context_length": 1000000,
+      "confidential_compute": false,
+      "tee_model_id": "Qwen/Qwen3.8-2.4T-A95B",
+      "mapping": "derived"
+    },
+    {
+      "model_name": "Hy4",
+      "input_per_1m_usd": 0.525,
+      "output_per_1m_usd": 1.5625,
+      "cache_read_per_1m_usd": 0.025,
+      "context_length": 1048576,
+      "confidential_compute": false,
+      "tee_model_id": "tencent/Hy4",
+      "mapping": "derived"
+    },
+    {
+      "model_name": "Qwen3.8-Max-0902",
+      "provider_org": "Alibaba",
+      "input_per_1m_usd": 2,
+      "output_per_1m_usd": 6,
+      "cache_read_per_1m_usd": 0.25,
+      "context_length": 1000000,
+      "confidential_compute": false,
+      "tee_model_id": "Qwen/Qwen3.8-Max-0902",
+      "mapping": "derived"
+    },
+    {
+      "model_name": "Kimi-K2.7-Code",
+      "provider_org": "Moonshot AI",
+      "input_per_1m_usd": 0.832,
+      "output_per_1m_usd": 3.5,
+      "cache_read_per_1m_usd": 0.167,
+      "context_length": 262144,
+      "confidential_compute": false,
+      "tee_model_id": "moonshotai/Kimi-K2.7-Code",
+      "mapping": "derived"
+    },
+    {
+      "model_name": "GLM-5.2-Fast",
+      "provider_org": "Z.ai",
+      "input_per_1m_usd": 2.45,
+      "output_per_1m_usd": 7.7,
+      "cache_read_per_1m_usd": 0.49,
+      "context_length": 1048576,
+      "confidential_compute": false,
+      "tee_model_id": "zai-org/GLM-5.2-Fast",
+      "mapping": "derived"
     }
   ],
-  "response_sha256": "c0431c38e28f6e3e5731a9cbd0128829097dbe9afe7891c10c2626c39f649b2c",
+  "response_sha256": "481a9f4a7f2c193af7cda5b54652cdfba135ac63da4f5ca9748fe2197d5e3f3b",
   "diff": {
-    "added": [],
+    "added": [
+      "deepseek-ai/DeepSeek-V4.1-Flash-1017",
+      "deepseek-ai/DeepSeek-V4-Pro-0813",
+      "zai-org/GLM-5.3",
+      "Qwen/Qwen3.8-2.4T-A95B",
+      "tencent/Hy4",
+      "Qwen/Qwen3.8-Max-0902",
+      "moonshotai/Kimi-K2.7-Code",
+      "zai-org/GLM-5.2-Fast"
+    ],
     "removed": [],
     "price_changed": []
   },
-  "skipped_unpriced": [
-    "deepseek-ai/DeepSeek-V4.1-Flash-1017",
-    "zai-org/GLM-5.3",
-    "deepseek-ai/DeepSeek-V4-Pro-0813",
-    "moonshotai/Kimi-K2.7-Code",
-    "zai-org/GLM-5.2-Fast",
-    "Qwen/Qwen3.8-2.4T-A95B",
-    "Qwen/Qwen3.8-Max-0902",
-    "tencent/Hy4"
-  ]
+  "skipped_unpriced": []
 }

@@ -1,0 +1,15 @@
+{
+  "artifact_id": "protocol-blueprint-bench-2",
+  "artifact_sha256": "722df570d1b42099388a6368ad394968faac31c042a5cbb3e7fca39eaa4378bc",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": ["blueprint-bench::2", "c1", "c2"],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Cannot independently recompute the supplied row sha256 or source sha256; owner-executed hash and transport/qualification checks are outside my read-only scope. This is a verification limitation, not missing numeric evidence.",
+    "The primary protocol excerpt is a bounded capture; I cannot re-fetch the live page, but all row fields relevant to the stated criteria are present and match the captured text."
+  ],
+  "missing_evidence": []
+}

@@ -1,0 +1,28 @@
+{
+  "artifact_id": "scores-7",
+  "artifact_sha256": "f9142c719de341b1ed54d8b9df611d96d873b9740f552a27280253b71778a0f3",
+  "round": 1,
+  "verdict": "blocked",
+  "coverage_checked": [
+    "vendor:DeepSeek-V3:aider-polyglot::snapshot-2026-09-10",
+    "c1"
+  ],
+  "errors_found": 1,
+  "findings": [
+    {
+      "id": "row-1-benchmark-version",
+      "severity": "blocker",
+      "location": "row vendor:DeepSeek-V3:aider-polyglot::snapshot-2026-09-10, fields benchmark_id and id",
+      "evidence": "Source Table 6 lists only 'Aider-Polyglot (Acc.)' with no version or snapshot. Claimed 'snapshot-2026-09-10' is absent from the primary evidence; no basis is provided for that version label.",
+      "repair": "Either remove the unsupported snapshot version, or map the benchmark to an explicitly documented version present in the source and update the artifact fields accordingly."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "Cannot independently verify the owner-executed SHA-256 hashes or transport/qualification checks; this is a limitation of the review scope, not a source-value gap.",
+    "The criterion requires verifying source date; the artifact supplies retrieved_at but published_at is null. Without the paper's publication date in the packet, the correctness of published_at cannot be confirmed."
+  ],
+  "missing_evidence": [
+    "published_at"
+  ]
+}

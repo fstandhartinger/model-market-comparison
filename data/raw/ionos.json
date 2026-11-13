@@ -1,9 +1,9 @@
 {
   "source": "IONOS AI Model Hub",
   "region": "eu (Germany)",
-  "collected_at": "2026-11-11",
+  "collected_at": "2026-11-13",
   "currency_note": "USD fields use IONOS' official localized USD price table at https://cloud.ionos.com/prices; EUR source prices are preserved in notes and are not converted locally.",
-  "method": "scripts/fetch-ionos-catalog.mjs (2026-11-11): one GET each of the server-rendered IONOS Cloud price pages https://cloud.ionos.com/prices (official localized USD, used for the price fields) and https://cloud.ionos.de/preise (original EUR, recorded as \"€in/€out\" at the start of each row's notes); every AI Model Hub table with an input- and an output-token price is included (Large language models, Vision-Language Models, Code Models); embedding, reranker and image tables are out of scope. Curated rows kept by catalog_name, normalized name or the page name in the notes; new rows mapping=derived; rows no longer listed are dropped. OpenAI-compatible pay-per-use, EU-sovereign (DE). See ionos.method.md.",
+  "method": "scripts/fetch-ionos-catalog.mjs (2026-11-13): one GET each of the server-rendered IONOS Cloud price pages https://cloud.ionos.com/prices (official localized USD, used for the price fields) and https://cloud.ionos.de/preise (original EUR, recorded as \"€in/€out\" at the start of each row's notes); every AI Model Hub table with an input- and an output-token price is included (Large language models, Vision-Language Models, Code Models); embedding, reranker and image tables are out of scope. Curated rows kept by catalog_name, normalized name or the page name in the notes; new rows mapping=derived; rows no longer listed are dropped. OpenAI-compatible pay-per-use, EU-sovereign (DE). See ionos.method.md.",
   "models": [
     {
       "model_name": "Qwen3.5 9B",
@@ -16,14 +16,15 @@
       "catalog_section": "Large language models"
     },
     {
-      "model_name": "Qwen3.8 27B",
+      "model_name": "Qwen3.8-27B New",
+      "catalog_name": "Qwen3.8-27B New",
       "provider_org": "Alibaba",
       "input_per_1m_usd": 0.45,
       "output_per_1m_usd": 2.7,
       "region": "eu",
-      "notes": "EUR price not listed on cloud.ionos.de/preise at collection time; EUR price not listed on cloud.ionos.de/preise at collection time; EUR price not listed on cloud.ionos.de/preise at collection time; EUR price not listed on cloud.ionos.de/preise at collection time; Qwen3.8-27B; marked New on the USD price page; new vs prior snapshot (2026-09-08)",
-      "catalog_name": "Qwen3.8-27B",
-      "catalog_section": "Large language models"
+      "catalog_section": "Large language models",
+      "notes": "EUR price not listed on cloud.ionos.de/preise at collection time; Qwen3.8-27B New",
+      "mapping": "derived"
     },
     {
       "model_name": "Qwen3.5 397B A17B",
@@ -36,14 +37,15 @@
       "catalog_section": "Large language models"
     },
     {
-      "model_name": "Mistral Small 3.2",
+      "model_name": "Mistral Small 24B Instruct New",
+      "catalog_name": "Mistral Small 24B Instruct New",
       "provider_org": "Mistral",
       "input_per_1m_usd": 0.11,
       "output_per_1m_usd": 0.33,
       "region": "eu",
-      "notes": "€0.10/€0.30 (Mistral Small 24B Instruct)",
-      "catalog_name": "Mistral Small 24B Instruct",
-      "catalog_section": "Large language models"
+      "catalog_section": "Large language models",
+      "notes": "EUR price not listed on cloud.ionos.de/preise at collection time; Mistral Small 24B Instruct New",
+      "mapping": "derived"
     },
     {
       "model_name": "gpt-oss-120b",
@@ -87,15 +89,22 @@
     }
   ],
   "response_sha256": {
-    "usd": "6cf8a56f8aa5be70c0e0dcf9173a4b53a27f933f209163389f61ca22e2607a2e",
-    "eur": "565dd80330970873c0b1c7d16d4ba4afcfb3dce5ae955e23bae1e480519d2e61"
+    "usd": "39a18a84333f174bbf4f757fff48acdea13e8a3d032df0a0d69883cd39489212",
+    "eur": "f9734e3ed9e853e47ee6f6333fb55ab792cc5ad298a1df3cb14a73dbdf052472"
   },
   "eur_missing": [
-    "Qwen3.8-27B"
+    "Qwen3.8-27B New",
+    "Mistral Small 24B Instruct New"
   ],
   "diff": {
-    "added": [],
-    "removed": [],
+    "added": [
+      "Qwen3.8-27B New",
+      "Mistral Small 24B Instruct New"
+    ],
+    "removed": [
+      "Qwen3.8 27B",
+      "Mistral Small 3.2"
+    ],
     "usd_price_changed": []
   }
 }

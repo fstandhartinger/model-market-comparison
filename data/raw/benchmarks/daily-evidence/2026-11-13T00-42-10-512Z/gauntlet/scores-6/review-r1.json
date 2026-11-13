@@ -1,0 +1,37 @@
+{
+  "artifact_id": "scores-6",
+  "artifact_sha256": "4a649226156a334048aed2dad0f337f973f5887dc238f643c51ac1024ef1d2a8",
+  "round": 1,
+  "verdict": "blocked",
+  "coverage_checked": [
+    "vendor:DeepSeek-V3:swe-bench-verified::snapshot-2026-09-10",
+    "c1"
+  ],
+  "errors_found": 2,
+  "findings": [
+    {
+      "id": "finding-1",
+      "severity": "blocker",
+      "location": "row vendor:DeepSeek-V3:swe-bench-verified::snapshot-2026-09-10; benchmark_id / benchmark version",
+      "evidence": "Primary evidence only names 'SWE-Bench Verified (OpenAI, 2024d)' and table row 'SWE Verified (Resolved)'; no snapshot date '2026-09-10' appears anywhere in SOURCE 1.",
+      "repair": "Provide primary evidence specifying snapshot 2026-09-10 for SWE-bench Verified, or change benchmark_id/benchmark version to match the cited SWE-Bench Verified source and regenerate the row id accordingly."
+    },
+    {
+      "id": "finding-2",
+      "severity": "blocker",
+      "location": "row vendor:DeepSeek-V3:swe-bench-verified::snapshot-2026-09-10; source.published_at",
+      "evidence": "Criterion c1 requires verifying source date. Artifact sets source.published_at=null, and SOURCE 1 header provides only retrieved_at=2026-11-13T00:53:22.680065+00:00 with no publication date for arXiv 2412.19437v2.",
+      "repair": "Supply the publication/source date in primary evidence and populate source.published_at accordingly, or explicitly document the intended null semantics if no source date is available."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "Unit 'percent' is not explicitly labeled on the SWE Verified row in Table 6; it is inferred from benchmark convention and matching percentage values.",
+    "Checkpoint label 'Dec '24' is inferred from arXiv ID 2412.19437v2; the source text only names 'DeepSeek-V3'.",
+    "I could not execute SHA-256 or transport/qualification checks; owner-provided hashes and producer receipt were accepted as-is."
+  ],
+  "missing_evidence": [
+    "SWE-bench Verified snapshot date '2026-09-10' (primary evidence cites only 'SWE-Bench Verified (OpenAI, 2024d)')",
+    "Publication date for arXiv 2412.19437v2 (source.published_at is null and SOURCE 1 provides no publication date; only retrieved_at)"
+  ]
+}

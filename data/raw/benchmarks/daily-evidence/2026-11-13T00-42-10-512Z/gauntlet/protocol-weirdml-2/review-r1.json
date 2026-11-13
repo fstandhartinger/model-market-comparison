@@ -1,0 +1,46 @@
+{
+  "artifact_id": "protocol-weirdml-2",
+  "artifact_sha256": "6bd60c5766dad9d19f8ad87594eec4ade45889654f1ab0b2516e23568e5c4ae7",
+  "round": 1,
+  "verdict": "blocked",
+  "coverage_checked": ["weirdml::2", "c1", "c2"],
+  "errors_found": 4,
+  "findings": [
+    {
+      "id": "f1",
+      "severity": "blocker",
+      "location": "row weirdml::2, fields version and version_guard",
+      "evidence": "Primary protocol page (SOURCE 1) is titled 'WeirdML v3', says 'WeirdML (v3) is an agentic benchmark...' and lists 'Previous versions: WeirdML v2 · WeirdML v1'. Row states version '2' and version_guard 'Verify the published version 2 before reading results.'",
+      "repair": "Update version to '3' and version_guard to the published version 3 if the row is the current board; otherwise mark the board retained and set superseded_by to the registry id for v3."
+    },
+    {
+      "id": "f2",
+      "severity": "blocker",
+      "location": "row weirdml::2, scoring.metric",
+      "evidence": "Row metric claims 'Average Max Accuracy: per task, mean over runs of the maximum test accuracy across the 5 iterations per run, averaged over all 17 tasks'. SOURCE 1 v3 protocol states the official score is '80% normalized area under its line on a logarithmic token axis, plus 20% of its final value', weights 11 tasks equally, and never mentions max test accuracy, 5 iterations, or 17 tasks.",
+      "repair": "Replace scoring.metric with the v3 official scoring definition (normalized area under best-so-far effective score plus final value, 11 tasks), or provide verifiable v2 protocol evidence if this row is intentionally v2."
+    },
+    {
+      "id": "f3",
+      "severity": "major",
+      "location": "row weirdml::2, description",
+      "evidence": "Row description says 'write, run, and iteratively improve PyTorch code under fixed compute and time limits'. SOURCE 1 v3 protocol describes '11 complex hand-made tasks ... explore and understand unfamiliar data, develop machine learning and data analysis pipelines ... limited data, unspecified goals and/or very limited feedback'; no mention of PyTorch or fixed compute/time limits.",
+      "repair": "Align description to the v3 protocol text, or supply v2-specific protocol evidence if the row is for version 2."
+    },
+    {
+      "id": "f4",
+      "severity": "blocker",
+      "location": "row weirdml::2, fields status and superseded_by",
+      "evidence": "SOURCE 1 shows the current protocol is WeirdML v3 and lists WeirdML v2 as a previous version, yet the row has status 'active' and superseded_by null. If the row is for v2, it is superseded by v3, so it should be retained and name the successor; if it is for v3, version and metric are still wrong.",
+      "repair": "Set status to 'retained' and superseded_by to our registry id for v3 if this is the v2 board; or convert the row to the current v3 board with matching version, metric and description."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "We cannot independently recompute hashes or execute transport/qualification checks; the owner performs those checks. This is a limitation, not missing numeric source evidence.",
+    "The row id 'weirdml::2' could be read as a legacy v2 board; even under that reading, the current v3 page contradicts 'active' and superseded_by null, and the packet lacks v2-specific metric/description evidence.",
+    "Unit/range check relies on SOURCE 3's generated summary of served values; min 1.729 and max 93.572 fall within [0,100], so that aspect was treated as passing for c1.",
+    "The packet does not contain our registry id for a v3 successor board; a correct superseded_by value would need that id from the successor's own entry."
+  ],
+  "missing_evidence": []
+}

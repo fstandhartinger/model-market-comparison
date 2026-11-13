@@ -1,0 +1,14 @@
+{
+  "artifact_id": "scores-8",
+  "artifact_sha256": "7e5b1d2c750c9bed5e434e5f139c1800bdd76616780fcef02b455482aafd3837",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": ["vendor:DeepSeek-V3:longbench::2", "c1"],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "I cannot independently recompute hashes or verify transport/qualification checks; those are owner-side externally executed and were not run by me."
+  ],
+  "missing_evidence": []
+}

@@ -1,0 +1,26 @@
+{
+  "artifact_id": "scores-3",
+  "artifact_sha256": "9eeebbc441dfdbfee219fc129f44258e9cec4ce9bf7058134d5d1223c3c6661e",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": [
+    "public:931ef2818258dcd75888cfaf",
+    "c1"
+  ],
+  "errors_found": 1,
+  "findings": [
+    {
+      "id": "f1",
+      "severity": "major",
+      "location": "public:931ef2818258dcd75888cfaf source.published_at",
+      "evidence": "SOURCE 1 native_source_row.source_row.dateAdded = \"2026-11-12\"; artifact source.published_at is null. Criterion c1 requires verifying source date, which is available in primary evidence but omitted in the row.",
+      "repair": "Set source.published_at to \"2026-11-12\" (the date the maintainer published the row) or otherwise populate the source date field to match the primary evidence."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "Cannot independently recompute SHA-256 hashes or verify transport/runtime; provided hashes are treated as binding per instructions.",
+    "Semantics of published_at vs source_row.dateAdded are inferred; the source explicitly provides dateAdded and the artifact leaves published_at null, which fails c1's source-date verification."
+  ],
+  "missing_evidence": []
+}
