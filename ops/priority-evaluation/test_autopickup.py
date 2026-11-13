@@ -2766,6 +2766,178 @@ class SlaCardsTests(DatabaseTestCase):
         self.assertEqual(ap.sla_decision_rows(None, ap.JOB_ROOT), [])
 
 
+class SlaStrayCloseoutTests(DatabaseTestCase):
+    """Re-review S1: 40 h cards whose order left the 40 h set for good are closed; held/open orders keep theirs."""
+
+    def setUp(self) -> None:
+        super().setUp()
+        set_cutover(datetime.now(timezone.utc) - timedelta(days=4))
+        self.root = ap.STATE_ROOT / "sla-decisions"
+        self.root.mkdir(parents=True, exist_ok=True)
+
+    def card(self, rid: str, **extra) -> None:
+        (self.root / f"{rid}.json").write_text(json.dumps({
+            "request_id": rid, "kind": "sla_40h", "notification": "sent", "message_id": 777001, "card": 1,
+            "decision": "no_action", "update_id": 888001, "late_attached": True, **extra}))
+
+    def run_sweep(self, fx, outcome="closed"):
+        calls = []
+        with mock.patch.object(ap.sla_decision, "close_stray",
+                               side_effect=lambda root, rid, reason, now: calls.append((rid, reason)) or outcome):
+            closed = ap.sla40_stray_closeouts(None, ap.JOB_ROOT, fx)
+        return closed, calls
+
+    def test_only_orders_that_left_for_good_are_closed_with_their_reason(self):
+        delivered = insert_order(paid_ago="45 hours", received_ago="45 hours", status="completed")
+        ap.sql(f"UPDATE {ap.TABLE} SET result_delivered_at=now() WHERE id='{delivered}'")
+        decided = insert_order(paid_ago="49 hours", received_ago="49 hours")
+        ap.sql(f"UPDATE {ap.TABLE} SET refund_decision='declined' WHERE id='{decided}'")
+        refunded = insert_order(paid_ago="49 hours", received_ago="49 hours", status="refund_pending")
+        still_open = insert_order(paid_ago="41 hours", received_ago="41 hours")
+        held = insert_order(paid_ago="41 hours", received_ago="41 hours")
+        ap.sql(f"UPDATE {ap.TABLE} SET customer_hold_started_at=now() WHERE id='{held}'")
+        sending = insert_order(paid_ago="41 hours", received_ago="41 hours")
+        ap.sql(f"UPDATE {ap.TABLE} SET delivery_email_status='sending' WHERE id='{sending}'")
+        for rid in (delivered, decided, refunded, still_open, held, sending):
+            self.card(rid)
+        (self.root / f"{delivered}.card1.completed.json").write_text("{}")  # receipts are skipped
+        closed, calls = self.run_sweep(FakeEffects())
+        self.assertEqual(closed, 3)
+        self.assertEqual(sorted(calls), sorted([(delivered, "delivered"), (decided, "decided_elsewhere"),
+                                                (refunded, "order_changed")]))
+
+    def test_finished_cards_cost_no_query_and_no_close(self):
+        rid = insert_order(paid_ago="45 hours", received_ago="45 hours", status="completed")
+        self.card(rid, late_closed=True, closeout_done=True)
+        other = insert_order(paid_ago="45 hours", received_ago="45 hours", status="completed")
+        self.card(other, decision="refund", late_attached=False)
+        with mock.patch.object(ap, "sql_json", side_effect=AssertionError("no query expected")):
+            closed, calls = self.run_sweep(FakeEffects())
+        self.assertEqual((closed, calls), (0, []))
+
+    def test_owner_managed_order_is_skipped(self):
+        rid = insert_order(paid_ago="45 hours", received_ago="45 hours", status="completed")
+        self.card(rid)
+        with mock.patch.object(ap.sla_decision, "OWNER_MANAGED_40H", frozenset({rid})):
+            self.assertEqual(self.run_sweep(FakeEffects()), (0, []))
+
+    def test_dry_run_does_nothing(self):
+        rid = insert_order(paid_ago="45 hours", received_ago="45 hours", status="completed")
+        self.card(rid)
+        self.assertEqual(self.run_sweep(FakeEffects(dry_run=True)), (0, []))
+
+    def handoffs(self, fx, phrase="tapped Refund in full"):
+        return [b for b in fx.boards if phrase in b]
+
+    def test_unapplied_refund_tap_handoff_survives_a_failed_board_post(self):
+        # independent review of CR-735, S2: the handoff is kept on the card and posted until the board accepts it
+        rid = insert_order(paid_ago="45 hours", received_ago="45 hours", status="completed")
+        ap.sql(f"UPDATE {ap.TABLE} SET result_delivered_at=now() WHERE id='{rid}'")
+        self.card(rid, stray_closed="refund_tap_unapplied", stray_reason="delivered", late_closed=True,
+                  closeout_done=True, stray_refund_tap={"update_id": 11, "received": 1.0})
+        fx = FakeEffects()
+        fx.board_ok = False
+        self.assertEqual(self.run_sweep(fx), (0, []))
+        fx.board_ok = True
+        self.run_sweep(fx)
+        self.run_sweep(fx)
+        notes = self.handoffs(fx)
+        self.assertEqual(len(notes), 2)  # one rejected post, then one accepted; none after
+        self.assertIn("The result was delivered", notes[-1])
+        self.assertIn("Never write refund_decision by hand", notes[-1])
+        self.assertNotIn("new refund card", notes[-1])
+        self.assertIsNone(row(rid)["refund_decision"])  # never records a decision
+
+    def test_handoff_text_follows_the_case(self):
+        rid = str(uuid.uuid4())
+        decided = ap.sla40_handoff_text(rid, "refund_tap_unapplied", {"stray_reason": "decided_elsewhere"})
+        self.assertIn("48-hour refund card stands", decided)
+        changed = ap.sla40_handoff_text(rid, "refund_tap_unapplied", {"stray_reason": "order_changed"})
+        self.assertIn("the 48-hour refund card asks him", changed)
+        hold = ap.sla40_handoff_text(rid, "refund_refused", {"refund_refused": {"why": "hold"}})
+        self.assertIn("the recorded tap is applied automatically", hold)
+        final = ap.sla40_handoff_text(rid, "refund_refused_final", {"refund_refused": {"why": "hold", "outcome": "decided_elsewhere"}})
+        self.assertIn("48-hour refund card first", final)
+        self.assertNotIn("by hand", hold)
+
+    def test_one_bad_card_does_not_stop_the_sweep(self):
+        good = insert_order(paid_ago="45 hours", received_ago="45 hours", status="completed")
+        self.card(good)
+        (self.root / f"{uuid.uuid4()}.json").write_text("{not json")
+        closed, calls = self.run_sweep(FakeEffects())
+        self.assertEqual((closed, calls), (1, [(good, "order_changed")]))
+
+    def refused(self, change_sql: str) -> tuple[str, FakeEffects]:
+        rid = insert_order(paid_ago="41 hours", received_ago="41 hours")
+        self.card(rid, decision="refund", late_attached=False)
+
+        def change_then_refund(row_, root, effects, now, deadline):
+            ap.sql(f"UPDATE {ap.TABLE} SET {change_sql} WHERE id='{rid}'")
+            return "refund"
+        fx = FakeEffects()
+        with mock.patch.object(ap.sla_decision, "advance", side_effect=change_then_refund):
+            self.assertEqual(ap.sla_decisions(None, ap.JOB_ROOT, fx), 1)
+        self.assertIsNone(row(rid)["refund_decision"])
+        self.assertEqual(fx.boards, [])  # posted by the close-out sweep, from the card
+        return rid, fx
+
+    def test_refused_40h_refund_tap_after_delivery_is_handed_to_the_owner_once(self):
+        # re-review S1 (c): the tap is recorded, but delivery won the race, so apply_refund_decision refuses it
+        rid, fx = self.refused("status='completed', result_delivered_at=now()")
+        fx.board_ok = False
+        self.run_sweep(fx)
+        fx.board_ok = True
+        self.run_sweep(fx)
+        self.run_sweep(fx)
+        notes = self.handoffs(fx, "changed before it was written")
+        self.assertEqual(len(notes), 2)  # one rejected, one accepted
+        self.assertIn("The result was delivered", notes[-1])
+        self.assertNotIn("approved a full refund", "".join(fx.boards))
+
+    def test_refused_40h_refund_tap_on_hold_says_it_applies_later(self):
+        self.hold_refused()
+
+    def hold_refused(self) -> tuple[str, FakeEffects]:
+        rid, fx = self.refused("customer_hold_started_at=now()")
+        self.run_sweep(fx)
+        notes = self.handoffs(fx, "changed before it was written")
+        self.assertEqual(len(notes), 1)
+        self.assertIn("customer hold", notes[0])
+        self.assertIn("applied automatically", notes[0])
+        self.assertIn("a second note follows", notes[0])
+        return rid, fx
+
+    def test_hold_refused_tap_never_applied_gets_a_second_handoff_once(self):
+        # independent check of 6ecf73b1, F1: the hold ends with a resubmission and the result is delivered first
+        rid, fx = self.hold_refused()
+        self.run_sweep(fx)  # still on hold: no outcome yet, nothing more posted
+        self.assertEqual(len(fx.boards), 1)
+        ap.sql(f"UPDATE {ap.TABLE} SET customer_hold_started_at=NULL, status='completed', result_delivered_at=now() "
+               f"WHERE id='{rid}'")
+        fx.board_ok = False
+        self.run_sweep(fx)
+        fx.board_ok = True
+        self.run_sweep(fx)
+        self.run_sweep(fx)
+        final = self.handoffs(fx, "was never applied")
+        self.assertEqual(len(final), 2)  # one rejected, one accepted
+        self.assertIn("the result was delivered first", final[-1])
+        self.assertIsNone(row(rid)["refund_decision"])
+
+    def test_hold_refused_tap_applied_after_the_hold_raises_no_second_handoff(self):
+        rid, fx = self.hold_refused()
+        ref = ap.sla_decision.reference(self.root, rid)
+        ap.sql(f"UPDATE {ap.TABLE} SET customer_hold_started_at=NULL, status='refund_due', refund_decision='approved', "
+               f"refund_decision_ref={ap.sql_text(ref)} WHERE id='{rid}'")
+        self.run_sweep(fx)
+        self.run_sweep(fx)
+        self.assertEqual(self.handoffs(fx, "was never applied"), [])
+        card = json.loads((self.root / f"{rid}.json").read_text())
+        self.assertEqual(card["refund_refused"]["outcome"], "applied")
+        with mock.patch.object(ap, "sql_json", side_effect=AssertionError("no query once the outcome is known")):
+            self.run_sweep(fx)
+
+
 class SlaDecisionCardTests(unittest.TestCase):
     """The 40 h card mechanics: exact callback keys, expiry, no text-reply decision."""
 

@@ -289,11 +289,195 @@ class OneCard(unittest.TestCase):
                 self.sla(EXPIRES + 100 + i)
             self.assertEqual(self.state()["closeout_tries"], sd.CLOSEOUT_TRIES)
 
+    # -- re-review S1: a card whose order left the 40 h set for good (close_stray) ---------------------------
+
+    def stray(self, reason="delivered", now=NOW + 60):
+        return sd.close_stray(self.sla_root, RID, reason, now)
+
+    def cleared(self):
+        return [p for m, p in self.f.http if m == "editMessageReplyMarkup" and p["reply_markup"]["inline_keyboard"] == []]
+
+    def test_on_time_delivery_after_no_action_closes_the_late_refund_button(self):
+        self.decided("no_action", "sla_n")
+        self.assertTrue(rf.sla40_card_live(self.sla_root, ROW, NOW + 30))
+        self.assertEqual(self.stray("delivered"), "closed")
+        st = self.state()
+        self.assertEqual((st["decision"], st["stray_closed"], st["late_closed"]), ("no_action", "delivered", True))
+        self.assertNotIn("late_refund", st)
+        self.assertTrue(st["buttons_removed"] and st["closeout_done"])
+        self.assertEqual(st["settled_reason"], sd.SETTLED["delivered"])
+        self.assertEqual(self.resolved, ["delivered"])
+        self.assertEqual(len(self.cleared()), 1)
+        self.assertFalse(rf.sla40_card_live(self.sla_root, ROW, NOW + 90))
+        self.assertIsNone(self.stray("delivered", NOW + 120))  # idempotent: nothing left to close
+        self.assertEqual(len(self.cleared()), 1)
+        self.assertEqual(sd.reference(self.sla_root, RID), f"telegram:{MSG}:10")  # still the No action tap, never a refund
+
+    def test_unanswered_card_is_closed_when_the_48h_card_decided_first(self):
+        self.seed_card()
+        self.assertEqual(self.sla(), "pending")
+        self.assertEqual(self.stray("decided_elsewhere"), "closed")
+        st = self.state()
+        self.assertIsNone(st.get("decision"))  # never records a decision
+        self.assertEqual(st["settled_reason"], sd.SETTLED["decided_elsewhere"])
+        self.assertEqual(len(self.cleared()), 1)  # all three buttons removed
+        with self.assertRaises(ValueError):
+            sd.reference(self.sla_root, RID)
+
+    def test_late_button_that_never_attached_is_closed(self):
+        # re-review S1 (a): the late keyboard edit kept failing, so the card still shows all three buttons
+        self.seed_card(decision="delay_note", update_id=10, decided_at=NOW - 5)
+        self.assertFalse(rf.sla40_card_live(self.sla_root, ROW, NOW))
+        self.assertEqual(self.stray("order_changed"), "closed")
+        st = self.state()
+        self.assertEqual(st["settled_reason"], sd.SETTLED["order_changed"])
+        self.assertEqual(len(self.cleared()), 1)
+
+    def test_refund_tap_on_the_original_button_is_reported_when_the_late_keyboard_never_attached(self):
+        # independent review of CR-735, S1: the original three buttons stay, and Refund keeps the same key
+        self.seed_card(decision="no_action", update_id=10, decided_at=NOW - 5)
+        self.tap(11, "sla_r", NOW + 30)
+        self.assertEqual(self.stray("delivered"), "refund_tap_unapplied")
+        st = self.state()
+        self.assertEqual((st["stray_refund_tap"]["update_id"], st["stray_reason"]), (11, "delivered"))
+        self.assertEqual(sd.pending_handoffs(st), ["refund_tap_unapplied"])
+
+    def test_stray_closed_card_never_decides_again(self):
+        # independent review of CR-735, N3: even if the order came back into the 40 h set, the closed card stays closed
+        self.seed_card()
+        self.tap(11, "sla_r", NOW + 30)
+        self.assertEqual(self.stray("delivered"), "refund_tap_unapplied")
+        self.assertEqual(self.sla(NOW + 90), "closed")
+        self.assertIsNone(self.state().get("decision"))
+
+    def test_handoffs_stay_pending_until_marked(self):
+        self.seed_card(decision="refund", update_id=10)
+        sd.note_refund_refused(self.sla_root, RID, "delivered", NOW)
+        sd.note_refund_refused(self.sla_root, RID, "hold", NOW + 5)  # first class wins
+        st = self.state()
+        self.assertEqual((sd.pending_handoffs(st), st["refund_refused"]["why"]), (["refund_refused"], "delivered"))
+        sd.mark_handoff_posted(self.sla_root, RID, "refund_refused", NOW + 10)
+        self.assertEqual(sd.pending_handoffs(self.state()), [])
+        self.assertEqual(self.state()["decision"], "refund")
+        with self.assertRaises(ValueError):
+            sd.note_refund_refused(self.sla_root, RID, "other", NOW)
+
+    def test_unread_late_refund_tap_is_reported_never_recorded(self):
+        self.decided("no_action", "sla_n")
+        self.tap(11, "sla_r", NOW + 30)  # after the last 40 h poll; the order was delivered meanwhile
+        self.assertEqual(self.stray("delivered"), "refund_tap_unapplied")
+        st = self.state()
+        self.assertEqual(st["decision"], "no_action")
+        self.assertNotIn("late_refund", st)
+        self.assertEqual(st["stray_refund_tap"]["update_id"], 11)
+        self.assertEqual(st["settled_reason"], sd.SETTLED["refund_tap_unapplied"])
+        self.assertEqual(sd.reference(self.sla_root, RID), f"telegram:{MSG}:10")
+        # the 40 h sweep can never turn it into a refund later
+        self.assertEqual(self.sla(NOW + 90), "closed")
+        self.assertNotIn("late_refund", self.state())
+
+    def test_unread_refund_tap_on_an_unanswered_card_is_reported(self):
+        self.seed_card()
+        self.tap(11, "sla_r", NOW + 30)
+        self.assertEqual(self.stray("delivered"), "refund_tap_unapplied")
+        st = self.state()
+        self.assertIsNone(st.get("decision"))
+        self.assertEqual(st["stray_refund_tap"]["update_id"], 11)
+
+    def test_foreign_or_out_of_window_refund_taps_are_not_reported(self):
+        self.seed_card()
+        self.tap(11, "sla_r", NOW + 30, sender=7)
+        self.tap(12, "sla_r", EXPIRES + 30)
+        self.assertEqual(self.stray("delivered", EXPIRES + 60), "closed")
+
+    def test_cards_already_finished_are_left_alone(self):
+        for extra in ({"decision": "refund", "update_id": 10, "closeout_done": True},
+                      {"decision": "expired"},
+                      {"decision": "no_action", "update_id": 10, "late_refund": True, "late_update_id": 11},
+                      {"notification": "unknown"},
+                      {"decision": "no_action", "update_id": 10, "late_attached": True, "late_closed": True,
+                       "closeout_done": True}):
+            with self.subTest(extra):
+                self.f.http.clear()
+                self.seed_card(**extra)
+                self.assertIsNone(self.stray())
+                self.assertEqual(self.f.http, [])
+
+    def test_failed_stray_closeout_is_retried_and_bounded(self):
+        self.decided("delay_note", "sla_d")
+        with mock.patch.object(ra, "settle_card", lambda *a, **k: None):
+            self.assertEqual(self.stray("delivered"), "closed")
+            for i in range(sd.CLOSEOUT_TRIES + 5):
+                self.stray("delivered", NOW + 100 + i)
+        st = self.state()
+        self.assertEqual(st["closeout_tries"], sd.CLOSEOUT_TRIES)
+        self.assertFalse(st["closeout_done"])
+        self.assertEqual(self.stray("delivered", NOW + 500), None)
+        self.assertEqual(self.resolved, ["delivered"])  # the resolve succeeded once and is not repeated
+
+    def test_failed_closeout_of_a_late_closed_card_is_finished_with_its_own_reason(self):
+        # a card closed at expiry (or superseded) whose settle failed: once the order left, only this sweep retries it
+        self.seed_card(decision="no_action", update_id=10, decided_at=NOW - 5, late_attached=True, late_closed=True,
+                       closeout_tries=1, buttons_removed=True, reply_action_resolved=True, resolved=True)
+        self.assertEqual(self.stray("delivered"), "retried")
+        st = self.state()
+        self.assertTrue(st["closeout_done"])
+        self.assertEqual(st["settled_reason"], sd.SETTLED["no_action"])
+        self.assertNotIn("stray_closed", st)
+
+    def test_missing_telegram_config_is_a_bounded_failed_step(self):
+        # independent review of CR-735, N1: telegram_config() raised outside _attach's try and escaped the close-out
+        self.decided("no_action", "sla_n")
+        with mock.patch.object(ra, "telegram_config", side_effect=KeyError("TG_CHAT_ID")):
+            self.assertEqual(self.stray("delivered"), "closed")
+        st = self.state()
+        self.assertFalse(st.get("buttons_removed"))
+        self.assertEqual(st["closeout_tries"], 1)
+        self.assertEqual(self.stray("delivered", NOW + 120), "retried")
+        self.assertTrue(self.state()["closeout_done"])
+
+    def test_close_stray_rejects_unknown_reasons_and_fixture_runs(self):
+        self.decided("no_action", "sla_n")
+        with self.assertRaises(ValueError):
+            self.stray("refund")
+        with mock.patch.object(sd, "live_runtime", return_value=False):
+            self.assertIsNone(self.stray())
+        self.assertFalse(self.state().get("late_closed"))
+
     def test_no_edit_message_text_anywhere(self):
         self.assertFalse(hasattr(ra, "edit_card_text"))
         self.assertFalse(hasattr(ra, "extend_ask"))
         for name in ("refusal_approval.py", "refund_approval.py", "sla_decision.py"):
             self.assertNotIn("editMessageText", (HERE / name).read_text())
+
+
+class ResolveAskBounded(unittest.TestCase):
+    """Re-review N2: a hung or missing notify-resolve is a failed step, never an exception that escapes a close-out."""
+
+    def test_timeout_or_missing_binary_returns_false(self):
+        tmp = Path(tempfile.mkdtemp())
+        state = {"message_id": MSG, "card": 1}
+        for module in (sd, rf):
+            for exc in (subprocess.TimeoutExpired(["notify-resolve"], 20), FileNotFoundError("notify-resolve")):
+                with self.subTest(module=module.__name__, exc=type(exc).__name__), \
+                        mock.patch("subprocess.run", side_effect=exc):
+                    self.assertFalse(module._resolve_ask(state, tmp / f"{RID}.json", "superseded"))
+
+    def test_superseded_closeout_survives_a_hung_notify_resolve(self):
+        tmp = Path(tempfile.mkdtemp())
+        ra.atomic(tmp / f"{RID}.json", {
+            "request_id": RID, "kind": "sla_40h", "card": 1, "notification": "sent", "chat_id": CHAT,
+            "message_id": MSG, "created_at": int(NOW) - 100, "expires_at": EXPIRES, "decision": "no_action",
+            "update_id": 10, "late_attached": True, "refund_key": "sla_r", "delay_key": "sla_d", "noaction_key": "sla_n"})
+        with mock.patch.object(sd, "live_runtime", return_value=True), \
+                mock.patch.object(sd, "_attach", lambda *a, **k: None), \
+                mock.patch.object(ra, "close_durable_reply_action", lambda state: True), \
+                mock.patch.object(ra, "settle_card", lambda *a, **k: None), \
+                mock.patch("subprocess.run", side_effect=subprocess.TimeoutExpired(["notify-resolve"], 20)):
+            self.assertTrue(sd.close_superseded(tmp, ROW))
+        st = json.loads((tmp / f"{RID}.json").read_text())
+        self.assertFalse(st["resolved"])
+        self.assertEqual(st["closeout_tries"], 1)  # counted, so CLOSEOUT_TRIES bounds it
 
 
 if __name__ == "__main__":

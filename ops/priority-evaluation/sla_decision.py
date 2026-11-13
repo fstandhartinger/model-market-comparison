@@ -9,6 +9,9 @@ mechanism: exact callback keys, his private chat only, 24-hour expiry.
 One card per order (N91): after "Send delay note" or "No action" the same card keeps exactly one live
 "Refund in full" button (via editMessageReplyMarkup, caption untouched) until the card's own expires_at; an
 exact later tap is the refund decision, once. Expiry removes the button and settles the card.
+
+A card whose order leaves the 40 h set for good (delivered, decided on the 48 h card, refunded, refused) is closed by
+close_stray() from the pickup cycle; it never records a decision and reports an unread Refund tap to an agent.
 """
 from __future__ import annotations
 
@@ -46,7 +49,14 @@ SETTLED = {"delay_note": "You tapped Send delay note; the worker sends the fixed
            "refund": "You tapped Refund in full; the refund worker pays it back.",
            "no_action": "You tapped No action; nothing was sent or refunded.",
            "expired": "The buttons expired unanswered; nothing was sent or refunded.",
-           "superseded": "The order changed after your choice; a new card asks about the refund instead."}
+           "superseded": "The order changed after your choice; a new card asks about the refund instead.",
+           # a card whose order left the 40 h set for good without a decision on it (close_stray, re-review S1)
+           "delivered": "The result was delivered, so this card is closed; nothing was refunded here.",
+           "decided_elsewhere": "You decided on the 48-hour refund card; this card is closed.",
+           "order_changed": "The order changed, so this card is closed and records nothing; a refund gets its own card.",
+           "refund_tap_unapplied": "You tapped Refund in full after the order had changed; nothing was refunded. "
+                                   "An agent follows up."}
+STRAY_REASONS = ("delivered", "decided_elsewhere", "order_changed")
 CLOSEOUT_TRIES = 12  # close-out steps after a final decision are retried each cycle, at most this often (~1 h)
 
 
@@ -171,9 +181,12 @@ def _resolve_ask(state: dict, path: Path, decision: str) -> bool:
         ra.atomic(receipt, {"message_id": state["message_id"], "source": SOURCE, "action_completed": True,
                             "action": "completed" if decision in ("delay_note", "refund") else "declined",
                             "completed_at": datetime.now(timezone.utc).isoformat()})
-    result = subprocess.run([str(ra.HOME / "bin/notify-resolve"), "--message-id", str(state["message_id"]),
-                             "--source", SOURCE, "--receipt", str(receipt)],
-                            capture_output=True, timeout=20, check=False)
+    try:  # a hung or missing notify-resolve is a failed step (retried, bounded), never an escaping error (re-review N2)
+        result = subprocess.run([str(ra.HOME / "bin/notify-resolve"), "--message-id", str(state["message_id"]),
+                                 "--source", SOURCE, "--receipt", str(receipt)],
+                                capture_output=True, timeout=20, check=False)
+    except (OSError, subprocess.SubprocessError):
+        return False
     return result.returncode == 0
 
 
@@ -194,7 +207,7 @@ def _finish(state: dict, path: Path, decision: str) -> None:
         try:
             _attach(state, [])
             state["buttons_removed"] = True
-        except ValueError:
+        except Exception:  # noqa: BLE001 - incl. telegram_config errors: a failed step, retried and bounded
             pass
     if not state.get("reply_action_resolved"):
         state["reply_action_resolved"] = ra.close_durable_reply_action(state)
@@ -244,6 +257,138 @@ def retry_superseded(root: Path, row: dict) -> None:
         state = json.loads(path.read_text())
         if state.get("superseded") and state.get("late_closed") and _closeout_pending(state):
             _finish(state, path, "superseded")
+
+
+def stray_card_live(state: dict) -> bool:
+    """A sent 40 h card that still shows buttons or an open ask: never answered, or delay note / no action with its
+    one Refund button not yet closed. Decided, expired and closed cards are finished by advance() itself."""
+    if state.get("kind") != "sla_40h" or state.get("notification") != "sent" or type(state.get("message_id")) is not int:
+        return False
+    if state.get("stray_closed") or state.get("late_closed"):
+        return False
+    decision = state.get("decision")
+    return decision is None or (decision in LATE_KEEP and not state.get("late_refund"))
+
+
+def stray_closeout_pending(state: dict) -> bool:
+    """A closed 40 h card whose close-out steps failed and whose order the 40 h sweep no longer polls."""
+    return bool(state.get("kind") == "sla_40h" and state.get("late_closed") and not state.get("late_refund")
+                and _closeout_pending(state))
+
+
+def _unapplied_refund_tap(state: dict, now: float) -> dict | None:
+    """An exact Refund tap on this card that the 40 h sweep never read (it was made after the last poll, or while the
+    order was already leaving the open set). Read on a copy: it is reported, never recorded as a decision."""
+    probe = dict(state)
+    if probe.get("decision") is None:
+        apply_callbacks(probe, ra.callback_rows((probe["refund_key"],), probe["chat_id"]), now)
+        if probe.get("decision") == "refund":
+            return {"update_id": probe.get("update_id"), "received": probe.get("decided_at")}
+        return None
+    # With or without the late keyboard: if its edit failed, the original Refund button (same key) is still shown.
+    apply_late_refund(probe, ra.callback_rows((probe["refund_key"],), probe["chat_id"]), now)
+    if probe.get("late_refund"):
+        return {"update_id": probe.get("late_update_id"), "received": probe.get("late_decided_at")}
+    return None
+
+
+def close_stray(root: Path, rid: str, reason: str, now: float) -> str | None:
+    """Close a 40 h card whose order left the 40 h set for good (delivered, decided on the 48 h card, refunded,
+    refused) while the card still shows buttons. The 40 h sweep no longer polls it, so a tap on it would be lost.
+
+    Never records or applies a decision. A Refund tap the sweep never read is kept on the state for the audit and
+    returned as "refund_tap_unapplied" so the caller can hand it to an agent. Retries a failed close-out (bounded by
+    CLOSEOUT_TRIES). Returns None (nothing to do), "closed", "retried" or "refund_tap_unapplied".
+    Caller holds the cycle lock and has checked that the order left the set for good."""
+    if reason not in STRAY_REASONS:
+        raise ValueError("unknown stray close-out reason")
+    if not live_runtime():
+        return None  # fixtures never contact Telegram
+    path = root / f"{uuid.UUID(rid)}.json"
+    if not path.exists():
+        return None
+    with path.with_suffix(".lock").open("a+") as lock:
+        fcntl.flock(lock, fcntl.LOCK_EX)
+        state = json.loads(path.read_text())
+        if not stray_card_live(state):
+            if stray_closeout_pending(state):
+                key = state.get("stray_closed") or ("superseded" if state.get("superseded") else state.get("decision"))
+                if key in SETTLED:
+                    _finish(state, path, key)
+                    return "retried"
+            return None
+        tap = _unapplied_refund_tap(state, now)
+        key = "refund_tap_unapplied" if tap else reason
+        state.update(stray_closed=key, stray_reason=reason, stray_closed_at=int(now), late_closed=True)
+        if tap:
+            state["stray_refund_tap"] = tap  # pending_handoffs() keeps asking the caller to post it until marked
+        ra.atomic(path, state)
+        _finish(state, path, key)
+        return "refund_tap_unapplied" if tap else "closed"
+
+
+REFUSED_WHY = ("hold", "delivered", "changed")
+
+
+def note_refund_refused(root: Path, rid: str, why: str, now: float) -> None:
+    """The caller could not write a recorded 40 h Refund tap to the row (delivery, a hold or a refusal got there
+    first). Kept on the card so the owner handoff survives a failed board post. Never changes the decision."""
+    if why not in REFUSED_WHY:
+        raise ValueError("unknown refusal class")
+    path = root / f"{uuid.UUID(rid)}.json"
+    with path.with_suffix(".lock").open("a+") as lock:
+        fcntl.flock(lock, fcntl.LOCK_EX)
+        state = json.loads(path.read_text())
+        if not state.get("refund_refused"):
+            state["refund_refused"] = {"why": why, "at": int(now)}
+            ra.atomic(path, state)
+
+
+REFUSED_OUTCOMES = ("applied", "delivered", "decided_elsewhere", "order_changed")
+
+
+def hold_refusal_open(state: dict) -> bool:
+    """A Refund tap refused during a customer hold whose final outcome is not known yet (applied after the hold, or the
+    order left the 40 h set first and the tap was never applied)."""
+    refused = state.get("refund_refused")
+    return isinstance(refused, dict) and refused.get("why") == "hold" and "outcome" not in refused
+
+
+def note_refused_outcome(root: Path, rid: str, outcome: str) -> None:
+    """Record how a hold-refused 40 h Refund tap ended; anything but "applied" raises a second owner handoff."""
+    if outcome not in REFUSED_OUTCOMES:
+        raise ValueError("unknown refused-tap outcome")
+    path = root / f"{uuid.UUID(rid)}.json"
+    with path.with_suffix(".lock").open("a+") as lock:
+        fcntl.flock(lock, fcntl.LOCK_EX)
+        state = json.loads(path.read_text())
+        if hold_refusal_open(state):
+            state["refund_refused"]["outcome"] = outcome
+            ra.atomic(path, state)
+
+
+def pending_handoffs(state: dict) -> list[str]:
+    """Owner handoffs recorded on this card and not yet accepted by the board: refund_tap_unapplied, refund_refused,
+    refund_refused_final (a hold-refused tap that was never applied)."""
+    posted = state.get("handoffs_posted") or {}
+    refused = state.get("refund_refused") if isinstance(state.get("refund_refused"), dict) else {}
+    kinds = []
+    if state.get("stray_refund_tap") and not posted.get("refund_tap_unapplied"):
+        kinds.append("refund_tap_unapplied")
+    if refused and not posted.get("refund_refused"):
+        kinds.append("refund_refused")
+    if refused.get("outcome") not in (None, "applied") and not posted.get("refund_refused_final"):
+        kinds.append("refund_refused_final")
+    return kinds
+
+
+def mark_handoff_posted(root: Path, rid: str, kind: str, now: float) -> None:
+    path = root / f"{uuid.UUID(rid)}.json"
+    with path.with_suffix(".lock").open("a+") as lock:
+        fcntl.flock(lock, fcntl.LOCK_EX)
+        state = json.loads(path.read_text())
+        state.setdefault("handoffs_posted", {})[kind] = int(now)
+        ra.atomic(path, state)
 
 
 def apply_late_refund(state: dict, rows, now: float) -> None:
@@ -310,6 +455,8 @@ def advance(row: dict, root: Path, effects, now: float, deadline: str) -> str:
         fcntl.flock(lock, fcntl.LOCK_EX)
         if path.exists():
             saved = json.loads(path.read_text())
+            if saved.get("stray_closed"):
+                return "closed"  # closed by close_stray: it told Florian nothing was decided here, so it stays so
             recorded = saved.get("decision")
             if recorded in LATE_KEEP and saved.get("late_refund"):
                 if not effects.dry_run and live_runtime():

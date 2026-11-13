@@ -156,9 +156,12 @@ def _resolve_ask(state: dict, path: Path, decision: str) -> bool:
         ra.atomic(receipt, {"message_id": state["message_id"], "source": SOURCE, "action_completed": True,
                             "action": "completed" if decision == "refund" else "declined",
                             "completed_at": datetime.now(timezone.utc).isoformat()})
-    result = subprocess.run([str(ra.HOME / "bin/notify-resolve"), "--message-id", str(state["message_id"]),
-                             "--source", SOURCE, "--receipt", str(receipt)],
-                            capture_output=True, timeout=20, check=False)
+    try:  # a hung or missing notify-resolve is a failed step, never an escaping error (re-review N2)
+        result = subprocess.run([str(ra.HOME / "bin/notify-resolve"), "--message-id", str(state["message_id"]),
+                                 "--source", SOURCE, "--receipt", str(receipt)],
+                                capture_output=True, timeout=20, check=False)
+    except (OSError, subprocess.SubprocessError):
+        return False
     return result.returncode == 0
 
 
