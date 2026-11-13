@@ -44,6 +44,11 @@ edit('app/sitemap.ts',"(r.version !== 'v1.8.9' || v189Visible))","(r.version !==
 edit('lib/jevbench-alldata-input.mjs',"import { readJevbenchV189ForBoard, v189BoardInput } from './jevbench-v189-release.mjs';","import { readJevbenchV1810ForBoard, v1810BoardInput } from './jevbench-v1810-release.mjs';\nimport { readJevbenchV189ForBoard, v189BoardInput } from './jevbench-v189-release.mjs';")
 edit('lib/jevbench-alldata-input.mjs',"  'v1.8.9': { read: readJevbenchV189ForBoard, board: v189BoardInput },","  'v1.8.9': { read: readJevbenchV189ForBoard, board: v189BoardInput },\n  'v1.8.10': { read: readJevbenchV1810ForBoard, board: v1810BoardInput },")
 assert (W/'lib/jevbench-alldata-input.mjs').read_text().count("'v1.8.10':")==1
+# r278 pre-flip 2 (critic2 B1): the release page's All-data grid/CSV uses the same assembled live chain as the release page, so its category view
+# takes the v1.8.10 artifact path instead of the frozen fallback.
+edit('lib/jevbench-alldata-input.mjs',"export async function readJevAllDataInput(version, root = process.cwd()) {","async function v1810AllDataChain(root) { const [b, previous] = await Promise.all([readJevbenchV161Release(root), readJevbenchV157Release(root)]); return assembleJevBoard({ release: { artifact: b.artifact, categories: b.categories, carry: b.carry }, previous, live: true, apiA4, root }); }\n\nexport async function readJevAllDataInput(version, root = process.cwd()) {")
+edit('lib/jevbench-alldata-input.mjs',"  const board = entry.board(release);","  const board = entry.board(release, version === 'v1.8.10' ? await v1810AllDataChain(root) : undefined);")
+assert (W/'lib/jevbench-alldata-input.mjs').read_text().count("entry.board(release, version === 'v1.8.10' ? await v1810AllDataChain(root) : undefined)")==1
 edit('test/cr-205-jev-page-structure.test.mjs',"'v1.8.8', 'v1.8.9'].sort());","'v1.8.8', 'v1.8.9', 'v1.8.10'].sort());")
 # Older release tests that pin the newest published release.
 for f in ['test/jevbench-feed-live-board.test.mjs','test/jevbench-v170-release.test.mjs','test/jevbench-v1637-release.test.mjs']:

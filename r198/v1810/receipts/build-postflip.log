@@ -16,22 +16,24 @@ Benchmark source/build guard: {
      · cpus: 4
 
    Creating an optimized production build ...
- ✓ Compiled successfully in 48s
+ ✓ Compiled successfully in 41s
    Linting and checking validity of types ...
    Collecting page data ...
    Generating static pages (0/710) ...
-   Generating static pages (39/710) 
+   Generating static pages (69/710) 
+   Generating static pages (71/710) 
    Generating static pages (177/710) 
    Generating static pages (354/710) 
-   Generating static pages (436/710) 
-   Generating static pages (455/710) 
-   Generating static pages (470/710) 
-   Generating static pages (481/710) 
+   Generating static pages (425/710) 
+   Generating static pages (434/710) 
+   Generating static pages (450/710) 
    Generating static pages (532/710) 
-   Generating static pages (584/710) 
-   Generating static pages (618/710) 
-   Generating static pages (635/710) 
-   Generating static pages (646/710) 
+   Generating static pages (571/710) 
+   Generating static pages (616/710) 
+   Generating static pages (619/710) 
+   Generating static pages (629/710) 
+   Generating static pages (640/710) 
+   Generating static pages (644/710) 
    Generating static pages (668/710) 
    Generating static pages (684/710) 
  ✓ Generating static pages (710/710)
@@ -42,7 +44,7 @@ Route (app)                                                  Size  First Load JS
 ┌ ○ /                                                     33.7 kB         308 kB
 ├ ○ /_not-found                                             482 B         103 kB
 ├ ○ /about                                                  482 B         103 kB
-├ ○ /account                                              2.22 kB         126 kB
+├ ○ /account                                              2.23 kB         126 kB
 ├ ƒ /admin/submissions                                      194 B         106 kB
 ├ ƒ /api/account                                            482 B         103 kB
 ├ ƒ /api/analytics/visits                                   482 B         103 kB
@@ -57,7 +59,7 @@ Route (app)                                                  Size  First Load JS
 ├ ƒ /api/fastlane-banner-event                              482 B         103 kB
 ├ ƒ /api/health                                             482 B         103 kB
 ├ ○ /api/jevbench                                           482 B         103 kB
-├ ƒ /api/jevbench-alldata/[version]                         710 B         112 kB
+├ ƒ /api/jevbench-alldata/[version]                         709 B         112 kB
 ├ ƒ /api/jevbench/api-addenda                               482 B         103 kB
 ├ ○ /api/jevbench/base-models                               482 B         103 kB
 ├ ○ /api/jevbench/latest                                    482 B         103 kB
@@ -177,7 +179,7 @@ Route (app)                                                  Size  First Load JS
 ├ ƒ /api/submissions/without-fast-lane                      482 B         103 kB
 ├ ƒ /api/use-model-event                                    482 B         103 kB
 ├ ○ /apple-icon.png                                           0 B            0 B
-├ ○ /audio-jev-bench                                      7.37 kB         119 kB
+├ ○ /audio-jev-bench                                      7.36 kB         119 kB
 ├ ○ /audio-jev-bench/opengraph-image                        482 B         103 kB
 ├ ƒ /benchmarks                                             17 kB         158 kB
 ├ ƒ /benchmarks/result                                      194 B         106 kB
@@ -198,8 +200,8 @@ Route (app)                                                  Size  First Load JS
 ├ ○ /image-jev-bench/opengraph-image                        482 B         103 kB
 ├ ○ /impressum                                              482 B         103 kB
 ├ ○ /independence                                           482 B         103 kB
-├ ○ /jev-models                                             780 B         289 kB
-├ ● /jev-models/[system]                                    699 B         179 kB
+├ ○ /jev-models                                             779 B         289 kB
+├ ● /jev-models/[system]                                    698 B         179 kB
 ├   ├ /jev-models/ajev-gemma4-31b-lm6q
 ├   ├ /jev-models/aleria-judge-1.1.1
 ├   ├ /jev-models/allec-oavg
@@ -213,41 +215,41 @@ Route (app)                                                  Size  First Load JS
 ├ ○ /jev-models/data                                        482 B         103 kB
 ├ ○ /jev-models/evaluate-alternatives                       482 B         103 kB
 ├ ○ /jev-models/how-to-choose                               672 B         107 kB
-├ ○ /jev-models/jev-vs-cygnet                               761 B         179 kB
-├ ○ /jev-models/jev-vs-decider-4b-v2                        761 B         179 kB
-├ ○ /jev-models/jev-vs-decisio-gemma-4-31b-v080             761 B         179 kB
-├ ○ /jev-models/jev-vs-deck31b                              761 B         179 kB
-├ ○ /jev-models/jev-vs-h2o-lightning-4b                     761 B         179 kB
-├ ○ /jev-models/jev-vs-hopper                               761 B         179 kB
-├ ○ /jev-models/jev-vs-imajev                               761 B         179 kB
-├ ○ /jev-models/jev-vs-jev-omni                             761 B         179 kB
-├ ○ /jev-models/jev-vs-jevk5                                761 B         179 kB
-├ ○ /jev-models/jev-vs-kev                                  761 B         179 kB
-├ ○ /jev-models/jev-vs-laya                                 761 B         179 kB
-├ ○ /jev-models/jev-vs-microsoft-decision-1                 761 B         179 kB
-├ ○ /jev-models/jev-vs-openai-decisions-api                 761 B         179 kB
-├ ○ /jev-models/jev-vs-plumb                                761 B         179 kB
-├ ○ /jev-models/jev-vs-quyet-1-0-large                      761 B         179 kB
-├ ○ /jev-models/jev-vs-reflex-4b                            761 B         179 kB
-├ ○ /jev-models/jev-vs-rene-1-31b-fp8                       761 B         179 kB
-├ ○ /jev-models/jev-vs-sage-1.3.0                           761 B         179 kB
-├ ○ /jev-models/jev-vs-spx-cd-flash                         761 B         179 kB
-├ ○ /jev-models/jev-vs-surogate-rune-26b-a4b-v3-v16         761 B         179 kB
-├ ○ /jev-models/jev-vs-torchcast-decision-12b               761 B         179 kB
-├ ○ /jev-models/jev-vs-winnow-12b-q8                        761 B         179 kB
-├ ○ /jev-models/jev-vs-xor-26b-a4b                          761 B         179 kB
+├ ○ /jev-models/jev-vs-cygnet                               760 B         179 kB
+├ ○ /jev-models/jev-vs-decider-4b-v2                        760 B         179 kB
+├ ○ /jev-models/jev-vs-decisio-gemma-4-31b-v080             760 B         179 kB
+├ ○ /jev-models/jev-vs-deck31b                              760 B         179 kB
+├ ○ /jev-models/jev-vs-h2o-lightning-4b                     760 B         179 kB
+├ ○ /jev-models/jev-vs-hopper                               760 B         179 kB
+├ ○ /jev-models/jev-vs-imajev                               760 B         179 kB
+├ ○ /jev-models/jev-vs-jev-omni                             760 B         179 kB
+├ ○ /jev-models/jev-vs-jevk5                                760 B         179 kB
+├ ○ /jev-models/jev-vs-kev                                  760 B         179 kB
+├ ○ /jev-models/jev-vs-laya                                 760 B         179 kB
+├ ○ /jev-models/jev-vs-microsoft-decision-1                 760 B         179 kB
+├ ○ /jev-models/jev-vs-openai-decisions-api                 760 B         179 kB
+├ ○ /jev-models/jev-vs-plumb                                760 B         179 kB
+├ ○ /jev-models/jev-vs-quyet-1-0-large                      760 B         179 kB
+├ ○ /jev-models/jev-vs-reflex-4b                            760 B         179 kB
+├ ○ /jev-models/jev-vs-rene-1-31b-fp8                       760 B         179 kB
+├ ○ /jev-models/jev-vs-sage-1.3.0                           760 B         179 kB
+├ ○ /jev-models/jev-vs-spx-cd-flash                         760 B         179 kB
+├ ○ /jev-models/jev-vs-surogate-rune-26b-a4b-v3-v16         760 B         179 kB
+├ ○ /jev-models/jev-vs-torchcast-decision-12b               760 B         179 kB
+├ ○ /jev-models/jev-vs-winnow-12b-q8                        760 B         179 kB
+├ ○ /jev-models/jev-vs-xor-26b-a4b                          760 B         179 kB
 ├ ○ /jev-models/methodology                                 482 B         103 kB
 ├ ○ /jev-models/methodology/v1.6.1                          482 B         103 kB
-├ ○ /jev-models/multimodal-preview                          240 B         264 kB
+├ ○ /jev-models/multimodal-preview                          241 B         264 kB
 ├ ○ /jev-models/open-source-jev                             672 B         107 kB
 ├ ○ /jev-models/opengraph-image                             482 B         103 kB
 ├ ○ /jev-models/request-evaluation/cancel                   194 B         106 kB
 ├ ○ /jev-models/request-evaluation/success                  194 B         106 kB
 ├ ○ /jev-models/v1                                        6.65 kB         109 kB
-├ ○ /jev-models/v1.4                                        776 B         220 kB
-├ ○ /jev-models/v1.4.1                                      526 B         229 kB
-├ ○ /jev-models/v1.4.2                                      526 B         229 kB
-├ ○ /jev-models/v1.4.2.1                                    526 B         229 kB
+├ ○ /jev-models/v1.4                                        777 B         220 kB
+├ ○ /jev-models/v1.4.1                                      527 B         229 kB
+├ ○ /jev-models/v1.4.2                                      527 B         229 kB
+├ ○ /jev-models/v1.4.2.1                                    527 B         229 kB
 ├ ○ /jev-models/v1.4.2.2                                  3.79 kB         255 kB
 ├ ○ /jev-models/v1.5.0                                    2.02 kB         278 kB
 ├ ○ /jev-models/v1.5.1                                    2.02 kB         278 kB
@@ -342,7 +344,7 @@ Route (app)                                                  Size  First Load JS
 ├ ○ /privacy                                                194 B         106 kB
 ├ ○ /provider-explorer                                    6.11 kB         126 kB
 ├ ○ /providers                                            6.49 kB         126 kB
-├ ○ /radar                                                  194 B         152 kB
+├ ○ /radar                                                  195 B         152 kB
 ├ ○ /robots.txt                                             482 B         103 kB
 ├ ○ /scatter                                              1.14 kB         242 kB
 ├ ○ /sitemap.xml                                            482 B         103 kB
