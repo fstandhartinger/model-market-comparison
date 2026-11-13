@@ -9,13 +9,13 @@ import { jevClassView } from '../components/jevClassView';
 import type { JevV15Artifact } from './jevbench-v15-preview.mjs';
 import type { JevV16Categories } from './jevbench-v16-release.mjs';
 
-export function buildJevAllDataProps({ artifact, categories, previousKeys, extra = [], live = false }: {
-  artifact: JevV15Artifact; categories: JevV16Categories; previousKeys: string[]; extra?: JevV15Artifact['systems']; live?: boolean;
+export function buildJevAllDataProps({ artifact, categories, categoryView, previousKeys, extra = [], live = false }: {
+  artifact: JevV15Artifact; categories?: JevV16Categories; categoryView?: ReturnType<typeof jevbenchCategoryView>; previousKeys: string[]; extra?: JevV15Artifact['systems']; live?: boolean;
 }) {
   const keys = [...new Set([...artifact.systems, ...artifact.not_measured].map((row) => row.key))];
   return {
     artifact,
-    categoryView: jevbenchCategoryView(artifact.revision, keys, { supplement: Boolean(categories.supplement),
+    categoryView: categoryView ?? jevbenchCategoryView(artifact.revision, keys, { supplement: Boolean(categories?.supplement),
       artifact: isFreshJevbenchV16Revision(artifact.revision) || hasApiFullAddendumCategories(categories) ? categories : undefined }),
     previousKeys,
     eligibility: jevClassView([...artifact.systems, ...extra].map(jevV15BoardSystem), { ...JEV_V16_CLASS_OPTIONS, nearCapPrecision: true }),
