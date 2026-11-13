@@ -1,0 +1,140 @@
+{
+ "base_commit": "d51151c73",
+ "fails": [],
+ "feed_diff": {
+  "base_model_overlay_keys_changed": [
+   "amos-1-large",
+   "amos-1-medium",
+   "decision-machine-1",
+   "drex-max",
+   "gemini-3.1-flash-lite",
+   "jevact",
+   "kushal-gemma4-31b-it-autoloops",
+   "launchables-myles-g-12b",
+   "launchables-myles-g-31b",
+   "microsoft-decision-1",
+   "microsoft-decision-1-r2",
+   "nimble-v4-max",
+   "nvidia/nemotron-3.5-super-vl",
+   "qwen3.8-27b",
+   "simplejev-qwen3.6-35b-a3b",
+   "singularity-super-decider",
+   "singularity-super-decider-thinking",
+   "spx-cd-flash",
+   "spx-cd-pro"
+  ],
+  "categories_artifact": {
+   "other_fields": [
+    ".results_sha256"
+   ],
+   "systems_added": [],
+   "systems_changed": [],
+   "systems_removed": [
+    "microsoft-decision-1-a2-20261012"
+   ]
+  },
+  "changed_field_categories": {
+   "systems[*].noul_decisive": {
+    "keys": [
+     "gemini-decision-1"
+    ],
+    "rows": 1
+   },
+   "systems[*].self_reported": {
+    "keys": [
+     "gemini-decision-1"
+    ],
+    "rows": 1
+   }
+  },
+  "roster_count": [
+   341,
+   340
+  ],
+  "rows_added": [],
+  "rows_removed": [
+   "microsoft-decision-1-a2-20261012"
+  ],
+  "top_level_paths": [
+   ".addendum.removed_keys(+)",
+   ".measurement_notes[48]",
+   ".roster_count",
+   ".source_note"
+  ]
+ },
+ "fields_compared_per_ranked_row": [
+  "scores",
+  "axes",
+  "cost",
+  "rank",
+  "ranks",
+  "capability",
+  "published_scores",
+  "ranked",
+  "composite_ci95",
+  "jevbench_score",
+  "speed",
+  "intelligence",
+  "calibration",
+  "draw"
+ ],
+ "files_changed_vs_base": [
+  "app/jev-models/[system]/page.tsx                   |    3 +-",
+  " app/jev-models/v1.8.10/page.tsx                    |   13 +-",
+  " components/BaseModelDisplay.tsx                    |    2 +-",
+  " components/JevBenchV16Board.tsx                    |   11 +-",
+  " components/JevCompareV15.tsx                       |   20 +-",
+  " components/JevRadars.tsx                           |   15 +-",
+  " data/jevbench-base-models.json                     |  288 +++-",
+  " .../jevbench/v1.8/jevbench-v1.8.10-categories.json |   54 +-",
+  " .../jevbench/v1.8/jevbench-v1.8.10-proof.json      |   14 +-",
+  " .../v1.8/jevbench-v1.8.10-publication.json         |    6 +-",
+  " .../jevbench/v1.8/jevbench-v1.8.10-results.json    | 1437 +-------------------",
+  " lib/jev-base-model.d.mts                           |    4 +-",
+  " lib/jev-base-model.mjs                             |    3 +",
+  " lib/jevbench-all-data-grid.mjs                     |    2 +-",
+  " lib/jevbench-categories.d.mts                      |    6 +",
+  " lib/jevbench-categories.mjs                        |   35 +-",
+  " lib/jevbench-releases.mjs                          |    2 +-",
+  " lib/jevbench-v1810-release.mjs                     |   32 +-",
+  " lib/radar-shape.d.mts                              |    3 +-",
+  " lib/radar-shape.mjs                                |   10 +-",
+  " 20 files changed, 378 insertions(+), 1582 deletions(-)"
+ ],
+ "n_ranked": [
+  315,
+  315
+ ],
+ "order_lists_equal": true,
+ "ranked_rows_checked": 315,
+ "sha256": {
+  "results_base": "b2c36232dbb52c81de05ac1ba9f3276d63b536b720588b25cfaad7495d1c4325",
+  "results_now": "63eb0e6f26c8ebc6fff2678d441d950c2a05dab5c43411804ffe5ee349ff8937"
+ },
+ "top_five": {
+  "base_receipt": "d51151c73:r198/v1810/receipts/topfive-after.json",
+  "compared": "every top five, full ranking and watched position of the 3 scopes x 12 lists + 4 release-board lists (topfive_v1810.mjs on the synthetic PASS tree)",
+  "diff_paths": [],
+  "equal": true,
+  "expected_row_count_changes": {
+   ".merged_rows": {
+    "base": 341,
+    "now": 340
+   },
+   ".views.all.rows": {
+    "base": 341,
+    "now": 340
+   },
+   ".views.api.rows": {
+    "base": 62,
+    "now": 61
+   },
+   ".views.open.rows": {
+    "base": 341,
+    "now": 340
+   }
+  },
+  "n_diff_paths": 0
+ },
+ "verdict": "PASS"
+}

@@ -1,0 +1,59 @@
+{
+ "added_row_equals_scorer_row_except_public_identity_and_equating": true,
+ "added_rows": [
+  "gemini-decision-1"
+ ],
+ "base": "e551f02f2bbf013fb2932507abd78525c33a4de4",
+ "base_contains_merge": "a3fe26c6c",
+ "board_metadata_equal": true,
+ "carried_rows_equal_except_rank_ranks": 302,
+ "carried_rows_rank_shifted": 283,
+ "categories_carry_history_unchanged": true,
+ "display_renamed_rows": {
+  "jev-27b-autotrust": {
+   "after": "AutoTrust-Decider-Pro-27B (AutoTrust, Qwen3.8-27B)",
+   "before": "JEV-27B (AutoTrust, Qwen3.8-27B)"
+  }
+ },
+ "equated_rows": 37,
+ "held_rows": [
+  "h2o-lightning-4b-v1.4.1",
+  "jeff_1_1_large",
+  "visionjev-1.0.0-27b",
+  "wemm-jev"
+ ],
+ "historical_files_byte_equal": 808,
+ "loader_edits": {
+  "lib/jevbench-alldata-input.mjs": {
+   "added_lines": 2,
+   "removed_lines": 0
+  },
+  "lib/jevbench-categories.mjs": {
+   "added_lines": 23,
+   "removed_lines": 14
+  },
+  "lib/jevbench-cohort-merge.mjs": {
+   "added_lines": 1,
+   "removed_lines": 1
+  },
+  "lib/jevbench-live-board.mjs": {
+   "added_lines": 14,
+   "removed_lines": 4
+  },
+  "lib/jevbench-releases.mjs": {
+   "added_lines": 1,
+   "removed_lines": 0
+  },
+  "lib/jevbench-v15-board.mjs": {
+   "added_lines": 1,
+   "removed_lines": 1
+  }
+ },
+ "lowsample_fix_lines_allowed_from": "dd3b51eab",
+ "measurement_notes_append_only": true,
+ "order_lists_without_newly_ranked_equal_v189": true,
+ "other_draws_unchanged": true,
+ "ranked_rows": 31,
+ "ranks_without_newly_ranked_equal_v189": true,
+ "status": "PASS"
+}

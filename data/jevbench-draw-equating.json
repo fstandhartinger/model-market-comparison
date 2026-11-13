@@ -8,7 +8,7 @@
     "drawn_on": "2026-10-01",
     "G_med": 2.573387642438244
   },
-  "method": "Every draw shares the same 300 public items (P, manifest 6b2321f8...). A fresh draw is equated to the reference draw with fixed anchor systems measured on both draws: offset = median over anchors of (metric on the reference S u P) - (metric on the new draw S u P), for Intelligence and Calibration, with a bootstrap 95% interval over anchors and items. A row from that draw is shown as published plus the offset; Capability and Composite follow from the equated axes. Until the anchor runs of a draw are complete its offset is 0 and the draw is marked 'anchor runs pending'.",
+  "method": "Every draw shares the same 300 public items (P, manifest 6b2321f8...). A fresh draw is equated to the reference draw with anchor systems measured on both draws (each draw lists its own anchor set): offset = median over anchors of (metric on the reference S u P) - (metric on the new draw S u P), for Intelligence and Calibration, with a bootstrap 95% interval over anchors and items. A row from that draw is shown as published plus the offset; Capability and Composite follow from the equated axes. Until the anchor runs of a draw are complete its offset is 0 and the draw is marked 'anchor runs pending'.",
   "anchor_pool": [
     "hopper",
     "kev-0.6b",
@@ -132,17 +132,37 @@
         "v1.8.6",
         "v1.8.7",
         "v1.8.8",
-        "v1.8.9"
+        "v1.8.9",
+        "v1.8.10"
       ],
-      "latest_release": "v1.8.9",
-      "status": "anchor-runs-pending",
+      "latest_release": "v1.8.10",
+      "status": "equated",
       "offset": {
-        "I": 0,
-        "C": 0
+        "C": -1.8542447151797177,
+        "I": -2.884891186577587
       },
-      "offset_ci95": null,
-      "anchors": [],
-      "joins_via": "v1.7-addendum"
+      "offset_ci95": {
+        "C": [
+          -5.447551660176162,
+          1.9718407968151896
+        ],
+        "I": [
+          -5.851030683979731,
+          1.0608488496147923
+        ]
+      },
+      "anchors": [
+        "decider-12b",
+        "h2o-lightning-4b-v1.1",
+        "quyet-1-0-large",
+        "torchcast-decision-27b"
+      ],
+      "joins_via": "v1.7-addendum",
+      "anchor_evidence": "Four strong anchor systems answered both the reference draw and this draw: Intelligence -2.88 (95% CI -5.85 to +1.06), Calibration -1.85 (95% CI -5.45 to +1.97), median over anchors, frozen scorer, B=1000. A fifth planned anchor could not be staged and is skipped as pre-registered. Receipt EQUATING-STRONG4-D1027.json, sha256 7888a0803466daac872f46809b12015af6c3686109276ab89e1028c206103146; applied in v1.8.10.",
+      "equating_receipt": {
+        "name": "EQUATING-STRONG4-D1027.json",
+        "sha256": "7888a0803466daac872f46809b12015af6c3686109276ab89e1028c206103146"
+      }
     }
   ]
 }

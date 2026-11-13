@@ -52,7 +52,9 @@ test('CR-599: no TS20 values are borrowed; permanent exception and revision-spec
   assert.equal(exceptions[0].decision, 'board #31072');
   assert.match(exceptions[0].reason, /Permanent/);
   const compare = readFileSync(new URL('../components/JevCompareV15.tsx', import.meta.url), 'utf8');
-  assert.match(compare, /texts: cells.map\(\(v, i\).*cats.missing\[pair\[i\].key\]/);
+  // v1.8.10 fast path: the row reason now comes through dimMissing (a per-dimension reason first, then the row's cats.missing reason).
+  assert.match(compare, /texts: cells.map\(\(v, i\).*(cats.missing\[pair\[i\].key\]|dimMissing\(cats, pair\[i\].key, dim.key\))/);
+  assert.match(compare, /const dimMissing = .*cats\.missingDims\?\.\[key\]\?\.\[dim\] \?\? cats\.missing\[key\];/);
   assert.match(compare, /const absent = pair.filter\(\(r\) => !categories!.systems\[r.key\]\?\.\[dim.key\]\)/);
 });
 

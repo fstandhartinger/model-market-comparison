@@ -1,0 +1,161 @@
+suite-slot: admitted in slot 0 after 0s
+TAP version 13
+# Subtest: feed carries board and open-board rank next to the unchanged combined rank
+ok 1 - feed carries board and open-board rank next to the unchanged combined rank
+  ---
+  duration_ms: 245052.396621
+  ...
+# Subtest: llms-full and FAQ use the open-weights board
+ok 2 - llms-full and FAQ use the open-weights board
+  ---
+  duration_ms: 208888.879982
+  ...
+# Subtest: publication is independent of the writer-owned primary checkout
+ok 3 - publication is independent of the writer-owned primary checkout
+  ---
+  duration_ms: 5.113524
+  ...
+# Subtest: the supervisor's dated brief backups can never make the checkout dirty again
+ok 4 - the supervisor's dated brief backups can never make the checkout dirty again
+  ---
+  duration_ms: 27245.280795
+  ...
+# Subtest: Image JevBench v0.1.4 preserves the frozen method and prices Wity-1 at its base-model estimate
+ok 5 - Image JevBench v0.1.4 preserves the frozen method and prices Wity-1 at its base-model estimate
+  ---
+  duration_ms: 44.794493
+  ...
+# Subtest: Image JevBench v0.1.4 archive is byte-pinned separately from the live preview
+ok 6 - Image JevBench v0.1.4 archive is byte-pinned separately from the live preview
+  ---
+  duration_ms: 4.737721
+  ...
+# Subtest: Image JevBench v0.1.1 is preserved as the exact parent release artifact
+ok 7 - Image JevBench v0.1.1 is preserved as the exact parent release artifact
+  ---
+  duration_ms: 6.125604
+  ...
+# Subtest: Image JevBench v0.1.2 is preserved as the exact parent release artifact
+ok 8 - Image JevBench v0.1.2 is preserved as the exact parent release artifact
+  ---
+  duration_ms: 6.117814
+  ...
+# Subtest: Image JevBench v0.1.3 is preserved as the exact parent release artifact
+ok 9 - Image JevBench v0.1.3 is preserved as the exact parent release artifact
+  ---
+  duration_ms: 5.061954
+  ...
+# Subtest: preview tracks validator rejects missing or changed counts
+ok 10 - preview tracks validator rejects missing or changed counts
+  ---
+  duration_ms: 63.961941
+  ...
+# Subtest: matched gap formatting removes negative zero
+ok 11 - matched gap formatting removes negative zero
+  ---
+  duration_ms: 0.214946
+  ...
+# Subtest: public Image JevBench route leads with the ranking and preserves aggregate-only data
+ok 12 - public Image JevBench route leads with the ranking and preserves aggregate-only data
+  ---
+  duration_ms: 17.111877
+  ...
+# Subtest: API.md pins the current JevBench and Image JevBench artifact hashes
+ok 13 - API.md pins the current JevBench and Image JevBench artifact hashes
+  ---
+  duration_ms: 3.882986
+  ...
+# Subtest: jevFoldWithPinned: pinned rows keep their position above the fold, do not count toward the limit, and are moved up from below it
+ok 14 - jevFoldWithPinned: pinned rows keep their position above the fold, do not count toward the limit, and are moved up from below it
+  ---
+  duration_ms: 1.179998
+  ...
+# Subtest: Delta 4: with the folds collapsed, Jev 1.13.0 and Jev 1.14.0 are rendered above the fold in the open-board Capability and Composite sections
+ok 15 - Delta 4: with the folds collapsed, Jev 1.13.0 and Jev 1.14.0 are rendered above the fold in the open-board Capability and Composite sections
+  ---
+  duration_ms: 12644.6318
+  ...
+# Subtest: v1.6.30 accepts the stored build once the review passes
+ok 16 - v1.6.30 accepts the stored build once the review passes
+  ---
+  duration_ms: 243.520807
+  ...
+# Subtest: v1.6.30 is not publishable while the manifest is PENDING or the preview card is a placeholder
+ok 17 - v1.6.30 is not publishable while the manifest is PENDING or the preview card is a placeholder
+  ---
+  duration_ms: 222.091632
+  ...
+# Subtest: 48 token-priced rows change cost on the common basis, 9 unpriced rows do not
+ok 18 - 48 token-priced rows change cost on the common basis, 9 unpriced rows do not
+  ---
+  duration_ms: 23.023315
+  ...
+# Subtest: named rows: nimble-v4-max enters at \#3, subq-snap-preview falls inside the official cost cap
+ok 19 - named rows: nimble-v4-max enters at \#3, subq-snap-preview falls inside the official cost cap
+  ---
+  duration_ms: 0.323874
+  ...
+# Subtest: Intelligence, Calibration, Speed and Capability are byte-identical on all 57 rows
+ok 20 - Intelligence, Calibration, Speed and Capability are byte-identical on all 57 rows
+  ---
+  duration_ms: 4.126252
+  ...
+# Subtest: cost, axes, composites and placement follow from the common-basis cost; mutations are rejected
+ok 21 - cost, axes, composites and placement follow from the common-basis cost; mutations are rejected
+  ---
+  duration_ms: 2507.657863
+  ...
+# Subtest: the proof binds the cost basis, the superseded freeze and every re-costed row
+ok 22 - the proof binds the cost basis, the superseded freeze and every re-costed row
+  ---
+  duration_ms: 2086.801928
+  ...
+# Subtest: the release note states the rule, the unchanged measures, the cap moves and the superseded freeze
+ok 23 - the release note states the rule, the unchanged measures, the cap moves and the superseded freeze
+  ---
+  duration_ms: 1515.708152
+  ...
+# Subtest: approval: a changed top five needs the preview card; placeholders and wrong provenance are rejected
+ok 24 - approval: a changed top five needs the preview card; placeholders and wrong provenance are rejected
+  ---
+  duration_ms: 1823.703091
+  ...
+# Subtest: the cost rule wording is general and appears on the methodology page and the board
+ok 25 - the cost rule wording is general and appears on the methodology page and the board
+  ---
+  duration_ms: 9.570339
+  ...
+# Subtest: the text about this draw's 15 items names who refused them and where the token figure comes from; no time-bound claim about authors
+ok 26 - the text about this draw's 15 items names who refused them and where the token figure comes from; no time-bound claim about authors
+  ---
+  duration_ms: 15.780132
+  ...
+# Subtest: Delta 3 (display only): Jev 1.14.0 is a second unranked reference row on the open board without the toggle; every ranking and rank is unchanged
+ok 27 - Delta 3 (display only): Jev 1.14.0 is a second unranked reference row on the open board without the toggle; every ranking and rank is unchanged
+  ---
+  duration_ms: 233988.304492
+  ...
+# Subtest: release note [110] states the general rule and then its history sentence
+ok 28 - release note [110] states the general rule and then its history sentence
+  ---
+  duration_ms: 0.487811
+  ...
+# Subtest: CR-89: the shared footer offers the exact support link and required company disclosure
+ok 29 - CR-89: the shared footer offers the exact support link and required company disclosure
+  ---
+  duration_ms: 2.198498
+  ...
+# Subtest: CR-89: About and repository support affordances use support language, not donation claims
+ok 30 - CR-89: About and repository support affordances use support language, not donation claims
+  ---
+  duration_ms: 2.170279
+  ...
+1..30
+# tests 30
+# suites 0
+# pass 30
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 454397.739177

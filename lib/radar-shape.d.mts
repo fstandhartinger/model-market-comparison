@@ -1,5 +1,6 @@
 export const MIN_RUN: number;
 export const RADAR_MIN_N: number;
+export const BREAKDOWN_MIN_SHOWN_N: number;
 export function presentRuns(present: boolean[]): number[][];
 export function radarShape(present: boolean[]): { kind: 'polygon' | 'runs' | 'points' | 'none'; runs: number[][] };
 export function radarValue(v: unknown): number | null;
@@ -11,7 +12,7 @@ export function radarRadius(v: number, domain?: RadarDomain): number;
 export function radarScale(domain?: RadarDomain): { signed: boolean; rings: number[]; zero: number | null; labels: number[] };
 export function ringLabelPoint(v: number, geo: { cx: number; cy: number; R: number; n: number }, domain?: RadarDomain): { x: number; y: number };
 export function ringLabelText(v: number): string;
-export function categoryCell(cell: readonly unknown[] | null | undefined, radarMinN?: number): { value: number | null; thin: boolean; n: number | null; text: string };
+export function categoryCell(cell: readonly unknown[] | null | undefined, radarMinN?: number, options?: { drawLowN?: boolean; minShown?: number }): { value: number | null; thin: boolean; low?: boolean; n: number | null; text: string };
 export const DENSE_SPOKES: number;
 export const BADGE_R: number;
 export const BADGE_FONT: number;

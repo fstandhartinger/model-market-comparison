@@ -1,0 +1,743 @@
+{
+ "benchmark": "JevBench",
+ "revision": "v1.8.8-share",
+ "kind": "category-aggregates",
+ "built_utc": null,
+ "source_results_sha256": "2a8a451e33ce89ccae2d7abf8c30d3832850127f27169185791c65ab4b1fff79",
+ "metric": "Chance-corrected competence (0 = chance, 100 = perfect) over the category's items the system saw, open and sealed pooled, tiers pooled: per request type the method's competence cell, then the mean over the request types present. Not part of the JevBench Score; never equated for API systems; compare systems within a category, not categories with each other. Values can be negative (below chance).",
+ "min_n": 15,
+ "labelling": "No model labelling: family, language and use case are authoring metadata of every item in the frozen v1.6 pool. All non-English uc1 items are machine-authored and not native-reviewed. Self-hosted systems saw S u P (1,500 items); hosted API systems saw only A u P (600 items), so their cells cover fewer items.",
+ "rules": [
+  "Cells with fewer than 15 items are omitted; categories under 30 items are marked low-n.",
+  "Core v1.6 items carry no use case; the use-case view covers the use-case (uc1) items only."
+ ],
+ "families": [
+  {
+   "key": "multilingual",
+   "label": "Multilingual",
+   "covers": "the same kind of decision asked in 21 languages besides English",
+   "n": 921,
+   "open": 58,
+   "sealed": 863,
+   "low_n": false
+  },
+  {
+   "key": "usecase",
+   "label": "Use-case decisions",
+   "covers": "single decisions from the TypeSafe use-case map outside routing",
+   "n": 325,
+   "open": 25,
+   "sealed": 300,
+   "low_n": false
+  },
+  {
+   "key": "llm_router",
+   "label": "LLM routing",
+   "covers": "pick the model, tier or agent that should handle a request (TypeSafe LLM Auto Router focus)",
+   "n": 90,
+   "open": 85,
+   "sealed": 5,
+   "low_n": false
+  },
+  {
+   "key": "perturb_pair",
+   "label": "Perturbation consistency",
+   "covers": "pairs that differ in an irrelevant detail and must get the same answer",
+   "n": 28,
+   "open": 24,
+   "sealed": 4,
+   "low_n": true
+  },
+  {
+   "key": "option_order",
+   "label": "Option-order robustness",
+   "covers": "the same question with shuffled answer options",
+   "n": 27,
+   "open": 21,
+   "sealed": 6,
+   "low_n": true
+  },
+  {
+   "key": "negation_pair_gen",
+   "label": "Negation consistency",
+   "covers": "pairs where a negation must flip the answer",
+   "n": 22,
+   "open": 18,
+   "sealed": 4,
+   "low_n": true
+  },
+  {
+   "key": "jaggedness",
+   "label": "Jaggedness",
+   "covers": "easy-looking items from areas where models fail unevenly",
+   "n": 22,
+   "open": 20,
+   "sealed": 2,
+   "low_n": true
+  },
+  {
+   "key": "fairness",
+   "label": "Fairness",
+   "covers": "decisions whose answer must not change with a protected attribute",
+   "n": 21,
+   "open": 15,
+   "sealed": 6,
+   "low_n": true
+  },
+  {
+   "key": "composite_gen",
+   "label": "Composite rules",
+   "covers": "several conditions that must all be checked before deciding",
+   "n": 19,
+   "open": 17,
+   "sealed": 2,
+   "low_n": true
+  },
+  {
+   "key": "calibration_gen",
+   "label": "Calibration (generated)",
+   "covers": "generated items that test confidence against outcome rates",
+   "n": 14,
+   "open": 12,
+   "sealed": 2,
+   "low_n": true
+  },
+  {
+   "key": "long_state",
+   "label": "Long state",
+   "covers": "decisions that depend on a long input state",
+   "n": 5,
+   "open": 3,
+   "sealed": 2,
+   "low_n": true
+  },
+  {
+   "key": "calibration",
+   "label": "Calibration (fixed)",
+   "covers": "items with known answer frequencies that test the reported confidence",
+   "n": 4,
+   "open": 2,
+   "sealed": 2,
+   "low_n": true
+  },
+  {
+   "key": "ml_usecase",
+   "label": "Ml usecase",
+   "covers": "ml_usecase",
+   "n": 2,
+   "open": 0,
+   "sealed": 2,
+   "low_n": true
+  }
+ ],
+ "usecases": [
+  {
+   "key": "model_routing",
+   "label": "Model routing",
+   "covers": "deciding which LLM or model tier should handle a prompt; classifying a request's intent, domain, difficulty or risk to pick a model",
+   "n": 148,
+   "open": 75,
+   "sealed": 73,
+   "low_n": false
+  },
+  {
+   "key": "lead_generation",
+   "label": "Lead generation",
+   "covers": "matching companies or inbound messages to an ideal customer profile, buyer intent, prioritising and routing sales leads",
+   "n": 75,
+   "open": 3,
+   "sealed": 72,
+   "low_n": false
+  },
+  {
+   "key": "feature_extraction",
+   "label": "Feature extraction for predictive modeling",
+   "covers": "turning natural-language data into probabilistic features or estimates for a downstream prediction",
+   "n": 72,
+   "open": 5,
+   "sealed": 67,
+   "low_n": false
+  },
+  {
+   "key": "llm_guardrails",
+   "label": "LLM guardrails",
+   "covers": "checking LLM inputs, outputs and tool calls: prompt injection, jailbreaks, policy violations, tool-call errors, answer quality",
+   "n": 71,
+   "open": 5,
+   "sealed": 66,
+   "low_n": false
+  },
+  {
+   "key": "code_linting",
+   "label": "Semantic code linting",
+   "covers": "checking code or writing against conventions and guidelines, as in CI review of code",
+   "n": 69,
+   "open": 3,
+   "sealed": 66,
+   "low_n": false
+  },
+  {
+   "key": "search_retrieval",
+   "label": "Search and retrieval",
+   "covers": "scoring query-to-candidate relevance, reranking results, selecting useful context for RAG",
+   "n": 67,
+   "open": 5,
+   "sealed": 62,
+   "low_n": false
+  },
+  {
+   "key": "knowledge_graphs",
+   "label": "Graphs and knowledge graphs",
+   "covers": "entity types, relationships between records, contradictions between facts, multi-step lookups across linked facts",
+   "n": 67,
+   "open": 3,
+   "sealed": 64,
+   "low_n": false
+  },
+  {
+   "key": "demand_forecasting",
+   "label": "Demand forecasting",
+   "covers": "purchase intent, product interest, demand and supply signals for forecasting",
+   "n": 66,
+   "open": 3,
+   "sealed": 63,
+   "low_n": false
+  },
+  {
+   "key": "customer_support",
+   "label": "Customer support",
+   "covers": "classifying tickets and customer intents, urgency, refunds, routing cases to a team, checking support replies",
+   "n": 66,
+   "open": 3,
+   "sealed": 63,
+   "low_n": false
+  },
+  {
+   "key": "recruiting",
+   "label": "Recruiting",
+   "covers": "resumes, applications, interview feedback, matching candidates to roles",
+   "n": 65,
+   "open": 1,
+   "sealed": 64,
+   "low_n": false
+  },
+  {
+   "key": "financial_crime",
+   "label": "Financial crime",
+   "covers": "suspicious transactions, KYC, fraud alerts, entity matching for investigations",
+   "n": 63,
+   "open": 4,
+   "sealed": 59,
+   "low_n": false
+  },
+  {
+   "key": "insurance_claims",
+   "label": "Insurance claims",
+   "covers": "first-notice-of-loss reports, claim complexity, missing information, claim triage",
+   "n": 62,
+   "open": 2,
+   "sealed": 60,
+   "low_n": false
+  },
+  {
+   "key": "ecommerce_marketplaces",
+   "label": "E-commerce marketplaces",
+   "covers": "product listings, product attributes, orders and deliveries, seller catalog policy",
+   "n": 62,
+   "open": 2,
+   "sealed": 60,
+   "low_n": false
+  },
+  {
+   "key": "moderation_trust_safety",
+   "label": "Moderation and trust and safety",
+   "covers": "user content moderation: toxicity, harassment, spam, unsafe advice, personal data exposure",
+   "n": 59,
+   "open": 3,
+   "sealed": 56,
+   "low_n": false
+  },
+  {
+   "key": "gaming",
+   "label": "Gaming",
+   "covers": "player reports, in-game chat, game support",
+   "n": 58,
+   "open": 3,
+   "sealed": 55,
+   "low_n": false
+  },
+  {
+   "key": "legal_compliance",
+   "label": "Legal and compliance",
+   "covers": "contracts, policies, regulations, eligibility rules, checking documents against written requirements",
+   "n": 56,
+   "open": 1,
+   "sealed": 55,
+   "low_n": false
+  },
+  {
+   "key": "advertising",
+   "label": "Advertising",
+   "covers": "ad creatives, campaign copy, brand safety, prohibited claims in ads",
+   "n": 48,
+   "open": 3,
+   "sealed": 45,
+   "low_n": false
+  },
+  {
+   "key": "risk_assessment",
+   "label": "Risk assessment",
+   "covers": "estimating probabilities and severity of risks, incidents, vendor or underwriting risk",
+   "n": 48,
+   "open": 1,
+   "sealed": 47,
+   "low_n": false
+  },
+  {
+   "key": "scientific_discovery",
+   "label": "Scientific discovery",
+   "covers": "screening papers, labelling research passages or survey answers, checking that citations support claims, methodology checks",
+   "n": 42,
+   "open": 2,
+   "sealed": 40,
+   "low_n": false
+  },
+  {
+   "key": "other",
+   "label": "Other",
+   "covers": "none of the above: general reasoning, arithmetic or date puzzles, everyday assistant requests without a business workflow",
+   "n": 32,
+   "open": 0,
+   "sealed": 32,
+   "low_n": false
+  }
+ ],
+ "languages": [
+  {
+   "key": "en",
+   "label": "English",
+   "covers": "items written in English",
+   "n": 555,
+   "open": 220,
+   "sealed": 335,
+   "low_n": false
+  },
+  {
+   "key": "mixed",
+   "label": "Mixed-language",
+   "covers": "items written in Mixed-language",
+   "n": 64,
+   "open": 2,
+   "sealed": 62,
+   "low_n": false
+  },
+  {
+   "key": "pl",
+   "label": "Polish",
+   "covers": "items written in Polish",
+   "n": 57,
+   "open": 11,
+   "sealed": 46,
+   "low_n": false
+  },
+  {
+   "key": "uk",
+   "label": "Ukrainian",
+   "covers": "items written in Ukrainian",
+   "n": 56,
+   "open": 3,
+   "sealed": 53,
+   "low_n": false
+  },
+  {
+   "key": "fi",
+   "label": "Finnish",
+   "covers": "items written in Finnish",
+   "n": 52,
+   "open": 1,
+   "sealed": 51,
+   "low_n": false
+  },
+  {
+   "key": "no",
+   "label": "Norwegian",
+   "covers": "items written in Norwegian",
+   "n": 51,
+   "open": 2,
+   "sealed": 49,
+   "low_n": false
+  },
+  {
+   "key": "de",
+   "label": "German",
+   "covers": "items written in German",
+   "n": 48,
+   "open": 11,
+   "sealed": 37,
+   "low_n": false
+  },
+  {
+   "key": "pt",
+   "label": "Portuguese",
+   "covers": "items written in Portuguese",
+   "n": 47,
+   "open": 7,
+   "sealed": 40,
+   "low_n": false
+  },
+  {
+   "key": "sv",
+   "label": "Swedish",
+   "covers": "items written in Swedish",
+   "n": 46,
+   "open": 2,
+   "sealed": 44,
+   "low_n": false
+  },
+  {
+   "key": "tr",
+   "label": "Turkish",
+   "covers": "items written in Turkish",
+   "n": 46,
+   "open": 2,
+   "sealed": 44,
+   "low_n": false
+  },
+  {
+   "key": "it",
+   "label": "Italian",
+   "covers": "items written in Italian",
+   "n": 45,
+   "open": 2,
+   "sealed": 43,
+   "low_n": false
+  },
+  {
+   "key": "ja",
+   "label": "Japanese",
+   "covers": "items written in Japanese",
+   "n": 44,
+   "open": 5,
+   "sealed": 39,
+   "low_n": false
+  },
+  {
+   "key": "ko",
+   "label": "Korean",
+   "covers": "items written in Korean",
+   "n": 43,
+   "open": 2,
+   "sealed": 41,
+   "low_n": false
+  },
+  {
+   "key": "zh",
+   "label": "Chinese",
+   "covers": "items written in Chinese",
+   "n": 41,
+   "open": 6,
+   "sealed": 35,
+   "low_n": false
+  },
+  {
+   "key": "id",
+   "label": "Indonesian",
+   "covers": "items written in Indonesian",
+   "n": 41,
+   "open": 1,
+   "sealed": 40,
+   "low_n": false
+  },
+  {
+   "key": "es",
+   "label": "Spanish",
+   "covers": "items written in Spanish",
+   "n": 37,
+   "open": 4,
+   "sealed": 33,
+   "low_n": false
+  },
+  {
+   "key": "cs",
+   "label": "Czech",
+   "covers": "items written in Czech",
+   "n": 37,
+   "open": 2,
+   "sealed": 35,
+   "low_n": false
+  },
+  {
+   "key": "hi",
+   "label": "Hindi",
+   "covers": "items written in Hindi",
+   "n": 37,
+   "open": 3,
+   "sealed": 34,
+   "low_n": false
+  },
+  {
+   "key": "nl",
+   "label": "Dutch",
+   "covers": "items written in Dutch",
+   "n": 36,
+   "open": 2,
+   "sealed": 34,
+   "low_n": false
+  },
+  {
+   "key": "da",
+   "label": "Danish",
+   "covers": "items written in Danish",
+   "n": 36,
+   "open": 2,
+   "sealed": 34,
+   "low_n": false
+  },
+  {
+   "key": "fr",
+   "label": "French",
+   "covers": "items written in French",
+   "n": 32,
+   "open": 1,
+   "sealed": 31,
+   "low_n": false
+  },
+  {
+   "key": "el",
+   "label": "Greek",
+   "covers": "items written in Greek",
+   "n": 28,
+   "open": 4,
+   "sealed": 24,
+   "low_n": true
+  },
+  {
+   "key": "ar",
+   "label": "Arabic",
+   "covers": "items written in Arabic",
+   "n": 21,
+   "open": 5,
+   "sealed": 16,
+   "low_n": true
+  }
+ ],
+ "systems": {
+  "gemini-decision-1": {
+   "families": {
+    "composite_gen": {
+     "n": 19,
+     "competence": 71.6
+    },
+    "fairness": {
+     "n": 21,
+     "competence": 98.8
+    },
+    "jaggedness": {
+     "n": 22,
+     "competence": 14.7
+    },
+    "llm_router": {
+     "n": 90,
+     "competence": 73.75
+    },
+    "multilingual": {
+     "n": 921,
+     "competence": 76.05
+    },
+    "negation_pair_gen": {
+     "n": 22,
+     "competence": 91.67
+    },
+    "option_order": {
+     "n": 27,
+     "competence": 85.71
+    },
+    "perturb_pair": {
+     "n": 28,
+     "competence": 80.87
+    },
+    "usecase": {
+     "n": 325,
+     "competence": 72.24
+    }
+   },
+   "usecases": {
+    "advertising": {
+     "n": 48,
+     "competence": 59.67
+    },
+    "code_linting": {
+     "n": 69,
+     "competence": 86.37
+    },
+    "customer_support": {
+     "n": 66,
+     "competence": 81.24
+    },
+    "demand_forecasting": {
+     "n": 66,
+     "competence": 8.74
+    },
+    "ecommerce_marketplaces": {
+     "n": 62,
+     "competence": 73.38
+    },
+    "feature_extraction": {
+     "n": 72,
+     "competence": 68.38
+    },
+    "financial_crime": {
+     "n": 63,
+     "competence": 48.72
+    },
+    "gaming": {
+     "n": 58,
+     "competence": 55.99
+    },
+    "insurance_claims": {
+     "n": 62,
+     "competence": 68.03
+    },
+    "knowledge_graphs": {
+     "n": 67,
+     "competence": 76.31
+    },
+    "lead_generation": {
+     "n": 75,
+     "competence": 91.82
+    },
+    "legal_compliance": {
+     "n": 56,
+     "competence": 79.32
+    },
+    "llm_guardrails": {
+     "n": 71,
+     "competence": 86.54
+    },
+    "model_routing": {
+     "n": 148,
+     "competence": 76.55
+    },
+    "moderation_trust_safety": {
+     "n": 59,
+     "competence": 92.98
+    },
+    "other": {
+     "n": 32,
+     "competence": 74.11
+    },
+    "recruiting": {
+     "n": 65,
+     "competence": 88.36
+    },
+    "risk_assessment": {
+     "n": 48,
+     "competence": 68.71
+    },
+    "scientific_discovery": {
+     "n": 42,
+     "competence": 60.03
+    },
+    "search_retrieval": {
+     "n": 67,
+     "competence": 94.22
+    }
+   },
+   "languages": {
+    "ar": {
+     "n": 21,
+     "competence": 79.23
+    },
+    "cs": {
+     "n": 37,
+     "competence": 67.51
+    },
+    "da": {
+     "n": 36,
+     "competence": 77.52
+    },
+    "de": {
+     "n": 48,
+     "competence": 71.81
+    },
+    "el": {
+     "n": 28,
+     "competence": 64.16
+    },
+    "en": {
+     "n": 555,
+     "competence": 72.63
+    },
+    "es": {
+     "n": 37,
+     "competence": 81.66
+    },
+    "fi": {
+     "n": 52,
+     "competence": 86.26
+    },
+    "fr": {
+     "n": 32,
+     "competence": 77.78
+    },
+    "hi": {
+     "n": 37,
+     "competence": 73.54
+    },
+    "id": {
+     "n": 41,
+     "competence": 85.37
+    },
+    "it": {
+     "n": 45,
+     "competence": 77.69
+    },
+    "ja": {
+     "n": 44,
+     "competence": 60.13
+    },
+    "ko": {
+     "n": 43,
+     "competence": 61.65
+    },
+    "mixed": {
+     "n": 64,
+     "competence": 93.49
+    },
+    "nl": {
+     "n": 36,
+     "competence": 65.66
+    },
+    "no": {
+     "n": 51,
+     "competence": 79.01
+    },
+    "pl": {
+     "n": 57,
+     "competence": 68.93
+    },
+    "pt": {
+     "n": 47,
+     "competence": 67.48
+    },
+    "sv": {
+     "n": 46,
+     "competence": 67.91
+    },
+    "tr": {
+     "n": 46,
+     "competence": 90.71
+    },
+    "uk": {
+     "n": 56,
+     "competence": 64.09
+    },
+    "zh": {
+     "n": 41,
+     "competence": 75.08
+    }
+   }
+  }
+ },
+ "unavailable": {}
+}

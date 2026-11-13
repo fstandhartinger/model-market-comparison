@@ -30,7 +30,7 @@ export function BaseModelDisplay({ benchmark = 'jevbench', systemKey, prefix = '
     {entry.sources.map((source, index) => <a key={`${source.url}-${index}`} href={source.url} target="_blank" rel="noopener noreferrer"
       className="ml-1 text-accent underline decoration-[rgb(var(--line))] underline-offset-2 hover:decoration-current"
       title={source.evidence || source.title || source.url} aria-label={`${prefix || 'Base model'} source ${index + 1} for ${systemKey}`}
-      data-bh-base-model-source={index}>{entry.sources.length > 1 ? `source ${index + 1}` : 'source'}</a>)}
+      data-bh-base-model-source={index} data-bh-base-model-source-kind={source.kind}>{source.kind ?? (entry.sources.length > 1 ? `source ${index + 1}` : 'source')}</a>)}
     {showNote && footnote != null && <a href={`#${baseModelNoteId(benchmark, systemKey)}`} className="text-accent no-underline" title={entry.note ?? undefined}
       aria-label={`Base-model note ${footnote} for ${systemKey}`} data-bh-base-model-footnote-ref={footnote}>*<sup>{footnote}</sup></a>}
     {showNote && footnote == null && <span className="bh-muted"> · {entry.note}</span>}

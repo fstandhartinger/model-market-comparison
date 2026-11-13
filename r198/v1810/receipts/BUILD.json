@@ -1,0 +1,138 @@
+{
+ "base": "v1.8.9",
+ "base_publication_sha256": "ea53c1af0110f417a0d65c544285d29185c5f66ddab61e84197f634b41b0167c",
+ "carried_equal_except_ranks": 303,
+ "display_renames": {
+  "jev-27b-autotrust": {
+   "after": "AutoTrust-Decider-Pro-27B (AutoTrust, Qwen3.8-27B)",
+   "before": "JEV-27B (AutoTrust, Qwen3.8-27B)"
+  }
+ },
+ "equated_rows": [
+  "allec-oavg",
+  "amber-4b",
+  "arcbright-elf-1-12b-r2",
+  "chaoliangunsw-jev-style-2b-decision-v4",
+  "cribl-decision-1.0-27b",
+  "cribl-decision-1.0-9b",
+  "cribl-decision-2",
+  "cribl-decision-2-mini",
+  "decide-1.1",
+  "decisio-gemma-4-12b-tuned-commit-think",
+  "decision-king-v1.1",
+  "decisionnode-flash-0.9.1-rc1",
+  "decisionnode-main-0.9.1-rc1",
+  "granite-switch-4.1-30b",
+  "granite-switch-4.1-8b",
+  "h2o-lightning-4b-v1.4.1",
+  "iota-decide-4b-v0.4",
+  "jeff_1_1_large",
+  "jeff_1_1_qwen_4b",
+  "joey-1",
+  "karpo_decision_31b",
+  "metadecision-31b-rain",
+  "microsoft-decision-1-r2",
+  "nvidia/nemotron-3.5-super-vl",
+  "oenogarum",
+  "piccolo-27b",
+  "piccolo-4b",
+  "piccolo-9b",
+  "saif-4b",
+  "sd-jev-4b-v12.1.0-aligned-s42-step0256",
+  "sors-2b",
+  "strike-1",
+  "torchcast-decision-31b-v1.0",
+  "umpire-35b-a3b",
+  "visionjev-1.0.0-27b",
+  "wemm-jev",
+  "zils-ai-z3-mini-soup-preview"
+ ],
+ "files": {
+  "carry": {
+   "path": "data/raw/benchmarks/jevbench/v1.8/jevbench-v1.8.10-carry.json",
+   "sha256": "271d1fc77a136a04a1eb6deb5480c52d4211eb2b66b2ac8bb31e80867e69003a"
+  },
+  "categories": {
+   "path": "data/raw/benchmarks/jevbench/v1.8/jevbench-v1.8.10-categories.json",
+   "sha256": "56f50ca2133562ea3f439fb7b6f853881be9c7e10c8586c7805be0a48a39bc74"
+  },
+  "history": {
+   "path": "data/raw/benchmarks/jevbench/v1.8/jevbench-v1.8.10-history.json",
+   "sha256": "d5e91333d6acefef1506f2a6ce23f71220ac1eeac9ce2d4e817c88a0a979a38b"
+  },
+  "history-carry": {
+   "path": "data/raw/benchmarks/jevbench/v1.8/jevbench-v1.8.10-history-carry.json",
+   "sha256": "f4d8ddfae4ac3b2741ca7cfdaa930b2afc1d9be612f4e6683a230aa23834e2ba"
+  },
+  "proof": {
+   "path": "data/raw/benchmarks/jevbench/v1.8/jevbench-v1.8.10-proof.json",
+   "sha256": "22963da652470b279306bb44d9c1b12ee7cfac01b3705b627279799ca173c1ca"
+  },
+  "results": {
+   "path": "data/raw/benchmarks/jevbench/v1.8/jevbench-v1.8.10-results.json",
+   "sha256": "63eb0e6f26c8ebc6fff2678d441d950c2a05dab5c43411804ffe5ee349ff8937"
+  }
+ },
+ "held_rows": [
+  "h2o-lightning-4b-v1.4.1",
+  "jeff_1_1_large",
+  "visionjev-1.0.0-27b",
+  "wemm-jev"
+ ],
+ "n_ranked": 315,
+ "new_row_ranks": {
+  "gemini-decision-1": {
+   "A": 86,
+   "B": 65,
+   "C": 67,
+   "capability": 52
+  }
+ },
+ "new_rows": [
+  "gemini-decision-1"
+ ],
+ "rank_shifted_rows": 283,
+ "ranked_rows": [
+  "allec-oavg",
+  "amber-4b",
+  "arcbright-elf-1-12b-r2",
+  "chaoliangunsw-jev-style-2b-decision-v4",
+  "cribl-decision-1.0-27b",
+  "cribl-decision-1.0-9b",
+  "cribl-decision-2",
+  "cribl-decision-2-mini",
+  "decide-1.1",
+  "decisio-gemma-4-12b-tuned-commit-think",
+  "decision-king-v1.1",
+  "granite-switch-4.1-30b",
+  "granite-switch-4.1-8b",
+  "iota-decide-4b-v0.4",
+  "jeff_1_1_qwen_4b",
+  "joey-1",
+  "karpo_decision_31b",
+  "metadecision-31b-rain",
+  "microsoft-decision-1-r2",
+  "nvidia/nemotron-3.5-super-vl",
+  "oenogarum",
+  "piccolo-27b",
+  "piccolo-4b",
+  "piccolo-9b",
+  "saif-4b",
+  "sd-jev-4b-v12.1.0-aligned-s42-step0256",
+  "sors-2b",
+  "strike-1",
+  "torchcast-decision-31b-v1.0",
+  "umpire-35b-a3b",
+  "zils-ai-z3-mini-soup-preview"
+ ],
+ "revision": "v1.8.10",
+ "roster_count": 340,
+ "unranked_rows": {
+  "decisionnode-flash-0.9.1-rc1": "unpriced: no cost axis, no composite",
+  "decisionnode-main-0.9.1-rc1": "unpriced: no cost axis, no composite",
+  "h2o-lightning-4b-v1.4.1": "held: row-specific draw-mix signature that no offset can remove (FAIR_SUBSET)",
+  "jeff_1_1_large": "held: top-five places within the uncertainty of the draw shift (FAIR_SUBSET)",
+  "visionjev-1.0.0-27b": "held: top-five places within the uncertainty of the draw shift (FAIR_SUBSET)",
+  "wemm-jev": "held: top-five places within the uncertainty of the draw shift (FAIR_SUBSET)"
+ }
+}

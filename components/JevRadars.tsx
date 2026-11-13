@@ -27,7 +27,8 @@ export function sparseNote(spokes: Spoke[], series: Series[]): string | null {
   });
   return sparse.length ? `${sparse.join("; ")}.` : null;
 }
-export type Spoke = { key: string; lines: string[]; values: (number | null)[]; texts: string[]; thin: boolean[]; tip?: string };
+/** low (v1.8.10): a drawn value under the radar minimum, shown as a hollow, lighter point and printed with its n. */
+export type Spoke = { key: string; lines: string[]; values: (number | null)[]; texts: string[]; thin: boolean[]; low?: boolean[]; tip?: string };
 
 /** `domain` (lead job jevbench-radar-full-areas-20261009): the value range from centre to rim, default 0–100. Current
  *  competence radars pass RADAR_SIGNED_DOMAIN (−100 centre, 0 bold ring at half radius, 100 rim), so a complete series of measured
@@ -63,7 +64,7 @@ function RadarCanvas({ spokes, series, size, id, title, desc, domain, mode, prof
   const at = (i: number, v: number) => { const a = -Math.PI / 2 + (2 * Math.PI * i) / spokes.length; const d = R * radarRadius(v, domain) / 100; return [r3(cx + d * Math.cos(a)), r3(cy + d * Math.sin(a))]; };
   const tooltipSeries: RadarSeries[] = series.map((se, k) => ({ id: String(k), name: se.name, color: se.stroke,
     points: spokes.map((s) => ({ value: plottable(s.values[k], s.thin[k]) ? s.values[k] : null,
-      label: radarValue(s.values[k]) === null ? 'No measured result' : s.thin[k] ? `${s.texts[k]} — too few completed items to plot` : s.texts[k] })) }));
+      label: radarValue(s.values[k]) === null ? 'No measured result' : s.thin[k] ? `${s.texts[k]} — too few completed items to plot` : s.low?.[k] ? `${s.texts[k]} — low sample, indicative only` : s.texts[k] })) }));
   const tooltipAxes = spokes.map((s) => ({ id: s.key, name: s.lines.join(' '), version: '', category: '', description: s.tip }));
   const tooltipAt = (k: number, i: number) => at(i, plottable(spokes[i]?.values[k], spokes[i]?.thin[k]) ? spokes[i].values[k] as number : domain[1]) as [number, number];
   const scale = radarScale(domain);
@@ -72,7 +73,7 @@ function RadarCanvas({ spokes, series, size, id, title, desc, domain, mode, prof
   // One value slot per series: the coloured value, a muted n=… for an under-minimum cell, a muted "n/a" for no value.
   const slots = (s: Spoke) => series.map((se, k) => {
     const missing = radarValue(s.values[k]) === null;
-    return !shown(s, k) ? null : <tspan key={k} fill={missing || s.thin[k] ? "var(--muted)" : se.stroke} fontWeight={missing ? 400 : 700} data-bh-jev12-radar-value={`${k === 0 ? "a" : "b"}:${s.key}`} data-bh-radar-na={missing ? "" : undefined}>{k > 0 && shown(s, k - 1) ? <tspan fill="var(--muted)" fontWeight={400}> · </tspan> : null}{missing ? "n/a" : s.texts[k]}</tspan>;
+    return !shown(s, k) ? null : <tspan key={k} fill={missing || s.thin[k] ? "var(--muted)" : se.stroke} fillOpacity={s.low?.[k] ? 0.75 : undefined} fontWeight={missing || s.low?.[k] ? 400 : 700} data-bh-jev12-radar-value={`${k === 0 ? "a" : "b"}:${s.key}`} data-bh-radar-na={missing ? "" : undefined} data-bh-radar-low-n={s.low?.[k] ? "" : undefined}>{k > 0 && shown(s, k - 1) ? <tspan fill="var(--muted)" fontWeight={400}> · </tspan> : null}{missing ? "n/a" : s.texts[k]}</tspan>;
   });
   const fullLabels = ends ? null : fullLabelLayout(spokes.map((s) => ({ lines: s.lines, value: valueText(s) })), size);
   const labelTitle = (s: Spoke, i: number) => `${s.lines.join(' ')}: ${series.map((se, k) => `${se.name}: ${tooltipSeries[k].points[i].label}`).join('; ')}${s.tip ? ` — ${s.tip}` : ''}`;
@@ -97,7 +98,13 @@ function RadarCanvas({ spokes, series, size, id, title, desc, domain, mode, prof
         {shape.kind === "polygon"
           ? <polygon points={pts.map((p) => p.join(",")).join(" ")} fill={se.stroke} fillOpacity={k === 0 ? 0.18 : 0.1} stroke={se.stroke} strokeWidth={2.2} strokeDasharray={se.dashed ? "6 4" : undefined} strokeLinejoin="round" />
           : shape.runs.map((run) => <polyline key={run[0]} points={run.map((i) => (byIndex[i] as number[]).join(",")).join(" ")} fill="none" stroke={se.stroke} strokeWidth={2.2} strokeDasharray={se.dashed ? "6 4" : undefined} strokeLinejoin="round" strokeLinecap="round" />)}
-        {pts.map(([x, y], i) => se.square ? <rect key={i} x={x - 3.5} y={y - 3.5} width={7} height={7} fill={se.stroke} stroke="var(--surface)" strokeWidth={1} /> : <circle key={i} cx={x} cy={y} r={3.8} fill={se.stroke} stroke="var(--surface)" strokeWidth={1} />)}
+        {byIndex.map((p, i) => {
+          if (!p) return null;
+          const [x, y] = p, low = Boolean(spokes[i].low?.[k]);
+          // v1.8.10: a low-sample point is hollow and lighter (surface fill, series outline), so it reads as measured but indicative.
+          const paint = low ? { fill: "var(--surface)", stroke: se.stroke, strokeWidth: 1.6, strokeOpacity: 0.85, "data-bh-radar-low-n-point": "" } : { fill: se.stroke, stroke: "var(--surface)", strokeWidth: 1 };
+          return se.square ? <rect key={i} x={x - 3.5} y={y - 3.5} width={7} height={7} {...paint} /> : <circle key={i} cx={x} cy={y} r={3.8} {...paint} />;
+        })}
       </g>;
     })}
     {ends && ends.items.map((it, i) => it.leader ? <line key={`leader-${spokes[i].key}`} x1={r3(it.ex)} y1={r3(it.ey)} x2={r3(it.x)} y2={r3(it.ly)} stroke="var(--muted)" strokeOpacity={0.45} strokeWidth={0.8} data-bh-radar-leader /> : null)}

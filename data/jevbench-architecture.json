@@ -7832,6 +7832,22 @@
           }
         ],
         "note": "Gemma-4-31B-it fine-tune with a linear readout; measured with the pinned serving code on an evaluator-owned RTX PRO 6000."
+      },
+      "gemini-decision-1": {
+        "arch": "closed-api",
+        "badges": {
+          "derivation": null,
+          "params": null,
+          "quant": null
+        },
+        "evidence": [
+          {
+            "kind": "provider-docs",
+            "url": "https://ai.google.dev/api/decisions",
+            "fact": "Hosted Gemini Decision 1 API (Gemini API, model id gemini-decision-1); no base model or weights disclosed."
+          }
+        ],
+        "note": "Hosting implementation and deployed weights were not independently inspected."
       }
     },
     "imagejevbench": {
