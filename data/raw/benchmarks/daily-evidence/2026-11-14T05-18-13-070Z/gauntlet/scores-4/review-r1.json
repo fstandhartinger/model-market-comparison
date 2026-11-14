@@ -1,0 +1,18 @@
+{
+  "artifact_id": "scores-4",
+  "artifact_sha256": "0cc46d060f449e944728778aa3239baade79625e801fa524ecc0912d058a75c8",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "vendor:DeepSeek-V3:longbench::2",
+    "c1"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Cannot independently recompute row sha256 or verify HTTP transport/qualification hashes; owner executes these.",
+    "Primary evidence does not include an explicit published_at field; row uses null and subject label derives 'Dec '24' from arXiv 2412.19437v2, which is not independently confirmed in the captured table text."
+  ],
+  "missing_evidence": []
+}

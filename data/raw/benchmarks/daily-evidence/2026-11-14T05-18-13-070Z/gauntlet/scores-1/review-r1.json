@@ -1,0 +1,49 @@
+{
+  "artifact_id": "scores-1",
+  "artifact_sha256": "b4b76ec9ef2eac5113948cdc0f75de50d25a1486a22f4bbb873f81a95c3967e6",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": [
+    "vendor:mistralai/Devstral-2-123B-Instruct-2512:swe-bench-verified::snapshot-2026-09-10",
+    "vendor:mistralai/Devstral-Small-2-24B-Instruct-2512:swe-bench-verified::snapshot-2026-09-10",
+    "c1"
+  ],
+  "errors_found": 4,
+  "findings": [
+    {
+      "id": "vendor:mistralai/Devstral-2-123B-Instruct-2512:swe-bench-verified::snapshot-2026-09-10",
+      "severity": "major",
+      "location": "source.published_at",
+      "evidence": "Source content includes byline 'December 9, 2025'; row has published_at: null.",
+      "repair": "Set published_at to the article publication date (December 9, 2025) or document why it is null."
+    },
+    {
+      "id": "vendor:mistralai/Devstral-2-123B-Instruct-2512:swe-bench-verified::snapshot-2026-09-10",
+      "severity": "major",
+      "location": "benchmark_id / snapshot version",
+      "evidence": "Row benchmark_id is 'swe-bench-verified::snapshot-2026-09-10' but source only states 'SWE-bench Verified' with no snapshot/version identifier.",
+      "repair": "Provide evidence for the snapshot-2026-09-10 mapping or change benchmark_id to match the source's stated version."
+    },
+    {
+      "id": "vendor:mistralai/Devstral-Small-2-24B-Instruct-2512:swe-bench-verified::snapshot-2026-09-10",
+      "severity": "major",
+      "location": "source.published_at",
+      "evidence": "Source content includes byline 'December 9, 2025'; row has published_at: null.",
+      "repair": "Set published_at to the article publication date (December 9, 2025) or document why it is null."
+    },
+    {
+      "id": "vendor:mistralai/Devstral-Small-2-24B-Instruct-2512:swe-bench-verified::snapshot-2026-09-10",
+      "severity": "major",
+      "location": "benchmark_id / snapshot version",
+      "evidence": "Row benchmark_id is 'swe-bench-verified::snapshot-2026-09-10' but source only states 'SWE-bench Verified' with no snapshot/version identifier.",
+      "repair": "Provide evidence for the snapshot-2026-09-10 mapping or change benchmark_id to match the source's stated version."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "Owner-executed hash and transport checks could not be independently verified in this review.",
+    "The exact interpretation of the snapshot-2026-09-10 suffix is not derivable from the supplied source content; it may be an internal classification not visible in the fetched article.",
+    "The article publication date is present in the source text but not structured; extraction is a straightforward reading but may require confirmation that the visible date is the official publish date."
+  ],
+  "missing_evidence": []
+}

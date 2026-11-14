@@ -1,0 +1,21 @@
+{
+  "artifact_id": "scores-0",
+  "artifact_sha256": "78cb5ddb9e4e6b7a0158f459e864b189cbe8acbbc2ddbcc55a7d1da8b016c076",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/retail",
+    "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/airline",
+    "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/telecom",
+    "c1"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "I am a read-only critic and cannot execute hash, transport, or qualification checks; row and artifact hashes are accepted as owner-provided bindings.",
+    "The README does not state a publication date; source date is represented by retrieved_at while published_at is null, which is consistent with the evidence.",
+    "The output-length claim in protocol (32,768 tokens, 81,920 for highly challenging tasks) follows the source footnote; TAU2 is placed under Agent tasks so 32,768 is the applicable value."
+  ],
+  "missing_evidence": []
+}

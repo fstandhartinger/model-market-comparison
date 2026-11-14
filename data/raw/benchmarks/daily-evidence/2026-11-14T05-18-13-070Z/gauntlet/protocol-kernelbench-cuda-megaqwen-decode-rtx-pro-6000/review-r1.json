@@ -1,0 +1,30 @@
+{
+  "artifact_id": "protocol-kernelbench-cuda-megaqwen-decode-rtx-pro-6000",
+  "artifact_sha256": "281df10e55b53ee8409b58c066527c9940e0dcc645df63602f73a2c4c8533ee0",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": ["kernelbench-cuda-megaqwen-decode::rtx-pro-6000", "c1", "c2"],
+  "errors_found": 2,
+  "findings": [
+    {
+      "id": "row-kernelbench-cuda-megaqwen-decode::rtx-pro-6000-vguard-deck",
+      "severity": "blocker",
+      "location": "version_guard",
+      "evidence": "version_guard: \"the problem must stay in the stated four-problem deck.\" SPEC.md SOURCE 3 states \"Hard/Mega stay frozen\", lists 01, 02, 03, and says \"Problem 04 ... was retired 2026-11-09\" and \"deck stays at three since 2026-11-09\"; leaderboard.json (SOURCE 2) has only 01, 02, 03 problems. The claimed four-problem deck contradicts the current protocol.",
+      "repair": "Change version_guard to the current three-problem deck (01, 02, 03) and remove any four-problem claim; confirm no silent reuse of the pre-2026-11-09 identity."
+    },
+    {
+      "id": "row-kernelbench-cuda-megaqwen-decode::rtx-pro-6000-notes-p04",
+      "severity": "major",
+      "location": "notes",
+      "evidence": "notes: \"the `bug` muse/muse-spark-1.3 [ultra] cell on 04 (0.2056)\", \"the `reward_hack` deepseek-claude/deepseek-v4-pro cell on 04\", and \"Opus 5 reaches 196.10% on 04\". SOURCE 3 says problem 04 was retired 2026-11-09; SOURCE 2 leaderboard.json contains no problem 04 and muse/muse-spark-1.3 has 03 peak_fraction 0.0333 annotation \"interesting\". These 04 cells/values are not present in the captured payload and contradict the retirement.",
+      "repair": "Remove all problem-04 references from the notes (or retitle them as historical, clearly detached from this board's current deck); do not assert 04 values that the served leaderboard no longer carries."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "version_status \"published\" relies on interpreting leaderboard.json's generated_from_summary tag \"v2\" or published_runs.json hardware \"RTX_PRO_6000\" as the maintainer's release identifier; the protocol does not explicitly call the version a release tag, so this determination is inferential.",
+    "I cannot execute the owner's hash verification or transport checks; row SHA-256 281df10e55b53ee8409b58c066527c9940e0dcc645df63602f73a2c4c8533ee0 and row 281df... are accepted only as stated."
+  ],
+  "missing_evidence": []
+}

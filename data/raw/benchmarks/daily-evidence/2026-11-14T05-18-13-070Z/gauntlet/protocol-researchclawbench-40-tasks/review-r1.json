@@ -1,0 +1,32 @@
+{
+  "artifact_id": "protocol-researchclawbench-40-tasks",
+  "artifact_sha256": "323b823336884461e76c46e6b967872723e976d0d6d9dcfa89f7b54356a18cb5",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": ["researchclawbench::40-tasks", "c1", "c2"],
+  "errors_found": 2,
+  "findings": [
+    {
+      "id": "researchclawbench::40-tasks-version-status-mismatch",
+      "severity": "major",
+      "location": "row researchclawbench::40-tasks, fields version/version_status",
+      "evidence": "The protocol text (README and homepage) publishes no release identifier for this board: no version number, tag, or dated release is stated; only descriptive counts (40 tasks, 10 domains) appear. Criterion c2 defines version_status 'published' only when the maintainer publishes a release identifier that the version copies. Here version='40-tasks' is a task-count descriptor, not a published release identifier, and version_status='published' is unsupported; the protocol instead supports 'snapshot' (no release identifier published).",
+      "repair": "Change version_status to 'snapshot' and set version to a dated snapshot identity (e.g., snapshot-<capture-date>) consistent with our vocabulary, or provide a protocol passage that actually names a release identifier for this board supporting 'published'."
+    },
+    {
+      "id": "researchclawbench::40-tasks-coverage-date-unsupported",
+      "severity": "minor",
+      "location": "row researchclawbench::40-tasks, scoring.notes",
+      "evidence": "The notes claim coverage '33 to 40 of 40 on 2026-09-21'. The primary protocol news does not mention 2026-09-21; it reports 33 retained tasks on 2026-10-28 and a complete 40-task set on 2026-09-17. The specific date is unsupported by the supplied evidence.",
+      "repair": "Remove the precise date from the coverage note or correct it to a date supported by evidence, or express coverage as a general range without an unverified date."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "The note's claim that the Pass@1 view is the page's default is not directly evidenced in the supplied excerpts; the README mentions Pass@5 but does not state a default view.",
+    "The version_guard's reference to leaderboard.json keys {tasks, agents, scores, frontier} cannot be verified from the supplied excerpts, which include only generated summaries of the 'value' field.",
+    "Owner hash/transport/qualification checks are outside my execution capability; I rely on the supplied sha256 values and captured excerpts.",
+    "The exact composition of the served values beyond the reported 21 finite values (min 12.412894736842105, max 21.11692307692308) is not shown, so unit/range agreement is judged only against those summary bounds."
+  ],
+  "missing_evidence": []
+}

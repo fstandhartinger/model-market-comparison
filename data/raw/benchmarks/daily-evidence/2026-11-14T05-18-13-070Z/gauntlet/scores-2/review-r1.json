@@ -1,0 +1,29 @@
+{
+  "artifact_id": "scores-2",
+  "artifact_sha256": "3808ce108e3e3f59eaf142f808a4c1e897608b150aa3e1aba69c7333026d3758",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": [
+    "vendor:DeepSeek-V3:swe-bench-verified::snapshot-2026-09-10",
+    "c1"
+  ],
+  "errors_found": 1,
+  "findings": [
+    {
+      "id": "f1",
+      "severity": "major",
+      "location": "row vendor:DeepSeek-V3:swe-bench-verified::snapshot-2026-09-10, benchmark_id field and row identity",
+      "evidence": "Primary evidence (Table 6 of arXiv 2412.19437v2) identifies the benchmark only as 'SWE-Bench Verified' with no version or snapshot date. The artifact's benchmark_id claims 'swe-bench-verified::snapshot-2026-09-10', a version not present in the source. Criterion c1 requires verifying benchmark version; this claim is unsupported by the supplied evidence.",
+      "repair": "Obtain primary evidence that defines the snapshot-2026-09-10 version, or change benchmark_id to reflect only the supported identity (e.g., 'swe-bench-verified') and mark version as unknown. Do not claim an unsupported snapshot date."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "Unable to recompute SHA-256 hashes; rely on owner-provided values.",
+    "Primary evidence does not include a publication date; retrieved_at is used as the source date, which appears supported.",
+    "The internal model_id 'deepseek-v3-dec-24::default' is an artifact mapping not explicitly stated in the source, but the source model name matches DeepSeek-V3."
+  ],
+  "missing_evidence": [
+    "benchmark version 'snapshot-2026-09-10' as claimed in benchmark_id is not present in primary evidence"
+  ]
+}

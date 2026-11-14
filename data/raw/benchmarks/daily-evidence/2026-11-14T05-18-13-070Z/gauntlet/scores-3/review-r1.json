@@ -1,0 +1,40 @@
+{
+  "artifact_id": "scores-3",
+  "artifact_sha256": "c5a07830d019040e1bafe3845102a5dde4279ba017620bd918887f44d0044904",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": [
+    "vendor:DeepSeek-V3:aider-polyglot::snapshot-2026-09-10",
+    "c1"
+  ],
+  "errors_found": 3,
+  "findings": [
+    {
+      "id": "F1",
+      "severity": "major",
+      "location": "row['benchmark_id']",
+      "evidence": "Primary source Table 6 shows only \"Aider-Polyglot (Acc.)\"; no snapshot version appears. The claimed \"snapshot-2026-09-10\" is not present in the paper.",
+      "repair": "Either change benchmark_id to match the source evidence (e.g., 'aider-polyglot') or add primary evidence that supports the snapshot version."
+    },
+    {
+      "id": "F2",
+      "severity": "major",
+      "location": "row['source']['published_at']",
+      "evidence": "The arXiv URL (https://arxiv.org/pdf/2412.19437v2) indicates a December 2024 paper, but the row sets published_at to null and no explicit publication date is given in the packet. Source date cannot be verified.",
+      "repair": "Populate published_at with the actual publication date (e.g., 2024-12-xx) from the arXiv paper metadata or provide an explicit source date in the evidence."
+    },
+    {
+      "id": "F3",
+      "severity": "minor",
+      "location": "row['subject']['source_id']",
+      "evidence": "Paper text refers only to \"DeepSeek-V3\" and the table caption to \"chat model\". The phrase \"December 2024 update\" is not in the primary source.",
+      "repair": "Remove the unsupported descriptor or rephrase to e.g., 'DeepSeek-V3 (per arXiv 2412.19437v2 Table 6)'."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "Cannot recompute owner-provided SHA-256 hashes or re-execute transport/qualification; rely on supplied hash and header.",
+    "Exact day of the arXiv publication date is not given in the packet, so only month/year (December 2024) is inferable from the URL."
+  ],
+  "missing_evidence": []
+}

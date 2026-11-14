@@ -1,0 +1,30 @@
+{
+  "artifact_id": "protocol-weirdml-2",
+  "artifact_sha256": "6bd60c5766dad9d19f8ad87594eec4ade45889654f1ab0b2516e23568e5c4ae7",
+  "round": 1,
+  "verdict": "blocked",
+  "coverage_checked": ["weirdml::2","c1","c2"],
+  "errors_found": 2,
+  "findings": [
+    {
+      "id": "find1",
+      "severity": "blocker",
+      "location": "weirdml::2 version/description/metric",
+      "evidence": "Row version '2' and description '17 tasks' contradict SOURCE 1 which shows current 'WeirdML v3' featuring 11 tasks, with v2 listed as a previous version. Metric also differs: v3 scoring is 80% normalized area under curve plus 20% final value over 11 tasks.",
+      "repair": "Update row to version '3', description to 11 tasks, and metric to match protocol's current scoring; or if v2 is retained, set status 'retained' and superseded_by accordingly."
+    },
+    {
+      "id": "find2",
+      "severity": "blocker",
+      "location": "weirdml::2 status/superseded_by",
+      "evidence": "Row status 'active' and superseded_by null contradict SOURCE 1 which names WeirdML v3 as current and lists v2 as a previous version, indicating v2 is superseded/replaced.",
+      "repair": "Set status to 'retained' and superseded_by to the successor board's registry id (e.g., weirdml::3 if that is the id), and version_status may be 'retained' if no longer refreshed."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "Cannot execute hash/transport checks; relies on provided hashes.",
+    "Exact registry id for successor board (WeirdML v3) is not in packet, so repair cannot specify it; but the row's null superseded_by is still a mismatch because the protocol names a successor."
+  ],
+  "missing_evidence": []
+}
