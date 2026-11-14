@@ -73,6 +73,9 @@ SUPPLEMENTS: tuple[dict[str, Any], ...] = (
     {"family": "starlord", "module": "starlord_runtime_supplement.py",
      "repos": ("huggingface.co/xsdfasfgsa/starlord-27b-preview",),
      "precedents": ("fastlane-native-2d2f81c6",)},
+    {"family": "minimodels_decision", "module": "minimodels_decision_runtime_supplement.py",
+     "repos": ("huggingface.co/minimodels-ai/decision-1.0",),
+     "precedents": ("fastlane-native-f62aeab1",)},
 )
 
 _SEGMENT = re.compile(r"[A-Za-z0-9][A-Za-z0-9._-]{0,95}")

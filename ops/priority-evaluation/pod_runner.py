@@ -1082,6 +1082,13 @@ def _lifecycle(provider, job, recipe, staging_path, output, state, gpu_choice, t
                 state['runtime_supplement'] = wps_decision_runtime_supplement.build(provider, pod_id)
                 image = state['runtime_supplement']['effective_image']
                 save_state()
+            import minimodels_decision_runtime_supplement
+            if minimodels_decision_runtime_supplement.active(job_dir or job, recipe):
+                # Fixed-order offline overlay of Minimodels Decision 1.0's documented stack (transformers 5.23 and pip's commit-date
+                # releases) on the author's digest-pinned torch 2.7.0+cu128 runtime image; the customer's serve_torch_jev.py is mounted unchanged.
+                state['runtime_supplement'] = minimodels_decision_runtime_supplement.build(provider, pod_id)
+                image = state['runtime_supplement']['effective_image']
+                save_state()
             import starlord_runtime_supplement
             if starlord_runtime_supplement.active(job_dir or job, recipe):
                 # Fixed-order offline overlay of Starlord-27B-preview's recorded transformers 5.3 stack (plus three stdlib-only
