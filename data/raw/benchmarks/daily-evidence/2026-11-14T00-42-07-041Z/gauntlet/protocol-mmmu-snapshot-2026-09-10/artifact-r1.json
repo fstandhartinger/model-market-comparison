@@ -1,0 +1,22 @@
+[
+  {
+    "id": "mmmu::snapshot-2026-09-10",
+    "version": "snapshot-2026-09-10",
+    "version_guard": "No public version was verified: this identity freezes the observed methodology/source snapshot. Review task set, harness, judges, metric and configuration before importing any later result; a changed protocol needs a new identity.",
+    "status": "active",
+    "version_status": "snapshot",
+    "superseded_by": null,
+    "scoring": {
+      "metric": "Zero-shot accuracy (percent) on multimodal college-level questions, reported overall and per discipline for the Val and Test splits",
+      "unit": "percent",
+      "range": [
+        0,
+        100
+      ],
+      "higher_better": true,
+      "notes": "Values retain this source implementation and score convention; different harnesses, subsets, judge revisions and versions must remain separate."
+    },
+    "description": "A multimodal benchmark of 11.5K college-level questions across six disciplines and 30 subjects, with 30 heterogeneous image types.",
+    "maintainer": "MMMU Team (Ohio State University et al.)"
+  }
+]

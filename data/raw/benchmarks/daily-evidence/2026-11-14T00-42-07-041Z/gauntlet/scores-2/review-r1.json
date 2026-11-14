@@ -1,0 +1,32 @@
+{
+  "artifact_id": "scores-2",
+  "artifact_sha256": "011daca6d5df3e7804579a1a1e4d3d8f4200345d28830e5adea9b1d515be1248",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "public:110b90039bd12486bfd34e94",
+    "public:f6eb52cbfb04fa0f6473d4b4",
+    "public:00d0e3a35943911bf24ff8da",
+    "public:b50b12162eef25f627bff60b",
+    "public:f3ae96633aa8d0c728df398b",
+    "public:f737ba4a8404b528d42a4147",
+    "public:bda1d85b21ce37948959f4cf",
+    "public:d77f4c6957d212e43ca5ff2e",
+    "public:3ec1c745af62663368a60f7b",
+    "public:52749b8727d4af4a4616d499",
+    "public:eae8fa0d798f3ecc05259e83",
+    "public:36263bef9333b157243b7eee",
+    "public:98153fb029f942527d28f2b1",
+    "public:1886a947e7cf7a626a792487",
+    "public:fdc944d2d74b46fe012482a8",
+    "c1"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Model_id values for rows public:b50b12162eef25f627bff60b, public:bda1d85b21ce37948959f4cf and public:d77f4c6957d212e43ca5ff2e (kimi-k2.6::default, minimax-m3::default, mistral-medium-3.1::default) are asserted with join_note; no independent catalog evidence is present in the packet, so these exact mappings could not be independently re-verified.",
+    "Owner-performed hash and transport/qualification checks could not be executed in this read-only review; owner-provided row SHA-256 values and producer receipt are treated as supplied evidence."
+  ],
+  "missing_evidence": []
+}

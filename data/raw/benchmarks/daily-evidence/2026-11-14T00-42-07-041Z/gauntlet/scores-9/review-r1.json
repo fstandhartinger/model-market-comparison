@@ -1,0 +1,37 @@
+{
+  "artifact_id": "scores-9",
+  "artifact_sha256": "0150d617494178e1ed94fa7d6024b8f2ec5e7d1c1ecd9b21c59be7256f091b15",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": [
+    "vendor:DeepSeek-V3:swe-bench-verified::snapshot-2026-09-10",
+    "c1"
+  ],
+  "errors_found": 2,
+  "findings": [
+    {
+      "id": "F1-benchmark-version",
+      "severity": "major",
+      "location": "row vendor:DeepSeek-V3:swe-bench-verified::snapshot-2026-09-10, benchmark_id",
+      "evidence": "Primary Table 6 names the benchmark only as 'SWE-Bench Verified'; no 'snapshot-2026-09-10' appears in the supplied PDF text, so the asserted benchmark version is not substantiated.",
+      "repair": "Remove ':snapshot-2026-09-10' from benchmark_id and related references, or provide primary evidence that establishes this specific snapshot version."
+    },
+    {
+      "id": "F2-source-date",
+      "severity": "minor",
+      "location": "row vendor:DeepSeek-V3:swe-bench-verified::snapshot-2026-09-10, source.published_at",
+      "evidence": "source.published_at is null and the packet supplies only retrieved_at and arXiv ID 2412.19437v2; no actual publication date is present to verify the 'source date' required by c1.",
+      "repair": "Supply the paper's publication date, or explicitly define the verified source date as the provided retrieved_at and document that choice."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "Could not independently execute owner hash/transport checks; relied on supplied row and source hashes.",
+    "Numeric formatting difference 42 vs 42.0 is acceptable per numeric equality rule.",
+    "No additional derivation or unit conversion was detected beyond direct transcription."
+  ],
+  "missing_evidence": [
+    "Evidence establishing the benchmark version snapshot-2026-09-10 for SWE-bench Verified.",
+    "Publication date of arXiv 2412.19437v2 (source date for c1)."
+  ]
+}

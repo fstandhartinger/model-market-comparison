@@ -1,0 +1,86 @@
+{
+  "started_at": "2026-11-14T01:16:15.547Z",
+  "mode": "oneshot",
+  "requested_model": "z-ai/glm-5.3-flash",
+  "producers": [],
+  "qualification": {
+    "id": "z-ai/glm-5.3-flash",
+    "family": "z-ai",
+    "free": false,
+    "input_per_1m": 0.0399,
+    "output_per_1m": 0.0784,
+    "context": 1048576,
+    "aa_intelligence_index": 27.8,
+    "aa_source": "exact_id_and_variants",
+    "matched_model_ids": [
+      "glm-5.3-flash::default"
+    ],
+    "aa_variant_scores": [
+      {
+        "id": "glm-5.3-flash::default",
+        "index": 27.8
+      }
+    ]
+  },
+  "input_sha256": "0f8af297f83cd35e99c25e74f1df3ed03e3f9926f88e326851158fda15d4a681",
+  "route": "openrouter",
+  "attempt": 1,
+  "free_route_role": "critic",
+  "free_routes_offered": [
+    "chutes/moonshotai/Kimi-K3-TEE"
+  ],
+  "excluded_models": [
+    "chutes/moonshotai/Kimi-K3-TEE"
+  ],
+  "hard_excluded_models": [],
+  "catalog": {
+    "source": "run-cache",
+    "fetched_at": "2026-11-14T01:03:02.387Z"
+  },
+  "request_limits": {
+    "max_tokens": 16384,
+    "timeout_seconds": 600,
+    "input_bytes": 52424
+  },
+  "reasoning": {
+    "effort": "low",
+    "exclude": true
+  },
+  "ignored_providers": [
+    "Wafer",
+    "OpenInference"
+  ],
+  "response_format_mode": "json_object",
+  "response_schema_sha256": "376bde7986cc2f8fd182f04e745c607933760bea7c306ea6e8e992b7f70be25a",
+  "images": [],
+  "actual_model": "z-ai/glm-5.3-flash",
+  "usage": {
+    "prompt_tokens": 12830,
+    "completion_tokens": 659,
+    "total_tokens": 13489,
+    "cost": 0.00111573,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.001127,
+      "upstream_inference_prompt_cost": 0.00096225,
+      "upstream_inference_completions_cost": 0.00016475
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 565,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "provider": "Tenstorrent",
+  "finish_reason": "stop",
+  "price_context": "OpenRouter catalog reference prices; usage.cost records the actual charge when returned.",
+  "session_id": null,
+  "finished_at": "2026-11-14T01:16:29.355Z",
+  "output_sha256": "5601e19fd5326fdd529fa8443b6914549ad75e93b37be693e78f95f61f60eb69"
+}

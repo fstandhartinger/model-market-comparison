@@ -1,0 +1,22 @@
+[
+  {
+    "id": "mazur-creative-story-writing::snapshot-2026-09-10",
+    "version": "snapshot-2026-09-10",
+    "version_guard": "No public version was verified: this identity freezes the observed methodology/source snapshot. Review task set, harness, judges, metric and configuration before importing any later result; a changed protocol needs a new identity.",
+    "status": "active",
+    "version_status": "snapshot",
+    "superseded_by": null,
+    "scoring": {
+      "metric": "Relative comparison score from pairwise LLM evaluator judgments (Thurstone-style rating; zero is near the middle of the comparison set)",
+      "unit": "points",
+      "range": [
+        null,
+        null
+      ],
+      "higher_better": true,
+      "notes": "Values retain this source implementation and score convention; different harnesses, subsets, judge revisions and versions must remain separate."
+    },
+    "description": "Pairwise comparison of short stories written to the same constrained creative briefs, with LLM evaluator choices combined into a relative comparison score.",
+    "maintainer": "Lech Mazur (lechmazur)"
+  }
+]

@@ -1,0 +1,22 @@
+{
+  "artifact_id": "scores-7",
+  "artifact_sha256": "f1680e0a150154b85514d6c22d4dcad98752110262ee8b019b483e643ed6770c",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/retail",
+    "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/airline",
+    "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/telecom",
+    "c1"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "I cannot recompute SHA-256 hashes or execute transport/qualification checks; owner-issued hashes bound rows as stated and qualification receipt is consistent with producer identity z-ai/glm-5.3-flash.",
+    "The benchmark version 'tau2-bench::2' is inferred from the source table label TAU2-Retail/Airline/Telecom; the README provides no finer version string, which is an alias-free reading of the observed rows.",
+    "The source README does not publish a date; published_at is null, while retrieved_at matches the packet timestamps, so no claim is missed.",
+    "Sampling/output-length protocol fields mirror README best-practice guidance; the source does not distinguish per-row usage for TAU2, so protocol text reflects the general statement."
+  ],
+  "missing_evidence": []
+}

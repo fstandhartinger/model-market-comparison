@@ -1,0 +1,99 @@
+[
+  {
+    "id": "public:74bfa9bc8526e60a7e5aa80c",
+    "benchmark_id": "mazur-creative-story-writing::snapshot-2026-09-10",
+    "subject": {
+      "source_id": "GPT-OSS-120B",
+      "name": "GPT-OSS-120B",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": -3.233,
+    "unit": "points",
+    "basis": "measured",
+    "source": {
+      "url": "https://raw.githubusercontent.com/lechmazur/writing/main/README.md",
+      "retrieved_at": "2026-11-14T00:46:15.961219+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-11-14T00-42-07-041Z/1ec6c86f5dda480b605f.gz",
+      "sha256": "1ec6c86f5dda480b605f4627b52a873ed017d7658d6dd62229d89444d3668848",
+      "locator": "markdown_table; source row 79; GPT-OSS-120B; field value"
+    },
+    "protocol": "Relative comparison score from pairwise LLM evaluator judgments (Thurstone-style rating; zero is near the middle of the comparison set); source row: [\"61\",\"GPT-OSS-120B\",\"-3.233\",\"10%\",\"-3.318 to -3.139\"]",
+    "comparison_key": null
+  },
+  {
+    "id": "public:7ae952c7210225caf3a514e4",
+    "benchmark_id": "mazur-creative-story-writing::snapshot-2026-09-10",
+    "subject": {
+      "source_id": "MiniMax-M2.7",
+      "name": "MiniMax-M2.7",
+      "model_id": "minimax-m2.7::default",
+      "variant": null,
+      "harness": null
+    },
+    "value": -3.922,
+    "unit": "points",
+    "basis": "measured",
+    "source": {
+      "url": "https://raw.githubusercontent.com/lechmazur/writing/main/README.md",
+      "retrieved_at": "2026-11-14T00:46:15.961219+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-11-14T00-42-07-041Z/1ec6c86f5dda480b605f.gz",
+      "sha256": "1ec6c86f5dda480b605f4627b52a873ed017d7658d6dd62229d89444d3668848",
+      "locator": "markdown_table; source row 80; MiniMax-M2.7; field value"
+    },
+    "protocol": "Relative comparison score from pairwise LLM evaluator judgments (Thurstone-style rating; zero is near the middle of the comparison set); source row: [\"62\",\"MiniMax-M2.7\",\"-3.922\",\"6%\",\"-4.062 to -3.790\"]",
+    "comparison_key": null,
+    "join_note": "Exact display name, unique default catalog configuration; no effort alias inference."
+  },
+  {
+    "id": "public:d41950835a28d665808623c0",
+    "benchmark_id": "mazur-creative-story-writing::snapshot-2026-09-10",
+    "subject": {
+      "source_id": "Grok 4.3",
+      "name": "Grok 4.3",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": -4.412,
+    "unit": "points",
+    "basis": "measured",
+    "source": {
+      "url": "https://raw.githubusercontent.com/lechmazur/writing/main/README.md",
+      "retrieved_at": "2026-11-14T00:46:15.961219+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-11-14T00-42-07-041Z/1ec6c86f5dda480b605f.gz",
+      "sha256": "1ec6c86f5dda480b605f4627b52a873ed017d7658d6dd62229d89444d3668848",
+      "locator": "markdown_table; source row 81; Grok 4.3; field value"
+    },
+    "protocol": "Relative comparison score from pairwise LLM evaluator judgments (Thurstone-style rating; zero is near the middle of the comparison set); source row: [\"63\",\"Grok 4.3\",\"-4.412\",\"4%\",\"-4.574 to -4.226\"]",
+    "comparison_key": null
+  },
+  {
+    "id": "public:bc9c05c77c218f1c66d2fb26",
+    "benchmark_id": "mazur-creative-story-writing::snapshot-2026-09-10",
+    "subject": {
+      "source_id": "Grok 4.5 (high)",
+      "name": "Grok 4.5 (high)",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": -5.246,
+    "unit": "points",
+    "basis": "measured",
+    "source": {
+      "url": "https://raw.githubusercontent.com/lechmazur/writing/main/README.md",
+      "retrieved_at": "2026-11-14T00:46:15.961219+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-11-14T00-42-07-041Z/1ec6c86f5dda480b605f.gz",
+      "sha256": "1ec6c86f5dda480b605f4627b52a873ed017d7658d6dd62229d89444d3668848",
+      "locator": "markdown_table; source row 82; Grok 4.5 (high); field value"
+    },
+    "protocol": "Relative comparison score from pairwise LLM evaluator judgments (Thurstone-style rating; zero is near the middle of the comparison set); source row: [\"64\",\"Grok 4.5 (high)\",\"-5.246\",\"1%\",\"-5.341 to -5.160\"]",
+    "comparison_key": null
+  }
+]

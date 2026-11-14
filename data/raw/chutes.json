@@ -1,6 +1,6 @@
 {
   "source": "Chutes — llm.chutes.ai/v1/models (first-party, public catalog)",
-  "collected_at": "2026-11-13",
+  "collected_at": "2026-11-14",
   "method": "scripts/fetch-chutes-catalog.mjs: one GET of the public catalog; prices are price.{input,output,input_cache_read}.usd per 1M tokens; curated model_name/provider_org carried over by exact tee_model_id; new ids marked mapping=derived. See chutes.method.md.",
   "models": [
     {
@@ -67,17 +67,6 @@
       "notes": " | 2026-07-31: price cut 1.40/4.40->1.25/3.95, cache-read 0.625 (live llm.chutes.ai)."
     },
     {
-      "model_name": "Qwen3.5-27B",
-      "provider_org": "Alibaba",
-      "input_per_1m_usd": 0.2,
-      "output_per_1m_usd": 1.75,
-      "cache_read_per_1m_usd": 0.02,
-      "context_length": 262144,
-      "confidential_compute": true,
-      "tee_model_id": "Qwen/Qwen3.5-27B-TEE",
-      "mapping": "derived"
-    },
-    {
       "model_name": "Qwen3.6-27B",
       "provider_org": "Alibaba",
       "input_per_1m_usd": 0.25,
@@ -99,15 +88,15 @@
       "notes": "Added 2026-08-26 from llm.chutes.ai"
     },
     {
-      "model_name": "DeepSeek V4 Flash 0731",
-      "provider_org": "DeepSeek",
-      "input_per_1m_usd": 0.44,
-      "output_per_1m_usd": 1.32,
-      "cache_read_per_1m_usd": 0.044,
+      "model_name": "Qwen3.5-27B",
+      "provider_org": "Alibaba",
+      "input_per_1m_usd": 0.2,
+      "output_per_1m_usd": 1.75,
+      "cache_read_per_1m_usd": 0.02,
+      "context_length": 262144,
       "confidential_compute": true,
-      "context_length": 1048576,
-      "tee_model_id": "deepseek-ai/DeepSeek-V4-Flash-0731-TEE",
-      "notes": "Added 2026-08-26 from llm.chutes.ai"
+      "tee_model_id": "Qwen/Qwen3.5-27B-TEE",
+      "mapping": "derived"
     },
     {
       "model_name": "DeepSeek-V4.1-Flash-1017",
@@ -129,6 +118,17 @@
       "context_length": 262144,
       "confidential_compute": true,
       "tee_model_id": "Qwen/Qwen3.5-397B-A17B-TEE"
+    },
+    {
+      "model_name": "DeepSeek V4 Flash 0731",
+      "provider_org": "DeepSeek",
+      "input_per_1m_usd": 0.44,
+      "output_per_1m_usd": 1.32,
+      "cache_read_per_1m_usd": 0.044,
+      "confidential_compute": true,
+      "context_length": 1048576,
+      "tee_model_id": "deepseek-ai/DeepSeek-V4-Flash-0731-TEE",
+      "notes": "Added 2026-08-26 from llm.chutes.ai"
     },
     {
       "model_name": "DeepSeek-V4-Pro-0813",
@@ -153,6 +153,17 @@
       "mapping": "derived"
     },
     {
+      "model_name": "Kimi-K2.7-Code",
+      "provider_org": "Moonshot AI",
+      "input_per_1m_usd": 0.832,
+      "output_per_1m_usd": 3.5,
+      "cache_read_per_1m_usd": 0.167,
+      "context_length": 262144,
+      "confidential_compute": false,
+      "tee_model_id": "moonshotai/Kimi-K2.7-Code",
+      "mapping": "derived"
+    },
+    {
       "model_name": "Qwen3.8-2.4T-A95B",
       "provider_org": "Alibaba",
       "input_per_1m_usd": 2,
@@ -164,14 +175,14 @@
       "mapping": "derived"
     },
     {
-      "model_name": "Kimi-K2.7-Code",
-      "provider_org": "Moonshot AI",
-      "input_per_1m_usd": 0.832,
-      "output_per_1m_usd": 3.5,
-      "cache_read_per_1m_usd": 0.167,
-      "context_length": 262144,
+      "model_name": "GLM-5.2-Fast",
+      "provider_org": "Z.ai",
+      "input_per_1m_usd": 2.45,
+      "output_per_1m_usd": 7.7,
+      "cache_read_per_1m_usd": 0.49,
+      "context_length": 1048576,
       "confidential_compute": false,
-      "tee_model_id": "moonshotai/Kimi-K2.7-Code",
+      "tee_model_id": "zai-org/GLM-5.2-Fast",
       "mapping": "derived"
     },
     {
@@ -194,20 +205,9 @@
       "confidential_compute": false,
       "tee_model_id": "tencent/Hy4",
       "mapping": "derived"
-    },
-    {
-      "model_name": "GLM-5.2-Fast",
-      "provider_org": "Z.ai",
-      "input_per_1m_usd": 2.45,
-      "output_per_1m_usd": 7.7,
-      "cache_read_per_1m_usd": 0.49,
-      "context_length": 1048576,
-      "confidential_compute": false,
-      "tee_model_id": "zai-org/GLM-5.2-Fast",
-      "mapping": "derived"
     }
   ],
-  "response_sha256": "013c8e268d1d4c861eebd247998cb92348b3469f3c90dec01b8bdbc658255b2b",
+  "response_sha256": "e915b76de1c1bc0fb26e2d5965a36eeae803e10520801f43b5e6657b35b59945",
   "diff": {
     "added": [],
     "removed": [],

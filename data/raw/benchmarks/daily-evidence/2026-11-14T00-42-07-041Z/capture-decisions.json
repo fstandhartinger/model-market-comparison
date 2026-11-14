@@ -1,0 +1,485 @@
+{
+  "schema_version": 1,
+  "arms": [
+    {
+      "id": "arc-agi::1",
+      "status": "retained_after_failure",
+      "reason": "Command failed: python3 ops/daily/public-candidate.py /opt/benchmarkheaven-daily/runs/2026-11-14T00-41-10-252Z-2380635/benchmark-candidates/plan-1.json /opt/benchmarkheaven-daily/runs/2026-11-14T00-41-10-252Z-2380635/benchmark-candidates/public-1.json\nTraceback (most recent call last):\n  File \"/home/flori/srv/benchmarkheaven-daily/runs/2026-11-14T00-41-10-252Z-2380635/work/ops/daily/public-candidate.py\", line 132, in <module>\n    evidence={}; result=module.collect(plan,registry,evidence=evidence)\n                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/flori/srv/benchmarkheaven-daily/runs/2026-11-14T00-41-10-252Z-2380635/work/scripts/collect-public-benchmarks.py\", line 1435, in collect\n    source=source_spec['source'];rule=source_spec['parser'];parsed=parse(load(source),rule,load,entry);source_count=0;included=set()\n                                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/flori/srv/benchmarkheaven-daily/runs/2026-11-14T00-41-10-252Z-2380635/work/scripts/collect-public-benchmarks.py\", line 196, in parse\n    if not released:raise ValueError('ARC Prize results page vendor or model release date missing or changed')\n                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nValueError: ARC Prize results page vendor or model release date missing or changed\n",
+      "captures": [
+        "https://arcprize.org/media/data/leaderboard/v1.json",
+        "https://arcprize.org/results/openai-gpt-6-luna",
+        "https://arcprize.org/results/openai-gpt-6-astra",
+        "https://arcprize.org/results/anthropic-claude-fable-5-1",
+        "https://arcprize.org/results/anthropic-claude-opus-5-5",
+        "https://arcprize.org/results/google-gemini-3-8-flash",
+        "https://arcprize.org/results/moonshot-kimi-k3",
+        "https://arcprize.org/results/deepseek-v4-flash-0731",
+        "https://arcprize.org/results/deepseek-v4-pro-0813"
+      ]
+    },
+    {
+      "id": "arc-agi::2",
+      "status": "retained_after_failure",
+      "reason": "Command failed: python3 ops/daily/public-candidate.py /opt/benchmarkheaven-daily/runs/2026-11-14T00-41-10-252Z-2380635/benchmark-candidates/plan-2.json /opt/benchmarkheaven-daily/runs/2026-11-14T00-41-10-252Z-2380635/benchmark-candidates/public-2.json\nTraceback (most recent call last):\n  File \"/home/flori/srv/benchmarkheaven-daily/runs/2026-11-14T00-41-10-252Z-2380635/work/ops/daily/public-candidate.py\", line 132, in <module>\n    evidence={}; result=module.collect(plan,registry,evidence=evidence)\n                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/flori/srv/benchmarkheaven-daily/runs/2026-11-14T00-41-10-252Z-2380635/work/scripts/collect-public-benchmarks.py\", line 1435, in collect\n    source=source_spec['source'];rule=source_spec['parser'];parsed=parse(load(source),rule,load,entry);source_count=0;included=set()\n                                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/flori/srv/benchmarkheaven-daily/runs/2026-11-14T00-41-10-252Z-2380635/work/scripts/collect-public-benchmarks.py\", line 196, in parse\n    if not released:raise ValueError('ARC Prize results page vendor or model release date missing or changed')\n                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nValueError: ARC Prize results page vendor or model release date missing or changed\n",
+      "captures": [
+        "https://arcprize.org/media/data/leaderboard/v2.json",
+        "https://arcprize.org/results/openai-gpt-6-luna",
+        "https://arcprize.org/results/openai-gpt-6-astra",
+        "https://arcprize.org/results/anthropic-claude-fable-5-1",
+        "https://arcprize.org/results/anthropic-claude-opus-5-5",
+        "https://arcprize.org/results/google-gemini-3-8-flash",
+        "https://arcprize.org/results/moonshot-kimi-k3",
+        "https://arcprize.org/results/deepseek-v4-flash-0731",
+        "https://arcprize.org/results/deepseek-v4-pro-0813"
+      ]
+    },
+    {
+      "id": "critpt::snapshot-2026-09-10",
+      "status": "retained_after_failure",
+      "reason": "Prior public identities disappeared",
+      "captures": [
+        "https://raw.githubusercontent.com/CritPt-Benchmark/CritPt/main/README.md"
+      ]
+    },
+    {
+      "id": "livebench::2026-06-25",
+      "status": "retained_after_failure",
+      "reason": "Primary source unavailable: https://livebench.ai/table_2026_06_25.csv: HTTP Error 404: Not Found",
+      "captures": [
+        "https://livebench.ai/table_2026_06_25.csv",
+        "https://livebench.ai/categories_2026_06_25.json",
+        "https://livebench.ai/static/js/main.04358d6f.js"
+      ]
+    },
+    {
+      "id": "tau3-voice::snapshot-2026-09-10",
+      "status": "retained_after_failure",
+      "reason": "Command failed: python3 ops/daily/public-candidate.py /opt/benchmarkheaven-daily/runs/2026-11-14T00-41-10-252Z-2380635/benchmark-candidates/plan-37.json /opt/benchmarkheaven-daily/runs/2026-11-14T00-41-10-252Z-2380635/benchmark-candidates/public-37.json\nTraceback (most recent call last):\n  File \"/home/flori/srv/benchmarkheaven-daily/runs/2026-11-14T00-41-10-252Z-2380635/work/ops/daily/public-candidate.py\", line 132, in <module>\n    evidence={}; result=module.collect(plan,registry,evidence=evidence)\n                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/flori/srv/benchmarkheaven-daily/runs/2026-11-14T00-41-10-252Z-2380635/work/scripts/collect-public-benchmarks.py\", line 1435, in collect\n    source=source_spec['source'];rule=source_spec['parser'];parsed=parse(load(source),rule,load,entry);source_count=0;included=set()\n                                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/flori/srv/benchmarkheaven-daily/runs/2026-11-14T00-41-10-252Z-2380635/work/scripts/collect-public-benchmarks.py\", line 154, in parse\n    if not table or not all(word in text(' '.join(' '.join(c) for c in table[0])) for word in spec['header_contains']):raise ValueError('HTML header/version changed')\n                                                                                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nValueError: HTML header/version changed\n",
+      "captures": []
+    },
+    {
+      "id": "terminal-bench::4.0",
+      "status": "retained_after_failure",
+      "reason": "Command failed: python3 ops/daily/public-candidate.py /opt/benchmarkheaven-daily/runs/2026-11-14T00-41-10-252Z-2380635/benchmark-candidates/plan-38.json /opt/benchmarkheaven-daily/runs/2026-11-14T00-41-10-252Z-2380635/benchmark-candidates/public-38.json\nTraceback (most recent call last):\n  File \"/home/flori/srv/benchmarkheaven-daily/runs/2026-11-14T00-41-10-252Z-2380635/work/ops/daily/public-candidate.py\", line 132, in <module>\n    evidence={}; result=module.collect(plan,registry,evidence=evidence)\n                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/flori/srv/benchmarkheaven-daily/runs/2026-11-14T00-41-10-252Z-2380635/work/scripts/collect-public-benchmarks.py\", line 1435, in collect\n    source=source_spec['source'];rule=source_spec['parser'];parsed=parse(load(source),rule,load,entry);source_count=0;included=set()\n                                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/flori/srv/benchmarkheaven-daily/runs/2026-11-14T00-41-10-252Z-2380635/work/scripts/collect-public-benchmarks.py\", line 385, in parse\n    if len(found)!=1 or found[0]['leaderboard']['name']!='4-0-0':raise ValueError('Terminal-Bench version/query changed')\n                                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nValueError: Terminal-Bench version/query changed\n",
+      "captures": [
+        "https://www.tbench.ai/"
+      ]
+    },
+    {
+      "id": "vending-bench::2",
+      "status": "retained_after_failure",
+      "reason": "Prior public identities disappeared",
+      "captures": [
+        "https://andonlabs.com/evals/vending-bench-2"
+      ]
+    },
+    {
+      "id": "weirdml::2",
+      "status": "retained_after_failure",
+      "reason": "weirdml::2: protocol not approved: round 1: chutes/moonshotai/Kimi-K3-TEE: fetch failed; round 2: revise — [blocker] row weirdml::2: version, scoring.metric, description → Align the row to current WeirdML v3: version '3' (or the maintainer's published 'v3' identifier), scoring.metric reflecting 11 tasks and the normalized area-un… | [blocker] row weirdml::2: status, version_status, superseded_by → Either migrate the row to the current v3 board (version '3', version_status 'published', status 'active') with the matching metric, or for the v2 board set sta… — all 1 row disputed, nothing left to publish",
+      "captures": [
+        "https://htihle.github.io/data/weirdml_data.csv"
+      ]
+    },
+    {
+      "id": "cursorbench::4.0",
+      "status": "retained_after_failure",
+      "reason": "Prior public identities disappeared",
+      "captures": [
+        "https://cursor.com/cursorbench"
+      ]
+    },
+    {
+      "id": "cursorbench-cost::4.0",
+      "status": "retained_after_failure",
+      "reason": "Prior public identities disappeared",
+      "captures": [
+        "https://cursor.com/cursorbench"
+      ]
+    },
+    {
+      "id": "vals-index::2",
+      "status": "retained_after_failure",
+      "reason": "Command failed: python3 ops/daily/public-candidate.py /opt/benchmarkheaven-daily/runs/2026-11-14T00-41-10-252Z-2380635/benchmark-candidates/plan-48.json /opt/benchmarkheaven-daily/runs/2026-11-14T00-41-10-252Z-2380635/benchmark-candidates/public-48.json\nTraceback (most recent call last):\n  File \"/home/flori/srv/benchmarkheaven-daily/runs/2026-11-14T00-41-10-252Z-2380635/work/ops/daily/public-candidate.py\", line 132, in <module>\n    evidence={}; result=module.collect(plan,registry,evidence=evidence)\n                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/flori/srv/benchmarkheaven-daily/runs/2026-11-14T00-41-10-252Z-2380635/work/scripts/collect-public-benchmarks.py\", line 1435, in collect\n    source=source_spec['source'];rule=source_spec['parser'];parsed=parse(load(source),rule,load,entry);source_count=0;included=set()\n                                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/flori/srv/benchmarkheaven-daily/runs/2026-11-14T00-41-10-252Z-2380635/work/scripts/collect-public-benchmarks.py\", line 218, in parse\n    if len(islands)!=1:raise ValueError('Astro island missing or ambiguous: '+spec['component'])\n                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nValueError: Astro island missing or ambiguous: /_astro/BenchmarkView.\n",
+      "captures": [
+        "https://www.vals.ai/benchmarks/vals_index"
+      ]
+    },
+    {
+      "id": "vals-index-finance-agent::2",
+      "status": "retained_after_failure",
+      "reason": "Command failed: python3 ops/daily/public-candidate.py /opt/benchmarkheaven-daily/runs/2026-11-14T00-41-10-252Z-2380635/benchmark-candidates/plan-49.json /opt/benchmarkheaven-daily/runs/2026-11-14T00-41-10-252Z-2380635/benchmark-candidates/public-49.json\nTraceback (most recent call last):\n  File \"/home/flori/srv/benchmarkheaven-daily/runs/2026-11-14T00-41-10-252Z-2380635/work/ops/daily/public-candidate.py\", line 132, in <module>\n    evidence={}; result=module.collect(plan,registry,evidence=evidence)\n                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/flori/srv/benchmarkheaven-daily/runs/2026-11-14T00-41-10-252Z-2380635/work/scripts/collect-public-benchmarks.py\", line 1435, in collect\n    source=source_spec['source'];rule=source_spec['parser'];parsed=parse(load(source),rule,load,entry);source_count=0;included=set()\n                                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/flori/srv/benchmarkheaven-daily/runs/2026-11-14T00-41-10-252Z-2380635/work/scripts/collect-public-benchmarks.py\", line 218, in parse\n    if len(islands)!=1:raise ValueError('Astro island missing or ambiguous: '+spec['component'])\n                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nValueError: Astro island missing or ambiguous: /_astro/BenchmarkView.\n",
+      "captures": [
+        "https://www.vals.ai/benchmarks/vals_index"
+      ]
+    },
+    {
+      "id": "vals-index-emb::2",
+      "status": "retained_after_failure",
+      "reason": "Command failed: python3 ops/daily/public-candidate.py /opt/benchmarkheaven-daily/runs/2026-11-14T00-41-10-252Z-2380635/benchmark-candidates/plan-50.json /opt/benchmarkheaven-daily/runs/2026-11-14T00-41-10-252Z-2380635/benchmark-candidates/public-50.json\nTraceback (most recent call last):\n  File \"/home/flori/srv/benchmarkheaven-daily/runs/2026-11-14T00-41-10-252Z-2380635/work/ops/daily/public-candidate.py\", line 132, in <module>\n    evidence={}; result=module.collect(plan,registry,evidence=evidence)\n                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/flori/srv/benchmarkheaven-daily/runs/2026-11-14T00-41-10-252Z-2380635/work/scripts/collect-public-benchmarks.py\", line 1435, in collect\n    source=source_spec['source'];rule=source_spec['parser'];parsed=parse(load(source),rule,load,entry);source_count=0;included=set()\n                                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/flori/srv/benchmarkheaven-daily/runs/2026-11-14T00-41-10-252Z-2380635/work/scripts/collect-public-benchmarks.py\", line 218, in parse\n    if len(islands)!=1:raise ValueError('Astro island missing or ambiguous: '+spec['component'])\n                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nValueError: Astro island missing or ambiguous: /_astro/BenchmarkView.\n",
+      "captures": [
+        "https://www.vals.ai/benchmarks/vals_index"
+      ]
+    },
+    {
+      "id": "vals-index-terminal-bench-2.1::2",
+      "status": "retained_after_failure",
+      "reason": "Command failed: python3 ops/daily/public-candidate.py /opt/benchmarkheaven-daily/runs/2026-11-14T00-41-10-252Z-2380635/benchmark-candidates/plan-51.json /opt/benchmarkheaven-daily/runs/2026-11-14T00-41-10-252Z-2380635/benchmark-candidates/public-51.json\nTraceback (most recent call last):\n  File \"/home/flori/srv/benchmarkheaven-daily/runs/2026-11-14T00-41-10-252Z-2380635/work/ops/daily/public-candidate.py\", line 132, in <module>\n    evidence={}; result=module.collect(plan,registry,evidence=evidence)\n                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/flori/srv/benchmarkheaven-daily/runs/2026-11-14T00-41-10-252Z-2380635/work/scripts/collect-public-benchmarks.py\", line 1435, in collect\n    source=source_spec['source'];rule=source_spec['parser'];parsed=parse(load(source),rule,load,entry);source_count=0;included=set()\n                                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/flori/srv/benchmarkheaven-daily/runs/2026-11-14T00-41-10-252Z-2380635/work/scripts/collect-public-benchmarks.py\", line 218, in parse\n    if len(islands)!=1:raise ValueError('Astro island missing or ambiguous: '+spec['component'])\n                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nValueError: Astro island missing or ambiguous: /_astro/BenchmarkView.\n",
+      "captures": [
+        "https://www.vals.ai/benchmarks/vals_index"
+      ]
+    },
+    {
+      "id": "vals-index-vibe-code-bench::2",
+      "status": "retained_after_failure",
+      "reason": "Command failed: python3 ops/daily/public-candidate.py /opt/benchmarkheaven-daily/runs/2026-11-14T00-41-10-252Z-2380635/benchmark-candidates/plan-52.json /opt/benchmarkheaven-daily/runs/2026-11-14T00-41-10-252Z-2380635/benchmark-candidates/public-52.json\nTraceback (most recent call last):\n  File \"/home/flori/srv/benchmarkheaven-daily/runs/2026-11-14T00-41-10-252Z-2380635/work/ops/daily/public-candidate.py\", line 132, in <module>\n    evidence={}; result=module.collect(plan,registry,evidence=evidence)\n                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/flori/srv/benchmarkheaven-daily/runs/2026-11-14T00-41-10-252Z-2380635/work/scripts/collect-public-benchmarks.py\", line 1435, in collect\n    source=source_spec['source'];rule=source_spec['parser'];parsed=parse(load(source),rule,load,entry);source_count=0;included=set()\n                                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/flori/srv/benchmarkheaven-daily/runs/2026-11-14T00-41-10-252Z-2380635/work/scripts/collect-public-benchmarks.py\", line 218, in parse\n    if len(islands)!=1:raise ValueError('Astro island missing or ambiguous: '+spec['component'])\n                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nValueError: Astro island missing or ambiguous: /_astro/BenchmarkView.\n",
+      "captures": [
+        "https://www.vals.ai/benchmarks/vals_index"
+      ]
+    },
+    {
+      "id": "vals-index-code-migration::2",
+      "status": "retained_after_failure",
+      "reason": "Command failed: python3 ops/daily/public-candidate.py /opt/benchmarkheaven-daily/runs/2026-11-14T00-41-10-252Z-2380635/benchmark-candidates/plan-53.json /opt/benchmarkheaven-daily/runs/2026-11-14T00-41-10-252Z-2380635/benchmark-candidates/public-53.json\nTraceback (most recent call last):\n  File \"/home/flori/srv/benchmarkheaven-daily/runs/2026-11-14T00-41-10-252Z-2380635/work/ops/daily/public-candidate.py\", line 132, in <module>\n    evidence={}; result=module.collect(plan,registry,evidence=evidence)\n                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/flori/srv/benchmarkheaven-daily/runs/2026-11-14T00-41-10-252Z-2380635/work/scripts/collect-public-benchmarks.py\", line 1435, in collect\n    source=source_spec['source'];rule=source_spec['parser'];parsed=parse(load(source),rule,load,entry);source_count=0;included=set()\n                                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/flori/srv/benchmarkheaven-daily/runs/2026-11-14T00-41-10-252Z-2380635/work/scripts/collect-public-benchmarks.py\", line 218, in parse\n    if len(islands)!=1:raise ValueError('Astro island missing or ambiguous: '+spec['component'])\n                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nValueError: Astro island missing or ambiguous: /_astro/BenchmarkView.\n",
+      "captures": [
+        "https://www.vals.ai/benchmarks/vals_index"
+      ]
+    },
+    {
+      "id": "vals-index-legal-research::2",
+      "status": "retained_after_failure",
+      "reason": "Command failed: python3 ops/daily/public-candidate.py /opt/benchmarkheaven-daily/runs/2026-11-14T00-41-10-252Z-2380635/benchmark-candidates/plan-54.json /opt/benchmarkheaven-daily/runs/2026-11-14T00-41-10-252Z-2380635/benchmark-candidates/public-54.json\nTraceback (most recent call last):\n  File \"/home/flori/srv/benchmarkheaven-daily/runs/2026-11-14T00-41-10-252Z-2380635/work/ops/daily/public-candidate.py\", line 132, in <module>\n    evidence={}; result=module.collect(plan,registry,evidence=evidence)\n                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/flori/srv/benchmarkheaven-daily/runs/2026-11-14T00-41-10-252Z-2380635/work/scripts/collect-public-benchmarks.py\", line 1435, in collect\n    source=source_spec['source'];rule=source_spec['parser'];parsed=parse(load(source),rule,load,entry);source_count=0;included=set()\n                                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/flori/srv/benchmarkheaven-daily/runs/2026-11-14T00-41-10-252Z-2380635/work/scripts/collect-public-benchmarks.py\", line 218, in parse\n    if len(islands)!=1:raise ValueError('Astro island missing or ambiguous: '+spec['component'])\n                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nValueError: Astro island missing or ambiguous: /_astro/BenchmarkView.\n",
+      "captures": [
+        "https://www.vals.ai/benchmarks/vals_index"
+      ]
+    },
+    {
+      "id": "vals-index-hlab::2",
+      "status": "retained_after_failure",
+      "reason": "Command failed: python3 ops/daily/public-candidate.py /opt/benchmarkheaven-daily/runs/2026-11-14T00-41-10-252Z-2380635/benchmark-candidates/plan-55.json /opt/benchmarkheaven-daily/runs/2026-11-14T00-41-10-252Z-2380635/benchmark-candidates/public-55.json\nTraceback (most recent call last):\n  File \"/home/flori/srv/benchmarkheaven-daily/runs/2026-11-14T00-41-10-252Z-2380635/work/ops/daily/public-candidate.py\", line 132, in <module>\n    evidence={}; result=module.collect(plan,registry,evidence=evidence)\n                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/flori/srv/benchmarkheaven-daily/runs/2026-11-14T00-41-10-252Z-2380635/work/scripts/collect-public-benchmarks.py\", line 1435, in collect\n    source=source_spec['source'];rule=source_spec['parser'];parsed=parse(load(source),rule,load,entry);source_count=0;included=set()\n                                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/flori/srv/benchmarkheaven-daily/runs/2026-11-14T00-41-10-252Z-2380635/work/scripts/collect-public-benchmarks.py\", line 218, in parse\n    if len(islands)!=1:raise ValueError('Astro island missing or ambiguous: '+spec['component'])\n                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nValueError: Astro island missing or ambiguous: /_astro/BenchmarkView.\n",
+      "captures": [
+        "https://www.vals.ai/benchmarks/vals_index"
+      ]
+    },
+    {
+      "id": "vals-index-cost::2",
+      "status": "retained_after_failure",
+      "reason": "Command failed: python3 ops/daily/public-candidate.py /opt/benchmarkheaven-daily/runs/2026-11-14T00-41-10-252Z-2380635/benchmark-candidates/plan-56.json /opt/benchmarkheaven-daily/runs/2026-11-14T00-41-10-252Z-2380635/benchmark-candidates/public-56.json\nTraceback (most recent call last):\n  File \"/home/flori/srv/benchmarkheaven-daily/runs/2026-11-14T00-41-10-252Z-2380635/work/ops/daily/public-candidate.py\", line 132, in <module>\n    evidence={}; result=module.collect(plan,registry,evidence=evidence)\n                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/flori/srv/benchmarkheaven-daily/runs/2026-11-14T00-41-10-252Z-2380635/work/scripts/collect-public-benchmarks.py\", line 1435, in collect\n    source=source_spec['source'];rule=source_spec['parser'];parsed=parse(load(source),rule,load,entry);source_count=0;included=set()\n                                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/flori/srv/benchmarkheaven-daily/runs/2026-11-14T00-41-10-252Z-2380635/work/scripts/collect-public-benchmarks.py\", line 218, in parse\n    if len(islands)!=1:raise ValueError('Astro island missing or ambiguous: '+spec['component'])\n                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nValueError: Astro island missing or ambiguous: /_astro/BenchmarkView.\n",
+      "captures": [
+        "https://www.vals.ai/benchmarks/vals_index"
+      ]
+    },
+    {
+      "id": "frontiercode::1.1",
+      "status": "retained_after_failure",
+      "reason": "Prior public identities disappeared",
+      "captures": [
+        "https://cognition.com/data/frontiercode-leaderboard/data.json",
+        "https://cognition.com/frontiercode"
+      ]
+    },
+    {
+      "id": "frontiercode-cost::1.1",
+      "status": "retained_after_failure",
+      "reason": "Prior public identities disappeared",
+      "captures": [
+        "https://cognition.com/data/frontiercode-leaderboard/data.json",
+        "https://cognition.com/frontiercode"
+      ]
+    },
+    {
+      "id": "apprenticebench-cua::snapshot-2026-09-14",
+      "status": "retained_after_failure",
+      "reason": "Command failed: python3 ops/daily/public-candidate.py /opt/benchmarkheaven-daily/runs/2026-11-14T00-41-10-252Z-2380635/benchmark-candidates/plan-59.json /opt/benchmarkheaven-daily/runs/2026-11-14T00-41-10-252Z-2380635/benchmark-candidates/public-59.json\nTraceback (most recent call last):\n  File \"/home/flori/srv/benchmarkheaven-daily/runs/2026-11-14T00-41-10-252Z-2380635/work/ops/daily/public-candidate.py\", line 132, in <module>\n    evidence={}; result=module.collect(plan,registry,evidence=evidence)\n                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/flori/srv/benchmarkheaven-daily/runs/2026-11-14T00-41-10-252Z-2380635/work/scripts/collect-public-benchmarks.py\", line 1435, in collect\n    source=source_spec['source'];rule=source_spec['parser'];parsed=parse(load(source),rule,load,entry);source_count=0;included=set()\n                                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/flori/srv/benchmarkheaven-daily/runs/2026-11-14T00-41-10-252Z-2380635/work/scripts/collect-public-benchmarks.py\", line 405, in parse\n    if header not in source:raise ValueError('Leaderboard header literal changed')\n                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nValueError: Leaderboard header literal changed\n",
+      "captures": [
+        "https://apprenticebench.com/assets/index-CwoZhdR2.js"
+      ]
+    },
+    {
+      "id": "apprenticebench-cua-cost::snapshot-2026-09-14",
+      "status": "retained_after_failure",
+      "reason": "Command failed: python3 ops/daily/public-candidate.py /opt/benchmarkheaven-daily/runs/2026-11-14T00-41-10-252Z-2380635/benchmark-candidates/plan-60.json /opt/benchmarkheaven-daily/runs/2026-11-14T00-41-10-252Z-2380635/benchmark-candidates/public-60.json\nTraceback (most recent call last):\n  File \"/home/flori/srv/benchmarkheaven-daily/runs/2026-11-14T00-41-10-252Z-2380635/work/ops/daily/public-candidate.py\", line 132, in <module>\n    evidence={}; result=module.collect(plan,registry,evidence=evidence)\n                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/flori/srv/benchmarkheaven-daily/runs/2026-11-14T00-41-10-252Z-2380635/work/scripts/collect-public-benchmarks.py\", line 1435, in collect\n    source=source_spec['source'];rule=source_spec['parser'];parsed=parse(load(source),rule,load,entry);source_count=0;included=set()\n                                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/flori/srv/benchmarkheaven-daily/runs/2026-11-14T00-41-10-252Z-2380635/work/scripts/collect-public-benchmarks.py\", line 405, in parse\n    if header not in source:raise ValueError('Leaderboard header literal changed')\n                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nValueError: Leaderboard header literal changed\n",
+      "captures": [
+        "https://apprenticebench.com/assets/index-CwoZhdR2.js"
+      ]
+    },
+    {
+      "id": "apprenticebench-api::snapshot-2026-09-14",
+      "status": "retained_after_failure",
+      "reason": "Command failed: python3 ops/daily/public-candidate.py /opt/benchmarkheaven-daily/runs/2026-11-14T00-41-10-252Z-2380635/benchmark-candidates/plan-61.json /opt/benchmarkheaven-daily/runs/2026-11-14T00-41-10-252Z-2380635/benchmark-candidates/public-61.json\nTraceback (most recent call last):\n  File \"/home/flori/srv/benchmarkheaven-daily/runs/2026-11-14T00-41-10-252Z-2380635/work/ops/daily/public-candidate.py\", line 132, in <module>\n    evidence={}; result=module.collect(plan,registry,evidence=evidence)\n                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/flori/srv/benchmarkheaven-daily/runs/2026-11-14T00-41-10-252Z-2380635/work/scripts/collect-public-benchmarks.py\", line 1435, in collect\n    source=source_spec['source'];rule=source_spec['parser'];parsed=parse(load(source),rule,load,entry);source_count=0;included=set()\n                                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/flori/srv/benchmarkheaven-daily/runs/2026-11-14T00-41-10-252Z-2380635/work/scripts/collect-public-benchmarks.py\", line 405, in parse\n    if header not in source:raise ValueError('Leaderboard header literal changed')\n                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nValueError: Leaderboard header literal changed\n",
+      "captures": [
+        "https://apprenticebench.com/assets/index-CwoZhdR2.js"
+      ]
+    },
+    {
+      "id": "apprenticebench-api-cost::snapshot-2026-09-14",
+      "status": "retained_after_failure",
+      "reason": "Command failed: python3 ops/daily/public-candidate.py /opt/benchmarkheaven-daily/runs/2026-11-14T00-41-10-252Z-2380635/benchmark-candidates/plan-62.json /opt/benchmarkheaven-daily/runs/2026-11-14T00-41-10-252Z-2380635/benchmark-candidates/public-62.json\nTraceback (most recent call last):\n  File \"/home/flori/srv/benchmarkheaven-daily/runs/2026-11-14T00-41-10-252Z-2380635/work/ops/daily/public-candidate.py\", line 132, in <module>\n    evidence={}; result=module.collect(plan,registry,evidence=evidence)\n                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/flori/srv/benchmarkheaven-daily/runs/2026-11-14T00-41-10-252Z-2380635/work/scripts/collect-public-benchmarks.py\", line 1435, in collect\n    source=source_spec['source'];rule=source_spec['parser'];parsed=parse(load(source),rule,load,entry);source_count=0;included=set()\n                                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/flori/srv/benchmarkheaven-daily/runs/2026-11-14T00-41-10-252Z-2380635/work/scripts/collect-public-benchmarks.py\", line 405, in parse\n    if header not in source:raise ValueError('Leaderboard header literal changed')\n                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nValueError: Leaderboard header literal changed\n",
+      "captures": [
+        "https://apprenticebench.com/assets/index-CwoZhdR2.js"
+      ]
+    },
+    {
+      "id": "matharena-arxivmath::2026-06",
+      "status": "retained_after_failure",
+      "reason": "Prior public identities disappeared",
+      "captures": [
+        "https://matharena.ai/competition_tables/arxiv--june"
+      ]
+    },
+    {
+      "id": "matharena-brokenarxiv::2026-06",
+      "status": "retained_after_failure",
+      "reason": "Prior public identities disappeared",
+      "captures": [
+        "https://matharena.ai/competition_tables/arxiv_false--june"
+      ]
+    },
+    {
+      "id": "gso::opt1-102",
+      "status": "retained_after_failure",
+      "reason": "gso::opt1-102: protocol not approved: round 1: revise — [major] gso::opt1-102 fields version and version_status (criterion c2) → Set version_status to \"snapshot\" and version to the dated frozen identity (e.g. \"snapshot-2026-11-14\", the capture date), since the board is live (not \"retaine… | [minor] gso::opt1-102 scoring.notes (criterion c1) → Extend scoring.notes to state that runs from 2026-09-27 use the improved elicitation per the changelog. No identity change is implied: total_tasks remains 102 … — all 1 row disputed, nothing left to publish",
+      "captures": [
+        "https://gso-bench.github.io/assets/leaderboard.json"
+      ]
+    },
+    {
+      "id": "lisanbench::0.2.0",
+      "status": "retained_after_failure",
+      "reason": "Command failed: python3 ops/daily/public-candidate.py /opt/benchmarkheaven-daily/runs/2026-11-14T00-41-10-252Z-2380635/benchmark-candidates/plan-92.json /opt/benchmarkheaven-daily/runs/2026-11-14T00-41-10-252Z-2380635/benchmark-candidates/public-92.json\nTraceback (most recent call last):\n  File \"/home/flori/srv/benchmarkheaven-daily/runs/2026-11-14T00-41-10-252Z-2380635/work/ops/daily/public-candidate.py\", line 132, in <module>\n    evidence={}; result=module.collect(plan,registry,evidence=evidence)\n                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/flori/srv/benchmarkheaven-daily/runs/2026-11-14T00-41-10-252Z-2380635/work/scripts/collect-public-benchmarks.py\", line 1435, in collect\n    source=source_spec['source'];rule=source_spec['parser'];parsed=parse(load(source),rule,load,entry);source_count=0;included=set()\n                                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/flori/srv/benchmarkheaven-daily/runs/2026-11-14T00-41-10-252Z-2380635/work/scripts/collect-public-benchmarks.py\", line 592, in parse\n    if hashlib.sha256('\\n'.join(words).encode()).hexdigest()!=req['starting_words_sha256']:raise ValueError('LisanBench starting words changed')\n                                                                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nValueError: LisanBench starting words changed\n",
+      "captures": [
+        "https://lisanbench.com/data/core.json",
+        "https://raw.githubusercontent.com/voice-from-the-outer-world/lisan-bench/main/README.md",
+        "https://lisanbench.com/data/rankings.json"
+      ]
+    },
+    {
+      "id": "matharena-arxivmath::2026-08",
+      "status": "retained_after_failure",
+      "reason": "Prior public identities disappeared",
+      "captures": [
+        "https://matharena.ai/competition_tables/arxiv--august"
+      ]
+    },
+    {
+      "id": "matharena-brokenarxiv::2026-08",
+      "status": "retained_after_failure",
+      "reason": "Prior public identities disappeared",
+      "captures": [
+        "https://matharena.ai/competition_tables/arxiv_false--august"
+      ]
+    },
+    {
+      "id": "weirdml::3",
+      "status": "retained_after_failure",
+      "reason": "Prior public identities disappeared",
+      "captures": [
+        "https://htihle.github.io/assets/data/weirdml_v3.json"
+      ]
+    },
+    {
+      "id": "kernelbench-cuda-glm52-fused-moe::rtx-pro-6000",
+      "status": "retained_after_failure",
+      "reason": "kernelbench-cuda-glm52-fused-moe::rtx-pro-6000: protocol not approved: round 1: revise — [major] version_guard and scoring.notes of row kernelbench-cuda-glm52-fused-moe::rtx-pro-6000 → Remove or explicitly date as historical the problem-04 references in scoring.notes and replace 'four-problem deck' with the current three-problem deck in versi… — all 1 row disputed, nothing left to publish",
+      "captures": [
+        "https://raw.githubusercontent.com/Infatoshi/kernelbench.com/master/benchmarks/cuda/results/leaderboard.json"
+      ]
+    },
+    {
+      "id": "kernelbench-cuda-deepseek-nsa::rtx-pro-6000",
+      "status": "retained_after_failure",
+      "reason": "kernelbench-cuda-deepseek-nsa::rtx-pro-6000: protocol not approved: round 1: revise — [major] row kernelbench-cuda-deepseek-nsa::rtx-pro-6000 scoring.notes → Remove or rewrite all problem-04-era claims (the muse bug cell, the deepseek-v4-pro reward_hack cell, the Opus 5 196.10% figure, the 150M peak_sps anchor) so t… | [major] row kernelbench-cuda-deepseek-nsa::rtx-pro-6000 version_guard → Update version_guard to the current three-problem deck (01/02/03 on RTX PRO 6000) or phrase it so a sibling problem's retirement is recognized rather than sile… — all 1 row disputed, nothing left to publish",
+      "captures": [
+        "https://raw.githubusercontent.com/Infatoshi/kernelbench.com/master/benchmarks/cuda/results/leaderboard.json"
+      ]
+    },
+    {
+      "id": "kernelbench-cuda-megaqwen-decode::rtx-pro-6000",
+      "status": "retained_after_failure",
+      "reason": "kernelbench-cuda-megaqwen-decode::rtx-pro-6000: protocol not approved: round 1: revise — [major] candidate row kernelbench-cuda-megaqwen-decode::rtx-pro-6000, field version_guard → Rewrite the guard to reference the current three-problem deck, e.g. 'schema_version must stay 1, hardware.name must contain \"RTX PRO 6000\", and the problem mus… — all 1 row disputed, nothing left to publish",
+      "captures": [
+        "https://raw.githubusercontent.com/Infatoshi/kernelbench.com/master/benchmarks/cuda/results/leaderboard.json"
+      ]
+    },
+    {
+      "id": "kernelbench-cuda-grid-mingru-sps::rtx-pro-6000",
+      "status": "retained_after_failure",
+      "reason": "Command failed: python3 ops/daily/public-candidate.py /opt/benchmarkheaven-daily/runs/2026-11-14T00-41-10-252Z-2380635/benchmark-candidates/plan-100.json /opt/benchmarkheaven-daily/runs/2026-11-14T00-41-10-252Z-2380635/benchmark-candidates/public-100.json\nTraceback (most recent call last):\n  File \"/home/flori/srv/benchmarkheaven-daily/runs/2026-11-14T00-41-10-252Z-2380635/work/ops/daily/public-candidate.py\", line 132, in <module>\n    evidence={}; result=module.collect(plan,registry,evidence=evidence)\n                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/flori/srv/benchmarkheaven-daily/runs/2026-11-14T00-41-10-252Z-2380635/work/scripts/collect-public-benchmarks.py\", line 1435, in collect\n    source=source_spec['source'];rule=source_spec['parser'];parsed=parse(load(source),rule,load,entry);source_count=0;included=set()\n                                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/flori/srv/benchmarkheaven-daily/runs/2026-11-14T00-41-10-252Z-2380635/work/scripts/collect-public-benchmarks.py\", line 757, in parse\n    if problem not in (data.get('problems') or []):raise ValueError('KernelBench-CUDA problem missing from deck: '+problem)\n                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nValueError: KernelBench-CUDA problem missing from deck: 04_grid_mingru_sps\n",
+      "captures": [
+        "https://raw.githubusercontent.com/Infatoshi/kernelbench.com/master/benchmarks/cuda/results/leaderboard.json"
+      ]
+    },
+    {
+      "id": "frontierswe::2",
+      "status": "retained_after_failure",
+      "reason": "Prior public identities disappeared",
+      "captures": [
+        "https://www.frontierswe.com/",
+        "https://epoch.ai/data/benchmark_data.zip#zip:frontierswe_external.csv"
+      ]
+    },
+    {
+      "id": "programbench::1",
+      "status": "retained_after_failure",
+      "reason": "Command failed: python3 ops/daily/public-candidate.py /opt/benchmarkheaven-daily/runs/2026-11-14T00-41-10-252Z-2380635/benchmark-candidates/plan-108.json /opt/benchmarkheaven-daily/runs/2026-11-14T00-41-10-252Z-2380635/benchmark-candidates/public-108.json\nTraceback (most recent call last):\n  File \"/home/flori/srv/benchmarkheaven-daily/runs/2026-11-14T00-41-10-252Z-2380635/work/ops/daily/public-candidate.py\", line 132, in <module>\n    evidence={}; result=module.collect(plan,registry,evidence=evidence)\n                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/flori/srv/benchmarkheaven-daily/runs/2026-11-14T00-41-10-252Z-2380635/work/scripts/collect-public-benchmarks.py\", line 1435, in collect\n    source=source_spec['source'];rule=source_spec['parser'];parsed=parse(load(source),rule,load,entry);source_count=0;included=set()\n                                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/flori/srv/benchmarkheaven-daily/runs/2026-11-14T00-41-10-252Z-2380635/work/scripts/collect-public-benchmarks.py\", line 802, in parse\n    if not isinstance(rf,dict) or set(rf.keys())!=required:raise ValueError(f'ProgramBench row {index}: field set changed ({sorted(required^set(rf.keys()))})')\n                                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nValueError: ProgramBench row 0: field set changed (['cost_is_estimate'])\n",
+      "captures": [
+        "https://programbench.com/",
+        "https://raw.githubusercontent.com/facebookresearch/ProgramBench/main/src/programbench/submission.py"
+      ]
+    },
+    {
+      "id": "rsi-exam::0.1",
+      "status": "retained_after_failure",
+      "reason": "Command failed: python3 ops/daily/public-candidate.py /opt/benchmarkheaven-daily/runs/2026-11-14T00-41-10-252Z-2380635/benchmark-candidates/plan-110.json /opt/benchmarkheaven-daily/runs/2026-11-14T00-41-10-252Z-2380635/benchmark-candidates/public-110.json\nTraceback (most recent call last):\n  File \"/home/flori/srv/benchmarkheaven-daily/runs/2026-11-14T00-41-10-252Z-2380635/work/ops/daily/public-candidate.py\", line 132, in <module>\n    evidence={}; result=module.collect(plan,registry,evidence=evidence)\n                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/flori/srv/benchmarkheaven-daily/runs/2026-11-14T00-41-10-252Z-2380635/work/scripts/collect-public-benchmarks.py\", line 1435, in collect\n    source=source_spec['source'];rule=source_spec['parser'];parsed=parse(load(source),rule,load,entry);source_count=0;included=set()\n                                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/flori/srv/benchmarkheaven-daily/runs/2026-11-14T00-41-10-252Z-2380635/work/scripts/collect-public-benchmarks.py\", line 1038, in parse\n    if harness not in req['harness_vocab']:raise ValueError(f'RSI-Exam unlisted harness {harness!r}')\n                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nValueError: RSI-Exam unlisted harness 'kimi code'\n",
+      "captures": [
+        "https://rsi-exam.ai/",
+        "https://rsi-exam.ai/blog.html"
+      ]
+    },
+    {
+      "id": "mcp-atlas::snapshot-2026-09-21",
+      "status": "retained_after_failure",
+      "reason": "mcp-atlas::snapshot-2026-09-21: protocol not approved: round 1: revise — [minor] scoring.notes → Correct the note to state the board's top row is 90.7% (or describe 88.1% as the second-ranked row) so it matches the captured table. — only minor findings, no row-level revision to apply",
+      "captures": [
+        "https://labs.scale.com/leaderboard/mcp_atlas"
+      ]
+    },
+    {
+      "id": "react-native-evals::91-evals",
+      "status": "retained_after_failure",
+      "reason": "Command failed: python3 ops/daily/public-candidate.py /opt/benchmarkheaven-daily/runs/2026-11-14T00-41-10-252Z-2380635/benchmark-candidates/plan-117.json /opt/benchmarkheaven-daily/runs/2026-11-14T00-41-10-252Z-2380635/benchmark-candidates/public-117.json\nTraceback (most recent call last):\n  File \"/home/flori/srv/benchmarkheaven-daily/runs/2026-11-14T00-41-10-252Z-2380635/work/ops/daily/public-candidate.py\", line 132, in <module>\n    evidence={}; result=module.collect(plan,registry,evidence=evidence)\n                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/flori/srv/benchmarkheaven-daily/runs/2026-11-14T00-41-10-252Z-2380635/work/scripts/collect-public-benchmarks.py\", line 1435, in collect\n    source=source_spec['source'];rule=source_spec['parser'];parsed=parse(load(source),rule,load,entry);source_count=0;included=set()\n                                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/flori/srv/benchmarkheaven-daily/runs/2026-11-14T00-41-10-252Z-2380635/work/scripts/collect-public-benchmarks.py\", line 1214, in parse\n    if groups!=req['categories']:raise ValueError(f'React Native Evals suite changed (new identity): {groups!r}')\n                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nValueError: React Native Evals suite changed (new identity): [['navigation', 13], ['animation', 13], ['async-state', 13], ['lists', 18], ['react-native-apis', 9]]\n",
+      "captures": [
+        "https://rn-evals.vercel.app/",
+        "https://raw.githubusercontent.com/callstackincubator/evals/main/README.md"
+      ]
+    },
+    {
+      "id": "researchclawbench::40-tasks",
+      "status": "retained_after_failure",
+      "reason": "researchclawbench::40-tasks: protocol not approved: round 1: revise — [major] row researchclawbench::40-tasks, field version_status → Set version_status to \"snapshot\" and version to snapshot-<freeze date> unless a published release identifier for the board can be cited; alternatively supply e… — all 1 row disputed, nothing left to publish",
+      "captures": [
+        "https://internscience.github.io/ResearchClawBench-Home/data/leaderboard.json",
+        "https://raw.githubusercontent.com/InternScience/ResearchClawBench/main/README.md",
+        "https://internscience.github.io/ResearchClawBench-Home/static/app.js",
+        "https://internscience.github.io/ResearchClawBench-Home/"
+      ]
+    },
+    {
+      "id": "matharena-hmmt::2026-02",
+      "status": "retained_after_failure",
+      "reason": "Prior public identities disappeared",
+      "captures": [
+        "https://matharena.ai/competition_tables/hmmt--hmmt_feb_2026"
+      ]
+    },
+    {
+      "id": "matharena-hmmt::2025-11",
+      "status": "retained_after_failure",
+      "reason": "Prior public identities disappeared",
+      "captures": [
+        "https://matharena.ai/competition_tables/hmmt--hmmt_nov_2025"
+      ]
+    },
+    {
+      "id": "matharena-apex::2025",
+      "status": "retained_after_failure",
+      "reason": "Prior public identities disappeared",
+      "captures": [
+        "https://matharena.ai/competition_tables/apex--apex_2025"
+      ]
+    },
+    {
+      "id": "matharena-apex-shortlist::2025",
+      "status": "retained_after_failure",
+      "reason": "Prior public identities disappeared",
+      "captures": [
+        "https://matharena.ai/competition_tables/apex--shortlist_2025"
+      ]
+    },
+    {
+      "id": "matharena-aime::2026",
+      "status": "retained_after_failure",
+      "reason": "Prior public identities disappeared",
+      "captures": [
+        "https://matharena.ai/competition_tables/aime--aime_2026"
+      ]
+    },
+    {
+      "id": "matharena-usamo::2026",
+      "status": "retained_after_failure",
+      "reason": "Prior public identities disappeared",
+      "captures": [
+        "https://matharena.ai/competition_tables/usamo--usamo_2026"
+      ]
+    },
+    {
+      "id": "mls-bench-lite::30-tasks",
+      "status": "retained_after_failure",
+      "reason": "Prior public identities disappeared",
+      "captures": [
+        "https://mls-bench.com/leaderboard",
+        "https://raw.githubusercontent.com/Imbernoulli/MLS-Bench/main/README.md"
+      ]
+    },
+    {
+      "id": "surge-chartography::100-tasks",
+      "status": "retained_after_failure",
+      "reason": "Prior public identities disappeared",
+      "captures": [
+        "https://surgehq.ai/benchmarks/chartography",
+        "https://raw.githubusercontent.com/surge-ai/chartography/main/README.md"
+      ]
+    },
+    {
+      "id": "surge-gdp-pdf::100-tasks",
+      "status": "retained_after_failure",
+      "reason": "Command failed: python3 ops/daily/public-candidate.py /opt/benchmarkheaven-daily/runs/2026-11-14T00-41-10-252Z-2380635/benchmark-candidates/plan-127.json /opt/benchmarkheaven-daily/runs/2026-11-14T00-41-10-252Z-2380635/benchmark-candidates/public-127.json\nTraceback (most recent call last):\n  File \"/home/flori/srv/benchmarkheaven-daily/runs/2026-11-14T00-41-10-252Z-2380635/work/ops/daily/public-candidate.py\", line 132, in <module>\n    evidence={}; result=module.collect(plan,registry,evidence=evidence)\n                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/flori/srv/benchmarkheaven-daily/runs/2026-11-14T00-41-10-252Z-2380635/work/scripts/collect-public-benchmarks.py\", line 1495, in collect\n    if source_count<source_spec.get('minimum_rows',1):raise ValueError('Coverage shrank / no scores: '+bid+' from '+source['url'])\n                                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nValueError: Coverage shrank / no scores: surge-gdp-pdf::100-tasks from https://surgehq.ai/benchmarks/gdp-pdf\n",
+      "captures": [
+        "https://surgehq.ai/benchmarks/gdp-pdf",
+        "https://raw.githubusercontent.com/surge-ai/gdp-pdf/main/README.md"
+      ]
+    },
+    {
+      "id": "interfaze-sob::text-image-audio",
+      "status": "retained_after_failure",
+      "reason": "Prior public identities disappeared",
+      "captures": [
+        "https://interfaze.ai/leaderboards/structured-output-benchmark"
+      ]
+    },
+    {
+      "id": "interfaze-sob-value-accuracy::text-image-audio",
+      "status": "retained_after_failure",
+      "reason": "Prior public identities disappeared",
+      "captures": [
+        "https://interfaze.ai/leaderboards/structured-output-benchmark"
+      ]
+    },
+    {
+      "id": "frontiercode-extended::1.1",
+      "status": "retained_after_failure",
+      "reason": "Prior public identities disappeared",
+      "captures": [
+        "https://cognition.com/data/frontiercode-leaderboard/data.json",
+        "https://cognition.com/frontiercode"
+      ]
+    },
+    {
+      "id": "frontiercode-extended-cost::1.1",
+      "status": "retained_after_failure",
+      "reason": "Prior public identities disappeared",
+      "captures": [
+        "https://cognition.com/data/frontiercode-leaderboard/data.json",
+        "https://cognition.com/frontiercode"
+      ]
+    },
+    {
+      "id": "scale-swe-bench-pro-v2-full::snapshot-2026-09-26",
+      "status": "retained_after_failure",
+      "reason": "Prior public identities disappeared",
+      "captures": [
+        "https://labs.scale.com/leaderboard/swe_bench_pro_public_v2"
+      ]
+    }
+  ]
+}

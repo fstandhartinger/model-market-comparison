@@ -1,0 +1,29 @@
+{
+  "artifact_id": "protocol-researchclawbench-40-tasks",
+  "artifact_sha256": "323b823336884461e76c46e6b967872723e976d0d6d9dcfa89f7b54356a18cb5",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": [
+    "researchclawbench::40-tasks",
+    "c1",
+    "c2"
+  ],
+  "errors_found": 1,
+  "findings": [
+    {
+      "id": "c2-version_status-mismatch",
+      "severity": "major",
+      "location": "row researchclawbench::40-tasks, field version_status",
+      "evidence": "Row sets version_status=\"published\" and version=\"40-tasks\". Per criterion c2, \"published\" requires the maintainer to publish a release identifier for this board that the version copies. SOURCE 3 README and SOURCE 1 page contain no benchmark release identifier; the only version-like strings are agent versions (EvoScientist v0.1.1/v0.0.4, InnoClaw (2.0)), and the badge \"Tasks-40\" is a count, not a release identifier. Therefore the protocol publishes no release identifier for this board, so version_status should be \"snapshot\" (with a snapshot-<date> version if no release id exists) rather than \"published\".",
+      "repair": "Set version_status to \"snapshot\" and version to snapshot-<freeze date> unless a published release identifier for the board can be cited; alternatively supply evidence of a maintainer-published release identifier if \"published\" is to be retained."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "I cannot execute owner-side hash, transport, or qualification checks; those are outside my read-only role.",
+    "The actual leaderboard.json content was not included in the packet (only its sha256 and generated summaries), so the version_guard's specific key/task-id assertions were not independently checked against the raw payload.",
+    "The row's notes claiming Pass@1 default and 33-40/40 coverage on 2026-09-21 are not verifiable from the provided protocol excerpts; I did not treat them as pass/fail evidence.",
+    "The protocol does not explicitly name the unit \"points\", but the generated served-value summary (12.41-21.12) is consistent with the stated [0,100] point scale, so c1's unit/range check passes."
+  ],
+  "missing_evidence": []
+}

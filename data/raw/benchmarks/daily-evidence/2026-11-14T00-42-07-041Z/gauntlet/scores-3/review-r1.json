@@ -1,0 +1,33 @@
+{
+  "artifact_id": "scores-3",
+  "artifact_sha256": "86f5ab0f49f64ac03ec967dd1acf02e4332b5d472aa594ced595cc987de38382",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "public:42ecda9abe849332c4b1dfac",
+    "public:020a940540cd5b47f2d9b59e",
+    "public:34f8f75fd9ff572a90c73a44",
+    "public:7a9a03b79cb5d7d94814b155",
+    "public:4367fada59cd5b70f31f6c69",
+    "public:2af5fee8440cd19d1f67826f",
+    "public:9fed84e73bcb08c9aef51807",
+    "public:4f128658712e3e9d6a74029d",
+    "public:3be0acb67632f9bbeb1a5b9f",
+    "public:437f0075299b3ada88f66068",
+    "public:7147aa181dbb9151bd897f41",
+    "public:942e4a30519e87ad925f23f5",
+    "public:b0b32950f1e89229c72acffb",
+    "public:f69a22569bdee7860c457ab7",
+    "public:9ea04a6bdec8abe553d637d3",
+    "c1"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Rows public:2af5fee8440cd19d1f67826f, public:437f0075299b3ada88f66068 and public:942e4a30519e87ad925f23f5 carry model_id values (e.g. mistral-large-3::default) that are not present in the primary evidence; these are catalog joins at default configuration based on exact display name and can be verified only against a catalog not included in the packet. comparison_key is null, so they do not violate the unknown-configuration rule, but the model_id attribution cannot be independently confirmed from the supplied evidence.",
+    "I cannot recompute the owner-provided SHA-256 hashes (per-row and artifact) or re-execute transport/qualification checks in this read-only review; those are owner-executed steps and are a limitation of my environment, not a numeric source gap.",
+    "The benchmark version label snapshot-2026-09-10 is the registry-assigned id and matches both the candidate rows and the primary evidence registry block; the board's 'Recent Updates' shows later model additions, but the registry version identity is consistently applied in both source and output."
+  ],
+  "missing_evidence": []
+}

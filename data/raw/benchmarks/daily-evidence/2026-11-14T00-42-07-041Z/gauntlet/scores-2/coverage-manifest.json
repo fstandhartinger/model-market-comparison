@@ -1,0 +1,169 @@
+{
+  "artifact_id": "scores-2",
+  "rounds_used": 1,
+  "rows": {
+    "total": 15,
+    "accepted": [
+      "public:110b90039bd12486bfd34e94",
+      "public:f6eb52cbfb04fa0f6473d4b4",
+      "public:00d0e3a35943911bf24ff8da",
+      "public:b50b12162eef25f627bff60b",
+      "public:f3ae96633aa8d0c728df398b",
+      "public:f737ba4a8404b528d42a4147",
+      "public:bda1d85b21ce37948959f4cf",
+      "public:d77f4c6957d212e43ca5ff2e",
+      "public:3ec1c745af62663368a60f7b",
+      "public:52749b8727d4af4a4616d499",
+      "public:eae8fa0d798f3ecc05259e83",
+      "public:36263bef9333b157243b7eee",
+      "public:98153fb029f942527d28f2b1",
+      "public:1886a947e7cf7a626a792487",
+      "public:fdc944d2d74b46fe012482a8"
+    ],
+    "quarantined": []
+  },
+  "producer_flagged": [],
+  "second_opinion": null,
+  "criteria": [
+    "c1"
+  ],
+  "coverage": {
+    "producer": {
+      "complete": true,
+      "model": "z-ai/glm-5.3-flash",
+      "rows_covered": 15
+    },
+    "critic": [
+      {
+        "round": 1,
+        "verdict": "pass",
+        "coverage_complete": true,
+        "missing_rows": [],
+        "missing_criteria": []
+      }
+    ],
+    "final": {
+      "rows_covered": 15,
+      "criteria_covered": 1,
+      "complete": true
+    }
+  },
+  "receipts": [
+    {
+      "round": 1,
+      "role": "producer",
+      "reused_from_round": null,
+      "requested_model": "z-ai/glm-5.3-flash",
+      "model": "z-ai/glm-5.3-flash",
+      "route": "openrouter",
+      "attempt": 1,
+      "cost_usd": 0.001685871,
+      "out": "data/raw/benchmarks/daily-evidence/2026-11-14T00-42-07-041Z/gauntlet/scores-2/producer-r1.json",
+      "output_sha256": "748db1ef2e07dc85860e319f92ecd88cc3e0664e90b5687cbad9b4c78cc141f7",
+      "qualification": {
+        "id": "z-ai/glm-5.3-flash",
+        "family": "z-ai",
+        "free": false,
+        "input_per_1m": 0.0399,
+        "output_per_1m": 0.0784,
+        "context": 1048576,
+        "aa_intelligence_index": 27.8,
+        "aa_source": "exact_id_and_variants",
+        "matched_model_ids": [
+          "glm-5.3-flash::default"
+        ],
+        "aa_variant_scores": [
+          {
+            "id": "glm-5.3-flash::default",
+            "index": 27.8
+          }
+        ]
+      },
+      "usage": {
+        "prompt_tokens": 19702,
+        "completion_tokens": 901,
+        "total_tokens": 20603,
+        "cost": 0.001685871,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "audio_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.0017029,
+          "upstream_inference_prompt_cost": 0.00147765,
+          "upstream_inference_completions_cost": 0.00022525
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 21,
+          "image_tokens": 0,
+          "audio_tokens": 0
+        }
+      },
+      "reasoning": {
+        "effort": "low",
+        "exclude": true
+      }
+    },
+    {
+      "round": 1,
+      "role": "critic",
+      "requested_model": "deepseek/deepseek-v4-flash-0731",
+      "model": "deepseek/deepseek-v4-flash-0731",
+      "route": "openrouter",
+      "attempt": 1,
+      "cost_usd": 0.00185248305,
+      "out": "data/raw/benchmarks/daily-evidence/2026-11-14T00-42-07-041Z/gauntlet/scores-2/review-r1.json",
+      "output_sha256": "e1419ac8e0f41764799aec3df365340b180e21cb192e47a12abe9d8d99b298e1",
+      "qualification": {
+        "id": "deepseek/deepseek-v4-flash-0731",
+        "family": "deepseek",
+        "free": false,
+        "input_per_1m": 0.0434,
+        "output_per_1m": 0.3,
+        "context": 1048576,
+        "aa_intelligence_index": 24.1,
+        "aa_source": "exact_id_and_variants",
+        "matched_model_ids": [
+          "deepseek-v4-flash-0731::max"
+        ],
+        "aa_variant_scores": [
+          {
+            "id": "deepseek-v4-flash-0731::max",
+            "index": 24.1,
+            "estimated_from_v4": 34.3
+          }
+        ]
+      },
+      "usage": {
+        "prompt_tokens": 19675,
+        "completion_tokens": 3391,
+        "total_tokens": 23066,
+        "cost": 0.00185248305,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "audio_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.001871195,
+          "upstream_inference_prompt_cost": 0.000853895,
+          "upstream_inference_completions_cost": 0.0010173
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 2833,
+          "image_tokens": 0,
+          "audio_tokens": 0
+        }
+      },
+      "reasoning": {
+        "effort": "low",
+        "exclude": true
+      }
+    }
+  ]
+}
