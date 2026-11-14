@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { parseTSystemsCatalog, readHubTable, parseEur, nameKey, hostingFor } from "../lib/t-systems-catalog.mjs";
+import { parseTSystemsCatalog, readHubTable, parseEur, nameKey, hostingFor, locationScope } from "../lib/t-systems-catalog.mjs";
 
 const HEAD = "<tr><th>Model</th><th>Provider</th><th>Cloud</th><th>Input</th><th>Output</th><th>Streaming output <span>tip</span></th><th>Tool calling</th><th>Context</th><th>In €/M</th><th>Out €/M</th><th>Cached €/M <span>Price per million prompt tokens</span></th><th>Plans</th></tr>";
 const TELEKOM = "<b>Telekom</b> Hosted on T-Cloud Public — Telekom&#39;s sovereign infrastructure in Germany.";
@@ -119,4 +119,48 @@ test("plan-included €0.00 rows get no per-token price and price_status n/a; a 
   // A €0.00 row without the plan wording keeps the literal price (no silent reinterpretation).
   const zero = page(row("GPT-OSS 120B", "OpenAI", TELEKOM, "128K", "€0.00", "€0.00", "n/a"));
   assert.equal(parseTSystemsCatalog({ llms: zero }, { models: [] }, fx, { day: "d" }).models[0].input_per_1m_eur, 0);
+});
+
+// Real /models/llms/ markup captured 2026-11-14 (4 rows kept). Since 2026-11-12 the Telekom cloud reads "T Cloud Hosted on
+// T Cloud Public — ... within the EU." (the old parser failed: unknown Cloud for new model d3-ultra) and a Location column
+// says where routed models run; the Cloud text itself no longer says "(EU regions)".
+const live14 = readFileSync(new URL("./fixtures/t-systems-llms-2026-11-14.html", import.meta.url), "utf8");
+
+test("reads the 2026-11-14 layout: T Cloud is Telekom sovereign hosting, Location is read per row", () => {
+  const rows = readHubTable(live14, "llms");
+  assert.deepEqual(rows.map((r) => [r.model, r.location]), [
+    ["d3-ultra", "Germany (EU)"], ["GPT-6.1 Sol (≤272k)", "Sweden"], ["Claude Opus 5.5", "Europe"], ["Gemini 4 Argon", "Worldwide"],
+  ]);
+  assert.equal(hostingFor(rows[0].cloud).hosting_class, "sovereign_germany");
+  assert.equal(hostingFor("T-Cloud Hosted on T-Cloud Public").hosting_class, "sovereign_germany");
+  assert.equal(hostingFor("TCloud Hosted"), null);
+  assert.equal(locationScope("Sweden"), "eu");
+  assert.equal(locationScope("Worldwide"), "global");
+  assert.equal(locationScope(null), null);
+  assert.throws(() => locationScope("USA"), /unknown Location "USA"/);
+});
+
+test("2026-11-14 layout: Worldwide rows are never published as EU-hosted; EU rows keep audited hosting", () => {
+  const prev = { models: [
+    { model_name: "Gemini 4 Argon", provider_org: "Google", input_per_1m_eur: 3.96, output_per_1m_eur: 19.8, hosting_class: "routed_gcp_eu", server_location: "GCP EU regions", region: "eu", eu_hosted: true, is_externally_hosted: true, status: "active", mapping: "derived" },
+    { model_name: "Claude Opus 5.5", provider_org: "Anthropic", input_per_1m_eur: 3.92, output_per_1m_eur: 19.58, hosting_class: "routed_gcp_eu", server_location: "GCP EU regions", region: "eu", eu_hosted: true, status: "active" },
+  ] };
+  const { models, diff } = parseTSystemsCatalog({ llms: live14 }, prev, fx, { day: "2026-11-14" });
+  const by = Object.fromEntries(models.map((m) => [m.model_name, m]));
+  assert.deepEqual([by["d3-ultra"].hosting_class, by["d3-ultra"].eu_hosted, by["d3-ultra"].price_status], ["sovereign_germany", true, "n/a"]);
+  assert.deepEqual([by["GPT-6.1 Sol (≤272k)"].hosting_class, by["GPT-6.1 Sol (≤272k)"].eu_hosted], ["routed_azure_eu", true]);
+  assert.deepEqual([by["Claude Opus 5.5"].hosting_class, by["Claude Opus 5.5"].server_location, by["Claude Opus 5.5"].eu_hosted], ["routed_gcp_eu", "GCP EU regions", true]);
+  const g = by["Gemini 4 Argon"];
+  assert.deepEqual([g.hosting_class, g.region, g.eu_hosted, g.mapping], ["routed_gcp_global", "global", false, "derived"]);
+  assert.match(g.notes, /Location: Worldwide/);
+  assert.deepEqual(diff.added.sort(), ["GPT-6.1 Sol (≤272k)", "d3-ultra"]);
+  // Once the Location is an EU place again, the downgraded row is re-derived as EU from its Cloud text.
+  const back = parseTSystemsCatalog({ llms: live14.replace(/Worldwide/g, "Europe") }, { models }, fx, { day: "2026-11-15" }).models.find((m) => m.model_name === "Gemini 4 Argon");
+  assert.deepEqual([back.hosting_class, back.region, back.eu_hosted], ["routed_gcp_eu", "eu", true]);
+});
+
+test("2026-11-14 layout fails closed: unknown Location, Worldwide sovereign row, Cloud deferring to a missing Location column", () => {
+  assert.throws(() => parseTSystemsCatalog({ llms: live14.replace(/>\s*Sweden\s*</, ">USA<") }, { models: [] }, fx, { day: "d" }), /unknown Location "USA"/);
+  assert.throws(() => parseTSystemsCatalog({ llms: live14.replace(/Germany\s\(EU\)/g, "Worldwide") }, { models: [] }, fx, { day: "d" }), /no non-EU mapping/);
+  assert.throws(() => readHubTable(live14.replace(/>Location</g, ">Region<")), /refers to a Location column/);
 });
