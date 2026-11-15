@@ -15,3 +15,52 @@ test('v1.8.11: no listed row displays any topic, use-case or language cell below
  assert.deepEqual(r.artifact.systems.filter(s=>!s.new_in||s.new_in!=='v1.8.11'),JSON.parse(readFileSync('data/raw/benchmarks/jevbench/v1.8/jevbench-v1.8.10-results.json')).systems);
  writeFileSync('r198/v1811/receipts/SUPPRESSED-CELLS.json',JSON.stringify({suppressed_cells:counts,rows_losing_a_dimension:lost,total,scored_floor:30,completed_coverage_floor:30},null,1)+'\n');
 });
+
+function assertRowBreakdownFloor(artifact, surface) {
+ for (const row of artifact.systems) for (const [dimension, cells] of Object.entries(row.v16?.breakdowns ?? {})) {
+  if (!cells || typeof cells !== 'object') continue;
+  for (const [name, cell] of Object.entries(cells)) {
+   assert.ok(!(cell && typeof cell === 'object' && Number.isInteger(cell.n) && cell.n < 30),
+    `${surface}: ${row.key}.${dimension}.${name}: n=${cell?.n}`);
+  }
+ }
+}
+
+test('v1.8.11: candidate display JSON removes small row breakdowns without changing the stored release', async () => {
+ const release = await readJevbenchV1811Candidate();
+ const stored = structuredClone(release.artifact);
+ const {artifact} = v1811BoardInput(release);
+ assertRowBreakdownFloor(artifact, 'candidate display');
+ const expected = structuredClone(stored);
+ for (const row of expected.systems) for (const cells of Object.values(row.v16?.breakdowns ?? {})) {
+  if (!cells || typeof cells !== 'object') continue;
+  for (const [name, cell] of Object.entries(cells)) {
+   if (cell && typeof cell === 'object' && Number.isInteger(cell.n) && cell.n < 30) delete cells[name];
+  }
+ }
+ assert.deepEqual(artifact, expected, 'only integer n < 30 breakdown cells are removed');
+ assert.deepEqual(release.artifact, stored, 'stored release is not mutated');
+});
+
+test('v1.8.11: precomputed All-data JSON has no small row breakdowns', () => {
+ assertRowBreakdownFloor(JSON.parse(readFileSync('data/jevbench-v1.8.11-alldata.json')).artifact, 'snapshot');
+});
+
+test('v1.8.11: published live board and every All-data JSON input have no small row breakdowns', async t => {
+ const manifest = JSON.parse(readFileSync('data/raw/benchmarks/jevbench/v1.8/jevbench-v1.8.11-publication.json'));
+ if (manifest.review.verdict !== 'PASS') return t.skip('candidate PENDING; live board still uses the historical release');
+ const {readJevbenchV161Release} = await import('../lib/jevbench-v16-release.mjs');
+ const {readJevbenchV157Release} = await import('../lib/jevbench-v15-release.mjs');
+ const {assembleJevBoard} = await import('../lib/jevbench-live-board.mjs');
+ const {readJevAllDataInput} = await import('../lib/jevbench-alldata-input.mjs');
+ const [release, previous] = await Promise.all([readJevbenchV161Release(), readJevbenchV157Release()]);
+ const apiA4 = JSON.parse(readFileSync('data/jevbench-api-a4-equated.json'));
+ const board = await assembleJevBoard({release, previous, apiA4, live: true});
+ assert.equal(board.published.restated_by, 'v1.8.11');
+ assertRowBreakdownFloor(board.published, 'live board');
+ for (const version of ['board-all', 'board-open', 'board-api', 'v1.8.11']) {
+  const input = await readJevAllDataInput(version);
+  assert.ok(input, `${version}: published input exists`);
+  assertRowBreakdownFloor(input.artifact, version);
+ }
+});
