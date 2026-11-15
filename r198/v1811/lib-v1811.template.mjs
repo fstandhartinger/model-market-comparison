@@ -115,13 +115,15 @@ export function v1811CategoryDisplay(categories){
  const systems=Object.fromEntries(Object.entries(categories.systems).map(([k,r])=>[k,{...r,...Object.fromEntries(['topics','usecases','languages'].filter(d=>r[d]).map(d=>[d,Object.fromEntries(Object.entries(r[d]).filter(([,c])=>c.n>=30 && (c.coverage_n??c.n)>=30))]))}]));
  return withRowPoolCategoryRows({...categories,systems:{},min_n:30,display_min_n:30,rules:[...(categories.rules??[]),V1811_BREAKDOWN_NOTE]},systems,apiFullAddendumCategoryBounds(categories)??{});
 }
+// Project legacy row breakdowns at the same display floor; never mutate the frozen results.
+const dropSmallRowBreakdowns=s=>{const b=s?.v16?.breakdowns;if(!b)return s;return{...s,v16:{...s.v16,breakdowns:Object.fromEntries(Object.entries(b).map(([d,c])=>[d,c&&typeof c==='object'?Object.fromEntries(Object.entries(c).filter(([,v])=>!(v&&typeof v==='object'&&Number.isInteger(v.n)&&v.n<30))):c]))}};};
 export function v1811BoardInput(release,chain){
  const bounds={...apiFullAddendumCategoryBounds(chain?.categories),...structuredClone(V1811_NEW_ROW_BOUNDS)};
  const categories=withRowPoolCategoryRows({...release.categories,systems:{}},release.categories.systems,bounds);
- return {artifact:release.artifact,categories:v1811CategoryDisplay(categories)};
+ return {artifact:{...release.artifact,systems:release.artifact.systems.map(dropSmallRowBreakdowns)},categories:v1811CategoryDisplay(categories)};
 }
 export function withV1811Addendum(chain,release){
- const update=a=>({...a,systems:release.artifact.systems,board:release.artifact.board,n_ranked:release.artifact.n_ranked,roster_count:release.artifact.roster_count,measurement_notes:release.artifact.measurement_notes,restated_by:'v1.8.11',v1811_sha256:release.sha256});
+ const update=a=>({...a,systems:release.artifact.systems.map(dropSmallRowBreakdowns),board:release.artifact.board,n_ranked:release.artifact.n_ranked,roster_count:release.artifact.roster_count,measurement_notes:release.artifact.measurement_notes,restated_by:'v1.8.11',v1811_sha256:release.sha256});
  const {categories}=v1811BoardInput(release,chain);
  const adapted=withRowPoolCategoryRows({...categories,revision:chain.published.revision,restated_by:'v1.8.11',systems:{}},categories.systems,apiFullAddendumCategoryBounds(categories));
  return {...chain,published:update(chain.published),merged:update(chain.merged),categories:adapted,publishedCarry:release.carry};
