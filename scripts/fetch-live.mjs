@@ -189,6 +189,13 @@ async function fetchDesignArena() {
   permit(`GET ${baseUrl}/api/registry`);
   const registry = await getJSON(`${baseUrl}/api/registry`);
   const inconsistencies = [], rekeys = [];
+  // CR-752: a contradiction D255 withholds can persist (glm-5.3 left the frontend board on 13 Nov 2026
+  // while the registry still serves it as active). Such an absence is published only under the same
+  // reviewed, expiring receipt AA and OpenRouter use: bound to the prior identity set and to the exact
+  // removed ids, per board. Without a receipt for a board nothing changes.
+  let approvals = {};
+  try { approvals = JSON.parse(await readFile(join(RAW, 'source-change-approvals.json'), 'utf8')); }
+  catch (error) { if (error.code !== 'ENOENT') throw error; }
   for (const q of queries) {
     const data = await getJSON(`${baseUrl}/api/leaderboard`, {
       method: "POST",
@@ -198,7 +205,7 @@ async function fetchDesignArena() {
     out[q.key] = { request: q.body, data: data.data || [] };
     const prior = previous.leaderboards?.[q.key]?.data;
     try {
-      assertIdentityCoverage(prior, out[q.key].data, (row) => row.modelId, `DesignArena ${q.key}`);
+      assertApprovedIdentityCoverage(prior, out[q.key].data, (row) => row.modelId, `DesignArena ${q.key}`, { approval: approvals.designarena_boards?.[q.key] ?? null });
     } catch (error) {
       // D255: only the missing-identity case is classifiable. An empty, malformed or duplicate-id
       // response is still fatal here, whatever the registry says.

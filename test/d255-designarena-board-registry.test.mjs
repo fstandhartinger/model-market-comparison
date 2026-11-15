@@ -10,7 +10,7 @@ import { mkdtemp, readFile, writeFile, rm, cp, mkdir } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { spawnSync } from 'node:child_process';
-import { BOARD_REGISTRY_INCONSISTENT, absentIdentities, classifyBoardAbsence } from '../lib/live-source.mjs';
+import { BOARD_REGISTRY_INCONSISTENT, absentIdentities, classifyBoardAbsence, identityDigest } from '../lib/live-source.mjs';
 import { readDesignArenaInconsistency } from '../ops/daily/daily.mjs';
 
 const REGISTRY = {
@@ -44,7 +44,7 @@ test('an absent row is classified against the source registry, not guessed', () 
 });
 
 /** A disposable checkout with a synthetic DesignArena, so no test touches the live source. */
-async function collectorFixture({ boards, registry = REGISTRY, priorBoards }) {
+async function collectorFixture({ boards, registry = REGISTRY, priorBoards, approvals = null }) {
   const directory = await mkdtemp(join(tmpdir(), 'bh-d255-'));
   await cp('lib', join(directory, 'lib'), { recursive: true });
   await mkdir(join(directory, 'scripts'));
@@ -56,6 +56,7 @@ async function collectorFixture({ boards, registry = REGISTRY, priorBoards }) {
     leaderboards: Object.fromEntries(Object.entries(priorBoards).map(([key, rows]) => [key, { request: {}, data: rows }])),
   };
   await writeFile(join(directory, 'data/raw/designarena.json'), JSON.stringify(prior, null, 2) + '\n');
+  if (approvals) await writeFile(join(directory, 'data/raw/source-change-approvals.json'), JSON.stringify(approvals, null, 2) + '\n');
   const hook = join(directory, 'synthetic-fetch.mjs');
   await writeFile(hook, `const boards=${JSON.stringify(boards)};const registry=${JSON.stringify(registry)};
 globalThis.fetch=async(url,opts={})=>{url=String(url);
@@ -130,6 +131,60 @@ test('an unchanged board still publishes normally', async () => {
     assert.equal(written.leaderboards.frontend.data[0].elo, 1305);
     assert.equal(written.model_registry.keeper.display_name, 'Keeper');
   } finally { await rm(fixture.directory, { recursive: true, force: true }); }
+});
+
+// A contradiction that persists (glm-5.3 left the frontend board on 13 Nov 2026 while the registry still
+// served it as active) is published only under a reviewed, expiring receipt bound to the prior set and
+// the exact removed ids, per board: the receipt AA and OpenRouter already use.
+const byId = (r) => r.modelId;
+const persisting = {
+  priorBoards: { frontend: [row('keeper', 1300, 900), row('vanished', 1325, 1005)], fullstack: [row('keeper', 1290, 800)] },
+  boards: { agon_webapps: [row('keeper', 1305, 700), row('newcomer', 1250, 300)], fullstack: [row('keeper', 1295, 640)] },
+  registry: { models: { ...REGISTRY.models,
+    newcomer: { displayName: 'Newcomer', provider: 'lab', active: true, openSource: false, arenas: { agents: ['agon_webapps'] } },
+    later: { displayName: 'Later', provider: 'lab', active: true, openSource: false, arenas: { agents: ['agon_webapps'] } } } },
+};
+const receipt = (over = {}) => ({ designarena_boards: { frontend: {
+  previous_identity_sha256: identityDigest(persisting.priorBoards.frontend, byId),
+  current_identity_sha256: identityDigest(persisting.boards.agon_webapps, byId),
+  removed: ['vanished'], expires_at: new Date(Date.now() + 3600e3).toISOString(), ...over,
+} } });
+
+test('a reviewed, unexpired receipt for the exact absence publishes the fresh board without it', async () => {
+  const fixture = await collectorFixture({ ...persisting, approvals: receipt() });
+  try {
+    assert.equal(fixture.result.status, 0, fixture.result.stdout + fixture.result.stderr);
+    const written = JSON.parse(await readFile(join(fixture.directory, 'data/raw/designarena.json'), 'utf8'));
+    assert.deepEqual(written.leaderboards.frontend.data.map(byId), ['keeper', 'newcomer']);
+    assert.equal(written.leaderboards.fullstack.data[0].elo, 1295);
+  } finally { await rm(fixture.directory, { recursive: true, force: true }); }
+});
+
+test('bounded additions after the review are tolerated only with a stated basis', async () => {
+  const later = { ...persisting, boards: { ...persisting.boards, agon_webapps: [...persisting.boards.agon_webapps, row('later', 1200, 50)] } };
+  for (const [over, status] of [[{}, 1], [{ allow_additions: true, additions_basis: 'the board keeps adding models' }, 0]]) {
+    const fixture = await collectorFixture({ ...later, approvals: receipt(over) });
+    try { assert.equal(fixture.result.status, status, JSON.stringify(over) + fixture.result.stderr); }
+    finally { await rm(fixture.directory, { recursive: true, force: true }); }
+  }
+});
+
+test('an expired, mis-bound or wrong-board receipt keeps the D255 withholding', async () => {
+  const cases = {
+    expired: receipt({ expires_at: new Date(Date.now() - 1000).toISOString() }),
+    'other removed id': receipt({ removed: ['keeper'] }),
+    'extra removed id': receipt({ removed: ['vanished', 'ghost'] }),
+    'other prior set': receipt({ previous_identity_sha256: identityDigest([row('keeper', 1, 1)], byId) }),
+    'other board': { designarena_boards: { fullstack: receipt().designarena_boards.frontend } },
+  };
+  for (const [name, approvals] of Object.entries(cases)) {
+    const fixture = await collectorFixture({ ...persisting, approvals });
+    try {
+      assert.equal(fixture.result.status, 1, name);
+      assert.match(fixture.result.stderr, new RegExp(BOARD_REGISTRY_INCONSISTENT), name);
+      assert.equal(await readFile(join(fixture.directory, 'data/raw/designarena.json'), 'utf8'), fixture.before, name);
+    } finally { await rm(fixture.directory, { recursive: true, force: true }); }
+  }
 });
 
 // The daily's half of the contract: three things must hold together or the run fails closed.
