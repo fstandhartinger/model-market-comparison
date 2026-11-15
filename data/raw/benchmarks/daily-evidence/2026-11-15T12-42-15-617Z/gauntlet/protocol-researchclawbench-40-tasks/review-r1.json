@@ -1,0 +1,24 @@
+{
+  "artifact_id": "protocol-researchclawbench-40-tasks",
+  "artifact_sha256": "323b823336884461e76c46e6b967872723e976d0d6d9dcfa89f7b54356a18cb5",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": ["researchclawbench::40-tasks", "c1", "c2"],
+  "errors_found": 1,
+  "findings": [
+    {
+      "id": "researchclawbench::40-tasks-version_status",
+      "severity": "major",
+      "location": "researchclawbench::40-tasks.version / version_status",
+      "evidence": "SOURCE3 README and SOURCE1 homepage publish no release identifier for this board; the only version-like strings are agent versions such as EvoScientist v0.1.1, and '40 tasks' / '10 domains' are counts, not a release identifier. Under criterion c2, 'published' requires the maintainer to publish a release identifier that the row's version copies. The row's version '40-tasks' is not such an identifier, so version_status 'published' mismatches the protocol.",
+      "repair": "Set version_status to 'snapshot' and version to 'snapshot-2026-11-15' (or the applicable freeze date), or provide evidence of a maintainer-published release identifier and copy it into version."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "I cannot execute owner hashes, transport checks, or leaderboard.json payload inspection; key/schema claims in version_guard (leaderboard.json keys and the exact 40 task ids) are not directly evidenced in the packet and were not treated as verified.",
+    "The homepage excerpt contains a 'No scored runs yet.' placeholder, which conflicts with the activity/value summaries; I treated it as a frontend placeholder and relied on the leaderboard payload summaries for served-value evidence.",
+    "Scoring.notes statements such as 'Pass@1 is the default' and the 33-40 coverage figure on 2026-09-21 are not directly evidenced in the supplied protocol excerpt; they do not contradict the reviewed fields."
+  ],
+  "missing_evidence": []
+}

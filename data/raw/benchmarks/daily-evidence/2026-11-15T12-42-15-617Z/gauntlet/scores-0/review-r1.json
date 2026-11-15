@@ -1,0 +1,22 @@
+{
+  "artifact_id": "scores-0",
+  "artifact_sha256": "7a6b74d8b48adec029d1a7d26036d3eea123d911a552a42c4138275575c28ce2",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/retail",
+    "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/airline",
+    "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/telecom",
+    "c1"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Owner hash/transport/qualification checks are not executable in this read-only review; row and source SHA-256 values are accepted as supplied.",
+    "TAU2 scores' percent unit is implicit from the README performance table context rather than explicitly labeled in the captured source; all numeric values match exactly.",
+    "Benchmark identity 'tau2-bench::2' is mapped from the source label 'TAU2'; the source does not provide an explicit version string beyond the TAU2 name.",
+    "Sampling settings in protocol (temperature 0.6, TopP 0.95, TopK 20, MinP 0) match source best-practice recommendations; source does not explicitly state these were used for the published TAU2 rows."
+  ],
+  "missing_evidence": []
+}

@@ -1,0 +1,22 @@
+[
+  {
+    "id": "researchclawbench::40-tasks",
+    "version": "40-tasks",
+    "version_guard": "leaderboard.json must keep its keys {tasks, agents, scores, frontier} and exactly the 40 reviewed task ids (four per domain: Astronomy, Chemistry, Earth, Energy, Information, Life, Material, Math, Neuroscience, Physics); each ResearchHarness row's entries must keep the reviewed fields with scores in 0–100 and name only the model in the row's own label; the page must still say 50 = matches the original paper, the README must still describe the weighted rubric judged by an LLM acting as a strict peer reviewer and the ResearchHarness baseline, and app.js must still rank agents by the plain mean of their scored tasks. Another task list is a new identity, never a silent update of this one.",
+    "status": "active",
+    "version_status": "published",
+    "superseded_by": null,
+    "scoring": {
+      "metric": "Mean rubric score over the tasks a model has a scored run for, 0–100 (an LLM acting as a strict peer reviewer grades each report against an expert-curated weighted rubric; 50 = the report matches the original paper)",
+      "unit": "points",
+      "range": [
+        0,
+        100
+      ],
+      "higher_better": true,
+      "notes": "Only the board's ResearchHarness rows are collected: the benchmark's own lightweight baseline harness around a standalone model, so the rows compare models. The board's other rows (Claude Code, Codex CLI, InnoClaw, Qiushi Engine and more) are research-agent products built around some model and are not model rows. Pass@1 view (the page's default; its Pass@5 view takes the best of five attempts). The value is the plain mean of the row's scored tasks, the figure the page ranks by: a task without a scored run is left out rather than counted as 0, so coverage differs (33 to 40 of 40 on 2026-09-21) and stays in each row's protocol with the mean cost per task. The page says 100 = surpasses the paper, the README 70+. Judged benchmark: an LLM judge applies the rubric."
+    },
+    "description": "An AI agent gets the raw data and related literature behind a published scientific paper — the paper itself hidden — and must redo the research end to end, from analysis to a written report, across 40 tasks in 10 scientific domains.",
+    "maintainer": "ResearchClawBench team (InternScience)"
+  }
+]

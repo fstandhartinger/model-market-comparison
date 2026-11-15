@@ -1,0 +1,29 @@
+{
+  "artifact_id": "scores-2",
+  "artifact_sha256": "6620588b270c92b6bcd1c7851ca3261af66d2458ec174461fda247702e1e0ee4",
+  "round": 1,
+  "verdict": "blocked",
+  "coverage_checked": [
+    "vendor:DeepSeek-V3:swe-bench-verified::snapshot-2026-09-10",
+    "c1"
+  ],
+  "errors_found": 1,
+  "findings": [
+    {
+      "id": "F1",
+      "severity": "blocker",
+      "location": "row vendor:DeepSeek-V3:swe-bench-verified::snapshot-2026-09-10; field benchmark_id/version",
+      "evidence": "Primary source (arXiv 2412.19437v2, Table 6) identifies the benchmark only as 'SWE-Bench Verified (OpenAI, 2024d)' and row 'SWE Verified (Resolved)' = 42.0 for DeepSeek-V3; no text supports a 'snapshot-2026-09-10' benchmark version. Candidate benchmark_id claims 'swe-bench-verified::snapshot-2026-09-10'.",
+      "repair": "Remove the unsupported snapshot suffix or supply primary evidence associating SWE-bench Verified with snapshot-2026-09-10; otherwise set benchmark_id to the evidenced version and keep REQUIRED_ROW_IDS consistent."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "Read-only review: cannot recompute row hashes or independently retrieve/verify the PDF; row binding relies on owner-provided canonical sha256 values.",
+    "Numeric equality 42 (JSON) vs 42.0 (source table) was checked after numeric parsing and is equal; trailing zero is not a mismatch.",
+    "Labels such as model_id 'deepseek-v3-dec-24::default' and 'December 2024 update' are inferred from the arXiv ID/date and source text 'DeepSeek-V3'; they are not literal strings in the evidence extract."
+  ],
+  "missing_evidence": [
+    "Primary evidence for benchmark version/snapshot 'snapshot-2026-09-10' (absent from SOURCE 1; source only cites 'SWE-Bench Verified' and 'SWE Verified (Resolved)')."
+  ]
+}

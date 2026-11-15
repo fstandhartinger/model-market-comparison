@@ -1,5 +1,5 @@
 {
-  "collected_at": "2026-11-15T05:31:54.340Z",
+  "collected_at": "2026-11-15T12:53:58.424Z",
   "models": {
     "moonshotai/kimi-k3": {
       "or_model_id": "moonshotai/kimi-k3",
@@ -372,26 +372,12 @@
           "endpoint_id": "e0865d46-38f6-45b2-adc8-d9405db39cbd",
           "cache_read_per_1m": 1,
           "cache_write_per_1m": 12.5,
-          "cache_hit_rate": 0.7668073127298073,
+          "cache_hit_rate": 0.8845814333232789,
           "cache_status": "available",
           "cache_note": "OpenRouter reported cacheHitRate as a fraction. Underlying numerator/denominator and exact summary interval are not published in this response.",
           "source_provider_name": "Amazon Bedrock (1)",
           "source_provider_slug": "amazon-bedrock",
-          "total_tokens": 95796539
-        },
-        {
-          "or_model_id": "openai/gpt-6-astra",
-          "endpoint_tag": "openai",
-          "provider": "OpenAI",
-          "endpoint_id": "c2928094-b04c-4f41-84b2-2bf508091421",
-          "cache_read_per_1m": 1,
-          "cache_write_per_1m": 12.5,
-          "cache_hit_rate": 0.5876718900645413,
-          "cache_status": "available",
-          "cache_note": "OpenRouter reported cacheHitRate as a fraction. Underlying numerator/denominator and exact summary interval are not published in this response.",
-          "source_provider_name": "OpenAI (4)",
-          "source_provider_slug": "openai",
-          "total_tokens": 5904078597
+          "total_tokens": 326203833
         },
         {
           "or_model_id": "openai/gpt-6-astra",
@@ -400,12 +386,26 @@
           "endpoint_id": "58a1125d-b0a0-4f59-a511-ae45f9a3f0ec",
           "cache_read_per_1m": 1,
           "cache_write_per_1m": 12.5,
-          "cache_hit_rate": 0.9192268092570909,
+          "cache_hit_rate": 0.9323892485531792,
           "cache_status": "available",
           "cache_note": "OpenRouter reported cacheHitRate as a fraction. Underlying numerator/denominator and exact summary interval are not published in this response.",
           "source_provider_name": "Azure (1)",
           "source_provider_slug": "azure",
-          "total_tokens": 1914828292
+          "total_tokens": 7346183943
+        },
+        {
+          "or_model_id": "openai/gpt-6-astra",
+          "endpoint_tag": "openai",
+          "provider": "OpenAI",
+          "endpoint_id": "c2928094-b04c-4f41-84b2-2bf508091421",
+          "cache_read_per_1m": 1,
+          "cache_write_per_1m": 12.5,
+          "cache_hit_rate": 0.8008431275175995,
+          "cache_status": "available",
+          "cache_note": "OpenRouter reported cacheHitRate as a fraction. Underlying numerator/denominator and exact summary interval are not published in this response.",
+          "source_provider_name": "OpenAI (4)",
+          "source_provider_slug": "openai",
+          "total_tokens": 11614070479
         },
         {
           "or_model_id": "openai/gpt-6-astra",
@@ -414,12 +414,12 @@
           "endpoint_id": "64614955-f8a2-4d65-bad7-88186222018e",
           "cache_read_per_1m": 0.5,
           "cache_write_per_1m": 6.25,
-          "cache_hit_rate": 0.9225604740237286,
+          "cache_hit_rate": 0.8374285991031889,
           "cache_status": "available",
           "cache_note": "OpenRouter reported cacheHitRate as a fraction. Underlying numerator/denominator and exact summary interval are not published in this response.",
           "source_provider_name": "OpenAI (2)",
           "source_provider_slug": "openai",
-          "total_tokens": 344383738
+          "total_tokens": 421618166
         },
         {
           "or_model_id": "openai/gpt-6-astra",
@@ -428,12 +428,12 @@
           "endpoint_id": "e0ae0cb9-7511-49c7-a7a5-0df5d68b64a5",
           "cache_read_per_1m": 1.1,
           "cache_write_per_1m": 13.75,
-          "cache_hit_rate": 0.982329137111493,
+          "cache_hit_rate": 0.5567049286934954,
           "cache_status": "available",
           "cache_note": "OpenRouter reported cacheHitRate as a fraction. Underlying numerator/denominator and exact summary interval are not published in this response.",
           "source_provider_name": "Amazon Bedrock (2)",
           "source_provider_slug": "amazon-bedrock",
-          "total_tokens": 30001943
+          "total_tokens": 135287
         },
         {
           "or_model_id": "openai/gpt-6-astra",
@@ -442,12 +442,12 @@
           "endpoint_id": "c06c7858-73a1-4449-95d2-7ffc7ca3d69c",
           "cache_read_per_1m": 1.1,
           "cache_write_per_1m": 13.75,
-          "cache_hit_rate": 0.8692884036595977,
+          "cache_hit_rate": 0.7615415640536642,
           "cache_status": "available",
           "cache_note": "OpenRouter reported cacheHitRate as a fraction. Underlying numerator/denominator and exact summary interval are not published in this response.",
           "source_provider_name": "Azure (2)",
           "source_provider_slug": "azure",
-          "total_tokens": 38273041
+          "total_tokens": 7540288
         },
         {
           "or_model_id": "openai/gpt-6-astra",
@@ -456,12 +456,12 @@
           "endpoint_id": "1071a095-b9bc-40cd-8d66-88b484b1827d",
           "cache_read_per_1m": 2,
           "cache_write_per_1m": 25,
-          "cache_hit_rate": 0.8948427809072445,
+          "cache_hit_rate": 0.8948250345295755,
           "cache_status": "available",
           "cache_note": "OpenRouter reported cacheHitRate as a fraction. Underlying numerator/denominator and exact summary interval are not published in this response.",
           "source_provider_name": "OpenAI (1)",
           "source_provider_slug": "openai",
-          "total_tokens": 213162843
+          "total_tokens": 92041955
         },
         {
           "or_model_id": "openai/gpt-6-astra",
@@ -470,17 +470,41 @@
           "endpoint_id": "87e3a50e-d7ba-4e4b-a8f3-0e6a719e183e",
           "cache_read_per_1m": 6,
           "cache_write_per_1m": 75,
-          "cache_hit_rate": 0,
+          "cache_hit_rate": 0.32358459029226005,
           "cache_status": "available",
           "cache_note": "OpenRouter reported cacheHitRate as a fraction. Underlying numerator/denominator and exact summary interval are not published in this response.",
           "source_provider_name": "OpenAI (3)",
           "source_provider_slug": "openai",
-          "total_tokens": 20209
+          "total_tokens": 884279
         }
       ],
       "usage": {
         "status": "available",
         "daily": [
+          {
+            "date": "2026-11-14",
+            "total_prompt_tokens": 30132760560,
+            "total_completion_tokens": 874959164,
+            "count": 4110053
+          },
+          {
+            "date": "2026-11-13",
+            "total_prompt_tokens": 35686991006,
+            "total_completion_tokens": 1377577317,
+            "count": 5064480
+          },
+          {
+            "date": "2026-11-12",
+            "total_prompt_tokens": 36053827999,
+            "total_completion_tokens": 535534241,
+            "count": 877327
+          },
+          {
+            "date": "2026-11-11",
+            "total_prompt_tokens": 45071552255,
+            "total_completion_tokens": 4242562406,
+            "count": 20661231
+          },
           {
             "date": "2026-11-10",
             "total_prompt_tokens": 45429447426,
@@ -498,69 +522,45 @@
             "total_prompt_tokens": 25868258248,
             "total_completion_tokens": 2906335217,
             "count": 5241764
-          },
-          {
-            "date": "2026-11-07",
-            "total_prompt_tokens": 28231368931,
-            "total_completion_tokens": 4029058441,
-            "count": 5710609
-          },
-          {
-            "date": "2026-11-06",
-            "total_prompt_tokens": 45304820801,
-            "total_completion_tokens": 6198920946,
-            "count": 9475395
-          },
-          {
-            "date": "2026-11-05",
-            "total_prompt_tokens": 67924742447,
-            "total_completion_tokens": 3939547559,
-            "count": 7772805
-          },
-          {
-            "date": "2026-11-04",
-            "total_prompt_tokens": 47047339135,
-            "total_completion_tokens": 3657817037,
-            "count": 3262234
           }
         ],
-        "total_prompt_tokens": 301575119903,
-        "total_completion_tokens": 24176641182,
-        "total_requests": 37014297,
-        "input_output_ratio": 12.473822051324847
+        "total_prompt_tokens": 260011980409,
+        "total_completion_tokens": 13381930327,
+        "total_requests": 41506345,
+        "input_output_ratio": 19.43008026909151
       },
-      "source_updated_at": "2026-11-11T05:30:13.287Z",
+      "source_updated_at": "2026-11-15T12:52:43.978Z",
       "window": {
-        "start_date": "2026-11-04",
-        "end_date": "2026-11-10"
+        "start_date": "2026-11-08",
+        "end_date": "2026-11-14"
       },
       "provenance": {
         "source": "OpenRouter model-page usage",
         "url": "https://openrouter.ai/openai/gpt-6-astra",
-        "collected_at": "2026-11-11T05:30:55.466Z",
+        "collected_at": "2026-11-15T12:54:00.787Z",
         "basis": "measured"
       },
-      "response_sha256": "2a8c9b696a1f793a8d2e3a00051bad6d97bf81b4be8632167cc80a7e86824610",
+      "response_sha256": "ddd5c841c368126f1e4c0bfae665a827b857be4b710b2ba4b13f30bd71f3d444",
       "cache": {
         "unjoined": [],
         "returned_summaries": 8,
         "summary_window": null,
         "chart_date_range": {
-          "first": "2026-11-04 00:00:00",
-          "last": "2026-11-11 00:00:00"
+          "first": "2026-11-08 00:00:00",
+          "last": "2026-11-15 00:00:00"
         },
         "provenance": {
           "source": "OpenRouter effective pricing statistics",
           "url": "https://openrouter.ai/api/frontend/v1/stats/effective-pricing?permaslug=openai%2Fgpt-6-astra-20260903&variant=standard&shape=v7",
-          "collected_at": "2026-11-11T05:30:57.668Z",
+          "collected_at": "2026-11-15T12:54:02.889Z",
           "basis": "measured"
         },
-        "response_sha256": "a600a645b9c34aaf02e4c238eb0fae0e2b58caecad937da6c4056adcc685c649"
+        "response_sha256": "b9e9e4f30df804a1b170d80c00c13a0e8f7af61e74c8f1d84c5aa35a42de89ec"
       },
       "cache_attempt": {
         "source": "OpenRouter effective pricing statistics",
         "url": "https://openrouter.ai/api/frontend/v1/stats/effective-pricing?permaslug=openai%2Fgpt-6-astra-20260903&variant=standard&shape=v7",
-        "collected_at": "2026-11-11T05:30:57.668Z",
+        "collected_at": "2026-11-15T12:54:02.889Z",
         "basis": "measured",
         "status": "available"
       }
@@ -30561,6 +30561,747 @@
         "basis": "measured",
         "status": "available"
       }
+    },
+    "openai/gpt-6.1-terra-pro": {
+      "or_model_id": "openai/gpt-6.1-terra-pro",
+      "model_permaslug": "openai/gpt-6.1-terra-pro-20261026",
+      "variant": "standard",
+      "endpoints": [
+        {
+          "or_model_id": "openai/gpt-6.1-terra-pro",
+          "endpoint_tag": "azure",
+          "provider": "Azure",
+          "endpoint_id": "dc5647c0-0fc9-40d4-920a-a07d775c3e0c",
+          "cache_read_per_1m": 0.049999999999999996,
+          "cache_write_per_1m": 1.25,
+          "cache_hit_rate": 0.5730276532790439,
+          "cache_status": "available",
+          "cache_note": "OpenRouter reported cacheHitRate as a fraction. Underlying numerator/denominator and exact summary interval are not published in this response.",
+          "source_provider_name": "Azure (3)",
+          "source_provider_slug": "azure",
+          "total_tokens": 63147923
+        },
+        {
+          "or_model_id": "openai/gpt-6.1-terra-pro",
+          "endpoint_tag": "openai",
+          "provider": "OpenAI",
+          "endpoint_id": "67ae46eb-2f8e-477b-8381-0eee78aaba0e",
+          "cache_read_per_1m": 0.049999999999999996,
+          "cache_write_per_1m": 1.25,
+          "cache_hit_rate": 0.859841389379303,
+          "cache_status": "available",
+          "cache_note": "OpenRouter reported cacheHitRate as a fraction. Underlying numerator/denominator and exact summary interval are not published in this response.",
+          "source_provider_name": "OpenAI (1)",
+          "source_provider_slug": "openai",
+          "total_tokens": 728486081
+        },
+        {
+          "or_model_id": "openai/gpt-6.1-terra-pro",
+          "endpoint_tag": "openai/flex",
+          "provider": "OpenAI",
+          "endpoint_id": "a954b9eb-53b5-43b3-addf-d47d08f0453a",
+          "cache_read_per_1m": 0.024999999999999998,
+          "cache_write_per_1m": 0.625,
+          "cache_hit_rate": 0.4287713983202336,
+          "cache_status": "available",
+          "cache_note": "OpenRouter reported cacheHitRate as a fraction. Underlying numerator/denominator and exact summary interval are not published in this response.",
+          "source_provider_name": "OpenAI (2)",
+          "source_provider_slug": "openai",
+          "total_tokens": 12517162
+        },
+        {
+          "or_model_id": "openai/gpt-6.1-terra-pro",
+          "endpoint_tag": "azure/us",
+          "provider": "Azure",
+          "endpoint_id": "d345bf57-0ed3-4677-ae3c-b5243fb53904",
+          "cache_read_per_1m": 0.055,
+          "cache_write_per_1m": 1.375,
+          "cache_hit_rate": 0.7324641133329154,
+          "cache_status": "available",
+          "cache_note": "OpenRouter reported cacheHitRate as a fraction. Underlying numerator/denominator and exact summary interval are not published in this response.",
+          "source_provider_name": "Azure (2)",
+          "source_provider_slug": "azure",
+          "total_tokens": 65628
+        },
+        {
+          "or_model_id": "openai/gpt-6.1-terra-pro",
+          "endpoint_tag": "azure/eu",
+          "provider": "Azure",
+          "endpoint_id": "8c656b10-7cef-4f3a-914e-be832442590b",
+          "cache_read_per_1m": 0.06,
+          "cache_write_per_1m": 1.5,
+          "cache_hit_rate": 0.26055514197596513,
+          "cache_status": "available",
+          "cache_note": "OpenRouter reported cacheHitRate as a fraction. Underlying numerator/denominator and exact summary interval are not published in this response.",
+          "source_provider_name": "Azure (1)",
+          "source_provider_slug": "azure",
+          "total_tokens": 179767
+        },
+        {
+          "or_model_id": "openai/gpt-6.1-terra-pro",
+          "endpoint_tag": "openai/fast",
+          "provider": "OpenAI",
+          "endpoint_id": "d5b3e368-8a97-4e85-899d-52abab5bf318",
+          "cache_read_per_1m": 0.09999999999999999,
+          "cache_write_per_1m": 2.5,
+          "cache_hit_rate": 0,
+          "cache_status": "available",
+          "cache_note": "OpenRouter reported cacheHitRate as a fraction. Underlying numerator/denominator and exact summary interval are not published in this response.",
+          "source_provider_name": "OpenAI (3)",
+          "source_provider_slug": "openai",
+          "total_tokens": 1469
+        }
+      ],
+      "usage": {
+        "status": "available",
+        "daily": [
+          {
+            "date": "2026-11-14",
+            "total_prompt_tokens": 3457999065,
+            "total_completion_tokens": 63187786,
+            "count": 35150
+          },
+          {
+            "date": "2026-11-13",
+            "total_prompt_tokens": 2779983563,
+            "total_completion_tokens": 50756935,
+            "count": 30379
+          },
+          {
+            "date": "2026-11-12",
+            "total_prompt_tokens": 3793542481,
+            "total_completion_tokens": 74513503,
+            "count": 44690
+          },
+          {
+            "date": "2026-11-11",
+            "total_prompt_tokens": 3538943510,
+            "total_completion_tokens": 62012092,
+            "count": 46782
+          },
+          {
+            "date": "2026-11-10",
+            "total_prompt_tokens": 5717378115,
+            "total_completion_tokens": 85011929,
+            "count": 78659
+          },
+          {
+            "date": "2026-11-09",
+            "total_prompt_tokens": 4470010651,
+            "total_completion_tokens": 64340019,
+            "count": 45655
+          },
+          {
+            "date": "2026-11-08",
+            "total_prompt_tokens": 5660734331,
+            "total_completion_tokens": 54711519,
+            "count": 30850
+          }
+        ],
+        "total_prompt_tokens": 29418591716,
+        "total_completion_tokens": 454533783,
+        "total_requests": 312165,
+        "input_output_ratio": 64.7225636823567
+      },
+      "source_updated_at": "2026-11-15T12:53:56.215Z",
+      "window": {
+        "start_date": "2026-11-08",
+        "end_date": "2026-11-14"
+      },
+      "provenance": {
+        "source": "OpenRouter model-page usage",
+        "url": "https://openrouter.ai/openai/gpt-6.1-terra-pro",
+        "collected_at": "2026-11-15T12:54:04.897Z",
+        "basis": "measured"
+      },
+      "response_sha256": "a09a0362636b7f6bed9b473c03498e90788285b7d5bcdafd23df2e9f5edbf999",
+      "cache": {
+        "unjoined": [],
+        "returned_summaries": 6,
+        "summary_window": null,
+        "chart_date_range": {
+          "first": "2026-11-08 00:00:00",
+          "last": "2026-11-15 00:00:00"
+        },
+        "provenance": {
+          "source": "OpenRouter effective pricing statistics",
+          "url": "https://openrouter.ai/api/frontend/v1/stats/effective-pricing?permaslug=openai%2Fgpt-6.1-terra-pro-20261026&variant=standard&shape=v7",
+          "collected_at": "2026-11-15T12:54:06.945Z",
+          "basis": "measured"
+        },
+        "response_sha256": "fef2630fd04ccf54ae08241a95bac9ea1ab2d9139b8b82b80fce4541bee31c44"
+      },
+      "cache_attempt": {
+        "source": "OpenRouter effective pricing statistics",
+        "url": "https://openrouter.ai/api/frontend/v1/stats/effective-pricing?permaslug=openai%2Fgpt-6.1-terra-pro-20261026&variant=standard&shape=v7",
+        "collected_at": "2026-11-15T12:54:06.945Z",
+        "basis": "measured",
+        "status": "available"
+      }
+    },
+    "openai/gpt-chat-latest": {
+      "or_model_id": "openai/gpt-chat-latest",
+      "model_permaslug": "openai/gpt-chat-latest-20260505",
+      "variant": "standard",
+      "endpoints": [
+        {
+          "or_model_id": "openai/gpt-chat-latest",
+          "endpoint_tag": "openai",
+          "provider": "OpenAI",
+          "endpoint_id": "144906de-89e6-4ba4-a986-640af2562cfa",
+          "cache_read_per_1m": 0.5,
+          "cache_write_per_1m": null,
+          "cache_hit_rate": 0.7064484858418435,
+          "cache_status": "available",
+          "cache_note": "OpenRouter reported cacheHitRate as a fraction. Underlying numerator/denominator and exact summary interval are not published in this response.",
+          "source_provider_name": "OpenAI",
+          "source_provider_slug": "openai",
+          "total_tokens": 62309264
+        }
+      ],
+      "usage": {
+        "status": "available",
+        "daily": [
+          {
+            "date": "2026-11-14",
+            "total_prompt_tokens": 211599481,
+            "total_completion_tokens": 6164695,
+            "count": 16555
+          },
+          {
+            "date": "2026-11-13",
+            "total_prompt_tokens": 417860501,
+            "total_completion_tokens": 7255378,
+            "count": 20440
+          },
+          {
+            "date": "2026-11-12",
+            "total_prompt_tokens": 243725904,
+            "total_completion_tokens": 8950324,
+            "count": 19759
+          },
+          {
+            "date": "2026-11-11",
+            "total_prompt_tokens": 302584172,
+            "total_completion_tokens": 7654477,
+            "count": 21672
+          },
+          {
+            "date": "2026-11-10",
+            "total_prompt_tokens": 262928145,
+            "total_completion_tokens": 6535834,
+            "count": 19514
+          },
+          {
+            "date": "2026-11-09",
+            "total_prompt_tokens": 333434452,
+            "total_completion_tokens": 9076484,
+            "count": 22968
+          },
+          {
+            "date": "2026-11-08",
+            "total_prompt_tokens": 151058953,
+            "total_completion_tokens": 3871181,
+            "count": 14218
+          }
+        ],
+        "total_prompt_tokens": 1923191608,
+        "total_completion_tokens": 49508373,
+        "total_requests": 135126,
+        "input_output_ratio": 38.84578489379968
+      },
+      "source_updated_at": "2026-11-15T12:52:01.169Z",
+      "window": {
+        "start_date": "2026-11-08",
+        "end_date": "2026-11-14"
+      },
+      "provenance": {
+        "source": "OpenRouter model-page usage",
+        "url": "https://openrouter.ai/openai/gpt-chat-latest",
+        "collected_at": "2026-11-15T12:54:08.951Z",
+        "basis": "measured"
+      },
+      "response_sha256": "b9feb4aaaced612ec426170e05c726d05d49bc8539341dc642d5f193e58f9a6d",
+      "cache": {
+        "unjoined": [],
+        "returned_summaries": 1,
+        "summary_window": null,
+        "chart_date_range": {
+          "first": "2026-11-08 00:00:00",
+          "last": "2026-11-15 00:00:00"
+        },
+        "provenance": {
+          "source": "OpenRouter effective pricing statistics",
+          "url": "https://openrouter.ai/api/frontend/v1/stats/effective-pricing?permaslug=openai%2Fgpt-chat-latest-20260505&variant=standard&shape=v7",
+          "collected_at": "2026-11-15T12:54:10.982Z",
+          "basis": "measured"
+        },
+        "response_sha256": "e9b519a7b3a9ca74348754c5263f5e64e4ead844a679192e23e57098362693e1"
+      },
+      "cache_attempt": {
+        "source": "OpenRouter effective pricing statistics",
+        "url": "https://openrouter.ai/api/frontend/v1/stats/effective-pricing?permaslug=openai%2Fgpt-chat-latest-20260505&variant=standard&shape=v7",
+        "collected_at": "2026-11-15T12:54:10.982Z",
+        "basis": "measured",
+        "status": "available"
+      }
+    },
+    "openai/gpt-oss-120b": {
+      "or_model_id": "openai/gpt-oss-120b",
+      "model_permaslug": "openai/gpt-oss-120b",
+      "variant": "standard",
+      "endpoints": [
+        {
+          "or_model_id": "openai/gpt-oss-120b",
+          "endpoint_tag": "crusoe/bf16",
+          "provider": "Crusoe",
+          "endpoint_id": "77161aa8-a8ac-484e-b8b5-641de35b4af9",
+          "cache_read_per_1m": 0.049999999999999996,
+          "cache_write_per_1m": null,
+          "cache_hit_rate": 0.6244839991442545,
+          "cache_status": "available",
+          "cache_note": "OpenRouter reported cacheHitRate as a fraction. Underlying numerator/denominator and exact summary interval are not published in this response.",
+          "source_provider_name": "Crusoe",
+          "source_provider_slug": "crusoe",
+          "total_tokens": 3090111729
+        },
+        {
+          "or_model_id": "openai/gpt-oss-120b",
+          "endpoint_tag": "google-vertex/global",
+          "provider": "Google",
+          "endpoint_id": "93ec7f6d-c7aa-44c1-b9a7-2cd664a17b13",
+          "cache_read_per_1m": null,
+          "cache_write_per_1m": null,
+          "cache_hit_rate": 0.5306228375776272,
+          "cache_status": "available",
+          "cache_note": "OpenRouter reported cacheHitRate as a fraction. Underlying numerator/denominator and exact summary interval are not published in this response.",
+          "source_provider_name": "Google Vertex",
+          "source_provider_slug": "google-vertex",
+          "total_tokens": 4051420121
+        },
+        {
+          "or_model_id": "openai/gpt-oss-120b",
+          "endpoint_tag": "primeintellect/fp4",
+          "provider": "PrimeIntellect",
+          "endpoint_id": "6a042b7a-82b2-425b-8d0f-4834f7be44dd",
+          "cache_read_per_1m": 0.031,
+          "cache_write_per_1m": null,
+          "cache_hit_rate": 0.5337731595488906,
+          "cache_status": "available",
+          "cache_note": "OpenRouter reported cacheHitRate as a fraction. Underlying numerator/denominator and exact summary interval are not published in this response.",
+          "source_provider_name": "Prime Intellect",
+          "source_provider_slug": "primeintellect",
+          "total_tokens": 732590573
+        },
+        {
+          "or_model_id": "openai/gpt-oss-120b",
+          "endpoint_tag": "sail-research/fp4",
+          "provider": "Sail Research",
+          "endpoint_id": "5d6ef5fa-40c9-4b4d-9524-f9f29e475cc9",
+          "cache_read_per_1m": 0.03,
+          "cache_write_per_1m": null,
+          "cache_hit_rate": 0.7092564913150813,
+          "cache_status": "available",
+          "cache_note": "OpenRouter reported cacheHitRate as a fraction. Underlying numerator/denominator and exact summary interval are not published in this response.",
+          "source_provider_name": "Sail Research",
+          "source_provider_slug": "sail-research",
+          "total_tokens": 831148379
+        },
+        {
+          "or_model_id": "openai/gpt-oss-120b",
+          "endpoint_tag": "groq",
+          "provider": "Groq",
+          "endpoint_id": "900c5273-4931-4e9f-bb52-57935dd154b4",
+          "cache_read_per_1m": 0.075,
+          "cache_write_per_1m": null,
+          "cache_hit_rate": 0.5378906666463208,
+          "cache_status": "available",
+          "cache_note": "OpenRouter reported cacheHitRate as a fraction. Underlying numerator/denominator and exact summary interval are not published in this response.",
+          "source_provider_name": "Groq",
+          "source_provider_slug": "groq",
+          "total_tokens": 3646908302
+        },
+        {
+          "or_model_id": "openai/gpt-oss-120b",
+          "endpoint_tag": "digitalocean",
+          "provider": "DigitalOcean",
+          "endpoint_id": "f731010c-7359-4b80-b327-eea871e58f55",
+          "cache_read_per_1m": 0.012,
+          "cache_write_per_1m": null,
+          "cache_hit_rate": 0.37723914829738586,
+          "cache_status": "available",
+          "cache_note": "OpenRouter reported cacheHitRate as a fraction. Underlying numerator/denominator and exact summary interval are not published in this response.",
+          "source_provider_name": "DigitalOcean",
+          "source_provider_slug": "digitalocean",
+          "total_tokens": 18287974
+        },
+        {
+          "or_model_id": "openai/gpt-oss-120b",
+          "endpoint_tag": "siliconflow/fp8",
+          "provider": "SiliconFlow",
+          "endpoint_id": "ce118593-d9b2-4d2d-bcd4-33f0609b42f1",
+          "cache_read_per_1m": 0.075,
+          "cache_write_per_1m": null,
+          "cache_hit_rate": 0,
+          "cache_status": "available",
+          "cache_note": "OpenRouter reported cacheHitRate as a fraction. Underlying numerator/denominator and exact summary interval are not published in this response.",
+          "source_provider_name": "SiliconFlow",
+          "source_provider_slug": "siliconflow",
+          "total_tokens": 6185350
+        },
+        {
+          "or_model_id": "openai/gpt-oss-120b",
+          "endpoint_tag": "near-ai/fp4",
+          "provider": "Near AI",
+          "endpoint_id": "cb90ebe8-debc-4bf6-a79f-c1f0f2fbbe88",
+          "cache_read_per_1m": 0.015,
+          "cache_write_per_1m": null,
+          "cache_hit_rate": 0.6749235301095344,
+          "cache_status": "available",
+          "cache_note": "OpenRouter reported cacheHitRate as a fraction. Underlying numerator/denominator and exact summary interval are not published in this response.",
+          "source_provider_name": "NEAR AI",
+          "source_provider_slug": "near-ai",
+          "total_tokens": 1846388268
+        },
+        {
+          "or_model_id": "openai/gpt-oss-120b",
+          "endpoint_tag": "io-net/fp4",
+          "provider": "Io Net",
+          "endpoint_id": "98237083-1d15-469c-8f51-d8a31dbd8f48",
+          "cache_read_per_1m": 0.08499999999999999,
+          "cache_write_per_1m": null,
+          "cache_hit_rate": 0.1533498714676074,
+          "cache_status": "available",
+          "cache_note": "OpenRouter reported cacheHitRate as a fraction. Underlying numerator/denominator and exact summary interval are not published in this response.",
+          "source_provider_name": "io.net",
+          "source_provider_slug": "io-net",
+          "total_tokens": 5937838
+        },
+        {
+          "or_model_id": "openai/gpt-oss-120b",
+          "endpoint_tag": "dekallm/bf16",
+          "provider": "DekaLLM",
+          "endpoint_id": "0fc72bcd-4226-4cf2-888f-0e9739f20063",
+          "cache_read_per_1m": 0.03,
+          "cache_write_per_1m": null,
+          "cache_hit_rate": 0.12415965413460159,
+          "cache_status": "available",
+          "cache_note": "OpenRouter reported cacheHitRate as a fraction. Underlying numerator/denominator and exact summary interval are not published in this response.",
+          "source_provider_name": "DekaLLM",
+          "source_provider_slug": "dekallm",
+          "total_tokens": 549027842
+        },
+        {
+          "or_model_id": "openai/gpt-oss-120b",
+          "endpoint_tag": "venice/int4",
+          "provider": "Venice",
+          "endpoint_id": "060d5b0c-6673-45f8-9b66-5679aa6e6d51",
+          "cache_read_per_1m": 0.03,
+          "cache_write_per_1m": null,
+          "cache_hit_rate": 0.41380592040627373,
+          "cache_status": "available",
+          "cache_note": "OpenRouter reported cacheHitRate as a fraction. Underlying numerator/denominator and exact summary interval are not published in this response.",
+          "source_provider_name": "Venice",
+          "source_provider_slug": "venice",
+          "total_tokens": 68058310
+        },
+        {
+          "or_model_id": "openai/gpt-oss-120b",
+          "endpoint_tag": "deepinfra/bf16",
+          "provider": "DeepInfra",
+          "endpoint_id": "85835306-dba3-4334-87bc-ab9ffa5c9c62",
+          "cache_read_per_1m": null,
+          "cache_write_per_1m": null,
+          "cache_hit_rate": 0,
+          "cache_status": "available",
+          "cache_note": "OpenRouter reported cacheHitRate as a fraction. Underlying numerator/denominator and exact summary interval are not published in this response.",
+          "source_provider_name": "DeepInfra (1)",
+          "source_provider_slug": "deepinfra",
+          "total_tokens": 1533476222
+        },
+        {
+          "or_model_id": "openai/gpt-oss-120b",
+          "endpoint_tag": "sambanova",
+          "provider": "SambaNova",
+          "endpoint_id": "f487438c-e29a-408a-b38b-14045101a90d",
+          "cache_read_per_1m": null,
+          "cache_write_per_1m": null,
+          "cache_hit_rate": 0,
+          "cache_status": "available",
+          "cache_note": "OpenRouter reported cacheHitRate as a fraction. Underlying numerator/denominator and exact summary interval are not published in this response.",
+          "source_provider_name": "SambaNova",
+          "source_provider_slug": "sambanova",
+          "total_tokens": 30256586
+        },
+        {
+          "or_model_id": "openai/gpt-oss-120b",
+          "endpoint_tag": "deepinfra/fp8",
+          "provider": "DeepInfra",
+          "endpoint_id": "adf182a9-2165-4bfd-a674-6486c615f71e",
+          "cache_read_per_1m": null,
+          "cache_write_per_1m": null,
+          "cache_hit_rate": 0,
+          "cache_status": "available",
+          "cache_note": "OpenRouter reported cacheHitRate as a fraction. Underlying numerator/denominator and exact summary interval are not published in this response.",
+          "source_provider_name": "DeepInfra (2)",
+          "source_provider_slug": "deepinfra",
+          "total_tokens": 343413778
+        },
+        {
+          "or_model_id": "openai/gpt-oss-120b",
+          "endpoint_tag": "akashml/fp4",
+          "provider": "AkashML",
+          "endpoint_id": "08a6dab7-09b5-4875-8f9b-f498f8f4173a",
+          "cache_read_per_1m": 0.03,
+          "cache_write_per_1m": null,
+          "cache_hit_rate": 0.5320155486900694,
+          "cache_status": "available",
+          "cache_note": "OpenRouter reported cacheHitRate as a fraction. Underlying numerator/denominator and exact summary interval are not published in this response.",
+          "source_provider_name": "AkashML",
+          "source_provider_slug": "akashml",
+          "total_tokens": 847294615
+        },
+        {
+          "or_model_id": "openai/gpt-oss-120b",
+          "endpoint_tag": "coreweave/fp4",
+          "provider": "CoreWeave",
+          "endpoint_id": "5595698f-9ce8-4aa8-8037-f0d7d3c13d2a",
+          "cache_read_per_1m": 0.03,
+          "cache_write_per_1m": null,
+          "cache_hit_rate": 0.9264281165550418,
+          "cache_status": "available",
+          "cache_note": "OpenRouter reported cacheHitRate as a fraction. Underlying numerator/denominator and exact summary interval are not published in this response.",
+          "source_provider_name": "CoreWeave",
+          "source_provider_slug": "coreweave",
+          "total_tokens": 1359748368
+        },
+        {
+          "or_model_id": "openai/gpt-oss-120b",
+          "endpoint_tag": "amazon-bedrock",
+          "provider": "Amazon Bedrock",
+          "endpoint_id": "b3f80c05-e31a-44f6-b63f-414467b87553",
+          "cache_read_per_1m": null,
+          "cache_write_per_1m": null,
+          "cache_hit_rate": 0,
+          "cache_status": "available",
+          "cache_note": "OpenRouter reported cacheHitRate as a fraction. Underlying numerator/denominator and exact summary interval are not published in this response.",
+          "source_provider_name": "Amazon Bedrock (1)",
+          "source_provider_slug": "amazon-bedrock",
+          "total_tokens": 252026658
+        },
+        {
+          "or_model_id": "openai/gpt-oss-120b",
+          "endpoint_tag": "mancer/fp8",
+          "provider": "Mancer 2",
+          "endpoint_id": "d4a6816a-826d-4988-a8ed-2caa3f7f398d",
+          "cache_read_per_1m": 0.07,
+          "cache_write_per_1m": null,
+          "cache_hit_rate": 0.3295159805124096,
+          "cache_status": "available",
+          "cache_note": "OpenRouter reported cacheHitRate as a fraction. Underlying numerator/denominator and exact summary interval are not published in this response.",
+          "source_provider_name": "Mancer",
+          "source_provider_slug": "mancer",
+          "total_tokens": 45904423
+        },
+        {
+          "or_model_id": "openai/gpt-oss-120b",
+          "endpoint_tag": "amazon-bedrock/eu-west-1",
+          "provider": "Amazon Bedrock",
+          "endpoint_id": "eda49f69-50b8-4385-9ecd-8452c15a8253",
+          "cache_read_per_1m": null,
+          "cache_write_per_1m": null,
+          "cache_hit_rate": 0,
+          "cache_status": "available",
+          "cache_note": "OpenRouter reported cacheHitRate as a fraction. Underlying numerator/denominator and exact summary interval are not published in this response.",
+          "source_provider_name": "Amazon Bedrock (2)",
+          "source_provider_slug": "amazon-bedrock",
+          "total_tokens": 49598108
+        },
+        {
+          "or_model_id": "openai/gpt-oss-120b",
+          "endpoint_tag": "parasail/fp4",
+          "provider": "Parasail",
+          "endpoint_id": "cedca069-169c-4bc2-963a-7ad3a21380c8",
+          "cache_read_per_1m": 0.055,
+          "cache_write_per_1m": null,
+          "cache_hit_rate": 0.48921732953030866,
+          "cache_status": "available",
+          "cache_note": "OpenRouter reported cacheHitRate as a fraction. Underlying numerator/denominator and exact summary interval are not published in this response.",
+          "source_provider_name": "Parasail (2)",
+          "source_provider_slug": "parasail",
+          "total_tokens": 83172496
+        },
+        {
+          "or_model_id": "openai/gpt-oss-120b",
+          "endpoint_tag": "parasail/fast",
+          "provider": "Parasail",
+          "endpoint_id": "281b622a-375e-4852-852f-bc708fc289ea",
+          "cache_read_per_1m": null,
+          "cache_write_per_1m": null,
+          "cache_hit_rate": 0.3238031153674507,
+          "cache_status": "available",
+          "cache_note": "OpenRouter reported cacheHitRate as a fraction. Underlying numerator/denominator and exact summary interval are not published in this response.",
+          "source_provider_name": "Parasail (1)",
+          "source_provider_slug": "parasail",
+          "total_tokens": 79623102
+        },
+        {
+          "or_model_id": "openai/gpt-oss-120b",
+          "endpoint_tag": "nebius/fp4",
+          "provider": "Nebius",
+          "endpoint_id": "de9b9344-2116-44ea-b30a-fd9ec94b1157",
+          "cache_read_per_1m": 0.09999999999999999,
+          "cache_write_per_1m": null,
+          "cache_hit_rate": 0.676078533913486,
+          "cache_status": "available",
+          "cache_note": "OpenRouter reported cacheHitRate as a fraction. Underlying numerator/denominator and exact summary interval are not published in this response.",
+          "source_provider_name": "Nebius Token Factory",
+          "source_provider_slug": "nebius",
+          "total_tokens": 104891113
+        },
+        {
+          "or_model_id": "openai/gpt-oss-120b",
+          "endpoint_tag": "together",
+          "provider": "Together",
+          "endpoint_id": "c7cc0654-cfe3-4531-bd8a-68cd162ba020",
+          "cache_read_per_1m": null,
+          "cache_write_per_1m": null,
+          "cache_hit_rate": 0.5030539133957243,
+          "cache_status": "available",
+          "cache_note": "OpenRouter reported cacheHitRate as a fraction. Underlying numerator/denominator and exact summary interval are not published in this response.",
+          "source_provider_name": "Together",
+          "source_provider_slug": "together",
+          "total_tokens": 36878585
+        },
+        {
+          "or_model_id": "openai/gpt-oss-120b",
+          "endpoint_tag": "cerebras/fp16",
+          "provider": "Cerebras",
+          "endpoint_id": "20cbeb96-747f-42b6-a371-266a1bcd1e6c",
+          "cache_read_per_1m": 0.35,
+          "cache_write_per_1m": null,
+          "cache_hit_rate": 0.6456740341353072,
+          "cache_status": "available",
+          "cache_note": "OpenRouter reported cacheHitRate as a fraction. Underlying numerator/denominator and exact summary interval are not published in this response.",
+          "source_provider_name": "Cerebras",
+          "source_provider_slug": "cerebras",
+          "total_tokens": 2775777136
+        },
+        {
+          "or_model_id": "openai/gpt-oss-120b",
+          "endpoint_tag": "baseten/fp4",
+          "provider": "BaseTen",
+          "endpoint_id": "000e507a-4d52-4dee-927a-8ece3a7b0c28",
+          "cache_read_per_1m": 0.09999999999999999,
+          "cache_write_per_1m": null,
+          "cache_hit_rate": 0.6871086724139994,
+          "cache_status": "available",
+          "cache_note": "OpenRouter reported cacheHitRate as a fraction. Underlying numerator/denominator and exact summary interval are not published in this response.",
+          "source_provider_name": "Baseten (1)",
+          "source_provider_slug": "baseten",
+          "total_tokens": 93433374
+        },
+        {
+          "or_model_id": "openai/gpt-oss-120b",
+          "endpoint_tag": "baseten/fp4/us",
+          "provider": "BaseTen",
+          "endpoint_id": "8727923e-c4b6-4dac-b5d5-6f2238b35a25",
+          "cache_read_per_1m": 0.09999999999999999,
+          "cache_write_per_1m": null,
+          "cache_hit_rate": 0.6368922840125172,
+          "cache_status": "available",
+          "cache_note": "OpenRouter reported cacheHitRate as a fraction. Underlying numerator/denominator and exact summary interval are not published in this response.",
+          "source_provider_name": "Baseten (2)",
+          "source_provider_slug": "baseten",
+          "total_tokens": 179822210
+        }
+      ],
+      "usage": {
+        "status": "available",
+        "daily": [
+          {
+            "date": "2026-11-14",
+            "total_prompt_tokens": 45779775663,
+            "total_completion_tokens": 6441817032,
+            "count": 13403513
+          },
+          {
+            "date": "2026-11-13",
+            "total_prompt_tokens": 62983816832,
+            "total_completion_tokens": 8603529548,
+            "count": 18595935
+          },
+          {
+            "date": "2026-11-12",
+            "total_prompt_tokens": 60218255181,
+            "total_completion_tokens": 8394330393,
+            "count": 18367476
+          },
+          {
+            "date": "2026-11-11",
+            "total_prompt_tokens": 53738838899,
+            "total_completion_tokens": 7910424242,
+            "count": 18419176
+          },
+          {
+            "date": "2026-11-10",
+            "total_prompt_tokens": 60498906326,
+            "total_completion_tokens": 8378130184,
+            "count": 18154784
+          },
+          {
+            "date": "2026-11-09",
+            "total_prompt_tokens": 63374013928,
+            "total_completion_tokens": 7835707416,
+            "count": 18158737
+          },
+          {
+            "date": "2026-11-08",
+            "total_prompt_tokens": 50868001901,
+            "total_completion_tokens": 6812393740,
+            "count": 16925478
+          }
+        ],
+        "total_prompt_tokens": 397461608730,
+        "total_completion_tokens": 54376332555,
+        "total_requests": 122025099,
+        "input_output_ratio": 7.309459650078087
+      },
+      "source_updated_at": "2026-11-15T12:53:01.750Z",
+      "window": {
+        "start_date": "2026-11-08",
+        "end_date": "2026-11-14"
+      },
+      "provenance": {
+        "source": "OpenRouter model-page usage",
+        "url": "https://openrouter.ai/openai/gpt-oss-120b",
+        "collected_at": "2026-11-15T12:54:12.988Z",
+        "basis": "measured"
+      },
+      "response_sha256": "ca240e6fbb15095b0974d622f3a180a4790ac31b2e6d6ac13396fa508ebba7f8",
+      "cache": {
+        "unjoined": [],
+        "returned_summaries": 26,
+        "summary_window": null,
+        "chart_date_range": {
+          "first": "2026-11-08 00:00:00",
+          "last": "2026-11-15 00:00:00"
+        },
+        "provenance": {
+          "source": "OpenRouter effective pricing statistics",
+          "url": "https://openrouter.ai/api/frontend/v1/stats/effective-pricing?permaslug=openai%2Fgpt-oss-120b&variant=standard&shape=v7",
+          "collected_at": "2026-11-15T12:54:15.204Z",
+          "basis": "measured"
+        },
+        "response_sha256": "9f990f9453d04aa7638bb4b7abde247291a02480277152e6f28edd9c02e40baa"
+      },
+      "cache_attempt": {
+        "source": "OpenRouter effective pricing statistics",
+        "url": "https://openrouter.ai/api/frontend/v1/stats/effective-pricing?permaslug=openai%2Fgpt-oss-120b&variant=standard&shape=v7",
+        "collected_at": "2026-11-15T12:54:15.204Z",
+        "basis": "measured",
+        "status": "available"
+      }
     }
   },
   "attempts": {
@@ -30574,7 +31315,7 @@
     "openai/gpt-6-astra": {
       "source": "OpenRouter model page",
       "url": "https://openrouter.ai/openai/gpt-6-astra",
-      "collected_at": "2026-11-11T05:30:55.466Z",
+      "collected_at": "2026-11-15T12:54:00.787Z",
       "status": "available",
       "http_status": 200
     },
@@ -32173,6 +32914,27 @@
       "collected_at": "2026-11-15T05:32:08.703Z",
       "status": "available",
       "http_status": 200
+    },
+    "openai/gpt-6.1-terra-pro": {
+      "source": "OpenRouter model page",
+      "url": "https://openrouter.ai/openai/gpt-6.1-terra-pro",
+      "collected_at": "2026-11-15T12:54:04.897Z",
+      "status": "available",
+      "http_status": 200
+    },
+    "openai/gpt-chat-latest": {
+      "source": "OpenRouter model page",
+      "url": "https://openrouter.ai/openai/gpt-chat-latest",
+      "collected_at": "2026-11-15T12:54:08.951Z",
+      "status": "available",
+      "http_status": 200
+    },
+    "openai/gpt-oss-120b": {
+      "source": "OpenRouter model page",
+      "url": "https://openrouter.ai/openai/gpt-oss-120b",
+      "collected_at": "2026-11-15T12:54:12.988Z",
+      "status": "available",
+      "http_status": 200
     }
   },
   "rankings": {
@@ -32385,15 +33147,15 @@
     "provenance": {
       "source": "OpenRouter weekly model rankings",
       "url": "https://openrouter.ai/rankings?view=week",
-      "collected_at": "2026-11-15T05:31:54.630Z",
+      "collected_at": "2026-11-15T12:53:58.777Z",
       "basis": "measured"
     },
-    "response_sha256": "1cd92ee65def53deb4b6a0f25f615f9704c1f2e54b42aebcc828025ab20b9b5d"
+    "response_sha256": "b48847a70cb3277534bac46c99b8db93860e46eba571312ae214a6d1466a710d"
   },
   "rankings_attempt": {
     "source": "OpenRouter weekly model rankings",
     "url": "https://openrouter.ai/rankings?view=week",
-    "collected_at": "2026-11-15T05:31:54.630Z",
+    "collected_at": "2026-11-15T12:53:58.777Z",
     "basis": "measured",
     "status": "available"
   },
@@ -32402,7 +33164,7 @@
     "eligible_page_models": 326,
     "pages_selected": 4,
     "pages_succeeded_this_run": 4,
-    "retained_model_pages": 216,
+    "retained_model_pages": 219,
     "policy": "At most four model pages per normal daily run: one oldest-attempt-first page from the maintained GPT-6 model/mode priority set, then up to three oldest-attempt-first pages from the remaining catalog; explicit targeted batches are capped at twelve. Per-observation dates are retained."
   }
 }

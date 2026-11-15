@@ -1,0 +1,34 @@
+{
+  "artifact_id": "scores-3",
+  "artifact_sha256": "848680508d4d5d13945f4c12f8386105352032f0a3eaacb22cc715ce97b0f325",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": [
+    "vendor:DeepSeek-V3:aider-polyglot::snapshot-2026-09-10",
+    "c1"
+  ],
+  "errors_found": 2,
+  "findings": [
+    {
+      "id": "F1",
+      "severity": "major",
+      "location": "row vendor:DeepSeek-V3:aider-polyglot::snapshot-2026-09-10, fields id and benchmark_id",
+      "evidence": "Primary evidence Table 6 names only 'Aider-Polyglot (Acc.)'; no source text mentions 'snapshot-2026-09-10' or any snapshot/version date for the benchmark.",
+      "repair": "Remove the unsupported 'snapshot-2026-09-10' suffix from id and benchmark_id, or supply primary evidence that identifies that exact benchmark version."
+    },
+    {
+      "id": "F2",
+      "severity": "minor",
+      "location": "row vendor:DeepSeek-V3:aider-polyglot::snapshot-2026-09-10, fields subject.source_id, subject.name, subject.model_id, subject.variant",
+      "evidence": "Primary evidence identifies the column as 'DeepSeek V3' and the caption says chat models; no source text states 'December 2024 update', 'Dec '24', or variant 'default'. The arXiv ID 2412 may imply a month but does not document an update or variant.",
+      "repair": "Align model identity and variant fields to claims present in the source, or add primary evidence supporting the 'December 2024 update' and 'default' variant."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "I cannot recompute SHA-256 hashes or execute transport/network checks; owner hash and retrieval assertions are assumed as stated.",
+    "The 'Dec '24' label might be inferred from arXiv ID 2412, but that inference is not explicit in the supplied source text.",
+    "The 'snapshot-2026-09-10' version might be an internal Benchmark Heaven identifier, but no supplied source or locator substantiates it."
+  ],
+  "missing_evidence": []
+}

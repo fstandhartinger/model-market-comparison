@@ -1,0 +1,23 @@
+{
+  "artifact_id": "protocol-gso-opt1-102",
+  "artifact_sha256": "eedef18bb298a4ecee13a356eb383d9eb5c33428b80c95017bb7ef88b2383f9f",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": ["gso::opt1-102", "c1", "c2"],
+  "errors_found": 1,
+  "findings": [
+    {
+      "id": "gso::opt1-102-version-status",
+      "severity": "major",
+      "location": "row gso::opt1-102 version/version_status",
+      "evidence": "Neither Source 1 (protocol page) nor Source 2 (leaderboard.json) contains any release identifier for this board; leaderboard.json metadata has only last_updated and total_tasks. The row nevertheless claims version 'opt1-102' with version_status 'published', which criterion c2 defines as copying a maintainer-published release identifier. No such identifier appears in the supplied evidence.",
+      "repair": "Change version_status to 'snapshot' and align version with a snapshot-<date> identity per criterion c2, or supply evidence of a published release identifier named opt1-102."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "I cannot recompute hashes or execute transport/qualification checks; owner-side hash verification is outside my read-only scope.",
+    "higher_better=true is inferred from the protocol's 'Estimator of fraction' wording and is not contradicted by evidence, but is not stated verbatim."
+  ],
+  "missing_evidence": []
+}
