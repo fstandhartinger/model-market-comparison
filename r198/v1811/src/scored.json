@@ -1,0 +1,320 @@
+{
+ "minimodels-decision-1.0-candy-cane": {
+  "cost_basis_sha256": "b83bdfd14c263ffacfa572b304084154afca84c1f00083101a33783ae6f8b356",
+  "frozen": {
+   "api_flag": false,
+   "api_subset": false,
+   "axes": {
+    "calibration": 92.57899727889142,
+    "cost": 57.60805349713269,
+    "intelligence": 77.10996486574209,
+    "speed": 85.26052442541899
+   },
+   "capability": 84.84448107231675,
+   "composite_ci95": {
+    "A": [
+     74.22784751001349,
+     76.23628648313925
+    ],
+    "B": [
+     73.95286742106893,
+     77.01124118407951
+    ],
+    "C": [
+     74.22784751001349,
+     76.23628648313925
+    ]
+   },
+   "cost": {
+    "kind": "estimate",
+    "usd_per_1000": 0.02588599622055449
+   },
+   "decision_limit": null,
+   "display": "Minimodels Decision 1.0 (candy-cane)",
+   "endpoint_kind": "gpu",
+   "full_coverage": true,
+   "jevbench_score": 75.6751359269179,
+   "key": "minimodels-decision-1.0-candy-cane",
+   "listing": "listed",
+   "rank": null,
+   "ranked": false,
+   "scores": {
+    "A": 75.6751359269179,
+    "B": 75.95781396938062,
+    "C": 75.6751359269179
+   },
+   "speed": {
+    "adjustment": "x2 + 0.15 s (assumption, not measured)",
+    "p50_s_adjusted": 0.44178321400013376,
+    "p50_s_raw": 0.14589160700006687,
+    "p95_s_adjusted": 0.6741217617000131,
+    "p95_s_raw": 0.26206088085000656
+   },
+   "status": {
+    "status": "complete"
+   },
+   "support": {
+    "choice": "native",
+    "noul": "native",
+    "score": "native"
+   },
+   "v16": {
+    "ci95": {
+     "B": 1000,
+     "C": [
+      89.15536982584455,
+      92.72779058744626
+     ],
+     "I": [
+      72.8597040510144,
+      80.53581609667957
+     ],
+     "capability": [
+      81.51568749857981,
+      85.94296321905279
+     ],
+     "composite": {
+      "A": [
+       74.22784751001349,
+       76.23628648313925
+      ],
+      "B": [
+       73.95286742106893,
+       77.01124118407951
+      ],
+      "C": [
+       74.22784751001349,
+       76.23628648313925
+      ]
+     },
+     "seed": 16
+    },
+    "complete": true,
+    "equated": null,
+    "equating_offset": null,
+    "g_med_used": 2.573387642438244,
+    "lane": "selfhosted"
+   },
+   "views": {
+    "Balanced 33:33:33": 71.3335723193711,
+    "Emphasis on Accuracy 60:20:20": 73.53706952508911,
+    "Emphasis on Cost 20:20:60": 65.12680672167478,
+    "Emphasis on Speed 20:60:20": 76.32020774108236,
+    "Intelligence only": 77.10996486574209
+   }
+  },
+  "pins": {
+   "frozen": "4ef7b0878885caff54d736088b7f094f9dc7b7bf5aa568814296ee3916bc73c5",
+   "v17-off": "66ad8d724e9ee72728f0fc717ec9f1f83e530171de67614e1b98322884ac735b",
+   "v17-share": "1775ccab58e15083f771f2e2c97c6a43ec8ca15d889d42b56f69620013b9ab75"
+  },
+  "v17-off": {
+   "api_flag": false,
+   "api_subset": false,
+   "axes": {
+    "calibration": 92.57899727889142,
+    "cost": 57.60805349713269,
+    "intelligence": 77.10996486574209,
+    "speed": 85.26052442541899
+   },
+   "capability": 84.84448107231675,
+   "composite_ci95": {
+    "A": [
+     74.22784751001349,
+     76.23628648313925
+    ],
+    "B": [
+     73.95286742106893,
+     77.01124118407951
+    ],
+    "C": [
+     74.22784751001349,
+     76.23628648313925
+    ]
+   },
+   "cost": {
+    "kind": "estimate",
+    "usd_per_1000": 0.02588599622055449
+   },
+   "decision_limit": null,
+   "display": "Minimodels Decision 1.0 (candy-cane)",
+   "endpoint_kind": "gpu",
+   "full_coverage": true,
+   "jevbench_score": 75.6751359269179,
+   "key": "minimodels-decision-1.0-candy-cane",
+   "listing": "listed",
+   "rank": null,
+   "ranked": false,
+   "scores": {
+    "A": 75.6751359269179,
+    "B": 75.95781396938062,
+    "C": 75.6751359269179
+   },
+   "speed": {
+    "adjustment": "x2 + 0.15 s (assumption, not measured)",
+    "p50_s_adjusted": 0.44178321400013376,
+    "p50_s_raw": 0.14589160700006687,
+    "p95_s_adjusted": 0.6741217617000131,
+    "p95_s_raw": 0.26206088085000656
+   },
+   "status": {
+    "status": "complete"
+   },
+   "support": {
+    "choice": "native",
+    "noul": "native",
+    "score": "native"
+   },
+   "v16": {
+    "ci95": {
+     "B": 1000,
+     "C": [
+      89.15536982584455,
+      92.72779058744626
+     ],
+     "I": [
+      72.8597040510144,
+      80.53581609667957
+     ],
+     "capability": [
+      81.51568749857981,
+      85.94296321905279
+     ],
+     "composite": {
+      "A": [
+       74.22784751001349,
+       76.23628648313925
+      ],
+      "B": [
+       73.95286742106893,
+       77.01124118407951
+      ],
+      "C": [
+       74.22784751001349,
+       76.23628648313925
+      ]
+     },
+     "seed": 16
+    },
+    "complete": true,
+    "equated": null,
+    "equating_offset": null,
+    "g_med_used": 2.573387642438244,
+    "lane": "selfhosted"
+   },
+   "views": {
+    "Balanced 33:33:33": 71.3335723193711,
+    "Emphasis on Accuracy 60:20:20": 73.53706952508911,
+    "Emphasis on Cost 20:20:60": 65.12680672167478,
+    "Emphasis on Speed 20:60:20": 76.32020774108236,
+    "Intelligence only": 77.10996486574209
+   }
+  },
+  "v17-share": {
+   "api_flag": false,
+   "api_subset": false,
+   "axes": {
+    "calibration": 92.57899727889142,
+    "cost": 57.60805349713269,
+    "intelligence": 77.10996486574209,
+    "speed": 72.48013389204425
+   },
+   "capability": 84.84448107231675,
+   "composite_ci95": {
+    "A": [
+     71.48440830287046,
+     73.34526728306548
+    ],
+    "B": [
+     71.75788139294554,
+     74.63386880969108
+    ],
+    "C": [
+     71.48440830287046,
+     73.34526728306548
+    ]
+   },
+   "cost": {
+    "kind": "estimate",
+    "usd_per_1000": 0.02588599622055449
+   },
+   "decision_limit": {
+    "limit_s": 10.0,
+    "rule": "latency_s > limit -> failed",
+    "treatment": "share"
+   },
+   "display": "Minimodels Decision 1.0 (candy-cane)",
+   "endpoint_kind": "gpu",
+   "full_coverage": true,
+   "jevbench_score": 72.82572444349665,
+   "key": "minimodels-decision-1.0-candy-cane",
+   "listing": "listed",
+   "rank": null,
+   "ranked": false,
+   "scores": {
+    "A": 72.82572444349665,
+    "B": 73.64405928831358,
+    "C": 72.82572444349665
+   },
+   "speed": {
+    "adjustment": "x2 + 0.15 s (assumption, not measured)",
+    "p50_s_adjusted": 0.40925947300004284,
+    "p50_s_raw": 0.1296297365000214,
+    "p95_s_adjusted": 13.803457108899975,
+    "p95_s_raw": 6.826728554449987
+   },
+   "status": {
+    "status": "complete"
+   },
+   "support": {
+    "choice": "native",
+    "noul": "native",
+    "score": "native"
+   },
+   "v16": {
+    "ci95": {
+     "B": 1000,
+     "C": [
+      89.15536982584455,
+      92.72779058744626
+     ],
+     "I": [
+      72.8597040510144,
+      80.53581609667957
+     ],
+     "capability": [
+      81.51568749857981,
+      85.94296321905279
+     ],
+     "composite": {
+      "A": [
+       71.48440830287046,
+       73.34526728306548
+      ],
+      "B": [
+       71.75788139294554,
+       74.63386880969108
+      ],
+      "C": [
+       71.48440830287046,
+       73.34526728306548
+      ]
+     },
+     "seed": 16
+    },
+    "complete": true,
+    "equated": null,
+    "equating_offset": null,
+    "g_med_used": 2.573387642438244,
+    "lane": "selfhosted"
+   },
+   "views": {
+    "Balanced 33:33:33": 67.99011610534343,
+    "Emphasis on Accuracy 60:20:20": 71.36633435160454,
+    "Emphasis on Cost 20:20:60": 63.418434750886924,
+    "Emphasis on Speed 20:60:20": 69.71767132630208,
+    "Intelligence only": 77.10996486574209
+   }
+  }
+ }
+}

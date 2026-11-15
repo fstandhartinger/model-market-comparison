@@ -1,0 +1,27 @@
+TAP version 13
+# Subtest: v1.8.11: no listed row displays any topic, use-case or language cell below 30 scored items
+not ok 1 - v1.8.11: no listed row displays any topic, use-case or language cell below 30 scored items
+  ---
+  duration_ms: 11025.150416
+  location: '/srv/heavy/jobs/v1811_r161b--ws.v1811_r161b/work/test/cr-257-v1811-min-samples.test.mjs:6:1'
+  failureType: 'testCodeFailure'
+  error: 'ajev-gemma4-31b-lm6q.usecases.advertising: n=22'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (file:///srv/heavy/jobs/v1811_r161b--ws.v1811_r161b/work/test/cr-257-v1811-min-samples.test.mjs:12:49)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+1..1
+# tests 1
+# suites 0
+# pass 0
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 11433.923116

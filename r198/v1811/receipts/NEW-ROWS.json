@@ -1,0 +1,169 @@
+{
+ "minimodels-decision-1.0-candy-cane": {
+  "api_flag": false,
+  "api_subset": false,
+  "author": "minimodels-ai",
+  "axes": {
+   "calibration": 90.7247525637117,
+   "cost": 57.60805349713269,
+   "intelligence": 74.2250736791645,
+   "speed": 72.48013389204425
+  },
+  "base_model": "google/gemma-4-31B-it",
+  "capability": 82.4749131214381,
+  "composite_ci95": {
+   "A": [
+    71.48440830287046,
+    73.34526728306548
+   ],
+   "B": [
+    71.75788139294554,
+    74.63386880969108
+   ],
+   "C": [
+    71.48440830287046,
+    73.34526728306548
+   ]
+  },
+  "cost": {
+   "basis": "GPU-time estimate from v1.8.0: one monthly-rented RTX PRO 6000 96 GB, USD 1.5235/hour; average load 70%. Architecture: dense gemma, 31B active parameters; throughput 10106.516129 tokens/s (architecture-class calibration, efficient-engine prefill). GPU-time cost USD 0.0258859962205545/1,000; old list-price estimate USD 0.0409948891873741/1,000 (google/gemma-4-31b-it at USD 0.09/M input and USD 0.34/M output). Applied min(old list-price estimate, GPU-time cost) = USD 0.0258859962205545/1,000. Estimated, not a bill.",
+   "kind": "estimate",
+   "usd_per_1000": 0.02588599622055449
+  },
+  "decision_limit": {
+   "limit_s": 10.0,
+   "rule": "latency_s > limit -> failed",
+   "treatment": "share"
+  },
+  "disclosure": "Paid public evaluation. Measured on the 27 Oct draw on an evaluator-owned rented GPU with the author's serving code unchanged at the pinned model commit, offline (no network). The author's wall-clock-capped selective scratchpad pass can make repeat runs differ slightly. Failed or unanswered requests count as wrong answers.",
+  "display": "Minimodels Decision 1.0 (candy-cane)",
+  "draw": {
+   "ci_basis": "measured on the draw before equating",
+   "drawn_on": "2026-10-27",
+   "g_med": 2.573387642438244,
+   "id": "v1.6-regular-20261027",
+   "label": "Third regular draw",
+   "measured_on": "2026-11-15",
+   "offset": {
+    "C": -1.8542447151797177,
+    "I": -2.884891186577587
+   },
+   "offset_ci95": {
+    "C": [
+     -5.447551660176162,
+     1.9718407968151896
+    ],
+    "I": [
+     -5.851030683979731,
+     1.0608488496147923
+    ]
+   },
+   "release": "v1.8.11",
+   "results_sha256": "1775ccab58e15083f771f2e2c97c6a43ec8ca15d889d42b56f69620013b9ab75",
+   "status": "equated"
+  },
+  "endpoint_condition": "Evaluator-owned Verda GPU VM (RTX PRO 6000), offline read-only container (--network none); author's scripts/serve_torch_jev.py unchanged at model commit 14ea4e1d29571d58d1de224198de6babc78d7cd0. MLX 4-bit affine checkpoint dequantised to bf16 by the author's loader, with LoRA adapter and static candy_cane calibration. Author's selective scratchpad pass on uncertain choice items (greedy, capped at 180 tokens and 8.6 seconds); author's own long-input compression.",
+  "endpoint_kind": "gpu",
+  "full_coverage": true,
+  "jevbench_score": 71.87722052632512,
+  "key": "minimodels-decision-1.0-candy-cane",
+  "last_measured_on": "2026-11-15",
+  "licence": "apache-2.0 (model card); base google/gemma-4-31B-it (Gemma terms)",
+  "listing": "unranked",
+  "measured_in": "v1.8.11",
+  "measurement_date_status": "measured",
+  "method": "v1.7",
+  "model_pin": "minimodels-ai/decision-1.0@14ea4e1d29571d58d1de224198de6babc78d7cd0",
+  "new_in": "v1.8.11",
+  "not_ranked_because": "Added after the v1.8.10 ranking review; it is ranked at the next review.",
+  "paid_fast_lane": true,
+  "published_scores": {
+   "axes": {
+    "calibration": 92.57899727889142,
+    "cost": 57.60805349713269,
+    "intelligence": 77.10996486574209,
+    "speed": 72.48013389204425
+   },
+   "capability": 84.84448107231675,
+   "scores": {
+    "A": 72.82572444349665,
+    "B": 73.64405928831358,
+    "C": 72.82572444349665
+   }
+  },
+  "rank": null,
+  "ranked": false,
+  "ranks": {
+   "A": null,
+   "B": null,
+   "C": null,
+   "capability": null
+  },
+  "repo": "https://huggingface.co/minimodels-ai/decision-1.0",
+  "scores": {
+   "A": 71.87722052632512,
+   "B": 72.3348329128039,
+   "C": 71.87722052632512
+  },
+  "speed": {
+   "adjustment": "x2 + 0.15 s (assumption, not measured)",
+   "p50_s_adjusted": 0.40925947300004284,
+   "p50_s_raw": 0.1296297365000214,
+   "p95_s_adjusted": 13.803457108899975,
+   "p95_s_raw": 6.826728554449987
+  },
+  "status": {
+   "status": "complete"
+  },
+  "support": {
+   "choice": "native",
+   "noul": "native",
+   "score": "native"
+  },
+  "underlying": "Paid public evaluation. Measured on the 27 Oct draw on an evaluator-owned rented GPU with the author's serving code unchanged at the pinned model commit, offline (no network). The author's wall-clock-capped selective scratchpad pass can make repeat runs differ slightly. Failed or unanswered requests count as wrong answers.",
+  "v16": {
+   "ci95": {
+    "B": 1000,
+    "C": [
+     89.15536982584455,
+     92.72779058744626
+    ],
+    "I": [
+     72.8597040510144,
+     80.53581609667957
+    ],
+    "capability": [
+     81.51568749857981,
+     85.94296321905279
+    ],
+    "composite": {
+     "A": [
+      71.48440830287046,
+      73.34526728306548
+     ],
+     "B": [
+      71.75788139294554,
+      74.63386880969108
+     ],
+     "C": [
+      71.48440830287046,
+      73.34526728306548
+     ]
+    },
+    "seed": 16
+   },
+   "complete": true,
+   "equated": null,
+   "equating_offset": null,
+   "g_med_used": 2.573387642438244,
+   "lane": "selfhosted"
+  },
+  "views": {
+   "Balanced 33:33:33": 67.22221439124517,
+   "Emphasis on Accuracy 60:20:20": 69.85857287021169,
+   "Emphasis on Cost 20:20:60": 63.01556778058313,
+   "Emphasis on Speed 20:60:20": 69.23110458110622,
+   "Intelligence only": 74.2250736791645
+  }
+ }
+}
