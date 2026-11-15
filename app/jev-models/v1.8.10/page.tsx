@@ -1,4 +1,5 @@
 import { jevMethodLabel } from '../../../lib/jev-decision-limit.mjs';
+import { seoTitle } from '../../../lib/seo';
 import { notFound } from 'next/navigation';
 import { readJevbenchV1810ForBoard, v1810BoardInput } from '../../../lib/jevbench-v1810-release.mjs';
 import { JevBenchV16Board } from '../../../components/JevBenchV16Board';
@@ -9,7 +10,7 @@ import { assembleJevBoard } from '../../../lib/jevbench-live-board.mjs';
 import apiA4 from '../../../data/jevbench-api-a4-equated.json';
 import { JevHistoryLazy } from '../../../components/JevHistoryLazy';
 import { PageJsonLd } from '../../../components/PageJsonLd';
-export const metadata = {title:'JevBench v1.8.10: the 27 Oct draw equated and ranked',description:'The 27 Oct draw is equated with four strong anchor systems and its rows are ranked; Gemini Decision 1 (Google, hosted API) joins on the same draw.',alternates:{canonical:'/jev-models/v1.8.10'}};
+export const metadata = {title:seoTitle('JevBench v1.8.10: 27 Oct rankings'),description:'The 27 Oct draw is equated with four strong anchor systems and its rows are ranked; Gemini Decision 1 (Google, hosted API) joins on the same draw.',alternates:{canonical:'/jev-models/v1.8.10'}};
 export default async function JevModelsV1810Page() {
  const release=await readJevbenchV1810ForBoard();if(!release)notFound();
  const [base,previous]=await Promise.all([readJevbenchV161Release(),readJevbenchV157Release()]);
