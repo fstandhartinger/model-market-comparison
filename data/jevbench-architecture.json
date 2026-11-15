@@ -7848,6 +7848,22 @@
           }
         ],
         "note": "Hosting implementation and deployed weights were not independently inspected."
+      },
+      "minimodels-decision-1.0-candy-cane": {
+        "arch": "open-llm-decoder",
+        "badges": {
+          "derivation": null,
+          "params": "31B",
+          "quant": "bf16"
+        },
+        "evidence": [
+          {
+            "fact": "Gemma-4-31B-it base, 4-bit checkpoint dequantised to bf16, LoRA adapter, static calibration and selective scratchpad pass.",
+            "kind": "model-card",
+            "url": "https://huggingface.co/minimodels-ai/decision-1.0/tree/14ea4e1d29571d58d1de224198de6babc78d7cd0"
+          }
+        ],
+        "note": "Measured with the author serving code unchanged on an evaluator-owned RTX PRO 6000; dequantised bf16 backbone and LoRA adapter."
       }
     },
     "imagejevbench": {

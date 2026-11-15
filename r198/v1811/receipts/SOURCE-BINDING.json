@@ -1,0 +1,350 @@
+{
+ "status": "PASS",
+ "files": 68,
+ "synthetic_pass_exceptions": [
+  "data/jevbench-v1.8.11-alldata.json",
+  "data/raw/benchmarks/jevbench/v1.8/jevbench-v1.8.11-publication.json"
+ ],
+ "sha256": {
+  "app/api/jevbench/v1.8.11/route.ts": {
+   "candidate": "0f09fe9a181f72eb7ed8ed608be7c540aaf2c1f94ea97329b25d230133684aa9",
+   "remote": "0f09fe9a181f72eb7ed8ed608be7c540aaf2c1f94ea97329b25d230133684aa9",
+   "synthetic_pass": "0f09fe9a181f72eb7ed8ed608be7c540aaf2c1f94ea97329b25d230133684aa9"
+  },
+  "app/jev-models/v1.8.11/page.tsx": {
+   "candidate": "82f4d850201fe1da6be5cdaa1ce50f34eb9f07954e1bba31389f0fd8b319336a",
+   "remote": "82f4d850201fe1da6be5cdaa1ce50f34eb9f07954e1bba31389f0fd8b319336a",
+   "synthetic_pass": "82f4d850201fe1da6be5cdaa1ce50f34eb9f07954e1bba31389f0fd8b319336a"
+  },
+  "app/sitemap.ts": {
+   "candidate": "030935f5d11148aa824ac327e0359ff2ccc841d4150d0519dcfce4cac4ee31e1",
+   "remote": "030935f5d11148aa824ac327e0359ff2ccc841d4150d0519dcfce4cac4ee31e1",
+   "synthetic_pass": "030935f5d11148aa824ac327e0359ff2ccc841d4150d0519dcfce4cac4ee31e1"
+  },
+  "components/JevBenchReleaseVersionNav.tsx": {
+   "candidate": "fb49ad4abc2cd088fd79aeb9f49864c825ff3c40c16ca028fc11e13b84ecc725",
+   "remote": "fb49ad4abc2cd088fd79aeb9f49864c825ff3c40c16ca028fc11e13b84ecc725",
+   "synthetic_pass": "fb49ad4abc2cd088fd79aeb9f49864c825ff3c40c16ca028fc11e13b84ecc725"
+  },
+  "components/JevBenchV16Board.tsx": {
+   "candidate": "a60129c1bd2ea638833fc3f189f3803e8ce1a0ea50dc38e420e473b6eeedd0a2",
+   "remote": "a60129c1bd2ea638833fc3f189f3803e8ce1a0ea50dc38e420e473b6eeedd0a2",
+   "synthetic_pass": "a60129c1bd2ea638833fc3f189f3803e8ce1a0ea50dc38e420e473b6eeedd0a2"
+  },
+  "components/JevCompareV15.tsx": {
+   "candidate": "bf7a77c9ac1a041f97bebfae9843b54a21974a052b0cb9fba4d7a09f6e68e197",
+   "remote": "bf7a77c9ac1a041f97bebfae9843b54a21974a052b0cb9fba4d7a09f6e68e197",
+   "synthetic_pass": "bf7a77c9ac1a041f97bebfae9843b54a21974a052b0cb9fba4d7a09f6e68e197"
+  },
+  "components/JevReleaseHistory.tsx": {
+   "candidate": "ad26920d497a0e3a6a18e711916293e09666b4b4dc2752c7e128bbb17734ad7f",
+   "remote": "ad26920d497a0e3a6a18e711916293e09666b4b4dc2752c7e128bbb17734ad7f",
+   "synthetic_pass": "ad26920d497a0e3a6a18e711916293e09666b4b4dc2752c7e128bbb17734ad7f"
+  },
+  "data/jevbench-architecture.json": {
+   "candidate": "73f736c8f5951b5a50b2c6665fba63f67acc453d824413d9281607925d5fffb7",
+   "remote": "73f736c8f5951b5a50b2c6665fba63f67acc453d824413d9281607925d5fffb7",
+   "synthetic_pass": "73f736c8f5951b5a50b2c6665fba63f67acc453d824413d9281607925d5fffb7"
+  },
+  "data/jevbench-base-models.json": {
+   "candidate": "d8695d1911a66ef1ea9702f4d47c08e0ec5f7a847006f1e28962381d891a8d08",
+   "remote": "d8695d1911a66ef1ea9702f4d47c08e0ec5f7a847006f1e28962381d891a8d08",
+   "synthetic_pass": "d8695d1911a66ef1ea9702f4d47c08e0ec5f7a847006f1e28962381d891a8d08"
+  },
+  "data/jevbench-draw-equating.json": {
+   "candidate": "71da1feb3087aafb7e0ae8130b055b3e3d53b0bdd93d691987b5a0b4dd3cc374",
+   "remote": "71da1feb3087aafb7e0ae8130b055b3e3d53b0bdd93d691987b5a0b4dd3cc374",
+   "synthetic_pass": "71da1feb3087aafb7e0ae8130b055b3e3d53b0bdd93d691987b5a0b4dd3cc374"
+  },
+  "data/jevbench-v1.8.11-alldata.json": {
+   "candidate": "72c7b7ac51f8434ddf0501b76289c9380a0ef6a3c38c9313659c8155b072cbda",
+   "remote": "72c7b7ac51f8434ddf0501b76289c9380a0ef6a3c38c9313659c8155b072cbda",
+   "synthetic_pass": "a8a84641d27015e552cf54173f54f1a71928745f231ca4aecb745ef6dcbba029"
+  },
+  "data/raw/benchmarks/jevbench/v1.8/jevbench-v1.8.11-carry.json": {
+   "candidate": "271d1fc77a136a04a1eb6deb5480c52d4211eb2b66b2ac8bb31e80867e69003a",
+   "remote": "271d1fc77a136a04a1eb6deb5480c52d4211eb2b66b2ac8bb31e80867e69003a",
+   "synthetic_pass": "271d1fc77a136a04a1eb6deb5480c52d4211eb2b66b2ac8bb31e80867e69003a"
+  },
+  "data/raw/benchmarks/jevbench/v1.8/jevbench-v1.8.11-categories.json": {
+   "candidate": "35eecc0f30bf88f398f30e4ab7b127ef7632070edb1fd267b2d0ba9466655972",
+   "remote": "35eecc0f30bf88f398f30e4ab7b127ef7632070edb1fd267b2d0ba9466655972",
+   "synthetic_pass": "35eecc0f30bf88f398f30e4ab7b127ef7632070edb1fd267b2d0ba9466655972"
+  },
+  "data/raw/benchmarks/jevbench/v1.8/jevbench-v1.8.11-history-carry.json": {
+   "candidate": "f4d8ddfae4ac3b2741ca7cfdaa930b2afc1d9be612f4e6683a230aa23834e2ba",
+   "remote": "f4d8ddfae4ac3b2741ca7cfdaa930b2afc1d9be612f4e6683a230aa23834e2ba",
+   "synthetic_pass": "f4d8ddfae4ac3b2741ca7cfdaa930b2afc1d9be612f4e6683a230aa23834e2ba"
+  },
+  "data/raw/benchmarks/jevbench/v1.8/jevbench-v1.8.11-history.json": {
+   "candidate": "d5e91333d6acefef1506f2a6ce23f71220ac1eeac9ce2d4e817c88a0a979a38b",
+   "remote": "d5e91333d6acefef1506f2a6ce23f71220ac1eeac9ce2d4e817c88a0a979a38b",
+   "synthetic_pass": "d5e91333d6acefef1506f2a6ce23f71220ac1eeac9ce2d4e817c88a0a979a38b"
+  },
+  "data/raw/benchmarks/jevbench/v1.8/jevbench-v1.8.11-proof.json": {
+   "candidate": "0934c9d3b32405bc11e87c5df3eac3b514047992d27861228958d7afe3b0a694",
+   "remote": "0934c9d3b32405bc11e87c5df3eac3b514047992d27861228958d7afe3b0a694",
+   "synthetic_pass": "0934c9d3b32405bc11e87c5df3eac3b514047992d27861228958d7afe3b0a694"
+  },
+  "data/raw/benchmarks/jevbench/v1.8/jevbench-v1.8.11-publication.json": {
+   "candidate": "0a83f16d8fa273a67b7ac88a3fcc16f7538cae2723ea087e8b0eafb8422ebd23",
+   "remote": "0a83f16d8fa273a67b7ac88a3fcc16f7538cae2723ea087e8b0eafb8422ebd23",
+   "synthetic_pass": "894b4905546c12f8f70e1b35f6be6dfa85af18754b97516dacf5dbeca3db6139"
+  },
+  "data/raw/benchmarks/jevbench/v1.8/jevbench-v1.8.11-results.json": {
+   "candidate": "3599bbf28797e1da9a50de887ff500a2ffa8643cd2001e9ab3e635e08b592b69",
+   "remote": "3599bbf28797e1da9a50de887ff500a2ffa8643cd2001e9ab3e635e08b592b69",
+   "synthetic_pass": "3599bbf28797e1da9a50de887ff500a2ffa8643cd2001e9ab3e635e08b592b69"
+  },
+  "lib/jevbench-alldata-input.mjs": {
+   "candidate": "4973363b67f0bf93ccd7a5556f1be2897d95e43309341c230327dbf1a0ab27da",
+   "remote": "4973363b67f0bf93ccd7a5556f1be2897d95e43309341c230327dbf1a0ab27da",
+   "synthetic_pass": "4973363b67f0bf93ccd7a5556f1be2897d95e43309341c230327dbf1a0ab27da"
+  },
+  "lib/jevbench-categories.mjs": {
+   "candidate": "fd7779faac33573f75719bda96a2eaf8940d8bf521c14d4e90e1267bfe3072b5",
+   "remote": "fd7779faac33573f75719bda96a2eaf8940d8bf521c14d4e90e1267bfe3072b5",
+   "synthetic_pass": "fd7779faac33573f75719bda96a2eaf8940d8bf521c14d4e90e1267bfe3072b5"
+  },
+  "lib/jevbench-live-board.mjs": {
+   "candidate": "1a520319f7942f858b6a24690c5af142a6e5135d9c7e9717e32ac781b173148c",
+   "remote": "1a520319f7942f858b6a24690c5af142a6e5135d9c7e9717e32ac781b173148c",
+   "synthetic_pass": "1a520319f7942f858b6a24690c5af142a6e5135d9c7e9717e32ac781b173148c"
+  },
+  "lib/jevbench-releases.mjs": {
+   "candidate": "b81a6fc864826e5f2396190b70248d9c470cc00dcee5bd5d49c37146fc2d0852",
+   "remote": "b81a6fc864826e5f2396190b70248d9c470cc00dcee5bd5d49c37146fc2d0852",
+   "synthetic_pass": "b81a6fc864826e5f2396190b70248d9c470cc00dcee5bd5d49c37146fc2d0852"
+  },
+  "lib/jevbench-v1811-release.mjs": {
+   "candidate": "b80a19a6c84c956a38d494d687337997500f20d2e304e86a6e4d2a62cd6e62c2",
+   "remote": "b80a19a6c84c956a38d494d687337997500f20d2e304e86a6e4d2a62cd6e62c2",
+   "synthetic_pass": "b80a19a6c84c956a38d494d687337997500f20d2e304e86a6e4d2a62cd6e62c2"
+  },
+  "next.config.mjs": {
+   "candidate": "2eade0c0d83de8e8974f81952020dd799484e17d49ece98961bdae666edb4120",
+   "remote": "2eade0c0d83de8e8974f81952020dd799484e17d49ece98961bdae666edb4120",
+   "synthetic_pass": "2eade0c0d83de8e8974f81952020dd799484e17d49ece98961bdae666edb4120"
+  },
+  "r198/v1811/README.md": {
+   "candidate": "c8c181c2f37053bba5221bacb5e844cb2c6fe967b599111a9c5321a907460c3a",
+   "remote": "c8c181c2f37053bba5221bacb5e844cb2c6fe967b599111a9c5321a907460c3a",
+   "synthetic_pass": "c8c181c2f37053bba5221bacb5e844cb2c6fe967b599111a9c5321a907460c3a"
+  },
+  "r198/v1811/add_topics_exception_v1811.py": {
+   "candidate": "90e1ba3161c9bc7b121ce0a14cf4ec95ca69632a529527546ed0dc310a15a548",
+   "remote": "90e1ba3161c9bc7b121ce0a14cf4ec95ca69632a529527546ed0dc310a15a548",
+   "synthetic_pass": "90e1ba3161c9bc7b121ce0a14cf4ec95ca69632a529527546ed0dc310a15a548"
+  },
+  "r198/v1811/approval_v1811.py": {
+   "candidate": "e003b23d6e4c51bd59cf67887c1351504941dc2ab67a579c3dcad06517904be4",
+   "remote": "e003b23d6e4c51bd59cf67887c1351504941dc2ab67a579c3dcad06517904be4",
+   "synthetic_pass": "e003b23d6e4c51bd59cf67887c1351504941dc2ab67a579c3dcad06517904be4"
+  },
+  "r198/v1811/build_v1811.py": {
+   "candidate": "0d150c70beb5e5f1ee1eba032768d18787e1d9cc803ffdb24fb2d70f3bd66964",
+   "remote": "0d150c70beb5e5f1ee1eba032768d18787e1d9cc803ffdb24fb2d70f3bd66964",
+   "synthetic_pass": "0d150c70beb5e5f1ee1eba032768d18787e1d9cc803ffdb24fb2d70f3bd66964"
+  },
+  "r198/v1811/check_built_v1811.mjs": {
+   "candidate": "d73e20eeff919eac5e786a2af8925b09f5285bac3788ee0500763d7064f81a26",
+   "remote": "d73e20eeff919eac5e786a2af8925b09f5285bac3788ee0500763d7064f81a26",
+   "synthetic_pass": "d73e20eeff919eac5e786a2af8925b09f5285bac3788ee0500763d7064f81a26"
+  },
+  "r198/v1811/flip_verdict_v1811.py": {
+   "candidate": "cb0372890ed2be546935742cc3b1e335694ed27567db4a18c57eb5cf19505ab9",
+   "remote": "cb0372890ed2be546935742cc3b1e335694ed27567db4a18c57eb5cf19505ab9",
+   "synthetic_pass": "cb0372890ed2be546935742cc3b1e335694ed27567db4a18c57eb5cf19505ab9"
+  },
+  "r198/v1811/freeze_v1811.py": {
+   "candidate": "300251013e5294fd63f73d66244986ea0a9ffefa4968608dfc4c7dbd1c71dc09",
+   "remote": "300251013e5294fd63f73d66244986ea0a9ffefa4968608dfc4c7dbd1c71dc09",
+   "synthetic_pass": "300251013e5294fd63f73d66244986ea0a9ffefa4968608dfc4c7dbd1c71dc09"
+  },
+  "r198/v1811/full_gates.sh": {
+   "candidate": "4dad91d92eeb6a426f1774fcd52e299f4ca2c99cfb6c533f48f0449cdea516f8",
+   "remote": "4dad91d92eeb6a426f1774fcd52e299f4ca2c99cfb6c533f48f0449cdea516f8",
+   "synthetic_pass": "4dad91d92eeb6a426f1774fcd52e299f4ca2c99cfb6c533f48f0449cdea516f8"
+  },
+  "r198/v1811/inputs/APPROVAL.json": {
+   "candidate": "78f4d1ebf07b0ede65066a416c79593047e05d1f3e714af3511f18383b9902e8",
+   "remote": "78f4d1ebf07b0ede65066a416c79593047e05d1f3e714af3511f18383b9902e8",
+   "synthetic_pass": "78f4d1ebf07b0ede65066a416c79593047e05d1f3e714af3511f18383b9902e8"
+  },
+  "r198/v1811/inputs/ARCHITECTURE.json": {
+   "candidate": "ab73d9135483267ed284b807a72b4f50040bf3a39d6fea574113b79620223c66",
+   "remote": "ab73d9135483267ed284b807a72b4f50040bf3a39d6fea574113b79620223c66",
+   "synthetic_pass": "ab73d9135483267ed284b807a72b4f50040bf3a39d6fea574113b79620223c66"
+  },
+  "r198/v1811/inputs/BREAKDOWN-POLICY.json": {
+   "candidate": "50c67d81146b087bd208939c21a990142d75a7cf2169661f8eb896e74986d785",
+   "remote": "50c67d81146b087bd208939c21a990142d75a7cf2169661f8eb896e74986d785",
+   "synthetic_pass": "50c67d81146b087bd208939c21a990142d75a7cf2169661f8eb896e74986d785"
+  },
+  "r198/v1811/inputs/CLEANED-ROWS.json": {
+   "candidate": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+   "remote": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+   "synthetic_pass": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356"
+  },
+  "r198/v1811/inputs/ENTRIES.json": {
+   "candidate": "c427d16828c4adbbb353a95d022352229c2d236c92504da242ad8231c9fd0fb5",
+   "remote": "c427d16828c4adbbb353a95d022352229c2d236c92504da242ad8231c9fd0fb5",
+   "synthetic_pass": "c427d16828c4adbbb353a95d022352229c2d236c92504da242ad8231c9fd0fb5"
+  },
+  "r198/v1811/inputs/ENTRY-PINS.json": {
+   "candidate": "3fdec2a1400760952b0f93deb073bb5cc6265f6c9fc40a05c880ef3b6ff47b2e",
+   "remote": "3fdec2a1400760952b0f93deb073bb5cc6265f6c9fc40a05c880ef3b6ff47b2e",
+   "synthetic_pass": "3fdec2a1400760952b0f93deb073bb5cc6265f6c9fc40a05c880ef3b6ff47b2e"
+  },
+  "r198/v1811/inputs/PROVENANCE.json": {
+   "candidate": "a7fa15bec64fe3053cb9c6b92daf962906993b503b53e538446e535f4349e69e",
+   "remote": "a7fa15bec64fe3053cb9c6b92daf962906993b503b53e538446e535f4349e69e",
+   "synthetic_pass": "a7fa15bec64fe3053cb9c6b92daf962906993b503b53e538446e535f4349e69e"
+  },
+  "r198/v1811/inputs/PUBLIC-ROWS.json": {
+   "candidate": "33eb345a7051cbf6b8ef36d61576e678d85ae3c581bface491a487a8c3b3c90e",
+   "remote": "33eb345a7051cbf6b8ef36d61576e678d85ae3c581bface491a487a8c3b3c90e",
+   "synthetic_pass": "33eb345a7051cbf6b8ef36d61576e678d85ae3c581bface491a487a8c3b3c90e"
+  },
+  "r198/v1811/inputs/TEXT-EXCEPTIONS.json": {
+   "candidate": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+   "remote": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+   "synthetic_pass": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+  },
+  "r198/v1811/inputs/TOPICS-BASE.json": {
+   "candidate": "3c680f03c9dc3ed31677973bcc3c6802b5692ab966a7f1c037b01e47f3c11f5b",
+   "remote": "3c680f03c9dc3ed31677973bcc3c6802b5692ab966a7f1c037b01e47f3c11f5b",
+   "synthetic_pass": "3c680f03c9dc3ed31677973bcc3c6802b5692ab966a7f1c037b01e47f3c11f5b"
+  },
+  "r198/v1811/inputs/history.json": {
+   "candidate": "a4dcb53176797f13dbe40dbc5db27610c8c4d76f21321ff610b63bfc2de80c7e",
+   "remote": "a4dcb53176797f13dbe40dbc5db27610c8c4d76f21321ff610b63bfc2de80c7e",
+   "synthetic_pass": "a4dcb53176797f13dbe40dbc5db27610c8c4d76f21321ff610b63bfc2de80c7e"
+  },
+  "r198/v1811/lib-v1811.template.mjs": {
+   "candidate": "02821e5db40041e9c92d5b6885cedb8be3904804da2f4068d51b3ea7fc964ec4",
+   "remote": "02821e5db40041e9c92d5b6885cedb8be3904804da2f4068d51b3ea7fc964ec4",
+   "synthetic_pass": "02821e5db40041e9c92d5b6885cedb8be3904804da2f4068d51b3ea7fc964ec4"
+  },
+  "r198/v1811/make_lib_v1811.py": {
+   "candidate": "4a34e5b162087d4a1514ad63cbc0603105ccaa47d457823d372d463a3c24d6c9",
+   "remote": "4a34e5b162087d4a1514ad63cbc0603105ccaa47d457823d372d463a3c24d6c9",
+   "synthetic_pass": "4a34e5b162087d4a1514ad63cbc0603105ccaa47d457823d372d463a3c24d6c9"
+  },
+  "r198/v1811/make_passtree_v1811.py": {
+   "candidate": "7cedc1077548ce218512fcadad3053ac5f8327c90abdc272e2a82e366e88dc0b",
+   "remote": "7cedc1077548ce218512fcadad3053ac5f8327c90abdc272e2a82e366e88dc0b",
+   "synthetic_pass": "7cedc1077548ce218512fcadad3053ac5f8327c90abdc272e2a82e366e88dc0b"
+  },
+  "r198/v1811/postflip_gates.sh": {
+   "candidate": "9369b36e4a867214c117ab4215c0e501d1ed48c0d3f260f2d2dc75bd31fb7d16",
+   "remote": "9369b36e4a867214c117ab4215c0e501d1ed48c0d3f260f2d2dc75bd31fb7d16",
+   "synthetic_pass": "9369b36e4a867214c117ab4215c0e501d1ed48c0d3f260f2d2dc75bd31fb7d16"
+  },
+  "r198/v1811/precheck.sh": {
+   "candidate": "473dce6b4aaf06bca1fc8b15ee55342b7a107e211f259d9b2c1b18aa69e24a21",
+   "remote": "473dce6b4aaf06bca1fc8b15ee55342b7a107e211f259d9b2c1b18aa69e24a21",
+   "synthetic_pass": "473dce6b4aaf06bca1fc8b15ee55342b7a107e211f259d9b2c1b18aa69e24a21"
+  },
+  "r198/v1811/seal_v1811.py": {
+   "candidate": "d1ce96cdfd439d35e58e5ebc05e35590714382103e0af2cbe3adbc695666bf23",
+   "remote": "d1ce96cdfd439d35e58e5ebc05e35590714382103e0af2cbe3adbc695666bf23",
+   "synthetic_pass": "d1ce96cdfd439d35e58e5ebc05e35590714382103e0af2cbe3adbc695666bf23"
+  },
+  "r198/v1811/src/cells.json": {
+   "candidate": "4214c3550697e72ae77b555fd66092e71f5929387f3fb7049d2ae19e0d85ef00",
+   "remote": "4214c3550697e72ae77b555fd66092e71f5929387f3fb7049d2ae19e0d85ef00",
+   "synthetic_pass": "4214c3550697e72ae77b555fd66092e71f5929387f3fb7049d2ae19e0d85ef00"
+  },
+  "r198/v1811/src/new-keys.json": {
+   "candidate": "f4921cc82d19a51c3e028bc64f040ab26d64a759d8e44826b8abdf37b4b66517",
+   "remote": "f4921cc82d19a51c3e028bc64f040ab26d64a759d8e44826b8abdf37b4b66517",
+   "synthetic_pass": "f4921cc82d19a51c3e028bc64f040ab26d64a759d8e44826b8abdf37b4b66517"
+  },
+  "r198/v1811/src/scored.json": {
+   "candidate": "b89e7eb86003cad44b9edc1b5b4bcf3f354d579773d859eef6b155997bc4f728",
+   "remote": "b89e7eb86003cad44b9edc1b5b4bcf3f354d579773d859eef6b155997bc4f728",
+   "synthetic_pass": "b89e7eb86003cad44b9edc1b5b4bcf3f354d579773d859eef6b155997bc4f728"
+  },
+  "r198/v1811/src/usage.json": {
+   "candidate": "94303fc519feb9877324571d9502edb2ae4a0a553caaf3c31e261c68d8baa0bd",
+   "remote": "94303fc519feb9877324571d9502edb2ae4a0a553caaf3c31e261c68d8baa0bd",
+   "synthetic_pass": "94303fc519feb9877324571d9502edb2ae4a0a553caaf3c31e261c68d8baa0bd"
+  },
+  "r198/v1811/validate_v1811.mjs": {
+   "candidate": "ea6cc564bc853844b2f895c31d4dfc4e909c78606323e0d5051c0095fce116ad",
+   "remote": "ea6cc564bc853844b2f895c31d4dfc4e909c78606323e0d5051c0095fce116ad",
+   "synthetic_pass": "ea6cc564bc853844b2f895c31d4dfc4e909c78606323e0d5051c0095fce116ad"
+  },
+  "r198/v1811/verify_pass.sh": {
+   "candidate": "7053c87ccf3904e266337913c65f7283aa06765f2fb92847b796ab0dc293e3db",
+   "remote": "7053c87ccf3904e266337913c65f7283aa06765f2fb92847b796ab0dc293e3db",
+   "synthetic_pass": "7053c87ccf3904e266337913c65f7283aa06765f2fb92847b796ab0dc293e3db"
+  },
+  "scripts/build-jevbench-v1811-alldata.mjs": {
+   "candidate": "9ac159ec7225202294940e724f475f961903e8934360e956c8e6f8b5d0e564cf",
+   "remote": "9ac159ec7225202294940e724f475f961903e8934360e956c8e6f8b5d0e564cf",
+   "synthetic_pass": "9ac159ec7225202294940e724f475f961903e8934360e956c8e6f8b5d0e564cf"
+  },
+  "test/cr-205-jev-page-structure.test.mjs": {
+   "candidate": "88cd179679d21af00713e9416d089a31100e4ec811e7aef590a39a2d17268d39",
+   "remote": "88cd179679d21af00713e9416d089a31100e4ec811e7aef590a39a2d17268d39",
+   "synthetic_pass": "88cd179679d21af00713e9416d089a31100e4ec811e7aef590a39a2d17268d39"
+  },
+  "test/cr-257-v1811-min-samples.test.mjs": {
+   "candidate": "2bb061842fa74b18bc7f3f85fdfcd87bdae25f3eb7e916ec38f68847c317c66d",
+   "remote": "2bb061842fa74b18bc7f3f85fdfcd87bdae25f3eb7e916ec38f68847c317c66d",
+   "synthetic_pass": "2bb061842fa74b18bc7f3f85fdfcd87bdae25f3eb7e916ec38f68847c317c66d"
+  },
+  "test/jevbench-breakdowns-every-listed-row.test.mjs": {
+   "candidate": "a70484f89211c9f7c45e7bdba01e4ae8f1e26a9b2a0390aa8e9bde0a8db17986",
+   "remote": "a70484f89211c9f7c45e7bdba01e4ae8f1e26a9b2a0390aa8e9bde0a8db17986",
+   "synthetic_pass": "a70484f89211c9f7c45e7bdba01e4ae8f1e26a9b2a0390aa8e9bde0a8db17986"
+  },
+  "test/jevbench-feed-live-board.test.mjs": {
+   "candidate": "9e43cb8cde8e2b92ecf0b95f4498b4bf5843e7d13b26cf18982968751c220127",
+   "remote": "9e43cb8cde8e2b92ecf0b95f4498b4bf5843e7d13b26cf18982968751c220127",
+   "synthetic_pass": "9e43cb8cde8e2b92ecf0b95f4498b4bf5843e7d13b26cf18982968751c220127"
+  },
+  "test/jevbench-v1637-release.test.mjs": {
+   "candidate": "fad1b8b70498d0dce2aa1cd265b4b8ef0692a6bbe03dbffed87ae687d11c2c78",
+   "remote": "fad1b8b70498d0dce2aa1cd265b4b8ef0692a6bbe03dbffed87ae687d11c2c78",
+   "synthetic_pass": "fad1b8b70498d0dce2aa1cd265b4b8ef0692a6bbe03dbffed87ae687d11c2c78"
+  },
+  "test/jevbench-v170-release.test.mjs": {
+   "candidate": "a9ceb04fb8e11d2b07d82cba46744fc69d25ef7c3d4928ff3d6a6fe1bb5debcf",
+   "remote": "a9ceb04fb8e11d2b07d82cba46744fc69d25ef7c3d4928ff3d6a6fe1bb5debcf",
+   "synthetic_pass": "a9ceb04fb8e11d2b07d82cba46744fc69d25ef7c3d4928ff3d6a6fe1bb5debcf"
+  },
+  "test/jevbench-v1810-alldata-regeneration.test.mjs": {
+   "candidate": "a55f0dc88f7ac1b76c341d53bedb12153cf7cd09b0fa398a989d90e8b6f4bf98",
+   "remote": "a55f0dc88f7ac1b76c341d53bedb12153cf7cd09b0fa398a989d90e8b6f4bf98",
+   "synthetic_pass": "a55f0dc88f7ac1b76c341d53bedb12153cf7cd09b0fa398a989d90e8b6f4bf98"
+  },
+  "test/jevbench-v1810-lowsample-memo.test.mjs": {
+   "candidate": "6ba8bbfd0eab1319d9b96ca3c8e1ef660ffda30991ff697b2bf7978a77eb4822",
+   "remote": "6ba8bbfd0eab1319d9b96ca3c8e1ef660ffda30991ff697b2bf7978a77eb4822",
+   "synthetic_pass": "6ba8bbfd0eab1319d9b96ca3c8e1ef660ffda30991ff697b2bf7978a77eb4822"
+  },
+  "test/jevbench-v1810-release.test.mjs": {
+   "candidate": "eb556ccbb9cead6cd8f6af43042e697e8dc5a493f7348878be68d86bb045ed35",
+   "remote": "eb556ccbb9cead6cd8f6af43042e697e8dc5a493f7348878be68d86bb045ed35",
+   "synthetic_pass": "eb556ccbb9cead6cd8f6af43042e697e8dc5a493f7348878be68d86bb045ed35"
+  },
+  "test/jevbench-v1811-alldata-precompute.test.mjs": {
+   "candidate": "ab8cf87436a90bf5d79e2d929c3b6cf9ef6128001cd4958bfb65c125c51c813a",
+   "remote": "ab8cf87436a90bf5d79e2d929c3b6cf9ef6128001cd4958bfb65c125c51c813a",
+   "synthetic_pass": "ab8cf87436a90bf5d79e2d929c3b6cf9ef6128001cd4958bfb65c125c51c813a"
+  },
+  "test/jevbench-v1811-alldata-regeneration.test.mjs": {
+   "candidate": "01f5b15caf07a5e488e3b4ff1856ff34681cead377c3eb53d2c803af700d7d86",
+   "remote": "01f5b15caf07a5e488e3b4ff1856ff34681cead377c3eb53d2c803af700d7d86",
+   "synthetic_pass": "01f5b15caf07a5e488e3b4ff1856ff34681cead377c3eb53d2c803af700d7d86"
+  },
+  "test/jevbench-v1811-release.test.mjs": {
+   "candidate": "1c85ddaa5c1797573d100ffdbd37150d29d49a70e86040c5f0fd8da688dc1c6c",
+   "remote": "1c85ddaa5c1797573d100ffdbd37150d29d49a70e86040c5f0fd8da688dc1c6c",
+   "synthetic_pass": "1c85ddaa5c1797573d100ffdbd37150d29d49a70e86040c5f0fd8da688dc1c6c"
+  }
+ }
+}

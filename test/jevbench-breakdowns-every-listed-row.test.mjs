@@ -58,12 +58,18 @@ test('exceptions need a reason and a decision reference', () => {
 test('fresh-draw rows carry their own draw cells, tagged with the draw; no row of the base is overridden', () => {
   const d1u = board.categories.systems['liquid-d1-ultra'];
   assert.equal(d1u.coverage, 'S+P (draw v1.6-regular-20261012)');
-  assert.ok(Object.keys(d1u.usecases).length >= 10 && Object.keys(d1u.languages).length >= 5);
+  if (board.categories.display_min_n === 30) {
+    const stored = JSON.parse(readFileSync(new URL('../data/raw/benchmarks/jevbench/v1.8/jevbench-v1.8.11-categories.json', import.meta.url)));
+    for (const [key, row] of Object.entries(board.categories.systems)) for (const dim of ['topics', 'usecases', 'languages']) {
+      const eligible = Object.entries(stored.systems[key]?.[dim] ?? {}).filter(([,cell]) => cell.n >= 30 && (cell.coverage_n ?? cell.n) >= 30).map(([name]) => name).sort();
+      assert.deepEqual(Object.keys(row[dim] ?? {}).sort(), eligible, `${key}.${dim}: every eligible cell survives suppression`);
+    }
+  } else assert.ok(Object.keys(d1u.usecases).length >= 10 && Object.keys(d1u.languages).length >= 5);
   const wald = board.categories.systems['wald-4b-v2'];
   assert.equal(wald.coverage, 'S+P (draw v1.6-fastlane-20261009)');
   assert.ok(wald.usecases.ecommerce_marketplaces || wald.usecases.moderation_trust_safety, 'v1.6.4 short use-case keys are mapped');
   for (const [key, row] of Object.entries(board.categories.systems)) for (const dim of ['topics', 'usecases', 'languages'])
-    for (const [c, cell] of Object.entries(row[dim] ?? {})) assert.ok(cell.n >= 15 && Number.isFinite(cell.competence), `${key}.${dim}.${c}`);
+    for (const [c, cell] of Object.entries(row[dim] ?? {})) assert.ok(cell.n >= (board.categories.display_min_n ?? 15) && Number.isFinite(cell.competence), `${key}.${dim}.${c}`);
   // The merged artifact passes the standard category validation (cells within each row's pool counts).
   assert.doesNotThrow(() => validateCategoryArtifact(board.categories, ['topics', 'usecases']));
   // Rows already in the live artifact keep their cells.
