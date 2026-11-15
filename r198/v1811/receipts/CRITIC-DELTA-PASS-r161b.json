@@ -1,0 +1,94 @@
+{
+ "verdict": "PASS",
+ "musts": [],
+ "reviewed_commit": "805700554a67858c5ad84bf0514e806bbeb57fb3",
+ "base": "ff90a703fc9a5b44a4913c3ef829418fd7806a5a",
+ "engine": "claude-opus-5-5 (Claude Code, independent delta critic r161b-v1811-delta-critic)",
+ "counts": {
+  "before_fix_pass_state": {
+   "live_board": 5993,
+   "board-all": 5993,
+   "board-open": 5993,
+   "board-api": 954,
+   "v1.8.11": 5993,
+   "snapshot": 5993
+  },
+  "after_fix_pass_state": {
+   "live_board": 0,
+   "board-all": 0,
+   "board-open": 0,
+   "board-api": 0,
+   "v1.8.11": 0,
+   "snapshot": 0
+  },
+  "remaining_integer_n_cells_after": {
+   "live_board": 4423,
+   "board-all": 4423,
+   "board-open": 4423,
+   "board-api": 794,
+   "v1.8.11": 4423,
+   "snapshot": 4423
+  },
+  "api_v1.8.11_frozen_record": {
+   "small": 5993,
+   "bytes_equal_stored_file": true,
+   "sha256": "3599bbf28797e1da9a50de887ff500a2ffa8643cd2001e9ab3e635e08b592b69"
+  },
+  "probe": "out/{base,src}-{pending,pass}.json (LeChonk)"
+ },
+ "display_only": {
+  "base_projected_equals_fix_all_surfaces_both_states": true,
+  "non_breakdown_fields_identical": true,
+  "frozen_v1811_hashes_unchanged": true,
+  "top5_unchanged": true,
+  "new_row": "unranked rank null",
+  "v1.8.10_input_identical": true,
+  "snapshot_regen_deterministic": true
+ },
+ "red_green": {
+  "red_pending": {
+   "exit": 1,
+   "pass": 1,
+   "fail": 2,
+   "skip": 1
+  },
+  "red_pass": {
+   "exit": 1,
+   "pass": 1,
+   "fail": 3,
+   "skip": 0
+  },
+  "green_pending": {
+   "pass": 3,
+   "skip": 1,
+   "fail": 0
+  },
+  "green_pass": {
+   "pass": 4,
+   "fail": 0
+  },
+  "n30_baseline_still_red": true,
+  "logs": [
+   "red/",
+   "out/src-*-newtest.log"
+  ]
+ },
+ "n2": {
+  "equivalent": true,
+  "historical_render_unchanged": true,
+  "basis": "display_min_n set only by v1.8.11 lib; probe: live PASS 30/restated v1.8.11, PENDING null/v1.8.10"
+ },
+ "gates": {
+  "validator": "PASS (17 negative controls), own LeChonk run",
+  "tsc": "PASS plain tsc --noEmit, own LeChonk run",
+  "focused_pending": "127 pass/2 skip/0 code failures + 3 typescript-dependent files 10 pass/1 skip (ts3/)",
+  "focused_pass": "128 pass/1 skip + 3 typescript-dependent files 11/11 (ts3/)",
+  "production_build": "accepted from fix worker (exit 0, 713/713) - source-bound: source-expected.json == git blobs of 805700554, bind_after.py PASS 11:57Z after build 11:56Z; own build reached 678/713 without error before own 3600s cap",
+  "built_check": "accepted from fix worker: PASS with committed check_built_v1811.mjs sha 6f35a043",
+  "full_suite": "not re-run (fix worker: 4273 tests, 0 fail)"
+ },
+ "flip_helpers": "unchanged; snapshot regeneration in PASS state works (exit 0, 0 small cells)",
+ "notes": [
+  "/api/jevbench-alldata/v1.8.10 (historical) still serves 5993 small per-row cells; unchanged by design, outside M1 scope"
+ ]
+}

@@ -1,0 +1,25 @@
+{
+ "status": "PASS",
+ "full_suite_initial_exit": 1,
+ "initial_failure": "not ok 1327 - the supervisor's dated brief backups can never make the checkout dirty again",
+ "cause": "Synthetic transport omitted Git repository metadata; git status exited 128.",
+ "resolution": "Reran the affected file in the real Sandy Git worktree; exact test, .gitignore and daily-source hashes match the built simulation.",
+ "test": "test/daily-clean-checkout-wait.test.mjs",
+ "rerun": {
+  "tests": 2,
+  "pass": 2,
+  "fail": 0,
+  "skipped": 0
+ },
+ "full_suite_log_sha256": "4709f2019491b1eeb8ee2b926097b6a0a6eeb963169d20a92d1ac1fad9a733ef",
+ "rerun_log_sha256": "6ecf775ecd79455ef90804d010e1c591692ccbcc9388d72987f108a2c4d217f2",
+ "source_binding": {
+  "status": "PASS",
+  "sha256": {
+   ".gitignore": "02a87077f1e59c2e92fecba663859e3c2bbea8073f5ed2356880b1d793a200bc",
+   "test/daily-clean-checkout-wait.test.mjs": "95295651053affc19c31858d5fe70962a308edb276cfda75d45c7c6872e5e05b",
+   "ops/daily/daily.mjs": "b4e043b165df8759cbb0a5fe37c979472bb6ee5c9c48857952a88a88ed5b32ec"
+  }
+ },
+ "unresolved_failures": []
+}
