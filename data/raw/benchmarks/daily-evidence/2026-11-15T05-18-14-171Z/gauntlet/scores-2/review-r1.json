@@ -1,0 +1,25 @@
+{
+  "artifact_id": "scores-2",
+  "artifact_sha256": "ccfa332d213b0c8dcf4638595b4bb4f601e93c2948ba7cc225fb916f66a488c4",
+  "round": 1,
+  "verdict": "blocked",
+  "coverage_checked": ["vendor:DeepSeek-V3:swe-bench-verified::snapshot-2026-09-10", "c1"],
+  "errors_found": 1,
+  "findings": [
+    {
+      "id": "F1",
+      "severity": "blocker",
+      "location": "row vendor:DeepSeek-V3:swe-bench-verified::snapshot-2026-09-10, benchmark_id/benchmark version",
+      "evidence": "Primary evidence (arXiv 2412.19437v2 Table 6) lists 'SWE-Bench Verified' and 'SWE Verified (Resolved)', but contains no 'snapshot-2026-09-10' or any snapshot/version identifier.",
+      "repair": "Ensure the claimed benchmark version is present in primary evidence; if not, revise the row to omit the unsupported snapshot or add evidence that specifies it. Do not infer from the source name alone."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "Owner-claimed canonical row hashes and transport/qualification checks were not independently executable in this read-only review.",
+    "The paper's publication date is not present in the provided snippet; the row's published_at:null is consistent with the snippet but not independently confirmed."
+  ],
+  "missing_evidence": [
+    "Snapshot/version identifier for SWE-bench Verified (paper only says 'SWE-Bench Verified'); the row claims snapshot-2026-09-10 without source support."
+  ]
+}

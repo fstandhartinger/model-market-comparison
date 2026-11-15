@@ -1,0 +1,44 @@
+User-Agent: *
+Allow: /
+Allow: /og.png
+Disallow: /traces/
+Disallow: /traces
+Disallow: /api/
+Disallow: /v1/
+Disallow: /og$
+
+User-Agent: Twitterbot
+User-Agent: facebookexternalhit
+User-Agent: LinkedInBot
+User-Agent: Slackbot-LinkExpanding
+User-Agent: Discordbot
+Allow: /
+Disallow: /traces/
+Disallow: /traces
+Disallow: /api/
+
+User-Agent: GPTBot
+Disallow: /
+
+User-Agent: ChatGPT-User
+Disallow: /
+
+User-Agent: Google-Extended
+Disallow: /traces/
+Disallow: /api/
+
+User-Agent: CCBot
+Disallow: /
+
+User-Agent: anthropic-ai
+Disallow: /traces/
+Disallow: /api/
+
+User-Agent: ClaudeBot
+Disallow: /traces/
+Disallow: /api/
+
+User-Agent: cohere-ai
+Disallow: /
+
+Sitemap: https://www.frontierswe.com/sitemap.xml

@@ -109,24 +109,6 @@
       "notes": "trustedtokens.eu/api/public/models Qwen/Qwen3.8-27B; 1000000 ctx; TNG-operated GPU inference in Germany; business accounts priced with included monthly credit (see trustedtokens.method.md)"
     },
     {
-      "model_name": "DeepSeek TNG R1T2 Chimera",
-      "provider_org": "TNG Technology Consulting",
-      "api_model_id": "tngtech/DeepSeek-TNG-R1T2-Chimera",
-      "model_id": "tngtech/DeepSeek-TNG-R1T2-Chimera",
-      "input_per_1m_eur": 1,
-      "output_per_1m_eur": 3,
-      "input_per_1m_usd": 1.11,
-      "output_per_1m_usd": 3.32,
-      "cache_read_per_1m_eur": 0.2,
-      "cache_read_per_1m_usd": 0.22,
-      "context_length": 65536,
-      "status": "production",
-      "eu_hosted": true,
-      "hosting_class": "sovereign_germany",
-      "region": "eu",
-      "notes": "trustedtokens.eu/api/public/models tngtech/DeepSeek-TNG-R1T2-Chimera; 65536 ctx; TNG-operated GPU inference in Germany; business accounts priced with included monthly credit (see trustedtokens.method.md)"
-    },
-    {
       "model_name": "Gpt Oss 120b",
       "provider_org": "OpenAI",
       "api_model_id": "openai/gpt-oss-120b",
@@ -143,6 +125,24 @@
       "hosting_class": "sovereign_germany",
       "region": "eu",
       "notes": "trustedtokens.eu/api/public/models openai/gpt-oss-120b; 131072 ctx; TNG-operated GPU inference in Germany; business accounts priced with included monthly credit (see trustedtokens.method.md)"
+    },
+    {
+      "model_name": "DeepSeek TNG R1T2 Chimera",
+      "provider_org": "TNG Technology Consulting",
+      "api_model_id": "tngtech/DeepSeek-TNG-R1T2-Chimera",
+      "model_id": "tngtech/DeepSeek-TNG-R1T2-Chimera",
+      "input_per_1m_eur": 1,
+      "output_per_1m_eur": 3,
+      "input_per_1m_usd": 1.11,
+      "output_per_1m_usd": 3.32,
+      "cache_read_per_1m_eur": 0.2,
+      "cache_read_per_1m_usd": 0.22,
+      "context_length": 65536,
+      "status": "production",
+      "eu_hosted": true,
+      "hosting_class": "sovereign_germany",
+      "region": "eu",
+      "notes": "trustedtokens.eu/api/public/models tngtech/DeepSeek-TNG-R1T2-Chimera; 65536 ctx; TNG-operated GPU inference in Germany; business accounts priced with included monthly credit (see trustedtokens.method.md)"
     },
     {
       "model_name": "Qwen3.6 35B A3B FP8",
@@ -200,8 +200,8 @@
     }
   ],
   "source": "TrustedTokens — trustedtokens.eu/api/public/models (first-party, public; the endpoint the /models page itself loads)",
-  "collected_at": "2026-11-14",
-  "method": "scripts/fetch-trustedtokens-catalog.mjs (2026-11-14): one unauthenticated GET of /api/public/models plus the ECB daily EUR/USD rate; EUR per-token prices normalized to EUR per 1M tokens (USD = EUR × ECB rate, nearest cent); rows without both token prices skipped; lifecycle from the catalog's attributes (deprecated kept); hosting audited sovereign Germany (see trustedtokens.method.md).",
+  "collected_at": "2026-11-15",
+  "method": "scripts/fetch-trustedtokens-catalog.mjs (2026-11-15): one unauthenticated GET of /api/public/models plus the ECB daily EUR/USD rate; EUR per-token prices normalized to EUR per 1M tokens (USD = EUR × ECB rate, nearest cent); rows without both token prices skipped; lifecycle from the catalog's attributes (deprecated kept); hosting audited sovereign Germany (see trustedtokens.method.md).",
   "currency": "EUR",
   "currency_note": "Native prices are EUR per token without VAT, shown here per 1M tokens; USD = EUR × ECB 2026-11-13: 1 EUR = 1.1052 USD, rounded to the nearest cent. Access is B2B: plans include monthly usage credit (Starter €50 / Pro €200 / Enterprise €2,000, all without VAT, marked indicative) against which these per-token prices are billed.",
   "usd_normalization": {
@@ -211,7 +211,7 @@
     "source": "https://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml",
     "rounding": "nearest USD cent"
   },
-  "response_sha256": "2eae10b37607cd51601b457fcef0c57b27f9de64e867cb30572685fc1b593ab1",
+  "response_sha256": "95b8b770ff2270cb382e6a1c8a5ec71f5d2965b59435b9a90cde8b179b6d07dc",
   "skipped": [],
   "diff": {
     "added": [],

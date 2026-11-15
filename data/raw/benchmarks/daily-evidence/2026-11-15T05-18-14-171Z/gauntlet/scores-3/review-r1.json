@@ -1,0 +1,15 @@
+{
+  "artifact_id": "scores-3",
+  "artifact_sha256": "48c8e07dac3c5ca8ee072ec19aa5a952854602e81a7a5a58c4a6b1f48f678398",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": ["vendor:DeepSeek-V3:aider-polyglot::snapshot-2026-09-10", "c1"],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Could not independently recompute row SHA-256 or rerun transport/qualification checks; owner-provided hashes and receipt were accepted per review instructions.",
+    "The captured PDF pages do not display the paper title or explicit December 2024 revision date; the model identity is matched through the supplied arXiv URL (2412.19437v2), the table column labeled DeepSeek V3, and the exact quoted locator."
+  ],
+  "missing_evidence": []
+}

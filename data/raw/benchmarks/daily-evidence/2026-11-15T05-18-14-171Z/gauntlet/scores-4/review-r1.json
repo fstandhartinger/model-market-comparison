@@ -1,0 +1,19 @@
+{
+  "artifact_id": "scores-4",
+  "artifact_sha256": "cbbe5e69be847670709e4c938cfeac1fdc774e58f68a0f0474b30c314330f159",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "vendor:DeepSeek-V3:longbench::2",
+    "c1"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Could not independently recompute row or canonical hashes or execute transport/qualification checks; relied on owner-supplied hashes and receipt as instructed.",
+    "The source file name data/raw/benchmarks/daily-evidence/2026-11-15T05-18-14-171Z/812a3fd645c80725354d.gz appears to be a truncated version of the full source sha256 812a3fd645c80725354de9d831a6785503007a60681461407f64e97305fa9330; interpreted as an internal file naming convention, not an evidence mismatch.",
+    "The 'December 2024 update' claim in the subject source_id is not explicitly visible in the supplied PDF excerpt, though arXiv ID 2412 and the December date are consistent with it; treated as consistent with the paper's identifying metadata."
+  ],
+  "missing_evidence": []
+}

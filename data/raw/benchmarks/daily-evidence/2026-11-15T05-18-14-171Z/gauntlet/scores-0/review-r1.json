@@ -1,0 +1,69 @@
+{
+  "artifact_id": "scores-0",
+  "artifact_sha256": "d3dccbce9da0652a64aaf9a483b348c780bf00532fdb09d206b1f38e66971faa",
+  "round": 1,
+  "verdict": "blocked",
+  "coverage_checked": [
+    "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/retail",
+    "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/airline",
+    "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/telecom",
+    "c1"
+  ],
+  "errors_found": 6,
+  "findings": [
+    {
+      "id": "protocol-retail",
+      "severity": "major",
+      "location": "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/retail - protocol field",
+      "evidence": "README 'Best Practices' states 'We suggest using Temperature=0.6, TopP=0.95, TopK=20, MinP=0' as recommendations, not confirmed settings for the benchmark results. The row asserts these as actual protocol. Output length claim is supported by the footnote; sampling parameters are only suggested.",
+      "repair": "Mark the sampling parameters as recommended/vendor-suggested rather than confirmed evaluation settings, or explicitly note that they are not verified as used for these scores."
+    },
+    {
+      "id": "protocol-airline",
+      "severity": "major",
+      "location": "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/airline - protocol field",
+      "evidence": "Same README 'Best Practices' section presents Temperature=0.6, TopP=0.95, TopK=20, MinP=0 as suggestions, not as the deployed evaluation configuration. Row protocol falsely presents them as factual.",
+      "repair": "Adjust protocol to reflect that these settings are recommendations from the vendor, not confirmed evaluation parameters for the reported score."
+    },
+    {
+      "id": "protocol-telecom",
+      "severity": "major",
+      "location": "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/telecom - protocol field",
+      "evidence": "The row claims temperature 0.6, TopP 0.95, TopK 20, MinP 0 as protocol, but the README only suggests these as best practices, not as the settings used for the benchmark evaluation.",
+      "repair": "Revise protocol to indicate these are vendor-suggested settings, not confirmed evaluation hyperparameters."
+    },
+    {
+      "id": "unit-retail",
+      "severity": "major",
+      "location": "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/retail - unit field",
+      "evidence": "The README table shows only numeric values (e.g., 71.9) with no unit designation, '%' sign, or explicit 'percent' label. The row claims 'percent' without source support.",
+      "repair": "Provide explicit evidence of the unit from the benchmark specification or footnote, or mark the unit as unverified."
+    },
+    {
+      "id": "unit-airline",
+      "severity": "major",
+      "location": "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/airline - unit field",
+      "evidence": "Source README contains raw numbers (58.0) without any unit declaration. The claimed 'percent' unit is not verifiable from the provided source.",
+      "repair": "Obtain an explicit unit statement from the benchmark definition or clearly flag the unit as unverified."
+    },
+    {
+      "id": "unit-telecom",
+      "severity": "major",
+      "location": "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/telecom - unit field",
+      "evidence": "README does not specify the unit for TAU2-Telecom value 45.6; no percent sign or unit label appears. The row's 'percent' unit is not confirmed by the source.",
+      "repair": "Add source-backed unit evidence or mark the unit as unverified to avoid unsupported claims."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "The variant label 'reasoning' (in model_id and variant fields) is not explicitly stated in the README; the model is described as supporting only thinking mode, but the exact variant identifier is not present in the source.",
+    "The harness field is null; the README does not explicitly name an evaluation harness, so null appears acceptable.",
+    "The numeric values for all three rows (71.9, 58, 45.6) exactly match the corresponding last-column values in the README table; no numeric discrepancy was found.",
+    "The source published_at is null; only retrieved_at is provided, which is consistent with the source header."
+  ],
+  "missing_evidence": [
+    "unit (percent) for vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/retail",
+    "unit (percent) for vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/airline",
+    "unit (percent) for vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/telecom"
+  ]
+}
