@@ -53,6 +53,17 @@ test("parses current OVHcloud catalog cards with catalog classes and separated u
   assert.deepEqual(skipped, []);
 });
 
+test("reads the euro-prefixed price format OVHcloud has used since 13 Nov 2026", () => {
+  const prefixed = currentChat("qwen-3-8-27b", "Qwen3.8-27B", "", "").replace(/><!-- -->€<\/b>/g, ">€X</b>");
+  const html = page(prefixed.replace("€X", "€0.40").replace("€X", "€2.70"));
+  const [card] = readCards(html);
+  assert.equal(card.inputEur, 0.4);
+  assert.equal(card.outputEur, 2.7);
+  for (const bad of ["€€0.40", "€0.40€", "€ ", "EUR 0.40", "€-0.40"]) {
+    assert.throws(() => readCards(page(prefixed.replace("€X", bad).replace("€X", "€2.70"))), /unreadable price/, bad);
+  }
+});
+
 test("keeps curated rows by model_id, converts with ECB, skips non-token cards, derives new ones", () => {
   const { models, skipped, diff } = parseOvhcloudCatalog(page(
     chat("gpt-oss-120b", "gpt-oss-120b", "0.08", "0.4"),
