@@ -1096,6 +1096,13 @@ def _lifecycle(provider, job, recipe, staging_path, output, state, gpu_choice, t
                 state['runtime_supplement'] = starlord_runtime_supplement.build(provider, pod_id)
                 image = state['runtime_supplement']['effective_image']
                 save_state()
+            import starlord_v2_runtime_supplement
+            if starlord_v2_runtime_supplement.active(job_dir or job, recipe):
+                # Fixed-order offline overlay of Starlord-27B-v2.0-preview's recorded stack: the reviewed v1 transformers 5.3 overlay
+                # plus the official flash-attn 2.8.3 release wheel; the customer's serve_systemone.py is mounted unchanged.
+                state['runtime_supplement'] = starlord_v2_runtime_supplement.build(provider, pod_id)
+                image = state['runtime_supplement']['effective_image']
+                save_state()
             import karpo_decision_runtime_supplement
             if karpo_decision_runtime_supplement.active(job_dir or job, recipe):
                 # Fixed-order offline overlay of Karpo-Decision-31B's recorded transformers 5.21 stack on the official
