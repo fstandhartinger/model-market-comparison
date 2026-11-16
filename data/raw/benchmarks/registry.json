@@ -538,7 +538,7 @@
       "id": "aa-coding-agent-index::2.0",
       "name": "Artificial Analysis Coding Agent Index v2.0",
       "version": "2.0",
-      "version_status": "published",
+      "version_status": "retained",
       "family": "aa-coding-agent-index",
       "category": "Coding",
       "one_sentence_description": "Measures coding-agent systems on FrontierCode v1.1 Main, Terminal-Bench 4.0 and SWE-Atlas-QnA-AA.",
@@ -564,24 +564,24 @@
         }
       ],
       "how_to_collect": {
-        "command": "node scripts/fetch-aa-coding-agents.mjs",
-        "format": "Next.js Flight JSON → validated separate JSON snapshot",
+        "command": "cat data/raw/aa-coding-agents-v2.0.json",
+        "format": "Retained JSON snapshot",
         "locator": "Read complete rows with exact model_name, harness and components; preserve every harness result and explicit model effort.",
-        "version_guard": "The collector requires every version statement on the page to say v2.0 and validates the three v2.0 components (frontiercode-v1.1-main, swe-atlas-qna, terminal-bench-v4), one-third weights and the index arithmetic before atomic replacement; it never writes the v1.4 or v1.5 files.",
-        "notes": "Exact snapshot: data/raw/aa-coding-agents-v2.0.json. AA keeps the payload id swe-atlas-qna for SWE-Atlas-QnA-AA; component values are never compared with v1.5. The collector does not modify the legacy Composite source."
+        "version_guard": "Never refresh this v2.0 file from the current page: AA replaced v2.0 with v2.1 (first stated on the page in the 2026-11-14 daily capture), and its 2026-11-13 capture date is binding.",
+        "notes": "Exact snapshot: data/raw/aa-coding-agents-v2.0.json (36 rows, collected 2026-11-13). AA keeps the payload id swe-atlas-qna for SWE-Atlas-QnA-AA; component values are never compared with v1.5 or v2.1. The collector does not modify the legacy Composite source."
       },
       "update_cadence": {
-        "source_schedule": "Not stated in the verified source; no promised publication schedule.",
-        "check_recommendation": "Weekly; daily on a known model launch (our policy, not a maintainer promise)."
+        "source_schedule": "Retained historical snapshot; superseded by v2.1 (AA methodology version history: \"Version 2.0 October 2026 - November 2026\").",
+        "check_recommendation": "Never refresh the retained file; verify its retained hash/date at build time."
       },
       "saturated": {
         "value": false,
         "note": "No verified saturation claim; retained without asserting that the benchmark is unsaturated."
       },
-      "superseded_by": null,
-      "status": "active",
+      "superseded_by": "aa-coding-agent-index::2.1",
+      "status": "retained",
       "first_seen": "2026-10-23",
-      "last_verified": "2026-10-23",
+      "last_verified": "2026-11-16",
       "evidence": [
         {
           "url": "https://artificialanalysis.ai/methodology/coding-agents-benchmarking",
@@ -596,6 +596,78 @@
           "sha256": "e0d05fe763d97149812181bfb14215ec280d576750a03c12fa32950cd1776040",
           "fetched_at": "2026-10-23T07:08:18.108Z",
           "excerpt": "Collected snapshot from page capture sha256 c96403abb65bbcc7c323fae83d5352c5e03daa4c0f0bb63f07b63937a6ed8c98: 24 complete rows; score_scale 0-1; every version statement names v2.0; components frontiercode-v1.1-main, swe-atlas-qna, terminal-bench-v4 at one-third weight; index equals the component mean for every row."
+        },
+        {
+          "url": "https://artificialanalysis.ai/methodology/coding-agents-benchmarking",
+          "file": "ops/cr-760/evidence/aa-methodology-v2.1.txt",
+          "sha256": "ea6d55f8aa5aeb502b158e2563d575cfdc0e04d32506ecde8b1dd05476b9cf3e",
+          "fetched_at": "2026-11-16T07:21:19Z",
+          "excerpt": "Version 2.0 October 2026 - November 2026 (version history on the v2.1 methodology page; v2.0 is no longer the current index)."
+        }
+      ]
+    },
+    {
+      "id": "aa-coding-agent-index::2.1",
+      "name": "Artificial Analysis Coding Agent Index v2.1",
+      "version": "2.1",
+      "version_status": "published",
+      "family": "aa-coding-agent-index",
+      "category": "Coding",
+      "one_sentence_description": "Measures coding-agent systems on FrontierCode-AA 2.0, Terminal-Bench 4.1 and SWE-Atlas-QnA-AA.",
+      "scoring": {
+        "metric": "Equal-weighted mean of the three component scores for a complete model-and-harness result",
+        "unit": "fraction",
+        "range": [
+          0,
+          1
+        ],
+        "higher_better": true,
+        "notes": "Equal-weight average of FrontierCode-AA 2.0 (AA implementation of Cognition FrontierCode 2.0: 132 non-public tasks; 0 if a blocking check fails, otherwise 70-100%; GPT-6 Luna (medium) judges the rubric; integrity scanner plus LLM judge zero reward-hacked attempts), Terminal-Bench 4.1 (the same 66 tasks as 4.0 with updated verifiers, pass@1; an attempt keeps its 4.0 score when the 4.1 verifiers cannot grade it) and SWE-Atlas-QnA-AA (Scale AI Task Resolve Rate re-graded by AA with GPT-6 Luna (xhigh), five votes per criterion). Three attempts per task. Not comparable with v1.4, v1.5 or v2.0: FrontierCode and Terminal-Bench changed. Different harnesses and model efforts remain separate.",
+        "bridge_break": true
+      },
+      "maintainer": "Artificial Analysis",
+      "source_type": "official_leaderboard",
+      "primary_url": "https://artificialanalysis.ai/agents/coding-agents",
+      "publication_urls": [
+        {
+          "url": "https://artificialanalysis.ai/agents/coding-agents",
+          "type": "official_leaderboard",
+          "role": "Primary results publication and collection entry point"
+        }
+      ],
+      "how_to_collect": {
+        "command": "node scripts/fetch-aa-coding-agents.mjs",
+        "format": "Next.js Flight JSON → validated separate JSON snapshot",
+        "locator": "Read complete rows with exact model_name, harness and components; preserve every harness result and explicit model effort.",
+        "version_guard": "The collector requires every version statement on the page to say v2.1 and validates the three v2.1 components (frontiercode-v2.0, swe-atlas-qna, terminal-bench-v4), one-third weights and the index arithmetic before atomic replacement; it never writes the v1.4, v1.5 or v2.0 files.",
+        "notes": "Exact snapshot: data/raw/aa-coding-agents-v2.1.json. AA keeps the payload ids swe-atlas-qna (SWE-Atlas-QnA-AA) and terminal-bench-v4 (now Terminal-Bench 4.1); component values are never compared with earlier versions. The collector does not modify the legacy Composite source."
+      },
+      "update_cadence": {
+        "source_schedule": "Not stated in the verified source; no promised publication schedule.",
+        "check_recommendation": "Weekly; daily on a known model launch (our policy, not a maintainer promise)."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No verified saturation claim; retained without asserting that the benchmark is unsaturated."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-11-16",
+      "last_verified": "2026-11-16",
+      "evidence": [
+        {
+          "url": "https://artificialanalysis.ai/methodology/coding-agents-benchmarking",
+          "file": "ops/cr-760/evidence/aa-methodology-v2.1.txt",
+          "sha256": "ea6d55f8aa5aeb502b158e2563d575cfdc0e04d32506ecde8b1dd05476b9cf3e",
+          "fetched_at": "2026-11-16T07:21:19Z",
+          "excerpt": "Artificial Analysis Coding Agent Index v2.1 is the equal-weight average of FrontierCode-AA 2.0, Terminal-Bench 4.1 and SWE-Atlas-QnA-AA. Index Components The index has three components: Evaluation Field Tasks Attempts per task Response Type Scoring FrontierCod ... Version History Version 2.1 November 2026 - current Upgraded Terminal-Bench 4.0 to Terminal-Bench 4.1: the same 66 tasks, scored with updated verifiers that improve reliability and resistance to reward hacking Replaced FrontierCode v1.1 with FrontierCode-AA 2.0, our implementation of Cognition's FrontierCode 2.0: 132 tasks, with Cognition's integrity scanner and LLM judge to detect reward hacking Aligned cost with our Intelligence Index evaluations: we combine provider-reported token counts with live measurements of each model's typical cache hit rate Version 2.0 October 2026 - November 2026 Replaced DeepSWE v1.1 with FrontierCode v1.1 from Cognition: 100 software engineering tasks on real open-source repositories, graded on whether a maintainer would merge the change Renamed SWE-Atlas-QnA to SWE-Atlas-QnA-AA with adjustments to Scale AI's grading: GPT-6 Luna (xhigh) as the judge with fi"
+        },
+        {
+          "url": "https://artificialanalysis.ai/agents/coding-agents",
+          "file": "ops/cr-760/evidence/aa-coding-agents-v2.1.json",
+          "sha256": "615e568d7674c65fd2ca774ac3f607c07b36053d600665deaab564a5c8b3cd19",
+          "fetched_at": "2026-11-16T07:21:19Z",
+          "excerpt": "Collected snapshot from page capture sha256 80780cab814ee43dea5690f84dae212708cfd740fee212d1769d08064c2e9583: 29 complete rows; score_scale 0-1; every version statement names v2.1; components frontiercode-v2.0, swe-atlas-qna, terminal-bench-v4 at one-third weight; index equals the component mean for every row."
         }
       ]
     },

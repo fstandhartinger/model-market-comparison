@@ -4,7 +4,8 @@
 
 - **v1.4 legacy snapshot**: `data/raw/aa-coding-agents.json`, collected 2026-09-09, 68 rows. This is the dated v1.4 input used by the existing Composite path.
 - **v1.5 snapshot**: `data/raw/aa-coding-agents-v1.5.json`, collected 2026-09-23, 19 complete rows. Keep v1.5 separate from v1.4; never combine values across versions.
-- **v2.0 snapshot** (CR-545): `data/raw/aa-coding-agents-v2.0.json`, first collected 2026-10-23, 24 complete rows. Current collector target. From this date the v1.5 file is frozen at its 2026-10-22 capture (42 rows) and never refreshed.
+- **v2.0 snapshot** (CR-545): `data/raw/aa-coding-agents-v2.0.json`, first collected 2026-10-23, 24 complete rows. Collector target until CR-760. From this date the v1.5 file is frozen at its 2026-10-22 capture (42 rows) and never refreshed.
+- **v2.1 snapshot** (CR-760): `data/raw/aa-coding-agents-v2.1.json`, first collected 2026-11-16, 29 complete rows. Current collector target. From this date the v2.0 file is frozen at its 2026-11-13 capture (36 rows) and never refreshed.
 - Method source dates and endpoints above were read from the two retained snapshot headers on 2026-09-24. No live AA values were fetched for this documentation correction.
 
 ## v1.4 source and extraction
@@ -23,6 +24,14 @@ The collector (`lib/aa-coding-agents.mjs`, `CODING_AGENT_CONTRACTS`) is pinned t
 
 The Benchmarks matrix merges "best of" across versions only for v1.4 and v1.5 (`data/benchmark-taxonomy.json`); v2.0 is a separate row.
 
+## v2.1 source and validation (CR-760)
+
+AA published Coding Agent Index v2.1 in November 2026 (methodology version history: "Version 2.1 November 2026 - current"; the coding-agents page first stated v2.1 in the 2026-11-14 daily capture, while the 2026-11-13 capture still stated v2.0). It is the equal-weight average of FrontierCode-AA 2.0 (AA's implementation of Cognition's FrontierCode 2.0: 132 non-public tasks; 0 if a blocking check fails, otherwise 70-100%; GPT-6 Luna (medium) judges the rubric; Cognition's integrity scanner plus an LLM judge zero reward-hacked attempts), Terminal-Bench 4.1 (the same 66 tasks as 4.0, with updated verifiers; an attempt keeps its 4.0 score when the 4.1 verifiers cannot grade it) and SWE-Atlas-QnA-AA (unchanged from v2.0). Three attempts per task. Two of three components changed, so v2.1 is a new identity (`aa-coding-agent-index::2.1`, `scoring.bridge_break`), never compared with v2.0.
+
+The collector is pinned to v2.1. It requires every version statement on the page to say v2.1, the components `frontiercode-v2.0`, `swe-atlas-qna` and `terminal-bench-v4`, three results per row, one-third weights and the index arithmetic. AA's payload keeps the id `terminal-bench-v4` for Terminal-Bench 4.1 (as it kept `swe-atlas-qna` for SWE-Atlas-QnA-AA), so a component id alone never makes two versions comparable. Evidence: `ops/cr-760/evidence` (page and methodology captures with SHA-256 in `manifest.json`).
+
+The Benchmarks matrix still merges "best of" across versions only for v1.4 and v1.5; v2.0 and v2.1 are separate rows. The Composite and the top 5 still read only v1.4.
+
 ## Handling and limits
 
-AA-derived values remain subject to the repository's source-permission hold. Do not refresh, remove, or alter numeric AA rows until the written-permission question is resolved. The v1.4, v1.5 and v2.0 captures are separate dated snapshots, not a single continuous series. Any median or other display transform must follow an explicit permission decision and a reviewed change request.
+AA-derived values remain subject to the repository's source-permission hold. Do not refresh, remove, or alter numeric AA rows until the written-permission question is resolved. The v1.4, v1.5, v2.0 and v2.1 captures are separate dated snapshots, not a single continuous series. Any median or other display transform must follow an explicit permission decision and a reviewed change request.

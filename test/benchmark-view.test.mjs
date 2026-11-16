@@ -139,11 +139,14 @@ test('actual source adapter keeps all version identities, values and dated legac
   //     (39 rows / 20.8 KB today) — a leak of other models' rows shows up here first;
   //   * 900 KB as the absolute ceiling: ~13 % over today's 799.2 KB, so an axis-metadata regression is
   //     still caught while a day's values are not.
+  // CR-760 (2026-11-16): main had grown to 895.1 KB (0.5 % margin) through new axes since D256; AA's Coding Agent
+  // Index v2.1 adds one more axis (907.9 KB, 4.9 % of the 18.4 MB matrix). Same reasoning as D256: the ceiling
+  // moves to 1,000 KB (~10 % over today); the fraction and own-rows checks above are unchanged.
   const full = JSON.stringify(view).length, payload = JSON.stringify(selected).length;
   const scoreRowBytes = selected.axes.reduce((n, a) => n + JSON.stringify(a.scores).length, 0);
   assert.ok(payload < full * 0.15, `initial benchmark payload bounded to selected models: ${payload} of ${full}`);
   assert.ok(scoreRowBytes < 120_000, `selected score rows are the selected model's only: ${scoreRowBytes} bytes`);
-  assert.ok(payload < 900_000, `initial benchmark payload bounded to selected models: ${payload}`);
+  assert.ok(payload < 1_000_000, `initial benchmark payload bounded to selected models: ${payload}`);
   assert.equal(JSON.stringify(ds), before);
 });
 

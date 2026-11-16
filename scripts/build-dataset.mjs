@@ -579,12 +579,15 @@ async function build() {
   const dataPolicy = await readJSON("openrouter-data-policy.json").catch(() => ({ providers: [] }));
   const epochEci = await readJSON("epoch-eci.json");
   const codingAgents = await readJSON("aa-coding-agents.json").catch(() => ({ rows: [] }));
-  // CR-545: three separate dated identities. v1.4 feeds the Composite, v1.5 is frozen at its last
-  // capture, v2.0 is the current board. None is ever combined with another.
+  // CR-545/CR-760: four separate dated identities. v1.4 feeds the Composite, v1.5 and v2.0 are frozen at
+  // their last captures, v2.1 is the current board. None is ever combined with another.
   const frozenCodingAgents = await readJSON("aa-coding-agents-v1.5.json");
-  const currentCodingAgents = await readJSON("aa-coding-agents-v2.0.json");
-  if (codingAgents.version !== "1.4" || frozenCodingAgents.version !== "1.5" || currentCodingAgents.version !== "2.0"
+  const frozenCodingAgentsV20 = await readJSON("aa-coding-agents-v2.0.json");
+  const currentCodingAgents = await readJSON("aa-coding-agents-v2.1.json");
+  if (codingAgents.version !== "1.4" || frozenCodingAgents.version !== "1.5" || frozenCodingAgentsV20.version !== "2.0"
+    || currentCodingAgents.version !== "2.1"
     || frozenCodingAgents.rows.length !== frozenCodingAgents.count
+    || frozenCodingAgentsV20.rows.length !== frozenCodingAgentsV20.count
     || currentCodingAgents.rows.length !== currentCodingAgents.count) {
     throw new Error("Coding Agent snapshot versions/counts are invalid; Composite requires the retained v1.4 snapshot");
   }
@@ -1496,7 +1499,8 @@ async function build() {
       openrouter_data_policy: dataPolicy.source?.retrieved_at || null,
       aa_coding_agents: codingAgents.collected_at, github_copilot: copilot.collected_at, claude_code: claude.collected_at,
       aa_coding_agents_v1_5: frozenCodingAgents.collected_at,
-      aa_coding_agents_v2_0: currentCodingAgents.collected_at,
+      aa_coding_agents_v2_0: frozenCodingAgentsV20.collected_at,
+      aa_coding_agents_v2_1: currentCodingAgents.collected_at,
       provider_meta: providerMeta.collected_at,
       aa_efficiency: aaEfficiency.collected_at,
       aa_efficiency_v4: aaEfficiencyV4.collected_at,
@@ -1521,7 +1525,7 @@ async function build() {
       },
       aa_coding_agents: {
         version: "1.4", status: "retained", collected_at: codingAgents.collected_at,
-        note: "AA now publishes v2.0. This dated v1.4 snapshot preserves the existing Composite definition; v1.5 and v2.0 are separate identities and never mixed into it.",
+        note: "AA now publishes v2.1. This dated v1.4 snapshot preserves the existing Composite definition; v1.5, v2.0 and v2.1 are separate identities and never mixed into it.",
       },
       aa_coding_agents_v1_5: {
         version: frozenCodingAgents.version, status: "retained", count: frozenCodingAgents.count, collected_at: frozenCodingAgents.collected_at,
@@ -1529,8 +1533,13 @@ async function build() {
         note: "AA replaced v1.5 with v2.0 on 2026-10-23 (different components). This is the last v1.5 capture with its own date; it is not refreshed and never compared with v2.0.",
       },
       aa_coding_agents_v2_0: {
+        version: frozenCodingAgentsV20.version, status: "retained", count: frozenCodingAgentsV20.count, collected_at: frozenCodingAgentsV20.collected_at,
+        path: "data/raw/aa-coding-agents-v2.0.json", url: frozenCodingAgentsV20.endpoint,
+        note: "AA replaced v2.0 with v2.1 in November 2026 (FrontierCode-AA 2.0 replaces FrontierCode v1.1; Terminal-Bench 4.1 replaces 4.0). This is the last v2.0 capture with its own date; it is not refreshed and never compared with v2.1.",
+      },
+      aa_coding_agents_v2_1: {
         version: currentCodingAgents.version, status: "collected_separately", count: currentCodingAgents.count,
-        path: "data/raw/aa-coding-agents-v2.0.json", url: currentCodingAgents.endpoint,
+        path: "data/raw/aa-coding-agents-v2.1.json", url: currentCodingAgents.endpoint,
       },
       provider_meta: {
         version: "curated", status: providerMeta.openrouter_crosscheck ? "curated_country_crosschecked" : "curated",

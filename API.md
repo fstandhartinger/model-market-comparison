@@ -307,6 +307,14 @@ benchmark id `aa-coding-agent-index::2.0`). `sources.aa_coding_agents_v1_5` is n
 the last v1.5 capture (2026-10-22). The three versions are separate benchmarks with different
 components; their scores are never combined, ranked or compared as one scale.
 
+### Coding Agent Index v2.1 (CR-760, 2026-11-16)
+
+AA replaced v2.0 with v2.1 (FrontierCode-AA 2.0, Terminal-Bench 4.1, SWE-Atlas-QnA-AA); the page first
+stated v2.1 in the 2026-11-14 daily capture. `sources.aa_coding_agents_v2_1` dates the current collection
+(`data/raw/aa-coding-agents-v2.1.json`, benchmark id `aa-coding-agent-index::2.1`).
+`sources.aa_coding_agents_v2_0` is now the frozen date of the last v2.0 capture (2026-11-13). The four
+versions are separate benchmarks; their scores are never combined, ranked or compared as one scale.
+
 `sources.provider_meta` (since 2026-09-14) dates the daily cross-check of the curated
 `country` field against OpenRouter's provider table, i.e. the date of the table it read.
 The judgment fields (`eu_hosted`, `non_us`, `hyperscaler`, notes) keep their own date in

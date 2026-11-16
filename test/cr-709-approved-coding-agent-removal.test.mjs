@@ -5,7 +5,9 @@ import assert from 'node:assert/strict';
 import { mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { APPROVED_CODING_AGENT_REMOVALS, CODING_AGENT_ROSTER_SHRANK, parseCodingAgents } from '../lib/aa-coding-agents.mjs';
+import { CODING_AGENT_VERSION, CODING_AGENT_FILE, CODING_AGENT_CONTRACTS, APPROVED_CODING_AGENT_REMOVALS, CODING_AGENT_ROSTER_SHRANK, parseCodingAgents } from '../lib/aa-coding-agents.mjs';
+// CR-760: fixtures follow the pinned contract (v2.1 since CR-760; this suite was written against v2.0).
+const PV = CODING_AGENT_VERSION;
 import { refreshCodingAgents } from '../scripts/fetch-aa-coding-agents.mjs';
 import { verifyWithheldCoding } from '../ops/daily/review-live.mjs';
 
@@ -13,11 +15,11 @@ const APPROVED = '9fcf1e000a8ac75cca614977bcac25da';
 const RUN_START = '2026-11-09T01:16:45.880Z';
 const rows = (n = 16) => Array.from({ length: n }, (_, i) => ({
   id: i === 0 ? APPROVED : `synthetic-${i}`, display: { model: `Fixture ${i}` }, agentName: 'Fixture harness', indexScore: 0.5, indexComponentCount: 3, evalCount: 3,
-  evals: ['frontiercode-v1.1-main', 'swe-atlas-qna', 'terminal-bench-v4'].map((datasetIndexName) => ({ datasetIndexName, mean: { reward: 0.5 }, weight: 1 / 3 })),
+  evals: CODING_AGENT_CONTRACTS[PV].components.map((datasetIndexName) => ({ datasetIndexName, mean: { reward: 0.5 }, weight: 1 / 3 })),
 }));
 const page = (items = rows()) => {
   const records = `a:${JSON.stringify(['$', 'div', null, { rows: items }])}\nb:${JSON.stringify({ title: 'Performance', description: 'Performance across the Artificial Analysis Coding Agent Index.', change: '$undefined', benchmarkRows: items.map((_, i) => `$a:props:rows:${i}`) })}\n`;
-  return '<span>Artificial Analysis Coding Agent Index v2.0 incorporates 3 benchmarks · Higher is better</span>'
+  return `<span>Artificial Analysis Coding Agent Index v${PV} incorporates 3 benchmarks · Higher is better</span>`
     + `<script>self.__next_f.push(${JSON.stringify([1, records])})</script>`;
 };
 const published = () => ({ ...parseCodingAgents(page()), collected_at: '2026-11-05' });
@@ -60,7 +62,7 @@ test('refresh writes the smaller snapshot; the review treats the run as ordinary
     assert.equal(JSON.parse(await readFile(target, 'utf8')).count, 15);
     const beforeDir = await mkdtemp(join(tmpdir(), 'cr709-approved-before-'));
     try {
-      await writeFile(join(beforeDir, 'aa-coding-agents-v2.0.json'), JSON.stringify(published()));
+      await writeFile(join(beforeDir, CODING_AGENT_FILE), JSON.stringify(published()));
       const receipt = { url: 'https://artificialanalysis.ai/agents/coding-agents', sha256: 'f'.repeat(64), fetched_at: RUN_START, body: page(without(APPROVED)) };
       assert.equal(await verifyWithheldCoding({ staged: snapshot, src: { beforeDir }, runStart: RUN_START, receipt }), null);
     } finally { await rm(beforeDir, { recursive: true, force: true }); }

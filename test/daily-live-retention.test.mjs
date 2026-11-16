@@ -51,20 +51,21 @@ test('CR-67.1/67.2: the dispute still rejects the contract, and the run withhold
     assert.equal(plan.action, 'retain');
     const runDir = join(dir, 'run'), rawDir = join(dir, 'work', 'data', 'raw');
     await mkdir(join(runDir, 'before', 'raw'), { recursive: true }); await mkdir(rawDir, { recursive: true });
+    // CR-760: the current Coding Agent contract is v2.1 (v2.0 frozen), so the restored file and source key are v2.1's.
     const prior = JSON.stringify({ version: '1.5', collected_at: '2026-09-16', rows: [{ score: 0.43 }] });
-    await writeFile(join(runDir, 'before', 'raw', 'aa-coding-agents-v2.0.json'), prior);
-    await writeFile(join(rawDir, 'aa-coding-agents-v2.0.json'), JSON.stringify({ version: '2.0', collected_at: '2026-09-17', rows: [{ score: 0.4305203524444174 }] }));
+    await writeFile(join(runDir, 'before', 'raw', 'aa-coding-agents-v2.1.json'), prior);
+    await writeFile(join(rawDir, 'aa-coding-agents-v2.1.json'), JSON.stringify({ version: '2.1', collected_at: '2026-09-17', rows: [{ score: 0.4305203524444174 }] }));
     const record = await retainPriorSnapshot({ runDir, rawDir, dataset: 'aa_coding_current', errors: review.errors });
-    assert.equal(await readFile(join(rawDir, 'aa-coding-agents-v2.0.json'), 'utf8'), prior);
-    assert.deepEqual([record.source, record.restored[0].file, record.restored[0].retained_collected_at, record.restored[0].retained_sha256], ['aa_coding_agents_v2_0', 'data/raw/aa-coding-agents-v2.0.json', '2026-09-16', sha256(prior)]);
+    assert.equal(await readFile(join(rawDir, 'aa-coding-agents-v2.1.json'), 'utf8'), prior);
+    assert.deepEqual([record.source, record.restored[0].file, record.restored[0].retained_collected_at, record.restored[0].retained_sha256], ['aa_coding_agents_v2_1', 'data/raw/aa-coding-agents-v2.1.json', '2026-09-16', sha256(prior)]);
     assert.ok(record.reasons.length > 0 && record.restored[0].rejected_capture_sha256);
     // Freshness: the withheld source keeps its published date; every other source must still be today's.
     const day = '2026-09-17';
     const before = { sources: Object.fromEntries(DAILY_FRESH_SOURCES.map((k) => [k, '2026-09-16'])) };
-    const after = { sources: { ...Object.fromEntries(DAILY_FRESH_SOURCES.map((k) => [k, day])), aa_coding_agents_v2_0: '2026-09-16' } };
-    assert.deepEqual(sourceFreshnessErrors({ day, before, after, retained: ['aa_coding_agents_v2_0'] }), []);
-    assert.match(sourceFreshnessErrors({ day, before, after }).join(), /aa_coding_agents_v2_0 is not today/);
-    assert.match(sourceFreshnessErrors({ day, before, after: { sources: { ...after.sources, aa_coding_agents_v2_0: day } }, retained: ['aa_coding_agents_v2_0'] }).join(), /withheld but its date changed/);
+    const after = { sources: { ...Object.fromEntries(DAILY_FRESH_SOURCES.map((k) => [k, day])), aa_coding_agents_v2_1: '2026-09-16' } };
+    assert.deepEqual(sourceFreshnessErrors({ day, before, after, retained: ['aa_coding_agents_v2_1'] }), []);
+    assert.match(sourceFreshnessErrors({ day, before, after }).join(), /aa_coding_agents_v2_1 is not today/);
+    assert.match(sourceFreshnessErrors({ day, before, after: { sources: { ...after.sources, aa_coding_agents_v2_1: day } }, retained: ['aa_coding_agents_v2_1'] }).join(), /withheld but its date changed/);
     const epochRetained = { sources: { ...Object.fromEntries(DAILY_FRESH_SOURCES.map((k) => [k, day])), epoch_eci: '2026-09-16' } };
     assert.deepEqual(sourceFreshnessErrors({ day, before, after: epochRetained, retained: ['epoch_eci'] }), []);
     // No prior copy → nothing to fall back to → the run fails.

@@ -11,17 +11,17 @@ import { CODING_AGENT_CONTRACTS, CODING_AGENT_FILE, CODING_AGENT_VERSION, FROZEN
 const json = async (p) => JSON.parse(await readFile(new URL(`../${p}`, import.meta.url), 'utf8'));
 const sha256 = async (p) => createHash('sha256').update(await readFile(new URL(`../${p}`, import.meta.url))).digest('hex');
 
-test('CR-545: the collector targets v2.0 and v1.5 is a frozen, superseded identity', async () => {
-  assert.equal(CODING_AGENT_VERSION, '2.0');
-  assert.equal(CODING_AGENT_FILE, 'aa-coding-agents-v2.0.json');
-  assert.deepEqual(FROZEN_CODING_AGENT_FILES, ['aa-coding-agents-v1.5.json']);
+// CR-760 (2026-11-16): AA moved on to v2.1, so v2.0 is now frozen too; its own guarantees below still hold.
+test('CR-545: v2.0 is its own identity and v1.5 is a frozen, superseded identity', async () => {
+  assert.notEqual(CODING_AGENT_VERSION, '1.5');
+  assert.notEqual(CODING_AGENT_FILE, 'aa-coding-agents-v1.5.json');
+  assert.ok(FROZEN_CODING_AGENT_FILES.includes('aa-coding-agents-v1.5.json'));
   assert.deepEqual(CODING_AGENT_CONTRACTS['2.0'].components, ['frontiercode-v1.1-main', 'swe-atlas-qna', 'terminal-bench-v4']);
   const registry = await json('data/raw/benchmarks/registry.json');
   const byId = new Map(registry.entries.map((e) => [e.id, e]));
   const v15 = byId.get('aa-coding-agent-index::1.5'), v20 = byId.get('aa-coding-agent-index::2.0');
   assert.equal(v15.status, 'retained');
   assert.equal(v15.superseded_by, 'aa-coding-agent-index::2.0');
-  assert.equal(v20.status, 'active');
   assert.equal(v20.family, v15.family);
   assert.equal(v20.scoring.bridge_break, true);
   const snapshot = await json('data/raw/aa-coding-agents-v2.0.json');
