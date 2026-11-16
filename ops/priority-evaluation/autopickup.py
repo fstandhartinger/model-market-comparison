@@ -175,6 +175,9 @@ ALERT_REPEAT = timedelta(hours=24)
 # card while it is demonstrably alive and the deadline is further away than this margin.
 OWNED_HOLD_DEADLINE_MARGIN = timedelta(hours=12)
 OWNED_HOLD_STATE_FRESH = timedelta(hours=6)
+# N118 (15 Nov 2026, f62aeab1): once the official pod measurement is complete and the pod is gone, the live owner
+# only has scoring, the result mail and the release left. That order stays quiet until this close to the deadline.
+MEASURED_RELEASE_MARGIN = timedelta(hours=3)
 OWNER_JOB_RE = re.compile(r"[a-z0-9][a-z0-9-]{2,100}")
 
 
@@ -264,6 +267,30 @@ def owner_job_live(owner: object, rid: str, now: datetime) -> bool:
         if result.stdout.strip() == "active":
             return True
     return False
+
+
+def measured_awaiting_release(rid: str) -> bool:
+    """pods/<rid>.json records a finished official measurement for this order: request_id matches,
+    measurement_completed is exactly True, torn_down_at is a real timestamp, no pod is still listed and neither
+    cleanup nor scored dispatch is uncertain. A missing, unreadable or partial record counts as not measured."""
+    rid = request_id(rid)
+    try:
+        record = load_json_file(STATE_ROOT / "pods" / f"{rid}.json", 1_000_000)  # = pod_runner.PODS_DIR
+    except PickupError:
+        return False
+    torn_down = record.get("torn_down_at")
+    try:
+        torn_down_ok = isinstance(torn_down, str) and parse_ts(torn_down) is not None
+    except (TypeError, ValueError):
+        torn_down_ok = False
+    return (record.get("request_id") == rid and record.get("measurement_completed") is True and torn_down_ok
+            and record.get("pod_id") is None and record.get("cleanup_uncertain") is False
+            and not record.get("scored_dispatch_uncertain"))
+
+
+def owned_hold_margin(rid: str) -> timedelta:
+    """How close to the deadline a live owner may hold an order quietly: 12 h, or 3 h once it is measured."""
+    return MEASURED_RELEASE_MARGIN if measured_awaiting_release(rid) else OWNED_HOLD_DEADLINE_MARGIN
 
 
 def hold_owner_live(owner: object, rid: str, now: datetime) -> bool:
@@ -2032,7 +2059,7 @@ def operational_escalate(row: dict[str, Any], state: dict[str, Any], effects: Ef
                          wake_owner(row, state), thread=BOARD_HANDOFF_THREAD):
             finish_ok(state, "operational_handoff", now)
     if covered:
-        return  # a live native owner with more than 12 h left owns the hold; no urgent card
+        return  # a live native owner with more than 12 h left (3 h once measured) owns the hold; no urgent card
     hold_key = re.sub(r"[^A-Za-z0-9_]+", "_", reason)[:48]
     alert(state, f"operational_hold_{hold_key}", effects, urgent=True,
           text=rescue_card(row, reason, exhausted=exhausted))
@@ -2060,7 +2087,7 @@ def ensure_native_owner(row: dict[str, Any], state: dict[str, Any], effects: Eff
     if not native_owner_due(rid, reason):
         return False
     name = native_owner.owner_name(rid)
-    quiet = deadline_for(row) - now > OWNED_HOLD_DEADLINE_MARGIN
+    quiet = deadline_for(row) - now > owned_hold_margin(rid)
     operational = state.get("operational_hold")
     existing = operational.get("owner") if isinstance(operational, dict) else None
     if existing not in (None, name) and owner_job_live(existing, rid, now):
@@ -4414,11 +4441,23 @@ def advance_sla_handoffs(row: dict[str, Any], state: dict[str, Any], effects: Ef
         if hours == 24 and measurement_started(rid, job_root):
             finish_ok(state, name, now, skipped="measurement_started")
             continue
+        if hours == 36 and measured_release_quiet(row, state, now):
+            continue  # not consumed: the handoff still goes out once under 3 h remain
         begin_attempt(state, name, now)
         if effects.board(sla_handoff(row, hours), wake_owner(row, state), thread=BOARD_HANDOFF_THREAD):
             finish_ok(state, name, now)
         else:
             finish_fail(state, name, "board_post_failed")
+
+
+def measured_release_quiet(row: dict[str, Any], state: dict[str, Any], now: datetime) -> bool:
+    """A deliberate (non-transient) hold whose named owner is live and whose official measurement is complete
+    (pods/<rid>.json) needs no 36 h owner wake-up while more than 3 h remain."""
+    rid = request_id(row.get("id"))
+    operational = state.get("operational_hold")
+    return (isinstance(operational, dict) and operational.get("transient") is False
+            and bool(operational.get("reason")) and hold_owner_live(operational.get("owner"), rid, now)
+            and measured_awaiting_release(rid) and deadline_for(row) - now > MEASURED_RELEASE_MARGIN)
 
 
 def sla_handoff(row: dict[str, Any], hours: int) -> str:
@@ -4666,10 +4705,14 @@ def health(effects: Effects) -> dict[str, Any]:
                      and (hold_owner_live(operational.get("owner"), rid, now)
                           or (operational.get("owner") == native_owner.owner_name(rid)
                               and native_owner_starting(state, now))))
-        owned_quiet = owned_run and deadline_for(row) - now > OWNED_HOLD_DEADLINE_MARGIN
+        # N118: a live owner whose official pod measurement is complete (pods/<rid>.json) stays quiet until 3 h.
+        margin = owned_hold_margin(rid) if owned_run else OWNED_HOLD_DEADLINE_MARGIN
+        measured = owned_run and margin == MEASURED_RELEASE_MARGIN
+        owned_quiet = owned_run and deadline_for(row) - now > margin
         if active_hold(row) or planned_review or owned_quiet:
             held_orders.append({"order": ref, "kind": "customer" if active_hold(row) else
-                                "operational_review" if planned_review else "owned_manual_run",
+                                "operational_review" if planned_review else
+                                "measured_awaiting_release" if measured else "owned_manual_run",
                                 "reason": row.get("customer_hold_reason") if active_hold(row) else operational["reason"],
                                 "owner": None if active_hold(row) else operational["owner"],
                                 "deadline": iso(deadline_for(row)),
@@ -4679,7 +4722,7 @@ def health(effects: Effects) -> dict[str, Any]:
             detail = f"; operational hold: {operational.get('reason') or 'unknown'}" if isinstance(operational, dict) else ""
             if owned_run:
                 problems.append((f"eval-due:{rid}", f"order {ref}: evaluation not running ({row.get('evaluation_status')}){detail}; "
-                                 f"owner {operational.get('owner')} has under 12 h to the deadline"))
+                                 f"owner {operational.get('owner')} has under {'3 h (measured, awaiting release)' if measured else '12 h'} to the deadline"))
             else:
                 problems.append((f"eval:{rid}", f"order {ref}: evaluation not running ({row.get('evaluation_status')}){detail}"))
         for name, item in state["steps"].items():
