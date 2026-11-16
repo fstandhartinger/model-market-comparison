@@ -1,4 +1,5 @@
-"""Fixed-order offline runtime supplement for Starlord-27B-v2.0-preview (paid fast-lane order 6b7af363).
+"""Fixed-order offline runtime supplement for Starlord-27B-v2.0-preview (paid fast-lane order 6b7af363) and Starlord-4B-preview
+(paid fast-lane order c5a084fa, CR-759).
 
 Starlord-27B-v2.0-preview is a Qwen/Qwen3.8-27B finetune read out through candidate logits (no generation), served by the customer's own
 stdlib-HTTP inference/serve_systemone.py (POST /v1/systemone) on one GPU. The author's recorded stack is torch 2.10.0+cu130,
@@ -13,6 +14,11 @@ unchanged bytes. The customer code imports decision_index.engines.base from the 
 only its three stdlib-only files on that import path, from the README-named commit 25c6ec7b, are copied into site-packages. The Docker
 build is offline and uses only the pinned context members. The customer code is mounted from the model repository by the trusted
 runner; this host module imports no model stack and executes no customer code.
+
+Starlord-4B-preview (same author, Qwen3.5-4B base) ships byte-identical inference/vendor/*, serve_systemone.py, bidir_attention.py,
+bidir_forward.py, bidir_prefix.py, jevbench.py and requirements.txt (same recorded stack incl. flash-attn 2.8.3); only direct_engine.py
+differs (4B shape checks plus an input-repetition readout using the same imports). It therefore reuses this exact pinned context; admission
+stays an explicit list of exact order ids (no wildcard, no repository match).
 """
 import hashlib
 import re
@@ -23,6 +29,7 @@ import measurement_dispatch
 import pod_runner
 
 ORDER = '6b7af363-cef5-4517-b3fa-4ca5055fbca4'
+ORDERS = frozenset({ORDER, 'c5a084fa-0c3b-4fd5-ab69-e69f9b6a7116'})
 BASE_IMAGE = 'pytorch/pytorch:2.10.0-cuda13.0-cudnn9-devel@sha256:48af19ebb88034e0325decc2b6142e5b9bfc276eaa5197ab6d94582f1d78ea4c'
 CONTEXT = Path('/home/flori/jobs/fastlane-native-6b7af363/supplement/PUBLIC-BUILD-CONTEXT.tar')
 CONTEXT_SHA = '94110a61f5fadd9175c8c8907a9bd99e244115e7b52d71b2ee3855f3f677ce4c'
@@ -83,8 +90,8 @@ def sha256(path):
         return _sha256_stream(stream)
 
 def active(job, recipe):
-    """Only this order's reviewed http_typesafe recipe on the exact pinned base selects the supplement."""
-    return (Path(job).name == ORDER and isinstance(recipe, dict) and recipe.get('kind') == 'http_typesafe'
+    """Only the listed orders' reviewed http_typesafe recipe on the exact pinned base selects the supplement."""
+    return (Path(job).name in ORDERS and isinstance(recipe, dict) and recipe.get('kind') == 'http_typesafe'
             and recipe.get('image') == BASE_IMAGE)
 
 def check_context(context=CONTEXT):
