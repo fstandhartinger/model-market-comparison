@@ -74,7 +74,7 @@ SUPPLEMENTS: tuple[dict[str, Any], ...] = (
      "repos": ("huggingface.co/xsdfasfgsa/starlord-27b-preview",),
      "precedents": ("fastlane-native-2d2f81c6",)},
     {"family": "starlord_v2", "module": "starlord_v2_runtime_supplement.py",
-     "repos": ("huggingface.co/xsdfasfgsa/starlord-27b-v2.0-preview",),
+     "repos": ("huggingface.co/xsdfasfgsa/starlord-27b-v2.0-preview", "huggingface.co/xsdfasfgsa/starlord-4b-preview"),
      "precedents": ("fastlane-native-6b7af363", "fastlane-native-2d2f81c6")},
     {"family": "minimodels_decision", "module": "minimodels_decision_runtime_supplement.py",
      "repos": ("huggingface.co/minimodels-ai/decision-1.0",),
