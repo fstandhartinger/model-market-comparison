@@ -1,0 +1,30 @@
+{
+  "artifact_id": "scores-4",
+  "artifact_sha256": "82623db8f05e28afb08d3b33f83241fda230d5b0706800bfa44480f4b6ead98a",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": [
+    "vendor:DeepSeek-V3:aider-polyglot::snapshot-2026-09-10",
+    "c1"
+  ],
+  "errors_found": 1,
+  "findings": [
+    {
+      "id": "f1",
+      "severity": "blocker",
+      "location": "row vendor:DeepSeek-V3:aider-polyglot::snapshot-2026-09-10 field benchmark_id (and id/coverage suffix)",
+      "evidence": "Primary source Table 6 shows 'Aider-Polyglot (Acc.)' with value 49.6 for DeepSeek-V3, but contains no snapshot/version token 'snapshot-2026-09-10'. Source URL and text do not mention any 2026-09-10 benchmark snapshot. Claimed benchmark_id 'aider-polyglot::snapshot-2026-09-10' is therefore unsupported by primary evidence.",
+      "repair": "Either remove the unsupported snapshot suffix and use a benchmark identifier verifiable from the source (e.g., 'aider-polyglot' plus any version stated in primary evidence), or supply primary evidence that explicitly records the benchmark version/snapshot date of 2026-09-10."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "Unit 'percent' is inferred from 'Acc.' metric; primary source does not explicitly print '%'.",
+    "Model variant 'default' and model_id 'deepseek-v3-dec-24::default' are internal labels not present in source; source only identifies 'DeepSeek-V3'.",
+    "December 2024 date is inferred from arXiv ID 2412.19437v2, not explicitly stated in excerpt.",
+    "Cannot independently recompute SHA-256 or execute transport/qualification checks; relies on owner-supplied hashes and receipt."
+  ],
+  "missing_evidence": [
+    "Primary source evidence for Aider-Polyglot benchmark snapshot date/version (2026-09-10); the arXiv excerpt only labels the row 'Aider-Polyglot (Acc.)' with no version."
+  ]
+}

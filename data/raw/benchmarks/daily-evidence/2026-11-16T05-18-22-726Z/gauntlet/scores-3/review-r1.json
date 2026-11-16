@@ -1,0 +1,37 @@
+{
+  "artifact_id": "scores-3",
+  "artifact_sha256": "038f4b73054c80e06d8b5cfeed22b7d4fdfcfe6c3f6887e63903f21e13c58ab8",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": [
+    "vendor:DeepSeek-V3:swe-bench-verified::snapshot-2026-09-10",
+    "c1"
+  ],
+  "errors_found": 2,
+  "findings": [
+    {
+      "id": "F1",
+      "severity": "blocker",
+      "location": "row vendor:DeepSeek-V3:swe-bench-verified::snapshot-2026-09-10, field benchmark_id",
+      "evidence": "Candidate claims benchmark_id swe-bench-verified::snapshot-2026-09-10, but primary evidence only names SWE-Bench Verified and SWE Verified (Resolved); no snapshot-2026-09-10 version appears in the captured source.",
+      "repair": "Either supply primary evidence identifying the snapshot version, or remove/qualify the snapshot claim so the benchmark version field is supported by the source."
+    },
+    {
+      "id": "F2",
+      "severity": "major",
+      "location": "row vendor:DeepSeek-V3:swe-bench-verified::snapshot-2026-09-10, field source.published_at",
+      "evidence": "source.published_at is null, and the captured primary source block contains no publication date for arXiv 2412.19437v2, so the required source date cannot be verified.",
+      "repair": "Obtain and bind the actual publication date from the primary source, or state the basis on which published_at is null with supporting evidence."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "I could not independently recompute the row SHA-256 or source SHA-256; owner-provided hash bindings were accepted as given.",
+    "The unit 'percent' is inferred from the SWE Verified (Resolved) metric convention; the captured table does not explicitly show a percent sign.",
+    "Subject identity 'December 2024 update' is inferred from arXiv ID 2412.19437 and URL v2; the captured excerpt does not explicitly state that phrase."
+  ],
+  "missing_evidence": [
+    "Benchmark version/snapshot identifier for SWE-bench Verified: snapshot-2026-09-10",
+    "Publication date of arXiv 2412.19437v2 for source.published_at"
+  ]
+}

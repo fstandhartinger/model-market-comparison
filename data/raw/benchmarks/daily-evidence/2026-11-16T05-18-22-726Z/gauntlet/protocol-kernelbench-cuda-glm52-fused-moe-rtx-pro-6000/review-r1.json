@@ -1,0 +1,36 @@
+{
+  "artifact_id": "protocol-kernelbench-cuda-glm52-fused-moe-rtx-pro-6000",
+  "artifact_sha256": "6aafe8f39bf09b836a09a197e283d2d81bad768a70baedba626edb70633514b9",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": [
+    "kernelbench-cuda-glm52-fused-moe::rtx-pro-6000",
+    "c1",
+    "c2"
+  ],
+  "errors_found": 2,
+  "findings": [
+    {
+      "id": "c1-stale-four-problem-and-04-refs",
+      "severity": "major",
+      "location": "row kernelbench-cuda-glm52-fused-moe::rtx-pro-6000, version_guard and scoring.notes",
+      "evidence": "Current SPEC.md (Source 3) says 'Problem 04 (grid + MinGRU RL sim SPS) was retired 2026-11-09' and 'deck stays at three since 2026-11-09'; its Perfect stack lists only 01, 02, 03. The candidate row's version_guard still requires 'the problem must stay in the stated four-problem deck', and its scoring.notes assert SPEC.md defines 'SPS against the 150M peak_sps anchor for 04' and that 'Opus 5 reaches 196.10% on 04'. Neither claim appears in the current protocol excerpt, which contains no 04 metric and no 150M anchor.",
+      "repair": "Update version_guard to the current three-problem deck (or drop the deck count), and remove or correct all 04 references in scoring.notes. Keep the problem-01 metric definition as the SPEC.md quote for 01/02 roofline peak_fraction; unit 'percent of roofline' and range [0,null] are consistent with SOURCE 7's served scale (lowest 4.11, highest 11.3 after ×100)."
+    },
+    {
+      "id": "c2-version-status-published-unsupported",
+      "severity": "major",
+      "location": "row kernelbench-cuda-glm52-fused-moe::rtx-pro-6000, version and version_status",
+      "evidence": "The row sets version='rtx-pro-6000' and version_status='published'. The primary payload (Source 2 leaderboard.json) publishes schema_version=1, environment='v2_containerized', and generated_from_summary.tag='v2'; it does not publish a release identifier for this board equal to 'rtx-pro-6000'. 'rtx-pro-6000' is the hardware name used in leaderboard.json and published_runs.json, not a published release identifier, so version_status='published' is unsupported and the version does not copy any maintainer-published release identifier.",
+      "repair": "Either set version_status='snapshot' and version='snapshot-2026-11-16' (using the capture date) on the ground that no release identifier is published, or, if a maintainer-published identifier such as schema_version/tag is intended, set version to that identifier and confirm it is the row's registry version. Recheck against the full kernelbench.com/cuda page if it contains a release identifier beyond the supplied excerpt."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "I cannot execute hash verification, transport checks, network fetch, or qualification checks; those are owned separately and I did not rely on them.",
+    "The packet labels SOURCE 7 and SOURCE 6 as generated summaries, not maintainer text; I used SOURCE 7 only to confirm the unit/range scale and SOURCE 6 only as affirmative activity evidence for status='active'.",
+    "The full kernelbench.com/cuda page beyond the supplied excerpt was not in the packet; if that full page publishes a release identifier for this board, the c2 version_status finding could be affected. Within the supplied text, no such identifier appears.",
+    "A row-level canonical SHA-256 was supplied but cannot be verified by me; I did not treat it as numeric source evidence."
+  ],
+  "missing_evidence": []
+}

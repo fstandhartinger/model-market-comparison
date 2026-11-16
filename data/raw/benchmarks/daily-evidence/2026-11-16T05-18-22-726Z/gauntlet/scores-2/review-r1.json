@@ -1,0 +1,51 @@
+{
+  "artifact_id": "scores-2",
+  "artifact_sha256": "270364515ee9b0fd52f10906524af1dc4afec9add1db27c9cde2db4d4350e37d",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": [
+    "vendor:mistralai/Devstral-2-123B-Instruct-2512:swe-bench-verified::snapshot-2026-09-10",
+    "vendor:mistralai/Devstral-Small-2-24B-Instruct-2512:swe-bench-verified::snapshot-2026-09-10",
+    "c1"
+  ],
+  "errors_found": 4,
+  "findings": [
+    {
+      "id": "row1-published_at-null",
+      "severity": "major",
+      "location": "vendor:mistralai/Devstral-2-123B-Instruct-2512:swe-bench-verified::snapshot-2026-09-10 / source.published_at",
+      "evidence": "Primary source text includes 'December 9, 2025' as the blog publication date; candidate sets published_at to null.",
+      "repair": "Set source.published_at to 2025-12-09 (ISO) or document why the captured source date is intentionally null."
+    },
+    {
+      "id": "row1-benchmark-version",
+      "severity": "major",
+      "location": "vendor:mistralai/Devstral-2-123B-Instruct-2512:swe-bench-verified::snapshot-2026-09-10 / benchmark_id",
+      "evidence": "Primary source only states 'SWE-bench Verified' and does not mention snapshot-2026-09-10; candidate benchmark_id includes that snapshot.",
+      "repair": "Obtain primary evidence that specifies the snapshot version or remove the unsupported snapshot from benchmark_id."
+    },
+    {
+      "id": "row2-published_at-null",
+      "severity": "major",
+      "location": "vendor:mistralai/Devstral-Small-2-24B-Instruct-2512:swe-bench-verified::snapshot-2026-09-10 / source.published_at",
+      "evidence": "Primary source text includes 'December 9, 2025' as the blog publication date; candidate sets published_at to null.",
+      "repair": "Set source.published_at to 2025-12-09 (ISO) or document why the captured source date is intentionally null."
+    },
+    {
+      "id": "row2-benchmark-version",
+      "severity": "major",
+      "location": "vendor:mistralai/Devstral-Small-2-24B-Instruct-2512:swe-bench-verified::snapshot-2026-09-10 / benchmark_id",
+      "evidence": "Primary source only states 'SWE-bench Verified' and does not mention snapshot-2026-09-10; candidate benchmark_id includes that snapshot.",
+      "repair": "Obtain primary evidence that specifies the snapshot version or remove the unsupported snapshot from benchmark_id."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "Could not recompute per-row SHA-256 or page hashes; relied on owner-provided hashes.",
+    "Could not execute transport/qualification checks; only the supplied producer receipt was reviewed.",
+    "The snapshot component of benchmark_id may be an internal catalog version not intended to appear in source text; it is flagged as missing evidence rather than a numeric mismatch."
+  ],
+  "missing_evidence": [
+    "Benchmark snapshot version 'snapshot-2026-09-10' absent from primary source text for both rows; source only names 'SWE-bench Verified'."
+  ]
+}

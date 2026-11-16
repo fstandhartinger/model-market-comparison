@@ -1,0 +1,41 @@
+{
+  "artifact_id": "protocol-kernelbench-cuda-deepseek-nsa-rtx-pro-6000",
+  "artifact_sha256": "106e3ed5770f2399032cd76ef25ac0ad13ad843f58eaa616992a43c991185a9c",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": [
+    "kernelbench-cuda-deepseek-nsa::rtx-pro-6000",
+    "c1",
+    "c2"
+  ],
+  "errors_found": 3,
+  "findings": [
+    {
+      "id": "c2-version_status-published",
+      "severity": "major",
+      "location": "row.version_status / row.version",
+      "evidence": "SPEC.md and leaderboard.json publish no release identifier for the RTX PRO 6000 board; the row's version is only the hardware name 'rtx-pro-6000'. Per c2, this supports version_status 'snapshot', not 'published'.",
+      "repair": "Set version_status to 'snapshot' and version to a dated identity such as 'snapshot-2026-11-16', or otherwise show the protocol publishes the identifier being copied."
+    },
+    {
+      "id": "c1-four-problem-deck",
+      "severity": "major",
+      "location": "row.version_guard",
+      "evidence": "version_guard requires the problem to stay in the 'stated four-problem deck', but SPEC.md says problem 04 was retired 2026-11-09 and 'deck stays at three since 2026-11-09'; leaderboard.json contains only 01/02/03.",
+      "repair": "Update the guard to require the three-problem deck (01, 02, 03) and reflect the current task set."
+    },
+    {
+      "id": "c1-stale-problem-04-note",
+      "severity": "minor",
+      "location": "row.scoring.notes",
+      "evidence": "notes claim the published ranked list still holds a `bug` muse/muse-spark-1.3 [ultra] cell on problem 04 (peak_fraction 0.2056); current protocol retired problem 04 and the captured leaderboard has no problem 04 cell.",
+      "repair": "Remove the problem 04 reference from the scoring notes and describe the scoring rule only in terms of the current 01/02/03 deck."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "I cannot execute the owner's hash or transport/qualification checks; I rely on the packet's stated retrieval hashes and timestamps.",
+    "Whether the maintainer's generated_from_summary tag 'v2' could count as a release identifier for the board is ambiguous, but the row's version is not that tag either way, so version_status 'published' remains unsupported."
+  ],
+  "missing_evidence": []
+}

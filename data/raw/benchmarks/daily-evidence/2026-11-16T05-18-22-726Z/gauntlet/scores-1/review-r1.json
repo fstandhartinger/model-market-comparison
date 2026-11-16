@@ -1,0 +1,21 @@
+{
+  "artifact_id": "scores-1",
+  "artifact_sha256": "5560fd6c5791449e38461be83af3c163b676e23bf81302114a12634b2c2b2e54",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/retail",
+    "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/airline",
+    "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/telecom",
+    "c1"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Rows bound to source 9aa7860622381d0ca3ead2f16cc9ce52472b8effa3e9614ede6acdef008282d3 via supplied owner SHA-256; cannot independently recompute hashes or re-fetch source.",
+    "Transport/qualification checks and owner hash verification are asserted by the proprietor; my read-only review cannot execute them.",
+    "Source README does not explicitly version the TAU2 suite; benchmark_id 'tau2-bench::2' is consistent with the artifact's own lineage and no source conflict was found."
+  ],
+  "missing_evidence": []
+}

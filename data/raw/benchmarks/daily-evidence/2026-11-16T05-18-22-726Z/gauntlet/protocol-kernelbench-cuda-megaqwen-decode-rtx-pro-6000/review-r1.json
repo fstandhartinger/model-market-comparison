@@ -1,0 +1,36 @@
+{
+  "artifact_id": "protocol-kernelbench-cuda-megaqwen-decode-rtx-pro-6000",
+  "artifact_sha256": "281df10e55b53ee8409b58c066527c9940e0dcc645df63602f73a2c4c8533ee0",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": [
+    "kernelbench-cuda-megaqwen-decode::rtx-pro-6000",
+    "c1",
+    "c2"
+  ],
+  "errors_found": 2,
+  "findings": [
+    {
+      "id": "kernelbench-cuda-megaqwen-decode::rtx-pro-6000",
+      "severity": "blocker",
+      "location": "version_guard",
+      "evidence": "version_guard requires 'the problem must stay in the stated four-problem deck', but the captured SPEC.md (sha256 ab27e1066a67..., last updated 2026-11-09) defines 'Three hard CUDA-only problems' and states 'Problem 04 ... was retired 2026-11-09' and 'deck stays at three since 2026-11-09'; leaderboard.json lists only problems 01_glm52_fused_moe, 02_deepseek_nsa, 03_megaqwen_decode.",
+      "repair": "Change version_guard to assert the deck is the three problems listed in the current SPEC.md (01, 02, 03) and remove the 'four-problem' invariant and any problem-04 guard."
+    },
+    {
+      "id": "kernelbench-cuda-megaqwen-decode::rtx-pro-6000",
+      "severity": "major",
+      "location": "scoring.notes",
+      "evidence": "notes attribute to SPEC.md a '150M `peak_sps` anchor for 04', cite 'Opus 5 reaches 196.10% on 04', a '`bug` muse/muse-spark-1.3 [ultra] cell on 04 (0.2056)' and a '`reward_hack` deepseek-claude/deepseek-v4-pro cell on 04'; the captured SPEC.md and leaderboard.json contain no problem 04, no peak_sps, no 0.2056 and no 196.10%, and SPEC.md states problem 04 was retired 2026-11-09 with the deck at three.",
+      "repair": "Delete all problem-04 references (peak_sps anchor, 196.10% Opus 5, muse 0.2056 bug cell, reward_hack deepseek-claude cell) and state the current deck has three problems; only the kinetic-0715[1m] 0.0622 'suspect' cell on 03 is supported by the captured data."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "version_status 'published' is a judgment call: no explicit board release identifier appears in the sources (leaderboard schema_version 1 and generated_from_summary tag v2 are schema/tooling versions), and version 'rtx-pro-6000' copies the maintainer's published hardware name (leaderboard hardware.name 'RTX PRO 6000 Blackwell Workstation'; published_runs hardware 'RTX_PRO_6000'); if the maintainer is read as publishing no release identifier, 'snapshot' would be the label instead.",
+    "I cannot execute the owner-side hash, transport or qualification checks; I bound rows only to the supplied per-row sha256 and could not verify them.",
+    "The /cuda page excerpt (source 4) renders numeric cells as 0, so it does not corroborate values; I relied on leaderboard.json and the generated value-scale summary.",
+    "The notes digression about problem 02 (ms headline, geomean speedup vs frozen eager anchor, peak_fraction as context column) is consistent with SPEC.md's 2026-07-15 standing rule and is not this row's problem, so I judged it only as context."
+  ],
+  "missing_evidence": []
+}

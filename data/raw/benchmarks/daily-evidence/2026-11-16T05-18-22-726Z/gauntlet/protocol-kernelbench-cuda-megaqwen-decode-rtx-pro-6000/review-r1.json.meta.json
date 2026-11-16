@@ -1,0 +1,86 @@
+{
+  "started_at": "2026-11-16T05:48:43.413Z",
+  "mode": "critic",
+  "requested_model": "deepseek/deepseek-v4-flash-0731",
+  "producers": [
+    "z-ai/glm-5.3-flash"
+  ],
+  "qualification": {
+    "id": "deepseek/deepseek-v4-flash-0731",
+    "family": "deepseek",
+    "free": false,
+    "input_per_1m": 0.06,
+    "output_per_1m": 0.18,
+    "context": 1048576,
+    "aa_intelligence_index": 24.1,
+    "aa_source": "exact_id_and_variants",
+    "matched_model_ids": [
+      "deepseek-v4-flash-0731::max"
+    ],
+    "aa_variant_scores": [
+      {
+        "id": "deepseek-v4-flash-0731::max",
+        "index": 24.1,
+        "estimated_from_v4": 34.3
+      }
+    ]
+  },
+  "input_sha256": "193e97f3c9d1832a9850a4872db1ebb11e8cc56731519ac057b92a7331932ed0",
+  "route": "openrouter",
+  "attempt": 1,
+  "free_route_role": "critic",
+  "free_routes_offered": [
+    "chutes/moonshotai/Kimi-K3-TEE"
+  ],
+  "excluded_models": [
+    "chutes/moonshotai/Kimi-K3-TEE"
+  ],
+  "hard_excluded_models": [],
+  "catalog": {
+    "source": "run-cache",
+    "fetched_at": "2026-11-16T05:35:58.391Z"
+  },
+  "request_limits": {
+    "max_tokens": 32768,
+    "timeout_seconds": 600,
+    "input_bytes": 69969
+  },
+  "reasoning": {
+    "effort": "low",
+    "exclude": true
+  },
+  "ignored_providers": [],
+  "response_format_mode": "json_object",
+  "response_schema_sha256": "376bde7986cc2f8fd182f04e745c607933760bea7c306ea6e8e992b7f70be25a",
+  "images": [],
+  "actual_model": "deepseek/deepseek-v4-flash-0731",
+  "usage": {
+    "prompt_tokens": 23268,
+    "completion_tokens": 9892,
+    "total_tokens": 33160,
+    "cost": 0.003933399096,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 512,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.0039731304,
+      "upstream_inference_prompt_cost": 0.0010055304,
+      "upstream_inference_completions_cost": 0.0029676
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 8985,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "provider": "Wafer",
+  "finish_reason": "stop",
+  "price_context": "OpenRouter catalog reference prices; usage.cost records the actual charge when returned.",
+  "session_id": null,
+  "finished_at": "2026-11-16T05:50:25.888Z",
+  "output_sha256": "45d4333d77600287c5438c93ecd3360a84a2a19429cc030e4cd79bb22c7fcfd3"
+}
