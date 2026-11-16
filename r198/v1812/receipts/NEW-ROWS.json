@@ -1,0 +1,170 @@
+{
+ "starlord-27b-v2-0-preview": {
+  "api_flag": false,
+  "api_subset": false,
+  "author": "xsdfasfgsa",
+  "axes": {
+   "calibration": 93.52883876482899,
+   "cost": 61.067776822568604,
+   "intelligence": 75.4315147322705,
+   "speed": 88.13780157140738
+  },
+  "base_model": "Qwen/Qwen3.8-27B",
+  "capability": 84.48017674854975,
+  "composite_ci95": {
+   "A": [
+    76.6767503241976,
+    79.15439093400457
+   ],
+   "B": [
+    76.02707191932,
+    79.68648239823193
+   ],
+   "C": [
+    76.6767503241976,
+    79.15439093400457
+   ]
+  },
+  "cost": {
+   "basis": "GPU-time estimate from v1.8.0: one monthly-rented RTX PRO 6000 96 GB, USD 1.5235/hour; average load 70%. Architecture: dense qwen, 27B active parameters; throughput 11763 tokens/s (architecture-class calibration, efficient-engine prefill). GPU-time cost USD 0.019849097845594/1,000; old list-price estimate USD 0.162205748824715/1,000 (qwen/qwen3.8-27b at USD 0.42/M input and USD 3.0/M output). Applied min(old list-price estimate, GPU-time cost) = USD 0.019849097845594/1,000. Estimated, not a bill.",
+   "kind": "estimate",
+   "usd_per_1000": 0.01984909784559396
+  },
+  "decision_limit": {
+   "limit_s": 10.0,
+   "rule": "latency_s > limit -> failed",
+   "treatment": "share"
+  },
+  "disclosure": "Paid public evaluation. Measured on the 27 Oct draw on an evaluator-owned rented GPU with the author's serving code unchanged at the pinned model commit, offline (no network). Candidate-logit readout with 0 generated tokens. Failed or unanswered requests count as wrong answers. The model card says the public JevBench split was used for evaluation and tuning, not training.",
+  "display": "Starlord-27B-v2.0-preview",
+  "draw": {
+   "ci_basis": "measured on the draw before equating",
+   "drawn_on": "2026-10-27",
+   "g_med": 2.573387642438244,
+   "id": "v1.6-regular-20261027",
+   "label": "Third regular draw",
+   "measured_on": "2026-11-15",
+   "offset": {
+    "C": -1.8542447151797177,
+    "I": -2.884891186577587
+   },
+   "offset_ci95": {
+    "C": [
+     -5.447551660176162,
+     1.9718407968151896
+    ],
+    "I": [
+     -5.851030683979731,
+     1.0608488496147923
+    ]
+   },
+   "release": "v1.8.12",
+   "results_sha256": "7a1b17fb3894892abeebc8e6190cd7b0765cebd1eeb445a0270c991e2a647dbe",
+   "status": "equated"
+  },
+  "endpoint_condition": "Evaluator-owned Verda GPU VM (RTX PRO 6000), offline read-only container (--network none); author's inference/serve_systemone.py unchanged at model commit eb4b2c81d89d32b00bfdeaf2501dcff46afe8406. One BF16 model instance, candidate-logit readout (FP32 softmax, T=1.0), 0 generated tokens, no KV cache. Full-attention layers run the author's two-block bidirectional FlashAttention (flash-attn 2.8.3 varlen: request prefix attends to the prefix, the rest to the whole request); linear-attention (GDN) layers are causal via fla 0.4.1 kernels. Limit 131,072 tokens per joint request, no truncation, HTTP 422 above the limit or on GPU OOM. PyTorch 2.10.0 cu130, transformers 5.3.0, flash-attn 2.8.3, Python 3.12 and decision_index base classes at commit 25c6ec7b.",
+  "endpoint_kind": "gpu",
+  "full_coverage": true,
+  "jevbench_score": 77.414262116208,
+  "key": "starlord-27b-v2-0-preview",
+  "last_measured_on": "2026-11-15",
+  "licence": "cc-by-nc-nd-4.0 (model card); base Qwen/Qwen3.8-27B",
+  "listing": "unranked",
+  "measured_in": "v1.8.12",
+  "measurement_date_status": "measured",
+  "method": "v1.7",
+  "model_pin": "xsdfasfgsa/Starlord-27B-v2.0-preview@eb4b2c81d89d32b00bfdeaf2501dcff46afe8406",
+  "new_in": "v1.8.12",
+  "not_ranked_because": "Added after the v1.8.10 ranking review; it is ranked at the next review.",
+  "notes": "The model card says the public JevBench split was used for evaluation and tuning, not training.",
+  "paid_fast_lane": true,
+  "published_scores": {
+   "axes": {
+    "calibration": 95.38308348000871,
+    "cost": 61.067776822568604,
+    "intelligence": 78.31640591884809,
+    "speed": 88.13780157140738
+   },
+   "capability": 86.8497446994284,
+   "scores": {
+    "A": 78.4715719003092,
+    "B": 78.44048953537622,
+    "C": 78.4715719003092
+   }
+  },
+  "rank": null,
+  "ranked": false,
+  "ranks": {
+   "A": null,
+   "B": null,
+   "C": null,
+   "capability": null
+  },
+  "repo": "https://huggingface.co/xsdfasfgsa/Starlord-27B-v2.0-preview",
+  "scores": {
+   "A": 77.414262116208,
+   "B": 77.00941747909003,
+   "C": 77.414262116208
+  },
+  "speed": {
+   "adjustment": "x2 + 0.15 s (assumption, not measured)",
+   "p50_s_adjusted": 0.32013891700003116,
+   "p50_s_raw": 0.08506945850001557,
+   "p95_s_adjusted": 0.4796024262000742,
+   "p95_s_raw": 0.1648012131000371
+  },
+  "status": {
+   "status": "complete"
+  },
+  "support": {
+   "choice": "native",
+   "noul": "native",
+   "score": "native"
+  },
+  "underlying": "Paid public evaluation. Measured on the 27 Oct draw on an evaluator-owned rented GPU with the author's serving code unchanged at the pinned model commit, offline (no network). Candidate-logit readout with 0 generated tokens. Failed or unanswered requests count as wrong answers. The model card says the public JevBench split was used for evaluation and tuning, not training.",
+  "v16": {
+   "ci95": {
+    "B": 1000,
+    "C": [
+     91.43436358562542,
+     95.25876776267944
+    ],
+    "I": [
+     73.37443310814281,
+     81.86235544418696
+    ],
+    "capability": [
+     82.84646121497806,
+     88.15039699280237
+    ],
+    "composite": {
+     "A": [
+      76.6767503241976,
+      79.15439093400457
+     ],
+     "B": [
+      76.02707191932,
+      79.68648239823193
+     ],
+     "C": [
+      76.6767503241976,
+      79.15439093400457
+     ]
+    },
+    "seed": 16
+   },
+   "complete": true,
+   "equated": null,
+   "equating_offset": null,
+   "g_med_used": 2.573387642438244,
+   "lane": "selfhosted"
+  },
+  "views": {
+   "Balanced 33:33:33": 73.20970038644289,
+   "Emphasis on Accuracy 60:20:20": 74.08253256655124,
+   "Emphasis on Cost 20:20:60": 67.81622170928507,
+   "Emphasis on Speed 20:60:20": 78.53002437465979,
+   "Intelligence only": 75.4315147322705
+  }
+ }
+}
