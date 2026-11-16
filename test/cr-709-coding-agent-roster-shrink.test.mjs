@@ -12,7 +12,9 @@ import assert from 'node:assert/strict';
 import { mkdtemp, mkdir, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { CODING_AGENT_ROSTER_SHRANK, CODING_AGENT_SHRINK_RETENTION_DAYS, codingAgentShrinkRetentionAllowed, parseCodingAgents } from '../lib/aa-coding-agents.mjs';
+import { CODING_AGENT_VERSION, CODING_AGENT_FILE, CODING_AGENT_CONTRACTS, CODING_AGENT_ROSTER_SHRANK, CODING_AGENT_SHRINK_RETENTION_DAYS, codingAgentShrinkRetentionAllowed, parseCodingAgents } from '../lib/aa-coding-agents.mjs';
+// CR-760: fixtures follow the pinned contract (v2.1 since CR-760; this suite was written against v2.0).
+const PV = CODING_AGENT_VERSION;
 import { refreshCodingAgents } from '../scripts/fetch-aa-coding-agents.mjs';
 import { readCodingAgentRosterShrink } from '../ops/daily/daily.mjs';
 import { verifyWithheldCoding } from '../ops/daily/review-live.mjs';
@@ -21,11 +23,11 @@ const RUN_START = '2026-11-07T01:16:45.880Z';
 // Synthetic fixtures, deliberately not benchmark observations.
 const rows = (n = 16) => Array.from({ length: n }, (_, i) => ({
   id: `synthetic-${i}`, display: { model: `Fixture ${i}` }, agentName: 'Fixture harness', indexScore: 0.5, indexComponentCount: 3, evalCount: 3,
-  evals: ['frontiercode-v1.1-main', 'swe-atlas-qna', 'terminal-bench-v4'].map((datasetIndexName) => ({ datasetIndexName, mean: { reward: 0.5 }, weight: 1 / 3 })),
+  evals: CODING_AGENT_CONTRACTS[PV].components.map((datasetIndexName) => ({ datasetIndexName, mean: { reward: 0.5 }, weight: 1 / 3 })),
 }));
 const page = (items = rows()) => {
   const records = `a:${JSON.stringify(['$', 'div', null, { rows: items }])}\nb:${JSON.stringify({ title: 'Performance', description: 'Performance across the Artificial Analysis Coding Agent Index.', change: '$undefined', benchmarkRows: items.map((_, i) => `$a:props:rows:${i}`) })}\n`;
-  return '<span>Artificial Analysis Coding Agent Index v2.0 incorporates 3 benchmarks · Higher is better</span>'
+  return `<span>Artificial Analysis Coding Agent Index v${PV} incorporates 3 benchmarks · Higher is better</span>`
     + `<script>self.__next_f.push(${JSON.stringify([1, records])})</script>`;
 };
 const published = () => ({ ...parseCodingAgents(page()), collected_at: '2026-11-05' });
@@ -49,7 +51,7 @@ test('larger drops, new identities, invalid rows or a rowless previous never car
   plain(() => parseCodingAgents(page(swapped), previous));
   const invalid = without(3); invalid[0].indexScore = 0.7;
   plain(() => parseCodingAgents(page(invalid), previous));
-  plain(() => parseCodingAgents(page(without(3)), { version: '2.0', count: 16 }));
+  plain(() => parseCodingAgents(page(without(3)), { version: PV, count: 16 }));
   plain(() => parseCodingAgents(page(rows(12)), null));
   // A full board is the ordinary path.
   assert.equal(parseCodingAgents(page(), previous).count, 16);
@@ -80,11 +82,11 @@ async function runFixture({ staged, before }) {
   const work = join(runDir, 'work');
   await mkdir(join(work, 'data/raw'), { recursive: true });
   await mkdir(join(runDir, 'before/raw'), { recursive: true });
-  if (staged !== undefined) await writeFile(join(work, 'data/raw/aa-coding-agents-v2.0.json'), staged);
-  if (before !== undefined) await writeFile(join(runDir, 'before/raw/aa-coding-agents-v2.0.json'), before);
+  if (staged !== undefined) await writeFile(join(work, 'data/raw/' + CODING_AGENT_FILE), staged);
+  if (before !== undefined) await writeFile(join(runDir, 'before/raw/' + CODING_AGENT_FILE), before);
   return { runDir, work };
 }
-const stepError = (detail) => new Error(`fetch-coding-v2.0 FAILED: AA CODING AGENT REFRESH FAILED: ${detail}`);
+const stepError = (detail) => new Error(`fetch-coding-v${PV} FAILED: AA CODING AGENT REFRESH FAILED: ${detail}`);
 
 test('the daily withholds only with the marker, a byte-identical snapshot and inside the window', async () => {
   const bytes = JSON.stringify(published(), null, 2) + '\n';
@@ -111,11 +113,11 @@ test('the daily withholds only with the marker, a byte-identical snapshot and in
 test('the live review proves the shrink withholding from the captured page and the starting snapshot', async () => {
   const beforeDir = await mkdtemp(join(tmpdir(), 'cr709-before-'));
   try {
-    await writeFile(join(beforeDir, 'aa-coding-agents-v2.0.json'), JSON.stringify(published()));
+    await writeFile(join(beforeDir, CODING_AGENT_FILE), JSON.stringify(published()));
     const src = { beforeDir };
     const receipt = (body) => ({ url: 'https://artificialanalysis.ai/agents/coding-agents', sha256: 'f'.repeat(64), fetched_at: RUN_START, body });
     const withheld = await verifyWithheldCoding({ staged: published(), src, runStart: RUN_START, receipt: receipt(page(without(3))) });
-    assert.deepEqual({ ...withheld, source: undefined }, { retained_collected_at: '2026-11-05', removed: ['synthetic-3'], page_rows: 15, pinned_version: '2.0', rows: 16, source: undefined });
+    assert.deepEqual({ ...withheld, source: undefined }, { retained_collected_at: '2026-11-05', removed: ['synthetic-3'], page_rows: 15, pinned_version: PV, rows: 16, source: undefined });
     // A full page is the ordinary path; a larger drop is not withheld (the ordinary path then fails closed).
     assert.equal(await verifyWithheldCoding({ staged: published(), src, runStart: RUN_START, receipt: receipt(page()) }), null);
     assert.equal(await verifyWithheldCoding({ staged: published(), src, runStart: RUN_START, receipt: receipt(page(without(1, 2, 3))) }), null);

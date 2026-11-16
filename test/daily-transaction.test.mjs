@@ -38,6 +38,8 @@ test('actual isolated daily transaction cannot alter main or remote after a part
       'data/dataset.json': JSON.stringify({ models: [], benchmark_results: { divergences: [] } }),
       'data/raw/aa-coding-agents.json': JSON.stringify({ version: '1.4', fixture: true }),
       'data/raw/aa-coding-agents-v1.5.json': JSON.stringify({ version: '1.5', fixture: true }),
+      // CR-760: v2.0 is frozen like v1.5 and hashed at the start of every run.
+      'data/raw/aa-coding-agents-v2.0.json': JSON.stringify({ version: '2.0', fixture: true }),
       // CR-634: the frozen AA v4.x snapshot and its token efficiency are hashed at the start of every run.
       'data/raw/artificialanalysis-v4.json': JSON.stringify({ index: '4.x', fixture: true }),
       'data/raw/aa-efficiency-v4.json': JSON.stringify({ index: '4.x', fixture: true }),

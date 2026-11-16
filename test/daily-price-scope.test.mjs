@@ -33,7 +33,7 @@ test('CR-66.7: a prices run needs today\'s OpenRouter and leaves every benchmark
 test('CR-66.7: a prices run may publish price files only', () => {
   assert.deepEqual(pricesScopeViolations(['data/dataset.json', 'data/raw/openrouter.json', 'data/raw/chutes.json', 'data/raw/aws-bedrock.json', 'data/raw/openrouter-data-policy.json']), []);
   const forbidden = ['data/raw/benchmarks/scores.json', 'data/raw/artificialanalysis.json', 'data/raw/designarena.json', 'data/raw/epoch-eci.json',
-    'data/raw/aa-efficiency.json', 'data/raw/artificialanalysis-v4.json', 'data/raw/aa-efficiency-v4.json', 'data/raw/aa-coding-agents-v1.5.json', 'data/raw/aa-coding-agents-v2.0.json', 'data/raw/openrouter-efficiency.json', 'data/raw/chutes-efficiency.json', 'data/raw/openrouter-benchmarks.json', 'data/raw/lumina-ledger.json'];
+    'data/raw/aa-efficiency.json', 'data/raw/artificialanalysis-v4.json', 'data/raw/aa-efficiency-v4.json', 'data/raw/aa-coding-agents-v1.5.json', 'data/raw/aa-coding-agents-v2.0.json', 'data/raw/aa-coding-agents-v2.1.json', 'data/raw/openrouter-efficiency.json', 'data/raw/chutes-efficiency.json', 'data/raw/openrouter-benchmarks.json', 'data/raw/lumina-ledger.json'];
   assert.deepEqual(pricesScopeViolations(forbidden), forbidden);
 });
 
@@ -48,6 +48,8 @@ test('CR-66.7: runDaily --scope prices collects OpenRouter without efficiency an
       'data/dataset.json': JSON.stringify({ models: [], sources: {}, benchmark_results: { divergences: [] } }),
       'data/raw/aa-coding-agents.json': JSON.stringify({ version: '1.4', fixture: true }),
       'data/raw/aa-coding-agents-v1.5.json': JSON.stringify({ version: '1.5', fixture: true }),
+      // CR-760: v2.0 is frozen like v1.5 and hashed at the start of every run.
+      'data/raw/aa-coding-agents-v2.0.json': JSON.stringify({ version: '2.0', fixture: true }),
       // CR-634: the frozen AA v4.x snapshot and its token efficiency are hashed at the start of every run.
       'data/raw/artificialanalysis-v4.json': JSON.stringify({ index: '4.x', fixture: true }),
       'data/raw/aa-efficiency-v4.json': JSON.stringify({ index: '4.x', fixture: true }),
@@ -66,7 +68,7 @@ test('CR-66.7: runDaily --scope prices collects OpenRouter without efficiency an
     assert.equal(await readFile(join(result.run_dir, 'work/fetch-live-args.txt'), 'utf8'), 'or-prices\n');
     const names = result.steps.map((s) => s.name);
     assert.ok(names.includes('fetch-or') && result.steps.find((s) => s.name === 'fetch-or').ok);
-    for (const skipped of ['capture-benchmarks', 'worker-catalog', 'fetch-aa', 'fetch-da', 'fetch-coding-v2.0', 'fetch-epoch-eci', 'build-epoch-provenance', 'fetch-openrouter-benchmarks', 'fetch-lumina-ledger', 'review-live', 'refresh-benchmarks']) {
+    for (const skipped of ['capture-benchmarks', 'worker-catalog', 'fetch-aa', 'fetch-da', 'fetch-coding-v2.1', 'fetch-epoch-eci', 'build-epoch-provenance', 'fetch-openrouter-benchmarks', 'fetch-lumina-ledger', 'review-live', 'refresh-benchmarks']) {
       assert.ok(!names.includes(skipped), `${skipped} must not run in the prices scope`);
     }
     assert.equal(result.workers, undefined);

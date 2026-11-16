@@ -681,7 +681,7 @@ export async function refreshBenchmarks({ runDir, review = reviewArtifact, runne
   // Compare the complete public Real-SWE sample with its frozen observation lock.
   // Changed samples are retained for a reviewed dated release, never relabelled.
   checks.push(...await checkRealSweSnapshot({ entries: registry.entries, receipts: [...captured.values()], lock: lock.realswe }));
-  // The current Coding Agent version (v2.0 since CR-545) has already passed complete primary-source review in the
+  // The current Coding Agent version (v2.1 since CR-760; v2.0 since CR-545) has already passed complete primary-source review in the
   // live stage. Preserve the v1.4 and frozen v1.5 locks and snapshots without changing their dates.
   const liveReview = await json(join(runDir, 'reports', 'live-step-result.json'));
   if (liveReview.ok !== true || liveReview.gauntlet?.complete !== true) throw new Error('Benchmark publication requires the completed live gauntlet');
