@@ -1,4 +1,4 @@
-"""Fixed-order offline runtime supplement for Quyet 1.2 Large (paid fast-lane order 3a698114).
+"""Fixed-order offline runtime supplement for Quyet 1.2 Large and Quyet 1.2 Small (paid fast-lane orders 3a698114, c727f558).
 
 Quyet-1.2-Large is a decision model: google/gemma-4-31B-it with fully merged BF16 weights plus a separate F32 option head, run in
 process through the author's quyet package (quyet.load(model_dir).predict(state, questions); one forward pass, nothing generated).
@@ -8,6 +8,10 @@ image (Python 3.12) already carries that torch; this supplement overlays the tra
 114b6e41 (minus einops and opencv, which Quyet does not import) as SHA-256-pinned public PyPI wheels. The Docker build is offline and
 uses only the pinned context members. The customer package is mounted from the code repository by the trusted runner; this host module
 imports no model stack and executes no customer code.
+
+Quyet-1.2-Small (order c727f558, CR-763) is the same quyet 1.2.0 package (src/quyet byte-identical between main d41fa079 and tag
+v1.2.0 e15bce50) on google/gemma-4-E4B-it: a full BF16 fine-tune plus option head, loaded via the [student] extra (accelerate). It
+needs exactly this stack, so the allow-list names both exact order ids; the base image and the wheel context are unchanged.
 """
 import hashlib
 import re
@@ -18,6 +22,7 @@ import measurement_dispatch
 import pod_runner
 
 ORDER = '3a698114-9133-4724-8583-21dc6267b3d5'
+ORDERS = frozenset({ORDER, 'c727f558-8b79-45aa-8ebe-26644fba1af5'})
 BASE_IMAGE = 'pytorch/pytorch:2.14.0-cuda13.0-cudnn9-devel@sha256:cce09744eb864371df6423aaba413145afb65794837be783c33446e7ef615d20'
 CONTEXT = Path('/home/flori/jobs/fastlane-native-3a698114/supplement/PUBLIC-BUILD-CONTEXT.tar')
 CONTEXT_SHA = '75c46ca9e7603e89c42442873698f04966aebea12a901b004cf49ba21f46d8b6'
@@ -66,8 +71,8 @@ def sha256(path):
         return _sha256_stream(stream)
 
 def active(job, recipe):
-    """Only this order's reviewed python_inprocess recipe (quyet:load) on the exact pinned base selects the supplement."""
-    return (Path(job).name == ORDER and isinstance(recipe, dict) and recipe.get('kind') == 'python_inprocess'
+    """Only these exact orders' reviewed python_inprocess recipe (quyet:load) on the exact pinned base selects the supplement."""
+    return (Path(job).name in ORDERS and isinstance(recipe, dict) and recipe.get('kind') == 'python_inprocess'
             and recipe.get('loader') == 'quyet:load' and recipe.get('image') == BASE_IMAGE)
 
 def check_context(context=CONTEXT):
