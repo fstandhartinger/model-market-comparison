@@ -1,0 +1,638 @@
+{
+ "quyet-1-2-large": {
+  "cost_basis_sha256": "b83bdfd14c263ffacfa572b304084154afca84c1f00083101a33783ae6f8b356",
+  "frozen": {
+   "api_flag": false,
+   "api_subset": false,
+   "axes": {
+    "calibration": 90.82112694903381,
+    "cost": 61.7344191165331,
+    "intelligence": 77.40185522604993,
+    "speed": 87.20475097738979
+   },
+   "capability": 84.11149108754188,
+   "composite_ci95": {
+    "A": [
+     75.77077616007215,
+     78.31540572043058
+    ],
+    "B": [
+     75.22408232862004,
+     78.78594300201314
+    ],
+    "C": [
+     75.77077616007215,
+     78.31540572043058
+    ]
+   },
+   "cost": {
+    "kind": "estimate",
+    "usd_per_1000": 0.01885903049573297
+   },
+   "decision_limit": null,
+   "display": "Quyet-1.2-Large",
+   "endpoint_kind": "gpu",
+   "full_coverage": true,
+   "jevbench_score": 77.52550188708992,
+   "key": "quyet-1-2-large",
+   "listing": "listed",
+   "rank": null,
+   "ranked": false,
+   "scores": {
+    "A": 77.52550188708992,
+    "B": 77.50074096160552,
+    "C": 77.52550188708992
+   },
+   "speed": {
+    "adjustment": "x2 + 0.15 s (assumption, not measured)",
+    "p50_s_adjusted": 0.3610268769999948,
+    "p50_s_raw": 0.10551343849999739,
+    "p95_s_adjusted": 0.5272120981998569,
+    "p95_s_raw": 0.18860604909992845
+   },
+   "status": {
+    "status": "complete"
+   },
+   "support": {
+    "choice": "native",
+    "noul": "native",
+    "score": "native"
+   },
+   "v16": {
+    "ci95": {
+     "B": 1000,
+     "C": [
+      86.62610962172646,
+      91.64363643872399
+     ],
+     "I": [
+      72.82585813366224,
+      80.92490188920179
+     ],
+     "capability": [
+      80.17734194846263,
+      85.81092310749294
+     ],
+     "composite": {
+      "A": [
+       75.77077616007215,
+       78.31540572043058
+      ],
+      "B": [
+       75.22408232862004,
+       78.78594300201314
+      ],
+      "C": [
+       75.77077616007215,
+       78.31540572043058
+      ]
+     },
+     "seed": 16
+    },
+    "complete": true,
+    "equated": null,
+    "equating_offset": null,
+    "g_med_used": 2.573387642438244,
+    "lane": "selfhosted"
+   },
+   "views": {
+    "Balanced 33:33:33": 73.91844144624469,
+    "Emphasis on Accuracy 60:20:20": 75.27349280160777,
+    "Emphasis on Cost 20:20:60": 68.50994059404198,
+    "Emphasis on Speed 20:60:20": 78.71561115557577,
+    "Intelligence only": 77.40185522604993
+   }
+  },
+  "pins": {
+   "frozen": "276aa052d0b948556882778e8f0f1b7a78f8f8700be9651709bb67aac66a1860",
+   "v17-off": "f70af827e3b72d69a04257d1cc8bef60e60b05bf5b9485448dc7444bb5d19ebb",
+   "v17-share": "d3950d9838157bf49139bc588aed11c68bb91f67234f250bc91571fafef15dd9"
+  },
+  "v17-off": {
+   "api_flag": false,
+   "api_subset": false,
+   "axes": {
+    "calibration": 90.82112694903381,
+    "cost": 61.7344191165331,
+    "intelligence": 77.40185522604993,
+    "speed": 87.20475097738979
+   },
+   "capability": 84.11149108754188,
+   "composite_ci95": {
+    "A": [
+     75.77077616007215,
+     78.31540572043058
+    ],
+    "B": [
+     75.22408232862004,
+     78.78594300201314
+    ],
+    "C": [
+     75.77077616007215,
+     78.31540572043058
+    ]
+   },
+   "cost": {
+    "kind": "estimate",
+    "usd_per_1000": 0.01885903049573297
+   },
+   "decision_limit": null,
+   "display": "Quyet-1.2-Large",
+   "endpoint_kind": "gpu",
+   "full_coverage": true,
+   "jevbench_score": 77.52550188708992,
+   "key": "quyet-1-2-large",
+   "listing": "listed",
+   "rank": null,
+   "ranked": false,
+   "scores": {
+    "A": 77.52550188708992,
+    "B": 77.50074096160552,
+    "C": 77.52550188708992
+   },
+   "speed": {
+    "adjustment": "x2 + 0.15 s (assumption, not measured)",
+    "p50_s_adjusted": 0.3610268769999948,
+    "p50_s_raw": 0.10551343849999739,
+    "p95_s_adjusted": 0.5272120981998569,
+    "p95_s_raw": 0.18860604909992845
+   },
+   "status": {
+    "status": "complete"
+   },
+   "support": {
+    "choice": "native",
+    "noul": "native",
+    "score": "native"
+   },
+   "v16": {
+    "ci95": {
+     "B": 1000,
+     "C": [
+      86.62610962172646,
+      91.64363643872399
+     ],
+     "I": [
+      72.82585813366224,
+      80.92490188920179
+     ],
+     "capability": [
+      80.17734194846263,
+      85.81092310749294
+     ],
+     "composite": {
+      "A": [
+       75.77077616007215,
+       78.31540572043058
+      ],
+      "B": [
+       75.22408232862004,
+       78.78594300201314
+      ],
+      "C": [
+       75.77077616007215,
+       78.31540572043058
+      ]
+     },
+     "seed": 16
+    },
+    "complete": true,
+    "equated": null,
+    "equating_offset": null,
+    "g_med_used": 2.573387642438244,
+    "lane": "selfhosted"
+   },
+   "views": {
+    "Balanced 33:33:33": 73.91844144624469,
+    "Emphasis on Accuracy 60:20:20": 75.27349280160777,
+    "Emphasis on Cost 20:20:60": 68.50994059404198,
+    "Emphasis on Speed 20:60:20": 78.71561115557577,
+    "Intelligence only": 77.40185522604993
+   }
+  },
+  "v17-share": {
+   "api_flag": false,
+   "api_subset": false,
+   "axes": {
+    "calibration": 90.82112694903381,
+    "cost": 61.7344191165331,
+    "intelligence": 77.40185522604993,
+    "speed": 88.26322277501028
+   },
+   "capability": 84.11149108754188,
+   "composite_ci95": {
+    "A": [
+     75.96867153327548,
+     78.52683477533759
+    ],
+    "B": [
+     75.38003851791416,
+     78.95703469616481
+    ],
+    "C": [
+     75.96867153327548,
+     78.52683477533759
+    ]
+   },
+   "cost": {
+    "kind": "estimate",
+    "usd_per_1000": 0.01885903049573297
+   },
+   "decision_limit": {
+    "limit_s": 10.0,
+    "rule": "latency_s > limit -> failed",
+    "treatment": "share"
+   },
+   "display": "Quyet-1.2-Large",
+   "endpoint_kind": "gpu",
+   "full_coverage": true,
+   "jevbench_score": 77.73268178280436,
+   "key": "quyet-1-2-large",
+   "listing": "listed",
+   "rank": null,
+   "ranked": false,
+   "scores": {
+    "A": 77.73268178280436,
+    "B": 77.66629042471078,
+    "C": 77.73268178280436
+   },
+   "speed": {
+    "adjustment": "x2 + 0.15 s (assumption, not measured)",
+    "p50_s_adjusted": 0.3088407199999438,
+    "p50_s_raw": 0.07942035999997188,
+    "p95_s_adjusted": 0.4829955909000432,
+    "p95_s_raw": 0.16649779545002158
+   },
+   "status": {
+    "status": "complete"
+   },
+   "support": {
+    "choice": "native",
+    "noul": "native",
+    "score": "native"
+   },
+   "v16": {
+    "ci95": {
+     "B": 1000,
+     "C": [
+      86.62610962172646,
+      91.64363643872399
+     ],
+     "I": [
+      72.82585813366224,
+      80.92490188920179
+     ],
+     "capability": [
+      80.17734194846263,
+      85.81092310749294
+     ],
+     "composite": {
+      "A": [
+       75.96867153327548,
+       78.52683477533759
+      ],
+      "B": [
+       75.38003851791416,
+       78.95703469616481
+      ],
+      "C": [
+       75.96867153327548,
+       78.52683477533759
+      ]
+     },
+     "seed": 16
+    },
+    "complete": true,
+    "equated": null,
+    "equating_offset": null,
+    "g_med_used": 2.573387642438244,
+    "lane": "selfhosted"
+   },
+   "views": {
+    "Balanced 33:33:33": 74.16975607036049,
+    "Emphasis on Accuracy 60:20:20": 75.42965414785871,
+    "Emphasis on Cost 20:20:60": 68.63927546706331,
+    "Emphasis on Speed 20:60:20": 79.23020223149182,
+    "Intelligence only": 77.40185522604993
+   }
+  }
+ },
+ "quyet-1-2-small": {
+  "cost_basis_sha256": "b83bdfd14c263ffacfa572b304084154afca84c1f00083101a33783ae6f8b356",
+  "frozen": {
+   "api_flag": false,
+   "api_subset": false,
+   "axes": {
+    "calibration": 83.25272170341549,
+    "cost": 88.8673177026433,
+    "intelligence": 34.678969405432376,
+    "speed": 93.05346974584282
+   },
+   "capability": 58.965845554423936,
+   "composite_ci95": {
+    "A": [
+     23.53153416908584,
+     37.56353231638725
+    ],
+    "B": [
+     19.847306994005745,
+     32.70921780265909
+    ],
+    "C": [
+     16.341343172976273,
+     26.085786330824487
+    ]
+   },
+   "cost": {
+    "kind": "estimate",
+    "usd_per_1000": 0.0023501165987887835
+   },
+   "decision_limit": null,
+   "display": "Quyet-1.2-Small",
+   "endpoint_kind": "gpu",
+   "full_coverage": true,
+   "jevbench_score": 30.617471111478206,
+   "key": "quyet-1-2-small",
+   "listing": "listed",
+   "rank": null,
+   "ranked": false,
+   "scores": {
+    "A": 30.617471111478206,
+    "B": 26.2346312785871,
+    "C": 21.262132716304315
+   },
+   "speed": {
+    "adjustment": "x2 + 0.15 s (assumption, not measured)",
+    "p50_s_adjusted": 0.20657804599997007,
+    "p50_s_raw": 0.028289022999985036,
+    "p95_s_adjusted": 0.2396452693000185,
+    "p95_s_raw": 0.04482263465000926
+   },
+   "status": {
+    "status": "complete"
+   },
+   "support": {
+    "choice": "native",
+    "noul": "native",
+    "score": "native"
+   },
+   "v16": {
+    "ci95": {
+     "B": 1000,
+     "C": [
+      77.28731719839115,
+      84.86530263313487
+     ],
+     "I": [
+      31.271384683234047,
+      37.72777814936402
+     ],
+     "capability": [
+      55.14670507089645,
+      60.55715566933496
+     ],
+     "composite": {
+      "A": [
+       23.53153416908584,
+       37.56353231638725
+      ],
+      "B": [
+       19.847306994005745,
+       32.70921780265909
+      ],
+      "C": [
+       16.341343172976273,
+       26.085786330824487
+      ]
+     },
+     "seed": 16
+    },
+    "complete": true,
+    "equated": null,
+    "equating_offset": null,
+    "g_med_used": 2.573387642438244,
+    "lane": "selfhosted"
+   },
+   "views": {
+    "Balanced 33:33:33": 28.388955281782643,
+    "Emphasis on Accuracy 60:20:20": 22.166881466601712,
+    "Emphasis on Cost 20:20:60": 32.795765375796044,
+    "Emphasis on Speed 20:60:20": 33.25483714394366,
+    "Intelligence only": 16.68240033872907
+   }
+  },
+  "pins": {
+   "frozen": "5432b86dc1405eec66b0f5b8e3dc390bfa97789a15155ca8039b9d9fb93258ea",
+   "v17-off": "2eeac683745c099f9a690fdf712dfcfbd551a4431325d11b238eb909a78e2f44",
+   "v17-share": "4550efb8e59e3f4a80e618bc22436de0852fb7b7bcd6433c26a775f6713e2fb9"
+  },
+  "v17-off": {
+   "api_flag": false,
+   "api_subset": false,
+   "axes": {
+    "calibration": 83.25272170341549,
+    "cost": 88.8673177026433,
+    "intelligence": 34.678969405432376,
+    "speed": 93.05346974584282
+   },
+   "capability": 58.965845554423936,
+   "composite_ci95": {
+    "A": [
+     23.53153416908584,
+     37.56353231638725
+    ],
+    "B": [
+     19.847306994005745,
+     32.70921780265909
+    ],
+    "C": [
+     16.341343172976273,
+     26.085786330824487
+    ]
+   },
+   "cost": {
+    "kind": "estimate",
+    "usd_per_1000": 0.0023501165987887835
+   },
+   "decision_limit": null,
+   "display": "Quyet-1.2-Small",
+   "endpoint_kind": "gpu",
+   "full_coverage": true,
+   "jevbench_score": 30.617471111478206,
+   "key": "quyet-1-2-small",
+   "listing": "listed",
+   "rank": null,
+   "ranked": false,
+   "scores": {
+    "A": 30.617471111478206,
+    "B": 26.2346312785871,
+    "C": 21.262132716304315
+   },
+   "speed": {
+    "adjustment": "x2 + 0.15 s (assumption, not measured)",
+    "p50_s_adjusted": 0.20657804599997007,
+    "p50_s_raw": 0.028289022999985036,
+    "p95_s_adjusted": 0.2396452693000185,
+    "p95_s_raw": 0.04482263465000926
+   },
+   "status": {
+    "status": "complete"
+   },
+   "support": {
+    "choice": "native",
+    "noul": "native",
+    "score": "native"
+   },
+   "v16": {
+    "ci95": {
+     "B": 1000,
+     "C": [
+      77.28731719839115,
+      84.86530263313487
+     ],
+     "I": [
+      31.271384683234047,
+      37.72777814936402
+     ],
+     "capability": [
+      55.14670507089645,
+      60.55715566933496
+     ],
+     "composite": {
+      "A": [
+       23.53153416908584,
+       37.56353231638725
+      ],
+      "B": [
+       19.847306994005745,
+       32.70921780265909
+      ],
+      "C": [
+       16.341343172976273,
+       26.085786330824487
+      ]
+     },
+     "seed": 16
+    },
+    "complete": true,
+    "equated": null,
+    "equating_offset": null,
+    "g_med_used": 2.573387642438244,
+    "lane": "selfhosted"
+   },
+   "views": {
+    "Balanced 33:33:33": 28.388955281782643,
+    "Emphasis on Accuracy 60:20:20": 22.166881466601712,
+    "Emphasis on Cost 20:20:60": 32.795765375796044,
+    "Emphasis on Speed 20:60:20": 33.25483714394366,
+    "Intelligence only": 16.68240033872907
+   }
+  },
+  "v17-share": {
+   "api_flag": false,
+   "api_subset": false,
+   "axes": {
+    "calibration": 83.25272170341549,
+    "cost": 88.8673177026433,
+    "intelligence": 34.678969405432376,
+    "speed": 93.3863994106336
+   },
+   "capability": 58.965845554423936,
+   "composite_ci95": {
+    "A": [
+     23.545047992281212,
+     37.58704210093485
+    ],
+    "B": [
+     19.855036405291802,
+     32.72356984644913
+    ],
+    "C": [
+     16.35072777241751,
+     26.102112570093656
+    ]
+   },
+   "cost": {
+    "kind": "estimate",
+    "usd_per_1000": 0.0023501165987887835
+   },
+   "decision_limit": {
+    "limit_s": 10.0,
+    "rule": "latency_s > limit -> failed",
+    "treatment": "share"
+   },
+   "display": "Quyet-1.2-Small",
+   "endpoint_kind": "gpu",
+   "full_coverage": true,
+   "jevbench_score": 30.636147263834946,
+   "key": "quyet-1-2-small",
+   "listing": "listed",
+   "rank": null,
+   "ranked": false,
+   "scores": {
+    "A": 30.636147263834946,
+    "B": 26.245598721413536,
+    "C": 21.27510226655205
+   },
+   "speed": {
+    "adjustment": "x2 + 0.15 s (assumption, not measured)",
+    "p50_s_adjusted": 0.19709886199998436,
+    "p50_s_raw": 0.023549430999992182,
+    "p95_s_adjusted": 0.23263547520000427,
+    "p95_s_raw": 0.04131773760000214
+   },
+   "status": {
+    "status": "complete"
+   },
+   "support": {
+    "choice": "native",
+    "noul": "native",
+    "score": "native"
+   },
+   "v16": {
+    "ci95": {
+     "B": 1000,
+     "C": [
+      77.28731719839115,
+      84.86530263313487
+     ],
+     "I": [
+      31.271384683234047,
+      37.72777814936402
+     ],
+     "capability": [
+      55.14670507089645,
+      60.55715566933496
+     ],
+     "composite": {
+      "A": [
+       23.545047992281212,
+       37.58704210093485
+      ],
+      "B": [
+       19.855036405291802,
+       32.72356984644913
+      ],
+      "C": [
+       16.35072777241751,
+       26.102112570093656
+      ]
+     },
+     "seed": 16
+    },
+    "complete": true,
+    "equated": null,
+    "equating_offset": null,
+    "g_med_used": 2.573387642438244,
+    "lane": "selfhosted"
+   },
+   "views": {
+    "Balanced 33:33:33": 28.410366872450254,
+    "Emphasis on Accuracy 60:20:20": 22.17471101111589,
+    "Emphasis on Cost 20:20:60": 32.81290638547786,
+    "Emphasis on Speed 20:60:20": 33.307766367080205,
+    "Intelligence only": 16.68240033872907
+   }
+  }
+ }
+}

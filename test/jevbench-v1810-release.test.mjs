@@ -56,7 +56,7 @@ test('v1.8.10 visibility, alldata and fairness gate follow independent review in
 });
 test('draw registry and release page describe the strong-anchor equating',()=>{
  const draw=JSON.parse(readFileSync('data/jevbench-draw-equating.json')).draws.find(d=>d.draw==='v1.6-regular-20261027');
- assertReleaseHistory(assert,draw,['v1.7.13','v1.7.14','v1.7.15','v1.7.16','v1.7.17','v1.7.19','v1.7.21','v1.7.22','v1.8.1','v1.8.2','v1.8.3','v1.8.4','v1.8.5','v1.8.6','v1.8.7','v1.8.8','v1.8.9','v1.8.10','v1.8.11','v1.8.12','v1.8.13']);
+ assertReleaseHistory(assert,draw,['v1.7.13','v1.7.14','v1.7.15','v1.7.16','v1.7.17','v1.7.19','v1.7.21','v1.7.22','v1.8.1','v1.8.2','v1.8.3','v1.8.4','v1.8.5','v1.8.6','v1.8.7','v1.8.8','v1.8.9','v1.8.10','v1.8.11','v1.8.12','v1.8.13','v1.8.14']);
  assert.equal(draw.status,'equated');assert.deepEqual(draw.offset,V1810_OFFSET);assert.deepEqual(draw.anchors,['decider-12b','h2o-lightning-4b-v1.1','quyet-1-0-large','torchcast-decision-27b']);
  const others=JSON.parse(readFileSync('data/jevbench-draw-equating.json')).draws.filter(d=>d.draw!==draw.draw);for(const d of others){assert.equal(d.status,'anchor-runs-pending');assert.deepEqual(d.offset,{I:0,C:0});}
  const page=readFileSync('app/jev-models/v1.8.10/page.tsx','utf8');assert.ok(page.includes('four strong anchor systems'));assert.ok(page.includes('Previous v1.8.9'));assert.ok(page.includes('ranked 31 of its rows'));assert.ok(!page.includes('Karpo'));

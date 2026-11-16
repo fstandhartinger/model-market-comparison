@@ -1,3 +1,4 @@
+import {hasPublishedJevbenchV1814Release} from '../lib/jevbench-v1814-release.mjs';
 import test from 'node:test';
 import {jevV15BoardRow,jevV15CompareRow} from '../lib/jevbench-v15-board.mjs';
 import {projectJevbenchFeed} from '../lib/jevbench-agent-feed.mjs';
@@ -32,9 +33,10 @@ test('restricted fields and wording are rejected recursively',()=>{
  }
  for(const term of ['98765','98765.','98765,','The synthetic number is 98765','98,765','87654','87,654','tier','per-type','test@example.com','12345678-abcd-abcd-abcd-123456789abc','board #123','custodian'])assert.throws(()=>validateV189PublicText({...restricted,extra:term}),term);
 });
-test('missing breakdowns use existing empty-cell handling and an exception',()=>{
+test('missing breakdowns use existing empty-cell handling and an exception',async()=>{
  const pub=load('publication');const ex=JSON.parse(readFileSync('data/jevbench-breakdown-exceptions.json')).entries.find(e=>e.key===key);
- if(pub.review.verdict==='PASS'){assert.deepEqual(ex.dims,policy.withheld_dims);assert.equal(ex.reason,policy.reason);}
+ if(await hasPublishedJevbenchV1814Release()){assert.deepEqual(ex,{"key":"karpo_decision_31b","dims":["topics"],"reason":"TEMPORARY: row on the 27 Oct 2026 regular draw (v1.6-regular-20261027, release v1.8.14). That draw has no ruled subject-topic labels yet, so no topic cells exist; its use-case and language cells are measured on the row's own draw. A follow-up release adds the topic cells once the draw's items are labelled and removes this entry.","decision":"DECISIONS 2026-10-27 18:20 UTC v1713-topics-exception-h2o141 (release owner), extended to every row on the 27 Oct draw (v1.8.14)"});}
+ else if(pub.review.verdict==='PASS'){assert.deepEqual(ex.dims,policy.withheld_dims);assert.equal(ex.reason,policy.reason);}
  else assert.equal(ex,undefined);
  const src=readFileSync('components/JevBenchV16Board.tsx','utf8');assert.ok(src.includes("publication_scope === 'standard-axes-only'"));
 });

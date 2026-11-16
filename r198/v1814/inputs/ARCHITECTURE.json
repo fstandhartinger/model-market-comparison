@@ -1,0 +1,32 @@
+{
+ "quyet-1-2-large": {
+  "arch": "open-llm-decoder",
+  "badges": {
+   "derivation": "fine-tune",
+   "params": "31B",
+   "quant": null
+  },
+  "evidence": [
+   {
+    "fact": "Card metadata declares google/gemma-4-31B-it base and Apache-2.0 licence. Measured with the pinned quyet 1.2.0 package and merged BF16 weights.",
+    "kind": "model-card",
+    "url": "https://huggingface.co/chinhnc/Quyet-1.2-Large/tree/ffad03b6f20aa548ba2e045410e9fcafe4ddf0d2"
+   }
+  ]
+ },
+ "quyet-1-2-small": {
+  "arch": "open-llm-decoder",
+  "badges": {
+   "derivation": "fine-tune",
+   "params": "7.46B",
+   "quant": null
+  },
+  "evidence": [
+   {
+    "fact": "Card metadata declares google/gemma-4-E4B-it base and Apache-2.0 licence. Measured with the pinned quyet 1.2.0 package and a full BF16 fine-tune.",
+    "kind": "model-card",
+    "url": "https://huggingface.co/chinhnc/Quyet-1.2-Small/tree/146a1ae2585ba95a6d390f00e60b9b00f67799af"
+   }
+  ]
+ }
+}
