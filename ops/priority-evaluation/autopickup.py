@@ -875,6 +875,28 @@ class Effects:
             return {"ActiveState": "unknown"}
         return dict(line.partition("=")[::2] for line in result.stdout.splitlines() if "=" in line)
 
+    def unit_journal_last_success(self, unit: str, since: str = "-26h") -> datetime | None:
+        # The newest successful start job of a user unit, read from the journal (read-only). `-n 1` is not reliable
+        # across rotated journal files, so read the whole window and take the maximum timestamp.
+        try:
+            result = subprocess.run(
+                ["journalctl", "--user", f"USER_UNIT={unit}", "JOB_TYPE=start", "JOB_RESULT=done",
+                 "--since", since, "--no-pager", "-o", "json", "--output-fields=__REALTIME_TIMESTAMP"],
+                text=True, capture_output=True, timeout=30, check=False,
+            )
+        except (OSError, subprocess.TimeoutExpired):
+            return None
+        if result.returncode:
+            return None
+        newest = 0
+        for line in result.stdout.splitlines():
+            try:
+                stamp = int(json.loads(line).get("__REALTIME_TIMESTAMP") or 0)
+            except (ValueError, TypeError, AttributeError, json.JSONDecodeError):
+                continue
+            newest = max(newest, stamp)
+        return datetime.fromtimestamp(newest / 1_000_000, timezone.utc) if newest else None
+
     def start_unit(self, unit: str) -> bool:
         if self.dry_run:
             self.record("systemd_start", unit=unit, dry_run=True, ok=True)
@@ -4583,6 +4605,17 @@ def systemd_last_success(effects: Effects, unit: str) -> datetime | None:
         time.sleep(3)
         values = effects.unit_state(unit)
     if values.get("Result") != "success" or values.get("ExecMainStatus") not in ("0", None):
+        # The memo is only refreshed when the health check runs (four times a day), so after one failed run it can
+        # be six hours old: an IMAP timeout at 17:53 plus a 12:05 memo raised a false "not succeeded within 60
+        # minutes" card although the watcher had succeeded at 17:38 (card a1794852308, 16 Nov 2026). Ask the
+        # journal for the newest successful run instead.
+        journal = getattr(effects, "unit_journal_last_success", None)
+        seen = journal(unit) if journal else None
+        if seen is not None and (remembered is None or seen > remembered):
+            if not effects.dry_run:
+                memo[unit] = iso(seen)
+                atomic_write(memo_path, json.dumps(memo, indent=2) + "\n")
+            return seen
         return remembered
     stamp = values.get("ExecMainExitTimestamp") or ""
     if not stamp or stamp == "n/a":
