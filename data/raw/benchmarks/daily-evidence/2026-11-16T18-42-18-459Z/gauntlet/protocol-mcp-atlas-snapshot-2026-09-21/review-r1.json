@@ -1,0 +1,25 @@
+{
+  "artifact_id": "protocol-mcp-atlas-snapshot-2026-09-21",
+  "artifact_sha256": "9349407c23d58eee8dd28185ec59bb20ba00b2091b27da5f7a95958eb3e0e518",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": ["mcp-atlas::snapshot-2026-09-21", "c1", "c2"],
+  "errors_found": 1,
+  "findings": [
+    {
+      "id": "mcp-atlas::snapshot-2026-09-21::notes-top-row",
+      "severity": "minor",
+      "location": "Row mcp-atlas::snapshot-2026-09-21, field scoring.notes",
+      "evidence": "The notes claim 'the board's own top row is 88.1 % — the stat card is stale'. The primary performance-comparison table in Source 1 lists rank 1 Gemini-4-Argon 90.70 ± 1.80 and rank 2 Muse Spark 1.1 88.10 ± 1.95, so the board's top row is 90.7%, not 88.1% (Muse Spark 1.1 is the second row). The claim that the 83.6% stat card is stale remains true, but the supporting figure is contradicted by the protocol text.",
+      "repair": "Change the note to state the top row is 90.7% (Gemini-4-Argon), or remove the specific numeric claim about the top row while keeping the point that the stat card is stale and not ingested."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "I am read-only and cannot recompute per-row or source hashes or execute transport/qualification checks; those are stated as owner-side responsibilities.",
+    "The captured excerpt is bounded, so the version_guard claim of 'exactly one embedded entries array' cannot be directly verified from the supplied text.",
+    "The snapshot date 2026-09-21 is our own dated identity and is not derivable from the payload retrieval date 2026-11-16; per criterion c2 this is acceptable because the page publishes no release identifier for this board.",
+    "The generated value-scale summary (37 values, low 40.2, high 90.7) supports the stated unit percent and range [0,100]; only bounds actually stated are judged."
+  ],
+  "missing_evidence": []
+}

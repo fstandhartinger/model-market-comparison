@@ -2,18 +2,18 @@
   "schema_version": 1,
   "source": {
     "url": "https://openrouter.ai/providers",
-    "retrieved_at": "2026-11-16T05:32:29.078Z",
-    "sha256": "f5c366800faff1d9446cdb7c674843ce062e115178fe1eafaa98a1884d23cfc8"
+    "retrieved_at": "2026-11-16T18:55:51.887Z",
+    "sha256": "1cb60850fa7de108a9c611942dbc1d19d1a9cf9d2f02a7effcfad0f81c07a6f0"
   },
   "basis": "OpenRouter's published provider table. 'private' = the provider survives OpenRouter's own 'Does not train' + 'Zero retention' filter.",
   "facet_crosscheck": {
     "zero_retention": {
-      "page": 61,
-      "parsed": 61
+      "page": 62,
+      "parsed": 62
     },
     "does_not_train": {
-      "page": 95,
-      "parsed": 95
+      "page": 96,
+      "parsed": 96
     }
   },
   "overrides": {
@@ -24,8 +24,8 @@
     }
   },
   "counts": {
-    "providers": 99,
-    "private": 62,
+    "providers": 100,
+    "private": 63,
     "not_private": 37,
     "unknown": 0
   },
@@ -803,6 +803,15 @@
       "headquarters": null,
       "override": null,
       "private": false
+    },
+    {
+      "slug": "pareto-alpha",
+      "name": "Pareto Alpha",
+      "does_not_train": true,
+      "zero_retention": true,
+      "headquarters": "United States",
+      "override": null,
+      "private": true
     },
     {
       "slug": "ambient",

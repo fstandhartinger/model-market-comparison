@@ -1,0 +1,63 @@
+{
+  "artifact_id": "scores-1",
+  "artifact_sha256": "fce9739ac97d8a74be942d6b4ffbae15e203f137853a6e00b70017ee4472e9ae",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": [
+    "vendor:mistralai/Devstral-2-123B-Instruct-2512:swe-bench-verified::snapshot-2026-09-10",
+    "vendor:mistralai/Devstral-Small-2-24B-Instruct-2512:swe-bench-verified::snapshot-2026-09-10",
+    "c1"
+  ],
+  "errors_found": 6,
+  "findings": [
+    {
+      "id": "F1",
+      "severity": "major",
+      "location": "vendor:mistralai/Devstral-2-123B-Instruct-2512:swe-bench-verified::snapshot-2026-09-10 -> source.published_at",
+      "evidence": "Source content explicitly includes 'December 9, 2025' as the publication date, but the row has published_at null.",
+      "repair": "Set published_at to '2025-12-09' (or equivalent ISO date) from the source."
+    },
+    {
+      "id": "F2",
+      "severity": "major",
+      "location": "vendor:mistralai/Devstral-2-123B-Instruct-2512:swe-bench-verified::snapshot-2026-09-10 -> benchmark_id",
+      "evidence": "Source only states 'SWE-bench Verified'; the row adds a snapshot suffix 'snapshot-2026-09-10' which is absent from the source and post-dates the article (Dec 9, 2025).",
+      "repair": "Remove the unverified snapshot suffix or ensure it is tied to a primary source defining that benchmark version."
+    },
+    {
+      "id": "F3",
+      "severity": "major",
+      "location": "vendor:mistralai/Devstral-2-123B-Instruct-2512:swe-bench-verified::snapshot-2026-09-10 -> subject.source_id",
+      "evidence": "Source identifies the model as 'Devstral 2 (123B)' and 'devstral-2512'; the row's source_id 'mistralai/Devstral-2-123B-Instruct-2512' contains 'Instruct' which is not present in the source text.",
+      "repair": "Align source_id with a source-cited identifier; do not infer 'Instruct' without evidence."
+    },
+    {
+      "id": "F4",
+      "severity": "major",
+      "location": "vendor:mistralai/Devstral-Small-2-24B-Instruct-2512:swe-bench-verified::snapshot-2026-09-10 -> source.published_at",
+      "evidence": "Source explicitly includes 'December 9, 2025' as the publication date, but the row has published_at null.",
+      "repair": "Set published_at to '2025-12-09' (or equivalent ISO date) from the source."
+    },
+    {
+      "id": "F5",
+      "severity": "major",
+      "location": "vendor:mistralai/Devstral-Small-2-24B-Instruct-2512:swe-bench-verified::snapshot-2026-09-10 -> benchmark_id",
+      "evidence": "Source only states 'SWE-bench Verified'; the row adds a snapshot suffix 'snapshot-2026-09-10' which is absent from the source and post-dates the article (Dec 9, 2025).",
+      "repair": "Remove the unverified snapshot suffix or ensure it is tied to a primary source defining that benchmark version."
+    },
+    {
+      "id": "F6",
+      "severity": "major",
+      "location": "vendor:mistralai/Devstral-Small-2-24B-Instruct-2512:swe-bench-verified::snapshot-2026-09-10 -> subject.source_id",
+      "evidence": "Source identifies the model as 'Devstral Small 2 (24B)' and references 'devstral-2512' for Devstral 2; the row's source_id 'mistralai/Devstral-Small-2-24B-Instruct-2512' contains 'Instruct' which is not present in the source text.",
+      "repair": "Align source_id with a source-cited identifier; do not infer 'Instruct' without evidence."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "We cannot independently verify the owner-executed hashes or transport/qualification checks; this is a limitation of the read-only review, not a finding.",
+    "The benchmark snapshot suffix (2026-09-10) might be an internal versioning scheme, but the provided evidence contains no such reference, so we cannot confirm its validity.",
+    "The 'Instruct' token in the source_id might be a standard variant naming in an external catalog, but the source evidence does not mention it, and a prior accepted subject identity is fixed, so inference is not permitted."
+  ],
+  "missing_evidence": []
+}

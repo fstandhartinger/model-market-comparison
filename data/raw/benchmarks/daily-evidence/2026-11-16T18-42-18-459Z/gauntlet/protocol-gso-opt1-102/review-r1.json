@@ -1,0 +1,24 @@
+{
+  "artifact_id": "protocol-gso-opt1-102",
+  "artifact_sha256": "eedef18bb298a4ecee13a356eb383d9eb5c33428b80c95017bb7ef88b2383f9f",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": ["gso::opt1-102", "c1", "c2"],
+  "errors_found": 1,
+  "findings": [
+    {
+      "id": "gso::opt1-102-c2-version_status",
+      "severity": "major",
+      "location": "gso::opt1-102 version/version_status",
+      "evidence": "Protocol page (source1) and leaderboard.json (source2) publish no release identifier/version field; metadata only has total_tasks 102 and last_updated 2026-09-27. Row declares version_status 'published' and version 'opt1-102', but c2 says 'published' requires a maintainer-published release identifier copied into version; absence of such an identifier supports 'snapshot' with a snapshot-<date> version.",
+      "repair": "Change version_status to 'snapshot' and set version to a snapshot-<date> identity (e.g., snapshot-2026-11-16) unless a maintainer-published release identifier is supplied; otherwise provide that identifier and update version accordingly."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "I cannot independently verify SHA-256 hashes, leaderboard transport, or producer qualification; those checks are owner-side.",
+    "The row's maintainer label adds '(UC Berkeley)'; the provided protocol excerpt names GSO and authors but does not spell out that affiliation. I did not treat this as a blocker because it is outside the acceptance criteria and the source names GSO.",
+    "Wording differences in the metric description are minor paraphrases of the source and were not treated as mismatches."
+  ],
+  "missing_evidence": []
+}

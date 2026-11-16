@@ -1,0 +1,20 @@
+{
+  "artifact_id": "scores-0",
+  "artifact_sha256": "ad3a5731a7c3c9d213d691dc7c82f09f1ca41fd3f94a71aa818ea22184c28073",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/retail",
+    "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/airline",
+    "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/telecom",
+    "c1"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Source table does not state an explicit unit; 'percent' is inferred but non-numeric and does not affect the numeric equality check.",
+    "Hash verification, transport and artifact-file binding checks are owner responsibilities; I could not execute them (read-only review)."
+  ],
+  "missing_evidence": []
+}

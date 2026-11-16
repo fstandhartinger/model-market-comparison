@@ -56,6 +56,16 @@
       "tee_model_id": "zai-org/GLM-5.1-TEE"
     },
     {
+      "model_name": "Qwen3.6-27B",
+      "provider_org": "Alibaba",
+      "input_per_1m_usd": 0.25,
+      "output_per_1m_usd": 2,
+      "cache_read_per_1m_usd": 0.025,
+      "context_length": 262144,
+      "confidential_compute": true,
+      "tee_model_id": "Qwen/Qwen3.6-27B-TEE"
+    },
+    {
       "model_name": "GLM-5.2",
       "provider_org": "Z.ai",
       "input_per_1m_usd": 1.25,
@@ -67,14 +77,15 @@
       "notes": " | 2026-07-31: price cut 1.40/4.40->1.25/3.95, cache-read 0.625 (live llm.chutes.ai)."
     },
     {
-      "model_name": "Qwen3.6-27B",
+      "model_name": "Qwen3.5-27B",
       "provider_org": "Alibaba",
-      "input_per_1m_usd": 0.25,
-      "output_per_1m_usd": 2,
-      "cache_read_per_1m_usd": 0.025,
+      "input_per_1m_usd": 0.2,
+      "output_per_1m_usd": 1.75,
+      "cache_read_per_1m_usd": 0.02,
       "context_length": 262144,
       "confidential_compute": true,
-      "tee_model_id": "Qwen/Qwen3.6-27B-TEE"
+      "tee_model_id": "Qwen/Qwen3.5-27B-TEE",
+      "mapping": "derived"
     },
     {
       "model_name": "Kimi K3",
@@ -86,17 +97,6 @@
       "context_length": 1048576,
       "tee_model_id": "moonshotai/Kimi-K3-TEE",
       "notes": "Added 2026-08-26 from llm.chutes.ai"
-    },
-    {
-      "model_name": "Qwen3.5-27B",
-      "provider_org": "Alibaba",
-      "input_per_1m_usd": 0.2,
-      "output_per_1m_usd": 1.75,
-      "cache_read_per_1m_usd": 0.02,
-      "context_length": 262144,
-      "confidential_compute": true,
-      "tee_model_id": "Qwen/Qwen3.5-27B-TEE",
-      "mapping": "derived"
     },
     {
       "model_name": "DeepSeek-V4.1-Flash-1017",
@@ -131,17 +131,6 @@
       "tee_model_id": "Qwen/Qwen3.5-397B-A17B-TEE"
     },
     {
-      "model_name": "GLM-5.3",
-      "provider_org": "Z.ai",
-      "input_per_1m_usd": 1.225,
-      "output_per_1m_usd": 3.85,
-      "cache_read_per_1m_usd": 0.245,
-      "context_length": 1048576,
-      "confidential_compute": false,
-      "tee_model_id": "zai-org/GLM-5.3",
-      "mapping": "derived"
-    },
-    {
       "model_name": "DeepSeek-V4-Pro-0813",
       "provider_org": "DeepSeek",
       "input_per_1m_usd": 0.85,
@@ -153,14 +142,14 @@
       "mapping": "derived"
     },
     {
-      "model_name": "Qwen3.8-Max-0902",
-      "provider_org": "Alibaba",
-      "input_per_1m_usd": 2,
-      "output_per_1m_usd": 6,
-      "cache_read_per_1m_usd": 0.25,
-      "context_length": 1000000,
+      "model_name": "GLM-5.3",
+      "provider_org": "Z.ai",
+      "input_per_1m_usd": 1.225,
+      "output_per_1m_usd": 3.85,
+      "cache_read_per_1m_usd": 0.245,
+      "context_length": 1048576,
       "confidential_compute": false,
-      "tee_model_id": "Qwen/Qwen3.8-Max-0902",
+      "tee_model_id": "zai-org/GLM-5.3",
       "mapping": "derived"
     },
     {
@@ -175,6 +164,17 @@
       "mapping": "derived"
     },
     {
+      "model_name": "Qwen3.8-Max-0902",
+      "provider_org": "Alibaba",
+      "input_per_1m_usd": 2,
+      "output_per_1m_usd": 6,
+      "cache_read_per_1m_usd": 0.25,
+      "context_length": 1000000,
+      "confidential_compute": false,
+      "tee_model_id": "Qwen/Qwen3.8-Max-0902",
+      "mapping": "derived"
+    },
+    {
       "model_name": "Qwen3.8-2.4T-A95B",
       "provider_org": "Alibaba",
       "input_per_1m_usd": 2,
@@ -183,16 +183,6 @@
       "context_length": 1000000,
       "confidential_compute": false,
       "tee_model_id": "Qwen/Qwen3.8-2.4T-A95B",
-      "mapping": "derived"
-    },
-    {
-      "model_name": "Hy4",
-      "input_per_1m_usd": 0.525,
-      "output_per_1m_usd": 1.5625,
-      "cache_read_per_1m_usd": 0.025,
-      "context_length": 1048576,
-      "confidential_compute": false,
-      "tee_model_id": "tencent/Hy4",
       "mapping": "derived"
     },
     {
@@ -205,9 +195,19 @@
       "confidential_compute": false,
       "tee_model_id": "moonshotai/Kimi-K2.7-Code",
       "mapping": "derived"
+    },
+    {
+      "model_name": "Hy4",
+      "input_per_1m_usd": 0.525,
+      "output_per_1m_usd": 1.5625,
+      "cache_read_per_1m_usd": 0.025,
+      "context_length": 1048576,
+      "confidential_compute": false,
+      "tee_model_id": "tencent/Hy4",
+      "mapping": "derived"
     }
   ],
-  "response_sha256": "81da5f8bcc816082ab70900beb3057ed6d21df3c9e9cf50371f34c51fbc5d0be",
+  "response_sha256": "6ebd831665a203f0db72c17a0b4795365d72912c87331f5e15b082186498340d",
   "diff": {
     "added": [],
     "removed": [],

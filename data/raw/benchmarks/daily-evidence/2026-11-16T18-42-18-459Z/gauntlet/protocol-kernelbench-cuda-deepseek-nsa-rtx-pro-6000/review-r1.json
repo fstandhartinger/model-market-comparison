@@ -1,0 +1,50 @@
+{
+  "artifact_id": "protocol-kernelbench-cuda-deepseek-nsa-rtx-pro-6000",
+  "artifact_sha256": "106e3ed5770f2399032cd76ef25ac0ad13ad843f58eaa616992a43c991185a9c",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": [
+    "kernelbench-cuda-deepseek-nsa::rtx-pro-6000",
+    "c1",
+    "c2"
+  ],
+  "errors_found": 4,
+  "findings": [
+    {
+      "id": "row-note-muse-04-cell",
+      "severity": "major",
+      "location": "kernelbench-cuda-deepseek-nsa::rtx-pro-6000 / scoring.notes",
+      "evidence": "Notes claim the per_problem ranked list 'still holds' a `bug` muse/muse-spark-1.3 [ultra] cell on problem 04 at peak_fraction 0.2056. SOURCE 2 leaderboard.json defines problems [\"01_glm52_fused_moe\",\"02_deepseek_nsa\",\"03_megaqwen_decode\"] with no 04 section, and muse's in-payload cells are 01/02/03 (0.0879, 0.0251, 0.0333). SOURCE 3 SPEC.md: 'Problem 04 ... was retired 2026-11-09' and 'deck stays at three since 2026-11-09'. No 04 data exists in the capture.",
+      "repair": "Remove the claim that the ranked list still holds a muse 04 cell (and its 0.2056 value); the current payload has no problem 04."
+    },
+    {
+      "id": "row-note-opus5-196-percent",
+      "severity": "major",
+      "location": "kernelbench-cuda-deepseek-nsa::rtx-pro-6000 / scoring.notes",
+      "evidence": "Notes state 'Opus 5 reaches 196.10% on 04'. The captured payload contains no problem 04; claude/claude-opus-5-5 [xhigh] has 01/02/03 cells only (0.1036, 1.0957, 0.0739). The 196.10% figure cannot be sourced from any supplied evidence.",
+      "repair": "Delete the claim or replace it with a value verifiable from the current capture (e.g. the 136.19% served for 02)."
+    },
+    {
+      "id": "row-note-reward-hack-04",
+      "severity": "major",
+      "location": "kernelbench-cuda-deepseek-nsa::rtx-pro-6000 / scoring.notes",
+      "evidence": "Notes assert a `reward_hack` deepseek-claude/deepseek-v4-pro cell on 04 is 'excluded by both' the validity rule and the ranked list. No 04 appears in SOURCE 2 leaderboard.json; SOURCE 5 published_runs.json lists the deepseek-v4-pro 04 run only in 'excluded' with reason 'problem 04 retired 2026-11-09'. The asserted ranked-list contrast is unsupported by the capture.",
+      "repair": "Remove the reward_hack 04 statement; describe the exclusion only where the capture supports it (retired-04 runs are in published_runs.json 'excluded')."
+    },
+    {
+      "id": "row-guard-four-problem-deck",
+      "severity": "major",
+      "location": "kernelbench-cuda-deepseek-nsa::rtx-pro-6000 / version_guard",
+      "evidence": "version_guard requires 'the problem must stay in the stated four-problem deck', but SOURCE 3 SPEC.md states 'Three hard CUDA-only problems', 'Problem 04 ... was retired 2026-11-09', and 'deck stays at three since 2026-11-09'. The current protocol has a three-problem deck.",
+      "repair": "Change the guard to reference the three-problem deck (01/02/03) or otherwise drop the four-problem reference."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "version_status 'published' rests on treating the maintainer's board identifier ('RTX PRO 6000 Blackwell Workstation', normalized to rtx-pro-6000) as the published identifier for this board; the maintainer publishes no distinct benchmark release string in the captured sources, so this is an interpretation, not a clear protocol statement.",
+    "I cannot recompute or verify the owner-provided row SHA-256, source SHA-256s, hash bindings, transport, or qualification checks; these are asserted by the owner.",
+    "SPEC.md's standing rule of 2026-07-15 makes milliseconds the headline for 02 with peak_fraction 'a context column'; the row publishes that context column and the run's served-value summary (21 values, lowest 2.51, highest 136.19) confirms the board is served on that ×100 percent-of-roofline scale, so unit/range pass, but the row's 04-related claims were judged unsupported because the current payload retired problem 04.",
+    "The retired problem-04 values cited in the notes (0.2056, 196.10%, reward_hack) are not needed to verify any criterion field; they are obsolete narrative claims and are handled in findings rather than as missing evidence."
+  ],
+  "missing_evidence": []
+}

@@ -110,23 +110,6 @@
       }
     },
     {
-      "model_name": "GPT-5.6 Terra",
-      "provider_org": "OpenAI",
-      "release_status": "GA",
-      "category": "Versatile",
-      "input_per_1m_usd": 2,
-      "cached_input_per_1m_usd": 0.2,
-      "cache_write_per_1m_usd": 2.5,
-      "output_per_1m_usd": 12,
-      "long_context": {
-        "input_per_1m_usd": 4,
-        "cached_input_per_1m_usd": 0.4,
-        "cache_write_per_1m_usd": 5,
-        "output_per_1m_usd": 18,
-        "threshold_input_tokens_gt": 272000
-      }
-    },
-    {
       "model_name": "GPT-6 Astra",
       "provider_org": "OpenAI",
       "release_status": "GA",
@@ -294,16 +277,6 @@
       "cache_write_per_1m_usd": 12.5,
       "output_per_1m_usd": 50,
       "feature_status": "research preview"
-    },
-    {
-      "model_name": "Claude Opus 5",
-      "provider_org": "Anthropic",
-      "release_status": "GA",
-      "category": "Powerful",
-      "input_per_1m_usd": 5,
-      "cached_input_per_1m_usd": 0.5,
-      "cache_write_per_1m_usd": 6.25,
-      "output_per_1m_usd": 25
     },
     {
       "model_name": "Claude Opus 5.5",
@@ -502,6 +475,21 @@
   ],
   "plans_checked_at": "2026-09-24",
   "retirement_history": [
+    {
+      "name": "Claude Opus 4.8",
+      "retirement_date": "2026-11-16",
+      "alternative": "Latest Claude Opus model"
+    },
+    {
+      "name": "Claude Opus 5",
+      "retirement_date": "2026-11-16",
+      "alternative": "Latest Claude Opus model"
+    },
+    {
+      "name": "GPT-5.6 Terra",
+      "retirement_date": "2026-11-16",
+      "alternative": "Latest GPT Terra model"
+    },
     {
       "name": "Gemini 3.7 Flash",
       "retirement_date": "2026-10-19",
@@ -713,16 +701,20 @@
     "Claude Sonnet 4"
   ],
   "retirement_overlap": [
+    "Claude Opus 4.8 (2026-11-16)",
     "Claude Sonnet 4.6 (2026-09-01)"
   ],
   "response_sha256": {
-    "supported": "527e44e696c6c08563a1ce4b6468ff13e10e6b04c702ecfb256dcd0b2bd422d0",
-    "pricing": "5024b9c6ec10829b517bd5e6c1df783d9ac9b4c56207c79418d584f6d1ff93c3",
-    "multipliers": "3c6a8568c13d2ca6e73189f4ea69a405e8ff01a8337ab5a8b859dc891ea018f8"
+    "supported": "f7833924cce5928f82de1dbc81bea9454c0bcfbf8c0511b299ad0fbbf0fa80ee",
+    "pricing": "e5f4cb21184380bee5b577ec6da0f268e610375a3646ea1be9b0bff572403632",
+    "multipliers": "e5f0636bd70c87a7cb61aa98725b6758cdbdc3b88b996a324a549ed6136b631b"
   },
   "diff": {
     "current_added": [],
-    "current_removed": [],
+    "current_removed": [
+      "GPT-5.6 Terra",
+      "Claude Opus 5"
+    ],
     "current_price_changed": [],
     "legacy_added": [],
     "legacy_removed": [],

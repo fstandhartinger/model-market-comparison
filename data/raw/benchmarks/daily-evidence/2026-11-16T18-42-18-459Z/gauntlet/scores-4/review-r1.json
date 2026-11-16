@@ -1,0 +1,27 @@
+{
+  "artifact_id": "scores-4",
+  "artifact_sha256": "24c998418dcddae32bafa3dfe74fbc7ccc4ef1807d942f663c9b0e1753630ecb",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": ["vendor:DeepSeek-V3:longbench::2", "c1"],
+  "errors_found": 1,
+  "findings": [
+    {
+      "id": "missing-source-date",
+      "severity": "blocker",
+      "location": "row vendor:DeepSeek-V3:longbench::2, field source.published_at",
+      "evidence": "source.published_at is null; the provided primary evidence (PDF pages 30-31) contains no publication or version date for arXiv 2412.19437v2, so criterion c1's source-date requirement cannot be verified.",
+      "repair": "Obtain and record the actual published/version date for arXiv 2412.19437v2 from owner-verified source metadata, set source.published_at accordingly, and confirm it against the evidence."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "SHA-256 and transport/qualification checks were not executed because this is a read-only review; those checks are outside the scope of this critique.",
+    "The captured PDF snippet does not include a publication date for arXiv 2412.19437v2, hence the source date could not be verified.",
+    "The caption's statement about benchmarks with fewer than 1000 samples is generic; no per-benchmark sample count for LongBench v2 is present, but this does not affect the observed value.",
+    "The protocol wording 'overall; Table 6 chat-model evaluation' is consistent with the provided evidence."
+  ],
+  "missing_evidence": [
+    "Published/version date for arXiv 2412.19437v2 (source.published_at)"
+  ]
+}

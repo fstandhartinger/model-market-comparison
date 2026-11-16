@@ -38,7 +38,7 @@
       "api_catalog_price": {
         "input_per_1m_usd": 1,
         "output_per_1m_usd": 4.2,
-        "cache_read_per_1m_usd": 0.14,
+        "cache_read_per_1m_usd": 0.135,
         "url": "https://api.inceptron.io/v1/models",
         "note": "provider feed ingested by OpenRouter; equals the OpenRouter route"
       },
@@ -58,9 +58,9 @@
       "context_length": 262144,
       "quantization": "int4",
       "api_catalog_price": {
-        "input_per_1m_usd": 0.7995,
+        "input_per_1m_usd": 0.7985,
         "output_per_1m_usd": 3.75,
-        "cache_read_per_1m_usd": 0.19,
+        "cache_read_per_1m_usd": 0.22,
         "url": "https://api.inceptron.io/v1/models",
         "note": "provider feed ingested by OpenRouter; equals the OpenRouter route"
       },
@@ -126,7 +126,7 @@
       "notes": "Listed by api.inceptron.io/v1/models as zai-org/GLM-5.3-Flash; fp8 quant; 1,048,576 context; text",
       "api_catalog_price": {
         "input_per_1m_usd": 0.175,
-        "output_per_1m_usd": 0.47,
+        "output_per_1m_usd": 0.49,
         "cache_read_per_1m_usd": 0.04,
         "url": "https://api.inceptron.io/v1/models",
         "note": "provider feed ingested by OpenRouter; equals the OpenRouter route"
@@ -139,7 +139,7 @@
       }
     }
   ],
-  "response_sha256": "d3aea73bff9be0c81146de668bf92b067cd16fe70b8a0370fa7260e22aefbe02",
+  "response_sha256": "be31e1dd1d04a574394cb84a480d1f97117218f722c8c6bd58e431a7184da368",
   "skipped": [],
   "diff": {
     "added": [],
@@ -150,7 +150,7 @@
   "availability": {
     "state": "list_prices_withdrawn_by_source",
     "observed_since": "2026-11-05",
-    "checked_at": "2026-11-16T05:32:39.438Z",
+    "checked_at": "2026-11-16T18:56:04.813Z",
     "url": "https://www.inceptron.io/models",
     "note": "Inceptron's models page lists the models without prices; its pricing page points to the models page. Direct prices are not published until they reappear."
   }
