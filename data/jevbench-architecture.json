@@ -7864,6 +7864,22 @@
           }
         ],
         "note": "Measured with the author serving code unchanged on an evaluator-owned RTX PRO 6000; dequantised bf16 backbone and LoRA adapter."
+      },
+      "starlord-27b-v2-0-preview": {
+        "arch": "open-llm-decoder",
+        "badges": {
+          "derivation": "fine-tune",
+          "params": "27B",
+          "quant": "BF16"
+        },
+        "evidence": [
+          {
+            "fact": "Qwen/Qwen3.8-27B base; BF16 model, candidate-logit readout; two-block bidirectional FlashAttention in full-attention layers.",
+            "kind": "model-card",
+            "url": "https://huggingface.co/xsdfasfgsa/Starlord-27B-v2.0-preview/tree/eb4b2c81d89d32b00bfdeaf2501dcff46afe8406"
+          }
+        ],
+        "note": "Measured with the author serving code unchanged on an evaluator-owned RTX PRO 6000; dense Qwen 27B architecture class."
       }
     },
     "imagejevbench": {

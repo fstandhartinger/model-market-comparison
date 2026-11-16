@@ -59,7 +59,7 @@ test('fresh-draw rows carry their own draw cells, tagged with the draw; no row o
   const d1u = board.categories.systems['liquid-d1-ultra'];
   assert.equal(d1u.coverage, 'S+P (draw v1.6-regular-20261012)');
   if (board.categories.display_min_n === 30) {
-    const stored = JSON.parse(readFileSync(new URL('../data/raw/benchmarks/jevbench/v1.8/jevbench-v1.8.11-categories.json', import.meta.url)));
+    const stored = JSON.parse(readFileSync(new URL(`../data/raw/benchmarks/jevbench/v1.8/jevbench-${board.published.restated_by}-categories.json`, import.meta.url)));
     for (const [key, row] of Object.entries(board.categories.systems)) for (const dim of ['topics', 'usecases', 'languages']) {
       const eligible = Object.entries(stored.systems[key]?.[dim] ?? {}).filter(([,cell]) => cell.n >= 30 && (cell.coverage_n ?? cell.n) >= 30).map(([name]) => name).sort();
       assert.deepEqual(Object.keys(row[dim] ?? {}).sort(), eligible, `${key}.${dim}: every eligible cell survives suppression`);

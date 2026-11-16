@@ -1,0 +1,14 @@
+{
+ "status": "PASS",
+ "exit": 0,
+ "scope": "exact failed metadata-only test file in the real Git worktree",
+ "original_failure": "ERR_CHILD_PROCESS_STDIO_MAXBUFFER from git status in synthetic tree with empty index",
+ "source_binding": {
+  "test/daily-clean-checkout-wait.test.mjs": "95295651053affc19c31858d5fe70962a308edb276cfda75d45c7c6872e5e05b",
+  ".gitignore": "02a87077f1e59c2e92fecba663859e3c2bbea8073f5ed2356880b1d793a200bc",
+  "ops/daily/daily.mjs": "b4e043b165df8759cbb0a5fe37c979472bb6ee5c9c48857952a88a88ed5b32ec"
+ },
+ "original_full_suite_preserved": true,
+ "node_version": "v26.8.1",
+ "git_version": "git version 2.34.1"
+}

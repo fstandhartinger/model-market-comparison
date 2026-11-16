@@ -1,0 +1,37 @@
+{
+ "verdict": "PASS",
+ "musts": [],
+ "reviewed_commit": "359e16856ede66caf7ef619dd478096ee790817d",
+ "engine": "claude-opus-5-5 (Claude Code, independent delta critic r168b-v1812-delta2)",
+ "chain": [
+  {
+   "review": "r168b-v1812-critic",
+   "verdict": "REVISE",
+   "reviewed_commit": "9f52f65784a77f1947337631b70446d2fd16b5cc",
+   "musts": [
+    "M1 nested previous breakdown cells under 30 served in All-data JSON (39 cells, one carried row)"
+   ]
+  },
+  {
+   "review": "r168b-v1812-delta-critic",
+   "verdict": "REVISE",
+   "reviewed_commit": "6df3829e34b41206feaa8e871b0793cc835a4f4f",
+   "closed": [
+    "M1 (39 -> 0, display-only)"
+   ],
+   "musts": [
+    "R1 privacy matcher missed embedded identifiers"
+   ]
+  },
+  {
+   "review": "r168b-v1812-delta2",
+   "verdict": "PASS",
+   "reviewed_commit": "359e16856ede66caf7ef619dd478096ee790817d",
+   "closed": [
+    "R1"
+   ]
+  }
+ ],
+ "full_private_receipt_sha256": "173912f5e62604e141a8e7a77f6427bc26631cfb7cfd7fea2060aa1b3a89d2f7",
+ "note": "Sanitized public copy: the full reviewer receipts stay in the release owner job folder (they name private identifiers by design)."
+}
