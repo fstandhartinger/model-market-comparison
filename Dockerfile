@@ -9,7 +9,8 @@ RUN npm run build
 FROM node:20-slim AS run
 # eMudhra CA distrust (Oct 2026): current CA bundle, and make Node trust it instead of its bundled root list
 RUN apt-get update && apt-get install -y --no-install-recommends ca-certificates && rm -rf /var/lib/apt/lists/*
-ENV NODE_OPTIONS="--use-openssl-ca"
+# Heap: V8 default (~790 MB in a 1536M container) OOM-crashed next-server 35x on 16 Nov 2026; raise it below the limit
+ENV NODE_OPTIONS="--use-openssl-ca --max-old-space-size=1152"
 WORKDIR /app
 ARG SOURCE_COMMIT=unknown
 # Coolify injects SOURCE_COMMIT for every deployed container. Local/non-Coolify
