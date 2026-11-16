@@ -2141,6 +2141,16 @@ def manage_evaluation(row: dict[str, Any], state: dict[str, Any], effects: Effec
         else:
             return
     if status == "exhausted":
+        if generated_runner_exhausted(state):
+            # INCIDENTS #25 (order c5a084fa, 16 Nov 2026): every preparation round wrote a runner that review
+            # FAILed as generated_runner. No automatic runtime exists, so a native owner takes the order; the
+            # card stays quiet while that owner is live (a dead owner or a near deadline still rings).
+            operational = state.get("operational_hold")
+            if not (isinstance(operational, dict) and operational.get("reason") == "unsupported_measurement_backend"):
+                set_operational_hold(state, "unsupported_measurement_backend", transient=False,
+                                     detail="the generated runner failed source review in every preparation round")
+            operational_escalate(row, state, effects, now, "unsupported_measurement_backend", exhausted=True)
+            return
         detail = (state.get("evaluation_exhausted") or {}).get("reason") or "evaluation_exhausted"
         reason = detail if detail in HOLD_REASON_LABELS else "evaluation_exhausted"
         alert(state, "evaluation_exhausted", effects, urgent=True,
@@ -5382,6 +5392,14 @@ def evaluate(rid: str) -> int:
 def append_state(job_dir: Path, text: str) -> None:
     path = job_dir / "STATE.md"
     atomic_write(path, path.read_text(encoding="utf-8", errors="replace") + text)
+
+
+def generated_runner_exhausted(state: dict[str, Any]) -> bool:
+    """The budget ran out on generated runners alone: the last review FAILed with scope generated_runner and no
+    runner ever passed review. That is the "no automatic runtime" case, not a customer or infrastructure fault."""
+    failure = state.get("runner_review_failure")
+    return isinstance(state.get("evaluation_exhausted"), dict) and not state.get("source_review_gate") \
+        and isinstance(failure, dict) and failure.get("scope") == "generated_runner"
 
 
 def mark_evaluation_exhausted(state: dict[str, Any], reason: str) -> None:

@@ -2622,6 +2622,42 @@ class SourceFetchPolicyTests(DatabaseTestCase):
         self.assertEqual(len(fx.started), starts)
 
 
+    def test_exhausted_after_generated_runner_failures_starts_a_native_owner_quietly(self):
+        # Order c5a084fa (16 Nov 2026): three preparation rounds, each runner FAILed review as generated_runner
+        # (round 1 even had a POD-RECIPE). The exhausted branch must start the native owner, not ring urgent.
+        rid = insert_order()
+        fx = FakeEffects()
+        self._claim(rid, fx)
+        state = ap.load_state(rid)
+        state["runner_review_failure"] = {"at": ap.iso(ap.utcnow()), "scope": "generated_runner", "attempt": 3}
+        ap.mark_evaluation_exhausted(state, "the measurement-adapter preparation retry budget is exhausted")
+        ap.update_row(rid, "evaluation_status='exhausted'")
+        ap.manage_evaluation(row(rid), ap.load_state(rid), fx, datetime.now(timezone.utc))
+        self.assertIn(f"jevbench-native-owner@{rid}.service", fx.started)
+        state = ap.load_state(rid)
+        self.assertEqual(state["operational_hold"]["reason"], "unsupported_measurement_backend")
+        self.assertFalse(any(n[0] == "urgent" for n in fx.notes))
+        starts = len(fx.started)
+        ap.manage_evaluation(row(rid), ap.load_state(rid), fx, datetime.now(timezone.utc))
+        self.assertEqual(len(fx.started), starts)
+        self.assertFalse(any(n[0] == "urgent" for n in fx.notes))
+
+    def test_exhausted_after_customer_or_passed_review_still_rings(self):
+        for failure, gate in (({"scope": "customer_source"}, None), ({"scope": "generated_runner"}, {"verdict": "PASS"})):
+            rid = insert_order()
+            fx = FakeEffects()
+            self._claim(rid, fx)
+            state = ap.load_state(rid)
+            state["runner_review_failure"] = failure
+            if gate:
+                state["source_review_gate"] = gate
+            ap.mark_evaluation_exhausted(state, "the source review retry budget is exhausted")
+            ap.update_row(rid, "evaluation_status='exhausted'")
+            ap.manage_evaluation(row(rid), ap.load_state(rid), fx, datetime.now(timezone.utc))
+            self.assertNotIn(f"jevbench-native-owner@{rid}.service", fx.started)
+            self.assertTrue(any(n[0] == "urgent" and "Automatic retries are used up" in n[2] for n in fx.notes))
+
+
 class SlaCardsTests(DatabaseTestCase):
     def setUp(self) -> None:
         super().setUp()
