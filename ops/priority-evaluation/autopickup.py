@@ -5256,7 +5256,8 @@ def evaluate(rid: str) -> int:
                     generated = load_json_file(job_dir / "trusted-runner/RUNTIME.json", 100_000)
                 except PickupError:
                     generated = None
-                if native_owner.runtime_declares_unsupported(generated):
+                if native_owner.runtime_declares_unsupported(generated) \
+                        or native_owner.gpu_pod_without_recipe(generated, job_dir / "trusted-runner"):
                     # INCIDENTS #25: retrying the generator or reviewing an unsupported runtime only burns the
                     # budget; the cycle hands the order to an automatic native owner job instead.
                     state = load_state(rid)

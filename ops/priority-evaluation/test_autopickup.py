@@ -1719,6 +1719,45 @@ class EvaluateTests(DatabaseTestCase):
         self.assertEqual(ap.load_state(rid)["operational_hold"]["owner"], "fastlane-native-" + rid[:8])
         self.assertFalse(any("DRINGEND" in text for _, _, text in fx.notes[notified:]))
 
+    def test_gpu_pod_runtime_without_recipe_hands_the_order_to_a_native_owner(self):
+        # Order 3a698114 (16 Nov 2026): no digest-pinned image, so the generator wrote a gpu_pod RUNTIME.json and a
+        # blocker but no POD-RECIPE.json. That must not reach review (3 x generated_runner FAIL); native owner at once.
+        rid = insert_order(visibility="private")
+        fx = FakeEffects()
+        ap.cycle(fx)
+        stages = []
+        def agent(folder, env, timeout, **kwargs):
+            stages.append(folder.name)
+            out = folder / "trusted-runner"
+            out.mkdir()
+            (out / "RUNTIME.json").write_text(json.dumps({"jevbench": {"backend": "gpu_pod", "model": "x/y",
+                                                                       "credential": "none"}}))
+            (out / "MEASUREMENT-META.json").write_text("{}")
+            (out / "PRICING-REVIEW.md").write_text("Pricing.\n")
+            (out / "OUTPUT.md").write_text("BLOCKER: no authenticated container image.\n")
+            return 0
+        with mock.patch.object(ap, "fetch_source"), mock.patch.object(ap, "run_agent", side_effect=agent):
+            ap.sql(f"UPDATE {ap.TABLE} SET evaluation_status='starting' WHERE id='{rid}'")
+            self.assertEqual(ap.evaluate(rid), 0)
+        self.assertEqual(stages, ["runner-prepare"])
+        self.assertEqual(ap.load_state(rid)["operational_hold"]["reason"], "unsupported_measurement_backend")
+        notified = len(fx.notes)
+        make_due(rid)
+        ap.cycle(fx)
+        self.assertIn(f"jevbench-native-owner@{rid}.service", fx.started)
+        self.assertFalse(any("DRINGEND" in text for _, _, text in fx.notes[notified:]))
+
+    def test_gpu_pod_runtime_with_recipe_is_not_routed_to_native_owner(self):
+        import native_owner
+        with tempfile.TemporaryDirectory() as tmp:
+            trusted = Path(tmp)
+            runtime = {"jevbench": {"backend": "gpu_pod"}}
+            self.assertTrue(native_owner.gpu_pod_without_recipe(runtime, trusted))
+            (trusted / "POD-RECIPE.json").write_text("{}")
+            self.assertFalse(native_owner.gpu_pod_without_recipe(runtime, trusted))
+            self.assertFalse(native_owner.gpu_pod_without_recipe({"jevbench": {"backend": "api"}}, Path(tmp) / "none"))
+            self.assertFalse(native_owner.gpu_pod_without_recipe(None, trusted))
+
     def test_generated_adapter_fail_retries_without_refund_even_with_customer_source(self):
         rid = insert_order()
         ap.cycle(FakeEffects())
