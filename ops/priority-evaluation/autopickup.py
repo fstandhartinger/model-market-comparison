@@ -756,6 +756,7 @@ def cycle_lock(blocking: bool = False):
 class Effects:
     dry_run: bool = False
     log: list[dict[str, Any]] = field(default_factory=list)
+    last_board_entry: int | None = None  # id of the entry the last successful board() call posted, when known
 
     def record(self, effect: str, **data: Any) -> None:
         self.log.append({"kind": effect, **data})
@@ -807,12 +808,31 @@ class Effects:
         if self.dry_run:
             self.record("board", owner=owner, board_kind=kind, thread=thread, dry_run=True, ok=True)
             return True
+        self.last_board_entry = None
         result = subprocess.run(
             [str(HOME / "bin/agent-board"), "--as", "fastlane-autopickup", "post", thread, "-", "--to", owner, "--kind", kind],
             input=message, text=True, capture_output=True, timeout=60, check=False,
         )
-        self.record("board", owner=owner, board_kind=kind, ok=result.returncode == 0)
+        if result.returncode == 0:
+            # CR-758 (N120): keep the entry id so the pickup can close its own handoff later.
+            match = re.search(r"Posted entry #(\d+)", result.stdout or "")
+            self.last_board_entry = int(match.group(1)) if match else None
+        self.record("board", owner=owner, board_kind=kind, ok=result.returncode == 0, entry=self.last_board_entry)
         return result.returncode == 0
+
+    def board_close(self, entry: int, reason: str) -> bool:
+        """Close an entry this identity authored (agent-board lets the author close it for all missing ackers)."""
+        if self.dry_run:
+            self.record("board_close", entry=entry, dry_run=True, ok=True)
+            return True
+        try:
+            result = subprocess.run([str(HOME / "bin/agent-board"), "--as", "fastlane-autopickup", "ack", str(int(entry)),
+                                     "--close", reason], text=True, capture_output=True, timeout=60, check=False)
+            ok = result.returncode == 0
+        except (OSError, subprocess.SubprocessError):
+            ok = False
+        self.record("board_close", entry=entry, ok=ok)
+        return ok
 
     # -- customer mail through the shared mail tool, in-process ---------------
     def mail(self, to: str, subject: str, body: str, *, outbox_id: str | None = None) -> tuple[bool, str]:
@@ -1758,6 +1778,64 @@ def handoff_message(row: dict[str, Any], job_dir: Path) -> str:
     )
 
 
+# CR-758 (reliability ledger N120, 16 Nov 2026): the pickup handoff goes to the per-order evaluation identity
+# fastlane-eval-<id>, a systemd unit that never acks. When the unit ran, or a native owner took over, or the order was
+# delivered, the entry stayed open and board escalation pinged the deputy (9 handoffs since 4 Nov). The pickup is the
+# entry's author, so it closes the entry itself once someone demonstrably owns the order.
+PICKUP_HANDOFF_CLOSE_LIMIT = 6
+CLOSED_ORDER_STATUSES = ("completed", "refund_due", "refunded")
+LIVE_UNIT_STATES = ("active", "activating", "deactivating", "reloading")
+
+
+def board_entry_id(effects: Effects) -> int | None:
+    entry = getattr(effects, "last_board_entry", None)
+    return entry if isinstance(entry, int) and not isinstance(entry, bool) and entry > 0 else None
+
+
+def pickup_handoff_close_reason(row: dict[str, Any], state: dict[str, Any], effects: Effects) -> str | None:
+    """Why the pickup handoff is resolved now, or None while it still needs its addressee."""
+    rid = request_id(row.get("id"))
+    ref = order_ref(rid)
+    if row.get("result_delivered_at") or row.get("status") in CLOSED_ORDER_STATUSES:
+        return f"order {ref} is {row.get('status')}: result delivered or order closed, the pickup handoff is resolved"
+    record = state.get("native_owner")
+    handed = state.get("steps", {}).get("native_owner_handoff")
+    if isinstance(record, dict) and record.get("start_ok") and record.get("job") == native_owner.owner_name(rid) \
+            and isinstance(handed, dict) and handed.get("status") == "done":
+        entry = handed.get("entry")
+        where = f" in entry #{entry}" if isinstance(entry, int) and not isinstance(entry, bool) else f" on #{BOARD_HANDOFF_THREAD}"
+        return f"native owner job {record['job']} took over order {ref}; re-addressed to @{record['job']}{where}"
+    if row.get("evaluation_status") in ("starting", "running") and not effects.dry_run \
+            and effects.unit_state(EVAL_UNIT.format(rid)).get("ActiveState") in LIVE_UNIT_STATES:
+        return f"evaluation service for order {ref} is active and owns it; the service identity cannot ack"
+    return None
+
+
+def settle_pickup_handoff(row: dict[str, Any], state: dict[str, Any], effects: Effects, now: datetime) -> bool:
+    """Close the pickup's own handoff once an owner is proven. Bounded; True when it is closed."""
+    record = state.get("pickup_handoff")
+    if not isinstance(record, dict):
+        return False
+    if record.get("closed_at"):
+        return True
+    entry = record.get("entry")
+    if record.get("close_exhausted") or not isinstance(entry, int) or isinstance(entry, bool) or entry <= 0:
+        return False
+    reason = pickup_handoff_close_reason(row, state, effects)
+    if reason is None:
+        return False
+    attempts = int(record.get("close_attempts") or 0) + 1
+    record["close_attempts"] = attempts
+    closed = effects.board_close(entry, reason)
+    if closed:
+        record["closed_at"] = iso(now)
+        record["close_reason"] = reason[:200]
+    elif attempts >= PICKUP_HANDOFF_CLOSE_LIMIT:
+        record["close_exhausted"] = True  # the normal board escalation still reaches the deputy
+    save_state(state)
+    return closed
+
+
 def alert(state: dict[str, Any], key: str, effects: Effects, *, text: str, urgent: bool = False,
           digest: bool = False, once: bool = True) -> bool:
     """Send one alert per key (and at most once per 24 h when `once` is False)."""
@@ -1862,7 +1940,11 @@ def advance_intake(row: dict[str, Any], state: dict[str, Any], job_dir: Path, ef
     # 4. Owner handoff on board #9 (the deployed worker sends the urgent Telegram notice).
     if row.get("board_status") != "sent" and not step_done(state, "handoff") and step_due(state, "handoff", now):
         begin_attempt(state, "handoff", now)
+        effects.last_board_entry = None
         if effects.board(handoff_message(row, job_dir), owner_for(rid)):
+            entry = board_entry_id(effects)
+            if entry is not None:
+                state["pickup_handoff"] = {"entry": entry, "to": owner_for(rid), "posted_at": iso(now)}
             update_row(rid, "board_status='sent'")
             finish_ok(state, "handoff", now)
         else:
@@ -2098,12 +2180,14 @@ def operational_escalate(row: dict[str, Any], state: dict[str, Any], effects: Ef
     if isinstance(record, dict) and record.get("job") == native_owner.owner_name(rid) and record.get("start_ok") \
             and native_owner_due(rid, reason):
         if not step_done(state, "native_owner_handoff"):
+            effects.last_board_entry = None
             if effects.board(f"Fast-lane order {order_ref(rid)}: the runner generator found no supported runtime "
                              f"({reason}). The pickup started native owner job ~/jobs/{record['job']} automatically "
                              f"(INCIDENTS #25). Payment deadline {deadline_for(row).isoformat()} continues; customer "
                              f"hold is not set. Request evidence: {job_directory(rid, JOB_ROOT)}/STATE.md.",
                              record["job"], thread=BOARD_HANDOFF_THREAD):
-                finish_ok(state, "native_owner_handoff", now)
+                entry = board_entry_id(effects)
+                finish_ok(state, "native_owner_handoff", now, **({"entry": entry} if entry is not None else {}))
     elif not step_done(state, "operational_handoff"):
         if effects.board(f"Fast-lane order {order_ref(rid)} requires an official measurement owner: "
                          f"{reason}. Payment deadline "
@@ -4688,6 +4772,8 @@ def process_row(row: dict[str, Any], effects: Effects, job_root: Path, now: date
     advance_delivery(row, state, job_dir, effects, now)
     row = load_row(rid) or row
     advance_refund_notice(row, state, effects, now)
+    # Fresh state: the evaluation unit may have written the request state since this cycle loaded it.
+    settle_pickup_handoff(load_row(rid) or row, load_state(rid), effects, now)
 
 
 def cycle(effects: Effects, synthetic_id: str | None = None, job_root: Path | None = None) -> dict[str, Any]:
