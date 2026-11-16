@@ -1,0 +1,131 @@
+TAP version 13
+# Subtest: v1.8.13: no listed row displays any topic, use-case or language cell below 30 scored items
+ok 1 - v1.8.13: no listed row displays any topic, use-case or language cell below 30 scored items
+  ---
+  duration_ms: 12310.187231
+  ...
+# Subtest: v1.8.13: candidate display JSON removes small row breakdowns without changing the stored release
+ok 2 - v1.8.13: candidate display JSON removes small row breakdowns without changing the stored release
+  ---
+  duration_ms: 11392.328404
+  ...
+# Subtest: v1.8.13: precomputed All-data JSON has no small row breakdowns
+ok 3 - v1.8.13: precomputed All-data JSON has no small row breakdowns
+  ---
+  duration_ms: 81.835967
+  ...
+# Subtest: v1.8.13: published live board and every All-data JSON input have no small row breakdowns
+ok 4 - v1.8.13: published live board and every All-data JSON input have no small row breakdowns
+  ---
+  duration_ms: 924371.31666
+  ...
+# Subtest: v1.8.13: previous breakdowns are filtered at arbitrary depth in every dimension
+ok 5 - v1.8.13: previous breakdowns are filtered at arbitrary depth in every dimension
+  ---
+  duration_ms: 8668.112241
+  ...
+# Subtest: no request while collapsed; first open loads once and reopening retains the table
+ok 6 - no request while collapsed; first open loads once and reopening retains the table
+  ---
+  duration_ms: 16.399422
+  ...
+# Subtest: HTTP failure leaves the disclosure and retry button usable
+ok 7 - HTTP failure leaves the disclosure and retry button usable
+  ---
+  duration_ms: 3.894155
+  ...
+# Subtest: network failure leaves the disclosure and retry button usable
+ok 8 - network failure leaves the disclosure and retry button usable
+  ---
+  duration_ms: 5.417445
+  ...
+# Subtest: JSON failure leaves the disclosure and retry button usable
+ok 9 - JSON failure leaves the disclosure and retry button usable
+  ---
+  duration_ms: 5.207609
+  ...
+# Subtest: every archive using the shared board has an explicit on-demand release loader
+ok 10 - every archive using the shared board has an explicit on-demand release loader
+  ---
+  duration_ms: 32.058119
+  ...
+# Subtest: gate: no listed row lacks topic, use-case or language cells without a recorded exception
+ok 11 - gate: no listed row lacks topic, use-case or language cells without a recorded exception
+  ---
+  duration_ms: 10.174394
+  ...
+# Subtest: gate catches a future fresh-draw row whose release ships no category cells
+ok 12 - gate catches a future fresh-draw row whose release ships no category cells
+  ---
+  duration_ms: 4.695729
+  ...
+# Subtest: gate catches an added API row and a carry row without language cells
+ok 13 - gate catches an added API row and a carry row without language cells
+  ---
+  duration_ms: 13.296723
+  ...
+# Subtest: exceptions need a reason and a decision reference
+ok 14 - exceptions need a reason and a decision reference
+  ---
+  duration_ms: 0.4989
+  ...
+# Subtest: fresh-draw rows carry their own draw cells, tagged with the draw; no row of the base is overridden
+ok 15 - fresh-draw rows carry their own draw cells, tagged with the draw; no row of the base is overridden
+  ---
+  duration_ms: 33.425874
+  ...
+# Subtest: cohort topic supplement is aggregate-only and validated
+ok 16 - cohort topic supplement is aggregate-only and validated
+  ---
+  duration_ms: 10.684944
+  ...
+# Subtest: gate (ImageJevBench v0.3): every ranking row has image-type, use-case and TypeSafe-20 cells or a recorded exception
+ok 17 - gate (ImageJevBench v0.3): every ranking row has image-type, use-case and TypeSafe-20 cells or a recorded exception
+  ---
+  duration_ms: 12.997039
+  ...
+# cold route 157.7 ms; 7525 values; 0 outside artifact; 0 wrong notes
+# Subtest: cold route serves the release cells and correct notes in under two seconds
+ok 18 - cold route serves the release cells and correct notes in under two seconds
+  ---
+  duration_ms: 12744.898671
+  ...
+# Subtest: missing publication still returns not found
+ok 19 - missing publication still returns not found
+  ---
+  duration_ms: 2.203788
+  ...
+# Subtest: a changed or unpublished manifest cannot use the snapshot
+ok 20 - a changed or unpublished manifest cannot use the snapshot
+  ---
+  duration_ms: 10.527616
+  ...
+# Subtest: precomputed input regenerates byte for byte from the validated release
+ok 21 - precomputed input regenerates byte for byte from the validated release
+  ---
+  duration_ms: 262803.893487
+  ...
+# Subtest: v1.8.13 carries every score, rank, note and stored category unchanged
+ok 22 - v1.8.13 carries every score, rank, note and stored category unchanged
+  ---
+  duration_ms: 273.723597
+  ...
+# Subtest: v1.8.13 validates as candidate and publication visibility follows PENDING/PASS
+ok 23 - v1.8.13 validates as candidate and publication visibility follows PENDING/PASS
+  ---
+  duration_ms: 33838.684668
+  ...
+# Subtest: v1.8.13 retains the published predecessor topic exceptions
+ok 24 - v1.8.13 retains the published predecessor topic exceptions
+  ---
+  duration_ms: 59.18132
+  ...
+1..24
+# tests 24
+# suites 0
+# pass 24
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 957338.937292

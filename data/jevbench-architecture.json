@@ -7880,6 +7880,21 @@
           }
         ],
         "note": "Measured with the author serving code unchanged on an evaluator-owned RTX PRO 6000; dense Qwen 27B architecture class."
+      },
+      "h2o-lightning-31b-v1.3.4": {
+        "arch": "open-llm-decoder",
+        "badges": {
+          "derivation": "fine-tune",
+          "params": "31B",
+          "quant": null
+        },
+        "evidence": [
+          {
+            "fact": "Card metadata declares google/gemma-4-31B-it base and H2O Model Non-Commercial Licence v1.1. Measured with the pinned author two-way profile on vLLM 0.30.0 with online FP8 weights.",
+            "kind": "model-card",
+            "url": "https://huggingface.co/h2oai/h2o-lightning-31b/tree/c35ed9505f6744770dc0d74bd3f468791a7984af"
+          }
+        ]
       }
     },
     "imagejevbench": {

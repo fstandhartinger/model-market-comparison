@@ -1,0 +1,170 @@
+{
+ "h2o-lightning-31b-v1.3.4": {
+  "api_flag": false,
+  "api_subset": false,
+  "author": "H2O.ai (paid evaluation, PUBLIC visibility)",
+  "axes": {
+   "calibration": 90.72556650172525,
+   "cost": 60.193951589794054,
+   "intelligence": 84.9859880104957,
+   "speed": 90.34116786910276
+  },
+  "base_model": "google/gemma-4-31B-it",
+  "capability": 87.85577725611049,
+  "composite_ci95": {
+   "A": [
+    79.21067036257834,
+    80.73161298379682
+   ],
+   "B": [
+    80.20321892642356,
+    82.44749757612078
+   ],
+   "C": [
+    79.21067036257834,
+    80.73161298379682
+   ]
+  },
+  "cost": {
+   "basis": "GPU-time estimate from v1.8.0: one monthly-rented RTX PRO 6000 96 GB, USD 1.5235/hour; average load 70%. Architecture: dense gemma, 31B active parameters; throughput 10106.516129 tokens/s (architecture-class calibration, efficient-engine prefill). GPU-time cost USD 0.0212260058867847/1,000; old list-price estimate USD 0.0321852518468771/1,000 (google/gemma-4-31b-it at USD 0.09/M input and USD 0.34/M output). Applied min(old list-price estimate, GPU-time cost) = USD 0.0212260058867847/1,000. Estimated, not a bill.",
+   "kind": "estimate",
+   "usd_per_1000": 0.021226005886784718
+  },
+  "decision_limit": {
+   "limit_s": 10.0,
+   "rule": "latency_s > limit -> failed",
+   "treatment": "share"
+  },
+  "disclosure": "Paid public evaluation. Measured on the 27 Oct draw on an evaluator-owned Verda GPU VM (RTX PRO 6000), offline with the author's serving stack at the pinned commit. Each scored stage is one fresh compile read once (no best-of). Failed or unanswered requests count as wrong answers. Second H2O-family model on this draw (after H2O-Lightning-4B v1.4.1); no shared weights. The temperatures and yes/no floor were fitted on v1.3.0's weights from Decision Index 0.3 public per-row reads (the release keeps them). The router head was fitted on HLE-style sets, with JevBench's public 231 items read as held-out. The determinism figure describes the preparation compile only; each scored stage is one fresh compile read once.",
+  "display": "H2O-Lightning-31B v1.3.4 (@c35ed950)",
+  "draw": {
+   "ci_basis": "measured on the draw before equating",
+   "drawn_on": "2026-10-27",
+   "g_med": 2.573387642438244,
+   "id": "v1.6-regular-20261027",
+   "label": "Third regular draw",
+   "measured_on": "2026-11-16",
+   "offset": {
+    "C": -1.8542447151797177,
+    "I": -2.884891186577587
+   },
+   "offset_ci95": {
+    "C": [
+     -5.447551660176162,
+     1.9718407968151896
+    ],
+    "I": [
+     -5.851030683979731,
+     1.0608488496147923
+    ]
+   },
+   "release": "v1.8.13",
+   "results_sha256": "6679e2870528f0ac9abaadcb907d96d597ce8abe583dfdb6cef97b39150a8b5e",
+   "status": "equated"
+  },
+  "endpoint_condition": "Evaluator-owned Verda GPU VM (RTX PRO 6000), offline container (--network none; lo only), author's serving stack at model commit c35ed9505f6744770dc0d74bd3f468791a7984af. Unmodified serve.sh --profile two-way, one vLLM 0.30.0 engine with h2oai/vllm overlay a36449a18b4465b4f70fa078f5403032de414de8. Online FP8 W8A8 from BF16 weights, TRITON_ATTN; max model length 131072, state budget 126976, two-way window 8192, selector v2 with automatic one-way fallback for the record/window or summed prompt threshold 4096. One read, readout_orders=1; AR and router off. PyTorch 2.13.0, transformers 5.20.0, torchcodec 0.17.0. Each scored stage is one fresh compile read once (no best-of); determinism is assessed only within the public preparation compile. Standard self-hosted x2 + 0.15 s latency adjustment.",
+  "endpoint_kind": "gpu",
+  "full_coverage": true,
+  "jevbench_score": 79.2534131113009,
+  "key": "h2o-lightning-31b-v1.3.4",
+  "last_measured_on": "2026-11-16",
+  "licence": "H2O Model Non-Commercial Licence v1.1 (weights; gated on Hugging Face; benchmarking and publishing results are allowed by the licence). Base Gemma 4 under its own licence.",
+  "listing": "unranked",
+  "measured_in": "v1.8.13",
+  "measurement_date_status": "measured",
+  "method": "v1.7",
+  "model_pin": "h2oai/h2o-lightning-31b@c35ed9505f6744770dc0d74bd3f468791a7984af",
+  "new_in": "v1.8.13",
+  "not_ranked_because": "Added after the v1.8.10 ranking review; it is ranked at the next review.",
+  "notes": "Second H2O-family model on this draw (after H2O-Lightning-4B v1.4.1); no shared weights. The temperatures and yes/no floor were fitted on v1.3.0's weights from Decision Index 0.3 public per-row reads (the release keeps them). The router head was fitted on HLE-style sets, with JevBench's public 231 items read as held-out. The determinism figure describes the preparation compile only; each scored stage is one fresh compile read once.",
+  "paid_fast_lane": true,
+  "published_scores": {
+   "axes": {
+    "calibration": 92.57981121690497,
+    "cost": 60.193951589794054,
+    "intelligence": 87.8708791970733,
+    "speed": 90.34116786910276
+   },
+   "capability": 90.22534520698913,
+   "scores": {
+    "A": 80.21828832498383,
+    "B": 81.64028316896955,
+    "C": 80.21828832498383
+   }
+  },
+  "rank": null,
+  "ranked": false,
+  "ranks": {
+   "A": null,
+   "B": null,
+   "C": null,
+   "capability": null
+  },
+  "repo": "https://huggingface.co/h2oai/h2o-lightning-31b",
+  "scores": {
+   "A": 79.2534131113009,
+   "B": 80.3372131645556,
+   "C": 79.2534131113009
+  },
+  "speed": {
+   "adjustment": "x2 + 0.15 s (assumption, not measured)",
+   "p50_s_adjusted": 0.25406657900011853,
+   "p50_s_raw": 0.052033289500059254,
+   "p95_s_adjusted": 0.36386113780031304,
+   "p95_s_raw": 0.10693056890015652
+  },
+  "status": {
+   "status": "complete"
+  },
+  "support": {
+   "choice": "native",
+   "noul": "native",
+   "score": "native"
+  },
+  "underlying": "Paid public evaluation. Measured on the 27 Oct draw on an evaluator-owned Verda GPU VM (RTX PRO 6000), offline with the author's serving stack at the pinned commit. Each scored stage is one fresh compile read once (no best-of). Failed or unanswered requests count as wrong answers. Second H2O-family model on this draw (after H2O-Lightning-4B v1.4.1); no shared weights. The temperatures and yes/no floor were fitted on v1.3.0's weights from Decision Index 0.3 public per-row reads (the release keeps them). The router head was fitted on HLE-style sets, with JevBench's public 231 items read as held-out. The determinism figure describes the preparation compile only; each scored stage is one fresh compile read once.",
+  "v16": {
+   "ci95": {
+    "B": 1000,
+    "C": [
+     89.95435747992923,
+     93.74570340979854
+    ],
+    "I": [
+     84.45024780300467,
+     90.32990033737572
+    ],
+    "capability": [
+     87.75272332938702,
+     91.50875031918368
+    ],
+    "composite": {
+     "A": [
+      79.21067036257834,
+      80.73161298379682
+     ],
+     "B": [
+      80.20321892642356,
+      82.44749757612078
+     ],
+     "C": [
+      79.21067036257834,
+      80.73161298379682
+     ]
+    },
+    "seed": 16
+   },
+   "complete": true,
+   "equated": null,
+   "equating_offset": null,
+   "g_med_used": 2.573387642438244,
+   "lane": "selfhosted"
+  },
+  "views": {
+   "Balanced 33:33:33": 76.04801565368398,
+   "Emphasis on Accuracy 60:20:20": 79.38769574274528,
+   "Emphasis on Cost 20:20:60": 68.79974239859268,
+   "Emphasis on Speed 20:60:20": 81.18588225508232,
+   "Intelligence only": 84.9859880104957
+  }
+ }
+}

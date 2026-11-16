@@ -1,0 +1,16 @@
+{
+ "verdict": "PASS",
+ "musts": [],
+ "reviewed_commit": "641e345fd8dc8ce18e3096a6b76603d26f531cee",
+ "engine": "claude-opus-5-5 (Claude Code, independent critic r169g-v1813-critic)",
+ "review_verdict_as_written": "PASS_WITH_CONDITIONS",
+ "conditions": {
+  "C1": "release date 2026-11-16 kept; publication on 2026-11-16 UTC (re-dated if the merge slips past midnight)",
+  "C2": "rebased onto origin/main e9fe65427 (no overlapping paths); TOPICS-BASE.json byte-equal to data/jevbench-breakdown-exceptions.json at the new base (9aba447d)",
+  "C3": "accepted by the release owner: the critic ran the committed compiled check against the preserved build output plus the focused PENDING and PASS suites and TSC on the exact commit"
+ },
+ "recommendations_deferred": ["S1 method-only determinism wording", "S2 deep breakdown walk in check_built (verification only)"],
+ "second_review": "A same-vendor Codex audit raised one MUST on the frozen aggregate release record; that record is out of scope of the n>=30 display floor by the standing ruling (DECISIONS, 12 Nov floor scope).",
+ "full_private_receipt_sha256": "8445a016e97333af520797ee8ac7a0a2a6b8cfcc75856c7e9eb33e2076d8ef22",
+ "note": "Sanitized public copy: the full reviewer receipts stay in the release owner job folder (they name private identifiers by design)."
+}

@@ -16,7 +16,7 @@ const nextConfig = {
   // Bundle the committed dataset.json as a runtime fallback when no DB is set.
   outputFileTracingIncludes: {
     "/**": ["./data/dataset.json"],
-    "/api/jevbench-alldata/*": ["./data/jevbench-v1.8.10-alldata.json", "./data/raw/benchmarks/jevbench/v1.8/jevbench-v1.8.10-publication.json", "./data/jevbench-v1.8.11-alldata.json", "./data/raw/benchmarks/jevbench/v1.8/jevbench-v1.8.11-publication.json", "./data/jevbench-v1.8.12-alldata.json", "./data/raw/benchmarks/jevbench/v1.8/jevbench-v1.8.12-publication.json"],
+    "/api/jevbench-alldata/*": ["./data/jevbench-v1.8.10-alldata.json", "./data/raw/benchmarks/jevbench/v1.8/jevbench-v1.8.10-publication.json", "./data/jevbench-v1.8.11-alldata.json", "./data/raw/benchmarks/jevbench/v1.8/jevbench-v1.8.11-publication.json", "./data/jevbench-v1.8.12-alldata.json", "./data/raw/benchmarks/jevbench/v1.8/jevbench-v1.8.12-publication.json", "./data/jevbench-v1.8.13-alldata.json", "./data/raw/benchmarks/jevbench/v1.8/jevbench-v1.8.13-publication.json"],
   },
   // CR-56.3: WebMCP tools may register only in this site's own top-level pages and same-origin frames
   // (a cross-origin frame never gets them; unknown to browsers without WebMCP).

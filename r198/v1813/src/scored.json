@@ -1,0 +1,320 @@
+{
+ "h2o-lightning-31b-v1.3.4": {
+  "cost_basis_sha256": "b83bdfd14c263ffacfa572b304084154afca84c1f00083101a33783ae6f8b356",
+  "frozen": {
+   "api_flag": false,
+   "api_subset": false,
+   "axes": {
+    "calibration": 92.8173748870434,
+    "cost": 60.193951589794054,
+    "intelligence": 88.15422303249971,
+    "speed": 89.84775825321954
+   },
+   "capability": 90.48579895977156,
+   "composite_ci95": {
+    "A": [
+     79.22921876617367,
+     80.75855863012389
+    ],
+    "B": [
+     80.27540547808091,
+     82.49300708752499
+    ],
+    "C": [
+     79.22921876617367,
+     80.75855863012389
+    ]
+   },
+   "cost": {
+    "kind": "estimate",
+    "usd_per_1000": 0.021226005886784718
+   },
+   "decision_limit": null,
+   "display": "H2O-Lightning-31B v1.3.4 (@c35ed950)",
+   "endpoint_kind": "gpu",
+   "full_coverage": true,
+   "jevbench_score": 80.22381806247357,
+   "key": "h2o-lightning-31b-v1.3.4",
+   "listing": "listed",
+   "rank": null,
+   "ranked": false,
+   "scores": {
+    "A": 80.22381806247357,
+    "B": 81.69365985529895,
+    "C": 80.22381806247357
+   },
+   "speed": {
+    "adjustment": "x2 + 0.15 s (assumption, not measured)",
+    "p50_s_adjusted": 0.27542446699990253,
+    "p50_s_raw": 0.06271223349995125,
+    "p95_s_adjusted": 0.37602927470015857,
+    "p95_s_raw": 0.11301463735007929
+   },
+   "status": {
+    "status": "complete"
+   },
+   "support": {
+    "choice": "native",
+    "noul": "native",
+    "score": "native"
+   },
+   "v16": {
+    "ci95": {
+     "B": 1000,
+     "C": [
+      90.23901152655893,
+      93.9773306027455
+     ],
+     "I": [
+      84.72273766272056,
+      90.63060673256386
+     ],
+     "capability": [
+      88.05398358548395,
+      91.83297100877714
+     ],
+     "composite": {
+      "A": [
+       79.22921876617367,
+       80.75855863012389
+      ],
+      "B": [
+       80.27540547808091,
+       82.49300708752499
+      ],
+      "C": [
+       79.22921876617367,
+       80.75855863012389
+      ]
+     },
+     "seed": 16
+    },
+    "complete": true,
+    "equated": null,
+    "equating_offset": null,
+    "g_med_used": 2.573387642438244,
+    "lane": "selfhosted"
+   },
+   "views": {
+    "Balanced 33:33:33": 76.75253064705336,
+    "Emphasis on Accuracy 60:20:20": 80.93997709619588,
+    "Emphasis on Cost 20:20:60": 69.14425396541024,
+    "Emphasis on Speed 20:60:20": 81.50419504336324,
+    "Intelligence only": 88.15422303249971
+   }
+  },
+  "pins": {
+   "frozen": "c4f1c63ade90dd65f7ce33ee1564848326757727fac253e1b8bae503a774ce24",
+   "v17-off": "c7085de758c566b71b3cd18cd3181118682f61dbbdf6ec555b1a86d6009bc78a",
+   "v17-share": "6679e2870528f0ac9abaadcb907d96d597ce8abe583dfdb6cef97b39150a8b5e"
+  },
+  "v17-off": {
+   "api_flag": false,
+   "api_subset": false,
+   "axes": {
+    "calibration": 92.8173748870434,
+    "cost": 60.193951589794054,
+    "intelligence": 88.15422303249971,
+    "speed": 89.84775825321954
+   },
+   "capability": 90.48579895977156,
+   "composite_ci95": {
+    "A": [
+     79.22921876617367,
+     80.75855863012389
+    ],
+    "B": [
+     80.27540547808091,
+     82.49300708752499
+    ],
+    "C": [
+     79.22921876617367,
+     80.75855863012389
+    ]
+   },
+   "cost": {
+    "kind": "estimate",
+    "usd_per_1000": 0.021226005886784718
+   },
+   "decision_limit": null,
+   "display": "H2O-Lightning-31B v1.3.4 (@c35ed950)",
+   "endpoint_kind": "gpu",
+   "full_coverage": true,
+   "jevbench_score": 80.22381806247357,
+   "key": "h2o-lightning-31b-v1.3.4",
+   "listing": "listed",
+   "rank": null,
+   "ranked": false,
+   "scores": {
+    "A": 80.22381806247357,
+    "B": 81.69365985529895,
+    "C": 80.22381806247357
+   },
+   "speed": {
+    "adjustment": "x2 + 0.15 s (assumption, not measured)",
+    "p50_s_adjusted": 0.27542446699990253,
+    "p50_s_raw": 0.06271223349995125,
+    "p95_s_adjusted": 0.37602927470015857,
+    "p95_s_raw": 0.11301463735007929
+   },
+   "status": {
+    "status": "complete"
+   },
+   "support": {
+    "choice": "native",
+    "noul": "native",
+    "score": "native"
+   },
+   "v16": {
+    "ci95": {
+     "B": 1000,
+     "C": [
+      90.23901152655893,
+      93.9773306027455
+     ],
+     "I": [
+      84.72273766272056,
+      90.63060673256386
+     ],
+     "capability": [
+      88.05398358548395,
+      91.83297100877714
+     ],
+     "composite": {
+      "A": [
+       79.22921876617367,
+       80.75855863012389
+      ],
+      "B": [
+       80.27540547808091,
+       82.49300708752499
+      ],
+      "C": [
+       79.22921876617367,
+       80.75855863012389
+      ]
+     },
+     "seed": 16
+    },
+    "complete": true,
+    "equated": null,
+    "equating_offset": null,
+    "g_med_used": 2.573387642438244,
+    "lane": "selfhosted"
+   },
+   "views": {
+    "Balanced 33:33:33": 76.75253064705336,
+    "Emphasis on Accuracy 60:20:20": 80.93997709619588,
+    "Emphasis on Cost 20:20:60": 69.14425396541024,
+    "Emphasis on Speed 20:60:20": 81.50419504336324,
+    "Intelligence only": 88.15422303249971
+   }
+  },
+  "v17-share": {
+   "api_flag": false,
+   "api_subset": false,
+   "axes": {
+    "calibration": 92.57981121690497,
+    "cost": 60.193951589794054,
+    "intelligence": 87.8708791970733,
+    "speed": 90.34116786910276
+   },
+   "capability": 90.22534520698913,
+   "composite_ci95": {
+    "A": [
+     79.21067036257834,
+     80.73161298379682
+    ],
+    "B": [
+     80.20321892642356,
+     82.44749757612078
+    ],
+    "C": [
+     79.21067036257834,
+     80.73161298379682
+    ]
+   },
+   "cost": {
+    "kind": "estimate",
+    "usd_per_1000": 0.021226005886784718
+   },
+   "decision_limit": {
+    "limit_s": 10.0,
+    "rule": "latency_s > limit -> failed",
+    "treatment": "share"
+   },
+   "display": "H2O-Lightning-31B v1.3.4 (@c35ed950)",
+   "endpoint_kind": "gpu",
+   "full_coverage": true,
+   "jevbench_score": 80.21828832498383,
+   "key": "h2o-lightning-31b-v1.3.4",
+   "listing": "listed",
+   "rank": null,
+   "ranked": false,
+   "scores": {
+    "A": 80.21828832498383,
+    "B": 81.64028316896955,
+    "C": 80.21828832498383
+   },
+   "speed": {
+    "adjustment": "x2 + 0.15 s (assumption, not measured)",
+    "p50_s_adjusted": 0.25406657900011853,
+    "p50_s_raw": 0.052033289500059254,
+    "p95_s_adjusted": 0.36386113780031304,
+    "p95_s_raw": 0.10693056890015652
+   },
+   "status": {
+    "status": "complete"
+   },
+   "support": {
+    "choice": "native",
+    "noul": "native",
+    "score": "native"
+   },
+   "v16": {
+    "ci95": {
+     "B": 1000,
+     "C": [
+      89.95435747992923,
+      93.74570340979854
+     ],
+     "I": [
+      84.45024780300467,
+      90.32990033737572
+     ],
+     "capability": [
+      87.75272332938702,
+      91.50875031918368
+     ],
+     "composite": {
+      "A": [
+       79.21067036257834,
+       80.73161298379682
+      ],
+      "B": [
+       80.20321892642356,
+       82.44749757612078
+      ],
+      "C": [
+       79.21067036257834,
+       80.73161298379682
+      ]
+     },
+     "seed": 16
+    },
+    "complete": true,
+    "equated": null,
+    "equating_offset": null,
+    "g_med_used": 2.573387642438244,
+    "lane": "selfhosted"
+   },
+   "views": {
+    "Balanced 33:33:33": 76.80009826005629,
+    "Emphasis on Accuracy 60:20:20": 80.87589360604306,
+    "Emphasis on Cost 20:20:60": 69.16741008260396,
+    "Emphasis on Speed 20:60:20": 81.69834334721915,
+    "Intelligence only": 87.8708791970733
+   }
+  }
+ }
+}
