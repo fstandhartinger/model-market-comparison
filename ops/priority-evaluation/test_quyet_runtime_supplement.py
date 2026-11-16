@@ -76,6 +76,17 @@ class Tests(unittest.TestCase):
         self.assertFalse(S.active(job, recipe(image=S.BASE_IMAGE.split('@')[0])))
         self.assertFalse(S.active(job, None))
 
+    def test_allow_list_is_exactly_two_full_order_ids(self):
+        self.assertEqual(S.ORDERS, frozenset({'3a698114-9133-4724-8583-21dc6267b3d5',
+                                              'c727f558-8b79-45aa-8ebe-26644fba1af5'}))
+        small = '/home/flori/jobs/fastlane-evaluations/c727f558-8b79-45aa-8ebe-26644fba1af5'
+        self.assertTrue(S.active(small, recipe()))
+        for name in ('c727f558', 'c727f558-8b79-45aa-8ebe-26644fba1af', 'c727f558-8b79-45aa-8ebe-26644fba1af5x',
+                     'C727F558-8B79-45AA-8EBE-26644FBA1AF5', '*', ''):
+            self.assertFalse(S.active('/jobs/' + name, recipe()), name)
+        self.assertFalse(S.active(small, recipe(loader='quyet.hub:load')))
+        self.assertFalse(S.active(small, recipe(image=S.BASE_IMAGE.split('@')[0])))
+
     def test_base_image_is_digest_pinned_and_valid_recipe_image(self):
         self.assertTrue(pod_runner.IMAGE_RE.fullmatch(S.BASE_IMAGE))
 

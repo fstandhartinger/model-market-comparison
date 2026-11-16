@@ -80,7 +80,7 @@ SUPPLEMENTS: tuple[dict[str, Any], ...] = (
      "repos": ("huggingface.co/minimodels-ai/decision-1.0",),
      "precedents": ("fastlane-native-f62aeab1",)},
     {"family": "quyet", "module": "quyet_runtime_supplement.py",
-     "repos": ("huggingface.co/chinhnc/quyet-1.2-large", "github.com/ncchinh/quyet"),
+     "repos": ("huggingface.co/chinhnc/quyet-1.2-large", "huggingface.co/chinhnc/quyet-1.2-small", "github.com/ncchinh/quyet"),
      "precedents": ("fastlane-native-3a698114",)},
 )
 
