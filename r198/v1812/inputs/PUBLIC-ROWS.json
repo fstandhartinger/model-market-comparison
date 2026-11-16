@@ -1,0 +1,11 @@
+{
+ "starlord-27b-v2-0-preview": {
+  "author": "xsdfasfgsa",
+  "disclosure": "Paid public evaluation. Measured on the 27 Oct draw on an evaluator-owned rented GPU with the author's serving code unchanged at the pinned model commit, offline (no network). Candidate-logit readout with 0 generated tokens. Failed or unanswered requests count as wrong answers. The model card says the public JevBench split was used for evaluation and tuning, not training.",
+  "display": "Starlord-27B-v2.0-preview",
+  "endpoint_condition": "Evaluator-owned Verda GPU VM (RTX PRO 6000), offline read-only container (--network none); author's inference/serve_systemone.py unchanged at model commit eb4b2c81d89d32b00bfdeaf2501dcff46afe8406. One BF16 model instance, candidate-logit readout (FP32 softmax, T=1.0), 0 generated tokens, no KV cache. Full-attention layers run the author's two-block bidirectional FlashAttention (flash-attn 2.8.3 varlen: request prefix attends to the prefix, the rest to the whole request); linear-attention (GDN) layers are causal via fla 0.4.1 kernels. Limit 131,072 tokens per joint request, no truncation, HTTP 422 above the limit or on GPU OOM. PyTorch 2.10.0 cu130, transformers 5.3.0, flash-attn 2.8.3, Python 3.12 and decision_index base classes at commit 25c6ec7b.",
+  "licence": "cc-by-nc-nd-4.0 (model card); base Qwen/Qwen3.8-27B",
+  "notes": "The model card says the public JevBench split was used for evaluation and tuning, not training.",
+  "repo": "https://huggingface.co/xsdfasfgsa/Starlord-27B-v2.0-preview"
+ }
+}

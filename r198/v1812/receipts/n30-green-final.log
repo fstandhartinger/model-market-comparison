@@ -1,0 +1,30 @@
+TAP version 13
+# Subtest: v1.8.12: no listed row displays any topic, use-case or language cell below 30 scored items
+ok 1 - v1.8.12: no listed row displays any topic, use-case or language cell below 30 scored items
+  ---
+  duration_ms: 11574.998638
+  ...
+# Subtest: v1.8.12: candidate display JSON removes small row breakdowns without changing the stored release
+ok 2 - v1.8.12: candidate display JSON removes small row breakdowns without changing the stored release
+  ---
+  duration_ms: 11167.182876
+  ...
+# Subtest: v1.8.12: precomputed All-data JSON has no small row breakdowns
+ok 3 - v1.8.12: precomputed All-data JSON has no small row breakdowns
+  ---
+  duration_ms: 51.446546
+  ...
+# Subtest: v1.8.12: published live board and every All-data JSON input have no small row breakdowns
+ok 4 - v1.8.12: published live board and every All-data JSON input have no small row breakdowns # SKIP candidate PENDING; live board still uses the historical release
+  ---
+  duration_ms: 0.4131
+  ...
+1..4
+# tests 4
+# suites 0
+# pass 3
+# fail 0
+# cancelled 0
+# skipped 1
+# todo 0
+# duration_ms 23240.105943

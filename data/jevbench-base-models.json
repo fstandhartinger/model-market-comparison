@@ -3645,6 +3645,18 @@
             "evidence": "Gemma-4-31B-it base; 4-bit affine checkpoint dequantised to bf16 with a LoRA adapter."
           }
         ]
+      },
+      "starlord-27b-v2-0-preview": {
+        "label": "Qwen/Qwen3.8-27B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "kind": "model card",
+            "url": "https://huggingface.co/xsdfasfgsa/Starlord-27B-v2.0-preview/tree/eb4b2c81d89d32b00bfdeaf2501dcff46afe8406",
+            "title": "Pinned author model repository",
+            "evidence": "The model card declares Qwen/Qwen3.8-27B as the base; BF16 candidate-logit readout with bidirectional full attention."
+          }
+        ]
       }
     },
     "imagejevbench": {
