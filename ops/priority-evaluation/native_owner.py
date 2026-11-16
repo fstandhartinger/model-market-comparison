@@ -79,6 +79,9 @@ SUPPLEMENTS: tuple[dict[str, Any], ...] = (
     {"family": "minimodels_decision", "module": "minimodels_decision_runtime_supplement.py",
      "repos": ("huggingface.co/minimodels-ai/decision-1.0",),
      "precedents": ("fastlane-native-f62aeab1",)},
+    {"family": "quyet", "module": "quyet_runtime_supplement.py",
+     "repos": ("huggingface.co/chinhnc/quyet-1.2-large", "github.com/ncchinh/quyet"),
+     "precedents": ("fastlane-native-3a698114",)},
 )
 
 _SEGMENT = re.compile(r"[A-Za-z0-9][A-Za-z0-9._-]{0,95}")
