@@ -1,0 +1,31 @@
+{
+  "artifact_id": "protocol-kernelbench-cuda-deepseek-nsa-rtx-pro-6000",
+  "artifact_sha256": "106e3ed5770f2399032cd76ef25ac0ad13ad843f58eaa616992a43c991185a9c",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": ["kernelbench-cuda-deepseek-nsa::rtx-pro-6000", "c1", "c2"],
+  "errors_found": 2,
+  "findings": [
+    {
+      "id": "stale-four-problem-deck-references",
+      "severity": "major",
+      "location": "Row kernelbench-cuda-deepseek-nsa::rtx-pro-6000, scoring.notes and version_guard",
+      "evidence": "SPEC.md (SOURCE 3) states 'Problem 04 ... was retired 2026-11-09' and 'deck stays at three since 2026-11-09'; leaderboard.json (SOURCE 2) lists problems as only [01_glm52_fused_moe, 02_deepseek_nsa, 03_megaqwen_decode]. The row's notes still cite 'Opus 5 reaches 196.10% on 04', 'bug muse/muse-spark-1.3 [ultra] cell on 04 (0.2056)', 'reward_hack deepseek-claude/deepseek-v4-pro cell on 04', and 'SPS against the 150M peak_sps anchor for 04'; version_guard requires 'the stated four-problem deck'. All these describe a task set that no longer exists; the 04 values are not present in the captured payload.",
+      "repair": "Rewrite scoring.notes and version_guard for the current three-problem deck: drop problem-04 references, replace 04 example values with values from the served payload (e.g., highest 02 value Claude Sonnet 5-5 = 136.19%), and change the version_guard deck reference from 'four-problem deck' to the current three-problem deck or remove the deck-size clause."
+    },
+    {
+      "id": "harness-enumeration-omits-kimi",
+      "severity": "minor",
+      "location": "Row kernelbench-cuda-deepseek-nsa::rtx-pro-6000, scoring.notes (agent harness enumeration)",
+      "evidence": "leaderboard.json (SOURCE 2) contains model label 'kimi/kimi-code/k3.1-pro [max]' with harness 'kimi'; the row's notes enumerate harnesses as '(codex, claude, grok, kinetic-claude, deepseek-claude, muse, or-fable, or-opus, zai-claude, agy)', omitting kimi.",
+      "repair": "Add 'kimi' to the harness enumeration in scoring.notes, or explicitly mark the list as non-exhaustive, so it matches the populated harnesses in the current payload."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "version_status 'published': the maintainer publishes the board identity (hardware name 'RTX PRO 6000 Blackwell Workstation' in leaderboard.json) which the version 'rtx-pro-6000' copies, but no explicit methodology release version appears in SPEC.md (only 'Last updated: 2026-11-09'); whether this satisfies 'published' vs 'snapshot' is a judgment call I could not resolve from the excerpt and did not flag as a finding.",
+    "The generated value-scale summary reports served values 2.51-136.19 (percent scale) while the raw payload peak_fraction fields read 0.0251-1.3619 (fractions); I accepted the summary as the scale basis per criteria, and the row's 'percent of roofline' unit and [0,null] range agree with both readings, so no unit/range mismatch was found.",
+    "Owner-executed hash and transport/qualification checks are outside my read-only scope; I relied on the supplied owner-computed row sha256 to bind the row and could not independently recompute hashes or verify retrieval."
+  ],
+  "missing_evidence": []
+}

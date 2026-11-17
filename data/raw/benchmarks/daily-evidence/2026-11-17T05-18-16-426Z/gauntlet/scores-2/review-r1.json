@@ -1,0 +1,23 @@
+{
+  "artifact_id": "scores-2",
+  "artifact_sha256": "3a19ab45654814a44361b67f2ab09a87c6326107c5f7b853e403dbb4709e850b",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": ["vendor:DeepSeek-V3:swe-bench-verified::snapshot-2026-09-10", "c1"],
+  "errors_found": 1,
+  "findings": [
+    {
+      "id": "row-vendor:DeepSeek-V3:swe-bench-verified::snapshot-2026-09-10-benchmark-version",
+      "severity": "major",
+      "location": "row vendor:DeepSeek-V3:swe-bench-verified::snapshot-2026-09-10 benchmark_id",
+      "evidence": "Primary evidence (arXiv 2412.19437v2, Table 6, page 31) labels the benchmark as 'SWE Verified (Resolved)' / 'SWE-Bench Verified' with no snapshot, date, or version suffix. The row's benchmark_id adds 'snapshot-2026-09-10', which is unsupported by the source.",
+      "repair": "Remove the unsupported '::snapshot-2026-09-10' suffix from benchmark_id (and align row id if needed), or supply primary evidence explicitly stating that snapshot version. Do not infer a snapshot from the paper."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "Reviewer cannot independently recompute row hashes or verify the owner's transport/qualification checks; supplied hashes and receipt are taken as given.",
+    "Numeric value 42 vs 42.0 accepted as equal per defined parsing rule; no other numeric discrepancies found."
+  ],
+  "missing_evidence": []
+}

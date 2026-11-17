@@ -1,0 +1,22 @@
+{
+  "artifact_id": "scores-0",
+  "artifact_sha256": "e53b5d9aa7b963322635c5701159f71f5c6735fb9984a815b9f015dbd3dbad04",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/retail",
+    "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/airline",
+    "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/telecom",
+    "c1"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "I cannot recompute row or source SHA-256 hashes or execute transport/qualification checks; owner-side verification is assumed per instructions.",
+    "Published_at is null in the artifact; primary README does not display an explicit publication date, so no date value is available beyond retrieved_at.",
+    "The protocol field mirrors README best practices (temp 0.6, TopP 0.95, TopK 20, MinP 0, output length 32768 with 81920 for highly challenging tasks); TAU2 agent tasks are not explicitly designated as highly challenging, a methodological wording nuance rather than a value mismatch.",
+    "source.file is an internal artifact path not present in the primary evidence; it was not independently corroborated by the supplied README content."
+  ],
+  "missing_evidence": []
+}

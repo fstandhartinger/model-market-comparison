@@ -1,0 +1,24 @@
+{
+  "artifact_id": "protocol-gso-opt1-102",
+  "artifact_sha256": "eedef18bb298a4ecee13a356eb383d9eb5c33428b80c95017bb7ef88b2383f9f",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": ["gso::opt1-102", "c1", "c2"],
+  "errors_found": 1,
+  "findings": [
+    {
+      "id": "gso::opt1-102-version_status",
+      "severity": "major",
+      "location": "Row gso::opt1-102, fields version_status and version",
+      "evidence": "Sources 1 and 2 publish no release identifier for this board: the protocol page shows no version string and leaderboard.json metadata carries only last_updated and total_tasks. Per criterion c2, version_status \"published\" requires the maintainer to publish a release identifier that the row's version copies; with no such identifier published, the evidence supports \"snapshot\" (version snapshot-<date>), so \"published\"/\"opt1-102\" is unsupported.",
+      "repair": "Set version_status to \"snapshot\" and version to \"snapshot-<capture-date>\" (e.g., snapshot-2026-11-17) unless a maintainer-published release identifier for this board is found; align version_guard text accordingly."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "I cannot recompute row or payload SHA-256; hash verification is executed by the owner.",
+    "I cannot independently confirm leaderboard.json is the complete file; within the packet no other source names a release identifier, so a missing broader page could not be ruled out by me alone.",
+    "The packet does not state the snapshot date prefix to use if version_status were \"snapshot\"."
+  ],
+  "missing_evidence": []
+}

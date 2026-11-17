@@ -1,0 +1,25 @@
+{
+  "artifact_id": "scores-4",
+  "artifact_sha256": "9796b244f874a48d71144394a0f720fcfe21e651df9f6d79952b48568c0992e1",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": ["vendor:DeepSeek-V3:longbench::2", "c1"],
+  "errors_found": 1,
+  "findings": [
+    {
+      "id": "f1",
+      "severity": "blocker",
+      "location": "vendor:DeepSeek-V3:longbench::2 source object",
+      "evidence": "The artifact sets published_at to null, and the primary evidence (PDF pages 30-31) does not contain the publication date of arXiv 2412.19437v2. Criterion c1 explicitly requires verifying source date for every observation; without any evidence of the publication date, this verification cannot be performed.",
+      "repair": "Add the publication date (e.g., from arXiv metadata, such as 2024-12-27 for version 2) to the source object, or include primary evidence that displays the paper's publication date so the source date can be verified."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "Unable to independently execute SHA-256 hash verification, transport checks, or producer qualification as those are owner-performed; relying on supplied values.",
+    "The numeric value 48.7 matches the LongBench v2 (Acc.) row in the DeepSeek V3 column of Table 6; no numeric mismatch found."
+  ],
+  "missing_evidence": [
+    "Publication date of arXiv 2412.19437v2 (arXiv version 2)"
+  ]
+}

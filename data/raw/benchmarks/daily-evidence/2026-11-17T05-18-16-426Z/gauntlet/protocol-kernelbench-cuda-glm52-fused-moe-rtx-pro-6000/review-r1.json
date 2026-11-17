@@ -1,0 +1,43 @@
+{
+  "artifact_id": "protocol-kernelbench-cuda-glm52-fused-moe-rtx-pro-6000",
+  "artifact_sha256": "6aafe8f39bf09b836a09a197e283d2d81bad768a70baedba626edb70633514b9",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": [
+    "kernelbench-cuda-glm52-fused-moe::rtx-pro-6000",
+    "c1",
+    "c2"
+  ],
+  "errors_found": 3,
+  "findings": [
+    {
+      "id": "F1",
+      "severity": "major",
+      "location": "row kernelbench-cuda-glm52-fused-moe::rtx-pro-6000 scoring.notes",
+      "evidence": "Source 2 (leaderboard.json) per_problem contains only 01,02,03 and no problem 04 data; Source 3 states problem 04 retired 2026-11-09. The notes claim the published ranked list 'still holds' the muse/muse-spark-1.3 [ultra] bug cell on 04 (0.2056) and cite Opus 5 at 196.10% on 04; neither value nor problem appears in current evidence.",
+      "repair": "Remove or explicitly mark as historical all problem-04 statements (muse bug 0.2056, reward_hack deepseek-v4-pro on 04, Opus 5 196.10%); do not present them as current published ranked-list content."
+    },
+    {
+      "id": "F2",
+      "severity": "major",
+      "location": "row kernelbench-cuda-glm52-fused-moe::rtx-pro-6000 version_guard",
+      "evidence": "version_guard says 'the problem must stay in the stated four-problem deck'; Source 3 SPEC.md says 'deck stays at three since 2026-11-09' and problem 04 (grid+MinGRU) was retired.",
+      "repair": "Change the guard to the current three-problem deck: 01_glm52_fused_moe, 02_deepseek_nsa, 03_megaqwen_decode."
+    },
+    {
+      "id": "F3",
+      "severity": "minor",
+      "location": "row kernelbench-cuda-glm52-fused-moe::rtx-pro-6000 scoring.notes harness enumeration",
+      "evidence": "Source 2 includes harness 'kimi' (kimi/kimi-code/k3.1-pro); the notes enumerate harnesses as codex, claude, grok, kinetic-claude, deepseek-claude, muse, or-fable, or-opus, zai-claude, agy — omitting kimi.",
+      "repair": "Add kimi to the enumeration or rephrase the parenthetical as non-exhaustive."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "Cannot independently execute owner hash, transport or qualification checks; reliance on owner receipt and canonical row hashes is a limitation, not missing evidence.",
+    "Bound-scale summary (SOURCE 7) reports served values 4.11..11.3 while the captured leaderboard.json raw peak_fraction values are 0.0411..0.113; row's unit 'percent of roofline' and range [0,null] are consistent with the summary scale as the criteria direct.",
+    "The per_problem 01 ranked list includes kimi/kimi-code/k3.1-pro with annotation_verdict 'rubric_leak'; the notes do not address rubric_leak as an excluded verdict, left as an ambiguity.",
+    "Whether 'rtx-pro-6000' is the maintainer-published release identifier vs our canonicalization of the published hardware name 'RTX PRO 6000 Blackwell Workstation'; judged consistent with version_status 'published'."
+  ],
+  "missing_evidence": []
+}

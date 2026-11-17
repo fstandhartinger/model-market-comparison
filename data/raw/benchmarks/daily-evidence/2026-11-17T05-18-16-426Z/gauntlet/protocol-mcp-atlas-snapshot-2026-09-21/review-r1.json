@@ -1,0 +1,25 @@
+{
+  "artifact_id": "protocol-mcp-atlas-snapshot-2026-09-21",
+  "artifact_sha256": "9349407c23d58eee8dd28185ec59bb20ba00b2091b27da5f7a95958eb3e0e518",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": ["mcp-atlas::snapshot-2026-09-21", "c1", "c2"],
+  "errors_found": 1,
+  "findings": [
+    {
+      "id": "f1",
+      "severity": "minor",
+      "location": "row mcp-atlas::snapshot-2026-09-21 -> scoring.notes",
+      "evidence": "SOURCE 1 leaderboard shows '1 Gemini-4-Argon NEW 90.70 ± 1.80' and '2 Muse Spark 1.1 88.10 ± 1.95'; the row's note states 'the board's own top row is 88.1 %'.",
+      "repair": "Correct the note to say the board's top row is 90.7 % (and that 88.1 % is the second row), matching the captured leaderboard."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "Read-only review: I did not re-execute source/row hash or transport checks; I relied on the supplied owner hashes and the executed producer receipt.",
+    "SOURCE 1's locator says the excerpt is exact when the full page exceeds the bound; some page text may be absent from the packet, but the relevant criteria fields were checked against the captured excerpt.",
+    "The '±' notation in the leaderboard is interpreted via the page's Legend reference to 'lower CI bound' and 'upper CI bound' as a confidence-interval notation; no separate finding was raised on this point.",
+    "The artifact's snapshot date 2026-09-21 does not appear in the source page (which shows 'Updated April 8, 2026'); per the criteria this is the row's own dated identity and was not treated as missing evidence."
+  ],
+  "missing_evidence": []
+}

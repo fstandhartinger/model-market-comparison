@@ -1,0 +1,41 @@
+{
+  "artifact_id": "scores-1",
+  "artifact_sha256": "41a30276546da9cbd002c6cf937ea291399afab7371de95e4c821ee6daeb87f8",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": [
+    "vendor:mistralai/Devstral-2-123B-Instruct-2512:swe-bench-verified::snapshot-2026-09-10",
+    "vendor:mistralai/Devstral-Small-2-24B-Instruct-2512:swe-bench-verified::snapshot-2026-09-10",
+    "c1"
+  ],
+  "errors_found": 3,
+  "findings": [
+    {
+      "id": "row1-source-published-date-missing",
+      "severity": "major",
+      "location": "source.published_at for row vendor:mistralai/Devstral-2-123B-Instruct-2512:swe-bench-verified::snapshot-2026-09-10",
+      "evidence": "Primary source sha256 f09dd691... contains the date 'December 9, 2025' for the blog post; artifact sets source.published_at to null.",
+      "repair": "Set source.published_at to 2025-12-09 (or an equivalent supported date representation) to record the source date actually present in the evidence."
+    },
+    {
+      "id": "row2-source-published-date-missing",
+      "severity": "major",
+      "location": "source.published_at for row vendor:mistralai/Devstral-Small-2-24B-Instruct-2512:swe-bench-verified::snapshot-2026-09-10",
+      "evidence": "Primary source sha256 f09dd691... contains the date 'December 9, 2025' for the blog post; artifact sets source.published_at to null.",
+      "repair": "Set source.published_at to 2025-12-09 (or an equivalent supported date representation) to record the source date actually present in the evidence."
+    },
+    {
+      "id": "benchmark-version-snapshot-unsupported",
+      "severity": "major",
+      "location": "benchmark_id in both rows: swe-bench-verified::snapshot-2026-09-10",
+      "evidence": "The primary source identifies the benchmark only as 'SWE-bench Verified' and does not state a snapshot-2026-09-10 version; the artifact claims snapshot-2026-09-10 in benchmark_id without supporting evidence in the packet.",
+      "repair": "Add authoritative evidence for snapshot-2026-09-10, or revise benchmark_id to match the benchmark version actually stated in the source while preserving the required row identity through a separately documented canonical mapping."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "I could not execute SHA-256, transport, or qualification checks; I relied on the owner-provided canonical row hashes and the producer receipt for identity and qualification.",
+    "The snapshot-2026-09-10 component of benchmark_id may be an external canonical label not stated in the blog text, but no packet evidence supports it; this is treated as an unsupported claim rather than a missing source value."
+  ],
+  "missing_evidence": []
+}

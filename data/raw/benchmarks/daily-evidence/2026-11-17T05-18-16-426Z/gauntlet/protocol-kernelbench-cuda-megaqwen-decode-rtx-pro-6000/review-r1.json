@@ -1,0 +1,35 @@
+{
+  "artifact_id": "protocol-kernelbench-cuda-megaqwen-decode-rtx-pro-6000",
+  "artifact_sha256": "281df10e55b53ee8409b58c066527c9940e0dcc645df63602f73a2c4c8533ee0",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": [
+    "kernelbench-cuda-megaqwen-decode::rtx-pro-6000",
+    "c1",
+    "c2"
+  ],
+  "errors_found": 2,
+  "findings": [
+    {
+      "id": "F1",
+      "severity": "major",
+      "location": "row kernelbench-cuda-megaqwen-decode::rtx-pro-6000, field version_guard",
+      "evidence": "SPEC.md states 'Three hard CUDA-only problems' and 'Problem 04 ... was retired 2026-11-09' and 'deck stays at three since 2026-11-09'; captured leaderboard.json problems array is [01_glm52_fused_moe, 02_deepseek_nsa, 03_megaqwen_decode] (three problems). The row's version_guard asserts 'the problem must stay in the stated four-problem deck', contradicting the current protocol deck count.",
+      "repair": "Reword version_guard to reflect the current three-problem deck (e.g., 'stated three-problem deck'), since problem 04 is retired and the served board has only problems 01, 02, and 03."
+    },
+    {
+      "id": "F2",
+      "severity": "major",
+      "location": "row kernelbench-cuda-megaqwen-decode::rtx-pro-6000, field scoring.notes",
+      "evidence": "Notes claim a current 'bug' muse/muse-spark-1.3 [ultra] cell on 04 (peak_fraction 0.2056), a 'reward_hack' deepseek-claude/deepseek-v4-pro cell on 04, and 'Opus 5 reaches 196.10% on 04', and that the published per_problem ranked list 'still holds' these two excluded cells on 04. The captured leaderboard.json contains no problem 04: the problems array lists only 01/02/03, per_problem has no 04, and neither muse-spark-1.3 nor deepseek-v4-pro rows have any 04 result. Values 0.2056, 196.10% and the annotation 'reward_hack' appear nowhere in the packet, and SPEC.md retires problem 04 as of 2026-11-09. The kinetic-claude/kinetic-0715[1m] 03 suspect cell (0.0622) is correctly present in per_problem.03.ranked_passes, so that example is valid, but the 04 examples are not.",
+      "repair": "Remove the problem-04 examples from scoring.notes (the 04 board is retired and no longer served) or rewrite them based only on current three-problem board evidence, e.g. the suspect kinetic-claude/kinetic-0715[1m] 03 cell (0.0622) that appears in ranked_passes."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "Read-only review: I cannot recompute the per-row SHA-256 (ff4983ac...) or run assertion/hash/transport/qualification checks; those are validated separately by the owner. The activity summary (SOURCE 6, 9 added model rows) and value-scale summary (SOURCE 7, 27 values, 0.97–8.12) are this run's generated reads and were used only for the bounded judgements they are allowed to make.",
+    "version_status 'published' is our labelling: the protocol publishes the board identity as 'RTX_PRO_6000'/'RTX PRO 6000' (published_runs.json hardware field and the site board tab) with no separate release version tag; no contradiction with 'published' was found.",
+    "The protocol text does not spell out 'active'/'published' or a 'snapshot-<date>' version; those fields were judged per the criteria against whether the maintainer still publishes values and whether a release identifier exists."
+  ],
+  "missing_evidence": []
+}

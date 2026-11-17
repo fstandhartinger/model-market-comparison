@@ -56,16 +56,6 @@
       "tee_model_id": "deepseek-ai/DeepSeek-V3.2-TEE"
     },
     {
-      "model_name": "Qwen3.6-27B",
-      "provider_org": "Alibaba",
-      "input_per_1m_usd": 0.25,
-      "output_per_1m_usd": 2,
-      "cache_read_per_1m_usd": 0.025,
-      "context_length": 262144,
-      "confidential_compute": true,
-      "tee_model_id": "Qwen/Qwen3.6-27B-TEE"
-    },
-    {
       "model_name": "GLM-5.2",
       "provider_org": "Z.ai",
       "input_per_1m_usd": 1.25,
@@ -75,6 +65,16 @@
       "confidential_compute": true,
       "tee_model_id": "zai-org/GLM-5.2-TEE",
       "notes": " | 2026-07-31: price cut 1.40/4.40->1.25/3.95, cache-read 0.625 (live llm.chutes.ai)."
+    },
+    {
+      "model_name": "Qwen3.6-27B",
+      "provider_org": "Alibaba",
+      "input_per_1m_usd": 0.25,
+      "output_per_1m_usd": 2,
+      "cache_read_per_1m_usd": 0.025,
+      "context_length": 262144,
+      "confidential_compute": true,
+      "tee_model_id": "Qwen/Qwen3.6-27B-TEE"
     },
     {
       "model_name": "Qwen3.5-27B",
@@ -99,17 +99,6 @@
       "notes": "Added 2026-08-26 from llm.chutes.ai"
     },
     {
-      "model_name": "DeepSeek-V4.1-Flash-1017",
-      "provider_org": "DeepSeek",
-      "input_per_1m_usd": 0.3,
-      "output_per_1m_usd": 1.2,
-      "cache_read_per_1m_usd": 0.03,
-      "context_length": 1000000,
-      "confidential_compute": false,
-      "tee_model_id": "deepseek-ai/DeepSeek-V4.1-Flash-1017",
-      "mapping": "derived"
-    },
-    {
       "model_name": "DeepSeek V4 Flash 0731",
       "provider_org": "DeepSeek",
       "input_per_1m_usd": 0.44,
@@ -119,6 +108,17 @@
       "context_length": 1048576,
       "tee_model_id": "deepseek-ai/DeepSeek-V4-Flash-0731-TEE",
       "notes": "Added 2026-08-26 from llm.chutes.ai"
+    },
+    {
+      "model_name": "DeepSeek-V4.1-Flash-1017",
+      "provider_org": "DeepSeek",
+      "input_per_1m_usd": 0.3,
+      "output_per_1m_usd": 1.2,
+      "cache_read_per_1m_usd": 0.03,
+      "context_length": 1000000,
+      "confidential_compute": false,
+      "tee_model_id": "deepseek-ai/DeepSeek-V4.1-Flash-1017",
+      "mapping": "derived"
     },
     {
       "model_name": "Qwen3.5-397B-A17B",
@@ -164,14 +164,14 @@
       "mapping": "derived"
     },
     {
-      "model_name": "GLM-5.2-Fast",
-      "provider_org": "Z.ai",
-      "input_per_1m_usd": 2.45,
-      "output_per_1m_usd": 7.7,
-      "cache_read_per_1m_usd": 0.49,
-      "context_length": 1048576,
+      "model_name": "Kimi-K2.7-Code",
+      "provider_org": "Moonshot AI",
+      "input_per_1m_usd": 0.832,
+      "output_per_1m_usd": 3.5,
+      "cache_read_per_1m_usd": 0.167,
+      "context_length": 262144,
       "confidential_compute": false,
-      "tee_model_id": "zai-org/GLM-5.2-Fast",
+      "tee_model_id": "moonshotai/Kimi-K2.7-Code",
       "mapping": "derived"
     },
     {
@@ -186,14 +186,14 @@
       "mapping": "derived"
     },
     {
-      "model_name": "Kimi-K2.7-Code",
-      "provider_org": "Moonshot AI",
-      "input_per_1m_usd": 0.832,
-      "output_per_1m_usd": 3.5,
-      "cache_read_per_1m_usd": 0.167,
-      "context_length": 262144,
+      "model_name": "GLM-5.2-Fast",
+      "provider_org": "Z.ai",
+      "input_per_1m_usd": 2.45,
+      "output_per_1m_usd": 7.7,
+      "cache_read_per_1m_usd": 0.49,
+      "context_length": 1048576,
       "confidential_compute": false,
-      "tee_model_id": "moonshotai/Kimi-K2.7-Code",
+      "tee_model_id": "zai-org/GLM-5.2-Fast",
       "mapping": "derived"
     },
     {
@@ -207,7 +207,7 @@
       "mapping": "derived"
     }
   ],
-  "response_sha256": "fbde6eaed7c6080b6b8c4df27c8bbee67c0b425784ab82ceee672f66edfc5c37",
+  "response_sha256": "abdc313720d58a3701e05b8ea8e2b98370e242456fe74165c714ae8ff21cfe77",
   "diff": {
     "added": [],
     "removed": [],

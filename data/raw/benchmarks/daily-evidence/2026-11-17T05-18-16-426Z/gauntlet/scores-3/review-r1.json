@@ -1,0 +1,36 @@
+{
+  "artifact_id": "scores-3",
+  "artifact_sha256": "ca14af71c0a8019fdff0bd6832d8701b0939677b01ea803cb1dec72a6db33233",
+  "round": 1,
+  "verdict": "blocked",
+  "coverage_checked": [
+    "vendor:DeepSeek-V3:aider-polyglot::snapshot-2026-09-10",
+    "c1"
+  ],
+  "errors_found": 2,
+  "findings": [
+    {
+      "id": "row-vendor:DeepSeek-V3:aider-polyglot::snapshot-2026-09-10-benchmark-version-unsupported",
+      "severity": "blocker",
+      "location": "benchmark_id / id of row vendor:DeepSeek-V3:aider-polyglot::snapshot-2026-09-10",
+      "evidence": "Primary source arXiv 2412.19437v2 Table 6 lists 'Aider-Polyglot (Acc.)' with value 49.6 but contains no mention of the version/snapshot 'snapshot-2026-09-10' claimed in benchmark_id and id. The paper is dated Dec 2024; the snapshot date is 2026-09-10, which is not in the evidence.",
+      "repair": "Remove the unsupported 'snapshot-2026-09-10' suffix from benchmark_id and id, or provide primary evidence documenting that exact Aider-Polyglot snapshot version. Do not invent a version."
+    },
+    {
+      "id": "row-vendor:DeepSeek-V3:aider-polyglot::snapshot-2026-09-10-source-date-missing",
+      "severity": "blocker",
+      "location": "source.published_at",
+      "evidence": "source.published_at is null and the captured primary evidence (PDF pages 30-31) does not state any publication date for arXiv 2412.19437v2; criterion c1 requires verifying the source date.",
+      "repair": "Populate source.published_at from an authoritative source date, or if none is available, remove the claim and disclose that the source date cannot be verified; without a source date the row cannot satisfy c1."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "Owner-side hash verification and transport/qualification checks not executable by this critic; row SHA-256 binds are accepted as given.",
+    "Retrieved_at is the capture time, not the source publication date; no inference was made from the arXiv identifier."
+  ],
+  "missing_evidence": [
+    "Explicit source-stated Aider-Polyglot benchmark version/snapshot used in arXiv 2412.19437v2 Table 6",
+    "Publication date of arXiv 2412.19437v2 (the source date)"
+  ]
+}
