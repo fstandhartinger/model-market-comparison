@@ -18,7 +18,7 @@ Safety contract (binding, deputy #64725):
   because a key inside free text cannot be cut out safely. Exempt: the two key-free texts /submit itself writes
   (lib/model-submission.mjs toPriorityBody; its API URL is validated to carry no key). A JSON object that would exceed the
   column's 800-character limit also falls back to the marker.
-- Closed = status completed/refunded/expired/checkout_failed/intake_declined, or refund_id set. Open orders are never
+- Closed = status completed/refunded/expired/intake_declined, checkout_failed untouched for 48 h, or refund_id set. Open orders are never
   touched; neither is an anomalous paid row with result_delivered_at (e.g. the recovery-pinned 3687485f).
 - No row locks are held across the planning step: the UPDATE only applies when the column still equals the value it was
   planned from, with lock_timeout 3 s and statement_timeout 20 s, so a busy row can never stall the pickup cycle.
@@ -44,13 +44,19 @@ TABLE = "bh_priority_evaluation_requests"
 DB_NAME = os.environ.get("FASTLANE_DB") or "benchmarkheaven_accounts"
 STATE_ROOT = Path(os.environ.get("FASTLANE_STATE_ROOT") or Path.home() / ".local/state/fastlane-autopickup")
 RECEIPT_LOG = "access-key-purge.jsonl"
-CLOSED_STATUSES = ("completed", "refunded", "expired", "checkout_failed", "intake_declined")
+CLOSED_STATUSES = ("completed", "refunded", "expired", "intake_declined")
+# checkout_failed can still turn into paid (late Stripe webhook) or back into checkout_pending (customer retry, which
+# compares access_instructions), so it counts as closed only after 48 h without an update (Stripe sessions last <= 24 h).
+CHECKOUT_FAILED_GRACE = "48 hours"
 MARKER_TEXT = "Access details removed after the order closed."
 # JSON fields that may survive a purge, and only as plain strings (checked on the value inside the database).
 SAFE_FIELDS = ("endpoint", "base_url", "api_base", "api_url", "url", "model", "model_id", "model_name", "provider",
                "region", "api_version", "deployment", "access_type", "protocol", "format")
+# 24+ word characters in a row (hyphens ignored, so UUID-style or dash-split keys count too) look like a token.
+TOKEN_RUN_SQL = "regexp_replace(%s, '-', '', 'g') ~ '[A-Za-z0-9_]{24,}'"
 SAFE_VALUE_SQL = ("jsonb_typeof(e.value) = 'string' AND (e.value #>> '{}') ~ '^[A-Za-z0-9._:/+ -]{1,200}$' "
-                  "AND (e.value #>> '{}') !~ '[A-Za-z0-9_]{24,}'")
+                  "AND NOT " + TOKEN_RUN_SQL % "(e.value #>> '{}')")
+PURGED_AT_SQL = "(e.key = 'api_key_purged_at' AND (e.value #>> '{}') ~ '^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$')"
 # The key-free texts /submit writes into access_instructions (lib/model-submission.mjs toPriorityBody).
 SUBMIT_TEXT_RE = (r"^Submitted via /submit \(ref [A-Za-z0-9-]{1,40}\)\. API URL: (https://[^\s@?#=&]{1,250}|see the submission "
                   r"record\.) API key: (stored encrypted in the submission record|none submitted)\.$")
@@ -58,6 +64,7 @@ OPEN_WEIGHTS_TEXT = "Open weights at the links above."
 REF_RE = re.compile(r"^[0-9a-f-]{6,36}$")
 
 CLOSED_SQL = ("(r.status IN (" + ", ".join(f"'{s}'" for s in CLOSED_STATUSES) + ")"
+              f" OR (r.status = 'checkout_failed' AND r.updated_at < now() - interval '{CHECKOUT_FAILED_GRACE}')"
               " OR r.refund_id IS NOT NULL)")
 
 # One statement: plan the purged value in the database, update only rows still equal to the planned-from value, return
@@ -72,7 +79,7 @@ WITH candidates AS (
 ), fields AS (
   SELECT s.id,
     jsonb_object_agg(e.key, e.value) FILTER (WHERE e.key IN ({", ".join(f"'{f}'" for f in SAFE_FIELDS)}) AND {SAFE_VALUE_SQL}) AS kept,
-    count(e.key) FILTER (WHERE e.key <> 'api_key_purged_at' AND NOT (e.key = 'access_removed' AND (e.value #>> '{{}}') = '{MARKER_TEXT}')
+    count(e.key) FILTER (WHERE NOT {PURGED_AT_SQL} AND NOT (e.key = 'access_removed' AND (e.value #>> '{{}}') = '{MARKER_TEXT}')
       AND NOT (e.key IN ({", ".join(f"'{f}'" for f in SAFE_FIELDS)}) AND {SAFE_VALUE_SQL})) AS dropped
   FROM shaped s LEFT JOIN LATERAL jsonb_each(s.obj) AS e ON true
   GROUP BY s.id
@@ -80,7 +87,8 @@ WITH candidates AS (
   SELECT jsonb_build_object('access_removed', '{MARKER_TEXT}', 'api_key_purged_at', :'now')::text AS m
 ), planned AS (
   SELECT s.id, s.v AS old_v, CASE
-      WHEN s.obj IS NULL AND (s.v = '{OPEN_WEIGHTS_TEXT}' OR s.v ~ '{SUBMIT_TEXT_RE}') THEN NULL
+      WHEN s.obj IS NULL AND (s.v = '{OPEN_WEIGHTS_TEXT}'
+        OR (s.v ~ '{SUBMIT_TEXT_RE}' AND NOT {TOKEN_RUN_SQL % "s.v"})) THEN NULL
       WHEN s.obj IS NULL THEN (SELECT m FROM marker)
       WHEN f.dropped = 0 THEN NULL
       ELSE (COALESCE(f.kept, '{{}}'::jsonb) || jsonb_build_object('api_key_purged_at', :'now'))::text
@@ -91,7 +99,7 @@ WITH candidates AS (
   FROM planned p WHERE p.new_value IS NOT NULL
 ), upd AS (
   UPDATE {TABLE} r SET access_instructions = f.new_value, updated_at = now()
-  FROM final f WHERE r.id = f.id AND r.access_instructions = f.old_v
+  FROM final f WHERE r.id = f.id AND r.access_instructions = f.old_v AND {CLOSED_SQL}
   RETURNING r.id::text AS id
 )
 SELECT json_build_object('count', count(*), 'ids', COALESCE(json_agg(id ORDER BY id), '[]'::json), 'api_key_purged_at', :'now')

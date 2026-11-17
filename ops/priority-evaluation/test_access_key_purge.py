@@ -125,7 +125,12 @@ class Sweep(unittest.TestCase):
             "json_already_marked": insert(json.dumps({"api_key": SYNTH, "api_key_purged_at": "2026-01-01T00:00:00Z"}), status="completed"),
             "json_no_secret": insert(json.dumps({"endpoint": "https://api.example.ai/v1", "model": "m-3"}), status="expired"),
             "free_text": insert(f"Use endpoint https://api.example.ai/v1 with key {SYNTH}", status="refunded"),
-            "json_array": insert(json.dumps([SYNTH, "x"]), status="checkout_failed"),
+            "json_array": insert(json.dumps([SYNTH, "x"]), status="expired"),
+            "json_uuid_key": insert(json.dumps({"deployment": "3f2a9c1e-7b4d-4e8a-9f10-2c3d4e5f6a7b"}), status="completed"),
+            "json_purged_at_holds_key": insert(json.dumps({"api_key_purged_at": SYNTH}), status="completed"),
+            "submit_text_token_url": insert("Submitted via /submit (ref ABCD1234). API URL: https://api.example.ai/v1/"
+                                            "a1b2c3d4e5f6a7b8c9d0e1f2a3b4 API key: none submitted.", status="completed"),
+            "checkout_failed_recent": insert(json.dumps({"api_key": SYNTH}), status="checkout_failed"),
             "broken_json": insert('{"api_key": "' + SYNTH + '", ', status="intake_declined"),
             "submit_text": insert(submit_text, status="completed"),
             "open_weights_text": insert("Open weights at the links above.", status="completed", access_type="open_weights"),
@@ -140,7 +145,8 @@ class Sweep(unittest.TestCase):
         result = json.loads(out)
         purged = {"json_key", "json_auth_header", "json_nested", "json_key_in_url", "json_userinfo", "json_odd_names",
                   "json_token_in_model", "json_already_marked", "json_fake_marker", "free_text", "json_array", "broken_json",
-                  "submit_text_with_key", "refund_id_flag"}
+                  "submit_text_with_key", "refund_id_flag", "json_uuid_key", "json_purged_at_holds_key",
+                  "submit_text_token_url"}
         self.assertEqual(sorted(result["order_ids"]), sorted(rows[n] for n in purged))
         self.assertEqual(result["affected_rows"], len(purged))
         stamp = result["api_key_purged_at"]
@@ -163,17 +169,24 @@ class Sweep(unittest.TestCase):
         self.assertEqual(json.loads(access(rows["json_no_secret"])), {"endpoint": "https://api.example.ai/v1", "model": "m-3"})
         self.assertEqual(access(rows["submit_text"]), submit_text)
         self.assertEqual(access(rows["open_weights_text"]), "Open weights at the links above.")
-        for name in ("paid_but_delivered", "open_order", "open_free_text"):
+        for name in ("paid_but_delivered", "open_order", "open_free_text", "checkout_failed_recent"):
             self.assertIn(SYNTH, access(rows[name]), name)
         # Nothing secret is left in any closed row.
         left = psql("SELECT count(*) FROM bh_priority_evaluation_requests WHERE position(:'k' in access_instructions) > 0 "
-                    "AND status NOT IN ('paid','review_passed');", k=SYNTH)
+                    "AND status NOT IN ('paid','review_passed','checkout_failed');", k=SYNTH)
         self.assertEqual(left, "0")
         self.assertEqual(psql("SELECT count(*) FROM bh_priority_evaluation_requests WHERE position(:'k' in access_instructions) > 0;",
                               k=SYNTH.replace("-", "_")), "0")
         # Idempotent: a second sweep changes nothing.
         code, out, _ = run("sweep")
         self.assertEqual((code, json.loads(out)["affected_rows"]), (0, 0))
+
+    def test_checkout_failed_is_purged_only_after_the_grace_period(self):
+        rid = insert(json.dumps({"api_key": SYNTH}), status="checkout_failed")
+        self.assertEqual(json.loads(run("sweep")[1])["affected_rows"], 0)
+        psql("UPDATE bh_priority_evaluation_requests SET updated_at = now() - interval '49 hours' WHERE id = (:'id')::uuid;", id=rid)
+        self.assertEqual(json.loads(run("sweep")[1])["order_ids"], [rid])
+        self.assertNotIn(SYNTH, access(rid))
 
     def test_dry_run_changes_nothing(self):
         rid = insert(json.dumps({"api_key": SYNTH}), status="refunded")
@@ -183,7 +196,7 @@ class Sweep(unittest.TestCase):
 
     def test_over_long_json_falls_back_to_marker(self):
         # Five safe 140-character URLs fit the 800-character check with the key, but not with api_key_purged_at added.
-        safe = {f: ("https://e.example/" + "ab-" * 58)[:140] for f in ("endpoint", "base_url", "api_base", "api_url", "url")}
+        safe = {f: ("https://e.example/" + "ab." * 58)[:140] for f in ("endpoint", "base_url", "api_base", "api_url", "url")}
         rid = insert(json.dumps({"api_key": "k", **safe}), status="completed")
         self.assertLessEqual(len(access(rid)), 800)
         self.assertGreater(len(json.dumps({**safe, "api_key_purged_at": "2026-11-17T07:00:00Z"})), 800)
