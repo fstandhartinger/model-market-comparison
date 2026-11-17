@@ -1,0 +1,320 @@
+{
+ "starlord-4b-preview": {
+  "cost_basis_sha256": "b83bdfd14c263ffacfa572b304084154afca84c1f00083101a33783ae6f8b356",
+  "frozen": {
+   "api_flag": false,
+   "api_subset": false,
+   "axes": {
+    "calibration": 73.20522028655245,
+    "cost": 73.76266219513131,
+    "intelligence": 61.815754235386585,
+    "speed": 91.66160472343677
+   },
+   "capability": 67.51048726096951,
+   "composite_ci95": {
+    "A": [
+     70.38250249513885,
+     75.85329751358604
+    ],
+    "B": [
+     66.83064377276868,
+     73.70575827074136
+    ],
+    "C": [
+     60.14702451243757,
+     75.85329751358604
+    ]
+   },
+   "cost": {
+    "kind": "estimate",
+    "usd_per_1000": 0.0074916577162910765
+   },
+   "decision_limit": null,
+   "display": "Starlord-4B-preview",
+   "endpoint_kind": "gpu",
+   "full_coverage": true,
+   "jevbench_score": 73.65936958847477,
+   "key": "starlord-4b-preview",
+   "listing": "listed",
+   "rank": null,
+   "ranked": false,
+   "scores": {
+    "A": 73.65936958847477,
+    "B": 70.94097636577185,
+    "C": 73.65936958847477
+   },
+   "speed": {
+    "adjustment": "x2 + 0.15 s (assumption, not measured)",
+    "p50_s_adjusted": 0.2326975880000873,
+    "p50_s_raw": 0.041348794000043654,
+    "p95_s_adjusted": 0.2931214808000618,
+    "p95_s_raw": 0.0715607404000309
+   },
+   "status": {
+    "status": "complete"
+   },
+   "support": {
+    "choice": "native",
+    "noul": "native",
+    "score": "native"
+   },
+   "v16": {
+    "ci95": {
+     "B": 1000,
+     "C": [
+      68.71245287465383,
+      76.43999156656777
+     ],
+     "I": [
+      55.49668549116052,
+      66.77968827381699
+     ],
+     "capability": [
+      62.626935681476624,
+      71.11730297703895
+     ],
+     "composite": {
+      "A": [
+       70.38250249513885,
+       75.85329751358604
+      ],
+      "B": [
+       66.83064377276868,
+       73.70575827074136
+      ],
+      "C": [
+       60.14702451243757,
+       75.85329751358604
+      ]
+     },
+     "seed": 16
+    },
+    "complete": true,
+    "equated": null,
+    "equating_offset": null,
+    "g_med_used": 2.573387642438244,
+    "lane": "selfhosted"
+   },
+   "views": {
+    "Balanced 33:33:33": 73.81200748114523,
+    "Emphasis on Accuracy 60:20:20": 68.49502223690527,
+    "Emphasis on Cost 20:20:60": 73.79226144629062,
+    "Emphasis on Speed 20:60:20": 80.04715693548879,
+    "Intelligence only": 61.815754235386585
+   }
+  },
+  "pins": {
+   "frozen": "0c28fa84d721a6644ea49c3078645e89684fb3b72c180b617c4c3873de2316a1",
+   "v17-off": "306eedf66c4ff79896953f5027c7f1d329a2facfa6006d51fd37452b16369a14",
+   "v17-share": "a44adb0142b2dcc85a77a3d6ba87b4a10bf4d63c905f8789f070e2f622fbd64d"
+  },
+  "v17-off": {
+   "api_flag": false,
+   "api_subset": false,
+   "axes": {
+    "calibration": 73.20522028655245,
+    "cost": 73.76266219513131,
+    "intelligence": 61.815754235386585,
+    "speed": 91.66160472343677
+   },
+   "capability": 67.51048726096951,
+   "composite_ci95": {
+    "A": [
+     70.38250249513885,
+     75.85329751358604
+    ],
+    "B": [
+     66.83064377276868,
+     73.70575827074136
+    ],
+    "C": [
+     60.14702451243757,
+     75.85329751358604
+    ]
+   },
+   "cost": {
+    "kind": "estimate",
+    "usd_per_1000": 0.0074916577162910765
+   },
+   "decision_limit": null,
+   "display": "Starlord-4B-preview",
+   "endpoint_kind": "gpu",
+   "full_coverage": true,
+   "jevbench_score": 73.65936958847477,
+   "key": "starlord-4b-preview",
+   "listing": "listed",
+   "rank": null,
+   "ranked": false,
+   "scores": {
+    "A": 73.65936958847477,
+    "B": 70.94097636577185,
+    "C": 73.65936958847477
+   },
+   "speed": {
+    "adjustment": "x2 + 0.15 s (assumption, not measured)",
+    "p50_s_adjusted": 0.2326975880000873,
+    "p50_s_raw": 0.041348794000043654,
+    "p95_s_adjusted": 0.2931214808000618,
+    "p95_s_raw": 0.0715607404000309
+   },
+   "status": {
+    "status": "complete"
+   },
+   "support": {
+    "choice": "native",
+    "noul": "native",
+    "score": "native"
+   },
+   "v16": {
+    "ci95": {
+     "B": 1000,
+     "C": [
+      68.71245287465383,
+      76.43999156656777
+     ],
+     "I": [
+      55.49668549116052,
+      66.77968827381699
+     ],
+     "capability": [
+      62.626935681476624,
+      71.11730297703895
+     ],
+     "composite": {
+      "A": [
+       70.38250249513885,
+       75.85329751358604
+      ],
+      "B": [
+       66.83064377276868,
+       73.70575827074136
+      ],
+      "C": [
+       60.14702451243757,
+       75.85329751358604
+      ]
+     },
+     "seed": 16
+    },
+    "complete": true,
+    "equated": null,
+    "equating_offset": null,
+    "g_med_used": 2.573387642438244,
+    "lane": "selfhosted"
+   },
+   "views": {
+    "Balanced 33:33:33": 73.81200748114523,
+    "Emphasis on Accuracy 60:20:20": 68.49502223690527,
+    "Emphasis on Cost 20:20:60": 73.79226144629062,
+    "Emphasis on Speed 20:60:20": 80.04715693548879,
+    "Intelligence only": 61.815754235386585
+   }
+  },
+  "v17-share": {
+   "api_flag": false,
+   "api_subset": false,
+   "axes": {
+    "calibration": 73.10233702443097,
+    "cost": 73.76266219513131,
+    "intelligence": 61.532410399960156,
+    "speed": 92.11986108726356
+   },
+   "capability": 67.31737371219556,
+   "composite_ci95": {
+    "A": [
+     70.270300589819,
+     75.7590614659806
+    ],
+    "B": [
+     66.68606324574694,
+     73.58615712004108
+    ],
+    "C": [
+     59.55401765783517,
+     75.7590614659806
+    ]
+   },
+   "cost": {
+    "kind": "estimate",
+    "usd_per_1000": 0.0074916577162910765
+   },
+   "decision_limit": {
+    "limit_s": 10.0,
+    "rule": "latency_s > limit -> failed",
+    "treatment": "share"
+   },
+   "display": "Starlord-4B-preview",
+   "endpoint_kind": "gpu",
+   "full_coverage": true,
+   "jevbench_score": 73.60590230669764,
+   "key": "starlord-4b-preview",
+   "listing": "listed",
+   "rank": null,
+   "ranked": false,
+   "scores": {
+    "A": 73.60590230669764,
+    "B": 70.82647949079767,
+    "C": 73.60590230669764
+   },
+   "speed": {
+    "adjustment": "x2 + 0.15 s (assumption, not measured)",
+    "p50_s_adjusted": 0.21157634800001687,
+    "p50_s_raw": 0.03078817400000844,
+    "p95_s_adjusted": 0.2900993626999252,
+    "p95_s_raw": 0.0700496813499626
+   },
+   "status": {
+    "status": "complete"
+   },
+   "support": {
+    "choice": "native",
+    "noul": "native",
+    "score": "native"
+   },
+   "v16": {
+    "ci95": {
+     "B": 1000,
+     "C": [
+      68.66790953667926,
+      76.32708488723125
+     ],
+     "I": [
+      55.16592264955817,
+      66.43059487054335
+     ],
+     "capability": [
+      62.40891664959272,
+      70.81082762669458
+     ],
+     "composite": {
+      "A": [
+       70.270300589819,
+       75.7590614659806
+      ],
+      "B": [
+       66.68606324574694,
+       73.58615712004108
+      ],
+      "C": [
+       59.55401765783517,
+       75.7590614659806
+      ]
+     },
+     "seed": 16
+    },
+    "complete": true,
+    "equated": null,
+    "equating_offset": null,
+    "g_med_used": 2.573387642438244,
+    "lane": "selfhosted"
+   },
+   "views": {
+    "Balanced 33:33:33": 73.77530264149387,
+    "Emphasis on Accuracy 60:20:20": 68.33662154159194,
+    "Emphasis on Cost 20:20:60": 73.77024594310882,
+    "Emphasis on Speed 20:60:20": 80.16050114689979,
+    "Intelligence only": 61.532410399960156
+   }
+  }
+ }
+}

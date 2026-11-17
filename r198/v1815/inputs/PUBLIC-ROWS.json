@@ -1,0 +1,11 @@
+{
+ "starlord-4b-preview": {
+  "author": "xsdfasfgsa (Hugging Face)",
+  "disclosure": "Paid public evaluation. Measured on the 27 Oct draw on an evaluator-owned rented GPU, offline with the author's serving stack at the pinned commit. Failed or unanswered requests count as wrong answers. Qwen3.5-4B finetune read out through candidate logits in one joint forward pass, 0 output tokens, with a two-block bidirectional attention pass over the request in the full-attention layers and short-input repetition (<= 3,000 tokens). The model card says the public JevBench split was used for evaluation and tuning, not training. Over-limit or OOM items refused with 422 and scored wrong.",
+  "display": "Starlord-4B-preview",
+  "endpoint_condition": "evaluator-owned Verda GPU VM (RTXPRO6000), offline read-only container (--network none); customer's inference/serve_systemone.py unchanged at model commit 53321bdd; one BF16 model instance, candidate-logit readout (FP32 softmax, T=1.0), no generation, no KV cache; full-attention layers run the author's two-block bidirectional FlashAttention (flash-attn 2.8.3 varlen: request prefix attends to the prefix, the rest to the whole request); JevBench input repetition as in the model card (complete user input repeated once when the encoded request is <= 3,000 tokens); linear-attention (GDN) layers causal via fla 0.4.1 kernels; customer limit 131,072 tokens per joint request (no truncation, HTTP 422 above or on GPU OOM); official PyTorch 2.10.0 cu130 image + pinned overlay (transformers 5.3.0, official flash-attn 2.8.3 cu13/torch2.10 release wheel, Python 3.12) + decision_index base classes @25c6ec7b",
+  "licence": "cc-by-nc-nd-4.0 (model card); base Qwen/Qwen3.5-4B (LICENSE-BASE)",
+  "notes": "Qwen3.5-4B finetune read out through candidate logits in one joint forward pass, 0 output tokens, with a two-block bidirectional attention pass over the request in the full-attention layers and short-input repetition (<= 3,000 tokens). The model card says the public JevBench split was used for evaluation and tuning, not training. Over-limit or OOM items refused with 422 and scored wrong.",
+  "repo": "https://huggingface.co/xsdfasfgsa/Starlord-4B-preview"
+ }
+}

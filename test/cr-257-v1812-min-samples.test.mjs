@@ -60,7 +60,7 @@ test('v1.8.12: published live board and every All-data JSON input have no small 
  const [release, previous] = await Promise.all([readJevbenchV161Release(), readJevbenchV157Release()]);
  const apiA4 = JSON.parse(readFileSync('data/jevbench-api-a4-equated.json'));
  const board = await assembleJevBoard({release, previous, apiA4, live: true});
- assert.ok(['v1.8.12','v1.8.13','v1.8.14'].includes(board.published.restated_by));
+ assert.ok(['v1.8.12','v1.8.13','v1.8.14','v1.8.15'].includes(board.published.restated_by));
  assertRowBreakdownFloor(board.published, 'live board');
  for (const version of ['board-all', 'board-open', 'board-api', 'v1.8.12']) {
   const input = await readJevAllDataInput(version);

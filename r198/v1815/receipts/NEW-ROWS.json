@@ -1,0 +1,170 @@
+{
+ "starlord-4b-preview": {
+  "api_flag": false,
+  "api_subset": false,
+  "author": "xsdfasfgsa (Hugging Face)",
+  "axes": {
+   "calibration": 71.24809230925125,
+   "cost": 73.76266219513131,
+   "intelligence": 58.647519213382566,
+   "speed": 92.11986108726356
+  },
+  "base_model": "Qwen/Qwen3.5-4B",
+  "capability": 64.94780576131691,
+  "composite_ci95": {
+   "A": [
+    70.270300589819,
+    75.7590614659806
+   ],
+   "B": [
+    66.68606324574694,
+    73.58615712004108
+   ],
+   "C": [
+    59.55401765783517,
+    75.7590614659806
+   ]
+  },
+  "cost": {
+   "basis": "GPU-time estimate from v1.8.0: one monthly-rented RTX PRO 6000 96 GB, USD 1.5235/hour; average load 70%. Architecture: small qwen, 4B active parameters; throughput 61525 tokens/s (architecture-class calibration, efficient-engine prefill). GPU-time cost USD 0.00749165771629108/1,000; old list-price estimate USD 0.0228722498321021/1,000 (deepinfra:Qwen/Qwen3.5-4B at USD 0.03/M input and USD 0.15/M output). Applied min(old list-price estimate, GPU-time cost) = USD 0.00749165771629108/1,000. Estimated, not a bill.",
+   "kind": "estimate",
+   "usd_per_1000": 0.0074916577162910765
+  },
+  "decision_limit": {
+   "limit_s": 10.0,
+   "rule": "latency_s > limit -> failed",
+   "treatment": "share"
+  },
+  "disclosure": "Paid public evaluation. Measured on the 27 Oct draw on an evaluator-owned rented GPU, offline with the author's serving stack at the pinned commit. Failed or unanswered requests count as wrong answers. Qwen3.5-4B finetune read out through candidate logits in one joint forward pass, 0 output tokens, with a two-block bidirectional attention pass over the request in the full-attention layers and short-input repetition (<= 3,000 tokens). The model card says the public JevBench split was used for evaluation and tuning, not training. Over-limit or OOM items refused with 422 and scored wrong.",
+  "display": "Starlord-4B-preview",
+  "draw": {
+   "ci_basis": "measured on the draw before equating",
+   "drawn_on": "2026-10-27",
+   "g_med": 2.573387642438244,
+   "id": "v1.6-regular-20261027",
+   "label": "Third regular draw",
+   "measured_on": "2026-11-17",
+   "offset": {
+    "C": -1.8542447151797177,
+    "I": -2.884891186577587
+   },
+   "offset_ci95": {
+    "C": [
+     -5.447551660176162,
+     1.9718407968151896
+    ],
+    "I": [
+     -5.851030683979731,
+     1.0608488496147923
+    ]
+   },
+   "release": "v1.8.15",
+   "results_sha256": "a44adb0142b2dcc85a77a3d6ba87b4a10bf4d63c905f8789f070e2f622fbd64d",
+   "status": "equated"
+  },
+  "endpoint_condition": "evaluator-owned Verda GPU VM (RTXPRO6000), offline read-only container (--network none); customer's inference/serve_systemone.py unchanged at model commit 53321bdd; one BF16 model instance, candidate-logit readout (FP32 softmax, T=1.0), no generation, no KV cache; full-attention layers run the author's two-block bidirectional FlashAttention (flash-attn 2.8.3 varlen: request prefix attends to the prefix, the rest to the whole request); JevBench input repetition as in the model card (complete user input repeated once when the encoded request is <= 3,000 tokens); linear-attention (GDN) layers causal via fla 0.4.1 kernels; customer limit 131,072 tokens per joint request (no truncation, HTTP 422 above or on GPU OOM); official PyTorch 2.10.0 cu130 image + pinned overlay (transformers 5.3.0, official flash-attn 2.8.3 cu13/torch2.10 release wheel, Python 3.12) + decision_index base classes @25c6ec7b",
+  "endpoint_kind": "gpu",
+  "full_coverage": true,
+  "jevbench_score": 72.07350067955714,
+  "key": "starlord-4b-preview",
+  "last_measured_on": "2026-11-17",
+  "licence": "cc-by-nc-nd-4.0 (model card); base Qwen/Qwen3.5-4B (LICENSE-BASE)",
+  "listing": "unranked",
+  "measured_in": "v1.8.15",
+  "measurement_date_status": "measured",
+  "method": "v1.7",
+  "model_pin": "xsdfasfgsa/Starlord-4B-preview@53321bddf5e9260cf46ea31abedf48487d2583d6",
+  "new_in": "v1.8.15",
+  "not_ranked_because": "Added after the v1.8.10 ranking review; it is ranked at the next review.",
+  "notes": "Qwen3.5-4B finetune read out through candidate logits in one joint forward pass, 0 output tokens, with a two-block bidirectional attention pass over the request in the full-attention layers and short-input repetition (<= 3,000 tokens). The model card says the public JevBench split was used for evaluation and tuning, not training. Over-limit or OOM items refused with 422 and scored wrong.",
+  "paid_fast_lane": true,
+  "published_scores": {
+   "axes": {
+    "calibration": 73.10233702443097,
+    "cost": 73.76266219513131,
+    "intelligence": 61.532410399960156,
+    "speed": 92.11986108726356
+   },
+   "capability": 67.31737371219556,
+   "scores": {
+    "A": 73.60590230669764,
+    "B": 70.82647949079767,
+    "C": 73.60590230669764
+   }
+  },
+  "rank": null,
+  "ranked": false,
+  "ranks": {
+   "A": null,
+   "B": null,
+   "C": null,
+   "capability": null
+  },
+  "repo": "https://huggingface.co/xsdfasfgsa/Starlord-4B-preview",
+  "scores": {
+   "A": 72.07350067955714,
+   "B": 68.91806405382466,
+   "C": 68.8608546152745
+  },
+  "speed": {
+   "adjustment": "x2 + 0.15 s (assumption, not measured)",
+   "p50_s_adjusted": 0.21157634800001687,
+   "p50_s_raw": 0.03078817400000844,
+   "p95_s_adjusted": 0.2900993626999252,
+   "p95_s_raw": 0.0700496813499626
+  },
+  "status": {
+   "status": "complete"
+  },
+  "support": {
+   "choice": "native",
+   "noul": "native",
+   "score": "native"
+  },
+  "underlying": "Paid public evaluation. Measured on the 27 Oct draw on an evaluator-owned rented GPU, offline with the author's serving stack at the pinned commit. Failed or unanswered requests count as wrong answers. Qwen3.5-4B finetune read out through candidate logits in one joint forward pass, 0 output tokens, with a two-block bidirectional attention pass over the request in the full-attention layers and short-input repetition (<= 3,000 tokens). The model card says the public JevBench split was used for evaluation and tuning, not training. Over-limit or OOM items refused with 422 and scored wrong.",
+  "v16": {
+   "ci95": {
+    "B": 1000,
+    "C": [
+     68.66790953667926,
+     76.32708488723125
+    ],
+    "I": [
+     55.16592264955817,
+     66.43059487054335
+    ],
+    "capability": [
+     62.40891664959272,
+     70.81082762669458
+    ],
+    "composite": {
+     "A": [
+      70.270300589819,
+      75.7590614659806
+     ],
+     "B": [
+      66.68606324574694,
+      73.58615712004108
+     ],
+     "C": [
+      59.55401765783517,
+      75.7590614659806
+     ]
+    },
+    "seed": 16
+   },
+   "complete": true,
+   "equated": null,
+   "equating_offset": null,
+   "g_med_used": 2.573387642438244,
+   "lane": "selfhosted"
+  },
+  "views": {
+   "Balanced 33:33:33": 72.35290321039533,
+   "Emphasis on Accuracy 60:20:20": 66.1677831041302,
+   "Emphasis on Cost 20:20:60": 72.91029056133799,
+   "Emphasis on Speed 20:60:20": 79.14613212482669,
+   "Intelligence only": 58.647519213382566
+  }
+ }
+}
