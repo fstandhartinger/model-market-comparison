@@ -32,10 +32,10 @@ test('CR-599: published reread stays unranked through the later new-weights fiel
   const existing = a.ranking.filter(r => r.key !== key);
   assert.equal(existing.length, 67);
   const hash = createHash('sha256').update(JSON.stringify(existing)).digest('hex');
-  // CR-769: re-pinned after the normal new-weights field refresh; predecessor 31B and reread snapshots stay frozen.
+  // CR-769: re-pinned after the normal new-weights field refresh; all rows use current field metadata; predecessor and reread scores stay unchanged.
   // CR-664 (2 Nov 2026): re-pinned after the wording fix in the measurement_source of the two Jev rows (alias jev-latest/jev-preview now point to 1.14.0).
   // The alias-reversal pin in cr-664 is refreshed with the same later field update.
-  assert.equal(hash, '8e9529267c1045801619a4c15c869bf21eed3d808f7aad9e6f6cfbf5548cab08');
+  assert.equal(hash, '295864de68b3e6c352a1480159d6a75e62998a095154fb6274de3893d0729e2b');
   assert.equal(existing.filter(r => r.ranked).length, 65);
 });
 

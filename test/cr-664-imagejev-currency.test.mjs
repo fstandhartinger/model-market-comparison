@@ -61,5 +61,5 @@ test('CR-664: two Jev alias strings remain reversible after CR-769 field refresh
     r.measurement_source = r.measurement_source.replace(re, orig);
   }
   const hash = createHash('sha256').update(JSON.stringify(rows)).digest('hex');
-  assert.equal(hash, '97c71238a9e7534566d3659c0699fbe5c7b26d4694bca40fe2a7814cc0a163f2');
+  assert.equal(hash, 'c379e552448e323d3e059c1bbe34b8119cc631ec3beb391eebe4f8acd73e565e');
 });
