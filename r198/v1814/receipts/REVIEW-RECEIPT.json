@@ -1,0 +1,30 @@
+{
+ "verdict": "PASS",
+ "engine": "claude-opus-5-5 (Claude Code): independent critic r174-v1814-critic + independent delta critic r170b-v1814-delta-critic; builder was Codex GPT-6.1 Sol",
+ "release": "v1.8.14",
+ "head_reviewed": "2ff3e9c65 reviewed in full by r174-v1814-critic; 2ff3e9c65 -> 4676697cb3dbbcaceca3030b13904ed2698cbaaa (the Quyet-1.2-Small successor removal ruled by the deputy) reviewed by r170b-v1814-delta-critic; final head = 4676697c plus one non-hashed line, the v1.8.14 release date set to the publication day (C1)",
+ "reviews": [
+  {
+   "path": "workers/r174-v1814-critic/RESULT.json",
+   "sha256": "0b93e10e88b802d80a71322067f404ade6ecf8ba7e706787c9163a1b40db03d3",
+   "verdict": "PASS_WITH_CONDITIONS",
+   "musts": [],
+   "conditions_closed_by_the_release_owner": {
+    "C1": "release date line set to 2026-11-17, the publication day; in no hashed artifact",
+    "C2": "the release-wide build/full-suite binding is accepted as v1.8.13 accepted its own C3: the builder's production build (exit 0) and 4,319-test suite (4,311 pass / 0 fail / 8 skip) ran in its own fixture after commit 12bdb2f18, which differs from the reviewed bytes only in seven receipt files under r198/v1814/receipts/, and the delta critic states this diff adds no reason for a full-suite re-run because no numeric leaf changed, no test pins the removed text or the old hashes, and the only code change is a validator branch it exercised in both directions",
+    "C3": "origin/main moved from e08770df to 63d7bad5 during the run; the merge queue rebases on current main and re-runs typecheck, production build and the full test suite before merging, and both hosts are verified on the exact merged revision afterwards",
+    "C4": "see audit_trail below"
+   },
+   "non_blocking": ["S1", "S2", "S3", "S4", "S5", "S6"]
+  },
+  {
+   "path": "workers/r170b-v1814-delta-critic/REVIEW.json",
+   "sha256": "ece34becf97b1f403540d44471b744904ead6fee765609edfa4c55061bb6fc4b",
+   "verdict": "PASS_WITH_CONDITIONS",
+   "musts": [],
+   "non_blocking": ["S1", "S2", "S3", "S4", "S5"]
+  }
+ ],
+ "audit_trail": "C4 of the delta review: the committed receipts r198/v1814/receipts/DETERMINISM.json, HELPERS.json, SUITE, BUILT-CHECK and SERVED-CHECK describe the PREDECESSOR bytes (2ff3e9c65) and were deliberately not regenerated. No v1814 helper or test reads any of them. The final-byte evidence is the builder's workers/r170b-v1814-successor-rebuild2/determinism.json (both Python builds identical for all 66 tracked files) together with the delta critic's own logs/, which reproduce the final bytes independently.",
+ "note": "The deputy ruled outcome B on the Quyet-1.2-Small successor claim (no public successor claim is supported: the paid submission carries no follow-up field, and the 1.0-Small row is a 328M encoder while 1.2-Small is a 4B-class fine-tune). The validator assertion that required that claim is inverted for the Small key and left pinned for Large. All SHOULDs of both reviews are carried to the next release by a standing decision of 17 Nov 06:17Z; S4 (the wording of the new code comment, including a gendered assumption about the submitter) is the first of them."
+}

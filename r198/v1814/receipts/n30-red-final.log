@@ -1,0 +1,47 @@
+TAP version 13
+# Subtest: v1.8.14: no listed row displays any topic, use-case or language cell below 30 scored items
+not ok 1 - v1.8.14: no listed row displays any topic, use-case or language cell below 30 scored items
+  ---
+  duration_ms: 9139.122073
+  location: '/home/flori/wt/jevbench-v1814-20261116/test/cr-257-v1814-min-samples.test.mjs:6:1'
+  failureType: 'testCodeFailure'
+  error: 'ajev-gemma4-31b-lm6q.usecases.advertising: n=22'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (file:///home/flori/wt/jevbench-v1814-20261116/test/cr-257-v1814-min-samples.test.mjs:12:49)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: v1.8.14: candidate display JSON removes small row breakdowns without changing the stored release
+ok 2 - v1.8.14: candidate display JSON removes small row breakdowns without changing the stored release
+  ---
+  duration_ms: 9313.862584
+  ...
+# Subtest: v1.8.14: precomputed All-data JSON has no small row breakdowns
+ok 3 - v1.8.14: precomputed All-data JSON has no small row breakdowns
+  ---
+  duration_ms: 61.151134
+  ...
+# Subtest: v1.8.14: published live board and every All-data JSON input have no small row breakdowns
+ok 4 - v1.8.14: published live board and every All-data JSON input have no small row breakdowns # SKIP candidate PENDING; live board still uses the historical release
+  ---
+  duration_ms: 0.301834
+  ...
+# Subtest: v1.8.14: previous breakdowns are filtered at arbitrary depth in every dimension
+ok 5 - v1.8.14: previous breakdowns are filtered at arbitrary depth in every dimension
+  ---
+  duration_ms: 8975.380492
+  ...
+1..5
+# tests 5
+# suites 0
+# pass 3
+# fail 1
+# cancelled 0
+# skipped 1
+# todo 0
+# duration_ms 27830.115295
