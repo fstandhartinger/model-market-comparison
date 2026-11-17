@@ -60,6 +60,11 @@ class Tests(unittest.TestCase):
     def test_active_only_for_exact_order_kind_and_base(self):
         job = '/home/flori/jobs/fastlane-evaluations/' + S.ORDER
         self.assertTrue(S.active(job, recipe()))
+        self.assertTrue(S.active('/home/flori/jobs/fastlane-evaluations/9a4acee8-a098-451c-bc86-3a2d6fea1c47', recipe()))
+        self.assertEqual(S.ORDERS, frozenset({S.ORDER, '9a4acee8-a098-451c-bc86-3a2d6fea1c47'}))
+        self.assertFalse(S.active('/jobs/9a4acee8', recipe()))
+        self.assertFalse(S.active('/jobs/9a4acee8-a098-451c-bc86-3a2d6fea1c4', recipe()))
+        self.assertFalse(S.active('/jobs/fastlane-native-9a4acee8', recipe()))
         self.assertFalse(S.active('/jobs/other-order', recipe()))
         self.assertFalse(S.active('/jobs/8c7dbe11-5695-45d7-b701-cf92dab3ada7', recipe()))
         self.assertFalse(S.active('/jobs/529be5d5-512f-463f-bdae-d7cd289fe970', recipe()))
