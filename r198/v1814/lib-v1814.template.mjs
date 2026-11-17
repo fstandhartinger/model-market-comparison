@@ -65,7 +65,13 @@ export function validateJevbenchV1814Bundle({manifest,artifact,categories,carry,
   if(s.capability!==(s.axes.intelligence+s.axes.calibration)/2)fail('equated capability');
   if(s.decision_limit.limit_s!==10||s.decision_limit.treatment!=='share'||s.v16.g_med_used!==2.573387642438244)fail('scoring method '+k);
   if(s.paid_fast_lane!==true)fail('public paid row '+k);
-  if(!s.notes?.includes('Successor of Quyet-1.0-'+(k.endsWith('small')?'Small':'Large')+' (measured on the v1.5 draw); no comparison is drawn between the two draws.'))fail('family history');
+  // v1.8.14: Large's successor claim is the submitter's own pointer (his submission carries followup_name
+  // Quyet-1.0-Large) and stays pinned. For Small the deputy ruled on 17 Nov that no public successor claim is
+  // supported — the paid submission has no followup_* field at all — so the assertion is inverted here: the row
+  // must NOT claim one, in any of the three prose fields.
+  if(k.endsWith('small')){
+    for(const f of ['notes','disclosure','underlying'])if(/Successor of /.test(s[f]??''))fail('family history: unsupported successor claim '+k+' in '+f);
+  }else if(!s.notes?.includes('Successor of Quyet-1.0-Large (measured on the v1.5 draw); no comparison is drawn between the two draws.'))fail('family history');
   same(s.status,{status:'complete'},'status without counts '+k);
   const p=proof.new_rows[k],u=p.cost;
   for(const f of ['axes','decision_limit','model_pin','composite_ci95'])same(p[f],s[f],'proof '+f+' '+k);

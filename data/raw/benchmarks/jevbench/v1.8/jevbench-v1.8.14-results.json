@@ -227180,7 +227180,7 @@
     "rule": "latency_s > limit -> failed",
     "treatment": "share"
    },
-   "disclosure": "Paid public evaluation. Measured on the 27 Oct draw on an evaluator-owned Verda GPU VM (RTXPRO6000), offline with the author's serving stack at the pinned commit. Failed or unanswered requests count as wrong answers. Successor of Quyet-1.0-Small (measured on the v1.5 draw); no comparison is drawn between the two draws. Decision model: full fine-tune of Gemma 4 E4B with a separate option head; choice via the option head, score and noul via vocabulary-symbol scores with fixed per-type temperatures; 0 output tokens.",
+   "disclosure": "Paid public evaluation. Measured on the 27 Oct draw on an evaluator-owned Verda GPU VM (RTXPRO6000), offline with the author's serving stack at the pinned commit. Failed or unanswered requests count as wrong answers. Decision model: full fine-tune of Gemma 4 E4B with a separate option head; choice via the option head, score and noul via vocabulary-symbol scores with fixed per-type temperatures; 0 output tokens.",
    "display": "Quyet-1.2-Small",
    "draw": {
     "ci_basis": "measured on the draw before equating",
@@ -227221,7 +227221,7 @@
    "model_pin": "chinhnc/Quyet-1.2-Small@146a1ae2585ba95a6d390f00e60b9b00f67799af",
    "new_in": "v1.8.14",
    "not_ranked_because": "Added after the v1.8.10 ranking review; it is ranked at the next review.",
-   "notes": "Successor of Quyet-1.0-Small (measured on the v1.5 draw); no comparison is drawn between the two draws. Decision model: full fine-tune of Gemma 4 E4B with a separate option head; choice via the option head, score and noul via vocabulary-symbol scores with fixed per-type temperatures; 0 output tokens.",
+   "notes": "Decision model: full fine-tune of Gemma 4 E4B with a separate option head; choice via the option head, score and noul via vocabulary-symbol scores with fixed per-type temperatures; 0 output tokens.",
    "paid_fast_lane": true,
    "published_scores": {
     "axes": {
@@ -227266,7 +227266,7 @@
     "noul": "native",
     "score": "native"
    },
-   "underlying": "Paid public evaluation. Measured on the 27 Oct draw on an evaluator-owned Verda GPU VM (RTXPRO6000), offline with the author's serving stack at the pinned commit. Failed or unanswered requests count as wrong answers. Successor of Quyet-1.0-Small (measured on the v1.5 draw); no comparison is drawn between the two draws. Decision model: full fine-tune of Gemma 4 E4B with a separate option head; choice via the option head, score and noul via vocabulary-symbol scores with fixed per-type temperatures; 0 output tokens.",
+   "underlying": "Paid public evaluation. Measured on the 27 Oct draw on an evaluator-owned Verda GPU VM (RTXPRO6000), offline with the author's serving stack at the pinned commit. Failed or unanswered requests count as wrong answers. Decision model: full fine-tune of Gemma 4 E4B with a separate option head; choice via the option head, score and noul via vocabulary-symbol scores with fixed per-type temperatures; 0 output tokens.",
    "v16": {
     "ci95": {
      "B": 1000,
