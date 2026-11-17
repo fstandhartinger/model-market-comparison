@@ -1,4 +1,4 @@
-"""Fixed-order offline runtime supplement for CueReflex-E4B (paid fast-lane order 1dedbcf2).
+"""Fixed-order offline runtime supplement for CueReflex-E4B (paid fast-lane orders 1dedbcf2 and 9a4acee8).
 
 CueReflex is a PEFT LoRA adapter plus a frozen answer-letter readout on google/gemma-4-E4B-it, served by the customer's own
 TypeSafe-compatible inference/serve.py. The author declares Python >=3.11, torch >=2.6, transformers >=5.5, peft >=0.19,
@@ -11,6 +11,9 @@ not accept) converted on the host without unpickling (opcode allow-list plus raw
 input LFS sha256 37ba4ef0..., output 43236263...). The image places it at /opt/cue-reflex-head/head.safetensors for the reviewed
 first-party launcher. The Docker build is offline and uses only the pinned context members. The customer package is mounted from
 the model repository by the trusted runner; this host module imports no model stack and executes no customer code.
+Order 9a4acee8 (CR-772) is the same customer's v0.2 checkpoint on the same base: its serve.py no longer reads decision_head.pt
+(it derives the readout from the base output embeddings), its adapter_config.json differs from 1dedbcf2's only in the recorded
+peft_version (0.21.3), and its imports are unchanged, so the identical pinned context serves it; head.safetensors stays unused there.
 """
 import hashlib
 import re
@@ -21,6 +24,7 @@ import measurement_dispatch
 import pod_runner
 
 ORDER = '1dedbcf2-3577-47b9-9893-eaad445b7061'
+ORDERS = frozenset({ORDER, '9a4acee8-a098-451c-bc86-3a2d6fea1c47'})
 BASE_IMAGE = 'pytorch/pytorch:2.9.1-cuda12.8-cudnn9-devel@sha256:39236c0ad9c66baecf01bb2e4f5562543c5b336c0c785887798775d6d6fdbf9a'
 CONTEXT = Path('/home/flori/jobs/fastlane-native-1dedbcf2/supplement/PUBLIC-BUILD-CONTEXT.tar')
 CONTEXT_SHA = '51be8c25ad667900ed3073a0a66a434b604d76875b03f41d1f2cd77c98197564'
@@ -79,8 +83,8 @@ def sha256(path):
         return _sha256_stream(stream)
 
 def active(job, recipe):
-    """Only this order's reviewed http_typesafe recipe on the exact pinned base selects the supplement."""
-    return (Path(job).name == ORDER and isinstance(recipe, dict) and recipe.get('kind') == 'http_typesafe'
+    """Only these exact orders' reviewed http_typesafe recipes on the exact pinned base select the supplement."""
+    return (Path(job).name in ORDERS and isinstance(recipe, dict) and recipe.get('kind') == 'http_typesafe'
             and recipe.get('image') == BASE_IMAGE)
 
 def check_context(context=CONTEXT):
