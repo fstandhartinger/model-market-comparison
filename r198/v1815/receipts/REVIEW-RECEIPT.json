@@ -1,0 +1,32 @@
+{
+ "verdict": "PASS",
+ "engine": "claude-opus-5-5 (Claude Code): independent critic r171e-v1815-critic (Opus 5.5 xhigh); builders were Codex GPT-6.1 Sol (r170b/r175/r176/r171b)",
+ "release": "v1.8.15",
+ "head_reviewed": "aa7314b5dfc41bfb2c919d58d70ce25019e0c90e reviewed in full by r171e-v1815-critic (verdict REVISE, four mechanical MUSTs, measurement clean: re-score max |delta| 0.0, cost right, 0 carried-row changes, privacy clean, display floor holds); final head = aa7314b5d + c1fa6031e (M1) + 388572e89 (M2-M4) + release-owner binding commits",
+ "reviews": [
+  {
+   "path": "workers/r171e-v1815-critic/RESULT.json",
+   "sha256": "d8de9c02ec8842b14e81a1184c1ef99dc19ef21c56163f05bf6e73016cb46e78",
+   "result_md_sha256": "9315e761b3c9848b239165388bb2d578d0df11cf2690f3faafc622b113508de8",
+   "verdict": "REVISE",
+   "musts": [
+    "M1",
+    "M2",
+    "M3",
+    "M4"
+   ],
+   "musts_closed_by_the_release_owner": "All four MUSTs closed by applying the critic's own PROPOSED-FIXES.patch (sha256 f187c978188854f2c166bdc4573c3380c5f457fe431edfa479cb079d1a7268e9) with no other change: the four touched files at 388572e89 are byte-identical to aa7314b5d + that patch (lead proof 17 Nov 17:5xZ). The critic applied the same patch in its own fixture and reports the real flip (dry-run and non-dry), freeze and seal dry-runs, the PASS validator (16 negative controls) and every PASS-state test it ran passing. Focused tests on 388572e89 (cr-205, v1713/v181/v1810/v189/v1815 release): 76 pass, 0 fail.",
+   "conditions_closed_by_the_release_owner": {
+    "C1": "release date line stays 2026-11-17, the publication day (merge queue today)",
+    "C2": "builder build/compiled/served receipts bind to aa7314b5d source (critic verified 58,764 tracked paths equal the .pass snapshot); M1-M4 touch only tests, one helper and one non-hashed data file; the merge queue re-runs typecheck, production build and the full suite on the rebased head",
+    "C3": "origin/main moved (c05c25bfb and later); the merge queue rebases on current main and re-runs all gates before merging; both hosts verified on the merged revision afterwards"
+   },
+   "non_blocking": [
+    "S1",
+    "S2",
+    "S3"
+   ]
+  }
+ ],
+ "note": "The serial Sandy full suite was stopped by the release owner (would need ~9 h at load 20); it had reached 518 tests with the one cr-205 failure (= M1). The finish worker's served-check helper was corrected by the release owner (board-api must NOT carry an open-scope row; lib/jevbench-scope.mjs), then 5/5 served routes PASS. SHOULDs S1-S3 carried to the next release."
+}
