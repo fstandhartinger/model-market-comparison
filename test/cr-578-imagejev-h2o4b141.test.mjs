@@ -60,9 +60,9 @@ test('CR-578 H2O-4B v1.4.1: scores, composite top-five change and unchanged capp
   assert.ok(Math.abs(c.speed.raw_p50_s - 0.08696616150001546) < 1e-12);
   const e = release.capability_eligibility;
   const capped = release.ranking.filter((r) => r.ranked && r.tracks.core.cost.usd_per_1000 <= e.cost_usd_per_1000_cap && r.tracks.core.speed.adjusted_p50_s <= e.latency_p50_s_cap).sort((a, b) => b.tracks.core.capability - a.tracks.core.capability);
-  assert.equal(capped.length, 55);
-  assert.equal(capped.findIndex((r) => r.key === key) + 1, 10);
-  assert.deepEqual(capped.slice(0, 5).map((r) => r.key), ['h2o_lightning_31b_image', 'kettei_fat', 'sage_1_4_images', 'drex_max', 'jev_1_13_images']);
+  assert.equal(capped.length, 56);
+  assert.equal(capped.findIndex((r) => r.key === key) + 1, 11);
+  assert.deepEqual(capped.slice(0, 5).map((r) => r.key), ['h2o_lightning_31b_image', 'h2o_lightning_31b_v134_image', 'kettei_fat', 'sage_1_4_images', 'drex_max']);
   const page = await readFile(new URL('../components/ImageJevV03Page.tsx', import.meta.url), 'utf8');
   assert.match(page, /27 Oct 2026 addendum, new row:<\/b> adds H2O-Lightning-4B v1.4.1 \(image\)/);
   assert.match(page, /TypeSafe-20 cells for this row were measured on 27 Oct 2026 on the 600 sealed items with 0 errors; the TypeSafe-20 bank had previously been exposed to API providers/);

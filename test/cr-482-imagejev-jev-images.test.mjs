@@ -47,7 +47,7 @@ test('CR-482 cost reference is Jev with images; both top fives are the reviewed 
     && r.tracks.core.speed.adjusted_p50_s <= e.latency_p50_s_cap;
   const capped = release.ranking.filter(inCap).sort((a, b) => b.tracks.core.capability - a.tracks.core.capability);
   assert.deepEqual(capped.slice(0, 5).map((r) => r.key),
-    ['h2o_lightning_31b_image', 'kettei_fat', 'sage_1_4_images', 'drex_max', 'jev_1_13_images']); // CR-536: H2O-Lightning-31B added; field equating and ranks refreshed.
+    ['h2o_lightning_31b_image', 'h2o_lightning_31b_v134_image', 'kettei_fat', 'sage_1_4_images', 'drex_max']); // CR-536: H2O-Lightning-31B added; field equating and ranks refreshed.
   assert.equal(capped.length, 56); // CR-536: H2O-Lightning-31B added; field equating and ranks refreshed.
   // Wity-1 and the GPT Lunas stay out on latency, not cost
   for (const key of ['wity_1', 'gpt6_luna', 'gpt56_luna']) assert.ok(row(key).tracks.core.speed.adjusted_p50_s > e.latency_p50_s_cap, key);
