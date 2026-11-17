@@ -28,14 +28,15 @@ test('CR-599: same-weight second read has scores and no rank in artifact and boa
   assert.equal(row.tracks.core.failures, 0);
 });
 
-test('CR-599: every existing row, rank, score and field statistic stays byte-identical to the published field', () => {
+test('CR-599: published reread stays unranked through the later new-weights field refresh', () => {
   const existing = a.ranking.filter(r => r.key !== key);
-  assert.equal(existing.length, 66);
+  assert.equal(existing.length, 67);
   const hash = createHash('sha256').update(JSON.stringify(existing)).digest('hex');
+  // CR-769: re-pinned after the normal new-weights field refresh; predecessor 31B and reread snapshots stay frozen.
   // CR-664 (2 Nov 2026): re-pinned after the wording fix in the measurement_source of the two Jev rows (alias jev-latest/jev-preview now point to 1.14.0).
-  // test/cr-664-imagejev-currency.test.mjs proves that reverting exactly those two strings restores the previous pin 5c5c616d....
-  assert.equal(hash, '298e5ebb577b094b2df40c9b88c2c2e75f6c0834d4a9b6703030cdd6c9fcb124');
-  assert.equal(existing.filter(r => r.ranked).length, 64);
+  // The alias-reversal pin in cr-664 is refreshed with the same later field update.
+  assert.equal(hash, '8e9529267c1045801619a4c15c869bf21eed3d808f7aad9e6f6cfbf5548cab08');
+  assert.equal(existing.filter(r => r.ranked).length, 65);
 });
 
 test('CR-599: no TS20 values are borrowed; permanent exception and revision-specific cell text', () => {

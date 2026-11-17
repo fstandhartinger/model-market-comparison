@@ -27,10 +27,10 @@ test('CR-664: the newer-version rows promise no landing date and claim no measur
   assert.doesNotMatch(all, /\b(will land|lands on|ETA|top 5|top five|rank #)/i);
 });
 
-test('CR-664: metadata only - no score, rank or ranking membership changed', () => {
+test('CR-664: currency section remains on the live v0.3 board after CR-769 addition', () => {
   assert.equal(a.revision, 'v0.3.0');
-  assert.equal(a.ranking.length, 67);
-  assert.equal(a.ranking.find(r => r.key === 'sage_1_4_images').rank, 7);
+  assert.equal(a.ranking.length, 68);
+  assert.equal(a.ranking.find(r => r.key === 'sage_1_4_images').rank, 8);
 });
 
 test('CR-664: Jev 1.13.0 rows are named by version, not by the moving alias', () => {
@@ -49,7 +49,7 @@ test('CR-664: page renders the section and records it in the revision history', 
   assert.match(section, /id="currency-check"/);
 });
 
-test('CR-664: the only change to existing rows is the alias wording in two Jev measurement_source strings', () => {
+test('CR-664: two Jev alias strings remain reversible after CR-769 field refresh', () => {
   const revert = {
     jev_1_13_images: [/Jev 1\.13\.0 \(TypeSafe's stable release when measured;[^)]*\) with images\./, "Jev 1.13.0 (TypeSafe's stable release, alias jev-latest) with images."],
     jev_1_14_images: [/Jev 1\.14\.0 \(TypeSafe's newest release, available since 14 Oct 2026; the aliases[^)]*\) with images\./, "Jev 1.14.0 (TypeSafe's newest release, available since 14 Oct 2026, alias jev-preview) with images."],
@@ -61,5 +61,5 @@ test('CR-664: the only change to existing rows is the alias wording in two Jev m
     r.measurement_source = r.measurement_source.replace(re, orig);
   }
   const hash = createHash('sha256').update(JSON.stringify(rows)).digest('hex');
-  assert.equal(hash, '5c5c616d61af4c9028be0126e567fe24a146564608b2a1002b1b93925b41b249');
+  assert.equal(hash, '97c71238a9e7534566d3659c0699fbe5c7b26d4694bca40fe2a7814cc0a163f2');
 });
