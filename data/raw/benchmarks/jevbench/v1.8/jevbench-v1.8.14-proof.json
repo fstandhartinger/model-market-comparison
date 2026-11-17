@@ -1,0 +1,301 @@
+{
+ "carried_rows": 343,
+ "carried_rows_equal_except": [],
+ "cost_basis": {
+  "cost_basis_sha256": "b83bdfd14c263ffacfa572b304084154afca84c1f00083101a33783ae6f8b356",
+  "frozen_at": "v1.7.16",
+  "n_items": 1489,
+  "rule": "fixed-common-cost-basis-d1027 (frozen at v1.7.16)",
+  "set_sha256": "4e912731e63369e1b3066b0b4afa87b44f1094aea079c5b41dc6d02e7f235537"
+ },
+ "equating": {
+  "anchor_output_sha256": {
+   "decider-12b": "9f467fcd9e3948666d3345ac6d89c222819c67151e9f18fc7da3877f181b50ee",
+   "h2o-lightning-4b-v1.1": "76ee19dc9f74dffc4811e5eb79a05e781961dc34993866a195d4a5a59e2d2475",
+   "quyet-1-0-large": "60901344af432989a06f73ba6f0664e2c9c3a7f07dfad49f8dcb6dbacaf9ab42",
+   "torchcast-decision-27b": "5dfa234af9e35ce8f552bf84bde514c8de982cd07c257c2c13b8f6dea21aee5b"
+  },
+  "anchors": [
+   "decider-12b",
+   "h2o-lightning-4b-v1.1",
+   "quyet-1-0-large",
+   "torchcast-decision-27b"
+  ],
+  "anchors_not_used": "One of the five planned anchor systems could not be staged before any scored item; its pre-registered handling is to skip it with no retry, so the offset uses the four complete anchors.",
+  "applied_as": "published + offset on Intelligence and Calibration (clipped 0..100); Capability = mean of the equated axes; composites and sort views by the frozen score_v15.composite; confidence intervals as measured on the draw before equating (not shifted); published numbers kept in published_scores",
+  "bootstrap": {
+   "B": 1000,
+   "conservative": "all independent",
+   "primary": "paired public items + independent sealed, anchors resampled",
+   "seed": 16
+  },
+  "coverage_note": "anchor reference Intelligence-base 60.0-73.4; d1027 rows above ~78 on the reference scale are extrapolated",
+  "draw": "v1.6-regular-20261027",
+  "equate_tool_sha256": "c9604b9dc72fd23570b856a6f475c570c36958bef21204863369e81f11ac2b9d",
+  "files": {
+   "equating": {
+    "name": "EQUATING-STRONG4-D1027.json",
+    "sha256": "7888a0803466daac872f46809b12015af6c3686109276ab89e1028c206103146"
+   }
+  },
+  "g_med": {
+   "new_draw_anchor_pool": -4.438035502660156,
+   "new_draw_rel": 2.573387642438244,
+   "reference": 2.573387642438244
+  },
+  "mean_instead_of_median": {
+   "C": -2.055450428516103,
+   "I": -2.609694629464121
+  },
+  "method": "Every draw shares the same 300 public items (P, manifest 6b2321f8...). A fresh draw is equated to the reference draw with anchor systems measured on both draws (each draw lists its own anchor set): offset = median over anchors of (metric on the reference S u P) - (metric on the new draw S u P), for Intelligence and Calibration, with a bootstrap 95% interval over anchors and items. A row from that draw is shown as published plus the offset; Capability and Composite follow from the equated axes. Until the anchor runs of a draw are complete its offset is 0 and the draw is marked 'anchor runs pending'.",
+  "n_anchors": 4,
+  "offset": {
+   "C": -1.8542447151797177,
+   "I": -2.884891186577587
+  },
+  "offset_basis": "median over anchors of (metric on v1.6.0 S u P) - (metric on d1027 S u P); applied by ADDING to a d1027 row (merged-board convention); I = post-penalty Intelligence at the reference G_med, C = Calibration",
+  "offset_ci95": {
+   "C": [
+    -5.447551660176162,
+    1.9718407968151896
+   ],
+   "I": [
+    -5.851030683979731,
+    1.0608488496147923
+   ]
+  },
+  "offset_ci95_independent_items": {
+   "C": [
+    -5.698741700420654,
+    1.8919272371911515
+   ],
+   "I": [
+    -8.253666488669571,
+    3.189140875897631
+   ]
+  },
+  "offset_info": {
+   "I_open": -7.105427357601002e-15,
+   "I_sealed": -5.582136051180097
+  },
+  "per_anchor_difference": {
+   "decider-12b": {
+    "C": -4.02419754778029,
+    "I_post_rel": -2.1607102631948862
+   },
+   "h2o-lightning-4b-v1.1": {
+    "C": -0.48911473592468724,
+    "I_post_rel": -3.6090721099602874
+   },
+   "quyet-1-0-large": {
+    "C": -3.0430998789773867,
+    "I_post_rel": -4.452462390359102
+   },
+   "torchcast-decision-27b": {
+    "C": -0.6653895513820487,
+    "I_post_rel": -0.21653375434220834
+   }
+  },
+  "reference_output_sha256": {
+   "decider-12b": "8bce97638c4a20cf0a51d47559a3c5930749ea91a718bde6c04cb5cccc285456",
+   "h2o-lightning-4b-v1.1": "4b19dbf4aa30baf2cf003b507340ecd863328c7185dd03cbe92bd71c3f95fd7f",
+   "quyet-1-0-large": "b9f8d6aefccad03fe97de9fac1c05e8356c487cf99d386dc51351073094a8072",
+   "torchcast-decision-27b": "c399b8943a5b862eed2678422d8fa4a1687b67f084dd32e4711a2d2fb25516a4"
+  },
+  "scorer": {
+   "name": "score_v16",
+   "noul_method": "O1S",
+   "sha256": "02132271117653e6302c509232a581d0094f0e78eac8b1bfc67596fd5d5097e9"
+  },
+  "sensitivity_leave_one_out": {
+   "decider-12b": {
+    "C": -0.6653895513820487,
+    "I": -3.6090721099602874
+   },
+   "h2o-lightning-4b-v1.1": {
+    "C": -3.0430998789773867,
+    "I": -2.1607102631948862
+   },
+   "quyet-1-0-large": {
+    "C": -0.6653895513820487,
+    "I": -2.1607102631948862
+   },
+   "torchcast-decision-27b": {
+    "C": -3.0430998789773867,
+    "I": -3.6090721099602874
+   }
+  },
+  "status": "equated"
+ },
+ "exceptions": {
+  "text_only_sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+ },
+ "method": {
+  "decision_limit_s": 10,
+  "label": "v1.7",
+  "rule": "latency_s > 10.000 s -> failed",
+  "treatment": "share"
+ },
+ "new_rows": {
+  "quyet-1-2-large": {
+   "axes": {
+    "calibration": 88.9668822338541,
+    "cost": 61.7344191165331,
+    "intelligence": 74.51696403947234,
+    "speed": 88.26322277501028
+   },
+   "code_commit": "ffad03b6f20aa548ba2e045410e9fcafe4ddf0d2",
+   "composite_ci95": {
+    "A": [
+     75.96867153327548,
+     78.52683477533759
+    ],
+    "B": [
+     75.38003851791416,
+     78.95703469616481
+    ],
+    "C": [
+     75.96867153327548,
+     78.52683477533759
+    ]
+   },
+   "cost": {
+    "active_b": 31,
+    "architecture_class": "dense",
+    "cost_common": 0.01885903049573297,
+    "family": "gemma",
+    "gpu_common": 0.01885903049573297,
+    "list_common": 0.02837405641370047,
+    "ref": {
+     "authority": "frozen market reference and v1.8 GPU-time min",
+     "in": 0.09,
+     "listing": "google/gemma-4-31b-it",
+     "module_sha256": "1b3c52fbeb5543c44c5d2c093002c60b469e4356a7f96116fc4228a345bd10b2",
+     "out": 0.33999999999999997
+    },
+    "throughput": 10106.516129032258
+   },
+   "decision_limit": {
+    "limit_s": 10.0,
+    "rule": "latency_s > limit -> failed",
+    "treatment": "share"
+   },
+   "failure_treatment": "Failed or unanswered requests count as wrong answers.",
+   "model_pin": "chinhnc/Quyet-1.2-Large@ffad03b6f20aa548ba2e045410e9fcafe4ddf0d2",
+   "price_reference": {
+    "authority": "frozen market reference and v1.8 GPU-time min",
+    "in": 0.09,
+    "listing": "google/gemma-4-31b-it",
+    "module_sha256": "1b3c52fbeb5543c44c5d2c093002c60b469e4356a7f96116fc4228a345bd10b2",
+    "out": 0.33999999999999997
+   },
+   "scored_input_sha256": "d3950d9838157bf49139bc588aed11c68bb91f67234f250bc91571fafef15dd9",
+   "treatment": "unranked"
+  },
+  "quyet-1-2-small": {
+   "axes": {
+    "calibration": 81.39847698823577,
+    "cost": 88.8673177026433,
+    "intelligence": 31.79407821885479,
+    "speed": 93.3863994106336
+   },
+   "code_commit": "146a1ae2585ba95a6d390f00e60b9b00f67799af",
+   "composite_ci95": {
+    "A": [
+     23.545047992281212,
+     37.58704210093485
+    ],
+    "B": [
+     19.855036405291802,
+     32.72356984644913
+    ],
+    "C": [
+     16.35072777241751,
+     26.102112570093656
+    ]
+   },
+   "cost": {
+    "active_b": 4,
+    "architecture_class": "small",
+    "cost_common": 0.0023501165987887835,
+    "family": "gemma",
+    "gpu_common": 0.0023501165987887835,
+    "list_common": 0.006265211551376763,
+    "ref": {
+     "authority": "frozen market reference and v1.8 GPU-time min",
+     "in": 0.02,
+     "listing": "deepinfra:google/gemma-4-E4B-it",
+     "module_sha256": "1b3c52fbeb5543c44c5d2c093002c60b469e4356a7f96116fc4228a345bd10b2",
+     "out": 0.1
+    },
+    "throughput": 80585.75
+   },
+   "decision_limit": {
+    "limit_s": 10.0,
+    "rule": "latency_s > limit -> failed",
+    "treatment": "share"
+   },
+   "failure_treatment": "Failed or unanswered requests count as wrong answers.",
+   "model_pin": "chinhnc/Quyet-1.2-Small@146a1ae2585ba95a6d390f00e60b9b00f67799af",
+   "price_reference": {
+    "authority": "frozen market reference and v1.8 GPU-time min",
+    "in": 0.02,
+    "listing": "deepinfra:google/gemma-4-E4B-it",
+    "module_sha256": "1b3c52fbeb5543c44c5d2c093002c60b469e4356a7f96116fc4228a345bd10b2",
+    "out": 0.1
+   },
+   "scored_input_sha256": "4550efb8e59e3f4a80e618bc22436de0852fb7b7bcd6433c26a775f6713e2fb9",
+   "treatment": "unranked"
+  }
+ },
+ "predecessor": {
+  "publication_sha256": "482c1749b25f8b0bd7bf1cdb84a1bd9e8db87a96d144f96789a488455173c8bb",
+  "revision": "v1.8.13"
+ },
+ "pricing_authority": "frozen market reference and v1.8 GPU-time min",
+ "pricing_module_sha256": "1b3c52fbeb5543c44c5d2c093002c60b469e4356a7f96116fc4228a345bd10b2",
+ "publication_approval": {
+  "changes": [
+   "two new unranked rows",
+   "Karpo carried-row breakdown/category addition"
+  ],
+  "fairness_review_required": false,
+  "fresh_baseline": "v1.8.13",
+  "scope": "row-only",
+  "status": "GO (standing; paid public evaluation; unranked row only)",
+  "top_five_effect": "unchanged"
+ },
+ "remeasured_rows": {},
+ "repriced_rows": {},
+ "revision": "v1.8.14",
+ "schema_version": 1,
+ "scorers": {
+  "a2_cells_v16": "afd034efe27bde12f2ebbfd12c4c0792c93214e1aa9a63deecb0e83a0184c990",
+  "build_categories_v16": "40eb50f3d7fea2693b4478c4b89f8bfb957dd17776add491935742e3b9354e73",
+  "build_topics_v16": "ec04ab598162bfc4340ffa7916a06573eb1222132c61e47ab772045bc67ced78",
+  "decisive_v16": "80b9ccf43e58dddb1b2a77e0a33aba8a9f7337a3a9a639afc7264218bbf8918f",
+  "noul_method_v16": "119e59486ab3300b972fbcbadb0fe1dceceb124287607375aa61c66063c607d0",
+  "pins_v17": "b50cc00dd2cb0ba46157eb6a2bda620255f3ff54404025e992bc7962dfff2f8b",
+  "run_under_v17": "efb194b2ea350db59be37e5e72af71f809f763a2476cd6f521adf6f4fd90a64f",
+  "score_v15": "0931e05c6410b1b971201834397cb609cdb25f942723c50375632952f6dcc447",
+  "score_v15_headlineA": "826f2cbcb57007ec8a161e6eb0111182b8a656c0638027c6c78022a858fd8e2c",
+  "score_v16": "02132271117653e6302c509232a581d0094f0e78eac8b1bfc67596fd5d5097e9",
+  "score_v17": "6363458d208a52f4ad5aaf73027cad1b7e0358ff962e581d57a3cc462c8f1978"
+ },
+ "source_inputs": {
+  "inputs/ARCHITECTURE.json": "ff61936b80d0fe637bd94d8c182da9da6842801f5cb5c4954250d4e5fdd30e1e",
+  "inputs/BREAKDOWN-POLICY.json": "50c67d81146b087bd208939c21a990142d75a7cf2169661f8eb896e74986d785",
+  "inputs/CLEANED-ROWS.json": "37d5af2fd7529d4fb5aa090875adec35a9e5ff1ccc6c32392d3297324f502fb7",
+  "inputs/ENTRIES.json": "fa86d64ecca56a1c40df586eddb00f628f0e0f6eb731b26e3922c3e617771961",
+  "inputs/ENTRY-PINS.json": "a4cc6a5b09613a23c7392b09c8e23904284e95cd87f87f8fd9fe07dd41ed4108",
+  "inputs/KARPO-CELLS.json": "362ce7763a26540731b15c6ce7a5263b4a42f198131ab5c69771f550c800313a",
+  "inputs/KARPO-ROW.json": "8e554579178683410adb1af7eb26e931938228f5c353cbe925da9b7a38220aa3",
+  "inputs/PROVENANCE.json": "a5bb736d939ddc6dc3dbdbfe65e0cde7df27e9ecbfa4620913bb441b6f0267a0",
+  "inputs/PUBLIC-ROWS.json": "9db4a659a25174cda08f1d7d917e3f8ee4dd039642143ec251963aa1875c1792",
+  "inputs/TEXT-EXCEPTIONS.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+  "src/cells.json": "d13bc9ae114e5673f828c7b501a578be403ace596b5b768c42ec1d8f5047e608",
+  "src/scored.json": "12f7154d6232f95eeddfb6d912906fea1927cb4fe538f361aa9acae40421d4cf",
+  "src/usage.json": "d0b24a49e9df19e9718e5b7c3e866d0372ccb1ec3550368edba208180397f6a3"
+ },
+ "topfive_diff_sha256": "50612102326a56682b7dfd7f6a146d75b8a69344e59f009eef7f48265f4eaef6"
+}

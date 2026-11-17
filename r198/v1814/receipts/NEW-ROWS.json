@@ -1,0 +1,338 @@
+{
+ "quyet-1-2-large": {
+  "api_flag": false,
+  "api_subset": false,
+  "author": "Chinh Nguyen (chinhnc on Hugging Face)",
+  "axes": {
+   "calibration": 88.9668822338541,
+   "cost": 61.7344191165331,
+   "intelligence": 74.51696403947234,
+   "speed": 88.26322277501028
+  },
+  "base_model": "google/gemma-4-31B-it",
+  "capability": 81.74192313666322,
+  "composite_ci95": {
+   "A": [
+    75.96867153327548,
+    78.52683477533759
+   ],
+   "B": [
+    75.38003851791416,
+    78.95703469616481
+   ],
+   "C": [
+    75.96867153327548,
+    78.52683477533759
+   ]
+  },
+  "cost": {
+   "basis": "GPU-time estimate from v1.8.0: one monthly-rented RTX PRO 6000 96 GB, USD 1.5235/hour; average load 70%. Architecture: dense gemma, 31B active parameters; throughput 10106.516129 tokens/s (architecture-class calibration, efficient-engine prefill). GPU-time cost USD 0.018859030495733/1,000; old list-price estimate USD 0.0283740564137005/1,000 (google/gemma-4-31b-it at USD 0.09/M input and USD 0.34/M output). Applied min(old list-price estimate, GPU-time cost) = USD 0.018859030495733/1,000. Estimated, not a bill.",
+   "kind": "estimate",
+   "usd_per_1000": 0.01885903049573297
+  },
+  "decision_limit": {
+   "limit_s": 10.0,
+   "rule": "latency_s > limit -> failed",
+   "treatment": "share"
+  },
+  "disclosure": "Paid public evaluation. Measured on the 27 Oct draw on an evaluator-owned Verda GPU VM (RTXPRO6000), offline with the author's serving stack at the pinned commit. Failed or unanswered requests count as wrong answers. Successor of Quyet-1.0-Large (measured on the v1.5 draw); no comparison is drawn between the two draws. Decision model: Gemma 4 31B with fully merged weights and a separate option head; choice via the option head, score and noul via vocabulary-symbol scores with fixed per-type temperatures; 0 output tokens.",
+  "display": "Quyet-1.2-Large",
+  "draw": {
+   "ci_basis": "measured on the draw before equating",
+   "drawn_on": "2026-10-27",
+   "g_med": 2.573387642438244,
+   "id": "v1.6-regular-20261027",
+   "label": "Third regular draw",
+   "measured_on": "2026-11-16",
+   "offset": {
+    "C": -1.8542447151797177,
+    "I": -2.884891186577587
+   },
+   "offset_ci95": {
+    "C": [
+     -5.447551660176162,
+     1.9718407968151896
+    ],
+    "I": [
+     -5.851030683979731,
+     1.0608488496147923
+    ]
+   },
+   "release": "v1.8.14",
+   "results_sha256": "d3950d9838157bf49139bc588aed11c68bb91f67234f250bc91571fafef15dd9",
+   "status": "equated"
+  },
+  "endpoint_condition": "evaluator-owned Verda GPU VM (RTXPRO6000), offline read-only container (--network none); the author's quyet 1.2.0 package (github.com/ncchinh/quyet @d41fa079) loaded in process by the fixed pod driver (quyet.load(model_dir, device='cuda').predict); merged BF16 Gemma 4 31B + F32 option head, SDPA, one forward pass per question, no generation, no prefix cache; inputs over the 32,768-token complete-input limit or over 256 options are refused (QuestionError, scored as 422/wrong); official PyTorch 2.14.0 cu130 image + pinned overlay (transformers 5.17.0, accelerate 1.15.0, Python 3.12)",
+  "endpoint_kind": "gpu",
+  "full_coverage": true,
+  "jevbench_score": 76.6458737791496,
+  "key": "quyet-1-2-large",
+  "last_measured_on": "2026-11-16",
+  "licence": "Apache-2.0",
+  "listing": "unranked",
+  "measured_in": "v1.8.14",
+  "measurement_date_status": "measured",
+  "method": "v1.7",
+  "model_pin": "chinhnc/Quyet-1.2-Large@ffad03b6f20aa548ba2e045410e9fcafe4ddf0d2",
+  "new_in": "v1.8.14",
+  "not_ranked_because": "Added after the v1.8.10 ranking review; it is ranked at the next review.",
+  "notes": "Successor of Quyet-1.0-Large (measured on the v1.5 draw); no comparison is drawn between the two draws. Decision model: Gemma 4 31B with fully merged weights and a separate option head; choice via the option head, score and noul via vocabulary-symbol scores with fixed per-type temperatures; 0 output tokens.",
+  "paid_fast_lane": true,
+  "published_scores": {
+   "axes": {
+    "calibration": 90.82112694903381,
+    "cost": 61.7344191165331,
+    "intelligence": 77.40185522604993,
+    "speed": 88.26322277501028
+   },
+   "capability": 84.11149108754188,
+   "scores": {
+    "A": 77.73268178280436,
+    "B": 77.66629042471078,
+    "C": 77.73268178280436
+   }
+  },
+  "rank": null,
+  "ranked": false,
+  "ranks": {
+   "A": null,
+   "B": null,
+   "C": null,
+   "capability": null
+  },
+  "repo": "https://huggingface.co/chinhnc/Quyet-1.2-Large",
+  "scores": {
+   "A": 76.6458737791496,
+   "B": 76.21041563027974,
+   "C": 76.6458737791496
+  },
+  "speed": {
+   "adjustment": "x2 + 0.15 s (assumption, not measured)",
+   "p50_s_adjusted": 0.3088407199999438,
+   "p50_s_raw": 0.07942035999997188,
+   "p95_s_adjusted": 0.4829955909000432,
+   "p95_s_raw": 0.16649779545002158
+  },
+  "status": {
+   "status": "complete"
+  },
+  "support": {
+   "choice": "native",
+   "noul": "native",
+   "score": "native"
+  },
+  "underlying": "Paid public evaluation. Measured on the 27 Oct draw on an evaluator-owned Verda GPU VM (RTXPRO6000), offline with the author's serving stack at the pinned commit. Failed or unanswered requests count as wrong answers. Successor of Quyet-1.0-Large (measured on the v1.5 draw); no comparison is drawn between the two draws. Decision model: Gemma 4 31B with fully merged weights and a separate option head; choice via the option head, score and noul via vocabulary-symbol scores with fixed per-type temperatures; 0 output tokens.",
+  "v16": {
+   "ci95": {
+    "B": 1000,
+    "C": [
+     86.62610962172646,
+     91.64363643872399
+    ],
+    "I": [
+     72.82585813366224,
+     80.92490188920179
+    ],
+    "capability": [
+     80.17734194846263,
+     85.81092310749294
+    ],
+    "composite": {
+     "A": [
+      75.96867153327548,
+      78.52683477533759
+     ],
+     "B": [
+      75.38003851791416,
+      78.95703469616481
+     ],
+     "C": [
+      75.96867153327548,
+      78.52683477533759
+     ]
+    },
+    "seed": 16
+   },
+   "complete": true,
+   "equated": null,
+   "equating_offset": null,
+   "g_med_used": 2.573387642438244,
+   "lane": "selfhosted"
+  },
+  "views": {
+   "Balanced 33:33:33": 73.26377772244295,
+   "Emphasis on Accuracy 60:20:20": 73.75995989344032,
+   "Emphasis on Cost 20:20:60": 68.17118858928325,
+   "Emphasis on Speed 20:60:20": 78.60717666022244,
+   "Intelligence only": 74.51696403947234
+  }
+ },
+ "quyet-1-2-small": {
+  "api_flag": false,
+  "api_subset": false,
+  "author": "Chinh Nguyen (chinhnc on Hugging Face)",
+  "axes": {
+   "calibration": 81.39847698823577,
+   "cost": 88.8673177026433,
+   "intelligence": 31.79407821885479,
+   "speed": 93.3863994106336
+  },
+  "base_model": "google/gemma-4-E4B-it",
+  "capability": 56.59627760354528,
+  "composite_ci95": {
+   "A": [
+    23.545047992281212,
+    37.58704210093485
+   ],
+   "B": [
+    19.855036405291802,
+    32.72356984644913
+   ],
+   "C": [
+    16.35072777241751,
+    26.102112570093656
+   ]
+  },
+  "cost": {
+   "basis": "GPU-time estimate from v1.8.0: one monthly-rented RTX PRO 6000 96 GB, USD 1.5235/hour; average load 70%. Architecture: small gemma, 4B active parameters; throughput 80585.75 tokens/s (architecture-class calibration, efficient-engine prefill). GPU-time cost USD 0.00235011659878878/1,000; old list-price estimate USD 0.00626521155137676/1,000 (deepinfra:google/gemma-4-E4B-it at USD 0.02/M input and USD 0.1/M output). Applied min(old list-price estimate, GPU-time cost) = USD 0.00235011659878878/1,000. Estimated, not a bill.",
+   "kind": "estimate",
+   "usd_per_1000": 0.0023501165987887835
+  },
+  "decision_limit": {
+   "limit_s": 10.0,
+   "rule": "latency_s > limit -> failed",
+   "treatment": "share"
+  },
+  "disclosure": "Paid public evaluation. Measured on the 27 Oct draw on an evaluator-owned Verda GPU VM (RTXPRO6000), offline with the author's serving stack at the pinned commit. Failed or unanswered requests count as wrong answers. Decision model: full fine-tune of Gemma 4 E4B with a separate option head; choice via the option head, score and noul via vocabulary-symbol scores with fixed per-type temperatures; 0 output tokens.",
+  "display": "Quyet-1.2-Small",
+  "draw": {
+   "ci_basis": "measured on the draw before equating",
+   "drawn_on": "2026-10-27",
+   "g_med": 2.573387642438244,
+   "id": "v1.6-regular-20261027",
+   "label": "Third regular draw",
+   "measured_on": "2026-11-16",
+   "offset": {
+    "C": -1.8542447151797177,
+    "I": -2.884891186577587
+   },
+   "offset_ci95": {
+    "C": [
+     -5.447551660176162,
+     1.9718407968151896
+    ],
+    "I": [
+     -5.851030683979731,
+     1.0608488496147923
+    ]
+   },
+   "release": "v1.8.14",
+   "results_sha256": "4550efb8e59e3f4a80e618bc22436de0852fb7b7bcd6433c26a775f6713e2fb9",
+   "status": "equated"
+  },
+  "endpoint_condition": "evaluator-owned Verda GPU VM (RTXPRO6000), offline read-only container (--network none); the author's quyet 1.2.0 package (github.com/ncchinh/quyet @d41fa079) loaded in process by the fixed pod driver (quyet.load(model_dir, device='cuda').predict); full BF16 fine-tune of Gemma 4 E4B (text decoder) + option head (kind student), SDPA, one forward pass per question, no generation, no prefix cache; inputs longer than the model's 23,434-token input limit, or choice questions with more than 256 options, are refused and scored as wrong; official PyTorch 2.14.0 cu130 image + pinned overlay (transformers 5.17.0, accelerate 1.15.0, Python 3.12)",
+  "endpoint_kind": "gpu",
+  "full_coverage": true,
+  "jevbench_score": 24.618214654792457,
+  "key": "quyet-1-2-small",
+  "last_measured_on": "2026-11-16",
+  "licence": "Apache-2.0",
+  "listing": "unranked",
+  "measured_in": "v1.8.14",
+  "measurement_date_status": "measured",
+  "method": "v1.7",
+  "model_pin": "chinhnc/Quyet-1.2-Small@146a1ae2585ba95a6d390f00e60b9b00f67799af",
+  "new_in": "v1.8.14",
+  "not_ranked_because": "Added after the v1.8.10 ranking review; it is ranked at the next review.",
+  "notes": "Decision model: full fine-tune of Gemma 4 E4B with a separate option head; choice via the option head, score and noul via vocabulary-symbol scores with fixed per-type temperatures; 0 output tokens.",
+  "paid_fast_lane": true,
+  "published_scores": {
+   "axes": {
+    "calibration": 83.25272170341549,
+    "cost": 88.8673177026433,
+    "intelligence": 34.678969405432376,
+    "speed": 93.3863994106336
+   },
+   "capability": 58.965845554423936,
+   "scores": {
+    "A": 30.636147263834946,
+    "B": 26.245598721413536,
+    "C": 21.27510226655205
+   }
+  },
+  "rank": null,
+  "ranked": false,
+  "ranks": {
+   "A": null,
+   "B": null,
+   "C": null,
+   "capability": null
+  },
+  "repo": "https://huggingface.co/chinhnc/Quyet-1.2-Small",
+  "scores": {
+   "A": 24.618214654792457,
+   "B": 20.81015659511498,
+   "C": 17.09598239916143
+  },
+  "speed": {
+   "adjustment": "x2 + 0.15 s (assumption, not measured)",
+   "p50_s_adjusted": 0.19709886199998436,
+   "p50_s_raw": 0.023549430999992182,
+   "p95_s_adjusted": 0.23263547520000427,
+   "p95_s_raw": 0.04131773760000214
+  },
+  "status": {
+   "status": "complete"
+  },
+  "support": {
+   "choice": "native",
+   "noul": "native",
+   "score": "native"
+  },
+  "underlying": "Paid public evaluation. Measured on the 27 Oct draw on an evaluator-owned Verda GPU VM (RTXPRO6000), offline with the author's serving stack at the pinned commit. Failed or unanswered requests count as wrong answers. Decision model: full fine-tune of Gemma 4 E4B with a separate option head; choice via the option head, score and noul via vocabulary-symbol scores with fixed per-type temperatures; 0 output tokens.",
+  "v16": {
+   "ci95": {
+    "B": 1000,
+    "C": [
+     77.28731719839115,
+     84.86530263313487
+    ],
+    "I": [
+     31.271384683234047,
+     37.72777814936402
+    ],
+    "capability": [
+     55.14670507089645,
+     60.55715566933496
+    ],
+    "composite": {
+     "A": [
+      23.545047992281212,
+      37.58704210093485
+     ],
+     "B": [
+      19.855036405291802,
+      32.72356984644913
+     ],
+     "C": [
+      16.35072777241751,
+      26.102112570093656
+     ]
+    },
+    "seed": 16
+   },
+   "complete": true,
+   "equated": null,
+   "equating_offset": null,
+   "g_med_used": 2.573387642438244,
+   "lane": "selfhosted"
+  },
+  "views": {
+   "Balanced 33:33:33": 22.710364252164236,
+   "Emphasis on Accuracy 60:20:20": 17.38101325389395,
+   "Emphasis on Cost 20:20:60": 26.630125197288244,
+   "Emphasis on Speed 20:60:20": 27.01769824581057,
+   "Intelligence only": 12.855788127734087
+  }
+ }
+}

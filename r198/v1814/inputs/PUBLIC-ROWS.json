@@ -1,0 +1,20 @@
+{
+ "quyet-1-2-large": {
+  "author": "Chinh Nguyen (chinhnc on Hugging Face)",
+  "disclosure": "Paid public evaluation. Measured on the 27 Oct draw on an evaluator-owned Verda GPU VM (RTXPRO6000), offline with the author's serving stack at the pinned commit. Failed or unanswered requests count as wrong answers. Successor of Quyet-1.0-Large (measured on the v1.5 draw); no comparison is drawn between the two draws. Decision model: Gemma 4 31B with fully merged weights and a separate option head; choice via the option head, score and noul via vocabulary-symbol scores with fixed per-type temperatures; 0 output tokens.",
+  "display": "Quyet-1.2-Large",
+  "endpoint_condition": "evaluator-owned Verda GPU VM (RTXPRO6000), offline read-only container (--network none); the author's quyet 1.2.0 package (github.com/ncchinh/quyet @d41fa079) loaded in process by the fixed pod driver (quyet.load(model_dir, device='cuda').predict); merged BF16 Gemma 4 31B + F32 option head, SDPA, one forward pass per question, no generation, no prefix cache; inputs over the 32,768-token complete-input limit or over 256 options are refused (QuestionError, scored as 422/wrong); official PyTorch 2.14.0 cu130 image + pinned overlay (transformers 5.17.0, accelerate 1.15.0, Python 3.12)",
+  "licence": "Apache-2.0",
+  "notes": "Successor of Quyet-1.0-Large (measured on the v1.5 draw); no comparison is drawn between the two draws. Decision model: Gemma 4 31B with fully merged weights and a separate option head; choice via the option head, score and noul via vocabulary-symbol scores with fixed per-type temperatures; 0 output tokens.",
+  "repo": "https://huggingface.co/chinhnc/Quyet-1.2-Large"
+ },
+ "quyet-1-2-small": {
+  "author": "Chinh Nguyen (chinhnc on Hugging Face)",
+  "disclosure": "Paid public evaluation. Measured on the 27 Oct draw on an evaluator-owned Verda GPU VM (RTXPRO6000), offline with the author's serving stack at the pinned commit. Failed or unanswered requests count as wrong answers. Decision model: full fine-tune of Gemma 4 E4B with a separate option head; choice via the option head, score and noul via vocabulary-symbol scores with fixed per-type temperatures; 0 output tokens.",
+  "display": "Quyet-1.2-Small",
+  "endpoint_condition": "evaluator-owned Verda GPU VM (RTXPRO6000), offline read-only container (--network none); the author's quyet 1.2.0 package (github.com/ncchinh/quyet @d41fa079) loaded in process by the fixed pod driver (quyet.load(model_dir, device='cuda').predict); full BF16 fine-tune of Gemma 4 E4B (text decoder) + option head (kind student), SDPA, one forward pass per question, no generation, no prefix cache; inputs longer than the model's 23,434-token input limit, or choice questions with more than 256 options, are refused and scored as wrong; official PyTorch 2.14.0 cu130 image + pinned overlay (transformers 5.17.0, accelerate 1.15.0, Python 3.12)",
+  "licence": "Apache-2.0",
+  "notes": "Decision model: full fine-tune of Gemma 4 E4B with a separate option head; choice via the option head, score and noul via vocabulary-symbol scores with fixed per-type temperatures; 0 output tokens.",
+  "repo": "https://huggingface.co/chinhnc/Quyet-1.2-Small"
+ }
+}
