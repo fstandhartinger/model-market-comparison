@@ -1,0 +1,30 @@
+{
+  "artifact_id": "scores-3",
+  "artifact_sha256": "880ded2e6c25e2ed105af0194c58fb12a2c1109e174feaafcf4603d6761f8661",
+  "round": 1,
+  "verdict": "blocked",
+  "coverage_checked": [
+    "vendor:DeepSeek-V3:swe-bench-verified::snapshot-2026-09-10",
+    "c1"
+  ],
+  "errors_found": 1,
+  "findings": [
+    {
+      "id": "F1",
+      "severity": "major",
+      "location": "row vendor:DeepSeek-V3:swe-bench-verified::snapshot-2026-09-10, field benchmark_id",
+      "evidence": "Primary evidence (arXiv 2412.19437v2, Table 6) lists the benchmark as 'SWE Verified (Resolved)' with no snapshot date; the paper text names 'SWE-Bench Verified' without a version. The row adds 'snapshot-2026-09-10', which is not present in the source and cannot be verified.",
+      "repair": "Remove the unsupported snapshot suffix from benchmark_id (use 'swe-bench-verified') or provide explicit evidence linking the snapshot to the source."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "Owner performs hash/transport/qualification checks; these are outside reviewer execution scope.",
+    "Numeric equality confirmed: paper value 42.0 equals served integer 42.",
+    "The snapshot-2026-09-10 may be an internal dataset version, but the packet provides no source evidence for it.",
+    "published_at is null in the row; the paper's publication date is not supplied in the packet, so correctness of that field cannot be assessed."
+  ],
+  "missing_evidence": [
+    "Publication date of arXiv 2412.19437v2 (paper submission/version date) needed to verify source date criterion."
+  ]
+}

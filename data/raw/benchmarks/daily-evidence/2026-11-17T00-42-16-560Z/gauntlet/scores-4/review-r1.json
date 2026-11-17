@@ -1,0 +1,19 @@
+{
+  "artifact_id": "scores-4",
+  "artifact_sha256": "0ec2a4c8ab161c89ffe17f3194d2913ab261ed4487fd052884d9de6ab3856e19",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "vendor:DeepSeek-V3:aider-polyglot::snapshot-2026-09-10",
+    "c1"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "I cannot independently recompute SHA-256 hashes or execute transport/qualification checks; owner-provided hashes and the supplied evidence were accepted as given.",
+    "The unit 'percent' is inferred from the 'Acc.' metric label; the table does not explicitly display a percent sign.",
+    "Row source.published_at is null and the evidence header provides no publication date beyond the arXiv identifier; no value was filled from memory."
+  ],
+  "missing_evidence": []
+}

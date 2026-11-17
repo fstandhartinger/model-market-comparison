@@ -1,0 +1,59 @@
+{
+  "artifact_id": "protocol-kernelbench-cuda-megaqwen-decode-rtx-pro-6000",
+  "artifact_sha256": "281df10e55b53ee8409b58c066527c9940e0dcc645df63602f73a2c4c8533ee0",
+  "round": 1,
+  "verdict": "blocked",
+  "coverage_checked": [
+    "kernelbench-cuda-megaqwen-decode::rtx-pro-6000",
+    "c1",
+    "c2"
+  ],
+  "errors_found": 5,
+  "findings": [
+    {
+      "id": "kernelbench-cuda-megaqwen-decode::rtx-pro-6000-1",
+      "severity": "blocker",
+      "location": "version_guard",
+      "evidence": "version_guard requires 'the problem must stay in the stated four-problem deck', but SPEC.md says 'Problem 04 (grid + MinGRU RL sim SPS) was retired 2026-11-09' and leaderboard.json has only three problems (01_glm52_fused_moe, 02_deepseek_nsa, 03_megaqwen_decode).",
+      "repair": "Update the guard to the current three-problem deck and remove problem-04 references."
+    },
+    {
+      "id": "kernelbench-cuda-megaqwen-decode::rtx-pro-6000-2",
+      "severity": "major",
+      "location": "version_status/version",
+      "evidence": "version_status='published' and version='rtx-pro-6000', but SPEC.md and leaderboard.json publish no board release identifier; the only 'v2' tag is generated_from_summary.tag. Per criterion c2, no release identifier means version_status must be 'snapshot' with a dated identity.",
+      "repair": "Set version_status='snapshot' and version='snapshot-2026-11-17' (this capture's retrieval date), unless a genuine published release identifier is found."
+    },
+    {
+      "id": "kernelbench-cuda-megaqwen-decode::rtx-pro-6000-3",
+      "severity": "major",
+      "location": "scoring.notes",
+      "evidence": "Notes claim leaderboard.json 'Published values are peak_fraction × 100', but source 2 stores fractions (03 values 0.0097–0.0812); source 7's served-scale summary reads 0.97–8.12, i.e. percent. The claim as written mis-describes the source payload.",
+      "repair": "State that leaderboard.json stores fractions 0–1 and the board/site serves ×100 percent values; keep registry storage ×100 with unit 'percent of roofline'."
+    },
+    {
+      "id": "kernelbench-cuda-megaqwen-decode::rtx-pro-6000-4",
+      "severity": "major",
+      "location": "scoring.notes (ranked-list claims)",
+      "evidence": "Notes cite a 'bug' muse/muse-spark-1.3 [ultra] 04 cell at 0.2056 'still holds' in the published per_problem ranked list, but leaderboard.json contains no problem 04 and SPEC.md retired problem 04 on 2026-11-09; the 0.2056 value is absent from the packet.",
+      "repair": "Remove the problem-04 ranked-list claims; retain only the verifiable 03 `suspect` kinetic-claude/kinetic-0715[1m] cell (0.0622, present in per_problem 03 ranked_passes)."
+    },
+    {
+      "id": "kernelbench-cuda-megaqwen-decode::rtx-pro-6000-5",
+      "severity": "major",
+      "location": "scoring.notes",
+      "evidence": "Notes assert 'Opus 5 reaches 196.10% on 04', but problem 04 is retired and no such value appears in any source in this packet.",
+      "repair": "Delete the 04 Opus-5 claim or support it with current evidence."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "I cannot execute the owner's hash/transport/qualification checks; the supplied row and packet hashes are taken as given.",
+    "Whether leaderboard.json's 'generated_from_summary.tag: v2' could count as a board release identifier is ambiguous; I treated it as a build tag, not a board version identifier.",
+    "The served-scale summary (0.97–8.12) differs from the raw leaderboard fractions (0.0097–0.0812); per criterion c1 I used the summary only for scale, not for metric meaning."
+  ],
+  "missing_evidence": [
+    "muse/muse-spark-1.3 [ultra] problem-04 peak_fraction 0.2056 (value cited in notes, absent from packet; SPEC.md says problem 04 retired)",
+    "claude-opus-5 problem-04 196.10% value cited in notes, absent from packet"
+  ]
+}

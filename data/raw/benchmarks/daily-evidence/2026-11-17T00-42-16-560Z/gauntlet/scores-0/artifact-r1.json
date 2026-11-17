@@ -1,0 +1,126 @@
+[
+  {
+    "id": "public:e626cb25b0659c704c930c0f",
+    "benchmark_id": "arc-agi::3",
+    "subject": {
+      "source_id": "thinky-inkling-2-small-xhigh",
+      "name": "Inkling 2 Small (XHigh)",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 0.2973701590780199,
+    "unit": "percent",
+    "basis": "derived",
+    "source": {
+      "url": "https://arcprize.org/media/data/leaderboard/v3.json",
+      "retrieved_at": "2026-11-17T00:52:26.214714+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-11-17T00-42-16-560Z/4784657bf920f8005b12.gz",
+      "sha256": "4784657bf920f8005b12c4c6ea1f399d0e3799a2559c7286c0ac439597574bfc",
+      "locator": "json; source row 129; thinky-inkling-2-small-xhigh; field score"
+    },
+    "protocol": "ARC-AGI 3; v3_Semi_Private; source system/configuration retained. Evaluation independence not assumed for board submissions.; modelType=CoT; modelGroup=thinky-inkling-2-small; providerId=Thinking Machines; display=True; resultsUrl=/results/thinky-inkling-2-small; cost=857.9235358; modelReleaseDate=2026-11-05T00:00:00.000Z",
+    "comparison_key": null,
+    "source_basis": "self_reported",
+    "derivation": {
+      "formula": "Source value × 100 to registry units",
+      "inputs": [
+        0.0029737015907801987
+      ]
+    }
+  },
+  {
+    "id": "public:5efd739dced5e264dd88b77d",
+    "benchmark_id": "arc-agi::3",
+    "subject": {
+      "source_id": "thinky-inkling-2-small-xhigh-provider-adapter",
+      "name": "Inkling 2 Small - Provider Adapter (XHigh)",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 2.5531321022460833,
+    "unit": "percent",
+    "basis": "derived",
+    "source": {
+      "url": "https://arcprize.org/media/data/leaderboard/v3.json",
+      "retrieved_at": "2026-11-17T00:52:26.214714+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-11-17T00-42-16-560Z/4784657bf920f8005b12.gz",
+      "sha256": "4784657bf920f8005b12c4c6ea1f399d0e3799a2559c7286c0ac439597574bfc",
+      "locator": "json; source row 130; thinky-inkling-2-small-xhigh-provider-adapter; field score"
+    },
+    "protocol": "ARC-AGI 3; v3_Semi_Private; source system/configuration retained. Evaluation independence not assumed for board submissions.; modelType=CoT; modelGroup=thinky-inkling-2-small-provider-adapter; providerId=Thinking Machines; display=True; resultsUrl=/results/thinky-inkling-2-small; cost=703.9424885; modelReleaseDate=2026-11-05T00:00:00.000Z",
+    "comparison_key": null,
+    "source_basis": "self_reported",
+    "derivation": {
+      "formula": "Source value × 100 to registry units",
+      "inputs": [
+        0.025531321022460834
+      ]
+    }
+  },
+  {
+    "id": "public:4e975f7e6c40f2563340255f",
+    "benchmark_id": "arc-agi::3",
+    "subject": {
+      "source_id": "inception-mercury-3-preview-high",
+      "name": "Mercury 3 Preview (High)",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 0.1096561642210538,
+    "unit": "percent",
+    "basis": "derived",
+    "source": {
+      "url": "https://arcprize.org/media/data/leaderboard/v3.json",
+      "retrieved_at": "2026-11-17T00:52:26.214714+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-11-17T00-42-16-560Z/4784657bf920f8005b12.gz",
+      "sha256": "4784657bf920f8005b12c4c6ea1f399d0e3799a2559c7286c0ac439597574bfc",
+      "locator": "json; source row 131; inception-mercury-3-preview-high; field score"
+    },
+    "protocol": "ARC-AGI 3; v3_Semi_Private; source system/configuration retained. Evaluation independence not assumed for board submissions.; modelType=Diffusion; modelGroup=inception-mercury-3-preview; providerId=Inception; display=True; resultsUrl=/results/inception-mercury-3-preview; cost=332.57656475; modelReleaseDate=2026-10-19T00:00:00.000Z",
+    "comparison_key": null,
+    "source_basis": "self_reported",
+    "derivation": {
+      "formula": "Source value × 100 to registry units",
+      "inputs": [
+        0.001096561642210538
+      ]
+    }
+  },
+  {
+    "id": "public:f0ccbf7e3c397ac93e93992e",
+    "benchmark_id": "arc-agi::3",
+    "subject": {
+      "source_id": "inception-mercury-3-preview-high-provider-adapter",
+      "name": "Mercury 3 Preview - Provider Adapter (High)",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 0.1662984397685085,
+    "unit": "percent",
+    "basis": "derived",
+    "source": {
+      "url": "https://arcprize.org/media/data/leaderboard/v3.json",
+      "retrieved_at": "2026-11-17T00:52:26.214714+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-11-17T00-42-16-560Z/4784657bf920f8005b12.gz",
+      "sha256": "4784657bf920f8005b12c4c6ea1f399d0e3799a2559c7286c0ac439597574bfc",
+      "locator": "json; source row 132; inception-mercury-3-preview-high-provider-adapter; field score"
+    },
+    "protocol": "ARC-AGI 3; v3_Semi_Private; source system/configuration retained. Evaluation independence not assumed for board submissions.; modelType=Diffusion; modelGroup=inception-mercury-3-preview-provider-adapter; providerId=Inception; display=True; resultsUrl=/results/inception-mercury-3-preview; cost=299.174967; modelReleaseDate=2026-10-19T00:00:00.000Z",
+    "comparison_key": null,
+    "source_basis": "self_reported",
+    "derivation": {
+      "formula": "Source value × 100 to registry units",
+      "inputs": [
+        0.0016629843976850851
+      ]
+    }
+  }
+]

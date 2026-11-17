@@ -1,0 +1,22 @@
+[
+  {
+    "id": "arc-agi::3",
+    "version": "3",
+    "version_guard": "Verify the published version 3 before reading results.",
+    "status": "active",
+    "version_status": "published",
+    "superseded_by": null,
+    "scoring": {
+      "metric": "Semi-private interactive game action efficiency relative to the human baseline",
+      "unit": "percent",
+      "range": [
+        0,
+        null
+      ],
+      "higher_better": true,
+      "notes": "Current scoring update uses median human actions and a 115% per-level cap. The final aggregate bound is not assumed from that cap. A scoring revision requires a new protocol identity; do not compare preview or earlier-baseline results."
+    },
+    "description": "The interactive ARC-AGI benchmark challenging AI agents to adapt on the fly to novel interactive environments, run with the Standard or Provider Adapter harness and scored against cost-per-task.",
+    "maintainer": "ARC Prize, Inc."
+  }
+]

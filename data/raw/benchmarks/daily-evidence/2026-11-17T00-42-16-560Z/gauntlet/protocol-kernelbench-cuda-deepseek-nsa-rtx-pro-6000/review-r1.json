@@ -1,0 +1,31 @@
+{
+  "artifact_id": "protocol-kernelbench-cuda-deepseek-nsa-rtx-pro-6000",
+  "artifact_sha256": "106e3ed5770f2399032cd76ef25ac0ad13ad843f58eaa616992a43c991185a9c",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": ["kernelbench-cuda-deepseek-nsa::rtx-pro-6000", "c1", "c2"],
+  "errors_found": 2,
+  "findings": [
+    {
+      "id": "f1",
+      "severity": "major",
+      "location": "row kernelbench-cuda-deepseek-nsa::rtx-pro-6000 version_guard",
+      "evidence": "version_guard states 'the problem must stay in the stated four-problem deck', but SOURCE 3 SPEC.md says 'Problem 04 (grid + MinGRU RL sim SPS) was retired 2026-11-09' and 'deck stays at three since 2026-11-09'; SOURCE 2 leaderboard.json problems lists only 01_glm52_fused_moe, 02_deepseek_nsa, 03_megaqwen_decode. The guard's four-problem-deck premise is contradicted by the current protocol.",
+      "repair": "Rewrite the guard to reference the current three-problem deck (01_glm52_fused_moe, 02_deepseek_nsa, 03_megaqwen_decode) and drop the 'four-problem deck' statement."
+    },
+    {
+      "id": "f2",
+      "severity": "major",
+      "location": "row kernelbench-cuda-deepseek-nsa::rtx-pro-6000 scoring.notes",
+      "evidence": "Notes assert the published per_problem ranked list 'still holds' a 'bug' muse/muse-spark-1.3 [ultra] cell on 04 (0.2056), a 'reward_hack' deepseek-claude/deepseek-v4-pro cell on 04, and that 'Opus 5 reaches 196.10% on 04'. The captured per_problem (SOURCE 2) contains only 01/02/03 with no 04 section, and SOURCE 3 SPEC.md retired problem 04 on 2026-11-09, so no 04 cells exist in the current ranked list. The other cited cross-check cell (suspect kinetic-claude/kinetic-0715[1m] on 03 at 0.0622) is present in the captured 03 ranked_passes.",
+      "repair": "Remove or explicitly mark as prior retained context all problem-04 references (muse 0.2056, reward_hack deepseek-v4-pro, Opus 196.10%); keep only current-deck statements, including the verifiable 03 kinetic-claude cell."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "version_status='published' is a judgment call: the packet shows no explicit per-board release tag (leaderboard.json has schema_version 1 and environment v2_containerized; published_runs.json hardware RTX_PRO_6000; SPEC.md 'Perfect stack (v1)'), and version 'rtx-pro-6000' copies the published hardware name rather than a version string; I could not execute hash/transport checks, but no contradiction with the row's 'published' value was found.",
+    "The problem-04 statements in notes/version_guard could have been intended as immutable prior-snapshot retained context, but the packet provides no prior snapshot and the statements are phrased as describing the current board, so I judged them against the current protocol.",
+    "I am read-only and could not recompute row hashes or verify owner hash/transport checks."
+  ],
+  "missing_evidence": []
+}

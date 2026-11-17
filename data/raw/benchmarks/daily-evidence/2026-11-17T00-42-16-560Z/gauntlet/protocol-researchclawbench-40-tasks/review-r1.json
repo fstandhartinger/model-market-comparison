@@ -1,0 +1,28 @@
+{
+  "artifact_id": "protocol-researchclawbench-40-tasks",
+  "artifact_sha256": "323b823336884461e76c46e6b967872723e976d0d6d9dcfa89f7b54356a18cb5",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": [
+    "researchclawbench::40-tasks",
+    "c1",
+    "c2"
+  ],
+  "errors_found": 1,
+  "findings": [
+    {
+      "id": "researchclawbench::40-tasks-version_status",
+      "severity": "major",
+      "location": "row.researchclawbench::40-tasks.version_status / version",
+      "evidence": "The candidate row sets version_status:\"published\" and version:\"40-tasks\". The primary protocol excerpt (SOURCE 1 home page and SOURCE 3 README) publishes no release identifier for the benchmark: the page shows only the title and '50 = matches original paper, 100 = surpasses it'; the README mentions '40 tasks' and a descriptive 'Tasks-40' badge but no version number or release tag. Per criterion c2, 'published' requires a maintainer-published release identifier that the version copies; without one, version_status should be 'snapshot' and the version should be a dated snapshot identity.",
+      "repair": "Set version_status to \"snapshot\" and version to a dated identity (e.g., snapshot-2026-11-17) reflecting the methodology observed on the capture date, or supply primary evidence of a maintainer-published release identifier that \"40-tasks\" faithfully copies."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "I cannot execute the owner's hash, transport, or qualification checks; those are performed separately by the owner and their success is assumed here.",
+    "The leaderboard.json raw payload content is not included in the packet; only generated activity and value-scale summaries are present (SOURCE 4 and SOURCE 5), so key-level claims in version_guard (e.g., exact key set {tasks, agents, scores, frontier}) could not be independently verified against the raw file.",
+    "Details in scoring.notes such as Pass@1 being the page default and coverage 33-40 on 2026-09-21 are not directly evidenced in the provided protocol excerpts."
+  ],
+  "missing_evidence": []
+}

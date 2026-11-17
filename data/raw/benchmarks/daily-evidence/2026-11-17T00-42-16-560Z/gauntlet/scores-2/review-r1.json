@@ -1,0 +1,36 @@
+{
+  "artifact_id": "scores-2",
+  "artifact_sha256": "76fc4e402f3ab2e32aa79168e8281565f6ae89cc0b466d0219984840510b71df",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": [
+    "vendor:mistralai/Devstral-2-123B-Instruct-2512:swe-bench-verified::snapshot-2026-09-10",
+    "vendor:mistralai/Devstral-Small-2-24B-Instruct-2512:swe-bench-verified::snapshot-2026-09-10",
+    "c1"
+  ],
+  "errors_found": 2,
+  "findings": [
+    {
+      "id": "row1-published_at-not-null",
+      "severity": "minor",
+      "location": "vendor:mistralai/Devstral-2-123B-Instruct-2512:swe-bench-verified::snapshot-2026-09-10 | source.published_at",
+      "evidence": "Primary source shows article date 'December 9, 2025'/By Mistral; row claims published_at:null, failing criterion c1 source-date verification.",
+      "repair": "Set source.published_at to 2025-12-09 (or record the source date explicitly) for both rows sharing this source."
+    },
+    {
+      "id": "row2-published_at-not-null",
+      "severity": "minor",
+      "location": "vendor:mistralai/Devstral-Small-2-24B-Instruct-2512:swe-bench-verified::snapshot-2026-09-10 | source.published_at",
+      "evidence": "Primary source shows article date 'December 9, 2025'/By Mistral; row claims published_at:null, failing criterion c1 source-date verification.",
+      "repair": "Set source.published_at to 2025-12-09 (or record the source date explicitly) for both rows sharing this source."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "Could not execute hash, transport, or qualification checks; owner boundary per instructions.",
+    "Snapshot tag 'snapshot-2026-09-10' appears in required row ids but is absent from primary evidence, which only says 'SWE-bench Verified'; treated as packet-prescribed catalog identity, not a source-derived value.",
+    "Row2 value 68 accepted as numerically equal to source '68.0%' per parsing rule (trailing decimal zero).",
+    "Both rows set harness:null; source specifies no SWE-bench evaluation harness, so null is consistent."
+  ],
+  "missing_evidence": []
+}
