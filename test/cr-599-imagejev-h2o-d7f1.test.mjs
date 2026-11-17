@@ -95,7 +95,7 @@ test('CR-599 (critic F1): the Capability headline lists the second read below ev
   assert.deepEqual(inside.slice(0, -1).map((r) => r.row.key), without, 'every other row keeps its order');
   const { head } = jevFoldWithPinned(inside, 10, () => false);
   assert.ok(head.every((r) => r.row.key !== key), 'not inside the visible top ten');
-  assert.ok(head.some((r) => r.row.key === 'h2o_lightning_4b_v141_image'), 'ranked @cc18ee33 row stays in the visible top ten');
+  assert.ok(inside.some((r) => r.row.key === 'h2o_lightning_4b_v141_image' && r.row.ranked), 'ranked @cc18ee33 row stays in class after the new 31B entry moves it beyond the first ten');
   assert.equal(head.length, 10);
   assert.ok(head.every((r) => r.row.ranked), 'the visible top ten are exactly ten ranked rows');
 });
