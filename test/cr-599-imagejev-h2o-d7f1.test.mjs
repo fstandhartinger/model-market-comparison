@@ -31,7 +31,10 @@ test('CR-599: same-weight second read has scores and no rank in artifact and boa
 test('CR-599: published reread stays unranked through the later new-weights field refresh', () => {
   const existing = a.ranking.filter(r => r.key !== key);
   assert.equal(existing.length, 67);
-  const hash = createHash('sha256').update(JSON.stringify(existing)).digest('hex');
+  // CR-769 display fix: only the v1.0.7 predecessor's display name changed; hash with it swapped back keeps the pin.
+  assert.equal(existing.find(r => r.key === 'h2o_lightning_31b_image').name, 'H2O-Lightning-31B v1.0.7 (image)');
+  const pinned = existing.map(r => r.key === 'h2o_lightning_31b_image' ? { ...r, name: 'H2O-Lightning-31B (image)' } : r);
+  const hash = createHash('sha256').update(JSON.stringify(pinned)).digest('hex');
   // CR-769: re-pinned after the normal new-weights field refresh; all rows use current field metadata; predecessor and reread scores stay unchanged.
   // CR-664 (2 Nov 2026): re-pinned after the wording fix in the measurement_source of the two Jev rows (alias jev-latest/jev-preview now point to 1.14.0).
   // The alias-reversal pin in cr-664 is refreshed with the same later field update.

@@ -60,6 +60,10 @@ test('CR-664: two Jev alias strings remain reversible after CR-769 field refresh
     assert.match(r.measurement_source, re);
     r.measurement_source = r.measurement_source.replace(re, orig);
   }
+  // CR-769 display fix: revert the v1.0.7 predecessor's display name as well (only that field changed).
+  const prev = rows.find(x => x.key === 'h2o_lightning_31b_image');
+  assert.equal(prev.name, 'H2O-Lightning-31B v1.0.7 (image)');
+  prev.name = 'H2O-Lightning-31B (image)';
   const hash = createHash('sha256').update(JSON.stringify(rows)).digest('hex');
   assert.equal(hash, 'c379e552448e323d3e059c1bbe34b8119cc631ec3beb391eebe4f8acd73e565e');
 });
