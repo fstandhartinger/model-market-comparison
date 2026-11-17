@@ -1,5 +1,14 @@
 {
-  "anchor_evidence": "The same 12 anchors answered two sealed draws of v1.6.0 (S and the A2 supplement): median difference -0.29 Intelligence and +1.56 Calibration points (v1.6.1 results, v16.equating_A2).",
+  "schema_version": 1,
+  "kind": "jevbench-draw-equating",
+  "decided": "Florian, 10 Oct 2026: one merged leaderboard; rows from fresh draws join it as soon as they are measured, put on the reference scale by anchor equating; no re-evaluation of earlier systems.",
+  "reference": {
+    "release": "v1.6.1",
+    "draw": "v1.6.0",
+    "drawn_on": "2026-10-01",
+    "G_med": 2.573387642438244
+  },
+  "method": "Every draw shares the same 300 public items (P, manifest 6b2321f8...). A fresh draw is equated to the reference draw with anchor systems measured on both draws (each draw lists its own anchor set): offset = median over anchors of (metric on the reference S u P) - (metric on the new draw S u P), for Intelligence and Calibration, with a bootstrap 95% interval over anchors and items. A row from that draw is shown as published plus the offset; Capability and Composite follow from the equated axes. Until the anchor runs of a draw are complete its offset is 0 and the draw is marked 'anchor runs pending'.",
   "anchor_pool": [
     "hopper",
     "kev-0.6b",
@@ -14,37 +23,31 @@
     "raw-qwen3-8b",
     "typecastlm"
   ],
-  "decided": "Florian, 10 Oct 2026: one merged leaderboard; rows from fresh draws join it as soon as they are measured, put on the reference scale by anchor equating; no re-evaluation of earlier systems.",
+  "anchor_evidence": "The same 12 anchors answered two sealed draws of v1.6.0 (S and the A2 supplement): median difference -0.29 Intelligence and +1.56 Calibration points (v1.6.1 results, v16.equating_A2).",
+  "public_anchor_check": "On the shared public items, systems on both new draws score 6 to 13 sealed points below the reference field's sealed-vs-public line (reference residual SD 3.8). Either the new sealed draws are harder or their cohorts are tuned on the public items; only anchor runs can separate the two. Until then their rows are, if anything, understated.",
   "draws": [
     {
-      "anchors": [],
       "draw": "v1.6-fastlane-20261009",
-      "drawn_on": "2026-10-09",
       "label": "Fast-lane draw",
-      "latest_release": "v1.6.4",
-      "offset": {
-        "C": 0,
-        "I": 0
-      },
-      "offset_ci95": null,
+      "drawn_on": "2026-10-09",
       "releases": [
         "v1.6.2",
         "v1.6.3",
         "v1.6.4"
       ],
-      "status": "anchor-runs-pending"
-    },
-    {
-      "anchors": [],
-      "draw": "v1.6-regular-20261010-a2",
-      "drawn_on": "2026-10-10",
-      "label": "Regular draw",
-      "latest_release": "v1.6.9",
+      "latest_release": "v1.6.4",
+      "status": "anchor-runs-pending",
       "offset": {
-        "C": 0,
-        "I": 0
+        "I": 0,
+        "C": 0
       },
       "offset_ci95": null,
+      "anchors": []
+    },
+    {
+      "draw": "v1.6-regular-20261010-a2",
+      "label": "Regular draw",
+      "drawn_on": "2026-10-10",
       "releases": [
         "v1.6.5",
         "v1.6.6",
@@ -52,19 +55,19 @@
         "v1.6.8",
         "v1.6.9"
       ],
-      "status": "anchor-runs-pending"
-    },
-    {
-      "anchors": [],
-      "draw": "v1.6-regular-20261012",
-      "drawn_on": "2026-10-12",
-      "label": "Second regular draw",
-      "latest_release": "v1.6.43",
+      "latest_release": "v1.6.9",
+      "status": "anchor-runs-pending",
       "offset": {
-        "C": 0,
-        "I": 0
+        "I": 0,
+        "C": 0
       },
       "offset_ci95": null,
+      "anchors": []
+    },
+    {
+      "draw": "v1.6-regular-20261012",
+      "label": "Second regular draw",
+      "drawn_on": "2026-10-12",
       "releases": [
         "v1.6.10",
         "v1.6.11",
@@ -99,39 +102,19 @@
         "v1.6.42",
         "v1.6.43"
       ],
-      "status": "anchor-runs-pending"
+      "latest_release": "v1.6.43",
+      "status": "anchor-runs-pending",
+      "offset": {
+        "I": 0,
+        "C": 0
+      },
+      "offset_ci95": null,
+      "anchors": []
     },
     {
-      "anchor_evidence": "Four strong anchor systems answered both the reference draw and this draw: Intelligence -2.88 (95% CI -5.85 to +1.06), Calibration -1.85 (95% CI -5.45 to +1.97), median over anchors, frozen scorer, B=1000. A fifth planned anchor could not be staged and is skipped as pre-registered. Receipt EQUATING-STRONG4-D1027.json, sha256 7888a0803466daac872f46809b12015af6c3686109276ab89e1028c206103146; applied in v1.8.10.",
-      "anchors": [
-        "decider-12b",
-        "h2o-lightning-4b-v1.1",
-        "quyet-1-0-large",
-        "torchcast-decision-27b"
-      ],
       "draw": "v1.6-regular-20261027",
-      "drawn_on": "2026-10-27",
-      "equating_receipt": {
-        "name": "EQUATING-STRONG4-D1027.json",
-        "sha256": "7888a0803466daac872f46809b12015af6c3686109276ab89e1028c206103146"
-      },
-      "joins_via": "v1.7-addendum",
       "label": "Third regular draw",
-      "latest_release": "v1.8.15",
-      "offset": {
-        "C": -1.8542447151797177,
-        "I": -2.884891186577587
-      },
-      "offset_ci95": {
-        "C": [
-          -5.447551660176162,
-          1.9718407968151896
-        ],
-        "I": [
-          -5.851030683979731,
-          1.0608488496147923
-        ]
-      },
+      "drawn_on": "2026-10-27",
       "releases": [
         "v1.7.13",
         "v1.7.14",
@@ -154,19 +137,37 @@
         "v1.8.11",
         "v1.8.12",
         "v1.8.13",
-        "v1.8.14"
+        "v1.8.14",
+        "v1.8.15"
       ],
-      "status": "equated"
+      "latest_release": "v1.8.15",
+      "status": "equated",
+      "offset": {
+        "C": -1.8542447151797177,
+        "I": -2.884891186577587
+      },
+      "offset_ci95": {
+        "C": [
+          -5.447551660176162,
+          1.9718407968151896
+        ],
+        "I": [
+          -5.851030683979731,
+          1.0608488496147923
+        ]
+      },
+      "anchors": [
+        "decider-12b",
+        "h2o-lightning-4b-v1.1",
+        "quyet-1-0-large",
+        "torchcast-decision-27b"
+      ],
+      "joins_via": "v1.7-addendum",
+      "anchor_evidence": "Four strong anchor systems answered both the reference draw and this draw: Intelligence -2.88 (95% CI -5.85 to +1.06), Calibration -1.85 (95% CI -5.45 to +1.97), median over anchors, frozen scorer, B=1000. A fifth planned anchor could not be staged and is skipped as pre-registered. Receipt EQUATING-STRONG4-D1027.json, sha256 7888a0803466daac872f46809b12015af6c3686109276ab89e1028c206103146; applied in v1.8.10.",
+      "equating_receipt": {
+        "name": "EQUATING-STRONG4-D1027.json",
+        "sha256": "7888a0803466daac872f46809b12015af6c3686109276ab89e1028c206103146"
+      }
     }
-  ],
-  "kind": "jevbench-draw-equating",
-  "method": "Every draw shares the same 300 public items (P, manifest 6b2321f8...). A fresh draw is equated to the reference draw with anchor systems measured on both draws (each draw lists its own anchor set): offset = median over anchors of (metric on the reference S u P) - (metric on the new draw S u P), for Intelligence and Calibration, with a bootstrap 95% interval over anchors and items. A row from that draw is shown as published plus the offset; Capability and Composite follow from the equated axes. Until the anchor runs of a draw are complete its offset is 0 and the draw is marked 'anchor runs pending'.",
-  "public_anchor_check": "On the shared public items, systems on both new draws score 6 to 13 sealed points below the reference field's sealed-vs-public line (reference residual SD 3.8). Either the new sealed draws are harder or their cohorts are tuned on the public items; only anchor runs can separate the two. Until then their rows are, if anything, understated.",
-  "reference": {
-    "G_med": 2.573387642438244,
-    "draw": "v1.6.0",
-    "drawn_on": "2026-10-01",
-    "release": "v1.6.1"
-  },
-  "schema_version": 1
+  ]
 }
