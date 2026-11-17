@@ -7,7 +7,7 @@ const key = 'h2o_lightning_31b_image';
 const row = release.ranking.find((r) => r.key === key);
 
 test('CR-536 H2O-31B: pinned official GPU row discloses licence, engine, timing and cost basis', () => {
-  assert.equal(row.name, 'H2O-Lightning-31B (image)');
+  assert.equal(row.name, 'H2O-Lightning-31B v1.0.7 (image)');
   assert.equal(row.kind, 'gpu');
   assert.equal(row.api_flag, false);
   assert.equal(row.licence, 'H2O Model Non-Commercial Licence v1.1');

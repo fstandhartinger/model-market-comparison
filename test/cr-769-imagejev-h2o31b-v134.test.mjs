@@ -9,7 +9,9 @@ const a=read('data/imagejev-v03.json'), key='h2o_lightning_31b_v134_image',row=a
 test('CR-769: new weights get a distinct ranked image row; published v1.0.7 keeps its scores and rank',()=>{
  assert.equal(row.ranked,true);assert.equal(row.rank,7);assert.equal(row.listing,'ranked');
  assert.equal(row.name,'H2O-Lightning-31B v1.3.4 @c35ed950 (image)');
- assert.equal(createHash('sha256').update(JSON.stringify(a.ranking.find(r=>r.key==='h2o_lightning_31b_image'))).digest('hex'),'351a6d15f81cae15a2b367b49544ef55648de54acd3bf10240bf64e8184b4dd9');
+ const prev=a.ranking.find(r=>r.key==='h2o_lightning_31b_image');assert.equal(prev.name,'H2O-Lightning-31B v1.0.7 (image)');
+ // Only the display name may differ from the pinned carried row (disambiguation next to v1.3.4).
+ assert.equal(createHash('sha256').update(JSON.stringify({...prev,name:'H2O-Lightning-31B (image)'})).digest('hex'),'351a6d15f81cae15a2b367b49544ef55648de54acd3bf10240bf64e8184b4dd9');
  for(const rows of [imageJevBoardSystems(a),imageJevCompareRows(a)])assert.equal(rows.find(r=>r.key===key).rank,7);
  assert.equal(row.tracks.core.capability,80.3429262759744);
  assert.equal(row.tracks.core.composite.score,50.964947278496204);
