@@ -23,10 +23,14 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 PG_BIN = next((p for p in sorted(Path("/usr/lib/postgresql").glob("*/bin"), reverse=True) if (p / "initdb").exists()), None)
 TMP = Path(tempfile.mkdtemp(prefix="access-key-purge-test-"))
-os.environ["FASTLANE_DB"] = "purge_test"
-os.environ["FASTLANE_STATE_ROOT"] = str(TMP / "state")
 sys.path.insert(0, str(HERE))
 import access_key_purge as akp  # noqa: E402
+
+# No FASTLANE_* environment changes (they would leak into other test modules run in the same process).
+akp.DB_NAME = "purge_test"
+akp.STATE_ROOT = TMP / "state"
+PG_ENV_KEYS = ("PGHOST", "PGPORT", "PGUSER")
+SAVED_PG_ENV = {k: os.environ.get(k) for k in PG_ENV_KEYS}
 
 SYNTH = "sk-SYNTHETIC-purge-test-9f3c2a7b1d"  # never a real key
 started = False
@@ -53,6 +57,11 @@ def setUpModule() -> None:
 
 
 def tearDownModule() -> None:
+    for key, value in SAVED_PG_ENV.items():
+        if value is None:
+            os.environ.pop(key, None)
+        else:
+            os.environ[key] = value
     if started:
         subprocess.run([str(PG_BIN / "pg_ctl"), "-D", str(TMP / "pgdata"), "-m", "immediate", "stop"], capture_output=True)
     shutil.rmtree(TMP, ignore_errors=True)
@@ -101,47 +110,67 @@ class Sweep(unittest.TestCase):
         clear()
 
     def test_mixed_access_instructions_shapes(self):
+        submit_text = ("Submitted via /submit (ref ABCD1234). API URL: https://api.example.ai/v1 "
+                       "API key: stored encrypted in the submission record.")
         rows = {
             "json_key": insert(json.dumps({"endpoint": "https://api.example.ai/v1", "api_key": SYNTH, "model": "m-1"})),
             "json_auth_header": insert(json.dumps({"endpoint": "https://api.example.ai/v1", "auth_header": f"Bearer {SYNTH}",
                                                    "headers": {"X-Api-Key": SYNTH}, "model": "m-2"}), status="refunded"),
+            "json_nested": insert(json.dumps({"endpoint": "https://api.example.ai/v1", "config": {"api_key": SYNTH}}), status="completed"),
+            "json_key_in_url": insert(json.dumps({"endpoint": f"https://api.example.ai/v1?api_key={SYNTH}", "model": "m-4"}), status="completed"),
+            "json_userinfo": insert(json.dumps({"endpoint": f"https://user:{SYNTH}@api.example.ai/v1"}), status="completed"),
+            "json_odd_names": insert(json.dumps({"apiKey": SYNTH, "Authorization": SYNTH, "pass": SYNTH, "model": "m-5"}), status="expired"),
+            "json_token_in_model": insert(json.dumps({"model": SYNTH.replace("-", "_")}), status="completed"),
+            "json_fake_marker": insert(json.dumps({"access_removed": SYNTH}), status="completed"),
+            "json_already_marked": insert(json.dumps({"api_key": SYNTH, "api_key_purged_at": "2026-01-01T00:00:00Z"}), status="completed"),
             "json_no_secret": insert(json.dumps({"endpoint": "https://api.example.ai/v1", "model": "m-3"}), status="expired"),
             "free_text": insert(f"Use endpoint https://api.example.ai/v1 with key {SYNTH}", status="refunded"),
             "json_array": insert(json.dumps([SYNTH, "x"]), status="checkout_failed"),
             "broken_json": insert('{"api_key": "' + SYNTH + '", ', status="intake_declined"),
-            "delivered_flag": insert(json.dumps({"api_key": SYNTH}), status="paid", delivered=True),
+            "submit_text": insert(submit_text, status="completed"),
+            "open_weights_text": insert("Open weights at the links above.", status="completed", access_type="open_weights"),
+            "submit_text_with_key": insert(submit_text + f" Also: {SYNTH}", status="completed"),
             "refund_id_flag": insert(json.dumps({"api_key": SYNTH}), status="refund_pending", refund_id="re_synthetic_1"),
+            "paid_but_delivered": insert(json.dumps({"api_key": SYNTH}), status="paid", delivered=True),
             "open_order": insert(json.dumps({"endpoint": "https://api.example.ai/v1", "api_key": SYNTH}), status="paid"),
             "open_free_text": insert(f"key {SYNTH}", status="review_passed"),
         }
         code, out, err = run("sweep")
         self.assertEqual(code, 0, err)
         result = json.loads(out)
-        purged = {"json_key", "json_auth_header", "free_text", "json_array", "broken_json", "delivered_flag", "refund_id_flag"}
-        self.assertEqual(result["affected_rows"], len(purged))
+        purged = {"json_key", "json_auth_header", "json_nested", "json_key_in_url", "json_userinfo", "json_odd_names",
+                  "json_token_in_model", "json_already_marked", "json_fake_marker", "free_text", "json_array", "broken_json",
+                  "submit_text_with_key", "refund_id_flag"}
         self.assertEqual(sorted(result["order_ids"]), sorted(rows[n] for n in purged))
-        self.assertRegex(result["api_key_purged_at"], r"^\d{4}-\d\d-\d\dT\d\d:\d\d:\d\dZ$")
+        self.assertEqual(result["affected_rows"], len(purged))
+        stamp = result["api_key_purged_at"]
+        self.assertRegex(stamp, r"^\d{4}-\d\d-\d\dT\d\d:\d\d:\d\dZ$")
         # The key never appears in output, error stream or the receipt log.
         receipt_log = (TMP / "state" / akp.RECEIPT_LOG).read_text()
         for text in (out, err, receipt_log):
             self.assertNotIn(SYNTH, text)
-        # JSON objects keep non-secret fields, lose every secret field, gain api_key_purged_at.
-        j = json.loads(access(rows["json_key"]))
-        self.assertEqual(j, {"endpoint": "https://api.example.ai/v1", "model": "m-1", "api_key_purged_at": result["api_key_purged_at"]})
-        j = json.loads(access(rows["json_auth_header"]))
-        self.assertEqual(set(j), {"endpoint", "model", "api_key_purged_at"})
+        # JSON objects keep only safe allow-listed fields and gain api_key_purged_at.
+        self.assertEqual(json.loads(access(rows["json_key"])), {"endpoint": "https://api.example.ai/v1", "model": "m-1", "api_key_purged_at": stamp})
+        self.assertEqual(json.loads(access(rows["json_auth_header"])), {"endpoint": "https://api.example.ai/v1", "model": "m-2", "api_key_purged_at": stamp})
+        self.assertEqual(json.loads(access(rows["json_nested"])), {"endpoint": "https://api.example.ai/v1", "api_key_purged_at": stamp})
+        self.assertEqual(json.loads(access(rows["json_key_in_url"])), {"model": "m-4", "api_key_purged_at": stamp})
+        self.assertEqual(json.loads(access(rows["json_odd_names"])), {"model": "m-5", "api_key_purged_at": stamp})
+        self.assertEqual(json.loads(access(rows["json_already_marked"])), {"api_key_purged_at": stamp})
         # Non-objects are replaced whole by the marker.
-        for name in ("free_text", "json_array", "broken_json"):
-            j = json.loads(access(rows[name]))
-            self.assertEqual(j, {"access_removed": akp.MARKER_TEXT, "api_key_purged_at": result["api_key_purged_at"]}, name)
-        # Untouched: a closed JSON row without secrets, and every open order.
-        self.assertNotIn("api_key_purged_at", access(rows["json_no_secret"]))
-        self.assertIn(SYNTH, access(rows["open_order"]))
-        self.assertIn(SYNTH, access(rows["open_free_text"]))
+        for name in ("free_text", "json_array", "broken_json", "submit_text_with_key"):
+            self.assertEqual(json.loads(access(rows[name])), {"access_removed": akp.MARKER_TEXT, "api_key_purged_at": stamp}, name)
+        # Untouched: safe JSON, the key-free /submit texts, a paid row with a delivery stamp, and every open order.
+        self.assertEqual(json.loads(access(rows["json_no_secret"])), {"endpoint": "https://api.example.ai/v1", "model": "m-3"})
+        self.assertEqual(access(rows["submit_text"]), submit_text)
+        self.assertEqual(access(rows["open_weights_text"]), "Open weights at the links above.")
+        for name in ("paid_but_delivered", "open_order", "open_free_text"):
+            self.assertIn(SYNTH, access(rows[name]), name)
         # Nothing secret is left in any closed row.
-        left = psql("SELECT count(*) FROM bh_priority_evaluation_requests WHERE access_instructions LIKE '%' || :'k' || '%' "
+        left = psql("SELECT count(*) FROM bh_priority_evaluation_requests WHERE position(:'k' in access_instructions) > 0 "
                     "AND status NOT IN ('paid','review_passed');", k=SYNTH)
         self.assertEqual(left, "0")
+        self.assertEqual(psql("SELECT count(*) FROM bh_priority_evaluation_requests WHERE position(:'k' in access_instructions) > 0;",
+                              k=SYNTH.replace("-", "_")), "0")
         # Idempotent: a second sweep changes nothing.
         code, out, _ = run("sweep")
         self.assertEqual((code, json.loads(out)["affected_rows"]), (0, 0))
@@ -153,15 +182,25 @@ class Sweep(unittest.TestCase):
         self.assertIn(SYNTH, access(rid))
 
     def test_over_long_json_falls_back_to_marker(self):
-        rid = insert(json.dumps({"api_key": "k", "endpoint": "https://e/" + "a" * 740}), status="completed")
+        # Five safe 140-character URLs fit the 800-character check with the key, but not with api_key_purged_at added.
+        safe = {f: ("https://e.example/" + "ab-" * 58)[:140] for f in ("endpoint", "base_url", "api_base", "api_url", "url")}
+        rid = insert(json.dumps({"api_key": "k", **safe}), status="completed")
         self.assertLessEqual(len(access(rid)), 800)
+        self.assertGreater(len(json.dumps({**safe, "api_key_purged_at": "2026-11-17T07:00:00Z"})), 800)
         code, out, _ = run("sweep")
-        self.assertEqual(code, 0)
+        self.assertEqual((code, json.loads(out)["affected_rows"]), (0, 1))
         self.assertEqual(json.loads(access(rid))["access_removed"], akp.MARKER_TEXT)
 
-    def test_sweep_never_raises(self):
+    def test_sweep_never_raises_and_logs_the_failure(self):
+        state = TMP / "state-error"
+        self.assertEqual(akp.sweep(db="no_such_database", state_root=state), {"error": "database operation failed"})
+        entry = json.loads((state / akp.RECEIPT_LOG).read_text().splitlines()[-1])
+        self.assertEqual((entry["action"], entry["error"]), ("sweep", "database operation failed"))
+
+    def test_explicit_db_argument_is_used(self):
+        rid = insert(json.dumps({"api_key": SYNTH}), status="refunded")
         with unittest.mock.patch.object(akp, "DB_NAME", "no_such_database"):
-            self.assertEqual(akp.sweep(), {"error": "database operation failed"})
+            self.assertEqual(akp.sweep(db="purge_test")["order_ids"], [rid])
 
     def test_postgres_log_never_holds_the_key(self):
         insert(json.dumps({"api_key": SYNTH, "endpoint": "https://api.example.ai/v1"}), status="refunded")
@@ -190,6 +229,11 @@ class PurgeOrder(unittest.TestCase):
         self.assertNotIn(SYNTH, out + err + access(target))
         self.assertIn(SYNTH, access(other))  # exact id only
 
+    def test_full_uuid_without_hyphens_resolves(self):
+        rid = insert(json.dumps({"api_key": SYNTH}), status="refunded")
+        code, out, _ = run("purge-order", rid.replace("-", ""))
+        self.assertEqual((code, json.loads(out)["order_id"]), (0, rid))
+
     def test_refuses_zero_matches(self):
         insert(json.dumps({"api_key": SYNTH}), status="refunded", rid="aaaaaaaa-0000-4000-8000-000000000001")
         code, out, err = run("purge-order", "bbbbbbbb")
@@ -212,7 +256,7 @@ class PurgeOrder(unittest.TestCase):
         self.assertEqual(code, 4)
         receipt = json.loads(out)
         self.assertEqual((receipt["affected_rows"], receipt["status"]), (0, "paid"))
-        self.assertIn("not delivered, refunded or closed", receipt["note"])
+        self.assertIn("not refunded or closed", receipt["note"])
         self.assertIn(SYNTH, access(rid))
 
     def test_already_purged_reports_zero(self):
@@ -239,7 +283,7 @@ class Source(unittest.TestCase):
 
     def test_autopickup_cycle_calls_sweep_once(self):
         src = (HERE / "autopickup.py").read_text()
-        self.assertEqual(src.count("access_key_purge.sweep()"), 1)
+        self.assertEqual(src.count("access_key_purge.sweep(db=DB_NAME, state_root=STATE_ROOT)"), 1)
         self.assertIn("access_key_purge.py", (HERE / "install-autopickup.sh").read_text())
 
 

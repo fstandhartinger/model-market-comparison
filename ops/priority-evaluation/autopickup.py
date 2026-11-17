@@ -4571,7 +4571,7 @@ def cycle(effects: Effects, synthetic_id: str | None = None, job_root: Path | No
     counts["sla"] = sla_sweep(synthetic_id, root, effects)
     counts["sla40_cards"] = sla_decisions(synthetic_id, root, effects)
     counts["refund_cards"] = refund_decisions(synthetic_id, root, effects)
-    counts["access_keys_purged"] = access_key_purge.sweep() if synthetic_id is None else None  # #64725: closed orders keep no key
+    counts["access_keys_purged"] = access_key_purge.sweep(db=DB_NAME, state_root=STATE_ROOT) if synthetic_id is None else None  # #64725
     if not kill:
         for row in claim_rows(synthetic_id, root):
             counts["claimed"] += 1
