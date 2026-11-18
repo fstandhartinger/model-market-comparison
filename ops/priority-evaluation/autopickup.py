@@ -1805,7 +1805,9 @@ def pickup_handoff_close_reason(row: dict[str, Any], state: dict[str, Any], effe
         entry = handed.get("entry")
         where = f" in entry #{entry}" if isinstance(entry, int) and not isinstance(entry, bool) else f" on #{BOARD_HANDOFF_THREAD}"
         return f"native owner job {record['job']} took over order {ref}; re-addressed to @{record['job']}{where}"
-    if row.get("evaluation_status") in ("starting", "running") and not effects.dry_run \
+    # CR-758 review S2: "running" only: evaluate() sets it after its gate and source fetch, so the unit really
+    # took the order; a unit that is merely activating can still exit in seconds and leave the order unowned.
+    if row.get("evaluation_status") == "running" and not effects.dry_run \
             and effects.unit_state(EVAL_UNIT.format(rid)).get("ActiveState") in LIVE_UNIT_STATES:
         return f"evaluation service for order {ref} is active and owns it; the service identity cannot ack"
     return None
@@ -1821,6 +1823,17 @@ def settle_pickup_handoff(row: dict[str, Any], state: dict[str, Any], effects: E
     entry = record.get("entry")
     if record.get("close_exhausted") or not isinstance(entry, int) or isinstance(entry, bool) or entry <= 0:
         return False
+    # CR-758 review S1: the eval unit may save an older copy of the state and erase closed_at; the marker file
+    # outside the shared state keeps the close, so the same entry is never closed twice.
+    marker = pickup_handoff_marker(state.get("id") or row.get("id"))
+    try:
+        done = json.loads(marker.read_text(encoding="utf-8")) if marker.is_file() else None
+    except (OSError, ValueError):
+        done = None
+    if isinstance(done, dict) and done.get("entry") == entry and done.get("closed_at"):
+        record.update(closed_at=done["closed_at"], close_reason=str(done.get("close_reason") or "")[:200])
+        save_pickup_handoff(state, record)
+        return True
     reason = pickup_handoff_close_reason(row, state, effects)
     if reason is None:
         return False
@@ -1830,10 +1843,33 @@ def settle_pickup_handoff(row: dict[str, Any], state: dict[str, Any], effects: E
     if closed:
         record["closed_at"] = iso(now)
         record["close_reason"] = reason[:200]
+        try:
+            atomic_write(marker, json.dumps({"entry": entry, "closed_at": record["closed_at"],
+                                             "close_reason": record["close_reason"]}) + "\n")
+        except OSError:
+            pass  # the state record still carries the close
     elif attempts >= PICKUP_HANDOFF_CLOSE_LIMIT:
         record["close_exhausted"] = True  # the normal board escalation still reaches the deputy
-    save_state(state)
+    save_pickup_handoff(state, record)
     return closed
+
+
+def pickup_handoff_marker(rid: object) -> Path:
+    return STATE_ROOT / "pickup-handoff" / f"{request_id(rid)}.json"
+
+
+def save_pickup_handoff(state: dict[str, Any], record: dict[str, Any]) -> None:
+    """CR-758 review S3: board_close can take up to 60 s; merge the record into a FRESH copy of the state so a hold
+    the eval unit wrote meanwhile survives, and keep the caller's copy in step."""
+    try:
+        fresh = load_state(request_id(state.get("id")))
+    except PickupError:
+        fresh = state
+    fresh["pickup_handoff"] = record
+    save_state(fresh)
+    if fresh is not state:
+        state.clear()
+        state.update(fresh)
 
 
 def alert(state: dict[str, Any], key: str, effects: Effects, *, text: str, urgent: bool = False,

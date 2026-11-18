@@ -1838,8 +1838,48 @@ class EvaluateTests(DatabaseTestCase):
         fx = FakeEffects()
         ap.cycle(fx)
         self.assertEqual(fx.units.get(ap.EVAL_UNIT.format(rid)), "active")
+        # CR-758 review S2: a unit that is only starting can still exit at once; the handoff stays open.
+        self.assertEqual(len(fx.open_entries(ap.owner_for(rid))), 1)
+        ap.sql(f"UPDATE {ap.TABLE} SET evaluation_status='running' WHERE id='{rid}'")
+        ap.settle_pickup_handoff(row(rid), ap.load_state(rid), fx, ap.utcnow())
         self.assertEqual(fx.open_entries(ap.owner_for(rid)), [])
         self.assertIn("evaluation service", ap.load_state(rid)["pickup_handoff"]["close_reason"])
+
+    def test_cr758_stale_state_save_never_closes_the_entry_twice(self):
+        # CR-758 review S1: the eval unit saves an older state copy without closed_at.
+        rid = insert_order()
+        fx = FakeEffects()
+        with mock.patch.object(fx, "unit_state", return_value={"ActiveState": "inactive"}):
+            ap.cycle(fx)
+        stale = ap.load_state(rid)
+        ap.sql(f"UPDATE {ap.TABLE} SET status='completed', result_delivered_at=now() WHERE id='{rid}'")
+        self.assertTrue(ap.settle_pickup_handoff(row(rid), ap.load_state(rid), fx, ap.utcnow()))
+        self.assertEqual(len(fx.close_calls), 1)
+        ap.save_state(stale)
+        self.assertNotIn("closed_at", ap.load_state(rid)["pickup_handoff"])
+        self.assertTrue(ap.settle_pickup_handoff(row(rid), ap.load_state(rid), fx, ap.utcnow()))
+        self.assertEqual(len(fx.close_calls), 1)
+        self.assertTrue(ap.load_state(rid)["pickup_handoff"]["closed_at"])
+
+    def test_cr758_hold_written_during_the_close_call_survives(self):
+        # CR-758 review S3: board_close can take up to 60 s; a hold the eval unit writes meanwhile must survive.
+        rid = insert_order()
+        fx = FakeEffects()
+        with mock.patch.object(fx, "unit_state", return_value={"ActiveState": "inactive"}):
+            ap.cycle(fx)
+        ap.sql(f"UPDATE {ap.TABLE} SET status='completed', result_delivered_at=now() WHERE id='{rid}'")
+        state = ap.load_state(rid)
+        real_close = fx.board_close
+        def close_while_unit_writes(entry, reason):
+            other = ap.load_state(rid)
+            ap.set_operational_hold(other, "fetch_source_transient", transient=True)
+            return real_close(entry, reason)
+        with mock.patch.object(fx, "board_close", side_effect=close_while_unit_writes):
+            self.assertTrue(ap.settle_pickup_handoff(row(rid), state, fx, ap.utcnow()))
+        saved = ap.load_state(rid)
+        self.assertEqual(saved["operational_hold"]["reason"], "fetch_source_transient")
+        self.assertTrue(saved["pickup_handoff"]["closed_at"])
+        self.assertEqual(state["operational_hold"]["reason"], "fetch_source_transient")
 
     def test_cr758_delivered_order_closes_an_open_pickup_handoff(self):
         rid = insert_order()
