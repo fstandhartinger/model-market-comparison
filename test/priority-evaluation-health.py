@@ -38,7 +38,7 @@ class Health(unittest.TestCase):
   self.ns.update(install_problems=lambda:copy.deepcopy(self.install))
   # N118: owned_hold_margin() reads pods/<rid>.json; here a set of measured order ids stands in for it.
   self.measured=set()
-  self.ns.update(MEASURED_RELEASE_MARGIN=dt.timedelta(hours=3),owned_hold_margin=lambda rid:dt.timedelta(hours=3) if rid in self.measured else dt.timedelta(hours=12))
+  self.ns.update(MEASURED_RELEASE_MARGIN=dt.timedelta(hours=3),owned_hold_margin=lambda rid,state=None:dt.timedelta(hours=3) if rid in self.measured else dt.timedelta(hours=12))
   tree=ast.parse((ROOT/'ops/priority-evaluation/autopickup.py').read_text());nodes=[n for n in tree.body if isinstance(n,ast.FunctionDef) and n.name in ['health','step','step_done','measurement_pin_problems']]
   exec(compile(ast.Module(body=nodes,type_ignores=[]),'actual-health','exec'),self.ns)
   self.effects=SimpleNamespace(dry_run=True,notify=lambda text:True,agent_handoff=lambda text:True)

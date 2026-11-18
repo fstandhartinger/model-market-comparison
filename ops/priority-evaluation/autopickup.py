@@ -269,28 +269,49 @@ def owner_job_live(owner: object, rid: str, now: datetime) -> bool:
     return False
 
 
-def measured_awaiting_release(rid: str) -> bool:
+# pod_runner hold reasons that mean the recorded measurement is not a valid official result (CR-764 review).
+MEASUREMENT_INVALID_REASONS = frozenset({
+    "partial_measurement_requires_reconciliation",
+    "existing_measurement_receipt_changed",
+    "official_measurement_changed_or_incomplete",
+})
+
+
+def _ts_ok(value: object) -> bool:
+    try:
+        return isinstance(value, str) and parse_ts(value) is not None
+    except (TypeError, ValueError):
+        return False
+
+
+def measured_awaiting_release(rid: str, state: dict[str, Any] | None = None) -> bool:
     """pods/<rid>.json records a finished official measurement for this order: request_id matches,
     measurement_completed is exactly True, torn_down_at is a real timestamp, no pod is still listed and neither
-    cleanup nor scored dispatch is uncertain. A missing, unreadable or partial record counts as not measured."""
+    cleanup nor scored dispatch is uncertain. pod_runner writes ended_at and cost_estimate_usd only after the
+    host-side row check passed and receipt.json was written, so both are required too: a pod that finished but
+    whose rows failed the host check is not measured. An order whose operational hold says the measurement is
+    invalid is never measured. A missing, unreadable or partial record counts as not measured."""
     rid = request_id(rid)
+    operational = state.get("operational_hold") if isinstance(state, dict) else None
+    if isinstance(operational, dict) and operational.get("reason") in MEASUREMENT_INVALID_REASONS:
+        return False
     try:
         record = load_json_file(STATE_ROOT / "pods" / f"{rid}.json", 1_000_000)  # = pod_runner.PODS_DIR
-    except PickupError:
+    except (PickupError, ValueError, RecursionError, OSError):
         return False
-    torn_down = record.get("torn_down_at")
-    try:
-        torn_down_ok = isinstance(torn_down, str) and parse_ts(torn_down) is not None
-    except (TypeError, ValueError):
-        torn_down_ok = False
-    return (record.get("request_id") == rid and record.get("measurement_completed") is True and torn_down_ok
+    if not isinstance(record, dict):
+        return False
+    cost = record.get("cost_estimate_usd")
+    return (record.get("request_id") == rid and record.get("measurement_completed") is True
+            and _ts_ok(record.get("torn_down_at")) and _ts_ok(record.get("ended_at"))
+            and isinstance(cost, (int, float)) and not isinstance(cost, bool)
             and record.get("pod_id") is None and record.get("cleanup_uncertain") is False
-            and not record.get("scored_dispatch_uncertain"))
+            and record.get("scored_dispatch_uncertain") is not True)
 
 
-def owned_hold_margin(rid: str) -> timedelta:
+def owned_hold_margin(rid: str, state: dict[str, Any] | None = None) -> timedelta:
     """How close to the deadline a live owner may hold an order quietly: 12 h, or 3 h once it is measured."""
-    return MEASURED_RELEASE_MARGIN if measured_awaiting_release(rid) else OWNED_HOLD_DEADLINE_MARGIN
+    return MEASURED_RELEASE_MARGIN if measured_awaiting_release(rid, state) else OWNED_HOLD_DEADLINE_MARGIN
 
 
 def hold_owner_live(owner: object, rid: str, now: datetime) -> bool:
@@ -2087,7 +2108,8 @@ def ensure_native_owner(row: dict[str, Any], state: dict[str, Any], effects: Eff
     if not native_owner_due(rid, reason):
         return False
     name = native_owner.owner_name(rid)
-    quiet = deadline_for(row) - now > owned_hold_margin(rid)
+    # CR-764 review: the 3 h measured margin covers only a LIVE owner; a dead owner's restart keeps the 12 h card.
+    quiet = deadline_for(row) - now > owned_hold_margin(rid, state)
     operational = state.get("operational_hold")
     existing = operational.get("owner") if isinstance(operational, dict) else None
     if existing not in (None, name) and owner_job_live(existing, rid, now):
@@ -2107,7 +2129,7 @@ def ensure_native_owner(row: dict[str, Any], state: dict[str, Any], effects: Eff
     save_state(state)
     record["start_ok"] = effects.start_unit(native_owner.UNIT.format(rid))
     save_state(state)
-    return quiet and record["start_ok"]
+    return deadline_for(row) - now > OWNED_HOLD_DEADLINE_MARGIN and record["start_ok"]
 
 
 def start_native_owner_job(rid: str) -> int:
@@ -4457,7 +4479,7 @@ def measured_release_quiet(row: dict[str, Any], state: dict[str, Any], now: date
     operational = state.get("operational_hold")
     return (isinstance(operational, dict) and operational.get("transient") is False
             and bool(operational.get("reason")) and hold_owner_live(operational.get("owner"), rid, now)
-            and measured_awaiting_release(rid) and deadline_for(row) - now > MEASURED_RELEASE_MARGIN)
+            and measured_awaiting_release(rid, state) and deadline_for(row) - now > MEASURED_RELEASE_MARGIN)
 
 
 def sla_handoff(row: dict[str, Any], hours: int) -> str:
@@ -4706,7 +4728,7 @@ def health(effects: Effects) -> dict[str, Any]:
                           or (operational.get("owner") == native_owner.owner_name(rid)
                               and native_owner_starting(state, now))))
         # N118: a live owner whose official pod measurement is complete (pods/<rid>.json) stays quiet until 3 h.
-        margin = owned_hold_margin(rid) if owned_run else OWNED_HOLD_DEADLINE_MARGIN
+        margin = owned_hold_margin(rid, state) if owned_run else OWNED_HOLD_DEADLINE_MARGIN
         measured = owned_run and margin == MEASURED_RELEASE_MARGIN
         owned_quiet = owned_run and deadline_for(row) - now > margin
         if active_hold(row) or planned_review or owned_quiet:
