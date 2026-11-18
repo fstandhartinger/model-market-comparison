@@ -79,7 +79,17 @@ class Tests(unittest.TestCase):
         self.assertFalse(S.active(four_b, recipe(kind='python_inprocess')))
         self.assertFalse(S.active(four_b, recipe(image=S.BASE_IMAGE.split('@')[0])))
         self.assertFalse(starlord_runtime_supplement.active(four_b, recipe()))
-        self.assertEqual(S.ORDERS, frozenset({'6b7af363-cef5-4517-b3fa-4ca5055fbca4', 'c5a084fa-0c3b-4fd5-ab69-e69f9b6a7116'}))
+        # CR-783: Starlord-4B-v1.4-preview (order cd7e038c) is admitted by its exact full id only.
+        v14 = '/home/flori/jobs/fastlane-evaluations/cd7e038c-dcac-4990-9ca5-feac99cd8d8d'
+        self.assertTrue(S.active(v14, recipe()))
+        self.assertFalse(S.active('/jobs/cd7e038c', recipe()))
+        self.assertFalse(S.active('/jobs/cd7e038c-dcac-4990-9ca5-feac99cd8d8e', recipe()))
+        self.assertFalse(S.active(v14 + '-x', recipe()))
+        self.assertFalse(S.active(v14, recipe(kind='python_inprocess')))
+        self.assertFalse(S.active(v14, recipe(image=S.BASE_IMAGE.split('@')[0])))
+        self.assertFalse(starlord_runtime_supplement.active(v14, recipe()))
+        self.assertEqual(S.ORDERS, frozenset({'6b7af363-cef5-4517-b3fa-4ca5055fbca4', 'c5a084fa-0c3b-4fd5-ab69-e69f9b6a7116',
+                                              'cd7e038c-dcac-4990-9ca5-feac99cd8d8d'}))
         # The reviewed v1 supplement (no flash-attn) never selects this order, and this one never selects v1's order.
         self.assertFalse(starlord_runtime_supplement.active(job, recipe()))
         self.assertTrue(starlord_runtime_supplement.active('/jobs/' + starlord_runtime_supplement.ORDER, recipe()))
