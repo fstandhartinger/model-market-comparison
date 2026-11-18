@@ -22,7 +22,7 @@ import { previewMetadata } from '../../../lib/seo';
 import { jevSystemKeyFromSlug, jevSystemPath, jevSystemSlug } from '../../../lib/jev-system-slug.mjs';
 import { isJevbenchV16ExcludedKey } from '../../../lib/jevbench-v16-public-scope.mjs';
 import { readJevbenchSeoData } from '../../../lib/jevbench-seo.mjs';
-import { readJevbenchA4ModelPages } from '../../../lib/jevbench-a4-model-pages.mjs';
+import { readJevbenchA4ModelPages, readJevbenchLiveCategoryView } from '../../../lib/jevbench-a4-model-pages.mjs';
 import { jevbenchCategoryView } from '../../../lib/jevbench-categories.mjs';
 import { jevIntentMetadata } from '../../../lib/jevbench-seo-metadata';
 import { JevComparisonPage } from '../../../components/JevComparisonPage';
@@ -123,7 +123,6 @@ function A4Breakdowns({ s, page }: { s: any; page: A4Page }) {
   const split = s.intelligence?.per_type_split ?? {};
   const types = (['choice', 'noul', 'score'] as const).filter((t) => split[`open|${t}`] || split[`sealed|${t}`]);
   const cats = page.categoryView ?? jevbenchCategoryView('v1.6.1', [s.key], { supplement: true });
-  const cell = cats?.systems[s.key];
   const sets = page.full ? `the full set (${page.nItems} items)` : `${page.subset} ∪ P (${page.nItems} items: 300 open + 300 sealed; fewer sealed items than the full set, so wider uncertainty)`;
   const pct = (v: number | null | undefined) => (v == null ? '—' : v.toFixed(1));
   return <section className="bh-panel mt-6 p-5" data-bh-jev-a4-breakdowns>
@@ -133,13 +132,31 @@ function A4Breakdowns({ s, page }: { s: any; page: A4Page }) {
       <thead><tr><th scope="col">Request type</th><th scope="col">Open</th><th scope="col">Sealed</th></tr></thead>
       <tbody>{types.map((t) => <tr key={t}><th scope="row" className="font-normal capitalize">{t}</th><td className="tabular">{pct(split[`open|${t}`]?.cc)}</td><td className="tabular">{pct(split[`sealed|${t}`]?.cc)}</td></tr>)}</tbody>
     </table></div>}
+    <CategoryTables cats={cats} systemKey={s.key} />
+  </section>;
+}
+
+// The category tables of one row (shared by the A4 breakdowns and, since 18 Nov 2026, the current-release system page).
+function CategoryTables({ cats, systemKey }: { cats: ReturnType<typeof jevbenchCategoryView>; systemKey: string }) {
+  const cell = cats?.systems[systemKey];
+  const pct = (v: number | null | undefined) => (v == null ? '—' : v.toFixed(1));
+  return <>
     {cats && (cell ? <div className="mt-3 grid gap-4 sm:grid-cols-2">{cats.dims.map((d) => {
       const rows = d.cats.filter((c) => !['other'].includes(c.key) && cell[d.key]?.[c.key]);
       return <div key={d.key} data-bh-jev-a4-dim={d.key}><h3 className="text-sm font-semibold">{d.title}</h3>
-        {!cell[d.key] && <p className="bh-muted mt-1 text-sm" data-bh-jev-a4-dim-missing={d.key}>{cats.missingDims?.[s.key]?.[d.key] ?? 'No per-category values are published for this system.'}</p>}
+        {!cell[d.key] && <p className="bh-muted mt-1 text-sm" data-bh-jev-a4-dim-missing={d.key}>{cats.missingDims?.[systemKey]?.[d.key] ?? 'No per-category values are published for this system.'}</p>}
         <table className="bh-table mt-1 text-sm"><tbody>{rows.map((c) => { const [v, n] = cell[d.key][c.key]; return <tr key={c.key}><th scope="row" className="font-normal" title={c.covers}>{c.short}</th><td className="tabular">{pct(v)}</td><td className="bh-muted tabular">n={n}{n < cats.radarMinN ? ' †' : ''}</td></tr>; })}</tbody></table></div>;
     })}<p className="bh-muted text-xs sm:col-span-2">Cells need at least {cats.minN} answered items; † fewer than {cats.radarMinN} ({cats.drawLowN ? 'indicative only; drawn as hollow, lighter points on the compare radars' : 'indicative only, listed below the radar in the compare view'}).</p></div>
-      : <p className="bh-muted mt-3 text-sm">{cats.missing[s.key] ?? 'No per-category values are published for this system.'}</p>)}
+      : <p className="bh-muted mt-3 text-sm">{cats.missing[systemKey] ?? 'No per-category values are published for this system.'}</p>)}
+  </>;
+}
+
+// 18 Nov 2026 (Karpo, UID 38270): rows outside the A4/addenda list showed no breakdowns at all; the live board's cells, not part of the score.
+function LiveBreakdowns({ cats, systemKey }: { cats: ReturnType<typeof jevbenchCategoryView>; systemKey: string }) {
+  return <section className="bh-panel mt-6 p-5" data-bh-jev-live-breakdowns>
+    <h2 className="font-semibold">Breakdowns (not part of the score)</h2>
+    <p className="bh-muted mt-1 text-sm">Chance-corrected competence (0 = chance, 100 = perfect) by category on {cats?.categoryPools?.[systemKey] ?? 'the items this row answered'}. Raw values, not equated; the same cells feed the <Link className="text-accent underline" href="/jev-models#compare">compare view</Link>.</p>
+    <CategoryTables cats={cats} systemKey={systemKey} />
   </section>;
 }
 
@@ -178,7 +195,7 @@ function A4System({ data, page, previous }: { data: Awaited<ReturnType<typeof re
   </>;
 }
 
-function CurrentReleaseSystem({ data, row }: { data: Awaited<ReturnType<typeof readJevbenchSeoData>>; row: SeoRow }) {
+function CurrentReleaseSystem({ data, row, cats }: { data: Awaited<ReturnType<typeof readJevbenchSeoData>>; row: SeoRow; cats?: ReturnType<typeof jevbenchCategoryView> }) {
   const url = `${SITE_URL}${jevSystemPath(row.key)}`;
   // Publish only the current sanitized presentation fields. No historical base-model overlay is copied.
   const price = row.cost?.usd_per_1000;
@@ -215,6 +232,7 @@ function CurrentReleaseSystem({ data, row }: { data: Awaited<ReturnType<typeof r
       <p className="bh-muted">{row.speed?.hardware ?? row.endpoint_condition ?? row.speed?.measured_where ?? 'Setup not stated'}</p>
       <JevDecisionLimitDetail row={row} />
     </section>
+    {cats && <LiveBreakdowns cats={cats} systemKey={row.key} />}
     <JevPreviousValuesPanel row={row} />
     {row.remeasured_in && row.remeasure?.disclosure && <section className="bh-panel mt-6 p-5" data-bh-jev-remeasure-disclosure><h2 className="font-semibold">Re-measured on a GPU</h2><p className="bh-muted mt-2">{row.remeasure.disclosure}</p></section>}
     {row.new_in && row.underlying && <section className="bh-panel mt-6 p-5" data-bh-jev-new-row-disclosure><h2 className="font-semibold">Model and serving disclosure</h2><p className="bh-muted mt-2">{row.underlying}</p></section>}
@@ -268,7 +286,7 @@ export default async function JevSystemPage({ params }: { params: Promise<{ syst
   const seoRow = data.systems.find((r) => r.key === key) ?? data.historical.find((r) => r.key === key);
   const a4Page = (await readJevbenchA4ModelPages() as Map<string, A4Page>).get(key);
   if (a4Page) return <A4System data={data} page={a4Page} previous={seoRow} />;
-  if (seoRow) return <CurrentReleaseSystem data={data} row={seoRow} />;
+  if (seoRow) return <CurrentReleaseSystem data={data} row={seoRow} cats={data.systems.some((r) => r.key === key) ? await readJevbenchLiveCategoryView([seoRow.key]) : null} />;
   const current = await findV142Row(key);
   if (current) return <JevV141SystemDetail row={current.row} ranked={current.view.ranked} revision={current.view.revision} generated={current.view.generated} note={current.note} sealedFamilyN={current.sealedFamilyN} hardFamilyN={current.hardFamilyN} />;
   const addendum = await findV157Addendum(key);

@@ -6,6 +6,7 @@ import { readJevbenchSeoData } from '../lib/jevbench-seo.mjs';
 import { JevCompareV15 } from './JevCompareV15';
 import { jevV15CompareRow } from '../lib/jevbench-v15-board.mjs';
 import { jevbenchCategoryView } from '../lib/jevbench-categories.mjs';
+import { readJevbenchLiveCategoryView } from '../lib/jevbench-a4-model-pages.mjs';
 import { boardRankText, costBasisLabel, DatasetFaqJsonLd, JevFaq, JevReleaseStamp, one, usdPerThousand } from './JevBenchSeoBlocks';
 import { jevSystemPath } from '../lib/jev-system-slug.mjs';
 import { jevDecisionLimitText, jevMethodView, jevPreviousTitle } from '../lib/jev-decision-limit.mjs';
@@ -16,6 +17,8 @@ export async function JevComparisonPage({rivalKey,path,label,priceNotes}: {rival
   const pair = data.comparisons.find((p) => p.key === rivalKey);
   if (!pair) throw new Error(`No published comparison for ${rivalKey}`);
   const {jev,rival} = pair;
+  // 18 Nov 2026: the live board's category cells (as /jev-models#compare); the base revision's frozen cells only when the live artifact lacks one of the two rows.
+  const categories = await readJevbenchLiveCategoryView([jev.key,rival.key]) ?? jevbenchCategoryView(data.artifact.base_revision,[jev.key,rival.key],{ supplement: true });
   const status = pair.inCurrentRelease ? `${rival.board === 'api' ? boardRankText(rival) : rival.rank == null ? 'Outside the Capability caps' : `Rank #${rival.rank} on the open-weights board`} in ${data.artifact.revision}` : `Not in the current release ranking; last published measurement: ${rival.measurement_revision}, ${rival.last_measured_on ?? 'date not published'}`;
   const faq = [
     {question: `What does JevBench show for Jev and ${label}?`, answer: `Jev 1.13.0 has Capability ${one(jev.capability)} and is the unranked reference (the open-weights board ranks ${data.ranked.length} open-weights systems; hosted API offerings are ranked on the API leaderboard). ${rival.display} has Capability ${one(rival.capability)}. ${status}. Historical scores use their original method and are not ranked against the current release.`},
@@ -44,7 +47,7 @@ export async function JevComparisonPage({rivalKey,path,label,priceNotes}: {rival
       <p className="mt-3">{status}.{rival.board === 'api' && <> <Link className="text-accent underline" href="/jev-models/api">JevBench API leaderboard</Link></>}</p><p className="bh-muted mt-2">Compare Jev-compatible models by separate measures and their measurement conditions. A historical measurement is not a current rank.</p>
     </header>
     <JevCompareV15 rows={[jevV15CompareRow(jev as JevV15System),jevV15CompareRow(rival as JevV15System)]} openDecisions={data.artifact.sample?.open ?? 0} sealedDecisions={data.artifact.sample?.sealed ?? 0}
-      categories={jevbenchCategoryView(data.artifact.base_revision,[jev.key,rival.key],{ supplement: true })} heading={`Jev and ${label}: published axes and category radars`}/>
+      categories={categories} heading={`Jev and ${label}: published axes and category radars`}/>
     <section className="bh-panel mt-6 p-5"><h2 className="text-xl font-semibold">Published values</h2>
       <div className="overflow-x-auto"><table className="w-full text-left text-sm" data-bh-jev-comparison-table><thead><tr><th>Measure</th><th>{jev.display}</th><th>{rival.display}</th></tr></thead><tbody>{measures.map(([name,a,b]) => <tr className="border-t" key={name}><th className="py-2">{name}</th><td>{a}</td><td>{b}</td></tr>)}</tbody></table></div>
       {(jevLatencyView(jev.speed).adjusted || jevLatencyView(rival.speed).adjusted) && <JevLatencyLegend className="bh-muted mt-2 text-xs" />}
