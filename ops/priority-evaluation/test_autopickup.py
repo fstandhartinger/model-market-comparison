@@ -2642,6 +2642,54 @@ class SourceFetchPolicyTests(DatabaseTestCase):
         self.assertEqual(len(fx.started), starts)
         self.assertFalse(any(n[0] == "urgent" for n in fx.notes))
 
+    def _generated_exhausted(self, rid, reason="the measurement-adapter preparation retry budget is exhausted", **extra):
+        state = ap.load_state(rid)
+        state["runner_review_failure"] = {"at": ap.iso(ap.utcnow()), "scope": "generated_runner", "attempt": 3}
+        state.update(extra)
+        ap.mark_evaluation_exhausted(state, reason)
+        ap.update_row(rid, "evaluation_status='exhausted'")
+
+    def test_generated_runner_exhaustion_keeps_a_hand_owners_hold(self):
+        # CR-756 review MUST 1: an order already held by a hand owner must not get a second (native) owner.
+        rid = insert_order()
+        fx = FakeEffects()
+        self._claim(rid, fx)
+        hand = {"reason": "native_runtime_build", "owner": "fastlane-hand-x", "transient": False}
+        self._generated_exhausted(rid, operational_hold=dict(hand))
+        ap.manage_evaluation(row(rid), ap.load_state(rid), fx, datetime.now(timezone.utc))
+        self.assertNotIn(f"jevbench-native-owner@{rid}.service", fx.started)
+        self.assertEqual(ap.load_state(rid)["operational_hold"]["owner"], "fastlane-hand-x")
+
+    def test_generated_runner_exhaustion_already_escalated_or_late_or_refund_decided_keeps_the_old_card(self):
+        # CR-756 review MUST 2: no owner start and no second card for orders exhausted before the deploy,
+        # past their deadline, or with a refund decision.
+        cases = (("already alerted", {"alerts": {"evaluation_exhausted": ap.iso(ap.utcnow())}}, timedelta(0)),
+                 ("past deadline", {}, timedelta(hours=49)),
+                 ("refund decided", {}, timedelta(0)))
+        for name, extra, later in cases:
+            rid = insert_order()
+            fx = FakeEffects()
+            self._claim(rid, fx)
+            self._generated_exhausted(rid, **extra)
+            if name == "refund decided":
+                ap.update_row(rid, "refund_decision='declined'")
+            ap.manage_evaluation(row(rid), ap.load_state(rid), fx, datetime.now(timezone.utc) + later)
+            self.assertNotIn(f"jevbench-native-owner@{rid}.service", fx.started, name)
+            alerts = ap.load_state(rid).get("alerts") or {}
+            self.assertNotIn("operational_hold_unsupported_measurement_backend", alerts, name)
+            urgent = [n for n in fx.notes if n[0] == "urgent" and "Automatic retries are used up" in n[2]]
+            self.assertEqual(len(urgent), 0 if name == "already alerted" else 1, name)
+
+    def test_source_review_budget_with_stale_generated_runner_record_still_rings(self):
+        # CR-756 review S3: a stale generated_runner record next to crashed review runs is not "no runtime".
+        rid = insert_order()
+        fx = FakeEffects()
+        self._claim(rid, fx)
+        self._generated_exhausted(rid, reason="the source review retry budget is exhausted")
+        ap.manage_evaluation(row(rid), ap.load_state(rid), fx, datetime.now(timezone.utc))
+        self.assertNotIn(f"jevbench-native-owner@{rid}.service", fx.started)
+        self.assertTrue(any(n[0] == "urgent" and "Automatic retries are used up" in n[2] for n in fx.notes))
+
     def test_exhausted_after_customer_or_passed_review_still_rings(self):
         for failure, gate in (({"scope": "customer_source"}, None), ({"scope": "generated_runner"}, {"verdict": "PASS"})):
             rid = insert_order()

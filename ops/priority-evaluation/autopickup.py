@@ -2141,7 +2141,7 @@ def manage_evaluation(row: dict[str, Any], state: dict[str, Any], effects: Effec
         else:
             return
     if status == "exhausted":
-        if generated_runner_exhausted(state):
+        if generated_runner_exhausted(state) and native_rescue_allowed(row, state, now):
             # INCIDENTS #25 (order c5a084fa, 16 Nov 2026): every preparation round wrote a runner that review
             # FAILed as generated_runner. No automatic runtime exists, so a native owner takes the order; the
             # card stays quiet while that owner is live (a dead owner or a near deadline still rings).
@@ -5230,7 +5230,7 @@ def evaluate(rid: str) -> int:
                     update_row(rid, "evaluation_status='pending'", "evaluation_status IN ('starting','running')")
                     return 0
                 if not consume_stage_attempt(state, "preparation", MAX_PREPARATION_ATTEMPTS):
-                    mark_evaluation_exhausted(state, "the measurement-adapter preparation retry budget is exhausted")
+                    mark_evaluation_exhausted(state, GENERATED_RUNNER_EXHAUSTED_REASON)
                     update_row(rid, "evaluation_status='exhausted'", "evaluation_status IN ('starting','running')")
                     return 1
                 prepare_runner_prompt(row, job_dir)
@@ -5394,12 +5394,35 @@ def append_state(job_dir: Path, text: str) -> None:
     atomic_write(path, path.read_text(encoding="utf-8", errors="replace") + text)
 
 
+GENERATED_RUNNER_EXHAUSTED_REASON = "the measurement-adapter preparation retry budget is exhausted"
+
+
 def generated_runner_exhausted(state: dict[str, Any]) -> bool:
-    """The budget ran out on generated runners alone: the last review FAILed with scope generated_runner and no
-    runner ever passed review. That is the "no automatic runtime" case, not a customer or infrastructure fault."""
+    """The PREPARATION budget ran out on generated runners alone: the last review FAILed with scope generated_runner
+    and no runner ever passed review. That is the "no automatic runtime" case, not a customer or infrastructure
+    fault. An exhausted source-review budget is excluded: there a stale generated_runner record can sit next to
+    review runs that crashed for other reasons (CR-756 review S3)."""
     failure = state.get("runner_review_failure")
-    return isinstance(state.get("evaluation_exhausted"), dict) and not state.get("source_review_gate") \
+    exhausted = state.get("evaluation_exhausted")
+    return isinstance(exhausted, dict) and exhausted.get("reason") == GENERATED_RUNNER_EXHAUSTED_REASON \
+        and not state.get("source_review_gate") \
         and isinstance(failure, dict) and failure.get("scope") == "generated_runner"
+
+
+def native_rescue_allowed(row: dict[str, Any], state: dict[str, Any], now: datetime) -> bool:
+    """CR-756 review: the exhausted -> native owner route only for an order that was not already escalated
+    (no evaluation_exhausted card yet), is still before its deadline, has no refund decision, and is not held by
+    another owner. Everything else keeps the old single evaluation_exhausted card, so the deploy neither starts
+    owners for old exhausted orders nor raises a second card for them."""
+    alerts = state.get("alerts")
+    if isinstance(alerts, dict) and alerts.get("evaluation_exhausted"):
+        return False
+    if row.get("refund_decision") or row.get("refund_id") or deadline_for(row) <= now:
+        return False
+    operational = state.get("operational_hold")
+    owner = operational.get("owner") if isinstance(operational, dict) else None
+    rid = request_id(row.get("id"))
+    return owner in (None, "", native_owner.owner_name(rid))
 
 
 def mark_evaluation_exhausted(state: dict[str, Any], reason: str) -> None:
