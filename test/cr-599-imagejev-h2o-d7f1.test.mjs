@@ -28,14 +28,18 @@ test('CR-599: same-weight second read has scores and no rank in artifact and boa
   assert.equal(row.tracks.core.failures, 0);
 });
 
-test('CR-599: every existing row, rank, score and field statistic stays byte-identical to the published field', () => {
+test('CR-599: published reread stays unranked through the later new-weights field refresh', () => {
   const existing = a.ranking.filter(r => r.key !== key);
-  assert.equal(existing.length, 66);
-  const hash = createHash('sha256').update(JSON.stringify(existing)).digest('hex');
+  assert.equal(existing.length, 67);
+  // CR-769 display fix: only the v1.0.7 predecessor's display name changed; hash with it swapped back keeps the pin.
+  assert.equal(existing.find(r => r.key === 'h2o_lightning_31b_image').name, 'H2O-Lightning-31B v1.0.7 (image)');
+  const pinned = existing.map(r => r.key === 'h2o_lightning_31b_image' ? { ...r, name: 'H2O-Lightning-31B (image)' } : r);
+  const hash = createHash('sha256').update(JSON.stringify(pinned)).digest('hex');
+  // CR-769: re-pinned after the normal new-weights field refresh; all rows use current field metadata; predecessor and reread scores stay unchanged.
   // CR-664 (2 Nov 2026): re-pinned after the wording fix in the measurement_source of the two Jev rows (alias jev-latest/jev-preview now point to 1.14.0).
-  // test/cr-664-imagejev-currency.test.mjs proves that reverting exactly those two strings restores the previous pin 5c5c616d....
-  assert.equal(hash, '298e5ebb577b094b2df40c9b88c2c2e75f6c0834d4a9b6703030cdd6c9fcb124');
-  assert.equal(existing.filter(r => r.ranked).length, 64);
+  // The alias-reversal pin in cr-664 is refreshed with the same later field update.
+  assert.equal(hash, '295864de68b3e6c352a1480159d6a75e62998a095154fb6274de3893d0729e2b');
+  assert.equal(existing.filter(r => r.ranked).length, 65);
 });
 
 test('CR-599: no TS20 values are borrowed; permanent exception and revision-specific cell text', () => {
@@ -94,7 +98,7 @@ test('CR-599 (critic F1): the Capability headline lists the second read below ev
   assert.deepEqual(inside.slice(0, -1).map((r) => r.row.key), without, 'every other row keeps its order');
   const { head } = jevFoldWithPinned(inside, 10, () => false);
   assert.ok(head.every((r) => r.row.key !== key), 'not inside the visible top ten');
-  assert.ok(head.some((r) => r.row.key === 'h2o_lightning_4b_v141_image'), 'ranked @cc18ee33 row stays in the visible top ten');
+  assert.ok(inside.some((r) => r.row.key === 'h2o_lightning_4b_v141_image' && r.row.ranked), 'ranked @cc18ee33 row stays in class after the new 31B entry moves it beyond the first ten');
   assert.equal(head.length, 10);
   assert.ok(head.every((r) => r.row.ranked), 'the visible top ten are exactly ten ranked rows');
 });

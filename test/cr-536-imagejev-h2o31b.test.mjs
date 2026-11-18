@@ -7,7 +7,7 @@ const key = 'h2o_lightning_31b_image';
 const row = release.ranking.find((r) => r.key === key);
 
 test('CR-536 H2O-31B: pinned official GPU row discloses licence, engine, timing and cost basis', () => {
-  assert.equal(row.name, 'H2O-Lightning-31B (image)');
+  assert.equal(row.name, 'H2O-Lightning-31B v1.0.7 (image)');
   assert.equal(row.kind, 'gpu');
   assert.equal(row.api_flag, false);
   assert.equal(row.licence, 'H2O Model Non-Commercial Licence v1.1');
@@ -53,7 +53,7 @@ test('CR-536 H2O-31B: both paid public top-five changes and capped Capability el
   assert.ok(Math.abs(c.speed.raw_p50_s - 0.2188372124999205) < 1e-12);
   const e = release.capability_eligibility;
   const capped = release.ranking.filter((r) => r.ranked && r.tracks.core.cost.usd_per_1000 <= e.cost_usd_per_1000_cap && r.tracks.core.speed.adjusted_p50_s <= e.latency_p50_s_cap).sort((a,b) => b.tracks.core.capability - a.tracks.core.capability);
-  assert.equal(capped.length, 55);
+  assert.equal(capped.length, 56);
   assert.equal(capped[0].key, key);
   const page = await readFile(new URL('../components/ImageJevV03Page.tsx', import.meta.url), 'utf8');
   assert.match(page, /22 Oct 2026 addendum, new row:<\/b> adds H2O-Lightning-31B/);

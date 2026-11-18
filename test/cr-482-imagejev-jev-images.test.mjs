@@ -47,8 +47,8 @@ test('CR-482 cost reference is Jev with images; both top fives are the reviewed 
     && r.tracks.core.speed.adjusted_p50_s <= e.latency_p50_s_cap;
   const capped = release.ranking.filter(inCap).sort((a, b) => b.tracks.core.capability - a.tracks.core.capability);
   assert.deepEqual(capped.slice(0, 5).map((r) => r.key),
-    ['h2o_lightning_31b_image', 'kettei_fat', 'sage_1_4_images', 'drex_max', 'jev_1_13_images']); // CR-536: H2O-Lightning-31B added; field equating and ranks refreshed.
-  assert.equal(capped.length, 55); // CR-536: H2O-Lightning-31B added; field equating and ranks refreshed.
+    ['h2o_lightning_31b_image', 'h2o_lightning_31b_v134_image', 'kettei_fat', 'sage_1_4_images', 'drex_max']); // CR-536: H2O-Lightning-31B added; field equating and ranks refreshed.
+  assert.equal(capped.length, 56); // CR-536: H2O-Lightning-31B added; field equating and ranks refreshed.
   // Wity-1 and the GPT Lunas stay out on latency, not cost
   for (const key of ['wity_1', 'gpt6_luna', 'gpt56_luna']) assert.ok(row(key).tracks.core.speed.adjusted_p50_s > e.latency_p50_s_cap, key);
   assert.match(e.rationale, /Jev would otherwise be excluded from its own headline/);
@@ -83,5 +83,5 @@ test('CR-482 System1 s1-vision is no longer an ImageJevBench row anywhere in the
   assert.equal(ts20.systems['s1-vision'], undefined);
   assert.equal(ts20.summary['s1-vision'], undefined);
   assert.ok(!/s1-vision|System1 s1|Blink/.test(JSON.stringify(release)), 'no mention of the removed row in the published data');
-  assert.equal(release.ranking.length, 67); // CR-536: H2O-Lightning-31B added; field equating and ranks refreshed.
+  assert.equal(release.ranking.length, 68); // CR-536: H2O-Lightning-31B added; field equating and ranks refreshed.
 });
