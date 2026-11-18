@@ -5415,13 +5415,19 @@ def native_rescue_allowed(row: dict[str, Any], state: dict[str, Any], now: datet
     another owner. Everything else keeps the old single evaluation_exhausted card, so the deploy neither starts
     owners for old exhausted orders nor raises a second card for them."""
     alerts = state.get("alerts")
+    rid = request_id(row.get("id"))
+    record = state.get("native_owner")
+    # Sticky (fix check F1): once the order took the native route, it stays there; flipping back at the deadline
+    # would ring a second card under the evaluation_exhausted key.
+    if (isinstance(record, dict) and record.get("job") == native_owner.owner_name(rid)) \
+            or (isinstance(alerts, dict) and alerts.get("operational_hold_unsupported_measurement_backend")):
+        return True
     if isinstance(alerts, dict) and alerts.get("evaluation_exhausted"):
         return False
     if row.get("refund_decision") or row.get("refund_id") or deadline_for(row) <= now:
         return False
     operational = state.get("operational_hold")
     owner = operational.get("owner") if isinstance(operational, dict) else None
-    rid = request_id(row.get("id"))
     return owner in (None, "", native_owner.owner_name(rid))
 
 

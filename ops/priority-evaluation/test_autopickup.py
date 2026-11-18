@@ -2680,6 +2680,22 @@ class SourceFetchPolicyTests(DatabaseTestCase):
             urgent = [n for n in fx.notes if n[0] == "urgent" and "Automatic retries are used up" in n[2]]
             self.assertEqual(len(urgent), 0 if name == "already alerted" else 1, name)
 
+    def test_native_route_stays_native_past_the_deadline_without_a_second_card(self):
+        # Fix check F1: T-1h rings once (operational_hold key); T+1h must not add an evaluation_exhausted card.
+        rid = insert_order()
+        fx = FakeEffects()
+        self._claim(rid, fx)
+        self._generated_exhausted(rid)
+        deadline = ap.deadline_for(row(rid))
+        ap.manage_evaluation(row(rid), ap.load_state(rid), fx, datetime.now(timezone.utc))
+        self.assertIn(f"jevbench-native-owner@{rid}.service", fx.started)
+        for when in (deadline - timedelta(hours=1), deadline + timedelta(hours=1)):
+            ap.manage_evaluation(row(rid), ap.load_state(rid), fx, when)
+        alerts = ap.load_state(rid).get("alerts") or {}
+        self.assertNotIn("evaluation_exhausted", alerts)
+        self.assertIn("operational_hold_unsupported_measurement_backend", alerts)
+        self.assertEqual(sum("Automatic retries are used up" in n[2] for n in fx.notes), 1)  # the T-1h card only
+
     def test_source_review_budget_with_stale_generated_runner_record_still_rings(self):
         # CR-756 review S3: a stale generated_runner record next to crashed review runs is not "no runtime".
         rid = insert_order()
