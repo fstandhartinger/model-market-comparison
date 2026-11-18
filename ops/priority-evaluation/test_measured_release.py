@@ -106,6 +106,12 @@ class MeasuredRecordTests(Base):
         self.assertFalse(ap.measured_awaiting_release(RID))
         self.assertEqual(ap.owned_hold_margin(RID), ap.OWNED_HOLD_DEADLINE_MARGIN)
 
+    def test_failed_remeasurement_after_a_success_is_not_measured(self) -> None:
+        # An older successful run's ended_at stays; the new attempt's torn_down_at is later (fix check F2).
+        self.pod(dict(VALID, torn_down_at="2026-11-16T09:00:00+00:00"))
+        self.assertFalse(ap.measured_awaiting_release(RID))
+        self.assertFalse(ap.measured_awaiting_release(RID, {"operational_hold": {"reason": "native_runtime_build"}}))
+
     def test_invalid_measurement_hold_reason_is_not_measured(self) -> None:
         self.pod(VALID)
         for reason in sorted(ap.MEASUREMENT_INVALID_REASONS):

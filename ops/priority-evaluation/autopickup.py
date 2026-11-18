@@ -284,6 +284,13 @@ def _ts_ok(value: object) -> bool:
         return False
 
 
+def _not_before(later: str, earlier: str) -> bool:
+    try:
+        return parse_ts(later) >= parse_ts(earlier)
+    except TypeError:  # naive vs aware timestamps: not provable
+        return False
+
+
 def measured_awaiting_release(rid: str, state: dict[str, Any] | None = None) -> bool:
     """pods/<rid>.json records a finished official measurement for this order: request_id matches,
     measurement_completed is exactly True, torn_down_at is a real timestamp, no pod is still listed and neither
@@ -302,8 +309,11 @@ def measured_awaiting_release(rid: str, state: dict[str, Any] | None = None) -> 
     if not isinstance(record, dict):
         return False
     cost = record.get("cost_estimate_usd")
+    # ended_at must belong to the LAST attempt: _lifecycle resets torn_down_at per attempt but keeps an older run's
+    # ended_at, so a failed re-measurement after a success would otherwise still read as measured (fix check F2).
     return (record.get("request_id") == rid and record.get("measurement_completed") is True
             and _ts_ok(record.get("torn_down_at")) and _ts_ok(record.get("ended_at"))
+            and _not_before(record["ended_at"], record["torn_down_at"])
             and isinstance(cost, (int, float)) and not isinstance(cost, bool)
             and record.get("pod_id") is None and record.get("cleanup_uncertain") is False
             and record.get("scored_dispatch_uncertain") is not True)
