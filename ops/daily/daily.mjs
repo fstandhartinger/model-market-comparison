@@ -18,6 +18,7 @@ import { GATE_TIMEOUT_MS, gatedPublish } from './publish-gate.mjs';
 import { staleSources, updateCollectorHealth } from './source-health.mjs';
 import { profileRunDir } from './profile-run.mjs';
 import { dailyConcurrency } from './concurrency.mjs';
+import { dailyTestCommand } from './test-command.mjs';
 import { BENCHMARK_STEP_TIMEOUT_MS } from './step-budget.mjs';
 // D249.2: steps run through `runStep`, not `promisify(execFile)` — a timeout has to signal the
 // child's process group, or the step's workers outlive the kill and keep writing into a run
@@ -518,7 +519,12 @@ export async function runDaily({ repo = ROOT, home = '/opt/benchmarkheaven-daily
     await command('npm-build', 'npm', ['run', 'build'], work, 3_600_000, isolatedEnvironment);
     // CR-631 (31 Oct 2026): the suite sums ~97 test-minutes (JevBench release-history and board tests take 2-7 min each)
     // and ran into the 30 min cap at concurrency 4 on a loaded Sandy; the cap is a hang guard, not a speed target.
-    await command('npm-test', 'npm', ['test'], work, 3_600_000, isolatedEnvironment);
+    // CR-777 (self-heal 2026-11-18): on a large host (LeChonk) the suite runs at the merge-queue gate lane's concurrency 12
+    // (decision bh-gates-lane-test-concurrency-39197): at 4 it outgrew this cap with zero failing tests. The cap is unchanged.
+    const testScript = JSON.parse(await readFile(join(work, 'package.json'), 'utf8')).scripts?.test;
+    const testCommand = dailyTestCommand(testScript);
+    report.npm_test_concurrency = testCommand.concurrency;
+    await command('npm-test', testCommand.file, testCommand.args, work, 3_600_000, isolatedEnvironment);
     await command('typecheck', 'npx', ['tsc', '--noEmit', '-p', '.'], work, 600_000, isolatedEnvironment);
     await command('prerender', process.execPath, ['--test', 'test/production/prerender.mjs'], work, 600_000, isolatedEnvironment);
     after = await readJSON(join(work, 'data/dataset.json'));
