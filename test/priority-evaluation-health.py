@@ -36,6 +36,9 @@ class Health(unittest.TestCase):
   # CR-716 (N95): install_problems() reads the real entry point/runtime; health() only needs its result here.
   self.install=([],[],{})
   self.ns.update(install_problems=lambda:copy.deepcopy(self.install))
+  # N118: owned_hold_margin() reads pods/<rid>.json; here a set of measured order ids stands in for it.
+  self.measured=set()
+  self.ns.update(MEASURED_RELEASE_MARGIN=dt.timedelta(hours=3),owned_hold_margin=lambda rid,state=None:dt.timedelta(hours=3) if rid in self.measured else dt.timedelta(hours=12))
   tree=ast.parse((ROOT/'ops/priority-evaluation/autopickup.py').read_text());nodes=[n for n in tree.body if isinstance(n,ast.FunctionDef) and n.name in ['health','step','step_done','measurement_pin_problems']]
   exec(compile(ast.Module(body=nodes,type_ignores=[]),'actual-health','exec'),self.ns)
   self.effects=SimpleNamespace(dry_run=True,notify=lambda text:True,agent_handoff=lambda text:True)
@@ -64,6 +67,23 @@ class Health(unittest.TestCase):
   self.live={'fastlane-holds-x'};r=self.call();self.assertEqual(r['problems'],[]);self.assertEqual(r['held_orders'][0]['kind'],'owned_manual_run')
   now=dt.datetime(2026,10,9,12,tzinfo=dt.timezone.utc);self.ns["utcnow"]=lambda:now;self.ns["systemd_last_success"]=lambda *a:now;r=self.call();self.assertIn('under 12 h to the deadline',r['problems'][0]);self.assertEqual(r['held_orders'],[])
   self.state['operational_hold']['transient']=True;self.assertNotIn('under 12 h',self.call()['problems'][0])
+ def test_measured_live_owner_listed_until_three_hours_before_deadline(self):
+  self.row['id']='f62aeab1-97ee-4340-85de-a4a513757a6d';self.state['operational_hold']=dict(reason='unsupported_measurement_backend',owner='fastlane-native-f62aeab1',transient=False)
+  self.live={'fastlane-native-f62aeab1'};self.measured={self.row['id']}
+  for now in [dt.datetime(2026,10,9,12,tzinfo=dt.timezone.utc),dt.datetime(2026,10,9,20,31,26,tzinfo=dt.timezone.utc)]:
+   self.ns["utcnow"]=lambda:now;self.ns["systemd_last_success"]=lambda *a:now;r=self.call();self.assertEqual(r['problems'],[]);self.assertEqual(r['held_orders'][0]['kind'],'measured_awaiting_release');self.assertFalse(r['held_orders'][0]['sla_paused'])
+  now=dt.datetime(2026,10,9,20,31,27,tzinfo=dt.timezone.utc);self.ns["utcnow"]=lambda:now;self.ns["systemd_last_success"]=lambda *a:now
+  r=self.call();self.assertIn('under 3 h (measured, awaiting release) to the deadline',r['problems'][0]);self.assertEqual(r['held_orders'],[])
+ def test_measured_order_without_live_owner_or_unmeasured_owned_order_still_alarms(self):
+  self.row['id']='f62aeab1-97ee-4340-85de-a4a513757a6d';self.state['operational_hold']=dict(reason='unsupported_measurement_backend',owner='fastlane-native-f62aeab1',transient=False)
+  now=dt.datetime(2026,10,9,12,tzinfo=dt.timezone.utc);self.ns["utcnow"]=lambda:now;self.ns["systemd_last_success"]=lambda *a:now
+  self.measured={self.row['id']};r=self.call();self.assertIn('evaluation not running',r['problems'][0]);self.assertNotIn('under',r['problems'][0]);self.assertEqual(r['held_orders'],[])
+  self.live={'fastlane-native-f62aeab1'};self.measured=set();r=self.call();self.assertIn('under 12 h to the deadline',r['problems'][0])
+  self.measured={self.row['id']};self.state['operational_hold']['transient']=True;r=self.call();self.assertNotIn('under',r['problems'][0]);self.assertEqual(r['held_orders'],[])
+ def test_owned_order_far_from_deadline_is_measured_kind_only_when_measured(self):
+  self.row['id']='f62aeab1-97ee-4340-85de-a4a513757a6d';self.state['operational_hold']=dict(reason='unsupported_measurement_backend',owner='fastlane-native-f62aeab1',transient=False);self.live={'fastlane-native-f62aeab1'}
+  self.assertEqual(self.call()['held_orders'][0]['kind'],'owned_manual_run')
+  self.measured={self.row['id']};self.assertEqual(self.call()['held_orders'][0]['kind'],'measured_awaiting_release')
  def test_every_benchmark_pin_is_checked_with_no_order_in_flight(self):
   self.ns['sql_rows']=lambda *a:[];self.assertEqual(self.call()['problems'],[]);self.assertEqual(self.mounted,['imagejevbench','jevbench'])
  def test_missing_pin_is_a_problem_and_does_not_hide_other_benchmarks(self):
