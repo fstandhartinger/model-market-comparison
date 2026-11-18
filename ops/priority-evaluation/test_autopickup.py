@@ -2707,9 +2707,13 @@ class SourceFetchPolicyTests(DatabaseTestCase):
         state = ap.load_state(rid)
         state["operational_hold"] = {"reason": "native_runtime_build", "owner": "fastlane-hand-x", "transient": False}
         ap.save_state(state)
+        cards = sum("Automatic retries are used up" in n[2] for n in fx.notes)
         ap.manage_evaluation(row(rid), ap.load_state(rid), fx, datetime.now(timezone.utc) + timedelta(minutes=30))
         self.assertEqual(len(fx.started), starts)
         self.assertEqual(ap.load_state(rid)["operational_hold"]["owner"], "fastlane-hand-x")
+        # Re-check S1: the takeover adds no evaluation_exhausted card.
+        self.assertEqual(sum("Automatic retries are used up" in n[2] for n in fx.notes), cards)
+        self.assertNotIn("evaluation_exhausted", ap.load_state(rid).get("alerts") or {})
 
     def test_evaluate_route_native_record_does_not_make_old_exhausted_orders_sticky(self):
         # Re-check R2: a native_owner record / operational_hold alert from the evaluate() route is not the marker.

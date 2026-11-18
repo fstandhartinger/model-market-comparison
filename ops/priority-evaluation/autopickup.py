@@ -2154,6 +2154,8 @@ def manage_evaluation(row: dict[str, Any], state: dict[str, Any], effects: Effec
                                      detail="the generated runner failed source review in every preparation round")
             operational_escalate(row, state, effects, now, "unsupported_measurement_backend", exhausted=True)
             return
+        if state.get("native_rescue_route"):
+            return  # already handed off under the native key; another owner took the hold (re-check S1); SLA alerts still watch
         detail = (state.get("evaluation_exhausted") or {}).get("reason") or "evaluation_exhausted"
         reason = detail if detail in HOLD_REASON_LABELS else "evaluation_exhausted"
         alert(state, "evaluation_exhausted", effects, urgent=True,
