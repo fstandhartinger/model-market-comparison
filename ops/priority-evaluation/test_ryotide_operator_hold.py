@@ -81,8 +81,10 @@ class ExactCorrectionGate(unittest.TestCase):
              mock.patch.object(c, 'sla_sweep', return_value={'examined': 1}) as sla, \
              mock.patch.object(c, 'sla_decisions', return_value={}) as decisions, \
              mock.patch.object(c, 'refund_decisions', return_value={}) as refunds, \
+             mock.patch.object(c.access_key_purge, 'sweep', return_value={'affected_rows': 0}) as purge, \
              mock.patch.object(c, 'claim_rows', return_value=[]) as claim:
             result = c.cycle(SimpleNamespace(dry_run=False))
+        purge.assert_called_once()  # CR-770: never a real sweep against the default database from a test
         sla.assert_called_once()
         decisions.assert_called_once()
         refunds.assert_called_once()
