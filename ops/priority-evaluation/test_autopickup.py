@@ -2696,6 +2696,39 @@ class SourceFetchPolicyTests(DatabaseTestCase):
         self.assertIn("operational_hold_unsupported_measurement_backend", alerts)
         self.assertEqual(sum("Automatic retries are used up" in n[2] for n in fx.notes), 1)  # the T-1h card only
 
+    def test_native_route_then_hand_owner_keeps_the_hand_hold(self):
+        # Re-check R1: after the native route, a hand owner takes the hold; no second (native) owner start.
+        rid = insert_order()
+        fx = FakeEffects()
+        self._claim(rid, fx)
+        self._generated_exhausted(rid)
+        ap.manage_evaluation(row(rid), ap.load_state(rid), fx, datetime.now(timezone.utc))
+        starts = len(fx.started)
+        state = ap.load_state(rid)
+        state["operational_hold"] = {"reason": "native_runtime_build", "owner": "fastlane-hand-x", "transient": False}
+        ap.save_state(state)
+        ap.manage_evaluation(row(rid), ap.load_state(rid), fx, datetime.now(timezone.utc) + timedelta(minutes=30))
+        self.assertEqual(len(fx.started), starts)
+        self.assertEqual(ap.load_state(rid)["operational_hold"]["owner"], "fastlane-hand-x")
+
+    def test_evaluate_route_native_record_does_not_make_old_exhausted_orders_sticky(self):
+        # Re-check R2: a native_owner record / operational_hold alert from the evaluate() route is not the marker.
+        for name, extra, later in (("already alerted", {"alerts": {"evaluation_exhausted": ap.iso(ap.utcnow()),
+                                                                   "operational_hold_unsupported_measurement_backend": ap.iso(ap.utcnow())}},
+                                    timedelta(0)),
+                                   ("past deadline", {"alerts": {"operational_hold_unsupported_measurement_backend": ap.iso(ap.utcnow())}},
+                                    timedelta(hours=49))):
+            rid = insert_order()
+            fx = FakeEffects()
+            self._claim(rid, fx)
+            native = {"job": "fastlane-native-" + rid[:8], "requested_at": ap.iso(ap.utcnow() - timedelta(hours=30)),
+                      "starts": 1, "start_ok": True}
+            self._generated_exhausted(rid, native_owner=native, **extra)
+            starts = len(fx.started)
+            ap.manage_evaluation(row(rid), ap.load_state(rid), fx, datetime.now(timezone.utc) + later)
+            self.assertEqual(len(fx.started), starts, name)
+            self.assertNotIn("native_rescue_route", ap.load_state(rid), name)
+
     def test_source_review_budget_with_stale_generated_runner_record_still_rings(self):
         # CR-756 review S3: a stale generated_runner record next to crashed review runs is not "no runtime".
         rid = insert_order()
