@@ -88,5 +88,45 @@ class UnitLastSuccessTests(unittest.TestCase):
             self.assertIsNone(ap.systemd_last_success(effects, UNIT))
 
 
+class JournalLastSuccessTests(unittest.TestCase):
+    """card a1794852308: one failed run plus a six-hour-old memo raised a false stale alert."""
+
+    def setUp(self) -> None:
+        self.root = Path(tempfile.mkdtemp(prefix="unit-last-success-"))
+        self.patch = mock.patch.object(ap, "STATE_ROOT", self.root)
+        self.patch.start()
+        (self.root / "unit-last-success.json").write_text(
+            '{"%s": "2026-10-29T11:53:13+00:00"}' % UNIT, encoding="utf-8")
+
+    def tearDown(self) -> None:
+        self.patch.stop()
+
+    def test_failed_latest_run_uses_newer_journal_success(self) -> None:
+        effects = FakeEffects()
+        effects.state = FAILED
+        effects.unit_journal_last_success = lambda unit: SUCCESS_AT
+        self.assertEqual(ap.systemd_last_success(effects, UNIT), SUCCESS_AT)
+        self.assertIn("17:35:55", (self.root / "unit-last-success.json").read_text(encoding="utf-8"))
+
+    def test_older_journal_success_keeps_memo(self) -> None:
+        effects = FakeEffects()
+        effects.state = FAILED
+        effects.unit_journal_last_success = lambda unit: datetime(2026, 10, 29, 9, 0, tzinfo=timezone.utc)
+        self.assertEqual(ap.systemd_last_success(effects, UNIT), datetime(2026, 10, 29, 11, 53, 13, tzinfo=timezone.utc))
+
+    def test_journal_unavailable_keeps_memo(self) -> None:
+        effects = FakeEffects()
+        effects.state = FAILED
+        effects.unit_journal_last_success = lambda unit: None
+        self.assertEqual(ap.systemd_last_success(effects, UNIT), datetime(2026, 10, 29, 11, 53, 13, tzinfo=timezone.utc))
+
+    def test_real_effects_journal_parser(self) -> None:
+        out = '{"__REALTIME_TIMESTAMP":"1794850716576317"}\n{"__REALTIME_TIMESTAMP":"1794834503335165"}\nnot-json\n'
+        done = mock.Mock(returncode=0, stdout=out)
+        with mock.patch.object(ap.subprocess, "run", return_value=done):
+            seen = ap.Effects.unit_journal_last_success(mock.Mock(), UNIT)
+        self.assertEqual(seen, datetime.fromtimestamp(1794850716576317 / 1_000_000, timezone.utc))
+
+
 if __name__ == "__main__":
     unittest.main()
