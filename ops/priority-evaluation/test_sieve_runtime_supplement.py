@@ -71,6 +71,16 @@ class Tests(unittest.TestCase):
         self.assertFalse(S.active(job, recipe(image='vllm/vllm-openai:v0.30.0@sha256:' + 'a' * 64)))
         self.assertFalse(S.active(job, recipe(image=S.BASE_IMAGE.split('@')[0])))
         self.assertFalse(S.active(job, None))
+        # Repeat order 0157a523 is admitted by its exact full id only.
+        repeat = '/home/flori/jobs/fastlane-evaluations/0157a523-cc7c-43f3-b00e-a7c33068568e'
+        self.assertTrue(S.active(repeat, recipe()))
+        self.assertFalse(S.active('/jobs/0157a523', recipe()))
+        self.assertFalse(S.active('/jobs/0157a523-cc7c-43f3-b00e-a7c33068568f', recipe()))
+        self.assertFalse(S.active(repeat + '-x', recipe()))
+        self.assertFalse(S.active(repeat, recipe(kind='python_inprocess')))
+        self.assertFalse(S.active(repeat, recipe(image=S.BASE_IMAGE.split('@')[0])))
+        self.assertEqual(S.ORDERS, frozenset({'ac6ebe34-a8ba-4b53-98ca-3e0a93755ec4',
+                                              '0157a523-cc7c-43f3-b00e-a7c33068568e'}))
 
     def test_base_image_is_digest_pinned_and_valid_recipe_image(self):
         self.assertTrue(pod_runner.IMAGE_RE.fullmatch(S.BASE_IMAGE))

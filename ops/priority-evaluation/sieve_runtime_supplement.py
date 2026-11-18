@@ -16,6 +16,8 @@ import measurement_dispatch
 import pod_runner
 
 ORDER = 'ac6ebe34-a8ba-4b53-98ca-3e0a93755ec4'
+# CR: repeat order 0157a523 (same weights/head.pt pins; code 0.5.1 changes only the Qwen3.5 path) is admitted by its exact id.
+ORDERS = frozenset({ORDER, '0157a523-cc7c-43f3-b00e-a7c33068568e'})
 BASE_IMAGE = 'pytorch/pytorch:2.9.1-cuda12.8-cudnn9-devel@sha256:39236c0ad9c66baecf01bb2e4f5562543c5b336c0c785887798775d6d6fdbf9a'
 CONTEXT = Path('/home/flori/jobs/fastlane-native-ac6ebe34/supplement/PUBLIC-BUILD-CONTEXT.tar')
 CONTEXT_SHA = '78e1bcdb350c55862e642a18a24a7804d7097757c5fe8fed22040826c72bca73'
@@ -74,8 +76,8 @@ def sha256(path):
         return _sha256_stream(stream)
 
 def active(job, recipe):
-    """Only this order's reviewed http_typesafe recipe on the exact pinned base selects the supplement."""
-    return (Path(job).name == ORDER and isinstance(recipe, dict) and recipe.get('kind') == 'http_typesafe'
+    """Only these exact orders' reviewed http_typesafe recipe on the exact pinned base selects the supplement."""
+    return (Path(job).name in ORDERS and isinstance(recipe, dict) and recipe.get('kind') == 'http_typesafe'
             and recipe.get('image') == BASE_IMAGE)
 
 def check_context(context=CONTEXT):
