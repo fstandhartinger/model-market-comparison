@@ -2141,6 +2141,21 @@ def manage_evaluation(row: dict[str, Any], state: dict[str, Any], effects: Effec
         else:
             return
     if status == "exhausted":
+        if generated_runner_exhausted(state) and native_rescue_allowed(row, state, now):
+            # INCIDENTS #25 (order c5a084fa, 16 Nov 2026): every preparation round wrote a runner that review
+            # FAILed as generated_runner. No automatic runtime exists, so a native owner takes the order; the
+            # card stays quiet while that owner is live (a dead owner or a near deadline still rings).
+            if not state.get("native_rescue_route"):
+                state["native_rescue_route"] = iso(now)
+                save_state(state)
+            operational = state.get("operational_hold")
+            if not (isinstance(operational, dict) and operational.get("reason") == "unsupported_measurement_backend"):
+                set_operational_hold(state, "unsupported_measurement_backend", transient=False,
+                                     detail="the generated runner failed source review in every preparation round")
+            operational_escalate(row, state, effects, now, "unsupported_measurement_backend", exhausted=True)
+            return
+        if state.get("native_rescue_route"):
+            return  # already handed off under the native key; another owner took the hold (re-check S1); SLA alerts still watch
         detail = (state.get("evaluation_exhausted") or {}).get("reason") or "evaluation_exhausted"
         reason = detail if detail in HOLD_REASON_LABELS else "evaluation_exhausted"
         alert(state, "evaluation_exhausted", effects, urgent=True,
@@ -5220,7 +5235,7 @@ def evaluate(rid: str) -> int:
                     update_row(rid, "evaluation_status='pending'", "evaluation_status IN ('starting','running')")
                     return 0
                 if not consume_stage_attempt(state, "preparation", MAX_PREPARATION_ATTEMPTS):
-                    mark_evaluation_exhausted(state, "the measurement-adapter preparation retry budget is exhausted")
+                    mark_evaluation_exhausted(state, GENERATED_RUNNER_EXHAUSTED_REASON)
                     update_row(rid, "evaluation_status='exhausted'", "evaluation_status IN ('starting','running')")
                     return 1
                 prepare_runner_prompt(row, job_dir)
@@ -5256,7 +5271,8 @@ def evaluate(rid: str) -> int:
                     generated = load_json_file(job_dir / "trusted-runner/RUNTIME.json", 100_000)
                 except PickupError:
                     generated = None
-                if native_owner.runtime_declares_unsupported(generated):
+                if native_owner.runtime_declares_unsupported(generated) \
+                        or native_owner.gpu_pod_without_recipe(generated, job_dir / "trusted-runner"):
                     # INCIDENTS #25: retrying the generator or reviewing an unsupported runtime only burns the
                     # budget; the cycle hands the order to an automatic native owner job instead.
                     state = load_state(rid)
@@ -5381,6 +5397,41 @@ def evaluate(rid: str) -> int:
 def append_state(job_dir: Path, text: str) -> None:
     path = job_dir / "STATE.md"
     atomic_write(path, path.read_text(encoding="utf-8", errors="replace") + text)
+
+
+GENERATED_RUNNER_EXHAUSTED_REASON = "the measurement-adapter preparation retry budget is exhausted"
+
+
+def generated_runner_exhausted(state: dict[str, Any]) -> bool:
+    """The PREPARATION budget ran out on generated runners alone: the last review FAILed with scope generated_runner
+    and no runner ever passed review. That is the "no automatic runtime" case, not a customer or infrastructure
+    fault. An exhausted source-review budget is excluded: there a stale generated_runner record can sit next to
+    review runs that crashed for other reasons (CR-756 review S3)."""
+    failure = state.get("runner_review_failure")
+    exhausted = state.get("evaluation_exhausted")
+    return isinstance(exhausted, dict) and exhausted.get("reason") == GENERATED_RUNNER_EXHAUSTED_REASON \
+        and not state.get("source_review_gate") \
+        and isinstance(failure, dict) and failure.get("scope") == "generated_runner"
+
+
+def native_rescue_allowed(row: dict[str, Any], state: dict[str, Any], now: datetime) -> bool:
+    """CR-756 review: the exhausted -> native owner route only for an order that was not already escalated
+    (no evaluation_exhausted card yet), is still before its deadline, has no refund decision, and is not held by
+    another owner. Everything else keeps the old single evaluation_exhausted card, so the deploy neither starts
+    owners for old exhausted orders nor raises a second card for them."""
+    alerts = state.get("alerts")
+    rid = request_id(row.get("id"))
+    if isinstance(alerts, dict) and alerts.get("evaluation_exhausted"):
+        return False
+    operational = state.get("operational_hold")
+    owner = operational.get("owner") if isinstance(operational, dict) else None
+    if owner not in (None, "", native_owner.owner_name(rid)):
+        return False  # another job holds the order; never a second owner, never replace its hold
+    # Sticky (fix check F1): once THIS branch took the native route (marker written only here), it stays there;
+    # flipping back at the deadline would ring a second card under the evaluation_exhausted key.
+    if state.get("native_rescue_route"):
+        return True
+    return not (row.get("refund_decision") or row.get("refund_id") or deadline_for(row) <= now)
 
 
 def mark_evaluation_exhausted(state: dict[str, Any], reason: str) -> None:

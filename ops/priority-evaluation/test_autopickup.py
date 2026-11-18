@@ -1719,6 +1719,45 @@ class EvaluateTests(DatabaseTestCase):
         self.assertEqual(ap.load_state(rid)["operational_hold"]["owner"], "fastlane-native-" + rid[:8])
         self.assertFalse(any("DRINGEND" in text for _, _, text in fx.notes[notified:]))
 
+    def test_gpu_pod_runtime_without_recipe_hands_the_order_to_a_native_owner(self):
+        # Order 3a698114 (16 Nov 2026): no digest-pinned image, so the generator wrote a gpu_pod RUNTIME.json and a
+        # blocker but no POD-RECIPE.json. That must not reach review (3 x generated_runner FAIL); native owner at once.
+        rid = insert_order(visibility="private")
+        fx = FakeEffects()
+        ap.cycle(fx)
+        stages = []
+        def agent(folder, env, timeout, **kwargs):
+            stages.append(folder.name)
+            out = folder / "trusted-runner"
+            out.mkdir()
+            (out / "RUNTIME.json").write_text(json.dumps({"jevbench": {"backend": "gpu_pod", "model": "x/y",
+                                                                       "credential": "none"}}))
+            (out / "MEASUREMENT-META.json").write_text("{}")
+            (out / "PRICING-REVIEW.md").write_text("Pricing.\n")
+            (out / "OUTPUT.md").write_text("BLOCKER: no authenticated container image.\n")
+            return 0
+        with mock.patch.object(ap, "fetch_source"), mock.patch.object(ap, "run_agent", side_effect=agent):
+            ap.sql(f"UPDATE {ap.TABLE} SET evaluation_status='starting' WHERE id='{rid}'")
+            self.assertEqual(ap.evaluate(rid), 0)
+        self.assertEqual(stages, ["runner-prepare"])
+        self.assertEqual(ap.load_state(rid)["operational_hold"]["reason"], "unsupported_measurement_backend")
+        notified = len(fx.notes)
+        make_due(rid)
+        ap.cycle(fx)
+        self.assertIn(f"jevbench-native-owner@{rid}.service", fx.started)
+        self.assertFalse(any("DRINGEND" in text for _, _, text in fx.notes[notified:]))
+
+    def test_gpu_pod_runtime_with_recipe_is_not_routed_to_native_owner(self):
+        import native_owner
+        with tempfile.TemporaryDirectory() as tmp:
+            trusted = Path(tmp)
+            runtime = {"jevbench": {"backend": "gpu_pod"}}
+            self.assertTrue(native_owner.gpu_pod_without_recipe(runtime, trusted))
+            (trusted / "POD-RECIPE.json").write_text("{}")
+            self.assertFalse(native_owner.gpu_pod_without_recipe(runtime, trusted))
+            self.assertFalse(native_owner.gpu_pod_without_recipe({"jevbench": {"backend": "api"}}, Path(tmp) / "none"))
+            self.assertFalse(native_owner.gpu_pod_without_recipe(None, trusted))
+
     def test_generated_adapter_fail_retries_without_refund_even_with_customer_source(self):
         rid = insert_order()
         ap.cycle(FakeEffects())
@@ -2581,6 +2620,143 @@ class SourceFetchPolicyTests(DatabaseTestCase):
         starts = len(fx.started)
         ap.manage_evaluation(row(rid), ap.load_state(rid), fx, datetime.now(timezone.utc))
         self.assertEqual(len(fx.started), starts)
+
+
+    def test_exhausted_after_generated_runner_failures_starts_a_native_owner_quietly(self):
+        # Order c5a084fa (16 Nov 2026): three preparation rounds, each runner FAILed review as generated_runner
+        # (round 1 even had a POD-RECIPE). The exhausted branch must start the native owner, not ring urgent.
+        rid = insert_order()
+        fx = FakeEffects()
+        self._claim(rid, fx)
+        state = ap.load_state(rid)
+        state["runner_review_failure"] = {"at": ap.iso(ap.utcnow()), "scope": "generated_runner", "attempt": 3}
+        ap.mark_evaluation_exhausted(state, "the measurement-adapter preparation retry budget is exhausted")
+        ap.update_row(rid, "evaluation_status='exhausted'")
+        ap.manage_evaluation(row(rid), ap.load_state(rid), fx, datetime.now(timezone.utc))
+        self.assertIn(f"jevbench-native-owner@{rid}.service", fx.started)
+        state = ap.load_state(rid)
+        self.assertEqual(state["operational_hold"]["reason"], "unsupported_measurement_backend")
+        self.assertFalse(any(n[0] == "urgent" for n in fx.notes))
+        starts = len(fx.started)
+        ap.manage_evaluation(row(rid), ap.load_state(rid), fx, datetime.now(timezone.utc))
+        self.assertEqual(len(fx.started), starts)
+        self.assertFalse(any(n[0] == "urgent" for n in fx.notes))
+
+    def _generated_exhausted(self, rid, reason="the measurement-adapter preparation retry budget is exhausted", **extra):
+        state = ap.load_state(rid)
+        state["runner_review_failure"] = {"at": ap.iso(ap.utcnow()), "scope": "generated_runner", "attempt": 3}
+        state.update(extra)
+        ap.mark_evaluation_exhausted(state, reason)
+        ap.update_row(rid, "evaluation_status='exhausted'")
+
+    def test_generated_runner_exhaustion_keeps_a_hand_owners_hold(self):
+        # CR-756 review MUST 1: an order already held by a hand owner must not get a second (native) owner.
+        rid = insert_order()
+        fx = FakeEffects()
+        self._claim(rid, fx)
+        hand = {"reason": "native_runtime_build", "owner": "fastlane-hand-x", "transient": False}
+        self._generated_exhausted(rid, operational_hold=dict(hand))
+        ap.manage_evaluation(row(rid), ap.load_state(rid), fx, datetime.now(timezone.utc))
+        self.assertNotIn(f"jevbench-native-owner@{rid}.service", fx.started)
+        self.assertEqual(ap.load_state(rid)["operational_hold"]["owner"], "fastlane-hand-x")
+
+    def test_generated_runner_exhaustion_already_escalated_or_late_or_refund_decided_keeps_the_old_card(self):
+        # CR-756 review MUST 2: no owner start and no second card for orders exhausted before the deploy,
+        # past their deadline, or with a refund decision.
+        cases = (("already alerted", {"alerts": {"evaluation_exhausted": ap.iso(ap.utcnow())}}, timedelta(0)),
+                 ("past deadline", {}, timedelta(hours=49)),
+                 ("refund decided", {}, timedelta(0)))
+        for name, extra, later in cases:
+            rid = insert_order()
+            fx = FakeEffects()
+            self._claim(rid, fx)
+            self._generated_exhausted(rid, **extra)
+            if name == "refund decided":
+                ap.update_row(rid, "refund_decision='declined'")
+            ap.manage_evaluation(row(rid), ap.load_state(rid), fx, datetime.now(timezone.utc) + later)
+            self.assertNotIn(f"jevbench-native-owner@{rid}.service", fx.started, name)
+            alerts = ap.load_state(rid).get("alerts") or {}
+            self.assertNotIn("operational_hold_unsupported_measurement_backend", alerts, name)
+            urgent = [n for n in fx.notes if n[0] == "urgent" and "Automatic retries are used up" in n[2]]
+            self.assertEqual(len(urgent), 0 if name == "already alerted" else 1, name)
+
+    def test_native_route_stays_native_past_the_deadline_without_a_second_card(self):
+        # Fix check F1: T-1h rings once (operational_hold key); T+1h must not add an evaluation_exhausted card.
+        rid = insert_order()
+        fx = FakeEffects()
+        self._claim(rid, fx)
+        self._generated_exhausted(rid)
+        deadline = ap.deadline_for(row(rid))
+        ap.manage_evaluation(row(rid), ap.load_state(rid), fx, datetime.now(timezone.utc))
+        self.assertIn(f"jevbench-native-owner@{rid}.service", fx.started)
+        for when in (deadline - timedelta(hours=1), deadline + timedelta(hours=1)):
+            ap.manage_evaluation(row(rid), ap.load_state(rid), fx, when)
+        alerts = ap.load_state(rid).get("alerts") or {}
+        self.assertNotIn("evaluation_exhausted", alerts)
+        self.assertIn("operational_hold_unsupported_measurement_backend", alerts)
+        self.assertEqual(sum("Automatic retries are used up" in n[2] for n in fx.notes), 1)  # the T-1h card only
+
+    def test_native_route_then_hand_owner_keeps_the_hand_hold(self):
+        # Re-check R1: after the native route, a hand owner takes the hold; no second (native) owner start.
+        rid = insert_order()
+        fx = FakeEffects()
+        self._claim(rid, fx)
+        self._generated_exhausted(rid)
+        ap.manage_evaluation(row(rid), ap.load_state(rid), fx, datetime.now(timezone.utc))
+        starts = len(fx.started)
+        state = ap.load_state(rid)
+        state["operational_hold"] = {"reason": "native_runtime_build", "owner": "fastlane-hand-x", "transient": False}
+        ap.save_state(state)
+        cards = sum("Automatic retries are used up" in n[2] for n in fx.notes)
+        ap.manage_evaluation(row(rid), ap.load_state(rid), fx, datetime.now(timezone.utc) + timedelta(minutes=30))
+        self.assertEqual(len(fx.started), starts)
+        self.assertEqual(ap.load_state(rid)["operational_hold"]["owner"], "fastlane-hand-x")
+        # Re-check S1: the takeover adds no evaluation_exhausted card.
+        self.assertEqual(sum("Automatic retries are used up" in n[2] for n in fx.notes), cards)
+        self.assertNotIn("evaluation_exhausted", ap.load_state(rid).get("alerts") or {})
+
+    def test_evaluate_route_native_record_does_not_make_old_exhausted_orders_sticky(self):
+        # Re-check R2: a native_owner record / operational_hold alert from the evaluate() route is not the marker.
+        for name, extra, later in (("already alerted", {"alerts": {"evaluation_exhausted": ap.iso(ap.utcnow()),
+                                                                   "operational_hold_unsupported_measurement_backend": ap.iso(ap.utcnow())}},
+                                    timedelta(0)),
+                                   ("past deadline", {"alerts": {"operational_hold_unsupported_measurement_backend": ap.iso(ap.utcnow())}},
+                                    timedelta(hours=49))):
+            rid = insert_order()
+            fx = FakeEffects()
+            self._claim(rid, fx)
+            native = {"job": "fastlane-native-" + rid[:8], "requested_at": ap.iso(ap.utcnow() - timedelta(hours=30)),
+                      "starts": 1, "start_ok": True}
+            self._generated_exhausted(rid, native_owner=native, **extra)
+            starts = len(fx.started)
+            ap.manage_evaluation(row(rid), ap.load_state(rid), fx, datetime.now(timezone.utc) + later)
+            self.assertEqual(len(fx.started), starts, name)
+            self.assertNotIn("native_rescue_route", ap.load_state(rid), name)
+
+    def test_source_review_budget_with_stale_generated_runner_record_still_rings(self):
+        # CR-756 review S3: a stale generated_runner record next to crashed review runs is not "no runtime".
+        rid = insert_order()
+        fx = FakeEffects()
+        self._claim(rid, fx)
+        self._generated_exhausted(rid, reason="the source review retry budget is exhausted")
+        ap.manage_evaluation(row(rid), ap.load_state(rid), fx, datetime.now(timezone.utc))
+        self.assertNotIn(f"jevbench-native-owner@{rid}.service", fx.started)
+        self.assertTrue(any(n[0] == "urgent" and "Automatic retries are used up" in n[2] for n in fx.notes))
+
+    def test_exhausted_after_customer_or_passed_review_still_rings(self):
+        for failure, gate in (({"scope": "customer_source"}, None), ({"scope": "generated_runner"}, {"verdict": "PASS"})):
+            rid = insert_order()
+            fx = FakeEffects()
+            self._claim(rid, fx)
+            state = ap.load_state(rid)
+            state["runner_review_failure"] = failure
+            if gate:
+                state["source_review_gate"] = gate
+            ap.mark_evaluation_exhausted(state, "the source review retry budget is exhausted")
+            ap.update_row(rid, "evaluation_status='exhausted'")
+            ap.manage_evaluation(row(rid), ap.load_state(rid), fx, datetime.now(timezone.utc))
+            self.assertNotIn(f"jevbench-native-owner@{rid}.service", fx.started)
+            self.assertTrue(any(n[0] == "urgent" and "Automatic retries are used up" in n[2] for n in fx.notes))
 
 
 class SlaCardsTests(DatabaseTestCase):

@@ -123,6 +123,21 @@ def runtime_declares_unsupported(runtime: object) -> bool:
     return any(isinstance(value, dict) and value.get("backend") == "unsupported" for value in runtime.values())
 
 
+def gpu_pod_without_recipe(runtime: object, trusted_dir: Path) -> bool:
+    """True when a generated runtime names backend gpu_pod but the frozen bundle has no POD-RECIPE.json.
+
+    The generator writes that shape when no digest-pinned image carries the author's stack (it reports a
+    "blocker" instead of `{"backend":"unsupported"}`). The pod cannot start without a recipe, so every source
+    review FAILs with failure_scope generated_runner and the order burns its budget (order 3a698114, 16 Nov 2026;
+    also 580d6afe, b6b2b557). It is the same "no automatic runtime" case and goes to the native owner at once."""
+    if not isinstance(runtime, dict):
+        return False
+    pod = runtime.get("backend") == "gpu_pod" or any(
+        isinstance(value, dict) and value.get("backend") == "gpu_pod" for value in runtime.values())
+    recipe = trusted_dir / "POD-RECIPE.json"
+    return pod and not recipe.is_file() and not recipe.is_symlink()
+
+
 def generator_hint(order: dict[str, Any]) -> str:
     """Extra text for the runner-generator prompt when a reviewed supplement covers this repository."""
     entry = match_supplement(order)
