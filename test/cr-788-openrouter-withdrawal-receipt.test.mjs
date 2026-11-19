@@ -40,6 +40,8 @@ test('CR-788: absences outside the receipt still count against the unchanged bou
 test('CR-788: an expired, too long, unbased or differently bound receipt is ignored', () => {
   for (const bad of [
     receipt({ expires_at: '2026-11-19T11:00:00Z' }),
+    receipt({ reviewed_at: '2026-11-20T09:00:00Z', expires_at: '2026-11-21T09:00:00Z' }), // not reviewed yet
+    receipt({ reviewed_at: '2026-11-20T09:00:00Z', expires_at: '2026-11-19T18:00:00Z' }), // reversed review window
     receipt({ expires_at: '2026-11-23T10:00:00Z' }), // > 3 days after review
     receipt({ review_basis: ' ' }),
     receipt({ previous_endpoint_set_sha256: '0'.repeat(64) }),
