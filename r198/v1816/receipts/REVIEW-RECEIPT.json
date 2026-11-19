@@ -1,0 +1,37 @@
+{
+ "verdict": "PASS",
+ "engine": "claude-opus-5-5 (Claude Code): independent critic r174d-v1816-critic (Opus 5.5 xhigh); builders were Codex GPT-6.2 Sol (r174b-v1816-build2) and GPT-6.1 Terra (r174b-v1816-build3)",
+ "release": "v1.8.16",
+ "head_reviewed": "3895ad55f reviewed in full by r174d-v1816-critic (REVISE, one MUST M1: base model rendered 'undisclosed'); fix 7a7507f42 reviewed by the same critic = PASS_WITH_CONDITIONS; measurement clean: re-score max |delta| 0.0, cost exact, 0 carried-row changes, 0 top-five changes, privacy clean, display floor holds",
+ "reviews": [
+  {
+   "path": "workers/r174d-v1816-critic/RESULT.json",
+   "sha256": "372f6d07749eab680ca34a5c3d2af4375b7179f60604760ab0ae78546873409b",
+   "result_md_sha256": "cb6c64a8b4fa5ce902a15c89c20abf374ee1d36a77b649dd8f69fb6e9cb60c1f",
+   "verdict_by_commit": {
+    "3895ad55f": "REVISE",
+    "7a7507f42": "PASS_WITH_CONDITIONS"
+   },
+   "musts": [
+    "M1"
+   ],
+   "musts_closed_by_the_release_owner": "M1 closed by 7a7507f42 (base-models overlay entry for sieve-31b-v3 set to status disclosed with the author model card at pin ed0a0467 as source, same shape as sieve-31b-v2); the critic reviewed that diff and rebuilt the All-data snapshot byte-identically.",
+   "conditions_closed_by_the_release_owner": {
+    "C1": "release date stays 2026-11-19: flip and merge-queue entry happen on 19 Nov",
+    "C2": "at flip time sha256(r198/v1816/inputs/TOPICS-BASE.json) = sha256(origin/main 55cd9f2de:data/jevbench-breakdown-exceptions.json) = fa98893e...",
+    "C3": "on 7a7507f42 (LeChonk units r174d-v1816-gates4/gates5): synthetic PASS tests 145 ok/0 fail, base-model tests 0, production build 0, compiled check 0, five served JSON routes PASS; the merge queue re-runs typecheck, build and the full suite on the rebased head",
+    "C4": "leftover raw symlink in workers/r174b-v1816-build2/score/runs unlinked (link only; raw 0600 nlink 1)"
+   },
+   "non_blocking": [
+    "S1",
+    "S2",
+    "S3",
+    "O1",
+    "O2",
+    "O3",
+    "O4"
+   ]
+  }
+ ],
+ "note": "O4 (same base-model overlay gap live on carried row starlord-4b-preview) is out of scope here and goes to the next release."
+}
