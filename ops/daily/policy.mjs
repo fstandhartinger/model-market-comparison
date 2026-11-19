@@ -274,7 +274,9 @@ export function npmTestBudgetFinding(npmTest, history = [], { day, runDir = null
 /** The one #8 finding for the first publish-blocking failure of a streak, or null for a run that published. */
 export function publishBlockedFinding({ statusOk, published = null, rc = null, streakStartedAt, streak, failedStep = null, error = null, runDir = null } = {}) {
   if (statusOk || published === true || typeof streakStartedAt !== 'string') return null;
-  const lastLine = typeof error === 'string' ? error.split('\n').map((l) => l.trim()).filter(Boolean).at(-1) ?? null : null;
+  // The cause is the last `...Error:` / `TIMEOUT:` line; stack frames (`at ...`) and `Command failed:` echoes are skipped.
+  const lines0 = typeof error === 'string' ? error.split('\n').map((l) => l.trim()).filter((l) => l && !/^at\s/.test(l) && !/^Command failed:/.test(l)) : [];
+  const lastLine = lines0.filter((l) => /^(\w*Error\b.*?:|TIMEOUT:)/.test(l)).at(-1) ?? lines0.at(-1) ?? null;
   const lines = [`Benchmark Heaven daily published nothing: run ended rc=${rc ?? 'unknown'}${failedStep ? ` in step ${failedStep}` : ''} (failure streak started ${streakStartedAt}; this is run ${streak} of it).`];
   if (lastLine) lines.push(`Cause: ${lastLine.slice(0, 400)}`);
   lines.push('coordination/self-heal.sh retries and, if needed, starts a repair job; the site keeps the last published data. This finding is posted once per failure streak.');

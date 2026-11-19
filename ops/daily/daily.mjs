@@ -712,7 +712,9 @@ export async function runDaily({ repo = ROOT, home = '/opt/benchmarkheaven-daily
   // N132: the npm-test duration is recorded on every run that reached the step (also a killed one) and judged against its
   // cap by the notify pass; a failed run hands over its failing step and error for the first-failure finding on #8.
   report.npm_test = npmTestRecord(report.steps, { capMs: NPM_TEST_TIMEOUT_MS, concurrency: report.npm_test_concurrency ?? null });
-  const failedStep = report.steps.filter((s) => s.ok === false).at(-1)?.name ?? null;
+  // The step that ended the run is the one its error names (`<step> FAILED: ...`); a tolerated collector failure earlier in
+  // the run (kept snapshot) is also `ok: false` and must not be blamed. No name -> no guess.
+  const failedStep = report.error?.match(/^([\w.-]+) FAILED:/)?.[1] ?? null;
   const context = { status_ok: report.exit_code === 0, rc: report.exit_code, top5: top5 ? { current: top5 } : null, datasets: { before: slim(before), after: slim(after) },
     quarantined_arms: report.quarantined_arms ?? [], stale_sources: report.stale_sources ?? [],
     npm_test: report.npm_test, published: report.published === true, failed_step: failedStep,

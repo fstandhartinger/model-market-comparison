@@ -184,3 +184,9 @@ test('under the test runner a send without an explicit stub can never reach the 
     assert.deepEqual(out.failed.map((f) => [f.kind, f.reason]), [['publish-blocked', 'agent_board_missing']]);
   } finally { await rm(stateDir, { recursive: true, force: true }); }
 });
+
+test('the publish-blocked cause is the error line, not a stack frame', () => {
+  const error = 'fetch-or FAILED: → OpenRouter model catalog …\nError: OpenRouter endpoints: 180 of 1552 prior endpoints absent (limit 77)\n    at fetchOpenRouter (file:///x/fetch-live.mjs:366:25)\n    at async main (file:///x/fetch-live.mjs:432:33)\n\nCommand failed: node scripts/fetch-live.mjs or\nError: OpenRouter endpoints: 180 of 1552 prior endpoints absent (limit 77)\n    at async main (file:///x/fetch-live.mjs:432:33)';
+  const f = publishBlockedFinding({ statusOk: false, published: false, rc: 1, streakStartedAt: '2026-11-19T05:31:01.306Z', streak: 1, failedStep: 'fetch-or', error });
+  assert.match(f.text, /Cause: Error: OpenRouter endpoints: 180 of 1552 prior endpoints absent \(limit 77\)$/m);
+});
