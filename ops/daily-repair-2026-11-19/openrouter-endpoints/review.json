@@ -1,0 +1,5858 @@
+{
+ "cr": "CR-786",
+ "reviewed_at": "2026-11-19T06:12:17Z",
+ "reviewer": "bh-self-heal-repair-2026-11-19-a1 (self-heal repair agent, exact-evidence review)",
+ "prior_snapshot": {
+  "file": "data/raw/openrouter.json",
+  "collected_at": "2026-11-17",
+  "endpoint_set_sha256": "ff00bfd40eeac4a88a3e424a366faac590ed5efbc3c1d06ccba0d46229eccb62",
+  "prior_endpoint_count": 1552,
+  "bound": {
+   "share": 0.05,
+   "limit": 77
+  }
+ },
+ "runs": {
+  "2026-11-19T05-17-05-687Z-1886818": {
+   "catalog_sha256": "79b11e051b5f0bfcb31a9f61d03af93a434f8e1c31e1477032918524238e08c7",
+   "catalog_models": 480,
+   "withdrawn_endpoints": 180,
+   "withdrawn_models": 0,
+   "error": "OpenRouter endpoints: 180 of 1552 prior endpoints absent (limit 77): partial response or removal requiring review (google/gemini-4-hydrogen Google/google-vertex/eu/unknown, google/gemini-4-hydrogen Google/google-vertex/us/unknown, google/gemini-4-carbon Google/google-vertex/eu/unknown, google/gemini-4-carbon Google/google-vertex/us/unknown, anthropic/claude-fable-5.2 Amazon Bedrock/amazon-bedrock/unknown)"
+  },
+  "2026-11-19T05-51-31-753Z-1951021": {
+   "catalog_sha256": "3a1c9b92a651ed8a608fabf771f8997a1dee8fc45c2316743f82de36ffcac6bd",
+   "catalog_models": 480,
+   "withdrawn_endpoints": 179,
+   "withdrawn_models": 0,
+   "error": "OpenRouter endpoints: 179 of 1552 prior endpoints absent (limit 77): partial response or removal requiring review (google/gemini-4-hydrogen Google/google-vertex/eu/unknown, google/gemini-4-hydrogen Google/google-vertex/us/unknown, google/gemini-4-carbon Google/google-vertex/eu/unknown, google/gemini-4-carbon Google/google-vertex/us/unknown, anthropic/claude-fable-5.2 Amazon Bedrock/amazon-bedrock/unknown)"
+  }
+ },
+ "method": "Read-only reconstruction from the two failed daily runs' retained HTTP responses (sources/live-manifest.jsonl, gz bodies copied under evidence/ by sha256). Each run fetched every catalog model's endpoint resource once and re-fetched every model with lost identities after the collector's 60 s re-check; the last response per model is used, exactly like the collector. No new requests were made.",
+ "removed_count": 179,
+ "excluded_not_in_both_runs": [
+  "qwen/qwen3.8-27b Tenstorrent/tenstorrent/fp8/fp8"
+ ],
+ "models": [
+  {
+   "model_id": "anthropic/claude-fable-5",
+   "prior_identities": [
+    "Amazon Bedrock/amazon-bedrock/unknown",
+    "Anthropic/anthropic/unknown",
+    "Azure/azure/unknown",
+    "Claude Platform on AWS/claude-on-aws/unknown",
+    "Google/google-vertex/europe/unknown",
+    "Google/google-vertex/global/unknown",
+    "Google/google-vertex/us/unknown"
+   ],
+   "current_identities": [
+    "Anthropic/anthropic/unknown",
+    "Azure/azure/unknown",
+    "Claude Platform on AWS/claude-on-aws/unknown",
+    "Google/google-vertex/global/unknown"
+   ],
+   "removed": [
+    "Amazon Bedrock/amazon-bedrock/unknown",
+    "Google/google-vertex/europe/unknown",
+    "Google/google-vertex/us/unknown"
+   ],
+   "removed_provider_still_listed_for_model": [
+    [
+     "Amazon Bedrock/amazon-bedrock/unknown",
+     false
+    ],
+    [
+     "Google/google-vertex/europe/unknown",
+     true
+    ],
+    [
+     "Google/google-vertex/us/unknown",
+     true
+    ]
+   ],
+   "responses": {
+    "2026-11-19T05-17-05-687Z-1886818": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:29:59.122Z",
+      "sha256": "649b116f8ece7b61574d66ede001508b23a7c901dee76877c5e4c5fc3ce9c999"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:31:00.986Z",
+      "sha256": "649b116f8ece7b61574d66ede001508b23a7c901dee76877c5e4c5fc3ce9c999"
+     }
+    ],
+    "2026-11-19T05-51-31-753Z-1951021": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:04:11.444Z",
+      "sha256": "649b116f8ece7b61574d66ede001508b23a7c901dee76877c5e4c5fc3ce9c999"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:05:12.844Z",
+      "sha256": "649b116f8ece7b61574d66ede001508b23a7c901dee76877c5e4c5fc3ce9c999"
+     }
+    ]
+   }
+  },
+  {
+   "model_id": "anthropic/claude-fable-5.1",
+   "prior_identities": [
+    "Amazon Bedrock/amazon-bedrock/unknown",
+    "Anthropic/anthropic/unknown",
+    "Azure/azure/unknown",
+    "Google/google-vertex/global/unknown",
+    "Google/google-vertex/us/unknown"
+   ],
+   "current_identities": [
+    "Anthropic/anthropic/unknown",
+    "Azure/azure/unknown",
+    "Google/google-vertex/global/unknown"
+   ],
+   "removed": [
+    "Amazon Bedrock/amazon-bedrock/unknown",
+    "Google/google-vertex/us/unknown"
+   ],
+   "removed_provider_still_listed_for_model": [
+    [
+     "Amazon Bedrock/amazon-bedrock/unknown",
+     false
+    ],
+    [
+     "Google/google-vertex/us/unknown",
+     true
+    ]
+   ],
+   "responses": {
+    "2026-11-19T05-17-05-687Z-1886818": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:29:58.688Z",
+      "sha256": "1073b435981f6051d0bf010ab871e9d145851b7441cb7185fc8e7849b4a05dd0"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:31:00.907Z",
+      "sha256": "1073b435981f6051d0bf010ab871e9d145851b7441cb7185fc8e7849b4a05dd0"
+     }
+    ],
+    "2026-11-19T05-51-31-753Z-1951021": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:04:11.066Z",
+      "sha256": "1699c5905ddcc1f27c1a3689337cd16f8df2f7cf79857033bd4c899dfacef90a"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:05:12.743Z",
+      "sha256": "1699c5905ddcc1f27c1a3689337cd16f8df2f7cf79857033bd4c899dfacef90a"
+     }
+    ]
+   }
+  },
+  {
+   "model_id": "anthropic/claude-fable-5.2",
+   "prior_identities": [
+    "Amazon Bedrock/amazon-bedrock/unknown",
+    "Anthropic/anthropic/fast/unknown",
+    "Anthropic/anthropic/unknown",
+    "Azure/azure/unknown",
+    "Google/google-vertex/global/unknown"
+   ],
+   "current_identities": [
+    "Anthropic/anthropic/fast/unknown",
+    "Anthropic/anthropic/unknown",
+    "Azure/azure/unknown",
+    "Google/google-vertex/global/unknown"
+   ],
+   "removed": [
+    "Amazon Bedrock/amazon-bedrock/unknown"
+   ],
+   "removed_provider_still_listed_for_model": [
+    [
+     "Amazon Bedrock/amazon-bedrock/unknown",
+     false
+    ]
+   ],
+   "responses": {
+    "2026-11-19T05-17-05-687Z-1886818": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:29:58.229Z",
+      "sha256": "b23ce1a05d08651d007455245e4fe5635a01a1c3a576fc31b25d4af959c7fc2d"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:31:00.856Z",
+      "sha256": "b23ce1a05d08651d007455245e4fe5635a01a1c3a576fc31b25d4af959c7fc2d"
+     }
+    ],
+    "2026-11-19T05-51-31-753Z-1951021": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:04:10.615Z",
+      "sha256": "7b7f13b23db48c4f30708f3acdd7d73fa781aa9e14a9dd6e6c80307dbb28a6b9"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:05:12.673Z",
+      "sha256": "b23ce1a05d08651d007455245e4fe5635a01a1c3a576fc31b25d4af959c7fc2d"
+     }
+    ]
+   }
+  },
+  {
+   "model_id": "anthropic/claude-fable-5:batch",
+   "prior_identities": [
+    "Anthropic/anthropic/unknown"
+   ],
+   "current_identities": [],
+   "removed": [
+    "Anthropic/anthropic/unknown"
+   ],
+   "removed_provider_still_listed_for_model": [
+    [
+     "Anthropic/anthropic/unknown",
+     false
+    ]
+   ],
+   "responses": {
+    "2026-11-19T05-17-05-687Z-1886818": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:29:59.136Z",
+      "sha256": "eda40f74f06ec40ec9d32e676bae28ff43245d193122f2b984403432b892733a"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:31:00.997Z",
+      "sha256": "eda40f74f06ec40ec9d32e676bae28ff43245d193122f2b984403432b892733a"
+     }
+    ],
+    "2026-11-19T05-51-31-753Z-1951021": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:04:11.442Z",
+      "sha256": "eda40f74f06ec40ec9d32e676bae28ff43245d193122f2b984403432b892733a"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:05:12.837Z",
+      "sha256": "eda40f74f06ec40ec9d32e676bae28ff43245d193122f2b984403432b892733a"
+     }
+    ]
+   }
+  },
+  {
+   "model_id": "anthropic/claude-haiku-4.5",
+   "prior_identities": [
+    "Amazon Bedrock/amazon-bedrock/eu-west-1/unknown",
+    "Amazon Bedrock/amazon-bedrock/global/unknown",
+    "Amazon Bedrock/amazon-bedrock/us/unknown",
+    "Anthropic/anthropic/unknown",
+    "Azure/azure/global/unknown",
+    "Google/google-vertex/europe/unknown",
+    "Google/google-vertex/global/unknown",
+    "Google/google-vertex/us-east5/unknown"
+   ],
+   "current_identities": [
+    "Amazon Bedrock/amazon-bedrock/global/unknown",
+    "Anthropic/anthropic/unknown",
+    "Azure/azure/global/unknown",
+    "Google/google-vertex/global/unknown"
+   ],
+   "removed": [
+    "Amazon Bedrock/amazon-bedrock/eu-west-1/unknown",
+    "Amazon Bedrock/amazon-bedrock/us/unknown",
+    "Google/google-vertex/europe/unknown",
+    "Google/google-vertex/us-east5/unknown"
+   ],
+   "removed_provider_still_listed_for_model": [
+    [
+     "Amazon Bedrock/amazon-bedrock/eu-west-1/unknown",
+     true
+    ],
+    [
+     "Amazon Bedrock/amazon-bedrock/us/unknown",
+     true
+    ],
+    [
+     "Google/google-vertex/europe/unknown",
+     true
+    ],
+    [
+     "Google/google-vertex/us-east5/unknown",
+     true
+    ]
+   ],
+   "responses": {
+    "2026-11-19T05-17-05-687Z-1886818": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:29:59.816Z",
+      "sha256": "e43c607651691529fcb2832a191c05ef5dc89936ab574475f4b91c226f682945"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:31:01.105Z",
+      "sha256": "e43c607651691529fcb2832a191c05ef5dc89936ab574475f4b91c226f682945"
+     }
+    ],
+    "2026-11-19T05-51-31-753Z-1951021": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:04:11.993Z",
+      "sha256": "e43c607651691529fcb2832a191c05ef5dc89936ab574475f4b91c226f682945"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:05:12.977Z",
+      "sha256": "e43c607651691529fcb2832a191c05ef5dc89936ab574475f4b91c226f682945"
+     }
+    ]
+   }
+  },
+  {
+   "model_id": "anthropic/claude-haiku-4.5:batch",
+   "prior_identities": [
+    "Anthropic/anthropic/unknown"
+   ],
+   "current_identities": [],
+   "removed": [
+    "Anthropic/anthropic/unknown"
+   ],
+   "removed_provider_still_listed_for_model": [
+    [
+     "Anthropic/anthropic/unknown",
+     false
+    ]
+   ],
+   "responses": {
+    "2026-11-19T05-17-05-687Z-1886818": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:29:59.834Z",
+      "sha256": "252e854e1c7c3d216d87d49ba74a17d3932ff684d3349f15bdb0d1414d5a1572"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:31:01.103Z",
+      "sha256": "252e854e1c7c3d216d87d49ba74a17d3932ff684d3349f15bdb0d1414d5a1572"
+     }
+    ],
+    "2026-11-19T05-51-31-753Z-1951021": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:04:11.992Z",
+      "sha256": "252e854e1c7c3d216d87d49ba74a17d3932ff684d3349f15bdb0d1414d5a1572"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:05:12.996Z",
+      "sha256": "252e854e1c7c3d216d87d49ba74a17d3932ff684d3349f15bdb0d1414d5a1572"
+     }
+    ]
+   }
+  },
+  {
+   "model_id": "anthropic/claude-haiku-5.5",
+   "prior_identities": [
+    "Amazon Bedrock/amazon-bedrock/eu-west-1/unknown",
+    "Amazon Bedrock/amazon-bedrock/unknown",
+    "Amazon Bedrock/amazon-bedrock/us-east-1/unknown",
+    "Anthropic/anthropic/unknown",
+    "Azure/azure/global/unknown",
+    "Azure/azure/us/unknown",
+    "Claude Platform on AWS/claude-on-aws/unknown",
+    "Google/google-vertex/europe/unknown",
+    "Google/google-vertex/global/unknown",
+    "Google/google-vertex/us/unknown"
+   ],
+   "current_identities": [
+    "Amazon Bedrock/amazon-bedrock/unknown",
+    "Anthropic/anthropic/unknown",
+    "Azure/azure/global/unknown",
+    "Claude Platform on AWS/claude-on-aws/unknown",
+    "Google/google-vertex/global/unknown"
+   ],
+   "removed": [
+    "Amazon Bedrock/amazon-bedrock/eu-west-1/unknown",
+    "Amazon Bedrock/amazon-bedrock/us-east-1/unknown",
+    "Azure/azure/us/unknown",
+    "Google/google-vertex/europe/unknown",
+    "Google/google-vertex/us/unknown"
+   ],
+   "removed_provider_still_listed_for_model": [
+    [
+     "Amazon Bedrock/amazon-bedrock/eu-west-1/unknown",
+     true
+    ],
+    [
+     "Amazon Bedrock/amazon-bedrock/us-east-1/unknown",
+     true
+    ],
+    [
+     "Azure/azure/us/unknown",
+     true
+    ],
+    [
+     "Google/google-vertex/europe/unknown",
+     true
+    ],
+    [
+     "Google/google-vertex/us/unknown",
+     true
+    ]
+   ],
+   "responses": {
+    "2026-11-19T05-17-05-687Z-1886818": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:29:58.413Z",
+      "sha256": "bc9e9ca064c762aa2d364bb011323cdbe43e6585ef596c40e5cd1a4741472cd9"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:31:00.852Z",
+      "sha256": "bc9e9ca064c762aa2d364bb011323cdbe43e6585ef596c40e5cd1a4741472cd9"
+     }
+    ],
+    "2026-11-19T05-51-31-753Z-1951021": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:04:10.796Z",
+      "sha256": "bc9e9ca064c762aa2d364bb011323cdbe43e6585ef596c40e5cd1a4741472cd9"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:05:12.705Z",
+      "sha256": "bc9e9ca064c762aa2d364bb011323cdbe43e6585ef596c40e5cd1a4741472cd9"
+     }
+    ]
+   }
+  },
+  {
+   "model_id": "anthropic/claude-opus-4.1:batch",
+   "prior_identities": [
+    "Anthropic/anthropic/unknown"
+   ],
+   "current_identities": [],
+   "removed": [
+    "Anthropic/anthropic/unknown"
+   ],
+   "removed_provider_still_listed_for_model": [
+    [
+     "Anthropic/anthropic/unknown",
+     false
+    ]
+   ],
+   "responses": {
+    "2026-11-19T05-17-05-687Z-1886818": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:29:59.964Z",
+      "sha256": "3c56266ad2dda72c90836bc09151fb7707b677cddcaddcfb5d3549cb863ae4c7"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:31:01.147Z",
+      "sha256": "3c56266ad2dda72c90836bc09151fb7707b677cddcaddcfb5d3549cb863ae4c7"
+     }
+    ],
+    "2026-11-19T05-51-31-753Z-1951021": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:04:12.116Z",
+      "sha256": "3c56266ad2dda72c90836bc09151fb7707b677cddcaddcfb5d3549cb863ae4c7"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:05:13.054Z",
+      "sha256": "3c56266ad2dda72c90836bc09151fb7707b677cddcaddcfb5d3549cb863ae4c7"
+     }
+    ]
+   }
+  },
+  {
+   "model_id": "anthropic/claude-opus-4.5",
+   "prior_identities": [
+    "Amazon Bedrock/amazon-bedrock/eu-west-1/unknown",
+    "Amazon Bedrock/amazon-bedrock/unknown",
+    "Anthropic/anthropic/unknown",
+    "Azure/azure/global/unknown",
+    "Claude Platform on AWS/claude-on-aws/unknown",
+    "Google/google-vertex/global/unknown"
+   ],
+   "current_identities": [
+    "Amazon Bedrock/amazon-bedrock/unknown",
+    "Anthropic/anthropic/unknown",
+    "Azure/azure/global/unknown",
+    "Claude Platform on AWS/claude-on-aws/unknown",
+    "Google/google-vertex/global/unknown"
+   ],
+   "removed": [
+    "Amazon Bedrock/amazon-bedrock/eu-west-1/unknown"
+   ],
+   "removed_provider_still_listed_for_model": [
+    [
+     "Amazon Bedrock/amazon-bedrock/eu-west-1/unknown",
+     true
+    ]
+   ],
+   "responses": {
+    "2026-11-19T05-17-05-687Z-1886818": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:29:59.777Z",
+      "sha256": "4d7f7358383f4b6b55bf386005b160e6643ac4c9a3acc2ff96de55fce8c6507a"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:31:01.082Z",
+      "sha256": "4d7f7358383f4b6b55bf386005b160e6643ac4c9a3acc2ff96de55fce8c6507a"
+     }
+    ],
+    "2026-11-19T05-51-31-753Z-1951021": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:04:11.984Z",
+      "sha256": "4d7f7358383f4b6b55bf386005b160e6643ac4c9a3acc2ff96de55fce8c6507a"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:05:12.946Z",
+      "sha256": "4d7f7358383f4b6b55bf386005b160e6643ac4c9a3acc2ff96de55fce8c6507a"
+     }
+    ]
+   }
+  },
+  {
+   "model_id": "anthropic/claude-opus-4.5:batch",
+   "prior_identities": [
+    "Anthropic/anthropic/unknown"
+   ],
+   "current_identities": [],
+   "removed": [
+    "Anthropic/anthropic/unknown"
+   ],
+   "removed_provider_still_listed_for_model": [
+    [
+     "Anthropic/anthropic/unknown",
+     false
+    ]
+   ],
+   "responses": {
+    "2026-11-19T05-17-05-687Z-1886818": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:29:59.765Z",
+      "sha256": "4df40f0caea1889a6cc33f1d3b6b2552989876deb5427bd94fafc42de0587eb9"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:31:01.096Z",
+      "sha256": "4df40f0caea1889a6cc33f1d3b6b2552989876deb5427bd94fafc42de0587eb9"
+     }
+    ],
+    "2026-11-19T05-51-31-753Z-1951021": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:04:11.941Z",
+      "sha256": "4df40f0caea1889a6cc33f1d3b6b2552989876deb5427bd94fafc42de0587eb9"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:05:12.958Z",
+      "sha256": "4df40f0caea1889a6cc33f1d3b6b2552989876deb5427bd94fafc42de0587eb9"
+     }
+    ]
+   }
+  },
+  {
+   "model_id": "anthropic/claude-opus-4.6",
+   "prior_identities": [
+    "Amazon Bedrock/amazon-bedrock/unknown",
+    "Anthropic/anthropic/unknown",
+    "Azure/azure/global/unknown",
+    "Claude Platform on AWS/claude-on-aws/unknown",
+    "Google/google-vertex/europe/unknown",
+    "Google/google-vertex/global/unknown"
+   ],
+   "current_identities": [
+    "Amazon Bedrock/amazon-bedrock/unknown",
+    "Anthropic/anthropic/unknown",
+    "Azure/azure/global/unknown",
+    "Claude Platform on AWS/claude-on-aws/unknown",
+    "Google/google-vertex/global/unknown"
+   ],
+   "removed": [
+    "Google/google-vertex/europe/unknown"
+   ],
+   "removed_provider_still_listed_for_model": [
+    [
+     "Google/google-vertex/europe/unknown",
+     true
+    ]
+   ],
+   "responses": {
+    "2026-11-19T05-17-05-687Z-1886818": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:29:59.680Z",
+      "sha256": "af2b1c3051c44e1f9680cdfeeeccb7dfb07c3357ae91746915b5b8b092a4e4ea"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:31:01.064Z",
+      "sha256": "af2b1c3051c44e1f9680cdfeeeccb7dfb07c3357ae91746915b5b8b092a4e4ea"
+     }
+    ],
+    "2026-11-19T05-51-31-753Z-1951021": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:04:11.880Z",
+      "sha256": "251e521cb522afd50a5b0aa649ea660b5a2eb8972d4ada2db8d1fa9e68fc39af"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:05:12.910Z",
+      "sha256": "251e521cb522afd50a5b0aa649ea660b5a2eb8972d4ada2db8d1fa9e68fc39af"
+     }
+    ]
+   }
+  },
+  {
+   "model_id": "anthropic/claude-opus-4.6:batch",
+   "prior_identities": [
+    "Anthropic/anthropic/unknown"
+   ],
+   "current_identities": [],
+   "removed": [
+    "Anthropic/anthropic/unknown"
+   ],
+   "removed_provider_still_listed_for_model": [
+    [
+     "Anthropic/anthropic/unknown",
+     false
+    ]
+   ],
+   "responses": {
+    "2026-11-19T05-17-05-687Z-1886818": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:29:59.668Z",
+      "sha256": "9081df8a28e0304bb9a9f8d97768b840307f049c4abded26a4012019468ec1f5"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:31:01.069Z",
+      "sha256": "9081df8a28e0304bb9a9f8d97768b840307f049c4abded26a4012019468ec1f5"
+     }
+    ],
+    "2026-11-19T05-51-31-753Z-1951021": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:04:11.794Z",
+      "sha256": "9081df8a28e0304bb9a9f8d97768b840307f049c4abded26a4012019468ec1f5"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:05:12.910Z",
+      "sha256": "9081df8a28e0304bb9a9f8d97768b840307f049c4abded26a4012019468ec1f5"
+     }
+    ]
+   }
+  },
+  {
+   "model_id": "anthropic/claude-opus-4.7",
+   "prior_identities": [
+    "Amazon Bedrock/amazon-bedrock/eu-west-1/unknown",
+    "Amazon Bedrock/amazon-bedrock/global/unknown",
+    "Anthropic/anthropic/unknown",
+    "Azure/azure/global/unknown",
+    "Claude Platform on AWS/claude-on-aws/unknown",
+    "Google/google-vertex/europe/unknown",
+    "Google/google-vertex/global/unknown",
+    "Google/google-vertex/us/unknown"
+   ],
+   "current_identities": [
+    "Amazon Bedrock/amazon-bedrock/global/unknown",
+    "Anthropic/anthropic/unknown",
+    "Azure/azure/global/unknown",
+    "Claude Platform on AWS/claude-on-aws/unknown",
+    "Google/google-vertex/global/unknown"
+   ],
+   "removed": [
+    "Amazon Bedrock/amazon-bedrock/eu-west-1/unknown",
+    "Google/google-vertex/europe/unknown",
+    "Google/google-vertex/us/unknown"
+   ],
+   "removed_provider_still_listed_for_model": [
+    [
+     "Amazon Bedrock/amazon-bedrock/eu-west-1/unknown",
+     true
+    ],
+    [
+     "Google/google-vertex/europe/unknown",
+     true
+    ],
+    [
+     "Google/google-vertex/us/unknown",
+     true
+    ]
+   ],
+   "responses": {
+    "2026-11-19T05-17-05-687Z-1886818": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:29:59.390Z",
+      "sha256": "d4ce7cb292a080c7b4bd352b482d9357a28d33e53d942b1e50d974285f4b44e0"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:31:01.011Z",
+      "sha256": "d4ce7cb292a080c7b4bd352b482d9357a28d33e53d942b1e50d974285f4b44e0"
+     }
+    ],
+    "2026-11-19T05-51-31-753Z-1951021": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:04:11.599Z",
+      "sha256": "d4ce7cb292a080c7b4bd352b482d9357a28d33e53d942b1e50d974285f4b44e0"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:05:12.857Z",
+      "sha256": "d4ce7cb292a080c7b4bd352b482d9357a28d33e53d942b1e50d974285f4b44e0"
+     }
+    ]
+   }
+  },
+  {
+   "model_id": "anthropic/claude-opus-4.7:batch",
+   "prior_identities": [
+    "Anthropic/anthropic/unknown"
+   ],
+   "current_identities": [],
+   "removed": [
+    "Anthropic/anthropic/unknown"
+   ],
+   "removed_provider_still_listed_for_model": [
+    [
+     "Anthropic/anthropic/unknown",
+     false
+    ]
+   ],
+   "responses": {
+    "2026-11-19T05-17-05-687Z-1886818": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:29:59.402Z",
+      "sha256": "27953ccbad0cfe40c2b51ecb55daacc85b1ca3bd3de6cc141e6465069cf61c39"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:31:01.014Z",
+      "sha256": "27953ccbad0cfe40c2b51ecb55daacc85b1ca3bd3de6cc141e6465069cf61c39"
+     }
+    ],
+    "2026-11-19T05-51-31-753Z-1951021": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:04:11.634Z",
+      "sha256": "27953ccbad0cfe40c2b51ecb55daacc85b1ca3bd3de6cc141e6465069cf61c39"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:05:12.860Z",
+      "sha256": "27953ccbad0cfe40c2b51ecb55daacc85b1ca3bd3de6cc141e6465069cf61c39"
+     }
+    ]
+   }
+  },
+  {
+   "model_id": "anthropic/claude-opus-4.8",
+   "prior_identities": [
+    "Amazon Bedrock/amazon-bedrock/eu-west-1/unknown",
+    "Amazon Bedrock/amazon-bedrock/unknown",
+    "Amazon Bedrock/amazon-bedrock/us/unknown",
+    "Anthropic/anthropic/fast/unknown",
+    "Anthropic/anthropic/unknown",
+    "Azure/azure/global/unknown",
+    "Azure/azure/us/unknown",
+    "Claude Platform on AWS/claude-on-aws/unknown",
+    "Google/google-vertex/europe/unknown",
+    "Google/google-vertex/global/unknown",
+    "Google/google-vertex/us/unknown"
+   ],
+   "current_identities": [
+    "Amazon Bedrock/amazon-bedrock/unknown",
+    "Anthropic/anthropic/fast/unknown",
+    "Anthropic/anthropic/unknown",
+    "Azure/azure/global/unknown",
+    "Claude Platform on AWS/claude-on-aws/unknown",
+    "Google/google-vertex/global/unknown"
+   ],
+   "removed": [
+    "Amazon Bedrock/amazon-bedrock/eu-west-1/unknown",
+    "Amazon Bedrock/amazon-bedrock/us/unknown",
+    "Azure/azure/us/unknown",
+    "Google/google-vertex/europe/unknown",
+    "Google/google-vertex/us/unknown"
+   ],
+   "removed_provider_still_listed_for_model": [
+    [
+     "Amazon Bedrock/amazon-bedrock/eu-west-1/unknown",
+     true
+    ],
+    [
+     "Amazon Bedrock/amazon-bedrock/us/unknown",
+     true
+    ],
+    [
+     "Azure/azure/us/unknown",
+     true
+    ],
+    [
+     "Google/google-vertex/europe/unknown",
+     true
+    ],
+    [
+     "Google/google-vertex/us/unknown",
+     true
+    ]
+   ],
+   "responses": {
+    "2026-11-19T05-17-05-687Z-1886818": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:29:59.179Z",
+      "sha256": "ed19e080ef31b8803f001d9f361c2f3cd337ef99f41ef3e9e0c266c2bdc91a90"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:31:00.977Z",
+      "sha256": "ed19e080ef31b8803f001d9f361c2f3cd337ef99f41ef3e9e0c266c2bdc91a90"
+     }
+    ],
+    "2026-11-19T05-51-31-753Z-1951021": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:04:11.454Z",
+      "sha256": "07ec05106066220a1239712915c6dc7c6b082fe240b8dd26b958d796be9b9faa"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:05:12.827Z",
+      "sha256": "07ec05106066220a1239712915c6dc7c6b082fe240b8dd26b958d796be9b9faa"
+     }
+    ]
+   }
+  },
+  {
+   "model_id": "anthropic/claude-opus-4.8:batch",
+   "prior_identities": [
+    "Anthropic/anthropic/unknown"
+   ],
+   "current_identities": [],
+   "removed": [
+    "Anthropic/anthropic/unknown"
+   ],
+   "removed_provider_still_listed_for_model": [
+    [
+     "Anthropic/anthropic/unknown",
+     false
+    ]
+   ],
+   "responses": {
+    "2026-11-19T05-17-05-687Z-1886818": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:29:59.166Z",
+      "sha256": "e71d70def2eb88e1847959ba915c60a46aad0930849d6e67e23077afba797bfc"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:31:00.983Z",
+      "sha256": "e71d70def2eb88e1847959ba915c60a46aad0930849d6e67e23077afba797bfc"
+     }
+    ],
+    "2026-11-19T05-51-31-753Z-1951021": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:04:11.465Z",
+      "sha256": "e71d70def2eb88e1847959ba915c60a46aad0930849d6e67e23077afba797bfc"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:05:12.822Z",
+      "sha256": "e71d70def2eb88e1847959ba915c60a46aad0930849d6e67e23077afba797bfc"
+     }
+    ]
+   }
+  },
+  {
+   "model_id": "anthropic/claude-opus-5",
+   "prior_identities": [
+    "Amazon Bedrock/amazon-bedrock/eu-west-1/unknown",
+    "Amazon Bedrock/amazon-bedrock/unknown",
+    "Amazon Bedrock/amazon-bedrock/us-east-1/unknown",
+    "Anthropic/anthropic/fast/unknown",
+    "Anthropic/anthropic/unknown",
+    "Azure/azure/global/unknown",
+    "Azure/azure/us/unknown",
+    "Claude Platform on AWS/claude-on-aws/unknown",
+    "Google/google-vertex/europe/unknown",
+    "Google/google-vertex/global/unknown",
+    "Google/google-vertex/us/unknown"
+   ],
+   "current_identities": [
+    "Amazon Bedrock/amazon-bedrock/unknown",
+    "Anthropic/anthropic/fast/unknown",
+    "Anthropic/anthropic/unknown",
+    "Azure/azure/global/unknown",
+    "Claude Platform on AWS/claude-on-aws/unknown",
+    "Google/google-vertex/global/unknown"
+   ],
+   "removed": [
+    "Amazon Bedrock/amazon-bedrock/eu-west-1/unknown",
+    "Amazon Bedrock/amazon-bedrock/us-east-1/unknown",
+    "Azure/azure/us/unknown",
+    "Google/google-vertex/europe/unknown",
+    "Google/google-vertex/us/unknown"
+   ],
+   "removed_provider_still_listed_for_model": [
+    [
+     "Amazon Bedrock/amazon-bedrock/eu-west-1/unknown",
+     true
+    ],
+    [
+     "Amazon Bedrock/amazon-bedrock/us-east-1/unknown",
+     true
+    ],
+    [
+     "Azure/azure/us/unknown",
+     true
+    ],
+    [
+     "Google/google-vertex/europe/unknown",
+     true
+    ],
+    [
+     "Google/google-vertex/us/unknown",
+     true
+    ]
+   ],
+   "responses": {
+    "2026-11-19T05-17-05-687Z-1886818": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:29:58.866Z",
+      "sha256": "c0e00368973892c0dcef3476f78d1294e719e8c519ff002837f7b06e56404175"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:31:00.927Z",
+      "sha256": "c0e00368973892c0dcef3476f78d1294e719e8c519ff002837f7b06e56404175"
+     }
+    ],
+    "2026-11-19T05-51-31-753Z-1951021": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:04:11.238Z",
+      "sha256": "10319f1616113118c53b04be639c610019bcd983950231bdceebfea10ab7bfc3"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:05:12.780Z",
+      "sha256": "a34563fed8eebe472476d0f2cc306c8ba3c5fbed00bda8d8e8256711cf5d7859"
+     }
+    ]
+   }
+  },
+  {
+   "model_id": "anthropic/claude-opus-5.5",
+   "prior_identities": [
+    "Amazon Bedrock/amazon-bedrock/eu-west-1/unknown",
+    "Amazon Bedrock/amazon-bedrock/unknown",
+    "Amazon Bedrock/amazon-bedrock/us-east-1/unknown",
+    "Anthropic/anthropic/fast/unknown",
+    "Anthropic/anthropic/unknown",
+    "Azure/azure/global/unknown",
+    "Azure/azure/us/unknown",
+    "Claude Platform on AWS/claude-on-aws/unknown",
+    "Google/google-vertex/europe/unknown",
+    "Google/google-vertex/global/unknown",
+    "Google/google-vertex/us/unknown"
+   ],
+   "current_identities": [
+    "Amazon Bedrock/amazon-bedrock/unknown",
+    "Anthropic/anthropic/fast/unknown",
+    "Anthropic/anthropic/unknown",
+    "Azure/azure/global/unknown",
+    "Claude Platform on AWS/claude-on-aws/unknown",
+    "Google/google-vertex/global/unknown"
+   ],
+   "removed": [
+    "Amazon Bedrock/amazon-bedrock/eu-west-1/unknown",
+    "Amazon Bedrock/amazon-bedrock/us-east-1/unknown",
+    "Azure/azure/us/unknown",
+    "Google/google-vertex/europe/unknown",
+    "Google/google-vertex/us/unknown"
+   ],
+   "removed_provider_still_listed_for_model": [
+    [
+     "Amazon Bedrock/amazon-bedrock/eu-west-1/unknown",
+     true
+    ],
+    [
+     "Amazon Bedrock/amazon-bedrock/us-east-1/unknown",
+     true
+    ],
+    [
+     "Azure/azure/us/unknown",
+     true
+    ],
+    [
+     "Google/google-vertex/europe/unknown",
+     true
+    ],
+    [
+     "Google/google-vertex/us/unknown",
+     true
+    ]
+   ],
+   "responses": {
+    "2026-11-19T05-17-05-687Z-1886818": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:29:58.528Z",
+      "sha256": "9bf121afe16765dda9339d9c2e1dfa4dc4a723880f93ffe9a5ce198efb90f851"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:31:00.888Z",
+      "sha256": "9bf121afe16765dda9339d9c2e1dfa4dc4a723880f93ffe9a5ce198efb90f851"
+     }
+    ],
+    "2026-11-19T05-51-31-753Z-1951021": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:04:10.906Z",
+      "sha256": "13792f91247a317de99d22bc1157d23c052b2635cf4dd612160dac08884a040b"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:05:12.734Z",
+      "sha256": "13792f91247a317de99d22bc1157d23c052b2635cf4dd612160dac08884a040b"
+     }
+    ]
+   }
+  },
+  {
+   "model_id": "anthropic/claude-sonnet-4.5",
+   "prior_identities": [
+    "Amazon Bedrock/amazon-bedrock/eu-west-1/unknown",
+    "Amazon Bedrock/amazon-bedrock/unknown",
+    "Anthropic/anthropic/unknown",
+    "Azure/azure/global/unknown",
+    "Claude Platform on AWS/claude-on-aws/unknown",
+    "Google/google-vertex/global/unknown",
+    "Google/google-vertex/us-east5/unknown"
+   ],
+   "current_identities": [
+    "Amazon Bedrock/amazon-bedrock/unknown",
+    "Anthropic/anthropic/unknown",
+    "Azure/azure/global/unknown",
+    "Claude Platform on AWS/claude-on-aws/unknown",
+    "Google/google-vertex/global/unknown"
+   ],
+   "removed": [
+    "Amazon Bedrock/amazon-bedrock/eu-west-1/unknown",
+    "Google/google-vertex/us-east5/unknown"
+   ],
+   "removed_provider_still_listed_for_model": [
+    [
+     "Amazon Bedrock/amazon-bedrock/eu-west-1/unknown",
+     true
+    ],
+    [
+     "Google/google-vertex/us-east5/unknown",
+     true
+    ]
+   ],
+   "responses": {
+    "2026-11-19T05-17-05-687Z-1886818": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:29:59.869Z",
+      "sha256": "7d5a3e728d83dde6d3fac42f08deaf3d9761d421a6d71d58722b1d1d382652c9"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:31:01.116Z",
+      "sha256": "7d5a3e728d83dde6d3fac42f08deaf3d9761d421a6d71d58722b1d1d382652c9"
+     }
+    ],
+    "2026-11-19T05-51-31-753Z-1951021": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:04:12.040Z",
+      "sha256": "549dff05d48fe8bc4352eaa9136d155bb3e26ed1d173bf49466f6b35ac511a48"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:05:12.997Z",
+      "sha256": "385e0bea32cd40ac73c82a12afce097816b96bc721bbff4d45b99f21d3145680"
+     }
+    ]
+   }
+  },
+  {
+   "model_id": "anthropic/claude-sonnet-4.5:batch",
+   "prior_identities": [
+    "Anthropic/anthropic/unknown"
+   ],
+   "current_identities": [],
+   "removed": [
+    "Anthropic/anthropic/unknown"
+   ],
+   "removed_provider_still_listed_for_model": [
+    [
+     "Anthropic/anthropic/unknown",
+     false
+    ]
+   ],
+   "responses": {
+    "2026-11-19T05-17-05-687Z-1886818": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:29:59.858Z",
+      "sha256": "30a8d0a99b2ade78e19b8d1969616356b55faf8c47c751430eadb6613c7377d3"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:31:01.113Z",
+      "sha256": "30a8d0a99b2ade78e19b8d1969616356b55faf8c47c751430eadb6613c7377d3"
+     }
+    ],
+    "2026-11-19T05-51-31-753Z-1951021": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:04:12.034Z",
+      "sha256": "30a8d0a99b2ade78e19b8d1969616356b55faf8c47c751430eadb6613c7377d3"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:05:12.988Z",
+      "sha256": "30a8d0a99b2ade78e19b8d1969616356b55faf8c47c751430eadb6613c7377d3"
+     }
+    ]
+   }
+  },
+  {
+   "model_id": "anthropic/claude-sonnet-4.6",
+   "prior_identities": [
+    "Amazon Bedrock/amazon-bedrock/eu-west-1/unknown",
+    "Amazon Bedrock/amazon-bedrock/global/unknown",
+    "Amazon Bedrock/amazon-bedrock/us/unknown",
+    "Anthropic/anthropic/unknown",
+    "Azure/azure/global/unknown",
+    "Claude Platform on AWS/claude-on-aws/unknown",
+    "Google/google-vertex/europe/unknown",
+    "Google/google-vertex/global/unknown",
+    "Google/google-vertex/us-east5/unknown"
+   ],
+   "current_identities": [
+    "Amazon Bedrock/amazon-bedrock/global/unknown",
+    "Anthropic/anthropic/unknown",
+    "Azure/azure/global/unknown",
+    "Claude Platform on AWS/claude-on-aws/unknown",
+    "Google/google-vertex/global/unknown"
+   ],
+   "removed": [
+    "Amazon Bedrock/amazon-bedrock/eu-west-1/unknown",
+    "Amazon Bedrock/amazon-bedrock/us/unknown",
+    "Google/google-vertex/europe/unknown",
+    "Google/google-vertex/us-east5/unknown"
+   ],
+   "removed_provider_still_listed_for_model": [
+    [
+     "Amazon Bedrock/amazon-bedrock/eu-west-1/unknown",
+     true
+    ],
+    [
+     "Amazon Bedrock/amazon-bedrock/us/unknown",
+     true
+    ],
+    [
+     "Google/google-vertex/europe/unknown",
+     true
+    ],
+    [
+     "Google/google-vertex/us-east5/unknown",
+     true
+    ]
+   ],
+   "responses": {
+    "2026-11-19T05-17-05-687Z-1886818": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:29:59.634Z",
+      "sha256": "39de9f02558f7a48f4a70030e6f731b2967cc67d57cf53a6d509f5a178ce236c"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:31:01.068Z",
+      "sha256": "39de9f02558f7a48f4a70030e6f731b2967cc67d57cf53a6d509f5a178ce236c"
+     }
+    ],
+    "2026-11-19T05-51-31-753Z-1951021": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:04:11.763Z",
+      "sha256": "39de9f02558f7a48f4a70030e6f731b2967cc67d57cf53a6d509f5a178ce236c"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:05:12.964Z",
+      "sha256": "39de9f02558f7a48f4a70030e6f731b2967cc67d57cf53a6d509f5a178ce236c"
+     }
+    ]
+   }
+  },
+  {
+   "model_id": "anthropic/claude-sonnet-4.6:batch",
+   "prior_identities": [
+    "Anthropic/anthropic/unknown"
+   ],
+   "current_identities": [],
+   "removed": [
+    "Anthropic/anthropic/unknown"
+   ],
+   "removed_provider_still_listed_for_model": [
+    [
+     "Anthropic/anthropic/unknown",
+     false
+    ]
+   ],
+   "responses": {
+    "2026-11-19T05-17-05-687Z-1886818": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:29:59.635Z",
+      "sha256": "a3b50e4344d0d83416a4b945ff0d2026850ed7fa485057e1214fbc5fe365f15c"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:31:01.068Z",
+      "sha256": "a3b50e4344d0d83416a4b945ff0d2026850ed7fa485057e1214fbc5fe365f15c"
+     }
+    ],
+    "2026-11-19T05-51-31-753Z-1951021": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:04:11.769Z",
+      "sha256": "a3b50e4344d0d83416a4b945ff0d2026850ed7fa485057e1214fbc5fe365f15c"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:05:12.893Z",
+      "sha256": "a3b50e4344d0d83416a4b945ff0d2026850ed7fa485057e1214fbc5fe365f15c"
+     }
+    ]
+   }
+  },
+  {
+   "model_id": "anthropic/claude-sonnet-5",
+   "prior_identities": [
+    "Amazon Bedrock/amazon-bedrock/eu-west-1/unknown",
+    "Amazon Bedrock/amazon-bedrock/global/unknown",
+    "Amazon Bedrock/amazon-bedrock/us-east-1/unknown",
+    "Anthropic/anthropic/unknown",
+    "Azure/azure/global/unknown",
+    "Azure/azure/us/unknown",
+    "Claude Platform on AWS/claude-on-aws/unknown",
+    "Google/google-vertex/europe/unknown",
+    "Google/google-vertex/global/unknown",
+    "Google/google-vertex/us/unknown"
+   ],
+   "current_identities": [
+    "Amazon Bedrock/amazon-bedrock/global/unknown",
+    "Anthropic/anthropic/unknown",
+    "Azure/azure/global/unknown",
+    "Claude Platform on AWS/claude-on-aws/unknown",
+    "Google/google-vertex/global/unknown"
+   ],
+   "removed": [
+    "Amazon Bedrock/amazon-bedrock/eu-west-1/unknown",
+    "Amazon Bedrock/amazon-bedrock/us-east-1/unknown",
+    "Azure/azure/us/unknown",
+    "Google/google-vertex/europe/unknown",
+    "Google/google-vertex/us/unknown"
+   ],
+   "removed_provider_still_listed_for_model": [
+    [
+     "Amazon Bedrock/amazon-bedrock/eu-west-1/unknown",
+     true
+    ],
+    [
+     "Amazon Bedrock/amazon-bedrock/us-east-1/unknown",
+     true
+    ],
+    [
+     "Azure/azure/us/unknown",
+     true
+    ],
+    [
+     "Google/google-vertex/europe/unknown",
+     true
+    ],
+    [
+     "Google/google-vertex/us/unknown",
+     true
+    ]
+   ],
+   "responses": {
+    "2026-11-19T05-17-05-687Z-1886818": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:29:59.068Z",
+      "sha256": "0acc6dd16bc5a066e5eb1def24f8705089bbb9b7c55562e442d7707f64224e8c"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:31:00.965Z",
+      "sha256": "0acc6dd16bc5a066e5eb1def24f8705089bbb9b7c55562e442d7707f64224e8c"
+     }
+    ],
+    "2026-11-19T05-51-31-753Z-1951021": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:04:11.378Z",
+      "sha256": "0acc6dd16bc5a066e5eb1def24f8705089bbb9b7c55562e442d7707f64224e8c"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:05:12.808Z",
+      "sha256": "0acc6dd16bc5a066e5eb1def24f8705089bbb9b7c55562e442d7707f64224e8c"
+     }
+    ]
+   }
+  },
+  {
+   "model_id": "anthropic/claude-sonnet-5.5",
+   "prior_identities": [
+    "Amazon Bedrock/amazon-bedrock/eu-west-1/unknown",
+    "Amazon Bedrock/amazon-bedrock/unknown",
+    "Amazon Bedrock/amazon-bedrock/us-east-1/unknown",
+    "Anthropic/anthropic/unknown",
+    "Azure/azure/global/unknown",
+    "Azure/azure/us/unknown",
+    "Claude Platform on AWS/claude-on-aws/unknown",
+    "Google/google-vertex/europe/unknown",
+    "Google/google-vertex/global/unknown",
+    "Google/google-vertex/us/unknown"
+   ],
+   "current_identities": [
+    "Amazon Bedrock/amazon-bedrock/unknown",
+    "Anthropic/anthropic/unknown",
+    "Azure/azure/global/unknown",
+    "Claude Platform on AWS/claude-on-aws/unknown",
+    "Google/google-vertex/global/unknown"
+   ],
+   "removed": [
+    "Amazon Bedrock/amazon-bedrock/eu-west-1/unknown",
+    "Amazon Bedrock/amazon-bedrock/us-east-1/unknown",
+    "Azure/azure/us/unknown",
+    "Google/google-vertex/europe/unknown",
+    "Google/google-vertex/us/unknown"
+   ],
+   "removed_provider_still_listed_for_model": [
+    [
+     "Amazon Bedrock/amazon-bedrock/eu-west-1/unknown",
+     true
+    ],
+    [
+     "Amazon Bedrock/amazon-bedrock/us-east-1/unknown",
+     true
+    ],
+    [
+     "Azure/azure/us/unknown",
+     true
+    ],
+    [
+     "Google/google-vertex/europe/unknown",
+     true
+    ],
+    [
+     "Google/google-vertex/us/unknown",
+     true
+    ]
+   ],
+   "responses": {
+    "2026-11-19T05-17-05-687Z-1886818": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:29:58.462Z",
+      "sha256": "b45d428185094cac8a78e4e005f9c4c11918af7721528c38aef67ab3dcbae759"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:31:00.882Z",
+      "sha256": "b45d428185094cac8a78e4e005f9c4c11918af7721528c38aef67ab3dcbae759"
+     }
+    ],
+    "2026-11-19T05-51-31-753Z-1951021": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:04:10.829Z",
+      "sha256": "b45d428185094cac8a78e4e005f9c4c11918af7721528c38aef67ab3dcbae759"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:05:12.704Z",
+      "sha256": "b45d428185094cac8a78e4e005f9c4c11918af7721528c38aef67ab3dcbae759"
+     }
+    ]
+   }
+  },
+  {
+   "model_id": "anthropic/claude-sonnet-5:batch",
+   "prior_identities": [
+    "Anthropic/anthropic/unknown"
+   ],
+   "current_identities": [],
+   "removed": [
+    "Anthropic/anthropic/unknown"
+   ],
+   "removed_provider_still_listed_for_model": [
+    [
+     "Anthropic/anthropic/unknown",
+     false
+    ]
+   ],
+   "responses": {
+    "2026-11-19T05-17-05-687Z-1886818": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:29:59.045Z",
+      "sha256": "2178656b632dffa1e9b2e1eea3ffea425f84fd600909a2658672f1b6f27cb180"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:31:00.977Z",
+      "sha256": "2178656b632dffa1e9b2e1eea3ffea425f84fd600909a2658672f1b6f27cb180"
+     }
+    ],
+    "2026-11-19T05-51-31-753Z-1951021": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:04:11.376Z",
+      "sha256": "2178656b632dffa1e9b2e1eea3ffea425f84fd600909a2658672f1b6f27cb180"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:05:12.820Z",
+      "sha256": "2178656b632dffa1e9b2e1eea3ffea425f84fd600909a2658672f1b6f27cb180"
+     }
+    ]
+   }
+  },
+  {
+   "model_id": "deepseek/deepseek-v4.1-flash-1017",
+   "prior_identities": [
+    "Alibaba/alibaba/unknown",
+    "Ambient/ambient/fp4/fp4",
+    "AtlasCloud/atlas-cloud/fp8/fp8",
+    "Baidu/baidu/fp8/fp8",
+    "BaseTen/baseten/fast/unknown",
+    "BaseTen/baseten/unknown",
+    "Cloudflare/cloudflare/unknown",
+    "Cohere/cohere/fp8/fp8",
+    "CoreWeave/coreweave/fp8/fp8",
+    "Crusoe/crusoe/fp8/fp8",
+    "DeepInfra/deepinfra/fp8/flex/fp8",
+    "DeepInfra/deepinfra/fp8/fp8",
+    "DeepInfra/deepinfra/fp8/priority/fp8",
+    "DeepSeek/deepseek/unknown",
+    "DekaLLM/dekallm/unknown",
+    "DigitalOcean/digitalocean/unknown",
+    "Fireworks/fireworks/spot/unknown",
+    "Fireworks/fireworks/unknown",
+    "Fireworks/fireworks/us/unknown",
+    "GMICloud/gmicloud/fp8/fp8",
+    "InferenceNet/inference-net/fp8/fp8",
+    "InferenceNet/inference-net/us/fp8",
+    "Ionstream/ionstream/flex/unknown",
+    "Ionstream/ionstream/unknown",
+    "Makora/makora/fp8/fp8",
+    "Mistral/mistral/fp8/fp8",
+    "Modal/modal/unknown",
+    "ModelRun/modelrun/fp4/fp4",
+    "Morph/morph/fast/fp8",
+    "Morph/morph/fp8/fp8",
+    "Near AI/near-ai/unknown",
+    "Nebius/nebius/fp8/fp8",
+    "Novita/novita/fp8/fp8",
+    "OpenInference/open-inference/fp4/fp4",
+    "Parasail/parasail/fp8/fp8",
+    "Particle AI/particle-ai/us/flex/unknown",
+    "Particle AI/particle-ai/us/unknown",
+    "PrimaLabs/primalabs/unknown",
+    "PrimeIntellect/primeintellect/unknown",
+    "Relace/relace/fp4/fp4",
+    "River/river/unknown",
+    "Sail Research/sail-research/fp4/fp4",
+    "Sail Research/sail-research/fp4/us/fp4",
+    "SiliconFlow/siliconflow/fp8/fp8",
+    "StepFun/stepfun/fp8/fp8",
+    "StreamLake/streamlake/fp8/fp8",
+    "Together/together/unknown",
+    "Venice/venice/fp8/fp8",
+    "Wafer/wafer/mxfp4/mxfp4",
+    "Wafer/wafer/us/mxfp4"
+   ],
+   "current_identities": [
+    "Alibaba/alibaba/unknown",
+    "Ambient/ambient/fp4/fp4",
+    "Ant Digital/antdigital/fp8/fp8",
+    "AtlasCloud/atlas-cloud/fp8/fp8",
+    "Baidu/baidu/fp8/fp8",
+    "BaseTen/baseten/fast/unknown",
+    "BaseTen/baseten/unknown",
+    "Cloudflare/cloudflare/unknown",
+    "Cohere/cohere/fp8/fp8",
+    "CoreWeave/coreweave/fp8/fp8",
+    "Crusoe/crusoe/fp8/fp8",
+    "DeepInfra/deepinfra/fp8/flex/fp8",
+    "DeepInfra/deepinfra/fp8/fp8",
+    "DeepInfra/deepinfra/fp8/priority/fp8",
+    "DeepSeek/deepseek/unknown",
+    "DekaLLM/dekallm/unknown",
+    "DigitalOcean/digitalocean/unknown",
+    "Fireworks/fireworks/spot/unknown",
+    "Fireworks/fireworks/unknown",
+    "Fireworks/fireworks/us/unknown",
+    "GMICloud/gmicloud/fp8/fp8",
+    "Inceptron/inceptron/fp4/fp4",
+    "InferenceNet/inference-net/fp8/fp8",
+    "InferenceNet/inference-net/us/fp8",
+    "Ionstream/ionstream/unknown",
+    "Makora/makora/fp8/fp8",
+    "Mistral/mistral/fp8/fp8",
+    "Modal/modal/unknown",
+    "ModelRun/modelrun/fp4/fp4",
+    "Morph/morph/fast/fp8",
+    "Morph/morph/fp8/fp8",
+    "Near AI/near-ai/unknown",
+    "Nebius/nebius/fp4/fp4",
+    "Novita/novita/fp8/fp8",
+    "OpenInference/open-inference/fp4/fp4",
+    "Parasail/parasail/fp8/fp8",
+    "Particle AI/particle-ai/us/flex/unknown",
+    "Particle AI/particle-ai/us/unknown",
+    "Pearl Research/pearl-research/fp8/fp8",
+    "PrimaLabs/primalabs/unknown",
+    "PrimeIntellect/primeintellect/unknown",
+    "Relace/relace/fp4/fp4",
+    "River/river/unknown",
+    "SiliconFlow/siliconflow/fp8/fp8",
+    "StepFun/stepfun/fp8/fp8",
+    "StreamLake/streamlake/fp8/fp8",
+    "Together/together/unknown",
+    "Venice/venice/fp8/fp8",
+    "Wafer/wafer/mxfp4/mxfp4",
+    "Wafer/wafer/us/mxfp4"
+   ],
+   "removed": [
+    "Ionstream/ionstream/flex/unknown",
+    "Nebius/nebius/fp8/fp8",
+    "Sail Research/sail-research/fp4/fp4",
+    "Sail Research/sail-research/fp4/us/fp4"
+   ],
+   "removed_provider_still_listed_for_model": [
+    [
+     "Ionstream/ionstream/flex/unknown",
+     true
+    ],
+    [
+     "Nebius/nebius/fp8/fp8",
+     true
+    ],
+    [
+     "Sail Research/sail-research/fp4/fp4",
+     false
+    ],
+    [
+     "Sail Research/sail-research/fp4/us/fp4",
+     false
+    ]
+   ],
+   "responses": {
+    "2026-11-19T05-17-05-687Z-1886818": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:29:58.352Z",
+      "sha256": "9909f15ec01d1d1c7369976166061e7e5e07be9dfa0267e0d4fe4efcab1f7694"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:31:00.869Z",
+      "sha256": "9909f15ec01d1d1c7369976166061e7e5e07be9dfa0267e0d4fe4efcab1f7694"
+     }
+    ],
+    "2026-11-19T05-51-31-753Z-1951021": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:04:10.724Z",
+      "sha256": "0aac3bc4b8fcb84b3df03b844c9bc68c0377758a5c9c331e7685bd0eea913423"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:05:12.686Z",
+      "sha256": "302d398f3f10218241abfecc78ffd20b853f4ce20588d206c93574e3b8df1390"
+     }
+    ]
+   }
+  },
+  {
+   "model_id": "google/gemini-3.1-flash-image",
+   "prior_identities": [
+    "Google AI Studio/google-ai-studio/unknown",
+    "Google/google-vertex/global/unknown",
+    "Google/google-vertex/us/unknown"
+   ],
+   "current_identities": [
+    "Google AI Studio/google-ai-studio/unknown",
+    "Google/google-vertex/global/unknown"
+   ],
+   "removed": [
+    "Google/google-vertex/us/unknown"
+   ],
+   "removed_provider_still_listed_for_model": [
+    [
+     "Google/google-vertex/us/unknown",
+     true
+    ]
+   ],
+   "responses": {
+    "2026-11-19T05-17-05-687Z-1886818": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:29:59.070Z",
+      "sha256": "bcbba8b87d02e072e033be88ad69ee0e478863459db088a282844c9d931138c8"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:31:00.966Z",
+      "sha256": "bcbba8b87d02e072e033be88ad69ee0e478863459db088a282844c9d931138c8"
+     }
+    ],
+    "2026-11-19T05-51-31-753Z-1951021": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:04:11.398Z",
+      "sha256": "bcbba8b87d02e072e033be88ad69ee0e478863459db088a282844c9d931138c8"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:05:12.820Z",
+      "sha256": "bcbba8b87d02e072e033be88ad69ee0e478863459db088a282844c9d931138c8"
+     }
+    ]
+   }
+  },
+  {
+   "model_id": "google/gemini-3.1-flash-lite",
+   "prior_identities": [
+    "Google AI Studio/google-ai-studio/flex/unknown",
+    "Google AI Studio/google-ai-studio/priority/unknown",
+    "Google AI Studio/google-ai-studio/unknown",
+    "Google/google-vertex/eu/unknown",
+    "Google/google-vertex/global/flex/unknown",
+    "Google/google-vertex/global/priority/unknown",
+    "Google/google-vertex/global/unknown",
+    "Google/google-vertex/us/unknown"
+   ],
+   "current_identities": [
+    "Google AI Studio/google-ai-studio/flex/unknown",
+    "Google AI Studio/google-ai-studio/priority/unknown",
+    "Google AI Studio/google-ai-studio/unknown",
+    "Google/google-vertex/global/flex/unknown",
+    "Google/google-vertex/global/priority/unknown",
+    "Google/google-vertex/global/unknown"
+   ],
+   "removed": [
+    "Google/google-vertex/eu/unknown",
+    "Google/google-vertex/us/unknown"
+   ],
+   "removed_provider_still_listed_for_model": [
+    [
+     "Google/google-vertex/eu/unknown",
+     true
+    ],
+    [
+     "Google/google-vertex/us/unknown",
+     true
+    ]
+   ],
+   "responses": {
+    "2026-11-19T05-17-05-687Z-1886818": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:29:59.194Z",
+      "sha256": "323ad3abcd2ea56a613f6e6ebd18309569bf1fc9fa7fb08a5c47125c7e320bf6"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:31:00.992Z",
+      "sha256": "323ad3abcd2ea56a613f6e6ebd18309569bf1fc9fa7fb08a5c47125c7e320bf6"
+     }
+    ],
+    "2026-11-19T05-51-31-753Z-1951021": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:04:11.483Z",
+      "sha256": "f0c2c35ab3f6422b55dd10ba7d4ea047e6b01071f66bf7d9be7addd4a8130ad5"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:05:12.850Z",
+      "sha256": "f0c2c35ab3f6422b55dd10ba7d4ea047e6b01071f66bf7d9be7addd4a8130ad5"
+     }
+    ]
+   }
+  },
+  {
+   "model_id": "google/gemini-3.5-flash",
+   "prior_identities": [
+    "Google AI Studio/google-ai-studio/flex/unknown",
+    "Google AI Studio/google-ai-studio/priority/unknown",
+    "Google AI Studio/google-ai-studio/unknown",
+    "Google/google-vertex/global/flex/unknown",
+    "Google/google-vertex/global/priority/unknown",
+    "Google/google-vertex/global/unknown",
+    "Google/google-vertex/us/unknown"
+   ],
+   "current_identities": [
+    "Google AI Studio/google-ai-studio/flex/unknown",
+    "Google AI Studio/google-ai-studio/priority/unknown",
+    "Google AI Studio/google-ai-studio/unknown",
+    "Google/google-vertex/global/flex/unknown",
+    "Google/google-vertex/global/priority/unknown",
+    "Google/google-vertex/global/unknown"
+   ],
+   "removed": [
+    "Google/google-vertex/us/unknown"
+   ],
+   "removed_provider_still_listed_for_model": [
+    [
+     "Google/google-vertex/us/unknown",
+     true
+    ]
+   ],
+   "responses": {
+    "2026-11-19T05-17-05-687Z-1886818": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:29:59.213Z",
+      "sha256": "c8355c233149dd1ebe36e015a8c023330388804a3f72adf430d31096f46df210"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:31:01.000Z",
+      "sha256": "c8355c233149dd1ebe36e015a8c023330388804a3f72adf430d31096f46df210"
+     }
+    ],
+    "2026-11-19T05-51-31-753Z-1951021": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:04:11.484Z",
+      "sha256": "2de0559bac05c4efcf7a912adc3088591813e5dcc192ee5dbbd97389121452eb"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:05:12.833Z",
+      "sha256": "2de0559bac05c4efcf7a912adc3088591813e5dcc192ee5dbbd97389121452eb"
+     }
+    ]
+   }
+  },
+  {
+   "model_id": "google/gemini-3.5-flash-lite",
+   "prior_identities": [
+    "Google AI Studio/google-ai-studio/flex/unknown",
+    "Google AI Studio/google-ai-studio/priority/unknown",
+    "Google AI Studio/google-ai-studio/unknown",
+    "Google/google-vertex/eu/unknown",
+    "Google/google-vertex/global/flex/unknown",
+    "Google/google-vertex/global/priority/unknown",
+    "Google/google-vertex/global/unknown",
+    "Google/google-vertex/us/unknown"
+   ],
+   "current_identities": [
+    "Google AI Studio/google-ai-studio/flex/unknown",
+    "Google AI Studio/google-ai-studio/priority/unknown",
+    "Google AI Studio/google-ai-studio/unknown",
+    "Google/google-vertex/global/flex/unknown",
+    "Google/google-vertex/global/priority/unknown",
+    "Google/google-vertex/global/unknown"
+   ],
+   "removed": [
+    "Google/google-vertex/eu/unknown",
+    "Google/google-vertex/us/unknown"
+   ],
+   "removed_provider_still_listed_for_model": [
+    [
+     "Google/google-vertex/eu/unknown",
+     true
+    ],
+    [
+     "Google/google-vertex/us/unknown",
+     true
+    ]
+   ],
+   "responses": {
+    "2026-11-19T05-17-05-687Z-1886818": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:29:58.910Z",
+      "sha256": "ee07f2e996c6ae760502818a5d7b7bbdbfe73e4b61c2920a40e0c6f1e618d635"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:31:00.942Z",
+      "sha256": "ee07f2e996c6ae760502818a5d7b7bbdbfe73e4b61c2920a40e0c6f1e618d635"
+     }
+    ],
+    "2026-11-19T05-51-31-753Z-1951021": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:04:11.269Z",
+      "sha256": "e204cb61cfac57f3b8badf60d64baa99553713962a364df51260b940bfbace86"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:05:12.793Z",
+      "sha256": "e204cb61cfac57f3b8badf60d64baa99553713962a364df51260b940bfbace86"
+     }
+    ]
+   }
+  },
+  {
+   "model_id": "google/gemini-3.6-flash",
+   "prior_identities": [
+    "Google AI Studio/google-ai-studio/flex/unknown",
+    "Google AI Studio/google-ai-studio/priority/unknown",
+    "Google AI Studio/google-ai-studio/unknown",
+    "Google/google-vertex/global/flex/unknown",
+    "Google/google-vertex/global/priority/unknown",
+    "Google/google-vertex/global/unknown",
+    "Google/google-vertex/us/unknown"
+   ],
+   "current_identities": [
+    "Google AI Studio/google-ai-studio/flex/unknown",
+    "Google AI Studio/google-ai-studio/priority/unknown",
+    "Google AI Studio/google-ai-studio/unknown",
+    "Google/google-vertex/global/flex/unknown",
+    "Google/google-vertex/global/priority/unknown",
+    "Google/google-vertex/global/unknown"
+   ],
+   "removed": [
+    "Google/google-vertex/us/unknown"
+   ],
+   "removed_provider_still_listed_for_model": [
+    [
+     "Google/google-vertex/us/unknown",
+     true
+    ]
+   ],
+   "responses": {
+    "2026-11-19T05-17-05-687Z-1886818": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:29:58.895Z",
+      "sha256": "831881df83604ccf4ac02cf4dfbae1f71a1f8326d4afd4eb06ce3fefb80dfcec"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:31:00.930Z",
+      "sha256": "831881df83604ccf4ac02cf4dfbae1f71a1f8326d4afd4eb06ce3fefb80dfcec"
+     }
+    ],
+    "2026-11-19T05-51-31-753Z-1951021": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:04:11.243Z",
+      "sha256": "230db6188bc04209db8703f6581d879c38265289756001bfd062a0209550c037"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:05:12.780Z",
+      "sha256": "1d3c19aadb16fec3e1381e601d9e6016d0bb68a0703eab059f492083bab42386"
+     }
+    ]
+   }
+  },
+  {
+   "model_id": "google/gemini-3.7-flash",
+   "prior_identities": [
+    "Google AI Studio/google-ai-studio/flex/unknown",
+    "Google AI Studio/google-ai-studio/priority/unknown",
+    "Google AI Studio/google-ai-studio/unknown",
+    "Google/google-vertex/global/flex/unknown",
+    "Google/google-vertex/global/priority/unknown",
+    "Google/google-vertex/global/unknown",
+    "Google/google-vertex/us/unknown"
+   ],
+   "current_identities": [
+    "Google AI Studio/google-ai-studio/flex/unknown",
+    "Google AI Studio/google-ai-studio/priority/unknown",
+    "Google AI Studio/google-ai-studio/unknown",
+    "Google/google-vertex/global/flex/unknown",
+    "Google/google-vertex/global/priority/unknown",
+    "Google/google-vertex/global/unknown"
+   ],
+   "removed": [
+    "Google/google-vertex/us/unknown"
+   ],
+   "removed_provider_still_listed_for_model": [
+    [
+     "Google/google-vertex/us/unknown",
+     true
+    ]
+   ],
+   "responses": {
+    "2026-11-19T05-17-05-687Z-1886818": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:29:58.771Z",
+      "sha256": "e9e83b50b373d4a9d7dd5032f426ea37dc83a0ffc906ce93dc4ed7dc494af6c4"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:31:00.933Z",
+      "sha256": "e9e83b50b373d4a9d7dd5032f426ea37dc83a0ffc906ce93dc4ed7dc494af6c4"
+     }
+    ],
+    "2026-11-19T05-51-31-753Z-1951021": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:04:11.167Z",
+      "sha256": "71d41bff11ce8910f3222c2ff0f8d4761c3aee1d99423cd483d8bbe9d5666c82"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:05:12.765Z",
+      "sha256": "079993337b288e5f0b6ddfcb5c75e6b7f7ba0a7d86fb827319c20b2b22606954"
+     }
+    ]
+   }
+  },
+  {
+   "model_id": "google/gemini-3.8-flash",
+   "prior_identities": [
+    "Google AI Studio/google-ai-studio/flex/unknown",
+    "Google AI Studio/google-ai-studio/priority/unknown",
+    "Google AI Studio/google-ai-studio/unknown",
+    "Google/google-vertex/global/flex/unknown",
+    "Google/google-vertex/global/priority/unknown",
+    "Google/google-vertex/global/unknown",
+    "Google/google-vertex/us/unknown"
+   ],
+   "current_identities": [
+    "Google AI Studio/google-ai-studio/flex/unknown",
+    "Google AI Studio/google-ai-studio/priority/unknown",
+    "Google AI Studio/google-ai-studio/unknown",
+    "Google/google-vertex/global/flex/unknown",
+    "Google/google-vertex/global/priority/unknown",
+    "Google/google-vertex/global/unknown"
+   ],
+   "removed": [
+    "Google/google-vertex/us/unknown"
+   ],
+   "removed_provider_still_listed_for_model": [
+    [
+     "Google/google-vertex/us/unknown",
+     true
+    ]
+   ],
+   "responses": {
+    "2026-11-19T05-17-05-687Z-1886818": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:29:58.673Z",
+      "sha256": "90732c6b6e5100c43aa6d7c29c96c6746617df2a14c81d97b7fef301c84c49db"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:31:00.904Z",
+      "sha256": "90732c6b6e5100c43aa6d7c29c96c6746617df2a14c81d97b7fef301c84c49db"
+     }
+    ],
+    "2026-11-19T05-51-31-753Z-1951021": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:04:11.041Z",
+      "sha256": "b4e856dd2aa3e935c0592687f6f76443068ac51d8f3a9c20f2ea360aa3bdf337"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:05:12.740Z",
+      "sha256": "b4e856dd2aa3e935c0592687f6f76443068ac51d8f3a9c20f2ea360aa3bdf337"
+     }
+    ]
+   }
+  },
+  {
+   "model_id": "google/gemini-4-argon",
+   "prior_identities": [
+    "Google AI Studio/google-ai-studio/flex/unknown",
+    "Google AI Studio/google-ai-studio/priority/unknown",
+    "Google AI Studio/google-ai-studio/unknown",
+    "Google/google-vertex/global/priority/unknown",
+    "Google/google-vertex/global/unknown",
+    "Google/google-vertex/us/unknown"
+   ],
+   "current_identities": [
+    "Google AI Studio/google-ai-studio/flex/unknown",
+    "Google AI Studio/google-ai-studio/priority/unknown",
+    "Google AI Studio/google-ai-studio/unknown",
+    "Google/google-vertex/global/priority/unknown",
+    "Google/google-vertex/global/unknown"
+   ],
+   "removed": [
+    "Google/google-vertex/us/unknown"
+   ],
+   "removed_provider_still_listed_for_model": [
+    [
+     "Google/google-vertex/us/unknown",
+     true
+    ]
+   ],
+   "responses": {
+    "2026-11-19T05-17-05-687Z-1886818": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:29:58.392Z",
+      "sha256": "6faf7cd7fa74d509c9873c49571b78653033d410d38e4f3abc36068d4339af50"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:31:00.852Z",
+      "sha256": "6faf7cd7fa74d509c9873c49571b78653033d410d38e4f3abc36068d4339af50"
+     }
+    ],
+    "2026-11-19T05-51-31-753Z-1951021": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:04:10.757Z",
+      "sha256": "301ea9bfe138762fbe87c9eacb5891d4460416889c1a09b049656a70da5e7961"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:05:12.690Z",
+      "sha256": "301ea9bfe138762fbe87c9eacb5891d4460416889c1a09b049656a70da5e7961"
+     }
+    ]
+   }
+  },
+  {
+   "model_id": "google/gemini-4-carbon",
+   "prior_identities": [
+    "Google AI Studio/google-ai-studio/flex/unknown",
+    "Google AI Studio/google-ai-studio/priority/unknown",
+    "Google AI Studio/google-ai-studio/unknown",
+    "Google/google-vertex/eu/unknown",
+    "Google/google-vertex/global/priority/unknown",
+    "Google/google-vertex/global/unknown",
+    "Google/google-vertex/us/unknown"
+   ],
+   "current_identities": [
+    "Google AI Studio/google-ai-studio/flex/unknown",
+    "Google AI Studio/google-ai-studio/priority/unknown",
+    "Google AI Studio/google-ai-studio/unknown",
+    "Google/google-vertex/global/priority/unknown",
+    "Google/google-vertex/global/unknown"
+   ],
+   "removed": [
+    "Google/google-vertex/eu/unknown",
+    "Google/google-vertex/us/unknown"
+   ],
+   "removed_provider_still_listed_for_model": [
+    [
+     "Google/google-vertex/eu/unknown",
+     true
+    ],
+    [
+     "Google/google-vertex/us/unknown",
+     true
+    ]
+   ],
+   "responses": {
+    "2026-11-19T05-17-05-687Z-1886818": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:29:58.220Z",
+      "sha256": "e6e3b9c86dc9c6d65e134f0e835e9dbabb6848acc00c9d104b90cbdb6c8970b3"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:31:00.827Z",
+      "sha256": "e6e3b9c86dc9c6d65e134f0e835e9dbabb6848acc00c9d104b90cbdb6c8970b3"
+     }
+    ],
+    "2026-11-19T05-51-31-753Z-1951021": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:04:10.602Z",
+      "sha256": "50e4c62dba76afcd7edb36f4993eb6107885b7f21c093b97b55af70b653fcf62"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:05:12.674Z",
+      "sha256": "498a8c4c8849df108a977bd13e108ecc13e6bbaa09caac720f664e997a0dd277"
+     }
+    ]
+   }
+  },
+  {
+   "model_id": "google/gemini-4-hydrogen",
+   "prior_identities": [
+    "Google AI Studio/google-ai-studio/flex/unknown",
+    "Google AI Studio/google-ai-studio/priority/unknown",
+    "Google AI Studio/google-ai-studio/unknown",
+    "Google/google-vertex/eu/unknown",
+    "Google/google-vertex/global/priority/unknown",
+    "Google/google-vertex/global/unknown",
+    "Google/google-vertex/us/unknown"
+   ],
+   "current_identities": [
+    "Google AI Studio/google-ai-studio/flex/unknown",
+    "Google AI Studio/google-ai-studio/priority/unknown",
+    "Google AI Studio/google-ai-studio/unknown",
+    "Google/google-vertex/global/priority/unknown",
+    "Google/google-vertex/global/unknown"
+   ],
+   "removed": [
+    "Google/google-vertex/eu/unknown",
+    "Google/google-vertex/us/unknown"
+   ],
+   "removed_provider_still_listed_for_model": [
+    [
+     "Google/google-vertex/eu/unknown",
+     true
+    ],
+    [
+     "Google/google-vertex/us/unknown",
+     true
+    ]
+   ],
+   "responses": {
+    "2026-11-19T05-17-05-687Z-1886818": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:29:58.190Z",
+      "sha256": "5ff3c79a21c8234d2e3341ef426a7d0d240b5f0174d6898fc0246db34f28bf2e"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:31:00.827Z",
+      "sha256": "5ff3c79a21c8234d2e3341ef426a7d0d240b5f0174d6898fc0246db34f28bf2e"
+     }
+    ],
+    "2026-11-19T05-51-31-753Z-1951021": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:04:10.585Z",
+      "sha256": "5230d967dc214f4d305ffbd6471442628a8c535e09c0100db1a8f789b6f94c24"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:05:12.684Z",
+      "sha256": "0fda54bd1f43607df69b99a4e85cdf747944953b5d27ad1460d3f4f1256e78e4"
+     }
+    ]
+   }
+  },
+  {
+   "model_id": "meta-llama/llama-3.3-70b-instruct",
+   "prior_identities": [
+    "AkashML/akashml/fp8/fp8",
+    "Cloudflare/cloudflare/fp8/fp8",
+    "CoreWeave/coreweave/fp16/fp16",
+    "DeepInfra/deepinfra/turbo/fp8",
+    "Google/google-vertex/unknown",
+    "Google/google-vertex/us-central1/unknown",
+    "Groq/groq/unknown",
+    "Parasail/parasail/fp8/fp8",
+    "SambaNova/sambanova-turbo/unknown"
+   ],
+   "current_identities": [
+    "AkashML/akashml/fp8/fp8",
+    "Cloudflare/cloudflare/fp8/fp8",
+    "CoreWeave/coreweave/fp16/fp16",
+    "DeepInfra/deepinfra/turbo/fp8",
+    "Groq/groq/unknown",
+    "Parasail/parasail/fp8/fp8"
+   ],
+   "removed": [
+    "Google/google-vertex/unknown",
+    "Google/google-vertex/us-central1/unknown",
+    "SambaNova/sambanova-turbo/unknown"
+   ],
+   "removed_provider_still_listed_for_model": [
+    [
+     "Google/google-vertex/unknown",
+     false
+    ],
+    [
+     "Google/google-vertex/us-central1/unknown",
+     false
+    ],
+    [
+     "SambaNova/sambanova-turbo/unknown",
+     false
+    ]
+   ],
+   "responses": {
+    "2026-11-19T05-17-05-687Z-1886818": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:30:00.252Z",
+      "sha256": "7566b3cc2895dffdc56c08ed8c8312a99d178706b2517dacab8acf78951670e8"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:31:01.213Z",
+      "sha256": "7566b3cc2895dffdc56c08ed8c8312a99d178706b2517dacab8acf78951670e8"
+     }
+    ],
+    "2026-11-19T05-51-31-753Z-1951021": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:04:12.411Z",
+      "sha256": "010db2c3decccd21127114ec5f64fa34c9b30091ffe52ffb3fa6a4cc33cee777"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:05:13.176Z",
+      "sha256": "ea69366c055f041bfcbeeb97832b5fe4e2539cfa1667b470f5671249722f98ed"
+     }
+    ]
+   }
+  },
+  {
+   "model_id": "meta-llama/llama-4-maverick",
+   "prior_identities": [
+    "Google/google-vertex/us-east5/unknown",
+    "Parasail/parasail/fp8/fp8"
+   ],
+   "current_identities": [
+    "Parasail/parasail/fp8/fp8"
+   ],
+   "removed": [
+    "Google/google-vertex/us-east5/unknown"
+   ],
+   "removed_provider_still_listed_for_model": [
+    [
+     "Google/google-vertex/us-east5/unknown",
+     false
+    ]
+   ],
+   "responses": {
+    "2026-11-19T05-17-05-687Z-1886818": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:30:00.152Z",
+      "sha256": "c8315f4d77da16c7b9560bc4fe677db179cb5eb04a6af5451c8bc67c5e27cb5d"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:31:01.191Z",
+      "sha256": "c8315f4d77da16c7b9560bc4fe677db179cb5eb04a6af5451c8bc67c5e27cb5d"
+     }
+    ],
+    "2026-11-19T05-51-31-753Z-1951021": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:04:12.253Z",
+      "sha256": "c8315f4d77da16c7b9560bc4fe677db179cb5eb04a6af5451c8bc67c5e27cb5d"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:05:13.155Z",
+      "sha256": "c8315f4d77da16c7b9560bc4fe677db179cb5eb04a6af5451c8bc67c5e27cb5d"
+     }
+    ]
+   }
+  },
+  {
+   "model_id": "meta-llama/llama-4-scout",
+   "prior_identities": [
+    "DeepInfra/deepinfra/fp8/flex/fp8",
+    "DeepInfra/deepinfra/fp8/fp8",
+    "DeepInfra/deepinfra/fp8/priority/fp8",
+    "Google/google-vertex/us-east5/unknown"
+   ],
+   "current_identities": [
+    "DeepInfra/deepinfra/fp8/flex/fp8",
+    "DeepInfra/deepinfra/fp8/fp8",
+    "DeepInfra/deepinfra/fp8/priority/fp8"
+   ],
+   "removed": [
+    "Google/google-vertex/us-east5/unknown"
+   ],
+   "removed_provider_still_listed_for_model": [
+    [
+     "Google/google-vertex/us-east5/unknown",
+     false
+    ]
+   ],
+   "responses": {
+    "2026-11-19T05-17-05-687Z-1886818": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:30:00.164Z",
+      "sha256": "406c945eb6d28555f7999d9dd52a75381eda8867264de86d99c2c4191b9a0b82"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:31:01.223Z",
+      "sha256": "406c945eb6d28555f7999d9dd52a75381eda8867264de86d99c2c4191b9a0b82"
+     }
+    ],
+    "2026-11-19T05-51-31-753Z-1951021": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:04:12.253Z",
+      "sha256": "79b3b968980c3731910ef107999f43aafdf74f6f18b3064924c87bb9bed124ec"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:05:13.160Z",
+      "sha256": "0f7ab14102f98826072d237fee639157db34d1e168dd9c7c978bd5c30d474a1e"
+     }
+    ]
+   }
+  },
+  {
+   "model_id": "mistralai/codestral-2508",
+   "prior_identities": [
+    "Mistral/mistral/eu/unknown",
+    "Mistral/mistral/unknown"
+   ],
+   "current_identities": [
+    "Mistral/mistral/unknown"
+   ],
+   "removed": [
+    "Mistral/mistral/eu/unknown"
+   ],
+   "removed_provider_still_listed_for_model": [
+    [
+     "Mistral/mistral/eu/unknown",
+     true
+    ]
+   ],
+   "responses": {
+    "2026-11-19T05-17-05-687Z-1886818": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:29:59.992Z",
+      "sha256": "3b090899e51c4493db56ffd407a75775402250cdcd232e4cb86bc2d4e18001f0"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:31:01.158Z",
+      "sha256": "3b090899e51c4493db56ffd407a75775402250cdcd232e4cb86bc2d4e18001f0"
+     }
+    ],
+    "2026-11-19T05-51-31-753Z-1951021": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:04:12.129Z",
+      "sha256": "3b090899e51c4493db56ffd407a75775402250cdcd232e4cb86bc2d4e18001f0"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:05:13.204Z",
+      "sha256": "8d4bc89bc09b0551a0b12c5377b2615312ca4ce29bf15790a4a267f689b659da"
+     }
+    ]
+   }
+  },
+  {
+   "model_id": "mistralai/mistral-large",
+   "prior_identities": [
+    "Mistral/mistral/eu/unknown",
+    "Mistral/mistral/unknown"
+   ],
+   "current_identities": [
+    "Mistral/mistral/unknown"
+   ],
+   "removed": [
+    "Mistral/mistral/eu/unknown"
+   ],
+   "removed_provider_still_listed_for_model": [
+    [
+     "Mistral/mistral/eu/unknown",
+     true
+    ]
+   ],
+   "responses": {
+    "2026-11-19T05-17-05-687Z-1886818": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:30:00.387Z",
+      "sha256": "2f2d2aec6a4b55e3b8c91df7b655ac99f63a9dac43a7f513314888d1cea946fe"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:31:01.227Z",
+      "sha256": "2f2d2aec6a4b55e3b8c91df7b655ac99f63a9dac43a7f513314888d1cea946fe"
+     }
+    ],
+    "2026-11-19T05-51-31-753Z-1951021": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:04:12.492Z",
+      "sha256": "7d746d5cae0a55d67a172f058f9aee78ba621bdb8e8129e385f286c0d656605d"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:05:13.202Z",
+      "sha256": "914e37a4ce56c7207d0405a8d81b6e55c4437cba04fb16133609db2a8ea43757"
+     }
+    ]
+   }
+  },
+  {
+   "model_id": "mistralai/mistral-medium-3",
+   "prior_identities": [
+    "Mistral/mistral/eu/unknown",
+    "Mistral/mistral/zdr/unknown"
+   ],
+   "current_identities": [
+    "Mistral/mistral/eu/unknown"
+   ],
+   "removed": [
+    "Mistral/mistral/zdr/unknown"
+   ],
+   "removed_provider_still_listed_for_model": [
+    [
+     "Mistral/mistral/zdr/unknown",
+     true
+    ]
+   ],
+   "responses": {
+    "2026-11-19T05-17-05-687Z-1886818": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:30:00.065Z",
+      "sha256": "9edd72cda8894f5b47a76538bf3c0bad6c3e9d3ff3e797450b8347ec73cbd8e2"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:31:01.186Z",
+      "sha256": "9edd72cda8894f5b47a76538bf3c0bad6c3e9d3ff3e797450b8347ec73cbd8e2"
+     }
+    ],
+    "2026-11-19T05-51-31-753Z-1951021": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:04:12.199Z",
+      "sha256": "9edd72cda8894f5b47a76538bf3c0bad6c3e9d3ff3e797450b8347ec73cbd8e2"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:05:13.091Z",
+      "sha256": "9edd72cda8894f5b47a76538bf3c0bad6c3e9d3ff3e797450b8347ec73cbd8e2"
+     }
+    ]
+   }
+  },
+  {
+   "model_id": "mistralai/mistral-medium-3.1",
+   "prior_identities": [
+    "Mistral/mistral/eu/unknown",
+    "Mistral/mistral/zdr/unknown"
+   ],
+   "current_identities": [
+    "Mistral/mistral/eu/unknown"
+   ],
+   "removed": [
+    "Mistral/mistral/zdr/unknown"
+   ],
+   "removed_provider_still_listed_for_model": [
+    [
+     "Mistral/mistral/zdr/unknown",
+     true
+    ]
+   ],
+   "responses": {
+    "2026-11-19T05-17-05-687Z-1886818": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:29:59.904Z",
+      "sha256": "14ddc87380bf71d1ea5a7aac6f49d83f0c041a231c069124308c7d3fee2a9526"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:31:01.130Z",
+      "sha256": "14ddc87380bf71d1ea5a7aac6f49d83f0c041a231c069124308c7d3fee2a9526"
+     }
+    ],
+    "2026-11-19T05-51-31-753Z-1951021": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:04:12.085Z",
+      "sha256": "14ddc87380bf71d1ea5a7aac6f49d83f0c041a231c069124308c7d3fee2a9526"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:05:13.009Z",
+      "sha256": "14ddc87380bf71d1ea5a7aac6f49d83f0c041a231c069124308c7d3fee2a9526"
+     }
+    ]
+   }
+  },
+  {
+   "model_id": "mistralai/mistral-saba",
+   "prior_identities": [
+    "Mistral/mistral/eu/unknown",
+    "Mistral/mistral/zdr/unknown"
+   ],
+   "current_identities": [
+    "Mistral/mistral/zdr/unknown"
+   ],
+   "removed": [
+    "Mistral/mistral/eu/unknown"
+   ],
+   "removed_provider_still_listed_for_model": [
+    [
+     "Mistral/mistral/eu/unknown",
+     true
+    ]
+   ],
+   "responses": {
+    "2026-11-19T05-17-05-687Z-1886818": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:30:00.221Z",
+      "sha256": "5836d2b439640e40cd8924d0a147d88d813bfdb1f4b2794669106c1c545c2727"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:31:01.232Z",
+      "sha256": "5836d2b439640e40cd8924d0a147d88d813bfdb1f4b2794669106c1c545c2727"
+     }
+    ],
+    "2026-11-19T05-51-31-753Z-1951021": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:04:12.355Z",
+      "sha256": "69b4425ed935842046f67e98a62a5d260e26cba4e42843812a8c904efdcc846b"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:05:13.178Z",
+      "sha256": "69b4425ed935842046f67e98a62a5d260e26cba4e42843812a8c904efdcc846b"
+     }
+    ]
+   }
+  },
+  {
+   "model_id": "mistralai/mistral-small-3.2-24b-instruct",
+   "prior_identities": [
+    "DeepInfra/deepinfra/fp8/flex/fp8",
+    "DeepInfra/deepinfra/fp8/fp8",
+    "DeepInfra/deepinfra/fp8/priority/fp8",
+    "Mistral/mistral/eu/unknown",
+    "Parasail/parasail/bf16/bf16",
+    "Venice/venice/fp8/fp8"
+   ],
+   "current_identities": [
+    "DeepInfra/deepinfra/fp8/flex/fp8",
+    "DeepInfra/deepinfra/fp8/fp8",
+    "DeepInfra/deepinfra/fp8/priority/fp8",
+    "Parasail/parasail/bf16/bf16",
+    "Venice/venice/fp8/fp8"
+   ],
+   "removed": [
+    "Mistral/mistral/eu/unknown"
+   ],
+   "removed_provider_still_listed_for_model": [
+    [
+     "Mistral/mistral/eu/unknown",
+     false
+    ]
+   ],
+   "responses": {
+    "2026-11-19T05-17-05-687Z-1886818": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:30:00.146Z",
+      "sha256": "f31cb3950f2cc3065a15a267f1fa5cdcd3631cc930ce2558512471b73d1a80c2"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:31:01.163Z",
+      "sha256": "f31cb3950f2cc3065a15a267f1fa5cdcd3631cc930ce2558512471b73d1a80c2"
+     }
+    ],
+    "2026-11-19T05-51-31-753Z-1951021": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:04:12.203Z",
+      "sha256": "50ff5a6cef6e632d0d9c4f40b95a875fbb94bec77f1ac03724c3ea5575c13fc0"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:05:13.169Z",
+      "sha256": "6fe03dfd9fcd5fea75ce6a767c8170b30954e8ab021d9e04619ebbe21de61793"
+     }
+    ]
+   }
+  },
+  {
+   "model_id": "moonshotai/kimi-k2.5",
+   "prior_identities": [
+    "Amazon Bedrock/amazon-bedrock/us-east-2/unknown",
+    "AtlasCloud/atlas-cloud/int4/int4",
+    "Novita/novita/unknown",
+    "SiliconFlow/siliconflow/int4/int4",
+    "Venice/venice/unknown"
+   ],
+   "current_identities": [
+    "Amazon Bedrock/amazon-bedrock/us-east-2/unknown",
+    "AtlasCloud/atlas-cloud/int4/int4",
+    "Novita/novita/unknown",
+    "SiliconFlow/siliconflow/int4/int4"
+   ],
+   "removed": [
+    "Venice/venice/unknown"
+   ],
+   "removed_provider_still_listed_for_model": [
+    [
+     "Venice/venice/unknown",
+     false
+    ]
+   ],
+   "responses": {
+    "2026-11-19T05-17-05-687Z-1886818": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:29:59.665Z",
+      "sha256": "7743d0eb5476284a8359a1eee5c4d2e5562a1a52c0129af8035930373ecc3b7a"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:31:01.080Z",
+      "sha256": "7743d0eb5476284a8359a1eee5c4d2e5562a1a52c0129af8035930373ecc3b7a"
+     }
+    ],
+    "2026-11-19T05-51-31-753Z-1951021": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:04:11.830Z",
+      "sha256": "17982444eca4a5942bcc77e230aeb10adeb350d3c29c0b70508ad9c34037c276"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:05:12.916Z",
+      "sha256": "d5eb1d7170126a518c541a6c610c9a9db3d5d5155d9df42ebea72f410d739d65"
+     }
+    ]
+   }
+  },
+  {
+   "model_id": "openai/gpt-4-turbo:batch",
+   "prior_identities": [
+    "OpenAI/openai/unknown"
+   ],
+   "current_identities": [],
+   "removed": [
+    "OpenAI/openai/unknown"
+   ],
+   "removed_provider_still_listed_for_model": [
+    [
+     "OpenAI/openai/unknown",
+     false
+    ]
+   ],
+   "responses": {
+    "2026-11-19T05-17-05-687Z-1886818": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:30:00.392Z",
+      "sha256": "2d1cd449be2a7bcd31d5f502aa26d4595d3a4635c938ddf61b0cd8ea97836641"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:31:01.238Z",
+      "sha256": "2d1cd449be2a7bcd31d5f502aa26d4595d3a4635c938ddf61b0cd8ea97836641"
+     }
+    ],
+    "2026-11-19T05-51-31-753Z-1951021": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:04:12.506Z",
+      "sha256": "2d1cd449be2a7bcd31d5f502aa26d4595d3a4635c938ddf61b0cd8ea97836641"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:05:13.217Z",
+      "sha256": "2d1cd449be2a7bcd31d5f502aa26d4595d3a4635c938ddf61b0cd8ea97836641"
+     }
+    ]
+   }
+  },
+  {
+   "model_id": "openai/gpt-4.1",
+   "prior_identities": [
+    "Azure/azure/swedencentral/unknown",
+    "Azure/azure/unknown",
+    "OpenAI/openai/unknown"
+   ],
+   "current_identities": [
+    "Azure/azure/unknown",
+    "OpenAI/openai/unknown"
+   ],
+   "removed": [
+    "Azure/azure/swedencentral/unknown"
+   ],
+   "removed_provider_still_listed_for_model": [
+    [
+     "Azure/azure/swedencentral/unknown",
+     true
+    ]
+   ],
+   "responses": {
+    "2026-11-19T05-17-05-687Z-1886818": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:30:00.121Z",
+      "sha256": "920933e18904526ca353d07dc1cc25ebb1efe14b3c6cc4016e9d0e0b3f876ffa"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:31:01.166Z",
+      "sha256": "920933e18904526ca353d07dc1cc25ebb1efe14b3c6cc4016e9d0e0b3f876ffa"
+     }
+    ],
+    "2026-11-19T05-51-31-753Z-1951021": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:04:12.297Z",
+      "sha256": "920933e18904526ca353d07dc1cc25ebb1efe14b3c6cc4016e9d0e0b3f876ffa"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:05:13.115Z",
+      "sha256": "920933e18904526ca353d07dc1cc25ebb1efe14b3c6cc4016e9d0e0b3f876ffa"
+     }
+    ]
+   }
+  },
+  {
+   "model_id": "openai/gpt-4.1-mini",
+   "prior_identities": [
+    "Azure/azure/swedencentral/unknown",
+    "Azure/azure/unknown",
+    "OpenAI/openai/unknown"
+   ],
+   "current_identities": [
+    "Azure/azure/unknown",
+    "OpenAI/openai/unknown"
+   ],
+   "removed": [
+    "Azure/azure/swedencentral/unknown"
+   ],
+   "removed_provider_still_listed_for_model": [
+    [
+     "Azure/azure/swedencentral/unknown",
+     true
+    ]
+   ],
+   "responses": {
+    "2026-11-19T05-17-05-687Z-1886818": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:30:00.154Z",
+      "sha256": "248c278228d904e6a28c52473e3ef7648124ea5902b5e6f76fe9928e6263d935"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:31:01.175Z",
+      "sha256": "248c278228d904e6a28c52473e3ef7648124ea5902b5e6f76fe9928e6263d935"
+     }
+    ],
+    "2026-11-19T05-51-31-753Z-1951021": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:04:12.231Z",
+      "sha256": "248c278228d904e6a28c52473e3ef7648124ea5902b5e6f76fe9928e6263d935"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:05:13.122Z",
+      "sha256": "248c278228d904e6a28c52473e3ef7648124ea5902b5e6f76fe9928e6263d935"
+     }
+    ]
+   }
+  },
+  {
+   "model_id": "openai/gpt-4.1-mini:batch",
+   "prior_identities": [
+    "OpenAI/openai/unknown"
+   ],
+   "current_identities": [],
+   "removed": [
+    "OpenAI/openai/unknown"
+   ],
+   "removed_provider_still_listed_for_model": [
+    [
+     "OpenAI/openai/unknown",
+     false
+    ]
+   ],
+   "responses": {
+    "2026-11-19T05-17-05-687Z-1886818": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:30:00.154Z",
+      "sha256": "f6d7ff931c2daa0bd6b731d3fc23b69c27edb307963a124c77ac3e61ffb32aba"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:31:01.213Z",
+      "sha256": "f6d7ff931c2daa0bd6b731d3fc23b69c27edb307963a124c77ac3e61ffb32aba"
+     }
+    ],
+    "2026-11-19T05-51-31-753Z-1951021": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:04:12.259Z",
+      "sha256": "f6d7ff931c2daa0bd6b731d3fc23b69c27edb307963a124c77ac3e61ffb32aba"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:05:13.144Z",
+      "sha256": "f6d7ff931c2daa0bd6b731d3fc23b69c27edb307963a124c77ac3e61ffb32aba"
+     }
+    ]
+   }
+  },
+  {
+   "model_id": "openai/gpt-4.1-nano",
+   "prior_identities": [
+    "Azure/azure/swedencentral/unknown",
+    "Azure/azure/unknown"
+   ],
+   "current_identities": [
+    "Azure/azure/unknown"
+   ],
+   "removed": [
+    "Azure/azure/swedencentral/unknown"
+   ],
+   "removed_provider_still_listed_for_model": [
+    [
+     "Azure/azure/swedencentral/unknown",
+     true
+    ]
+   ],
+   "responses": {
+    "2026-11-19T05-17-05-687Z-1886818": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:30:00.130Z",
+      "sha256": "e7361314ed02c4057e919e7775930c4fb04d58d8061ad1038531cc35cc57be97"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:31:01.189Z",
+      "sha256": "e7361314ed02c4057e919e7775930c4fb04d58d8061ad1038531cc35cc57be97"
+     }
+    ],
+    "2026-11-19T05-51-31-753Z-1951021": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:04:12.321Z",
+      "sha256": "e7361314ed02c4057e919e7775930c4fb04d58d8061ad1038531cc35cc57be97"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:05:13.139Z",
+      "sha256": "e7361314ed02c4057e919e7775930c4fb04d58d8061ad1038531cc35cc57be97"
+     }
+    ]
+   }
+  },
+  {
+   "model_id": "openai/gpt-4.1-nano:batch",
+   "prior_identities": [
+    "OpenAI/openai/unknown"
+   ],
+   "current_identities": [],
+   "removed": [
+    "OpenAI/openai/unknown"
+   ],
+   "removed_provider_still_listed_for_model": [
+    [
+     "OpenAI/openai/unknown",
+     false
+    ]
+   ],
+   "responses": {
+    "2026-11-19T05-17-05-687Z-1886818": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:30:00.137Z",
+      "sha256": "5d45ea5ff5b9ede6e20dfd9c857f82b33782a7d0a4c0834061f794f1d8ee132c"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:31:01.187Z",
+      "sha256": "5d45ea5ff5b9ede6e20dfd9c857f82b33782a7d0a4c0834061f794f1d8ee132c"
+     }
+    ],
+    "2026-11-19T05-51-31-753Z-1951021": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:04:12.253Z",
+      "sha256": "5d45ea5ff5b9ede6e20dfd9c857f82b33782a7d0a4c0834061f794f1d8ee132c"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:05:13.149Z",
+      "sha256": "5d45ea5ff5b9ede6e20dfd9c857f82b33782a7d0a4c0834061f794f1d8ee132c"
+     }
+    ]
+   }
+  },
+  {
+   "model_id": "openai/gpt-4.1:batch",
+   "prior_identities": [
+    "OpenAI/openai/unknown"
+   ],
+   "current_identities": [],
+   "removed": [
+    "OpenAI/openai/unknown"
+   ],
+   "removed_provider_still_listed_for_model": [
+    [
+     "OpenAI/openai/unknown",
+     false
+    ]
+   ],
+   "responses": {
+    "2026-11-19T05-17-05-687Z-1886818": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:30:00.127Z",
+      "sha256": "343d7d629a04fba67c9cf52185a510e943bde943c3b3e69dd67b89db98037cee"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:31:01.176Z",
+      "sha256": "343d7d629a04fba67c9cf52185a510e943bde943c3b3e69dd67b89db98037cee"
+     }
+    ],
+    "2026-11-19T05-51-31-753Z-1951021": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:04:12.227Z",
+      "sha256": "343d7d629a04fba67c9cf52185a510e943bde943c3b3e69dd67b89db98037cee"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:05:13.122Z",
+      "sha256": "343d7d629a04fba67c9cf52185a510e943bde943c3b3e69dd67b89db98037cee"
+     }
+    ]
+   }
+  },
+  {
+   "model_id": "openai/gpt-4o-mini",
+   "prior_identities": [
+    "Azure/azure/swedencentral/unknown",
+    "Azure/azure/unknown",
+    "OpenAI/openai/unknown"
+   ],
+   "current_identities": [
+    "Azure/azure/unknown",
+    "OpenAI/openai/unknown"
+   ],
+   "removed": [
+    "Azure/azure/swedencentral/unknown"
+   ],
+   "removed_provider_still_listed_for_model": [
+    [
+     "Azure/azure/swedencentral/unknown",
+     true
+    ]
+   ],
+   "responses": {
+    "2026-11-19T05-17-05-687Z-1886818": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:30:00.345Z",
+      "sha256": "8e3bc3985245a595b22b99fe7d5dc031af291ac4a6464f95095c3ad2ec0dbb17"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:31:01.201Z",
+      "sha256": "8e3bc3985245a595b22b99fe7d5dc031af291ac4a6464f95095c3ad2ec0dbb17"
+     }
+    ],
+    "2026-11-19T05-51-31-753Z-1951021": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:04:12.436Z",
+      "sha256": "8e3bc3985245a595b22b99fe7d5dc031af291ac4a6464f95095c3ad2ec0dbb17"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:05:13.176Z",
+      "sha256": "8e3bc3985245a595b22b99fe7d5dc031af291ac4a6464f95095c3ad2ec0dbb17"
+     }
+    ]
+   }
+  },
+  {
+   "model_id": "openai/gpt-4o-mini:batch",
+   "prior_identities": [
+    "OpenAI/openai/unknown"
+   ],
+   "current_identities": [],
+   "removed": [
+    "OpenAI/openai/unknown"
+   ],
+   "removed_provider_still_listed_for_model": [
+    [
+     "OpenAI/openai/unknown",
+     false
+    ]
+   ],
+   "responses": {
+    "2026-11-19T05-17-05-687Z-1886818": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:30:00.355Z",
+      "sha256": "4de2b00c02016b9aa802e8a87ad0cd36ade8b0ba55fd6319e1286992e6a7ae8f"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:31:01.232Z",
+      "sha256": "4de2b00c02016b9aa802e8a87ad0cd36ade8b0ba55fd6319e1286992e6a7ae8f"
+     }
+    ],
+    "2026-11-19T05-51-31-753Z-1951021": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:04:12.459Z",
+      "sha256": "4de2b00c02016b9aa802e8a87ad0cd36ade8b0ba55fd6319e1286992e6a7ae8f"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:05:13.183Z",
+      "sha256": "4de2b00c02016b9aa802e8a87ad0cd36ade8b0ba55fd6319e1286992e6a7ae8f"
+     }
+    ]
+   }
+  },
+  {
+   "model_id": "openai/gpt-4o:batch",
+   "prior_identities": [
+    "OpenAI/openai/unknown"
+   ],
+   "current_identities": [],
+   "removed": [
+    "OpenAI/openai/unknown"
+   ],
+   "removed_provider_still_listed_for_model": [
+    [
+     "OpenAI/openai/unknown",
+     false
+    ]
+   ],
+   "responses": {
+    "2026-11-19T05-17-05-687Z-1886818": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:30:00.374Z",
+      "sha256": "6875568ac86cee3d662b0bd57332977ec257b52a71dbfbd348542120ebd15f64"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:31:01.223Z",
+      "sha256": "6875568ac86cee3d662b0bd57332977ec257b52a71dbfbd348542120ebd15f64"
+     }
+    ],
+    "2026-11-19T05-51-31-753Z-1951021": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:04:12.474Z",
+      "sha256": "6875568ac86cee3d662b0bd57332977ec257b52a71dbfbd348542120ebd15f64"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:05:13.199Z",
+      "sha256": "6875568ac86cee3d662b0bd57332977ec257b52a71dbfbd348542120ebd15f64"
+     }
+    ]
+   }
+  },
+  {
+   "model_id": "openai/gpt-5",
+   "prior_identities": [
+    "Azure/azure/swedencentral/unknown",
+    "Azure/azure/unknown",
+    "OpenAI/openai/default/unknown"
+   ],
+   "current_identities": [
+    "Azure/azure/unknown",
+    "OpenAI/openai/default/unknown"
+   ],
+   "removed": [
+    "Azure/azure/swedencentral/unknown"
+   ],
+   "removed_provider_still_listed_for_model": [
+    [
+     "Azure/azure/swedencentral/unknown",
+     true
+    ]
+   ],
+   "responses": {
+    "2026-11-19T05-17-05-687Z-1886818": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:29:59.903Z",
+      "sha256": "f613881c3df5c47c6f3cfa4db7f3fb523b3f26be0aa1225f8e7ea6ac74c6a699"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:31:01.120Z",
+      "sha256": "f613881c3df5c47c6f3cfa4db7f3fb523b3f26be0aa1225f8e7ea6ac74c6a699"
+     }
+    ],
+    "2026-11-19T05-51-31-753Z-1951021": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:04:12.078Z",
+      "sha256": "4153d57fd20f62285c50411373b9be21c6f22f28290f4e0420fce94d0c7c8819"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:05:13.023Z",
+      "sha256": "3804c12349f08107566d8738713391057783f8b28b6c3274ecf9ceeb3f69f073"
+     }
+    ]
+   }
+  },
+  {
+   "model_id": "openai/gpt-5-mini",
+   "prior_identities": [
+    "Azure/azure/swedencentral/unknown",
+    "Azure/azure/unknown",
+    "OpenAI/openai/flex/unknown",
+    "OpenAI/openai/unknown"
+   ],
+   "current_identities": [
+    "Azure/azure/unknown",
+    "OpenAI/openai/flex/unknown",
+    "OpenAI/openai/unknown"
+   ],
+   "removed": [
+    "Azure/azure/swedencentral/unknown"
+   ],
+   "removed_provider_still_listed_for_model": [
+    [
+     "Azure/azure/swedencentral/unknown",
+     true
+    ]
+   ],
+   "responses": {
+    "2026-11-19T05-17-05-687Z-1886818": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:29:59.925Z",
+      "sha256": "95a178ac17bf556c358a4834dba4dd6162625c871ad0361efb50c210aab3b891"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:31:01.150Z",
+      "sha256": "95a178ac17bf556c358a4834dba4dd6162625c871ad0361efb50c210aab3b891"
+     }
+    ],
+    "2026-11-19T05-51-31-753Z-1951021": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:04:12.104Z",
+      "sha256": "95a178ac17bf556c358a4834dba4dd6162625c871ad0361efb50c210aab3b891"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:05:13.044Z",
+      "sha256": "3628c8d5c919dff2d2b6be2e898ba44e7ff519bdd7937077abb3242adaf79df2"
+     }
+    ]
+   }
+  },
+  {
+   "model_id": "openai/gpt-5-mini:batch",
+   "prior_identities": [
+    "OpenAI/openai/unknown"
+   ],
+   "current_identities": [],
+   "removed": [
+    "OpenAI/openai/unknown"
+   ],
+   "removed_provider_still_listed_for_model": [
+    [
+     "OpenAI/openai/unknown",
+     false
+    ]
+   ],
+   "responses": {
+    "2026-11-19T05-17-05-687Z-1886818": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:29:59.928Z",
+      "sha256": "18342c13746a17357633057a5bb37add48a6b95f8f3ce3973739d3eaf9e5c187"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:31:01.157Z",
+      "sha256": "18342c13746a17357633057a5bb37add48a6b95f8f3ce3973739d3eaf9e5c187"
+     }
+    ],
+    "2026-11-19T05-51-31-753Z-1951021": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:04:12.086Z",
+      "sha256": "18342c13746a17357633057a5bb37add48a6b95f8f3ce3973739d3eaf9e5c187"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:05:13.039Z",
+      "sha256": "18342c13746a17357633057a5bb37add48a6b95f8f3ce3973739d3eaf9e5c187"
+     }
+    ]
+   }
+  },
+  {
+   "model_id": "openai/gpt-5-nano",
+   "prior_identities": [
+    "Azure/azure/swedencentral/unknown",
+    "Azure/azure/unknown",
+    "OpenAI/openai/flex/unknown",
+    "OpenAI/openai/unknown"
+   ],
+   "current_identities": [
+    "Azure/azure/unknown",
+    "OpenAI/openai/flex/unknown",
+    "OpenAI/openai/unknown"
+   ],
+   "removed": [
+    "Azure/azure/swedencentral/unknown"
+   ],
+   "removed_provider_still_listed_for_model": [
+    [
+     "Azure/azure/swedencentral/unknown",
+     true
+    ]
+   ],
+   "responses": {
+    "2026-11-19T05-17-05-687Z-1886818": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:29:59.931Z",
+      "sha256": "5a48a74893cf5a2069d124a317b59843bf99263bdcd71bc4cefec28ddaa89de0"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:31:01.137Z",
+      "sha256": "5a48a74893cf5a2069d124a317b59843bf99263bdcd71bc4cefec28ddaa89de0"
+     }
+    ],
+    "2026-11-19T05-51-31-753Z-1951021": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:04:12.080Z",
+      "sha256": "5a48a74893cf5a2069d124a317b59843bf99263bdcd71bc4cefec28ddaa89de0"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:05:13.038Z",
+      "sha256": "5a48a74893cf5a2069d124a317b59843bf99263bdcd71bc4cefec28ddaa89de0"
+     }
+    ]
+   }
+  },
+  {
+   "model_id": "openai/gpt-5-pro:batch",
+   "prior_identities": [
+    "OpenAI/openai/unknown"
+   ],
+   "current_identities": [],
+   "removed": [
+    "OpenAI/openai/unknown"
+   ],
+   "removed_provider_still_listed_for_model": [
+    [
+     "OpenAI/openai/unknown",
+     false
+    ]
+   ],
+   "responses": {
+    "2026-11-19T05-17-05-687Z-1886818": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:29:59.850Z",
+      "sha256": "2aa524fcf46d57afd0c3098a0bbb905c3b10442308334f9154ff777a43fd0bec"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:31:01.120Z",
+      "sha256": "2aa524fcf46d57afd0c3098a0bbb905c3b10442308334f9154ff777a43fd0bec"
+     }
+    ],
+    "2026-11-19T05-51-31-753Z-1951021": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:04:12.048Z",
+      "sha256": "2aa524fcf46d57afd0c3098a0bbb905c3b10442308334f9154ff777a43fd0bec"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:05:13.176Z",
+      "sha256": "2aa524fcf46d57afd0c3098a0bbb905c3b10442308334f9154ff777a43fd0bec"
+     }
+    ]
+   }
+  },
+  {
+   "model_id": "openai/gpt-5.1",
+   "prior_identities": [
+    "Azure/azure/swedencentral/unknown",
+    "Azure/azure/unknown",
+    "OpenAI/openai/fast/unknown",
+    "OpenAI/openai/flex/unknown",
+    "OpenAI/openai/unknown"
+   ],
+   "current_identities": [
+    "Azure/azure/unknown",
+    "OpenAI/openai/fast/unknown",
+    "OpenAI/openai/flex/unknown",
+    "OpenAI/openai/unknown"
+   ],
+   "removed": [
+    "Azure/azure/swedencentral/unknown"
+   ],
+   "removed_provider_still_listed_for_model": [
+    [
+     "Azure/azure/swedencentral/unknown",
+     true
+    ]
+   ],
+   "responses": {
+    "2026-11-19T05-17-05-687Z-1886818": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:29:59.777Z",
+      "sha256": "d755369181719d02ee2659647c2ca388c2641a834daa1c3e09410b84a3ee10b5"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:31:01.136Z",
+      "sha256": "d755369181719d02ee2659647c2ca388c2641a834daa1c3e09410b84a3ee10b5"
+     }
+    ],
+    "2026-11-19T05-51-31-753Z-1951021": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:04:11.974Z",
+      "sha256": "d755369181719d02ee2659647c2ca388c2641a834daa1c3e09410b84a3ee10b5"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:05:12.958Z",
+      "sha256": "d755369181719d02ee2659647c2ca388c2641a834daa1c3e09410b84a3ee10b5"
+     }
+    ]
+   }
+  },
+  {
+   "model_id": "openai/gpt-5.1:batch",
+   "prior_identities": [
+    "OpenAI/openai/unknown"
+   ],
+   "current_identities": [],
+   "removed": [
+    "OpenAI/openai/unknown"
+   ],
+   "removed_provider_still_listed_for_model": [
+    [
+     "OpenAI/openai/unknown",
+     false
+    ]
+   ],
+   "responses": {
+    "2026-11-19T05-17-05-687Z-1886818": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:29:59.779Z",
+      "sha256": "d32dece2a8131338fcdbd7ff4139479ebb2c275842d0a44927196685e4675a0c"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:31:01.095Z",
+      "sha256": "d32dece2a8131338fcdbd7ff4139479ebb2c275842d0a44927196685e4675a0c"
+     }
+    ],
+    "2026-11-19T05-51-31-753Z-1951021": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:04:11.933Z",
+      "sha256": "d32dece2a8131338fcdbd7ff4139479ebb2c275842d0a44927196685e4675a0c"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:05:12.973Z",
+      "sha256": "d32dece2a8131338fcdbd7ff4139479ebb2c275842d0a44927196685e4675a0c"
+     }
+    ]
+   }
+  },
+  {
+   "model_id": "openai/gpt-5.2-chat",
+   "prior_identities": [
+    "Azure/azure/unknown"
+   ],
+   "current_identities": [],
+   "removed": [
+    "Azure/azure/unknown"
+   ],
+   "removed_provider_still_listed_for_model": [
+    [
+     "Azure/azure/unknown",
+     false
+    ]
+   ],
+   "responses": {
+    "2026-11-19T05-17-05-687Z-1886818": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:29:59.712Z",
+      "sha256": "61f10633e8b973a997d8b78f8fd0060a0ae9303915f34fb4432d345a503c9cbe"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:31:01.080Z",
+      "sha256": "61f10633e8b973a997d8b78f8fd0060a0ae9303915f34fb4432d345a503c9cbe"
+     }
+    ],
+    "2026-11-19T05-51-31-753Z-1951021": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:04:11.859Z",
+      "sha256": "61f10633e8b973a997d8b78f8fd0060a0ae9303915f34fb4432d345a503c9cbe"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:05:12.930Z",
+      "sha256": "61f10633e8b973a997d8b78f8fd0060a0ae9303915f34fb4432d345a503c9cbe"
+     }
+    ]
+   }
+  },
+  {
+   "model_id": "openai/gpt-5.2-pro:batch",
+   "prior_identities": [
+    "OpenAI/openai/unknown"
+   ],
+   "current_identities": [],
+   "removed": [
+    "OpenAI/openai/unknown"
+   ],
+   "removed_provider_still_listed_for_model": [
+    [
+     "OpenAI/openai/unknown",
+     false
+    ]
+   ],
+   "responses": {
+    "2026-11-19T05-17-05-687Z-1886818": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:29:59.717Z",
+      "sha256": "6c8c0f9e6b288c03fbef1491f87551a6c0fd4576a604a8f92d72442d6fe77630"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:31:01.085Z",
+      "sha256": "6c8c0f9e6b288c03fbef1491f87551a6c0fd4576a604a8f92d72442d6fe77630"
+     }
+    ],
+    "2026-11-19T05-51-31-753Z-1951021": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:04:11.861Z",
+      "sha256": "6c8c0f9e6b288c03fbef1491f87551a6c0fd4576a604a8f92d72442d6fe77630"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:05:13.165Z",
+      "sha256": "6c8c0f9e6b288c03fbef1491f87551a6c0fd4576a604a8f92d72442d6fe77630"
+     }
+    ]
+   }
+  },
+  {
+   "model_id": "openai/gpt-5.2:batch",
+   "prior_identities": [
+    "OpenAI/openai/unknown"
+   ],
+   "current_identities": [],
+   "removed": [
+    "OpenAI/openai/unknown"
+   ],
+   "removed_provider_still_listed_for_model": [
+    [
+     "OpenAI/openai/unknown",
+     false
+    ]
+   ],
+   "responses": {
+    "2026-11-19T05-17-05-687Z-1886818": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:29:59.753Z",
+      "sha256": "bd5110bfbd90fc43599e3b7d9b9d2339a2734d07d3b982a21cca45df47d57115"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:31:01.085Z",
+      "sha256": "bd5110bfbd90fc43599e3b7d9b9d2339a2734d07d3b982a21cca45df47d57115"
+     }
+    ],
+    "2026-11-19T05-51-31-753Z-1951021": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:04:11.905Z",
+      "sha256": "bd5110bfbd90fc43599e3b7d9b9d2339a2734d07d3b982a21cca45df47d57115"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:05:12.960Z",
+      "sha256": "bd5110bfbd90fc43599e3b7d9b9d2339a2734d07d3b982a21cca45df47d57115"
+     }
+    ]
+   }
+  },
+  {
+   "model_id": "openai/gpt-5.4",
+   "prior_identities": [
+    "Amazon Bedrock/amazon-bedrock/us-east-1/unknown",
+    "Azure/azure/eu/unknown",
+    "Azure/azure/unknown",
+    "Azure/azure/us/unknown",
+    "OpenAI/openai/fast/unknown",
+    "OpenAI/openai/flex/unknown",
+    "OpenAI/openai/unknown"
+   ],
+   "current_identities": [
+    "Azure/azure/unknown",
+    "OpenAI/openai/fast/unknown",
+    "OpenAI/openai/flex/unknown",
+    "OpenAI/openai/unknown"
+   ],
+   "removed": [
+    "Amazon Bedrock/amazon-bedrock/us-east-1/unknown",
+    "Azure/azure/eu/unknown",
+    "Azure/azure/us/unknown"
+   ],
+   "removed_provider_still_listed_for_model": [
+    [
+     "Amazon Bedrock/amazon-bedrock/us-east-1/unknown",
+     false
+    ],
+    [
+     "Azure/azure/eu/unknown",
+     true
+    ],
+    [
+     "Azure/azure/us/unknown",
+     true
+    ]
+   ],
+   "responses": {
+    "2026-11-19T05-17-05-687Z-1886818": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:29:59.571Z",
+      "sha256": "ede0b1ec3a044caacb24092dabca1e0b704365be66e888ac18e8d0a70c0d1958"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:31:01.053Z",
+      "sha256": "ede0b1ec3a044caacb24092dabca1e0b704365be66e888ac18e8d0a70c0d1958"
+     }
+    ],
+    "2026-11-19T05-51-31-753Z-1951021": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:04:11.726Z",
+      "sha256": "62058b3e310ef1a5e9ad85436b401cca1b60ccab3f0e2b60f0ddb7bfee118eab"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:05:13.047Z",
+      "sha256": "1e4a901a098765f0e04d578af0a032f64129b96dfe8965db7f5c0c9405cc191f"
+     }
+    ]
+   }
+  },
+  {
+   "model_id": "openai/gpt-5.4-mini",
+   "prior_identities": [
+    "Azure/azure/unknown",
+    "Azure/azure/us/unknown",
+    "OpenAI/openai/fast/unknown",
+    "OpenAI/openai/flex/unknown",
+    "OpenAI/openai/unknown"
+   ],
+   "current_identities": [
+    "Azure/azure/unknown",
+    "OpenAI/openai/fast/unknown",
+    "OpenAI/openai/flex/unknown",
+    "OpenAI/openai/unknown"
+   ],
+   "removed": [
+    "Azure/azure/us/unknown"
+   ],
+   "removed_provider_still_listed_for_model": [
+    [
+     "Azure/azure/us/unknown",
+     true
+    ]
+   ],
+   "responses": {
+    "2026-11-19T05-17-05-687Z-1886818": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:29:59.542Z",
+      "sha256": "b18bf642c53ea22d8c62ea6e75d043d824d8efee9698d2211988e41a6c92d002"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:31:01.038Z",
+      "sha256": "b18bf642c53ea22d8c62ea6e75d043d824d8efee9698d2211988e41a6c92d002"
+     }
+    ],
+    "2026-11-19T05-51-31-753Z-1951021": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:04:11.687Z",
+      "sha256": "1548774326035acd925c7a6dd61a0b3315bf66421d61c678c334a1dc83cef0ac"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:05:12.872Z",
+      "sha256": "8f7cde263037a0139fd048f16f89059a0e69ebebb4b272b51b1a978e3ebd095b"
+     }
+    ]
+   }
+  },
+  {
+   "model_id": "openai/gpt-5.4-mini:batch",
+   "prior_identities": [
+    "OpenAI/openai/unknown"
+   ],
+   "current_identities": [],
+   "removed": [
+    "OpenAI/openai/unknown"
+   ],
+   "removed_provider_still_listed_for_model": [
+    [
+     "OpenAI/openai/unknown",
+     false
+    ]
+   ],
+   "responses": {
+    "2026-11-19T05-17-05-687Z-1886818": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:29:59.543Z",
+      "sha256": "d76f4328daefc7a7a0413b0669719ad242e080353d7e27b2938b390d5ce2dd17"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:31:01.033Z",
+      "sha256": "d76f4328daefc7a7a0413b0669719ad242e080353d7e27b2938b390d5ce2dd17"
+     }
+    ],
+    "2026-11-19T05-51-31-753Z-1951021": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:04:11.691Z",
+      "sha256": "d76f4328daefc7a7a0413b0669719ad242e080353d7e27b2938b390d5ce2dd17"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:05:12.950Z",
+      "sha256": "d76f4328daefc7a7a0413b0669719ad242e080353d7e27b2938b390d5ce2dd17"
+     }
+    ]
+   }
+  },
+  {
+   "model_id": "openai/gpt-5.4-nano",
+   "prior_identities": [
+    "Azure/azure/unknown",
+    "Azure/azure/us/unknown",
+    "OpenAI/openai/flex/unknown",
+    "OpenAI/openai/unknown"
+   ],
+   "current_identities": [
+    "Azure/azure/unknown",
+    "OpenAI/openai/flex/unknown",
+    "OpenAI/openai/unknown"
+   ],
+   "removed": [
+    "Azure/azure/us/unknown"
+   ],
+   "removed_provider_still_listed_for_model": [
+    [
+     "Azure/azure/us/unknown",
+     true
+    ]
+   ],
+   "responses": {
+    "2026-11-19T05-17-05-687Z-1886818": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:29:59.515Z",
+      "sha256": "81ec20a51acd398797cba2069c6004f3bb7834faa9493bdfe2cf05bbab329f4e"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:31:01.023Z",
+      "sha256": "81ec20a51acd398797cba2069c6004f3bb7834faa9493bdfe2cf05bbab329f4e"
+     }
+    ],
+    "2026-11-19T05-51-31-753Z-1951021": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:04:11.677Z",
+      "sha256": "81ec20a51acd398797cba2069c6004f3bb7834faa9493bdfe2cf05bbab329f4e"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:05:12.863Z",
+      "sha256": "716a5ab35e667c4f8071421935794aab805aa616ecf39795531571ce47f6570e"
+     }
+    ]
+   }
+  },
+  {
+   "model_id": "openai/gpt-5.4-nano:batch",
+   "prior_identities": [
+    "OpenAI/openai/unknown"
+   ],
+   "current_identities": [],
+   "removed": [
+    "OpenAI/openai/unknown"
+   ],
+   "removed_provider_still_listed_for_model": [
+    [
+     "OpenAI/openai/unknown",
+     false
+    ]
+   ],
+   "responses": {
+    "2026-11-19T05-17-05-687Z-1886818": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:29:59.534Z",
+      "sha256": "bcedc1e9778b6c6a32d1fc3b8779530ad796745571748d1e69751acb6e3497b9"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:31:01.039Z",
+      "sha256": "bcedc1e9778b6c6a32d1fc3b8779530ad796745571748d1e69751acb6e3497b9"
+     }
+    ],
+    "2026-11-19T05-51-31-753Z-1951021": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:04:11.681Z",
+      "sha256": "bcedc1e9778b6c6a32d1fc3b8779530ad796745571748d1e69751acb6e3497b9"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:05:12.873Z",
+      "sha256": "bcedc1e9778b6c6a32d1fc3b8779530ad796745571748d1e69751acb6e3497b9"
+     }
+    ]
+   }
+  },
+  {
+   "model_id": "openai/gpt-5.4-pro:batch",
+   "prior_identities": [
+    "OpenAI/openai/unknown"
+   ],
+   "current_identities": [],
+   "removed": [
+    "OpenAI/openai/unknown"
+   ],
+   "removed_provider_still_listed_for_model": [
+    [
+     "OpenAI/openai/unknown",
+     false
+    ]
+   ],
+   "responses": {
+    "2026-11-19T05-17-05-687Z-1886818": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:29:59.577Z",
+      "sha256": "3f386418277a2dab9dcfd8232a18046f5ce2aa9e847d6e36d29633e4050f8b97"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:31:01.045Z",
+      "sha256": "3f386418277a2dab9dcfd8232a18046f5ce2aa9e847d6e36d29633e4050f8b97"
+     }
+    ],
+    "2026-11-19T05-51-31-753Z-1951021": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:04:11.710Z",
+      "sha256": "3f386418277a2dab9dcfd8232a18046f5ce2aa9e847d6e36d29633e4050f8b97"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:05:13.087Z",
+      "sha256": "3f386418277a2dab9dcfd8232a18046f5ce2aa9e847d6e36d29633e4050f8b97"
+     }
+    ]
+   }
+  },
+  {
+   "model_id": "openai/gpt-5.4:batch",
+   "prior_identities": [
+    "OpenAI/openai/unknown"
+   ],
+   "current_identities": [],
+   "removed": [
+    "OpenAI/openai/unknown"
+   ],
+   "removed_provider_still_listed_for_model": [
+    [
+     "OpenAI/openai/unknown",
+     false
+    ]
+   ],
+   "responses": {
+    "2026-11-19T05-17-05-687Z-1886818": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:29:59.588Z",
+      "sha256": "4946f07cab6297dff9ea24904fed8b442d08657fbcb5deb5db8387cd4427cbdd"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:31:01.048Z",
+      "sha256": "4946f07cab6297dff9ea24904fed8b442d08657fbcb5deb5db8387cd4427cbdd"
+     }
+    ],
+    "2026-11-19T05-51-31-753Z-1951021": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:04:11.721Z",
+      "sha256": "4946f07cab6297dff9ea24904fed8b442d08657fbcb5deb5db8387cd4427cbdd"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:05:12.893Z",
+      "sha256": "4946f07cab6297dff9ea24904fed8b442d08657fbcb5deb5db8387cd4427cbdd"
+     }
+    ]
+   }
+  },
+  {
+   "model_id": "openai/gpt-5.5",
+   "prior_identities": [
+    "Amazon Bedrock/amazon-bedrock/us-east-1/unknown",
+    "Azure/azure/eu/unknown",
+    "Azure/azure/unknown",
+    "Azure/azure/us/unknown",
+    "OpenAI/openai/fast/unknown",
+    "OpenAI/openai/flex/unknown",
+    "OpenAI/openai/unknown"
+   ],
+   "current_identities": [
+    "Azure/azure/unknown",
+    "OpenAI/openai/fast/unknown",
+    "OpenAI/openai/flex/unknown",
+    "OpenAI/openai/unknown"
+   ],
+   "removed": [
+    "Amazon Bedrock/amazon-bedrock/us-east-1/unknown",
+    "Azure/azure/eu/unknown",
+    "Azure/azure/us/unknown"
+   ],
+   "removed_provider_still_listed_for_model": [
+    [
+     "Amazon Bedrock/amazon-bedrock/us-east-1/unknown",
+     false
+    ],
+    [
+     "Azure/azure/eu/unknown",
+     true
+    ],
+    [
+     "Azure/azure/us/unknown",
+     true
+    ]
+   ],
+   "responses": {
+    "2026-11-19T05-17-05-687Z-1886818": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:29:59.318Z",
+      "sha256": "e6cfaf8a7f55de8e26f2ab489ca43d91d3ef69ec18f93926812718dd161d130e"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:31:01.038Z",
+      "sha256": "e6cfaf8a7f55de8e26f2ab489ca43d91d3ef69ec18f93926812718dd161d130e"
+     }
+    ],
+    "2026-11-19T05-51-31-753Z-1951021": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:04:11.647Z",
+      "sha256": "878978ccda4183d0a8271998a87ef63e46ba9eb7087b40adf3cf60751631d293"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:05:12.860Z",
+      "sha256": "878978ccda4183d0a8271998a87ef63e46ba9eb7087b40adf3cf60751631d293"
+     }
+    ]
+   }
+  },
+  {
+   "model_id": "openai/gpt-5.5-pro:batch",
+   "prior_identities": [
+    "OpenAI/openai/unknown"
+   ],
+   "current_identities": [],
+   "removed": [
+    "OpenAI/openai/unknown"
+   ],
+   "removed_provider_still_listed_for_model": [
+    [
+     "OpenAI/openai/unknown",
+     false
+    ]
+   ],
+   "responses": {
+    "2026-11-19T05-17-05-687Z-1886818": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:29:59.414Z",
+      "sha256": "d3e9b33201e38146582f3ea312c2a94010fbba1075aef162b343cfe8872028b2"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:31:01.018Z",
+      "sha256": "d3e9b33201e38146582f3ea312c2a94010fbba1075aef162b343cfe8872028b2"
+     }
+    ],
+    "2026-11-19T05-51-31-753Z-1951021": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:04:11.574Z",
+      "sha256": "d3e9b33201e38146582f3ea312c2a94010fbba1075aef162b343cfe8872028b2"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:05:12.875Z",
+      "sha256": "d3e9b33201e38146582f3ea312c2a94010fbba1075aef162b343cfe8872028b2"
+     }
+    ]
+   }
+  },
+  {
+   "model_id": "openai/gpt-5.5:batch",
+   "prior_identities": [
+    "OpenAI/openai/unknown"
+   ],
+   "current_identities": [],
+   "removed": [
+    "OpenAI/openai/unknown"
+   ],
+   "removed_provider_still_listed_for_model": [
+    [
+     "OpenAI/openai/unknown",
+     false
+    ]
+   ],
+   "responses": {
+    "2026-11-19T05-17-05-687Z-1886818": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:29:59.317Z",
+      "sha256": "a3c11de59cfed14b425c5b06a9c94e8169f2b6c674a15fe3851bda037dea68ca"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:31:01.006Z",
+      "sha256": "a3c11de59cfed14b425c5b06a9c94e8169f2b6c674a15fe3851bda037dea68ca"
+     }
+    ],
+    "2026-11-19T05-51-31-753Z-1951021": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:04:11.631Z",
+      "sha256": "a3c11de59cfed14b425c5b06a9c94e8169f2b6c674a15fe3851bda037dea68ca"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:05:13.078Z",
+      "sha256": "a3c11de59cfed14b425c5b06a9c94e8169f2b6c674a15fe3851bda037dea68ca"
+     }
+    ]
+   }
+  },
+  {
+   "model_id": "openai/gpt-5.6-luna",
+   "prior_identities": [
+    "Amazon Bedrock/amazon-bedrock/global/unknown",
+    "Amazon Bedrock/amazon-bedrock/us-east-1/unknown",
+    "Azure/azure/eu/unknown",
+    "Azure/azure/unknown",
+    "Azure/azure/us/unknown",
+    "OpenAI/openai/fast/unknown",
+    "OpenAI/openai/flex/unknown",
+    "OpenAI/openai/unknown"
+   ],
+   "current_identities": [
+    "Amazon Bedrock/amazon-bedrock/global/unknown",
+    "Azure/azure/unknown",
+    "OpenAI/openai/fast/unknown",
+    "OpenAI/openai/flex/unknown",
+    "OpenAI/openai/unknown"
+   ],
+   "removed": [
+    "Amazon Bedrock/amazon-bedrock/us-east-1/unknown",
+    "Azure/azure/eu/unknown",
+    "Azure/azure/us/unknown"
+   ],
+   "removed_provider_still_listed_for_model": [
+    [
+     "Amazon Bedrock/amazon-bedrock/us-east-1/unknown",
+     true
+    ],
+    [
+     "Azure/azure/eu/unknown",
+     true
+    ],
+    [
+     "Azure/azure/us/unknown",
+     true
+    ]
+   ],
+   "responses": {
+    "2026-11-19T05-17-05-687Z-1886818": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:29:58.961Z",
+      "sha256": "95aa57bb940e0acd75a3e6636b9a795125e65f382394bca0a3a5582824fd98bf"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:31:00.943Z",
+      "sha256": "95aa57bb940e0acd75a3e6636b9a795125e65f382394bca0a3a5582824fd98bf"
+     }
+    ],
+    "2026-11-19T05-51-31-753Z-1951021": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:04:11.299Z",
+      "sha256": "95aa57bb940e0acd75a3e6636b9a795125e65f382394bca0a3a5582824fd98bf"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:05:12.791Z",
+      "sha256": "95aa57bb940e0acd75a3e6636b9a795125e65f382394bca0a3a5582824fd98bf"
+     }
+    ]
+   }
+  },
+  {
+   "model_id": "openai/gpt-5.6-luna-pro",
+   "prior_identities": [
+    "Azure/azure/eu/unknown",
+    "Azure/azure/unknown",
+    "OpenAI/openai/fast/unknown",
+    "OpenAI/openai/flex/unknown",
+    "OpenAI/openai/unknown"
+   ],
+   "current_identities": [
+    "Azure/azure/unknown",
+    "OpenAI/openai/fast/unknown",
+    "OpenAI/openai/flex/unknown",
+    "OpenAI/openai/unknown"
+   ],
+   "removed": [
+    "Azure/azure/eu/unknown"
+   ],
+   "removed_provider_still_listed_for_model": [
+    [
+     "Azure/azure/eu/unknown",
+     true
+    ]
+   ],
+   "responses": {
+    "2026-11-19T05-17-05-687Z-1886818": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:29:58.949Z",
+      "sha256": "20dc6b8b0bd2566cd9e683522a051bd71985564ddc6443bb388aaab70312a9c9"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:31:00.942Z",
+      "sha256": "20dc6b8b0bd2566cd9e683522a051bd71985564ddc6443bb388aaab70312a9c9"
+     }
+    ],
+    "2026-11-19T05-51-31-753Z-1951021": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:04:11.301Z",
+      "sha256": "3fef7b52aecf84538773b40e2f8f058757b7702fb897e2bdcec00c25b728057e"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:05:12.791Z",
+      "sha256": "3fef7b52aecf84538773b40e2f8f058757b7702fb897e2bdcec00c25b728057e"
+     }
+    ]
+   }
+  },
+  {
+   "model_id": "openai/gpt-5.6-sol",
+   "prior_identities": [
+    "Amazon Bedrock/amazon-bedrock/global/unknown",
+    "Amazon Bedrock/amazon-bedrock/us-east-1/unknown",
+    "Azure/azure/eu/unknown",
+    "Azure/azure/unknown",
+    "Azure/azure/us/unknown",
+    "OpenAI/openai/fast/unknown",
+    "OpenAI/openai/flex/unknown",
+    "OpenAI/openai/unknown"
+   ],
+   "current_identities": [
+    "Amazon Bedrock/amazon-bedrock/global/unknown",
+    "Azure/azure/unknown",
+    "OpenAI/openai/fast/unknown",
+    "OpenAI/openai/flex/unknown",
+    "OpenAI/openai/unknown"
+   ],
+   "removed": [
+    "Amazon Bedrock/amazon-bedrock/us-east-1/unknown",
+    "Azure/azure/eu/unknown",
+    "Azure/azure/us/unknown"
+   ],
+   "removed_provider_still_listed_for_model": [
+    [
+     "Amazon Bedrock/amazon-bedrock/us-east-1/unknown",
+     true
+    ],
+    [
+     "Azure/azure/eu/unknown",
+     true
+    ],
+    [
+     "Azure/azure/us/unknown",
+     true
+    ]
+   ],
+   "responses": {
+    "2026-11-19T05-17-05-687Z-1886818": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:29:59.003Z",
+      "sha256": "841bf4ba412463c01392f066c8cfea57c4a071bb3eac81b05dfcba7d5f4186c1"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:31:00.959Z",
+      "sha256": "841bf4ba412463c01392f066c8cfea57c4a071bb3eac81b05dfcba7d5f4186c1"
+     }
+    ],
+    "2026-11-19T05-51-31-753Z-1951021": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:04:11.344Z",
+      "sha256": "651fbb03e276a2055598f1c6e57fe451c0a4d673c8656f1191705552b62f8bd4"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:05:12.820Z",
+      "sha256": "651fbb03e276a2055598f1c6e57fe451c0a4d673c8656f1191705552b62f8bd4"
+     }
+    ]
+   }
+  },
+  {
+   "model_id": "openai/gpt-5.6-sol-pro",
+   "prior_identities": [
+    "Azure/azure/eu/unknown",
+    "Azure/azure/unknown",
+    "OpenAI/openai/fast/unknown",
+    "OpenAI/openai/flex/unknown",
+    "OpenAI/openai/unknown"
+   ],
+   "current_identities": [
+    "Azure/azure/unknown",
+    "OpenAI/openai/fast/unknown",
+    "OpenAI/openai/flex/unknown",
+    "OpenAI/openai/unknown"
+   ],
+   "removed": [
+    "Azure/azure/eu/unknown"
+   ],
+   "removed_provider_still_listed_for_model": [
+    [
+     "Azure/azure/eu/unknown",
+     true
+    ]
+   ],
+   "responses": {
+    "2026-11-19T05-17-05-687Z-1886818": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:29:58.998Z",
+      "sha256": "a48071b941ccd30fe60f4a0aa9209abc6f4682f4a182db797b30fe84dcff7a2a"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:31:00.960Z",
+      "sha256": "a48071b941ccd30fe60f4a0aa9209abc6f4682f4a182db797b30fe84dcff7a2a"
+     }
+    ],
+    "2026-11-19T05-51-31-753Z-1951021": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:04:11.334Z",
+      "sha256": "f46d08d5f0b44fb0642b4efe72b19609032672ad987832cb46e59e0b83b17035"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:05:12.805Z",
+      "sha256": "f46d08d5f0b44fb0642b4efe72b19609032672ad987832cb46e59e0b83b17035"
+     }
+    ]
+   }
+  },
+  {
+   "model_id": "openai/gpt-5.6-terra",
+   "prior_identities": [
+    "Amazon Bedrock/amazon-bedrock/us-east-1/unknown",
+    "Azure/azure/eu/unknown",
+    "Azure/azure/unknown",
+    "Azure/azure/us/unknown",
+    "OpenAI/openai/fast/unknown",
+    "OpenAI/openai/flex/unknown",
+    "OpenAI/openai/unknown"
+   ],
+   "current_identities": [
+    "Azure/azure/unknown",
+    "OpenAI/openai/fast/unknown",
+    "OpenAI/openai/flex/unknown",
+    "OpenAI/openai/unknown"
+   ],
+   "removed": [
+    "Amazon Bedrock/amazon-bedrock/us-east-1/unknown",
+    "Azure/azure/eu/unknown",
+    "Azure/azure/us/unknown"
+   ],
+   "removed_provider_still_listed_for_model": [
+    [
+     "Amazon Bedrock/amazon-bedrock/us-east-1/unknown",
+     false
+    ],
+    [
+     "Azure/azure/eu/unknown",
+     true
+    ],
+    [
+     "Azure/azure/us/unknown",
+     true
+    ]
+   ],
+   "responses": {
+    "2026-11-19T05-17-05-687Z-1886818": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:29:58.976Z",
+      "sha256": "a80e6dcd470f738e5c7a7c2d910b61d3b8bb3710bdeba41beb1689cbec2a34d9"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:31:00.950Z",
+      "sha256": "a80e6dcd470f738e5c7a7c2d910b61d3b8bb3710bdeba41beb1689cbec2a34d9"
+     }
+    ],
+    "2026-11-19T05-51-31-753Z-1951021": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:04:11.328Z",
+      "sha256": "e5d6d9af3992024d8d755610bda8c27eec58b4e76eab4c035a8fc6bc351f8582"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:05:12.794Z",
+      "sha256": "e5d6d9af3992024d8d755610bda8c27eec58b4e76eab4c035a8fc6bc351f8582"
+     }
+    ]
+   }
+  },
+  {
+   "model_id": "openai/gpt-5.6-terra-pro",
+   "prior_identities": [
+    "Azure/azure/eu/unknown",
+    "Azure/azure/unknown",
+    "OpenAI/openai/fast/unknown",
+    "OpenAI/openai/flex/unknown",
+    "OpenAI/openai/unknown"
+   ],
+   "current_identities": [
+    "Azure/azure/unknown",
+    "OpenAI/openai/fast/unknown",
+    "OpenAI/openai/flex/unknown",
+    "OpenAI/openai/unknown"
+   ],
+   "removed": [
+    "Azure/azure/eu/unknown"
+   ],
+   "removed_provider_still_listed_for_model": [
+    [
+     "Azure/azure/eu/unknown",
+     true
+    ]
+   ],
+   "responses": {
+    "2026-11-19T05-17-05-687Z-1886818": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:29:58.975Z",
+      "sha256": "5e9298072c7594c3a765568cbafcb6ea662f1bd36e8b0837dbbb063d31b6c981"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:31:00.942Z",
+      "sha256": "5e9298072c7594c3a765568cbafcb6ea662f1bd36e8b0837dbbb063d31b6c981"
+     }
+    ],
+    "2026-11-19T05-51-31-753Z-1951021": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:04:11.299Z",
+      "sha256": "0dfc039655907ee6719af582b4f7ac8d312ffb0d164de57e62da85eb7f64c865"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:05:12.780Z",
+      "sha256": "0dfc039655907ee6719af582b4f7ac8d312ffb0d164de57e62da85eb7f64c865"
+     }
+    ]
+   }
+  },
+  {
+   "model_id": "openai/gpt-5:batch",
+   "prior_identities": [
+    "OpenAI/openai/unknown"
+   ],
+   "current_identities": [],
+   "removed": [
+    "OpenAI/openai/unknown"
+   ],
+   "removed_provider_still_listed_for_model": [
+    [
+     "OpenAI/openai/unknown",
+     false
+    ]
+   ],
+   "responses": {
+    "2026-11-19T05-17-05-687Z-1886818": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:29:59.910Z",
+      "sha256": "764ff6549d2228950ba4e732110e1011bd6974b39c912756c144af9ca4c6358e"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:31:01.124Z",
+      "sha256": "764ff6549d2228950ba4e732110e1011bd6974b39c912756c144af9ca4c6358e"
+     }
+    ],
+    "2026-11-19T05-51-31-753Z-1951021": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:04:12.072Z",
+      "sha256": "764ff6549d2228950ba4e732110e1011bd6974b39c912756c144af9ca4c6358e"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:05:13.012Z",
+      "sha256": "764ff6549d2228950ba4e732110e1011bd6974b39c912756c144af9ca4c6358e"
+     }
+    ]
+   }
+  },
+  {
+   "model_id": "openai/gpt-6-astra",
+   "prior_identities": [
+    "Amazon Bedrock/amazon-bedrock/global/unknown",
+    "Amazon Bedrock/amazon-bedrock/us-west-2/unknown",
+    "Azure/azure/unknown",
+    "Azure/azure/us/unknown",
+    "OpenAI/openai/fast/unknown",
+    "OpenAI/openai/flex/unknown",
+    "OpenAI/openai/ultrafast/unknown",
+    "OpenAI/openai/unknown"
+   ],
+   "current_identities": [
+    "Amazon Bedrock/amazon-bedrock/global/unknown",
+    "Azure/azure/unknown",
+    "OpenAI/openai/fast/unknown",
+    "OpenAI/openai/flex/unknown",
+    "OpenAI/openai/ultrafast/unknown",
+    "OpenAI/openai/unknown"
+   ],
+   "removed": [
+    "Amazon Bedrock/amazon-bedrock/us-west-2/unknown",
+    "Azure/azure/us/unknown"
+   ],
+   "removed_provider_still_listed_for_model": [
+    [
+     "Amazon Bedrock/amazon-bedrock/us-west-2/unknown",
+     true
+    ],
+    [
+     "Azure/azure/us/unknown",
+     true
+    ]
+   ],
+   "responses": {
+    "2026-11-19T05-17-05-687Z-1886818": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:29:58.623Z",
+      "sha256": "9c55a367207b112f7610fd57022f90447e987d16c9d4b1e745de79d90065648d"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:31:00.897Z",
+      "sha256": "9c55a367207b112f7610fd57022f90447e987d16c9d4b1e745de79d90065648d"
+     }
+    ],
+    "2026-11-19T05-51-31-753Z-1951021": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:04:11.005Z",
+      "sha256": "8cf92bb33f2df85777dea59bf6aad135878f98f597ccd53bd524100361998969"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:05:12.744Z",
+      "sha256": "5d5136d3202ce67bef8a6d688a96117899f8061b35e7210fdea06df4e9465a81"
+     }
+    ]
+   }
+  },
+  {
+   "model_id": "openai/gpt-6-astra-pro",
+   "prior_identities": [
+    "Azure/azure/unknown",
+    "Azure/azure/us/unknown",
+    "OpenAI/openai/fast/unknown",
+    "OpenAI/openai/flex/unknown",
+    "OpenAI/openai/ultrafast/unknown",
+    "OpenAI/openai/unknown"
+   ],
+   "current_identities": [
+    "Azure/azure/unknown",
+    "OpenAI/openai/fast/unknown",
+    "OpenAI/openai/flex/unknown",
+    "OpenAI/openai/ultrafast/unknown",
+    "OpenAI/openai/unknown"
+   ],
+   "removed": [
+    "Azure/azure/us/unknown"
+   ],
+   "removed_provider_still_listed_for_model": [
+    [
+     "Azure/azure/us/unknown",
+     true
+    ]
+   ],
+   "responses": {
+    "2026-11-19T05-17-05-687Z-1886818": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:29:58.640Z",
+      "sha256": "8453560b2c6fc089c271e7101917f728f583f91075142c85a9f766a7cf3a3a81"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:31:00.903Z",
+      "sha256": "8453560b2c6fc089c271e7101917f728f583f91075142c85a9f766a7cf3a3a81"
+     }
+    ],
+    "2026-11-19T05-51-31-753Z-1951021": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:04:11.031Z",
+      "sha256": "8453560b2c6fc089c271e7101917f728f583f91075142c85a9f766a7cf3a3a81"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:05:12.743Z",
+      "sha256": "8453560b2c6fc089c271e7101917f728f583f91075142c85a9f766a7cf3a3a81"
+     }
+    ]
+   }
+  },
+  {
+   "model_id": "openai/gpt-6-luna",
+   "prior_identities": [
+    "Amazon Bedrock/amazon-bedrock/global/unknown",
+    "Amazon Bedrock/amazon-bedrock/us-east-1/unknown",
+    "Azure/azure/eu/unknown",
+    "Azure/azure/unknown",
+    "Azure/azure/us/unknown",
+    "OpenAI/openai/fast/unknown",
+    "OpenAI/openai/flex/unknown",
+    "OpenAI/openai/unknown"
+   ],
+   "current_identities": [
+    "Amazon Bedrock/amazon-bedrock/global/unknown",
+    "Azure/azure/unknown",
+    "OpenAI/openai/fast/unknown",
+    "OpenAI/openai/flex/unknown",
+    "OpenAI/openai/unknown"
+   ],
+   "removed": [
+    "Amazon Bedrock/amazon-bedrock/us-east-1/unknown",
+    "Azure/azure/eu/unknown",
+    "Azure/azure/us/unknown"
+   ],
+   "removed_provider_still_listed_for_model": [
+    [
+     "Amazon Bedrock/amazon-bedrock/us-east-1/unknown",
+     true
+    ],
+    [
+     "Azure/azure/eu/unknown",
+     true
+    ],
+    [
+     "Azure/azure/us/unknown",
+     true
+    ]
+   ],
+   "responses": {
+    "2026-11-19T05-17-05-687Z-1886818": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:29:58.512Z",
+      "sha256": "8c4f61cbe522c37a5f3595b9e7827e76007f43e73859b1b10f1dd5abe0c81c59"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:31:00.875Z",
+      "sha256": "8c4f61cbe522c37a5f3595b9e7827e76007f43e73859b1b10f1dd5abe0c81c59"
+     }
+    ],
+    "2026-11-19T05-51-31-753Z-1951021": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:04:10.898Z",
+      "sha256": "990df9a7982ba2b6e17df2d9171026f8ae4ec562fe1d10fc3605a4043064314a"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:05:12.720Z",
+      "sha256": "990df9a7982ba2b6e17df2d9171026f8ae4ec562fe1d10fc3605a4043064314a"
+     }
+    ]
+   }
+  },
+  {
+   "model_id": "openai/gpt-6-luna-pro",
+   "prior_identities": [
+    "Azure/azure/eu/unknown",
+    "Azure/azure/unknown",
+    "Azure/azure/us/unknown",
+    "OpenAI/openai/fast/unknown",
+    "OpenAI/openai/flex/unknown",
+    "OpenAI/openai/unknown"
+   ],
+   "current_identities": [
+    "Azure/azure/unknown",
+    "OpenAI/openai/fast/unknown",
+    "OpenAI/openai/flex/unknown",
+    "OpenAI/openai/unknown"
+   ],
+   "removed": [
+    "Azure/azure/eu/unknown",
+    "Azure/azure/us/unknown"
+   ],
+   "removed_provider_still_listed_for_model": [
+    [
+     "Azure/azure/eu/unknown",
+     true
+    ],
+    [
+     "Azure/azure/us/unknown",
+     true
+    ]
+   ],
+   "responses": {
+    "2026-11-19T05-17-05-687Z-1886818": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:29:58.492Z",
+      "sha256": "9ed9a998a48d9c28f9f0ac5dd502c7c673f91f0424d7f6e77b09debe01cc5ab7"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:31:00.868Z",
+      "sha256": "9ed9a998a48d9c28f9f0ac5dd502c7c673f91f0424d7f6e77b09debe01cc5ab7"
+     }
+    ],
+    "2026-11-19T05-51-31-753Z-1951021": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:04:10.887Z",
+      "sha256": "654a6508c906f61c63c1c5e64efce597cdcb89c4e6085b2534096c6ab47552e5"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:05:12.710Z",
+      "sha256": "6f720205e7bdc23117b72de940fe30de26f85def19b62e1aef5e6e3daf138518"
+     }
+    ]
+   }
+  },
+  {
+   "model_id": "openai/gpt-6-sol",
+   "prior_identities": [
+    "Amazon Bedrock/amazon-bedrock/global/unknown",
+    "Amazon Bedrock/amazon-bedrock/us-east-1/unknown",
+    "Azure/azure/eu/unknown",
+    "Azure/azure/unknown",
+    "Azure/azure/us/unknown",
+    "OpenAI/openai/fast/unknown",
+    "OpenAI/openai/flex/unknown",
+    "OpenAI/openai/unknown"
+   ],
+   "current_identities": [
+    "Amazon Bedrock/amazon-bedrock/global/unknown",
+    "Azure/azure/unknown",
+    "OpenAI/openai/fast/unknown",
+    "OpenAI/openai/flex/unknown",
+    "OpenAI/openai/unknown"
+   ],
+   "removed": [
+    "Amazon Bedrock/amazon-bedrock/us-east-1/unknown",
+    "Azure/azure/eu/unknown",
+    "Azure/azure/us/unknown"
+   ],
+   "removed_provider_still_listed_for_model": [
+    [
+     "Amazon Bedrock/amazon-bedrock/us-east-1/unknown",
+     true
+    ],
+    [
+     "Azure/azure/eu/unknown",
+     true
+    ],
+    [
+     "Azure/azure/us/unknown",
+     true
+    ]
+   ],
+   "responses": {
+    "2026-11-19T05-17-05-687Z-1886818": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:29:58.502Z",
+      "sha256": "4a184f4e7b87439af748c77d0ca39e45b40ce2ab61b814c2aa437f52ff953245"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:31:00.892Z",
+      "sha256": "4a184f4e7b87439af748c77d0ca39e45b40ce2ab61b814c2aa437f52ff953245"
+     }
+    ],
+    "2026-11-19T05-51-31-753Z-1951021": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:04:10.906Z",
+      "sha256": "e11293e9ca2dc50303d2a45044d521d329e3cdb96e696dd4d2db5872de0aeafa"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:05:12.727Z",
+      "sha256": "e11293e9ca2dc50303d2a45044d521d329e3cdb96e696dd4d2db5872de0aeafa"
+     }
+    ]
+   }
+  },
+  {
+   "model_id": "openai/gpt-6-sol-pro",
+   "prior_identities": [
+    "Azure/azure/eu/unknown",
+    "Azure/azure/unknown",
+    "Azure/azure/us/unknown",
+    "OpenAI/openai/fast/unknown",
+    "OpenAI/openai/flex/unknown",
+    "OpenAI/openai/unknown"
+   ],
+   "current_identities": [
+    "Azure/azure/unknown",
+    "OpenAI/openai/fast/unknown",
+    "OpenAI/openai/flex/unknown",
+    "OpenAI/openai/unknown"
+   ],
+   "removed": [
+    "Azure/azure/eu/unknown",
+    "Azure/azure/us/unknown"
+   ],
+   "removed_provider_still_listed_for_model": [
+    [
+     "Azure/azure/eu/unknown",
+     true
+    ],
+    [
+     "Azure/azure/us/unknown",
+     true
+    ]
+   ],
+   "responses": {
+    "2026-11-19T05-17-05-687Z-1886818": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:29:58.497Z",
+      "sha256": "7658d2bd65f4e29ab0c120b49f364644fc9177f838ed4c3f0d7369426a0494af"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:31:00.884Z",
+      "sha256": "7658d2bd65f4e29ab0c120b49f364644fc9177f838ed4c3f0d7369426a0494af"
+     }
+    ],
+    "2026-11-19T05-51-31-753Z-1951021": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:04:10.880Z",
+      "sha256": "7f3cf2b5ea61d03eda3af1cec3fdc10b7e750012c66982743294b42be589f1f0"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:05:12.709Z",
+      "sha256": "7658d2bd65f4e29ab0c120b49f364644fc9177f838ed4c3f0d7369426a0494af"
+     }
+    ]
+   }
+  },
+  {
+   "model_id": "openai/gpt-6.1-sol",
+   "prior_identities": [
+    "Amazon Bedrock/amazon-bedrock/global/unknown",
+    "Amazon Bedrock/amazon-bedrock/us-east-1/unknown",
+    "Azure/azure/eu/unknown",
+    "Azure/azure/unknown",
+    "Azure/azure/us/unknown",
+    "OpenAI/openai/fast/unknown",
+    "OpenAI/openai/flex/unknown",
+    "OpenAI/openai/ultrafast/unknown",
+    "OpenAI/openai/unknown"
+   ],
+   "current_identities": [
+    "Amazon Bedrock/amazon-bedrock/global/unknown",
+    "Azure/azure/unknown",
+    "OpenAI/openai/fast/unknown",
+    "OpenAI/openai/flex/unknown",
+    "OpenAI/openai/ultrafast/unknown",
+    "OpenAI/openai/unknown"
+   ],
+   "removed": [
+    "Amazon Bedrock/amazon-bedrock/us-east-1/unknown",
+    "Azure/azure/eu/unknown",
+    "Azure/azure/us/unknown"
+   ],
+   "removed_provider_still_listed_for_model": [
+    [
+     "Amazon Bedrock/amazon-bedrock/us-east-1/unknown",
+     true
+    ],
+    [
+     "Azure/azure/eu/unknown",
+     true
+    ],
+    [
+     "Azure/azure/us/unknown",
+     true
+    ]
+   ],
+   "responses": {
+    "2026-11-19T05-17-05-687Z-1886818": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:29:58.470Z",
+      "sha256": "ea1848d38afa52acd5a08e3b2c82ded0812a89d220d5e8fc2051059dba79a982"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:31:00.860Z",
+      "sha256": "ea1848d38afa52acd5a08e3b2c82ded0812a89d220d5e8fc2051059dba79a982"
+     }
+    ],
+    "2026-11-19T05-51-31-753Z-1951021": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:04:10.852Z",
+      "sha256": "ea1848d38afa52acd5a08e3b2c82ded0812a89d220d5e8fc2051059dba79a982"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:05:12.697Z",
+      "sha256": "ea1848d38afa52acd5a08e3b2c82ded0812a89d220d5e8fc2051059dba79a982"
+     }
+    ]
+   }
+  },
+  {
+   "model_id": "openai/gpt-6.1-sol-pro",
+   "prior_identities": [
+    "Azure/azure/eu/unknown",
+    "Azure/azure/unknown",
+    "Azure/azure/us/unknown",
+    "OpenAI/openai/fast/unknown",
+    "OpenAI/openai/flex/unknown",
+    "OpenAI/openai/ultrafast/unknown",
+    "OpenAI/openai/unknown"
+   ],
+   "current_identities": [
+    "Azure/azure/unknown",
+    "OpenAI/openai/fast/unknown",
+    "OpenAI/openai/flex/unknown",
+    "OpenAI/openai/ultrafast/unknown",
+    "OpenAI/openai/unknown"
+   ],
+   "removed": [
+    "Azure/azure/eu/unknown",
+    "Azure/azure/us/unknown"
+   ],
+   "removed_provider_still_listed_for_model": [
+    [
+     "Azure/azure/eu/unknown",
+     true
+    ],
+    [
+     "Azure/azure/us/unknown",
+     true
+    ]
+   ],
+   "responses": {
+    "2026-11-19T05-17-05-687Z-1886818": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:29:58.424Z",
+      "sha256": "1ce5060583595feed0dd28d87cf713fd32b1a0e9a2d4fb0ef801f5d4397984e2"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:31:00.848Z",
+      "sha256": "1ce5060583595feed0dd28d87cf713fd32b1a0e9a2d4fb0ef801f5d4397984e2"
+     }
+    ],
+    "2026-11-19T05-51-31-753Z-1951021": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:04:10.814Z",
+      "sha256": "4e2eeab5bc659bdf7d2a71e9fb2b9bd67e2bcc2fdb30b98242b9f88b10e06d06"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:05:12.705Z",
+      "sha256": "4e2eeab5bc659bdf7d2a71e9fb2b9bd67e2bcc2fdb30b98242b9f88b10e06d06"
+     }
+    ]
+   }
+  },
+  {
+   "model_id": "openai/gpt-6.1-terra",
+   "prior_identities": [
+    "Amazon Bedrock/amazon-bedrock/us-east-1/unknown",
+    "Azure/azure/eu/unknown",
+    "Azure/azure/unknown",
+    "Azure/azure/us/unknown",
+    "OpenAI/openai/fast/unknown",
+    "OpenAI/openai/flex/unknown",
+    "OpenAI/openai/unknown"
+   ],
+   "current_identities": [
+    "Azure/azure/unknown",
+    "OpenAI/openai/fast/unknown",
+    "OpenAI/openai/flex/unknown",
+    "OpenAI/openai/unknown"
+   ],
+   "removed": [
+    "Amazon Bedrock/amazon-bedrock/us-east-1/unknown",
+    "Azure/azure/eu/unknown",
+    "Azure/azure/us/unknown"
+   ],
+   "removed_provider_still_listed_for_model": [
+    [
+     "Amazon Bedrock/amazon-bedrock/us-east-1/unknown",
+     false
+    ],
+    [
+     "Azure/azure/eu/unknown",
+     true
+    ],
+    [
+     "Azure/azure/us/unknown",
+     true
+    ]
+   ],
+   "responses": {
+    "2026-11-19T05-17-05-687Z-1886818": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:29:58.327Z",
+      "sha256": "3e26da19bb6ded016edb9ef3e57e2b3631de8fc93507e11fb4b7548922a7df96"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:31:00.871Z",
+      "sha256": "3e26da19bb6ded016edb9ef3e57e2b3631de8fc93507e11fb4b7548922a7df96"
+     }
+    ],
+    "2026-11-19T05-51-31-753Z-1951021": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:04:10.684Z",
+      "sha256": "3e26da19bb6ded016edb9ef3e57e2b3631de8fc93507e11fb4b7548922a7df96"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:05:12.705Z",
+      "sha256": "3e26da19bb6ded016edb9ef3e57e2b3631de8fc93507e11fb4b7548922a7df96"
+     }
+    ]
+   }
+  },
+  {
+   "model_id": "openai/gpt-6.1-terra-pro",
+   "prior_identities": [
+    "Azure/azure/eu/unknown",
+    "Azure/azure/unknown",
+    "Azure/azure/us/unknown",
+    "OpenAI/openai/fast/unknown",
+    "OpenAI/openai/flex/unknown",
+    "OpenAI/openai/unknown"
+   ],
+   "current_identities": [
+    "Azure/azure/unknown",
+    "OpenAI/openai/fast/unknown",
+    "OpenAI/openai/flex/unknown",
+    "OpenAI/openai/unknown"
+   ],
+   "removed": [
+    "Azure/azure/eu/unknown",
+    "Azure/azure/us/unknown"
+   ],
+   "removed_provider_still_listed_for_model": [
+    [
+     "Azure/azure/eu/unknown",
+     true
+    ],
+    [
+     "Azure/azure/us/unknown",
+     true
+    ]
+   ],
+   "responses": {
+    "2026-11-19T05-17-05-687Z-1886818": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:29:58.316Z",
+      "sha256": "8d54a2e2275628a18318e517e69aa248103f89464be229e95bb6dfe9bc43d1c9"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:31:00.861Z",
+      "sha256": "8d54a2e2275628a18318e517e69aa248103f89464be229e95bb6dfe9bc43d1c9"
+     }
+    ],
+    "2026-11-19T05-51-31-753Z-1951021": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:04:10.663Z",
+      "sha256": "063e8b2815ce96a0f28ddc882c93065176cc02605917d36f58726bcf92aa5ebe"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:05:12.680Z",
+      "sha256": "063e8b2815ce96a0f28ddc882c93065176cc02605917d36f58726bcf92aa5ebe"
+     }
+    ]
+   }
+  },
+  {
+   "model_id": "openai/o3-mini:batch",
+   "prior_identities": [
+    "OpenAI/openai/unknown"
+   ],
+   "current_identities": [],
+   "removed": [
+    "OpenAI/openai/unknown"
+   ],
+   "removed_provider_still_listed_for_model": [
+    [
+     "OpenAI/openai/unknown",
+     false
+    ]
+   ],
+   "responses": {
+    "2026-11-19T05-17-05-687Z-1886818": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:30:00.224Z",
+      "sha256": "80642b2d2ffa7ab72817e1f43cb3a719fe53e53363ba0f737f3a26433a685447"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:31:01.208Z",
+      "sha256": "80642b2d2ffa7ab72817e1f43cb3a719fe53e53363ba0f737f3a26433a685447"
+     }
+    ],
+    "2026-11-19T05-51-31-753Z-1951021": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:04:12.368Z",
+      "sha256": "80642b2d2ffa7ab72817e1f43cb3a719fe53e53363ba0f737f3a26433a685447"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:05:13.181Z",
+      "sha256": "80642b2d2ffa7ab72817e1f43cb3a719fe53e53363ba0f737f3a26433a685447"
+     }
+    ]
+   }
+  },
+  {
+   "model_id": "openai/o3:batch",
+   "prior_identities": [
+    "OpenAI/openai/unknown"
+   ],
+   "current_identities": [],
+   "removed": [
+    "OpenAI/openai/unknown"
+   ],
+   "removed_provider_still_listed_for_model": [
+    [
+     "OpenAI/openai/unknown",
+     false
+    ]
+   ],
+   "responses": {
+    "2026-11-19T05-17-05-687Z-1886818": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:30:00.112Z",
+      "sha256": "a18e042a3bd80071fdb83619e00c63db4c2a7f508d2d004d72697f58821b18ed"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:31:01.170Z",
+      "sha256": "a18e042a3bd80071fdb83619e00c63db4c2a7f508d2d004d72697f58821b18ed"
+     }
+    ],
+    "2026-11-19T05-51-31-753Z-1951021": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:04:12.226Z",
+      "sha256": "a18e042a3bd80071fdb83619e00c63db4c2a7f508d2d004d72697f58821b18ed"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:05:13.088Z",
+      "sha256": "a18e042a3bd80071fdb83619e00c63db4c2a7f508d2d004d72697f58821b18ed"
+     }
+    ]
+   }
+  },
+  {
+   "model_id": "openai/o4-mini:batch",
+   "prior_identities": [
+    "OpenAI/openai/unknown"
+   ],
+   "current_identities": [],
+   "removed": [
+    "OpenAI/openai/unknown"
+   ],
+   "removed_provider_still_listed_for_model": [
+    [
+     "OpenAI/openai/unknown",
+     false
+    ]
+   ],
+   "responses": {
+    "2026-11-19T05-17-05-687Z-1886818": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:30:00.105Z",
+      "sha256": "67a1b73346e5096374f6a84465971c6b9f3dc2a07f9209ac8b63e72e8d80603f"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:31:01.170Z",
+      "sha256": "67a1b73346e5096374f6a84465971c6b9f3dc2a07f9209ac8b63e72e8d80603f"
+     }
+    ],
+    "2026-11-19T05-51-31-753Z-1951021": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:04:12.300Z",
+      "sha256": "67a1b73346e5096374f6a84465971c6b9f3dc2a07f9209ac8b63e72e8d80603f"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:05:13.122Z",
+      "sha256": "67a1b73346e5096374f6a84465971c6b9f3dc2a07f9209ac8b63e72e8d80603f"
+     }
+    ]
+   }
+  },
+  {
+   "model_id": "qwen/qwen3-235b-a22b-2507",
+   "prior_identities": [
+    "DeepInfra/deepinfra/fp8/flex/fp8",
+    "DeepInfra/deepinfra/fp8/fp8",
+    "DeepInfra/deepinfra/fp8/priority/fp8",
+    "Nebius/nebius/fp8/fp8",
+    "Parasail/parasail/fp8/fp8",
+    "Venice/venice/fp8/fp8"
+   ],
+   "current_identities": [
+    "DeepInfra/deepinfra/fp8/flex/fp8",
+    "DeepInfra/deepinfra/fp8/fp8",
+    "DeepInfra/deepinfra/fp8/priority/fp8",
+    "Parasail/parasail/fp8/fp8",
+    "Venice/venice/fp8/fp8"
+   ],
+   "removed": [
+    "Nebius/nebius/fp8/fp8"
+   ],
+   "removed_provider_still_listed_for_model": [
+    [
+     "Nebius/nebius/fp8/fp8",
+     false
+    ]
+   ],
+   "responses": {
+    "2026-11-19T05-17-05-687Z-1886818": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:30:00.019Z",
+      "sha256": "1c93867626db358656e8e08a274e515b7615a0aad6eb6cfbe72305175a3e6378"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:31:01.150Z",
+      "sha256": "1c93867626db358656e8e08a274e515b7615a0aad6eb6cfbe72305175a3e6378"
+     }
+    ],
+    "2026-11-19T05-51-31-753Z-1951021": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:04:12.153Z",
+      "sha256": "f68987fc99e4f3b7448aa0bc6e9c3a4f5b6d91be981874cbc1deb8e6e82cc6a4"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:05:13.087Z",
+      "sha256": "f68987fc99e4f3b7448aa0bc6e9c3a4f5b6d91be981874cbc1deb8e6e82cc6a4"
+     }
+    ]
+   }
+  },
+  {
+   "model_id": "qwen/qwen3.7-flash",
+   "prior_identities": [
+    "Alibaba/alibaba/unknown",
+    "Alibaba/alibaba/us-east-1/unknown"
+   ],
+   "current_identities": [
+    "Alibaba/alibaba/unknown"
+   ],
+   "removed": [
+    "Alibaba/alibaba/us-east-1/unknown"
+   ],
+   "removed_provider_still_listed_for_model": [
+    [
+     "Alibaba/alibaba/us-east-1/unknown",
+     true
+    ]
+   ],
+   "responses": {
+    "2026-11-19T05-17-05-687Z-1886818": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:29:58.865Z",
+      "sha256": "b141f88a01208db42dce387f9664f8019a965494a6824085d82cab4177ae0631"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:31:00.921Z",
+      "sha256": "b141f88a01208db42dce387f9664f8019a965494a6824085d82cab4177ae0631"
+     }
+    ],
+    "2026-11-19T05-51-31-753Z-1951021": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:04:11.228Z",
+      "sha256": "b141f88a01208db42dce387f9664f8019a965494a6824085d82cab4177ae0631"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:05:12.781Z",
+      "sha256": "b141f88a01208db42dce387f9664f8019a965494a6824085d82cab4177ae0631"
+     }
+    ]
+   }
+  },
+  {
+   "model_id": "qwen/qwen3.7-max",
+   "prior_identities": [
+    "Alibaba/alibaba/unknown",
+    "Alibaba/alibaba/us-east-1/unknown"
+   ],
+   "current_identities": [
+    "Alibaba/alibaba/unknown"
+   ],
+   "removed": [
+    "Alibaba/alibaba/us-east-1/unknown"
+   ],
+   "removed_provider_still_listed_for_model": [
+    [
+     "Alibaba/alibaba/us-east-1/unknown",
+     true
+    ]
+   ],
+   "responses": {
+    "2026-11-19T05-17-05-687Z-1886818": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:29:59.166Z",
+      "sha256": "be67f392841c6cb5760cb9f23a81d29a4674f5a93ad086e8b5a976dac5a949f2"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:31:00.989Z",
+      "sha256": "be67f392841c6cb5760cb9f23a81d29a4674f5a93ad086e8b5a976dac5a949f2"
+     }
+    ],
+    "2026-11-19T05-51-31-753Z-1951021": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:04:11.471Z",
+      "sha256": "be67f392841c6cb5760cb9f23a81d29a4674f5a93ad086e8b5a976dac5a949f2"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:05:12.843Z",
+      "sha256": "be67f392841c6cb5760cb9f23a81d29a4674f5a93ad086e8b5a976dac5a949f2"
+     }
+    ]
+   }
+  },
+  {
+   "model_id": "qwen/qwen3.8-27b",
+   "prior_identities": [
+    "AkashML/akashml/fp8/fp8",
+    "Alibaba/alibaba/unknown",
+    "Cerebras/cerebras/fp16/fp16",
+    "Chutes/chutes/fp8/fp8",
+    "Cloudflare/cloudflare/unknown",
+    "CoreWeave/coreweave/fp8/fp8",
+    "Darkbloom/darkbloom/fp4/fp4",
+    "DeepInfra/deepinfra/bf16/bf16",
+    "DekaLLM/dekallm/unknown",
+    "GMICloud/gmicloud/fp8/fp8",
+    "Io Net/io-net/fp8/fp8",
+    "Ionstream/ionstream/fp8/fp8",
+    "Mancer 2/mancer/fp8/fp8",
+    "Modal/modal/unknown",
+    "ModelRun/modelrun/fp4/fp4",
+    "Near AI/near-ai/fp8/fp8",
+    "Nebius/nebius/fp4/fp4",
+    "Novita/novita/unknown",
+    "Parasail/parasail/fp8/fp8",
+    "PrimeIntellect/primeintellect/fp8/fp8",
+    "Reka/reka/fp8/fp8",
+    "SiliconFlow/siliconflow/fp8/fp8",
+    "StreamLake/streamlake/unknown",
+    "Tenstorrent/tenstorrent/fp8/fp8",
+    "Venice/venice/fp8/fp8",
+    "Wafer/wafer/fp8/fp8"
+   ],
+   "current_identities": [
+    "AkashML/akashml/fp8/fp8",
+    "Alibaba/alibaba/unknown",
+    "Cerebras/cerebras/fp16/fp16",
+    "Chutes/chutes/fp8/fp8",
+    "Cloudflare/cloudflare/unknown",
+    "CoreWeave/coreweave/fp8/fp8",
+    "Darkbloom/darkbloom/fp4/fp4",
+    "DeepInfra/deepinfra/fp8/fp8",
+    "DekaLLM/dekallm/unknown",
+    "GMICloud/gmicloud/fp8/fp8",
+    "Ionstream/ionstream/fp8/fp8",
+    "Mancer 2/mancer/fp8/fp8",
+    "Modal/modal/unknown",
+    "ModelRun/modelrun/fp4/fp4",
+    "Near AI/near-ai/fp8/fp8",
+    "Nebius/nebius/fp4/fp4",
+    "Novita/novita/unknown",
+    "Parasail/parasail/fp8/fp8",
+    "PrimeIntellect/primeintellect/fp8/fp8",
+    "Reka/reka/fp8/fp8",
+    "SiliconFlow/siliconflow/fp8/fp8",
+    "StreamLake/streamlake/unknown",
+    "Tenstorrent/tenstorrent/fp8/fp8",
+    "Venice/venice/fp8/fp8",
+    "Wafer/wafer/fp8/fp8"
+   ],
+   "removed": [
+    "DeepInfra/deepinfra/bf16/bf16",
+    "Io Net/io-net/fp8/fp8"
+   ],
+   "removed_provider_still_listed_for_model": [
+    [
+     "DeepInfra/deepinfra/bf16/bf16",
+     true
+    ],
+    [
+     "Io Net/io-net/fp8/fp8",
+     false
+    ]
+   ],
+   "responses": {
+    "2026-11-19T05-17-05-687Z-1886818": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:29:58.759Z",
+      "sha256": "fe961526b65c2101ddafe446304283d65d8b09f9212e4aea41cbc2e3470069bd"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:31:00.909Z",
+      "sha256": "fe961526b65c2101ddafe446304283d65d8b09f9212e4aea41cbc2e3470069bd"
+     }
+    ],
+    "2026-11-19T05-51-31-753Z-1951021": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:04:11.133Z",
+      "sha256": "9634f3cc3dafd8743c0b872397d365fb52d5a8fedf962759f54bdc8925d7e13d"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:05:12.770Z",
+      "sha256": "cf08e8acaff52566110fab02b4bf4498cf7fce310f07eb7fceb5a59f89700f85"
+     }
+    ]
+   }
+  },
+  {
+   "model_id": "x-ai/grok-4.6",
+   "prior_identities": [
+    "Amazon Bedrock/amazon-bedrock/us-west-2/unknown",
+    "xAI/xai/priority/unknown",
+    "xAI/xai/unknown",
+    "xAI/xai/zdr/priority/unknown",
+    "xAI/xai/zdr/unknown",
+    "xAI/xai/zdr/us/unknown"
+   ],
+   "current_identities": [
+    "xAI/xai/priority/unknown",
+    "xAI/xai/unknown",
+    "xAI/xai/zdr/priority/unknown",
+    "xAI/xai/zdr/unknown"
+   ],
+   "removed": [
+    "Amazon Bedrock/amazon-bedrock/us-west-2/unknown",
+    "xAI/xai/zdr/us/unknown"
+   ],
+   "removed_provider_still_listed_for_model": [
+    [
+     "Amazon Bedrock/amazon-bedrock/us-west-2/unknown",
+     false
+    ],
+    [
+     "xAI/xai/zdr/us/unknown",
+     true
+    ]
+   ],
+   "responses": {
+    "2026-11-19T05-17-05-687Z-1886818": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:29:58.800Z",
+      "sha256": "7af0db9bb79f1afd0f221016db0e9b9ebf28fbd82b106b70f54756ce78be87ad"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:31:00.927Z",
+      "sha256": "7af0db9bb79f1afd0f221016db0e9b9ebf28fbd82b106b70f54756ce78be87ad"
+     }
+    ],
+    "2026-11-19T05-51-31-753Z-1951021": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:04:11.164Z",
+      "sha256": "c8139c118c32a41ca32e1df80c39546f741b9de25bcca438d9c07eafb5493beb"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:05:12.760Z",
+      "sha256": "c8139c118c32a41ca32e1df80c39546f741b9de25bcca438d9c07eafb5493beb"
+     }
+    ]
+   }
+  },
+  {
+   "model_id": "x-ai/grok-4.7",
+   "prior_identities": [
+    "Amazon Bedrock/amazon-bedrock/global/unknown",
+    "xAI/xai/priority/unknown",
+    "xAI/xai/unknown",
+    "xAI/xai/zdr/priority/unknown",
+    "xAI/xai/zdr/unknown",
+    "xAI/xai/zdr/us/unknown"
+   ],
+   "current_identities": [
+    "Amazon Bedrock/amazon-bedrock/global/unknown",
+    "xAI/xai/priority/unknown",
+    "xAI/xai/unknown",
+    "xAI/xai/zdr/priority/unknown",
+    "xAI/xai/zdr/unknown"
+   ],
+   "removed": [
+    "xAI/xai/zdr/us/unknown"
+   ],
+   "removed_provider_still_listed_for_model": [
+    [
+     "xAI/xai/zdr/us/unknown",
+     true
+    ]
+   ],
+   "responses": {
+    "2026-11-19T05-17-05-687Z-1886818": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:29:58.544Z",
+      "sha256": "56db3380abd3e3a053773435c483a5b006b6c1c9f2e95c1d865448f8ea00db9b"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:31:00.890Z",
+      "sha256": "56db3380abd3e3a053773435c483a5b006b6c1c9f2e95c1d865448f8ea00db9b"
+     }
+    ],
+    "2026-11-19T05-51-31-753Z-1951021": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:04:10.923Z",
+      "sha256": "1d2c1562c339ccf2e9f605763d5feda892d16a0a006095e462a946b57f407cd3"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:05:12.729Z",
+      "sha256": "56db3380abd3e3a053773435c483a5b006b6c1c9f2e95c1d865448f8ea00db9b"
+     }
+    ]
+   }
+  },
+  {
+   "model_id": "xiaomi/mimo-v2.5-pro",
+   "prior_identities": [
+    "AtlasCloud/atlas-cloud/fp8/fp8",
+    "DigitalOcean/digitalocean/unknown"
+   ],
+   "current_identities": [
+    "DigitalOcean/digitalocean/unknown"
+   ],
+   "removed": [
+    "AtlasCloud/atlas-cloud/fp8/fp8"
+   ],
+   "removed_provider_still_listed_for_model": [
+    [
+     "AtlasCloud/atlas-cloud/fp8/fp8",
+     false
+    ]
+   ],
+   "responses": {
+    "2026-11-19T05-17-05-687Z-1886818": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:29:59.351Z",
+      "sha256": "94dad1cd693e15fb783b3dd0c6d786cb4643dffb116a439c830c7977fab78780"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:31:01.017Z",
+      "sha256": "94dad1cd693e15fb783b3dd0c6d786cb4643dffb116a439c830c7977fab78780"
+     }
+    ],
+    "2026-11-19T05-51-31-753Z-1951021": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:04:11.593Z",
+      "sha256": "d806290b0022c653caa30b913261938ba2972266a8d6fc18e303ab8e06b41eff"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:05:12.851Z",
+      "sha256": "5de1ba5f9369b449d74f122deb7015a25138678a7134bca1560c250749096c63"
+     }
+    ]
+   }
+  },
+  {
+   "model_id": "xiaomi/mimo-v2.6-flash",
+   "prior_identities": [
+    "Cohere/cohere/fp8/fp8",
+    "Darkbloom/darkbloom/fp4/fp4",
+    "DeepInfra/deepinfra/fp8/fp8",
+    "GMICloud/gmicloud/bf16/bf16",
+    "Makora/makora/fp8/fp8",
+    "Tenstorrent/tenstorrent/fp8/fp8",
+    "Venice/venice/fp8/fp8",
+    "Xiaomi/xiaomi/fp8/fp8"
+   ],
+   "current_identities": [
+    "Cohere/cohere/fp8/fp8",
+    "Darkbloom/darkbloom/fp4/fp4",
+    "DeepInfra/deepinfra/fp8/fp8",
+    "GMICloud/gmicloud/bf16/bf16",
+    "Makora/makora/fp8/fp8",
+    "Venice/venice/fp8/fp8",
+    "Xiaomi/xiaomi/fp8/fp8"
+   ],
+   "removed": [
+    "Tenstorrent/tenstorrent/fp8/fp8"
+   ],
+   "removed_provider_still_listed_for_model": [
+    [
+     "Tenstorrent/tenstorrent/fp8/fp8",
+     false
+    ]
+   ],
+   "responses": {
+    "2026-11-19T05-17-05-687Z-1886818": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:29:58.572Z",
+      "sha256": "401bc424308c7355a23071a06c3c19691d56fd4da6dd26c02212ad5bdf364ba8"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:31:00.896Z",
+      "sha256": "401bc424308c7355a23071a06c3c19691d56fd4da6dd26c02212ad5bdf364ba8"
+     }
+    ],
+    "2026-11-19T05-51-31-753Z-1951021": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:04:11.009Z",
+      "sha256": "027dd5560f37b6b47c9b2fc6dc4c92815cdbe465a7f93fa1fe7a5611860264e0"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:05:12.742Z",
+      "sha256": "76e624c0656b87f2c241372c3a08e6b5638ca45de64700a0ea7ea14f1366af87"
+     }
+    ]
+   }
+  },
+  {
+   "model_id": "z-ai/glm-5.2",
+   "prior_identities": [
+    "Alibaba/alibaba/fast/fp8",
+    "Alibaba/alibaba/fp8/fp8",
+    "Alibaba/alibaba/fp8/us-east-1/fp8",
+    "Ambient/ambient/fp8/fp8",
+    "AtlasCloud/atlas-cloud/fp8/fp8",
+    "Baidu/baidu/fast/fp4",
+    "Baidu/baidu/fp8/fp8",
+    "BaseTen/baseten/fast/fp8",
+    "BaseTen/baseten/fp8/fp8",
+    "BaseTen/baseten/fp8/us/fp8",
+    "BaseTen/baseten/us/fast/fp8",
+    "Cloudflare/cloudflare/unknown",
+    "CoreWeave/coreweave/fp4/fp4",
+    "DeepInfra/deepinfra/fp4/flex/fp4",
+    "DeepInfra/deepinfra/fp4/fp4",
+    "DeepInfra/deepinfra/fp4/priority/fp4",
+    "DigitalOcean/digitalocean/unknown",
+    "Friendli/friendli/unknown",
+    "GMICloud/gmicloud/fp8/fp8",
+    "Inceptron/inceptron/fp4/fp4",
+    "Mistral/mistral/eu/unknown",
+    "Mistral/mistral/zdr/nvfp4",
+    "Morph/morph/fp8/fp8",
+    "Nebius/nebius/fp4/fp4",
+    "Novita/novita/fp8/fp8",
+    "Parasail/parasail/fp4/fp4",
+    "Relace/relace/fp4/fp4",
+    "SiliconFlow/siliconflow/fp8/fp8",
+    "StreamLake/streamlake/fp8/fp8",
+    "Together/together/unknown",
+    "Venice/venice/fp8/fp8",
+    "Wafer/wafer/fp4",
+    "Wafer/wafer/us/fp4",
+    "Z.AI/z-ai/fp8/fp8"
+   ],
+   "current_identities": [
+    "Alibaba/alibaba/fast/fp8",
+    "Alibaba/alibaba/fp8/fp8",
+    "Alibaba/alibaba/fp8/us-east-1/fp8",
+    "Ambient/ambient/fp8/fp8",
+    "AtlasCloud/atlas-cloud/fp8/fp8",
+    "Baidu/baidu/fast/fp4",
+    "Baidu/baidu/fp8/fp8",
+    "BaseTen/baseten/fast/fp8",
+    "BaseTen/baseten/fp8/fp8",
+    "BaseTen/baseten/fp8/us/fp8",
+    "BaseTen/baseten/us/fast/fp8",
+    "Cloudflare/cloudflare/unknown",
+    "CoreWeave/coreweave/fp4/fp4",
+    "DeepInfra/deepinfra/fp4/flex/fp4",
+    "DeepInfra/deepinfra/fp4/fp4",
+    "DeepInfra/deepinfra/fp4/priority/fp4",
+    "DigitalOcean/digitalocean/unknown",
+    "Friendli/friendli/unknown",
+    "GMICloud/gmicloud/fp8/fp8",
+    "Mistral/mistral/eu/unknown",
+    "Mistral/mistral/zdr/unknown",
+    "Morph/morph/fp8/fp8",
+    "Nebius/nebius/fp4/fp4",
+    "Novita/novita/fp8/fp8",
+    "Parasail/parasail/fp4/fp4",
+    "Relace/relace/fp4/fp4",
+    "SiliconFlow/siliconflow/fp8/fp8",
+    "StreamLake/streamlake/fp8/fp8",
+    "Together/together/unknown",
+    "Venice/venice/fp8/fp8",
+    "Wafer/wafer/fp4",
+    "Wafer/wafer/us/fp4",
+    "Z.AI/z-ai/fp8/fp8"
+   ],
+   "removed": [
+    "Inceptron/inceptron/fp4/fp4",
+    "Mistral/mistral/zdr/nvfp4"
+   ],
+   "removed_provider_still_listed_for_model": [
+    [
+     "Inceptron/inceptron/fp4/fp4",
+     false
+    ],
+    [
+     "Mistral/mistral/zdr/nvfp4",
+     true
+    ]
+   ],
+   "responses": {
+    "2026-11-19T05-17-05-687Z-1886818": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:29:59.083Z",
+      "sha256": "d9aa504703bad1bfa7b4c8165d341548f645cde1c62a94026467981262dcee37"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:31:00.971Z",
+      "sha256": "d9aa504703bad1bfa7b4c8165d341548f645cde1c62a94026467981262dcee37"
+     }
+    ],
+    "2026-11-19T05-51-31-753Z-1951021": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:04:11.401Z",
+      "sha256": "b12192f909438c69b3f8e86b3e4b5841384c8b4ed8429e191a3c4c04c521908e"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:05:12.817Z",
+      "sha256": "2ff1b0e9ab64c4dee44cbc97fb1db904ed63523a10dbf0b7090fde733dc28de3"
+     }
+    ]
+   }
+  },
+  {
+   "model_id": "z-ai/glm-5.3-flash",
+   "prior_identities": [
+    "AtlasCloud/atlas-cloud/fp8/fp8",
+    "BaseTen/baseten/fp8/fp8",
+    "Cohere/cohere/nvfp4/nvfp4",
+    "CoreWeave/coreweave/nvfp4/nvfp4",
+    "Crusoe/crusoe/fp4/fp4",
+    "Darkbloom/darkbloom/fp4/fp4",
+    "DeepInfra/deepinfra/fp4/fp4",
+    "DekaLLM/dekallm/unknown",
+    "DigitalOcean/digitalocean/unknown",
+    "Fireworks/fireworks/unknown",
+    "Fireworks/fireworks/us/unknown",
+    "Friendli/friendli/unknown",
+    "GMICloud/gmicloud/fp8/fp8",
+    "Inceptron/inceptron/fp8/fp8",
+    "InferenceNet/inference-net/fp4/fp4",
+    "InferenceNet/inference-net/us/fp4",
+    "KT/kt/unknown",
+    "Makora/makora/fp4/fp4",
+    "Mistral/mistral/unknown",
+    "Modal/modal/fp4/fp4",
+    "Morph/morph/fp8/fp8",
+    "Near AI/near-ai/fp8/fp8",
+    "Nebius/nebius/fp4/fp4",
+    "NextBit/nextbit/fp4/fp4",
+    "Novita/novita/fp8/fp8",
+    "OpenInference/open-inference/fp4/fp4",
+    "Parasail/parasail/fast/fp4",
+    "Parasail/parasail/fp4/fp4",
+    "Particle AI/particle-ai/nvfp4/flex/nvfp4",
+    "Particle AI/particle-ai/nvfp4/nvfp4",
+    "Reka/reka/unknown",
+    "Relace/relace/fp4/fp4",
+    "River/river/unknown",
+    "Sail Research/sail-research/fp4/fp4",
+    "Sail Research/sail-research/us/fp4",
+    "SiliconFlow/siliconflow/fp8/fp8",
+    "StreamLake/streamlake/fp8/fp8",
+    "Tenstorrent/tenstorrent/fp8/fp8",
+    "Together/together/unknown",
+    "Venice/venice/unknown",
+    "Wafer/wafer/nvfp4/nvfp4",
+    "Wafer/wafer/us/nvfp4",
+    "Z.AI/z-ai/fp8/fp8"
+   ],
+   "current_identities": [
+    "Baidu/baidu/fp8/fp8",
+    "BaseTen/baseten/fp8/fp8",
+    "Cohere/cohere/nvfp4/nvfp4",
+    "CoreWeave/coreweave/nvfp4/nvfp4",
+    "Crusoe/crusoe/fp4/fp4",
+    "Darkbloom/darkbloom/fp4/fp4",
+    "DeepInfra/deepinfra/fp4/fp4",
+    "DekaLLM/dekallm/unknown",
+    "DigitalOcean/digitalocean/unknown",
+    "Fireworks/fireworks/unknown",
+    "Fireworks/fireworks/us/unknown",
+    "Friendli/friendli/unknown",
+    "GMICloud/gmicloud/fp8/fp8",
+    "Inceptron/inceptron/fp8/fp8",
+    "InferenceNet/inference-net/fp4/fp4",
+    "InferenceNet/inference-net/us/fp4",
+    "KT/kt/unknown",
+    "Makora/makora/fp4/fp4",
+    "Mistral/mistral/unknown",
+    "Modal/modal/fp4/fp4",
+    "Morph/morph/fp8/fp8",
+    "Near AI/near-ai/fp8/fp8",
+    "Nebius/nebius/fp4/fp4",
+    "Novita/novita/fp8/fp8",
+    "OpenInference/open-inference/fp4/fp4",
+    "Parasail/parasail/fast/fp4",
+    "Parasail/parasail/fp8/fp8",
+    "Particle AI/particle-ai/nvfp4/flex/nvfp4",
+    "Particle AI/particle-ai/nvfp4/nvfp4",
+    "Reka/reka/unknown",
+    "Relace/relace/fp4/fp4",
+    "River/river/unknown",
+    "Sail Research/sail-research/fp4/fp4",
+    "Sail Research/sail-research/us/fp4",
+    "SiliconFlow/siliconflow/fp8/fp8",
+    "StreamLake/streamlake/fp8/fp8",
+    "Tenstorrent/tenstorrent/fp8/fp8",
+    "Together/together/unknown",
+    "Venice/venice/unknown",
+    "Wafer/wafer/nvfp4/nvfp4",
+    "Wafer/wafer/us/nvfp4",
+    "Z.AI/z-ai/fp8/fp8"
+   ],
+   "removed": [
+    "AtlasCloud/atlas-cloud/fp8/fp8",
+    "NextBit/nextbit/fp4/fp4",
+    "Parasail/parasail/fp4/fp4"
+   ],
+   "removed_provider_still_listed_for_model": [
+    [
+     "AtlasCloud/atlas-cloud/fp8/fp8",
+     false
+    ],
+    [
+     "NextBit/nextbit/fp4/fp4",
+     false
+    ],
+    [
+     "Parasail/parasail/fp4/fp4",
+     true
+    ]
+   ],
+   "responses": {
+    "2026-11-19T05-17-05-687Z-1886818": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:29:58.719Z",
+      "sha256": "0ba742bb5fed8241d46f2c2438dd4692ba443de18223526a412dd0eafdddd806"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T05:31:01.068Z",
+      "sha256": "0ba742bb5fed8241d46f2c2438dd4692ba443de18223526a412dd0eafdddd806"
+     }
+    ],
+    "2026-11-19T05-51-31-753Z-1951021": [
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:04:11.098Z",
+      "sha256": "f57d03a1432ab8b8d9bb3bc4a58a33839576aebe0b7bad63cb62dd7217705fa9"
+     },
+     {
+      "status": 200,
+      "fetched_at": "2026-11-19T06:05:12.744Z",
+      "sha256": "2e92ee6d34a1558792daadc4a8d745ba5785d248612b1ca734c4808442d39f03"
+     }
+    ]
+   }
+  }
+ ]
+}

@@ -362,8 +362,12 @@ async function fetchOpenRouter({ efficiency = true } = {}) {
     await mapLimit(recheck, 10, loadEndpoints);
   }
   const date = new Date().toISOString().slice(0, 10);
-  const plan = planOpenRouterWithdrawals({ previous, models, endpointsById, date });
+  let approvals = {};
+  try { approvals = JSON.parse(await readFile(join(RAW, 'source-change-approvals.json'), 'utf8')); }
+  catch (error) { if (error.code !== 'ENOENT') throw error; }
+  const plan = planOpenRouterWithdrawals({ previous, models, endpointsById, date, approval: approvals.openrouter_endpoint_withdrawals ?? null });
   if (plan.error) throw new Error(plan.error);
+  if (plan.run.approved_endpoint_withdrawals) console.log(`  ${plan.run.approved_endpoint_withdrawals.count} endpoint withdrawals under reviewed approval ${plan.run.approved_endpoint_withdrawals.cr ?? ''} (${plan.run.approved_endpoint_withdrawals.reviewed_at})`);
   for (const m of plan.run.withdrawn_models) console.log(`  withdrawn model ${m.id} (${date})`);
   for (const e of plan.run.withdrawn_endpoints) console.log(`  withdrawn endpoint ${e.model_id} ${e.identity} (${date})`);
   for (const r of [...plan.run.restored_models, ...plan.run.restored_endpoints]) console.log(`  restored ${r.model_id ?? r.id}${r.identity ? ` ${r.identity}` : ''} (withdrawn ${r.withdrawn_at})`);
