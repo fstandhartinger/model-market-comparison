@@ -863,10 +863,18 @@ test("all published providers have metadata and no generated normalization ghost
     }
     assert.ok(providerMeta.providers[provider.provider], provider.provider);
   }
+  // CR-788: a row whose every OpenRouter route was withdrawn stays as an unpriced benchmark subject when
+  // published observations join it; such a row must carry observations and must not be a ghost otherwise.
+  const observed = new Set(ds.benchmark_results.observations.map((o) => o.subject?.model_id));
   const ghosts = ds.models.filter((model) => !model.aa_model_id && !model.coding_agent_results?.length
     && !Object.values(model.benchmarks || {}).some((value) => value != null)
-    && !Object.keys(model.designarena || {}).length && !model.offers.length && !model.copilot);
+    && !Object.keys(model.designarena || {}).length && !model.offers.length && !model.copilot
+    && !(model.benchmark_subject_only && observed.has(model.id)));
   assert.deepEqual(ghosts, []);
+  for (const model of ds.models.filter((m) => m.benchmark_subject_only)) {
+    assert.equal(model.offers.length, 0, `${model.id}: benchmark-only row carries no offer`);
+    assert.ok(observed.has(model.id), `${model.id}: benchmark-only row has published observations`);
+  }
 });
 
 test("September frontier additions retain prices, exact efforts and conservative metadata", () => {

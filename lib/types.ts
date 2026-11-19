@@ -249,6 +249,8 @@ export interface ModelRow {
   offers: Offer[];
   manual_notes?: string;
   benchmark_override_note?: string;
+  /** CR-788: every OpenRouter route was withdrawn; kept unpriced because published benchmark observations join this row. */
+  benchmark_subject_only?: boolean;
   designarena_attachment_note?: string;
   epoch_eci_attachment_note?: string;
   aa_agentic_attachment_note?: string;
