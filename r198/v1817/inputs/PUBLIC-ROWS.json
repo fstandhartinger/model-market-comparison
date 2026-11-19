@@ -1,0 +1,11 @@
+{
+ "subq-snap-1.2": {
+  "author": "Subquadratic",
+  "disclosure": "Measured through the SubQ hosted API on the full 27 Oct draw. Hosting implementation and deployed weights were not independently inspected. Failed or unanswered requests count as wrong answers. The hosted API returned native probabilities for all three question types and reported zero output tokens.",
+  "display": "SubQ Snap 1.2",
+  "endpoint_condition": "SubQ /v1/systemone API (api.subq.ai), one item per request, native probabilities; latency measured from our server in Germany.",
+  "licence": "Proprietary hosted API (no weights release)",
+  "notes": "The hosted API returned native probabilities for all three question types and reported zero output tokens.",
+  "repo": "https://subq.ai"
+ }
+}

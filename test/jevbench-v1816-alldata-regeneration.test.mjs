@@ -1,8 +1,26 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { readFile } from 'node:fs/promises';
-import { buildV1816AllDataView } from '../scripts/build-jevbench-v1816-alldata.mjs';
+import {readFile, readdir, mkdtemp, mkdir, symlink, rm} from 'node:fs/promises';
+import {join, resolve} from 'node:path';
+import {tmpdir} from 'node:os';
+import {buildV1816AllDataView} from '../scripts/build-jevbench-v1816-alldata.mjs';
 
-test('precomputed input regenerates byte for byte from the validated release', { timeout: 1800000 }, async () => {
-  assert.equal(JSON.stringify(await buildV1816AllDataView()) + '\n', await readFile('data/jevbench-v1.8.16-alldata.json', 'utf8'));
+test('v1.8.16 precomputed All-data bytes reproduce on its published release chain', async()=>{
+  // A newer live addendum contributes its own row-pool bounds. Freeze this historical
+  // regeneration at v1.8.16, without changing any archived source or artifact bytes.
+  const root=await mkdtemp(join(tmpdir(),'v1816-chain-'));
+  const hidden=['data/raw/benchmarks/jevbench/v1.8/jevbench-v1.8.17-publication.json'];
+  async function mirror(rel=''){
+    for(const e of await readdir(resolve(rel||'.'),{withFileTypes:true})){
+      if(['.git','.next','.heavy-run','node_modules'].includes(e.name))continue;
+      const path=rel?`${rel}/${e.name}`:e.name;
+      if(hidden.includes(path))continue;
+      if(hidden.some(h=>h.startsWith(path+'/'))){await mkdir(join(root,path));await mirror(path);}
+      else await symlink(resolve(path),join(root,path));
+    }
+  }
+  try{
+    await mirror();
+    assert.equal(JSON.stringify(await buildV1816AllDataView(root))+'\n',await readFile('data/jevbench-v1.8.16-alldata.json','utf8'));
+  }finally{await rm(root,{recursive:true,force:true});}
 });
