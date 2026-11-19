@@ -558,6 +558,13 @@ async function build() {
   console.log(`AA Intelligence Index v${aa.index_version}: ${[...aaIntelligence.byId.values()].filter((r) => r.status === "measured").length} measured, ${[...aaIntelligence.byId.values()].filter((r) => r.status === "estimated").length} estimated from v4 (isotonic fit on ${aaIntelligence.fit.bridge_count} models, leave-one-out MAE ${aaIntelligence.fit.loo?.mae?.toFixed(2) ?? "n/a"})`);
   const da = await readJSON("designarena.json");
   const or = await readJSON("openrouter.json");
+  // Published benchmark observations remain evidence when an API route disappears.
+  // Keep their catalog identities without inventing an available offer (CR-787).
+  // The complete score evidence is still verified before writing the dataset below.
+  const benchmarkScores = await readJSON("benchmarks/scores.json");
+  const publishedBenchmarkModelIds = new Set((benchmarkScores.observations || [])
+    .map((o) => o.subject?.model_id).filter((id) => typeof id === "string"));
+  const publishedBenchmarkFamilies = new Set([...publishedBenchmarkModelIds].map((id) => id.split("::")[0]));
   const aaEfficiency = await readJSON("aa-efficiency.json");
   const openrouterEfficiency = await readJSON("openrouter-efficiency.json");
   const chutesEfficiency = await readJSON("chutes-efficiency.json");
@@ -818,7 +825,7 @@ async function build() {
     const familyKey = mappedFamily || own.familyKey;
     const org = mappedFamily ? [...models.values()].find((row) => row.family_key === familyKey)?.org || own.org : own.org;
     const pricedEndpoints = (m.endpoints || []).filter((e) => num(e.pricing?.prompt) != null || num(e.pricing?.completion) != null);
-    if (!pricedEndpoints.length) continue;
+    if (!pricedEndpoints.length && !publishedBenchmarkFamilies.has(familyKey)) continue;
 
     const hasPublishedWeights = typeof m.hugging_face_id === "string" && m.hugging_face_id.trim().length > 0;
     const fam = family(familyKey, org, { openWeights: hasPublishedWeights });
@@ -1314,7 +1321,7 @@ async function build() {
   for (const row of modelRows) {
     const hasScore = Object.values(row.benchmarks || {}).some((value) => value != null);
     const hasDesign = Object.keys(row.designarena || {}).length > 0;
-    if (!row.aa_model_id && !row.coding_agent_results?.length
+    if (!publishedBenchmarkModelIds.has(row.id) && !row.aa_model_id && !row.coding_agent_results?.length
         && !hasScore && !hasDesign && !row.offers.length && !row.copilot) models.delete(row.id);
   }
   modelRows = [...models.values()];
@@ -1451,7 +1458,6 @@ async function build() {
   const { attachEfficiency } = await import("../lib/efficiency.mjs");
   const efficiency = attachEfficiency(modelRows, { aa, aaEfficiency, aaEfficiencyV4, openrouter: or, openrouterEfficiency, chutesEfficiency, now: generated_at });
   const benchmarkRegistry = await readJSON("benchmarks/registry.json");
-  const benchmarkScores = await readJSON("benchmarks/scores.json");
   const { verifyScoreEvidence } = await import("../lib/benchmark-score-evidence.mjs");
   const { buildBenchmarkResults } = await import("../lib/benchmark-scores.mjs");
   const { buildHeadlineObservations } = await import("../lib/headline-history.mjs");
