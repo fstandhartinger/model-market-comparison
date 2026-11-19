@@ -795,6 +795,13 @@ async function build() {
   } catch { /* no manual file */ }
   const orIdsByFamily = new Map();
   const openRouterRoutes = [];
+  // CR-788: when OpenRouter withdraws every route of a model (19 Nov 2026: openai/gpt-5.2-chat lost its only
+  // route, Azure), the row stays as an unpriced benchmark subject if a published benchmark join targets it,
+  // so its verified scores are not withheld. Only families of models whose endpoints the retained snapshot
+  // records as withdrawn qualify; no offer is kept or invented.
+  const withdrawnOpenRouterIds = new Set((or.withdrawals?.endpoints || []).map((e) => e.model_id));
+  const benchmarkJoinTargets = new Set(((await readJSON("benchmarks/identity-map.json")).entries || []).map((e) => e.model_id));
+  const joinedFamily = (familyKey) => [...benchmarkJoinTargets].some((id) => id.startsWith(`${familyKey}::`));
   for (const m of or.models) {
     const outputs = m.architecture?.output_modalities || [];
     // This is a language-model comparison: multimodal INPUT is fine, but image,
@@ -818,7 +825,10 @@ async function build() {
     const familyKey = mappedFamily || own.familyKey;
     const org = mappedFamily ? [...models.values()].find((row) => row.family_key === familyKey)?.org || own.org : own.org;
     const pricedEndpoints = (m.endpoints || []).filter((e) => num(e.pricing?.prompt) != null || num(e.pricing?.completion) != null);
-    if (!pricedEndpoints.length) continue;
+    if (!pricedEndpoints.length) {
+      if (withdrawnOpenRouterIds.has(m.id) && joinedFamily(familyKey)) family(familyKey, org, { openWeights: typeof m.hugging_face_id === "string" && m.hugging_face_id.trim().length > 0 }).benchmarkSubjectOnly = true;
+      continue;
+    }
 
     const hasPublishedWeights = typeof m.hugging_face_id === "string" && m.hugging_face_id.trim().length > 0;
     const fam = family(familyKey, org, { openWeights: hasPublishedWeights });
@@ -1314,8 +1324,12 @@ async function build() {
   for (const row of modelRows) {
     const hasScore = Object.values(row.benchmarks || {}).some((value) => value != null);
     const hasDesign = Object.keys(row.designarena || {}).length > 0;
+    const benchmarkSubject = families.get(row.family_key)?.benchmarkSubjectOnly && benchmarkJoinTargets.has(row.id);
     if (!row.aa_model_id && !row.coding_agent_results?.length
-        && !hasScore && !hasDesign && !row.offers.length && !row.copilot) models.delete(row.id);
+        && !hasScore && !hasDesign && !row.offers.length && !row.copilot) {
+      if (benchmarkSubject) row.benchmark_subject_only = true;
+      else models.delete(row.id);
+    }
   }
   modelRows = [...models.values()];
   const epochEciAttachment = attachEpochEci(modelRows, epochEci);

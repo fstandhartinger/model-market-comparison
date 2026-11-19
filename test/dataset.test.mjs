@@ -312,7 +312,13 @@ test("EU-capable gateway providers mark only their explicitly European OpenRoute
     assert.equal(providerMeta.providers[provider]?.eu_hosted, true, `${provider} directory capability`);
     assert.equal(providerMeta.providers[provider]?.openrouter_eu_hosted, false, `${provider} blanket routing`);
     const rows = offers.filter((offer) => offer.provider === provider);
-    assert.ok(rows.some((offer) => offer.region === "eu" && offer.eu_hosted), `${provider} explicit EU route`);
+    // CR-788: OpenRouter delisted the Azure swedencentral and Google Vertex eu routes on 19 Nov 2026, so an
+    // explicit EU route is required only while the raw snapshot still lists one; the EU flag never appears without it.
+    const listsEuRoute = openRouter.models.some((m) => (m.endpoints || []).some((e) => e.provider_name === provider
+      && String(e.tag || "").split("/").slice(1).some((part) => /^eu(-|$)/.test(part) || part === "swedencentral")));
+    if (listsEuRoute) assert.ok(rows.some((offer) => offer.region === "eu" && offer.eu_hosted), `${provider} explicit EU route`);
+    else assert.ok(rows.every((offer) => offer.region !== "eu" && !offer.eu_hosted), `${provider}: no EU route upstream, so no EU-flagged row`);
+    assert.ok(rows.every((offer) => !offer.eu_hosted || offer.region === "eu"), `${provider} EU flag only on an EU route`);
     assert.ok(rows.some((offer) => offer.region === "global" && !offer.eu_hosted), `${provider} global route`);
   }
 });
@@ -857,10 +863,18 @@ test("all published providers have metadata and no generated normalization ghost
     }
     assert.ok(providerMeta.providers[provider.provider], provider.provider);
   }
+  // CR-788: a row whose every OpenRouter route was withdrawn stays as an unpriced benchmark subject when
+  // published observations join it; such a row must carry observations and must not be a ghost otherwise.
+  const observed = new Set(ds.benchmark_results.observations.map((o) => o.subject?.model_id));
   const ghosts = ds.models.filter((model) => !model.aa_model_id && !model.coding_agent_results?.length
     && !Object.values(model.benchmarks || {}).some((value) => value != null)
-    && !Object.keys(model.designarena || {}).length && !model.offers.length && !model.copilot);
+    && !Object.keys(model.designarena || {}).length && !model.offers.length && !model.copilot
+    && !(model.benchmark_subject_only && observed.has(model.id)));
   assert.deepEqual(ghosts, []);
+  for (const model of ds.models.filter((m) => m.benchmark_subject_only)) {
+    assert.equal(model.offers.length, 0, `${model.id}: benchmark-only row carries no offer`);
+    assert.ok(observed.has(model.id), `${model.id}: benchmark-only row has published observations`);
+  }
 });
 
 test("September frontier additions retain prices, exact efforts and conservative metadata", () => {
