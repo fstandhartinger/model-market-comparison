@@ -76,6 +76,14 @@ class Tests(unittest.TestCase):
         self.assertFalse(S.active(job, recipe(image=S.BASE_IMAGE.split('@')[0])))
         self.assertFalse(S.active(job, None))
 
+    def test_native_owner_routes_this_repo_and_keeps_the_sibling(self):
+        import native_owner
+        entry = native_owner.match_supplement({'model_link': 'https://huggingface.co/minimodels-ai/decision-1-hard-candy'})
+        self.assertEqual(entry['family'], 'minimodels_hard_candy')
+        self.assertEqual(entry['module'], Path(S.__file__).name)
+        sibling = native_owner.match_supplement({'model_link': 'https://huggingface.co/minimodels-ai/decision-1.0'})
+        self.assertEqual(sibling['family'], 'minimodels_decision')
+
     def test_base_image_is_digest_pinned_and_valid_recipe_image(self):
         self.assertTrue(pod_runner.IMAGE_RE.fullmatch(S.BASE_IMAGE))
 
