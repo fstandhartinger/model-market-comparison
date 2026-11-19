@@ -1242,6 +1242,10 @@ def _lifecycle(provider, job, recipe, staging_path, output, state, gpu_choice, t
             # Chon's think-when-unsure pass makes a 1,500-row run longer than the default hour; this order may use
             # the rest of its attempt TTL minus a teardown margin (the TTL and cost caps are unchanged).
             wait_s = chon_runtime_supplement.run_wait_seconds(state.get('attempt_started_at'), ttl)
+        import minimodels_hard_candy_runtime_supplement
+        if minimodels_hard_candy_runtime_supplement.active(job_dir or job, recipe):
+            # Skyfall's uncertainty-gated CoT can also exceed the default hour on 1,500 rows; same rule, same caps.
+            wait_s = minimodels_hard_candy_runtime_supplement.run_wait_seconds(state.get('attempt_started_at'), ttl)
         wait = _exec(provider, pod_id, ["docker", "wait", "jev-pod-run"], timeout=wait_s)
         rc = wait.stdout.strip().splitlines()[-1] if wait.stdout.strip() else ""
         logs = _exec(provider, pod_id, ["docker", "logs", "--tail", "20000", "jev-pod-run"], timeout=120)

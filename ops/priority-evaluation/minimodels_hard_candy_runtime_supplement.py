@@ -14,6 +14,7 @@ execs it with the author's entrypoint defaults. This host module imports no mode
 import hashlib
 import re
 import tarfile
+from datetime import datetime, timezone
 from pathlib import Path
 
 import measurement_dispatch
@@ -139,3 +140,22 @@ def build(provider, pod_id, context=CONTEXT):
     if inspected.stdout.strip() != image:
         raise pod_runner.PodRunError('runtime supplement image identity differs')
     return dict(evidence, effective_image=image)
+
+
+DEFAULT_RUN_WAIT_S = 3600
+RUN_WAIT_MARGIN_S = 900  # logs, raw download, receipts and exact-ID teardown before the attempt TTL ends
+
+
+def run_wait_seconds(attempt_started_at, ttl_hours, now=None):
+    """Run-container wait for this order (Chon precedent): Skyfall's uncertainty-gated CoT (up to 420 greedy tokens, 8.8 s cap)
+    can make a 1,500-row run longer than the default hour, so the run may use the rest of its attempt TTL minus a teardown
+    margin. TTL and cost caps are unchanged. A missing or unreadable start time keeps the default."""
+    try:
+        started = datetime.fromisoformat(attempt_started_at)
+        if started.tzinfo is None:
+            raise ValueError
+        elapsed = ((now or datetime.now(timezone.utc)) - started).total_seconds()
+        left = float(ttl_hours) * 3600 - max(elapsed, 0.0) - RUN_WAIT_MARGIN_S
+    except (TypeError, ValueError):
+        return DEFAULT_RUN_WAIT_S
+    return int(max(DEFAULT_RUN_WAIT_S, left))
