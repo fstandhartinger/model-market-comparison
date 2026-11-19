@@ -1,0 +1,11 @@
+{
+ "sieve-31b-v3": {
+  "author": "Sthanika AI",
+  "disclosure": "Paid public evaluation. Measured on the 27 Oct draw on an evaluator-owned rented GPU, offline with the reviewed Sieve runtime. Failed or unanswered requests count as wrong answers. The native LettersEngine evaluates two option orders and reports the summed unpadded input usage, with zero output generation.",
+  "display": "Sieve-31B-v3",
+  "endpoint_condition": "Evaluator-owned Verda GPU VM, offline read-only container (--network none); first-party loopback shim over native LettersEngine at code commit 1e64657c, true package version 0.5.1; three reviewed source substitutions replace metadata deserialization/provenance and restrict the package to letters only. head.pt is never downloaded or unpickled: identical SHA256 metadata is embedded from the prior strict builtins-only decode. BF16 Gemma-4-31B backbone, native full-precision calibrated label softmax; reads=1, reread_max=3000, orders=2, no context truncation/default limit. Actual backbone token concordance covers both option orders, usage sums unpadded passes, output_tokens=0. Native unsupported shapes return 422; GPU OOM is operational failure, not a length refusal. Official PyTorch 2.9.1 CUDA12.8 image plus reviewed offline Sieve supplement.",
+  "licence": "apache-2.0 (model card; base Gemma terms also apply)",
+  "notes": "The native LettersEngine evaluates two option orders and reports the summed unpadded input usage, with zero output generation.",
+  "repo": "https://huggingface.co/sthanika-ai/Sieve-31B-v3"
+ }
+}
