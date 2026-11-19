@@ -865,6 +865,7 @@ test("all published providers have metadata and no generated normalization ghost
   }
   const ghosts = ds.models.filter((model) => !model.aa_model_id && !model.coding_agent_results?.length
     && !Object.values(model.benchmarks || {}).some((value) => value != null)
+    && !(ds.benchmark_results?.coverage?.by_model?.[model.id]?.available > 0)
     && !Object.keys(model.designarena || {}).length && !model.offers.length && !model.copilot);
   assert.deepEqual(ghosts, []);
 });
