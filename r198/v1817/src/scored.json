@@ -1,0 +1,342 @@
+{
+ "subq-snap-1.2": {
+  "cost_basis_sha256": "b83bdfd14c263ffacfa572b304084154afca84c1f00083101a33783ae6f8b356",
+  "frozen": {
+   "api_flag": true,
+   "api_subset": false,
+   "axes": {
+    "calibration": 94.06582365134844,
+    "cost": 64.7929890301389,
+    "intelligence": 78.35582057802682,
+    "speed": 87.07792231454107
+   },
+   "capability": 86.21082211468763,
+   "composite_ci95": {
+    "A": [
+     77.73791246872119,
+     80.31784607860523
+    ],
+    "B": [
+     76.871163292449,
+     80.60832071082541
+    ],
+    "C": [
+     77.73791246872119,
+     80.31784607860523
+    ]
+   },
+   "cost": {
+    "common_basis": {
+     "n_items": 1489,
+     "rule": "common",
+     "usd_per_1000_all_items": 0.02538882666666667
+    },
+    "kind": "estimate",
+    "usage_estimated_rows": 0,
+    "usd_per_1000": 0.014913069173942242
+   },
+   "decision_limit": null,
+   "display": "SubQ Snap 1.2",
+   "endpoint_kind": "api",
+   "full_coverage": true,
+   "jevbench_score": 79.50566063780332,
+   "key": "subq-snap-1.2",
+   "listing": "listed",
+   "rank": null,
+   "ranked": false,
+   "scores": {
+    "A": 79.50566063780332,
+    "B": 79.2730007759616,
+    "C": 79.50566063780332
+   },
+   "speed": {
+    "adjustment": "none (API)",
+    "n": 124,
+    "p50_s_adjusted": 0.43534107005689293,
+    "p50_s_raw": 0.43534107005689293,
+    "p95_s_adjusted": 0.45017163624288514,
+    "p95_s_raw": 0.45017163624288514
+   },
+   "status": {
+    "status": "complete"
+   },
+   "support": {
+    "choice": "native",
+    "noul": "native",
+    "score": "native"
+   },
+   "v16": {
+    "ci95": {
+     "B": 1000,
+     "C": [
+      90.1208781521348,
+      94.33676987064007
+     ],
+     "I": [
+      73.45144520094834,
+      82.04087480514457
+     ],
+     "capability": [
+      82.37271397274533,
+      87.76387843028282
+     ],
+     "composite": {
+      "A": [
+       77.73791246872119,
+       80.31784607860523
+      ],
+      "B": [
+       76.871163292449,
+       80.60832071082541
+      ],
+      "C": [
+       77.73791246872119,
+       80.31784607860523
+      ]
+     },
+     "seed": 16
+    },
+    "complete": true,
+    "equated": null,
+    "equating_offset": null,
+    "g_med_used": 2.573387642438244,
+    "lane": "api"
+   },
+   "views": {
+    "Balanced 33:33:33": 75.60478245681459,
+    "Emphasis on Accuracy 60:20:20": 76.68168646267641,
+    "Emphasis on Cost 20:20:60": 70.87416662733872,
+    "Emphasis on Speed 20:60:20": 79.8110536026419,
+    "Intelligence only": 78.35582057802682
+   }
+  },
+  "pins": {
+   "frozen": "ab37d116fbed9917898f209e81d74b00df4684298dcf9ef738303bc3a6b9766b",
+   "v17-off": "1b67df6d679a06194941e5d4e8fe569905de1c058e1c5894e8cdd616bde371d9",
+   "v17-share": "0cd3f387f5b4a9faca057fd63403bc1789526adcb71b4e921f738f4e871c7722"
+  },
+  "v17-off": {
+   "api_flag": true,
+   "api_subset": false,
+   "axes": {
+    "calibration": 94.06582365134844,
+    "cost": 64.7929890301389,
+    "intelligence": 78.35582057802682,
+    "speed": 87.07792231454107
+   },
+   "capability": 86.21082211468763,
+   "composite_ci95": {
+    "A": [
+     77.73791246872119,
+     80.31784607860523
+    ],
+    "B": [
+     76.871163292449,
+     80.60832071082541
+    ],
+    "C": [
+     77.73791246872119,
+     80.31784607860523
+    ]
+   },
+   "cost": {
+    "common_basis": {
+     "n_items": 1489,
+     "rule": "common",
+     "usd_per_1000_all_items": 0.02538882666666667
+    },
+    "kind": "estimate",
+    "usage_estimated_rows": 0,
+    "usd_per_1000": 0.014913069173942242
+   },
+   "decision_limit": null,
+   "display": "SubQ Snap 1.2",
+   "endpoint_kind": "api",
+   "full_coverage": true,
+   "jevbench_score": 79.50566063780332,
+   "key": "subq-snap-1.2",
+   "listing": "listed",
+   "rank": null,
+   "ranked": false,
+   "scores": {
+    "A": 79.50566063780332,
+    "B": 79.2730007759616,
+    "C": 79.50566063780332
+   },
+   "speed": {
+    "adjustment": "none (API)",
+    "n": 124,
+    "p50_s_adjusted": 0.43534107005689293,
+    "p50_s_raw": 0.43534107005689293,
+    "p95_s_adjusted": 0.45017163624288514,
+    "p95_s_raw": 0.45017163624288514
+   },
+   "status": {
+    "status": "complete"
+   },
+   "support": {
+    "choice": "native",
+    "noul": "native",
+    "score": "native"
+   },
+   "v16": {
+    "ci95": {
+     "B": 1000,
+     "C": [
+      90.1208781521348,
+      94.33676987064007
+     ],
+     "I": [
+      73.45144520094834,
+      82.04087480514457
+     ],
+     "capability": [
+      82.37271397274533,
+      87.76387843028282
+     ],
+     "composite": {
+      "A": [
+       77.73791246872119,
+       80.31784607860523
+      ],
+      "B": [
+       76.871163292449,
+       80.60832071082541
+      ],
+      "C": [
+       77.73791246872119,
+       80.31784607860523
+      ]
+     },
+     "seed": 16
+    },
+    "complete": true,
+    "equated": null,
+    "equating_offset": null,
+    "g_med_used": 2.573387642438244,
+    "lane": "api"
+   },
+   "views": {
+    "Balanced 33:33:33": 75.60478245681459,
+    "Emphasis on Accuracy 60:20:20": 76.68168646267641,
+    "Emphasis on Cost 20:20:60": 70.87416662733872,
+    "Emphasis on Speed 20:60:20": 79.8110536026419,
+    "Intelligence only": 78.35582057802682
+   }
+  },
+  "v17-share": {
+   "api_flag": true,
+   "api_subset": false,
+   "axes": {
+    "calibration": 94.06582365134844,
+    "cost": 64.7929890301389,
+    "intelligence": 78.35582057802682,
+    "speed": 87.04684116960723
+   },
+   "capability": 86.21082211468763,
+   "composite_ci95": {
+    "A": [
+     77.73171795692495,
+     80.31123359979415
+    ],
+    "B": [
+     76.8663174927291,
+     80.60299230899429
+    ],
+    "C": [
+     77.73171795692495,
+     80.31123359979415
+    ]
+   },
+   "cost": {
+    "common_basis": {
+     "n_items": 1489,
+     "rule": "common",
+     "usd_per_1000_all_items": 0.02538882666666667
+    },
+    "kind": "estimate",
+    "usage_estimated_rows": 0,
+    "usd_per_1000": 0.014913069173942242
+   },
+   "decision_limit": {
+    "limit_s": 10.0,
+    "rule": "latency_s > limit -> failed",
+    "treatment": "share"
+   },
+   "display": "SubQ Snap 1.2",
+   "endpoint_kind": "api",
+   "full_coverage": true,
+   "jevbench_score": 79.4991812100819,
+   "key": "subq-snap-1.2",
+   "listing": "listed",
+   "rank": null,
+   "ranked": false,
+   "scores": {
+    "A": 79.4991812100819,
+    "B": 79.26784744193483,
+    "C": 79.4991812100819
+   },
+   "speed": {
+    "adjustment": "none (API)",
+    "basis": "all decisions given (lane items in the raw), measured latency_s",
+    "n": 1500,
+    "p50_s_adjusted": 0.4357196744531393,
+    "p50_s_raw": 0.4357196744531393,
+    "p95_s_adjusted": 0.45301096338080243,
+    "p95_s_raw": 0.45301096338080243
+   },
+   "status": {
+    "status": "complete"
+   },
+   "support": {
+    "choice": "native",
+    "noul": "native",
+    "score": "native"
+   },
+   "v16": {
+    "ci95": {
+     "B": 1000,
+     "C": [
+      90.1208781521348,
+      94.33676987064007
+     ],
+     "I": [
+      73.45144520094834,
+      82.04087480514457
+     ],
+     "capability": [
+      82.37271397274533,
+      87.76387843028282
+     ],
+     "composite": {
+      "A": [
+       77.73171795692495,
+       80.31123359979415
+      ],
+      "B": [
+       76.8663174927291,
+       80.60299230899429
+      ],
+      "C": [
+       77.73171795692495,
+       80.31123359979415
+      ]
+     },
+     "seed": 16
+    },
+    "complete": true,
+    "equated": null,
+    "equating_offset": null,
+    "g_med_used": 2.573387642438244,
+    "lane": "api"
+   },
+   "views": {
+    "Balanced 33:33:33": 75.59697034701125,
+    "Emphasis on Accuracy 60:20:20": 76.67686452124084,
+    "Emphasis on Cost 20:20:60": 70.8700473918661,
+    "Emphasis on Speed 20:60:20": 79.79538508164322,
+    "Intelligence only": 78.35582057802682
+   }
+  }
+ }
+}
