@@ -77,22 +77,29 @@ test('CR-66.6: no direct Telegram request remains in ops/daily; a missing notify
   assert.deepEqual(result, { sent: false, reason: 'notify_missing' });
 });
 
-test('failures send nothing from the daily notifier (the publish gate alerts) but three failures still request escalation', async () => {
+// N132 / CR-785: the first failure of the streak now posts ONE #8 board finding (never a notify message); the failure
+// alert itself still belongs to the publish gate.
+test('failures send nothing to Florian from the daily notifier (the publish gate alerts), post one #8 finding, and three failures still request escalation', async () => {
   const { executeNotifications } = await import('../ops/daily/notify.mjs');
-  const { mkdtemp, readFile, rm } = await import('node:fs/promises');
+  const { mkdtemp, mkdir, readFile, rm } = await import('node:fs/promises');
   const { tmpdir } = await import('node:os');
   const { join } = await import('node:path');
   const stateDir = await mkdtemp(join(tmpdir(), 'bh-failure-retry-'));
   const start = 1_800_000_000_000, day = 86_400_000;
   try {
     const stub = await stubNotify(stateDir);
-    const base = { stateDir, context: { status_ok: false, rc: 1 }, env: { BH_NOTIFY: stub.bin } };
+    await mkdir(join(stateDir, 'board'));
+    const board = await stubNotify(join(stateDir, 'board'));
+    const base = { stateDir, context: { status_ok: false, rc: 1 }, env: { BH_NOTIFY: stub.bin, BH_AGENT_BOARD: board.bin } };
     for (let i = 0; i < 3; i++) {
       const result = await executeNotifications({ ...base, now: start + i * day });
-      assert.equal(result.sent.length, 0);
+      assert.deepEqual(result.sent, i === 0 ? ['publish-blocked'] : []);
       assert.ok(result.plan.skips.some((s) => s.kind === 'failure'));
     }
     assert.equal((await stub.calls()).length, 0);
+    const posts = await board.calls();
+    assert.equal(posts.length, 1);
+    assert.deepEqual(posts[0].slice(0, 4), ['post', '8', '--kind', 'finding']);
     assert.equal(JSON.parse(await readFile(join(stateDir, 'escalation-request.json'))).streak, 3);
     const state = JSON.parse(await readFile(join(stateDir, 'daily-state.json')));
     assert.deepEqual(state.pending, []);

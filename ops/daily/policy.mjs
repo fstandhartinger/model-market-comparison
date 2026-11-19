@@ -215,6 +215,75 @@ export function staleCollectorHumanTodo(stale, { cardAfter = COLLECTOR_CARD_DAYS
   return { key: `collector-stale:${due.map((x) => `${x.id}@${x.failing_since ?? x.last_ok ?? 'unknown'}`).join('|')}`, text: lines.join('\n'), collectors: due.map((x) => x.id) };
 }
 
+// Reliability review N132 (19 Nov 2026): Benchmark Heaven published nothing from 17 Nov 05:53Z on. The npm-test step had
+// grown 2835 s (16 Nov, 79 % of its 3600 s cap) -> 3165 s (17 Nov, 88 %) -> killed at the cap (18 Nov, four runs), and the
+// failures raised no alert: the gate's own failure alert is suppressed while coordination/self-heal.sh handles the streak.
+// Two board findings on #8 now make both visible on the first day:
+//  - the npm-test duration is recorded per run; at >= 75 % of the cap (or a rise of more than 10 % against the last earlier
+//    day at the same concurrency, once the suite is past half the cap) the run posts ONE finding per band (75/85/95/100 %),
+//    repeated for a standing band at most weekly. The answer is sharding or faster tests, never a higher cap (CR-631/CR-777).
+//  - the FIRST failed (publish-blocking) run of a failure streak posts one finding, keyed on the day the streak began, so
+//    the self-heal retries, the catch-up and later runs of the same outage stay silent and an unsent post is retried.
+export const DAILY_FINDING_THREAD = 8;
+export const NPM_TEST_WARN_SHARE = 0.75;
+export const NPM_TEST_RISE_SHARE = 0.10;
+export const NPM_TEST_RISE_MIN_SHARE = 0.5;
+export const NPM_TEST_BANDS = Object.freeze([1, 0.95, 0.85, 0.75]);
+export const NPM_TEST_FINDING_REPEAT_MS = 7 * 24 * 60 * 60 * 1000;
+export const NPM_TEST_HISTORY_MAX = 14;
+const seconds = (ms) => Math.round(ms / 1000);
+const percent = (share) => Math.round(share * 100);
+
+/** The npm-test record a run hands to the notifier, or null when the step did not run. */
+export function npmTestRecord(steps, { capMs, concurrency = null } = {}) {
+  const step = (Array.isArray(steps) ? steps : []).filter((s) => s?.name === 'npm-test').at(-1);
+  if (!step || !Number.isFinite(step.duration_ms) || !Number.isFinite(capMs) || capMs <= 0) return null;
+  return { duration_ms: step.duration_ms, cap_ms: capMs, ok: step.ok === true, concurrency: Number.isSafeInteger(concurrency) ? concurrency : null,
+    timed_out: step.ok !== true && step.duration_ms >= capMs, finished_at: step.finished_at ?? null };
+}
+
+/** History after this run: only a completed (ok) suite is a duration; a killed one is just its cap. */
+export function nextNpmTestHistory(history, npmTest, { iso, dryRun = false } = {}) {
+  const list = (Array.isArray(history) ? history : []).filter((h) => h && typeof h.day === 'string' && Number.isFinite(h.duration_ms));
+  if (dryRun || !npmTest?.ok || typeof iso !== 'string') return list.slice(-NPM_TEST_HISTORY_MAX);
+  return [...list, { day: iso.slice(0, 10), at: iso, duration_ms: npmTest.duration_ms, cap_ms: npmTest.cap_ms, concurrency: npmTest.concurrency ?? null }]
+    .slice(-NPM_TEST_HISTORY_MAX);
+}
+
+/** The one #8 finding for an npm-test step close to (or at) its cap or rising fast, or null. */
+export function npmTestBudgetFinding(npmTest, history = [], { day, runDir = null } = {}) {
+  if (!npmTest || !Number.isFinite(npmTest.duration_ms) || !Number.isFinite(npmTest.cap_ms) || npmTest.cap_ms <= 0 || typeof day !== 'string') return null;
+  const share = npmTest.duration_ms / npmTest.cap_ms;
+  const prior = (Array.isArray(history) ? history : []).filter((h) => h && typeof h.day === 'string' && h.day < day
+    && (h.concurrency ?? null) === (npmTest.concurrency ?? null) && Number.isFinite(h.duration_ms) && h.duration_ms > 0).at(-1) ?? null;
+  const rise = prior ? npmTest.duration_ms / prior.duration_ms - 1 : null;
+  const band = NPM_TEST_BANDS.find((b) => share >= b) ?? null;
+  const rising = rise !== null && rise > NPM_TEST_RISE_SHARE && share >= NPM_TEST_RISE_MIN_SHARE;
+  if (band === null && !rising) return null;
+  const at = `${seconds(npmTest.duration_ms)} s of its ${seconds(npmTest.cap_ms)} s cap (${percent(share)} %)`;
+  const lines = [npmTest.timed_out
+    ? `Benchmark Heaven daily ${day}: npm-test was killed at its ${seconds(npmTest.cap_ms)} s cap, so this run publishes nothing.`
+    : `Benchmark Heaven daily ${day}: npm-test took ${at}${npmTest.concurrency ? ` at --test-concurrency=${npmTest.concurrency}` : ''}.`];
+  if (prior) lines.push(`Last earlier day at the same concurrency: ${seconds(prior.duration_ms)} s on ${prior.day} (${rise >= 0 ? '+' : ''}${percent(rise)} %).`);
+  lines.push('At the cap the step is killed and the day publishes nothing (17-19 Nov 2026). Shard the suite or speed up its slowest files; never raise the cap (CR-631, CR-777).');
+  if (runDir) lines.push(`Run: ${runDir} (per-file timing: reports/npm-test.log; stage timing: reports/profile.json).`);
+  return { key: band !== null ? `npm-test-budget:${percent(band)}` : `npm-test-rise:${day}`, band: band === null ? null : percent(band), share, rise,
+    repeatAfterMs: band !== null ? NPM_TEST_FINDING_REPEAT_MS : null, text: lines.join('\n'), thread: DAILY_FINDING_THREAD };
+}
+
+/** The one #8 finding for the first publish-blocking failure of a streak, or null for a run that published. */
+export function publishBlockedFinding({ statusOk, published = null, rc = null, streakStartedAt, streak, failedStep = null, error = null, runDir = null } = {}) {
+  if (statusOk || published === true || typeof streakStartedAt !== 'string') return null;
+  // The cause is the last `...Error:` / `TIMEOUT:` line; stack frames (`at ...`) and `Command failed:` echoes are skipped.
+  const lines0 = typeof error === 'string' ? error.split('\n').map((l) => l.trim()).filter((l) => l && !/^at\s/.test(l) && !/^Command failed:/.test(l)) : [];
+  const lastLine = lines0.filter((l) => /^(\w*Error\b.*?:|TIMEOUT:)/.test(l)).at(-1) ?? lines0.at(-1) ?? null;
+  const lines = [`Benchmark Heaven daily published nothing: run ended rc=${rc ?? 'unknown'}${failedStep ? ` in step ${failedStep}` : ''} (failure streak started ${streakStartedAt}; this is run ${streak} of it).`];
+  if (lastLine) lines.push(`Cause: ${lastLine.slice(0, 400)}`);
+  lines.push('coordination/self-heal.sh retries and, if needed, starts a repair job; the site keeps the last published data. This finding is posted once per failure streak.');
+  if (runDir) lines.push(`Run: ${runDir}`);
+  return { key: `publish-blocked:${streakStartedAt}`, text: lines.join('\n'), thread: DAILY_FINDING_THREAD };
+}
+
 // --- Failure streak / escalation -------------------------------------------
 export function nextFailureStreak(current, statusOk) {
   const streak = Number.isSafeInteger(current) && current >= 0 ? current : 0;
@@ -241,6 +310,11 @@ export function planNotifications({
   summary_excerpt: summaryExcerpt = null,
   quarantined_arms: quarantinedArms = [],
   stale_sources: staleSourceList = [],
+  // N132: the run's npm-test record (npmTestRecord), the recorded history, the start of the current streak and the
+  // publish facts of a failed run.
+  npm_test: npmTest = null, npm_test_history: npmTestHistory = [],
+  failure_streak_started_at: streakStartedBefore = null,
+  published = null, failed_step: failedStep = null, error: runError = null, run_dir: runDir = null, dry_run: dryRun = false,
   now = Date.now(),
 } = {}) {
   const at = Number.isFinite(now) ? now : Date.parse(now);
@@ -252,6 +326,10 @@ export function planNotifications({
   const sends = []; const skips = []; const baseline = {}; const seeded = previous === null;
 
   baseline.failure_streak = nextFailureStreak(streakBefore, statusOk);
+  // A streak starts at its first failed run; a state written before N132 has no start yet, so the open streak starts now.
+  baseline.failure_streak_started_at = statusOk ? null
+    : (streakBefore > 0 && typeof streakStartedBefore === 'string' ? streakStartedBefore : iso);
+  baseline.npm_test_history = nextNpmTestHistory(npmTestHistory, npmTest, { iso, dryRun });
   // A failed run keeps the last successful baseline; only a successful run
   // advances the watchlist snapshot.
   baseline.top5_state = statusOk ? current : previous;
@@ -338,6 +416,22 @@ export function planNotifications({
     if (known[collectorHandoff.key]) skips.push({ kind: 'collector-handoff', key: collectorHandoff.key, reason: 'duplicate' });
     else sends.push({ kind: 'collector-handoff', key: collectorHandoff.key, text: collectorHandoff.text,
       board: { thread: collectorHandoff.thread, to: collectorHandoff.owner }, onSent: { notified_key: collectorHandoff.key } });
+  }
+  // N132: both findings are independent of the other sends and go to board #8, never to Florian.
+  const blocked = publishBlockedFinding({ statusOk, published, rc, streakStartedAt: baseline.failure_streak_started_at,
+    streak: baseline.failure_streak, failedStep, error: runError, runDir });
+  if (blocked) {
+    if (known[blocked.key]) skips.push({ kind: 'publish-blocked', key: blocked.key, reason: 'duplicate' });
+    else sends.push({ kind: 'publish-blocked', key: blocked.key, text: blocked.text,
+      board: { thread: blocked.thread, kind: 'finding' }, onSent: { notified_key: blocked.key } });
+  }
+  const budget = npmTestBudgetFinding(npmTest, npmTestHistory, { day, runDir });
+  if (budget) {
+    const last = Date.parse(known[budget.key] ?? '');
+    const fresh = Number.isFinite(last) && (budget.repeatAfterMs === null || at - last < budget.repeatAfterMs);
+    if (fresh) skips.push({ kind: 'npm-test-budget', key: budget.key, reason: 'duplicate' });
+    else sends.push({ kind: 'npm-test-budget', key: budget.key, text: budget.text,
+      board: { thread: budget.thread, kind: 'finding', to: COLLECTOR_OWNER_JOB }, onSent: { notified_key: budget.key } });
   }
   const collectorTodo = staleCollectorHumanTodo(escalatable);
   if (collectorTodo) {
