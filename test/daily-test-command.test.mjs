@@ -22,6 +22,8 @@ test('daily npm-test: a small host, a changed script or an unknown CPU count kee
 test('daily npm-test: the step keeps its 60 min cap and the isolated environment', async () => {
   const src = await readFile(new URL('../ops/daily/daily.mjs', import.meta.url), 'utf8');
   const line = src.split('\n').find((l) => l.includes("command('npm-test'"));
-  assert.match(line, /testCommand\.file, testCommand\.args, work, 3_600_000, isolatedEnvironment\);$/);
+  // CR-785: the cap is the named constant the N132 budget finding judges the duration against; it stays 60 min.
+  assert.match(line, /testCommand\.file, testCommand\.args, work, NPM_TEST_TIMEOUT_MS, isolatedEnvironment\);$/);
+  assert.match(src, /^export const NPM_TEST_TIMEOUT_MS = 3_600_000;$/m);
   assert.match(src, /dailyTestCommand\(testScript\)/);
 });

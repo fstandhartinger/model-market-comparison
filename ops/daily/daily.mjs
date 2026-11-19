@@ -10,7 +10,7 @@ import { BOARD_REGISTRY_INCONSISTENT } from '../../lib/live-source.mjs';
 import { AA_INDEX_PINNED_MAJOR, AA_INDEX_VERSION_CHANGED } from '../../lib/aa-index-version.mjs';
 import { aaLegacyApiRetiredMessage, aaRetirementRetentionAllowed, isAaRetainedSnapshot } from '../../lib/aa-legacy-api.mjs';
 import { CODING_AGENT_FILE, CODING_AGENT_ROSTER_SHRANK, CODING_AGENT_SOURCE_KEY, CODING_AGENT_VERSION, CODING_AGENT_VERSION_CHANGED, FROZEN_CODING_AGENT_FILES, codingAgentShrinkRetentionAllowed } from '../../lib/aa-coding-agents.mjs';
-import { COMMIT_TRAILER, assessCommitScope, parseScope, parseStatusPorcelain, pricesScopeViolations, selectProducerCritic, sourceFreshnessErrors, staleCollectorDigestLines } from './policy.mjs';
+import { COMMIT_TRAILER, assessCommitScope, npmTestRecord, parseScope, parseStatusPorcelain, pricesScopeViolations, selectProducerCritic, sourceFreshnessErrors, staleCollectorDigestLines } from './policy.mjs';
 import { executeNotifications } from './notify.mjs';
 import { compactPublishedRun } from './compact-run.mjs';
 import { pruneStaleRuns } from './prune-runs.mjs';
@@ -25,6 +25,8 @@ import { BENCHMARK_STEP_TIMEOUT_MS } from './step-budget.mjs';
 // directory the next stage is already reading. See ops/daily/step-process.mjs.
 import { runStep } from './step-process.mjs';
 const ROOT = fileURLToPath(new URL('../../', import.meta.url));
+// The npm-test hang guard (CR-631/CR-777). N132: the notify pass compares each run's npm-test duration with this cap.
+export const NPM_TEST_TIMEOUT_MS = 3_600_000;
 const hash = (value) => createHash('sha256').update(value).digest('hex');
 const readJSON = async (path) => JSON.parse(await readFile(path, 'utf8'));
 const redact = (value) => {
@@ -524,7 +526,7 @@ export async function runDaily({ repo = ROOT, home = '/opt/benchmarkheaven-daily
     const testScript = JSON.parse(await readFile(join(work, 'package.json'), 'utf8')).scripts?.test;
     const testCommand = dailyTestCommand(testScript);
     report.npm_test_concurrency = testCommand.concurrency;
-    await command('npm-test', testCommand.file, testCommand.args, work, 3_600_000, isolatedEnvironment);
+    await command('npm-test', testCommand.file, testCommand.args, work, NPM_TEST_TIMEOUT_MS, isolatedEnvironment);
     await command('typecheck', 'npx', ['tsc', '--noEmit', '-p', '.'], work, 600_000, isolatedEnvironment);
     await command('prerender', process.execPath, ['--test', 'test/production/prerender.mjs'], work, 600_000, isolatedEnvironment);
     after = await readJSON(join(work, 'data/dataset.json'));
@@ -707,8 +709,14 @@ export async function runDaily({ repo = ROOT, home = '/opt/benchmarkheaven-daily
       reused_units: units.map((u) => ({ kind: u.kind, id: u.id, fingerprint: u.fingerprint, accepted_run_id: u.accepted_run_id, accepted_at: u.accepted_at, captures: u.captures })) };
   } catch (error) { report.reuse = { error: redact(String(error.message)) }; }
   await writeJSONAtomic(join(reports, 'run-report.json'), report);
+  // N132: the npm-test duration is recorded on every run that reached the step (also a killed one) and judged against its
+  // cap by the notify pass; a failed run hands over its failing step and error for the first-failure finding on #8.
+  report.npm_test = npmTestRecord(report.steps, { capMs: NPM_TEST_TIMEOUT_MS, concurrency: report.npm_test_concurrency ?? null });
+  const failedStep = report.steps.filter((s) => s.ok === false).at(-1)?.name ?? null;
   const context = { status_ok: report.exit_code === 0, rc: report.exit_code, top5: top5 ? { current: top5 } : null, datasets: { before: slim(before), after: slim(after) },
-    quarantined_arms: report.quarantined_arms ?? [], stale_sources: report.stale_sources ?? [] };
+    quarantined_arms: report.quarantined_arms ?? [], stale_sources: report.stale_sources ?? [],
+    npm_test: report.npm_test, published: report.published === true, failed_step: failedStep,
+    error: report.error ? redact(String(report.error)).slice(-1500) : null, run_dir: runDir };
   await writeJSONAtomic(join(reports, 'notify-context.json'), context);
   await executeNotifications({ context, stateDir: join(home, 'state'), dryRun }).catch((e) => console.error(`NOTIFICATION FAILED: ${redact(e.message)}`));
   console.log(summary);

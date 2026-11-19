@@ -66,6 +66,8 @@ export async function readNotifyState(stateDir) {
       ? daily.pending.filter((p) => p && typeof p.text === 'string')
       : [],
     last_run: daily.last_run ?? null,
+    failure_streak_started_at: typeof daily.failure_streak_started_at === 'string' ? daily.failure_streak_started_at : null,
+    npm_test_history: Array.isArray(daily.npm_test_history) ? daily.npm_test_history : [],
     failureAlertLastSentAt,
   };
 }
@@ -74,7 +76,12 @@ export async function readNotifyState(stateDir) {
 // CR-66.6: every message goes through `~/bin/notify now` (the one way jobs on Sandy message Florian:
 // dedup, daily cap, logging); no Telegram request is made from here. Returns { sent, reason? } and
 // never throws — a failed send must not mask the daily run's own exit code.
-export const notifyBinary = (env = process.env) => env.BH_NOTIFY || join(env.HOME || '/home/flori', 'bin/notify');
+// CR-785 (19 Nov 2026): under the Node test runner (`node --test` sets NODE_TEST_CONTEXT in every test process and its
+// children) a send without an explicit BH_NOTIFY / BH_AGENT_BOARD stub resolves to a path that cannot exist, so a test can
+// never message Florian or post to the real board: a notify test without a stub posted four fake #8 findings (#67623-6).
+export const TEST_RUNNER_BLOCKED_BIN = '/nonexistent/bh-daily-send-blocked-under-node-test';
+const underTestRunner = (env) => Boolean(env?.NODE_TEST_CONTEXT || process.env.NODE_TEST_CONTEXT);
+export const notifyBinary = (env = process.env) => env.BH_NOTIFY || (underTestRunner(env) ? TEST_RUNNER_BLOCKED_BIN : join(env.HOME || '/home/flori', 'bin/notify'));
 
 // Reliability review N11 (28 Oct 2026): a routine ask that `notify` routes to board #15 prints ROUTED_TO_BOARD_ID=<id>
 // but still exits non-zero (75 NOT SENT: it did not reach Telegram), and a capped card printing QUEUED: outbox <id> is
@@ -132,15 +139,18 @@ export async function sendNotify(text, { bin = notifyBinary(), execImpl = execFi
 // Reliability review N7 (27 Oct 2026): a collector failing 3-6 days is agent work, not a message to Florian, so it
 // goes to the owning job as a board handoff (`agent-board post <thread> --kind handoff --to <owner>`) under the daily
 // run's own identity. Same contract as sendNotify: { sent, reason? }, never throws; a failed post is not marked sent, so the next run replans it while the collector still fails.
-export const agentBoardBinary = (env = process.env) => env.BH_AGENT_BOARD || join(env.HOME || '/home/flori', 'bin/agent-board');
+export const agentBoardBinary = (env = process.env) => env.BH_AGENT_BOARD || (underTestRunner(env) ? TEST_RUNNER_BLOCKED_BIN : join(env.HOME || '/home/flori', 'bin/agent-board'));
 export const DAILY_BOARD_IDENTITY = 'ops:benchmarkheaven-daily';
 
-export async function sendBoardHandoff(text, { thread, to, bin = agentBoardBinary(), execImpl = execFileAsync, env = process.env } = {}) {
-  if (!Number.isSafeInteger(thread) || typeof to !== 'string' || !to) return { sent: false, reason: 'board_target_missing' };
+// N132 (19 Nov 2026): the same post also carries the run's #8 findings (`kind: 'finding'`); a finding may be unaddressed,
+// a handoff always names its owner.
+export const BOARD_POST_KINDS = new Set(['handoff', 'finding']);
+export async function sendBoardHandoff(text, { thread, to = null, kind = 'handoff', bin = agentBoardBinary(), execImpl = execFileAsync, env = process.env } = {}) {
+  if (!Number.isSafeInteger(thread) || !BOARD_POST_KINDS.has(kind) || (to !== null && (typeof to !== 'string' || !to)) || (kind === 'handoff' && !to)) return { sent: false, reason: 'board_target_missing' };
   try {
     // CR-711: identity via AGENT_BOARD_NAME, not a leading `--as`: on LeChonk agent-board is the Sandy relay client and
     // the relay only accepts the subcommand first (it refused every handoff with "subcommand not allowed: '--as'").
-    await execImpl(bin, ['post', String(thread), '--kind', 'handoff', '--to', to, String(text).slice(0, 4000)],
+    await execImpl(bin, ['post', String(thread), '--kind', kind, ...(to ? ['--to', to] : []), String(text).slice(0, 4000)],
       { timeout: NOTIFY_TIMEOUT_MS, env: { ...env, AGENT_BOARD_NAME: DAILY_BOARD_IDENTITY } });
     return { sent: true };
   } catch (error) {
@@ -156,6 +166,8 @@ export async function sendBoardHandoff(text, { thread, to, bin = agentBoardBinar
 // routine asks reach the chief of staff first), and a card is only ever sent from the current run's plan.
 export const HUMAN_TODO_KINDS = new Set(['quarantine', 'collector-stale']);
 export const HUMAN_TODO_ASK_MINUTES = 960;
+// Board posts the current plan re-creates while still due; an unsent one is never replayed blindly.
+export const PLANNED_BOARD_KINDS = new Set(['collector-handoff', 'publish-blocked', 'npm-test-budget']);
 
 // One reply job per card key: the dispatcher appends Florian's reply to that job's PROMPT.md and resumes it, so a
 // second card the same day, or a retry of this one, must never overwrite another card's prompt or an appended reply.
@@ -197,13 +209,18 @@ export async function executeNotifications({
     summary_excerpt: context.summary_excerpt ?? null,
     // F-209 / D225: source-health's quarantined arms, so a standing quarantine becomes a human todo.
     quarantined_arms: context.quarantined_arms ?? [],
-    stale_sources: context.stale_sources ?? [], now,
+    stale_sources: context.stale_sources ?? [],
+    // N132: npm-test budget and first publish block (#8 findings).
+    npm_test: context.npm_test ?? null, npm_test_history: state.npm_test_history,
+    failure_streak_started_at: state.failure_streak_started_at,
+    published: context.published ?? null, failed_step: context.failed_step ?? null, error: context.error ?? null,
+    run_dir: context.run_dir ?? null, dry_run: dryRun, now,
   });
   // Pending DATA events are replayed first. Failure alerts are replanned from
   // current status through the weekly gate; recovery drops stale unsent failures.
   // Replaying them directly would bypass weekly dedup and report resolved problems.
   // Human-action cards and collector handoffs are never replayed: the current plan re-creates one that is still due and unsent.
-  const pendingReplay = state.pending.filter((p) => p.kind !== 'failure' && !HUMAN_TODO_KINDS.has(p.kind) && p.kind !== 'collector-handoff' && !state.notified[p.key]).map((p) => ({
+  const pendingReplay = state.pending.filter((p) => p.kind !== 'failure' && !HUMAN_TODO_KINDS.has(p.kind) && !PLANNED_BOARD_KINDS.has(p.kind) && !state.notified[p.key]).map((p) => ({
     kind: p.kind ?? 'pending', key: p.key ?? null, text: p.text, onSent: p.onSent ?? null, pending: true,
   }));
   const pendingKeys = new Set(pendingReplay.map((p) => p.key).filter((k) => typeof k === 'string' && k));
@@ -272,6 +289,8 @@ export async function executeNotifications({
   await writeJsonAtomic(join(stateDir, 'daily-state.json'), {
     notified: { ...state.notified, ...notifiedAdditions },
     failure_streak: plan.baseline.failure_streak,
+    failure_streak_started_at: plan.baseline.failure_streak_started_at ?? null,
+    npm_test_history: plan.baseline.npm_test_history ?? state.npm_test_history,
     escalation_request: context.status_ok ? null : (plan.baseline.escalation_request ?? state.escalation_request),
     pending: pendingNext,
     last_run: { at: new Date(now).toISOString(), status_ok: context.status_ok, rc: context.rc ?? null, sent, failed: failed.map((f) => f.kind) },
