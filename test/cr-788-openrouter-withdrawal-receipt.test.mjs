@@ -42,6 +42,8 @@ test('CR-788: an expired, too long, unbased or differently bound receipt is igno
     receipt({ expires_at: '2026-11-19T11:00:00Z' }),
     receipt({ expires_at: '2026-11-23T10:00:00Z' }), // > 3 days after review
     receipt({ review_basis: ' ' }),
+    receipt({ reviewed_at: '2026-11-20T09:00:00Z', expires_at: '2026-11-21T09:00:00Z' }), // reviewed in the future
+    receipt({ reviewed_at: '2026-11-19T11:00:00Z', expires_at: '2026-11-19T10:00:00Z' }), // expires before review
     receipt({ previous_endpoint_set_sha256: '0'.repeat(64) }),
     receipt({ withdrawn: 'all' }),
   ]) assert.match(plan([bad]).error, /20 of 300 prior endpoints absent/);

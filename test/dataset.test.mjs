@@ -317,6 +317,7 @@ test("EU-capable gateway providers mark only their explicitly European OpenRoute
     const listsEuRoute = openRouter.models.some((m) => (m.endpoints || []).some((e) => e.provider_name === provider
       && String(e.tag || "").split("/").slice(1).some((part) => /^eu(-|$)/.test(part) || part === "swedencentral")));
     if (listsEuRoute) assert.ok(rows.some((offer) => offer.region === "eu" && offer.eu_hosted), `${provider} explicit EU route`);
+    else assert.ok(rows.every((offer) => offer.region !== "eu" && !offer.eu_hosted), `${provider}: no EU route upstream, so no EU-flagged row`);
     assert.ok(rows.every((offer) => !offer.eu_hosted || offer.region === "eu"), `${provider} EU flag only on an EU route`);
     assert.ok(rows.some((offer) => offer.region === "global" && !offer.eu_hosted), `${provider} global route`);
   }

@@ -778,12 +778,12 @@
         "z-ai/glm-5.3-flash NextBit/nextbit/fp4/fp4",
         "z-ai/glm-5.3-flash Parasail/parasail/fp4/fp4"
       ],
-      "reviewed_at": "2026-11-19T09:29:37Z",
+      "reviewed_at": "2026-11-19T09:50:40Z",
       "expires_at": "2026-11-22T06:00:00Z",
       "review_file": "ops/daily-repair-2026-11-19/openrouter/endpoint-withdrawal-review.json",
-      "review_sha256": "fb42ec1c93e96ed27f29ee4ffa30f05dd50f42fc400134f6fb9dc3fb48df9288",
+      "review_sha256": "82932614fb40052c5168624ef3c6ef6d4d24a61a9ed89bf53f17a5696d35c6e1",
       "primary_url": "https://openrouter.ai/api/v1/models/{id}/endpoints",
-      "review_basis": "OpenRouter delisted 179 endpoint identities on 19 Nov 2026 (118 regional routes such as google-vertex/eu|us, azure/swedencentral and Bedrock regions; legacy :batch SKUs emptied; a few provider quantization variants). Identical across 4 fetch rounds (05:17-09:50Z) and absent from the /endpoints/zdr listing. These become dated withdrawals (never priced); the receipt only applies to the transition from the 17 Nov snapshot and every other absence still counts against the 5 % bound."
+      "review_basis": "OpenRouter delisted 179 endpoint identities on 19 Nov 2026: 126 regional routes (google-vertex/eu|us, azure/swedencentral, Bedrock and other regional tags), 31 legacy :batch SKUs emptied (the newest :batch SKUs keep endpoints) and 22 provider/quantization variants. Identical in the 07:17Z and 08:05Z daily fetches (captures 2026-11-19T08:18:17.467Z to 2026-11-19T08:19:20.697Z, each re-checked after >=60 s) and in an independent recheck of all 106 models at 09:26:27-09:26:45Z; 178 of 179 also absent from /api/v1/endpoints/zdr at 09:27:21Z (the other is a quantization re-key). They become dated withdrawals (never priced); the receipt only applies to the transition from the 17 Nov snapshot and every other absence still counts against the 5 % bound."
     }
   ]
 }

@@ -1,6 +1,6 @@
 {
  "cr": "CR-788",
- "reviewed_at": "2026-11-19T09:29:37Z",
+ "reviewed_at": "2026-11-19T09:50:40Z",
  "reviewer": "claude:bh-daily-collectors-fix-20261007 (assigned by board #67858)",
  "prior_snapshot": {
   "path": "data/raw/openrouter.json",
@@ -48,7 +48,11 @@
   {
    "source": "daily run 2026-11-19T08-05-29-417Z-2420927 fetch-or, first fetch + recheck >=60 s",
    "result": "identical 179",
-   "packet": "jobs/bh-self-heal-repair-2026-11-19-a2/evidence/2026-11-19T08-05-29-417Z-2420927/endpoint-review-packet.json"
+   "packet": "jobs/bh-self-heal-repair-2026-11-19-a2/evidence/2026-11-19T08-05-29-417Z-2420927/endpoint-review-packet.json",
+   "fetched_at_range": [
+    "2026-11-19T08:18:17.467Z",
+    "2026-11-19T08:19:20.697Z"
+   ]
   },
   {
    "source": "independent live recheck of all 106 models /api/v1/models/{id}/endpoints",
@@ -165,12 +169,17 @@
     "xiaomi/mimo-v2.6-flash": "5eee6713e09d08e1b314454a151e944e344111a95186ac21a1d9ad5bda339ea3",
     "z-ai/glm-5.2": "36d8ebba0e936d0f730d26aa720f686f40c0deb91e99c4e0da4a6dafb57cf67b",
     "z-ai/glm-5.3-flash": "75d7a7945376294e47d00aa7052841e75ae458405726f433e3cb4eec9f408d67"
-   }
+   },
+   "checked_at_range": [
+    "2026-11-19T09:26:27Z",
+    "2026-11-19T09:26:45Z"
+   ]
   },
   {
    "source": "https://openrouter.ai/api/v1/endpoints/zdr (second OpenRouter surface)",
    "sha256": "b872d42f112424b92beded1cb160ec864f68d5eb868290fe8d0998ad8f743bef",
-   "result": "178 of 179 identities absent; the one present is z-ai/glm-5.2 Mistral/mistral/zdr re-labelled from nvfp4 to unknown quantization (a re-key, the old identity is still withdrawn). No azure/swedencentral route remains anywhere in the listing."
+   "result": "178 of 179 identities absent; the one present is z-ai/glm-5.2 Mistral/mistral/zdr re-labelled from nvfp4 to unknown quantization (a re-key, the old identity is still withdrawn). No azure/swedencentral route remains anywhere in the listing.",
+   "fetched_at": "2026-11-19T09:27:21Z"
   },
   {
    "source": "third-party report github.com/sol-aeternum/Daemon/issues/747 (2026-11-19)",
@@ -358,5 +367,16 @@
   "openai/gpt-4o:batch OpenAI/openai/unknown",
   "openai/gpt-4-turbo:batch OpenAI/openai/unknown",
   "mistralai/mistral-large Mistral/mistral/eu/unknown"
- ]
+ ],
+ "by_kind_note": "Classification: key model id ends with :batch -> batch SKU emptied; identity tag contains /eu, /us (incl. us-east-1 etc.) or swedencentral -> regional route; otherwise provider/quantization variant. An earlier board line said 118 regional using a narrower regex; 126 is the count under this rule.",
+ "evidence_archive": {
+  "path": "ops/daily-repair-2026-11-19/openrouter/evidence/or-withdrawal-1119.tar.gz",
+  "sha256": "82e94892a1113885f3aa72b07432a9fe488827abc8dac3cdd4fb69d6ade8b7ef"
+ },
+ "fresh_candidate_dataset": {
+  "built_from": "replay of run 2026-11-19T08-05-29-417Z-2420927 through this CR",
+  "raw_openrouter_sha256": "f2a1c5b84073ae98e587d3c87e1d84072027b0259ec5d6b4db8065214724b8d8",
+  "dataset_sha256": "8dcdeb1ff9cceb3fefce7b99680c2d227d878f22431b6211298642580d920c2e",
+  "note": "built locally for test verification only; not committed"
+ }
 }

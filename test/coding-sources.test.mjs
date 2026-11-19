@@ -263,6 +263,10 @@ test('slug boards: every join re-derives from the label, and the refusals are th
   const map = json('data/raw/benchmarks/identity-map.json');
   const dataset = json('data/dataset.json');
   const byId = new Map(dataset.models.map((m) => [m.id, m]));
+  const openRouterRaw = json('data/raw/openrouter.json');
+  const routedIds = new Set((openRouterRaw.models || []).filter((m) => (m.endpoints || []).length).map((m) => m.id));
+  const withdrawnOpenRouterFamilies = new Set((openRouterRaw.withdrawals?.endpoints || [])
+    .filter((w) => !routedIds.has(w.model_id)).map((w) => w.model_id.split('/').pop()));
   const parserFor = (benchmarkId) => benchmarkId.startsWith('bullshitbench-') ? parseBullshitBenchId
     : benchmarkId.startsWith('apprenticebench-') ? parseApprenticeBenchId
     : benchmarkId.startsWith('vals-index') ? parseValsIndexId
@@ -277,7 +281,13 @@ test('slug boards: every join re-derives from the label, and the refusals are th
     const o = observations.find((x) => x.benchmark_id === e.benchmark_id && x.subject.source_id === e.source_id);
     const { family, effort } = parserFor(e.benchmark_id)(e.source_id, e.source_id, o?.protocol ?? '');
     const model = byId.get(e.model_id);
-    assert.ok(model, e.model_id);
+    // CR-788: OpenRouter withdrew the only route of openai/gpt-5.2-chat (Azure) on 2026-11-19, so the build no
+    // longer publishes that row (no phantom offers, CR-534/CR-597). A join may point at an absent row only when the
+    // retained OpenRouter snapshot records that family's route as withdrawn; any other missing target still fails.
+    if (!model) {
+      assert.ok(withdrawnOpenRouterFamilies.has(family), `${e.model_id}: absent without a recorded OpenRouter withdrawal`);
+      continue;
+    }
     assert.equal(model.family_key, family, `${e.source_id}: the joined family is the label's own slug`);
     if (effort && effort !== 'none' && effort !== 'default') assert.equal(model.variant, effort, `${e.source_id}: the joined configuration is the stated setting`);
     if (effort === 'none') assert.equal(model.variant, 'non-reasoning', 'reasoning off joins only a non-reasoning configuration');
