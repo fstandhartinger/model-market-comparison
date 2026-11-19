@@ -362,7 +362,10 @@ async function fetchOpenRouter({ efficiency = true } = {}) {
     await mapLimit(recheck, 10, loadEndpoints);
   }
   const date = new Date().toISOString().slice(0, 10);
-  const plan = planOpenRouterWithdrawals({ previous, models, endpointsById, date });
+  let approvals = {};
+  try { approvals = JSON.parse(await readFile(join(RAW, 'source-change-approvals.json'), 'utf8')); }
+  catch (error) { if (error.code !== 'ENOENT') throw error; }
+  const plan = planOpenRouterWithdrawals({ previous, models, endpointsById, date, receipts: approvals.openrouter_endpoint_withdrawals ?? [] });
   if (plan.error) throw new Error(plan.error);
   for (const m of plan.run.withdrawn_models) console.log(`  withdrawn model ${m.id} (${date})`);
   for (const e of plan.run.withdrawn_endpoints) console.log(`  withdrawn endpoint ${e.model_id} ${e.identity} (${date})`);

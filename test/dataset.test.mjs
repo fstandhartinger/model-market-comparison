@@ -312,7 +312,12 @@ test("EU-capable gateway providers mark only their explicitly European OpenRoute
     assert.equal(providerMeta.providers[provider]?.eu_hosted, true, `${provider} directory capability`);
     assert.equal(providerMeta.providers[provider]?.openrouter_eu_hosted, false, `${provider} blanket routing`);
     const rows = offers.filter((offer) => offer.provider === provider);
-    assert.ok(rows.some((offer) => offer.region === "eu" && offer.eu_hosted), `${provider} explicit EU route`);
+    // CR-788: OpenRouter delisted the Azure swedencentral and Google Vertex eu routes on 19 Nov 2026, so an
+    // explicit EU route is required only while the raw snapshot still lists one; the EU flag never appears without it.
+    const listsEuRoute = openRouter.models.some((m) => (m.endpoints || []).some((e) => e.provider_name === provider
+      && String(e.tag || "").split("/").slice(1).some((part) => /^eu(-|$)/.test(part) || part === "swedencentral")));
+    if (listsEuRoute) assert.ok(rows.some((offer) => offer.region === "eu" && offer.eu_hosted), `${provider} explicit EU route`);
+    assert.ok(rows.every((offer) => !offer.eu_hosted || offer.region === "eu"), `${provider} EU flag only on an EU route`);
     assert.ok(rows.some((offer) => offer.region === "global" && !offer.eu_hosted), `${provider} global route`);
   }
 });
