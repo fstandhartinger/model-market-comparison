@@ -1089,6 +1089,13 @@ def _lifecycle(provider, job, recipe, staging_path, output, state, gpu_choice, t
                 state['runtime_supplement'] = minimodels_decision_runtime_supplement.build(provider, pod_id)
                 image = state['runtime_supplement']['effective_image']
                 save_state()
+            import minimodels_hard_candy_runtime_supplement
+            if minimodels_hard_candy_runtime_supplement.active(job_dir or job, recipe):
+                # Fixed-order offline builder of Minimodels Decision 1 hard-candy's documented Skyfall stack (MLX 0.32.4 CUDA, Rust,
+                # pinned FetchContent sources) on the author's digest-pinned CUDA 12.8.1 devel base; /code/skyfall is compiled in the run container.
+                state['runtime_supplement'] = minimodels_hard_candy_runtime_supplement.build(provider, pod_id)
+                image = state['runtime_supplement']['effective_image']
+                save_state()
             import starlord_runtime_supplement
             if starlord_runtime_supplement.active(job_dir or job, recipe):
                 # Fixed-order offline overlay of Starlord-27B-preview's recorded transformers 5.3 stack (plus three stdlib-only
