@@ -159,6 +159,18 @@ class Tests(unittest.TestCase):
                     self.assertRaises(pod_runner.PodRunError):
                 S.build(provider, 'pod-1', path)
 
+    def test_run_wait_uses_rest_of_ttl_minus_margin_never_below_default(self):
+        from datetime import datetime, timedelta, timezone
+        now = datetime(2026, 11, 20, 12, 0, tzinfo=timezone.utc)
+        started = (now - timedelta(minutes=20)).isoformat()
+        self.assertEqual(S.run_wait_seconds(started, 3.0, now), 3 * 3600 - 20 * 60 - S.RUN_WAIT_MARGIN_S)
+        late = (now - timedelta(hours=2, minutes=50)).isoformat()
+        self.assertEqual(S.run_wait_seconds(late, 3.0, now), S.DEFAULT_RUN_WAIT_S)
+        for bad in (None, '', 'not-a-time', '2026-11-20T11:00:00'):
+            self.assertEqual(S.run_wait_seconds(bad, 3.0, now), S.DEFAULT_RUN_WAIT_S)
+        source = Path(pod_runner.__file__).read_text()
+        self.assertIn("wait_s = minimodels_hard_candy_runtime_supplement.run_wait_seconds(state.get('attempt_started_at'), ttl)", source)
+
     @unittest.skipUnless(LOCAL_CONTEXT.is_file(), 'host-only build context not present')
     def test_real_context_matches_every_pin(self):
         S.check_context(LOCAL_CONTEXT)
