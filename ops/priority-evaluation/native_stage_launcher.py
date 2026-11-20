@@ -33,7 +33,7 @@ DEADLINE = datetime(2026, 11, 21, 17, 31, 29, tzinfo=timezone.utc)
 HASH_RE = re.compile(r"[0-9a-f]{64}\Z")
 CLEAR_PREFIX = "CLEAR FASTLANE "
 HOLD_PREFIX = f"HOLD FASTLANE {ORDER_ID} "
-EXISTING_HOLDS = {70724, 70742, 72382, 72385, 72481, 72489}
+EXISTING_HOLDS = {70724, 70742, 72382, 72385, 72481, 72489, 72555}
 TOOL_NAMES = (
     "agent-board", "gpu-broker", "gpu_broker.py", "gpu-pod-guard", "gpu-cost-monitor",
     "gpu-reaper", "gpu_fleet_visibility.py", "gpu_inventory_isolation.py", "load-guard",
@@ -159,6 +159,20 @@ def board_holds() -> list[dict]:
             if entry.get("kind") == "decision" and entry.get("body", "").startswith(HOLD_PREFIX)]
 
 
+def validate_stage_holds(stage: str, hold_entries: list[dict], resolved_holds: set[int]) -> None:
+    """Validate every hold's schema before filtering for the requested stage."""
+    require(stage in STAGES, "invalid fast-lane stage")
+    for hold_entry in hold_entries:
+        require(hold_entry.get("author") in CUSTODIANS | DEPUTIES | {"florian", "human:florian"},
+                f"unverified HOLD author in #{hold_entry.get('id')}")
+        hold = first_line(hold_entry, HOLD_PREFIX)
+        require(set(hold) == {"stage"} and hold.get("stage") in {"all", *STAGES},
+                f"invalid fast-lane HOLD in #{hold_entry.get('id')}")
+        if hold["stage"] in {"all", stage}:
+            require(hold_entry["id"] in resolved_holds,
+                    f"unresolved cross-channel HOLD #{hold_entry['id']}")
+
+
 def preliminary_authority(stage: str, deputy_id: int, now: datetime | None = None) -> dict:
     """Validate all mutable authority before opening any packet-pinned member."""
     policy = STAGES[stage]
@@ -226,15 +240,7 @@ def preliminary_authority(stage: str, deputy_id: int, now: datetime | None = Non
             "hold clearance is stale or bound to different decisions")
     resolved_holds = set(clearance_scope["resolved_holds"])
     require(EXISTING_HOLDS <= resolved_holds, "existing fast-lane holds were not reconciled")
-    for hold_entry in board_holds():
-        require(hold_entry.get("author") in CUSTODIANS | DEPUTIES | {"florian", "human:florian"},
-                f"unverified HOLD author in #{hold_entry.get('id')}")
-        hold = first_line(hold_entry, HOLD_PREFIX)
-        require(set(hold) == {"stage"} and hold.get("stage") in {"all", stage},
-                f"invalid fast-lane HOLD in #{hold_entry.get('id')}")
-        if hold["stage"] in {"all", stage}:
-            require(hold_entry["id"] in resolved_holds,
-                    f"unresolved cross-channel HOLD #{hold_entry['id']}")
+    validate_stage_holds(stage, board_holds(), resolved_holds)
     reaper = board_entry(scope["reaper_id"])
     require(reaper.get("author") in REAPER_OWNERS and reaper.get("kind") in {"decision", "answer"}
             and issued - timedelta(hours=2) <= entry_time(reaper) <= issued
