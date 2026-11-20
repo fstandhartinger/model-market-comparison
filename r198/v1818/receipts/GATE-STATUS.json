@@ -1,0 +1,320 @@
+{
+  "status": "STOP_PREBUILD_DISK",
+  "manifest": "PENDING",
+  "sandy": [
+    {
+      "gate": "snapshot",
+      "argv": [
+        "node",
+        "scripts/build-jevbench-v1818-alldata.mjs"
+      ],
+      "cwd": "/home/flori/wt/jevbench-v1818-20261120",
+      "exit": 0,
+      "expected": 0,
+      "log": "logs/snapshot.log",
+      "finished": "2026-11-20T09:31:33.781037+00:00"
+    },
+    {
+      "gate": "n30-negative",
+      "argv": [
+        "node",
+        "--test",
+        "test/cr-257-v1818-min-samples.test.mjs"
+      ],
+      "cwd": "/home/flori/wt/jevbench-v1818-20261120",
+      "exit": 1,
+      "expected": 1,
+      "log": "logs/n30-negative.log",
+      "finished": "2026-11-20T09:31:53.284797+00:00"
+    },
+    {
+      "gate": "n30-positive",
+      "argv": [
+        "node",
+        "--test",
+        "test/cr-257-v1818-min-samples.test.mjs"
+      ],
+      "cwd": "/home/flori/wt/jevbench-v1818-20261120",
+      "exit": 0,
+      "expected": 0,
+      "log": "logs/n30-positive.log",
+      "finished": "2026-11-20T09:32:10.924087+00:00"
+    },
+    {
+      "gate": "tsc",
+      "argv": [
+        "node",
+        "node_modules/typescript/bin/tsc",
+        "--noEmit"
+      ],
+      "cwd": "/home/flori/wt/jevbench-v1818-20261120",
+      "exit": 0,
+      "expected": 0,
+      "log": "logs/tsc.log",
+      "finished": "2026-11-20T09:32:58.009041+00:00"
+    },
+    {
+      "gate": "pending-tests",
+      "argv": [
+        "node",
+        "--test",
+        "--test-concurrency=2",
+        "test/jevbench-v1818-release.test.mjs",
+        "test/jevbench-v1818-topics-base.test.mjs",
+        "test/jevbench-v1818-alldata-regeneration.test.mjs",
+        "test/jevbench-v1818-alldata-precompute.test.mjs",
+        "test/jevbench-v1817-release.test.mjs",
+        "test/jevbench-breakdowns-every-listed-row.test.mjs",
+        "test/jevbench-feed-live-board.test.mjs",
+        "test/cr-257-category-radars.test.mjs",
+        "test/jevbench-architecture-data.test.mjs",
+        "test/release-page-seo.test.mjs",
+        "test/sitemap-releases-redirects.test.mjs",
+        "test/cr-205-jev-page-structure.test.mjs"
+      ],
+      "cwd": "/home/flori/wt/jevbench-v1818-20261120",
+      "exit": 0,
+      "expected": 0,
+      "log": "logs/pending-tests.log",
+      "finished": "2026-11-20T09:39:55.519469+00:00"
+    }
+  ],
+  "final_local": [
+    {
+      "gate": "audit-final",
+      "argv": [
+        "python3",
+        "-B",
+        "/home/flori/jobs/jevbench-add-requests-20260919/workers/r174l-v1818-ranking-build2/tools/audit.py"
+      ],
+      "exit": 0,
+      "log": "logs/audit-final.log"
+    },
+    {
+      "gate": "validator-final",
+      "argv": [
+        "node",
+        "r198/v1818/validate_v1818.mjs"
+      ],
+      "exit": 0,
+      "log": "logs/validator-final.log"
+    },
+    {
+      "gate": "privacy-final",
+      "argv": [
+        "python3",
+        "-B",
+        "/home/flori/jobs/jevbench-add-requests-20260919/workers/r174l-v1818-ranking-build2/tools/privacy.py"
+      ],
+      "exit": 0,
+      "log": "logs/privacy-final.log"
+    }
+  ],
+  "lechonk": [
+    {
+      "gate": "node-version",
+      "argv": [
+        "/srv/heavy/tools/node20/bin/node",
+        "--version"
+      ],
+      "cwd": "/home/flori/wt/jevbench-v1818-r174l2-gates",
+      "env": {},
+      "exit": 0,
+      "expected": 0,
+      "log": "node-version.log",
+      "started": "2026-11-20T09:30:59.780833+00:00",
+      "finished": "2026-11-20T09:30:59.786944+00:00"
+    },
+    {
+      "gate": "module-imports",
+      "argv": [
+        "/srv/heavy/tools/node20/bin/node",
+        "--input-type=module",
+        "-e",
+        "await import('./lib/jevbench-categories.mjs'); await import('./lib/jevbench-alldata-input.mjs'); await import('./lib/jevbench-live-board.mjs');"
+      ],
+      "cwd": "/home/flori/wt/jevbench-v1818-r174l2-gates",
+      "env": {},
+      "exit": 0,
+      "expected": 0,
+      "log": "module-imports.log",
+      "started": "2026-11-20T09:30:59.787293+00:00",
+      "finished": "2026-11-20T09:31:00.169919+00:00"
+    },
+    {
+      "gate": "snapshot",
+      "argv": [
+        "/srv/heavy/tools/node20/bin/node",
+        "scripts/build-jevbench-v1818-alldata.mjs"
+      ],
+      "cwd": "/home/flori/wt/jevbench-v1818-r174l2-gates",
+      "env": {
+        "NEXT_PHASE": "phase-production-build"
+      },
+      "exit": 0,
+      "expected": 0,
+      "log": "snapshot.log",
+      "started": "2026-11-20T09:31:00.170835+00:00",
+      "finished": "2026-11-20T09:35:25.648448+00:00"
+    },
+    {
+      "gate": "validator",
+      "argv": [
+        "/srv/heavy/tools/node20/bin/node",
+        "r198/v1818/validate_v1818.mjs"
+      ],
+      "cwd": "/home/flori/wt/jevbench-v1818-r174l2-gates",
+      "env": {},
+      "exit": 0,
+      "expected": 0,
+      "log": "validator.log",
+      "started": "2026-11-20T09:35:25.649446+00:00",
+      "finished": "2026-11-20T09:36:06.262740+00:00"
+    },
+    {
+      "gate": "n30-negative",
+      "argv": [
+        "/srv/heavy/tools/node20/bin/node",
+        "--test",
+        "test/cr-257-v1818-min-samples.test.mjs"
+      ],
+      "cwd": "/home/flori/wt/jevbench-v1818-r174l2-gates",
+      "env": {
+        "N30_BASELINE": "1"
+      },
+      "exit": 1,
+      "expected": 1,
+      "log": "n30-negative.log",
+      "started": "2026-11-20T09:36:06.263696+00:00",
+      "finished": "2026-11-20T09:36:49.667507+00:00"
+    },
+    {
+      "gate": "n30-positive",
+      "argv": [
+        "/srv/heavy/tools/node20/bin/node",
+        "--test",
+        "test/cr-257-v1818-min-samples.test.mjs"
+      ],
+      "cwd": "/home/flori/wt/jevbench-v1818-r174l2-gates",
+      "env": {},
+      "exit": 0,
+      "expected": 0,
+      "log": "n30-positive.log",
+      "started": "2026-11-20T09:36:49.669061+00:00",
+      "finished": "2026-11-20T09:37:35.101322+00:00"
+    },
+    {
+      "gate": "snapshot-privacy",
+      "argv": [
+        "/srv/heavy/tools/node20/bin/node",
+        "--input-type=module",
+        "-e",
+        "\nimport assert from 'node:assert/strict';\nimport { readFileSync } from 'node:fs';\nimport { privateTokenHits } from './r198/v1812/private-token-check.mjs';\nconst k='cue-reflex-4b-v0.2';\nconst data=JSON.parse(readFileSync('data/jevbench-v1.8.18-alldata.json','utf8'));\nconst row=data.artifact.systems.find(row=>row.key===k);\nconst text=JSON.stringify({row, cells:data.categoryView.systems[k]});\nassert.ok(row);\nassert.ok(Object.values(privateTokenHits(text)).every(n=>n===0));\nassert.doesNotMatch(text,/fastlane-native|raw\\.jsonl|\\/home\\/|probs_as_returned|\"task_id\"|\"opaque_id\"/);\nconsole.log('PASS snapshot new row and cells, 0 private token hits');\n"
+      ],
+      "cwd": "/home/flori/wt/jevbench-v1818-r174l2-gates",
+      "env": {},
+      "exit": 0,
+      "expected": 0,
+      "log": "snapshot-privacy.log",
+      "started": "2026-11-20T09:37:35.101899+00:00",
+      "finished": "2026-11-20T09:37:35.310762+00:00"
+    },
+    {
+      "gate": "tsc",
+      "argv": [
+        "/srv/heavy/tools/node20/bin/node",
+        "node_modules/typescript/bin/tsc",
+        "--noEmit"
+      ],
+      "cwd": "/home/flori/wt/jevbench-v1818-r174l2-gates",
+      "env": {},
+      "exit": 0,
+      "expected": 0,
+      "log": "tsc.log",
+      "started": "2026-11-20T09:37:35.311447+00:00",
+      "finished": "2026-11-20T09:38:55.059728+00:00"
+    },
+    {
+      "gate": "pending-tests",
+      "argv": [
+        "/srv/heavy/tools/node20/bin/node",
+        "--test",
+        "--test-concurrency=4",
+        "test/jevbench-v1816-alldata-precompute.test.mjs",
+        "test/jevbench-v1816-alldata-regeneration.test.mjs",
+        "test/jevbench-v1816-release.test.mjs",
+        "test/jevbench-v1816-topics-base.test.mjs",
+        "test/jevbench-v1817-alldata-precompute.test.mjs",
+        "test/jevbench-v1817-alldata-regeneration.test.mjs",
+        "test/jevbench-v1817-release.test.mjs",
+        "test/jevbench-v1817-topics-base.test.mjs",
+        "test/jevbench-v1818-alldata-precompute.test.mjs",
+        "test/jevbench-v1818-alldata-regeneration.test.mjs",
+        "test/jevbench-v1818-release.test.mjs",
+        "test/jevbench-v1818-topics-base.test.mjs",
+        "test/cr-257-v1811-min-samples.test.mjs",
+        "test/cr-257-v1812-min-samples.test.mjs",
+        "test/cr-257-v1813-min-samples.test.mjs",
+        "test/cr-257-v1814-min-samples.test.mjs",
+        "test/cr-257-v1815-min-samples.test.mjs",
+        "test/cr-257-v1816-min-samples.test.mjs",
+        "test/cr-257-v1817-min-samples.test.mjs",
+        "test/cr-257-v1818-min-samples.test.mjs",
+        "test/jevbench-feed-live-board.test.mjs",
+        "test/jevbench-v1637-release.test.mjs",
+        "test/jevbench-v170-release.test.mjs",
+        "test/jevbench-v1810-release.test.mjs",
+        "test/jevbench-v1810-lowsample-memo.test.mjs",
+        "test/jevbench-breakdowns-every-listed-row.test.mjs",
+        "test/jevbench-alldata-fetch.test.mjs",
+        "test/cr-257-category-radars.test.mjs",
+        "test/jevbench-architecture-data.test.mjs",
+        "test/release-page-seo.test.mjs",
+        "test/sitemap-releases-redirects.test.mjs",
+        "test/cr-205-jev-page-structure.test.mjs"
+      ],
+      "cwd": "/home/flori/wt/jevbench-v1818-r174l2-gates",
+      "env": {},
+      "exit": 0,
+      "expected": 0,
+      "log": "pending-tests.log",
+      "started": "2026-11-20T10:06:18.251219+00:00",
+      "finished": "2026-11-20T11:51:22.807331+00:00"
+    },
+    {
+      "gate": "worktree-prebuild-disk",
+      "argv": [
+        "/home/flori/bin/disk-preflight",
+        "6",
+        "--path",
+        "/home/flori/wt"
+      ],
+      "cwd": "/home/flori/wt/jevbench-v1818-r174l2-gates",
+      "env": {},
+      "exit": 1,
+      "expected": 0,
+      "log": "worktree-prebuild-disk.log",
+      "started": "2026-11-20T11:51:22.808181+00:00",
+      "finished": "2026-11-20T11:51:22.852350+00:00"
+    }
+  ],
+  "remaining_gates": [
+    "synthetic PASS fixture and tests",
+    "production build",
+    "compiled page checks",
+    "served JSON and model-page checks",
+    "full suite"
+  ],
+  "disk_first_exit": 1,
+  "disk_retry_exit": 1,
+  "passed_pending_tests": {
+    "tests": 181,
+    "pass": 178,
+    "skip": 3,
+    "fail": 0
+  },
+  "snapshot_cross_host": {
+    "status": "PASS",
+    "sha256": "b3c2d6eefcca9acbb278ac5512f18a5c953d07400a7d076291c3234badb420e4"
+  }
+}
