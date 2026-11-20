@@ -16,6 +16,7 @@ KEYS = frozenset({"payment_confirmation_v1", "review_passed_v1",
                   "result_private_v1", "result_public_v1", "decisor_result_public_v163_correction"})
 UUID = re.compile(r"^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$")
 LATE_RESULT_KEY = "cd7e_late_result_v1"
+LATE_AUTH = "bh_cd7e_late_result_authorizations"
 LATE_ORDER = "cd7e038c-dcac-4990-9ca5-feac99cd8d8d"
 LATE_ENVELOPE = str(uuid.uuid5(uuid.NAMESPACE_URL, f"benchmarkheaven-fastlane/{LATE_ORDER}/{LATE_RESULT_KEY}"))
 TABLE = "bh_priority_eval_transactional_mail"
@@ -71,6 +72,7 @@ class Envelope:
         self.digest = hashlib.sha256(body.encode("utf-8")).hexdigest()
         self.state = None
         self.submitted = False
+        self._late_session = None
 
     def validate(self):
         late = self.id == LATE_ENVELOPE
@@ -120,7 +122,9 @@ class Envelope:
     def _claim_late(self):
         if self.state == "sent":
             return False
-        # Recheck identity and live order eligibility atomically with the pending claim.
+        session = self.require_late_custody()
+        generation, admission_sha = session[3:5]
+        # Bind the pending claim to the approval currently governing this session.
         row = query(f"""WITH late_order AS MATERIALIZED (
           SELECT r.*, r AS order_record FROM {ORDERS} r JOIN {TABLE} e ON e.request_id=r.id
           WHERE e.id='{self.id}'::uuid AND e.template_key='{LATE_RESULT_KEY}'
@@ -130,20 +134,48 @@ class Envelope:
           FROM late_order r WHERE e.id='{self.id}'::uuid AND r.id=e.request_id
           AND e.state='pending' AND bh_cd7e_late_mail_ready(e,r.order_record)
           AND e.template_key='{LATE_RESULT_KEY}'
+          AND EXISTS (SELECT 1 FROM {LATE_AUTH} a
+                      WHERE a.envelope_id=e.id AND a.generation={literal(generation)}
+                        AND a.admission_sha256={literal(admission_sha)}
+                        AND a.expires_at>clock_timestamp())
           AND e.recipient={literal(self.recipient)}
           AND e.subject={literal(self.subject)} AND e.body_sha256='{self.digest}'
           RETURNING e.id)
           SELECT json_build_object('claimed',true)::text FROM claimed;""")
         if row != {"claimed": True}:
             raise TransactionRefused("paid-order mail was already claimed or its state changed")
+        self._late_session = session
         self.state = "sending"
+        try:
+            self.require_late_custody()
+        except TransactionRefused:
+            # A database lock wait may have outlived custody. No SMTP has begun.
+            self.failed()
+            raise
         return True
 
     @property
     def message_id(self):
         return f"<fastlane-{self.id}@benchmarkheaven.com>"
 
+    def require_late_custody(self):
+        try:
+            # The shared adapter loads this module by file. The active pickup
+            # and the adapter resolve the same custody context through the runtime import.
+            from cd7e_late_result import sender_session
+            session = sender_session(self.recipient, self.subject, self.digest)
+            if self._late_session is not None and session is not self._late_session:
+                raise ValueError("custody session changed after claim")
+            session[-1]()
+        except Exception as exc:
+            raise TransactionRefused("active exact late custody could not be verified") from exc
+        return session
+
     def before_submission(self):
+        if self.id == LATE_ENVELOPE:
+            if self.state != "sending" or self._late_session is None:
+                raise TransactionRefused("late SMTP submission requires a custody-bound claim")
+            self.require_late_custody()
         self.submitted = True
 
     def accepted(self):

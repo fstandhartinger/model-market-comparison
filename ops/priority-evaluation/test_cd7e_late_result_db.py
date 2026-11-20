@@ -11,6 +11,10 @@ import json
 import os
 import shutil
 import smtplib
+import socket
+import sys
+from threading import Thread
+import time
 from pathlib import Path
 import subprocess
 import tempfile
@@ -36,6 +40,58 @@ def sender_query(statement):
     # Use the real sender's SQL and lifecycle, with only its connection redirected.
     output = ap.sql(statement)
     return json.loads(output) if output else None
+
+
+class CustodyProtocol(unittest.TestCase):
+    def test_refuses_silent_partial_malformed_and_closed_responses(self):
+        for behavior in ("silent", "partial", "malformed", "closed"):
+            with self.subTest(behavior=behavior):
+                client, server = socket.socketpair()
+                with client, server, patch.object(late, "CHECK_TIMEOUT", 0.20):
+                    def respond():
+                        with server.makefile("rb") as requests:
+                            requests.readline()
+                            if behavior == "malformed":
+                                server.sendall(b"{bad json}\n")
+                            elif behavior == "partial":
+                                try:
+                                    for _ in range(12):
+                                        server.sendall(b" ")
+                                        time.sleep(0.05)
+                                except BrokenPipeError:
+                                    pass
+                            elif behavior == "silent":
+                                server.recv(1)
+                            else:
+                                server.shutdown(socket.SHUT_WR)
+
+                    worker = Thread(target=respond)
+                    worker.start()
+                    try:
+                        expected = (TimeoutError if behavior in ("partial", "silent") else ValueError)
+                        with self.assertRaises(expected):
+                            late.check_custody_socket(client, {"attestation_sha256": "b" * 64})
+                    finally:
+                        client.close()
+                        worker.join(timeout=2)
+                    self.assertFalse(worker.is_alive())
+
+    def test_socket_checks_kernel_peer_uid(self):
+        with tempfile.TemporaryDirectory() as directory, socket.socket(socket.AF_UNIX) as server:
+            endpoint = Path(directory) / "custody.sock"
+            server.bind(str(endpoint))
+            server.listen(3)
+            uid = os.geteuid()
+            with patch.object(late, "CUSTODY_SOCKET", endpoint):
+                with self.assertRaisesRegex(ValueError, "peer identity"):
+                    with late.open_custody_socket(uid):
+                        self.fail("same-identity socket admitted")
+                with patch.object(late.os, "geteuid", return_value=uid + 1):
+                    with self.assertRaisesRegex(ValueError, "peer identity"):
+                        with late.open_custody_socket(uid + 2):
+                            self.fail("wrong-identity socket admitted")
+                    with late.open_custody_socket(uid):
+                        pass
 
 
 @unittest.skipUnless(os.environ.get("PG_VIRTUALENV") == "1", "requires isolated pg_virtualenv cluster")
@@ -140,6 +196,9 @@ class LateResultDB(unittest.TestCase):
     def envelope(body=BODY):
         return sender.Envelope(late.ENVELOPE, "gmail", CUSTOMER, None, SUBJECT, body)
 
+    def fixture_session(self, refresh=lambda: None, admission="b" * 64):
+        return late.sender_custody(CUSTOMER, SUBJECT, BODY, self.approval["generation"], admission, refresh)
+
     def test_delayed_callback_then_succeeded_refund_and_crash_reconciliation(self):
         for status in ("paid", "refund_due", "refund_pending"):
             self.set_order(f"status='{status}'")
@@ -152,9 +211,10 @@ class LateResultDB(unittest.TestCase):
         with self.assertRaises(sender.TransactionRefused):
             self.envelope("changed text").validate()
         envelope = self.envelope().validate()
-        self.assertTrue(envelope.claim())
-        envelope.before_submission()
-        envelope.accepted()
+        with self.fixture_session():
+            self.assertTrue(envelope.claim())
+            envelope.before_submission()
+            envelope.accepted()
         ap.sql(f"UPDATE {late.MAIL} SET expires_at=now()-interval '1 hour' WHERE id='{late.ENVELOPE}'; "
                f"UPDATE {late.AUTH} SET expires_at=(SELECT expires_at FROM {late.MAIL} WHERE id='{late.ENVELOPE}')")
         with tempfile.TemporaryDirectory() as directory, patch.object(ap, "STATE_ROOT", Path(directory)):
@@ -179,7 +239,8 @@ class LateResultDB(unittest.TestCase):
 
         def claim(envelope):
             try:
-                return envelope.claim()
+                with self.fixture_session():
+                    return envelope.claim()
             except sender.TransactionRefused:
                 return False
 
@@ -190,24 +251,28 @@ class LateResultDB(unittest.TestCase):
         self.set_refunded()
         self.stage()
         envelope = self.envelope().validate()
-        self.set_order("refund_status='manual_review'")
-        with self.assertRaises(sender.TransactionRefused):
+        with self.fixture_session(admission="c" * 64), self.assertRaisesRegex(sender.TransactionRefused, "state changed"):
             envelope.claim()
-        self.set_order("refund_status='succeeded',model_link='https://example.invalid/changed'")
-        with self.assertRaises(sender.TransactionRefused):
-            envelope.claim()
+        with self.fixture_session():
+            self.set_order("refund_status='manual_review'")
+            with self.assertRaisesRegex(sender.TransactionRefused, "state changed"):
+                envelope.claim()
+            self.set_order("refund_status='succeeded',model_link='https://example.invalid/changed'")
+            with self.assertRaisesRegex(sender.TransactionRefused, "state changed"):
+                envelope.claim()
 
     def test_pre_submission_failure_and_uncertain_smtp(self):
         self.set_refunded()
         self.stage()
         envelope = self.envelope().validate()
-        envelope.claim()
-        envelope.failed()
-        self.assertEqual(late.receipt(ap)["state"], "pending")
-        second = self.envelope().validate()
-        second.claim()
-        second.before_submission()
-        second.failed()
+        with self.fixture_session():
+            envelope.claim()
+            envelope.failed()
+            self.assertEqual(late.receipt(ap)["state"], "pending")
+            second = self.envelope().validate()
+            second.claim()
+            second.before_submission()
+            second.failed()
         self.assertEqual(late.receipt(ap)["state"], "uncertain")
         with self.assertRaises(sender.TransactionRefused):
             self.envelope().validate()
@@ -293,14 +358,19 @@ class LateResultDB(unittest.TestCase):
         effect = ap.Effects()
         with self.installed_adapter() as smtp, patch.object(ap, "author_message_guard", return_value=None):
             conn = smtp.return_value
-            conn.login.side_effect = OSError("simulated failure before submission")
             self.assertFalse(effect.mail(CUSTOMER, SUBJECT, BODY, outbox_id=late.ENVELOPE)[0])
+            smtp.assert_not_called()
+            self.assertEqual(late.receipt(ap)["state"], "pending")
+            conn.login.side_effect = OSError("simulated failure before submission")
+            with self.fixture_session():
+                self.assertFalse(effect.mail(CUSTOMER, SUBJECT, BODY, outbox_id=late.ENVELOPE)[0])
             conn.send_message.assert_not_called()
             self.assertEqual(late.receipt(ap)["state"], "pending")
 
             conn.login.side_effect = None
             conn.send_message.side_effect = OSError("simulated ambiguous submission")
-            self.assertFalse(effect.mail(CUSTOMER, SUBJECT, BODY, outbox_id=late.ENVELOPE)[0])
+            with self.fixture_session():
+                self.assertFalse(effect.mail(CUSTOMER, SUBJECT, BODY, outbox_id=late.ENVELOPE)[0])
             outbound = conn.send_message.call_args.args[0]
             self.assertEqual(outbound["Message-ID"], self.envelope().message_id)
             self.assertEqual(late.receipt(ap)["state"], "uncertain")
@@ -430,48 +500,106 @@ class LateResultDB(unittest.TestCase):
             }
             attest_pin = write_pin("review/CD7E-CUSTODY-ATTESTATION.json", attest)
             manifest["attestation_sha256"] = attest_pin["sha256"]
-            verifier = root / "fixture-custody-verifier"
+            draw = official["draw_release"]
+            selected = {
+                "S": [f"synthetic-s-{i}" for i in range(1200)],
+                "P": [f"synthetic-p-{i}" for i in range(300)],
+            }
+            (root / "draws").mkdir()
+            (root / "draws" / f"{draw}.json").write_text(json.dumps(selected))
+            (root / "id-map.json").write_text(json.dumps({
+                str(index): {"item_id": key} for index, key in enumerate(selected["S"] + selected["P"])
+            }))
+            ledger = root / "ledger.jsonl"
+            ledger.write_text("")
+            rotation = root / "synthetic-rotation.py"
+            rotation.write_text(
+                "import json\nfrom pathlib import Path\n"
+                "class State:\n"
+                "    def __init__(self, conf):\n"
+                "        self.draws = {p.stem: json.loads(p.read_text()) for p in Path(conf['draws']).glob('*.json')}\n"
+                "        self.retired_items = set(Path(conf['ledger']).read_text().splitlines())\n"
+                "    def retired(self, item):\n"
+                "        return item in self.retired_items\n"
+            )
+            lock_path = root / ".lock"
+            lock_path.touch()
+            lock_stat = lock_path.stat()
+            verifier = root / "fixture-custody-verifier.py"
             verifier.write_text(
-                "#!/usr/bin/python3\n"
                 f"import sys; sys.path.insert(0, {str(Path(ap.__file__).resolve().parent)!r})\n"
-                "import json, sys\n"
+                "from array import array\n"
+                "import json, socket\n"
                 "from datetime import datetime, timezone\n"
                 "from pathlib import Path\n"
                 "import v16_profiles\n"
                 "base = Path(__file__).parent\n"
                 "v16_profiles.ROTATION_TOOL = base / 'synthetic-rotation.py'\n"
-                "def check_retirement(_admission):\n"
-                "    if (base / 'retired').exists():\n"
-                "        raise ValueError('synthetic draw retired')\n"
-                "v16_profiles._retirement_unlocked = check_retirement\n"
                 f"expected_order = {late.ORDER!r}\n"
+                f"expected_envelope = {late.ENVELOPE!r}\n"
                 f"expected_generation = {manifest['generation']!r}\n"
-                "order, generation, digest, expiry = sys.argv[1:]\n"
-                "if (order, generation) != (expected_order, expected_generation):\n"
-                "    raise SystemExit(3)\n"
-                "with v16_profiles.retirement_lock({'draw_release': 'synthetic-draw'}):\n"
+                f"expected_release = {release!r}\n"
+                f"admission = {{'draw_release': {draw!r}, 'rotation_tool_sha256': {ap.sha256_file(rotation)!r},\n"
+                "              'references': {'id_map': {'path': str(base / 'id-map.json')}}}\n"
+                "with v16_profiles.retirement_lock(admission, transferable=True) as lock_fd, "
+                "socket.fromfd(1, socket.AF_UNIX, socket.SOCK_STREAM) as wire:\n"
+                "    initial = None\n"
                 "    for line in sys.stdin:\n"
-                "        check_retirement({})\n"
+                "        v16_profiles.retirement(admission)\n"
+                "        check = json.loads(line)\n"
                 "        current = json.loads((base / 'fixture-custody-status.json').read_text())\n"
-                "        if (line != 'CHECK\\n' or current['attestation_sha256'] != digest\n"
+                "        nonce, operation = check.pop('nonce'), check.pop('operation')\n"
+                "        if (operation != ('OPEN' if initial is None else 'CHECK')\n"
+                "                or (initial is not None and check != initial)\n"
+                "                or check['order_id'] != expected_order or check['envelope_id'] != expected_envelope\n"
+                "                or check['generation'] != expected_generation\n"
+                "                or check['release_commit'] != expected_release\n"
+                "                or check['attestation_sha256'] != current['attestation_sha256']\n"
+                "                or check['verifier_sha256'] != current['verifier_sha256']\n"
                 "                or datetime.fromisoformat(current['expires_at']) <= datetime.now(timezone.utc)\n"
-                "                or datetime.fromisoformat(current['expires_at']) < datetime.fromisoformat(expiry)):\n"
+                "                or datetime.fromisoformat(current['expires_at']) < datetime.fromisoformat(check['expires_at'])):\n"
                 "            raise SystemExit(3)\n"
-                "        print(json.dumps({'status': current['status'], 'attestation_sha256': digest}), flush=True)\n"
+                "        reply = json.dumps({'status': current['status'], 'attestation_sha256': check['attestation_sha256'],\n"
+                "                            'nonce': nonce}).encode() + b'\\n'\n"
+                "        if initial is None and current['status'] == 'ACTIVE':\n"
+                "            wire.sendmsg([reply], [(socket.SOL_SOCKET, socket.SCM_RIGHTS, array('i', [lock_fd]))])\n"
+                "            initial = check\n"
+                "        else:\n"
+                "            wire.sendall(reply)\n"
             )
-            verifier.chmod(0o700)
             manifest["custody_verifier_sha256"] = ap.sha256_file(verifier)
+            manifest["custody_uid"] = os.geteuid() + 1
+            manifest["custody_lock_device"] = lock_stat.st_dev
+            manifest["custody_lock_inode"] = lock_stat.st_ino
             status_path = root / "fixture-custody-status.json"
             active = {"status": "ACTIVE", "attestation_sha256": manifest["attestation_sha256"],
+                      "verifier_sha256": manifest["custody_verifier_sha256"],
                       "expires_at": ap.iso(ap.utcnow() + timedelta(hours=2))}
             status_path.write_text(json.dumps(active))
+            fixture_processes = []
 
-            def release_lookup(path):
-                # A separate descriptor cannot acquire the canonical retirement
-                # lock while the custody verifier is governing release checks.
-                with (root / ".lock").open("a") as check_lock:
+            @contextmanager
+            def fixture_connection(uid):
+                self.assertEqual(uid, manifest["custody_uid"])
+                client, peer = socket.socketpair()
+                with client, peer, subprocess.Popen(
+                    [sys.executable, "-B", str(verifier)], stdin=peer, stdout=peer, stderr=subprocess.DEVNULL,
+                ) as process:
+                    fixture_processes.append(process)
+                    peer.close()
+                    try:
+                        yield client
+                    finally:
+                        client.close()
+                        process.wait(timeout=5)
+
+            def custody_lock_held():
+                with lock_path.open("a") as check_lock:
                     with self.assertRaises(BlockingIOError):
                         fcntl.flock(check_lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
+
+            def release_lookup(path):
+                custody_lock_held()
                 return github[path]
 
             def pin_manifest():
@@ -483,7 +611,7 @@ class LateResultDB(unittest.TestCase):
                 patch.object(ap, "JOB_ROOT", root),
                 patch.object(ap, "STATE_ROOT", root / "state"),
                 patch.object(ap, "SHARE_ROOT", Path(ap.__file__).resolve().parent),
-                patch.object(late, "CUSTODY_VERIFIER", verifier),
+                patch.object(late, "open_custody_socket", fixture_connection),
                 patch.object(ap.official_scoring, "pins", side_effect=AssertionError("ordinary scorer path used")),
                 patch.object(ap.measurement_dispatch, "pins", side_effect=AssertionError("ordinary measurement path used")),
                 patch.object(ap.Effects, "gh_json", side_effect=release_lookup),
@@ -522,20 +650,72 @@ class LateResultDB(unittest.TestCase):
 
                 for stale in (dict(active, expires_at=ap.iso(ap.utcnow() - timedelta(minutes=1))),
                               dict(active, status="REVOKED")):
-                    status_path.write_text(json.dumps(stale))
+                    with lock_path.open("a") as writer:
+                        fcntl.flock(writer, fcntl.LOCK_EX | fcntl.LOCK_NB)
+                        status_path.write_text(json.dumps(stale))
                     with self.assertRaisesRegex(ap.PickupError, "custody verifier"):
                         late.run(ap, late.ORDER, "send")
                 status_path.write_text(json.dumps(active))
 
-                retired = root / "retired"
-                retired.touch()
+                ledger.write_text(selected["S"][0] + "\n")
                 with self.assertRaisesRegex(ap.PickupError, "custody verifier"):
                     late.run(ap, late.ORDER, "send")
-                retired.unlink()
+                ledger.write_text("")
                 self.assertFalse((job / "results/raw").exists())
                 self.assertIsNone(late.receipt(ap))
                 self.assertEqual(ap.load_row(late.ORDER)["evaluation_status"], "pending")
                 smtp.assert_not_called()
+
+                def lose_session():
+                    fixture_processes[-1].kill()
+                    fixture_processes[-1].wait(timeout=5)
+                    custody_lock_held()
+
+                def revoke_session():
+                    # Simulate a verifier refusal while the canonical writer is excluded.
+                    status_path.write_text(json.dumps(dict(active, status="REVOKED")))
+
+                def expire_session():
+                    expired = dict(active, expires_at=ap.iso(ap.utcnow() - timedelta(minutes=1)))
+                    status_path.write_text(json.dumps(expired))
+
+                original_mail = ap.Effects.mail
+                for sabotage in (lose_session, revoke_session, expire_session):
+                    smtp.reset_mock()
+                    with self.subTest(sabotage=sabotage.__name__, boundary="before claim"):
+                        def mail_after_loss(effect, *args, **kwargs):
+                            self.assertEqual(late.receipt(ap)["state"], "pending")
+                            sabotage()
+                            return original_mail(effect, *args, **kwargs)
+
+                        with patch.object(ap.Effects, "mail", mail_after_loss):
+                            with self.assertRaises(ap.PickupError):
+                                late.run(ap, late.ORDER, "send")
+                        smtp.assert_not_called()
+                        self.assertEqual(late.receipt(ap)["state"], "pending")
+                        status_path.write_text(json.dumps(active))
+                    with self.subTest(sabotage=sabotage.__name__, boundary="SMTP preparation"):
+                        def login_after_claim(*_):
+                            self.assertEqual(late.receipt(ap)["state"], "sending")
+                            custody_lock_held()
+                            sabotage()
+
+                        smtp.return_value.login.side_effect = login_after_claim
+                        with self.assertRaises(ap.PickupError):
+                            late.run(ap, late.ORDER, "send")
+                        smtp.return_value.send_message.assert_not_called()
+                        self.assertEqual(late.receipt(ap)["state"], "pending")
+                        status_path.write_text(json.dumps(active))
+
+                def submit_with_custody(_message):
+                    # Losing the verifier after the last authorization cannot
+                    # let a concurrent writer pass the sender's canonical lock.
+                    lose_session()
+                    self.assertEqual(json.loads(status_path.read_text())["status"], "ACTIVE")
+                    return {}
+
+                smtp.return_value.login.side_effect = None
+                smtp.return_value.send_message.side_effect = submit_with_custody
                 guard.reset_mock()
                 first = late.run(ap, late.ORDER, "send")
                 self.assertEqual(late.run(ap, late.ORDER, "send"), first)
@@ -547,6 +727,8 @@ class LateResultDB(unittest.TestCase):
                 self.assertEqual(guard.call_args_list[0].args, (subject, body))
                 self.assertEqual(guard.call_args_list[1].args, (subject, body))
                 self.assertEqual(guard.call_count, 2)
+                with lock_path.open("a") as writer:
+                    fcntl.flock(writer, fcntl.LOCK_EX | fcntl.LOCK_NB)
 
     def test_scope_holds_and_prior_result(self):
         self.set_refunded()

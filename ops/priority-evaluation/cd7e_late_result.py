@@ -1,13 +1,19 @@
 """Explicit trusted-host delivery for the single missed cd7e038c order."""
 
-from contextlib import contextmanager
+from array import array
+from contextlib import ExitStack, contextmanager
+from contextvars import ContextVar
 from datetime import timedelta
+import fcntl
 import hashlib
 import json
 from pathlib import Path
+import os
 import re
 import socket
-import subprocess
+import stat
+import struct
+import time
 import uuid
 
 ORDER = "cd7e038c-dcac-4990-9ca5-feac99cd8d8d"
@@ -18,7 +24,28 @@ AUTH = "bh_cd7e_late_result_authorizations"
 URL = "https://benchmarkheaven.com/jev-models"
 SYSTEM = "starlord-4b-v1.4-preview"
 APPROVAL_PATH = "review/CD7E-LATE-DELIVERY-ADMISSION.json"
-CUSTODY_VERIFIER = Path("/home/flori/.local/share/priority-evaluation/custody/cd7e-verify")
+CUSTODY_SOCKET = Path("/run/jevbench-custody/cd7e038c.sock")
+CHECK_TIMEOUT = 5
+SESSION_TIMEOUT = 150
+MAX_REPLY = 512
+_sender_session = ContextVar("cd7e_late_sender_session", default=None)
+
+
+@contextmanager
+def sender_custody(recipient, subject, body, generation, admission_sha, refresh):
+    digest = hashlib.sha256(body.encode("utf-8")).hexdigest()
+    token = _sender_session.set((recipient, subject, digest, generation, admission_sha, refresh))
+    try:
+        yield
+    finally:
+        _sender_session.reset(token)
+
+
+def sender_session(recipient, subject, digest):
+    session = _sender_session.get()
+    if session is None or session[:3] != (recipient, subject, digest):
+        raise ValueError("late mail requires its exact live custody session")
+    return session
 
 
 def receipt(ap):
@@ -83,6 +110,15 @@ def load_admission(ap, job: Path, state):
         ap.pinned_file(job, pin)
     if proofs["release_result"]["path"] != "release/RESULT.json":
         raise ap.PickupError("late delivery release proof must pin the pickup result")
+    uid = approval.get("custody_uid")
+    if type(uid) is not int or not 0 < uid < 2**32 - 1 or uid == os.geteuid():
+        raise ap.PickupError("late delivery requires a separate custody identity")
+    device, inode = approval.get("custody_lock_device"), approval.get("custody_lock_inode")
+    if type(device) is not int or device < 0 or type(inode) is not int or inode <= 0:
+        raise ap.PickupError("late delivery requires the canonical custody lock identity")
+    result = approval.get("result")
+    if not isinstance(result, dict) or not re.fullmatch(r"[0-9a-f]{40}", str(result.get("release_commit", ""))):
+        raise ap.PickupError("late delivery requires an exact release commit")
     for key in ("attestation_sha256", "custody_verifier_sha256"):
         if not ap.SHA64_RE.fullmatch(str(approval.get(key) or "")):
             raise ap.PickupError("late delivery requires exact custody attestation and verifier pins")
@@ -90,51 +126,117 @@ def load_admission(ap, job: Path, state):
 
 
 @contextmanager
-def custody_status_session(ap, generation, expected, expires_at, verifier_sha256):
-    # The separately maintained custodian owns the canonical retirement lock.
-    # This private session holds it through the last check and sender claim.
-    if CUSTODY_VERIFIER.is_symlink() or not CUSTODY_VERIFIER.is_file() \
-            or ap.sha256_file(CUSTODY_VERIFIER) != verifier_sha256:
-        raise ap.PickupError("the pinned custody verifier is unavailable")
-    client, server = socket.socketpair()
-    with client, server:
-        client.settimeout(5)
-        try:
-            verifier = subprocess.Popen(
-                [str(CUSTODY_VERIFIER), ORDER, generation, expected, expires_at],
-                stdin=server, stdout=server, stderr=subprocess.DEVNULL,
-                env={"PATH": "/usr/bin:/bin", "LANG": "C.UTF-8"},
-            )
-        except OSError as exc:
-            raise ap.PickupError("the custody verifier is unavailable") from exc
-        server.close()
-        try:
-            with client.makefile("rb") as replies:
-                def check():
-                    try:
-                        client.sendall(b"CHECK\n")
-                        reply = replies.readline(512)
-                        if not reply.endswith(b"\n"):
-                            raise ValueError("incomplete custody response")
-                        response = json.loads(reply)
-                    except (OSError, ValueError) as exc:
-                        raise ap.PickupError("the custody verifier refused or did not answer") from exc
-                    if verifier.poll() is not None \
-                            or response != {"status": "ACTIVE", "attestation_sha256": expected}:
-                        raise ap.PickupError("the custody verifier did not confirm the active attestation")
+def open_custody_socket(uid):
+    with socket.socket(socket.AF_UNIX, socket.SOCK_STREAM) as client:
+        client.settimeout(CHECK_TIMEOUT)
+        client.connect(str(CUSTODY_SOCKET))
+        peer = client.getsockopt(socket.SOL_SOCKET, socket.SO_PEERCRED, struct.calcsize("iII"))
+        _, peer_uid, _ = struct.unpack("iII", peer)
+        if uid == os.geteuid() or peer_uid != uid:
+            raise ValueError("custody socket peer identity mismatch")
+        yield client
 
-                yield check
-        finally:
-            client.close()
-            try:
-                verifier.wait(timeout=2)
-            except subprocess.TimeoutExpired:
-                verifier.kill()
-                verifier.wait(timeout=2)
+
+def check_custody_socket(client, request, *, lock_identity=None):
+    deadline = time.monotonic() + CHECK_TIMEOUT
+
+    def remaining():
+        seconds = deadline - time.monotonic()
+        if seconds <= 0:
+            raise TimeoutError("custody reply deadline elapsed")
+        return seconds
+
+    nonce = uuid.uuid4().hex
+    message = {**request, "operation": "OPEN" if lock_identity is not None else "CHECK", "nonce": nonce}
+    client.settimeout(remaining())
+    client.sendall(json.dumps(message, separators=(",", ":")).encode("ascii") + b"\n")
+    reply = bytearray()
+    fds = array("i")
+    try:
+        while len(reply) < MAX_REPLY:
+            client.settimeout(remaining())
+            chunk, controls, flags, _ = client.recvmsg(
+                MAX_REPLY - len(reply), socket.CMSG_SPACE(fds.itemsize), socket.MSG_CMSG_CLOEXEC,
+            )
+            for level, kind, data in controls:
+                if (level, kind) == (socket.SOL_SOCKET, socket.SCM_RIGHTS):
+                    fds.frombytes(data[:len(data) - len(data) % fds.itemsize])
+            remaining()
+            if flags & socket.MSG_CTRUNC or len(fds) > 1 or any(
+                (level, kind, len(data)) != (socket.SOL_SOCKET, socket.SCM_RIGHTS, fds.itemsize)
+                for level, kind, data in controls
+            ):
+                raise ValueError("invalid custody lock transfer")
+            reply.extend(chunk)
+            if not chunk or b"\n" in chunk:
+                break
+        if reply.count(b"\n") != 1 or not reply.endswith(b"\n"):
+            raise ValueError("incomplete custody response")
+        expected = {"status": "ACTIVE", "attestation_sha256": request["attestation_sha256"], "nonce": nonce}
+        fields = json.loads(reply, object_pairs_hook=tuple)
+        if not isinstance(fields, tuple) or len(fields) != len(expected) or dict(fields) != expected:
+            raise ValueError("custody response did not confirm the exact request")
+        # A response buffered before peer exit does not establish a live session.
+        client.setblocking(False)
+        try:
+            client.recv(1, socket.MSG_PEEK)
+        except BlockingIOError:
+            pass
+        else:
+            raise ValueError("custody session closed or supplied unsolicited data")
+        if lock_identity is None and not fds:
+            return None
+        if lock_identity is None or len(fds) != 1:
+            raise ValueError("custody reply must carry exactly the expected lock descriptor")
+        fd = fds[0]
+        info = os.fstat(fd)
+        if (info.st_dev, info.st_ino) != lock_identity or not stat.S_ISREG(info.st_mode) \
+                or info.st_nlink != 1 or fcntl.fcntl(fd, fcntl.F_GETFL) & os.O_ACCMODE != os.O_RDONLY:
+            raise ValueError("custody lock descriptor does not match the protected inode")
+        fcntl.flock(fd, fcntl.LOCK_EX | fcntl.LOCK_NB)
+        return fds.pop()
+    finally:
+        for fd in fds:
+            os.close(fd)
 
 
 @contextmanager
-def current_custody(ap, job, approval):
+def custody_status_session(ap, approval, admission_sha):
+    request = {
+        "order_id": ORDER,
+        "envelope_id": ENVELOPE,
+        "generation": approval["generation"],
+        "admission_sha256": admission_sha,
+        "attestation_sha256": approval["attestation_sha256"],
+        "release_commit": approval["result"]["release_commit"],
+        "verifier_sha256": approval["custody_verifier_sha256"],
+        "expires_at": approval["expires_at"],
+    }
+    deadline = time.monotonic() + SESSION_TIMEOUT
+    with ExitStack() as stack:
+        try:
+            client = stack.enter_context(open_custody_socket(approval["custody_uid"]))
+            identity = (approval["custody_lock_device"], approval["custody_lock_inode"])
+            fd = check_custody_socket(client, request, lock_identity=identity)
+            stack.callback(os.close, fd)
+        except (OSError, ValueError, TypeError) as exc:
+            raise ap.PickupError("the custody verifier is unavailable") from exc
+
+        def check():
+            try:
+                if time.monotonic() >= deadline:
+                    raise TimeoutError("custody session deadline elapsed")
+                check_custody_socket(client, request)
+                if time.monotonic() >= deadline:
+                    raise TimeoutError("custody session deadline elapsed")
+            except (OSError, ValueError, TypeError) as exc:
+                raise ap.PickupError("the custody verifier refused or did not answer") from exc
+
+        yield check
+
+
+@contextmanager
+def current_custody(ap, job, approval, admission_sha):
     generation = approval["generation"]
     expected = approval["attestation_sha256"]
     pin = {"path": "review/CD7E-CUSTODY-ATTESTATION.json", "sha256": expected}
@@ -152,12 +254,13 @@ def current_custody(ap, job, approval):
     for name in ("measurement", "exposure", "release_result"):
         if attest.get(f"{name}_sha256") != proofs[name]["sha256"]:
             raise ap.PickupError("late custody attestation does not bind the approved evidence")
-    with custody_status_session(ap, generation, expected, approval["expires_at"],
-                                approval["custody_verifier_sha256"]) as check:
+    with custody_status_session(ap, approval, admission_sha) as check:
         def refresh():
-            check()
             if ap.sha256_file(path) != expected or ap.parse_ts(approval["expires_at"]) <= ap.utcnow():
                 raise ap.PickupError("late custody attestation is stale or changed")
+            check()
+            if ap.parse_ts(approval["expires_at"]) <= ap.utcnow():
+                raise ap.PickupError("late custody attestation expired during verification")
 
         refresh()
         yield attest, refresh
@@ -277,16 +380,17 @@ def run(ap, order, action):
         state = ap.load_state(ORDER)
         job = ap.job_directory(ORDER, ap.JOB_ROOT)
         approval = load_admission(ap, job, state)
-        with current_custody(ap, job, approval) as (custody, refresh_custody):
+        admission_sha = state["cd7e_late_delivery"]["admission_sha256"]
+        with current_custody(ap, job, approval, admission_sha) as (custody, refresh_custody):
             subject, body = admitted_result(ap, job, row, state, approval, custody)
             refresh_custody()
             if action == "preview":
                 return {"subject": subject, "body": body, "generation": approval["generation"]}
             if action != "send":
                 raise ap.PickupError("unknown late delivery action")
-            stage(ap, row, approval, subject, body, state["cd7e_late_delivery"]["admission_sha256"])
-            refresh_custody()
-            ok, reason = ap.Effects().mail(row["email"], subject, body, outbox_id=ENVELOPE)
+            stage(ap, row, approval, subject, body, admission_sha)
+            with sender_custody(row["email"], subject, body, approval["generation"], admission_sha, refresh_custody):
+                ok, reason = ap.Effects().mail(row["email"], subject, body, outbox_id=ENVELOPE)
             if not ok:
                 raise ap.PickupError(f"late result sender returned {reason}; check the exact envelope")
         return reconcile(ap)
