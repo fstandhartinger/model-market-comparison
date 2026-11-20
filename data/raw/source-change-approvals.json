@@ -568,15 +568,15 @@
   },
   "designarena_boards": {
     "frontend": {
-      "previous_identity_sha256": "2f23cb6b3e911b926330684cd535ca250d5dae5a80e75e3ef75a5b545ccd0de5",
-      "current_identity_sha256": "756de79861e8f55f3285714916f01e4e0d3032f8f0d0ebd7afcfa07b0c5eacfd",
+      "previous_identity_sha256": "756de79861e8f55f3285714916f01e4e0d3032f8f0d0ebd7afcfa07b0c5eacfd",
+      "current_identity_sha256": "8b740f9a12c589dcc87549841ec673f48f999709adf2530ea17807b1a5378fc2",
       "removed": [
-        "glm-5.3"
+        "lithium-1015"
       ],
       "allow_additions": true,
-      "additions_basis": "DesignArena keeps adding models to this board (gemini-4-argon and snowhare joined between 11 and 15 Nov 2026); only new identities within the shared bound are tolerated, every prior identity except glm-5.3 must still be present.",
-      "reviewed_at": "2026-11-15T07:25:00Z",
-      "expires_at": "2026-11-18T06:00:00Z",
+      "additions_basis": "DesignArena keeps adding models to this board (gemini-4-argon and snowhare joined between 11 and 17 Nov 2026); only new identities within the shared bound are tolerated, every prior identity except lithium-1015 must still be present.",
+      "reviewed_at": "2026-11-20T06:50:00Z",
+      "expires_at": "2026-11-23T06:00:00Z",
       "primary_url": "https://www.designarena.ai/api/leaderboard",
       "primary_request": {
         "arenaType": "agents",
@@ -584,14 +584,14 @@
         "variationName": "public",
         "inputModality": "text"
       },
-      "primary_capture_sha256": "caa3fe71e4d4202e6bac4cff54f507d92ed4d33604d478611624542e48541fda",
+      "primary_capture_sha256": "244c51f13b563244ce434bf12bf5922c559595b4dfacc66e4e1a84c42e80ec45",
       "registry_url": "https://www.designarena.ai/api/registry",
-      "registry_capture_sha256": "a11a2c300255965f7eb93f1adcd5a37bbc6d149f7d2989614de7bb4e618fa486",
+      "registry_capture_sha256": "057b7d9ea291c7f78edb720d5b42876ea02d550eff2193f3d61be53cdd78f246",
       "evidence_files": [
-        "ops/daily-repair-2026-11-15/designarena/evidence/caa3fe71e4d4202e6bac4cff54f507d92ed4d33604d478611624542e48541fda.gz",
-        "ops/daily-repair-2026-11-15/designarena/evidence/a11a2c300255965f7eb93f1adcd5a37bbc6d149f7d2989614de7bb4e618fa486.gz"
+        "ops/daily-repair-2026-11-20/designarena/evidence/244c51f13b563244ce434bf12bf5922c559595b4dfacc66e4e1a84c42e80ec45.gz",
+        "ops/daily-repair-2026-11-20/designarena/evidence/057b7d9ea291c7f78edb720d5b42876ea02d550eff2193f3d61be53cdd78f246.gz"
       ],
-      "review_basis": "glm-5.3 (GLM-5.3, zhipu; 515 battles, Elo 1272 in the 2026-11-11 snapshot) is absent from the frontend (agon_webapps) board in every capture since 2026-11-13T00:53Z: daily sidecars 13 Nov 00:53Z and 05:29Z, 14 Nov 00:53Z and 05:30Z, 15 Nov 05:29Z, and the review capture of 15 Nov 07:21Z (board lastUpdateTime 2026-11-15T06:10Z, 96722 votes). The registry still lists it active for agon_webapps, and the public changelog records only its addition (27 Aug 2026), so D255 withheld the whole board. No re-key explains the absence (no new board identity with the same display name and provider), and the board without the text-modality filter has the same 57 rows. california was absent on 13 Nov and back on 14 Nov, so an absence can be temporary; if glm-5.3 returns it is an ordinary addition. Withholding has kept the full board at 2026-11-11 for three days and would keep Gemini 4 Argon, MiniMax M3.1 Flash and every Elo update off the site. Decision: publish the source's current board without glm-5.3, for this board and this one identity, until the receipt expires."
+      "review_basis": "lithium-1015 (Ling 3.2 Flash, antgroup; Elo 1234, 791 battles in the published 2026-11-17 snapshot) is absent from the frontend (agon_webapps) board in every capture since the board update of 2026-11-17T20:53Z: 18 Nov 06:46Z, the daily sidecars of 19 Nov 23:41Z and 20 Nov 02:47Z (board lastUpdateTime 2026-11-19T23:31Z), and the review capture of 20 Nov 06:45Z (lastUpdateTime 2026-11-20T03:20Z, 97694 votes, 56 rows). The registry still lists it active for agon_webapps only, so D255 withheld the whole board. No re-key explains the absence: the current board has no identity the prior one lacks, and the other antgroup Ling entries (colorado, nevada, new-mexico) are on other arenas. The board without the text-modality filter has the same 56 rows. Absences can be temporary (california, 13-14 Nov); if lithium-1015 returns it is an ordinary addition. Withholding has kept the full board at 2026-11-17 for three days. glm-5.3 (CR-752 receipt, expired 18 Nov) is already absent from the prior snapshot. Decision: publish the source's current board without lithium-1015, for this board and this one identity, until the receipt expires."
     }
   },
   "openrouter_endpoint_withdrawals": [
