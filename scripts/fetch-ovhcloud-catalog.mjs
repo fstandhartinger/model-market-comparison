@@ -12,7 +12,7 @@ import { writeJSONAtomic } from "../lib/snapshot.mjs";
 import { captureLiveSource } from "../lib/live-source.mjs";
 
 const target = fileURLToPath(new URL("../data/raw/ovhcloud.json", import.meta.url));
-const pageUrl = "https://www.ovhcloud.com/en/public-cloud/ai-endpoints/catalog/";
+const pageUrl = "https://www.ovhcloud.com/en-ie/public-cloud/ai-endpoints/catalog/";
 const ecbUrl = "https://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml";
 const headers = { "User-Agent": "BenchmarkHeaven/1.0 (+https://github.com/fstandhartinger/model-market-comparison)" };
 const get = async (url) => {

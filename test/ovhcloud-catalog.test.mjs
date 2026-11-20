@@ -94,3 +94,10 @@ test("fails closed on missing FX, conflicting duplicates, empty scope and large 
   const titleless = currentChat("qwen-3-8-27b", "Qwen3.8-27B", "0.4", "2.7").replace(/<h3\b[^>]*>[\s\S]*?<\/h3>/, "");
   assert.throws(() => readCards(page(titleless)), /without a title/);
 });
+
+test("collector reads the EUR catalog page (CR-796: /en/ switched to USD on 2026-11-18)", () => {
+  const src = readFileSync(new URL("../scripts/fetch-ovhcloud-catalog.mjs", import.meta.url), "utf8");
+  assert.match(src, /https:\/\/www\.ovhcloud\.com\/en-ie\/public-cloud\/ai-endpoints\/catalog\//);
+  const usdCard = currentChat("usd-model", "usd-model", "$0.15", "$0.60").replace(/<!-- -->€/g, "");
+  assert.throws(() => readCards(usdCard), /unreadable price "\$0\.15"/);
+});

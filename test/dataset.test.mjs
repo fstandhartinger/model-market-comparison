@@ -144,6 +144,8 @@ test("open-weights filter metadata excludes audited proprietary families", () =>
   assert.ok(grok.every((model) => model.org === "xAI"));
   assert.deepEqual(grok.filter((model) => model.open_weights).map((model) => model.family_key).sort(), ["grok-1", "grok-2-dec-24"]);
   assert.equal(ds.models.some((model) => model.org === "SpaceXAI"), false);
+  // 2026-11-20: OpenRouter renamed its "SpaceXAI:" name prefix to "SpaceXSI:".
+  assert.equal(ds.models.some((model) => model.org === "SpaceXSI"), false);
 });
 
 test("OpenRouter aliases merge free tiers and exclude router/music pseudo-models", () => {
