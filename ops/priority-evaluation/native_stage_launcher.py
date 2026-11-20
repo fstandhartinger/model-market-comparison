@@ -26,13 +26,20 @@ RUNTIME = Path("/home/flori/.local/share/priority-evaluation/runtime")
 PUBLIC_INPUT_ROOT = ROOT.parent / "jevbench-add-requests-20260919/r126/input-public"
 V15_HARNESS_ROOT = ROOT.parent / "jevbench-v15-measure-20260925/harness"
 BOARD = Path("/home/flori/bin/agent-board")
+TOOLS = Path("/home/flori/bin")
 BOARD_DIR = Path("/home/flori/.agent-board")
 DECISIONS = Path("/home/flori/DECISIONS.md")
 DEADLINE = datetime(2026, 11, 21, 17, 31, 29, tzinfo=timezone.utc)
 HASH_RE = re.compile(r"[0-9a-f]{64}\Z")
 CLEAR_PREFIX = "CLEAR FASTLANE "
 HOLD_PREFIX = f"HOLD FASTLANE {ORDER_ID} "
-EXISTING_HOLDS = {70724, 70742}
+EXISTING_HOLDS = {70724, 70742, 72382, 72385, 72481, 72489}
+TOOL_NAMES = (
+    "agent-board", "gpu-broker", "gpu_broker.py", "gpu-pod-guard", "gpu-cost-monitor",
+    "gpu-reaper", "gpu_fleet_visibility.py", "gpu_inventory_isolation.py", "load-guard",
+    "runpod_v2.py", "upcloud_gpu_safety.py", "coreweave_gpu_safety.py",
+)
+SEALED_PROFILE = ROOT / "v16/measurement-profiles-v1.6-regular-20261027.json"
 DEPUTIES = {
     f"{engine}:{role}"
     for engine in ("codex", "claude")
@@ -381,6 +388,9 @@ def validate_packet_path_policy(stage: str, pins: dict[Path, str]) -> None:
                    ROOT / "review", ROOT / "trusted-runner", ROOT / "receipts", ROOT / "workers",
                    ROOT / "supplement", ORDER / "source", ORDER / "review", ORDER / "trusted-runner")
     shared_roots = (RUNTIME, PUBLIC_INPUT_ROOT, V15_HARNESS_ROOT)
+    exact_paths = {TOOLS / name for name in TOOL_NAMES}
+    if stage == "sealed":
+        exact_paths.add(SEALED_PROFILE)
     forbidden_parts = {
         "sealed", "sealed-data", "sealed-inputs", "jevbench-sealed", "hidden", "hidden-data",
         "v16-profile-admission.json", "v16-profile-review.json",
@@ -393,7 +403,7 @@ def validate_packet_path_policy(stage: str, pins: dict[Path, str]) -> None:
                     and not any("v16-profile" in part or "sealed-data" in part for part in parts)
                     and not _within(path, ROOT / "v16"),
                     f"public-only path policy rejects protected packet member: {path.name}")
-        require(any(_within(path, root) for root in roots),
+        require(path in exact_paths or any(_within(path, root) for root in roots),
                 f"packet path is outside the exact order source roots: {path.name}")
 
 
