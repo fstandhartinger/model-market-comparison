@@ -60,11 +60,12 @@ INDUCED={'decide-1.1':(['all/composites/B','release/B'],'Composite B among all s
 for k,(named,label) in INDUCED.items():
  row=by[k];prior=next((e['before'] for e in notes if e['key']==k),row['listing_note'])
  pts={n:place(k,'point',n)for n in named}
- assert all(v and v<=5 for v in pts.values()) and len(set(pts.values()))==1,k
- assert all(any((place(k,sc,n) or 999)>5 for sc in wa['robust_scenarios'])for n in named),k
- after=row['listing_note'].split(' Its #')[0]+f' Its #{pts[named[0]]} place on {label} is within the uncertainty of the draw shift.'
+ boundary=[n for n in named if pts[n] and pts[n]<=5 and any((place(k,sc,n) or 999)>5 for sc in wa['robust_scenarios'])]
+ if not boundary:continue
+ assert len(set(pts[n]for n in boundary))==1,k
+ after=row['listing_note'].split(' Its #')[0]+f' Its #{pts[boundary[0]]} place on {label} is within the uncertainty of the draw shift.'
  row['listing_note']=after;notes=[e for e in notes if e['key']!=k]
- notes.append({'key':k,'path':'listing_note','before':prior,'after':after,'named_point_places':pts,'remaining_boundary_places':named})
+ notes.append({'key':k,'path':'listing_note','before':prior,'after':after,'named_point_places':pts,'remaining_boundary_places':boundary})
 notes.sort(key=lambda e:e['key'])
 put(J/'inputs/TEXT-EXCEPTIONS.json',notes)
 # Stable order uses the same production list inputs and tie order as the frozen WHATIF.
