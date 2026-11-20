@@ -26,7 +26,7 @@ def baseline_complete(package):
 
 def adopt_raw(job, package):
     """Copy only the authenticated receipt into an immutable generation namespace."""
-    if Path(job).name == native_owner.STRANDS_E2B_ORDER:
+    if native_owner.is_strands_e2b_order(Path(job).name):
         raise ValueError("separate_native_measurement_wrapper_required")
     admission, measured, _ = package
     root = v16_profiles.STATE_ROOT / 'measurements' / Path(job).name / admission['generation'] / 'jevbench'

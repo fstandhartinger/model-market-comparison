@@ -1357,8 +1357,9 @@ def default_alert(text: str) -> None:
 def run(rid: str, job_dir: Path, recipe: dict, output: Path, expected_pins: dict, max_usd: float,
         *, provider: Provider | None = None, alert=None, benchmarks=('jevbench',), native_source_pins=None, measurement_pins_factory=None, pre_upload_gate=None, allocation_gate=None, runtime_preflight=None, image_context_provider=None, weights_streamer=None, fallback_providers=()) -> dict:
     """Measure the reviewed recipe on one disposable GPU pod; idempotent via receipt + pod state."""
+    import native_owner
     import strands_decider_e2b_runtime_supplement
-    strands_e2b = strands_decider_e2b_runtime_supplement.ORDER in (rid, Path(job_dir).name)
+    strands_e2b = any(native_owner.is_strands_e2b_order(value) for value in (rid, Path(job_dir).name))
     if strands_e2b:
         strands_decider_e2b_runtime_supplement.require(
             job_dir, recipe, rid, provider, benchmarks, pre_upload_gate, allocation_gate, fallback_providers)

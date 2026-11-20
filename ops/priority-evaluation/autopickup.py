@@ -2471,7 +2471,7 @@ def _jev_v15_composite(axes: dict[str, Any], option: str) -> float:
 
 
 def dispatch_measurement(rid: str, job_dir: Path) -> None:
-    if native_owner.STRANDS_E2B_ORDER in (rid, job_dir.name):
+    if any(native_owner.is_strands_e2b_order(value) for value in (rid, job_dir.name)):
         raise measurement_dispatch.OperationalHold("separate_native_measurement_wrapper_required")
     review = validate_review_gate(job_dir)
     row = load_row(rid)
@@ -5341,7 +5341,7 @@ def run_agent(job_dir: Path, env: dict[str, str], timeout_hint: int, *, read_onl
 
 def evaluate_v16_generation(rid: str, job_dir: Path) -> int:
     """Same owning unit; reviewed generation, no customer agent or legacy release."""
-    if native_owner.STRANDS_E2B_ORDER in (rid, job_dir.name):
+    if any(native_owner.is_strands_e2b_order(value) for value in (rid, job_dir.name)):
         raise PickupError("separate_native_measurement_wrapper_required")
     import v16_adoption
     try:

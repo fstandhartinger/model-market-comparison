@@ -22,6 +22,7 @@ import json
 import re
 import subprocess
 import urllib.parse
+import uuid
 from datetime import datetime
 from pathlib import Path
 from typing import Any
@@ -33,6 +34,14 @@ UNIT = "jevbench-native-owner@{}.service"
 REASONS = frozenset({"unsupported_measurement_backend"})
 START_GRACE_MINUTES = 20
 MAX_STARTS = 2
+
+
+def is_strands_e2b_order(value: str) -> bool:
+    """Match the UUID identity even when an entry point receives an alias."""
+    try:
+        return str(uuid.UUID(value)) == STRANDS_E2B_ORDER
+    except ValueError:
+        return False
 
 # Reviewed order-scoped runtime supplements by model/code repository (lower-case host/owner/name).
 SUPPLEMENTS: tuple[dict[str, Any], ...] = (

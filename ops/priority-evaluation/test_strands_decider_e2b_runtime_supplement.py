@@ -122,6 +122,30 @@ class StrandsRuntimeTests(unittest.TestCase):
             with self.assertRaisesRegex(AssertionError, "generic gate was reached"):
                 v16_profiles.measure(self.root / OTHER)
 
+    def test_equivalent_uuids_stop_before_generic_or_native_admission_reads(self):
+        unopened = Mock(side_effect=AssertionError("unexpected gate or profile read"))
+        with patch.object(v16_profiles, "accepted", unopened), \
+                patch.object(v16_profiles, "_sha", unopened), \
+                patch.object(autopickup, "validate_review_gate", unopened), \
+                patch.object(pod_runner, "validate_recipe", unopened):
+            for alias in (ORDER.upper(), ORDER.replace("-", ""), "{" + ORDER + "}"):
+                with self.subTest(alias=alias):
+                    job = self.root / alias
+                    with self.assertRaisesRegex(measurement_dispatch.OperationalHold, HOLD):
+                        v16_profiles.measure(job)
+                    with self.assertRaisesRegex(ValueError, HOLD):
+                        v16_adoption.adopt_raw(job, ({"generation": "fixture"}, {}, {}))
+                    with self.assertRaisesRegex(measurement_dispatch.OperationalHold, HOLD):
+                        autopickup.dispatch_measurement(OTHER, job)
+                    with self.assertRaisesRegex(autopickup.PickupError, HOLD):
+                        autopickup.evaluate_v16_generation(alias, self.root / OTHER)
+                    for rid, directory in ((alias, self.root / OTHER), (OTHER, job)):
+                        with self.assertRaisesRegex(measurement_dispatch.OperationalHold,
+                                                    "strands_e2b_native_admission_required"):
+                            pod_runner.run(rid, directory, {}, self.root / "output", {}, 15,
+                                           measurement_pins_factory=unopened)
+        unopened.assert_not_called()
+
     def test_existing_review_passed_mail_remains_available(self):
         row = {"id": ORDER, "status": "review_passed", "review_passed_at": "present"}
         state = {"source_review_gate": {"verdict": "PASS"}}
