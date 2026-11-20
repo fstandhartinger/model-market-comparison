@@ -1,5 +1,6 @@
 """Fixed-order offline runtime supplement for Starlord-27B-v2.0-preview (paid fast-lane order 6b7af363) and Starlord-4B-preview
-(paid fast-lane order c5a084fa, CR-759) and Starlord-4B-v1.4-preview (paid fast-lane order cd7e038c, CR-783).
+(paid fast-lane order c5a084fa, CR-759) and Starlord-4B-v1.4-preview (paid fast-lane order cd7e038c, CR-783) and Starlord-4B-v1.5-preview
+(paid fast-lane order 9d46b4ad, CR-790).
 
 Starlord-27B-v2.0-preview is a Qwen/Qwen3.8-27B finetune read out through candidate logits (no generation), served by the customer's own
 stdlib-HTTP inference/serve_systemone.py (POST /v1/systemone) on one GPU. The author's recorded stack is torch 2.10.0+cu130,
@@ -22,6 +23,10 @@ stays an explicit list of exact order ids (no wildcard, no repository match).
 
 Starlord-4B-v1.4-preview (same author, Qwen3.5-4B base) ships the same byte-identical files and requirements as Starlord-4B-preview;
 its direct_engine.py drops the input repetition and projects candidates in BF16, with the same imports. It reuses this exact context.
+
+Starlord-4B-v1.5-preview (same author, Qwen3.5-4B base) ships direct_engine.py, inference/vendor/*, bidir_*.py and jevbench.py
+byte-identical to v1.4; serve_systemone.py now serves a CUDA-graph engine (s2b_graph_12_fixedrope_*.py) that adds a triton-JIT depthwise
+causal-conv kernel. Its requirements add only triton==3.6.0, which the pinned base image already carries. It reuses this exact context.
 """
 import hashlib
 import re
@@ -32,7 +37,8 @@ import measurement_dispatch
 import pod_runner
 
 ORDER = '6b7af363-cef5-4517-b3fa-4ca5055fbca4'
-ORDERS = frozenset({ORDER, 'c5a084fa-0c3b-4fd5-ab69-e69f9b6a7116', 'cd7e038c-dcac-4990-9ca5-feac99cd8d8d'})
+ORDERS = frozenset({ORDER, 'c5a084fa-0c3b-4fd5-ab69-e69f9b6a7116', 'cd7e038c-dcac-4990-9ca5-feac99cd8d8d',
+                       '9d46b4ad-b7b2-4d02-beda-7a56db409848'})
 BASE_IMAGE = 'pytorch/pytorch:2.10.0-cuda13.0-cudnn9-devel@sha256:48af19ebb88034e0325decc2b6142e5b9bfc276eaa5197ab6d94582f1d78ea4c'
 CONTEXT = Path('/home/flori/jobs/fastlane-native-6b7af363/supplement/PUBLIC-BUILD-CONTEXT.tar')
 CONTEXT_SHA = '94110a61f5fadd9175c8c8907a9bd99e244115e7b52d71b2ee3855f3f677ce4c'
