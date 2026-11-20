@@ -1,5 +1,5 @@
 """First-party tests with synthetic receipts and no submitted code execution."""
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 import hashlib
 import io
 import json
@@ -102,6 +102,46 @@ class StrandsRuntimeTests(unittest.TestCase):
             pod_runner.run(ORDER, self.job, {}, output, {}, 15, measurement_pins_factory=pins)
         pins.assert_not_called()
         self.assertFalse(output.exists())
+
+    def test_protected_read_waits_for_authority_even_with_native_arguments(self):
+        pins = Mock(side_effect=AssertionError("first protected input read"))
+        with patch.object(supplement, "require"):
+            for disposition in ("missing", "revoked", "expired", "mismatched"):
+                with self.subTest(disposition=disposition):
+                    checker = Mock(side_effect=measurement_dispatch.OperationalHold(disposition))
+                    with self.assertRaisesRegex(measurement_dispatch.OperationalHold, disposition):
+                        pod_runner.run(ORDER, self.job, {}, self.root / "output", {}, 15,
+                                       allocation_gate=checker, measurement_pins_factory=pins)
+                    checker.assert_called_once_with("before_protected_read", {})
+        pins.assert_not_called()
+        self.assertFalse((self.root / "output").exists())
+
+    def test_runtime_receipt_matches_pinned_image_and_exact_attempt(self):
+        runtime = dict(supplement.binding(), effective_image="sha256:" + "a" * 64)
+        state = {"last_pod_id": "owned-instance", "runtime_supplement": runtime}
+        receipt = {"pod_id": "owned-instance", "runtime_supplement": dict(runtime)}
+        supplement.verify_receipt(receipt, state)
+        for drift in ({"runtime_supplement": None}, {"pod_id": "another-instance"},
+                      {"runtime_supplement": dict(runtime, effective_image="sha256:" + "b" * 64)}):
+            with self.subTest(drift=drift), self.assertRaisesRegex(
+                    measurement_dispatch.OperationalHold, "existing_measurement_receipt_changed"):
+                supplement.verify_receipt(dict(receipt, **drift), state)
+
+    def test_dispatch_and_wait_use_the_earlier_cutoff_and_reserve(self):
+        start = datetime(2026, 11, 21, 10, tzinfo=timezone.utc)
+        state = {"attempt_started_at": start.isoformat()}
+        clock = lambda: start + timedelta(minutes=20)
+        check = Mock(return_value=1800)
+        self.assertEqual(supplement.bounded_seconds(check, state, clock, 1.5, 300, 3600), 1500)
+        check.assert_called_once_with("remaining_seconds", state)
+        check.return_value = 9999
+        self.assertEqual(supplement.bounded_seconds(check, state, clock, 1, 300, 3600), 2100)
+        self.assertEqual(supplement.bounded_seconds(check, state, clock, 1.5, 300, 100), 100)
+        for live in (None, True, float("nan"), 300, -10):
+            with self.subTest(live=live), self.assertRaisesRegex(pod_runner.PodRunError, "cleanup_margin"):
+                supplement.bounded_seconds(Mock(return_value=live), state, clock, 1.5, 300, 3600)
+        with self.assertRaisesRegex(pod_runner.PodRunError, "cleanup_margin"):
+            supplement.bounded_seconds(check, state, clock, 1.5, pod_runner.HOST_RUN_RESERVE_S, 900)
 
     def test_generic_entrypoints_do_not_run_for_order(self):
         unexpected = Mock(side_effect=AssertionError("generic gate was reached"))

@@ -1208,9 +1208,16 @@ def _lifecycle(provider, job, recipe, staging_path, output, state, gpu_choice, t
                     ok = False
                 if not ok:
                     raise PodRunError("host_staging_ttl_margin_insufficient")
+            upload_timeout = 900
+            if strands_e2b:
+                upload_timeout = strands_decider_e2b_runtime_supplement.bounded_seconds(
+                    allocation_gate, state, _utcnow, ttl, HOST_RUN_RESERVE_S, upload_timeout)
             state['input_dispatched'] = True
             save_state()  # dispatch is durable before the first sealed transfer
-            provider.scp_to(pod_id, str(staging_path), "/work/stage.tar")
+            if strands_e2b:
+                provider.scp_to(pod_id, str(staging_path), "/work/stage.tar", timeout=upload_timeout)
+            else:
+                provider.scp_to(pod_id, str(staging_path), "/work/stage.tar")
         _exec(provider, pod_id, ["tar", "-xf", "/work/stage.tar", "-C", "/"])
         _exec(provider, pod_id, ["tar", "-xf", "/work/code.tar", "-C", "/work/code"])
         state['execution_started'] = True
@@ -1258,6 +1265,10 @@ def _lifecycle(provider, job, recipe, staging_path, output, state, gpu_choice, t
             # Chon's think-when-unsure pass makes a 1,500-row run longer than the default hour; this order may use
             # the rest of its attempt TTL minus a teardown margin (the TTL and cost caps are unchanged).
             wait_s = chon_runtime_supplement.run_wait_seconds(state.get('attempt_started_at'), ttl)
+        if strands_e2b:
+            wait_s = strands_decider_e2b_runtime_supplement.bounded_seconds(
+                allocation_gate, state, _utcnow, ttl,
+                strands_decider_e2b_runtime_supplement.RESULT_COLLECTION_RESERVE_S, wait_s)
         wait = _exec(provider, pod_id, ["docker", "wait", "jev-pod-run"], timeout=wait_s)
         rc = wait.stdout.strip().splitlines()[-1] if wait.stdout.strip() else ""
         logs = _exec(provider, pod_id, ["docker", "logs", "--tail", "20000", "jev-pod-run"], timeout=120)
@@ -1363,6 +1374,9 @@ def run(rid: str, job_dir: Path, recipe: dict, output: Path, expected_pins: dict
     if strands_e2b:
         strands_decider_e2b_runtime_supplement.require(
             job_dir, recipe, rid, provider, benchmarks, pre_upload_gate, allocation_gate, fallback_providers)
+        # The measurement pins factory may hash the protected input. Keep the
+        # order's explicit early authority check ahead of that first access.
+        allocation_gate('before_protected_read', {})
     validate_recipe(recipe, job_dir)
     current = measurement_pins_factory() if measurement_pins_factory is not None else measurement_dispatch.pins()
     if current != expected_pins:
@@ -1454,6 +1468,8 @@ def run(rid: str, job_dir: Path, recipe: dict, output: Path, expected_pins: dict
         prior = json.loads(receipt_file.read_text())
         if prior.get("pins") != current or prior.get("recipe_sha256") != recipe_sha or prior.get('admission_binding_sha256') != admission_binding:
             raise measurement_dispatch.OperationalHold("existing_measurement_receipt_changed")
+        if strands_e2b:
+            strands_decider_e2b_runtime_supplement.verify_receipt(prior, state)
         if host_binding is not None and any(prior.get('host_staging', {}).get(k) != v for k, v in host_binding.items()):
             raise measurement_dispatch.OperationalHold('existing_measurement_receipt_changed')
         for name, record in prior.get('benchmarks', {'jevbench': prior}).items():

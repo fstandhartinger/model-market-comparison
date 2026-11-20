@@ -8,8 +8,10 @@ measurement. The server runs the author's Transformers backend.
 """
 import hashlib
 import json
+import math
 import re
 import tarfile
+from datetime import datetime
 from pathlib import Path
 
 import execution_source
@@ -35,6 +37,7 @@ CONTEXT_LIMIT = 24 * 1024 * 1024
 REMOTE_ROOT = '/runtime-supplement/strands-decider-e2b'
 BUILD_TIMEOUT_S = 600
 SCP_TIMEOUT_S = 300
+RESULT_COLLECTION_RESERVE_S = 300
 
 def _sha256_stream(stream):
     digest = hashlib.sha256()
@@ -139,6 +142,32 @@ def check_context(context=CONTEXT):
 def binding():
     return {'module_sha256': sha256(__file__), 'context_sha256': CONTEXT_SHA,
             'recipe_sha256': RECIPE_SHA, 'source_contract_sha256': SOURCE_CONTRACT_SHA, 'base_image': BASE_IMAGE}
+
+
+def verify_receipt(receipt, state):
+    """Refuse reuse if the recorded offline image or runtime pins changed."""
+    proof = receipt.get('runtime_supplement')
+    if (not isinstance(proof, dict) or proof != state.get('runtime_supplement')
+            or not re.fullmatch(r'sha256:[a-f0-9]{64}', str(proof.get('effective_image')))
+            or proof != dict(binding(), effective_image=proof['effective_image'])
+            or not receipt.get('pod_id') or receipt['pod_id'] != state.get('last_pod_id')):
+        raise measurement_dispatch.OperationalHold('existing_measurement_receipt_changed')
+
+
+def bounded_seconds(allocation_gate, state, clock, ttl, reserve, maximum):
+    """Use the earlier of the billed TTL and the authenticated cleanup bound."""
+    live = allocation_gate('remaining_seconds', state)
+    try:
+        now = clock()
+        started = datetime.fromisoformat(state['attempt_started_at'])
+        if started.tzinfo is None or started > now or type(live) not in (int, float) or not math.isfinite(live):
+            raise ValueError('invalid attempt clock')
+        remaining = math.floor(min(live, ttl * 3600 - (now - started).total_seconds()) - reserve)
+    except (KeyError, TypeError, ValueError, OverflowError):
+        remaining = 0
+    if remaining < 1:
+        raise pod_runner.PodRunError('strands_e2b_cleanup_margin_insufficient')
+    return min(remaining, maximum)
 
 
 def verify_context(context=CONTEXT):
