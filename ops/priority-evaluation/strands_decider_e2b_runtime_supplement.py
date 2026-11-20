@@ -38,6 +38,8 @@ REMOTE_ROOT = '/runtime-supplement/strands-decider-e2b'
 BUILD_TIMEOUT_S = 600
 SCP_TIMEOUT_S = 300
 RESULT_COLLECTION_RESERVE_S = 300
+GPU = ('RTXPRO6000', 96)
+INSTANCE_TYPE = '1RTXPRO6000.30V'
 
 def _sha256_stream(stream):
     digest = hashlib.sha256()
@@ -67,7 +69,8 @@ def require(job, recipe, rid, provider, benchmarks, pre_upload_gate, allocation_
 
     if (rid != ORDER or not active(job, recipe) or not isinstance(provider, VerdaProvider)
             or fallback_providers or tuple(benchmarks) != ('jevbench',)
-            or not callable(pre_upload_gate) or not callable(allocation_gate)):
+            or not callable(pre_upload_gate) or not callable(allocation_gate)
+            or not callable(getattr(provider, 'verify_dispatch_identity', None))):
         raise measurement_dispatch.OperationalHold('strands_e2b_native_admission_required')
     verify_sources(Path(job), recipe)
     verify_context()
@@ -144,13 +147,31 @@ def binding():
             'recipe_sha256': RECIPE_SHA, 'source_contract_sha256': SOURCE_CONTRACT_SHA, 'base_image': BASE_IMAGE}
 
 
-def verify_receipt(receipt, state):
+def launch_binding(value):
+    """Validate the identity from the trusted host authority reader."""
+    if (not isinstance(value, dict) or set(value) != {'approval_sha256', 'packet_sha256', 'location'}
+            or any(not re.fullmatch(r'[a-f0-9]{64}', str(value[field]))
+                   for field in ('approval_sha256', 'packet_sha256'))
+            or not re.fullmatch(r'FIN-[0-9]{2}', str(value['location']))):
+        raise measurement_dispatch.OperationalHold('strands_e2b_native_admission_required')
+    return dict(value)
+
+
+def verify_created_pod(pod, launch):
+    if (pod.get('gpu') != GPU[0] or type(pod.get('gpu_count')) is not int
+            or pod['gpu_count'] != 1 or pod.get('instance_type') != INSTANCE_TYPE
+            or pod.get('location') != launch['location']):
+        raise measurement_dispatch.OperationalHold('gpu_pod_quote_changed')
+
+
+def verify_receipt(receipt, state, launch):
     """Refuse reuse if the recorded offline image or runtime pins changed."""
     proof = receipt.get('runtime_supplement')
     if (not isinstance(proof, dict) or proof != state.get('runtime_supplement')
             or not re.fullmatch(r'sha256:[a-f0-9]{64}', str(proof.get('effective_image')))
             or proof != dict(binding(), effective_image=proof['effective_image'])
-            or not receipt.get('pod_id') or receipt['pod_id'] != state.get('last_pod_id')):
+            or not receipt.get('pod_id') or receipt['pod_id'] != state.get('last_pod_id')
+            or receipt.get('native_launch') != launch or state.get('native_launch') != launch):
         raise measurement_dispatch.OperationalHold('existing_measurement_receipt_changed')
 
 

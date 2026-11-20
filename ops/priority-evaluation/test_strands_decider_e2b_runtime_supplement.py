@@ -116,16 +116,57 @@ class StrandsRuntimeTests(unittest.TestCase):
         pins.assert_not_called()
         self.assertFalse((self.root / "output").exists())
 
+    def test_revocation_after_source_export_stops_staging(self):
+        from verda_provider import VerdaProvider
+
+        approval = {"approval_sha256": "b" * 64, "packet_sha256": "c" * 64, "location": "FIN-02"}
+        gate = Mock(side_effect=[approval, None])
+        gate.max_new_usd = 15
+        recipe = {"kind": "http_typesafe", "min_vram_gb": 24, "code": {"commit": "a", "tree": "b"}}
+        source = self.job / "source"
+        source.mkdir(parents=True)
+        write_json(source / "FETCH-RECEIPT-model.json", {})
+        provider = Mock(spec=VerdaProvider)
+        provider.sealed_custody_ok = True
+        with patch.object(supplement, "require"), patch.object(pod_runner, "validate_recipe"), \
+                patch.object(pod_runner, "PODS_DIR", self.root / "pods"), \
+                patch.object(pod_runner, "export_source"), patch.object(pod_runner, "build_staging") as stage:
+            with self.assertRaisesRegex(measurement_dispatch.OperationalHold, "strands_e2b_native_admission_required"):
+                pod_runner.run(ORDER, self.job, recipe, self.root / "output", {}, 15, provider=provider,
+                               allocation_gate=gate, measurement_pins_factory=lambda: {})
+        self.assertEqual([call.args[0] for call in gate.call_args_list],
+                         ["before_protected_read", "before_protected_read"])
+        stage.assert_not_called()
+        provider.reserve.assert_not_called()
+
     def test_runtime_receipt_matches_pinned_image_and_exact_attempt(self):
         runtime = dict(supplement.binding(), effective_image="sha256:" + "a" * 64)
-        state = {"last_pod_id": "owned-instance", "runtime_supplement": runtime}
-        receipt = {"pod_id": "owned-instance", "runtime_supplement": dict(runtime)}
-        supplement.verify_receipt(receipt, state)
+        approval = {"approval_sha256": "b" * 64, "packet_sha256": "c" * 64, "location": "FIN-02"}
+        state = {"last_pod_id": "owned-instance", "runtime_supplement": runtime, "native_launch": approval}
+        receipt = {"pod_id": "owned-instance", "runtime_supplement": dict(runtime), "native_launch": approval}
+        supplement.verify_receipt(receipt, state, approval)
         for drift in ({"runtime_supplement": None}, {"pod_id": "another-instance"},
+                      {"native_launch": dict(approval, location="FIN-03")},
                       {"runtime_supplement": dict(runtime, effective_image="sha256:" + "b" * 64)}):
             with self.subTest(drift=drift), self.assertRaisesRegex(
                     measurement_dispatch.OperationalHold, "existing_measurement_receipt_changed"):
-                supplement.verify_receipt(dict(receipt, **drift), state)
+                supplement.verify_receipt(dict(receipt, **drift), state, approval)
+        with self.assertRaisesRegex(measurement_dispatch.OperationalHold, "existing_measurement_receipt_changed"):
+            supplement.verify_receipt(receipt, state, dict(approval, approval_sha256="d" * 64))
+
+    def test_pending_order_bindings_block_hardware_drift(self):
+        approval = {"approval_sha256": "b" * 64, "packet_sha256": "c" * 64, "location": "FIN-02"}
+        pod = {"gpu": "RTXPRO6000", "gpu_count": 1, "instance_type": "1RTXPRO6000.30V",
+               "location": "FIN-02"}
+        self.assertEqual(supplement.launch_binding(approval), approval)
+        with self.assertRaisesRegex(measurement_dispatch.OperationalHold, "strands_e2b_native_admission_required"):
+            supplement.launch_binding(dict(approval, location="ICE-01"))
+        supplement.verify_created_pod(pod, approval)
+        for drift in ({"gpu_count": True}, {"gpu_count": 2}, {"location": "FIN-03"},
+                      {"gpu": "H100"}, {"instance_type": "1H100.80S.30V"}):
+            with self.subTest(drift=drift), self.assertRaisesRegex(
+                    measurement_dispatch.OperationalHold, "gpu_pod_quote_changed"):
+                supplement.verify_created_pod(dict(pod, **drift), approval)
 
     def test_dispatch_and_wait_use_the_earlier_cutoff_and_reserve(self):
         start = datetime(2026, 11, 21, 10, tzinfo=timezone.utc)
