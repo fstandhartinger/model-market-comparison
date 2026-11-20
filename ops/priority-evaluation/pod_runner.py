@@ -844,6 +844,13 @@ WEIGHTS_SNIPPET = (
 )
 
 
+PINNED_WEIGHTS_SNIPPET = (
+    "import sys; from huggingface_hub import snapshot_download; "
+    "snapshot_download(repo_id=sys.argv[1], revision=sys.argv[2], local_dir=sys.argv[3], "
+    "allow_patterns=sys.argv[4:], token=False)"
+)
+
+
 def _note_capacity_offer(state, provider, gpu_choice, exc):
     """Remember the cheapest offer any provider quoted but we could not take (cap/capacity), for the T-24h handoff."""
     price = getattr(exc, 'offer_usd_h', None)
@@ -901,6 +908,8 @@ def _lifecycle(provider, job, recipe, staging_path, output, state, gpu_choice, t
     if "host_staging" in recipe and ttl < HOST_MIN_TTL_HOURS:
         # Original caps leave this attempt too little TTL for build + stream + run: hold before any quote/reserve/create.
         raise measurement_dispatch.OperationalHold("host_staging_ttl_too_short")
+    import strands_decider_e2b_runtime_supplement
+    strands_e2b = strands_decider_e2b_runtime_supplement.active(job_dir or job, recipe)
     try:
         attempts = state.get('creation_attempts', 0)
         try:
@@ -1030,6 +1039,10 @@ def _lifecycle(provider, job, recipe, staging_path, output, state, gpu_choice, t
                                                "--format", "{{json .RepoDigests}}"])
             if image.split("@", 1)[1] not in inspect.stdout:
                 raise PodRunError("pulled image digest does not match the pin")
+            if strands_e2b:
+                state['runtime_supplement'] = strands_decider_e2b_runtime_supplement.build(provider, pod_id)
+                image = state['runtime_supplement']['effective_image']
+                save_state()
             import standardone_runtime_supplement
             if standardone_runtime_supplement.active(job_dir or job, recipe):
                 # Fixed-order offline build of the documented stack on the pinned base, before weights/inputs.
@@ -1148,11 +1161,21 @@ def _lifecycle(provider, job, recipe, staging_path, output, state, gpu_choice, t
         else:
             for entry in recipe["weights"]:
                 target = f"/models/{entry['dir']}"
+                # This order uses only the trusted base for networked acquisition.
+                # Keep the author's wheel and unrelated Hub objects out of that process.
+                if strands_e2b:
+                    download_image = recipe["image"]
+                    snippet = PINNED_WEIGHTS_SNIPPET
+                    patterns = sorted(entry["sha256"])
+                else:
+                    download_image = image
+                    snippet = WEIGHTS_SNIPPET
+                    patterns = []
                 _exec(provider, pod_id, ["docker", "run", "--rm", "-v", "/models:/models",
                                          "-e", "HOME=/tmp", "--tmpfs", "/tmp",
                                          "-e", "HF_HUB_DISABLE_TELEMETRY=1",
-                                         "-e", "HF_TOKEN=", "--entrypoint", "python3", image,
-                                         "-c", WEIGHTS_SNIPPET, entry["repo"], entry["revision"], target],
+                                         "-e", "HF_TOKEN=", "--entrypoint", "python3", download_image,
+                                         "-c", snippet, entry["repo"], entry["revision"], target, *patterns],
                       timeout=5400)
                 for relative, digest in entry["sha256"].items():
                     check = _exec(provider, pod_id, ["sha256sum", f"{target}/{relative}"])
@@ -1334,6 +1357,11 @@ def default_alert(text: str) -> None:
 def run(rid: str, job_dir: Path, recipe: dict, output: Path, expected_pins: dict, max_usd: float,
         *, provider: Provider | None = None, alert=None, benchmarks=('jevbench',), native_source_pins=None, measurement_pins_factory=None, pre_upload_gate=None, allocation_gate=None, runtime_preflight=None, image_context_provider=None, weights_streamer=None, fallback_providers=()) -> dict:
     """Measure the reviewed recipe on one disposable GPU pod; idempotent via receipt + pod state."""
+    import strands_decider_e2b_runtime_supplement
+    strands_e2b = strands_decider_e2b_runtime_supplement.ORDER in (rid, Path(job_dir).name)
+    if strands_e2b:
+        strands_decider_e2b_runtime_supplement.require(
+            job_dir, recipe, rid, provider, benchmarks, pre_upload_gate, allocation_gate, fallback_providers)
     validate_recipe(recipe, job_dir)
     current = measurement_pins_factory() if measurement_pins_factory is not None else measurement_dispatch.pins()
     if current != expected_pins:
@@ -1475,7 +1503,9 @@ def run(rid: str, job_dir: Path, recipe: dict, output: Path, expected_pins: dict
         quote_budget = {'remaining': 2}
         chain = provider_chain(provider, fallback_providers)
         provider_index = 0  # advances only after a capacity miss; the attempt budget below is unchanged
-        for attempt in range(1 if scoped or (rid == '3687485f-5a51-4964-bd9a-73973f3494d7' and allocation_gate is not None) else 2):
+        single_attempt = strands_e2b or scoped or (
+            rid == '3687485f-5a51-4964-bd9a-73973f3494d7' and allocation_gate is not None)
+        for attempt in range(1 if single_attempt else 2):
             gpu_choice = candidates[attempt % len(candidates)]
             run_spend = state.get('spent_upper_bound_usd', 0.0) - prior_spend
             remaining = min(budget - run_spend, cap - state.get('spent_upper_bound_usd', 0.0))

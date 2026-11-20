@@ -2205,6 +2205,13 @@ def manage_evaluation(row: dict[str, Any], state: dict[str, Any], effects: Effec
     unit = EVAL_UNIT.format(rid)
     if row.get("status") not in ("paid", "review_passed") or active_hold(row):
         return
+    if rid == native_owner.STRANDS_E2B_ORDER:
+        operational = state.get("operational_hold")
+        if isinstance(operational, dict):
+            operational_escalate(row, state, effects, now,
+                                 str(operational.get("reason") or "unsupported_measurement_backend"),
+                                 exhausted=False)
+        return
     if row.get("review_passed_at") and state.get("source_review_gate"):
         subject = f"Benchmark Heaven evaluation order {order_ref(rid)}: source review passed"
         body = fill_template(read_template("autopickup-review-passed-template.txt"), {"ORDER_REF": order_ref(rid)})
@@ -2464,6 +2471,8 @@ def _jev_v15_composite(axes: dict[str, Any], option: str) -> float:
 
 
 def dispatch_measurement(rid: str, job_dir: Path) -> None:
+    if native_owner.STRANDS_E2B_ORDER in (rid, job_dir.name):
+        raise measurement_dispatch.OperationalHold("separate_native_measurement_wrapper_required")
     review = validate_review_gate(job_dir)
     row = load_row(rid)
     state = load_state(rid)
@@ -3611,6 +3620,13 @@ def advance_public_release(row: dict[str, Any], job_dir: Path, state: dict[str, 
 
 def advance_delivery(row: dict[str, Any], state: dict[str, Any], job_dir: Path, effects: Effects, now: datetime) -> None:
     rid = request_id(row.get("id"))
+    if rid == native_owner.STRANDS_E2B_ORDER:
+        finalization = state.get("v16_finalization")
+        # The native delivery operator must stage a verified result. The generic
+        # finalizer must never create a release for this order.
+        if (row.get("release_status") != "verified" or not isinstance(finalization, dict)
+                or finalization.get("recorded_by") != native_owner.owner_name(rid)):
+            return
 
     if row.get("evaluation_status") == "ready_for_release" and row.get("release_status") not in ("verified", "refused", "done") \
             and step_due(state, "finalize", now):
@@ -5321,6 +5337,8 @@ def run_agent(job_dir: Path, env: dict[str, str], timeout_hint: int, *, read_onl
 
 def evaluate_v16_generation(rid: str, job_dir: Path) -> int:
     """Same owning unit; reviewed generation, no customer agent or legacy release."""
+    if native_owner.STRANDS_E2B_ORDER in (rid, job_dir.name):
+        raise PickupError("separate_native_measurement_wrapper_required")
     import v16_adoption
     try:
         validate_review_gate(job_dir)
@@ -5380,6 +5398,8 @@ def evaluate_v16_generation(rid: str, job_dir: Path) -> int:
 
 def evaluate(rid: str) -> int:
     rid = request_id(rid)
+    if rid == native_owner.STRANDS_E2B_ORDER:
+        raise PickupError("separate_native_measurement_wrapper_required")
     row = load_row(rid)
     if not row or row.get("synthetic_test") is not False or row.get("stripe_mode") != "live":
         raise PickupError("the evaluation service accepts only a real live order")

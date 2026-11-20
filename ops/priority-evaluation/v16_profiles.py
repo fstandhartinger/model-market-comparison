@@ -16,6 +16,7 @@ import threading
 from contextlib import contextmanager
 
 import measurement_dispatch
+import native_owner
 import official_scoring_v16 as official_scoring
 import pod_runner
 
@@ -178,6 +179,8 @@ def _retirement_unlocked(admission):
 def measure(job_dir, *, scoped_topup=False):
     """Guarded first-party native run, with original per-order pod budget intact."""
     job = Path(job_dir)
+    if job.name == native_owner.STRANDS_E2B_ORDER:
+        raise measurement_dispatch.OperationalHold("separate_native_measurement_wrapper_required")
     admission, measured, scored = accepted(job)
     late = None
     if job.name == '3687485f-5a51-4964-bd9a-73973f3494d7':

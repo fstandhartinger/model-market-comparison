@@ -26,6 +26,7 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any
 
+STRANDS_E2B_ORDER = "0616c39d-e505-4365-b9e8-db157fc67539"
 OWNER_PREFIX = "fastlane-native-"
 UNIT = "jevbench-native-owner@{}.service"
 # Hold reasons that mean "no automatic runtime exists for this model" rather than a transient fault.
@@ -80,6 +81,9 @@ SUPPLEMENTS: tuple[dict[str, Any], ...] = (
     {"family": "minimodels_decision", "module": "minimodels_decision_runtime_supplement.py",
      "repos": ("huggingface.co/minimodels-ai/decision-1.0",),
      "precedents": ("fastlane-native-f62aeab1",)},
+    {"family": "strands_decider_e2b", "module": "strands_decider_e2b_runtime_supplement.py",
+     "repos": ("huggingface.co/strandsagents/strands-decider-e2b-gemma4-v2-2611",),
+     "precedents": ("fastlane-native-0616c39d",)},
     {"family": "quyet", "module": "quyet_runtime_supplement.py",
      "repos": ("huggingface.co/chinhnc/quyet-1.2-large", "huggingface.co/chinhnc/quyet-1.2-small", "github.com/ncchinh/quyet"),
      "precedents": ("fastlane-native-3a698114",)},
