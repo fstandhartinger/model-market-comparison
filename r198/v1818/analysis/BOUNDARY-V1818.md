@@ -1,6 +1,6 @@
 # v1.8.18 ranking configuration
 
-Candidate preparation only; independent fairness review PENDING. The retained all-nine WHATIF is reused unchanged (8e20a249…). No model call or new measurement.
+Candidate preparation only; independent fairness review FAIR (all nine ranked). The retained all-nine WHATIF is reused unchanged (8e20a249…). No model call or new measurement.
 
 R1 binds separate I/C endpoints and the four leave-one-out offsets; joint endpoints are stress tests. R2 tests point top-five memberships only; favourable-only crossings do not hold a row. R3 permits one point boundary place failing only I CI low with T3. Family/language corrections belong to the independent fairness review.
 
@@ -23,7 +23,9 @@ Starlord 27B has exactly one point top-five place: open/B #5. It is #7 at I CI l
 ## Carried place-naming notes
 
 - arcbright-elf-1-12b-r2: Measured on the 27 Oct 2026 draw; shown on the reference scale by anchor equating with four strong anchor systems (Intelligence -2.9, Calibration -1.9 points; 95% interval of the Intelligence shift -5.9 to +1.1). Its #5 place on the open-weights Composite A and C lists is within the uncertainty of the draw shift.
-- karpo_decision_31b: Measured on the 27 Oct 2026 draw; shown on the reference scale by anchor equating with four strong anchor systems (Intelligence -2.9, Calibration -1.9 points; 95% interval of the Intelligence shift -5.9 to +1.1).
+- decide-1.1: Measured on the 27 Oct 2026 draw; shown on the reference scale by anchor equating with four strong anchor systems (Intelligence -2.9, Calibration -1.9 points; 95% interval of the Intelligence shift -5.9 to +1.1). Its #4 place on Composite B among all systems is within the uncertainty of the draw shift.
+- karpo_decision_31b: Measured on the 27 Oct 2026 draw; shown on the reference scale by anchor equating with four strong anchor systems (Intelligence -2.9, Calibration -1.9 points; 95% interval of the Intelligence shift -5.9 to +1.1). Its #4 place on the Capability Score among all systems is within the uncertainty of the draw shift.
+- sd-jev-4b-v12.1.0-aligned-s42-step0256: Measured on the 27 Oct 2026 draw; shown on the reference scale by anchor equating with four strong anchor systems (Intelligence -2.9, Calibration -1.9 points; 95% interval of the Intelligence shift -5.9 to +1.1). Its #5 place on the API Composite A list is within the uncertainty of the draw shift.
 
 ## Every candidate / primary-list place
 

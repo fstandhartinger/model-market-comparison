@@ -349,6 +349,7 @@
     {
       "key": "decide-1.1",
       "fields": [
+        "listing_note",
         "ranks"
       ]
     },
@@ -1807,6 +1808,7 @@
     {
       "key": "sd-jev-4b-v12.1.0-aligned-s42-step0256",
       "fields": [
+        "listing_note",
         "rank",
         "ranks"
       ]
@@ -2338,14 +2340,42 @@
       ]
     },
     {
-      "after": "Measured on the 27 Oct 2026 draw; shown on the reference scale by anchor equating with four strong anchor systems (Intelligence -2.9, Calibration -1.9 points; 95% interval of the Intelligence shift -5.9 to +1.1).",
+      "after": "Measured on the 27 Oct 2026 draw; shown on the reference scale by anchor equating with four strong anchor systems (Intelligence -2.9, Calibration -1.9 points; 95% interval of the Intelligence shift -5.9 to +1.1). Its #4 place on Composite B among all systems is within the uncertainty of the draw shift.",
+      "before": "Measured on the 27 Oct 2026 draw; shown on the reference scale by anchor equating with four strong anchor systems (Intelligence -2.9, Calibration -1.9 points; 95% interval of the Intelligence shift -5.9 to +1.1).",
+      "key": "decide-1.1",
+      "named_point_places": {
+        "all/composites/B": 4,
+        "release/B": 4
+      },
+      "path": "listing_note",
+      "remaining_boundary_places": [
+        "all/composites/B",
+        "release/B"
+      ]
+    },
+    {
+      "after": "Measured on the 27 Oct 2026 draw; shown on the reference scale by anchor equating with four strong anchor systems (Intelligence -2.9, Calibration -1.9 points; 95% interval of the Intelligence shift -5.9 to +1.1). Its #4 place on the Capability Score among all systems is within the uncertainty of the draw shift.",
       "before": "Measured on the 27 Oct 2026 draw; shown on the reference scale by anchor equating with four strong anchor systems (Intelligence -2.9, Calibration -1.9 points; 95% interval of the Intelligence shift -5.9 to +1.1). Its #5 place on Composite B among all systems is within the uncertainty of the draw shift.",
       "key": "karpo_decision_31b",
       "named_point_places": {
-        "all/composites/B": 6
+        "all/capability/official_caps": 4
       },
       "path": "listing_note",
-      "remaining_boundary_places": []
+      "remaining_boundary_places": [
+        "all/capability/official_caps"
+      ]
+    },
+    {
+      "after": "Measured on the 27 Oct 2026 draw; shown on the reference scale by anchor equating with four strong anchor systems (Intelligence -2.9, Calibration -1.9 points; 95% interval of the Intelligence shift -5.9 to +1.1). Its #5 place on the API Composite A list is within the uncertainty of the draw shift.",
+      "before": "Measured on the 27 Oct 2026 draw; shown on the reference scale by anchor equating with four strong anchor systems (Intelligence -2.9, Calibration -1.9 points; 95% interval of the Intelligence shift -5.9 to +1.1).",
+      "key": "sd-jev-4b-v12.1.0-aligned-s42-step0256",
+      "named_point_places": {
+        "api/composites/A": 5
+      },
+      "path": "listing_note",
+      "remaining_boundary_places": [
+        "api/composites/A"
+      ]
     }
   ],
   "overlay_changes": {

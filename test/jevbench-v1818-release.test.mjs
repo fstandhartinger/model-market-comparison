@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {execFileSync} from 'node:child_process';
-import {readJevbenchV1818Candidate,hasPublishedJevbenchV1818Release,readJevbenchV1818ForBoard} from '../lib/jevbench-v1818-release.mjs';
+import {readJevbenchV1818Candidate,hasPublishedJevbenchV1818Release,readJevbenchV1818ForBoard,validateJevbenchV1818Bundle} from '../lib/jevbench-v1818-release.mjs';
 import {baseModelFor} from '../lib/jev-base-model.mjs';
 import {readJevAllDataInput} from '../lib/jevbench-alldata-input.mjs';
 const load=(v,n)=>JSON.parse(readFileSync(`data/raw/benchmarks/jevbench/v1.8/jevbench-${v}-${n}.json`));
@@ -14,6 +14,12 @@ test('committed PASS manifest never carries a synthetic or pending review engine
  if(manifest.review.verdict==='PASS'){
   assert.ok(manifest.review.engine);
   assert.doesNotMatch(manifest.review.engine,/synthetic|pending/i);
+ }
+});
+test('public reader rejects synthetic and pending engines even with a PASS verdict',()=>{
+ for(const engine of ['synthetic-preview-only','PENDING','pending-review']){
+  const manifest={...load('v1.8.18','publication'),review:{verdict:'PASS',engine,receipt_sha256:'a'.repeat(64)}};
+  assert.throws(()=>validateJevbenchV1818Bundle({manifest}),/independent review PENDING/);
  }
 });
 test('v1.8.18 preserves all non-ranking measurement fields and all carried cells',()=>{

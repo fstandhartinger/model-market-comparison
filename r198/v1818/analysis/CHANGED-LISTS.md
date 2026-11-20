@@ -1,6 +1,6 @@
 # Changed primary top-five lists
 
-Candidate review pending.
+Independent fairness review: FAIR, all nine rows ranked. Release-owner binding and sealing remain pending.
 
 ## all/composites/A
 
