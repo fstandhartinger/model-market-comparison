@@ -224,6 +224,17 @@ class VerdaProvider(pod_runner.Provider):
         except subprocess.TimeoutExpired:
             return subprocess.CompletedProcess(argv, 124, '', 'ssh exec timeout')
 
+    def exec_bounded(self, pod_id, command, timeout):
+        """Use an already verified endpoint, with no SSH timeout extension."""
+        if type(timeout) is not int or timeout < 2 or pod_id not in self._hosts:
+            raise pod_runner.PodRunError('bounded Verda exec requires a verified endpoint and time budget')
+        remote = ['timeout', '--kill-after=1s', f'{timeout - 1}s', *command]
+        argv = ['ssh', *self._ssh_base(pod_id), 'root@' + self._hosts[pod_id], shlex.join(remote)]
+        try:
+            return subprocess.run(argv, capture_output=True, text=True, timeout=timeout)
+        except subprocess.TimeoutExpired:
+            return subprocess.CompletedProcess(argv, 124, '', 'ssh exec timeout')
+
     def _scp(self, argv, timeout):
         try:
             return subprocess.run(argv, capture_output=True, text=True, timeout=timeout).returncode == 0
@@ -236,6 +247,14 @@ class VerdaProvider(pod_runner.Provider):
 
     def scp_from(self, pod_id, remote, local):
         if not self._scp(['scp', '-q', *self._ssh_base(pod_id), '--', f'root@{self._ip(pod_id)}:{remote}', local], 900):
+            raise pod_runner.PodRunError('scp download failed')
+
+    def scp_from_bounded(self, pod_id, remote, local, timeout):
+        """Fetch from the established instance without an unbounded lookup."""
+        if type(timeout) is not int or timeout < 1 or pod_id not in self._hosts:
+            raise pod_runner.PodRunError('bounded Verda download requires a verified endpoint and time budget')
+        if not self._scp(['scp', '-q', *self._ssh_base(pod_id), '--', f'root@{self._hosts[pod_id]}:{remote}', local],
+                         timeout):
             raise pod_runner.PodRunError('scp download failed')
 
     def rm(self, pod_id):
