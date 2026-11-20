@@ -1,7 +1,21 @@
 {
   "status": "STOP_PREBUILD_DISK",
   "manifest": "PENDING",
-  "sandy": [
+  "source_candidate": "323f24c08",
+  "fairness": "FAIR, all nine ranked; TF1\u2013TF3 adopted",
+  "sandy_gates": [
+    {
+      "gate": "validator",
+      "argv": [
+        "node",
+        "r198/v1818/validate_v1818.mjs"
+      ],
+      "cwd": "/home/flori/wt/jevbench-v1818-20261120",
+      "exit": 0,
+      "expected": 0,
+      "log": "logs/validator.log",
+      "finished": "2026-11-20T12:04:25.526898+00:00"
+    },
     {
       "gate": "snapshot",
       "argv": [
@@ -12,7 +26,7 @@
       "exit": 0,
       "expected": 0,
       "log": "logs/snapshot.log",
-      "finished": "2026-11-20T09:31:33.781037+00:00"
+      "finished": "2026-11-20T12:07:41.412597+00:00"
     },
     {
       "gate": "n30-negative",
@@ -25,7 +39,7 @@
       "exit": 1,
       "expected": 1,
       "log": "logs/n30-negative.log",
-      "finished": "2026-11-20T09:31:53.284797+00:00"
+      "finished": "2026-11-20T12:08:04.245525+00:00"
     },
     {
       "gate": "n30-positive",
@@ -38,7 +52,7 @@
       "exit": 0,
       "expected": 0,
       "log": "logs/n30-positive.log",
-      "finished": "2026-11-20T09:32:10.924087+00:00"
+      "finished": "2026-11-20T12:08:20.668077+00:00"
     },
     {
       "gate": "tsc",
@@ -51,7 +65,7 @@
       "exit": 0,
       "expected": 0,
       "log": "logs/tsc.log",
-      "finished": "2026-11-20T09:32:58.009041+00:00"
+      "finished": "2026-11-20T12:08:35.767378+00:00"
     },
     {
       "gate": "pending-tests",
@@ -76,16 +90,16 @@
       "exit": 0,
       "expected": 0,
       "log": "logs/pending-tests.log",
-      "finished": "2026-11-20T09:39:55.519469+00:00"
+      "finished": "2026-11-20T12:16:00.037889+00:00"
     }
   ],
-  "final_local": [
+  "sandy_final_gates": [
     {
       "gate": "audit-final",
       "argv": [
         "python3",
         "-B",
-        "/home/flori/jobs/jevbench-add-requests-20260919/workers/r174l-v1818-ranking-build2/tools/audit.py"
+        "/home/flori/jobs/jevbench-add-requests-20260919/workers/r174l-v1818-ranking-build3/tools/audit.py"
       ],
       "exit": 0,
       "log": "logs/audit-final.log"
@@ -104,13 +118,13 @@
       "argv": [
         "python3",
         "-B",
-        "/home/flori/jobs/jevbench-add-requests-20260919/workers/r174l-v1818-ranking-build2/tools/privacy.py"
+        "/home/flori/jobs/jevbench-add-requests-20260919/workers/r174l-v1818-ranking-build3/tools/privacy.py"
       ],
       "exit": 0,
       "log": "logs/privacy-final.log"
     }
   ],
-  "lechonk": [
+  "lechonk_gates": [
     {
       "gate": "node-version",
       "argv": [
@@ -122,8 +136,8 @@
       "exit": 0,
       "expected": 0,
       "log": "node-version.log",
-      "started": "2026-11-20T09:30:59.780833+00:00",
-      "finished": "2026-11-20T09:30:59.786944+00:00"
+      "started": "2026-11-20T12:07:53.584313+00:00",
+      "finished": "2026-11-20T12:07:53.593829+00:00"
     },
     {
       "gate": "module-imports",
@@ -138,8 +152,8 @@
       "exit": 0,
       "expected": 0,
       "log": "module-imports.log",
-      "started": "2026-11-20T09:30:59.787293+00:00",
-      "finished": "2026-11-20T09:31:00.169919+00:00"
+      "started": "2026-11-20T12:07:53.594277+00:00",
+      "finished": "2026-11-20T12:07:53.994423+00:00"
     },
     {
       "gate": "snapshot",
@@ -154,8 +168,8 @@
       "exit": 0,
       "expected": 0,
       "log": "snapshot.log",
-      "started": "2026-11-20T09:31:00.170835+00:00",
-      "finished": "2026-11-20T09:35:25.648448+00:00"
+      "started": "2026-11-20T12:07:53.994941+00:00",
+      "finished": "2026-11-20T12:11:32.143359+00:00"
     },
     {
       "gate": "validator",
@@ -168,8 +182,8 @@
       "exit": 0,
       "expected": 0,
       "log": "validator.log",
-      "started": "2026-11-20T09:35:25.649446+00:00",
-      "finished": "2026-11-20T09:36:06.262740+00:00"
+      "started": "2026-11-20T12:11:32.144132+00:00",
+      "finished": "2026-11-20T12:12:06.543731+00:00"
     },
     {
       "gate": "n30-negative",
@@ -185,8 +199,8 @@
       "exit": 1,
       "expected": 1,
       "log": "n30-negative.log",
-      "started": "2026-11-20T09:36:06.263696+00:00",
-      "finished": "2026-11-20T09:36:49.667507+00:00"
+      "started": "2026-11-20T12:12:06.544625+00:00",
+      "finished": "2026-11-20T12:12:51.054433+00:00"
     },
     {
       "gate": "n30-positive",
@@ -200,8 +214,8 @@
       "exit": 0,
       "expected": 0,
       "log": "n30-positive.log",
-      "started": "2026-11-20T09:36:49.669061+00:00",
-      "finished": "2026-11-20T09:37:35.101322+00:00"
+      "started": "2026-11-20T12:12:51.055459+00:00",
+      "finished": "2026-11-20T12:13:35.722670+00:00"
     },
     {
       "gate": "snapshot-privacy",
@@ -209,15 +223,15 @@
         "/srv/heavy/tools/node20/bin/node",
         "--input-type=module",
         "-e",
-        "\nimport assert from 'node:assert/strict';\nimport { readFileSync } from 'node:fs';\nimport { privateTokenHits } from './r198/v1812/private-token-check.mjs';\nconst k='cue-reflex-4b-v0.2';\nconst data=JSON.parse(readFileSync('data/jevbench-v1.8.18-alldata.json','utf8'));\nconst row=data.artifact.systems.find(row=>row.key===k);\nconst text=JSON.stringify({row, cells:data.categoryView.systems[k]});\nassert.ok(row);\nassert.ok(Object.values(privateTokenHits(text)).every(n=>n===0));\nassert.doesNotMatch(text,/fastlane-native|raw\\.jsonl|\\/home\\/|probs_as_returned|\"task_id\"|\"opaque_id\"/);\nconsole.log('PASS snapshot new row and cells, 0 private token hits');\n"
+        "\n    import assert from 'node:assert/strict';\n    import { readFileSync } from 'node:fs';\n    import { privateTokenHits } from './r198/v1812/private-token-check.mjs';\n    const k='cue-reflex-4b-v0.2';\n    const data=JSON.parse(readFileSync('data/jevbench-v1.8.18-alldata.json','utf8'));\n    const row=data.artifact.systems.find(row=>row.key===k);\n    const text=JSON.stringify({row, cells:data.categoryView.systems[k]});\n    assert.ok(row);\n    assert.ok(Object.values(privateTokenHits(text)).every(n=>n===0));\n    assert.doesNotMatch(text,/fastlane-native|raw\\.jsonl|\\/home\\/|probs_as_returned|\"task_id\"|\"opaque_id\"/);\n    console.log('PASS snapshot new row and cells, 0 private token hits');\n    "
       ],
       "cwd": "/home/flori/wt/jevbench-v1818-r174l2-gates",
       "env": {},
       "exit": 0,
       "expected": 0,
       "log": "snapshot-privacy.log",
-      "started": "2026-11-20T09:37:35.101899+00:00",
-      "finished": "2026-11-20T09:37:35.310762+00:00"
+      "started": "2026-11-20T12:13:35.723510+00:00",
+      "finished": "2026-11-20T12:13:35.900248+00:00"
     },
     {
       "gate": "tsc",
@@ -231,8 +245,8 @@
       "exit": 0,
       "expected": 0,
       "log": "tsc.log",
-      "started": "2026-11-20T09:37:35.311447+00:00",
-      "finished": "2026-11-20T09:38:55.059728+00:00"
+      "started": "2026-11-20T12:13:35.900981+00:00",
+      "finished": "2026-11-20T12:13:57.144850+00:00"
     },
     {
       "gate": "pending-tests",
@@ -278,43 +292,106 @@
       "exit": 0,
       "expected": 0,
       "log": "pending-tests.log",
-      "started": "2026-11-20T10:06:18.251219+00:00",
-      "finished": "2026-11-20T11:51:22.807331+00:00"
-    },
-    {
-      "gate": "worktree-prebuild-disk",
-      "argv": [
-        "/home/flori/bin/disk-preflight",
-        "6",
-        "--path",
-        "/home/flori/wt"
-      ],
-      "cwd": "/home/flori/wt/jevbench-v1818-r174l2-gates",
-      "env": {},
-      "exit": 1,
-      "expected": 0,
-      "log": "worktree-prebuild-disk.log",
-      "started": "2026-11-20T11:51:22.808181+00:00",
-      "finished": "2026-11-20T11:51:22.852350+00:00"
+      "started": "2026-11-20T12:13:57.145593+00:00",
+      "finished": "2026-11-20T13:53:17.302961+00:00"
     }
   ],
-  "remaining_gates": [
-    "synthetic PASS fixture and tests",
+  "binding_disk_checks": [
+    {
+      "at": "2026-11-20T12:02:20.170115+00:00",
+      "exit": 1,
+      "output": "NO: disk 84.8 % used, 210 GB free; 6 GB would leave 85.2 % used, 204 GB free (would exceed 85 % used) -- cleanup ran first when root was >=85%; retain the gate and inspect archive receipts\n"
+    },
+    {
+      "at": "2026-11-20T12:12:20.559780+00:00",
+      "exit": 1,
+      "output": "NO: disk 84.9 % used, 209 GB free; 6 GB would leave 85.3 % used, 203 GB free (would exceed 85 % used) -- cleanup ran first when root was >=85%; retain the gate and inspect archive receipts\n"
+    },
+    {
+      "at": "2026-11-20T12:22:20.971443+00:00",
+      "exit": 1,
+      "output": "NO: disk 85.1 % used, 205 GB free; 6 GB would leave 85.5 % used, 199 GB free (would exceed 85 % used) -- cleanup ran first when root was >=85%; retain the gate and inspect archive receipts\n"
+    },
+    {
+      "at": "2026-11-20T12:32:21.405774+00:00",
+      "exit": 1,
+      "output": "NO: disk 85.0 % used, 207 GB free; 6 GB would leave 85.4 % used, 201 GB free (would exceed 85 % used) -- cleanup ran first when root was >=85%; retain the gate and inspect archive receipts\n"
+    },
+    {
+      "at": "2026-11-20T12:42:21.841386+00:00",
+      "exit": 1,
+      "output": "NO: disk 85.0 % used, 207 GB free; 6 GB would leave 85.4 % used, 201 GB free (would exceed 85 % used) -- cleanup ran first when root was >=85%; retain the gate and inspect archive receipts\n"
+    },
+    {
+      "at": "2026-11-20T12:52:22.304950+00:00",
+      "exit": 1,
+      "output": "NO: disk 85.0 % used, 207 GB free; 6 GB would leave 85.4 % used, 201 GB free (would exceed 85 % used) -- cleanup ran first when root was >=85%; retain the gate and inspect archive receipts\n"
+    },
+    {
+      "at": "2026-11-20T13:02:22.713665+00:00",
+      "exit": 1,
+      "output": "NO: disk 85.0 % used, 207 GB free; 6 GB would leave 85.4 % used, 201 GB free (would exceed 85 % used) -- cleanup ran first when root was >=85%; retain the gate and inspect archive receipts\n"
+    },
+    {
+      "at": "2026-11-20T13:12:23.103040+00:00",
+      "exit": 1,
+      "output": "NO: disk 85.0 % used, 207 GB free; 6 GB would leave 85.4 % used, 201 GB free (would exceed 85 % used) -- cleanup ran first when root was >=85%; retain the gate and inspect archive receipts\n"
+    },
+    {
+      "at": "2026-11-20T13:22:23.486908+00:00",
+      "exit": 1,
+      "output": "NO: disk 84.6 % used, 212 GB free; 6 GB would leave 85.0 % used, 206 GB free (would exceed 85 % used) -- cleanup ran first when root was >=85%; retain the gate and inspect archive receipts\n"
+    },
+    {
+      "at": "2026-11-20T13:32:23.896124+00:00",
+      "exit": 1,
+      "output": "NO: disk 85.0 % used, 206 GB free; 6 GB would leave 85.5 % used, 200 GB free (would exceed 85 % used) -- cleanup ran first when root was >=85%; retain the gate and inspect archive receipts\n"
+    },
+    {
+      "at": "2026-11-20T13:42:24.282116+00:00",
+      "exit": 1,
+      "output": "NO: disk 85.2 % used, 205 GB free; 6 GB would leave 85.6 % used, 199 GB free (would exceed 85 % used) -- cleanup ran first when root was >=85%; retain the gate and inspect archive receipts\n"
+    },
+    {
+      "at": "2026-11-20T13:52:24.678251+00:00",
+      "exit": 1,
+      "output": "NO: disk 85.2 % used, 204 GB free; 6 GB would leave 85.6 % used, 198 GB free (would exceed 85 % used) -- cleanup ran first when root was >=85%; retain the gate and inspect archive receipts\n"
+    },
+    {
+      "at": "2026-11-20T14:02:25.091585+00:00",
+      "exit": 1,
+      "output": "NO: disk 85.1 % used, 205 GB free; 6 GB would leave 85.6 % used, 199 GB free (would exceed 85 % used) -- cleanup ran first when root was >=85%; retain the gate and inspect archive receipts\n"
+    }
+  ],
+  "stop": {
+    "status": "STOP_PREBUILD_DISK",
+    "reason": "The binding LeChonk work-volume preflight refused all 13 checks over two hours (6 GB, --path /home/flori/wt). Last output: NO: disk 85.1 % used, 205 GB free; 6 GB would leave 85.6 % used, 199 GB free (would exceed 85 % used) -- cleanup ran first when root was >=85%; retain the gate and inspect archive receipts No guard override or other-job cleanup.",
+    "checks": 13,
+    "started": "2026-11-20T12:02:20.170115+00:00",
+    "finished": "2026-11-20T14:02:25.091585+00:00",
+    "binding_command": [
+      "ssh",
+      "lechonk",
+      "/home/flori/bin/disk-preflight",
+      "6",
+      "--path",
+      "/home/flori/wt"
+    ],
+    "pending_run_completed": true,
+    "not_run": [
+      "synthetic PASS fixture/tests",
+      "production build",
+      "compiled/served checks",
+      "full suite"
+    ],
+    "resume_public_mirror": "/home/flori/wt/jevbench-v1818-r174l2-gates",
+    "receipts": ".worker3-receipts"
+  },
+  "not_run": [
+    "synthetic PASS fixture/tests",
     "production build",
-    "compiled page checks",
-    "served JSON and model-page checks",
+    "compiled/served checks",
     "full suite"
   ],
-  "disk_first_exit": 1,
-  "disk_retry_exit": 1,
-  "passed_pending_tests": {
-    "tests": 181,
-    "pass": 178,
-    "skip": 3,
-    "fail": 0
-  },
-  "snapshot_cross_host": {
-    "status": "PASS",
-    "sha256": "b3c2d6eefcca9acbb278ac5512f18a5c953d07400a7d076291c3234badb420e4"
-  }
+  "lead_owned": "C3 review binding, actual flip/seal and final-byte reruns"
 }

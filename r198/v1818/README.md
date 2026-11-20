@@ -4,8 +4,10 @@ PENDING candidate: nine-row ranking review using the v1.8.10 robust set and acce
 
 `inputs/RANKING-CONFIG.json` owns dispositions. Every boundary place is computed from that configuration. `analysis/WHATIF-V1818.json` is the retained all-nine WHATIF. Joint endpoints are stress tests. The independent family/language checks confirm all nine classifications. The publication manifest remains PENDING; real flip and seal helpers refuse until independent fairness review is bound by the lead. The isolated PASS fixture supplies simulated approval fields in its own copy; production readers always enforce the fairness gate and reject synthetic/pending engines.
 
-## Gate recovery (20 Nov 2026)
+## Gate stop after Amendment 2 (20 Nov 2026)
 
-Attempt 2 stopped at the binding 6 GB LeChonk disk gate after passing the PENDING checks. Amendment 2 updates the candidate and reruns checks; its worker reports and `receipts/GATE-STATUS.json` record the final gate status. The existing public mirror and dependencies are reused.
+All Sandy gates passed, including 84 focused tests / one PENDING-only skip / zero failures, validator, sample-floor controls, TypeScript, determinism and privacy. See `receipts/GATE-STATUS.json` for the completed LeChonk PENDING checks and full command receipts.
 
-Keep the manifest PENDING. The release owner binds the review, flips and seals only after the required gates and approval. No PR or publication is authorized for the worker.
+The exact 6 GB LeChonk work-volume preflight refused all 13 attempts over two hours. The worker stopped without creating a synthetic PASS fixture or running the production build, compiled/served checks or full suite. The guard was not overridden and no other job's data was removed. The public mirror and dependencies are retained for resumption.
+
+Keep the manifest PENDING. C3 remains with the release owner: bind the independent review, flip/seal, and rerun checks on the changed pins. No PR or publication was made by this worker.
