@@ -29,7 +29,9 @@ def _argument(value):
     raise PeerDatabaseError("invalid late pickup database argument type")
 
 
-class PeerDatabase:
+class _PeerDatabase:
+    route = PSQL
+
     def _call(self, operation, *values):
         args = ", ".join(_argument(value) for value in values)
         sql = (
@@ -40,7 +42,7 @@ class PeerDatabase:
         )
         try:
             result = subprocess.run(
-                PSQL, input=sql, text=True, encoding="utf-8", capture_output=True,
+                self.route, input=sql, text=True, encoding="utf-8", capture_output=True,
                 timeout=16, check=False, cwd="/",
                 env={"PATH": "/usr/bin:/bin", "LANG": "C.UTF-8", "PGCONNECT_TIMEOUT": "4",
                      "PGPASSFILE": "/dev/null", "PGCLIENTENCODING": "UTF8"},
@@ -51,6 +53,8 @@ class PeerDatabase:
         except (OSError, subprocess.TimeoutExpired, ValueError) as exc:
             raise PeerDatabaseError("late pickup database unavailable") from exc
 
+
+class PeerDatabase(_PeerDatabase):
     def read_order(self):
         return self._call("read_order")
 
@@ -64,14 +68,19 @@ class PeerDatabase:
     def validate(self, recipient, subject, digest):
         return self._call("validate", recipient, subject, digest)
 
+
+
+class TransportDatabase(_PeerDatabase):
+    route = (
+        *PSQL[:PSQL.index("-U")], "-U", "jevbench_cd7e_transport", "-d", PSQL[-1],
+    )
+
     def claim(self, recipient, subject, digest, generation, admission):
-        return self._call("claim", recipient, subject, digest, generation, admission)
+        claimed_at = self._call("claim", recipient, subject, digest, generation, admission)
+        return datetime.fromisoformat(claimed_at) if claimed_at is not None else None
 
-    def accepted(self, digest):
-        return self._call("accepted", digest)
+    def accepted(self, digest, claimed_at, message_id, accepted_at):
+        return self._call("accepted", digest, claimed_at, message_id, accepted_at)
 
-    def failed(self, digest, submitted):
-        return self._call("failed", digest, submitted)
-
-    def reconcile(self):
-        return self._call("reconcile")
+    def failed(self, digest, claimed_at, message_id, outcome):
+        return self._call("failed", digest, claimed_at, message_id, outcome)

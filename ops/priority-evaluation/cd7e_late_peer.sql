@@ -1,6 +1,6 @@
 -- Explicit installer input for the isolated late-pickup package.
 -- Apply as a database administrator in a single transaction after migration 004.
--- The deployment provisions and verifies the two roles and pg_ident mapping separately.
+-- The deployment provisions and verifies the three roles and their pg_ident mappings separately.
 SET LOCAL lock_timeout = '5s';
 SELECT pg_catalog.pg_advisory_xact_lock(pg_catalog.hashtext('bh_accounts_priority_eval_schema'));
 
@@ -8,6 +8,7 @@ DO $roles$
 DECLARE
   owner_role oid;
   pickup_role oid;
+  transport_role oid;
 BEGIN
   SELECT oid INTO STRICT owner_role FROM pg_catalog.pg_roles
   WHERE rolname = 'jevbench_cd7e_owner' AND NOT rolcanlogin AND NOT rolinherit
@@ -15,9 +16,14 @@ BEGIN
   SELECT oid INTO STRICT pickup_role FROM pg_catalog.pg_roles
   WHERE rolname = 'jevbench_cd7e_late' AND rolcanlogin AND NOT rolinherit
     AND NOT (rolsuper OR rolcreatedb OR rolcreaterole OR rolreplication OR rolbypassrls);
-  IF EXISTS (SELECT FROM pg_catalog.pg_auth_members WHERE member IN (owner_role, pickup_role))
+  SELECT oid INTO STRICT transport_role FROM pg_catalog.pg_roles
+  WHERE rolname = 'jevbench_cd7e_transport' AND rolcanlogin AND NOT rolinherit
+    AND NOT (rolsuper OR rolcreatedb OR rolcreaterole OR rolreplication OR rolbypassrls);
+  IF EXISTS (SELECT FROM pg_catalog.pg_auth_members WHERE member IN (owner_role, pickup_role, transport_role))
     OR pg_catalog.has_schema_privilege(pickup_role, 'public', 'CREATE')
+    OR pg_catalog.has_schema_privilege(transport_role, 'public', 'CREATE')
     OR pg_catalog.has_database_privilege(pickup_role, current_database(), 'CREATE')
+    OR pg_catalog.has_database_privilege(transport_role, current_database(), 'CREATE')
   THEN
     RAISE EXCEPTION 'late pickup database role has unexpected privileges';
   END IF;
@@ -145,13 +151,14 @@ RETURNS text LANGUAGE sql STABLE SECURITY DEFINER SET search_path = pg_catalog, 
 $$;
 
 CREATE FUNCTION cd7e_late.claim(expected_recipient text, expected_subject text, expected_digest text,
-  expected_generation text, expected_admission text) RETURNS boolean
+  expected_generation text, expected_admission text) RETURNS timestamptz
 LANGUAGE sql SECURITY DEFINER SET search_path = pg_catalog, pg_temp AS $$
   WITH locked_order AS MATERIALIZED (
     SELECT r AS order_record, r.id FROM public.bh_priority_evaluation_requests r
     WHERE r.id = 'cd7e038c-dcac-4990-9ca5-feac99cd8d8d' FOR UPDATE
   ), claimed AS (
-    UPDATE public.bh_priority_eval_transactional_mail e SET state = 'sending', claimed_at = now()
+    UPDATE public.bh_priority_eval_transactional_mail e SET state = 'sending',
+      claimed_at = greatest(clock_timestamp(), e.claimed_at + interval '1 microsecond')
     FROM locked_order r, public.bh_cd7e_late_result_authorizations a
     WHERE e.id = '1fe81855-8b6d-50f6-863f-f0760c2e48eb' AND r.id = e.request_id
       AND e.template_key = 'cd7e_late_result_v1' AND e.state = 'pending'
@@ -160,29 +167,39 @@ LANGUAGE sql SECURITY DEFINER SET search_path = pg_catalog, pg_temp AS $$
       AND a.admission_sha256 = expected_admission AND a.expires_at > clock_timestamp()
       AND e.recipient COLLATE "C" = expected_recipient AND e.subject COLLATE "C" = expected_subject
       AND e.body_sha256 = expected_digest
-    RETURNING e.id
+    RETURNING e.claimed_at
   )
-  SELECT EXISTS (SELECT FROM claimed)
+  SELECT claimed_at FROM claimed
 $$;
 
-CREATE FUNCTION cd7e_late.accepted(expected_digest text) RETURNS boolean
-LANGUAGE sql SECURITY DEFINER SET search_path = pg_catalog, pg_temp AS $$
-  WITH saved AS (
-    UPDATE cd7e_late.exact_mail SET state = 'sent', sent_at = clock_timestamp()
-    WHERE state = 'sending' AND body_sha256 = expected_digest RETURNING id
-  )
-  SELECT EXISTS (SELECT FROM saved)
-$$;
-
-CREATE FUNCTION cd7e_late.failed(expected_digest text, submitted boolean) RETURNS boolean
+CREATE FUNCTION cd7e_late.accepted(expected_digest text, expected_claim timestamptz,
+  expected_message_id text, accepted_at timestamptz) RETURNS boolean
 LANGUAGE sql STRICT SECURITY DEFINER SET search_path = pg_catalog, pg_temp AS $$
   WITH saved AS (
-    UPDATE cd7e_late.exact_mail SET state = CASE WHEN submitted THEN 'uncertain' ELSE 'pending' END
-    WHERE state = 'sending' AND body_sha256 = expected_digest RETURNING id
+    UPDATE cd7e_late.exact_mail SET state = 'sent', sent_at = accepted_at
+    WHERE state = 'sending' AND body_sha256 = expected_digest AND claimed_at = expected_claim
+      AND expected_message_id = '<fastlane-1fe81855-8b6d-50f6-863f-f0760c2e48eb@benchmarkheaven.com>'
+      AND accepted_at >= claimed_at AND accepted_at <= clock_timestamp()
+    RETURNING id
   )
   SELECT EXISTS (SELECT FROM saved)
 $$;
 
+CREATE FUNCTION cd7e_late.failed(expected_digest text, expected_claim timestamptz,
+  expected_message_id text, outcome text) RETURNS boolean
+LANGUAGE sql STRICT SECURITY DEFINER SET search_path = pg_catalog, pg_temp AS $$
+  WITH saved AS (
+    UPDATE cd7e_late.exact_mail SET state = CASE outcome
+      WHEN 'before_submission' THEN 'pending' ELSE 'uncertain' END
+    WHERE state = 'sending' AND body_sha256 = expected_digest AND claimed_at = expected_claim
+      AND expected_message_id = '<fastlane-1fe81855-8b6d-50f6-863f-f0760c2e48eb@benchmarkheaven.com>'
+      AND outcome IN ('before_submission', 'uncertain')
+    RETURNING id
+  )
+  SELECT EXISTS (SELECT FROM saved)
+$$;
+
+-- Leave reconciliation inaccessible to both service roles until it requires durable audit proof.
 CREATE FUNCTION cd7e_late.reconcile() RETURNS jsonb
 LANGUAGE plpgsql SECURITY DEFINER SET search_path = pg_catalog, pg_temp AS $$
 DECLARE
@@ -203,27 +220,32 @@ BEGIN
 END
 $$;
 
-GRANT USAGE ON SCHEMA cd7e_late TO jevbench_cd7e_late;
+GRANT USAGE ON SCHEMA cd7e_late TO jevbench_cd7e_late, jevbench_cd7e_transport;
 GRANT EXECUTE ON FUNCTION cd7e_late.read_order(), cd7e_late.receipt(),
   cd7e_late.stage(text, text, text, text, text, timestamptz, text, text, text),
-  cd7e_late.validate(text, text, text), cd7e_late.claim(text, text, text, text, text),
-  cd7e_late.accepted(text), cd7e_late.failed(text, boolean), cd7e_late.reconcile()
-  TO jevbench_cd7e_late;
+  cd7e_late.validate(text, text, text) TO jevbench_cd7e_late;
+GRANT EXECUTE ON FUNCTION cd7e_late.claim(text, text, text, text, text),
+  cd7e_late.accepted(text, timestamptz, text, timestamptz),
+  cd7e_late.failed(text, timestamptz, text, text) TO jevbench_cd7e_transport;
 RESET ROLE;
 
 DO $permissions$
 DECLARE
+  service_role text;
   relation_name text;
 BEGIN
-  FOREACH relation_name IN ARRAY ARRAY['public.bh_priority_evaluation_requests',
-    'public.bh_priority_eval_transactional_mail', 'public.bh_cd7e_late_result_authorizations',
-    'cd7e_late.exact_order', 'cd7e_late.exact_mail']
+  FOREACH service_role IN ARRAY ARRAY['jevbench_cd7e_late', 'jevbench_cd7e_transport']
   LOOP
-    IF pg_catalog.has_any_column_privilege('jevbench_cd7e_late', relation_name, 'SELECT,INSERT,UPDATE,REFERENCES')
-      OR pg_catalog.has_table_privilege('jevbench_cd7e_late', relation_name, 'DELETE,TRUNCATE,TRIGGER')
-    THEN
-      RAISE EXCEPTION 'late pickup role can directly access %', relation_name;
-    END IF;
+    FOREACH relation_name IN ARRAY ARRAY['public.bh_priority_evaluation_requests',
+      'public.bh_priority_eval_transactional_mail', 'public.bh_cd7e_late_result_authorizations',
+      'cd7e_late.exact_order', 'cd7e_late.exact_mail']
+    LOOP
+      IF pg_catalog.has_any_column_privilege(service_role, relation_name, 'SELECT,INSERT,UPDATE,REFERENCES')
+        OR pg_catalog.has_table_privilege(service_role, relation_name, 'DELETE,TRUNCATE,TRIGGER')
+      THEN
+        RAISE EXCEPTION 'late service role % can directly access %', service_role, relation_name;
+      END IF;
+    END LOOP;
   END LOOP;
 END
 $permissions$;

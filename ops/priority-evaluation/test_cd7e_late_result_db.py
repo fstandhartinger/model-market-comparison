@@ -322,6 +322,7 @@ class LateResultDB(unittest.TestCase):
         ap.sql("""
           CREATE ROLE jevbench_cd7e_owner NOLOGIN NOINHERIT;
           CREATE ROLE jevbench_cd7e_late LOGIN NOINHERIT;
+          CREATE ROLE jevbench_cd7e_transport LOGIN NOINHERIT;
           CREATE ROLE cd7e_unrelated_fixture LOGIN NOINHERIT;
         """)
         subprocess.run(["psql", "-Xq", "-v", "ON_ERROR_STOP=1", "--single-transaction",
@@ -374,21 +375,49 @@ class LateResultDB(unittest.TestCase):
             mismatch = ",".join(map(ap.sql_text, (changed, SUBJECT, digest)))
             self.assertEqual(peer(f"SELECT cd7e_late.validate({mismatch})"), "")
         self.assertEqual(peer(f"SELECT cd7e_late.validate({arguments})"), "pending")
-        self.assertEqual(peer(f"SELECT cd7e_late.claim({arguments}, 'wrong-generation', '{admission}')"), "f")
+        transport_role = "jevbench_cd7e_transport"
+
+        def transport(statement):
+            return peer(statement, transport_role)
+
+        self.assertEqual(transport(f"SELECT cd7e_late.claim({arguments}, 'wrong-generation', '{admission}')"), "")
         claim = f"SELECT cd7e_late.claim({arguments}, '{generation}', '{admission}')"
+        with self.assertRaises(ap.PickupError):
+            peer(claim)
         with ThreadPoolExecutor(max_workers=2) as workers:
-            self.assertCountEqual(workers.map(peer, (claim, claim)), ("t", "f"))
-        self.assertEqual(peer(f"SELECT cd7e_late.failed('{digest}', false)"), "t")
-        self.assertEqual(peer(claim), "t")
-        self.assertEqual(peer("SELECT cd7e_late.accepted('wrong')"), "f")
-        self.assertEqual(peer(f"SELECT cd7e_late.accepted('{digest}')"), "t")
-        self.assertEqual(peer(f"SELECT cd7e_late.accepted('{digest}')"), "f")
-        accepted = json.loads(peer("SELECT cd7e_late.receipt()"))
-        ap.sql(f"UPDATE {late.MAIL} SET expires_at=now()-interval '1 hour' WHERE id='{late.ENVELOPE}'; "
-               f"UPDATE {late.AUTH} a SET expires_at=e.expires_at FROM {late.MAIL} e WHERE e.id=a.envelope_id")
-        reconciled = json.loads(peer("SELECT cd7e_late.reconcile()"))
-        self.assertEqual(reconciled["recorded_at"], accepted["sent_at"])
-        self.assertEqual(reconciled, json.loads(peer("SELECT cd7e_late.reconcile()")))
+            claims = list(workers.map(transport, (claim, claim)))
+        self.assertEqual(claims.count(""), 1)
+        first_claim = ap.sql_text(next(value for value in claims if value))
+        message_id = ap.sql_text(self.envelope().message_id)
+        failed = f"SELECT cd7e_late.failed('{digest}', {first_claim}, {message_id}, 'before_submission')"
+        accepted = f"SELECT cd7e_late.accepted('{digest}', {first_claim}, {message_id}, clock_timestamp())"
+        for statement in (accepted, failed, "SELECT cd7e_late.reconcile()"):
+            with self.subTest(statement=statement), self.assertRaises(ap.PickupError):
+                peer(statement)
+        for statement in ("SELECT cd7e_late.read_order()", "SELECT cd7e_late.reconcile()",
+                          f"SELECT * FROM {late.MAIL}"):
+            with self.subTest(statement=statement), self.assertRaises(ap.PickupError):
+                transport(statement)
+
+        self.assertEqual(transport(failed.replace(message_id, "'<wrong>'")), "f")
+        self.assertEqual(transport(failed.replace("'before_submission'", "'accepted'")), "f")
+        self.assertEqual(transport(failed), "t")
+        second_claim = ap.sql_text(transport(claim))
+        self.assertNotEqual(first_claim, second_claim)
+        self.assertEqual(transport(accepted), "f")
+        self.assertEqual(transport(failed), "f")
+        accepted = accepted.replace(first_claim, second_claim)
+        self.assertEqual(transport(accepted.replace(message_id, "'<wrong>'")), "f")
+        self.assertEqual(transport(accepted.replace(f"'{digest}'", "'wrong'")), "f")
+        for offset in ("- interval '1 hour'", "+ interval '1 hour'"):
+            self.assertEqual(transport(accepted.replace("clock_timestamp()", f"clock_timestamp() {offset}")), "f")
+        accepted_at = ap.sql("SELECT clock_timestamp()")
+        accepted = accepted.replace("clock_timestamp()", ap.sql_text(accepted_at))
+        self.assertEqual(transport(accepted), "t")
+        self.assertEqual(transport(accepted), "f")
+        receipt = json.loads(peer("SELECT cd7e_late.receipt()"))
+        self.assertEqual(datetime.fromisoformat(receipt["sent_at"]), datetime.fromisoformat(accepted_at))
+        self.assertIsNone(receipt["recorded_at"])
         paid = ap.load_row(late.ORDER)
         self.assertEqual(paid["refund_status"], "succeeded")
         self.assertEqual(paid["sla_paused_seconds"], 0)
@@ -414,7 +443,7 @@ class LateResultDB(unittest.TestCase):
         args = (CUSTOMER, "Fixture quote ' and backslash \\", hashlib.sha256(BODY.encode()).hexdigest())
         generation = self.approval["generation"]
         admission = "b" * 64
-        with patch.object(late_peer, "PSQL", fixture_route), patch.dict(os.environ, {
+        with patch.object(late_peer.PeerDatabase, "route", fixture_route), patch.dict(os.environ, {
             "PGUSER": "untrusted-override", "PGHOST": "/invalid", "PGOPTIONS": "-c default_transaction_read_only=on",
         }):
             self.assertEqual(db.read_order()["email"], CUSTOMER)
@@ -424,10 +453,17 @@ class LateResultDB(unittest.TestCase):
                 datetime.fromisoformat(self.approval["expires_at"]), *args,
             ))
             self.assertEqual(db.validate(*args), "pending")
-            self.assertTrue(db.claim(*args, generation, admission))
-            self.assertTrue(db.failed(args[-1], True))
+            transport_route = tuple("jevbench_cd7e_transport" if arg == "jevbench_cd7e_late" else arg
+                                    for arg in fixture_route)
+            transport = late_peer.TransportDatabase()
+            self.assertEqual(transport.route[transport.route.index("-U") + 1], "jevbench_cd7e_transport")
+            with patch.object(late_peer.TransportDatabase, "route", transport_route):
+                claimed_at = transport.claim(*args, generation, admission)
+                self.assertIsNotNone(claimed_at)
+                self.assertIsNone(transport.claim(*args, generation, admission))
+                self.assertTrue(transport.failed(args[-1], claimed_at, self.envelope().message_id, "uncertain"))
+                self.assertIsNone(transport.claim(*args, generation, admission))
             self.assertEqual(db.receipt()["state"], "uncertain")
-            self.assertIsNone(db.reconcile())
 
     def test_delayed_callback_then_succeeded_refund_and_crash_reconciliation(self):
         for status in ("paid", "refund_due", "refund_pending"):
