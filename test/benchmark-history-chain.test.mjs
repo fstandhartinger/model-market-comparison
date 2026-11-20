@@ -19,7 +19,7 @@ const A = ['a1', 'a2', 'a3', 'a4', 'a5'], B = ['b1', 'b2', 'b3', 'b4', 'b5'], C 
 const byName = (list, id) => list.find((e) => e.subject_name === `Model ${id}`);
 
 test('unreachable current board bounds bridge searches as retained states accumulate', () => {
-  // CR-801: many mutually comparable retained snapshots, but no bridge to today's
+  // CR-803: many mutually comparable retained snapshots, but no bridge to today's
   // board. Counting hop lookups makes the regression deterministic under host load.
   const retained = 32;
   const nodes = Array.from({ length: retained }, (_, i) => ({ id: `S${i}`, values: new Map(A.map((id) => [id, 1])) }));
