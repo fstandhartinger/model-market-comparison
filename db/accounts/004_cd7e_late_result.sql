@@ -36,7 +36,8 @@ RETURNS text LANGUAGE sql STABLE STRICT AS $$
 $$;
 
 CREATE OR REPLACE FUNCTION bh_cd7e_late_order_ready(
-  r bh_priority_evaluation_requests, expected_identity text, expected_refund_ref text
+  r bh_priority_evaluation_requests, expected_identity text, expected_refund_ref text,
+  allow_pending boolean DEFAULT false
 )
 RETURNS boolean LANGUAGE sql STABLE STRICT AS $$
   SELECT COALESCE(
@@ -49,7 +50,8 @@ RETURNS boolean LANGUAGE sql STABLE STRICT AS $$
     AND r.customer_hold_started_at IS NULL AND r.customer_hold_reason IS NULL
     AND r.result_delivered_at IS NULL AND r.result_url IS NULL
     AND r.delivery_email_status = 'not_due'
-    AND r.evaluation_status IN ('ready_for_release','done')
+    AND (r.evaluation_status IN ('ready_for_release','done')
+         OR (allow_pending AND r.evaluation_status = 'pending' AND r.release_status = 'not_due'))
     AND r.release_status IN ('not_due','verified')
     AND bh_cd7e_late_identity(r) = expected_identity
     AND r.refund_decision_ref = expected_refund_ref AND r.refund_decided_at IS NOT NULL

@@ -10,11 +10,14 @@ import hashlib
 import json
 import re
 import subprocess
+import uuid
 
 KEYS = frozenset({"payment_confirmation_v1", "review_passed_v1",
                   "result_private_v1", "result_public_v1", "decisor_result_public_v163_correction"})
 UUID = re.compile(r"^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$")
 LATE_RESULT_KEY = "cd7e_late_result_v1"
+LATE_ORDER = "cd7e038c-dcac-4990-9ca5-feac99cd8d8d"
+LATE_ENVELOPE = str(uuid.uuid5(uuid.NAMESPACE_URL, f"benchmarkheaven-fastlane/{LATE_ORDER}/{LATE_RESULT_KEY}"))
 TABLE = "bh_priority_eval_transactional_mail"
 ORDERS = "bh_priority_evaluation_requests"
 
@@ -44,11 +47,8 @@ def literal(value):
     return "'" + value.replace("'", "''") + "'"
 
 
-def eligible_sql(order_record="r"):
-    # CASE keeps normal transactional mail independent of the late branch.
-    return f"""CASE WHEN e.template_key='{LATE_RESULT_KEY}'
-      THEN bh_cd7e_late_mail_ready(e,{order_record})
-      ELSE (r.stripe_mode='live' AND r.synthetic_test=false AND r.paid_at IS NOT NULL
+def eligible_sql():
+    return """r.stripe_mode='live' AND r.synthetic_test=false AND r.paid_at IS NOT NULL
       AND r.payment_intent_id IS NOT NULL AND (r.status IN ('paid','review_passed') OR (e.template_key='decisor_result_public_v163_correction' AND r.id='3687485f-5a51-4964-bd9a-73973f3494d7'::uuid AND r.status='completed' AND r.evaluation_status='done' AND r.release_status='done' AND r.visibility='public' AND r.delivery_email_status='sent' AND r.result_delivered_at='2026-10-06T13:08:59+00:00'::timestamptz AND r.result_url='https://benchmarkheaven.com/jev-models/v1.6.3' AND r.refund_id IS NULL AND r.refunded_at IS NULL))
       AND lower(e.recipient)=lower(r.email) AND e.expires_at>now()
       AND (e.template_key!='decisor_result_public_v163_correction' OR (r.id='3687485f-5a51-4964-bd9a-73973f3494d7'::uuid AND r.status='completed' AND r.evaluation_status='done' AND r.release_status='done' AND r.visibility='public' AND r.delivery_email_status='sent' AND r.result_delivered_at='2026-10-06T13:08:59+00:00'::timestamptz AND r.result_url='https://benchmarkheaven.com/jev-models/v1.6.3' AND r.refund_id IS NULL AND r.refunded_at IS NULL))
@@ -56,7 +56,7 @@ def eligible_sql(order_record="r"):
            (r.review_passed_at IS NOT NULL AND r.customer_hold_started_at IS NULL))
       AND (e.template_key NOT IN ('result_private_v1','result_public_v1') OR
            (e.template_key='result_private_v1' AND r.visibility='private') OR
-           (e.template_key='result_public_v1' AND r.visibility='public'))) END"""
+           (e.template_key='result_public_v1' AND r.visibility='public'))"""
 
 
 class Envelope:
@@ -73,17 +73,21 @@ class Envelope:
         self.submitted = False
 
     def validate(self):
+        late = self.id == LATE_ENVELOPE
+        predicates = "bh_cd7e_late_mail_ready(e,r)" if late else eligible_sql()
+        templates = {LATE_RESULT_KEY} if late else KEYS
         row = query(f"""SELECT json_build_object(
           'template_key',e.template_key,'recipient',e.recipient,'subject',e.subject,
           'body_sha256',e.body_sha256,'state',e.state,'order_email',r.email,
           'paid',r.paid_at IS NOT NULL,'payment',r.payment_intent_id IS NOT NULL,
-          'mode',r.stripe_mode,'synthetic',r.synthetic_test,'eligible',({eligible_sql()}))::text
+          'mode',r.stripe_mode,'synthetic',r.synthetic_test,'eligible',({predicates}))::text
           FROM {TABLE} e JOIN {ORDERS} r ON r.id=e.request_id WHERE e.id='{self.id}'::uuid;""")
-        if not isinstance(row, dict) or row.get("template_key") not in KEYS | {LATE_RESULT_KEY} \
+        normalize = str if late else str.casefold
+        if not isinstance(row, dict) or row.get("template_key") not in templates \
                 or row.get("mode") != "live" or row.get("synthetic") is not False \
                 or row.get("paid") is not True or row.get("payment") is not True \
-                or str(row.get("recipient", "")).casefold() != self.recipient.casefold() \
-                or str(row.get("order_email", "")).casefold() != self.recipient.casefold() \
+                or normalize(str(row.get("recipient", ""))) != normalize(self.recipient) \
+                or normalize(str(row.get("order_email", ""))) != normalize(self.recipient) \
                 or row.get("subject") != self.subject or row.get("body_sha256") != self.digest:
             raise TransactionRefused("mail does not match an approved paid-order envelope")
         self.state = row.get("state")
@@ -94,6 +98,26 @@ class Envelope:
         return self
 
     def claim(self):
+        if self.id == LATE_ENVELOPE:
+            return self._claim_late()
+        if self.state == "sent":
+            return False
+        # Recheck identity and live order eligibility atomically with the pending claim.
+        row = query(f"""WITH claimed AS (
+          UPDATE {TABLE} e SET state='sending',claimed_at=now()
+          FROM {ORDERS} r WHERE e.id='{self.id}'::uuid AND r.id=e.request_id
+          AND e.state='pending' AND ({eligible_sql()})
+          AND e.template_key IN ('payment_confirmation_v1','review_passed_v1','result_private_v1','result_public_v1','decisor_result_public_v163_correction')
+          AND lower(e.recipient)=lower({literal(self.recipient)})
+          AND e.subject={literal(self.subject)} AND e.body_sha256='{self.digest}'
+          RETURNING e.id)
+          SELECT json_build_object('claimed',true)::text FROM claimed;""")
+        if row != {"claimed": True}:
+            raise TransactionRefused("paid-order mail was already claimed or its state changed")
+        self.state = "sending"
+        return True
+
+    def _claim_late(self):
         if self.state == "sent":
             return False
         # Recheck identity and live order eligibility atomically with the pending claim.
@@ -101,18 +125,12 @@ class Envelope:
           SELECT r.*, r AS order_record FROM {ORDERS} r JOIN {TABLE} e ON e.request_id=r.id
           WHERE e.id='{self.id}'::uuid AND e.template_key='{LATE_RESULT_KEY}'
           FOR UPDATE OF r
-        ), candidate_order AS (
-          SELECT * FROM late_order
-          UNION ALL
-          SELECT r.*, r AS order_record FROM {ORDERS} r JOIN {TABLE} e ON e.request_id=r.id
-          WHERE e.id='{self.id}'::uuid AND e.template_key<>'{LATE_RESULT_KEY}'
         ), claimed AS (
           UPDATE {TABLE} e SET state='sending',claimed_at=now()
-          FROM candidate_order r WHERE e.id='{self.id}'::uuid AND r.id=e.request_id
-          AND e.state='pending' AND ({eligible_sql('r.order_record')})
-          AND (e.template_key IN ('payment_confirmation_v1','review_passed_v1','result_private_v1','result_public_v1','decisor_result_public_v163_correction')
-               OR e.template_key='{LATE_RESULT_KEY}')
-          AND lower(e.recipient)=lower({literal(self.recipient)})
+          FROM late_order r WHERE e.id='{self.id}'::uuid AND r.id=e.request_id
+          AND e.state='pending' AND bh_cd7e_late_mail_ready(e,r.order_record)
+          AND e.template_key='{LATE_RESULT_KEY}'
+          AND e.recipient={literal(self.recipient)}
           AND e.subject={literal(self.subject)} AND e.body_sha256='{self.digest}'
           RETURNING e.id)
           SELECT json_build_object('claimed',true)::text FROM claimed;""")
