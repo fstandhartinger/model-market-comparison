@@ -2466,7 +2466,7 @@ def _jev_v15_composite(axes: dict[str, Any], option: str) -> float:
 
 
 def dispatch_measurement(rid: str, job_dir: Path) -> None:
-    if rid in native_owner.EXCLUSIVE_MEASUREMENT_ORDERS:
+    if native_owner.requires_exclusive_measurement(rid) or native_owner.requires_exclusive_measurement(job_dir.name):
         raise measurement_dispatch.OperationalHold("separate_native_measurement_wrapper_required")
     review = validate_review_gate(job_dir)
     row = load_row(rid)
@@ -5325,7 +5325,7 @@ def run_agent(job_dir: Path, env: dict[str, str], timeout_hint: int, *, read_onl
 
 def evaluate_v16_generation(rid: str, job_dir: Path) -> int:
     """Same owning unit; reviewed generation, no customer agent or legacy release."""
-    if rid in native_owner.EXCLUSIVE_MEASUREMENT_ORDERS:
+    if native_owner.requires_exclusive_measurement(rid) or native_owner.requires_exclusive_measurement(job_dir.name):
         raise PickupError("order requires its separate native measurement wrapper")
     import v16_adoption
     try:

@@ -179,7 +179,7 @@ def _retirement_unlocked(admission):
 def measure(job_dir, *, scoped_topup=False):
     """Guarded first-party native run, with original per-order pod budget intact."""
     job = Path(job_dir)
-    if job.name in native_owner.EXCLUSIVE_MEASUREMENT_ORDERS:
+    if native_owner.requires_exclusive_measurement(job.name):
         raise measurement_dispatch.OperationalHold("separate_native_measurement_wrapper_required")
     admission, measured, scored = accepted(job)
     late = None

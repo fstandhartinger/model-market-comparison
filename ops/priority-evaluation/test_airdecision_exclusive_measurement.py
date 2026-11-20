@@ -51,9 +51,22 @@ class AirDecisionExclusiveMeasurementTests(unittest.TestCase):
 
     def test_generic_measurement_refuses_before_acceptance(self):
         with patch.object(v16_profiles, "accepted") as accepted:
-            with self.assertRaisesRegex(measurement_dispatch.OperationalHold, "separate_native_measurement_wrapper_required"):
-                v16_profiles.measure(Path(ORDER))
+            for spelling in (ORDER, ORDER.upper(), ORDER.replace("-", ""), "{" + ORDER + "}"):
+                with self.subTest(spelling=spelling):
+                    with self.assertRaisesRegex(measurement_dispatch.OperationalHold, "separate_native_measurement_wrapper_required"):
+                        v16_profiles.measure(Path(spelling))
         accepted.assert_not_called()
+
+    def test_explicit_order_and_job_directory_aliases_refuse_before_reads(self):
+        alias = ORDER.upper()
+        with patch.object(autopickup, "validate_review_gate") as validate:
+            for order, directory in ((alias, Path(NEIGHBOR)), (NEIGHBOR, Path(alias))):
+                with self.subTest(order=order, directory=directory):
+                    with self.assertRaisesRegex(autopickup.PickupError, "separate native measurement wrapper"):
+                        autopickup.evaluate_v16_generation(order, directory)
+                    with self.assertRaisesRegex(measurement_dispatch.OperationalHold, "separate_native_measurement_wrapper_required"):
+                        autopickup.dispatch_measurement(order, directory)
+        validate.assert_not_called()
 
     def test_neighbor_continues_through_ordinary_evaluate(self):
         with patch.object(autopickup, "load_row", return_value=None) as row:
