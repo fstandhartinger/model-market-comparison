@@ -61,7 +61,11 @@ class Tests(unittest.TestCase):
         job = '/home/flori/jobs/fastlane-evaluations/' + S.ORDER
         self.assertTrue(S.active(job, recipe()))
         self.assertTrue(S.active('/home/flori/jobs/fastlane-evaluations/9a4acee8-a098-451c-bc86-3a2d6fea1c47', recipe()))
-        self.assertEqual(S.ORDERS, frozenset({S.ORDER, '9a4acee8-a098-451c-bc86-3a2d6fea1c47'}))
+        self.assertTrue(S.active('/home/flori/jobs/fastlane-evaluations/2be2698b-dc43-42a1-8b8c-1fe228fd0d30', recipe()))
+        self.assertEqual(S.ORDERS, frozenset({S.ORDER, '9a4acee8-a098-451c-bc86-3a2d6fea1c47', '2be2698b-dc43-42a1-8b8c-1fe228fd0d30'}))
+        self.assertFalse(S.active('/jobs/2be2698b', recipe()))
+        self.assertFalse(S.active('/jobs/2be2698b-dc43-42a1-8b8c-1fe228fd0d3', recipe()))
+        self.assertFalse(S.active('/jobs/fastlane-native-2be2698b', recipe()))
         self.assertFalse(S.active('/jobs/9a4acee8', recipe()))
         self.assertFalse(S.active('/jobs/9a4acee8-a098-451c-bc86-3a2d6fea1c4', recipe()))
         self.assertFalse(S.active('/jobs/fastlane-native-9a4acee8', recipe()))
