@@ -345,6 +345,26 @@ class NativeStageLauncherTests(unittest.TestCase):
                     )
                 self.assertEqual(opened, [])
 
+    def test_stage_holds_validate_the_full_stage_enum_before_filtering(self):
+        def hold(entry_id, scope):
+            return {
+                "id": entry_id, "author": "codex:jevbench-item-reserve-20261007", "kind": "decision",
+                "body": f"{launcher.HOLD_PREFIX}{json.dumps({'stage': scope})}",
+            }
+
+        for stage, other_stage in (("adapter_smoke", "sealed"), ("sealed", "adapter_smoke")):
+            with self.subTest(stage=stage, hold=other_stage):
+                launcher.validate_stage_holds(stage, [hold(72610, other_stage)], set())
+            with self.subTest(stage=stage, hold="current"), \
+                    self.assertRaisesRegex(ValueError, "unresolved cross-channel HOLD"):
+                launcher.validate_stage_holds(stage, [hold(72611, stage)], set())
+            with self.subTest(stage=stage, hold="all"), \
+                    self.assertRaisesRegex(ValueError, "unresolved cross-channel HOLD"):
+                launcher.validate_stage_holds(stage, [hold(72612, "all")], set())
+            with self.subTest(stage=stage, hold="invalid"), \
+                    self.assertRaisesRegex(ValueError, "invalid fast-lane HOLD"):
+                launcher.validate_stage_holds(stage, [hold(72613, "measurement")], set())
+
     def test_preliminary_authority_rejects_missing_live_clearance_before_packet_member_io(self):
         packet_sha = "a" * 64
         custody_scope = {"order": launcher.ORDER_ID, "stage": "adapter_smoke",
@@ -433,39 +453,42 @@ class NativeStageLauncherTests(unittest.TestCase):
         custody_scope = {"order": launcher.ORDER_ID, "stage": "adapter_smoke",
                          "packet_sha256": packet_sha, "expires": "2026-11-20T23:30:00Z"}
         custody_body = "HASH CONFIRMED + UNSPENT " + json.dumps(custody_scope)
-        custody = {"id": 72493, "thread_id": 11, "author": "codex:jevbench-item-reserve-20261007",
+        custody = {"id": 72602, "thread_id": 11, "author": "codex:jevbench-item-reserve-20261007",
                    "kind": "decision", "created_at": "2026-11-20T23:08:00Z", "body": custody_body}
         approval = {"order": launcher.ORDER_ID, "packet_sha256": packet_sha, "provider": "verda",
                     "instance_type": "1RTXPRO6000.30V", "location": "FIN-02",
                     "offer_id": "1RTXPRO6000.30V@FIN-02", "ttl_h": 1.20, "attempts": 1,
                     "max_usd_h": 3, "max_os_volume_usd_h": 0.25, "expires": "2026-11-20T23:20:00Z",
-                    "custody_id": 72493, "custody_sha256": "", "clearance_id": 72490, "reaper_id": 72491,
+                    "custody_id": 72602, "custody_sha256": "", "clearance_id": 72600, "reaper_id": 72601,
                     "prior_charge_sha256": "d" * 64}
-        word = f"#72493 {custody['author']} {custody['created_at']}\n{custody_body}".encode()
+        word = f"#72602 {custody['author']} {custody['created_at']}\n{custody_body}".encode()
         approval["custody_sha256"] = hashlib.sha256(word).hexdigest()
-        deputy = {"id": 72494, "thread_id": 11, "author": "codex:cos-deputy-opus",
+        deputy = {"id": 72603, "thread_id": 11, "author": "codex:cos-deputy-opus",
                   "kind": "decision", "created_at": "2026-11-20T23:09:00Z",
                   "body": "GO ADAPTER SMOKE " + json.dumps(approval)}
-        known_holds = [70724, 70742, 72382, 72385, 72481, 72489]
+        known_holds = sorted(launcher.EXISTING_HOLDS)
         clearance_scope = {"order": launcher.ORDER_ID, "stage": "adapter_smoke", "packet_sha256": packet_sha,
                            "decisions_sha256": "c" * 64, "resolved_holds": known_holds}
-        clearance = {"id": 72490, "thread_id": 11, "author": "codex:cos-deputy-opus", "kind": "decision",
+        clearance = {"id": 72600, "thread_id": 11, "author": "codex:cos-deputy-opus", "kind": "decision",
                      "created_at": "2026-11-20T23:05:00Z",
                      "body": "CLEAR FASTLANE " + json.dumps(clearance_scope)}
-        reaper = {"id": 72491, "thread_id": 11, "author": "codex:gpu-broker-20261026", "kind": "decision",
+        reaper = {"id": 72601, "thread_id": 11, "author": "codex:gpu-broker-20261026", "kind": "decision",
                   "created_at": "2026-11-20T23:06:00Z",
                   "body": "REAPER CONFIRMED " + json.dumps({"order": launcher.ORDER_ID,
                       "stage": "adapter_smoke", "packet_sha256": packet_sha, "ttl_h": 1.20})}
         now = datetime(2026, 11, 20, 23, 10, tzinfo=timezone.utc)
         with patch.object(launcher, "board_entry", side_effect=[deputy, custody, clearance, reaper]), \
                 patch.object(launcher, "board_since", return_value=[reaper, custody, deputy]), \
-                patch.object(launcher, "board_holds", return_value=[]), \
+                patch.object(launcher, "board_holds", return_value=[{
+                    "id": 72610, "thread_id": 11, "author": "codex:jevbench-item-reserve-20261007",
+                    "kind": "decision", "body": launcher.HOLD_PREFIX + json.dumps({"stage": "sealed"}),
+                }]), \
                 patch.object(launcher, "scoped_decisions_digest", return_value="c" * 64), \
                 patch.object(launcher, "read_regular_file", return_value=(word, None)):
-            result = launcher.preliminary_authority("adapter_smoke", 72494, now=now)
+            result = launcher.preliminary_authority("adapter_smoke", 72603, now=now)
         self.assertEqual(result["packet_sha256"], packet_sha)
 
-        superseding_clearance = {"id": 72492, "thread_id": 11, "author": "codex:cos-deputy-opus",
+        superseding_clearance = {"id": 72604, "thread_id": 11, "author": "codex:cos-deputy-opus",
                                  "kind": "decision", "created_at": "2026-11-20T23:07:00Z",
                                  "body": "CLEAR FASTLANE " + json.dumps(clearance_scope)}
         with patch.object(launcher, "board_entry", side_effect=[deputy, custody, clearance, reaper]), \
@@ -475,9 +498,9 @@ class NativeStageLauncherTests(unittest.TestCase):
                 patch.object(launcher, "scoped_decisions_digest", return_value="c" * 64), \
                 patch.object(launcher, "read_regular_file", return_value=(word, None)), \
                 self.assertRaisesRegex(ValueError, "superseded"):
-            launcher.preliminary_authority("adapter_smoke", 72494, now=now)
+            launcher.preliminary_authority("adapter_smoke", 72603, now=now)
 
-        superseding_go = {"id": 72495, "thread_id": 11, "author": "codex:cos-deputy-opus",
+        superseding_go = {"id": 72605, "thread_id": 11, "author": "codex:cos-deputy-opus",
                           "kind": "decision", "created_at": "2026-11-20T23:11:00Z",
                           "body": "GO SEALED " + json.dumps({"order": launcher.ORDER_ID})}
         with patch.object(launcher, "board_entry", side_effect=[deputy, custody, clearance, reaper]), \
@@ -486,18 +509,18 @@ class NativeStageLauncherTests(unittest.TestCase):
                 patch.object(launcher, "scoped_decisions_digest", return_value="c" * 64), \
                 patch.object(launcher, "read_regular_file", return_value=(word, None)), \
                 self.assertRaisesRegex(ValueError, "superseded"):
-            launcher.preliminary_authority("adapter_smoke", 72494, now=now)
+            launcher.preliminary_authority("adapter_smoke", 72603, now=now)
 
         bad_custody_scope = dict(custody_scope, packet_sha256="b" * 64)
         bad_custody_body = "HASH CONFIRMED + UNSPENT " + json.dumps(bad_custody_scope)
-        bad_word = f"#72493 {custody['author']} {custody['created_at']}\n{bad_custody_body}".encode()
+        bad_word = f"#72602 {custody['author']} {custody['created_at']}\n{bad_custody_body}".encode()
         bad_custody = dict(custody, body=bad_custody_body)
         bad_approval = dict(approval, custody_sha256=hashlib.sha256(bad_word).hexdigest())
         deputy_again = dict(deputy, body="GO ADAPTER SMOKE " + json.dumps(bad_approval))
         with patch.object(launcher, "board_entry", side_effect=[deputy_again, bad_custody]), \
                 patch.object(launcher, "read_regular_file", return_value=(bad_word, None)), \
                 self.assertRaisesRegex(ValueError, "bound to different packet"):
-            launcher.preliminary_authority("adapter_smoke", 72494, now=now)
+            launcher.preliminary_authority("adapter_smoke", 72603, now=now)
 
 
 if __name__ == "__main__":
