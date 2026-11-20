@@ -163,3 +163,29 @@ CREATE TABLE IF NOT EXISTS bh_priority_eval_transactional_mail (
   claimed_at timestamptz, sent_at timestamptz,
   UNIQUE (request_id,template_key)
 );
+
+-- One reviewed customer-only envelope for Strands Decider v2 E2B.
+ALTER TABLE bh_priority_eval_transactional_mail
+  ADD COLUMN IF NOT EXISTS artifact_sha256 text;
+
+DO $$
+BEGIN
+  IF NOT EXISTS (
+    SELECT 1 FROM pg_constraint
+    WHERE conrelid = 'bh_priority_eval_transactional_mail'::regclass
+      AND conname = 'bh_priority_eval_mail_envelope_check'
+  ) THEN
+    ALTER TABLE bh_priority_eval_transactional_mail
+      DROP CONSTRAINT IF EXISTS bh_priority_eval_transactional_mail_template_key_check,
+      ADD CONSTRAINT bh_priority_eval_mail_envelope_check CHECK (
+        (template_key IN ('payment_confirmation_v1','review_passed_v1','result_private_v1','result_public_v1')
+          AND artifact_sha256 IS NULL)
+        OR
+        (template_key = 'result_0616c39d_customer_only_v1'
+          AND request_id = '0616c39d-e505-4365-b9e8-db157fc67539'
+          AND artifact_sha256 IS NOT NULL
+          AND artifact_sha256 ~ '^[a-f0-9]{64}$'
+          AND expires_at <= TIMESTAMPTZ '2026-11-22 19:53:27+00')
+      );
+  END IF;
+END $$;
