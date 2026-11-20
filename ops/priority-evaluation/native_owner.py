@@ -28,6 +28,8 @@ from typing import Any
 
 OWNER_PREFIX = "fastlane-native-"
 UNIT = "jevbench-native-owner@{}.service"
+# This paid order requires its separate, board-gated Verda measurement wrapper.
+EXCLUSIVE_MEASUREMENT_ORDER = "9d46b4ad-b7b2-4d02-beda-7a56db409848"
 # Hold reasons that mean "no automatic runtime exists for this model" rather than a transient fault.
 REASONS = frozenset({"unsupported_measurement_backend"})
 START_GRACE_MINUTES = 20

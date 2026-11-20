@@ -2209,6 +2209,8 @@ def manage_evaluation(row: dict[str, Any], state: dict[str, Any], effects: Effec
         subject = f"Benchmark Heaven evaluation order {order_ref(rid)}: source review passed"
         body = fill_template(read_template("autopickup-review-passed-template.txt"), {"ORDER_REF": order_ref(rid)})
         send_tracked_mail(row, state, "review_passed", "review_email_status", subject, body, effects, now)
+    if rid == native_owner.EXCLUSIVE_MEASUREMENT_ORDER:
+        return
     if status in ("starting", "running"):
         if effects.dry_run:
             return
@@ -5188,6 +5190,8 @@ def run_agent(job_dir: Path, env: dict[str, str], timeout_hint: int, *, read_onl
 
 def evaluate_v16_generation(rid: str, job_dir: Path) -> int:
     """Same owning unit; reviewed generation, no customer agent or legacy release."""
+    if rid == native_owner.EXCLUSIVE_MEASUREMENT_ORDER:
+        raise PickupError("order requires its separate native measurement wrapper")
     import v16_adoption
     try:
         validate_review_gate(job_dir)
@@ -5247,6 +5251,8 @@ def evaluate_v16_generation(rid: str, job_dir: Path) -> int:
 
 def evaluate(rid: str) -> int:
     rid = request_id(rid)
+    if rid == native_owner.EXCLUSIVE_MEASUREMENT_ORDER:
+        raise PickupError("order requires its separate native measurement wrapper")
     row = load_row(rid)
     if not row or row.get("synthetic_test") is not False or row.get("stripe_mode") != "live":
         raise PickupError("the evaluation service accepts only a real live order")
