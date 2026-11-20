@@ -199,6 +199,20 @@ test('identity map: exact existing configurations; measured joins visible; self-
     }
     return true;
   };
+  // CR-804 (2026-11-20): the reverse of CR-322. The ingest reads the previous build's catalog, so a configuration that
+  // returns to the catalog in this run leaves its rows unmatched until the next ingest. Accepted only when every source
+  // row carries the ingest's pending note for exactly this configuration and nothing of it is published as a join.
+  const pendingReturn = (entry) => {
+    if (!catalog.has(entry.model_id)) return false;
+    const rows = scores.observations.filter((x) => x.benchmark_id === entry.benchmark_id && x.subject.source_id === entry.source_id);
+    const pending = (x) => x.subject.model_id === null
+      && (x.join_note ?? '').startsWith(`Identity map pending ${entry.reviewed_at ?? map.reviewed_at}: ${entry.model_id} is not in the catalog this ingest read`);
+    if (!rows.length || !rows.every(pending)) return false;
+    for (const x of observations.filter((o) => o.benchmark_id === entry.benchmark_id && o.subject.source_id === entry.source_id)) {
+      assert.equal(x.subject.model_id, null, `${x.id}: a pending identity-map row is never published as a join`);
+    }
+    return true;
+  };
   // CR-173 (2026-09-26): FrontierCode 1.1 Extended (the full 150-task set) and its cost twin are reviewed vendor boards too;
   // Terminal-Bench 4.0 board rows join by display name + the row's own reasoning_effort.
   const SELF_REPORTED = ['frontiercode::1.1', 'frontiercode-cost::1.1', 'frontiercode-extended::1.1', 'frontiercode-extended-cost::1.1',
@@ -227,7 +241,7 @@ test('identity map: exact existing configurations; measured joins visible; self-
   for (const entry of map.entries.filter((e) => e.basis !== 'self_reported')) {
     assert.ok([...IDS, ...EPOCH_RUN, ...SLUG_BOARDS].some((id) => entry.benchmark_id === id || entry.benchmark_id.startsWith(`${id}::`)),
       `the map covers only the reviewed boards: ${entry.benchmark_id}`);
-    if (leftCatalog(entry)) continue;
+    if (leftCatalog(entry) || pendingReturn(entry)) continue;
     const o = observations.find((x) => x.benchmark_id === entry.benchmark_id && x.subject.source_id === entry.source_id);
     if (!o && withdrawn.has(`${entry.benchmark_id}#${entry.source_id}`)) continue;
     assert.ok(o, entry.source_id);

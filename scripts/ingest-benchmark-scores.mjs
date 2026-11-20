@@ -216,6 +216,13 @@ for (const path of ['data/raw/benchmarks/public-observations.json', 'data/raw/be
         if (!reviewedAt) throw new Error(`Identity map entry has no review date: ${observation.id}`);
         observation.join_note = `Reviewed identity map ${reviewedAt}: ${reviewed.rule}`;
         if (selfReported) observation.identity_review = reviewed.review;
+      } else if (!selfReported && !models.some((m) => m.id === reviewed.model_id)) {
+        // CR-804 (2026-11-20): the ingest reads the catalog of the PREVIOUS build (data/dataset.json); the daily rebuilds
+        // the catalog only after this step. A configuration that returns to the catalog in this run (laguna-xs-2.1::default
+        // came back with the OVHcloud collector fix) therefore stays unmatched for one run. Say so on the row, so the
+        // build checks can tell this one-run gap from a broken reviewed join; the next ingest joins it under the rule.
+        const reviewedAt = reviewed.reviewed_at ?? identityMap.reviewed_at;
+        observation.join_note = `Identity map pending ${reviewedAt}: ${reviewed.model_id} is not in the catalog this ingest read; the reviewed rule joins it at the first ingest that finds it in the catalog.`;
       }
     }
     observations.push(observation);
