@@ -2,6 +2,7 @@
 import unittest
 from datetime import datetime, timezone
 from pathlib import Path
+from uuid import UUID
 from unittest.mock import Mock, patch
 
 import autopickup
@@ -24,19 +25,25 @@ class ExclusiveNativeMeasurementTests(unittest.TestCase):
 
     def test_service_entry_and_generic_adoption_refuse_before_reading_state(self):
         order = native_owner.EXCLUSIVE_MEASUREMENT_ORDER
-        with patch.object(autopickup, "load_row") as load_row, patch.object(autopickup, "load_state") as load_state:
+        with patch.object(autopickup, "load_row") as load_row, patch.object(autopickup, "load_state") as load_state, \
+                patch.object(autopickup, "validate_review_gate") as validate:
             with self.assertRaisesRegex(autopickup.PickupError, "separate native measurement wrapper"):
                 autopickup.evaluate(order)
             with self.assertRaisesRegex(autopickup.PickupError, "separate native measurement wrapper"):
                 autopickup.evaluate_v16_generation(order, Path(order))
+            with self.assertRaisesRegex(measurement_dispatch.OperationalHold, "separate_native_measurement_wrapper_required"):
+                autopickup.dispatch_measurement(order, Path(order))
+        validate.assert_not_called()
         load_row.assert_not_called()
         load_state.assert_not_called()
 
     def test_generic_measurement_refuses_before_acceptance(self):
         order = native_owner.EXCLUSIVE_MEASUREMENT_ORDER
         with patch.object(v16_profiles, "accepted") as accepted:
-            with self.assertRaisesRegex(measurement_dispatch.OperationalHold, "separate_native_measurement_wrapper_required"):
-                v16_profiles.measure(Path(order))
+            for spelling in (order, UUID(order).hex, order.upper()):
+                with self.subTest(spelling=spelling):
+                    with self.assertRaisesRegex(measurement_dispatch.OperationalHold, "separate_native_measurement_wrapper_required"):
+                        v16_profiles.measure(Path(spelling))
         accepted.assert_not_called()
 
     def test_neighbor_order_continues_through_ordinary_evaluate(self):

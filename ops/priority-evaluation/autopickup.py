@@ -2466,6 +2466,8 @@ def _jev_v15_composite(axes: dict[str, Any], option: str) -> float:
 
 
 def dispatch_measurement(rid: str, job_dir: Path) -> None:
+    if rid == native_owner.EXCLUSIVE_MEASUREMENT_ORDER:
+        raise measurement_dispatch.OperationalHold("separate_native_measurement_wrapper_required")
     review = validate_review_gate(job_dir)
     row = load_row(rid)
     state = load_state(rid)
