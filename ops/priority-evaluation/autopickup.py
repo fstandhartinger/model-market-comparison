@@ -57,7 +57,7 @@ import urllib.request
 import uuid
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta, timezone
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 from typing import Any, Callable
 
 
@@ -1396,7 +1396,7 @@ def review_request_json(row: dict[str, Any]) -> str:
     return text.replace("`", "\\u0060").replace("<", "\\u003c").replace(">", "\\u003e")
 
 
-def source_review_pins(job_dir: Path) -> dict[str, Any]:
+def source_review_pins(job_dir: Path, *, late_custody: dict | None = None) -> dict[str, Any]:
     """Return exact customer source pins plus the host-pinned official scoring methods."""
     pins: dict[str, Any] = {}
     source_dir = job_dir / "source"
@@ -1431,8 +1431,13 @@ def source_review_pins(job_dir: Path) -> dict[str, Any]:
         raise PickupError("source review requires the host order benchmark list")
     try:
         import v16_adoption
-        package = v16_adoption.selected(job_dir, load_state(request_id(job_dir.name)))
-        if package is not None:
+        if late_custody is not None:
+            from cd7e_late_result import ORDER
+            if job_dir.name != ORDER or order["benchmarks"] != ["jevbench"]:
+                raise ValueError("late custody method pins are scoped to the exact JevBench order")
+            pins["official_measurement"] = late_custody["official_measurement"]
+            pins["official_methods"] = late_custody["official_methods"]
+        elif (package := v16_adoption.selected(job_dir, load_state(request_id(job_dir.name)))) is not None:
             if order["benchmarks"] != ["jevbench"]:
                 raise ValueError("v16 admission requires text-only order")
             _, pins["official_measurement"], pins["official_methods"] = package
@@ -1595,7 +1600,7 @@ def freeze_runner_bundle(job_dir: Path) -> dict[str, Any]:
     return manifest
 
 
-def validate_review_gate(job_dir: Path) -> dict[str, Any]:
+def validate_review_gate(job_dir: Path, *, late_custody: dict | None = None) -> dict[str, Any]:
     review_path = job_dir / "review" / "CODE-REVIEW.md"
     gate_path = job_dir / "review" / "GATE.json"
     if not review_path.is_file() or not gate_path.is_file():
@@ -1605,7 +1610,8 @@ def validate_review_gate(job_dir: Path) -> dict[str, Any]:
     if review_result.get("verdict") != "PASS":
         raise PickupError("the independent source review did not pass")
     gate_value = load_json_file(gate_path, 100_000)
-    current_pins = source_review_pins(job_dir)
+    current_pins = (source_review_pins(job_dir) if late_custody is None
+                    else source_review_pins(job_dir, late_custody=late_custody))
     trusted_gate = load_state(request_id(job_dir.name)).get("source_review_gate")
     if not isinstance(trusted_gate, dict) or gate_value != trusted_gate \
             or not isinstance(gate_value, dict) or gate_value.get("verdict") != "PASS" \
@@ -2435,6 +2441,26 @@ def pinned_file(job_dir: Path, entry: object) -> Path:
     return path
 
 
+def check_aggregate_receipts(job_dir, receipts, approved):
+    """Refuse unstaged result paths before the common verifier hashes any receipt."""
+    if not isinstance(approved, dict) or len(approved) != len(receipts):
+        raise PickupError("late result requires the exact approved aggregate receipts")
+    seen = set()
+    root = job_dir.resolve()
+    for pin in receipts:
+        name = pin.get("path") if isinstance(pin, dict) else None
+        if not isinstance(name, str):
+            raise PickupError("late result cites an unapproved aggregate receipt")
+        path = PurePosixPath(name)
+        digest = approved.get(name)
+        if (name in seen or len(path.parts) < 2 or path.parts[0] != "results"
+                or name != path.as_posix() or ".." in path.parts or path.parts[1] == "raw"
+                or not isinstance(digest, str) or not SHA64_RE.fullmatch(digest)
+                or pin.get("sha256") != digest or within(root, name) != root / name):
+            raise PickupError("late result cites an unapproved aggregate receipt")
+        seen.add(name)
+
+
 def _score_receipt_payload(value: dict[str, Any]) -> dict[str, Any]:
     return {key: item for key, item in value.items() if key != "pass"}
 
@@ -2692,7 +2718,8 @@ def finite_number(value: object) -> float:
 
 
 def verify_result(row: dict[str, Any], job_dir: Path, state: dict[str, Any], effects: Effects,
-                  *, public_live: bool = True) -> dict[str, Any]:
+                  *, public_live: bool = True, late_custody: dict | None = None,
+                  late_receipt_hashes: dict[str, str] | None = None) -> dict[str, Any]:
     rid = request_id(row.get("id"))
     result = load_result(job_dir)
     if result.get("request_id") != rid:
@@ -2710,7 +2737,8 @@ def verify_result(row: dict[str, Any], job_dir: Path, state: dict[str, Any], eff
     if visibility == "private" and PRIVATE_PUBLIC_FIELDS.intersection(result):
         raise PickupError("private result contains public-release evidence")
 
-    review_gate = validate_review_gate(job_dir)
+    review_gate = (validate_review_gate(job_dir) if late_custody is None
+                   else validate_review_gate(job_dir, late_custody=late_custody))
     if not isinstance(result.get("review"), dict) or result["review"].get("path") != "review/CODE-REVIEW.md" \
             or result["review"].get("sha256") != review_gate.get("review_sha256"):
         raise PickupError("result does not cite the independently verified source review")
@@ -2720,6 +2748,8 @@ def verify_result(row: dict[str, Any], job_dir: Path, state: dict[str, Any], eff
     receipts = result.get("receipts")
     if not isinstance(receipts, list) or not 1 <= len(receipts) <= 200:
         raise PickupError("result has no receipts")
+    if late_custody is not None:
+        check_aggregate_receipts(job_dir, receipts, late_receipt_hashes)
     receipt_pins = []
     current_receipt_hashes: dict[str, str] = {}
     for entry in receipts:
@@ -2735,7 +2765,7 @@ def verify_result(row: dict[str, Any], job_dir: Path, state: dict[str, Any], eff
         official_inputs = recompute.get("official_inputs")
         raw_hashes = official_inputs.get("raw_hashes") if isinstance(official_inputs, dict) else None
         import v16_adoption
-        package = v16_adoption.selected(job_dir, state)
+        package = v16_adoption.selected(job_dir, state) if late_custody is None else None
         if package and (not isinstance(official_inputs, dict)
                         or official_inputs.get("generation") != package[0]["generation"]
                         or official_inputs.get("raw_paths") != v16_adoption.raw_paths(package[0])
@@ -2744,10 +2774,15 @@ def verify_result(row: dict[str, Any], job_dir: Path, state: dict[str, Any], eff
             raise PickupError("v16 independent recomputation has stale generation pins")
         if not isinstance(raw_hashes, dict) or not raw_hashes:
             raise PickupError("host-run independent recomputation is missing or stale")
-        for name, digest in raw_hashes.items():
-            raw_path = within(job_dir, (official_inputs.get("raw_paths") or {}).get(name, f"results/raw/{name}.jsonl"))
-            if not raw_path.is_file() or raw_path.is_symlink() or sha256_file(raw_path) != digest:
-                raise PickupError("raw scorer input changed after the independent recomputation")
+        if late_custody is not None:
+            from cd7e_late_result import recompute_matches_attestation
+            if not recompute_matches_attestation(rid, late_custody, recompute, review_gate):
+                raise PickupError("late custody attestation differs from the independent recomputation")
+        else:
+            for name, digest in raw_hashes.items():
+                raw_path = within(job_dir, (official_inputs.get("raw_paths") or {}).get(name, f"results/raw/{name}.jsonl"))
+                if not raw_path.is_file() or raw_path.is_symlink() or sha256_file(raw_path) != digest:
+                    raise PickupError("raw scorer input changed after the independent recomputation")
         current_receipt_hashes = bind_raw_receipts(current_receipt_hashes, raw_hashes, official_inputs.get("raw_paths"))
     result_sha = sha256_file(job_dir / "release" / "RESULT.json")
     if not isinstance(recompute, dict) or recompute.get("verdict") != "PASS" \
@@ -6478,6 +6513,9 @@ def main(argv: list[str] | None = None) -> int:
     cycle_parser.add_argument("--synthetic")
     cycle_parser.add_argument("--job-root", type=Path)
     sub.add_parser("health")
+    late = sub.add_parser("cd7e-late-result")
+    late.add_argument("request_id")
+    late.add_argument("action", choices=("preview", "send", "reconcile"))
     record_parser = sub.add_parser("record-install")
     record_parser.add_argument("--source", default="hotfix")
     record_parser.add_argument("--reason", required=True)
@@ -6495,6 +6533,10 @@ def main(argv: list[str] | None = None) -> int:
     fetch_parser.add_argument("--which", required=True, choices=("code", "model"))
     args = parser.parse_args(argv)
     try:
+        if args.command == "cd7e-late-result":
+            import cd7e_late_result
+            print(json.dumps(cd7e_late_result.run(sys.modules[__name__], args.request_id, args.action), sort_keys=True))
+            return 0
         if args.command == "cycle":
             if args.job_root and not args.synthetic:
                 raise PickupError("--job-root is only for a synthetic run")

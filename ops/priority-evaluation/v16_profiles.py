@@ -115,13 +115,15 @@ _RETIREMENT_CUSTODY = threading.local()
 
 
 @contextmanager
-def retirement_lock(admission):
+def retirement_lock(admission, *, transferable=False):
     """Keep genuine same-thread fd custody through nested, freshly checked gates."""
     lock = ROTATION_TOOL.parent / '.lock'
     if lock.is_symlink():
         raise ValueError('unsafe canonical rotation lock')
     held = getattr(_RETIREMENT_CUSTODY, 'held', None)
     if held is not None:
+        if transferable:
+            raise ValueError('retirement transfer requires an outer lock acquisition')
         # Only this thread's actual outer acquisition establishes custody.
         # Another thread/process must acquire its own descriptor normally.
         actual = os.fstat(held['fd'])
@@ -135,16 +137,19 @@ def retirement_lock(admission):
         finally:
             held['depth'] -= 1
         return
-    with lock.open('a') as handle:
+    with lock.open('r' if transferable else 'a') as handle:
         fcntl.flock(handle, fcntl.LOCK_EX)
         actual = os.fstat(handle.fileno())
         _RETIREMENT_CUSTODY.held = {'fd': handle.fileno(), 'path': str(lock.resolve()), 'inode': (actual.st_dev, actual.st_ino), 'pid': os.getpid(), 'thread': threading.get_ident(), 'depth': 1}
         try:
             _retirement_unlocked(admission)
-            yield
+            yield handle.fileno() if transferable else None
         finally:
             del _RETIREMENT_CUSTODY.held
-            fcntl.flock(handle, fcntl.LOCK_UN)
+            if not transferable:
+                fcntl.flock(handle, fcntl.LOCK_UN)
+            # A transferable lock ends when the final reference to this open
+            # file description closes, including any peer's SCM_RIGHTS copy.
 
 
 def retirement(admission):
