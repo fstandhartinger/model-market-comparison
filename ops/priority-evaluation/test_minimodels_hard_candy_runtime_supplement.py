@@ -41,6 +41,16 @@ class FakeProvider:
     def scp_to(self, pod_id, local, remote, timeout=None):
         self.calls.append(('scp_to', local, remote))
 
+    def rm(self, pod_id):
+        self.calls.append(('rm_pod', pod_id))
+
+    def ps_ids(self):
+        self.calls.append(('ps_ids',))
+        return set()
+
+    def release(self, job, pod_id, reservation):
+        self.calls.append(('release', job, pod_id, reservation))
+
 
 class Tests(unittest.TestCase):
     def context(self, files=None):
@@ -149,7 +159,10 @@ class Tests(unittest.TestCase):
         order = [call[1][0] if call[0] == 'exec' else 'scp' for call in provider.calls]
         self.assertLess(order.index('scp'), order.index('sha256sum'))
         self.assertLess(order.index('sha256sum'), order.index('tar'))
-        self.assertLess(order.index('tar'), order.index('docker'))
+        self.assertLess(order.index('tar'), order.index('rm', order.index('tar')))
+        self.assertLess(order.index('rm', order.index('tar')), order.index('docker'))
+        cleanup = [call[1] for call in provider.calls if call[0] == 'exec' and call[1][:2] == ('rm', '-f')]
+        self.assertEqual(cleanup, [('rm', '-f', S.REMOTE_ROOT + '/context.tar', S.REMOTE_ROOT + '/image.iid')])
 
     def test_build_host_pin_failure_is_hold_before_any_pod_effect(self):
         path, _, _ = self.context()
@@ -171,16 +184,40 @@ class Tests(unittest.TestCase):
         from datetime import datetime, timedelta, timezone
         now = datetime(2026, 11, 20, 12, 0, tzinfo=timezone.utc)
         started = (now - timedelta(minutes=20)).isoformat()
-        self.assertEqual(S.run_wait_seconds(started, 3.0, now), 3 * 3600 - 20 * 60 - S.RUN_WAIT_MARGIN_S)
+        overhead = S.RUN_WAIT_MARGIN_S + S.PROVIDER_EXEC_TIMEOUT_OVERHEAD_S
+        self.assertEqual(S.run_wait_seconds(started, 3.0, now), 3 * 3600 - 20 * 60 - overhead)
         shorter = (now - timedelta(hours=1, minutes=55)).isoformat()
-        self.assertEqual(S.run_wait_seconds(shorter, 3.0, now), 50 * 60)
+        self.assertEqual(S.run_wait_seconds(shorter, 3.0, now), 49 * 60)
         late = (now - timedelta(hours=2, minutes=50)).isoformat()
         self.assertEqual(S.run_wait_seconds(late, 3.0, now), 0)
         for bad in (None, '', 'not-a-time', '2026-11-20T11:00:00'):
             self.assertEqual(S.run_wait_seconds(bad, 3.0, now), 0)
         self.assertEqual(S.run_wait_seconds(started, float('inf'), now), 0)
         source = Path(pod_runner.__file__).read_text()
-        self.assertIn("wait_s = minimodels_hard_candy_runtime_supplement.run_wait_seconds(state.get('attempt_started_at'), ttl)", source)
+        self.assertIn('minimodels_hard_candy_runtime_supplement.wait_for_container(', source)
+
+    def test_zero_wait_fails_before_remote_call_and_reaches_exact_id_teardown(self):
+        provider = FakeProvider()
+        try:
+            with patch.object(S, 'run_wait_seconds', return_value=0):
+                with self.assertRaises(measurement_dispatch.OperationalHold):
+                    S.wait_for_container(provider, 'pod-1', 'bad-time', 1.2)
+        finally:
+            pod_runner._teardown(provider, 'fastlane-eval-9aa6673b', 'pod-1', 'reservation-1', None)
+        self.assertFalse(any(call[0] == 'exec' for call in provider.calls))
+        self.assertIn(('rm_pod', 'pod-1'), provider.calls)
+        self.assertIn(('release', 'fastlane-eval-9aa6673b', 'pod-1', 'reservation-1'), provider.calls)
+
+    def test_wait_caller_passes_budget_net_of_provider_overhead(self):
+        from datetime import datetime, timedelta, timezone
+        now = datetime(2026, 11, 20, 12, 0, tzinfo=timezone.utc)
+        started = (now - timedelta(minutes=20)).isoformat()
+        provider = FakeProvider()
+        S.wait_for_container(provider, 'pod-1', started, 3.0, now)
+        wait_call = next(call for call in provider.calls
+                         if call[0] == 'exec' and call[1] == ('docker', 'wait', 'jev-pod-run'))
+        self.assertEqual(wait_call[2] + S.PROVIDER_EXEC_TIMEOUT_OVERHEAD_S
+                         + 20 * 60 + S.RUN_WAIT_MARGIN_S, 3 * 3600)
 
     @unittest.skipUnless(LOCAL_CONTEXT.is_file(), 'host-only build context not present')
     def test_real_context_matches_every_pin(self):
