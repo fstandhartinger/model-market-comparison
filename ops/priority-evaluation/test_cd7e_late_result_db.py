@@ -43,6 +43,47 @@ def sender_query(statement):
 
 
 class CustodyProtocol(unittest.TestCase):
+    def test_admission_rejects_unapproved_proofs_before_hashing(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            now = ap.utcnow()
+            state = {"cd7e_late_delivery": {
+                "verdict": "ACCEPTED", "generation": "fixture", "admission_sha256": "a" * 64,
+            }}
+            approval = {
+                "order_id": late.ORDER, "scope": "exact-cd7e-late-result-delivery",
+                "generation": "fixture", "verdict": "ACCEPTED",
+                "expires_at": ap.iso(now + timedelta(minutes=15)),
+                "identity_sha256": "b" * 64, "refund_ref": REF,
+            }
+            raw = root / "protected.jsonl"
+            raw.touch()
+            for path in late.PROOF_PATHS.values():
+                candidate = root / path
+                candidate.parent.mkdir(parents=True, exist_ok=True)
+                candidate.touch()
+            paths = {
+                "wrong release path": {"release_result": raw.name},
+                "wrong measurement path": {"measurement": raw.name},
+                "redirected measurement": {},
+            }
+            for case, replacements in paths.items():
+                if case == "redirected measurement":
+                    measurement = root / late.PROOF_PATHS["measurement"]
+                    measurement.unlink()
+                    measurement.symlink_to(raw)
+                approval["proofs"] = {
+                    key: {"path": replacements.get(key, path), "sha256": "c" * 64}
+                    for key, path in late.PROOF_PATHS.items()
+                }
+                with self.subTest(case=case), patch.object(ap, "pinned_file") as pin, \
+                        patch.object(ap, "load_json_file", return_value=approval):
+                    with self.assertRaisesRegex(ap.PickupError, "unapproved evidence path"):
+                        late.load_admission(ap, root, state)
+                    pin.assert_called_once_with(root, {
+                        "path": late.APPROVAL_PATH, "sha256": "a" * 64,
+                    })
+
     def test_only_exact_approved_aggregate_receipts_are_admitted(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
@@ -59,6 +100,7 @@ class CustodyProtocol(unittest.TestCase):
 
             cases = [
                 ([pin], None),
+                ([pin], {"results/unstaged.json": digest}),
                 ([pin, pin], {**approved, "results/other.json": digest}),
                 ([dict(pin, sha256="2" * 64)], approved),
             ]

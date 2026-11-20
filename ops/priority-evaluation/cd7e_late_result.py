@@ -24,6 +24,13 @@ AUTH = "bh_cd7e_late_result_authorizations"
 URL = "https://benchmarkheaven.com/jev-models"
 SYSTEM = "starlord-4b-v1.4-preview"
 APPROVAL_PATH = "review/CD7E-LATE-DELIVERY-ADMISSION.json"
+PROOF_PATHS = {
+    "independent_review": "review/independent_review.json",
+    "measurement": "review/measurement.json",
+    "exposure": "review/exposure.json",
+    "teardown": "review/teardown.json",
+    "release_result": "release/RESULT.json",
+}
 CUSTODY_SOCKET = Path("/run/jevbench-custody/cd7e038c.sock")
 CHECK_TIMEOUT = 5
 SESSION_TIMEOUT = 150
@@ -85,6 +92,17 @@ def reconcile(ap):
     }
 
 
+def check_proof_paths(ap, job: Path, proofs):
+    if not isinstance(proofs, dict) or proofs.keys() != PROOF_PATHS.keys():
+        raise ap.PickupError("late delivery requires the independently reviewed evidence set")
+    root = job.resolve()
+    for name, expected in PROOF_PATHS.items():
+        pin = proofs[name]
+        if (not isinstance(pin, dict) or pin.get("path") != expected
+                or ap.within(root, expected) != root / expected):
+            raise ap.PickupError("late delivery cites an unapproved evidence path")
+
+
 def load_admission(ap, job: Path, state):
     anchor = state.get("cd7e_late_delivery")
     if not isinstance(anchor, dict) or anchor.get("verdict") != "ACCEPTED":
@@ -102,14 +120,9 @@ def load_admission(ap, job: Path, state):
             or not re.fullmatch(r"telegram:[0-9]{1,12}:[0-9]{1,15}", str(approval.get("refund_ref") or "")):
         raise ap.PickupError("late delivery approval has an invalid scope, identity or expiry")
     proofs = approval.get("proofs")
-    if not isinstance(proofs, dict) or set(proofs) != {
-        "independent_review", "measurement", "exposure", "teardown", "release_result"
-    }:
-        raise ap.PickupError("late delivery requires the independently reviewed evidence set")
+    check_proof_paths(ap, job, proofs)
     for pin in proofs.values():
         ap.pinned_file(job, pin)
-    if proofs["release_result"]["path"] != "release/RESULT.json":
-        raise ap.PickupError("late delivery release proof must pin the pickup result")
     uid = approval.get("custody_uid")
     if type(uid) is not int or not 0 < uid < 2**32 - 1 or uid == os.geteuid():
         raise ap.PickupError("late delivery requires a separate custody identity")
