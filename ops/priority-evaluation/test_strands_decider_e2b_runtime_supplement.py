@@ -4,6 +4,7 @@ import hashlib
 import io
 import json
 from pathlib import Path
+import subprocess
 import tarfile
 from tempfile import TemporaryDirectory
 import unittest
@@ -183,6 +184,79 @@ class StrandsRuntimeTests(unittest.TestCase):
                 supplement.bounded_seconds(Mock(return_value=live), state, clock, 1.5, 300, 3600)
         with self.assertRaisesRegex(pod_runner.PodRunError, "cleanup_margin"):
             supplement.bounded_seconds(check, state, clock, 1.5, pod_runner.HOST_RUN_RESERVE_S, 900)
+
+    def test_time_expiry_between_post_upload_prep_and_launch(self):
+        now = datetime(2026, 11, 21, 10, tzinfo=timezone.utc)
+        gate = Mock(side_effect=[350, 301, 300])
+        provider = Mock()
+        provider.exec_bounded.return_value.returncode = 0
+        attempt = supplement.AttemptIO(provider, "pod", gate, {"attempt_started_at": now.isoformat()},
+                                       lambda: now, 1.5)
+        attempt.exec(["tar", "-xf", "/work/stage.tar"])
+        attempt.timeout(600, supplement.RESULT_COLLECTION_RESERVE_S)
+        with self.assertRaisesRegex(pod_runner.PodRunError, "cleanup_margin"):
+            attempt.exec(["docker", "run"])
+        provider.exec_bounded.assert_called_once_with("pod", ["tar", "-xf", "/work/stage.tar"], 50)
+
+    def test_wait_expiry_and_partial_receipt_fetch_yield_to_cleanup(self):
+        now = datetime(2026, 11, 21, 10, tzinfo=timezone.utc)
+        gate = Mock(side_effect=[320, 65, 15])
+        provider = Mock()
+        provider.exec_bounded.return_value.returncode = 124
+        attempt = supplement.AttemptIO(provider, "pod", gate, {"attempt_started_at": now.isoformat()},
+                                       lambda: now, 1.5)
+        with self.assertRaisesRegex(pod_runner.PodRunError, "exit 124"):
+            attempt.exec(["docker", "wait"], 3600)
+        provider.exec_bounded.assert_called_once_with("pod", ["docker", "wait"], 20)
+
+        def transfer(_pod, _remote, partial, _timeout):
+            Path(partial).write_bytes(b"fixture evidence")
+
+        provider.scp_from_bounded.side_effect = transfer
+        attempt.fetch("/work/out/raw.jsonl", self.root / "raw.jsonl")
+        with self.assertRaisesRegex(pod_runner.PodRunError, "cleanup_margin"):
+            attempt.fetch("/work/out/receipt.json", self.root / "pod-receipt.json")
+        provider.scp_from_bounded.assert_called_once_with("pod", "/work/out/raw.jsonl",
+                                                         str(self.root / "raw.jsonl.partial"), 50)
+        self.assertFalse((self.root / "pod-receipt.json").exists())
+        self.assertEqual((self.root / "raw.jsonl").read_bytes(), b"fixture evidence")
+
+    def test_verda_bounded_transport_has_no_extra_minute_or_lookup(self):
+        from verda_provider import VerdaProvider
+
+        provider = VerdaProvider(ORDER, "fixture")
+        self.addCleanup(provider._tmp.cleanup)
+        provider._hosts["pod"] = "192.0.2.1"
+        with patch("verda_provider.subprocess.run", return_value=subprocess.CompletedProcess([], 0)) as run:
+            provider.exec_bounded("pod", ["docker", "wait", "container"], 20)
+            self.assertEqual(run.call_args.kwargs["timeout"], 20)
+            self.assertEqual(run.call_args.args[0][-1], "timeout --kill-after=1s 19s docker wait container")
+            provider.scp_from_bounded("pod", "/work/raw", str(self.root / "raw"), 37)
+            self.assertEqual(run.call_args.kwargs["timeout"], 37)
+            with self.assertRaisesRegex(pod_runner.PodRunError, "verified endpoint"):
+                provider.exec_bounded("other", ["true"], 20)
+            self.assertEqual(run.call_count, 2)
+
+    def test_timed_out_raw_transfer_preserves_noncanonical_partial_data(self):
+        now = datetime(2026, 11, 21, 10, tzinfo=timezone.utc)
+        gate = Mock(side_effect=[45, 15])
+        provider = Mock()
+        attempt = supplement.AttemptIO(provider, "pod", gate, {"attempt_started_at": now.isoformat()},
+                                       lambda: now, 1.5)
+
+        def timed_out(_pod, _remote, partial, _timeout):
+            Path(partial).write_bytes(b"partial")
+            raise pod_runner.PodRunError("transfer timed out")
+
+        provider.scp_from_bounded.side_effect = timed_out
+        with self.assertRaisesRegex(pod_runner.PodRunError, "transfer timed out"):
+            attempt.fetch("/work/out/raw.jsonl", self.root / "raw.jsonl")
+        with self.assertRaisesRegex(pod_runner.PodRunError, "cleanup_margin"):
+            attempt.fetch("/work/out/scored-loop-started.json", self.root / "started.json", maximum=90)
+        self.assertFalse((self.root / "raw.jsonl").exists())
+        self.assertEqual((self.root / "raw.jsonl.partial").read_bytes(), b"partial")
+        provider.scp_from_bounded.assert_called_once_with("pod", "/work/out/raw.jsonl",
+                                                         str(self.root / "raw.jsonl.partial"), 30)
 
     def test_generic_entrypoints_do_not_run_for_order(self):
         unexpected = Mock(side_effect=AssertionError("generic gate was reached"))

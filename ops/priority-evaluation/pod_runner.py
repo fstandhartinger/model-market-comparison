@@ -904,6 +904,7 @@ def _lifecycle(provider, job, recipe, staging_path, output, state, gpu_choice, t
             ryotide_runtime_supplement.recovery_bounds(job_dir, state, ttl, budget)
     pod_id = None
     reservation = None
+    strands_io = None
     quote_budget = {'remaining': 2} if quote_budget is None else quote_budget
     if "host_staging" in recipe and ttl < HOST_MIN_TTL_HOURS:
         # Original caps leave this attempt too little TTL for build + stream + run: hold before any quote/reserve/create.
@@ -1197,6 +1198,11 @@ def _lifecycle(provider, job, recipe, staging_path, output, state, gpu_choice, t
             save_state()
             decisor_native_preinput.accepted(job_dir or job, pod_id, recipe, state['runtime_preflight'])
         _exec(provider, pod_id, ["mkdir", "-p", "/work", "/work/out", "/work/code"])
+        if strands_e2b:
+            strands_io = strands_decider_e2b_runtime_supplement.AttemptIO(
+                provider, pod_id, allocation_gate, state, _utcnow, ttl)
+        run_command = strands_io.exec if strands_io else lambda command, maximum=600: _exec(
+            provider, pod_id, command, timeout=maximum)
         # Optional trusted context holds the canonical custody lock across upload.
         with pre_upload_gate() if pre_upload_gate is not None else nullcontext():
             if type(allocation_gate) is ScopedTopUp:
@@ -1213,19 +1219,20 @@ def _lifecycle(provider, job, recipe, staging_path, output, state, gpu_choice, t
             upload_timeout = 900
             if strands_e2b:
                 provider.verify_dispatch_identity(pod_id)
-                upload_timeout = strands_decider_e2b_runtime_supplement.bounded_seconds(
-                    allocation_gate, state, _utcnow, ttl, HOST_RUN_RESERVE_S, upload_timeout)
+                upload_timeout = strands_io.timeout(upload_timeout, HOST_RUN_RESERVE_S)
             state['input_dispatched'] = True
             save_state()  # dispatch is durable before the first sealed transfer
             if strands_e2b:
                 provider.scp_to(pod_id, str(staging_path), "/work/stage.tar", timeout=upload_timeout)
             else:
                 provider.scp_to(pod_id, str(staging_path), "/work/stage.tar")
-        _exec(provider, pod_id, ["tar", "-xf", "/work/stage.tar", "-C", "/"])
-        _exec(provider, pod_id, ["tar", "-xf", "/work/code.tar", "-C", "/work/code"])
+        run_command(["tar", "-xf", "/work/stage.tar", "-C", "/"])
+        run_command(["tar", "-xf", "/work/code.tar", "-C", "/work/code"])
+        if strands_io:
+            strands_io.timeout(600, strands_decider_e2b_runtime_supplement.RESULT_COLLECTION_RESERVE_S)
         state['execution_started'] = True
         save_state()  # crash after launch is never eligible for automatic scored retry
-        _exec(provider, pod_id, ["docker", "run", "-d", "--name", "jev-pod-run", "--gpus", "all",
+        run_command(["docker", "run", "-d", "--name", "jev-pod-run", "--gpus", "all",
                                  "--network", "none", "--shm-size", "16g",
                                  "--tmpfs", "/tmp:exec,size=16g",
                                  "-e", "HOME=/tmp", "-e", "HF_TOKEN=", "-e", "OPENAI_API_KEY=",
@@ -1237,11 +1244,14 @@ def _lifecycle(provider, job, recipe, staging_path, output, state, gpu_choice, t
                                  *(['-v', '/work/inputs/public:/inputs/public:ro',
                                     '-v', '/work/inputs/sealed:/inputs/sealed:ro'] if 'imagejevbench' in benchmarks else []),
                                  "-v", "/work/out:/output", image, "/driver/pod_entry.sh"])
-        mode = _exec(provider, pod_id, ["docker", "inspect", "jev-pod-run",
-                                        "--format", "{{.HostConfig.NetworkMode}}"])
+        mode = run_command(["docker", "inspect", "jev-pod-run", "--format", "{{.HostConfig.NetworkMode}}"])
         network_mode = mode.stdout.strip()
         if network_mode != "none":
             raise PodRunError(f"run container network mode is {network_mode!r}, not 'none'")
+        if strands_io:
+            actual = run_command(["docker", "inspect", "jev-pod-run", "--format", "{{.Image}}"])
+            if actual.stdout.strip() != image:
+                raise PodRunError('Strands measurement effective image differs')
         if isinstance(state.get('runtime_preflight'), dict) and 'effective_image' in state['runtime_preflight']:
             actual = _exec(provider, pod_id, ['docker', 'inspect', 'jev-pod-run', '--format', '{{.Image}}'])
             if actual.stdout.strip() != image:
@@ -1268,13 +1278,11 @@ def _lifecycle(provider, job, recipe, staging_path, output, state, gpu_choice, t
             # Chon's think-when-unsure pass makes a 1,500-row run longer than the default hour; this order may use
             # the rest of its attempt TTL minus a teardown margin (the TTL and cost caps are unchanged).
             wait_s = chon_runtime_supplement.run_wait_seconds(state.get('attempt_started_at'), ttl)
-        if strands_e2b:
-            wait_s = strands_decider_e2b_runtime_supplement.bounded_seconds(
-                allocation_gate, state, _utcnow, ttl,
-                strands_decider_e2b_runtime_supplement.RESULT_COLLECTION_RESERVE_S, wait_s)
-        wait = _exec(provider, pod_id, ["docker", "wait", "jev-pod-run"], timeout=wait_s)
+        wait = run_command(["docker", "wait", "jev-pod-run"], maximum=wait_s)
         rc = wait.stdout.strip().splitlines()[-1] if wait.stdout.strip() else ""
-        logs = _exec(provider, pod_id, ["docker", "logs", "--tail", "20000", "jev-pod-run"], timeout=120)
+        log_command = ["docker", "logs", "--tail", "20000", "jev-pod-run"]
+        logs = (strands_io.exec(log_command, 120, strands_decider_e2b_runtime_supplement.CLEANUP_HANDOFF_S)
+                if strands_io else run_command(log_command, 120))
         (output / "pod-driver.log").write_bytes((logs.stdout + logs.stderr).encode(errors="replace"))
         if rc != "0":
             raise PodRunError(f"pod driver exited {rc or 'unknown'}")
@@ -1297,10 +1305,14 @@ def _lifecycle(provider, job, recipe, staging_path, output, state, gpu_choice, t
             state['measurement_completed'] = True
             save_state()
             return state
-        provider.scp_from(pod_id, "/work/out/raw.jsonl", str(output / "raw.jsonl"))
         # The pod-side driver receipt is kept as evidence; only our host receipt below owns
         # the canonical receipt.json path.
-        provider.scp_from(pod_id, "/work/out/receipt.json", str(output / "pod-receipt.json"))
+        if strands_io:
+            strands_io.fetch("/work/out/raw.jsonl", output / "raw.jsonl")
+            strands_io.fetch("/work/out/receipt.json", output / "pod-receipt.json")
+        else:
+            provider.scp_from(pod_id, "/work/out/raw.jsonl", str(output / "raw.jsonl"))
+            provider.scp_from(pod_id, "/work/out/receipt.json", str(output / "pod-receipt.json"))
         rows = (output / "raw.jsonl").read_bytes().count(b"\n")
         if rows != expected_rows:
             raise PodRunError(f"raw.jsonl has {rows} rows, expected {expected_rows}")
@@ -1312,6 +1324,16 @@ def _lifecycle(provider, job, recipe, staging_path, output, state, gpu_choice, t
             state['unidentified_candidate_pod_ids'] = list(exc.candidate_pod_ids)
             save_state()
         if pod_id and state.get('input_dispatched') and not state.get('measurement_completed'):
+            if strands_io:
+                if state.get('execution_started'):
+                    for name in ('raw.jsonl', 'scored-loop-started.json'):
+                        try:
+                            strands_io.fetch('/work/out/' + name, output / name, maximum=90)
+                        except Exception:
+                            pass
+                state['scored_dispatch_uncertain'] = True
+                save_state()
+                raise measurement_dispatch.OperationalHold('partial_measurement_requires_reconciliation') from None
             # Preserve every available partial raw. A failed evidence fetch is ambiguity,
             # never evidence that scoring did not begin.
             for name in benchmarks:

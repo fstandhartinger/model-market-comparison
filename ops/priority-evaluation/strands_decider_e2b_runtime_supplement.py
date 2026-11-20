@@ -38,6 +38,7 @@ REMOTE_ROOT = '/runtime-supplement/strands-decider-e2b'
 BUILD_TIMEOUT_S = 600
 SCP_TIMEOUT_S = 300
 RESULT_COLLECTION_RESERVE_S = 300
+CLEANUP_HANDOFF_S = 15
 GPU = ('RTXPRO6000', 96)
 INSTANCE_TYPE = '1RTXPRO6000.30V'
 
@@ -189,6 +190,37 @@ def bounded_seconds(allocation_gate, state, clock, ttl, reserve, maximum):
     if remaining < 1:
         raise pod_runner.PodRunError('strands_e2b_cleanup_margin_insufficient')
     return min(remaining, maximum)
+
+
+class AttemptIO:
+    """Check the deadline again for each operation after protected upload."""
+
+    def __init__(self, provider, pod_id, allocation_gate, state, clock, ttl):
+        self.provider = provider
+        self.pod_id = pod_id
+        self.allocation_gate = allocation_gate
+        self.state = state
+        self.clock = clock
+        self.ttl = ttl
+
+    def timeout(self, maximum, reserve):
+        return bounded_seconds(self.allocation_gate, self.state, self.clock, self.ttl, reserve, maximum)
+
+    def exec(self, command, maximum=600, reserve=RESULT_COLLECTION_RESERVE_S):
+        timeout = self.timeout(maximum, reserve)
+        result = self.provider.exec_bounded(self.pod_id, command, timeout)
+        if result.returncode:
+            raise pod_runner.PodRunError(f'Strands bounded {command[0]} command failed (exit {result.returncode})')
+        return result
+
+    def fetch(self, remote, target, maximum=900):
+        target = Path(target)
+        partial = target.with_name(target.name + '.partial')
+        if target.exists() or partial.exists() or target.is_symlink() or partial.is_symlink():
+            raise pod_runner.PodRunError('Strands retrieval target already exists')
+        timeout = self.timeout(maximum, CLEANUP_HANDOFF_S)
+        self.provider.scp_from_bounded(self.pod_id, remote, str(partial), timeout)
+        partial.replace(target)
 
 
 def verify_context(context=CONTEXT):
