@@ -911,6 +911,9 @@ def _lifecycle(provider, job, recipe, staging_path, output, state, gpu_choice, t
         raise measurement_dispatch.OperationalHold("host_staging_ttl_too_short")
     import strands_decider_e2b_runtime_supplement
     strands_e2b = strands_decider_e2b_runtime_supplement.active(job_dir or job, recipe)
+    lease_hours = ttl
+    if strands_e2b:
+        lease_hours += strands_decider_e2b_runtime_supplement.CLEANUP_HOURS
     try:
         attempts = state.get('creation_attempts', 0)
         try:
@@ -949,16 +952,16 @@ def _lifecycle(provider, job, recipe, staging_path, output, state, gpu_choice, t
             raise measurement_dispatch.OperationalHold('gpu_pod_cleanup_uncertain') from exc
         if allocation_gate is not None:
             allocation_gate('before_reserve', state)
-        reservation = provider.reserve(job, "pod-measure", MAX_HOURLY_USD, budget, ttl)
+        reservation = provider.reserve(job, "pod-measure", MAX_HOURLY_USD, budget, lease_hours)
         state['creation_attempts'] = attempts + 1
         state['attempt_started_at'] = datetime.now(timezone.utc).isoformat()
         state.pop('torn_down_at', None)
         state['cleanup_uncertain'] = True
         state['attempt_ttl_hours'] = ttl
-        state['attempt_reserved_upper_bound_usd'] = ttl * _attempt_rate(recipe, job_dir or job)
+        state['attempt_reserved_upper_bound_usd'] = lease_hours * _attempt_rate(recipe, job_dir or job)
         extra = allocation_gate.contingency_usd if allocation_gate is not None else 0
         state['attempt_contingency_usd'] = extra
-        state['spent_upper_bound_usd'] = state.get('spent_upper_bound_usd', 0.0) + ttl * _attempt_rate(recipe, job_dir or job) + extra
+        state['spent_upper_bound_usd'] = state.get('spent_upper_bound_usd', 0.0) + state['attempt_reserved_upper_bound_usd'] + extra
         state['reservation_id'] = reservation
         state['input_dispatched'] = False
         state['execution_started'] = False
@@ -969,6 +972,9 @@ def _lifecycle(provider, job, recipe, staging_path, output, state, gpu_choice, t
                 try:
                     allocation_gate('before_create', state)
                 except Exception:
+                    if strands_e2b:
+                        # The exact order's reservation remains for audited reconciliation.
+                        raise
                     # No create call happened. Release only our reservation; keep
                     # monotonic attempts and full conservative charge/one-use claim.
                     provider.release(job, None, reservation)
@@ -977,13 +983,20 @@ def _lifecycle(provider, job, recipe, staging_path, output, state, gpu_choice, t
                     state['torn_down_at'] = datetime.now(timezone.utc).isoformat()
                     save_state()
                     raise
-            if "host_staging" in recipe or _attempt_rate(recipe, job_dir or job) != MAX_HOURLY_USD:
+            if strands_e2b:
+                work_budget = budget - strands_decider_e2b_runtime_supplement.CLEANUP_HOURS * MAX_HOURLY_USD
+                pod = provider.create(gpu_choice[0], ttl, work_budget)
+            elif "host_staging" in recipe or _attempt_rate(recipe, job_dir or job) != MAX_HOURLY_USD:
                 # Provider-side price ceiling = the pinned price the charge is accounted at, so the recorded
                 # upper bound holds even for an unclear create or a failed teardown.
                 pod = provider.create(gpu_choice[0], ttl, budget, max_hourly=_attempt_rate(recipe, job_dir or job))
             else:
                 pod = provider.create(gpu_choice[0], ttl, budget)
         except PodCapacityError as exc:
+            if strands_e2b:
+                # Never credit a charged attempt or release a reservation from a
+                # generic capacity exception. Reconcile its exact journal first.
+                raise measurement_dispatch.OperationalHold('gpu_pod_cleanup_requires_reconciliation') from exc
             proof = getattr(exc, 'proof', None)
             if isinstance(provider, LiumProvider) and proof is None:
                 raise measurement_dispatch.OperationalHold('gpu_pod_cleanup_uncertain') from exc
@@ -1356,7 +1369,11 @@ def _lifecycle(provider, job, recipe, staging_path, output, state, gpu_choice, t
         if pod_id:
             # Full TTL worst-case charge is durable before create/teardown and is
             # retained until separately authenticated billing reconciliation.
-            _teardown(provider, job, pod_id, reservation, alert)
+            if strands_e2b:
+                state['native_teardown'] = strands_decider_e2b_runtime_supplement.teardown(
+                    provider, job, pod_id, reservation, state['native_launch'])
+            else:
+                _teardown(provider, job, pod_id, reservation, alert)
             ended = datetime.now(timezone.utc)
             # Keep full TTL upper bound: provider billing quantum has not been
             # authenticated. Only a separate reviewed billing reconciliation may
@@ -1566,6 +1583,10 @@ def run(rid: str, job_dir: Path, recipe: dict, output: Path, expected_pins: dict
                 raise measurement_dispatch.OperationalHold('gpu_pod_budget_exhausted')
             ttl = min(ttl_cap, remaining / _attempt_rate(recipe, job_dir),
                       allocation_gate.max_ttl_hours if allocation_gate is not None else ttl_cap)
+            if strands_e2b:
+                ttl -= strands_decider_e2b_runtime_supplement.CLEANUP_HOURS
+                if ttl <= 0:
+                    raise measurement_dispatch.OperationalHold("gpu_pod_budget_exhausted")
             try:
                 state = _lifecycle(chain[provider_index % len(chain)], job, recipe, staging_path, output, state,
                                    gpu_choice, ttl, remaining, alert, save_state, benchmarks, quote_budget,
@@ -1601,6 +1622,7 @@ def run(rid: str, job_dir: Path, recipe: dict, output: Path, expected_pins: dict
         receipt['runtime_supplement'] = dict(state['runtime_supplement'])
     if strands_e2b:
         receipt['native_launch'] = strands_launch
+        receipt['native_teardown'] = state['native_teardown']
     combined = recipe['kind'] == 'aplomb_native' or 'imagejevbench' in benchmarks
     if combined:
         receipt['benchmarks'] = {}

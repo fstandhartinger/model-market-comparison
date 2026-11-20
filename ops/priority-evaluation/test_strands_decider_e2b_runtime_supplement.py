@@ -143,10 +143,27 @@ class StrandsRuntimeTests(unittest.TestCase):
     def test_runtime_receipt_matches_pinned_image_and_exact_attempt(self):
         runtime = dict(supplement.binding(), effective_image="sha256:" + "a" * 64)
         approval = {"approval_sha256": "b" * 64, "packet_sha256": "c" * 64, "location": "FIN-02"}
-        state = {"last_pod_id": "owned-instance", "runtime_supplement": runtime, "native_launch": approval}
-        receipt = {"pod_id": "owned-instance", "runtime_supplement": dict(runtime), "native_launch": approval}
+        pod_id = "cb5728c3-6db8-4f6a-a932-a5b0b2265062"
+        cleanup = {"job": "fastlane-eval-0616c39d", "pod_id": pod_id, "reservation_id": "gpu-" + "d" * 24,
+                   "packet_sha256": approval["packet_sha256"], "attempt_id": "ab7222e2-ade6-4289-898f-87094f556065",
+                   "volume_id": "0134df30-60c4-4aa9-b59a-e05350ee0da9", "terminal_at": 100, "hard_end": 120,
+                   "guard_released": True}
+        state = {"last_pod_id": pod_id, "reservation_id": cleanup["reservation_id"],
+                 "runtime_supplement": runtime, "native_launch": approval, "native_teardown": dict(cleanup)}
+        receipt = {"pod_id": pod_id, "runtime_supplement": dict(runtime), "native_launch": approval,
+                   "native_teardown": cleanup}
+        provider = Mock()
+        provider.teardown_exact.return_value = cleanup
+        self.assertEqual(supplement.teardown(provider, cleanup["job"], pod_id, cleanup["reservation_id"], approval),
+                         cleanup)
+        provider.rm.assert_not_called()
+        provider.teardown_exact.return_value = dict(cleanup, guard_released=False)
+        with self.assertRaisesRegex(measurement_dispatch.OperationalHold, "gpu_pod_teardown_uncertain"):
+            supplement.teardown(provider, cleanup["job"], pod_id, cleanup["reservation_id"], approval)
         supplement.verify_receipt(receipt, state, approval)
         for drift in ({"runtime_supplement": None}, {"pod_id": "another-instance"},
+                      {"native_teardown": dict(cleanup, guard_released=False)},
+                      {"native_teardown": dict(cleanup, attempt_id=pod_id)},
                       {"native_launch": dict(approval, location="FIN-03")},
                       {"runtime_supplement": dict(runtime, effective_image="sha256:" + "b" * 64)}):
             with self.subTest(drift=drift), self.assertRaisesRegex(
@@ -168,6 +185,36 @@ class StrandsRuntimeTests(unittest.TestCase):
             with self.subTest(drift=drift), self.assertRaisesRegex(
                     measurement_dispatch.OperationalHold, "gpu_pod_quote_changed"):
                 supplement.verify_created_pod(dict(pod, **drift), approval)
+
+    def test_lifecycle_keeps_full_lease_and_uses_exact_teardown_after_attach_error(self):
+        from pod_runner import PodRunError
+
+        pod = {"pod_id": "2d8ef6c1-9258-459d-a9e5-83be4c0f7cf8", "gpu": "RTXPRO6000",
+               "gpu_count": 1, "instance_type": "1RTXPRO6000.30V", "location": "FIN-02", "hourly_usd": 2}
+        reservation = "gpu-" + "d" * 24
+        approval = {"approval_sha256": "b" * 64, "packet_sha256": "c" * 64, "location": "FIN-02"}
+        state = {"request_id": ORDER, "native_launch": approval}
+        provider = Mock()
+        provider.preflight.return_value = None
+        provider.reserve.return_value = reservation
+        provider.create.return_value = pod
+        provider.attach.side_effect = PodRunError("attach inconclusive")
+        provider.teardown_exact.side_effect = TimeoutError("slow cleanup")
+        with patch.object(supplement, "active", return_value=True), \
+                patch.object(pod_runner.pod_capacity, "allocation_count", return_value=0):
+            with self.assertRaisesRegex(measurement_dispatch.OperationalHold, "gpu_pod_teardown_uncertain"):
+                pod_runner._lifecycle(provider, "fastlane-eval-0616c39d", {}, None, self.root, state,
+                                      supplement.GPU, 2.75, 15, None, Mock(), job_dir=self.job)
+        provider.reserve.assert_called_once_with("fastlane-eval-0616c39d", "pod-measure", 5, 15, 3)
+        provider.create.assert_called_once_with("RTXPRO6000", 2.75, 13.75)
+        provider.teardown_exact.assert_called_once_with("fastlane-eval-0616c39d", pod["pod_id"], reservation, approval)
+        provider.rm.assert_not_called()
+        provider.release.assert_not_called()
+        self.assertEqual(state["pod_id"], pod["pod_id"])
+        self.assertEqual(state["reservation_id"], reservation)
+        self.assertTrue(state["cleanup_uncertain"])
+        self.assertEqual(state["spent_upper_bound_usd"], 15)
+        self.assertNotIn("native_teardown", state)
 
     def test_dispatch_and_wait_use_the_earlier_cutoff_and_reserve(self):
         start = datetime(2026, 11, 21, 10, tzinfo=timezone.utc)

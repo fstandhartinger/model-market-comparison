@@ -39,6 +39,7 @@ BUILD_TIMEOUT_S = 600
 SCP_TIMEOUT_S = 300
 RESULT_COLLECTION_RESERVE_S = 300
 CLEANUP_HANDOFF_S = 15
+CLEANUP_HOURS = 0.25
 GPU = ('RTXPRO6000', 96)
 INSTANCE_TYPE = '1RTXPRO6000.30V'
 
@@ -71,7 +72,8 @@ def require(job, recipe, rid, provider, benchmarks, pre_upload_gate, allocation_
     if (rid != ORDER or not active(job, recipe) or not isinstance(provider, VerdaProvider)
             or fallback_providers or tuple(benchmarks) != ('jevbench',)
             or not callable(pre_upload_gate) or not callable(allocation_gate)
-            or not callable(getattr(provider, 'verify_dispatch_identity', None))):
+            or not callable(getattr(provider, 'verify_dispatch_identity', None))
+            or not callable(getattr(provider, 'teardown_exact', None))):
         raise measurement_dispatch.OperationalHold('strands_e2b_native_admission_required')
     verify_sources(Path(job), recipe)
     verify_context()
@@ -165,10 +167,39 @@ def verify_created_pod(pod, launch):
         raise measurement_dispatch.OperationalHold('gpu_pod_quote_changed')
 
 
+def _validate_teardown(proof, job, pod_id, reservation, launch):
+    if (not isinstance(proof, dict) or proof.get('job') != job or proof.get('pod_id') != pod_id
+            or proof.get('reservation_id') != reservation or proof.get('packet_sha256') != launch['packet_sha256']
+            or proof.get('guard_released') is not True
+            or any(not re.fullmatch(r'[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}', str(proof.get(key)))
+                   for key in ('pod_id', 'attempt_id', 'volume_id'))
+            or len({pod_id, proof['attempt_id'], proof['volume_id']}) != 3
+            or not re.fullmatch(r'gpu-[0-9a-f]{24}', str(reservation))
+            or any(type(proof.get(key)) is not int for key in ('terminal_at', 'hard_end'))
+            or not 0 < proof['terminal_at'] <= proof['hard_end']):
+        raise ValueError('invalid exact Verda teardown proof')
+
+
+def teardown(provider, job, pod_id, reservation, launch):
+    """Only the authenticated attempt adapter may complete this order's teardown."""
+    try:
+        proof = provider.teardown_exact(job, pod_id, reservation, launch)
+        _validate_teardown(proof, job, pod_id, reservation, launch)
+        return proof
+    except Exception as exc:
+        raise measurement_dispatch.OperationalHold('gpu_pod_teardown_uncertain') from exc
+
+
 def verify_receipt(receipt, state, launch):
     """Refuse reuse if the recorded offline image or runtime pins changed."""
     proof = receipt.get('runtime_supplement')
-    if (not isinstance(proof, dict) or proof != state.get('runtime_supplement')
+    try:
+        cleanup = receipt.get('native_teardown')
+        _validate_teardown(cleanup, 'fastlane-eval-' + ORDER[:8], receipt.get('pod_id'),
+                           state.get('reservation_id'), launch)
+    except ValueError:
+        raise measurement_dispatch.OperationalHold('existing_measurement_receipt_changed') from None
+    if (cleanup != state.get('native_teardown') or not isinstance(proof, dict) or proof != state.get('runtime_supplement')
             or not re.fullmatch(r'sha256:[a-f0-9]{64}', str(proof.get('effective_image')))
             or proof != dict(binding(), effective_image=proof['effective_image'])
             or not receipt.get('pod_id') or receipt['pod_id'] != state.get('last_pod_id')
