@@ -18,7 +18,7 @@
   },
   "proof": {
    "path": "data/raw/benchmarks/jevbench/v1.8/jevbench-v1.8.18-proof.json",
-   "sha256": "14373b13ffa52165c5211dd399fb96ff5ab85a91c0584ecc48ced1bc2ab0bed1"
+   "sha256": "80976b5d014a16b5ba8baf66c16a93cec58771cb2a02825a7c1e79eccef03fa9"
   },
   "results": {
    "path": "data/raw/benchmarks/jevbench/v1.8/jevbench-v1.8.18-results.json",
@@ -34,9 +34,9 @@
  },
  "provisional": false,
  "review": {
-  "engine": "PENDING",
-  "receipt_sha256": null,
-  "verdict": "PENDING"
+  "engine": "claude-opus-5-5 (Claude Code): independent fairness check + critic r174l-v1818-fair (Opus 5.5 xhigh); builders were Codex Sol (r174l-v1818-ranking-build, -build2, -build3)",
+  "receipt_sha256": "2baf51e0ecd612a90760200601e3487cb472d5866f90e11a164a40ed600c0648",
+  "verdict": "PASS"
  },
  "revision": "v1.8.18",
  "schema_version": 1,

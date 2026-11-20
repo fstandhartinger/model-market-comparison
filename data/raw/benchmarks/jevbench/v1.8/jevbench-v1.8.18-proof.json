@@ -263,17 +263,25 @@
    "carried boundary-note updates",
    "Starlord-4B base disclosure"
   ],
-  "fairness_review_required": true,
+  "fairness_review": {
+   "conditions_closed": "M1/C1 TF1-TF3 adopted (3b47425a2); C2 synthetic bypass removed; C3 rebound here; C4 LeChonk PENDING suite 180/0/3 + merge queue; C5 preview refreshed",
+   "engine": "claude-opus-5-5 xhigh",
+   "fairness": "FAIR",
+   "verdict": "PASS_WITH_CONDITIONS",
+   "worker": "r174l-v1818-fair"
+  },
+  "fairness_review_required": false,
+  "fairness_review_verdict": "PASS",
   "fresh_baseline": "v1.8.17",
   "scope": "nine-row ranking review, Cue addition and Starlord base disclosure",
-  "status": "GO (candidate preparation only; independent fairness review pending)",
-  "top_five_effect": "changed; preview required"
+  "status": "GO: Florian card 20094 Publish (20 Nov 2026); independent fairness review FAIR, all nine ranked",
+  "top_five_effect": "changed; Florian preview approved (card 20094)"
  },
  "rank_review": {
   "classification_sha256": "108b7382135cf0c68756cb51049bdf17d24967f7217ec67031b9fe2e8b56291c",
   "configuration": {
    "held": [],
-   "lead_final_fairness_review_pending": true,
+   "lead_final_fairness_review_pending": false,
    "n_ranked": 324,
    "ranked": [
     "minimodels-decision-1.0-candy-cane",
@@ -288,7 +296,7 @@
    ],
    "rule": "R1 separate I/C endpoints + leave-one-out; R2 point memberships only; R3 single I-low boundary gets T3; joint endpoints stress only"
   },
-  "fairness_review": "PENDING",
+  "fairness_review": "PASS",
   "whatif_sha256": "8e20a24903e4854ed8c13418b98b2e72abfc856aeb05414a597c1b9367013745"
  },
  "remeasured_rows": {},
@@ -315,7 +323,7 @@
   "inputs/ENTRY-PINS.json": "da13f7e411dc55ca070b43c8b57dd984f1cb70b7bb8d82feb4901e9223224644",
   "inputs/PROVENANCE.json": "66b46c2299e829577416adc6e049f128bcf480d9dab3eada8e0db3e4ff2b19d3",
   "inputs/PUBLIC-ROWS.json": "38bfcd8e194ed78dac1b5998310b640d7530c24cf38a786180fd5947df59d2dd",
-  "inputs/RANKING-CONFIG.json": "27bf444b3cd407f362aad49471ed530515cd6449d50f4f20ce334dbc22e81d4b",
+  "inputs/RANKING-CONFIG.json": "d406cb1097c53d7e34821adf1cbbb0b78d2c48791fb0c3373593276a6785c0e1",
   "inputs/TEXT-EXCEPTIONS.json": "8ba39fa33245d47b16d58c26595630815aab322e4f9d593e21a19c9d71a4c0e1",
   "src/cells.json": "13c982fa0309c0a4eb1b7282852a4f50e0cd44caaf058b27b34acc6616b758be",
   "src/scored.json": "8992c2f47984eb50ab91e3c4dd1f04e994f66995b8f8bfad4fcee4ae3ca19a41",
