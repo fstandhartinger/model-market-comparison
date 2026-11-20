@@ -123,6 +123,7 @@ def build(provider, pod_id, context=CONTEXT):
         evidence = binding()
     except (OSError, ValueError, tarfile.TarError):
         raise measurement_dispatch.OperationalHold('runtime_supplement_unaccepted') from None
+    pod_runner._exec(provider, pod_id, ['rm', '-rf', REMOTE_ROOT])
     pod_runner._exec(provider, pod_id, ['mkdir', '-p', REMOTE_ROOT])
     # ~2.9 GB of pinned public wheels and toolchains (CUDA math wheels dominate); generous timeout for slow pod uplinks.
     provider.scp_to(pod_id, str(context), REMOTE_ROOT + '/context.tar', timeout=SCP_TIMEOUT_S)
@@ -130,6 +131,8 @@ def build(provider, pod_id, context=CONTEXT):
     if CONTEXT_SHA not in transferred.stdout.split():
         raise pod_runner.PodRunError('runtime supplement context changed in transfer')
     pod_runner._exec(provider, pod_id, ['tar', '-xf', REMOTE_ROOT + '/context.tar', '-C', REMOTE_ROOT])
+    # Keep only the pinned extracted members in Docker's build context; the compressed upload is 3 GB itself.
+    pod_runner._exec(provider, pod_id, ['rm', '-f', REMOTE_ROOT + '/context.tar', REMOTE_ROOT + '/image.iid'])
     pod_runner._exec(provider, pod_id, ['docker', 'build', '--network', 'none', '--pull=false',
                                         '--iidfile', REMOTE_ROOT + '/image.iid',
                                         '-f', REMOTE_ROOT + '/Dockerfile.runtime-supplement', REMOTE_ROOT],
@@ -143,8 +146,8 @@ def build(provider, pod_id, context=CONTEXT):
     return dict(evidence, effective_image=image)
 
 
-DEFAULT_RUN_WAIT_S = 3600
 RUN_WAIT_MARGIN_S = 900  # logs, raw download, receipts and exact-ID teardown before the attempt TTL ends
+PROVIDER_EXEC_TIMEOUT_OVERHEAD_S = 60  # VerdaProvider.exec sets its ssh timeout to timeout + 60
 
 
 def run_wait_seconds(attempt_started_at, ttl_hours, now=None):
@@ -157,7 +160,16 @@ def run_wait_seconds(attempt_started_at, ttl_hours, now=None):
         if not math.isfinite(ttl) or ttl <= 0:
             raise ValueError
         elapsed = ((now or datetime.now(timezone.utc)) - started).total_seconds()
-        left = ttl * 3600 - max(elapsed, 0.0) - RUN_WAIT_MARGIN_S
+        left = (ttl * 3600 - max(elapsed, 0.0) - RUN_WAIT_MARGIN_S
+                - PROVIDER_EXEC_TIMEOUT_OVERHEAD_S)
     except (OverflowError, TypeError, ValueError):
         return 0
     return max(0, int(left))
+
+
+def wait_for_container(provider, pod_id, attempt_started_at, ttl_hours, now=None):
+    """Wait only when the bounded ssh timeout fits before the teardown cutoff."""
+    timeout = run_wait_seconds(attempt_started_at, ttl_hours, now)
+    if timeout <= 0:
+        raise measurement_dispatch.OperationalHold('runtime_attempt_ttl_margin_exhausted')
+    return pod_runner._exec(provider, pod_id, ['docker', 'wait', 'jev-pod-run'], timeout=timeout)
