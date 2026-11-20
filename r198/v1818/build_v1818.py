@@ -33,7 +33,9 @@ for k in classification:
   row['listing_note']=T2
   if classification[k]['T3']:
    assert list(classification[k]['point_boundary_places'])==['open/composites/B']
-   row['listing_note']+=' Its #5 place on the open-weights Composite B list is within the uncertainty of the draw shift.'
+   n=place(k,'point','open/composites/B')
+   if n and n<=5 and any((place(k,sc,'open/composites/B') or 999)>5 for sc in wa['robust_scenarios']):
+    row['listing_note']+=f' Its #{n} place on the open-weights Composite B list is within the uncertainty of the draw shift.'
  else:row['not_ranked_because']=T1
 # Named carried notes are checked on the final all-nine field, never on a partial proposal.
 notes=[]
