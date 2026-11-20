@@ -18,31 +18,57 @@ def digest(path):
     return hashlib.sha256(Path(path).read_bytes()).hexdigest()
 
 
-def profile(benchmark, manifest_path=None):
-    manifest = json.loads((Path(manifest_path) if manifest_path is not None else MANIFEST).read_text())
-    if manifest.get('schema_version') != 1 or benchmark not in manifest.get('profiles', {}):
-        raise ValueError('official scoring profile unavailable')
-    result = manifest['profiles'][benchmark]
+def _validate_profile(result):
+    baseline_bytes = None
     for name, pin in result['files'].items():
         if not re.fullmatch(r'[A-Za-z0-9_.-]+', name) or set(pin) != {'path', 'sha256'}:
             raise ValueError('invalid official reference manifest')
         path = Path(pin['path'])
-        if path.is_symlink() or not path.is_file() or digest(path) != pin['sha256']:
+        if path.is_symlink() or not path.is_file():
             raise ValueError('official reference pin changed')
-    baseline = json.loads(Path(result['files']['baseline.json']['path']).read_text())
+        data = path.read_bytes()
+        if hashlib.sha256(data).hexdigest() != pin['sha256']:
+            raise ValueError('official reference pin changed')
+        if name == 'baseline.json':
+            baseline_bytes = data
+    if baseline_bytes is None:
+        raise ValueError('official baseline missing')
+    baseline = json.loads(baseline_bytes)
     phase, gm = baseline.get('phase'), baseline.get('G_med')
     if phase == 'measurement_plan':
         if gm is not None:
             raise ValueError('measurement-only v16 baseline must not invent a cohort gap')
     elif phase != 'completed_cohort' or isinstance(gm, bool) or not isinstance(gm, (int, float)) or not math.isfinite(gm):
         raise ValueError('invalid completed v16 cohort baseline')
-    return result
 
 
-def pins(benchmarks, manifest=None):
+def profile(benchmark, manifest_path=None):
+    return pins([benchmark], manifest_path)['profiles'][benchmark]
+
+
+def pins(benchmarks, manifest=None, *, expected_pins=None):
     manifest = Path(manifest) if manifest is not None else MANIFEST
-    return {'manifest_sha256': digest(manifest), 'adapter_sha256': digest(ROOT / 'official_score_v16.py'),
-            'profiles': {benchmark: profile(benchmark, manifest) for benchmark in benchmarks}}
+    if expected_pins is not None and (manifest.is_symlink() or not manifest.is_file()):
+        raise ValueError('official scoring manifest changed')
+    data = manifest.read_bytes()
+    manifest_digest = hashlib.sha256(data).hexdigest()
+    if expected_pins is not None and expected_pins.get('manifest_sha256') != manifest_digest:
+        raise ValueError('official scoring manifest changed')
+    value = json.loads(data)
+    if not isinstance(value, dict) or value.get('schema_version') != 1:
+        raise ValueError('official scoring profile unavailable')
+    profiles = value.get('profiles', {})
+    benchmarks = tuple(benchmarks)
+    if not isinstance(profiles, dict) or any(benchmark not in profiles for benchmark in benchmarks):
+        raise ValueError('official scoring profile unavailable')
+    selected = {benchmark: profiles[benchmark] for benchmark in benchmarks}
+    current = {'manifest_sha256': manifest_digest, 'adapter_sha256': digest(ROOT / 'official_score_v16.py'),
+               'profiles': selected}
+    if expected_pins is not None and current != expected_pins:
+        raise ValueError('official scoring pins differ from source review')
+    for result in selected.values():
+        _validate_profile(result)
+    return current
 
 
 def validate_meta(benchmark, meta):
@@ -60,9 +86,7 @@ def validate_meta(benchmark, meta):
 
 def run(benchmark, raw, meta, expected_pins, *, manifest=None):
     validate_meta(benchmark, meta)
-    current = pins(list(expected_pins['profiles']), manifest)
-    if current != expected_pins:
-        raise ValueError('official scoring pins differ from source review')
+    current = pins(list(expected_pins['profiles']), manifest, expected_pins=expected_pins)
     item = current['profiles'][benchmark]
     with tempfile.TemporaryDirectory(prefix='fastlane-official-') as tmp:
         scratch = Path(tmp)
@@ -90,6 +114,5 @@ def run(benchmark, raw, meta, expected_pins, *, manifest=None):
         if outputs[0] != outputs[1] or digest(raw) != digest(scratch / 'raw.jsonl'):
             raise ValueError('official scorer passes or raw pins changed')
         # Recheck references after execution as well, before trusting any aggregate.
-        if pins(list(expected_pins['profiles']), manifest) != expected_pins:
-            raise ValueError('official reference changed during scoring')
+        pins(list(expected_pins['profiles']), manifest, expected_pins=expected_pins)
         return outputs[0]
