@@ -3694,6 +3694,8 @@ def advance_delivery(row: dict[str, Any], state: dict[str, Any], job_dir: Path, 
 def record_result_delivery(row: dict[str, Any], state: dict[str, Any], summary: dict[str, Any], now: datetime) -> bool:
     """Atomically close the delivery/refund race after audited result mail success."""
     rid = request_id(row.get("id"))
+    if rid == native_owner.STRANDS_E2B_ORDER:
+        return False
     subject, _ = result_message(row, summary)
     mail_step = step(state, "result_mail")
     sent_at = parse_ts(mail_step.get("sent_at"))
@@ -4205,11 +4207,14 @@ def recover_result_email_leases(synthetic_id: str | None, job_root: Path, effect
     rows = sql_rows(f"""
       SELECT {row_json_sql('r')} FROM {TABLE} AS r
       WHERE {predicate} AND r.status IN ('paid','review_passed')
+        AND r.id <> '{native_owner.STRANDS_E2B_ORDER}'::uuid
         AND r.delivery_email_status='sending' AND r.updated_at < now()-interval '10 minutes'
       ORDER BY r.paid_at LIMIT 50
     """)
     for row in rows:
         rid = request_id(row["id"])
+        if rid == native_owner.STRANDS_E2B_ORDER:
+            continue
         state = load_state(rid)
         summary = state.get("verified")
         if not isinstance(summary, dict) or summary.get("outcome") != "delivered":

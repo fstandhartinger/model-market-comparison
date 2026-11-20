@@ -151,6 +151,24 @@ class StrandsRuntimeTests(unittest.TestCase):
         forbidden.assert_not_called()
         self.assertFalse(effects.mock_calls)
 
+    def test_stale_sending_lease_has_no_generic_reconciliation(self):
+        now = datetime.now(timezone.utc)
+        row = {"id": ORDER, "status": "paid", "visibility": "public", "delivery_email_status": "sending"}
+        summary = {"outcome": "delivered", "visibility": "public",
+                   "results": [{"public_url": "https://example.invalid/embargoed"}]}
+        state = {"verified": summary}
+        effects = Mock(dry_run=False)
+        forbidden = Mock(side_effect=AssertionError("generic mail recovery or public URL write"))
+        with patch.object(autopickup, "managed_predicate", return_value="TRUE"), \
+                patch.object(autopickup, "sql_rows", return_value=[row]) as select, \
+                patch.object(autopickup, "load_state", forbidden), \
+                patch.object(autopickup, "mail_sent_at", forbidden), \
+                patch.object(autopickup, "update_row", forbidden):
+            autopickup.recover_result_email_leases(None, self.root, effects)
+            self.assertFalse(autopickup.record_result_delivery(row, state, summary, now))
+        self.assertIn(f"r.id <> '{ORDER}'::uuid", select.call_args.args[0])
+        forbidden.assert_not_called()
+
     def test_timer_and_delivery_fenced_but_operational_escalation_preserved(self):
         for status in ("pending", "failed", "running", "ready_for_release"):
             with self.subTest(status=status):
