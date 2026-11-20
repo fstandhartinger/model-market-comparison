@@ -6,6 +6,11 @@ L=lambda p:json.loads(p.read_text());sha=lambda p:hashlib.sha256(p.read_bytes())
 def put(p,d):p.write_text(json.dumps(d,indent=1,sort_keys=True,ensure_ascii=False)+'\n')
 old={n:L(D/f'jevbench-{PREV}-{n}.json') for n in ['results','categories','proof','publication']};res=cp(old['results']);cat=cp(old['categories']);by={s['key']:s for s in res['systems']}
 cfg=L(J/'inputs/RANKING-CONFIG.json');classification=L(J/'analysis/CLASSIFICATION.json');wa=L(J/'analysis/WHATIF-V1818.json')
+# Every scenario already contains the all-nine production order. Removing held rows
+# preserves the production order and makes a configuration change a one-list edit.
+final_lists={sc:{name:[k for k in arr if k not in cfg['held']]for name,arr in lists.items()}for sc,lists in wa['primary_rankings'].items()}
+def place(key,sc,name):
+ arr=final_lists[sc][name];return arr.index(key)+1 if key in arr else None
 T1='Measured on the 27 Oct 2026 draw and shown on the reference scale by anchor equating with four strong anchor systems (Intelligence -2.9, Calibration -1.9 points). Not ranked yet: its top-five places lie within the uncertainty of that shift (95% interval -5.9 to +1.1 Intelligence points). Ranking follows when more anchor runs narrow the interval.'
 T2='Measured on the 27 Oct 2026 draw; shown on the reference scale by anchor equating with four strong anchor systems (Intelligence -2.9, Calibration -1.9 points; 95% interval of the Intelligence shift -5.9 to +1.1).'
 HIST='Reviewed the nine rows added after the v1.8.10 ranking review using the published four-anchor equating and top-five sensitivity checks.'
@@ -36,7 +41,7 @@ for k,row in by.items():
  if k in classification or ' Its #'not in row.get('listing_note',''):continue
  before=row['listing_note'];named=['all/composites/B']if k=='karpo_decision_31b'else['open/composites/A','open/composites/C']if k=='arcbright-elf-1-12b-r2'else None
  assert named is not None,'unhandled carried place-naming note'
- point=wa['rows'][k]['scenarios']['point']['primary_ranks'];boundary=[n for n in named if point[n]and point[n]<=5 and any(wa['rows'][k]['scenarios'][sc]['primary_ranks'][n]>5 for sc in wa['robust_scenarios'])]
+ point={n:place(k,'point',n)for n in named};boundary=[n for n in named if point[n]and point[n]<=5 and any((place(k,sc,n) or 999)>5 for sc in wa['robust_scenarios'])]
  after=before.split(' Its #')[0]
  if boundary:
   assert len(set(point[n]for n in boundary))==1
@@ -48,7 +53,7 @@ for k,row in by.items():
 put(J/'inputs/TEXT-EXCEPTIONS.json',notes)
 # Stable order uses the same production list inputs and tie order as the frozen WHATIF.
 for metric,b in res['board'].items():
- expected=wa['primary_rankings']['point']['release/'+metric]
+ expected=final_lists['point']['release/'+metric]
  init=[k for k in old['results']['board'][metric]['order']if by[k]['ranked']]+[k for k in cfg['ranked']if k not in old['results']['board'][metric]['order']]
  pos={k:i for i,k in enumerate(init)};value=lambda k:by[k]['capability']if metric=='capability'else by[k]['scores'][metric]
  b['order']=sorted(init,key=lambda k:(-value(k),pos[k]));assert b['order']==expected
@@ -61,7 +66,7 @@ res['addendum']={**cp(old['results']['addendum']),'predecessor':PREV,'new_keys':
 put(D/f'jevbench-{REV}-results.json',res);cat.update(revision=REV,results_sha256=sha(D/f'jevbench-{REV}-results.json'),source_results_sha256=res['source_sha256']);put(D/f'jevbench-{REV}-categories.json',cat)
 for n in ['carry','history','history-carry']:shutil.copyfile(D/f'jevbench-{PREV}-{n}.json',D/f'jevbench-{REV}-{n}.json')
 new={K:s};bounds={K:{dim:{k:c['n']for k,c in vals.items()}for dim,vals in cat['systems'][K].items()}}
-proof={'schema_version':1,'revision':REV,'method':res['method'],'predecessor':{'revision':PREV,'publication_sha256':sha(D/f'jevbench-{PREV}-publication.json')},'carried_rows':len(old['results']['systems']),'carried_rows_equal_except':{'all':'rank and ranks','reviewed_rows':['ranked','listing','not_ranked_because','listing_note'],'carried_text':notes},'exceptions':{'text_only_sha256':sha(J/'inputs/TEXT-EXCEPTIONS.json'),'base_overlay_keys':['starlord-4b-preview']},'new_rows':{K:{'scored_input_sha256':s['draw']['results_sha256'],'model_pin':s['model_pin'],'axes':s['axes'],'composite_ci95':s['composite_ci95'],'decision_limit':s['decision_limit'],'cost':u,'treatment':'ranked'if s['ranked']else'unranked'}},'rank_review':{'configuration':cfg,'whatif_sha256':sha(J/'analysis/WHATIF-V1818.json'),'classification_sha256':sha(J/'analysis/CLASSIFICATION.json'),'fairness_review':'PENDING'},'remeasured_rows':{},'repriced_rows':{},'scorers':old['proof']['scorers'],'pricing_module_sha256':old['proof']['pricing_module_sha256'],'cost_basis':old['proof']['cost_basis'],'equating':old['proof']['equating'],'publication_approval':L(J/'inputs/APPROVAL.json'),'source_inputs':{f:sha(J/f)for f in ['src/scored.json','src/usage.json','src/cells.json','inputs/ENTRIES.json','inputs/ENTRY-PINS.json','inputs/PUBLIC-ROWS.json','inputs/TEXT-EXCEPTIONS.json','inputs/ARCHITECTURE.json','inputs/PROVENANCE.json','inputs/BREAKDOWN-POLICY.json','inputs/RANKING-CONFIG.json']}}
+proof={'schema_version':1,'revision':REV,'method':res['method'],'predecessor':{'revision':PREV,'publication_sha256':sha(D/f'jevbench-{PREV}-publication.json')},'carried_rows':len(old['results']['systems']),'carried_rows_equal_except':{'all':'rank and ranks','reviewed_rows':['ranked','listing','not_ranked_because','listing_note'],'carried_text':notes},'exceptions':{'text_only_sha256':sha(J/'inputs/TEXT-EXCEPTIONS.json'),'base_overlay_keys':['starlord-4b-preview']},'new_rows':{K:{'scored_input_sha256':s['draw']['results_sha256'],'model_pin':s['model_pin'],'axes':s['axes'],'composite_ci95':s['composite_ci95'],'decision_limit':s['decision_limit'],'cost':u,'treatment':'ranked'if s['ranked']else'unranked'}},'rank_review':{'configuration':cfg,'whatif_sha256':sha(J/'analysis/WHATIF-V1818.json'),'classification_sha256':sha(J/'analysis/CLASSIFICATION.json'),'fairness_review':L(J/'inputs/APPROVAL.json').get('fairness_review_verdict','PENDING')},'remeasured_rows':{},'repriced_rows':{},'scorers':old['proof']['scorers'],'pricing_module_sha256':old['proof']['pricing_module_sha256'],'cost_basis':old['proof']['cost_basis'],'equating':old['proof']['equating'],'publication_approval':L(J/'inputs/APPROVAL.json'),'source_inputs':{f:sha(J/f)for f in ['src/scored.json','src/usage.json','src/cells.json','inputs/ENTRIES.json','inputs/ENTRY-PINS.json','inputs/PUBLIC-ROWS.json','inputs/TEXT-EXCEPTIONS.json','inputs/ARCHITECTURE.json','inputs/PROVENANCE.json','inputs/BREAKDOWN-POLICY.json','inputs/RANKING-CONFIG.json']}}
 put(D/f'jevbench-{REV}-proof.json',proof)
 manifest=cp(old['publication']);manifest.update(revision=REV,predecessor=proof['predecessor'],review={'engine':'PENDING','verdict':'PENDING','receipt_sha256':None});manifest['files']={n:{'path':f'data/raw/benchmarks/jevbench/v1.8/jevbench-{REV}-{n}.json','sha256':sha(D/f'jevbench-{REV}-{n}.json')}for n in ['results','categories','carry','proof','history','history-carry']};put(D/f'jevbench-{REV}-publication.json',manifest)
 put(J/'receipts/NEW-ROWS.json',new);put(J/'receipts/BOUNDS.json',bounds);put(J/'inputs/history.json',HIST)

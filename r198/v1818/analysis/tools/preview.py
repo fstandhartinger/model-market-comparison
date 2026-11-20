@@ -41,7 +41,7 @@ for n in range(20,101,20):d.line([pt(i,n)for i in range(4)]+[pt(0,n)],fill='#415
 for i,axis in enumerate(AX):
  x,y=pt(i,130);d.text((x-55,y-10),axis.title(),font=f(20),fill='#c3d2e6')
 for k,col in [(lv,'#f49bb6'),(en,'#64dfb7')]:d.line([pt(i,models[k]['axes'][axis])for i,axis in enumerate(AX)]+[pt(0,models[k]['axes'][AX[0]])],fill=col,width=5)
-d.text((980,740),'New top-five entrant',font=f(18),fill='#a3b8d3');d.text((980,775),models[en]['display'][:48],font=f(20),fill='#64dfb7');d.text((980,820),'Displaced model',font=f(18),fill='#a3b8d3');d.text((980,855),models[lv]['display'][:48],font=f(20),fill='#f49bb6')
+d.text((980,740),'New top-five entrant',font=f(18),fill='#a3b8d3');d.text((980,775),models[en]['display'].split(' (')[0][:48],font=f(20),fill='#64dfb7');d.text((980,820),'Displaced model',font=f(18),fill='#a3b8d3');d.text((980,855),models[lv]['display'].split(' (')[0][:48],font=f(20),fill='#f49bb6')
 d.text((60,740),'Four-anchor shift unchanged',font=f(25),fill='#e4edf8');d.text((60,785),'Intelligence −2.885 · Calibration −1.854',font=f(22),fill='#a3b8d3');d.text((60,835),'Separate-axis + leave-one-out checks',font=f(22),fill='#a3b8d3');d.text((60,880),'Joint-CI endpoints shown as stress tests',font=f(22),fill='#a3b8d3');d.text((60,950),'Local review draft · no approval, publication or release readiness implied',font=f(18),fill='#a3b8d3')
 img.save(O/'card.png')
 print('Static draft preview:',(O/'index.html').stat().st_size,'bytes; card 1600x1000; full rankings for all 40 primary lists.')

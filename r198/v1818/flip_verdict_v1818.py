@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Release-owner helper: bind an independent PASS receipt to v1.8.18. Use --dry-run to inspect only.
-Refuses unless v1.8.17 is PASS, v1.8.18 is bound to its current manifest bytes and the row-only standing approval matches."""
+Refuses unless v1.8.17 is PASS, v1.8.18 is bound to its current manifest bytes and the independent fairness approval is recorded."""
 import argparse
 import hashlib
 import json
