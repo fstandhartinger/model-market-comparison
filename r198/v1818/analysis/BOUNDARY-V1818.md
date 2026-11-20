@@ -1410,3 +1410,7 @@ Comparison uses the same scenario with and without the nine promotions; this iso
 | leave_out_h2o-lightning-4b-v1.1 | release/C | Torchcast Decision 31B v1.0 | 3 | 4 |
 | leave_out_h2o-lightning-4b-v1.1 | release/C | Super Decider | 4 | 5 |
 | leave_out_h2o-lightning-4b-v1.1 | release/C | H2O-Lightning-4B v1.1 (H2O.ai, Qwen3.5-4B fine-tune, stock vLLM + open shim) | 5 | 7 |
+
+## Carried T3 wording conflict
+
+The proposal moves Karpo from all-systems Composite B #5 to #6 and Arcbright r2 from open Composite A/C #4 to #5. Their inherited listing_notes still name the old places. The brief permits carried result changes only to rank/ranks, so correcting those notes needs a lead ruling. No carried text was edited. See CARRIED-TEXT-RULING.json.
