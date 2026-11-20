@@ -2,7 +2,7 @@
 
 from concurrent.futures import ThreadPoolExecutor
 from contextlib import contextmanager, redirect_stdout
-from datetime import timedelta
+from datetime import datetime, timedelta
 import fcntl
 import hashlib
 import io
@@ -24,6 +24,7 @@ import uuid
 
 import autopickup as ap
 import cd7e_late_result as late
+import cd7e_late_peer as late_peer
 import fastlane_transactional as sender
 
 DECISOR = "3687485f-5a51-4964-bd9a-73973f3494d7"
@@ -313,6 +314,120 @@ class LateResultDB(unittest.TestCase):
 
     def fixture_session(self, refresh=lambda: None, admission="b" * 64):
         return late.sender_custody(CUSTOMER, SUBJECT, BODY, self.approval["generation"], admission, refresh)
+
+    @staticmethod
+    def install_restricted_fixture():
+        if ap.sql("SELECT to_regnamespace('cd7e_late')"):
+            return
+        ap.sql("""
+          CREATE ROLE jevbench_cd7e_owner NOLOGIN NOINHERIT;
+          CREATE ROLE jevbench_cd7e_late LOGIN NOINHERIT;
+          CREATE ROLE cd7e_unrelated_fixture LOGIN NOINHERIT;
+        """)
+        subprocess.run(["psql", "-Xq", "-v", "ON_ERROR_STOP=1", "--single-transaction",
+                        "-d", DB, "-f", str(ROOT / "ops/priority-evaluation/cd7e_late_peer.sql")],
+                       check=True)
+
+    def test_restricted_database_role_and_exact_lifecycle(self):
+        role = "jevbench_cd7e_late"
+        self.install_restricted_fixture()
+
+        def peer(statement, database_role=role):
+            return ap.sql(f"SET SESSION AUTHORIZATION {database_role}; {statement}")
+
+        version = ap.sql("SHOW server_version")
+        print(f"Restricted SQL fixture PostgreSQL {version}")
+        self.assertEqual(json.loads(peer("SELECT cd7e_late.read_order()")), {
+            "id": late.ORDER, "visibility": "public", "benchmarks": ["jevbench"], "email": CUSTOMER,
+        })
+        for statement in (f"SELECT email FROM {ap.TABLE}", f"SELECT * FROM {late.MAIL}",
+                          f"SELECT * FROM {late.AUTH}", "SELECT * FROM cd7e_late.exact_order",
+                          f"SET ROLE jevbench_cd7e_owner; SELECT * FROM {ap.TABLE}",
+                          "CREATE TABLE cd7e_late.extra (id int)"):
+            with self.subTest(statement=statement), self.assertRaises(ap.PickupError):
+                peer(statement)
+        with self.assertRaises(ap.PickupError):
+            peer("SELECT cd7e_late.read_order()", "cd7e_unrelated_fixture")
+
+        self.set_refunded()
+        self.set_order("evaluation_status='pending'")
+        digest = hashlib.sha256(BODY.encode()).hexdigest()
+        admission = "b" * 64
+        generation = self.approval["generation"]
+        arguments = ",".join(map(ap.sql_text, (CUSTOMER, SUBJECT, digest)))
+
+        def stage_with(generation):
+            values = (self.approval["identity_sha256"], REF, generation, admission, "a" * 40,
+                      self.approval["expires_at"], CUSTOMER, SUBJECT, digest)
+            return peer("SELECT cd7e_late.stage(" + ",".join(map(ap.sql_text, values)) + ")")
+
+        with self.assertRaises(ap.PickupError):
+            stage_with("bad generation")
+        self.assertEqual(ap.load_row(late.ORDER)["evaluation_status"], "pending")
+        self.assertIsNone(late.receipt(ap))
+        self.assertEqual(ap.sql(f"SELECT count(*) FROM {late.MAIL} WHERE id='{late.ENVELOPE}'"), "0")
+        self.assertEqual(stage_with(generation), "t")
+        self.assertEqual(stage_with(generation), "t")
+        with self.assertRaises(ap.PickupError):
+            stage_with("changed-generation")
+        for changed in (CUSTOMER.upper(), CUSTOMER + ".example"):
+            mismatch = ",".join(map(ap.sql_text, (changed, SUBJECT, digest)))
+            self.assertEqual(peer(f"SELECT cd7e_late.validate({mismatch})"), "")
+        self.assertEqual(peer(f"SELECT cd7e_late.validate({arguments})"), "pending")
+        self.assertEqual(peer(f"SELECT cd7e_late.claim({arguments}, 'wrong-generation', '{admission}')"), "f")
+        claim = f"SELECT cd7e_late.claim({arguments}, '{generation}', '{admission}')"
+        with ThreadPoolExecutor(max_workers=2) as workers:
+            self.assertCountEqual(workers.map(peer, (claim, claim)), ("t", "f"))
+        self.assertEqual(peer(f"SELECT cd7e_late.failed('{digest}', false)"), "t")
+        self.assertEqual(peer(claim), "t")
+        self.assertEqual(peer("SELECT cd7e_late.accepted('wrong')"), "f")
+        self.assertEqual(peer(f"SELECT cd7e_late.accepted('{digest}')"), "t")
+        self.assertEqual(peer(f"SELECT cd7e_late.accepted('{digest}')"), "f")
+        accepted = json.loads(peer("SELECT cd7e_late.receipt()"))
+        ap.sql(f"UPDATE {late.MAIL} SET expires_at=now()-interval '1 hour' WHERE id='{late.ENVELOPE}'; "
+               f"UPDATE {late.AUTH} a SET expires_at=e.expires_at FROM {late.MAIL} e WHERE e.id=a.envelope_id")
+        reconciled = json.loads(peer("SELECT cd7e_late.reconcile()"))
+        self.assertEqual(reconciled["recorded_at"], accepted["sent_at"])
+        self.assertEqual(reconciled, json.loads(peer("SELECT cd7e_late.reconcile()")))
+        paid = ap.load_row(late.ORDER)
+        self.assertEqual(paid["refund_status"], "succeeded")
+        self.assertEqual(paid["sla_paused_seconds"], 0)
+
+    @unittest.skipUnless(os.environ.get("CD7E_FIXTURE_PEER") == "1", "requires isolated peer mapping")
+    def test_restricted_client_over_a_real_peer_socket(self):
+        self.install_restricted_fixture()
+        self.set_refunded()
+        command = late_peer.PSQL
+        fixture_route = (
+            *command[:command.index("-h")], "-h", os.environ["PGHOST"],
+            "-p", os.environ["PGPORT"], "-U", "jevbench_cd7e_late", "-d", DB,
+        )
+        # The isolated daemon requires a mapped peer for this one role. Its
+        # other test-management connections continue to use the fixture admin.
+        who = subprocess.run((*fixture_route, "-c", "SELECT current_user"), text=True,
+                             capture_output=True, check=True)
+        self.assertEqual(who.stdout.strip(), "jevbench_cd7e_late")
+        self.assertEqual(command[command.index("-h") + 1], "/var/run/postgresql")
+        self.assertEqual(command[-1], "benchmarkheaven_accounts")
+
+        db = late_peer.PeerDatabase()
+        args = (CUSTOMER, "Fixture quote ' and backslash \\", hashlib.sha256(BODY.encode()).hexdigest())
+        generation = self.approval["generation"]
+        admission = "b" * 64
+        with patch.object(late_peer, "PSQL", fixture_route), patch.dict(os.environ, {
+            "PGUSER": "untrusted-override", "PGHOST": "/invalid", "PGOPTIONS": "-c default_transaction_read_only=on",
+        }):
+            self.assertEqual(db.read_order()["email"], CUSTOMER)
+            self.assertIsNone(db.receipt())
+            self.assertTrue(db.stage(
+                self.approval["identity_sha256"], REF, generation, admission, "a" * 40,
+                datetime.fromisoformat(self.approval["expires_at"]), *args,
+            ))
+            self.assertEqual(db.validate(*args), "pending")
+            self.assertTrue(db.claim(*args, generation, admission))
+            self.assertTrue(db.failed(args[-1], True))
+            self.assertEqual(db.receipt()["state"], "uncertain")
+            self.assertIsNone(db.reconcile())
 
     def test_delayed_callback_then_succeeded_refund_and_crash_reconciliation(self):
         for status in ("paid", "refund_due", "refund_pending"):

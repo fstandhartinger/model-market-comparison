@@ -53,7 +53,7 @@ RETURNS boolean LANGUAGE sql STABLE STRICT AS $$
     AND (r.evaluation_status IN ('ready_for_release','done')
          OR (allow_pending AND r.evaluation_status = 'pending' AND r.release_status = 'not_due'))
     AND r.release_status IN ('not_due','verified')
-    AND bh_cd7e_late_identity(r) = expected_identity
+    AND public.bh_cd7e_late_identity(r) = expected_identity
     AND r.refund_decision_ref = expected_refund_ref AND r.refund_decided_at IS NOT NULL
     AND (
       (r.status = 'refunded' AND r.refund_decision = 'approved'
@@ -72,12 +72,12 @@ RETURNS boolean LANGUAGE sql STABLE STRICT AS $$
   SELECT e.template_key = 'cd7e_late_result_v1' AND e.request_id = r.id
     AND e.recipient = r.email AND e.expires_at > now()
     AND EXISTS (
-      SELECT 1 FROM bh_cd7e_late_result_authorizations a
+      SELECT 1 FROM public.bh_cd7e_late_result_authorizations a
       WHERE a.envelope_id = e.id AND a.body_sha256 = e.body_sha256
         AND a.expires_at = e.expires_at AND a.expires_at > now()
-        AND bh_cd7e_late_order_ready(r, a.identity_sha256, a.refund_ref)
+        AND public.bh_cd7e_late_order_ready(r, a.identity_sha256, a.refund_ref)
     ) AND NOT EXISTS (
-      SELECT 1 FROM bh_priority_eval_transactional_mail prior
+      SELECT 1 FROM public.bh_priority_eval_transactional_mail prior
       WHERE prior.request_id = r.id AND prior.template_key IN ('result_private_v1','result_public_v1')
     )
 $$;
