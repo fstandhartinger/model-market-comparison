@@ -252,7 +252,7 @@ const ORG_ALIASES = {
   "Meta Llama": "Meta", "Meta-Llama": "Meta",
   "Alibaba Cloud": "Alibaba", "Qwen": "Alibaba",
   "MistralAI": "Mistral", "Mistral AI": "Mistral",
-  "xAI (Grok)": "xAI", "X AI": "xAI", "SpaceXAI": "xAI",
+  "xAI (Grok)": "xAI", "X AI": "xAI", "SpaceXAI": "xAI", "SpaceXSI": "xAI",
   "Z.AI": "Z.ai", "z-ai": "Z.ai",
   "Nvidia": "NVIDIA", "Meta Llama": "Meta", "meta-llama": "Meta",
   "Amazon Bedrock": "Amazon", "Google AI": "Google", "Google AI Studio": "Google",
