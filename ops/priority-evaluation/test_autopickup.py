@@ -1799,9 +1799,12 @@ PAGE = ('<main><section id="jev-capability"></section><div id="jev-bubbles"><h3 
 class CustomerOnlyOutboxSchemaTests(DatabaseTestCase):
     def test_order_specific_template_requires_exact_order_artifact_and_deadline(self):
         order_id = "0616c39d-e505-4365-b9e8-db157fc67539"
+        correction_order = "3687485f-5a51-4964-bd9a-73973f3494d7"
         neighbor = insert_order(event=False)
-        ap.sql(f"UPDATE {ap.TABLE} SET id='{order_id}' WHERE id='{insert_order(event=False)}'")
+        for request_id in (order_id, correction_order):
+            ap.sql(f"UPDATE {ap.TABLE} SET id='{request_id}' WHERE id='{insert_order(event=False)}'")
         template = "result_0616c39d_customer_only_v1"
+        correction = "decisor_result_public_v163_correction"
         deadline = "2026-11-22 19:53:27+00"
         digest = "a" * 64
 
@@ -1817,6 +1820,8 @@ class CustomerOnlyOutboxSchemaTests(DatabaseTestCase):
             (order_id, template, "A" * 64, deadline),
             (order_id, template, digest, "2026-11-22 19:53:28+00"),
             (neighbor, "result_private_v1", digest, deadline),
+            (neighbor, correction, None, deadline),
+            (correction_order, correction, digest, deadline),
             (order_id, "result_customer_only_unapproved_v1", digest, deadline),
         ):
             with self.subTest(request_id=request_id, template=key, artifact=artifact, expiry=expiry):
@@ -1824,6 +1829,7 @@ class CustomerOnlyOutboxSchemaTests(DatabaseTestCase):
                     stage(request_id, key, artifact, expiry)
 
         stage(order_id, template, digest, deadline)
+        stage(correction_order, correction, None, deadline)
         stage(order_id, "review_passed_v1", None, deadline)
         stage(neighbor, "result_private_v1", None, deadline)
         with self.assertRaises(ap.PickupError):
