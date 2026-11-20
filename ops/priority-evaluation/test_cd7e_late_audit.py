@@ -6,11 +6,14 @@ import os
 import tempfile
 import unittest
 import warnings
-from datetime import datetime, timezone
+from dataclasses import replace
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from unittest.mock import patch
 
-from cd7e_late_audit import MESSAGE_ID, AuditHold, append_accepted
+from cd7e_late_audit import (
+    ENVELOPE_ID, MESSAGE_ID, ORDER_ID, AcceptedEnvelope, AuditHold, append_accepted, reconcile_accepted,
+)
 
 
 class LateAuditTest(unittest.TestCase):
@@ -27,6 +30,11 @@ class LateAuditTest(unittest.TestCase):
         self.accepted = datetime.fromtimestamp(1780000042, timezone.utc)
         self.exact_row = (b"1780000042\t2026-05-28T20:27:22\tgmail\tpaid@example.test\tResult\t"
                           + MESSAGE_ID + b"\n")
+
+        self.evidence = AcceptedEnvelope(
+            ORDER_ID, ENVELOPE_ID, MESSAGE_ID.decode("ascii"), "a" * 64, self.accepted - timedelta(seconds=1),
+            self.accepted, "paid@example.test", "Result",
+        )
 
     @staticmethod
     def identity(path):
@@ -107,6 +115,71 @@ class LateAuditTest(unittest.TestCase):
             with self.assertRaises(AuditHold):
                 self.append()
         self.assertEqual(self.path.read_bytes(), self.ordinary_row)
+
+    def reconcile(self, lookup, complete):
+        return reconcile_accepted(self.path, self.inode, self.lock, self.lock_inode,
+                                  lookup=lookup, complete=complete)
+
+    def test_lookup_and_durable_completion_hold_the_writer_lock(self):
+        def assert_writer_excluded():
+            with self.lock.open("rb") as writer:
+                with self.assertRaises(BlockingIOError):
+                    fcntl.flock(writer, fcntl.LOCK_EX | fcntl.LOCK_NB)
+
+        def lookup():
+            assert_writer_excluded()
+            self.assertEqual(self.path.read_bytes(), self.ordinary_row)
+            return self.evidence
+
+        delivered = []
+
+        def complete(evidence):
+            assert_writer_excluded()
+            sync.assert_called_once()
+            self.assertEqual(self.path.read_bytes(), self.ordinary_row + self.exact_row)
+            delivered.append(evidence)
+            return True
+
+        with patch("cd7e_late_audit.os.fsync", wraps=os.fsync) as sync:
+            self.reconcile(lookup, complete)
+        self.assertEqual(delivered, [self.evidence])
+        with self.lock.open("rb") as writer:
+            fcntl.flock(writer, fcntl.LOCK_EX | fcntl.LOCK_NB)
+
+    def test_missing_receipt_and_audit_failure_block_completion(self):
+        def unexpected(_):
+            self.fail("completion called without durable audit proof")
+
+        for receipt in (None, replace(self.evidence, order_id="wrong"),
+                        replace(self.evidence, envelope_id="wrong"),
+                        replace(self.evidence, message_id="wrong"),
+                        replace(self.evidence, body_sha256="wrong"),
+                        replace(self.evidence, claimed_at=self.accepted + timedelta(seconds=1))):
+            with self.subTest(receipt=receipt):
+                with self.assertRaises(AuditHold):
+                    self.reconcile(lambda: receipt, unexpected)
+        self.assertEqual(self.path.read_bytes(), self.ordinary_row)
+        with patch("cd7e_late_audit.os.fsync", side_effect=OSError):
+            with self.assertRaises(AuditHold):
+                self.reconcile(lambda: self.evidence, unexpected)
+
+    def test_lost_completion_response_reuses_exact_marker(self):
+        completed = set()
+
+        def respond(evidence):
+            already_completed = evidence in completed
+            completed.add(evidence)
+            if not already_completed:
+                raise TimeoutError("fixture lost the completion response")
+            return True
+
+        with self.assertRaises(AuditHold):
+            self.reconcile(lambda: self.evidence, respond)
+        with patch("cd7e_late_audit.os.write") as write:
+            self.reconcile(lambda: self.evidence, respond)
+            write.assert_not_called()
+        self.assertEqual(completed, {self.evidence})
+        self.assertEqual(self.path.read_bytes(), self.ordinary_row + self.exact_row)
 
     @unittest.skipUnless(os.environ.get("CD7E_MAIL_ADAPTER"), "requires pinned mail reader fixture")
     def test_canonical_readers_include_the_row_and_retained_inflight(self):
