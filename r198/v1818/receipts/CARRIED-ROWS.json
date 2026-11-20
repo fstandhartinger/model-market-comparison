@@ -349,6 +349,7 @@
     {
       "key": "decide-1.1",
       "fields": [
+        "listing_note",
         "ranks"
       ]
     },
@@ -1807,6 +1808,7 @@
     {
       "key": "sd-jev-4b-v12.1.0-aligned-s42-step0256",
       "fields": [
+        "listing_note",
         "rank",
         "ranks"
       ]
@@ -2338,32 +2340,46 @@
       ]
     },
     {
-      "after": "Measured on the 27 Oct 2026 draw; shown on the reference scale by anchor equating with four strong anchor systems (Intelligence -2.9, Calibration -1.9 points; 95% interval of the Intelligence shift -5.9 to +1.1).",
+      "after": "Measured on the 27 Oct 2026 draw; shown on the reference scale by anchor equating with four strong anchor systems (Intelligence -2.9, Calibration -1.9 points; 95% interval of the Intelligence shift -5.9 to +1.1). Its #4 place on Composite B among all systems is within the uncertainty of the draw shift.",
+      "before": "Measured on the 27 Oct 2026 draw; shown on the reference scale by anchor equating with four strong anchor systems (Intelligence -2.9, Calibration -1.9 points; 95% interval of the Intelligence shift -5.9 to +1.1).",
+      "key": "decide-1.1",
+      "named_point_places": {
+        "all/composites/B": 4,
+        "release/B": 4
+      },
+      "path": "listing_note",
+      "remaining_boundary_places": [
+        "all/composites/B",
+        "release/B"
+      ]
+    },
+    {
+      "after": "Measured on the 27 Oct 2026 draw; shown on the reference scale by anchor equating with four strong anchor systems (Intelligence -2.9, Calibration -1.9 points; 95% interval of the Intelligence shift -5.9 to +1.1). Its #4 place on the Capability Score among all systems is within the uncertainty of the draw shift.",
       "before": "Measured on the 27 Oct 2026 draw; shown on the reference scale by anchor equating with four strong anchor systems (Intelligence -2.9, Calibration -1.9 points; 95% interval of the Intelligence shift -5.9 to +1.1). Its #5 place on Composite B among all systems is within the uncertainty of the draw shift.",
       "key": "karpo_decision_31b",
       "named_point_places": {
-        "all/composites/B": 6
+        "all/capability/official_caps": 4
       },
       "path": "listing_note",
-      "remaining_boundary_places": []
+      "remaining_boundary_places": [
+        "all/capability/official_caps"
+      ]
+    },
+    {
+      "after": "Measured on the 27 Oct 2026 draw; shown on the reference scale by anchor equating with four strong anchor systems (Intelligence -2.9, Calibration -1.9 points; 95% interval of the Intelligence shift -5.9 to +1.1). Its #5 place on the API Composite A list is within the uncertainty of the draw shift.",
+      "before": "Measured on the 27 Oct 2026 draw; shown on the reference scale by anchor equating with four strong anchor systems (Intelligence -2.9, Calibration -1.9 points; 95% interval of the Intelligence shift -5.9 to +1.1).",
+      "key": "sd-jev-4b-v12.1.0-aligned-s42-step0256",
+      "named_point_places": {
+        "api/composites/A": 5
+      },
+      "path": "listing_note",
+      "remaining_boundary_places": [
+        "api/composites/A"
+      ]
     }
   ],
   "overlay_changes": {
     "base-models": {
-      "cue-reflex-4b-v0.2": {
-        "before": null,
-        "after": {
-          "label": "google/gemma-4-E4B-it",
-          "status": "disclosed",
-          "sources": [
-            {
-              "url": "https://huggingface.co/oidlabs/cue-reflex-4B/blob/a36bd3ec3020f567d43ffb95ba6323a44d6a0ccf/README.md",
-              "title": "Author model card",
-              "evidence": "The model card metadata declares base_model: google/gemma-4-E4B-it (base_model_relation: finetune)."
-            }
-          ]
-        }
-      },
       "starlord-4b-preview": {
         "before": {
           "label": "Qwen/Qwen3.5-4B",
@@ -2377,6 +2393,20 @@
               "url": "https://huggingface.co/xsdfasfgsa/Starlord-4B-preview/blob/53321bddf5e9260cf46ea31abedf48487d2583d6/README.md",
               "title": "Author model card",
               "evidence": "The model card metadata declares base_model: Qwen/Qwen3.5-4B."
+            }
+          ]
+        }
+      },
+      "cue-reflex-4b-v0.2": {
+        "before": null,
+        "after": {
+          "label": "google/gemma-4-E4B-it",
+          "status": "disclosed",
+          "sources": [
+            {
+              "url": "https://huggingface.co/oidlabs/cue-reflex-4B/blob/a36bd3ec3020f567d43ffb95ba6323a44d6a0ccf/README.md",
+              "title": "Author model card",
+              "evidence": "The model card metadata declares base_model: google/gemma-4-E4B-it (base_model_relation: finetune)."
             }
           ]
         }

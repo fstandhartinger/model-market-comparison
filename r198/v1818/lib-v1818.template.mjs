@@ -34,7 +34,7 @@ export function validateV1818PublicText(value){
 }
 export function validateJevbenchV1818Bundle({manifest,artifact,categories,carry,proof,previous,previousManifestSha256},{candidate=false}={}){
  if(manifest.revision!=='v1.8.18'||manifest.schema_version!==1||manifest.status!=='published'||manifest.provisional!==false)fail('manifest identity');
- if(!candidate&&(manifest.review?.verdict!=='PASS'||!manifest.review.engine||manifest.review.engine==='PENDING'||!hex(manifest.review.receipt_sha256)))fail('independent review PENDING');
+ if(!candidate&&(manifest.review?.verdict!=='PASS'||!manifest.review.engine||/synthetic|pending/i.test(manifest.review.engine)||!hex(manifest.review.receipt_sha256)))fail('independent review PENDING');
  same(manifest.predecessor,{revision:'v1.8.17',publication_sha256:previousManifestSha256},'predecessor binding');
  if(previous?.artifact.revision!=='v1.8.17'||(!candidate&&previous.manifest.review.verdict!=='PASS'))fail('validated predecessor');
  for(const f of V1818_FILE_KEYS){same(manifest.files[f]?.path,`${V1818_ROOT}/jevbench-v1.8.18-${f}.json`,'file path '+f);same(manifest.files[f]?.sha256,V1818_EXPECTED_HASHES[f],'pinned hash '+f);}
@@ -102,7 +102,7 @@ export function validateJevbenchV1818Bundle({manifest,artifact,categories,carry,
  same(proof,V1818_EXPECTED_PROOF,'exact proof');
  if(proof.carried_rows!==previous.artifact.systems.length||!equal(proof.carried_rows_equal_except.carried_text,V1818_TEXT_EXCEPTIONS)||!hex(proof.exceptions.text_only_sha256))fail('enumerated text-only carry exceptions');
  if(proof.publication_approval.scope!=='nine-row ranking review, Cue addition and Starlord base disclosure'||proof.publication_approval.fresh_baseline!=='v1.8.17')fail('scoped candidate authority');
- if(!candidate&&manifest.review.engine!=='synthetic-preview-only'&&(proof.publication_approval.fairness_review_required!==false||proof.rank_review.fairness_review!=='PASS'))fail('independent fairness review PENDING');
+ if(!candidate&&(proof.publication_approval.fairness_review_required!==false||proof.rank_review.fairness_review!=='PASS'))fail('independent fairness review PENDING');
  same(proof.predecessor,manifest.predecessor,'proof predecessor');
  same(proof.equating,previous.proof.equating,'unchanged equating');
  same(proof.scorers,previous.proof.scorers,'unchanged scorers');
