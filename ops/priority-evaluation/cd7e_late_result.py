@@ -289,7 +289,10 @@ def recompute_matches_attestation(rid, attest, recompute, review_gate):
 def admitted_result(ap, job, row, state, approval, custody):
     if state.get("operational_hold") or row is None:
         raise ap.PickupError("the trusted pickup still holds the order")
-    summary = ap.verify_result(row, job, state, ap.Effects(), public_live=True, late_custody=custody)
+    summary = ap.verify_result(
+        row, job, state, ap.Effects(), public_live=True, late_custody=custody,
+        late_receipt_hashes=approval.get("aggregate_receipt_hashes"),
+    )
     results = summary.get("results") or []
     if summary.get("outcome") != "delivered" or summary.get("visibility") != "public" or len(results) != 1:
         raise ap.PickupError("late delivery requires one verified public result")

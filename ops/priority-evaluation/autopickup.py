@@ -57,7 +57,7 @@ import urllib.request
 import uuid
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta, timezone
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 from typing import Any, Callable
 
 
@@ -2441,6 +2441,26 @@ def pinned_file(job_dir: Path, entry: object) -> Path:
     return path
 
 
+def check_aggregate_receipts(job_dir, receipts, approved):
+    """Refuse unstaged result paths before the common verifier hashes any receipt."""
+    if not isinstance(approved, dict) or len(approved) != len(receipts):
+        raise PickupError("late result requires the exact approved aggregate receipts")
+    seen = set()
+    root = job_dir.resolve()
+    for pin in receipts:
+        name = pin.get("path") if isinstance(pin, dict) else None
+        if not isinstance(name, str):
+            raise PickupError("late result cites an unapproved aggregate receipt")
+        path = PurePosixPath(name)
+        digest = approved.get(name)
+        if (name in seen or len(path.parts) < 2 or path.parts[0] != "results"
+                or name != path.as_posix() or ".." in path.parts or path.parts[1] == "raw"
+                or not isinstance(digest, str) or not SHA64_RE.fullmatch(digest)
+                or pin.get("sha256") != digest or within(root, name) != root / name):
+            raise PickupError("late result cites an unapproved aggregate receipt")
+        seen.add(name)
+
+
 def _score_receipt_payload(value: dict[str, Any]) -> dict[str, Any]:
     return {key: item for key, item in value.items() if key != "pass"}
 
@@ -2698,7 +2718,8 @@ def finite_number(value: object) -> float:
 
 
 def verify_result(row: dict[str, Any], job_dir: Path, state: dict[str, Any], effects: Effects,
-                  *, public_live: bool = True, late_custody: dict | None = None) -> dict[str, Any]:
+                  *, public_live: bool = True, late_custody: dict | None = None,
+                  late_receipt_hashes: dict[str, str] | None = None) -> dict[str, Any]:
     rid = request_id(row.get("id"))
     result = load_result(job_dir)
     if result.get("request_id") != rid:
@@ -2727,6 +2748,8 @@ def verify_result(row: dict[str, Any], job_dir: Path, state: dict[str, Any], eff
     receipts = result.get("receipts")
     if not isinstance(receipts, list) or not 1 <= len(receipts) <= 200:
         raise PickupError("result has no receipts")
+    if late_custody is not None:
+        check_aggregate_receipts(job_dir, receipts, late_receipt_hashes)
     receipt_pins = []
     current_receipt_hashes: dict[str, str] = {}
     for entry in receipts:

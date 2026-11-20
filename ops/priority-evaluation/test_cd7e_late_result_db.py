@@ -43,6 +43,33 @@ def sender_query(statement):
 
 
 class CustodyProtocol(unittest.TestCase):
+    def test_only_exact_approved_aggregate_receipts_are_admitted(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            results = root / "results"
+            (results / "raw").mkdir(parents=True)
+            (results / "raw" / "private.jsonl").touch()
+            (results / "aggregate.json").touch()
+            (results / "alias.json").symlink_to(results / "raw" / "private.jsonl")
+            digest = "1" * 64
+            name = "results/aggregate.json"
+            approved = {name: digest}
+            pin = {"path": name, "sha256": digest}
+            ap.check_aggregate_receipts(root, [pin], approved)
+
+            cases = [
+                ([pin], None),
+                ([pin, pin], {**approved, "results/other.json": digest}),
+                ([dict(pin, sha256="2" * 64)], approved),
+            ]
+            for path in ("results/raw/private.jsonl", "results/alias.json",
+                         "results//aggregate.json", "results/../results/aggregate.json"):
+                cases.append(([dict(pin, path=path)], {path: digest}))
+            for pins, allowed in cases:
+                with self.subTest(pins=pins, allowed=allowed):
+                    with self.assertRaisesRegex(ap.PickupError, "approved aggregate receipt"):
+                        ap.check_aggregate_receipts(root, pins, allowed)
+
     def test_refuses_silent_partial_malformed_and_closed_responses(self):
         for behavior in ("silent", "partial", "malformed", "closed"):
             with self.subTest(behavior=behavior):
@@ -472,7 +499,8 @@ class LateResultDB(unittest.TestCase):
                       for name in ("independent_review", "measurement", "exposure", "teardown")}
             proofs["release_result"] = result
             manifest = dict(self.approval, order_id=late.ORDER, scope="exact-cd7e-late-result-delivery",
-                            verdict="ACCEPTED", result=item, proofs=proofs)
+                            verdict="ACCEPTED", result=item, proofs=proofs,
+                            aggregate_receipt_hashes={run_receipt["path"]: run_receipt["sha256"]})
             trusted_state = {
                 "id": late.ORDER,
                 "cd7e_late_delivery": {"verdict": "ACCEPTED", "generation": manifest["generation"]},
