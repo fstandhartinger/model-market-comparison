@@ -35,23 +35,28 @@ def _sha(path):
     return hashlib.sha256(_reference_bytes(path)).hexdigest()
 
 
-def measurement_pins(manifest, *, expected_sha256=None, expected_profile=None):
+def measurement_pins(manifest, *, expected_sha256=None, expected_profile=None, expected_pins=None):
     data = _reference_bytes(manifest)
     digest = hashlib.sha256(data).hexdigest()
-    if expected_sha256 is not None and digest != expected_sha256:
+    if ((expected_sha256 is not None and digest != expected_sha256)
+            or (expected_pins is not None and digest != expected_pins.get('manifest_sha256'))):
         raise ValueError('v16 measurement manifest changed')
     value = json.loads(data)
     if not isinstance(value, dict) or value.get('schema_version') != 1:
         raise ValueError('invalid v16 measurement profile')
-    if expected_profile is not None and value != expected_profile:
+    if ((expected_profile is not None and value != expected_profile)
+            or (expected_pins is not None and value != expected_pins.get('profile'))):
         raise ValueError('v16 measurement profile differs from source review')
+    current = {'manifest_sha256': digest,
+               'driver_sha256': _sha(Path(measurement_dispatch.__file__).parent / 'measurement_driver.py'),
+               'profile': value}
+    if expected_pins is not None and current != expected_pins:
+        raise ValueError('v16 measurement pins differ from source review')
     for name, pin in value['code'].items():
         if '..' in Path(name).parts or not re.fullmatch(r'[A-Za-z0-9_/.-]+', name):
             raise ValueError('invalid v16 code inventory')
         measurement_dispatch.checked(pin)
-    return {'manifest_sha256': digest,
-            'driver_sha256': _sha(Path(measurement_dispatch.__file__).parent / 'measurement_driver.py'),
-            'profile': value}
+    return current
 
 
 def _check_source_pins(job, recipe, gate_pins, admission_pins):
@@ -146,8 +151,7 @@ def accepted(job_dir):
             or expected_scoring.get('manifest_sha256') != scoring_ref['sha256'] \
             or not isinstance(expected_measurement.get('profile'), dict):
         raise ValueError('v16 source gate has stale method pins')
-    measured = measurement_pins(measurement_ref['path'], expected_sha256=measurement_ref['sha256'],
-                                expected_profile=expected_measurement['profile'])
+    measured = measurement_pins(measurement_ref['path'], expected_pins=expected_measurement)
     scored = official_scoring.pins(['jevbench'], scoring_ref['path'], expected_pins=expected_scoring)
     freeze_bytes = _reference_bytes(references['freeze']['path'])
     if hashlib.sha256(freeze_bytes).hexdigest() != references['freeze']['sha256'] \

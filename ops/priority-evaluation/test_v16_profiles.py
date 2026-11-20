@@ -164,6 +164,7 @@ class AdmissionBindingTests(unittest.TestCase):
                     patch.object(v16_profiles.official_scoring, 'pins', return_value=scored) as read_scoring, \
                     patch.object(v16_profiles.measurement_dispatch, 'checked'):
                 self.assertEqual(v16_profiles.accepted(job)[0], admission)
+                read_measurement.assert_called_once_with(references['measurement']['path'], expected_pins=measured)
                 read_measurement.reset_mock()
                 read_scoring.reset_mock()
                 protected_paths = {Path(ref['path']) for ref in references.values()}
@@ -216,6 +217,22 @@ class AdmissionBindingTests(unittest.TestCase):
 
 
 class ManifestReadTests(unittest.TestCase):
+    def test_stale_measurement_driver_pin_refuses_before_reading_code_references(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / 'measurement.json'
+            profile = {'schema_version': 1, 'code': {
+                'trusted.py': {'path': 'trusted.py', 'sha256': 'trusted'},
+            }}
+            data = json.dumps(profile).encode()
+            path.write_bytes(data)
+            with patch.object(v16_profiles.measurement_dispatch, 'checked') as checked:
+                pins = v16_profiles.measurement_pins(path)
+                self.assertEqual(pins['manifest_sha256'], hashlib.sha256(data).hexdigest())
+                checked.reset_mock()
+                with self.assertRaisesRegex(ValueError, 'measurement pins differ'):
+                    v16_profiles.measurement_pins(path, expected_pins={**pins, 'driver_sha256': '0' * 64})
+                checked.assert_not_called()
+
     def test_measurement_authenticates_single_read_before_following_links(self):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / 'measurement.json'
