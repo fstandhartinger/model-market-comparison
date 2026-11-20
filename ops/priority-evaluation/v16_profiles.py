@@ -35,15 +35,21 @@ def _sha(path):
     return hashlib.sha256(_reference_bytes(path)).hexdigest()
 
 
-def measurement_pins(manifest):
-    value = json.loads(Path(manifest).read_text())
-    if value.get('schema_version') != 1:
+def measurement_pins(manifest, *, expected_sha256=None, expected_profile=None):
+    data = _reference_bytes(manifest)
+    digest = hashlib.sha256(data).hexdigest()
+    if expected_sha256 is not None and digest != expected_sha256:
+        raise ValueError('v16 measurement manifest changed')
+    value = json.loads(data)
+    if not isinstance(value, dict) or value.get('schema_version') != 1:
         raise ValueError('invalid v16 measurement profile')
+    if expected_profile is not None and value != expected_profile:
+        raise ValueError('v16 measurement profile differs from source review')
     for name, pin in value['code'].items():
         if '..' in Path(name).parts or not re.fullmatch(r'[A-Za-z0-9_/.-]+', name):
             raise ValueError('invalid v16 code inventory')
         measurement_dispatch.checked(pin)
-    return {'manifest_sha256': _sha(manifest),
+    return {'manifest_sha256': digest,
             'driver_sha256': _sha(Path(measurement_dispatch.__file__).parent / 'measurement_driver.py'),
             'profile': value}
 
@@ -130,18 +136,30 @@ def accepted(job_dir):
     if set(references) != {'measurement', 'scoring', 'freeze', 'id_map'}:
         raise ValueError('invalid v16 reference inventory')
     for ref in references.values():
-        if set(ref) != {'path', 'sha256'} or not Path(ref['path']).is_absolute() \
-                or _sha(ref['path']) != ref['sha256']:
-            raise ValueError('v16 reference changed')
-    measured = measurement_pins(references['measurement']['path'])
-    scored = official_scoring.pins(['jevbench'], references['scoring']['path'])
+        if set(ref) != {'path', 'sha256'} or not Path(ref['path']).is_absolute():
+            raise ValueError('invalid v16 reference pin')
+    expected_measurement = pins.get('official_measurement')
+    expected_scoring = pins.get('official_methods')
+    measurement_ref, scoring_ref = references['measurement'], references['scoring']
+    if not isinstance(expected_measurement, dict) or not isinstance(expected_scoring, dict) \
+            or expected_measurement.get('manifest_sha256') != measurement_ref['sha256'] \
+            or expected_scoring.get('manifest_sha256') != scoring_ref['sha256'] \
+            or not isinstance(expected_measurement.get('profile'), dict):
+        raise ValueError('v16 source gate has stale method pins')
+    measured = measurement_pins(measurement_ref['path'], expected_sha256=measurement_ref['sha256'],
+                                expected_profile=expected_measurement['profile'])
+    scored = official_scoring.pins(['jevbench'], scoring_ref['path'], expected_pins=expected_scoring)
+    freeze_bytes = _reference_bytes(references['freeze']['path'])
+    if hashlib.sha256(freeze_bytes).hexdigest() != references['freeze']['sha256'] \
+            or _sha(references['id_map']['path']) != references['id_map']['sha256']:
+        raise ValueError('v16 reference changed')
+    freeze = json.loads(freeze_bytes)
     if measured['profile']['code']['pod_drivers/pod_driver.py']['sha256'] != _sha(Path(__file__).parent / 'pod_drivers/pod_driver_v16.py'):
         raise ValueError('v16 profile requires the installed first-party v16 driver')
     if measured['profile'].get('method') != 'jevbench-v16' \
             or measured['profile']['inputs']['jevbench']['count'] != 1500 \
             or scored['profiles']['jevbench'].get('version_prefix') != 'v1.6.':
         raise ValueError('mixed v16 method profiles')
-    freeze = json.loads(Path(references['freeze']['path']).read_text())
     input_pin = measured['profile']['inputs']['jevbench']['items']
     if freeze.get('release') != admission.get('draw_release') \
             or freeze['counts']['selfhosted_input'] != 1500 \
@@ -149,9 +167,9 @@ def accepted(job_dir):
             or freeze['file_sha256']['frozen/gold.jsonl'] != scored['profiles']['jevbench']['files']['gold.jsonl']['sha256'] \
             or freeze['file_sha256']['frozen/id-map.json'] != references['id_map']['sha256']:
         raise ValueError('v16 freeze differs from measurement/scoring')
-    measurement_dispatch.checked(input_pin)
-    if pins.get('official_measurement') != measured or pins.get('official_methods') != scored:
+    if expected_measurement != measured or expected_scoring != scored:
         raise ValueError('v16 source gate has stale method pins')
+    measurement_dispatch.checked(input_pin)
     return admission, measured, scored
 
 

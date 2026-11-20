@@ -132,6 +132,8 @@ class AdmissionBindingTests(unittest.TestCase):
             references={}
             for name in ('measurement','scoring','id_map'):
                 path=root/f'{name}.json';references[name]={'path':str(path),'sha256':put(path,{})}
+            measured['manifest_sha256'] = references['measurement']['sha256']
+            scored['manifest_sha256'] = references['scoring']['sha256']
             freeze=root/'freeze.json'
             references['freeze']={'path':str(freeze),'sha256':put(freeze,{'release':'synthetic','counts':{'selfhosted_input':1500},
                    'input_sha256':{'selfhosted':'input'},'file_sha256':{'frozen/gold.jsonl':'gold','frozen/id-map.json':references['id_map']['sha256']}})}
@@ -211,6 +213,64 @@ class AdmissionBindingTests(unittest.TestCase):
                 measured['profile']['method']='jevbench-v15'
                 with self.assertRaisesRegex(ValueError, 'mixed v16'):
                     v16_profiles.accepted(job)
+
+
+class ManifestReadTests(unittest.TestCase):
+    def test_measurement_authenticates_single_read_before_following_links(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / 'measurement.json'
+            profile = {'schema_version': 1, 'code': {
+                'trusted.py': {'path': 'trusted.py', 'sha256': 'trusted'},
+            }}
+            data = json.dumps(profile).encode()
+            digest = hashlib.sha256(data).hexdigest()
+            path.write_bytes(data)
+            with patch.object(v16_profiles.measurement_dispatch, 'checked') as checked:
+                with self.assertRaisesRegex(ValueError, 'manifest changed'):
+                    v16_profiles.measurement_pins(path, expected_sha256='wrong', expected_profile=profile)
+                with self.assertRaisesRegex(ValueError, 'profile differs'):
+                    v16_profiles.measurement_pins(path, expected_sha256=digest, expected_profile={})
+                checked.assert_not_called()
+                read_bytes = Path.read_bytes
+                reads = []
+                def read_once(candidate):
+                    if candidate == path:
+                        reads.append(candidate)
+                        self.assertEqual(len(reads), 1)
+                    return read_bytes(candidate)
+                with patch.object(Path, 'read_bytes', read_once):
+                    actual = v16_profiles.measurement_pins(path, expected_sha256=digest, expected_profile=profile)
+                self.assertEqual(actual['manifest_sha256'], digest)
+                self.assertEqual(actual['profile'], profile)
+                checked.assert_called_once_with(profile['code']['trusted.py'])
+
+    def test_scoring_authenticates_manifest_before_following_links(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            baseline = root / 'baseline.json'
+            baseline.write_text(json.dumps({'phase': 'measurement_plan', 'G_med': None}))
+            manifest = root / 'scoring.json'
+            profile = {'version_prefix': 'v1.6.', 'files': {'baseline.json': {
+                'path': str(baseline), 'sha256': official_scoring.digest(baseline),
+            }}}
+            manifest.write_text(json.dumps({'schema_version': 1, 'profiles': {'jevbench': profile}}))
+            pins = official_scoring.pins(['jevbench'], manifest)
+            with patch.object(official_scoring, '_validate_profile') as follow_references:
+                with self.assertRaisesRegex(ValueError, 'manifest changed'):
+                    official_scoring.pins(['jevbench'], manifest, expected_pins={**pins, 'manifest_sha256': 'wrong'})
+                with self.assertRaisesRegex(ValueError, 'pins differ'):
+                    official_scoring.pins(['jevbench'], manifest, expected_pins={**pins, 'profiles': {}})
+                follow_references.assert_not_called()
+            read_bytes = Path.read_bytes
+            reads = []
+            def read_once(candidate):
+                if candidate in (manifest, baseline):
+                    self.assertNotIn(candidate, reads)
+                    reads.append(candidate)
+                return read_bytes(candidate)
+            with patch.object(Path, 'read_bytes', read_once):
+                self.assertEqual(official_scoring.pins(['jevbench'], manifest, expected_pins=pins), pins)
+            self.assertEqual(reads, [manifest, baseline])
 
 
 class UploadBoundaryTests(unittest.TestCase):
