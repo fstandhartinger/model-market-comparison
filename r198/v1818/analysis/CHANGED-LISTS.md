@@ -1,6 +1,6 @@
-# Proposed top-five changes — analysis only
+# Changed primary top-five lists
 
-No candidate release data has been built. This compares the frozen v1.8.17 point field with the five-row ranking proposal.
+Candidate review pending.
 
 ## all/composites/A
 
@@ -60,7 +60,7 @@ After: Torchcast Decision 4B (v1.3), H2O-Lightning-31B v1.3.4 (@c35ed950), Torch
 
 Before: Torchcast Decision 31B v1.0, Karpo-Decision-31B, Torchcast Decision 4B (v1.3), H2O-Lightning-31B v1.0.7 (H2O.ai, Gemma-4-31B-it fine-tune, vLLM + h2oai overlay, one-engine FP8 profile, self-hosted), Fastino GLiDE 1.2 (open weights, self-hosted)
 
-After: H2O-Lightning-31B v1.3.4 (@c35ed950), Torchcast Decision 31B v1.0, Karpo-Decision-31B, Torchcast Decision 4B (v1.3), H2O-Lightning-31B v1.0.7 (H2O.ai, Gemma-4-31B-it fine-tune, vLLM + h2oai overlay, one-engine FP8 profile, self-hosted)
+After: H2O-Lightning-31B v1.3.4 (@c35ed950), Torchcast Decision 31B v1.0, Karpo-Decision-31B, Torchcast Decision 4B (v1.3), Starlord-27B-v2.0-preview
 
 ## open/composites/C
 
@@ -121,6 +121,24 @@ After: Torchcast Decision 31B v1.0, MetaDecision-31B-Rain, H2O-Lightning-31B v1.
 Before: Torchcast Decision 31B v1.0, MetaDecision-31B-Rain, Karpo-Decision-31B, baselabs mammoth-1 (27B), KnowLine 31B-Gen1
 
 After: Torchcast Decision 31B v1.0, MetaDecision-31B-Rain, H2O-Lightning-31B v1.3.4 (@c35ed950), Karpo-Decision-31B, baselabs mammoth-1 (27B)
+
+## api/composites/A
+
+Before: decide-1.1 (decide.sh, API), Super Decider, Myles-G 12B (Launchables), SD-JEV-4B-v12.1.0 (Kego, author-hosted API), kettei-fat (Sqwish)
+
+After: decide-1.1 (decide.sh, API), Super Decider, SubQ Snap 1.2, Myles-G 12B (Launchables), SD-JEV-4B-v12.1.0 (Kego, author-hosted API)
+
+## api/composites/B
+
+Before: Super Decider, decide-1.1 (decide.sh, API), kettei-fat (Sqwish), Fastino GLiDE (hosted API, 22 Oct 2026), Drex Max (Nace AI)
+
+After: Super Decider, decide-1.1 (decide.sh, API), kettei-fat (Sqwish), SubQ Snap 1.2, Fastino GLiDE (hosted API, 22 Oct 2026)
+
+## api/composites/C
+
+Before: decide-1.1 (decide.sh, API), Super Decider, SD-JEV-4B-v12.1.0 (Kego, author-hosted API), kettei-fat (Sqwish), Fastino GLiDE (hosted API, 22 Oct 2026)
+
+After: decide-1.1 (decide.sh, API), Super Decider, SubQ Snap 1.2, SD-JEV-4B-v12.1.0 (Kego, author-hosted API), kettei-fat (Sqwish)
 
 ## release/A
 

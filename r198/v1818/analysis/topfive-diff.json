@@ -1,6 +1,6 @@
 {
-  "status": "PROPOSAL_ONLY",
-  "changed_primary_lists": 23,
+  "status": "CANDIDATE_REVIEW_PENDING",
+  "changed_primary_lists": 26,
   "lists": [
     {
       "list": "all/composites/A",
@@ -223,12 +223,14 @@
         "torchcast-decision-31b-v1.0",
         "karpo_decision_31b",
         "torchcast-decision-4b-v1.3",
-        "h2o-lightning-31b"
+        "starlord-27b-v2-0-preview"
       ],
       "entrants": [
-        "h2o-lightning-31b-v1.3.4"
+        "h2o-lightning-31b-v1.3.4",
+        "starlord-27b-v2-0-preview"
       ],
       "leavers": [
+        "h2o-lightning-31b",
         "fastino-glide-1.2-open"
       ]
     },
@@ -460,6 +462,75 @@
       ],
       "leavers": [
         "knowline-31b-gen1"
+      ]
+    },
+    {
+      "list": "api/composites/A",
+      "before": [
+        "decide-1.1",
+        "singularity-super-decider",
+        "launchables-myles-g-12b",
+        "sd-jev-4b-v12.1.0-aligned-s42-step0256",
+        "kettei-fat"
+      ],
+      "after": [
+        "decide-1.1",
+        "singularity-super-decider",
+        "subq-snap-1.2",
+        "launchables-myles-g-12b",
+        "sd-jev-4b-v12.1.0-aligned-s42-step0256"
+      ],
+      "entrants": [
+        "subq-snap-1.2"
+      ],
+      "leavers": [
+        "kettei-fat"
+      ]
+    },
+    {
+      "list": "api/composites/B",
+      "before": [
+        "singularity-super-decider",
+        "decide-1.1",
+        "kettei-fat",
+        "fastino-glide-api",
+        "drex-max"
+      ],
+      "after": [
+        "singularity-super-decider",
+        "decide-1.1",
+        "kettei-fat",
+        "subq-snap-1.2",
+        "fastino-glide-api"
+      ],
+      "entrants": [
+        "subq-snap-1.2"
+      ],
+      "leavers": [
+        "drex-max"
+      ]
+    },
+    {
+      "list": "api/composites/C",
+      "before": [
+        "decide-1.1",
+        "singularity-super-decider",
+        "sd-jev-4b-v12.1.0-aligned-s42-step0256",
+        "kettei-fat",
+        "fastino-glide-api"
+      ],
+      "after": [
+        "decide-1.1",
+        "singularity-super-decider",
+        "subq-snap-1.2",
+        "sd-jev-4b-v12.1.0-aligned-s42-step0256",
+        "kettei-fat"
+      ],
+      "entrants": [
+        "subq-snap-1.2"
+      ],
+      "leavers": [
+        "fastino-glide-api"
       ]
     },
     {

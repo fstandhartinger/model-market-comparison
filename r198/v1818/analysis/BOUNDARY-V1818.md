@@ -1,457 +1,450 @@
-# v1.8.18 scoring-free boundary analysis
+# v1.8.18 ranking configuration
 
-**PROVISIONAL; no v1.8.18 release build.** All nine rows were provisionally ranked before any release-data edits. Accepted measurement aggregates only.
+Candidate preparation only; independent fairness review PENDING. The retained all-nine WHATIF is reused unchanged (8e20a249…). No model call or new measurement.
 
-## Method and scope
+R1 binds separate I/C endpoints and the four leave-one-out offsets; joint endpoints are stress tests. R2 tests point top-five memberships only; favourable-only crossings do not hold a row. R3 permits one point boundary place failing only I CI low with T3. Family/language corrections belong to the independent fairness review.
 
-The 40 predecessor lists reproduce exactly. Point composites reproduce within 1e-9 for all 47 d1027 rows. Every scenario changes the common shift for every d1027 row with accepted published scores, including the existing ranked field. All other scores and ranking eligibility are carried forward. The production scope/class helpers and frozen jevComposite produce each list. The inherited four held rows and two unpriced rows remain unranked.
+| Row | A | B | C | Capability | Classification | Proposed |
+|---|---:|---:|---:|---:|---|---|
+| Minimodels Decision 1.0 (candy-cane) | 71.877221 | 72.334833 | 71.877221 | 82.474913 | ROBUST_OUT | rank |
+| Starlord-27B-v2.0-preview | 77.414262 | 77.009417 | 77.414262 | 84.480177 | BOUNDARY | rank + T3 |
+| H2O-Lightning-31B v1.3.4 (@c35ed950) | 79.253413 | 80.337213 | 79.253413 | 87.855777 | ROBUST_IN_TOP5 | rank |
+| Quyet-1.2-Large | 76.645874 | 76.210416 | 76.645874 | 81.741923 | ROBUST_OUT | rank |
+| Quyet-1.2-Small | 24.618215 | 20.810157 | 17.095982 | 56.596278 | ROBUST_OUT | rank |
+| Starlord-4B-preview | 72.073501 | 68.918064 | 68.860855 | 64.947806 | ROBUST_OUT | rank |
+| Sieve-31B-v3 | 72.944054 | 73.798901 | 72.944054 | 84.933007 | ROBUST_OUT | rank |
+| SubQ Snap 1.2 | 78.405858 | 77.800752 | 78.405858 | 83.841254 | ROBUST_IN_TOP5 | rank |
+| Cue-Reflex-4B v0.2 | 72.672251 | 66.959186 | 52.383442 | 64.655356 | ROBUST_OUT | rank |
 
-The v1.8.10 review treated I/C endpoints separately and four leave-one-out offsets as robustness checks; joint I+C endpoints were stress tests. Both are shown. Family/language correction checks from the original fairness review were not recomputed: this brief forbids rescoring and no accepted corrections exist for these nine rows. These are provisional classifications for independent review.
+315 + 9 = **324 ranked**. 26 of 40 primary top-five lists change.
 
-Unlike the first v1.8.10 recommendation, this conservative proposal also holds rows whose top-five membership appears only at favourable endpoints. That interpretation follows the brief’s instruction to flag every crossing. An alternative that checks only point-held top-five places would rank Quyet Large and Sieve, yielding 322 ranked instead of 320. Neither alternative has been bound.
+Starlord 27B has exactly one point top-five place: open/B #5. It is #7 at I CI low and stays #4–5 under every other binding scenario. SubQ has only API A/B/C point memberships, all robust. Quyet Large and Sieve have no point top-five membership and are ROBUST_OUT. H2O’s 23 point memberships are robust; 16 cross only in joint-endpoint stress tests.
 
-| Row | A | B | C | Capability | Point top-five places | Classification | Proposed |
-|---|---:|---:|---:|---:|---:|---|---|
-| Minimodels Decision 1.0 (candy-cane) | 71.877221 | 72.334833 | 71.877221 | 82.474913 | 0 | ROBUST_OUT | rank |
-| Starlord-27B-v2.0-preview | 77.414262 | 77.009417 | 77.414262 | 84.480177 | 1 | BOUNDARY | hold |
-| H2O-Lightning-31B v1.3.4 (@c35ed950) | 79.253413 | 80.337213 | 79.253413 | 87.855777 | 23 | ROBUST_IN_TOP5 | rank |
-| Quyet-1.2-Large | 76.645874 | 76.210416 | 76.645874 | 81.741923 | 0 | BOUNDARY | hold |
-| Quyet-1.2-Small | 24.618215 | 20.810157 | 17.095982 | 56.596278 | 0 | ROBUST_OUT | rank |
-| Starlord-4B-preview | 72.073501 | 68.918064 | 68.860855 | 64.947806 | 0 | ROBUST_OUT | rank |
-| Sieve-31B-v3 | 72.944054 | 73.798901 | 72.944054 | 84.933007 | 0 | BOUNDARY | hold |
-| SubQ Snap 1.2 | 78.405858 | 77.800752 | 78.405858 | 83.841254 | 3 | BOUNDARY | hold |
-| Cue-Reflex-4B v0.2 | 72.672251 | 66.959186 | 52.383442 | 64.655356 | 0 | ROBUST_OUT | rank |
+## Carried place-naming notes
 
-Proposed count: 315 + 5 = **320**. Configuration is in PROPOSED-CONFIG.json. No T3 exception is proposed for a candidate: H2O has no induced boundary in the precedent scenario set. Existing carried-row T3 texts are retained; their numerical places must be re-reviewed on a completed candidate.
+- arcbright-elf-1-12b-r2: Measured on the 27 Oct 2026 draw; shown on the reference scale by anchor equating with four strong anchor systems (Intelligence -2.9, Calibration -1.9 points; 95% interval of the Intelligence shift -5.9 to +1.1). Its #5 place on the open-weights Composite A and C lists is within the uncertainty of the draw shift.
+- karpo_decision_31b: Measured on the 27 Oct 2026 draw; shown on the reference scale by anchor equating with four strong anchor systems (Intelligence -2.9, Calibration -1.9 points; 95% interval of the Intelligence shift -5.9 to +1.1).
 
-## Interpretation differences requiring the lead’s decision
+## Every candidate / primary-list place
 
-H2O has 23 point top-five places and zero membership crossings under the separate-axis/LOO set. Sixteen lists cross the line if joint-CI endpoints are made binding. Under a literal all-11-scenario rule H2O is BOUNDARY and would also be held (319 ranked under this proposal); under the v1.8.10 stress-test distinction it is ROBUST_IN_TOP5.
-
-T1 and T2 are reproduced verbatim in PROPOSED-TEXTS.json. T1’s phrase “its top-five places” is imprecise for the two rows that have no point top-five place (Quyet Large and Sieve). If the lead holds them for favourable-scenario crossings, that wording needs a scoped ruling; I have not silently rewritten the mandated text.
-
-## Special cases
-
-H2O: retained accepted scorer aggregates give public-300 I 85.623988, sealed I 90.117771, raw gap -4.493783. The predecessor H2O-31B v1.0.7 has public I 79.976567 and sealed I 78.619495. The new version gains 5.647420 on shared public items, unlike H2O-4B v1.4.1’s public decrease. The new gap normalized to the equating point is 1.276000, close to the old row’s +1.357072 gap. The sealed values compare different item populations and are not a same-draw version comparison. No row-specific sign reversal like the old H2O-4B case is supported here. This covers only the text row; A218’s ImageJevBench and customer-mail obligations remain with the lead.
-
-Quyet Small: public I 44.943311, sealed I 28.634576, gap 16.308736, gap-penalty factor 0.942647. Equated I is 31.794078. The unpenalized four-axis harmonic mean 60.884127, multiplied by (I/50)^2 = 0.404345, exactly reproduces A 24.618215. The low A follows the accepted Intelligence floor and public/sealed gap, despite high Speed/Cost; it is arithmetically plausible.
-
-SubQ is a hosted API (api_flag true, endpoint_kind api), receives no self-hosted latency adjustment and uses its accepted launch-list cost 0.014913069173942242 USD/1,000 decisions. Its point API Composite A/B/C places are robust as memberships; its other board/favourable-scenario and capped-Capability crossings motivate the conservative whole-row hold. It is never put into the open-weights ranking.
-
-## Every primary-list place per candidate
-
-Ranges include all 11 WHATIF scenarios. “Boundary” uses the separate-axis/LOO set; “stress” flags an additional joint-endpoint crossing. Out-of-scope ranks are null.
+All-scenario ranges include joint stress endpoints. Binding ranges use R1 only.
 
 ### Minimodels Decision 1.0 (candy-cane)
 
-| Primary list | Point | All-scenario range | Separate-axis/LOO range | Boundary | Joint stress crossing |
-|---|---:|---|---|---|---|
-| all/composites/A | 87 | [68, 93] | [77, 90] | False | False |
-| all/composites/B | 53 | [37, 65] | [40, 60] | False | False |
-| all/composites/C | 66 | [59, 73] | [60, 72] | False | False |
-| all/capability/official_caps | 21 | [9, 42] | [16, 35] | False | False |
-| all/capability/no_caps | 25 | [13, 47] | [20, 40] | False | False |
-| all/capability/cost_off_latency_2x | 21 | [9, 43] | [16, 36] | False | False |
-| all/capability/latency_none | 21 | [9, 42] | [16, 35] | False | False |
-| all/extra_capability/cost_7x | 21 | [9, 43] | [16, 36] | False | False |
-| all/extra_capability/cost_10x | 21 | [9, 43] | [16, 36] | False | False |
-| all/extra_capability/rank_field | 25 | [13, 47] | [20, 40] | False | False |
-| all/extra_capability/cost_7x_latency_none | 24 | [12, 46] | [19, 39] | False | False |
-| all/extra_capability/cost_10x_latency_none | 24 | [12, 46] | [19, 39] | False | False |
-| open/composites/A | 69 | [52, 73] | [60, 71] | False | False |
-| open/composites/B | 39 | [26, 47] | [28, 45] | False | False |
-| open/composites/C | 49 | [44, 54] | [44, 53] | False | False |
-| open/capability/official_caps | 15 | [8, 32] | [11, 27] | False | False |
-| open/capability/no_caps | 15 | [8, 33] | [11, 28] | False | False |
-| open/capability/cost_off_latency_2x | 15 | [8, 33] | [11, 28] | False | False |
-| open/capability/latency_none | 15 | [8, 32] | [11, 27] | False | False |
-| open/extra_capability/cost_7x | 15 | [8, 33] | [11, 28] | False | False |
-| open/extra_capability/cost_10x | 15 | [8, 33] | [11, 28] | False | False |
-| open/extra_capability/rank_field | 15 | [8, 33] | [11, 28] | False | False |
-| open/extra_capability/cost_7x_latency_none | 15 | [8, 33] | [11, 28] | False | False |
-| open/extra_capability/cost_10x_latency_none | 15 | [8, 33] | [11, 28] | False | False |
-| api/composites/A | — | — | — | False | False |
-| api/composites/B | — | — | — | False | False |
-| api/composites/C | — | — | — | False | False |
-| api/capability/official_caps | — | — | — | False | False |
-| api/capability/no_caps | — | — | — | False | False |
-| api/capability/cost_off_latency_2x | — | — | — | False | False |
-| api/capability/latency_none | — | — | — | False | False |
-| api/extra_capability/cost_7x | — | — | — | False | False |
-| api/extra_capability/cost_10x | — | — | — | False | False |
-| api/extra_capability/rank_field | — | — | — | False | False |
-| api/extra_capability/cost_7x_latency_none | — | — | — | False | False |
-| api/extra_capability/cost_10x_latency_none | — | — | — | False | False |
-| release/A | 87 | [68, 93] | [77, 90] | False | False |
-| release/B | 53 | [37, 65] | [40, 60] | False | False |
-| release/C | 66 | [59, 73] | [60, 72] | False | False |
-| release/capability | 25 | [13, 47] | [20, 40] | False | False |
+| List | Point | All range | Binding range | Point boundary failures |
+|---|---:|---|---|---|
+| all/composites/A | 87 | [68, 93] | [77, 90] | {} |
+| all/composites/B | 53 | [37, 65] | [40, 60] | {} |
+| all/composites/C | 66 | [59, 73] | [60, 72] | {} |
+| all/capability/official_caps | 21 | [9, 42] | [16, 35] | {} |
+| all/capability/no_caps | 25 | [13, 47] | [20, 40] | {} |
+| all/capability/cost_off_latency_2x | 21 | [9, 43] | [16, 36] | {} |
+| all/capability/latency_none | 21 | [9, 42] | [16, 35] | {} |
+| all/extra_capability/cost_7x | 21 | [9, 43] | [16, 36] | {} |
+| all/extra_capability/cost_10x | 21 | [9, 43] | [16, 36] | {} |
+| all/extra_capability/rank_field | 25 | [13, 47] | [20, 40] | {} |
+| all/extra_capability/cost_7x_latency_none | 24 | [12, 46] | [19, 39] | {} |
+| all/extra_capability/cost_10x_latency_none | 24 | [12, 46] | [19, 39] | {} |
+| open/composites/A | 69 | [52, 73] | [60, 71] | {} |
+| open/composites/B | 39 | [26, 47] | [28, 45] | {} |
+| open/composites/C | 49 | [44, 54] | [44, 53] | {} |
+| open/capability/official_caps | 15 | [8, 32] | [11, 27] | {} |
+| open/capability/no_caps | 15 | [8, 33] | [11, 28] | {} |
+| open/capability/cost_off_latency_2x | 15 | [8, 33] | [11, 28] | {} |
+| open/capability/latency_none | 15 | [8, 32] | [11, 27] | {} |
+| open/extra_capability/cost_7x | 15 | [8, 33] | [11, 28] | {} |
+| open/extra_capability/cost_10x | 15 | [8, 33] | [11, 28] | {} |
+| open/extra_capability/rank_field | 15 | [8, 33] | [11, 28] | {} |
+| open/extra_capability/cost_7x_latency_none | 15 | [8, 33] | [11, 28] | {} |
+| open/extra_capability/cost_10x_latency_none | 15 | [8, 33] | [11, 28] | {} |
+| api/composites/A | None | None | None | {} |
+| api/composites/B | None | None | None | {} |
+| api/composites/C | None | None | None | {} |
+| api/capability/official_caps | None | None | None | {} |
+| api/capability/no_caps | None | None | None | {} |
+| api/capability/cost_off_latency_2x | None | None | None | {} |
+| api/capability/latency_none | None | None | None | {} |
+| api/extra_capability/cost_7x | None | None | None | {} |
+| api/extra_capability/cost_10x | None | None | None | {} |
+| api/extra_capability/rank_field | None | None | None | {} |
+| api/extra_capability/cost_7x_latency_none | None | None | None | {} |
+| api/extra_capability/cost_10x_latency_none | None | None | None | {} |
+| release/A | 87 | [68, 93] | [77, 90] | {} |
+| release/B | 53 | [37, 65] | [40, 60] | {} |
+| release/C | 66 | [59, 73] | [60, 72] | {} |
+| release/capability | 25 | [13, 47] | [20, 40] | {} |
 
 ### Starlord-27B-v2.0-preview
 
-| Primary list | Point | All-scenario range | Separate-axis/LOO range | Boundary | Joint stress crossing |
-|---|---:|---|---|---|---|
-| all/composites/A | 13 | [12, 16] | [12, 15] | False | False |
-| all/composites/B | 9 | [6, 16] | [6, 13] | False | False |
-| all/composites/C | 12 | [10, 15] | [10, 13] | False | False |
-| all/capability/official_caps | 12 | [6, 28] | [6, 16] | False | False |
-| all/capability/no_caps | 16 | [10, 33] | [10, 20] | False | False |
-| all/capability/cost_off_latency_2x | 12 | [6, 29] | [6, 16] | False | False |
-| all/capability/latency_none | 12 | [6, 28] | [6, 16] | False | False |
-| all/extra_capability/cost_7x | 12 | [6, 29] | [6, 16] | False | False |
-| all/extra_capability/cost_10x | 12 | [6, 29] | [6, 16] | False | False |
-| all/extra_capability/rank_field | 16 | [10, 33] | [10, 20] | False | False |
-| all/extra_capability/cost_7x_latency_none | 15 | [9, 32] | [9, 19] | False | False |
-| all/extra_capability/cost_10x_latency_none | 15 | [9, 32] | [9, 19] | False | False |
-| open/composites/A | 7 | [7, 9] | [7, 9] | False | False |
-| open/composites/B | 5 | [4, 8] | [4, 7] | True | True |
-| open/composites/C | 7 | [6, 9] | [6, 9] | False | False |
-| open/capability/official_caps | 9 | [6, 21] | [6, 11] | False | False |
-| open/capability/no_caps | 9 | [6, 22] | [6, 11] | False | False |
-| open/capability/cost_off_latency_2x | 9 | [6, 22] | [6, 11] | False | False |
-| open/capability/latency_none | 9 | [6, 21] | [6, 11] | False | False |
-| open/extra_capability/cost_7x | 9 | [6, 22] | [6, 11] | False | False |
-| open/extra_capability/cost_10x | 9 | [6, 22] | [6, 11] | False | False |
-| open/extra_capability/rank_field | 9 | [6, 22] | [6, 11] | False | False |
-| open/extra_capability/cost_7x_latency_none | 9 | [6, 22] | [6, 11] | False | False |
-| open/extra_capability/cost_10x_latency_none | 9 | [6, 22] | [6, 11] | False | False |
-| api/composites/A | — | — | — | False | False |
-| api/composites/B | — | — | — | False | False |
-| api/composites/C | — | — | — | False | False |
-| api/capability/official_caps | — | — | — | False | False |
-| api/capability/no_caps | — | — | — | False | False |
-| api/capability/cost_off_latency_2x | — | — | — | False | False |
-| api/capability/latency_none | — | — | — | False | False |
-| api/extra_capability/cost_7x | — | — | — | False | False |
-| api/extra_capability/cost_10x | — | — | — | False | False |
-| api/extra_capability/rank_field | — | — | — | False | False |
-| api/extra_capability/cost_7x_latency_none | — | — | — | False | False |
-| api/extra_capability/cost_10x_latency_none | — | — | — | False | False |
-| release/A | 13 | [12, 16] | [12, 15] | False | False |
-| release/B | 9 | [6, 16] | [6, 13] | False | False |
-| release/C | 12 | [10, 15] | [10, 13] | False | False |
-| release/capability | 16 | [10, 33] | [10, 20] | False | False |
+| List | Point | All range | Binding range | Point boundary failures |
+|---|---:|---|---|---|
+| all/composites/A | 13 | [12, 16] | [12, 15] | {} |
+| all/composites/B | 9 | [6, 16] | [6, 13] | {} |
+| all/composites/C | 12 | [10, 15] | [10, 13] | {} |
+| all/capability/official_caps | 12 | [6, 28] | [6, 16] | {} |
+| all/capability/no_caps | 16 | [10, 33] | [10, 20] | {} |
+| all/capability/cost_off_latency_2x | 12 | [6, 29] | [6, 16] | {} |
+| all/capability/latency_none | 12 | [6, 28] | [6, 16] | {} |
+| all/extra_capability/cost_7x | 12 | [6, 29] | [6, 16] | {} |
+| all/extra_capability/cost_10x | 12 | [6, 29] | [6, 16] | {} |
+| all/extra_capability/rank_field | 16 | [10, 33] | [10, 20] | {} |
+| all/extra_capability/cost_7x_latency_none | 15 | [9, 32] | [9, 19] | {} |
+| all/extra_capability/cost_10x_latency_none | 15 | [9, 32] | [9, 19] | {} |
+| open/composites/A | 7 | [7, 9] | [7, 9] | {} |
+| open/composites/B | 5 | [4, 8] | [4, 7] | {'I_ci_low': 7} |
+| open/composites/C | 7 | [6, 9] | [6, 9] | {} |
+| open/capability/official_caps | 9 | [6, 21] | [6, 11] | {} |
+| open/capability/no_caps | 9 | [6, 22] | [6, 11] | {} |
+| open/capability/cost_off_latency_2x | 9 | [6, 22] | [6, 11] | {} |
+| open/capability/latency_none | 9 | [6, 21] | [6, 11] | {} |
+| open/extra_capability/cost_7x | 9 | [6, 22] | [6, 11] | {} |
+| open/extra_capability/cost_10x | 9 | [6, 22] | [6, 11] | {} |
+| open/extra_capability/rank_field | 9 | [6, 22] | [6, 11] | {} |
+| open/extra_capability/cost_7x_latency_none | 9 | [6, 22] | [6, 11] | {} |
+| open/extra_capability/cost_10x_latency_none | 9 | [6, 22] | [6, 11] | {} |
+| api/composites/A | None | None | None | {} |
+| api/composites/B | None | None | None | {} |
+| api/composites/C | None | None | None | {} |
+| api/capability/official_caps | None | None | None | {} |
+| api/capability/no_caps | None | None | None | {} |
+| api/capability/cost_off_latency_2x | None | None | None | {} |
+| api/capability/latency_none | None | None | None | {} |
+| api/extra_capability/cost_7x | None | None | None | {} |
+| api/extra_capability/cost_10x | None | None | None | {} |
+| api/extra_capability/rank_field | None | None | None | {} |
+| api/extra_capability/cost_7x_latency_none | None | None | None | {} |
+| api/extra_capability/cost_10x_latency_none | None | None | None | {} |
+| release/A | 13 | [12, 16] | [12, 15] | {} |
+| release/B | 9 | [6, 16] | [6, 13] | {} |
+| release/C | 12 | [10, 15] | [10, 13] | {} |
+| release/capability | 16 | [10, 33] | [10, 20] | {} |
 
 ### H2O-Lightning-31B v1.3.4 (@c35ed950)
 
-| Primary list | Point | All-scenario range | Separate-axis/LOO range | Boundary | Joint stress crossing |
-|---|---:|---|---|---|---|
-| all/composites/A | 3 | [2, 6] | [3, 3] | False | True |
-| all/composites/B | 1 | [1, 1] | [1, 1] | False | False |
-| all/composites/C | 3 | [2, 5] | [3, 3] | False | False |
-| all/capability/official_caps | 3 | [3, 9] | [3, 4] | False | True |
-| all/capability/no_caps | 7 | [6, 13] | [6, 8] | False | False |
-| all/capability/cost_off_latency_2x | 3 | [3, 9] | [3, 4] | False | True |
-| all/capability/latency_none | 3 | [3, 9] | [3, 4] | False | True |
-| all/extra_capability/cost_7x | 3 | [3, 9] | [3, 4] | False | True |
-| all/extra_capability/cost_10x | 3 | [3, 9] | [3, 4] | False | True |
-| all/extra_capability/rank_field | 7 | [6, 13] | [6, 8] | False | False |
-| all/extra_capability/cost_7x_latency_none | 6 | [6, 12] | [6, 7] | False | False |
-| all/extra_capability/cost_10x_latency_none | 6 | [6, 12] | [6, 7] | False | False |
-| open/composites/A | 2 | [1, 3] | [2, 2] | False | False |
-| open/composites/B | 1 | [1, 1] | [1, 1] | False | False |
-| open/composites/C | 2 | [1, 3] | [2, 2] | False | False |
-| open/capability/official_caps | 3 | [3, 6] | [3, 3] | False | True |
-| open/capability/no_caps | 3 | [3, 6] | [3, 3] | False | True |
-| open/capability/cost_off_latency_2x | 3 | [3, 6] | [3, 3] | False | True |
-| open/capability/latency_none | 3 | [3, 6] | [3, 3] | False | True |
-| open/extra_capability/cost_7x | 3 | [3, 6] | [3, 3] | False | True |
-| open/extra_capability/cost_10x | 3 | [3, 6] | [3, 3] | False | True |
-| open/extra_capability/rank_field | 3 | [3, 6] | [3, 3] | False | True |
-| open/extra_capability/cost_7x_latency_none | 3 | [3, 6] | [3, 3] | False | True |
-| open/extra_capability/cost_10x_latency_none | 3 | [3, 6] | [3, 3] | False | True |
-| api/composites/A | — | — | — | False | False |
-| api/composites/B | — | — | — | False | False |
-| api/composites/C | — | — | — | False | False |
-| api/capability/official_caps | — | — | — | False | False |
-| api/capability/no_caps | — | — | — | False | False |
-| api/capability/cost_off_latency_2x | — | — | — | False | False |
-| api/capability/latency_none | — | — | — | False | False |
-| api/extra_capability/cost_7x | — | — | — | False | False |
-| api/extra_capability/cost_10x | — | — | — | False | False |
-| api/extra_capability/rank_field | — | — | — | False | False |
-| api/extra_capability/cost_7x_latency_none | — | — | — | False | False |
-| api/extra_capability/cost_10x_latency_none | — | — | — | False | False |
-| release/A | 3 | [2, 6] | [3, 3] | False | True |
-| release/B | 1 | [1, 1] | [1, 1] | False | False |
-| release/C | 3 | [2, 5] | [3, 3] | False | False |
-| release/capability | 7 | [6, 13] | [6, 8] | False | False |
+| List | Point | All range | Binding range | Point boundary failures |
+|---|---:|---|---|---|
+| all/composites/A | 3 | [2, 6] | [3, 3] | {} |
+| all/composites/B | 1 | [1, 1] | [1, 1] | {} |
+| all/composites/C | 3 | [2, 5] | [3, 3] | {} |
+| all/capability/official_caps | 3 | [3, 9] | [3, 4] | {} |
+| all/capability/no_caps | 7 | [6, 13] | [6, 8] | {} |
+| all/capability/cost_off_latency_2x | 3 | [3, 9] | [3, 4] | {} |
+| all/capability/latency_none | 3 | [3, 9] | [3, 4] | {} |
+| all/extra_capability/cost_7x | 3 | [3, 9] | [3, 4] | {} |
+| all/extra_capability/cost_10x | 3 | [3, 9] | [3, 4] | {} |
+| all/extra_capability/rank_field | 7 | [6, 13] | [6, 8] | {} |
+| all/extra_capability/cost_7x_latency_none | 6 | [6, 12] | [6, 7] | {} |
+| all/extra_capability/cost_10x_latency_none | 6 | [6, 12] | [6, 7] | {} |
+| open/composites/A | 2 | [1, 3] | [2, 2] | {} |
+| open/composites/B | 1 | [1, 1] | [1, 1] | {} |
+| open/composites/C | 2 | [1, 3] | [2, 2] | {} |
+| open/capability/official_caps | 3 | [3, 6] | [3, 3] | {} |
+| open/capability/no_caps | 3 | [3, 6] | [3, 3] | {} |
+| open/capability/cost_off_latency_2x | 3 | [3, 6] | [3, 3] | {} |
+| open/capability/latency_none | 3 | [3, 6] | [3, 3] | {} |
+| open/extra_capability/cost_7x | 3 | [3, 6] | [3, 3] | {} |
+| open/extra_capability/cost_10x | 3 | [3, 6] | [3, 3] | {} |
+| open/extra_capability/rank_field | 3 | [3, 6] | [3, 3] | {} |
+| open/extra_capability/cost_7x_latency_none | 3 | [3, 6] | [3, 3] | {} |
+| open/extra_capability/cost_10x_latency_none | 3 | [3, 6] | [3, 3] | {} |
+| api/composites/A | None | None | None | {} |
+| api/composites/B | None | None | None | {} |
+| api/composites/C | None | None | None | {} |
+| api/capability/official_caps | None | None | None | {} |
+| api/capability/no_caps | None | None | None | {} |
+| api/capability/cost_off_latency_2x | None | None | None | {} |
+| api/capability/latency_none | None | None | None | {} |
+| api/extra_capability/cost_7x | None | None | None | {} |
+| api/extra_capability/cost_10x | None | None | None | {} |
+| api/extra_capability/rank_field | None | None | None | {} |
+| api/extra_capability/cost_7x_latency_none | None | None | None | {} |
+| api/extra_capability/cost_10x_latency_none | None | None | None | {} |
+| release/A | 3 | [2, 6] | [3, 3] | {} |
+| release/B | 1 | [1, 1] | [1, 1] | {} |
+| release/C | 3 | [2, 5] | [3, 3] | {} |
+| release/capability | 7 | [6, 13] | [6, 8] | {} |
 
 ### Quyet-1.2-Large
 
-| Primary list | Point | All-scenario range | Separate-axis/LOO range | Boundary | Joint stress crossing |
-|---|---:|---|---|---|---|
-| all/composites/A | 20 | [15, 28] | [18, 22] | False | False |
-| all/composites/B | 12 | [8, 23] | [9, 20] | False | False |
-| all/composites/C | 17 | [15, 26] | [16, 20] | False | False |
-| all/capability/official_caps | 28 | [12, 48] | [19, 38] | False | False |
-| all/capability/no_caps | 32 | [16, 54] | [23, 43] | False | False |
-| all/capability/cost_off_latency_2x | 28 | [12, 50] | [19, 39] | False | False |
-| all/capability/latency_none | 28 | [12, 48] | [19, 38] | False | False |
-| all/extra_capability/cost_7x | 28 | [12, 50] | [19, 39] | False | False |
-| all/extra_capability/cost_10x | 28 | [12, 50] | [19, 39] | False | False |
-| all/extra_capability/rank_field | 32 | [16, 54] | [23, 43] | False | False |
-| all/extra_capability/cost_7x_latency_none | 31 | [15, 53] | [22, 42] | False | False |
-| all/extra_capability/cost_10x_latency_none | 31 | [15, 53] | [22, 42] | False | False |
-| open/composites/A | 14 | [11, 18] | [12, 14] | False | False |
-| open/composites/B | 7 | [5, 14] | [5, 12] | True | True |
-| open/composites/C | 12 | [11, 17] | [11, 13] | False | False |
-| open/capability/official_caps | 21 | [9, 36] | [13, 29] | False | False |
-| open/capability/no_caps | 21 | [9, 37] | [13, 30] | False | False |
-| open/capability/cost_off_latency_2x | 21 | [9, 37] | [13, 30] | False | False |
-| open/capability/latency_none | 21 | [9, 36] | [13, 29] | False | False |
-| open/extra_capability/cost_7x | 21 | [9, 37] | [13, 30] | False | False |
-| open/extra_capability/cost_10x | 21 | [9, 37] | [13, 30] | False | False |
-| open/extra_capability/rank_field | 21 | [9, 37] | [13, 30] | False | False |
-| open/extra_capability/cost_7x_latency_none | 21 | [9, 37] | [13, 30] | False | False |
-| open/extra_capability/cost_10x_latency_none | 21 | [9, 37] | [13, 30] | False | False |
-| api/composites/A | — | — | — | False | False |
-| api/composites/B | — | — | — | False | False |
-| api/composites/C | — | — | — | False | False |
-| api/capability/official_caps | — | — | — | False | False |
-| api/capability/no_caps | — | — | — | False | False |
-| api/capability/cost_off_latency_2x | — | — | — | False | False |
-| api/capability/latency_none | — | — | — | False | False |
-| api/extra_capability/cost_7x | — | — | — | False | False |
-| api/extra_capability/cost_10x | — | — | — | False | False |
-| api/extra_capability/rank_field | — | — | — | False | False |
-| api/extra_capability/cost_7x_latency_none | — | — | — | False | False |
-| api/extra_capability/cost_10x_latency_none | — | — | — | False | False |
-| release/A | 20 | [15, 28] | [18, 22] | False | False |
-| release/B | 12 | [8, 23] | [9, 20] | False | False |
-| release/C | 17 | [15, 26] | [16, 20] | False | False |
-| release/capability | 32 | [16, 54] | [23, 43] | False | False |
+| List | Point | All range | Binding range | Point boundary failures |
+|---|---:|---|---|---|
+| all/composites/A | 20 | [15, 28] | [18, 22] | {} |
+| all/composites/B | 12 | [8, 23] | [9, 20] | {} |
+| all/composites/C | 17 | [15, 26] | [16, 20] | {} |
+| all/capability/official_caps | 28 | [12, 48] | [19, 38] | {} |
+| all/capability/no_caps | 32 | [16, 54] | [23, 43] | {} |
+| all/capability/cost_off_latency_2x | 28 | [12, 50] | [19, 39] | {} |
+| all/capability/latency_none | 28 | [12, 48] | [19, 38] | {} |
+| all/extra_capability/cost_7x | 28 | [12, 50] | [19, 39] | {} |
+| all/extra_capability/cost_10x | 28 | [12, 50] | [19, 39] | {} |
+| all/extra_capability/rank_field | 32 | [16, 54] | [23, 43] | {} |
+| all/extra_capability/cost_7x_latency_none | 31 | [15, 53] | [22, 42] | {} |
+| all/extra_capability/cost_10x_latency_none | 31 | [15, 53] | [22, 42] | {} |
+| open/composites/A | 14 | [11, 18] | [12, 14] | {} |
+| open/composites/B | 7 | [5, 14] | [5, 12] | {} |
+| open/composites/C | 12 | [11, 17] | [11, 13] | {} |
+| open/capability/official_caps | 21 | [9, 36] | [13, 29] | {} |
+| open/capability/no_caps | 21 | [9, 37] | [13, 30] | {} |
+| open/capability/cost_off_latency_2x | 21 | [9, 37] | [13, 30] | {} |
+| open/capability/latency_none | 21 | [9, 36] | [13, 29] | {} |
+| open/extra_capability/cost_7x | 21 | [9, 37] | [13, 30] | {} |
+| open/extra_capability/cost_10x | 21 | [9, 37] | [13, 30] | {} |
+| open/extra_capability/rank_field | 21 | [9, 37] | [13, 30] | {} |
+| open/extra_capability/cost_7x_latency_none | 21 | [9, 37] | [13, 30] | {} |
+| open/extra_capability/cost_10x_latency_none | 21 | [9, 37] | [13, 30] | {} |
+| api/composites/A | None | None | None | {} |
+| api/composites/B | None | None | None | {} |
+| api/composites/C | None | None | None | {} |
+| api/capability/official_caps | None | None | None | {} |
+| api/capability/no_caps | None | None | None | {} |
+| api/capability/cost_off_latency_2x | None | None | None | {} |
+| api/capability/latency_none | None | None | None | {} |
+| api/extra_capability/cost_7x | None | None | None | {} |
+| api/extra_capability/cost_10x | None | None | None | {} |
+| api/extra_capability/rank_field | None | None | None | {} |
+| api/extra_capability/cost_7x_latency_none | None | None | None | {} |
+| api/extra_capability/cost_10x_latency_none | None | None | None | {} |
+| release/A | 20 | [15, 28] | [18, 22] | {} |
+| release/B | 12 | [8, 23] | [9, 20] | {} |
+| release/C | 17 | [15, 26] | [16, 20] | {} |
+| release/capability | 32 | [16, 54] | [23, 43] | {} |
 
 ### Quyet-1.2-Small
 
-| Primary list | Point | All-scenario range | Separate-axis/LOO range | Boundary | Joint stress crossing |
-|---|---:|---|---|---|---|
-| all/composites/A | 213 | [193, 223] | [193, 223] | False | False |
-| all/composites/B | 216 | [195, 225] | [195, 225] | False | False |
-| all/composites/C | 215 | [195, 224] | [195, 224] | False | False |
-| all/capability/official_caps | 198 | [178, 214] | [184, 210] | False | False |
-| all/capability/no_caps | 223 | [198, 239] | [208, 235] | False | False |
-| all/capability/cost_off_latency_2x | 207 | [184, 223] | [192, 219] | False | False |
-| all/capability/latency_none | 205 | [184, 221] | [191, 217] | False | False |
-| all/extra_capability/cost_7x | 206 | [184, 222] | [191, 218] | False | False |
-| all/extra_capability/cost_10x | 207 | [184, 223] | [192, 219] | False | False |
-| all/extra_capability/rank_field | 223 | [198, 239] | [208, 235] | False | False |
-| all/extra_capability/cost_7x_latency_none | 220 | [196, 236] | [205, 232] | False | False |
-| all/extra_capability/cost_10x_latency_none | 221 | [196, 237] | [206, 233] | False | False |
-| open/composites/A | 171 | [154, 179] | [154, 179] | False | False |
-| open/composites/B | 172 | [154, 180] | [154, 180] | False | False |
-| open/composites/C | 171 | [154, 179] | [154, 179] | False | False |
-| open/capability/official_caps | 163 | [144, 179] | [150, 175] | False | False |
-| open/capability/no_caps | 174 | [152, 190] | [160, 186] | False | False |
-| open/capability/cost_off_latency_2x | 167 | [146, 183] | [153, 179] | False | False |
-| open/capability/latency_none | 168 | [148, 184] | [155, 180] | False | False |
-| open/extra_capability/cost_7x | 167 | [146, 183] | [153, 179] | False | False |
-| open/extra_capability/cost_10x | 167 | [146, 183] | [153, 179] | False | False |
-| open/extra_capability/rank_field | 174 | [152, 190] | [160, 186] | False | False |
-| open/extra_capability/cost_7x_latency_none | 174 | [152, 190] | [160, 186] | False | False |
-| open/extra_capability/cost_10x_latency_none | 174 | [152, 190] | [160, 186] | False | False |
-| api/composites/A | — | — | — | False | False |
-| api/composites/B | — | — | — | False | False |
-| api/composites/C | — | — | — | False | False |
-| api/capability/official_caps | — | — | — | False | False |
-| api/capability/no_caps | — | — | — | False | False |
-| api/capability/cost_off_latency_2x | — | — | — | False | False |
-| api/capability/latency_none | — | — | — | False | False |
-| api/extra_capability/cost_7x | — | — | — | False | False |
-| api/extra_capability/cost_10x | — | — | — | False | False |
-| api/extra_capability/rank_field | — | — | — | False | False |
-| api/extra_capability/cost_7x_latency_none | — | — | — | False | False |
-| api/extra_capability/cost_10x_latency_none | — | — | — | False | False |
-| release/A | 213 | [193, 223] | [193, 223] | False | False |
-| release/B | 216 | [195, 225] | [195, 225] | False | False |
-| release/C | 215 | [195, 224] | [195, 224] | False | False |
-| release/capability | 223 | [198, 239] | [208, 235] | False | False |
+| List | Point | All range | Binding range | Point boundary failures |
+|---|---:|---|---|---|
+| all/composites/A | 213 | [193, 223] | [193, 223] | {} |
+| all/composites/B | 216 | [195, 225] | [195, 225] | {} |
+| all/composites/C | 215 | [195, 224] | [195, 224] | {} |
+| all/capability/official_caps | 198 | [178, 214] | [184, 210] | {} |
+| all/capability/no_caps | 223 | [198, 239] | [208, 235] | {} |
+| all/capability/cost_off_latency_2x | 207 | [184, 223] | [192, 219] | {} |
+| all/capability/latency_none | 205 | [184, 221] | [191, 217] | {} |
+| all/extra_capability/cost_7x | 206 | [184, 222] | [191, 218] | {} |
+| all/extra_capability/cost_10x | 207 | [184, 223] | [192, 219] | {} |
+| all/extra_capability/rank_field | 223 | [198, 239] | [208, 235] | {} |
+| all/extra_capability/cost_7x_latency_none | 220 | [196, 236] | [205, 232] | {} |
+| all/extra_capability/cost_10x_latency_none | 221 | [196, 237] | [206, 233] | {} |
+| open/composites/A | 171 | [154, 179] | [154, 179] | {} |
+| open/composites/B | 172 | [154, 180] | [154, 180] | {} |
+| open/composites/C | 171 | [154, 179] | [154, 179] | {} |
+| open/capability/official_caps | 163 | [144, 179] | [150, 175] | {} |
+| open/capability/no_caps | 174 | [152, 190] | [160, 186] | {} |
+| open/capability/cost_off_latency_2x | 167 | [146, 183] | [153, 179] | {} |
+| open/capability/latency_none | 168 | [148, 184] | [155, 180] | {} |
+| open/extra_capability/cost_7x | 167 | [146, 183] | [153, 179] | {} |
+| open/extra_capability/cost_10x | 167 | [146, 183] | [153, 179] | {} |
+| open/extra_capability/rank_field | 174 | [152, 190] | [160, 186] | {} |
+| open/extra_capability/cost_7x_latency_none | 174 | [152, 190] | [160, 186] | {} |
+| open/extra_capability/cost_10x_latency_none | 174 | [152, 190] | [160, 186] | {} |
+| api/composites/A | None | None | None | {} |
+| api/composites/B | None | None | None | {} |
+| api/composites/C | None | None | None | {} |
+| api/capability/official_caps | None | None | None | {} |
+| api/capability/no_caps | None | None | None | {} |
+| api/capability/cost_off_latency_2x | None | None | None | {} |
+| api/capability/latency_none | None | None | None | {} |
+| api/extra_capability/cost_7x | None | None | None | {} |
+| api/extra_capability/cost_10x | None | None | None | {} |
+| api/extra_capability/rank_field | None | None | None | {} |
+| api/extra_capability/cost_7x_latency_none | None | None | None | {} |
+| api/extra_capability/cost_10x_latency_none | None | None | None | {} |
+| release/A | 213 | [193, 223] | [193, 223] | {} |
+| release/B | 216 | [195, 225] | [195, 225] | {} |
+| release/C | 215 | [195, 224] | [195, 224] | {} |
+| release/capability | 223 | [198, 239] | [208, 235] | {} |
 
 ### Starlord-4B-preview
 
-| Primary list | Point | All-scenario range | Separate-axis/LOO range | Boundary | Joint stress crossing |
-|---|---:|---|---|---|---|
-| all/composites/A | 81 | [47, 104] | [64, 94] | False | False |
-| all/composites/B | 88 | [63, 110] | [70, 103] | False | False |
-| all/composites/C | 87 | [42, 109] | [56, 107] | False | False |
-| all/capability/official_caps | 139 | [121, 163] | [130, 151] | False | False |
-| all/capability/no_caps | 158 | [136, 183] | [147, 170] | False | False |
-| all/capability/cost_off_latency_2x | 145 | [127, 169] | [136, 157] | False | False |
-| all/capability/latency_none | 144 | [124, 169] | [133, 156] | False | False |
-| all/extra_capability/cost_7x | 145 | [127, 169] | [136, 157] | False | False |
-| all/extra_capability/cost_10x | 145 | [127, 169] | [136, 157] | False | False |
-| all/extra_capability/rank_field | 158 | [136, 183] | [147, 170] | False | False |
-| all/extra_capability/cost_7x_latency_none | 156 | [134, 181] | [145, 168] | False | False |
-| all/extra_capability/cost_10x_latency_none | 156 | [134, 181] | [145, 168] | False | False |
-| open/composites/A | 63 | [34, 82] | [49, 74] | False | False |
-| open/composites/B | 67 | [47, 84] | [53, 78] | False | False |
-| open/composites/C | 64 | [30, 81] | [42, 79] | False | False |
-| open/capability/official_caps | 110 | [92, 130] | [101, 119] | False | False |
-| open/capability/no_caps | 117 | [96, 138] | [106, 126] | False | False |
-| open/capability/cost_off_latency_2x | 112 | [94, 132] | [103, 121] | False | False |
-| open/capability/latency_none | 113 | [93, 134] | [102, 122] | False | False |
-| open/extra_capability/cost_7x | 112 | [94, 132] | [103, 121] | False | False |
-| open/extra_capability/cost_10x | 112 | [94, 132] | [103, 121] | False | False |
-| open/extra_capability/rank_field | 117 | [96, 138] | [106, 126] | False | False |
-| open/extra_capability/cost_7x_latency_none | 117 | [96, 138] | [106, 126] | False | False |
-| open/extra_capability/cost_10x_latency_none | 117 | [96, 138] | [106, 126] | False | False |
-| api/composites/A | — | — | — | False | False |
-| api/composites/B | — | — | — | False | False |
-| api/composites/C | — | — | — | False | False |
-| api/capability/official_caps | — | — | — | False | False |
-| api/capability/no_caps | — | — | — | False | False |
-| api/capability/cost_off_latency_2x | — | — | — | False | False |
-| api/capability/latency_none | — | — | — | False | False |
-| api/extra_capability/cost_7x | — | — | — | False | False |
-| api/extra_capability/cost_10x | — | — | — | False | False |
-| api/extra_capability/rank_field | — | — | — | False | False |
-| api/extra_capability/cost_7x_latency_none | — | — | — | False | False |
-| api/extra_capability/cost_10x_latency_none | — | — | — | False | False |
-| release/A | 81 | [47, 104] | [64, 94] | False | False |
-| release/B | 88 | [63, 110] | [70, 103] | False | False |
-| release/C | 87 | [42, 109] | [56, 107] | False | False |
-| release/capability | 158 | [136, 183] | [147, 170] | False | False |
+| List | Point | All range | Binding range | Point boundary failures |
+|---|---:|---|---|---|
+| all/composites/A | 81 | [47, 104] | [64, 94] | {} |
+| all/composites/B | 88 | [63, 110] | [70, 103] | {} |
+| all/composites/C | 87 | [42, 109] | [56, 107] | {} |
+| all/capability/official_caps | 139 | [121, 163] | [130, 151] | {} |
+| all/capability/no_caps | 158 | [136, 183] | [147, 170] | {} |
+| all/capability/cost_off_latency_2x | 145 | [127, 169] | [136, 157] | {} |
+| all/capability/latency_none | 144 | [124, 169] | [133, 156] | {} |
+| all/extra_capability/cost_7x | 145 | [127, 169] | [136, 157] | {} |
+| all/extra_capability/cost_10x | 145 | [127, 169] | [136, 157] | {} |
+| all/extra_capability/rank_field | 158 | [136, 183] | [147, 170] | {} |
+| all/extra_capability/cost_7x_latency_none | 156 | [134, 181] | [145, 168] | {} |
+| all/extra_capability/cost_10x_latency_none | 156 | [134, 181] | [145, 168] | {} |
+| open/composites/A | 63 | [34, 82] | [49, 74] | {} |
+| open/composites/B | 67 | [47, 84] | [53, 78] | {} |
+| open/composites/C | 64 | [30, 81] | [42, 79] | {} |
+| open/capability/official_caps | 110 | [92, 130] | [101, 119] | {} |
+| open/capability/no_caps | 117 | [96, 138] | [106, 126] | {} |
+| open/capability/cost_off_latency_2x | 112 | [94, 132] | [103, 121] | {} |
+| open/capability/latency_none | 113 | [93, 134] | [102, 122] | {} |
+| open/extra_capability/cost_7x | 112 | [94, 132] | [103, 121] | {} |
+| open/extra_capability/cost_10x | 112 | [94, 132] | [103, 121] | {} |
+| open/extra_capability/rank_field | 117 | [96, 138] | [106, 126] | {} |
+| open/extra_capability/cost_7x_latency_none | 117 | [96, 138] | [106, 126] | {} |
+| open/extra_capability/cost_10x_latency_none | 117 | [96, 138] | [106, 126] | {} |
+| api/composites/A | None | None | None | {} |
+| api/composites/B | None | None | None | {} |
+| api/composites/C | None | None | None | {} |
+| api/capability/official_caps | None | None | None | {} |
+| api/capability/no_caps | None | None | None | {} |
+| api/capability/cost_off_latency_2x | None | None | None | {} |
+| api/capability/latency_none | None | None | None | {} |
+| api/extra_capability/cost_7x | None | None | None | {} |
+| api/extra_capability/cost_10x | None | None | None | {} |
+| api/extra_capability/rank_field | None | None | None | {} |
+| api/extra_capability/cost_7x_latency_none | None | None | None | {} |
+| api/extra_capability/cost_10x_latency_none | None | None | None | {} |
+| release/A | 81 | [47, 104] | [64, 94] | {} |
+| release/B | 88 | [63, 110] | [70, 103] | {} |
+| release/C | 87 | [42, 109] | [56, 107] | {} |
+| release/capability | 158 | [136, 183] | [147, 170] | {} |
 
 ### Sieve-31B-v3
 
-| Primary list | Point | All-scenario range | Separate-axis/LOO range | Boundary | Joint stress crossing |
-|---|---:|---|---|---|---|
-| all/composites/A | 67 | [51, 80] | [56, 70] | False | False |
-| all/composites/B | 33 | [22, 47] | [24, 44] | False | False |
-| all/composites/C | 55 | [45, 63] | [49, 56] | False | False |
-| all/capability/official_caps | 9 | [5, 25] | [5, 14] | True | True |
-| all/capability/no_caps | 13 | [9, 29] | [9, 18] | False | False |
-| all/capability/cost_off_latency_2x | 9 | [5, 25] | [5, 14] | True | True |
-| all/capability/latency_none | 9 | [5, 25] | [5, 14] | True | True |
-| all/extra_capability/cost_7x | 9 | [5, 25] | [5, 14] | True | True |
-| all/extra_capability/cost_10x | 9 | [5, 25] | [5, 14] | True | True |
-| all/extra_capability/rank_field | 13 | [9, 29] | [9, 18] | False | False |
-| all/extra_capability/cost_7x_latency_none | 12 | [8, 28] | [8, 17] | False | False |
-| all/extra_capability/cost_10x_latency_none | 12 | [8, 28] | [8, 17] | False | False |
-| open/composites/A | 51 | [37, 62] | [42, 53] | False | False |
-| open/composites/B | 22 | [14, 35] | [15, 32] | False | False |
-| open/composites/C | 40 | [32, 46] | [36, 40] | False | False |
-| open/capability/official_caps | 7 | [5, 19] | [5, 9] | True | True |
-| open/capability/no_caps | 7 | [5, 19] | [5, 9] | True | True |
-| open/capability/cost_off_latency_2x | 7 | [5, 19] | [5, 9] | True | True |
-| open/capability/latency_none | 7 | [5, 19] | [5, 9] | True | True |
-| open/extra_capability/cost_7x | 7 | [5, 19] | [5, 9] | True | True |
-| open/extra_capability/cost_10x | 7 | [5, 19] | [5, 9] | True | True |
-| open/extra_capability/rank_field | 7 | [5, 19] | [5, 9] | True | True |
-| open/extra_capability/cost_7x_latency_none | 7 | [5, 19] | [5, 9] | True | True |
-| open/extra_capability/cost_10x_latency_none | 7 | [5, 19] | [5, 9] | True | True |
-| api/composites/A | — | — | — | False | False |
-| api/composites/B | — | — | — | False | False |
-| api/composites/C | — | — | — | False | False |
-| api/capability/official_caps | — | — | — | False | False |
-| api/capability/no_caps | — | — | — | False | False |
-| api/capability/cost_off_latency_2x | — | — | — | False | False |
-| api/capability/latency_none | — | — | — | False | False |
-| api/extra_capability/cost_7x | — | — | — | False | False |
-| api/extra_capability/cost_10x | — | — | — | False | False |
-| api/extra_capability/rank_field | — | — | — | False | False |
-| api/extra_capability/cost_7x_latency_none | — | — | — | False | False |
-| api/extra_capability/cost_10x_latency_none | — | — | — | False | False |
-| release/A | 67 | [51, 80] | [56, 70] | False | False |
-| release/B | 33 | [22, 47] | [24, 44] | False | False |
-| release/C | 55 | [45, 63] | [49, 56] | False | False |
-| release/capability | 13 | [9, 29] | [9, 18] | False | False |
+| List | Point | All range | Binding range | Point boundary failures |
+|---|---:|---|---|---|
+| all/composites/A | 67 | [51, 80] | [56, 70] | {} |
+| all/composites/B | 33 | [22, 47] | [24, 44] | {} |
+| all/composites/C | 55 | [45, 63] | [49, 56] | {} |
+| all/capability/official_caps | 9 | [5, 25] | [5, 14] | {} |
+| all/capability/no_caps | 13 | [9, 29] | [9, 18] | {} |
+| all/capability/cost_off_latency_2x | 9 | [5, 25] | [5, 14] | {} |
+| all/capability/latency_none | 9 | [5, 25] | [5, 14] | {} |
+| all/extra_capability/cost_7x | 9 | [5, 25] | [5, 14] | {} |
+| all/extra_capability/cost_10x | 9 | [5, 25] | [5, 14] | {} |
+| all/extra_capability/rank_field | 13 | [9, 29] | [9, 18] | {} |
+| all/extra_capability/cost_7x_latency_none | 12 | [8, 28] | [8, 17] | {} |
+| all/extra_capability/cost_10x_latency_none | 12 | [8, 28] | [8, 17] | {} |
+| open/composites/A | 51 | [37, 62] | [42, 53] | {} |
+| open/composites/B | 22 | [14, 35] | [15, 32] | {} |
+| open/composites/C | 40 | [32, 46] | [36, 40] | {} |
+| open/capability/official_caps | 7 | [5, 19] | [5, 9] | {} |
+| open/capability/no_caps | 7 | [5, 19] | [5, 9] | {} |
+| open/capability/cost_off_latency_2x | 7 | [5, 19] | [5, 9] | {} |
+| open/capability/latency_none | 7 | [5, 19] | [5, 9] | {} |
+| open/extra_capability/cost_7x | 7 | [5, 19] | [5, 9] | {} |
+| open/extra_capability/cost_10x | 7 | [5, 19] | [5, 9] | {} |
+| open/extra_capability/rank_field | 7 | [5, 19] | [5, 9] | {} |
+| open/extra_capability/cost_7x_latency_none | 7 | [5, 19] | [5, 9] | {} |
+| open/extra_capability/cost_10x_latency_none | 7 | [5, 19] | [5, 9] | {} |
+| api/composites/A | None | None | None | {} |
+| api/composites/B | None | None | None | {} |
+| api/composites/C | None | None | None | {} |
+| api/capability/official_caps | None | None | None | {} |
+| api/capability/no_caps | None | None | None | {} |
+| api/capability/cost_off_latency_2x | None | None | None | {} |
+| api/capability/latency_none | None | None | None | {} |
+| api/extra_capability/cost_7x | None | None | None | {} |
+| api/extra_capability/cost_10x | None | None | None | {} |
+| api/extra_capability/rank_field | None | None | None | {} |
+| api/extra_capability/cost_7x_latency_none | None | None | None | {} |
+| api/extra_capability/cost_10x_latency_none | None | None | None | {} |
+| release/A | 67 | [51, 80] | [56, 70] | {} |
+| release/B | 33 | [22, 47] | [24, 44] | {} |
+| release/C | 55 | [45, 63] | [49, 56] | {} |
+| release/capability | 13 | [9, 29] | [9, 18] | {} |
 
 ### SubQ Snap 1.2
 
-| Primary list | Point | All-scenario range | Separate-axis/LOO range | Boundary | Joint stress crossing |
-|---|---:|---|---|---|---|
-| all/composites/A | 6 | [5, 11] | [5, 9] | True | True |
-| all/composites/B | 7 | [4, 11] | [4, 8] | True | True |
-| all/composites/C | 6 | [5, 10] | [5, 8] | True | True |
-| all/capability/official_caps | 16 | [7, 33] | [9, 21] | False | False |
-| all/capability/no_caps | 20 | [11, 38] | [13, 25] | False | False |
-| all/capability/cost_off_latency_2x | 16 | [7, 34] | [9, 21] | False | False |
-| all/capability/latency_none | 16 | [7, 33] | [9, 21] | False | False |
-| all/extra_capability/cost_7x | 16 | [7, 34] | [9, 21] | False | False |
-| all/extra_capability/cost_10x | 16 | [7, 34] | [9, 21] | False | False |
-| all/extra_capability/rank_field | 20 | [11, 38] | [13, 25] | False | False |
-| all/extra_capability/cost_7x_latency_none | 19 | [10, 37] | [12, 24] | False | False |
-| all/extra_capability/cost_10x_latency_none | 19 | [10, 37] | [12, 24] | False | False |
-| open/composites/A | — | — | — | False | False |
-| open/composites/B | — | — | — | False | False |
-| open/composites/C | — | — | — | False | False |
-| open/capability/official_caps | — | — | — | False | False |
-| open/capability/no_caps | — | — | — | False | False |
-| open/capability/cost_off_latency_2x | — | — | — | False | False |
-| open/capability/latency_none | — | — | — | False | False |
-| open/extra_capability/cost_7x | — | — | — | False | False |
-| open/extra_capability/cost_10x | — | — | — | False | False |
-| open/extra_capability/rank_field | — | — | — | False | False |
-| open/extra_capability/cost_7x_latency_none | — | — | — | False | False |
-| open/extra_capability/cost_10x_latency_none | — | — | — | False | False |
-| api/composites/A | 3 | [2, 5] | [2, 5] | False | False |
-| api/composites/B | 4 | [2, 6] | [2, 4] | False | True |
-| api/composites/C | 3 | [2, 4] | [2, 4] | False | False |
-| api/capability/official_caps | 6 | [1, 8] | [3, 6] | True | True |
-| api/capability/no_caps | 10 | [5, 12] | [7, 10] | False | True |
-| api/capability/cost_off_latency_2x | 6 | [1, 8] | [3, 6] | True | True |
-| api/capability/latency_none | 6 | [1, 8] | [3, 6] | True | True |
-| api/extra_capability/cost_7x | 6 | [1, 8] | [3, 6] | True | True |
-| api/extra_capability/cost_10x | 6 | [1, 8] | [3, 6] | True | True |
-| api/extra_capability/rank_field | 10 | [5, 12] | [7, 10] | False | True |
-| api/extra_capability/cost_7x_latency_none | 9 | [4, 11] | [6, 9] | False | True |
-| api/extra_capability/cost_10x_latency_none | 9 | [4, 11] | [6, 9] | False | True |
-| release/A | 6 | [5, 11] | [5, 9] | True | True |
-| release/B | 7 | [4, 11] | [4, 8] | True | True |
-| release/C | 6 | [5, 10] | [5, 8] | True | True |
-| release/capability | 20 | [11, 38] | [13, 25] | False | False |
+| List | Point | All range | Binding range | Point boundary failures |
+|---|---:|---|---|---|
+| all/composites/A | 6 | [5, 11] | [5, 9] | {} |
+| all/composites/B | 7 | [4, 11] | [4, 8] | {} |
+| all/composites/C | 6 | [5, 10] | [5, 8] | {} |
+| all/capability/official_caps | 16 | [7, 33] | [9, 21] | {} |
+| all/capability/no_caps | 20 | [11, 38] | [13, 25] | {} |
+| all/capability/cost_off_latency_2x | 16 | [7, 34] | [9, 21] | {} |
+| all/capability/latency_none | 16 | [7, 33] | [9, 21] | {} |
+| all/extra_capability/cost_7x | 16 | [7, 34] | [9, 21] | {} |
+| all/extra_capability/cost_10x | 16 | [7, 34] | [9, 21] | {} |
+| all/extra_capability/rank_field | 20 | [11, 38] | [13, 25] | {} |
+| all/extra_capability/cost_7x_latency_none | 19 | [10, 37] | [12, 24] | {} |
+| all/extra_capability/cost_10x_latency_none | 19 | [10, 37] | [12, 24] | {} |
+| open/composites/A | None | None | None | {} |
+| open/composites/B | None | None | None | {} |
+| open/composites/C | None | None | None | {} |
+| open/capability/official_caps | None | None | None | {} |
+| open/capability/no_caps | None | None | None | {} |
+| open/capability/cost_off_latency_2x | None | None | None | {} |
+| open/capability/latency_none | None | None | None | {} |
+| open/extra_capability/cost_7x | None | None | None | {} |
+| open/extra_capability/cost_10x | None | None | None | {} |
+| open/extra_capability/rank_field | None | None | None | {} |
+| open/extra_capability/cost_7x_latency_none | None | None | None | {} |
+| open/extra_capability/cost_10x_latency_none | None | None | None | {} |
+| api/composites/A | 3 | [2, 5] | [2, 5] | {} |
+| api/composites/B | 4 | [2, 6] | [2, 4] | {} |
+| api/composites/C | 3 | [2, 4] | [2, 4] | {} |
+| api/capability/official_caps | 6 | [1, 8] | [3, 6] | {} |
+| api/capability/no_caps | 10 | [5, 12] | [7, 10] | {} |
+| api/capability/cost_off_latency_2x | 6 | [1, 8] | [3, 6] | {} |
+| api/capability/latency_none | 6 | [1, 8] | [3, 6] | {} |
+| api/extra_capability/cost_7x | 6 | [1, 8] | [3, 6] | {} |
+| api/extra_capability/cost_10x | 6 | [1, 8] | [3, 6] | {} |
+| api/extra_capability/rank_field | 10 | [5, 12] | [7, 10] | {} |
+| api/extra_capability/cost_7x_latency_none | 9 | [4, 11] | [6, 9] | {} |
+| api/extra_capability/cost_10x_latency_none | 9 | [4, 11] | [6, 9] | {} |
+| release/A | 6 | [5, 11] | [5, 9] | {} |
+| release/B | 7 | [4, 11] | [4, 8] | {} |
+| release/C | 6 | [5, 10] | [5, 8] | {} |
+| release/capability | 20 | [11, 38] | [13, 25] | {} |
 
 ### Cue-Reflex-4B v0.2
 
-| Primary list | Point | All-scenario range | Separate-axis/LOO range | Boundary | Joint stress crossing |
-|---|---:|---|---|---|---|
-| all/composites/A | 72 | [31, 133] | [41, 133] | False | False |
-| all/composites/B | 106 | [79, 136] | [85, 136] | False | False |
-| all/composites/C | 126 | [105, 139] | [108, 139] | False | False |
-| all/capability/official_caps | 142 | [126, 168] | [133, 153] | False | False |
-| all/capability/no_caps | 161 | [141, 188] | [150, 172] | False | False |
-| all/capability/cost_off_latency_2x | 148 | [132, 174] | [139, 159] | False | False |
-| all/capability/latency_none | 147 | [129, 174] | [136, 158] | False | False |
-| all/extra_capability/cost_7x | 148 | [132, 174] | [139, 159] | False | False |
-| all/extra_capability/cost_10x | 148 | [132, 174] | [139, 159] | False | False |
-| all/extra_capability/rank_field | 161 | [141, 188] | [150, 172] | False | False |
-| all/extra_capability/cost_7x_latency_none | 159 | [139, 186] | [148, 170] | False | False |
-| all/extra_capability/cost_10x_latency_none | 159 | [139, 186] | [148, 170] | False | False |
-| open/composites/A | 55 | [21, 105] | [29, 105] | False | False |
-| open/composites/B | 81 | [59, 107] | [64, 107] | False | False |
-| open/composites/C | 97 | [78, 108] | [80, 108] | False | False |
-| open/capability/official_caps | 113 | [97, 135] | [104, 121] | False | False |
-| open/capability/no_caps | 120 | [101, 143] | [109, 128] | False | False |
-| open/capability/cost_off_latency_2x | 115 | [99, 137] | [106, 123] | False | False |
-| open/capability/latency_none | 116 | [98, 139] | [105, 124] | False | False |
-| open/extra_capability/cost_7x | 115 | [99, 137] | [106, 123] | False | False |
-| open/extra_capability/cost_10x | 115 | [99, 137] | [106, 123] | False | False |
-| open/extra_capability/rank_field | 120 | [101, 143] | [109, 128] | False | False |
-| open/extra_capability/cost_7x_latency_none | 120 | [101, 143] | [109, 128] | False | False |
-| open/extra_capability/cost_10x_latency_none | 120 | [101, 143] | [109, 128] | False | False |
-| api/composites/A | — | — | — | False | False |
-| api/composites/B | — | — | — | False | False |
-| api/composites/C | — | — | — | False | False |
-| api/capability/official_caps | — | — | — | False | False |
-| api/capability/no_caps | — | — | — | False | False |
-| api/capability/cost_off_latency_2x | — | — | — | False | False |
-| api/capability/latency_none | — | — | — | False | False |
-| api/extra_capability/cost_7x | — | — | — | False | False |
-| api/extra_capability/cost_10x | — | — | — | False | False |
-| api/extra_capability/rank_field | — | — | — | False | False |
-| api/extra_capability/cost_7x_latency_none | — | — | — | False | False |
-| api/extra_capability/cost_10x_latency_none | — | — | — | False | False |
-| release/A | 72 | [31, 133] | [41, 133] | False | False |
-| release/B | 106 | [79, 136] | [85, 136] | False | False |
-| release/C | 126 | [105, 139] | [108, 139] | False | False |
-| release/capability | 161 | [141, 188] | [150, 172] | False | False |
+| List | Point | All range | Binding range | Point boundary failures |
+|---|---:|---|---|---|
+| all/composites/A | 72 | [31, 133] | [41, 133] | {} |
+| all/composites/B | 106 | [79, 136] | [85, 136] | {} |
+| all/composites/C | 126 | [105, 139] | [108, 139] | {} |
+| all/capability/official_caps | 142 | [126, 168] | [133, 153] | {} |
+| all/capability/no_caps | 161 | [141, 188] | [150, 172] | {} |
+| all/capability/cost_off_latency_2x | 148 | [132, 174] | [139, 159] | {} |
+| all/capability/latency_none | 147 | [129, 174] | [136, 158] | {} |
+| all/extra_capability/cost_7x | 148 | [132, 174] | [139, 159] | {} |
+| all/extra_capability/cost_10x | 148 | [132, 174] | [139, 159] | {} |
+| all/extra_capability/rank_field | 161 | [141, 188] | [150, 172] | {} |
+| all/extra_capability/cost_7x_latency_none | 159 | [139, 186] | [148, 170] | {} |
+| all/extra_capability/cost_10x_latency_none | 159 | [139, 186] | [148, 170] | {} |
+| open/composites/A | 55 | [21, 105] | [29, 105] | {} |
+| open/composites/B | 81 | [59, 107] | [64, 107] | {} |
+| open/composites/C | 97 | [78, 108] | [80, 108] | {} |
+| open/capability/official_caps | 113 | [97, 135] | [104, 121] | {} |
+| open/capability/no_caps | 120 | [101, 143] | [109, 128] | {} |
+| open/capability/cost_off_latency_2x | 115 | [99, 137] | [106, 123] | {} |
+| open/capability/latency_none | 116 | [98, 139] | [105, 124] | {} |
+| open/extra_capability/cost_7x | 115 | [99, 137] | [106, 123] | {} |
+| open/extra_capability/cost_10x | 115 | [99, 137] | [106, 123] | {} |
+| open/extra_capability/rank_field | 120 | [101, 143] | [109, 128] | {} |
+| open/extra_capability/cost_7x_latency_none | 120 | [101, 143] | [109, 128] | {} |
+| open/extra_capability/cost_10x_latency_none | 120 | [101, 143] | [109, 128] | {} |
+| api/composites/A | None | None | None | {} |
+| api/composites/B | None | None | None | {} |
+| api/composites/C | None | None | None | {} |
+| api/capability/official_caps | None | None | None | {} |
+| api/capability/no_caps | None | None | None | {} |
+| api/capability/cost_off_latency_2x | None | None | None | {} |
+| api/capability/latency_none | None | None | None | {} |
+| api/extra_capability/cost_7x | None | None | None | {} |
+| api/extra_capability/cost_10x | None | None | None | {} |
+| api/extra_capability/rank_field | None | None | None | {} |
+| api/extra_capability/cost_7x_latency_none | None | None | None | {} |
+| api/extra_capability/cost_10x_latency_none | None | None | None | {} |
+| release/A | 72 | [31, 133] | [41, 133] | {} |
+| release/B | 106 | [79, 136] | [85, 136] | {} |
+| release/C | 126 | [105, 139] | [108, 139] | {} |
+| release/capability | 161 | [141, 188] | [150, 172] | {} |
 
-## Every carried top-five place changed because of the nine candidates
+## Special cases
 
-Comparison uses the same scenario with and without the nine promotions; this isolates their effect from the offset’s own effect. The JSON includes every scenario, list and carried row, including numerical place changes within the top five.
+H2O public Intelligence 85.623956 vs sealed 90.117789; public gain over the prior H2O 31B is +5.6474. Its equating-normalized gap +1.2760 is close to the prior +1.3571. The H2O 4B v1.4.1 public-loss/sealed-gain signature is not supported. The sealed comparison crosses draws. Only A218’s text row is covered here.
 
-| Scenario | List | Carried row | Before | After |
+Quyet Small: public I 44.9433 vs sealed 28.6346; penalty 0.942647; equated I 31.7941. Harmonic A 60.884127 × (I/50)² gives 24.618215 within 1e-9. The low A is arithmetically consistent with accepted aggregates.
+
+SubQ is hosted API, with no self-hosted latency adjustment and accepted launch-list cost 0.014913069173942242 USD/1,000. It stays outside open weights.
+
+## Carried top-five place changes
+
+| Scenario | List | Row | Before | After |
 |---|---|---|---:|---:|
 | point | all/composites/A | Torchcast Decision 31B v1.0 | 3 | 4 |
 | point | all/composites/A | Super Decider | 4 | 5 |
@@ -1410,7 +1403,3 @@ Comparison uses the same scenario with and without the nine promotions; this iso
 | leave_out_h2o-lightning-4b-v1.1 | release/C | Torchcast Decision 31B v1.0 | 3 | 4 |
 | leave_out_h2o-lightning-4b-v1.1 | release/C | Super Decider | 4 | 5 |
 | leave_out_h2o-lightning-4b-v1.1 | release/C | H2O-Lightning-4B v1.1 (H2O.ai, Qwen3.5-4B fine-tune, stock vLLM + open shim) | 5 | 7 |
-
-## Carried T3 wording conflict
-
-The proposal moves Karpo from all-systems Composite B #5 to #6 and Arcbright r2 from open Composite A/C #4 to #5. Their inherited listing_notes still name the old places. The brief permits carried result changes only to rank/ranks, so correcting those notes needs a lead ruling. No carried text was edited. See CARRIED-TEXT-RULING.json.
