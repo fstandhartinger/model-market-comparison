@@ -190,3 +190,14 @@ test('the publish-blocked cause is the error line, not a stack frame', () => {
   const f = publishBlockedFinding({ statusOk: false, published: false, rc: 1, streakStartedAt: '2026-11-19T05:31:01.306Z', streak: 1, failedStep: 'fetch-or', error });
   assert.match(f.text, /Cause: Error: OpenRouter endpoints: 180 of 1552 prior endpoints absent \(limit 77\)$/m);
 });
+
+test('run-report.json is written after report.npm_test is set, so the report carries it (CR-800)', async () => {
+  // 20 Nov 2026: the first post-N132 daily had npm_test in notify-context.json but null in run-report.json,
+  // because the field was assigned after the report was written.
+  const src = await readFile(new URL('../ops/daily/daily.mjs', import.meta.url), 'utf8');
+  const assign = src.indexOf('report.npm_test = npmTestRecord(');
+  const write = src.indexOf("await writeJSONAtomic(join(reports, 'run-report.json'), report);");
+  assert.ok(assign > 0 && write > 0, 'both statements exist');
+  assert.ok(assign < write, 'npm_test is assigned before run-report.json is written');
+  assert.equal(src.indexOf("await writeJSONAtomic(join(reports, 'run-report.json'), report);", write + 1), -1, 'one final run-report write');
+});

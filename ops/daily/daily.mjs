@@ -708,10 +708,11 @@ export async function runDaily({ repo = ROOT, home = '/opt/benchmarkheaven-daily
       live_contracts: liveStep?.gauntlet?.reuse ?? null, benchmarks: benchStep?.reuse ?? null,
       reused_units: units.map((u) => ({ kind: u.kind, id: u.id, fingerprint: u.fingerprint, accepted_run_id: u.accepted_run_id, accepted_at: u.accepted_at, captures: u.captures })) };
   } catch (error) { report.reuse = { error: redact(String(error.message)) }; }
-  await writeJSONAtomic(join(reports, 'run-report.json'), report);
   // N132: the npm-test duration is recorded on every run that reached the step (also a killed one) and judged against its
   // cap by the notify pass; a failed run hands over its failing step and error for the first-failure finding on #8.
+  // CR-800: set before run-report.json is written, so the report itself carries npm_test (20 Nov: it was null there).
   report.npm_test = npmTestRecord(report.steps, { capMs: NPM_TEST_TIMEOUT_MS, concurrency: report.npm_test_concurrency ?? null });
+  await writeJSONAtomic(join(reports, 'run-report.json'), report);
   // The step that ended the run is the one its error names (`<step> FAILED: ...`); a tolerated collector failure earlier in
   // the run (kept snapshot) is also `ok: false` and must not be blamed. No name -> no guess.
   const failedStep = report.error?.match(/^([\w.-]+) FAILED:/)?.[1] ?? null;
