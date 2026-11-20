@@ -2350,20 +2350,6 @@
   ],
   "overlay_changes": {
     "base-models": {
-      "cue-reflex-4b-v0.2": {
-        "before": null,
-        "after": {
-          "label": "google/gemma-4-E4B-it",
-          "status": "disclosed",
-          "sources": [
-            {
-              "url": "https://huggingface.co/oidlabs/cue-reflex-4B/blob/a36bd3ec3020f567d43ffb95ba6323a44d6a0ccf/README.md",
-              "title": "Author model card",
-              "evidence": "The model card metadata declares base_model: google/gemma-4-E4B-it (base_model_relation: finetune)."
-            }
-          ]
-        }
-      },
       "starlord-4b-preview": {
         "before": {
           "label": "Qwen/Qwen3.5-4B",
@@ -2377,6 +2363,20 @@
               "url": "https://huggingface.co/xsdfasfgsa/Starlord-4B-preview/blob/53321bddf5e9260cf46ea31abedf48487d2583d6/README.md",
               "title": "Author model card",
               "evidence": "The model card metadata declares base_model: Qwen/Qwen3.5-4B."
+            }
+          ]
+        }
+      },
+      "cue-reflex-4b-v0.2": {
+        "before": null,
+        "after": {
+          "label": "google/gemma-4-E4B-it",
+          "status": "disclosed",
+          "sources": [
+            {
+              "url": "https://huggingface.co/oidlabs/cue-reflex-4B/blob/a36bd3ec3020f567d43ffb95ba6323a44d6a0ccf/README.md",
+              "title": "Author model card",
+              "evidence": "The model card metadata declares base_model: google/gemma-4-E4B-it (base_model_relation: finetune)."
             }
           ]
         }
