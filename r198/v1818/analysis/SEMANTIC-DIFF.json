@@ -1,0 +1,27 @@
+{
+  "status": "PARTIAL_SOURCE_ONLY",
+  "release_data_built": false,
+  "release_artifacts_changed": 0,
+  "predecessor_release_files_changed": 0,
+  "carried_result_rows_changed": 0,
+  "overlay_only_exception": {
+    "key": "starlord-4b-preview",
+    "before": {
+      "label": "Qwen/Qwen3.5-4B",
+      "url": "https://huggingface.co/Qwen/Qwen3.5-4B"
+    },
+    "after": {
+      "label": "Qwen/Qwen3.5-4B",
+      "status": "disclosed",
+      "sources": [
+        {
+          "url": "https://huggingface.co/xsdfasfgsa/Starlord-4B-preview/blob/53321bddf5e9260cf46ea31abedf48487d2583d6/README.md",
+          "title": "Author model card",
+          "evidence": "The model card metadata declares base_model: Qwen/Qwen3.5-4B."
+        }
+      ]
+    }
+  },
+  "candidate_semantic_diff": "NOT RUN: candidate not built",
+  "node_modules_symlink_removed": false
+}
