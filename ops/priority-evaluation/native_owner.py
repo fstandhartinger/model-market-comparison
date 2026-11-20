@@ -28,6 +28,8 @@ from typing import Any
 
 OWNER_PREFIX = "fastlane-native-"
 UNIT = "jevbench-native-owner@{}.service"
+# These paid orders require their own separately authorized native measurement.
+EXCLUSIVE_MEASUREMENT_ORDERS = frozenset({"2be2698b-dc43-42a1-8b8c-1fe228fd0d30"})
 # Hold reasons that mean "no automatic runtime exists for this model" rather than a transient fault.
 REASONS = frozenset({"unsupported_measurement_backend"})
 START_GRACE_MINUTES = 20
