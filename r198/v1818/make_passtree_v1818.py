@@ -40,9 +40,16 @@ if prior['review']['verdict']=='PENDING':
  prior['review']={'verdict':'PASS','engine':'synthetic-preview-only','receipt_sha256':'b'*64};put_unlinked(pred,prior)
 p=D/'jevbench-v1.8.18-publication.json';m=json.loads(p.read_text());assert m['review']['verdict']=='PENDING','resume only accepts an unfinished PENDING copy'
 m['predecessor']['publication_sha256']=hashlib.sha256(pred.read_bytes()).hexdigest()
-proofpath=D/'jevbench-v1.8.18-proof.json';proof=json.loads(proofpath.read_text());proof['predecessor']=m['predecessor'];put_unlinked(proofpath,proof)
+proofpath=D/'jevbench-v1.8.18-proof.json';proof=json.loads(proofpath.read_text());proof['predecessor']=m['predecessor']
+# Only the isolated fixture simulates completed fairness approval. Production readers
+# apply the same unconditional approval checks to every engine.
+proof['publication_approval']['fairness_review_required']=False
+proof['publication_approval']['fairness_review_verdict']='PASS'
+proof['rank_review']['fairness_review']='PASS'
+put_unlinked(proofpath,proof)
+put_unlinked(P/'r198/v1818/inputs/APPROVAL.json',proof['publication_approval'])
 m['files']['proof']['sha256']=hashlib.sha256(proofpath.read_bytes()).hexdigest()
-m['review']={'verdict':'PASS','engine':'synthetic-preview-only','receipt_sha256':'a'*64};put_unlinked(p,m)
+m['review']={'verdict':'PASS','engine':'isolated-fixture-review','receipt_sha256':'a'*64};put_unlinked(p,m)
 # Generated loader pins must match the synthetic predecessor binding, without touching a source hardlink.
 loader=P/'lib/jevbench-v1818-release.mjs';loader.unlink()
 subprocess.run(['python3','-B',str(P/'r198/v1818/make_lib_v1818.py')],check=True)
