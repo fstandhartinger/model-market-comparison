@@ -12,6 +12,7 @@ file is in the image: /opt/skyfall-build/start.sh compiles the read-only /code/s
 execs it with the author's entrypoint defaults. This host module imports no model stack and executes no customer code.
 """
 import hashlib
+import math
 import re
 import tarfile
 from datetime import datetime, timezone
@@ -147,15 +148,16 @@ RUN_WAIT_MARGIN_S = 900  # logs, raw download, receipts and exact-ID teardown be
 
 
 def run_wait_seconds(attempt_started_at, ttl_hours, now=None):
-    """Run-container wait for this order (Chon precedent): Skyfall's uncertainty-gated CoT (up to 420 greedy tokens, 8.8 s cap)
-    can make a 1,500-row run longer than the default hour, so the run may use the rest of its attempt TTL minus a teardown
-    margin. TTL and cost caps are unchanged. A missing or unreadable start time keeps the default."""
+    """Bound this order's run-container wait by the remaining attempt TTL and teardown margin."""
     try:
         started = datetime.fromisoformat(attempt_started_at)
         if started.tzinfo is None:
             raise ValueError
+        ttl = float(ttl_hours)
+        if not math.isfinite(ttl) or ttl <= 0:
+            raise ValueError
         elapsed = ((now or datetime.now(timezone.utc)) - started).total_seconds()
-        left = float(ttl_hours) * 3600 - max(elapsed, 0.0) - RUN_WAIT_MARGIN_S
-    except (TypeError, ValueError):
-        return DEFAULT_RUN_WAIT_S
-    return int(max(DEFAULT_RUN_WAIT_S, left))
+        left = ttl * 3600 - max(elapsed, 0.0) - RUN_WAIT_MARGIN_S
+    except (OverflowError, TypeError, ValueError):
+        return 0
+    return max(0, int(left))
