@@ -85,10 +85,6 @@ function run(rankedCandidates,label){
 }
 const all=run(CAND,'WHAT-IF ONLY: all nine candidates provisionally ranked; no release data edits');
 writeFileSync(B+'/WHATIF-V1818.json',JSON.stringify(all,null,1)+'\n');
-let ranked=CAND.filter(k=>all.summary[k].classification!=='BOUNDARY');
-const prop=run(ranked,'PROPOSAL ONLY: hold every candidate crossing top-five membership in precedent single-axis/LOO scenarios; retain existing carried-row status');
-writeFileSync(B+'/WHATIF-PROPOSED-V1818.json',JSON.stringify(prop,null,1)+'\n');
-writeFileSync(B+'/PROPOSED-CONFIG.json',JSON.stringify({ranked,held:CAND.filter(k=>!ranked.includes(k)),n_ranked:315+ranked.length,lead_decision_pending:true},null,2)+'\n');
-console.log('PASS: 40 predecessor lists reproduce; frozen composite point reproduces on',DRAW.length,'draw rows; 11 scenarios.');
-for(const k of CAND)console.log(k,all.summary[k].classification,all.summary[k].primary_point_top5,'point top5;',all.summary[k].any_crossing_places,'crossings;',all.summary[k].stress_crossing_places,'including stress');
-console.log('Proposal',JSON.stringify({ranked,held:CAND.filter(k=>!ranked.includes(k)),n_ranked:315+ranked.length}));
+// Final dispositions are bound separately by inputs/RANKING-CONFIG.json under lead R1–R3.
+// The retained original WHATIF was not rerun by the continuation worker.
+console.log('Retained all-nine scenario analysis; use CLASSIFICATION.json for amended point-membership rulings.');
