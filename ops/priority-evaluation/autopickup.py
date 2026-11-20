@@ -6345,6 +6345,9 @@ def main(argv: list[str] | None = None) -> int:
     cycle_parser.add_argument("--synthetic")
     cycle_parser.add_argument("--job-root", type=Path)
     sub.add_parser("health")
+    late = sub.add_parser("cd7e-late-result")
+    late.add_argument("request_id")
+    late.add_argument("action", choices=("preview", "send", "reconcile"))
     record_parser = sub.add_parser("record-install")
     record_parser.add_argument("--source", default="hotfix")
     record_parser.add_argument("--reason", required=True)
@@ -6362,6 +6365,10 @@ def main(argv: list[str] | None = None) -> int:
     fetch_parser.add_argument("--which", required=True, choices=("code", "model"))
     args = parser.parse_args(argv)
     try:
+        if args.command == "cd7e-late-result":
+            import cd7e_late_result
+            print(json.dumps(cd7e_late_result.run(sys.modules[__name__], args.request_id, args.action), sort_keys=True))
+            return 0
         if args.command == "cycle":
             if args.job_root and not args.synthetic:
                 raise PickupError("--job-root is only for a synthetic run")
