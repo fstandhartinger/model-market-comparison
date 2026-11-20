@@ -21,10 +21,18 @@ from datetime import datetime, timedelta, timezone
 
 ORDER_ID = "9aa6673b-f364-4a20-9fc4-899678189814"
 ROOT = Path("/home/flori/jobs/fastlane-native-9aa6673b")
+ORDER = ROOT.parent / "fastlane-evaluations" / ORDER_ID
 RUNTIME = Path("/home/flori/.local/share/priority-evaluation/runtime")
+PUBLIC_INPUT_ROOT = ROOT.parent / "jevbench-add-requests-20260919/r126/input-public"
+V15_HARNESS_ROOT = ROOT.parent / "jevbench-v15-measure-20260925/harness"
 BOARD = Path("/home/flori/bin/agent-board")
+BOARD_DIR = Path("/home/flori/.agent-board")
+DECISIONS = Path("/home/flori/DECISIONS.md")
 DEADLINE = datetime(2026, 11, 21, 17, 31, 29, tzinfo=timezone.utc)
 HASH_RE = re.compile(r"[0-9a-f]{64}\Z")
+CLEAR_PREFIX = "CLEAR FASTLANE "
+HOLD_PREFIX = f"HOLD FASTLANE {ORDER_ID} "
+EXISTING_HOLDS = {70724, 70742}
 DEPUTIES = {
     f"{engine}:{role}"
     for engine in ("codex", "claude")
@@ -33,6 +41,9 @@ DEPUTIES = {
 CUSTODIANS = {
     "codex:jevbench-item-reserve-20261007",
     "claude:jevbench-item-reserve-20261007",
+}
+REAPER_OWNERS = {
+    f"{engine}:gpu-broker-20261026" for engine in ("codex", "claude", "devin")
 }
 
 STAGES = {
@@ -46,6 +57,7 @@ STAGES = {
         "unit": "fl9aa-adapter-smoke",
         "run_script": "run_public_smoke.sh",
         "preflight_script": "smoke.py",
+        "admission_script": "public_smoke_admission.py",
         "runtime_max_sec": 4320,
         "one_use_files": (ROOT / "public-smoke/ADAPTER-PROOF-CREATE-CALLED",
                           ROOT / "public-smoke/ADAPTER-PROOF-RESERVATION-CLAIM"),
@@ -66,6 +78,7 @@ STAGES = {
         "unit": "fl9aa-sealed",
         "run_script": "run_sealed.sh",
         "preflight_script": "measure_v16.py",
+        "admission_script": "sealed_admission.py",
         "runtime_max_sec": 9900,
         "one_use_files": (ROOT / "v16/CREATE-CALLED", ROOT / "v16/RESERVATION-CLAIM"),
         "scripts": (
@@ -117,8 +130,30 @@ def board_entry(entry_id: int) -> dict:
     return row
 
 
+def entry_time(entry: dict) -> datetime:
+    value = entry.get("created_at")
+    require(isinstance(value, str), f"#11 entry {entry.get('id')} has no timestamp")
+    return parse_time(value)
+
+
+def scoped_decisions_digest() -> str:
+    sections = re.split(r"(?m)(?=^## )", DECISIONS.read_text(encoding="utf-8"))
+    scoped = [section for section in sections if ORDER_ID[:8] in section.lower()]
+    return hashlib.sha256("".join(scoped).encode()).hexdigest()
+
+
+def board_holds() -> list[dict]:
+    raw = subprocess.check_output(
+        [str(BOARD), "search", HOLD_PREFIX.strip(), "--json"], text=True, timeout=30,
+    )
+    entries = json.loads(raw)
+    require(isinstance(entries, list) and len(entries) < 100, "cross-channel hold readback is incomplete")
+    return [entry for entry in entries
+            if entry.get("kind") == "decision" and entry.get("body", "").startswith(HOLD_PREFIX)]
+
+
 def preliminary_authority(stage: str, deputy_id: int, now: datetime | None = None) -> dict:
-    """Bind the packet hash to current deputy and custody decisions before reading candidate code."""
+    """Validate all mutable authority before opening any packet-pinned member."""
     policy = STAGES[stage]
     now = now or datetime.now(timezone.utc)
     require(type(deputy_id) is int and deputy_id > 0, "positive deputy decision ID required")
@@ -128,13 +163,21 @@ def preliminary_authority(stage: str, deputy_id: int, now: datetime | None = Non
     scope = first_line(deputy, policy["go_prefix"])
     require(scope.get("order") == ORDER_ID and HASH_RE.fullmatch(str(scope.get("packet_sha256", ""))),
             "deputy decision is not bound to this exact order and packet")
-    issued = parse_time(deputy["created_at"])
+    issued = entry_time(deputy)
     expires = parse_time(scope.get("expires"))
     require(issued <= now < expires <= min(issued + timedelta(minutes=20), DEADLINE),
             "deputy decision is stale, expired or outside the order deadline")
-    require(scope.get("ttl_h") == policy["ttl_h"] and type(scope.get("attempts")) is int
-            and scope["attempts"] == 1 and type(scope.get("custody_id")) is int
-            and type(scope.get("clearance_id")) is int and type(scope.get("reaper_id")) is int,
+    expected_fields = {
+        "order", "provider", "instance_type", "location", "offer_id", "max_usd_h",
+        "max_os_volume_usd_h", "ttl_h", "attempts", "expires", "packet_sha256",
+        "custody_id", "custody_sha256", "clearance_id", "reaper_id",
+        "smoke_sha256" if stage == "sealed" else "prior_charge_sha256",
+    }
+    require(set(scope) == expected_fields and scope.get("ttl_h") == policy["ttl_h"]
+            and type(scope.get("attempts")) is int and scope["attempts"] == 1
+            and all(type(scope.get(key)) is int for key in ("custody_id", "clearance_id", "reaper_id"))
+            and 0 < scope["clearance_id"] < scope["custody_id"] < deputy_id
+            and 0 < scope["reaper_id"] < deputy_id,
             "deputy decision scope is incomplete")
     require(isinstance(scope.get("custody_sha256"), str)
             and HASH_RE.fullmatch(scope["custody_sha256"]), "custody word hash is missing")
@@ -152,7 +195,7 @@ def preliminary_authority(stage: str, deputy_id: int, now: datetime | None = Non
     require(word_text.rstrip("\n") == expected_word.rstrip("\n"),
             "custody word bytes differ from their #11 source")
     custody_scope = first_line(custody, "HASH CONFIRMED + UNSPENT ")
-    custody_issued = parse_time(custody["created_at"])
+    custody_issued = entry_time(custody)
     custody_expires = parse_time(custody_scope.get("expires"))
     require(set(custody_scope) == {"order", "stage", "packet_sha256", "expires"}
             and custody_scope["order"] == ORDER_ID and custody_scope["stage"] == stage
@@ -161,6 +204,50 @@ def preliminary_authority(stage: str, deputy_id: int, now: datetime | None = Non
             and custody_expires <= min(custody_issued + timedelta(hours=2), DEADLINE)
             and expires <= custody_expires,
             "custody confirmation is stale or bound to different packet bytes")
+    clearance = board_entry(scope["clearance_id"])
+    require(clearance.get("author") in DEPUTIES and clearance.get("kind") == "decision"
+            and clearance.get("id") < custody.get("id") and entry_time(clearance) <= custody_issued,
+            "hold clearance is missing or must precede custody")
+    clearance_scope = first_line(clearance, CLEAR_PREFIX)
+    require(set(clearance_scope) == {"order", "stage", "packet_sha256", "decisions_sha256", "resolved_holds"}
+            and clearance_scope.get("order") == ORDER_ID and clearance_scope.get("stage") == stage
+            and clearance_scope.get("packet_sha256") == scope["packet_sha256"]
+            and clearance_scope.get("decisions_sha256") == scoped_decisions_digest()
+            and isinstance(clearance_scope.get("resolved_holds"), list)
+            and all(type(item) is int and 0 < item < clearance.get("id")
+                    for item in clearance_scope["resolved_holds"]),
+            "hold clearance is stale or bound to different decisions")
+    resolved_holds = set(clearance_scope["resolved_holds"])
+    require(EXISTING_HOLDS <= resolved_holds, "existing fast-lane holds were not reconciled")
+    for hold_entry in board_holds():
+        require(hold_entry.get("author") in CUSTODIANS | DEPUTIES | {"florian", "human:florian"},
+                f"unverified HOLD author in #{hold_entry.get('id')}")
+        hold = first_line(hold_entry, HOLD_PREFIX)
+        require(set(hold) == {"stage"} and hold.get("stage") in {"all", stage},
+                f"invalid fast-lane HOLD in #{hold_entry.get('id')}")
+        if hold["stage"] in {"all", stage}:
+            require(hold_entry["id"] in resolved_holds,
+                    f"unresolved cross-channel HOLD #{hold_entry['id']}")
+    reaper = board_entry(scope["reaper_id"])
+    require(reaper.get("author") in REAPER_OWNERS and reaper.get("kind") in {"decision", "answer"}
+            and issued - timedelta(hours=2) <= entry_time(reaper) <= issued
+            and first_line(reaper, "REAPER CONFIRMED ") == {
+                "order": ORDER_ID, "stage": stage, "packet_sha256": scope["packet_sha256"],
+                "ttl_h": policy["ttl_h"],
+            }, "reaper confirmation is missing, stale or bound to different packet bytes")
+    superseding_prefixes = tuple(item["go_prefix"] for item in STAGES.values()) + (
+        "HASH CONFIRMED + UNSPENT ", CLEAR_PREFIX, "REAPER CONFIRMED ")
+    # A newer clearance, reaper word, custody word, or GO can supersede this
+    # authorization even when it was posted after the selected clearance but
+    # before the selected custody word. Scan from the earliest selected record.
+    for entry in board_since(min(scope["clearance_id"], scope["reaper_id"]) - 1):
+        if entry.get("id") in {scope["custody_id"], scope["clearance_id"], scope["reaper_id"], deputy_id}:
+            continue
+        if entry.get("author") not in CUSTODIANS | DEPUTIES | REAPER_OWNERS:
+            continue
+        line = entry.get("body", "").partition("\n")[0]
+        if line.startswith(superseding_prefixes):
+            require(ORDER_ID not in line, f"stage authority was superseded by #11 entry {entry.get('id')}")
     require(scope.get("provider") == "verda" and scope.get("instance_type") == "1RTXPRO6000.30V"
             and scope.get("offer_id") == f"{scope.get('instance_type')}@{scope.get('location')}"
             and isinstance(scope.get("location"), str) and re.fullmatch(r"FIN-\d+", scope["location"])
@@ -172,7 +259,8 @@ def preliminary_authority(stage: str, deputy_id: int, now: datetime | None = Non
     require((scope["max_usd_h"] + scope["max_os_volume_usd_h"]) * scope["ttl_h"]
             <= policy["max_reservation_usd"],
             "deputy decision exceeds the stage reservation cap")
-    return {"scope": scope, "deputy": deputy, "custody": custody, "packet_sha256": scope["packet_sha256"]}
+    return {"scope": scope, "deputy": deputy, "custody": custody, "clearance": clearance,
+            "reaper": reaper, "packet_sha256": scope["packet_sha256"]}
 
 
 def require_unused_stage(stage: str) -> None:
@@ -279,7 +367,47 @@ def parse_packet(stage: str, packet_bytes: bytes, expected_sha256: str) -> dict[
     required.add(RUNTIME / "native_stage_launcher.py")
     require(required <= pins.keys(),
             "approved packet omits a required stage launcher or runtime member")
+    validate_packet_path_policy(stage, pins)
     return pins
+
+
+def _within(path: Path, root: Path) -> bool:
+    return path == root or root in path.parents
+
+
+def validate_packet_path_policy(stage: str, pins: dict[Path, str]) -> None:
+    """Reject paths outside the order's exact source roots before opening any pinned member."""
+    order_roots = (ROOT / "scripts", ROOT / "public-smoke", ROOT / "adapter-proof", ROOT / "source",
+                   ROOT / "review", ROOT / "trusted-runner", ROOT / "receipts", ROOT / "workers",
+                   ROOT / "supplement", ORDER / "source", ORDER / "review", ORDER / "trusted-runner")
+    shared_roots = (RUNTIME, PUBLIC_INPUT_ROOT, V15_HARNESS_ROOT)
+    forbidden_parts = {
+        "sealed", "sealed-data", "sealed-inputs", "jevbench-sealed", "hidden", "hidden-data",
+        "v16-profile-admission.json", "v16-profile-review.json",
+    }
+    for path in pins:
+        roots = order_roots + shared_roots
+        if stage == "adapter_smoke":
+            parts = {part.lower() for part in path.parts}
+            require(not parts.intersection(forbidden_parts)
+                    and not any("v16-profile" in part or "sealed-data" in part for part in parts)
+                    and not _within(path, ROOT / "v16"),
+                    f"public-only path policy rejects protected packet member: {path.name}")
+        require(any(_within(path, root) for root in roots),
+                f"packet path is outside the exact order source roots: {path.name}")
+
+
+def authenticate_selected_paths(stage: str, packet_bytes: bytes, expected_sha256: str,
+                                selected: set[Path], reader=read_pinned_file):
+    pins = parse_packet(stage, packet_bytes, expected_sha256)
+    require(selected <= pins.keys(), "approved packet omits the trusted preflight closure")
+    captured = {}
+    for path in sorted(selected):
+        actual, data = reader(path, True)
+        require(actual == pins[path], f"packet pin mismatch in trusted preflight closure: {path.name}")
+        require(isinstance(data, bytes), f"trusted preflight closure was not captured: {path.name}")
+        captured[path] = data
+    return pins, captured
 
 
 def authenticate_packet(stage: str, packet_bytes: bytes, expected_sha256: str, reader=read_pinned_file):
@@ -334,6 +462,54 @@ def _fsync_snapshot_directories(root: Path) -> None:
             os.close(fd)
 
 
+def _snapshot_relpath(source: Path) -> Path | None:
+    if source == ROOT / "scripts" or ROOT / "scripts" in source.parents:
+        return source.relative_to(ROOT / "scripts")
+    if source == RUNTIME or RUNTIME in source.parents:
+        return Path("runtime") / source.relative_to(RUNTIME)
+    return None
+
+
+def _snapshot_files(root: Path) -> dict[Path, bytes]:
+    files = {}
+    for path in root.rglob("*"):
+        if path.is_symlink():
+            raise ValueError("execution snapshot contains a symlink")
+        if path.is_file():
+            data, _ = read_regular_file(path)
+            files[path.relative_to(root)] = data
+    return files
+
+
+def _verify_snapshot(root: Path, expected: dict[Path, bytes]) -> None:
+    actual = _snapshot_files(root)
+    require(set(actual) == set(expected), "execution snapshot file set changed during preflight")
+    for relative, data in expected.items():
+        require(actual[relative] == data, f"execution snapshot bytes changed during preflight: {relative.name}")
+
+
+def _preflight_command(stage: str, snapshot: Path, deputy_id: int, packet_sha256: str) -> list[str]:
+    policy = STAGES[stage]
+    require(BOARD_DIR.is_dir() and not BOARD_DIR.is_symlink(), "agent-board state directory is unavailable")
+    verified_root = snapshot / "runtime"
+    packet_path = snapshot / "PACKET-HASHES.txt"
+    script = snapshot / policy["preflight_script"]
+    return [
+        "/usr/bin/bwrap", "--unshare-all", "--die-with-parent", "--clearenv",
+        "--ro-bind", "/", "/", "--dev", "/dev", "--proc", "/proc", "--tmpfs", "/tmp",
+        "--ro-bind", str(snapshot), str(snapshot), "--bind", str(BOARD_DIR), str(BOARD_DIR),
+        "--chdir", str(ROOT), "--setenv", "PATH", "/usr/bin:/bin:/home/flori/bin",
+        "--setenv", "HOME", "/home/flori", "--setenv", "TMPDIR", "/tmp",
+        "--setenv", "PYTHONDONTWRITEBYTECODE", "1", "--setenv", "AGENT_BOARD_DIR", str(BOARD_DIR),
+        "--setenv", "FASTLANE_NATIVE_STAGE", stage,
+        "--setenv", "FASTLANE_NATIVE_AUTHENTICATED_PACKET_SHA256", packet_sha256,
+        "--setenv", "FASTLANE_NATIVE_VERIFIED_RUNTIME_ROOT", str(verified_root),
+        "--setenv", "FASTLANE_NATIVE_AUTHENTICATED_PACKET_PATH", str(packet_path),
+        "--", "/usr/bin/python3", "-IB", "-B", str(script), "--preflight-only", str(deputy_id),
+        str(packet_path),
+    ]
+
+
 def _remove_snapshot(root: Path) -> None:
     if not root.exists():
         return
@@ -349,56 +525,96 @@ def _remove_snapshot(root: Path) -> None:
 def start_stage(stage: str, deputy_id: int) -> None:
     policy = STAGES[stage]
     authority = preliminary_authority(stage, deputy_id)
+    require_unused_stage(stage)
     packet_bytes, _ = read_regular_file(policy["packet"])
+    packet_pins = parse_packet(stage, packet_bytes, authority["packet_sha256"])
+    preflight_paths = {
+        ROOT / "scripts" / policy["preflight_script"],
+        ROOT / "scripts" / policy["admission_script"],
+        RUNTIME / "native_stage_launcher.py",
+    }
+    _, preflight_capture = authenticate_selected_paths(
+        stage, packet_bytes, authority["packet_sha256"], preflight_paths,
+    )
     snapshot = Path(tempfile.mkdtemp(prefix=("fl9aa-adapter-smoke." if stage == "adapter_smoke"
-                                            else "fl9aa-sealed."), dir="/tmp"))
+                                            else "fl9aa-sealed."), dir="/var/tmp"))
     os.chmod(snapshot, 0o700)
     started = False
     try:
+        expected_snapshot = {Path("PACKET-HASHES.txt"): packet_bytes}
+        _write_snapshot_file(snapshot, Path("PACKET-HASHES.txt"), packet_bytes)
+        for source, data in preflight_capture.items():
+            relative = _snapshot_relpath(source)
+            require(relative is not None, "preflight closure includes an unapproved source root")
+            _write_snapshot_file(snapshot, relative, data)
+            expected_snapshot[relative] = data
+        _fsync_snapshot_directories(snapshot)
+        _freeze_snapshot(snapshot)
+        subprocess.run(
+            _preflight_command(stage, snapshot, deputy_id, authority["packet_sha256"]), cwd=ROOT, env={},
+            stdin=subprocess.DEVNULL, check=True, timeout=300,
+        )
+        _verify_snapshot(snapshot, expected_snapshot)
+
+        # Re-read all live authority and the packet before any full-manifest member pass.
+        authority = preliminary_authority(stage, deputy_id)
+        current_packet, _ = read_regular_file(policy["packet"])
+        require(current_packet == packet_bytes, "live packet changed after the authenticated preflight")
+
+        pins, captured = authenticate_packet(
+            stage, packet_bytes, authority["packet_sha256"], reader=read_pinned_file,
+        )
+        require(pins == packet_pins, "packet member set changed after stage authority validation")
+        for source, data in preflight_capture.items():
+            require(captured.get(source) == data, f"trusted preflight source changed: {source.name}")
+
+        # Preflight ran with a read-only mount; reopen the helper-owned directory to extend its snapshot.
+        for path in sorted((entry for entry in snapshot.rglob("*") if entry.is_dir()),
+                           key=lambda entry: len(entry.parts), reverse=True):
+            os.chmod(path, 0o700)
+        os.chmod(snapshot, 0o700)
+        for source, data in captured.items():
+            relative = _snapshot_relpath(source)
+            if relative is None:
+                continue
+            if relative in expected_snapshot:
+                require(expected_snapshot[relative] == data,
+                        f"preflight snapshot differs from authenticated closure: {relative.name}")
+                continue
+            _write_snapshot_file(snapshot, relative, data)
+            expected_snapshot[relative] = data
+        _fsync_snapshot_directories(snapshot)
+        _verify_snapshot(snapshot, expected_snapshot)
+        authority = preliminary_authority(stage, deputy_id)
+        current_packet, _ = read_regular_file(policy["packet"])
+        require(current_packet == packet_bytes, "live packet changed before stage launch")
+        _freeze_snapshot(snapshot)
+
         def launch_verified(pins, captured):
             nonlocal started
             require_unused_stage(stage)
-            # Persist the exact approved packet before running any packet-bound code.
-            _write_snapshot_file(snapshot, Path("PACKET-HASHES.txt"), packet_bytes)
-            for source, data in captured.items():
-                if RUNTIME in source.parents:
-                    relative = Path("runtime") / source.relative_to(RUNTIME)
-                elif ROOT / "scripts" == source or ROOT / "scripts" in source.parents:
-                    relative = source.relative_to(ROOT / "scripts")
-                else:
-                    continue
-                _write_snapshot_file(snapshot, relative, data)
-            _fsync_snapshot_directories(snapshot)
             required_script = snapshot / policy["preflight_script"]
             run_script = snapshot / policy["run_script"]
             require(required_script.is_file() and run_script.is_file(),
                     "verified startup snapshot lacks its exact stage entry points")
-            env = os.environ.copy()
-            env["FASTLANE_NATIVE_VERIFIED_RUNTIME_ROOT"] = str(snapshot / "runtime")
-            subprocess.run(
-                ["/usr/bin/python3", "-IB", str(required_script), "--preflight-only", str(deputy_id),
-                 str(snapshot / "PACKET-HASHES.txt")],
-                cwd=ROOT, env=env, stdin=subprocess.DEVNULL, check=True, timeout=300,
-            )
-            preflight_bytes, _ = read_regular_file(snapshot / "PACKET-HASHES.txt")
-            require(preflight_bytes == packet_bytes, "candidate preflight packet differs from authenticated bytes")
-            _freeze_snapshot(snapshot)
             # A timed-out systemd-run call can still have accepted the unit. Preserve its
-            # immutable snapshot on every ambiguous outcome instead of deleting live inputs.
+            # read-only snapshot on every ambiguous outcome instead of deleting live inputs.
             started = True
             subprocess.run(
                 ["systemd-run", "--user", f"--unit={policy['unit']}", f"--working-directory={ROOT}",
                  "--property=UMask=0077", "--property=KillMode=mixed", "--property=KillSignal=SIGTERM",
                  "--property=TimeoutStopSec=1200", f"--property=RuntimeMaxSec={policy['runtime_max_sec']}",
+                 f"--property=ReadOnlyPaths={snapshot}",
+                 f"--setenv=FASTLANE_NATIVE_STAGE={stage}",
+                 f"--setenv=FASTLANE_NATIVE_AUTHENTICATED_PACKET_SHA256={authority['packet_sha256']}",
                  f"--setenv=FASTLANE_NATIVE_VERIFIED_RUNTIME_ROOT={snapshot / 'runtime'}",
+                 f"--setenv=FASTLANE_NATIVE_AUTHENTICATED_PACKET_PATH={snapshot / 'PACKET-HASHES.txt'}",
                  "/bin/bash", str(run_script), str(snapshot), str(deputy_id)],
                 cwd=ROOT, stdin=subprocess.DEVNULL, check=True, timeout=60,
             )
             return True
 
-        execute_after_authentication(
-            stage, packet_bytes, authority["packet_sha256"], read_pinned_file, launch_verified,
-        )
+        launch_verified(pins, captured)
     finally:
         if not started:
             _remove_snapshot(snapshot)
