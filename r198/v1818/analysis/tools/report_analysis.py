@@ -1,5 +1,5 @@
 from pathlib import Path
-import json,hashlib
+import json,hashlib,re
 B=Path(__file__).resolve().parent.parent
 load=lambda n:json.loads((B/n).read_text())
 a=load('WHATIF-V1818.json');p=load('WHATIF-PROPOSED-V1818.json');cfg=load('PROPOSED-CONFIG.json');sp=load('SPECIAL-CASES.json')
@@ -29,7 +29,7 @@ for l,arr in p['primary_rankings']['point'].items():
  old5=before[l][:5];new5=arr[:5]
  if old5!=new5:
   changes.append({'list':l,'before':old5,'after':new5,'entrants':[k for k in new5 if k not in old5],'leavers':[k for k in old5 if k not in new5]});cl+=[f'## {l}','', 'Before: '+', '.join(by[k]['display']for k in old5), '', 'After: '+', '.join(by[k]['display']for k in new5),'']
- def record(k,i):return{'place':i+1,'model':by[k]['display'],'value':by[k]['scores'][l.split('/')[-1]]if '/composites/'in l or (l.startswith('release/')and l!='release/capability')else by[k]['capability']}
+ def record(k,i):return{'place':i+1,'model':re.sub(r'\s*\(@[0-9a-f]{7,40}\)','',by[k]['display']),'value':by[k]['scores'][l.split('/')[-1]]if '/composites/'in l or (l.startswith('release/')and l!='release/capability')else by[k]['capability']}
  facts.append({'list':l,'before':[record(k,i)for i,k in enumerate(old5)],'after':[record(k,i)for i,k in enumerate(new5)]})
 (B/'topfive-diff.json').write_text(json.dumps({'status':'PROPOSAL_ONLY','changed_primary_lists':len(changes),'lists':changes},indent=2)+'\n');(B/'CARD-FACTS.json').write_text(json.dumps({'status':'PROPOSAL_ONLY','changed_primary_lists':len(changes),'lists':facts},indent=2)+'\n');(B/'CHANGED-LISTS.md').write_text('\n'.join(cl).rstrip()+'\n')
 print('Proposal changes',len(changes),'of 40 primary top-five lists; BOUNDARY includes',len(a['carried_topfive_changes']),'carried place changes across 11 scenarios.')
