@@ -42,6 +42,52 @@ def sender_query(statement):
     return json.loads(output) if output else None
 
 
+class RestrictedRelease(unittest.TestCase):
+    def test_public_reads_use_fixed_urls_without_credentials(self):
+        with patch.object(ap.host_github, "token", side_effect=AssertionError("credential lookup")):
+            client = late.PublicRelease(ap)
+            sha = "a" * 40
+            artifact = ap.canonical_artifact_path("jevbench", "v1.6.3")
+            with patch.object(client.opener, "open", side_effect=lambda *_a, **_kw: io.BytesIO(b"{}")) as opened:
+                self.assertEqual(client.gh_json(f"repos/{ap.REPO}/pulls/123"), {})
+                self.assertEqual(client.gh_json(f"repos/{ap.REPO}/commits/{sha}"), {})
+                self.assertEqual(client.gh_json(f"repos/{ap.REPO}/compare/{sha}...{sha}"), {})
+                self.assertEqual(client.gh_file(artifact, sha), b"{}")
+                self.assertEqual(client.http_get(late.URL), b"{}")
+                self.assertEqual(client.http_get(ap.PUBLIC_HOSTS[1] + "/api/meta"), b"{}")
+            self.assertEqual([call.args[0].full_url for call in opened.call_args_list], [
+                f"https://api.github.com/repos/{ap.REPO}/pulls/123",
+                f"https://api.github.com/repos/{ap.REPO}/commits/{sha}",
+                f"https://api.github.com/repos/{ap.REPO}/compare/{sha}...{sha}",
+                f"https://raw.githubusercontent.com/{ap.REPO}/{sha}/{artifact}",
+                late.URL,
+                ap.PUBLIC_HOSTS[1] + "/api/meta",
+            ])
+            for call in opened.call_args_list:
+                self.assertFalse(call.args[0].has_header("Authorization"))
+                self.assertEqual(call.kwargs["timeout"], 10)
+
+    def test_refuses_unapproved_routes_before_open(self):
+        client = late.PublicRelease(ap)
+        with patch.object(client.opener, "open") as opened:
+            with self.assertRaises(ap.PickupError):
+                client.gh_json(f"repos/{ap.REPO}/pulls/1?per_page=1")
+            with self.assertRaises(ap.PickupError):
+                client.gh_file("data/raw/benchmarks/jevbench/v9.9/jevbench-v1.6.3-results.json", "a" * 40)
+            with self.assertRaises(ap.PickupError):
+                client.http_get("https://benchmarkheaven.com.example/api/meta")
+            opened.assert_not_called()
+
+    def test_redirect_and_oversized_response_fail_closed(self):
+        client = late.PublicRelease(ap)
+        self.assertIsNone(late.NoReleaseRedirect().redirect_request(
+            None, None, 302, "Found", {}, "https://example.invalid/",
+        ))
+        with patch.object(client.opener, "open", return_value=io.BytesIO(b"{}")):
+            with self.assertRaisesRegex(ap.PickupError, "size limit"):
+                client.http_get(late.URL, 1)
+
+
 class CustodyProtocol(unittest.TestCase):
     def test_admission_rejects_unapproved_proofs_before_hashing(self):
         with tempfile.TemporaryDirectory() as directory:
@@ -684,9 +730,9 @@ class LateResultDB(unittest.TestCase):
                 patch.object(late, "open_custody_socket", fixture_connection),
                 patch.object(ap.official_scoring, "pins", side_effect=AssertionError("ordinary scorer path used")),
                 patch.object(ap.measurement_dispatch, "pins", side_effect=AssertionError("ordinary measurement path used")),
-                patch.object(ap.Effects, "gh_json", side_effect=release_lookup),
-                patch.object(ap.Effects, "gh_file", side_effect=lambda path, ref: files[path, ref]),
-                patch.object(ap.Effects, "http_get", side_effect=lambda url, *args: pages[url]),
+                patch.object(late.PublicRelease, "gh_json", side_effect=release_lookup),
+                patch.object(late.PublicRelease, "gh_file", side_effect=lambda path, ref: files[path, ref]),
+                patch.object(late.PublicRelease, "http_get", side_effect=lambda url, *args: pages[url]),
                 patch.object(ap, "author_message_guard", return_value=None) as guard,
                 self.installed_adapter() as smtp,
             ):

@@ -6,6 +6,7 @@ from contextvars import ContextVar
 from datetime import timedelta
 import fcntl
 import hashlib
+from http.client import HTTPException
 import json
 from pathlib import Path
 import os
@@ -14,6 +15,7 @@ import socket
 import stat
 import struct
 import time
+import urllib.request
 import uuid
 
 ORDER = "cd7e038c-dcac-4990-9ca5-feac99cd8d8d"
@@ -299,11 +301,70 @@ def recompute_matches_attestation(rid, attest, recompute, review_gate):
     )
 
 
+class NoReleaseRedirect(urllib.request.HTTPRedirectHandler):
+    def redirect_request(self, req, fp, code, msg, headers, newurl):
+        return None
+
+
+class PublicRelease:
+    """Read the public release from fixed endpoints without workshop credentials."""
+
+    def __init__(self, ap):
+        self.ap = ap
+        self.opener = urllib.request.build_opener(
+            urllib.request.ProxyHandler({}), NoReleaseRedirect(),
+        )
+
+    def _read(self, url, limit, accept):
+        request = urllib.request.Request(url, headers={
+            "Accept": accept,
+            "User-Agent": "benchmarkheaven-fastlane-late/1",
+            "Cache-Control": "no-cache",
+        })
+        try:
+            with self.opener.open(request, timeout=10) as response:
+                data = response.read(limit + 1)
+        except (HTTPException, OSError, ValueError) as exc:
+            raise self.ap.PickupError("late public release lookup failed") from exc
+        if len(data) > limit:
+            raise self.ap.PickupError("late public release response exceeds its size limit")
+        return data
+
+    def gh_json(self, path):
+        sha = r"[0-9a-f]{40}"
+        route = rf"repos/{re.escape(self.ap.REPO)}/(?:pulls/[1-9][0-9]*|commits/{sha}|compare/{sha}\.\.\.{sha})"
+        if not re.fullmatch(route, path):
+            raise self.ap.PickupError("late GitHub release path is outside the allowed routes")
+        data = self._read("https://api.github.com/" + path, 5_000_000, "application/vnd.github+json")
+        try:
+            return json.loads(data)
+        except (UnicodeError, ValueError) as exc:
+            raise self.ap.PickupError("late GitHub release lookup returned invalid JSON") from exc
+
+    def gh_file(self, path, ref):
+        match = re.fullmatch(
+            r"data/raw/benchmarks/jevbench/v[0-9]+\.[0-9]+/jevbench-(v[0-9]+\.[0-9]+\.[0-9]+)-results\.json",
+            path,
+        )
+        if not match or self.ap.canonical_artifact_path("jevbench", match[1]) != path \
+                or not self.ap.SHA40_RE.fullmatch(ref):
+            raise self.ap.PickupError("late GitHub release artifact path or commit is invalid")
+        return self._read(f"https://raw.githubusercontent.com/{self.ap.REPO}/{ref}/{path}",
+                          50_000_000, "application/json")
+
+    def http_get(self, url, limit=12_000_000):
+        if url == URL:
+            return self._read(url, limit, "text/html")
+        if url in {host + "/api/meta" for host in self.ap.PUBLIC_HOSTS}:
+            return self._read(url, limit, "application/json")
+        raise self.ap.PickupError("late site lookup is outside the allowed routes")
+
+
 def admitted_result(ap, job, row, state, approval, custody):
     if state.get("operational_hold") or row is None:
         raise ap.PickupError("the trusted pickup still holds the order")
     summary = ap.verify_result(
-        row, job, state, ap.Effects(), public_live=True, late_custody=custody,
+        row, job, state, PublicRelease(ap), public_live=True, late_custody=custody,
         late_receipt_hashes=approval.get("aggregate_receipt_hashes"),
     )
     results = summary.get("results") or []
