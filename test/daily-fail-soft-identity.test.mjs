@@ -2,9 +2,33 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { aaKeyFrozen, stickyAaFamilyKey } from '../lib/aa-identity.mjs';
-import { reconcileScoreModelIds } from '../lib/benchmark-scores.mjs';
+import { reconcileScoreModelIds, restoreReviewedMeasuredJoins } from '../lib/benchmark-scores.mjs';
 
 const PRO = 'bf220674-68bd-43cc-a1b8-ce5ed4d2f18d';
+
+test('a reviewed measured source rejoins when its catalog model returns after score ingestion', () => {
+  const entry = { benchmark_id: 'context::8', source_id: 'poolside/laguna-xs-2.1@reasoning=enabled',
+    model_id: 'laguna-xs-2.1::default', reviewed_at: '2026-09-21', rule: 'exact reviewed default configuration' };
+  const row = { id: 'public:returning', benchmark_id: entry.benchmark_id, basis: 'derived', source_basis: 'measured', value: 73,
+    subject: { source_id: entry.source_id, name: 'Laguna XS', model_id: null, variant: null, harness: null },
+    source: { sha256: 'retained-evidence' } };
+  const snapshot = { observations: [row] };
+  const map = { entries: [entry] }, models = [{ id: entry.model_id }];
+  const out = restoreReviewedMeasuredJoins(snapshot, models, map);
+  assert.equal(out.observations[0].subject.model_id, entry.model_id);
+  assert.equal(out.observations[0].join_note, `Reviewed identity map ${entry.reviewed_at}: ${entry.rule}`);
+  assert.equal(out.observations[0].value, row.value);
+  assert.equal(out.observations[0].source, row.source, 'evidence is retained verbatim');
+  assert.equal(row.subject.model_id, null, 'the verified raw snapshot is immutable');
+  assert.equal(restoreReviewedMeasuredJoins(snapshot, [], map), snapshot, 'absent models remain unmatched');
+  assert.equal(restoreReviewedMeasuredJoins(snapshot, models, { entries: [] }), snapshot, 'no new identity rule is invented');
+  for (const over of [{ basis: 'self_reported', source_basis: undefined }, { basis: 'preliminary', source_basis: undefined },
+    { join_note: 'Withheld conflicting source rows' }, { identity_review: { pending: true } }, { id: 'manual:returning' }]) {
+    const protectedSnapshot = { observations: [{ ...row, ...over }] };
+    assert.equal(restoreReviewedMeasuredJoins(protectedSnapshot, models, map), protectedSnapshot, 'existing review/withholding boundaries are preserved');
+  }
+  assert.throws(() => restoreReviewedMeasuredJoins(snapshot, models, { entries: [{ ...entry, reviewed_at: undefined }] }), /review date/);
+});
 
 test('an AA rename keeps the published family key (DeepSeek V4 Pro → "DeepSeek V4 Pro 0424")', () => {
   const naturalRowIds = new Map([['deepseek-v4-pro-0424::max', PRO], ['deepseek-v4-pro-0813::max', 'other']]);
