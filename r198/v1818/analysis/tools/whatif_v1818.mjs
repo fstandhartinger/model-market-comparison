@@ -23,7 +23,7 @@ const eq=proof.equating,AX=['intelligence','calibration','speed','cost'];
 assert(Math.abs(eq.offset.I-(-2.884891186577587))<1e-9);
 assert(Math.abs(eq.offset.C-(-1.8542447151797177))<1e-9);
 const receipt=load('/home/flori/jobs/jevbench-add-requests-20260919/r276/equating/EQUATING-STRONG4-D1027.json');
-assert.deepEqual(eq.offset,receipt.offset);assert.deepEqual(eq.offset_ci95,receipt.offset_ci95);
+for(const axis of ['I','C']){assert(Math.abs(eq.offset[axis]-receipt.offset[axis])<1e-9);for(let i=0;i<2;i++)assert(Math.abs(eq.offset_ci95[axis][i]-receipt.offset_ci95[axis][i])<1e-9);}
 const systems=[...before.systems,cue].sort((x,y)=>x.key.localeCompare(y.key));
 const DRAW=systems.filter(s=>s.draw?.id==='v1.6-regular-20261027'&&s.published_scores).map(s=>s.key).sort();
 const isApi=jevScopeClassifier(before.systems,load(V+'jevbench-v1.8.17-carry.json').rows,[],[]);

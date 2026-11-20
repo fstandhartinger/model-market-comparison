@@ -1,0 +1,29 @@
+{
+  "status": "LEAD_RULING_NEEDED",
+  "reason": "Ranking promotions change positions named in inherited T3 listing_notes, while the brief allows carried-row result changes only to rank/ranks. No carried text was changed.",
+  "rows": [
+    {
+      "key": "karpo_decision_31b",
+      "existing_text_place": {
+        "all/composites/B": 5
+      },
+      "proposed_point_place": {
+        "all/composites/B": 6
+      },
+      "issue": "The inherited T3 still says all-systems Composite B #5, but that is no longer its place."
+    },
+    {
+      "key": "arcbright-elf-1-12b-r2",
+      "existing_text_place": {
+        "open/composites/A": 4,
+        "open/composites/C": 4
+      },
+      "proposed_point_place": {
+        "open/composites/A": 5,
+        "open/composites/C": 5
+      },
+      "issue": "The inherited T3 still names #4 on both lists; the proposed point place is #5."
+    }
+  ],
+  "required": "Lead must explicitly permit correcting/removing stale inherited T3 notes or choose a configuration that preserves their referenced places."
+}
