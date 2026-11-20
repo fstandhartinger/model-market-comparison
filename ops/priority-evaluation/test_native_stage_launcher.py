@@ -15,9 +15,10 @@ _REAL_RUN = subprocess.run
 
 
 class NativeStageLauncherTests(unittest.TestCase):
-    def packet_fixture(self, stage="adapter_smoke"):
+    def packet_fixture(self, stage="adapter_smoke", additional_paths=()):
         paths = {launcher.ROOT / "scripts" / name for name in launcher.STAGES[stage]["scripts"]}
         paths.add(launcher.RUNTIME / "native_stage_launcher.py")
+        paths.update(additional_paths)
         content = {path: b"approved candidate bytes\n" for path in paths}
         entries = "\n".join(
             f"{hashlib.sha256(content[path]).hexdigest()}  {path}"
@@ -32,9 +33,10 @@ class NativeStageLauncherTests(unittest.TestCase):
         temp = tempfile.TemporaryDirectory(prefix="native-stage-launch-test.", dir="/var/tmp")
         base = Path(temp.name)
         root, runtime, board_dir = base / "order", base / "runtime", base / "board"
+        tool_root = root / "host-tools"
         scripts = root / "scripts"
         stage_dir = root / ("public-smoke" if stage == "adapter_smoke" else "v16")
-        for directory in (scripts, stage_dir, runtime, board_dir):
+        for directory in (scripts, stage_dir, runtime, board_dir, tool_root):
             directory.mkdir(parents=True, exist_ok=True)
         preflight_name = "smoke.py" if stage == "adapter_smoke" else "measure_v16.py"
         admission_name = "public_smoke_admission.py" if stage == "adapter_smoke" else "sealed_admission.py"
@@ -68,6 +70,11 @@ class NativeStageLauncherTests(unittest.TestCase):
             ).encode(),
             runtime_path: b"fixture trusted launcher bytes\n",
         }
+        content.update({tool_root / name: f"fixture tool {name}\n".encode() for name in launcher.TOOL_NAMES})
+        if stage == "sealed":
+            profile_path = root / "v16/measurement-profiles-v1.6-regular-20261027.json"
+            profile_path.parent.mkdir(parents=True, exist_ok=True)
+            content[profile_path] = b"fixture sealed profile pin\n"
         packet_path = stage_dir / "PACKET-HASHES.txt"
         word_path = stage_dir / "CUSTODY-WORD.txt"
         policy = {
@@ -135,12 +142,15 @@ class NativeStageLauncherTests(unittest.TestCase):
         patches = (
             patch.object(launcher, "ROOT", root),
             patch.object(launcher, "RUNTIME", runtime),
+            patch.object(launcher, "TOOLS", root / "host-tools"),
+            patch.object(launcher, "SEALED_PROFILE",
+                         root / "v16/measurement-profiles-v1.6-regular-20261027.json"),
             patch.object(launcher, "BOARD_DIR", board_dir),
             patch.object(launcher, "STAGES", {**launcher.STAGES, stage: policy}),
             patch.object(launcher, "preliminary_authority", side_effect=auth),
             patch.object(launcher.subprocess, "run", side_effect=runner),
         )
-        with patches[0], patches[1], patches[2], patches[3], patches[4], patches[5]:
+        with patches[0], patches[1], patches[2], patches[3], patches[4], patches[5], patches[6], patches[7]:
             launcher.start_stage(stage, 12345)
         return calls, auth_calls
 
@@ -167,6 +177,9 @@ class NativeStageLauncherTests(unittest.TestCase):
             admission_path.write_bytes(b"altered admission bytes\n")
             try:
                 with patch.object(launcher, "ROOT", root), patch.object(launcher, "RUNTIME", runtime), \
+                        patch.object(launcher, "TOOLS", root / "host-tools"), \
+                        patch.object(launcher, "SEALED_PROFILE",
+                                     root / "v16/measurement-profiles-v1.6-regular-20261027.json"), \
                         patch.object(launcher, "BOARD_DIR", board_dir), \
                         patch.object(launcher, "STAGES", {**launcher.STAGES, stage: policy}), \
                         patch.object(launcher, "preliminary_authority",
@@ -288,6 +301,50 @@ class NativeStageLauncherTests(unittest.TestCase):
             )
         self.assertEqual(opened, [])
 
+    def test_exact_host_tool_inventory_and_sealed_profile_paths_are_allowed_only_for_their_stage(self):
+        with tempfile.TemporaryDirectory(prefix="native-stage-paths.", dir="/var/tmp") as temp:
+            base = Path(temp)
+            root, runtime, tools = base / "order", base / "runtime", base / "bin"
+            profile = root / "v16/measurement-profiles-v1.6-regular-20261027.json"
+            for stage in launcher.STAGES:
+                with self.subTest(stage=stage), \
+                        patch.object(launcher, "ROOT", root), \
+                        patch.object(launcher, "RUNTIME", runtime), \
+                        patch.object(launcher, "TOOLS", tools), \
+                        patch.object(launcher, "SEALED_PROFILE", profile):
+                    allowed = {tools / name for name in launcher.TOOL_NAMES}
+                    if stage == "sealed":
+                        allowed.add(profile)
+                    packet, _ = self.packet_fixture(stage, allowed)
+                    pins = launcher.parse_packet(stage, packet, hashlib.sha256(packet).hexdigest())
+                    self.assertTrue(allowed <= pins.keys())
+
+                    extra = tools / "unlisted-helper"
+                    packet_with_extra, _ = self.packet_fixture(stage, allowed | {extra})
+                    opened = []
+
+                    def reader(path, capture):
+                        opened.append(path)
+                        data = b"unused member bytes\n"
+                        return hashlib.sha256(data).hexdigest(), data if capture else None
+
+                    with self.assertRaisesRegex(ValueError, "outside the exact order source roots"):
+                        launcher.authenticate_packet(
+                            stage, packet_with_extra, hashlib.sha256(packet_with_extra).hexdigest(), reader=reader,
+                        )
+                    self.assertEqual(opened, [])
+
+            with patch.object(launcher, "ROOT", root), patch.object(launcher, "RUNTIME", runtime), \
+                    patch.object(launcher, "TOOLS", tools), patch.object(launcher, "SEALED_PROFILE", profile):
+                public_packet, _ = self.packet_fixture("adapter_smoke", {profile})
+                opened = []
+                with self.assertRaisesRegex(ValueError, "public-only path policy"):
+                    launcher.authenticate_packet(
+                        "adapter_smoke", public_packet, hashlib.sha256(public_packet).hexdigest(),
+                        reader=lambda path, capture: (opened.append(path) or ("0" * 64, None)),
+                    )
+                self.assertEqual(opened, [])
+
     def test_preliminary_authority_rejects_missing_live_clearance_before_packet_member_io(self):
         packet_sha = "a" * 64
         custody_scope = {"order": launcher.ORDER_ID, "stage": "adapter_smoke",
@@ -356,6 +413,9 @@ class NativeStageLauncherTests(unittest.TestCase):
 
                 with patch.object(launcher, "ROOT", fixture[1]), \
                         patch.object(launcher, "RUNTIME", fixture[2]), \
+                        patch.object(launcher, "TOOLS", fixture[1] / "host-tools"), \
+                        patch.object(launcher, "SEALED_PROFILE",
+                                     fixture[1] / "v16/measurement-profiles-v1.6-regular-20261027.json"), \
                         patch.object(launcher, "BOARD_DIR", fixture[3]), \
                         patch.object(launcher, "STAGES", {**launcher.STAGES, stage: fixture[7]}), \
                         patch.object(launcher, "preliminary_authority",
@@ -371,64 +431,73 @@ class NativeStageLauncherTests(unittest.TestCase):
     def test_preliminary_authority_binds_deputy_to_the_exact_custody_packet(self):
         packet_sha = "a" * 64
         custody_scope = {"order": launcher.ORDER_ID, "stage": "adapter_smoke",
-                         "packet_sha256": packet_sha, "expires": "2026-11-20T22:00:00Z"}
+                         "packet_sha256": packet_sha, "expires": "2026-11-20T23:30:00Z"}
         custody_body = "HASH CONFIRMED + UNSPENT " + json.dumps(custody_scope)
-        custody = {"id": 70753, "thread_id": 11, "author": "codex:jevbench-item-reserve-20261007",
-                   "kind": "decision", "created_at": "2026-11-20T20:30:00Z", "body": custody_body}
+        custody = {"id": 72493, "thread_id": 11, "author": "codex:jevbench-item-reserve-20261007",
+                   "kind": "decision", "created_at": "2026-11-20T23:08:00Z", "body": custody_body}
         approval = {"order": launcher.ORDER_ID, "packet_sha256": packet_sha, "provider": "verda",
                     "instance_type": "1RTXPRO6000.30V", "location": "FIN-02",
                     "offer_id": "1RTXPRO6000.30V@FIN-02", "ttl_h": 1.20, "attempts": 1,
-                    "max_usd_h": 3, "max_os_volume_usd_h": 0.25, "expires": "2026-11-20T21:05:00Z",
-                    "custody_id": 70753, "custody_sha256": "", "clearance_id": 70750, "reaper_id": 70751,
+                    "max_usd_h": 3, "max_os_volume_usd_h": 0.25, "expires": "2026-11-20T23:20:00Z",
+                    "custody_id": 72493, "custody_sha256": "", "clearance_id": 72490, "reaper_id": 72491,
                     "prior_charge_sha256": "d" * 64}
-        word = f"#70753 {custody['author']} {custody['created_at']}\n{custody_body}".encode()
+        word = f"#72493 {custody['author']} {custody['created_at']}\n{custody_body}".encode()
         approval["custody_sha256"] = hashlib.sha256(word).hexdigest()
-        deputy = {"id": 70754, "thread_id": 11, "author": "codex:cos-deputy-opus",
-                  "kind": "decision", "created_at": "2026-11-20T20:45:00Z",
+        deputy = {"id": 72494, "thread_id": 11, "author": "codex:cos-deputy-opus",
+                  "kind": "decision", "created_at": "2026-11-20T23:09:00Z",
                   "body": "GO ADAPTER SMOKE " + json.dumps(approval)}
+        known_holds = [70724, 70742, 72382, 72385, 72481, 72489]
         clearance_scope = {"order": launcher.ORDER_ID, "stage": "adapter_smoke", "packet_sha256": packet_sha,
-                           "decisions_sha256": "c" * 64, "resolved_holds": [70724, 70742]}
-        clearance = {"id": 70750, "thread_id": 11, "author": "codex:cos-deputy-opus", "kind": "decision",
-                     "created_at": "2026-11-20T20:15:00Z",
+                           "decisions_sha256": "c" * 64, "resolved_holds": known_holds}
+        clearance = {"id": 72490, "thread_id": 11, "author": "codex:cos-deputy-opus", "kind": "decision",
+                     "created_at": "2026-11-20T23:05:00Z",
                      "body": "CLEAR FASTLANE " + json.dumps(clearance_scope)}
-        reaper = {"id": 70751, "thread_id": 11, "author": "codex:gpu-broker-20261026", "kind": "decision",
-                  "created_at": "2026-11-20T20:20:00Z",
+        reaper = {"id": 72491, "thread_id": 11, "author": "codex:gpu-broker-20261026", "kind": "decision",
+                  "created_at": "2026-11-20T23:06:00Z",
                   "body": "REAPER CONFIRMED " + json.dumps({"order": launcher.ORDER_ID,
                       "stage": "adapter_smoke", "packet_sha256": packet_sha, "ttl_h": 1.20})}
-        now = datetime(2026, 11, 20, 20, 50, tzinfo=timezone.utc)
+        now = datetime(2026, 11, 20, 23, 10, tzinfo=timezone.utc)
         with patch.object(launcher, "board_entry", side_effect=[deputy, custody, clearance, reaper]), \
                 patch.object(launcher, "board_since", return_value=[reaper, custody, deputy]), \
                 patch.object(launcher, "board_holds", return_value=[]), \
                 patch.object(launcher, "scoped_decisions_digest", return_value="c" * 64), \
                 patch.object(launcher, "read_regular_file", return_value=(word, None)):
-            result = launcher.preliminary_authority("adapter_smoke", 70754, now=now)
+            result = launcher.preliminary_authority("adapter_smoke", 72494, now=now)
         self.assertEqual(result["packet_sha256"], packet_sha)
 
-        superseding_clearance = {"id": 70752, "thread_id": 11, "author": "codex:cos-deputy-opus",
-                                 "kind": "decision", "created_at": "2026-11-20T20:25:00Z",
+        superseding_clearance = {"id": 72492, "thread_id": 11, "author": "codex:cos-deputy-opus",
+                                 "kind": "decision", "created_at": "2026-11-20T23:07:00Z",
                                  "body": "CLEAR FASTLANE " + json.dumps(clearance_scope)}
-        superseding_go = {"id": 70755, "thread_id": 11, "author": "codex:cos-deputy-opus",
-                          "kind": "decision", "created_at": "2026-11-20T20:46:00Z",
-                          "body": "GO SEALED " + json.dumps({"order": launcher.ORDER_ID})}
         with patch.object(launcher, "board_entry", side_effect=[deputy, custody, clearance, reaper]), \
                 patch.object(launcher, "board_since",
-                             return_value=[reaper, superseding_clearance, custody, deputy, superseding_go]), \
+                             return_value=[reaper, superseding_clearance, custody, deputy]), \
                 patch.object(launcher, "board_holds", return_value=[]), \
                 patch.object(launcher, "scoped_decisions_digest", return_value="c" * 64), \
                 patch.object(launcher, "read_regular_file", return_value=(word, None)), \
                 self.assertRaisesRegex(ValueError, "superseded"):
-            launcher.preliminary_authority("adapter_smoke", 70754, now=now)
+            launcher.preliminary_authority("adapter_smoke", 72494, now=now)
+
+        superseding_go = {"id": 72495, "thread_id": 11, "author": "codex:cos-deputy-opus",
+                          "kind": "decision", "created_at": "2026-11-20T23:11:00Z",
+                          "body": "GO SEALED " + json.dumps({"order": launcher.ORDER_ID})}
+        with patch.object(launcher, "board_entry", side_effect=[deputy, custody, clearance, reaper]), \
+                patch.object(launcher, "board_since", return_value=[reaper, custody, deputy, superseding_go]), \
+                patch.object(launcher, "board_holds", return_value=[]), \
+                patch.object(launcher, "scoped_decisions_digest", return_value="c" * 64), \
+                patch.object(launcher, "read_regular_file", return_value=(word, None)), \
+                self.assertRaisesRegex(ValueError, "superseded"):
+            launcher.preliminary_authority("adapter_smoke", 72494, now=now)
 
         bad_custody_scope = dict(custody_scope, packet_sha256="b" * 64)
         bad_custody_body = "HASH CONFIRMED + UNSPENT " + json.dumps(bad_custody_scope)
-        bad_word = f"#70753 {custody['author']} {custody['created_at']}\n{bad_custody_body}".encode()
+        bad_word = f"#72493 {custody['author']} {custody['created_at']}\n{bad_custody_body}".encode()
         bad_custody = dict(custody, body=bad_custody_body)
         bad_approval = dict(approval, custody_sha256=hashlib.sha256(bad_word).hexdigest())
         deputy_again = dict(deputy, body="GO ADAPTER SMOKE " + json.dumps(bad_approval))
         with patch.object(launcher, "board_entry", side_effect=[deputy_again, bad_custody]), \
                 patch.object(launcher, "read_regular_file", return_value=(bad_word, None)), \
                 self.assertRaisesRegex(ValueError, "bound to different packet"):
-            launcher.preliminary_authority("adapter_smoke", 70754, now=now)
+            launcher.preliminary_authority("adapter_smoke", 72494, now=now)
 
 
 if __name__ == "__main__":
