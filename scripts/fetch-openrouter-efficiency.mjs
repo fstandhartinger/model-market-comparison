@@ -4,7 +4,7 @@ import { fileURLToPath } from "node:url";
 import { createHash } from "node:crypto";
 import { execFile } from "node:child_process";
 import { promisify } from "node:util";
-import { parseOpenRouterPage, parseOpenRouterCache, parseOpenRouterRankings } from "../lib/openrouter-efficiency.mjs";
+import { parseOpenRouterPage, parseOpenRouterCache, parseOpenRouterRankings, parseRobotsDisallows, robotsDisallowedBy } from "../lib/openrouter-efficiency.mjs";
 import { completedWeek } from "../lib/chutes-efficiency.mjs";
 import { writeJSONAtomic } from "../lib/snapshot.mjs";
 import { captureLiveSource } from '../lib/live-source.mjs';
@@ -18,7 +18,10 @@ const explicit = args.find((arg) => arg.startsWith("--models="))?.slice(9).split
 const limit = Number(args.find((arg) => arg.startsWith("--limit="))?.slice(8) || 4);
 const evidenceDir = args.find((arg) => arg.startsWith("--evidence-dir="))?.slice(15) || process.env.BH_EVIDENCE_DIR;
 
+let robotsRules = null;
 async function get(url) {
+  const blocked = robotsRules && robotsDisallowedBy(url, robotsRules);
+  if (blocked) throw new Error(`OpenRouter robots policy disallows ${new URL(url).pathname} (rule ${blocked})`);
   // curl is the established working transport on Sandy; Node fetch intermittently
   // failed before an HTTP response. Same public URLs/UA, no cookies or auth.
   const { stdout } = await promisify(execFile)("curl", ["--silent", "--show-error", "--max-time", "60", "--user-agent", ua, "--write-out", "\n%{http_code}", url], { timeout: 65000, maxBuffer: 12000000 });
@@ -41,11 +44,15 @@ try {
   const window = completedWeek(new Date(collected_at));
   const selected = explicit || selectOpenRouterEfficiencyModels({ catalogIds, attempts: previous.attempts, limit });
   if (selected.length > 12 || !selected.length || new Set(selected).size !== selected.length || selected.some((id) => !catalogIds.has(id))) throw new Error("Select 1..12 unique exact catalog model IDs with text output");
-  // The public robots policy currently allows these pages. Fail closed on a
-  // changed policy; a human can review and narrow this small collector if needed.
+  // Honour the live robots policy for every URL this collector requests (rankings,
+  // model pages, effective-pricing API). Fail closed: a disallowed planned URL stops
+  // the whole run before any page is fetched, and get() re-checks each request.
   const robots = await get("https://openrouter.ai/robots.txt");
-  const disallows = [...robots.matchAll(/^Disallow:\s*(\S*)/gim)].map((m) => m[1]).filter(Boolean);
-  if (disallows.some((path) => path !== "/seo/")) throw new Error("OpenRouter robots policy changed; review before fetching model pages");
+  robotsRules = parseRobotsDisallows(robots);
+  for (const planned of ["https://openrouter.ai/rankings?view=week", "https://openrouter.ai/api/frontend/v1/stats/effective-pricing?permaslug=x", ...selected.map((id) => `https://openrouter.ai/${id}`)]) {
+    const rule = robotsDisallowedBy(planned, robotsRules);
+    if (rule) throw new Error(`OpenRouter robots policy disallows ${new URL(planned).pathname} (rule ${rule}); review before fetching`);
+  }
   const models = { ...previous.models };
   const attempts = { ...previous.attempts };
   let rankings = previous.rankings || null;
