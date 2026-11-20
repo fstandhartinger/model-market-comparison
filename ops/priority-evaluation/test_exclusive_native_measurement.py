@@ -33,6 +33,13 @@ class ExclusiveNativeMeasurementTests(unittest.TestCase):
                 autopickup.evaluate_v16_generation(order, Path(order))
             with self.assertRaisesRegex(measurement_dispatch.OperationalHold, "separate_native_measurement_wrapper_required"):
                 autopickup.dispatch_measurement(order, Path(order))
+            ordinary = "9d46b4ad-b7b2-4d02-beda-7a56db409849"
+            for rid, job in ((order.upper(), Path(ordinary)), (ordinary, Path(order.upper()))):
+                with self.subTest(rid=rid, directory=job.name):
+                    with self.assertRaisesRegex(autopickup.PickupError, "separate native measurement wrapper"):
+                        autopickup.evaluate_v16_generation(rid, job)
+                    with self.assertRaisesRegex(measurement_dispatch.OperationalHold, "separate_native_measurement_wrapper_required"):
+                        autopickup.dispatch_measurement(rid, job)
         validate.assert_not_called()
         load_row.assert_not_called()
         load_state.assert_not_called()
