@@ -1,0 +1,31 @@
+{
+ "verdict": "PASS",
+ "engine": "claude-opus-5-5 (Claude Code): independent fairness check + critic r174l-v1818-fair (Opus 5.5 xhigh); builders were Codex Sol (r174l-v1818-ranking-build, -build2, -build3)",
+ "release": "v1.8.18",
+ "head_reviewed": "9ab204a3b (+ addendum 0547a8ded) reviewed in full by r174l-v1818-fair = PASS_WITH_CONDITIONS, fairness FAIR, all nine rows ranked; WHATIF 440/440 lists reproduced; family/language corrections change no classification; same rule as peers max error 0.0; Cue numbers vs RESULT-PRIVATE max |delta| 0.0; sealed-id scan 0",
+ "florian_go": "card 20094 'Publish (recommended)' 20 Nov 2026 ~13:05Z (DECISIONS jev-v1818-ranking-review-publish)",
+ "reviews": [
+  {
+   "path": "workers/r174l-v1818-fair/RESULT.json",
+   "sha256": "b7a28799e386b2de25745d0baf30248bc408ad6ec132d3072a2755fc8a482b44",
+   "result_md_sha256": "beeac37462f4a226e25347dac010e98d1e902a3735c7bda2862f27915a018df5",
+   "verdict_by_commit": {
+    "9ab204a3b": "PASS_WITH_CONDITIONS"
+   },
+   "musts": [
+    "M1"
+   ],
+   "musts_closed_by_the_release_owner": "M1 closed by lead ruling (extend R4 to induced boundary places): the critic's PROPOSED-FIXES.patch (f0f8e609) applied in 3b47425a2 (TF1 decide-1.1, TF2 Karpo, TF3 SD-JEV), place numbers derived from the ranking config",
+   "conditions_closed_by_the_release_owner": {
+    "C1": "= M1, closed as above",
+    "C2": "synthetic-preview-only engine bypass removed from lib/jevbench-v1818-release.mjs and its template; committed-tree negative control added (build3)",
+    "C3": "fairness approval bound in r198/v1818/inputs/APPROVAL.json + RANKING-CONFIG.json; proof/publication/lib rebuilt twice byte-identically; precheck PASS (validator 17 controls, All-data, N30 red/green, tsc, 21/0 focused tests)",
+    "C4": "LeChonk PENDING suite 180 pass / 0 fail / 3 skip (build3); synthetic PASS build/full suite not run on LeChonk (work-volume disk guard refused 13 times) -> the merge queue runs typecheck, production build and the full suite on the rebased PASS head (v1.8.15/v1.8.16 precedent); model pages verified live after deploy",
+    "C5": "preview regenerated without pending banners, boundary places incl. TF1-TF3; shown to Florian as card 20094"
+   },
+   "non_blocking": [
+    "indentation of the v1.8.18 entry in data/jevbench-draw-equating.json fixed in build3"
+   ]
+  }
+ ]
+}
