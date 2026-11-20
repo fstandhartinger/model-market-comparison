@@ -1,4 +1,4 @@
-"""Exact-order offline runtime for Strands Decider v2 E2B (CR-810).
+"""Exact-order offline runtime for Strands Decider v2 E2B (CR-811).
 
 The merged Gemma 4 checkpoint uses the submitted public release wheel.
 Its Python modules match the pinned submitted GitHub checkout. The
