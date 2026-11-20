@@ -18,6 +18,22 @@ const registry = (entries) => ({ entries });
 const A = ['a1', 'a2', 'a3', 'a4', 'a5'], B = ['b1', 'b2', 'b3', 'b4', 'b5'], C = ['c1', 'c2', 'c3', 'c4', 'c5'], D = ['d1', 'd2', 'd3', 'd4', 'd5'];
 const byName = (list, id) => list.find((e) => e.subject_name === `Model ${id}`);
 
+test('unreachable current board bounds bridge searches as retained states accumulate', () => {
+  // CR-801: many mutually comparable retained snapshots, but no bridge to today's
+  // board. Counting hop lookups makes the regression deterministic under host load.
+  const retained = 32;
+  const nodes = Array.from({ length: retained }, (_, i) => ({ id: `S${i}`, values: new Map(A.map((id) => [id, 1])) }));
+  nodes.push({ id: 'current', values: new Map(B.map((id) => [id, 1])) });
+  let lookups = 0;
+  class CountedMemo extends Map {
+    get(key) { lookups++; return super.get(key); }
+  }
+  const result = findBridgeChain(nodes, 0, retained, { memo: new CountedMemo() });
+  assert.equal(result.comparable, false, 'an unreachable board still publishes no estimate');
+  assert.deepEqual(result.hops, []);
+  assert.ok(lookups <= 3 * nodes.length ** 2, `${lookups} hop lookups exceeded the retained-state work budget`);
+});
+
 test('two-hop ratio chain: S0 and current share no model, S1 links them (x2 then x3)', () => {
   const s0 = state('S0', '01', [...obsSet(A, 1), observation('h', 3)]);
   const s1 = state('S1', '02', [...obsSet(A, 2), ...obsSet(B, 10)]);
