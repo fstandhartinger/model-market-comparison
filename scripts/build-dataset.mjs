@@ -800,7 +800,8 @@ async function build() {
   // so its verified scores are not withheld. Only families of models whose endpoints the retained snapshot
   // records as withdrawn qualify; no offer is kept or invented.
   const withdrawnOpenRouterIds = new Set((or.withdrawals?.endpoints || []).map((e) => e.model_id));
-  const benchmarkJoinTargets = new Set(((await readJSON("benchmarks/identity-map.json")).entries || []).map((e) => e.model_id));
+  const benchmarkIdentityMap = await readJSON("benchmarks/identity-map.json");
+  const benchmarkJoinTargets = new Set((benchmarkIdentityMap.entries || []).map((e) => e.model_id));
   const joinedFamily = (familyKey) => [...benchmarkJoinTargets].some((id) => id.startsWith(`${familyKey}::`));
   for (const m of or.models) {
     const outputs = m.architecture?.output_modalities || [];
@@ -1485,8 +1486,8 @@ async function build() {
   // a catalog id this build no longer has and the whole day's build threw. Score rows are keyed to the catalog id of the
   // build that ingested them; after the evidence check above, re-key them through the stable AA UUID, and withhold (with a
   // warning) only rows whose model can no longer be resolved at all.
-  const { reconcileScoreModelIds } = await import("../lib/benchmark-scores.mjs");
-  const reconciled = reconcileScoreModelIds(benchmarkScores, modelRows);
+  const { reconcileScoreModelIds, restoreReviewedMeasuredJoins } = await import("../lib/benchmark-scores.mjs");
+  const reconciled = reconcileScoreModelIds(restoreReviewedMeasuredJoins(benchmarkScores, modelRows, benchmarkIdentityMap), modelRows);
   if (reconciled.remapped.length) console.warn(`! Benchmark score rows re-keyed to renamed catalog ids: ${reconciled.remapped.join(", ")}`);
   if (reconciled.withheld.length) console.warn(`! Benchmark score rows withheld (model no longer in the catalog): ${reconciled.withheld.length} — ${reconciled.withheld.slice(0, 10).join(", ")}`);
   const benchmark_results = buildBenchmarkResults(reconciled.snapshot, benchmarkRegistry, modelRows, benchmarkHistory.states.length ? benchmarkHistory : null, headlineObservations);
