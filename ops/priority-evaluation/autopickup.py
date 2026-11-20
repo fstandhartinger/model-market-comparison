@@ -2205,6 +2205,10 @@ def manage_evaluation(row: dict[str, Any], state: dict[str, Any], effects: Effec
     unit = EVAL_UNIT.format(rid)
     if row.get("status") not in ("paid", "review_passed") or active_hold(row):
         return
+    if row.get("review_passed_at") and state.get("source_review_gate"):
+        subject = f"Benchmark Heaven evaluation order {order_ref(rid)}: source review passed"
+        body = fill_template(read_template("autopickup-review-passed-template.txt"), {"ORDER_REF": order_ref(rid)})
+        send_tracked_mail(row, state, "review_passed", "review_email_status", subject, body, effects, now)
     if rid == native_owner.STRANDS_E2B_ORDER:
         operational = state.get("operational_hold")
         if isinstance(operational, dict):
@@ -2212,10 +2216,6 @@ def manage_evaluation(row: dict[str, Any], state: dict[str, Any], effects: Effec
                                  str(operational.get("reason") or "unsupported_measurement_backend"),
                                  exhausted=False)
         return
-    if row.get("review_passed_at") and state.get("source_review_gate"):
-        subject = f"Benchmark Heaven evaluation order {order_ref(rid)}: source review passed"
-        body = fill_template(read_template("autopickup-review-passed-template.txt"), {"ORDER_REF": order_ref(rid)})
-        send_tracked_mail(row, state, "review_passed", "review_email_status", subject, body, effects, now)
     if status in ("starting", "running"):
         if effects.dry_run:
             return
@@ -3621,12 +3621,9 @@ def advance_public_release(row: dict[str, Any], job_dir: Path, state: dict[str, 
 def advance_delivery(row: dict[str, Any], state: dict[str, Any], job_dir: Path, effects: Effects, now: datetime) -> None:
     rid = request_id(row.get("id"))
     if rid == native_owner.STRANDS_E2B_ORDER:
-        finalization = state.get("v16_finalization")
-        # The native delivery operator must stage a verified result. The generic
-        # finalizer must never create a release for this order.
-        if (row.get("release_status") != "verified" or not isinstance(finalization, dict)
-                or finalization.get("recorded_by") != native_owner.owner_name(rid)):
-            return
+        # This order delivers via the reviewed customer-only operator. Public
+        # finalization and announcements require a separate release decision.
+        return
 
     if row.get("evaluation_status") == "ready_for_release" and row.get("release_status") not in ("verified", "refused", "done") \
             and step_due(state, "finalize", now):
@@ -3722,6 +3719,8 @@ def record_result_delivery(row: dict[str, Any], state: dict[str, Any], summary: 
 def advance_xpost(row: dict[str, Any], state: dict[str, Any], job_dir: Path, summary: dict[str, Any],
                   effects: Effects, now: datetime) -> None:
     rid = request_id(row.get("id"))
+    if rid == native_owner.STRANDS_E2B_ORDER:
+        return
     text = xpost_text(summary)
     if step(state, "xpost")["status"] == "pending" and not any(item.get("top5_changed") for item in summary["results"]):
         step(state, "xpost")["status"] = "skipped"
@@ -5881,6 +5880,8 @@ def consume_stage_attempt(state: dict[str, Any], name: str, limit: int) -> bool:
 
 def xpost(rid: str) -> int:
     rid = request_id(rid)
+    if rid == native_owner.STRANDS_E2B_ORDER:
+        raise PickupError("separate_native_public_release_required")
     row = load_row(rid)
     if not row or row.get("synthetic_test") is not False or row.get("stripe_mode") != "live" \
             or row.get("status") not in ("completed", "refund_due") or row.get("visibility") != "public" \

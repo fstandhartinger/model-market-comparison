@@ -122,10 +122,39 @@ class StrandsRuntimeTests(unittest.TestCase):
             with self.assertRaisesRegex(AssertionError, "generic gate was reached"):
                 v16_profiles.measure(self.root / OTHER)
 
+    def test_existing_review_passed_mail_remains_available(self):
+        row = {"id": ORDER, "status": "review_passed", "review_passed_at": "present"}
+        state = {"source_review_gate": {"verdict": "PASS"}}
+        effects = Mock()
+        now = datetime.now(timezone.utc)
+        with patch.object(autopickup, "read_template", return_value="Review passed"), \
+                patch.object(autopickup, "send_tracked_mail") as send:
+            autopickup.manage_evaluation(row, state, effects, now)
+        send.assert_called_once()
+        self.assertEqual(send.call_args.args[2:4], ("review_passed", "review_email_status"))
+        self.assertFalse(effects.mock_calls)
+
+    def test_verified_public_state_never_enters_generic_delivery_or_x(self):
+        row = {"id": ORDER, "status": "paid", "visibility": "public", "release_status": "verified"}
+        summary = {"outcome": "delivered", "visibility": "public", "results": []}
+        state = {"verified": summary, "v16_finalization": {"recorded_by": native_owner.owner_name(ORDER)}}
+        effects = Mock()
+        now = datetime.now(timezone.utc)
+        forbidden = Mock(side_effect=AssertionError("public or generic delivery effect"))
+        with patch.object(autopickup, "gate", forbidden), \
+                patch.object(autopickup, "xpost_text", forbidden), \
+                patch.object(autopickup, "load_row", forbidden):
+            autopickup.advance_delivery(row, state, self.job, effects, now)
+            autopickup.advance_xpost(row, state, self.job, summary, effects, now)
+            with self.assertRaisesRegex(autopickup.PickupError, "separate_native_public_release_required"):
+                autopickup.xpost(ORDER)
+        forbidden.assert_not_called()
+        self.assertFalse(effects.mock_calls)
+
     def test_timer_and_delivery_fenced_but_operational_escalation_preserved(self):
         for status in ("pending", "failed", "running", "ready_for_release"):
             with self.subTest(status=status):
-                row = {"id": ORDER, "status": "paid", "evaluation_status": status, "review_passed_at": "present"}
+                row = {"id": ORDER, "status": "paid", "evaluation_status": status}
                 hold = {"reason": "unsupported_measurement_backend"}
                 state = {"source_review_gate": {"verdict": "PASS"}, "operational_hold": hold}
                 now = datetime.now(timezone.utc)
