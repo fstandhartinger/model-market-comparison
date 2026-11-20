@@ -1,6 +1,6 @@
 -- Explicit installer input for the isolated late-pickup package.
 -- Apply as a database administrator in a single transaction after migration 004.
--- The deployment provisions and verifies the three roles and their pg_ident mappings separately.
+-- The deployment provisions and verifies the four roles and their pg_ident mappings separately.
 SET LOCAL lock_timeout = '5s';
 SELECT pg_catalog.pg_advisory_xact_lock(pg_catalog.hashtext('bh_accounts_priority_eval_schema'));
 
@@ -9,6 +9,7 @@ DECLARE
   owner_role oid;
   pickup_role oid;
   transport_role oid;
+  audit_role oid;
 BEGIN
   SELECT oid INTO STRICT owner_role FROM pg_catalog.pg_roles
   WHERE rolname = 'jevbench_cd7e_owner' AND NOT rolcanlogin AND NOT rolinherit
@@ -19,11 +20,17 @@ BEGIN
   SELECT oid INTO STRICT transport_role FROM pg_catalog.pg_roles
   WHERE rolname = 'jevbench_cd7e_transport' AND rolcanlogin AND NOT rolinherit
     AND NOT (rolsuper OR rolcreatedb OR rolcreaterole OR rolreplication OR rolbypassrls);
-  IF EXISTS (SELECT FROM pg_catalog.pg_auth_members WHERE member IN (owner_role, pickup_role, transport_role))
+  SELECT oid INTO STRICT audit_role FROM pg_catalog.pg_roles
+  WHERE rolname = 'jevbench_cd7e_audit' AND rolcanlogin AND NOT rolinherit
+    AND NOT (rolsuper OR rolcreatedb OR rolcreaterole OR rolreplication OR rolbypassrls);
+  IF EXISTS (SELECT FROM pg_catalog.pg_auth_members
+             WHERE member IN (owner_role, pickup_role, transport_role, audit_role))
     OR pg_catalog.has_schema_privilege(pickup_role, 'public', 'CREATE')
     OR pg_catalog.has_schema_privilege(transport_role, 'public', 'CREATE')
+    OR pg_catalog.has_schema_privilege(audit_role, 'public', 'CREATE')
     OR pg_catalog.has_database_privilege(pickup_role, current_database(), 'CREATE')
     OR pg_catalog.has_database_privilege(transport_role, current_database(), 'CREATE')
+    OR pg_catalog.has_database_privilege(audit_role, current_database(), 'CREATE')
   THEN
     RAISE EXCEPTION 'late pickup database role has unexpected privileges';
   END IF;
@@ -39,7 +46,8 @@ GRANT SELECT, UPDATE (evaluation_status, updated_at, delivery_email_status,
   ON public.bh_priority_evaluation_requests TO jevbench_cd7e_owner;
 GRANT SELECT, INSERT (id, request_id, template_key, recipient, subject, body_sha256, expires_at),
   UPDATE (state, claimed_at, sent_at) ON public.bh_priority_eval_transactional_mail TO jevbench_cd7e_owner;
-GRANT SELECT, INSERT ON public.bh_cd7e_late_result_authorizations TO jevbench_cd7e_owner;
+GRANT SELECT, INSERT, REFERENCES (envelope_id)
+  ON public.bh_cd7e_late_result_authorizations TO jevbench_cd7e_owner;
 GRANT EXECUTE ON FUNCTION public.bh_cd7e_late_identity(public.bh_priority_evaluation_requests),
   public.bh_cd7e_late_order_ready(public.bh_priority_evaluation_requests, text, text, boolean),
   public.bh_cd7e_late_mail_ready(public.bh_priority_eval_transactional_mail,
@@ -199,34 +207,93 @@ LANGUAGE sql STRICT SECURITY DEFINER SET search_path = pg_catalog, pg_temp AS $$
   SELECT EXISTS (SELECT FROM saved)
 $$;
 
--- Leave reconciliation inaccessible to both service roles until it requires durable audit proof.
-CREATE FUNCTION cd7e_late.reconcile() RETURNS jsonb
-LANGUAGE plpgsql SECURITY DEFINER SET search_path = pg_catalog, pg_temp AS $$
-DECLARE
-  current_receipt jsonb;
-BEGIN
-  UPDATE public.bh_priority_evaluation_requests r SET delivery_email_status = 'sent',
-    result_delivered_at = e.sent_at, result_url = a.result_url, release_status = 'done',
-    pickup_status = 'done', evaluation_status = 'done', updated_at = now()
-  FROM cd7e_late.exact_mail e JOIN public.bh_cd7e_late_result_authorizations a ON e.id = a.envelope_id
-  WHERE e.request_id = r.id AND e.state = 'sent' AND e.sent_at IS NOT NULL
+-- The audit identity can see only the fixed envelope, including replays of the
+-- same completion. The caller holds the canonical writer lock during both calls.
+CREATE VIEW cd7e_late.exact_acceptance AS
+  SELECT e.request_id AS order_id, e.id AS envelope_id,
+    '<fastlane-1fe81855-8b6d-50f6-863f-f0760c2e48eb@benchmarkheaven.com>'::text AS message_id,
+    e.body_sha256, e.claimed_at, e.sent_at AS accepted_at, e.recipient, e.subject
+  FROM cd7e_late.exact_mail e
+  JOIN public.bh_cd7e_late_result_authorizations a ON a.envelope_id = e.id
+  JOIN public.bh_priority_evaluation_requests r ON r.id = e.request_id
+  WHERE e.state = 'sent' AND e.sent_at >= e.claimed_at
     AND e.body_sha256 = a.body_sha256 AND e.recipient COLLATE "C" = r.email AND e.expires_at = a.expires_at
-    AND public.bh_cd7e_late_order_ready(r, a.identity_sha256, a.refund_ref);
-  current_receipt := cd7e_late.receipt();
-  IF current_receipt->>'state' = 'sent' AND current_receipt->>'recorded_at' = current_receipt->>'sent_at' THEN
-    RETURN current_receipt;
+    AND public.bh_cd7e_late_identity(r) = a.identity_sha256
+    AND r.refund_decision_ref = a.refund_ref;
+
+CREATE FUNCTION cd7e_late.audit_acceptance() RETURNS jsonb
+LANGUAGE sql STABLE SECURITY DEFINER SET search_path = pg_catalog, pg_temp AS $$
+  SELECT to_jsonb(e) FROM cd7e_late.exact_acceptance e
+$$;
+
+CREATE TABLE cd7e_late.audit_completion (
+  envelope_id uuid PRIMARY KEY REFERENCES public.bh_cd7e_late_result_authorizations(envelope_id)
+    CHECK (envelope_id = '1fe81855-8b6d-50f6-863f-f0760c2e48eb'),
+  body_sha256 text NOT NULL,
+  claimed_at timestamptz NOT NULL,
+  accepted_at timestamptz NOT NULL,
+  recipient text NOT NULL,
+  subject text NOT NULL
+);
+
+CREATE FUNCTION cd7e_late.audit_complete(expected_digest text, expected_claim timestamptz,
+  expected_message_id text, expected_acceptance timestamptz, expected_recipient text,
+  expected_subject text) RETURNS boolean
+LANGUAGE plpgsql STRICT SECURITY DEFINER SET search_path = pg_catalog, pg_temp AS $$
+DECLARE
+  evidence cd7e_late.exact_acceptance%ROWTYPE;
+BEGIN
+  -- Match the order-first lock sequence used by stage and claim.
+  PERFORM id FROM cd7e_late.exact_order FOR UPDATE;
+  PERFORM id FROM cd7e_late.exact_mail FOR UPDATE;
+  SELECT * INTO evidence FROM cd7e_late.exact_acceptance e
+  WHERE e.body_sha256 = expected_digest AND e.claimed_at = expected_claim
+    AND e.message_id COLLATE "C" = expected_message_id AND e.accepted_at = expected_acceptance
+    AND e.recipient COLLATE "C" = expected_recipient AND e.subject COLLATE "C" = expected_subject;
+  IF NOT FOUND THEN
+    RETURN false;
   END IF;
-  RETURN NULL;
+
+  UPDATE public.bh_priority_evaluation_requests r SET delivery_email_status = 'sent',
+    result_delivered_at = evidence.accepted_at, result_url = a.result_url, release_status = 'done',
+    pickup_status = 'done', evaluation_status = 'done', updated_at = now()
+  FROM public.bh_cd7e_late_result_authorizations a
+  WHERE r.id = evidence.order_id AND a.envelope_id = evidence.envelope_id
+    AND a.body_sha256 = evidence.body_sha256
+    AND public.bh_cd7e_late_order_ready(r, a.identity_sha256, a.refund_ref)
+    AND NOT EXISTS (SELECT FROM public.bh_priority_eval_transactional_mail prior WHERE prior.request_id = r.id
+                    AND prior.template_key IN ('result_public_v1', 'result_private_v1'));
+
+  IF FOUND THEN
+    INSERT INTO cd7e_late.audit_completion
+      (envelope_id, body_sha256, claimed_at, accepted_at, recipient, subject)
+    VALUES (evidence.envelope_id, evidence.body_sha256, evidence.claimed_at, evidence.accepted_at,
+            evidence.recipient, evidence.subject);
+  END IF;
+
+  RETURN EXISTS (
+    SELECT FROM cd7e_late.exact_order r
+    JOIN public.bh_cd7e_late_result_authorizations a ON a.envelope_id = evidence.envelope_id
+    JOIN cd7e_late.audit_completion c ON c.envelope_id = evidence.envelope_id
+    AND c.body_sha256 = evidence.body_sha256 AND c.claimed_at = evidence.claimed_at
+    AND c.accepted_at = evidence.accepted_at AND c.recipient COLLATE "C" = evidence.recipient
+    AND c.subject COLLATE "C" = evidence.subject
+    WHERE r.id = evidence.order_id AND r.result_delivered_at = evidence.accepted_at
+      AND r.result_url = a.result_url AND r.delivery_email_status = 'sent'
+      AND r.release_status = 'done' AND r.pickup_status = 'done' AND r.evaluation_status = 'done'
+  );
 END
 $$;
 
-GRANT USAGE ON SCHEMA cd7e_late TO jevbench_cd7e_late, jevbench_cd7e_transport;
+GRANT USAGE ON SCHEMA cd7e_late TO jevbench_cd7e_late, jevbench_cd7e_transport, jevbench_cd7e_audit;
 GRANT EXECUTE ON FUNCTION cd7e_late.read_order(), cd7e_late.receipt(),
   cd7e_late.stage(text, text, text, text, text, timestamptz, text, text, text),
   cd7e_late.validate(text, text, text) TO jevbench_cd7e_late;
 GRANT EXECUTE ON FUNCTION cd7e_late.claim(text, text, text, text, text),
   cd7e_late.accepted(text, timestamptz, text, timestamptz),
   cd7e_late.failed(text, timestamptz, text, text) TO jevbench_cd7e_transport;
+GRANT EXECUTE ON FUNCTION cd7e_late.audit_acceptance(),
+  cd7e_late.audit_complete(text, timestamptz, text, timestamptz, text, text) TO jevbench_cd7e_audit;
 RESET ROLE;
 
 DO $permissions$
@@ -234,11 +301,12 @@ DECLARE
   service_role text;
   relation_name text;
 BEGIN
-  FOREACH service_role IN ARRAY ARRAY['jevbench_cd7e_late', 'jevbench_cd7e_transport']
+  FOREACH service_role IN ARRAY ARRAY['jevbench_cd7e_late', 'jevbench_cd7e_transport', 'jevbench_cd7e_audit']
   LOOP
     FOREACH relation_name IN ARRAY ARRAY['public.bh_priority_evaluation_requests',
       'public.bh_priority_eval_transactional_mail', 'public.bh_cd7e_late_result_authorizations',
-      'cd7e_late.exact_order', 'cd7e_late.exact_mail']
+      'cd7e_late.exact_order', 'cd7e_late.exact_mail', 'cd7e_late.exact_acceptance',
+      'cd7e_late.audit_completion']
     LOOP
       IF pg_catalog.has_any_column_privilege(service_role, relation_name, 'SELECT,INSERT,UPDATE,REFERENCES')
         OR pg_catalog.has_table_privilege(service_role, relation_name, 'DELETE,TRUNCATE,TRIGGER')

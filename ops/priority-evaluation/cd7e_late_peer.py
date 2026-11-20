@@ -1,8 +1,10 @@
-"""Typed database client for the exact-order late pickup service."""
+"""Typed database clients for the exact-order late result services."""
 
 import json
 import subprocess
 from datetime import datetime
+
+from cd7e_late_audit import AcceptedEnvelope
 
 
 PSQL = (
@@ -69,7 +71,6 @@ class PeerDatabase(_PeerDatabase):
         return self._call("validate", recipient, subject, digest)
 
 
-
 class TransportDatabase(_PeerDatabase):
     route = (
         *PSQL[:PSQL.index("-U")], "-U", "jevbench_cd7e_transport", "-d", PSQL[-1],
@@ -84,3 +85,31 @@ class TransportDatabase(_PeerDatabase):
 
     def failed(self, digest, claimed_at, message_id, outcome):
         return self._call("failed", digest, claimed_at, message_id, outcome)
+
+
+class AuditDatabase(_PeerDatabase):
+    route = (
+        *PSQL[:PSQL.index("-U")], "-U", "jevbench_cd7e_audit", "-d", PSQL[-1],
+    )
+
+    def lookup(self):
+        evidence = self._call("audit_acceptance")
+        if evidence is None:
+            return None
+        try:
+            return AcceptedEnvelope(
+                order_id=evidence["order_id"], envelope_id=evidence["envelope_id"],
+                message_id=evidence["message_id"], body_sha256=evidence["body_sha256"],
+                claimed_at=datetime.fromisoformat(evidence["claimed_at"]),
+                accepted_at=datetime.fromisoformat(evidence["accepted_at"]),
+                recipient=evidence["recipient"], subject=evidence["subject"],
+            )
+        except (KeyError, TypeError, ValueError) as exc:
+            raise PeerDatabaseError("invalid late audit acceptance receipt") from exc
+
+    def complete(self, evidence):
+        evidence.audit_row()
+        return self._call(
+            "audit_complete", evidence.body_sha256, evidence.claimed_at, evidence.message_id,
+            evidence.accepted_at, evidence.recipient, evidence.subject,
+        )

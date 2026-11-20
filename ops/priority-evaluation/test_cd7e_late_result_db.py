@@ -2,6 +2,7 @@
 
 from concurrent.futures import ThreadPoolExecutor
 from contextlib import contextmanager, redirect_stdout
+from dataclasses import replace
 from datetime import datetime, timedelta
 import fcntl
 import hashlib
@@ -23,6 +24,7 @@ from unittest.mock import patch
 import uuid
 
 import autopickup as ap
+import cd7e_late_audit as audit
 import cd7e_late_result as late
 import cd7e_late_peer as late_peer
 import fastlane_transactional as sender
@@ -285,6 +287,8 @@ class LateResultDB(unittest.TestCase):
         """)
 
     def setUp(self):
+        if ap.sql("SELECT to_regclass('cd7e_late.audit_completion')"):
+            ap.sql("DELETE FROM cd7e_late.audit_completion")
         ap.sql(f"DELETE FROM {late.AUTH}; DELETE FROM {late.MAIL} WHERE request_id='{late.ORDER}'; "
                f"DELETE FROM {ap.TABLE} WHERE id='{late.ORDER}';")
         self.insert_order(late.ORDER)
@@ -323,6 +327,7 @@ class LateResultDB(unittest.TestCase):
           CREATE ROLE jevbench_cd7e_owner NOLOGIN NOINHERIT;
           CREATE ROLE jevbench_cd7e_late LOGIN NOINHERIT;
           CREATE ROLE jevbench_cd7e_transport LOGIN NOINHERIT;
+          CREATE ROLE jevbench_cd7e_audit LOGIN NOINHERIT;
           CREATE ROLE cd7e_unrelated_fixture LOGIN NOINHERIT;
         """)
         subprocess.run(["psql", "-Xq", "-v", "ON_ERROR_STOP=1", "--single-transaction",
@@ -391,10 +396,10 @@ class LateResultDB(unittest.TestCase):
         message_id = ap.sql_text(self.envelope().message_id)
         failed = f"SELECT cd7e_late.failed('{digest}', {first_claim}, {message_id}, 'before_submission')"
         accepted = f"SELECT cd7e_late.accepted('{digest}', {first_claim}, {message_id}, clock_timestamp())"
-        for statement in (accepted, failed, "SELECT cd7e_late.reconcile()"):
+        for statement in (accepted, failed, "SELECT cd7e_late.audit_acceptance()"):
             with self.subTest(statement=statement), self.assertRaises(ap.PickupError):
                 peer(statement)
-        for statement in ("SELECT cd7e_late.read_order()", "SELECT cd7e_late.reconcile()",
+        for statement in ("SELECT cd7e_late.read_order()", "SELECT cd7e_late.audit_acceptance()",
                           f"SELECT * FROM {late.MAIL}"):
             with self.subTest(statement=statement), self.assertRaises(ap.PickupError):
                 transport(statement)
@@ -464,6 +469,93 @@ class LateResultDB(unittest.TestCase):
                 self.assertTrue(transport.failed(args[-1], claimed_at, self.envelope().message_id, "uncertain"))
                 self.assertIsNone(transport.claim(*args, generation, admission))
             self.assertEqual(db.receipt()["state"], "uncertain")
+
+    @unittest.skipUnless(os.environ.get("CD7E_FIXTURE_PEER") == "1", "requires isolated peer mapping")
+    def test_audit_peer_recovers_after_lost_completion_reply(self):
+        self.install_restricted_fixture()
+        self.set_refunded()
+        self.stage()
+        command = late_peer.PSQL
+
+        def route(role):
+            return (
+                *command[:command.index("-h")], "-h", os.environ["PGHOST"],
+                "-p", os.environ["PGPORT"], "-U", role, "-d", DB,
+            )
+
+        db = late_peer.AuditDatabase()
+        transport = late_peer.TransportDatabase()
+        transport_role = "jevbench_cd7e_transport"
+        audit_role = "jevbench_cd7e_audit"
+        self.assertEqual(db.route[db.route.index("-U") + 1], audit_role)
+        digest = hashlib.sha256(BODY.encode()).hexdigest()
+        message_id = self.envelope().message_id
+
+        def as_role(role, statement):
+            return ap.sql(f"SET SESSION AUTHORIZATION {role}; {statement}")
+
+        for statement in ("SELECT cd7e_late.read_order()", "SELECT * FROM cd7e_late.exact_acceptance",
+                          "SELECT * FROM cd7e_late.audit_completion", f"SELECT * FROM {late.MAIL}",
+                          "SELECT cd7e_late.accepted('digest', now(), 'message', now())"):
+            with self.subTest(statement=statement), self.assertRaises(ap.PickupError):
+                as_role(audit_role, statement)
+        for role in ("jevbench_cd7e_late", transport_role, "cd7e_unrelated_fixture"):
+            with self.subTest(role=role), self.assertRaises(ap.PickupError):
+                as_role(role, "SELECT cd7e_late.audit_complete('digest', now(), 'message', now(), 'a', 'b')")
+
+        with patch.object(late_peer.AuditDatabase, "route", route(audit_role)), patch.object(
+            late_peer.TransportDatabase, "route", route(transport_role)
+        ):
+            self.assertIsNone(db.lookup())
+            claim = transport.claim(CUSTOMER, SUBJECT, digest, self.approval["generation"], "b" * 64)
+            self.assertIsNotNone(claim)
+            self.assertIsNone(db.lookup())
+            accepted_at = datetime.fromisoformat(ap.sql("SELECT clock_timestamp()"))
+            self.assertTrue(transport.accepted(digest, claim, message_id, accepted_at))
+            evidence = db.lookup()
+            self.assertEqual(evidence, audit.AcceptedEnvelope(
+                late.ORDER, late.ENVELOPE, message_id, digest, claim, accepted_at, CUSTOMER, SUBJECT,
+            ))
+
+            def lost_reply(receipt):
+                self.assertTrue(db.complete(receipt))
+                raise late_peer.PeerDatabaseError("simulated disconnect after commit")
+
+            for changed in (
+                replace(evidence, body_sha256="c" * 64),
+                replace(evidence, claimed_at=claim - timedelta(microseconds=1)),
+                replace(evidence, accepted_at=accepted_at + timedelta(microseconds=1)),
+                replace(evidence, recipient=CUSTOMER.upper()),
+                replace(evidence, subject=SUBJECT + " changed"),
+            ):
+                self.assertFalse(db.complete(changed))
+            self.assertIsNone(ap.load_row(late.ORDER)["result_delivered_at"])
+
+            with tempfile.TemporaryDirectory() as directory:
+                sink, lock = (Path(directory) / name for name in ("audit", "lock"))
+                sink.touch()
+                lock.touch()
+
+                def inode(path):
+                    info = path.stat()
+                    return info.st_dev, info.st_ino
+
+                paths = sink, inode(sink), lock, inode(lock)
+                with self.assertRaises(late_peer.PeerDatabaseError):
+                    audit.reconcile_accepted(*paths, lookup=db.lookup, complete=lost_reply)
+                audit.reconcile_accepted(*paths, lookup=db.lookup, complete=db.complete)
+                self.assertEqual(sink.read_bytes(), evidence.audit_row())
+
+                ap.sql(f"UPDATE {late.MAIL} SET claimed_at = claimed_at - interval '1 microsecond' "
+                       f"WHERE id='{late.ENVELOPE}'")
+                self.assertFalse(db.complete(evidence))
+                self.assertFalse(db.complete(db.lookup()))
+
+        paid = ap.load_row(late.ORDER)
+        self.assertEqual(datetime.fromisoformat(paid["result_delivered_at"]), accepted_at)
+        self.assertEqual(paid["delivery_email_status"], "sent")
+        self.assertEqual(paid["refund_status"], "succeeded")
+        self.assertEqual(paid["sla_paused_seconds"], 0)
 
     def test_delayed_callback_then_succeeded_refund_and_crash_reconciliation(self):
         for status in ("paid", "refund_due", "refund_pending"):
