@@ -15,6 +15,7 @@ import os
 import threading
 from contextlib import contextmanager
 
+from execution_source import SHA40
 import measurement_dispatch
 import official_scoring_v16 as official_scoring
 import pod_runner
@@ -23,11 +24,15 @@ STATE_ROOT = pod_runner.STATE_ROOT
 ROTATION_TOOL = Path('/home/flori/jevbench-sealed/rotation/rotation.py')
 
 
-def _sha(path):
+def _reference_bytes(path):
     p = Path(path)
     if p.is_symlink() or not p.is_file():
         raise ValueError('unsafe v16 reference')
-    return hashlib.sha256(p.read_bytes()).hexdigest()
+    return p.read_bytes()
+
+
+def _sha(path):
+    return hashlib.sha256(_reference_bytes(path)).hexdigest()
 
 
 def measurement_pins(manifest):
@@ -43,6 +48,38 @@ def measurement_pins(manifest):
             'profile': value}
 
 
+def _check_source_pins(job, recipe, gate_pins, admission_pins):
+    code = recipe.get('code') if isinstance(recipe, dict) else None
+    if not isinstance(code, dict) or set(code) not in ({'commit', 'tree'}, {'source', 'commit', 'tree'}):
+        raise ValueError('invalid v16 recipe source')
+    # Existing two-repository recipes omit the selector.
+    source = code.get('source', 'code')
+    if source not in ('model', 'code'):
+        raise ValueError('invalid v16 recipe source')
+    names = {'model'} if source == 'model' else {'model', 'code'}
+    source_dir = job / 'source'
+    receipt_names = {f'FETCH-RECEIPT-{name}.json' for name in names}
+    if not isinstance(admission_pins, dict) or admission_pins.keys() != names \
+            or gate_pins.keys() & {'model', 'code'} != names \
+            or source_dir.is_symlink() \
+            or {path.name for path in source_dir.glob('FETCH-RECEIPT-*.json')} != receipt_names:
+        raise ValueError('v16 source inventory differs from reviewed recipe')
+    for name in sorted(names):
+        pin = admission_pins[name]
+        if not isinstance(pin, dict) or pin != gate_pins[name]:
+            raise ValueError('v16 source pin changed')
+        receipt_bytes = _reference_bytes(source_dir / f'FETCH-RECEIPT-{name}.json')
+        if pin.get('receipt_sha256') != hashlib.sha256(receipt_bytes).hexdigest():
+            raise ValueError('v16 source receipt changed')
+        receipt = json.loads(receipt_bytes)
+        if not isinstance(receipt, dict) or receipt.get('which') != name or any(
+                not isinstance(pin.get(key), str) or not SHA40.fullmatch(pin[key])
+                or receipt.get(key) != pin[key] for key in ('commit', 'tree')):
+            raise ValueError('v16 source receipt has different commit or tree pins')
+        if name == source and any(code[key] != pin[key] for key in ('commit', 'tree')):
+            raise ValueError('v16 recipe uses different commit or tree pins')
+
+
 def accepted(job_dir):
     """Return host-admitted package and fresh pins, refusing stale source gates."""
     job = Path(job_dir)
@@ -50,19 +87,45 @@ def accepted(job_dir):
     state = json.loads((STATE_ROOT / 'requests' / (rid + '.json')).read_text())
     path = job / 'review/V16-PROFILE-ADMISSION.json'
     record = state.get('v16_profile_admission', {})
-    if record.get('verdict') != 'ACCEPTED' or record.get('receipt_sha256') != _sha(path):
+    if record.get('verdict') != 'ACCEPTED':
         raise ValueError('v16 admission is not accepted by host')
-    admission = json.loads(path.read_text())
+    admission_bytes = _reference_bytes(path)
+    admission_digest = hashlib.sha256(admission_bytes).hexdigest()
+    if record.get('receipt_sha256') != admission_digest:
+        raise ValueError('v16 admission is not accepted by host')
+    admission = json.loads(admission_bytes)
     if admission.get('schema_version') != 1 or admission.get('verdict') != 'ACCEPTED' \
             or admission.get('order_id') != rid or admission.get('rotation_tool_sha256') != _sha(ROTATION_TOOL) \
             or not re.fullmatch(r'[a-z0-9-]{1,80}', admission.get('generation', '')):
         raise ValueError('invalid v16 admission')
-    independent_path = job / 'review/V16-PROFILE-REVIEW.json'
-    independent = json.loads(independent_path.read_text())
-    if record.get('independent_review_sha256') != _sha(independent_path) \
+    independent_bytes = _reference_bytes(job / 'review/V16-PROFILE-REVIEW.json')
+    independent = json.loads(independent_bytes)
+    if record.get('independent_review_sha256') != hashlib.sha256(independent_bytes).hexdigest() \
             or independent.get('verdict') != 'ACCEPTED' or independent.get('reviewer_engine') != 'claude' \
-            or independent.get('admission_sha256') != _sha(path):
+            or independent.get('admission_sha256') != admission_digest:
         raise ValueError('v16 independent acceptance missing')
+    gate = json.loads(_reference_bytes(job / 'review/GATE.json'))
+    if gate != state.get('source_review_gate') or gate.get('verdict') != 'PASS' \
+            or gate.get('review_sha256') != _sha(job / 'review/CODE-REVIEW.md'):
+        raise ValueError('v16 source gate is missing or stale')
+    pins = gate.get('source_pins', {})
+    trusted = pins.get('trusted_runner', {})
+    if trusted.get('manifest_sha256') != _sha(job / 'trusted-runner/UPSTREAM-MANIFEST.json'):
+        raise ValueError('v16 runner manifest changed')
+    required = {'RUNTIME.json', 'MEASUREMENT-META.json', 'POD-RECIPE.json'}
+    runner_files = trusted.get('files', {})
+    if not required.issubset(runner_files):
+        raise ValueError('v16 runner pins missing')
+    recipe_bytes = _reference_bytes(job / 'trusted-runner/POD-RECIPE.json')
+    recipe_digest = hashlib.sha256(recipe_bytes).hexdigest()
+    if recipe_digest != admission.get('recipe_sha256') or recipe_digest != runner_files['POD-RECIPE.json']:
+        raise ValueError('v16 recipe changed')
+    for name, digest in runner_files.items():
+        if name == 'POD-RECIPE.json':
+            continue
+        if Path(name).name != name or _sha(job / 'trusted-runner' / name) != digest:
+            raise ValueError('v16 reviewed runner file changed')
+    _check_source_pins(job, json.loads(recipe_bytes), pins, admission.get('source_pins'))
     references = admission['references']
     if set(references) != {'measurement', 'scoring', 'freeze', 'id_map'}:
         raise ValueError('invalid v16 reference inventory')
@@ -87,27 +150,8 @@ def accepted(job_dir):
             or freeze['file_sha256']['frozen/id-map.json'] != references['id_map']['sha256']:
         raise ValueError('v16 freeze differs from measurement/scoring')
     measurement_dispatch.checked(input_pin)
-    gate_path = job / 'review/GATE.json'
-    gate = json.loads(gate_path.read_text())
-    pins = gate.get('source_pins', {})
-    if gate != state.get('source_review_gate') or gate.get('verdict') != 'PASS' \
-            or gate.get('review_sha256') != _sha(job / 'review/CODE-REVIEW.md') \
-            or pins.get('official_measurement') != measured or pins.get('official_methods') != scored:
+    if pins.get('official_measurement') != measured or pins.get('official_methods') != scored:
         raise ValueError('v16 source gate has stale method pins')
-    for name in ('model', 'code'):
-        if pins.get(name) != admission.get('source_pins', {}).get(name) \
-                or pins[name]['receipt_sha256'] != _sha(job / ('source/FETCH-RECEIPT-' + name + '.json')):
-            raise ValueError('v16 source pair changed')
-    trusted = pins.get('trusted_runner', {})
-    if trusted.get('manifest_sha256') != _sha(job / 'trusted-runner/UPSTREAM-MANIFEST.json'):
-        raise ValueError('v16 runner manifest changed')
-    for name, digest in trusted.get('files', {}).items():
-        if Path(name).name != name or _sha(job / 'trusted-runner' / name) != digest:
-            raise ValueError('v16 reviewed runner file changed')
-    if not {'RUNTIME.json', 'MEASUREMENT-META.json', 'POD-RECIPE.json'}.issubset(trusted.get('files', {})):
-        raise ValueError('v16 runner pins missing')
-    if admission.get('recipe_sha256') != _sha(job / 'trusted-runner/POD-RECIPE.json'):
-        raise ValueError('v16 recipe changed')
     return admission, measured, scored
 
 

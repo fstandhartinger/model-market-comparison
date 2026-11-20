@@ -100,14 +100,32 @@ class V16Tests(unittest.TestCase):
 
 class AdmissionBindingTests(unittest.TestCase):
     def test_accepted_package_rejects_stale_gate_and_mixed_method(self):
+        for selector in ('model', 'code', None):
+            with self.subTest(selector=selector):
+                self._check_accepted_package(selector)
+
+    def _check_accepted_package(self, selector):
         with tempfile.TemporaryDirectory() as directory:
             root=Path(directory);rid='1c027833-1c49-408d-b4a0-63a4d654249b';job=root/rid
             for sub in ('review','source','trusted-runner'):(job/sub).mkdir(parents=True)
             def put(path,value):
                 path.write_text(json.dumps(value));return hashlib.sha256(path.read_bytes()).hexdigest()
-            for name in ('RUNTIME.json','MEASUREMENT-META.json','POD-RECIPE.json','UPSTREAM-MANIFEST.json'):
-                put(job/'trusted-runner'/name,{})
-            source={name:{'receipt_sha256':put(job/'source'/f'FETCH-RECEIPT-{name}.json',{})} for name in ('model','code')}
+            for name in ('RUNTIME.json', 'MEASUREMENT-META.json', 'UPSTREAM-MANIFEST.json'):
+                put(job/'trusted-runner'/name, {})
+            source = {}
+            names = ('model',) if selector == 'model' else ('model', 'code')
+            for index, name in enumerate(names):
+                pin = {'commit': str(index + 1) * 40, 'tree': str(index + 3) * 40}
+                digest = put(job/'source'/f'FETCH-RECEIPT-{name}.json', {**pin, 'which': name})
+                source[name] = {**pin, 'receipt_sha256': digest}
+            execution_pin = source[selector or 'code']
+            code = {key: execution_pin[key] for key in ('commit', 'tree')}
+            if selector is not None:
+                code['source'] = selector
+            recipe_path = job/'trusted-runner/POD-RECIPE.json'
+            put(recipe_path, {'code': code})
+            rotation_tool = root/'rotation.py'
+            rotation_tool.write_text('# synthetic')
             measured={'profile':{'method':'jevbench-v16','inputs':{'jevbench':{'count':1500,'items':{'path':'synthetic','sha256':'input'}}},
                        'code':{'pod_drivers/pod_driver.py':{'sha256':v16_profiles._sha(Path(v16_profiles.__file__).parent/'pod_drivers/pod_driver_v16.py')}}}}
             scored={'profiles':{'jevbench':{'version_prefix':'v1.6.','files':{'gold.jsonl':{'sha256':'gold'}}}}}
@@ -123,21 +141,76 @@ class AdmissionBindingTests(unittest.TestCase):
             reviewsha=put(job/'review/CODE-REVIEW.md',{})
             gate={'verdict':'PASS','review_sha256':reviewsha,'source_pins':pins};put(job/'review/GATE.json',gate)
             admission={'schema_version':1,'verdict':'ACCEPTED','order_id':rid,'generation':'synthetic','draw_release':'synthetic',
-                       'source_pins':source,'references':references,'rotation_tool_sha256':v16_profiles._sha(v16_profiles.ROTATION_TOOL),
+                       'source_pins':source,'references':references,'rotation_tool_sha256':v16_profiles._sha(rotation_tool),
                        'recipe_sha256':v16_profiles._sha(job/'trusted-runner/POD-RECIPE.json')}
-            admission_sha=put(job/'review/V16-PROFILE-ADMISSION.json',admission)
-            review_sha=put(job/'review/V16-PROFILE-REVIEW.json',{'verdict':'ACCEPTED','reviewer_engine':'claude','admission_sha256':admission_sha})
-            state={'source_review_gate':gate,'v16_profile_admission':{'verdict':'ACCEPTED','receipt_sha256':admission_sha,'independent_review_sha256':review_sha}}
-            (root/'requests').mkdir();put(root/'requests'/f'{rid}.json',state)
-            with patch.object(v16_profiles,'STATE_ROOT',root), patch.object(v16_profiles,'measurement_pins',return_value=measured), \
-                    patch.object(v16_profiles.official_scoring,'pins',return_value=scored),patch.object(v16_profiles.measurement_dispatch,'checked'):
-                self.assertEqual(v16_profiles.accepted(job)[0],admission)
-                # A stale on-disk gate cannot piggyback on host acceptance.
-                put(job/'review/GATE.json',{**gate,'verdict':'FAIL'})
-                with self.assertRaisesRegex(ValueError,'stale method pins'):v16_profiles.accepted(job)
-                put(job/'review/GATE.json',gate)
+            state_path = root/'requests'/f'{rid}.json'
+            state_path.parent.mkdir()
+            def register(candidate, source_gate):
+                admission_sha = put(job/'review/V16-PROFILE-ADMISSION.json', candidate)
+                review_sha = put(job/'review/V16-PROFILE-REVIEW.json', {
+                    'verdict': 'ACCEPTED', 'reviewer_engine': 'claude', 'admission_sha256': admission_sha,
+                })
+                put(job/'review/GATE.json', source_gate)
+                put(state_path, {'source_review_gate': source_gate, 'v16_profile_admission': {
+                    'verdict': 'ACCEPTED', 'receipt_sha256': admission_sha,
+                    'independent_review_sha256': review_sha,
+                }})
+            register(admission, gate)
+            with patch.object(v16_profiles, 'STATE_ROOT', root), \
+                    patch.object(v16_profiles, 'ROTATION_TOOL', rotation_tool), \
+                    patch.object(v16_profiles, 'measurement_pins', return_value=measured) as read_measurement, \
+                    patch.object(v16_profiles.official_scoring, 'pins', return_value=scored) as read_scoring, \
+                    patch.object(v16_profiles.measurement_dispatch, 'checked'):
+                self.assertEqual(v16_profiles.accepted(job)[0], admission)
+                read_measurement.reset_mock()
+                read_scoring.reset_mock()
+                protected_paths = {Path(ref['path']) for ref in references.values()}
+                read_bytes = v16_profiles._reference_bytes
+                def check_read(path):
+                    self.assertNotIn(Path(path), protected_paths)
+                    return read_bytes(path)
+                with patch.object(v16_profiles, '_reference_bytes', side_effect=check_read):
+                    put(job/'review/GATE.json', {**gate, 'verdict': 'FAIL'})
+                    with self.assertRaisesRegex(ValueError, 'gate is missing or stale'):
+                        v16_profiles.accepted(job)
+
+                    wrong_source = dict(source)
+                    if selector == 'model':
+                        wrong_source['code'] = source['model']
+                    else:
+                        del wrong_source['code']
+                    register({**admission, 'source_pins': wrong_source}, gate)
+                    with self.assertRaisesRegex(ValueError, 'source inventory'):
+                        v16_profiles.accepted(job)
+
+                    register(admission, gate)
+                    if selector == 'model':
+                        extra = job/'source/FETCH-RECEIPT-code.json'
+                        put(extra, {})
+                        with self.assertRaisesRegex(ValueError, 'source inventory'):
+                            v16_profiles.accepted(job)
+                        extra.unlink()
+                    receipt = job/'source'/f'FETCH-RECEIPT-{selector or "code"}.json'
+                    receipt_bytes = receipt.read_bytes()
+                    put(receipt, {'which': selector or 'code'})
+                    with self.assertRaisesRegex(ValueError, 'source receipt changed'):
+                        v16_profiles.accepted(job)
+                    receipt.write_bytes(receipt_bytes)
+
+                    recipe_sha = put(recipe_path, {'code': {**code, 'tree': 'f' * 40}})
+                    wrong_runner = {**trusted, 'files': {**trusted['files'], 'POD-RECIPE.json': recipe_sha}}
+                    register({**admission, 'recipe_sha256': recipe_sha},
+                             {**gate, 'source_pins': {**pins, 'trusted_runner': wrong_runner}})
+                    with self.assertRaisesRegex(ValueError, 'recipe uses different commit or tree'):
+                        v16_profiles.accepted(job)
+
+                read_measurement.assert_not_called()
+                read_scoring.assert_not_called()
+                put(recipe_path, {'code': code})
+                register(admission, gate)
                 measured['profile']['method']='jevbench-v15'
-                with self.assertRaisesRegex(ValueError,'mixed v16'):v16_profiles.accepted(job)
+                with self.assertRaisesRegex(ValueError, 'mixed v16'):
+                    v16_profiles.accepted(job)
 
 
 class UploadBoundaryTests(unittest.TestCase):
