@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
+import {execFileSync} from 'node:child_process';
 import {readJevbenchV1818Candidate,hasPublishedJevbenchV1818Release,readJevbenchV1818ForBoard} from '../lib/jevbench-v1818-release.mjs';
 import {baseModelFor} from '../lib/jev-base-model.mjs';
 import {readJevAllDataInput} from '../lib/jevbench-alldata-input.mjs';
@@ -8,6 +9,13 @@ const load=(v,n)=>JSON.parse(readFileSync(`data/raw/benchmarks/jevbench/v1.8/jev
 const r=load('v1.8.18','results'),p=load('v1.8.17','results'),by=new Map(r.systems.map(s=>[s.key,s]));
 const cfg=JSON.parse(readFileSync('r198/v1818/inputs/RANKING-CONFIG.json'));
 const notes=JSON.parse(readFileSync('r198/v1818/inputs/TEXT-EXCEPTIONS.json'));
+test('committed PASS manifest never carries a synthetic or pending review engine',()=>{
+ const manifest=JSON.parse(execFileSync('git',['show','HEAD:data/raw/benchmarks/jevbench/v1.8/jevbench-v1.8.18-publication.json'],{encoding:'utf8'}));
+ if(manifest.review.verdict==='PASS'){
+  assert.ok(manifest.review.engine);
+  assert.doesNotMatch(manifest.review.engine,/synthetic|pending/i);
+ }
+});
 test('v1.8.18 preserves all non-ranking measurement fields and all carried cells',()=>{
  const reviewed=new Set([...cfg.ranked,...cfg.held]);
  for(const prior of p.systems){
@@ -34,7 +42,10 @@ test('mechanical R1–R3 disposition and carried T3 notes match the retained WHA
   assert.equal(by.get(k).ranked,rank,k);
  }
  assert.match(by.get('starlord-27b-v2-0-preview').listing_note,/Its #5 place on the open-weights Composite B list/);
- assert.doesNotMatch(by.get('karpo_decision_31b').listing_note,/Its #/);
+ assert.doesNotMatch(by.get('karpo_decision_31b').listing_note,/Composite B among all systems/);
+ assert.match(by.get('karpo_decision_31b').listing_note,/Its #4 place on the Capability Score among all systems is within the uncertainty of the draw shift\.$/);
+ assert.match(by.get('decide-1.1').listing_note,/Its #4 place on Composite B among all systems is within the uncertainty of the draw shift\.$/);
+ assert.match(by.get('sd-jev-4b-v12.1.0-aligned-s42-step0256').listing_note,/Its #5 place on the API Composite A list is within the uncertainty of the draw shift\.$/);
  assert.match(by.get('arcbright-elf-1-12b-r2').listing_note,/Its #5 place on the open-weights Composite A and C lists/);
  assert.equal(by.get('subq-snap-1.2').endpoint_kind,'api');
 });
