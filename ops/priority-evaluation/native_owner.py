@@ -95,6 +95,9 @@ SUPPLEMENTS: tuple[dict[str, Any], ...] = (
      "precedents": ("fastlane-native-9aa6673b", "fastlane-native-f62aeab1")},
     {"family": "strands_decider_e2b", "module": "strands_decider_e2b_runtime_supplement.py",
      "repos": ("huggingface.co/strandsagents/strands-decider-e2b-gemma4-v2-2611",),
+     # Exact-order native-owner routing only (STRANDS_E2B_ORDER); not a pre-payment intake
+     # classification for repeat orders until repeat execution is reviewed (board #73758).
+     "intake_admission": False,
      "precedents": ("fastlane-native-0616c39d",)},
     {"family": "quyet", "module": "quyet_runtime_supplement.py",
      "repos": ("huggingface.co/chinhnc/quyet-1.2-large", "huggingface.co/chinhnc/quyet-1.2-small", "github.com/ncchinh/quyet"),
