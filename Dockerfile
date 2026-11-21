@@ -19,5 +19,7 @@ ENV NODE_ENV=production \
     SOURCE_COMMIT=${SOURCE_COMMIT}
 COPY --from=build /app ./
 EXPOSE 3000
-# Seed the DB at boot when DATABASE_URL is set (skips if snapshot unchanged), then serve.
-CMD ["sh", "-c", "node scripts/seed-db.mjs || true; npm start"]
+# Structured JSON logs + request ids (CR-822, logging standard AGENTS.md; logkit/README.md). No IPs or user agents.
+ENV LOG_APP=benchmark-heaven LOG_IP=0 LOG_UA=0
+# Seed the DB at boot when DATABASE_URL is set (skips if snapshot unchanged), then serve (same as `npm start`, with logkit).
+CMD ["sh", "-c", "node scripts/seed-db.mjs || true; exec node -r ./logkit/logkit-preload.cjs node_modules/next/dist/bin/next start -p ${PORT:-3000}"]
