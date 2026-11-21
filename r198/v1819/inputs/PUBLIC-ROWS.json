@@ -1,0 +1,20 @@
+{
+ "bison-1": {
+  "author": "Base Labs",
+  "disclosure": "Hosted API via Baseten Model APIs, served as decision-models/baseten-bison-31b-latest (a -latest alias), measured 21 Nov 2026; not tied to a Hugging Face revision. Reference Hugging Face HEAD at run time: baselabs/bison-1@bf8350b2. Baseten documentation lists 131,072 context tokens, while its management API reported 32,768. Five items of 77–82k input tokens received answers with full reported usage; reported usage is not proof that every token was read. Failed or unanswered requests count as wrong answers. Baseten retention statements are vendor claims and were not audited.",
+  "display": "bison-1",
+  "endpoint_condition": "Baseten Model APIs /v1/systemone (inference.baseten.co); native probabilities; served model decision-models/baseten-bison-31b-latest.",
+  "licence": "MIT (modifications) and Apache-2.0 (base model)",
+  "notes": "Hosted API via Baseten Model APIs, served as decision-models/baseten-bison-31b-latest (a -latest alias), measured 21 Nov 2026; not tied to a Hugging Face revision. Reference Hugging Face HEAD at run time: baselabs/bison-1@bf8350b2.",
+  "repo": "https://huggingface.co/baselabs/bison-1"
+ },
+ "groundhog-1": {
+  "author": "Base Labs",
+  "disclosure": "Hosted API via Baseten Model APIs, served as decision-models/baseten-groundhog-26b-latest (a -latest alias), measured 21 Nov 2026; not tied to a Hugging Face revision. Reference Hugging Face HEAD at run time: baselabs/groundhog-1@f4602c43. Baseten documentation lists 131,072 context tokens, while its management API reported 16,384. Five items of 77–82k input tokens received answers with full reported usage; reported usage is not proof that every token was read. Failed or unanswered requests count as wrong answers. Baseten retention statements are vendor claims and were not audited.",
+  "display": "groundhog-1",
+  "endpoint_condition": "Baseten Model APIs /v1/systemone (inference.baseten.co); native probabilities; served model decision-models/baseten-groundhog-26b-latest.",
+  "licence": "MIT (modifications) and Apache-2.0 (base model)",
+  "notes": "Hosted API via Baseten Model APIs, served as decision-models/baseten-groundhog-26b-latest (a -latest alias), measured 21 Nov 2026; not tied to a Hugging Face revision. Reference Hugging Face HEAD at run time: baselabs/groundhog-1@f4602c43.",
+  "repo": "https://huggingface.co/baselabs/groundhog-1"
+ }
+}

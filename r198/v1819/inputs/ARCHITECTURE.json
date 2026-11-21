@@ -1,0 +1,32 @@
+{
+ "bison-1": {
+  "arch": "open-llm-decoder",
+  "badges": {
+   "derivation": "fine-tune",
+   "params": "31B",
+   "quant": null
+  },
+  "evidence": [
+   {
+    "fact": "The model card declares a 31B dense Gemma-4-31B base and fine-tuning. Hosted API through Baseten Model APIs; deployed weights are not pinned to the reference Hugging Face HEAD.",
+    "kind": "model-card",
+    "url": "https://huggingface.co/baselabs/bison-1/blob/bf8350b2/README.md"
+   }
+  ]
+ },
+ "groundhog-1": {
+  "arch": "open-llm-decoder",
+  "badges": {
+   "derivation": "fine-tune",
+   "params": "26B-A4B",
+   "quant": null
+  },
+  "evidence": [
+   {
+    "fact": "The model card declares a 26B-A4B mixture-of-experts Gemma-4-26B-A4B base and fine-tuning. Hosted API through Baseten Model APIs; deployed weights are not pinned to the reference Hugging Face HEAD.",
+    "kind": "model-card",
+    "url": "https://huggingface.co/baselabs/groundhog-1/blob/f4602c43/README.md"
+   }
+  ]
+ }
+}
