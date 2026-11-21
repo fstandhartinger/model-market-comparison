@@ -34,7 +34,13 @@ WINDOW = 24 * 3600
 # DECISIONS 6 Nov 00:55Z, wps-order-114b6e41-customer-path-after-cleanup-failure-1106.
 # The native owner + deputy handle the no-ETA note choice at 40h. The normal 48h
 # refund card remains active; this mapping grants no contact/refund/run authority.
-OWNER_MANAGED_40H = frozenset({"114b6e41-14c5-42b1-9a35-386ab83b62e9"})
+OWNER_MANAGED_40H = frozenset({
+    "114b6e41-14c5-42b1-9a35-386ab83b62e9",
+    "9d46b4ad-b7b2-4d02-beda-7a56db409848",
+    "9aa6673b-f364-4a20-9fc4-899678189814",
+    "2be2698b-dc43-42a1-8b8c-1fe228fd0d30",
+    "0616c39d-e505-4365-b9e8-db157fc67539",
+})
 
 
 def owner_managed(row: dict) -> bool:
