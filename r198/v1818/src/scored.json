@@ -1,0 +1,129 @@
+{
+ "cue-reflex-4b-v0.2": {
+  "api_flag": false,
+  "api_subset": false,
+  "axes": {
+   "calibration": 80.22436710301471,
+   "cost": 87.4389342337437,
+   "intelligence": 53.825480139605645,
+   "speed": 89.17096582826152
+  },
+  "capability": 67.02492362131018,
+  "composite_ci95": {
+   "A": [
+    65.16709336969895,
+    76.77579610522012
+   ],
+   "B": [
+    59.459400835969895,
+    72.25344908138668
+   ],
+   "C": [
+    45.25492595117983,
+    72.79592964524781
+   ]
+  },
+  "cost": {
+   "basis": "GPU-time estimate from v1.8.0: one monthly-rented RTX PRO 6000 96 GB, USD 1.5235/hour; average load 70%. Architecture: small gemma, 4B active parameters; throughput 80585.75 tokens/s (architecture-class calibration, efficient-engine prefill). GPU-time cost USD 0.00262241966066776/1,000; old list-price estimate USD 0.00699114842175957/1,000 (deepinfra:google/gemma-4-E4B-it at USD 0.02/M input and USD 0.10/M output). Applied min(old list-price estimate, GPU-time cost) = USD 0.00262241966066776/1,000. Common 1,489-item basis: 520,491 input and zero output tokens. Estimated, not a bill.",
+   "common_basis": {
+    "n_items": 1489,
+    "rule": "common",
+    "usd_per_1000_all_items": 0.002615587077073754
+   },
+   "kind": "estimate",
+   "usage_estimated_rows": 0,
+   "usd_per_1000": 0.0026224196606677587
+  },
+  "decision_limit": {
+   "limit_s": 10.0,
+   "rule": "latency_s > limit -> failed",
+   "treatment": "share"
+  },
+  "display": "Cue-Reflex-4B v0.2",
+  "endpoint_kind": "gpu",
+  "full_coverage": true,
+  "jevbench_score": 74.49543151821608,
+  "key": "cue-reflex-4b-v0.2",
+  "listing": "listed",
+  "rank": null,
+  "ranked": false,
+  "scores": {
+   "A": 74.49543151821608,
+   "B": 69.18200495867002,
+   "C": 59.95190181630094
+  },
+  "speed": {
+   "adjustment": "x2 + 0.15 s (assumption, not measured)",
+   "p50_s_adjusted": 0.3403903630000059,
+   "p50_s_raw": 0.09519518150000295,
+   "p95_s_adjusted": 0.3555708591999973,
+   "p95_s_raw": 0.10278542959999867
+  },
+  "status": {
+   "status": "complete"
+  },
+  "support": {
+   "choice": "native",
+   "noul": "native",
+   "score": "native"
+  },
+  "v16": {
+   "ci95": {
+    "B": 1000,
+    "C": [
+     75.0680218976957,
+     83.03126369998682
+    ],
+    "I": [
+     47.96965037579451,
+     58.48495887867693
+    ],
+    "capability": [
+     62.160837967337166,
+     70.01583009320993
+    ],
+    "composite": {
+     "A": [
+      65.16709336969895,
+      76.77579610522012
+     ],
+     "B": [
+      59.459400835969895,
+      72.25344908138668
+     ],
+     "C": [
+      45.25492595117983,
+      72.79592964524781
+     ]
+    },
+    "seed": 16
+   },
+   "complete": true,
+   "equated": null,
+   "equating_offset": null,
+   "g_med_used": 2.573387642438244,
+   "lane": "selfhosted"
+  },
+  "validity": {
+   "choice": {
+    "invalid_rate": 0.005333333333333301,
+    "n": 750
+   },
+   "noul": {
+    "invalid_rate": 0.002666666666666706,
+    "n": 375
+   },
+   "score": {
+    "invalid_rate": 0.0,
+    "n": 375
+   }
+  },
+  "views": {
+   "Balanced 33:33:33": 72.76338606149162,
+   "Emphasis on Accuracy 60:20:20": 63.786371466878684,
+   "Emphasis on Cost 20:20:60": 77.9999161590019,
+   "Emphasis on Speed 20:60:20": 78.54428871443982,
+   "Intelligence only": 53.82548013960565
+  }
+ }
+}

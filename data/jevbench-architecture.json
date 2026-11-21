@@ -7970,6 +7970,21 @@
             "fact": "The declared base is google/gemma-4-31B-it. The model card lists Apache 2.0 and the base Gemma terms also apply. Measured with the BF16 backbone."
           }
         ]
+      },
+      "cue-reflex-4b-v0.2": {
+        "arch": "open-llm-decoder",
+        "badges": {
+          "derivation": "fine-tune",
+          "params": "4B",
+          "quant": null
+        },
+        "evidence": [
+          {
+            "fact": "Model card declares Gemma-4-E4B base with a LoRA adapter.",
+            "kind": "model-card",
+            "url": "https://huggingface.co/oidlabs/cue-reflex-4B/blob/a36bd3ec3020f567d43ffb95ba6323a44d6a0ccf/README.md"
+          }
+        ]
       }
     },
     "imagejevbench": {
