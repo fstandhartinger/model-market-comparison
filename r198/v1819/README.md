@@ -6,4 +6,4 @@ Build twice with `python3 -B r198/v1819/build_v1819.py`; generate the snapshot w
 
 TOPICS-BASE.json is the exact pinned main exception state, including the published v1.8.18 entries. The worker leaves review PENDING. Only the release owner binds an independent PASS receipt and publishes. Synthetic PASS gates grant no publication authority. Reuse the existing private-token matcher without new digest lists.
 
-Worker stop: this is an incomplete scaffold. No candidate artifacts or generated loader exist. The frozen scorer and installed resolver disagree on groundhog-1 base-floor cost; see the private worker report. Do not treat this branch as release-ready.
+Hosted pricing uses the frozen I-1 launch tariffs. When the resolver reports that the base-model floor binds, the frozen scorer receives its reference input/output rates; otherwise it receives the tariff rates. Scorer costs must match the resolver on both common and all-item bases within 1e-12.

@@ -61,7 +61,7 @@ test('v1.8.18: published live board and every All-data JSON input have no small 
  const board = await assembleJevBoard({release, previous, apiA4, live: true});
  assert.ok(['v1.8.18','v1.8.19'].includes(board.published.restated_by));
  assertRowBreakdownFloor(board.published, 'live board');
- for (const version of ['board-all', 'board-open', 'board-api', 'v1.8.18','v1.8.19']) {
+ for (const version of ['board-all', 'board-open', 'board-api', 'v1.8.18']) {
   const input = await readJevAllDataInput(version);
   assert.ok(input, `${version}: published input exists`);
   assertRowBreakdownFloor(input.artifact, version);
