@@ -49,6 +49,7 @@ import re
 import resource
 import shlex
 import shutil
+import stat
 import subprocess
 import tempfile
 import time
@@ -169,6 +170,7 @@ STEP_LIMITS = {
     "finalize": 30,
     "result_mail": 10, "xpost": 1, "xpost_receipt": 6, "refund_notice": 10,
     "sla24_handoff": 8, "sla36_handoff": 8, "t18_parity_decision": 8, "t18_standard_prep": 8,
+    "native_api_release_handoff": 8,
 }
 BACKOFF_BASE_SECONDS = 300
 BACKOFF_CAP_SECONDS = 7200
@@ -282,6 +284,54 @@ MEASUREMENT_INVALID_REASONS = frozenset({
     "existing_measurement_receipt_changed",
     "official_measurement_changed_or_incomplete",
 })
+
+# Reviewed aggregate validation and custody closure, keyed by SHA-256 of the order UUID and UTC payment time.
+# Neither receipt grants release or delivery authority. Data from the model runner is not a trust root.
+# Board #73814, #75170 and #75243.
+NATIVE_API_COMPLETIONS = {
+    "59e40ee293b1ff305321af6c02628431c7c794dee444745a3183f1e417fd6ada": {
+        "VALIDATION-1121.json": "17d7f3c71249ec84333cb3ba0d4a0a5411ebcc9a573183390c3266a19891e9cb",
+        "CONSUMED-1121.md": "abc984e78e71eaf1b32bbab843ce9180d50079720c5babf7c37254060d202d13",
+    },
+}
+
+
+def native_api_measurement_completed(row: dict[str, Any], state: dict[str, Any]) -> bool:
+    """Recognize a reviewed out-of-band measurement for SLA supervision only."""
+    rid = request_id(row["id"])
+    if (row.get("access_type") != "api_endpoint"
+            or row.get("resubmission_count") != 0 or row.get("evaluation_attempts") != 0
+            or row.get("synthetic_test") is not False):
+        return False
+    paid_at = parse_ts(row.get("paid_at"))
+    if paid_at is None:
+        return False
+    attempt_key = hashlib.sha256(f"{rid}\n{paid_at.isoformat()}".encode()).hexdigest()
+    receipts = NATIVE_API_COMPLETIONS.get(attempt_key)
+    hold = state.get("operational_hold")
+    if (not receipts or not isinstance(hold, dict) or hold.get("transient") is not False
+            or hold.get("reason") != "unsupported_measurement_backend"
+            or hold.get("owner") != native_owner.owner_name(rid)):
+        return False
+    # Walk fixed host directories without following symlinks. Verify the bytes in the opened descriptors.
+    try:
+        with contextlib.ExitStack() as stack:
+            directory = os.open(HOME, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW)
+            stack.callback(os.close, directory)
+            for name in ("jobs", native_owner.owner_name(rid), "receipts"):
+                directory = os.open(name, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW, dir_fd=directory)
+                stack.callback(os.close, directory)
+            for name, expected in receipts.items():
+                fd = os.open(name, os.O_RDONLY | os.O_NOFOLLOW | os.O_NONBLOCK, dir_fd=directory)
+                with os.fdopen(fd, "rb") as receipt:
+                    info = os.fstat(receipt.fileno())
+                    if not stat.S_ISREG(info.st_mode) or info.st_nlink != 1 or info.st_size > 32_768:
+                        return False
+                    if hashlib.sha256(receipt.read(32_769)).hexdigest() != expected:
+                        return False
+    except OSError:
+        return False
+    return True
 
 
 def _ts_ok(value: object) -> bool:
@@ -2361,6 +2411,9 @@ def manage_evaluation(row: dict[str, Any], state: dict[str, Any], effects: Effec
     attempts = int(row.get("evaluation_attempts") or 0)
     unit = EVAL_UNIT.format(rid)
     if row.get("status") not in ("paid", "review_passed") or active_hold(row):
+        return
+    if native_api_measurement_completed(row, state):
+        # The native owner retains the result. Leave the operational hold and all delivery gates in place.
         return
     if row.get("review_passed_at") and state.get("source_review_gate"):
         subject = f"Benchmark Heaven evaluation order {order_ref(rid)}: source review passed"
@@ -4769,10 +4822,12 @@ def recover_result_email_leases(synthetic_id: str | None, job_root: Path, effect
                        "delivery_email_status='sending' AND updated_at < now()-interval '10 minutes'")
 
 
-def measurement_started(rid: str, job_root: Path) -> bool:
-    """A host measurement record or a produced RESULT.json means the clock is no longer 'not started'."""
+def measurement_started(rid: str, job_root: Path, *, row: dict[str, Any] | None = None) -> bool:
+    """Recognize host measurement, a reviewed native completion, or a result artifact."""
     state = load_state(rid)
     if isinstance(state.get("host_measurement"), dict) and state["host_measurement"]:
+        return True
+    if row is not None and native_api_measurement_completed(row, state):
         return True
     return (job_directory(rid, job_root) / "release" / "RESULT.json").is_file()
 
@@ -4803,7 +4858,7 @@ def sla_sweep(synthetic_id: str | None, job_root: Path, effects: Effects) -> dic
             if effects.dry_run:
                 row = sql_json(f"SELECT {row_json_sql('r')} FROM {TABLE} AS r WHERE {base} "
                                f"AND {sla_elapsed_sql()} >= interval '{hours} hours' AND r.{column}_alerted_at IS NULL LIMIT 1")
-                if row and (hours != 24 or not measurement_started(request_id(row["id"]), job_root)):
+                if row and (hours != 24 or not measurement_started(request_id(row["id"]), job_root, row=row)):
                     send_sla_notice(row, hours, effects)
                     counts[key] += 1
                 break
@@ -4818,7 +4873,7 @@ def sla_sweep(synthetic_id: str | None, job_root: Path, effects: Effects) -> dic
             if not row:
                 break
             rid = request_id(row["id"])
-            if hours == 24 and measurement_started(rid, job_root):
+            if hours == 24 and measurement_started(rid, job_root, row=row):
                 # Measuring already; the 24 h "not started" warning does not apply to this order.
                 update_row(rid, f"{column}_alerted_at=now(), {column}_alert_claimed_at=NULL")
                 continue
@@ -5282,17 +5337,19 @@ def advance_sla_handoffs(row: dict[str, Any], state: dict[str, Any], effects: Ef
     if row.get("status") not in ("paid", "review_passed") or row.get("result_delivered_at") or active_hold(row):
         return
     rid = request_id(row.get("id"))
+    native_measured = native_api_measurement_completed(row, state)
     for hours in (24, 36):
-        name = f"sla{hours}_handoff"
+        name = "native_api_release_handoff" if hours == 36 and native_measured else f"sla{hours}_handoff"
         if not row.get(f"sla_{hours}h_alerted_at") or step_done(state, name) or not step_due(state, name, now):
             continue
-        if hours == 24 and measurement_started(rid, job_root):
+        if hours == 24 and measurement_started(rid, job_root, row=row):
             finish_ok(state, name, now, skipped="measurement_started")
             continue
         if hours == 36 and measured_release_quiet(row, state, now):
             continue  # not consumed: the handoff still goes out once under 3 h remain
         begin_attempt(state, name, now)
-        if effects.board(sla_handoff(row, hours), wake_owner(row, state), thread=BOARD_HANDOFF_THREAD):
+        if effects.board(sla_handoff(row, hours, native_measured=native_measured),
+                         wake_owner(row, state), thread=BOARD_HANDOFF_THREAD):
             finish_ok(state, name, now)
         else:
             finish_fail(state, name, "board_post_failed")
@@ -5321,7 +5378,7 @@ def advance_t18_path_health(row: dict[str, Any], state: dict[str, Any], effects:
     deadline = deadline_for(row)
     if deadline - now > T18_PATH_HEALTH_MARGIN or now >= deadline:
         return
-    if not native_route_hold_open(rid, state) or measurement_started(rid, job_root):
+    if not native_route_hold_open(rid, state) or measurement_started(rid, job_root, row=row):
         return
     operational = state.get("operational_hold") or {}
     reason = str(operational.get("reason"))
@@ -5357,17 +5414,22 @@ def advance_t18_path_health(row: dict[str, Any], state: dict[str, Any], effects:
 
 
 def measured_release_quiet(row: dict[str, Any], state: dict[str, Any], now: datetime) -> bool:
-    """A deliberate (non-transient) hold whose named owner is live and whose official measurement is complete
-    (pods/<rid>.json) needs no 36 h owner wake-up while more than 3 h remain."""
+    """Defer the 36 h owner wake-up while a live owner has a measured order and more than 3 h remain."""
     rid = request_id(row.get("id"))
     operational = state.get("operational_hold")
     return (isinstance(operational, dict) and operational.get("transient") is False
             and bool(operational.get("reason")) and hold_owner_live(operational.get("owner"), rid, now)
-            and measured_awaiting_release(rid, state) and deadline_for(row) - now > MEASURED_RELEASE_MARGIN)
+            and (native_api_measurement_completed(row, state) or measured_awaiting_release(rid, state))
+            and deadline_for(row) - now > MEASURED_RELEASE_MARGIN)
 
 
-def sla_handoff(row: dict[str, Any], hours: int) -> str:
+def sla_handoff(row: dict[str, Any], hours: int, *, native_measured: bool = False) -> str:
     rid = request_id(row.get("id"))
+    if native_measured:
+        return (f"Fast-lane order {order_ref(rid)} has a validated native API measurement and no customer result "
+                f"{hours} hours after payment. Payment deadline: {deadline_for(row).isoformat()}. "
+                "Owner: verify the release hold and record delivery or the existing late disposition as applicable. "
+                "Refunds need Florian's button.")
     text = (f"Fast-lane order {order_ref(rid)} has no result {hours} hours after payment; the result deadline is "
             f"{deadline_for(row).isoformat()}. Owner: start or unblock the measurement now, or say on this thread "
             f"who owns it. Evidence: {job_directory(rid, JOB_ROOT)}/STATE.md. Refunds need Florian's button.")
@@ -5644,21 +5706,27 @@ def health(effects: Effects) -> dict[str, Any]:
                           or (operational.get("owner") == native_owner.owner_name(rid)
                               and native_owner_starting(state, now))))
         # N118: a live owner whose official pod measurement is complete (pods/<rid>.json) stays quiet until 3 h.
-        margin = owned_hold_margin(rid, state) if owned_run else OWNED_HOLD_DEADLINE_MARGIN
-        measured = owned_run and margin == MEASURED_RELEASE_MARGIN
-        owned_quiet = owned_run and deadline_for(row) - now > margin
+        native_measured = native_api_measurement_completed(row, state)
+        measured = owned_run and (native_measured or measured_awaiting_release(rid, state))
+        margin = MEASURED_RELEASE_MARGIN if measured else OWNED_HOLD_DEADLINE_MARGIN
+        # A completed native API run with a live owner gets the retried board release handoff.
+        owned_quiet = owned_run and (native_measured or deadline_for(row) - now > margin)
         if active_hold(row) or planned_review or owned_quiet:
             held_orders.append({"order": ref, "kind": "customer" if active_hold(row) else
                                 "operational_review" if planned_review else
                                 "measured_awaiting_release" if measured else "owned_manual_run",
-                                "reason": row.get("customer_hold_reason") if active_hold(row) else operational["reason"],
+                                "reason": (row.get("customer_hold_reason") if active_hold(row) else
+                                           "native_api_measured_awaiting_release" if native_measured else operational["reason"]),
                                 "owner": None if active_hold(row) else operational["owner"],
                                 "deadline": iso(deadline_for(row)),
                                 "sla_paused": bool(active_hold(row))})
         if row.get("evaluation_status") in ("pending", "failed", "exhausted") and now - paid > timedelta(minutes=45) \
                 and not active_hold(row) and not (planned_review and now < deadline_for(row)) and not owned_quiet:
             detail = f"; operational hold: {operational.get('reason') or 'unknown'}" if isinstance(operational, dict) else ""
-            if owned_run:
+            if native_measured:
+                problems.append((f"eval-due:{rid}", f"order {ref}: native API measurement is complete and release is pending. "
+                                 f"Owner {operational['owner']}; payment deadline {iso(deadline_for(row))}"))
+            elif owned_run:
                 problems.append((f"eval-due:{rid}", f"order {ref}: evaluation not running ({row.get('evaluation_status')}){detail}; "
                                  f"owner {operational.get('owner')} has under {'3 h (measured, awaiting release)' if measured else '12 h'} to the deadline"))
             else:
