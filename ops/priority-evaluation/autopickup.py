@@ -2053,6 +2053,8 @@ def decision_context_line(row: dict[str, Any], question: str) -> str:
         budget = max(DECISION_HEADLINE_MAX - len(visible(customer, "")), 12)
         model = (model[:budget - 1].rsplit(" ", 1)[0].rstrip(" ,;:-(") or model[:budget - 1]) + "…"
         about = visible(customer, model)
+    if len(about) + 1 + len(link) > 220:
+        link = f"{SITE}/submit"
     return f"Worum geht's: {about} {link}"
 
 

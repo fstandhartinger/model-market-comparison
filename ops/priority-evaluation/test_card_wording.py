@@ -76,6 +76,32 @@ class CardWording(unittest.TestCase):
         self.assert_card(c.sla_message(ROW, 36))
         self.assertIn('24 hours', c.sla_message(ROW, 24))
 
+    def test_approval_headline_states_situation_and_decision(self):
+        row = dict(ROW, amount_total=4900)
+        refund_situations = {
+            'sla_missed': 'No result at 48 hours',
+            'sla_48h_payment': 'The result was late',
+            'operator_refusal': 'An operator requested a refund',
+            'source_review_failed': 'Source review failed',
+        }
+        self.assertEqual(refund_situations.keys(), c.refund_approval.REASONS.keys())
+        for kind, situation in refund_situations.items():
+            with self.subTest(kind=kind):
+                headline = c.refund_approval.caption(row, kind, '10 Oct 12:00 UTC').splitlines()[1]
+                self.assertTrue(headline.startswith(f"Worum geht's: {situation} "))
+                self.assertIn(f"refund USD 49.00 ({c.eur_phrase(4900)})?", headline)
+                self.assertLessEqual(len(headline.removeprefix("Worum geht's: ").split(' https://', 1)[0]), 120)
+
+        for kind, situation, decision in (
+            ('refusal', 'Source review failed', 'the refusal'),
+            ('change_request', 'Source needs fixes', 'the change request'),
+        ):
+            with self.subTest(kind=kind):
+                headline = c.refusal_approval.approval_caption(row, kind).splitlines()[1]
+                self.assertTrue(headline.startswith(f"Worum geht's: {situation}, so send "))
+                self.assertIn(decision, headline)
+                self.assertIn(row['model_name'], headline)
+
     @unittest.skipUnless(Path('/home/flori/bin/notify').is_file(), 'installed Sandy notifier is unavailable')
     def test_actual_notify_contract_and_compaction(self):
         loader = importlib.machinery.SourceFileLoader('actual_notify_card_test', '/home/flori/bin/notify')
