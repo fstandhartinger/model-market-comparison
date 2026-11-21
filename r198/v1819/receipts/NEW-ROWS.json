@@ -38,7 +38,11 @@
   },
   "decision_limit": {
    "limit_s": 10.0,
+   "n_over_limit": 5,
+   "n_over_limit_answered_ok": 5,
    "rule": "latency_s > limit -> failed",
+   "speed_basis": "all decisions given (lane items in the raw), measured latency_s",
+   "speed_n": 1500,
    "treatment": "share"
   },
   "disclosure": "Hosted API via Baseten Model APIs, served as decision-models/baseten-bison-31b-latest (a -latest alias), measured 21 Nov 2026; not tied to a Hugging Face revision. Reference Hugging Face HEAD at run time: baselabs/bison-1@bf8350b2. Baseten documentation lists 131,072 context tokens, while its management API reported 32,768. Five items of 77–82k input tokens received answers with full reported usage; reported usage is not proof that every token was read. Failed or unanswered requests count as wrong answers. Baseten retention statements are vendor claims and were not audited.",
@@ -214,7 +218,11 @@
   },
   "decision_limit": {
    "limit_s": 10.0,
+   "n_over_limit": 0,
+   "n_over_limit_answered_ok": 0,
    "rule": "latency_s > limit -> failed",
+   "speed_basis": "all decisions given (lane items in the raw), measured latency_s",
+   "speed_n": 1500,
    "treatment": "share"
   },
   "disclosure": "Hosted API via Baseten Model APIs, served as decision-models/baseten-groundhog-26b-latest (a -latest alias), measured 21 Nov 2026; not tied to a Hugging Face revision. Reference Hugging Face HEAD at run time: baselabs/groundhog-1@f4602c43. Baseten documentation lists 131,072 context tokens, while its management API reported 16,384. Five items of 77–82k input tokens received answers with full reported usage; reported usage is not proof that every token was read. Failed or unanswered requests count as wrong answers. Baseten retention statements are vendor claims and were not audited.",
