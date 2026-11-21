@@ -260,7 +260,11 @@
    },
    "decision_limit": {
     "limit_s": 10.0,
+    "n_over_limit": 5,
+    "n_over_limit_answered_ok": 5,
     "rule": "latency_s > limit -> failed",
+    "speed_basis": "all decisions given (lane items in the raw), measured latency_s",
+    "speed_n": 1500,
     "treatment": "share"
    },
    "display": "bison-1",
@@ -600,7 +604,11 @@
    },
    "decision_limit": {
     "limit_s": 10.0,
+    "n_over_limit": 0,
+    "n_over_limit_answered_ok": 0,
     "rule": "latency_s > limit -> failed",
+    "speed_basis": "all decisions given (lane items in the raw), measured latency_s",
+    "speed_n": 1500,
     "treatment": "share"
    },
    "display": "groundhog-1",

@@ -36,6 +36,8 @@ def equate(row):
 baseby={r['key']:r for r in res['systems']};draw=next(r['draw'] for r in res['systems'] if (r.get('draw')or{}).get('id')=='v1.6-regular-20261027')
 for k in keys:
  en=entries[k]['entry'];u=usage[k];s=cp(scored[k]['v17-share']);assert s['v16']['g_med_used']==2.573387642438244
+ # Keep the scorer's whole aggregate, including the measured timeout counts.
+ assert all(f in s['decision_limit'] for f in ['n_over_limit','n_over_limit_answered_ok','speed_n','speed_basis'])
  assert abs(s['cost']['usd_per_1000']-u['cost_common'])<1e-12
  for f in ['display','author','repo','licence','endpoint_condition','disclosure']:s[f]=public_rows[k][f]
  s['underlying']=public_rows[k]['disclosure'];s['notes']=public_rows[k]['notes'];s['base_model']=en['base_model']

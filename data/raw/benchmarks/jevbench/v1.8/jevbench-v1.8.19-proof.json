@@ -193,7 +193,11 @@
    },
    "decision_limit": {
     "limit_s": 10.0,
+    "n_over_limit": 5,
+    "n_over_limit_answered_ok": 5,
     "rule": "latency_s > limit -> failed",
+    "speed_basis": "all decisions given (lane items in the raw), measured latency_s",
+    "speed_n": 1500,
     "treatment": "share"
    },
    "failure_treatment": "Failed or unanswered requests count as wrong answers.",
@@ -267,7 +271,11 @@
    },
    "decision_limit": {
     "limit_s": 10.0,
+    "n_over_limit": 0,
+    "n_over_limit_answered_ok": 0,
     "rule": "latency_s > limit -> failed",
+    "speed_basis": "all decisions given (lane items in the raw), measured latency_s",
+    "speed_n": 1500,
     "treatment": "share"
    },
    "failure_treatment": "Failed or unanswered requests count as wrong answers.",
@@ -329,7 +337,7 @@
   "inputs/PUBLIC-ROWS.json": "532996b7886c4cfeea519814532ce9d0f8d96191bc3fa78cac171894ea9b67fc",
   "inputs/TEXT-EXCEPTIONS.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
   "src/cells.json": "f8bf96ec4fc52ddd414a9eabd8e2072e9c0504a89285b7c4fe65e0fa27701677",
-  "src/scored.json": "693145eb89aeadfe4291b15a3bb68f63e06fc8f12d15c8466407209c0fd4acce",
+  "src/scored.json": "a7c9efbfee83567b65a2255bb6c3d6aed53149d1a72e08fb2d0a75477632664c",
   "src/usage.json": "1d1f749ef7f812df43419d0abcc84020429bafb873305269316e9451d7b64a91"
  },
  "topfive_diff_sha256": "7495629dd33b4baa6b624022ceade8840b85de70fbe689a4a3f4cd2d5539adbf"
