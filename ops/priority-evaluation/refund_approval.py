@@ -33,6 +33,12 @@ REASONS = {
     "operator_refusal": "An operator marked the order for refund.",
     "source_review_failed": "Legacy source-review refusal.",
 }
+REFUND_SITUATIONS = {
+    "sla_missed": "No result at 48 hours",
+    "sla_48h_payment": "The result was late",
+    "operator_refusal": "An operator requested a refund",
+    "source_review_failed": "Source review failed",
+}
 
 
 def reason_key(row: dict) -> str:
@@ -54,8 +60,10 @@ def caption(row: dict, kind: str, deadline: str) -> str:
     money = f"USD {int(amount) / 100:.2f}" if isinstance(amount, int) and not isinstance(amount, bool) else "the full amount"
     from autopickup import decision_context_line, eur_phrase
     eur = eur_phrase(amount)
-    context = decision_context_line(row, f"Refund {money}{f' ({eur})' if eur else ''} to {{customer}} "
-                                         "for model {model}?")
+    headline_amount = f"{money} ({eur})" if eur else money
+    context = decision_context_line(
+        row, f"{REFUND_SITUATIONS[kind]} for {{customer}}'s {{model}}, so refund {headline_amount}?",
+    )
     return (f"🧑 DU BIST DRAN\n{context}\n\n🧑 Für dich\n"
             f"- Decide whether to refund this customer ({money}).\n"
             f"  Why: {REASONS[kind].format(deadline=deadline)} Nothing is refunded without your button.\n"

@@ -331,8 +331,13 @@ def card(path, draft, title_text="Refusal email — exact draft"):
 
 def approval_caption(row, kind):
     from autopickup import decision_context_line
-    title = "change-request" if kind == "change_request" else "refusal"
-    context = decision_context_line(row, f"Send the {title} email to {{customer}} about model {{model}}?")
+    if kind == "change_request":
+        title = "change-request"
+        headline = "Source needs fixes, so send {customer} the change request for model {model}?"
+    else:
+        title = "refusal"
+        headline = "Source review failed, so send {customer} the refusal for model {model}?"
+    context = decision_context_line(row, headline)
     return (f"🧑 DU BIST DRAN\n{context}\n\n🧑 Für dich\n"
             f"- Decide whether to send the {title} email to this customer.\n"
             f"  {KINDS[kind][1][1]}\n"
