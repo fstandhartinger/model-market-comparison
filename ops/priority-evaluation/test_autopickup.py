@@ -207,6 +207,9 @@ class FakeEffects(ap.Effects):
         self.stopped: list[str] = []
         self.mail_ok = True
         self.board_ok = True
+        self.board_entries: dict[int, dict] = {}
+        self.close_calls: list[tuple[int, str]] = []
+        self.close_ok = True
         self.start_ok = True
         self.units: dict[str, str] = {}
         self.events: dict[str, dict] = {}
@@ -226,7 +229,22 @@ class FakeEffects(ap.Effects):
     def board(self, message, owner, kind="handoff", thread="9"):
         self.boards.append(message)
         self.board_threads.append((thread, owner, kind))
+        self.last_board_entry = None
+        if self.board_ok:
+            entry = 1000 + len(self.boards)
+            self.board_entries[entry] = {"to": owner, "kind": kind, "thread": thread, "closed": None}
+            self.last_board_entry = entry
         return self.board_ok
+
+    def board_close(self, entry, reason):
+        self.close_calls.append((entry, reason))
+        if not self.close_ok or entry not in self.board_entries:
+            return False
+        self.board_entries[entry]["closed"] = reason
+        return True
+
+    def open_entries(self, owner):
+        return [entry for entry, item in self.board_entries.items() if item["to"] == owner and not item["closed"]]
 
     def mail(self, to, subject, body, **kwargs):
         self.mails.append((to, subject, body))
@@ -477,6 +495,28 @@ class OwnershipAndClaimTests(DatabaseTestCase):
         self.assertEqual((current["confirmation_status"], current["board_status"], current["pickup_status"],
                           current["evaluation_status"]), ("sent", "sent", "started", "starting"))
         self.assertEqual(current["pickup_owner"], ap.owner_for(rid))
+
+
+class BoardEntryIdTests(unittest.TestCase):
+    def test_board_records_the_posted_entry_id_and_close_uses_author_close(self):
+        fx = ap.Effects()
+        done = subprocess.CompletedProcess([], 0, "Posted entry #64012 to thread #9 Fast lane.\n", "")
+        with mock.patch.object(ap.subprocess, "run", return_value=done) as run:
+            self.assertTrue(fx.board("text", "fastlane-eval-abcd1234"))
+            self.assertEqual(fx.last_board_entry, 64012)
+            self.assertTrue(fx.board_close(64012, "order abcd1234 is completed"))
+        command = run.call_args.args[0]
+        self.assertEqual(command[1:], ["--as", "fastlane-autopickup", "ack", "64012", "--close", "order abcd1234 is completed"])
+        for out, code in (("Posted entry to thread #9.\n", 0), ("", 0), ("Posted entry #77 to thread #9.\n", 1)):
+            with mock.patch.object(ap.subprocess, "run", return_value=subprocess.CompletedProcess([], code, out, "")):
+                fx.board("text", "x")
+            self.assertIsNone(fx.last_board_entry, out)
+
+    def test_dry_run_close_runs_nothing(self):
+        fx = ap.Effects(dry_run=True)
+        with mock.patch.object(ap.subprocess, "run") as run:
+            self.assertTrue(fx.board_close(5, "dry run close"))
+        run.assert_not_called()
 
 
 class UrgentAlertRoutingTests(unittest.TestCase):
@@ -1757,6 +1797,133 @@ class EvaluateTests(DatabaseTestCase):
             self.assertFalse(native_owner.gpu_pod_without_recipe(runtime, trusted))
             self.assertFalse(native_owner.gpu_pod_without_recipe({"jevbench": {"backend": "api"}}, Path(tmp) / "none"))
             self.assertFalse(native_owner.gpu_pod_without_recipe(None, trusted))
+
+    def test_cr758_pickup_unsupported_native_leaves_no_open_eval_handoff(self):
+        # N120: the pickup handoff to fastlane-eval-<id> (a never-acking unit) is closed by its author once the native
+        # owner took over; the new entry is addressed to the native owner job, which acks it.
+        rid = insert_order(visibility="private")
+        fx = FakeEffects()
+        eval_owner = ap.owner_for(rid)
+        with mock.patch.object(fx, "unit_state", return_value={"ActiveState": "inactive"}):
+            ap.cycle(fx)
+        state = ap.load_state(rid)
+        self.assertEqual(state["pickup_handoff"]["to"], eval_owner)
+        self.assertEqual(fx.open_entries(eval_owner), [state["pickup_handoff"]["entry"]])
+        def agent(folder, env, timeout, **kwargs):
+            out = folder / "trusted-runner"
+            out.mkdir()
+            (out / "RUNTIME.json").write_text(json.dumps({"jevbench": {"backend": "unsupported"}}))
+            (out / "MEASUREMENT-META.json").write_text("{}")
+            (out / "PRICING-REVIEW.md").write_text("No pinned image carries the documented stack.\n")
+            return 0
+        with mock.patch.object(ap, "fetch_source"), mock.patch.object(ap, "run_agent", side_effect=agent):
+            ap.sql(f"UPDATE {ap.TABLE} SET evaluation_status='starting' WHERE id='{rid}'")
+            self.assertEqual(ap.evaluate(rid), 0)
+        make_due(rid)
+        ap.cycle(fx)
+        native = "fastlane-native-" + rid[:8]
+        self.assertIn(f"jevbench-native-owner@{rid}.service", fx.started)
+        self.assertEqual(fx.open_entries(eval_owner), [])
+        self.assertEqual(len(fx.open_entries(native)), 1)
+        state = ap.load_state(rid)
+        self.assertIn("native owner job " + native, state["pickup_handoff"]["close_reason"])
+        self.assertEqual(state["steps"]["native_owner_handoff"]["entry"], fx.open_entries(native)[0])
+        calls = len(fx.close_calls)
+        make_due(rid)
+        ap.cycle(fx)
+        self.assertEqual(len(fx.close_calls), calls)  # closed once, never again
+
+    def test_cr758_active_eval_unit_closes_the_pickup_handoff(self):
+        rid = insert_order()
+        fx = FakeEffects()
+        ap.cycle(fx)
+        self.assertEqual(fx.units.get(ap.EVAL_UNIT.format(rid)), "active")
+        # CR-758 review S2: a unit that is only starting can still exit at once; the handoff stays open.
+        self.assertEqual(len(fx.open_entries(ap.owner_for(rid))), 1)
+        ap.sql(f"UPDATE {ap.TABLE} SET evaluation_status='running' WHERE id='{rid}'")
+        ap.settle_pickup_handoff(row(rid), ap.load_state(rid), fx, ap.utcnow())
+        self.assertEqual(fx.open_entries(ap.owner_for(rid)), [])
+        self.assertIn("evaluation service", ap.load_state(rid)["pickup_handoff"]["close_reason"])
+
+    def test_cr758_stale_state_save_never_closes_the_entry_twice(self):
+        # CR-758 review S1: the eval unit saves an older state copy without closed_at.
+        rid = insert_order()
+        fx = FakeEffects()
+        with mock.patch.object(fx, "unit_state", return_value={"ActiveState": "inactive"}):
+            ap.cycle(fx)
+        stale = ap.load_state(rid)
+        ap.sql(f"UPDATE {ap.TABLE} SET status='completed', result_delivered_at=now() WHERE id='{rid}'")
+        self.assertTrue(ap.settle_pickup_handoff(row(rid), ap.load_state(rid), fx, ap.utcnow()))
+        self.assertEqual(len(fx.close_calls), 1)
+        ap.save_state(stale)
+        self.assertNotIn("closed_at", ap.load_state(rid)["pickup_handoff"])
+        self.assertTrue(ap.settle_pickup_handoff(row(rid), ap.load_state(rid), fx, ap.utcnow()))
+        self.assertEqual(len(fx.close_calls), 1)
+        self.assertTrue(ap.load_state(rid)["pickup_handoff"]["closed_at"])
+
+    def test_cr758_hold_written_during_the_close_call_survives(self):
+        # CR-758 review S3: board_close can take up to 60 s; a hold the eval unit writes meanwhile must survive.
+        rid = insert_order()
+        fx = FakeEffects()
+        with mock.patch.object(fx, "unit_state", return_value={"ActiveState": "inactive"}):
+            ap.cycle(fx)
+        ap.sql(f"UPDATE {ap.TABLE} SET status='completed', result_delivered_at=now() WHERE id='{rid}'")
+        state = ap.load_state(rid)
+        real_close = fx.board_close
+        def close_while_unit_writes(entry, reason):
+            other = ap.load_state(rid)
+            ap.set_operational_hold(other, "fetch_source_transient", transient=True)
+            return real_close(entry, reason)
+        with mock.patch.object(fx, "board_close", side_effect=close_while_unit_writes):
+            self.assertTrue(ap.settle_pickup_handoff(row(rid), state, fx, ap.utcnow()))
+        saved = ap.load_state(rid)
+        self.assertEqual(saved["operational_hold"]["reason"], "fetch_source_transient")
+        self.assertTrue(saved["pickup_handoff"]["closed_at"])
+        self.assertEqual(state["operational_hold"]["reason"], "fetch_source_transient")
+
+    def test_cr758_delivered_order_closes_an_open_pickup_handoff(self):
+        rid = insert_order()
+        fx = FakeEffects()
+        with mock.patch.object(fx, "unit_state", return_value={"ActiveState": "inactive"}):
+            ap.cycle(fx)
+        self.assertEqual(len(fx.open_entries(ap.owner_for(rid))), 1)
+        ap.sql(f"UPDATE {ap.TABLE} SET status='completed', result_delivered_at=now() WHERE id='{rid}'")
+        with mock.patch.object(fx, "unit_state", return_value={"ActiveState": "inactive"}):
+            self.assertTrue(ap.settle_pickup_handoff(row(rid), ap.load_state(rid), fx, ap.utcnow()))
+        self.assertEqual(fx.open_entries(ap.owner_for(rid)), [])
+        self.assertIn("completed", ap.load_state(rid)["pickup_handoff"]["close_reason"])
+
+    def test_cr758_close_is_bounded_and_needs_a_valid_entry(self):
+        rid = insert_order()
+        fx = FakeEffects()
+        with mock.patch.object(fx, "unit_state", return_value={"ActiveState": "inactive"}):
+            ap.cycle(fx)
+        ap.sql(f"UPDATE {ap.TABLE} SET status='completed', result_delivered_at=now() WHERE id='{rid}'")
+        now = ap.utcnow()
+        state = ap.load_state(rid)
+        good = state["pickup_handoff"]["entry"]
+        # Mixed records: missing, bool, zero, string ids never reach agent-board; a legacy order has no record at all.
+        for bad in (None, True, 0, -3, str(good)):
+            state["pickup_handoff"]["entry"] = bad
+            self.assertFalse(ap.settle_pickup_handoff(row(rid), state, fx, now))
+        legacy = {"id": rid, "steps": {}, "alerts": {}}
+        self.assertFalse(ap.settle_pickup_handoff(row(rid), legacy, fx, now))
+        self.assertEqual(fx.close_calls, [])
+        state["pickup_handoff"]["entry"] = good
+        fx.close_ok = False
+        for _ in range(ap.PICKUP_HANDOFF_CLOSE_LIMIT + 3):
+            self.assertFalse(ap.settle_pickup_handoff(row(rid), state, fx, now))
+        self.assertEqual(len(fx.close_calls), ap.PICKUP_HANDOFF_CLOSE_LIMIT)
+        self.assertTrue(ap.load_state(rid)["pickup_handoff"]["close_exhausted"])
+
+    def test_cr758_open_order_without_owner_keeps_the_handoff_open(self):
+        rid = insert_order()
+        fx = FakeEffects()
+        with mock.patch.object(fx, "unit_state", return_value={"ActiveState": "inactive"}):
+            ap.cycle(fx)
+            self.assertFalse(ap.settle_pickup_handoff(row(rid), ap.load_state(rid), fx, ap.utcnow()))
+        self.assertEqual(fx.close_calls, [])
+        self.assertEqual(len(fx.open_entries(ap.owner_for(rid))), 1)
 
     def test_generated_adapter_fail_retries_without_refund_even_with_customer_source(self):
         rid = insert_order()
