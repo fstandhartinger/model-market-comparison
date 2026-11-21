@@ -1,4 +1,4 @@
-"""Fixed-order offline runtime supplement for CueReflex-E4B (paid fast-lane orders 1dedbcf2 and 9a4acee8).
+"""Fixed-order offline runtime supplement for CueReflex-E4B (paid fast-lane orders 1dedbcf2 and 9a4acee8) and AirDecision-4B-v1.2 (order 2be2698b).
 
 CueReflex is a PEFT LoRA adapter plus a frozen answer-letter readout on google/gemma-4-E4B-it, served by the customer's own
 TypeSafe-compatible inference/serve.py. The author declares Python >=3.11, torch >=2.6, transformers >=5.5, peft >=0.19,
@@ -14,6 +14,13 @@ the model repository by the trusted runner; this host module imports no model st
 Order 9a4acee8 (CR-772) is the same customer's v0.2 checkpoint on the same base: its serve.py no longer reads decision_head.pt
 (it derives the readout from the base output embeddings), its adapter_config.json differs from 1dedbcf2's only in the recorded
 peft_version (0.21.3), and its imports are unchanged, so the identical pinned context serves it; head.safetensors stays unused there.
+Order 2be2698b (CR-797) is a different customer: YellowPlus/AirDecision-4B-v1.2 @ 18efb92c, a full Qwen3.5-4B finetune
+(Qwen3_5ForConditionalGeneration, safetensors only, no remote code) read out through candidate-symbol logits in one causal forward pass
+by its own stdlib-HTTP serve.py. Its requirements.txt gives only lower bounds (torch>=2.9.0, torchvision>=0.24.0, transformers>=5.14.0,
+safetensors>=0.4.0, Pillow>=10.0.0), and its code imports only torch, transformers (AutoTokenizer, Qwen3_5ForConditionalGeneration)
+and, lazily for image inputs, PIL. The same pinned context meets every bound: the base carries torch 2.9.1+cu128, torchvision
+0.24.1+cu128 and Pillow 11.3.0, and the overlay adds transformers 5.20.1 (ships qwen3_5) with safetensors 0.8.0. peft, accelerate,
+fastapi, uvicorn and head.safetensors stay installed but unused there. Admission stays an explicit list of exact order ids.
 """
 import hashlib
 import re
@@ -24,7 +31,7 @@ import measurement_dispatch
 import pod_runner
 
 ORDER = '1dedbcf2-3577-47b9-9893-eaad445b7061'
-ORDERS = frozenset({ORDER, '9a4acee8-a098-451c-bc86-3a2d6fea1c47'})
+ORDERS = frozenset({ORDER, '9a4acee8-a098-451c-bc86-3a2d6fea1c47', '2be2698b-dc43-42a1-8b8c-1fe228fd0d30'})
 BASE_IMAGE = 'pytorch/pytorch:2.9.1-cuda12.8-cudnn9-devel@sha256:39236c0ad9c66baecf01bb2e4f5562543c5b336c0c785887798775d6d6fdbf9a'
 CONTEXT = Path('/home/flori/jobs/fastlane-native-1dedbcf2/supplement/PUBLIC-BUILD-CONTEXT.tar')
 CONTEXT_SHA = '51be8c25ad667900ed3073a0a66a434b604d76875b03f41d1f2cd77c98197564'
