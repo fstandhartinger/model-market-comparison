@@ -1,0 +1,354 @@
+{
+ "bison-1": {
+  "api_flag": true,
+  "api_subset": false,
+  "author": "Base Labs",
+  "axes": {
+   "calibration": 92.98585136015433,
+   "cost": 52.48410738483477,
+   "intelligence": 78.11284054261208,
+   "speed": 90.56329650238234
+  },
+  "base_model": "google/gemma-4-31B-it",
+  "capability": 85.5493459513832,
+  "composite_ci95": {
+   "A": [
+    74.11269037948567,
+    76.00458316368653
+   ],
+   "B": [
+    74.62796865789599,
+    77.50961686887862
+   ],
+   "C": [
+    74.11269037948567,
+    76.00458316368653
+   ]
+  },
+  "cost": {
+   "basis": "Baseten Model APIs launch list price, USD 0.1/M input with free output (https://www.baseten.co/library/bison-1/, read 21 Nov 2026). Counted under the frozen I-1 launch-list-price rule, excluding promotional credits. This is above the google/gemma-4-31b-it base-model reference, USD 0.09/M input and USD 0.34/M output from the frozen OpenRouter snapshot, so the list price counts. The API reported one output token per item; output is free. The common 1,489-item basis uses 571,160 measured input tokens and yields USD 0.0383586299529886 per 1,000 decisions. The full 1,500-item run used 972,512 input tokens and yields USD 0.0648341333333333 per 1,000 decisions.",
+   "common_basis": {
+    "n_items": 1489,
+    "rule": "common",
+    "usd_per_1000_all_items": 0.06483413333333334
+   },
+   "kind": "estimate",
+   "usage_estimated_rows": 0,
+   "usd_per_1000": 0.03835862995298858
+  },
+  "decision_limit": {
+   "limit_s": 10.0,
+   "rule": "latency_s > limit -> failed",
+   "treatment": "share"
+  },
+  "disclosure": "Hosted API via Baseten Model APIs, served as decision-models/baseten-bison-31b-latest (a -latest alias), measured 21 Nov 2026; not tied to a Hugging Face revision. Reference Hugging Face HEAD at run time: baselabs/bison-1@bf8350b2. Baseten documentation lists 131,072 context tokens, while its management API reported 32,768. Five items of 77–82k input tokens received answers with full reported usage; reported usage is not proof that every token was read. Failed or unanswered requests count as wrong answers. Baseten retention statements are vendor claims and were not audited.",
+  "display": "bison-1",
+  "draw": {
+   "ci_basis": "measured on the draw before equating",
+   "drawn_on": "2026-10-27",
+   "g_med": 2.573387642438244,
+   "id": "v1.6-regular-20261027",
+   "label": "Third regular draw",
+   "measured_on": "2026-11-21",
+   "offset": {
+    "C": -1.8542447151797177,
+    "I": -2.884891186577587
+   },
+   "offset_ci95": {
+    "C": [
+     -5.447551660176162,
+     1.9718407968151896
+    ],
+    "I": [
+     -5.851030683979731,
+     1.0608488496147923
+    ]
+   },
+   "release": "v1.8.19",
+   "results_sha256": "f1eefbc034b37e8fe2d4997ba64864066d27c4267c7c432eb912331a271ce87a",
+   "status": "equated"
+  },
+  "endpoint_condition": "Baseten Model APIs /v1/systemone (inference.baseten.co); native probabilities; served model decision-models/baseten-bison-31b-latest.",
+  "endpoint_kind": "api",
+  "full_coverage": true,
+  "jevbench_score": 74.55494725441005,
+  "key": "bison-1",
+  "last_measured_on": "2026-11-21",
+  "licence": "MIT (modifications) and Apache-2.0 (base model)",
+  "listing": "unranked",
+  "measured_in": "v1.8.19",
+  "measurement_date_status": "measured",
+  "method": "v1.7",
+  "model_pin": "hosted-api:https://inference.baseten.co/v1/systemone#decision-models/baseten-bison-31b-latest",
+  "new_in": "v1.8.19",
+  "not_ranked_because": "Added after the v1.8.10 ranking review; it is ranked at the next review.",
+  "notes": "Hosted API via Baseten Model APIs, served as decision-models/baseten-bison-31b-latest (a -latest alias), measured 21 Nov 2026; not tied to a Hugging Face revision. Reference Hugging Face HEAD at run time: baselabs/bison-1@bf8350b2.",
+  "paid_fast_lane": false,
+  "published_scores": {
+   "axes": {
+    "calibration": 94.84009607533405,
+    "cost": 52.48410738483477,
+    "intelligence": 80.99773172918967,
+    "speed": 90.56329650238234
+   },
+   "capability": 87.91891390226186,
+   "scores": {
+    "A": 75.49238588058094,
+    "B": 76.5327589822731,
+    "C": 75.49238588058094
+   }
+  },
+  "rank": null,
+  "ranked": false,
+  "ranks": {
+   "A": null,
+   "B": null,
+   "C": null,
+   "capability": null
+  },
+  "repo": "https://huggingface.co/baselabs/bison-1",
+  "scores": {
+   "A": 74.55494725441005,
+   "B": 75.24035868047422,
+   "C": 74.55494725441005
+  },
+  "speed": {
+   "adjustment": "none (API)",
+   "basis": "all decisions given (lane items in the raw), measured latency_s",
+   "n": 1500,
+   "p50_s_adjusted": 0.25069423113018274,
+   "p50_s_raw": 0.25069423113018274,
+   "p95_s_adjusted": 0.35036927096080034,
+   "p95_s_raw": 0.35036927096080034
+  },
+  "status": {
+   "status": "complete"
+  },
+  "support": {
+   "choice": "native",
+   "noul": "native",
+   "score": "native"
+  },
+  "underlying": "Hosted API via Baseten Model APIs, served as decision-models/baseten-bison-31b-latest (a -latest alias), measured 21 Nov 2026; not tied to a Hugging Face revision. Reference Hugging Face HEAD at run time: baselabs/bison-1@bf8350b2. Baseten documentation lists 131,072 context tokens, while its management API reported 32,768. Five items of 77–82k input tokens received answers with full reported usage; reported usage is not proof that every token was read. Failed or unanswered requests count as wrong answers. Baseten retention statements are vendor claims and were not audited.",
+  "v16": {
+   "ci95": {
+    "B": 1000,
+    "C": [
+     91.18800010098971,
+     94.90255293503942
+    ],
+    "I": [
+     76.5929543050537,
+     84.33434167325927
+    ],
+    "capability": [
+     84.46018760356807,
+     89.0348755386608
+    ],
+    "composite": {
+     "A": [
+      74.11269037948567,
+      76.00458316368653
+     ],
+     "B": [
+      74.62796865789599,
+      77.50961686887862
+     ],
+     "C": [
+      74.11269037948567,
+      76.00458316368653
+     ]
+    },
+    "seed": 16
+   },
+   "complete": true,
+   "equated": null,
+   "equating_offset": null,
+   "g_med_used": 2.573387642438244,
+   "lane": "api"
+  },
+  "views": {
+   "Balanced 33:33:33": 69.93434061810791,
+   "Emphasis on Accuracy 60:20:20": 72.99124596406531,
+   "Emphasis on Cost 20:20:60": 61.72522965128248,
+   "Emphasis on Speed 20:60:20": 76.94511638594574,
+   "Intelligence only": 78.11284054261208
+  }
+ },
+ "groundhog-1": {
+  "api_flag": true,
+  "api_subset": false,
+  "author": "Base Labs",
+  "axes": {
+   "calibration": 93.34974227270696,
+   "cost": 53.74410170645706,
+   "intelligence": 68.53884509344387,
+   "speed": 90.54096001791727
+  },
+  "base_model": "google/gemma-4-26b-a4b-it",
+  "capability": 80.94429368307541,
+  "composite_ci95": {
+   "A": [
+    72.14195837899538,
+    74.58350830523493
+   ],
+   "B": [
+    71.0029196439357,
+    74.75448483892839
+   ],
+   "C": [
+    72.14195837899538,
+    74.58350830523493
+   ]
+  },
+  "cost": {
+   "basis": "Baseten Model APIs launch list price, USD 0.035/M input with free output (https://www.baseten.co/library/groundhog-1/, read 21 Nov 2026). Counted under the frozen I-1 launch-list-price rule, excluding promotional credits. This is below the google/gemma-4-26b-a4b-it base-model reference, USD 0.09/M input and USD 0.3/M output from the frozen OpenRouter snapshot, so the M2 §2 floor binds (price floor: base-model reference price applied). The API reported one output token per item, priced at the reference output rate. The common 1,489-item basis uses 571,160 measured input tokens and yields USD 0.0348227669576897 per 1,000 decisions. The full 1,500-item run used 972,512 input tokens and yields USD 0.05865072 per 1,000 decisions.",
+   "common_basis": {
+    "n_items": 1489,
+    "rule": "common",
+    "usd_per_1000_all_items": 0.058650719999999996
+   },
+   "kind": "estimate",
+   "usage_estimated_rows": 0,
+   "usd_per_1000": 0.034822766957689724
+  },
+  "decision_limit": {
+   "limit_s": 10.0,
+   "rule": "latency_s > limit -> failed",
+   "treatment": "share"
+  },
+  "disclosure": "Hosted API via Baseten Model APIs, served as decision-models/baseten-groundhog-26b-latest (a -latest alias), measured 21 Nov 2026; not tied to a Hugging Face revision. Reference Hugging Face HEAD at run time: baselabs/groundhog-1@f4602c43. Baseten documentation lists 131,072 context tokens, while its management API reported 16,384. Five items of 77–82k input tokens received answers with full reported usage; reported usage is not proof that every token was read. Failed or unanswered requests count as wrong answers. Baseten retention statements are vendor claims and were not audited.",
+  "display": "groundhog-1",
+  "draw": {
+   "ci_basis": "measured on the draw before equating",
+   "drawn_on": "2026-10-27",
+   "g_med": 2.573387642438244,
+   "id": "v1.6-regular-20261027",
+   "label": "Third regular draw",
+   "measured_on": "2026-11-21",
+   "offset": {
+    "C": -1.8542447151797177,
+    "I": -2.884891186577587
+   },
+   "offset_ci95": {
+    "C": [
+     -5.447551660176162,
+     1.9718407968151896
+    ],
+    "I": [
+     -5.851030683979731,
+     1.0608488496147923
+    ]
+   },
+   "release": "v1.8.19",
+   "results_sha256": "f1eefbc034b37e8fe2d4997ba64864066d27c4267c7c432eb912331a271ce87a",
+   "status": "equated"
+  },
+  "endpoint_condition": "Baseten Model APIs /v1/systemone (inference.baseten.co); native probabilities; served model decision-models/baseten-groundhog-26b-latest.",
+  "endpoint_kind": "api",
+  "full_coverage": true,
+  "jevbench_score": 72.78803542525311,
+  "key": "groundhog-1",
+  "last_measured_on": "2026-11-21",
+  "licence": "MIT (modifications) and Apache-2.0 (base model)",
+  "listing": "unranked",
+  "measured_in": "v1.8.19",
+  "measurement_date_status": "measured",
+  "method": "v1.7",
+  "model_pin": "hosted-api:https://inference.baseten.co/v1/systemone#decision-models/baseten-groundhog-26b-latest",
+  "new_in": "v1.8.19",
+  "not_ranked_because": "Added after the v1.8.10 ranking review; it is ranked at the next review.",
+  "notes": "Hosted API via Baseten Model APIs, served as decision-models/baseten-groundhog-26b-latest (a -latest alias), measured 21 Nov 2026; not tied to a Hugging Face revision. Reference Hugging Face HEAD at run time: baselabs/groundhog-1@f4602c43.",
+  "paid_fast_lane": false,
+  "published_scores": {
+   "axes": {
+    "calibration": 95.20398698788668,
+    "cost": 53.74410170645706,
+    "intelligence": 71.42373628002146,
+    "speed": 90.54096001791727
+   },
+   "capability": 83.31386163395408,
+   "scores": {
+    "A": 73.86052487930291,
+    "B": 73.35995542624151,
+    "C": 73.86052487930291
+   }
+  },
+  "rank": null,
+  "ranked": false,
+  "ranks": {
+   "A": null,
+   "B": null,
+   "C": null,
+   "capability": null
+  },
+  "repo": "https://huggingface.co/baselabs/groundhog-1",
+  "scores": {
+   "A": 72.78803542525311,
+   "B": 71.89656378372314,
+   "C": 72.78803542525311
+  },
+  "speed": {
+   "adjustment": "none (API)",
+   "basis": "all decisions given (lane items in the raw), measured latency_s",
+   "n": 1500,
+   "p50_s_adjusted": 0.25026157102547586,
+   "p50_s_raw": 0.25026157102547586,
+   "p95_s_adjusted": 0.3527847729623318,
+   "p95_s_raw": 0.3527847729623318
+  },
+  "status": {
+   "status": "complete"
+  },
+  "support": {
+   "choice": "native",
+   "noul": "native",
+   "score": "native"
+  },
+  "underlying": "Hosted API via Baseten Model APIs, served as decision-models/baseten-groundhog-26b-latest (a -latest alias), measured 21 Nov 2026; not tied to a Hugging Face revision. Reference Hugging Face HEAD at run time: baselabs/groundhog-1@f4602c43. Baseten documentation lists 131,072 context tokens, while its management API reported 16,384. Five items of 77–82k input tokens received answers with full reported usage; reported usage is not proof that every token was read. Failed or unanswered requests count as wrong answers. Baseten retention statements are vendor claims and were not audited.",
+  "v16": {
+   "ci95": {
+    "B": 1000,
+    "C": [
+     90.62995486800335,
+     94.55505382370968
+    ],
+    "I": [
+     66.77121879190666,
+     75.48259581818098
+    ],
+    "capability": [
+     79.38090790494783,
+     84.41355481424588
+    ],
+    "composite": {
+     "A": [
+      72.14195837899538,
+      74.58350830523493
+     ],
+     "B": [
+      71.0029196439357,
+      74.75448483892839
+     ],
+     "C": [
+      72.14195837899538,
+      74.58350830523493
+     ]
+    },
+    "seed": 17
+   },
+   "complete": true,
+   "equated": null,
+   "equating_offset": null,
+   "g_med_used": 2.573387642438244,
+   "lane": "api"
+  },
+  "views": {
+   "Balanced 33:33:33": 67.80935341869265,
+   "Emphasis on Accuracy 60:20:20": 68.09927868246207,
+   "Emphasis on Cost 20:20:60": 61.38353315289013,
+   "Emphasis on Speed 20:60:20": 75.37938356924089,
+   "Intelligence only": 68.53884509344387
+  }
+ }
+}

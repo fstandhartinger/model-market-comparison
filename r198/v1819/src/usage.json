@@ -1,0 +1,68 @@
+{
+ "bison-1": {
+  "all_input_tokens": 972512,
+  "all_output_tokens": 1500,
+  "candidate_all": 0.06483413333333334,
+  "candidate_common": 0.03835862995298858,
+  "common_input_tokens": 571160,
+  "common_n": 1489,
+  "common_output_tokens": 1489,
+  "cost_common": 0.03835862995298858,
+  "floor_all": 0.05869072,
+  "floor_binds": false,
+  "floor_common": 0.03486276695768972,
+  "list_all": 0.06483413333333334,
+  "list_common": 0.03835862995298858,
+  "market_rates_per_m": [
+   0.09,
+   0.33999999999999997
+  ],
+  "market_reference": "google/gemma-4-31b-it",
+  "ref": {
+   "authority": "frozen I-1 launch-list-price rule",
+   "in": 0.1,
+   "listing": "Baseten Model APIs launch tariff",
+   "module_sha256": "16f71aec341fdc5d0ed8ccab1c166f93eb7a98f1fe7440c3c4548c035f3f8ab0",
+   "observed_on": "2026-11-21",
+   "out": 0.0,
+   "url": "https://www.baseten.co/library/bison-1/"
+  },
+  "scorer_rates": [
+   0.1,
+   0.0
+  ]
+ },
+ "groundhog-1": {
+  "all_input_tokens": 972512,
+  "all_output_tokens": 1500,
+  "candidate_all": 0.02269194666666667,
+  "candidate_common": 0.013425520483546007,
+  "common_input_tokens": 571160,
+  "common_n": 1489,
+  "common_output_tokens": 1489,
+  "cost_common": 0.034822766957689724,
+  "floor_all": 0.058650719999999996,
+  "floor_binds": true,
+  "floor_common": 0.034822766957689724,
+  "list_all": 0.058650719999999996,
+  "list_common": 0.034822766957689724,
+  "market_rates_per_m": [
+   0.09,
+   0.3
+  ],
+  "market_reference": "google/gemma-4-26b-a4b-it",
+  "ref": {
+   "authority": "frozen I-1 launch-list-price rule",
+   "in": 0.035,
+   "listing": "Baseten Model APIs launch tariff",
+   "module_sha256": "16f71aec341fdc5d0ed8ccab1c166f93eb7a98f1fe7440c3c4548c035f3f8ab0",
+   "observed_on": "2026-11-21",
+   "out": 0.0,
+   "url": "https://www.baseten.co/library/groundhog-1/"
+  },
+  "scorer_rates": [
+   0.09,
+   0.3
+  ]
+ }
+}
