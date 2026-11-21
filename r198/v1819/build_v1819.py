@@ -41,7 +41,13 @@ for k in keys:
  s['underlying']=public_rows[k]['disclosure'];s['notes']=public_rows[k]['notes'];s['base_model']=en['base_model']
  s['model_pin']=L(J/'inputs/ENTRY-PINS.json')[k]['model_pin'];s.update(method='v1.7',new_in=REV,measured_in=REV,last_measured_on=en['measured_on'],measurement_date_status='measured',paid_fast_lane=False,ranked=False,rank=None,ranks={'A':None,'B':None,'C':None,'capability':None},listing='unranked',not_ranked_because=NOTE)
  s['draw']={**{f:draw[f] for f in ['id','label','drawn_on','status','offset','offset_ci95']},'release':REV,'measured_on':s['last_measured_on'],'g_med':2.573387642438244,'results_sha256':scored[k]['pins']['v17-share']}
- basis=(f"Baseten Model APIs launch list price, USD {u['ref']['in']:g} per million input tokens and free output ({u['ref']['url']}, read 21 Nov 2026). Counted under the frozen I-1 launch-list-price rule, excluding promotional credits, with the base-model floor. The common {u['common_n']:,}-item basis uses {u['common_input_tokens']:,} measured input tokens and yields USD {u['cost_common']:.15g} per 1,000 decisions. The full 1,500-item run used {u['all_input_tokens']:,} input tokens and yields USD {u['list_all']:.15g} per 1,000 decisions. The API reported one output token per item; output is free.")
+ ref=u['market_reference'];ri,ro=u['market_rates_per_m']
+ basis=(f"Baseten Model APIs launch list price, USD {u['ref']['in']:g}/M input with free output ({u['ref']['url']}, read 21 Nov 2026). Counted under the frozen I-1 launch-list-price rule, excluding promotional credits. ")
+ if u['floor_binds']:
+  basis+=(f"This is below the {ref} base-model reference, USD {ri:g}/M input and USD {ro:g}/M output from the frozen OpenRouter snapshot, so the M2 §2 floor binds (price floor: base-model reference price applied). The API reported one output token per item, priced at the reference output rate. ")
+ else:
+  basis+=(f"This is above the {ref} base-model reference, USD {ri:g}/M input and USD {ro:g}/M output from the frozen OpenRouter snapshot, so the list price counts. The API reported one output token per item; output is free. ")
+ basis+=(f"The common {u['common_n']:,}-item basis uses {u['common_input_tokens']:,} measured input tokens and yields USD {u['cost_common']:.15g} per 1,000 decisions. The full 1,500-item run used {u['all_input_tokens']:,} input tokens and yields USD {u['list_all']:.15g} per 1,000 decisions.")
  s['cost']['basis']=basis
  s=equate(s)
  s['draw']['ci_basis']='measured on the draw before equating'
