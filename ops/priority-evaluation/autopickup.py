@@ -6329,7 +6329,10 @@ def write_tree_listing(job_dir: Path, dest: Path, which: str, commit: str, tree:
         item: dict[str, Any] = {"path": path, "mode": mode, "git_blob_oid": oid,
                                 "blob_size": int(size) if size.isdigit() else None}
         if item["blob_size"] is not None and item["blob_size"] <= 200:
-            pointer = LFS_POINTER_RE.fullmatch(git(dest, "cat-file", "blob", oid))
+            try:
+                pointer = LFS_POINTER_RE.fullmatch(git(dest, "cat-file", "blob", oid))
+            except UnicodeDecodeError:
+                pointer = None  # A small binary blob is not an LFS pointer.
             if pointer:
                 item["lfs_oid_sha256"], item["lfs_size"] = pointer.group(1), int(pointer.group(2))
         files.append(item)
