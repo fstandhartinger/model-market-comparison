@@ -1,0 +1,30 @@
+{
+  "artifact_id": "scores-11",
+  "artifact_sha256": "f7c26560fa6514120af09a448aeaac4e21f6aac42a1e56f31e532844291b8811",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": [
+    "public:38e62aacb9c4e417cc43da38",
+    "public:7dda7a3a279d3cb442636ac6",
+    "public:4411f7047ad2bc7a1ca98b57",
+    "public:d92b355556197513fdf9dc1c",
+    "public:473705bcda76514febc4e7fd",
+    "c1"
+  ],
+  "errors_found": 1,
+  "findings": [
+    {
+      "id": "row-2-model-id",
+      "severity": "blocker",
+      "location": "public:7dda7a3a279d3cb442636ac6 subject.model_id",
+      "evidence": "Source 5 (row 4) provides model name 'Gemini 4 Hydrogen' and score '91.7%' only; no model_id 'gemini-4-hydrogen::default' appears in any supplied source evidence. Candidate row claims this model_id without supporting evidence.",
+      "repair": "Set subject.model_id to null or add primary evidence proving the catalog mapping; do not infer from memory."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "Basis 'measured' is inferred from protocol wording ('accuracy averaged over 5 runs') rather than an explicit field; acceptable but unstated.",
+    "We cannot recompute sha256 hashes or execute transport/qualification checks; owner-provided hashes accepted as binding."
+  ],
+  "missing_evidence": []
+}

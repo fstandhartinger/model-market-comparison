@@ -1,0 +1,24 @@
+{
+  "artifact_id": "protocol-researchclawbench-40-tasks",
+  "artifact_sha256": "323b823336884461e76c46e6b967872723e976d0d6d9dcfa89f7b54356a18cb5",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": ["researchclawbench::40-tasks", "c1", "c2"],
+  "errors_found": 1,
+  "findings": [
+    {
+      "id": "f1",
+      "severity": "major",
+      "location": "researchclawbench::40-tasks > version / version_status",
+      "evidence": "Row claims version_status='published' and version='40-tasks'. SOURCE 1 (protocol homepage) and SOURCE 3 (README) contain only task-count descriptors ('40 tasks', 'Tasks-40') and no release identifier for the board. SOURCE 4 confirms ongoing value changes but not a published release version. Under c2, a page with no release identifier supports 'snapshot', not 'published', and '40-tasks' is not a published release identifier.",
+      "repair": "Reclassify version_status to 'snapshot' and set version to a dated identity such as 'snapshot-<retrieval-date>' (e.g., snapshot-2026-11-21), or supply evidence of a maintainer-published release identifier and copy that identifier into version."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "Could not execute the owner's hash, transport, or qualification checks; hashes and row binding were taken as supplied.",
+    "scoring.notes' claim that Pass@1 is the page's default and the '33 to 40 of 40 on 2026-09-21' coverage figures are not directly evidenced in the excerpted SOURCE 1/2/3 content; they are not required to settle c1/c2 but remain unverified.",
+    "version_guard's description of leaderboard.json key structure and exact 40 task ids is not directly observable in the supplied excerpts; it is a stated contract rather than a quoted protocol attribute."
+  ],
+  "missing_evidence": []
+}

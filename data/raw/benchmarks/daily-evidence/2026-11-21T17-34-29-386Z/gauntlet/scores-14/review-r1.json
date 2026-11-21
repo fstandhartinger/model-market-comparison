@@ -1,0 +1,28 @@
+{
+  "artifact_id": "scores-14",
+  "artifact_sha256": "e62a59d88ed51f85fbf4bcb9f8ee04f943748317128b571b90aacbd66cff74dc",
+  "round": 1,
+  "verdict": "blocked",
+  "coverage_checked": [
+    "vendor:DeepSeek-V3:swe-bench-verified::snapshot-2026-09-10",
+    "c1"
+  ],
+  "errors_found": 1,
+  "findings": [
+    {
+      "id": "F1",
+      "severity": "blocker",
+      "location": "vendor:DeepSeek-V3:swe-bench-verified::snapshot-2026-09-10 -> benchmark_id and subject.source_id",
+      "evidence": "Primary evidence (arXiv 2412.19437v2 captured pages) names only 'SWE-Bench Verified' and 'DeepSeek-V3'; it contains no 'snapshot-2026-09-10' version and no date string for the paper. The candidate row asserts benchmark_id 'swe-bench-verified::snapshot-2026-09-10' and source_id '... December 2024 update ...' that are not present in the supplied primary evidence.",
+      "repair": "Remove the unsupported snapshot suffix from benchmark_id and any unverified date labels, or supply primary evidence that explicitly establishes the snapshot version and publication date. The row cannot be accepted with an unverified benchmark version."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "I cannot recompute owner SHA-256 hashes or run transport/qualification checks; I relied on the provided hash bindings and receipt.",
+    "The numeric value 42.0 in the primary table is consistent with the stored value 42 (trailing zero formatting); no numeric mismatch found."
+  ],
+  "missing_evidence": [
+    "SWE-bench Verified snapshot version 'snapshot-2026-09-10' is absent from primary evidence; only 'SWE-Bench Verified' is provided."
+  ]
+}

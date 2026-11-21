@@ -1,0 +1,467 @@
+[
+  {
+    "id": "public:f830f143983f1d7bf1bf05f3",
+    "benchmark_id": "arc-agi::3",
+    "subject": {
+      "source_id": "openai-gpt-5-6-sol-low",
+      "name": "GPT-5.6 Sol (Low)",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 0.33,
+    "unit": "percent",
+    "basis": "derived",
+    "source": {
+      "url": "https://arcprize.org/media/data/leaderboard/v3.json",
+      "retrieved_at": "2026-11-21T17:44:51.849961+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-11-21T17-34-29-386Z/fb7a1dde30f84f4636b7.gz",
+      "sha256": "fb7a1dde30f84f4636b796ad38247d29635e9e38000e35bdeafd85056f261dce",
+      "locator": "json; source row 7; openai-gpt-5-6-sol-low; field score"
+    },
+    "protocol": "ARC-AGI 3; v3_Semi_Private; source system/configuration retained. Evaluation independence not assumed for board submissions.; modelType=CoT; modelGroup=openai-gpt-5-6-sol; providerId=OpenAI; display=True; resultsUrl=/results/openai-gpt-5-6-sol; cost=12805.599455; modelReleaseDate=2026-07-09T00:00:00.000Z",
+    "comparison_key": null,
+    "source_basis": "self_reported",
+    "derivation": {
+      "formula": "Source value × 100 to registry units",
+      "inputs": [
+        0.0033
+      ]
+    }
+  },
+  {
+    "id": "public:5a8466c55953052ace052db2",
+    "benchmark_id": "arc-agi::3",
+    "subject": {
+      "source_id": "openai-gpt-5-6-sol-medium",
+      "name": "GPT-5.6 Sol (Medium)",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 1.0699999999999998,
+    "unit": "percent",
+    "basis": "derived",
+    "source": {
+      "url": "https://arcprize.org/media/data/leaderboard/v3.json",
+      "retrieved_at": "2026-11-21T17:44:51.849961+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-11-21T17-34-29-386Z/fb7a1dde30f84f4636b7.gz",
+      "sha256": "fb7a1dde30f84f4636b796ad38247d29635e9e38000e35bdeafd85056f261dce",
+      "locator": "json; source row 8; openai-gpt-5-6-sol-medium; field score"
+    },
+    "protocol": "ARC-AGI 3; v3_Semi_Private; source system/configuration retained. Evaluation independence not assumed for board submissions.; modelType=CoT; modelGroup=openai-gpt-5-6-sol; providerId=OpenAI; display=True; resultsUrl=/results/openai-gpt-5-6-sol; cost=12971.169665; modelReleaseDate=2026-07-09T00:00:00.000Z",
+    "comparison_key": null,
+    "source_basis": "self_reported",
+    "derivation": {
+      "formula": "Source value × 100 to registry units",
+      "inputs": [
+        0.0107
+      ]
+    }
+  },
+  {
+    "id": "public:16b23b675f0fe7a05546893a",
+    "benchmark_id": "arc-agi::3",
+    "subject": {
+      "source_id": "openai-gpt-5-6-sol-high",
+      "name": "GPT-5.6 Sol (High)",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 2.15,
+    "unit": "percent",
+    "basis": "derived",
+    "source": {
+      "url": "https://arcprize.org/media/data/leaderboard/v3.json",
+      "retrieved_at": "2026-11-21T17:44:51.849961+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-11-21T17-34-29-386Z/fb7a1dde30f84f4636b7.gz",
+      "sha256": "fb7a1dde30f84f4636b796ad38247d29635e9e38000e35bdeafd85056f261dce",
+      "locator": "json; source row 9; openai-gpt-5-6-sol-high; field score"
+    },
+    "protocol": "ARC-AGI 3; v3_Semi_Private; source system/configuration retained. Evaluation independence not assumed for board submissions.; modelType=CoT; modelGroup=openai-gpt-5-6-sol; providerId=OpenAI; display=True; resultsUrl=/results/openai-gpt-5-6-sol; cost=15176.06685; modelReleaseDate=2026-07-09T00:00:00.000Z",
+    "comparison_key": null,
+    "source_basis": "self_reported",
+    "derivation": {
+      "formula": "Source value × 100 to registry units",
+      "inputs": [
+        0.0215
+      ]
+    }
+  },
+  {
+    "id": "public:e7d7f89fdcb84e72ed561d4a",
+    "benchmark_id": "arc-agi::3",
+    "subject": {
+      "source_id": "openai-gpt-5-6-sol-max",
+      "name": "GPT-5.6 Sol (Max)",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 7.779999999999999,
+    "unit": "percent",
+    "basis": "derived",
+    "source": {
+      "url": "https://arcprize.org/media/data/leaderboard/v3.json",
+      "retrieved_at": "2026-11-21T17:44:51.849961+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-11-21T17-34-29-386Z/fb7a1dde30f84f4636b7.gz",
+      "sha256": "fb7a1dde30f84f4636b796ad38247d29635e9e38000e35bdeafd85056f261dce",
+      "locator": "json; source row 11; openai-gpt-5-6-sol-max; field score"
+    },
+    "protocol": "ARC-AGI 3; v3_Semi_Private; source system/configuration retained. Evaluation independence not assumed for board submissions.; modelType=CoT; modelGroup=openai-gpt-5-6-sol; providerId=OpenAI; display=True; resultsUrl=/results/openai-gpt-5-6-sol; cost=25064.114815; modelReleaseDate=2026-07-09T00:00:00.000Z",
+    "comparison_key": null,
+    "source_basis": "self_reported",
+    "derivation": {
+      "formula": "Source value × 100 to registry units",
+      "inputs": [
+        0.0778
+      ]
+    }
+  },
+  {
+    "id": "public:b47fcf284f4918d880128436",
+    "benchmark_id": "arc-agi::3",
+    "subject": {
+      "source_id": "openai-gpt-5-6-terra-low",
+      "name": "GPT-5.6 Terra (Low)",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 0.01,
+    "unit": "percent",
+    "basis": "derived",
+    "source": {
+      "url": "https://arcprize.org/media/data/leaderboard/v3.json",
+      "retrieved_at": "2026-11-21T17:44:51.849961+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-11-21T17-34-29-386Z/fb7a1dde30f84f4636b7.gz",
+      "sha256": "fb7a1dde30f84f4636b796ad38247d29635e9e38000e35bdeafd85056f261dce",
+      "locator": "json; source row 12; openai-gpt-5-6-terra-low; field score"
+    },
+    "protocol": "ARC-AGI 3; v3_Semi_Private; source system/configuration retained. Evaluation independence not assumed for board submissions.; modelType=CoT; modelGroup=openai-gpt-5-6-terra; providerId=OpenAI; display=True; resultsUrl=/results/openai-gpt-5-6-terra; cost=5068.4817075; modelReleaseDate=2026-07-09T00:00:00.000Z",
+    "comparison_key": null,
+    "source_basis": "self_reported",
+    "derivation": {
+      "formula": "Source value × 100 to registry units",
+      "inputs": [
+        0.0001
+      ]
+    }
+  },
+  {
+    "id": "public:24670194b4fbb747c445ac54",
+    "benchmark_id": "arc-agi::3",
+    "subject": {
+      "source_id": "openai-gpt-5-6-terra-medium",
+      "name": "GPT-5.6 Terra (Medium)",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 0.08,
+    "unit": "percent",
+    "basis": "derived",
+    "source": {
+      "url": "https://arcprize.org/media/data/leaderboard/v3.json",
+      "retrieved_at": "2026-11-21T17:44:51.849961+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-11-21T17-34-29-386Z/fb7a1dde30f84f4636b7.gz",
+      "sha256": "fb7a1dde30f84f4636b796ad38247d29635e9e38000e35bdeafd85056f261dce",
+      "locator": "json; source row 13; openai-gpt-5-6-terra-medium; field score"
+    },
+    "protocol": "ARC-AGI 3; v3_Semi_Private; source system/configuration retained. Evaluation independence not assumed for board submissions.; modelType=CoT; modelGroup=openai-gpt-5-6-terra; providerId=OpenAI; display=True; resultsUrl=/results/openai-gpt-5-6-terra; cost=5895.3054625; modelReleaseDate=2026-07-09T00:00:00.000Z",
+    "comparison_key": null,
+    "source_basis": "self_reported",
+    "derivation": {
+      "formula": "Source value × 100 to registry units",
+      "inputs": [
+        0.0008
+      ]
+    }
+  },
+  {
+    "id": "public:b1fce445b70cf9a33eadce20",
+    "benchmark_id": "arc-agi::3",
+    "subject": {
+      "source_id": "openai-gpt-5-6-terra-high",
+      "name": "GPT-5.6 Terra (High)",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 0.49,
+    "unit": "percent",
+    "basis": "derived",
+    "source": {
+      "url": "https://arcprize.org/media/data/leaderboard/v3.json",
+      "retrieved_at": "2026-11-21T17:44:51.849961+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-11-21T17-34-29-386Z/fb7a1dde30f84f4636b7.gz",
+      "sha256": "fb7a1dde30f84f4636b796ad38247d29635e9e38000e35bdeafd85056f261dce",
+      "locator": "json; source row 14; openai-gpt-5-6-terra-high; field score"
+    },
+    "protocol": "ARC-AGI 3; v3_Semi_Private; source system/configuration retained. Evaluation independence not assumed for board submissions.; modelType=CoT; modelGroup=openai-gpt-5-6-terra; providerId=OpenAI; display=True; resultsUrl=/results/openai-gpt-5-6-terra; cost=5881.3865325; modelReleaseDate=2026-07-09T00:00:00.000Z",
+    "comparison_key": null,
+    "source_basis": "self_reported",
+    "derivation": {
+      "formula": "Source value × 100 to registry units",
+      "inputs": [
+        0.0049
+      ]
+    }
+  },
+  {
+    "id": "public:75356bb957ccb867e79d11d2",
+    "benchmark_id": "arc-agi::3",
+    "subject": {
+      "source_id": "openai-gpt-5-6-terra-xhigh",
+      "name": "GPT-5.6 Terra (XHigh)",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 0.65,
+    "unit": "percent",
+    "basis": "derived",
+    "source": {
+      "url": "https://arcprize.org/media/data/leaderboard/v3.json",
+      "retrieved_at": "2026-11-21T17:44:51.849961+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-11-21T17-34-29-386Z/fb7a1dde30f84f4636b7.gz",
+      "sha256": "fb7a1dde30f84f4636b796ad38247d29635e9e38000e35bdeafd85056f261dce",
+      "locator": "json; source row 15; openai-gpt-5-6-terra-xhigh; field score"
+    },
+    "protocol": "ARC-AGI 3; v3_Semi_Private; source system/configuration retained. Evaluation independence not assumed for board submissions.; modelType=CoT; modelGroup=openai-gpt-5-6-terra; providerId=OpenAI; display=True; resultsUrl=/results/openai-gpt-5-6-terra; cost=6804.0417725; modelReleaseDate=2026-07-09T00:00:00.000Z",
+    "comparison_key": null,
+    "source_basis": "self_reported",
+    "derivation": {
+      "formula": "Source value × 100 to registry units",
+      "inputs": [
+        0.0065
+      ]
+    }
+  },
+  {
+    "id": "public:b8dbdb4a4856846f5e446026",
+    "benchmark_id": "arc-agi::3",
+    "subject": {
+      "source_id": "openai-gpt-5-6-terra-max",
+      "name": "GPT-5.6 Terra (Max)",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 0.8,
+    "unit": "percent",
+    "basis": "derived",
+    "source": {
+      "url": "https://arcprize.org/media/data/leaderboard/v3.json",
+      "retrieved_at": "2026-11-21T17:44:51.849961+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-11-21T17-34-29-386Z/fb7a1dde30f84f4636b7.gz",
+      "sha256": "fb7a1dde30f84f4636b796ad38247d29635e9e38000e35bdeafd85056f261dce",
+      "locator": "json; source row 16; openai-gpt-5-6-terra-max; field score"
+    },
+    "protocol": "ARC-AGI 3; v3_Semi_Private; source system/configuration retained. Evaluation independence not assumed for board submissions.; modelType=CoT; modelGroup=openai-gpt-5-6-terra; providerId=OpenAI; display=True; resultsUrl=/results/openai-gpt-5-6-terra; cost=7918.3147575; modelReleaseDate=2026-07-09T00:00:00.000Z",
+    "comparison_key": null,
+    "source_basis": "self_reported",
+    "derivation": {
+      "formula": "Source value × 100 to registry units",
+      "inputs": [
+        0.008
+      ]
+    }
+  },
+  {
+    "id": "public:0bfcbbe1a498468673c9953f",
+    "benchmark_id": "arc-agi::3",
+    "subject": {
+      "source_id": "openai-gpt-5-6-luna-low",
+      "name": "GPT-5.6 Luna (Low)",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 0.16999999999999998,
+    "unit": "percent",
+    "basis": "derived",
+    "source": {
+      "url": "https://arcprize.org/media/data/leaderboard/v3.json",
+      "retrieved_at": "2026-11-21T17:44:51.849961+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-11-21T17-34-29-386Z/fb7a1dde30f84f4636b7.gz",
+      "sha256": "fb7a1dde30f84f4636b796ad38247d29635e9e38000e35bdeafd85056f261dce",
+      "locator": "json; source row 17; openai-gpt-5-6-luna-low; field score"
+    },
+    "protocol": "ARC-AGI 3; v3_Semi_Private; source system/configuration retained. Evaluation independence not assumed for board submissions.; modelType=CoT; modelGroup=openai-gpt-5-6-luna; providerId=OpenAI; display=True; resultsUrl=/results/openai-gpt-5-6-luna; cost=2307.492141; modelReleaseDate=2026-07-09T00:00:00.000Z",
+    "comparison_key": null,
+    "source_basis": "self_reported",
+    "derivation": {
+      "formula": "Source value × 100 to registry units",
+      "inputs": [
+        0.0017
+      ]
+    }
+  },
+  {
+    "id": "public:36178aa5ba56c156018c60f5",
+    "benchmark_id": "arc-agi::3",
+    "subject": {
+      "source_id": "openai-gpt-5-6-luna-medium",
+      "name": "GPT-5.6 Luna (Medium)",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 0.16999999999999998,
+    "unit": "percent",
+    "basis": "derived",
+    "source": {
+      "url": "https://arcprize.org/media/data/leaderboard/v3.json",
+      "retrieved_at": "2026-11-21T17:44:51.849961+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-11-21T17-34-29-386Z/fb7a1dde30f84f4636b7.gz",
+      "sha256": "fb7a1dde30f84f4636b796ad38247d29635e9e38000e35bdeafd85056f261dce",
+      "locator": "json; source row 18; openai-gpt-5-6-luna-medium; field score"
+    },
+    "protocol": "ARC-AGI 3; v3_Semi_Private; source system/configuration retained. Evaluation independence not assumed for board submissions.; modelType=CoT; modelGroup=openai-gpt-5-6-luna; providerId=OpenAI; display=True; resultsUrl=/results/openai-gpt-5-6-luna; cost=2379.133944; modelReleaseDate=2026-07-09T00:00:00.000Z",
+    "comparison_key": null,
+    "source_basis": "self_reported",
+    "derivation": {
+      "formula": "Source value × 100 to registry units",
+      "inputs": [
+        0.0017
+      ]
+    }
+  },
+  {
+    "id": "public:d362014a9c75002cc6029208",
+    "benchmark_id": "arc-agi::3",
+    "subject": {
+      "source_id": "openai-gpt-5-6-luna-high",
+      "name": "GPT-5.6 Luna (High)",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 0.1,
+    "unit": "percent",
+    "basis": "derived",
+    "source": {
+      "url": "https://arcprize.org/media/data/leaderboard/v3.json",
+      "retrieved_at": "2026-11-21T17:44:51.849961+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-11-21T17-34-29-386Z/fb7a1dde30f84f4636b7.gz",
+      "sha256": "fb7a1dde30f84f4636b796ad38247d29635e9e38000e35bdeafd85056f261dce",
+      "locator": "json; source row 19; openai-gpt-5-6-luna-high; field score"
+    },
+    "protocol": "ARC-AGI 3; v3_Semi_Private; source system/configuration retained. Evaluation independence not assumed for board submissions.; modelType=CoT; modelGroup=openai-gpt-5-6-luna; providerId=OpenAI; display=True; resultsUrl=/results/openai-gpt-5-6-luna; cost=2482.436957; modelReleaseDate=2026-07-09T00:00:00.000Z",
+    "comparison_key": null,
+    "source_basis": "self_reported",
+    "derivation": {
+      "formula": "Source value × 100 to registry units",
+      "inputs": [
+        0.001
+      ]
+    }
+  },
+  {
+    "id": "public:0bbd48b922e1a0a9c36995e9",
+    "benchmark_id": "arc-agi::3",
+    "subject": {
+      "source_id": "openai-gpt-5-6-luna-xhigh",
+      "name": "GPT-5.6 Luna (XHigh)",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 0.02,
+    "unit": "percent",
+    "basis": "derived",
+    "source": {
+      "url": "https://arcprize.org/media/data/leaderboard/v3.json",
+      "retrieved_at": "2026-11-21T17:44:51.849961+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-11-21T17-34-29-386Z/fb7a1dde30f84f4636b7.gz",
+      "sha256": "fb7a1dde30f84f4636b796ad38247d29635e9e38000e35bdeafd85056f261dce",
+      "locator": "json; source row 20; openai-gpt-5-6-luna-xhigh; field score"
+    },
+    "protocol": "ARC-AGI 3; v3_Semi_Private; source system/configuration retained. Evaluation independence not assumed for board submissions.; modelType=CoT; modelGroup=openai-gpt-5-6-luna; providerId=OpenAI; display=True; resultsUrl=/results/openai-gpt-5-6-luna; cost=2801.589938; modelReleaseDate=2026-07-09T00:00:00.000Z",
+    "comparison_key": null,
+    "source_basis": "self_reported",
+    "derivation": {
+      "formula": "Source value × 100 to registry units",
+      "inputs": [
+        0.0002
+      ]
+    }
+  },
+  {
+    "id": "public:1d82824d1852e6a0ef0395aa",
+    "benchmark_id": "arc-agi::3",
+    "subject": {
+      "source_id": "openai-gpt-5-6-luna-max",
+      "name": "GPT-5.6 Luna (Max)",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 0.18,
+    "unit": "percent",
+    "basis": "derived",
+    "source": {
+      "url": "https://arcprize.org/media/data/leaderboard/v3.json",
+      "retrieved_at": "2026-11-21T17:44:51.849961+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-11-21T17-34-29-386Z/fb7a1dde30f84f4636b7.gz",
+      "sha256": "fb7a1dde30f84f4636b796ad38247d29635e9e38000e35bdeafd85056f261dce",
+      "locator": "json; source row 21; openai-gpt-5-6-luna-max; field score"
+    },
+    "protocol": "ARC-AGI 3; v3_Semi_Private; source system/configuration retained. Evaluation independence not assumed for board submissions.; modelType=CoT; modelGroup=openai-gpt-5-6-luna; providerId=OpenAI; display=True; resultsUrl=/results/openai-gpt-5-6-luna; cost=3189.415171; modelReleaseDate=2026-07-09T00:00:00.000Z",
+    "comparison_key": null,
+    "source_basis": "self_reported",
+    "derivation": {
+      "formula": "Source value × 100 to registry units",
+      "inputs": [
+        0.0018
+      ]
+    }
+  },
+  {
+    "id": "public:ed226daa6840843af3d8f25b",
+    "benchmark_id": "arc-agi::3",
+    "subject": {
+      "source_id": "anthropic-claude-opus-5-high",
+      "name": "Claude Opus 5 (High)",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 30.159999999999997,
+    "unit": "percent",
+    "basis": "derived",
+    "source": {
+      "url": "https://arcprize.org/media/data/leaderboard/v3.json",
+      "retrieved_at": "2026-11-21T17:44:51.849961+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-11-21T17-34-29-386Z/fb7a1dde30f84f4636b7.gz",
+      "sha256": "fb7a1dde30f84f4636b796ad38247d29635e9e38000e35bdeafd85056f261dce",
+      "locator": "json; source row 25; anthropic-claude-opus-5-high; field score"
+    },
+    "protocol": "ARC-AGI 3; v3_Semi_Private; source system/configuration retained. Evaluation independence not assumed for board submissions.; modelType=CoT; modelGroup=anthropic-claude-opus-5; providerId=Anthropic; display=True; resultsUrl=/results/anthropic-claude-opus-5; cost=20657.36924; modelReleaseDate=2026-07-24T00:00:00.000Z",
+    "comparison_key": null,
+    "source_basis": "self_reported",
+    "derivation": {
+      "formula": "Source value × 100 to registry units",
+      "inputs": [
+        0.3016
+      ]
+    }
+  }
+]

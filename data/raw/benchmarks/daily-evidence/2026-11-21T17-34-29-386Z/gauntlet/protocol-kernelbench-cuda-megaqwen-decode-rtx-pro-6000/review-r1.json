@@ -1,0 +1,35 @@
+{
+  "artifact_id": "protocol-kernelbench-cuda-megaqwen-decode-rtx-pro-6000",
+  "artifact_sha256": "281df10e55b53ee8409b58c066527c9940e0dcc645df63602f73a2c4c8533ee0",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": [
+    "kernelbench-cuda-megaqwen-decode::rtx-pro-6000",
+    "c1",
+    "c2"
+  ],
+  "errors_found": 2,
+  "findings": [
+    {
+      "id": "f1-guard-deck-mismatch",
+      "severity": "major",
+      "location": "row kernelbench-cuda-megaqwen-decode::rtx-pro-6000 / version_guard",
+      "evidence": "SPEC.md: 'Problem 04 ... was retired 2026-11-09' and 'deck stays at three since 2026-11-09'; leaderboard.json problems list contains only 01_glm52_fused_moe, 02_deepseek_nsa, 03_megaqwen_decode. Candidate version_guard requires 'the stated four-problem deck', a deck the current protocol does not have.",
+      "repair": "Change version_guard to require the current three-problem deck (01_glm52_fused_moe, 02_deepseek_nsa, 03_megaqwen_decode) and remove all references to a four-problem deck."
+    },
+    {
+      "id": "f2-notes-fabricated-04",
+      "severity": "major",
+      "location": "row kernelbench-cuda-megaqwen-decode::rtx-pro-6000 / scoring.notes",
+      "evidence": "Notes assert a muse/muse-spark-1.3 [ultra] 'bug' cell on 04 (0.2056), 'Opus 5 reaches 196.10% on 04', and a 'reward_hack deepseek-claude/deepseek-v4-pro cell on 04'. The captured leaderboard.json has no problem 04 and no such values, and SPEC.md states problem 04 was retired 2026-11-09.",
+      "repair": "Delete all problem-04 concrete claims and unsupported values; retain only facts present in the captured payload, such as kinetic-claude/kinetic-0715[1m] suspect 0.0622 on 03."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "Owner-side hash and transport/qualification checks were not executable by me; row hash ff4983ac0dd6bac758c3d2867956a5b10dc56fb0da828314c2a81d6373623d70 is accepted as given.",
+    "Interpretation of version_status 'published' is ambiguous when version is the hardware name 'rtx-pro-6000' rather than a protocol release identifier (SPEC 'Perfect stack (v1)', schema_version 1); not treated as a finding.",
+    "The activity and value-scale summaries are this run's own generated reads and were used only as the criteria permit."
+  ],
+  "missing_evidence": []
+}

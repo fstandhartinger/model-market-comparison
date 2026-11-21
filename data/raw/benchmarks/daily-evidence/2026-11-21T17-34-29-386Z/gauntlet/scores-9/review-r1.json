@@ -1,0 +1,34 @@
+{
+  "artifact_id": "scores-9",
+  "artifact_sha256": "8db233983e599152f3b55264ed558aaf3fc925fc425148abc1d77f81f1ae47b6",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "public:040be19d42e890da4d90e95f",
+    "public:5a66616fd273bf4edac53195",
+    "public:5f9785779758476807ed3888",
+    "public:8de4ced7dfcf7bcee220ee19",
+    "public:93f34d832832a20ccab16b6e",
+    "public:17c060b4c91732e0b445d1c7",
+    "public:c90cd391ba95e9b374b85d65",
+    "public:3bba519f2ed8bd5823af5aa6",
+    "public:2fce3c680e43279c2e7cdb41",
+    "public:d5e23672da6637a22c8730fe",
+    "public:c7025131b6d18e25b59e60a6",
+    "public:cdc727c8b178e6c315c5446e",
+    "public:c6f882dec399bac675abea18",
+    "public:bb3c1c6763147595927e0f92",
+    "public:7191a825d02fa49204162f36",
+    "c1"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "I cannot independently recompute row SHA-256 values or execute transport/hash/qualification checks; owner-provided hashes are treated as trusted binding evidence.",
+    "Source captures provide retrieved_at but no exact published_at; candidate records published_at null and uses retrieved_at as source date, which is consistent with available evidence.",
+    "No reasoning/harness configuration beyond 'no reasoning setting' is stated on the source page; candidate records null configuration and does not infer one.",
+    "Source activity summary reports 2 model row value changes versus a prior snapshot, but this does not affect the captured values used by the candidate rows."
+  ],
+  "missing_evidence": []
+}

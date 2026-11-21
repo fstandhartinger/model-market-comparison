@@ -1,0 +1,30 @@
+{
+  "artifact_id": "scores-11",
+  "artifact_sha256": "1664643add174e9294081c039e37d5ecc48cc57f05367d974e98f0e4bd40e230",
+  "round": 2,
+  "verdict": "revise",
+  "coverage_checked": [
+    "public:38e62aacb9c4e417cc43da38",
+    "public:4411f7047ad2bc7a1ca98b57",
+    "public:d92b355556197513fdf9dc1c",
+    "public:473705bcda76514febc4e7fd",
+    "c1"
+  ],
+  "errors_found": 1,
+  "findings": [
+    {
+      "id": "source-date-omitted-all-rows",
+      "severity": "major",
+      "location": "public:38e62aacb9c4e417cc43da38; public:4411f7047ad2bc7a1ca98b57; public:d92b355556197513fdf9dc1c; public:473705bcda76514febc4e7fd — source.published_at and source object",
+      "evidence": "Primary source rows carry a published date per model: source row 1 dateAdded=2026-11-19, source rows 15/16/29 dateAdded=2026-11-18. Candidate rows record only published_at:null and no separate source-date field, so criterion c1's requirement to verify source date is not satisfied.",
+      "repair": "Populate a source date in each row from the corresponding source_row.dateAdded (or an equivalent source_date field), or explicitly explain that published_at:null represents an intentionally unmapped date while still exposing the parsed dateAdded value."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "I cannot independently recompute row/source SHA-256 hashes or execute transport/qualification checks; I rely on the owner-provided hashes and receipt.",
+    "The exact meaning of 'source date' is not explicitly defined in the artifact schema; I treated source_row.dateAdded as the published source date because published_at is null in the rows.",
+    "The artifact's source.file path is not present in the primary projections, so I could not compare that field; it is not part of the acceptance criteria."
+  ],
+  "missing_evidence": []
+}

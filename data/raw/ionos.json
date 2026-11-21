@@ -1,9 +1,9 @@
 {
   "source": "IONOS AI Model Hub",
   "region": "eu (Germany)",
-  "collected_at": "2026-11-17",
+  "collected_at": "2026-11-21",
   "currency_note": "USD fields use IONOS' official localized USD price table at https://cloud.ionos.com/prices; EUR source prices are preserved in notes and are not converted locally.",
-  "method": "scripts/fetch-ionos-catalog.mjs (2026-11-17): one GET each of the server-rendered IONOS Cloud price pages https://cloud.ionos.com/prices (official localized USD, used for the price fields) and https://cloud.ionos.de/preise (original EUR, recorded as \"€in/€out\" at the start of each row's notes); every AI Model Hub table with an input- and an output-token price is included (Large language models, Vision-Language Models, Code Models); embedding, reranker and image tables are out of scope. Curated rows kept by catalog_name, normalized name or the page name in the notes; new rows mapping=derived; rows no longer listed are dropped. OpenAI-compatible pay-per-use, EU-sovereign (DE). See ionos.method.md.",
+  "method": "scripts/fetch-ionos-catalog.mjs (2026-11-21): one GET each of the server-rendered IONOS Cloud price pages https://cloud.ionos.com/prices (official localized USD, used for the price fields) and https://cloud.ionos.de/preise (original EUR, recorded as \"€in/€out\" at the start of each row's notes); every AI Model Hub table with an input- and an output-token price is included (Large language models, Vision-Language Models, Code Models); embedding, reranker and image tables are out of scope. Curated rows kept by catalog_name, normalized name or the page name in the notes; new rows mapping=derived; rows no longer listed are dropped. OpenAI-compatible pay-per-use, EU-sovereign (DE). See ionos.method.md.",
   "models": [
     {
       "model_name": "Qwen3.5 9B",
@@ -23,7 +23,7 @@
       "output_per_1m_usd": 2.7,
       "region": "eu",
       "catalog_section": "Large language models",
-      "notes": "EUR price not listed on cloud.ionos.de/preise at collection time; EUR price not listed on cloud.ionos.de/preise at collection time; EUR price not listed on cloud.ionos.de/preise at collection time; EUR price not listed on cloud.ionos.de/preise at collection time; EUR price not listed on cloud.ionos.de/preise at collection time; EUR price not listed on cloud.ionos.de/preise at collection time; EUR price not listed on cloud.ionos.de/preise at collection time; EUR price not listed on cloud.ionos.de/preise at collection time; EUR price not listed on cloud.ionos.de/preise at collection time; EUR price not listed on cloud.ionos.de/preise at collection time; Qwen3.8-27B New",
+      "notes": "EUR price not listed on cloud.ionos.de/preise at collection time; EUR price not listed on cloud.ionos.de/preise at collection time; EUR price not listed on cloud.ionos.de/preise at collection time; EUR price not listed on cloud.ionos.de/preise at collection time; EUR price not listed on cloud.ionos.de/preise at collection time; EUR price not listed on cloud.ionos.de/preise at collection time; EUR price not listed on cloud.ionos.de/preise at collection time; EUR price not listed on cloud.ionos.de/preise at collection time; EUR price not listed on cloud.ionos.de/preise at collection time; EUR price not listed on cloud.ionos.de/preise at collection time; EUR price not listed on cloud.ionos.de/preise at collection time; Qwen3.8-27B New",
       "mapping": "derived"
     },
     {
@@ -44,7 +44,7 @@
       "output_per_1m_usd": 0.33,
       "region": "eu",
       "catalog_section": "Large language models",
-      "notes": "EUR price not listed on cloud.ionos.de/preise at collection time; EUR price not listed on cloud.ionos.de/preise at collection time; EUR price not listed on cloud.ionos.de/preise at collection time; EUR price not listed on cloud.ionos.de/preise at collection time; EUR price not listed on cloud.ionos.de/preise at collection time; EUR price not listed on cloud.ionos.de/preise at collection time; EUR price not listed on cloud.ionos.de/preise at collection time; EUR price not listed on cloud.ionos.de/preise at collection time; EUR price not listed on cloud.ionos.de/preise at collection time; EUR price not listed on cloud.ionos.de/preise at collection time; Mistral Small 24B Instruct New",
+      "notes": "EUR price not listed on cloud.ionos.de/preise at collection time; EUR price not listed on cloud.ionos.de/preise at collection time; EUR price not listed on cloud.ionos.de/preise at collection time; EUR price not listed on cloud.ionos.de/preise at collection time; EUR price not listed on cloud.ionos.de/preise at collection time; EUR price not listed on cloud.ionos.de/preise at collection time; EUR price not listed on cloud.ionos.de/preise at collection time; EUR price not listed on cloud.ionos.de/preise at collection time; EUR price not listed on cloud.ionos.de/preise at collection time; EUR price not listed on cloud.ionos.de/preise at collection time; EUR price not listed on cloud.ionos.de/preise at collection time; Mistral Small 24B Instruct New",
       "mapping": "derived"
     },
     {
@@ -89,8 +89,8 @@
     }
   ],
   "response_sha256": {
-    "usd": "fdc7ee75cf9918ef59ae6f8eb5b321d167f94f9d4afbaa444b92483234c32c2e",
-    "eur": "f9734e3ed9e853e47ee6f6333fb55ab792cc5ad298a1df3cb14a73dbdf052472"
+    "usd": "7e0119b8d16e8564760bd03c9a4486ec5a9248efc7a2b631234d375ba0e5df55",
+    "eur": "2423f9c3c9909dd6ad712796773019d0c2766fe5782fb2bb9ecf1c61ad9dcb7a"
   },
   "eur_missing": [
     "Qwen3.8-27B New",

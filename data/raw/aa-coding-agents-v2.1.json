@@ -1,13 +1,13 @@
 {
   "source": "ArtificialAnalysis Coding Agent Index",
   "version": "2.1",
-  "collected_at": "2026-11-17",
+  "collected_at": "2026-11-21",
   "endpoint": "https://artificialanalysis.ai/agents/coding-agents",
   "methodology_url": "https://artificialanalysis.ai/methodology/coding-agents-benchmarking",
   "method": "Decode Flight JSON and resolve benchmarkRows references on the full coding-agents page; validate version, row count, identities, components and index arithmetic before atomic replacement.",
   "score_scale": "0-1",
   "basis": "measured",
-  "count": 30,
+  "count": 41,
   "components": [
     {
       "id": "frontiercode-v2.0",
@@ -25,27 +25,27 @@
   "completeness_note": "Complete v2.1 benchmarkRows only. v1.4, v1.5 and v2.0 remain separate dated snapshots (v1.4 feeds the unchanged Composite); versions use different components and must never be combined or compared as one scale.",
   "rows": [
     {
-      "source_id": "bdeb89e3a86551106e671c63fa1415bc",
-      "model_name": "Gemini 4 Argon (High)",
-      "harness": "Antigravity CLI",
-      "score": 0.454992429673075,
+      "source_id": "8178a0ab530e25e65f53d836ef248eae",
+      "model_name": "GPT-6.2 Sol (Low)",
+      "harness": "Codex",
+      "score": 0.371599956554795,
       "eval_count": 3,
       "index_component_count": 3,
       "complete": true,
       "components": [
         {
           "id": "frontiercode-v2.0",
-          "score": 0.248245454545455,
+          "score": 0.280977777777778,
           "weight": 0.333333333333333
         },
         {
           "id": "swe-atlas-qna",
-          "score": 0.551075268817204,
+          "score": 0.424731182795699,
           "weight": 0.333333333333333
         },
         {
           "id": "terminal-bench-v4",
-          "score": 0.565656565656566,
+          "score": 0.409090909090909,
           "weight": 0.333333333333333
         }
       ]
@@ -72,32 +72,6 @@
         {
           "id": "terminal-bench-v4",
           "score": 0.297979797979798,
-          "weight": 0.333333333333333
-        }
-      ]
-    },
-    {
-      "source_id": "7814cb87040ea234c69eca79cd85486d",
-      "model_name": "Gemini 4 Carbon (High)",
-      "harness": "Antigravity CLI",
-      "score": 0.554659278266536,
-      "eval_count": 3,
-      "index_component_count": 3,
-      "complete": true,
-      "components": [
-        {
-          "id": "frontiercode-v2.0",
-          "score": 0.380416414141414,
-          "weight": 0.333333333333333
-        },
-        {
-          "id": "swe-atlas-qna",
-          "score": 0.637096774193548,
-          "weight": 0.333333333333333
-        },
-        {
-          "id": "terminal-bench-v4",
-          "score": 0.646464646464647,
           "weight": 0.333333333333333
         }
       ]
@@ -311,6 +285,32 @@
       ]
     },
     {
+      "source_id": "e00a520b90336304cd56ead289bb59f2",
+      "model_name": "Beam 1.0",
+      "harness": "Mirror",
+      "score": 0.154770250896058,
+      "eval_count": 3,
+      "index_component_count": 3,
+      "complete": true,
+      "components": [
+        {
+          "id": "frontiercode-v2.0",
+          "score": 0.0475626262626263,
+          "weight": 0.333333333333333
+        },
+        {
+          "id": "swe-atlas-qna",
+          "score": 0.376344086021506,
+          "weight": 0.333333333333333
+        },
+        {
+          "id": "terminal-bench-v4",
+          "score": 0.0404040404040404,
+          "weight": 0.333333333333333
+        }
+      ]
+    },
+    {
       "source_id": "98e53b1f02eee089dc8221078e300b3e",
       "model_name": "Claude Fable 5.1 (Max, Default Fallback)",
       "harness": "Claude Code",
@@ -337,74 +337,74 @@
       ]
     },
     {
-      "source_id": "ad1f505937d9446886b286573593bd42",
-      "model_name": "Mistral Large 4 (High)",
-      "harness": "Mistral Vibe",
-      "score": 0.405885380688606,
-      "eval_count": 3,
-      "index_component_count": 3,
-      "complete": true,
-      "components": [
-        {
-          "id": "frontiercode-v2.0",
-          "score": 0.20470404040404,
-          "weight": 0.333333333333333
-        },
-        {
-          "id": "swe-atlas-qna",
-          "score": 0.588709677419355,
-          "weight": 0.333333333333333
-        },
-        {
-          "id": "terminal-bench-v4",
-          "score": 0.424242424242424,
-          "weight": 0.333333333333333
-        }
-      ]
-    },
-    {
-      "source_id": "7989f86ae8d744efb7608655672ab296",
-      "model_name": "Grok 4.7 (Xhigh)",
-      "harness": "Grok Build",
-      "score": 0.416396947974367,
-      "eval_count": 3,
-      "index_component_count": 3,
-      "complete": true,
-      "components": [
-        {
-          "id": "frontiercode-v2.0",
-          "score": 0.296926262626263,
-          "weight": 0.333333333333333
-        },
-        {
-          "id": "swe-atlas-qna",
-          "score": 0.629032258064516,
-          "weight": 0.333333333333333
-        },
-        {
-          "id": "terminal-bench-v4",
-          "score": 0.323232323232323,
-          "weight": 0.333333333333333
-        }
-      ]
-    },
-    {
-      "source_id": "97f24b3f300fe06034101d053f3a894b",
-      "model_name": "GPT-6 Astra (Max)",
+      "source_id": "2827f8a25558cdb94dfada79c70b0d8c",
+      "model_name": "GPT-6.2 Sol (Medium)",
       "harness": "Codex",
-      "score": 0.530999198979038,
+      "score": 0.453516511893125,
       "eval_count": 3,
       "index_component_count": 3,
       "complete": true,
       "components": [
         {
           "id": "frontiercode-v2.0",
-          "score": 0.425842171717172,
+          "score": 0.362911868686869,
           "weight": 0.333333333333333
         },
         {
           "id": "swe-atlas-qna",
-          "score": 0.591397849462366,
+          "score": 0.502688172043011,
+          "weight": 0.333333333333333
+        },
+        {
+          "id": "terminal-bench-v4",
+          "score": 0.494949494949495,
+          "weight": 0.333333333333333
+        }
+      ]
+    },
+    {
+      "source_id": "eb55a750b7784b3f03c16efc3c39e1ff",
+      "model_name": "GPT-6.2 Sol (Max)",
+      "harness": "Codex",
+      "score": 0.486171442923862,
+      "eval_count": 3,
+      "index_component_count": 3,
+      "complete": true,
+      "components": [
+        {
+          "id": "frontiercode-v2.0",
+          "score": 0.415340656565656,
+          "weight": 0.333333333333333
+        },
+        {
+          "id": "swe-atlas-qna",
+          "score": 0.462365591397849,
+          "weight": 0.333333333333333
+        },
+        {
+          "id": "terminal-bench-v4",
+          "score": 0.580808080808081,
+          "weight": 0.333333333333333
+        }
+      ]
+    },
+    {
+      "source_id": "2b66aa9f8afa482977259846d9b207ba",
+      "model_name": "GPT-6.2 Sol (Xhigh)",
+      "harness": "Codex",
+      "score": 0.497854108287173,
+      "eval_count": 3,
+      "index_component_count": 3,
+      "complete": true,
+      "components": [
+        {
+          "id": "frontiercode-v2.0",
+          "score": 0.404363888888889,
+          "weight": 0.333333333333333
+        },
+        {
+          "id": "swe-atlas-qna",
+          "score": 0.513440860215054,
           "weight": 0.333333333333333
         },
         {
@@ -415,79 +415,53 @@
       ]
     },
     {
-      "source_id": "da3088d1680debe97b7b536e6908c548",
-      "model_name": "Mistral Large 4 (Medium)",
-      "harness": "Mistral Vibe",
-      "score": 0.296112186379928,
+      "source_id": "f547ba043e9627fd184c2e7e5fb35998",
+      "model_name": "Gemini 4 Neon (Xhigh)",
+      "harness": "Antigravity CLI",
+      "score": 0.586395593027045,
       "eval_count": 3,
       "index_component_count": 3,
       "complete": true,
       "components": [
         {
           "id": "frontiercode-v2.0",
-          "score": 0.179473737373737,
+          "score": 0.430252272727273,
           "weight": 0.333333333333333
         },
         {
           "id": "swe-atlas-qna",
-          "score": 0.446236559139785,
+          "score": 0.67741935483871,
           "weight": 0.333333333333333
         },
         {
           "id": "terminal-bench-v4",
-          "score": 0.262626262626263,
+          "score": 0.651515151515151,
           "weight": 0.333333333333333
         }
       ]
     },
     {
-      "source_id": "5146f276cbceb4e9fdeb5834609f805b",
-      "model_name": "GPT-6.1 Sol (Max)",
+      "source_id": "c4f606fc3bab9772d3e2ab6c95ebed5a",
+      "model_name": "GPT-6.2 Sol (High)",
       "harness": "Codex",
-      "score": 0.52159890300858,
+      "score": 0.47455238405561,
       "eval_count": 3,
       "index_component_count": 3,
       "complete": true,
       "components": [
         {
           "id": "frontiercode-v2.0",
-          "score": 0.424930303030303,
+          "score": 0.382927272727273,
           "weight": 0.333333333333333
         },
         {
           "id": "swe-atlas-qna",
-          "score": 0.599462365591398,
+          "score": 0.505376344086022,
           "weight": 0.333333333333333
         },
         {
           "id": "terminal-bench-v4",
-          "score": 0.54040404040404,
-          "weight": 0.333333333333333
-        }
-      ]
-    },
-    {
-      "source_id": "1fece3eef716cd9668b972cced54606c",
-      "model_name": "GPT-6.1 Terra (Max)",
-      "harness": "Codex",
-      "score": 0.486481600955794,
-      "eval_count": 3,
-      "index_component_count": 3,
-      "complete": true,
-      "components": [
-        {
-          "id": "frontiercode-v2.0",
-          "score": 0.414071717171717,
-          "weight": 0.333333333333333
-        },
-        {
-          "id": "swe-atlas-qna",
-          "score": 0.540322580645161,
-          "weight": 0.333333333333333
-        },
-        {
-          "id": "terminal-bench-v4",
-          "score": 0.505050505050505,
+          "score": 0.535353535353535,
           "weight": 0.333333333333333
         }
       ]
@@ -571,6 +545,58 @@
       ]
     },
     {
+      "source_id": "e7d93c34f5c806bec7608750fc56e91a",
+      "model_name": "GPT-6.2 Astra (Low)",
+      "harness": "Codex",
+      "score": 0.355783061800804,
+      "eval_count": 3,
+      "index_component_count": 3,
+      "complete": true,
+      "components": [
+        {
+          "id": "frontiercode-v2.0",
+          "score": 0.26505202020202,
+          "weight": 0.333333333333333
+        },
+        {
+          "id": "swe-atlas-qna",
+          "score": 0.362903225806452,
+          "weight": 0.333333333333333
+        },
+        {
+          "id": "terminal-bench-v4",
+          "score": 0.439393939393939,
+          "weight": 0.333333333333333
+        }
+      ]
+    },
+    {
+      "source_id": "f60010d6306ed860deef16152e949af3",
+      "model_name": "GPT-6.2 Astra (High)",
+      "harness": "Codex",
+      "score": 0.522778597806017,
+      "eval_count": 3,
+      "index_component_count": 3,
+      "complete": true,
+      "components": [
+        {
+          "id": "frontiercode-v2.0",
+          "score": 0.421626767676768,
+          "weight": 0.333333333333333
+        },
+        {
+          "id": "swe-atlas-qna",
+          "score": 0.545698924731183,
+          "weight": 0.333333333333333
+        },
+        {
+          "id": "terminal-bench-v4",
+          "score": 0.601010101010101,
+          "weight": 0.333333333333333
+        }
+      ]
+    },
+    {
       "source_id": "ab4f6cb89f990484067eca06109875b3",
       "model_name": "Muse Ember (Max)",
       "harness": "Muse Code",
@@ -592,6 +618,32 @@
         {
           "id": "terminal-bench-v4",
           "score": 0.434343434343434,
+          "weight": 0.333333333333333
+        }
+      ]
+    },
+    {
+      "source_id": "7853ef55ffc046be0c351cb5ba7d0290",
+      "model_name": "GPT-6.2 Astra (Max)",
+      "harness": "Codex",
+      "score": 0.534702278157923,
+      "eval_count": 3,
+      "index_component_count": 3,
+      "complete": true,
+      "components": [
+        {
+          "id": "frontiercode-v2.0",
+          "score": 0.416667929292929,
+          "weight": 0.333333333333333
+        },
+        {
+          "id": "swe-atlas-qna",
+          "score": 0.551075268817204,
+          "weight": 0.333333333333333
+        },
+        {
+          "id": "terminal-bench-v4",
+          "score": 0.636363636363636,
           "weight": 0.333333333333333
         }
       ]
@@ -623,6 +675,58 @@
       ]
     },
     {
+      "source_id": "eae5a29e0ed56a9c2aa5b6e82dd082e2",
+      "model_name": "GPT-6.2 Astra (Medium)",
+      "harness": "Codex",
+      "score": 0.490562984685565,
+      "eval_count": 3,
+      "index_component_count": 3,
+      "complete": true,
+      "components": [
+        {
+          "id": "frontiercode-v2.0",
+          "score": 0.39870101010101,
+          "weight": 0.333333333333333
+        },
+        {
+          "id": "swe-atlas-qna",
+          "score": 0.537634408602151,
+          "weight": 0.333333333333333
+        },
+        {
+          "id": "terminal-bench-v4",
+          "score": 0.535353535353535,
+          "weight": 0.333333333333333
+        }
+      ]
+    },
+    {
+      "source_id": "ad1f505937d9446886b286573593bd42",
+      "model_name": "Mistral Large 4 (High)",
+      "harness": "Mistral Vibe",
+      "score": 0.405885380688606,
+      "eval_count": 3,
+      "index_component_count": 3,
+      "complete": true,
+      "components": [
+        {
+          "id": "frontiercode-v2.0",
+          "score": 0.20470404040404,
+          "weight": 0.333333333333333
+        },
+        {
+          "id": "swe-atlas-qna",
+          "score": 0.588709677419355,
+          "weight": 0.333333333333333
+        },
+        {
+          "id": "terminal-bench-v4",
+          "score": 0.424242424242424,
+          "weight": 0.333333333333333
+        }
+      ]
+    },
+    {
       "source_id": "9820ee072540fb8c51becfc2b1f274c8",
       "model_name": "Claude Fable 5.2 (Xhigh, Default Fallback)",
       "harness": "Claude Code",
@@ -649,27 +753,27 @@
       ]
     },
     {
-      "source_id": "e00a520b90336304cd56ead289bb59f2",
-      "model_name": "Beam 1.0",
-      "harness": "Mirror",
-      "score": 0.154770250896058,
+      "source_id": "7989f86ae8d744efb7608655672ab296",
+      "model_name": "Grok 4.7 (Xhigh)",
+      "harness": "Grok Build",
+      "score": 0.416396947974367,
       "eval_count": 3,
       "index_component_count": 3,
       "complete": true,
       "components": [
         {
           "id": "frontiercode-v2.0",
-          "score": 0.0475626262626263,
+          "score": 0.296926262626263,
           "weight": 0.333333333333333
         },
         {
           "id": "swe-atlas-qna",
-          "score": 0.376344086021506,
+          "score": 0.629032258064516,
           "weight": 0.333333333333333
         },
         {
           "id": "terminal-bench-v4",
-          "score": 0.0404040404040404,
+          "score": 0.323232323232323,
           "weight": 0.333333333333333
         }
       ]
@@ -727,6 +831,32 @@
       ]
     },
     {
+      "source_id": "1fece3eef716cd9668b972cced54606c",
+      "model_name": "GPT-6.1 Terra (Max)",
+      "harness": "Codex",
+      "score": 0.486481600955794,
+      "eval_count": 3,
+      "index_component_count": 3,
+      "complete": true,
+      "components": [
+        {
+          "id": "frontiercode-v2.0",
+          "score": 0.414071717171717,
+          "weight": 0.333333333333333
+        },
+        {
+          "id": "swe-atlas-qna",
+          "score": 0.540322580645161,
+          "weight": 0.333333333333333
+        },
+        {
+          "id": "terminal-bench-v4",
+          "score": 0.505050505050505,
+          "weight": 0.333333333333333
+        }
+      ]
+    },
+    {
       "source_id": "09e56f8cd938c59b1a9a600141535ab0",
       "model_name": "Claude Fable 5.2 (Low, Default Fallback)",
       "harness": "Claude Code",
@@ -779,6 +909,136 @@
       ]
     },
     {
+      "source_id": "bdeb89e3a86551106e671c63fa1415bc",
+      "model_name": "Gemini 4 Argon (High)",
+      "harness": "Antigravity CLI",
+      "score": 0.454992429673075,
+      "eval_count": 3,
+      "index_component_count": 3,
+      "complete": true,
+      "components": [
+        {
+          "id": "frontiercode-v2.0",
+          "score": 0.248245454545455,
+          "weight": 0.333333333333333
+        },
+        {
+          "id": "swe-atlas-qna",
+          "score": 0.551075268817204,
+          "weight": 0.333333333333333
+        },
+        {
+          "id": "terminal-bench-v4",
+          "score": 0.565656565656566,
+          "weight": 0.333333333333333
+        }
+      ]
+    },
+    {
+      "source_id": "97f24b3f300fe06034101d053f3a894b",
+      "model_name": "GPT-6 Astra (Max)",
+      "harness": "Codex",
+      "score": 0.530999198979038,
+      "eval_count": 3,
+      "index_component_count": 3,
+      "complete": true,
+      "components": [
+        {
+          "id": "frontiercode-v2.0",
+          "score": 0.425842171717172,
+          "weight": 0.333333333333333
+        },
+        {
+          "id": "swe-atlas-qna",
+          "score": 0.591397849462366,
+          "weight": 0.333333333333333
+        },
+        {
+          "id": "terminal-bench-v4",
+          "score": 0.575757575757576,
+          "weight": 0.333333333333333
+        }
+      ]
+    },
+    {
+      "source_id": "d2d75a8abf0ca8d8888f99cff7bee543",
+      "model_name": "GPT-6.2 Astra (Xhigh)",
+      "harness": "Codex",
+      "score": 0.53121247963506,
+      "eval_count": 3,
+      "index_component_count": 3,
+      "complete": true,
+      "components": [
+        {
+          "id": "frontiercode-v2.0",
+          "score": 0.434790909090909,
+          "weight": 0.333333333333333
+        },
+        {
+          "id": "swe-atlas-qna",
+          "score": 0.537634408602151,
+          "weight": 0.333333333333333
+        },
+        {
+          "id": "terminal-bench-v4",
+          "score": 0.621212121212121,
+          "weight": 0.333333333333333
+        }
+      ]
+    },
+    {
+      "source_id": "da3088d1680debe97b7b536e6908c548",
+      "model_name": "Mistral Large 4 (Medium)",
+      "harness": "Mistral Vibe",
+      "score": 0.296112186379928,
+      "eval_count": 3,
+      "index_component_count": 3,
+      "complete": true,
+      "components": [
+        {
+          "id": "frontiercode-v2.0",
+          "score": 0.179473737373737,
+          "weight": 0.333333333333333
+        },
+        {
+          "id": "swe-atlas-qna",
+          "score": 0.446236559139785,
+          "weight": 0.333333333333333
+        },
+        {
+          "id": "terminal-bench-v4",
+          "score": 0.262626262626263,
+          "weight": 0.333333333333333
+        }
+      ]
+    },
+    {
+      "source_id": "5146f276cbceb4e9fdeb5834609f805b",
+      "model_name": "GPT-6.1 Sol (Max)",
+      "harness": "Codex",
+      "score": 0.52159890300858,
+      "eval_count": 3,
+      "index_component_count": 3,
+      "complete": true,
+      "components": [
+        {
+          "id": "frontiercode-v2.0",
+          "score": 0.424930303030303,
+          "weight": 0.333333333333333
+        },
+        {
+          "id": "swe-atlas-qna",
+          "score": 0.599462365591398,
+          "weight": 0.333333333333333
+        },
+        {
+          "id": "terminal-bench-v4",
+          "score": 0.54040404040404,
+          "weight": 0.333333333333333
+        }
+      ]
+    },
+    {
       "source_id": "f83b8dc1b834e06b1dd1142e29bc77fc",
       "model_name": "Muse Wonder (Max)",
       "harness": "Muse Code",
@@ -800,6 +1060,32 @@
         {
           "id": "terminal-bench-v4",
           "score": 0.474747474747475,
+          "weight": 0.333333333333333
+        }
+      ]
+    },
+    {
+      "source_id": "7814cb87040ea234c69eca79cd85486d",
+      "model_name": "Gemini 4 Carbon (High)",
+      "harness": "Antigravity CLI",
+      "score": 0.554659278266536,
+      "eval_count": 3,
+      "index_component_count": 3,
+      "complete": true,
+      "components": [
+        {
+          "id": "frontiercode-v2.0",
+          "score": 0.380416414141414,
+          "weight": 0.333333333333333
+        },
+        {
+          "id": "swe-atlas-qna",
+          "score": 0.637096774193548,
+          "weight": 0.333333333333333
+        },
+        {
+          "id": "terminal-bench-v4",
+          "score": 0.646464646464647,
           "weight": 0.333333333333333
         }
       ]

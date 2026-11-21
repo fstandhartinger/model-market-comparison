@@ -1,0 +1,34 @@
+{
+  "artifact_id": "scores-4",
+  "artifact_sha256": "fb6dc2e933dc65129d7b924af5df46905f8339f8886bbf5e5b067012bda48f6f",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "public:ab13b1d4c32eb22871964158",
+    "public:caad197be4a5b603ab8366b2",
+    "public:21aa6d99093d8fd3673a562a",
+    "public:6a7423fa2ccbd85655336613",
+    "public:5214c0ccf008f0ccd9226d99",
+    "public:0b7f91bd0ad1beaa4f5f312f",
+    "public:c952aa752b04b09113b4f701",
+    "public:41d017f82e1b9c652bb62a94",
+    "public:3b919cd6b7e9b55bc6337f83",
+    "public:89a50c05f3ba56eab51320ae",
+    "public:27e1fff8f3bc0f42a178b905",
+    "public:63638e5977e6ece5878f80df",
+    "public:a16f6f0e7dcfcc3e63f43b02",
+    "public:8c12c7194e03b43a15050bda",
+    "public:e469b094a4fa63223ee3df43",
+    "c1"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Cannot independently recompute row SHA-256 hashes or execute transport/qualification checks; relies on owner-provided hashes and receipt as instruction-bound limitations.",
+    "The 'measured' basis label is inferred from the protocol description (pairwise LLM evaluator judgments) and not explicitly stated in the source text.",
+    "The snapshot version 'snapshot-2026-09-10' appears in Benchmark Heaven registry metadata in the primary evidence, not in the maintainer's page text; treated as exact transcription of that registry field.",
+    "Effort/harness fields (variant, harness, model_id) are null for all rows; the source publishes effort only as part of the model name string, which is transcribed exactly, so no separate fields are asserted."
+  ],
+  "missing_evidence": []
+}
