@@ -4225,6 +4225,20 @@ def measurement_started(rid: str, job_root: Path) -> bool:
     return (job_directory(rid, job_root) / "release" / "RESULT.json").is_file()
 
 
+def send_sla_notice(row: dict[str, Any], hours: int, effects: Effects) -> bool:
+    urgent = hours == 36
+    if urgent:
+        rid = request_id(row["id"])
+        owner = native_owner.owner_name(rid)
+        try:
+            if wake_owner(row) == owner and hold_owner_live(owner, rid, utcnow()):
+                # The existing retried SLA handoff wakes the owner on board #11.
+                urgent = False
+        except (PickupError, UnicodeError):
+            pass  # Unreadable state cannot establish ownership.
+    return effects.notify(sla_message(row, hours, urgent=urgent), mode="urgent" if urgent else "now")
+
+
 def sla_sweep(synthetic_id: str | None, job_root: Path, effects: Effects) -> dict[str, int]:
     recover_result_email_leases(synthetic_id, job_root, effects)
     predicate = managed_predicate("r", synthetic_id, job_root)
@@ -4238,7 +4252,7 @@ def sla_sweep(synthetic_id: str | None, job_root: Path, effects: Effects) -> dic
                 row = sql_json(f"SELECT {row_json_sql('r')} FROM {TABLE} AS r WHERE {base} "
                                f"AND {sla_elapsed_sql()} >= interval '{hours} hours' AND r.{column}_alerted_at IS NULL LIMIT 1")
                 if row and (hours != 24 or not measurement_started(request_id(row["id"]), job_root)):
-                    effects.notify(sla_message(row, hours), mode="urgent" if hours >= 36 else "now")
+                    send_sla_notice(row, hours, effects)
                     counts[key] += 1
                 break
             row = sql_json(f"""
@@ -4256,7 +4270,7 @@ def sla_sweep(synthetic_id: str | None, job_root: Path, effects: Effects) -> dic
                 # Measuring already; the 24 h "not started" warning does not apply to this order.
                 update_row(rid, f"{column}_alerted_at=now(), {column}_alert_claimed_at=NULL")
                 continue
-            sent = effects.notify(sla_message(row, hours), mode="urgent" if hours >= 36 else "now")
+            sent = send_sla_notice(row, hours, effects)
             if sent:
                 update_row(rid, f"{column}_alerted_at=now(), {column}_alert_claimed_at=NULL")
                 counts[key] += 1
@@ -4654,10 +4668,12 @@ def sla_handoff(row: dict[str, Any], hours: int) -> str:
             f"who owns it. Evidence: {job_directory(rid, JOB_ROOT)}/STATE.md. Refunds need Florian's button.")
 
 
-def sla_message(row: dict[str, Any], hours: int) -> str:
+def sla_message(row: dict[str, Any], hours: int, *, urgent: bool | None = None) -> str:
     due = deadline_for(row).strftime("%d %b %H:%M UTC")
     context = card_context_line(row, f"has no result {hours} hours after payment")
-    status = "🚨 DRINGEND" if hours >= 36 else "🤖 LÄUFT"
+    if urgent is None:
+        urgent = hours >= 36
+    status = "🚨 DRINGEND" if urgent else "🤖 LÄUFT"
     return (f"{status}\n{context}\n\n🤖 Agenten\n"
             f"- Agents are investigating; the result deadline is {due}.\n"
             "- Refunds require a separate approval card.")
