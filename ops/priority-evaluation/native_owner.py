@@ -22,16 +22,28 @@ import json
 import re
 import subprocess
 import urllib.parse
+import uuid
 from datetime import datetime
 from pathlib import Path
 from typing import Any
 
 OWNER_PREFIX = "fastlane-native-"
 UNIT = "jevbench-native-owner@{}.service"
+# These paid orders require their own separately authorized native measurement.
+EXCLUSIVE_MEASUREMENT_ORDERS = frozenset({"2be2698b-dc43-42a1-8b8c-1fe228fd0d30"})
 # Hold reasons that mean "no automatic runtime exists for this model" rather than a transient fault.
 REASONS = frozenset({"unsupported_measurement_backend"})
 START_GRACE_MINUTES = 20
 MAX_STARTS = 2
+
+
+def requires_exclusive_measurement(order_id: str) -> bool:
+    try:
+        canonical = str(uuid.UUID(order_id))
+    except ValueError:
+        return False
+    return canonical in EXCLUSIVE_MEASUREMENT_ORDERS
+
 
 # Reviewed order-scoped runtime supplements by model/code repository (lower-case host/owner/name).
 SUPPLEMENTS: tuple[dict[str, Any], ...] = (
