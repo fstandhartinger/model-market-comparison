@@ -4833,17 +4833,18 @@ def measurement_started(rid: str, job_root: Path, *, row: dict[str, Any] | None 
 
 
 def send_sla_notice(row: dict[str, Any], hours: int, effects: Effects) -> bool:
-    urgent = hours == 36
-    if urgent:
+    if hours == 36:
         rid = request_id(row["id"])
         owner = native_owner.owner_name(rid)
         try:
-            if wake_owner(row) == owner and hold_owner_live(owner, rid, utcnow()):
-                # The existing retried SLA handoff wakes the owner on board #11.
-                urgent = False
+            state = load_state(rid)
+            board_only = native_api_measurement_completed(row, state) and hold_owner_live(owner, rid, utcnow())
         except (PickupError, UnicodeError):
-            pass  # Unreadable state cannot establish ownership.
-    return effects.notify(sla_message(row, hours, urgent=urgent), mode="urgent" if urgent else "now")
+            board_only = False  # Unreadable state cannot establish completion and ownership.
+        if board_only:
+            # The existing retried SLA handoff wakes the owner on board #11.
+            return effects.notify(sla_handoff(row, hours, native_measured=True), mode="digest")
+    return effects.notify(sla_message(row, hours), mode="urgent" if hours == 36 else "now")
 
 
 def sla_sweep(synthetic_id: str | None, job_root: Path, effects: Effects) -> dict[str, int]:
@@ -5446,12 +5447,10 @@ def sla_handoff(row: dict[str, Any], hours: int, *, native_measured: bool = Fals
     return text
 
 
-def sla_message(row: dict[str, Any], hours: int, *, urgent: bool | None = None) -> str:
+def sla_message(row: dict[str, Any], hours: int) -> str:
     due = deadline_for(row).strftime("%d %b %H:%M UTC")
     context = card_context_line(row, f"has no result {hours} hours after payment")
-    if urgent is None:
-        urgent = hours >= 36
-    status = "🚨 DRINGEND" if urgent else "🤖 LÄUFT"
+    status = "🚨 DRINGEND" if hours >= 36 else "🤖 LÄUFT"
     return (f"{status}\n{context}\n\n🤖 Agenten\n"
             f"- Agents are investigating; the result deadline is {due}.\n"
             "- Refunds require a separate approval card.")
@@ -5705,12 +5704,11 @@ def health(effects: Effects) -> dict[str, Any]:
                      and (hold_owner_live(operational.get("owner"), rid, now)
                           or (operational.get("owner") == native_owner.owner_name(rid)
                               and native_owner_starting(state, now))))
-        # N118: a live owner whose official pod measurement is complete (pods/<rid>.json) stays quiet until 3 h.
+        # A live owner with a verified measurement stays quiet until 3 h before the deadline.
         native_measured = native_api_measurement_completed(row, state)
         measured = owned_run and (native_measured or measured_awaiting_release(rid, state))
         margin = MEASURED_RELEASE_MARGIN if measured else OWNED_HOLD_DEADLINE_MARGIN
-        # A completed native API run with a live owner gets the retried board release handoff.
-        owned_quiet = owned_run and (native_measured or deadline_for(row) - now > margin)
+        owned_quiet = owned_run and deadline_for(row) - now > margin
         if active_hold(row) or planned_review or owned_quiet:
             held_orders.append({"order": ref, "kind": "customer" if active_hold(row) else
                                 "operational_review" if planned_review else

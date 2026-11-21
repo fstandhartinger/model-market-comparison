@@ -326,34 +326,54 @@ class NativeApiCompletionTests(Base):
         effects.board.assert_called_once()
 
 
-class SlaNotice36Tests(Base):
     def test_stale_parked_owner_needs_a_pending_wake_for_this_order(self) -> None:
-        self.live_owner(f"# STATE\n- {RID}\n- PARKED\n")
+        self.live_owner(f"# STATE\n- {self.rid}\n- PARKED\n")
+        no.receipt(self.receipts.parent, {"order": self.rid, "launched": True})
         stamp = (self.now - timedelta(hours=7)).timestamp()
         os.utime(self.tmp / "jobs" / self.owner / "STATE.md", (stamp, stamp))
+        ap.save_state(self.state)
         schedule = self.tmp / "schedule"
         schedule.mkdir()
         (schedule / "state.json").write_text("{}")
         events = schedule / "events.jsonl"
-        event = {"id": f"check-{RID[:8]}", "owner": [self.owner], "status": "active",
+        event = {"id": f"check-{self.rid[:8]}", "owner": [self.owner], "status": "active",
                  "at": ap.iso(self.now + timedelta(hours=1))}
-        row = self.row(11)
 
-        for owner, expected in ((self.owner, "now"), ("different-owner", "urgent")):
+        for owner, expected in ((self.owner, "digest"), ("different-owner", "urgent")):
             with self.subTest(owner=owner):
                 events.write_text(json.dumps({**event, "owner": [owner]}) + "\n")
                 effects = ap.Effects(dry_run=True)
                 with mock.patch.object(effects, "notify", return_value=True) as notify:
-                    self.assertTrue(ap.send_sla_notice(row, 36, effects))
+                    self.assertTrue(ap.send_sla_notice(self.native_row, 36, effects))
                 self.assertEqual(notify.call_args.kwargs["mode"], expected)
-                self.assertTrue(notify.call_args.args[0].startswith(
-                    "🤖 LÄUFT" if expected == "now" else "🚨 DRINGEND"))
+                self.assertIn("validated native API measurement" if expected == "digest" else "🚨 DRINGEND",
+                              notify.call_args.args[0])
 
-    def test_final_done_owner_does_not_suppress_urgent_notice(self) -> None:
-        self.live_owner(f"# STATE\n- {RID}\n- FINAL DONE\n")
+    def test_unverified_measurement_keeps_urgent_notice_with_live_owner(self) -> None:
+        self.live_owner(f"# STATE\n- {self.rid}\n")
+        no.receipt(self.receipts.parent, {"order": self.rid, "launched": True})
+        ap.save_state(self.state)
+        (self.receipts / "CONSUMED-1121.md").unlink()
         effects = mock.Mock()
-        ap.send_sla_notice(self.row(11), 36, effects)
+        ap.send_sla_notice(self.native_row, 36, effects)
         self.assertEqual(effects.notify.call_args.kwargs["mode"], "urgent")
+
+    def test_health_reports_release_deadline_at_three_hours(self) -> None:
+        self.live_owner(f"# STATE\n- {self.rid}\n")
+        no.receipt(self.receipts.parent, {"order": self.rid, "launched": True})
+        ap.save_state(self.state)
+        effects = mock.Mock(dry_run=True)
+        with mock.patch.object(ap, "sql_rows", return_value=[self.native_row]), \
+                mock.patch.object(ap, "measurement_pin_problems", return_value=[]), \
+                mock.patch.object(ap, "install_problems", return_value=([], [], {})), \
+                mock.patch.object(ap, "systemd_last_success", return_value=self.now), \
+                mock.patch.object(ap, "utcnow", return_value=self.now) as clock:
+            self.assertEqual(ap.health(effects)["held_orders"][0]["kind"], "measured_awaiting_release")
+            clock.return_value = ap.deadline_for(self.native_row) - timedelta(hours=3)
+            report = ap.health(effects)
+            self.assertEqual(report["held_orders"], [])
+            self.assertTrue(any("native API measurement is complete and release is pending" in problem
+                                for problem in report["problems"]))
 
 
 if __name__ == "__main__":
