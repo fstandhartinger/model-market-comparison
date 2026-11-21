@@ -45,6 +45,9 @@ SLA_DECISION_HOURS = 36
 OWNER_MANAGED_40H = frozenset({
     "114b6e41-14c5-42b1-9a35-386ab83b62e9",
     "9d46b4ad-b7b2-4d02-beda-7a56db409848",
+    "9aa6673b-f364-4a20-9fc4-899678189814",
+    "2be2698b-dc43-42a1-8b8c-1fe228fd0d30",
+    "0616c39d-e505-4365-b9e8-db157fc67539",
 })
 
 
