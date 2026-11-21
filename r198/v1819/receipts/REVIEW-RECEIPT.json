@@ -1,0 +1,39 @@
+{
+ "verdict": "PASS",
+ "engine": "claude-opus-5-5 (Claude Code) release owner binding independent reviews r180-v1819-critic + r180-v1819-critic2 (Codex gpt-6.2-sol medium); builders were Codex gpt-6.1-sol (r180-v1819-baselabs-build, -build2, -fix1)",
+ "release": "v1.8.19",
+ "head_reviewed": "79ca12c99efc3b91ad13cfff78c8d724b3351b91 (replacement bytes) reviewed by r180-v1819-critic2 = PASS, 0 MUSTs, 0 conditions; full re-review of 9d15d89f by r180-v1819-critic = FAIL on M1 only (scores, cost, 349 carried rows, 40 what-if lists and privacy reproduced exactly)",
+ "florian_go": "card 20165 'Publish (recommended)' 21 Nov 2026 ~16:5xZ (DECISIONS jev-v1819-baselabs-publish): publish bison-1 and groundhog-1 unranked; preview of the hypothetical hosted-API Capability top five shown",
+ "pricing": "pricing_v15 16f71aec installed under deputy #74428 (DECISIONS baselabs-i1-list-prices-pricing-v15-1121); review r180-pricing-review-baselabs PASS_WITH_CONDITIONS, conditions closed (F1 doc fix, pin inventory re-run, quiescence)",
+ "reviews": [
+  {
+   "path": "workers/r180-v1819-critic/RESULT.json",
+   "sha256": "54f08daae244ce505e18111e4a5fec6d42273b3b86cf333852ab72641b6d2ee7",
+   "result_md_sha256": "0ba978ece1ea54f647001516d9483599935188f69ee7399c663a30119727ecec",
+   "verdict_by_commit": {
+    "9d15d89f6": "FAIL"
+   },
+   "musts": [
+    "M1"
+   ],
+   "musts_closed_by_the_release_owner": "M1 (decision-limit counts dropped from the export) fixed in 79ca12c99 (fix1, AMENDMENT 2): n_over_limit, n_over_limit_answered_ok, speed_n, speed_basis carried to rows/proof/receipts/loader/All-data; bison-1 renders 'over, 5 of 1,500 over 10 s', groundhog-1 'clean, 0 of 1,500'; regression test with negative control; verified by critic2",
+   "conditions_closed_by_the_release_owner": {
+    "1": "release-owner ruling: #74237 'ordinary answers' includes the standard 10-second rule; scores unchanged",
+    "2": "Florian preview GO recorded (card 20165); preview relabelled 'v1.8.18 baseline' in fix1",
+    "3": "rebase onto main after #665 merges, re-check predecessor/topic-base binding and date; any byte change gets a fresh independent check before labelling",
+    "4": "flip files regenerated and committed by the release owner (this commit); production build + full suite = merge-queue gates (LeChonk 85.6 % and Sandy disk preflight refused; v1.8.15-v1.8.18 precedent)"
+   }
+  },
+  {
+   "path": "workers/r180-v1819-critic2/RESULT.json",
+   "sha256": "571c7699241940dcbc4abd296f3bb68b0f823108b9aeacf667bc2cebdaf912df",
+   "result_md_sha256": "fb915eceee44bbc34a86b9ae809dfd2ae0312ec0682b80995cad11216f1ddefb",
+   "verdict_by_commit": {
+    "79ca12c99": "PASS"
+   },
+   "musts": [],
+   "conditions": [],
+   "gates": "full non-sparse checkout: focused PENDING 161 pass / 3 expected skip; validator PENDING + synthetic PASS; synthetic PASS fixture batch 15/15; N30 pair; tsc; privacy delta scan; carry comparison byte-identical"
+  }
+ ]
+}
