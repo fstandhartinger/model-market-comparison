@@ -251,5 +251,35 @@ class Handoff36Tests(Base):
             self.assertTrue(ap.step_done(self.state, "sla36_handoff"), name)
 
 
+class SlaNotice36Tests(Base):
+    def test_stale_parked_owner_needs_a_pending_wake_for_this_order(self) -> None:
+        self.live_owner(f"# STATE\n- {RID}\n- PARKED\n")
+        stamp = (self.now - timedelta(hours=7)).timestamp()
+        os.utime(self.tmp / "jobs" / self.owner / "STATE.md", (stamp, stamp))
+        schedule = self.tmp / "schedule"
+        schedule.mkdir()
+        (schedule / "state.json").write_text("{}")
+        events = schedule / "events.jsonl"
+        event = {"id": f"check-{RID[:8]}", "owner": [self.owner], "status": "active",
+                 "at": ap.iso(self.now + timedelta(hours=1))}
+        row = self.row(11)
+
+        for owner, expected in ((self.owner, "now"), ("different-owner", "urgent")):
+            with self.subTest(owner=owner):
+                events.write_text(json.dumps({**event, "owner": [owner]}) + "\n")
+                effects = ap.Effects(dry_run=True)
+                with mock.patch.object(effects, "notify", return_value=True) as notify:
+                    self.assertTrue(ap.send_sla_notice(row, 36, effects))
+                self.assertEqual(notify.call_args.kwargs["mode"], expected)
+                self.assertTrue(notify.call_args.args[0].startswith(
+                    "🤖 LÄUFT" if expected == "now" else "🚨 DRINGEND"))
+
+    def test_final_done_owner_does_not_suppress_urgent_notice(self) -> None:
+        self.live_owner(f"# STATE\n- {RID}\n- FINAL DONE\n")
+        effects = mock.Mock()
+        ap.send_sla_notice(self.row(11), 36, effects)
+        self.assertEqual(effects.notify.call_args.kwargs["mode"], "urgent")
+
+
 if __name__ == "__main__":
     unittest.main()
