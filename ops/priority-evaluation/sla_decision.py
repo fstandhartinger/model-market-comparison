@@ -1,7 +1,9 @@
-"""Florian's 40-hour SLA decision card. Host only; polled by the pickup cycle under its lock.
+"""Florian's SLA decision card. Host only; polled by the pickup cycle under its lock.
 
-At 40 hours after payment (48-hour clock minus pauses) an open order asks Florian once for an
-exact Telegram button: "Send delay note" (one fixed-template delay email to the customer),
+At SLA_DECISION_HOURS (36, was 40 until 22 Nov 2026) after payment (48-hour clock minus pauses) an open
+order asks Florian once for an exact Telegram button: "Send delay note" (one fixed-template delay email to the
+customer, dated with ONE concrete date that is planned when the card is built, stored on the card as delay_eta and
+named in its caption: the order owner's ETA when one is valid, else max(deadline + 24 h, now + 24 h)),
 "Refund in full" (identical to the refund card's approval) or "No action". A text reply, an
 expired card or any other signal is never a decision. Built on the refund_approval.py
 mechanism: exact callback keys, his private chat only, 24-hour expiry.
@@ -10,8 +12,10 @@ One card per order (N91): after "Send delay note" or "No action" the same card k
 "Refund in full" button (via editMessageReplyMarkup, caption untouched) until the card's own expires_at; an
 exact later tap is the refund decision, once. Expiry removes the button and settles the card.
 
-A card whose order leaves the 40 h set for good (delivered, decided on the 48 h card, refunded, refused) is closed by
-close_stray() from the pickup cycle; it never records a decision and reports an unread Refund tap to an agent.
+The persisted kind "sla_40h", the file names and the callback keys keep their historical "40" so live cards stay valid.
+
+A card whose order leaves the SLA decision set for good (delivered, decided on the 48 h card, refunded, refused) is
+closed by close_stray() from the pickup cycle; it never records a decision and reports an unread Refund tap to an agent.
 """
 from __future__ import annotations
 
@@ -31,6 +35,10 @@ import refusal_approval as ra
 
 SOURCE = "fastlane-sla40-decision"
 WINDOW = 24 * 3600
+# Payment-clock hours after which the card asks Florian (DECISIONS fastlane-zero-wait-1122, 22 Nov 2026: 36 instead of
+# 40, so the customer hears from us before a miss). The SQL in autopickup.sla_decision_rows and every card and
+# handoff text read this one value.
+SLA_DECISION_HOURS = 36
 # DECISIONS 6 Nov 00:55Z, wps-order-114b6e41-customer-path-after-cleanup-failure-1106.
 # The native owner + deputy handle the no-ETA note choice at 40h. The normal 48h
 # refund card remains active; this mapping grants no contact/refund/run authority.
@@ -49,11 +57,14 @@ MAX_CARDS = 3  # an expired card is asked again at most twice; then the order wa
 
 # the ↳ line on the card once its decision is recorded (notify settle, board #41061)
 SETTLED = {"delay_note": "You tapped Send delay note; the worker sends the fixed delay email.",
+           # the date on the card could not be sent any more at tap time (autopickup.hold_delay_note): nothing was mailed
+           "delay_note_held": "You tapped Send delay note, but its date could no longer be sent; nothing was mailed. "
+                              "An agent follows up.",
            "refund": "You tapped Refund in full; the refund worker pays it back.",
            "no_action": "You tapped No action; nothing was sent or refunded.",
            "expired": "The buttons expired unanswered; nothing was sent or refunded.",
            "superseded": "The order changed after your choice; a new card asks about the refund instead.",
-           # a card whose order left the 40 h set for good without a decision on it (close_stray, re-review S1)
+           # a card whose order left the SLA decision set for good without a decision on it (close_stray, re-review S1)
            "delivered": "The result was delivered, so this card is closed; nothing was refunded here.",
            "decided_elsewhere": "You decided on the 48-hour refund card; this card is closed.",
            "order_changed": "The order changed, so this card is closed and records nothing; a refund gets its own card.",
@@ -63,25 +74,107 @@ STRAY_REASONS = ("delivered", "decided_elsewhere", "order_changed")
 CLOSEOUT_TRIES = 12  # close-out steps after a final decision are retried each cycle, at most this often (~1 h)
 
 
-def caption(row: dict, deadline: str) -> str:
+def caption(row: dict, deadline: str, delay_eta: datetime | None = None) -> str:
+    """The card text. `delay_eta` is the one date advance() planned and stored on the card; the delay note mails exactly
+    that date. A caller without it (a preview, a test) gets the date planned for now."""
     if owner_managed(row):
         raise ValueError("40h decision is owner-managed; no generic ETA card")
-    rid = str(uuid.UUID(str(row["id"])))
     amount = row.get("amount_total")
     money = f"USD {int(amount) / 100:.2f}" if isinstance(amount, int) and not isinstance(amount, bool) else "the full amount"
-    from autopickup import decision_context_line, eur_phrase
+    from autopickup import ETA_FORMAT, decision_context_line, eur_phrase, plan_delay_eta, utcnow
     eur = eur_phrase(amount)
-    context = decision_context_line(row, "No result 40 h after payment for {customer}, model {model}: "
+    if delay_eta is None:
+        delay_eta = plan_delay_eta(row, utcnow())[0]  # reads only the owner-eta file, which it survives unreadable
+    date = delay_eta.strftime(ETA_FORMAT)
+    context = decision_context_line(row, f"No result {SLA_DECISION_HOURS} h after payment for "
+                                         "{customer}, model {model}: "
                                          f"delay note or refund{f' ({eur})' if eur else ''}?")
     return (f"🧑 DU BIST DRAN\n{context}\n\n🧑 Für dich\n"
             "- Decide the next step for this customer.\n"
-            f"  Why: No result 40 hours after payment; the deadline is {deadline}.\n"
-            f"  Effect: Send delay note = mails a new date (deadline + 24 h), no cost. Refund in full = pays {money} back, final. "
+            f"  Why: No result {SLA_DECISION_HOURS} hours after payment; the deadline is {deadline}.\n"
+            f"  Effect: Send delay note = mails {date}, no cost. Refund in full = pays {money} back, final. "
             "No action = nothing goes out.\n"
-            "  Steps:\n  1. Tap Send delay note (mails the customer a new ETA of deadline + 24 h), "
+            f"  Steps:\n  1. Tap Send delay note (mails the customer the date: {date}), "
             "Refund in full, or No action.\n"
             "  Time: 1 minute. Buttons expire in 24 hours so that an old card can never act. "
             "A text reply does not decide.")
+
+
+def _parse_eta(value: object) -> datetime | None:
+    try:
+        parsed = datetime.fromisoformat(str(value))
+    except ValueError:
+        return None
+    return parsed.astimezone(timezone.utc) if parsed.tzinfo else None
+
+
+def card_delay_eta(root: Path, rid: str) -> tuple[datetime | None, str]:
+    """The date this order's card names and its delay note mails: (date, "owner"|"default"). (None, "default") for a
+    card sent before the date was stored (the 40 h era) or an unreadable card file; the caller then uses what that
+    card's caption said, deadline + 24 h."""
+    try:
+        state = json.loads((root / f"{uuid.UUID(rid)}.json").read_text())
+    except (OSError, ValueError):
+        return None, "default"
+    if not isinstance(state, dict):
+        return None, "default"
+    return _parse_eta(state.get("delay_eta")), "owner" if state.get("delay_eta_source") == "owner" else "default"
+
+
+def open_card_eta(root: Path, rid: str, now: float, legacy: datetime) -> datetime | None:
+    """The date the still-open card of this order names, else None. Open = sent (or possibly sent) and neither closed,
+    nor expired, nor decided other than Send delay note (that decision mails or has mailed this very date). `legacy`
+    is what a card without a stored date promised: deadline + 24 h. Caller holds the cycle lock."""
+    try:
+        state = json.loads((root / f"{uuid.UUID(rid)}.json").read_text())
+    except (OSError, ValueError):
+        return None
+    if not isinstance(state, dict) or state.get("kind") != "sla_40h" \
+            or state.get("notification") not in ("attempted", "unknown", "sent") \
+            or state.get("stray_closed") or state.get("late_closed") or state.get("superseded"):
+        return None
+    decision = state.get("decision")
+    if decision is None:
+        expires = state.get("expires_at")
+        if isinstance(expires, (int, float)) and now > expires:
+            return None  # the next cycle re-asks with a fresh card, which reads the owner ETA
+    elif decision != "delay_note":
+        return None
+    return _parse_eta(state.get("delay_eta")) or legacy
+
+
+def delay_held(root: Path, rid: str) -> dict | None:
+    """The record that Florian's Send delay note tap was not mailed (see note_delay_held), else None."""
+    try:
+        state = json.loads((root / f"{uuid.UUID(rid)}.json").read_text())
+    except (OSError, ValueError):
+        return None
+    held = state.get("delay_held") if isinstance(state, dict) else None
+    return held if isinstance(held, dict) else None
+
+
+def note_delay_held(root: Path, rid: str, why: str, eta_text: str, now: float) -> dict:
+    """The caller refused to mail the recorded Send delay note: the date on the card could no longer be sent. Kept on
+    the card (decision unchanged, so no other card or date appears) so the owner handoff survives a failed board post
+    and the card's closing line says nothing was mailed. Returns the record; an earlier record is kept."""
+    path = root / f"{uuid.UUID(rid)}.json"
+    with path.with_suffix(".lock").open("a+") as lock:
+        fcntl.flock(lock, fcntl.LOCK_EX)
+        state = json.loads(path.read_text())
+        if not isinstance(state.get("delay_held"), dict):
+            state["delay_held"] = {"why": why, "eta": eta_text, "at": int(now)}
+            ra.atomic(path, state)
+        return state["delay_held"]
+
+
+def mark_delay_held_handoff_posted(root: Path, rid: str, now: float) -> None:
+    path = root / f"{uuid.UUID(rid)}.json"
+    with path.with_suffix(".lock").open("a+") as lock:
+        fcntl.flock(lock, fcntl.LOCK_EX)
+        state = json.loads(path.read_text())
+        if isinstance(state.get("delay_held"), dict) and not state["delay_held"].get("handoff_posted"):
+            state["delay_held"]["handoff_posted"] = int(now)
+            ra.atomic(path, state)
 
 
 def _keyboard(state: dict) -> list:
@@ -206,6 +299,8 @@ LATE_KEEP = ("delay_note", "no_action")  # decisions after which the Refund butt
 def _finish(state: dict, path: Path, decision: str) -> None:
     """Close the card for good: no buttons, reply action and ask resolved, settled line. Every step is idempotent;
     closeout_done records that all of them succeeded so a caller can retry a failed step (bounded by CLOSEOUT_TRIES)."""
+    if decision == "delay_note" and isinstance(state.get("delay_held"), dict):
+        decision = "delay_note_held"  # the recorded tap was not mailed: say so, and resolve the ask as declined
     if not state.get("buttons_removed"):
         try:
             _attach(state, [])
@@ -230,8 +325,8 @@ def _closeout_pending(state: dict) -> bool:
 
 
 def close_superseded(root: Path, row: dict) -> bool:
-    """The order left the open set (late delivery, refusal) while its 40 h card still shows a live Refund button.
-    The 40 h sweep no longer polls that card, so a tap on it would be lost: close it, and let the 48 h refund card
+    """The order left the open set (late delivery, refusal) while its SLA card still shows a live Refund button.
+    The SLA sweep no longer polls that card, so a tap on it would be lost: close it, and let the 48 h refund card
     ask instead. Never records or applies a refund. Caller holds the cycle lock. Returns True if a card was closed."""
     path = root / f"{uuid.UUID(str(row['id']))}.json"
     if not path.exists():
@@ -250,7 +345,7 @@ def close_superseded(root: Path, row: dict) -> bool:
 
 
 def retry_superseded(root: Path, row: dict) -> None:
-    """Retry a failed close-out of a superseded 40 h card (the 40 h sweep no longer reaches it). Bounded by
+    """Retry a failed close-out of a superseded SLA card (the SLA sweep no longer reaches it). Bounded by
     CLOSEOUT_TRIES; never records or applies a refund. Caller holds the cycle lock."""
     path = root / f"{uuid.UUID(str(row['id']))}.json"
     if not path.exists() or not live_runtime():
@@ -263,7 +358,7 @@ def retry_superseded(root: Path, row: dict) -> None:
 
 
 def stray_card_live(state: dict) -> bool:
-    """A sent 40 h card that still shows buttons or an open ask: never answered, or delay note / no action with its
+    """A sent SLA card that still shows buttons or an open ask: never answered, or delay note / no action with its
     one Refund button not yet closed. Decided, expired and closed cards are finished by advance() itself."""
     if state.get("kind") != "sla_40h" or state.get("notification") != "sent" or type(state.get("message_id")) is not int:
         return False
@@ -274,13 +369,13 @@ def stray_card_live(state: dict) -> bool:
 
 
 def stray_closeout_pending(state: dict) -> bool:
-    """A closed 40 h card whose close-out steps failed and whose order the 40 h sweep no longer polls."""
+    """A closed SLA card whose close-out steps failed and whose order the SLA sweep no longer polls."""
     return bool(state.get("kind") == "sla_40h" and state.get("late_closed") and not state.get("late_refund")
                 and _closeout_pending(state))
 
 
 def _unapplied_refund_tap(state: dict, now: float) -> dict | None:
-    """An exact Refund tap on this card that the 40 h sweep never read (it was made after the last poll, or while the
+    """An exact Refund tap on this card that the SLA sweep never read (it was made after the last poll, or while the
     order was already leaving the open set). Read on a copy: it is reported, never recorded as a decision."""
     probe = dict(state)
     if probe.get("decision") is None:
@@ -296,8 +391,8 @@ def _unapplied_refund_tap(state: dict, now: float) -> dict | None:
 
 
 def close_stray(root: Path, rid: str, reason: str, now: float) -> str | None:
-    """Close a 40 h card whose order left the 40 h set for good (delivered, decided on the 48 h card, refunded,
-    refused) while the card still shows buttons. The 40 h sweep no longer polls it, so a tap on it would be lost.
+    """Close an SLA card whose order left the SLA decision set for good (delivered, decided on the 48 h card, refunded,
+    refused) while the card still shows buttons. The SLA sweep no longer polls it, so a tap on it would be lost.
 
     Never records or applies a decision. A Refund tap the sweep never read is kept on the state for the audit and
     returned as "refund_tap_unapplied" so the caller can hand it to an agent. Retries a failed close-out (bounded by
@@ -334,7 +429,7 @@ REFUSED_WHY = ("hold", "delivered", "changed")
 
 
 def note_refund_refused(root: Path, rid: str, why: str, now: float) -> None:
-    """The caller could not write a recorded 40 h Refund tap to the row (delivery, a hold or a refusal got there
+    """The caller could not write a recorded SLA-card Refund tap to the row (delivery, a hold or a refusal got there
     first). Kept on the card so the owner handoff survives a failed board post. Never changes the decision."""
     if why not in REFUSED_WHY:
         raise ValueError("unknown refusal class")
@@ -352,13 +447,13 @@ REFUSED_OUTCOMES = ("applied", "delivered", "decided_elsewhere", "order_changed"
 
 def hold_refusal_open(state: dict) -> bool:
     """A Refund tap refused during a customer hold whose final outcome is not known yet (applied after the hold, or the
-    order left the 40 h set first and the tap was never applied)."""
+    order left the SLA decision set first and the tap was never applied)."""
     refused = state.get("refund_refused")
     return isinstance(refused, dict) and refused.get("why") == "hold" and "outcome" not in refused
 
 
 def note_refused_outcome(root: Path, rid: str, outcome: str) -> None:
-    """Record how a hold-refused 40 h Refund tap ended; anything but "applied" raises a second owner handoff."""
+    """Record how a hold-refused SLA-card Refund tap ended; anything but "applied" raises a second owner handoff."""
     if outcome not in REFUSED_OUTCOMES:
         raise ValueError("unknown refused-tap outcome")
     path = root / f"{uuid.UUID(rid)}.json"
@@ -485,9 +580,15 @@ def advance(row: dict, root: Path, effects, now: float, deadline: str) -> str:
             history = state.pop("history", [])
             history.append({k: state.get(k) for k in ("card", "message_id", "created_at", "expires_at", "decision")})
             state = {"request_id": rid, "kind": state["kind"], "history": history, **_new_card(state.get("card", 1))}
+        if state["notification"] == "pending":
+            # One concrete date per card, planned each time the card is (re)built until it is sent: the caption names
+            # it and the delay note mails exactly it (CR-835 M1).
+            from autopickup import plan_delay_eta
+            delay_eta, source = plan_delay_eta(row, datetime.fromtimestamp(now, timezone.utc))
+            state.update(delay_eta=delay_eta.isoformat(timespec="seconds"), delay_eta_source=source)
         ra.atomic(path, state)
         if state["notification"] == "pending":
-            _send_card(state, path, caption(row, deadline), now)
+            _send_card(state, path, caption(row, deadline, delay_eta), now)
         if not state.get("message_id"):
             return "pending" if state["notification"] == "pending" else "unknown"
         if not state.get("buttons_attached"):
