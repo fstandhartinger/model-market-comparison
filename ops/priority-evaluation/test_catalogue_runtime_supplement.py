@@ -30,7 +30,8 @@ def pypi_url(filename, seed='a'):
 def wheel(name='peft', version='0.21.2', filename=None, **extra):
     filename = filename or f"{name.replace('-', '_')}-{version}-py3-none-any.whl"
     value = {'name': name, 'version': version, 'filename': filename, 'url': pypi_url(filename),
-             'sha256': hashlib.sha256(filename.encode()).hexdigest(), 'size': 1000, 'requires': []}
+             'sha256': hashlib.sha256(filename.encode()).hexdigest(), 'size': 1000, 'requires': [],
+             'uploaded': '2025-06-01T00:00:00Z', 'project_since': '2019-01-01T00:00:00Z'}
     value.update(extra)
     return value
 
@@ -367,9 +368,12 @@ class Build(unittest.TestCase):
         self.assertEqual(C.build(provider, 'pod-1', order.job, recipe())['pip_check']['added'], [])
         provider = FakeProvider(value['wheels'])
         provider.pip_lines = {value['image']: [base_line], IID: [base_line, 'peft 0.21.2 requires accelerate, which is not installed.']}
+        state = {}
         with self.assertRaises(measurement_dispatch.OperationalHold) as raised:
-            C.build(provider, 'pod-1', order.job, recipe())
+            C.build(provider, 'pod-1', order.job, recipe(), state)
         self.assertEqual(str(raised.exception), C.PIP_HOLD)
+        self.assertEqual(state['runtime_supplement_refused']['pip_check']['added'],
+                         ['peft 0.21.2 requires accelerate, which is not installed.'])
         b = Order(self, lock(image_id='hf-torch2.14-cu13.0'))
         b_lock = lock(image_id='hf-torch2.14-cu13.0')
         provider = FakeProvider(b_lock['wheels'])
@@ -453,10 +457,11 @@ class PodRunnerWiring(unittest.TestCase):
 
 # ------------------------------------------------------------------------------------------------------------- resolver
 
-def wheel_file(name, version, py='py3-none-any', yanked=False, kind='bdist_wheel'):
+def wheel_file(name, version, py='py3-none-any', yanked=False, kind='bdist_wheel', uploaded='2024-01-01T00:00:00.000000Z'):
     filename = f"{name.replace('-', '_')}-{version}-{py}.whl" if kind == 'bdist_wheel' else f'{name}-{version}.tar.gz'
     return {'packagetype': kind, 'filename': filename, 'url': pypi_url(filename, 'f'), 'yanked': yanked,
-            'digests': {'sha256': hashlib.sha256(filename.encode()).hexdigest()}, 'size': 2048}
+            'digests': {'sha256': hashlib.sha256(filename.encode()).hexdigest()}, 'size': 2048,
+            'upload_time_iso_8601': uploaded}
 
 
 class FakePyPI:
@@ -536,6 +541,17 @@ class Resolver(unittest.TestCase):
         for request, packages in cases:
             with self.assertRaises(C.CatalogueError, msg=json.dumps(request)):
                 L.resolve(request, fetch=FakePyPI(packages))
+
+    def test_young_projects_go_to_the_owner(self):
+        import datetime as _dt
+        recent = (_dt.datetime.now(_dt.timezone.utc) - _dt.timedelta(days=5)).strftime('%Y-%m-%dT%H:%M:%S.000000Z')
+        fetch = FakePyPI({'fresh-helper': pkg('fresh-helper', '0.3', files=[wheel_file('fresh-helper', '0.3', uploaded=recent)])})
+        with self.assertRaises(C.CatalogueError) as raised:
+            L.resolve(self.request('fresh-helper==0.3'), fetch=fetch)
+        self.assertIn('younger than 90 days', str(raised.exception))
+        value = L.resolve(self.request('peft==0.21.2'), fetch=FakePyPI({'peft': pkg('peft', '0.21.2')}))
+        self.assertEqual(value['wheels'][0]['project_since'], '2024-01-01T00:00:00Z')
+        self.assertEqual(value['wheels'][0]['uploaded'], '2024-01-01T00:00:00Z')
 
     def test_network_problem_is_a_refusal_not_a_partial_lock(self):
         def broken(url):
@@ -644,7 +660,7 @@ class PipCheckSimulation(unittest.TestCase):
 class CriticRoundOneFixes(unittest.TestCase):
     def test_weights_are_fetched_with_the_download_image_not_the_order_image(self):
         source = (HERE / 'pod_runner.py').read_text()
-        site = source.index('catalogue_runtime_supplement.build(provider, pod_id, job_dir, recipe)')
+        site = source.index('catalogue_runtime_supplement.build(provider, pod_id, job_dir, recipe, state)')
         self.assertIn("weights_image = state['runtime_supplement']['download_image']", source[site:site + 700])
         loop = source.index('"-c", WEIGHTS_SNIPPET, entry["repo"], entry["revision"], target]')
         self.assertIn('"--entrypoint", "python3", weights_image or image,', source[loop - 400:loop])

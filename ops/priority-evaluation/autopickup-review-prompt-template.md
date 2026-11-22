@@ -96,6 +96,8 @@ does not hold:
   `runtime_catalogue.json` in the host runtime), `image` must equal the lock's `image`, and the locked wheels
   must be the packages and versions the customer documents plus their ordinary dependencies: no package that
   looks like a typo of a well-known name, no package the customer does not need, no customer-owned package.
+  Each wheel shows `uploaded` (this file) and `project_since` (the project's first PyPI upload); the host already refuses
+  projects younger than 90 days. A recent upload of a package the customer does not document is a FAIL.
   The host has already enforced hashes, the index host, wheels-only and the deny list; you review the list as data.
   A `CATALOGUE-REQUEST.json` without a lock means the host refused it: FAIL with `failure_scope` "runner".
 - `weights[*].revision` equals the model fetch receipt commit. Every `*.safetensors` file in the model

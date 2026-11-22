@@ -50,7 +50,7 @@ def _request(path: str):
 def cmd_resolve(args) -> int:
     try:
         lock = lock_mod.resolve(_request(args.request))
-    except (OSError, ValueError) as exc:
+    except Exception as exc:  # noqa: BLE001 - incl. RecursionError: report, never a traceback
         print(f'REFUSED: {exc}', file=sys.stderr)
         return 2
     print(json.dumps(lock, indent=1, sort_keys=True))
@@ -64,7 +64,11 @@ def cmd_lock(args) -> int:
         raise SystemExit('fastlane-catalogue: the preparation directory must be an existing folder inside the order')
     if (order / 'trusted-runner' / 'UPSTREAM-MANIFEST.json').exists() and prep == order / 'trusted-runner':
         raise SystemExit('fastlane-catalogue: that bundle is already frozen; lock before the freeze')
-    request = _request(args.request)
+    try:
+        request = _request(args.request)
+    except Exception as exc:  # noqa: BLE001
+        print(f'REFUSED: request is not readable JSON ({type(exc).__name__})', file=sys.stderr)
+        return 2
     target = prep / cat.REQUEST
     if target.is_symlink():
         raise SystemExit('fastlane-catalogue: request path is a symlink')
@@ -83,7 +87,7 @@ def cmd_check(args) -> int:
     try:
         recipe = json.loads(cat.read_regular(order / 'trusted-runner' / 'POD-RECIPE.json', cat.JSON_LIMIT).decode('utf-8'))
         accepted = cat.accept(order, recipe)
-    except (OSError, ValueError) as exc:
+    except Exception as exc:  # noqa: BLE001
         print(f'NOT ACCEPTED: {exc}', file=sys.stderr)
         return 2
     print(json.dumps(cat.binding(accepted), indent=1, sort_keys=True))

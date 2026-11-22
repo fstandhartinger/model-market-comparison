@@ -47,6 +47,21 @@ def _utc() -> str:
     return datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')
 
 
+MIN_PROJECT_AGE_DAYS = 90
+_EPOCH = '2000-01-01T00:00:00Z'
+
+
+def _iso(value: object) -> str:
+    """PyPI `upload_time_iso_8601` -> 'YYYY-MM-DDTHH:MM:SSZ' (seconds precision); a fixed old value when unusable."""
+    if isinstance(value, str) and re.fullmatch(r'20[0-9]{2}-[01][0-9]-[0-3][0-9]T[0-9]{2}:[0-9]{2}:[0-9]{2}(\.[0-9]+)?Z', value):
+        return value[:19] + 'Z'
+    return _EPOCH
+
+
+def _iso_ts(value: str) -> float:
+    return datetime.strptime(value[:19], '%Y-%m-%dT%H:%M:%S').replace(tzinfo=timezone.utc).timestamp()
+
+
 def default_fetch(url: str) -> bytes:
     """GET a PyPI JSON document over https (no redirects to other hosts, bounded size)."""
     if not url.startswith('https://pypi.org/pypi/'):
@@ -124,7 +139,8 @@ def pick_wheel(name: str, version: str, document: dict[str, Any], image: dict[st
         if not isinstance(filename, str) or not cat.wheel_compatible(filename, image['python'], image['glibc']):
             continue
         record = {'name': name, 'version': version, 'filename': filename, 'url': entry.get('url'),
-                  'sha256': (entry.get('digests') or {}).get('sha256'), 'size': entry.get('size')}
+                  'sha256': (entry.get('digests') or {}).get('sha256'), 'size': entry.get('size'),
+                  'uploaded': _iso(entry.get('upload_time_iso_8601'))}
         candidates.append((_score(filename, minor), filename, record))
     if not candidates:
         raise cat.CatalogueError(f'{name}=={version} has no wheel for python {image["python"]} x86_64 (sdist-only or '
@@ -172,6 +188,14 @@ class _Session:
         value = (self.version_doc(name, version).get('info') or {}).get('requires_dist') or []
         return [r for r in value if isinstance(r, str)] if isinstance(value, list) else []
 
+    def first_upload(self, name: str) -> str:
+        """Earliest file upload time of the whole project (ISO Z); the epoch when PyPI gives none (counts as young)."""
+        releases = self.get(PYPI_ALL.format(name=name), name).get('releases')
+        stamps = [_iso(f.get('upload_time_iso_8601')) for files in (releases or {}).values() if isinstance(files, list)
+                  for f in files if isinstance(f, dict)]
+        stamps = [x for x in stamps if x != _EPOCH]
+        return min(stamps) if stamps else _utc()
+
     def candidates(self, name: str, specs: list[str]) -> list[str]:
         """Stable, non-yanked releases with a fitting wheel that satisfy every specifier, newest first."""
         releases = self.get(PYPI_ALL.format(name=name), name).get('releases')
@@ -205,7 +229,7 @@ class _Counting:
         return data
 
 
-_FILE_KEYS = ('packagetype', 'filename', 'url', 'yanked', 'digests', 'size')
+_FILE_KEYS = ('packagetype', 'filename', 'url', 'yanked', 'digests', 'size', 'upload_time_iso_8601')
 
 
 def _trim(document: dict[str, Any]) -> dict[str, Any]:
@@ -287,10 +311,20 @@ def resolve(request: object, *, catalogue: dict[str, Any] | None = None, fetch: 
         raise cat.CatalogueError('pip-check problems remain: ' + '; '.join(f'{d} requires {dep} {spec}'
                                                                           for d, dep, spec in sorted(problems)[:10]))
     wheels = []
+    young = []
+    cutoff = _iso_ts(_utc()) - MIN_PROJECT_AGE_DAYS * 86400
     for name in sorted(chosen):
         record = pick_wheel(name, chosen[name], session.version_doc(name, chosen[name]), image, catalogue)
         record['requires'] = session.requires(name, chosen[name])
+        record['project_since'] = session.first_upload(name)
+        if _iso_ts(record['project_since']) > cutoff:
+            young.append(f"{name} (first PyPI upload {record['project_since'][:10]})")
         wheels.append(record)
+    if young:
+        # A project younger than this has no track record (e.g. published for this order); the source review only sees
+        # its name, so it goes to the native owner instead of being admitted by data (critic r2 SHOULD 1).
+        raise cat.CatalogueError(f'PyPI projects younger than {MIN_PROJECT_AGE_DAYS} days need the native owner: '
+                                 + ', '.join(young))
     lock = {'schema': cat.SCHEMA, 'image_id': image_id, 'image': image['image'], 'wheels': wheels, 'requested': lines,
             'base': {'inventory_sha256': cat.inventory_sha256(image), 'baseline_problems': len(baseline)},
             'resolved_at': _utc(), 'resolved_by': 'host pypi json api'}

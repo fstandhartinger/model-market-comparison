@@ -1176,7 +1176,7 @@ def _lifecycle(provider, job, recipe, staging_path, output, state, gpu_choice, t
                     raise measurement_dispatch.OperationalHold('runtime_supplement_conflict')
                 if job_dir is None:
                     raise measurement_dispatch.OperationalHold(catalogue_runtime_supplement.HOLD)
-                state['runtime_supplement'] = catalogue_runtime_supplement.build(provider, pod_id, job_dir, recipe)
+                state['runtime_supplement'] = catalogue_runtime_supplement.build(provider, pod_id, job_dir, recipe, state)
                 image = state['runtime_supplement']['effective_image']
                 # Pinned weights are fetched (network on) with the catalogue's reviewed downloader image, never with
                 # the order overlay image, so no order-locked wheel runs with network.

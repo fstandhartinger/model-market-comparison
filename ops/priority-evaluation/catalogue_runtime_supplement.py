@@ -43,7 +43,7 @@ import pod_runner
 
 HERE = Path(__file__).resolve().parent
 CATALOGUE = HERE / 'runtime_catalogue.json'
-CATALOGUE_SHA256 = 'bbd19442b837d7b5e123d802992d71c2c1b31205babe0cee2fbf4ff4ccb69c84'
+CATALOGUE_SHA256 = '357b018e8cedcf14fe21d3a9c3e4bb0955d38c2af8bfec35f4f78c3a8270898f'
 LOCK = 'CATALOGUE-OVERLAY.json'
 REQUEST = 'CATALOGUE-REQUEST.json'
 SCHEMA = 1
@@ -59,6 +59,7 @@ HOLD = 'runtime_catalogue_unaccepted'
 PIP_HOLD = 'runtime_catalogue_pip_check_failed'
 MAX_REQUIRES = 300
 
+ISO_RE = re.compile(r'20[0-9]{2}-[01][0-9]-[0-3][0-9]T[0-9:.]{8,15}Z')
 ORDER_ID_RE = re.compile(r'[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}')
 HEX64_RE = re.compile(r'[0-9a-f]{64}')
 IMAGE_ID_RE = re.compile(r'[a-z0-9][a-z0-9.-]{0,40}')
@@ -71,7 +72,7 @@ PYPI_PATH_RE = re.compile(r'/packages/[0-9a-f]{2}/[0-9a-f]{2}/[0-9a-f]{60}/[^/]+
 MANYLINUX_RE = re.compile(r'manylinux_(\d+)_(\d+)_x86_64')
 LEGACY_MANYLINUX = {'manylinux1_x86_64': (2, 5), 'manylinux2010_x86_64': (2, 12), 'manylinux2014_x86_64': (2, 17)}
 LOCK_KEYS = {'schema', 'image_id', 'image', 'wheels', 'resolved_at', 'resolved_by', 'requested', 'base'}
-WHEEL_KEYS = {'name', 'version', 'filename', 'url', 'sha256', 'size', 'requires'}
+WHEEL_KEYS = {'name', 'version', 'filename', 'url', 'sha256', 'size', 'requires', 'uploaded', 'project_since'}
 ENTRY_KEYS = ('order_id', 'image_id', 'image', 'lock_sha256', 'module_sha256', 'catalogue_sha256',
               'base_inventory_sha256', 'admitted_at', 'admitted_by', 'basis')
 _OPEN_FLAGS = os.O_RDONLY | getattr(os, 'O_NOFOLLOW', 0) | getattr(os, 'O_CLOEXEC', 0) | getattr(os, 'O_NONBLOCK', 0)
@@ -532,6 +533,8 @@ def validate_lock(lock: object, catalogue: dict[str, Any]) -> dict[str, Any]:
         if not isinstance(requires, list) or len(requires) > MAX_REQUIRES \
                 or not all(isinstance(r, str) and len(r) <= 500 for r in requires):
             raise CatalogueError('wheel requires metadata')
+        if not all(isinstance(wheel[k], str) and ISO_RE.fullmatch(wheel[k]) for k in ('uploaded', 'project_since')):
+            raise CatalogueError('wheel upload dates')
         total += size
     if total > limits['max_total_bytes']:
         raise CatalogueError('overlay total size')
@@ -665,7 +668,7 @@ def binding(accepted: dict[str, Any]) -> dict[str, Any]:
             'base_inventory_sha256': inventory_sha256(accepted['image'])}
 
 
-def build(provider, pod_id, job, recipe):
+def build(provider, pod_id, job, recipe, state=None):
     """On the owned pod, before weights/inputs: build the order image (base + locked wheels) and the download image
     (base + the catalogue's fixed downloader wheels), both offline; return evidence with `effective_image` (the run) and
     `download_image` (pod_runner fetches the pinned weights with it, network on). Order-lock wheels therefore never run
@@ -698,6 +701,8 @@ def build(provider, pod_id, job, recipe):
                           'pip_check': {'base_problems': len(base_check), 'derived_problems': len(derived),
                                         'added': added[:20]}}
         if added:
+            if isinstance(state, dict):  # persisted by pod_runner's teardown path, so the owner sees what broke
+                state['runtime_supplement_refused'] = dict(evidence, stage=label, pip_check=results[label]['pip_check'])
             raise measurement_dispatch.OperationalHold(PIP_HOLD)
     order = results['order']
     return dict(evidence, effective_image=order['image'], download_image=results['download']['image'],
@@ -744,8 +749,11 @@ def _build_image(provider, pod_id, lock: dict[str, Any], root: str) -> tuple[str
 
 
 def _pip_check(provider, pod_id, ref) -> list[str]:
+    """`pip check` inside `ref`, offline, isolated mode (-I: no sitecustomize, user site or cwd on the path). This is a
+    BACKSTOP, not the control: code from an overlay `.pth` could still influence its output. The control is the host
+    simulation over reviewed metadata (validate_lock / new_pip_problems), which runs before any pod exists."""
     result = provider.exec(pod_id, ['docker', 'run', '--rm', '--network', 'none', '--entrypoint', 'python3', ref,
-                                    '-m', 'pip', 'check', '--disable-pip-version-check'], timeout=300)
+                                    '-I', '-m', 'pip', 'check', '--disable-pip-version-check'], timeout=300)
     lines = [line.strip() for line in (result.stdout or '').splitlines() if line.strip()]
     if result.returncode not in (0, 1) or (result.returncode == 1 and not lines) \
             or (result.returncode == 0 and lines != ['No broken requirements found.']):
