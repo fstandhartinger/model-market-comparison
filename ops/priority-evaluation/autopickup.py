@@ -2620,11 +2620,145 @@ def _jev_v15_composite(axes: dict[str, Any], option: str) -> float:
     return score
 
 
+# --- proposal 5 option C (fastlane-zero-wait-p5-hook): admit known families at pickup, then ask custody for v1.6 ---------
+# Both steps run right after the per-order source review passed. They only CALL the existing gates: fastlane-admit's own
+# admit() (all refusals stay there) and custody's pinned `v16-admit`. The pickup never writes v16_profile_admission and a
+# failure here never changes what the pickup did before (the hold or the measurement path below stays as it was).
+FASTLANE_ADMIT_PATH = HOME / "bin" / "fastlane-admit"
+# Custody's v16-admit command: path AND sha256 must both be set (the installer fills them once custody posts them on
+# board #11). Empty = the step is disabled.
+V16_ADMIT_PATH = ""
+V16_ADMIT_SHA256 = ""
+V16_ADMIT_TIMEOUT_S = 120
+V16_ADMIT_RETRY_S = 900
+AUTO_ADMIT_ACTOR = "fastlane-autopickup"
+
+
+def _hook_note(job_dir: Path, text: str) -> None:
+    try:
+        append_state(job_dir, f"\n\n{iso(utcnow())} auto-admit: " + " ".join(str(text).split())[:300] + "\n")
+    except Exception:  # noqa: BLE001 - a note is never worth breaking the pickup
+        pass
+
+
+def _load_fastlane_admit():
+    from importlib.machinery import SourceFileLoader
+    loader = SourceFileLoader("fastlane_admit_in_pickup", str(FASTLANE_ADMIT_PATH))
+    spec = importlib.util.spec_from_loader(loader.name, loader)
+    module = importlib.util.module_from_spec(spec)
+    loader.exec_module(module)
+    return module
+
+
+def _has_gpu_pod_runtime(job_dir: Path) -> bool:
+    runtimes = load_json_file(job_dir / "trusted-runner/RUNTIME.json", 100_000)
+    return any(isinstance(item, dict) and item.get("backend") == "gpu_pod" for item in runtimes.values())
+
+
+def _auto_admit_family(job_dir: Path, row: dict[str, Any], review: dict[str, Any], cli: Any) -> None:
+    trusted = job_dir / "trusted-runner"
+    if (trusted / supplement_admission.RECEIPT).exists() or not (trusted / "POD-RECIPE.json").is_file():
+        return
+    if not _has_gpu_pod_runtime(job_dir):
+        return
+    candidates = [item["family"] for item in native_owner.SUPPLEMENTS if cli.family_match(native_owner, item, row)[1] is None]
+    if len(candidates) != 1:
+        return  # none: today's path; several (e.g. a shared author namespace): a human picks the family
+    rid = str(row["id"])
+    state = load_state(rid)
+    key = f"{review['review_sha256']}:{candidates[0]}"
+    if (state.get("auto_admit") or {}).get("key") == key:
+        return  # decided for this exact review already (admitted, or refused: do not retry or repeat the note)
+    basis = f"autopickup review-sha256 {review['review_sha256']}"
+    try:
+        action, entry = cli.admit(rid, candidates[0], basis, dry_run=False, by=AUTO_ADMIT_ACTOR, row=row)
+        outcome, note = action, f"family {candidates[0]} {action} ({basis})"
+    except (cli.Refused, cli.Failed) as exc:
+        outcome, note = "refused" if isinstance(exc, cli.Refused) else "failed", f"family {candidates[0]} not admitted: {exc}"
+    state = load_state(rid)
+    state["auto_admit"] = {"key": key, "outcome": outcome, "at": iso(utcnow())}
+    save_state(state)
+    _hook_note(job_dir, note)
+
+
+def _v16_admit_pin_ok() -> str | None:
+    """None when the pinned custody command may run; else the reason it may not."""
+    if not V16_ADMIT_PATH or not V16_ADMIT_SHA256:
+        return None  # disabled: not worth a note
+    path = Path(V16_ADMIT_PATH)
+    try:
+        info = path.stat()
+        if not path.is_file() or path.is_symlink() or info.st_uid != os.getuid() or info.st_mode & 0o022 \
+                or not info.st_mode & 0o100:
+            return "file is not an own, executable, non-writable regular file"
+        live = sha256_file(path)
+    except OSError:
+        return "file is missing or unreadable"
+    if live != V16_ADMIT_SHA256:
+        return "sha256 differs from the pin"
+    return ""
+
+
+def _auto_v16_admit(job_dir: Path, row: dict[str, Any], review: dict[str, Any], cli: Any) -> None:
+    rid = str(row["id"])
+    if "jevbench" not in (row.get("benchmarks") or []) or "v16_profile_admission" in load_state(rid):
+        return
+    if not V16_ADMIT_PATH or not V16_ADMIT_SHA256:
+        return
+    if cli.order_problems(cli.normalize_row(row)):
+        return  # paid-live-unrefunded-undelivered gate shared with fastlane-admit; no custody call for anything else
+    state = load_state(rid)
+    key = f"{review['review_sha256']}:{V16_ADMIT_SHA256}"
+    previous = state.get("v16_admit_attempt") or {}
+    if previous.get("key") == key:
+        last = parse_ts(previous.get("at"))
+        if last is not None and (utcnow() - last).total_seconds() < V16_ADMIT_RETRY_S:
+            return
+    problem = _v16_admit_pin_ok()
+    if problem is None:
+        return
+    outcome = problem
+    if not problem:
+        try:
+            done = subprocess.run([V16_ADMIT_PATH, rid, "--basis", f"autopickup review-sha256 {review['review_sha256']}"],
+                                  env={"PATH": "/usr/bin:/bin", "HOME": str(HOME), "AGENT_BOARD_NAME": AUTO_ADMIT_ACTOR},
+                                  stdin=subprocess.DEVNULL, capture_output=True, text=True,
+                                  timeout=V16_ADMIT_TIMEOUT_S, check=False)
+            outcome = "exit 0" if done.returncode == 0 else f"exit {done.returncode}: " + (done.stderr or done.stdout)[-160:]
+        except subprocess.TimeoutExpired:
+            outcome = f"timeout after {V16_ADMIT_TIMEOUT_S}s"
+        except OSError as exc:
+            outcome = f"could not run: {exc.strerror or exc}"
+    state = load_state(rid)
+    state["v16_admit_attempt"] = {"key": key, "at": iso(utcnow()), "outcome": outcome[:200]}
+    save_state(state)
+    _hook_note(job_dir, f"v16-admit {outcome}" + ("; the order continues" if outcome == "exit 0" else "; hold unchanged"))
+
+
+def auto_admit_hook(rid: str, job_dir: Path, row: dict[str, Any] | None, review: dict[str, Any]) -> None:
+    """Never raises: any failure is one STATE.md line and today's behaviour."""
+    try:
+        if not isinstance(row, dict) or row.get("id") != rid or not review.get("review_sha256"):
+            return
+        cli = _load_fastlane_admit()
+        try:
+            _auto_admit_family(job_dir, row, review, cli)
+        except (Exception, SystemExit) as exc:  # noqa: BLE001
+            _hook_note(job_dir, f"family admission step failed: {type(exc).__name__}")
+        try:
+            _auto_v16_admit(job_dir, row, review, cli)
+        except (Exception, SystemExit) as exc:  # noqa: BLE001
+            _hook_note(job_dir, f"v16 admission step failed: {type(exc).__name__}")
+    except (Exception, SystemExit):  # noqa: BLE001 - e.g. fastlane-admit not installed or not loadable yet
+        return
+
+
 def dispatch_measurement(rid: str, job_dir: Path) -> None:
     if any(native_owner.is_strands_e2b_order(value) for value in (rid, job_dir.name)):
         raise measurement_dispatch.OperationalHold("separate_native_measurement_wrapper_required")
     review = validate_review_gate(job_dir)
     row = load_row(rid)
+    auto_admit_hook(rid, job_dir, row, review)
     state = load_state(rid)
     # urgent-autofix-394 (17 Oct), restored 21 Oct (#22690/#22751): the legacy JevBench v1.5 profile is retired. A JevBench
     # order without a host-recorded v1.6 profile admission must hold, never fall back to the retired set

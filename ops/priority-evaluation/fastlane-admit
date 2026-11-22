@@ -359,7 +359,23 @@ def write_entry(registry, entry: dict, *, by: str, evidence: dict | None = None)
 
 # --- command ----------------------------------------------------------------------------------------------------------
 
-def admit(order_id: str, family: str, basis: str, *, dry_run: bool, by: str) -> tuple[str, dict]:
+def normalize_row(row: dict) -> dict:
+    """A caller-supplied order row (the pickup's ROW_FIELDS row, or a fetch_order() row) in the shape order_problems()
+    reads. Nothing is looked up; a missing column stays missing so order_problems() refuses."""
+    if 'paid' in row and 'delivered' in row:
+        return row  # already a fetch_order() row
+    out = {key: row.get(key) for key in ('id', 'status', 'stripe_mode', 'synthetic_test', 'refund_status', 'model_link',
+                                         'code_link')}
+    out['paid'] = None if 'paid_at' not in row else row.get('paid_at') is not None
+    out['delivered'] = None if 'result_delivered_at' not in row else row.get('result_delivered_at') is not None
+    out['has_refund_id'] = None if 'refund_id' not in row else row.get('refund_id') is not None
+    out['refunded'] = None if 'refunded_at' not in row else row.get('refunded_at') is not None
+    return out
+
+
+def admit(order_id: str, family: str, basis: str, *, dry_run: bool, by: str, row: dict | None = None) -> tuple[str, dict]:
+    """`row`: the caller's already-loaded order row (the autopickup passes its own); it is used instead of a second
+    database query, must be for this order, and goes through the same order_problems() gate."""
     owner, registry = runtime()
     if not registry.is_order_id(order_id):
         raise Refused('order id must be a canonical lower-case UUID')
@@ -370,7 +386,12 @@ def admit(order_id: str, family: str, basis: str, *, dry_run: bool, by: str) -> 
     supplement = next((item for item in owner.SUPPLEMENTS if item['family'] == family), None)
     if supplement is None:
         raise Refused(f'unknown supplement family {family!r}; known: ' + ', '.join(item['family'] for item in owner.SUPPLEMENTS))
-    row = fetch_order(order_id)
+    if row is None:
+        row = fetch_order(order_id)
+    else:
+        if not isinstance(row, dict) or row.get('id') != order_id:
+            raise Refused('supplied order row is not for this order')
+        row = normalize_row(row)
     problems = order_problems(row)
     if problems:
         raise Refused('order not admissible: ' + '; '.join(problems))
