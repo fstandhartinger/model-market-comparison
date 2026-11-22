@@ -4577,14 +4577,13 @@ def plan_delay_eta(row: dict[str, Any], now: datetime) -> tuple[datetime, str]:
     return max(deadline_for(row) + hours, now + hours), "default"
 
 
-def delay_note_message(row: dict[str, Any], eta: datetime | None = None,
-                       now: datetime | None = None) -> tuple[str, str]:
-    """The fixed delay mail. `eta` is the date the decision card named; without it the date is planned now."""
+def delay_note_message(row: dict[str, Any], eta: datetime) -> tuple[str, str]:
+    """The fixed delay mail, dated with exactly the date the decision card named (never planned here, critic r2 N1)."""
     if sla_decision.owner_managed(row):
         raise ValueError("40h decision is owner-managed; no fixed result ETA")
+    if not isinstance(eta, datetime):
+        raise ValueError("the delay note needs the date its card named")
     rid = request_id(row["id"])
-    if eta is None:
-        eta = plan_delay_eta(row, now or utcnow())[0]
     subject = f"Benchmark Heaven evaluation order {order_ref(rid)}: delayed"
     body = fill_template(read_template("autopickup-delay-template.txt"),
                          {"ORDER_REF": order_ref(rid), "NEW_ETA": eta.strftime(ETA_FORMAT)})
@@ -4734,6 +4733,8 @@ def sla_decisions(synthetic_id: str | None, job_root: Path, effects: Effects) ->
         elif outcome == "delay_note":
             if state.get("delay_email_status") != "sent" and not hold_delay_note(row, state, root, effects):
                 eta, _ = sla_decision.card_delay_eta(root, rid)
+                if eta is None:  # a card sent before the date was stored: its caption said deadline + 24 h (critic r2 N1)
+                    eta = deadline_for(row) + timedelta(hours=DELAY_NOTE_DEFAULT_HOURS)
                 subject, body = delay_note_message(row, eta)
                 ok, reason = effects.mail(str(row.get("email") or ""), subject, body)
                 state["delay_email_status"] = "sent" if ok else f"failed:{reason}"
@@ -4866,12 +4867,16 @@ def sla_handoff(row: dict[str, Any], hours: int) -> str:
     text = (f"Fast-lane order {order_ref(rid)} has no result {hours} hours after payment; the result deadline is "
             f"{deadline_for(row).isoformat()}. Owner: start or unblock the measurement now, or say on this thread "
             f"who owns it. Evidence: {job_directory(rid, JOB_ROOT)}/STATE.md. Refunds need Florian's button.")
+    command = (f"`~/bin/jevbench-autopickup set-eta {rid} --eta <ISO+Z>` (for example 2026-11-24T18:00:00Z; later "
+               "than the deadline, at most 48 h after it, at least 1 h ahead)")
     if hours >= sla_decision.SLA_DECISION_HOURS:
-        text += (f" If you know when the result will be ready, run `~/bin/jevbench-autopickup set-eta {rid} --eta "
-                 "<ISO+Z>` (for example 2026-11-24T18:00:00Z; later than the deadline, at most 48 h after it, at "
-                 "least 1 h ahead). That command is the only way your ETA reaches the customer: Florian's decision "
-                 "card names one date and the delay note mails exactly that date. Set it before the card is built; "
-                 "once the card exists it names its own date and set-eta refuses.")
+        text += (" Florian's SLA decision card for this order is out now and names one date; its delay note mails "
+                 f"exactly that date. Your ETA ({command}) only reaches a re-asked card if this one expires "
+                 "unanswered, so tell Florian on the card thread if its date is wrong.")
+    else:
+        text += (f" If delivery before the deadline is not certain, record your real ETA now with {command}. It is the "
+                 f"only way your ETA reaches the customer: the {sla_decision.SLA_DECISION_HOURS} h decision card names "
+                 "one date and its delay note mails exactly that date.")
     return text
 
 
@@ -6206,6 +6211,9 @@ def set_eta(rid: str, eta_text: str, now: datetime | None = None) -> str:
         raise PickupError("this order is owner-managed: it gets no generic delay note, so an owner ETA does not apply")
     open_eta = sla_decision.open_card_eta(STATE_ROOT / "sla-decisions", rid, now.timestamp(),
                                           deadline_for(row) + timedelta(hours=DELAY_NOTE_DEFAULT_HOURS))
+    if sla_decision.delay_held(STATE_ROOT / "sla-decisions", rid) is not None:
+        raise PickupError("the delay note on this order's SLA card was held (nothing was mailed); "
+                          "the owner handoff asks Florian what the customer should hear")
     if open_eta is not None:
         raise PickupError(f"the open SLA card already names {open_eta.strftime(ETA_FORMAT)}; "
                           "its delay note mails exactly that date")
