@@ -38,7 +38,7 @@ export function useModelHref(key: string, benchmark: UseModelBenchmark, target: 
   const hash = target === 'hub' ? '' : `#${USE_MODEL_ANCHORS[target]}`;
   const slug = useModelSlug(key, benchmark);
   // Attribution for the Decision Models side (board #22 #28951): ref stays for the hub, utm_* for its analytics.
-  return `${USE_MODEL_HUB}/${slug}?ref=${benchmark}&utm_source=benchmarkheaven&utm_medium=use-button&utm_content=${encodeURIComponent(slug)}${hash}`;
+  return `${USE_MODEL_HUB}/${slug}?ref=${benchmark}&utm_source=benchmarkheaven&utm_medium=use-button&utm_campaign=bh-use-button&utm_content=${encodeURIComponent(slug)}${hash}`;
 }
 
 /** One-line disclosure shown in the hover panel and under each ranking while the entry is visible. */
