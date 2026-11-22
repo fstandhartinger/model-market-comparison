@@ -12,8 +12,9 @@ now starts that owner job itself, at the first unsupported runtime:
   deadline still raises the urgent card.
 
 The registry below tells the owner (and the generator prompt) which reviewed runtime supplement and precedent jobs
-belong to the same model repository. Admission itself lives in supplement_admission.py (Part 2): an `active()`
-admits its listed order ids, or a repeat order whose fetched stack files are byte-identical to the reviewed precedent.
+belong to the same model repository. Admission itself lives in supplement_admission.py (Part 2) and order_admission_registry.py: an `active()`
+admits its listed order ids, a repeat order whose fetched stack files are byte-identical to the reviewed precedent, or an
+order the host entered with `fastlane-admit` (bound to the installed module bytes, base image and context).
 Stdlib only; nothing here imports a model stack or runs customer code.
 """
 from __future__ import annotations
@@ -183,8 +184,11 @@ def prompt_text(rid: str, order: dict[str, Any], *, reason: str, deadline: str, 
                       f"{', '.join(entry['precedents'])}. Diff this order's serving code and stack pins against the "
                       "latest precedent. If trusted-runner/SUPPLEMENT-ADMISSION.json exists, the host already admitted this "
                       "order (identical stack files): fix the recipe, do not change `active()`. Otherwise, if the "
-                      "pins are unchanged, reuse the supplement context and add this exact order id to `active()` "
-                      "(or its stack hashes to supplement_admission.FAMILIES).")
+                      "supplement module, base image and context pins are unchanged, admit this exact order with the "
+                      f"host command `fastlane-admit <order-id> {entry['family']} --basis <board id>` once its recipe is "
+                      "frozen (an audited data write bound to the installed module bytes: no code PR, no merge queue). "
+                      "Only a changed supplement or pin needs a CR + PR (or its stack hashes in "
+                      "supplement_admission.FAMILIES).")
     else:
         supplement = ("- No reviewed supplement matches this repository. Build a new order-scoped supplement "
                       "following the existing *_runtime_supplement.py modules (exact order id, digest-pinned base, "
@@ -208,8 +212,10 @@ Your board name also answers to @fastlane-eval-{ref}. Post on thread #11 that yo
 ## Plan (keep every existing gate)
 1. Confirm the generator's reason from trusted-runner/RUNTIME.json and PRICING-REVIEW.md; do not redo a clean
    source review that already passed (review/CODE-REVIEW.md), but do review any customer code you will run.
-2. Runtime: CR + PR through the Benchmark Heaven merge queue for the supplement allow-list or a new supplement
-   (exact order ids, no wildcard, tests); install with ops/priority-evaluation/install-worker.sh from main.
+2. Runtime: a matching reviewed supplement with unchanged pins needs no PR: after step 3 freezes the recipe run
+   `fastlane-admit <order-id> <family> --basis <board id>` (add --dry-run first). A new or changed supplement needs a
+   CR + PR through the Benchmark Heaven merge queue (exact order ids, no wildcard, tests); install with
+   ops/priority-evaluation/install-worker.sh from main.
 3. Write the hand-built bundle (POD-RECIPE, RUNTIME gpu_pod credential none, MEASUREMENT-META) into the order
    trusted-runner/, freeze it with autopickup.freeze_runner_bundle, independent review -> review/NATIVE-SOURCE-REVIEW.md.
 4. Synthetic smoke, then ONE measurement on the provider the current DECISIONS allow for sealed input (Verda;

@@ -20,7 +20,8 @@ by its own stdlib-HTTP serve.py. Its requirements.txt gives only lower bounds (t
 safetensors>=0.4.0, Pillow>=10.0.0), and its code imports only torch, transformers (AutoTokenizer, Qwen3_5ForConditionalGeneration)
 and, lazily for image inputs, PIL. The same pinned context meets every bound: the base carries torch 2.9.1+cu128, torchvision
 0.24.1+cu128 and Pillow 11.3.0, and the overlay adds transformers 5.20.1 (ships qwen3_5) with safetensors 0.8.0. peft, accelerate,
-fastapi, uvicorn and head.safetensors stay installed but unused there. Admission stays an explicit list of exact order ids.
+fastapi, uvicorn and head.safetensors stay installed but unused there. Admission stays exact order ids: listed here, or entered by the host in the order admission registry
+(order_admission_registry; entries bind an order to this module's bytes, base image and context).
 """
 import hashlib
 import re
@@ -28,6 +29,7 @@ import tarfile
 from pathlib import Path
 
 import measurement_dispatch
+import order_admission_registry
 import pod_runner
 
 ORDER = '1dedbcf2-3577-47b9-9893-eaad445b7061'
@@ -90,9 +92,12 @@ def sha256(path):
         return _sha256_stream(stream)
 
 def active(job, recipe):
-    """Only these exact orders' reviewed http_typesafe recipes on the exact pinned base select the supplement."""
-    return (Path(job).name in ORDERS and isinstance(recipe, dict) and recipe.get('kind') == 'http_typesafe'
-            and recipe.get('image') == BASE_IMAGE)
+    """Only these exact orders' reviewed http_typesafe recipes on the exact pinned base select the supplement.
+    A host-registry admission (order_admission_registry, `fastlane-admit`) counts like a listed order."""
+    return (isinstance(recipe, dict) and recipe.get('kind') == 'http_typesafe'
+            and recipe.get('image') == BASE_IMAGE
+            and (Path(job).name in ORDERS
+                 or order_admission_registry.admitted(Path(job).name, __file__, BASE_IMAGE, CONTEXT_SHA)))
 
 def check_context(context=CONTEXT):
     """The context must be byte-identical to the pinned public-only inventory."""

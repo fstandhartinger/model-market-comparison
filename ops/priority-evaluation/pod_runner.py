@@ -1119,9 +1119,10 @@ def _lifecycle(provider, job, recipe, staging_path, output, state, gpu_choice, t
                 image = state['runtime_supplement']['effective_image']
                 save_state()
             import minimodels_hard_candy_runtime_supplement
-            if minimodels_hard_candy_runtime_supplement.active(job_dir or job, recipe):
+            if minimodels_hard_candy_runtime_supplement.supplement_active(job_dir or job, recipe):
                 # Fixed-order offline builder of Minimodels Decision 1 hard-candy's documented Skyfall stack (MLX 0.32.4 CUDA, Rust,
                 # pinned FetchContent sources) on the author's digest-pinned CUDA 12.8.1 devel base; /code/skyfall is compiled in the run container.
+                # supplement_active() also admits a host-registry order (fastlane-admit); the TTL-bounded run wait below stays exact-order.
                 state['runtime_supplement'] = minimodels_hard_candy_runtime_supplement.build(provider, pod_id)
                 image = state['runtime_supplement']['effective_image']
                 save_state()
@@ -1147,9 +1148,10 @@ def _lifecycle(provider, job, recipe, staging_path, output, state, gpu_choice, t
                 image = state['runtime_supplement']['effective_image']
                 save_state()
             import chon_runtime_supplement
-            if chon_runtime_supplement.active(job_dir or job, recipe):
+            if chon_runtime_supplement.supplement_active(job_dir or job, recipe):
                 # Fixed-order offline build of Chon-1.0-12B's documented torch 2.9.1/transformers 5.20/peft 0.18.1
-                # /fastapi stack for the customer's own chon.serve.
+                # /fastapi stack for the customer's own chon.serve. supplement_active() also admits a host-registry
+                # order; the exact-order TTL/rate/wait exceptions elsewhere in this file stay on active().
                 state['runtime_supplement'] = chon_runtime_supplement.build(provider, pod_id)
                 image = state['runtime_supplement']['effective_image']
                 save_state()

@@ -17,6 +17,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 import measurement_dispatch
+import order_admission_registry
 import pod_runner
 
 ORDER = '3ce4b317-09bb-459f-a33f-1e48e35006b2'
@@ -87,6 +88,15 @@ def active(job, recipe):
     """Only this order's reviewed http_typesafe recipe on the exact pinned base selects the supplement."""
     return (Path(job).name == ORDER and isinstance(recipe, dict) and recipe.get('kind') == 'http_typesafe'
             and recipe.get('image') == BASE_IMAGE)
+
+def supplement_active(job, recipe):
+    """Plain build admission: the exact order (active) or an order the host registry admitted
+    (order_admission_registry, `fastlane-admit`). active() alone carries this order's deputy exceptions (TTL cap,
+    pinned rate, long run wait in pod_runner); an admitted order never inherits them."""
+    return (active(job, recipe)
+            or (isinstance(recipe, dict) and recipe.get('kind') == 'http_typesafe'
+                and recipe.get('image') == BASE_IMAGE
+                and order_admission_registry.admitted(Path(job).name, __file__, BASE_IMAGE, CONTEXT_SHA)))
 
 def check_context(context=CONTEXT):
     """The context must be byte-identical to the pinned public-only inventory."""

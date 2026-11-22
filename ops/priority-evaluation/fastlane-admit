@@ -1,0 +1,436 @@
+#!/usr/bin/python3 -I
+"""fastlane-admit <order-uuid> <family> --basis <text> [--dry-run]
+
+Admit ONE live paid fast-lane order to an ALREADY-REVIEWED runtime supplement by writing a host data entry (audited), instead
+of a code PR that only adds one order UUID to the supplement's ORDERS set (job fastlane-sla-rootcause-20261122).
+
+The entry (order_admission_registry.py) binds the order to the INSTALLED supplement module's SHA-256 and to the module's own
+BASE_IMAGE / CONTEXT_SHA constants, so any later change of the supplement invalidates it and needs a new review. Every other
+gate is untouched: per-order source review of customer code, the freeze, the custody word, sealed GO rules, the recipe check in
+the supplement's active() and the pod caps.
+
+Checks before anything is written (a refusal exits 3 and writes nothing):
+  * the order is live, not synthetic, status 'paid', paid, undelivered, unrefunded (/usr/bin/psql with a clean environment,
+    benchmarkheaven_accounts);
+  * <family> is in the INSTALLED native_owner.SUPPLEMENTS and the order's own model_link or code_link is one of that family's
+    reviewed repositories (native_owner.repo_key; the native_owner.match_supplement rule), or, when no family lists it, a
+    repository of the same host/owner namespace that belongs to this family alone (version bumps as new HF repos); the
+    audit line records repo_match kind exact|namespace;
+  * the family's installed module consults the registry and pins BASE_IMAGE/CONTEXT_SHA;
+  * the order's frozen ~/jobs/fastlane-evaluations/<uuid>/trusted-runner/POD-RECIPE.json exists, is a regular file, and its
+    image equals the module's BASE_IMAGE;
+  * with the proposed entry in place, the module's own active() (supplement_active() where it has one) accepts the recipe.
+
+The command never edits code, never installs, never contacts anyone. The write is atomic (tmp + fsync + rename, mode 0600,
+flock). order-admissions.log next to the registry gets an `intent` line BEFORE the rename and a `done` line after it (an
+`aborted` line when the rename fails), each carrying the entry, the SHA-256 of the frozen POD-RECIPE.json and, when present, of
+review/NATIVE-SOURCE-REVIEW.md / review/CODE-REVIEW.md (traceability only, not a refusal). If the intent line cannot be written
+nothing is changed. Idempotent for the same order and module bytes.
+Exit codes: 0 ok / already admitted / dry run, 2 usage, 3 refused, 4 operational error (the message says whether the registry changed).
+"""
+from __future__ import annotations
+
+import argparse
+import ast
+import fcntl
+import hashlib
+import importlib
+import json
+import os
+import re
+import subprocess
+import sys
+import tempfile
+from datetime import datetime, timezone
+from pathlib import Path
+
+DB_NAME = 'benchmarkheaven_accounts'
+PSQL = '/usr/bin/psql'
+PSQL_TIMEOUT_S = 15
+REVIEW_RECEIPTS = ('review/NATIVE-SOURCE-REVIEW.md', 'review/CODE-REVIEW.md')
+REVIEW_LIMIT = 4 * 1024 * 1024
+RECIPE_LIMIT = 1024 * 1024
+BASIS_RE = re.compile(r'[^\x00-\x1f\x7f]{1,300}')
+ACTOR_RE = re.compile(r'[A-Za-z0-9._:@/+-]{1,120}')
+FAMILY_RE = re.compile(r'[a-z0-9_]{1,60}')
+IMAGE_RE = re.compile(r'[A-Za-z0-9._/:-]+@sha256:[0-9a-f]{64}')
+LOG_NAME = 'order-admissions.log'
+UUID_RE = re.compile(r'[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}')
+
+
+def _home() -> Path:
+    return Path(os.path.expanduser('~'))
+
+
+RUNTIME_DIR = _home() / '.local' / 'share' / 'priority-evaluation' / 'runtime'
+JOBS_DIR = _home() / 'jobs' / 'fastlane-evaluations'
+
+
+class Refused(Exception):
+    """A gate said no (exit 3)."""
+
+
+class Failed(Exception):
+    """The check or the write could not run (exit 4). `changed` says whether the registry file was replaced."""
+
+    def __init__(self, message: str, *, changed: bool = False):
+        super().__init__(message)
+        self.changed = changed
+
+
+def now_iso() -> str:
+    return datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')
+
+
+def runtime():
+    """First-party host modules from the INSTALLED runtime (never from the working directory)."""
+    path = str(RUNTIME_DIR)
+    if path not in sys.path:
+        sys.path.insert(0, path)
+    try:
+        return importlib.import_module('native_owner'), importlib.import_module('order_admission_registry')
+    except ImportError as error:
+        raise Failed(f'installed runtime lacks a required module ({error.name}); run install-autopickup.sh from main') from None
+
+
+# --- order -------------------------------------------------------------------------------------------------------------
+
+def psql_env() -> dict:
+    """The caller's environment minus every PG* variable (host, port, service, user, options, ...), with a fixed PATH.
+    HOME stays so ~/.pgpass still works."""
+    env = {key: value for key, value in os.environ.items() if not key.startswith('PG')}
+    env['PATH'] = '/usr/bin:/bin'
+    return env
+
+
+def fetch_order(order_id: str):
+    """The order's admission-relevant facts from the accounts DB, or None when no such order exists."""
+    if not UUID_RE.fullmatch(order_id if isinstance(order_id, str) else ''):
+        raise Refused('order id must be a canonical lower-case UUID')  # the id is interpolated into the SQL below
+    sql = ("SELECT row_to_json(t) FROM (SELECT id::text AS id, status, stripe_mode, synthetic_test, "
+           "paid_at IS NOT NULL AS paid, result_delivered_at IS NOT NULL AS delivered, "
+           "refund_id IS NOT NULL AS has_refund_id, refunded_at IS NOT NULL AS refunded, refund_status, model_link, code_link "
+           f"FROM bh_priority_evaluation_requests WHERE id = '{order_id}'::uuid) t")  # order_id is a validated UUID
+    try:
+        done = subprocess.run([PSQL, '-X', '-qAt', '-v', 'ON_ERROR_STOP=1', '-d', DB_NAME, '-c', sql], env=psql_env(),
+                              stdin=subprocess.DEVNULL, capture_output=True, text=True, timeout=PSQL_TIMEOUT_S, check=False)
+    except (OSError, subprocess.TimeoutExpired):
+        raise Failed('database check could not run') from None
+    if done.returncode != 0:
+        raise Failed('database check failed')
+    text = done.stdout.strip()
+    if not text:
+        return None
+    try:
+        return json.loads(text)
+    except ValueError:
+        raise Failed('database check returned unreadable data') from None
+
+
+def order_problems(row) -> list[str]:
+    if not isinstance(row, dict):
+        return ['no such order']
+    problems = []
+    if row.get('stripe_mode') != 'live':
+        problems.append('not a live-mode order')
+    if row.get('synthetic_test') is not False:
+        problems.append('synthetic test order')
+    if row.get('status') != 'paid':
+        problems.append(f"status is {row.get('status')!r}, not 'paid'")
+    if row.get('paid') is not True:
+        problems.append('not paid')
+    if row.get('delivered') is not False:
+        problems.append('already delivered')
+    if row.get('has_refund_id') is not False or row.get('refunded') is not False or row.get('refund_status') is not None:
+        problems.append('refund started or done')
+    return problems
+
+
+def family_match(owner, supplement: dict, row: dict) -> tuple[dict | None, str | None]:
+    """(match, problem). An exact repository match (native_owner.match_supplement rule) wins. Only when NO family lists the
+    order's repository exactly, a repository of the SAME host/owner namespace as one reviewed repo of this family (a version
+    bump published as a new Hugging Face repo) is accepted, and only if that namespace belongs to this one family alone
+    (critic r2 S-1: xsdfasfgsa and minimodels-ai hold two families each). A different author or host always needs a reviewed
+    `repos` entry. Only normalised repo keys are echoed, never raw customer text."""
+    keys = {owner.repo_key(row.get('model_link')), owner.repo_key(row.get('code_link'))} - {None}
+    shown = ', '.join(sorted(keys)) or 'none recognised'
+    exact = keys & set(supplement['repos'])
+    if exact:
+        return {'kind': 'exact', 'keys': sorted(exact)}, None
+    other = owner.match_supplement(row)
+    if other is not None:
+        return None, (f"the order's repositories ({shown}) are reviewed for family {other['family']!r}, "
+                      f"not {supplement['family']!r}")
+    spaces = {key.rsplit('/', 1)[0] for key in keys}
+    owners = [item for item in owner.SUPPLEMENTS if {repo.rsplit('/', 1)[0] for repo in item['repos']} & spaces]
+    if len(owners) == 1 and owners[0]['family'] == supplement['family']:
+        return {'kind': 'namespace', 'keys': sorted(keys)}, None
+    if len(owners) > 1 and supplement['family'] in {item['family'] for item in owners}:
+        # e.g. xsdfasfgsa: starlord + starlord_v2 (same base image). The caller's family choice is recorded; the module's
+        # own active() must still select the frozen recipe, the order must not be code-listed in any supplement, and
+        # the public smoke runs before any sealed input.
+        return {'kind': 'namespace-shared', 'keys': sorted(keys),
+                'families': sorted(item['family'] for item in owners)}, None
+    return None, (f"the order's repositories ({shown}) are not among the repositories reviewed for family "
+                  f"{supplement['family']!r} ({', '.join(supplement['repos'])})")
+
+
+def code_listed_in(order_id: str) -> list[str]:
+    """Installed supplement modules whose source names this exact order id (code-listed admissions). A registry entry on
+    top of a code listing elsewhere could make two supplements build for one order (critic r2 S-1)."""
+    found = []
+    for path in sorted(RUNTIME_DIR.glob('*_runtime_supplement.py')):
+        try:
+            if order_id in path.read_text(encoding='utf-8', errors='replace'):
+                found.append(path.name)
+        except OSError:
+            found.append(path.name + ' (unreadable)')
+    return found
+
+
+def family_problem(owner, supplement: dict, row: dict) -> str | None:
+    """The refusal reason of family_match(), or None."""
+    return family_match(owner, supplement, row)[1]
+
+
+# --- module and recipe ------------------------------------------------------------------------------------------------
+
+def module_facts(registry, path: Path) -> dict:
+    """Digest and pinned constants of the installed module, taken from ONE read of its bytes (nothing is executed)."""
+    try:
+        source = registry.read_regular(path, registry.MODULE_LIMIT, host_owned=False)
+    except (OSError, ValueError):
+        raise Refused(f'installed supplement module {path.name} is missing or not a regular file') from None
+    try:
+        tree = ast.parse(source)
+    except (SyntaxError, ValueError):
+        raise Refused('installed supplement module does not parse') from None
+    found: dict[str, list[str]] = {}
+    for node in tree.body:
+        if isinstance(node, ast.Assign) and len(node.targets) == 1 and isinstance(node.targets[0], ast.Name) \
+                and node.targets[0].id in ('BASE_IMAGE', 'CONTEXT_SHA'):
+            try:
+                value = ast.literal_eval(node.value)
+            except ValueError:
+                continue
+            if isinstance(value, str):
+                found.setdefault(node.targets[0].id, []).append(value)
+    if set(found) != {'BASE_IMAGE', 'CONTEXT_SHA'} or any(len(values) != 1 for values in found.values()):
+        raise Refused(f'{path.name} has no single BASE_IMAGE and CONTEXT_SHA constant; not registry-admissible')
+    base, context = found['BASE_IMAGE'][0], found['CONTEXT_SHA'][0]
+    if not IMAGE_RE.fullmatch(base) or not registry.HEX64_RE.fullmatch(context):
+        raise Refused(f'{path.name} pins are not a digest-pinned image and a SHA-256')
+    if b'order_admission_registry.admitted(' not in source:
+        raise Refused(f'{path.name} does not consult the order admission registry (order-specific supplement)')
+    return {'module_sha256': hashlib.sha256(source).hexdigest(), 'base_image': base, 'context_sha256': context}
+
+
+def load_recipe(registry, order_id: str) -> tuple[dict, str]:
+    """The frozen recipe and the SHA-256 of the exact bytes it was parsed from."""
+    order_dir = JOBS_DIR / order_id
+    if order_dir.is_symlink() or not order_dir.is_dir():
+        raise Refused('order folder is missing or a symlink')
+    path = order_dir / 'trusted-runner' / 'POD-RECIPE.json'
+    try:
+        data = registry.read_regular(path, RECIPE_LIMIT, host_owned=False)
+        value = json.loads(data.decode('utf-8'))
+    except (OSError, ValueError):
+        raise Refused('frozen POD-RECIPE.json is missing, not a regular file or not JSON') from None
+    if not isinstance(value, dict):
+        raise Refused('frozen POD-RECIPE.json is not an object')
+    return value, hashlib.sha256(data).hexdigest()
+
+
+def review_receipts(registry, order_id: str) -> dict:
+    """SHA-256 of each per-order review receipt that exists as a regular file (traceability only; absence is not a refusal)."""
+    found = {}
+    for name in REVIEW_RECEIPTS:
+        try:
+            found[name] = hashlib.sha256(registry.read_regular(JOBS_DIR / order_id / name, REVIEW_LIMIT, host_owned=False)).hexdigest()
+        except (OSError, ValueError):
+            continue
+    return found
+
+
+def active_with_entry(registry, module_name: str, order_id: str, recipe: dict, entry: dict) -> bool:
+    """Ask the installed supplement's own gate, with only the proposed entry in a throwaway registry."""
+    stem = module_name[:-3]
+    with tempfile.TemporaryDirectory(prefix='fastlane-admit-') as scratch:
+        probe = Path(scratch) / 'order-admissions.json'
+        fd = os.open(probe, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
+        with os.fdopen(fd, 'w', encoding='utf-8') as handle:
+            json.dump({'schema': registry.SCHEMA, 'entries': [entry]}, handle)
+        previous = registry.REGISTRY
+        registry.REGISTRY = probe
+        try:
+            try:
+                module = importlib.import_module(stem)
+            except Exception as error:  # noqa: BLE001 - any import trouble means we cannot verify
+                raise Failed(f'cannot import installed {stem} to verify it ({type(error).__name__})') from None
+            if Path(module.__file__).resolve() != (RUNTIME_DIR / module_name).resolve():
+                raise Failed(f'{stem} was imported from {module.__file__}, not the installed runtime')
+            gate = getattr(module, 'supplement_active', None) or getattr(module, 'active', None)
+            if gate is None:
+                raise Refused(f'{stem} has no active()')
+            return bool(gate(JOBS_DIR / order_id, recipe))
+        finally:
+            registry.REGISTRY = previous
+
+
+# --- registry write ---------------------------------------------------------------------------------------------------
+
+def audit_line(log: Path, record: dict) -> None:
+    fd = os.open(log, os.O_WRONLY | os.O_APPEND | os.O_CREAT | getattr(os, 'O_NOFOLLOW', 0) | getattr(os, 'O_CLOEXEC', 0), 0o600)
+    try:
+        os.write(fd, (json.dumps(record, sort_keys=True) + '\n').encode('utf-8'))
+        os.fsync(fd)
+    finally:
+        os.close(fd)
+
+
+def write_entry(registry, entry: dict, *, by: str, evidence: dict | None = None) -> str:
+    """Add or refresh the entry under an exclusive lock; returns 'added', 'replaced' or 'unchanged'. Atomic.
+
+    Audit order: `intent` line, then the rename, then a `done` line (an `aborted` line if the rename fails). Any OSError becomes
+    Failed(...) saying whether the registry file was replaced: before the rename it never was; if only the `done` line fails the
+    entry IS live and its `intent` line exists."""
+    path = Path(registry.REGISTRY)
+    log = path.with_name(LOG_NAME)
+    stage, changed, lock_fd = 'preparing the registry directory and lock', False, None
+    try:
+        path.parent.mkdir(mode=0o700, parents=True, exist_ok=True)
+        lock_fd = os.open(path.with_name(path.name + '.lock'), os.O_WRONLY | os.O_CREAT | getattr(os, 'O_NOFOLLOW', 0)
+                          | getattr(os, 'O_CLOEXEC', 0), 0o600)
+        fcntl.flock(lock_fd, fcntl.LOCK_EX)
+        stage = 'reading the registry'
+        try:
+            current = registry.load(path)
+        except FileNotFoundError:
+            current = {'schema': registry.SCHEMA, 'entries': []}
+        except (OSError, ValueError):
+            raise Failed(f'existing registry {path} is unreadable or unsafe; not overwriting it') from None
+        same_order = [e for e in current['entries'] if e['order_id'] == entry['order_id']]
+        for existing in same_order:
+            if existing['module'] != entry['module']:
+                raise Refused(f"order already admitted to module {existing['module']} ({existing['family']}); one supplement per order")
+        core = ('order_id', 'module', 'module_sha256', 'base_image', 'context_sha256')
+        if any(all(e[k] == entry[k] for k in core) for e in same_order):
+            return 'unchanged'
+        entries = [e for e in current['entries'] if e['order_id'] != entry['order_id']] + [entry]
+        action = 'replaced' if same_order else 'added'
+        record = {'action': action, 'by': by, 'entry': entry, 'registry': str(path), **(evidence or {})}
+        stage = "writing the audit 'intent' line"
+        audit_line(log, dict(record, phase='intent', ts=now_iso()))
+        stage = 'writing the registry file'
+        tmp = None
+        try:
+            fd, tmp = tempfile.mkstemp(dir=path.parent, prefix='.order-admissions-', suffix='.tmp')
+            with os.fdopen(fd, 'w', encoding='utf-8') as handle:
+                json.dump({'schema': registry.SCHEMA, 'entries': entries}, handle, indent=1, sort_keys=True)
+                handle.write('\n')
+                handle.flush()
+                os.fsync(handle.fileno())
+            os.chmod(tmp, 0o600)
+            os.replace(tmp, path)
+        except BaseException:
+            if tmp is not None:
+                Path(tmp).unlink(missing_ok=True)
+            try:
+                audit_line(log, dict(record, phase='aborted', ts=now_iso()))
+            except OSError:
+                pass  # the dangling intent line is already enough to tell the story
+            raise
+        changed = True
+        stage = 'syncing the registry directory'
+        dir_fd = os.open(path.parent, os.O_RDONLY)
+        try:
+            os.fsync(dir_fd)
+        finally:
+            os.close(dir_fd)
+        stage = "writing the audit 'done' line (the entry IS live and its intent line exists)"
+        audit_line(log, dict(record, phase='done', ts=now_iso()))
+        return action
+    except OSError as error:
+        raise Failed(f'OSError while {stage}: {error.strerror or error}', changed=changed) from None
+    finally:
+        if lock_fd is not None:
+            os.close(lock_fd)
+
+
+# --- command ----------------------------------------------------------------------------------------------------------
+
+def admit(order_id: str, family: str, basis: str, *, dry_run: bool, by: str) -> tuple[str, dict]:
+    owner, registry = runtime()
+    if not registry.is_order_id(order_id):
+        raise Refused('order id must be a canonical lower-case UUID')
+    if not FAMILY_RE.fullmatch(family):
+        raise Refused('family must be a native_owner family name')
+    if not BASIS_RE.fullmatch(basis or ''):
+        raise Refused('--basis must be 1-300 printable characters on one line')
+    supplement = next((item for item in owner.SUPPLEMENTS if item['family'] == family), None)
+    if supplement is None:
+        raise Refused(f'unknown supplement family {family!r}; known: ' + ', '.join(item['family'] for item in owner.SUPPLEMENTS))
+    row = fetch_order(order_id)
+    problems = order_problems(row)
+    if problems:
+        raise Refused('order not admissible: ' + '; '.join(problems))
+    repo_match, problem = family_match(owner, supplement, row)
+    if problem:
+        raise Refused(problem)
+    module_name = supplement['module']
+    listed = code_listed_in(order_id)
+    if listed:
+        raise Refused(f'order is already code-listed in {", ".join(listed)}; no registry entry is needed or allowed')
+    facts = module_facts(registry, RUNTIME_DIR / module_name)
+    recipe, recipe_sha256 = load_recipe(registry, order_id)
+    if recipe.get('image') != facts['base_image']:
+        raise Refused('frozen recipe image differs from the supplement BASE_IMAGE')
+    entry = {'order_id': order_id, 'family': family, 'module': module_name, 'module_sha256': facts['module_sha256'],
+             'base_image': facts['base_image'], 'context_sha256': facts['context_sha256'], 'admitted_at': now_iso(),
+             'admitted_by': by, 'basis': basis}
+    if not active_with_entry(registry, module_name, order_id, recipe, entry):
+        raise Refused(f'{module_name} would not select this order\'s recipe (kind/loader/image differ from what it accepts)')
+    if dry_run:
+        return 'dry-run', entry
+    evidence = {'recipe_sha256': recipe_sha256, 'review_receipts': review_receipts(registry, order_id), 'repo_match': repo_match}
+    action = write_entry(registry, entry, by=by, evidence=evidence)
+    if action == 'unchanged':
+        try:  # the stored entry is the one to show, with its original admitted_at
+            entry = next(e for e in registry.load()['entries'] if e['order_id'] == order_id)
+        except (OSError, ValueError, StopIteration):
+            pass
+    return action, entry
+
+
+def main(argv=None) -> int:
+    parser = argparse.ArgumentParser(prog='fastlane-admit', description=__doc__.split('\n\n')[0])
+    parser.add_argument('order_id', metavar='order-uuid')
+    parser.add_argument('family')
+    parser.add_argument('--basis', required=True, help='board id / DECISIONS key / reason for the admission')
+    parser.add_argument('--dry-run', action='store_true', help='run every check, write nothing')
+    parser.add_argument('--by', default=os.environ.get('AGENT_BOARD_NAME') or os.environ.get('USER') or 'unknown',
+                        help='admitting job (default $AGENT_BOARD_NAME)')
+    args = parser.parse_args(argv)
+    if not ACTOR_RE.fullmatch(args.by):
+        print('fastlane-admit: --by has unusual characters', file=sys.stderr)
+        return 2
+    try:
+        action, entry = admit(args.order_id, args.family, args.basis, dry_run=args.dry_run, by=args.by)
+    except Refused as error:
+        print(f'fastlane-admit: REFUSED: {error}', file=sys.stderr)
+        return 3
+    except Failed as error:
+        print(f"fastlane-admit: ERROR: {error}; registry {'CHANGED' if error.changed else 'unchanged'}", file=sys.stderr)
+        return 4
+    except OSError as error:  # write_entry converts its own OSErrors; anything else happened before the write step
+        print(f'fastlane-admit: ERROR: {error.strerror or error}; registry unchanged (nothing is written before every check passed)',
+              file=sys.stderr)
+        return 4
+    print(json.dumps({'result': action, 'entry': entry}, indent=1, sort_keys=True))
+    if action == 'dry-run':
+        print('DRY RUN: nothing written', file=sys.stderr)
+    return 0
+
+
+if __name__ == '__main__':
+    sys.exit(main())
