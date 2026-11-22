@@ -13,7 +13,9 @@ Checks before anything is written (a refusal exits 3 and writes nothing):
   * the order is live, not synthetic, status 'paid', paid, undelivered, unrefunded (/usr/bin/psql with a clean environment,
     benchmarkheaven_accounts);
   * <family> is in the INSTALLED native_owner.SUPPLEMENTS and the order's own model_link or code_link is one of that family's
-    reviewed repositories (native_owner.repo_key; the same rule as native_owner.match_supplement);
+    reviewed repositories (native_owner.repo_key; the native_owner.match_supplement rule), or, when no family lists it, a
+    repository of the same host/owner namespace that belongs to this family alone (version bumps as new HF repos); the
+    audit line records repo_match kind exact|namespace;
   * the family's installed module consults the registry and pins BASE_IMAGE/CONTEXT_SHA;
   * the order's frozen ~/jobs/fastlane-evaluations/<uuid>/trusted-runner/POD-RECIPE.json exists, is a regular file, and its
     image equals the module's BASE_IMAGE;
@@ -144,20 +146,36 @@ def order_problems(row) -> list[str]:
     return problems
 
 
-def family_problem(owner, supplement: dict, row: dict) -> str | None:
-    """None when the order's own repository is one the family's supplement was reviewed for (same rule as
-    native_owner.match_supplement) or a sibling repository of the SAME author namespace (host/owner), e.g. a version bump
-    published as a new Hugging Face repo (starlord-4b-v1.5-preview after starlord-4b-v1.4-preview); else the reason.
-    A different author always needs a reviewed `repos` entry. Only normalised repo keys are echoed, never raw customer text."""
+def family_match(owner, supplement: dict, row: dict) -> tuple[dict | None, str | None]:
+    """(match, problem). An exact repository match (native_owner.match_supplement rule) wins. Only when NO family lists the
+    order's repository exactly, a repository of the SAME host/owner namespace as one reviewed repo of this family (a version
+    bump published as a new Hugging Face repo) is accepted, and only if that namespace belongs to this one family alone
+    (critic r2 S-1: xsdfasfgsa and minimodels-ai hold two families each). A different author or host always needs a reviewed
+    `repos` entry. Only normalised repo keys are echoed, never raw customer text."""
     keys = {owner.repo_key(row.get('model_link')), owner.repo_key(row.get('code_link'))} - {None}
-    if keys & set(supplement['repos']):
-        return None
-    namespaces = {key.rsplit('/', 1)[0] for key in supplement['repos']}
-    if {key.rsplit('/', 1)[0] for key in keys} & namespaces:
-        return None
     shown = ', '.join(sorted(keys)) or 'none recognised'
-    return (f"the order's repositories ({shown}) are not among the repositories reviewed for family "
-            f"{supplement['family']!r} ({', '.join(supplement['repos'])})")
+    exact = keys & set(supplement['repos'])
+    if exact:
+        return {'kind': 'exact', 'keys': sorted(exact)}, None
+    other = owner.match_supplement(row)
+    if other is not None:
+        return None, (f"the order's repositories ({shown}) are reviewed for family {other['family']!r}, "
+                      f"not {supplement['family']!r}")
+    spaces = {key.rsplit('/', 1)[0] for key in keys}
+    owners = [item for item in owner.SUPPLEMENTS if {repo.rsplit('/', 1)[0] for repo in item['repos']} & spaces]
+    if len(owners) == 1 and owners[0]['family'] == supplement['family']:
+        return {'kind': 'namespace', 'keys': sorted(keys)}, None
+    if len(owners) > 1:
+        return None, (f"the order's repositories ({shown}) are not among the repositories reviewed for family "
+                      f"{supplement['family']!r}, and their namespace is shared by several families "
+                      f"({', '.join(sorted(item['family'] for item in owners))}); add the repository to one family's repos")
+    return None, (f"the order's repositories ({shown}) are not among the repositories reviewed for family "
+                  f"{supplement['family']!r} ({', '.join(supplement['repos'])})")
+
+
+def family_problem(owner, supplement: dict, row: dict) -> str | None:
+    """The refusal reason of family_match(), or None."""
+    return family_match(owner, supplement, row)[1]
 
 
 # --- module and recipe ------------------------------------------------------------------------------------------------
@@ -341,7 +359,7 @@ def admit(order_id: str, family: str, basis: str, *, dry_run: bool, by: str) -> 
     problems = order_problems(row)
     if problems:
         raise Refused('order not admissible: ' + '; '.join(problems))
-    problem = family_problem(owner, supplement, row)
+    repo_match, problem = family_match(owner, supplement, row)
     if problem:
         raise Refused(problem)
     module_name = supplement['module']
@@ -356,7 +374,7 @@ def admit(order_id: str, family: str, basis: str, *, dry_run: bool, by: str) -> 
         raise Refused(f'{module_name} would not select this order\'s recipe (kind/loader/image differ from what it accepts)')
     if dry_run:
         return 'dry-run', entry
-    evidence = {'recipe_sha256': recipe_sha256, 'review_receipts': review_receipts(registry, order_id)}
+    evidence = {'recipe_sha256': recipe_sha256, 'review_receipts': review_receipts(registry, order_id), 'repo_match': repo_match}
     action = write_entry(registry, entry, by=by, evidence=evidence)
     if action == 'unchanged':
         try:  # the stored entry is the one to show, with its original admitted_at

@@ -703,11 +703,32 @@ class CliTests(TempCase):
         with self.assertRaisesRegex(self.cli.Refused, 'not among the repositories reviewed for family'):
             self.admit(dry_run=True)
 
+    def test_r2_S1_exact_family_wins_and_shared_namespace_is_refused(self):
+        import native_owner
+        fams = {item['family']: item for item in native_owner.SUPPLEMENTS}
+        if not {'starlord', 'starlord_v2'} <= set(fams):
+            self.skipTest('starlord families not in this native_owner')
+        listed_v2 = next(r for r in fams['starlord_v2']['repos'] if r not in fams['starlord']['repos'])
+        row = dict(self.LIVE, model_link='https://' + listed_v2, code_link=None)
+        match, problem = self.cli.family_match(native_owner, fams['starlord'], row)
+        self.assertIsNone(match); self.assertIn("reviewed for family 'starlord_v2'", problem)
+        match, problem = self.cli.family_match(native_owner, fams['starlord_v2'], row)
+        self.assertEqual(match['kind'], 'exact'); self.assertIsNone(problem)
+        row = dict(self.LIVE, model_link='https://huggingface.co/xsdfasfgsa/starlord-4b-v9.9-preview', code_link=None)
+        match, problem = self.cli.family_match(native_owner, fams['starlord_v2'], row)
+        self.assertIsNone(match); self.assertIn('shared by several families', problem)
+
+    def test_r2_S2_namespace_match_is_recorded(self):
+        import native_owner
+        cue = next(item for item in native_owner.SUPPLEMENTS if item['family'] == 'cue_reflex')
+        row = dict(self.LIVE, model_link='https://huggingface.co/oidlabs/cue-reflex-4b-v0.3', code_link=None)
+        self.assertEqual(self.cli.family_match(native_owner, cue, row)[0], {'kind': 'namespace', 'keys': ['huggingface.co/oidlabs/cue-reflex-4b-v0.3']})
+
     def test_MUST1_repository_of_another_family_and_unusable_links_are_refused(self):
         import native_owner
         self.row = dict(self.LIVE, model_link='https://huggingface.co/liqiiiii/jeva-4b', code_link=None)  # jeva's repository
         self.assertEqual(native_owner.match_supplement(self.row)['family'], 'jeva')
-        with self.assertRaisesRegex(self.cli.Refused, 'not among the repositories reviewed for family .cue_reflex.'):
+        with self.assertRaisesRegex(self.cli.Refused, "reviewed for family 'jeva', not 'cue_reflex'"):
             self.admit(dry_run=True)
         for model, code in ((None, None), ('', ''), ('http://huggingface.co/oidlabs/cue-reflex-4b', None),
                             ('https://evil.example/huggingface.co/oidlabs/cue-reflex-4b', None),
