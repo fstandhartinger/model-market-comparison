@@ -4178,6 +4178,24 @@ class RecordDeliveryTests(DatabaseTestCase):
             self.record(rid, "Re: order", late)
         self.assertEqual(row(rid)["status"], "refund_due")
 
+    def test_on_time_record_is_refused_when_a_later_same_subject_send_passed_the_deadline(self):
+        rid = insert_order(paid_ago="50 hours", received_ago="50 hours")
+        early, late = self.ago(20), self.ago(0.5)
+        tool = self.audit((early, "author@example.com", "Re: order"), (late, "author@example.com", "Re: order"))
+        with mock.patch.object(ap, "MAIL_TOOL", tool), self.assertRaises(ap.PickupError):
+            self.record(rid, "Re: order", early)
+        self.assertEqual(row(rid)["status"], "paid")
+
+    def test_sent_at_needs_a_time_zone(self):
+        rid = insert_order(paid_ago="5 hours", received_ago="5 hours")
+        sent = self.ago(1)
+        naive = datetime.fromtimestamp(sent, timezone.utc).replace(tzinfo=None).isoformat()
+        with mock.patch.object(ap, "MAIL_TOOL", self.audit((sent, "author@example.com", "R"))):
+            with self.assertRaises(ap.PickupError):
+                ap.record_delivery(rid, "R", self.SHA, naive)
+            ap.record_delivery(rid, "R", self.SHA, naive + "Z")
+        self.assertEqual(row(rid)["status"], "completed")
+
     def test_two_sends_inside_the_window_are_ambiguous(self):
         rid = insert_order(paid_ago="10 hours", received_ago="10 hours")
         sent = self.ago(1)
