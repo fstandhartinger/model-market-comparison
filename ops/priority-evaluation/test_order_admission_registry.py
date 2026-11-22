@@ -716,7 +716,13 @@ class CliTests(TempCase):
         self.assertEqual(match['kind'], 'exact'); self.assertIsNone(problem)
         row = dict(self.LIVE, model_link='https://huggingface.co/xsdfasfgsa/starlord-4b-v9.9-preview', code_link=None)
         match, problem = self.cli.family_match(native_owner, fams['starlord_v2'], row)
-        self.assertIsNone(match); self.assertIn('shared by several families', problem)
+        self.assertIsNone(problem)
+        self.assertEqual((match['kind'], match['families']), ('namespace-shared', ['starlord', 'starlord_v2']))
+
+    def test_r2_S1_code_listed_order_is_refused(self):
+        self.assertEqual(self.cli.code_listed_in('00000000-0000-0000-0000-000000000000'), [])
+        listed = self.cli.code_listed_in('1dedbcf2-3577-47b9-9893-eaad445b7061')  # cue_reflex ORDER constant
+        self.assertIn('cue_reflex_runtime_supplement.py', listed)
 
     def test_r2_S2_namespace_match_is_recorded(self):
         import native_owner

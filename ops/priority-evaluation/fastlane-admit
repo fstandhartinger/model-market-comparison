@@ -165,12 +165,27 @@ def family_match(owner, supplement: dict, row: dict) -> tuple[dict | None, str |
     owners = [item for item in owner.SUPPLEMENTS if {repo.rsplit('/', 1)[0] for repo in item['repos']} & spaces]
     if len(owners) == 1 and owners[0]['family'] == supplement['family']:
         return {'kind': 'namespace', 'keys': sorted(keys)}, None
-    if len(owners) > 1:
-        return None, (f"the order's repositories ({shown}) are not among the repositories reviewed for family "
-                      f"{supplement['family']!r}, and their namespace is shared by several families "
-                      f"({', '.join(sorted(item['family'] for item in owners))}); add the repository to one family's repos")
+    if len(owners) > 1 and supplement['family'] in {item['family'] for item in owners}:
+        # e.g. xsdfasfgsa: starlord + starlord_v2 (same base image). The caller's family choice is recorded; the module's
+        # own active() must still select the frozen recipe, the order must not be code-listed in any supplement, and
+        # the public smoke runs before any sealed input.
+        return {'kind': 'namespace-shared', 'keys': sorted(keys),
+                'families': sorted(item['family'] for item in owners)}, None
     return None, (f"the order's repositories ({shown}) are not among the repositories reviewed for family "
                   f"{supplement['family']!r} ({', '.join(supplement['repos'])})")
+
+
+def code_listed_in(order_id: str) -> list[str]:
+    """Installed supplement modules whose source names this exact order id (code-listed admissions). A registry entry on
+    top of a code listing elsewhere could make two supplements build for one order (critic r2 S-1)."""
+    found = []
+    for path in sorted(RUNTIME_DIR.glob('*_runtime_supplement.py')):
+        try:
+            if order_id in path.read_text(encoding='utf-8', errors='replace'):
+                found.append(path.name)
+        except OSError:
+            found.append(path.name + ' (unreadable)')
+    return found
 
 
 def family_problem(owner, supplement: dict, row: dict) -> str | None:
@@ -363,6 +378,9 @@ def admit(order_id: str, family: str, basis: str, *, dry_run: bool, by: str) -> 
     if problem:
         raise Refused(problem)
     module_name = supplement['module']
+    listed = code_listed_in(order_id)
+    if listed:
+        raise Refused(f'order is already code-listed in {", ".join(listed)}; no registry entry is needed or allowed')
     facts = module_facts(registry, RUNTIME_DIR / module_name)
     recipe, recipe_sha256 = load_recipe(registry, order_id)
     if recipe.get('image') != facts['base_image']:
