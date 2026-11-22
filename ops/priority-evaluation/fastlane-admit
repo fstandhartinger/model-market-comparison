@@ -10,15 +10,21 @@ gate is untouched: per-order source review of customer code, the freeze, the cus
 the supplement's active() and the pod caps.
 
 Checks before anything is written (a refusal exits 3 and writes nothing):
-  * the order is live, not synthetic, status 'paid', paid, undelivered, unrefunded (psql, benchmarkheaven_accounts);
-  * <family> is in native_owner.SUPPLEMENTS and its installed module consults the registry and pins BASE_IMAGE/CONTEXT_SHA;
+  * the order is live, not synthetic, status 'paid', paid, undelivered, unrefunded (/usr/bin/psql with a clean environment,
+    benchmarkheaven_accounts);
+  * <family> is in the INSTALLED native_owner.SUPPLEMENTS and the order's own model_link or code_link is one of that family's
+    reviewed repositories (native_owner.repo_key; the same rule as native_owner.match_supplement);
+  * the family's installed module consults the registry and pins BASE_IMAGE/CONTEXT_SHA;
   * the order's frozen ~/jobs/fastlane-evaluations/<uuid>/trusted-runner/POD-RECIPE.json exists, is a regular file, and its
     image equals the module's BASE_IMAGE;
   * with the proposed entry in place, the module's own active() (supplement_active() where it has one) accepts the recipe.
 
 The command never edits code, never installs, never contacts anyone. The write is atomic (tmp + fsync + rename, mode 0600,
-flock) and appends one JSON line to order-admissions.log next to the registry. Idempotent for the same order and module bytes.
-Exit codes: 0 ok / already admitted / dry run, 2 usage, 3 refused, 4 operational error.
+flock). order-admissions.log next to the registry gets an `intent` line BEFORE the rename and a `done` line after it (an
+`aborted` line when the rename fails), each carrying the entry, the SHA-256 of the frozen POD-RECIPE.json and, when present, of
+review/NATIVE-SOURCE-REVIEW.md / review/CODE-REVIEW.md (traceability only, not a refusal). If the intent line cannot be written
+nothing is changed. Idempotent for the same order and module bytes.
+Exit codes: 0 ok / already admitted / dry run, 2 usage, 3 refused, 4 operational error (the message says whether the registry changed).
 """
 from __future__ import annotations
 
@@ -37,6 +43,10 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 DB_NAME = 'benchmarkheaven_accounts'
+PSQL = '/usr/bin/psql'
+PSQL_TIMEOUT_S = 15
+REVIEW_RECEIPTS = ('review/NATIVE-SOURCE-REVIEW.md', 'review/CODE-REVIEW.md')
+REVIEW_LIMIT = 4 * 1024 * 1024
 RECIPE_LIMIT = 1024 * 1024
 BASIS_RE = re.compile(r'[^\x00-\x1f\x7f]{1,300}')
 ACTOR_RE = re.compile(r'[A-Za-z0-9._:@/+-]{1,120}')
@@ -59,7 +69,11 @@ class Refused(Exception):
 
 
 class Failed(Exception):
-    """The check itself could not run (exit 4); nothing is written."""
+    """The check or the write could not run (exit 4). `changed` says whether the registry file was replaced."""
+
+    def __init__(self, message: str, *, changed: bool = False):
+        super().__init__(message)
+        self.changed = changed
 
 
 def now_iso() -> str:
@@ -79,17 +93,25 @@ def runtime():
 
 # --- order -------------------------------------------------------------------------------------------------------------
 
+def psql_env() -> dict:
+    """The caller's environment minus every PG* variable (host, port, service, user, options, ...), with a fixed PATH.
+    HOME stays so ~/.pgpass still works."""
+    env = {key: value for key, value in os.environ.items() if not key.startswith('PG')}
+    env['PATH'] = '/usr/bin:/bin'
+    return env
+
+
 def fetch_order(order_id: str):
     """The order's admission-relevant facts from the accounts DB, or None when no such order exists."""
     if not UUID_RE.fullmatch(order_id if isinstance(order_id, str) else ''):
         raise Refused('order id must be a canonical lower-case UUID')  # the id is interpolated into the SQL below
     sql = ("SELECT row_to_json(t) FROM (SELECT id::text AS id, status, stripe_mode, synthetic_test, "
            "paid_at IS NOT NULL AS paid, result_delivered_at IS NOT NULL AS delivered, "
-           "refund_id IS NOT NULL AS has_refund_id, refunded_at IS NOT NULL AS refunded, refund_status "
+           "refund_id IS NOT NULL AS has_refund_id, refunded_at IS NOT NULL AS refunded, refund_status, model_link, code_link "
            f"FROM bh_priority_evaluation_requests WHERE id = '{order_id}'::uuid) t")  # order_id is a validated UUID
     try:
-        done = subprocess.run(['psql', '-X', '-qAt', '-v', 'ON_ERROR_STOP=1', '-d', DB_NAME, '-c', sql],
-                              capture_output=True, text=True, timeout=30, check=False)
+        done = subprocess.run([PSQL, '-X', '-qAt', '-v', 'ON_ERROR_STOP=1', '-d', DB_NAME, '-c', sql], env=psql_env(),
+                              stdin=subprocess.DEVNULL, capture_output=True, text=True, timeout=PSQL_TIMEOUT_S, check=False)
     except (OSError, subprocess.TimeoutExpired):
         raise Failed('database check could not run') from None
     if done.returncode != 0:
@@ -120,6 +142,17 @@ def order_problems(row) -> list[str]:
     if row.get('has_refund_id') is not False or row.get('refunded') is not False or row.get('refund_status') is not None:
         problems.append('refund started or done')
     return problems
+
+
+def family_problem(owner, supplement: dict, row: dict) -> str | None:
+    """None when the order's own repository is one the family's supplement was reviewed for (same rule as
+    native_owner.match_supplement), else the reason. Only normalised repo keys are echoed, never raw customer text."""
+    keys = {owner.repo_key(row.get('model_link')), owner.repo_key(row.get('code_link'))} - {None}
+    if keys & set(supplement['repos']):
+        return None
+    shown = ', '.join(sorted(keys)) or 'none recognised'
+    return (f"the order's repositories ({shown}) are not among the repositories reviewed for family "
+            f"{supplement['family']!r} ({', '.join(supplement['repos'])})")
 
 
 # --- module and recipe ------------------------------------------------------------------------------------------------
@@ -154,18 +187,31 @@ def module_facts(registry, path: Path) -> dict:
     return {'module_sha256': hashlib.sha256(source).hexdigest(), 'base_image': base, 'context_sha256': context}
 
 
-def load_recipe(registry, order_id: str) -> dict:
+def load_recipe(registry, order_id: str) -> tuple[dict, str]:
+    """The frozen recipe and the SHA-256 of the exact bytes it was parsed from."""
     order_dir = JOBS_DIR / order_id
     if order_dir.is_symlink() or not order_dir.is_dir():
         raise Refused('order folder is missing or a symlink')
     path = order_dir / 'trusted-runner' / 'POD-RECIPE.json'
     try:
-        value = json.loads(registry.read_regular(path, RECIPE_LIMIT, host_owned=False).decode('utf-8'))
+        data = registry.read_regular(path, RECIPE_LIMIT, host_owned=False)
+        value = json.loads(data.decode('utf-8'))
     except (OSError, ValueError):
         raise Refused('frozen POD-RECIPE.json is missing, not a regular file or not JSON') from None
     if not isinstance(value, dict):
         raise Refused('frozen POD-RECIPE.json is not an object')
-    return value
+    return value, hashlib.sha256(data).hexdigest()
+
+
+def review_receipts(registry, order_id: str) -> dict:
+    """SHA-256 of each per-order review receipt that exists as a regular file (traceability only; absence is not a refusal)."""
+    found = {}
+    for name in REVIEW_RECEIPTS:
+        try:
+            found[name] = hashlib.sha256(registry.read_regular(JOBS_DIR / order_id / name, REVIEW_LIMIT, host_owned=False)).hexdigest()
+        except (OSError, ValueError):
+            continue
+    return found
 
 
 def active_with_entry(registry, module_name: str, order_id: str, recipe: dict, entry: dict) -> bool:
@@ -204,14 +250,21 @@ def audit_line(log: Path, record: dict) -> None:
         os.close(fd)
 
 
-def write_entry(registry, entry: dict, *, by: str) -> str:
-    """Add or refresh the entry under an exclusive lock; returns 'added', 'replaced' or 'unchanged'. Atomic."""
+def write_entry(registry, entry: dict, *, by: str, evidence: dict | None = None) -> str:
+    """Add or refresh the entry under an exclusive lock; returns 'added', 'replaced' or 'unchanged'. Atomic.
+
+    Audit order: `intent` line, then the rename, then a `done` line (an `aborted` line if the rename fails). Any OSError becomes
+    Failed(...) saying whether the registry file was replaced: before the rename it never was; if only the `done` line fails the
+    entry IS live and its `intent` line exists."""
     path = Path(registry.REGISTRY)
-    path.parent.mkdir(mode=0o700, parents=True, exist_ok=True)
-    lock_fd = os.open(path.with_name(path.name + '.lock'), os.O_WRONLY | os.O_CREAT | getattr(os, 'O_NOFOLLOW', 0)
-                      | getattr(os, 'O_CLOEXEC', 0), 0o600)
+    log = path.with_name(LOG_NAME)
+    stage, changed, lock_fd = 'preparing the registry directory and lock', False, None
     try:
+        path.parent.mkdir(mode=0o700, parents=True, exist_ok=True)
+        lock_fd = os.open(path.with_name(path.name + '.lock'), os.O_WRONLY | os.O_CREAT | getattr(os, 'O_NOFOLLOW', 0)
+                          | getattr(os, 'O_CLOEXEC', 0), 0o600)
         fcntl.flock(lock_fd, fcntl.LOCK_EX)
+        stage = 'reading the registry'
         try:
             current = registry.load(path)
         except FileNotFoundError:
@@ -227,8 +280,13 @@ def write_entry(registry, entry: dict, *, by: str) -> str:
             return 'unchanged'
         entries = [e for e in current['entries'] if e['order_id'] != entry['order_id']] + [entry]
         action = 'replaced' if same_order else 'added'
-        fd, tmp = tempfile.mkstemp(dir=path.parent, prefix='.order-admissions-', suffix='.tmp')
+        record = {'action': action, 'by': by, 'entry': entry, 'registry': str(path), **(evidence or {})}
+        stage = "writing the audit 'intent' line"
+        audit_line(log, dict(record, phase='intent', ts=now_iso()))
+        stage = 'writing the registry file'
+        tmp = None
         try:
+            fd, tmp = tempfile.mkstemp(dir=path.parent, prefix='.order-admissions-', suffix='.tmp')
             with os.fdopen(fd, 'w', encoding='utf-8') as handle:
                 json.dump({'schema': registry.SCHEMA, 'entries': entries}, handle, indent=1, sort_keys=True)
                 handle.write('\n')
@@ -237,18 +295,28 @@ def write_entry(registry, entry: dict, *, by: str) -> str:
             os.chmod(tmp, 0o600)
             os.replace(tmp, path)
         except BaseException:
-            Path(tmp).unlink(missing_ok=True)
+            if tmp is not None:
+                Path(tmp).unlink(missing_ok=True)
+            try:
+                audit_line(log, dict(record, phase='aborted', ts=now_iso()))
+            except OSError:
+                pass  # the dangling intent line is already enough to tell the story
             raise
+        changed = True
+        stage = 'syncing the registry directory'
         dir_fd = os.open(path.parent, os.O_RDONLY)
         try:
             os.fsync(dir_fd)
         finally:
             os.close(dir_fd)
-        audit_line(path.with_name(LOG_NAME), {'ts': now_iso(), 'action': action, 'by': by, 'entry': entry,
-                                                'registry': str(path)})
+        stage = "writing the audit 'done' line (the entry IS live and its intent line exists)"
+        audit_line(log, dict(record, phase='done', ts=now_iso()))
         return action
+    except OSError as error:
+        raise Failed(f'OSError while {stage}: {error.strerror or error}', changed=changed) from None
     finally:
-        os.close(lock_fd)
+        if lock_fd is not None:
+            os.close(lock_fd)
 
 
 # --- command ----------------------------------------------------------------------------------------------------------
@@ -264,12 +332,16 @@ def admit(order_id: str, family: str, basis: str, *, dry_run: bool, by: str) -> 
     supplement = next((item for item in owner.SUPPLEMENTS if item['family'] == family), None)
     if supplement is None:
         raise Refused(f'unknown supplement family {family!r}; known: ' + ', '.join(item['family'] for item in owner.SUPPLEMENTS))
-    problems = order_problems(fetch_order(order_id))
+    row = fetch_order(order_id)
+    problems = order_problems(row)
     if problems:
         raise Refused('order not admissible: ' + '; '.join(problems))
+    problem = family_problem(owner, supplement, row)
+    if problem:
+        raise Refused(problem)
     module_name = supplement['module']
     facts = module_facts(registry, RUNTIME_DIR / module_name)
-    recipe = load_recipe(registry, order_id)
+    recipe, recipe_sha256 = load_recipe(registry, order_id)
     if recipe.get('image') != facts['base_image']:
         raise Refused('frozen recipe image differs from the supplement BASE_IMAGE')
     entry = {'order_id': order_id, 'family': family, 'module': module_name, 'module_sha256': facts['module_sha256'],
@@ -279,7 +351,8 @@ def admit(order_id: str, family: str, basis: str, *, dry_run: bool, by: str) -> 
         raise Refused(f'{module_name} would not select this order\'s recipe (kind/loader/image differ from what it accepts)')
     if dry_run:
         return 'dry-run', entry
-    action = write_entry(registry, entry, by=by)
+    evidence = {'recipe_sha256': recipe_sha256, 'review_receipts': review_receipts(registry, order_id)}
+    action = write_entry(registry, entry, by=by, evidence=evidence)
     if action == 'unchanged':
         try:  # the stored entry is the one to show, with its original admitted_at
             entry = next(e for e in registry.load()['entries'] if e['order_id'] == order_id)
@@ -306,7 +379,11 @@ def main(argv=None) -> int:
         print(f'fastlane-admit: REFUSED: {error}', file=sys.stderr)
         return 3
     except Failed as error:
-        print(f'fastlane-admit: ERROR: {error}', file=sys.stderr)
+        print(f"fastlane-admit: ERROR: {error}; registry {'CHANGED' if error.changed else 'unchanged'}", file=sys.stderr)
+        return 4
+    except OSError as error:  # write_entry converts its own OSErrors; anything else happened before the write step
+        print(f'fastlane-admit: ERROR: {error.strerror or error}; registry unchanged (nothing is written before every check passed)',
+              file=sys.stderr)
         return 4
     print(json.dumps({'result': action, 'entry': entry}, indent=1, sort_keys=True))
     if action == 'dry-run':

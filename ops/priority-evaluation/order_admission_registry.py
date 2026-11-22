@@ -5,7 +5,9 @@ supplement's `ORDERS` set. That PR waited in the merge queue for hours (order 2b
 supplement code, its digest-pinned base image and its public build context were already reviewed and unchanged.
 
 This module lets the host admit such an order with a DATA write instead (`fastlane-admit`, audited), and every supplement's
-`active()` asks `admitted(...)` next to its code-listed orders. The entry binds the order to what was reviewed:
+`active()` asks `admitted(...)` next to its code-listed orders. Exception: chon and minimodels_hard_candy carry order-specific
+deputy exceptions in pod_runner (TTL cap / rate / long run wait) that stay exact-order on `active()`; their registry check lives
+in a separate `supplement_active()` that only the pod_runner BUILD site uses. The entry binds the order to what was reviewed:
 
 * the supplement module file (its SHA-256 as installed, so any code change invalidates every entry),
 * the digest-pinned base image and the SHA-256 of the pinned public build context (the module's own constants).
@@ -54,6 +56,11 @@ def _default_registry() -> Path:
 
 REGISTRY = Path(os.environ.get('FASTLANE_ORDER_ADMISSIONS') or _default_registry())
 
+# SHA-256 of each supplement module file, taken on the FIRST admitted() call for that path in this process and kept for
+# the life of the process (first call wins). pod_runner asks active() more than once per attempt (build site, run wait);
+# a reinstall in between must not flip the answer, and a long-running process keeps judging the module it started with.
+_MODULE_DIGESTS: dict[str, str] = {}
+
 
 def is_order_id(value: object) -> bool:
     """Canonical lower-case UUID text only (no braces, no urn prefix, no upper case, no padding)."""
@@ -87,6 +94,15 @@ def file_sha256(path: Path | str) -> str:
     return hashlib.sha256(read_regular(path, MODULE_LIMIT, host_owned=False)).hexdigest()
 
 
+def module_digest(module_file: Path | str) -> str:
+    """`file_sha256` cached per path for the life of the process (first successful call wins; failures are not cached)."""
+    key = os.fspath(module_file)
+    digest = _MODULE_DIGESTS.get(key)
+    if digest is None:
+        digest = _MODULE_DIGESTS.setdefault(key, file_sha256(key))
+    return digest
+
+
 def valid_entry(entry: object) -> bool:
     """Structure check shared with the writer: every required key is present with a plausible string value."""
     if not isinstance(entry, dict) or any(not isinstance(entry.get(key), str) or not entry[key] for key in ENTRY_KEYS):
@@ -107,9 +123,10 @@ def load(path: Path | str | None = None) -> dict[str, Any]:
 
 
 def admitted(order_id: str, module_file: str, base_image: str, context_sha256: str) -> bool:
-    """True only when the registry holds an entry for exactly this order, this module as it is now, this base and context.
+    """True only when the registry holds an entry for exactly this order, this module as first read in this process, this base and context.
 
-    Called from a supplement's `active()` as `admitted(Path(job).name, __file__, BASE_IMAGE, CONTEXT_SHA)`. Fails closed."""
+    Called from a supplement's `active()` as `admitted(Path(job).name, __file__, BASE_IMAGE, CONTEXT_SHA)`. Fails closed.
+    The module digest is computed once per process and path (`module_digest`), so all calls in one attempt agree."""
     try:
         if not (is_order_id(order_id) and isinstance(module_file, (str, os.PathLike))
                 and isinstance(base_image, str) and base_image and isinstance(context_sha256, str)
@@ -121,7 +138,7 @@ def admitted(order_id: str, module_file: str, base_image: str, context_sha256: s
                       and entry['base_image'] == base_image and entry['context_sha256'] == context_sha256]
         if not candidates:
             return False
-        digest = file_sha256(module_file)
+        digest = module_digest(module_file)
         return any(entry['module_sha256'] == digest for entry in candidates)
     except Exception:  # noqa: BLE001 - fail closed; a registry problem must never break or widen a run
         return False

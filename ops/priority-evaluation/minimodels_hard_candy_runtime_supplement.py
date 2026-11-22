@@ -89,12 +89,18 @@ def sha256(path):
         return _sha256_stream(stream)
 
 def active(job, recipe):
-    """Only this order's reviewed http_typesafe recipe on the exact pinned base selects the supplement.
-    A host-registry admission (order_admission_registry, `fastlane-admit`) counts like a listed order."""
-    return (isinstance(recipe, dict) and recipe.get('kind') == 'http_typesafe'
-            and recipe.get('image') == BASE_IMAGE
-            and (Path(job).name == ORDER
-                 or order_admission_registry.admitted(Path(job).name, __file__, BASE_IMAGE, CONTEXT_SHA)))
+    """Only this order's reviewed http_typesafe recipe on the exact pinned base selects the supplement."""
+    return (Path(job).name == ORDER and isinstance(recipe, dict) and recipe.get('kind') == 'http_typesafe'
+            and recipe.get('image') == BASE_IMAGE)
+
+def supplement_active(job, recipe):
+    """Plain build admission: the exact order (active) or an order the host registry admitted
+    (order_admission_registry, `fastlane-admit`). active() alone carries this order's deputy exception (the run wait
+    bounded by the attempt TTL in pod_runner); an admitted order never inherits it."""
+    return (active(job, recipe)
+            or (isinstance(recipe, dict) and recipe.get('kind') == 'http_typesafe'
+                and recipe.get('image') == BASE_IMAGE
+                and order_admission_registry.admitted(Path(job).name, __file__, BASE_IMAGE, CONTEXT_SHA)))
 
 def check_context(context=CONTEXT):
     """The context must be byte-identical to the pinned public-only inventory."""

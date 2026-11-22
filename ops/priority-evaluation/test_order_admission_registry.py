@@ -3,6 +3,7 @@
 Synthetic only: no database, no pod, no customer code; the real registry under ~/.local/state is never read or written.
 Run: python3 -m pytest -q ops/priority-evaluation/test_order_admission_registry.py
 """
+import hashlib
 import importlib
 import importlib.machinery
 import importlib.util
@@ -61,6 +62,12 @@ class TempCase(unittest.TestCase):
         patcher = mock.patch.object(R, 'REGISTRY', self.registry_path)
         patcher.start()
         self.addCleanup(patcher.stop)
+        self.forget_digests()  # a test starts like a fresh process: nothing cached
+        self.addCleanup(self.forget_digests)
+
+    @staticmethod
+    def forget_digests():
+        R._MODULE_DIGESTS.clear()
 
     def module_file(self, text='BASE_IMAGE = "x"\n'):
         path = self.root / 'fake_runtime_supplement.py'
@@ -114,9 +121,37 @@ class AdmittedTests(TempCase):
         self.write([self.entry(module=module)])
         self.assertTrue(self.check(module=module))
         module.write_text('BASE_IMAGE = "y"\n')
+        self.forget_digests()  # a new process reads the changed file
         self.assertFalse(self.check(module=module))
         module.write_text('BASE_IMAGE = "x"\n')
+        self.forget_digests()
         self.assertTrue(self.check(module=module))
+
+    def test_module_digest_is_taken_once_per_process_and_path(self):
+        """S-4: a reinstall between two active() calls of one attempt must not flip the decision (first call wins)."""
+        module = self.module_file('BASE_IMAGE = "x"\n')
+        self.write([self.entry(module=module)])
+        self.assertTrue(self.check(module=module))
+        module.write_text('BASE_IMAGE = "x"\n# docstring-only reinstall\n')
+        self.assertTrue(self.check(module=module))  # same process: still the module the first call judged
+        # the other direction: an entry made for the NEW bytes is not accepted by a process that judged the old ones
+        self.write([self.entry(module=module)])
+        self.assertFalse(self.check(module=module))
+        self.forget_digests()  # only a new process picks the new bytes up
+        self.assertTrue(self.check(module=module))
+
+    def test_module_digest_cache_is_per_path_and_does_not_cache_failures(self):
+        module = self.module_file('BASE_IMAGE = "x"\n')
+        other = self.root / 'other_runtime_supplement.py'
+        ghost = dict(self.entry(module=module), module=other.name)  # an entry for a module file that is not there (yet)
+        self.write([ghost])
+        self.assertFalse(self.check(module=other))  # missing file: False, and nothing cached for it
+        self.assertEqual(R._MODULE_DIGESTS, {})
+        other.write_text('BASE_IMAGE = "z"\n')
+        self.write([self.entry(module=module), self.entry(order=OTHER, module=other)])
+        self.assertTrue(self.check(order=OTHER, module=other))
+        self.assertTrue(self.check(module=module))
+        self.assertEqual(set(R._MODULE_DIGESTS), {str(module), str(other)})
 
     def test_wrong_base_and_context(self):
         module = self.module_file()
@@ -299,11 +334,35 @@ class SupplementTests(TempCase):
         self.assertEqual(pod_runner._order_ttl_cap(exact, recipe), C.TTL_CAP_HOURS)
         self.assertEqual(pod_runner._attempt_rate(recipe, exact), C.ATTEMPT_RATE_USD)
 
-    def test_pod_runner_uses_supplement_active_only_at_the_chon_build_site(self):
+    def test_hard_candy_exact_order_exception_is_not_inherited(self):
+        """MUST-2: the TTL-bounded run wait (pod_runner, wait_for_container) belongs to order 9aa6673b alone."""
+        import minimodels_hard_candy_runtime_supplement as H
+        self.admit(H)
+        job = '/home/flori/jobs/fastlane-evaluations/' + ORDER
+        recipe = recipe_for(H)
+        self.assertTrue(H.supplement_active(job, recipe))  # the registry order still gets the build
+        self.assertFalse(H.active(job, recipe))  # ...but not the exact-order run wait
+        exact = '/home/flori/jobs/fastlane-evaluations/' + H.ORDER
+        self.assertTrue(H.active(exact, recipe))
+        self.assertTrue(H.supplement_active(exact, recipe))
+        for other in (dict(recipe, image=BASE), dict(recipe, kind='python_inprocess'), None, 'x'):
+            self.assertFalse(H.supplement_active(job, other))
+            self.assertFalse(H.active(job, other))
+        self.assertFalse(H.active('/jobs/' + OTHER, recipe))
+
+    def test_pod_runner_uses_supplement_active_only_at_the_build_sites(self):
         text = (HERE / 'pod_runner.py').read_text()
         self.assertEqual(text.count('chon_runtime_supplement.supplement_active('), 1)
         # TTL cap, attempt rate and long run wait: exact order only
         self.assertEqual(text.count('chon_runtime_supplement.active('), 3)
+        self.assertEqual(text.count('minimodels_hard_candy_runtime_supplement.supplement_active('), 1)
+        self.assertEqual(text.count('minimodels_hard_candy_runtime_supplement.active('), 1)
+        # each call sits at the right place: supplement_active() guards build(), active() guards wait_for_container()
+        build = text.index('minimodels_hard_candy_runtime_supplement.build(')
+        self.assertIn('hard_candy_runtime_supplement.supplement_active(', text[build - 700:build])
+        wait = text.index('minimodels_hard_candy_runtime_supplement.wait_for_container(')
+        self.assertIn('hard_candy_runtime_supplement.active(', text[wait - 400:wait])
+        self.assertNotIn('supplement_active(', text[wait - 400:wait])
 
     def test_ryotide_and_other_order_specific_flows_do_not_consult_the_registry(self):
         for name in NOT_EXTENDED:
@@ -338,7 +397,8 @@ class SupplementTests(TempCase):
 
 class CliTests(TempCase):
     LIVE = {'id': ORDER, 'status': 'paid', 'stripe_mode': 'live', 'synthetic_test': False, 'paid': True, 'delivered': False,
-            'has_refund_id': False, 'refunded': False, 'refund_status': None}
+            'has_refund_id': False, 'refunded': False, 'refund_status': None,
+            'model_link': 'https://huggingface.co/oidlabs/cue-reflex-4b', 'code_link': None}
 
     def setUp(self):
         super().setUp()
@@ -369,6 +429,9 @@ class CliTests(TempCase):
     def registry_entries(self):
         return json.loads(self.registry_path.read_text())['entries']
 
+    def audit_lines(self):
+        return [json.loads(line) for line in self.log.read_text().splitlines()]
+
     def test_admit_writes_entry_audit_line_and_makes_the_supplement_active(self):
         action, entry = self.admit()
         self.assertEqual(action, 'added')
@@ -381,10 +444,10 @@ class CliTests(TempCase):
         self.assertEqual((entry['admitted_by'], entry['basis']), ('unit-test', 'board #1 unit test'))
         self.assertRegex(entry['admitted_at'], r'^\d{4}-\d\d-\d\dT\d\d:\d\d:\d\dZ$')
         self.assertEqual(stat.S_IMODE(os.stat(self.registry_path).st_mode), 0o600)
-        lines = self.log.read_text().splitlines()
-        self.assertEqual(len(lines), 1)
-        audit = json.loads(lines[0])
-        self.assertEqual((audit['action'], audit['by'], audit['entry']), ('added', 'unit-test', entry))
+        audits = self.audit_lines()
+        self.assertEqual([a['phase'] for a in audits], ['intent', 'done'])
+        for audit in audits:
+            self.assertEqual((audit['action'], audit['by'], audit['entry']), ('added', 'unit-test', entry))
         self.assertEqual(stat.S_IMODE(os.stat(self.log).st_mode), 0o600)
         self.assertTrue(self.S.active('/home/flori/jobs/fastlane-evaluations/' + ORDER, {'kind': HTTP, 'image': self.S.BASE_IMAGE}))
         self.assertFalse(self.S.active('/jobs/' + OTHER, {'kind': HTTP, 'image': self.S.BASE_IMAGE}))
@@ -395,7 +458,7 @@ class CliTests(TempCase):
         self.assertEqual(action, 'unchanged')
         self.assertEqual(again, first)  # the original entry, not a rewritten one
         self.assertEqual(len(self.registry_entries()), 1)
-        self.assertEqual(len(self.log.read_text().splitlines()), 1)
+        self.assertEqual([a['phase'] for a in self.audit_lines()], ['intent', 'done'])  # nothing new for an unchanged entry
 
     def test_changed_module_bytes_replace_the_stale_entry(self):
         self.admit()
@@ -413,6 +476,8 @@ class CliTests(TempCase):
         self.assertEqual(action, 'replaced')
         self.assertNotEqual(fresh['module_sha256'], stale['module_sha256'])
         self.assertEqual(self.registry_entries(), [fresh])
+        self.assertEqual([(a['action'], a['phase']) for a in self.audit_lines()],
+                         [('added', 'intent'), ('added', 'done'), ('replaced', 'intent'), ('replaced', 'done')])
 
     def test_dry_run_writes_nothing(self):
         action, entry = self.admit(dry_run=True)
@@ -465,6 +530,7 @@ class CliTests(TempCase):
         self.assertFalse(self.registry_path.exists())
 
     def test_refuses_order_specific_supplements_that_do_not_use_the_registry(self):
+        self.row = dict(self.LIVE, model_link=None, code_link='https://github.com/csabag/ryotide')  # ryotide's own repository
         with self.assertRaisesRegex(self.cli.Refused, 'BASE_IMAGE|registry'):
             self.admit(family='ryotide')
         self.assertFalse(self.registry_path.exists())
@@ -479,6 +545,7 @@ class CliTests(TempCase):
 
     def test_one_supplement_per_order(self):
         self.admit()
+        self.row = dict(self.LIVE, code_link='https://github.com/liqiiiii/jeva')  # also a jeva repository
         self.freeze_recipe({'kind': HTTP, 'image': supplement('jeva').BASE_IMAGE})
         with self.assertRaisesRegex(self.cli.Refused, 'one supplement per order'):
             self.admit(family='jeva')
@@ -500,13 +567,157 @@ class CliTests(TempCase):
         self.admit()
         before = self.registry_path.read_bytes()
         self.freeze_recipe({'kind': HTTP, 'image': self.S.BASE_IMAGE}, order=OTHER)
+        self.row = dict(self.LIVE, id=OTHER)
         with mock.patch.object(self.cli.os, 'replace', side_effect=OSError('disk full')):
-            with self.assertRaises(OSError):
+            with self.assertRaises(self.cli.Failed) as stop:
                 self.cli.admit(OTHER, 'cue_reflex', 'b', dry_run=False, by='t')
+        self.assertFalse(stop.exception.changed)
         self.assertEqual(self.registry_path.read_bytes(), before)  # old file intact
         leftovers = [p.name for p in self.registry_path.parent.iterdir() if p.name.startswith('.order-admissions-')]
         self.assertEqual(leftovers, [])
-        self.assertEqual(len(self.log.read_text().splitlines()), 1)  # no audit line for the failed write
+        phases = [(a['entry']['order_id'], a['phase']) for a in self.audit_lines()]
+        self.assertEqual(phases, [(ORDER, 'intent'), (ORDER, 'done'), (OTHER, 'intent'), (OTHER, 'aborted')])
+
+    def test_S2_intent_line_failure_changes_nothing_and_exits_4(self):
+        """Was test_GAP_audit_failure_after_rename...: the entry used to go live before its audit line."""
+        with mock.patch.object(self.cli, 'audit_line', side_effect=OSError(28, 'No space left on device')):
+            with self.assertRaises(self.cli.Failed) as stop:
+                self.admit()
+        self.assertFalse(stop.exception.changed)
+        self.assertIn("'intent' line", str(stop.exception))
+        self.assertFalse(self.registry_path.exists())  # no entry without an audit line
+        self.assertFalse(self.log.exists())
+
+    def test_S2_done_line_failure_reports_that_the_entry_is_live_and_audited_by_its_intent_line(self):
+        real = self.cli.audit_line
+        calls = []
+
+        def flaky(log, record):
+            calls.append(record['phase'])
+            if record['phase'] == 'done':
+                raise OSError(13, 'Permission denied')
+            real(log, record)
+        with mock.patch.object(self.cli, 'audit_line', side_effect=flaky):
+            with self.assertRaises(self.cli.Failed) as stop:
+                self.admit()
+        self.assertTrue(stop.exception.changed)
+        self.assertEqual(calls, ['intent', 'done'])
+        self.assertEqual([e['order_id'] for e in self.registry_entries()], [ORDER])
+        self.assertEqual([a['phase'] for a in self.audit_lines()], ['intent'])  # the entry has its audit line
+        self.assertIn('IS live', str(stop.exception))
+
+    def test_S2_main_turns_oserror_into_exit_4_and_says_whether_the_registry_changed(self):
+        def run(*argv):
+            err = mock.MagicMock()
+            with mock.patch.object(sys, 'stdout', mock.MagicMock()), mock.patch.object(sys, 'stderr', err):
+                code = self.cli.main(list(argv))
+            return code, ''.join(c.args[0] for c in err.write.call_args_list)
+        argv = (ORDER, 'cue_reflex', '--basis', 'b', '--by', 't')
+        real_audit = self.cli.audit_line
+        with mock.patch.object(self.cli, 'audit_line', side_effect=OSError(28, 'No space left on device')):
+            code, err = run(*argv)
+        self.assertEqual(code, 4)
+        self.assertIn('registry unchanged', err)
+        self.assertNotIn('Traceback', err)
+
+        def only_done_fails(log, record):
+            if record['phase'] == 'done':
+                raise OSError(5, 'Input/output error')
+            return real_audit(log, record)
+        with mock.patch.object(self.cli, 'audit_line', side_effect=only_done_fails):
+            code, err = run(*argv)
+        self.assertEqual(code, 4)
+        self.assertIn('registry CHANGED', err)
+        # OSError before the write step (here: the frozen recipe cannot be read) is exit 4 as well, never a traceback
+        with mock.patch.object(self.cli, 'load_recipe', side_effect=PermissionError(13, 'Permission denied')):
+            code, err = run(OTHER, 'cue_reflex', '--basis', 'b', '--by', 't')
+        self.assertEqual(code, 4)
+        self.assertIn('registry unchanged', err)
+
+    def test_S2_oserror_while_preparing_the_registry_directory_is_exit_4_unchanged(self):
+        blocker = self.registry_path.parent
+        blocker.parent.mkdir(parents=True, exist_ok=True)
+        blocker.write_text('a file where the state directory should be')
+        with self.assertRaises(self.cli.Failed) as stop:
+            self.admit()
+        self.assertFalse(stop.exception.changed)
+        self.assertIn('OSError while preparing', str(stop.exception))
+
+    def test_S3_audit_lines_carry_the_recipe_and_review_receipt_hashes(self):
+        recipe_path = self.root / 'jobs' / ORDER / 'trusted-runner' / 'POD-RECIPE.json'
+        review = self.root / 'jobs' / ORDER / 'review'
+        review.mkdir(parents=True)
+        (review / 'NATIVE-SOURCE-REVIEW.md').write_text('PASS\n')
+        (review / 'CODE-REVIEW.md').write_text('PASS too\n')
+        self.admit()
+        for audit in self.audit_lines():
+            self.assertEqual(audit['recipe_sha256'], hashlib.sha256(recipe_path.read_bytes()).hexdigest())
+            self.assertEqual(audit['review_receipts'], {
+                'review/NATIVE-SOURCE-REVIEW.md': hashlib.sha256(b'PASS\n').hexdigest(),
+                'review/CODE-REVIEW.md': hashlib.sha256(b'PASS too\n').hexdigest()})
+
+    def test_S3_missing_review_receipt_is_recorded_as_absent_and_does_not_refuse(self):
+        recipe_path = self.root / 'jobs' / ORDER / 'trusted-runner' / 'POD-RECIPE.json'
+        action, _ = self.admit()
+        self.assertEqual(action, 'added')
+        audit = self.audit_lines()[-1]
+        self.assertEqual(audit['review_receipts'], {})
+        self.assertEqual(audit['recipe_sha256'], hashlib.sha256(recipe_path.read_bytes()).hexdigest())
+        # a receipt that is a symlink or a directory does not count as present
+        order_dir = self.root / 'jobs' / ORDER / 'review'
+        order_dir.mkdir()
+        real = self.root / 'real-review.md'
+        real.write_text('x')
+        (order_dir / 'CODE-REVIEW.md').symlink_to(real)
+        (order_dir / 'NATIVE-SOURCE-REVIEW.md').mkdir()
+        self.assertEqual(self.cli.review_receipts(R, ORDER), {})
+
+    def test_MUST1_foreign_repository_is_refused_and_a_listed_repository_accepted(self):
+        """Was test_GAP_family_is_not_checked_against_the_orders_repository."""
+        import native_owner
+        self.row = dict(self.LIVE, model_link='https://huggingface.co/someone-else/unrelated-model', code_link=None)
+        self.assertIsNone(native_owner.match_supplement(self.row))
+        with self.assertRaisesRegex(self.cli.Refused, 'not among the repositories reviewed for family'):
+            self.admit(dry_run=True)
+        with self.assertRaises(self.cli.Refused):
+            self.admit()
+        self.assertFalse(self.registry_path.exists())
+        self.assertFalse(self.log.exists())
+        # a listed repository is accepted, by model_link ...
+        self.row = dict(self.LIVE, model_link='https://huggingface.co/oidlabs/cue-reflex-4b/tree/main', code_link=None)
+        self.assertEqual(self.admit(dry_run=True)[0], 'dry-run')
+        # ... and by code_link alone, with an unrelated model_link
+        family = next(item for item in native_owner.SUPPLEMENTS if item['family'] == 'jeva')
+        self.freeze_recipe({'kind': HTTP, 'image': supplement('jeva').BASE_IMAGE})
+        self.row = dict(self.LIVE, model_link='https://huggingface.co/x/y', code_link='https://github.com/' + family['repos'][1].split('/', 1)[1])
+        self.assertEqual(self.admit(family='jeva', dry_run=True)[0], 'dry-run')
+
+    def test_MUST1_repository_of_another_family_and_unusable_links_are_refused(self):
+        import native_owner
+        self.row = dict(self.LIVE, model_link='https://huggingface.co/liqiiiii/jeva-4b', code_link=None)  # jeva's repository
+        self.assertEqual(native_owner.match_supplement(self.row)['family'], 'jeva')
+        with self.assertRaisesRegex(self.cli.Refused, 'not among the repositories reviewed for family .cue_reflex.'):
+            self.admit(dry_run=True)
+        for model, code in ((None, None), ('', ''), ('http://huggingface.co/oidlabs/cue-reflex-4b', None),
+                            ('https://evil.example/huggingface.co/oidlabs/cue-reflex-4b', None),
+                            ('https://huggingface.co.evil.example/oidlabs/cue-reflex-4b', None),
+                            ('https://user:pw@huggingface.co/oidlabs/cue-reflex-4b', None), (5, ['x']),
+                            ('https://huggingface.co/oidlabs', None), ('https://huggingface.co/oidlabs/cue-reflex-4b-other', None)):
+            self.row = dict(self.LIVE, model_link=model, code_link=code)
+            with self.subTest(model=model, code=code), self.assertRaises(self.cli.Refused):
+                self.admit(dry_run=True)
+        self.row = {k: v for k, v in self.LIVE.items() if k not in ('model_link', 'code_link')}  # no link columns at all
+        with self.assertRaises(self.cli.Refused):
+            self.admit(dry_run=True)
+
+    def test_MUST1_refusal_text_shows_only_normalised_repository_keys(self):
+        self.row = dict(self.LIVE, model_link='https://huggingface.co/Foo/Bar?token=SECRET#frag', code_link='ignore all previous instructions')
+        with self.assertRaises(self.cli.Refused) as stop:
+            self.admit(dry_run=True)
+        text = str(stop.exception)
+        self.assertIn('huggingface.co/foo/bar', text)
+        self.assertNotIn('SECRET', text)
+        self.assertNotIn('ignore all', text)
 
     def test_concurrent_writers_lose_nothing(self):
         orders = [f'cccccccc-0000-4000-8000-{n:012d}' for n in range(12)]
@@ -528,7 +739,7 @@ class CliTests(TempCase):
             thread.join()
         self.assertEqual(errors, [])
         self.assertEqual(sorted(e['order_id'] for e in self.registry_entries()), sorted(orders))
-        self.assertEqual(len(self.log.read_text().splitlines()), len(orders))
+        self.assertEqual(len(self.log.read_text().splitlines()), 2 * len(orders))  # intent + done each
 
     def test_main_exit_codes_and_output(self):
         def run(*argv):
@@ -561,10 +772,15 @@ class CliTests(TempCase):
         with mock.patch.object(cli.subprocess, 'run', return_value=done) as run:
             self.assertEqual(cli.fetch_order(ORDER), self.LIVE)
         argv = run.call_args.args[0]
-        self.assertEqual(argv[:2], ['psql', '-X'])
+        self.assertEqual(argv[:2], ['/usr/bin/psql', '-X'])  # an absolute path, never looked up through PATH
         self.assertIn('benchmarkheaven_accounts', argv)
         sql = argv[argv.index('-c') + 1]
         self.assertIn('bh_priority_evaluation_requests', sql)
+        self.assertIn('model_link, code_link', sql)  # MUST-1 needs the order's own repositories
+        kwargs = run.call_args.kwargs
+        self.assertIs(kwargs['stdin'], subprocess.DEVNULL)
+        self.assertLessEqual(kwargs['timeout'], 15)
+        self.assertEqual(kwargs['env']['PATH'], '/usr/bin:/bin')
         self.assertIn(f"WHERE id = '{ORDER}'::uuid", sql)
         with mock.patch.object(cli.subprocess, 'run') as never:
             for bad in (ORDER + "'; drop table x; --", ORDER.upper(), '', None, 5):
@@ -579,9 +795,38 @@ class CliTests(TempCase):
         with mock.patch.object(cli.subprocess, 'run', return_value=subprocess.CompletedProcess([], 0, stdout='garbage', stderr='')):
             with self.assertRaises(cli.Failed):
                 cli.fetch_order(ORDER)
-        with mock.patch.object(cli.subprocess, 'run', side_effect=subprocess.TimeoutExpired('psql', 30)):
+        with mock.patch.object(cli.subprocess, 'run', side_effect=subprocess.TimeoutExpired('psql', 15)):
             with self.assertRaises(cli.Failed):
                 cli.fetch_order(ORDER)
+
+    def test_S1_psql_runs_with_a_clean_environment_and_a_fixed_path(self):
+        """Was test_GAP_psql_resolved_from_PATH_and_PG_env_is_inherited. A real child process, a stand-in for /usr/bin/psql."""
+        cli = load_cli()  # setUp replaced fetch_order on self.cli with the fixture row
+        fake = self.root / 'fake-psql'
+        fake.write_text('#!/usr/bin/python3\nimport json, os, sys\n'
+                        'print(json.dumps({"env": dict(os.environ), "argv": sys.argv[1:], "tty": os.isatty(0)}))\n')
+        fake.chmod(0o700)
+        evil_bin = self.root / 'bin'
+        evil_bin.mkdir()
+        shim = evil_bin / 'psql'
+        shim.write_text('#!/bin/sh\necho \'{"id":"%s","status":"paid"}\'\n' % ORDER)
+        shim.chmod(0o700)
+        env = {'PATH': f'{evil_bin}:/usr/bin', 'HOME': '/home/someone', 'PGHOST': 'staging.example', 'PGSERVICE': 'staging',
+               'PGOPTIONS': '-c x=1', 'PGPASSFILE': '/tmp/other', 'PGDATABASE': 'other', 'KEEP_ME': '1'}
+        with mock.patch.dict(os.environ, env, clear=True), mock.patch.object(cli, 'PSQL', str(fake)):
+            seen = cli.fetch_order(ORDER)
+        self.assertEqual(seen['env']['PATH'], '/usr/bin:/bin')
+        self.assertEqual(seen['env']['HOME'], '/home/someone')  # kept, so ~/.pgpass still works
+        self.assertEqual(seen['env']['KEEP_ME'], '1')
+        self.assertEqual([k for k in seen['env'] if k.startswith('PG')], [])
+        self.assertIn('benchmarkheaven_accounts', seen['argv'])
+        # the real command path is pinned too: with a psql on PATH, the answer cannot come from it
+        self.assertFalse(seen['tty'])
+        self.assertEqual(cli.PSQL, '/usr/bin/psql')
+        with mock.patch.dict(os.environ, {'PATH': f'{evil_bin}:/usr/bin'}), \
+                mock.patch.object(cli.subprocess, 'run', return_value=subprocess.CompletedProcess([], 0, stdout='', stderr='')) as run:
+            cli.fetch_order(ORDER)
+        self.assertEqual(run.call_args.args[0][0], '/usr/bin/psql')
 
     def test_the_command_file_is_executable_stdlib_only_python(self):
         path = HERE / 'fastlane-admit'
