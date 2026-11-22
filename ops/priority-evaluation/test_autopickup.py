@@ -14,6 +14,7 @@ os.environ["FASTLANE_HOST_EVIDENCE_OFFLINE"] = "1"  # host_evidence never reache
 import contextlib
 import hashlib
 import importlib
+import io
 import json
 import os
 import re
@@ -3107,6 +3108,295 @@ class SlaCardsTests(DatabaseTestCase):
         other = insert_order(paid_ago="49 hours", received_ago="49 hours")
         ap.sql(f"UPDATE {ap.TABLE} SET refund_decision='approved' WHERE id='{other}'")
         self.assertEqual(ap.sla_decision_rows(None, ap.JOB_ROOT), [])
+
+
+class Sla36EtaTests(DatabaseTestCase):
+    """Proposal 6 (DECISIONS fastlane-zero-wait-1122): the SLA decision card fires at 36 h, and the delay note mails
+    the order owner's ETA (`set-eta`) instead of the fixed deadline + 24 h."""
+
+    def setUp(self) -> None:
+        super().setUp()
+        set_cutover(datetime.now(timezone.utc) - timedelta(days=4))
+
+    def eta_in(self, hours: float = 12) -> datetime:
+        return (datetime.now(timezone.utc) + timedelta(hours=hours)).replace(microsecond=0)
+
+    def default_eta_text(self, rid: str) -> str:
+        return (ap.deadline_for(row(rid)) + timedelta(hours=24)).strftime("%d %b %H:%M UTC")
+
+    def assert_refused(self, rid: str, eta: str, message: str) -> None:
+        with self.assertRaises(ap.PickupError) as ctx:
+            ap.set_eta(rid, eta)
+        self.assertIn(message, str(ctx.exception))
+        self.assertNotIn("owner_eta", ap.load_state(rid))
+
+    def _decide(self, rid: str, decision: str) -> None:
+        root = ap.STATE_ROOT / "sla-decisions"
+        root.mkdir(parents=True, exist_ok=True)
+        (root / f"{rid}.json").write_text(json.dumps({
+            "request_id": rid, "kind": "sla_40h", "decision": decision,
+            "message_id": 777001, "update_id": 888001, "card": 1,
+            "delay_key": "sla_x_delay", "refund_key": "sla_x_refund", "noaction_key": "sla_x_noaction"}))
+
+    # -- the 36 h threshold ---------------------------------------------------------------------------------------
+
+    def test_threshold_is_one_named_constant_of_36_hours(self):
+        self.assertEqual(ap.sla_decision.SLA_DECISION_HOURS, 36)
+        due = insert_order(paid_ago="36 hours", received_ago="36 hours")
+        self.assertEqual([r["id"] for r in ap.sla_decision_rows(None, ap.JOB_ROOT)], [due])
+        with mock.patch.object(ap.sla_decision, "SLA_DECISION_HOURS", 40):  # the SQL reads the constant
+            self.assertEqual(ap.sla_decision_rows(None, ap.JOB_ROOT), [])
+
+    def test_36h_boundary_no_card_at_35h59_card_at_36h00(self):
+        early = insert_order(paid_ago="35 hours 59 minutes", received_ago="36 hours")
+        self.assertEqual(ap.sla_decision_rows(None, ap.JOB_ROOT), [])
+        self.assertEqual(ap.sla_decisions(None, ap.JOB_ROOT, FakeEffects()), 0)
+        ap.sql(f"UPDATE {ap.TABLE} SET paid_at=now() - interval '36 hours' WHERE id='{early}'")
+        self.assertEqual([r["id"] for r in ap.sla_decision_rows(None, ap.JOB_ROOT)], [early])
+        self.assertEqual(ap.sla_decisions(None, ap.JOB_ROOT, FakeEffects()), 1)
+
+    def test_36h_boundary_counts_the_paused_clock(self):
+        rid = insert_order(paid_ago="38 hours", received_ago="38 hours")
+        ap.sql(f"UPDATE {ap.TABLE} SET sla_paused_seconds=3*3600 WHERE id='{rid}'")  # 38 h - 3 h pause = 35 h
+        self.assertEqual(ap.sla_decision_rows(None, ap.JOB_ROOT), [])
+        ap.sql(f"UPDATE {ap.TABLE} SET sla_paused_seconds=2*3600 WHERE id='{rid}'")  # 36 h
+        self.assertEqual([r["id"] for r in ap.sla_decision_rows(None, ap.JOB_ROOT)], [rid])
+
+    def test_texts_name_the_constant_not_40(self):
+        rid = insert_order(paid_ago="37 hours", received_ago="37 hours")
+        text = ap.sla_decision.caption(row(rid), self.default_eta_text(rid))
+        self.assertIn("No result 36 h after payment", text)
+        self.assertIn("No result 36 hours after payment", text)
+        rid2 = "11111111-1111-4111-8111-111111111111"
+        texts = [ap.sla40_handoff_text(rid2, "refund_tap_unapplied", {"stray_reason": reason})
+                 for reason in ("decided_elsewhere", "order_changed", "delivered")]
+        texts += [ap.sla40_handoff_text(rid2, "refund_refused_final", {"refund_refused": {"outcome": outcome}})
+                  for outcome in ("decided_elsewhere", "order_changed", "applied")]
+        texts += [ap.sla40_handoff_text(rid2, "refund_refused", {"refund_refused": {"why": why}})
+                  for why in ("hold", "delivered", "changed")]
+        texts.append(text)
+        for item in texts:
+            self.assertIsNone(re.search(r"\b40\b", item), item)
+        self.assertIn("first 36 h check", texts[6])
+        self.assertIn("about 36 h later", texts[6])
+        self.assertIn("returns to the 36 h step", texts[7])
+        for item in texts[:8]:
+            self.assertIn("36-hour card", item)
+
+    def test_board_notes_for_the_card_outcomes_say_36_hour(self):
+        for decision, phrase in (("delay_note", "sent the delay note"), ("no_action", "chose 'No action'"),
+                                 ("refund", "approved a full refund")):
+            rid = insert_order(paid_ago="37 hours", received_ago="37 hours")
+            self._decide(rid, decision)
+            fx = FakeEffects()
+            ap.sla_decisions(None, ap.JOB_ROOT, fx)
+            self.assertTrue(any(phrase in note and "36-hour decision card" in note for note in fx.boards), decision)
+            self.assertFalse(any("40-hour" in note for note in fx.boards), decision)
+            ap.sql(f"TRUNCATE {ap.TABLE} CASCADE; TRUNCATE {ap.EVENTS_TABLE}")
+
+    # -- set-eta --------------------------------------------------------------------------------------------------
+
+    def test_set_eta_stores_eta_and_set_at_in_the_order_state(self):
+        rid = insert_order(paid_ago="37 hours", received_ago="37 hours")
+        eta, now = self.eta_in(12), datetime.now(timezone.utc)
+        message = ap.set_eta(rid, ap.iso(eta), now)
+        self.assertIn("owner ETA " + eta.strftime("%d %b %H:%M UTC"), message)
+        self.assertEqual(ap.load_state(rid)["owner_eta"], {"eta": ap.iso(eta), "set_at": ap.iso(now)})
+        self.assertEqual(json.loads(ap.state_path(rid).read_text())["owner_eta"], {"eta": ap.iso(eta), "set_at": ap.iso(now)})
+        # a later call replaces it; other state is kept
+        state = ap.load_state(rid)
+        state["alerts"]["kept"] = True
+        ap.save_state(state)
+        later = self.eta_in(20)
+        ap.set_eta(rid, ap.iso(later))
+        self.assertEqual(ap.load_state(rid)["owner_eta"]["eta"], ap.iso(later))
+        self.assertTrue(ap.load_state(rid)["alerts"]["kept"])
+
+    def test_set_eta_accepts_z_and_offset_forms_and_stores_utc(self):
+        rid = insert_order(paid_ago="37 hours", received_ago="37 hours")
+        eta = self.eta_in(12)
+        ap.set_eta(rid, eta.strftime("%Y-%m-%dT%H:%M:%SZ"))
+        self.assertEqual(ap.load_state(rid)["owner_eta"]["eta"], ap.iso(eta))
+        ap.set_eta(rid, eta.astimezone(timezone(timedelta(hours=2))).isoformat())
+        self.assertEqual(ap.load_state(rid)["owner_eta"]["eta"], ap.iso(eta))
+
+    def test_set_eta_refuses_an_order_that_is_not_live_or_is_synthetic(self):
+        eta = ap.iso(self.eta_in(12))
+        unknown = str(uuid.uuid4())
+        with self.assertRaises(ap.PickupError):
+            ap.set_eta(unknown, eta)
+        self.assertFalse(ap.state_path(unknown).exists())
+        test_mode = insert_order(paid_ago="37 hours", received_ago="37 hours", stripe_mode="test")
+        self.assert_refused(test_mode, eta, "live, non-synthetic")
+        synthetic = insert_order(paid_ago="37 hours", received_ago="37 hours", synthetic=True)
+        self.assert_refused(synthetic, eta, "live, non-synthetic")
+
+    def test_set_eta_refuses_a_closed_or_delivered_order(self):
+        eta = ap.iso(self.eta_in(12))
+        for status in ("completed", "refund_due", "refund_pending", "refunded", "intake_declined", "awaiting_review"):
+            rid = insert_order(paid_ago="37 hours", received_ago="37 hours", status=status)
+            self.assert_refused(rid, eta, "closed or delivered")
+        delivered = insert_order(paid_ago="37 hours", received_ago="37 hours")
+        ap.sql(f"UPDATE {ap.TABLE} SET result_delivered_at=now() WHERE id='{delivered}'")
+        self.assert_refused(delivered, eta, "closed or delivered")
+        mailing = insert_order(paid_ago="37 hours", received_ago="37 hours")
+        ap.sql(f"UPDATE {ap.TABLE} SET delivery_email_status='sending' WHERE id='{mailing}'")
+        self.assert_refused(mailing, eta, "closed or delivered")
+        mailed = insert_order(paid_ago="37 hours", received_ago="37 hours")
+        ap.sql(f"UPDATE {ap.TABLE} SET delivery_email_status='sent' WHERE id='{mailed}'")
+        self.assert_refused(mailed, eta, "closed or delivered")
+        decided = insert_order(paid_ago="37 hours", received_ago="37 hours")
+        ap.sql(f"UPDATE {ap.TABLE} SET refund_decision='declined' WHERE id='{decided}'")
+        self.assert_refused(decided, eta, "closed or delivered")
+
+    def test_set_eta_refuses_an_eta_in_the_past_or_not_a_time(self):
+        rid = insert_order(paid_ago="37 hours", received_ago="37 hours")
+        now = datetime.now(timezone.utc)
+        self.assert_refused(rid, ap.iso(now - timedelta(minutes=1)), "not in the future")
+        self.assert_refused(rid, ap.iso(now - timedelta(days=2)), "not in the future")
+        self.assert_refused(rid, "not-a-time", "ISO 8601")
+        self.assert_refused(rid, "", "ISO 8601")
+        naive = (now + timedelta(hours=12)).strftime("%Y-%m-%dT%H:%M:%S")
+        self.assert_refused(rid, naive, "UTC offset")
+        with self.assertRaises(ap.PickupError):  # exactly now is not in the future either
+            ap.set_eta(rid, ap.iso(now), now)
+
+    def test_set_eta_refuses_an_eta_later_than_the_deadline_plus_48_hours(self):
+        rid = insert_order(paid_ago="37 hours", received_ago="37 hours")
+        latest = ap.deadline_for(row(rid)) + timedelta(hours=48)
+        self.assert_refused(rid, ap.iso(latest + timedelta(seconds=2)), "later than the deadline + 48 h")
+        self.assert_refused(rid, ap.iso(latest + timedelta(days=3)), "later than the deadline + 48 h")
+        ap.set_eta(rid, ap.iso(latest.replace(microsecond=0)))  # the limit itself is allowed
+        self.assertEqual(ap.load_state(rid)["owner_eta"]["eta"], ap.iso(latest.replace(microsecond=0)))
+
+    def test_set_eta_cap_follows_the_paused_clock(self):
+        rid = insert_order(paid_ago="37 hours", received_ago="37 hours")
+        ap.sql(f"UPDATE {ap.TABLE} SET sla_paused_seconds=10*3600 WHERE id='{rid}'")
+        latest = ap.deadline_for(row(rid)) + timedelta(hours=48)  # paid + 48 h + 10 h pause + 48 h
+        ap.set_eta(rid, ap.iso(latest.replace(microsecond=0)))
+        with self.assertRaises(ap.PickupError):
+            ap.set_eta(rid, ap.iso(latest + timedelta(seconds=2)))
+
+    def test_set_eta_cli_runs_under_the_blocking_cycle_lock(self):
+        rid = insert_order(paid_ago="37 hours", received_ago="37 hours")
+        locks = []
+
+        @contextlib.contextmanager
+        def recording_lock(blocking: bool = False):
+            locks.append(blocking)
+            yield True
+
+        def run(*argv):
+            out, err = io.StringIO(), io.StringIO()
+            with contextlib.redirect_stdout(out), contextlib.redirect_stderr(err), \
+                    mock.patch.object(ap, "cycle_lock", recording_lock):
+                code = ap.main(list(argv))
+            return code, out.getvalue(), err.getvalue()
+        eta = self.eta_in(12)
+        code, out, err = run("set-eta", rid, "--eta", ap.iso(eta))
+        self.assertEqual((code, err), (0, ""))
+        self.assertIn("owner ETA " + eta.strftime("%d %b %H:%M UTC"), out)
+        self.assertEqual(locks, [True])
+        self.assertEqual(ap.load_state(rid)["owner_eta"]["eta"], ap.iso(eta))
+        code, out, err = run("set-eta", rid, "--eta", ap.iso(datetime.now(timezone.utc) - timedelta(hours=1)))
+        self.assertEqual(code, 1)
+        self.assertIn("fast-lane pickup: the ETA is not in the future", err)
+        self.assertEqual(ap.load_state(rid)["owner_eta"]["eta"], ap.iso(eta))  # the refused call changed nothing
+        with self.assertRaises(SystemExit), contextlib.redirect_stderr(io.StringIO()):
+            ap.main(["set-eta", rid])  # --eta is required
+
+    # -- the delay note -------------------------------------------------------------------------------------------
+
+    def test_delay_note_without_an_owner_eta_mails_deadline_plus_24_hours(self):
+        rid = insert_order(paid_ago="41 hours", received_ago="41 hours")
+        subject, body = ap.delay_note_message(row(rid))
+        self.assertEqual(subject, f"Benchmark Heaven evaluation order {ap.order_ref(rid)}: delayed")
+        self.assertIn(f"We now expect to send your result by {self.default_eta_text(rid)}.", body)
+        self.assertIn("48-hour target", body)
+
+    def test_delay_note_with_an_owner_eta_mails_that_date(self):
+        rid = insert_order(paid_ago="41 hours", received_ago="41 hours")
+        eta = self.eta_in(12)
+        ap.set_eta(rid, ap.iso(eta))
+        _, body = ap.delay_note_message(row(rid))
+        self.assertIn(f"We now expect to send your result by {eta.strftime('%d %b %H:%M UTC')}.", body)
+        self.assertNotIn(self.default_eta_text(rid), body)
+
+    def test_delay_note_falls_back_once_the_owner_eta_has_passed(self):
+        rid = insert_order(paid_ago="41 hours", received_ago="41 hours")
+        eta = self.eta_in(12)
+        ap.set_eta(rid, ap.iso(eta))
+        _, still = ap.delay_note_message(row(rid), now=eta - timedelta(seconds=1))
+        self.assertIn(eta.strftime("%d %b %H:%M UTC"), still)
+        for now in (eta, eta + timedelta(hours=1)):
+            _, body = ap.delay_note_message(row(rid), now=now)
+            self.assertIn(self.default_eta_text(rid), body)
+            self.assertNotIn(eta.strftime("%d %b %H:%M UTC") + ".", body)
+        # a damaged owner_eta is ignored, never mailed
+        for broken in ("soon", {"eta": "soon"}, {"eta": None}, {}):
+            state = ap.load_state(rid)
+            state["owner_eta"] = broken
+            ap.save_state(state)
+            _, body = ap.delay_note_message(row(rid))
+            self.assertIn(self.default_eta_text(rid), body)
+
+    def test_delay_note_decision_mails_the_owner_eta_once(self):
+        rid = insert_order(paid_ago="41 hours", received_ago="41 hours")
+        eta = self.eta_in(12)
+        ap.set_eta(rid, ap.iso(eta))
+        self._decide(rid, "delay_note")
+        fx = FakeEffects()
+        self.assertEqual(ap.sla_decisions(None, ap.JOB_ROOT, fx), 1)
+        self.assertEqual(len(fx.mails), 1)
+        self.assertIn(f"by {eta.strftime('%d %b %H:%M UTC')}.", fx.mails[0][2])
+        self.assertEqual(ap.sla_decisions(None, ap.JOB_ROOT, fx), 1)
+        self.assertEqual(len(fx.mails), 1)
+        self.assertEqual(ap.load_state(rid)["owner_eta"]["eta"], ap.iso(eta))  # the delay path keeps the state
+
+    def test_delay_note_decision_without_an_owner_eta_is_unchanged(self):
+        rid = insert_order(paid_ago="41 hours", received_ago="41 hours")
+        self._decide(rid, "delay_note")
+        fx = FakeEffects()
+        self.assertEqual(ap.sla_decisions(None, ap.JOB_ROOT, fx), 1)
+        self.assertIn(f"by {self.default_eta_text(rid)}.", fx.mails[0][2])
+
+    # -- the card caption -----------------------------------------------------------------------------------------
+
+    def test_caption_names_the_eta_the_delay_note_will_mail(self):
+        rid = insert_order(paid_ago="37 hours", received_ago="37 hours")
+        deadline = ap.deadline_for(row(rid)).strftime("%d %b %H:%M UTC")
+        plain = ap.sla_decision.caption(row(rid), deadline)
+        self.assertEqual(plain.count("deadline + 24 h"), 2)  # Effect line and Steps line
+        self.assertNotIn("owner ETA", plain)
+        self.assertIn(f"the deadline is {deadline}", plain)
+        eta = self.eta_in(12)
+        ap.set_eta(rid, ap.iso(eta))
+        owned = ap.sla_decision.caption(row(rid), deadline)
+        label = "owner ETA " + eta.strftime("%d %b %H:%M UTC")
+        self.assertEqual(owned.count(label), 2)
+        self.assertIn(f"Send delay note = mails {label}, no cost.", owned)
+        self.assertIn(f"mails the customer the date: {label}", owned)
+        self.assertNotIn("deadline + 24 h", owned)
+        # an owner ETA that is already past is not what the delay note would mail: the card says deadline + 24 h
+        state = ap.load_state(rid)
+        state["owner_eta"] = {"eta": ap.iso(datetime.now(timezone.utc) - timedelta(minutes=1)), "set_at": ap.iso(datetime.now(timezone.utc))}
+        ap.save_state(state)
+        self.assertEqual(ap.sla_decision.caption(row(rid), deadline), plain)
+
+    # -- owner-managed orders keep their behaviour ----------------------------------------------------------------
+
+    def test_owner_managed_orders_keep_their_behaviour(self):
+        rid = insert_order(paid_ago="41 hours", received_ago="41 hours")
+        ap.set_eta(rid, ap.iso(self.eta_in(12)))
+        self._decide(rid, "delay_note")
+        fx = FakeEffects()
+        with mock.patch.object(ap.sla_decision, "OWNER_MANAGED_40H", frozenset({rid})):
+            self.assertEqual(ap.sla_decisions(None, ap.JOB_ROOT, fx), 0)  # skipped before any card or mail
+            with self.assertRaises(ValueError):
+                ap.delay_note_message(row(rid))
+            with self.assertRaises(ValueError):
+                ap.sla_decision.caption(row(rid), "deadline")
+        self.assertEqual(fx.mails, [])
 
 
 class SlaStrayCloseoutTests(DatabaseTestCase):
