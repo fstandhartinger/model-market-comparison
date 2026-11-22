@@ -1,7 +1,8 @@
-"""Florian's 40-hour SLA decision card. Host only; polled by the pickup cycle under its lock.
+"""Florian's SLA decision card. Host only; polled by the pickup cycle under its lock.
 
-At 40 hours after payment (48-hour clock minus pauses) an open order asks Florian once for an
-exact Telegram button: "Send delay note" (one fixed-template delay email to the customer),
+At SLA_DECISION_HOURS (36, was 40 until 22 Nov 2026) after payment (48-hour clock minus pauses) an open
+order asks Florian once for an exact Telegram button: "Send delay note" (one fixed-template delay email to the
+customer, dated with the order owner's ETA when one is set, else deadline + 24 h),
 "Refund in full" (identical to the refund card's approval) or "No action". A text reply, an
 expired card or any other signal is never a decision. Built on the refund_approval.py
 mechanism: exact callback keys, his private chat only, 24-hour expiry.
@@ -9,6 +10,8 @@ mechanism: exact callback keys, his private chat only, 24-hour expiry.
 One card per order (N91): after "Send delay note" or "No action" the same card keeps exactly one live
 "Refund in full" button (via editMessageReplyMarkup, caption untouched) until the card's own expires_at; an
 exact later tap is the refund decision, once. Expiry removes the button and settles the card.
+
+The persisted kind "sla_40h", the file names and the callback keys keep their historical "40" so live cards stay valid.
 
 A card whose order leaves the 40 h set for good (delivered, decided on the 48 h card, refunded, refused) is closed by
 close_stray() from the pickup cycle; it never records a decision and reports an unread Refund tap to an agent.
@@ -31,6 +34,10 @@ import refusal_approval as ra
 
 SOURCE = "fastlane-sla40-decision"
 WINDOW = 24 * 3600
+# Payment-clock hours after which the card asks Florian (DECISIONS fastlane-zero-wait-1122, 22 Nov 2026: 36 instead of
+# 40, so the customer hears from us before a miss). The SQL in autopickup.sla_decision_rows and every card and
+# handoff text read this one value.
+SLA_DECISION_HOURS = 36
 # DECISIONS 6 Nov 00:55Z, wps-order-114b6e41-customer-path-after-cleanup-failure-1106.
 # The native owner + deputy handle the no-ETA note choice at 40h. The normal 48h
 # refund card remains active; this mapping grants no contact/refund/run authority.
@@ -69,16 +76,18 @@ def caption(row: dict, deadline: str) -> str:
     rid = str(uuid.UUID(str(row["id"])))
     amount = row.get("amount_total")
     money = f"USD {int(amount) / 100:.2f}" if isinstance(amount, int) and not isinstance(amount, bool) else "the full amount"
-    from autopickup import decision_context_line, eur_phrase
+    from autopickup import decision_context_line, delay_note_eta_text, eur_phrase, load_state, utcnow
     eur = eur_phrase(amount)
-    context = decision_context_line(row, "No result 40 h after payment for {customer}, model {model}: "
+    eta = delay_note_eta_text(load_state(rid), utcnow())  # "owner ETA <time>" or "deadline + 24 h"
+    context = decision_context_line(row, f"No result {SLA_DECISION_HOURS} h after payment for "
+                                         "{customer}, model {model}: "
                                          f"delay note or refund{f' ({eur})' if eur else ''}?")
     return (f"🧑 DU BIST DRAN\n{context}\n\n🧑 Für dich\n"
             "- Decide the next step for this customer.\n"
-            f"  Why: No result 40 hours after payment; the deadline is {deadline}.\n"
-            f"  Effect: Send delay note = mails a new date (deadline + 24 h), no cost. Refund in full = pays {money} back, final. "
+            f"  Why: No result {SLA_DECISION_HOURS} hours after payment; the deadline is {deadline}.\n"
+            f"  Effect: Send delay note = mails {eta}, no cost. Refund in full = pays {money} back, final. "
             "No action = nothing goes out.\n"
-            "  Steps:\n  1. Tap Send delay note (mails the customer a new ETA of deadline + 24 h), "
+            f"  Steps:\n  1. Tap Send delay note (mails the customer the date: {eta}), "
             "Refund in full, or No action.\n"
             "  Time: 1 minute. Buttons expire in 24 hours so that an old card can never act. "
             "A text reply does not decide.")

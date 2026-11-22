@@ -4413,7 +4413,7 @@ def sla_sweep(synthetic_id: str | None, job_root: Path, effects: Effects) -> dic
 
 
 def sla_decision_rows(synthetic_id: str | None, job_root: Path) -> list[dict[str, Any]]:
-    """Open orders 40+ hours after payment with no decision yet (the 40 h card asks Florian)."""
+    """Open orders SLA_DECISION_HOURS+ hours after payment with no decision yet (the SLA card asks Florian)."""
     predicate = managed_predicate("r", synthetic_id, job_root)
     return sql_rows(f"""
       SELECT {row_json_sql('r')} FROM {TABLE} AS r
@@ -4421,7 +4421,7 @@ def sla_decision_rows(synthetic_id: str | None, job_root: Path) -> list[dict[str
         AND r.paid_at IS NOT NULL AND r.customer_hold_started_at IS NULL
         AND COALESCE(r.delivery_email_status,'not_due') NOT IN ('sending','sent')
         AND r.refund_id IS NULL AND r.refund_decision IS NULL
-        AND {sla_elapsed_sql()} >= interval '40 hours'
+        AND {sla_elapsed_sql()} >= interval '{sla_decision.SLA_DECISION_HOURS} hours'
       ORDER BY r.paid_at LIMIT 20
     """)
 
@@ -4445,12 +4445,13 @@ def sla40_stray_reason(row: dict[str, Any]) -> str:
 
 
 def sla40_handoff_text(rid: str, kind: str, card: dict[str, Any]) -> str:
-    """Owner handoff for a Refund tap on the 40 h card that was not applied. Says per case what already happens."""
+    """Owner handoff for a Refund tap on the SLA decision card that was not applied. Says per case what already happens."""
     head = f"Fast-lane order {order_ref(rid)}: "
+    hours = sla_decision.SLA_DECISION_HOURS
     if kind == "refund_tap_unapplied":
         reason = card.get("stray_reason")
-        tap = ("Florian tapped Refund in full on the 40-hour card, but no sweep read the tap before the order left the "
-               "40 h step. Nothing was refunded by that tap and no decision was recorded; the card now tells him an "
+        tap = (f"Florian tapped Refund in full on the {hours}-hour card, but no sweep read the tap before the order left the "
+               f"{hours} h step. Nothing was refunded by that tap and no decision was recorded; the card now tells him an "
                "agent follows up. ")
         if reason == "decided_elsewhere":
             return head + tap + ("His decision on the 48-hour refund card stands (see the order row). Owner: tell "
@@ -4464,7 +4465,7 @@ def sla40_handoff_text(rid: str, kind: str, card: dict[str, Any]) -> str:
     refused = card.get("refund_refused") or {}
     why = refused.get("why")
     if kind == "refund_refused_final":
-        tap = ("Florian's Refund in full tap on the 40-hour card was recorded during a customer hold and was never "
+        tap = (f"Florian's Refund in full tap on the {hours}-hour card was recorded during a customer hold and was never "
                "applied: ")
         if refused.get("outcome") == "decided_elsewhere":
             return head + tap + ("he decided on the 48-hour refund card first, and that decision stands. Owner: tell "
@@ -4475,17 +4476,17 @@ def sla40_handoff_text(rid: str, kind: str, card: dict[str, Any]) -> str:
                                  "Florian. " + NO_HAND_WRITE)
         return head + tap + ("the result was delivered first, so nothing was refunded, while his card says the refund "
                              "worker pays it back. Owner: tell Florian and ask what he wants. " + NO_HAND_WRITE)
-    tap = "Florian tapped Refund in full on the 40-hour card, but the order changed before it was written. "
+    tap = f"Florian tapped Refund in full on the {hours}-hour card, but the order changed before it was written. "
     if why == "hold":
         return head + tap + ("The order is on customer hold, so nothing is refunded yet. If the order is still "
-                             "undelivered at the first 40 h check after the hold ends, the recorded tap is applied "
+                             f"undelivered at the first {hours} h check after the hold ends, the recorded tap is applied "
                              "automatically and the refund worker pays it back. A resubmission restarts the 48 h clock, "
-                             "so that check can be up to about 40 h later. If the order is delivered or decided first, "
+                             f"so that check can be up to about {hours} h later. If the order is delivered or decided first, "
                              "a second note follows. Owner: no action now.")
     if why == "delivered":
         return head + tap + ("The result was delivered (or its mail was being sent), so nothing was refunded, while "
                              "his card says the refund worker pays it back. If a result mail that was being sent "
-                             "fails, the order returns to the 40 h step and the recorded tap is applied automatically. "
+                             f"fails, the order returns to the {hours} h step and the recorded tap is applied automatically. "
                              "Owner: tell Florian and ask what he wants. " + NO_HAND_WRITE)
     return head + tap + ("Nothing was refunded by this tap. If the order now waits for a refund decision, the 48-hour "
                          "refund card asks him. Owner: check the row and tell Florian. " + NO_HAND_WRITE)
@@ -4537,16 +4538,39 @@ def sla40_stray_closeouts(synthetic_id: str | None, job_root: Path, effects: Eff
                 if effects.board(sla40_handoff_text(rid, kind, card), owner_for(rid), kind="handoff"):
                     sla_decision.mark_handoff_posted(root, rid, kind, utcnow().timestamp())
         except Exception as exc:
-            print(f"fast-lane SLA 40 h close-out: {rid[:8]}: {type(exc).__name__}", file=sys.stderr)
+            print(f"fast-lane SLA {sla_decision.SLA_DECISION_HOURS} h close-out: {rid[:8]}: {type(exc).__name__}",
+                  file=sys.stderr)
             continue
     return closed
 
 
-def delay_note_message(row: dict[str, Any]) -> tuple[str, str]:
+DELAY_NOTE_DEFAULT_HOURS = 24  # the delay note mails deadline + this many hours while the order owner set no ETA
+OWNER_ETA_MAX_AFTER_DEADLINE = timedelta(hours=48)  # `set-eta` refuses an ETA later than deadline + this
+ETA_FORMAT = "%d %b %H:%M UTC"
+
+
+def owner_eta_in_future(state: dict[str, Any], now: datetime) -> datetime | None:
+    """The order owner's ETA (`set-eta`) while it still lies in the future, else None."""
+    stored = state.get("owner_eta")
+    eta = parse_ts(stored.get("eta")) if isinstance(stored, dict) else None
+    return eta if eta is not None and eta > now else None
+
+
+def delay_note_eta_text(state: dict[str, Any], now: datetime) -> str:
+    """Which ETA the delay note mails, as the SLA card words it: "owner ETA <time>" or "deadline + 24 h"."""
+    owner = owner_eta_in_future(state, now)
+    if owner is not None:
+        return f"owner ETA {owner.strftime(ETA_FORMAT)}"
+    return f"deadline + {DELAY_NOTE_DEFAULT_HOURS} h"
+
+
+def delay_note_message(row: dict[str, Any], state: dict[str, Any] | None = None,
+                       now: datetime | None = None) -> tuple[str, str]:
     if sla_decision.owner_managed(row):
         raise ValueError("40h decision is owner-managed; no fixed result ETA")
-    new_eta = (deadline_for(row) + timedelta(hours=24)).strftime("%d %b %H:%M UTC")
     rid = request_id(row["id"])
+    owner = owner_eta_in_future(load_state(rid) if state is None else state, now or utcnow())
+    new_eta = (owner or deadline_for(row) + timedelta(hours=DELAY_NOTE_DEFAULT_HOURS)).strftime(ETA_FORMAT)
     subject = f"Benchmark Heaven evaluation order {order_ref(rid)}: delayed"
     body = fill_template(read_template("autopickup-delay-template.txt"),
                          {"ORDER_REF": order_ref(rid), "NEW_ETA": new_eta})
@@ -4615,11 +4639,12 @@ def post_gpu_capacity_handoff_once(row: dict[str, Any], state: dict[str, Any], e
 
 
 def sla_decisions(synthetic_id: str | None, job_root: Path, effects: Effects) -> int:
-    """Advance each open order's 40 h decision card and apply Florian's exact button.
+    """Advance each open order's SLA decision card (at SLA_DECISION_HOURS) and apply Florian's exact button.
 
     "Refund in full" is written like the refund card (status refund_due, decision approved), so
     the 48 h card can never fire a second refund for the same order. "Send delay note" sends the
-    fixed delay template once and records delay_email_status in the request state.
+    fixed delay template once (dated with the owner ETA from `set-eta` while it is in the future, else
+    deadline + 24 h) and records delay_email_status in the request state.
     """
     if effects.dry_run:
         return 0
@@ -4641,7 +4666,7 @@ def sla_decisions(synthetic_id: str | None, job_root: Path, effects: Effects) ->
             if apply_refund_decision(row, "approved", sla_decision.reference(root, rid), effects):
                 post_sla40_outcome_once(state, "refund", effects, (
                     f"Fast-lane order {order_ref(rid)}: Florian approved a full refund on the "
-                    "40-hour decision card; the refund worker pays it back now."), owner_for(rid))
+                    f"{sla_decision.SLA_DECISION_HOURS}-hour decision card; the refund worker pays it back now."), owner_for(rid))
             else:
                 # The tap lost a race with delivery, a hold or a refusal (re-review S1 c): the row guard refused it and
                 # nothing was refunded. Kept on the card; sla40_stray_closeouts posts the owner handoff until accepted.
@@ -4660,7 +4685,7 @@ def sla_decisions(synthetic_id: str | None, job_root: Path, effects: Effects) ->
                           file=sys.stderr)
         elif outcome == "delay_note":
             if state.get("delay_email_status") != "sent":
-                subject, body = delay_note_message(row)
+                subject, body = delay_note_message(row, state)
                 ok, reason = effects.mail(str(row.get("email") or ""), subject, body)
                 state["delay_email_status"] = "sent" if ok else f"failed:{reason}"
                 save_state(state)
@@ -4670,11 +4695,11 @@ def sla_decisions(synthetic_id: str | None, job_root: Path, effects: Effects) ->
             if state.get("delay_email_status") == "sent":
                 post_sla40_outcome_once(state, "delay_note", effects, (
                     f"Fast-lane order {order_ref(rid)}: Florian sent the delay note on the "
-                    "40-hour decision card; the customer was told the new ETA."), owner_for(rid))
+                    f"{sla_decision.SLA_DECISION_HOURS}-hour decision card; the customer was told the new ETA."), owner_for(rid))
         elif outcome == "no_action":
             post_sla40_outcome_once(state, "no_action", effects, (
-                f"Fast-lane order {order_ref(rid)}: Florian chose 'No action' on the 40-hour "
-                "decision card; the order keeps running."), owner_for(rid))
+                f"Fast-lane order {order_ref(rid)}: Florian chose 'No action' on the "
+                f"{sla_decision.SLA_DECISION_HOURS}-hour decision card; the order keeps running."), owner_for(rid))
         elif outcome == "exhausted":
             alert(state, "sla40_card_exhausted", effects, digest=True, text=(
                 agent_status_card(row, 'awaits a decision: the delay or refund cards expired', 'No refund or delay email was authorized; agents are following up.', urgent=False)))
@@ -6110,6 +6135,40 @@ def access_ok(rid: str) -> str:
     return f"Order {order_ref(rid)}: access confirmed; the 48-hour clock runs again."
 
 
+def set_eta(rid: str, eta_text: str, now: datetime | None = None) -> str:
+    """The order owner's result ETA for the delay note (proposal 6, DECISIONS fastlane-zero-wait-1122).
+
+    Caller holds cycle_lock. Stored in the order state as owner_eta; delay_note_message mails it while it still lies
+    in the future (else deadline + 24 h) and the SLA card names which of the two it will mail.
+    """
+    rid = request_id(rid)
+    now = now or utcnow()
+    row = load_row(rid)
+    if not row or row.get("stripe_mode") != "live" or row.get("synthetic_test") is not False:
+        raise PickupError("only a live, non-synthetic order can get an owner ETA")
+    if row.get("status") not in ("paid", "review_passed") or row.get("result_delivered_at") \
+            or row.get("delivery_email_status") in ("sending", "sent") \
+            or row.get("refund_id") or row.get("refund_decision"):
+        raise PickupError("the order is closed or delivered; an owner ETA no longer applies")
+    try:
+        eta = datetime.fromisoformat(str(eta_text).strip().replace("Z", "+00:00"))
+    except ValueError:
+        raise PickupError("the ETA is not an ISO 8601 time (for example 2026-11-24T18:00:00Z)") from None
+    if eta.tzinfo is None:
+        raise PickupError("the ETA needs a UTC offset (for example 2026-11-24T18:00:00Z)")
+    eta = eta.astimezone(timezone.utc)
+    if eta <= now:
+        raise PickupError("the ETA is not in the future")
+    latest = deadline_for(row) + OWNER_ETA_MAX_AFTER_DEADLINE
+    if eta > latest:
+        raise PickupError(f"the ETA is later than the deadline + {int(OWNER_ETA_MAX_AFTER_DEADLINE.total_seconds() // 3600)} h "
+                          f"({latest.strftime(ETA_FORMAT)})")
+    state = load_state(rid)
+    state["owner_eta"] = {"eta": iso(eta), "set_at": iso(now)}
+    save_state(state)
+    return f"Order {order_ref(rid)}: owner ETA {eta.strftime(ETA_FORMAT)}; the delay note mails it while it lies in the future."
+
+
 def migrate_source_recovery_projection(journal_path: Path, journal: dict[str, Any], row: dict[str, Any],
                                        approval: dict[str, Any], evidence: dict[str, Any],
                                        preserved: dict[str, Any]) -> dict[str, Any]:
@@ -6744,6 +6803,9 @@ def main(argv: list[str] | None = None) -> int:
     hold_parser = sub.add_parser("hold")
     hold_parser.add_argument("request_id")
     hold_parser.add_argument("--reason", required=True, choices=HOLD_REASONS)
+    eta_parser = sub.add_parser("set-eta")
+    eta_parser.add_argument("request_id")
+    eta_parser.add_argument("--eta", required=True, help="ISO 8601 time with a UTC offset, e.g. 2026-11-24T18:00:00Z")
     fetch_parser = sub.add_parser("fetch-source")
     fetch_parser.add_argument("request_id")
     fetch_parser.add_argument("--which", required=True, choices=("code", "model"))
@@ -6807,6 +6869,8 @@ def main(argv: list[str] | None = None) -> int:
                 print(hold(args.request_id, args.reason))
             elif args.command == "resume":
                 print(resume(args.request_id))
+            elif args.command == "set-eta":
+                print(set_eta(args.request_id, args.eta))
             elif args.command == "access-ok":
                 print(access_ok(args.request_id))
             elif args.command == "recover-source-access":
