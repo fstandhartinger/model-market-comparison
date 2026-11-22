@@ -662,8 +662,10 @@ class CriticRoundOneFixes(unittest.TestCase):
         source = (HERE / 'pod_runner.py').read_text()
         site = source.index('catalogue_runtime_supplement.build(provider, pod_id, job_dir, recipe, state)')
         self.assertIn("weights_image = state['runtime_supplement']['download_image']", source[site:site + 700])
-        loop = source.index('"-c", WEIGHTS_SNIPPET, entry["repo"], entry["revision"], target]')
-        self.assertIn('"--entrypoint", "python3", weights_image or image,', source[loop - 400:loop])
+        loop = source.index('"-c", snippet, entry["repo"], entry["revision"], target, *patterns]')
+        self.assertIn('"--entrypoint", "python3", download_image,', source[loop - 200:loop])
+        branch = source.rindex('snippet = WEIGHTS_SNIPPET', 0, loop)
+        self.assertIn('download_image = weights_image or image', source[branch - 200:branch])
         self.assertEqual(source.count('weights_image = None'), 1)
 
     def test_preflight_decision_is_carried_into_every_attempt(self):
