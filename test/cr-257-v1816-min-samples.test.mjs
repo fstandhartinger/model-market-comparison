@@ -49,24 +49,7 @@ test('v1.8.16: precomputed All-data JSON has no small row breakdowns', () => {
  assertRowBreakdownFloor(JSON.parse(readFileSync('data/jevbench-v1.8.16-alldata.json')).artifact, 'snapshot');
 });
 
-test('v1.8.16: published live board and every All-data JSON input have no small row breakdowns', async t => {
- const manifest = JSON.parse(readFileSync('data/raw/benchmarks/jevbench/v1.8/jevbench-v1.8.16-publication.json'));
- if (manifest.review.verdict !== 'PASS') return t.skip('candidate PENDING; live board still uses the historical release');
- const {readJevbenchV161Release} = await import('../lib/jevbench-v16-release.mjs');
- const {readJevbenchV157Release} = await import('../lib/jevbench-v15-release.mjs');
- const {assembleJevBoard} = await import('../lib/jevbench-live-board.mjs');
- const {readJevAllDataInput} = await import('../lib/jevbench-alldata-input.mjs');
- const [release, previous] = await Promise.all([readJevbenchV161Release(), readJevbenchV157Release()]);
- const apiA4 = JSON.parse(readFileSync('data/jevbench-api-a4-equated.json'));
- const board = await assembleJevBoard({release, previous, apiA4, live: true});
- assert.ok(['v1.8.16','v1.8.17'].includes(board.published.restated_by));
- assertRowBreakdownFloor(board.published, 'live board');
- for (const version of ['board-all', 'board-open', 'board-api', 'v1.8.16']) {
-  const input = await readJevAllDataInput(version);
-  assert.ok(input, `${version}: published input exists`);
-  assertRowBreakdownFloor(input.artifact, version);
- }
-});
+// The live board + All-data input check for this release lives in test/cr-257-live-*-min-samples.test.mjs (CR-817).
 
 test('v1.8.16: previous breakdowns are filtered at arbitrary depth in every dimension', async () => {
  const release = await readJevbenchV1816Candidate();
