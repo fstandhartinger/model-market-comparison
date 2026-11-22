@@ -146,9 +146,14 @@ def order_problems(row) -> list[str]:
 
 def family_problem(owner, supplement: dict, row: dict) -> str | None:
     """None when the order's own repository is one the family's supplement was reviewed for (same rule as
-    native_owner.match_supplement), else the reason. Only normalised repo keys are echoed, never raw customer text."""
+    native_owner.match_supplement) or a sibling repository of the SAME author namespace (host/owner), e.g. a version bump
+    published as a new Hugging Face repo (starlord-4b-v1.5-preview after starlord-4b-v1.4-preview); else the reason.
+    A different author always needs a reviewed `repos` entry. Only normalised repo keys are echoed, never raw customer text."""
     keys = {owner.repo_key(row.get('model_link')), owner.repo_key(row.get('code_link'))} - {None}
     if keys & set(supplement['repos']):
+        return None
+    namespaces = {key.rsplit('/', 1)[0] for key in supplement['repos']}
+    if {key.rsplit('/', 1)[0] for key in keys} & namespaces:
         return None
     shown = ', '.join(sorted(keys)) or 'none recognised'
     return (f"the order's repositories ({shown}) are not among the repositories reviewed for family "

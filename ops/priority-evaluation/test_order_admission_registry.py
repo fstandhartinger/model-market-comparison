@@ -692,6 +692,17 @@ class CliTests(TempCase):
         self.row = dict(self.LIVE, model_link='https://huggingface.co/x/y', code_link='https://github.com/' + family['repos'][1].split('/', 1)[1])
         self.assertEqual(self.admit(family='jeva', dry_run=True)[0], 'dry-run')
 
+    def test_same_author_version_bump_is_accepted_other_author_refused(self):
+        """Lead (fastlane-sla-rootcause-20261122): a new HF repo of the SAME author namespace counts as the family."""
+        self.row = dict(self.LIVE, model_link='https://huggingface.co/oidlabs/cue-reflex-4b-v0.3', code_link=None)
+        self.assertEqual(self.admit(dry_run=True)[0], 'dry-run')
+        self.row = dict(self.LIVE, model_link='https://huggingface.co/oidlabs-fake/cue-reflex-4b', code_link=None)
+        with self.assertRaisesRegex(self.cli.Refused, 'not among the repositories reviewed for family'):
+            self.admit(dry_run=True)
+        self.row = dict(self.LIVE, model_link='https://github.com/oidlabs/cue-reflex-4b', code_link=None)  # same owner name, other host
+        with self.assertRaisesRegex(self.cli.Refused, 'not among the repositories reviewed for family'):
+            self.admit(dry_run=True)
+
     def test_MUST1_repository_of_another_family_and_unusable_links_are_refused(self):
         import native_owner
         self.row = dict(self.LIVE, model_link='https://huggingface.co/liqiiiii/jeva-4b', code_link=None)  # jeva's repository
@@ -702,7 +713,7 @@ class CliTests(TempCase):
                             ('https://evil.example/huggingface.co/oidlabs/cue-reflex-4b', None),
                             ('https://huggingface.co.evil.example/oidlabs/cue-reflex-4b', None),
                             ('https://user:pw@huggingface.co/oidlabs/cue-reflex-4b', None), (5, ['x']),
-                            ('https://huggingface.co/oidlabs', None), ('https://huggingface.co/oidlabs/cue-reflex-4b-other', None)):
+                            ('https://huggingface.co/oidlabs', None)):  # same-author sibling repos: see the version-bump test
             self.row = dict(self.LIVE, model_link=model, code_link=code)
             with self.subTest(model=model, code=code), self.assertRaises(self.cli.Refused):
                 self.admit(dry_run=True)
