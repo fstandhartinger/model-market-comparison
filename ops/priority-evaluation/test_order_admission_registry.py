@@ -434,6 +434,36 @@ class CliTests(TempCase):
     def audit_lines(self):
         return [json.loads(line) for line in self.log.read_text().splitlines()]
 
+    PICKUP_ROW = {'id': ORDER, 'status': 'paid', 'stripe_mode': 'live', 'synthetic_test': False, 'paid_at': '2026-11-22T10:00:00Z',
+                  'result_delivered_at': None, 'refund_id': None, 'refunded_at': None, 'refund_status': None,
+                  'model_link': 'https://huggingface.co/oidlabs/cue-reflex-4b', 'code_link': None}
+
+    def test_admit_with_the_pickups_own_row_makes_no_database_query(self):
+        with mock.patch.object(self.cli, 'fetch_order', side_effect=AssertionError('no second query')):
+            action, entry = self.cli.admit(ORDER, 'cue_reflex', 'autopickup test', dry_run=False, by='t', row=dict(self.PICKUP_ROW))
+        self.assertEqual(action, 'added')
+        self.assertEqual(self.registry_entries(), [entry])
+
+    def test_supplied_row_goes_through_the_same_order_gate(self):
+        for name, change in {'refunded': {'refunded_at': 'x'}, 'refund_id': {'refund_id': 'r'}, 'refund_status': {'refund_status': 'due'},
+                             'synthetic': {'synthetic_test': True}, 'test_mode': {'stripe_mode': 'test'}, 'unpaid': {'paid_at': None},
+                             'delivered': {'result_delivered_at': 'x'}, 'status': {'status': 'completed'}}.items():
+            with self.subTest(name):
+                with self.assertRaises(self.cli.Refused):
+                    self.cli.admit(ORDER, 'cue_reflex', 'b', dry_run=False, by='t', row=dict(self.PICKUP_ROW, **change))
+        self.assertFalse(self.registry_path.exists())
+
+    def test_supplied_row_for_another_order_or_with_missing_columns_is_refused(self):
+        with self.assertRaises(self.cli.Refused):
+            self.cli.admit(ORDER, 'cue_reflex', 'b', dry_run=False, by='t', row=dict(self.PICKUP_ROW, id=OTHER))
+        incomplete = {key: value for key, value in self.PICKUP_ROW.items() if key != 'paid_at'}
+        with self.assertRaises(self.cli.Refused):
+            self.cli.admit(ORDER, 'cue_reflex', 'b', dry_run=False, by='t', row=incomplete)
+        self.assertFalse(self.registry_path.exists())
+
+    def test_fetch_order_shaped_row_is_accepted_unchanged(self):
+        self.assertEqual(self.cli.normalize_row(self.LIVE), self.LIVE)
+
     def test_admit_writes_entry_audit_line_and_makes_the_supplement_active(self):
         action, entry = self.admit()
         self.assertEqual(action, 'added')
