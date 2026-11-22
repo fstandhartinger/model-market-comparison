@@ -19,6 +19,7 @@ Stdlib only; nothing here imports a model stack or runs customer code.
 """
 from __future__ import annotations
 
+import hashlib
 import json
 import re
 import subprocess
@@ -106,6 +107,59 @@ SUPPLEMENTS: tuple[dict[str, Any], ...] = (
      "precedents": ("fastlane-native-3a698114",)},
 )
 
+# Frozen precedent recipe shapes for the generator hint (CR-841, proposal 5 option B). Family -> (precedent order folder,
+# SHA-256 of its trusted-runner/POD-RECIPE.json, SHA-256 of its trusted-runner/RUNTIME.json). The files are read at
+# <evaluations root>/<order>/trusted-runner/ and used only when both digests match, so a changed or replaced file silently
+# falls back to the plain hint; there is no "latest folder" lookup. Only families whose supplement module asks
+# order_admission_registry.admitted() and that have a frozen recipe are listed (minimodels_hard_candy has none yet; ryotide
+# is not registry-extended).
+GENERATOR_PRECEDENTS: dict[str, tuple[str, str, str]] = {
+    'karpo_decision': ('a597df0b-966e-4b7b-9a78-722097bc1ba6',
+        '6d07ddf915f3c4991b658d6a1d46a24daa36e03af032d3de6df75b9f4a5852a0',
+        'e6427e132a4263d34124b611ef8a1fb37076a12c6fab7e9a00aab816ccce2df7'),
+    'krino': ('8c7dbe11-5695-45d7-b701-cf92dab3ada7',
+        '58364dd019f2b0ce6c981bb1c1aefecbf21e8e300f3230e15827c018dac69d7a',
+        'eaa4ae4846f2ef0e771f0a5a2e5736f5f98dba8aaf6dcc3bda1a12db89e9566e'),
+    'jeva': ('8a93f2a0-bf48-4ae3-b747-357380797391',
+        'acc396d36a065cc824c79c5118314638fe41bc1920a4d0bf373927baba892e11',
+        '9149af4bfe88bb1f2d6eec3ed3b52ae8aae6ce1f5e4accc22017be6b5e1cb890'),
+    'minimodels_decision': ('f62aeab1-97ee-4340-85de-a4a513757a6d',
+        '871980da128a94bd0e9532ff2280e68927b0d17b7700470127ab9b5389b6aac6',
+        '2cf0deab336cb9d7e10e0a65df48794b66b8c0df6df91b0006767cc5406fa755'),
+    'starlord_v2': ('cd7e038c-dcac-4990-9ca5-feac99cd8d8d',
+        '67c46abd588d6cd592960bc879e1fefb4ede8c57fbb24d3ca48d46798b67bd0a',
+        '7dd4a011b0635c232fc754903da35462f56c1d716a6063e2b1a68bf7c0da3472'),
+    'starlord': ('2d2f81c6-4f5d-47c6-ac93-8d3e88408b75',
+        '76c0d8a4a03bfe83e9049110ff7b1c57873a7207048a6a2fa9980fe4e67eed15',
+        '2adb9b1bfb6fce890ed274036df651d1fbe2c9408e708ebd673e8da6409c49b8'),
+    'cue_reflex': ('1dedbcf2-3577-47b9-9893-eaad445b7061',
+        'e240249126377d225a82f341423f2aafd111d9e07e9ecee8c0c3b53606a96642',
+        '83e3b2660b18db13406074db3d485cce0b12d8a8d948a0d59c3f9086c9dc143b'),
+    'standardone': ('a8731403-9731-4d57-98b4-0c5d93952ad2',
+        '88d06f50af7a69af13d0683a554a827fd7026fe7ef3e851131e9b795a50dca56',
+        'b2fd92f00ae25934ec04f8f8703e76fed825b69dd64fe4f7a7b03c29a90287df'),
+    'torchcast': ('9494e9ea-eeea-46e0-8fb1-41a045f41354',
+        '04b9dca1a5e4cb319307e76ae47fdc243209dce3300b9f5900f53d9ea5707ac5',
+        '3866de09aeedb33ad2655110ce501321d321cc1f90880fbd0fa590d95761eb9f'),
+    'lychee': ('a5d49ab5-d91f-4545-9f23-6fbce4a33021',
+        '3ff0e3d16f379b3c88f7f28c53b087242b60779ba1fb835a87ee4e9cb3aa4416',
+        '991cdddf1d0bc59dbad4e57487256ee02282dbb09c3cef660001912ec24b5b9e'),
+    'quyet': ('3a698114-9133-4724-8583-21dc6267b3d5',
+        '857b2933b990aa241c738024f9b06c33f4f73b2e51c089c914281f85069eb961',
+        '8a7cae5da7f42d388bc344a9a6f355a4b0b8b6af633b6992a061a3083aa10133'),
+    'sieve': ('ac6ebe34-a8ba-4b53-98ca-3e0a93755ec4',
+        'c924eb184db1870f1c2d3e4944ccbeb971aebfe71218f546f81b492d2e1a5d74',
+        '4dfc0e758789ef5890a449b219a037150b93c6f2722e4f5be5b571447de32097'),
+    'chon': ('3ce4b317-09bb-459f-a33f-1e48e35006b2',
+        '814a49ac51bd14a914e9769f4b594133bcd050fa7282c4c950c39bacead79b91',
+        'b11be28f9f25227fe1e6beffe863c6a8e8beeb51d8e39d2a174262334b91d43d'),
+    'wps_decision': ('114b6e41-14c5-42b1-9a35-386ab83b62e9',
+        '5b32a482c776e66412b374a533713f2dec24e0add3be5c0f0b369d08e84fc82e',
+        '78ad47715becba9affb3ca7921774a9c96c6e9698e6ee5f92b23ae38ed8625f1'),
+}
+_PRECEDENT_FILE_LIMIT = 256 * 1024
+_PIN = "<order-specific: take from this order's MODEL-WEIGHT-PINS.json / fetch receipts>"
+
 _SEGMENT = re.compile(r"[A-Za-z0-9][A-Za-z0-9._-]{0,95}")
 
 
@@ -128,12 +182,15 @@ def repo_key(url: object) -> str | None:
     return f"{host}/{segments[0].lower()}/{name.lower()}"
 
 
-def match_supplement(order: dict[str, Any]) -> dict[str, Any] | None:
+def match_supplements(order: dict[str, Any]) -> list[dict[str, Any]]:
+    """Every registered family whose repositories contain the order's model or code repository."""
     keys = {repo_key(order.get("model_link")), repo_key(order.get("code_link"))} - {None}
-    for entry in SUPPLEMENTS:
-        if keys & set(entry["repos"]):
-            return entry
-    return None
+    return [entry for entry in SUPPLEMENTS if keys & set(entry["repos"])]
+
+
+def match_supplement(order: dict[str, Any]) -> dict[str, Any] | None:
+    matches = match_supplements(order)
+    return matches[0] if matches else None
 
 
 def runtime_declares_unsupported(runtime: object) -> bool:
@@ -160,11 +217,77 @@ def gpu_pod_without_recipe(runtime: object, trusted_dir: Path) -> bool:
     return pod and not recipe.is_file() and not recipe.is_symlink()
 
 
-def generator_hint(order: dict[str, Any]) -> str:
-    """Extra text for the runner-generator prompt when a reviewed supplement covers this repository."""
-    entry = match_supplement(order)
-    if entry is None:
+def _precedent_shapes(family: str, evaluations_root: Path | str) -> str | None:
+    """The pinned precedent POD-RECIPE.json / RUNTIME.json of a family as prompt text, or None when unavailable.
+
+    Reads exactly <root>/<pinned order>/trusted-runner/<file> (no symlink, size-capped) and requires the pinned SHA-256.
+    Order-specific values (weights revision and file hashes, code commit and tree) are replaced by a placeholder, so only
+    the recipe shape is shown: image, code source, services, endpoint and the like."""
+    pinned = GENERATOR_PRECEDENTS.get(family)
+    if pinned is None:
+        return None
+    order, *digests = pinned
+    base = Path(evaluations_root) / order / "trusted-runner"
+    shapes = []
+    try:
+        if base.is_symlink() or not base.is_dir():
+            return None
+        for name, digest in zip(("POD-RECIPE.json", "RUNTIME.json"), digests):
+            path = base / name
+            if path.is_symlink() or not path.is_file() or path.stat().st_size > _PRECEDENT_FILE_LIMIT:
+                return None
+            raw = path.read_bytes()
+            if hashlib.sha256(raw).hexdigest() != digest:
+                return None
+            value = json.loads(raw.decode("utf-8"))
+            if name == "POD-RECIPE.json":
+                if not isinstance(value, dict):
+                    return None
+                for weight in value.get("weights") or ():
+                    if isinstance(weight, dict):
+                        for key in ("revision", "sha256"):
+                            if key in weight:
+                                weight[key] = _PIN
+                code = value.get("code")
+                if isinstance(code, dict):
+                    for key in ("commit", "tree"):
+                        if key in code:
+                            code[key] = _PIN
+            shapes.append(f"Precedent `{name}` (host data, frozen, sha256 {digest[:12]}, order {order[:8]}; "
+                          "order-specific pins replaced by a placeholder):\n```json\n"
+                          + json.dumps(value, indent=2, sort_keys=True) + "\n```\n")
+    except (OSError, ValueError, UnicodeError, RecursionError):
+        return None
+    return "".join(shapes)
+
+
+def generator_hint(order: dict[str, Any], evaluations_root: Path | str | None = None) -> str:
+    """Extra text for the runner-generator prompt when a reviewed supplement covers this repository.
+
+    With `evaluations_root` and EXACTLY ONE matching family that has a pinned, digest-verified precedent recipe, the hint
+    shows that recipe shape and tells the generator to write the gpu_pod recipe instead of `unsupported` (the host
+    registry check `active()` and the supplement's own recipe check stay the gate). Zero or several matches, a family
+    without a precedent, or an unreadable/changed precedent file give today's hint unchanged."""
+    matches = match_supplements(order)
+    if not matches:
         return ""
+    entry = matches[0]
+    if evaluations_root is not None and len(matches) == 1:
+        shapes = _precedent_shapes(entry["family"], evaluations_root)
+        if shapes:
+            return (f"\nRuntime supplement note (host registry, not customer text): this repository matches the reviewed "
+                    f"`{entry['family']}` runtime supplement (`{entry['module']}` in the host runtime). Repeat orders of "
+                    "this family are served by that supplement through the host admission registry, so do NOT write "
+                    "{\"backend\":\"unsupported\"} and do not report a blocker for the missing image: write the gpu_pod "
+                    "POD-RECIPE.json in the precedent's shape (the constant fields: schema_version, kind, image, "
+                    "min_vram_gb, code.source, services argv/env/ready_url, endpoint; for http_typesafe servers keep the "
+                    "precedent's server code and argv unchanged unless this order's source review shows a real difference), "
+                    "and take every order-specific value (weights repo/revision/file sha256 map, code commit and tree, "
+                    "served model name, prices) from this order's host MODEL-WEIGHT-PINS.json, fetch receipts and "
+                    "pricing review. Never copy a precedent revision or hash. RUNTIME.json (backend gpu_pod, credential "
+                    "none) and MEASUREMENT-META.json follow the precedent shape with this order's model id and prices. "
+                    "If this order's stack clearly differs from the precedent, say so in PRICING-REVIEW.md; the "
+                    "independent source review decides.\n" + shapes)
     return (f"\nRuntime supplement note (host registry, not customer text): this repository matches the reviewed "
             f"`{entry['family']}` runtime supplement (`{entry['module']}` in the host runtime; precedent jobs "
             f"{', '.join(entry['precedents'])} under /home/flori/jobs/). Unless a host admission note follows, the "

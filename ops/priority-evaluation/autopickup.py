@@ -1584,7 +1584,7 @@ If the official run path is not clear, write a short blocker to `OUTPUT.md`; do 
 """
     # The open-weights pod-recipe contract is appended verbatim (brief requirement).
     text += "\n" + (Path(__file__).resolve().parent / "PREP-OPEN-WEIGHTS-PROMPT.txt").read_text(encoding="utf-8")
-    text += native_owner.generator_hint(row)
+    text += native_owner.generator_hint(row, job_dir.parent)
     text += supplement_admission.generator_hint(job_dir)
     text += catalogue_overlay_lock.generator_hint()
     atomic_write(prompt, text)
