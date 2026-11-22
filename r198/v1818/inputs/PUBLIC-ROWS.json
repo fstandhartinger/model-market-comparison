@@ -1,0 +1,11 @@
+{
+ "cue-reflex-4b-v0.2": {
+  "author": "OidLabs Team (oidlabs)",
+  "disclosure": "Paid public evaluation. Measured on the 27 Oct draw on an evaluator-owned rented GPU, offline with the author's serving stack at the pinned commit. Failed or unanswered requests count as wrong answers. Gemma-4-E4B finetune with a frozen answer-letter readout in one forward pass and zero output generation. The serving configuration applies a yes/no confidence rule: yes-probability in (0.20, 0.50) becomes 0.199, and [0.50, 0.80) becomes 0.801. This rule is part of the measured model. Over-limit items are refused with HTTP 422 and scored wrong.",
+  "display": "Cue-Reflex-4B v0.2",
+  "endpoint_condition": "Evaluator-owned Verda GPU VM (RTX6000), offline read-only container (--network none); author inference/serve.py at a36bd3ec through a first-party launcher; BF16 Gemma-4-E4B + LoRA with a frozen answer-letter readout, one forward pass, zero output tokens. Pinned inference_config: sandwich prompt format, per-kind temperatures 1.118/1.032/1.227 and the disclosed yes/no confidence rule; limits 8192 prompt tokens and 16 options, no truncation, HTTP 422 above limits. PyTorch 2.9.1 cu128, transformers 5.20.1, peft 0.21.2 (adapter metadata records 0.21.3), Python 3.11.",
+  "licence": "Apache-2.0 (repo LICENSE and inference/LICENSE at a36bd3ec; model card apache-2.0); base google/gemma-4-E4B-it Apache-2.0",
+  "notes": "Gemma-4-E4B finetune with a frozen answer-letter readout in one forward pass and zero output generation. The serving configuration applies a yes/no confidence rule: yes-probability in (0.20, 0.50) becomes 0.199, and [0.50, 0.80) becomes 0.801. This rule is part of the measured model. Over-limit items are refused with HTTP 422 and scored wrong.",
+  "repo": "https://huggingface.co/oidlabs/cue-reflex-4B"
+ }
+}

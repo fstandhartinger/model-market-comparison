@@ -1,0 +1,92 @@
+{
+  "api_flag": false,
+  "api_subset": false,
+  "draw": {
+    "ci_basis": "measured on the draw before equating",
+    "drawn_on": "2026-10-27",
+    "g_med": 2.573387642438244,
+    "id": "v1.6-regular-20261027",
+    "label": "Third regular draw",
+    "measured_on": "2026-11-17",
+    "offset": {
+      "C": -1.8542447151797177,
+      "I": -2.884891186577587
+    },
+    "offset_ci95": {
+      "C": [
+        -5.447551660176162,
+        1.9718407968151896
+      ],
+      "I": [
+        -5.851030683979731,
+        1.0608488496147923
+      ]
+    },
+    "release": "v1.8.15",
+    "results_sha256": "ce6e2ac7c64a0532c4fe1fae754061b5167e90f56df70f7d7aa5b90420063adb",
+    "status": "equated"
+  },
+  "full_coverage": true,
+  "method": "v1.7",
+  "status": {
+    "status": "complete"
+  },
+  "support": {
+    "choice": "native",
+    "noul": "native",
+    "score": "native"
+  },
+  "key": "cue-reflex-4b-v0.2",
+  "display": "Cue-Reflex-4B v0.2",
+  "author": "OidLabs Team (oidlabs)",
+  "endpoint_kind": "gpu",
+  "ranked": false,
+  "listing": "unranked",
+  "rank": null,
+  "ranks": {
+    "A": null,
+    "B": null,
+    "C": null,
+    "capability": null
+  },
+  "axes": {
+    "calibration": 78.370122387835,
+    "cost": 87.4389342337437,
+    "intelligence": 50.940588953028055,
+    "speed": 89.17096582826152
+  },
+  "scores": {
+    "A": 72.67225103253114,
+    "B": 66.95918630441138,
+    "C": 52.38344247884868
+  },
+  "jevbench_score": 72.67225103253114,
+  "capability": 64.65535567043153,
+  "published_scores": {
+    "axes": {
+      "calibration": 80.22436710301471,
+      "cost": 87.4389342337437,
+      "intelligence": 53.825480139605645,
+      "speed": 89.17096582826152
+    },
+    "scores": {
+      "A": 74.49543151821608,
+      "B": 69.18200495867002,
+      "C": 59.95190181630094
+    },
+    "capability": 67.02492362131018
+  },
+  "cost": {
+    "usd_per_1000": 0.0026224196606677587,
+    "kind": "estimate"
+  },
+  "speed": {
+    "adjustment": "x2 + 0.15 s (assumption, not measured)",
+    "basis": "all decisions given (lane items in the raw), measured latency_s",
+    "n": 1500,
+    "p50_s_adjusted": 0.3403903630000059,
+    "p50_s_raw": 0.09519518150000295,
+    "p95_s_adjusted": 0.3555708591999973,
+    "p95_s_raw": 0.10278542959999867
+  }
+}

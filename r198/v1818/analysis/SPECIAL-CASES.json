@@ -1,0 +1,65 @@
+{
+  "H2O": {
+    "source": "workers/r168b-v1813-build/score/out-v17-share/jevbench-v1.6.0-results.json",
+    "source_sha256": "6679e2870528f0ac9abaadcb907d96d597ce8abe583dfdb6cef97b39150a8b5e",
+    "new": {
+      "I_open": 85.62398779441732,
+      "I_sealed": 90.11777059972925,
+      "base": 87.8708791970733,
+      "excess": -7.067170447750181,
+      "gap": -4.4937828053119375,
+      "penalty": 1.0
+    },
+    "old_reference_model": {
+      "I_open": 79.9765674204135,
+      "I_sealed": 78.61949506906838,
+      "base": 79.29803124474094,
+      "excess": -8.482454419010587,
+      "gap": 1.3570723513451242,
+      "penalty": 1
+    },
+    "public_delta_vs_old_reference": 5.647420374003815,
+    "sealed_delta_vs_old_reference": 11.498275530660877,
+    "equating_normalized_gap": 1.275999567843236,
+    "caveat": "Old H2O is measured on the reference draw; sealed deltas compare different item populations. Public items are shared. These are retained accepted aggregates, not a fresh score."
+  },
+  "Quyet_Small": {
+    "source": "workers/r170-v1814-build2/score-small/out-v17-share/jevbench-v1.6.0-results.json",
+    "source_sha256": "4550efb8e59e3f4a80e618bc22436de0852fb7b7bcd6433c26a775f6713e2fb9",
+    "intelligence": {
+      "I_open": 44.94331118815002,
+      "I_sealed": 28.63457550533808,
+      "base": 36.78894334674405,
+      "excess": 13.735348040373696,
+      "gap": 16.30873568281194,
+      "penalty": 0.942646519596263
+    },
+    "per_type_accuracy": {
+      "choice": null,
+      "noul": null,
+      "score": null
+    },
+    "equated_axes": {
+      "calibration": 81.39847698823577,
+      "cost": 88.8673177026433,
+      "intelligence": 31.79407821885479,
+      "speed": 93.3863994106336
+    },
+    "unpenalized_harmonic_A": 60.884127411408016,
+    "intelligence_gate_multiplier": 0.4043453639146626,
+    "reproduced_A": 24.618214654792457,
+    "published_A": 24.618214654792457
+  },
+  "SubQ": {
+    "api_flag": true,
+    "endpoint_kind": "api",
+    "speed_adjustment": "none (API)",
+    "cost_usd_per_1000": 0.014913069173942242,
+    "axes": {
+      "calibration": 92.21157893616872,
+      "cost": 64.7929890301389,
+      "intelligence": 75.47092939144923,
+      "speed": 87.04684116960723
+    }
+  }
+}

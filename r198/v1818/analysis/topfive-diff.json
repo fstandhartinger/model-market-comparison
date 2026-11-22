@@ -1,0 +1,606 @@
+{
+  "status": "FAIR_ALL_NINE_RANKED_CANDIDATE_PENDING_BINDING",
+  "changed_primary_lists": 26,
+  "lists": [
+    {
+      "list": "all/composites/A",
+      "before": [
+        "torchcast-decision-4b-v1.3",
+        "decide-1.1",
+        "torchcast-decision-31b-v1.0",
+        "singularity-super-decider",
+        "launchables-myles-g-12b"
+      ],
+      "after": [
+        "torchcast-decision-4b-v1.3",
+        "decide-1.1",
+        "h2o-lightning-31b-v1.3.4",
+        "torchcast-decision-31b-v1.0",
+        "singularity-super-decider"
+      ],
+      "entrants": [
+        "h2o-lightning-31b-v1.3.4"
+      ],
+      "leavers": [
+        "launchables-myles-g-12b"
+      ]
+    },
+    {
+      "list": "all/composites/B",
+      "before": [
+        "torchcast-decision-31b-v1.0",
+        "singularity-super-decider",
+        "decide-1.1",
+        "kettei-fat",
+        "karpo_decision_31b"
+      ],
+      "after": [
+        "h2o-lightning-31b-v1.3.4",
+        "torchcast-decision-31b-v1.0",
+        "singularity-super-decider",
+        "decide-1.1",
+        "kettei-fat"
+      ],
+      "entrants": [
+        "h2o-lightning-31b-v1.3.4"
+      ],
+      "leavers": [
+        "karpo_decision_31b"
+      ]
+    },
+    {
+      "list": "all/composites/C",
+      "before": [
+        "torchcast-decision-4b-v1.3",
+        "decide-1.1",
+        "torchcast-decision-31b-v1.0",
+        "singularity-super-decider",
+        "h2o-lightning-4b"
+      ],
+      "after": [
+        "torchcast-decision-4b-v1.3",
+        "decide-1.1",
+        "h2o-lightning-31b-v1.3.4",
+        "torchcast-decision-31b-v1.0",
+        "singularity-super-decider"
+      ],
+      "entrants": [
+        "h2o-lightning-31b-v1.3.4"
+      ],
+      "leavers": [
+        "h2o-lightning-4b"
+      ]
+    },
+    {
+      "list": "all/capability/official_caps",
+      "before": [
+        "torchcast-decision-31b-v1.0",
+        "metadecision-31b-rain",
+        "karpo_decision_31b",
+        "kettei-fat",
+        "singularity-super-decider-thinking"
+      ],
+      "after": [
+        "torchcast-decision-31b-v1.0",
+        "metadecision-31b-rain",
+        "h2o-lightning-31b-v1.3.4",
+        "karpo_decision_31b",
+        "kettei-fat"
+      ],
+      "entrants": [
+        "h2o-lightning-31b-v1.3.4"
+      ],
+      "leavers": [
+        "singularity-super-decider-thinking"
+      ]
+    },
+    {
+      "list": "all/capability/cost_off_latency_2x",
+      "before": [
+        "torchcast-decision-31b-v1.0",
+        "metadecision-31b-rain",
+        "karpo_decision_31b",
+        "kettei-fat",
+        "singularity-super-decider-thinking"
+      ],
+      "after": [
+        "torchcast-decision-31b-v1.0",
+        "metadecision-31b-rain",
+        "h2o-lightning-31b-v1.3.4",
+        "karpo_decision_31b",
+        "kettei-fat"
+      ],
+      "entrants": [
+        "h2o-lightning-31b-v1.3.4"
+      ],
+      "leavers": [
+        "singularity-super-decider-thinking"
+      ]
+    },
+    {
+      "list": "all/capability/latency_none",
+      "before": [
+        "torchcast-decision-31b-v1.0",
+        "metadecision-31b-rain",
+        "karpo_decision_31b",
+        "kettei-fat",
+        "singularity-super-decider-thinking"
+      ],
+      "after": [
+        "torchcast-decision-31b-v1.0",
+        "metadecision-31b-rain",
+        "h2o-lightning-31b-v1.3.4",
+        "karpo_decision_31b",
+        "kettei-fat"
+      ],
+      "entrants": [
+        "h2o-lightning-31b-v1.3.4"
+      ],
+      "leavers": [
+        "singularity-super-decider-thinking"
+      ]
+    },
+    {
+      "list": "all/extra_capability/cost_7x",
+      "before": [
+        "torchcast-decision-31b-v1.0",
+        "metadecision-31b-rain",
+        "karpo_decision_31b",
+        "kettei-fat",
+        "singularity-super-decider-thinking"
+      ],
+      "after": [
+        "torchcast-decision-31b-v1.0",
+        "metadecision-31b-rain",
+        "h2o-lightning-31b-v1.3.4",
+        "karpo_decision_31b",
+        "kettei-fat"
+      ],
+      "entrants": [
+        "h2o-lightning-31b-v1.3.4"
+      ],
+      "leavers": [
+        "singularity-super-decider-thinking"
+      ]
+    },
+    {
+      "list": "all/extra_capability/cost_10x",
+      "before": [
+        "torchcast-decision-31b-v1.0",
+        "metadecision-31b-rain",
+        "karpo_decision_31b",
+        "kettei-fat",
+        "singularity-super-decider-thinking"
+      ],
+      "after": [
+        "torchcast-decision-31b-v1.0",
+        "metadecision-31b-rain",
+        "h2o-lightning-31b-v1.3.4",
+        "karpo_decision_31b",
+        "kettei-fat"
+      ],
+      "entrants": [
+        "h2o-lightning-31b-v1.3.4"
+      ],
+      "leavers": [
+        "singularity-super-decider-thinking"
+      ]
+    },
+    {
+      "list": "open/composites/A",
+      "before": [
+        "torchcast-decision-4b-v1.3",
+        "torchcast-decision-31b-v1.0",
+        "h2o-lightning-4b",
+        "arcbright-elf-1-12b-r2",
+        "wald-26b-a4b"
+      ],
+      "after": [
+        "torchcast-decision-4b-v1.3",
+        "h2o-lightning-31b-v1.3.4",
+        "torchcast-decision-31b-v1.0",
+        "h2o-lightning-4b",
+        "arcbright-elf-1-12b-r2"
+      ],
+      "entrants": [
+        "h2o-lightning-31b-v1.3.4"
+      ],
+      "leavers": [
+        "wald-26b-a4b"
+      ]
+    },
+    {
+      "list": "open/composites/B",
+      "before": [
+        "torchcast-decision-31b-v1.0",
+        "karpo_decision_31b",
+        "torchcast-decision-4b-v1.3",
+        "h2o-lightning-31b",
+        "fastino-glide-1.2-open"
+      ],
+      "after": [
+        "h2o-lightning-31b-v1.3.4",
+        "torchcast-decision-31b-v1.0",
+        "karpo_decision_31b",
+        "torchcast-decision-4b-v1.3",
+        "starlord-27b-v2-0-preview"
+      ],
+      "entrants": [
+        "h2o-lightning-31b-v1.3.4",
+        "starlord-27b-v2-0-preview"
+      ],
+      "leavers": [
+        "h2o-lightning-31b",
+        "fastino-glide-1.2-open"
+      ]
+    },
+    {
+      "list": "open/composites/C",
+      "before": [
+        "torchcast-decision-4b-v1.3",
+        "torchcast-decision-31b-v1.0",
+        "h2o-lightning-4b",
+        "arcbright-elf-1-12b-r2",
+        "wald-26b-a4b"
+      ],
+      "after": [
+        "torchcast-decision-4b-v1.3",
+        "h2o-lightning-31b-v1.3.4",
+        "torchcast-decision-31b-v1.0",
+        "h2o-lightning-4b",
+        "arcbright-elf-1-12b-r2"
+      ],
+      "entrants": [
+        "h2o-lightning-31b-v1.3.4"
+      ],
+      "leavers": [
+        "wald-26b-a4b"
+      ]
+    },
+    {
+      "list": "open/capability/official_caps",
+      "before": [
+        "torchcast-decision-31b-v1.0",
+        "metadecision-31b-rain",
+        "karpo_decision_31b",
+        "mammoth-1",
+        "knowline-31b-gen1"
+      ],
+      "after": [
+        "torchcast-decision-31b-v1.0",
+        "metadecision-31b-rain",
+        "h2o-lightning-31b-v1.3.4",
+        "karpo_decision_31b",
+        "mammoth-1"
+      ],
+      "entrants": [
+        "h2o-lightning-31b-v1.3.4"
+      ],
+      "leavers": [
+        "knowline-31b-gen1"
+      ]
+    },
+    {
+      "list": "open/capability/no_caps",
+      "before": [
+        "torchcast-decision-31b-v1.0",
+        "metadecision-31b-rain",
+        "karpo_decision_31b",
+        "mammoth-1",
+        "knowline-31b-gen1"
+      ],
+      "after": [
+        "torchcast-decision-31b-v1.0",
+        "metadecision-31b-rain",
+        "h2o-lightning-31b-v1.3.4",
+        "karpo_decision_31b",
+        "mammoth-1"
+      ],
+      "entrants": [
+        "h2o-lightning-31b-v1.3.4"
+      ],
+      "leavers": [
+        "knowline-31b-gen1"
+      ]
+    },
+    {
+      "list": "open/capability/cost_off_latency_2x",
+      "before": [
+        "torchcast-decision-31b-v1.0",
+        "metadecision-31b-rain",
+        "karpo_decision_31b",
+        "mammoth-1",
+        "knowline-31b-gen1"
+      ],
+      "after": [
+        "torchcast-decision-31b-v1.0",
+        "metadecision-31b-rain",
+        "h2o-lightning-31b-v1.3.4",
+        "karpo_decision_31b",
+        "mammoth-1"
+      ],
+      "entrants": [
+        "h2o-lightning-31b-v1.3.4"
+      ],
+      "leavers": [
+        "knowline-31b-gen1"
+      ]
+    },
+    {
+      "list": "open/capability/latency_none",
+      "before": [
+        "torchcast-decision-31b-v1.0",
+        "metadecision-31b-rain",
+        "karpo_decision_31b",
+        "mammoth-1",
+        "knowline-31b-gen1"
+      ],
+      "after": [
+        "torchcast-decision-31b-v1.0",
+        "metadecision-31b-rain",
+        "h2o-lightning-31b-v1.3.4",
+        "karpo_decision_31b",
+        "mammoth-1"
+      ],
+      "entrants": [
+        "h2o-lightning-31b-v1.3.4"
+      ],
+      "leavers": [
+        "knowline-31b-gen1"
+      ]
+    },
+    {
+      "list": "open/extra_capability/cost_7x",
+      "before": [
+        "torchcast-decision-31b-v1.0",
+        "metadecision-31b-rain",
+        "karpo_decision_31b",
+        "mammoth-1",
+        "knowline-31b-gen1"
+      ],
+      "after": [
+        "torchcast-decision-31b-v1.0",
+        "metadecision-31b-rain",
+        "h2o-lightning-31b-v1.3.4",
+        "karpo_decision_31b",
+        "mammoth-1"
+      ],
+      "entrants": [
+        "h2o-lightning-31b-v1.3.4"
+      ],
+      "leavers": [
+        "knowline-31b-gen1"
+      ]
+    },
+    {
+      "list": "open/extra_capability/cost_10x",
+      "before": [
+        "torchcast-decision-31b-v1.0",
+        "metadecision-31b-rain",
+        "karpo_decision_31b",
+        "mammoth-1",
+        "knowline-31b-gen1"
+      ],
+      "after": [
+        "torchcast-decision-31b-v1.0",
+        "metadecision-31b-rain",
+        "h2o-lightning-31b-v1.3.4",
+        "karpo_decision_31b",
+        "mammoth-1"
+      ],
+      "entrants": [
+        "h2o-lightning-31b-v1.3.4"
+      ],
+      "leavers": [
+        "knowline-31b-gen1"
+      ]
+    },
+    {
+      "list": "open/extra_capability/rank_field",
+      "before": [
+        "torchcast-decision-31b-v1.0",
+        "metadecision-31b-rain",
+        "karpo_decision_31b",
+        "mammoth-1",
+        "knowline-31b-gen1"
+      ],
+      "after": [
+        "torchcast-decision-31b-v1.0",
+        "metadecision-31b-rain",
+        "h2o-lightning-31b-v1.3.4",
+        "karpo_decision_31b",
+        "mammoth-1"
+      ],
+      "entrants": [
+        "h2o-lightning-31b-v1.3.4"
+      ],
+      "leavers": [
+        "knowline-31b-gen1"
+      ]
+    },
+    {
+      "list": "open/extra_capability/cost_7x_latency_none",
+      "before": [
+        "torchcast-decision-31b-v1.0",
+        "metadecision-31b-rain",
+        "karpo_decision_31b",
+        "mammoth-1",
+        "knowline-31b-gen1"
+      ],
+      "after": [
+        "torchcast-decision-31b-v1.0",
+        "metadecision-31b-rain",
+        "h2o-lightning-31b-v1.3.4",
+        "karpo_decision_31b",
+        "mammoth-1"
+      ],
+      "entrants": [
+        "h2o-lightning-31b-v1.3.4"
+      ],
+      "leavers": [
+        "knowline-31b-gen1"
+      ]
+    },
+    {
+      "list": "open/extra_capability/cost_10x_latency_none",
+      "before": [
+        "torchcast-decision-31b-v1.0",
+        "metadecision-31b-rain",
+        "karpo_decision_31b",
+        "mammoth-1",
+        "knowline-31b-gen1"
+      ],
+      "after": [
+        "torchcast-decision-31b-v1.0",
+        "metadecision-31b-rain",
+        "h2o-lightning-31b-v1.3.4",
+        "karpo_decision_31b",
+        "mammoth-1"
+      ],
+      "entrants": [
+        "h2o-lightning-31b-v1.3.4"
+      ],
+      "leavers": [
+        "knowline-31b-gen1"
+      ]
+    },
+    {
+      "list": "api/composites/A",
+      "before": [
+        "decide-1.1",
+        "singularity-super-decider",
+        "launchables-myles-g-12b",
+        "sd-jev-4b-v12.1.0-aligned-s42-step0256",
+        "kettei-fat"
+      ],
+      "after": [
+        "decide-1.1",
+        "singularity-super-decider",
+        "subq-snap-1.2",
+        "launchables-myles-g-12b",
+        "sd-jev-4b-v12.1.0-aligned-s42-step0256"
+      ],
+      "entrants": [
+        "subq-snap-1.2"
+      ],
+      "leavers": [
+        "kettei-fat"
+      ]
+    },
+    {
+      "list": "api/composites/B",
+      "before": [
+        "singularity-super-decider",
+        "decide-1.1",
+        "kettei-fat",
+        "fastino-glide-api",
+        "drex-max"
+      ],
+      "after": [
+        "singularity-super-decider",
+        "decide-1.1",
+        "kettei-fat",
+        "subq-snap-1.2",
+        "fastino-glide-api"
+      ],
+      "entrants": [
+        "subq-snap-1.2"
+      ],
+      "leavers": [
+        "drex-max"
+      ]
+    },
+    {
+      "list": "api/composites/C",
+      "before": [
+        "decide-1.1",
+        "singularity-super-decider",
+        "sd-jev-4b-v12.1.0-aligned-s42-step0256",
+        "kettei-fat",
+        "fastino-glide-api"
+      ],
+      "after": [
+        "decide-1.1",
+        "singularity-super-decider",
+        "subq-snap-1.2",
+        "sd-jev-4b-v12.1.0-aligned-s42-step0256",
+        "kettei-fat"
+      ],
+      "entrants": [
+        "subq-snap-1.2"
+      ],
+      "leavers": [
+        "fastino-glide-api"
+      ]
+    },
+    {
+      "list": "release/A",
+      "before": [
+        "torchcast-decision-4b-v1.3",
+        "decide-1.1",
+        "torchcast-decision-31b-v1.0",
+        "singularity-super-decider",
+        "launchables-myles-g-12b"
+      ],
+      "after": [
+        "torchcast-decision-4b-v1.3",
+        "decide-1.1",
+        "h2o-lightning-31b-v1.3.4",
+        "torchcast-decision-31b-v1.0",
+        "singularity-super-decider"
+      ],
+      "entrants": [
+        "h2o-lightning-31b-v1.3.4"
+      ],
+      "leavers": [
+        "launchables-myles-g-12b"
+      ]
+    },
+    {
+      "list": "release/B",
+      "before": [
+        "torchcast-decision-31b-v1.0",
+        "singularity-super-decider",
+        "decide-1.1",
+        "kettei-fat",
+        "karpo_decision_31b"
+      ],
+      "after": [
+        "h2o-lightning-31b-v1.3.4",
+        "torchcast-decision-31b-v1.0",
+        "singularity-super-decider",
+        "decide-1.1",
+        "kettei-fat"
+      ],
+      "entrants": [
+        "h2o-lightning-31b-v1.3.4"
+      ],
+      "leavers": [
+        "karpo_decision_31b"
+      ]
+    },
+    {
+      "list": "release/C",
+      "before": [
+        "torchcast-decision-4b-v1.3",
+        "decide-1.1",
+        "torchcast-decision-31b-v1.0",
+        "singularity-super-decider",
+        "h2o-lightning-4b"
+      ],
+      "after": [
+        "torchcast-decision-4b-v1.3",
+        "decide-1.1",
+        "h2o-lightning-31b-v1.3.4",
+        "torchcast-decision-31b-v1.0",
+        "singularity-super-decider"
+      ],
+      "entrants": [
+        "h2o-lightning-31b-v1.3.4"
+      ],
+      "leavers": [
+        "h2o-lightning-4b"
+      ]
+    }
+  ]
+}
