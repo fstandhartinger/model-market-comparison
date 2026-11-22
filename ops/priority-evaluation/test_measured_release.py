@@ -358,6 +358,17 @@ class NativeApiCompletionTests(Base):
         ap.send_sla_notice(self.native_row, 36, effects)
         self.assertEqual(effects.notify.call_args.kwargs["mode"], "urgent")
 
+    def test_final_done_owner_does_not_suppress_urgent_notice(self) -> None:
+        # Valid pinned native receipts, but the owner already wrote FINAL DONE: nobody is left to release.
+        self.live_owner(f"# STATE\n- {self.rid}\n- FINAL DONE\n")
+        no.receipt(self.receipts.parent, {"order": self.rid, "launched": True})
+        ap.save_state(self.state)
+        self.assertTrue(ap.native_api_measurement_completed(self.native_row, self.state))
+        effects = mock.Mock()
+        ap.send_sla_notice(self.native_row, 36, effects)
+        self.assertEqual(effects.notify.call_args.kwargs["mode"], "urgent")
+        self.assertTrue(effects.notify.call_args.args[0].startswith("🚨 DRINGEND"))
+
     def test_health_reports_release_deadline_at_three_hours(self) -> None:
         self.live_owner(f"# STATE\n- {self.rid}\n")
         no.receipt(self.receipts.parent, {"order": self.rid, "launched": True})
