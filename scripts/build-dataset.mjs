@@ -827,7 +827,17 @@ async function build() {
     const org = mappedFamily ? [...models.values()].find((row) => row.family_key === familyKey)?.org || own.org : own.org;
     const pricedEndpoints = (m.endpoints || []).filter((e) => num(e.pricing?.prompt) != null || num(e.pricing?.completion) != null);
     if (!pricedEndpoints.length) {
-      if (withdrawnOpenRouterIds.has(m.id) && joinedFamily(familyKey)) family(familyKey, org, { openWeights: typeof m.hugging_face_id === "string" && m.hugging_face_id.trim().length > 0 }).benchmarkSubjectOnly = true;
+      if (withdrawnOpenRouterIds.has(m.id) && joinedFamily(familyKey)) {
+        const subjectFamily = family(familyKey, org, { openWeights: typeof m.hugging_face_id === "string" && m.hugging_face_id.trim().length > 0 });
+        subjectFamily.benchmarkSubjectOnly = true;
+        // CR-827: keep the withdrawn model's own OpenRouter identity (catalog id and canonical slug, as
+        // OpenRouter still lists them) so OpenRouter's own benchmark runs of that permaslug keep joining
+        // the subject row. Without it the join index (lib/openrouter-benchmark-scores.mjs familyIndex)
+        // only sees offers, which a withdrawn model no longer has, and its published runs drop out.
+        // Identity only: no offer, price or endpoint is kept or invented.
+        if (!subjectFamily.withdrawnOpenRouterIdentities) subjectFamily.withdrawnOpenRouterIdentities = new Map();
+        subjectFamily.withdrawnOpenRouterIdentities.set(m.id, { id: m.id, canonical_slug: m.canonical_slug ?? null });
+      }
       continue;
     }
 
@@ -1296,18 +1306,26 @@ async function build() {
     for (const { board, statedVariant, entry } of Object.values(entries)) {
       const exact = statedVariant ? models.get(`${familyKey}::${statedVariant}`) ?? null : null;
       const target = exact ?? fallback;
-      if (!byTarget.has(target.id)) byTarget.set(target.id, { target, boards: {}, exactVariants: new Set() });
+      if (!byTarget.has(target.id)) byTarget.set(target.id, { target, boards: {}, exactVariants: new Set(), uncatalogedVariants: new Set() });
       const bucket = byTarget.get(target.id);
       // Two source rows resolving to the same target and board: the better-sampled one wins.
       const prior = bucket.boards[board];
       if (!prior || (entry.battles || 0) > (prior.battles || 0)) bucket.boards[board] = entry;
       if (exact) bucket.exactVariants.add(statedVariant);
+      else if (statedVariant) bucket.uncatalogedVariants.add(statedVariant);
     }
-    for (const { target, boards, exactVariants } of byTarget.values()) {
+    for (const { target, boards, exactVariants, uncatalogedVariants } of byTarget.values()) {
       target.designarena = boards;
+      // CR-827 (22 Nov 2026: GPT-6.2 Astra (max) while the catalog only has gpt-6.2-astra::default): a
+      // stated effort that is not a catalog configuration is never mapped onto another one. The result
+      // keeps the family-scoped rule, and the note says which effort the source named instead of
+      // claiming the source named none.
+      const familyScope = uncatalogedVariants.size
+        ? `Intelligence.ai (formerly DesignArena) names the effort ${[...uncatalogedVariants].sort().join(", ")} for this result in its own model registry, but that effort is not a catalog configuration of ${familyKey}. It is attached exactly once to ${target.id}, the deterministic family representative used by collapsed comparisons; this does not assert that Intelligence.ai tested this specific effort setting.`
+        : `Intelligence.ai (formerly DesignArena) publishes this result at product/family scope without an effort setting. It is attached exactly once to ${target.id}, the deterministic family representative used by collapsed comparisons; this does not assert that Intelligence.ai tested this specific effort setting.`;
       target.designarena_attachment_note = exactVariants.size
         ? `Intelligence.ai (formerly DesignArena) names the tested effort for this result in its own model registry (${[...exactVariants].sort().join(", ")}), so it is attached to ${target.id}, exactly that catalog configuration.`
-        : `Intelligence.ai (formerly DesignArena) publishes this result at product/family scope without an effort setting. It is attached exactly once to ${target.id}, the deterministic family representative used by collapsed comparisons; this does not assert that Intelligence.ai tested this specific effort setting.`;
+        : familyScope;
     }
   }
 
@@ -1328,8 +1346,11 @@ async function build() {
     const benchmarkSubject = families.get(row.family_key)?.benchmarkSubjectOnly && benchmarkJoinTargets.has(row.id);
     if (!row.aa_model_id && !row.coding_agent_results?.length
         && !hasScore && !hasDesign && !row.offers.length && !row.copilot) {
-      if (benchmarkSubject) row.benchmark_subject_only = true;
-      else models.delete(row.id);
+      if (benchmarkSubject) {
+        row.benchmark_subject_only = true;
+        const identities = families.get(row.family_key)?.withdrawnOpenRouterIdentities;
+        if (identities?.size) row.openrouter_withdrawn_identities = [...identities.values()].sort((a, b) => a.id.localeCompare(b.id));
+      } else models.delete(row.id);
     }
   }
   modelRows = [...models.values()];
