@@ -34,8 +34,11 @@ class RetiredMethodGuardTests(unittest.TestCase):
     def test_image_only_proceeds(self):
         self.assertEqual(self.dispatch(["imagejevbench"], {}), "PROCEEDS")
 
-    def test_v16_admitted_proceeds(self):
-        self.assertEqual(self.dispatch(["jevbench"], {"v16_profile_admission": {"verdict": "ACCEPTED"}}), "PROCEEDS")
+    def test_v16_admitted_is_rerouted_never_measured_on_the_retired_path(self):
+        # CR-842 r3 S1: dispatch_measurement is the retired legacy path and evaluate() routes admitted orders away before
+        # calling it, so an admission seen here appeared after evaluate()'s route check: hold, the next pass routes it
+        self.assertEqual(self.dispatch(["jevbench"], {"v16_profile_admission": {"verdict": "ACCEPTED"}}),
+                         "HOLD:v16_admitted_reroute")
 
 
 if __name__ == "__main__":
