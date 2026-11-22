@@ -6424,7 +6424,7 @@ def record_delivery(rid: str, subject: str, artifact_sha256: str, sent_at: str) 
     if not isinstance(subject, str) or not subject.strip() or subject != subject.strip() \
             or len(subject) > RECORD_DELIVERY_SUBJECT_MAX or any(ch in subject for ch in "\r\n\t"):
         raise PickupError("--subject must be the exact one-line subject of the sent result mail")
-    claimed = parse_ts(sent_at)
+    claimed = parse_ts(sent_at) if isinstance(sent_at, str) and re.search(r"(Z|[+-]\d{2}:?\d{2})$", sent_at.strip()) else None
     if claimed is None:
         raise PickupError("--sent-at must be the reported send time (ISO 8601 with time zone)")
     row = load_row(rid)
@@ -6449,8 +6449,8 @@ def record_delivery(rid: str, subject: str, artifact_sha256: str, sent_at: str) 
     paid = parse_ts(row.get("paid_at"))
     if paid is None:
         raise PickupError("order has no recorded payment time")
-    near = [stamp for stamp in audited_sends(recipient, subject)
-            if abs((stamp - claimed).total_seconds()) <= RECORD_DELIVERY_WINDOW_S]
+    sends = audited_sends(recipient, subject)
+    near = [stamp for stamp in sends if abs((stamp - claimed).total_seconds()) <= RECORD_DELIVERY_WINDOW_S]
     if len(near) != 1:
         raise PickupError(f"mail_tool's sent audit has {len(near)} sends to the order's address with this subject "
                           f"within {RECORD_DELIVERY_WINDOW_S} s of --sent-at; exactly one is required")
@@ -6458,6 +6458,9 @@ def record_delivery(rid: str, subject: str, artifact_sha256: str, sent_at: str) 
     if proven < paid:
         raise PickupError("the audited send is older than the payment")
     late = proven >= deadline_for(row)
+    if not late and any(stamp >= deadline_for(row) for stamp in sends):
+        # An error toward "on time" would cancel the refund path for good (critic r2 S1): let Florian's card decide.
+        raise PickupError("a later send with the same subject exists after the deadline; pass that send's time")
     assignments = (f"status='{'refund_due' if late else 'completed'}', delivery_email_status='sent', "
                    f"result_delivered_at={sql_text(iso(proven))}::timestamptz")
     if late:
@@ -6468,12 +6471,16 @@ def record_delivery(rid: str, subject: str, artifact_sha256: str, sent_at: str) 
                           "AND customer_hold_started_at IS NULL AND refund_id IS NULL AND refund_decision IS NULL "
                           "AND COALESCE(delivery_email_status,'not_due') <> 'sending'"):
             raise PickupError("the order changed while recording; read its status and retry")
-        state = load_state(rid)
-        state["external_delivery"] = {"subject_sha256": hashlib.sha256(subject.encode()).hexdigest(),
-                                      "sent_at": iso(proven), "artifact_sha256": artifact_sha256,
-                                      "recorded_at": iso(utcnow()), "late": late,
-                                      "source": "mail_tool sent-audit.log"}
-        save_state(state)
+        try:
+            state = load_state(rid)
+            state["external_delivery"] = {"subject_sha256": hashlib.sha256(subject.encode()).hexdigest(),
+                                          "sent_at": iso(proven), "artifact_sha256": artifact_sha256,
+                                          "recorded_at": iso(utcnow()), "late": late,
+                                          "source": "mail_tool sent-audit.log"}
+            save_state(state)
+        except (PickupError, OSError, ValueError) as exc:
+            return (f"Order {order_ref(rid)}: result delivery recorded in the DB at {iso(proven)}, but the state note "
+                    f"failed ({type(exc).__name__}); do not retry, the DB row is final.")
     return (f"Order {order_ref(rid)}: result delivery recorded at {iso(proven)} from the mail audit"
             + (" (after the deadline: refund_due, Florian's refund card decides)." if late else "."))
 
