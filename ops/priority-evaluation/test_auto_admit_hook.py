@@ -75,6 +75,8 @@ class HookCase(unittest.TestCase):
         self.set_ctl()
         self.admit_path = self.root / 'fastlane-admit'
         self.admit_path.write_text(FAKE_ADMIT.format(real=str(HERE / 'fastlane-admit'), ctl=str(self.ctl)))
+        os.chmod(self.admit_path, 0o644)  # the umask on a dev box may leave it group-writable, which the hook refuses
+        self.admit_sha = hashlib.sha256(self.admit_path.read_bytes()).hexdigest()
         self.write_job(runtime_backend='gpu_pod', recipe=True)
         self.row = {'id': RID, 'benchmarks': ['jevbench'], 'status': 'paid', 'stripe_mode': 'live', 'synthetic_test': False,
                     'paid_at': '2026-11-22T10:00:00Z', 'result_delivered_at': None, 'refund_id': None, 'refunded_at': None,
@@ -83,6 +85,7 @@ class HookCase(unittest.TestCase):
         self.native_calls = []
         patches = [mock.patch.object(ap, 'STATE_ROOT', self.state_root),
                    mock.patch.object(ap, 'FASTLANE_ADMIT_PATH', self.admit_path),
+                   mock.patch.object(ap, 'FASTLANE_ADMIT_SHA256', self.admit_sha),
                    mock.patch.object(ap, 'V16_ADMIT_PATH', ''),
                    mock.patch.object(ap, 'V16_ADMIT_SHA256', ''),
                    mock.patch.object(ap, 'validate_review_gate',
@@ -107,17 +110,22 @@ class HookCase(unittest.TestCase):
         if recipe:
             (trusted / 'POD-RECIPE.json').write_text('{}')
 
-    def v16_script(self, exit_code=0, sleep=0, write_state=True, mode=0o700):
+    def v16_script(self, exit_code=0, sleep=0, write_state=True, mode=0o700, grandchild_marker=None):
         path = self.root / 'v16-admit'
         log = self.root / 'v16.log'
         state = self.state_root / 'requests' / f'{RID}.json'
-        path.write_text(f'#!{sys.executable}\nimport json, sys, time\n'
+        grand = ''
+        if grandchild_marker:
+            grand = (f'import subprocess\n'
+                     f'subprocess.Popen([sys.executable, "-c", "import time; time.sleep(2); open({str(grandchild_marker)!r}, \'w\').write(\'late\')"])\n')
+        path.write_text(f'#!{sys.executable}\nimport json, os, sys, time\n'
                         f'open({str(log)!r}, "a").write(json.dumps(sys.argv[1:]) + "\\n")\n'
+                        + grand +
                         f'time.sleep({sleep})\n'
                         f'if {exit_code} == 0 and {write_state}:\n'
                         f'    s = json.load(open({str(state)!r}))\n'
                         f'    s["v16_profile_admission"] = {{"verdict": "ACCEPTED"}}\n'
-                        f'    json.dump(s, open({str(state)!r}, "w"))\n'
+                        f'    json.dump(s, open({str(state)!r} + ".tmp", "w")); os.replace({str(state)!r} + ".tmp", {str(state)!r})\n'
                         f'sys.exit({exit_code})\n')
         os.chmod(path, mode)
         self.v16_log = log
@@ -129,6 +137,12 @@ class HookCase(unittest.TestCase):
             patcher = mock.patch.object(ap, target, value)
             patcher.start()
             self.addCleanup(patcher.stop)
+
+    def repin_admit(self):
+        os.chmod(self.admit_path, 0o644)
+        patcher = mock.patch.object(ap, 'FASTLANE_ADMIT_SHA256', hashlib.sha256(self.admit_path.read_bytes()).hexdigest())
+        patcher.start()
+        self.addCleanup(patcher.stop)
 
     # helpers ----------------------------------------------------------------------------------------------------
     def dispatch(self):
@@ -247,12 +261,71 @@ class FamilyAdmitTests(HookCase):
                     self.admit_path.unlink(missing_ok=True)
                 else:
                     self.admit_path.write_text(content)
+                    self.repin_admit()
                 self.assertEqual(self.dispatch(), 'HOLD:official_method_retired_requires_admission')
 
     def test_wrong_row_id_is_ignored(self):
         self.row['id'] = 'bbbbbbbb-1111-4222-8333-444444444444'
         self.dispatch_ignoring_errors()
         self.assertEqual(self.admit_calls(), [])
+
+
+class AdmitPinTests(HookCase):
+    """S3: fastlane-admit is only loaded when it is the pinned file; both steps are off otherwise."""
+
+    def test_empty_pin_turns_the_hook_off_without_a_note(self):
+        with mock.patch.object(ap, 'FASTLANE_ADMIT_SHA256', ''):
+            self.assertEqual(self.dispatch(), 'HOLD:official_method_retired_requires_admission')
+        self.assertEqual(self.admit_calls(), [])
+        self.assertNotIn('auto-admit', self.state_md())
+
+    def test_empty_admit_pin_also_keeps_a_fully_pinned_v16_step_off(self):
+        path = self.v16_script(exit_code=0)
+        self.pin(path)
+        with mock.patch.object(ap, 'FASTLANE_ADMIT_SHA256', ''):
+            self.assertEqual(self.dispatch(), 'HOLD:official_method_retired_requires_admission')
+        self.assertEqual(self.v16_calls(), [])  # step 2 reuses fastlane-admit's order gate, so it needs that pin too
+
+    def test_sha_mismatch_is_not_loaded_and_is_noted(self):
+        marker = self.root / 'executed'
+        self.admit_path.write_text(f'open({str(marker)!r}, "w").write("x")\n')  # changed after the pin was taken
+        self.assertEqual(self.dispatch(), 'HOLD:official_method_retired_requires_admission')
+        self.assertFalse(marker.exists())
+        self.assertIn('step skipped: fastlane-admit sha256 differs from the pin', self.state_md())
+
+    def test_group_or_other_writable_file_is_not_loaded(self):
+        for mode in (0o664, 0o646):
+            with self.subTest(oct(mode)):
+                os.chmod(self.admit_path, mode)
+                self.assertEqual(self.dispatch(), 'HOLD:official_method_retired_requires_admission')
+                self.assertEqual(self.admit_calls(), [])
+        self.assertIn('fastlane-admit file is not an own, non-writable regular file', self.state_md())
+
+    def test_symlink_is_not_loaded(self):
+        link = self.root / 'link-admit'
+        link.symlink_to(self.admit_path)
+        with mock.patch.object(ap, 'FASTLANE_ADMIT_PATH', link):
+            self.assertEqual(self.dispatch(), 'HOLD:official_method_retired_requires_admission')
+        self.assertEqual(self.admit_calls(), [])
+        self.assertIn('missing, a symlink or unreadable', self.state_md())
+
+    def test_relative_path_is_not_loaded(self):
+        with mock.patch.object(ap, 'FASTLANE_ADMIT_PATH', Path('fastlane-admit')):
+            self.assertEqual(self.dispatch(), 'HOLD:official_method_retired_requires_admission')
+        self.assertIn('path is not absolute', self.state_md())
+
+    def test_the_verified_bytes_are_what_runs(self):
+        # the module is built from the bytes that were hashed: a swap after the check cannot change what executes
+        original = ap._pinned_bytes
+
+        def swap_after_check(*args, **kwargs):
+            result = original(*args, **kwargs)
+            self.admit_path.write_text('raise SystemExit(9)\n')
+            return result
+        with mock.patch.object(ap, '_pinned_bytes', side_effect=swap_after_check):
+            self.assertEqual(self.dispatch(), 'HOLD:official_method_retired_requires_admission')
+        self.assertEqual(len(self.admit_calls()), 1)  # the pinned (original) code ran, not the swapped file
+        self.assertNotIn('hook failed', self.state_md())
 
 
 class V16AdmitTests(HookCase):
@@ -282,7 +355,15 @@ class V16AdmitTests(HookCase):
     def test_missing_file_holds(self):
         self.pin(self.root / 'nope', sha='1' * 64)
         self.assertEqual(self.dispatch(), 'HOLD:official_method_retired_requires_admission')
-        self.assertIn('missing or unreadable', self.state_md())
+        self.assertIn('missing, a symlink or unreadable', self.state_md())
+
+    def test_relative_path_never_executes(self):
+        path = self.v16_script()
+        self.pin(path, sha=hashlib.sha256(path.read_bytes()).hexdigest())
+        with mock.patch.object(ap, 'V16_ADMIT_PATH', os.path.relpath(path)):
+            self.assertEqual(self.dispatch(), 'HOLD:official_method_retired_requires_admission')
+        self.assertEqual(self.v16_calls(), [])
+        self.assertIn('v16-admit path is not absolute', self.state_md())
 
     def test_group_writable_file_is_refused_even_with_right_hash(self):
         path = self.v16_script(mode=0o770)
@@ -290,45 +371,107 @@ class V16AdmitTests(HookCase):
         self.assertEqual(self.dispatch(), 'HOLD:official_method_retired_requires_admission')
         self.assertEqual(self.v16_calls(), [])
 
-    def test_exit_zero_continues_to_the_measurement_path(self):
+    def test_a_pin_problem_is_not_an_attempt(self):
+        path = self.v16_script(exit_code=1)
+        self.pin(path, sha='0' * 64)
+        self.dispatch()
+        self.assertNotIn('v16_admit_attempt', self.state())
+
+    def test_exit_zero_is_rerouted_never_continued_on_the_legacy_path(self):
         path = self.v16_script(exit_code=0)
         self.pin(path)
-        self.assertEqual(self.dispatch(), 'PROCEEDS')
+        self.assertEqual(self.dispatch(), 'HOLD:v16_admitted_reroute')  # not 'PROCEEDS' (the legacy runtime_spec)
         self.assertEqual(self.v16_calls(), [[RID, '--basis', 'autopickup review-sha256 ' + REVIEW_SHA]])
-        self.assertIn('v16-admit exit 0; the order continues', self.state_md())
+        self.assertIn('v16-admit exit 0; the order is routed to its v1.6 evaluation', self.state_md())
         self.assertEqual(self.native_calls, [])
+        self.assertEqual(self.state()['v16_admit_attempt']['kind'], 'admitted')
+
+    def test_the_reroute_reason_is_transient_and_retried_without_backoff(self):
+        self.assertIn('v16_admitted_reroute', ap.TRANSIENT_HOLD_REASONS)
+        self.assertIn('v16_admit_retry', ap.TRANSIENT_HOLD_REASONS)
+        self.assertIn('v16_admitted_reroute', ap.IMMEDIATE_RETRY_HOLD_REASONS)
+        self.assertNotIn('v16_admit_retry', ap.IMMEDIATE_RETRY_HOLD_REASONS)
+
+    def test_an_order_admitted_before_the_hook_is_not_rerouted_by_it(self):
+        state = self.state()
+        state['v16_profile_admission'] = {'verdict': 'ACCEPTED'}
+        ap.save_state(state)
+        self.assertEqual(self.dispatch(), 'PROCEEDS')  # unchanged: the guard passes, evaluate() would have routed it earlier
+        self.assertEqual(self.v16_calls(), [])
 
     def test_pickup_never_writes_the_admission_key_itself(self):
         path = self.v16_script(exit_code=0, write_state=False)
         self.pin(path)
         self.assertEqual(self.dispatch(), 'HOLD:official_method_retired_requires_admission')
         self.assertNotIn('v16_profile_admission', self.state())
+        self.assertIn('exit 0 but no admission was recorded', self.state_md())
 
-    def test_exit_one_holds_and_is_not_rerun_within_the_retry_window(self):
+    def test_exit_one_holds_and_is_attempted_once_per_review_and_pin(self):
         path = self.v16_script(exit_code=1)
         self.pin(path)
-        self.assertEqual(self.dispatch(), 'HOLD:official_method_retired_requires_admission')
-        self.assertEqual(self.dispatch(), 'HOLD:official_method_retired_requires_admission')
-        self.assertEqual(len(self.v16_calls()), 1)
+        for _ in range(3):
+            self.assertEqual(self.dispatch(), 'HOLD:official_method_retired_requires_admission')
+        self.assertEqual(len(self.v16_calls()), 1)  # custody refused and routed the order to #22: never asked again
         self.assertIn('v16-admit exit 1', self.state_md())
+        self.assertTrue(self.state()['v16_admit_attempt']['final'])
 
-    def test_retry_after_the_window(self):
+    def test_a_new_review_sha_or_a_new_pin_is_a_new_attempt(self):
         path = self.v16_script(exit_code=1)
         self.pin(path)
         self.dispatch()
-        state = self.state()
-        state['v16_admit_attempt']['at'] = '2020-01-01T00:00:00Z'
-        ap.save_state(state)
-        self.dispatch()
+        with mock.patch.object(ap, 'validate_review_gate', lambda j: {'source_pins': {}, 'review_sha256': 'c' * 64}):
+            self.dispatch()
         self.assertEqual(len(self.v16_calls()), 2)
+        path = self.v16_script(exit_code=1)
+        path.write_text(path.read_text() + '# edited by custody\n')
+        self.pin(path)
+        self.dispatch()
+        self.assertEqual(len(self.v16_calls()), 3)
 
-    def test_timeout_holds(self):
+    def test_timeout_is_a_transient_retry_and_stops_after_three_attempts(self):
         path = self.v16_script(exit_code=0, sleep=5)
         self.pin(path)
-        with mock.patch.object(ap, 'V16_ADMIT_TIMEOUT_S', 1):
+        with mock.patch.object(ap, 'V16_ADMIT_TIMEOUT_S', 0.3):
+            self.assertEqual(self.dispatch(), 'HOLD:v16_admit_retry')
+            self.assertEqual(self.dispatch(), 'HOLD:v16_admit_retry')
+            self.assertEqual(self.dispatch(), 'HOLD:official_method_retired_requires_admission')  # third attempt: then today's hold
             self.assertEqual(self.dispatch(), 'HOLD:official_method_retired_requires_admission')
-        self.assertIn('v16-admit timeout after 1s; hold unchanged', self.state_md())
+        self.assertEqual(len(self.v16_calls()), 3)
+        self.assertIn('v16-admit timeout after 0.3s; retried later (attempt 1 of 3)', self.state_md())
+        self.assertIn('attempt 3 of 3, no more', self.state_md())
         self.assertNotIn('v16_profile_admission', self.state())
+
+    def test_oserror_is_retried_like_a_timeout(self):
+        path = self.v16_script(exit_code=0)
+        self.pin(path)
+        with mock.patch.object(ap.subprocess, 'Popen', side_effect=PermissionError(13, 'Permission denied')):
+            self.assertEqual(self.dispatch(), 'HOLD:v16_admit_retry')
+        self.assertIn('could not run: Permission denied; retried later', self.state_md())
+
+    def test_a_timeout_kills_the_whole_process_group(self):
+        marker = self.root / 'grandchild-wrote'
+        path = self.v16_script(exit_code=0, sleep=5, grandchild_marker=marker)
+        self.pin(path)
+        with mock.patch.object(ap, 'V16_ADMIT_TIMEOUT_S', 0.5):
+            self.assertEqual(self.dispatch(), 'HOLD:v16_admit_retry')
+        import time
+        time.sleep(2.5)  # the grandchild would have written its marker after 2 s
+        self.assertFalse(marker.exists())
+
+    def test_runs_in_its_own_session(self):
+        path = self.v16_script(exit_code=0)
+        self.pin(path)
+        seen = {}
+        real = ap.subprocess.Popen
+
+        def spy(*args, **kwargs):
+            seen.update(kwargs)
+            return real(*args, **kwargs)
+        with mock.patch.object(ap.subprocess, 'Popen', side_effect=spy):
+            self.dispatch()
+        self.assertIs(seen.get('start_new_session'), True)
+        self.assertEqual(sorted(seen['env']), ['AGENT_BOARD_NAME', 'HOME', 'PATH'])
+        self.assertEqual(seen['stdin'], ap.subprocess.DEVNULL)
 
     def test_not_for_ineligible_orders_other_benchmarks_or_already_admitted(self):
         path = self.v16_script(exit_code=0)
@@ -340,16 +483,22 @@ class V16AdmitTests(HookCase):
                 with mock.patch.object(ap, 'load_row', lambda rid: row):
                     self.dispatch_ignoring_errors()
         self.assertEqual(self.v16_calls(), [])
-        state = self.state()
-        state['v16_profile_admission'] = {'verdict': 'ACCEPTED'}
-        ap.save_state(state)
-        self.dispatch()
+
+    def test_a_row_missing_a_gate_column_never_reaches_custody(self):
+        path = self.v16_script(exit_code=0)
+        self.pin(path)
+        for column in ('status', 'stripe_mode', 'synthetic_test', 'paid_at', 'result_delivered_at', 'refund_id', 'refunded_at',
+                       'refund_status'):
+            with self.subTest(column):
+                row = {key: value for key, value in self.row.items() if key != column}
+                with mock.patch.object(ap, 'load_row', lambda rid: row):
+                    self.dispatch_ignoring_errors()
         self.assertEqual(self.v16_calls(), [])
 
     def test_hook_errors_never_break_dispatch(self):
         path = self.v16_script(exit_code=0)
         self.pin(path)
-        with mock.patch.object(ap.subprocess, 'run', side_effect=RuntimeError('boom')):
+        with mock.patch.object(ap, '_run_v16_admit', side_effect=RuntimeError('boom')):
             self.assertEqual(self.dispatch(), 'HOLD:official_method_retired_requires_admission')
         self.assertIn('v16 admission step failed: RuntimeError', self.state_md())
 
