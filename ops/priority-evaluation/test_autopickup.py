@@ -4112,5 +4112,101 @@ class NotifyPromiseGateTests(unittest.TestCase):
         self.assertTrue(command[command.index("--no-promise") + 1].strip())
 
 
+class RecordDeliveryTests(DatabaseTestCase):
+    """CR-831: an audited mail-owner result send closes the refund race; nothing else counts as proof."""
+
+    SHA = "a" * 64
+
+    def setUp(self) -> None:
+        super().setUp()
+        set_cutover(datetime.now(timezone.utc) - timedelta(days=4))
+
+    def audit(self, *lines: tuple[float, str, str]) -> Path:
+        audit = TMP / "audit-record-delivery" / "sent-audit.log"
+        audit.parent.mkdir(exist_ok=True)
+        audit.write_text("".join(f"{stamp:.0f}\tx\tgmail\t{to}\t{subject}\n" for stamp, to, subject in lines))
+        return audit.parent / "mail_tool.py"
+
+    def ago(self, hours: float) -> float:
+        return datetime.now(timezone.utc).timestamp() - hours * 3600
+
+    def test_audited_on_time_send_completes_and_stops_the_refund_card(self):
+        rid = insert_order(paid_ago="40 hours", received_ago="40 hours")
+        subject = "Re: Strands result"
+        tool = self.audit((self.ago(1), "Author@Example.com", subject))
+        with mock.patch.object(ap, "MAIL_TOOL", tool):
+            message = ap.record_delivery(rid, subject, self.SHA)
+        self.assertIn("recorded", message)
+        current = row(rid)
+        self.assertEqual(current["status"], "completed")
+        self.assertEqual(current["delivery_email_status"], "sent")
+        self.assertIsNotNone(current["result_delivered_at"])
+        self.assertIsNone(current["refund_reason"])
+        state = ap.load_state(rid)["external_delivery"]
+        self.assertEqual(state["artifact_sha256"], self.SHA)
+        self.assertFalse(state["late"])
+        ap.sql(f"UPDATE {ap.TABLE} SET paid_at=now()-interval '49 hours' WHERE id='{rid}'")
+        self.assertEqual([r["id"] for r in ap.refund_decision_rows(None, ap.JOB_ROOT)], [])
+        self.assertEqual(ap.sla_sweep(None, ap.JOB_ROOT, FakeEffects())["missed48"], 0)
+        with mock.patch.object(ap, "MAIL_TOOL", tool), self.assertRaises(ap.PickupError):
+            ap.record_delivery(rid, subject, self.SHA)  # second record refused
+
+    def test_late_send_is_refund_due_for_florians_card(self):
+        rid = insert_order(paid_ago="50 hours", received_ago="50 hours")
+        tool = self.audit((self.ago(1), "author@example.com", "Result"))
+        with mock.patch.object(ap, "MAIL_TOOL", tool):
+            ap.record_delivery(rid, "Result", self.SHA)
+        current = row(rid)
+        self.assertEqual(current["status"], "refund_due")
+        self.assertEqual(current["refund_reason"], "sla_48h_payment")
+        self.assertIn(rid, [r["id"] for r in ap.refund_decision_rows(None, ap.JOB_ROOT)])
+
+    def test_no_matching_audited_send_changes_nothing(self):
+        rid = insert_order(paid_ago="10 hours", received_ago="10 hours")
+        cases = [
+            ((self.ago(1), "other@example.com", "Result"), "Result"),       # other recipient
+            ((self.ago(1), "author@example.com", "Result 2"), "Result"),    # other subject
+            ((self.ago(12), "author@example.com", "Result"), "Result"),     # before payment
+        ]
+        for line, subject in cases:
+            with self.subTest(line=line), mock.patch.object(ap, "MAIL_TOOL", self.audit(line)), \
+                    self.assertRaises(ap.PickupError):
+                ap.record_delivery(rid, subject, self.SHA)
+        with mock.patch.object(ap, "MAIL_TOOL", TMP / "no-such-dir" / "mail_tool.py"), self.assertRaises(ap.PickupError):
+            ap.record_delivery(rid, "Result", self.SHA)
+        current = row(rid)
+        self.assertEqual(current["status"], "paid")
+        self.assertIsNone(current["result_delivered_at"])
+        self.assertNotIn("external_delivery", ap.load_state(rid))
+
+    def test_refuses_bad_input_test_orders_holds_and_inflight_mail(self):
+        tool = self.audit((self.ago(1), "author@example.com", "Result"))
+        live = insert_order()
+        test_mode = insert_order(stripe_mode="test")
+        synthetic = insert_order(synthetic=True)
+        held = insert_order()
+        ap.hold(held, "customer_reply")
+        inflight = insert_order()
+        ap.sql(f"UPDATE {ap.TABLE} SET delivery_email_status='sending' WHERE id='{inflight}'")
+        closed = insert_order(status="completed")
+        with mock.patch.object(ap, "MAIL_TOOL", tool):
+            for rid, subject, sha in ((live, "Result", "A" * 64), (live, "Result", "abc"), (live, "Re\nBcc: x", self.SHA),
+                                      (live, "", self.SHA), (test_mode, "Result", self.SHA), (synthetic, "Result", self.SHA),
+                                      (held, "Result", self.SHA), (inflight, "Result", self.SHA),
+                                      (closed, "Result", self.SHA)):
+                with self.subTest(rid=rid, subject=subject, sha=sha), self.assertRaises(ap.PickupError):
+                    ap.record_delivery(rid, subject, sha)
+        self.assertEqual(row(live)["status"], "paid")
+        self.assertEqual(row(inflight)["delivery_email_status"], "sending")
+
+    def test_cli_exit_codes(self):
+        rid = insert_order(paid_ago="5 hours", received_ago="5 hours")
+        tool = self.audit((self.ago(1), "author@example.com", "Result"))
+        with mock.patch.object(ap, "MAIL_TOOL", tool):
+            self.assertEqual(ap.main(["record-delivery", rid, "--subject", "Nope", "--artifact-sha256", self.SHA]), 1)
+            self.assertEqual(ap.main(["record-delivery", rid, "--subject", "Result", "--artifact-sha256", self.SHA]), 0)
+        self.assertEqual(row(rid)["status"], "completed")
+
+
 if __name__ == "__main__":
     unittest.main()
