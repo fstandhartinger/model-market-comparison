@@ -354,7 +354,11 @@ TRANSIENT_HOLD_REASONS = frozenset({
     "gpu_pod_capacity",
     "gpu_pod_run_failed",
     "fetch_source_transient",
+    "v16_admitted_reroute",  # CR-842: custody admitted the order inside dispatch_measurement; evaluate() routes it next pass
+    "v16_admit_retry",  # CR-842: the pinned v16-admit timed out or could not run (at most V16_ADMIT_MAX_ATTEMPTS attempts)
 })
+# Transient holds that are not a failure: the very next scheduler pass restarts the evaluation, with no backoff.
+IMMEDIATE_RETRY_HOLD_REASONS = frozenset({"v16_admitted_reroute"})
 HOLD_RETRY_BACKOFF_MINUTES = (15, 30, 60, 120)
 HOLD_MAX_RETRIES = len(HOLD_RETRY_BACKOFF_MINUTES)
 BOARD_HANDOFF_THREAD = "11"  # "JevBench releases" (was the stale allout-ops-20260929 thread)
@@ -2387,6 +2391,8 @@ def manage_evaluation(row: dict[str, Any], state: dict[str, Any], effects: Effec
                 retries = hold_retries(state, reason)
                 if retries < HOLD_MAX_RETRIES:
                     retry_at = parse_ts(operational.get("next_retry_at"))
+                    if retry_at is None and reason in IMMEDIATE_RETRY_HOLD_REASONS:
+                        retry_at = now
                     if retry_at is None:
                         operational["next_retry_at"] = iso(now + timedelta(minutes=HOLD_RETRY_BACKOFF_MINUTES[retries]))
                         save_state(state)
@@ -2601,13 +2607,35 @@ def _jev_v15_composite(axes: dict[str, Any], option: str) -> float:
 # Both steps run right after the per-order source review passed. They only CALL the existing gates: fastlane-admit's own
 # admit() (all refusals stay there) and custody's pinned `v16-admit`. The pickup never writes v16_profile_admission and a
 # failure here never changes what the pickup did before (the hold or the measurement path below stays as it was).
+#
+# Semantics (CR-842 r2, after critic findings M1/S1-S4):
+#  * Success of v16-admit: custody's command writes v16_profile_admission. dispatch_measurement then raises the transient hold
+#    `v16_admitted_reroute` (cleared on the next scheduler pass) so evaluate() sends the order down its v1.6 branch. A
+#    v1.6-admitted order never continues on the retired legacy measurement path inside the same call.
+#  * One v16 attempt per (review sha, pin sha). A non-zero exit means custody refused and routed the order to #22: today's
+#    non-transient hold stays and nothing re-runs. Only a timeout or an OSError is retried (transient hold `v16_admit_retry`,
+#    at most V16_ADMIT_MAX_ATTEMPTS attempts, then today's hold).
+#  * Orders that already sit under `official_method_retired_requires_admission` from BEFORE the pins were set are NOT
+#    re-entered automatically: that hold is non-transient and nothing clears it. Setting the pin later does nothing for
+#    them; only a human clearing the hold (or a new source review) sends such an order through dispatch_measurement again.
+#  * A Failed family admission is recorded like a Refused one (state `auto_admit.key`), so it is not retried for the same
+#    review; a new review sha or a human re-runs it (conservative on purpose).
+#  * Pins. FASTLANE_ADMIT_SHA256 and V16_ADMIT_SHA256 empty = off. fastlane-admit is read once from an own, non-symlink,
+#    not group/other-writable file, hashed, and executed from exactly those bytes (no TOCTOU for step 1). The v16-admit
+#    command is executed by path after the same checks: between the hash check and exec the file could still be swapped
+#    by the same uid, and the parent directories and sibling files it may use are not pinned. Accepted residual risk
+#    (same uid, no new privilege boundary); custody is asked for a self-contained script.
+#  * The state file is written by custody's command (not by the pickup). A command killed mid-write could leave a
+#    truncated state file unless custody writes atomically (tmp + rename); custody is asked to.
 FASTLANE_ADMIT_PATH = HOME / "bin" / "fastlane-admit"
-# Custody's v16-admit command: path AND sha256 must both be set (the installer fills them once custody posts them on
-# board #11). Empty = the step is disabled.
+FASTLANE_ADMIT_SHA256 = ""  # empty = the whole hook is off (both steps reuse fastlane-admit's code); the installer sets it
+PINNED_FILE_MAX_BYTES = 1 << 20
+# Custody's v16-admit command: an ABSOLUTE path and its sha256, both set by the installer once custody posts them on
+# board #11. Empty = the step is disabled.
 V16_ADMIT_PATH = ""
 V16_ADMIT_SHA256 = ""
 V16_ADMIT_TIMEOUT_S = 120
-V16_ADMIT_RETRY_S = 900
+V16_ADMIT_MAX_ATTEMPTS = 3
 AUTO_ADMIT_ACTOR = "fastlane-autopickup"
 
 
@@ -2618,13 +2646,46 @@ def _hook_note(job_dir: Path, text: str) -> None:
         pass
 
 
-def _load_fastlane_admit():
-    from importlib.machinery import SourceFileLoader
-    loader = SourceFileLoader("fastlane_admit_in_pickup", str(FASTLANE_ADMIT_PATH))
-    spec = importlib.util.spec_from_loader(loader.name, loader)
-    module = importlib.util.module_from_spec(spec)
-    loader.exec_module(module)
-    return module
+def _pinned_bytes(path_text: str, pin: str, *, executable: bool) -> tuple[bytes | None, str]:
+    """(content, '') when `path_text` is an absolute path to an own, regular, non-symlink file that is not group/other-writable
+    (and owner-executable when asked) and whose bytes hash to `pin`; else (None, reason). The content is read from the very
+    descriptor that was checked."""
+    import stat as stat_module
+    path = Path(path_text)
+    if not path.is_absolute():
+        return None, "path is not absolute"
+    try:
+        fd = os.open(path, os.O_RDONLY | os.O_NOFOLLOW | os.O_CLOEXEC)
+    except OSError:
+        return None, "file is missing, a symlink or unreadable"
+    with os.fdopen(fd, "rb") as handle:
+        info = os.fstat(handle.fileno())
+        if not stat_module.S_ISREG(info.st_mode) or info.st_uid != os.getuid() or info.st_mode & 0o022 \
+                or (executable and not info.st_mode & 0o100):
+            return None, "file is not an own, non-writable regular file" + (" with the owner execute bit" if executable else "")
+        try:
+            data = handle.read(PINNED_FILE_MAX_BYTES + 1)
+        except OSError:
+            return None, "file is unreadable"
+    if len(data) > PINNED_FILE_MAX_BYTES:
+        return None, "file is larger than the allowed size"
+    if hashlib.sha256(data).hexdigest() != pin:
+        return None, "sha256 differs from the pin"
+    return data, ""
+
+
+def _load_fastlane_admit() -> tuple[Any, str]:
+    """(module, '') or (None, reason). Empty pin = (None, '') = off without a note."""
+    if not FASTLANE_ADMIT_SHA256:
+        return None, ""
+    data, problem = _pinned_bytes(str(FASTLANE_ADMIT_PATH), FASTLANE_ADMIT_SHA256, executable=False)
+    if data is None:
+        return None, f"fastlane-admit {problem}"
+    import types
+    module = types.ModuleType("fastlane_admit_in_pickup")
+    module.__file__ = str(FASTLANE_ADMIT_PATH)
+    exec(compile(data, str(FASTLANE_ADMIT_PATH), "exec"), module.__dict__)  # the verified bytes, not a second read
+    return module, ""
 
 
 def _has_gpu_pod_runtime(job_dir: Path) -> bool:
@@ -2658,76 +2719,98 @@ def _auto_admit_family(job_dir: Path, row: dict[str, Any], review: dict[str, Any
     _hook_note(job_dir, note)
 
 
-def _v16_admit_pin_ok() -> str | None:
-    """None when the pinned custody command may run; else the reason it may not."""
-    if not V16_ADMIT_PATH or not V16_ADMIT_SHA256:
-        return None  # disabled: not worth a note
-    path = Path(V16_ADMIT_PATH)
+def _run_v16_admit(rid: str, basis: str) -> tuple[str, str]:
+    """Run custody's pinned command once. (kind, outcome): kind is 'admitted' (exit 0), 'refused' (any other exit: custody
+    said no and routed the order to #22) or 'retry' (timeout or OSError only). A timeout kills the whole process group."""
+    import signal
     try:
-        info = path.stat()
-        if not path.is_file() or path.is_symlink() or info.st_uid != os.getuid() or info.st_mode & 0o022 \
-                or not info.st_mode & 0o100:
-            return "file is not an own, executable, non-writable regular file"
-        live = sha256_file(path)
-    except OSError:
-        return "file is missing or unreadable"
-    if live != V16_ADMIT_SHA256:
-        return "sha256 differs from the pin"
-    return ""
+        proc = subprocess.Popen([V16_ADMIT_PATH, rid, "--basis", basis],
+                                env={"PATH": "/usr/bin:/bin", "HOME": str(HOME), "AGENT_BOARD_NAME": AUTO_ADMIT_ACTOR},
+                                stdin=subprocess.DEVNULL, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True,
+                                errors="replace", start_new_session=True)
+    except OSError as exc:
+        return "retry", f"could not run: {exc.strerror or exc}"
+    try:
+        stdout, stderr = proc.communicate(timeout=V16_ADMIT_TIMEOUT_S)
+    except subprocess.TimeoutExpired:
+        with contextlib.suppress(ProcessLookupError, PermissionError):
+            os.killpg(proc.pid, signal.SIGKILL)  # the child and anything it started in its own session
+        with contextlib.suppress(Exception):
+            proc.communicate(timeout=10)  # reap it and close the pipes
+        return "retry", f"timeout after {V16_ADMIT_TIMEOUT_S}s"
+    except OSError as exc:
+        with contextlib.suppress(ProcessLookupError, PermissionError):
+            os.killpg(proc.pid, signal.SIGKILL)
+        return "retry", f"could not run: {exc.strerror or exc}"
+    if proc.returncode == 0:
+        return "admitted", "exit 0"
+    return "refused", f"exit {proc.returncode}: " + (stderr or stdout or "")[-160:]
 
 
-def _auto_v16_admit(job_dir: Path, row: dict[str, Any], review: dict[str, Any], cli: Any) -> None:
+def _auto_v16_admit(job_dir: Path, row: dict[str, Any], review: dict[str, Any], cli: Any) -> str | None:
+    """Ask custody's pinned v16-admit once per (review sha, pin sha). Returns a transient hold reason when the timeout/OSError
+    retry budget allows another attempt on a later pass, else None (the caller continues with today's behaviour)."""
     rid = str(row["id"])
     if "jevbench" not in (row.get("benchmarks") or []) or "v16_profile_admission" in load_state(rid):
-        return
+        return None
     if not V16_ADMIT_PATH or not V16_ADMIT_SHA256:
-        return
+        return None
     if cli.order_problems(cli.normalize_row(row)):
-        return  # paid-live-unrefunded-undelivered gate shared with fastlane-admit; no custody call for anything else
+        return None  # paid-live-unrefunded-undelivered gate shared with fastlane-admit; no custody call for anything else
     state = load_state(rid)
     key = f"{review['review_sha256']}:{V16_ADMIT_SHA256}"
     previous = state.get("v16_admit_attempt") or {}
+    attempts = 0
     if previous.get("key") == key:
-        last = parse_ts(previous.get("at"))
-        if last is not None and (utcnow() - last).total_seconds() < V16_ADMIT_RETRY_S:
-            return
-    problem = _v16_admit_pin_ok()
-    if problem is None:
-        return
-    outcome = problem
-    if not problem:
-        try:
-            done = subprocess.run([V16_ADMIT_PATH, rid, "--basis", f"autopickup review-sha256 {review['review_sha256']}"],
-                                  env={"PATH": "/usr/bin:/bin", "HOME": str(HOME), "AGENT_BOARD_NAME": AUTO_ADMIT_ACTOR},
-                                  stdin=subprocess.DEVNULL, capture_output=True, text=True,
-                                  timeout=V16_ADMIT_TIMEOUT_S, check=False)
-            outcome = "exit 0" if done.returncode == 0 else f"exit {done.returncode}: " + (done.stderr or done.stdout)[-160:]
-        except subprocess.TimeoutExpired:
-            outcome = f"timeout after {V16_ADMIT_TIMEOUT_S}s"
-        except OSError as exc:
-            outcome = f"could not run: {exc.strerror or exc}"
-    state = load_state(rid)
-    state["v16_admit_attempt"] = {"key": key, "at": iso(utcnow()), "outcome": outcome[:200]}
+        attempts = previous.get("attempts") if isinstance(previous.get("attempts"), int) else V16_ADMIT_MAX_ATTEMPTS
+        if previous.get("final") or attempts >= V16_ADMIT_MAX_ATTEMPTS:
+            return None  # this (review, pin) pair has had its attempt(s)
+    _content, problem = _pinned_bytes(V16_ADMIT_PATH, V16_ADMIT_SHA256, executable=True)
+    if problem:
+        _hook_note(job_dir, f"v16-admit {problem}; hold unchanged")  # nothing ran: not an attempt
+        return None
+    kind, outcome = _run_v16_admit(rid, f"autopickup review-sha256 {review['review_sha256']}")
+    attempts += 1
+    state = load_state(rid)  # custody's command may have written the state file
+    if kind == "admitted" and "v16_profile_admission" not in state:
+        kind, outcome = "refused", "exit 0 but no admission was recorded"
+    final = kind != "retry" or attempts >= V16_ADMIT_MAX_ATTEMPTS
+    state["v16_admit_attempt"] = {"key": key, "attempts": attempts, "final": final, "kind": kind, "at": iso(utcnow()),
+                                  "outcome": outcome[:200]}
     save_state(state)
-    _hook_note(job_dir, f"v16-admit {outcome}" + ("; the order continues" if outcome == "exit 0" else "; hold unchanged"))
+    if kind == "admitted":
+        suffix = "; the order is routed to its v1.6 evaluation"
+    elif final:
+        suffix = "; hold unchanged" + (f" (attempt {attempts} of {V16_ADMIT_MAX_ATTEMPTS}, no more)" if kind == "retry" else "")
+    else:
+        suffix = f"; retried later (attempt {attempts} of {V16_ADMIT_MAX_ATTEMPTS})"
+    _hook_note(job_dir, f"v16-admit {outcome}{suffix}")
+    return None if final else "v16_admit_retry"
 
 
-def auto_admit_hook(rid: str, job_dir: Path, row: dict[str, Any] | None, review: dict[str, Any]) -> None:
-    """Never raises: any failure is one STATE.md line and today's behaviour."""
+def auto_admit_hook(rid: str, job_dir: Path, row: dict[str, Any] | None, review: dict[str, Any]) -> str | None:
+    """Never raises: any failure is one STATE.md line and today's behaviour. Returns a transient hold reason only when a
+    timed-out v16-admit may be retried on a later pass."""
+    hold = None
     try:
         if not isinstance(row, dict) or row.get("id") != rid or not review.get("review_sha256"):
-            return
-        cli = _load_fastlane_admit()
+            return None
+        cli, problem = _load_fastlane_admit()
+        if cli is None:
+            if problem:
+                _hook_note(job_dir, f"step skipped: {problem}")
+            return None
         try:
             _auto_admit_family(job_dir, row, review, cli)
         except (Exception, SystemExit) as exc:  # noqa: BLE001
             _hook_note(job_dir, f"family admission step failed: {type(exc).__name__}")
         try:
-            _auto_v16_admit(job_dir, row, review, cli)
+            hold = _auto_v16_admit(job_dir, row, review, cli)
         except (Exception, SystemExit) as exc:  # noqa: BLE001
             _hook_note(job_dir, f"v16 admission step failed: {type(exc).__name__}")
-    except (Exception, SystemExit):  # noqa: BLE001 - e.g. fastlane-admit not installed or not loadable yet
-        return
+    except (Exception, SystemExit) as exc:  # noqa: BLE001 - e.g. fastlane-admit not loadable
+        _hook_note(job_dir, f"hook failed: {type(exc).__name__}")
+    return hold
 
 
 def dispatch_measurement(rid: str, job_dir: Path) -> None:
@@ -2735,8 +2818,15 @@ def dispatch_measurement(rid: str, job_dir: Path) -> None:
         raise measurement_dispatch.OperationalHold("separate_native_measurement_wrapper_required")
     review = validate_review_gate(job_dir)
     row = load_row(rid)
-    auto_admit_hook(rid, job_dir, row, review)
+    admitted_before = "v16_profile_admission" in load_state(rid)
+    retry_hold = auto_admit_hook(rid, job_dir, row, review)
     state = load_state(rid)
+    if "v16_profile_admission" in state and not admitted_before:
+        # Custody admitted the order during this very call. evaluate() routes admitted orders to evaluate_v16_generation()
+        # before it gets here, so stop and let the next pass do that; this function is the retired legacy path.
+        raise measurement_dispatch.OperationalHold("v16_admitted_reroute")
+    if retry_hold:
+        raise measurement_dispatch.OperationalHold(retry_hold)
     # urgent-autofix-394 (17 Oct), restored 21 Oct (#22690/#22751): the legacy JevBench v1.5 profile is retired. A JevBench
     # order without a host-recorded v1.6 profile admission must hold, never fall back to the retired set
     # (attest 07d13315, mixlayer 27387658). ImageJevBench-only orders are unaffected; v1.6-admitted orders take
