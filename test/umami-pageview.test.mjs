@@ -124,3 +124,43 @@ test('CR-177.1/CR-67.4: the page-view path adds no third-party script and no dev
   const layout = readFileSync(new URL('../app/layout.tsx', import.meta.url), 'utf8');
   assert.match(layout, /<PageViewReporter \/>/);
 });
+
+test('Growth A (growth-measures-approved-1122): a full page load forwards only the external referrer HOST', () => {
+  const view = documentPageview(doc('https://benchmarkheaven.com/jev-models?utm_source=x', { referer: 'https://www.Google.com/search?q=jev+bench&utm_campaign=c#frag' }));
+  assert.deepEqual(view, { hostname: 'benchmarkheaven.com', url: '/jev-models', referrerHost: 'google.com' });
+  const body = pageviewPayload(view, 'site-id');
+  assert.deepEqual(body, { type: 'event', payload: { website: 'site-id', hostname: 'benchmarkheaven.com', url: '/jev-models', referrer: 'https://google.com/' } });
+  // Never a path, query, fragment or campaign label — neither the referrer's nor our own page's.
+  assert.doesNotMatch(JSON.stringify(body), /search|q=|utm|campaign|frag|\?/);
+  // Our own hosts and non-web schemes are no referrer at all.
+  for (const referer of ['https://benchmarkheaven.com/compare', 'https://www.benchmarkheaven.com/', 'https://model-market-comparison.app.mintapis.com/x',
+    'android-app://com.google.android.gm/', 'javascript:alert(1)', 'not a url', '']) {
+    const own = documentPageview(doc('https://benchmarkheaven.com/', { referer }));
+    assert.deepEqual(own, { hostname: 'benchmarkheaven.com', url: '/' }, referer);
+    assert.equal('referrer' in pageviewPayload(own, 'site-id').payload, false);
+  }
+});
+
+test('Growth A: an in-app navigation forwards the sanitized landing referrer host, never caller strings', () => {
+  const nav = (extra = {}) => headers({ origin: 'https://benchmarkheaven.com', ...extra });
+  assert.deepEqual(navigationPageview(nav(), '/compare', 'https://t.co/abc?x=1'), { hostname: 'benchmarkheaven.com', url: '/compare', referrerHost: 't.co' });
+  assert.deepEqual(navigationPageview(nav(), '/compare', 'https://chatgpt.com'), { hostname: 'benchmarkheaven.com', url: '/compare', referrerHost: 'chatgpt.com' });
+  for (const referrer of [undefined, null, 42, '', 'https://benchmarkheaven.com/', 'evil string', 'data:text/html,x', 'https://' + 'a'.repeat(3000) + '.com/']) {
+    assert.deepEqual(navigationPageview(nav(), '/compare', referrer), { hostname: 'benchmarkheaven.com', url: '/compare' }, String(referrer).slice(0, 40));
+  }
+  // The payload re-validates: a forged referrerHost cannot smuggle a path or query into Umami.
+  assert.equal(pageviewPayload({ hostname: 'benchmarkheaven.com', url: '/', referrerHost: 'evil.com/path?q=1' }, 'id').payload.referrer, 'https://evil.com/');
+  assert.equal('referrer' in pageviewPayload({ hostname: 'benchmarkheaven.com', url: '/', referrerHost: 'benchmarkheaven.com' }, 'id').payload, false);
+});
+
+test('Growth A: the browser sends only the referring ORIGIN; privacy text and decision record name the referrer domain', () => {
+  const code = readFileSync(new URL('../components/PageViewReporter.tsx', import.meta.url), 'utf8').replace(/^\s*\/\/.*$/gm, '');
+  assert.match(code, /ref\.origin/);
+  assert.match(code, /referrer: referrerOrigin\(\)/);
+  const route = readFileSync(new URL('../app/api/page-view/route.ts', import.meta.url), 'utf8');
+  assert.match(route, /navigationPageview\(request\.headers, payload\?\.path, payload\?\.referrer\)/);
+  const privacy = readFileSync(new URL('../app/privacy/page.tsx', import.meta.url), 'utf8');
+  assert.match(privacy, /domain of the website that referred you/);
+  const decision = readFileSync(new URL('../ops/ux-2026-09-12/CR-67.5-CONSENT-DECISION.md', import.meta.url), 'utf8');
+  assert.match(decision, /growth-measures-approved-1122/);
+});

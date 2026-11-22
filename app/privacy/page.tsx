@@ -9,7 +9,7 @@ export const metadata: Metadata = { title: "Privacy policy", description: "Bench
 export default function PrivacyPage() {
   return <article className="max-w-3xl text-sm leading-relaxed text-gray-300">
     <h1 className="text-2xl font-bold text-inherit">Privacy policy</h1>
-    <p className="bh-muted mt-1">Last updated: September 26, 2026</p>
+    <p className="bh-muted mt-1">Last updated: November 22, 2026</p>
 
     <h2 className="mt-6 mb-2 font-semibold">Who is responsible</h2>
     <p>productivity-boost.com Betriebs UG (haftungsbeschränkt) &amp; Co. KG, Reichenbergerstr. 2, 94036 Passau, Germany,
@@ -56,15 +56,18 @@ export default function PrivacyPage() {
         and we will answer and explain how to switch on one of these signals.</li>
     </ul>
     <p className="mt-2">We also count page views in our own self-hosted Umami service on our Hetzner server. Your browser
-      never contacts Umami: our server sends the public host name and requested page (without query parameters), plus
+      never contacts Umami: our server sends the public host name and requested page (without query parameters), the
+      domain of the website that referred you to us, if your browser reports one (for example google.com; only the domain,
+      never the address of the referring page, its query parameters or campaign labels, and never our own domains), plus
       the trusted client IP and the actual User-Agent from the request headers, to calculate anonymous visitor and
       session counts. <a className="text-accent" href="https://docs.umami.is/docs/metric-definitions" rel="noopener noreferrer" target="_blank">Umami&apos;s metric definitions</a> say it does not retain the raw IP address; it uses the IP to derive approximate
       location information such as country where available, and the User-Agent to report browser, operating system and
       device categories. Both are also used to create a salted anonymous session identifier. We use these aggregate
-      breakdowns to understand where visitors come from and which kinds of devices they use. The salt rotates daily, so
+      breakdowns, including the referring domains, to understand where visitors come from and which kinds of devices they use. The salt rotates daily, so
       the visitor figures count daily sessions and do not link a visitor across days. Umami&apos;s normal bot filter remains enabled. The page path is selected from a fixed list of
       our routes. For in-app page changes, your browser makes one small same-origin request to <code>/api/page-view</code>
-      containing only the new path; it sets no statistics cookie or other storage and does not run when your browser
+      containing only the new path and the scheme and domain of the site that referred you (the server keeps only the
+      domain); it sets no statistics cookie or other storage and does not run when your browser
       signals Global Privacy Control or Do Not Track. No third-party analytics service is used. Our assessment is that
       this server-side processing does not require device-storage consent under § 25 TDDDG; it uses our legitimate
       interest in understanding site use (Art. 6(1)(f) GDPR). The Umami service retains collected analytics data

@@ -43,7 +43,7 @@ async function readSmallBody(request: Request) {
 export async function POST(request: Request) {
   if (request.headers.get("content-type")?.split(";", 1)[0] !== "application/json") return noContent();
   if (Number(request.headers.get("content-length") || 0) > 512) return noContent();
-  let payload: { path?: unknown };
+  let payload: { path?: unknown; referrer?: unknown };
   try {
     const body = await readSmallBody(request);
     if (!body) return noContent();
@@ -51,9 +51,10 @@ export async function POST(request: Request) {
   } catch {
     return noContent();
   }
-  // The path is re-derived from the allow-list of known routes, so nothing a caller writes reaches Umami
-  // verbatim, and a request with GPC/DNT, a bot agent or a foreign Origin is dropped here.
-  const hit = navigationPageview(request.headers, payload?.path);
+  // The path is re-derived from the allow-list of known routes and the referrer is reduced to an external host
+  // (growth measure A, 22 Nov 2026), so nothing a caller writes reaches Umami verbatim, and a request with
+  // GPC/DNT, a bot agent or a foreign Origin is dropped here.
+  const hit = navigationPageview(request.headers, payload?.path, payload?.referrer);
   if (hit) await sendPageview(hit, { identity: clientIdentity(request.headers) });
   return noContent();
 }
