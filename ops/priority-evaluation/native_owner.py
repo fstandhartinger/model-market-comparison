@@ -22,16 +22,27 @@ import json
 import re
 import subprocess
 import urllib.parse
+import uuid
 from datetime import datetime
 from pathlib import Path
 from typing import Any
 
 OWNER_PREFIX = "fastlane-native-"
 UNIT = "jevbench-native-owner@{}.service"
+# This paid order requires its separate, board-gated Verda measurement wrapper.
+EXCLUSIVE_MEASUREMENT_ORDER = "9d46b4ad-b7b2-4d02-beda-7a56db409848"
 # Hold reasons that mean "no automatic runtime exists for this model" rather than a transient fault.
 REASONS = frozenset({"unsupported_measurement_backend"})
 START_GRACE_MINUTES = 20
 MAX_STARTS = 2
+
+def requires_exclusive_measurement(order_id: str) -> bool:
+    try:
+        canonical = str(uuid.UUID(order_id))
+    except ValueError:
+        return False
+    return canonical == EXCLUSIVE_MEASUREMENT_ORDER
+
 
 # Reviewed order-scoped runtime supplements by model/code repository (lower-case host/owner/name).
 SUPPLEMENTS: tuple[dict[str, Any], ...] = (
