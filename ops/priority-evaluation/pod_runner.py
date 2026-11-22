@@ -899,7 +899,7 @@ def _teardown(provider, job, pod_id, reservation, alert):
 
 
 def _lifecycle(provider, job, recipe, staging_path, output, state, gpu_choice, ttl, budget,
-               alert, save_state, benchmarks=('jevbench',), quote_budget=None, expected_rows=EXPECTED_ROWS, pre_upload_gate=None, allocation_gate=None, runtime_preflight=None, *, job_dir=None, image_context_provider=None, weights_streamer=None, native_code_archive=None, candidate_pins=None):
+               alert, save_state, benchmarks=('jevbench',), quote_budget=None, expected_rows=EXPECTED_ROWS, pre_upload_gate=None, allocation_gate=None, runtime_preflight=None, *, job_dir=None, image_context_provider=None, weights_streamer=None, native_code_archive=None, candidate_pins=None, catalogue_selected=False):
     """One pod attempt; raises PodRunError on any step failure (teardown still runs)."""
     if getattr(runtime_preflight, 'supplemented', False):
         import ryotide_runtime_supplement
@@ -1051,6 +1051,7 @@ def _lifecycle(provider, job, recipe, staging_path, output, state, gpu_choice, t
             allocation_gate.bind_created_hardware(provider, pod_id, state)
             save_state()
         image = recipe["image"]
+        weights_image = None
         if "host_staging" in recipe:
             if weights_streamer is None:
                 raise PodRunError("weights_streamer_not_configured")
@@ -1169,12 +1170,17 @@ def _lifecycle(provider, job, recipe, staging_path, output, state, gpu_choice, t
                 image = state['runtime_supplement']['effective_image']
                 save_state()
             import catalogue_runtime_supplement
-            if job_dir is not None and catalogue_runtime_supplement.selected(job_dir):
+            if catalogue_selected or (job_dir is not None and catalogue_runtime_supplement.selected(job_dir)):
                 # Data-admitted catalogue overlay: locked wheels fetched by hash on the pod, offline build, before weights/inputs.
                 if image != recipe["image"]:
                     raise measurement_dispatch.OperationalHold('runtime_supplement_conflict')
+                if job_dir is None:
+                    raise measurement_dispatch.OperationalHold(catalogue_runtime_supplement.HOLD)
                 state['runtime_supplement'] = catalogue_runtime_supplement.build(provider, pod_id, job_dir, recipe)
                 image = state['runtime_supplement']['effective_image']
+                # Pinned weights are fetched (network on) with the catalogue's reviewed downloader image, never with
+                # the order overlay image, so no order-locked wheel runs with network.
+                weights_image = state['runtime_supplement']['download_image']
                 save_state()
         if runtime_preflight is not None:
             state['runtime_preflight'] = runtime_preflight(provider, pod_id)
@@ -1207,7 +1213,8 @@ def _lifecycle(provider, job, recipe, staging_path, output, state, gpu_choice, t
                     snippet = PINNED_WEIGHTS_SNIPPET
                     patterns = sorted(entry["sha256"])
                 else:
-                    download_image = image
+                    # Catalogue orders: the reviewed downloader image, never the order overlay image.
+                    download_image = weights_image or image
                     snippet = WEIGHTS_SNIPPET
                     patterns = []
                 _exec(provider, pod_id, ["docker", "run", "--rm", "-v", "/models:/models",
@@ -1435,6 +1442,22 @@ def default_alert(text: str) -> None:
     subprocess.run([str(HOME / "bin/notify"), "urgent", text], capture_output=True, timeout=45, check=False)
 
 
+def _order_supplement_active(job_dir, recipe) -> bool:
+    """True when any order-scoped supplement (native_owner.SUPPLEMENTS) would also build for this order; an error counts
+    as active (fail closed), so a catalogue order can never get two supplements."""
+    import importlib
+    import native_owner
+    for entry in native_owner.SUPPLEMENTS:
+        try:
+            module = importlib.import_module(entry['module'][:-3])
+            check = getattr(module, 'active', None)
+            if check is not None and check(job_dir, recipe):
+                return True
+        except Exception:  # noqa: BLE001 - fail closed
+            return True
+    return False
+
+
 def run(rid: str, job_dir: Path, recipe: dict, output: Path, expected_pins: dict, max_usd: float,
         *, provider: Provider | None = None, alert=None, benchmarks=('jevbench',), native_source_pins=None, measurement_pins_factory=None, pre_upload_gate=None, allocation_gate=None, runtime_preflight=None, image_context_provider=None, weights_streamer=None, fallback_providers=()) -> dict:
     """Measure the reviewed recipe on one disposable GPU pod; idempotent via receipt + pod state."""
@@ -1454,9 +1477,11 @@ def run(rid: str, job_dir: Path, recipe: dict, output: Path, expected_pins: dict
         raise measurement_dispatch.OperationalHold("measurement_pins_differ_from_review")
     import catalogue_runtime_supplement
     # Runtime catalogue (data-admitted base image + hash-locked wheel overlay): fully accepted on the host before any
-    # reservation or pod, so a refused lock costs nothing; never combined with host staging or a native preflight.
-    if catalogue_runtime_supplement.preflight(job_dir, recipe) is not None \
-            and ('host_staging' in recipe or runtime_preflight is not None):
+    # reservation or pod, so a refused lock costs nothing; never combined with host staging, a native preflight or an
+    # order-scoped supplement. The decision is carried into every attempt (a vanished lock cannot fall back to the base).
+    catalogue_selected = catalogue_runtime_supplement.preflight(job_dir, recipe) is not None
+    if catalogue_selected and ('host_staging' in recipe or runtime_preflight is not None
+                               or _order_supplement_active(job_dir, recipe)):
         raise measurement_dispatch.OperationalHold(catalogue_runtime_supplement.HOLD)
     if not benchmarks or len(set(benchmarks)) != len(benchmarks) or set(benchmarks) - {'jevbench', 'imagejevbench'}:
         raise measurement_dispatch.OperationalHold('unsupported_order_runtime')
@@ -1633,7 +1658,8 @@ def run(rid: str, job_dir: Path, recipe: dict, output: Path, expected_pins: dict
                 state = _lifecycle(chain[provider_index % len(chain)], job, recipe, staging_path, output, state,
                                    gpu_choice, ttl, remaining, alert, save_state, benchmarks, quote_budget,
                                    current['profile']['inputs']['jevbench']['count'], pre_upload_gate, allocation_gate, runtime_preflight,
-                                   job_dir=job_dir, image_context_provider=image_context_provider, weights_streamer=weights_streamer, native_code_archive=code_tar, candidate_pins=current)
+                                   job_dir=job_dir, image_context_provider=image_context_provider, weights_streamer=weights_streamer, native_code_archive=code_tar, candidate_pins=current,
+                                   catalogue_selected=catalogue_selected)
                 break
             except PodCapacityError as exc:
                 _note_capacity_offer(state, chain[provider_index % len(chain)], gpu_choice, exc)

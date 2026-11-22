@@ -55,22 +55,32 @@ def recipe(image_id=IMAGE_ID, **extra):
 
 
 class FakeProvider:
-    def __init__(self, wheels, context_sha=None, iid=IID, inspected=None, wheel_sha=None, listing=None):
-        self.calls, self.wheels, self.context_sha, self.iid = [], wheels, context_sha, iid
-        self.inspected, self.wheel_sha, self.listing = inspected or iid, wheel_sha, listing
+    """Records commands; models uploaded/fetched files so sha256sum/find answer like a pod would."""
+    pip_lines: dict = {}
+
+    def __init__(self, wheels=None, context_sha=None, iid=IID, inspected=None, wheel_sha=None, listing=None):
+        self.calls, self.files, self.iid, self.inspected = [], {}, iid, inspected or iid
+        self.context_sha, self.wheel_sha, self.listing = context_sha, wheel_sha, listing
+        self.known = {w['url']: w['sha256'] for w in (wheels or [])}
+        for image in catalogue()['images'].values():
+            self.known.update({w['url']: w['sha256'] for w in image['downloader']['wheels']})
 
     def exec(self, pod_id, command, timeout=600):
         self.calls.append(('exec', tuple(command), timeout))
         out = ''
         if command[0] == 'sha256sum':
-            if command[1].endswith('context.tar'):
-                out = f'{self.context_sha}  {command[1]}\n'
+            path = command[1]
+            if path.endswith('context.tar'):
+                digest = self.context_sha or hashlib.sha256(self.files[path]).hexdigest()
             else:
-                name = command[1].rsplit('/', 1)[1]
-                digest = self.wheel_sha or next(w['sha256'] for w in self.wheels if w['filename'] == name)
-                out = f'{digest}  {command[1]}\n'
+                digest = self.wheel_sha or self.files[path]
+            out = f'{digest}  {path}\n'
+        elif command[0] == 'curl':
+            self.files[command[command.index('-o') + 1]] = self.known[command[-1]]
         elif command[0] == 'find':
-            out = ''.join(f + '\n' for f in (self.listing if self.listing is not None else [w['filename'] for w in self.wheels]))
+            root = command[1] + '/'
+            names = self.listing if self.listing is not None else [k[len(root):] for k in self.files if k.startswith(root)]
+            out = ''.join(f + '\n' for f in names)
         elif command[0] == 'cat':
             out = self.iid + '\n'
         elif command[:3] == ['docker', 'image', 'inspect']:
@@ -81,10 +91,10 @@ class FakeProvider:
                                    stdout=''.join(l + '\n' for l in lines) or 'No broken requirements found.\n')
         return SimpleNamespace(returncode=0, stdout=out, stderr='')
 
-    pip_lines: dict = {}
-
     def scp_to(self, pod_id, local, remote):
-        self.calls.append(('scp_to', Path(local).read_bytes(), remote))
+        data = Path(local).read_bytes()
+        self.files[remote] = data
+        self.calls.append(('scp_to', data, remote))
 
 
 class Order:
@@ -315,30 +325,35 @@ class Build(unittest.TestCase):
         value = lock(wheels=[wheel(), wheel(name='accelerate', version='1.15.0')])
         order = Order(self, value)
         context = C.context_tar(value)
-        provider = FakeProvider(value['wheels'], context_sha=hashlib.sha256(context).hexdigest())
+        provider = FakeProvider(value['wheels'])
         result = C.build(provider, 'pod-1', order.job, recipe())
         self.assertEqual(result['effective_image'], IID)
         self.assertEqual(result['base_image'], value['image'])
         self.assertEqual(result['wheels'], 2)
         self.assertEqual(result['lock_sha256'], hashlib.sha256(order.data).hexdigest())
         scp = [c for c in provider.calls if c[0] == 'scp_to']
-        self.assertEqual(len(scp), 1)
+        self.assertEqual(len(scp), 2)  # order context, then the downloader context
         self.assertEqual(scp[0][1], context)
+        downloader = catalogue()['images'][IMAGE_ID]['downloader']['wheels']
+        self.assertEqual(scp[1][1], C.context_tar(C.downloader_lock(IMAGE_ID, catalogue()['images'][IMAGE_ID])))
+        self.assertEqual(result['download_image'], IID)
         curls = [c[1] for c in provider.calls if c[0] == 'exec' and c[1][0] == 'curl']
-        self.assertEqual(len(curls), 2)
+        self.assertEqual(len(curls), 2 + len(downloader))
         for argv in curls:
             self.assertIn('=https', argv)
             self.assertEqual(argv[argv.index('--max-redirs') + 1], '0')
             self.assertTrue(argv[-1].startswith('https://files.pythonhosted.org/packages/'))
         builds = [c[1] for c in provider.calls if c[0] == 'exec' and c[1][:2] == ('docker', 'build')]
-        self.assertEqual(len(builds), 1)
-        self.assertEqual(builds[0][builds[0].index('--network') + 1], 'none')
-        self.assertIn('--pull=false', builds[0])
+        self.assertEqual(len(builds), 2)  # order image, download image
+        for argv in builds:
+            self.assertEqual(argv[argv.index('--network') + 1], 'none')
+            self.assertIn('--pull=false', argv)
+        self.assertNotEqual(builds[0][-1], builds[1][-1])  # separate build contexts
         names = [c[1][0] if c[0] == 'exec' else 'scp' for c in provider.calls]
         self.assertLess(names.index('scp'), names.index('curl'))
-        self.assertLess(max(i for i, n in enumerate(names) if n == 'curl'), names.index('docker'))
+        self.assertLess(names.index('curl'), names.index('docker'))
         pip_checks = [c[1] for c in provider.calls if c[0] == 'exec' and c[1][:2] == ('docker', 'run')]
-        self.assertEqual(len(pip_checks), 2)  # base image, then the derived image
+        self.assertEqual(len(pip_checks), 3)  # base image, the order image, the download image
         for argv in pip_checks:
             self.assertEqual(argv[argv.index('--network') + 1], 'none')
         self.assertEqual(result['pip_check'], {'base_problems': 0, 'derived_problems': 0, 'added': []})
@@ -346,28 +361,43 @@ class Build(unittest.TestCase):
     def test_pod_pip_check_gate_holds_on_a_new_problem_but_not_on_base_or_ignored_ones(self):
         value = lock()
         order = Order(self, value)
-        sha = hashlib.sha256(C.context_tar(value)).hexdigest()
         base_line = 'torch 2.9.1 has requirement x==1, but you have x 2.'
-        provider = FakeProvider(value['wheels'], context_sha=sha)
+        provider = FakeProvider(value['wheels'])
         provider.pip_lines = {value['image']: [base_line], IID: [base_line]}
         self.assertEqual(C.build(provider, 'pod-1', order.job, recipe())['pip_check']['added'], [])
-        provider = FakeProvider(value['wheels'], context_sha=sha)
+        provider = FakeProvider(value['wheels'])
         provider.pip_lines = {value['image']: [base_line], IID: [base_line, 'peft 0.21.2 requires accelerate, which is not installed.']}
         with self.assertRaises(measurement_dispatch.OperationalHold) as raised:
             C.build(provider, 'pod-1', order.job, recipe())
         self.assertEqual(str(raised.exception), C.PIP_HOLD)
         b = Order(self, lock(image_id='hf-torch2.14-cu13.0'))
         b_lock = lock(image_id='hf-torch2.14-cu13.0')
-        provider = FakeProvider(b_lock['wheels'], context_sha=hashlib.sha256(C.context_tar(b_lock)).hexdigest())
+        provider = FakeProvider(b_lock['wheels'])
         provider.pip_lines = {IID: ['spin 0.18 has requirement click!=8.3.0,<8.4,>=8, but you have click 8.5.1.']}
         self.assertEqual(C.build(provider, 'pod-1', b.job, recipe('hf-torch2.14-cu13.0'))['pip_check']['added'], [])
 
-    def test_empty_overlay_uses_the_base_image_without_pod_commands(self):
+    def test_empty_overlay_uses_the_base_image(self):
+        order = Order(self, lock(wheels=[], image_id='vllm-0.31'))
+        provider = FakeProvider([])
+        result = C.build(provider, 'pod-1', order.job, recipe('vllm-0.31'))
+        self.assertEqual(result['effective_image'], lock(image_id='vllm-0.31')['image'])
+        self.assertEqual(result['download_image'], lock(image_id='vllm-0.31')['image'])  # vLLM ships huggingface_hub
+        self.assertEqual(provider.calls, [])
         order = Order(self, lock(wheels=[]))
         provider = FakeProvider([])
         result = C.build(provider, 'pod-1', order.job, recipe())
         self.assertEqual(result['effective_image'], lock()['image'])
-        self.assertEqual(provider.calls, [])
+        self.assertEqual(result['download_image'], IID)  # hf-torch bases need the reviewed downloader overlay
+
+    def test_download_image_never_contains_order_wheels(self):
+        for image_id, image in catalogue()['images'].items():
+            names = {w['name'] for w in image['downloader']['wheels']}
+            self.assertTrue(names <= {'huggingface-hub', 'hf-xet', 'httpx', 'httpcore', 'h11', 'anyio', 'click', 'tqdm',
+                                      'idna', 'certifi', 'sniffio', 'filelock', 'fsspec', 'packaging', 'pyyaml',
+                                      'requests', 'typing-extensions'}, image_id)
+            if 'huggingface-hub' not in image['preinstalled']:
+                self.assertIn('huggingface-hub', names, image_id)
+            C.validate_lock(C.downloader_lock(image_id, image), catalogue())
 
     def test_host_acceptance_failure_is_a_hold_before_any_pod_effect(self):
         order = Order(self, lock(), admit=False)
@@ -379,12 +409,11 @@ class Build(unittest.TestCase):
     def test_pod_side_mismatches_are_run_errors(self):
         value = lock()
         order = Order(self, value)
-        sha = hashlib.sha256(C.context_tar(value)).hexdigest()
         for provider in (FakeProvider(value['wheels'], context_sha='c' * 64),
-                         FakeProvider(value['wheels'], context_sha=sha, wheel_sha='e' * 64),
-                         FakeProvider(value['wheels'], context_sha=sha, listing=['peft-0.21.2-py3-none-any.whl', 'x.whl']),
-                         FakeProvider(value['wheels'], context_sha=sha, iid='latest'),
-                         FakeProvider(value['wheels'], context_sha=sha, inspected='sha256:' + 'd' * 64)):
+                         FakeProvider(value['wheels'], wheel_sha='e' * 64),
+                         FakeProvider(value['wheels'], listing=['peft-0.21.2-py3-none-any.whl', 'x.whl']),
+                         FakeProvider(value['wheels'], iid='latest'),
+                         FakeProvider(value['wheels'], inspected='sha256:' + 'd' * 64)):
             with self.assertRaises(pod_runner.PodRunError):
                 C.build(provider, 'pod-1', order.job, recipe())
 
@@ -610,6 +639,97 @@ class PipCheckSimulation(unittest.TestCase):
         value['base'] = dict(value['base'], inventory_sha256='e' * 64)
         with self.assertRaises(C.CatalogueError):
             C.validate_lock(value, catalogue())
+
+
+class CriticRoundOneFixes(unittest.TestCase):
+    def test_weights_are_fetched_with_the_download_image_not_the_order_image(self):
+        source = (HERE / 'pod_runner.py').read_text()
+        site = source.index('catalogue_runtime_supplement.build(provider, pod_id, job_dir, recipe)')
+        self.assertIn("weights_image = state['runtime_supplement']['download_image']", source[site:site + 700])
+        loop = source.index('"-c", WEIGHTS_SNIPPET, entry["repo"], entry["revision"], target]')
+        self.assertIn('"--entrypoint", "python3", weights_image or image,', source[loop - 400:loop])
+        self.assertEqual(source.count('weights_image = None'), 1)
+
+    def test_preflight_decision_is_carried_into_every_attempt(self):
+        source = (HERE / 'pod_runner.py').read_text()
+        self.assertIn('catalogue_selected=catalogue_selected)', source)
+        self.assertIn('if catalogue_selected or (job_dir is not None and catalogue_runtime_supplement.selected(job_dir)):', source)
+
+    def test_no_order_supplement_claims_a_synthetic_catalogue_order(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            job = Path(tmp) / ORDER
+            (job / 'trusted-runner').mkdir(parents=True)
+            for image_id in catalogue()['images']:
+                self.assertFalse(pod_runner._order_supplement_active(job, recipe(image_id)), image_id)
+        import standardone_runtime_supplement as S
+        self.assertTrue(pod_runner._order_supplement_active(
+            Path('/home/flori/jobs/fastlane-evaluations') / S.ORDER, {'kind': 'http_typesafe', 'image': S.BASE_IMAGE}))
+
+    def test_deeply_nested_request_is_a_refusal_not_a_crash(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            job = Path(tmp) / ORDER
+            prep = job / 'runner-prepare' / 'trusted-runner'
+            prep.mkdir(parents=True)
+            (prep / C.REQUEST).write_text('[' * 200000)
+            result = L.write_receipt(job, prep, fetch=FakePyPI({}), registry=Path(tmp) / 'reg.json')
+            self.assertIn('refused', result)
+            frozen = job / 'trusted-runner'
+            frozen.mkdir()
+            (frozen / C.LOCK).write_text('[' * 200000)
+            with self.assertRaises(measurement_dispatch.OperationalHold):
+                C.preflight(job, recipe())
+
+    def test_symlinked_preparation_directory_is_refused(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            job = Path(tmp) / ORDER
+            other = Path(tmp) / 'other' / 'trusted-runner'
+            other.mkdir(parents=True)
+            (other / C.LOCK).write_text('{"frozen": "other order"}')
+            (job / 'runner-prepare').mkdir(parents=True)
+            (job / 'runner-prepare' / 'trusted-runner').symlink_to(other)
+            with self.assertRaises(C.CatalogueError):
+                L.write_receipt(job, job / 'runner-prepare' / 'trusted-runner', fetch=FakePyPI({}))
+            self.assertTrue((other / C.LOCK).exists())
+
+    def test_requirement_parser_has_no_catastrophic_backtracking(self):
+        import time as _time
+        env = L.marker_env(catalogue()['images'][IMAGE_ID])
+        started = _time.monotonic()
+        for n in (400, 2000, 20000):
+            L.dependency_specs(['a' + ' ' * n + ')x', 'b' + '(' * n, 'c[' + 'x' * n], env)
+        self.assertLess(_time.monotonic() - started, 1.0)
+        self.assertEqual(L.dependency_specs(['foo (>=1.0,<2)', 'bar[x,y]>=3; python_version >= "3.8"',
+                                             'baz @ https://x/y.whl', 'qux'], env),
+                         {'foo': ['>=1.0,<2'], 'bar': ['>=3'], 'baz': ['<unparsed>'], 'qux': ['']})
+
+    def test_marker_extra_and_compatible_release(self):
+        env = L.marker_env(catalogue()['images'][IMAGE_ID])  # python 3.11
+        self.assertTrue(L.marker_applies('extra != "dev"', env))
+        self.assertFalse(L.marker_applies('extra == "dev"', env))
+        self.assertFalse(L.marker_applies('python_version ~= "3.10.1"', env))
+        self.assertTrue(L.marker_applies('python_version ~= "3.10"', env))
+        self.assertTrue(L.marker_applies('"3.9" <= python_version', env))
+
+    def test_registry_prunes_old_entries(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            registry = Path(tmp) / 'reg.json'
+            data = C.canonical_json(lock())
+            old = L.append_admission(ORDER, data, lock(), by='t', basis='b', registry=registry)
+            value = json.loads(registry.read_text())
+            value['entries'][0]['admitted_at'] = '2026-01-01T00:00:00Z'
+            registry.write_text(json.dumps(value))
+            os.chmod(registry, 0o600)
+            L.append_admission(ORDER, data, lock(), by='t', basis='b', registry=registry)
+            entries = C.load_registry(registry)['entries']
+            self.assertEqual(len(entries), 1)
+            self.assertNotEqual(entries[0]['admitted_at'], '2026-01-01T00:00:00Z')
+            self.assertEqual(old['base_inventory_sha256'], C.inventory_sha256(catalogue()['images'][IMAGE_ID]))
+
+    def test_resolver_budget_is_enforced(self):
+        big = FakePyPI({'peft': pkg('peft', '0.21.2')})
+        with patch.object(L, 'MAX_FETCHES', 0):
+            with self.assertRaises(C.CatalogueError):
+                L.resolve({'schema': 1, 'image_id': IMAGE_ID, 'requirements': ['peft==0.21.2']}, fetch=big)
 
 
 class CommandLine(unittest.TestCase):

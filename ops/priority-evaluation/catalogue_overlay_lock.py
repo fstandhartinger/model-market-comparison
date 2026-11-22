@@ -24,6 +24,7 @@ import hashlib
 import json
 import os
 import re
+import time
 import urllib.request
 from datetime import datetime, timezone
 from pathlib import Path
@@ -149,16 +150,19 @@ def _json(fetch: Fetch, url: str, label: str) -> dict[str, Any]:
 
 
 class _Session:
-    """One resolution: cached PyPI documents, bounded fetches."""
+    """One resolution: cached, TRIMMED PyPI documents; bounded fetch count, bytes and wall-clock time."""
 
     def __init__(self, fetch: Fetch, image: dict[str, Any], env: dict[str, str]):
         self.fetch, self.image, self.env, self.cache = fetch, image, env, {}
+        self.bytes, self.deadline = 0, time.monotonic() + MAX_SECONDS
 
     def get(self, url: str, label: str) -> dict[str, Any]:
         if url not in self.cache:
-            if len(self.cache) >= MAX_FETCHES:
-                raise cat.CatalogueError('dependency closure too large')
-            self.cache[url] = _json(self.fetch, url, label)
+            if len(self.cache) >= MAX_FETCHES or self.bytes > MAX_TOTAL_BYTES or time.monotonic() > self.deadline:
+                raise cat.CatalogueError('dependency resolution budget exhausted (fetches, bytes or time)')
+            counted = _Counting(self.fetch)
+            self.cache[url] = _trim(_json(counted, url, label))
+            self.bytes += counted.bytes
         return self.cache[url]
 
     def version_doc(self, name: str, version: str) -> dict[str, Any]:
@@ -185,6 +189,37 @@ class _Session:
             if all(satisfies(version, spec) is not False for spec in specs if spec and spec != '<unparsed>'):
                 ranked.append((parsed['key'], version))
         return [version for _, version in sorted(ranked, reverse=True)]
+
+
+MAX_TOTAL_BYTES = 256 * 1024 * 1024
+MAX_SECONDS = 600
+
+
+class _Counting:
+    def __init__(self, fetch: Fetch):
+        self.fetch, self.bytes = fetch, 0
+
+    def __call__(self, url: str) -> bytes:
+        data = self.fetch(url)
+        self.bytes += len(data)
+        return data
+
+
+_FILE_KEYS = ('packagetype', 'filename', 'url', 'yanked', 'digests', 'size')
+
+
+def _trim(document: dict[str, Any]) -> dict[str, Any]:
+    """Keep only what the resolver reads (bounded memory for big release lists)."""
+    info = document.get('info') if isinstance(document.get('info'), dict) else {}
+    out: dict[str, Any] = {'info': {k: info.get(k) for k in ('name', 'version', 'requires_dist')}}
+
+    def files(value):
+        return [{k: f.get(k) for k in _FILE_KEYS} for f in value if isinstance(f, dict)] if isinstance(value, list) else value
+    if 'urls' in document:
+        out['urls'] = files(document['urls'])
+    if isinstance(document.get('releases'), dict):
+        out['releases'] = {v: files(fs) for v, fs in document['releases'].items()}
+    return out
 
 
 def _constraints(dep: str, versions: dict[str, str], requires: dict[str, list[str]], env: dict[str, str],
@@ -284,6 +319,10 @@ def append_admission(order_id: str, lock_bytes: bytes, lock: dict[str, Any], *, 
             value = cat.load_registry(path)
         else:
             value = {'schema': cat.SCHEMA, 'entries': []}
+        # Bounded size: entries older than REGISTRY_KEEP_DAYS are dropped (an order is delivered or refunded within 48 h
+        # plus pauses; the audit log keeps every entry).
+        cutoff = datetime.now(timezone.utc).timestamp() - cat.REGISTRY_KEEP_DAYS * 86400
+        value['entries'] = [e for e in value['entries'] if _ts(e['admitted_at']) >= cutoff]
         value['entries'].append(entry)
         tmp = path.with_name(path.name + '.tmp')
         fd = os.open(tmp, os.O_WRONLY | os.O_CREAT | os.O_TRUNC | getattr(os, 'O_NOFOLLOW', 0), 0o600)
@@ -301,6 +340,13 @@ def append_admission(order_id: str, lock_bytes: bytes, lock: dict[str, Any], *, 
     return entry
 
 
+def _ts(text: str) -> float:
+    try:
+        return datetime.strptime(text, '%Y-%m-%dT%H:%M:%SZ').replace(tzinfo=timezone.utc).timestamp()
+    except ValueError:
+        return 0.0
+
+
 def write_receipt(job_dir: Path | str, prep_trusted: Path | str, *, fetch: Fetch = default_fetch,
                   registry: Path | None = None, by: str = 'fastlane-autopickup',
                   basis: str = 'host catalogue resolution before freeze') -> dict[str, Any] | None:
@@ -309,6 +355,9 @@ def write_receipt(job_dir: Path | str, prep_trusted: Path | str, *, fetch: Fetch
     Returns the admission entry, None when there is no request, or {'refused': reason} when the request was refused
     (no lock is written then; the request alone keeps the order on the catalogue path, which holds)."""
     job_dir, prep_trusted = Path(job_dir), Path(prep_trusted)
+    if prep_trusted.is_symlink() or not prep_trusted.is_dir() \
+            or any(p.is_symlink() for p in (prep_trusted.parent, job_dir)):
+        raise cat.CatalogueError('preparation bundle directory is missing or a symlink')
     lock_path, request_path = prep_trusted / cat.LOCK, prep_trusted / cat.REQUEST
     if lock_path.is_symlink() or lock_path.exists():
         if lock_path.is_dir() and not lock_path.is_symlink():
@@ -324,7 +373,7 @@ def write_receipt(job_dir: Path | str, prep_trusted: Path | str, *, fetch: Fetch
         with os.fdopen(fd, 'wb') as handle:
             handle.write(data)
         return append_admission(job_dir.name, data, lock, by=by, basis=basis, registry=registry)
-    except (OSError, ValueError) as exc:
+    except Exception as exc:  # noqa: BLE001 - incl. RecursionError from planted JSON: a refusal, never a crash
         if lock_path.is_file() and not lock_path.is_symlink():
             lock_path.unlink()
         return {'refused': str(exc)[:500] if isinstance(exc, cat.CatalogueError) else type(exc).__name__}

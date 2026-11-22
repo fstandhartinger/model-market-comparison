@@ -197,9 +197,14 @@ def prompt_text(rid: str, order: dict[str, Any], *, reason: str, deadline: str, 
                       "`~/bin/fastlane-catalogue lock <order folder> --request <file> --basis <board id>` before the freeze "
                       "(it writes the hash-locked CATALOGUE-OVERLAY.json and the host admission), use the catalogue image "
                       "string in POD-RECIPE.json, freeze, and check with `~/bin/fastlane-catalogue check <order folder>`. "
+                      "The independent review (NATIVE-SOURCE-REVIEW.md) must also review CATALOGUE-OVERLAY.json as data: "
+                      "the locked packages/versions are the documented stack plus ordinary dependencies, no typo-like "
+                      "names, nothing the customer does not need, no customer-owned package (customer code is reviewed "
+                      "and mounted from /code, never pip-installed). "
                       "Only if no catalogue image fits (other exact torch, compiled extensions, author container), build a "
                       "new order-scoped supplement following the existing *_runtime_supplement.py modules (exact order id, "
-                      "digest-pinned base, SHA-256-pinned public wheels, offline build).")
+                      "digest-pinned base, SHA-256-pinned public wheels, offline build), and delete any "
+                      "CATALOGUE-REQUEST.json / CATALOGUE-OVERLAY.json from the bundle before the freeze.")
     return f"""# Paid fast-lane order {ref} — native measurement owner (started automatically)
 
 You own this order end to end until the customer result is delivered (DELIVERED + RESULT.md + FINAL DONE).

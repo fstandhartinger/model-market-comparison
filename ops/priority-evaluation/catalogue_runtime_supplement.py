@@ -43,7 +43,7 @@ import pod_runner
 
 HERE = Path(__file__).resolve().parent
 CATALOGUE = HERE / 'runtime_catalogue.json'
-CATALOGUE_SHA256 = 'a0376ef2046f2def14db4135647f7e164f20c5f65c546e5db80374038274912c'
+CATALOGUE_SHA256 = 'bbd19442b837d7b5e123d802992d71c2c1b31205babe0cee2fbf4ff4ccb69c84'
 LOCK = 'CATALOGUE-OVERLAY.json'
 REQUEST = 'CATALOGUE-REQUEST.json'
 SCHEMA = 1
@@ -52,6 +52,8 @@ REMOTE_ROOT = '/runtime-supplement/catalogue'
 BUILD_TIMEOUT_S = 1800
 FETCH_TIMEOUT_S = 900
 JSON_LIMIT = 1024 * 1024
+REGISTRY_LIMIT = 16 * 1024 * 1024
+REGISTRY_KEEP_DAYS = 45
 MODULE_LIMIT = 4 * 1024 * 1024
 HOLD = 'runtime_catalogue_unaccepted'
 PIP_HOLD = 'runtime_catalogue_pip_check_failed'
@@ -165,6 +167,8 @@ def load_catalogue(path: Path | str = CATALOGUE, expected_sha256: str | None = N
                 or not isinstance(image.get('preinstalled'), dict) \
                 or not isinstance(image.get('requires'), dict) \
                 or not isinstance(image.get('pip_check_ignore'), list) \
+                or not isinstance(image.get('downloader'), dict) or set(image['downloader']) != {'requested', 'wheels'} \
+                or not isinstance(image['downloader']['wheels'], list) \
                 or not all(isinstance(n, str) and NAME_RE.fullmatch(n) for n in image['pip_check_ignore']) \
                 or any(not isinstance(v, list) or not all(isinstance(x, str) for x in v) for v in image['requires'].values()) \
                 or not re.fullmatch(r'2\.[0-9]{2}', str(image.get('glibc'))):
@@ -188,14 +192,9 @@ _TOKEN = re.compile(r"\s*(?:(?P<str>'[^']*'|\"[^\"]*\")|(?P<op>===|==|!=|<=|>=|~
                     r"(?P<bool>and\b|or\b)|(?P<paren>[()])|(?P<var>[A-Za-z_][A-Za-z0-9_.]*))")
 
 
-def _vtuple(text: str) -> tuple[int, ...] | None:
-    parts = re.findall(r'\d+', text.split('+')[0])
-    return tuple(int(p) for p in parts[:4]) if parts and re.fullmatch(r'[0-9][0-9.]*(\*)?', text) else None
-
-
 def marker_applies(marker: str, env: dict[str, str]) -> bool:
     """Evaluate a PEP 508 marker for the image. Anything this small evaluator does not understand counts as True
-    (the dependency is then required), except `extra` comparisons, which are False (extras are never installed)."""
+    (the dependency is then required). `extra` is '' (extras are never installed), as pip check evaluates it."""
     tokens: list[tuple[str, str]] = []
     position = 0
     while position < len(marker):
@@ -232,22 +231,23 @@ def marker_applies(marker: str, env: dict[str, str]) -> bool:
             raise ValueError
         lname, lval = value(left)
         rname, rval = value(right)
-        if 'extra' in (lname, rname):
-            return False
         if lval is None or rval is None:
             raise ValueError
         operator = op[1]
         if operator in ('in', 'not in'):
             return (lval in rval) == (operator == 'in')
-        if lname in ('python_version', 'python_full_version', 'platform_release') or \
-                rname in ('python_version', 'python_full_version', 'platform_release'):
-            lv, rv = _vtuple(lval.rstrip('*')), _vtuple(rval.rstrip('*'))
-            if lv is None or rv is None:
+        versions = ('python_version', 'python_full_version', 'platform_release')
+        if lname in versions or rname in versions:
+            if lname in versions:
+                verdict = satisfies(lval, operator + rval)
+            else:  # 'literal' op variable: flip the operator
+                flipped = {'<': '>', '<=': '>=', '>': '<', '>=': '<=', '==': '==', '!=': '!=', '===': '==='}.get(operator)
+                if flipped is None:
+                    raise ValueError
+                verdict = satisfies(rval, flipped + lval)
+            if verdict is None:
                 raise ValueError
-            width = max(len(lv), len(rv))
-            lv, rv = lv + (0,) * (width - len(lv)), rv + (0,) * (width - len(rv))
-            return {'==': lv == rv, '===': lv == rv, '!=': lv != rv, '<': lv < rv, '<=': lv <= rv,
-                    '>': lv > rv, '>=': lv >= rv, '~=': lv >= rv}[operator]
+            return verdict
         if operator in ('==', '==='):
             return lval == rval
         if operator == '!=':
@@ -280,7 +280,7 @@ def marker_applies(marker: str, env: dict[str, str]) -> bool:
 def marker_env(image: dict[str, Any]) -> dict[str, str]:
     return {'python_version': image['python'], 'python_full_version': image['python'] + '.0',
             'sys_platform': 'linux', 'platform_system': 'Linux', 'platform_machine': 'x86_64', 'os_name': 'posix',
-            'implementation_name': 'cpython', 'platform_python_implementation': 'CPython'}
+            'implementation_name': 'cpython', 'platform_python_implementation': 'CPython', 'extra': ''}
 
 
 def dependency_specs(requires_dist: object, env: dict[str, str]) -> dict[str, list[str]]:
@@ -289,18 +289,42 @@ def dependency_specs(requires_dist: object, env: dict[str, str]) -> dict[str, li
     for line in requires_dist or []:
         if not isinstance(line, str):
             continue
-        requirement, _, marker = line.partition(';')
-        match = re.match(r'\s*([A-Za-z0-9][A-Za-z0-9._-]*)\s*(?:\[[^\]]*\])?\s*\(?([^()]*)\)?\s*$', requirement)
-        if not match:
-            match = re.match(r'\s*([A-Za-z0-9][A-Za-z0-9._-]*)', requirement)
-            if not match:
-                continue
-            spec = '<unparsed>'
+        name, spec = _split_requirement(line[:MAX_REQUIREMENT_CHARS])
+        if name is None:
+            continue
+        marker = line.partition(';')[2].strip()
+        if len(line) > MAX_REQUIREMENT_CHARS:
+            spec = '<unparsed>'  # an oversized line is never judged; the dependency still counts as required
+        elif not marker or marker_applies(marker, env):
+            pass
         else:
-            spec = match[2].strip() if match.lastindex and match.lastindex >= 2 and match[2] else ''
-        if not marker.strip() or marker_applies(marker.strip(), env):
-            specs.setdefault(normalize(match[1]), []).append(spec)
+            continue
+        specs.setdefault(normalize(name), []).append(spec)
     return specs
+
+
+MAX_REQUIREMENT_CHARS = 1000
+_NAME_START = re.compile(r'[A-Za-z0-9][A-Za-z0-9._-]*')
+
+
+def _split_requirement(line: str) -> tuple[str | None, str]:
+    """(name, specifier) of a PEP 508 line without backtracking regexes: name, optional [extras], optional
+    parenthesised or bare specifier up to ';'. '<unparsed>' when the rest is not a plain specifier."""
+    requirement = line.partition(';')[0].strip()
+    match = _NAME_START.match(requirement)
+    if not match:
+        return None, ''
+    rest = requirement[match.end():].strip()
+    if rest.startswith('['):
+        close = rest.find(']')
+        if close < 0:
+            return match[0], '<unparsed>'
+        rest = rest[close + 1:].strip()
+    if rest.startswith('(') and rest.endswith(')'):
+        rest = rest[1:-1].strip()
+    if '@' in rest or '(' in rest or ')' in rest or (rest and rest[0] not in '<>=!~'):
+        return match[0], '<unparsed>'
+    return match[0], rest
 
 
 # ------------------------------------------------------------------------------------------------------------- versions
@@ -563,7 +587,7 @@ def valid_entry(entry: object) -> bool:
 
 
 def load_registry(path: Path | str | None = None) -> dict[str, Any]:
-    value = json.loads(read_regular(REGISTRY if path is None else path, JSON_LIMIT, host_owned=True).decode('utf-8'))
+    value = json.loads(read_regular(REGISTRY if path is None else path, REGISTRY_LIMIT, host_owned=True).decode('utf-8'))
     if not isinstance(value, dict) or set(value) != {'schema', 'entries'} or value['schema'] != SCHEMA \
             or not isinstance(value['entries'], list) or not all(valid_entry(e) for e in value['entries']):
         raise CatalogueError('registry schema')
@@ -623,8 +647,15 @@ def preflight(job: Path | str, recipe: object) -> dict[str, Any] | None:
         return None
     try:
         return accept(job, recipe)
-    except (OSError, ValueError, KeyError, TypeError):
+    except Exception:  # noqa: BLE001 - incl. RecursionError from planted JSON; once selected, every problem holds
         raise measurement_dispatch.OperationalHold(HOLD) from None
+
+
+def downloader_lock(image_id: str, image: dict[str, Any]) -> dict[str, Any]:
+    """The fixed, reviewed downloader overlay of a catalogue image as a lock (validated like an order lock)."""
+    return {'schema': SCHEMA, 'image_id': image_id, 'image': image['image'], 'wheels': image['downloader']['wheels'],
+            'requested': image['downloader']['requested'], 'resolved_at': 'catalogue', 'resolved_by': 'catalogue',
+            'base': {'inventory_sha256': inventory_sha256(image), 'baseline_problems': 0}}
 
 
 def binding(accepted: dict[str, Any]) -> dict[str, Any]:
@@ -635,32 +666,61 @@ def binding(accepted: dict[str, Any]) -> dict[str, Any]:
 
 
 def build(provider, pod_id, job, recipe):
-    """Fetch the locked wheels on the owned pod (before weights/inputs), build the derived image offline, return evidence.
+    """On the owned pod, before weights/inputs: build the order image (base + locked wheels) and the download image
+    (base + the catalogue's fixed downloader wheels), both offline; return evidence with `effective_image` (the run) and
+    `download_image` (pod_runner fetches the pinned weights with it, network on). Order-lock wheels therefore never run
+    with network: the download image holds only reviewed catalogue wheels.
 
     Host-side acceptance problems are an OperationalHold (no retry); pod-side failures raise PodRunError via
-    pod_runner._exec and are eligible for the ordinary single fresh-pod retry."""
+    pod_runner._exec and are eligible for the ordinary single fresh-pod retry; a new pip-check problem is a hold."""
     try:
         accepted = accept(job, recipe)
         evidence = binding(accepted)
-        context = context_tar(accepted['lock'])
-    except (OSError, ValueError, KeyError, TypeError):
+        catalogue = load_catalogue()
+        downloader = downloader_lock(accepted['lock']['image_id'], accepted['image'])
+        validate_lock(downloader, catalogue)
+    except Exception:  # noqa: BLE001 - every host-side problem is a hold before any pod effect
         raise measurement_dispatch.OperationalHold(HOLD) from None
-    lock = accepted['lock']
-    if not lock['wheels']:
-        return dict(evidence, effective_image=accepted['image']['image'])
+    base = accepted['image']['image']
+    ignored = tuple(f'{name} ' for name in accepted['image']['pip_check_ignore'])
+    base_check = None
+    results = {}
+    for label, lock in (('order', accepted['lock']), ('download', downloader)):
+        if not lock['wheels']:
+            results[label] = {'image': base}
+            continue
+        image, context_sha = _build_image(provider, pod_id, lock, f'{REMOTE_ROOT}/{label}')
+        if base_check is None:
+            base_check = _pip_check(provider, pod_id, base)
+        derived = _pip_check(provider, pod_id, image)
+        added = sorted(line for line in set(derived) - set(base_check) if not normalize(line).startswith(ignored))
+        results[label] = {'image': image, 'context_sha256': context_sha,
+                          'pip_check': {'base_problems': len(base_check), 'derived_problems': len(derived),
+                                        'added': added[:20]}}
+        if added:
+            raise measurement_dispatch.OperationalHold(PIP_HOLD)
+    order = results['order']
+    return dict(evidence, effective_image=order['image'], download_image=results['download']['image'],
+                context_sha256=order.get('context_sha256'), pip_check=order.get('pip_check'),
+                download=results['download'])
+
+
+def _build_image(provider, pod_id, lock: dict[str, Any], root: str) -> tuple[str, str]:
+    """Fetch the lock's wheels by hash into `root` on the pod and build FROM the pinned base offline; (image id, ctx sha)."""
+    context = context_tar(lock)
     context_sha = hashlib.sha256(context).hexdigest()
-    pod_runner._exec(provider, pod_id, ['rm', '-rf', REMOTE_ROOT])
-    pod_runner._exec(provider, pod_id, ['mkdir', '-p', REMOTE_ROOT + '/wheels'])
+    pod_runner._exec(provider, pod_id, ['rm', '-rf', root])
+    pod_runner._exec(provider, pod_id, ['mkdir', '-p', root + '/wheels'])
     with tempfile.TemporaryDirectory(prefix='catalogue-context-') as tmp:
         local = Path(tmp) / 'context.tar'
         local.write_bytes(context)
-        provider.scp_to(pod_id, str(local), REMOTE_ROOT + '/context.tar')
-    transferred = pod_runner._exec(provider, pod_id, ['sha256sum', REMOTE_ROOT + '/context.tar'])
+        provider.scp_to(pod_id, str(local), root + '/context.tar')
+    transferred = pod_runner._exec(provider, pod_id, ['sha256sum', root + '/context.tar'])
     if context_sha not in transferred.stdout.split():
         raise pod_runner.PodRunError('catalogue context changed in transfer')
-    pod_runner._exec(provider, pod_id, ['tar', '-xf', REMOTE_ROOT + '/context.tar', '-C', REMOTE_ROOT])
+    pod_runner._exec(provider, pod_id, ['tar', '-xf', root + '/context.tar', '-C', root])
     for wheel in lock['wheels']:
-        target = f"{REMOTE_ROOT}/wheels/{wheel['filename']}"
+        target = f"{root}/wheels/{wheel['filename']}"
         pod_runner._exec(provider, pod_id, ['curl', '--fail', '--silent', '--show-error', '--proto', '=https',
                                             '--max-redirs', '0', '--max-filesize', str(wheel['size']),
                                             '--max-time', str(FETCH_TIMEOUT_S), '-o', target, wheel['url']],
@@ -668,29 +728,19 @@ def build(provider, pod_id, job, recipe):
         check = pod_runner._exec(provider, pod_id, ['sha256sum', target])
         if wheel['sha256'] not in check.stdout.split():
             raise pod_runner.PodRunError(f"catalogue wheel {wheel['name']} sha256 mismatch")
-    listing = pod_runner._exec(provider, pod_id, ['find', REMOTE_ROOT + '/wheels', '-mindepth', '1', '-printf', '%f\\n'])
+    listing = pod_runner._exec(provider, pod_id, ['find', root + '/wheels', '-mindepth', '1', '-printf', '%f\\n'])
     if sorted(listing.stdout.split()) != sorted(w['filename'] for w in lock['wheels']):
         raise pod_runner.PodRunError('catalogue wheel directory differs from the lock')
     pod_runner._exec(provider, pod_id, ['docker', 'build', '--network', 'none', '--pull=false',
-                                        '--iidfile', REMOTE_ROOT + '/image.iid',
-                                        '-f', REMOTE_ROOT + '/Dockerfile.catalogue', REMOTE_ROOT],
+                                        '--iidfile', root + '/image.iid', '-f', root + '/Dockerfile.catalogue', root],
                      timeout=BUILD_TIMEOUT_S)
-    image = pod_runner._exec(provider, pod_id, ['cat', REMOTE_ROOT + '/image.iid']).stdout.strip()
+    image = pod_runner._exec(provider, pod_id, ['cat', root + '/image.iid']).stdout.strip()
     if not re.fullmatch(r'sha256:[0-9a-f]{64}', image):
         raise pod_runner.PodRunError('catalogue build has no immutable image id')
     inspected = pod_runner._exec(provider, pod_id, ['docker', 'image', 'inspect', image, '--format', '{{.Id}}'])
     if inspected.stdout.strip() != image:
         raise pod_runner.PodRunError('catalogue image identity differs')
-    # Gate: the derived image may not add a `pip check` problem to the base image's own result (the host simulated the
-    # same from metadata; this is the real thing). Offline, no GPU, containers removed. A new problem is deterministic,
-    # so it is a hold (owner), not a retry.
-    base_check, derived_check = (_pip_check(provider, pod_id, ref) for ref in (accepted['image']['image'], image))
-    ignored = tuple(f'{name} ' for name in accepted['image']['pip_check_ignore'])
-    added = sorted(line for line in set(derived_check) - set(base_check) if not normalize(line).startswith(ignored))
-    pip_check = {'base_problems': len(base_check), 'derived_problems': len(derived_check), 'added': added[:20]}
-    if added:
-        raise measurement_dispatch.OperationalHold(PIP_HOLD)
-    return dict(evidence, effective_image=image, context_sha256=context_sha, pip_check=pip_check)
+    return image, context_sha
 
 
 def _pip_check(provider, pod_id, ref) -> list[str]:
