@@ -3,6 +3,30 @@
   "checked_utc": "2026-10-30T00:00:00Z",
   "benchmarks": {
     "jevbench": {
+      "bison-1": {
+        "status": "disclosed",
+        "label": "google/gemma-4-31B-it",
+        "sources": [
+          {
+            "url": "https://huggingface.co/baselabs/bison-1/blob/bf8350b2/README.md",
+            "title": "Model card at reference HEAD",
+            "kind": "model card",
+            "evidence": "The model card declares base_model: google/gemma-4-31B-it."
+          }
+        ]
+      },
+      "groundhog-1": {
+        "status": "disclosed",
+        "label": "google/gemma-4-26b-a4b-it",
+        "sources": [
+          {
+            "url": "https://huggingface.co/baselabs/groundhog-1/blob/f4602c43/README.md",
+            "title": "Model card at reference HEAD",
+            "kind": "model card",
+            "evidence": "The model card declares base_model: google/gemma-4-26b-a4b-it."
+          }
+        ]
+      },
       "cygnet": {
         "label": "google/gemma-4-12B-it",
         "status": "disclosed",
