@@ -4113,7 +4113,7 @@ class NotifyPromiseGateTests(unittest.TestCase):
 
 
 class RecordDeliveryTests(DatabaseTestCase):
-    """CR-831: an audited mail-owner result send closes the refund race; nothing else counts as proof."""
+    """CR-831: exactly one audited mail-owner result send closes the refund race; nothing else counts as proof."""
 
     SHA = "a" * 64
 
@@ -4130,17 +4130,23 @@ class RecordDeliveryTests(DatabaseTestCase):
     def ago(self, hours: float) -> float:
         return datetime.now(timezone.utc).timestamp() - hours * 3600
 
+    def at(self, stamp: float) -> str:
+        return datetime.fromtimestamp(stamp, timezone.utc).isoformat()
+
+    def record(self, rid, subject, stamp, sha=None):
+        return ap.record_delivery(rid, subject, sha or self.SHA, self.at(stamp))
+
     def test_audited_on_time_send_completes_and_stops_the_refund_card(self):
         rid = insert_order(paid_ago="40 hours", received_ago="40 hours")
-        subject = "Re: Strands result"
-        tool = self.audit((self.ago(1), "Author@Example.com", subject))
+        subject, sent = "Re: Strands result", self.ago(1)
+        tool = self.audit((sent, "Author@Example.com", subject))
         with mock.patch.object(ap, "MAIL_TOOL", tool):
-            message = ap.record_delivery(rid, subject, self.SHA)
+            message = self.record(rid, subject, sent + 30)  # reported time a few seconds off is fine
         self.assertIn("recorded", message)
         current = row(rid)
         self.assertEqual(current["status"], "completed")
         self.assertEqual(current["delivery_email_status"], "sent")
-        self.assertIsNotNone(current["result_delivered_at"])
+        self.assertEqual(ap.parse_ts(current["result_delivered_at"]).timestamp(), round(sent))
         self.assertIsNone(current["refund_reason"])
         state = ap.load_state(rid)["external_delivery"]
         self.assertEqual(state["artifact_sha256"], self.SHA)
@@ -4149,17 +4155,53 @@ class RecordDeliveryTests(DatabaseTestCase):
         self.assertEqual([r["id"] for r in ap.refund_decision_rows(None, ap.JOB_ROOT)], [])
         self.assertEqual(ap.sla_sweep(None, ap.JOB_ROOT, FakeEffects())["missed48"], 0)
         with mock.patch.object(ap, "MAIL_TOOL", tool), self.assertRaises(ap.PickupError):
-            ap.record_delivery(rid, subject, self.SHA)  # second record refused
+            self.record(rid, subject, sent)  # second record refused
 
     def test_late_send_is_refund_due_for_florians_card(self):
         rid = insert_order(paid_ago="50 hours", received_ago="50 hours")
-        tool = self.audit((self.ago(1), "author@example.com", "Result"))
-        with mock.patch.object(ap, "MAIL_TOOL", tool):
-            ap.record_delivery(rid, "Result", self.SHA)
+        sent = self.ago(1)
+        with mock.patch.object(ap, "MAIL_TOOL", self.audit((sent, "author@example.com", "Result"))):
+            self.record(rid, "Result", sent)
         current = row(rid)
         self.assertEqual(current["status"], "refund_due")
         self.assertEqual(current["refund_reason"], "sla_48h_payment")
         self.assertIn(rid, [r["id"] for r in ap.refund_decision_rows(None, ap.JOB_ROOT)])
+
+    def test_earlier_same_subject_mail_cannot_make_a_late_result_on_time(self):
+        """Critic M1: an on-time status mail and a late result share the in-thread subject."""
+        rid = insert_order(paid_ago="50 hours", received_ago="50 hours")
+        early, late = self.ago(20), self.ago(0.5)
+        tool = self.audit((early, "author@example.com", "Re: order"), (late, "author@example.com", "Re: order"))
+        with mock.patch.object(ap, "MAIL_TOOL", tool):
+            with self.assertRaises(ap.PickupError):
+                self.record(rid, "Re: order", self.ago(10))  # no send near the reported time
+            self.record(rid, "Re: order", late)
+        self.assertEqual(row(rid)["status"], "refund_due")
+
+    def test_two_sends_inside_the_window_are_ambiguous(self):
+        rid = insert_order(paid_ago="10 hours", received_ago="10 hours")
+        sent = self.ago(1)
+        tool = self.audit((sent, "author@example.com", "R"), (sent + 60, "author@example.com", "R"))
+        with mock.patch.object(ap, "MAIL_TOOL", tool), self.assertRaises(ap.PickupError):
+            self.record(rid, "R", sent + 30)
+        self.assertEqual(row(rid)["status"], "paid")
+
+    def test_pickup_own_non_result_mails_never_count(self):
+        """Critic M2: payment received / delayed / review passed subjects are refused."""
+        rid = insert_order(paid_ago="50 hours", received_ago="50 hours")
+        ref = ap.order_ref(rid)
+        sent = self.ago(49.9)
+        for suffix in ("payment received", "delayed", "source review passed", "changes needed"):
+            subject = f"Benchmark Heaven evaluation order {ref}: {suffix}"
+            with self.subTest(subject=subject), \
+                    mock.patch.object(ap, "MAIL_TOOL", self.audit((sent, "author@example.com", subject))), \
+                    self.assertRaises(ap.PickupError):
+                self.record(rid, subject, sent)
+            with self.subTest(subject="Re: " + subject), \
+                    mock.patch.object(ap, "MAIL_TOOL", self.audit((sent, "author@example.com", "Re: " + subject))), \
+                    self.assertRaises(ap.PickupError):
+                self.record(rid, "Re: " + subject, sent)
+        self.assertEqual(row(rid)["status"], "paid")
 
     def test_no_matching_audited_send_changes_nothing(self):
         rid = insert_order(paid_ago="10 hours", received_ago="10 hours")
@@ -4167,20 +4209,22 @@ class RecordDeliveryTests(DatabaseTestCase):
             ((self.ago(1), "other@example.com", "Result"), "Result"),       # other recipient
             ((self.ago(1), "author@example.com", "Result 2"), "Result"),    # other subject
             ((self.ago(12), "author@example.com", "Result"), "Result"),     # before payment
+            ((self.ago(10) - 30, "author@example.com", "Result"), "Result"),  # 30 s before payment
         ]
         for line, subject in cases:
             with self.subTest(line=line), mock.patch.object(ap, "MAIL_TOOL", self.audit(line)), \
                     self.assertRaises(ap.PickupError):
-                ap.record_delivery(rid, subject, self.SHA)
+                self.record(rid, subject, line[0])
         with mock.patch.object(ap, "MAIL_TOOL", TMP / "no-such-dir" / "mail_tool.py"), self.assertRaises(ap.PickupError):
-            ap.record_delivery(rid, "Result", self.SHA)
+            self.record(rid, "Result", self.ago(1))
         current = row(rid)
         self.assertEqual(current["status"], "paid")
         self.assertIsNone(current["result_delivered_at"])
         self.assertNotIn("external_delivery", ap.load_state(rid))
 
-    def test_refuses_bad_input_test_orders_holds_and_inflight_mail(self):
-        tool = self.audit((self.ago(1), "author@example.com", "Result"))
+    def test_refuses_bad_input_test_orders_holds_refunds_and_inflight_mail(self):
+        sent = self.ago(1)
+        tool = self.audit((sent, "author@example.com", "Result"))
         live = insert_order()
         test_mode = insert_order(stripe_mode="test")
         synthetic = insert_order(synthetic=True)
@@ -4188,25 +4232,31 @@ class RecordDeliveryTests(DatabaseTestCase):
         ap.hold(held, "customer_reply")
         inflight = insert_order()
         ap.sql(f"UPDATE {ap.TABLE} SET delivery_email_status='sending' WHERE id='{inflight}'")
+        decided = insert_order()
+        ap.sql(f"UPDATE {ap.TABLE} SET refund_decision='declined' WHERE id='{decided}'")
         closed = insert_order(status="completed")
         with mock.patch.object(ap, "MAIL_TOOL", tool):
-            for rid, subject, sha in ((live, "Result", "A" * 64), (live, "Result", "abc"), (live, "Re\nBcc: x", self.SHA),
-                                      (live, "", self.SHA), (test_mode, "Result", self.SHA), (synthetic, "Result", self.SHA),
-                                      (held, "Result", self.SHA), (inflight, "Result", self.SHA),
-                                      (closed, "Result", self.SHA)):
-                with self.subTest(rid=rid, subject=subject, sha=sha), self.assertRaises(ap.PickupError):
-                    ap.record_delivery(rid, subject, sha)
+            for rid, subject, sha, when in (
+                    (live, "Result", "A" * 64, self.at(sent)), (live, "Result", "abc", self.at(sent)),
+                    (live, "Re\nBcc: x", self.SHA, self.at(sent)), (live, "", self.SHA, self.at(sent)),
+                    (live, " Result", self.SHA, self.at(sent)), (live, "Result", self.SHA, "yesterday"),
+                    (test_mode, "Result", self.SHA, self.at(sent)), (synthetic, "Result", self.SHA, self.at(sent)),
+                    (held, "Result", self.SHA, self.at(sent)), (inflight, "Result", self.SHA, self.at(sent)),
+                    (decided, "Result", self.SHA, self.at(sent)), (closed, "Result", self.SHA, self.at(sent))):
+                with self.subTest(rid=rid, subject=subject, sha=sha, when=when), self.assertRaises(ap.PickupError):
+                    ap.record_delivery(rid, subject, sha, when)
         self.assertEqual(row(live)["status"], "paid")
         self.assertEqual(row(inflight)["delivery_email_status"], "sending")
+        self.assertEqual(row(decided)["status"], "paid")
 
     def test_cli_exit_codes(self):
         rid = insert_order(paid_ago="5 hours", received_ago="5 hours")
-        tool = self.audit((self.ago(1), "author@example.com", "Result"))
-        with mock.patch.object(ap, "MAIL_TOOL", tool):
-            self.assertEqual(ap.main(["record-delivery", rid, "--subject", "Nope", "--artifact-sha256", self.SHA]), 1)
-            self.assertEqual(ap.main(["record-delivery", rid, "--subject", "Result", "--artifact-sha256", self.SHA]), 0)
+        sent = self.ago(1)
+        with mock.patch.object(ap, "MAIL_TOOL", self.audit((sent, "author@example.com", "Result"))):
+            base = ["record-delivery", rid, "--artifact-sha256", self.SHA, "--sent-at", self.at(sent)]
+            self.assertEqual(ap.main(base + ["--subject", "Nope"]), 1)
+            self.assertEqual(ap.main(base + ["--subject", "Result"]), 0)
         self.assertEqual(row(rid)["status"], "completed")
-
 
 if __name__ == "__main__":
     unittest.main()
