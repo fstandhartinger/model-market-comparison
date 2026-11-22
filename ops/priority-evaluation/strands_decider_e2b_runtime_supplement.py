@@ -45,7 +45,14 @@ RESULT_COLLECTION_RESERVE_S = 300
 CLEANUP_HANDOFF_S = 15
 CLEANUP_HOURS = 0.25
 GPU = ('RTXPRO6000', 96)
-INSTANCE_TYPE = '1RTXPRO6000.30V'
+# Ruling board #77285: the single-GPU SKU 1RTXPRO6000.30V has no FIN capacity, so this order runs on the 2x RTX PRO 6000 VM
+# 2RTXPRO6000.60V (same pinned Docker image) and the measurement container sees ONE GPU (docker --gpus device=0).
+INSTANCE_TYPE = '2RTXPRO6000.60V'
+GPU_COUNT = 2          # GPUs on the created VM (exactly)
+DOCKER_GPUS = 'device=0'  # GPUs given to the measurement container: one
+# Strands-only all-in hourly ceiling (5.962 compute + OS volume ~6.1-6.3/h) for reserve/create/price checks; every other order
+# keeps pod_runner.MAX_HOURLY_USD. Sealed: budget 20 -> TTL min(3, 20/7, 2.75) - 0.25 = 2.5 h + 0.25 h cleanup; 7.0 x 2.75 = 19.25 <= 20.
+MAX_HOURLY_USD = 7.0
 
 def _sha256_stream(stream):
     digest = hashlib.sha256()
@@ -166,7 +173,7 @@ def launch_binding(value):
 
 def verify_created_pod(pod, launch):
     if (pod.get('gpu') != GPU[0] or type(pod.get('gpu_count')) is not int
-            or pod['gpu_count'] != 1 or pod.get('instance_type') != INSTANCE_TYPE
+            or pod['gpu_count'] != GPU_COUNT or pod.get('instance_type') != INSTANCE_TYPE
             or pod.get('location') != launch['location']):
         raise measurement_dispatch.OperationalHold('gpu_pod_quote_changed')
 
