@@ -4427,7 +4427,7 @@ def sla_decision_rows(synthetic_id: str | None, job_root: Path) -> list[dict[str
 
 
 # The order can never come back into sla_decision_rows: delivered, decided, refunded or no longer open. A customer
-# hold, a 'sending' delivery mail or a paused clock are temporary and keep the card (the 40 h sweep reads taps made
+# hold, a 'sending' delivery mail or a paused clock are temporary and keep the card (the SLA sweep reads taps made
 # meanwhile once the order is back).
 SLA40_LEFT_FOR_GOOD_SQL = ("NOT (r.status IN ('paid','review_passed') AND r.result_delivered_at IS NULL "
                            "AND COALESCE(r.delivery_email_status,'not_due') <> 'sent' "
@@ -4493,7 +4493,7 @@ def sla40_handoff_text(rid: str, kind: str, card: dict[str, Any]) -> str:
 
 
 def sla40_stray_closeouts(synthetic_id: str | None, job_root: Path, effects: Effects) -> int:
-    """Close 40 h cards whose order left the 40 h set for good while the card still shows buttons (re-review S1).
+    """Close SLA cards whose order left the SLA decision set for good while the card still shows buttons (re-review S1).
 
     sla_decisions polls only open rows and refund_approval closes only refund_due/refund_pending cards with a live
     late Refund button. Every other exit (on-time delivery, a 48 h card decided first, a late button that never
@@ -4544,41 +4544,84 @@ def sla40_stray_closeouts(synthetic_id: str | None, job_root: Path, effects: Eff
     return closed
 
 
-DELAY_NOTE_DEFAULT_HOURS = 24  # the delay note mails deadline + this many hours while the order owner set no ETA
-OWNER_ETA_MAX_AFTER_DEADLINE = timedelta(hours=48)  # `set-eta` refuses an ETA later than deadline + this
+DELAY_NOTE_DEFAULT_HOURS = 24  # the default delay date is max(deadline, now) + this many hours (see plan_delay_eta)
+DELAY_NOTE_MIN_LEAD = timedelta(hours=1)  # a delay date must lie at least this far ahead when set and when mailed
+OWNER_ETA_MAX_AFTER_DEADLINE = timedelta(hours=48)  # an owner ETA may be at most this long after the deadline
 ETA_FORMAT = "%d %b %H:%M UTC"
 
 
-def owner_eta_in_future(state: dict[str, Any], now: datetime) -> datetime | None:
-    """The order owner's ETA (`set-eta`) while it still lies in the future, else None."""
-    stored = state.get("owner_eta")
-    eta = parse_ts(stored.get("eta")) if isinstance(stored, dict) else None
-    return eta if eta is not None and eta > now else None
+def owner_eta_path(rid: str) -> Path:
+    """The order owner's ETA (`set-eta`) lives outside the request state: evaluate() rewrites that whole file from a
+    copy it read before a review of up to 2 h, which silently dropped an ETA written meanwhile (CR-835 M3)."""
+    return STATE_ROOT / "owner-eta" / f"{request_id(rid)}.json"
 
 
-def delay_note_eta_text(state: dict[str, Any], now: datetime) -> str:
-    """Which ETA the delay note mails, as the SLA card words it: "owner ETA <time>" or "deadline + 24 h"."""
-    owner = owner_eta_in_future(state, now)
-    if owner is not None:
-        return f"owner ETA {owner.strftime(ETA_FORMAT)}"
-    return f"deadline + {DELAY_NOTE_DEFAULT_HOURS} h"
+def read_owner_eta(rid: str) -> datetime | None:
+    """The stored owner ETA, or None when there is none or its file is unreadable or damaged (never raises)."""
+    try:
+        value = json.loads(owner_eta_path(rid).read_text(encoding="utf-8"))
+    except (OSError, ValueError, PickupError):
+        return None
+    return parse_ts(value.get("eta")) if isinstance(value, dict) else None
 
 
-def delay_note_message(row: dict[str, Any], state: dict[str, Any] | None = None,
+def delay_eta_problem(row: dict[str, Any], eta: datetime, now: datetime, *, owner: bool) -> str | None:
+    """Why `eta` cannot be mailed as this order's new result date right now, else None (CR-835 M2, S4).
+
+    Every date must lie after the order's current deadline (the mail says the order "will take longer than our
+    48-hour target") and at least DELAY_NOTE_MIN_LEAD ahead (ETA_FORMAT drops the seconds). An owner ETA may also be
+    at most deadline + 48 h; the default date is exempt from that cap: for a re-asked card (2 or 3) the rule
+    "never in the past" outranks it (default = now + 24 h can lie beyond deadline + 48 h)."""
+    deadline = deadline_for(row)
+    if eta <= now:
+        return "the ETA is not in the future"
+    if eta < now + DELAY_NOTE_MIN_LEAD:
+        return "the ETA is less than 1 h ahead"
+    if eta <= deadline:
+        return f"the ETA is not later than the order's deadline ({deadline.strftime(ETA_FORMAT)})"
+    latest = deadline + OWNER_ETA_MAX_AFTER_DEADLINE
+    if owner and eta > latest:
+        return (f"the ETA is later than the deadline + {int(OWNER_ETA_MAX_AFTER_DEADLINE.total_seconds() // 3600)} h "
+                f"({latest.strftime(ETA_FORMAT)})")
+    return None
+
+
+def plan_delay_eta(row: dict[str, Any], now: datetime) -> tuple[datetime, str]:
+    """The ONE date a decision card names and its delay note mails: (date, "owner"|"default"), planned when the card
+    is built and kept on the card state (CR-835 M1). The order owner's ETA while it is valid, else the default
+    max(deadline + 24 h, now + 24 h): never in the past, also for the re-asked cards 2 and 3 (M4)."""
+    owner = read_owner_eta(row["id"])
+    if owner is not None and delay_eta_problem(row, owner, now, owner=True) is None:
+        return owner, "owner"
+    hours = timedelta(hours=DELAY_NOTE_DEFAULT_HOURS)
+    return max(deadline_for(row) + hours, now + hours), "default"
+
+
+def delay_note_message(row: dict[str, Any], eta: datetime | None = None,
                        now: datetime | None = None) -> tuple[str, str]:
+    """The fixed delay mail. `eta` is the date the decision card named; without it the date is planned now."""
     if sla_decision.owner_managed(row):
         raise ValueError("40h decision is owner-managed; no fixed result ETA")
     rid = request_id(row["id"])
-    owner = owner_eta_in_future(load_state(rid) if state is None else state, now or utcnow())
-    new_eta = (owner or deadline_for(row) + timedelta(hours=DELAY_NOTE_DEFAULT_HOURS)).strftime(ETA_FORMAT)
+    if eta is None:
+        eta = plan_delay_eta(row, now or utcnow())[0]
     subject = f"Benchmark Heaven evaluation order {order_ref(rid)}: delayed"
     body = fill_template(read_template("autopickup-delay-template.txt"),
-                         {"ORDER_REF": order_ref(rid), "NEW_ETA": new_eta})
+                         {"ORDER_REF": order_ref(rid), "NEW_ETA": eta.strftime(ETA_FORMAT)})
     return subject, body
 
 
+def delay_held_text(row: dict[str, Any], held: dict[str, Any]) -> str:
+    rid = request_id(row.get("id"))
+    return (f"Fast-lane order {order_ref(rid)}: Florian tapped Send delay note on the "
+            f"{sla_decision.SLA_DECISION_HOURS}-hour card, but NOTHING was mailed to the customer: the date on the card "
+            f"({held.get('eta')}) can no longer be sent ({held.get('why')}). The order keeps running; no refund was "
+            "authorized and the 48-hour refund card still applies. Owner: tell Florian what happened and ask what "
+            "the customer should hear.")
+
+
 def post_sla40_outcome_once(state: dict[str, Any], outcome: str, effects: Effects, text: str, owner: str) -> bool:
-    """Post the board note for a 40 h card outcome once per order; the pickup runs every 5 minutes.
+    """Post the board note for an SLA card outcome once per order; the pickup runs every 5 minutes.
 
     The marker is written only after the board accepted the note, so a failed post is retried next cycle.
     """
@@ -4638,13 +4681,38 @@ def post_gpu_capacity_handoff_once(row: dict[str, Any], state: dict[str, Any], e
     return True
 
 
+def hold_delay_note(row: dict[str, Any], state: dict[str, Any], root: Path, effects: Effects) -> bool:
+    """Florian tapped Send delay note: True when the mail must NOT go out, because the date his card names can no
+    longer be sent (CR-835 M1/M2): less than 1 h ahead, or not after the order's current deadline any more (a hold
+    or a resubmission moved it), or an owner ETA beyond deadline + 48 h. The mail only ever carries the date on the
+    card, so nothing else can be sent in its place. Nothing is mailed or refunded; the refusal is kept on the card
+    (it stays decided, so no second card and no other date appear) and the order's owner gets one board handoff,
+    retried each cycle until the board accepts it. Caller holds the cycle lock."""
+    rid = request_id(row["id"])
+    held = sla_decision.delay_held(root, rid)
+    if held is None:
+        eta, source = sla_decision.card_delay_eta(root, rid)
+        if eta is None:  # a card sent before the date was stored (the 40 h era): its caption said deadline + 24 h
+            eta, source = deadline_for(row) + timedelta(hours=DELAY_NOTE_DEFAULT_HOURS), "default"
+        now = utcnow()
+        problem = delay_eta_problem(row, eta, now, owner=source == "owner")
+        if problem is None:
+            return False
+        held = sla_decision.note_delay_held(root, rid, problem, eta.strftime(ETA_FORMAT), now.timestamp())
+    if not held.get("handoff_posted") and effects.board(delay_held_text(row, held), wake_owner(row, state),
+                                                        kind="handoff", thread=BOARD_HANDOFF_THREAD):
+        sla_decision.mark_delay_held_handoff_posted(root, rid, utcnow().timestamp())
+    return True
+
+
 def sla_decisions(synthetic_id: str | None, job_root: Path, effects: Effects) -> int:
     """Advance each open order's SLA decision card (at SLA_DECISION_HOURS) and apply Florian's exact button.
 
     "Refund in full" is written like the refund card (status refund_due, decision approved), so
     the 48 h card can never fire a second refund for the same order. "Send delay note" sends the
-    fixed delay template once (dated with the owner ETA from `set-eta` while it is in the future, else
-    deadline + 24 h) and records delay_email_status in the request state.
+    fixed delay template once, dated with exactly the date the card named (delay_eta on the card state, planned when the
+    card was built), and records delay_email_status in the request state. If that date can no longer be mailed (under
+    1 h ahead, not after the current deadline) nothing is mailed and the order's owner gets a handoff (hold_delay_note).
     """
     if effects.dry_run:
         return 0
@@ -4684,8 +4752,9 @@ def sla_decisions(synthetic_id: str | None, job_root: Path, effects: Effects) ->
                     print(f"fast-lane SLA decision: order {order_ref(rid)}: refused tap: {type(exc).__name__}",
                           file=sys.stderr)
         elif outcome == "delay_note":
-            if state.get("delay_email_status") != "sent":
-                subject, body = delay_note_message(row, state)
+            if state.get("delay_email_status") != "sent" and not hold_delay_note(row, state, root, effects):
+                eta, _ = sla_decision.card_delay_eta(root, rid)
+                subject, body = delay_note_message(row, eta)
                 ok, reason = effects.mail(str(row.get("email") or ""), subject, body)
                 state["delay_email_status"] = "sent" if ok else f"failed:{reason}"
                 save_state(state)
@@ -4814,9 +4883,16 @@ def measured_release_quiet(row: dict[str, Any], state: dict[str, Any], now: date
 
 def sla_handoff(row: dict[str, Any], hours: int) -> str:
     rid = request_id(row.get("id"))
-    return (f"Fast-lane order {order_ref(rid)} has no result {hours} hours after payment; the result deadline is "
+    text = (f"Fast-lane order {order_ref(rid)} has no result {hours} hours after payment; the result deadline is "
             f"{deadline_for(row).isoformat()}. Owner: start or unblock the measurement now, or say on this thread "
             f"who owns it. Evidence: {job_directory(rid, JOB_ROOT)}/STATE.md. Refunds need Florian's button.")
+    if hours >= sla_decision.SLA_DECISION_HOURS:
+        text += (f" If you know when the result will be ready, run `~/bin/jevbench-autopickup set-eta {rid} --eta "
+                 "<ISO+Z>` (for example 2026-11-24T18:00:00Z; later than the deadline, at most 48 h after it, at "
+                 "least 1 h ahead). That command is the only way your ETA reaches the customer: Florian's decision "
+                 "card names one date and the delay note mails exactly that date. Set it before the card is built; "
+                 "once the card exists it names its own date and set-eta refuses.")
+    return text
 
 
 def sla_message(row: dict[str, Any], hours: int) -> str:
@@ -6138,8 +6214,10 @@ def access_ok(rid: str) -> str:
 def set_eta(rid: str, eta_text: str, now: datetime | None = None) -> str:
     """The order owner's result ETA for the delay note (proposal 6, DECISIONS fastlane-zero-wait-1122).
 
-    Caller holds cycle_lock. Stored in the order state as owner_eta; delay_note_message mails it while it still lies
-    in the future (else deadline + 24 h) and the SLA card names which of the two it will mail.
+    Caller holds cycle_lock. Stored in STATE_ROOT/owner-eta/<rid>.json, outside the request state that evaluate()
+    rewrites. The SLA decision card reads it once, when the card is built, and names that one date; the delay note
+    mails exactly the date on the card. So an ETA set while a sent card is open is refused (it could not reach the
+    customer), and one that is not later than the deadline, less than 1 h ahead or beyond deadline + 48 h never is.
     """
     rid = request_id(rid)
     now = now or utcnow()
@@ -6150,6 +6228,13 @@ def set_eta(rid: str, eta_text: str, now: datetime | None = None) -> str:
             or row.get("delivery_email_status") in ("sending", "sent") \
             or row.get("refund_id") or row.get("refund_decision"):
         raise PickupError("the order is closed or delivered; an owner ETA no longer applies")
+    if sla_decision.owner_managed(row):
+        raise PickupError("this order is owner-managed: it gets no generic delay note, so an owner ETA does not apply")
+    open_eta = sla_decision.open_card_eta(STATE_ROOT / "sla-decisions", rid, now.timestamp(),
+                                          deadline_for(row) + timedelta(hours=DELAY_NOTE_DEFAULT_HOURS))
+    if open_eta is not None:
+        raise PickupError(f"the open SLA card already names {open_eta.strftime(ETA_FORMAT)}; "
+                          "its delay note mails exactly that date")
     try:
         eta = datetime.fromisoformat(str(eta_text).strip().replace("Z", "+00:00"))
     except ValueError:
@@ -6157,16 +6242,12 @@ def set_eta(rid: str, eta_text: str, now: datetime | None = None) -> str:
     if eta.tzinfo is None:
         raise PickupError("the ETA needs a UTC offset (for example 2026-11-24T18:00:00Z)")
     eta = eta.astimezone(timezone.utc)
-    if eta <= now:
-        raise PickupError("the ETA is not in the future")
-    latest = deadline_for(row) + OWNER_ETA_MAX_AFTER_DEADLINE
-    if eta > latest:
-        raise PickupError(f"the ETA is later than the deadline + {int(OWNER_ETA_MAX_AFTER_DEADLINE.total_seconds() // 3600)} h "
-                          f"({latest.strftime(ETA_FORMAT)})")
-    state = load_state(rid)
-    state["owner_eta"] = {"eta": iso(eta), "set_at": iso(now)}
-    save_state(state)
-    return f"Order {order_ref(rid)}: owner ETA {eta.strftime(ETA_FORMAT)}; the delay note mails it while it lies in the future."
+    problem = delay_eta_problem(row, eta, now, owner=True)
+    if problem:
+        raise PickupError(problem)
+    atomic_write(owner_eta_path(rid), json.dumps({"eta": iso(eta), "set_at": iso(now)}, indent=2, sort_keys=True) + "\n")
+    return (f"Order {order_ref(rid)}: owner ETA {eta.strftime(ETA_FORMAT)} stored. The SLA decision card names it when it "
+            "is built; the customer hears it only if Florian taps Send delay note on that card.")
 
 
 def migrate_source_recovery_projection(journal_path: Path, journal: dict[str, Any], row: dict[str, Any],
@@ -6458,6 +6539,8 @@ def resubmit(rid: str, model_link: str | None = None, code_link: str | None = No
                       f"customer_hold_reason={sql_text(CHANGE_HOLD_REASON)} AND customer_hold_started_at IS NOT NULL "
                       "AND status IN ('paid','review_passed') AND refund_id IS NULL AND result_delivered_at IS NULL"):
         raise PickupError("the order changed while resubmitting; nothing was restarted")
+    with contextlib.suppress(OSError):  # the 48 h clock restarted: an ETA set for the old deadline no longer holds
+        owner_eta_path(rid).unlink()
     row = load_row(rid) or row
     write_job_files(row, job_dir)
     atomic_write(job_dir / "STATE.md", (job_dir / "STATE.md").read_text(encoding="utf-8", errors="replace")

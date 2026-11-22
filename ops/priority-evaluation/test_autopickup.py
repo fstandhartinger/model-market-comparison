@@ -24,7 +24,9 @@ import subprocess
 import sys
 import tempfile
 import threading
+import types
 import unittest
+import urllib.request
 import uuid
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
@@ -3141,8 +3143,9 @@ class SlaCardsTests(DatabaseTestCase):
 
 
 class Sla36EtaTests(DatabaseTestCase):
-    """Proposal 6 (DECISIONS fastlane-zero-wait-1122): the SLA decision card fires at 36 h, and the delay note mails
-    the order owner's ETA (`set-eta`) instead of the fixed deadline + 24 h."""
+    """Proposal 6 (DECISIONS fastlane-zero-wait-1122): the SLA decision card fires at 36 h, names ONE concrete delay
+    date (the order owner's `set-eta` ETA, else max(deadline + 24 h, now + 24 h)) and its delay note mails exactly
+    that date. Review CR-835 r1 (M1-M4, S1, S3, S4, S6, S7) is pinned here."""
 
     def setUp(self) -> None:
         super().setUp()
@@ -3151,22 +3154,41 @@ class Sla36EtaTests(DatabaseTestCase):
     def eta_in(self, hours: float = 12) -> datetime:
         return (datetime.now(timezone.utc) + timedelta(hours=hours)).replace(microsecond=0)
 
+    @staticmethod
+    def fmt(value: datetime) -> str:
+        return value.strftime(ap.ETA_FORMAT)
+
+    def default_eta(self, rid: str) -> datetime:
+        return ap.deadline_for(row(rid)) + timedelta(hours=24)
+
     def default_eta_text(self, rid: str) -> str:
-        return (ap.deadline_for(row(rid)) + timedelta(hours=24)).strftime("%d %b %H:%M UTC")
+        return self.fmt(self.default_eta(rid))
 
     def assert_refused(self, rid: str, eta: str, message: str) -> None:
         with self.assertRaises(ap.PickupError) as ctx:
             ap.set_eta(rid, eta)
         self.assertIn(message, str(ctx.exception))
-        self.assertNotIn("owner_eta", ap.load_state(rid))
+        self.assertFalse(ap.owner_eta_path(rid).exists())
 
-    def _decide(self, rid: str, decision: str) -> None:
+    def _decide(self, rid: str, decision: str, delay_eta: datetime | None = None, source: str = "default",
+                **extra) -> None:
+        """A recorded button on the card file. Without `delay_eta` it is a card sent before the date was stored."""
         root = ap.STATE_ROOT / "sla-decisions"
         root.mkdir(parents=True, exist_ok=True)
-        (root / f"{rid}.json").write_text(json.dumps({
-            "request_id": rid, "kind": "sla_40h", "decision": decision,
-            "message_id": 777001, "update_id": 888001, "card": 1,
-            "delay_key": "sla_x_delay", "refund_key": "sla_x_refund", "noaction_key": "sla_x_noaction"}))
+        card = {"request_id": rid, "kind": "sla_40h", "decision": decision,
+                "message_id": 777001, "update_id": 888001, "card": 1,
+                "delay_key": "sla_x_delay", "refund_key": "sla_x_refund", "noaction_key": "sla_x_noaction"}
+        if delay_eta is not None:
+            card.update(delay_eta=ap.iso(delay_eta), delay_eta_source=source)
+        (root / f"{rid}.json").write_text(json.dumps({**card, **extra}))
+
+    def _seed_open_card(self, rid: str, **extra) -> None:
+        now = int(datetime.now(timezone.utc).timestamp())
+        self._decide(rid, None, self.default_eta(rid), notification="sent", created_at=now - 60,
+                     expires_at=now - 60 + ap.sla_decision.WINDOW, **extra)
+
+    def card(self, rid: str) -> dict:
+        return json.loads((ap.STATE_ROOT / "sla-decisions" / f"{rid}.json").read_text())
 
     # -- the 36 h threshold ---------------------------------------------------------------------------------------
 
@@ -3224,45 +3246,75 @@ class Sla36EtaTests(DatabaseTestCase):
             self.assertFalse(any("40-hour" in note for note in fx.boards), decision)
             ap.sql(f"TRUNCATE {ap.TABLE} CASCADE; TRUNCATE {ap.EVENTS_TABLE}")
 
+    def test_the_36h_owner_wakeup_names_the_set_eta_command(self):  # S1
+        rid = insert_order(paid_ago="37 hours", received_ago="37 hours")
+        text = ap.sla_handoff(row(rid), 36)
+        self.assertIn(f"`~/bin/jevbench-autopickup set-eta {rid} --eta <ISO+Z>`", text)
+        self.assertIn("only way your ETA reaches the customer", text)
+        self.assertIn("Set it before the card is built", text)
+        self.assertIn("set-eta refuses", text)
+        early = ap.sla_handoff(row(rid), 24)  # the 24 h wake-up is unchanged
+        self.assertNotIn("set-eta", early)
+        self.assertIn("24 hours after payment", early)
+
     # -- set-eta --------------------------------------------------------------------------------------------------
 
-    def test_set_eta_stores_eta_and_set_at_in_the_order_state(self):
+    def test_set_eta_stores_the_eta_outside_the_request_state(self):  # M3
         rid = insert_order(paid_ago="37 hours", received_ago="37 hours")
-        eta, now = self.eta_in(12), datetime.now(timezone.utc)
+        eta, now = self.eta_in(30), datetime.now(timezone.utc)
         message = ap.set_eta(rid, ap.iso(eta), now)
-        self.assertIn("owner ETA " + eta.strftime("%d %b %H:%M UTC"), message)
-        self.assertEqual(ap.load_state(rid)["owner_eta"], {"eta": ap.iso(eta), "set_at": ap.iso(now)})
-        self.assertEqual(json.loads(ap.state_path(rid).read_text())["owner_eta"], {"eta": ap.iso(eta), "set_at": ap.iso(now)})
-        # a later call replaces it; other state is kept
+        self.assertIn("owner ETA " + self.fmt(eta), message)
+        self.assertNotIn("the delay note mails it", message)  # it does not claim the note will mail it
+        path = ap.STATE_ROOT / "owner-eta" / f"{rid}.json"
+        self.assertEqual(ap.owner_eta_path(rid), path)
+        self.assertEqual(json.loads(path.read_text()), {"eta": ap.iso(eta), "set_at": ap.iso(now)})
+        self.assertEqual(path.stat().st_mode & 0o777, 0o600)
+        self.assertEqual(path.parent.stat().st_mode & 0o777, 0o700)
+        self.assertEqual(ap.read_owner_eta(rid), eta)
+        self.assertFalse(ap.state_path(rid).exists())  # nothing was written to the request state
+        self.assertNotIn("owner_eta", ap.load_state(rid))
+        # a later call replaces it; the request state is not touched
         state = ap.load_state(rid)
         state["alerts"]["kept"] = True
         ap.save_state(state)
-        later = self.eta_in(20)
+        later = self.eta_in(36)
         ap.set_eta(rid, ap.iso(later))
-        self.assertEqual(ap.load_state(rid)["owner_eta"]["eta"], ap.iso(later))
+        self.assertEqual(ap.read_owner_eta(rid), later)
         self.assertTrue(ap.load_state(rid)["alerts"]["kept"])
+        self.assertNotIn("owner_eta", ap.load_state(rid))
+
+    def test_a_stale_request_state_write_cannot_drop_the_owner_eta(self):  # M3 (the evaluation unit's save_state)
+        rid = insert_order(paid_ago="37 hours", received_ago="37 hours")
+        stale = ap.load_state(rid)  # evaluate() reads the state, then reviews for up to 2 h ...
+        eta = self.eta_in(30)
+        ap.set_eta(rid, ap.iso(eta))  # ... the owner sets the ETA meanwhile ...
+        stale["alerts"]["evaluation"] = True
+        ap.save_state(stale)  # ... and evaluate() writes back what it read
+        self.assertEqual(ap.read_owner_eta(rid), eta)
+        planned, source = ap.plan_delay_eta(row(rid), datetime.now(timezone.utc))
+        self.assertEqual((planned, source), (eta, "owner"))
 
     def test_set_eta_accepts_z_and_offset_forms_and_stores_utc(self):
         rid = insert_order(paid_ago="37 hours", received_ago="37 hours")
-        eta = self.eta_in(12)
+        eta = self.eta_in(30)
         ap.set_eta(rid, eta.strftime("%Y-%m-%dT%H:%M:%SZ"))
-        self.assertEqual(ap.load_state(rid)["owner_eta"]["eta"], ap.iso(eta))
+        self.assertEqual(ap.read_owner_eta(rid), eta)
         ap.set_eta(rid, eta.astimezone(timezone(timedelta(hours=2))).isoformat())
-        self.assertEqual(ap.load_state(rid)["owner_eta"]["eta"], ap.iso(eta))
+        self.assertEqual(json.loads(ap.owner_eta_path(rid).read_text())["eta"], ap.iso(eta))
 
     def test_set_eta_refuses_an_order_that_is_not_live_or_is_synthetic(self):
-        eta = ap.iso(self.eta_in(12))
+        eta = ap.iso(self.eta_in(30))
         unknown = str(uuid.uuid4())
         with self.assertRaises(ap.PickupError):
             ap.set_eta(unknown, eta)
-        self.assertFalse(ap.state_path(unknown).exists())
+        self.assertFalse(ap.owner_eta_path(unknown).exists())
         test_mode = insert_order(paid_ago="37 hours", received_ago="37 hours", stripe_mode="test")
         self.assert_refused(test_mode, eta, "live, non-synthetic")
         synthetic = insert_order(paid_ago="37 hours", received_ago="37 hours", synthetic=True)
         self.assert_refused(synthetic, eta, "live, non-synthetic")
 
     def test_set_eta_refuses_a_closed_or_delivered_order(self):
-        eta = ap.iso(self.eta_in(12))
+        eta = ap.iso(self.eta_in(30))
         for status in ("completed", "refund_due", "refund_pending", "refunded", "intake_declined", "awaiting_review"):
             rid = insert_order(paid_ago="37 hours", received_ago="37 hours", status=status)
             self.assert_refused(rid, eta, "closed or delivered")
@@ -3279,6 +3331,11 @@ class Sla36EtaTests(DatabaseTestCase):
         ap.sql(f"UPDATE {ap.TABLE} SET refund_decision='declined' WHERE id='{decided}'")
         self.assert_refused(decided, eta, "closed or delivered")
 
+    def test_set_eta_refuses_an_owner_managed_order(self):  # S3
+        rid = insert_order(paid_ago="37 hours", received_ago="37 hours")
+        with mock.patch.object(ap.sla_decision, "OWNER_MANAGED_40H", frozenset({rid})):
+            self.assert_refused(rid, ap.iso(self.eta_in(30)), "owner-managed")
+
     def test_set_eta_refuses_an_eta_in_the_past_or_not_a_time(self):
         rid = insert_order(paid_ago="37 hours", received_ago="37 hours")
         now = datetime.now(timezone.utc)
@@ -3286,10 +3343,29 @@ class Sla36EtaTests(DatabaseTestCase):
         self.assert_refused(rid, ap.iso(now - timedelta(days=2)), "not in the future")
         self.assert_refused(rid, "not-a-time", "ISO 8601")
         self.assert_refused(rid, "", "ISO 8601")
-        naive = (now + timedelta(hours=12)).strftime("%Y-%m-%dT%H:%M:%S")
+        naive = (now + timedelta(hours=30)).strftime("%Y-%m-%dT%H:%M:%S")
         self.assert_refused(rid, naive, "UTC offset")
         with self.assertRaises(ap.PickupError):  # exactly now is not in the future either
             ap.set_eta(rid, ap.iso(now), now)
+
+    def test_set_eta_needs_one_hour_of_lead(self):  # S4
+        rid = insert_order(paid_ago="50 hours", received_ago="50 hours")  # deadline passed 2 h ago
+        now = datetime.now(timezone.utc).replace(microsecond=0)
+        self.assert_refused(rid, ap.iso(now + timedelta(seconds=30)), "less than 1 h ahead")
+        self.assert_refused(rid, ap.iso(now + timedelta(minutes=59)), "less than 1 h ahead")
+        ap.set_eta(rid, ap.iso(now + timedelta(hours=1)), now)  # exactly 1 h is enough
+        self.assertEqual(ap.read_owner_eta(rid), now + timedelta(hours=1))
+
+    def test_set_eta_refuses_an_eta_at_or_before_the_deadline(self):  # M2 (critic probe 2: deadline - 5 h was accepted)
+        rid = insert_order(paid_ago="37 hours", received_ago="37 hours")
+        deadline = ap.deadline_for(row(rid))
+        self.assertGreater(deadline - datetime.now(timezone.utc), timedelta(hours=10))
+        self.assert_refused(rid, ap.iso(deadline - timedelta(hours=5)), "not later than the order's deadline")
+        self.assert_refused(rid, ap.iso(deadline - timedelta(hours=9)), "not later than the order's deadline")
+        self.assert_refused(rid, ap.iso(deadline), "not later than the order's deadline")  # iso() drops the fraction
+        self.assert_refused(rid, ap.iso(deadline.replace(microsecond=0)), "not later than the order's deadline")
+        ap.set_eta(rid, ap.iso(deadline + timedelta(seconds=2)))  # just after it is allowed
+        self.assertGreater(ap.read_owner_eta(rid), deadline)
 
     def test_set_eta_refuses_an_eta_later_than_the_deadline_plus_48_hours(self):
         rid = insert_order(paid_ago="37 hours", received_ago="37 hours")
@@ -3297,7 +3373,7 @@ class Sla36EtaTests(DatabaseTestCase):
         self.assert_refused(rid, ap.iso(latest + timedelta(seconds=2)), "later than the deadline + 48 h")
         self.assert_refused(rid, ap.iso(latest + timedelta(days=3)), "later than the deadline + 48 h")
         ap.set_eta(rid, ap.iso(latest.replace(microsecond=0)))  # the limit itself is allowed
-        self.assertEqual(ap.load_state(rid)["owner_eta"]["eta"], ap.iso(latest.replace(microsecond=0)))
+        self.assertEqual(ap.read_owner_eta(rid), latest.replace(microsecond=0))
 
     def test_set_eta_cap_follows_the_paused_clock(self):
         rid = insert_order(paid_ago="37 hours", received_ago="37 hours")
@@ -3306,6 +3382,42 @@ class Sla36EtaTests(DatabaseTestCase):
         ap.set_eta(rid, ap.iso(latest.replace(microsecond=0)))
         with self.assertRaises(ap.PickupError):
             ap.set_eta(rid, ap.iso(latest + timedelta(seconds=2)))
+
+    def test_set_eta_is_refused_while_a_sent_card_is_open(self):  # M1
+        rid = insert_order(paid_ago="37 hours", received_ago="37 hours")
+        self._seed_open_card(rid)
+        named = self.default_eta_text(rid)
+        self.assert_refused(rid, ap.iso(self.eta_in(30)), f"the open SLA card already names {named}")
+        named_eta = self.eta_in(30)
+        self._decide(rid, "delay_note", named_eta, "owner", notification="sent")  # decided: its mail is that date
+        self.assert_refused(rid, ap.iso(self.eta_in(36)), "the open SLA card already names " + self.fmt(named_eta))
+
+    def test_a_card_that_never_stored_a_date_names_deadline_plus_24_hours(self):  # live 40 h-era cards
+        rid = insert_order(paid_ago="41 hours", received_ago="41 hours")
+        now = int(datetime.now(timezone.utc).timestamp())
+        self._decide(rid, None, None, notification="sent", created_at=now - 60, expires_at=now + 3600)
+        self.assert_refused(rid, ap.iso(self.eta_in(40)), f"already names {self.default_eta_text(rid)}")
+
+    def test_set_eta_is_allowed_when_no_card_is_open(self):  # also: it is then read by the next card
+        now = int(datetime.now(timezone.utc).timestamp())
+        cases = {
+            "no card": None,
+            "card not sent yet": dict(notification="pending"),
+            "expired unanswered": dict(notification="sent", created_at=now - 90000, expires_at=now - 3600),
+            "decided expired": dict(notification="sent", decision="expired", created_at=now - 90000, expires_at=now - 3600),
+            "no action": dict(notification="sent", decision="no_action", expires_at=now + 3600),
+            "refund": dict(notification="sent", decision="refund", expires_at=now + 3600),
+            "closed late": dict(notification="sent", decision="delay_note", late_closed=True, expires_at=now + 3600),
+            "closed stray": dict(notification="sent", stray_closed="delivered", expires_at=now + 3600),
+            "superseded": dict(notification="sent", decision="delay_note", superseded=True, expires_at=now + 3600),
+        }
+        for name, fields in cases.items():
+            rid = insert_order(paid_ago="37 hours", received_ago="37 hours")
+            if fields is not None:
+                self._decide(rid, fields.pop("decision", None), self.default_eta(rid), **fields)
+            eta = self.eta_in(30)
+            ap.set_eta(rid, ap.iso(eta))
+            self.assertEqual(ap.read_owner_eta(rid), eta, name)
 
     def test_set_eta_cli_runs_under_the_blocking_cycle_lock(self):
         rid = insert_order(paid_ago="37 hours", received_ago="37 hours")
@@ -3322,102 +3434,258 @@ class Sla36EtaTests(DatabaseTestCase):
                     mock.patch.object(ap, "cycle_lock", recording_lock):
                 code = ap.main(list(argv))
             return code, out.getvalue(), err.getvalue()
-        eta = self.eta_in(12)
+        eta = self.eta_in(30)
         code, out, err = run("set-eta", rid, "--eta", ap.iso(eta))
         self.assertEqual((code, err), (0, ""))
-        self.assertIn("owner ETA " + eta.strftime("%d %b %H:%M UTC"), out)
+        self.assertIn("owner ETA " + self.fmt(eta), out)
         self.assertEqual(locks, [True])
-        self.assertEqual(ap.load_state(rid)["owner_eta"]["eta"], ap.iso(eta))
+        self.assertEqual(ap.read_owner_eta(rid), eta)
         code, out, err = run("set-eta", rid, "--eta", ap.iso(datetime.now(timezone.utc) - timedelta(hours=1)))
         self.assertEqual(code, 1)
         self.assertIn("fast-lane pickup: the ETA is not in the future", err)
-        self.assertEqual(ap.load_state(rid)["owner_eta"]["eta"], ap.iso(eta))  # the refused call changed nothing
+        self.assertEqual(ap.read_owner_eta(rid), eta)  # the refused call changed nothing
         with self.assertRaises(SystemExit), contextlib.redirect_stderr(io.StringIO()):
             ap.main(["set-eta", rid])  # --eta is required
 
+    def test_resubmit_removes_the_owner_eta(self):  # M2: the 48 h clock restarts, the old ETA no longer holds
+        rid = insert_order(paid_ago="30 hours", received_ago="30 hours")
+        job = ap.JOB_ROOT / rid
+        job.mkdir(parents=True)
+        (job / "STATE.md").write_text("state\n")
+        ap.set_eta(rid, ap.iso(self.eta_in(30)))
+        self.assertTrue(ap.owner_eta_path(rid).exists())
+        ap.sql(f"UPDATE {ap.TABLE} SET customer_hold_started_at=now(), "
+               f"customer_hold_reason={ap.sql_text(ap.CHANGE_HOLD_REASON)} WHERE id='{rid}'")
+        ap.resubmit(rid)
+        self.assertFalse(ap.owner_eta_path(rid).exists())
+        self.assertIsNone(ap.read_owner_eta(rid))
+
+    # -- the one planned date -------------------------------------------------------------------------------------
+
+    def test_plan_without_an_owner_eta_is_deadline_plus_24_hours(self):
+        rid = insert_order(paid_ago="37 hours", received_ago="37 hours")
+        now = datetime.now(timezone.utc)
+        self.assertEqual(ap.plan_delay_eta(row(rid), now), (self.default_eta(rid), "default"))
+
+    def test_plan_default_is_never_in_the_past_also_for_the_reasked_cards(self):  # M4
+        for hours, expect_now_based in ((37, False), (47, False), (65, True), (89, True), (140, True)):
+            rid = insert_order(paid_ago=f"{hours} hours", received_ago=f"{hours} hours")
+            now = datetime.now(timezone.utc)
+            eta, source = ap.plan_delay_eta(row(rid), now)
+            self.assertEqual(source, "default", hours)
+            self.assertGreaterEqual(eta, now + timedelta(hours=24), hours)
+            self.assertGreater(eta, ap.deadline_for(row(rid)), hours)
+            self.assertEqual(eta == now + timedelta(hours=24), expect_now_based, hours)
+            self.assertEqual(eta, max(ap.deadline_for(row(rid)) + timedelta(hours=24), now + timedelta(hours=24)))
+
+    def test_plan_uses_a_valid_owner_eta(self):
+        rid = insert_order(paid_ago="37 hours", received_ago="37 hours")
+        eta = self.eta_in(30)
+        ap.set_eta(rid, ap.iso(eta))
+        self.assertEqual(ap.plan_delay_eta(row(rid), datetime.now(timezone.utc)), (eta, "owner"))
+
+    def test_plan_ignores_an_owner_eta_that_is_no_longer_valid(self):
+        rid = insert_order(paid_ago="37 hours", received_ago="37 hours")
+        eta = self.eta_in(30)
+        ap.set_eta(rid, ap.iso(eta))
+        now = datetime.now(timezone.utc)
+        for when in (eta - timedelta(minutes=59), eta, eta + timedelta(hours=1)):  # < 1 h ahead, now, past
+            self.assertEqual(ap.plan_delay_eta(row(rid), when)[1], "default", when)
+        ap.sql(f"UPDATE {ap.TABLE} SET sla_paused_seconds=30*3600 WHERE id='{rid}'")  # the deadline moved past the ETA
+        self.assertEqual(ap.plan_delay_eta(row(rid), now), (self.default_eta(rid), "default"))
+        ap.sql(f"UPDATE {ap.TABLE} SET sla_paused_seconds=0 WHERE id='{rid}'")
+        ap.atomic_write(ap.owner_eta_path(rid), json.dumps({"eta": ap.iso(ap.deadline_for(row(rid)) + timedelta(days=3))}))
+        self.assertEqual(ap.plan_delay_eta(row(rid), now)[1], "default")  # beyond deadline + 48 h
+
+    def test_a_damaged_or_unreadable_owner_eta_is_ignored(self):  # S6
+        rid = insert_order(paid_ago="37 hours", received_ago="37 hours")
+        now = datetime.now(timezone.utc)
+        path = ap.owner_eta_path(rid)
+        path.parent.mkdir(parents=True)
+        for content in ("soon", "[]", '"x"', '{"eta": "soon"}', '{"eta": null}', "{}", "{broken", b"\xff\xfe\x00"):
+            (path.write_bytes if isinstance(content, bytes) else path.write_text)(content)
+            self.assertIsNone(ap.read_owner_eta(rid), content)
+            self.assertEqual(ap.plan_delay_eta(row(rid), now), (self.default_eta(rid), "default"), content)
+        path.unlink()
+        path.mkdir()  # an unreadable path (a directory)
+        self.assertIsNone(ap.read_owner_eta(rid))
+        self.assertEqual(ap.plan_delay_eta(row(rid), now)[1], "default")
+
+    def test_the_default_is_exempt_from_the_deadline_plus_48_hours_cap(self):
+        rid = insert_order(paid_ago="100 hours", received_ago="100 hours")  # a re-asked card 3: now + 24 h > deadline + 48 h
+        now = datetime.now(timezone.utc)
+        eta, source = ap.plan_delay_eta(row(rid), now)
+        self.assertGreater(eta, ap.deadline_for(row(rid)) + timedelta(hours=48))
+        self.assertIsNone(ap.delay_eta_problem(row(rid), eta, now, owner=False))
+        self.assertIn("later than the deadline + 48 h", ap.delay_eta_problem(row(rid), eta, now, owner=True))
+
     # -- the delay note -------------------------------------------------------------------------------------------
 
-    def test_delay_note_without_an_owner_eta_mails_deadline_plus_24_hours(self):
+    def test_delay_note_without_an_eta_mails_the_planned_default(self):
         rid = insert_order(paid_ago="41 hours", received_ago="41 hours")
         subject, body = ap.delay_note_message(row(rid))
         self.assertEqual(subject, f"Benchmark Heaven evaluation order {ap.order_ref(rid)}: delayed")
         self.assertIn(f"We now expect to send your result by {self.default_eta_text(rid)}.", body)
-        self.assertIn("48-hour target", body)
+        self.assertIn("will take longer than our 48-hour target", body)
 
-    def test_delay_note_with_an_owner_eta_mails_that_date(self):
+    def test_delay_note_mails_exactly_the_date_it_is_given(self):
         rid = insert_order(paid_ago="41 hours", received_ago="41 hours")
-        eta = self.eta_in(12)
-        ap.set_eta(rid, ap.iso(eta))
-        _, body = ap.delay_note_message(row(rid))
-        self.assertIn(f"We now expect to send your result by {eta.strftime('%d %b %H:%M UTC')}.", body)
+        eta = self.eta_in(40)
+        ap.set_eta(rid, ap.iso(self.eta_in(45)))  # an owner ETA stored later changes nothing
+        _, body = ap.delay_note_message(row(rid), eta)
+        self.assertIn(f"We now expect to send your result by {self.fmt(eta)}.", body)
+        self.assertNotIn(self.fmt(self.eta_in(45)), body)
         self.assertNotIn(self.default_eta_text(rid), body)
 
-    def test_delay_note_falls_back_once_the_owner_eta_has_passed(self):
+    def test_delay_note_decision_mails_the_date_on_the_card_once(self):
         rid = insert_order(paid_ago="41 hours", received_ago="41 hours")
-        eta = self.eta_in(12)
-        ap.set_eta(rid, ap.iso(eta))
-        _, still = ap.delay_note_message(row(rid), now=eta - timedelta(seconds=1))
-        self.assertIn(eta.strftime("%d %b %H:%M UTC"), still)
-        for now in (eta, eta + timedelta(hours=1)):
-            _, body = ap.delay_note_message(row(rid), now=now)
-            self.assertIn(self.default_eta_text(rid), body)
-            self.assertNotIn(eta.strftime("%d %b %H:%M UTC") + ".", body)
-        # a damaged owner_eta is ignored, never mailed
-        for broken in ("soon", {"eta": "soon"}, {"eta": None}, {}):
-            state = ap.load_state(rid)
-            state["owner_eta"] = broken
-            ap.save_state(state)
-            _, body = ap.delay_note_message(row(rid))
-            self.assertIn(self.default_eta_text(rid), body)
-
-    def test_delay_note_decision_mails_the_owner_eta_once(self):
-        rid = insert_order(paid_ago="41 hours", received_ago="41 hours")
-        eta = self.eta_in(12)
-        ap.set_eta(rid, ap.iso(eta))
-        self._decide(rid, "delay_note")
+        eta = self.eta_in(40)
+        self._decide(rid, "delay_note", eta, "owner")
         fx = FakeEffects()
         self.assertEqual(ap.sla_decisions(None, ap.JOB_ROOT, fx), 1)
         self.assertEqual(len(fx.mails), 1)
-        self.assertIn(f"by {eta.strftime('%d %b %H:%M UTC')}.", fx.mails[0][2])
+        self.assertIn(f"by {self.fmt(eta)}.", fx.mails[0][2])
         self.assertEqual(ap.sla_decisions(None, ap.JOB_ROOT, fx), 1)
         self.assertEqual(len(fx.mails), 1)
-        self.assertEqual(ap.load_state(rid)["owner_eta"]["eta"], ap.iso(eta))  # the delay path keeps the state
+        self.assertEqual(ap.load_state(rid)["delay_email_status"], "sent")
+        self.assertNotIn("delay_held", self.card(rid))
 
-    def test_delay_note_decision_without_an_owner_eta_is_unchanged(self):
+    def test_delay_note_decision_on_a_card_without_a_stored_date_is_unchanged(self):
         rid = insert_order(paid_ago="41 hours", received_ago="41 hours")
-        self._decide(rid, "delay_note")
+        self._decide(rid, "delay_note")  # a card sent before the date was stored promised deadline + 24 h
         fx = FakeEffects()
         self.assertEqual(ap.sla_decisions(None, ap.JOB_ROOT, fx), 1)
         self.assertIn(f"by {self.default_eta_text(rid)}.", fx.mails[0][2])
 
+    def test_an_owner_eta_set_after_the_card_never_reaches_the_mail(self):  # M1 (critic probe 1), without Telegram
+        rid = insert_order(paid_ago="41 hours", received_ago="41 hours")
+        planned = self.default_eta(rid)
+        self._decide(rid, "delay_note", planned, "default")
+        ap.atomic_write(ap.owner_eta_path(rid), json.dumps({"eta": ap.iso(self.eta_in(30))}))  # written behind set-eta
+        fx = FakeEffects()
+        ap.sla_decisions(None, ap.JOB_ROOT, fx)
+        self.assertIn(f"by {self.fmt(planned)}.", fx.mails[0][2])
+        self.assertNotIn(self.fmt(self.eta_in(30)), fx.mails[0][2])
+
+    def test_a_card_date_less_than_an_hour_ahead_sends_nothing_and_hands_off(self):  # M1
+        rid = insert_order(paid_ago="41 hours", received_ago="41 hours")
+        soon = datetime.now(timezone.utc) + timedelta(minutes=30)
+        self._decide(rid, "delay_note", soon, "owner")
+        fx = FakeEffects()
+        fx.board_ok = False
+        self.assertEqual(ap.sla_decisions(None, ap.JOB_ROOT, fx), 1)
+        self.assertEqual(fx.mails, [])  # nothing to the customer
+        self.assertNotIn("delay_email_status", ap.load_state(rid))
+        held = self.card(rid)["delay_held"]
+        self.assertIn("less than 1 h ahead", held["why"])
+        self.assertNotIn("handoff_posted", held)  # the board refused: retried next cycle
+        fx.board_ok = True
+        ap.sla_decisions(None, ap.JOB_ROOT, fx)
+        ap.sla_decisions(None, ap.JOB_ROOT, fx)
+        self.assertEqual(fx.mails, [])
+        handoffs = [text for text in fx.boards if "NOTHING was mailed" in text]
+        self.assertEqual(len(handoffs), 2)  # the failed post and its one retry
+        self.assertEqual(len([e for e in fx.board_threads if e[2] == "handoff"]), 2)
+        self.assertEqual(fx.board_threads[-1][0], ap.BOARD_HANDOFF_THREAD)
+        self.assertIn(self.fmt(soon), handoffs[-1])
+        self.assertIn("no refund was authorized", handoffs[-1])
+        self.assertIn("less than 1 h ahead", handoffs[-1])
+        self.assertTrue(self.card(rid)["delay_held"]["handoff_posted"])
+        self.assertEqual(self.card(rid)["decision"], "delay_note")  # the card stays as tapped: no second card, no refund
+        self.assertIsNone(row(rid)["refund_decision"])
+        self.assertFalse(any("told the new ETA" in text for text in fx.boards))  # no false success note
+
+    def test_a_card_date_the_deadline_has_passed_sends_nothing(self):  # M2 at mail time
+        rid = insert_order(paid_ago="50 hours", received_ago="50 hours")  # deadline passed 2 h ago
+        eta = datetime.now(timezone.utc) + timedelta(hours=5)
+        self._decide(rid, "delay_note", eta, "owner")  # valid when the card was built
+        ap.sql(f"UPDATE {ap.TABLE} SET sla_paused_seconds=10*3600 WHERE id='{rid}'")  # a hold moved the deadline to +8 h
+        fx = FakeEffects()
+        ap.sla_decisions(None, ap.JOB_ROOT, fx)
+        self.assertEqual(fx.mails, [])
+        self.assertIn("not later than the order's deadline", self.card(rid)["delay_held"]["why"])
+        self.assertTrue(any("NOTHING was mailed" in text for text in fx.boards))
+
+    def test_an_owner_eta_beyond_the_cap_is_rechecked_at_mail_time(self):  # M2 at mail time
+        rid = insert_order(paid_ago="37 hours", received_ago="37 hours")
+        eta = ap.deadline_for(row(rid)) + timedelta(hours=47)
+        self._decide(rid, "delay_note", eta, "owner")
+        fx = FakeEffects()
+        ap.sla_decisions(None, ap.JOB_ROOT, fx)
+        self.assertEqual(len(fx.mails), 1)  # within deadline + 48 h: sent
+        rid2 = insert_order(paid_ago="37 hours", received_ago="37 hours")
+        self._decide(rid2, "delay_note", ap.deadline_for(row(rid2)) + timedelta(hours=49), "owner")
+        ap.sla_decisions(None, ap.JOB_ROOT, fx)
+        self.assertEqual(len(fx.mails), 1)  # beyond it: held
+        self.assertIn("later than the deadline + 48 h", self.card(rid2)["delay_held"]["why"])
+
+    def test_a_default_date_beyond_the_cap_is_still_mailed(self):  # card 3 of a long-late order
+        rid = insert_order(paid_ago="100 hours", received_ago="90 hours")  # (received after the test cutover)
+        eta, source = ap.plan_delay_eta(row(rid), datetime.now(timezone.utc))
+        self._decide(rid, "delay_note", eta, source)
+        fx = FakeEffects()
+        ap.sla_decisions(None, ap.JOB_ROOT, fx)
+        self.assertEqual(len(fx.mails), 1)
+        self.assertIn(f"by {self.fmt(eta)}.", fx.mails[0][2])
+
+    def test_a_legacy_card_whose_default_date_has_passed_sends_nothing(self):  # never an ETA in the past
+        rid = insert_order(paid_ago="80 hours", received_ago="80 hours")  # deadline + 24 h passed 8 h ago
+        self._decide(rid, "delay_note")
+        fx = FakeEffects()
+        ap.sla_decisions(None, ap.JOB_ROOT, fx)
+        self.assertEqual(fx.mails, [])
+        self.assertIn("not in the future", self.card(rid)["delay_held"]["why"])
+
+    def test_the_closing_line_of_a_held_card_says_nothing_was_mailed(self):
+        self.assertIn("nothing was mailed", ap.sla_decision.SETTLED["delay_note_held"])
+        settled = []
+        rid = insert_order(paid_ago="41 hours", received_ago="41 hours")
+        root = ap.STATE_ROOT / "sla-decisions"
+        for held, expected in ((True, "delay_note_held"), (False, "delay_note")):
+            self._decide(rid, "delay_note", self.eta_in(40), "owner", notification="sent", chat_id=42,
+                         **({"delay_held": {"why": "x", "eta": "x", "at": 1}} if held else {}))
+            state = self.card(rid)
+            with mock.patch.object(ap.sla_decision, "_attach", return_value=None), \
+                    mock.patch.object(ap.sla_decision.ra, "close_durable_reply_action", return_value=True), \
+                    mock.patch.object(ap.sla_decision, "_resolve_ask", return_value=True), \
+                    mock.patch.object(ap.sla_decision.ra, "settle_card",
+                                      lambda s, p, reason, source=None: settled.append(reason)):
+                ap.sla_decision._finish(state, root / f"{rid}.json", "delay_note")
+            self.assertEqual(settled[-1], ap.sla_decision.SETTLED[expected], held)
+
     # -- the card caption -----------------------------------------------------------------------------------------
 
-    def test_caption_names_the_eta_the_delay_note_will_mail(self):
+    def test_caption_names_the_concrete_date_the_delay_note_mails(self):  # M1, S5
         rid = insert_order(paid_ago="37 hours", received_ago="37 hours")
         deadline = ap.deadline_for(row(rid)).strftime("%d %b %H:%M UTC")
+        eta = self.eta_in(30)
+        text = ap.sla_decision.caption(row(rid), deadline, eta)
+        self.assertIn(f"Send delay note = mails {self.fmt(eta)}, no cost.", text)
+        self.assertIn(f"mails the customer the date: {self.fmt(eta)}", text)
+        self.assertEqual(text.count(self.fmt(eta)), 2)
+        self.assertNotIn("deadline + 24 h", text)
+        self.assertIn(f"the deadline is {deadline}", text)
+        # without a given date the caption names the date planned now (default, or a valid owner ETA)
         plain = ap.sla_decision.caption(row(rid), deadline)
-        self.assertEqual(plain.count("deadline + 24 h"), 2)  # Effect line and Steps line
-        self.assertNotIn("owner ETA", plain)
-        self.assertIn(f"the deadline is {deadline}", plain)
-        eta = self.eta_in(12)
+        self.assertIn(f"Send delay note = mails {self.default_eta_text(rid)}, no cost.", plain)
         ap.set_eta(rid, ap.iso(eta))
-        owned = ap.sla_decision.caption(row(rid), deadline)
-        label = "owner ETA " + eta.strftime("%d %b %H:%M UTC")
-        self.assertEqual(owned.count(label), 2)
-        self.assertIn(f"Send delay note = mails {label}, no cost.", owned)
-        self.assertIn(f"mails the customer the date: {label}", owned)
-        self.assertNotIn("deadline + 24 h", owned)
-        # an owner ETA that is already past is not what the delay note would mail: the card says deadline + 24 h
-        state = ap.load_state(rid)
-        state["owner_eta"] = {"eta": ap.iso(datetime.now(timezone.utc) - timedelta(minutes=1)), "set_at": ap.iso(datetime.now(timezone.utc))}
-        ap.save_state(state)
-        self.assertEqual(ap.sla_decision.caption(row(rid), deadline), plain)
+        self.assertIn(f"Send delay note = mails {self.fmt(eta)}, no cost.", ap.sla_decision.caption(row(rid), deadline))
+
+    def test_caption_survives_an_unreadable_request_state_or_eta_file(self):  # S6
+        rid = insert_order(paid_ago="37 hours", received_ago="37 hours")
+        deadline = ap.deadline_for(row(rid)).strftime("%d %b %H:%M UTC")
+        ap.state_path(rid).parent.mkdir(parents=True, exist_ok=True)
+        ap.state_path(rid).write_text("{broken")
+        ap.owner_eta_path(rid).parent.mkdir(parents=True, exist_ok=True)
+        ap.owner_eta_path(rid).write_text("{broken")
+        text = ap.sla_decision.caption(row(rid), deadline)
+        self.assertIn(f"Send delay note = mails {self.default_eta_text(rid)}, no cost.", text)
 
     # -- owner-managed orders keep their behaviour ----------------------------------------------------------------
 
     def test_owner_managed_orders_keep_their_behaviour(self):
         rid = insert_order(paid_ago="41 hours", received_ago="41 hours")
-        ap.set_eta(rid, ap.iso(self.eta_in(12)))
+        ap.set_eta(rid, ap.iso(self.eta_in(40)))
         self._decide(rid, "delay_note")
         fx = FakeEffects()
         with mock.patch.object(ap.sla_decision, "OWNER_MANAGED_40H", frozenset({rid})):
@@ -3427,6 +3695,166 @@ class Sla36EtaTests(DatabaseTestCase):
             with self.assertRaises(ValueError):
                 ap.sla_decision.caption(row(rid), "deadline")
         self.assertEqual(fx.mails, [])
+
+
+class Sla36CardFlowTests(DatabaseTestCase):
+    """The card, its caption, the owner's set-eta and the delay mail through sla_decision.advance and
+    ap.sla_decisions, with Telegram and notify faked (CR-835 r1 M1: the card and the mail must agree)."""
+    CHAT = 4242
+    MESSAGE_ID = 5150
+
+    def setUp(self) -> None:
+        super().setUp()
+        set_cutover(datetime.now(timezone.utc) - timedelta(days=4))
+        sd, ra = ap.sla_decision, ap.refusal_approval
+        self.captions: list[str] = []
+        self.taps: list[tuple] = []
+        self.settled: list[str] = []
+        self.update_id = 100
+
+        def fake_run(args, **kwargs):
+            if "--dry-run" in args:
+                return subprocess.CompletedProcess(args, 0, stdout="[DRY RUN] would send to the chat\n", stderr="")
+            self.captions.append(kwargs.get("input"))
+            return subprocess.CompletedProcess(args, 0, stdout=f"MESSAGE_ID={self.MESSAGE_ID}\n", stderr="")
+        patches = [
+            mock.patch.object(sd, "live_runtime", return_value=True),
+            mock.patch.object(sd, "subprocess", types.SimpleNamespace(run=fake_run)),
+            mock.patch.object(sd, "_resolve_ask", lambda state, path, decision: True),
+            mock.patch.object(ra, "telegram_config", return_value=("token", self.CHAT)),
+            mock.patch.object(ra, "CALLBACK_STATUS", Path(tempfile.mkdtemp(prefix="cb-status-", dir=TMP))),
+            mock.patch.object(ra, "callback_rows", self.callback_rows),
+            mock.patch.object(ra, "register_keyboard", lambda *args, **kwargs: None),
+            mock.patch.object(ra, "close_durable_reply_action", lambda state: True),
+            mock.patch.object(ra, "settle_card", lambda state, path, reason, source=None: self.settled.append(reason)),
+            mock.patch.object(urllib.request, "urlopen", lambda request, timeout=None: io.StringIO('{"ok": true}')),
+        ]
+        for patch in patches:
+            patch.start()
+            self.addCleanup(patch.stop)
+
+    def callback_rows(self, keys, chat):
+        return [tap for tap in self.taps if tap[5] in keys and tap[1] == chat and tap[3] == chat]
+
+    def card(self, rid: str) -> dict:
+        return json.loads((ap.STATE_ROOT / "sla-decisions" / f"{rid}.json").read_text())
+
+    def tap(self, rid: str, key: str = "delay_key") -> None:
+        self.update_id += 1
+        self.taps.append((self.update_id, self.CHAT, self.MESSAGE_ID, self.CHAT, datetime.now().timestamp(),
+                          self.card(rid)[key]))
+
+    @staticmethod
+    def fmt(value: datetime) -> str:
+        return value.strftime(ap.ETA_FORMAT)
+
+    def test_the_card_names_one_date_and_the_mail_carries_exactly_it(self):  # critic probe 1
+        rid = insert_order(paid_ago="37 hours", received_ago="37 hours")
+        planned = ap.deadline_for(row(rid)) + timedelta(hours=24)
+        fx = FakeEffects()
+        self.assertEqual(ap.sla_decisions(None, ap.JOB_ROOT, fx), 1)
+        card = self.card(rid)
+        self.assertEqual((card["notification"], card["delay_eta"], card["delay_eta_source"]),
+                         ("sent", ap.iso(planned), "default"))
+        self.assertEqual(len(self.captions), 1)
+        self.assertIn(f"Send delay note = mails {self.fmt(planned)}, no cost.", self.captions[0])
+        self.assertNotIn("deadline + 24 h", self.captions[0])
+        # The owner is woken after the card exists (same cycle) and runs set-eta: refused, the card stands.
+        with self.assertRaises(ap.PickupError) as ctx:
+            ap.set_eta(rid, ap.iso(datetime.now(timezone.utc) + timedelta(hours=30)))
+        self.assertIn(f"the open SLA card already names {self.fmt(planned)}", str(ctx.exception))
+        self.assertFalse(ap.owner_eta_path(rid).exists())
+        self.tap(rid)
+        self.assertEqual(ap.sla_decisions(None, ap.JOB_ROOT, fx), 1)
+        self.assertEqual(len(fx.mails), 1)
+        self.assertIn(f"We now expect to send your result by {self.fmt(planned)}.", fx.mails[0][2])
+        self.assertEqual(len(self.captions), 1)  # one card only
+        self.assertEqual(ap.sla_decisions(None, ap.JOB_ROOT, fx), 1)
+        self.assertEqual(len(fx.mails), 1)  # and one mail only
+
+    def test_an_owner_eta_set_before_the_card_is_named_and_mailed(self):
+        rid = insert_order(paid_ago="37 hours", received_ago="37 hours")
+        eta = (datetime.now(timezone.utc) + timedelta(hours=30)).replace(microsecond=0)
+        ap.set_eta(rid, ap.iso(eta))
+        fx = FakeEffects()
+        ap.sla_decisions(None, ap.JOB_ROOT, fx)
+        card = self.card(rid)
+        self.assertEqual((card["delay_eta"], card["delay_eta_source"]), (ap.iso(eta), "owner"))
+        self.assertIn(f"Send delay note = mails {self.fmt(eta)}, no cost.", self.captions[0])
+        self.assertNotIn(self.fmt(ap.deadline_for(row(rid)) + timedelta(hours=24)), self.captions[0])
+        self.tap(rid)
+        ap.sla_decisions(None, ap.JOB_ROOT, fx)
+        self.assertIn(f"by {self.fmt(eta)}.", fx.mails[0][2])
+        self.assertTrue(ap.owner_eta_path(rid).exists())  # the owner's file is kept
+
+    def test_the_date_is_planned_again_until_the_card_is_sent(self):
+        rid = insert_order(paid_ago="37 hours", received_ago="37 hours")
+        with mock.patch.object(ap.sla_decision.subprocess, "run",
+                               return_value=subprocess.CompletedProcess([], 1, stdout="", stderr="capped")):
+            ap.sla_decisions(None, ap.JOB_ROOT, FakeEffects())  # the notify preview refuses (cap): not sent
+        self.assertEqual(self.card(rid)["notification"], "pending")
+        self.assertEqual(self.captions, [])
+        eta = (datetime.now(timezone.utc) + timedelta(hours=30)).replace(microsecond=0)
+        ap.set_eta(rid, ap.iso(eta))  # no card is open yet, so the owner may still set it
+        ap.sla_decisions(None, ap.JOB_ROOT, FakeEffects())
+        self.assertEqual(self.card(rid)["delay_eta"], ap.iso(eta))
+        self.assertIn(f"mails {self.fmt(eta)}, no cost.", self.captions[0])
+
+    def test_tap_after_the_named_owner_eta_is_close_sends_nothing(self):  # critic probe 1, reverse case
+        rid = insert_order(paid_ago="37 hours", received_ago="37 hours")
+        eta = (datetime.now(timezone.utc) + timedelta(hours=12)).replace(microsecond=0)  # just after the deadline (11 h)
+        ap.set_eta(rid, ap.iso(eta))
+        fx = FakeEffects()
+        ap.sla_decisions(None, ap.JOB_ROOT, fx)
+        self.assertIn(f"mails {self.fmt(eta)}, no cost.", self.captions[0])
+        self.tap(rid)
+        later = eta - timedelta(minutes=30)  # Florian taps the next morning; the date is now < 1 h away
+        with mock.patch.object(ap, "utcnow", return_value=later):
+            ap.sla_decisions(None, ap.JOB_ROOT, fx)
+        self.assertEqual(fx.mails, [])  # no mail carrying a different (default) date
+        self.assertIn("less than 1 h ahead", self.card(rid)["delay_held"]["why"])
+        handoff = [text for text in fx.boards if "NOTHING was mailed" in text]
+        self.assertEqual(len(handoff), 1)
+        self.assertIn(self.fmt(eta), handoff[0])
+        self.assertEqual(self.card(rid)["decision"], "delay_note")
+        self.assertIsNone(row(rid)["refund_decision"])
+
+    def test_a_reasked_card_names_a_date_that_is_not_in_the_past(self):  # M4: cards 2 and 3
+        rid = insert_order(paid_ago="65 hours", received_ago="65 hours")  # card 1 ran 36-60 h; the deadline was 17 h ago
+        root = ap.STATE_ROOT / "sla-decisions"
+        root.mkdir(parents=True)
+        for number in (1, 2):
+            now = datetime.now(timezone.utc)
+            (root / f"{rid}.json").write_text(json.dumps({
+                "request_id": rid, "kind": "sla_40h", "history": [], "card": number, "notification": "sent",
+                "chat_id": self.CHAT, "message_id": self.MESSAGE_ID, "created_at": int(now.timestamp()) - 90000,
+                "expires_at": int(now.timestamp()) - 3600, "decision": "expired", "resolved": True,
+                "delay_key": "sla_a", "refund_key": "sla_b", "noaction_key": "sla_c",
+                "delay_eta": ap.iso(now - timedelta(hours=10)), "delay_eta_source": "default"}))
+            before = len(self.captions)
+            ap.sla_decisions(None, ap.JOB_ROOT, FakeEffects())
+            card = self.card(rid)
+            self.assertEqual(card["card"], number + 1)
+            eta = datetime.fromisoformat(card["delay_eta"])
+            self.assertGreaterEqual(eta, now + timedelta(hours=24) - timedelta(seconds=5))
+            self.assertGreater(eta, ap.deadline_for(row(rid)) + timedelta(hours=24))  # not deadline + 24 h (= 7 h ahead)
+            self.assertEqual(len(self.captions), before + 1)
+            self.assertIn(f"mails {self.fmt(eta)}, no cost.", self.captions[-1])
+
+    def test_a_held_card_closes_with_a_line_that_says_nothing_was_mailed(self):
+        rid = insert_order(paid_ago="37 hours", received_ago="37 hours")
+        eta = (datetime.now(timezone.utc) + timedelta(hours=12)).replace(microsecond=0)
+        ap.set_eta(rid, ap.iso(eta))
+        fx = FakeEffects()
+        ap.sla_decisions(None, ap.JOB_ROOT, fx)
+        self.tap(rid)
+        with mock.patch.object(ap, "utcnow", return_value=eta - timedelta(minutes=30)):
+            ap.sla_decisions(None, ap.JOB_ROOT, fx)
+        expiry = self.card(rid)["expires_at"] + 10
+        with mock.patch.object(ap, "utcnow", return_value=datetime.fromtimestamp(expiry, timezone.utc)):
+            ap.sla_decisions(None, ap.JOB_ROOT, fx)  # the card expires: its late Refund button is closed
+        self.assertEqual(fx.mails, [])
+        self.assertEqual(self.settled[-1], ap.sla_decision.SETTLED["delay_note_held"])
 
 
 class SlaStrayCloseoutTests(DatabaseTestCase):
