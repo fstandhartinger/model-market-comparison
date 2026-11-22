@@ -167,7 +167,7 @@ STEP_LIMITS = {
     "evaluation_start": MAX_PREPARATION_ATTEMPTS + MAX_SOURCE_REVIEW_ATTEMPTS + MAX_EVALUATION_ATTEMPTS,
     "finalize": 30,
     "result_mail": 10, "xpost": 1, "xpost_receipt": 6, "refund_notice": 10,
-    "sla24_handoff": 8, "sla36_handoff": 8,
+    "sla24_handoff": 8, "sla36_handoff": 8, "t18_parity_decision": 8, "t18_standard_prep": 8,
 }
 BACKOFF_BASE_SECONDS = 300
 BACKOFF_CAP_SECONDS = 7200
@@ -179,6 +179,11 @@ OWNED_HOLD_STATE_FRESH = timedelta(hours=6)
 # N118 (15 Nov 2026, f62aeab1): once the official pod measurement is complete and the pod is gone, the live owner
 # only has scoring, the result mail and the release left. That order stays quiet until this close to the deadline.
 MEASURED_RELEASE_MARGIN = timedelta(hours=3)
+# N140 (22 Nov 2026, 2be2698b): a native-route hold with no started measurement switched to the standard path only when
+# someone asked in time. At this much time left the pickup asks the deputy for a parity ruling and requests source-only
+# standard-path prep in parallel, once per order.
+T18_PATH_HEALTH_MARGIN = timedelta(hours=18)
+T18_PARITY_OWNER = "cos-deputy-opus"
 OWNER_JOB_RE = re.compile(r"[a-z0-9][a-z0-9-]{2,100}")
 
 
@@ -4777,6 +4782,68 @@ def advance_sla_handoffs(row: dict[str, Any], state: dict[str, Any], effects: Ef
             finish_fail(state, name, "board_post_failed")
 
 
+def native_route_hold_open(rid: str, state: dict[str, Any]) -> bool:
+    """An open operational hold that routes the order to a native owner (no automatic runtime)."""
+    operational = state.get("operational_hold")
+    if not isinstance(operational, dict) or not operational.get("reason"):
+        return False
+    reason = str(operational["reason"])
+    if native_owner_due(rid, reason):
+        return True
+    record = state.get("native_owner")
+    owner = operational.get("owner")
+    return isinstance(record, dict) and record.get("job") == native_owner.owner_name(rid) \
+        and owner in (None, record.get("job"))
+
+
+def advance_t18_path_health(row: dict[str, Any], state: dict[str, Any], effects: Effects, now: datetime,
+                            job_root: Path) -> None:
+    """N140: at T-18 h a paid order with no started measurement and an open native-route hold gets ONE #11 decision
+    to the deputy (standard-path parity ruling) and ONE source-only standard-path prep request to the hold owner.
+    Both are bounded, retried steps; neither launches anything, spends money or contacts the customer."""
+    if row.get("status") not in ("paid", "review_passed") or row.get("result_delivered_at") or active_hold(row):
+        return
+    if row.get("paid_at") is None or row.get("refund_id") or row.get("refund_decision"):
+        return
+    rid = request_id(row.get("id"))
+    deadline = deadline_for(row)
+    if deadline - now > T18_PATH_HEALTH_MARGIN or now >= deadline:
+        return
+    if not native_route_hold_open(rid, state) or measurement_started(rid, job_root):
+        return
+    operational = state.get("operational_hold") or {}
+    reason = str(operational.get("reason"))
+    owner = wake_owner(row, state)
+    left = deadline - now
+    left_text = f"{int(left.total_seconds() // 3600)} h {int(left.total_seconds() % 3600 // 60)} min"
+    evidence = f"{job_directory(rid, JOB_ROOT)}/STATE.md"
+    texts = {
+        "t18_parity_decision": (
+            T18_PARITY_OWNER, "decision",
+            f"T-18 h path health, fast-lane order {order_ref(rid)}: no measurement has started, {left_text} before the "
+            f"result deadline {deadline.isoformat()}, and the native-route hold ({reason}) is still open (owner "
+            f"@{owner}). Deputy: rule now whether the standard path has parity for this order and may replace the "
+            f"native route if the hold is not cleared. Source-only standard-path prep is requested in parallel; it "
+            f"launches nothing. Evidence: {evidence}. No customer contact; refunds need Florian's button."),
+        "t18_standard_prep": (
+            owner, "handoff",
+            f"T-18 h path health, fast-lane order {order_ref(rid)}: please prepare the standard path in parallel to the "
+            f"native route, SOURCE ONLY: reviewed runner/recipe and public smoke packet, no pod, no launch, no spend, "
+            f"no customer contact. The deputy rules on parity (@{T18_PARITY_OWNER}, same thread). Deadline "
+            f"{deadline.isoformat()} ({left_text} left), hold {reason}. Evidence: {evidence}."),
+    }
+    for name, (to, kind, text) in texts.items():
+        if step_done(state, name) or not step_due(state, name, now):
+            continue
+        begin_attempt(state, name, now)
+        effects.last_board_entry = None
+        if effects.board(text, to, kind=kind, thread=BOARD_HANDOFF_THREAD):
+            entry = board_entry_id(effects)
+            finish_ok(state, name, now, **({"entry": entry} if entry is not None else {}))
+        else:
+            finish_fail(state, name, "board_post_failed")
+
+
 def measured_release_quiet(row: dict[str, Any], state: dict[str, Any], now: datetime) -> bool:
     """A deliberate (non-transient) hold whose named owner is live and whose official measurement is complete
     (pods/<rid>.json) needs no 36 h owner wake-up while more than 3 h remain."""
@@ -4824,6 +4891,7 @@ def process_row(row: dict[str, Any], effects: Effects, job_root: Path, now: date
             save_state(state)
     row = advance_intake(row, state, job_dir, effects, now)
     advance_sla_handoffs(row, state, effects, now, job_root)
+    advance_t18_path_health(row, state, effects, now, job_root)
     advance_change_request(row, state, job_dir, effects, now)
     advance_delivery(row, state, job_dir, effects, now)
     row = load_row(rid) or row
