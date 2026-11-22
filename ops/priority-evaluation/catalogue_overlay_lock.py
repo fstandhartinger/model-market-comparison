@@ -84,188 +84,12 @@ def parse_request(value: object, catalogue: dict[str, Any]) -> tuple[str, list[t
     return value['image_id'], pins, list(lines)
 
 
-# -------------------------------------------------------------------------------------------------------------- markers
-
-_TOKEN = re.compile(r"\s*(?:(?P<str>'[^']*'|\"[^\"]*\")|(?P<op>===|==|!=|<=|>=|~=|<|>|not\s+in\b|in\b)|"
-                    r"(?P<bool>and\b|or\b)|(?P<paren>[()])|(?P<var>[A-Za-z_][A-Za-z0-9_.]*))")
-
-
-def _vtuple(text: str) -> tuple[int, ...] | None:
-    parts = re.findall(r'\d+', text.split('+')[0])
-    return tuple(int(p) for p in parts[:4]) if parts and re.fullmatch(r'[0-9][0-9.]*(\*)?', text) else None
-
-
-def marker_applies(marker: str, env: dict[str, str]) -> bool:
-    """Evaluate a PEP 508 marker for the image. Anything this small evaluator does not understand counts as True
-    (the dependency is then required), except `extra` comparisons, which are False (extras are never installed)."""
-    tokens: list[tuple[str, str]] = []
-    position = 0
-    while position < len(marker):
-        match = _TOKEN.match(marker, position)
-        if not match or match.end() == position:
-            return True
-        kind = match.lastgroup
-        tokens.append((kind, re.sub(r'\s+', ' ', match[kind])))
-        position = match.end()
-        if not marker[position:].strip():
-            break
-    index = 0
-
-    def value(token: tuple[str, str]) -> tuple[str, str | None]:
-        kind, text = token
-        if kind == 'str':
-            return 'str', text[1:-1]
-        if kind == 'var':
-            return text, env.get(text)
-        raise ValueError
-
-    def compare() -> bool:
-        nonlocal index
-        if index < len(tokens) and tokens[index] == ('paren', '('):
-            index += 1
-            result = disjunction()
-            if index >= len(tokens) or tokens[index] != ('paren', ')'):
-                raise ValueError
-            index += 1
-            return result
-        left, op, right = tokens[index], tokens[index + 1], tokens[index + 2]
-        index += 3
-        if op[0] != 'op':
-            raise ValueError
-        lname, lval = value(left)
-        rname, rval = value(right)
-        if 'extra' in (lname, rname):
-            return False
-        if lval is None or rval is None:
-            raise ValueError
-        operator = op[1]
-        if operator in ('in', 'not in'):
-            return (lval in rval) == (operator == 'in')
-        if lname in ('python_version', 'python_full_version', 'platform_release') or \
-                rname in ('python_version', 'python_full_version', 'platform_release'):
-            lv, rv = _vtuple(lval.rstrip('*')), _vtuple(rval.rstrip('*'))
-            if lv is None or rv is None:
-                raise ValueError
-            width = max(len(lv), len(rv))
-            lv, rv = lv + (0,) * (width - len(lv)), rv + (0,) * (width - len(rv))
-            return {'==': lv == rv, '===': lv == rv, '!=': lv != rv, '<': lv < rv, '<=': lv <= rv,
-                    '>': lv > rv, '>=': lv >= rv, '~=': lv >= rv}[operator]
-        if operator in ('==', '==='):
-            return lval == rval
-        if operator == '!=':
-            return lval != rval
-        raise ValueError
-
-    def conjunction() -> bool:
-        nonlocal index
-        result = compare()
-        while index < len(tokens) and tokens[index] == ('bool', 'and'):
-            index += 1
-            result = compare() and result
-        return result
-
-    def disjunction() -> bool:
-        nonlocal index
-        result = conjunction()
-        while index < len(tokens) and tokens[index] == ('bool', 'or'):
-            index += 1
-            result = conjunction() or result
-        return result
-
-    try:
-        result = disjunction()
-        return result if index == len(tokens) else True
-    except (ValueError, IndexError, KeyError):
-        return True
-
-
-def marker_env(image: dict[str, Any]) -> dict[str, str]:
-    return {'python_version': image['python'], 'python_full_version': image['python'] + '.0',
-            'sys_platform': 'linux', 'platform_system': 'Linux', 'platform_machine': 'x86_64', 'os_name': 'posix',
-            'implementation_name': 'cpython', 'platform_python_implementation': 'CPython'}
-
-
-def dependency_specs(requires_dist: object, env: dict[str, str]) -> dict[str, list[str]]:
-    """{normalized dependency name: [specifier strings]} for the dependencies that apply to the image (no extras)."""
-    specs: dict[str, list[str]] = {}
-    for line in requires_dist or []:
-        if not isinstance(line, str):
-            continue
-        requirement, _, marker = line.partition(';')
-        match = re.match(r'\s*([A-Za-z0-9][A-Za-z0-9._-]*)\s*(?:\[[^\]]*\])?\s*\(?([^()]*)\)?\s*$', requirement)
-        if not match:
-            match = re.match(r'\s*([A-Za-z0-9][A-Za-z0-9._-]*)', requirement)
-            if not match:
-                continue
-            spec = '<unparsed>'
-        else:
-            spec = match[2].strip() if match.lastindex and match.lastindex >= 2 and match[2] else ''
-        if not marker.strip() or marker_applies(marker.strip(), env):
-            specs.setdefault(cat.normalize(match[1]), []).append(spec)
-    return specs
-
-
-# ------------------------------------------------------------------------------------------------------------- versions
-
-_VERSION = re.compile(r'v?(\d+(?:\.\d+)*)(?:[-_.]?(a|b|rc|alpha|beta|c|pre|preview)[-_.]?(\d*))?'
-                      r'(?:(?:[-_.]?(?:post|rev|r)[-_.]?(\d*))|-(\d+))?(?:[-_.]?dev[-_.]?(\d*))?(?:\+([a-z0-9.]+))?')
-_PRE = {'a': 0, 'alpha': 0, 'b': 1, 'beta': 1, 'rc': 2, 'c': 2, 'pre': 2, 'preview': 2}
-
-
-def parse_version(text: str):
-    """PEP 440 sort key (release padded, pre, post, dev) + flags; None for anything unparseable."""
-    match = _VERSION.fullmatch(text.strip().lower())
-    if not match:
-        return None
-    release = tuple(int(x) for x in match[1].split('.'))
-    pre = (_PRE[match[2]], int(match[3] or 0)) if match[2] else None
-    post_text = match[4] if match[4] is not None else match[5]
-    post = int(post_text or 0) if (match[4] is not None or match[5] is not None) else None
-    dev = int(match[6] or 0) if match[6] is not None else None
-    pre_key = pre if pre else ((-1, 0) if dev is not None and post is None else (9, 0))
-    key = (release + (0,) * (8 - len(release)), pre_key, -1 if post is None else post, 10 ** 9 if dev is None else dev)
-    return {'key': key, 'release': release, 'prerelease': pre is not None or dev is not None, 'local': match[7]}
-
-
-def satisfies(version: str, spec: str) -> bool | None:
-    """True/False for a comma-separated PEP 440 specifier; None when the specifier cannot be evaluated."""
-    parsed = parse_version(version)
-    if parsed is None:
-        return None
-    for clause in [c.strip() for c in spec.split(',') if c.strip()]:
-        match = re.fullmatch(r'(===|==|!=|~=|<=|>=|<|>)\s*([A-Za-z0-9.*+!_-]+)', clause)
-        if not match:
-            return None
-        op, target = match[1], match[2]
-        if op == '===':
-            if version != target:
-                return False
-            continue
-        if op in ('==', '!=') and target.endswith('.*'):
-            prefix = parse_version(target[:-2])
-            if prefix is None:
-                return None
-            width = len(prefix['release'])
-            hit = parsed['release'][:width] + (0,) * max(0, width - len(parsed['release'])) == prefix['release']
-            if hit != (op == '=='):
-                return False
-            continue
-        other = parse_version(target)
-        if other is None:
-            return None
-        mine = parsed['key'] if other['local'] or not parsed['local'] else parse_version(version.split('+')[0])['key']
-        if op == '~=':
-            if len(other['release']) < 2:
-                return None
-            width = len(other['release']) - 1
-            if not (mine >= other['key'] and parsed['release'][:width] == other['release'][:width]):
-                return False
-            continue
-        result = {'==': mine == other['key'], '!=': mine != other['key'], '<=': mine <= other['key'],
-                  '>=': mine >= other['key'], '<': mine < other['key'], '>': mine > other['key']}[op]
-        if not result:
-            return False
-    return True
+# Version, marker and dependency logic is shared with the run-time gate (catalogue_runtime_supplement).
+marker_applies = cat.marker_applies
+marker_env = cat.marker_env
+dependency_specs = cat.dependency_specs
+parse_version = cat.parse_version
+satisfies = cat.satisfies
 
 
 # ------------------------------------------------------------------------------------------------------------ resolving
@@ -308,7 +132,8 @@ def pick_wheel(name: str, version: str, document: dict[str, Any], image: dict[st
 
 
 MAX_FETCHES = 400
-ROUNDS = 6
+ROUNDS = 8
+CANDIDATES = 25
 
 
 def _json(fetch: Fetch, url: str, label: str) -> dict[str, Any]:
@@ -323,117 +148,116 @@ def _json(fetch: Fetch, url: str, label: str) -> dict[str, Any]:
     return value
 
 
-def _newest(name: str, specs: list[str], document: dict[str, Any], image: dict[str, Any]) -> str:
-    """Newest stable, non-yanked release with a fitting wheel that satisfies every specifier."""
-    releases = document.get('releases')
-    if not isinstance(releases, dict):
-        raise cat.CatalogueError(f'{name}: no release list')
-    ranked = []
-    for version, files in releases.items():
-        parsed = parse_version(version) if isinstance(version, str) else None
-        if parsed is None or parsed['prerelease'] or parsed['local'] or not isinstance(files, list):
-            continue
-        if not any(isinstance(f, dict) and f.get('packagetype') == 'bdist_wheel' and not f.get('yanked')
-                   and isinstance(f.get('filename'), str)
-                   and cat.wheel_compatible(f['filename'], image['python'], image['glibc']) for f in files):
-            continue
-        if all(satisfies(version, spec) is True for spec in specs):
-            ranked.append((parsed['key'], version))
-    if not ranked:
-        raise cat.CatalogueError(f'{name}: no stable wheel release satisfies {" and ".join(s or "any" for s in specs)}')
-    return max(ranked)[1]
+class _Session:
+    """One resolution: cached PyPI documents, bounded fetches."""
 
+    def __init__(self, fetch: Fetch, image: dict[str, Any], env: dict[str, str]):
+        self.fetch, self.image, self.env, self.cache = fetch, image, env, {}
 
-def _closure(chosen: dict[str, str], preinstalled: dict[str, str], image: dict[str, Any],
-             catalogue: dict[str, Any], env: dict[str, str], fetch: Fetch, cache: dict[str, dict[str, Any]]):
-    constraints: dict[str, list[tuple[str, str]]] = {}
-    documents: dict[str, dict[str, Any]] = {}
-    queue = sorted(chosen)
-    while queue:
-        name = queue.pop(0)
-        url = PYPI.format(name=name, version=chosen[name])
-        if url not in cache:
-            if len(cache) > MAX_FETCHES:
+    def get(self, url: str, label: str) -> dict[str, Any]:
+        if url not in self.cache:
+            if len(self.cache) >= MAX_FETCHES:
                 raise cat.CatalogueError('dependency closure too large')
-            cache[url] = _json(fetch, url, f'{name}=={chosen[name]}')
-        documents[name] = cache[url]
-        for dep, specs in sorted(dependency_specs((cache[url].get('info') or {}).get('requires_dist'), env).items()):
-            for spec in specs:
-                constraints.setdefault(dep, []).append((name, spec))
-            if dep in chosen or dep in preinstalled:
+            self.cache[url] = _json(self.fetch, url, label)
+        return self.cache[url]
+
+    def version_doc(self, name: str, version: str) -> dict[str, Any]:
+        return self.get(PYPI.format(name=name, version=version), f'{name}=={version}')
+
+    def requires(self, name: str, version: str) -> list[str]:
+        value = (self.version_doc(name, version).get('info') or {}).get('requires_dist') or []
+        return [r for r in value if isinstance(r, str)] if isinstance(value, list) else []
+
+    def candidates(self, name: str, specs: list[str]) -> list[str]:
+        """Stable, non-yanked releases with a fitting wheel that satisfy every specifier, newest first."""
+        releases = self.get(PYPI_ALL.format(name=name), name).get('releases')
+        if not isinstance(releases, dict):
+            raise cat.CatalogueError(f'{name}: no release list')
+        ranked = []
+        for version, files in releases.items():
+            parsed = parse_version(version) if isinstance(version, str) else None
+            if parsed is None or parsed['prerelease'] or parsed['local'] or not isinstance(files, list):
                 continue
-            if cat.denied(dep, catalogue):
-                raise cat.CatalogueError(f'{dep} (needed by {name}) is not in the image and may not come from an overlay')
-            dep_specs = [s for _, s in constraints[dep]]
-            if '<unparsed>' in dep_specs:
-                raise cat.CatalogueError(f'{dep} (needed by {name}): unparsed requirement, pin it explicitly')
-            chosen[dep] = _newest(dep, dep_specs, _all(fetch, dep, cache), image)
-            queue.append(dep)
-            if len(chosen) > catalogue['overlay']['max_wheels']:
-                raise cat.CatalogueError('dependency closure exceeds the wheel limit')
-    return constraints, documents
+            if not any(isinstance(f, dict) and f.get('packagetype') == 'bdist_wheel' and not f.get('yanked')
+                       and isinstance(f.get('filename'), str)
+                       and cat.wheel_compatible(f['filename'], self.image['python'], self.image['glibc']) for f in files):
+                continue
+            if all(satisfies(version, spec) is not False for spec in specs if spec and spec != '<unparsed>'):
+                ranked.append((parsed['key'], version))
+        return [version for _, version in sorted(ranked, reverse=True)]
 
 
-def _all(fetch: Fetch, name: str, cache: dict[str, dict[str, Any]]) -> dict[str, Any]:
-    url = PYPI_ALL.format(name=name)
-    if url not in cache:
-        if len(cache) > MAX_FETCHES:
-            raise cat.CatalogueError('dependency closure too large')
-        cache[url] = _json(fetch, url, name)
-    return cache[url]
+def _constraints(dep: str, versions: dict[str, str], requires: dict[str, list[str]], env: dict[str, str],
+                 ignore: list[str]) -> list[str]:
+    specs = []
+    for dist, lines in requires.items():
+        if dist in versions and dist != dep and dist not in ignore:
+            specs += dependency_specs(lines, env).get(dep, [])
+    return specs
+
+
+def _fits(lines: list[str], versions: dict[str, str], env: dict[str, str], skip: str) -> bool:
+    """A candidate's own requirements are met by what is installed now (names not installed yet are fine)."""
+    for dep, specs in dependency_specs(lines, env).items():
+        if dep != skip and dep in versions and any(
+                spec and spec != '<unparsed>' and satisfies(versions[dep], spec) is False for spec in specs):
+            return False
+    return True
 
 
 def resolve(request: object, *, catalogue: dict[str, Any] | None = None, fetch: Fetch = default_fetch) -> dict[str, Any]:
     """The validated overlay lock for a generator request; CatalogueError with an operator-facing reason otherwise.
 
-    Requested pins are taken exactly and never changed. Every applicable dependency that is neither requested nor
-    preinstalled is completed with the newest stable release (fitting wheel) satisfying all known constraints. A
-    preinstalled or completed distribution whose version violates a constraint is re-picked (a preinstalled one is then
-    upgraded by the overlay, unless the deny list protects it) and the closure is recomputed, at most ROUNDS times.
-    No backtracking beyond that: a remaining conflict is a refusal that names it."""
+    The goal is the owner's gate (#77152/#77174): the overlay may add no `pip check` problem to the base image's own
+    package set, simulated from metadata (versions + Requires-Dist of every installed distribution, read from the pinned
+    image layers). Requested pins are exact and never changed. Each round simulates `pip check` on base + overlay; every
+    dependency that is missing or violated (and is neither requested nor protected by the deny list) is (re)picked: the
+    newest stable fitting release that satisfies all constraints the installed set puts on it, preferring a release whose
+    own requirements need no change to what is installed (so the base stays as it is). Bounded rounds; a remaining
+    problem is a refusal that names it."""
     catalogue = cat.load_catalogue() if catalogue is None else catalogue
     image_id, pins, lines = parse_request(request, catalogue)
     image = cat.image_entry(catalogue, image_id)
     env = marker_env(image)
-    preinstalled = {cat.normalize(n): str(v).split('|')[-1] for n, v in image['preinstalled'].items()}
+    session = _Session(fetch, image, env)
+    base_versions, base_requires = cat.installed_set(image)
+    ignore = image['pip_check_ignore']
+    baseline = cat.simulate_pip_check(base_versions, base_requires, env, ignore)
     explicit = dict(pins)
-    repick: set[str] = set()
-    cache: dict[str, dict[str, Any]] = {}
-    chosen: dict[str, str] = {}
-    last_constraints: dict[str, list[tuple[str, str]]] = {}
-    problems: list[str] = []
+    chosen = dict(explicit)
+    for name, version in explicit.items():
+        session.version_doc(name, version)
+    problems: set[tuple[str, str, str]] = set()
     for _round in range(ROUNDS):
-        previous = chosen
-        chosen = dict(explicit)
-        if previous:
-            # Carry forward completions; re-pick the conflicting ones against every constraint seen last round.
-            for dep in repick:
-                specs = [s for _, s in last_constraints.get(dep, []) if s and s != '<unparsed>']
-                chosen[dep] = _newest(dep, specs, _all(fetch, dep, cache), image)
-            for dep, version in previous.items():
-                chosen.setdefault(dep, version)
-        constraints, documents = _closure(chosen, preinstalled, image, catalogue, env, fetch, cache)
-        last_constraints = constraints
-        problems, repick, fixed = [], set(), []
-        for dep, items in sorted(constraints.items()):
-            version = chosen.get(dep, preinstalled.get(dep))
-            for by, spec in items:
-                if version is None or not spec or spec == '<unparsed>' or satisfies(version, spec) is not False:
-                    continue
-                where = 'the request' if dep in explicit else ('the completion' if dep in chosen else 'the image')
-                problems.append(f'{by} needs {dep}{spec}, {where} has {version}')
-                if dep in explicit or cat.denied(dep, catalogue):
-                    fixed.append(problems[-1])
-                else:
-                    repick.add(dep)
+        versions = dict(base_versions, **chosen)
+        requires = dict(base_requires, **{n: session.requires(n, v) for n, v in chosen.items()})
+        problems = cat.simulate_pip_check(versions, requires, env, ignore) - baseline
         if not problems:
             break
+        fixed = sorted(p for p in problems if p[1] in explicit or cat.denied(p[1], catalogue))
         if fixed:
-            raise cat.CatalogueError('version conflicts with exact or protected versions: ' + '; '.join(fixed[:12]))
+            raise cat.CatalogueError('the request conflicts with the image or a protected package: '
+                                     + '; '.join(f'{d} requires {dep} {spec}' for d, dep, spec in fixed[:10]))
+        for dep in sorted({p[1] for p in problems}):
+            specs = _constraints(dep, versions, requires, env, ignore)
+            options = session.candidates(dep, specs)
+            if not options:
+                raise cat.CatalogueError(f'{dep}: no stable wheel release satisfies '
+                                         + (' and '.join(s for s in specs if s) or 'any'))
+            pick = next((v for v in options[:CANDIDATES] if _fits(session.requires(dep, v), versions, env, dep)), options[0])
+            chosen[dep] = pick
+            if len(chosen) > catalogue['overlay']['max_wheels']:
+                raise cat.CatalogueError('dependency closure exceeds the wheel limit')
     else:
-        raise cat.CatalogueError('version conflicts remain after re-picking: ' + '; '.join(problems[:12]))
-    wheels = [pick_wheel(name, chosen[name], documents[name], image, catalogue) for name in sorted(chosen)]
+        raise cat.CatalogueError('pip-check problems remain: ' + '; '.join(f'{d} requires {dep} {spec}'
+                                                                          for d, dep, spec in sorted(problems)[:10]))
+    wheels = []
+    for name in sorted(chosen):
+        record = pick_wheel(name, chosen[name], session.version_doc(name, chosen[name]), image, catalogue)
+        record['requires'] = session.requires(name, chosen[name])
+        wheels.append(record)
     lock = {'schema': cat.SCHEMA, 'image_id': image_id, 'image': image['image'], 'wheels': wheels, 'requested': lines,
+            'base': {'inventory_sha256': cat.inventory_sha256(image), 'baseline_problems': len(baseline)},
             'resolved_at': _utc(), 'resolved_by': 'host pypi json api'}
     cat.validate_lock(lock, catalogue)
     return lock
@@ -448,9 +272,11 @@ def append_admission(order_id: str, lock_bytes: bytes, lock: dict[str, Any], *, 
     if not cat.ORDER_ID_RE.fullmatch(order_id) or not by or not basis or len(by) > 200 or len(basis) > 500:
         raise cat.CatalogueError('admission arguments')
     path.parent.mkdir(parents=True, exist_ok=True, mode=0o700)
+    image = cat.image_entry(cat.load_catalogue(), lock['image_id'])
     entry = {'order_id': order_id, 'image_id': lock['image_id'], 'image': lock['image'],
              'lock_sha256': hashlib.sha256(lock_bytes).hexdigest(), 'module_sha256': cat.module_sha256(),
-             'catalogue_sha256': cat.CATALOGUE_SHA256, 'admitted_at': _utc(), 'admitted_by': by, 'basis': basis}
+             'catalogue_sha256': cat.CATALOGUE_SHA256, 'base_inventory_sha256': cat.inventory_sha256(image),
+             'admitted_at': _utc(), 'admitted_by': by, 'basis': basis}
     guard = os.open(os.fspath(path) + '.lock', os.O_WRONLY | os.O_CREAT | getattr(os, 'O_NOFOLLOW', 0), 0o600)
     try:
         fcntl.flock(guard, fcntl.LOCK_EX)

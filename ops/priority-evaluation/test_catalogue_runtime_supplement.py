@@ -30,7 +30,7 @@ def pypi_url(filename, seed='a'):
 def wheel(name='peft', version='0.21.2', filename=None, **extra):
     filename = filename or f"{name.replace('-', '_')}-{version}-py3-none-any.whl"
     value = {'name': name, 'version': version, 'filename': filename, 'url': pypi_url(filename),
-             'sha256': hashlib.sha256(filename.encode()).hexdigest(), 'size': 1000}
+             'sha256': hashlib.sha256(filename.encode()).hexdigest(), 'size': 1000, 'requires': []}
     value.update(extra)
     return value
 
@@ -42,6 +42,7 @@ def catalogue():
 def lock(wheels=None, image_id=IMAGE_ID, **extra):
     value = {'schema': 1, 'image_id': image_id, 'image': catalogue()['images'][image_id]['image'],
              'wheels': [wheel()] if wheels is None else wheels, 'requested': ['peft==0.21.2'],
+             'base': {'inventory_sha256': C.inventory_sha256(catalogue()['images'][image_id]), 'baseline_problems': 0},
              'resolved_at': '2026-11-22T00:00:00Z', 'resolved_by': 'test'}
     value.update(extra)
     return value
@@ -74,7 +75,13 @@ class FakeProvider:
             out = self.iid + '\n'
         elif command[:3] == ['docker', 'image', 'inspect']:
             out = self.inspected + '\n'
+        elif command[:2] == ['docker', 'run'] and 'check' in command:
+            lines = self.pip_lines.get(command[command.index('python3') + 1], [])
+            return SimpleNamespace(returncode=1 if lines else 0, stderr='',
+                                   stdout=''.join(l + '\n' for l in lines) or 'No broken requirements found.\n')
         return SimpleNamespace(returncode=0, stdout=out, stderr='')
+
+    pip_lines: dict = {}
 
     def scp_to(self, pod_id, local, remote):
         self.calls.append(('scp_to', Path(local).read_bytes(), remote))
@@ -331,8 +338,29 @@ class Build(unittest.TestCase):
         self.assertLess(names.index('scp'), names.index('curl'))
         self.assertLess(max(i for i, n in enumerate(names) if n == 'curl'), names.index('docker'))
         pip_checks = [c[1] for c in provider.calls if c[0] == 'exec' and c[1][:2] == ('docker', 'run')]
-        self.assertEqual(len(pip_checks), 1)
-        self.assertEqual(pip_checks[0][pip_checks[0].index('--network') + 1], 'none')
+        self.assertEqual(len(pip_checks), 2)  # base image, then the derived image
+        for argv in pip_checks:
+            self.assertEqual(argv[argv.index('--network') + 1], 'none')
+        self.assertEqual(result['pip_check'], {'base_problems': 0, 'derived_problems': 0, 'added': []})
+
+    def test_pod_pip_check_gate_holds_on_a_new_problem_but_not_on_base_or_ignored_ones(self):
+        value = lock()
+        order = Order(self, value)
+        sha = hashlib.sha256(C.context_tar(value)).hexdigest()
+        base_line = 'torch 2.9.1 has requirement x==1, but you have x 2.'
+        provider = FakeProvider(value['wheels'], context_sha=sha)
+        provider.pip_lines = {value['image']: [base_line], IID: [base_line]}
+        self.assertEqual(C.build(provider, 'pod-1', order.job, recipe())['pip_check']['added'], [])
+        provider = FakeProvider(value['wheels'], context_sha=sha)
+        provider.pip_lines = {value['image']: [base_line], IID: [base_line, 'peft 0.21.2 requires accelerate, which is not installed.']}
+        with self.assertRaises(measurement_dispatch.OperationalHold) as raised:
+            C.build(provider, 'pod-1', order.job, recipe())
+        self.assertEqual(str(raised.exception), C.PIP_HOLD)
+        b = Order(self, lock(image_id='hf-torch2.14-cu13.0'))
+        b_lock = lock(image_id='hf-torch2.14-cu13.0')
+        provider = FakeProvider(b_lock['wheels'], context_sha=hashlib.sha256(C.context_tar(b_lock)).hexdigest())
+        provider.pip_lines = {IID: ['spin 0.18 has requirement click!=8.3.0,<8.4,>=8, but you have click 8.5.1.']}
+        self.assertEqual(C.build(provider, 'pod-1', b.job, recipe('hf-torch2.14-cu13.0'))['pip_check']['added'], [])
 
     def test_empty_overlay_uses_the_base_image_without_pod_commands(self):
         order = Order(self, lock(wheels=[]))
@@ -449,6 +477,16 @@ class Resolver(unittest.TestCase):
         fetch = FakePyPI({'x-lib': pkg('x-lib', '1.0', requires=['typing-extensions>=1.0'])})
         self.assertEqual([w['name'] for w in L.resolve(self.request('x-lib==1.0'), fetch=fetch)['wheels']], ['x-lib'])
 
+    def test_completion_prefers_a_release_that_keeps_the_base_unchanged(self):
+        installed_click = catalogue()['images'][IMAGE_ID]['preinstalled'].get('click')
+        self.assertTrue(installed_click)
+        fetch = FakePyPI({'x-lib': pkg('x-lib', '1.0', requires=['helper>=1']),
+                          'helper': {'1.0': ([], [wheel_file('helper', '1.0')]),
+                                     '2.0': (['click>=999'], [wheel_file('helper', '2.0')])}})
+        value = L.resolve(self.request('x-lib==1.0'), fetch=fetch)
+        self.assertEqual([(w['name'], w['version']) for w in value['wheels']], [('helper', '1.0'), ('x-lib', '1.0')])
+        self.assertEqual(value['wheels'][1]['requires'], ['helper>=1'])
+
     def test_refusals(self):
         cases = [
             (self.request('peft>=0.2'), {}),
@@ -541,6 +579,37 @@ class HostReceipt(unittest.TestCase):
             self.assertIn(image['image'], hint)
         self.assertIn('CATALOGUE-REQUEST.json', hint)
         self.assertIn('do NOT write', hint)
+
+
+class PipCheckSimulation(unittest.TestCase):
+    def test_baseline_matches_the_real_pod_pip_check_of_each_image(self):
+        # data/e2e receipts of job fastlane-runtime-catalogue-20261122 (Verda A100, 22 Nov 2026)
+        expected = {'hf-torch2.9-cu12.8': set(), 'hf-torch2.14-cu13.0': set(),
+                    'vllm-0.31': {('opentelemetry-exporter-otlp-common', 'opentelemetry-sdk', '~=1.45.0'),
+                                  ('torch', 'nvidia-nccl-cu13', '==2.29.7')}}
+        for image_id, image in catalogue()['images'].items():
+            found = C.simulate_pip_check(*C.installed_set(image), C.marker_env(image), image['pip_check_ignore'])
+            self.assertEqual(found, expected[image_id], image_id)
+
+    def test_lock_that_adds_a_problem_is_refused_everywhere(self):
+        missing = lock(wheels=[wheel(requires=['accelerate>=1.0', 'pytest; extra == "test"'])])
+        with self.assertRaises(C.CatalogueError) as raised:
+            C.validate_lock(missing, catalogue())
+        self.assertIn('accelerate', str(raised.exception))
+        too_new = lock(wheels=[wheel(requires=['torch>=99'])])
+        with self.assertRaises(C.CatalogueError):
+            C.validate_lock(too_new, catalogue())
+        breaks_base = lock(wheels=[wheel(name='typing-extensions', version='1.0', filename='typing_extensions-1.0-py3-none-any.whl')])
+        with self.assertRaises(C.CatalogueError):
+            C.validate_lock(breaks_base, catalogue())  # base dists that need a newer typing-extensions now fail
+        ok = lock(wheels=[wheel(requires=['torch>=2.0', 'numpy'])])
+        C.validate_lock(ok, catalogue())
+
+    def test_lock_must_name_the_exact_base_package_set(self):
+        value = lock()
+        value['base'] = dict(value['base'], inventory_sha256='e' * 64)
+        with self.assertRaises(C.CatalogueError):
+            C.validate_lock(value, catalogue())
 
 
 class CommandLine(unittest.TestCase):

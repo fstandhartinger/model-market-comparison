@@ -43,7 +43,7 @@ import pod_runner
 
 HERE = Path(__file__).resolve().parent
 CATALOGUE = HERE / 'runtime_catalogue.json'
-CATALOGUE_SHA256 = 'f6f8943c7400aba9a24f47e6ce4ba3120785ba80c744e7ccec8ebe43e3aa47bb'
+CATALOGUE_SHA256 = 'a0376ef2046f2def14db4135647f7e164f20c5f65c546e5db80374038274912c'
 LOCK = 'CATALOGUE-OVERLAY.json'
 REQUEST = 'CATALOGUE-REQUEST.json'
 SCHEMA = 1
@@ -54,6 +54,8 @@ FETCH_TIMEOUT_S = 900
 JSON_LIMIT = 1024 * 1024
 MODULE_LIMIT = 4 * 1024 * 1024
 HOLD = 'runtime_catalogue_unaccepted'
+PIP_HOLD = 'runtime_catalogue_pip_check_failed'
+MAX_REQUIRES = 300
 
 ORDER_ID_RE = re.compile(r'[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}')
 HEX64_RE = re.compile(r'[0-9a-f]{64}')
@@ -66,10 +68,10 @@ WHEEL_RE = re.compile(r'(?P<dist>[A-Za-z0-9_.]+)-(?P<version>[A-Za-z0-9_.+!]+)(?
 PYPI_PATH_RE = re.compile(r'/packages/[0-9a-f]{2}/[0-9a-f]{2}/[0-9a-f]{60}/[^/]+')
 MANYLINUX_RE = re.compile(r'manylinux_(\d+)_(\d+)_x86_64')
 LEGACY_MANYLINUX = {'manylinux1_x86_64': (2, 5), 'manylinux2010_x86_64': (2, 12), 'manylinux2014_x86_64': (2, 17)}
-LOCK_KEYS = {'schema', 'image_id', 'image', 'wheels', 'resolved_at', 'resolved_by', 'requested'}
-WHEEL_KEYS = {'name', 'version', 'filename', 'url', 'sha256', 'size'}
+LOCK_KEYS = {'schema', 'image_id', 'image', 'wheels', 'resolved_at', 'resolved_by', 'requested', 'base'}
+WHEEL_KEYS = {'name', 'version', 'filename', 'url', 'sha256', 'size', 'requires'}
 ENTRY_KEYS = ('order_id', 'image_id', 'image', 'lock_sha256', 'module_sha256', 'catalogue_sha256',
-              'admitted_at', 'admitted_by', 'basis')
+              'base_inventory_sha256', 'admitted_at', 'admitted_by', 'basis')
 _OPEN_FLAGS = os.O_RDONLY | getattr(os, 'O_NOFOLLOW', 0) | getattr(os, 'O_CLOEXEC', 0) | getattr(os, 'O_NONBLOCK', 0)
 
 
@@ -161,6 +163,10 @@ def load_catalogue(path: Path | str = CATALOGUE, expected_sha256: str | None = N
                 or not isinstance(image.get('kinds'), list) or not image['kinds'] \
                 or set(image['kinds']) - {'http_typesafe', 'python_inprocess'} \
                 or not isinstance(image.get('preinstalled'), dict) \
+                or not isinstance(image.get('requires'), dict) \
+                or not isinstance(image.get('pip_check_ignore'), list) \
+                or not all(isinstance(n, str) and NAME_RE.fullmatch(n) for n in image['pip_check_ignore']) \
+                or any(not isinstance(v, list) or not all(isinstance(x, str) for x in v) for v in image['requires'].values()) \
                 or not re.fullmatch(r'2\.[0-9]{2}', str(image.get('glibc'))):
             raise CatalogueError('catalogue image entry')
     return value
@@ -174,6 +180,239 @@ def image_entry(catalogue: dict[str, Any], image_id: object) -> dict[str, Any]:
 
 def denied(name: str, catalogue: dict[str, Any]) -> bool:
     return any(fnmatch.fnmatchcase(name, pattern) for pattern in catalogue['overlay']['deny'])
+
+
+# -------------------------------------------------------------------------------------------------------------- markers
+
+_TOKEN = re.compile(r"\s*(?:(?P<str>'[^']*'|\"[^\"]*\")|(?P<op>===|==|!=|<=|>=|~=|<|>|not\s+in\b|in\b)|"
+                    r"(?P<bool>and\b|or\b)|(?P<paren>[()])|(?P<var>[A-Za-z_][A-Za-z0-9_.]*))")
+
+
+def _vtuple(text: str) -> tuple[int, ...] | None:
+    parts = re.findall(r'\d+', text.split('+')[0])
+    return tuple(int(p) for p in parts[:4]) if parts and re.fullmatch(r'[0-9][0-9.]*(\*)?', text) else None
+
+
+def marker_applies(marker: str, env: dict[str, str]) -> bool:
+    """Evaluate a PEP 508 marker for the image. Anything this small evaluator does not understand counts as True
+    (the dependency is then required), except `extra` comparisons, which are False (extras are never installed)."""
+    tokens: list[tuple[str, str]] = []
+    position = 0
+    while position < len(marker):
+        match = _TOKEN.match(marker, position)
+        if not match or match.end() == position:
+            return True
+        kind = match.lastgroup
+        tokens.append((kind, re.sub(r'\s+', ' ', match[kind])))
+        position = match.end()
+        if not marker[position:].strip():
+            break
+    index = 0
+
+    def value(token: tuple[str, str]) -> tuple[str, str | None]:
+        kind, text = token
+        if kind == 'str':
+            return 'str', text[1:-1]
+        if kind == 'var':
+            return text, env.get(text)
+        raise ValueError
+
+    def compare() -> bool:
+        nonlocal index
+        if index < len(tokens) and tokens[index] == ('paren', '('):
+            index += 1
+            result = disjunction()
+            if index >= len(tokens) or tokens[index] != ('paren', ')'):
+                raise ValueError
+            index += 1
+            return result
+        left, op, right = tokens[index], tokens[index + 1], tokens[index + 2]
+        index += 3
+        if op[0] != 'op':
+            raise ValueError
+        lname, lval = value(left)
+        rname, rval = value(right)
+        if 'extra' in (lname, rname):
+            return False
+        if lval is None or rval is None:
+            raise ValueError
+        operator = op[1]
+        if operator in ('in', 'not in'):
+            return (lval in rval) == (operator == 'in')
+        if lname in ('python_version', 'python_full_version', 'platform_release') or \
+                rname in ('python_version', 'python_full_version', 'platform_release'):
+            lv, rv = _vtuple(lval.rstrip('*')), _vtuple(rval.rstrip('*'))
+            if lv is None or rv is None:
+                raise ValueError
+            width = max(len(lv), len(rv))
+            lv, rv = lv + (0,) * (width - len(lv)), rv + (0,) * (width - len(rv))
+            return {'==': lv == rv, '===': lv == rv, '!=': lv != rv, '<': lv < rv, '<=': lv <= rv,
+                    '>': lv > rv, '>=': lv >= rv, '~=': lv >= rv}[operator]
+        if operator in ('==', '==='):
+            return lval == rval
+        if operator == '!=':
+            return lval != rval
+        raise ValueError
+
+    def conjunction() -> bool:
+        nonlocal index
+        result = compare()
+        while index < len(tokens) and tokens[index] == ('bool', 'and'):
+            index += 1
+            result = compare() and result
+        return result
+
+    def disjunction() -> bool:
+        nonlocal index
+        result = conjunction()
+        while index < len(tokens) and tokens[index] == ('bool', 'or'):
+            index += 1
+            result = conjunction() or result
+        return result
+
+    try:
+        result = disjunction()
+        return result if index == len(tokens) else True
+    except (ValueError, IndexError, KeyError):
+        return True
+
+
+def marker_env(image: dict[str, Any]) -> dict[str, str]:
+    return {'python_version': image['python'], 'python_full_version': image['python'] + '.0',
+            'sys_platform': 'linux', 'platform_system': 'Linux', 'platform_machine': 'x86_64', 'os_name': 'posix',
+            'implementation_name': 'cpython', 'platform_python_implementation': 'CPython'}
+
+
+def dependency_specs(requires_dist: object, env: dict[str, str]) -> dict[str, list[str]]:
+    """{normalized dependency name: [specifier strings]} for the dependencies that apply to the image (no extras)."""
+    specs: dict[str, list[str]] = {}
+    for line in requires_dist or []:
+        if not isinstance(line, str):
+            continue
+        requirement, _, marker = line.partition(';')
+        match = re.match(r'\s*([A-Za-z0-9][A-Za-z0-9._-]*)\s*(?:\[[^\]]*\])?\s*\(?([^()]*)\)?\s*$', requirement)
+        if not match:
+            match = re.match(r'\s*([A-Za-z0-9][A-Za-z0-9._-]*)', requirement)
+            if not match:
+                continue
+            spec = '<unparsed>'
+        else:
+            spec = match[2].strip() if match.lastindex and match.lastindex >= 2 and match[2] else ''
+        if not marker.strip() or marker_applies(marker.strip(), env):
+            specs.setdefault(normalize(match[1]), []).append(spec)
+    return specs
+
+
+# ------------------------------------------------------------------------------------------------------------- versions
+
+_VERSION = re.compile(r'v?(\d+(?:\.\d+)*)(?:[-_.]?(a|b|rc|alpha|beta|c|pre|preview)[-_.]?(\d*))?'
+                      r'(?:(?:[-_.]?(?:post|rev|r)[-_.]?(\d*))|-(\d+))?(?:[-_.]?dev[-_.]?(\d*))?(?:\+([a-z0-9.]+))?')
+_PRE = {'a': 0, 'alpha': 0, 'b': 1, 'beta': 1, 'rc': 2, 'c': 2, 'pre': 2, 'preview': 2}
+
+
+def parse_version(text: str):
+    """PEP 440 sort key (release padded, pre, post, dev) + flags; None for anything unparseable."""
+    match = _VERSION.fullmatch(text.strip().lower())
+    if not match:
+        return None
+    release = tuple(int(x) for x in match[1].split('.'))
+    pre = (_PRE[match[2]], int(match[3] or 0)) if match[2] else None
+    post_text = match[4] if match[4] is not None else match[5]
+    post = int(post_text or 0) if (match[4] is not None or match[5] is not None) else None
+    dev = int(match[6] or 0) if match[6] is not None else None
+    pre_key = pre if pre else ((-1, 0) if dev is not None and post is None else (9, 0))
+    key = (release + (0,) * (8 - len(release)), pre_key, -1 if post is None else post, 10 ** 9 if dev is None else dev)
+    return {'key': key, 'release': release, 'prerelease': pre is not None or dev is not None, 'local': match[7]}
+
+
+def satisfies(version: str, spec: str) -> bool | None:
+    """True/False for a comma-separated PEP 440 specifier; None when the specifier cannot be evaluated."""
+    parsed = parse_version(version)
+    if parsed is None:
+        return None
+    for clause in [c.strip() for c in spec.split(',') if c.strip()]:
+        match = re.fullmatch(r'(===|==|!=|~=|<=|>=|<|>)\s*([A-Za-z0-9.*+!_-]+)', clause)
+        if not match:
+            return None
+        op, target = match[1], match[2]
+        if op == '===':
+            if version != target:
+                return False
+            continue
+        if op in ('==', '!=') and target.endswith('.*'):
+            prefix = parse_version(target[:-2])
+            if prefix is None:
+                return None
+            width = len(prefix['release'])
+            hit = parsed['release'][:width] + (0,) * max(0, width - len(parsed['release'])) == prefix['release']
+            if hit != (op == '=='):
+                return False
+            continue
+        other = parse_version(target)
+        if other is None:
+            return None
+        mine = parsed['key'] if other['local'] or not parsed['local'] else parse_version(version.split('+')[0])['key']
+        if op == '~=':
+            if len(other['release']) < 2:
+                return None
+            width = len(other['release']) - 1
+            if not (mine >= other['key'] and parsed['release'][:width] == other['release'][:width]):
+                return False
+            continue
+        result = {'==': mine == other['key'], '!=': mine != other['key'], '<=': mine <= other['key'],
+                  '>=': mine >= other['key'], '<': mine < other['key'], '>': mine > other['key']}[op]
+        if not result:
+            return False
+    return True
+
+
+# --------------------------------------------------------------------------------------------------- pip check simulation
+
+def installed_set(image: dict[str, Any], lock: dict[str, Any] | None = None) -> tuple[dict[str, str], dict[str, list[str]]]:
+    """({name: version}, {name: [Requires-Dist]}) of the base image, with the lock's wheels replacing/adding entries."""
+    versions = {normalize(n): str(v) for n, v in image['preinstalled'].items()}
+    requires = {normalize(n): list(r) for n, r in image['requires'].items()}
+    for wheel in (lock or {}).get('wheels', []):
+        versions[wheel['name']] = wheel['version']
+        requires[wheel['name']] = list(wheel['requires'])
+    return versions, requires
+
+
+def simulate_pip_check(versions: dict[str, str], requires: dict[str, list[str]], env: dict[str, str],
+                       ignore: tuple[str, ...] | list[str] = ()) -> set[tuple[str, str, str]]:
+    """What `pip check` would report, from metadata only: (dist, dependency, 'missing' | violated specifier).
+    Extras are not installed, markers are evaluated for the image, unparseable specifiers are not judged. `ignore` names
+    reviewed base tool distributions (catalogue `pip_check_ignore`) whose own requirements are not checked."""
+    problems: set[tuple[str, str, str]] = set()
+    for dist, lines in requires.items():
+        if dist not in versions or dist in ignore:
+            continue
+        for dep, specs in dependency_specs(lines, env).items():
+            if dep == dist:
+                continue
+            if dep not in versions:
+                problems.add((dist, dep, 'missing'))
+                continue
+            for spec in specs:
+                if spec and spec != '<unparsed>' and satisfies(versions[dep], spec) is False:
+                    problems.add((dist, dep, spec))
+    return problems
+
+
+def new_pip_problems(image: dict[str, Any], lock: dict[str, Any]) -> list[str]:
+    """Problems the overlay ADDS to the base image's own `pip check` result (the base may have its own, e.g. vLLM's nccl pin)."""
+    env, ignore = marker_env(image), image['pip_check_ignore']
+    base = simulate_pip_check(*installed_set(image), env, ignore)
+    versions, requires = installed_set(image, lock)
+    return [f'{dist} {versions.get(dist, "?")} requires {dep}{"" if spec == "missing" else spec}'
+            f'{" (not installed)" if spec == "missing" else ", has " + versions[dep]}'
+            for dist, dep, spec in sorted(simulate_pip_check(versions, requires, env, ignore) - base)]
+
+
+def inventory_sha256(image: dict[str, Any]) -> str:
+    """Identity of the base package set a lock was checked against (versions + Requires-Dist, canonical JSON)."""
+    return hashlib.sha256(json.dumps({'preinstalled': image['preinstalled'], 'requires': image['requires']},
+                                     sort_keys=True, separators=(',', ':')).encode()).hexdigest()
 
 
 # ------------------------------------------------------------------------------------------------------------------ lock
@@ -265,9 +504,20 @@ def validate_lock(lock: object, catalogue: dict[str, Any]) -> dict[str, Any]:
         size = wheel['size']
         if type(size) is not int or not 0 < size <= limits['max_wheel_bytes']:
             raise CatalogueError('wheel size')
+        requires = wheel['requires']
+        if not isinstance(requires, list) or len(requires) > MAX_REQUIRES \
+                or not all(isinstance(r, str) and len(r) <= 500 for r in requires):
+            raise CatalogueError('wheel requires metadata')
         total += size
     if total > limits['max_total_bytes']:
         raise CatalogueError('overlay total size')
+    base = lock['base']
+    if not isinstance(base, dict) or set(base) != {'inventory_sha256', 'baseline_problems'} \
+            or base['inventory_sha256'] != inventory_sha256(image) or type(base['baseline_problems']) is not int:
+        raise CatalogueError('lock was not checked against this base package set')
+    problems = new_pip_problems(image, lock)
+    if problems:
+        raise CatalogueError('overlay adds pip-check problems: ' + '; '.join(problems[:10]))
     return image
 
 
@@ -307,7 +557,8 @@ def valid_entry(entry: object) -> bool:
             or any(not isinstance(entry[key], str) or not entry[key] for key in ENTRY_KEYS):
         return False
     return (ORDER_ID_RE.fullmatch(entry['order_id']) is not None and IMAGE_ID_RE.fullmatch(entry['image_id']) is not None
-            and all(HEX64_RE.fullmatch(entry[k]) for k in ('lock_sha256', 'module_sha256', 'catalogue_sha256'))
+            and all(HEX64_RE.fullmatch(entry[k]) for k in ('lock_sha256', 'module_sha256', 'catalogue_sha256',
+                                                            'base_inventory_sha256'))
             and pod_runner.IMAGE_RE.fullmatch(entry['image']) is not None)
 
 
@@ -319,13 +570,15 @@ def load_registry(path: Path | str | None = None) -> dict[str, Any]:
     return value
 
 
-def admitted(order_id: str, image_id: str, image: str, lock_sha256: str, *, registry: Path | str | None = None) -> bool:
-    """True only for a registry entry binding exactly this order, image, lock, module (as first read) and catalogue."""
+def admitted(order_id: str, image_id: str, image: str, lock_sha256: str, base_inventory: str, *,
+             registry: Path | str | None = None) -> bool:
+    """True only for a registry entry binding exactly this order, image, lock, base package set, module (as first read)
+    and catalogue."""
     try:
         digest = module_sha256()
         return any(e['order_id'] == order_id and e['image_id'] == image_id and e['image'] == image
                    and e['lock_sha256'] == lock_sha256 and e['module_sha256'] == digest
-                   and e['catalogue_sha256'] == CATALOGUE_SHA256
+                   and e['catalogue_sha256'] == CATALOGUE_SHA256 and e['base_inventory_sha256'] == base_inventory
                    for e in load_registry(registry)['entries'])
     except Exception:  # noqa: BLE001 - fail closed
         return False
@@ -359,7 +612,7 @@ def accept(job: Path | str, recipe: object, *, registry: Path | str | None = Non
     image = validate_lock(lock, catalogue)
     if not isinstance(recipe, dict) or recipe.get('kind') not in image['kinds'] or recipe.get('image') != image['image']:
         raise CatalogueError('recipe kind/image do not match the catalogue image')
-    if not admitted(order_id, lock['image_id'], image['image'], lock_sha, registry=registry):
+    if not admitted(order_id, lock['image_id'], image['image'], lock_sha, inventory_sha256(image), registry=registry):
         raise CatalogueError('no host admission for this order, lock, module and catalogue')
     return {'lock': lock, 'image': image, 'lock_sha256': lock_sha}
 
@@ -377,7 +630,8 @@ def preflight(job: Path | str, recipe: object) -> dict[str, Any] | None:
 def binding(accepted: dict[str, Any]) -> dict[str, Any]:
     return {'family': FAMILY, 'module_sha256': module_sha256(), 'catalogue_sha256': CATALOGUE_SHA256,
             'image_id': accepted['lock']['image_id'], 'base_image': accepted['image']['image'],
-            'lock_sha256': accepted['lock_sha256'], 'wheels': len(accepted['lock']['wheels'])}
+            'lock_sha256': accepted['lock_sha256'], 'wheels': len(accepted['lock']['wheels']),
+            'base_inventory_sha256': inventory_sha256(accepted['image'])}
 
 
 def build(provider, pod_id, job, recipe):
@@ -427,8 +681,23 @@ def build(provider, pod_id, job, recipe):
     inspected = pod_runner._exec(provider, pod_id, ['docker', 'image', 'inspect', image, '--format', '{{.Id}}'])
     if inspected.stdout.strip() != image:
         raise pod_runner.PodRunError('catalogue image identity differs')
-    # Evidence only (base images may carry their own pip-check findings): offline, no GPU, removed afterwards.
-    check = provider.exec(pod_id, ['docker', 'run', '--rm', '--network', 'none', '--entrypoint', 'python3', image,
-                                   '-m', 'pip', 'check'], timeout=300)
-    pip_check = {'returncode': check.returncode, 'tail': ((check.stdout or '') + (check.stderr or ''))[-2000:]}
+    # Gate: the derived image may not add a `pip check` problem to the base image's own result (the host simulated the
+    # same from metadata; this is the real thing). Offline, no GPU, containers removed. A new problem is deterministic,
+    # so it is a hold (owner), not a retry.
+    base_check, derived_check = (_pip_check(provider, pod_id, ref) for ref in (accepted['image']['image'], image))
+    ignored = tuple(f'{name} ' for name in accepted['image']['pip_check_ignore'])
+    added = sorted(line for line in set(derived_check) - set(base_check) if not normalize(line).startswith(ignored))
+    pip_check = {'base_problems': len(base_check), 'derived_problems': len(derived_check), 'added': added[:20]}
+    if added:
+        raise measurement_dispatch.OperationalHold(PIP_HOLD)
     return dict(evidence, effective_image=image, context_sha256=context_sha, pip_check=pip_check)
+
+
+def _pip_check(provider, pod_id, ref) -> list[str]:
+    result = provider.exec(pod_id, ['docker', 'run', '--rm', '--network', 'none', '--entrypoint', 'python3', ref,
+                                    '-m', 'pip', 'check', '--disable-pip-version-check'], timeout=300)
+    lines = [line.strip() for line in (result.stdout or '').splitlines() if line.strip()]
+    if result.returncode not in (0, 1) or (result.returncode == 1 and not lines) \
+            or (result.returncode == 0 and lines != ['No broken requirements found.']):
+        raise pod_runner.PodRunError('catalogue pip check did not run')
+    return [] if result.returncode == 0 else lines
