@@ -1,0 +1,42 @@
+{
+  "artifact_id": "scores-3",
+  "artifact_sha256": "42ad42001cf90bc905c9e3f357d00a2f9400cf155eeae966e5e06014a45c03ba",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": [
+    "public:3b8e953493d4bd9c07931a56",
+    "public:7b3a1abcabdd1b65e7c77ce2",
+    "public:2f515e7b8f92c3321bafc1b8",
+    "public:09cf90c7bac748538ded0e33",
+    "public:cfe04bcffac623ca09f1a46d",
+    "public:91a1e05e164444d3ff628038",
+    "public:ea9a159f59601b3ee2273a6a",
+    "public:708e3e2cd4075231abe6a7ac",
+    "public:ca9fe4f90072f942f69d1cc8",
+    "public:b2a8f8138e86d9c29fe646fe",
+    "public:7e1a4094f5d400b1eacfedd6",
+    "public:7d61cc70d301860fb49e8189",
+    "public:43d0aee849875be65cf5e738",
+    "public:d41293fa05950343ccf0be08",
+    "public:ec2d1790f032480da78ed8b0",
+    "c1"
+  ],
+  "errors_found": 1,
+  "findings": [
+    {
+      "id": "finding-1",
+      "severity": "minor",
+      "location": "public:d41293fa05950343ccf0be08 subject.model_id and join_note",
+      "evidence": "Primary source (SOURCE 17, source row 32) provides only display name 'Kimi K3' and value '2.104'; no catalog id 'kimi-k3::default' or uniqueness/default-config statement appears in the packet. The added model_id and join_note are unsupported claims.",
+      "repair": "Remove model_id 'kimi-k3::default' and the join_note unless catalog evidence is supplied; retain the published source_id/name 'Kimi K3'."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "Owner-computed hashes and transport/qualification checks were not independently executed; per instructions these are acknowledged limitations, not missing numeric source evidence.",
+    "Basis field 'measured' is inferred from the published protocol describing pairwise LLM evaluator judgments, not from an explicit basis label in the source evidence."
+  ],
+  "missing_evidence": [
+    "Catalog mapping evidence that display name 'Kimi K3' corresponds to model_id 'kimi-k3::default' and the claimed unique default configuration."
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "artifact_id": "scores-6",
+  "artifact_sha256": "a39ed68da88bfbde104b0f49fdf34ecb426feb9306f8042b1ac36db8bc888949",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "public:36263bef9333b157243b7eee",
+    "public:1886a947e7cf7a626a792487",
+    "public:fdc944d2d74b46fe012482a8",
+    "public:42ecda9abe849332c4b1dfac",
+    "public:020a940540cd5b47f2d9b59e",
+    "public:34f8f75fd9ff572a90c73a44",
+    "public:7a9a03b79cb5d7d94814b155",
+    "public:4367fada59cd5b70f31f6c69",
+    "public:2af5fee8440cd19d1f67826f",
+    "public:9fed84e73bcb08c9aef51807",
+    "public:4f128658712e3e9d6a74029d",
+    "public:3be0acb67632f9bbeb1a5b9f",
+    "public:437f0075299b3ada88f66068",
+    "public:7147aa181dbb9151bd897f41",
+    "public:942e4a30519e87ad925f23f5",
+    "c1"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "I cannot recompute row/bundle SHA-256 hashes or execute transport/qualification checks; owner separately handles these per packet instructions.",
+    "Three rows (public:2af5fee8440cd19d1f67826f, public:437f0075299b3ada88f66068, public:942e4a30519e87ad925f23f5) carry model_id values and join_notes that reference a catalog default configuration not present in the supplied evidence; I treated these as retained prior accepted identity rather than fresh claims, and the source names/values match without alias inference.",
+    "The benchmark_id version 'snapshot-2026-09-10' is not literally stated in the README text but is bound by the registry.id in the primary evidence; accepted as the supplied mapping.",
+    "All primary values, units, model names, benchmark ids, source locators/URLs/sha256/retrieved_at, protocols, and basis were compared against the projectable native_source_row/context fields provided; all matched."
+  ],
+  "missing_evidence": []
+}

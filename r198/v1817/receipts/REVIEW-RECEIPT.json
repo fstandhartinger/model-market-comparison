@@ -1,0 +1,37 @@
+{
+ "verdict": "PASS",
+ "engine": "claude-opus-5-5 (Claude Code): independent critic r174l-v1817-critic (Opus 5.5 xhigh); builder was Codex Sol (r174g-v1817-build)",
+ "release": "v1.8.17",
+ "head_reviewed": "a8170af66 reviewed in full by r174l-v1817-critic = PASS_WITH_CONDITIONS, no MUST; independent re-score max |delta| 0.0, cost exact (subq-snap-1.1 reproduced first), 0 carried-row changes, 0 top-five changes, privacy clean, display floor holds, rebuild 11/11 byte-identical",
+ "reviews": [
+  {
+   "path": "workers/r174l-v1817-critic/RESULT.json",
+   "sha256": "cc281f4e196b138efc01d78d59429b368833e7603dec3d091e5cc330d7054b7d",
+   "result_md_sha256": "5ed7813eb24d38615e77e5da650148a4b6e8c6bf7c0e39fbcc726a9f1fe5f623",
+   "verdict_by_commit": {
+    "a8170af66": "PASS_WITH_CONDITIONS"
+   },
+   "musts": [],
+   "conditions_closed_by_the_release_owner": {
+    "C1": "r198/v1817/receipts/SUPPRESSED-CELLS.json committed (sha256 899c1f3e..., byte-equal to the LeChonk receipt and the critic's PENDING and PASS runs)",
+    "C2": "release date 2026-11-20: flip and merge-queue entry happen on 20 Nov UTC",
+    "C3": "at flip time sha256(r198/v1817/inputs/TOPICS-BASE.json) = sha256(origin/main 8def8a518:data/jevbench-breakdown-exceptions.json) = 578f5503...",
+    "C4": "origin/main moved by CR-792/794/795 with 0 file overlap; the merge queue rebases and re-runs typecheck, build and the full suite on the rebased head"
+   },
+   "should_applied": {
+    "S1": "data/jevbench-draw-equating.json v1.8.17 list entry re-indented to 8 spaces (whitespace only)"
+   },
+   "non_blocking": [
+    "O1",
+    "O2",
+    "O3",
+    "O4",
+    "O5",
+    "O6",
+    "O7",
+    "O8"
+   ]
+  }
+ ],
+ "note": "O1: equated A 78.41 would place 5th by A among ranked rows; the row is unranked here, so the top-five preview and Florian GO apply at the v1.8.18 ranking review."
+}

@@ -1,0 +1,29 @@
+{
+  "artifact_id": "scores-10",
+  "artifact_sha256": "222503ab15d1aa8ee0ac7134184f3d9011099f374e2ff52c0b2acb9ec55f65e5",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "public:20f6fb71c8d4d1d7c8b53245",
+    "public:7f7e9afb85a532530522056d",
+    "public:0ce1e427ddf2bbf883948f5b",
+    "public:f75ec3e872f56b50d31a7516",
+    "public:c0aa301171e7f9923a009261",
+    "public:79ea654b79d413cc6f357799",
+    "public:b3e400c7b489b660d91cafdf",
+    "public:7608a1c53e43a40d10a72066",
+    "public:2dc82061aebb515d1bc1c41c",
+    "public:f7283ea1be47a99c2dfd5f4d",
+    "c1"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "I cannot recompute canonical row hashes, the source-file SHA-256, or re-execute transport/qualification checks; those are outside my read-only scope.",
+    "The identity mapping for rows public:79ea654b79d413cc6f357799 and public:f7283ea1be47a99c2dfd5f4d (model_id gemini-3-flash::default, grok-4.20-reasoning::default) is accepted from the retained reviewed identity context; the packet does not contain the catalog itself, but this is a retained prior observation, not a fresh claim.",
+    "The source page does not explicitly state a reasoning/effort setting; all rows leave harness/variant null and the protocol notes 'the page states no reasoning setting' consistently with the captured page.",
+    "Per source note, scores printed as 0.000** mean at-or-below random baseline; treating them as numeric 0 in all five such rows is consistent with the served value and marker."
+  ],
+  "missing_evidence": []
+}

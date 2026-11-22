@@ -1,0 +1,178 @@
+{
+ "subq-snap-1.2": {
+  "api_flag": true,
+  "api_subset": false,
+  "author": "Subquadratic",
+  "axes": {
+   "calibration": 92.21157893616872,
+   "cost": 64.7929890301389,
+   "intelligence": 75.47092939144923,
+   "speed": 87.04684116960723
+  },
+  "base_model": null,
+  "capability": 83.84125416380897,
+  "composite_ci95": {
+   "A": [
+    77.73171795692495,
+    80.31123359979415
+   ],
+   "B": [
+    76.8663174927291,
+    80.60299230899429
+   ],
+   "C": [
+    77.73171795692495,
+    80.31123359979415
+   ]
+  },
+  "cost": {
+   "basis": "SubQ's published launch tariff, USD 0.04 per million input tokens and free output (https://subq.ai/pricing, read 12 Nov 2026). Counted under the frozen I-1 launch-list-price rule, excluding promotional credits. The common 1,489-item basis uses 555,139 measured input tokens and yields USD 0.0149130691739422 per 1,000 decisions. The full 1,500-item run used 952,081 input tokens and yields USD 0.0253888266666667 per 1,000 decisions. Both figures use zero output tokens.",
+   "common_basis": {
+    "n_items": 1489,
+    "rule": "common",
+    "usd_per_1000_all_items": 0.02538882666666667
+   },
+   "kind": "estimate",
+   "usage_estimated_rows": 0,
+   "usd_per_1000": 0.014913069173942242
+  },
+  "decision_limit": {
+   "limit_s": 10.0,
+   "rule": "latency_s > limit -> failed",
+   "treatment": "share"
+  },
+  "disclosure": "Measured through the SubQ hosted API on the full 27 Oct draw. Hosting implementation and deployed weights were not independently inspected. Failed or unanswered requests count as wrong answers. The hosted API returned native probabilities for all three question types and reported zero output tokens.",
+  "display": "SubQ Snap 1.2",
+  "draw": {
+   "ci_basis": "measured on the draw before equating",
+   "drawn_on": "2026-10-27",
+   "g_med": 2.573387642438244,
+   "id": "v1.6-regular-20261027",
+   "label": "Third regular draw",
+   "measured_on": "2026-11-12",
+   "offset": {
+    "C": -1.8542447151797177,
+    "I": -2.884891186577587
+   },
+   "offset_ci95": {
+    "C": [
+     -5.447551660176162,
+     1.9718407968151896
+    ],
+    "I": [
+     -5.851030683979731,
+     1.0608488496147923
+    ]
+   },
+   "release": "v1.8.17",
+   "results_sha256": "0cd3f387f5b4a9faca057fd63403bc1789526adcb71b4e921f738f4e871c7722",
+   "status": "equated"
+  },
+  "endpoint_condition": "SubQ /v1/systemone API (api.subq.ai), one item per request, native probabilities; latency measured from our server in Germany.",
+  "endpoint_kind": "api",
+  "full_coverage": true,
+  "jevbench_score": 78.4058579327724,
+  "key": "subq-snap-1.2",
+  "last_measured_on": "2026-11-12",
+  "licence": "Proprietary hosted API (no weights release)",
+  "listing": "unranked",
+  "measured_in": "v1.8.17",
+  "measurement_date_status": "measured",
+  "method": "v1.7",
+  "model_pin": "hosted-api:https://subq.ai#subq-snap-1.2",
+  "new_in": "v1.8.17",
+  "not_ranked_because": "Added after the v1.8.10 ranking review; it is ranked at the next review.",
+  "notes": "The hosted API returned native probabilities for all three question types and reported zero output tokens.",
+  "paid_fast_lane": false,
+  "published_scores": {
+   "axes": {
+    "calibration": 94.06582365134844,
+    "cost": 64.7929890301389,
+    "intelligence": 78.35582057802682,
+    "speed": 87.04684116960723
+   },
+   "capability": 86.21082211468763,
+   "scores": {
+    "A": 79.4991812100819,
+    "B": 79.26784744193483,
+    "C": 79.4991812100819
+   }
+  },
+  "rank": null,
+  "ranked": false,
+  "ranks": {
+   "A": null,
+   "B": null,
+   "C": null,
+   "capability": null
+  },
+  "repo": "https://subq.ai",
+  "scores": {
+   "A": 78.4058579327724,
+   "B": 77.80075170562397,
+   "C": 78.4058579327724
+  },
+  "speed": {
+   "adjustment": "none (API)",
+   "basis": "all decisions given (lane items in the raw), measured latency_s",
+   "n": 1500,
+   "p50_s_adjusted": 0.4357196744531393,
+   "p50_s_raw": 0.4357196744531393,
+   "p95_s_adjusted": 0.45301096338080243,
+   "p95_s_raw": 0.45301096338080243
+  },
+  "status": {
+   "status": "complete"
+  },
+  "support": {
+   "choice": "native",
+   "noul": "native",
+   "score": "native"
+  },
+  "underlying": "Measured through the SubQ hosted API on the full 27 Oct draw. Hosting implementation and deployed weights were not independently inspected. Failed or unanswered requests count as wrong answers. The hosted API returned native probabilities for all three question types and reported zero output tokens.",
+  "v16": {
+   "ci95": {
+    "B": 1000,
+    "C": [
+     90.1208781521348,
+     94.33676987064007
+    ],
+    "I": [
+     73.45144520094834,
+     82.04087480514457
+    ],
+    "capability": [
+     82.37271397274533,
+     87.76387843028282
+    ],
+    "composite": {
+     "A": [
+      77.73171795692495,
+      80.31123359979415
+     ],
+     "B": [
+      76.8663174927291,
+      80.60299230899429
+     ],
+     "C": [
+      77.73171795692495,
+      80.31123359979415
+     ]
+    },
+    "seed": 16
+   },
+   "complete": true,
+   "equated": null,
+   "equating_offset": null,
+   "g_med_used": 2.573387642438244,
+   "lane": "api"
+  },
+  "views": {
+   "Balanced 33:33:33": 74.67893432231313,
+   "Emphasis on Accuracy 60:20:20": 74.99372924670823,
+   "Emphasis on Cost 20:20:60": 70.38336991118712,
+   "Emphasis on Speed 20:60:20": 79.17893783418221,
+   "Intelligence only": 75.47092939144923
+  }
+ }
+}

@@ -1,0 +1,62 @@
+{
+  "artifact_id": "scores-1",
+  "artifact_sha256": "a378f9bac5f5bee27683541f6db3ab8000c0b373d1935a913475d611720b5332",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": [
+    "public:edcc9393bcd1b50b83e620d4",
+    "public:7ab53d10aca20083f431e628",
+    "public:9442e09f3b49a71b849f0ca2",
+    "public:d7b832dca96d8cba7343b4ea",
+    "public:bc13d16018fe984e3060c2c8",
+    "public:29689487dfe2d8d37d472691",
+    "public:d4b3efc4ff2ba218ed3ccc8e",
+    "public:e69da438fe8e5bff901194fd",
+    "public:c6024384929e42701af0317a",
+    "public:b0ba1f0b37aae56f7d5a123c",
+    "public:68ae44908a1d1672095416ac",
+    "public:5eca3c14324abac25253a30a",
+    "public:81d80e8c8c80b7d6122708f6",
+    "public:b04973509eac3fc8b45c9718",
+    "public:ddfeddf42d4260d04da8cc32",
+    "c1"
+  ],
+  "errors_found": 4,
+  "findings": [
+    {
+      "id": "public:29689487dfe2d8d37d472691",
+      "severity": "major",
+      "location": "value field / derivation",
+      "evidence": "Source score 0.0002791945504283949; expected product is 0.02791945504283949; claimed value is 0.027919455042839488, differing in the final digit.",
+      "repair": "Set value to exactly 0.02791945504283949 (source × 100) and confirm derivation input matches."
+    },
+    {
+      "id": "public:d4b3efc4ff2ba218ed3ccc8e",
+      "severity": "major",
+      "location": "value field / derivation",
+      "evidence": "Source score 0.00046440444355949666; expected product is 0.046440444355949666; claimed value is 0.04644044435594966, missing the final digit and not numerically equal.",
+      "repair": "Set value to exactly 0.046440444355949666 (source × 100)."
+    },
+    {
+      "id": "public:e69da438fe8e5bff901194fd",
+      "severity": "major",
+      "location": "value field / derivation",
+      "evidence": "Source score 0.15071935405559647; expected product is 15.071935405559647; claimed value is 15.071935405559648, differing in the last digit.",
+      "repair": "Set value to exactly 15.071935405559647 (source × 100)."
+    },
+    {
+      "id": "public:b04973509eac3fc8b45c9718",
+      "severity": "major",
+      "location": "value field / derivation",
+      "evidence": "Source score 0.38734558170278127; expected product is 38.734558170278127; claimed value is 38.73455817027813, which is not numerically equal.",
+      "repair": "Set value to exactly 38.734558170278127 (source × 100)."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "Cannot recompute row hashes or execute transport/qualification checks; relies on owner-supplied bindings.",
+    "Numeric mismatches are at the limit of floating-point precision; without direct parsing we cannot rule out that some decimal strings map to the same binary double, but the observable digit differences violate the strict no-rounding criterion.",
+    "Source file path and full content beyond the provided excerpts not independently verifiable."
+  ],
+  "missing_evidence": []
+}

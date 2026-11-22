@@ -1,7 +1,7 @@
 {
   "source": "GitHub Copilot (current usage-based billing plus annual-plan legacy request billing)",
-  "collected_at": "2026-11-17",
-  "method": "scripts/fetch-github-copilot-catalog.mjs (2026-11-17): current_models[] = the intersection of the supported-models catalog table (https://docs.github.com/en/copilot/reference/ai-models/supported-models) and the per-token pricing tables (https://docs.github.com/en/copilot/reference/copilot-billing/models-and-pricing), matched by exact name after footnote markers are removed; Default and Long context tiers are folded into one row (long_context carries the threshold and higher price); promotion end dates come from the pricing footnotes. models[] = the legacy annual-plan multiplier table (https://docs.github.com/en/copilot/reference/copilot-billing/request-based-billing-legacy/model-multipliers-for-annual-plans) with effective USD per request = multiplier × per_premium_request_usd; the page's \"subject to change\" list sets the note. Plan allowances (plans[]) are documented on separate billing pages and keep plans_checked_at. See github-copilot.method.md.",
+  "collected_at": "2026-11-21",
+  "method": "scripts/fetch-github-copilot-catalog.mjs (2026-11-21): current_models[] = the intersection of the supported-models catalog table (https://docs.github.com/en/copilot/reference/ai-models/supported-models) and the per-token pricing tables (https://docs.github.com/en/copilot/reference/copilot-billing/models-and-pricing), matched by exact name after footnote markers are removed; Default and Long context tiers are folded into one row (long_context carries the threshold and higher price); promotion end dates come from the pricing footnotes. models[] = the legacy annual-plan multiplier table (https://docs.github.com/en/copilot/reference/copilot-billing/request-based-billing-legacy/model-multipliers-for-annual-plans) with effective USD per request = multiplier × per_premium_request_usd; the page's \"subject to change\" list sets the note. Plan allowances (plans[]) are documented on separate billing pages and keep plans_checked_at. See github-copilot.method.md.",
   "pricing_model": "ai_credits_per_token_with_legacy_per_premium_request",
   "ai_credit_usd": 0.01,
   "per_premium_request_usd": 0.04,
@@ -199,6 +199,42 @@
       "mapping": "derived"
     },
     {
+      "model_name": "GPT-6.2 Astra",
+      "provider_org": "OpenAI",
+      "release_status": "GA",
+      "category": "Powerful",
+      "input_per_1m_usd": 8,
+      "cached_input_per_1m_usd": 0.4,
+      "cache_write_per_1m_usd": 10,
+      "output_per_1m_usd": 40,
+      "long_context": {
+        "input_per_1m_usd": 16,
+        "cached_input_per_1m_usd": 0.8,
+        "cache_write_per_1m_usd": 20,
+        "output_per_1m_usd": 60,
+        "threshold_input_tokens_gt": 272000
+      },
+      "mapping": "derived"
+    },
+    {
+      "model_name": "GPT-6.2 Sol",
+      "provider_org": "OpenAI",
+      "release_status": "GA",
+      "category": "Powerful",
+      "input_per_1m_usd": 2,
+      "cached_input_per_1m_usd": 0.1,
+      "cache_write_per_1m_usd": 2.5,
+      "output_per_1m_usd": 10,
+      "long_context": {
+        "input_per_1m_usd": 4,
+        "cached_input_per_1m_usd": 0.2,
+        "cache_write_per_1m_usd": 5,
+        "output_per_1m_usd": 15,
+        "threshold_input_tokens_gt": 272000
+      },
+      "mapping": "derived"
+    },
+    {
       "model_name": "Claude Fable 5",
       "provider_org": "Anthropic",
       "release_status": "GA",
@@ -362,6 +398,16 @@
       "mapping": "derived"
     },
     {
+      "model_name": "Gemini 4 Neon",
+      "provider_org": "Google",
+      "release_status": "GA",
+      "category": "Versatile",
+      "input_per_1m_usd": 3,
+      "cached_input_per_1m_usd": 0.15,
+      "output_per_1m_usd": 15,
+      "mapping": "derived"
+    },
+    {
       "model_name": "MAI-Code-1.1-Flash",
       "provider_org": "Microsoft",
       "release_status": "GA",
@@ -369,6 +415,26 @@
       "input_per_1m_usd": 0.2,
       "cached_input_per_1m_usd": 0.02,
       "output_per_1m_usd": 1.2
+    },
+    {
+      "model_name": "MAI Code 2",
+      "provider_org": "Microsoft",
+      "release_status": "GA",
+      "category": "Powerful",
+      "input_per_1m_usd": 0.5,
+      "cached_input_per_1m_usd": 0.025,
+      "output_per_1m_usd": 2.5,
+      "mapping": "derived"
+    },
+    {
+      "model_name": "MAI Code 2 Flash",
+      "provider_org": "Microsoft",
+      "release_status": "GA",
+      "category": "Lightweight",
+      "input_per_1m_usd": 0.05,
+      "cached_input_per_1m_usd": 0.005,
+      "output_per_1m_usd": 0.25,
+      "mapping": "derived"
     },
     {
       "model_name": "Kimi K3",
@@ -463,6 +529,22 @@
       "notes": "Official legacy annual-plan multiplier; not current token pricing.",
       "premium_request_multiplier": 0.25,
       "effective_usd_per_request": 0.01
+    },
+    {
+      "model_name": "MAI Code 2",
+      "provider_org": "Microsoft",
+      "premium_request_multiplier": 1,
+      "effective_usd_per_request": 0.04,
+      "notes": "Legacy annual-plan multiplier.",
+      "mapping": "derived"
+    },
+    {
+      "model_name": "MAI Code 2 Flash",
+      "provider_org": "Microsoft",
+      "premium_request_multiplier": 0.33,
+      "effective_usd_per_request": 0.0132,
+      "notes": "Legacy annual-plan multiplier.",
+      "mapping": "derived"
     }
   ],
   "feature_multipliers": [
@@ -705,15 +787,24 @@
     "Claude Sonnet 4.6 (2026-09-01)"
   ],
   "response_sha256": {
-    "supported": "d052099c90f3b6dcf33814d0896390ebf8bea49dc1e6d4e1d0d4d42e0a8fd1e6",
-    "pricing": "0e2263f27d9a66a56c3fc8d030dbfb59e81d7737d962f6dfaf7235dff5b5603b",
-    "multipliers": "8fa4ad805652f028d328d449412ff9abbaee7e836228f3652dc13d9bc94302ef"
+    "supported": "c7411506a3e37a5d693793506996eaaf766f666347670cc2d18b06dab95b668d",
+    "pricing": "b36f4d80822d986847b8cf4cb10353751feae1e8f3e161d4d1b95b99fae639bb",
+    "multipliers": "498a0a0099933abae7be5d7ad66b9845dca998f21284aa013badcb559f65cc3c"
   },
   "diff": {
-    "current_added": [],
+    "current_added": [
+      "GPT-6.2 Astra",
+      "GPT-6.2 Sol",
+      "Gemini 4 Neon",
+      "MAI Code 2",
+      "MAI Code 2 Flash"
+    ],
     "current_removed": [],
     "current_price_changed": [],
-    "legacy_added": [],
+    "legacy_added": [
+      "MAI Code 2",
+      "MAI Code 2 Flash"
+    ],
     "legacy_removed": [],
     "legacy_multiplier_changed": []
   },

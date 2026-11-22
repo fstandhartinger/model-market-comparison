@@ -1,0 +1,78 @@
+# *
+User-agent: *
+Allow: /
+Disallow: /auth/*
+Disallow: /dashboard/*
+Disallow: /playground/*
+Disallow: /api/*
+
+# GPTBot
+User-agent: GPTBot
+Allow: /
+
+# OAI-SearchBot
+User-agent: OAI-SearchBot
+Allow: /
+
+# ChatGPT-User
+User-agent: ChatGPT-User
+Allow: /
+
+# ClaudeBot
+User-agent: ClaudeBot
+Allow: /
+
+# Claude-User
+User-agent: Claude-User
+Allow: /
+
+# anthropic-ai
+User-agent: anthropic-ai
+Allow: /
+
+# PerplexityBot
+User-agent: PerplexityBot
+Allow: /
+
+# Perplexity-User
+User-agent: Perplexity-User
+Allow: /
+
+# Google-Extended
+User-agent: Google-Extended
+Allow: /
+
+# Applebot-Extended
+User-agent: Applebot-Extended
+Allow: /
+
+# Amazonbot
+User-agent: Amazonbot
+Allow: /
+
+# Bytespider
+User-agent: Bytespider
+Allow: /
+
+# CCBot
+User-agent: CCBot
+Allow: /
+
+# cohere-ai
+User-agent: cohere-ai
+Allow: /
+
+# Meta-ExternalAgent
+User-agent: Meta-ExternalAgent
+Allow: /
+
+# Host
+Host: https://interfaze.ai
+
+# Sitemaps
+Sitemap: https://interfaze.ai/sitemap.xml
+Sitemap: https://interfaze.ai/sitemap-models.xml
+
+# Machine-readable content index for LLMs / AI agents:
+# llms.txt: https://interfaze.ai/llms.txt
+# llms-full.txt: https://interfaze.ai/llms-full.txt

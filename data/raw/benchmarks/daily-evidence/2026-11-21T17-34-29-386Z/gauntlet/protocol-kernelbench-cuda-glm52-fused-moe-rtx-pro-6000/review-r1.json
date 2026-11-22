@@ -1,0 +1,49 @@
+{
+  "artifact_id": "protocol-kernelbench-cuda-glm52-fused-moe-rtx-pro-6000",
+  "artifact_sha256": "6aafe8f39bf09b836a09a197e283d2d81bad768a70baedba626edb70633514b9",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": [
+    "kernelbench-cuda-glm52-fused-moe::rtx-pro-6000",
+    "c1",
+    "c2"
+  ],
+  "errors_found": 4,
+  "findings": [
+    {
+      "id": "f1",
+      "severity": "major",
+      "location": "version_guard",
+      "evidence": "SPEC.md says 'Three hard CUDA-only problems', 'Problem 04 ... retired 2026-11-09', and 'deck stays at three since 2026-11-09'; SOURCE 2 problems list has 3 entries. Row version_guard says 'the problem must stay in the stated four-problem deck'.",
+      "repair": "Change version_guard to reference the current three-problem deck (01-03) and remove 'four-problem deck'."
+    },
+    {
+      "id": "f2",
+      "severity": "major",
+      "location": "description",
+      "evidence": "SPEC.md table says problem 01 is 'GLM-5.3 Fused MoE (256+shared, top-8)'; SOURCE 4 shows 'GLM-5.3 Fused MoE'. Row description says 'Fuse GLM-5.2's MoE forward pass'.",
+      "repair": "Update description to GLM-5.3, consistent with current protocol."
+    },
+    {
+      "id": "f3",
+      "severity": "major",
+      "location": "scoring.notes",
+      "evidence": "SPEC.md retired problem 04 on 2026-11-09; SOURCE 2 leaderboard has no problem 04 or such cells; SOURCE 4 shows only 3 CUDA problems. Row notes assert active 04-specific claims ('SPS against the 150M peak_sps anchor', muse bug cell 0.2056, reward_hack cell, Opus 5 196.10%).",
+      "repair": "Remove or explicitly mark as historical any problem 04 references; claims about muse, reward_hack and Opus 5 on 04 are not supported by the current payload."
+    },
+    {
+      "id": "f4",
+      "severity": "major",
+      "location": "version/version_status",
+      "evidence": "Source payload contains no maintainer release identifier for this board; only hardware key 'RTX_PRO_6000' (SOURCE 5) and a generation tag 'v2' in leaderboard.json. Row version 'rtx-pro-6000' with version_status 'published' does not copy a published release identifier.",
+      "repair": "Set version_status to 'snapshot' and version to 'snapshot-2026-11-21' unless a distinct release identifier (e.g. 'v2') is confirmed as the board's published version; if 'v2' is the release identifier, set version to 'v2'."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "Owner-side SHA-256 and transport checks not independently executed; row hash 69efa0288e2ba57f087fce1facaca9407a3cd212674650211765da1900754695 and artifact hash taken as binding.",
+    "Maintainer release identifier determination is ambiguous: leaderboard.json includes generated_from_summary.tag 'v2', which could be a release tag; the current version/version_status combination is inconsistent regardless.",
+    "Generated value-scale summary reports 28 values 4.11-11.3 while raw leaderboard.json stores raw fractions; per instructions the summary is treated as scale-only evidence for unit/range."
+  ],
+  "missing_evidence": []
+}

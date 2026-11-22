@@ -1,0 +1,20 @@
+{
+  "artifact_id": "protocol-mazur-creative-story-writing-snapshot-2026-09-10",
+  "artifact_sha256": "d0bedc67f03020a1918d640a6c576ae6937e5130eb4cf9579a6d457ab8fc7a3e",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "mazur-creative-story-writing::snapshot-2026-09-10",
+    "c1",
+    "c2"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Owner-computed hashes and transport/qualification checks cannot be independently executed in this review; only supplied evidence was compared.",
+    "Row version snapshot-2026-09-10 differs from source retrieval date 2026-11-21; acceptance criteria do not require these dates to match for a snapshot identifier.",
+    "Protocol text calls the field 'Comparison score' rather than 'points'; the row's unit 'points' is not contradicted by the protocol or the served value scale and was judged as a non-mismatch."
+  ],
+  "missing_evidence": []
+}

@@ -1,0 +1,75 @@
+{
+  "artifact_id": "scores-2",
+  "artifact_sha256": "f334db4f2605bb8a4a2de08d01d2c0a5f6111c1f9dcb067e4fd30196ea83611b",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": [
+    "public:862592aa585843f28e6c2ceb",
+    "public:a3a974ce362bda6b7b57cd7e",
+    "public:a559d8cb4c6aab21b6cb9f25",
+    "public:4bfed111581737253842d282",
+    "public:30dca02b21907176f04dc623",
+    "public:c285a5c1cca44e6772499576",
+    "public:51ccfca9d3a4d49df6d2de84",
+    "public:9a28521740bba38309abe40b",
+    "public:c39056e6ed0365e2c230bd59",
+    "public:9d666d3e72c2fec1c9a1a968",
+    "public:87da35b3228b0b9e2a19e345",
+    "public:79fcf9648d0276f635bae44d",
+    "public:6f2ddf015a7dbbe18beaeed2",
+    "public:ce62b485e09d6623cb9e9bfe",
+    "c1"
+  ],
+  "errors_found": 6,
+  "findings": [
+    {
+      "id": "public:a3a974ce362bda6b7b57cd7e",
+      "severity": "major",
+      "location": "row value field / derivation output",
+      "evidence": "SOURCE 6 serves score=0.9979754933183766; exact ×100 = 99.79754933183766, but candidate value is 99.79754933183767.",
+      "repair": "Set value to 99.79754933183766, or use exact decimal arithmetic for the derivation."
+    },
+    {
+      "id": "public:30dca02b21907176f04dc623",
+      "severity": "major",
+      "location": "row value field / derivation output",
+      "evidence": "SOURCE 9 serves score=0.5492668909755776; exact ×100 = 54.92668909755776, but candidate value is 54.926689097557755.",
+      "repair": "Set value to 54.92668909755776, or use exact decimal arithmetic for the derivation."
+    },
+    {
+      "id": "public:c285a5c1cca44e6772499576",
+      "severity": "major",
+      "location": "row value field / derivation output",
+      "evidence": "SOURCE 10 serves score=0.40122897675400504; exact ×100 = 40.122897675400504, but candidate value is 40.1228976754005.",
+      "repair": "Set value to 40.122897675400504, or use exact decimal arithmetic for the derivation."
+    },
+    {
+      "id": "public:51ccfca9d3a4d49df6d2de84",
+      "severity": "major",
+      "location": "row value field / derivation output",
+      "evidence": "SOURCE 11 serves score=0.31106769205634743; exact ×100 = 31.106769205634743, but candidate value is 31.106769205634745.",
+      "repair": "Set value to 31.106769205634743, or use exact decimal arithmetic for the derivation."
+    },
+    {
+      "id": "public:9a28521740bba38309abe40b",
+      "severity": "major",
+      "location": "row value field / derivation output",
+      "evidence": "SOURCE 12 serves score=0.22051606320371117; exact ×100 = 22.051606320371117, but candidate value is 22.051606320371118.",
+      "repair": "Set value to 22.051606320371117, or use exact decimal arithmetic for the derivation."
+    },
+    {
+      "id": "public:79fcf9648d0276f635bae44d",
+      "severity": "major",
+      "location": "row value field / derivation output",
+      "evidence": "SOURCE 16 serves score=0.9006104570787179; exact ×100 = 90.06104570787179, but candidate value is 90.06104570787178.",
+      "repair": "Set value to 90.06104570787179, or use exact decimal arithmetic for the derivation."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "I cannot execute SHA-256, transport, or qualification checks; owner-supplied hashes and receipt are accepted as binding per instructions.",
+    "The six numeric discrepancies are at 1e-14 scale and may arise from IEEE-754 binary multiplication. I treated the exact decimal products as required because the acceptance criterion forbids rounding or tolerance.",
+    "The source file path in the candidate rows is not independently evidenced in the packet, but it is not a required acceptance field."
+  ],
+  "missing_evidence": []
+}

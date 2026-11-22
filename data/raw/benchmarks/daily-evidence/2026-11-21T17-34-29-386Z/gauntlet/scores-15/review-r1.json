@@ -1,0 +1,19 @@
+{
+  "artifact_id": "scores-15",
+  "artifact_sha256": "d2949c9a242e6a9ae9820673d868315b407cdc82c98930a1ba8499f0defbff7d",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "vendor:DeepSeek-V3:aider-polyglot::snapshot-2026-09-10",
+    "c1"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Cannot independently recompute SHA-256 hashes or execute retrieval/transport checks; owner-provided hashes were used and the artifact's source.sha256 matches the primary evidence sha256 exactly.",
+    "The benchmark_id suffix 'snapshot-2026-09-10' is not present in the PDF evidence; it is treated as an internal artifact/snapshot label rather than a source-claimed benchmark version, and comparison_key is null accordingly.",
+    "published_at is null in the artifact; the evidence does not expose an explicit publication date, so source-date consistency was assessed from retrieved_at and the 'December 2024 update' wording in the source_id."
+  ],
+  "missing_evidence": []
+}

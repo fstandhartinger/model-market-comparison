@@ -1,0 +1,27 @@
+{
+  "artifact_id": "protocol-gso-opt1-102",
+  "artifact_sha256": "eedef18bb298a4ecee13a356eb383d9eb5c33428b80c95017bb7ef88b2383f9f",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": [
+    "gso::opt1-102",
+    "c1",
+    "c2"
+  ],
+  "errors_found": 1,
+  "findings": [
+    {
+      "id": "gso::opt1-102-version_status",
+      "severity": "major",
+      "location": "gso::opt1-102.version_status (and version)",
+      "evidence": "Protocol page (SOURCE 1) and leaderboard.json (SOURCE 2, metadata.total_tasks=102 only) publish no release identifier or version for this board; the row claims version_status 'published' and version 'opt1-102', but 'published' requires the maintainer to publish a release identifier that the version copies. No such identifier appears in the captured protocol or payload.",
+      "repair": "Change version_status to 'snapshot' and version to a snapshot-<date> identity (e.g., snapshot-2026-11-21) since the maintainer publishes no release identifier for this board; alternatively, cite a concrete maintainer release identifier from the primary source to justify 'published'."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "I cannot recompute per-row SHA-256 or execute hash/transport qualification checks; those are separately owned and verified by the owner.",
+    "The protocol text does not explicitly say 'no version exists', but the complete captured page and leaderboard.json contain no release identifier, which is sufficient to judge version_status under criterion c2."
+  ],
+  "missing_evidence": []
+}

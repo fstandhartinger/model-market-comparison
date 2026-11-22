@@ -1,0 +1,18 @@
+{
+  "artifact_id": "scores-16",
+  "artifact_sha256": "1cc29d1fd399412e47811cb8217eabaa4a018d576b734d0ea7e0e98582665ae8",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "vendor:DeepSeek-V3:longbench::2",
+    "c1"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Cannot independently recompute SHA-256 hashes; relying on provided row hash f1f0bea92f5dc21a8d64ad5931bc57649aa92ba2edbcf0afea608e33796876fe and source sha 812a3fd645c80725354de9d831a6785503007a60681461407f64e97305fa9330.",
+    "Subject model_id includes 'dec-24' derived from arXiv ID date; consistent with paper and source_id."
+  ],
+  "missing_evidence": []
+}

@@ -1,0 +1,26 @@
+{
+  "artifact_id": "scores-7",
+  "artifact_sha256": "1eea539886ec61ae26a7ed0c89939fd87574536553e537306898c59fe2283fd3",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "public:b0b32950f1e89229c72acffb",
+    "public:f69a22569bdee7860c457ab7",
+    "public:9ea04a6bdec8abe553d637d3",
+    "public:74bfa9bc8526e60a7e5aa80c",
+    "public:7ae952c7210225caf3a514e4",
+    "public:d41950835a28d665808623c0",
+    "public:bc9c05c77c218f1c66d2fb26",
+    "c1"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Cannot independently execute owner hash/transport/qualification checks; these are outside available evidence per instructions.",
+    "Source has no explicit publication date beyond retrieved_at; candidate published_at null is consistent with absence but not independently verifiable.",
+    "MiniMax-M2.7 row includes model_id minimax-m2.7::default and join_note not present in primary source; treated as prior accepted subject identity, mapping not independently verified in this packet.",
+    "Numeric equality for -3.29 vs -3.290 and -5.35 vs -5.350 accepted per criteria; not treated as mismatch."
+  ],
+  "missing_evidence": []
+}

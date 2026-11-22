@@ -1,7 +1,7 @@
 {
   "source": "Azure AI Foundry",
   "region": "offer-specific (global, EU Data Zone, regional, or US Fireworks)",
-  "collected_at": "2026-11-17",
+  "collected_at": "2026-11-21",
   "method": "Azure Retail Prices API (prices.azure.com/api/retail/prices), paginated across six EU resource/billing regions and cross-checked against the model-retirement schedule (https://learn.microsoft.com/en-us/azure/foundry/openai/concepts/model-retirement-schedule, updated 2026-08-19) plus current model/region catalogs. Queries cover OpenAI/Models/AI Foundry plus the separate productName 'Azure Kimi'. Deployment scope is modeled per offer: Global meters use region=global and are not technically EU-resident; only documented Europe Data Zone or regional offers use an EU region. A company-specific policy overlay marks only the native Azure Direct DeepSeek V4 Pro and Kimi K2.7 Code Global routes as eu_policy_equivalent=true so they qualify for this application's EU filter without changing eu_hosted=false or claiming technical residency. Retired models are excluded even when stale Retail meters remain. GPT-5.6 Luna/Sol/Terra standard token meters were published (effective 2026-07-01), so those rows now carry the default short-context Standard prices; long-context prices are documented in notes. Fireworks offers use documented US hosting and eu_hosted=false. Standard pay-as-you-go input/output token meters plus explicitly mapped Kimi K2.7 Code cache-read meters; other cached, batch and provisioned-throughput meters are excluded. All prices are native USD from the API (currencyCode=USD); no currency conversion is applied. 2026-08-26 refresh sources: Retail Prices API (Foundry Models + Azure Kimi, swedencentral), https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure (2026-08-20), https://learn.microsoft.com/en-us/azure/foundry/how-to/fireworks/enable-fireworks-models (2026-08-07), https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-from-partners (2026-07-24). Retail 'Azure Kimi' placeholder meters 'Model 6'/'Model 7' (eff. 2026-08-01, inconsistent in/out values) are ignored until a named product appears. grok-4.6 is in the catalog (Preview) but has no Retail meter yet, so no row. MAI-Cyber-1-Flash has Retail 'MAI Models' meters (0.60/3.50, eff. 2026-08-01) but Microsoft states it is available only to verified defenders through MDASH (Foundry private preview, not a standalone API; https://microsoft.ai/models/mai-cyber-1-flash/) and it is absent from the Azure-sold catalog, so no row. 2026-09-08: fetched all 1,619 matching swedencentral Retail rows across OpenAI/Models/AI Foundry/Azure Kimi (two pages), checked current lifecycle and region catalogs. GPT-6 Astra is now listed, but no named meter: added unpriced Global and EU Data Zone rows. Six older Fireworks models are GA but PTU-only per the current Fireworks catalog: their lingering token meters are excluded. Added Kimi K3 at $3.30/$16.50 using named Retail meters and explicit pay-per-token availability. Existing GPT-5.6 Sol Azure rates remain $5/$30 Global ($5.50/$33 DZ), despite different first-party/Copilot rates; no cross-provider price substitution.",
   "models": [
     {
@@ -1147,7 +1147,7 @@
         "cache_read": "K2.7 Code cached glbl Tokens"
       },
       "cache_read_per_1m_usd": 0.19,
-      "cache_read_checked_at": "2026-11-17",
+      "cache_read_checked_at": "2026-11-21",
       "cache_read_source": {
         "url": "https://prices.azure.com/api/retail/prices?currencyCode=USD&$filter=armRegionName%20eq%20'swedencentral'%20and%20(contains(productName%2C'OpenAI')%20or%20contains(productName%2C'Models')%20or%20productName%20eq%20'Azure%20Kimi')",
         "date": "2026-09-24",
@@ -1184,7 +1184,7 @@
         "cache_read": "FW Kimi K2.7 Code Cd Inp DZ Tokens"
       },
       "cache_read_per_1m_usd": 0.21,
-      "cache_read_checked_at": "2026-11-17",
+      "cache_read_checked_at": "2026-11-21",
       "cache_read_source": {
         "url": "https://prices.azure.com/api/retail/prices?currencyCode=USD&$filter=armRegionName%20eq%20'westeurope'%20and%20(contains(productName%2C'OpenAI')%20or%20contains(productName%2C'Models')%20or%20productName%20eq%20'Azure%20Kimi')",
         "date": "2026-09-24",
@@ -1393,9 +1393,9 @@
     }
   ],
   "lifecycle_checked_at": "2026-09-08",
-  "meters_checked_at": "2026-11-17",
-  "retail_collection": "scripts/fetch-azure-foundry-catalog.mjs (2026-11-17): 12 pages, 9854 Retail items across swedencentral, westeurope, francecentral, germanywestcentral, polandcentral, spaincentral; each row's named Standard input/output and explicitly mapped cache-read meters re-read (1K meters x 1000), first billing region by that order. Rows are never added by the script; lifecycle and Europe Data Zone availability keep lifecycle_checked_at.",
-  "response_sha256": "f3acecdf74f4d5304ff1b6084fb34e6e5b3cf0d29aa1bfaf9d40172bd7c61867",
+  "meters_checked_at": "2026-11-21",
+  "retail_collection": "scripts/fetch-azure-foundry-catalog.mjs (2026-11-21): 13 pages, 10742 Retail items across swedencentral, westeurope, francecentral, germanywestcentral, polandcentral, spaincentral; each row's named Standard input/output and explicitly mapped cache-read meters re-read (1K meters x 1000), first billing region by that order. Rows are never added by the script; lifecycle and Europe Data Zone availability keep lifecycle_checked_at.",
+  "response_sha256": "67ab91473d3d93ce8bcbb186ecf0e47f3288c9ed87a4f635d29810b95295753c",
   "diff": {
     "removed": [],
     "price_changed": [],
@@ -1405,10 +1405,34 @@
     ],
     "cache_read_missing": [],
     "new_meters": [
+      "Azure Baseten Models · GLM 5.3 Flash Inp DZ 1M Tokens = 0.165 (effective 2026-11-01)",
+      "Azure Baseten Models · GLM 5.3 Flash Inp Gl 1M Tokens = 0.15 (effective 2026-11-01)",
+      "Azure Baseten Models · GLM 5.3 Flash Opt DZ 1M Tokens = 0.55 (effective 2026-11-01)",
+      "Azure Baseten Models · GLM 5.3 Flash Opt Gl 1M Tokens = 0.5 (effective 2026-11-01)",
+      "Azure Baseten Models · GLM 5.3 Inp DZ 1M Tokens = 1.54 (effective 2026-11-01)",
+      "Azure Baseten Models · GLM 5.3 Inp Gl 1M Tokens = 1.4 (effective 2026-11-01)",
+      "Azure Baseten Models · GLM 5.3 Opt DZ 1M Tokens = 4.84 (effective 2026-11-01)",
+      "Azure Baseten Models · GLM 5.3 Opt Gl 1M Tokens = 4.4 (effective 2026-11-01)",
+      "Azure Baseten Models · Kimi K3 Inp DZ 1M Tokens = 3.3 (effective 2026-11-01)",
+      "Azure Baseten Models · Kimi K3 Inp Gl 1M Tokens = 3 (effective 2026-11-01)",
+      "Azure Baseten Models · Kimi K3 Opt DZ 1M Tokens = 16.5 (effective 2026-11-01)",
+      "Azure Baseten Models · Kimi K3 Opt Gl 1M Tokens = 15 (effective 2026-11-01)",
+      "Azure Baseten Models · Kimi K3.1 Inp DZ 1M Tokens = 2.2 (effective 2026-11-01)",
+      "Azure Baseten Models · Kimi K3.1 Inp Gl 1M Tokens = 2 (effective 2026-11-01)",
+      "Azure Baseten Models · Kimi K3.1 Opt DZ 1M Tokens = 11 (effective 2026-11-01)",
+      "Azure Baseten Models · Kimi K3.1 Opt Gl 1M Tokens = 10 (effective 2026-11-01)",
+      "Azure Baseten Models · V4.1 Flash1017 Inp DZ 1M Tokens = 0.33 (effective 2026-11-01)",
+      "Azure Baseten Models · V4.1 Flash1017 Inp Gl 1M Tokens = 0.3 (effective 2026-11-01)",
+      "Azure Baseten Models · V4.1 Flash1017 Opt DZ 1M Tokens = 1.32 (effective 2026-11-01)",
+      "Azure Baseten Models · V4.1 Flash1017 Opt Gl 1M Tokens = 1.2 (effective 2026-11-01)",
       "Azure Deepseek Models · V4.1 Flash Input DZ 1M Tokens = 0.36 (effective 2026-10-01)",
       "Azure Deepseek Models · V4.1 Flash Input Glbl 1M Tokens = 0.3 (effective 2026-10-01)",
       "Azure Deepseek Models · V4.1 Flash Output DZ 1M Tokens = 1.44 (effective 2026-10-01)",
       "Azure Deepseek Models · V4.1 Flash Output Glbl 1M Tokens = 1.2 (effective 2026-10-01)",
+      "Azure Deepseek Models · V4.1 Flash1017 In Glbl 1M Tokens = 0.3 (effective 2026-11-01)",
+      "Azure Deepseek Models · V4.1 Flash1017 Opt Glbl 1M Tokens = 1.2 (effective 2026-11-01)",
+      "Azure Deepseek Models · V4.1Flash 1017 Inp DZ 1M Tokens = 0.36 (effective 2026-11-01)",
+      "Azure Deepseek Models · V4.1Flash 1017 Opt DZ 1M Tokens = 1.44 (effective 2026-11-01)",
       "Azure Fireworks Models · FW DS-V4.1-Flash Gl Inp Tokens = 0.375 (effective 2026-09-01)",
       "Azure Fireworks Models · FW DS-V4.1-Flash Gl Opt Tokens = 1.5 (effective 2026-09-01)",
       "Azure Fireworks Models · FW GLM 5.3 DZ Inp Tokens = 2.1 (effective 2026-09-01)",
@@ -1419,6 +1443,8 @@
       "Azure Fireworks Models · FW GLM-5.3-Flash Gl Opt Tokens = 0.625 (effective 2026-09-01)",
       "Azure Fireworks Models · FW Kimi-K3 Gl Inp Tokens = 3 (effective 2026-09-01)",
       "Azure Fireworks Models · FW Kimi-K3 Gl Opt Tokens = 15 (effective 2026-09-01)",
+      "Azure Fireworks Models · Kimi K3.1 Pro Inp - Global 1M Tokens = 2.5 (effective 2026-11-01)",
+      "Azure Fireworks Models · Kimi K3.1 Pro Opt- Global 1M Tokens = 12.5 (effective 2026-11-01)",
       "Azure Grok Models · 4.6 Inp DZ L Tokens = 4.8 (effective 2026-09-01)",
       "Azure Grok Models · 4.6 Inp DZ Tokens = 2.4 (effective 2026-09-01)",
       "Azure Grok Models · 4.6 Inp Glbl L Tokens = 4 (effective 2026-09-01)",
@@ -1439,6 +1465,10 @@
       "Azure Kimi · Kimi 3.1 Pro Inp Glbl 1M Tokens = 2.3 (effective 2026-11-01)",
       "Azure Kimi · Kimi 3.1 Pro Outp DZ 1M Tokens = 13.8 (effective 2026-11-01)",
       "Azure Kimi · Kimi 3.1 Pro Outp Glbl 1M Tokens = 11.5 (effective 2026-11-01)",
+      "Azure Mistral Models · Large 4 Inp DZ Tokens = 0.84 (effective 2026-11-01)",
+      "Azure Mistral Models · Large 4 Inp Glbl Tokens = 0.7 (effective 2026-11-01)",
+      "Azure Mistral Models · Large 4 Outp DZ Tokens = 2.52 (effective 2026-11-01)",
+      "Azure Mistral Models · Large 4 Outp Glbl Tokens = 2.1 (effective 2026-11-01)",
       "Azure OpenAI GPT6 · 6-luna LongCo Inp Std DZ 1M Tokens = 0.24 (effective 2026-09-01)",
       "Azure OpenAI GPT6 · 6-luna LongCo Inp Std Gl 1M Tokens = 0.2 (effective 2026-09-01)",
       "Azure OpenAI GPT6 · 6-luna LongCo Opt Std DZ 1M Tokens = 0.9 (effective 2026-09-01)",
@@ -1478,7 +1508,12 @@
       "MAI Models · Code 1.1 Flash Input glbl 1M Tokens = 0.2 (effective 2026-09-01)",
       "MAI Models · Code 1.1 Flash Output Glbl 1M Tokens = 1.2 (effective 2026-09-01)",
       "MAI Models · Cyber 1.1 Inp glbl 1M Tokens = 0.6 (effective 2026-10-01)",
-      "MAI Models · Cyber 1.1 Opt glbl 1M Tokens = 3.5 (effective 2026-10-01)"
+      "MAI Models · Cyber 1.1 Opt glbl 1M Tokens = 3.5 (effective 2026-10-01)",
+      "MAI Models · Cyber-2-Flash Input DZ 1M Tokens = 0.06 (effective 2026-11-01)",
+      "MAI Models · Cyber-2-Flash Output DZ 1M Tokens = 0.3 (effective 2026-11-01)",
+      "MAI Models · Cyber-2-Flash Output glbl 1M Tokens = 0.25 (effective 2026-11-01)",
+      "MAI Models · MAI-Code-2-Flash Inp glbl 1M Tokens = 0.05 (effective 2026-11-01)",
+      "MAI Models · MAI-Code-2-Flash Opt glbl 1M Tokens = 0.25 (effective 2026-11-01)"
     ],
     "products": [
       "Azure Deepseek Models",

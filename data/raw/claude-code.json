@@ -1,7 +1,7 @@
 {
   "source": "Anthropic Claude API and Claude Code Enterprise",
-  "collected_at": "2026-11-17",
-  "method": "scripts/fetch-claude-api-catalog.mjs (2026-11-17): models[] from the server-rendered model and batch price tables on https://platform.claude.com/docs/en/about-claude/pricing; rows labelled retired there, or Retired in the lifecycle table on https://platform.claude.com/docs/en/about-claude/model-deprecations, are excluded; lifecycle_status and tentative retirement dates come from that table by API model id. Pricing modifiers are derived from the current tables and text. Claude Code Enterprise seat pricing comes from https://claude.com/pricing; seat minimums, usage billing, limits, and legacy-plan terms come from https://support.claude.com/en/articles/9797531-what-is-the-enterprise-plan. See claude-code.method.md.",
+  "collected_at": "2026-11-21",
+  "method": "scripts/fetch-claude-api-catalog.mjs (2026-11-21): models[] from the server-rendered model and batch price tables on https://platform.claude.com/docs/en/about-claude/pricing; rows labelled retired there, or Retired in the lifecycle table on https://platform.claude.com/docs/en/about-claude/model-deprecations, are excluded; lifecycle_status and tentative retirement dates come from that table by API model id. Pricing modifiers are derived from the current tables and text. Claude Code Enterprise seat pricing comes from https://claude.com/pricing; seat minimums, usage billing, limits, and legacy-plan terms come from https://support.claude.com/en/articles/9797531-what-is-the-enterprise-plan. See claude-code.method.md.",
   "models": [
     {
       "model_name": "Claude Fable 5.2",
@@ -314,8 +314,8 @@
     "sales_assisted_minimum_seats": 50,
     "sales_assisted_options": "Invoicing, multi-currency billing, and HIPAA-readiness/BAA are available through sales.",
     "legacy_note": "Some organizations remain on older seat-based Enterprise plans with Standard and Premium seats and per-seat limits until they migrate to usage-based billing.",
-    "seat_and_usage_checked_at": "2026-11-17",
-    "other_terms_checked_at": "2026-11-17"
+    "seat_and_usage_checked_at": "2026-11-21",
+    "other_terms_checked_at": "2026-11-21"
   },
   "pricing_modifiers": {
     "prompt_cache_5m_write_multiplier": 1.25,
@@ -340,10 +340,10 @@
     "Claude Sonnet 4 (Retired)"
   ],
   "response_sha256": {
-    "pricing": "14d7a1cf7d986e7e81b409c54d9a6a4940cd15ba6fb5aa8be08a6da290cbdd6c",
-    "deprecations": "e3656f49319b27472f38b3196bbbab1e4f9de77497fbd95322b80b0762155577",
-    "enterprise": "604ac90e382703a186a5f78d8cd8cf0f13630c817956b5dc610f4b0e2f08d7ec",
-    "enterprise_terms": "be953bc8766af0710011719669d92cf75c4bbad9d76d9654691e7263e5b2a00a"
+    "pricing": "be39d75f646b7f2f0ae47763379d4cedafacb0938d1b5c04dde95dabdb81f149",
+    "deprecations": "faf184e23b5d8644471aac88e61a7c079b5ce9994bc69856aeee411e91ae6ee2",
+    "enterprise": "2de13e985d7f2142584f924494828001c9ab13f97c5d4d97493aa5a366cd4f05",
+    "enterprise_terms": "cfa69139306d2e8a106f8dd4925c055d5a6a21ba8f1f2225cbc99d71f584d05a"
   },
   "diff": {
     "added": [],
