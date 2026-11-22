@@ -9,7 +9,9 @@ import re
 import uuid
 
 MAX_REFUSALS = 4
-MAX_ALLOCATIONS = 2
+# Florian 22 Nov 2026 (key fastlane-zero-wait-1122): paid lane = first pod + two fresh-pod retries = 3 allocations per order
+# (was 2). Order-specific exceptions (FreshAllocation / ScopedTopUp) keep their own hash-pinned limits.
+MAX_ALLOCATIONS = 3
 REQUEST_RE = re.compile(r"[0-9a-f]{32}\Z")
 SHA_RE = re.compile(r"[0-9a-f]{64}\Z")
 

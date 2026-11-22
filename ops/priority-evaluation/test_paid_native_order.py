@@ -265,14 +265,27 @@ class NativeOrderTests(unittest.TestCase):
             pr._teardown(fake, 'fixture', 'pod-1', 'reservation', lambda x: None)
         self.assertEqual(fake.releases, 0)
 
+    def test_third_fresh_pod_creation_is_still_allowed_after_two(self):
+        fake = _FakeProvider()
+        state = {'creation_attempts':2, 'spent_upper_bound_usd':30.0}
+        with mock.patch.object(pr, 'PODS_DIR', self.root / 'pods'):
+            try:
+                pr._lifecycle(fake, 'fixture', self.recipe, self.root/'stage.tar',
+                    self.root/'out', state, ('H100',80), 3, 20, lambda x:None, lambda:None)
+            except Exception:
+                pass  # the synthetic staging tarball is absent; only the allocation decision matters here
+        self.assertEqual(state['creation_attempts'], 3)  # reserved: the allocation gate allowed it
+        self.assertEqual(state['spent_upper_bound_usd'], 30.0 + 3 * pr._attempt_rate(self.recipe))
+        self.assertLessEqual(state['spent_upper_bound_usd'], pr.PER_ORDER_CAP_USD)
+
     def test_original_fresh_pod_creation_budget_is_not_reset(self):
         fake = _FakeProvider()
-        state = {'creation_attempts':2, 'spent_upper_bound_usd':3.0}
+        state = {'creation_attempts':3, 'spent_upper_bound_usd':3.0}  # first pod + two fresh-pod retries are used up
         with self.assertRaises(pr.PodRunError):
             pr._lifecycle(fake, 'fixture', self.recipe, self.root/'stage.tar',
                 self.root/'out', state, ('H100',80), 3, 17, lambda x:None, lambda:None)
         self.assertEqual(fake.next_pod, 0)
-        self.assertEqual(state['creation_attempts'], 2)
+        self.assertEqual(state['creation_attempts'], 3)
         self.assertEqual(state['spent_upper_bound_usd'], 3.0)
 
 
