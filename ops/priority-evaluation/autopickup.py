@@ -2221,10 +2221,12 @@ def operational_escalate(row: dict[str, Any], state: dict[str, Any], effects: Ef
     covered = ensure_native_owner(row, state, effects, now, reason)
     record = state.get("native_owner")
     if isinstance(record, dict) and record.get("job") == native_owner.owner_name(rid) and record.get("start_ok") \
-            and native_owner_due(rid, reason):
+            and native_owner_due(rid, reason, row, state):
         if not step_done(state, "native_owner_handoff"):
             effects.last_board_entry = None
-            if effects.board(f"Fast-lane order {order_ref(rid)}: the runner generator found no supported runtime "
+            what = ("the runner generator found no supported runtime" if reason not in native_owner.FAMILY_HOLD_REASONS
+                    else "the order matches a reviewed runtime family but has no host v1.6 profile admission")
+            if effects.board(f"Fast-lane order {order_ref(rid)}: {what} "
                              f"({reason}). The pickup started native owner job ~/jobs/{record['job']} automatically "
                              f"(INCIDENTS #25). Payment deadline {deadline_for(row).isoformat()} continues; customer "
                              f"hold is not set. Request evidence: {job_directory(rid, JOB_ROOT)}/STATE.md.",
@@ -2246,9 +2248,16 @@ def operational_escalate(row: dict[str, Any], state: dict[str, Any], effects: Ef
           text=rescue_card(row, reason, exhausted=exhausted))
 
 
-def native_owner_due(rid: str, reason: str) -> bool:
+def native_owner_due(rid: str, reason: str, row: dict[str, Any] | None = None,
+                     state: dict[str, Any] | None = None) -> bool:
     if reason in native_owner.REASONS:
         return True
+    if reason in native_owner.FAMILY_HOLD_REASONS:
+        # CR-841: the generator hint steers a repeat order of a registered family to a gpu_pod recipe instead of
+        # `unsupported`, so the retired-method hold is where such an order that the host has not admitted reaches its owner.
+        # Exactly one registry family must match the order (the match the hint uses) and no v1.6 admission may exist.
+        return isinstance(row, dict) and isinstance(state, dict) and "v16_profile_admission" not in state \
+            and native_owner.single_family(row)
     if reason != "unsupported_order_runtime":
         return False
     try:
@@ -2265,7 +2274,7 @@ def ensure_native_owner(row: dict[str, Any], state: dict[str, Any], effects: Eff
     Returns True while that owner covers the hold quietly (just requested, or live with more than 12 h left).
     A dead owner gets one more start; after that, or near the deadline, the caller raises the urgent card."""
     rid = request_id(row.get("id"))
-    if not native_owner_due(rid, reason):
+    if not native_owner_due(rid, reason, row, state):
         return False
     name = native_owner.owner_name(rid)
     # CR-764 review: the 3 h measured margin covers only a LIVE owner; a dead owner's restart keeps the 12 h card.

@@ -9,7 +9,9 @@ now starts that owner job itself, at the first unsupported runtime:
 * that unit (this module's `start`) writes ~/jobs/fastlane-native-<ref>/PROMPT.md + STATE.md from fixed text and
   host-validated order facts, then launches it with `~/bin/job-start` (Opus lead);
 * the cycle keeps the hold quiet while the owner is live and more than 12 h remain; a dead owner or a near
-  deadline still raises the urgent card.
+  deadline still raises the urgent card;
+* CR-841: an order of exactly one registered family that reaches `official_method_retired_requires_admission` without a
+  host v1.6 profile admission gets the same owner (the generator hint may have steered it to a recipe, not `unsupported`).
 
 The registry below tells the owner (and the generator prompt) which reviewed runtime supplement and precedent jobs
 belong to the same model repository. Admission itself lives in supplement_admission.py (Part 2) and order_admission_registry.py: an `active()`
@@ -21,7 +23,9 @@ from __future__ import annotations
 
 import hashlib
 import json
+import os
 import re
+import stat
 import subprocess
 import urllib.parse
 import uuid
@@ -34,6 +38,9 @@ OWNER_PREFIX = "fastlane-native-"
 UNIT = "jevbench-native-owner@{}.service"
 # Hold reasons that mean "no automatic runtime exists for this model" rather than a transient fault.
 REASONS = frozenset({"unsupported_measurement_backend"})
+# Hold reasons that start the owner only for an order of exactly one registered family without a host v16 admission
+# (CR-841): the generator hint can now make such an order skip the unsupported route, so this hold is its owner trigger.
+FAMILY_HOLD_REASONS = frozenset({"official_method_retired_requires_admission"})
 START_GRACE_MINUTES = 20
 MAX_STARTS = 2
 
@@ -108,57 +115,54 @@ SUPPLEMENTS: tuple[dict[str, Any], ...] = (
 )
 
 # Frozen precedent recipe shapes for the generator hint (CR-841, proposal 5 option B). Family -> (precedent order folder,
-# SHA-256 of its trusted-runner/POD-RECIPE.json, SHA-256 of its trusted-runner/RUNTIME.json). The files are read at
-# <evaluations root>/<order>/trusted-runner/ and used only when both digests match, so a changed or replaced file silently
-# falls back to the plain hint; there is no "latest folder" lookup. Only families whose supplement module asks
-# order_admission_registry.admitted() and that have a frozen recipe are listed (minimodels_hard_candy has none yet; ryotide
-# is not registry-extended).
-GENERATOR_PRECEDENTS: dict[str, tuple[str, str, str]] = {
-    'karpo_decision': ('a597df0b-966e-4b7b-9a78-722097bc1ba6',
-        '6d07ddf915f3c4991b658d6a1d46a24daa36e03af032d3de6df75b9f4a5852a0',
-        'e6427e132a4263d34124b611ef8a1fb37076a12c6fab7e9a00aab816ccce2df7'),
-    'krino': ('8c7dbe11-5695-45d7-b701-cf92dab3ada7',
-        '58364dd019f2b0ce6c981bb1c1aefecbf21e8e300f3230e15827c018dac69d7a',
-        'eaa4ae4846f2ef0e771f0a5a2e5736f5f98dba8aaf6dcc3bda1a12db89e9566e'),
-    'jeva': ('8a93f2a0-bf48-4ae3-b747-357380797391',
-        'acc396d36a065cc824c79c5118314638fe41bc1920a4d0bf373927baba892e11',
-        '9149af4bfe88bb1f2d6eec3ed3b52ae8aae6ce1f5e4accc22017be6b5e1cb890'),
-    'minimodels_decision': ('f62aeab1-97ee-4340-85de-a4a513757a6d',
-        '871980da128a94bd0e9532ff2280e68927b0d17b7700470127ab9b5389b6aac6',
-        '2cf0deab336cb9d7e10e0a65df48794b66b8c0df6df91b0006767cc5406fa755'),
+# SHA-256 of its trusted-runner/POD-RECIPE.json, SHA-256 of its trusted-runner/RUNTIME.json, the model repository key the
+# precedent measured). The files are read at <evaluations root>/<order>/trusted-runner/ and used only when both digests
+# match, so a changed or replaced file silently falls back to the plain hint; there is no "latest folder" lookup. The
+# recipe is inlined only for an order whose model_link is exactly that repository (a sibling size or version of the same
+# family gets the plain hint: its dir, min_vram_gb, model and argv paths differ).
+# Left out on purpose (r2 review of CR-841, measured on the real precedent folders):
+# * the 3 supplement_admission.FAMILIES (standardone, lychee, torchcast): their conditional hint ("unless a host admission
+#   note follows ... needs an owner") is the byte-identical-stack discriminator and stays the only text for them;
+# * recipes whose services argv carries inline source: sieve (22 KB python), jeva (6.5 KB), cue_reflex (1.9 KB),
+#   minimodels_decision (1.9 KB incl. file hashes), krino (399-char `sh -c` launcher with the base-model revision);
+# * karpo_decision (excluded by lead decision; its argv is a plain module launch);
+# * minimodels_hard_candy (no precedent POD-RECIPE.json) and ryotide (not registry-extended).
+GENERATOR_PRECEDENTS: dict[str, tuple[str, str, str, str]] = {
     'starlord_v2': ('cd7e038c-dcac-4990-9ca5-feac99cd8d8d',
         '67c46abd588d6cd592960bc879e1fefb4ede8c57fbb24d3ca48d46798b67bd0a',
-        '7dd4a011b0635c232fc754903da35462f56c1d716a6063e2b1a68bf7c0da3472'),
+        '7dd4a011b0635c232fc754903da35462f56c1d716a6063e2b1a68bf7c0da3472',
+        'huggingface.co/xsdfasfgsa/starlord-4b-v1.4-preview'),
     'starlord': ('2d2f81c6-4f5d-47c6-ac93-8d3e88408b75',
         '76c0d8a4a03bfe83e9049110ff7b1c57873a7207048a6a2fa9980fe4e67eed15',
-        '2adb9b1bfb6fce890ed274036df651d1fbe2c9408e708ebd673e8da6409c49b8'),
-    'cue_reflex': ('1dedbcf2-3577-47b9-9893-eaad445b7061',
-        'e240249126377d225a82f341423f2aafd111d9e07e9ecee8c0c3b53606a96642',
-        '83e3b2660b18db13406074db3d485cce0b12d8a8d948a0d59c3f9086c9dc143b'),
-    'standardone': ('a8731403-9731-4d57-98b4-0c5d93952ad2',
-        '88d06f50af7a69af13d0683a554a827fd7026fe7ef3e851131e9b795a50dca56',
-        'b2fd92f00ae25934ec04f8f8703e76fed825b69dd64fe4f7a7b03c29a90287df'),
-    'torchcast': ('9494e9ea-eeea-46e0-8fb1-41a045f41354',
-        '04b9dca1a5e4cb319307e76ae47fdc243209dce3300b9f5900f53d9ea5707ac5',
-        '3866de09aeedb33ad2655110ce501321d321cc1f90880fbd0fa590d95761eb9f'),
-    'lychee': ('a5d49ab5-d91f-4545-9f23-6fbce4a33021',
-        '3ff0e3d16f379b3c88f7f28c53b087242b60779ba1fb835a87ee4e9cb3aa4416',
-        '991cdddf1d0bc59dbad4e57487256ee02282dbb09c3cef660001912ec24b5b9e'),
+        '2adb9b1bfb6fce890ed274036df651d1fbe2c9408e708ebd673e8da6409c49b8',
+        'huggingface.co/xsdfasfgsa/starlord-27b-preview'),
     'quyet': ('3a698114-9133-4724-8583-21dc6267b3d5',
         '857b2933b990aa241c738024f9b06c33f4f73b2e51c089c914281f85069eb961',
-        '8a7cae5da7f42d388bc344a9a6f355a4b0b8b6af633b6992a061a3083aa10133'),
-    'sieve': ('ac6ebe34-a8ba-4b53-98ca-3e0a93755ec4',
-        'c924eb184db1870f1c2d3e4944ccbeb971aebfe71218f546f81b492d2e1a5d74',
-        '4dfc0e758789ef5890a449b219a037150b93c6f2722e4f5be5b571447de32097'),
+        '8a7cae5da7f42d388bc344a9a6f355a4b0b8b6af633b6992a061a3083aa10133',
+        'huggingface.co/chinhnc/quyet-1.2-large'),
     'chon': ('3ce4b317-09bb-459f-a33f-1e48e35006b2',
         '814a49ac51bd14a914e9769f4b594133bcd050fa7282c4c950c39bacead79b91',
-        'b11be28f9f25227fe1e6beffe863c6a8e8beeb51d8e39d2a174262334b91d43d'),
+        'b11be28f9f25227fe1e6beffe863c6a8e8beeb51d8e39d2a174262334b91d43d',
+        'huggingface.co/ninhnv/chon-1.0-12b'),
     'wps_decision': ('114b6e41-14c5-42b1-9a35-386ab83b62e9',
         '5b32a482c776e66412b374a533713f2dec24e0add3be5c0f0b369d08e84fc82e',
-        '78ad47715becba9affb3ca7921774a9c96c6e9698e6ee5f92b23ae38ed8625f1'),
+        '78ad47715becba9affb3ca7921774a9c96c6e9698e6ee5f92b23ae38ed8625f1',
+        'huggingface.co/kingsoft-office/wps-decision-1'),
 }
 _PRECEDENT_FILE_LIMIT = 256 * 1024
-_PIN = "<order-specific: take from this order's MODEL-WEIGHT-PINS.json / fetch receipts>"
+_INLINE_STRING_LIMIT = 300  # a longer string, or any multi-line string, is inline source: the family is not for the table
+_DIR_FLAGS = os.O_RDONLY | getattr(os, "O_DIRECTORY", 0) | getattr(os, "O_NOFOLLOW", 0) | getattr(os, "O_CLOEXEC", 0)
+_FILE_FLAGS = os.O_RDONLY | getattr(os, "O_NOFOLLOW", 0) | getattr(os, "O_CLOEXEC", 0) | getattr(os, "O_NONBLOCK", 0)
+# Every maximal run of 40 or more hex digits (git commit/tree, SHA-256/512 digest) is a pin; none reaches the prompt
+# except the host-pinned `image@sha256:` digest.
+_HEX_RUN = re.compile(r"(?<![0-9A-Fa-f])[0-9A-Fa-f]{40,}(?![0-9A-Fa-f])")
+_IMAGE_DIGEST = re.compile(r"[^\s@]+@sha256:[0-9a-f]{64}")
+_PIN_ANY = "<pin: take from this order's host files>"
+_PIN_REVISION = "<40 hex revision from this order's MODEL-WEIGHT-PINS.json>"
+_PIN_FILE_SHA = "<64 hex from this order's MODEL-WEIGHT-PINS.json>"
+_PIN_COMMIT = "<40 hex commit from this order's code fetch receipt>"
+_PIN_TREE = "<40 hex tree from this order's code fetch receipt>"
+_PRICE = "<from this order's pricing review>"
 
 _SEGMENT = re.compile(r"[A-Za-z0-9][A-Za-z0-9._-]{0,95}")
 
@@ -217,46 +221,127 @@ def gpu_pod_without_recipe(runtime: object, trusted_dir: Path) -> bool:
     return pod and not recipe.is_file() and not recipe.is_symlink()
 
 
+def single_family(order: dict[str, Any]) -> bool:
+    """True when exactly one registered family matches the order (the match the generator hint uses)."""
+    return len(match_supplements(order)) == 1
+
+
+def _read_precedent_file(root: Path | str, order: str, name: str) -> bytes:
+    """Bytes of <root>/<order>/trusted-runner/<name>; OSError/ValueError unless every step below the root is a real one.
+
+    The order folder, `trusted-runner` and the file are opened with O_NOFOLLOW from the parent descriptor and the file is
+    checked with fstat (regular, size cap) like order_admission_registry.read_regular, so a swap after the open cannot
+    change what was verified. The root is host configuration and may itself be a link."""
+    fds = [os.open(os.fspath(root), os.O_RDONLY | getattr(os, "O_DIRECTORY", 0) | getattr(os, "O_CLOEXEC", 0))]
+    try:
+        for part in (order, "trusted-runner"):
+            fds.append(os.open(part, _DIR_FLAGS, dir_fd=fds[-1]))
+        fds.append(os.open(name, _FILE_FLAGS, dir_fd=fds[-1]))
+        info = os.fstat(fds[-1])
+        if not stat.S_ISREG(info.st_mode):
+            raise ValueError("not a regular file")
+        if info.st_size > _PRECEDENT_FILE_LIMIT:
+            raise ValueError("file too large")
+        with os.fdopen(fds[-1], "rb", closefd=False) as stream:
+            data = stream.read(_PRECEDENT_FILE_LIMIT + 1)
+    finally:
+        for fd in reversed(fds):
+            os.close(fd)
+    if len(data) > _PRECEDENT_FILE_LIMIT:
+        raise ValueError("file too large")
+    return data
+
+
+def _scrub(value: Any, *, top: bool = False) -> Any:
+    """Copy of a parsed precedent file with every hex pin run replaced; ValueError for inline source or odd keys.
+
+    Only the top-level `image` string (the host-pinned base image digest) is kept as it is."""
+    if isinstance(value, dict):
+        out: dict[str, Any] = {}
+        for key, item in value.items():
+            if not isinstance(key, str):
+                raise ValueError("non-string key")
+            if top and key == "image":
+                if not isinstance(item, str) or _IMAGE_DIGEST.fullmatch(item) is None:
+                    raise ValueError("image is not digest-pinned")
+                out[key] = item
+            else:
+                out[_HEX_RUN.sub(_PIN_ANY, key)] = _scrub(item)
+        return out
+    if isinstance(value, list):
+        return [_scrub(item) for item in value]
+    if isinstance(value, str):
+        if "\n" in value or len(value) > _INLINE_STRING_LIMIT:
+            raise ValueError("inline source in a precedent string")
+        return _HEX_RUN.sub(_PIN_ANY, value)
+    return value
+
+
+def _recipe_shape(recipe: dict[str, Any]) -> dict[str, Any]:
+    """The POD-RECIPE.json shape: weights revision/file digests and code commit/tree become typed placeholders."""
+    recipe = dict(recipe)
+    weights = recipe.get("weights")
+    if isinstance(weights, list):
+        shaped = []
+        for weight in weights:
+            weight = dict(weight)  # TypeError/ValueError for a non-mapping entry
+            if "revision" in weight:
+                weight["revision"] = _PIN_REVISION
+            if "sha256" in weight:
+                weight["sha256"] = {"<file>": _PIN_FILE_SHA} if isinstance(weight["sha256"], dict) else _PIN_FILE_SHA
+            shaped.append(weight)
+        recipe["weights"] = shaped
+    elif weights is not None:
+        raise ValueError("weights is not a list")
+    code = recipe.get("code")
+    if isinstance(code, dict):
+        code = dict(code)
+        for key, placeholder in (("commit", _PIN_COMMIT), ("tree", _PIN_TREE)):
+            if key in code:
+                code[key] = placeholder
+        recipe["code"] = code
+    elif code is not None:
+        raise ValueError("code is not an object")
+    return _scrub(recipe, top=True)
+
+
+def _runtime_shape(runtime: dict[str, Any]) -> dict[str, Any]:
+    """The RUNTIME.json shape: the previous order's prices become a placeholder (this order's pricing review decides)."""
+    def prices(value: Any) -> Any:
+        if isinstance(value, dict):
+            return {key: _PRICE if isinstance(key, str) and key.startswith("price") else prices(item)
+                    for key, item in value.items()}
+        return value
+    return _scrub(prices(runtime))
+
+
 def _precedent_shapes(family: str, evaluations_root: Path | str) -> str | None:
     """The pinned precedent POD-RECIPE.json / RUNTIME.json of a family as prompt text, or None when unavailable.
 
-    Reads exactly <root>/<pinned order>/trusted-runner/<file> (no symlink, size-capped) and requires the pinned SHA-256.
-    Order-specific values (weights revision and file hashes, code commit and tree) are replaced by a placeholder, so only
-    the recipe shape is shown: image, code source, services, endpoint and the like."""
+    Reads exactly <root>/<pinned order>/trusted-runner/<file> (no symlink anywhere below the root, size-capped) and
+    requires the pinned SHA-256. Every 40+ hex run (weights revision and file digests, code commit and tree) and every
+    price is replaced by a placeholder; only the host-pinned `image@sha256:` digest stays. A precedent whose strings carry
+    inline source (multi-line or longer than 300 characters), a non-digest image or an unexpected shape gives None."""
     pinned = GENERATOR_PRECEDENTS.get(family)
     if pinned is None:
         return None
-    order, *digests = pinned
-    base = Path(evaluations_root) / order / "trusted-runner"
+    order, *digests, _repo = pinned
     shapes = []
     try:
-        if base.is_symlink() or not base.is_dir():
-            return None
-        for name, digest in zip(("POD-RECIPE.json", "RUNTIME.json"), digests):
-            path = base / name
-            if path.is_symlink() or not path.is_file() or path.stat().st_size > _PRECEDENT_FILE_LIMIT:
-                return None
-            raw = path.read_bytes()
+        for name, digest, shape in (("POD-RECIPE.json", digests[0], _recipe_shape),
+                                    ("RUNTIME.json", digests[1], _runtime_shape)):
+            raw = _read_precedent_file(evaluations_root, order, name)
             if hashlib.sha256(raw).hexdigest() != digest:
                 return None
             value = json.loads(raw.decode("utf-8"))
-            if name == "POD-RECIPE.json":
-                if not isinstance(value, dict):
-                    return None
-                for weight in value.get("weights") or ():
-                    if isinstance(weight, dict):
-                        for key in ("revision", "sha256"):
-                            if key in weight:
-                                weight[key] = _PIN
-                code = value.get("code")
-                if isinstance(code, dict):
-                    for key in ("commit", "tree"):
-                        if key in code:
-                            code[key] = _PIN
-            shapes.append(f"Precedent `{name}` (host data, frozen, sha256 {digest[:12]}, order {order[:8]}; "
-                          "order-specific pins replaced by a placeholder):\n```json\n"
-                          + json.dumps(value, indent=2, sort_keys=True) + "\n```\n")
-    except (OSError, ValueError, UnicodeError, RecursionError):
+            if not isinstance(value, dict):
+                return None
+            note = ("every 40/64-hex string (weights revision and file digests, code commit and tree) is replaced by "
+                    "a placeholder; only the host-pinned `image@sha256:` digest is kept" if name == "POD-RECIPE.json"
+                    else "the previous order's prices are replaced by a placeholder")
+            shapes.append(f"Precedent `{name}` (host data, frozen, sha256 {digest[:12]}; {note}):\n```json\n"
+                          + json.dumps(shape(value), indent=2, sort_keys=True) + "\n```\n")
+    except (OSError, ValueError, TypeError, AttributeError, UnicodeError, RecursionError):
         return None
     return "".join(shapes)
 
@@ -264,30 +349,40 @@ def _precedent_shapes(family: str, evaluations_root: Path | str) -> str | None:
 def generator_hint(order: dict[str, Any], evaluations_root: Path | str | None = None) -> str:
     """Extra text for the runner-generator prompt when a reviewed supplement covers this repository.
 
-    With `evaluations_root` and EXACTLY ONE matching family that has a pinned, digest-verified precedent recipe, the hint
-    shows that recipe shape and tells the generator to write the gpu_pod recipe instead of `unsupported` (the host
-    registry check `active()` and the supplement's own recipe check stay the gate). Zero or several matches, a family
-    without a precedent, or an unreadable/changed precedent file give today's hint unchanged."""
+    With `evaluations_root`, EXACTLY ONE matching family, an order whose model_link is the very repository its pinned
+    precedent measured, and a digest-verified precedent recipe, the hint shows that recipe shape and tells the generator
+    to write the gpu_pod recipe instead of `unsupported` (the host registry check `active()` and the supplement's own
+    recipe check stay the gate; the pickup starts the native owner at the retired-method hold when the order is not
+    admitted). Zero or several matches, a family or repository without a precedent, or an unreadable/changed precedent
+    file give today's hint unchanged."""
     matches = match_supplements(order)
     if not matches:
         return ""
     entry = matches[0]
-    if evaluations_root is not None and len(matches) == 1:
+    pinned = GENERATOR_PRECEDENTS.get(entry["family"])
+    if evaluations_root is not None and len(matches) == 1 and pinned is not None \
+            and repo_key(order.get("model_link")) == pinned[3]:
         shapes = _precedent_shapes(entry["family"], evaluations_root)
         if shapes:
-            return (f"\nRuntime supplement note (host registry, not customer text): this repository matches the reviewed "
-                    f"`{entry['family']}` runtime supplement (`{entry['module']}` in the host runtime). Repeat orders of "
-                    "this family are served by that supplement through the host admission registry, so do NOT write "
-                    "{\"backend\":\"unsupported\"} and do not report a blocker for the missing image: write the gpu_pod "
-                    "POD-RECIPE.json in the precedent's shape (the constant fields: schema_version, kind, image, "
-                    "min_vram_gb, code.source, services argv/env/ready_url, endpoint; for http_typesafe servers keep the "
-                    "precedent's server code and argv unchanged unless this order's source review shows a real difference), "
-                    "and take every order-specific value (weights repo/revision/file sha256 map, code commit and tree, "
-                    "served model name, prices) from this order's host MODEL-WEIGHT-PINS.json, fetch receipts and "
-                    "pricing review. Never copy a precedent revision or hash. RUNTIME.json (backend gpu_pod, credential "
-                    "none) and MEASUREMENT-META.json follow the precedent shape with this order's model id and prices. "
-                    "If this order's stack clearly differs from the precedent, say so in PRICING-REVIEW.md; the "
-                    "independent source review decides.\n" + shapes)
+            return (f"\nRuntime supplement note (host registry, not customer text): this order's model repository "
+                    f"`{pinned[3]}` is the one the reviewed `{entry['family']}` runtime supplement (`{entry['module']}` "
+                    "in the host runtime) was built and measured for. Repeat orders of it are served by that supplement "
+                    "through the host admission registry, so do NOT write {\"backend\":\"unsupported\"} and do not "
+                    "report a blocker for the missing image: write the gpu_pod POD-RECIPE.json in the shape of the "
+                    "precedent below. All other blocker rules above still apply (pickle weights, trust_remote_code or "
+                    "auto_map, several systems in one order, runtime versions that differ from the documented ones). "
+                    "Use the precedent's `image` exactly: it is the host-pinned base image of that supplement and the "
+                    "supplement is selected only when the image is byte-equal; this replaces the image-digest rule "
+                    "above for this image only, any other GPU image recipe remains unsupported. Keep the constant "
+                    "fields (schema_version, kind, image, min_vram_gb, weights repo and dir, code.source, services "
+                    "argv/env/ready_url, endpoint) unless this order's fetched source (the README and the serving files "
+                    "under source/) shows a real difference; if it does, say so in PRICING-REVIEW.md. Take every "
+                    "order-specific value from this order's host files: the weights revision and the file sha256 map "
+                    "from MODEL-WEIGHT-PINS.json, the code commit and tree from the code fetch receipt, and the served "
+                    "model name and the prices from your pricing review (v1.5-M2 reference rule with the read date). "
+                    "Never copy a precedent revision, hash or price: the shapes below carry placeholders instead. "
+                    "RUNTIME.json (backend gpu_pod, credential none) and MEASUREMENT-META.json follow the precedent's "
+                    "shape with this order's model id and prices. The independent source review decides.\n" + shapes)
     return (f"\nRuntime supplement note (host registry, not customer text): this repository matches the reviewed "
             f"`{entry['family']}` runtime supplement (`{entry['module']}` in the host runtime; precedent jobs "
             f"{', '.join(entry['precedents'])} under /home/flori/jobs/). Unless a host admission note follows, the "
@@ -299,6 +394,10 @@ def generator_hint(order: dict[str, Any], evaluations_root: Path | str | None = 
 def prompt_text(rid: str, order: dict[str, Any], *, reason: str, deadline: str, order_dir: Path) -> str:
     ref = rid[:8]
     entry = match_supplement(order)
+    why = ("its runner generator found no supported runtime"
+           if reason not in FAMILY_HOLD_REASONS else
+           "the order matches a reviewed runtime family but is held without the host's v1.6 profile admission "
+           "(the replacement test set is not approved for it; never fall back to the retired v1.5 profile)")
     if entry:
         supplement = (f"- Matching reviewed supplement: `{entry['family']}` "
                       f"(`ops/priority-evaluation/{entry['module']}`; installed copy under "
@@ -331,7 +430,7 @@ def prompt_text(rid: str, order: dict[str, Any], *, reason: str, deadline: str, 
     return f"""# Paid fast-lane order {ref} — native measurement owner (started automatically)
 
 You own this order end to end until the customer result is delivered (DELIVERED + RESULT.md + FINAL DONE).
-The fast-lane pickup started this job at once because its runner generator found no supported runtime
+The fast-lane pickup started this job at once because {why}
 (hold reason `{reason}`; INCIDENTS #25, root-cause owner fastlane-sla-20261004). Load skills first:
 `jevbench-fast-lane`, `third-party-submission-review`, `gpu-pod-management`, `benchmarkheaven-site-merge-queue`.
 Your board name also answers to @fastlane-eval-{ref}. Post on thread #11 that you own it.
