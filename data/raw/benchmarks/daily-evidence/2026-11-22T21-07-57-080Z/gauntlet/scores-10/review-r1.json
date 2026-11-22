@@ -1,0 +1,19 @@
+{
+  "artifact_id": "scores-10",
+  "artifact_sha256": "eaafa941e4da427294bd623f6a49408089f07a1881ca2d384dd4dd1af4f95963",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "vendor:DeepSeek-V3:longbench::2",
+    "c1"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Could not independently execute SHA-256 hash verification or transport/qualification checks; these are owner-executed and outside this critic's read-only scope.",
+    "The source PDF does not explicitly label a 'December 2024 update' for DeepSeek-V3; the arXiv identifier date (2412) is used, which is consistent but not explicitly stated in the primary evidence.",
+    "The 'published_at' field is null; the primary evidence does not provide an explicit publication date, so no comparison is possible for that field."
+  ],
+  "missing_evidence": []
+}

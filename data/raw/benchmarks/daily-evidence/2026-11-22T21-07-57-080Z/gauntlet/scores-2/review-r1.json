@@ -1,0 +1,29 @@
+{
+  "artifact_id": "scores-2",
+  "artifact_sha256": "1c9d521a009e87dc0dfb264d6375ace27b655253067909d9d968b8f9812ea469",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": [
+    "public:c78c20ee73ebdb07bd7d9573",
+    "public:12b246c718c4db974d756f3b",
+    "c1"
+  ],
+  "errors_found": 1,
+  "findings": [
+    {
+      "id": "basis-unsupported",
+      "severity": "major",
+      "location": "Both candidate rows: public:c78c20ee73ebdb07bd7d9573 and public:12b246c718c4db974d756f3b",
+      "evidence": "Primary source (SOURCE 1/6) registry notes: 'W/10 is published as the combination of W/10-Direct and W/10-Adherence; we did not verify its weighting.' No explicit basis field (measured/self_reported/derived) exists in the served CSV or protocol. The candidate labels basis as 'measured', which is not directly stated and may conflict with the composite/derived nature of W/10.",
+      "repair": "Either change basis to 'derived' if the taxonomy classifies composite scores as derived, or supply an explicit source statement that the published W/10 value is to be treated as 'measured'."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "The packet does not contain an explicit basis designation for these observations; the candidate's 'measured' label is an interpretation. Whether a composite score should be 'measured' or 'derived' is not resolved by the supplied evidence.",
+    "I cannot re-execute SHA-256, transport, or qualification checks; those are outside my read-only role and are handled separately by the owner."
+  ],
+  "missing_evidence": [
+    "Explicit basis classification (measured/self_reported/derived) for each observation"
+  ]
+}

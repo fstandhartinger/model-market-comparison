@@ -1,0 +1,14 @@
+{
+  "artifact_id": "protocol-simple-bench-snapshot-2026-09-26",
+  "artifact_sha256": "c8df6b2b4a4f473f482313a7148dc11059283b983be1eb5e339cbc5cd6150502",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": ["simple-bench::snapshot-2026-09-26", "c1", "c2"],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Cannot independently execute hash verification or transport/qualification checks; these are owner-executed per instructions. No contradiction found between row fields and primary evidence."
+  ],
+  "missing_evidence": []
+}

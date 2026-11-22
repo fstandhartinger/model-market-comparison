@@ -1,0 +1,24 @@
+{
+  "artifact_id": "protocol-arc-agi-3",
+  "artifact_sha256": "95716ef98d721e5a0c3f9c69bd5024d97b8aa40916a61e38fdf901ea9069d450",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": ["arc-agi::3", "c1", "c2"],
+  "errors_found": 1,
+  "findings": [
+    {
+      "id": "arc-agi::3",
+      "severity": "major",
+      "location": "description",
+      "evidence": "Source 2 (leaderboard) shows scores as percentages (e.g., 70.3%, 100.0%) and lists Cost as a separate column/axis, while the metric itself (per Source 1) is action efficiency relative to the median human baseline. The row's description claims the board is 'scored against cost-per-task', which contradicts both the leaderboard layout and the row's own scoring.metric.",
+      "repair": "Revise description to state the score is action efficiency relative to the human baseline, with cost-per-task reported as a separate axis/value (e.g., 'scored as action efficiency relative to the human baseline; cost-per-task is reported alongside')."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "I cannot recompute the row or source hashes; the owner-supplied hashes are treated as binding.",
+    "The term 'semi-private' in scoring.metric does not appear verbatim in the sources; I interpret it as consistent with the Public Demo subset (25 of 135 environments public) but this wording is not directly evidenced.",
+    "Source 3 is a generated activity summary from this run's own capture comparison; I did not independently verify the underlying payload counts."
+  ],
+  "missing_evidence": []
+}

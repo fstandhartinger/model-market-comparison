@@ -1,0 +1,36 @@
+{
+  "artifact_id": "scores-9",
+  "artifact_sha256": "6d3e3897e142f09bc622ee300c9f7c56a5414bdc20ac89ae5e57e8b885387276",
+  "round": 1,
+  "verdict": "blocked",
+  "coverage_checked": [
+    "vendor:DeepSeek-V3:aider-polyglot::snapshot-2026-09-10",
+    "c1"
+  ],
+  "errors_found": 2,
+  "findings": [
+    {
+      "id": "benchmark-version-unsupported",
+      "severity": "blocker",
+      "location": "row vendor:DeepSeek-V3:aider-polyglot::snapshot-2026-09-10: benchmark_id / source.locator / source.url",
+      "evidence": "Candidate row sets benchmark_id 'aider-polyglot::snapshot-2026-09-10'; primary evidence from arXiv 2412.19437v2 Table 6 lists only 'Aider-Polyglot (Acc.)' and contains no occurrence of 'snapshot-2026-09-10'. No supplied source text or row field establishes this benchmark snapshot; the claimed snapshot date is not in the packet.",
+      "repair": "Provide primary evidence for the 'snapshot-2026-09-10' benchmark version or change benchmark_id to the version actually attested by the source; do not invent snapshot identifiers."
+    },
+    {
+      "id": "source-date-unverified",
+      "severity": "major",
+      "location": "row vendor:DeepSeek-V3:aider-polyglot::snapshot-2026-09-10: source.published_at",
+      "evidence": "source.published_at is null, and the primary evidence excerpt does not contain an arXiv publication/update date for 2412.19437v2. Criterion c1 requires verifying source date; the row's source_id asserts 'December 2024 update' but no dated field is supplied.",
+      "repair": "Add the actual publication/update date from the captured source or a source excerpt showing the date, or explicitly mark the date unavailable with supporting evidence."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "Read-only critic cannot recompute artifact or row SHA-256; relying on owner-supplied hashes.",
+    "Cannot access original PDF beyond captured text excerpt; cannot independently verify table layout or page boundaries."
+  ],
+  "missing_evidence": [
+    "Primary evidence for benchmark version 'snapshot-2026-09-10' for Aider-Polyglot.",
+    "arXiv 2412.19437v2 publication/update date for source.published_at."
+  ]
+}

@@ -1,10 +1,10 @@
 {
   "source": "OVHcloud AI Endpoints",
   "region": "eu",
-  "collected_at": "2026-11-21",
+  "collected_at": "2026-11-22",
   "listing_url": "https://www.ovhcloud.com/en/public-cloud/ai-endpoints/catalog/",
-  "method": "scripts/fetch-ovhcloud-catalog.mjs (2026-11-21): one GET of the server-rendered AI Endpoints catalog; every card with both a '/Mtoken(input)' and a '/Mtoken(output)' EUR price is a text-generating LLM/VLM (embeddings, guards, speech, TTS and image generation have other units and are listed in skipped); curated rows kept by model_id or normalized name, new cards mapping=derived; USD = EUR × ECB daily reference rate, rounded to cents. EU-hosted, zero data retention apart from billing. See ovhcloud.method.md.",
-  "currency_note": "Original prices are EUR per 1 million tokens. USD = EUR * 1.099, rounded to the nearest USD cent consistently across all rows. The official ECB reference-rate date is 2026-11-20, the latest rate published at collection time on 2026-11-21.",
+  "method": "scripts/fetch-ovhcloud-catalog.mjs (2026-11-22): one GET of the server-rendered AI Endpoints catalog; every card with both a '/Mtoken(input)' and a '/Mtoken(output)' EUR price is a text-generating LLM/VLM (embeddings, guards, speech, TTS and image generation have other units and are listed in skipped); curated rows kept by model_id or normalized name, new cards mapping=derived; USD = EUR × ECB daily reference rate, rounded to cents. EU-hosted, zero data retention apart from billing. See ovhcloud.method.md.",
+  "currency_note": "Original prices are EUR per 1 million tokens. USD = EUR * 1.099, rounded to the nearest USD cent consistently across all rows. The official ECB reference-rate date is 2026-11-20, the latest rate published at collection time on 2026-11-22.",
   "usd_normalization": {
     "status": "applied",
     "eur_to_usd": 1.099,
@@ -264,15 +264,7 @@
     "nvr-tts-es-es"
   ],
   "diff": {
-    "added": [
-      "qwen3-vl-30b-a3b",
-      "nemotron3-omni-30b",
-      "nemotron3-nano-30b",
-      "qwen3.6-35b-a3b",
-      "laguna-xs-2.1",
-      "gemma-4-26b-a4b",
-      "DeepSeek-V4.1-Flash-1017"
-    ],
+    "added": [],
     "removed": [],
     "eur_price_changed": []
   }

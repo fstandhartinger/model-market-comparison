@@ -1,0 +1,47 @@
+{
+  "artifact_id": "protocol-weirdml-2",
+  "artifact_sha256": "6bd60c5766dad9d19f8ad87594eec4ade45889654f1ab0b2516e23568e5c4ae7",
+  "round": 1,
+  "verdict": "blocked",
+  "coverage_checked": ["weirdml::2", "c1", "c2"],
+  "errors_found": 4,
+  "findings": [
+    {
+      "id": "weirdml::2-version-identity",
+      "severity": "blocker",
+      "location": "row weirdml::2 / version, version_guard",
+      "evidence": "SOURCE 1 publishes 'WeirdML v3' and lists only 'Previous versions: WeirdML v2 · WeirdML v1'. The row claims version 2, version_status 'published', status 'active', and version_guard 'Verify the published version 2 before reading results.' The current protocol's release identifier is v3, not v2, and no v2 protocol excerpt is supplied, so the claimed current version/identity cannot be established.",
+      "repair": "Either set version to 3 and update the row to the current v3 protocol, or treat the row as retained/superseded v2 and supply the v2 protocol evidence that defines its identity and scoring."
+    },
+    {
+      "id": "weirdml::2-metric",
+      "severity": "blocker",
+      "location": "row weirdml::2 / scoring.metric",
+      "evidence": "Row scoring.metric is 'Average Max Accuracy: per task, mean over runs of the maximum test accuracy across the 5 iterations per run, averaged over all 17 tasks'. SOURCE 1 says WeirdML v3 has '11 complex hand-made tasks' and official score is '80% normalized area under its line ... plus 20% of its final value', and 'Effective scores ... are not raw accuracy'. This contradicts the supplied current protocol; SOURCE 3 only establishes the numeric scale of avg_acc, not metric meaning.",
+      "repair": "Replace the metric with the current v3 scoring rule and 11-task scope, or capture and verify the v2 protocol that defines the 17-task/5-iteration maximum-accuracy metric."
+    },
+    {
+      "id": "weirdml::2-superseded",
+      "severity": "major",
+      "location": "row weirdml::2 / superseded_by",
+      "evidence": "SOURCE 1 names 'WeirdML v3' as the current version and places v2 under 'Previous versions', which names v3 as the successor board. The row sets superseded_by null. Under c2, a named successor contradicts null; SOURCE 2's nonzero changed-value count can support status active but does not settle supersession.",
+      "repair": "Set superseded_by to the registry id for WeirdML v3, or provide protocol evidence that v2 has no successor board."
+    },
+    {
+      "id": "weirdml::2-description",
+      "severity": "minor",
+      "location": "row weirdml::2 / description",
+      "evidence": "SOURCE 1 describes v3 as an agentic benchmark with 11 tasks, developing ML/data-analysis pipelines under limited data and feedback. The excerpt does not mention PyTorch code, fixed compute/time limits, or 'write, run, and iteratively improve', so the row description is unsupported for v2 and not a description of the supplied v3 protocol.",
+      "repair": "Align the description with the captured protocol excerpt, or add the v2 protocol text that supports the claimed description."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "SOURCE 2 and SOURCE 3 do not state whether their avg_acc payload is for WeirdML v2 or v3; I treated them as evidence for row weirdml::2's source field, but they cannot settle metric meaning or version.",
+    "I could not execute SHA-256 or transport/qualification checks; those are owner-controlled checks.",
+    "The absence of a dedicated v2 page makes it ambiguous whether the metric/description mismatches are wrong-value failures or missing-evidence failures."
+  ],
+  "missing_evidence": [
+    "WeirdML v2 protocol text or page: task count, scoring rule covering '5 iterations' and 'maximum test accuracy', description, and whether v2 remains published; SOURCE 1 contains only the v3 page and a one-line 'Previous versions: WeirdML v2' link."
+  ]
+}

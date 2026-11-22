@@ -1,0 +1,28 @@
+{
+  "artifact_id": "scores-8",
+  "artifact_sha256": "1f196ac095acf5c1b02f60ba52a6c6fbde5f120ca988e5dc833143e9dd84f393",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": [
+    "vendor:DeepSeek-V3:swe-bench-verified::snapshot-2026-09-10",
+    "c1"
+  ],
+  "errors_found": 1,
+  "findings": [
+    {
+      "id": "vendor:DeepSeek-V3:swe-bench-verified::snapshot-2026-09-10",
+      "severity": "major",
+      "location": "benchmark_id / version",
+      "evidence": "Primary source (arXiv 2412.19437v2, pages 30-31, Table 6) names 'SWE-Bench Verified' (OpenAI, 2024d) and reports DeepSeek-V3 at 42.0, but contains no version or snapshot identifier. The artifact's benchmark_id asserts 'snapshot-2026-09-10' without any supporting source value.",
+      "repair": "Remove the unsupported 'snapshot-2026-09-10' version component from benchmark_id and match the source's identifier, or add primary evidence that documents the snapshot/version. If the snapshot is internal pipeline metadata, label it as such and do not present it as the benchmark version."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "I could not recompute SHA-256 hashes or execute transport/qualification checks; I relied on the owner-provided per-row and source hashes and producer receipt.",
+    "The 'December 2024 update' wording in source_id is not verbatim in the paper; it is inferred from the arXiv date and could be imprecise."
+  ],
+  "missing_evidence": [
+    "A source-supported benchmark version/snapshot for SWE-bench Verified; the packet contains only the name 'SWE-Bench Verified' without a version, while the artifact claims 'snapshot-2026-09-10'."
+  ]
+}

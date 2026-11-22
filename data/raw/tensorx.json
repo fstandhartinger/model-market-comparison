@@ -1,7 +1,7 @@
 {
   "source": "TensorX — tensorx.ai/pricing (first-party, public)",
   "region": "eu (Ireland)",
-  "collected_at": "2026-11-21",
+  "collected_at": "2026-11-22",
   "listing_url": "https://tensorx.ai/pricing/",
   "method": "scripts/fetch-tensorx-catalog.mjs: one GET of the server-rendered pricing table; columns located by header (Model Name, Context, Input Price, Cache Read, Output Price), native USD per 1M tokens; rows without both token prices (embeddings) omitted; curated names kept by api_model_id or normalized slug tail; new slugs mapping=derived; rows no longer listed are dropped. EU-sovereign (Dublin HQ, EU regions, zero data retention). See tensorx.method.md.",
   "models": [
@@ -119,7 +119,7 @@
       "api_model_id": "z-ai/glm-5.2"
     }
   ],
-  "response_sha256": "0a9a4a3b0184ac62b8ae7e5989cdf00d6d5ef6df1c793549e22f5e72d63ea404",
+  "response_sha256": "a47c36ccaade7a008869bf2a5e25bfc8d29fe9d44d42adef3f0342573702788d",
   "skipped": [
     "qwen/qwen3-embedding-8b"
   ],

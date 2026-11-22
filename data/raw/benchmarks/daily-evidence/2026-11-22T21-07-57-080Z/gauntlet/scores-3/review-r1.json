@@ -1,0 +1,20 @@
+{
+  "artifact_id": "scores-3",
+  "artifact_sha256": "1fe4d2f9dd4a7d3c1d3c99ee7e089e792b1e38b61b91e6cdfee4d02b3e99b275",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "public:99d3595dc531b21fd2561f81",
+    "public:2ba568e2095cce10413dd715",
+    "c1"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Row SHA-256 values are owner-provided and cannot be recomputed by this read-only review; accepted as binding per packet.",
+    "Basis 'measured' is inferred from the third-party benchmark nature and app.py description; the source payload does not contain an explicit basis token.",
+    "Source date is represented in the protocol's Test Date=11/22/2026; the artifact has no separate source_date field."
+  ],
+  "missing_evidence": []
+}
