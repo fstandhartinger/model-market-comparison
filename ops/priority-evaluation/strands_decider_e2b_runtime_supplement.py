@@ -45,7 +45,9 @@ RESULT_COLLECTION_RESERVE_S = 300
 CLEANUP_HANDOFF_S = 15
 CLEANUP_HOURS = 0.25
 GPU = ('RTXPRO6000', 96)
-INSTANCE_TYPE = '1RTXPRO6000.30V'
+INSTANCE_TYPE = '1RTXPRO6000.30V'   # preferred SKU
+# Exact allowlist: plain first, the confidential-computing variant (same 1x RTX PRO 6000 96GB) only as fallback.
+INSTANCE_TYPES = (INSTANCE_TYPE, '1RTXPRO6000.30V.CC')
 
 def _sha256_stream(stream):
     digest = hashlib.sha256()
@@ -166,7 +168,7 @@ def launch_binding(value):
 
 def verify_created_pod(pod, launch):
     if (pod.get('gpu') != GPU[0] or type(pod.get('gpu_count')) is not int
-            or pod['gpu_count'] != 1 or pod.get('instance_type') != INSTANCE_TYPE
+            or pod['gpu_count'] != 1 or pod.get('instance_type') not in INSTANCE_TYPES
             or pod.get('location') != launch['location']):
         raise measurement_dispatch.OperationalHold('gpu_pod_quote_changed')
 

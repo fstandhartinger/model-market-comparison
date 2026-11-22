@@ -180,8 +180,12 @@ class StrandsRuntimeTests(unittest.TestCase):
         with self.assertRaisesRegex(measurement_dispatch.OperationalHold, "strands_e2b_native_admission_required"):
             supplement.launch_binding(dict(approval, location="ICE-01"))
         supplement.verify_created_pod(pod, approval)
+        supplement.verify_created_pod(dict(pod, instance_type="1RTXPRO6000.30V.CC"), approval)
+        self.assertEqual(supplement.INSTANCE_TYPES, ("1RTXPRO6000.30V", "1RTXPRO6000.30V.CC"))
         for drift in ({"gpu_count": True}, {"gpu_count": 2}, {"location": "FIN-03"},
-                      {"gpu": "H100"}, {"instance_type": "1H100.80S.30V"}):
+                      {"gpu": "H100"}, {"instance_type": "1H100.80S.30V"},
+                      {"instance_type": "2RTXPRO6000.60V"}, {"instance_type": "1RTXPRO6000.30V.cc"},
+                      {"instance_type": "1RTXPRO6000.30V.CC.INTEL"}, {"instance_type": None}):
             with self.subTest(drift=drift), self.assertRaisesRegex(
                     measurement_dispatch.OperationalHold, "gpu_pod_quote_changed"):
                 supplement.verify_created_pod(dict(pod, **drift), approval)
