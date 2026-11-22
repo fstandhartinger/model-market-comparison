@@ -4787,13 +4787,9 @@ def native_route_hold_open(rid: str, state: dict[str, Any]) -> bool:
     operational = state.get("operational_hold")
     if not isinstance(operational, dict) or not operational.get("reason"):
         return False
-    reason = str(operational["reason"])
-    if native_owner_due(rid, reason):
-        return True
-    record = state.get("native_owner")
-    owner = operational.get("owner")
-    return isinstance(record, dict) and record.get("job") == native_owner.owner_name(rid) \
-        and owner in (None, record.get("job"))
+    # The reason itself routes to a native owner, or the native owner explicitly owns this hold. A leftover
+    # native_owner record alone is not enough: a later ownerless hold (gpu capacity, transient fetch) is no native route.
+    return native_owner_due(rid, str(operational["reason"])) or operational.get("owner") == native_owner.owner_name(rid)
 
 
 def advance_t18_path_health(row: dict[str, Any], state: dict[str, Any], effects: Effects, now: datetime,
@@ -4891,7 +4887,10 @@ def process_row(row: dict[str, Any], effects: Effects, job_root: Path, now: date
             save_state(state)
     row = advance_intake(row, state, job_dir, effects, now)
     advance_sla_handoffs(row, state, effects, now, job_root)
-    advance_t18_path_health(row, state, effects, now, job_root)
+    try:
+        advance_t18_path_health(row, state, effects, now, job_root)
+    except Exception as exc:  # advisory only: it must never block delivery or refund steps for this order
+        print(f"fast-lane pickup: order {order_ref(rid)}: t18 path health: {type(exc).__name__}", file=sys.stderr)
     advance_change_request(row, state, job_dir, effects, now)
     advance_delivery(row, state, job_dir, effects, now)
     row = load_row(rid) or row
