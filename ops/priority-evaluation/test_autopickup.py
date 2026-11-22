@@ -3250,11 +3250,10 @@ class Sla36EtaTests(DatabaseTestCase):
         rid = insert_order(paid_ago="37 hours", received_ago="37 hours")
         text = ap.sla_handoff(row(rid), 36)
         self.assertIn(f"`~/bin/jevbench-autopickup set-eta {rid} --eta <ISO+Z>`", text)
-        self.assertIn("only way your ETA reaches the customer", text)
-        self.assertIn("Set it before the card is built", text)
-        self.assertIn("set-eta refuses", text)
-        early = ap.sla_handoff(row(rid), 24)  # the 24 h wake-up is unchanged
-        self.assertNotIn("set-eta", early)
+        self.assertIn("only reaches a re-asked card", text)
+        early = ap.sla_handoff(row(rid), 24)  # critic r2 N2: the 24 h wake-up asks for the ETA before the card
+        self.assertIn(f"set-eta {rid}", early)
+        self.assertIn("only way your ETA reaches the customer", early)
         self.assertIn("24 hours after payment", early)
 
     # -- set-eta --------------------------------------------------------------------------------------------------
@@ -3521,9 +3520,9 @@ class Sla36EtaTests(DatabaseTestCase):
 
     # -- the delay note -------------------------------------------------------------------------------------------
 
-    def test_delay_note_without_an_eta_mails_the_planned_default(self):
+    def test_delay_note_mails_the_planned_default_it_is_given(self):
         rid = insert_order(paid_ago="41 hours", received_ago="41 hours")
-        subject, body = ap.delay_note_message(row(rid))
+        subject, body = ap.delay_note_message(row(rid), self.default_eta(rid))
         self.assertEqual(subject, f"Benchmark Heaven evaluation order {ap.order_ref(rid)}: delayed")
         self.assertIn(f"We now expect to send your result by {self.default_eta_text(rid)}.", body)
         self.assertIn("will take longer than our 48-hour target", body)
@@ -3556,6 +3555,24 @@ class Sla36EtaTests(DatabaseTestCase):
         fx = FakeEffects()
         self.assertEqual(ap.sla_decisions(None, ap.JOB_ROOT, fx), 1)
         self.assertIn(f"by {self.default_eta_text(rid)}.", fx.mails[0][2])
+
+    def test_legacy_card_tapped_after_the_deadline_mails_exactly_deadline_plus_24h(self):  # critic r2 N1
+        rid = insert_order(paid_ago="60 hours", received_ago="60 hours")
+        self._decide(rid, "delay_note")  # pre-deploy card: no stored date, its caption said deadline + 24 h
+        promised = ap.deadline_for(row(rid)) + timedelta(hours=24)
+        fx = FakeEffects()
+        ap.sla_decisions(None, ap.JOB_ROOT, fx)
+        self.assertEqual(len(fx.mails), 1)
+        self.assertIn(f"by {promised.strftime(ap.ETA_FORMAT)}.", fx.mails[0][2])
+
+    def test_handoff_texts_name_set_eta_at_24h_and_are_honest_at_36h(self):  # critic r2 N2
+        rid = insert_order(paid_ago="37 hours", received_ago="37 hours")
+        early = ap.sla_handoff(row(rid), 24)
+        self.assertIn(f"set-eta {rid}", early)
+        self.assertIn("record your real ETA now", early)
+        late = ap.sla_handoff(row(rid), 36)
+        self.assertIn("card for this order is out now", late)
+        self.assertNotIn("Set it before the card is built", late)
 
     def test_an_owner_eta_set_after_the_card_never_reaches_the_mail(self):  # M1 (critic probe 1), without Telegram
         rid = insert_order(paid_ago="41 hours", received_ago="41 hours")
@@ -3691,7 +3708,7 @@ class Sla36EtaTests(DatabaseTestCase):
         with mock.patch.object(ap.sla_decision, "OWNER_MANAGED_40H", frozenset({rid})):
             self.assertEqual(ap.sla_decisions(None, ap.JOB_ROOT, fx), 0)  # skipped before any card or mail
             with self.assertRaises(ValueError):
-                ap.delay_note_message(row(rid))
+                ap.delay_note_message(row(rid), self.eta_in(40))
             with self.assertRaises(ValueError):
                 ap.sla_decision.caption(row(rid), "deadline")
         self.assertEqual(fx.mails, [])
