@@ -3070,9 +3070,21 @@ def deliver_measured_first(row: dict[str, Any], state: dict[str, Any], summary: 
             return
         row = load_row(rid) or row
     if record_measured_delivery(row, state, pinned, now) and (load_row(rid) or {}).get("status") == "refund_due":
-        effects.board(f"Paid order {order_ref(rid)}: the measured result mail was accepted only after the 48 h deadline, so "
-                      "the order is refund_due (Florian's refund card decides). Its public row was promised to the "
-                      "customer: publish it through the ordinary release path by hand.", owner_for(rid), kind="handoff")
+        measured_late_handoff(rid, effects)
+
+
+def measured_late_handoff(rid: str, effects: Effects) -> None:
+    """A late-accepted measured mail leaves the pickup's claim set (refund_due): hand the promised publication to the
+    owner once (both the normal and the lease-recovery path). If the board refuses the post, Florian's refund card for
+    the refund_due order still names the order, so the case cannot vanish silently."""
+    state = load_state(rid)
+    if state.get("measured_late_handoff_at"):
+        return
+    if effects.board(f"Paid order {order_ref(rid)}: the measured result mail was accepted only after the 48 h deadline, so "
+                     "the order is refund_due (Florian's refund card decides). Its public row was promised to the "
+                     "customer: publish it through the ordinary release path by hand.", owner_for(rid), kind="handoff"):
+        state["measured_late_handoff_at"] = iso(utcnow())
+        save_state(state)
 
 
 def measured_lines(summary: object) -> list[tuple]:
@@ -4453,7 +4465,9 @@ def recover_result_email_leases(synthetic_id: str | None, job_root: Path, effect
             if update_row(rid, "delivery_email_status='sent'",
                           "delivery_email_status='sending' AND updated_at < now()-interval '10 minutes'"):
                 current = load_row(rid) or row
-                (record_measured_delivery if measured else record_result_delivery)(current, state, summary, utcnow())
+                recorded = (record_measured_delivery if measured else record_result_delivery)(current, state, summary, utcnow())
+                if measured and recorded and (load_row(rid) or {}).get("status") == "refund_due":
+                    measured_late_handoff(rid, effects)
         else:
             # The SMTP tool's call deadline is far shorter than this lease. With no
             # matching Sent audit row, release the claim so the SLA path may proceed.
