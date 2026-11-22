@@ -1,0 +1,114 @@
+#!/usr/bin/env python3
+"""fastlane-catalogue: the standard runtime catalogue for paid fast-lane orders (host operator command).
+
+  fastlane-catalogue images                                   list the reviewed base images
+  fastlane-catalogue resolve --request FILE                   dry run: print the lock a request would get (nothing written)
+  fastlane-catalogue lock ORDER_DIR --request FILE --basis B  before the freeze: write CATALOGUE-REQUEST.json, the host
+                                                              lock CATALOGUE-OVERLAY.json and the audited admission entry
+                                                              into ORDER_DIR/runner-prepare/trusted-runner (or --prep DIR)
+  fastlane-catalogue check ORDER_DIR                          after the freeze: full run-time acceptance against the frozen
+                                                              POD-RECIPE.json (what pod_runner checks before any pod)
+
+Runs the INSTALLED runtime (~/.local/share/priority-evaluation/runtime), so the admission binds the module that will run.
+Imports and executes no customer code; the request file is data. Exit 0 = ok, 2 = refused / not accepted.
+"""
+import argparse
+import json
+import os
+import sys
+from pathlib import Path
+
+RUNTIME = Path(os.environ.get('FASTLANE_RUNTIME_DIR') or Path.home() / '.local/share/priority-evaluation/runtime')
+sys.path.insert(0, str(RUNTIME))
+
+import catalogue_overlay_lock as lock_mod  # noqa: E402
+import catalogue_runtime_supplement as cat  # noqa: E402
+
+
+def _order_dir(value: str) -> Path:
+    path = Path(value).resolve()
+    if not cat.ORDER_ID_RE.fullmatch(path.name) or not path.is_dir():
+        raise SystemExit(f'fastlane-catalogue: {value} is not an order folder')
+    return path
+
+
+def cmd_images(_args) -> int:
+    catalogue = cat.load_catalogue()
+    for image_id, image in sorted(catalogue['images'].items()):
+        pre = image['preinstalled']
+        print(f"{image_id}\n  image  {image['image']}\n  python {image['python']}  torch {image.get('torch')}  "
+              f"cuda {image.get('cuda')}  kinds {','.join(image['kinds'])}\n  has    "
+              + ', '.join(f'{k} {pre[k]}' for k in ('transformers', 'vllm', 'accelerate', 'peft', 'safetensors',
+                                                    'tokenizers', 'numpy') if k in pre))
+    return 0
+
+
+def _request(path: str):
+    return json.loads(cat.read_regular(path, cat.JSON_LIMIT).decode('utf-8'))
+
+
+def cmd_resolve(args) -> int:
+    try:
+        lock = lock_mod.resolve(_request(args.request))
+    except (OSError, ValueError) as exc:
+        print(f'REFUSED: {exc}', file=sys.stderr)
+        return 2
+    print(json.dumps(lock, indent=1, sort_keys=True))
+    return 0
+
+
+def cmd_lock(args) -> int:
+    order = _order_dir(args.order_dir)
+    prep = Path(args.prep).resolve() if args.prep else order / 'runner-prepare' / 'trusted-runner'
+    if not prep.is_dir() or prep.is_symlink() or order not in prep.parents:
+        raise SystemExit('fastlane-catalogue: the preparation directory must be an existing folder inside the order')
+    if (order / 'trusted-runner' / 'UPSTREAM-MANIFEST.json').exists() and prep == order / 'trusted-runner':
+        raise SystemExit('fastlane-catalogue: that bundle is already frozen; lock before the freeze')
+    request = _request(args.request)
+    target = prep / cat.REQUEST
+    if target.is_symlink():
+        raise SystemExit('fastlane-catalogue: request path is a symlink')
+    target.write_bytes(cat.canonical_json(request))
+    result = lock_mod.write_receipt(order, prep, by=os.environ.get('AGENT_BOARD_NAME') or 'operator', basis=args.basis)
+    if not isinstance(result, dict) or 'refused' in result:
+        print(f"REFUSED: {(result or {}).get('refused', 'no request')}", file=sys.stderr)
+        return 2
+    print(json.dumps(result, indent=1, sort_keys=True))
+    print(f'wrote {prep / cat.LOCK}; use image {result["image"]} in POD-RECIPE.json, then freeze', file=sys.stderr)
+    return 0
+
+
+def cmd_check(args) -> int:
+    order = _order_dir(args.order_dir)
+    try:
+        recipe = json.loads(cat.read_regular(order / 'trusted-runner' / 'POD-RECIPE.json', cat.JSON_LIMIT).decode('utf-8'))
+        accepted = cat.accept(order, recipe)
+    except (OSError, ValueError) as exc:
+        print(f'NOT ACCEPTED: {exc}', file=sys.stderr)
+        return 2
+    print(json.dumps(cat.binding(accepted), indent=1, sort_keys=True))
+    return 0
+
+
+def main(argv=None) -> int:
+    parser = argparse.ArgumentParser(prog='fastlane-catalogue', description=__doc__.split('\n')[0])
+    sub = parser.add_subparsers(dest='cmd', required=True)
+    sub.add_parser('images').set_defaults(func=cmd_images)
+    p = sub.add_parser('resolve')
+    p.add_argument('--request', required=True)
+    p.set_defaults(func=cmd_resolve)
+    p = sub.add_parser('lock')
+    p.add_argument('order_dir')
+    p.add_argument('--request', required=True)
+    p.add_argument('--basis', required=True, help='board entry / DECISIONS key that admits this order')
+    p.add_argument('--prep', help='preparation trusted-runner folder (default ORDER/runner-prepare/trusted-runner)')
+    p.set_defaults(func=cmd_lock)
+    p = sub.add_parser('check')
+    p.add_argument('order_dir')
+    p.set_defaults(func=cmd_check)
+    args = parser.parse_args(argv)
+    return args.func(args)
+
+
+if __name__ == '__main__':
+    sys.exit(main())

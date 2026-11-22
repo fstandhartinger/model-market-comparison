@@ -34,6 +34,7 @@ import public_artifacts
 import measurement_dispatch
 import native_owner
 import supplement_admission
+import catalogue_overlay_lock
 import static_agent
 import source_metadata
 import native_source_selection
@@ -1585,6 +1586,7 @@ If the official run path is not clear, write a short blocker to `OUTPUT.md`; do 
     text += "\n" + (Path(__file__).resolve().parent / "PREP-OPEN-WEIGHTS-PROMPT.txt").read_text(encoding="utf-8")
     text += native_owner.generator_hint(row)
     text += supplement_admission.generator_hint(job_dir)
+    text += catalogue_overlay_lock.generator_hint()
     atomic_write(prompt, text)
     return prompt
 
@@ -5946,13 +5948,24 @@ def evaluate(rid: str) -> int:
                     supplement_admission.write_receipt(job_dir, job_dir / "runner-prepare" / "trusted-runner")
                 except (OSError, ValueError) as exc:
                     raise PickupError("supplement admission receipt could not be written") from exc
+                # Runtime catalogue (fastlane-runtime-catalogue-20261122): the host, not the generator, resolves a
+                # CATALOGUE-REQUEST.json into the hash-locked CATALOGUE-OVERLAY.json and its admission entry before the
+                # freeze; any generator-written lock is removed. A refusal writes no lock (the order then goes to the owner).
+                try:
+                    catalogue_result = catalogue_overlay_lock.write_receipt(job_dir, job_dir / "runner-prepare" / "trusted-runner")
+                except (OSError, ValueError) as exc:
+                    raise PickupError("runtime catalogue lock could not be written") from exc
+                if isinstance(catalogue_result, dict) and "refused" in catalogue_result:
+                    append_state(job_dir, f"\n\nRuntime catalogue request refused by the host at {iso(utcnow())}: "
+                                          f"{catalogue_result['refused']}\n")
                 freeze_runner_bundle(job_dir)
                 try:
                     generated = load_json_file(job_dir / "trusted-runner/RUNTIME.json", 100_000)
                 except PickupError:
                     generated = None
                 if native_owner.runtime_declares_unsupported(generated) \
-                        or native_owner.gpu_pod_without_recipe(generated, job_dir / "trusted-runner"):
+                        or native_owner.gpu_pod_without_recipe(generated, job_dir / "trusted-runner") \
+                        or catalogue_overlay_lock.request_without_lock(job_dir / "trusted-runner"):
                     # INCIDENTS #25: retrying the generator or reviewing an unsupported runtime only burns the
                     # budget; the cycle hands the order to an automatic native owner job instead.
                     state = load_state(rid)

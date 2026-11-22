@@ -1168,6 +1168,14 @@ def _lifecycle(provider, job, recipe, staging_path, output, state, gpu_choice, t
                 state['runtime_supplement'] = quyet_runtime_supplement.build(provider, pod_id)
                 image = state['runtime_supplement']['effective_image']
                 save_state()
+            import catalogue_runtime_supplement
+            if job_dir is not None and catalogue_runtime_supplement.selected(job_dir):
+                # Data-admitted catalogue overlay: locked wheels fetched by hash on the pod, offline build, before weights/inputs.
+                if image != recipe["image"]:
+                    raise measurement_dispatch.OperationalHold('runtime_supplement_conflict')
+                state['runtime_supplement'] = catalogue_runtime_supplement.build(provider, pod_id, job_dir, recipe)
+                image = state['runtime_supplement']['effective_image']
+                save_state()
         if runtime_preflight is not None:
             state['runtime_preflight'] = runtime_preflight(provider, pod_id)
             save_state()
@@ -1444,6 +1452,12 @@ def run(rid: str, job_dir: Path, recipe: dict, output: Path, expected_pins: dict
     current = measurement_pins_factory() if measurement_pins_factory is not None else measurement_dispatch.pins()
     if current != expected_pins:
         raise measurement_dispatch.OperationalHold("measurement_pins_differ_from_review")
+    import catalogue_runtime_supplement
+    # Runtime catalogue (data-admitted base image + hash-locked wheel overlay): fully accepted on the host before any
+    # reservation or pod, so a refused lock costs nothing; never combined with host staging or a native preflight.
+    if catalogue_runtime_supplement.preflight(job_dir, recipe) is not None \
+            and ('host_staging' in recipe or runtime_preflight is not None):
+        raise measurement_dispatch.OperationalHold(catalogue_runtime_supplement.HOLD)
     if not benchmarks or len(set(benchmarks)) != len(benchmarks) or set(benchmarks) - {'jevbench', 'imagejevbench'}:
         raise measurement_dispatch.OperationalHold('unsupported_order_runtime')
     if ('imagejevbench' in benchmarks and recipe['kind'] != 'aplomb_native') or (recipe['kind'] == 'aplomb_native' and 'hourly_usd' not in recipe):

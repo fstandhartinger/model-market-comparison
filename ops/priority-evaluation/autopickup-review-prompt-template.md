@@ -92,6 +92,12 @@ following and FAIL with `failure_scope` "runner" (our adapter, never the custome
 does not hold:
 - `image` is pinned by digest, and it is the runtime the customer documents (or the official upstream
   image of the documented version).
+- If `trusted-runner/CATALOGUE-OVERLAY.json` is present (host-written lock for a reviewed catalogue base image,
+  `runtime_catalogue.json` in the host runtime), `image` must equal the lock's `image`, and the locked wheels
+  must be the packages and versions the customer documents plus their ordinary dependencies: no package that
+  looks like a typo of a well-known name, no package the customer does not need, no customer-owned package.
+  The host has already enforced hashes, the index host, wheels-only and the deny list; you review the list as data.
+  A `CATALOGUE-REQUEST.json` without a lock means the host refused it: FAIL with `failure_scope` "runner".
 - `weights[*].revision` equals the model fetch receipt commit. Every `*.safetensors` file in the model
   repository is listed, and its sha256 equals the LFS oid in the fetched repository (`git show
   HEAD:<file>`). The repository has no pickle weights, no `auto_map`, no `trust_remote_code` and no `.py`
