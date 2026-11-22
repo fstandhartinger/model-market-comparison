@@ -116,38 +116,39 @@ SUPPLEMENTS: tuple[dict[str, Any], ...] = (
 
 # Frozen precedent recipe shapes for the generator hint (CR-841, proposal 5 option B). Family -> (precedent order folder,
 # SHA-256 of its trusted-runner/POD-RECIPE.json, SHA-256 of its trusted-runner/RUNTIME.json, the model repository key the
-# precedent measured). The files are read at <evaluations root>/<order>/trusted-runner/ and used only when both digests
-# match, so a changed or replaced file silently falls back to the plain hint; there is no "latest folder" lookup. The
-# recipe is inlined only for an order whose model_link is exactly that repository (a sibling size or version of the same
-# family gets the plain hint: its dir, min_vram_gb, model and argv paths differ).
-# Left out on purpose (r2 review of CR-841, measured on the real precedent folders):
+# precedent measured, the code repository key its recipe reads the serving code from or None when `code.source` is "model").
+# The files are read at <evaluations root>/<order>/trusted-runner/ and used only when both digests match, so a changed or
+# replaced file silently falls back to the plain hint; there is no "latest folder" lookup. The recipe is inlined only for an
+# order whose model_link is exactly that repository (a sibling size or version of the same family gets the plain hint: its
+# dir, min_vram_gb, model and argv paths differ) and whose code side matches the precedent's: source "code" needs a code_link
+# of exactly the code repository, source "model" needs an order without any code_link (see `_precedent_applies`).
+# Left out on purpose (r2/r3 review of CR-841, measured on the real precedent folders):
 # * the 3 supplement_admission.FAMILIES (standardone, lychee, torchcast): their conditional hint ("unless a host admission
 #   note follows ... needs an owner") is the byte-identical-stack discriminator and stays the only text for them;
 # * recipes whose services argv carries inline source: sieve (22 KB python), jeva (6.5 KB), cue_reflex (1.9 KB),
 #   minimodels_decision (1.9 KB incl. file hashes), krino (399-char `sh -c` launcher with the base-model revision);
-# * karpo_decision (excluded by lead decision; its argv is a plain module launch);
+# * chon: its recipe has a second weights entry (the base model google/gemma-4-12B-it) that MODEL-WEIGHT-PINS.json of a repeat
+#   order does not pin (the precedent used a hand-made fetch receipt), and chon_runtime_supplement.active() carries its TTL cap
+#   and rate only for the precedent order id, so the generator could not complete the recipe from host files;
+# * karpo_decision (excluded by lead decision; its argv is a plain module launch, its recipe reads code from the code repo);
 # * minimodels_hard_candy (no precedent POD-RECIPE.json) and ryotide (not registry-extended).
-GENERATOR_PRECEDENTS: dict[str, tuple[str, str, str, str]] = {
+GENERATOR_PRECEDENTS: dict[str, tuple[str, str, str, str, str | None]] = {
     'starlord_v2': ('cd7e038c-dcac-4990-9ca5-feac99cd8d8d',
         '67c46abd588d6cd592960bc879e1fefb4ede8c57fbb24d3ca48d46798b67bd0a',
         '7dd4a011b0635c232fc754903da35462f56c1d716a6063e2b1a68bf7c0da3472',
-        'huggingface.co/xsdfasfgsa/starlord-4b-v1.4-preview'),
+        'huggingface.co/xsdfasfgsa/starlord-4b-v1.4-preview', None),
     'starlord': ('2d2f81c6-4f5d-47c6-ac93-8d3e88408b75',
         '76c0d8a4a03bfe83e9049110ff7b1c57873a7207048a6a2fa9980fe4e67eed15',
         '2adb9b1bfb6fce890ed274036df651d1fbe2c9408e708ebd673e8da6409c49b8',
-        'huggingface.co/xsdfasfgsa/starlord-27b-preview'),
+        'huggingface.co/xsdfasfgsa/starlord-27b-preview', None),
     'quyet': ('3a698114-9133-4724-8583-21dc6267b3d5',
         '857b2933b990aa241c738024f9b06c33f4f73b2e51c089c914281f85069eb961',
         '8a7cae5da7f42d388bc344a9a6f355a4b0b8b6af633b6992a061a3083aa10133',
-        'huggingface.co/chinhnc/quyet-1.2-large'),
-    'chon': ('3ce4b317-09bb-459f-a33f-1e48e35006b2',
-        '814a49ac51bd14a914e9769f4b594133bcd050fa7282c4c950c39bacead79b91',
-        'b11be28f9f25227fe1e6beffe863c6a8e8beeb51d8e39d2a174262334b91d43d',
-        'huggingface.co/ninhnv/chon-1.0-12b'),
+        'huggingface.co/chinhnc/quyet-1.2-large', 'github.com/ncchinh/quyet'),
     'wps_decision': ('114b6e41-14c5-42b1-9a35-386ab83b62e9',
         '5b32a482c776e66412b374a533713f2dec24e0add3be5c0f0b369d08e84fc82e',
         '78ad47715becba9affb3ca7921774a9c96c6e9698e6ee5f92b23ae38ed8625f1',
-        'huggingface.co/kingsoft-office/wps-decision-1'),
+        'huggingface.co/kingsoft-office/wps-decision-1', None),
 }
 _PRECEDENT_FILE_LIMIT = 256 * 1024
 _INLINE_STRING_LIMIT = 300  # a longer string, or any multi-line string, is inline source: the family is not for the table
@@ -224,6 +225,21 @@ def gpu_pod_without_recipe(runtime: object, trusted_dir: Path) -> bool:
 def single_family(order: dict[str, Any]) -> bool:
     """True when exactly one registered family matches the order (the match the generator hint uses)."""
     return len(match_supplements(order)) == 1
+
+
+def _precedent_applies(order: dict[str, Any], pinned: tuple[str, str, str, str, str | None]) -> bool:
+    """True when the order is a repeat of the precedent's repository on the model AND the code side.
+
+    The model_link must be the repository the precedent measured. A recipe with `code.source: "code"` reads the serving
+    code from a separate repository, so the order's code_link must be exactly that repository (without it the generator has
+    no code fetch receipt to fill commit and tree from). A recipe with `code.source: "model"` serves the model repository's
+    own files, so an order that supplies any code_link of its own (another repository, or an unreadable link) does not apply."""
+    if repo_key(order.get("model_link")) != pinned[3]:
+        return False
+    code_link = order.get("code_link")
+    if pinned[4] is not None:
+        return repo_key(code_link) == pinned[4]
+    return code_link is None or (isinstance(code_link, str) and not code_link.strip())
 
 
 def _read_precedent_file(root: Path | str, order: str, name: str) -> bytes:
@@ -325,7 +341,7 @@ def _precedent_shapes(family: str, evaluations_root: Path | str) -> str | None:
     pinned = GENERATOR_PRECEDENTS.get(family)
     if pinned is None:
         return None
-    order, *digests, _repo = pinned
+    order, *digests, _repo, _code_repo = pinned
     shapes = []
     try:
         for name, digest, shape in (("POD-RECIPE.json", digests[0], _recipe_shape),
@@ -349,8 +365,9 @@ def _precedent_shapes(family: str, evaluations_root: Path | str) -> str | None:
 def generator_hint(order: dict[str, Any], evaluations_root: Path | str | None = None) -> str:
     """Extra text for the runner-generator prompt when a reviewed supplement covers this repository.
 
-    With `evaluations_root`, EXACTLY ONE matching family, an order whose model_link is the very repository its pinned
-    precedent measured, and a digest-verified precedent recipe, the hint shows that recipe shape and tells the generator
+    With `evaluations_root`, EXACTLY ONE matching family, an order whose model_link (and code_link, see
+    `_precedent_applies`) is the very repository its pinned precedent measured, and a digest-verified precedent recipe,
+    the hint shows that recipe shape and tells the generator
     to write the gpu_pod recipe instead of `unsupported` (the host registry check `active()` and the supplement's own
     recipe check stay the gate; the pickup starts the native owner at the retired-method hold when the order is not
     admitted). Zero or several matches, a family or repository without a precedent, or an unreadable/changed precedent
@@ -360,8 +377,7 @@ def generator_hint(order: dict[str, Any], evaluations_root: Path | str | None = 
         return ""
     entry = matches[0]
     pinned = GENERATOR_PRECEDENTS.get(entry["family"])
-    if evaluations_root is not None and len(matches) == 1 and pinned is not None \
-            and repo_key(order.get("model_link")) == pinned[3]:
+    if evaluations_root is not None and len(matches) == 1 and pinned is not None and _precedent_applies(order, pinned):
         shapes = _precedent_shapes(entry["family"], evaluations_root)
         if shapes:
             return (f"\nRuntime supplement note (host registry, not customer text): this order's model repository "
@@ -373,16 +389,20 @@ def generator_hint(order: dict[str, Any], evaluations_root: Path | str | None = 
                     "auto_map, several systems in one order, runtime versions that differ from the documented ones). "
                     "Use the precedent's `image` exactly: it is the host-pinned base image of that supplement and the "
                     "supplement is selected only when the image is byte-equal; this replaces the image-digest rule "
-                    "above for this image only, any other GPU image recipe remains unsupported. Keep the constant "
-                    "fields (schema_version, kind, image, min_vram_gb, weights repo and dir, code.source, services "
-                    "argv/env/ready_url, endpoint) unless this order's fetched source (the README and the serving files "
+                    "above for this image only, any other GPU image recipe remains unsupported. Keep the precedent's "
+                    "constant fields (schema_version, kind, image, min_vram_gb, weights repo and dir, code.source, "
+                    "endpoint, services argv/env/ready_url or, for python_inprocess, loader/pythonpath/model_dir/"
+                    "load_kwargs, and the served model name `model`, which must equal the `--name` in the service argv "
+                    "where the argv has one) unless this order's fetched source (the README and the serving files "
                     "under source/) shows a real difference; if it does, say so in PRICING-REVIEW.md. Take every "
                     "order-specific value from this order's host files: the weights revision and the file sha256 map "
-                    "from MODEL-WEIGHT-PINS.json, the code commit and tree from the code fetch receipt, and the served "
-                    "model name and the prices from your pricing review (v1.5-M2 reference rule with the read date). "
-                    "Never copy a precedent revision, hash or price: the shapes below carry placeholders instead. "
+                    "from MODEL-WEIGHT-PINS.json, the code commit and tree from the code fetch receipt, and the prices "
+                    "from your pricing review (v1.5-M2 reference rule with the read date). MODEL-WEIGHT-PINS.json pins "
+                    "this order's own model repository only: a weights entry for a repository other than this order's "
+                    "model has no host pin, so write a blocker instead of a recipe for it; never invent a revision or "
+                    "hash. Never copy a precedent revision, hash or price: the shapes below carry placeholders instead. "
                     "RUNTIME.json (backend gpu_pod, credential none) and MEASUREMENT-META.json follow the precedent's "
-                    "shape with this order's model id and prices. The independent source review decides.\n" + shapes)
+                    "shape with the same served model name and this order's prices. The independent source review decides.\n" + shapes)
     return (f"\nRuntime supplement note (host registry, not customer text): this repository matches the reviewed "
             f"`{entry['family']}` runtime supplement (`{entry['module']}` in the host runtime; precedent jobs "
             f"{', '.join(entry['precedents'])} under /home/flori/jobs/). Unless a host admission note follows, the "
