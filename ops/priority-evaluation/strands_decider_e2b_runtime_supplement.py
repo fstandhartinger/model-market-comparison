@@ -23,11 +23,15 @@ ORDER = native_owner.STRANDS_E2B_ORDER
 BASE_IMAGE = 'vllm/vllm-openai:v0.30.0@sha256:8a69ffad015f138d7170c4ddc429e230a3bc1c1719f67e14324749df200a4b90'
 RECIPE_SHA = '737f6ce9a381c085af394f173eb56960351c37f497bd6e8d7031f623848d7307'
 SOURCE_CONTRACT_SHA = '15a41a4082664bce649b24854e84165f8da9647e2cf52d89771cdf753f76868f'
-CONTEXT = Path('/home/flori/jobs/fastlane-native-0616c39d/supplement/RELEASE-BUILD-CONTEXT.tar')
-CONTEXT_SHA = '712c5a2f710ce7285f34172cdf51e2fae420d738ad088200c608b7b29f8b622c'
+# v3 (22 Nov 2026): the pinned vllm base already fails plain `pip check` (torch pins nvidia-nccl-cu13==2.29.7, the image has 2.30.7),
+# so the build ran into it on the first real smoke. The context now carries scoped_pip_check.py: pip check over every installed
+# distribution with exactly that one allowed base mismatch, exact overlay versions, and import checks. Wheels and lock are unchanged.
+CONTEXT = Path('/home/flori/jobs/fastlane-native-0616c39d/supplement/RELEASE-BUILD-CONTEXT-v3.tar')
+CONTEXT_SHA = 'ec819b6632d46af4101419c4e4ed092df3420619e3ba1c4013803e71439fa704'
 FILES = {
-    "Dockerfile.runtime-supplement": "2d22a6e811690e8fec1b56c35c96615c3e969b6663047f7fd178db3a7e1f4820",
+    "Dockerfile.runtime-supplement": "90520cacba71f4c60ab01316e49037ea274faa055dedd11d6f0e18b9ac95f141",
     "requirements.lock": "a958801f53827d430c287bcec4d103a926888a7cd72e3d39d57ea71ef6827474",
+    "scoped_pip_check.py": "ec3726e146729b63807bd01f93356cc80f9214cf3371d1510be26fd1181f0c0f",
     "wheels/peft-0.21.0-py3-none-any.whl": "b64eb75fd9dece7401c70e675b8d9de024993b70483691b41c62876f0c7809b7",
     "wheels/pillow-13.0.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl": "42d63be3af4f9b951b199b0a9d23365d37ab14687e6d77b74940432c8515c4ca",
     "wheels/strands_decider-0.4.0-py3-none-any.whl": "6484657659f8ca9a5faa9263cb791d3463c8a5d683f367072a294489efd4c4d5"
