@@ -6408,6 +6408,109 @@ def resubmit(rid: str, model_link: str | None = None, code_link: str | None = No
     return f"Order {order_ref(rid)} resubmitted ({count}); new deadline {deadline_for(row).strftime('%Y-%m-%d %H:%M UTC')}."
 
 
+# CR-831 (Florian 22 Nov 2026, key fastlane-zero-wait-1122): a result mail that went out through the guarded
+# mail-owner path (mail_tool + author-message-guard) instead of the pickup's own result step, e.g. a native-owner
+# order whose pickup delivery branch is disabled, is recorded here so the 48 h refund card sees a real delivery.
+# Proof is exactly ONE line of mail_tool's sent audit: the order's own address, this exact subject, at the send time
+# the mail owner reported (+-120 s), at or after payment. The pickup's own non-result mails (payment received, review
+# passed, delayed, change request, refusal) never count. It sends nothing and publishes nothing; a late send becomes
+# refund_due exactly like record_result_delivery, and refunds stay on Florian's button.
+RECORD_DELIVERY_SUBJECT_MAX = 300
+RECORD_DELIVERY_WINDOW_S = 120
+RECORD_DELIVERY_AUDIT_LINES = 20000
+
+
+def audited_sends(recipient: str, subject: str) -> list[datetime]:
+    """Every audited send (newest audit tail) to this recipient with exactly this subject, oldest first."""
+    audit = MAIL_TOOL.parent / "sent-audit.log"
+    if not recipient or not audit.is_file():
+        return []
+    try:
+        lines = audit.read_text(encoding="utf-8", errors="replace").splitlines()
+    except OSError:
+        return []
+    found = []
+    for line in lines[-RECORD_DELIVERY_AUDIT_LINES:]:
+        parts = line.split("\t")
+        if len(parts) < 5:
+            continue
+        try:
+            stamp = float(parts[0])
+        except ValueError:
+            continue
+        if math.isfinite(stamp) and parts[3].strip().lower() == recipient.lower() and parts[4].strip() == subject:
+            found.append(datetime.fromtimestamp(stamp, timezone.utc))
+    return found
+
+
+def record_delivery(rid: str, subject: str, artifact_sha256: str, sent_at: str) -> str:
+    rid = request_id(rid)
+    if not isinstance(artifact_sha256, str) or not re.fullmatch(r"[0-9a-f]{64}", artifact_sha256):
+        raise PickupError("--artifact-sha256 must be a lowercase SHA-256")
+    if not isinstance(subject, str) or not subject.strip() or subject != subject.strip() \
+            or len(subject) > RECORD_DELIVERY_SUBJECT_MAX or any(ch in subject for ch in "\r\n\t"):
+        raise PickupError("--subject must be the exact one-line subject of the sent result mail")
+    claimed = parse_ts(sent_at) if isinstance(sent_at, str) and re.search(r"(Z|[+-]\d{2}:?\d{2})$", sent_at.strip()) else None
+    if claimed is None:
+        raise PickupError("--sent-at must be the reported send time (ISO 8601 with time zone)")
+    row = load_row(rid)
+    if not row:
+        raise PickupError("order not found")
+    if row.get("synthetic_test") is not False or row.get("stripe_mode") != "live":
+        raise PickupError("record-delivery accepts only a real live order")
+    if row.get("status") not in ("paid", "review_passed") or row.get("result_delivered_at"):
+        raise PickupError(f"order is {row.get('status')} and cannot take a delivery record")
+    if row.get("refund_id") or row.get("refund_decision"):
+        raise PickupError("order already has a refund decision; Florian's refund path decides")
+    if active_hold(row):
+        raise PickupError("order is on customer hold; resume it before recording the delivery")
+    if row.get("delivery_email_status") == "sending":
+        raise PickupError("the pickup's own result mail is in flight; let it finish")
+    recipient = str(row.get("email") or "").strip()
+    if not recipient:
+        raise PickupError("order has no customer address")
+    own_prefix = f"Benchmark Heaven evaluation order {order_ref(rid)}: "
+    if own_prefix.lower() in subject.lower() and subject != own_prefix + "your result":
+        raise PickupError("that subject belongs to one of the pickup's own non-result mails")
+    paid = parse_ts(row.get("paid_at"))
+    if paid is None:
+        raise PickupError("order has no recorded payment time")
+    sends = audited_sends(recipient, subject)
+    near = [stamp for stamp in sends if abs((stamp - claimed).total_seconds()) <= RECORD_DELIVERY_WINDOW_S]
+    if len(near) != 1:
+        raise PickupError(f"mail_tool's sent audit has {len(near)} sends to the order's address with this subject "
+                          f"within {RECORD_DELIVERY_WINDOW_S} s of --sent-at; exactly one is required")
+    proven = near[0]
+    if proven < paid:
+        raise PickupError("the audited send is older than the payment")
+    late = proven >= deadline_for(row)
+    if not late and any(stamp >= deadline_for(row) for stamp in sends):
+        # An error toward "on time" would cancel the refund path for good (critic r2 S1): let Florian's card decide.
+        raise PickupError("a later send with the same subject exists after the deadline; pass that send's time")
+    assignments = (f"status='{'refund_due' if late else 'completed'}', delivery_email_status='sent', "
+                   f"result_delivered_at={sql_text(iso(proven))}::timestamptz")
+    if late:
+        assignments += ", refund_reason='sla_48h_payment', refund_status=NULL"
+    with cycle_lock(blocking=True):
+        if not update_row(rid, assignments,
+                          "status IN ('paid','review_passed') AND result_delivered_at IS NULL "
+                          "AND customer_hold_started_at IS NULL AND refund_id IS NULL AND refund_decision IS NULL "
+                          "AND COALESCE(delivery_email_status,'not_due') <> 'sending'"):
+            raise PickupError("the order changed while recording; read its status and retry")
+        try:
+            state = load_state(rid)
+            state["external_delivery"] = {"subject_sha256": hashlib.sha256(subject.encode()).hexdigest(),
+                                          "sent_at": iso(proven), "artifact_sha256": artifact_sha256,
+                                          "recorded_at": iso(utcnow()), "late": late,
+                                          "source": "mail_tool sent-audit.log"}
+            save_state(state)
+        except (PickupError, OSError, ValueError) as exc:
+            return (f"Order {order_ref(rid)}: result delivery recorded in the DB at {iso(proven)}, but the state note "
+                    f"failed ({type(exc).__name__}); do not retry, the DB row is final.")
+    return (f"Order {order_ref(rid)}: result delivery recorded at {iso(proven)} from the mail audit"
+            + (" (after the deadline: refund_due, Florian's refund card decides)." if late else "."))
+
+
 def gate(rid: str) -> tuple[bool, str]:
     row = load_row(request_id(rid))
     if not row:
@@ -6644,6 +6747,11 @@ def main(argv: list[str] | None = None) -> int:
     fetch_parser = sub.add_parser("fetch-source")
     fetch_parser.add_argument("request_id")
     fetch_parser.add_argument("--which", required=True, choices=("code", "model"))
+    delivery_parser = sub.add_parser("record-delivery")
+    delivery_parser.add_argument("request_id")
+    delivery_parser.add_argument("--subject", required=True)
+    delivery_parser.add_argument("--artifact-sha256", required=True)
+    delivery_parser.add_argument("--sent-at", required=True)
     args = parser.parse_args(argv)
     try:
         if args.command == "cycle":
@@ -6681,6 +6789,9 @@ def main(argv: list[str] | None = None) -> int:
         if args.command == "fetch-source":
             print(json.dumps(fetch_source(args.request_id, args.which), indent=2))
             return 0
+        if args.command == "record-delivery":
+            print(record_delivery(args.request_id, args.subject, args.artifact_sha256, args.sent_at))
+            return 0
         if args.command == "status":
             rid = request_id(args.request_id)
             row = load_row(rid) or {}
@@ -6702,6 +6813,7 @@ def main(argv: list[str] | None = None) -> int:
                 print(recover_source_access(args.request_id))
             elif args.command == "resubmit":
                 print(resubmit(args.request_id, args.model_link, args.code_link))
+
         return 0
     except PickupError as exc:
         print(f"fast-lane pickup: {exc}", file=sys.stderr)
