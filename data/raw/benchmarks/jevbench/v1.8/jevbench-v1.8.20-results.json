@@ -266241,7 +266241,7 @@
    "method": "v1.7",
    "model_pin": "xsdfasfgsa/Starlord-4B-v2.0-preview@b4b4facd68fde1d8f9ad3bd05d692350a789a47f",
    "new_in": "v1.8.20",
-   "not_ranked_because": "Added after the v1.8.10 ranking review; it is ranked at the next review.",
+   "not_ranked_because": "Measured on the 22 Nov 2026 draw, which is not yet equated to the reference scale; anchor runs for that draw are pending. Shown unranked until then.",
    "notes": "A later version of Starlord-4B-preview, which is listed separately. Qwen3.5-4B finetune read out through candidate logits in one joint forward pass, 0 output tokens, with a two-block bidirectional attention pass over the request in the full-attention layers. The JevBench-only Noul confidence floor of 0.801 is part of the measured model (see the disclosure). The model card reports a public JevBench result; it does not state how the public split was used. Over-limit or OOM items refused with 422 and scored wrong.",
    "paid_fast_lane": true,
    "rank": null,
