@@ -40,12 +40,37 @@ class CapacityTests(unittest.TestCase):
         self.assertEqual(self.state['creation_attempts'],2)
         self.assertEqual(self.state['spent_upper_bound_usd'],1.25)
         self.assertEqual(pc.allocation_count(self.state,self.root),1)
-        self.state['creation_attempts']=3
-        self.assertEqual(pc.allocation_count(self.state,self.root),2)
+        self.state['creation_attempts']=4  # one credited refusal: 3 real allocations = first pod + two fresh-pod retries
+        self.assertEqual(pc.allocation_count(self.state,self.root),3)
         fake=SimpleNamespace(reserve=lambda *a:self.fail('allocation cap reached'))
         with patch.object(pr,'PODS_DIR',self.root),self.assertRaises(pr.PodRunError):
             pr._lifecycle(fake,'fixture',{},self.root/'stage',self.root/'out',self.state,('RTXPRO6000',96),3,18.75,None,lambda:None)
-        self.assertEqual(self.state['creation_attempts'],3)
+        self.assertEqual(self.state['creation_attempts'],4)
+
+    def test_allocation_limit_is_first_pod_plus_two_fresh_pod_retries(self):
+        self.assertEqual(pc.MAX_ALLOCATIONS, 3)
+        state={'request_id':self.rid,'creation_attempts':2,'spent_upper_bound_usd':30.0}
+        self.assertEqual(pc.allocation_count(state,self.root),2)  # a third allocation is still allowed (2 < 3)
+        reserved=[]
+        class Stop(Exception):pass
+        def reserve(*args):
+            reserved.append(args)
+            raise Stop()
+        with patch.object(pr,'PODS_DIR',self.root),self.assertRaises(Stop):
+            pr._lifecycle(SimpleNamespace(reserve=reserve,preflight=lambda *a:None),'fixture',{},self.root/'stage',self.root/'out',state,('RTXPRO6000',96),3,20.0,None,lambda:None)
+        self.assertEqual(len(reserved),1)
+        state['creation_attempts']=3  # the fourth allocation is refused before any reservation
+        self.assertEqual(pc.allocation_count(state,self.root),3)
+        fake=SimpleNamespace(reserve=lambda *a:self.fail('fourth allocation reserved'),preflight=lambda *a:None)
+        with patch.object(pr,'PODS_DIR',self.root),self.assertRaises(pr.PodRunError):
+            pr._lifecycle(fake,'fixture',{},self.root/'stage',self.root/'out',state,('RTXPRO6000',96),3,5.0,None,lambda:None)
+        self.assertEqual(state['creation_attempts'],3)
+
+    def test_raw_attempt_counter_is_bounded_by_allocations_plus_refusals(self):
+        limit=pc.MAX_ALLOCATIONS+pc.MAX_REFUSALS
+        self.assertEqual(pc.allocation_count({'request_id':self.rid,'creation_attempts':limit},self.root),limit)
+        with self.assertRaises(pc.CapacityEvidenceError):
+            pc.allocation_count({'request_id':self.rid,'creation_attempts':limit+1},self.root)
 
     def test_receipt_bytes_and_cross_order_and_duplicates_fail_closed(self):
         digest=self.credit()

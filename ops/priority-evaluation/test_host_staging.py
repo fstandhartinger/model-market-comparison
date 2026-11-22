@@ -470,21 +470,21 @@ class HostStagingTests(unittest.TestCase):
 
     def test_host_failure_second_attempt_keeps_full_ttl_at_pinned_price_and_caps(self):
         # Host-staged recipes account TTL and the upper-bound charge at the pinned hourly price (1.30 here), so a
-        # failed staging attempt does not starve the one permitted fresh-pod retry (original caps unchanged).
+        # failed staging attempt does not starve the two permitted fresh-pod retries (per-order caps: 3 allocations).
         fake = HostFake('size')
         with self.assertRaisesRegex(md.OperationalHold, 'gpu_pod_run_failed'):
             self.run_recipe(fake)
         state = json.loads((self.root / 'pods' / (RID + '.json')).read_text())
-        self.assertEqual(fake.removed, ['pod-1', 'pod-2'])
-        self.assertEqual(state['creation_attempts'], 2)
-        self.assertAlmostEqual(state['spent_upper_bound_usd'], 2 * 3 * 1.30)
-        self.assertLessEqual(state['spent_upper_bound_usd'], 20)
+        self.assertEqual(fake.removed, ['pod-1', 'pod-2', 'pod-3'])
+        self.assertEqual(state['creation_attempts'], 3)
+        self.assertAlmostEqual(state['spent_upper_bound_usd'], 3 * 3 * 1.30)
+        self.assertLessEqual(state['spent_upper_bound_usd'], pr.PER_ORDER_CAP_USD)
         self.assertAlmostEqual(state['attempt_ttl_hours'], 3)
         self.assertFalse(state['input_dispatched'])
         self.assertFalse(state['execution_started'])
         with self.assertRaises(md.OperationalHold):
             self.run_recipe(fake)
-        self.assertEqual(fake.next_pod, 2)  # no third creation
+        self.assertEqual(fake.next_pod, 3)  # no fourth creation
 
     def test_legacy_recipes_keep_the_five_dollar_ceiling_accounting(self):
         self.assertEqual(pr._attempt_rate({'kind': 'aplomb_native', 'hourly_usd': 1.3}), pr.MAX_HOURLY_USD)

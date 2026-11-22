@@ -11,7 +11,7 @@ manual runs used (up/exec/scp/rm/ps/spend) plus ~/bin/gpu-pod-guard reserve/atta
 RunPodProvider is a documented stub that raises OperationalHold("gpu_pod_capacity") — a second
 provider is future work.
 
-One fresh-pod retry on a run failure -> OperationalHold("gpu_pod_run_failed"); no capacity ->
+Up to two fresh-pod retries (three pod allocations per order) on a run failure -> OperationalHold("gpu_pod_run_failed"); no capacity ->
 OperationalHold("gpu_pod_capacity"). A partial raw.jsonl is kept and never resumed. The returned
 receipt has the same shape measurement_dispatch.run returns so dispatch_measurement and
 score_measurement work unchanged.
@@ -50,7 +50,13 @@ LIUM = HOME / ".local/bin/lium"
 GUARD = HOME / "bin/gpu-pod-guard"
 
 MAX_HOURLY_USD = 5.00  # Florian 6 Oct 2026: paid fast-lane GPU pods up to USD 5/h
-PER_ORDER_CAP_USD = 20.0  # ... and at most USD 20 per order
+# Florian 22 Nov 2026 (DECISIONS key fastlane-zero-wait-1122): paid lane USD 50 per order (was 20), up to two fresh-pod retries.
+# Each attempt still reserves at most MAX_HOURLY_USD * TTL_CAP_HOURS = 15, so three attempts (45) fit in the order cap.
+PER_ORDER_CAP_USD = 50.0  # ... and at most USD 50 per order
+# Order-specific fresh-generation authorities (v16_allocation.FreshAllocation) are hash-pinned to the original accounting
+# (USD 20 per order, one retry) and keep it unchanged; the scoped top-up has its own lifetime cap.
+ORIGINAL_ORDER_CAP_USD = 20.0
+ORIGINAL_MAX_ATTEMPTS = 2
 TTL_CAP_HOURS = 3.0
 EXPECTED_ROWS = 1624
 GPU_PREFERENCE = (("H100", 80), ("A100", 80), ("L40S", 48), ("RTX6000", 48), ("RTXPRO6000", 96))  # lium marketplace names
@@ -86,8 +92,8 @@ def _attempt_rate(recipe, job=None):
     """USD/h used for the per-attempt TTL and upper-bound charge.
 
     Host-staged native recipes pin the exact hourly price (validated 0 < price <= MAX_HOURLY_USD, compared with the live
-    pod price right after creation, hold if the live price exceeds the pin), so the original caps (<= USD 5/h, USD 20/order, 3 h TTL,
-    2 creations) are accounted at that pinned price. All other routes keep the USD 5/h ceiling."""
+    pod price right after creation, hold if the live price exceeds the pin), so the per-order caps (<= USD 5/h, USD 50/order, 3 h TTL,
+    3 creations) are accounted at that pinned price. All other routes keep the USD 5/h ceiling."""
     if job is not None:
         import chon_runtime_supplement
         if chon_runtime_supplement.active(job, recipe):
@@ -108,7 +114,7 @@ LOADER_RE = re.compile(r"[A-Za-z_][A-Za-z0-9_]*(\.[A-Za-z_][A-Za-z0-9_]*)*:[A-Za
 
 
 class PodRunError(Exception):
-    """A pod-side lifecycle step failed; eligible for one fresh-pod retry."""
+    """A pod-side lifecycle step failed; eligible for a fresh-pod retry (up to two per order)."""
 
 
 class PodCapacityError(Exception):
@@ -920,7 +926,7 @@ def _lifecycle(provider, job, recipe, staging_path, output, state, gpu_choice, t
             allocations = pod_capacity.allocation_count(state, PODS_DIR)
             limit = allocation_gate('check', state) if allocation_gate is not None else pod_capacity.MAX_ALLOCATIONS
             from scoped_native_topup import ScopedTopUp
-            ceiling = allocation_gate.allowed_total if type(allocation_gate) is ScopedTopUp else 3
+            ceiling = allocation_gate.allowed_total if type(allocation_gate) is ScopedTopUp else pod_capacity.MAX_ALLOCATIONS
             if type(limit) is not int or not 1 <= limit <= ceiling:
                 raise PodRunError('invalid trusted allocation limit')
             if allocations >= limit:
@@ -1545,7 +1551,9 @@ def run(rid: str, job_dir: Path, recipe: dict, output: Path, expected_pins: dict
     state['request_id'] = rid
     from scoped_native_topup import ScopedTopUp
     scoped = type(allocation_gate) is ScopedTopUp
-    cap = allocation_gate.lifetime_cap_usd if scoped else PER_ORDER_CAP_USD
+    # Ordinary orders: the per-order cap. A scoped top-up carries its own lifetime cap; a fresh-generation authority
+    # (v16_allocation.FreshAllocation) stays on the original USD 20 accounting it is hash-pinned to.
+    cap = allocation_gate.lifetime_cap_usd if scoped else (PER_ORDER_CAP_USD if allocation_gate is None else ORIGINAL_ORDER_CAP_USD)
     if scoped:
         allocation_gate('check', state)
     budget = min(cap, max_usd)
@@ -1587,7 +1595,13 @@ def run(rid: str, job_dir: Path, recipe: dict, output: Path, expected_pins: dict
         provider_index = 0  # advances only after a capacity miss; the attempt budget below is unchanged
         single_attempt = strands_e2b or scoped or (
             rid == '3687485f-5a51-4964-bd9a-73973f3494d7' and allocation_gate is not None)
-        for attempt in range(1 if single_attempt else 2):
+        if single_attempt:
+            max_attempts = 1
+        elif allocation_gate is not None:
+            max_attempts = ORIGINAL_MAX_ATTEMPTS  # fresh-generation exceptions keep their original single retry
+        else:
+            max_attempts = pod_capacity.MAX_ALLOCATIONS  # first pod + two fresh-pod retries
+        for attempt in range(max_attempts):
             gpu_choice = candidates[attempt % len(candidates)]
             run_spend = state.get('spent_upper_bound_usd', 0.0) - prior_spend
             remaining = min(budget - run_spend, cap - state.get('spent_upper_bound_usd', 0.0))

@@ -3449,7 +3449,7 @@ class PodRecipeValidationTests(unittest.TestCase):
         self.assertEqual([g for g in pod_runner.GPU_PREFERENCE if g[1] >= recipe['min_vram_gb']],
                          [('RTXPRO6000', 96)])
         self.assertEqual(pod_runner.MAX_HOURLY_USD, 5.0)
-        self.assertEqual(pod_runner.PER_ORDER_CAP_USD, 20.0)
+        self.assertEqual(pod_runner.PER_ORDER_CAP_USD, 50.0)
         self.assertEqual(pod_runner.TTL_CAP_HOURS, 3.0)
         self._rejected(lambda r: r.update(min_vram_gb=True))
         self._rejected(lambda r: r.update(min_vram_gb=96.0))
@@ -3569,7 +3569,7 @@ class _FakeProvider(pod_runner.Provider):
         if command[:2] == ["docker", "image"]:
             out = '["x@sha256:8a69ffad015f138d7170c4ddc429e230a3bc1c1719f67e14324749df200a4b90"]'
         elif command[:1] == ["sha256sum"]:
-            digest = "0" * 64 if self.behavior.get("sha_bad") \
+            digest = "0" * 64 if self.behavior.get("sha_bad") or pod_id in self.behavior.get("sha_bad_pods", ()) \
                 else TORCHCAST_RECIPE['weights'][0]['sha256']['model.safetensors']
             out = f"{digest}  x"
             if self.behavior.get("sha_noise"):
@@ -3692,15 +3692,116 @@ class PodRunnerLifecycleTests(unittest.TestCase):
         # exact-id teardown verified against ps; TTL = min(3 h, 20/5) = 3 h
         self.assertIn(("create", "H100", 3.0, 20.0), provider.calls)
 
-    def test_caps_are_five_per_hour_and_twenty_per_order(self):
+    def test_caps_are_five_per_hour_and_fifty_per_order(self):
         self.assertEqual(pod_runner.MAX_HOURLY_USD, 5.00)
-        self.assertEqual(pod_runner.PER_ORDER_CAP_USD, 20.0)
+        self.assertEqual(pod_runner.PER_ORDER_CAP_USD, 50.0)
+        self.assertEqual(pod_runner.TTL_CAP_HOURS, 3.0)
         provider = _FakeProvider()
-        self._run(provider, max_usd=50.0)  # the order cap wins over a larger caller budget
-        self.assertIn(("create", "H100", 3.0, 20.0), provider.calls)
+        self._run(provider, max_usd=80.0)  # the order cap wins over a larger caller budget
+        self.assertIn(("create", "H100", 3.0, 50.0), provider.calls)
         provider = _FakeProvider()
         self._run(provider, max_usd=4.0)  # a smaller remaining budget shortens the TTL
         self.assertIn(("create", "H100", 0.8, 4.0), provider.calls)
+
+    def _create_calls(self, provider):
+        return [c for c in provider.calls if c[0] == "create"]
+
+    def _ledger(self, rid):
+        return json.loads((self.pods_dir / f"{rid}.json").read_text())
+
+    def test_third_allocation_is_allowed_after_two_failed_runs(self):
+        # Florian 22 Nov 2026: the paid lane gets the first pod plus two fresh-pod retries (3 allocations per order).
+        provider = _FakeProvider({"sha_bad_pods": {"pod-1", "pod-2"}})
+        receipt = self._run(provider, max_usd=pod_runner.PER_ORDER_CAP_USD)
+        self.assertEqual(receipt["rows"], 1624)
+        self.assertEqual(receipt["pod_id"], "pod-3")
+        self.assertEqual(provider.removed, ["pod-1", "pod-2", "pod-3"])
+        self.assertEqual(provider.pods, {})
+        # every attempt reserves at most TTL_CAP_HOURS * MAX_HOURLY_USD = 15: 15 + 15 + 15 = 45 <= 50
+        gpus = [g[0] for g in pod_runner.GPU_PREFERENCE if g[1] >= self.recipe["min_vram_gb"]]  # one candidate per attempt
+        self.assertEqual(self._create_calls(provider),
+                         [("create", gpus[0], 3.0, 50.0), ("create", gpus[1], 3.0, 35.0), ("create", gpus[2], 3.0, 20.0)])
+        self.assertEqual(receipt["charged_or_reserved_usd"], 45.0)
+        self.assertLessEqual(receipt["charged_or_reserved_usd"], pod_runner.PER_ORDER_CAP_USD)
+
+    def test_fourth_allocation_is_refused_and_spend_never_exceeds_the_order_cap(self):
+        provider = _FakeProvider({"sha_bad": True})
+        rid = str(uuid.uuid4())
+        output = self.tmp / "out-fourth"
+
+        def run():
+            with mock.patch.object(pod_runner.measurement_dispatch, "pins", return_value=self.pins):
+                return pod_runner.run(rid, self.job, self.recipe, output, self.pins, 80.0,  # caller budget above the cap
+                                      provider=provider, alert=self.alerts.append)
+        with self.assertRaises(ap.measurement_dispatch.OperationalHold) as ctx:
+            run()
+        self.assertEqual(str(ctx.exception), "gpu_pod_run_failed")
+        self.assertEqual(provider.removed, ["pod-1", "pod-2", "pod-3"])
+        ledger = self._ledger(rid)
+        self.assertEqual(ledger["creation_attempts"], 3)
+        self.assertEqual(ledger["spent_upper_bound_usd"], 45.0)
+        self.assertLessEqual(ledger["spent_upper_bound_usd"], pod_runner.PER_ORDER_CAP_USD)
+        # A later pickup pass of the same order may not rent a fourth pod: nothing is reserved or created.
+        reservations = len([c for c in provider.calls if c[0] == "reserve"])
+        with self.assertRaises(ap.measurement_dispatch.OperationalHold) as again:
+            run()
+        self.assertEqual(str(again.exception), "gpu_pod_run_failed")
+        self.assertEqual(provider.next_pod, 3)
+        self.assertEqual(len(self._create_calls(provider)), 3)
+        self.assertEqual(len([c for c in provider.calls if c[0] == "reserve"]), reservations)
+        ledger = self._ledger(rid)
+        self.assertEqual(ledger["creation_attempts"], 3)
+        self.assertEqual(ledger["spent_upper_bound_usd"], 45.0)
+
+    def test_remaining_budget_arithmetic_refuses_when_the_order_cap_is_reached(self):
+        for spent, expected in ((50.0, "gpu_pod_budget_exhausted"), (50.01, "partial_measurement_requires_reconciliation")):
+            provider = _FakeProvider()
+            rid = str(uuid.uuid4())
+            self.pods_dir.mkdir(parents=True, exist_ok=True)
+            (self.pods_dir / f"{rid}.json").write_text(json.dumps(
+                {"request_id": rid, "creation_attempts": 2, "spent_upper_bound_usd": spent, "torn_down_at": "2026-11-22T00:00:00+00:00"}))
+            with mock.patch.object(pod_runner.measurement_dispatch, "pins", return_value=self.pins):
+                with self.assertRaises(ap.measurement_dispatch.OperationalHold) as ctx:
+                    pod_runner.run(rid, self.job, self.recipe, self.tmp / f"out-{spent}", self.pins, 80.0,
+                                   provider=provider, alert=self.alerts.append)
+            self.assertEqual(str(ctx.exception), expected)
+            self.assertEqual(provider.calls, [])  # no quote, reservation or pod
+
+    def test_prior_spend_shortens_the_last_attempt_and_the_total_stays_within_the_cap(self):
+        provider = _FakeProvider({"sha_bad": True})
+        rid = str(uuid.uuid4())
+        self.pods_dir.mkdir(parents=True, exist_ok=True)
+        (self.pods_dir / f"{rid}.json").write_text(json.dumps(
+            {"request_id": rid, "creation_attempts": 1, "spent_upper_bound_usd": 25.0, "torn_down_at": "2026-11-22T00:00:00+00:00"}))
+        with mock.patch.object(pod_runner.measurement_dispatch, "pins", return_value=self.pins):
+            with self.assertRaises(ap.measurement_dispatch.OperationalHold) as ctx:
+                pod_runner.run(rid, self.job, self.recipe, self.tmp / "out-prior", self.pins, 80.0,
+                               provider=provider, alert=self.alerts.append)
+        self.assertEqual(str(ctx.exception), "gpu_pod_budget_exhausted")  # the cap is reached: refuse, never over-spend
+        # 25 already spent: 15 + 10 fit; the next allocation would have 0 left and is not even reserved
+        self.assertEqual([(c[2], c[3]) for c in self._create_calls(provider)], [(3.0, 25.0), (2.0, 10.0)])
+        self.assertEqual(self._ledger(rid)["spent_upper_bound_usd"], 50.0)
+
+    def test_order_specific_allocation_gate_keeps_the_original_cap_and_one_retry(self):
+        # A fresh-generation authority (v16_allocation.FreshAllocation) is hash-pinned to the original accounting:
+        # USD 20 per order and one retry. The raised per-order cap must not widen it.
+        class Gate:
+            contingency_usd = 0
+            max_new_usd = pod_runner.ORIGINAL_ORDER_CAP_USD
+            max_ttl_hours = pod_runner.TTL_CAP_HOURS
+
+            def __call__(self, phase, state):
+                return 2
+
+        provider = _FakeProvider({"sha_bad": True})
+        rid = str(uuid.uuid4())
+        with mock.patch.object(pod_runner.measurement_dispatch, "pins", return_value=self.pins):
+            with self.assertRaises(ap.measurement_dispatch.OperationalHold) as ctx:
+                pod_runner.run(rid, self.job, self.recipe, self.tmp / "out-gated", self.pins, 80.0,
+                               provider=provider, alert=self.alerts.append, allocation_gate=Gate())
+        self.assertEqual(str(ctx.exception), "gpu_pod_run_failed")
+        self.assertEqual(provider.removed, ["pod-1", "pod-2"])
+        self.assertEqual(self._ledger(rid)["spent_upper_bound_usd"], 20.0)
 
     def test_driver_failure_preserves_partial_and_never_retries(self):
         provider = _FakeProvider({"wait_rc": {"pod-1": "1"}})
@@ -3796,10 +3897,10 @@ class PodRunnerLifecycleTests(unittest.TestCase):
     def test_weight_sha_mismatch_is_a_run_failure_with_the_actual_digest(self):
         provider = _FakeProvider({"sha_bad": True})
         with self.assertRaises(ap.measurement_dispatch.OperationalHold) as ctx:
-            self._run(provider)
+            self._run(provider, max_usd=50.0)  # the full per-order budget: first pod + two fresh-pod retries
         self.assertEqual(str(ctx.exception), "gpu_pod_run_failed")
         self.assertIn("0" * 64, str(ctx.exception.__cause__))
-        self.assertEqual(provider.removed, ["pod-1", "pod-2"])
+        self.assertEqual(provider.removed, ["pod-1", "pod-2", "pod-3"])
 
     def test_row_count_mismatch_is_rejected(self):
         provider = _FakeProvider({"rows": 1600})
@@ -3986,7 +4087,7 @@ class PodUnidentifiedCreateTests(unittest.TestCase):
         pod_id = "55555555-5555-4555-8555-555555555555"
         fake = _FakeLium(new_on_up=[pod_id], hourly=5.10, up_output=json.dumps({"id":pod_id,"price_per_hour":5.10}))
         with self.assertRaises(ap.measurement_dispatch.OperationalHold) as ctx:
-            self._run(self._provider(fake))
+            self._run(self._provider(fake), max_usd=50.0)  # all three allocations may be tried within the order cap
         self.assertEqual(str(ctx.exception), "gpu_pod_capacity")
         self.assertEqual(set(fake.removed), {pod_id})  # only our exact id, never a foreign pod
         self.assertEqual(fake.pods, {})
