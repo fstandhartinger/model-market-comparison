@@ -2096,7 +2096,8 @@ class FinalizeTests(DatabaseTestCase):
         self.assertNotIn(ap.XPOST_UNIT.format(rid), fx.started)
         # Past the deadline: no refund card, no SLA alert, and the release PR may still be opened (gate open).
         ap.sql(f"UPDATE {ap.TABLE} SET paid_at=now()-interval '50 hours' WHERE id='{rid}'")
-        self.assertEqual(ap.gate(rid), (True, "ok"))
+        self.assertEqual(ap.gate(rid, publish=True), (True, "ok"))
+        self.assertFalse(ap.gate(rid)[0])  # measurement callers and the CLI keep the strict deadline
         self.assertEqual([r["id"] for r in ap.refund_decision_rows(None, ap.JOB_ROOT)], [])
         self.assertEqual(ap.sla_sweep(None, ap.JOB_ROOT, FakeEffects())["missed48"], 0)
         self.assertEqual([r["id"] for r in ap.sla_decision_rows(None, ap.JOB_ROOT)], [])
@@ -2176,7 +2177,7 @@ class FinalizeTests(DatabaseTestCase):
         state["measured_summary"] = summary
         ap.save_state(state)
         ap.sql(f"UPDATE {ap.TABLE} SET delivery_email_status='sent', paid_at=now()-interval '49 hours' WHERE id='{rid}'")
-        self.assertEqual(ap.gate(rid), (True, "ok"))
+        self.assertEqual(ap.gate(rid, publish=True), (True, "ok"))
         make_due(rid, "finalize")
         with mock.patch.object(ap, "advance_public_release", return_value=False):
             ap.cycle(fx)
@@ -2184,6 +2185,34 @@ class FinalizeTests(DatabaseTestCase):
         self.assertIsNotNone(current["result_delivered_at"])
         self.assertEqual(current["status"], "paid")
         self.assertFalse(any("your result" in m[1] for m in fx.mails))
+
+    def test_pinned_measured_result_is_never_mailed_after_a_changed_verification(self):
+        """Critic r2 M-A: a re-measured order must not get the superseded pinned score."""
+        rid, fx, job, _live = self.prepare_not_live()
+        fx.mail_ok = False
+        with mock.patch.object(ap, "advance_public_release", return_value=False):
+            ap.cycle(fx)
+        fx.mail_ok = True
+        state = ap.load_state(rid)
+        self.assertEqual(state["measured_summary"]["results"][0]["score"], 71.23456)
+        fresh = json.loads(json.dumps(state["measured_summary"]))
+        fresh["results"][0]["score"] = 65.5
+        ap.sql(f"UPDATE {ap.TABLE} SET delivery_email_status='failed' WHERE id='{rid}'")
+        before = len(fx.mails)
+        with self.assertRaises(ap.PickupError):
+            ap.deliver_measured_first(row(rid), ap.load_state(rid), fresh, fx, datetime.now(timezone.utc))
+        self.assertEqual(len(fx.mails), before)
+        self.assertIsNone(row(rid)["result_delivered_at"])
+
+    def test_native_owned_order_gets_no_parallel_measured_mail(self):
+        rid, fx, _job, _live = self.prepare_not_live()
+        state = ap.load_state(rid)
+        state["native_owner"] = {"job": "fastlane-native-x", "started_at": ap.iso(datetime.now(timezone.utc))}
+        ap.save_state(state)
+        with mock.patch.object(ap, "advance_public_release", return_value=False):
+            ap.cycle(fx)
+        self.assertFalse(any("your result" in m[1] for m in fx.mails))
+        self.assertNotIn("measured_first", ap.load_state(rid))
 
     def test_measured_result_is_not_mailed_after_the_deadline_or_during_a_hold(self):
         rid, fx, _job, _live = self.prepare_not_live()

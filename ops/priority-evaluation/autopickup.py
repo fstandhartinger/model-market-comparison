@@ -3058,18 +3058,35 @@ def deliver_measured_first(row: dict[str, Any], state: dict[str, Any], summary: 
     rid = request_id(row.get("id"))
     if row.get("result_delivered_at") or row.get("status") not in ("paid", "review_passed"):
         return
+    if isinstance(state.get("native_owner"), dict) and not state.get("measured_first"):
+        return  # a native owner delivers this order through its own operator; never a parallel pickup mail
     if not state.get("measured_first"):
         state["measured_first"] = True
         state["measured_summary"] = summary
         save_state(state)
     pinned = state["measured_summary"]
+    if measured_lines(pinned) != measured_lines(summary):
+        # Critic r2 M-A: never mail a pinned result the host no longer verifies.
+        raise PickupError("pinned measured result differs from the current verification; explicit reconciliation required")
     if row.get("delivery_email_status") != "sent":
         subject, body = measured_result_message(row, pinned)
         if not send_tracked_mail(row, state, "result_mail", "delivery_email_status", subject, body, effects, now,
                                  extra_guard=RESULT_DELIVERY_GUARD):
             return
         row = load_row(rid) or row
-    record_measured_delivery(row, state, pinned, now)
+    if record_measured_delivery(row, state, pinned, now) and (load_row(rid) or {}).get("status") == "refund_due":
+        effects.board(f"Paid order {order_ref(rid)}: the measured result mail was accepted only after the 48 h deadline, so "
+                      "the order is refund_due (Florian's refund card decides). Its public row was promised to the "
+                      "customer: publish it through the ordinary release path by hand.", owner_for(rid), kind="handoff")
+
+
+def measured_lines(summary: object) -> list[tuple]:
+    """The fields measured_result_message renders, for comparing a pinned summary with a fresh verification."""
+    results = summary.get("results") if isinstance(summary, dict) else None
+    if not isinstance(results, list):
+        return []
+    return [(item.get("benchmark"), item.get("version"), item.get("score"), item.get("system_key"),
+             item.get("public_url")) for item in results if isinstance(item, dict)]
 
 
 RESULT_DELIVERY_GUARD = (
@@ -3587,7 +3604,7 @@ def _jev_models_premerge_check(effects: Effects, release_files: dict[str, Path],
 
 def open_public_release_pr(rid: str, row: dict[str, Any], job_dir: Path, state: dict[str, Any],
                            effects: Effects) -> dict[str, Any] | None:
-    allowed, _reason = gate(rid)
+    allowed, _reason = gate(rid, publish=True)
     if not allowed:
         return None
     if SITE_CHECKOUT.is_symlink() or not SITE_CHECKOUT.is_dir():
@@ -3702,12 +3719,12 @@ def open_public_release_pr(rid: str, row: dict[str, Any], job_dir: Path, state: 
             site_command(["git", "-C", str(worktree), "-c", "user.name=Fast-lane automation",
                           "-c", "user.email=fastlane@benchmarkheaven.invalid", "commit", "-m",
                           f"{cr}: Publish paid fast-lane result {order_ref(rid)}"], timeout=120)
-            allowed, _reason = gate(rid)
+            allowed, _reason = gate(rid, publish=True)
             if not allowed:
                 return None
             pushed_head = site_command(["git", "-C", str(worktree), "rev-parse", "HEAD"])
             site_command(["git", "-C", str(worktree), "push", "--set-upstream", "origin", branch], timeout=300)
-            allowed, _reason = gate(rid)
+            allowed, _reason = gate(rid, publish=True)
             if not allowed:
                 return None
             body = (f"{cr}\n\nAutomated paid fast-lane leaderboard revision for order `{order_ref(rid)}`.\n\n"
@@ -3728,7 +3745,7 @@ def open_public_release_pr(rid: str, row: dict[str, Any], job_dir: Path, state: 
             state["public_release"] = record
             save_state(state)
 
-    allowed, _reason = gate(rid)
+    allowed, _reason = gate(rid, publish=True)
     if not allowed:
         return record
     pr = effects.gh_json(f"repos/{REPO}/pulls/{int(record['pr_number'])}")
@@ -3826,7 +3843,7 @@ def advance_delivery(row: dict[str, Any], state: dict[str, Any], job_dir: Path, 
 
     if row.get("evaluation_status") == "ready_for_release" and row.get("release_status") not in ("verified", "refused", "done") \
             and step_due(state, "finalize", now):
-        allowed, _reason = gate(rid)
+        allowed, _reason = gate(rid, publish=True)
         if not allowed:
             # Holds and deadlines are delivery gates too. Do not consume retry budget while closed.
             return
@@ -3853,7 +3870,7 @@ def advance_delivery(row: dict[str, Any], state: dict[str, Any], job_dir: Path, 
                 update_row(rid, "release_status='failed'")
                 alert(state, "finalize_exhausted", effects, urgent=True, text=agent_status_card(row, "is blocked: the result could not be verified", "Agents are checking the result before emailing it to the customer."))
             return
-        allowed, _reason = gate(rid)
+        allowed, _reason = gate(rid, publish=True)
         if not allowed:
             return
         state["verified"] = summary
@@ -3871,12 +3888,12 @@ def advance_delivery(row: dict[str, Any], state: dict[str, Any], job_dir: Path, 
     if row.get("release_status") == "verified" and summary and row.get("status") in ("paid", "review_passed") \
             and not row.get("result_delivered_at") and state.get("measured_first"):
         # CR-833: a staged measured envelope keeps its pinned body, also once the row is live.
-        deliver_measured_first(row, state, state["measured_summary"], effects, now)
+        deliver_measured_first(row, state, summary, effects, now)
         row = load_row(rid) or row
     complete_measured_after_live(row, state)
     row = load_row(rid) or row
     if row.get("release_status") == "verified" and summary and row.get("status") in ("paid", "review_passed") \
-            and not row.get("result_delivered_at"):
+            and not row.get("result_delivered_at") and not state.get("measured_first"):
         if row.get("delivery_email_status") == "sent":
             record_result_delivery(row, state, summary, now)
         else:
@@ -6815,7 +6832,9 @@ def record_delivery(rid: str, subject: str, artifact_sha256: str, sent_at: str) 
             + (" (after the deadline: refund_due, Florian's refund card decides)." if late else "."))
 
 
-def gate(rid: str) -> tuple[bool, str]:
+def gate(rid: str, *, publish: bool = False) -> tuple[bool, str]:
+    """publish=True (CR-833): the publication follow-up of an order whose measured result already reached the
+    customer is not closed by the 48 h deadline. Measurement callers and the CLI keep the strict gate."""
     row = load_row(request_id(rid))
     if not row:
         return False, "order not found"
@@ -6825,9 +6844,9 @@ def gate(rid: str) -> tuple[bool, str]:
         return False, "order is on customer hold"
     if not row.get("paid_at"):
         return False, "order has no recorded payment time"
-    if utcnow() >= deadline_for(row) and not row.get("result_delivered_at") \
-            and row.get("delivery_email_status") != "sent":
-        # CR-833: once the result reached the customer, the deadline no longer closes the publication follow-up.
+    if utcnow() >= deadline_for(row) and not (
+            publish and (row.get("result_delivered_at") or row.get("delivery_email_status") == "sent")
+            and load_state(request_id(rid)).get("measured_first") is True):
         return False, "the 48-hour deadline has passed"
     return True, "ok"
 
