@@ -43,6 +43,7 @@ ACTOR_RE = re.compile(r'[A-Za-z0-9._:@/+-]{1,120}')
 FAMILY_RE = re.compile(r'[a-z0-9_]{1,60}')
 IMAGE_RE = re.compile(r'[A-Za-z0-9._/:-]+@sha256:[0-9a-f]{64}')
 LOG_NAME = 'order-admissions.log'
+UUID_RE = re.compile(r'[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}')
 
 
 def _home() -> Path:
@@ -80,6 +81,8 @@ def runtime():
 
 def fetch_order(order_id: str):
     """The order's admission-relevant facts from the accounts DB, or None when no such order exists."""
+    if not UUID_RE.fullmatch(order_id if isinstance(order_id, str) else ''):
+        raise Refused('order id must be a canonical lower-case UUID')  # the id is interpolated into the SQL below
     sql = ("SELECT row_to_json(t) FROM (SELECT id::text AS id, status, stripe_mode, synthetic_test, "
            "paid_at IS NOT NULL AS paid, result_delivered_at IS NOT NULL AS delivered, "
            "refund_id IS NOT NULL AS has_refund_id, refunded_at IS NOT NULL AS refunded, refund_status "

@@ -566,6 +566,11 @@ class CliTests(TempCase):
         sql = argv[argv.index('-c') + 1]
         self.assertIn('bh_priority_evaluation_requests', sql)
         self.assertIn(f"WHERE id = '{ORDER}'::uuid", sql)
+        with mock.patch.object(cli.subprocess, 'run') as never:
+            for bad in (ORDER + "'; drop table x; --", ORDER.upper(), '', None, 5):
+                with self.assertRaises(cli.Refused):
+                    cli.fetch_order(bad)  # nothing but a canonical UUID is ever put into the SQL
+            never.assert_not_called()
         with mock.patch.object(cli.subprocess, 'run', return_value=subprocess.CompletedProcess([], 0, stdout='\n', stderr='')):
             self.assertIsNone(cli.fetch_order(ORDER))
         with mock.patch.object(cli.subprocess, 'run', return_value=subprocess.CompletedProcess([], 2, stdout='', stderr='boom')):
