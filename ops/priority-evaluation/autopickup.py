@@ -2329,6 +2329,13 @@ def manage_evaluation(row: dict[str, Any], state: dict[str, Any], effects: Effec
         subject = f"Benchmark Heaven evaluation order {order_ref(rid)}: source review passed"
         body = fill_template(read_template("autopickup-review-passed-template.txt"), {"ORDER_REF": order_ref(rid)})
         send_tracked_mail(row, state, "review_passed", "review_email_status", subject, body, effects, now)
+    if rid == native_owner.STRANDS_E2B_ORDER:
+        operational = state.get("operational_hold")
+        if isinstance(operational, dict):
+            operational_escalate(row, state, effects, now,
+                                 str(operational.get("reason") or "unsupported_measurement_backend"),
+                                 exhausted=False)
+        return
     if status in ("starting", "running"):
         if effects.dry_run:
             return
@@ -2584,6 +2591,8 @@ def _jev_v15_composite(axes: dict[str, Any], option: str) -> float:
 
 
 def dispatch_measurement(rid: str, job_dir: Path) -> None:
+    if any(native_owner.is_strands_e2b_order(value) for value in (rid, job_dir.name)):
+        raise measurement_dispatch.OperationalHold("separate_native_measurement_wrapper_required")
     review = validate_review_gate(job_dir)
     row = load_row(rid)
     state = load_state(rid)
@@ -3731,6 +3740,10 @@ def advance_public_release(row: dict[str, Any], job_dir: Path, state: dict[str, 
 
 def advance_delivery(row: dict[str, Any], state: dict[str, Any], job_dir: Path, effects: Effects, now: datetime) -> None:
     rid = request_id(row.get("id"))
+    if rid == native_owner.STRANDS_E2B_ORDER:
+        # This order delivers via the reviewed customer-only operator. Public
+        # finalization and announcements require a separate release decision.
+        return
 
     if row.get("evaluation_status") == "ready_for_release" and row.get("release_status") not in ("verified", "refused", "done") \
             and step_due(state, "finalize", now):
@@ -3801,6 +3814,8 @@ def advance_delivery(row: dict[str, Any], state: dict[str, Any], job_dir: Path, 
 def record_result_delivery(row: dict[str, Any], state: dict[str, Any], summary: dict[str, Any], now: datetime) -> bool:
     """Atomically close the delivery/refund race after audited result mail success."""
     rid = request_id(row.get("id"))
+    if rid == native_owner.STRANDS_E2B_ORDER:
+        return False
     subject, _ = result_message(row, summary)
     mail_step = step(state, "result_mail")
     sent_at = parse_ts(mail_step.get("sent_at"))
@@ -3826,6 +3841,8 @@ def record_result_delivery(row: dict[str, Any], state: dict[str, Any], summary: 
 def advance_xpost(row: dict[str, Any], state: dict[str, Any], job_dir: Path, summary: dict[str, Any],
                   effects: Effects, now: datetime) -> None:
     rid = request_id(row.get("id"))
+    if rid == native_owner.STRANDS_E2B_ORDER:
+        return
     text = xpost_text(summary)
     if step(state, "xpost")["status"] == "pending" and not any(item.get("top5_changed") for item in summary["results"]):
         step(state, "xpost")["status"] = "skipped"
@@ -4310,11 +4327,14 @@ def recover_result_email_leases(synthetic_id: str | None, job_root: Path, effect
     rows = sql_rows(f"""
       SELECT {row_json_sql('r')} FROM {TABLE} AS r
       WHERE {predicate} AND r.status IN ('paid','review_passed')
+        AND r.id <> '{native_owner.STRANDS_E2B_ORDER}'::uuid
         AND r.delivery_email_status='sending' AND r.updated_at < now()-interval '10 minutes'
       ORDER BY r.paid_at LIMIT 50
     """)
     for row in rows:
         rid = request_id(row["id"])
+        if rid == native_owner.STRANDS_E2B_ORDER:
+            continue
         state = load_state(rid)
         summary = state.get("verified")
         if not isinstance(summary, dict) or summary.get("outcome") != "delivered":
@@ -5443,6 +5463,8 @@ def run_agent(job_dir: Path, env: dict[str, str], timeout_hint: int, *, read_onl
 
 def evaluate_v16_generation(rid: str, job_dir: Path) -> int:
     """Same owning unit; reviewed generation, no customer agent or legacy release."""
+    if any(native_owner.is_strands_e2b_order(value) for value in (rid, job_dir.name)):
+        raise PickupError("separate_native_measurement_wrapper_required")
     import v16_adoption
     try:
         validate_review_gate(job_dir)
@@ -5502,6 +5524,8 @@ def evaluate_v16_generation(rid: str, job_dir: Path) -> int:
 
 def evaluate(rid: str) -> int:
     rid = request_id(rid)
+    if rid == native_owner.STRANDS_E2B_ORDER:
+        raise PickupError("separate_native_measurement_wrapper_required")
     row = load_row(rid)
     if not row or row.get("synthetic_test") is not False or row.get("stripe_mode") != "live":
         raise PickupError("the evaluation service accepts only a real live order")
@@ -5983,6 +6007,8 @@ def consume_stage_attempt(state: dict[str, Any], name: str, limit: int) -> bool:
 
 def xpost(rid: str) -> int:
     rid = request_id(rid)
+    if rid == native_owner.STRANDS_E2B_ORDER:
+        raise PickupError("separate_native_public_release_required")
     row = load_row(rid)
     if not row or row.get("synthetic_test") is not False or row.get("stripe_mode") != "live" \
             or row.get("status") not in ("completed", "refund_due") or row.get("visibility") != "public" \
@@ -6451,7 +6477,10 @@ def write_tree_listing(job_dir: Path, dest: Path, which: str, commit: str, tree:
         item: dict[str, Any] = {"path": path, "mode": mode, "git_blob_oid": oid,
                                 "blob_size": int(size) if size.isdigit() else None}
         if item["blob_size"] is not None and item["blob_size"] <= 200:
-            pointer = LFS_POINTER_RE.fullmatch(git(dest, "cat-file", "blob", oid))
+            try:
+                pointer = LFS_POINTER_RE.fullmatch(git(dest, "cat-file", "blob", oid))
+            except UnicodeDecodeError:
+                pointer = None  # A small binary blob is not an LFS pointer.
             if pointer:
                 item["lfs_oid_sha256"], item["lfs_size"] = pointer.group(1), int(pointer.group(2))
         files.append(item)

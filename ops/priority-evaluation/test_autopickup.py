@@ -2632,6 +2632,36 @@ class DeliveredOrderGuardTests(DatabaseTestCase):
                 self.assertEqual(fx.boards, [])
 
 
+class TreeListingTests(unittest.TestCase):
+    def test_small_binary_blob_is_listed_alongside_a_real_lfs_pointer(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            job = Path(tmp)
+            repo = job / "source" / "model"
+            repo.mkdir(parents=True)
+            ap.git(repo, "init", "-q")
+            (repo / "binary.bin").write_bytes(bytes([0x89, 0x50, 0x4E, 0x47]))
+            lfs_oid = "a" * 64
+            (repo / "weights.safetensors").write_text(
+                f"version https://git-lfs.github.com/spec/v1\noid sha256:{lfs_oid}\nsize 9001\n",
+                encoding="ascii",
+            )
+            ap.git(repo, "add", "binary.bin", "weights.safetensors")
+            ap.git(repo, "-c", "user.name=Test", "-c", "user.email=test@example.com",
+                   "commit", "-qm", "Synthetic pinned source")
+            commit = ap.git(repo, "rev-parse", "HEAD").strip()
+            tree = ap.git(repo, "rev-parse", "HEAD^{tree}").strip()
+
+            ap.write_tree_listing(job, repo, "model", commit, tree)
+
+            listing = json.loads((job / "source" / "TREE-LISTING-model.json").read_text())
+            files = {item["path"]: item for item in listing["files"]}
+            self.assertEqual(listing["file_count"], 2)
+            self.assertEqual(files["binary.bin"]["blob_size"], 4)
+            self.assertNotIn("lfs_oid_sha256", files["binary.bin"])
+            self.assertEqual(files["weights.safetensors"]["lfs_oid_sha256"], lfs_oid)
+            self.assertEqual(files["weights.safetensors"]["lfs_size"], 9001)
+
+
 class SourceFetchPolicyTests(DatabaseTestCase):
     """PR1b/c: fetches run outside the preparation budget; bad links and burned budgets never idle."""
 

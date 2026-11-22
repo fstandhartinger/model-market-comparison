@@ -844,6 +844,13 @@ WEIGHTS_SNIPPET = (
 )
 
 
+PINNED_WEIGHTS_SNIPPET = (
+    "import sys; from huggingface_hub import snapshot_download; "
+    "snapshot_download(repo_id=sys.argv[1], revision=sys.argv[2], local_dir=sys.argv[3], "
+    "allow_patterns=sys.argv[4:], token=False)"
+)
+
+
 def _note_capacity_offer(state, provider, gpu_choice, exc):
     """Remember the cheapest offer any provider quoted but we could not take (cap/capacity), for the T-24h handoff."""
     price = getattr(exc, 'offer_usd_h', None)
@@ -897,10 +904,16 @@ def _lifecycle(provider, job, recipe, staging_path, output, state, gpu_choice, t
             ryotide_runtime_supplement.recovery_bounds(job_dir, state, ttl, budget)
     pod_id = None
     reservation = None
+    strands_io = None
     quote_budget = {'remaining': 2} if quote_budget is None else quote_budget
     if "host_staging" in recipe and ttl < HOST_MIN_TTL_HOURS:
         # Original caps leave this attempt too little TTL for build + stream + run: hold before any quote/reserve/create.
         raise measurement_dispatch.OperationalHold("host_staging_ttl_too_short")
+    import strands_decider_e2b_runtime_supplement
+    strands_e2b = strands_decider_e2b_runtime_supplement.active(job_dir or job, recipe)
+    lease_hours = ttl
+    if strands_e2b:
+        lease_hours += strands_decider_e2b_runtime_supplement.CLEANUP_HOURS
     try:
         attempts = state.get('creation_attempts', 0)
         try:
@@ -939,16 +952,16 @@ def _lifecycle(provider, job, recipe, staging_path, output, state, gpu_choice, t
             raise measurement_dispatch.OperationalHold('gpu_pod_cleanup_uncertain') from exc
         if allocation_gate is not None:
             allocation_gate('before_reserve', state)
-        reservation = provider.reserve(job, "pod-measure", MAX_HOURLY_USD, budget, ttl)
+        reservation = provider.reserve(job, "pod-measure", MAX_HOURLY_USD, budget, lease_hours)
         state['creation_attempts'] = attempts + 1
         state['attempt_started_at'] = datetime.now(timezone.utc).isoformat()
         state.pop('torn_down_at', None)
         state['cleanup_uncertain'] = True
         state['attempt_ttl_hours'] = ttl
-        state['attempt_reserved_upper_bound_usd'] = ttl * _attempt_rate(recipe, job_dir or job)
+        state['attempt_reserved_upper_bound_usd'] = lease_hours * _attempt_rate(recipe, job_dir or job)
         extra = allocation_gate.contingency_usd if allocation_gate is not None else 0
         state['attempt_contingency_usd'] = extra
-        state['spent_upper_bound_usd'] = state.get('spent_upper_bound_usd', 0.0) + ttl * _attempt_rate(recipe, job_dir or job) + extra
+        state['spent_upper_bound_usd'] = state.get('spent_upper_bound_usd', 0.0) + state['attempt_reserved_upper_bound_usd'] + extra
         state['reservation_id'] = reservation
         state['input_dispatched'] = False
         state['execution_started'] = False
@@ -959,6 +972,9 @@ def _lifecycle(provider, job, recipe, staging_path, output, state, gpu_choice, t
                 try:
                     allocation_gate('before_create', state)
                 except Exception:
+                    if strands_e2b:
+                        # The exact order's reservation remains for audited reconciliation.
+                        raise
                     # No create call happened. Release only our reservation; keep
                     # monotonic attempts and full conservative charge/one-use claim.
                     provider.release(job, None, reservation)
@@ -967,13 +983,20 @@ def _lifecycle(provider, job, recipe, staging_path, output, state, gpu_choice, t
                     state['torn_down_at'] = datetime.now(timezone.utc).isoformat()
                     save_state()
                     raise
-            if "host_staging" in recipe or _attempt_rate(recipe, job_dir or job) != MAX_HOURLY_USD:
+            if strands_e2b:
+                work_budget = budget - strands_decider_e2b_runtime_supplement.CLEANUP_HOURS * MAX_HOURLY_USD
+                pod = provider.create(gpu_choice[0], ttl, work_budget)
+            elif "host_staging" in recipe or _attempt_rate(recipe, job_dir or job) != MAX_HOURLY_USD:
                 # Provider-side price ceiling = the pinned price the charge is accounted at, so the recorded
                 # upper bound holds even for an unclear create or a failed teardown.
                 pod = provider.create(gpu_choice[0], ttl, budget, max_hourly=_attempt_rate(recipe, job_dir or job))
             else:
                 pod = provider.create(gpu_choice[0], ttl, budget)
         except PodCapacityError as exc:
+            if strands_e2b:
+                # Never credit a charged attempt or release a reservation from a
+                # generic capacity exception. Reconcile its exact journal first.
+                raise measurement_dispatch.OperationalHold('gpu_pod_cleanup_requires_reconciliation') from exc
             proof = getattr(exc, 'proof', None)
             if isinstance(provider, LiumProvider) and proof is None:
                 raise measurement_dispatch.OperationalHold('gpu_pod_cleanup_uncertain') from exc
@@ -1000,6 +1023,8 @@ def _lifecycle(provider, job, recipe, staging_path, output, state, gpu_choice, t
         save_state()  # persist immediately: a crashed process must find this pod by exact id
         if pod.get('metadata_invalid'):
             raise measurement_dispatch.OperationalHold('gpu_pod_quote_changed')
+        if strands_e2b:
+            strands_decider_e2b_runtime_supplement.verify_created_pod(pod, state['native_launch'])
         try:
             hourly = float(hourly)
         except (TypeError, ValueError):
@@ -1030,6 +1055,10 @@ def _lifecycle(provider, job, recipe, staging_path, output, state, gpu_choice, t
                                                "--format", "{{json .RepoDigests}}"])
             if image.split("@", 1)[1] not in inspect.stdout:
                 raise PodRunError("pulled image digest does not match the pin")
+            if strands_e2b:
+                state['runtime_supplement'] = strands_decider_e2b_runtime_supplement.build(provider, pod_id)
+                image = state['runtime_supplement']['effective_image']
+                save_state()
             import standardone_runtime_supplement
             if standardone_runtime_supplement.active(job_dir or job, recipe):
                 # Fixed-order offline build of the documented stack on the pinned base, before weights/inputs.
@@ -1155,11 +1184,21 @@ def _lifecycle(provider, job, recipe, staging_path, output, state, gpu_choice, t
         else:
             for entry in recipe["weights"]:
                 target = f"/models/{entry['dir']}"
+                # This order uses only the trusted base for networked acquisition.
+                # Keep the author's wheel and unrelated Hub objects out of that process.
+                if strands_e2b:
+                    download_image = recipe["image"]
+                    snippet = PINNED_WEIGHTS_SNIPPET
+                    patterns = sorted(entry["sha256"])
+                else:
+                    download_image = image
+                    snippet = WEIGHTS_SNIPPET
+                    patterns = []
                 _exec(provider, pod_id, ["docker", "run", "--rm", "-v", "/models:/models",
                                          "-e", "HOME=/tmp", "--tmpfs", "/tmp",
                                          "-e", "HF_HUB_DISABLE_TELEMETRY=1",
-                                         "-e", "HF_TOKEN=", "--entrypoint", "python3", image,
-                                         "-c", WEIGHTS_SNIPPET, entry["repo"], entry["revision"], target],
+                                         "-e", "HF_TOKEN=", "--entrypoint", "python3", download_image,
+                                         "-c", snippet, entry["repo"], entry["revision"], target, *patterns],
                       timeout=5400)
                 for relative, digest in entry["sha256"].items():
                     check = _exec(provider, pod_id, ["sha256sum", f"{target}/{relative}"])
@@ -1179,6 +1218,11 @@ def _lifecycle(provider, job, recipe, staging_path, output, state, gpu_choice, t
             save_state()
             decisor_native_preinput.accepted(job_dir or job, pod_id, recipe, state['runtime_preflight'])
         _exec(provider, pod_id, ["mkdir", "-p", "/work", "/work/out", "/work/code"])
+        if strands_e2b:
+            strands_io = strands_decider_e2b_runtime_supplement.AttemptIO(
+                provider, pod_id, allocation_gate, state, _utcnow, ttl)
+        run_command = strands_io.exec if strands_io else lambda command, maximum=600: _exec(
+            provider, pod_id, command, timeout=maximum)
         # Optional trusted context holds the canonical custody lock across upload.
         with pre_upload_gate() if pre_upload_gate is not None else nullcontext():
             if type(allocation_gate) is ScopedTopUp:
@@ -1192,14 +1236,23 @@ def _lifecycle(provider, job, recipe, staging_path, output, state, gpu_choice, t
                     ok = False
                 if not ok:
                     raise PodRunError("host_staging_ttl_margin_insufficient")
+            upload_timeout = 900
+            if strands_e2b:
+                provider.verify_dispatch_identity(pod_id)
+                upload_timeout = strands_io.timeout(upload_timeout, HOST_RUN_RESERVE_S)
             state['input_dispatched'] = True
             save_state()  # dispatch is durable before the first sealed transfer
-            provider.scp_to(pod_id, str(staging_path), "/work/stage.tar")
-        _exec(provider, pod_id, ["tar", "-xf", "/work/stage.tar", "-C", "/"])
-        _exec(provider, pod_id, ["tar", "-xf", "/work/code.tar", "-C", "/work/code"])
+            if strands_e2b:
+                provider.scp_to(pod_id, str(staging_path), "/work/stage.tar", timeout=upload_timeout)
+            else:
+                provider.scp_to(pod_id, str(staging_path), "/work/stage.tar")
+        run_command(["tar", "-xf", "/work/stage.tar", "-C", "/"])
+        run_command(["tar", "-xf", "/work/code.tar", "-C", "/work/code"])
+        if strands_io:
+            strands_io.timeout(600, strands_decider_e2b_runtime_supplement.RESULT_COLLECTION_RESERVE_S)
         state['execution_started'] = True
         save_state()  # crash after launch is never eligible for automatic scored retry
-        _exec(provider, pod_id, ["docker", "run", "-d", "--name", "jev-pod-run", "--gpus", "all",
+        run_command(["docker", "run", "-d", "--name", "jev-pod-run", "--gpus", "all",
                                  "--network", "none", "--shm-size", "16g",
                                  "--tmpfs", "/tmp:exec,size=16g",
                                  "-e", "HOME=/tmp", "-e", "HF_TOKEN=", "-e", "OPENAI_API_KEY=",
@@ -1211,11 +1264,14 @@ def _lifecycle(provider, job, recipe, staging_path, output, state, gpu_choice, t
                                  *(['-v', '/work/inputs/public:/inputs/public:ro',
                                     '-v', '/work/inputs/sealed:/inputs/sealed:ro'] if 'imagejevbench' in benchmarks else []),
                                  "-v", "/work/out:/output", image, "/driver/pod_entry.sh"])
-        mode = _exec(provider, pod_id, ["docker", "inspect", "jev-pod-run",
-                                        "--format", "{{.HostConfig.NetworkMode}}"])
+        mode = run_command(["docker", "inspect", "jev-pod-run", "--format", "{{.HostConfig.NetworkMode}}"])
         network_mode = mode.stdout.strip()
         if network_mode != "none":
             raise PodRunError(f"run container network mode is {network_mode!r}, not 'none'")
+        if strands_io:
+            actual = run_command(["docker", "inspect", "jev-pod-run", "--format", "{{.Image}}"])
+            if actual.stdout.strip() != image:
+                raise PodRunError('Strands measurement effective image differs')
         if isinstance(state.get('runtime_preflight'), dict) and 'effective_image' in state['runtime_preflight']:
             actual = _exec(provider, pod_id, ['docker', 'inspect', 'jev-pod-run', '--format', '{{.Image}}'])
             if actual.stdout.strip() != image:
@@ -1247,9 +1303,11 @@ def _lifecycle(provider, job, recipe, staging_path, output, state, gpu_choice, t
             if chon_runtime_supplement.active(job_dir or job, recipe):
                 # Chon's longer run uses its remaining TTL rule only for that exact order.
                 wait_s = chon_runtime_supplement.run_wait_seconds(state.get('attempt_started_at'), ttl)
-            wait = _exec(provider, pod_id, ["docker", "wait", "jev-pod-run"], timeout=wait_s)
+            wait = run_command(["docker", "wait", "jev-pod-run"], maximum=wait_s)
         rc = wait.stdout.strip().splitlines()[-1] if wait.stdout.strip() else ""
-        logs = _exec(provider, pod_id, ["docker", "logs", "--tail", "20000", "jev-pod-run"], timeout=120)
+        log_command = ["docker", "logs", "--tail", "20000", "jev-pod-run"]
+        logs = (strands_io.exec(log_command, 120, strands_decider_e2b_runtime_supplement.CLEANUP_HANDOFF_S)
+                if strands_io else run_command(log_command, 120))
         (output / "pod-driver.log").write_bytes((logs.stdout + logs.stderr).encode(errors="replace"))
         if rc != "0":
             raise PodRunError(f"pod driver exited {rc or 'unknown'}")
@@ -1272,10 +1330,14 @@ def _lifecycle(provider, job, recipe, staging_path, output, state, gpu_choice, t
             state['measurement_completed'] = True
             save_state()
             return state
-        provider.scp_from(pod_id, "/work/out/raw.jsonl", str(output / "raw.jsonl"))
         # The pod-side driver receipt is kept as evidence; only our host receipt below owns
         # the canonical receipt.json path.
-        provider.scp_from(pod_id, "/work/out/receipt.json", str(output / "pod-receipt.json"))
+        if strands_io:
+            strands_io.fetch("/work/out/raw.jsonl", output / "raw.jsonl")
+            strands_io.fetch("/work/out/receipt.json", output / "pod-receipt.json")
+        else:
+            provider.scp_from(pod_id, "/work/out/raw.jsonl", str(output / "raw.jsonl"))
+            provider.scp_from(pod_id, "/work/out/receipt.json", str(output / "pod-receipt.json"))
         rows = (output / "raw.jsonl").read_bytes().count(b"\n")
         if rows != expected_rows:
             raise PodRunError(f"raw.jsonl has {rows} rows, expected {expected_rows}")
@@ -1287,6 +1349,16 @@ def _lifecycle(provider, job, recipe, staging_path, output, state, gpu_choice, t
             state['unidentified_candidate_pod_ids'] = list(exc.candidate_pod_ids)
             save_state()
         if pod_id and state.get('input_dispatched') and not state.get('measurement_completed'):
+            if strands_io:
+                if state.get('execution_started'):
+                    for name in ('raw.jsonl', 'scored-loop-started.json'):
+                        try:
+                            strands_io.fetch('/work/out/' + name, output / name, maximum=90)
+                        except Exception:
+                            pass
+                state['scored_dispatch_uncertain'] = True
+                save_state()
+                raise measurement_dispatch.OperationalHold('partial_measurement_requires_reconciliation') from None
             # Preserve every available partial raw. A failed evidence fetch is ambiguity,
             # never evidence that scoring did not begin.
             for name in benchmarks:
@@ -1309,7 +1381,11 @@ def _lifecycle(provider, job, recipe, staging_path, output, state, gpu_choice, t
         if pod_id:
             # Full TTL worst-case charge is durable before create/teardown and is
             # retained until separately authenticated billing reconciliation.
-            _teardown(provider, job, pod_id, reservation, alert)
+            if strands_e2b:
+                state['native_teardown'] = strands_decider_e2b_runtime_supplement.teardown(
+                    provider, job, pod_id, reservation, state['native_launch'])
+            else:
+                _teardown(provider, job, pod_id, reservation, alert)
             ended = datetime.now(timezone.utc)
             # Keep full TTL upper bound: provider billing quantum has not been
             # authenticated. Only a separate reviewed billing reconciliation may
@@ -1346,6 +1422,16 @@ def default_alert(text: str) -> None:
 def run(rid: str, job_dir: Path, recipe: dict, output: Path, expected_pins: dict, max_usd: float,
         *, provider: Provider | None = None, alert=None, benchmarks=('jevbench',), native_source_pins=None, measurement_pins_factory=None, pre_upload_gate=None, allocation_gate=None, runtime_preflight=None, image_context_provider=None, weights_streamer=None, fallback_providers=()) -> dict:
     """Measure the reviewed recipe on one disposable GPU pod; idempotent via receipt + pod state."""
+    import native_owner
+    import strands_decider_e2b_runtime_supplement
+    strands_e2b = any(native_owner.is_strands_e2b_order(value) for value in (rid, Path(job_dir).name))
+    if strands_e2b:
+        strands_decider_e2b_runtime_supplement.require(
+            job_dir, recipe, rid, provider, benchmarks, pre_upload_gate, allocation_gate, fallback_providers)
+        # The measurement pins factory may hash the protected input. Keep the
+        # order's explicit early authority check ahead of that first access.
+        strands_launch = strands_decider_e2b_runtime_supplement.launch_binding(
+            allocation_gate('before_protected_read', {}))
     validate_recipe(recipe, job_dir)
     current = measurement_pins_factory() if measurement_pins_factory is not None else measurement_dispatch.pins()
     if current != expected_pins:
@@ -1400,6 +1486,9 @@ def run(rid: str, job_dir: Path, recipe: dict, output: Path, expected_pins: dict
         if state.get('request_id', rid) != rid:
             raise measurement_dispatch.OperationalHold('gpu_pod_cleanup_uncertain')
         if state.get('pod_id') or state.get('cleanup_uncertain') or (state.get('attempt_started_at') and not state.get('torn_down_at')):
+            if strands_e2b:
+                # Exact-order recovery authenticates the original provider journal.
+                raise measurement_dispatch.OperationalHold('gpu_pod_cleanup_requires_reconciliation')
             # A crash may have occurred inside provider.create before exact ID was saved.
             # Retain the precharged full TTL bound and never start another rental.
             if 'attempt_reserved_upper_bound_usd' not in state:
@@ -1437,6 +1526,8 @@ def run(rid: str, job_dir: Path, recipe: dict, output: Path, expected_pins: dict
         prior = json.loads(receipt_file.read_text())
         if prior.get("pins") != current or prior.get("recipe_sha256") != recipe_sha or prior.get('admission_binding_sha256') != admission_binding:
             raise measurement_dispatch.OperationalHold("existing_measurement_receipt_changed")
+        if strands_e2b:
+            strands_decider_e2b_runtime_supplement.verify_receipt(prior, state, strands_launch)
         if host_binding is not None and any(prior.get('host_staging', {}).get(k) != v for k, v in host_binding.items()):
             raise measurement_dispatch.OperationalHold('existing_measurement_receipt_changed')
         for name, record in prior.get('benchmarks', {'jevbench': prior}).items():
@@ -1476,10 +1567,17 @@ def run(rid: str, job_dir: Path, recipe: dict, output: Path, expected_pins: dict
     candidates = exact_candidates if exact_candidates is not None else [g for g in GPU_PREFERENCE if g[1] >= recipe["min_vram_gb"]]
     if scoped:
         candidates = [allocation_gate.gpu_choice(recipe)]
+    if strands_e2b:
+        candidates = [strands_decider_e2b_runtime_supplement.GPU]
+        if state.get('native_launch', strands_launch) != strands_launch:
+            raise measurement_dispatch.OperationalHold('existing_measurement_receipt_changed')
+        state['native_launch'] = strands_launch
     if not candidates:
         raise measurement_dispatch.OperationalHold("pod_recipe_invalid")
     started = datetime.now(timezone.utc)
     code_tar = export_source(job_dir, recipe["code"]["commit"], recipe["code"]["tree"], recipe['code'].get('source', 'code'))
+    if strands_e2b and allocation_gate('before_protected_read', state) != strands_launch:
+        raise measurement_dispatch.OperationalHold('strands_e2b_native_admission_required')
     staging_path = _stage_tarball(build_staging(recipe, current, code_tar, benchmarks))
     save_state = lambda: _save_pod_state(state_path, state)
     try:
@@ -1487,7 +1585,9 @@ def run(rid: str, job_dir: Path, recipe: dict, output: Path, expected_pins: dict
         quote_budget = {'remaining': 2}
         chain = provider_chain(provider, fallback_providers)
         provider_index = 0  # advances only after a capacity miss; the attempt budget below is unchanged
-        for attempt in range(1 if scoped or (rid == '3687485f-5a51-4964-bd9a-73973f3494d7' and allocation_gate is not None) else 2):
+        single_attempt = strands_e2b or scoped or (
+            rid == '3687485f-5a51-4964-bd9a-73973f3494d7' and allocation_gate is not None)
+        for attempt in range(1 if single_attempt else 2):
             gpu_choice = candidates[attempt % len(candidates)]
             run_spend = state.get('spent_upper_bound_usd', 0.0) - prior_spend
             remaining = min(budget - run_spend, cap - state.get('spent_upper_bound_usd', 0.0))
@@ -1495,6 +1595,10 @@ def run(rid: str, job_dir: Path, recipe: dict, output: Path, expected_pins: dict
                 raise measurement_dispatch.OperationalHold('gpu_pod_budget_exhausted')
             ttl = min(ttl_cap, remaining / _attempt_rate(recipe, job_dir),
                       allocation_gate.max_ttl_hours if allocation_gate is not None else ttl_cap)
+            if strands_e2b:
+                ttl -= strands_decider_e2b_runtime_supplement.CLEANUP_HOURS
+                if ttl <= 0:
+                    raise measurement_dispatch.OperationalHold("gpu_pod_budget_exhausted")
             try:
                 state = _lifecycle(chain[provider_index % len(chain)], job, recipe, staging_path, output, state,
                                    gpu_choice, ttl, remaining, alert, save_state, benchmarks, quote_budget,
@@ -1528,6 +1632,9 @@ def run(rid: str, job_dir: Path, recipe: dict, output: Path, expected_pins: dict
         receipt['host_staging'] = dict(state['host_staging'])
     if state.get('runtime_supplement'):
         receipt['runtime_supplement'] = dict(state['runtime_supplement'])
+    if strands_e2b:
+        receipt['native_launch'] = strands_launch
+        receipt['native_teardown'] = state['native_teardown']
     combined = recipe['kind'] == 'aplomb_native' or 'imagejevbench' in benchmarks
     if combined:
         receipt['benchmarks'] = {}

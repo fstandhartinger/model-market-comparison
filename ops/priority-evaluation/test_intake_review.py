@@ -433,10 +433,16 @@ class SafeLink(unittest.TestCase):
 class RegistryMirror(unittest.TestCase):
     def test_reviewed_supplement_list_matches_native_owner(self):
         import native_owner
-        expected = sorted(repo.split("/", 1)[1].lower() for e in native_owner.SUPPLEMENTS for repo in e["repos"] if repo.startswith("huggingface.co/"))
+        def hf(entries):
+            return sorted(repo.split("/", 1)[1].lower() for e in entries for repo in e["repos"] if repo.startswith("huggingface.co/"))
+        admitted = [e for e in native_owner.SUPPLEMENTS if e.get("intake_admission", True)]
+        exact_only = [e for e in native_owner.SUPPLEMENTS if not e.get("intake_admission", True)]
         text = (HERE.parent.parent / "lib" / "priority-intake-runtime.mjs").read_text()
         block = text.split("REVIEWED_SUPPLEMENT_REPOS = Object.freeze([", 1)[1].split("]);", 1)[0]
-        self.assertEqual(sorted(re.findall(r"'([^']+)'", block)), expected)
+        listed = sorted(re.findall(r"'([^']+)'", block))
+        self.assertEqual(listed, hf(admitted))
+        # Exact-order native routes must never become repository-wide pre-payment admissions.
+        self.assertFalse(set(listed) & set(hf(exact_only)))
 
     def test_limits_match_pod_runner(self):
         text = (HERE / "pod_runner.py").read_text()
