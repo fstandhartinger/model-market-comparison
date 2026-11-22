@@ -1,0 +1,274 @@
+{
+ "carried_rows": 351,
+ "carried_rows_equal_except": [],
+ "cost_basis": {
+  "cost_basis_sha256": "b83bdfd14c263ffacfa572b304084154afca84c1f00083101a33783ae6f8b356",
+  "frozen_at": "v1.7.16",
+  "n_items": 1489,
+  "rule": "fixed-common-cost-basis-d1027 (frozen at v1.7.16)",
+  "set_sha256": "4e912731e63369e1b3066b0b4afa87b44f1094aea079c5b41dc6d02e7f235537"
+ },
+ "equating": {
+  "anchor_output_sha256": {
+   "decider-12b": "9f467fcd9e3948666d3345ac6d89c222819c67151e9f18fc7da3877f181b50ee",
+   "h2o-lightning-4b-v1.1": "76ee19dc9f74dffc4811e5eb79a05e781961dc34993866a195d4a5a59e2d2475",
+   "quyet-1-0-large": "60901344af432989a06f73ba6f0664e2c9c3a7f07dfad49f8dcb6dbacaf9ab42",
+   "torchcast-decision-27b": "5dfa234af9e35ce8f552bf84bde514c8de982cd07c257c2c13b8f6dea21aee5b"
+  },
+  "anchors": [
+   "decider-12b",
+   "h2o-lightning-4b-v1.1",
+   "quyet-1-0-large",
+   "torchcast-decision-27b"
+  ],
+  "anchors_not_used": "One of the five planned anchor systems could not be staged before any scored item; its pre-registered handling is to skip it with no retry, so the offset uses the four complete anchors.",
+  "applied_as": "published + offset on Intelligence and Calibration (clipped 0..100); Capability = mean of the equated axes; composites and sort views by the frozen score_v15.composite; confidence intervals as measured on the draw before equating (not shifted); published numbers kept in published_scores",
+  "bootstrap": {
+   "B": 1000,
+   "conservative": "all independent",
+   "primary": "paired public items + independent sealed, anchors resampled",
+   "seed": 16
+  },
+  "coverage_note": "anchor reference Intelligence-base 60.0-73.4; d1027 rows above ~78 on the reference scale are extrapolated",
+  "draw": "v1.6-regular-20261027",
+  "equate_tool_sha256": "c9604b9dc72fd23570b856a6f475c570c36958bef21204863369e81f11ac2b9d",
+  "files": {
+   "equating": {
+    "name": "EQUATING-STRONG4-D1027.json",
+    "sha256": "7888a0803466daac872f46809b12015af6c3686109276ab89e1028c206103146"
+   }
+  },
+  "g_med": {
+   "new_draw_anchor_pool": -4.438035502660156,
+   "new_draw_rel": 2.573387642438244,
+   "reference": 2.573387642438244
+  },
+  "mean_instead_of_median": {
+   "C": -2.055450428516103,
+   "I": -2.609694629464121
+  },
+  "method": "Every draw shares the same 300 public items (P, manifest 6b2321f8...). A fresh draw is equated to the reference draw with anchor systems measured on both draws (each draw lists its own anchor set): offset = median over anchors of (metric on the reference S u P) - (metric on the new draw S u P), for Intelligence and Calibration, with a bootstrap 95% interval over anchors and items. A row from that draw is shown as published plus the offset; Capability and Composite follow from the equated axes. Until the anchor runs of a draw are complete its offset is 0 and the draw is marked 'anchor runs pending'.",
+  "n_anchors": 4,
+  "offset": {
+   "C": -1.8542447151797177,
+   "I": -2.884891186577587
+  },
+  "offset_basis": "median over anchors of (metric on v1.6.0 S u P) - (metric on d1027 S u P); applied by ADDING to a d1027 row (merged-board convention); I = post-penalty Intelligence at the reference G_med, C = Calibration",
+  "offset_ci95": {
+   "C": [
+    -5.447551660176162,
+    1.9718407968151896
+   ],
+   "I": [
+    -5.851030683979731,
+    1.0608488496147923
+   ]
+  },
+  "offset_ci95_independent_items": {
+   "C": [
+    -5.698741700420654,
+    1.8919272371911515
+   ],
+   "I": [
+    -8.253666488669571,
+    3.189140875897631
+   ]
+  },
+  "offset_info": {
+   "I_open": -7.105427357601002e-15,
+   "I_sealed": -5.582136051180097
+  },
+  "per_anchor_difference": {
+   "decider-12b": {
+    "C": -4.02419754778029,
+    "I_post_rel": -2.1607102631948862
+   },
+   "h2o-lightning-4b-v1.1": {
+    "C": -0.48911473592468724,
+    "I_post_rel": -3.6090721099602874
+   },
+   "quyet-1-0-large": {
+    "C": -3.0430998789773867,
+    "I_post_rel": -4.452462390359102
+   },
+   "torchcast-decision-27b": {
+    "C": -0.6653895513820487,
+    "I_post_rel": -0.21653375434220834
+   }
+  },
+  "reference_output_sha256": {
+   "decider-12b": "8bce97638c4a20cf0a51d47559a3c5930749ea91a718bde6c04cb5cccc285456",
+   "h2o-lightning-4b-v1.1": "4b19dbf4aa30baf2cf003b507340ecd863328c7185dd03cbe92bd71c3f95fd7f",
+   "quyet-1-0-large": "b9f8d6aefccad03fe97de9fac1c05e8356c487cf99d386dc51351073094a8072",
+   "torchcast-decision-27b": "c399b8943a5b862eed2678422d8fa4a1687b67f084dd32e4711a2d2fb25516a4"
+  },
+  "scorer": {
+   "name": "score_v16",
+   "noul_method": "O1S",
+   "sha256": "02132271117653e6302c509232a581d0094f0e78eac8b1bfc67596fd5d5097e9"
+  },
+  "sensitivity_leave_one_out": {
+   "decider-12b": {
+    "C": -0.6653895513820487,
+    "I": -3.6090721099602874
+   },
+   "h2o-lightning-4b-v1.1": {
+    "C": -3.0430998789773867,
+    "I": -2.1607102631948862
+   },
+   "quyet-1-0-large": {
+    "C": -0.6653895513820487,
+    "I": -2.1607102631948862
+   },
+   "torchcast-decision-27b": {
+    "C": -3.0430998789773867,
+    "I": -3.6090721099602874
+   }
+  },
+  "status": "equated"
+ },
+ "exceptions": {
+  "text_only_sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+ },
+ "method": {
+  "decision_limit_s": 10,
+  "label": "v1.7",
+  "rule": "latency_s > 10.000 s -> failed",
+  "treatment": "share"
+ },
+ "new_draw": {
+  "cost_basis": {
+   "draw": "v1.6-regular-20261122",
+   "n_items": 1500,
+   "rule": "every item of the draw counts; no common-basis exclusion (the common 1,489-item basis belongs to the 27 Oct draw)"
+  },
+  "decision_limit": {
+   "limit_s": 10.0,
+   "treatment": "share"
+  },
+  "draw": "v1.6-regular-20261122",
+  "g_med_fixed": 2.573387642438244,
+  "g_med_source": "Carried over from the 27 Oct draw (2.5734): a draw with a single row has no cohort median. Scores do not depend on it (re-scored with 9.84 and 10.07: identical to three decimals).",
+  "offset": {
+   "C": 0,
+   "I": 0
+  },
+  "reference_params_sha256": "83f722dda177748a26ab1ecff3b86e812a30cb501ae9c49054833d14db4a3530",
+  "status": "anchor-runs-pending"
+ },
+ "new_rows": {
+  "starlord-4b-v2.0-preview": {
+   "axes": {
+    "calibration": 83.19570254573138,
+    "cost": 75.04609936889244,
+    "intelligence": 66.12691758546116,
+    "speed": 93.73165205315465
+   },
+   "code_commit": "b4b4facd68fde1d8f9ad3bd05d692350a789a47f",
+   "composite_ci95": {
+    "A": [
+     75.89301357260193,
+     79.81901244750365
+    ],
+    "B": [
+     72.51762316626657,
+     77.53520518937214
+    ],
+    "C": [
+     75.89301357260193,
+     79.81901244750365
+    ]
+   },
+   "cost": {
+    "active_b": 4,
+    "architecture_class": "small",
+    "binding": "gpu",
+    "cost_all": 0.006788857420199556,
+    "family": "qwen",
+    "gpu_all": 0.006788857420199556,
+    "gpu_rate_per_m": 0.009826306250524048,
+    "input_tokens": 1036329,
+    "list_all": 0.020726580000000005,
+    "n_items": 1500,
+    "output_tokens": 0,
+    "ref": {
+     "authority": "frozen market reference and v1.8 GPU-time min",
+     "in": 0.030000000000000002,
+     "listing": "deepinfra:Qwen/Qwen3.5-4B",
+     "module_sha256": "16f71aec341fdc5d0ed8ccab1c166f93eb7a98f1fe7440c3c4548c035f3f8ab0",
+     "out": 0.15
+    },
+    "reference_params_sha256": "83f722dda177748a26ab1ecff3b86e812a30cb501ae9c49054833d14db4a3530",
+    "throughput": 61525.0
+   },
+   "decision_limit": {
+    "limit_s": 10.0,
+    "n_over_limit": 5,
+    "n_over_limit_answered_ok": 5,
+    "rule": "latency_s > limit -> failed",
+    "speed_basis": "all decisions given (lane items in the raw), measured latency_s",
+    "speed_n": 1500,
+    "treatment": "share"
+   },
+   "failure_treatment": "Failed or unanswered requests count as wrong answers.",
+   "model_pin": "xsdfasfgsa/Starlord-4B-v2.0-preview@b4b4facd68fde1d8f9ad3bd05d692350a789a47f",
+   "price_reference": {
+    "authority": "frozen market reference and v1.8 GPU-time min",
+    "in": 0.030000000000000002,
+    "listing": "deepinfra:Qwen/Qwen3.5-4B",
+    "module_sha256": "16f71aec341fdc5d0ed8ccab1c166f93eb7a98f1fe7440c3c4548c035f3f8ab0",
+    "out": 0.15
+   },
+   "scored_input_sha256": "a2168e5f1483772da9763348f6af860e88c6ed8919a104a19a6f8b69ed1b8849",
+   "treatment": "unranked"
+  }
+ },
+ "predecessor": {
+  "publication_sha256": "228517b451a5a52dc99c8eee51a63e0ca1fc25aeec9b9836f4498b697b230e2d",
+  "revision": "v1.8.19"
+ },
+ "pricing_authority": "frozen market reference and v1.8 GPU-time min",
+ "pricing_module_sha256": "16f71aec341fdc5d0ed8ccab1c166f93eb7a98f1fe7440c3c4548c035f3f8ab0",
+ "publication_approval": {
+  "changes": [
+   "one new unranked row",
+   "one new draw entry (anchor runs pending, offset 0)"
+  ],
+  "fairness_review_required": false,
+  "fresh_baseline": "v1.8.19",
+  "scope": "row-only: one new unranked row on a new draw",
+  "status": "PENDING",
+  "top_five_effect": "unchanged"
+ },
+ "remeasured_rows": {},
+ "repriced_rows": {},
+ "revision": "v1.8.20",
+ "schema_version": 1,
+ "scorers": {
+  "a2_cells_v16": "afd034efe27bde12f2ebbfd12c4c0792c93214e1aa9a63deecb0e83a0184c990",
+  "build_categories_v16": "40eb50f3d7fea2693b4478c4b89f8bfb957dd17776add491935742e3b9354e73",
+  "build_topics_v16": "ec04ab598162bfc4340ffa7916a06573eb1222132c61e47ab772045bc67ced78",
+  "decisive_v16": "80b9ccf43e58dddb1b2a77e0a33aba8a9f7337a3a9a639afc7264218bbf8918f",
+  "noul_method_v16": "119e59486ab3300b972fbcbadb0fe1dceceb124287607375aa61c66063c607d0",
+  "pins_v17": "b50cc00dd2cb0ba46157eb6a2bda620255f3ff54404025e992bc7962dfff2f8b",
+  "run_under_v17": "efb194b2ea350db59be37e5e72af71f809f763a2476cd6f521adf6f4fd90a64f",
+  "score_v15": "0931e05c6410b1b971201834397cb609cdb25f942723c50375632952f6dcc447",
+  "score_v15_headlineA": "826f2cbcb57007ec8a161e6eb0111182b8a656c0638027c6c78022a858fd8e2c",
+  "score_v16": "02132271117653e6302c509232a581d0094f0e78eac8b1bfc67596fd5d5097e9",
+  "score_v17": "6363458d208a52f4ad5aaf73027cad1b7e0358ff962e581d57a3cc462c8f1978"
+ },
+ "source_inputs": {
+  "inputs/ARCHITECTURE.json": "5673e0a38fdfc3f2f1999eda76e7a693cf4a8376671b271f38c1d98e13327282",
+  "inputs/BREAKDOWN-POLICY.json": "50c67d81146b087bd208939c21a990142d75a7cf2169661f8eb896e74986d785",
+  "inputs/CLEANED-ROWS.json": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+  "inputs/ENTRIES.json": "5f28593f7a319c0c58f18acd7d8418bf3132ef932949fa7f946137ae0d2fa9dd",
+  "inputs/ENTRY-PINS.json": "b9226adfa828b77517d2a15ab5b51628c0d30dd5415f5c9de9d6354ea6f8fe56",
+  "inputs/PROVENANCE.json": "a6c98b8bd2ace3a3be4d54883948971c5d609268ed6689de1318c11eb0e8c9b4",
+  "inputs/PUBLIC-ROWS.json": "1f987ae44c710f78d7ae4296d7f6a89d404a7b2e72b94107cbd6cfe3d92ff18b",
+  "inputs/TEXT-EXCEPTIONS.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+  "src/cells.json": "743b034cf3a94438789c90a78ecfc01452c3daa08639e1fdc7372bfc0a51f749",
+  "src/scored.json": "0e813f37e0050b86e178c36e06dfda72dab384a18bc9b7d19da6d885db9c59a8",
+  "src/usage.json": "2805064813d60d24f456d64026a554f4687e7f22437e1bdc2f62a8d999c6fb22"
+ },
+ "topfive_diff_sha256": "7495629dd33b4baa6b624022ceade8840b85de70fbe689a4a3f4cd2d5539adbf"
+}

@@ -70,14 +70,14 @@ test('under the next build memo the live board still serves the carried pair its
       assert.equal(hasApiFullAddendumCategories(cats), true, 'memo copy keeps the row-pool bounds');
       const keys = board.published.systems.filter((s) => s.ranked).map((s) => s.key);
       const view = jevbenchCategoryView(board.published.revision, keys, { supplement: Boolean(cats.supplement), artifact: cats });
-      if (['v1.8.11','v1.8.12','v1.8.13','v1.8.14','v1.8.15','v1.8.16','v1.8.17','v1.8.18','v1.8.19'].includes(board.published.restated_by)) assert.equal(view.systems['torchcast-decision-4b-v1.3'].usecases.search_retrieval, undefined, 'v1.8.11 suppresses the stored 24-item cell');
+      if (['v1.8.11','v1.8.12','v1.8.13','v1.8.14','v1.8.15','v1.8.16','v1.8.17','v1.8.18','v1.8.19','v1.8.20'].includes(board.published.restated_by)) assert.equal(view.systems['torchcast-decision-4b-v1.3'].usecases.search_retrieval, undefined, 'v1.8.11 suppresses the stored 24-item cell');
       else assert.deepEqual(view.systems['torchcast-decision-4b-v1.3'].usecases.search_retrieval, [97.56, 24]);
       // v1.8.10 fast path: a row lacking one dimension (the 27 Oct draw's unlabelled topics) keeps the others.
       const expectMissing = keys.filter((k) => !cats.systems[k]?.topics && !cats.systems[k]?.usecases);
       assert.deepEqual(Object.keys(view.missing).sort(), expectMissing.sort(), 'only rows without any cells are missing');
       assert.equal(expectMissing.includes('torchcast-decision-4b-v1.3'), false);
       assert.equal(expectMissing.includes('torchcast-decision-31b-v1.0'), false);
-      assert.ok(Object.keys(view.systems['torchcast-decision-31b-v1.0'].usecases).length >= (['v1.8.11','v1.8.12','v1.8.13','v1.8.14','v1.8.15','v1.8.16','v1.8.17','v1.8.18','v1.8.19'].includes(board.published.restated_by) ? 1 : 19), 'the 27 Oct draw row shows its eligible use-case cells');
+      assert.ok(Object.keys(view.systems['torchcast-decision-31b-v1.0'].usecases).length >= (['v1.8.11','v1.8.12','v1.8.13','v1.8.14','v1.8.15','v1.8.16','v1.8.17','v1.8.18','v1.8.19','v1.8.20'].includes(board.published.restated_by) ? 1 : 19), 'the 27 Oct draw row shows its eligible use-case cells');
       assert.equal(view.missingDims['torchcast-decision-31b-v1.0'].topics, 'subject topics: not labelled for this draw yet (top-up pending)');
     }
   } finally {
