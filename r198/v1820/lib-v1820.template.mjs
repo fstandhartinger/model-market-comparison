@@ -16,7 +16,7 @@ export const V1820_NEW_CELLS=/*CELLS*/;
 export const V1820_BREAKDOWN_POLICY=/*SCOPE*/;
 export const V1820_NEW_KEYS=Object.keys(V1820_NEW_ROWS).sort();
 export const V1820_DRAW='v1.6-regular-20261122';
-export const V1820_NOTE='Added after the v1.8.10 ranking review; it is ranked at the next review.';
+export const V1820_NOTE='Measured on the 22 Nov 2026 draw, which is not yet equated to the reference scale; anchor runs for that draw are pending. Shown unranked until then.';
 const fail=m=>{throw Error('JevBench v1.8.20: '+m);};
 const same=(a,b,m)=>{if(!equal(a,b))fail(m);};
 const hash=b=>createHash('sha256').update(b).digest('hex');

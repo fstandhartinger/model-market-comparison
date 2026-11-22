@@ -36,7 +36,7 @@ test('v1.8.20 self-hosted pin, disclosed base, standard unranked sentence and co
  const row=systems.find(s=>s.key===V1820_NEW_KEYS[0]),live=systems.find(s=>s.key==='starlord-4b-preview'),base=baseModelFor('jevbench',row.key);
  assert.equal(row.model_pin,'xsdfasfgsa/Starlord-4B-v2.0-preview@b4b4facd68fde1d8f9ad3bd05d692350a789a47f');
  assert.equal(row.speed.adjustment,'x2 + 0.15 s (assumption, not measured)');assert.equal(base.status,'disclosed');assert.equal(base.label,row.base_model);assert.ok(base.sources.length);
- assert.equal(row.not_ranked_because,'Added after the v1.8.10 ranking review; it is ranked at the next review.');
+ assert.equal(row.not_ranked_because,'Measured on the 22 Nov 2026 draw, which is not yet equated to the reference scale; anchor runs for that draw are pending. Shown unranked until then.');
  const shape=t=>t.replace(/USD [0-9.e-]+\/1,000/g,'USD N/1,000');
  assert.equal(shape(row.cost.basis),shape(live.cost.basis),'same wording as the live Starlord-4B-preview, new numbers only');
  assert.ok(row.cost.usd_per_1000<0.0068&&row.cost.usd_per_1000>0.0067);

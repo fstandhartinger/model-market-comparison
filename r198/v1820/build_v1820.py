@@ -3,7 +3,7 @@ import pathlib,json,copy,hashlib,shutil,re,subprocess
 J=pathlib.Path(__file__).resolve().parent;W=J.parents[1];D=W/'data/raw/benchmarks/jevbench/v1.8';REV='v1.8.20';PREV='v1.8.19';NEW_DRAW='v1.6-regular-20261122'
 L=lambda p:json.loads(pathlib.Path(p).read_text());sha=lambda p:hashlib.sha256(pathlib.Path(p).read_bytes()).hexdigest();cp=copy.deepcopy
 put=lambda p,v:pathlib.Path(p).write_text(json.dumps(v,indent=1,sort_keys=True,ensure_ascii=False)+'\n')
-NOTE='Added after the v1.8.10 ranking review; it is ranked at the next review.'
+NOTE='Measured on the 22 Nov 2026 draw, which is not yet equated to the reference scale; anchor runs for that draw are pending. Shown unranked until then.'
 entries=L(J/'inputs/ENTRIES.json');usage=L(J/'src/usage.json');scored=L(J/'src/scored.json');cells=L(J/'src/cells.json');old={n:L(D/f'jevbench-{PREV}-{n}.json') for n in ['results','categories','proof','publication']}
 keys=sorted(entries);assert keys==['starlord-4b-v2.0-preview']
 HIST=L(J/'inputs/history.json')
