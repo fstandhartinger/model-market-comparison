@@ -3031,6 +3031,52 @@ def result_message(row: dict[str, Any], summary: dict[str, Any]) -> tuple[str, s
     return f"Benchmark Heaven evaluation order {order_ref(rid)}: your result", body
 
 
+def measured_result_message(row: dict[str, Any], summary: dict[str, Any]) -> tuple[str, str]:
+    """CR-833 (Florian 22 Nov 2026, fastlane-zero-wait-1122): the measured, independently recomputed result of a
+    public order, mailed as soon as it is verified, before the release train. Scores only, no rank or placement;
+    the public row follows in the next release. Same subject as result_message, so one result mail per order."""
+    rid = request_id(row.get("id"))
+    lines = [f"{BENCHMARK_NAMES[item['benchmark']]} {item['version']}: score {item['score']:.2f}"
+             for item in summary["results"]]
+    boards = ", ".join(dict.fromkeys(item["public_url"] for item in summary["results"]))
+    body = fill_template(read_template("autopickup-result-measured-template.txt"),
+                         {"ORDER_REF": order_ref(rid), "RESULT_LINES": "\n".join(lines), "LEADERBOARD": boards})
+    return f"Benchmark Heaven evaluation order {order_ref(rid)}: your result", body
+
+
+def measured_delivery_publication(row: dict[str, Any], state: dict[str, Any]) -> bool:
+    """A public order whose measured result was already mailed (CR-833) keeps publishing after delivery, also past
+    the 48 h deadline: delivery is done, the public row is the follow-up. Holds still stop it."""
+    return (state.get("measured_first") is True and row.get("visibility") == "public"
+            and row.get("status") in ("completed", "refund_due") and bool(row.get("result_delivered_at"))
+            and not active_hold(row))
+
+
+def deliver_measured_first(row: dict[str, Any], state: dict[str, Any], summary: dict[str, Any], effects: Effects,
+                           now: datetime) -> None:
+    """Send the measured result once through the tracked result_public_v1 envelope and record the delivery."""
+    rid = request_id(row.get("id"))
+    if row.get("result_delivered_at") or row.get("status") not in ("paid", "review_passed"):
+        return
+    if row.get("delivery_email_status") != "sent":
+        subject, body = measured_result_message(row, summary)
+        delivery_guard = (
+            "status IN ('paid','review_passed') AND customer_hold_started_at IS NULL "
+            "AND paid_at IS NOT NULL AND paid_at + COALESCE(sla_paused_seconds,0) * interval '1 second' "
+            "+ interval '48 hours' > now()"
+        )
+        if not state.get("measured_first"):
+            state["measured_first"] = True
+            save_state(state)
+        if not send_tracked_mail(row, state, "result_mail", "delivery_email_status", subject, body, effects, now,
+                                 extra_guard=delivery_guard):
+            return
+        row = load_row(rid) or row
+    state["measured_first"] = True
+    save_state(state)
+    record_result_delivery(row, state, summary, now)
+
+
 def xpost_text(summary: dict[str, Any]) -> str | None:
     changed = [item for item in summary.get("results", []) if item.get("top5_changed")]
     if not changed:
@@ -3748,7 +3794,7 @@ def advance_delivery(row: dict[str, Any], state: dict[str, Any], job_dir: Path, 
     if row.get("evaluation_status") == "ready_for_release" and row.get("release_status") not in ("verified", "refused", "done") \
             and step_due(state, "finalize", now):
         allowed, _reason = gate(rid)
-        if not allowed:
+        if not allowed and not measured_delivery_publication(row, state):
             # Holds and deadlines are delivery gates too. Do not consume retry budget while closed.
             return
         begin_attempt(state, "finalize", now)
@@ -3757,6 +3803,11 @@ def advance_delivery(row: dict[str, Any], state: dict[str, Any], job_dir: Path, 
             if summary["outcome"] == "delivered" and summary["visibility"] == "public":
                 state["candidate_verified"] = summary
                 save_state(state)
+                if allowed and (state.get("public_release") or {}).get("status") != "live":
+                    # CR-833: the customer gets the measured result now; the public row follows (one result mail).
+                    # An already-live release keeps the ordinary "your result is live" mail below.
+                    deliver_measured_first(row, state, summary, effects, now)
+                    row = load_row(rid) or row
                 if not advance_public_release(row, job_dir, state, effects):
                     # The result remains private until the ordinary site queue merges it and
                     # both public hosts report the deployed merge revision.
@@ -3770,7 +3821,7 @@ def advance_delivery(row: dict[str, Any], state: dict[str, Any], job_dir: Path, 
                 alert(state, "finalize_exhausted", effects, urgent=True, text=agent_status_card(row, "is blocked: the result could not be verified", "Agents are checking the result before emailing it to the customer."))
             return
         allowed, _reason = gate(rid)
-        if not allowed:
+        if not allowed and not measured_delivery_publication(load_row(rid) or row, state):
             return
         state["verified"] = summary
         finish_ok(state, "finalize", now, outcome=summary["outcome"])

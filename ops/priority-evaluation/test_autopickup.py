@@ -33,6 +33,7 @@ HERE = Path(__file__).resolve().parent
 PG_BIN = next((p for p in sorted(Path("/usr/lib/postgresql").glob("*/bin"), reverse=True) if (p / "initdb").exists()), None)
 TEMPLATES = ("autopickup-prompt-template.md", "autopickup-review-prompt-template.md", "autopickup-confirmation-template.txt",
              "autopickup-result-public-template.txt", "autopickup-result-private-template.txt", "autopickup-refund-template.txt",
+             "autopickup-result-measured-template.txt",
              "autopickup-refusal-template.txt", "autopickup-review-passed-template.txt",
              "autopickup-change-request-template.txt", "autopickup-delay-template.txt")
 
@@ -2058,15 +2059,78 @@ class FinalizeTests(DatabaseTestCase):
         with mock.patch.object(ap, "advance_public_release", return_value=True):
             ap.cycle(fx)
 
-    def test_public_result_waits_for_live_site_release_before_email(self):
-        rid, fx, _job = self.prepare()
+    def prepare_not_live(self):
+        """prepare() records a live release; take it back so the release is still in the queue."""
+        rid, fx, job = self.prepare()
+        state = ap.load_state(rid)
+        live = state.pop("public_release")
+        ap.save_state(state)
+        return rid, fx, job, live
+
+    def test_public_result_is_mailed_measured_before_the_release_and_only_once(self):
+        """CR-833: the customer gets the verified measured result now; the public row follows without a second mail."""
+        rid, fx, job, live = self.prepare_not_live()
+        with mock.patch.object(ap, "advance_public_release", return_value=False):
+            ap.cycle(fx)
+        results = [mail for mail in fx.mails if "your result" in mail[1]]
+        self.assertEqual(len(results), 1)
+        body = results[0][2]
+        self.assertIn("JevBench v1.5.2: score 71.23", body)
+        self.assertIn("Placements are provisional until the release review", body)
+        self.assertIn("https://benchmarkheaven.com/jev-models", body)
+        self.assertNotIn("Evil", body)
+        self.assertIsNone(re.search(r"\b(rank|ranked|placed|position|top)\b|#\d", body, re.I))
+        current = row(rid)
+        self.assertEqual((current["status"], current["delivery_email_status"]), ("completed", "sent"))
+        self.assertIsNotNone(current["result_delivered_at"])
+        self.assertNotEqual(current["release_status"], "verified")
+        state = ap.load_state(rid)
+        self.assertTrue(state["measured_first"])
+        self.assertIn("candidate_verified", state)
+        self.assertEqual(state["steps"]["finalize"]["attempts"], 0)
+        self.assertNotIn(ap.XPOST_UNIT.format(rid), fx.started)
+        # Still not live: no second mail, nothing published or posted.
+        make_due(rid)
+        with mock.patch.object(ap, "advance_public_release", return_value=False):
+            ap.cycle(fx)
+        self.assertEqual(len([m for m in fx.mails if "your result" in m[1]]), 1)
+        # The release goes live after the 48 h deadline: publication and the post still follow, no second mail.
+        ap.sql(f"UPDATE {ap.TABLE} SET paid_at=now()-interval '50 hours' WHERE id='{rid}'")
+        state = ap.load_state(rid)
+        state["public_release"] = live
+        ap.save_state(state)
+        make_due(rid)
+        self.cycle_live_release(fx)
+        current = row(rid)
+        self.assertEqual((current["status"], current["release_status"]), ("completed", "verified"))
+        self.assertEqual(len([m for m in fx.mails if "your result" in m[1]]), 1)
+        self.assertEqual(fx.started.count(ap.XPOST_UNIT.format(rid)), 1)
+        self.assertEqual([r["id"] for r in ap.refund_decision_rows(None, ap.JOB_ROOT)], [])
+
+    def test_measured_result_is_not_mailed_after_the_deadline_or_during_a_hold(self):
+        rid, fx, _job, _live = self.prepare_not_live()
+        ap.sql(f"UPDATE {ap.TABLE} SET paid_at=now()-interval '49 hours' WHERE id='{rid}'")
         with mock.patch.object(ap, "advance_public_release", return_value=False):
             ap.cycle(fx)
         self.assertFalse(any("your result" in mail[1] for mail in fx.mails))
-        self.assertNotEqual(row(rid)["release_status"], "verified")
+        self.assertIsNone(row(rid)["result_delivered_at"])
+        rid2, fx2, _, _live2 = self.prepare_not_live()
+        ap.hold(rid2, "customer_reply")
+        with mock.patch.object(ap, "advance_public_release", return_value=False):
+            ap.cycle(fx2)
+        self.assertFalse(any("your result" in mail[1] for mail in fx2.mails))
+
+    def test_publication_after_measured_delivery_stops_on_a_customer_hold(self):
+        rid, fx, _job, _live = self.prepare_not_live()
+        with mock.patch.object(ap, "advance_public_release", return_value=False):
+            ap.cycle(fx)
+        current = row(rid)
         state = ap.load_state(rid)
-        self.assertIn("candidate_verified", state)
-        self.assertEqual(state["steps"]["finalize"]["attempts"], 0)
+        self.assertTrue(ap.measured_delivery_publication(current, state))
+        held = dict(current, customer_hold_started_at="2026-11-22T00:00:00+00:00")
+        self.assertFalse(ap.measured_delivery_publication(held, state))
+        self.assertFalse(ap.measured_delivery_publication(dict(current, visibility="private"), state))
+        self.assertFalse(ap.measured_delivery_publication(current, {}))
 
     def test_public_result_rejects_evaluator_supplied_release_evidence(self):
         rid, fx, job = self.prepare()
