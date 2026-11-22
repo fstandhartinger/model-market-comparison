@@ -3,6 +3,21 @@
   "checked_utc": "2026-10-08T08:38:12Z",
   "benchmarks": {
     "jevbench": {
+      "starlord-4b-v2.0-preview": {
+        "arch": "open-llm-decoder",
+        "badges": {
+          "derivation": "fine-tune",
+          "params": "4B",
+          "quant": "BF16"
+        },
+        "evidence": [
+          {
+            "fact": "Model card declares Qwen/Qwen3.5-4B base; cc-by-nc-nd-4.0 licence with LICENSE-BASE note. Measured with the author runtime at the pinned model commit.",
+            "kind": "model-card",
+            "url": "https://huggingface.co/xsdfasfgsa/Starlord-4B-v2.0-preview/tree/b4b4facd68fde1d8f9ad3bd05d692350a789a47f"
+          }
+        ]
+      },
       "bison-1": {
         "arch": "open-llm-decoder",
         "badges": {
