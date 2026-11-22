@@ -14,6 +14,7 @@ import tarfile
 from pathlib import Path
 
 import measurement_dispatch
+import order_admission_registry
 import pod_runner
 import supplement_admission
 
@@ -91,10 +92,12 @@ def sha256(path):
 
 def active(job, recipe):
     """A listed order, or a host-admitted repeat of the reviewed stack (supplement_admission), with the
-    reviewed http_typesafe recipe on the exact pinned base selects the supplement."""
+    reviewed http_typesafe recipe on the exact pinned base selects the supplement.
+    A host-registry admission (order_admission_registry, `fastlane-admit`) counts like a listed order."""
     return (isinstance(recipe, dict) and recipe.get('kind') == 'http_typesafe'
             and recipe.get('image') == BASE_IMAGE
-            and (Path(job).name == ORDER or supplement_admission.admitted(job, FAMILY)))
+            and (Path(job).name == ORDER or supplement_admission.admitted(job, FAMILY)
+                 or order_admission_registry.admitted(Path(job).name, __file__, BASE_IMAGE, CONTEXT_SHA)))
 
 def check_context(context=CONTEXT):
     """The context must be byte-identical to the pinned public-only inventory."""

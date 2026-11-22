@@ -1147,9 +1147,10 @@ def _lifecycle(provider, job, recipe, staging_path, output, state, gpu_choice, t
                 image = state['runtime_supplement']['effective_image']
                 save_state()
             import chon_runtime_supplement
-            if chon_runtime_supplement.active(job_dir or job, recipe):
+            if chon_runtime_supplement.supplement_active(job_dir or job, recipe):
                 # Fixed-order offline build of Chon-1.0-12B's documented torch 2.9.1/transformers 5.20/peft 0.18.1
-                # /fastapi stack for the customer's own chon.serve.
+                # /fastapi stack for the customer's own chon.serve. supplement_active() also admits a host-registry
+                # order; the exact-order TTL/rate/wait exceptions elsewhere in this file stay on active().
                 state['runtime_supplement'] = chon_runtime_supplement.build(provider, pod_id)
                 image = state['runtime_supplement']['effective_image']
                 save_state()
