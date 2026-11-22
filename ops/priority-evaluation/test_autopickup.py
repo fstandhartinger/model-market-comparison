@@ -354,6 +354,12 @@ class DatabaseTestCase(unittest.TestCase):
         shutil.rmtree(ap.STATE_ROOT, ignore_errors=True)
         shutil.rmtree(ap.JOB_ROOT, ignore_errors=True)
         set_cutover(datetime.now(timezone.utc) - timedelta(days=1))
+        # autopickup.py ships FASTLANE_ADMIT_SHA256 (CR-842): the auto-admit hook is live by default. A test that is not about
+        # the hook must never run it (it would load the host's ~/bin/fastlane-admit and could write the real admission
+        # registry, or add STATE.md notes): hook off here; AutoAdmitHookSchedulerTests switches it on with its own copy.
+        patcher = mock.patch.object(ap, "FASTLANE_ADMIT_SHA256", "")
+        patcher.start()
+        self.addCleanup(patcher.stop)
 
 
 class PortableMeasurementFixtureTests(unittest.TestCase):
@@ -5304,6 +5310,33 @@ class AutoAdmitHookSchedulerTests(DatabaseTestCase):
         self.assertEqual(self.evaluation_pass(), 0)
         self.assertEqual(self.v16_generation, [self.rid])  # ... where evaluate() routes it through the v1.6 branch
         self.assertEqual(len(self.custody_calls()), 1)  # custody was asked once; the legacy pod path never ran (stubs raise)
+
+    def test_an_admission_between_the_route_check_and_dispatch_never_measures_on_the_legacy_path(self):
+        # critic r2 S1: evaluate() loaded its state and chose the retired route; custody (or a human v16-admit) then recorded
+        # the admission before dispatch_measurement began. That used to carry on to runtime_spec / pod_runner.run with the
+        # retired v1.5 method and spend pod money (the stubs raise if reached).
+        real_dispatch, real_gate = ap.dispatch_measurement, ap.validate_review_gate
+
+        def gate_then_admission(job_dir):
+            result = real_gate(job_dir)  # the admission lands right after the review gate of dispatch_measurement
+            state = ap.load_state(self.rid)
+            state["v16_profile_admission"] = {"verdict": "ACCEPTED"}
+            ap.save_state(state)
+            return result
+
+        def dispatch_with_the_admission_arriving(rid, job_dir):
+            with mock.patch.object(ap, "validate_review_gate", side_effect=gate_then_admission):
+                return real_dispatch(rid, job_dir)
+        with mock.patch.object(ap, "dispatch_measurement", side_effect=dispatch_with_the_admission_arriving):
+            self.assertEqual(self.evaluation_pass(), 0)
+        self.assertEqual((self.hold()["reason"], self.hold()["transient"]), ("v16_admitted_reroute", True))
+        self.assertEqual(self.v16_generation, [])
+        self.assertEqual(self.custody_calls(), [])  # already admitted: custody is not asked
+        started = len(self.fx.started)
+        ap.manage_evaluation(row(self.rid), ap.load_state(self.rid), self.fx, datetime.now(timezone.utc))
+        self.assertEqual(self.fx.started[started:], [self.unit])  # the next scheduler pass restarts it without backoff
+        self.assertEqual(self.evaluation_pass(), 0)
+        self.assertEqual(self.v16_generation, [self.rid])  # evaluate() now routes it through the v1.6 branch
 
     def test_custody_refusal_keeps_todays_hold_and_is_never_asked_again(self):
         self.custody(exit_code=1)

@@ -2608,13 +2608,31 @@ def _jev_v15_composite(axes: dict[str, Any], option: str) -> float:
 # admit() (all refusals stay there) and custody's pinned `v16-admit`. The pickup never writes v16_profile_admission and a
 # failure here never changes what the pickup did before (the hold or the measurement path below stays as it was).
 #
-# Semantics (CR-842 r2, after critic findings M1/S1-S4):
-#  * Success of v16-admit: custody's command writes v16_profile_admission. dispatch_measurement then raises the transient hold
-#    `v16_admitted_reroute` (cleared on the next scheduler pass) so evaluate() sends the order down its v1.6 branch. A
-#    v1.6-admitted order never continues on the retired legacy measurement path inside the same call.
-#  * One v16 attempt per (review sha, pin sha). A non-zero exit means custody refused and routed the order to #22: today's
-#    non-transient hold stays and nothing re-runs. Only a timeout or an OSError is retried (transient hold `v16_admit_retry`,
-#    at most V16_ADMIT_MAX_ATTEMPTS attempts, then today's hold).
+# Semantics (CR-842 r3, after critic findings M1/S1-S4 of r1 and r2):
+#  * Reroute. custody's command writes v16_profile_admission. Whenever dispatch_measurement sees that key in the state, whether
+#    custody wrote it during this very call or anyone (custody, a human v16-admit) wrote it after evaluate() chose its route,
+#    it raises the transient hold `v16_admitted_reroute` (cleared on the next scheduler pass) so evaluate() sends the order
+#    down its v1.6 branch. dispatch_measurement is the retired legacy measurement path and evaluate() is its only caller, so
+#    an admitted order never continues on it. The hold is bounded by HOLD_MAX_RETRIES.
+#  * Exit-code contract for custody's v16-admit command (what the pickup runs: `<V16_ADMIT_PATH> <order id> --basis <text>`):
+#        exit 0       = admitted. v16_profile_admission MUST be in the order's state file when the command has exited
+#                       (otherwise the pickup records `refused`: "exit 0 but no admission was recorded").
+#        exit 1       = refused (custody said no and routed the order to #22). FINAL for this (review sha, pin sha).
+#        anything else = could not decide, retried: any other exit code, a negative code (death by signal), 126/127 (not
+#                       executable / command not found), a timeout, an OSError at start. Retried on a later scheduler pass
+#                       (transient hold `v16_admit_retry`), at most V16_ADMIT_MAX_ATTEMPTS attempts in total, then today's hold.
+#    A script that crashes with an uncaught Python exception exits 1 and therefore counts as a refusal: custody must catch
+#    its own errors and exit with a code other than 0 or 1 for "try again". The command runs with stdin /dev/null, in its own
+#    session, with exactly PATH=<HOME>/bin:/usr/local/bin:/usr/bin:/bin, HOME and AGENT_BOARD_NAME (no PG*, Stripe or
+#    OpenRouter variables). After it exits (any code) and after a timeout the pickup kills its whole process group
+#    (SIGKILL), so nothing it started may write the state afterwards; a child that calls setsid() itself escapes that.
+#    (The group id stays reserved while any member lives; once the group is empty the kill finds nothing. Pids are handed
+#    out cyclically, so the number cannot come back within the microseconds between the exit and the kill.)
+#  * Attempts are counted per (review sha, pin sha); a new review sha or a new pin starts again at 0. A pin or file problem
+#    is not an attempt (nothing ran).
+#  * Orders in status 'review_passed' (set by `jevbench-review pass`) are NOT admitted by this hook: fastlane-admit's gate
+#    wants status 'paid', and the hook only calls that gate. Conservative on purpose and identical to the human
+#    `fastlane-admit`; such an order keeps today's behaviour.
 #  * Orders that already sit under `official_method_retired_requires_admission` from BEFORE the pins were set are NOT
 #    re-entered automatically: that hold is non-transient and nothing clears it. Setting the pin later does nothing for
 #    them; only a human clearing the hold (or a new source review) sends such an order through dispatch_measurement again.
@@ -2628,7 +2646,10 @@ def _jev_v15_composite(axes: dict[str, Any], option: str) -> float:
 #  * The state file is written by custody's command (not by the pickup). A command killed mid-write could leave a
 #    truncated state file unless custody writes atomically (tmp + rename); custody is asked to.
 FASTLANE_ADMIT_PATH = HOME / "bin" / "fastlane-admit"
-FASTLANE_ADMIT_SHA256 = ""  # empty = the whole hook is off (both steps reuse fastlane-admit's code); the installer sets it
+# sha256 of ops/priority-evaluation/fastlane-admit in THIS tree (installed byte-identical by `install -m 755`). Empty = the
+# whole hook is off (both steps reuse fastlane-admit's code). Edit fastlane-admit => recompute this in the same commit:
+# test_auto_admit_hook.PinInTreeTests fails on a stale pin. The installed ~/bin/fastlane-admit must be exactly this file.
+FASTLANE_ADMIT_SHA256 = "489a2522829a8140ebd893d715bd880551fa3debf18c0eb7ebd390c84c4e70c9"
 PINNED_FILE_MAX_BYTES = 1 << 20
 # Custody's v16-admit command: an ABSOLUTE path and its sha256, both set by the installer once custody posts them on
 # board #11. Empty = the step is disabled.
@@ -2719,13 +2740,26 @@ def _auto_admit_family(job_dir: Path, row: dict[str, Any], review: dict[str, Any
     _hook_note(job_dir, note)
 
 
-def _run_v16_admit(rid: str, basis: str) -> tuple[str, str]:
-    """Run custody's pinned command once. (kind, outcome): kind is 'admitted' (exit 0), 'refused' (any other exit: custody
-    said no and routed the order to #22) or 'retry' (timeout or OSError only). A timeout kills the whole process group."""
+def _kill_group_and_reap(proc: Any) -> None:
+    """SIGKILL the child's whole process group (pgid == child pid, from start_new_session) and reap the child. Never raises."""
     import signal
+    with contextlib.suppress(ProcessLookupError, PermissionError, OSError):
+        os.killpg(proc.pid, signal.SIGKILL)  # an empty or foreign group is not an error
+    with contextlib.suppress(Exception):
+        proc.wait(timeout=10)  # reap (a zombie otherwise); returns at once when communicate() already did
+    for pipe in (proc.stdout, proc.stderr):
+        with contextlib.suppress(Exception):
+            if pipe is not None:
+                pipe.close()
+
+
+def _run_v16_admit(rid: str, basis: str) -> tuple[str, str]:
+    """Run custody's pinned command once. (kind, outcome) per the exit-code contract above the constants: 'admitted' (exit 0),
+    'refused' (exit 1, final) or 'retry' (any other code incl. a negative one, 126/127, a timeout, an OSError). The whole
+    process group is killed after every run (success, failure, timeout, OSError) and the child is always reaped."""
     try:
-        proc = subprocess.Popen([V16_ADMIT_PATH, rid, "--basis", basis],
-                                env={"PATH": "/usr/bin:/bin", "HOME": str(HOME), "AGENT_BOARD_NAME": AUTO_ADMIT_ACTOR},
+        env = {"PATH": f"{HOME}/bin:/usr/local/bin:/usr/bin:/bin", "HOME": str(HOME), "AGENT_BOARD_NAME": AUTO_ADMIT_ACTOR}
+        proc = subprocess.Popen([V16_ADMIT_PATH, rid, "--basis", basis], env=env,
                                 stdin=subprocess.DEVNULL, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True,
                                 errors="replace", start_new_session=True)
     except OSError as exc:
@@ -2733,23 +2767,23 @@ def _run_v16_admit(rid: str, basis: str) -> tuple[str, str]:
     try:
         stdout, stderr = proc.communicate(timeout=V16_ADMIT_TIMEOUT_S)
     except subprocess.TimeoutExpired:
-        with contextlib.suppress(ProcessLookupError, PermissionError):
-            os.killpg(proc.pid, signal.SIGKILL)  # the child and anything it started in its own session
-        with contextlib.suppress(Exception):
-            proc.communicate(timeout=10)  # reap it and close the pipes
+        _kill_group_and_reap(proc)
         return "retry", f"timeout after {V16_ADMIT_TIMEOUT_S}s"
     except OSError as exc:
-        with contextlib.suppress(ProcessLookupError, PermissionError):
-            os.killpg(proc.pid, signal.SIGKILL)
+        _kill_group_and_reap(proc)
         return "retry", f"could not run: {exc.strerror or exc}"
-    if proc.returncode == 0:
+    _kill_group_and_reap(proc)  # exited: nothing it started may write the state after the pickup re-reads it
+    code = proc.returncode
+    if code == 0:
         return "admitted", "exit 0"
-    return "refused", f"exit {proc.returncode}: " + (stderr or stdout or "")[-160:]
+    tail = (stderr or stdout or "").strip()[-160:]
+    return ("refused" if code == 1 else "retry"), f"exit {code}" + (f": {tail}" if tail else "")
 
 
 def _auto_v16_admit(job_dir: Path, row: dict[str, Any], review: dict[str, Any], cli: Any) -> str | None:
-    """Ask custody's pinned v16-admit once per (review sha, pin sha). Returns a transient hold reason when the timeout/OSError
-    retry budget allows another attempt on a later pass, else None (the caller continues with today's behaviour)."""
+    """Ask custody's pinned v16-admit (counted attempts per (review sha, pin sha), see the exit-code contract above the
+    constants). Returns a transient hold reason when the command asked for a retry (exit code other than 0/1, timeout,
+    OSError) and the attempt budget allows another pass, else None (the caller continues with today's behaviour)."""
     rid = str(row["id"])
     if "jevbench" not in (row.get("benchmarks") or []) or "v16_profile_admission" in load_state(rid):
         return None
@@ -2818,12 +2852,13 @@ def dispatch_measurement(rid: str, job_dir: Path) -> None:
         raise measurement_dispatch.OperationalHold("separate_native_measurement_wrapper_required")
     review = validate_review_gate(job_dir)
     row = load_row(rid)
-    admitted_before = "v16_profile_admission" in load_state(rid)
     retry_hold = auto_admit_hook(rid, job_dir, row, review)
     state = load_state(rid)
-    if "v16_profile_admission" in state and not admitted_before:
-        # Custody admitted the order during this very call. evaluate() routes admitted orders to evaluate_v16_generation()
-        # before it gets here, so stop and let the next pass do that; this function is the retired legacy path.
+    if "v16_profile_admission" in state:
+        # Admitted during the hook above, or by custody / a human between evaluate()'s route check (which loaded its state
+        # earlier) and now. This function is the retired legacy measurement path and evaluate() is its only caller, which
+        # routes admitted orders to evaluate_v16_generation() first: so any key seen here is new. Stop, never measure with
+        # the retired method (and spend pod money); the next scheduler pass routes the order.
         raise measurement_dispatch.OperationalHold("v16_admitted_reroute")
     if retry_hold:
         raise measurement_dispatch.OperationalHold(retry_hold)

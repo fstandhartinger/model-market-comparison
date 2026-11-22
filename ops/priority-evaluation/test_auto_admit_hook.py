@@ -8,9 +8,11 @@ from __future__ import annotations
 import hashlib
 import json
 import os
+import shutil
 import stat
 import sys
 import tempfile
+import time
 import unittest
 from pathlib import Path
 from unittest import mock
@@ -110,17 +112,23 @@ class HookCase(unittest.TestCase):
         if recipe:
             (trusted / 'POD-RECIPE.json').write_text('{}')
 
-    def v16_script(self, exit_code=0, sleep=0, write_state=True, mode=0o700, grandchild_marker=None):
+    def v16_script(self, exit_code=0, sleep=0, write_state=True, mode=0o700, grandchild_marker=None, detach_grandchild=False,
+                   die_by_signal=0, record_env=None):
+        """Custody's command as a script. `detach_grandchild`: the grandchild gets /dev/null for stdio (so the pipes do not
+        hold the command back) and outlives the command; `die_by_signal`: the command kills itself with that signal."""
         path = self.root / 'v16-admit'
         log = self.root / 'v16.log'
         state = self.state_root / 'requests' / f'{RID}.json'
         grand = ''
         if grandchild_marker:
+            quiet = ', stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL' if detach_grandchild else ''
             grand = (f'import subprocess\n'
-                     f'subprocess.Popen([sys.executable, "-c", "import time; time.sleep(2); open({str(grandchild_marker)!r}, \'w\').write(\'late\')"])\n')
+                     f'subprocess.Popen([sys.executable, "-c", "import time; time.sleep(2); open({str(grandchild_marker)!r}, \'w\').write(\'late\')"]{quiet})\n')
+        env = f'open({str(record_env)!r}, "w").write(json.dumps(dict(os.environ)))\n' if record_env else ''
+        sig = f'os.kill(os.getpid(), {die_by_signal})\ntime.sleep(5)\n' if die_by_signal else ''
         path.write_text(f'#!{sys.executable}\nimport json, os, sys, time\n'
                         f'open({str(log)!r}, "a").write(json.dumps(sys.argv[1:]) + "\\n")\n'
-                        + grand +
+                        + env + grand + sig +
                         f'time.sleep({sleep})\n'
                         f'if {exit_code} == 0 and {write_state}:\n'
                         f'    s = json.load(open({str(state)!r}))\n'
@@ -392,12 +400,22 @@ class V16AdmitTests(HookCase):
         self.assertIn('v16_admitted_reroute', ap.IMMEDIATE_RETRY_HOLD_REASONS)
         self.assertNotIn('v16_admit_retry', ap.IMMEDIATE_RETRY_HOLD_REASONS)
 
-    def test_an_order_admitted_before_the_hook_is_not_rerouted_by_it(self):
+    def test_an_order_admitted_before_the_hook_is_rerouted_too(self):
+        # CR-842 r3 S1: the key may have appeared after evaluate()'s route check (custody, a human v16-admit): the retired
+        # legacy path must not measure it. No v16-admit call (already admitted), no legacy runtime_spec, no native start.
         state = self.state()
         state['v16_profile_admission'] = {'verdict': 'ACCEPTED'}
         ap.save_state(state)
-        self.assertEqual(self.dispatch(), 'PROCEEDS')  # unchanged: the guard passes, evaluate() would have routed it earlier
+        self.assertEqual(self.dispatch(), 'HOLD:v16_admitted_reroute')  # not 'PROCEEDS'
         self.assertEqual(self.v16_calls(), [])
+        self.assertEqual(self.native_calls, [])
+
+    def test_an_admitted_order_is_rerouted_even_without_any_v16_pin(self):
+        state = self.state()
+        state['v16_profile_admission'] = {'verdict': 'ACCEPTED'}
+        ap.save_state(state)
+        with mock.patch.object(ap, 'FASTLANE_ADMIT_SHA256', ''):  # the hook is off entirely
+            self.assertEqual(self.dispatch(), 'HOLD:v16_admitted_reroute')
 
     def test_pickup_never_writes_the_admission_key_itself(self):
         path = self.v16_script(exit_code=0, write_state=False)
@@ -448,15 +466,121 @@ class V16AdmitTests(HookCase):
             self.assertEqual(self.dispatch(), 'HOLD:v16_admit_retry')
         self.assertIn('could not run: Permission denied; retried later', self.state_md())
 
+    def test_other_exit_codes_are_retried_at_most_three_times(self):
+        # CR-842 r3 S2: 0 = admitted, 1 = refused (final), anything else is "could not decide": retried, same 3-attempt cap.
+        # That includes 126/127 (a missing tool in custody's script) and a death by signal (a negative return code).
+        cases = (('exit 2', {'exit_code': 2}), ('exit 126', {'exit_code': 126}), ('exit 127', {'exit_code': 127}),
+                 ('exit 255', {'exit_code': 255}), ('SIGKILL', {'exit_code': 0, 'die_by_signal': 9}),
+                 ('SIGTERM', {'exit_code': 0, 'die_by_signal': 15}))
+        for label, kwargs in cases:
+            with self.subTest(label):
+                before = len(self.v16_calls())
+                self.pin(self.v16_script(**kwargs))  # another script = another pin = counted from 0
+                self.assertEqual(self.dispatch(), 'HOLD:v16_admit_retry')
+                self.assertEqual(self.dispatch(), 'HOLD:v16_admit_retry')
+                self.assertEqual(self.dispatch(), 'HOLD:official_method_retired_requires_admission')  # 3rd attempt, then today's hold
+                self.assertEqual(self.dispatch(), 'HOLD:official_method_retired_requires_admission')
+                self.assertEqual(len(self.v16_calls()) - before, 3)
+                attempt = self.state()['v16_admit_attempt']
+                self.assertEqual((attempt['kind'], attempt['attempts'], attempt['final']), ('retry', 3, True))
+                self.assertNotIn('v16_profile_admission', self.state())
+        self.assertIn('v16-admit exit -9', self.state_md())
+        self.assertIn('v16-admit exit 127; retried later (attempt 1 of 3)', self.state_md())
+        self.assertIn('v16-admit exit 2; hold unchanged (attempt 3 of 3, no more)', self.state_md())
+
+    def test_exit_zero_without_the_key_is_a_final_refusal_not_a_retry(self):
+        self.pin(self.v16_script(exit_code=0, write_state=False))
+        for _ in range(3):
+            self.assertEqual(self.dispatch(), 'HOLD:official_method_retired_requires_admission')
+        self.assertEqual(len(self.v16_calls()), 1)
+        self.assertEqual((self.state()['v16_admit_attempt']['kind'], self.state()['v16_admit_attempt']['final']), ('refused', True))
+
+    def test_a_retry_that_ends_in_admission_is_routed_and_stops_asking(self):
+        # the first attempt could not decide (exit 3), the second admits: reroute, and no third call
+        counter = self.root / 'count'
+        path = self.root / 'v16-admit'
+        state = self.state_root / 'requests' / f'{RID}.json'
+        path.write_text(f'#!{sys.executable}\nimport json, os, sys\n'
+                        f'n = int(open({str(counter)!r}).read()) if os.path.exists({str(counter)!r}) else 0\n'
+                        f'open({str(counter)!r}, "w").write(str(n + 1))\n'
+                        f'if n == 0:\n    sys.exit(3)\n'
+                        f's = json.load(open({str(state)!r})); s["v16_profile_admission"] = {{"verdict": "ACCEPTED"}}\n'
+                        f'json.dump(s, open({str(state)!r} + ".tmp", "w")); os.replace({str(state)!r} + ".tmp", {str(state)!r})\n')
+        os.chmod(path, 0o700)
+        self.pin(path)
+        self.assertEqual(self.dispatch(), 'HOLD:v16_admit_retry')
+        self.assertEqual(self.dispatch(), 'HOLD:v16_admitted_reroute')
+        self.assertEqual(self.dispatch(), 'HOLD:v16_admitted_reroute')  # admitted: the key is there, custody is not asked again
+        self.assertEqual(counter.read_text(), '2')
+
+    def test_the_command_environment_has_home_bin_first_on_the_path(self):
+        env_file = self.root / 'env.json'
+        self.pin(self.v16_script(exit_code=0, record_env=env_file))
+        self.assertEqual(self.dispatch(), 'HOLD:v16_admitted_reroute')
+        seen = json.loads(env_file.read_text())
+        self.assertEqual(seen['PATH'], f'{ap.HOME}/bin:/usr/local/bin:/usr/bin:/bin')
+        self.assertEqual((seen['HOME'], seen['AGENT_BOARD_NAME']), (str(ap.HOME), ap.AUTO_ADMIT_ACTOR))
+        self.assertFalse([key for key in seen if key.startswith(('PG', 'STRIPE', 'OPENROUTER'))])
+
+    def test_a_tool_in_home_bin_is_found_by_name_and_a_missing_one_is_a_retry_not_a_refusal(self):
+        home = self.root / 'home'
+        (home / 'bin').mkdir(parents=True)
+        tool = home / 'bin' / 'custody-tool'
+        tool.write_text(f'#!/bin/sh\necho "$1" > {str(self.root / "tool-ran")}\n')
+        os.chmod(tool, 0o755)
+        script = self.root / 'v16-sh'
+        script.write_text('#!/bin/sh\ncustody-tool called\n')
+        os.chmod(script, 0o700)
+        with mock.patch.object(ap, 'HOME', home), mock.patch.object(ap, 'V16_ADMIT_PATH', str(script)):
+            self.assertEqual(ap._run_v16_admit(RID, 'basis'), ('admitted', 'exit 0'))
+            self.assertEqual((self.root / 'tool-ran').read_text().strip(), 'called')
+            script.write_text('#!/bin/sh\ncustody-tool-that-does-not-exist\n')
+            kind, outcome = ap._run_v16_admit(RID, 'basis')
+        self.assertEqual(kind, 'retry')  # sh: exit 127 "not found" is a retry, no longer a final refusal
+        self.assertTrue(outcome.startswith('exit 127'), outcome)
+
     def test_a_timeout_kills_the_whole_process_group(self):
         marker = self.root / 'grandchild-wrote'
         path = self.v16_script(exit_code=0, sleep=5, grandchild_marker=marker)
         self.pin(path)
         with mock.patch.object(ap, 'V16_ADMIT_TIMEOUT_S', 0.5):
             self.assertEqual(self.dispatch(), 'HOLD:v16_admit_retry')
-        import time
         time.sleep(2.5)  # the grandchild would have written its marker after 2 s
         self.assertFalse(marker.exists())
+
+    def test_the_process_group_is_killed_after_an_exit_too(self):
+        # CR-842 r3 N4: a grandchild that outlives the command must not write the state after the pickup re-read it
+        for exit_code in (0, 1, 2):
+            with self.subTest(exit_code):
+                state = self.state()  # a fresh order each time: exit 0 admits it, and an admitted order is not asked again
+                for key in ('v16_profile_admission', 'v16_admit_attempt'):
+                    state.pop(key, None)
+                ap.save_state(state)
+                marker = self.root / f'grandchild-wrote-{exit_code}'
+                self.pin(self.v16_script(exit_code=exit_code, grandchild_marker=marker, detach_grandchild=True))
+                self.dispatch()
+                time.sleep(2.5)  # the grandchild would have written its marker 2 s after it started
+                self.assertFalse(marker.exists())
+        self.assertEqual(len(self.v16_calls()), 3)
+
+    def test_an_oserror_while_waiting_kills_the_group_and_reaps_the_child(self):
+        # CR-842 r3 N4: the OSError branch of communicate() used to leave the killed child as a zombie
+        self.pin(self.v16_script(exit_code=0, sleep=30))
+        real = ap.subprocess.Popen
+        procs = []
+
+        def spy(*args, **kwargs):
+            proc = real(*args, **kwargs)
+            proc.communicate = mock.Mock(side_effect=OSError(5, 'Input/output error'))
+            procs.append(proc)
+            return proc
+        with mock.patch.object(ap.subprocess, 'Popen', side_effect=spy):
+            self.assertEqual(self.dispatch(), 'HOLD:v16_admit_retry')
+        self.assertIn('could not run: Input/output error; retried later', self.state_md())
+        self.assertEqual(len(procs), 1)
+        self.assertIsNotNone(procs[0].returncode)  # reaped
+        with self.assertRaises(ProcessLookupError):  # no zombie leader, no surviving member
+            os.killpg(procs[0].pid, 0)
 
     def test_runs_in_its_own_session(self):
         path = self.v16_script(exit_code=0)
@@ -471,6 +595,7 @@ class V16AdmitTests(HookCase):
             self.dispatch()
         self.assertIs(seen.get('start_new_session'), True)
         self.assertEqual(sorted(seen['env']), ['AGENT_BOARD_NAME', 'HOME', 'PATH'])
+        self.assertEqual(seen['env']['PATH'], f'{ap.HOME}/bin:/usr/local/bin:/usr/bin:/bin')
         self.assertEqual(seen['stdin'], ap.subprocess.DEVNULL)
 
     def test_not_for_ineligible_orders_other_benchmarks_or_already_admitted(self):
@@ -501,6 +626,31 @@ class V16AdmitTests(HookCase):
         with mock.patch.object(ap, '_run_v16_admit', side_effect=RuntimeError('boom')):
             self.assertEqual(self.dispatch(), 'HOLD:official_method_retired_requires_admission')
         self.assertIn('v16 admission step failed: RuntimeError', self.state_md())
+
+
+class PinInTreeTests(unittest.TestCase):
+    """CR-842 r3 S4: the FASTLANE_ADMIT_SHA256 that autopickup.py ships is the sha256 of THIS tree's fastlane-admit. A stale pin
+    (fastlane-admit edited without the constant) turns the whole hook off in production, silently: here it fails CI.
+    No HookCase: these tests read the shipped constant, never a patched one."""
+
+    def test_a_non_empty_pin_is_the_sha256_of_the_fastlane_admit_in_this_tree(self):
+        actual = hashlib.sha256((HERE / 'fastlane-admit').read_bytes()).hexdigest()
+        if ap.FASTLANE_ADMIT_SHA256:
+            self.assertEqual(ap.FASTLANE_ADMIT_SHA256, actual,
+                             f'stale pin: fastlane-admit changed without FASTLANE_ADMIT_SHA256; set it to {actual}')
+
+    def test_the_shipped_pin_loads_this_trees_fastlane_admit_through_the_hooks_loader(self):
+        if not ap.FASTLANE_ADMIT_SHA256:
+            self.skipTest('the hook is shipped off (empty pin)')
+        with tempfile.TemporaryDirectory() as tmp:
+            copy = Path(tmp) / 'fastlane-admit'  # a git checkout under umask 002 is group-writable, which the loader refuses
+            shutil.copyfile(HERE / 'fastlane-admit', copy)
+            os.chmod(copy, 0o755)
+            with mock.patch.object(ap, 'FASTLANE_ADMIT_PATH', copy):
+                module, problem = ap._load_fastlane_admit()
+        self.assertEqual(problem, '')
+        for name in ('admit', 'family_match', 'order_problems', 'normalize_row', 'Refused', 'Failed'):
+            self.assertTrue(hasattr(module, name), name)
 
 
 if __name__ == '__main__':
