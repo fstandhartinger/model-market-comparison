@@ -237,6 +237,8 @@ export interface ModelRow {
     hugging_face_id?: string | null;
     context_window_tokens?: number | null;
   };
+  /** CR-827: OpenRouter identity of a fully withdrawn model kept as an unpriced benchmark subject (no offer). */
+  openrouter_withdrawn_identities?: { id: string; canonical_slug: string | null }[];
   coding_agent_results?: { harness: string; score: number; source_model_name?: string }[];
   featured: boolean;
   has_benchmark: boolean;

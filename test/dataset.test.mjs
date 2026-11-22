@@ -643,11 +643,24 @@ test("family-scoped Intelligence.ai evidence attaches once to deterministic Over
   const named = Object.entries(designArena.model_registry ?? {})
     .filter(([, meta]) => /\((?:x\s?high|xhigh|max|high|medium|low|minimal)\)/i.test(meta?.display_name ?? ''));
   assert.ok(named.length >= 3, 'the source still states efforts in its registry');
-  for (const [sourceId] of named) {
+  for (const [sourceId, meta] of named) {
     const owners = ds.models.filter((m) => Object.values(m.designarena ?? {}).some((b) => b?.modelId === sourceId));
     assert.equal(owners.length, 1, `${sourceId} attaches exactly once`);
-    assert.match(owners[0].designarena_attachment_note, /names the tested effort/i, sourceId);
+    // CR-827: a stated effort that is a catalog configuration joins exactly that configuration. A stated
+    // effort the catalog has no configuration for (22 Nov 2026: GPT-6.2 Astra (max), catalog only
+    // gpt-6.2-astra::default) is never mapped onto another one: it stays family-scoped, and its note
+    // names the source's effort instead of claiming the source stated none.
+    const effort = /\((x\s?high|xhigh|max|high|medium|low|minimal)\)/i.exec(meta.display_name)[1].toLowerCase().replace(/\s/g, '');
+    if (ds.models.some((m) => m.id === `${owners[0].family_key}::${effort}`)) {
+      assert.match(owners[0].designarena_attachment_note, /names the tested effort/i, sourceId);
+      assert.equal(owners[0].id, `${owners[0].family_key}::${effort}`, sourceId);
+    } else {
+      assert.match(owners[0].designarena_attachment_note, new RegExp(`names the effort ${effort} .*not a catalog configuration`, 'i'), sourceId);
+      assert.match(owners[0].designarena_attachment_note, /attached exactly once/i, sourceId);
+    }
   }
+  assert.ok(named.filter(([sourceId]) => /names the tested effort/i.test(ds.models.find((m) => Object.values(m.designarena ?? {}).some((b) => b?.modelId === sourceId))?.designarena_attachment_note ?? '')).length >= 3,
+    'at least three stated efforts still join their exact catalog configuration');
   const astra = ds.models.find((m) => m.id === 'gpt-6-astra::xhigh');
   assert.equal(astra?.designarena.frontend?.modelId, 'gpt-6-astra', 'GPT-6 Astra (xhigh) sits on ::xhigh');
   assert.equal(ds.models.find((m) => m.id === 'gpt-6-astra::high')?.designarena.frontend, undefined);
