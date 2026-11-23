@@ -434,6 +434,86 @@ class CliTests(TempCase):
     def audit_lines(self):
         return [json.loads(line) for line in self.log.read_text().splitlines()]
 
+    PICKUP_ROW = {'id': ORDER, 'status': 'paid', 'stripe_mode': 'live', 'synthetic_test': False, 'paid_at': '2026-11-22T10:00:00Z',
+                  'result_delivered_at': None, 'refund_id': None, 'refunded_at': None, 'refund_status': None,
+                  'model_link': 'https://huggingface.co/oidlabs/cue-reflex-4b', 'code_link': None}
+
+    def test_admit_with_the_pickups_own_row_makes_no_database_query(self):
+        with mock.patch.object(self.cli, 'fetch_order', side_effect=AssertionError('no second query')):
+            action, entry = self.cli.admit(ORDER, 'cue_reflex', 'autopickup test', dry_run=False, by='t', row=dict(self.PICKUP_ROW))
+        self.assertEqual(action, 'added')
+        self.assertEqual(self.registry_entries(), [entry])
+
+    def test_supplied_row_goes_through_the_same_order_gate(self):
+        for name, change in {'refunded': {'refunded_at': 'x'}, 'refund_id': {'refund_id': 'r'}, 'refund_status': {'refund_status': 'due'},
+                             'synthetic': {'synthetic_test': True}, 'test_mode': {'stripe_mode': 'test'}, 'unpaid': {'paid_at': None},
+                             'delivered': {'result_delivered_at': 'x'}, 'status': {'status': 'completed'}}.items():
+            with self.subTest(name):
+                with self.assertRaises(self.cli.Refused):
+                    self.cli.admit(ORDER, 'cue_reflex', 'b', dry_run=False, by='t', row=dict(self.PICKUP_ROW, **change))
+        self.assertFalse(self.registry_path.exists())
+
+    def test_supplied_row_for_another_order_or_with_missing_columns_is_refused(self):
+        with self.assertRaises(self.cli.Refused):
+            self.cli.admit(ORDER, 'cue_reflex', 'b', dry_run=False, by='t', row=dict(self.PICKUP_ROW, id=OTHER))
+        incomplete = {key: value for key, value in self.PICKUP_ROW.items() if key != 'paid_at'}
+        with self.assertRaises(self.cli.Refused):
+            self.cli.admit(ORDER, 'cue_reflex', 'b', dry_run=False, by='t', row=incomplete)
+        self.assertFalse(self.registry_path.exists())
+
+    def test_fetch_order_shaped_row_is_accepted_unchanged(self):
+        self.assertEqual(self.cli.normalize_row(self.LIVE), self.LIVE)
+
+    def test_dropping_each_column_in_turn_refuses(self):
+        # S2: a missing column maps to a refusing sentinel, whichever of the two row shapes the caller used. No column,
+        # gate or not, may be absent: the full fetch_order key set (or the full pickup column set) is required.
+        for shape, source in (('pickup', self.PICKUP_ROW), ('fetch_order', self.LIVE)):
+            for column in source:
+                with self.subTest(shape=shape, dropped=column):
+                    partial = {key: value for key, value in source.items() if key != column}
+                    problems = self.cli.order_problems(self.cli.normalize_row(partial))
+                    self.assertTrue(problems, 'a row without %s must be refused' % column)
+                    with self.assertRaises(self.cli.Refused):
+                        self.cli.admit(ORDER, 'cue_reflex', 'b', dry_run=False, by='t', row=partial)
+        self.assertFalse(self.registry_path.exists())
+        self.assertEqual(self.cli.order_problems(self.cli.normalize_row(self.PICKUP_ROW)), [])
+        self.assertEqual(self.cli.order_problems(self.cli.normalize_row(self.LIVE)), [])
+
+    def test_missing_refund_status_names_the_column_instead_of_passing(self):
+        # the critic's probe: refund_status absent used to read as None, which is the admissible value
+        row = {key: value for key, value in self.PICKUP_ROW.items() if key != 'refund_status'}
+        problems = self.cli.order_problems(self.cli.normalize_row(row))
+        self.assertTrue(any('refund_status' in problem for problem in problems), problems)
+
+    def test_hybrid_rows_get_no_shortcut(self):
+        hybrid = {'id': ORDER, 'status': 'paid', 'stripe_mode': 'live', 'synthetic_test': False, 'paid': True,
+                  'delivered': False, 'has_refund_id': False, 'refunded': False, 'paid_at': None}
+        problems = self.cli.order_problems(self.cli.normalize_row(hybrid))
+        self.assertIn('not paid', problems)  # paid_at is read as a pickup column: None means unpaid; 'paid: True' is ignored
+        self.assertTrue(any('lacks column' in problem for problem in problems))
+        # a full fetch_order row that also carries a raw pickup column is contradictory: it is read as a pickup row, so the
+        # missing raw columns refuse it (the derived booleans cannot vouch for an order whose paid_at says otherwise)
+        both = dict(self.LIVE, paid_at=None)
+        self.assertTrue(self.cli.order_problems(self.cli.normalize_row(both)))
+        self.assertEqual(self.cli.order_problems(self.cli.normalize_row(dict(self.LIVE, paid=False))), ['not paid'])
+
+    def test_registry_lock_wait_is_bounded(self):
+        import fcntl
+        lock_path = self.registry_path.with_name(self.registry_path.name + '.lock')
+        lock_path.parent.mkdir(parents=True, exist_ok=True)
+        holder = os.open(lock_path, os.O_WRONLY | os.O_CREAT, 0o600)
+        self.addCleanup(os.close, holder)
+        fcntl.flock(holder, fcntl.LOCK_EX)  # a hung human fastlane-admit holding the lock
+        waiter = os.open(lock_path, os.O_WRONLY)
+        self.addCleanup(os.close, waiter)
+        with self.assertRaises(BlockingIOError):
+            self.cli.flock_bounded(waiter, wait=0.2)
+        with mock.patch.object(self.cli, 'LOCK_WAIT_S', 0.2):
+            with self.assertRaises(self.cli.Failed) as raised:
+                self.admit()
+        self.assertFalse(raised.exception.changed)
+        self.assertFalse(self.registry_path.exists())
+
     def test_admit_writes_entry_audit_line_and_makes_the_supplement_active(self):
         action, entry = self.admit()
         self.assertEqual(action, 'added')

@@ -41,6 +41,7 @@ import re
 import subprocess
 import sys
 import tempfile
+import time
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -131,6 +132,8 @@ def order_problems(row) -> list[str]:
     if not isinstance(row, dict):
         return ['no such order']
     problems = []
+    if row.get('_missing'):
+        problems.append('order row lacks column(s): ' + ', '.join(str(name) for name in row['_missing']))
     if row.get('stripe_mode') != 'live':
         problems.append('not a live-mode order')
     if row.get('synthetic_test') is not False:
@@ -301,7 +304,7 @@ def write_entry(registry, entry: dict, *, by: str, evidence: dict | None = None)
         path.parent.mkdir(mode=0o700, parents=True, exist_ok=True)
         lock_fd = os.open(path.with_name(path.name + '.lock'), os.O_WRONLY | os.O_CREAT | getattr(os, 'O_NOFOLLOW', 0)
                           | getattr(os, 'O_CLOEXEC', 0), 0o600)
-        fcntl.flock(lock_fd, fcntl.LOCK_EX)
+        flock_bounded(lock_fd)
         stage = 'reading the registry'
         try:
             current = registry.load(path)
@@ -357,9 +360,57 @@ def write_entry(registry, entry: dict, *, by: str, evidence: dict | None = None)
             os.close(lock_fd)
 
 
+LOCK_WAIT_S = 10
+
+
+def flock_bounded(fd: int, wait: float | None = None) -> None:
+    """flock(LOCK_EX) that gives up after `wait` seconds (OSError, which write_entry turns into Failed): a hung holder must
+    not stall the autopickup unit that now calls admit() in-process."""
+    deadline = time.monotonic() + (LOCK_WAIT_S if wait is None else wait)
+    while True:
+        try:
+            fcntl.flock(fd, fcntl.LOCK_EX | fcntl.LOCK_NB)
+            return
+        except BlockingIOError:
+            if time.monotonic() >= deadline:
+                raise
+            time.sleep(0.05)
+
+
 # --- command ----------------------------------------------------------------------------------------------------------
 
-def admit(order_id: str, family: str, basis: str, *, dry_run: bool, by: str) -> tuple[str, dict]:
+MISSING = '<missing>'  # stands in for a gate column the caller's row lacks; equals no value order_problems() accepts
+# The exact key set fetch_order() returns, and the raw columns of the pickup's row that the gate is derived from.
+FETCH_ORDER_KEYS = ('id', 'status', 'stripe_mode', 'synthetic_test', 'paid', 'delivered', 'has_refund_id', 'refunded',
+                    'refund_status', 'model_link', 'code_link')
+RAW_GATE_COLUMNS = ('paid_at', 'result_delivered_at', 'refund_id', 'refunded_at')  # present: read as a pickup row
+PICKUP_ROW_KEYS = ('id', 'status', 'stripe_mode', 'synthetic_test', 'paid_at', 'result_delivered_at', 'refund_id',
+                   'refunded_at', 'refund_status', 'model_link', 'code_link')
+
+
+def normalize_row(row: dict) -> dict:
+    """A caller-supplied order row in the shape order_problems() reads. Nothing is looked up.
+    A row carrying the FULL fetch_order() key set and none of the raw columns is taken as it is. Anything else is read as
+    the pickup's raw row (paid_at, result_delivered_at, refund_id, refunded_at become the booleans fetch_order() computes
+    in SQL); a hybrid or partial row gets no shortcut. Every column the row lacks becomes MISSING (a value order_problems() refuses) and
+    is named in '_missing', so a changed SQL or a partial caller can never turn into an admissible order."""
+    if not isinstance(row, dict):
+        return row  # order_problems() answers 'no such order'
+    if not any(column in row for column in RAW_GATE_COLUMNS) and all(key in row for key in FETCH_ORDER_KEYS):
+        return {key: row[key] for key in FETCH_ORDER_KEYS}
+    missing = [key for key in PICKUP_ROW_KEYS if key not in row]
+    out = {key: row.get(key, MISSING) for key in ('id', 'status', 'stripe_mode', 'synthetic_test', 'refund_status',
+                                                    'model_link', 'code_link')}
+    for flag, column in (('paid', 'paid_at'), ('delivered', 'result_delivered_at'), ('has_refund_id', 'refund_id'),
+                         ('refunded', 'refunded_at')):
+        out[flag] = MISSING if column not in row else row[column] is not None
+    out['_missing'] = missing
+    return out
+
+
+def admit(order_id: str, family: str, basis: str, *, dry_run: bool, by: str, row: dict | None = None) -> tuple[str, dict]:
+    """`row`: the caller's already-loaded order row (the autopickup passes its own); it is used instead of a second
+    database query, must be for this order, and goes through the same order_problems() gate."""
     owner, registry = runtime()
     if not registry.is_order_id(order_id):
         raise Refused('order id must be a canonical lower-case UUID')
@@ -370,7 +421,12 @@ def admit(order_id: str, family: str, basis: str, *, dry_run: bool, by: str) -> 
     supplement = next((item for item in owner.SUPPLEMENTS if item['family'] == family), None)
     if supplement is None:
         raise Refused(f'unknown supplement family {family!r}; known: ' + ', '.join(item['family'] for item in owner.SUPPLEMENTS))
-    row = fetch_order(order_id)
+    if row is None:
+        row = fetch_order(order_id)
+    else:
+        if not isinstance(row, dict) or row.get('id') != order_id:
+            raise Refused('supplied order row is not for this order')
+        row = normalize_row(row)
     problems = order_problems(row)
     if problems:
         raise Refused('order not admissible: ' + '; '.join(problems))

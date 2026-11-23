@@ -354,6 +354,12 @@ class DatabaseTestCase(unittest.TestCase):
         shutil.rmtree(ap.STATE_ROOT, ignore_errors=True)
         shutil.rmtree(ap.JOB_ROOT, ignore_errors=True)
         set_cutover(datetime.now(timezone.utc) - timedelta(days=1))
+        # autopickup.py ships FASTLANE_ADMIT_SHA256 (CR-842): the auto-admit hook is live by default. A test that is not about
+        # the hook must never run it (it would load the host's ~/bin/fastlane-admit and could write the real admission
+        # registry, or add STATE.md notes): hook off here; AutoAdmitHookSchedulerTests switches it on with its own copy.
+        patcher = mock.patch.object(ap, "FASTLANE_ADMIT_SHA256", "")
+        patcher.start()
+        self.addCleanup(patcher.stop)
 
 
 class PortableMeasurementFixtureTests(unittest.TestCase):
@@ -5217,6 +5223,179 @@ class PodRuntimeSpecTests(unittest.TestCase):
         meta["system"]["price_in_per_m"] = 0.04
         with self.assertRaises(ValueError):
             ap.measurement_dispatch.validate_api_meta("jevbench", meta, self.GPU_RUNTIME)
+
+
+class AutoAdmitHookSchedulerTests(DatabaseTestCase):
+    """CR-842 (proposal 5 option C): the pickup's pinned v16-admit step through the real evaluate() + manage_evaluation()
+    path (critic r1 M1: no legacy pod path after a hook admission; S1: the retry rules hold through the scheduler)."""
+
+    _gate = PodDispatchIntegrationTests._gate
+
+    def setUp(self):
+        super().setUp()
+        self.fx = FakeEffects()
+        self.rid = insert_order()
+        ap.cycle(self.fx)  # claims the order: job folder, evaluation_status='starting'
+        self.job = ap.JOB_ROOT / self.rid
+        self.unit = ap.EVAL_UNIT.format(self.rid)
+        self._gate(self.rid, self.job, {"schema_version": 1}, {"backend": "gpu_pod", "credential": "none"}, {"jevbench": {}})
+        self.custody_dir = Path(tempfile.mkdtemp(prefix="v16-admit-fixture-"))
+        os.chmod(self.custody_dir, 0o700)
+        self.addCleanup(shutil.rmtree, self.custody_dir, True)
+        self.custody_log = self.custody_dir / "calls.log"
+        # the real file's bytes (its order gate decides which orders may reach custody), copied with a mode the hook accepts:
+        # a git checkout under umask 002 leaves the original group-writable, which the hook refuses
+        admit = self.custody_dir / "fastlane-admit"
+        shutil.copyfile(HERE / "fastlane-admit", admit)
+        os.chmod(admit, 0o755)
+        for target, value in (("FASTLANE_ADMIT_PATH", admit), ("FASTLANE_ADMIT_SHA256", ap.sha256_file(admit)),
+                              ("V16_ADMIT_PATH", ""), ("V16_ADMIT_SHA256", "")):
+            patcher = mock.patch.object(ap, target, value)
+            patcher.start()
+            self.addCleanup(patcher.stop)
+        # whatever happens after the hook, no real pod, scorer or measurement may start from a test
+        for target in (ap.pod_runner, "run"), (ap.measurement_dispatch, "runtime_spec"):
+            patcher = mock.patch.object(*target, side_effect=AssertionError("legacy measurement path reached"))
+            patcher.start()
+            self.addCleanup(patcher.stop)
+        self.v16_generation = []
+        patcher = mock.patch.object(ap, "evaluate_v16_generation",
+                                    side_effect=lambda rid, job: self.v16_generation.append(rid) or 0)
+        patcher.start()
+        self.addCleanup(patcher.stop)
+
+    def custody(self, exit_code=0, sleep=0):
+        """Custody's command as a self-contained script that records the admission atomically (as it was asked to)."""
+        path = self.custody_dir / "v16-admit"
+        state = ap.state_path(self.rid)
+        path.write_text(f"#!{sys.executable}\nimport json, os, sys, time\n"
+                        f"open({str(self.custody_log)!r}, 'a').write(json.dumps(sys.argv[1:]) + '\\n')\n"
+                        f"time.sleep({sleep})\n"
+                        f"if {exit_code} == 0:\n"
+                        f"    s = json.load(open({str(state)!r})); s['v16_profile_admission'] = {{'verdict': 'ACCEPTED'}}\n"
+                        f"    json.dump(s, open({str(state)!r} + '.tmp', 'w')); os.replace({str(state)!r} + '.tmp', {str(state)!r})\n"
+                        f"sys.exit({exit_code})\n")
+        os.chmod(path, 0o700)
+        for target, value in (("V16_ADMIT_PATH", str(path)), ("V16_ADMIT_SHA256", ap.sha256_file(path))):
+            patcher = mock.patch.object(ap, target, value)
+            patcher.start()
+            self.addCleanup(patcher.stop)
+
+    def custody_calls(self):
+        return self.custody_log.read_text().splitlines() if self.custody_log.exists() else []
+
+    def evaluation_pass(self):
+        """What the started evaluation unit does: claim the order for one evaluation, then run it."""
+        ap.sql(f"UPDATE {ap.TABLE} SET evaluation_status='starting' WHERE id='{self.rid}'")
+        return ap.evaluate(self.rid)
+
+    def hold(self):
+        return ap.load_state(self.rid).get("operational_hold")
+
+    def test_hook_admitted_order_reaches_the_v16_generation_and_never_the_legacy_pod_path(self):
+        # the critic's probe (pickup-admitted, then the retired pod_runner.run with the v1.5 pin) as a regression test
+        self.custody(exit_code=0)
+        self.assertEqual(self.evaluation_pass(), 0)
+        state = ap.load_state(self.rid)
+        self.assertIn("v16_profile_admission", state)  # custody wrote it; the pickup did not
+        self.assertEqual((self.hold()["reason"], self.hold()["transient"]), ("v16_admitted_reroute", True))
+        self.assertEqual(self.v16_generation, [])  # not inside the same call ...
+        self.assertEqual(row(self.rid)["evaluation_status"], "pending")
+        started = len(self.fx.started)
+        ap.manage_evaluation(row(self.rid), ap.load_state(self.rid), self.fx, datetime.now(timezone.utc))
+        self.assertIsNone(self.hold())  # ... but the very next scheduler pass restarts it, without the 15 minute backoff
+        self.assertEqual(ap.load_state(self.rid)["hold_retries"]["v16_admitted_reroute"], 1)
+        self.assertEqual(self.fx.started[started:], [self.unit])
+        self.assertEqual(self.fx.notes, [])
+        self.assertEqual(self.evaluation_pass(), 0)
+        self.assertEqual(self.v16_generation, [self.rid])  # ... where evaluate() routes it through the v1.6 branch
+        self.assertEqual(len(self.custody_calls()), 1)  # custody was asked once; the legacy pod path never ran (stubs raise)
+
+    def test_an_admission_between_the_route_check_and_dispatch_never_measures_on_the_legacy_path(self):
+        # critic r2 S1: evaluate() loaded its state and chose the retired route; custody (or a human v16-admit) then recorded
+        # the admission before dispatch_measurement began. That used to carry on to runtime_spec / pod_runner.run with the
+        # retired v1.5 method and spend pod money (the stubs raise if reached).
+        real_dispatch, real_gate = ap.dispatch_measurement, ap.validate_review_gate
+
+        def gate_then_admission(job_dir):
+            result = real_gate(job_dir)  # the admission lands right after the review gate of dispatch_measurement
+            state = ap.load_state(self.rid)
+            state["v16_profile_admission"] = {"verdict": "ACCEPTED"}
+            ap.save_state(state)
+            return result
+
+        def dispatch_with_the_admission_arriving(rid, job_dir):
+            with mock.patch.object(ap, "validate_review_gate", side_effect=gate_then_admission):
+                return real_dispatch(rid, job_dir)
+        with mock.patch.object(ap, "dispatch_measurement", side_effect=dispatch_with_the_admission_arriving):
+            self.assertEqual(self.evaluation_pass(), 0)
+        self.assertEqual((self.hold()["reason"], self.hold()["transient"]), ("v16_admitted_reroute", True))
+        self.assertEqual(self.v16_generation, [])
+        self.assertEqual(self.custody_calls(), [])  # already admitted: custody is not asked
+        started = len(self.fx.started)
+        ap.manage_evaluation(row(self.rid), ap.load_state(self.rid), self.fx, datetime.now(timezone.utc))
+        self.assertEqual(self.fx.started[started:], [self.unit])  # the next scheduler pass restarts it without backoff
+        self.assertEqual(self.evaluation_pass(), 0)
+        self.assertEqual(self.v16_generation, [self.rid])  # evaluate() now routes it through the v1.6 branch
+
+    def test_custody_refusal_keeps_todays_hold_and_is_never_asked_again(self):
+        self.custody(exit_code=1)
+        self.assertEqual(self.evaluation_pass(), 0)
+        self.assertEqual((self.hold()["reason"], self.hold()["transient"]),
+                         ("official_method_retired_requires_admission", False))
+        started = len(self.fx.started)
+        ap.manage_evaluation(row(self.rid), ap.load_state(self.rid), self.fx, datetime.now(timezone.utc))
+        self.assertEqual(len(self.fx.started), started)  # a non-transient hold escalates; the scheduler restarts nothing
+        self.assertIsNotNone(self.hold())
+        state = ap.load_state(self.rid)  # a human clears the hold and the order is evaluated again
+        state.pop("operational_hold")
+        ap.save_state(state)
+        self.assertEqual(self.evaluation_pass(), 0)
+        self.assertEqual(self.hold()["reason"], "official_method_retired_requires_admission")
+        self.assertEqual(len(self.custody_calls()), 1)  # one attempt per (review sha, pin sha)
+        self.assertEqual(self.v16_generation, [])
+
+    def test_timeout_retries_through_the_scheduler_at_most_three_times(self):
+        self.custody(exit_code=0, sleep=5)
+        now = datetime.now(timezone.utc)
+        with mock.patch.object(ap, "V16_ADMIT_TIMEOUT_S", 0.3):
+            for attempt in (1, 2):
+                self.assertEqual(self.evaluation_pass(), 0)
+                self.assertEqual((self.hold()["reason"], self.hold()["transient"]), ("v16_admit_retry", True))
+                started = len(self.fx.started)
+                ap.manage_evaluation(row(self.rid), ap.load_state(self.rid), self.fx, now)  # schedules the backoff
+                self.assertEqual(len(self.fx.started), started)
+                self.assertIsNotNone(self.hold()["next_retry_at"])
+                now += timedelta(hours=3)  # past the 15 / 30 minute backoff of the first / second retry
+                ap.manage_evaluation(row(self.rid), ap.load_state(self.rid), self.fx, now)  # backoff over: restart
+                self.assertIsNone(self.hold())
+                self.assertEqual(self.fx.started[started:], [self.unit])
+                self.assertEqual(len(self.custody_calls()), attempt)
+            self.assertEqual(self.evaluation_pass(), 0)  # the third and last attempt
+            self.assertEqual((self.hold()["reason"], self.hold()["transient"]),
+                             ("official_method_retired_requires_admission", False))
+            self.assertEqual(len(self.custody_calls()), 3)
+            started = len(self.fx.started)
+            ap.manage_evaluation(row(self.rid), ap.load_state(self.rid), self.fx, now + timedelta(hours=1))
+            self.assertEqual(len(self.fx.started), started)
+            state = ap.load_state(self.rid)
+            state.pop("operational_hold")
+            ap.save_state(state)
+            self.assertEqual(self.evaluation_pass(), 0)
+            self.assertEqual(len(self.custody_calls()), 3)  # no fourth attempt for this review and pin
+        self.assertNotIn("v16_profile_admission", ap.load_state(self.rid))
+        self.assertEqual(self.v16_generation, [])
+
+    def test_an_order_held_before_the_pin_was_set_is_not_re_entered(self):
+        # documented limit: official_method_retired_requires_admission is not transient and nothing clears it
+        self.assertEqual(self.evaluation_pass(), 0)
+        self.assertEqual(self.hold()["reason"], "official_method_retired_requires_admission")
+        self.custody(exit_code=0)  # the pin is set afterwards
+        started = len(self.fx.started)
+        ap.manage_evaluation(row(self.rid), ap.load_state(self.rid), self.fx, datetime.now(timezone.utc) + timedelta(hours=2))
+        self.assertEqual(len(self.fx.started), started)
+        self.assertEqual(self.custody_calls(), [])
+        self.assertEqual(self.hold()["reason"], "official_method_retired_requires_admission")
 
 
 class NotifyPromiseGateTests(unittest.TestCase):

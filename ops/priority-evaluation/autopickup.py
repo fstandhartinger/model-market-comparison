@@ -354,7 +354,11 @@ TRANSIENT_HOLD_REASONS = frozenset({
     "gpu_pod_capacity",
     "gpu_pod_run_failed",
     "fetch_source_transient",
+    "v16_admitted_reroute",  # CR-842: custody admitted the order inside dispatch_measurement; evaluate() routes it next pass
+    "v16_admit_retry",  # CR-842: the pinned v16-admit timed out or could not run (at most V16_ADMIT_MAX_ATTEMPTS attempts)
 })
+# Transient holds that are not a failure: the very next scheduler pass restarts the evaluation, with no backoff.
+IMMEDIATE_RETRY_HOLD_REASONS = frozenset({"v16_admitted_reroute"})
 HOLD_RETRY_BACKOFF_MINUTES = (15, 30, 60, 120)
 HOLD_MAX_RETRIES = len(HOLD_RETRY_BACKOFF_MINUTES)
 BOARD_HANDOFF_THREAD = "11"  # "JevBench releases" (was the stale allout-ops-20260929 thread)
@@ -2410,6 +2414,8 @@ def manage_evaluation(row: dict[str, Any], state: dict[str, Any], effects: Effec
                 retries = hold_retries(state, reason)
                 if retries < HOLD_MAX_RETRIES:
                     retry_at = parse_ts(operational.get("next_retry_at"))
+                    if retry_at is None and reason in IMMEDIATE_RETRY_HOLD_REASONS:
+                        retry_at = now
                     if retry_at is None:
                         operational["next_retry_at"] = iso(now + timedelta(minutes=HOLD_RETRY_BACKOFF_MINUTES[retries]))
                         save_state(state)
@@ -2620,12 +2626,267 @@ def _jev_v15_composite(axes: dict[str, Any], option: str) -> float:
     return score
 
 
+# --- proposal 5 option C (fastlane-zero-wait-p5-hook): admit known families at pickup, then ask custody for v1.6 ---------
+# Both steps run right after the per-order source review passed. They only CALL the existing gates: fastlane-admit's own
+# admit() (all refusals stay there) and custody's pinned `v16-admit`. The pickup never writes v16_profile_admission and a
+# failure here never changes what the pickup did before (the hold or the measurement path below stays as it was).
+#
+# Semantics (CR-842 r3, after critic findings M1/S1-S4 of r1 and r2):
+#  * Reroute. custody's command writes v16_profile_admission. Whenever dispatch_measurement sees that key in the state, whether
+#    custody wrote it during this very call or anyone (custody, a human v16-admit) wrote it after evaluate() chose its route,
+#    it raises the transient hold `v16_admitted_reroute` (cleared on the next scheduler pass) so evaluate() sends the order
+#    down its v1.6 branch. dispatch_measurement is the retired legacy measurement path and evaluate() is its only caller, so
+#    an admitted order never continues on it. The hold is bounded by HOLD_MAX_RETRIES.
+#  * Exit-code contract for custody's v16-admit command (what the pickup runs: `<V16_ADMIT_PATH> <order id> --basis <text>`):
+#        exit 0       = admitted. v16_profile_admission MUST be in the order's state file when the command has exited
+#                       (otherwise the pickup records `refused`: "exit 0 but no admission was recorded").
+#        exit 1       = refused (custody said no and routed the order to #22). FINAL for this (review sha, pin sha).
+#        anything else = could not decide, retried: any other exit code, a negative code (death by signal), 126/127 (not
+#                       executable / command not found), a timeout, an OSError at start. Retried on a later scheduler pass
+#                       (transient hold `v16_admit_retry`), at most V16_ADMIT_MAX_ATTEMPTS attempts in total, then today's hold.
+#    A script that crashes with an uncaught Python exception exits 1 and therefore counts as a refusal: custody must catch
+#    its own errors and exit with a code other than 0 or 1 for "try again". The command runs with stdin /dev/null, in its own
+#    session, with exactly PATH=<HOME>/bin:/usr/local/bin:/usr/bin:/bin, HOME and AGENT_BOARD_NAME (no PG*, Stripe or
+#    OpenRouter variables). After it exits (any code) and after a timeout the pickup kills its whole process group
+#    (SIGKILL), so nothing it started may write the state afterwards; a child that calls setsid() itself escapes that.
+#    (The group id stays reserved while any member lives; once the group is empty the kill finds nothing. Pids are handed
+#    out cyclically, so the number cannot come back within the microseconds between the exit and the kill.)
+#  * Attempts are counted per (review sha, pin sha); a new review sha or a new pin starts again at 0. A pin or file problem
+#    is not an attempt (nothing ran).
+#  * Orders in status 'review_passed' (set by `jevbench-review pass`) are NOT admitted by this hook: fastlane-admit's gate
+#    wants status 'paid', and the hook only calls that gate. Conservative on purpose and identical to the human
+#    `fastlane-admit`; such an order keeps today's behaviour.
+#  * Orders that already sit under `official_method_retired_requires_admission` from BEFORE the pins were set are NOT
+#    re-entered automatically: that hold is non-transient and nothing clears it. Setting the pin later does nothing for
+#    them; only a human clearing the hold (or a new source review) sends such an order through dispatch_measurement again.
+#  * A Failed family admission is recorded like a Refused one (state `auto_admit.key`), so it is not retried for the same
+#    review; a new review sha or a human re-runs it (conservative on purpose).
+#  * Pins. FASTLANE_ADMIT_SHA256 and V16_ADMIT_SHA256 empty = off. fastlane-admit is read once from an own, non-symlink,
+#    not group/other-writable file, hashed, and executed from exactly those bytes (no TOCTOU for step 1). The v16-admit
+#    command is executed by path after the same checks: between the hash check and exec the file could still be swapped
+#    by the same uid, and the parent directories and sibling files it may use are not pinned. Accepted residual risk
+#    (same uid, no new privilege boundary); custody is asked for a self-contained script.
+#  * The state file is written by custody's command (not by the pickup). A command killed mid-write could leave a
+#    truncated state file unless custody writes atomically (tmp + rename); custody is asked to.
+FASTLANE_ADMIT_PATH = HOME / "bin" / "fastlane-admit"
+# sha256 of ops/priority-evaluation/fastlane-admit in THIS tree (installed byte-identical by `install -m 755`). Empty = the
+# whole hook is off (both steps reuse fastlane-admit's code). Edit fastlane-admit => recompute this in the same commit:
+# test_auto_admit_hook.PinInTreeTests fails on a stale pin. The installed ~/bin/fastlane-admit must be exactly this file.
+FASTLANE_ADMIT_SHA256 = "489a2522829a8140ebd893d715bd880551fa3debf18c0eb7ebd390c84c4e70c9"
+PINNED_FILE_MAX_BYTES = 1 << 20
+# Custody's v16-admit command: an ABSOLUTE path and its sha256. Empty = the step is disabled. Custody's tool is final
+# (#78576: /home/flori/.local/share/jev-custody/v16-admit, sha256 b1dfc787...), but it refuses every order until a custody
+# reservation exists and the review gate pins a reserved draw's v1.6 profiles; a refusal is final per (review sha, pin sha),
+# so the pin is set only together with that change (critic S1, 23 Nov).
+V16_ADMIT_PATH = ""
+V16_ADMIT_SHA256 = ""
+V16_ADMIT_TIMEOUT_S = 180  # custody tool: lock waits 20/60/20 s + two derivations (critic S2, 23 Nov)
+V16_ADMIT_MAX_ATTEMPTS = 3
+AUTO_ADMIT_ACTOR = "fastlane-autopickup"
+
+
+def _hook_note(job_dir: Path, text: str) -> None:
+    try:
+        append_state(job_dir, f"\n\n{iso(utcnow())} auto-admit: " + " ".join(str(text).split())[:300] + "\n")
+    except Exception:  # noqa: BLE001 - a note is never worth breaking the pickup
+        pass
+
+
+def _pinned_bytes(path_text: str, pin: str, *, executable: bool) -> tuple[bytes | None, str]:
+    """(content, '') when `path_text` is an absolute path to an own, regular, non-symlink file that is not group/other-writable
+    (and owner-executable when asked) and whose bytes hash to `pin`; else (None, reason). The content is read from the very
+    descriptor that was checked."""
+    import stat as stat_module
+    path = Path(path_text)
+    if not path.is_absolute():
+        return None, "path is not absolute"
+    try:
+        fd = os.open(path, os.O_RDONLY | os.O_NOFOLLOW | os.O_CLOEXEC)
+    except OSError:
+        return None, "file is missing, a symlink or unreadable"
+    with os.fdopen(fd, "rb") as handle:
+        info = os.fstat(handle.fileno())
+        if not stat_module.S_ISREG(info.st_mode) or info.st_uid != os.getuid() or info.st_mode & 0o022 \
+                or (executable and not info.st_mode & 0o100):
+            return None, "file is not an own, non-writable regular file" + (" with the owner execute bit" if executable else "")
+        try:
+            data = handle.read(PINNED_FILE_MAX_BYTES + 1)
+        except OSError:
+            return None, "file is unreadable"
+    if len(data) > PINNED_FILE_MAX_BYTES:
+        return None, "file is larger than the allowed size"
+    if hashlib.sha256(data).hexdigest() != pin:
+        return None, "sha256 differs from the pin"
+    return data, ""
+
+
+def _load_fastlane_admit() -> tuple[Any, str]:
+    """(module, '') or (None, reason). Empty pin = (None, '') = off without a note."""
+    if not FASTLANE_ADMIT_SHA256:
+        return None, ""
+    data, problem = _pinned_bytes(str(FASTLANE_ADMIT_PATH), FASTLANE_ADMIT_SHA256, executable=False)
+    if data is None:
+        return None, f"fastlane-admit {problem}"
+    import types
+    module = types.ModuleType("fastlane_admit_in_pickup")
+    module.__file__ = str(FASTLANE_ADMIT_PATH)
+    exec(compile(data, str(FASTLANE_ADMIT_PATH), "exec"), module.__dict__)  # the verified bytes, not a second read
+    return module, ""
+
+
+def _has_gpu_pod_runtime(job_dir: Path) -> bool:
+    runtimes = load_json_file(job_dir / "trusted-runner/RUNTIME.json", 100_000)
+    return any(isinstance(item, dict) and item.get("backend") == "gpu_pod" for item in runtimes.values())
+
+
+def _auto_admit_family(job_dir: Path, row: dict[str, Any], review: dict[str, Any], cli: Any) -> None:
+    trusted = job_dir / "trusted-runner"
+    if (trusted / supplement_admission.RECEIPT).exists() or not (trusted / "POD-RECIPE.json").is_file():
+        return
+    if not _has_gpu_pod_runtime(job_dir):
+        return
+    candidates = [item["family"] for item in native_owner.SUPPLEMENTS if cli.family_match(native_owner, item, row)[1] is None]
+    if len(candidates) != 1:
+        return  # none: today's path; several (e.g. a shared author namespace): a human picks the family
+    rid = str(row["id"])
+    state = load_state(rid)
+    key = f"{review['review_sha256']}:{candidates[0]}"
+    if (state.get("auto_admit") or {}).get("key") == key:
+        return  # decided for this exact review already (admitted, or refused: do not retry or repeat the note)
+    basis = f"autopickup review-sha256 {review['review_sha256']}"
+    try:
+        action, entry = cli.admit(rid, candidates[0], basis, dry_run=False, by=AUTO_ADMIT_ACTOR, row=row)
+        outcome, note = action, f"family {candidates[0]} {action} ({basis})"
+    except (cli.Refused, cli.Failed) as exc:
+        outcome, note = "refused" if isinstance(exc, cli.Refused) else "failed", f"family {candidates[0]} not admitted: {exc}"
+    state = load_state(rid)
+    state["auto_admit"] = {"key": key, "outcome": outcome, "at": iso(utcnow())}
+    save_state(state)
+    _hook_note(job_dir, note)
+
+
+def _kill_group_and_reap(proc: Any) -> None:
+    """SIGKILL the child's whole process group (pgid == child pid, from start_new_session) and reap the child. Never raises."""
+    import signal
+    with contextlib.suppress(ProcessLookupError, PermissionError, OSError):
+        os.killpg(proc.pid, signal.SIGKILL)  # an empty or foreign group is not an error
+    with contextlib.suppress(Exception):
+        proc.wait(timeout=10)  # reap (a zombie otherwise); returns at once when communicate() already did
+    for pipe in (proc.stdout, proc.stderr):
+        with contextlib.suppress(Exception):
+            if pipe is not None:
+                pipe.close()
+
+
+def _run_v16_admit(rid: str, basis: str) -> tuple[str, str]:
+    """Run custody's pinned command once. (kind, outcome) per the exit-code contract above the constants: 'admitted' (exit 0),
+    'refused' (exit 1, final) or 'retry' (any other code incl. a negative one, 126/127, a timeout, an OSError). The whole
+    process group is killed after every run (success, failure, timeout, OSError) and the child is always reaped."""
+    try:
+        env = {"PATH": f"{HOME}/bin:/usr/local/bin:/usr/bin:/bin", "HOME": str(HOME), "AGENT_BOARD_NAME": AUTO_ADMIT_ACTOR}
+        proc = subprocess.Popen([V16_ADMIT_PATH, rid, "--basis", basis], env=env,
+                                stdin=subprocess.DEVNULL, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True,
+                                errors="replace", start_new_session=True)
+    except OSError as exc:
+        return "retry", f"could not run: {exc.strerror or exc}"
+    try:
+        stdout, stderr = proc.communicate(timeout=V16_ADMIT_TIMEOUT_S)
+    except subprocess.TimeoutExpired:
+        _kill_group_and_reap(proc)
+        return "retry", f"timeout after {V16_ADMIT_TIMEOUT_S}s"
+    except OSError as exc:
+        _kill_group_and_reap(proc)
+        return "retry", f"could not run: {exc.strerror or exc}"
+    _kill_group_and_reap(proc)  # exited: nothing it started may write the state after the pickup re-reads it
+    code = proc.returncode
+    if code == 0:
+        return "admitted", "exit 0"
+    tail = (stderr or stdout or "").strip()[-160:]
+    return ("refused" if code == 1 else "retry"), f"exit {code}" + (f": {tail}" if tail else "")
+
+
+def _auto_v16_admit(job_dir: Path, row: dict[str, Any], review: dict[str, Any], cli: Any) -> str | None:
+    """Ask custody's pinned v16-admit (counted attempts per (review sha, pin sha), see the exit-code contract above the
+    constants). Returns a transient hold reason when the command asked for a retry (exit code other than 0/1, timeout,
+    OSError) and the attempt budget allows another pass, else None (the caller continues with today's behaviour)."""
+    rid = str(row["id"])
+    if "jevbench" not in (row.get("benchmarks") or []) or "v16_profile_admission" in load_state(rid):
+        return None
+    if not V16_ADMIT_PATH or not V16_ADMIT_SHA256:
+        return None
+    if cli.order_problems(cli.normalize_row(row)):
+        return None  # paid-live-unrefunded-undelivered gate shared with fastlane-admit; no custody call for anything else
+    state = load_state(rid)
+    key = f"{review['review_sha256']}:{V16_ADMIT_SHA256}"
+    previous = state.get("v16_admit_attempt") or {}
+    attempts = 0
+    if previous.get("key") == key:
+        attempts = previous.get("attempts") if isinstance(previous.get("attempts"), int) else V16_ADMIT_MAX_ATTEMPTS
+        if previous.get("final") or attempts >= V16_ADMIT_MAX_ATTEMPTS:
+            return None  # this (review, pin) pair has had its attempt(s)
+    _content, problem = _pinned_bytes(V16_ADMIT_PATH, V16_ADMIT_SHA256, executable=True)
+    if problem:
+        _hook_note(job_dir, f"v16-admit {problem}; hold unchanged")  # nothing ran: not an attempt
+        return None
+    kind, outcome = _run_v16_admit(rid, f"autopickup review-sha256 {review['review_sha256']}")
+    attempts += 1
+    state = load_state(rid)  # custody's command may have written the state file
+    if kind == "admitted" and "v16_profile_admission" not in state:
+        kind, outcome = "refused", "exit 0 but no admission was recorded"
+    final = kind != "retry" or attempts >= V16_ADMIT_MAX_ATTEMPTS
+    state["v16_admit_attempt"] = {"key": key, "attempts": attempts, "final": final, "kind": kind, "at": iso(utcnow()),
+                                  "outcome": outcome[:200]}
+    save_state(state)
+    if kind == "admitted":
+        suffix = "; the order is routed to its v1.6 evaluation"
+    elif final:
+        suffix = "; hold unchanged" + (f" (attempt {attempts} of {V16_ADMIT_MAX_ATTEMPTS}, no more)" if kind == "retry" else "")
+    else:
+        suffix = f"; retried later (attempt {attempts} of {V16_ADMIT_MAX_ATTEMPTS})"
+    _hook_note(job_dir, f"v16-admit {outcome}{suffix}")
+    return None if final else "v16_admit_retry"
+
+
+def auto_admit_hook(rid: str, job_dir: Path, row: dict[str, Any] | None, review: dict[str, Any]) -> str | None:
+    """Never raises: any failure is one STATE.md line and today's behaviour. Returns a transient hold reason only when a
+    timed-out v16-admit may be retried on a later pass."""
+    hold = None
+    try:
+        if not isinstance(row, dict) or row.get("id") != rid or not review.get("review_sha256"):
+            return None
+        cli, problem = _load_fastlane_admit()
+        if cli is None:
+            if problem:
+                _hook_note(job_dir, f"step skipped: {problem}")
+            return None
+        try:
+            _auto_admit_family(job_dir, row, review, cli)
+        except (Exception, SystemExit) as exc:  # noqa: BLE001
+            _hook_note(job_dir, f"family admission step failed: {type(exc).__name__}")
+        try:
+            hold = _auto_v16_admit(job_dir, row, review, cli)
+        except (Exception, SystemExit) as exc:  # noqa: BLE001
+            _hook_note(job_dir, f"v16 admission step failed: {type(exc).__name__}")
+    except (Exception, SystemExit) as exc:  # noqa: BLE001 - e.g. fastlane-admit not loadable
+        _hook_note(job_dir, f"hook failed: {type(exc).__name__}")
+    return hold
+
+
 def dispatch_measurement(rid: str, job_dir: Path) -> None:
     if any(native_owner.is_strands_e2b_order(value) for value in (rid, job_dir.name)):
         raise measurement_dispatch.OperationalHold("separate_native_measurement_wrapper_required")
     review = validate_review_gate(job_dir)
     row = load_row(rid)
+    retry_hold = auto_admit_hook(rid, job_dir, row, review)
     state = load_state(rid)
+    if "v16_profile_admission" in state:
+        # Admitted during the hook above, or by custody / a human between evaluate()'s route check (which loaded its state
+        # earlier) and now. This function is the retired legacy measurement path and evaluate() is its only caller, which
+        # routes admitted orders to evaluate_v16_generation() first: so any key seen here is new. Stop, never measure with
+        # the retired method (and spend pod money); the next scheduler pass routes the order.
+        raise measurement_dispatch.OperationalHold("v16_admitted_reroute")
+    if retry_hold:
+        raise measurement_dispatch.OperationalHold(retry_hold)
     # urgent-autofix-394 (17 Oct), restored 21 Oct (#22690/#22751): the legacy JevBench v1.5 profile is retired. A JevBench
     # order without a host-recorded v1.6 profile admission must hold, never fall back to the retired set
     # (attest 07d13315, mixlayer 27387658). ImageJevBench-only orders are unaffected; v1.6-admitted orders take
