@@ -3014,6 +3014,131 @@ class SlaCardsTests(DatabaseTestCase):
             ap.advance_sla_handoffs(row(rid), ap.load_state(rid), fx, later + timedelta(hours=1), ap.JOB_ROOT)
             self.assertEqual(len(fx.boards), 1)  # once
 
+    def _t18_order(self, paid_ago: str, home: str) -> str:
+        rid = insert_order(paid_ago=paid_ago, received_ago=paid_ago)
+        state = ap.load_state(rid)
+        ap.set_operational_hold(state, "unsupported_measurement_backend", transient=False)
+        ap.save_state(state)
+        owner = ap.native_owner.owner_name(rid)
+        (Path(home) / "jobs" / owner).mkdir(parents=True)
+        (Path(home) / "jobs" / owner / "PROMPT.md").write_text("owner", encoding="utf-8")
+        return rid
+
+    def test_t18_native_hold_posts_one_parity_decision_and_one_prep_request(self):
+        # N140 (2be2698b, 22 Nov 2026): path switching depended on someone asking in time.
+        with tempfile.TemporaryDirectory() as home, mock.patch.object(ap, "HOME", Path(home)):
+            rid = self._t18_order("31 hours", home)
+            fx = FakeEffects()
+            now = datetime.now(timezone.utc)
+            ap.advance_t18_path_health(row(rid), ap.load_state(rid), fx, now, ap.JOB_ROOT)
+            self.assertEqual(len(fx.boards), 2)
+            owner = ap.native_owner.owner_name(rid)
+            self.assertEqual(sorted(fx.board_threads),
+                             sorted([("11", ap.T18_PARITY_OWNER, "decision"), ("11", owner, "handoff")]))
+            self.assertTrue(any("parity" in b and "launches nothing" in b for b in fx.boards))
+            self.assertTrue(any("SOURCE ONLY" in b and "no launch" in b for b in fx.boards))
+            for b in fx.boards:
+                self.assertIn("unsupported_measurement_backend", b)
+            state = ap.load_state(rid)
+            self.assertTrue(ap.step_done(state, "t18_parity_decision"))
+            self.assertTrue(ap.step_done(state, "t18_standard_prep"))
+            self.assertEqual(fx.notes, [])  # board only: no card, no customer mail
+            # Repeat sweep: nothing new.
+            ap.advance_t18_path_health(row(rid), ap.load_state(rid), fx, now + timedelta(minutes=10), ap.JOB_ROOT)
+            self.assertEqual(len(fx.boards), 2)
+
+    def test_t18_check_is_silent_at_t30(self):
+        with tempfile.TemporaryDirectory() as home, mock.patch.object(ap, "HOME", Path(home)):
+            rid = self._t18_order("18 hours", home)
+            fx = FakeEffects()
+            ap.advance_t18_path_health(row(rid), ap.load_state(rid), fx, datetime.now(timezone.utc), ap.JOB_ROOT)
+            self.assertEqual(fx.boards, [])
+
+    def test_t18_check_is_silent_once_measurement_started(self):
+        with tempfile.TemporaryDirectory() as home, mock.patch.object(ap, "HOME", Path(home)):
+            rid = self._t18_order("31 hours", home)
+            state = ap.load_state(rid)
+            state["host_measurement"] = {"jevbench": {"raw_sha256": "x" * 64}}
+            ap.save_state(state)
+            fx = FakeEffects()
+            ap.advance_t18_path_health(row(rid), ap.load_state(rid), fx, datetime.now(timezone.utc), ap.JOB_ROOT)
+            self.assertEqual(fx.boards, [])
+
+    def test_t18_check_needs_an_open_native_route_hold(self):
+        with tempfile.TemporaryDirectory() as home, mock.patch.object(ap, "HOME", Path(home)):
+            rid = insert_order(paid_ago="31 hours", received_ago="31 hours")
+            fx = FakeEffects()
+            now = datetime.now(timezone.utc)
+            ap.advance_t18_path_health(row(rid), ap.load_state(rid), fx, now, ap.JOB_ROOT)
+            state = ap.load_state(rid)
+            ap.set_operational_hold(state, "fetch_source_transient", transient=True)  # not a native route
+            ap.save_state(state)
+            ap.advance_t18_path_health(row(rid), ap.load_state(rid), fx, now, ap.JOB_ROOT)
+            self.assertEqual(fx.boards, [])
+
+    def test_t18_stale_native_owner_record_with_a_later_ownerless_hold_is_silent(self):
+        with tempfile.TemporaryDirectory() as home, mock.patch.object(ap, "HOME", Path(home)):
+            rid = self._t18_order("31 hours", home)
+            state = ap.load_state(rid)
+            state["native_owner"] = {"job": ap.native_owner.owner_name(rid), "reason": "unsupported_measurement_backend"}
+            ap.set_operational_hold(state, "gpu_pod_capacity", transient=True)
+            ap.save_state(state)
+            fx = FakeEffects()
+            ap.advance_t18_path_health(row(rid), ap.load_state(rid), fx, datetime.now(timezone.utc), ap.JOB_ROOT)
+            self.assertEqual(fx.boards, [])
+            state = ap.load_state(rid)
+            state["operational_hold"]["owner"] = ap.native_owner.owner_name(rid)  # native owner holds it: a native route
+            ap.save_state(state)
+            ap.advance_t18_path_health(row(rid), ap.load_state(rid), fx, datetime.now(timezone.utc), ap.JOB_ROOT)
+            self.assertEqual(len(fx.boards), 2)
+
+    def test_t18_is_silent_for_paused_clock_refund_decision_customer_hold_and_past_deadline(self):
+        with tempfile.TemporaryDirectory() as home, mock.patch.object(ap, "HOME", Path(home)):
+            rid = self._t18_order("31 hours", home)
+            now = datetime.now(timezone.utc)
+            fx = FakeEffects()
+            base = row(rid)
+            for patch in ({"sla_paused_seconds": 6 * 3600}, {"refund_decision": "declined"},
+                          {"customer_hold_started_at": now.isoformat()}):
+                ap.advance_t18_path_health({**base, **patch}, ap.load_state(rid), fx, now, ap.JOB_ROOT)
+            ap.advance_t18_path_health(base, ap.load_state(rid), fx, now + timedelta(hours=18), ap.JOB_ROOT)
+            self.assertEqual(fx.boards, [])
+
+    def test_t18_one_failed_step_does_not_block_the_other(self):
+        with tempfile.TemporaryDirectory() as home, mock.patch.object(ap, "HOME", Path(home)):
+            rid = self._t18_order("31 hours", home)
+            fx = FakeEffects()
+            real = fx.board
+            fail_deputy = lambda message, owner, kind="handoff", thread="9": \
+                False if owner == ap.T18_PARITY_OWNER else real(message, owner, kind=kind, thread=thread)
+            with mock.patch.object(fx, "board", side_effect=fail_deputy):
+                ap.advance_t18_path_health(row(rid), ap.load_state(rid), fx, datetime.now(timezone.utc), ap.JOB_ROOT)
+            state = ap.load_state(rid)
+            self.assertFalse(ap.step_done(state, "t18_parity_decision"))
+            self.assertTrue(ap.step_done(state, "t18_standard_prep"))
+            self.assertEqual(len(fx.boards), 1)
+
+    def test_t18_error_does_not_abort_process_row(self):
+        with mock.patch.object(ap, "advance_t18_path_health", side_effect=ap.PickupError("boom")), \
+                mock.patch.object(ap, "advance_delivery") as delivery:
+            rid = insert_order(paid_ago="31 hours", received_ago="31 hours")
+            with contextlib.suppress(Exception):
+                ap.process_row(row(rid), FakeEffects(), ap.JOB_ROOT, datetime.now(timezone.utc))
+            self.assertTrue(delivery.called)
+
+    def test_t18_failed_post_retries_with_backoff_then_posts_once(self):
+        with tempfile.TemporaryDirectory() as home, mock.patch.object(ap, "HOME", Path(home)):
+            rid = self._t18_order("31 hours", home)
+            fx = FakeEffects()
+            now = datetime.now(timezone.utc)
+            with mock.patch.object(fx, "board", return_value=False):
+                ap.advance_t18_path_health(row(rid), ap.load_state(rid), fx, now, ap.JOB_ROOT)
+            self.assertFalse(ap.step_done(ap.load_state(rid), "t18_parity_decision"))
+            ap.advance_t18_path_health(row(rid), ap.load_state(rid), fx, now + timedelta(minutes=1), ap.JOB_ROOT)
+            self.assertEqual(fx.boards, [])  # backoff not elapsed
+            ap.advance_t18_path_health(row(rid), ap.load_state(rid), fx, now + timedelta(hours=1), ap.JOB_ROOT)
+            self.assertEqual(len(fx.boards), 2)
+
     def test_wake_owner_prefers_an_existing_hold_owner_job(self):
         rid = insert_order(paid_ago="5 hours", received_ago="5 hours")
         with tempfile.TemporaryDirectory() as home, mock.patch.object(ap, "HOME", Path(home)):
