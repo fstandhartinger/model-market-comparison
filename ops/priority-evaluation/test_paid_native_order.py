@@ -53,15 +53,24 @@ class NativeOrderTests(unittest.TestCase):
         import shutil
         shutil.rmtree(self.job)
 
+    def _pinned_rows(self):
+        # setUp pins a 2-row profile for the dual-benchmark tests. _FakeProvider defaults to the retired
+        # 1624-row run, which pod_runner rightly refuses (and holds for reconciliation) against a pin of 2.
+        # The legacy-path budget tests are about cost, so make the fake emit the pinned row count.
+        return {'rows': self.pins['profile']['inputs']['jevbench']['count']}
+
     def test_native_text_missing_or_invalid_quote_holds_before_pod(self):
         for rate in (None, True, 2.00):
             runtime = {'backend': 'gpu_pod'}
             if rate is not None:
                 runtime['gpu_usd_h'] = rate
+            # A JevBench order without a host-recorded v1.6 admission now holds first with
+            # official_method_retired_requires_admission (urgent-autofix-394). This test is about the quote
+            # check that follows, so the order is admitted the same way test_retired_method_guard admits one.
             with self.subTest(rate=rate), \
                  mock.patch.object(ap, 'validate_review_gate', return_value={'source_pins': {}}), \
                  mock.patch.object(ap, 'load_row', return_value={'benchmarks': ['jevbench']}), \
-                 mock.patch.object(ap, 'load_state', return_value={}), \
+                 mock.patch.object(ap, 'load_state', return_value={'v16_profile_admission': {'verdict': 'ACCEPTED'}}), \
                  mock.patch.object(ap, 'load_json_file', side_effect=[{'jevbench': runtime}, {'jevbench': {}}, self.recipe, self.recipe]), \
                  mock.patch.object(md, 'runtime_spec'), \
                  mock.patch.object(md, 'validate_api_meta'), \
@@ -191,7 +200,7 @@ class NativeOrderTests(unittest.TestCase):
         recipe['code']={'commit':commit,'tree':tree}
         recipe['weights'][0]['revision']=self.recipe['weights'][0]['revision']
         for cap,expected_creations in ((15,1),(20,2)):
-            fake=Fake();pods=self.root/f'budget-pods-{cap}'
+            fake=Fake(self._pinned_rows());pods=self.root/f'budget-pods-{cap}'
             with mock.patch.object(md,'pins',return_value=self.pins), mock.patch.object(pr,'PODS_DIR',pods):
                 if cap==15:
                     with self.assertRaisesRegex(md.OperationalHold,'gpu_pod_budget_exhausted'):
@@ -215,7 +224,7 @@ class NativeOrderTests(unittest.TestCase):
             pods=self.root/f'restart-budget-{cap}';pods.mkdir()
             statefile=pods/'00000000-0000-4000-8000-000000000088.json'
             statefile.write_text(json.dumps({'creation_attempts':1,'spent_upper_bound_usd':15,'torn_down_at':'2026-10-08T00:00:00+00:00'}))
-            fake=_FakeProvider()
+            fake=_FakeProvider(self._pinned_rows())
             with mock.patch.object(md,'pins',return_value=self.pins),mock.patch.object(pr,'PODS_DIR',pods):
                 if cap==15:
                     with self.assertRaisesRegex(md.OperationalHold,'gpu_pod_budget_exhausted'):
