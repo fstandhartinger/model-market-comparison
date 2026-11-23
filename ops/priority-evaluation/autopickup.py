@@ -1584,7 +1584,7 @@ If the official run path is not clear, write a short blocker to `OUTPUT.md`; do 
 """
     # The open-weights pod-recipe contract is appended verbatim (brief requirement).
     text += "\n" + (Path(__file__).resolve().parent / "PREP-OPEN-WEIGHTS-PROMPT.txt").read_text(encoding="utf-8")
-    text += native_owner.generator_hint(row)
+    text += native_owner.generator_hint(row, job_dir.parent)
     text += supplement_admission.generator_hint(job_dir)
     text += catalogue_overlay_lock.generator_hint()
     atomic_write(prompt, text)
@@ -2221,10 +2221,12 @@ def operational_escalate(row: dict[str, Any], state: dict[str, Any], effects: Ef
     covered = ensure_native_owner(row, state, effects, now, reason)
     record = state.get("native_owner")
     if isinstance(record, dict) and record.get("job") == native_owner.owner_name(rid) and record.get("start_ok") \
-            and native_owner_due(rid, reason):
+            and native_owner_due(rid, reason, row, state, now):
         if not step_done(state, "native_owner_handoff"):
             effects.last_board_entry = None
-            if effects.board(f"Fast-lane order {order_ref(rid)}: the runner generator found no supported runtime "
+            what = ("the runner generator found no supported runtime" if reason not in native_owner.FAMILY_HOLD_REASONS
+                    else "the order matches a reviewed runtime family but has no host v1.6 profile admission")
+            if effects.board(f"Fast-lane order {order_ref(rid)}: {what} "
                              f"({reason}). The pickup started native owner job ~/jobs/{record['job']} automatically "
                              f"(INCIDENTS #25). Payment deadline {deadline_for(row).isoformat()} continues; customer "
                              f"hold is not set. Request evidence: {job_directory(rid, JOB_ROOT)}/STATE.md.",
@@ -2246,9 +2248,30 @@ def operational_escalate(row: dict[str, Any], state: dict[str, Any], effects: Ef
           text=rescue_card(row, reason, exhausted=exhausted))
 
 
-def native_owner_due(rid: str, reason: str) -> bool:
+def native_owner_live(rid: str, state: dict[str, Any], now: datetime | None) -> bool:
+    """The automatic native owner this pickup requested for the order is live (job-start launched it, STATE.md current)."""
+    record = state.get("native_owner")
+    name = native_owner.owner_name(rid)
+    return now is not None and isinstance(record, dict) and record.get("job") == name and hold_owner_live(name, rid, now)
+
+
+def native_owner_due(rid: str, reason: str, row: dict[str, Any] | None = None,
+                     state: dict[str, Any] | None = None, now: datetime | None = None) -> bool:
     if reason in native_owner.REASONS:
         return True
+    if reason in native_owner.FAMILY_HOLD_REASONS:
+        # CR-841: the generator hint steers a repeat order of a registered family to a gpu_pod recipe instead of
+        # `unsupported`, so the retired-method hold is where such an order that the host has not admitted reaches its owner.
+        if not (isinstance(row, dict) and isinstance(state, dict)):
+            return False
+        if native_owner_live(rid, state, now):
+            # A live native owner of this order keeps the hold quiet whatever the admission state: the v1.6 admission
+            # can be written a cycle or more before the hold is cleared, and the owner is still working the order.
+            return True
+        # Starting a NEW owner needs exactly one registry family (the match the hint uses), no v1.6 admission, and no
+        # scoped native top-up (manage_evaluation reaches this hold for such a state before its delivered/status checks).
+        return "v16_profile_admission" not in state and "scoped_native_topup" not in state \
+            and native_owner.single_family(row)
     if reason != "unsupported_order_runtime":
         return False
     try:
@@ -2265,7 +2288,7 @@ def ensure_native_owner(row: dict[str, Any], state: dict[str, Any], effects: Eff
     Returns True while that owner covers the hold quietly (just requested, or live with more than 12 h left).
     A dead owner gets one more start; after that, or near the deadline, the caller raises the urgent card."""
     rid = request_id(row.get("id"))
-    if not native_owner_due(rid, reason):
+    if not native_owner_due(rid, reason, row, state, now):
         return False
     name = native_owner.owner_name(rid)
     # CR-764 review: the 3 h measured margin covers only a LIVE owner; a dead owner's restart keeps the 12 h card.

@@ -115,6 +115,11 @@ class EnsureOwnerTests(unittest.TestCase):
         for patch in reversed(self.patches):
             patch.stop()
 
+    def setUp_effects(self) -> None:
+        self.effects = mock.Mock()
+        self.effects.start_unit.return_value = True
+        self.effects.board.return_value = True
+
     def owner_state(self, text: str, launched: bool = True) -> None:
         path = self.tmp / "jobs" / no.owner_name(RID) / "STATE.md"
         path.parent.mkdir(parents=True, exist_ok=True)
@@ -228,14 +233,152 @@ class EnsureOwnerTests(unittest.TestCase):
         self.effects.start_unit.assert_called_once()
         self.assertEqual(self.state["operational_hold"]["owner"], no.owner_name(RID))
 
+    RETIRED = "official_method_retired_requires_admission"
+
+    def retired_state(self, **extra) -> dict:
+        return {"id": RID, "steps": {}, "alerts": {}, "operational_hold": {"reason": self.RETIRED, "transient": False}, **extra}
+
     def test_other_reasons_keep_the_old_path(self) -> None:
-        state = {"id": RID, "steps": {}, "alerts": {}, "operational_hold": {"reason": "official_method_retired_requires_admission", "transient": False}}
+        # An order that matches no registered family keeps today's path at the retired-method hold: card + handoff, no owner.
+        row = dict(self.row, model_link="https://huggingface.co/someone/other-model")
+        state = self.retired_state()
         with mock.patch.object(ap, "alert") as alert:
-            ap.operational_escalate(self.row, state, self.effects, self.now, "official_method_retired_requires_admission", exhausted=False)
+            ap.operational_escalate(row, state, self.effects, self.now, self.RETIRED, exhausted=False)
         self.effects.start_unit.assert_not_called()
         self.assertTrue(alert.call_args.kwargs["urgent"])
         self.assertEqual(self.effects.board.call_args.args[1], ap.WAKE_FALLBACK)  # placeholder owner has no job folder
         self.assertNotIn("native_owner", state)
+        for reason in ("gpu_pod_capacity", "official_measurement_pin_changed", "evaluation_exhausted"):
+            self.assertFalse(ap.native_owner_due(RID, reason, self.row, self.retired_state()), reason)
+
+    def test_retired_hold_with_one_family_match_starts_the_owner_once(self) -> None:
+        # CR-841 M2: the generator hint steers the order to a recipe, so the retired-method hold is its owner trigger.
+        state = self.retired_state()
+        self.assertEqual(len(no.match_supplements(self.row)), 1)
+        with mock.patch.object(ap, "alert") as alert:
+            ap.operational_escalate(self.row, state, self.effects, self.now, self.RETIRED, exhausted=False)
+        self.effects.start_unit.assert_called_once_with(f"jevbench-native-owner@{RID}.service")
+        alert.assert_not_called()
+        self.assertEqual(state["operational_hold"]["owner"], "fastlane-native-9494e9ea")
+        self.assertEqual(state["native_owner"]["starts"], 1)
+        self.assertEqual(state["native_owner"]["reason"], self.RETIRED)
+        self.assertEqual(self.effects.board.call_args.args[1], "fastlane-native-9494e9ea")
+        self.assertIn("has no host v1.6 profile admission", self.effects.board.call_args.args[0])
+        self.assertNotIn("found no supported runtime", self.effects.board.call_args.args[0])
+        # Next cycles inside the grace window and later: no second start, no second handoff, still quiet.
+        for minutes in (5, 15):
+            with mock.patch.object(ap, "alert") as alert:
+                ap.operational_escalate(self.row, state, self.effects, self.now + timedelta(minutes=minutes),
+                                        self.RETIRED, exhausted=False)
+            alert.assert_not_called()
+        self.assertEqual(self.effects.start_unit.call_count, 1)
+        self.assertEqual(self.effects.board.call_count, 1)
+
+    def test_retired_hold_owner_prompt_names_the_hold(self) -> None:
+        text = no.prompt_text(RID, self.row, reason=self.RETIRED, deadline="d", order_dir=self.tmp)
+        self.assertIn("held without the host's v1.6 profile admission", text)
+        self.assertNotIn("found no supported runtime", text)
+        self.assertIn(f"(hold reason `{self.RETIRED}`", text)
+        plain = no.prompt_text(RID, self.row, reason="unsupported_measurement_backend", deadline="d", order_dir=self.tmp)
+        self.assertIn("because its runner generator found no supported runtime\n(hold reason", plain)
+
+    def test_retired_hold_without_exactly_one_match_is_unchanged(self) -> None:
+        zero = dict(self.row, model_link="https://huggingface.co/someone/other-model")
+        two = dict(self.row, code_link="https://github.com/csabag/ryotide")  # torchcast model + ryotide code
+        none_link = dict(self.row, model_link=None)
+        self.assertEqual(len(no.match_supplements(two)), 2)
+        for name, row in (("zero", zero), ("two", two), ("no link", none_link)):
+            self.setUp_effects()
+            state = self.retired_state()
+            with mock.patch.object(ap, "alert") as alert:
+                ap.operational_escalate(row, state, self.effects, self.now, self.RETIRED, exhausted=False)
+            self.effects.start_unit.assert_not_called()
+            self.assertTrue(alert.call_args.kwargs["urgent"], name)
+            self.assertNotIn("native_owner", state, name)
+            self.assertFalse(ap.ensure_native_owner(row, state, self.effects, self.now, self.RETIRED), name)
+            self.assertFalse(ap.native_owner_due(RID, self.RETIRED, row, state), name)
+
+    def live_owner_record(self) -> dict:
+        return {"job": no.owner_name(RID), "requested_at": ap.iso(self.now - timedelta(hours=1)), "starts": 1, "start_ok": True,
+                "reason": self.RETIRED}
+
+    def test_retired_hold_of_an_admitted_order_starts_no_new_owner(self) -> None:
+        # CR-841 S3: starting a NEW owner still needs "no v1.6 admission": none, and a dead owner is not restarted.
+        state = self.retired_state(v16_profile_admission={"profile": "v1.6"})
+        with mock.patch.object(ap, "alert") as alert:
+            ap.operational_escalate(self.row, state, self.effects, self.now, self.RETIRED, exhausted=False)
+        self.effects.start_unit.assert_not_called()
+        self.assertTrue(alert.call_args.kwargs["urgent"])
+        self.assertNotIn("native_owner", state)
+        self.assertFalse(ap.native_owner_due(RID, self.RETIRED, self.row, state, self.now))
+        dead = self.retired_state(v16_profile_admission={"profile": "v1.6"}, native_owner=self.live_owner_record())
+        self.owner_state(f"# STATE\n- {RID} gave up\n- FINAL DONE\n")
+        self.assertFalse(ap.native_owner_due(RID, self.RETIRED, self.row, dead, self.now))
+        self.assertFalse(ap.ensure_native_owner(self.row, dead, self.effects, self.now, self.RETIRED))
+        self.effects.start_unit.assert_not_called()
+        self.assertEqual(dead["native_owner"]["starts"], 1)
+
+    def test_retired_hold_live_native_owner_stays_quiet_whatever_the_admission_state(self) -> None:
+        # CR-841 S3: the v1.6 admission lands before the hold is cleared; the live owner must not trigger card + 2nd handoff.
+        self.owner_state(f"# STATE\n- {RID} working\n")
+        for name, extra in (("before admission", {}), ("after admission", {"v16_profile_admission": {"profile": "v1.6"}})):
+            self.setUp_effects()
+            state = self.retired_state(native_owner=self.live_owner_record(), steps={"native_owner_handoff": {"status": "done", "attempts": 1}}, **extra)
+            self.assertTrue(ap.native_owner_due(RID, self.RETIRED, self.row, state, self.now), name)
+            if extra:  # without `now` liveness is unknown, so an admitted order has no cover
+                self.assertFalse(ap.native_owner_due(RID, self.RETIRED, self.row, state), name)
+            with mock.patch.object(ap, "alert") as alert:
+                ap.operational_escalate(self.row, state, self.effects, self.now, self.RETIRED, exhausted=False)
+            alert.assert_not_called()
+            self.effects.start_unit.assert_not_called()
+            self.effects.board.assert_not_called()
+            self.assertEqual(state["native_owner"]["starts"], 1, name)
+            self.assertEqual(state["operational_hold"]["owner"], no.owner_name(RID), name)
+        # The 12 h deadline margin still applies to a live owner (same rule as for every other reason).
+        late = dict(self.row, paid_at=ap.iso(self.now - timedelta(hours=40)))
+        state = self.retired_state(native_owner=self.live_owner_record(), v16_profile_admission={"profile": "v1.6"})
+        with mock.patch.object(ap, "alert") as alert:
+            ap.operational_escalate(late, state, self.effects, self.now, self.RETIRED, exhausted=False)
+        self.assertTrue(alert.call_args.kwargs["urgent"])
+        self.effects.start_unit.assert_not_called()
+
+    def test_retired_hold_live_owner_of_another_order_or_unlaunched_does_not_cover_an_admitted_order(self) -> None:
+        admitted = {"v16_profile_admission": {"profile": "v1.6"}}
+        other = self.retired_state(native_owner=dict(self.live_owner_record(), job=no.owner_name(OTHER)), **admitted)
+        self.owner_state(f"# STATE\n- {RID} working\n")
+        self.assertFalse(ap.native_owner_due(RID, self.RETIRED, self.row, other, self.now))
+        self.owner_state(f"# STATE\n- {RID} working\n", launched=False)  # job-start never launched it: not a live owner
+        unlaunched = self.retired_state(native_owner=self.live_owner_record(), **admitted)
+        self.assertFalse(ap.native_owner_due(RID, self.RETIRED, self.row, unlaunched, self.now))
+
+    def test_retired_hold_of_a_scoped_native_topup_state_starts_no_owner(self) -> None:
+        # CR-841 N3: manage_evaluation calls operational_escalate for a scoped top-up before its delivered/status checks.
+        for name, row in (("paid", self.row), ("delivered", dict(self.row, result_delivered_at=ap.iso(self.now))),
+                          ("refunded", dict(self.row, status="refunded"))):
+            self.setUp_effects()
+            state = self.retired_state(scoped_native_topup={"id": "t1"})
+            self.assertFalse(ap.native_owner_due(RID, self.RETIRED, row, state, self.now), name)
+            with mock.patch.object(ap, "alert"):
+                ap.manage_evaluation(row, state, self.effects, self.now)
+            self.effects.start_unit.assert_not_called()
+            self.assertNotIn("native_owner", state, name)
+
+    def test_retired_hold_trigger_needs_row_and_state(self) -> None:
+        # The old two-argument call (no order facts) never triggers on the new reason.
+        self.assertFalse(ap.native_owner_due(RID, self.RETIRED))
+        self.assertTrue(ap.native_owner_due(RID, self.RETIRED, self.row, self.retired_state()))
+        self.assertTrue(ap.native_owner_due(RID, "unsupported_measurement_backend"))
+
+    def test_retired_hold_dead_owner_gets_one_restart_then_the_card(self) -> None:
+        state = self.retired_state(native_owner={"job": no.owner_name(RID), "requested_at": ap.iso(self.now - timedelta(hours=1)),
+                                                 "starts": 1, "start_ok": True})
+        self.owner_state(f"# STATE\n- {RID} gave up\n- FINAL DONE\n")
+        self.assertTrue(ap.ensure_native_owner(self.row, state, self.effects, self.now, self.RETIRED))
+        self.assertEqual(state["native_owner"]["starts"], 2)
+        with mock.patch.object(ap, "alert") as alert:
+            ap.operational_escalate(self.row, state, self.effects, self.now + timedelta(hours=1), self.RETIRED, exhausted=False)
+        self.assertEqual(self.effects.start_unit.call_count, 1)
+        self.assertTrue(alert.call_args.kwargs["urgent"])
 
     def test_whole_order_unsupported_runtime_counts(self) -> None:
         runtime = self.tmp / "orders" / RID / "trusted-runner" / "RUNTIME.json"
