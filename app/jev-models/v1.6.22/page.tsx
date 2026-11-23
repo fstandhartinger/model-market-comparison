@@ -1,4 +1,3 @@
-import { JevBenchArchiveNotes } from '../../../components/JevBenchArchiveNotes';
 import { notFound } from 'next/navigation';
 import { readOptionalJevbenchV1622Release, v1622BoardInput } from '../../../lib/jevbench-v1622-release.mjs';
 import { historicalCatalogue } from '../../../lib/jevbench-v162-release.mjs';
@@ -47,7 +46,7 @@ export default async function JevModelsV1622Page() {
       <p className="mt-2"><strong>Nemotron Deciffusion 8B v2</strong> answered all 1,500 items; it answers the 15 longest items on about 10% of their state through its own compaction. <strong>Trio-Spark v1.3</strong> (MachineFi, hosted API) answered 1,398 of 1,500: MachineFi&rsquo;s API refused 58 items because they have 9 options (it supports at most 8), 43 over its 1,024-token input cap and 1 more; all 102 are <strong>scored as wrong answers</strong>. Its latency is raw from Sandy, with no API adjustment. Both rows are <strong>listed but not ranked</strong>: the frozen pricing path gives them no price, so they have no Cost axis, no Composite and no rank in any view. Hosted API figures measure the vendor endpoint; its deployed weights were not independently inspected.</p>
       <p className="mt-2">The carried Nimble-v4, Nimble-v4-max and Sage 1.4 rows keep their published listed-but-not-ranked treatment. <strong>reflex-instinct-0.6b remains listed but not ranked</strong>, as required by deputy decision #18761: its Speed figure is non-official, and the composite weights Speed. The collapsed &ldquo;All data&rdquo; table may show the scorer&rsquo;s composite and a Jev-class verdict for that row; neither is an official placement.</p>
       <p className="mt-2">All full-draw rows were scored in one invocation with O1S, 1,000 bootstrap samples, seed 16 and the frozen v1.6.10 field median, so every earlier row keeps its point score, axes, capability and cost. Some earlier confidence intervals move because the scorer seeds each row&rsquo;s resample by its position in the sorted roster. No rank or score was sent to any model author.</p>
-      <div className="mt-3" data-bh-jev1622-measurement-notes><JevBenchArchiveNotes version="v1.6.22" notes={measurementNotes} /></div>
+      <div className="mt-3" data-bh-jev1622-measurement-notes>{measurementNotes.map((note, index) => <p className="mt-2" key={index}>{note}</p>)}</div>
     </section>
     <JevHistoryLazy />
   </>;

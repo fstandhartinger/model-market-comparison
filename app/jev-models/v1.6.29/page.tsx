@@ -1,4 +1,3 @@
-import { JevBenchArchiveNotes } from '../../../components/JevBenchArchiveNotes';
 import { notFound } from 'next/navigation';
 import { readOptionalJevbenchV1629Release, v1629BoardInput } from '../../../lib/jevbench-v1629-release.mjs';
 import { historicalCatalogue } from '../../../lib/jevbench-v162-release.mjs';
@@ -46,7 +45,7 @@ export default async function JevModelsV1629Page() {
       <p className="mt-2"><strong>Vega-U (Nandakishor M).</strong> A sibling of vegaml-0.8b and vegaml-4b: a decision engine on a frozen Qwen3.5-0.8B reader. It ran on our own CPU server with 32 threads, fp32 and --network none. Its Speed is not comparable with GPU rows, including its A6000 siblings. Fifteen of 1,500 items sit at the 73,728-token context cap and are answered on a right-truncated state through the author&rsquo;s own build_prompt; they are answered, not refused.</p>
       <p className="mt-2">The carried listed-but-not-ranked rows keep their treatment, and <strong>reflex-instinct-0.6b remains listed but not ranked</strong>, as required by deputy decision #18761: its Speed figure is non-official, and the composite weights Speed. The collapsed &ldquo;All data&rdquo; table may show the scorer&rsquo;s composite and a Jev-class verdict for an unranked row; neither is an official placement.</p>
       <p className="mt-2">All full-draw rows were scored in one invocation with O1S, 1,000 bootstrap samples, seed 16 and the frozen v1.6.10 field median, so every earlier row keeps its point score, axes, capability and cost. Some earlier confidence intervals move because the scorer seeds each row&rsquo;s resample by its position in the sorted roster. No rank or score was sent to any model author.</p>
-      <div className="mt-3" data-bh-jev1629-measurement-notes><JevBenchArchiveNotes version="v1.6.29" notes={measurementNotes} /></div>
+      <div className="mt-3" data-bh-jev1629-measurement-notes>{measurementNotes.map((note, index) => <p className="mt-2" key={index}>{note}</p>)}</div>
     </section>
     <JevHistoryLazy />
   </>;

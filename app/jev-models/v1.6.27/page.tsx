@@ -1,4 +1,3 @@
-import { JevBenchArchiveNotes } from '../../../components/JevBenchArchiveNotes';
 import { notFound } from 'next/navigation';
 import { readOptionalJevbenchV1627Release, v1627BoardInput } from '../../../lib/jevbench-v1627-release.mjs';
 import { historicalCatalogue } from '../../../lib/jevbench-v162-release.mjs';
@@ -48,7 +47,7 @@ export default async function JevModelsV1627Page() {
       <p className="mt-2"><strong>Verdin-4B (Victor Bennett).</strong> A public submission (Qwen3.5-4B with a merged LoRA and a pointer head). The author serves it on one RTX 5090; we ran the author&rsquo;s own documented CPU path in float32 on our shared CPU, so its <strong>Speed is a lower bound</strong>, not the speed of the author&rsquo;s deployment. It answered 1,485 of 1,500; the 15 items over its own 65,536-token limit are scored as wrong answers. Its cost is an estimate at its base model&rsquo;s market price ({usd(verdin)} per 1,000 decisions); it ranks {verdin?.ranks?.A ?? '–'} on the composite. Its weights are CC BY-NC 4.0 (non-commercial).</p>
       <p className="mt-2">The carried listed-but-not-ranked rows keep their treatment, and <strong>reflex-instinct-0.6b remains listed but not ranked</strong>, as required by deputy decision #18761: its Speed figure is non-official, and the composite weights Speed. The collapsed &ldquo;All data&rdquo; table may show the scorer&rsquo;s composite and a Jev-class verdict for an unranked row; neither is an official placement.</p>
       <p className="mt-2">All full-draw rows were scored in one invocation with O1S, 1,000 bootstrap samples, seed 16 and the frozen v1.6.10 field median, so every earlier row keeps its point score, axes, capability and cost. Some earlier confidence intervals move because the scorer seeds each row&rsquo;s resample by its position in the sorted roster. No rank or score was sent to any model author.</p>
-      <div className="mt-3" data-bh-jev1627-measurement-notes><JevBenchArchiveNotes version="v1.6.27" notes={measurementNotes} /></div>
+      <div className="mt-3" data-bh-jev1627-measurement-notes>{measurementNotes.map((note, index) => <p className="mt-2" key={index}>{note}</p>)}</div>
     </section>
     <JevHistoryLazy />
   </>;
