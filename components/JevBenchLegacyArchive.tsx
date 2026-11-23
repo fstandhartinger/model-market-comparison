@@ -16,7 +16,7 @@ export function JevBenchLegacyArchiveWidget({ version, part = 'board', ...props 
   const a = props.artifact;
   const isV15 = version.startsWith('v1.5.');
   const isCapability = isV15 || (version === 'v1.4.2.2' && part === 'capability');
-  const primary = part === 'board' || (version === 'v1.4.2.2' && part === 'capability');
+  const primary = version === 'v1.4.2.2' ? part === 'capability' : part === 'board';
   let rows: Array<{ key: string; name: string; rank: string; score: number | null; cost?: number | null }> = [];
   let count = 0;
   if (primary && version === 'v1.7.0') {
