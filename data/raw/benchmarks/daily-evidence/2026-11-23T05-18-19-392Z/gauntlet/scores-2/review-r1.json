@@ -1,0 +1,16 @@
+{
+  "artifact_id": "scores-2",
+  "artifact_sha256": "ed093019f29a08eb86c2e7f369e53e57ee3bb701031f70fd89a849b4645cc794",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": ["public:c78c20ee73ebdb07bd7d9573", "public:12b246c718c4db974d756f3b", "c1"],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Read-only review: could not independently recompute row SHA-256s or verify transport/hash ownership; relied on owner-bound hashes and primary projections.",
+    "Basis 'measured' is inferred from the board's published results context; the source row does not explicitly label measured/self_reported/derived, but no contrary evidence exists.",
+    "Source has no separate source-date field; Test Date (11/22/2026) is present in the protocol and matches the primary row."
+  ],
+  "missing_evidence": []
+}

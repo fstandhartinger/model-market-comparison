@@ -1,0 +1,57 @@
+{
+  "artifact_id": "protocol-researchclawbench-40-tasks",
+  "artifact_sha256": "323b823336884461e76c46e6b967872723e976d0d6d9dcfa89f7b54356a18cb5",
+  "round": 1,
+  "verdict": "blocked",
+  "coverage_checked": ["researchclawbench::40-tasks", "c1", "c2"],
+  "errors_found": 5,
+  "findings": [
+    {
+      "id": "f1",
+      "severity": "blocker",
+      "location": "version_guard",
+      "evidence": "Packet contains only generated summaries of leaderboard.json (sources 4-5), not its raw content. The guard claims keys {tasks, agents, scores, frontier}, exactly 40 reviewed task ids, four per domain, and ResearchHarness row field constraints; none of these can be verified from supplied evidence. README confirms 40 tasks and 10 domains but not exact ids or JSON schema.",
+      "repair": "Provide raw leaderboard.json content (or an exact projection of its keys/task ids/row fields) or remove the unverifiable guard assertions; retain only guard parts supported by sources 1-3."
+    },
+    {
+      "id": "f2",
+      "severity": "blocker",
+      "location": "version_status/version",
+      "evidence": "Row states version_status 'published' and version '40-tasks', asserting a published release identifier. Neither website excerpt (source 1) nor README (source 3) names any release/version identifier for this board; per c2, absence of a published release identifier supports 'snapshot', not 'published'.",
+      "repair": "Set version_status to 'snapshot' and version to 'snapshot-2026-11-23' (capture date) unless a release identifier is actually found in primary evidence."
+    },
+    {
+      "id": "f3",
+      "severity": "blocker",
+      "location": "scoring.notes",
+      "evidence": "Notes claim coverage '33 to 40 of 40 on 2026-09-21' and 'mean cost per task'. These specific numbers and cost claim appear nowhere in the packet; source 5 only summarizes 21 served values with min 12.412894736842105 and max 21.11692307692308.",
+      "repair": "Remove the unsupported coverage numbers and mean-cost claim, or add primary evidence containing those values."
+    },
+    {
+      "id": "f4",
+      "severity": "minor",
+      "location": "scoring.notes",
+      "evidence": "Claim 'Pass@1 view (the page's default)' is not supported. Source 3 only mentions that Pass@5 leaderboard results were added (2026-07-01) and source 1 does not identify a default view.",
+      "repair": "Remove 'the page's default' or rephrase to 'Pass@1 and Pass@5 views exist; Pass@5 takes best of five attempts' and cite evidence for which is default."
+    },
+    {
+      "id": "f5",
+      "severity": "minor",
+      "location": "description",
+      "evidence": "Description states 'the paper itself hidden'. README describes the agent receiving raw data, related work, and instructions, with the target paper used in evaluation; no supplied excerpt says the target paper is hidden from the agent.",
+      "repair": "Remove 'the paper itself hidden' or add evidence that the target paper is withheld during the research stage."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "I could not execute hashes or transport/qualification checks; owner-provided hashes and generated summaries are taken as given.",
+    "Sources 4 and 5 are generated summaries from leaderboard.json rather than the raw payload, so leaderboard schema, task-id list, and row-field details cannot be independently confirmed.",
+    "The absence of a release identifier is treated as evidence supporting 'snapshot' per c2, not as a missing value; however the packet never explicitly states there is no release identifier, so this rests on the provided excerpts being complete."
+  ],
+  "missing_evidence": [
+    "Raw leaderboard.json content supporting claimed keys {tasks, agents, scores, frontier}, exact 40 reviewed task ids, and ResearchHarness row field constraints",
+    "Coverage counts '33 to 40 of 40 on 2026-09-21' and 'mean cost per task' claimed in scoring.notes",
+    "Evidence that the target paper is hidden from the agent during research for the description field",
+    "Evidence that Pass@1 is the page's default view"
+  ]
+}

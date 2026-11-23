@@ -1,0 +1,44 @@
+{
+  "artifact_id": "protocol-kernelbench-cuda-glm52-fused-moe-rtx-pro-6000",
+  "artifact_sha256": "6aafe8f39bf09b836a09a197e283d2d81bad768a70baedba626edb70633514b9",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": ["kernelbench-cuda-glm52-fused-moe::rtx-pro-6000", "c1", "c2"],
+  "errors_found": 4,
+  "findings": [
+    {
+      "id": "f1",
+      "severity": "major",
+      "location": "kernelbench-cuda-glm52-fused-moe::rtx-pro-6000.description",
+      "evidence": "Row description says 'GLM-5.2's MoE forward pass'; SPEC.md states '01 | `glm52_fused_moe` | GLM-5.3 Fused MoE (256+shared, top-8) fused'.",
+      "repair": "Change description to GLM-5.3 (or align with problem name) to match the protocol's stated model version."
+    },
+    {
+      "id": "f2",
+      "severity": "major",
+      "location": "kernelbench-cuda-glm52-fused-moe::rtx-pro-6000.version_guard",
+      "evidence": "version_guard claims the problem must stay in a 'four-problem deck'; SPEC.md says 'Problem 04 ... was retired 2026-11-09' and 'deck stays at three since 2026-11-09'.",
+      "repair": "Change guard to a three-problem deck or remove the four-problem statement."
+    },
+    {
+      "id": "f3",
+      "severity": "major",
+      "location": "kernelbench-cuda-glm52-fused-moe::rtx-pro-6000.version_status",
+      "evidence": "version_status is 'published' but no release identifier for this board appears in SPEC.md, leaderboard.json, or /cuda page; only internal schema_version/environment/tag fields. Row version is hardware name 'rtx-pro-6000', not a published release id.",
+      "repair": "Set version_status to 'snapshot' and version to 'snapshot-<date>' unless a maintainer-published release identifier for this board is supplied."
+    },
+    {
+      "id": "f4",
+      "severity": "minor",
+      "location": "kernelbench-cuda-glm52-fused-moe::rtx-pro-6000.scoring.notes",
+      "evidence": "Notes claim the published ranked list 'still holds' a `bug` muse cell on 04 and a `reward_hack` deepseek cell on 04; problem 04 is retired (SPEC.md) and absent from the current leaderboard.json.",
+      "repair": "Remove or clearly mark as historical the 04-specific claims in notes, or update to the current 01-03 deck."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "Whether the internal 'environment: v2_containerized' or 'generated_from_summary.tag: v2' in leaderboard.json constitutes a published release identifier is ambiguous; absent explicit evidence, I treated it as not a board release id.",
+    "I cannot execute SHA-256 or transport/qualification checks; those are owner-side."
+  ],
+  "missing_evidence": []
+}

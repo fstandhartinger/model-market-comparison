@@ -1,7 +1,7 @@
 {
   "source": "GitHub Copilot (current usage-based billing plus annual-plan legacy request billing)",
-  "collected_at": "2026-11-22",
-  "method": "scripts/fetch-github-copilot-catalog.mjs (2026-11-22): current_models[] = the intersection of the supported-models catalog table (https://docs.github.com/en/copilot/reference/ai-models/supported-models) and the per-token pricing tables (https://docs.github.com/en/copilot/reference/copilot-billing/models-and-pricing), matched by exact name after footnote markers are removed; Default and Long context tiers are folded into one row (long_context carries the threshold and higher price); promotion end dates come from the pricing footnotes. models[] = the legacy annual-plan multiplier table (https://docs.github.com/en/copilot/reference/copilot-billing/request-based-billing-legacy/model-multipliers-for-annual-plans) with effective USD per request = multiplier × per_premium_request_usd; the page's \"subject to change\" list sets the note. Plan allowances (plans[]) are documented on separate billing pages and keep plans_checked_at. See github-copilot.method.md.",
+  "collected_at": "2026-11-23",
+  "method": "scripts/fetch-github-copilot-catalog.mjs (2026-11-23): current_models[] = the intersection of the supported-models catalog table (https://docs.github.com/en/copilot/reference/ai-models/supported-models) and the per-token pricing tables (https://docs.github.com/en/copilot/reference/copilot-billing/models-and-pricing), matched by exact name after footnote markers are removed; Default and Long context tiers are folded into one row (long_context carries the threshold and higher price); promotion end dates come from the pricing footnotes. models[] = the legacy annual-plan multiplier table (https://docs.github.com/en/copilot/reference/copilot-billing/request-based-billing-legacy/model-multipliers-for-annual-plans) with effective USD per request = multiplier × per_premium_request_usd; the page's \"subject to change\" list sets the note. Plan allowances (plans[]) are documented on separate billing pages and keep plans_checked_at. See github-copilot.method.md.",
   "pricing_model": "ai_credits_per_token_with_legacy_per_premium_request",
   "ai_credit_usd": 0.01,
   "per_premium_request_usd": 0.04,
@@ -787,9 +787,9 @@
     "Claude Sonnet 4.6 (2026-09-01)"
   ],
   "response_sha256": {
-    "supported": "c7411506a3e37a5d693793506996eaaf766f666347670cc2d18b06dab95b668d",
+    "supported": "70d6e5f48944ef6eb1c9dd0c264c8783a67c1cb7b5e3747aec67af045083c01f",
     "pricing": "ce29870cf22ade59136ba932b9bf06d2e26ba4858253d44a8828bafa7b0e628a",
-    "multipliers": "498a0a0099933abae7be5d7ad66b9845dca998f21284aa013badcb559f65cc3c"
+    "multipliers": "43095cd375c11218e3fcde9a91f5fb85963be404de332cbeb0910b972261e0eb"
   },
   "diff": {
     "current_added": [],

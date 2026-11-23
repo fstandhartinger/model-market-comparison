@@ -1,0 +1,24 @@
+{
+  "artifact_id": "protocol-kernelbench-cuda-megaqwen-decode-rtx-pro-6000",
+  "artifact_sha256": "281df10e55b53ee8409b58c066527c9940e0dcc645df63602f73a2c4c8533ee0",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": ["kernelbench-cuda-megaqwen-decode::rtx-pro-6000", "c1", "c2"],
+  "errors_found": 1,
+  "findings": [
+    {
+      "id": "kernelbench-cuda-megaqwen-decode::rtx-pro-6000",
+      "severity": "major",
+      "location": "version_guard and scoring.notes",
+      "evidence": "Row version_guard states 'the problem must stay in the stated four-problem deck' and notes cite problem-04 cells (muse/muse-spark-1.3 0.2056 on 04, deepseek-claude/deepseek-v4-pro reward_hack on 04, Opus 5 196.10% on 04) as though 04 is part of this board. Current protocol contradicts this: SPEC.md says 'Problem 04 (grid + MinGRU RL sim SPS) was retired 2026-11-09' and 'deck stays at three since 2026-11-09'; leaderboard.json problems is ['01_glm52_fused_moe','02_deepseek_nsa','03_megaqwen_decode']; published_runs.json excludes every 04 run with reason 'problem 04 retired 2026-11-09'. The deck is three problems and the 04 entries and the 196.10% value are absent from today's captured payload, so the four-problem description/guards are stale for the current protocol.",
+      "repair": "Change 'four-problem deck' to 'three-problem deck' in version_guard, and remove or explicitly mark as historical the problem-04 references (muse 04 0.2056, deepseek-v4-pro reward_hack on 04, Opus 5 196.10% on 04), since 04 was retired 2026-11-09 and is not part of the current board."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "Owner separately executes hash/transport/qualification checks; I cannot recompute row or source hashes, so row SHA binding and hook verification are outside my capability.",
+    "version_status 'published' is judged from the maintainer publishing the board identifier 'RTX_PRO_6000' (published_runs.json) / 'RTX PRO 6000 Blackwell Workstation' (leaderboard.json); if that is not considered a release identifier, subsequent review might deem 'snapshot' more apt.",
+    "The value-scale (29 values, 0.97-8.12) and activity (11 added) summaries are trusted as this run's generated reads of the capture; I could not independently recompute them."
+  ],
+  "missing_evidence": []
+}

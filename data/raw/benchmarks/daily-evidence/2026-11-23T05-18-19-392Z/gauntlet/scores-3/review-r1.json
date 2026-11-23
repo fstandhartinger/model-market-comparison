@@ -1,0 +1,23 @@
+{
+  "artifact_id": "scores-3",
+  "artifact_sha256": "ccfa54eed72fba9e2e88624d33570f8b215a90362b227160a165b673b7f53615",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/retail",
+    "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/airline",
+    "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/telecom",
+    "c1"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "The README performance table lists numeric values without an explicit unit declaration; the 'percent' unit is inferred from the standard TAU2 reporting convention rather than stated verbatim in the served source.",
+    "The protocol's output-length statement (32,768 tokens, 81,920 for highly challenging tasks) is derived from the README 'Best Practices' and footnote, which recommend these settings; the source does not publish a separate evaluation harness config for the TAU2 rows.",
+    "Harness is null and no explicit evaluation harness is named in the README; only sampling recommendations and output-length guidance appear.",
+    "published_at is null because the README does not expose a publication date; only retrieved_at is available.",
+    "I cannot independently recompute the per-row or artifact SHA-256 hashes; I rely on the owner-provided hash bindings for row identity."
+  ],
+  "missing_evidence": []
+}

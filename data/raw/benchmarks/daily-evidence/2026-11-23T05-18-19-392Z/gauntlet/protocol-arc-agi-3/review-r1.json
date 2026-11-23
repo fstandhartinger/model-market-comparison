@@ -1,0 +1,15 @@
+{
+  "artifact_id": "protocol-arc-agi-3",
+  "artifact_sha256": "95716ef98d721e5a0c3f9c69bd5024d97b8aa40916a61e38fdf901ea9069d450",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": ["arc-agi::3", "c1", "c2"],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "The term 'semi-private' in the metric field is not explicitly used in the protocol text; it is consistent with the protocol's description of environments where test takers are not given instructions, but the exact wording is our editorial addition.",
+    "I cannot execute hash verification or transport checks; I rely on the provided owner hashes and generated summaries as evidence, per the instructions."
+  ],
+  "missing_evidence": []
+}

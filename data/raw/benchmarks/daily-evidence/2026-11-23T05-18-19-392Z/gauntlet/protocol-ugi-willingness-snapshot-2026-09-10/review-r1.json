@@ -1,0 +1,16 @@
+{
+  "artifact_id": "protocol-ugi-willingness-snapshot-2026-09-10",
+  "artifact_sha256": "dd8b7592b887476b21e04b4a80eb36754917b755174bdacd4ef8bab75a83274c",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": ["ugi-willingness::snapshot-2026-09-10", "c1", "c2"],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "I cannot independently execute the owner's hash verification, transport checks, or the generated summaries; I relied on the supplied primary evidence and stated summaries as provided.",
+    "The protocol text does not explicitly use the word 'score' as a unit; I based the unit/range judgement on the run's own value-scale summary (SOURCE 4, lowest 0, highest 10), which is consistent with the row's unit 'score' and its null/unbounded range claim.",
+    "Higher-better is not literally printed in the protocol; the description of W/10 as 'how far a model can be pushed before it refuses' reasonably supports higher_better=true, and no evidence contradicts it."
+  ],
+  "missing_evidence": []
+}

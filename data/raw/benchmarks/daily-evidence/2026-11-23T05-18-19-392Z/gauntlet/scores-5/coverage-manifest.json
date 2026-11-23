@@ -1,0 +1,204 @@
+{
+  "artifact_id": "scores-5",
+  "rounds_used": 3,
+  "rows": {
+    "total": 1,
+    "accepted": [],
+    "quarantined": [
+      "vendor:DeepSeek-V3:swe-bench-verified::snapshot-2026-09-10"
+    ]
+  },
+  "producer_flagged": [],
+  "second_opinion": null,
+  "criteria": [
+    "c1"
+  ],
+  "coverage": {
+    "producer": null,
+    "critic": [],
+    "final": {
+      "rows_covered": 0,
+      "criteria_covered": 0,
+      "complete": false
+    }
+  },
+  "receipts": [
+    {
+      "round": 1,
+      "role": "producer",
+      "reused_from_round": null,
+      "requested_model": "deepseek/deepseek-v4-flash-0731",
+      "model": "deepseek/deepseek-v4-flash-0731",
+      "route": "openrouter",
+      "attempt": 1,
+      "cost_usd": 0.002599886718,
+      "out": "data/raw/benchmarks/daily-evidence/2026-11-23T05-18-19-392Z/gauntlet/scores-5/producer-r1.json",
+      "output_sha256": "e036ef24bb0ec95184734e99c3ea5073a5bca6e9a86b31f8c55b61120c4ab1dc",
+      "qualification": {
+        "id": "deepseek/deepseek-v4-flash-0731",
+        "family": "deepseek",
+        "free": false,
+        "input_per_1m": 0.0434,
+        "output_per_1m": 0.3,
+        "context": 1048576,
+        "aa_intelligence_index": 24.1,
+        "aa_source": "exact_id_and_variants",
+        "matched_model_ids": [
+          "deepseek-v4-flash-0731::max"
+        ],
+        "aa_variant_scores": [
+          {
+            "id": "deepseek-v4-flash-0731::max",
+            "index": 24.1,
+            "estimated_from_v4": 34.3
+          }
+        ]
+      },
+      "usage": {
+        "prompt_tokens": 3773,
+        "completion_tokens": 8208,
+        "total_tokens": 11981,
+        "cost": 0.002599886718,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "audio_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.0026261482,
+          "upstream_inference_prompt_cost": 0.0001637482,
+          "upstream_inference_completions_cost": 0.0024624
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 8114,
+          "image_tokens": 0,
+          "audio_tokens": 0
+        }
+      },
+      "reasoning": {
+        "effort": "low",
+        "exclude": true
+      }
+    },
+    {
+      "round": 2,
+      "role": "producer",
+      "reused_from_round": null,
+      "requested_model": "deepseek/deepseek-v4-flash-0731",
+      "model": "deepseek/deepseek-v4-flash-0731",
+      "route": "openrouter",
+      "attempt": 2,
+      "cost_usd": 0.001285626276,
+      "out": "data/raw/benchmarks/daily-evidence/2026-11-23T05-18-19-392Z/gauntlet/scores-5/producer-r2.json",
+      "output_sha256": "549cce1e332bb03b16ae5f3f99949efcdd10689e1910dcf374794394333f895e",
+      "qualification": {
+        "id": "deepseek/deepseek-v4-flash-0731",
+        "family": "deepseek",
+        "free": false,
+        "input_per_1m": 0.0434,
+        "output_per_1m": 0.3,
+        "context": 1048576,
+        "aa_intelligence_index": 24.1,
+        "aa_source": "exact_id_and_variants",
+        "matched_model_ids": [
+          "deepseek-v4-flash-0731::max"
+        ],
+        "aa_variant_scores": [
+          {
+            "id": "deepseek-v4-flash-0731::max",
+            "index": 24.1,
+            "estimated_from_v4": 34.3
+          }
+        ]
+      },
+      "usage": {
+        "prompt_tokens": 3786,
+        "completion_tokens": 3781,
+        "total_tokens": 7567,
+        "cost": 0.001285626276,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "audio_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.0012986124,
+          "upstream_inference_prompt_cost": 0.0001643124,
+          "upstream_inference_completions_cost": 0.0011343
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 3674,
+          "image_tokens": 0,
+          "audio_tokens": 0
+        }
+      },
+      "reasoning": {
+        "effort": "low",
+        "exclude": true
+      }
+    },
+    {
+      "round": 3,
+      "role": "producer",
+      "reused_from_round": null,
+      "requested_model": "deepseek/deepseek-v4-flash-0731",
+      "model": "deepseek/deepseek-v4-flash-0731",
+      "route": "openrouter",
+      "attempt": 3,
+      "cost_usd": 0.001130295276,
+      "out": "data/raw/benchmarks/daily-evidence/2026-11-23T05-18-19-392Z/gauntlet/scores-5/producer-r3.json",
+      "output_sha256": "b2265a80fcedabe5403013676f98864d3a6c80ad0518ed61f19f2dcfbf91438a",
+      "qualification": {
+        "id": "deepseek/deepseek-v4-flash-0731",
+        "family": "deepseek",
+        "free": false,
+        "input_per_1m": 0.0434,
+        "output_per_1m": 0.3,
+        "context": 1048576,
+        "aa_intelligence_index": 24.1,
+        "aa_source": "exact_id_and_variants",
+        "matched_model_ids": [
+          "deepseek-v4-flash-0731::max"
+        ],
+        "aa_variant_scores": [
+          {
+            "id": "deepseek-v4-flash-0731::max",
+            "index": 24.1,
+            "estimated_from_v4": 34.3
+          }
+        ]
+      },
+      "usage": {
+        "prompt_tokens": 3786,
+        "completion_tokens": 3258,
+        "total_tokens": 7044,
+        "cost": 0.001130295276,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "audio_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.0011417124,
+          "upstream_inference_prompt_cost": 0.0001643124,
+          "upstream_inference_completions_cost": 0.0009774
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 3172,
+          "image_tokens": 0,
+          "audio_tokens": 0
+        }
+      },
+      "reasoning": {
+        "effort": "low",
+        "exclude": true
+      }
+    }
+  ]
+}

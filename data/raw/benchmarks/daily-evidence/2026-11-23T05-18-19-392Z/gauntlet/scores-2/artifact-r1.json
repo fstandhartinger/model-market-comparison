@@ -1,0 +1,50 @@
+[
+  {
+    "id": "public:c78c20ee73ebdb07bd7d9573",
+    "benchmark_id": "ugi-willingness::snapshot-2026-09-10",
+    "subject": {
+      "source_id": "google/gemini-4-carbon (thinking_level=low)",
+      "name": "google/gemini-4-carbon (thinking_level=low)",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 1.8,
+    "unit": "score",
+    "basis": "measured",
+    "source": {
+      "url": "https://huggingface.co/spaces/DontPlanToEnd/UGI-Leaderboard/raw/main/ugi-leaderboard-data.csv",
+      "retrieved_at": "2026-11-23T05:25:05.434917+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-11-23T05-18-19-392Z/7b94b14196f884cc54df.gz",
+      "sha256": "7b94b14196f884cc54dfb53016bbc450eca740c5b229745bea017a9658b1808d",
+      "locator": "csv; source row 1329; google/gemini-4-carbon (thinking_level=low); field W/10 👍"
+    },
+    "protocol": "W/10 👍 published composite; Prompt Template=; Test Date=11/22/2026; Model Link=https://huggingface.co/google/gemini-4-carbon (thinking_level=low); Is Thinking Model=False",
+    "comparison_key": null
+  },
+  {
+    "id": "public:12b246c718c4db974d756f3b",
+    "benchmark_id": "ugi-willingness::snapshot-2026-09-10",
+    "subject": {
+      "source_id": "google/gemini-4-carbon (thinking_level=medium)",
+      "name": "google/gemini-4-carbon (thinking_level=medium)",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 1.8,
+    "unit": "score",
+    "basis": "measured",
+    "source": {
+      "url": "https://huggingface.co/spaces/DontPlanToEnd/UGI-Leaderboard/raw/main/ugi-leaderboard-data.csv",
+      "retrieved_at": "2026-11-23T05:25:05.434917+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-11-23T05-18-19-392Z/7b94b14196f884cc54df.gz",
+      "sha256": "7b94b14196f884cc54dfb53016bbc450eca740c5b229745bea017a9658b1808d",
+      "locator": "csv; source row 1330; google/gemini-4-carbon (thinking_level=medium); field W/10 👍"
+    },
+    "protocol": "W/10 👍 published composite; Prompt Template=; Test Date=11/22/2026; Model Link=https://huggingface.co/google/gemini-4-carbon (thinking_level=medium); Is Thinking Model=True",
+    "comparison_key": null
+  }
+]

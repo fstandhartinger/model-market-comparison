@@ -1,0 +1,45 @@
+{
+  "artifact_id": "protocol-weirdml-2",
+  "artifact_sha256": "6bd60c5766dad9d19f8ad87594eec4ade45889654f1ab0b2516e23568e5c4ae7",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": ["weirdml::2", "c1", "c2"],
+  "errors_found": 4,
+  "findings": [
+    {
+      "id": "version-mismatch",
+      "severity": "blocker",
+      "location": "weirdml::2 version, version_guard, version_status",
+      "evidence": "SOURCE 1 shows current page as \"WeirdML v3\" and lists \"Previous versions: WeirdML v2\"; the row claims version \"2\" with version_status \"published\", implying the maintainer publishes identifier \"2\", but the published identifier is v3.",
+      "repair": "Set version to \"3\" and adjust version_guard accordingly (or, if intentionally retaining v2, mark status \"retained\" and set superseded_by to the successor registry id)."
+    },
+    {
+      "id": "metric-mismatch",
+      "severity": "blocker",
+      "location": "weirdml::2 scoring.metric",
+      "evidence": "SOURCE 1 defines the official score as \"80% normalized area under its line on a logarithmic token axis, plus 20% of its final value\" over \"11 tasks\"; the row states \"Average Max Accuracy ... averaged over all 17 tasks\", a different metric and task count.",
+      "repair": "Replace the metric with the v3 scoring rule and correct the task count to 11 (matching the protocol's configuration count)."
+    },
+    {
+      "id": "lifecycle-mismatch",
+      "severity": "blocker",
+      "location": "weirdml::2 status, superseded_by",
+      "evidence": "SOURCE 1 presents v3 as the active version and lists \"WeirdML v2\" under \"Previous versions\"; for a row identifying as v2, v3 is the named successor and v2 is no longer reported, so status \"active\" and superseded_by null contradict the protocol.",
+      "repair": "If the row is v2, set status to \"retained\" and superseded_by to the successor registry id (e.g., weirdml::3); if the row is meant to be v3, correct the version and retain active/null."
+    },
+    {
+      "id": "description-mismatch",
+      "severity": "minor",
+      "location": "weirdml::2 description",
+      "evidence": "SOURCE 1 describes v3 as \"11 complex hand-made tasks\" to \"explore and understand unfamiliar data, develop machine learning and data analysis pipelines\" with \"limited data, unspecified goals and/or very limited feedback\"; the row description says \"write, run, and iteratively improve PyTorch code under fixed compute and time limits,\" which does not match the v3 protocol text.",
+      "repair": "Align the description with the v3 protocol wording, or clarify the version it describes."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "Cannot recompute hashes or execute transport/qualification checks; owner performs those separately.",
+    "Successor registry id for v3 is inferred as weirdml::3; exact id depends on registry conventions.",
+    "The row may have been intended as a v2 snapshot, but under the current v3 protocol its version, metric, and lifecycle fields would still be mismatched."
+  ],
+  "missing_evidence": []
+}

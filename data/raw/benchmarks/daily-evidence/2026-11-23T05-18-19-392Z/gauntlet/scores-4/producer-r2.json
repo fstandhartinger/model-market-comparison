@@ -1,0 +1,12 @@
+{
+  "rows": {
+    "vendor:mistralai/Devstral-2-123B-Instruct-2512:swe-bench-verified::snapshot-2026-09-10": {
+      "status": "mismatch",
+      "note": "Value 72.2 matches source, but source.published_at is null while the article shows 'December 9, 2025'; benchmark_id includes 'snapshot-2026-09-10' not present in source; subject source_id/model_id contain 'Instruct-2512' unsupported by evidence."
+    },
+    "vendor:mistralai/Devstral-Small-2-24B-Instruct-2512:swe-bench-verified::snapshot-2026-09-10": {
+      "status": "mismatch",
+      "note": "Value 68 matches source, but source.published_at is null while article shows 'December 9, 2025'; benchmark_id includes 'snapshot-2026-09-10' not present in source; subject source_id/model_id contain 'Instruct-2512' unsupported by evidence."
+    }
+  }
+}

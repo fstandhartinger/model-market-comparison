@@ -1,0 +1,23 @@
+{
+  "artifact_id": "protocol-gso-opt1-102",
+  "artifact_sha256": "eedef18bb298a4ecee13a356eb383d9eb5c33428b80c95017bb7ef88b2383f9f",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": ["gso::opt1-102", "c1", "c2"],
+  "errors_found": 1,
+  "findings": [
+    {
+      "id": "c2-version-status-mismatch",
+      "severity": "blocker",
+      "location": "row gso::opt1-102: version_status / version",
+      "evidence": "Row sets version_status='published' and version='opt1-102'. SOURCE 1 protocol text and SOURCE 2 leaderboard.json publish no release identifier for this board: no version string appears; the page only shows '102 tasks' and metadata contains total_tasks=102 and last_updated=2026-09-27. Per criterion c2, a page publishing no release identifier supports version_status='snapshot' with a snapshot-<date> version, not 'published'.",
+      "repair": "Set version_status='snapshot' and version='snapshot-2026-11-23' (the capture date), and align version_guard and any registry references so the identifier is the dated snapshot identity; only use 'published' if a maintainer release identifier is confirmed from the source."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "I cannot independently recompute hashes or execute transport/qualification checks; those owner-side checks are outside my read-only scope and are assumed from the packet.",
+    "The protocol changelog records methodology changes (iteration budget, network isolation, hack detector), but the row notes them and the protocol still presents the same benchmark and task count, so I did not treat those as a separate identity mismatch beyond the version_status issue."
+  ],
+  "missing_evidence": []
+}

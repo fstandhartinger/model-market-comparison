@@ -1,0 +1,27 @@
+{
+  "artifact_id": "protocol-kernelbench-cuda-deepseek-nsa-rtx-pro-6000",
+  "artifact_sha256": "106e3ed5770f2399032cd76ef25ac0ad13ad843f58eaa616992a43c991185a9c",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": [
+    "kernelbench-cuda-deepseek-nsa::rtx-pro-6000",
+    "c1",
+    "c2"
+  ],
+  "errors_found": 1,
+  "findings": [
+    {
+      "id": "kernelbench-cuda-deepseek-nsa::rtx-pro-6000|version_status",
+      "severity": "major",
+      "location": "kernelbench-cuda-deepseek-nsa::rtx-pro-6000 (version, version_status)",
+      "evidence": "Row claims version_status 'published' and version 'rtx-pro-6000'. SPEC.md (dated 2026-11-09) and leaderboard.json publish no release identifier for this board; leaderboard contains only schema_version 1 (data schema) and hardware name 'RTX PRO 6000 Blackwell Workstation'. Per criterion c2, no published release identifier means version_status must be 'snapshot', not 'published'.",
+      "repair": "Set version_status to 'snapshot' and version to the dated snapshot identity (snapshot-<date>), or cite an actual maintainer-published release identifier for this board if one is supplied."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "Value-scale summary (lowest 2.51, highest 136.19) is a generated read; raw leaderboard shows fractional peak_fraction values. I accepted the generated summary for the unit/range scale judgement per instructions.",
+    "Owner hash/transport checks are not executable by the reviewer; treated as prior verified via owner receipt."
+  ],
+  "missing_evidence": []
+}
