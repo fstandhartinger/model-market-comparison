@@ -4,7 +4,8 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm ci
 COPY . .
-RUN npm run build
+# CR-848: .next/cache (~1.1 GB webpack cache) is build-only; dropping it keeps every deploy image smaller on sandy-prod.
+RUN npm run build && rm -rf .next/cache
 
 FROM node:20-slim AS run
 # eMudhra CA distrust (Oct 2026): current CA bundle, and make Node trust it instead of its bundled root list
