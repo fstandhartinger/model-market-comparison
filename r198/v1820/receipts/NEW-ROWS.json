@@ -1,0 +1,168 @@
+{
+ "starlord-4b-v2.0-preview": {
+  "api_flag": false,
+  "api_subset": false,
+  "author": "xsdfasfgsa (Hugging Face)",
+  "axes": {
+   "calibration": 83.19570254573138,
+   "cost": 75.04609936889244,
+   "intelligence": 66.12691758546116,
+   "speed": 93.73165205315465
+  },
+  "base_model": "Qwen/Qwen3.5-4B",
+  "capability": 74.66131006559627,
+  "composite_ci95": {
+   "A": [
+    75.89301357260193,
+    79.81901244750365
+   ],
+   "B": [
+    72.51762316626657,
+    77.53520518937214
+   ],
+   "C": [
+    75.89301357260193,
+    79.81901244750365
+   ]
+  },
+  "cost": {
+   "basis": "GPU-time estimate from v1.8.0: one monthly-rented RTX PRO 6000 96 GB, USD 1.5235/hour; average load 70%. Architecture: small qwen, 4B active parameters; throughput 61525 tokens/s (architecture-class calibration, efficient-engine prefill). GPU-time cost USD 0.00678885742019956/1,000; old list-price estimate USD 0.02072658/1,000 (deepinfra:Qwen/Qwen3.5-4B at USD 0.03/M input and USD 0.15/M output). Applied min(old list-price estimate, GPU-time cost) = USD 0.00678885742019956/1,000. Estimated, not a bill.",
+   "kind": "estimate",
+   "usage_estimated_rows": 0,
+   "usd_per_1000": 0.006788857420199556
+  },
+  "decision_limit": {
+   "limit_s": 10.0,
+   "n_over_limit": 5,
+   "n_over_limit_answered_ok": 5,
+   "rule": "latency_s > limit -> failed",
+   "speed_basis": "all decisions given (lane items in the raw), measured latency_s",
+   "speed_n": 1500,
+   "treatment": "share"
+  },
+  "disclosure": "Paid public evaluation. Measured on the 22 Nov 2026 draw on an evaluator-owned rented GPU, offline with the author's serving stack at the pinned commit. Not yet equated: anchor runs on this draw are pending, so the row is not yet equated against the 27 Oct draw. Failed or unanswered requests count as wrong answers: 5 of 1,500 decisions took longer than the 10 s limit and are counted as failed (share rule). Qwen3.5-4B finetune read out through candidate logits in one joint forward pass, 0 output tokens, with a two-block bidirectional attention pass over the request in the full-attention layers. Confidence rule: the author ships a JevBench-only Noul confidence floor of 0.801. The author's HTTP server applies it after the readout; that is the route measured here, while in-process engines return the raw softmax. The floor sees only the question type and the two probabilities. It raises the stated Noul confidence to at least 0.801, so it can move the Calibration and Noul scores. It changes the predicted answer only at exactly p = 0.5, where the answer becomes yes. This rule is part of the measured model. No input was truncated (limit 131,072 tokens per request; anything above it, or a GPU out-of-memory, is refused with HTTP 422 and scored wrong). The author's CUDA-graph engine serves requests up to 4,096 tokens, with the native fallback above. The licence is non-commercial. The model card reports a public JevBench result; it does not state how the public split was used.",
+  "display": "Starlord-4B-v2.0-preview",
+  "draw": {
+   "drawn_on": "2026-11-22",
+   "g_med": 2.573387642438244,
+   "g_med_note": "Carried over from the 27 Oct draw (2.5734): a draw with a single row has no cohort median. Scores do not depend on it (re-scored with 9.84 and 10.07: identical to three decimals).",
+   "id": "v1.6-regular-20261122",
+   "label": "Fourth regular draw",
+   "measured_on": "2026-11-22",
+   "offset": {
+    "C": 0,
+    "I": 0
+   },
+   "offset_ci95": null,
+   "release": "v1.8.20",
+   "results_sha256": "a2168e5f1483772da9763348f6af860e88c6ed8919a104a19a6f8b69ed1b8849",
+   "status": "anchor-runs-pending"
+  },
+  "endpoint_condition": "evaluator-owned Verda GPU VM (RTXPRO6000), offline read-only container (--network none); customer's inference/serve_systemone.py unchanged at model commit b4b4facd; one BF16 model instance, candidate-logit readout (BF16 projection, FP32 softmax, T=1.0), no generation, no KV cache; the author's CUDA-graph engine (12 padded buckets up to 4,096 tokens, native fallback above) runs the full-attention layers as two-block bidirectional FlashAttention (flash-attn 2.8.3 varlen: request prefix attends to the prefix, the rest to the whole request); linear-attention (GDN) layers causal via fla 0.4.1 kernels with the author's triton depthwise causal-conv kernel; customer limit 131,072 tokens per joint request (no truncation, HTTP 422 above or on GPU OOM); official PyTorch 2.10.0 cu130 image + pinned overlay (transformers 5.3.0, official flash-attn 2.8.3 cu13/torch2.10 release wheel, Python 3.12) + decision_index base classes @25c6ec7b",
+  "endpoint_kind": "gpu",
+  "full_coverage": true,
+  "jevbench_score": 78.2224969903174,
+  "key": "starlord-4b-v2.0-preview",
+  "last_measured_on": "2026-11-22",
+  "licence": "cc-by-nc-nd-4.0 (model card); base Qwen/Qwen3.5-4B (LICENSE-BASE)",
+  "listing": "unranked",
+  "measured_in": "v1.8.20",
+  "measurement_date_status": "measured",
+  "method": "v1.7",
+  "model_pin": "xsdfasfgsa/Starlord-4B-v2.0-preview@b4b4facd68fde1d8f9ad3bd05d692350a789a47f",
+  "new_in": "v1.8.20",
+  "not_ranked_because": "Measured on the 22 Nov 2026 draw, which is not yet equated to the reference scale; anchor runs for that draw are pending. Shown unranked until then.",
+  "notes": "A later version of Starlord-4B-preview, which is listed separately. Qwen3.5-4B finetune read out through candidate logits in one joint forward pass, 0 output tokens, with a two-block bidirectional attention pass over the request in the full-attention layers. The JevBench-only Noul confidence floor of 0.801 is part of the measured model (see the disclosure). The model card reports a public JevBench result; it does not state how the public split was used. Over-limit or OOM items refused with 422 and scored wrong.",
+  "paid_fast_lane": true,
+  "rank": null,
+  "ranked": false,
+  "ranks": {
+   "A": null,
+   "B": null,
+   "C": null,
+   "capability": null
+  },
+  "repo": "https://huggingface.co/xsdfasfgsa/Starlord-4B-v2.0-preview",
+  "scores": {
+   "A": 78.2224969903174,
+   "B": 75.46188087368724,
+   "C": 78.2224969903174
+  },
+  "speed": {
+   "adjustment": "x2 + 0.15 s (assumption, not measured)",
+   "basis": "all decisions given (lane items in the raw), measured latency_s",
+   "n": 1500,
+   "p50_s_adjusted": 0.1893333220000045,
+   "p50_s_raw": 0.01966666100000225,
+   "p95_s_adjusted": 0.22367000099995948,
+   "p95_s_raw": 0.036835000499979745
+  },
+  "status": {
+   "status": "complete"
+  },
+  "support": {
+   "choice": "native",
+   "noul": "native",
+   "score": "native"
+  },
+  "underlying": "Paid public evaluation. Measured on the 22 Nov 2026 draw on an evaluator-owned rented GPU, offline with the author's serving stack at the pinned commit. Not yet equated: anchor runs on this draw are pending, so the row is not yet equated against the 27 Oct draw. Failed or unanswered requests count as wrong answers: 5 of 1,500 decisions took longer than the 10 s limit and are counted as failed (share rule). Qwen3.5-4B finetune read out through candidate logits in one joint forward pass, 0 output tokens, with a two-block bidirectional attention pass over the request in the full-attention layers. Confidence rule: the author ships a JevBench-only Noul confidence floor of 0.801. The author's HTTP server applies it after the readout; that is the route measured here, while in-process engines return the raw softmax. The floor sees only the question type and the two probabilities. It raises the stated Noul confidence to at least 0.801, so it can move the Calibration and Noul scores. It changes the predicted answer only at exactly p = 0.5, where the answer becomes yes. This rule is part of the measured model. No input was truncated (limit 131,072 tokens per request; anything above it, or a GPU out-of-memory, is refused with HTTP 422 and scored wrong). The author's CUDA-graph engine serves requests up to 4,096 tokens, with the native fallback above. The licence is non-commercial. The model card reports a public JevBench result; it does not state how the public split was used.",
+  "v16": {
+   "ci95": {
+    "B": 1000,
+    "C": [
+     78.62526646818708,
+     85.47168722569086
+    ],
+    "I": [
+     61.573877638477576,
+     70.15103491853547
+    ],
+    "capability": [
+     70.67220727374014,
+     77.30944600504314
+    ],
+    "composite": {
+     "A": [
+      75.89301357260193,
+      79.81901244750365
+     ],
+     "B": [
+      72.51762316626657,
+      77.53520518937214
+     ],
+     "C": [
+      75.89301357260193,
+      79.81901244750365
+     ]
+    },
+    "seed": 16
+   },
+   "complete": true,
+   "equated": null,
+   "equating_offset": null,
+   "g_med_used": 2.573387642438244,
+   "lane": "selfhosted"
+  },
+  "validity": {
+   "choice": {
+    "invalid_rate": 0.005333333333333301,
+    "n": 750
+   },
+   "noul": {
+    "invalid_rate": 0.002666666666666706,
+    "n": 375
+   },
+   "score": {
+    "invalid_rate": 0.0,
+    "n": 375
+   }
+  },
+  "views": {
+   "Balanced 33:33:33": 76.69430686628868,
+   "Emphasis on Accuracy 60:20:20": 72.08640934315545,
+   "Emphasis on Cost 20:20:60": 76.02641178337154,
+   "Emphasis on Speed 20:60:20": 82.70772969436746,
+   "Intelligence only": 66.12691758546116
+  }
+ }
+}

@@ -1,0 +1,135 @@
+{
+ "starlord-4b-v2.0-preview": {
+  "cost_basis_sha256": null,
+  "pins": {
+   "v17-share": "a2168e5f1483772da9763348f6af860e88c6ed8919a104a19a6f8b69ed1b8849"
+  },
+  "v17-share": {
+   "api_flag": false,
+   "api_subset": false,
+   "axes": {
+    "calibration": 83.19570254573138,
+    "cost": 75.04609936889244,
+    "intelligence": 66.12691758546116,
+    "speed": 93.73165205315465
+   },
+   "capability": 74.66131006559627,
+   "composite_ci95": {
+    "A": [
+     75.89301357260193,
+     79.81901244750365
+    ],
+    "B": [
+     72.51762316626657,
+     77.53520518937214
+    ],
+    "C": [
+     75.89301357260193,
+     79.81901244750365
+    ]
+   },
+   "cost": {
+    "kind": "estimate",
+    "usage_estimated_rows": 0,
+    "usd_per_1000": 0.006788857420199556
+   },
+   "decision_limit": {
+    "limit_s": 10.0,
+    "n_over_limit": 5,
+    "n_over_limit_answered_ok": 5,
+    "rule": "latency_s > limit -> failed",
+    "speed_basis": "all decisions given (lane items in the raw), measured latency_s",
+    "speed_n": 1500,
+    "treatment": "share"
+   },
+   "display": "Starlord-4B-v2.0-preview",
+   "endpoint_kind": "gpu",
+   "full_coverage": true,
+   "jevbench_score": 78.2224969903174,
+   "key": "starlord-4b-v2.0-preview",
+   "listing": "listed",
+   "rank": null,
+   "ranked": false,
+   "scores": {
+    "A": 78.2224969903174,
+    "B": 75.46188087368724,
+    "C": 78.2224969903174
+   },
+   "speed": {
+    "adjustment": "x2 + 0.15 s (assumption, not measured)",
+    "basis": "all decisions given (lane items in the raw), measured latency_s",
+    "n": 1500,
+    "p50_s_adjusted": 0.1893333220000045,
+    "p50_s_raw": 0.01966666100000225,
+    "p95_s_adjusted": 0.22367000099995948,
+    "p95_s_raw": 0.036835000499979745
+   },
+   "status": {
+    "status": "complete"
+   },
+   "support": {
+    "choice": "native",
+    "noul": "native",
+    "score": "native"
+   },
+   "v16": {
+    "ci95": {
+     "B": 1000,
+     "C": [
+      78.62526646818708,
+      85.47168722569086
+     ],
+     "I": [
+      61.573877638477576,
+      70.15103491853547
+     ],
+     "capability": [
+      70.67220727374014,
+      77.30944600504314
+     ],
+     "composite": {
+      "A": [
+       75.89301357260193,
+       79.81901244750365
+      ],
+      "B": [
+       72.51762316626657,
+       77.53520518937214
+      ],
+      "C": [
+       75.89301357260193,
+       79.81901244750365
+      ]
+     },
+     "seed": 16
+    },
+    "complete": true,
+    "equated": null,
+    "equating_offset": null,
+    "g_med_used": 2.573387642438244,
+    "lane": "selfhosted"
+   },
+   "validity": {
+    "choice": {
+     "invalid_rate": 0.005333333333333301,
+     "n": 750
+    },
+    "noul": {
+     "invalid_rate": 0.002666666666666706,
+     "n": 375
+    },
+    "score": {
+     "invalid_rate": 0.0,
+     "n": 375
+    }
+   },
+   "views": {
+    "Balanced 33:33:33": 76.69430686628868,
+    "Emphasis on Accuracy 60:20:20": 72.08640934315545,
+    "Emphasis on Cost 20:20:60": 76.02641178337154,
+    "Emphasis on Speed 20:60:20": 82.70772969436746,
+    "Intelligence only": 66.12691758546116
+   }
+  }
+ }
+}

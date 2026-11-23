@@ -1,0 +1,29 @@
+{
+ "verdict": "PASS",
+ "engine": "claude-opus-5-5 (Claude Code) release owner binding independent review r191-v1820-critic (Claude Sonnet 5.5); builder r189-v1820-starlord2-build (Claude Sonnet 5.5 xhigh) + two lead edits (0717e983e)",
+ "release": "v1.8.20",
+ "head_reviewed": "0717e983e74c0a1f954730976dd32d7ec06d13a3 reviewed in full by r191-v1820-critic = PASS_WITH_CONDITIONS, 0 MUSTs (numbers = artifact 538869075e87 on every field, cost re-derived, 351 carried rows deep-equal, 0 top-five changes, privacy 0 hits, display floor holds)",
+ "approval": "GO (standing; paid public evaluation; unranked row only): paid public fast-lane order 43f435be, row unranked (v1.8.11-v1.8.16 precedent)",
+ "score_artifact": {
+  "path": "r189/starlord2/STARLORD2-SCORES-R189.json",
+  "sha256": "538869075e8727047ed3368ffa0c915f61b83f5fa9294872a19ad45b7010130f",
+  "critic": "workers/r189-starlord2-critic PASS_WITH_CONDITIONS (max delta 0.0), 3 wording MUSTs applied before the build"
+ },
+ "reviews": [
+  {
+   "path": "workers/r191-v1820-critic/RESULT.json",
+   "sha256": "c811fa3760ce1e9a242efc3e23c610b8763f7dff5cbb629eff51f9bc6cada6cf",
+   "result_md_sha256": "7221a5bccc38cfb2fe79ba1098b786f28399fc9ccbf0c9d9baedbd4eb460584e",
+   "verdict_by_commit": {
+    "0717e983e": "PASS_WITH_CONDITIONS"
+   },
+   "musts": [],
+   "conditions_closed_by_the_release_owner": {
+    "C1": "APPROVAL.json bound to \"GO (standing; paid public evaluation; unranked row only)\"; rebuilt; delta vs 0717e983e = APPROVAL.json, proof.publication_approval, publication/lib/alldata hashes only (results, categories, carry byte-identical); validator re-run",
+    "C2": "seal_v1820.py now writes to v1.6-regular-20261122/frozen-release-v1.8.20 with draw v1.6-regular-20261122",
+    "C3": "DECISIONS 2026-11-22 18:5x UTC v1820-topics-exception-draw1122 recorded",
+    "NOT_RUN": "tail of cr-257 v1817/v1818/v1819 min-samples under load 20-25 (diff is one added allowed version; v1820 min-samples green in PENDING and synthetic PASS): merge-queue gates run the full suite; production build = merge-queue gate (LeChonk/Sandy disk guards, v1.8.15-v1.8.19 precedent)"
+   }
+  }
+ ]
+}
