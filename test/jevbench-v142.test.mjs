@@ -58,10 +58,10 @@ test('CR-191 preserves pinned v1.4.2.2 and v1.4.2 routes while v1.5.7 is live', 
   assert.match(version22FamiliesRoute, /readJevbenchV1422Families\(\)/);
   assert.match(page, /canonical = '\/jev-models\/v1\.4\.2'/);
   assert.match(page, /async function pinnedView\(\) \{\s*const result = await readJevbenchV142WithFamilies\(\);\s*return \{ \.\.\.jevbenchV142View\(result\), sealedFamilyN: result\.sealedFamilyN \};\s*\}/);
-  assert.match(page, /export default async function JevModelsV142Page\(\) \{\s*const view = await pinnedView\(\);[\s\S]*<JevModelsV14Board artifact=\{view\.artifact\} sha256=\{view\.sha256\}/);
+  assert.match(page, /export default async function JevModelsV142Page\(\) \{\s*const view = await pinnedView\(\);[\s\S]*<JevBenchLegacyArchiveWidget version="v1\.4\.2" part="board" artifact=\{view\.artifact\} sha256=\{view\.sha256\}/);
   assert.match(version22Page, /readJevbenchV1422WithFamilies\(\)/);
   assert.match(version22Page, /readJevbenchV1421\(\)/); // The exact preceding v1.4.2.1 release is the comparison base.
-  assert.match(version22Page, /<JevModelsV14Board artifact=\{v14\.artifact\} sha256=\{v14\.sha256\}/);
+  assert.match(version22Page, /<JevBenchLegacyArchiveWidget version="v1\.4\.2\.2" part="board" artifact=\{v14\.artifact\} sha256=\{v14\.sha256\}/);
   assert.match(version22Page, /href="\/jev-models\/v1\.4\.2\.2" data-bh-jev-version-share/);
   assert.match(livePage, /readCurrentJevbench\(\)/);
   assert.match(livePage, /JevBenchV16ReleaseRoute/);
