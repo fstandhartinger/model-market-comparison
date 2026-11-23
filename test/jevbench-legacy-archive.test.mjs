@@ -115,23 +115,27 @@ async function realComponents(source) {
   return result;
 }
 
-test('legacy v1.4 and v1.5 full-board markup survives JSON transport unchanged', async () => {
-  for (const [version, file, name, View] of [
-    ['v1.4.2.2', 'components/JevModelsV14.tsx', 'JevModelsV14Board', JevModelsV14Board],
-    ['v1.5.7', 'components/JevBenchV15Preview.tsx', 'JevBenchV15', JevBenchV15View],
-  ]) {
+test('every legacy full-board renderer survives static JSON transport unchanged', async () => {
+  for (const version of JEV_LEGACY_ARCHIVE_VERSIONS) {
+    const [file, name, View] = version.startsWith('v1.4')
+      ? ['components/JevModelsV14.tsx', 'JevModelsV14Board', JevModelsV14Board]
+      : version.startsWith('v1.5.')
+      ? ['components/JevBenchV15Preview.tsx', 'JevBenchV15', JevBenchV15View]
+      : ['components/JevV170OldNewTable.tsx', 'JevV170OldNewTable', JevV170OldNewTable];
     const source = fixture.files[file], components = await realComponents(source);
     let saved = originals.get(version);
     if (!saved) {
       const file = `app/jev-models/${version}/page.tsx`;
       const expected = await widgets(await compile(fixture.files[file], file).default());
-      saved = { props: expected.board.props, payload: { render: { guides: [{ href: '/jev-models/methodology', label: 'Methodology' }] } } }; // Guide data has its own parity proof; isolated renderer checks need no live-board assembly.
+      const response = await GET(new Request(`http://localhost/api/jevbench/${version}/board`), { params: Promise.resolve({ version }) });
+      assert.equal(response.status, 200);
+      saved = { props: expected.board.props, payload: await response.json() };
     }
     const { props, payload } = saved;
     const Guides = () => React.createElement(JevBoardGuides, { links: payload.render?.guides ?? [] });
     components.set('./JevBenchSeoBlocks', { JevBoardIntentLinks: Guides });
     const Old = compile(source, file, components)[name];
-    const actual = renderToStaticMarkup(React.createElement(View, { ...normalize(props), ...(version.startsWith('v1.5') ? { guides: React.createElement(Guides) } : {}) }));
+    const actual = renderToStaticMarkup(React.createElement(View, { ...payload.props, ...(version.startsWith('v1.5') ? { guides: React.createElement(Guides) } : {}) }));
     const expected = renderToStaticMarkup(React.createElement(Old, props));
     if (actual !== expected) {
       let at = 0; while (at < actual.length && actual[at] === expected[at]) at++;

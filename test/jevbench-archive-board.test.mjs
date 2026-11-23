@@ -64,20 +64,25 @@ for (const stmt of originalBoardAst.statements.filter(ts.isImportDeclaration)) {
   }
 }
 const OriginalBoard = compile(originalBoardSource, originalBoardFile, originalModules).JevBenchV16Board;
+async function originalPageProps(version) {
+  const file = `app/jev-models/${version}/page.tsx`;
+  const tree = await compile(baseline.files[file], file).default();
+  let props = findBoard(tree);
+  if (!props) {
+    const routeProps = findBoard(tree, 'JevBenchV16ReleaseRoute');
+    assert.ok(routeProps, 'found original release route');
+    const route = compile(baseline.files['components/JevBenchV16ReleaseRoute.tsx'], 'components/JevBenchV16ReleaseRoute.tsx');
+    props = findBoard(await route.JevBenchV16ReleaseRoute(routeProps));
+  }
+  assert.ok(props, 'found original board');
+  return props;
+}
 const legacyProps = new Map();
 for (const version of JEV_ARCHIVE_BOARD_VERSIONS) {
   test(`${version}: static JSON exactly preserves every original board prop and comparison category`, async () => {
     const file = `app/jev-models/${version}/page.tsx`;
     const source = baseline.files[file];
-    const tree = await compile(source, file).default();
-    let old = findBoard(tree);
-    if (!old) {
-      const routeProps = findBoard(tree, 'JevBenchV16ReleaseRoute');
-      assert.ok(routeProps, 'found original release route');
-      const route = compile(baseline.files['components/JevBenchV16ReleaseRoute.tsx'], 'components/JevBenchV16ReleaseRoute.tsx');
-      old = findBoard(await route.JevBenchV16ReleaseRoute(routeProps));
-    }
-    assert.ok(old, 'found original board');
+    const old = await originalPageProps(version);
     const props = await readJevArchiveBoardProps(version);
     assert.deepEqual(normalize(props), normalize(old));
     const response = await GET(new Request(`http://localhost/api/jevbench/${version}/board`), { params: Promise.resolve({ version }) });
@@ -115,12 +120,13 @@ test('summary is useful without JavaScript and its loader receives only a versio
   for (const text of ['Capability Score', 'Composite', 'Cost / 1,000 decisions', props.sha256, 'Load full board', '2026-11-22', 'data-bh-jev16-method', '/api/jevbench/v1.8.20/board']) assert.ok(html.includes(text));
 });
 
-test('client renderer preserves original full-board markup across the three release families', async () => {
+test('client renderer preserves original full-board markup for every modern archive', async () => {
   const OldBoard = OriginalBoard;
-  for (const version of ['v1.6.30', 'v1.7.13', 'v1.8.20']) {
-    const props = legacyProps.get(version) ?? await readJevArchiveBoardProps(version);
-    const transported = normalize(props);
-    const categories = normalize(jevArchiveComparisonCategories(props));
+  for (const version of JEV_ARCHIVE_BOARD_VERSIONS) {
+    const props = legacyProps.get(version) ?? await originalPageProps(version);
+    const response = await GET(new Request(`http://localhost/api/jevbench/${version}/board`), { params: Promise.resolve({ version }) });
+    assert.equal(response.status, 200);
+    const { props: transported, comparisonCategories: categories } = await response.json();
     assert.equal(renderToStaticMarkup(React.createElement(JevBenchV16Board, { ...transported, comparisonCategories: categories })),
       renderToStaticMarkup(React.createElement(OldBoard, props)), `${version}: full markup including disclosures and child data`);
   }
