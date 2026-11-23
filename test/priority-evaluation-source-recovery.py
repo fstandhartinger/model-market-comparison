@@ -49,6 +49,7 @@ class Recovery(unittest.TestCase):
                                     and any(isinstance(t,ast.Name) and t.id==key for t in n.targets)))
   self.ns['SITE']='https://benchmarkheaven.com'
   self.ns['native_owner']=SimpleNamespace(STRANDS_E2B_ORDER='0616c39d-e505-4365-b9e8-db157fc67539',is_strands_e2b_order=lambda value: str(value).lower().strip('{}')=='0616c39d-e505-4365-b9e8-db157fc67539')  # CR-811 exact-order fence; inert stub
+  self.ns['native_api_measurement_completed']=lambda *a:False  # CR-820: fixtures are not reviewed native API completions; covered in test_measured_release.py
   self.ns['ensure_native_owner']=lambda *a,**k:False  # INCIDENTS #25: these source-access holds never need a native owner
   self.ns['public_link']=lambda value: URL if value==URL else None
   self.ns['wake_owner']=lambda row,state=None:self.ns['owner_for'](row.get('id'))  # CR-665: wake_owner is covered in test_autopickup.py

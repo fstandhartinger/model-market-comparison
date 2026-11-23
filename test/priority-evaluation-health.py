@@ -32,13 +32,13 @@ class Health(unittest.TestCase):
    if self.pin_failure=='scoring':raise ValueError('official reference pin changed')
   self.ns.update(measurement_dispatch=SimpleNamespace(OperationalHold=Hold,pins=code_pins,input_mounts=mounts),official_scoring=SimpleNamespace(pins=scoring_pins))
   # INCIDENTS #25 native owner: a plain owner counts as live exactly like owner_job_live; no native owner is starting.
-  self.ns.update(hold_owner_live=self.ns['owner_job_live'],native_owner_starting=lambda *a:False,native_owner=SimpleNamespace(owner_name=lambda rid:'fastlane-native-'+rid[:8]))
+  self.ns.update(hold_owner_live=self.ns['owner_job_live'],native_owner_starting=lambda *a:False,native_api_measurement_completed=lambda *a:False,native_owner=SimpleNamespace(owner_name=lambda rid:'fastlane-native-'+rid[:8]))
   # CR-716 (N95): install_problems() reads the real entry point/runtime; health() only needs its result here.
   self.install=([],[],{})
   self.ns.update(install_problems=lambda:copy.deepcopy(self.install))
   # N118: owned_hold_margin() reads pods/<rid>.json; here a set of measured order ids stands in for it.
   self.measured=set()
-  self.ns.update(MEASURED_RELEASE_MARGIN=dt.timedelta(hours=3),owned_hold_margin=lambda rid,state=None:dt.timedelta(hours=3) if rid in self.measured else dt.timedelta(hours=12))
+  self.ns.update(MEASURED_RELEASE_MARGIN=dt.timedelta(hours=3),owned_hold_margin=lambda rid,state=None:dt.timedelta(hours=3) if rid in self.measured else dt.timedelta(hours=12),measured_awaiting_release=lambda rid,state=None:rid in self.measured)  # CR-820: health() calls it directly
   tree=ast.parse((ROOT/'ops/priority-evaluation/autopickup.py').read_text());nodes=[n for n in tree.body if isinstance(n,ast.FunctionDef) and n.name in ['health','step','step_done','measurement_pin_problems']]
   exec(compile(ast.Module(body=nodes,type_ignores=[]),'actual-health','exec'),self.ns)
   self.effects=SimpleNamespace(dry_run=True,notify=lambda text:True,agent_handoff=lambda text:True)

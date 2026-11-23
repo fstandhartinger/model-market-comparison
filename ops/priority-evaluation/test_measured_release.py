@@ -7,6 +7,7 @@ Run: python3 -m unittest ops/priority-evaluation/test_measured_release.py -v
 
 from __future__ import annotations
 
+import hashlib
 import json
 import os
 import subprocess
@@ -251,34 +252,139 @@ class Handoff36Tests(Base):
             self.assertTrue(ap.step_done(self.state, "sla36_handoff"), name)
 
 
-class SlaNotice36Tests(Base):
+class NativeApiCompletionTests(Base):
+    def setUp(self) -> None:
+        super().setUp()
+        # The exact order is the sole admission, but fixtures carry no real evaluation evidence.
+        self.rid = "f193d3ab-8ae4-4eef-a93b-cdf0264d9798"
+        self.owner = no.owner_name(self.rid)
+        self.paid = ap.iso(self.now - timedelta(hours=38))
+        self.native_row = {"id": self.rid, "access_type": "api_endpoint", "synthetic_test": False,
+                           "status": "paid", "evaluation_status": "pending", "evaluation_attempts": 0,
+                           "resubmission_count": 0, "paid_at": self.paid, "sla_36h_alerted_at": self.paid}
+        self.state = {"id": self.rid, "steps": {"sla36_handoff": {"status": "done"}},
+                      "operational_hold": {"owner": self.owner, "reason": "unsupported_measurement_backend",
+                                           "transient": False}}
+        self.receipts = self.tmp / "jobs" / self.owner / "receipts"
+        self.receipts.mkdir(parents=True)
+        fixture_pins = {}
+        for name in ("VALIDATION-1121.json", "CONSUMED-1121.md"):
+            fixture = name.encode()
+            (self.receipts / name).write_bytes(fixture)
+            fixture_pins[name] = hashlib.sha256(fixture).hexdigest()
+        key = hashlib.sha256(f"{self.rid}\n{self.paid}".encode()).hexdigest()
+        pins = mock.patch.dict(ap.NATIVE_API_COMPLETIONS, {key: fixture_pins}, clear=True)
+        pins.start()
+        self.addCleanup(pins.stop)
+
+    def test_requires_both_pinned_receipts_and_original_paid_attempt(self) -> None:
+        complete = ap.native_api_measurement_completed
+        self.assertTrue(complete(self.native_row, self.state))
+        for change in ({"id": RID}, {"synthetic_test": True}, {"paid_at": ap.iso(self.now)},
+                       {"resubmission_count": 1}, {"evaluation_attempts": 1}, {"access_type": "open_weights"}):
+            with self.subTest(change=change):
+                self.assertFalse(complete(dict(self.native_row, **change), self.state))
+        self.assertFalse(complete(self.native_row, {"operational_hold": {"reason": "existing_measurement_receipt_changed"}}))
+        custody = self.receipts / "CONSUMED-1121.md"
+        custody.write_bytes(b"tampered")
+        self.assertFalse(complete(self.native_row, self.state))
+        custody.unlink()
+        self.assertFalse(complete(self.native_row, self.state))
+        redirected = self.tmp / custody.name
+        redirected.write_bytes(custody.name.encode())
+        custody.symlink_to(redirected)
+        self.assertFalse(complete(self.native_row, self.state))
+
+    def test_real_entry_points_recognize_measurement_without_start_or_status_write(self) -> None:
+        effects = mock.Mock(dry_run=False)
+        ap.save_state(self.state)
+        self.assertTrue(ap.measurement_started(self.rid, self.tmp / "orders", row=self.native_row))
+        with mock.patch.object(ap, "update_row") as update, mock.patch.object(ap, "operational_escalate") as escalate:
+            ap.manage_evaluation(self.native_row, self.state, effects, self.now)
+        update.assert_not_called()
+        escalate.assert_not_called()
+        self.assertEqual(effects.mock_calls, [])
+        self.assertEqual(ap.load_state(self.rid)["operational_hold"], self.state["operational_hold"])
+
+    def test_release_handoff_has_own_retry_and_keeps_paid_deadline(self) -> None:
+        for name in ("STATE.md", "PROMPT.md"):
+            (self.receipts.parent / name).write_text(self.rid)
+        no.receipt(self.receipts.parent, {"order": self.rid, "launched": True})
+        effects = mock.Mock()
+        effects.board.return_value = True
+        root = self.tmp / "orders"
+        ap.advance_sla_handoffs(self.native_row, self.state, effects, self.now, root)
+        effects.board.assert_not_called()
+        late = ap.deadline_for(self.native_row)
+        ap.advance_sla_handoffs(self.native_row, self.state, effects, late, root)
+        message, owner = effects.board.call_args.args
+        self.assertIn("validated native API measurement", message)
+        self.assertIn(late.isoformat(), message)
+        self.assertIn("Refunds need Florian's button", message)
+        self.assertEqual(owner, self.owner)
+        ap.advance_sla_handoffs(self.native_row, self.state, effects, late, root)
+        effects.board.assert_called_once()
+
+
     def test_stale_parked_owner_needs_a_pending_wake_for_this_order(self) -> None:
-        self.live_owner(f"# STATE\n- {RID}\n- PARKED\n")
+        self.live_owner(f"# STATE\n- {self.rid}\n- PARKED\n")
+        no.receipt(self.receipts.parent, {"order": self.rid, "launched": True})
         stamp = (self.now - timedelta(hours=7)).timestamp()
         os.utime(self.tmp / "jobs" / self.owner / "STATE.md", (stamp, stamp))
+        ap.save_state(self.state)
         schedule = self.tmp / "schedule"
         schedule.mkdir()
         (schedule / "state.json").write_text("{}")
         events = schedule / "events.jsonl"
-        event = {"id": f"check-{RID[:8]}", "owner": [self.owner], "status": "active",
+        event = {"id": f"check-{self.rid[:8]}", "owner": [self.owner], "status": "active",
                  "at": ap.iso(self.now + timedelta(hours=1))}
-        row = self.row(11)
 
-        for owner, expected in ((self.owner, "now"), ("different-owner", "urgent")):
+        for owner, expected in ((self.owner, "digest"), ("different-owner", "urgent")):
             with self.subTest(owner=owner):
                 events.write_text(json.dumps({**event, "owner": [owner]}) + "\n")
                 effects = ap.Effects(dry_run=True)
                 with mock.patch.object(effects, "notify", return_value=True) as notify:
-                    self.assertTrue(ap.send_sla_notice(row, 36, effects))
+                    self.assertTrue(ap.send_sla_notice(self.native_row, 36, effects))
                 self.assertEqual(notify.call_args.kwargs["mode"], expected)
-                self.assertTrue(notify.call_args.args[0].startswith(
-                    "🤖 LÄUFT" if expected == "now" else "🚨 DRINGEND"))
+                self.assertIn("validated native API measurement" if expected == "digest" else "🚨 DRINGEND",
+                              notify.call_args.args[0])
+
+    def test_unverified_measurement_keeps_urgent_notice_with_live_owner(self) -> None:
+        self.live_owner(f"# STATE\n- {self.rid}\n")
+        no.receipt(self.receipts.parent, {"order": self.rid, "launched": True})
+        ap.save_state(self.state)
+        (self.receipts / "CONSUMED-1121.md").unlink()
+        effects = mock.Mock()
+        ap.send_sla_notice(self.native_row, 36, effects)
+        self.assertEqual(effects.notify.call_args.kwargs["mode"], "urgent")
 
     def test_final_done_owner_does_not_suppress_urgent_notice(self) -> None:
-        self.live_owner(f"# STATE\n- {RID}\n- FINAL DONE\n")
+        # Valid pinned native receipts, but the owner already wrote FINAL DONE: nobody is left to release.
+        self.live_owner(f"# STATE\n- {self.rid}\n- FINAL DONE\n")
+        no.receipt(self.receipts.parent, {"order": self.rid, "launched": True})
+        ap.save_state(self.state)
+        self.assertTrue(ap.native_api_measurement_completed(self.native_row, self.state))
         effects = mock.Mock()
-        ap.send_sla_notice(self.row(11), 36, effects)
+        ap.send_sla_notice(self.native_row, 36, effects)
         self.assertEqual(effects.notify.call_args.kwargs["mode"], "urgent")
+        self.assertTrue(effects.notify.call_args.args[0].startswith("🚨 DRINGEND"))
+
+    def test_health_reports_release_deadline_at_three_hours(self) -> None:
+        self.live_owner(f"# STATE\n- {self.rid}\n")
+        no.receipt(self.receipts.parent, {"order": self.rid, "launched": True})
+        ap.save_state(self.state)
+        effects = mock.Mock(dry_run=True)
+        with mock.patch.object(ap, "sql_rows", return_value=[self.native_row]), \
+                mock.patch.object(ap, "measurement_pin_problems", return_value=[]), \
+                mock.patch.object(ap, "install_problems", return_value=([], [], {})), \
+                mock.patch.object(ap, "systemd_last_success", return_value=self.now), \
+                mock.patch.object(ap, "utcnow", return_value=self.now) as clock:
+            self.assertEqual(ap.health(effects)["held_orders"][0]["kind"], "measured_awaiting_release")
+            clock.return_value = ap.deadline_for(self.native_row) - timedelta(hours=3)
+            report = ap.health(effects)
+            self.assertEqual(report["held_orders"], [])
+            self.assertTrue(any("native API measurement is complete and release is pending" in problem
+                                for problem in report["problems"]))
 
 
 if __name__ == "__main__":
