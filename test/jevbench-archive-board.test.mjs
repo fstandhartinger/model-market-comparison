@@ -44,12 +44,26 @@ function compile(source, file, componentModules = null) {
 }
 function findBoard(node, componentName = 'JevBenchV16Board') {
   if (!node || typeof node !== 'object') return null;
-  if (node.type?.componentName === componentName) return node.props;
+  if (node.type?.componentName === componentName || node.type?.name === componentName) return node.props;
   for (const child of [node.props?.children].flat(Infinity)) {
     const result = findBoard(child, componentName); if (result) return result;
   }
   return null;
 }
+// Independent oracle: execute the hash-pinned ORIGINAL renderer to obtain the category props
+// it passed to the compare component. Do not use the new route's projection helper as its own oracle.
+const originalBoardFile = 'components/JevBenchV16Board.tsx';
+const originalBoardSource = baseline.files[originalBoardFile];
+const originalBoardAst = ts.createSourceFile(originalBoardFile, originalBoardSource, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
+const originalModules = new Map();
+for (const stmt of originalBoardAst.statements.filter(ts.isImportDeclaration)) {
+  const spec = stmt.moduleSpecifier.text;
+  if (spec.startsWith('./') && !stmt.importClause?.isTypeOnly) {
+    try { originalModules.set(spec, await import(new URL('../components/' + spec.slice(2) + '.tsx', import.meta.url))); }
+    catch (e) { if (spec !== './jevClassView') throw e; originalModules.set(spec, await import('../components/jevClassView.ts')); }
+  }
+}
+const OriginalBoard = compile(originalBoardSource, originalBoardFile, originalModules).JevBenchV16Board;
 const legacyProps = new Map();
 for (const version of JEV_ARCHIVE_BOARD_VERSIONS) {
   test(`${version}: static JSON exactly preserves every original board prop and comparison category`, async () => {
@@ -71,7 +85,9 @@ for (const version of JEV_ARCHIVE_BOARD_VERSIONS) {
     assert.equal(response.headers.get('Cache-Control'), 'public, max-age=3600');
     const json = await response.json();
     assert.deepEqual(json.props, normalize(old));
-    assert.deepEqual(json.comparisonCategories, normalize(jevArchiveComparisonCategories(old)));
+    const originalCompare = findBoard(OriginalBoard(old), 'JevCompareV15');
+    assert.ok(originalCompare?.categories, 'found the original renderer comparison projection');
+    assert.deepEqual(json.comparisonCategories, normalize(originalCompare.categories), 'all comparison cells and disclosures equal the original renderer');
     const page = await readFile(new URL('../' + file, import.meta.url), 'utf8');
     assert.equal(page.replaceAll('JevBenchArchiveBoard', 'JevBenchV16Board').replace('components/JevBenchV16Board', 'components/JevBenchV16Board').replace(` version="${version}"`, ''), source, 'only wrapper import/name and version changed');
     legacyProps.set(version, old);
@@ -100,18 +116,7 @@ test('summary is useful without JavaScript and its loader receives only a versio
 });
 
 test('client renderer preserves original full-board markup across the three release families', async () => {
-  const file = 'components/JevBenchV16Board.tsx';
-  const source = baseline.files[file];
-  const parsed = ts.createSourceFile(file, source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
-  const modules = new Map();
-  for (const stmt of parsed.statements.filter(ts.isImportDeclaration)) {
-    const spec = stmt.moduleSpecifier.text;
-    if (spec.startsWith('./') && !stmt.importClause?.isTypeOnly) {
-      try { modules.set(spec, await import(new URL('../components/' + spec.slice(2) + '.tsx', import.meta.url))); }
-      catch (e) { if (spec !== './jevClassView') throw e; modules.set(spec, await import('../components/jevClassView.ts')); }
-    }
-  }
-  const OldBoard = compile(source, file, modules).JevBenchV16Board;
+  const OldBoard = OriginalBoard;
   for (const version of ['v1.6.30', 'v1.7.13', 'v1.8.20']) {
     const props = legacyProps.get(version) ?? await readJevArchiveBoardProps(version);
     const transported = normalize(props);
