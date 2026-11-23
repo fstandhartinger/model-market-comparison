@@ -141,6 +141,7 @@ test('every legacy full-board renderer survives static JSON transport unchanged'
       let at = 0; while (at < actual.length && actual[at] === expected[at]) at++;
       assert.fail(`${version}: markup differs at ${at}; actual=${JSON.stringify(actual.slice(Math.max(0, at - 120), at + 300))}; expected=${JSON.stringify(expected.slice(Math.max(0, at - 120), at + 300))}`);
     }
+    console.info('Full board markup identical after static JSON:', version);
   }
 });
 

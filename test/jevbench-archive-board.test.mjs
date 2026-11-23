@@ -127,8 +127,13 @@ test('client renderer preserves original full-board markup for every modern arch
     const response = await GET(new Request(`http://localhost/api/jevbench/${version}/board`), { params: Promise.resolve({ version }) });
     assert.equal(response.status, 200);
     const { props: transported, comparisonCategories: categories } = await response.json();
-    assert.equal(renderToStaticMarkup(React.createElement(JevBenchV16Board, { ...transported, comparisonCategories: categories })),
-      renderToStaticMarkup(React.createElement(OldBoard, props)), `${version}: full markup including disclosures and child data`);
+    const actual = renderToStaticMarkup(React.createElement(JevBenchV16Board, { ...transported, comparisonCategories: categories }));
+    const expected = renderToStaticMarkup(React.createElement(OldBoard, props));
+    if (actual !== expected) {
+      let at = 0; while (at < actual.length && actual[at] === expected[at]) at++;
+      assert.fail(`${version}: markup differs at ${at}; actual=${JSON.stringify(actual.slice(Math.max(0, at - 120), at + 300))}; expected=${JSON.stringify(expected.slice(Math.max(0, at - 120), at + 300))}`);
+    }
+    console.info('Full board markup identical after static JSON:', version);
   }
 });
 
