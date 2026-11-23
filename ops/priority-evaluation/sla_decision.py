@@ -56,20 +56,20 @@ MAX_CARDS = 3  # an expired card is asked again at most twice; then the order wa
 
 
 # the ↳ line on the card once its decision is recorded (notify settle, board #41061)
-SETTLED = {"delay_note": "You tapped Send delay note; the worker sends the fixed delay email.",
+SETTLED = {"delay_note": "Du hast Verspätungsmail getippt; der Worker sendet die feste Verspätungsmail.",
            # the date on the card could not be sent any more at tap time (autopickup.hold_delay_note): nothing was mailed
-           "delay_note_held": "You tapped Send delay note, but its date could no longer be sent; nothing was mailed. "
-                              "An agent follows up.",
-           "refund": "You tapped Refund in full; the refund worker pays it back.",
-           "no_action": "You tapped No action; nothing was sent or refunded.",
-           "expired": "The buttons expired unanswered; nothing was sent or refunded.",
-           "superseded": "The order changed after your choice; a new card asks about the refund instead.",
+           "delay_note_held": "Du hast Verspätungsmail getippt, aber ihr Termin war nicht mehr sendbar; es wurde nichts "
+                              "gemailt. Ein Agent kümmert sich.",
+           "refund": "Du hast Zurückzahlen getippt; der Refund-Worker zahlt den Betrag zurück.",
+           "no_action": "Du hast Nichts tun getippt; es wurde nichts gesendet oder erstattet.",
+           "expired": "Die Buttons sind unbeantwortet abgelaufen; es wurde nichts gesendet oder erstattet.",
+           "superseded": "Die Bestellung hat sich nach deiner Wahl geändert; eine neue Karte fragt stattdessen nach der Rückzahlung.",
            # a card whose order left the SLA decision set for good without a decision on it (close_stray, re-review S1)
-           "delivered": "The result was delivered, so this card is closed; nothing was refunded here.",
-           "decided_elsewhere": "You decided on the 48-hour refund card; this card is closed.",
-           "order_changed": "The order changed, so this card is closed and records nothing; a refund gets its own card.",
-           "refund_tap_unapplied": "You tapped Refund in full after the order had changed; nothing was refunded. "
-                                   "An agent follows up."}
+           "delivered": "Das Ergebnis wurde geliefert, darum ist diese Karte geschlossen; hier wurde nichts erstattet.",
+           "decided_elsewhere": "Du hast auf der 48-h-Rückzahlungskarte entschieden; diese Karte ist geschlossen.",
+           "order_changed": "Die Bestellung hat sich geändert; diese Karte ist geschlossen und hält nichts fest. Eine Rückzahlung bekommt eine eigene Karte.",
+           "refund_tap_unapplied": "Du hast Zurückzahlen getippt, nachdem sich die Bestellung geändert hatte; "
+                                   "es wurde nichts erstattet. Ein Agent kümmert sich."}
 STRAY_REASONS = ("delivered", "decided_elsewhere", "order_changed")
 CLOSEOUT_TRIES = 12  # close-out steps after a final decision are retried each cycle, at most this often (~1 h)
 
@@ -80,24 +80,23 @@ def caption(row: dict, deadline: str, delay_eta: datetime | None = None) -> str:
     if owner_managed(row):
         raise ValueError("40h decision is owner-managed; no generic ETA card")
     amount = row.get("amount_total")
-    money = f"USD {int(amount) / 100:.2f}" if isinstance(amount, int) and not isinstance(amount, bool) else "the full amount"
+    money = f"USD {int(amount) / 100:.2f}" if isinstance(amount, int) and not isinstance(amount, bool) else "den vollen Betrag"
     from autopickup import ETA_FORMAT, decision_context_line, eur_phrase, plan_delay_eta, utcnow
-    eur = eur_phrase(amount)
+    eur = (eur_phrase(amount) or "").replace("about ", "ca. ")
     if delay_eta is None:
         delay_eta = plan_delay_eta(row, utcnow())[0]  # reads only the owner-eta file, which it survives unreadable
     date = delay_eta.strftime(ETA_FORMAT)
-    context = decision_context_line(row, f"No result {SLA_DECISION_HOURS} h after payment for "
-                                         "{customer}, model {model}: "
-                                         f"delay note or refund{f' ({eur})' if eur else ''}?")
+    context = decision_context_line(row, f"Kein Ergebnis {SLA_DECISION_HOURS} h nach Zahlung für {{customer}}, {{model}}: "
+                                         f"Verspätungsmail oder Rückzahlung{f' ({eur})' if eur else ''}?"
+                                    ).replace(" für the customer,", " für den Kunden,")
     return (f"🧑 DU BIST DRAN\n{context}\n\n🧑 Für dich\n"
-            "- Decide the next step for this customer.\n"
-            f"  Why: No result {SLA_DECISION_HOURS} hours after payment; the deadline is {deadline}.\n"
-            f"  Effect: Send delay note = mails {date}, no cost. Refund in full = pays {money} back, final. "
-            "No action = nothing goes out.\n"
-            f"  Steps:\n  1. Tap Send delay note (mails the customer the date: {date}), "
-            "Refund in full, or No action.\n"
-            "  Time: 1 minute. Buttons expire in 24 hours so that an old card can never act. "
-            "A text reply does not decide.")
+            "- Vorschlag: Verspätungsmail.\n"
+            f"  Effect: Verspätungsmail (empfohlen) = neuer Termin {date}, kostenlos. "
+            f"Zurückzahlen = {money} zurück, endgültig. Nichts tun = nichts geht raus.\n"
+            f"  Why: Der Kunde wartet seit {SLA_DECISION_HOURS} h; die Frist endet {deadline}.\n"
+            "  Steps:\n  1. Tippe Verspätungsmail, Zurückzahlen oder Nichts tun.\n"
+            "  Time: 1 Minute. Die Buttons laufen nach 24 h ab, damit eine alte Karte nie handelt; "
+            "eine Textantwort entscheidet nicht.")
 
 
 def _parse_eta(value: object) -> datetime | None:
@@ -178,13 +177,13 @@ def mark_delay_held_handoff_posted(root: Path, rid: str, now: float) -> None:
 
 
 def _keyboard(state: dict) -> list:
-    return [[{"text": "Send delay note", "callback_data": state["delay_key"]},
-             {"text": "Refund in full", "callback_data": state["refund_key"]},
-             {"text": "No action", "callback_data": state["noaction_key"]}]]
+    return [[{"text": "Verspätungsmail (empfohlen)", "callback_data": state["delay_key"]},
+             {"text": "Zurückzahlen", "callback_data": state["refund_key"]},
+             {"text": "Nichts tun", "callback_data": state["noaction_key"]}]]
 
 
 def _late_keyboard(state: dict) -> list:
-    return [[{"text": "Refund in full", "callback_data": state["refund_key"]}]]
+    return [[{"text": "Zurückzahlen", "callback_data": state["refund_key"]}]]
 
 
 def _attach(state: dict, keyboard: list | None = None) -> None:
@@ -247,7 +246,7 @@ def _send_card(state: dict, path: Path, text: str, now: float) -> None:
     command = [str(ra.HOME / "bin/notify"), "now", "--florian-only",
                "Florian's 4 Oct decision: every fast-lane SLA/refund step needs his explicit button.",
                "--topic", ra.order_topic(state["request_id"], "sla40"),
-               "--ask", str(WINDOW // 60), "--text-stdin"]
+               "--ask", str(WINDOW // 60), "--allow-german", "--text-stdin"]  # CEO cards are German (AGENTS.md §2)
     reply_job_dir = str(ra.HOME / "jobs" / "fastlane-refusal-reply-guard-20260929")
     env = {**os.environ, "NOTIFY_SOURCE": SOURCE, "AGENT_BOARD_JOBDIR": reply_job_dir,
            "NOTIFY_REPLY_JOB_DIR": reply_job_dir, **ra.CALLER_BUTTONS_ENV}

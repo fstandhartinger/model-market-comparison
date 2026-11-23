@@ -332,7 +332,10 @@ def card(path, draft, title_text="Refusal email — exact draft"):
 def approval_caption(row, kind):
     from autopickup import decision_context_line
     title = "change-request" if kind == "change_request" else "refusal"
-    context = decision_context_line(row, f"Send the {title} email to {{customer}} about model {{model}}?")
+    # notify's headline lint wants the situation in the sentence itself, not only the question (card clarity, 21 Nov)
+    found = "has fixable problems" if kind == "change_request" else "failed"
+    context = decision_context_line(row, f"Source review of model {{model}} from {{customer}} {found}: "
+                                         f"send the {title} email?")
     return (f"🧑 DU BIST DRAN\n{context}\n\n🧑 Für dich\n"
             f"- Decide whether to send the {title} email to this customer.\n"
             f"  {KINDS[kind][1][1]}\n"

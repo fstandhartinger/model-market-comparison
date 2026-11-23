@@ -366,10 +366,13 @@ class ApprovalCardSend(unittest.TestCase):
         for text, strict in captions:
             with self.subTest(caption=text.splitlines()[1]):
                 result = subprocess.run([str(NOTIFY), 'now', '--florian-only', 'approval card regression test',
-                                         '--ask', '720', '--text-stdin', '--dry-run'],
+                                         '--ask', '720', '--allow-german', '--text-stdin', '--dry-run'],
                                         input=text, text=True, capture_output=True, env=env, timeout=60)
                 self.assertEqual(result.returncode, 0, result.stderr)
-                self.assertRegex(result.stdout, r'\[DRY RUN\] (would send to the|this open human action already exists)')
+                # A reached global immediate limit only changes routing (board #28 instead of Telegram), not
+                # whether the caption passed every card lint; the live counter must not decide this test.
+                self.assertRegex(result.stdout, r'\[DRY RUN\] (would send to the|this open human action already exists'
+                                                r'|global immediate limit reached; message would be)')
                 warnings = [l for l in result.stderr.splitlines() if l.startswith('repeat-lint')]
                 if not strict:
                     warnings = [l for l in warnings if '(money-eur)' not in l]
