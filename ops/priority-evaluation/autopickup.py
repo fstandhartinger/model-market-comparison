@@ -3036,6 +3036,109 @@ def result_message(row: dict[str, Any], summary: dict[str, Any]) -> tuple[str, s
     return f"Benchmark Heaven evaluation order {order_ref(rid)}: your result", body
 
 
+def measured_result_message(row: dict[str, Any], summary: dict[str, Any]) -> tuple[str, str]:
+    """CR-833 (Florian 22 Nov 2026, fastlane-zero-wait-1122): the measured, independently recomputed result of a
+    public order, mailed as soon as it is verified, before the release train. Scores only, no rank or placement;
+    the public row follows in the next release. Same subject as result_message, so one result mail per order."""
+    rid = request_id(row.get("id"))
+    lines = [f"{BENCHMARK_NAMES[item['benchmark']]} {item['version']}: score {item['score']:.2f}"
+             for item in summary["results"]]
+    boards = ", ".join(dict.fromkeys(item["public_url"] for item in summary["results"]))
+    body = fill_template(read_template("autopickup-result-measured-template.txt"),
+                         {"ORDER_REF": order_ref(rid), "RESULT_LINES": "\n".join(lines), "LEADERBOARD": boards})
+    return f"Benchmark Heaven evaluation order {order_ref(rid)}: your result", body
+
+
+def deliver_measured_first(row: dict[str, Any], state: dict[str, Any], summary: dict[str, Any], effects: Effects,
+                           now: datetime) -> None:
+    """Send the measured result once through the tracked result_public_v1 envelope and record the delivery. The order
+    stays paid/review_passed with result_delivered_at set until its public row is live (then completed), so the release
+    PR, queue and live checks keep running through the ordinary gate. The chosen body is pinned in the state before the
+    envelope is staged, so every retry (also after the release went live) reuses exactly that body."""
+    rid = request_id(row.get("id"))
+    if row.get("result_delivered_at") or row.get("status") not in ("paid", "review_passed"):
+        return
+    if isinstance(state.get("native_owner"), dict) and not state.get("measured_first"):
+        return  # a native owner delivers this order through its own operator; never a parallel pickup mail
+    if not state.get("measured_first"):
+        state["measured_first"] = True
+        state["measured_summary"] = summary
+        save_state(state)
+    pinned = state["measured_summary"]
+    if measured_lines(pinned) != measured_lines(summary):
+        # Critic r2 M-A: never mail a pinned result the host no longer verifies.
+        raise PickupError("pinned measured result differs from the current verification; explicit reconciliation required")
+    if row.get("delivery_email_status") != "sent":
+        subject, body = measured_result_message(row, pinned)
+        if not send_tracked_mail(row, state, "result_mail", "delivery_email_status", subject, body, effects, now,
+                                 extra_guard=RESULT_DELIVERY_GUARD):
+            return
+        row = load_row(rid) or row
+    if record_measured_delivery(row, state, pinned, now) and (load_row(rid) or {}).get("status") == "refund_due":
+        measured_late_handoff(rid, effects)
+
+
+def measured_late_handoff(rid: str, effects: Effects) -> None:
+    """A late-accepted measured mail leaves the pickup's claim set (refund_due): hand the promised publication to the
+    owner once (both the normal and the lease-recovery path). If the board refuses the post, Florian's refund card for
+    the refund_due order still names the order, so the case cannot vanish silently."""
+    state = load_state(rid)
+    if state.get("measured_late_handoff_at"):
+        return
+    if effects.board(f"Paid order {order_ref(rid)}: the measured result mail was accepted only after the 48 h deadline, so "
+                     "the order is refund_due (Florian's refund card decides). Its public row was promised to the "
+                     "customer: publish it through the ordinary release path by hand.", owner_for(rid), kind="handoff"):
+        state["measured_late_handoff_at"] = iso(utcnow())
+        save_state(state)
+
+
+def measured_lines(summary: object) -> list[tuple]:
+    """The fields measured_result_message renders, for comparing a pinned summary with a fresh verification."""
+    results = summary.get("results") if isinstance(summary, dict) else None
+    if not isinstance(results, list):
+        return []
+    return [(item.get("benchmark"), item.get("version"), item.get("score"), item.get("system_key"),
+             item.get("public_url")) for item in results if isinstance(item, dict)]
+
+
+RESULT_DELIVERY_GUARD = (
+    "status IN ('paid','review_passed') AND customer_hold_started_at IS NULL "
+    "AND paid_at IS NOT NULL AND paid_at + COALESCE(sla_paused_seconds,0) * interval '1 second' "
+    "+ interval '48 hours' > now()"
+)
+
+
+def record_measured_delivery(row: dict[str, Any], state: dict[str, Any], summary: dict[str, Any], now: datetime) -> bool:
+    """Close the refund race after the audited measured mail, keeping the order open for its public release."""
+    rid = request_id(row.get("id"))
+    subject, _ = measured_result_message(row, summary)
+    mail_step = step(state, "result_mail")
+    sent_at = parse_ts(mail_step.get("sent_at"))
+    if sent_at is None:
+        sent_at = mail_sent_at(str(row.get("email") or ""), subject,
+                               parse_ts(mail_step.get("last_attempt_at"))) or now
+        mail_step["sent_at"] = iso(sent_at)
+        save_state(state)
+    first_url = next((item.get("public_url") for item in summary.get("results", []) if item.get("public_url")), None)
+    assignments = (f"result_delivered_at={sql_text(iso(sent_at))}::timestamptz, "
+                   f"result_url={sql_text(first_url) if first_url else 'result_url'}")
+    if sent_at >= deadline_for(row):
+        # SMTP accepted only after the deadline (a seconds-wide race past RESULT_DELIVERY_GUARD): Florian's refund
+        # card decides, exactly like record_result_delivery. Publication then continues through the order owner.
+        assignments += ", status='refund_due', refund_reason='sla_48h_payment', refund_status=NULL"
+    return update_row(rid, assignments,
+                      "status IN ('paid','review_passed') AND customer_hold_started_at IS NULL "
+                      "AND delivery_email_status='sent' AND result_delivered_at IS NULL")
+
+
+def complete_measured_after_live(row: dict[str, Any], state: dict[str, Any]) -> None:
+    """The measured order's public row is verified live: the order is complete."""
+    if state.get("measured_first") and row.get("release_status") == "verified" and row.get("result_delivered_at") \
+            and row.get("status") in ("paid", "review_passed"):
+        update_row(request_id(row.get("id")), "status='completed'",
+                   "status IN ('paid','review_passed') AND result_delivered_at IS NOT NULL AND release_status='verified'")
+
+
 def xpost_text(summary: dict[str, Any]) -> str | None:
     changed = [item for item in summary.get("results", []) if item.get("top5_changed")]
     if not changed:
@@ -3513,7 +3616,7 @@ def _jev_models_premerge_check(effects: Effects, release_files: dict[str, Path],
 
 def open_public_release_pr(rid: str, row: dict[str, Any], job_dir: Path, state: dict[str, Any],
                            effects: Effects) -> dict[str, Any] | None:
-    allowed, _reason = gate(rid)
+    allowed, _reason = gate(rid, publish=True)
     if not allowed:
         return None
     if SITE_CHECKOUT.is_symlink() or not SITE_CHECKOUT.is_dir():
@@ -3628,12 +3731,12 @@ def open_public_release_pr(rid: str, row: dict[str, Any], job_dir: Path, state: 
             site_command(["git", "-C", str(worktree), "-c", "user.name=Fast-lane automation",
                           "-c", "user.email=fastlane@benchmarkheaven.invalid", "commit", "-m",
                           f"{cr}: Publish paid fast-lane result {order_ref(rid)}"], timeout=120)
-            allowed, _reason = gate(rid)
+            allowed, _reason = gate(rid, publish=True)
             if not allowed:
                 return None
             pushed_head = site_command(["git", "-C", str(worktree), "rev-parse", "HEAD"])
             site_command(["git", "-C", str(worktree), "push", "--set-upstream", "origin", branch], timeout=300)
-            allowed, _reason = gate(rid)
+            allowed, _reason = gate(rid, publish=True)
             if not allowed:
                 return None
             body = (f"{cr}\n\nAutomated paid fast-lane leaderboard revision for order `{order_ref(rid)}`.\n\n"
@@ -3654,7 +3757,7 @@ def open_public_release_pr(rid: str, row: dict[str, Any], job_dir: Path, state: 
             state["public_release"] = record
             save_state(state)
 
-    allowed, _reason = gate(rid)
+    allowed, _reason = gate(rid, publish=True)
     if not allowed:
         return record
     pr = effects.gh_json(f"repos/{REPO}/pulls/{int(record['pr_number'])}")
@@ -3752,7 +3855,7 @@ def advance_delivery(row: dict[str, Any], state: dict[str, Any], job_dir: Path, 
 
     if row.get("evaluation_status") == "ready_for_release" and row.get("release_status") not in ("verified", "refused", "done") \
             and step_due(state, "finalize", now):
-        allowed, _reason = gate(rid)
+        allowed, _reason = gate(rid, publish=True)
         if not allowed:
             # Holds and deadlines are delivery gates too. Do not consume retry budget while closed.
             return
@@ -3762,6 +3865,11 @@ def advance_delivery(row: dict[str, Any], state: dict[str, Any], job_dir: Path, 
             if summary["outcome"] == "delivered" and summary["visibility"] == "public":
                 state["candidate_verified"] = summary
                 save_state(state)
+                if state.get("measured_first") or (state.get("public_release") or {}).get("status") != "live":
+                    # CR-833: the customer gets the measured result now; the public row follows (one result mail).
+                    # An already-live release keeps the ordinary "your result is live" mail below.
+                    deliver_measured_first(row, state, summary, effects, now)
+                    row = load_row(rid) or row
                 if not advance_public_release(row, job_dir, state, effects):
                     # The result remains private until the ordinary site queue merges it and
                     # both public hosts report the deployed merge revision.
@@ -3774,7 +3882,7 @@ def advance_delivery(row: dict[str, Any], state: dict[str, Any], job_dir: Path, 
                 update_row(rid, "release_status='failed'")
                 alert(state, "finalize_exhausted", effects, urgent=True, text=agent_status_card(row, "is blocked: the result could not be verified", "Agents are checking the result before emailing it to the customer."))
             return
-        allowed, _reason = gate(rid)
+        allowed, _reason = gate(rid, publish=True)
         if not allowed:
             return
         state["verified"] = summary
@@ -3790,7 +3898,14 @@ def advance_delivery(row: dict[str, Any], state: dict[str, Any], job_dir: Path, 
 
     summary = state.get("verified")
     if row.get("release_status") == "verified" and summary and row.get("status") in ("paid", "review_passed") \
-            and not row.get("result_delivered_at"):
+            and not row.get("result_delivered_at") and state.get("measured_first"):
+        # CR-833: a staged measured envelope keeps its pinned body, also once the row is live.
+        deliver_measured_first(row, state, summary, effects, now)
+        row = load_row(rid) or row
+    complete_measured_after_live(row, state)
+    row = load_row(rid) or row
+    if row.get("release_status") == "verified" and summary and row.get("status") in ("paid", "review_passed") \
+            and not row.get("result_delivered_at") and not state.get("measured_first"):
         if row.get("delivery_email_status") == "sent":
             record_result_delivery(row, state, summary, now)
         else:
@@ -4341,10 +4456,11 @@ def recover_result_email_leases(synthetic_id: str | None, job_root: Path, effect
         if rid == native_owner.STRANDS_E2B_ORDER:
             continue
         state = load_state(rid)
-        summary = state.get("verified")
+        measured = bool(state.get("measured_first")) and isinstance(state.get("measured_summary"), dict)
+        summary = state.get("measured_summary") if measured else state.get("verified")
         if not isinstance(summary, dict) or summary.get("outcome") != "delivered":
             continue
-        subject, _ = result_message(row, summary)
+        subject, _ = measured_result_message(row, summary) if measured else result_message(row, summary)
         mail_step = step(state, "result_mail")
         sent_at = mail_sent_at(str(row.get("email") or ""), subject,
                                parse_ts(mail_step.get("last_attempt_at")))
@@ -4354,7 +4470,9 @@ def recover_result_email_leases(synthetic_id: str | None, job_root: Path, effect
             if update_row(rid, "delivery_email_status='sent'",
                           "delivery_email_status='sending' AND updated_at < now()-interval '10 minutes'"):
                 current = load_row(rid) or row
-                record_result_delivery(current, state, summary, utcnow())
+                recorded = (record_measured_delivery if measured else record_result_delivery)(current, state, summary, utcnow())
+                if measured and recorded and (load_row(rid) or {}).get("status") == "refund_due":
+                    measured_late_handoff(rid, effects)
         else:
             # The SMTP tool's call deadline is far shorter than this lease. With no
             # matching Sent audit row, release the claim so the SLA path may proceed.
@@ -6728,7 +6846,9 @@ def record_delivery(rid: str, subject: str, artifact_sha256: str, sent_at: str) 
             + (" (after the deadline: refund_due, Florian's refund card decides)." if late else "."))
 
 
-def gate(rid: str) -> tuple[bool, str]:
+def gate(rid: str, *, publish: bool = False) -> tuple[bool, str]:
+    """publish=True (CR-833): the publication follow-up of an order whose measured result already reached the
+    customer is not closed by the 48 h deadline. Measurement callers and the CLI keep the strict gate."""
     row = load_row(request_id(rid))
     if not row:
         return False, "order not found"
@@ -6738,7 +6858,9 @@ def gate(rid: str) -> tuple[bool, str]:
         return False, "order is on customer hold"
     if not row.get("paid_at"):
         return False, "order has no recorded payment time"
-    if utcnow() >= deadline_for(row):
+    if utcnow() >= deadline_for(row) and not (
+            publish and (row.get("result_delivered_at") or row.get("delivery_email_status") == "sent")
+            and load_state(request_id(rid)).get("measured_first") is True):
         return False, "the 48-hour deadline has passed"
     return True, "ok"
 
