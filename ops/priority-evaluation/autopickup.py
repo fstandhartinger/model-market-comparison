@@ -2676,8 +2676,8 @@ FASTLANE_ADMIT_SHA256 = "489a2522829a8140ebd893d715bd880551fa3debf18c0eb7ebd390c
 PINNED_FILE_MAX_BYTES = 1 << 20
 # Custody's v16-admit command: an ABSOLUTE path and its sha256, both set by the installer once custody posts them on
 # board #11. Empty = the step is disabled.
-V16_ADMIT_PATH = ""
-V16_ADMIT_SHA256 = ""
+V16_ADMIT_PATH = "/home/flori/.local/share/jev-custody/v16-admit"
+V16_ADMIT_SHA256 = "b1dfc7873afbdf3dd0ada8885553f4f661b6782672c5c70cf9b9da9b55f9d4e2"
 V16_ADMIT_TIMEOUT_S = 120
 V16_ADMIT_MAX_ATTEMPTS = 3
 AUTO_ADMIT_ACTOR = "fastlane-autopickup"
