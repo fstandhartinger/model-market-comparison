@@ -2651,11 +2651,13 @@ FASTLANE_ADMIT_PATH = HOME / "bin" / "fastlane-admit"
 # test_auto_admit_hook.PinInTreeTests fails on a stale pin. The installed ~/bin/fastlane-admit must be exactly this file.
 FASTLANE_ADMIT_SHA256 = "489a2522829a8140ebd893d715bd880551fa3debf18c0eb7ebd390c84c4e70c9"
 PINNED_FILE_MAX_BYTES = 1 << 20
-# Custody's v16-admit command: an ABSOLUTE path and its sha256, both set by the installer once custody posts them on
-# board #11. Empty = the step is disabled.
-V16_ADMIT_PATH = "/home/flori/.local/share/jev-custody/v16-admit"
-V16_ADMIT_SHA256 = "b1dfc7873afbdf3dd0ada8885553f4f661b6782672c5c70cf9b9da9b55f9d4e2"
-V16_ADMIT_TIMEOUT_S = 120
+# Custody's v16-admit command: an ABSOLUTE path and its sha256. Empty = the step is disabled. Custody's tool is final
+# (#78576: /home/flori/.local/share/jev-custody/v16-admit, sha256 b1dfc787...), but it refuses every order until a custody
+# reservation exists and the review gate pins a reserved draw's v1.6 profiles; a refusal is final per (review sha, pin sha),
+# so the pin is set only together with that change (critic S1, 23 Nov).
+V16_ADMIT_PATH = ""
+V16_ADMIT_SHA256 = ""
+V16_ADMIT_TIMEOUT_S = 180  # custody tool: lock waits 20/60/20 s + two derivations (critic S2, 23 Nov)
 V16_ADMIT_MAX_ATTEMPTS = 3
 AUTO_ADMIT_ACTOR = "fastlane-autopickup"
 
