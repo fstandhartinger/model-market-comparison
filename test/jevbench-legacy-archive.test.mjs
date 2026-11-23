@@ -159,3 +159,21 @@ test('legacy guides retain the original server-generated links and labels', asyn
   const { readJevBoardGuideLinks } = await import('../lib/jevbench-guide-links.mjs');
   assert.deepEqual(normalize(await readJevBoardGuideLinks()), normalize(node.props.links));
 });
+
+
+test('v1.4.2.2 renders one default-order top-20 summary while preserving the method without JavaScript', async () => {
+  const { JevBenchLegacyArchiveWidget } = await import('../components/JevBenchLegacyArchive.tsx');
+  const { JevBenchLegacyArchiveProvider } = await import('../components/JevBenchLegacyArchiveProvider.tsx');
+  const { JevCapabilityRanking } = await import('../components/JevCapabilityRanking.tsx');
+  const version = 'v1.4.2.2';
+  const input = await readJevLegacyArchivePayload(version, process.cwd(), jevClassView);
+  const h = React.createElement;
+  const summary = renderToStaticMarkup(h(JevBenchLegacyArchiveProvider, { version },
+    Object.entries(input.widgets).map(([part, widget]) => h(JevBenchLegacyArchiveWidget, { ...widget.props, version, part, key: part }))));
+  const fullRanking = renderToStaticMarkup(h(JevCapabilityRanking, input.widgets.capability.props));
+  const keys = (html, marker) => [...html.matchAll(new RegExp(marker + '="([^" ]+)"', 'g'))].map(m => m[1]);
+  assert.deepEqual(keys(summary, 'data-bh-jev-archive-row'), keys(fullRanking, 'data-bh-jev-capability-name').slice(0, 20));
+  assert.equal(keys(summary, 'data-bh-jev-archive-row').length, 20);
+  assert.ok(summary.includes('data-bh-jev14-changes'));
+  assert.ok(summary.includes('/api/jevbench/v1.4.2.2/board'));
+});
