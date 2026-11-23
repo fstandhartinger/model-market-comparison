@@ -9,8 +9,20 @@ import { useEffect, useRef } from "react";
 // What it does NOT do (decision record ops/ux-2026-09-12/CR-67.5-CONSENT-DECISION.md §7): it sets no cookie,
 // writes and reads no localStorage/sessionStorage/cache/client hint, loads no third-party script, and sends
 // nothing on the first render — the server counted that load itself. The body is the path of the page the
-// visitor navigated to, which the server would have seen as a request anyway, and credentials are omitted so
+// visitor navigated to, which the server would have seen as a request anyway, plus the ORIGIN of the site that
+// referred the visitor to us (document.referrer reduced to scheme+host in the browser; the server keeps only an
+// external host — growth measure A, 22 Nov 2026; never the referrer's path or query), and credentials are omitted so
 // not even a signed-in session cookie travels with it. GPC/DNT stop it in the browser as well as on the server.
+function referrerOrigin() {
+  try {
+    const ref = document.referrer ? new URL(document.referrer) : null;
+    if (!ref || (ref.protocol !== "https:" && ref.protocol !== "http:") || ref.host === window.location.host) return undefined;
+    return ref.origin;
+  } catch {
+    return undefined;
+  }
+}
+
 function reportPath(path: string) {
   const privacyNavigator = navigator as Navigator & { globalPrivacyControl?: boolean };
   const privacyWindow = window as Window & { doNotTrack?: string };
@@ -18,7 +30,7 @@ function reportPath(path: string) {
   void fetch("/api/page-view", {
     method: "POST",
     headers: { "content-type": "application/json" },
-    body: JSON.stringify({ path }),
+    body: JSON.stringify({ path, referrer: referrerOrigin() }),
     credentials: "omit",
     cache: "no-store",
     keepalive: true,
