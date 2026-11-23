@@ -166,7 +166,7 @@ class CardWording(unittest.TestCase):
                 card = c.rescue_card(row, reason)
                 self.assertLessEqual(len(card.splitlines()[1].split(': ', 1)[1]), 220)
                 notify.validate_format(card, 'urgent')
-        self.assertIn('model HS1 0.1.2?', c.refusal_approval.approval_caption(
+        self.assertIn('model HS1 0.1.2 from ', c.refusal_approval.approval_caption(
             dict(ROW, customer_name=None, email='gabriel.keith@example-company.com', model_link='',
                  model_name=long_name), 'change_request'))
 

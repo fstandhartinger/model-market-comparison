@@ -366,7 +366,7 @@ class ApprovalCardSend(unittest.TestCase):
         for text, strict in captions:
             with self.subTest(caption=text.splitlines()[1]):
                 result = subprocess.run([str(NOTIFY), 'now', '--florian-only', 'approval card regression test',
-                                         '--ask', '720', '--text-stdin', '--dry-run'],
+                                         '--ask', '720', '--allow-german', '--text-stdin', '--dry-run'],
                                         input=text, text=True, capture_output=True, env=env, timeout=60)
                 self.assertEqual(result.returncode, 0, result.stderr)
                 self.assertRegex(result.stdout, r'\[DRY RUN\] (would send to the|this open human action already exists)')
