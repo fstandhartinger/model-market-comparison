@@ -6,6 +6,7 @@ import React from 'react';
 import {renderToStaticMarkup} from 'react-dom/server';
 import {projectJevbenchFeed} from '../lib/jevbench-agent-feed.mjs';
 import {jevApiRoster} from '../lib/jevbench-scope.mjs';
+import {one,usd} from '../lib/jevbench-board-format.mjs';
 const load=n=>JSON.parse(readFileSync(`data/raw/benchmarks/jevbench/v1.7/jevbench-${n}.json`));
 const artifact=load('v1.7.10-results'),previous=load('v1.7.9-results');
 const keys=['singularity-super-decider','singularity-super-decider-thinking'];
@@ -25,11 +26,11 @@ test('v1.7.10 latest feed projection uses vendor links for both API rows',()=>{
 test('v1.7.10 actual API roster JSX renders vendor hrefs for both rows',()=>{
  // Compile the real roster and its formatting helpers in isolation. Unrelated latency cells are stubbed.
  const src=readFileSync('components/JevBenchV16Board.tsx','utf8'),ast=ts.createSourceFile('board.tsx',src,ts.ScriptTarget.Latest,true,ts.ScriptKind.TSX);
- const names=new Set(['one','usd','rosterCapability','ENDPOINT_TAG','basisLine','costCell','rosterStatus','ApiRoster']);
+ const names=new Set(['rosterCapability','ENDPOINT_TAG','basisLine','costCell','rosterStatus','ApiRoster']);
  const parts=ast.statements.filter(n=>names.has(n.name?.text)||n.declarationList?.declarations.some(d=>names.has(d.name.text))).map(n=>n.getText(ast));
  assert.equal(parts.length,names.size);
  const code=ts.transpileModule(parts.join('\n'),{compilerOptions:{jsx:ts.JsxEmit.React,module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022}}).outputText;
- const ApiRoster=new Function('React','jevApiRoster','JevLatencyValue','JevLatencyLegend','NOT_RANKED','PUBLIC_SET',code+'\nreturn ApiRoster;')(React,jevApiRoster,()=>null,()=>null,{},new Map());
+ const ApiRoster=new Function('React','jevApiRoster','JevLatencyValue','JevLatencyLegend','NOT_RANKED','PUBLIC_SET','one','usd',code+'\nreturn ApiRoster;')(React,jevApiRoster,()=>null,()=>null,{},new Map(),one,usd);
  const rows=artifact.systems.filter(s=>keys.includes(s.key));
  const html=renderToStaticMarkup(React.createElement(ApiRoster,{a:{...artifact,systems:rows},carry:{rows:[]},listed:[],eligibility:new Map()}));
  for(const key of keys)assert.match(html,new RegExp(`<a[^>]+href="${url}"[^>]+data-bh-jev-api-roster-row="${key}"`));
