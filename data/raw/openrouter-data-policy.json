@@ -2,18 +2,18 @@
   "schema_version": 1,
   "source": {
     "url": "https://openrouter.ai/providers",
-    "retrieved_at": "2026-11-23T05:31:38.874Z",
-    "sha256": "2e38ca565a59622ba95184dfd4c5412e5de73c5f8bf3a3d2a08dc6445ca8f693"
+    "retrieved_at": "2026-11-23T18:55:31.859Z",
+    "sha256": "b0f3fe14db77dfd14528960ea32f4ada8fde7baa564876b305f7d796c4c3a02b"
   },
   "basis": "OpenRouter's published provider table. 'private' = the provider survives OpenRouter's own 'Does not train' + 'Zero retention' filter.",
   "facet_crosscheck": {
     "zero_retention": {
-      "page": 54,
-      "parsed": 54
+      "page": 53,
+      "parsed": 53
     },
     "does_not_train": {
-      "page": 96,
-      "parsed": 96
+      "page": 95,
+      "parsed": 95
     }
   },
   "overrides": {
@@ -24,8 +24,8 @@
     }
   },
   "counts": {
-    "providers": 99,
-    "private": 55,
+    "providers": 98,
+    "private": 54,
     "not_private": 44,
     "unknown": 0
   },
@@ -531,15 +531,6 @@
       "does_not_train": true,
       "zero_retention": true,
       "headquarters": "Spain",
-      "override": null,
-      "private": true
-    },
-    {
-      "slug": "dekallm",
-      "name": "DekaLLM",
-      "does_not_train": true,
-      "zero_retention": true,
-      "headquarters": "Indonesia",
       "override": null,
       "private": true
     },

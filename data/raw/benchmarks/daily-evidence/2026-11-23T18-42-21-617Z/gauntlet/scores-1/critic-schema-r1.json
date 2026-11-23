@@ -1,0 +1,122 @@
+{
+  "type": "object",
+  "properties": {
+    "artifact_id": {
+      "type": "string",
+      "enum": [
+        "scores-1"
+      ]
+    },
+    "artifact_sha256": {
+      "type": "string",
+      "enum": [
+        "85db7f8c5a539bb3de5bcf14ed9f7275c4956639941124af5730a0d5435b15d4"
+      ]
+    },
+    "round": {
+      "type": "integer",
+      "enum": [
+        1
+      ]
+    },
+    "verdict": {
+      "type": "string",
+      "enum": [
+        "pass",
+        "revise",
+        "blocked"
+      ]
+    },
+    "coverage_checked": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "public:38e62aacb9c4e417cc43da38",
+          "public:7dda7a3a279d3cb442636ac6",
+          "public:4411f7047ad2bc7a1ca98b57",
+          "public:d92b355556197513fdf9dc1c",
+          "public:473705bcda76514febc4e7fd",
+          "c1"
+        ]
+      }
+    },
+    "errors_found": {
+      "type": "integer"
+    },
+    "findings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "maxLength": 2048
+          },
+          "severity": {
+            "type": "string",
+            "enum": [
+              "blocker",
+              "major",
+              "minor"
+            ]
+          },
+          "location": {
+            "type": "string",
+            "maxLength": 2048
+          },
+          "evidence": {
+            "type": "string",
+            "maxLength": 2048
+          },
+          "repair": {
+            "type": "string",
+            "maxLength": 2048
+          }
+        },
+        "required": [
+          "id",
+          "severity",
+          "location",
+          "evidence",
+          "repair"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "fixed": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "maxLength": 2048
+      }
+    },
+    "uncertainties": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "maxLength": 2048
+      }
+    },
+    "missing_evidence": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "maxLength": 2048
+      }
+    }
+  },
+  "required": [
+    "artifact_id",
+    "artifact_sha256",
+    "round",
+    "verdict",
+    "coverage_checked",
+    "errors_found",
+    "findings",
+    "fixed",
+    "uncertainties",
+    "missing_evidence"
+  ],
+  "additionalProperties": false
+}

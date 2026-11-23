@@ -1,0 +1,33 @@
+{
+  "artifact_id": "protocol-weirdml-2",
+  "artifact_sha256": "6bd60c5766dad9d19f8ad87594eec4ade45889654f1ab0b2516e23568e5c4ae7",
+  "round": 1,
+  "verdict": "blocked",
+  "coverage_checked": ["weirdml::2", "c1", "c2"],
+  "errors_found": 2,
+  "findings": [
+    {
+      "id": "weirdml::2",
+      "severity": "blocker",
+      "location": "scoring.metric",
+      "evidence": "Source 1 describes current WeirdML v3 with 11 tasks and 'official score is 80% normalized area under its line... plus 20% of its final value'; the row claims 'Average Max Accuracy... averaged over all 17 tasks' for version 2. No captured v2 protocol text or any source establishes a 17-task Average Max Accuracy metric or its continuity. Source 3's scale summary settles only unit/range, not metric meaning.",
+      "repair": "Supply the WeirdML v2 protocol text, or other evidence establishing 17 tasks and the Average Max Accuracy scoring, and show that it matches the row's fields. If v2 is no longer freshly published, mark status/version_status as retained instead of active/published."
+    },
+    {
+      "id": "weirdml::2",
+      "severity": "major",
+      "location": "superseded_by",
+      "evidence": "Source 1 states 'WeirdML v3' as the current version and lists 'Previous versions: WeirdML v2', naming a successor version. The row sets superseded_by: null, which is a mismatch under c2 because the protocol names a successor. Source 2's changed values support status active but do not affect supersession.",
+      "repair": "Set superseded_by to the registry id for the successor board WeirdML v3 from the registry entry; do not leave null when the protocol names that successor. If no registry entry exists for the successor, the packet must state that explicitly."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "I cannot execute hash or transport checks; the owner separately verifies those.",
+    "The generated scale/activity summaries are this run's own reads and settle only unit/range and status activity, not metric meaning or version identity.",
+    "The protocol page never uses explicit 'superseded by' wording for v2; the supersession reading depends on 'WeirdML v3' being current and 'Previous versions: WeirdML v2'."
+  ],
+  "missing_evidence": [
+    "WeirdML v2 protocol text establishing the claimed 17-task Average Max Accuracy metric and its continuity with the row's scoring fields."
+  ]
+}

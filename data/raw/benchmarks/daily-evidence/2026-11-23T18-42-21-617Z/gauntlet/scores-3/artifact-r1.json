@@ -1,0 +1,50 @@
+[
+  {
+    "id": "vendor:mistralai/Devstral-2-123B-Instruct-2512:swe-bench-verified::snapshot-2026-09-10",
+    "benchmark_id": "swe-bench-verified::snapshot-2026-09-10",
+    "subject": {
+      "source_id": "mistralai/Devstral-2-123B-Instruct-2512",
+      "name": "Devstral 2",
+      "model_id": "devstral-2-123b::default",
+      "variant": "default",
+      "harness": null
+    },
+    "value": 72.2,
+    "unit": "percent",
+    "basis": "self_reported",
+    "source": {
+      "url": "https://mistral.ai/news/devstral-2-vibe-cli/",
+      "file": "data/raw/benchmarks/daily-evidence/2026-11-23T18-42-21-617Z/e41a98fb73f533e32bc4.gz",
+      "sha256": "e41a98fb73f533e32bc409764ad7cd92d8968bb80abca1321122cec749d86765",
+      "retrieved_at": "2026-11-23T18:53:34.983882+00:00",
+      "published_at": null,
+      "locator": "\"It reaches 72.2% on SWE-bench Verified\" (also: \"achieving 72.2% on SWE-bench Verified\")"
+    },
+    "protocol": "overall; Self-reported vendor headline figure; evaluation harness for the SWE-bench Verified number not specified in source (Cline scaffolding used only for separate human evaluations)",
+    "comparison_key": null
+  },
+  {
+    "id": "vendor:mistralai/Devstral-Small-2-24B-Instruct-2512:swe-bench-verified::snapshot-2026-09-10",
+    "benchmark_id": "swe-bench-verified::snapshot-2026-09-10",
+    "subject": {
+      "source_id": "mistralai/Devstral-Small-2-24B-Instruct-2512",
+      "name": "Devstral Small 2",
+      "model_id": "devstral-small-2::default",
+      "variant": "default",
+      "harness": null
+    },
+    "value": 68,
+    "unit": "percent",
+    "basis": "self_reported",
+    "source": {
+      "url": "https://mistral.ai/news/devstral-2-vibe-cli/",
+      "file": "data/raw/benchmarks/daily-evidence/2026-11-23T18-42-21-617Z/e41a98fb73f533e32bc4.gz",
+      "sha256": "e41a98fb73f533e32bc409764ad7cd92d8968bb80abca1321122cec749d86765",
+      "retrieved_at": "2026-11-23T18:53:34.983882+00:00",
+      "published_at": null,
+      "locator": "\"Devstral Small 2 scores 68.0% on SWE-bench Verified\""
+    },
+    "protocol": "overall; Self-reported vendor headline figure; evaluation harness not specified in source",
+    "comparison_key": null
+  }
+]

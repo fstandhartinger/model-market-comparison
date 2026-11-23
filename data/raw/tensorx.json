@@ -69,16 +69,6 @@
       "api_model_id": "qwen/qwen3.8-2.4t-a95b"
     },
     {
-      "model_name": "Kimi K3",
-      "provider_org": "Moonshot AI",
-      "input_per_1m_usd": 3,
-      "output_per_1m_usd": 15,
-      "cache_read_per_1m_usd": 0.75,
-      "region": "eu",
-      "notes": "tensorx.ai/pricing moonshotai/kimi-k3; 1M ctx",
-      "api_model_id": "moonshotai/kimi-k3"
-    },
-    {
       "model_name": "DeepSeek V4 Pro 0813",
       "provider_org": "DeepSeek",
       "input_per_1m_usd": 2,
@@ -119,7 +109,7 @@
       "api_model_id": "z-ai/glm-5.2"
     }
   ],
-  "response_sha256": "a827d7b9eff4d5280f3d284a9a263a27cd592e9d85112210aa10c60cd64d8e2b",
+  "response_sha256": "367010c33ba261565739ed4c7f89b3758ae20ed546232c43efdf670c175f880f",
   "skipped": [
     "qwen/qwen3-embedding-8b"
   ],
@@ -129,7 +119,9 @@
       "deepseek/deepseek-v4.1-flash-1017",
       "minimax/minimax-m3.1-flash"
     ],
-    "removed": [],
+    "removed": [
+      "Kimi K3"
+    ],
     "price_changed": []
   }
 }

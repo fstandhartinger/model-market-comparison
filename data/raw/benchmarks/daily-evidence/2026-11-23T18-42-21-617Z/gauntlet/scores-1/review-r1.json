@@ -1,0 +1,23 @@
+{
+  "artifact_id": "scores-1",
+  "artifact_sha256": "85db7f8c5a539bb3de5bcf14ed9f7275c4956639941124af5730a0d5435b15d4",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "public:38e62aacb9c4e417cc43da38",
+    "public:7dda7a3a279d3cb442636ac6",
+    "public:4411f7047ad2bc7a1ca98b57",
+    "public:d92b355556197513fdf9dc1c",
+    "public:473705bcda76514febc4e7fd",
+    "c1"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "model_id values for rows public:38e62aacb9c4e417cc43da38 and public:7dda7a3a279d3cb442636ac6 (gemini-4-neon::default, gemini-4-hydrogen::default) are not independently verifiable from the packet's source projections, which only provide display names; mappings are consistent but catalog evidence is absent.",
+    "source file paths under data/raw/... are not present in the primary evidence; only source sha256, url, retrieved_at, and locator could be compared.",
+    "I cannot recompute row hashes or perform transport/qualification checks; these are owner-executed and outside my read-only scope."
+  ],
+  "missing_evidence": []
+}

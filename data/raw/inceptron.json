@@ -15,8 +15,8 @@
       "quantization": "fp4",
       "api_catalog_price": {
         "input_per_1m_usd": 1.05,
-        "output_per_1m_usd": 3.25,
-        "cache_read_per_1m_usd": 0.1776,
+        "output_per_1m_usd": 3.5,
+        "cache_read_per_1m_usd": 0.1171,
         "url": "https://api.inceptron.io/v1/models",
         "note": "provider feed ingested by OpenRouter; equals the OpenRouter route"
       },
@@ -38,7 +38,7 @@
       "api_catalog_price": {
         "input_per_1m_usd": 0.5648,
         "output_per_1m_usd": 2.788,
-        "cache_read_per_1m_usd": 0.19,
+        "cache_read_per_1m_usd": 0.15,
         "url": "https://api.inceptron.io/v1/models",
         "note": "provider feed ingested by OpenRouter; equals the OpenRouter route"
       },
@@ -58,7 +58,7 @@
       "context_length": 262144,
       "quantization": "int4",
       "api_catalog_price": {
-        "input_per_1m_usd": 0.61,
+        "input_per_1m_usd": 0.65,
         "output_per_1m_usd": 3.55,
         "cache_read_per_1m_usd": 0.17,
         "url": "https://api.inceptron.io/v1/models",
@@ -126,9 +126,9 @@
       "mapping": "derived",
       "notes": "Listed by api.inceptron.io/v1/models as zai-org/GLM-5.3-Flash; fp8 quant; 1,048,576 context; text",
       "api_catalog_price": {
-        "input_per_1m_usd": 0.16,
+        "input_per_1m_usd": 0.17,
         "output_per_1m_usd": 0.5,
-        "cache_read_per_1m_usd": 0.04,
+        "cache_read_per_1m_usd": 0.06,
         "url": "https://api.inceptron.io/v1/models",
         "note": "provider feed ingested by OpenRouter; equals the OpenRouter route"
       },
@@ -140,7 +140,7 @@
       }
     }
   ],
-  "response_sha256": "949bc1b3561c396a350de97b85c604cf0e11aa6ce62de6a076587558444fc25a",
+  "response_sha256": "a9c940365b85eb6c278819ded8fa42e94845ddd5e605529bcdc26fb78f3c4da7",
   "skipped": [],
   "diff": {
     "added": [],
@@ -151,7 +151,7 @@
   "availability": {
     "state": "list_prices_withdrawn_by_source",
     "observed_since": "2026-11-05",
-    "checked_at": "2026-11-23T05:31:50.192Z",
+    "checked_at": "2026-11-23T18:55:44.730Z",
     "url": "https://www.inceptron.io/models",
     "note": "Inceptron's models page lists the models without prices; its pricing page points to the models page. Direct prices are not published until they reappear."
   }

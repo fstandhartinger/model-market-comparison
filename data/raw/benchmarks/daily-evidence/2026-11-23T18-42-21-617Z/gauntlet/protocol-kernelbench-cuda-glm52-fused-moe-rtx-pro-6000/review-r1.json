@@ -1,0 +1,38 @@
+{
+  "artifact_id": "protocol-kernelbench-cuda-glm52-fused-moe-rtx-pro-6000",
+  "artifact_sha256": "6aafe8f39bf09b836a09a197e283d2d81bad768a70baedba626edb70633514b9",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": [
+    "kernelbench-cuda-glm52-fused-moe::rtx-pro-6000",
+    "c1",
+    "c2"
+  ],
+  "errors_found": 2,
+  "findings": [
+    {
+      "id": "f1-c1-desc-model-version",
+      "severity": "major",
+      "location": "row kernelbench-cuda-glm52-fused-moe::rtx-pro-6000, field description",
+      "evidence": "Protocol SPEC.md perfect-stack table and live /cuda page (SOURCE 3, SOURCE 4) name problem 01 'GLM-5.3 Fused MoE (256+shared, top-8)'; row description instead states 'Fuse GLM-5.2's MoE forward pass (256+shared experts, top-8 routing)'. Maintainer never labels the model GLM-5.2; 'glm52' is only the problem slug.",
+      "repair": "Correct the description to name 'GLM-5.3 Fused MoE' (matching SPEC.md and the live site), or cite which captured source supports GLM-5.2.",
+      "severity_note": "identity of the benchmarked model misstated"
+    },
+    {
+      "id": "f2-c1-deck-count",
+      "severity": "major",
+      "location": "row kernelbench-cuda-glm52-fused-moe::rtx-pro-6000, fields version_guard and scoring.notes",
+      "evidence": "version_guard says 'the problem must stay in the stated four-problem deck', but SPEC.md states 'deck stays at three since 2026-11-09' (problem 04 grid+MinGRU retired), leaderboard.json 'problems' lists only 01/02/03, and SOURCE 5 excluded entries mark all 04 runs 'problem 04 retired 2026-11-09'. Notes also treat 04 as live ('SPS against the 150M peak_sps anchor for 04'; 'Opus 5 reaches 196.10% on 04'), a ceiling rule not present in SPEC.md.",
+      "repair": "Update version_guard to a three-problem deck and revise notes so problem-04 statements are labeled retired/historical or removed, with only the served 01/02/03 metric semantics (dense-eq roofline peak_fraction; decode tok/s) described."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "version_status 'published' with version 'rtx-pro-6000' appears to copy the maintainer-published board label 'RTX PRO 6000' (SOURCE 4 tabs); the packet shows no distinct methodology release identifier (only schema_version 1, tag v2, SPEC 'last updated' date), so 'published' vs 'snapshot' classification is ambiguous; I could not execute the owner hash/transport checks.",
+    "Notes cite retired problem-04 values (muse-spark-1.3 0.2056, Opus 5 196.10%, deepseek-v4-pro reward_hack on 04) that cannot be verified because leaderboard.json contains no 04 entries after retirement; treated as historical rationale, not current served data.",
+    "Value-scale summary reports 4.11-11.3 as percent for problem-01-only values; row unit 'percent of roofline' and range [0,null] are consistent with that scale, and the unbounded upper null cannot be contradicted, so no unit/range finding raised.",
+    "The kinetic-0715[1m] 0.0622 suspect cell on 03 is present in the ranked list, consistent with the notes' validity-rule cross-check claim."
+  ],
+  "missing_evidence": [],
+  "narrative_ok": true
+}

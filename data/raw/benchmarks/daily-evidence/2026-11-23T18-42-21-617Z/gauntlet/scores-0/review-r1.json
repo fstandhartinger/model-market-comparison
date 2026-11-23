@@ -1,0 +1,33 @@
+{
+  "artifact_id": "scores-0",
+  "artifact_sha256": "ea6031aebf162bcd3e2532e5b7e32ff484d8df68b5c7c3fda02fc605493ce866",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "public:edcc9393bcd1b50b83e620d4",
+    "public:7ab53d10aca20083f431e628",
+    "public:9442e09f3b49a71b849f0ca2",
+    "public:d7b832dca96d8cba7343b4ea",
+    "public:bc13d16018fe984e3060c2c8",
+    "public:29689487dfe2d8d37d472691",
+    "public:d4b3efc4ff2ba218ed3ccc8e",
+    "public:e69da438fe8e5bff901194fd",
+    "public:c6024384929e42701af0317a",
+    "public:b0ba1f0b37aae56f7d5a123c",
+    "public:68ae44908a1d1672095416ac",
+    "public:5eca3c14324abac25253a30a",
+    "public:81d80e8c8c80b7d6122708f6",
+    "public:b04973509eac3fc8b45c9718",
+    "public:ddfeddf42d4260d04da8cc32",
+    "c1"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Rows 29689487dfe2d8d37d472691, d4b3efc4ff2ba218ed3ccc8e and e69da438fe8e5bff901194fd show final-decimal differences of 6e-18 to 1e-15 between the candidate value and the exact decimal product of the source score and 100 (e.g. candidate 0.027919455042839488 vs exact 0.02791945504283949). This is consistent with IEEE-754 parsing of the served JSON numeric cell and binary multiplication by 100, so I treated them as the same parsed numeric value under c1 rather than as transcription mismatches.",
+    "source_basis self_reported is not an explicit field in the captured JSON rows; it is inferred from the protocol note 'Evaluation independence not assumed for board submissions' and the ARC Prize board submission context. No contradictory evidence was present.",
+    "Row hashes, gzip file existence, transport and qualification checks were not executable in this read-only review and are assumed covered by the owner-side processes."
+  ],
+  "missing_evidence": []
+}
