@@ -445,11 +445,14 @@ class RegistryMirror(unittest.TestCase):
         self.assertFalse(set(listed) & set(hf(exact_only)))
 
     def test_limits_match_pod_runner(self):
+        # The pre-payment intake estimate ceiling (JS PER_ORDER_CAP_USD) mirrors the original single-run order budget
+        # (pod_runner ORIGINAL_ORDER_CAP_USD = 20). The pod_runner PER_ORDER_CAP_USD was raised to 50 on 22 Nov 2026 to
+        # pay for two fresh-pod retries (3 x USD 15), not to admit larger single runs, so the public intake gate is unchanged.
         text = (HERE / "pod_runner.py").read_text()
         js = (HERE.parent.parent / "lib" / "priority-intake-runtime.mjs").read_text()
-        for name in ("MAX_HOURLY_USD", "PER_ORDER_CAP_USD"):
-            py = float(re.search(rf"^{name} = ([0-9.]+)", text, re.M).group(1))
-            self.assertEqual(float(re.search(rf"export const {name} = ([0-9.]+)", js).group(1)), py)
+        for js_name, py_name in (("MAX_HOURLY_USD", "MAX_HOURLY_USD"), ("PER_ORDER_CAP_USD", "ORIGINAL_ORDER_CAP_USD")):
+            py = float(re.search(rf"^{py_name} = ([0-9.]+)", text, re.M).group(1))
+            self.assertEqual(float(re.search(rf"export const {js_name} = ([0-9.]+)", js).group(1)), py)
 
 
 if __name__ == "__main__":

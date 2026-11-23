@@ -69,11 +69,11 @@ class FreshAllocation:
                 or type(total) is not int or total!=allocations+1 or total>(3 if self.rid in (WALD, DECISOR) else 2) \
                 or type(authority.get('max_additional_allocations')) is not int or authority['max_additional_allocations']!=1 \
                 or isinstance(spent,bool) or not isinstance(spent,(int,float)) \
-                or not math.isfinite(spent) or not 0<=spent<pod_runner.PER_ORDER_CAP_USD:
+                or not math.isfinite(spent) or not 0<=spent<pod_runner.ORIGINAL_ORDER_CAP_USD:
             raise ValueError('invalid bounded fresh-generation accounting')
         self.contingency_usd = 0
         self.max_ttl_hours = pod_runner.TTL_CAP_HOURS
-        self.max_new_usd = pod_runner.PER_ORDER_CAP_USD
+        self.max_new_usd = pod_runner.ORIGINAL_ORDER_CAP_USD
         if self.rid == DECISOR:
             if (attempts != 2 or allocations != 2 or total != 3 or spent != 7.8
                     or authority.get('max_new_usd') != 12 or authority.get('max_ttl_hours') != 2.4
@@ -135,10 +135,10 @@ class FreshAllocation:
                     or state.get('creation_attempts')!=a['original_creation_attempts']+1 \
                     or pod_capacity.allocation_count(state,pod_runner.PODS_DIR)!=a['allowed_total_allocations'] \
                     or state.get('spent_upper_bound_usd',0)<a['original_spent_upper_bound_usd'] \
-                    or state.get('spent_upper_bound_usd',float('inf'))>pod_runner.PER_ORDER_CAP_USD \
+                    or state.get('spent_upper_bound_usd',float('inf'))>pod_runner.ORIGINAL_ORDER_CAP_USD \
                     or charge > self.max_new_usd or ttl > self.max_ttl_hours \
                     or state.get('attempt_ttl_hours',float('inf'))>min(pod_runner.TTL_CAP_HOURS,
-                       (pod_runner.PER_ORDER_CAP_USD-a['original_spent_upper_bound_usd'])/pod_runner.MAX_HOURLY_USD):
+                       (pod_runner.ORIGINAL_ORDER_CAP_USD-a['original_spent_upper_bound_usd'])/pod_runner.MAX_HOURLY_USD):
                 raise ValueError('fresh generation reservation exceeds original accounting')
             exclusive(self.create_claim,{'authority_sha256':self.digest,'creation_attempts':state['creation_attempts']})
         else:
