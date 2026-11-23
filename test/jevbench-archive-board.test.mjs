@@ -12,7 +12,7 @@ import { jevArchiveComparisonCategories } from '../lib/jevbench-archive-board-vi
 register('./jevbench-archive-loader-hooks.mjs', import.meta.url);
 const { GET, generateStaticParams, dynamic, dynamicParams } = await import('../app/api/jevbench/[version]/board/route.ts');
 const { JevBenchArchiveBoard } = await import('../components/JevBenchArchiveBoard.tsx');
-const { JevBenchV16Board, JevBenchV16ArchiveMethod } = await import('../components/JevBenchV16Board.tsx');
+const { JevBenchV16Board, JevBenchV16ArchiveMethod, JEV_BOARD_REVISIONS } = await import('../components/JevBenchV16Board.tsx');
 const BASE = 'd5e8e19ab914bf9120b572d55601a2c24c921ea7';
 // These endpoints are force-static: exercise the actual production-build path against the immutable committed snapshot.
 // Each cold cache still validates the complete predecessor chain. Dedicated release/fixture tests retain uncached mode.
@@ -23,7 +23,7 @@ const normalize = value => JSON.parse(JSON.stringify(value));
 const baselineBytes = await readFile(new URL('./fixtures/jevbench-archive-baseline.json', import.meta.url));
 const baseline = JSON.parse(baselineBytes);
 assert.equal(baseline.revision, BASE);
-assert.equal(createHash('sha256').update(baselineBytes).digest('hex'), '66ec065909abe27845c36e5d181d4370332cca00b1b8e53b20fb9ab51fa168ca');
+assert.equal(createHash('sha256').update(baselineBytes).digest('hex'), '5daac2fa29f9680bf5352ab74256c734513274207dc9d3f01e0c1d6bf622d7ab');
 
 function compile(source, file, componentModules = null) {
   const require = createRequire(new URL('../' + file, import.meta.url));
@@ -31,7 +31,8 @@ function compile(source, file, componentModules = null) {
   const module = { exports: {} };
   runInNewContext(code, { module, exports: module.exports, require: id => {
     if (componentModules?.has(id)) return componentModules.get(id);
-    if (id.includes('/components/')) return new Proxy({}, { get: (_, name) => {
+    if (id === './JevBenchV16Board') return { JevBenchV16Board: Object.assign(() => null, { componentName: 'JevBenchV16Board' }), JEV_BOARD_REVISIONS };
+    if (id.includes('/components/') || (file === 'components/JevBenchV16ReleaseRoute.tsx' && id.startsWith('./'))) return new Proxy({}, { get: (_, name) => {
       const fn = () => null; fn.componentName = String(name); return fn;
     } });
     if (id === 'next/navigation') return { notFound() { throw Error('notFound'); } };
@@ -40,11 +41,11 @@ function compile(source, file, componentModules = null) {
   } });
   return module.exports;
 }
-function findBoard(node) {
+function findBoard(node, componentName = 'JevBenchV16Board') {
   if (!node || typeof node !== 'object') return null;
-  if (node.type?.componentName === 'JevBenchV16Board') return node.props;
+  if (node.type?.componentName === componentName) return node.props;
   for (const child of [node.props?.children].flat(Infinity)) {
-    const result = findBoard(child); if (result) return result;
+    const result = findBoard(child, componentName); if (result) return result;
   }
   return null;
 }
@@ -53,7 +54,14 @@ for (const version of JEV_ARCHIVE_BOARD_VERSIONS) {
   test(`${version}: static JSON exactly preserves every original board prop and comparison category`, async () => {
     const file = `app/jev-models/${version}/page.tsx`;
     const source = baseline.files[file];
-    const old = findBoard(await compile(source, file).default());
+    const tree = await compile(source, file).default();
+    let old = findBoard(tree);
+    if (!old) {
+      const routeProps = findBoard(tree, 'JevBenchV16ReleaseRoute');
+      assert.ok(routeProps, 'found original release route');
+      const route = compile(baseline.files['components/JevBenchV16ReleaseRoute.tsx'], 'components/JevBenchV16ReleaseRoute.tsx');
+      old = findBoard(await route.JevBenchV16ReleaseRoute(routeProps));
+    }
     assert.ok(old, 'found original board');
     const props = await readJevArchiveBoardProps(version);
     assert.deepEqual(normalize(props), normalize(old));
@@ -70,7 +78,7 @@ for (const version of JEV_ARCHIVE_BOARD_VERSIONS) {
 }
 
 test('static route publishes only the explicit archive allowlist', async () => {
-  assert.equal(JEV_ARCHIVE_BOARD_VERSIONS.length, 84);
+  assert.equal(JEV_ARCHIVE_BOARD_VERSIONS.length, 86);
   assert.equal(dynamic, 'force-static'); assert.equal(dynamicParams, false);
   assert.deepEqual(generateStaticParams(), JEV_ARCHIVE_BOARD_VERSIONS.map(version => ({ version })));
   for (const version of ['board-open', '../v1.8.20', 'constructor', 'v9.9.9']) {
