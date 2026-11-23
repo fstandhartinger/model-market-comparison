@@ -8,6 +8,7 @@ import ts from 'typescript';
 import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { JEV_ARCHIVE_BOARD_VERSIONS, readJevArchiveBoardProps } from '../lib/jevbench-archive-board-input.mjs';
+import { JEV_LEGACY_ARCHIVE_VERSIONS } from '../lib/jevbench-archive-legacy-input.mjs';
 import { jevArchiveComparisonCategories } from '../lib/jevbench-archive-board-view.mjs';
 register('./jevbench-archive-loader-hooks.mjs', import.meta.url);
 const { GET, generateStaticParams, dynamic, dynamicParams } = await import('../app/api/jevbench/[version]/board/route.ts');
@@ -49,12 +50,39 @@ function findBoard(node, componentName = 'JevBenchV16Board') {
   }
   return null;
 }
+// Capture the original note list from the same page invocation used for the props proof.
+// The only extra archive edit replaces the exact cumulative-note expression in 21 pages.
+function originalNotes(source, file) {
+  const parsed = ts.createSourceFile(file, source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
+  let match;
+  function visit(node) {
+    if (ts.isJsxExpression(node) && node.expression && ts.isCallExpression(node.expression)) {
+      const access = node.expression.expression;
+      if (ts.isPropertyAccessExpression(access) && access.name.text === 'map' && ts.isIdentifier(access.expression) && ['notes', 'measurementNotes'].includes(access.expression.text)) {
+        assert.ok(!match, 'one original cumulative note list');
+        match = { name: access.expression.text, expression: node.getText(parsed) };
+      }
+    }
+    ts.forEachChild(node, visit);
+  }
+  visit(parsed);
+  if (!match) return null;
+  const fn = parsed.statements.find(node => ts.isFunctionDeclaration(node) && node.modifiers?.some(m => m.kind === ts.SyntaxKind.DefaultKeyword));
+  const result = fn?.body.statements.find(ts.isReturnStatement);
+  assert.ok(result?.expression);
+  return { ...match, instrumented: source.slice(0, result.expression.getStart(parsed)) + `{ tree: (${result.expression.getText(parsed)}), originalNotes: ${match.name} }` + source.slice(result.expression.end) };
+}
 const legacyProps = new Map();
 for (const version of JEV_ARCHIVE_BOARD_VERSIONS) {
   test(`${version}: static JSON exactly preserves every original board prop and comparison category`, async () => {
     const file = `app/jev-models/${version}/page.tsx`;
     const source = baseline.files[file];
-    const tree = await compile(source, file).default();
+    const page = await readFile(new URL('../' + file, import.meta.url), 'utf8');
+    const deferred = page.includes('<JevBenchArchiveNotes ');
+    const notes = deferred ? originalNotes(source, file) : null;
+    assert.ok(!deferred || notes, 'deferred notes have an exact original list');
+    const result = await compile(notes?.instrumented ?? source, file).default();
+    const tree = notes ? result.tree : result;
     let old = findBoard(tree);
     if (!old) {
       const routeProps = findBoard(tree, 'JevBenchV16ReleaseRoute');
@@ -71,8 +99,11 @@ for (const version of JEV_ARCHIVE_BOARD_VERSIONS) {
     const json = await response.json();
     assert.deepEqual(json.props, normalize(old));
     assert.deepEqual(json.comparisonCategories, normalize(jevArchiveComparisonCategories(old)));
-    const page = await readFile(new URL('../' + file, import.meta.url), 'utf8');
-    assert.equal(page.replaceAll('JevBenchArchiveBoard', 'JevBenchV16Board').replace('components/JevBenchV16Board', 'components/JevBenchV16Board').replace(` version="${version}"`, ''), source, 'only wrapper import/name and version changed');
+    if (notes) assert.deepEqual(json.props.artifact.measurement_notes, normalize(result.originalNotes), 'every deferred original paragraph is unchanged in the same static JSON');
+    const restored = notes ? page
+      .replace("import { JevBenchArchiveNotes } from '../../../components/JevBenchArchiveNotes';\n", '')
+      .replace(`<JevBenchArchiveNotes version="${version}" notes={${notes.name}} />`, notes.expression) : page;
+    assert.equal(restored.replaceAll('JevBenchArchiveBoard', 'JevBenchV16Board').replace('components/JevBenchV16Board', 'components/JevBenchV16Board').replace(` version="${version}"`, ''), source, 'only wrapper import/name and version changed');
     legacyProps.set(version, old);
   });
 }
@@ -80,7 +111,7 @@ for (const version of JEV_ARCHIVE_BOARD_VERSIONS) {
 test('static route publishes only the explicit archive allowlist', async () => {
   assert.equal(JEV_ARCHIVE_BOARD_VERSIONS.length, 86);
   assert.equal(dynamic, 'force-static'); assert.equal(dynamicParams, false);
-  assert.deepEqual(generateStaticParams(), JEV_ARCHIVE_BOARD_VERSIONS.map(version => ({ version })));
+  assert.deepEqual(generateStaticParams(), [...JEV_ARCHIVE_BOARD_VERSIONS, ...JEV_LEGACY_ARCHIVE_VERSIONS].map(version => ({ version })));
   for (const version of ['board-open', '../v1.8.20', 'constructor', 'v9.9.9']) {
     assert.equal(await readJevArchiveBoardProps(version), null);
     assert.equal((await GET(new Request('http://localhost'), { params: Promise.resolve({ version }) })).status, 404);
@@ -122,7 +153,7 @@ test('client renderer preserves original full-board markup across the three rele
 
 test('full-board browser module graph contains no Node built-ins or server-only modules', async () => {
   const { stat } = await import('node:fs/promises');
-  const pending = [new URL('../components/JevBenchV16Board.tsx', import.meta.url)];
+  const pending = ['JevBenchV16Board.tsx', 'JevBenchArchiveLoader.tsx', 'JevBenchArchiveNotesLoader.tsx'].map(file => new URL('../components/' + file, import.meta.url));
   const seen = new Set();
   while (pending.length) {
     const url = pending.pop();

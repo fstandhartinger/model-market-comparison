@@ -7,7 +7,7 @@ import { readFileSync } from 'node:fs';
 
 const read = (p) => readFileSync(new URL(p, import.meta.url), 'utf8');
 const release = read('../components/JevBenchV15ReleasePage.tsx');
-const preview = read('../components/JevBenchV15Preview.tsx');
+const preview = read('../components/JevBenchV15View.tsx');
 const livePage = read('../app/jev-models/page.tsx');
 const pinnedPage = read('../app/jev-models/v1.5.0/page.tsx');
 const types = read('../components/jevTypes.ts');

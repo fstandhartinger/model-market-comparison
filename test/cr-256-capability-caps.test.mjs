@@ -163,7 +163,7 @@ test('CR-256: client ranking exposes caps, custom notes, and URL reads/writes; s
   assert.match(helpers, /params.get\('costcap'\)/); assert.match(helpers, /params.get\('latcap'\)/);
   assert.doesNotMatch(source, /export function jevClassView/);
   assert.match(read('../components/jevClassView.ts'), /export function jevClassView/);
-  for (const importer of ['../components/JevBenchV15Preview.tsx', '../app/jev-models/multimodal-preview/page.tsx', '../app/jev-models/v1.4.2.2/page.tsx']) {
+  for (const importer of ['../components/JevBenchV15View.tsx', '../app/jev-models/multimodal-preview/page.tsx', '../app/jev-models/v1.4.2.2/page.tsx']) {
     assert.match(read(importer), /import \{ jevClassView \} from '[^']*\/jevClassView'/);
   }
 });

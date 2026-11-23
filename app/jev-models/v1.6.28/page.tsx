@@ -1,3 +1,4 @@
+import { JevBenchArchiveNotes } from '../../../components/JevBenchArchiveNotes';
 import { notFound } from 'next/navigation';
 import { readOptionalJevbenchV1628Release, v1628BoardInput } from '../../../lib/jevbench-v1628-release.mjs';
 import { historicalCatalogue } from '../../../lib/jevbench-v162-release.mjs';
@@ -45,7 +46,7 @@ export default async function JevModelsV1628Page() {
       <p className="mt-2"><strong>PurpleMIST-Flash-1.0 (Olaverse).</strong> A public submission (Qwen3.5-9B-Base with a merged LoRA and a pointer head) served by the author&rsquo;s own code on one rented RTX 6000 Ada. It answered 1,485 of 1,500; the 15 items over the author&rsquo;s own 65,536-token limit are scored as wrong answers. The frozen pricing path has no market-listing decision for its declared base Qwen/Qwen3.5-9B-Base, so it has no Cost, no composite and no rank, the same treatment as jevora-9b-v1 and kev-9b-v2. Its server reports no token usage, so its scored copy carries the offline input counts accepted for its sibling PurpleMIST-Mini-1.0; nothing else differs from the raw.</p>
       <p className="mt-2">The carried listed-but-not-ranked rows keep their treatment, and <strong>reflex-instinct-0.6b remains listed but not ranked</strong>, as required by deputy decision #18761: its Speed figure is non-official, and the composite weights Speed. The collapsed &ldquo;All data&rdquo; table may show the scorer&rsquo;s composite and a Jev-class verdict for an unranked row; neither is an official placement.</p>
       <p className="mt-2">All full-draw rows were scored in one invocation with O1S, 1,000 bootstrap samples, seed 16 and the frozen v1.6.10 field median, so every earlier row keeps its point score, axes, capability and cost. Some earlier confidence intervals move because the scorer seeds each row&rsquo;s resample by its position in the sorted roster. No rank or score was sent to any model author.</p>
-      <div className="mt-3" data-bh-jev1628-measurement-notes>{measurementNotes.map((note, index) => <p className="mt-2" key={index}>{note}</p>)}</div>
+      <div className="mt-3" data-bh-jev1628-measurement-notes><JevBenchArchiveNotes version="v1.6.28" notes={measurementNotes} /></div>
     </section>
     <JevHistoryLazy />
   </>;

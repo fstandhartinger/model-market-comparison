@@ -1,3 +1,4 @@
+import { JevBenchArchiveNotes } from '../../../components/JevBenchArchiveNotes';
 import { notFound } from 'next/navigation';
 import { readOptionalJevbenchV1643Release, v1643BoardInput } from '../../../lib/jevbench-v1643-release.mjs';
 import { JevBenchArchiveBoard } from '../../../components/JevBenchArchiveBoard';
@@ -21,5 +22,5 @@ export default async function JevModelsV1643Page() {
  carry={{...release.historical.carry,rows:[]}} carrySha256={release.historical.carrySha256} previousKeys={historicalCatalogue(release.historical.artifact, release.historical.carry).map(row => row.key)} scope="all" />
  <section className="mt-10 max-w-4xl" data-bh-jev1643-method><h2 className="text-2xl font-bold">What changed in v1.6.43</h2>
  <p>{JEVBENCH_COST_RULE} {JEVBENCH_COST_RULE_HISTORY}</p>
- {notes.map((note,index)=><p className="mt-2" key={index}>{note}</p>)}</section><JevHistoryLazy /></>;
+ <JevBenchArchiveNotes version="v1.6.43" notes={notes} /></section><JevHistoryLazy /></>;
 }

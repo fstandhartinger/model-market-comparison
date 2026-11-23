@@ -1,3 +1,5 @@
+import { JevBenchLegacyArchiveProvider } from '../../../components/JevBenchLegacyArchiveProvider';
+import { JevBenchLegacyArchiveWidget } from '../../../components/JevBenchLegacyArchive';
 import type { Metadata } from 'next';
 import { readJevbenchV14, jevbenchV14View } from '../../../lib/jevbench-v14.mjs';
 import { JevModelsV14Board } from '../../../components/JevModelsV14';
@@ -40,7 +42,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function JevModelsV14Page() {
   const view = await pinnedView();
-  return <>
+  return <JevBenchLegacyArchiveProvider version="v1.4" key="v1.4"><>
     <header className="bh-page-head">
       <p className="bh-eyebrow" data-bh-jev-frozen-version>Frozen JevBench release {view.revision}</p>
       <h1 className="mt-1 text-3xl font-bold tracking-tight">JevBench {view.revision} — frozen results</h1>
@@ -53,7 +55,7 @@ export default async function JevModelsV14Page() {
         <a className="text-accent underline" href="/jev-models" data-bh-jev-live-link>View live board</a>
       </p>
     </header>
-    <JevModelsV14Board artifact={view.artifact} sha256={view.sha256} />
+    <JevBenchLegacyArchiveWidget version="v1.4" part="board" artifact={view.artifact} sha256={view.sha256} />
     <PageJsonLd meta={await generateMetadata()} />
-  </>;
+  </></JevBenchLegacyArchiveProvider>;
 }

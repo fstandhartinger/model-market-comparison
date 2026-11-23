@@ -10,7 +10,7 @@ import { readFileSync } from 'node:fs';
 import { jevV15BoardRow } from '../lib/jevbench-v15-board.mjs';
 
 const read = (p) => readFileSync(new URL(p, import.meta.url), 'utf8');
-const preview = read('../components/JevBenchV15Preview.tsx');
+const preview = read('../components/JevBenchV15View.tsx');
 const board = read('../components/JevBoardInteractive.tsx');
 const shared = read('../components/JevBoardShared.tsx');
 const axesViews = read('../components/JevAxesViews.tsx');

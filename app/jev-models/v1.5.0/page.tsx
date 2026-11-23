@@ -1,3 +1,5 @@
+import { JevBenchLegacyArchiveProvider } from '../../../components/JevBenchLegacyArchiveProvider';
+import { JevBenchLegacyArchiveWidget } from '../../../components/JevBenchLegacyArchive';
 import type { Metadata } from 'next';
 import { readJevbenchV150Release } from '../../../lib/jevbench-v15-release.mjs';
 import { JevBenchV15ReleasePage } from '../../../components/JevBenchV15ReleasePage';
@@ -28,8 +30,8 @@ export default async function JevModelsV150Page() {
   const { artifact, sha256 } = await currentRelease();
   // CR-205: the frozen v1.5.0 page keeps the same section structure as the live board, ending with the
   // revision history (the historical v1.3.0 board, loaded lazily).
-  return <>
+  return <JevBenchLegacyArchiveProvider version="v1.5.0" key="v1.5.0"><>
     <JevBenchV15ReleasePage artifact={artifact} sha256={sha256} />
     <JevHistoryLazy />
-  </>;
+  </></JevBenchLegacyArchiveProvider>;
 }

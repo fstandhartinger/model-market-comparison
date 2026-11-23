@@ -1,3 +1,4 @@
+import { JevBenchArchiveNotes } from '../../../components/JevBenchArchiveNotes';
 import { notFound } from 'next/navigation';
 import { readOptionalJevbenchV1630Release, v1630BoardInput } from '../../../lib/jevbench-v1630-release.mjs';
 import { JEVBENCH_COST_RULE, JEVBENCH_COST_RULE_HISTORY } from '../../../lib/jevbench-cost-rule.mjs';
@@ -46,7 +47,7 @@ export default async function JevModelsV1630Page() {
           <tbody>{priced.map(r => <tr key={r.key}><td className="pr-4">{r.display}</td><td className="pr-4 text-right">{usd(r.cost?.usd_per_1000)}</td><td className="text-right">{usd(r.cost?.common_basis?.usd_per_1000_all_items)}</td></tr>)}</tbody></table>
       </details>
       <p className="mt-2" data-bh-jev-open-reference-note><strong>Display only.</strong> Jev 1.14.0 (TypeSafe AI&apos;s current version) is now also shown as a second unranked reference row on the open-weights board, next to Jev 1.13.0, which stays the reference that defines the Jev-class caps. Jev 1.14.0 stays ranked on the API board. This display change recomputes no score, cap or rank and changes no ranking list.</p>
-      <div className="mt-3" data-bh-jev1630-measurement-notes>{measurementNotes.map((note, index) => <p className="mt-2" key={index}>{note}</p>)}</div>
+      <div className="mt-3" data-bh-jev1630-measurement-notes><JevBenchArchiveNotes version="v1.6.30" notes={measurementNotes} /></div>
     </section>
     <JevHistoryLazy />
   </>;

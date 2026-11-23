@@ -1,3 +1,4 @@
+import { JevBenchArchiveNotes } from '../../../components/JevBenchArchiveNotes';
 import { notFound } from 'next/navigation';
 import { readOptionalJevbenchV1624Release, v1624BoardInput } from '../../../lib/jevbench-v1624-release.mjs';
 import { historicalCatalogue } from '../../../lib/jevbench-v162-release.mjs';
@@ -46,7 +47,7 @@ export default async function JevModelsV1624Page() {
       <p className="mt-2">The six <strong>re-measured</strong> systems ran on one rented RTX 5090, not the RTX PRO 6000 or H100 of their earlier runs, so their Speed is as measured on that card and <strong>not comparable</strong> with the earlier figures. Decision 2.0 Lux 9B and Noma supersede their historical v1.5 measurements, which stay on the v1.5 supplement page as the record of the old protocol. <strong>Imajev-9B is over the official cost cap</strong>: its cost counts every one of the four option-order passes it computes per question, so it is ranked on the composites but left out of the official cost-capped views; the server-reported basis is a footnote in the notes. Noma truncates long inputs and answers every item; the others refuse or fail the 15 longest items, which are <strong>scored as wrong answers</strong>. <strong>Bongard-mini</strong> is listed with its measured Intelligence, Calibration, Capability and Speed but has no Cost axis, no Composite and no rank in any view.</p>
       <p className="mt-2">The carried Nemotron Deciffusion 8B v2 and Trio-Spark v1.3 rows keep their published listed-but-not-ranked treatment. <strong>reflex-instinct-0.6b remains listed but not ranked</strong>, as required by deputy decision #18761: its Speed figure is non-official, and the composite weights Speed. The collapsed &ldquo;All data&rdquo; table may show the scorer&rsquo;s composite and a Jev-class verdict for an unranked row; neither is an official placement.</p>
       <p className="mt-2">All full-draw rows were scored in one invocation with O1S, 1,000 bootstrap samples, seed 16 and the frozen v1.6.10 field median, so every earlier row keeps its point score, axes, capability and cost. Some earlier confidence intervals move because the scorer seeds each row&rsquo;s resample by its position in the sorted roster. No rank or score was sent to any model author.</p>
-      <div className="mt-3" data-bh-jev1624-measurement-notes>{measurementNotes.map((note, index) => <p className="mt-2" key={index}>{note}</p>)}</div>
+      <div className="mt-3" data-bh-jev1624-measurement-notes><JevBenchArchiveNotes version="v1.6.24" notes={measurementNotes} /></div>
     </section>
     <JevHistoryLazy />
   </>;

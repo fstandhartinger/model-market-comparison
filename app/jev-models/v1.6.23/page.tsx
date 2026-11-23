@@ -1,3 +1,4 @@
+import { JevBenchArchiveNotes } from '../../../components/JevBenchArchiveNotes';
 import { notFound } from 'next/navigation';
 import { readOptionalJevbenchV1623Release, v1623BoardInput } from '../../../lib/jevbench-v1623-release.mjs';
 import { historicalCatalogue } from '../../../lib/jevbench-v162-release.mjs';
@@ -47,7 +48,7 @@ export default async function JevModelsV1623Page() {
       <p className="mt-2"><strong>Nimble-v4</strong> ({usd(nimble)} per 1,000 decisions) is inside the official cost cap. <strong>Nimble-v4-max</strong> ({usd(nimbleMax)} per 1,000 decisions) is <strong>over the official cost cap</strong>: it is ranked on the composites and in the cost-relaxed views, and the official-caps views leave it out. Both answered all 1,500 items. Hosted API figures measure the vendor endpoint; deployed weights were not independently inspected.</p>
       <p className="mt-2">The prices count through a scoped update of the frozen pricing module that adds exactly these three systems and changes no other row&rsquo;s price. Free credit and free-plan usage are not used: each row is priced at the published tariff. <strong>reflex-instinct-0.6b remains listed but not ranked</strong> (deputy decision #18761), and Nemotron Deciffusion 8B v2 and Trio-Spark v1.3 stay listed without a price. The collapsed &ldquo;All data&rdquo; table may show the scorer&rsquo;s composite and a Jev-class verdict for an unranked row; neither is an official placement.</p>
       <p className="mt-2">All full-draw rows were scored in one invocation with O1S, 1,000 bootstrap samples, seed 16 and the frozen v1.6.10 field median. No rank or score was sent to any model author.</p>
-      <div className="mt-3" data-bh-jev1623-measurement-notes>{measurementNotes.map((note, index) => <p className="mt-2" key={index}>{note}</p>)}</div>
+      <div className="mt-3" data-bh-jev1623-measurement-notes><JevBenchArchiveNotes version="v1.6.23" notes={measurementNotes} /></div>
     </section>
     <JevHistoryLazy />
   </>;

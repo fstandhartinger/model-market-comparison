@@ -56,7 +56,7 @@ test('addendum rows carry a generic v1.5 roster label, including A2 without impl
   assert.doesNotThrow(() => validateJevbenchV15Preview(ok));
   const bad = clone(artifact); bad.systems[0].addendum = { id: 'A2', release: 'v1.5', label: 'v1.5.1 addendum A2' };
   assert.throws(() => validateJevbenchV15Preview(bad), /addendum/);
-  assert.match(read('components/JevBenchV15Preview.tsx'), /row\.addendum\.label/);
+  assert.match(read('components/JevBenchV15View.tsx'), /row\.addendum\.label/);
 });
 
 test('option weights: B = 40/20/20/20 with floor 50; C floor 60', () => {
@@ -109,7 +109,7 @@ test('hidden What-If Lab: noindex, unlinked, aggregate-only; addendum rows liste
   assert.match(html, /<th>What-If #<\/th>/);
   assert.match(html, /What-If # can include measured addendum rows/);
   assert.match(html, /Before every release we review the leaderboard for anomalies and close loopholes with general, documented rules\./);
-  const component = read('components/JevBenchV15Preview.tsx');
+  const component = read('components/JevBenchV15View.tsx');
   // F-210 (pass 39): the two placements moved out of a sentence per row into a column per option. Both facts are still
   // stated for every addendum row — pinned at the heading that names the column and at the cell that prints the number.
   assert.match(component, /data-bh-jev15-addendum-table/);
@@ -186,7 +186,7 @@ test('F-206: on the real artifact every ranked bar has an A interval to draw and
 });
 
 test('v1.5 headline disclosure: A is equal-axis/equal-type, B is secondary, and owner method note is present', () => {
-  const src = read('components/JevBenchV15Preview.tsx');
+  const src = read('components/JevBenchV15View.tsx');
   assert.match(src, /const headline = a\.headline/);
   assert.match(src, /A is the official headline: equal 25\/25\/25\/25 axis weights/);
   assert.match(src, /B remains the secondary 40\/20\/20\/20 axis-weight view/);
@@ -197,7 +197,7 @@ test('v1.5 headline disclosure: A is equal-axis/equal-type, B is secondary, and 
 });
 
 test('F-206: the preview component says the majority once and marks only the tariff exception', () => {
-  const src = read('components/JevBenchV15Preview.tsx');
+  const src = read('components/JevBenchV15View.tsx');
   assert.doesNotMatch(src, /est \? '~' : ''/, 'the tilde is gone from the cost cell');
   assert.match(src, /data-bh-jev15-cost-cell/);
   assert.match(src, /const COST_LEGEND = 'Costs are estimates \(est\.\) unless marked tariff\.';/);

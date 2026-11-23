@@ -131,7 +131,7 @@ test('CR-439 coverage: every latency surface uses the shared helper; method note
     'components/JevComparisonPage.tsx': /jevLatencyText/,
     'components/JevBenchRankingTable.tsx': /JevLatencyValue/,
     'components/JevV15SystemDetail.tsx': /jevLatencyView/,
-    'components/JevBenchV15Preview.tsx': /jevLatencyView/,
+    'components/JevBenchV15View.tsx': /jevLatencyView/,
     'app/jev-models/[system]/page.tsx': /JevLatencyDetail/,
     'app/image-jev-bench/[system]/page.tsx': /jevLatencyView/,
     'lib/jevbench-agent-feed.mjs': /jevLatencyJsonFields/,

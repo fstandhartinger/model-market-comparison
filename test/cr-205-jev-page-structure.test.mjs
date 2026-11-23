@@ -25,7 +25,7 @@ const [page, v150Page, v151Page, v152Page, v153Page, v154Page, v155Page, v156Pag
   read('../app/jev-models/v1.5.6/page.tsx'),
   read('../app/jev-models/v1.5.7/page.tsx'),
   read('../components/JevBenchV15ReleasePage.tsx'),
-  read('../components/JevBenchV15Preview.tsx'),
+  read('../components/JevBenchV15View.tsx'),
   read('../components/JevCapabilityLazy.tsx'),
   read('../app/jev-models/v1.4.2.2/page.tsx'),
   read('../app/jev-models/v1.4.2.1/page.tsx'),
@@ -88,10 +88,10 @@ test('CR-205: the v1.5 release page keeps every required section, in the v1.4.2.
   assert.match(releaseComponent, /'@type': 'Dataset'|'@type': 'FAQPage'/); // the structured data the v1.4.2.2 page carried
 
   // The complete section order, restored from v1.4.2.2, inside JevBenchV15's render:
-  const render = boardSource.slice(boardSource.indexOf('export function JevBenchV15('));
+  const render = boardSource.slice(boardSource.indexOf('export function JevBenchV15View('));
   ordered(render, [
     '<JevCapabilityRanking',   // 1. capability bar chart
-    '<JevBoardIntentLinks',
+    '{guides}',
     '<JevBubbleCharts',       // 2. synchronized Capability-vs-cost and Capability-vs-speed charts
     'data-bh-jev15-whatif',   //    the What-If link to the weight sliders
     '<JevScoreChart',         // 3. main composite score chart (sliders, presets, View-by)
@@ -225,7 +225,7 @@ test('v1.5.2 adds the verified Nemotron A3 row and leaves every top five unchang
 
 test('CR-205: the frozen v1.4.2.2 page keeps its complete structure', () => {
   ordered(page1422, [
-    '<JevCapabilityRanking', '<JevBoardIntentLinks', '<JevBubbleCharts', '<JevModelsV14Board',
+    '<JevBenchLegacyArchiveWidget version="v1.4.2.2" part="capability"', '<JevBoardIntentLinks', '<JevBenchLegacyArchiveWidget version="v1.4.2.2" part="bubbles"', '<JevBenchLegacyArchiveWidget version="v1.4.2.2" part="board"',
     'data-bh-jev14-findings', 'jev-alternatives-heading', 'data-bh-jev-costs', 'jev-not-measured',
     '<details id="method"', '<details id="limits"', '<details id="credit"',
     '<JevCapabilityLazy', '<JevContextLazy', '<JevHistoryLazy />',
@@ -241,11 +241,11 @@ test('CR-205: every older versioned page keeps its board and disclosures', () =>
     ['v1.4.2.1', page1421], ['v1.4.2', page142], ['v1.4.1', page141], ['v1.4', page140],
   ];
   for (const [name, source] of modernRoutes) {
-    assert.match(source, /<JevModelsV14Board artifact=\{view\.artifact\}/, `${name} keeps the composite board`);
+    assert.match(source, /<JevBenchLegacyArchiveWidget version=\"[^\"]+\" part=\"board\" artifact=\{view\.artifact\}/, `${name} keeps the composite board`);
     assert.match(source, /data-bh-jev-version-share/, `${name} keeps the share/live links`);
   }
   for (const [name, source] of [['v1.4.2.1', page1421], ['v1.4.2', page142], ['v1.4.1', page141]]) {
-    assert.match(source, /<JevCapabilityChart systems=\{view\.systems\}/, `${name} keeps the capability charts`);
+    assert.match(source, /<JevBenchLegacyArchiveWidget version=\"[^\"]+\" part=\"capability\" systems=\{view\.systems\}/, `${name} keeps the capability charts`);
   }
   assert.match(page140, /data-bh-jev-frozen-version/, 'v1.4.0 remains its pinned historical release');
   ordered(v14BoardSource, [

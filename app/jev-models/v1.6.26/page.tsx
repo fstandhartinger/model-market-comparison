@@ -1,3 +1,4 @@
+import { JevBenchArchiveNotes } from '../../../components/JevBenchArchiveNotes';
 import { notFound } from 'next/navigation';
 import { readOptionalJevbenchV1626Release, v1626BoardInput } from '../../../lib/jevbench-v1626-release.mjs';
 import { historicalCatalogue } from '../../../lib/jevbench-v162-release.mjs';
@@ -47,7 +48,7 @@ export default async function JevModelsV1626Page() {
       <p className="mt-2"><strong>Nimble-v4-max re-priced.</strong> Bespoke Labs&rsquo; public pricing page now lists Nimble-v4-max at USD 0.04 per million input tokens (it listed 0.09 earlier the same day), output free. The row keeps its measured values; at the new price it costs {usd(nim)} per 1,000 decisions, inside the official cost cap, so its Cost axis and composites rise and it now appears in the official cost-capped views. It ranks {nim?.ranks?.A ?? '–'} of {artifact.n_ranked} on this draw&rsquo;s composite. <strong>Nimble-v4</strong> is unchanged: Bespoke told us in a chat on 16 Oct 2026 that it is deprecated; its pricing page still lists it (only nimble-v3 is marked deprecated there), so it stays ranked and priced.</p>
       <p className="mt-2">The carried Nemotron Deciffusion 8B v2, Trio-Spark v1.3 and Bongard-mini rows keep their published listed-but-not-ranked treatment. <strong>reflex-instinct-0.6b remains listed but not ranked</strong>, as required by deputy decision #18761: its Speed figure is non-official, and the composite weights Speed.</p>
       <p className="mt-2">All full-draw rows were scored in one invocation with O1S, 1,000 bootstrap samples, seed 16 and the frozen v1.6.10 field median, so every earlier row keeps its point score, axes, capability and cost, except Nimble-v4-max&rsquo;s cost and what follows from it. Some earlier confidence intervals move because the scorer seeds each row&rsquo;s resample by its position in the sorted roster. No rank or score was sent to any model author.</p>
-      <div className="mt-3" data-bh-jev1626-measurement-notes>{measurementNotes.map((note, index) => <p className="mt-2" key={index}>{note}</p>)}</div>
+      <div className="mt-3" data-bh-jev1626-measurement-notes><JevBenchArchiveNotes version="v1.6.26" notes={measurementNotes} /></div>
     </section>
     <JevHistoryLazy />
   </>;

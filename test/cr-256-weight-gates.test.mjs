@@ -66,6 +66,6 @@ test('CR-256: the board names the gates in the row tag, the weights panel and th
   assert.match(board, /data-bh-jev-gates-applied/);
   assert.match(board, /\+ Penalties applied:/);
   assert.match(board, /gate=\{gates\.get\(row\.key\) \?\? null\}/);
-  assert.match(read('../components/JevBenchV15Preview.tsx'), /data-bh-jev-gates-method/);
+  assert.match(read('../components/JevBenchV15View.tsx'), /data-bh-jev-gates-method/);
   assert.match(read('../app/jev-models/multimodal-preview/page.tsx'), /gate ×…/);
 });

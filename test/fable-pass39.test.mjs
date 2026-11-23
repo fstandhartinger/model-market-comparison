@@ -6,7 +6,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 
-const component = readFileSync(new URL('../components/JevBenchV15Preview.tsx', import.meta.url), 'utf8');
+const component = readFileSync(new URL('../components/JevBenchV15View.tsx', import.meta.url), 'utf8');
 
 test('F-206(d): the leader element renders the built sentence, never the artifact\'s bare leader_wording', () => {
   const el = component.match(/data-bh-jev15-leader>\{([^}]*)\}<\/p>/);

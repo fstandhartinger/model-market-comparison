@@ -1,4 +1,5 @@
 'use client';
+import { fetchJevArchiveData } from './JevBenchArchiveData';
 import { useState, type ComponentType, type ComponentProps } from 'react';
 import type { JevBenchV16Board } from './JevBenchV16Board';
 
@@ -13,11 +14,9 @@ export function JevBenchArchiveLoader({ version }: { version: string }) {
     if (loading) return;
     setLoading(true); setError(false);
     try {
-      const [response, { JevBenchV16Board: Board }] = await Promise.all([
-        fetch(jsonHref), import('./JevBenchV16Board'),
+      const [data, { JevBenchV16Board: Board }] = await Promise.all([
+        fetchJevArchiveData(version), import('./JevBenchV16Board'),
       ]);
-      if (!response.ok) throw new Error('Archive unavailable');
-      const data = await response.json();
       if (!data.props?.artifact || data.props.artifact.revision !== version || !data.comparisonCategories) throw new Error('Invalid archive');
       setLoaded({ Board, props: { ...data.props, comparisonCategories: data.comparisonCategories, hideMethod: true } });
     } catch { setError(true); }

@@ -261,7 +261,7 @@ test('CR-251 slow-schedule notice: not at rank 10, shown from rank 11', () => {
 
 test('CR-251 site wiring: sitemap, menus, benchmark-page links and the re-evaluation paragraph', async () => {
   const [sitemap, nav, jev, release, image, audio, request] = await Promise.all([
-    read('../app/sitemap.ts'), read('../components/Nav.tsx'), read('../components/JevBenchV15Preview.tsx'),
+    read('../app/sitemap.ts'), read('../components/Nav.tsx'), read('../components/JevBenchV15View.tsx'),
     read('../components/JevBenchV15ReleasePage.tsx'), read('../app/jev-models/multimodal-preview/page.tsx'),
     read('../app/audio-jev-bench/page.tsx'), read('../app/submit/page.tsx'),
   ]);
