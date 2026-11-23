@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation';
 import { readOptionalJevbenchV164Release, v164BoardInput } from '../../../lib/jevbench-v164-release.mjs';
 import { historicalCatalogue } from '../../../lib/jevbench-v162-release.mjs';
-import { JevBenchV16Board } from '../../../components/JevBenchV16Board';
+import { JevBenchArchiveBoard } from '../../../components/JevBenchArchiveBoard';
 import { JevBenchReleaseVersionNav } from '../../../components/JevBenchReleaseVersionNav';
 import { JevHistoryLazy } from '../../../components/JevHistoryLazy';
 import { withPublicAdapterIds } from '../../../lib/jevbench-v15-release.mjs';
@@ -27,7 +27,7 @@ export default async function JevModelsV164Page() {
       <p className="mt-3 max-w-3xl">Same-draw addendum to the published five-model v1.6.3: {release.artifact.systems.length} completed preregistered paid submissions answered the same fresh 1,500-decision draw with methodology v1.6. Four native systems are ranked; {wrapperRows.length} measured {wrapperRows.length === 1 ? 'wrapper is' : 'wrappers are'} listed below the rankings.  Historical scores retain their original dates and are listed separately below.</p>
       <p className="bh-muted mt-2 text-xs break-all"><a className="text-accent underline" href="/api/jevbench/v1.6.4">Aggregate results JSON</a> · SHA-256 {release.sha256} · <a className="text-accent underline" href="/jev-models/v1.6.3">Previous v1.6.3 five-system release</a> · <a className="text-accent underline" href="/jev-models">Full historical board</a></p>
     </header>
-    <JevBenchV16Board artifact={withPublicAdapterIds(board.artifact)} sha256={release.sha256}
+    <JevBenchArchiveBoard version="v1.6.4" artifact={withPublicAdapterIds(board.artifact)} sha256={release.sha256}
       categories={board.categories} categoriesSha256={release.categoriesSha256}
       carry={{ ...historical.carry, rows: [] }} carrySha256={historical.carrySha256}
       previousKeys={oldKeys} scope="all" />

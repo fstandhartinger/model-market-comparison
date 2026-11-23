@@ -263,7 +263,7 @@ test('CR-205: fresh native v1.6.2 uses the complete shared board, both radars an
   const board = await read('../components/JevBenchV16Board.tsx');
   assert.match(route, /readOptionalJevbenchV162Release\(\)/);
   assert.match(route, /if \(!release\) notFound\(\)/);
-  ordered(route, ['<JevBenchV16Board', 'data-bh-jev162-history', '<JevHistoryLazy'], 'fresh native page');
+  ordered(route, ['<JevBenchArchiveBoard', 'data-bh-jev162-history', '<JevHistoryLazy'], 'fresh native page');
   assert.match(route, /historicalCatalogue\(historical.artifact, historical.carry\)/);
   for (const section of ['<JevBenchV16Charts', '<JevScoreChart', '<JevCompareV15', '<JevV15AllDataGrid', '<Method']) {
     assert.ok(board.includes(section), `shared v1.6 board keeps ${section}`);
@@ -279,7 +279,7 @@ test('CR-205: fail-closed v1.6.3 addendum uses the complete shared board, wrappe
   const route = await read('../app/jev-models/v1.6.3/page.tsx');
   assert.match(route, /readOptionalJevbenchV163Release\(\)/);
   assert.match(route, /if \(!release\) notFound\(\)/);
-  ordered(route, ['<JevBenchV16Board', 'data-bh-jev163-addendum-method', 'data-bh-jev163-wrappers', 'data-bh-jev163-history', '<JevHistoryLazy'], 'v1.6.3 addendum page');
+  ordered(route, ['<JevBenchArchiveBoard', 'data-bh-jev163-addendum-method', 'data-bh-jev163-wrappers', 'data-bh-jev163-history', '<JevHistoryLazy'], 'v1.6.3 addendum page');
   assert.match(route, /historicalCatalogue\(historical.artifact, historical.carry\)/);
 });
 
@@ -287,7 +287,7 @@ test('CR-205: v1.6.4 retains shared board, both wrappers below ranking, method a
   const route = await read('../app/jev-models/v1.6.4/page.tsx');
   assert.match(route, /readOptionalJevbenchV164Release\(\)/);
   assert.match(route, /if \(!release\) notFound\(\)/);
-  ordered(route, ['<JevBenchV16Board', 'data-bh-jev164-addendum-method', 'data-bh-jev164-wrappers', 'data-bh-jev164-history', '<JevHistoryLazy'], 'v1.6.4 full addendum page');
+  ordered(route, ['<JevBenchArchiveBoard', 'data-bh-jev164-addendum-method', 'data-bh-jev164-wrappers', 'data-bh-jev164-history', '<JevHistoryLazy'], 'v1.6.4 full addendum page');
   assert.match(route, /historicalCatalogue\(historical.artifact, historical.carry\)/);
 });
 
@@ -295,7 +295,7 @@ test('CR-205: fail-closed v1.6.5 regular draw uses the shared board, its own met
   const route = await read('../app/jev-models/v1.6.5/page.tsx');
   assert.match(route, /readOptionalJevbenchV165Release\(\)/);
   assert.match(route, /if \(!release\) notFound\(\)/);
-  ordered(route, ['<JevBenchV16Board', 'data-bh-jev165-method', 'data-bh-jev165-measurement-notes', '<JevHistoryLazy'], 'v1.6.5 regular-draw page');
+  ordered(route, ['<JevBenchArchiveBoard', 'data-bh-jev165-method', 'data-bh-jev165-measurement-notes', '<JevHistoryLazy'], 'v1.6.5 regular-draw page');
   assert.match(route, /historicalCatalogue\(historical.artifact, historical.carry\)/);
 });
 
@@ -303,7 +303,7 @@ test('CR-205: fail-closed v1.6.6 same-draw addition uses the shared board, its o
   const route = await read('../app/jev-models/v1.6.6/page.tsx');
   assert.match(route, /readOptionalJevbenchV166Release\(\)/);
   assert.match(route, /if \(!release\) notFound\(\)/);
-  ordered(route, ['<JevBenchV16Board', 'data-bh-jev166-method', 'data-bh-jev166-measurement-notes', '<JevHistoryLazy'], 'v1.6.6 same-draw page');
+  ordered(route, ['<JevBenchArchiveBoard', 'data-bh-jev166-method', 'data-bh-jev166-measurement-notes', '<JevHistoryLazy'], 'v1.6.6 same-draw page');
   assert.match(route, /historicalCatalogue\(historical.artifact, historical.carry\)/);
 });
 
@@ -311,7 +311,7 @@ test('CR-205: fail-closed v1.6.7 same-draw addition uses the shared board, its o
   const route = await read('../app/jev-models/v1.6.7/page.tsx');
   assert.match(route, /readOptionalJevbenchV167Release\(\)/);
   assert.match(route, /if \(!release\) notFound\(\)/);
-  ordered(route, ['<JevBenchV16Board', 'data-bh-jev167-method', 'data-bh-jev167-measurement-notes', '<JevHistoryLazy'], 'v1.6.7 same-draw page');
+  ordered(route, ['<JevBenchArchiveBoard', 'data-bh-jev167-method', 'data-bh-jev167-measurement-notes', '<JevHistoryLazy'], 'v1.6.7 same-draw page');
   assert.match(route, /historicalCatalogue\(historical.artifact, historical.carry\)/);
 });
 
@@ -319,7 +319,7 @@ test('CR-205: fail-closed v1.6.8 same-draw addition uses the shared board, its o
   const route = await read('../app/jev-models/v1.6.8/page.tsx');
   assert.match(route, /readOptionalJevbenchV168Release\(\)/);
   assert.match(route, /if \(!release\) notFound\(\)/);
-  ordered(route, ['<JevBenchV16Board', 'data-bh-jev168-method', 'data-bh-jev168-measurement-notes', '<JevHistoryLazy'], 'v1.6.8 same-draw page');
+  ordered(route, ['<JevBenchArchiveBoard', 'data-bh-jev168-method', 'data-bh-jev168-measurement-notes', '<JevHistoryLazy'], 'v1.6.8 same-draw page');
   assert.match(route, /historicalCatalogue\(historical.artifact, historical.carry\)/);
 });
 
@@ -327,7 +327,7 @@ test('CR-205: fail-closed v1.6.9 same-draw addition uses the shared board, its o
   const route = await read('../app/jev-models/v1.6.9/page.tsx');
   assert.match(route, /readOptionalJevbenchV169Release\(\)/);
   assert.match(route, /if \(!release\) notFound\(\)/);
-  ordered(route, ['<JevBenchV16Board', 'data-bh-jev169-method', 'data-bh-jev169-measurement-notes', '<JevHistoryLazy'], 'v1.6.9 same-draw page');
+  ordered(route, ['<JevBenchArchiveBoard', 'data-bh-jev169-method', 'data-bh-jev169-measurement-notes', '<JevHistoryLazy'], 'v1.6.9 same-draw page');
   assert.match(route, /historicalCatalogue\(historical.artifact, historical.carry\)/);
 });
 
@@ -335,7 +335,7 @@ test('CR-205: fail-closed v1.6.10 first release on the second regular draw uses 
   const route = await read('../app/jev-models/v1.6.10/page.tsx');
   assert.match(route, /readOptionalJevbenchV1610Release\(\)/);
   assert.match(route, /if \(!release\) notFound\(\)/);
-  ordered(route, ['<JevBenchV16Board', 'data-bh-jev1610-method', 'data-bh-jev1610-measurement-notes', '<JevHistoryLazy'], 'v1.6.10 page');
+  ordered(route, ['<JevBenchArchiveBoard', 'data-bh-jev1610-method', 'data-bh-jev1610-measurement-notes', '<JevHistoryLazy'], 'v1.6.10 page');
   assert.match(route, /historicalCatalogue\(historical.artifact, historical.carry\)/);
 });
 
@@ -343,7 +343,7 @@ test('CR-205: fail-closed v1.6.11 same-draw addition uses the shared board, its 
   const route = await read('../app/jev-models/v1.6.11/page.tsx');
   assert.match(route, /readOptionalJevbenchV1611Release\(\)/);
   assert.match(route, /if \(!release\) notFound\(\)/);
-  ordered(route, ['<JevBenchV16Board', 'data-bh-jev1611-method', 'data-bh-jev1611-measurement-notes', '<JevHistoryLazy'], 'v1.6.11 page');
+  ordered(route, ['<JevBenchArchiveBoard', 'data-bh-jev1611-method', 'data-bh-jev1611-measurement-notes', '<JevHistoryLazy'], 'v1.6.11 page');
   assert.match(route, /historicalCatalogue\(historical.artifact, historical.carry\)/);
 });
 
@@ -351,7 +351,7 @@ test('CR-205: fail-closed v1.6.12 same-draw addition uses the shared board, its 
   const route = await read('../app/jev-models/v1.6.12/page.tsx');
   assert.match(route, /readOptionalJevbenchV1612Release\(\)/);
   assert.match(route, /if \(!release\) notFound\(\)/);
-  ordered(route, ['<JevBenchV16Board', 'data-bh-jev1612-method', 'data-bh-jev1612-measurement-notes', '<JevHistoryLazy'], 'v1.6.12 page');
+  ordered(route, ['<JevBenchArchiveBoard', 'data-bh-jev1612-method', 'data-bh-jev1612-measurement-notes', '<JevHistoryLazy'], 'v1.6.12 page');
   assert.match(route, /historicalCatalogue\(historical.artifact, historical.carry\)/);
 });
 
@@ -359,7 +359,7 @@ test('CR-205: fail-closed v1.6.13 same-draw addition uses the shared board, its 
   const route = await read('../app/jev-models/v1.6.13/page.tsx');
   assert.match(route, /readOptionalJevbenchV1613Release\(\)/);
   assert.match(route, /if \(!release\) notFound\(\)/);
-  ordered(route, ['<JevBenchV16Board', 'data-bh-jev1613-method', 'data-bh-jev1613-measurement-notes', '<JevHistoryLazy'], 'v1.6.13 page');
+  ordered(route, ['<JevBenchArchiveBoard', 'data-bh-jev1613-method', 'data-bh-jev1613-measurement-notes', '<JevHistoryLazy'], 'v1.6.13 page');
   assert.match(route, /historicalCatalogue\(historical.artifact, historical.carry\)/);
 });
 
@@ -367,7 +367,7 @@ test('CR-205: fail-closed v1.6.14 same-draw addition uses the shared board, its 
   const route = await read('../app/jev-models/v1.6.14/page.tsx');
   assert.match(route, /readOptionalJevbenchV1614Release\(\)/);
   assert.match(route, /if \(!release\) notFound\(\)/);
-  ordered(route, ['<JevBenchV16Board', 'data-bh-jev1614-method', 'data-bh-jev1614-measurement-notes', '<JevHistoryLazy'], 'v1.6.14 page');
+  ordered(route, ['<JevBenchArchiveBoard', 'data-bh-jev1614-method', 'data-bh-jev1614-measurement-notes', '<JevHistoryLazy'], 'v1.6.14 page');
   assert.match(route, /historicalCatalogue\(historical.artifact, historical.carry\)/);
 });
 
@@ -375,7 +375,7 @@ test('CR-205: fail-closed v1.6.15 three-row same-draw addition uses the shared b
   const route = await read('../app/jev-models/v1.6.15/page.tsx');
   assert.match(route, /readOptionalJevbenchV1615Release\(\)/);
   assert.match(route, /if \(!release\) notFound\(\)/);
-  ordered(route, ['<JevBenchV16Board', 'data-bh-jev1615-method', 'data-bh-jev1615-measurement-notes', '<JevHistoryLazy'], 'v1.6.15 page');
+  ordered(route, ['<JevBenchArchiveBoard', 'data-bh-jev1615-method', 'data-bh-jev1615-measurement-notes', '<JevHistoryLazy'], 'v1.6.15 page');
   assert.match(route, /historicalCatalogue\(historical.artifact, historical.carry\)/);
   // the row that is deliberately not ranked must be named on the page, with the reason, and the page must
   // say what its composite in the full data table does NOT mean
@@ -391,7 +391,7 @@ test('CR-205: fail-closed v1.6.16 one-row same-draw addition uses the shared boa
   const route = await read('../app/jev-models/v1.6.16/page.tsx');
   assert.match(route, /readOptionalJevbenchV1616Release\(\)/);
   assert.match(route, /if \(!release\) notFound\(\)/);
-  ordered(route, ['<JevBenchV16Board', 'data-bh-jev1616-method', 'data-bh-jev1616-measurement-notes', '<JevHistoryLazy'], 'v1.6.16 page');
+  ordered(route, ['<JevBenchArchiveBoard', 'data-bh-jev1616-method', 'data-bh-jev1616-measurement-notes', '<JevHistoryLazy'], 'v1.6.16 page');
   assert.match(route, /historicalCatalogue\(historical.artifact, historical.carry\)/);
   // the new row's two material caveats are on the page itself, not only in the notes
   assert.match(route, /RTX PRO 6000/);
@@ -410,7 +410,7 @@ test('CR-205: fail-closed v1.6.17 same-draw addition uses the shared board, its 
   const route = await read('../app/jev-models/v1.6.17/page.tsx');
   assert.match(route, /readOptionalJevbenchV1617Release\(\)/);
   assert.match(route, /if \(!release\) notFound\(\)/);
-  ordered(route, ['<JevBenchV16Board', 'data-bh-jev1617-method', 'data-bh-jev1617-measurement-notes', '<JevHistoryLazy'], 'v1.6.17 page');
+  ordered(route, ['<JevBenchArchiveBoard', 'data-bh-jev1617-method', 'data-bh-jev1617-measurement-notes', '<JevHistoryLazy'], 'v1.6.17 page');
   assert.match(route, /historicalCatalogue\(historical.artifact, historical.carry\)/);
   // each added row's material caveat is on the page itself, not only in the notes
   assert.match(route, /four sittings/);
@@ -429,7 +429,7 @@ test('CR-205: fail-closed v1.6.18 same-draw addition uses the shared board, its 
   const route = await read('../app/jev-models/v1.6.18/page.tsx');
   assert.match(route, /readOptionalJevbenchV1618Release\(\)/);
   assert.match(route, /if \(!release\) notFound\(\)/);
-  ordered(route, ['<JevBenchV16Board', 'data-bh-jev1618-method', 'data-bh-jev1618-measurement-notes', '<JevHistoryLazy'], 'v1.6.18 page');
+  ordered(route, ['<JevBenchArchiveBoard', 'data-bh-jev1618-method', 'data-bh-jev1618-measurement-notes', '<JevHistoryLazy'], 'v1.6.18 page');
   assert.match(route, /historicalCatalogue\(historical.artifact, historical.carry\)/);
   // each added row's material caveat is on the page itself, not only in the notes
   assert.match(route, /Nimble-v4-max/);
@@ -447,7 +447,7 @@ test('CR-205: fail-closed v1.6.20 price-only addendum uses the shared board, its
   const route = await read('../app/jev-models/v1.6.20/page.tsx');
   assert.match(route, /readOptionalJevbenchV1620Release\(\)/);
   assert.match(route, /if \(!release\) notFound\(\)/);
-  ordered(route, ['<JevBenchV16Board', 'data-bh-jev1620-method', 'data-bh-jev1620-measurement-notes', '<JevHistoryLazy'], 'v1.6.20 page');
+  ordered(route, ['<JevBenchArchiveBoard', 'data-bh-jev1620-method', 'data-bh-jev1620-measurement-notes', '<JevHistoryLazy'], 'v1.6.20 page');
   assert.match(route, /historicalCatalogue\(historical.artifact, historical.carry\)/);
   // the price-only caveats that decide how this row may be read are on the page itself
   assert.match(route, /SubQ Snap/);
@@ -463,7 +463,7 @@ test('CR-205: fail-closed v1.6.21 same-draw addition uses the shared board, its 
   const route = await read('../app/jev-models/v1.6.21/page.tsx');
   assert.match(route, /readOptionalJevbenchV1621Release\(\)/);
   assert.match(route, /if \(!release\) notFound\(\)/);
-  ordered(route, ['<JevBenchV16Board', 'data-bh-jev1621-method', 'data-bh-jev1621-measurement-notes', '<JevHistoryLazy'], 'v1.6.21 page');
+  ordered(route, ['<JevBenchArchiveBoard', 'data-bh-jev1621-method', 'data-bh-jev1621-measurement-notes', '<JevHistoryLazy'], 'v1.6.21 page');
   assert.match(route, /historicalCatalogue\(historical.artifact, historical.carry\)/);
   // the caveats that decide how the new row may be read are on the page itself
   assert.match(route, /d1-ultra \(Liquid AI\) joins the regular draw/);
@@ -478,7 +478,7 @@ test('CR-205: fail-closed v1.6.22 same-draw addition uses the shared board, its 
   const route = await read('../app/jev-models/v1.6.22/page.tsx');
   assert.match(route, /readOptionalJevbenchV1622Release\(\)/);
   assert.match(route, /if \(!release\) notFound\(\)/);
-  ordered(route, ['<JevBenchV16Board', 'data-bh-jev1622-method', 'data-bh-jev1622-measurement-notes', '<JevHistoryLazy'], 'v1.6.22 page');
+  ordered(route, ['<JevBenchArchiveBoard', 'data-bh-jev1622-method', 'data-bh-jev1622-measurement-notes', '<JevHistoryLazy'], 'v1.6.22 page');
   assert.match(route, /historicalCatalogue\(historical.artifact, historical.carry\)/);
   // the caveats that decide how the new rows may be read are on the page itself
   assert.match(route, /Four more evaluated systems join the regular draw/);
@@ -497,7 +497,7 @@ test('CR-205: fail-closed v1.6.23 price-only addendum uses the shared board, its
   const route = await read('../app/jev-models/v1.6.23/page.tsx');
   assert.match(route, /readOptionalJevbenchV1623Release\(\)/);
   assert.match(route, /if \(!release\) notFound\(\)/);
-  ordered(route, ['<JevBenchV16Board', 'data-bh-jev1623-method', 'data-bh-jev1623-measurement-notes', '<JevHistoryLazy'], 'v1.6.23 page');
+  ordered(route, ['<JevBenchArchiveBoard', 'data-bh-jev1623-method', 'data-bh-jev1623-measurement-notes', '<JevHistoryLazy'], 'v1.6.23 page');
   assert.match(route, /historicalCatalogue\(historical.artifact, historical.carry\)/);
   // the caveats that decide how the repriced rows may be read are on the page itself
   assert.match(route, /Sage 1\.4 and Bespoke Nimble-v4 \/ v4-max are now priced and ranked/);
@@ -514,7 +514,7 @@ test('CR-205: fail-closed v1.6.24 same-draw addition uses the shared board, its 
   const route = await read('../app/jev-models/v1.6.24/page.tsx');
   assert.match(route, /readOptionalJevbenchV1624Release\(\)/);
   assert.match(route, /if \(!release\) notFound\(\)/);
-  ordered(route, ['<JevBenchV16Board', 'data-bh-jev1624-method', 'data-bh-jev1624-measurement-notes', '<JevHistoryLazy'], 'v1.6.24 page');
+  ordered(route, ['<JevBenchArchiveBoard', 'data-bh-jev1624-method', 'data-bh-jev1624-measurement-notes', '<JevHistoryLazy'], 'v1.6.24 page');
   assert.match(route, /historicalCatalogue\(historical.artifact, historical.carry\)/);
   // the caveats that decide how the new rows may be read are on the page itself
   assert.match(route, /re-measured/);
@@ -532,7 +532,7 @@ test('CR-205: fail-closed v1.6.25 same-draw addition uses the shared board, its 
   const route = await read('../app/jev-models/v1.6.25/page.tsx');
   assert.match(route, /readOptionalJevbenchV1625Release\(\)/);
   assert.match(route, /if \(!release\) notFound\(\)/);
-  ordered(route, ['<JevBenchV16Board', 'data-bh-jev1625-method', 'data-bh-jev1625-measurement-notes', '<JevHistoryLazy'], 'v1.6.25 page');
+  ordered(route, ['<JevBenchArchiveBoard', 'data-bh-jev1625-method', 'data-bh-jev1625-measurement-notes', '<JevHistoryLazy'], 'v1.6.25 page');
   assert.match(route, /historicalCatalogue\(historical.artifact, historical.carry\)/);
   // the caveats that decide how the new rows may be read are on the page itself
   assert.match(route, /paid fast-lane order/);
@@ -555,7 +555,7 @@ test('CR-205: fail-closed v1.6.26 same-draw addition uses the shared board, its 
   const route = await read('../app/jev-models/v1.6.26/page.tsx');
   assert.match(route, /readOptionalJevbenchV1626Release\(\)/);
   assert.match(route, /if \(!release\) notFound\(\)/);
-  ordered(route, ['<JevBenchV16Board', 'data-bh-jev1626-method', 'data-bh-jev1626-measurement-notes', '<JevHistoryLazy'], 'v1.6.26 page');
+  ordered(route, ['<JevBenchArchiveBoard', 'data-bh-jev1626-method', 'data-bh-jev1626-measurement-notes', '<JevHistoryLazy'], 'v1.6.26 page');
   assert.match(route, /historicalCatalogue\(historical.artifact, historical.carry\)/);
   // the caveats that decide how the new and re-priced rows may be read are on the page itself
   assert.match(route, /measured again on this draw/);
@@ -578,7 +578,7 @@ test('CR-205: fail-closed v1.6.27 same-draw addition uses the shared board, its 
   const route = await read('../app/jev-models/v1.6.27/page.tsx');
   assert.match(route, /readOptionalJevbenchV1627Release\(\)/);
   assert.match(route, /if \(!release\) notFound\(\)/);
-  ordered(route, ['<JevBenchV16Board', 'data-bh-jev1627-method', 'data-bh-jev1627-measurement-notes', '<JevHistoryLazy'], 'v1.6.27 page');
+  ordered(route, ['<JevBenchArchiveBoard', 'data-bh-jev1627-method', 'data-bh-jev1627-measurement-notes', '<JevHistoryLazy'], 'v1.6.27 page');
   assert.match(route, /historicalCatalogue\(historical.artifact, historical.carry\)/);
   // the caveats that decide how the two new rows may be read are on the page itself
   assert.match(route, /Jev 1\.14\.0/);
@@ -597,7 +597,7 @@ test('CR-205: fail-closed v1.6.28 same-draw addition uses the shared board, its 
   const route = await read('../app/jev-models/v1.6.28/page.tsx');
   assert.match(route, /readOptionalJevbenchV1628Release\(\)/);
   assert.match(route, /if \(!release\) notFound\(\)/);
-  ordered(route, ['<JevBenchV16Board', 'data-bh-jev1628-method', 'data-bh-jev1628-measurement-notes', '<JevHistoryLazy'], 'v1.6.28 page');
+  ordered(route, ['<JevBenchArchiveBoard', 'data-bh-jev1628-method', 'data-bh-jev1628-measurement-notes', '<JevHistoryLazy'], 'v1.6.28 page');
   assert.match(route, /historicalCatalogue\(historical.artifact, historical.carry\)/);
   // the caveats that decide how the two new rows may be read are on the page itself
   assert.match(route, /basal-omni-1\.0-ultra/);
@@ -616,7 +616,7 @@ test('CR-205: fail-closed v1.6.29 same-draw addition uses the shared board, its 
   const route = await read('../app/jev-models/v1.6.29/page.tsx');
   assert.match(route, /readOptionalJevbenchV1629Release\(\)/);
   assert.match(route, /if \(!release\) notFound\(\)/);
-  ordered(route, ['<JevBenchV16Board', 'data-bh-jev1629-method', 'data-bh-jev1629-measurement-notes', '<JevHistoryLazy'], 'v1.6.29 page');
+  ordered(route, ['<JevBenchArchiveBoard', 'data-bh-jev1629-method', 'data-bh-jev1629-measurement-notes', '<JevHistoryLazy'], 'v1.6.29 page');
   assert.match(route, /historicalCatalogue\(historical.artifact, historical.carry\)/);
   // the caveats that decide how the two new rows may be read are on the page itself
   assert.match(route, /Torchcast Decision 4B v1\.2/);
@@ -635,7 +635,7 @@ test('CR-205: fail-closed v1.6.30 cost-rule release uses the shared board, its o
   const route = await read('../app/jev-models/v1.6.30/page.tsx');
   assert.match(route, /readOptionalJevbenchV1630Release\(\)/);
   assert.match(route, /if \(!release\) notFound\(\)/);
-  ordered(route, ['<JevBenchV16Board', 'data-bh-jev1630-method', 'data-bh-jev1630-cost-table', 'data-bh-jev1630-measurement-notes', '<JevHistoryLazy'], 'v1.6.30 page');
+  ordered(route, ['<JevBenchArchiveBoard', 'data-bh-jev1630-method', 'data-bh-jev1630-cost-table', 'data-bh-jev1630-measurement-notes', '<JevHistoryLazy'], 'v1.6.30 page');
   assert.match(route, /historicalCatalogue\(historical.artifact, historical.carry\)/);
   // what the release changes, and what it does not, is on the page itself
   assert.match(route, /JEVBENCH_COST_RULE/);
@@ -651,7 +651,7 @@ test('CR-205: v1.7.1 same-draw additions retain the complete shared board, metho
   const route = await read('../app/jev-models/v1.7.1/page.tsx');
   assert.match(route, /readJevbenchV171ForBoard\(\)/);
   assert.match(route, /if\(!release\)notFound\(\)/);
-  ordered(route, ['<JevBenchV16Board', 'data-bh-jev171-method', '<JevHistoryLazy'], 'v1.7.1 page');
+  ordered(route, ['<JevBenchArchiveBoard', 'data-bh-jev171-method', '<JevHistoryLazy'], 'v1.7.1 page');
   assert.match(route, /previousKeys=/);
   assert.match(route, /categories=\{board.categories\}/);
   assert.match(route, /All carried scores and confidence intervals are retained/);
@@ -662,7 +662,7 @@ test('CR-205: v1.7.2 same-draw additions retain the complete shared board, metho
   const route = await read('../app/jev-models/v1.7.2/page.tsx');
   assert.match(route, /readJevbenchV172ForBoard\(\)/);
   assert.match(route, /if\(!release\)notFound\(\)/);
-  ordered(route, ['<JevBenchV16Board', 'data-bh-jev172-method', '<JevHistoryLazy'], 'v1.7.2 page');
+  ordered(route, ['<JevBenchArchiveBoard', 'data-bh-jev172-method', '<JevHistoryLazy'], 'v1.7.2 page');
   assert.match(route, /previousKeys=/);
   assert.match(route, /categories=\{board.categories\}/);
   assert.match(route, /All carried scores and confidence intervals are retained/);
@@ -673,7 +673,7 @@ test('CR-205: v1.7.3 GPU replacement retains the shared board, method notes and 
   const route = await read('../app/jev-models/v1.7.3/page.tsx');
   assert.match(route, /readJevbenchV173ForBoard\(\)/);
   assert.match(route, /if\(!release\)notFound\(\)/);
-  ordered(route, ['<JevBenchV16Board', 'data-bh-jev173-method', '<JevHistoryLazy'], 'v1.7.3 page');
+  ordered(route, ['<JevBenchArchiveBoard', 'data-bh-jev173-method', '<JevHistoryLazy'], 'v1.7.3 page');
   assert.match(route, /previousKeys=/);
   assert.match(route, /categories=\{board.categories\}/);
   assert.match(route, /All 288 other rows retain their scores and confidence intervals/);
@@ -683,7 +683,7 @@ test('CR-205: v1.7.3 GPU replacement retains the shared board, method notes and 
 test('CR-205: v1.7.4 self-hosted addition retains shared board, method notes and history', async () => {
  const route=await read('../app/jev-models/v1.7.4/page.tsx');
  assert.match(route,/readJevbenchV174ForBoard\(\)/);assert.match(route,/if\(!release\)notFound\(\)/);
- ordered(route,['<JevBenchV16Board','data-bh-jev174-method','<JevHistoryLazy'],'v1.7.4 page');
+ ordered(route,['<JevBenchArchiveBoard','data-bh-jev174-method','<JevHistoryLazy'],'v1.7.4 page');
  assert.match(route,/previousKeys=/);assert.match(route,/categories=\{board.categories\}/);
  assert.match(route,/All 290 carried rows retain their scores and confidence intervals/);
  assert.match(route,/One new self-hosted row DOPEST 1.0 \(31B\); no method change/);
@@ -738,7 +738,7 @@ test('CR-205: the board sections are fed by the pinned v1.5 release artifact', a
 test('CR-205: v1.7.5 self-hosted addition retains shared board, method notes and history', async () => {
  const route=await read('../app/jev-models/v1.7.5/page.tsx');
  assert.match(route,/readJevbenchV175ForBoard\(\)/);assert.match(route,/if\(!release\)notFound\(\)/);
- ordered(route,['<JevBenchV16Board','data-bh-jev175-method','<JevHistoryLazy'],'v1.7.5 page');
+ ordered(route,['<JevBenchArchiveBoard','data-bh-jev175-method','<JevHistoryLazy'],'v1.7.5 page');
  assert.match(route,/previousKeys=/);assert.match(route,/categories=\{board.categories\}/);
  assert.match(route,/All 291 carried rows retain their scores and confidence intervals/);
  assert.match(route,/One new self-hosted row Sieve-31B-v2; no method change/);
@@ -746,7 +746,7 @@ test('CR-205: v1.7.5 self-hosted addition retains shared board, method notes and
 test('CR-205: v1.7.6 self-hosted addition retains shared board, method notes and history', async () => {
  const route=await read('../app/jev-models/v1.7.6/page.tsx');
  assert.match(route,/readJevbenchV176ForBoard\(\)/);assert.match(route,/if\(!release\)notFound\(\)/);
- ordered(route,['<JevBenchV16Board','data-bh-jev176-method','<JevHistoryLazy'],'v1.7.6 page');
+ ordered(route,['<JevBenchArchiveBoard','data-bh-jev176-method','<JevHistoryLazy'],'v1.7.6 page');
  assert.match(route,/previousKeys=/);assert.match(route,/categories=\{board.categories\}/);
  assert.match(route,/All 292 carried rows retain their scores and confidence intervals/);
  assert.match(route,/One new self-hosted row Decisio 12B tuned commit \(variant of the Decisio family\); no method change/);
@@ -755,7 +755,7 @@ test('CR-205: v1.7.6 self-hosted addition retains shared board, method notes and
 test('CR-205: v1.7.7 self-hosted addition retains shared board, method notes and history', async () => {
  const route=await read('../app/jev-models/v1.7.7/page.tsx');
  assert.match(route,/readJevbenchV177ForBoard\(\)/);assert.match(route,/if\(!release\)notFound\(\)/);
- ordered(route,['<JevBenchV16Board','data-bh-jev177-method','<JevHistoryLazy'],'v1.7.7 page');
+ ordered(route,['<JevBenchArchiveBoard','data-bh-jev177-method','<JevHistoryLazy'],'v1.7.7 page');
  assert.match(route,/previousKeys=/);assert.match(route,/categories=\{board.categories\}/);
  assert.match(route,/All 293 carried rows retain their scores and confidence intervals/);
  assert.match(route,/Two new self-hosted rows D1A Gemma 4 E4B and D1A Gemma 4 E2B; no method change/);
@@ -764,7 +764,7 @@ test('CR-205: v1.7.7 self-hosted addition retains shared board, method notes and
 test('CR-205: v1.7.8 self-hosted addition retains shared board, method notes and history', async () => {
  const route=await read('../app/jev-models/v1.7.8/page.tsx');
  assert.match(route,/readJevbenchV178ForBoard\(\)/);assert.match(route,/if\(!release\)notFound\(\)/);
- ordered(route,['<JevBenchV16Board','data-bh-jev178-method','<JevHistoryLazy'],'v1.7.8 page');
+ ordered(route,['<JevBenchArchiveBoard','data-bh-jev178-method','<JevHistoryLazy'],'v1.7.8 page');
  assert.match(route,/previousKeys=/);assert.match(route,/categories=\{board.categories\}/);
  assert.match(route,/All 295 carried rows retain their scores and confidence intervals/);
  assert.match(route,/One new self-hosted row Jeff-1.1-Medium; no method change/);
@@ -773,7 +773,7 @@ test('CR-205: v1.7.8 self-hosted addition retains shared board, method notes and
 test('CR-205: v1.7.9 addendum retains shared board, method notes and history', async () => {
  const route=await read('../app/jev-models/v1.7.9/page.tsx');
  assert.match(route,/readJevbenchV179ForBoard\(\)/);assert.match(route,/if\(!release\)notFound\(\)/);
- ordered(route,['<JevBenchV16Board','data-bh-jev179-method','<JevHistoryLazy'],'v1.7.9 page');
+ ordered(route,['<JevBenchArchiveBoard','data-bh-jev179-method','<JevHistoryLazy'],'v1.7.9 page');
  assert.match(route,/previousKeys=/);assert.match(route,/categories=\{board.categories\}/);
  assert.match(route,/GLiClass v4 9B; Myles-G 12B now priced at its public list price/);
  assert.match(route,/earlier releases showed a same-base ESTIMATE of USD 0.0264/);

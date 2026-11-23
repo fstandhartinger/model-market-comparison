@@ -131,7 +131,7 @@ async function pageModule(root) {
   'next/navigation':{notFound:absent},
   '../../../lib/jevbench-v162-release.mjs':{readOptionalJevbenchV162Release:()=>readOptionalJevbenchV162Release(root),historicalCatalogue},
   '../../../lib/jevbench-v15-release.mjs':{withPublicAdapterIds:a=>a},
-  '../../../components/JevBenchV16Board':{JevBenchV16Board:props=>React.createElement('div',{'data-fixture-board':true,'data-cohort-rows':props.artifact.systems.length,'data-category-revision':props.categories.revision})},
+  '../../../components/JevBenchArchiveBoard':{JevBenchArchiveBoard:props=>React.createElement('div',{'data-fixture-board':true,'data-cohort-rows':props.artifact.systems.length,'data-category-revision':props.categories.revision})},
   '../../../components/JevBenchReleaseVersionNav':{JevBenchReleaseVersionNav:()=>React.createElement('nav',null,'version navigation')},
   '../../../components/JevHistoryLazy':{JevHistoryLazy:()=>React.createElement('div',null,'historical versions')},
   '../../../lib/seo':{seoTitle:t=>t},

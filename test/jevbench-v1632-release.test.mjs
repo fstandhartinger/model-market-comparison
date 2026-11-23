@@ -32,7 +32,7 @@ test('v1.6.32 validates carried estimates, usage, paid authority, disclosure and
 });
 test('v1.6.32 archived route retains shared board, method notes and history',async()=>{
  const page=await readFile('app/jev-models/v1.6.32/page.tsx','utf8');assert.match(page,/readOptionalJevbenchV1632Release\(\)/);assert.match(page,/v1632BoardInput\(release\)/);
- assert.ok(page.indexOf('<JevBenchV16Board')<page.indexOf('data-bh-jev1632-method'));assert.ok(page.indexOf('data-bh-jev1632-method')<page.indexOf('<JevHistoryLazy'));
+ assert.ok(page.indexOf('<JevBenchArchiveBoard')<page.indexOf('data-bh-jev1632-method'));assert.ok(page.indexOf('data-bh-jev1632-method')<page.indexOf('<JevHistoryLazy'));
 });
 
 test('Vega 4B binds CPU, capped states, exact token totals and reader provenance',()=>{const k='vega-u-qwen3.5-4b',v=r.artifact.systems.find(s=>s.key===k),n=r.proof.new_rows[k];assert.equal(v.endpoint_kind,'cpu');assert.equal(n.input_tokens,1837991);assert.equal(n.output_tokens,0);assert.equal(n.context_cap_tokens,73728);assert.equal(n.truncated_long_items,15);assert.equal(n.native_probabilities,true);assert.match(v.endpoint_condition,/32 cores/);assert.match(n.disclosure,/851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a/);assert.match(n.disclosure,/27.8, p90 34.7, maximum 42.0/);assert.ok(Object.values(v.ranks).every(n=>n>5));rejects(b=>{b.proof.new_rows[k].context_cap_tokens=6000},/runtime provenance/);rejects(b=>{b.proof.new_rows[k].input_tokens++},/usage/);});

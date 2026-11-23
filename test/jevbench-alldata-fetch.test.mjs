@@ -77,6 +77,6 @@ test('every archive using the shared board has an explicit on-demand release loa
   for (const entry of await readdir(pages, { withFileTypes: true })) {
     if (!entry.isDirectory() || !/^v\d+\.\d+\.\d+$/.test(entry.name)) continue;
     const page = await readFile(new URL(`${entry.name}/page.tsx`, pages), 'utf8');
-    if (page.includes('<JevBenchV16Board')) assert.ok(loader.includes(`'${entry.name}':`), `${entry.name} needs an all-data loader`);
+    if ((page.includes('<JevBenchV16Board') || page.includes('<JevBenchArchiveBoard'))) assert.ok(loader.includes(`'${entry.name}':`), `${entry.name} needs an all-data loader`);
   }
 });

@@ -1,16 +1,17 @@
+import { one, usd } from '../lib/jevbench-board-format.mjs';
 import { knowlineDiagnosticUnavailable } from '../lib/jevbench-knowline-diagnostic.mjs';
-import { hasApiFullAddendumCategories } from '../lib/jevbench-api-full-addenda.mjs';
+import { hasApiFullAddendumCategories } from '../lib/jevbench-category-bounds.mjs';
 import { JevMethodTag } from './JevMethodTag';
 import { JEV_REMEASURE_PENDING } from '../lib/jev-decision-limit.mjs';
 import { JEVBENCH_COST_RULE, JEVBENCH_COST_RULE_HISTORY } from '../lib/jevbench-cost-rule.mjs';
-import { COMPOSITE_DEFINITION } from '../lib/decision-benchmark-manifest.mjs';
+import { COMPOSITE_DEFINITION } from '../lib/decision-benchmark-definition.mjs';
 import spokeExceptions from '../data/jevbench-radar-spoke-exceptions.json';
 import { Fragment } from 'react';
 import { languageRoster } from '../lib/jevbench-language-roster.mjs';
 import { JevArchitectureMethod } from './JevArchitecture';
 import type { CSSProperties } from 'react';
 import type { JevV15Artifact } from '../lib/jevbench-v15-preview.mjs';
-import { jevV15LeaderSentence } from '../lib/jevbench-v15-preview.mjs';
+import { jevV15LeaderSentence } from '../lib/jevbench-board-wording.mjs';
 import { jevV15SliderPresets, jevV16ChartRow, jevV15BoardRow, jevV15CompareRow } from '../lib/jevbench-v15-board.mjs';
 import type { JevV16ReleaseArtifact, JevV16Categories, JevV16Carry } from '../lib/jevbench-v16-release.mjs';
 import type { JevV14System } from '../lib/jevbench-v14.mjs';
@@ -44,8 +45,6 @@ import drawEquating from '../data/jevbench-draw-equating.json';
 
 const spokeReason = (key: string) => spokeExceptions.find((e) => e.key === key)?.reason;
 const exposureNote = (key: string) => (L3_EXPOSURE_NOTES as Record<string, string>)[key];
-const one = (v: number | null | undefined) => v == null ? '—' : v.toFixed(1);
-const usd = (v: number | null | undefined) => v == null ? '—' : `$${v.toFixed(4)}`;
 const sec = (v: number | null | undefined) => v == null ? '—' : `${v.toFixed(2)} s`;
 const short = (display: string) => display.replace(/\s*\(.*\)\s*$/, '');
 // Review 6 Oct 2026: variants share a short name ("GPT-6 Luna", "wity-1"); texts that list systems by name keep the full display for those.
@@ -620,7 +619,9 @@ function ApiPublicSet({ measured }: { measured: ReadonlySet<string> }) {
   </section>;
 }
 
-export function JevBenchV16Board({ artifact: a, sha256, categories, categoriesSha256, carry, carrySha256, previousKeys, scope = 'all', apiKeys = [], apiListed = [], live = false }: {
+export function JevBenchV16Board({ artifact: a, sha256, categories, categoriesSha256, carry, carrySha256, previousKeys, scope = 'all', apiKeys = [], apiListed = [], live = false, comparisonCategories, hideMethod = false }: {
+  hideMethod?: boolean;
+  comparisonCategories?: ReturnType<typeof jevbenchCategoryView>;
   apiListed?: JevApiListedRow[];
   /** Florian 10 Oct 2026: the live merged board (open / api / all presets); false on archived release pages. */
   live?: boolean;
@@ -691,7 +692,7 @@ export function JevBenchV16Board({ artifact: a, sha256, categories, categoriesSh
       {scope === 'api' && <ApiRoster a={a} carry={carry} listed={apiListed} eligibility={eligibilityByKey} />}
       {scope === 'api' && <ApiPublicSet measured={measuredKeys} />}
       {scope === 'api' && <JevV15FilterPanel />}
-      <JevCompareV15 rows={compareRows} openDecisions={a.v16.counts.P} sealedDecisions={a.v16.counts.S} categories={jevbenchCategoryView(a.revision, compareRows.map((r) => r.key), { supplement: Boolean(categories.supplement), artifact: fresh || hasApiFullAddendumCategories(categories) ? categories : undefined })} />
+      <JevCompareV15 rows={compareRows} openDecisions={a.v16.counts.P} sealedDecisions={a.v16.counts.S} categories={comparisonCategories ?? jevbenchCategoryView(a.revision, compareRows.map((r) => r.key), { supplement: Boolean(categories.supplement), artifact: fresh || hasApiFullAddendumCategories(categories) ? categories : undefined })} />
       <p className="bh-muted mt-2 max-w-4xl text-xs" data-bh-jev16-radar-note>{categories.supplement ? <>Category radars count each answered item once from the pools named under each radar. API overlay rows use {API_CATEGORY_POOLS}. Raw and unequated; cells under {categories.min_n} answered items are omitted. Per-type and tier radars retain each row&apos;s original measurement pools: A4/A5 rows have 300 open plus 300 sealed items; full-set rows have S {a.v16.counts.S.toLocaleString('en-US')} plus P {a.v16.counts.P}.</> : <>{categories.lane_note} Sealed counts refer to self-hosted S ({a.v16.counts.S.toLocaleString('en-US')}); API rows use their original measured sealed basis.</>}</p>
       <LanguageView carry={carry} scope={scope} a={a} categories={categories} hiddenApi={hiddenApi} />
       <NoulAndGate a={a} hiddenApi={hiddenApi} />
@@ -705,7 +706,15 @@ export function JevBenchV16Board({ artifact: a, sha256, categories, categoriesSh
         .filter((s) => s.listing !== JEV_PRELIMINARY_LISTING && s.listing !== JEV_PENDING_LISTING && !remeasure(s) && !hiddenApi.has(s.key))
         .map((s) => ({ key: s.key, system: s.display, rank: s.ranked ? s.rank ?? null : null })) }} />}
       {(!fresh || carry.rows.length > 0) && <DatedCarry carry={carry} hiddenApi={hiddenApi} showExceptions={Boolean(categories.supplement)} />}
-      <Method categories={categories} a={a} sha256={sha256} categoriesSha256={categoriesSha256} carrySha256={carrySha256} scope={scope} hiddenApi={hiddenApi} preliminary={preliminary} live={live} />
+      {!hideMethod && <Method categories={categories} a={a} sha256={sha256} categoriesSha256={categoriesSha256} carrySha256={carrySha256} scope={scope} hiddenApi={hiddenApi} preliminary={preliminary} live={live} />}
     </section>
   </JevV15FilterProvider>;
+}
+
+/** The exact same method text stays available in the compact archive before JavaScript loads. */
+export function JevBenchV16ArchiveMethod(props: Parameters<typeof JevBenchV16Board>[0]) {
+  const { artifact, categories, sha256, categoriesSha256, carrySha256, carry, scope = 'all' } = props;
+  const preliminary = apiChartExtras(carry, new Set(artifact.systems.map(s => s.key))).length > 0;
+  return <Method a={artifact} categories={categories} sha256={sha256} categoriesSha256={categoriesSha256}
+    carrySha256={carrySha256} scope={scope} hiddenApi={new Set()} preliminary={preliminary} />;
 }

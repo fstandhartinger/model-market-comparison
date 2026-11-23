@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation';
 import { readOptionalJevbenchV169Release, v169BoardInput } from '../../../lib/jevbench-v169-release.mjs';
 import { historicalCatalogue } from '../../../lib/jevbench-v162-release.mjs';
-import { JevBenchV16Board } from '../../../components/JevBenchV16Board';
+import { JevBenchArchiveBoard } from '../../../components/JevBenchArchiveBoard';
 import { JevBenchReleaseVersionNav } from '../../../components/JevBenchReleaseVersionNav';
 import { JevHistoryLazy } from '../../../components/JevHistoryLazy';
 import { withPublicAdapterIds } from '../../../lib/jevbench-v15-release.mjs';
@@ -28,7 +28,7 @@ export default async function JevModelsV169Page() {
       <p className="mt-3 max-w-3xl">jiwo 0.8b, jiwo 4b, ClassOne Qwen 3.5 2B, ClassOne Qwen 3.5 4B and ClassOne Gemma 4 E4B join the eleven systems of v1.6.8 on the same fresh seeded draw: {release.artifact.systems.length} self-hosted open systems each answered the same 1,500 decisions of draw {release.proof.draw_release} (1,200 sealed plus the 300-item public set). The field median stays frozen at its v1.6.5 value, so the eleven earlier rows keep their scores; only ranks and confidence intervals are recomputed for the larger field. Every drawn item had no prior scored use, and the set does not overlap v1.6.0 or the paid fast-lane draw. All {release.artifact.systems.length} rows are complete and ranked. Historical scores keep their original dates and are listed separately below.</p>
       <p className="bh-muted mt-2 text-xs break-all"><a className="text-accent underline" href="/api/jevbench/v1.6.9">Aggregate results JSON</a> · SHA-256 {release.sha256} · <a className="text-accent underline" href="/jev-models/v1.6.8">Previous v1.6.8 (eleven rows)</a> · <a className="text-accent underline" href="/jev-models">Full historical board</a></p>
     </header>
-    <JevBenchV16Board artifact={withPublicAdapterIds(board.artifact)} sha256={release.sha256}
+    <JevBenchArchiveBoard version="v1.6.9" artifact={withPublicAdapterIds(board.artifact)} sha256={release.sha256}
       categories={board.categories} categoriesSha256={release.categoriesSha256}
       carry={{ ...historical.carry, rows: [] }} carrySha256={historical.carrySha256}
       previousKeys={oldKeys} scope="all" />

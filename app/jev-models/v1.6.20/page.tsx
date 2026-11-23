@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation';
 import { readOptionalJevbenchV1620Release, v1620BoardInput } from '../../../lib/jevbench-v1620-release.mjs';
 import { historicalCatalogue } from '../../../lib/jevbench-v162-release.mjs';
-import { JevBenchV16Board } from '../../../components/JevBenchV16Board';
+import { JevBenchArchiveBoard } from '../../../components/JevBenchArchiveBoard';
 import { JevBenchReleaseVersionNav } from '../../../components/JevBenchReleaseVersionNav';
 import { JevHistoryLazy } from '../../../components/JevHistoryLazy';
 import { withPublicAdapterIds } from '../../../lib/jevbench-v15-release.mjs';
@@ -32,7 +32,7 @@ export default async function JevModelsV1620Page() {
       <p className="mt-3 max-w-3xl">This release adds a cost axis for <strong>SubQ Snap</strong> using the vendor’s published USD 0.05 per million input tokens, with no output charge, under the scoped I-1 ruling (#19174). It is a same-draw price update: no model requests or new measurements were made. SubQ keeps its v1.6.17 measurement and 1,500 previously recorded responses; the other full-draw rows keep their published point estimates.</p>
       <p className="bh-muted mt-2 text-xs break-all"><a className="text-accent underline" href="/api/jevbench/v1.6.20">Aggregate results JSON</a> · SHA-256 {release.sha256} · <a className="text-accent underline" href="/jev-models/v1.6.18">Previous v1.6.18</a> · <a className="text-accent underline" href="/jev-models">Full historical board</a></p>
     </header>
-    <JevBenchV16Board artifact={withPublicAdapterIds(board.artifact)} sha256={release.sha256}
+    <JevBenchArchiveBoard version="v1.6.20" artifact={withPublicAdapterIds(board.artifact)} sha256={release.sha256}
       categories={board.categories} categoriesSha256={release.categoriesSha256}
       carry={{ ...historical.carry, rows: [] }} carrySha256={historical.carrySha256}
       previousKeys={oldKeys} scope="all" />

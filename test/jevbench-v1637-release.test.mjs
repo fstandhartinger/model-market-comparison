@@ -129,7 +129,7 @@ test('the corrected price is recomputed from tokens, the frozen tariff and the n
  for(const [k,spec] of Object.entries(V1637_ROW_SPEC))assert.equal(spec.usd,1000*(spec.tokens*0.030000000000000002+0*0.15)/1e6/spec.decisions,k);
 });
 test('v1.6.37 archived route keeps shared board, method and history',async()=>{
- const page=await readFile('app/jev-models/v1.6.37/page.tsx','utf8');assert.match(page,/readOptionalJevbenchV1637Release\(\)/);assert.match(page,/v1637BoardInput\(release\)/);assert.ok(page.indexOf('<JevBenchV16Board')<page.indexOf('data-bh-jev1637-method'));assert.match(page,/USD 0\.04 per 1M input/);
+ const page=await readFile('app/jev-models/v1.6.37/page.tsx','utf8');assert.match(page,/readOptionalJevbenchV1637Release\(\)/);assert.match(page,/v1637BoardInput\(release\)/);assert.ok(page.indexOf('<JevBenchArchiveBoard')<page.indexOf('data-bh-jev1637-method'));assert.match(page,/USD 0\.04 per 1M input/);
 });
 import { readCohortRows, jevWithCohortRows } from '../lib/jevbench-cohort-merge.mjs';
 import { readCurrentJevbench } from '../lib/jevbench-current.mjs';

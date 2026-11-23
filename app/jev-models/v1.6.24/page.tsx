@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation';
 import { readOptionalJevbenchV1624Release, v1624BoardInput } from '../../../lib/jevbench-v1624-release.mjs';
 import { historicalCatalogue } from '../../../lib/jevbench-v162-release.mjs';
-import { JevBenchV16Board } from '../../../components/JevBenchV16Board';
+import { JevBenchArchiveBoard } from '../../../components/JevBenchArchiveBoard';
 import { JevBenchReleaseVersionNav } from '../../../components/JevBenchReleaseVersionNav';
 import { JevHistoryLazy } from '../../../components/JevHistoryLazy';
 import { withPublicAdapterIds } from '../../../lib/jevbench-v15-release.mjs';
@@ -35,7 +35,7 @@ export default async function JevModelsV1624Page() {
       <p className="mt-3 max-w-3xl">The 26 full-draw rows of v1.6.23 keep their full 1,500-item results, point scores and categories on draw {release.proof.draw_release}. Added here, all measured on this draw: six systems we had evaluated before on protocols the board has since retired, <strong>re-measured</strong> with their authors&rsquo; own servers at the evaluated revisions (Decision 2.0 Lux 9B, Imajev-9B, Imajev-2B, ArseneLupin v1.1 and Noma ranked; <strong>Bongard-mini</strong> listed but <strong>not ranked</strong>, because the frozen pricing path gives it no price), and two hosted models from paid fast-lane orders, <strong>kettei-fat</strong> and <strong>kettei-chub</strong> by Sqwish, priced from Sqwish&rsquo;s public list price and ranked. Carried ranks shift where a new ranked row sits above them; some carried confidence intervals move with the new roster; no earlier point score moves, and every move is counted in the notes below.</p>
       <p className="bh-muted mt-2 text-xs break-all"><a className="text-accent underline" href="/api/jevbench/v1.6.24">Aggregate results JSON</a> · SHA-256 {release.sha256} · <a className="text-accent underline" href="/jev-models/v1.6.23">Previous v1.6.23</a> · <a className="text-accent underline" href="/jev-models">Full historical board</a></p>
     </header>
-    <JevBenchV16Board artifact={withPublicAdapterIds(board.artifact)} sha256={release.sha256}
+    <JevBenchArchiveBoard version="v1.6.24" artifact={withPublicAdapterIds(board.artifact)} sha256={release.sha256}
       categories={board.categories} categoriesSha256={release.categoriesSha256}
       carry={{ ...historical.carry, rows: [] }} carrySha256={historical.carrySha256}
       previousKeys={oldKeys} scope="all" />

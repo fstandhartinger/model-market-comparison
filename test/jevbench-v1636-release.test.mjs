@@ -69,7 +69,7 @@ test('v1.6.36 rejects altered usage, runtime, price, approval, disclosures and r
  rejects(b=>{row(b,'kettei-fat').axes.intelligence++},/capability|carried|axes/);
 });
 test('v1.6.36 archived route keeps shared board, method and history',async()=>{
- const page=await readFile('app/jev-models/v1.6.36/page.tsx','utf8');assert.match(page,/readOptionalJevbenchV1636Release\(\)/);assert.match(page,/v1636BoardInput\(release\)/);assert.ok(page.indexOf('<JevBenchV16Board')<page.indexOf('data-bh-jev1636-method'));assert.ok(page.indexOf('data-bh-jev1636-method')<page.indexOf('<JevHistoryLazy'));
+ const page=await readFile('app/jev-models/v1.6.36/page.tsx','utf8');assert.match(page,/readOptionalJevbenchV1636Release\(\)/);assert.match(page,/v1636BoardInput\(release\)/);assert.ok(page.indexOf('<JevBenchArchiveBoard')<page.indexOf('data-bh-jev1636-method'));assert.ok(page.indexOf('data-bh-jev1636-method')<page.indexOf('<JevHistoryLazy'));
 });
 import { readCohortRows, jevWithCohortRows } from '../lib/jevbench-cohort-merge.mjs';
 import { readCurrentJevbench } from '../lib/jevbench-current.mjs';

@@ -2,7 +2,7 @@ import { notFound } from 'next/navigation';
 import { readOptionalJevbenchV1630Release, v1630BoardInput } from '../../../lib/jevbench-v1630-release.mjs';
 import { JEVBENCH_COST_RULE, JEVBENCH_COST_RULE_HISTORY } from '../../../lib/jevbench-cost-rule.mjs';
 import { historicalCatalogue } from '../../../lib/jevbench-v162-release.mjs';
-import { JevBenchV16Board } from '../../../components/JevBenchV16Board';
+import { JevBenchArchiveBoard } from '../../../components/JevBenchArchiveBoard';
 import { JevBenchReleaseVersionNav } from '../../../components/JevBenchReleaseVersionNav';
 import { JevHistoryLazy } from '../../../components/JevHistoryLazy';
 import { withPublicAdapterIds } from '../../../lib/jevbench-v15-release.mjs';
@@ -33,7 +33,7 @@ export default async function JevModelsV1630Page() {
       <p className="mt-3 max-w-3xl">Cost per 1,000 decisions is computed on the same 1,485 items for every token-priced row of draw {release.proof.draw_release}: the 15 very long items are left out of cost for all rows. They are the 15 items the Jev reference refused with max_tokens_exceeded, which the other rows that did not answer them refused or failed on (each at least 76,358 input tokens as counted by the rows that answered them). Rows that refused or failed on those items paid nothing for them, while rows that answered them paid for them. Intelligence, Calibration, Speed and Capability are unchanged on all 57 rows, and a refused item still counts as a wrong answer. Cost, the Cost axis, composites and the placements that follow from them move; every move is counted below.</p>
       <p className="bh-muted mt-2 text-xs break-all"><a className="text-accent underline" href="/api/jevbench/v1.6.30">Aggregate results JSON</a> · SHA-256 {release.sha256} · <a className="text-accent underline" href="/jev-models/v1.6.29">Previous v1.6.29</a> · <a className="text-accent underline" href="/jev-models">Full historical board</a></p>
     </header>
-    <JevBenchV16Board artifact={withPublicAdapterIds(board.artifact)} sha256={release.sha256}
+    <JevBenchArchiveBoard version="v1.6.30" artifact={withPublicAdapterIds(board.artifact)} sha256={release.sha256}
       categories={board.categories} categoriesSha256={release.categoriesSha256}
       carry={{ ...historical.carry, rows: [] }} carrySha256={historical.carrySha256}
       previousKeys={oldKeys} scope="all" />

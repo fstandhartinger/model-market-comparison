@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation';
 import { readOptionalJevbenchV1633Release, v1633BoardInput } from '../../../lib/jevbench-v1633-release.mjs';
-import { JevBenchV16Board } from '../../../components/JevBenchV16Board';
+import { JevBenchArchiveBoard } from '../../../components/JevBenchArchiveBoard';
 import { JevBenchReleaseVersionNav } from '../../../components/JevBenchReleaseVersionNav';
 import { JevHistoryLazy } from '../../../components/JevHistoryLazy';
 import { historicalCatalogue } from '../../../lib/jevbench-v162-release.mjs';
@@ -18,7 +18,7 @@ export default async function JevModelsV1633Page() {
  <h1 className="mt-1 text-3xl font-bold">Perplexity Decider v1.2 (27B) joins the regular draw</h1>
  <p className="mt-3 max-w-3xl">One new ranked row on the same draw and common cost basis as v1.6.32. All 62 carried full-draw rows keep their point estimates. Perplexity Decider v1.2 is the 27B sibling of Flash v1.2 and Decider v1.1 27B. Measured on one H200 141 GB in the EU, using our own HTTP shim and the author’s numerical code. Cost exceeds the official cap; the row remains available in uncapped views.</p>
  <p className="bh-muted mt-2 text-xs break-all"><a href="/api/jevbench/v1.6.33">Aggregate results JSON</a> · SHA-256 {release.sha256} · <a href="/jev-models/v1.6.32">Previous v1.6.32</a></p></header>
- <JevBenchV16Board artifact={withPublicAdapterIds(board.artifact)} sha256={release.sha256} categories={board.categories} categoriesSha256={release.categoriesSha256}
+ <JevBenchArchiveBoard version="v1.6.33" artifact={withPublicAdapterIds(board.artifact)} sha256={release.sha256} categories={board.categories} categoriesSha256={release.categoriesSha256}
  carry={{...release.historical.carry,rows:[]}} carrySha256={release.historical.carrySha256} previousKeys={historicalCatalogue(release.historical.artifact, release.historical.carry).map(row => row.key)} scope="all" />
  <section className="mt-10 max-w-4xl" data-bh-jev1633-method><h2 className="text-2xl font-bold">What changed in v1.6.33</h2>
  <p>{JEVBENCH_COST_RULE} {JEVBENCH_COST_RULE_HISTORY}</p>

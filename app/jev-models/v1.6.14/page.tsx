@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation';
 import { readOptionalJevbenchV1614Release, v1614BoardInput } from '../../../lib/jevbench-v1614-release.mjs';
 import { historicalCatalogue } from '../../../lib/jevbench-v162-release.mjs';
-import { JevBenchV16Board } from '../../../components/JevBenchV16Board';
+import { JevBenchArchiveBoard } from '../../../components/JevBenchArchiveBoard';
 import { JevBenchReleaseVersionNav } from '../../../components/JevBenchReleaseVersionNav';
 import { JevHistoryLazy } from '../../../components/JevHistoryLazy';
 import { withPublicAdapterIds } from '../../../lib/jevbench-v15-release.mjs';
@@ -28,7 +28,7 @@ export default async function JevModelsV1614Page() {
       <p className="mt-3 max-w-3xl">Seven official rows from v1.6.13 retain their full 1,500-item results, ranks and categories on draw {release.proof.draw_release}. Microsoft-Decision-1 (Azure Foundry) adds a separate, unranked A2 re-run: 300 supplementary sealed plus 300 public decisions, with an equating pool of four of six self-hosted systems. It does not replace the official Microsoft measurement or enter any ranking. Historical scores keep their original dates.</p>
       <p className="bh-muted mt-2 text-xs break-all"><a className="text-accent underline" href="/api/jevbench/v1.6.14">Aggregate results JSON</a> · SHA-256 {release.sha256} · <a className="text-accent underline" href="/jev-models/v1.6.13">Previous v1.6.13 (seven rows)</a> · <a className="text-accent underline" href="/jev-models">Full historical board</a></p>
     </header>
-    <JevBenchV16Board artifact={withPublicAdapterIds(board.artifact)} sha256={release.sha256}
+    <JevBenchArchiveBoard version="v1.6.14" artifact={withPublicAdapterIds(board.artifact)} sha256={release.sha256}
       categories={board.categories} categoriesSha256={release.categoriesSha256}
       carry={{ ...historical.carry, rows: [] }} carrySha256={historical.carrySha256}
       previousKeys={oldKeys} scope="all" />
