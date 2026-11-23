@@ -2145,6 +2145,7 @@ def card_context_line(row: dict[str, Any], status: str) -> str:
     return "Worum geht's: " + about
 
 
+DECISION_CONTEXT_MAX = 219  # notify CONTEXT_MAX_CHARS 220: "Worum geht's:" text incl. the link, kept under it
 DECISION_HEADLINE_MAX = 120  # notify card v2: a 🧑 headline (links not counted) is the decision, at most 120 chars
 FX_FILE = HOME / ".notify/fx-usd-eur.json"  # USD->EUR cache that notify refreshes from the ECB
 FX_FALLBACK = 0.90
@@ -2164,18 +2165,20 @@ def eur_phrase(amount_cents: object) -> str:
 def decision_context_line(row: dict[str, Any], question: str) -> str:
     """Headline of a 🧑 decision card: `question` with {customer} and {model}, shortened to the card v2 limit."""
     customer, model, link = card_identity(row)
+    # notify also caps the whole "Worum geht's:" text, link included, at 220 characters (a pinned HF tree link is ~95)
+    limit = min(DECISION_HEADLINE_MAX, DECISION_CONTEXT_MAX - (len(link) + 1 if link else 0))
 
     def visible(who: str, name: str) -> str:
         return question.format(customer=who, model=name)
     about = visible(customer, model)
-    if len(about) > DECISION_HEADLINE_MAX:
+    if len(about) > limit:
         model = re.sub(r"\s*[\(\[][^\)\]]*[\)\]]\s*$", "", model).strip() or model
         about = visible(customer, model)
-    if len(about) > DECISION_HEADLINE_MAX:
+    if len(about) > limit:
         customer = "the customer"
         about = visible(customer, model)
-    if len(about) > DECISION_HEADLINE_MAX:
-        budget = max(DECISION_HEADLINE_MAX - len(visible(customer, "")), 12)
+    if len(about) > limit:
+        budget = max(limit - len(visible(customer, "")), 12)
         model = (model[:budget - 1].rsplit(" ", 1)[0].rstrip(" ,;:-(") or model[:budget - 1]) + "…"
         about = visible(customer, model)
     return f"Worum geht's: {about} {link}"

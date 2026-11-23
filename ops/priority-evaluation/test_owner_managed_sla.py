@@ -39,7 +39,7 @@ class OwnerManagedSlaTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             sd.caption(WPS, 'deadline')
         with self.assertRaises(ValueError):
-            ap.delay_note_message(WPS)
+            ap.delay_note_message(WPS, ap.utcnow())  # owner-managed refuses before the date is used
 
     def test_cycle_skips_before_loading_or_applying_any_decision(self):
         effects = mock.Mock(dry_run=False)

@@ -114,7 +114,7 @@ class OneCard(unittest.TestCase):
     def check_flow(self, first, key):
         self.decided(first, key)
         # keeps exactly one live Refund button, ask stays open, nothing settled yet
-        self.assertEqual(self.keyboard_edits()[-1], [[{"text": "Refund in full", "callback_data": "sla_r"}]])
+        self.assertEqual(self.keyboard_edits()[-1], [[{"text": "Zurückzahlen", "callback_data": "sla_r"}]])
         self.assertEqual((self.resolved, self.state().get("settled")), ([], None))
         self.assertEqual(self.sla(NOW + 60), first)  # no press yet: stays, no second edit
         self.assertEqual(len(self.keyboard_edits()), 1)

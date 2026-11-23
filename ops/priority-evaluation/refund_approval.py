@@ -28,10 +28,10 @@ SOURCE = "fastlane-refund-approval"
 WINDOW = 24 * 3600
 MAX_CARDS = 3  # an expired card is asked again at most twice; then the order waits for an operator
 REASONS = {
-    "sla_missed": "No result 48 hours after payment (deadline {deadline}).",
-    "sla_48h_payment": "The result was delivered after the 48-hour deadline.",
-    "operator_refusal": "An operator marked the order for refund.",
-    "source_review_failed": "Legacy source-review refusal.",
+    "sla_missed": "Der zahlende Kunde hat 48 h nach Zahlung kein Ergebnis (Frist {deadline}); zugesagt ist die Erstattung.",
+    "sla_48h_payment": "Das Ergebnis kam erst nach der 48-h-Frist; zugesagt ist die Erstattung.",
+    "operator_refusal": "Ein Agent hat die Bestellung zur Erstattung markiert.",
+    "source_review_failed": "Alte Ablehnung aus der Quellcode-Prüfung.",
 }
 
 
@@ -43,31 +43,37 @@ def reason_key(row: dict) -> str:
 
 
 # the ↳ line on the card once its decision is recorded (notify settle, board #41061)
-SETTLED = {"refund": "You tapped Refund in full; the refund worker pays it back.",
-           "decline": "You tapped No refund; nothing is paid back.",
-           "expired": "The buttons expired unanswered; nothing was refunded."}
+SETTLED = {"refund": "Du hast Zurückzahlen getippt; der Refund-Worker zahlt den Betrag zurück.",
+           "decline": "Du hast Nicht zurückzahlen getippt; es wird nichts erstattet.",
+           "expired": "Die Buttons sind unbeantwortet abgelaufen; es wurde nichts erstattet."}
 
 
 def caption(row: dict, kind: str, deadline: str) -> str:
     rid = str(uuid.UUID(str(row["id"])))
     amount = row.get("amount_total")
-    money = f"USD {int(amount) / 100:.2f}" if isinstance(amount, int) and not isinstance(amount, bool) else "the full amount"
+    money = f"USD {int(amount) / 100:.2f}" if isinstance(amount, int) and not isinstance(amount, bool) else "den vollen Betrag"
     from autopickup import decision_context_line, eur_phrase
-    eur = eur_phrase(amount)
-    context = decision_context_line(row, f"Refund {money}{f' ({eur})' if eur else ''} to {{customer}} "
-                                         "for model {model}?")
+    eur = (eur_phrase(amount) or "").replace("about ", "ca. ")
+    # notify's headline lint wants the situation in the sentence itself, not only the question (card clarity, 21 Nov)
+    situation = {"sla_missed": "Kein Ergebnis 48 h nach Zahlung für {customer}, {model}",
+                 "sla_48h_payment": "Das Ergebnis für {customer}, {model} kam erst nach der 48-h-Frist",
+                 "operator_refusal": "Ein Agent hat die Bestellung von {customer}, {model} zur Erstattung markiert",
+                 "source_review_failed": "Die Quellcode-Prüfung hat die Bestellung von {customer}, {model} abgelehnt"}[kind]
+    context = decision_context_line(row, f"{situation}: {money}{f' ({eur})' if eur else ''} zurückzahlen?"
+                                    ).replace(" für the customer,", " für den Kunden,").replace(" von the customer,", " des Kunden,")
     return (f"🧑 DU BIST DRAN\n{context}\n\n🧑 Für dich\n"
-            f"- Decide whether to refund this customer ({money}).\n"
-            f"  Why: {REASONS[kind].format(deadline=deadline)} Nothing is refunded without your button.\n"
-            f"  Effect: Refund in full = pays {money} back to the customer, final. No refund = nothing is paid back.\n"
-            "  Steps:\n  1. Tap Refund in full or No refund.\n"
-            "  Time: 1 minute. Buttons expire in 24 hours so that an old card can never refund. "
-            "A text reply does not authorize a refund.")
+            "- Vorschlag: Zurückzahlen.\n"
+            f"  Effect: Zurückzahlen (empfohlen) = zahlt {money} zurück, endgültig. "
+            "Nicht zurückzahlen = nichts wird erstattet.\n"
+            f"  Why: {REASONS[kind].format(deadline=deadline)}\n"
+            "  Steps:\n  1. Tippe Zurückzahlen oder Nicht zurückzahlen.\n"
+            "  Time: 1 Minute. Die Buttons laufen nach 24 h ab, damit eine alte Karte nie erstattet; "
+            "eine Textantwort erstattet nicht.")
 
 
 def _keyboard(state: dict) -> list:
-    return [[{"text": "Refund in full", "callback_data": state["refund_key"]},
-             {"text": "No refund", "callback_data": state["decline_key"]}]]
+    return [[{"text": "Zurückzahlen (empfohlen)", "callback_data": state["refund_key"]},
+             {"text": "Nicht zurückzahlen", "callback_data": state["decline_key"]}]]
 
 
 def _attach(state: dict) -> None:
@@ -126,7 +132,7 @@ def _send_card(state: dict, path: Path, text: str, now: float) -> None:
     command = [str(ra.HOME / "bin/notify"), "now", "--florian-only",
                "Florian's 3 Oct decision: every fast-lane refund needs his explicit button.",
                "--topic", ra.order_topic(state["request_id"], "refund"),
-               "--ask", str(WINDOW // 60), "--text-stdin"]
+               "--ask", str(WINDOW // 60), "--allow-german", "--text-stdin"]  # CEO cards are German (AGENTS.md §2)
     reply_job_dir = str(ra.HOME / "jobs" / "fastlane-refusal-reply-guard-20260929")
     env = {**os.environ, "NOTIFY_SOURCE": SOURCE, "AGENT_BOARD_JOBDIR": reply_job_dir,
            "NOTIFY_REPLY_JOB_DIR": reply_job_dir, **ra.CALLER_BUTTONS_ENV}
