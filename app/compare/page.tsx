@@ -5,6 +5,7 @@ import { pageDataVersion } from '../../lib/page-data';
 import { previewMetadata, SHARE_IMAGE } from "../../lib/seo";
 import { compareDescription, compareHeadline, resolveCompareRequest } from "../../lib/compare-meta";
 import { PageJsonLd } from "../../components/PageJsonLd";
+import { PopularModelLinks } from '../../components/PopularModelLinks';
 
 const BASE = { path: "/compare", documentTitle: "Compare", title: "Compare AI models — Benchmark Heaven",
   description: "Up to four models, every benchmark, the evidence beside each score — plus what each model actually costs per task." };
@@ -34,6 +35,7 @@ export default async function ComparePage({ searchParams }: { searchParams: Prom
           ? ` ${request.pending.map((p) => p.name).join(' and ')} ${request.pending.length === 1 ? 'is' : 'are'} not measured yet — the numbers land here as soon as they are published.`
           : ''}</p>
       </header>
+      <PopularModelLinks />
       <BenchmarkCompareLoader version={await pageDataVersion()} />
       <ComparePricePanel />
       <PageJsonLd meta={await generateMetadata({ searchParams })} />

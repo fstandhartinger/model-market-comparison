@@ -5,6 +5,7 @@ import { BenchmarkMatrixLoader } from '../../components/deferred/BenchmarkMatrix
 import { pageDataVersion } from '../../lib/page-data';
 import { previewMetadata } from "../../lib/seo";
 import { PageJsonLd } from '../../components/PageJsonLd';
+import { PopularModelLinks } from '../../components/PopularModelLinks';
 
 // CR-1.1: the tab opens on the release-style comparison. The single-benchmark ranking stays one
 // click away and keeps its `?benchmark=` deep links. F-27: one sentence under the heading.
@@ -24,11 +25,12 @@ export default async function BenchmarksPage({ searchParams }: { searchParams: P
   // CR-62.1: the ranking and matrix data arrive as JSON after this server-rendered shell.
   const version = await pageDataVersion();
   if (single) {
-    return <div><header className="bh-page-head"><h1 className="text-3xl font-bold tracking-tight">One benchmark. Every result.</h1><p className="bh-muted mt-3 max-w-2xl">Rankings, coverage and original sources across {view.registryCount} registered benchmark versions.</p></header>{tabs}<BenchmarkRankingLoader version={version} /></div>;
+    return <div><header className="bh-page-head"><h1 className="text-3xl font-bold tracking-tight">One benchmark. Every result.</h1><p className="bh-muted mt-3 max-w-2xl">Rankings, coverage and original sources across {view.registryCount} registered benchmark versions.</p></header>{tabs}<PopularModelLinks /><BenchmarkRankingLoader version={version} /></div>;
   }
   return <div>
     <header className="bh-page-head"><h1 className="text-3xl font-bold tracking-tight">Every benchmark, side by side.</h1><p className="bh-muted mt-3 max-w-2xl">The strongest models under your filters, side by side on every benchmark with a published result — each value with its source.</p></header>
     {tabs}
+    <PopularModelLinks />
     {/* CR-1.11: the shared-URL selection is part of the table's first render, so it does not re-layout once it mounts. */}
     <BenchmarkMatrixLoader version={version} initial={{ models: typeof params.models === 'string' ? params.models : null, set: typeof params.set === 'string' ? params.set : null, rows: typeof params.rows === 'string' ? params.rows : null }} />
     <PageJsonLd meta={metadata} />

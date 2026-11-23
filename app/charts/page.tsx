@@ -2,6 +2,7 @@ import { ChartsBoardLoader } from "../../components/deferred/ChartsBoardLoader";
 import { pageDataVersion } from "../../lib/page-data";
 import { previewMetadata } from "../../lib/seo";
 import { PageJsonLd } from "../../components/PageJsonLd";
+import { PopularModelLinks } from '../../components/PopularModelLinks';
 
 
 export const metadata = previewMetadata({ path: "/charts", documentTitle: "Charts", title: "AI model charts — Benchmark Heaven",
@@ -16,6 +17,7 @@ export default async function ChartsPage() {
         <a href="/compare" className="text-accent">Leaderboard</a>, <a href="#cheapest" className="text-accent">cheapest models</a>, <a href="#open-vs-closed" className="text-accent">open vs closed</a>, and{" "}
         <a href="/scatter" className="text-accent">score against cost</a> — all under your current filters.
       </p>
+      <PopularModelLinks />
       <ChartsBoardLoader version={version} />
       <PageJsonLd meta={metadata} />
     </div>

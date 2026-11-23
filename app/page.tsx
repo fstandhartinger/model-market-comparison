@@ -5,6 +5,7 @@ import { pageDataVersion } from "../lib/page-data";
 import { BRAND_CLAIM, BRAND_LINE, previewMetadata } from "../lib/seo";
 import { noWidow } from "../lib/typography";
 import { HomeJsonLd } from "../components/HomeJsonLd";
+import { PopularModelLinks } from "../components/PopularModelLinks";
 
 
 export const metadata = previewMetadata({ path: "/", title: "Benchmark Heaven — AI benchmarks & decision model evaluation", absoluteTitle: "Benchmark Heaven — AI benchmarks & decision model evaluation",
@@ -42,6 +43,8 @@ export default async function Home() {
         </p>
         <p className="mt-3 text-sm"><a className="text-accent underline" href="/jev-models">JevBench by Benchmark Heaven — the decision model benchmark</a>: compare typed decision accuracy, calibration, latency and cost. <a className="text-accent underline" href="/decision-model-benchmarks">Which benchmark fits your workload?</a></p>
       </section>
+
+      <PopularModelLinks />
 
       {/* CR-62.1: the model and benchmark data arrive as JSON after this shell (the inlined 8 MB page broke link previews). */}
       <HomeModeLoader version={await pageDataVersion()} />
