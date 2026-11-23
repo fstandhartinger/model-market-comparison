@@ -177,3 +177,29 @@ test('v1.4.2.2 renders one default-order top-20 summary while preserving the met
   assert.ok(summary.includes('data-bh-jev14-changes'));
   assert.ok(summary.includes('/api/jevbench/v1.4.2.2/board'));
 });
+
+test('legacy summaries retain published estimate, release and carry disclosures', async () => {
+  const { JevBenchLegacyArchiveWidget } = await import('../components/JevBenchLegacyArchive.tsx');
+  const { JevBenchLegacyArchiveProvider } = await import('../components/JevBenchLegacyArchiveProvider.tsx');
+  const { JEV_REMEASURE_PENDING_LABEL } = await import('../lib/jev-decision-limit.mjs');
+  const { V170_FIXTURE_SYSTEMS: systems, V170_FIXTURE_CARRY: carryRows, V170_FIXTURE_CARRY_LABEL: carryLabel } = await import('./fixtures/jev-v170-fixture.mjs');
+  const h = React.createElement;
+  const summary = (version, props) => renderToStaticMarkup(h(JevBenchLegacyArchiveProvider, { version }, h(JevBenchLegacyArchiveWidget, { version, ...props })));
+  const payload = await readJevLegacyArchivePayload('v1.4.2.2', process.cwd(), jevClassView);
+  const html = summary('v1.4.2.2', { part: 'capability', ...payload.widgets.capability.props });
+  let estimates = 0;
+  for (const row of html.matchAll(/<tr[^>]+data-bh-jev-archive-row="([^"]+)"[^>]*>([\s\S]*?)<\/tr>/g)) {
+    const source = payload.widgets.capability.props.systems.find(s => s.key === row[1]);
+    assert.ok(source);
+    if (source.cost?.kind === 'estimate' && source.cost.usd_per_1000 != null) {
+      estimates++;
+      assert.ok(row[2].includes('est. '), row[1] + ': published estimate stays marked');
+    } else assert.ok(!row[2].includes('est. '), row[1] + ': no invented estimate label');
+  }
+  assert.ok(estimates > 0);
+  const initial = await readJevLegacyArchivePayload('v1.4', process.cwd(), jevClassView);
+  assert.ok(summary('v1.4', initial.props).includes('Release ' + initial.props.artifact.revision));
+  const oldNew = summary('v1.7.0', { systems, carryRows, carryLabel });
+  assert.ok(oldNew.includes(JEV_REMEASURE_PENDING_LABEL));
+  assert.ok(oldNew.includes(carryLabel));
+});
