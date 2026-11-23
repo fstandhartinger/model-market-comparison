@@ -100,6 +100,10 @@ def _attempt_rate(recipe, job=None):
             # One exact order with a recorded deputy exception: its attempts are accounted (and created) at a
             # pinned provider-side price ceiling instead of the USD 5/h route ceiling.
             return chon_runtime_supplement.ATTEMPT_RATE_USD
+        import strands_decider_e2b_runtime_supplement
+        if strands_decider_e2b_runtime_supplement.active(job, recipe):
+            # Order 0616c39d (2x RTX PRO 6000 VM, one GPU used): Strands-only all-in ceiling, not the USD 5/h route ceiling.
+            return strands_decider_e2b_runtime_supplement.MAX_HOURLY_USD
     if "host_staging" in recipe and type(recipe.get("hourly_usd")) in (int, float) and 0 < recipe["hourly_usd"] <= MAX_HOURLY_USD:
         return float(recipe["hourly_usd"])
     return MAX_HOURLY_USD
@@ -958,7 +962,8 @@ def _lifecycle(provider, job, recipe, staging_path, output, state, gpu_choice, t
             raise measurement_dispatch.OperationalHold('gpu_pod_cleanup_uncertain') from exc
         if allocation_gate is not None:
             allocation_gate('before_reserve', state)
-        reservation = provider.reserve(job, "pod-measure", MAX_HOURLY_USD, budget, lease_hours)
+        reserve_hourly = strands_decider_e2b_runtime_supplement.MAX_HOURLY_USD if strands_e2b else MAX_HOURLY_USD
+        reservation = provider.reserve(job, "pod-measure", reserve_hourly, budget, lease_hours)
         state['creation_attempts'] = attempts + 1
         state['attempt_started_at'] = datetime.now(timezone.utc).isoformat()
         state.pop('torn_down_at', None)
@@ -990,8 +995,9 @@ def _lifecycle(provider, job, recipe, staging_path, output, state, gpu_choice, t
                     save_state()
                     raise
             if strands_e2b:
-                work_budget = budget - strands_decider_e2b_runtime_supplement.CLEANUP_HOURS * MAX_HOURLY_USD
-                pod = provider.create(gpu_choice[0], ttl, work_budget)
+                strands_rate = strands_decider_e2b_runtime_supplement.MAX_HOURLY_USD
+                work_budget = budget - strands_decider_e2b_runtime_supplement.CLEANUP_HOURS * strands_rate
+                pod = provider.create(gpu_choice[0], ttl, work_budget, max_hourly=strands_rate)
             elif "host_staging" in recipe or _attempt_rate(recipe, job_dir or job) != MAX_HOURLY_USD:
                 # Provider-side price ceiling = the pinned price the charge is accounted at, so the recorded
                 # upper bound holds even for an unclear create or a failed teardown.
@@ -1035,9 +1041,10 @@ def _lifecycle(provider, job, recipe, staging_path, output, state, gpu_choice, t
             hourly = float(hourly)
         except (TypeError, ValueError):
             hourly = 0.0
-        if not 0 < hourly <= MAX_HOURLY_USD:
+        hourly_cap = strands_decider_e2b_runtime_supplement.MAX_HOURLY_USD if strands_e2b else MAX_HOURLY_USD
+        if not 0 < hourly <= hourly_cap:
             raise PodCapacityError(f"pod {pod_id} hourly price {pod.get('hourly_usd')} "
-                                   f"exceeds the {MAX_HOURLY_USD} cap")
+                                   f"exceeds the {hourly_cap} cap")
         if (recipe['kind'] == 'aplomb_native' or 'imagejevbench' in benchmarks) and (
                 hourly > recipe.get('hourly_usd') if 'host_staging' in recipe else hourly != recipe.get('hourly_usd')):
             # Host-staged recipes: the pinned price is the accounted AND provider-side ceiling; a cheaper node is safe
@@ -1275,7 +1282,9 @@ def _lifecycle(provider, job, recipe, staging_path, output, state, gpu_choice, t
             strands_io.timeout(600, strands_decider_e2b_runtime_supplement.RESULT_COLLECTION_RESERVE_S)
         state['execution_started'] = True
         save_state()  # crash after launch is never eligible for automatic scored retry
-        run_command(["docker", "run", "-d", "--name", "jev-pod-run", "--gpus", "all",
+        # Order 0616c39d runs on a 2-GPU VM and measures on ONE GPU; every other order keeps all GPUs.
+        run_command(["docker", "run", "-d", "--name", "jev-pod-run", "--gpus",
+                                 strands_decider_e2b_runtime_supplement.DOCKER_GPUS if strands_e2b else "all",
                                  "--network", "none", "--shm-size", "16g",
                                  "--tmpfs", "/tmp:exec,size=16g",
                                  "-e", "HOME=/tmp", "-e", "HF_TOKEN=", "-e", "OPENAI_API_KEY=",

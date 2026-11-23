@@ -174,14 +174,16 @@ class StrandsRuntimeTests(unittest.TestCase):
 
     def test_pending_order_bindings_block_hardware_drift(self):
         approval = {"approval_sha256": "b" * 64, "packet_sha256": "c" * 64, "location": "FIN-02"}
-        pod = {"gpu": "RTXPRO6000", "gpu_count": 1, "instance_type": "1RTXPRO6000.30V",
+        pod = {"gpu": "RTXPRO6000", "gpu_count": 2, "instance_type": "2RTXPRO6000.60V",
                "location": "FIN-02"}
         self.assertEqual(supplement.launch_binding(approval), approval)
         with self.assertRaisesRegex(measurement_dispatch.OperationalHold, "strands_e2b_native_admission_required"):
             supplement.launch_binding(dict(approval, location="ICE-01"))
         supplement.verify_created_pod(pod, approval)
-        for drift in ({"gpu_count": True}, {"gpu_count": 2}, {"location": "FIN-03"},
-                      {"gpu": "H100"}, {"instance_type": "1H100.80S.30V"}):
+        for drift in ({"gpu_count": True}, {"gpu_count": 1}, {"gpu_count": 3}, {"gpu_count": 2.0},
+                      {"gpu_count": None}, {"location": "FIN-03"}, {"gpu": "H100"},
+                      {"instance_type": "1H100.80S.30V"}, {"instance_type": "1RTXPRO6000.30V"},
+                      {"instance_type": "2RTXPRO6000.60V.CC"}, {"instance_type": "4RTXPRO6000.120V"}):
             with self.subTest(drift=drift), self.assertRaisesRegex(
                     measurement_dispatch.OperationalHold, "gpu_pod_quote_changed"):
                 supplement.verify_created_pod(dict(pod, **drift), approval)
@@ -190,7 +192,7 @@ class StrandsRuntimeTests(unittest.TestCase):
         from pod_runner import PodRunError
 
         pod = {"pod_id": "2d8ef6c1-9258-459d-a9e5-83be4c0f7cf8", "gpu": "RTXPRO6000",
-               "gpu_count": 1, "instance_type": "1RTXPRO6000.30V", "location": "FIN-02", "hourly_usd": 2}
+               "gpu_count": 2, "instance_type": "2RTXPRO6000.60V", "location": "FIN-02", "hourly_usd": 6.2}
         reservation = "gpu-" + "d" * 24
         approval = {"approval_sha256": "b" * 64, "packet_sha256": "c" * 64, "location": "FIN-02"}
         state = {"request_id": ORDER, "native_launch": approval}
@@ -204,17 +206,114 @@ class StrandsRuntimeTests(unittest.TestCase):
                 patch.object(pod_runner.pod_capacity, "allocation_count", return_value=0):
             with self.assertRaisesRegex(measurement_dispatch.OperationalHold, "gpu_pod_teardown_uncertain"):
                 pod_runner._lifecycle(provider, "fastlane-eval-0616c39d", {}, None, self.root, state,
-                                      supplement.GPU, 2.75, 15, None, Mock(), job_dir=self.job)
-        provider.reserve.assert_called_once_with("fastlane-eval-0616c39d", "pod-measure", 5, 15, 3)
-        provider.create.assert_called_once_with("RTXPRO6000", 2.75, 13.75)
+                                      supplement.GPU, 2.5, 20, None, Mock(), job_dir=self.job)
+        # Strands-only ceiling 7.0 (2x RTX PRO 6000 VM): lease 2.5 + 0.25 h, work budget 20 - 0.25 * 7 = 18.25.
+        provider.reserve.assert_called_once_with("fastlane-eval-0616c39d", "pod-measure", 7.0, 20, 2.75)
+        provider.create.assert_called_once_with("RTXPRO6000", 2.5, 18.25, max_hourly=7.0)
         provider.teardown_exact.assert_called_once_with("fastlane-eval-0616c39d", pod["pod_id"], reservation, approval)
         provider.rm.assert_not_called()
         provider.release.assert_not_called()
         self.assertEqual(state["pod_id"], pod["pod_id"])
         self.assertEqual(state["reservation_id"], reservation)
         self.assertTrue(state["cleanup_uncertain"])
-        self.assertEqual(state["spent_upper_bound_usd"], 15)
+        self.assertEqual(state["spent_upper_bound_usd"], 19.25)
         self.assertNotIn("native_teardown", state)
+
+    def test_two_gpu_sku_constants_and_strands_only_rate(self):
+        self.assertEqual((supplement.INSTANCE_TYPE, supplement.GPU_COUNT, supplement.DOCKER_GPUS),
+                         ("2RTXPRO6000.60V", 2, "device=0"))
+        self.assertEqual(supplement.MAX_HOURLY_USD, 7.0)
+        self.assertEqual(pod_runner.MAX_HOURLY_USD, 5.0)  # unchanged for every other order
+        # Sealed: TTL min(3, 20 / 7, 2.75) - 0.25 = 2.5 h; the full lease incl. cleanup fits the USD 20 budget.
+        ttl = min(pod_runner.TTL_CAP_HOURS, 20 / supplement.MAX_HOURLY_USD, 2.75) - supplement.CLEANUP_HOURS
+        self.assertEqual(ttl, 2.5)
+        self.assertLessEqual(supplement.MAX_HOURLY_USD * (ttl + supplement.CLEANUP_HOURS), 20)
+        with patch.object(supplement, "active", side_effect=lambda job, recipe: Path(job).name == ORDER):
+            self.assertEqual(pod_runner._attempt_rate({}, self.job), 7.0)
+            self.assertEqual(pod_runner._attempt_rate({}, self.root / OTHER), pod_runner.MAX_HOURLY_USD)
+            self.assertEqual(pod_runner._attempt_rate({}), pod_runner.MAX_HOURLY_USD)
+
+    def _launch_command(self, strands, hourly):
+        """Drive _lifecycle until the measurement container start and return that docker argv."""
+        class Launched(Exception):
+            pass
+
+        launched = []
+
+        def record(command):
+            if command[:3] == ["docker", "run", "-d"]:
+                launched.append(list(command))
+                raise Launched()
+            return subprocess.CompletedProcess(command, 0, "", "")
+
+        base = "registry.example/base@sha256:" + "a" * 64
+
+        def provider_exec(pod_id, command, timeout=600):
+            if command[:3] == ["docker", "image", "inspect"]:
+                return subprocess.CompletedProcess(command, 0, '["registry.example/base@sha256:' + "a" * 64 + '"]', "")
+            return record(command)
+
+        class FakeIO:
+            def __init__(self, *args):
+                pass
+
+            def timeout(self, maximum, reserve):
+                return maximum
+
+            def exec(self, command, maximum=600, reserve=0):
+                return record(command)
+
+        pod = {"pod_id": "2d8ef6c1-9258-459d-a9e5-83be4c0f7cf8", "gpu": "RTXPRO6000", "gpu_count": 2,
+               "instance_type": "2RTXPRO6000.60V", "location": "FIN-02", "hourly_usd": hourly}
+        approval = {"approval_sha256": "b" * 64, "packet_sha256": "c" * 64, "location": "FIN-02"}
+        state = {"request_id": ORDER, "native_launch": approval}
+        provider = Mock()
+        provider.preflight.return_value = None
+        provider.reserve.return_value = "gpu-" + "d" * 24
+        provider.create.return_value = pod
+        provider.exec.side_effect = provider_exec
+        recipe = {"image": base, "kind": "http_typesafe", "weights": []}
+        job = self.job if strands else self.root / OTHER
+        with patch.object(supplement, "active", return_value=strands), \
+                patch.object(supplement, "build", return_value={"effective_image": "strands@sha256:" + "e" * 64}), \
+                patch.object(supplement, "AttemptIO", FakeIO), \
+                patch.object(supplement, "teardown", return_value={}), \
+                patch.object(pod_runner, "_teardown"), \
+                patch.object(pod_runner.pod_capacity, "allocation_count", return_value=0):
+            with self.assertRaises(Exception):
+                pod_runner._lifecycle(provider, "fastlane-eval-0616c39d", recipe, Path("/nonexistent/stage.tar"),
+                                      self.root, state, supplement.GPU, 2.5, 20, None, Mock(), job_dir=job)
+        self.assertEqual(len(launched), 1)
+        return launched[0]
+
+    def test_measurement_container_gets_one_gpu_only_for_this_order(self):
+        command = self._launch_command(strands=True, hourly=6.2)
+        self.assertEqual(command[command.index("--gpus") + 1], "device=0")
+        self.assertEqual(command.count("--gpus"), 1)
+        other = self._launch_command(strands=False, hourly=4.0)
+        self.assertEqual(other[other.index("--gpus") + 1], "all")
+        self.assertEqual(other.count("--gpus"), 1)
+
+    def test_strands_price_ceiling_is_seven_not_five(self):
+        # 6.2 USD/h passes for this order (would exceed the generic USD 5 cap) ...
+        self._launch_command(strands=True, hourly=6.2)
+        # ... and anything above the Strands ceiling is refused before any container starts.
+        approval = {"approval_sha256": "b" * 64, "packet_sha256": "c" * 64, "location": "FIN-02"}
+        pod = {"pod_id": "2d8ef6c1-9258-459d-a9e5-83be4c0f7cf8", "gpu": "RTXPRO6000", "gpu_count": 2,
+               "instance_type": "2RTXPRO6000.60V", "location": "FIN-02", "hourly_usd": 7.01}
+        provider = Mock()
+        provider.preflight.return_value = None
+        provider.reserve.return_value = "gpu-" + "d" * 24
+        provider.create.return_value = pod
+        state = {"request_id": ORDER, "native_launch": approval}
+        with patch.object(supplement, "active", return_value=True), \
+                patch.object(supplement, "teardown", return_value={}), \
+                patch.object(pod_runner.pod_capacity, "allocation_count", return_value=0):
+            with self.assertRaisesRegex(pod_runner.PodCapacityError, "exceeds the 7.0 cap"):
+                pod_runner._lifecycle(provider, "fastlane-eval-0616c39d", {}, None, self.root, state,
+                                      supplement.GPU, 2.5, 20, None, Mock(), job_dir=self.job)
+        provider.attach.assert_not_called()
+        provider.exec.assert_not_called()
 
     def test_dispatch_and_wait_use_the_earlier_cutoff_and_reserve(self):
         start = datetime(2026, 11, 21, 10, tzinfo=timezone.utc)
