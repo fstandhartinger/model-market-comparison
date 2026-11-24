@@ -2748,8 +2748,10 @@ def _jev_v15_composite(axes: dict[str, Any], option: str) -> float:
 #    source_review_pins therefore pins the draw's profiles (v16_profiles.measurement_pins and official_scoring_v16.pins on the
 #    draw's own manifests, after each of its four reference files hashed to its pin) in place of the retired ones, ONLY when
 #    all hold: the v16 pin is on; no v16_profile_admission; NO state.native_owner (custody line 359 refuses every order with an
-#    owner record, live or not; an automatic native owner is started the first time the retired hold escalates, so orders that
-#    have one go the owner's manual custody path, and the hook's value is admitting BEFORE a hold escalates to an owner);
+#    owner record, live or not; since CR-853 the first scheduler pass after the retired hold is set starts an automatic native
+#    owner whatever the runtime-family match, unless a v1.6 admission or a scoped native top-up exists, so nearly every held
+#    order gets a record there and goes the owner's manual custody path; the hook's value is admitting BEFORE that: evaluate()
+#    runs the hook inside dispatch_measurement, before the hold exists, and the owner start is in manage_evaluation after it);
 #    benchmarks == ["jevbench"]; a live, paid, unrefunded, undelivered order (what the hook can act on); at least
 #    V16_DRAW_MIN_REVIEW_BUDGET unused source-review attempts; exactly one admission-registry entry for the order; exactly one
 #    draw in RESERVATIONS.json that is open, unexpired and lists the order or maps the entry's family to its module (custody's
@@ -2773,7 +2775,11 @@ def _jev_v15_composite(axes: dict[str, Any], option: str) -> float:
 #    on, manage_evaluation now clears it once when the pair (V16_ADMIT_SHA256, reservations sha or 'absent') differs from the
 #    pair in the key of the order's last v16_admit_attempt (no attempt = differs: a new custody tool pin re-enters too), at most
 #    once per (order, pair) (state v16_reentry), only for a benchmarks == ["jevbench"] order without native_owner, never when
-#    evaluation_attempts is used up and never while an owner job is live on the order. The restarted evaluation goes through
+#    evaluation_attempts is used up and never while an owner job is live on the order. v16_reentry runs before
+#    operational_escalate (which starts the CR-853 native owner), so a re-entry still wins while no owner record exists: when
+#    custody's reservations (or the pin) change between the evaluation that set the hold and the first scheduler pass. A refused
+#    owner start, and MAX_STARTS used up, leave the record (it is written before systemd is asked) and therefore block re-entry
+#    as well. The restarted evaluation goes through
 #    the review gate above and dispatch_measurement. A recorded draw that is no longer the draw custody would pick (the
 #    single open, unexpired, verifying candidate) is dropped and selected again when another draw qualifies and the review
 #    budget can pay for it; when none can be pinned the hold stays (v16_reentry marker result 'kept', examined once per pair).
@@ -3092,7 +3098,8 @@ def v16_reentry(row: dict[str, Any], state: dict[str, Any], now: datetime) -> bo
     """manage_evaluation, non-transient hold `official_method_retired_requires_admission` (CR-857): True when the hold was
     cleared so that the evaluation restarts, through dispatch_measurement, with the reservations as they are now. All of:
     the v16 pin is on; a text-only JevBench order without an admission and WITHOUT a native owner record (custody refuses
-    those: `not_native_owner`; the hook's value is admitting before a hold escalates to an owner); the evaluation budget is
+    those: `not_native_owner`; the hook's value is admitting before a hold escalates to an owner, and since CR-853 the first
+    scheduler pass after the hold starts that owner for nearly every order, after this check); the evaluation budget is
     not used up; no owner job (automatic native or hand-started) is live on the order; the reservations are readable (absent
     counts as a value) and the pair (pin sha, reservations sha) DIFFERS from the one in the key of the last v16_admit_attempt
     (no attempt = differs); this pair was not re-entered before (state `v16_reentry`: at most one per order and pair, so a hold
