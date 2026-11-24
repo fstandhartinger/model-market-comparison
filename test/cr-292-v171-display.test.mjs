@@ -10,11 +10,12 @@ import { baseModelFootnotes, baseModelFor, baseModelVisibleNote } from '../lib/j
 const src = (p) => readFileSync(new URL(`../${p}`, import.meta.url), 'utf8');
 const board = src('components/JevBenchV16Board.tsx');
 const route = src('components/JevBenchV16ReleaseRoute.tsx');
+const notes = src('lib/jevbench-capability-notes.mjs');
 const ranking = src('components/JevCapabilityRanking.tsx');
 
 test('1: the Jev reference row reads exactly as Florian asked', () => {
-  assert.match(ranking, /'Not ranked, only shown as a reference to compare with'/);
-  assert.match(ranking, /listing === JEV_SCOPE_LISTING\.reference\) return 'Not ranked, only shown as a reference to compare with'/);
+  assert.match(notes, /'Not ranked, only shown as a reference to compare with'/);
+  assert.match(notes, /listing === JEV_SCOPE_LISTING\.reference\) return 'Not ranked, only shown as a reference to compare with'/);
 });
 
 test('2: ranking headings name the board (open weights / API offerings)', () => {

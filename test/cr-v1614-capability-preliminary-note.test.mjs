@@ -3,11 +3,12 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 
+const notes = readFileSync(new URL('../lib/jevbench-capability-notes.mjs', import.meta.url), 'utf8');
 const src = readFileSync(new URL('../components/JevCapabilityRanking.tsx', import.meta.url), 'utf8');
 
 test('unrankedNote prefers the row preliminary label and keeps the legacy P300 text as the default', () => {
-  assert.match(src, /export function unrankedNote\(listing: string, benchName: string, preliminary\?: \{ label\?: string \| null \} \| null\)/);
-  assert.match(src, /if \(listing === 'preliminary'\) return preliminary\?\.label \?\? 'Preliminary · public set \(300 items\) · full sealed run pending';/);
+  assert.match(notes, /export function unrankedNote\(listing, benchName, preliminary\)/);
+  assert.match(notes, /if \(listing === 'preliminary'\) return preliminary\?\.label \?\? 'Preliminary · public set \(300 items\) · full sealed run pending';/);
   assert.match(src, /unrankedNote\(r\.row\.listing, benchName, \(r\.row as \{ preliminary\?: \{ label\?: string \| null \} \| null \}\)\.preliminary\)/);
 });
 

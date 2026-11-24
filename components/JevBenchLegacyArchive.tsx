@@ -1,3 +1,4 @@
+import { referenceNote, unrankedNote } from '../lib/jevbench-capability-notes.mjs';
 import { JevBenchLegacyArchiveLoader } from './JevBenchLegacyArchiveProvider';
 import { JevV14ArchiveMethod, jevV14BoardRows } from './JevModelsV14';
 import { JevV15ArchiveMethod, jevV15ArchiveChartData } from './JevBenchV15View';
@@ -17,7 +18,7 @@ export function JevBenchLegacyArchiveWidget({ version, part = 'board', ...props 
   const isV15 = version.startsWith('v1.5.');
   const isCapability = isV15 || (version === 'v1.4.2.2' && part === 'capability');
   const primary = version === 'v1.4.2.2' ? part === 'capability' : part === 'board';
-  let rows: Array<{ key: string; name: string; rank: string; score: number | null; cost?: number | null; estimated?: boolean; note?: string }> = [];
+  let rows: Array<{ key: string; name: string; rank: string; score: number | null; cost?: number | null; estimated?: boolean; announced?: boolean; note?: string }> = [];
   let count = 0;
   if (primary && version === 'v1.7.0') {
     const ordered = jevOldNewRows(props.systems, props.carryRows);
@@ -29,10 +30,10 @@ export function JevBenchLegacyArchiveWidget({ version, part = 'board', ...props 
     let rank = 0;
     const ordered = [...jevBelowRankedLast(view.rows.filter(r => r.inClass)), ...view.rows.filter(r => !r.inClass)];
     count = a?.systems.length ?? props.systems.length;
-    rows = ordered.slice(0, 20).map(r => ({ key: r.row.key, name: r.row.display, rank: r.inClass && r.row.ranked ? String(++rank) : '–', score: r.capability, cost: r.cost, estimated: r.row.cost?.kind === 'estimate' }));
+    rows = ordered.slice(0, 20).map(r => ({ key: r.row.key, name: r.row.display, rank: r.inClass && r.row.ranked ? String(++rank) : '–', score: r.capability, cost: r.cost, estimated: r.row.cost?.kind === 'estimate', announced: r.row.cost?.kind === 'announced', note: !r.inClass ? `Outside: ${r.reasons.join(', ')}` : r.isReference ? referenceNote() : !r.row.ranked ? unrankedNote(r.row.listing, 'JevBench', (r.row as { preliminary?: { label?: string | null } | null }).preliminary) : undefined }));
   } else if (primary && a) {
     count = a.systems.length;
-    rows = jevV14BoardRows(a).slice(0, 20).map(r => ({ key: r.key, name: r.display, rank: r.rank == null ? '–' : String(r.rank), score: r.jevbench_score, cost: r.cost?.usd_per_1000, estimated: r.cost?.kind === 'estimate' }));
+    rows = jevV14BoardRows(a).slice(0, 20).map(r => ({ key: r.key, name: r.display, rank: r.rank == null ? '–' : String(r.rank), score: r.jevbench_score, cost: r.cost?.usd_per_1000, estimated: r.cost?.kind === 'estimate', announced: r.cost?.kind === 'announced' }));
   }
   const displayVersion = a?.revision ?? props.revision ?? version;
   const published = jevbenchRelease(version)?.date ?? a?.published_on;
@@ -45,7 +46,7 @@ export function JevBenchLegacyArchiveWidget({ version, part = 'board', ...props 
       <div className="mt-3 overflow-x-auto"><table className="w-full text-left text-sm tabular" data-bh-jev-archive-top>
         <caption className="sr-only">JevBench {displayVersion}: top 20 rows in the default order</caption>
         <thead><tr>{['Rank', 'System', isCapability ? 'Capability Score' : 'Composite', ...(version === 'v1.7.0' ? [] : ['Cost / 1,000 decisions'])].map(h => <th className="p-2" key={h} scope="col">{h}</th>)}</tr></thead>
-        <tbody>{rows.map(r => <tr key={r.key} className="border-t border-line" data-bh-jev-archive-row={r.key}><td className="p-2">{r.rank}</td><th className="p-2 font-normal" scope="row">{r.name}{r.note && <span className="bh-muted block text-xs">{r.note}</span>}</th><td className="p-2">{version === 'v1.7.0' ? r.score == null ? '—' : jevFixed(r.score, 2) : one(r.score)}</td>{version !== 'v1.7.0' && <td className="p-2">{r.estimated && r.cost != null && 'est. '}{isCapability ? r.cost == null ? '—' : capabilityUsd(r.cost) : dollars(r.cost)}</td>}</tr>)}</tbody>
+        <tbody>{rows.map(r => <tr key={r.key} className="border-t border-line" data-bh-jev-archive-row={r.key}><td className="p-2">{r.rank}</td><th className="p-2 font-normal" scope="row">{r.name}{r.note && <span className="bh-muted block text-xs">{r.note}</span>}</th><td className="p-2">{version === 'v1.7.0' ? r.score == null ? '—' : jevFixed(r.score, 2) : one(r.score)}</td>{version !== 'v1.7.0' && <td className="p-2">{r.estimated && r.cost != null && 'est. '}{r.announced && r.cost != null && 'ann. '}{isCapability ? r.cost == null ? '—' : capabilityUsd(r.cost) : dollars(r.cost)}</td>}</tr>)}</tbody>
       </table></div>
     </section>}
     {part === 'board' && version.startsWith('v1.4') && <JevV14ArchiveMethod />}

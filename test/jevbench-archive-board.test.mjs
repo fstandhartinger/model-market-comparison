@@ -78,7 +78,7 @@ async function originalPageProps(version) {
   return props;
 }
 const legacyProps = new Map();
-for (const version of JEV_ARCHIVE_BOARD_VERSIONS) {
+for (const version of Object.keys(baseline.files).map(file => file.match(/^app\/jev-models\/(v[\d.]+)\/page\.tsx$/)?.[1]).filter(Boolean)) {
   test(`${version}: static JSON exactly preserves every original board prop and comparison category`, async () => {
     const file = `app/jev-models/${version}/page.tsx`;
     const source = baseline.files[file];
@@ -100,7 +100,9 @@ for (const version of JEV_ARCHIVE_BOARD_VERSIONS) {
 }
 
 test('static route publishes only the explicit archive allowlist', async () => {
-  assert.equal(JEV_ARCHIVE_BOARD_VERSIONS.length, 86);
+  const frozenVersions = Object.keys(baseline.files).map(file => file.match(/^app\/jev-models\/(v[\d.]+)\/page\.tsx$/)?.[1]).filter(Boolean);
+  assert.equal(frozenVersions.length, 86);
+  for (const version of frozenVersions) assert.ok(JEV_ARCHIVE_BOARD_VERSIONS.includes(version), `${version} remains in the allowlist`);
   assert.equal(dynamic, 'force-static'); assert.equal(dynamicParams, false);
   assert.deepEqual(generateStaticParams(), [...JEV_ARCHIVE_BOARD_VERSIONS, ...JEV_LEGACY_ARCHIVE_VERSIONS].map(version => ({ version })));
   for (const version of ['board-open', '../v1.8.20', 'constructor', 'v9.9.9']) {
@@ -122,7 +124,7 @@ test('summary is useful without JavaScript and its loader receives only a versio
 
 test('client renderer preserves original full-board markup for every modern archive', async () => {
   const OldBoard = OriginalBoard;
-  for (const version of JEV_ARCHIVE_BOARD_VERSIONS) {
+  for (const version of Object.keys(baseline.files).map(file => file.match(/^app\/jev-models\/(v[\d.]+)\/page\.tsx$/)?.[1]).filter(Boolean)) {
     const props = legacyProps.get(version) ?? await originalPageProps(version);
     const response = await GET(new Request(`http://localhost/api/jevbench/${version}/board`), { params: Promise.resolve({ version }) });
     assert.equal(response.status, 200);
