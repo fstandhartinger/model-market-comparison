@@ -37,6 +37,15 @@ from __future__ import annotations
 
 import contextlib
 import contextvars
+# What a cap edit does NOT do (CR-858 critic S1/S3, read before editing the override):
+#  * Runs under an order-specific authority (v16_allocation.FreshAllocation, scoped_native_topup.ScopedTopUp, Strands) keep
+#    their ORIGINAL, hash-pinned accounting (USD 5/h, 3 h, USD 20/order, their own retry count). Lowering the config does not
+#    brake them (FreshAllocation still takes a lowered per-order cap via v16_profiles), raising it does not widen them.
+#  * Lowering a cap below an order's pinned recipe price (hourly_usd) or below what an order already spent turns that order
+#    into a NON-transient hold (`pod_recipe_invalid` / `partial_measurement_requires_reconciliation`), not a quiet wait.
+#    Check live paid orders (pods ledger spent_upper_bound_usd, recipe hourly_usd) before lowering; nothing is overspent either way.
+#  * Raising a cap is a money decision (Florian / DECISIONS), never an operator call. The USD 300/day lane cap and the
+#    8-pod lane cap live in ~/bin/gpu-pod-guard (PAID_LANE), not here.
 import dataclasses
 import json
 import math
