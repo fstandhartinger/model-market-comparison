@@ -54,7 +54,8 @@ class CardWording(unittest.TestCase):
         state = {'steps': {}, 'operational_hold': {'reason': 'official_method_retired_requires_admission'}}
         effects = mock.Mock()
         effects.board.return_value = False
-        with mock.patch.object(c, 'alert') as alert:
+        # CR-853: this hold now starts a native owner; the card below is the path when that owner does not cover it.
+        with mock.patch.object(c, 'alert') as alert, mock.patch.object(c, 'ensure_native_owner', return_value=False):
             c.operational_escalate(ROW, state, effects, c.utcnow(),
                                   'official_method_retired_requires_admission', exhausted=False)
         self.assert_card(alert.call_args.kwargs['text'])

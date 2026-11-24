@@ -239,15 +239,6 @@ class EnsureOwnerTests(unittest.TestCase):
         return {"id": RID, "steps": {}, "alerts": {}, "operational_hold": {"reason": self.RETIRED, "transient": False}, **extra}
 
     def test_other_reasons_keep_the_old_path(self) -> None:
-        # An order that matches no registered family keeps today's path at the retired-method hold: card + handoff, no owner.
-        row = dict(self.row, model_link="https://huggingface.co/someone/other-model")
-        state = self.retired_state()
-        with mock.patch.object(ap, "alert") as alert:
-            ap.operational_escalate(row, state, self.effects, self.now, self.RETIRED, exhausted=False)
-        self.effects.start_unit.assert_not_called()
-        self.assertTrue(alert.call_args.kwargs["urgent"])
-        self.assertEqual(self.effects.board.call_args.args[1], ap.WAKE_FALLBACK)  # placeholder owner has no job folder
-        self.assertNotIn("native_owner", state)
         for reason in ("gpu_pod_capacity", "official_measurement_pin_changed", "evaluation_exhausted"):
             self.assertFalse(ap.native_owner_due(RID, reason, self.row, self.retired_state()), reason)
 
@@ -282,21 +273,45 @@ class EnsureOwnerTests(unittest.TestCase):
         plain = no.prompt_text(RID, self.row, reason="unsupported_measurement_backend", deadline="d", order_dir=self.tmp)
         self.assertIn("because its runner generator found no supported runtime\n(hold reason", plain)
 
-    def test_retired_hold_without_exactly_one_match_is_unchanged(self) -> None:
+    def test_retired_hold_without_exactly_one_match_starts_the_owner_too(self) -> None:
+        # CR-853 (order d57b054a, AirDecision, 24 Nov 2026): no family matched, so nobody owned the hold and the pickup
+        # raised an urgent card 15 min after payment with 48 h left. Zero or several matches now start the owner as well.
         zero = dict(self.row, model_link="https://huggingface.co/someone/other-model")
         two = dict(self.row, code_link="https://github.com/csabag/ryotide")  # torchcast model + ryotide code
         none_link = dict(self.row, model_link=None)
         self.assertEqual(len(no.match_supplements(two)), 2)
+        self.assertEqual(len(no.match_supplements(zero)), 0)
         for name, row in (("zero", zero), ("two", two), ("no link", none_link)):
             self.setUp_effects()
             state = self.retired_state()
+            self.assertTrue(ap.native_owner_due(RID, self.RETIRED, row, state), name)
             with mock.patch.object(ap, "alert") as alert:
                 ap.operational_escalate(row, state, self.effects, self.now, self.RETIRED, exhausted=False)
-            self.effects.start_unit.assert_not_called()
-            self.assertTrue(alert.call_args.kwargs["urgent"], name)
-            self.assertNotIn("native_owner", state, name)
-            self.assertFalse(ap.ensure_native_owner(row, state, self.effects, self.now, self.RETIRED), name)
-            self.assertFalse(ap.native_owner_due(RID, self.RETIRED, row, state), name)
+            alert.assert_not_called()
+            self.effects.start_unit.assert_called_once_with(f"jevbench-native-owner@{RID}.service")
+            self.assertEqual(state["native_owner"]["starts"], 1, name)
+            self.assertEqual(state["operational_hold"]["owner"], no.owner_name(RID), name)
+            self.assertEqual(self.effects.board.call_args.args[1], no.owner_name(RID), name)
+            self.assertIn("matches no single reviewed runtime family", self.effects.board.call_args.args[0], name)
+            self.assertNotIn("found no supported runtime", self.effects.board.call_args.args[0], name)
+            text = no.prompt_text(RID, row, reason=self.RETIRED, deadline="d", order_dir=self.tmp)
+            self.assertIn("matches no single reviewed runtime family", text, name)
+            self.assertIn("held without the host's v1.6 profile admission", text, name)
+
+    def test_retired_hold_without_a_family_still_cards_when_the_start_fails_or_near_the_deadline(self) -> None:
+        zero = dict(self.row, model_link="https://huggingface.co/someone/other-model")
+        state = self.retired_state()
+        self.effects.start_unit.return_value = False
+        with mock.patch.object(ap, "alert") as alert:
+            ap.operational_escalate(zero, state, self.effects, self.now, self.RETIRED, exhausted=False)
+        self.assertTrue(alert.call_args.kwargs["urgent"])
+        self.setUp_effects()
+        late = dict(zero, paid_at=ap.iso(self.now - timedelta(hours=40)))
+        state = self.retired_state()
+        with mock.patch.object(ap, "alert") as alert:
+            ap.operational_escalate(late, state, self.effects, self.now, self.RETIRED, exhausted=False)
+        self.effects.start_unit.assert_called_once()
+        self.assertTrue(alert.call_args.kwargs["urgent"])
 
     def live_owner_record(self) -> dict:
         return {"job": no.owner_name(RID), "requested_at": ap.iso(self.now - timedelta(hours=1)), "starts": 1, "start_ok": True,
