@@ -5493,7 +5493,7 @@ class AutoAdmitHookSchedulerTests(DatabaseTestCase):
         retired = ap.load_state(self.rid)["source_review_gate"]["source_pins"]
         refs = drawgate.make_refs(self.custody_dir, "a", "draw-a")
         draw = {"status": "open", "families": {}, "orders": [self.rid], "expires_at": drawgate.FUTURE, "max_uses": 1,
-                "references": refs}
+                "references": refs, **drawgate.custody_fields(refs)}
         sha = self.put_reservations(json.dumps({"schema": 1, "draws": {"draw-a": draw}}))
         self.assertEqual(self.manage(), 1)  # re-entry: the hold is cleared
         reviewed = []
@@ -5531,6 +5531,105 @@ class AutoAdmitHookSchedulerTests(DatabaseTestCase):
         self.assertEqual(ap.load_state(self.rid)["stage_attempts"]["source_review"], 1)
         self.assertNotIn("evaluation_exhausted", ap.load_state(self.rid))
 
+    def use_registry(self):
+        """The admission registry names this order's family, as the draw gate needs (never the real registry)."""
+        import order_admission_registry
+        import test_v16_draw_gate as drawgate
+        registry = self.custody_dir / "order-admissions.json"
+        drawgate.write_atomic(registry, json.dumps({"schema": 1, "entries": [drawgate.GateCase.entry(self.rid)]}))
+        patcher = mock.patch.object(order_admission_registry, "REGISTRY", registry)
+        patcher.start()
+        self.addCleanup(patcher.stop)
+
+    def draw_for_order(self, refs, **overrides):
+        import test_v16_draw_gate as drawgate
+        draw = {"status": "open", "families": {}, "orders": [self.rid], "expires_at": drawgate.FUTURE, "max_uses": 1,
+                "references": refs, **drawgate.custody_fields(refs)}
+        return {**draw, **overrides}
+
+    def passing_review(self, reviewed):
+        """run_agent stub: a source review that PASSes on exactly the pins the pickup computes now."""
+        def review(folder, env, timeout, **kwargs):
+            pins = ap.source_review_pins(self.job)
+            reviewed.append(pins)
+            (folder / "OUTPUT.md").write_text(json.dumps({"schema_version": 1, "verdict": "PASS", "source_pins": pins,
+                                                          "summary": "pins checked", "checks": ["pins"], "findings": []}))
+            return 0
+        return mock.patch.object(ap, "run_agent", side_effect=review)
+
+    def test_an_order_with_a_native_owner_record_is_not_re_entered_by_the_scheduler(self):
+        # CR-857 critic MUST-1: custody refuses every order with state.native_owner (not_native_owner), live or not
+        self.custody(exit_code=1)
+        self.assertEqual(self.evaluation_pass(), 0)
+        state = ap.load_state(self.rid)
+        state["native_owner"] = {"job": ap.native_owner.owner_name(self.rid), "reason": "official_method_retired_requires_admission",
+                                 "requested_at": ap.iso(datetime.now(timezone.utc)), "starts": 1, "start_ok": True}
+        ap.save_state(state)
+        self.put_reservations('{"schema": 1, "draws": {}}\n')
+        with mock.patch.object(ap, "native_owner_live", return_value=False), \
+                mock.patch.object(ap, "ensure_native_owner", return_value=False):  # the owner is gone; no second start here
+            self.assertEqual(self.manage(), 0)
+        self.assertIsNotNone(self.hold())
+        self.assertNotIn("v16_reentry", ap.load_state(self.rid))
+        self.assertEqual(len(self.custody_calls()), 1)
+        self.assertEqual(row(self.rid)["evaluation_status"], "pending")
+
+    def test_a_recorded_draw_whose_files_vanish_holds_the_order_without_a_loop_and_a_new_draw_replaces_it(self):
+        # CR-857 critic SHOULD-1: the recorded draw's files disappear while the order has no admission. That used to raise
+        # PickupError inside evaluate(): the unit failed, the row stayed 'starting', no hold, no card, a restart every 10 minutes.
+        import test_v16_draw_gate as drawgate
+        import v16_profiles
+        self.use_registry()
+        self.custody(exit_code=1)
+        self.assertEqual(self.evaluation_pass(), 0)  # no reservation: refused, today's hold
+        refs_a = drawgate.make_refs(self.custody_dir, "a", "draw-a")
+        draw_a = self.draw_for_order(refs_a)
+        self.put_reservations(json.dumps({"schema": 1, "draws": {"draw-a": draw_a}}))
+        self.assertEqual(self.manage(), 1)  # re-entry
+        reviewed = []
+        with self.passing_review(reviewed):
+            self.assertEqual(self.evaluation_pass(), 0)  # ONE review on draw-a's pins; the draw is recorded
+        self.assertEqual(ap.load_state(self.rid)["v16_gate_draw"]["release"], "draw-a")
+        self.assertEqual(ap.load_state(self.rid)["stage_attempts"]["source_review"], 1)
+        for key in ("measurement", "scoring"):  # custody removes draw-a's files before the next pass
+            Path(refs_a[key]["path"]).unlink()
+        calls = len(self.custody_calls())
+        with mock.patch.object(ap, "run_agent", side_effect=AssertionError("a review for an unusable draw")):
+            self.assertEqual(self.evaluation_pass(), 0)
+        state = ap.load_state(self.rid)
+        self.assertEqual((self.hold()["reason"], self.hold()["transient"]), ("official_method_retired_requires_admission", False))
+        self.assertIn("recorded v1.6 draw is unavailable or changed", self.hold()["detail"])
+        self.assertEqual(row(self.rid)["evaluation_status"], "pending")  # not 'failed', not 'starting' for ever
+        self.assertEqual(state["stage_attempts"]["source_review"], 1)  # no attempt, no budget used
+        self.assertEqual(len(self.custody_calls()), calls)  # custody is not asked about a gate that cannot be checked
+        self.assertIn("recorded v1.6 draw is unavailable or changed; the order is held", (self.job / "STATE.md").read_text())
+        self.assertEqual(state["v16_gate_draw"]["release"], "draw-a")  # the record stays until a replacement is found
+        for _ in range(3):  # the existing escalation path: the scheduler restarts nothing
+            self.assertEqual(self.manage(), 0)
+        self.assertIsNotNone(self.hold())
+        # custody closes draw-a and reserves draw-b: one re-entry, the record is replaced, ONE new review with draw-b's pins
+        refs_b = drawgate.make_refs(self.custody_dir, "b", "draw-b")
+        self.put_reservations(json.dumps({"schema": 1, "draws": {"draw-a": dict(draw_a, status="closed"),
+                                                                 "draw-b": self.draw_for_order(refs_b)}}))
+        self.assertEqual(self.manage(), 1)
+        self.assertNotIn("v16_gate_draw", ap.load_state(self.rid))
+        self.assertIsNone(self.hold())
+        reviewed = []
+        with self.passing_review(reviewed):
+            self.assertEqual(self.evaluation_pass(), 0)
+        self.assertEqual(len(reviewed), 1)
+        self.assertEqual(reviewed[0]["official_measurement"], v16_profiles.measurement_pins(refs_b["measurement"]["path"]))
+        state = ap.load_state(self.rid)
+        self.assertEqual(state["v16_gate_draw"]["release"], "draw-b")
+        self.assertEqual(state["stage_attempts"]["source_review"], 2)
+        self.assertEqual(self.evaluation_pass(), 0)  # valid gate: dispatch_measurement, custody asked once for the new key
+        self.assertEqual(len(self.custody_calls()), calls + 1)
+        self.assertEqual(self.hold()["reason"], "official_method_retired_requires_admission")  # custody refuses here
+        self.assertEqual(self.manage(), 0)  # bounded: nothing more happens for these reservations
+        self.assertEqual(self.manage(), 0)
+        self.assertNotIn("evaluation_exhausted", ap.load_state(self.rid))
+        self.assertEqual(row(self.rid)["evaluation_status"], "pending")
+
     def test_no_review_is_started_for_a_draw_when_the_source_review_budget_is_short(self):
         import order_admission_registry
         import test_v16_draw_gate as drawgate
@@ -5546,7 +5645,7 @@ class AutoAdmitHookSchedulerTests(DatabaseTestCase):
         ap.save_state(state)
         refs = drawgate.make_refs(self.custody_dir, "a", "draw-a")
         draw = {"status": "open", "families": {}, "orders": [self.rid], "expires_at": drawgate.FUTURE, "max_uses": 1,
-                "references": refs}
+                "references": refs, **drawgate.custody_fields(refs)}
         self.put_reservations(json.dumps({"schema": 1, "draws": {"draw-a": draw}}))
         self.assertEqual(self.manage(), 1)  # re-entry itself is fine ...
         with mock.patch.object(ap, "run_agent", side_effect=AssertionError("a review the budget cannot afford")):
