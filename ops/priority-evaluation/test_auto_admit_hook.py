@@ -707,10 +707,32 @@ class ReservationKeyTests(HookCase):
                 self.assertEqual(self.attempt()['code'], expected)
                 self.assertEqual(self.attempt()['kind'], 'refused')
 
+    def test_the_real_tools_stdout_lines_give_their_token(self):
+        # custody's v16-admit b1dfc787 prints 'v16-admit: refused: <token>' (exit 1) and 'v16-admit: retry: <token>' (exit 3)
+        for printed, expected in (('v16-admit: refused: no_reservations\n', 'no_reservations'),
+                                  ('v16-admit: refused: one_reserved_draw', 'one_reserved_draw'),
+                                  ('v16-admit: refused: gate_pins_draw_measurement\n\n', 'gate_pins_draw_measurement'),
+                                  ('v16-admit: refused: ' + 'x' * 64, 'x' * 64), ('v16-admit: refused: refused', 'refused')):
+            with self.subTest(printed):
+                self.pin(self.v16_script(exit_code=1, stdout=printed))
+                self.dispatch()
+                self.assertEqual((self.attempt()['kind'], self.attempt()['code']), ('refused', expected))
+
+    def test_the_real_tools_retry_line_gives_its_token_too(self):
+        self.pin(self.v16_script(exit_code=3, stdout='v16-admit: retry: lock_busy\n'))
+        self.assertEqual(self.dispatch(), 'HOLD:v16_admit_retry')
+        self.assertEqual((self.attempt()['kind'], self.attempt()['code']), ('retry', 'lock_busy'))
+
     def test_anything_else_on_stdout_is_unparsed(self):
-        # the validated form is ^[a-z0-9_]{1,64}$: no prose, no upper case, no second line, no 65th character, nothing
-        for printed in ('', 'v16-admit: refused: no_reservations\n', 'No_Reservations', 'two\ntokens\n', 'x' * 65, 'a-b', 'a b',
-                        '\x1b[31mno_reservations', 'uumlaut_\u00e4', '$(touch x)'):
+        # the validated forms are ^[a-z0-9_]{1,64}$ and 'v16-admit: (refused|retry): <that token>': no prose, no upper case, no
+        # second line, no 65th character, no other prefix, nothing
+        for printed in ('', 'No_Reservations', 'two\ntokens\n', 'x' * 65, 'a-b', 'a b', '\x1b[31mno_reservations', 'uumlaut_\u00e4',
+                        '$(touch x)', 'v16-admit: refused: order id format', 'v16-admit: error, retry', 'v16-admit: ADMITTED on draw-a',
+                        'v16-admit: refused: ' + 'x' * 65, 'v16-admit: refused: No_Reservations', 'v16-admit: refused: two tokens',
+                        'v16-admit: refused: a\nv16-admit: refused: b', 'v16-admit: refused:no_reservations',
+                        'v16-admit:  refused: no_reservations', 'v16-admit: refused:  no_reservations', 'v16-admit: refused: ',
+                        'v16-admit: other: no_reservations', 'x v16-admit: refused: no_reservations',
+                        'v16-admit: refused: no_reservations x', 'V16-ADMIT: refused: no_reservations'):
             with self.subTest(printed):
                 self.pin(self.v16_script(exit_code=1, stdout=printed))
                 self.dispatch()
@@ -743,8 +765,11 @@ class ReservationKeyTests(HookCase):
         cases['symlink'] = lambda: self.reservations.symlink_to(target)
         cases['directory'] = lambda: self.reservations.mkdir()
         cases['fifo'] = lambda: os.mkfifo(self.reservations)
-        cases['too large'] = lambda: (self.reservations.write_bytes(b' ' * (ap.PINNED_FILE_MAX_BYTES + 1)),
+        cases['too large'] = lambda: (self.reservations.write_bytes(b' ' * (ap.V16_RESERVATIONS_LIMIT + 1)),
                                       os.chmod(self.reservations, 0o600))
+        patcher = mock.patch.object(ap, 'V16_RESERVATIONS_LIMIT', 4096)  # the real limit is 64 MiB (next test)
+        patcher.start()
+        self.addCleanup(patcher.stop)
         for label, make in cases.items():
             with self.subTest(label):
                 if self.reservations.is_dir() and not self.reservations.is_symlink():
@@ -755,6 +780,33 @@ class ReservationKeyTests(HookCase):
                 self.assertEqual(self.dispatch(), 'HOLD:official_method_retired_requires_admission')
                 self.assertEqual(self.v16_calls(), [])
                 self.assertNotIn('v16_admit_attempt', self.state())
+
+    def test_the_reservations_limit_is_custodys_64_mib_not_the_pinned_files_1_mib(self):
+        # v16-admit reads RESERVATIONS.json with LIMIT = 64 MiB: a file between 1 and 64 MiB must reach custody, so it is keyed
+        self.assertEqual(ap.V16_RESERVATIONS_LIMIT, 64 * 1024 * 1024)
+        self.assertEqual(ap.PINNED_FILE_MAX_BYTES, 1024 * 1024)
+        self.pin(self.v16_script(exit_code=1))
+        document = '{"schema": 1, "draws": {}}' + ' ' * (2 * ap.PINNED_FILE_MAX_BYTES)
+        sha = self.put_reservations(document)
+        self.assertEqual(self.dispatch(), 'HOLD:official_method_retired_requires_admission')
+        self.assertEqual(len(self.v16_calls()), 1)
+        self.assertTrue(self.attempt()['key'].endswith(':' + sha))
+        # ... and one byte over custody's own limit is not an attempt
+        with mock.patch.object(ap, 'V16_RESERVATIONS_LIMIT', len(document) - 1):
+            self.put_reservations(document + ' ')
+            self.assertEqual(self.dispatch(), 'HOLD:official_method_retired_requires_admission')
+        self.assertEqual(len(self.v16_calls()), 1)
+        self.assertIn('v16-admit reservations file is larger than the allowed size; hold unchanged', self.state_md())
+
+    def test_the_safe_reader_limit_is_a_parameter_that_defaults_to_the_pinned_file_limit(self):
+        path = self.root / 'g'
+        path.write_bytes(b'x' * 10)
+        os.chmod(path, 0o600)
+        self.assertEqual(ap._read_safe_file(str(path), limit=10), (b'x' * 10, ''))
+        self.assertEqual(ap._read_safe_file(str(path), limit=9), (None, 'file is larger than the allowed size'))
+        path.write_bytes(b'x' * (ap.PINNED_FILE_MAX_BYTES + 1))
+        self.assertEqual(ap._read_safe_file(str(path)), (None, 'file is larger than the allowed size'))
+        self.assertEqual(ap._read_safe_file(str(path), limit=ap.PINNED_FILE_MAX_BYTES + 1)[1], '')
 
     def test_fixing_the_mode_of_the_same_bytes_is_not_locked_out(self):
         # the sha does not change with the mode; had the unsafe file counted as an attempt, the order would stay refused for good
