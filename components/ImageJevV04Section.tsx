@@ -3,6 +3,9 @@ import { validateImageJevV04Feed } from '../lib/imagejev-v04-feed.mjs';
 const number = (value: number, digits = 2) => value.toLocaleString('en-US', {
   minimumFractionDigits: digits, maximumFractionDigits: digits,
 });
+const maybe = (value: number | null, digits = 2) => value === null ? 'Not measured' : number(value, digits);
+const percent = (value: number) => `${number(value * 100, 1)} %`;
+const BREAKDOWN_LABELS = { use_case: 'use case', image_type: 'image type' } as const;
 
 /** This section accepts only its own validated v0.4 aggregate; no legacy board helpers. */
 export function ImageJevV04Section({ feed }: { feed: unknown }) {
@@ -17,8 +20,8 @@ export function ImageJevV04Section({ feed }: { feed: unknown }) {
       <p className="bh-eyebrow">Image benchmark · {data.revision} · {data.data_kind === 'fixture' ? 'Fixture preview' : 'Measured aggregates'}</p>
       <h2 id="imagejev-v04-heading" className="mt-1 text-2xl font-semibold">JevImageBench Capability Score — v0.4</h2>
       <p className="mt-3">v0.4 uses a separate scale. Its scores cannot be compared with v0.3 scores.</p>
-      <p className="bh-muted mt-2 text-sm">{data.rows.length.toLocaleString('en-US')} systems · {data.items.toLocaleString('en-US')} items · Updated <time dateTime={data.built_utc}>{data.built_utc.slice(0, 10)}</time></p>
-      <p className="bh-muted mt-2 text-sm">Raw Capability is the mean of Intelligence and Calibration (0–100), before any serving-budget caps. No ranks are assigned in this preview.</p>
+      <p className="bh-muted mt-2 text-sm">{data.rows.length.toLocaleString('en-US')} {data.rows.length === 1 ? 'system' : 'systems'} · {data.items.toLocaleString('en-US')} items · Updated <time dateTime={data.built_utc}>{data.built_utc.slice(0, 10)}</time></p>
+      <p className="bh-muted mt-2 text-sm">Raw Capability is the mean of Intelligence and Calibration (0–100), before any serving-budget caps. No ranks are assigned on the v0.4 scale yet.</p>
     </header>
     <div className="bh-panel mt-4 p-4" aria-label="v0.4 raw capability scores">
       <ul className="space-y-4">
@@ -42,13 +45,28 @@ export function ImageJevV04Section({ feed }: { feed: unknown }) {
           <thead><tr>{['System', 'Raw Capability', 'Intelligence', 'Calibration', 'Composite', 'Median latency (s)', 'USD / 1,000 decisions', 'Items', 'Measured'].map(label => <th scope="col" key={label}>{label}</th>)}</tr></thead>
           <tbody>{data.rows.map(row => <tr key={row.id} data-bh-imagejev-v04-row={row.id}>
             <th scope="row" className="text-left font-normal">{row.name}</th>
-            <td>{number((row.intelligence + row.calibration) / 2)}</td><td>{number(row.intelligence)}</td><td>{number(row.calibration)}</td><td>{number(row.composite)}</td>
-            <td>{number(row.latency_p50_s, 3)}</td><td>{number(row.usd_per_1000, 5)}</td><td>{row.n.toLocaleString('en-US')}</td>
+            <td>{number((row.intelligence + row.calibration) / 2)}</td><td>{number(row.intelligence)}</td><td>{number(row.calibration)}</td><td>{maybe(row.composite)}</td>
+            <td>{maybe(row.latency_p50_s, 3)}</td><td>{number(row.usd_per_1000, 5)}</td><td>{row.n.toLocaleString('en-US')}</td>
             <td><time dateTime={row.measured_utc}>{row.measured_utc.slice(0, 10)}</time></td>
           </tr>)}</tbody>
         </table>
       </div>
     </section>
+    {data.rows.flatMap(row => (Object.keys(BREAKDOWN_LABELS) as (keyof typeof BREAKDOWN_LABELS)[]).map(kind => {
+      const cells = row.breakdowns[kind];
+      if (!cells) return null;
+      return <section key={`${row.id}-${kind}`} className="mt-8" data-bh-imagejev-v04-breakdown={kind}>
+        <h3 className="text-lg font-semibold">{row.name} by {BREAKDOWN_LABELS[kind]}</h3>
+        <p className="bh-muted mt-1 text-sm">Accuracy per {BREAKDOWN_LABELS[kind]} next to the chance level of the same items. Every cell has at least 30 scored items.</p>
+        <div className="mt-3 overflow-x-auto"><table className="bh-table w-full">
+          <thead><tr>{['Cell', 'Items', 'Correct', 'Accuracy', 'Chance level'].map(label => <th scope="col" key={label}>{label}</th>)}</tr></thead>
+          <tbody>{cells.map(cell => <tr key={cell.id} data-bh-imagejev-v04-cell={cell.id}>
+            <th scope="row" className="text-left font-normal">{cell.label}</th><td>{cell.n.toLocaleString('en-US')}</td><td>{cell.correct.toLocaleString('en-US')}</td>
+            <td>{percent(cell.correct / cell.n)}</td><td>{percent(cell.chance)}</td>
+          </tr>)}</tbody>
+        </table></div>
+      </section>;
+    }))}
     <section id="imagejev-v04-method" className="bh-panel mt-8 max-w-5xl p-4" aria-labelledby="imagejev-v04-method-heading">
       <h3 id="imagejev-v04-method-heading" className="text-xl font-semibold">v0.4 method disclosure</h3>
       {data.method_disclosure === null

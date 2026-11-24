@@ -1,3 +1,10 @@
+export interface ImageJevV04Cell {
+  id: string;
+  label: string;
+  n: number;
+  correct: number;
+  chance: number;
+}
 export interface ImageJevV04Row {
   id: string;
   name: string;
@@ -5,10 +12,12 @@ export interface ImageJevV04Row {
   measured_utc: string;
   intelligence: number;
   calibration: number;
-  composite: number;
-  latency_p50_s: number;
+  composite: number | null;
+  latency_p50_s: number | null;
   usd_per_1000: number;
+  breakdowns: { use_case: ImageJevV04Cell[] | null; image_type: ImageJevV04Cell[] | null };
 }
+export declare const IMAGEJEV_V04_MIN_CELL_N: 30;
 export interface ImageJevV04Feed {
   schema_version: 1;
   benchmark: 'ImageJevBench';

@@ -23,15 +23,21 @@ async function withPage(fixture, check) {
   }
 }
 
-test('missing v0.4 feed hides the section while the production page and site layout render', { timeout: 60_000 }, async () => {
+test('measured v0.4-A feed renders the Gemini row, use-case cells and disclosure, indexed and without fixture labels', { timeout: 60_000 }, async () => {
   await withPage(false, (html) => {
     assert.match(html, /ImageJevBench v0\.4/);
-    assert.match(html, /Results are not available yet/);
     assert.match(html, /<nav\b/);
     assert.match(html, /href="\/image-jev-bench"/);
-    assert.match(html, /name="robots" content="noindex, nofollow/);
-    assert.doesNotMatch(html, /id="imagejev-v04"|data-bh-imagejev-v04-row/);
-    assert.doesNotMatch(html, /Fixture Amber|FICTIONAL FIXTURE/);
+    assert.match(html, /data-feed-kind="measured"/);
+    assert.match(html, /Gemini Decision 1/);
+    assert.equal((html.match(/data-bh-imagejev-v04-row="/g) ?? []).length, 1);
+    assert.match(html, /data-bh-imagejev-v04-breakdown="use_case"/);
+    assert.match(html, /data-bh-imagejev-v04-breakdown="image_type"/);
+    assert.equal((html.match(/data-bh-imagejev-v04-cell="/g) ?? []).length, 12);
+    assert.match(html, /Compare models only within the same evaluation pool/);
+    assert.doesNotMatch(html, /name="robots" content="noindex/);
+    assert.doesNotMatch(html, /FICTIONAL FIXTURE|Fixture Amber|data-bh-imagejev-v04-method-placeholder|Results are not available yet/);
+    assert.doesNotMatch(html, /data-bh-v03-measured|data-bh-mm-ranking|<th[^>]*>Rank|delta_v03/);
   });
 });
 
@@ -43,6 +49,7 @@ test('explicit local fixture preview renders v0.4 only, fictional labels and dis
     assert.match(html, /data-bh-imagejev-v04-method-placeholder=/);
     assert.match(html, /release owner to supply/);
     assert.match(html, /separate scale/);
+    assert.match(html, /name="robots" content="noindex, nofollow/);
     assert.match(html, /aria-valuenow="75"/);
     assert.match(html, /aria-valuenow="62"/);
     assert.match(html, /Fixture Amber \(fictional\)/);

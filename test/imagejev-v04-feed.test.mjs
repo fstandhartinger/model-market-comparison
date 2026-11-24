@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import test from 'node:test';
-import { loadImageJevV04Feed, validateImageJevV04Feed } from '../lib/imagejev-v04-feed.mjs';
+import { IMAGEJEV_V04_MIN_CELL_N, loadImageJevV04Feed, validateImageJevV04Feed } from '../lib/imagejev-v04-feed.mjs';
 
 const fixture = JSON.parse(await readFile(new URL('../data/fixtures/imagejev-v04.fixture.json', import.meta.url), 'utf8'));
 const copy = () => structuredClone(fixture);
@@ -49,7 +49,7 @@ test('wrong versions, invalid metadata and extra legacy fields fail closed', () 
 
 test('invalid scores, counts, timing, duplicates and disguised fixtures hide the whole feed', () => {
   for (const field of ['intelligence', 'calibration', 'composite']) {
-    for (const bad of [-0.01, 100.01, NaN, Infinity, '75', null, true]) {
+    for (const bad of [-0.01, 100.01, NaN, Infinity, '75', true, ...(field === 'composite' ? [] : [null])]) {
       const value = copy(); value.rows[1][field] = bad;
       assert.equal(validateImageJevV04Feed(value), null, `${field}=${String(bad)}`);
     }
@@ -58,7 +58,7 @@ test('invalid scores, counts, timing, duplicates and disguised fixtures hide the
       assert.ok(validateImageJevV04Feed(value));
     }
   }
-  for (const field of ['latency_p50_s', 'usd_per_1000']) for (const bad of [-1, Infinity, NaN, '0', null]) {
+  for (const field of ['latency_p50_s', 'usd_per_1000']) for (const bad of [-1, Infinity, NaN, '0', ...(field === 'usd_per_1000' ? [null] : [])]) {
     const value = copy(); value.rows[1][field] = bad;
     assert.equal(validateImageJevV04Feed(value), null, field);
   }
@@ -71,6 +71,54 @@ test('invalid scores, counts, timing, duplicates and disguised fixtures hide the
   ]) {
     const value = copy(); value.rows[1][field] = bad;
     assert.equal(validateImageJevV04Feed(value), null, `${field}=${String(bad)}`);
+  }
+});
+
+test('composite and latency may be null (not measured), never strings or estimates', () => {
+  const value = copy(); value.rows[0].composite = null; value.rows[0].latency_p50_s = null;
+  assert.ok(validateImageJevV04Feed(value));
+});
+
+test('release gate: every listed breakdown cell needs >= 30 scored items and the cells cover the row exactly', () => {
+  assert.equal(IMAGEJEV_V04_MIN_CELL_N, 30);
+  const atFloor = copy();
+  atFloor.rows[0].breakdowns.use_case = [
+    { id: 'a', label: 'A', n: 30, correct: 10, chance: 0.25 },
+    { id: 'b', label: 'B', n: 270, correct: 100, chance: 0.25 },
+  ];
+  assert.ok(validateImageJevV04Feed(atFloor), 'a 30-item cell is allowed');
+  const below = structuredClone(atFloor);
+  below.rows[0].breakdowns.use_case[0].n = 29; below.rows[0].breakdowns.use_case[1].n = 271;
+  assert.equal(validateImageJevV04Feed(below), null, 'a 29-item cell hides the whole feed');
+  const imageBelow = structuredClone(atFloor);
+  imageBelow.rows[0].breakdowns.image_type = structuredClone(below.rows[0].breakdowns.use_case);
+  assert.equal(validateImageJevV04Feed(imageBelow), null, 'the image-type breakdown has the same floor');
+  for (const mutate of [
+    (b) => { b.use_case[1].n = 260; },
+    (b) => { b.use_case[1].id = 'a'; },
+    (b) => { b.use_case[0].correct = 31; },
+    (b) => { b.use_case[0].chance = 0; },
+    (b) => { b.use_case[0].chance = 1; },
+    (b) => { b.use_case[0].rank = 1; },
+    (b) => { b.use_case = []; },
+    (b) => { delete b.image_type; },
+    (b) => { b.category = null; },
+  ]) {
+    const value = structuredClone(atFloor); mutate(value.rows[0].breakdowns);
+    assert.equal(validateImageJevV04Feed(value), null, String(mutate));
+  }
+  const none = copy(); none.rows[0].breakdowns = { use_case: null, image_type: null };
+  assert.ok(validateImageJevV04Feed(none), 'breakdowns may be withheld entirely');
+});
+
+test('the committed measured v0.4-A feed passes the cell gate when present', async () => {
+  let raw;
+  try { raw = await readFile(new URL('../data/imagejev-v04.json', import.meta.url), 'utf8'); } catch { return; }
+  const feed = validateImageJevV04Feed(JSON.parse(raw));
+  assert.ok(feed, 'data/imagejev-v04.json must validate');
+  assert.equal(feed.data_kind, 'measured');
+  for (const row of feed.rows) for (const cells of Object.values(row.breakdowns)) for (const cell of cells ?? []) {
+    assert.ok(cell.n >= IMAGEJEV_V04_MIN_CELL_N, `${row.id} ${cell.id} n=${cell.n}`);
   }
 });
 
