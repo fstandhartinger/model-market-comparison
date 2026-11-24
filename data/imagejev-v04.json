@@ -1,0 +1,113 @@
+{
+  "schema_version": 1,
+  "benchmark": "ImageJevBench",
+  "scale": "v0.4",
+  "revision": "v0.4-A",
+  "data_kind": "measured",
+  "built_utc": "2026-11-24T05:30:00.000Z",
+  "items": 300,
+  "method_disclosure": "ImageJevBench v0.4-A Reasoning uses 300 items with generated images per evaluation pool. Every image is generated, including diagrams, charts and simulated interfaces. The pool tests visual reasoning on tasks such as spatial relationships, interpreting diagrams and reading charts. Scores use the v0.4 scale. Compare models only within the same evaluation pool.\n\nPool: 300 items from 141 generator families (150 multiple-choice, 75 yes/no/unsure and 75 score questions; 135 of them hard), drawn by our custody agent with its own seed on 23 Nov 2026. Each item carries an answer computed by its generator and checked by independent verifier code, and every family passed shortcut tests (an answer must not be guessable from position or layout alone). Anthropic Claude and OpenAI Codex agents wrote and reviewed the items. Google had no role in writing or reviewing them, and there is no human expert panel.\n\nScoring: Intelligence is chance-corrected accuracy. Calibration scores the probabilities the model states with each answer. Raw Capability is (Intelligence + Calibration) / 2. The item mix differs from v0.3, so v0.4 scores are on their own scale and are not ranked against the v0.3 board.\n\nGemini Decision 1: Google Gemini API (Decisions API v1beta), model id gemini-decision-1, request-pinned. The image is sent inline at medium resolution, one item per request, with no retries. Measured on 23 Nov 2026. 299 of 300 requests were answered; one network error counts as a wrong answer. Accuracy 172 of 300 (57.3 %) against a chance level of 30.7 %. Cost basis: Google list price USD 0.10 per 1M input tokens (text and image), output not billed, times the API-reported usage (203,285 input tokens, 0 output tokens); the failed request counts as zero tokens. Latency was measured from our server in Germany, request send to full response, network time included, over the 299 answered requests: p50 0.684 s, p95 1.237 s. Composite uses the same four axes and gates as the v0.3 board (Intelligence, Calibration, Speed, Cost); here the Intelligence and Cost gates apply because both axes are below 50.\n\nGoogle has now seen this pool, so a later Gemini re-measure uses a different sealed pool. Anthropic and OpenAI models are not listed on this pool because agents from those vendors wrote and reviewed its items.",
+  "rows": [
+    {
+      "id": "gemini-decision-1",
+      "name": "Gemini Decision 1 (Google, hosted API)",
+      "n": 300,
+      "measured_utc": "2026-11-23T17:08:18.000Z",
+      "intelligence": 38.4418,
+      "calibration": 87.7995,
+      "composite": 26.6914,
+      "latency_p50_s": 0.684,
+      "usd_per_1000": 0.0677617,
+      "breakdowns": {
+        "use_case": [
+          {
+            "id": "diagram-planning",
+            "label": "Diagram planning",
+            "n": 116,
+            "correct": 62,
+            "chance": 0.310201
+          },
+          {
+            "id": "chart-decision",
+            "label": "Chart decisions",
+            "n": 66,
+            "correct": 48,
+            "chance": 0.335606
+          },
+          {
+            "id": "document-check",
+            "label": "Document checks",
+            "n": 42,
+            "correct": 20,
+            "chance": 0.272222
+          },
+          {
+            "id": "ui-agent-action",
+            "label": "UI agent actions",
+            "n": 40,
+            "correct": 27,
+            "chance": 0.28125
+          },
+          {
+            "id": "count-inspect",
+            "label": "Count and inspect",
+            "n": 36,
+            "correct": 15,
+            "chance": 0.3125
+          }
+        ],
+        "image_type": [
+          {
+            "id": "g1",
+            "label": "Maths, logic and engineering diagrams",
+            "n": 60,
+            "correct": 32,
+            "chance": 0.3347
+          },
+          {
+            "id": "g2",
+            "label": "Spatial, maps and board puzzles",
+            "n": 56,
+            "correct": 30,
+            "chance": 0.2839
+          },
+          {
+            "id": "g3",
+            "label": "Charts, including trap charts",
+            "n": 36,
+            "correct": 22,
+            "chance": 0.3069
+          },
+          {
+            "id": "g4",
+            "label": "UI screens and agent safety",
+            "n": 40,
+            "correct": 27,
+            "chance": 0.2812
+          },
+          {
+            "id": "g5",
+            "label": "Documents, receipts and small text",
+            "n": 36,
+            "correct": 19,
+            "chance": 0.2787
+          },
+          {
+            "id": "g6",
+            "label": "Multi-panel and multilingual",
+            "n": 36,
+            "correct": 27,
+            "chance": 0.3472
+          },
+          {
+            "id": "g7",
+            "label": "Counting and surface inspection",
+            "n": 36,
+            "correct": 15,
+            "chance": 0.3125
+          }
+        ]
+      }
+    }
+  ]
+}
