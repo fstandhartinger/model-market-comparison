@@ -2525,7 +2525,8 @@ def manage_evaluation(row: dict[str, Any], state: dict[str, Any], effects: Effec
                 else:
                     operational_escalate(row, state, effects, now, reason, exhausted=True)
                     return
-            elif not effects.dry_run and v16_reentry(row, state, now):
+            elif reason == "official_method_retired_requires_admission" and not getattr(effects, "dry_run", False) \
+                    and v16_reentry(row, state, now):
                 pass  # CR-857: custody's reservations changed since this order's last v16-admit attempt; the hold is cleared
             else:
                 operational_escalate(row, state, effects, now, reason, exhausted=False)
