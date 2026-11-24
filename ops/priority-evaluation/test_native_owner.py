@@ -189,6 +189,24 @@ class EnsureOwnerTests(unittest.TestCase):
         self.effects.start_unit.assert_called_once()
         self.assertEqual(self.state["native_owner"]["starts"], 2)
 
+    def test_dry_run_cycle_writes_no_owner_record(self) -> None:
+        # CR-859 (#82153): `cycle --dry-run` must not save native_owner/start_ok or the hold owner into the real
+        # state file; otherwise the next real pass sees a "starting" owner for the grace window and starts nothing.
+        self.effects.dry_run = True
+        self.assertTrue(ap.ensure_native_owner(self.row, self.state, self.effects, self.now, "unsupported_measurement_backend"))
+        self.effects.start_unit.assert_called_once_with(f"jevbench-native-owner@{RID}.service")
+        self.assertNotIn("native_owner", self.state)
+        self.assertNotIn("owner", self.state["operational_hold"])
+        self.assertFalse(ap.state_path(RID).exists())
+        # The real pass right after the dry run still starts the owner.
+        self.setUp_effects()
+        self.effects.dry_run = False
+        self.assertTrue(ap.ensure_native_owner(self.row, self.state, self.effects, self.now, "unsupported_measurement_backend"))
+        self.effects.start_unit.assert_called_once_with(f"jevbench-native-owner@{RID}.service")
+        self.assertEqual(self.state["native_owner"]["starts"], 1)
+        self.assertTrue(self.state["native_owner"]["start_ok"])
+        self.assertEqual(self.state["operational_hold"]["owner"], no.owner_name(RID))
+
     def test_hand_started_owner_is_kept(self) -> None:
         self.state["operational_hold"]["owner"] = "fastlane-torchcast4b-v14-native-20261101"
         path = self.tmp / "jobs" / "fastlane-torchcast4b-v14-native-20261101" / "STATE.md"
