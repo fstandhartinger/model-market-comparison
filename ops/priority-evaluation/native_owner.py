@@ -475,9 +475,16 @@ Your board name also answers to @fastlane-eval-{ref}. Post on thread #11 that yo
    ops/priority-evaluation/install-worker.sh from main.
 3. Write the hand-built bundle (POD-RECIPE, RUNTIME gpu_pod credential none, MEASUREMENT-META) into the order
    trusted-runner/, freeze it with autopickup.freeze_runner_bundle, independent review -> review/NATIVE-SOURCE-REVIEW.md.
-4. Synthetic smoke, then ONE measurement on the provider the current DECISIONS allow for sealed input (Verda;
-   never Lium/marketplace), <= USD 5/h, <= USD 20 per order, TTL <= 3 h, gpu-pod-guard reservation, exact-ID teardown.
-   Get custody/deputy admission on #11 as the precedents did.
+4. Public smoke (no custody GO: the kit's packet check gates it), then ONE measurement on a company cloud the current
+   DECISIONS allow for sealed input (#80212: Verda, UpCloud, Hetzner, RunPod Secure, Shadeform tier-1; never Lium,
+   marketplace hosts or Katowice). Caps come from the installed paid-lane-caps.json (`python3 paid_lane_caps.py` prints
+   them; today USD 5/h, USD 50 per order, TTL 3 h); gpu-pod-guard reservation, exact-ID teardown. Accept any SKU variant
+   of the approved GPU under the hourly cap (e.g. Verda .CC). Lean process (DECISIONS gr2-speed-board-jev-lean-1124,
+   jobs/jevbench-item-reserve-20261007/LEAN-PROCESS.md): ask custody for ONE word on the final runtime set
+   (custody_word.py; valid until the run deadline, up to 24 h). Keep caps, prices, SKU, device and deadlines in a config
+   file named in the word's config globs, so a change is a `recheck`, not a new word. Your kit must accept a GO valid
+   for up to 24 h. Broker tools (gpu-pod-guard etc.): record their sha at launch; if your kit pins one, keep that pin in
+   the config globs so a broker update is a `recheck`, not a rebuild plus new words.
 5. Hand off to the JevBench release owner on #11 for the public row (if the order is public).
 6. Deliver with the precedent deliver.py path (author-message-guard on the exact text, no ranks). Never write a
    refund decision; refunds need Florian's button. Post #9 + #11.

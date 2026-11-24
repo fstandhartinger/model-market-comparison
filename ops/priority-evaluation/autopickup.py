@@ -43,6 +43,7 @@ import refusal_approval
 import refund_approval
 import sla_decision
 import pod_runner
+import paid_lane_caps
 import access_key_purge
 import pwd
 import re
@@ -65,7 +66,8 @@ from typing import Any, Callable
 
 HOME = Path.home()
 TABLE = "bh_priority_evaluation_requests"
-API_ORDER_CAP_USD = 5.0  # endpoint measurements; GPU pod orders use pod_runner.PER_ORDER_CAP_USD
+# CR-858: the endpoint-measurement cap (was API_ORDER_CAP_USD = 5.0; GPU pod orders use per_order_cap_usd) is config now:
+# paid-lane-caps.json / paid_lane_caps.py. API_ORDER_CAP_USD still resolves (module __getattr__ below) for existing callers.
 EVENTS_TABLE = "bh_priority_eval_webhook_events"
 DB_NAME = os.environ.get("FASTLANE_DB") or "benchmarkheaven_accounts"
 STATE_ROOT = Path(os.environ.get("FASTLANE_STATE_ROOT") or HOME / ".local/state/fastlane-autopickup")
@@ -403,6 +405,7 @@ TRANSIENT_HOLD_REASONS = frozenset({
     "measurement_pins_differ_from_review",
     "gpu_pod_capacity",
     "gpu_pod_run_failed",
+    "paid_lane_caps_invalid",  # CR-858: the paid-lane caps config is missing/invalid; an operator edit fixes it, the retry then proceeds
     "fetch_source_transient",
     "v16_admitted_reroute",  # CR-842: custody admitted the order inside dispatch_measurement; evaluate() routes it next pass
     "v16_admit_retry",  # CR-842: the pinned v16-admit timed out or could not run (at most V16_ADMIT_MAX_ATTEMPTS attempts)
@@ -441,6 +444,21 @@ BAD_LINK_MESSAGES = {
 # fixed shell entrypoint pod_drivers/pod_entry.sh next to the .py files; a .py-only pattern made every
 # preparation/review fail with "invalid name" from the 4 Oct install on.
 MEASUREMENT_CODE_NAME_RE = re.compile(r"[A-Za-z0-9_]+(?:/[A-Za-z0-9_]+)*\.(?:py|sh)")
+
+
+def paid_lane_caps_in_force() -> paid_lane_caps.Caps:
+    """The validated paid-lane money caps, read now. Fail closed: invalid or unreadable config is the transient operational
+    hold paid_lane_caps_invalid (raised before any pod or endpoint spend), never a default or a larger value."""
+    try:
+        return paid_lane_caps.current(STATE_ROOT)
+    except paid_lane_caps.CapsInvalid:
+        raise measurement_dispatch.OperationalHold(paid_lane_caps.HOLD_REASON) from None
+
+
+def __getattr__(name):
+    if name == "API_ORDER_CAP_USD":
+        return paid_lane_caps_in_force().api_order_cap_usd
+    raise AttributeError(f"module {__name__!r} has no attribute {name!r}")
 
 
 class PickupError(RuntimeError):
@@ -2126,6 +2144,7 @@ HOLD_REASON_LABELS = {
     "measurement_pins_differ_from_review": ("the test files differ from the reviewed files", "die Testdateien weichen von den geprüften Dateien ab"),
     "gpu_pod_capacity": ("no evaluation GPU is currently available", "derzeit ist keine GPU für die Messung verfügbar"),
     "gpu_pod_run_failed": ("the evaluation GPU run failed", "die Messung auf der GPU ist fehlgeschlagen"),
+    "paid_lane_caps_invalid": ("an internal spending-limit check blocks the evaluation and an agent must fix it", "eine interne Prüfung der Kostenlimits blockiert die Messung und ein Agent muss sie beheben"),
     "sealed_run_needs_trusted_provider": ("the GPU run needs a trusted host for the sealed test set (Verda), started by an agent", "der GPU-Lauf braucht einen vertrauenswürdigen Host für das versiegelte Testset (Verda), gestartet von einem Agenten"),
     "fetch_source_transient": ("the model source download is temporarily unavailable", "der Download der Modellquellen ist vorübergehend nicht verfügbar"),
     "fetch_source_failed": ("the model source download failed and needs checking", "der Download der Modellquellen ist fehlgeschlagen und muss geprüft werden"),
@@ -2169,6 +2188,7 @@ SHORT_HOLD_LABELS = {
     "measurement_pins_differ_from_review": "test files differ from the reviewed files",
     "gpu_pod_capacity": "no evaluation GPU is available",
     "gpu_pod_run_failed": "the GPU evaluation failed",
+    "paid_lane_caps_invalid": "an internal limit check blocks the evaluation",
     "fetch_source_transient": "the source download is unavailable",
     "fetch_source_failed": "the source download failed",
     "source_access_recovered_pending_review": "source and test approval need review",
@@ -2962,6 +2982,7 @@ def dispatch_measurement(rid: str, job_dir: Path) -> None:
         except (ValueError, KeyError, TypeError):
             raise measurement_dispatch.OperationalHold("reviewed_runtime_metadata_invalid") from None
     records = state.setdefault("host_measurement", {})
+    caps = paid_lane_caps_in_force()  # CR-858: one validated read per dispatch, before any pod or endpoint spend
     spent = sum(record.get("charged_or_reserved_usd", 0) for record in records.values())
     gpu_names = tuple(name for name in row['benchmarks'] if runtimes[name]['backend'] == 'gpu_pod')
     combined_records = None
@@ -2985,7 +3006,7 @@ def dispatch_measurement(rid: str, job_dir: Path) -> None:
             host_extra = {'weights_streamer': streamer, 'image_context_provider': context_provider}
         bundle = pod_runner.run(rid, job_dir, recipe, STATE_ROOT / 'measurements' / rid / 'gpu-order',
                                 review['source_pins']['official_measurement'],
-                                max(0, pod_runner.PER_ORDER_CAP_USD - spent), benchmarks=gpu_names,
+                                max(0, caps.per_order_cap_usd - spent), benchmarks=gpu_names,
                                 native_source_pins=review['source_pins'], **host_extra)
         combined_records = bundle['benchmarks']
     for benchmark in row["benchmarks"]:
@@ -3017,10 +3038,10 @@ def dispatch_measurement(rid: str, job_dir: Path) -> None:
             else:
                 recipe = load_json_file(job_dir / "trusted-runner" / "POD-RECIPE.json", 100_000)
                 record = pod_runner.run(rid, job_dir, recipe, output, review["source_pins"]["official_measurement"],
-                                        max(0, pod_runner.PER_ORDER_CAP_USD - spent))
+                                        max(0, caps.per_order_cap_usd - spent))
         else:
             record = measurement_dispatch.run(benchmark, runtime, credential, output,
-                                              review["source_pins"]["official_measurement"], max(0, API_ORDER_CAP_USD - spent))
+                                              review["source_pins"]["official_measurement"], max(0, caps.api_order_cap_usd - spent))
         if benchmark not in records:
             spent += record["charged_or_reserved_usd"]
         records[benchmark] = record
@@ -5128,15 +5149,20 @@ def gpu_capacity_handoff_text(rid: str) -> str:
         offer = pod_state.get("cheapest_offer") if isinstance(pod_state, dict) else None
     except (OSError, ValueError):
         pass
+    try:  # wording only: an invalid caps config must not stop this handoff note
+        caps = paid_lane_caps_in_force()
+        hourly_cap, order_cap = f"USD {caps.max_hourly_usd:.2f}/h", f"USD {caps.per_order_cap_usd:.0f} per order"
+    except measurement_dispatch.OperationalHold:
+        hourly_cap, order_cap = "the configured hourly cap", "the configured per-order cap"
     if isinstance(offer, dict) and isinstance(offer.get("hourly_usd"), (int, float)) \
             and not isinstance(offer.get("hourly_usd"), bool):
         seen = (f"{str(offer.get('provider'))[:20]} {str(offer.get('gpu'))[:20]} at USD {offer['hourly_usd']:.2f}/h "
-                f"(cap USD {pod_runner.MAX_HOURLY_USD:.2f}/h)")
+                f"(cap {hourly_cap})")
     else:
         seen = "no priced offer from any admitted provider"
     return (f"Fast-lane order {order_ref(rid)}: still waiting for GPU capacity with 24 h left on the 48 h clock. "
             f"Reason: no admitted sealed-custody provider (Verda) had a GPU within the cap "
-            f"(USD {pod_runner.MAX_HOURLY_USD:.2f}/h, USD {pod_runner.PER_ORDER_CAP_USD:.0f} per order). "
+            f"({hourly_cap}, {order_cap}). "
             f"Cheapest offer seen: {seen}. Owner: pick another admitted provider, raise the cap, or hand the order to Florian. "
             f"No refund is triggered by this note.")
 

@@ -4726,6 +4726,45 @@ class PodRunnerLifecycleTests(unittest.TestCase):
         self._run(provider, max_usd=4.0)  # a smaller remaining budget shortens the TTL
         self.assertIn(("create", "H100", 0.8, 4.0), provider.calls)
 
+    def _override_caps(self, **changes):
+        """CR-858: write an operator override under a tmp state root and point pod_runner at it."""
+        body = {"schema_version": 1, "max_hourly_usd": 5.0, "per_order_cap_usd": 50.0, "ttl_cap_hours": 3.0,
+                "api_order_cap_usd": 5.0, "max_pod_allocations": 3, **changes}
+        root = self.tmp / "caps-state"
+        (root / "config").mkdir(parents=True, exist_ok=True)
+        path = root / "config" / "paid-lane-caps.json"
+        path.write_text(json.dumps(body))
+        os.chmod(path, 0o600)
+        patcher = mock.patch.object(pod_runner, "STATE_ROOT", root)
+        patcher.start()
+        self.addCleanup(patcher.stop)
+        return path
+
+    def test_configured_caps_drive_the_attempt_ttl_budget_and_charge(self):
+        self._override_caps(max_hourly_usd=4.0, per_order_cap_usd=40.0, ttl_cap_hours=2.0)
+        provider = _FakeProvider()
+        receipt = self._run(provider, max_usd=80.0)  # the configured order cap (40) wins over the caller budget
+        self.assertIn(("create", "H100", 2.0, 40.0), provider.calls)
+        self.assertEqual(receipt["charged_or_reserved_usd"], 8.0)  # 2 h x USD 4/h
+
+    def test_configured_allocation_count_limits_the_fresh_pod_retries(self):
+        self._override_caps(max_pod_allocations=1)
+        provider = _FakeProvider({"sha_bad": True})
+        with self.assertRaises(ap.measurement_dispatch.OperationalHold) as ctx:
+            self._run(provider, max_usd=50.0)
+        self.assertEqual(str(ctx.exception), "gpu_pod_run_failed")
+        self.assertEqual(provider.removed, ["pod-1"])
+        self.assertEqual(len(self._create_calls(provider)), 1)
+
+    def test_invalid_caps_config_holds_before_any_provider_call_or_ledger(self):
+        self._override_caps().write_text("{}")
+        provider = _FakeProvider()
+        with self.assertRaises(ap.measurement_dispatch.OperationalHold) as ctx:
+            self._run(provider, max_usd=50.0)
+        self.assertEqual(str(ctx.exception), "paid_lane_caps_invalid")
+        self.assertEqual(provider.calls, [])
+        self.assertEqual(list(self.pods_dir.glob("*.json")), [])
+
     def _create_calls(self, provider):
         return [c for c in provider.calls if c[0] == "create"]
 
@@ -4804,6 +4843,25 @@ class PodRunnerLifecycleTests(unittest.TestCase):
         # 25 already spent: 15 + 10 fit; the next allocation would have 0 left and is not even reserved
         self.assertEqual([(c[2], c[3]) for c in self._create_calls(provider)], [(3.0, 25.0), (2.0, 10.0)])
         self.assertEqual(self._ledger(rid)["spent_upper_bound_usd"], 50.0)
+
+    def test_legacy_crash_state_is_charged_the_original_full_ttl_even_with_lowered_caps(self):
+        # CR-858 critic S2: a crash state written before attempt_reserved_upper_bound_usd existed is charged the larger of the
+        # configured and the original full TTL (3 h x USD 5/h = 15). Lowering the caps must never shrink that charge.
+        self._override_caps(max_hourly_usd=1.0, per_order_cap_usd=20.0, ttl_cap_hours=1.0)
+        provider = _FakeProvider()
+        rid = str(uuid.uuid4())
+        self.pods_dir.mkdir(parents=True, exist_ok=True)
+        (self.pods_dir / f"{rid}.json").write_text(json.dumps(
+            {"request_id": rid, "creation_attempts": 1, "spent_upper_bound_usd": 0.0,
+             "attempt_started_at": "2026-11-22T00:00:00+00:00"}))
+        with mock.patch.object(pod_runner.measurement_dispatch, "pins", return_value=self.pins):
+            with self.assertRaises(ap.measurement_dispatch.OperationalHold):
+                pod_runner.run(rid, self.job, self.recipe, self.tmp / "out-legacy", self.pins, 80.0,
+                               provider=provider, alert=self.alerts.append)
+        ledger = self._ledger(rid)
+        self.assertEqual(ledger["attempt_reserved_upper_bound_usd"], 15.0)
+        self.assertEqual(ledger["spent_upper_bound_usd"], 15.0)
+        self.assertEqual(self._create_calls(provider), [])  # never another rental on an unreconciled crash
 
     def test_order_specific_allocation_gate_keeps_the_original_cap_and_one_retry(self):
         # A fresh-generation authority (v16_allocation.FreshAllocation) is hash-pinned to the original accounting:
