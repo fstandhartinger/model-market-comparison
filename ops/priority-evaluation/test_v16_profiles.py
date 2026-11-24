@@ -100,20 +100,40 @@ class V16Tests(unittest.TestCase):
 
 class AdmissionBindingTests(unittest.TestCase):
     def test_accepted_package_rejects_stale_gate_and_mixed_method(self):
+        for selector in ('model', 'code', None):
+            with self.subTest(selector=selector):
+                self._check_accepted_package(selector)
+
+    def _check_accepted_package(self, selector):
         with tempfile.TemporaryDirectory() as directory:
             root=Path(directory);rid='1c027833-1c49-408d-b4a0-63a4d654249b';job=root/rid
             for sub in ('review','source','trusted-runner'):(job/sub).mkdir(parents=True)
             def put(path,value):
                 path.write_text(json.dumps(value));return hashlib.sha256(path.read_bytes()).hexdigest()
-            for name in ('RUNTIME.json','MEASUREMENT-META.json','POD-RECIPE.json','UPSTREAM-MANIFEST.json'):
-                put(job/'trusted-runner'/name,{})
-            source={name:{'receipt_sha256':put(job/'source'/f'FETCH-RECEIPT-{name}.json',{})} for name in ('model','code')}
+            for name in ('RUNTIME.json', 'MEASUREMENT-META.json', 'UPSTREAM-MANIFEST.json'):
+                put(job/'trusted-runner'/name, {})
+            source = {}
+            names = ('model',) if selector == 'model' else ('model', 'code')
+            for index, name in enumerate(names):
+                pin = {'commit': str(index + 1) * 40, 'tree': str(index + 3) * 40}
+                digest = put(job/'source'/f'FETCH-RECEIPT-{name}.json', {**pin, 'which': name})
+                source[name] = {**pin, 'receipt_sha256': digest}
+            execution_pin = source[selector or 'code']
+            code = {key: execution_pin[key] for key in ('commit', 'tree')}
+            if selector is not None:
+                code['source'] = selector
+            recipe_path = job/'trusted-runner/POD-RECIPE.json'
+            put(recipe_path, {'code': code})
+            rotation_tool = root/'rotation.py'
+            rotation_tool.write_text('# synthetic')
             measured={'profile':{'method':'jevbench-v16','inputs':{'jevbench':{'count':1500,'items':{'path':'synthetic','sha256':'input'}}},
                        'code':{'pod_drivers/pod_driver.py':{'sha256':v16_profiles._sha(Path(v16_profiles.__file__).parent/'pod_drivers/pod_driver_v16.py')}}}}
             scored={'profiles':{'jevbench':{'version_prefix':'v1.6.','files':{'gold.jsonl':{'sha256':'gold'}}}}}
             references={}
             for name in ('measurement','scoring','id_map'):
                 path=root/f'{name}.json';references[name]={'path':str(path),'sha256':put(path,{})}
+            measured['manifest_sha256'] = references['measurement']['sha256']
+            scored['manifest_sha256'] = references['scoring']['sha256']
             freeze=root/'freeze.json'
             references['freeze']={'path':str(freeze),'sha256':put(freeze,{'release':'synthetic','counts':{'selfhosted_input':1500},
                    'input_sha256':{'selfhosted':'input'},'file_sha256':{'frozen/gold.jsonl':'gold','frozen/id-map.json':references['id_map']['sha256']}})}
@@ -123,21 +143,151 @@ class AdmissionBindingTests(unittest.TestCase):
             reviewsha=put(job/'review/CODE-REVIEW.md',{})
             gate={'verdict':'PASS','review_sha256':reviewsha,'source_pins':pins};put(job/'review/GATE.json',gate)
             admission={'schema_version':1,'verdict':'ACCEPTED','order_id':rid,'generation':'synthetic','draw_release':'synthetic',
-                       'source_pins':source,'references':references,'rotation_tool_sha256':v16_profiles._sha(v16_profiles.ROTATION_TOOL),
+                       'source_pins':source,'references':references,'rotation_tool_sha256':v16_profiles._sha(rotation_tool),
                        'recipe_sha256':v16_profiles._sha(job/'trusted-runner/POD-RECIPE.json')}
-            admission_sha=put(job/'review/V16-PROFILE-ADMISSION.json',admission)
-            review_sha=put(job/'review/V16-PROFILE-REVIEW.json',{'verdict':'ACCEPTED','reviewer_engine':'claude','admission_sha256':admission_sha})
-            state={'source_review_gate':gate,'v16_profile_admission':{'verdict':'ACCEPTED','receipt_sha256':admission_sha,'independent_review_sha256':review_sha}}
-            (root/'requests').mkdir();put(root/'requests'/f'{rid}.json',state)
-            with patch.object(v16_profiles,'STATE_ROOT',root), patch.object(v16_profiles,'measurement_pins',return_value=measured), \
-                    patch.object(v16_profiles.official_scoring,'pins',return_value=scored),patch.object(v16_profiles.measurement_dispatch,'checked'):
-                self.assertEqual(v16_profiles.accepted(job)[0],admission)
-                # A stale on-disk gate cannot piggyback on host acceptance.
-                put(job/'review/GATE.json',{**gate,'verdict':'FAIL'})
-                with self.assertRaisesRegex(ValueError,'stale method pins'):v16_profiles.accepted(job)
-                put(job/'review/GATE.json',gate)
+            state_path = root/'requests'/f'{rid}.json'
+            state_path.parent.mkdir()
+            def register(candidate, source_gate):
+                admission_sha = put(job/'review/V16-PROFILE-ADMISSION.json', candidate)
+                review_sha = put(job/'review/V16-PROFILE-REVIEW.json', {
+                    'verdict': 'ACCEPTED', 'reviewer_engine': 'claude', 'admission_sha256': admission_sha,
+                })
+                put(job/'review/GATE.json', source_gate)
+                put(state_path, {'source_review_gate': source_gate, 'v16_profile_admission': {
+                    'verdict': 'ACCEPTED', 'receipt_sha256': admission_sha,
+                    'independent_review_sha256': review_sha,
+                }})
+            register(admission, gate)
+            with patch.object(v16_profiles, 'STATE_ROOT', root), \
+                    patch.object(v16_profiles, 'ROTATION_TOOL', rotation_tool), \
+                    patch.object(v16_profiles, 'measurement_pins', return_value=measured) as read_measurement, \
+                    patch.object(v16_profiles.official_scoring, 'pins', return_value=scored) as read_scoring, \
+                    patch.object(v16_profiles.measurement_dispatch, 'checked'):
+                self.assertEqual(v16_profiles.accepted(job)[0], admission)
+                read_measurement.assert_called_once_with(references['measurement']['path'], expected_pins=measured)
+                read_measurement.reset_mock()
+                read_scoring.reset_mock()
+                protected_paths = {Path(ref['path']) for ref in references.values()}
+                read_bytes = v16_profiles._reference_bytes
+                def check_read(path):
+                    self.assertNotIn(Path(path), protected_paths)
+                    return read_bytes(path)
+                with patch.object(v16_profiles, '_reference_bytes', side_effect=check_read):
+                    put(job/'review/GATE.json', {**gate, 'verdict': 'FAIL'})
+                    with self.assertRaisesRegex(ValueError, 'gate is missing or stale'):
+                        v16_profiles.accepted(job)
+
+                    wrong_source = dict(source)
+                    if selector == 'model':
+                        wrong_source['code'] = source['model']
+                    else:
+                        del wrong_source['code']
+                    register({**admission, 'source_pins': wrong_source}, gate)
+                    with self.assertRaisesRegex(ValueError, 'source inventory'):
+                        v16_profiles.accepted(job)
+
+                    register(admission, gate)
+                    if selector == 'model':
+                        extra = job/'source/FETCH-RECEIPT-code.json'
+                        put(extra, {})
+                        with self.assertRaisesRegex(ValueError, 'source inventory'):
+                            v16_profiles.accepted(job)
+                        extra.unlink()
+                    receipt = job/'source'/f'FETCH-RECEIPT-{selector or "code"}.json'
+                    receipt_bytes = receipt.read_bytes()
+                    put(receipt, {'which': selector or 'code'})
+                    with self.assertRaisesRegex(ValueError, 'source receipt changed'):
+                        v16_profiles.accepted(job)
+                    receipt.write_bytes(receipt_bytes)
+
+                    recipe_sha = put(recipe_path, {'code': {**code, 'tree': 'f' * 40}})
+                    wrong_runner = {**trusted, 'files': {**trusted['files'], 'POD-RECIPE.json': recipe_sha}}
+                    register({**admission, 'recipe_sha256': recipe_sha},
+                             {**gate, 'source_pins': {**pins, 'trusted_runner': wrong_runner}})
+                    with self.assertRaisesRegex(ValueError, 'recipe uses different commit or tree'):
+                        v16_profiles.accepted(job)
+
+                read_measurement.assert_not_called()
+                read_scoring.assert_not_called()
+                put(recipe_path, {'code': code})
+                register(admission, gate)
                 measured['profile']['method']='jevbench-v15'
-                with self.assertRaisesRegex(ValueError,'mixed v16'):v16_profiles.accepted(job)
+                with self.assertRaisesRegex(ValueError, 'mixed v16'):
+                    v16_profiles.accepted(job)
+
+
+class ManifestReadTests(unittest.TestCase):
+    def test_stale_measurement_driver_pin_refuses_before_reading_code_references(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / 'measurement.json'
+            profile = {'schema_version': 1, 'code': {
+                'trusted.py': {'path': 'trusted.py', 'sha256': 'trusted'},
+            }}
+            data = json.dumps(profile).encode()
+            path.write_bytes(data)
+            with patch.object(v16_profiles.measurement_dispatch, 'checked') as checked:
+                pins = v16_profiles.measurement_pins(path)
+                self.assertEqual(pins['manifest_sha256'], hashlib.sha256(data).hexdigest())
+                checked.reset_mock()
+                with self.assertRaisesRegex(ValueError, 'measurement pins differ'):
+                    v16_profiles.measurement_pins(path, expected_pins={**pins, 'driver_sha256': '0' * 64})
+                checked.assert_not_called()
+
+    def test_measurement_authenticates_single_read_before_following_links(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / 'measurement.json'
+            profile = {'schema_version': 1, 'code': {
+                'trusted.py': {'path': 'trusted.py', 'sha256': 'trusted'},
+            }}
+            data = json.dumps(profile).encode()
+            digest = hashlib.sha256(data).hexdigest()
+            path.write_bytes(data)
+            with patch.object(v16_profiles.measurement_dispatch, 'checked') as checked:
+                with self.assertRaisesRegex(ValueError, 'manifest changed'):
+                    v16_profiles.measurement_pins(path, expected_sha256='wrong', expected_profile=profile)
+                with self.assertRaisesRegex(ValueError, 'profile differs'):
+                    v16_profiles.measurement_pins(path, expected_sha256=digest, expected_profile={})
+                checked.assert_not_called()
+                read_bytes = Path.read_bytes
+                reads = []
+                def read_once(candidate):
+                    if candidate == path:
+                        reads.append(candidate)
+                        self.assertEqual(len(reads), 1)
+                    return read_bytes(candidate)
+                with patch.object(Path, 'read_bytes', read_once):
+                    actual = v16_profiles.measurement_pins(path, expected_sha256=digest, expected_profile=profile)
+                self.assertEqual(actual['manifest_sha256'], digest)
+                self.assertEqual(actual['profile'], profile)
+                checked.assert_called_once_with(profile['code']['trusted.py'])
+
+    def test_scoring_authenticates_manifest_before_following_links(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            baseline = root / 'baseline.json'
+            baseline.write_text(json.dumps({'phase': 'measurement_plan', 'G_med': None}))
+            manifest = root / 'scoring.json'
+            profile = {'version_prefix': 'v1.6.', 'files': {'baseline.json': {
+                'path': str(baseline), 'sha256': official_scoring.digest(baseline),
+            }}}
+            manifest.write_text(json.dumps({'schema_version': 1, 'profiles': {'jevbench': profile}}))
+            pins = official_scoring.pins(['jevbench'], manifest)
+            with patch.object(official_scoring, '_validate_profile') as follow_references:
+                with self.assertRaisesRegex(ValueError, 'manifest changed'):
+                    official_scoring.pins(['jevbench'], manifest, expected_pins={**pins, 'manifest_sha256': 'wrong'})
+                with self.assertRaisesRegex(ValueError, 'pins differ'):
+                    official_scoring.pins(['jevbench'], manifest, expected_pins={**pins, 'profiles': {}})
+                follow_references.assert_not_called()
+            read_bytes = Path.read_bytes
+            reads = []
+            def read_once(candidate):
+                if candidate in (manifest, baseline):
+                    self.assertNotIn(candidate, reads)
+                    reads.append(candidate)
+                return read_bytes(candidate)
+            with patch.object(Path, 'read_bytes', read_once):
+                self.assertEqual(official_scoring.pins(['jevbench'], manifest, expected_pins=pins), pins)
+            self.assertEqual(reads, [manifest, baseline])
 
 
 class UploadBoundaryTests(unittest.TestCase):
