@@ -9,7 +9,7 @@ const read = (path) => readFile(new URL(path, import.meta.url), 'utf8');
 
 test('CR-575: hub links carry ref plus utm attribution, anchors stay last', async () => {
   const lib = await read('../lib/use-model.ts');
-  assert.match(lib, /\?ref=\$\{benchmark\}&utm_source=benchmarkheaven&utm_medium=use-button&utm_content=\$\{encodeURIComponent\(slug\)\}\$\{hash\}/);
+  assert.match(lib, /\?ref=\$\{benchmark\}&utm_source=benchmarkheaven&utm_medium=use-button&utm_campaign=bh-use-button&utm_content=\$\{encodeURIComponent\(slug\)\}\$\{hash\}/);
 });
 
 test('CR-575: disclosure in the hover panel and under the ranking, neutral for every open-weights row', async () => {
