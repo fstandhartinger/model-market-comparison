@@ -59,8 +59,8 @@ class VerdaProvider(pod_runner.Provider):
     # -- accounting (identical fields to LiumProvider, provider verda) --
     def reserve(self, job, name, hourly, cost_cap, hours):
         result = pod_runner._run_cli([str(pod_runner.GUARD), 'reserve', '--job', job, '--provider', 'verda',
-                                      '--name', name, '--hourly-price', str(pod_runner.MAX_HOURLY_USD),
-                                      '--max-hourly-price', str(pod_runner.MAX_HOURLY_USD), '--cost-cap', str(cost_cap),
+                                      '--name', name, '--hourly-price', str(pod_runner.caps().max_hourly_usd),
+                                      '--max-hourly-price', str(pod_runner.caps().max_hourly_usd), '--cost-cap', str(cost_cap),
                                       '--runtime-hours', str(hours)], timeout=60)
         if result.returncode:
             raise pod_runner.PodCapacityError('guard reserve failed: ' + result.stderr.strip()[-200:])
@@ -110,8 +110,11 @@ class VerdaProvider(pod_runner.Provider):
         _stop_deadman(instance_id)
         raise pod_runner.PodCapacityError(f'{reason}; deleted by exact id and confirmed gone')
 
-    def create(self, gpu, ttl_hours, budget, max_hourly=pod_runner.MAX_HOURLY_USD):
-        if type(max_hourly) not in (int, float) or not 0 < max_hourly <= pod_runner.MAX_HOURLY_USD:
+    def create(self, gpu, ttl_hours, budget, max_hourly=pod_runner.CONFIG_CEILING):
+        ceiling = pod_runner.caps().max_hourly_usd
+        if max_hourly is pod_runner.CONFIG_CEILING:
+            max_hourly = ceiling
+        if type(max_hourly) not in (int, float) or not 0 < max_hourly <= ceiling:
             raise pod_runner.PodRunError('invalid provider price ceiling')
         instance_type = INSTANCE_TYPES.get(gpu)
         if instance_type is None:
