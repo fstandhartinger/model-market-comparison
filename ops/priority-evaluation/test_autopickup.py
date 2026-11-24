@@ -5350,12 +5350,21 @@ class AutoAdmitHookSchedulerTests(DatabaseTestCase):
         os.replace(tmp, self.reservations)
         return ap.sha256_file(self.reservations)
 
-    def manage(self, hours=2, fx=None):
-        """One scheduler pass for the order, `hours` after now (past any backoff). Returns how many units it started."""
+    def manage_units(self, hours=2, fx=None):
+        """One scheduler pass for the order, `hours` after now (past any backoff). Returns the units it started."""
         fx = fx or self.fx
         started = len(fx.started)
         ap.manage_evaluation(row(self.rid), ap.load_state(self.rid), fx, datetime.now(timezone.utc) + timedelta(hours=hours))
-        return len(fx.started) - started
+        return fx.started[started:]
+
+    def manage(self, hours=2, fx=None):
+        """Like manage_units, as a count."""
+        return len(self.manage_units(hours, fx))
+
+    @property
+    def owner_unit(self):
+        """CR-853: the first scheduler pass at official_method_retired_requires_admission starts this unit, not the evaluation."""
+        return f"jevbench-native-owner@{self.rid}.service"
 
     def evaluation_pass(self):
         """What the started evaluation unit does: claim the order for one evaluation, then run it."""
@@ -5460,42 +5469,72 @@ class AutoAdmitHookSchedulerTests(DatabaseTestCase):
         self.assertNotIn("v16_profile_admission", ap.load_state(self.rid))
         self.assertEqual(self.v16_generation, [])
 
-    def test_an_order_held_before_the_pin_was_set_is_re_entered_once_when_the_pin_comes(self):
-        # CR-857 (c): official_method_retired_requires_admission is non-transient; with the v16 pin on and an order that has had
-        # no attempt for the current reservations (here: absent) the scheduler clears it once and the order meets custody
+    def test_an_order_held_before_the_pin_was_set_gets_its_native_owner_and_is_not_re_entered_when_the_pin_comes(self):
+        # CR-857 x CR-853, the lead's decision: with the pin still empty the first scheduler pass starts the native owner for
+        # the retired-method hold (CR-853: whatever the runtime-family match). The owner record makes custody refuse the order
+        # (not_native_owner), so the pin arriving afterwards re-enters nothing and custody is never asked. That is intended.
         self.assertEqual(self.evaluation_pass(), 0)
         self.assertEqual(self.hold()["reason"], "official_method_retired_requires_admission")
-        self.assertEqual(self.manage(), 0)  # the pin is still empty: today's behaviour, nothing restarts
+        self.assertEqual(self.manage_units(), [self.owner_unit])  # the pin is still empty: the hold gets its owner
+        self.assertTrue(ap.load_state(self.rid)["native_owner"]["start_ok"])
         self.assertIsNotNone(self.hold())
         self.assertNotIn("v16_reentry", ap.load_state(self.rid))
         self.custody(exit_code=0)  # the pin is set afterwards
-        self.assertEqual(self.manage(), 1)
-        self.assertEqual(self.fx.started[-1], self.unit)
+        self.assertEqual(self.manage_units(), [])  # the owner record blocks the re-entry; the owner is not started twice
+        self.assertEqual(self.hold()["reason"], "official_method_retired_requires_admission")
+        self.assertNotIn("v16_reentry", ap.load_state(self.rid))
+        self.assertEqual(self.custody_calls(), [])
+        self.assertEqual(row(self.rid)["evaluation_status"], "pending")
+
+    def test_an_order_held_before_the_pin_was_set_is_re_entered_once_when_the_pin_comes_before_the_first_scheduler_pass(self):
+        # CR-857 (c), the window that is left after CR-853: the hold exists (set by evaluate()), no scheduler pass has run yet
+        # (so there is no native owner record) and the pin comes now. v16_reentry runs before operational_escalate, which is
+        # what starts the owner, so the evaluation restarts and the order meets custody instead of an owner
+        self.assertEqual(self.evaluation_pass(), 0)
+        self.assertEqual(self.hold()["reason"], "official_method_retired_requires_admission")
+        self.assertNotIn("native_owner", ap.load_state(self.rid))
+        self.custody(exit_code=0)  # the pin is set after the hold, before the scheduler looked at it
+        self.assertEqual(self.manage_units(), [self.unit])  # the evaluation unit, not the owner
         self.assertIsNone(self.hold())
+        self.assertNotIn("native_owner", ap.load_state(self.rid))
         self.assertEqual(ap.load_state(self.rid)["v16_reentry"]["reservations"], "absent")
         self.assertEqual(row(self.rid)["evaluation_status"], "starting")
         self.assertEqual(self.custody_calls(), [])
         self.assertEqual(self.evaluation_pass(), 0)
         self.assertEqual(len(self.custody_calls()), 1)  # asked exactly once; admitted: routed to the v1.6 evaluation
         self.assertEqual(self.hold()["reason"], "v16_admitted_reroute")
+        self.assertEqual(self.manage_units(), [self.unit])  # the transient reroute hold restarts the evaluation, never the owner
+        self.assertNotIn("native_owner", ap.load_state(self.rid))
 
-    def test_a_refusal_is_retried_once_per_reservations_sha_through_the_scheduler(self):
+    def test_a_refusal_is_retried_once_per_reservations_sha_until_the_native_owner_exists(self):
+        # CR-857 x CR-853: while no scheduler pass has run there is no owner record, and custody's reservations changing in that
+        # window re-enter the order once per sha. The first pass that finds nothing new starts the native owner (CR-853); after
+        # that custody would refuse the order (not_native_owner), so a changed sha re-enters nothing.
         self.custody(exit_code=1)
         self.assertEqual(self.evaluation_pass(), 0)
         self.assertEqual(self.hold()["reason"], "official_method_retired_requires_admission")
         self.assertTrue(ap.load_state(self.rid)["v16_admit_attempt"]["key"].endswith(":absent"))
-        self.assertEqual(self.manage(), 0)  # custody refused for the current (absent) reservations: nothing new to ask
-        self.assertEqual(self.manage(), 0)
+        self.assertNotIn("native_owner", ap.load_state(self.rid))
+        now = datetime.now(timezone.utc)
+        # no owner record yet, so the attempt key alone stops a re-entry for the (absent) reservations custody just refused
+        self.assertFalse(ap.v16_reentry(row(self.rid), ap.load_state(self.rid), now))
         for round_number, text in enumerate(('{"schema": 1, "draws": {}}\n', '{"schema": 1, "draws": {"x": {"status": "closed"}}}\n'), 2):
-            sha = self.put_reservations(text)  # custody changes the reservations
-            self.assertEqual(self.manage(), 1)  # the hold is cleared once ...
+            sha = self.put_reservations(text)  # custody changes the reservations before the scheduler looks at the order
+            self.assertEqual(self.manage_units(), [self.unit])  # the hold is cleared once, the evaluation restarts ...
             self.assertEqual(ap.load_state(self.rid)["v16_reentry"]["reservations"], sha)
-            self.assertEqual(self.evaluation_pass(), 0)  # ... the evaluation asks custody again ...
+            self.assertEqual(self.evaluation_pass(), 0)  # ... asks custody again ...
             self.assertEqual(len(self.custody_calls()), round_number)
             self.assertEqual(self.hold()["reason"], "official_method_retired_requires_admission")
             self.assertTrue(ap.load_state(self.rid)["v16_admit_attempt"]["key"].endswith(":" + sha))
-            self.assertEqual(self.manage(), 0)  # ... and the same reservations never again
-            self.assertEqual(self.manage(), 0)
+            self.assertNotIn("native_owner", ap.load_state(self.rid))
+            self.assertFalse(ap.v16_reentry(row(self.rid), ap.load_state(self.rid), now))  # ... and the same sha never again
+        self.assertEqual(self.manage_units(), [self.owner_unit])  # CR-853: nothing new for these reservations, the hold gets its owner
+        marker = ap.load_state(self.rid)["v16_reentry"]
+        self.put_reservations('{"schema": 1, "draws": {"y": {"status": "closed"}}}\n')  # a new sha, but the owner record exists
+        self.assertEqual(self.manage_units(), [])
+        self.assertEqual(ap.load_state(self.rid)["v16_reentry"], marker)
+        self.assertEqual(len(self.custody_calls()), 3)
+        self.assertIsNotNone(self.hold())
         self.assertEqual(row(self.rid)["evaluation_status"], "pending")  # nothing was ever marked failed or exhausted
         self.assertNotIn("evaluation_exhausted", ap.load_state(self.rid))
 
@@ -5507,21 +5546,30 @@ class AutoAdmitHookSchedulerTests(DatabaseTestCase):
         self.assertEqual(self.evaluation_pass(), 0)
         self.assertEqual(self.hold()["reason"], "official_method_retired_requires_admission")
         self.assertNotIn("v16_admit_attempt", ap.load_state(self.rid))
-        self.assertEqual(self.manage(), 1)  # no attempt = differs: one re-entry for 'absent' ...
+        self.assertEqual(self.manage_units(), [self.unit])  # no attempt = differs: one re-entry for 'absent' ...
         self.assertEqual(self.evaluation_pass(), 0)
         self.assertEqual(self.hold()["reason"], "official_method_retired_requires_admission")
-        for _ in range(3):
-            self.assertEqual(self.manage(), 0)  # ... and the hold that returns is not cleared again
+        # ... and the hold that returns is not cleared again. The owner start is switched off here: CR-853's owner record
+        # would end the loop as well, and this test is about the marker alone
+        with mock.patch.object(ap, "ensure_native_owner", return_value=False):
+            for _ in range(3):
+                self.assertEqual(self.manage_units(), [])
+        self.assertNotIn("native_owner", ap.load_state(self.rid))
         self.assertEqual(self.custody_calls(), [])
+        self.assertEqual(self.manage_units(), [self.owner_unit])  # as it is, the next pass hands the hold to the owner
 
     def test_dry_run_never_re_enters(self):
         self.custody(exit_code=1)
         self.assertEqual(self.evaluation_pass(), 0)
         self.put_reservations('{"schema": 1, "draws": {}}\n')
-        self.assertEqual(self.manage(fx=FakeEffects(dry_run=True)), 0)
+        # the owner start is switched off for the dry pass: a dry pass writes the owner request into the state like a real
+        # one (ensure_native_owner has no dry-run guard, pre-existing), and that record would end re-entry for the real
+        # pass below. That side effect is not what this test is about (see RESULT.md)
+        with mock.patch.object(ap, "ensure_native_owner", return_value=False):
+            self.assertEqual(self.manage(fx=FakeEffects(dry_run=True)), 0)
         self.assertIsNotNone(self.hold())
         self.assertNotIn("v16_reentry", ap.load_state(self.rid))
-        self.assertEqual(self.manage(), 1)  # the real pass does
+        self.assertEqual(self.manage_units(), [self.unit])  # the real pass does
 
     def test_a_live_owner_job_keeps_the_hold(self):
         self.custody(exit_code=1)
@@ -5578,8 +5626,9 @@ class AutoAdmitHookSchedulerTests(DatabaseTestCase):
         self.assertEqual(len(self.custody_calls()), 2)
         self.assertEqual(self.hold()["reason"], "official_method_retired_requires_admission")
         self.assertTrue(ap.load_state(self.rid)["v16_admit_attempt"]["key"].endswith(":" + sha))
-        # bounded: neither another re-entry nor another review nor another custody call for these reservations
-        self.assertEqual(self.manage(), 0)
+        # bounded: neither another re-entry nor another review nor another custody call for these reservations; the first
+        # scheduler pass finds nothing new and (CR-853) hands the hold to the native owner
+        self.assertEqual(self.manage_units(), [self.owner_unit])
         state = ap.load_state(self.rid)
         state.pop("operational_hold")  # even a human clearing the hold does not repeat any of it
         ap.save_state(state)
@@ -5616,42 +5665,61 @@ class AutoAdmitHookSchedulerTests(DatabaseTestCase):
         return mock.patch.object(ap, "run_agent", side_effect=review)
 
     def test_an_order_with_a_native_owner_record_is_not_re_entered_by_the_scheduler(self):
-        # CR-857 critic MUST-1: custody refuses every order with state.native_owner (not_native_owner), live or not
+        # CR-857 critic MUST-1: custody refuses every order with state.native_owner (not_native_owner), live or not. The record
+        # comes the real way here: CR-853's first scheduler pass at the hold. The unit-level tests cover the falsy variants.
         self.custody(exit_code=1)
         self.assertEqual(self.evaluation_pass(), 0)
+        self.assertEqual(self.manage_units(), [self.owner_unit])
         state = ap.load_state(self.rid)
-        state["native_owner"] = {"job": ap.native_owner.owner_name(self.rid), "reason": "official_method_retired_requires_admission",
-                                 "requested_at": ap.iso(datetime.now(timezone.utc)), "starts": 1, "start_ok": True}
-        ap.save_state(state)
+        self.assertEqual(state["native_owner"]["job"], ap.native_owner.owner_name(self.rid))
+        self.assertFalse(ap.native_owner_live(self.rid, state, datetime.now(timezone.utc)))  # the owner is not live, still blocked
         self.put_reservations('{"schema": 1, "draws": {}}\n')
-        with mock.patch.object(ap, "native_owner_live", return_value=False), \
-                mock.patch.object(ap, "ensure_native_owner", return_value=False):  # the owner is gone; no second start here
-            self.assertEqual(self.manage(), 0)
+        self.assertEqual(self.manage_units(), [])  # no re-entry, and the owner (inside its start grace) is not started twice
         self.assertIsNotNone(self.hold())
         self.assertNotIn("v16_reentry", ap.load_state(self.rid))
         self.assertEqual(len(self.custody_calls()), 1)
         self.assertEqual(row(self.rid)["evaluation_status"], "pending")
 
-    def test_a_recorded_draw_whose_files_vanish_holds_the_order_without_a_loop_and_a_new_draw_replaces_it(self):
-        # CR-857 critic SHOULD-1: the recorded draw's files disappear while the order has no admission. That used to raise
-        # PickupError inside evaluate(): the unit failed, the row stayed 'starting', no hold, no card, a restart every 10 minutes.
+    def test_a_refused_owner_start_and_used_up_starts_leave_a_record_that_still_blocks_re_entry(self):
+        # the lead's question: is there a state "held without an owner record" through a refused owner start or MAX_STARTS?
+        # No: ensure_native_owner writes the record BEFORE it asks systemd, so both leave a (truthy) record behind
+        self.custody(exit_code=1)
+        self.assertEqual(self.evaluation_pass(), 0)
+        fx = FakeEffects()
+        fx.start_ok = False  # systemd refuses the owner unit
+        self.assertEqual(self.manage_units(fx=fx), [self.owner_unit])
+        record = ap.load_state(self.rid)["native_owner"]
+        self.assertEqual((record["starts"], record["start_ok"]), (1, False))
+        self.put_reservations('{"schema": 1, "draws": {}}\n')  # custody's reservations change after the refused start
+        self.assertEqual(self.manage_units(fx=fx), [self.owner_unit])  # the second and last start (MAX_STARTS), refused again
+        self.assertEqual(ap.load_state(self.rid)["native_owner"]["starts"], ap.native_owner.MAX_STARTS)
+        self.assertEqual(self.manage_units(fx=fx), [])  # starts used up: no third start ...
+        self.assertNotIn("v16_reentry", ap.load_state(self.rid))  # ... and no re-entry at any point
+        self.assertIsNotNone(self.hold())
+        self.assertEqual(len(self.custody_calls()), 1)
+
+    def held_after_the_recorded_draws_files_vanished(self):
+        """A draw is recorded for the order's source review, then custody removes its files: the evaluation holds the order
+        (V16DrawChanged). Returns (refs of draw-a, draw-a, the custody calls so far)."""
         import test_v16_draw_gate as drawgate
-        import v16_profiles
         self.use_registry()
         self.custody(exit_code=1)
         self.assertEqual(self.evaluation_pass(), 0)  # no reservation: refused, today's hold
         refs_a = drawgate.make_refs(self.custody_dir, "a", "draw-a")
         draw_a = self.draw_for_order(refs_a)
         self.put_reservations(json.dumps({"schema": 1, "draws": {"draw-a": draw_a}}))
-        self.assertEqual(self.manage(), 1)  # re-entry
+        self.assertEqual(self.manage_units(), [self.unit])  # re-entry (no scheduler pass before it: no owner record yet)
         reviewed = []
         with self.passing_review(reviewed):
             self.assertEqual(self.evaluation_pass(), 0)  # ONE review on draw-a's pins; the draw is recorded
         self.assertEqual(ap.load_state(self.rid)["v16_gate_draw"]["release"], "draw-a")
         self.assertEqual(ap.load_state(self.rid)["stage_attempts"]["source_review"], 1)
-        for key in ("measurement", "scoring"):  # custody removes draw-a's files before the next pass
+        return refs_a, draw_a
+
+    def assert_held_for_the_vanished_draw(self, refs_a, calls):
+        """Custody removed draw-a's files: ONE evaluation pass holds the order, uses no attempt and asks nobody."""
+        for key in ("measurement", "scoring"):
             Path(refs_a[key]["path"]).unlink()
-        calls = len(self.custody_calls())
         with mock.patch.object(ap, "run_agent", side_effect=AssertionError("a review for an unusable draw")):
             self.assertEqual(self.evaluation_pass(), 0)
         state = ap.load_state(self.rid)
@@ -5662,14 +5730,41 @@ class AutoAdmitHookSchedulerTests(DatabaseTestCase):
         self.assertEqual(len(self.custody_calls()), calls)  # custody is not asked about a gate that cannot be checked
         self.assertIn("recorded v1.6 draw is unavailable or changed; the order is held", (self.job / "STATE.md").read_text())
         self.assertEqual(state["v16_gate_draw"]["release"], "draw-a")  # the record stays until a replacement is found
-        for _ in range(3):  # the existing escalation path: the scheduler restarts nothing
-            self.assertEqual(self.manage(), 0)
+
+    def test_a_recorded_draw_whose_files_vanish_holds_the_order_without_a_loop_and_gets_its_native_owner(self):
+        # CR-857 critic SHOULD-1: the recorded draw's files disappear while the order has no admission. That used to raise
+        # PickupError inside evaluate(): the unit failed, the row stayed 'starting', no hold, no card, a restart every 10 minutes.
+        # With CR-853 the hold's first scheduler pass starts the native owner, and an owner record ends automatic replacement.
+        import test_v16_draw_gate as drawgate
+        refs_a, draw_a = self.held_after_the_recorded_draws_files_vanished()
+        calls = len(self.custody_calls())
+        self.assert_held_for_the_vanished_draw(refs_a, calls)
+        self.assertEqual(self.manage_units(), [self.owner_unit])  # the existing escalation path: the owner, never the evaluation
+        for _ in range(2):
+            self.assertEqual(self.manage_units(), [])
+        refs_b = drawgate.make_refs(self.custody_dir, "b", "draw-b")  # custody closes draw-a and reserves draw-b ...
+        self.put_reservations(json.dumps({"schema": 1, "draws": {"draw-a": dict(draw_a, status="closed"),
+                                                                 "draw-b": self.draw_for_order(refs_b)}}))
+        self.assertEqual(self.manage_units(), [])  # ... too late: the owner record blocks the replacement (custody refuses it too)
+        self.assertEqual(ap.load_state(self.rid)["v16_gate_draw"]["release"], "draw-a")
         self.assertIsNotNone(self.hold())
-        # custody closes draw-a and reserves draw-b: one re-entry, the record is replaced, ONE new review with draw-b's pins
+        self.assertEqual(row(self.rid)["evaluation_status"], "pending")
+        self.assertEqual(len(self.custody_calls()), calls)
+
+    def test_a_vanished_draw_is_replaced_once_when_custody_reserves_another_before_the_first_scheduler_pass(self):
+        # CR-857 critic SHOULD-1, the window that is left after CR-853: custody closes draw-a (its files go) and reserves draw-b
+        # in one act, the evaluation pass holds the order, and the scheduler's first look comes before any owner record exists:
+        # one re-entry, the record is replaced, ONE review with draw-b's pins, custody asked once, nothing loops
+        import test_v16_draw_gate as drawgate
+        import v16_profiles
+        refs_a, draw_a = self.held_after_the_recorded_draws_files_vanished()
+        calls = len(self.custody_calls())
         refs_b = drawgate.make_refs(self.custody_dir, "b", "draw-b")
         self.put_reservations(json.dumps({"schema": 1, "draws": {"draw-a": dict(draw_a, status="closed"),
                                                                  "draw-b": self.draw_for_order(refs_b)}}))
-        self.assertEqual(self.manage(), 1)
+        self.assert_held_for_the_vanished_draw(refs_a, calls)
+        self.assertNotIn("native_owner", ap.load_state(self.rid))
+        self.assertEqual(self.manage_units(), [self.unit])  # re-entry, before the owner start
         self.assertNotIn("v16_gate_draw", ap.load_state(self.rid))
         self.assertIsNone(self.hold())
         reviewed = []
@@ -5683,10 +5778,54 @@ class AutoAdmitHookSchedulerTests(DatabaseTestCase):
         self.assertEqual(self.evaluation_pass(), 0)  # valid gate: dispatch_measurement, custody asked once for the new key
         self.assertEqual(len(self.custody_calls()), calls + 1)
         self.assertEqual(self.hold()["reason"], "official_method_retired_requires_admission")  # custody refuses here
-        self.assertEqual(self.manage(), 0)  # bounded: nothing more happens for these reservations
-        self.assertEqual(self.manage(), 0)
+        self.assertEqual(self.manage_units(), [self.owner_unit])  # bounded: nothing is re-entered again, the hold gets its owner
+        self.assertEqual(self.manage_units(), [])
         self.assertNotIn("evaluation_exhausted", ap.load_state(self.rid))
         self.assertEqual(row(self.rid)["evaluation_status"], "pending")
+
+    def first_passes_with_a_reservation(self, exit_code):
+        """CR-857 x CR-853: the pin is on and custody has a reserved draw for the order BEFORE the order's first retired-method
+        hold. Runs the two evaluation passes (the review on the draw's pins, then dispatch_measurement -> the hook -> custody)
+        and returns one tuple per operational hold set meanwhile: (reason, custody calls so far, units started since the
+        passes began, whether an owner record existed)."""
+        import test_v16_draw_gate as drawgate
+        self.use_registry()
+        self.custody(exit_code=exit_code)
+        refs = drawgate.make_refs(self.custody_dir, "a", "draw-a")
+        self.put_reservations(json.dumps({"schema": 1, "draws": {"draw-a": self.draw_for_order(refs)}}))
+        baseline = len(self.fx.started)
+        holds, real_hold, reviewed = [], ap.set_operational_hold, []
+
+        def spy(state, reason, *args, **kwargs):
+            holds.append((reason, len(self.custody_calls()), self.fx.started[baseline:], "native_owner" in ap.load_state(self.rid)))
+            return real_hold(state, reason, *args, **kwargs)
+        with mock.patch.object(ap, "set_operational_hold", side_effect=spy), self.passing_review(reviewed):
+            self.assertEqual(self.evaluation_pass(), 0)  # the gate pins the retired profiles: a review on the draw's pins first
+            self.assertEqual((len(reviewed), holds, self.custody_calls()), (1, [], []))  # no hold and no custody call yet
+            self.assertEqual(ap.load_state(self.rid)["v16_gate_draw"]["release"], "draw-a")
+            self.assertEqual(self.evaluation_pass(), 0)  # valid gate: dispatch_measurement -> the hook -> custody
+        self.assertEqual(len(self.custody_calls()), 1)
+        self.assertEqual(self.fx.started[baseline:], [])  # nothing was started by the evaluation itself
+        return holds
+
+    def test_with_a_reservation_present_custody_is_asked_before_the_hold_and_the_hold_before_the_native_owner(self):
+        # the lead's check: CR-853 starts the owner at the retired-method hold of nearly every order; the hook (CR-857's reason
+        # to exist) still comes first. Custody refuses here: it was asked once BEFORE the hold was set, no owner record or
+        # started unit existed at that moment, and only the scheduler pass after the hold starts the owner.
+        holds = self.first_passes_with_a_reservation(exit_code=1)
+        self.assertEqual(holds, [("official_method_retired_requires_admission", 1, [], False)])
+        self.assertEqual(self.manage_units(), [self.owner_unit])
+        self.assertEqual(len(self.custody_calls()), 1)
+
+    def test_with_a_reservation_present_an_admitting_custody_means_the_order_never_gets_a_hold_or_an_owner(self):
+        # the same two passes with custody admitting: the order is admitted before any retired-method hold exists, so
+        # CR-853's owner start (a hold reaction) has nothing to react to
+        holds = self.first_passes_with_a_reservation(exit_code=0)
+        self.assertEqual(holds, [("v16_admitted_reroute", 1, [], False)])  # the transient reroute, not the retired-method hold
+        self.assertIn("v16_profile_admission", ap.load_state(self.rid))
+        self.assertEqual(self.manage_units(), [self.unit])  # the evaluation restarts on the v1.6 route ...
+        self.assertNotIn("native_owner", ap.load_state(self.rid))  # ... and no owner was ever requested
+        self.assertEqual(len(self.custody_calls()), 1)
 
     def test_no_review_is_started_for_a_draw_when_the_source_review_budget_is_short(self):
         import order_admission_registry
