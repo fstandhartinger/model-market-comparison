@@ -73,3 +73,36 @@ test("the shipped snapshot agrees with OpenRouter's own published filter counts"
   assert.equal(index.get("chutes"), true, "the Chutes override must survive into the snapshot");
   assert.ok(index.size >= 50);
 });
+
+// CR-856 (daily repair 2026-11-24): OpenRouter inserted a "Provisional" yes/no column before
+// "Headquarters". The fixed cell index then read "No" as every provider's headquarters, and the
+// provider-meta cross-check reported 99 country disagreements. Columns now come from the header.
+const th = (label) => `<th class="or-table__header-cell" scope="col"><button type="button"><span class="min-w-0">${label}</span><svg aria-hidden="true"></svg></button></th>`;
+const td = (v) => `<td class="or-table__cell text-sm">${v}</td>`;
+const page1124 = (...rows) => `<table><thead class="or-table__header--sticky"><tr class="or-table__row">` +
+  ["Provider", "Trains", "Retention", "BYOK", "Provisional", "Headquarters", "Terms of service", "Privacy policy"].map(th).join("") +
+  `</tr></thead><tbody>${rows.join("")}</tbody></table>`;
+const row1124 = (slug, name, trainsV, retention, provisional, hq) =>
+  `<tr class="or-table__row">${td(`<a href="/provider/${slug}">${name}</a>`)}${td(trainsV)}${td(retention)}${td("Yes")}${td(provisional)}${td(hq)}${td("Terms")}${td("Privacy")}</tr>`;
+
+test("CR-856: headquarters is read from the column the header names, not a fixed position", () => {
+  const parsed = parseProviderPolicyPage(page1124(
+    row1124("tencent", "Tencent Cloud", "No", "Retains prompts", "No", "China"),
+    row1124("unbiased", "Unbiased", "No", "Zero retention", "Yes", "United States"),
+    row1124("nohq", "No HQ", "Yes", "Zero retention", "No", "—"),
+  ));
+  const by = Object.fromEntries(parsed.map((p) => [p.slug, p]));
+  assert.equal(by.tencent.headquarters, "China");
+  assert.equal(by.unbiased.headquarters, "United States");
+  assert.equal(by.nohq.headquarters, null);
+  assert.equal(keepsDataPrivate(by.unbiased), true);
+  assert.equal(keepsDataPrivate(by.tencent), false);
+  assert.equal(by.nohq.does_not_train, false);
+});
+
+test("CR-856: a yes/no value in the headquarters column is a layout change, not a country", () => {
+  // Header without a Headquarters label: the legacy position 4 is now the Provisional flag.
+  const shifted = `<table><thead><tr>${["Provider", "Trains", "Retention", "BYOK", "Provisional"].map(th).join("")}</tr></thead><tbody>` +
+    row1124("tencent", "Tencent Cloud", "No", "Retains prompts", "No", "China") + `</tbody></table>`;
+  assert.throws(() => parseProviderPolicyPage(shifted), /headquarters column reads "No"/);
+});
