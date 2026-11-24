@@ -483,7 +483,8 @@ Your board name also answers to @fastlane-eval-{ref}. Post on thread #11 that yo
    jobs/jevbench-item-reserve-20261007/LEAN-PROCESS.md): ask custody for ONE word on the final runtime set
    (custody_word.py; valid until the run deadline, up to 24 h). Keep caps, prices, SKU, device and deadlines in a config
    file named in the word's config globs, so a change is a `recheck`, not a new word. Your kit must accept a GO valid
-   for up to 24 h. Broker tools (gpu-pod-guard etc.) are not runtime set: record their sha at launch, never pin them.
+   for up to 24 h. Broker tools (gpu-pod-guard etc.): record their sha at launch; if your kit pins one, keep that pin in
+   the config globs so a broker update is a `recheck`, not a rebuild plus new words.
 5. Hand off to the JevBench release owner on #11 for the public row (if the order is public).
 6. Deliver with the precedent deliver.py path (author-message-guard on the exact text, no ranks). Never write a
    refund decision; refunds need Florian's button. Post #9 + #11.

@@ -4844,6 +4844,25 @@ class PodRunnerLifecycleTests(unittest.TestCase):
         self.assertEqual([(c[2], c[3]) for c in self._create_calls(provider)], [(3.0, 25.0), (2.0, 10.0)])
         self.assertEqual(self._ledger(rid)["spent_upper_bound_usd"], 50.0)
 
+    def test_legacy_crash_state_is_charged_the_original_full_ttl_even_with_lowered_caps(self):
+        # CR-858 critic S2: a crash state written before attempt_reserved_upper_bound_usd existed is charged the larger of the
+        # configured and the original full TTL (3 h x USD 5/h = 15). Lowering the caps must never shrink that charge.
+        self._override_caps(max_hourly_usd=1.0, per_order_cap_usd=20.0, ttl_cap_hours=1.0)
+        provider = _FakeProvider()
+        rid = str(uuid.uuid4())
+        self.pods_dir.mkdir(parents=True, exist_ok=True)
+        (self.pods_dir / f"{rid}.json").write_text(json.dumps(
+            {"request_id": rid, "creation_attempts": 1, "spent_upper_bound_usd": 0.0,
+             "attempt_started_at": "2026-11-22T00:00:00+00:00"}))
+        with mock.patch.object(pod_runner.measurement_dispatch, "pins", return_value=self.pins):
+            with self.assertRaises(ap.measurement_dispatch.OperationalHold):
+                pod_runner.run(rid, self.job, self.recipe, self.tmp / "out-legacy", self.pins, 80.0,
+                               provider=provider, alert=self.alerts.append)
+        ledger = self._ledger(rid)
+        self.assertEqual(ledger["attempt_reserved_upper_bound_usd"], 15.0)
+        self.assertEqual(ledger["spent_upper_bound_usd"], 15.0)
+        self.assertEqual(self._create_calls(provider), [])  # never another rental on an unreconciled crash
+
     def test_order_specific_allocation_gate_keeps_the_original_cap_and_one_retry(self):
         # A fresh-generation authority (v16_allocation.FreshAllocation) is hash-pinned to the original accounting:
         # USD 20 per order and one retry. The raised per-order cap must not widen it.
