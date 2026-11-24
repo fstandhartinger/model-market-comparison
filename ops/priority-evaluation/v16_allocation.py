@@ -72,7 +72,7 @@ class FreshAllocation:
                 or not math.isfinite(spent) or not 0<=spent<pod_runner.ORIGINAL_ORDER_CAP_USD:
             raise ValueError('invalid bounded fresh-generation accounting')
         self.contingency_usd = 0
-        self.max_ttl_hours = pod_runner.TTL_CAP_HOURS
+        self.max_ttl_hours = pod_runner.ORIGINAL_TTL_CAP_HOURS
         self.max_new_usd = pod_runner.ORIGINAL_ORDER_CAP_USD
         if self.rid == DECISOR:
             if (attempts != 2 or allocations != 2 or total != 3 or spent != 7.8
@@ -127,7 +127,7 @@ class FreshAllocation:
             charge=state.get('attempt_reserved_upper_bound_usd')
             if isinstance(ttl,bool) or not isinstance(ttl,(int,float)) or not math.isfinite(ttl) or ttl<=0 \
                     or isinstance(charge,bool) or not isinstance(charge,(int,float)) or not math.isfinite(charge) \
-                    or abs(charge-ttl*pod_runner.MAX_HOURLY_USD)>1e-9 \
+                    or abs(charge-ttl*pod_runner.ORIGINAL_MAX_HOURLY_USD)>1e-9 \
                     or state.get('attempt_contingency_usd', 0) != self.contingency_usd \
                     or abs(state.get('spent_upper_bound_usd',float('inf'))-a['original_spent_upper_bound_usd']-charge-self.contingency_usd)>1e-9:
                 raise ValueError('fresh generation reservation charge differs')
@@ -137,8 +137,8 @@ class FreshAllocation:
                     or state.get('spent_upper_bound_usd',0)<a['original_spent_upper_bound_usd'] \
                     or state.get('spent_upper_bound_usd',float('inf'))>pod_runner.ORIGINAL_ORDER_CAP_USD \
                     or charge > self.max_new_usd or ttl > self.max_ttl_hours \
-                    or state.get('attempt_ttl_hours',float('inf'))>min(pod_runner.TTL_CAP_HOURS,
-                       (pod_runner.ORIGINAL_ORDER_CAP_USD-a['original_spent_upper_bound_usd'])/pod_runner.MAX_HOURLY_USD):
+                    or state.get('attempt_ttl_hours',float('inf'))>min(pod_runner.ORIGINAL_TTL_CAP_HOURS,
+                       (pod_runner.ORIGINAL_ORDER_CAP_USD-a['original_spent_upper_bound_usd'])/pod_runner.ORIGINAL_MAX_HOURLY_USD):
                 raise ValueError('fresh generation reservation exceeds original accounting')
             exclusive(self.create_claim,{'authority_sha256':self.digest,'creation_attempts':state['creation_attempts']})
         else:

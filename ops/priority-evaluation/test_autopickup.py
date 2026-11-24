@@ -4726,6 +4726,45 @@ class PodRunnerLifecycleTests(unittest.TestCase):
         self._run(provider, max_usd=4.0)  # a smaller remaining budget shortens the TTL
         self.assertIn(("create", "H100", 0.8, 4.0), provider.calls)
 
+    def _override_caps(self, **changes):
+        """CR-858: write an operator override under a tmp state root and point pod_runner at it."""
+        body = {"schema_version": 1, "max_hourly_usd": 5.0, "per_order_cap_usd": 50.0, "ttl_cap_hours": 3.0,
+                "api_order_cap_usd": 5.0, "max_pod_allocations": 3, **changes}
+        root = self.tmp / "caps-state"
+        (root / "config").mkdir(parents=True, exist_ok=True)
+        path = root / "config" / "paid-lane-caps.json"
+        path.write_text(json.dumps(body))
+        os.chmod(path, 0o600)
+        patcher = mock.patch.object(pod_runner, "STATE_ROOT", root)
+        patcher.start()
+        self.addCleanup(patcher.stop)
+        return path
+
+    def test_configured_caps_drive_the_attempt_ttl_budget_and_charge(self):
+        self._override_caps(max_hourly_usd=4.0, per_order_cap_usd=40.0, ttl_cap_hours=2.0)
+        provider = _FakeProvider()
+        receipt = self._run(provider, max_usd=80.0)  # the configured order cap (40) wins over the caller budget
+        self.assertIn(("create", "H100", 2.0, 40.0), provider.calls)
+        self.assertEqual(receipt["charged_or_reserved_usd"], 8.0)  # 2 h x USD 4/h
+
+    def test_configured_allocation_count_limits_the_fresh_pod_retries(self):
+        self._override_caps(max_pod_allocations=1)
+        provider = _FakeProvider({"sha_bad": True})
+        with self.assertRaises(ap.measurement_dispatch.OperationalHold) as ctx:
+            self._run(provider, max_usd=50.0)
+        self.assertEqual(str(ctx.exception), "gpu_pod_run_failed")
+        self.assertEqual(provider.removed, ["pod-1"])
+        self.assertEqual(len(self._create_calls(provider)), 1)
+
+    def test_invalid_caps_config_holds_before_any_provider_call_or_ledger(self):
+        self._override_caps().write_text("{}")
+        provider = _FakeProvider()
+        with self.assertRaises(ap.measurement_dispatch.OperationalHold) as ctx:
+            self._run(provider, max_usd=50.0)
+        self.assertEqual(str(ctx.exception), "paid_lane_caps_invalid")
+        self.assertEqual(provider.calls, [])
+        self.assertEqual(list(self.pods_dir.glob("*.json")), [])
+
     def _create_calls(self, provider):
         return [c for c in provider.calls if c[0] == "create"]
 

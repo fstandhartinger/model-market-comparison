@@ -39,6 +39,9 @@ import measurement_dispatch
 import execution_source
 import native_admission
 from contextlib import nullcontext
+import dataclasses
+import functools
+import paid_lane_caps
 import pod_capacity
 import sys
 
@@ -49,15 +52,19 @@ HOME = Path.home()
 LIUM = HOME / ".local/bin/lium"
 GUARD = HOME / "bin/gpu-pod-guard"
 
-MAX_HOURLY_USD = 5.00  # Florian 6 Oct 2026: paid fast-lane GPU pods up to USD 5/h
-# Florian 22 Nov 2026 (DECISIONS key fastlane-zero-wait-1122): paid lane USD 50 per order (was 20), up to two fresh-pod retries.
-# Each attempt still reserves at most MAX_HOURLY_USD * TTL_CAP_HOURS = 15, so three attempts (45) fit in the order cap.
-PER_ORDER_CAP_USD = 50.0  # ... and at most USD 50 per order
-# Order-specific fresh-generation authorities (v16_allocation.FreshAllocation) are hash-pinned to the original accounting
-# (USD 20 per order, one retry) and keep it unchanged; the scoped top-up has its own lifetime cap.
+# CR-858 (Florian 24 Nov 2026: price caps and limits are config, not constants): MAX_HOURLY_USD (USD 5/h, Florian 6 Oct 2026),
+# PER_ORDER_CAP_USD (USD 50 per order, Florian 22 Nov 2026, key fastlane-zero-wait-1122) and TTL_CAP_HOURS (3 h per attempt) now
+# come from paid-lane-caps.json via paid_lane_caps.py (shipped default = these exact values; operator override under the state
+# root). They are read per dispatch through caps(); the module attributes MAX_HOURLY_USD / PER_ORDER_CAP_USD / TTL_CAP_HOURS
+# still resolve (module __getattr__ below) for existing callers and tests. An invalid config raises the operational hold
+# paid_lane_caps_invalid before any spend.
+# Order-specific authorities (v16_allocation.FreshAllocation, ScopedTopUp, the Strands/Chon supplements) are written against the
+# original accounting (USD 20 per order, one retry, USD 5/h, 3 h) and keep it as literals: run() pins exactly these for every
+# allocation-gated order, so a config edit can never move them. The scoped top-up has its own lifetime cap.
 ORIGINAL_ORDER_CAP_USD = 20.0
 ORIGINAL_MAX_ATTEMPTS = 2
-TTL_CAP_HOURS = 3.0
+ORIGINAL_MAX_HOURLY_USD = 5.00
+ORIGINAL_TTL_CAP_HOURS = 3.0
 EXPECTED_ROWS = 1624
 GPU_PREFERENCE = (("H100", 80), ("A100", 80), ("L40S", 48), ("RTX6000", 48), ("RTXPRO6000", 96))  # lium marketplace names
 
@@ -80,20 +87,55 @@ def _utcnow():
     return datetime.now(timezone.utc)
 
 
+def caps() -> paid_lane_caps.Caps:
+    """The paid-lane caps in force (the snapshot run() pinned for this dispatch, else read from config now).
+
+    Fail closed: an invalid or unreadable config is the transient operational hold paid_lane_caps_invalid, never a default."""
+    try:
+        return paid_lane_caps.current(STATE_ROOT)
+    except paid_lane_caps.CapsInvalid:
+        raise measurement_dispatch.OperationalHold(paid_lane_caps.HOLD_REASON) from None
+
+
+class _ConfiguredCeiling:
+    """Default of Provider.create(max_hourly=...): "the configured max_hourly_usd, resolved at call time" (an explicit None stays invalid)."""
+    def __repr__(self):
+        return 'CONFIG_CEILING'
+
+
+CONFIG_CEILING = _ConfiguredCeiling()
+_CAP_ATTRIBUTES = {'MAX_HOURLY_USD': 'max_hourly_usd', 'PER_ORDER_CAP_USD': 'per_order_cap_usd', 'TTL_CAP_HOURS': 'ttl_cap_hours'}
+
+
+def __getattr__(name):
+    """pod_runner.MAX_HOURLY_USD / PER_ORDER_CAP_USD / TTL_CAP_HOURS keep working for outside callers; they read the config."""
+    field = _CAP_ATTRIBUTES.get(name)
+    if field is None:
+        raise AttributeError(f"module {__name__!r} has no attribute {name!r}")
+    return getattr(caps(), field)
+
+
+def _original_caps(config: paid_lane_caps.Caps) -> paid_lane_caps.Caps:
+    """The original accounting every allocation-gated (order-specific authority) run is written against; no config value moves it."""
+    return dataclasses.replace(config, max_hourly_usd=ORIGINAL_MAX_HOURLY_USD, per_order_cap_usd=ORIGINAL_ORDER_CAP_USD,
+                               ttl_cap_hours=ORIGINAL_TTL_CAP_HOURS, max_pod_allocations=pod_capacity.MAX_ALLOCATIONS,
+                               source='original-accounting')
+
+
 def _order_ttl_cap(job, recipe):
-    """Attempt TTL cap in hours: TTL_CAP_HOURS, except one exact order with a recorded deputy exception."""
+    """Attempt TTL cap in hours: the configured ttl_cap_hours, except one exact order with a recorded deputy exception."""
     import chon_runtime_supplement
     if chon_runtime_supplement.active(job, recipe):
         return chon_runtime_supplement.TTL_CAP_HOURS
-    return TTL_CAP_HOURS
+    return caps().ttl_cap_hours
 
 
 def _attempt_rate(recipe, job=None):
     """USD/h used for the per-attempt TTL and upper-bound charge.
 
-    Host-staged native recipes pin the exact hourly price (validated 0 < price <= MAX_HOURLY_USD, compared with the live
-    pod price right after creation, hold if the live price exceeds the pin), so the per-order caps (<= USD 5/h, USD 50/order, 3 h TTL,
-    3 creations) are accounted at that pinned price. All other routes keep the USD 5/h ceiling."""
+    Host-staged native recipes pin the exact hourly price (validated 0 < price <= the configured max_hourly_usd, compared with the live
+    pod price right after creation, hold if the live price exceeds the pin), so the per-order caps (config: USD 5/h, USD 50/order, 3 h TTL,
+    3 creations) are accounted at that pinned price. All other routes keep the configured hourly ceiling."""
     if job is not None:
         import chon_runtime_supplement
         if chon_runtime_supplement.active(job, recipe):
@@ -104,9 +146,10 @@ def _attempt_rate(recipe, job=None):
         if strands_decider_e2b_runtime_supplement.active(job, recipe):
             # Order 0616c39d (2x RTX PRO 6000 VM, one GPU used): Strands-only all-in ceiling, not the USD 5/h route ceiling.
             return strands_decider_e2b_runtime_supplement.MAX_HOURLY_USD
-    if "host_staging" in recipe and type(recipe.get("hourly_usd")) in (int, float) and 0 < recipe["hourly_usd"] <= MAX_HOURLY_USD:
+    ceiling = caps().max_hourly_usd
+    if "host_staging" in recipe and type(recipe.get("hourly_usd")) in (int, float) and 0 < recipe["hourly_usd"] <= ceiling:
         return float(recipe["hourly_usd"])
-    return MAX_HOURLY_USD
+    return ceiling
 IMAGE_RE = re.compile(r"^[A-Za-z0-9._/-]+(?::[A-Za-z0-9_.-]+)?@sha256:[0-9a-f]{64}$")
 SHA40_RE = re.compile(r"[0-9a-f]{40}")
 SHA64_RE = re.compile(r"[0-9a-f]{64}")
@@ -178,7 +221,7 @@ def validate_recipe(recipe, job_dir: Path) -> dict:
         raise measurement_dispatch.OperationalHold("pod_recipe_invalid")
     if 'hourly_usd' in recipe and (isinstance(recipe['hourly_usd'], bool)
             or not isinstance(recipe['hourly_usd'], (int, float))
-            or not 0 < recipe['hourly_usd'] <= MAX_HOURLY_USD):
+            or not 0 < recipe['hourly_usd'] <= caps().max_hourly_usd):
         raise measurement_dispatch.OperationalHold('pod_recipe_invalid')
     weights = recipe.get("weights")
     if not isinstance(weights, list) or not 1 <= len(weights) <= 8:
@@ -529,7 +572,7 @@ class Provider:
     def preflight(self, gpu, recipe, benchmarks, capacity_remaining=pod_capacity.MAX_REFUSALS, allow_two_gpu=False):
         return None
 
-    def create(self, gpu: str, ttl_hours: float, budget: float, max_hourly: float = MAX_HOURLY_USD) -> dict:
+    def create(self, gpu: str, ttl_hours: float, budget: float, max_hourly: float | _ConfiguredCeiling = CONFIG_CEILING) -> dict:
         raise NotImplementedError
 
     def exec(self, pod_id: str, command: list[str], timeout: int = 600) -> subprocess.CompletedProcess:
@@ -577,8 +620,8 @@ class LiumProvider(Provider):
 
     def reserve(self, job, name, hourly, cost_cap, hours):
         result = _run_cli([str(GUARD), "reserve", "--job", job, "--provider", "lium",
-                           "--name", name, "--hourly-price", str(MAX_HOURLY_USD),
-                           "--max-hourly-price", str(MAX_HOURLY_USD), "--cost-cap", str(cost_cap),
+                           "--name", name, "--hourly-price", str(caps().max_hourly_usd),
+                           "--max-hourly-price", str(caps().max_hourly_usd), "--cost-cap", str(cost_cap),
                            "--runtime-hours", str(hours)], timeout=60)
         if result.returncode:
             raise PodCapacityError(f"guard reserve failed: {result.stderr.strip()[-200:]}")
@@ -627,8 +670,11 @@ class LiumProvider(Provider):
             raise measurement_dispatch.OperationalHold('gpu_pod_quote_changed') from exc
         return {'quote': None, 'refusals': refusals, 'quote_count': len(refusals)}
 
-    def create(self, gpu, ttl_hours, budget, max_hourly=MAX_HOURLY_USD):
-        if type(max_hourly) not in (int, float) or not 0 < max_hourly <= MAX_HOURLY_USD:
+    def create(self, gpu, ttl_hours, budget, max_hourly=CONFIG_CEILING):
+        ceiling = caps().max_hourly_usd
+        if max_hourly is CONFIG_CEILING:
+            max_hourly = ceiling
+        if type(max_hourly) not in (int, float) or not 0 < max_hourly <= ceiling:
             raise PodRunError('invalid provider price ceiling')
         before = self.ps_ids()
         placement = getattr(self, '_placement', None)
@@ -778,7 +824,7 @@ class RunPodProvider(Provider):
 
     name = "runpod"
 
-    def create(self, gpu, ttl_hours, budget, max_hourly=MAX_HOURLY_USD):
+    def create(self, gpu, ttl_hours, budget, max_hourly=CONFIG_CEILING):
         raise measurement_dispatch.OperationalHold("gpu_pod_capacity")
 
 
@@ -928,7 +974,7 @@ def _lifecycle(provider, job, recipe, staging_path, output, state, gpu_choice, t
         attempts = state.get('creation_attempts', 0)
         try:
             allocations = pod_capacity.allocation_count(state, PODS_DIR)
-            limit = allocation_gate('check', state) if allocation_gate is not None else pod_capacity.MAX_ALLOCATIONS
+            limit = allocation_gate('check', state) if allocation_gate is not None else caps().max_pod_allocations
             from scoped_native_topup import ScopedTopUp
             ceiling = allocation_gate.allowed_total if type(allocation_gate) is ScopedTopUp else pod_capacity.MAX_ALLOCATIONS
             if type(limit) is not int or not 1 <= limit <= ceiling:
@@ -962,7 +1008,7 @@ def _lifecycle(provider, job, recipe, staging_path, output, state, gpu_choice, t
             raise measurement_dispatch.OperationalHold('gpu_pod_cleanup_uncertain') from exc
         if allocation_gate is not None:
             allocation_gate('before_reserve', state)
-        reserve_hourly = strands_decider_e2b_runtime_supplement.MAX_HOURLY_USD if strands_e2b else MAX_HOURLY_USD
+        reserve_hourly = strands_decider_e2b_runtime_supplement.MAX_HOURLY_USD if strands_e2b else caps().max_hourly_usd
         reservation = provider.reserve(job, "pod-measure", reserve_hourly, budget, lease_hours)
         state['creation_attempts'] = attempts + 1
         state['attempt_started_at'] = datetime.now(timezone.utc).isoformat()
@@ -998,7 +1044,7 @@ def _lifecycle(provider, job, recipe, staging_path, output, state, gpu_choice, t
                 strands_rate = strands_decider_e2b_runtime_supplement.MAX_HOURLY_USD
                 work_budget = budget - strands_decider_e2b_runtime_supplement.CLEANUP_HOURS * strands_rate
                 pod = provider.create(gpu_choice[0], ttl, work_budget, max_hourly=strands_rate)
-            elif "host_staging" in recipe or _attempt_rate(recipe, job_dir or job) != MAX_HOURLY_USD:
+            elif "host_staging" in recipe or _attempt_rate(recipe, job_dir or job) != caps().max_hourly_usd:
                 # Provider-side price ceiling = the pinned price the charge is accounted at, so the recorded
                 # upper bound holds even for an unclear create or a failed teardown.
                 pod = provider.create(gpu_choice[0], ttl, budget, max_hourly=_attempt_rate(recipe, job_dir or job))
@@ -1041,7 +1087,7 @@ def _lifecycle(provider, job, recipe, staging_path, output, state, gpu_choice, t
             hourly = float(hourly)
         except (TypeError, ValueError):
             hourly = 0.0
-        hourly_cap = strands_decider_e2b_runtime_supplement.MAX_HOURLY_USD if strands_e2b else MAX_HOURLY_USD
+        hourly_cap = strands_decider_e2b_runtime_supplement.MAX_HOURLY_USD if strands_e2b else caps().max_hourly_usd
         if not 0 < hourly <= hourly_cap:
             raise PodCapacityError(f"pod {pod_id} hourly price {pod.get('hourly_usd')} "
                                    f"exceeds the {hourly_cap} cap")
@@ -1467,7 +1513,7 @@ def _order_supplement_active(job_dir, recipe) -> bool:
     return False
 
 
-def run(rid: str, job_dir: Path, recipe: dict, output: Path, expected_pins: dict, max_usd: float,
+def _run(rid: str, job_dir: Path, recipe: dict, output: Path, expected_pins: dict, max_usd: float,
         *, provider: Provider | None = None, alert=None, benchmarks=('jevbench',), native_source_pins=None, measurement_pins_factory=None, pre_upload_gate=None, allocation_gate=None, runtime_preflight=None, image_context_provider=None, weights_streamer=None, fallback_providers=()) -> dict:
     """Measure the reviewed recipe on one disposable GPU pod; idempotent via receipt + pod state."""
     import native_owner
@@ -1550,7 +1596,9 @@ def run(rid: str, job_dir: Path, recipe: dict, output: Path, expected_pins: dict
             if 'attempt_reserved_upper_bound_usd' not in state:
                 # Legacy crash state is not trusted as zero cost. Charge the maximum
                 # original TTL while requiring exact-id/billing reconciliation.
-                state['attempt_reserved_upper_bound_usd'] = TTL_CAP_HOURS * MAX_HOURLY_USD
+                # (the larger of the configured and the original maximum, so lowering a cap later never shrinks this charge)
+                state['attempt_reserved_upper_bound_usd'] = (max(caps().ttl_cap_hours, ORIGINAL_TTL_CAP_HOURS)
+                                                             * max(caps().max_hourly_usd, ORIGINAL_MAX_HOURLY_USD))
                 state['spent_upper_bound_usd'] = state.get('spent_upper_bound_usd', 0.0) + state['attempt_reserved_upper_bound_usd']
                 _save_pod_state(state_path, state)
             if state.get('pod_id'):
@@ -1603,7 +1651,7 @@ def run(rid: str, job_dir: Path, recipe: dict, output: Path, expected_pins: dict
     scoped = type(allocation_gate) is ScopedTopUp
     # Ordinary orders: the per-order cap. A scoped top-up carries its own lifetime cap; a fresh-generation authority
     # (v16_allocation.FreshAllocation) stays on the original USD 20 accounting it is hash-pinned to.
-    cap = allocation_gate.lifetime_cap_usd if scoped else (PER_ORDER_CAP_USD if allocation_gate is None else ORIGINAL_ORDER_CAP_USD)
+    cap = allocation_gate.lifetime_cap_usd if scoped else (caps().per_order_cap_usd if allocation_gate is None else ORIGINAL_ORDER_CAP_USD)
     if scoped:
         allocation_gate('check', state)
     budget = min(cap, max_usd)
@@ -1650,7 +1698,7 @@ def run(rid: str, job_dir: Path, recipe: dict, output: Path, expected_pins: dict
         elif allocation_gate is not None:
             max_attempts = ORIGINAL_MAX_ATTEMPTS  # fresh-generation exceptions keep their original single retry
         else:
-            max_attempts = pod_capacity.MAX_ALLOCATIONS  # first pod + two fresh-pod retries
+            max_attempts = caps().max_pod_allocations  # first pod + two fresh-pod retries (config; code ceiling pod_capacity.MAX_ALLOCATIONS)
         for attempt in range(max_attempts):
             gpu_choice = candidates[attempt % len(candidates)]
             run_spend = state.get('spent_upper_bound_usd', 0.0) - prior_spend
@@ -1687,7 +1735,7 @@ def run(rid: str, job_dir: Path, recipe: dict, output: Path, expected_pins: dict
         staging_path.unlink(missing_ok=True)
     ended = datetime.now(timezone.utc)
     hours = (ended - started).total_seconds() / 3600
-    cost = round(min(budget, (state.get("hourly_usd") or MAX_HOURLY_USD) * hours), 4)
+    cost = round(min(budget, (state.get("hourly_usd") or caps().max_hourly_usd) * hours), 4)
     receipt = {"pins": current, "recipe_sha256": recipe_sha, 'admission_binding_sha256': admission_binding, "pod_id": state.get("last_pod_id"),
                "gpu": state.get("gpu"), "hourly_usd": state.get("hourly_usd"),
                "started_at": started.isoformat(), "ended_at": ended.isoformat(),
@@ -1718,3 +1766,19 @@ def run(rid: str, job_dir: Path, recipe: dict, output: Path, expected_pins: dict
     state.update(ended_at=ended.isoformat(), cost_estimate_usd=cost)
     save_state()
     return receipt
+
+
+@functools.wraps(_run)
+def run(*args, **kwargs):
+    """Measure the reviewed recipe on one disposable GPU pod (see _run), with the paid-lane caps read ONCE, first.
+
+    Nothing is touched before the caps are validated: an invalid config is the operational hold paid_lane_caps_invalid
+    (fail closed, no reservation, no pod). One dispatch then uses one snapshot from reserve to teardown, so an operator edit
+    mid-run cannot change the accounting of an attempt in flight. Every allocation-gated order (FreshAllocation, ScopedTopUp,
+    Strands) runs on the original accounting those authorities are written against, whatever the config says."""
+    config = caps()
+    with paid_lane_caps.pinned(_original_caps(config) if kwargs.get('allocation_gate') is not None else config):
+        return _run(*args, **kwargs)
+
+
+run.__name__ = run.__qualname__ = 'run'
