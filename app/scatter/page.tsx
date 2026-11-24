@@ -1,6 +1,7 @@
 import { ScatterLoader } from "../../components/deferred/ScatterLoader";
 import { pageDataVersion } from "../../lib/page-data";
 import { PageJsonLd } from "../../components/PageJsonLd";
+import { PopularModelLinks } from '../../components/PopularModelLinks';
 
 
 export const metadata = { title: "Cost vs capability", description: "Every AI model by real cost per task and benchmark score — the Pareto frontier marks the best value. Interactive cost–capability analysis.", alternates: { canonical: "/scatter" } };
@@ -14,6 +15,7 @@ export default async function ScatterPage() {
         Every model by real cost per task (cheaper to the right) and score. Upper-right is best
         value; the green line is the Pareto frontier.
       </p>
+      <PopularModelLinks />
       <ScatterLoader version={version} />
       <PageJsonLd meta={metadata} />
     </div>
