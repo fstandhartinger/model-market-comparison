@@ -85,7 +85,9 @@ class HookCase(unittest.TestCase):
                     'refund_status': None, 'model_link': 'https://huggingface.co/x/y', 'code_link': None,
                     '_fam': ['cue_reflex']}
         self.native_calls = []
+        self.reservations = self.root / 'RESERVATIONS.json'  # absent unless a test writes it (never custody's real file)
         patches = [mock.patch.object(ap, 'STATE_ROOT', self.state_root),
+                   mock.patch.object(ap, 'V16_RESERVATIONS_PATH', self.reservations),
                    mock.patch.object(ap, 'FASTLANE_ADMIT_PATH', self.admit_path),
                    mock.patch.object(ap, 'FASTLANE_ADMIT_SHA256', self.admit_sha),
                    mock.patch.object(ap, 'V16_ADMIT_PATH', ''),
@@ -113,7 +115,7 @@ class HookCase(unittest.TestCase):
             (trusted / 'POD-RECIPE.json').write_text('{}')
 
     def v16_script(self, exit_code=0, sleep=0, write_state=True, mode=0o700, grandchild_marker=None, detach_grandchild=False,
-                   die_by_signal=0, record_env=None):
+                   die_by_signal=0, record_env=None, stdout=None):
         """Custody's command as a script. `detach_grandchild`: the grandchild gets /dev/null for stdio (so the pipes do not
         hold the command back) and outlives the command; `die_by_signal`: the command kills itself with that signal."""
         path = self.root / 'v16-admit'
@@ -126,9 +128,10 @@ class HookCase(unittest.TestCase):
                      f'subprocess.Popen([sys.executable, "-c", "import time; time.sleep(2); open({str(grandchild_marker)!r}, \'w\').write(\'late\')"]{quiet})\n')
         env = f'open({str(record_env)!r}, "w").write(json.dumps(dict(os.environ)))\n' if record_env else ''
         sig = f'os.kill(os.getpid(), {die_by_signal})\ntime.sleep(5)\n' if die_by_signal else ''
+        out = f'sys.stdout.write({stdout!r})\nsys.stdout.flush()\n' if stdout is not None else ''
         path.write_text(f'#!{sys.executable}\nimport json, os, sys, time\n'
                         f'open({str(log)!r}, "a").write(json.dumps(sys.argv[1:]) + "\\n")\n'
-                        + env + grand + sig +
+                        + env + grand + sig + out +
                         f'time.sleep({sleep})\n'
                         f'if {exit_code} == 0 and {write_state}:\n'
                         f'    s = json.load(open({str(state)!r}))\n'
@@ -532,10 +535,10 @@ class V16AdmitTests(HookCase):
         script.write_text('#!/bin/sh\ncustody-tool called\n')
         os.chmod(script, 0o700)
         with mock.patch.object(ap, 'HOME', home), mock.patch.object(ap, 'V16_ADMIT_PATH', str(script)):
-            self.assertEqual(ap._run_v16_admit(RID, 'basis'), ('admitted', 'exit 0'))
+            self.assertEqual(ap._run_v16_admit(RID, 'basis'), ('admitted', 'exit 0', 'unparsed'))
             self.assertEqual((self.root / 'tool-ran').read_text().strip(), 'called')
             script.write_text('#!/bin/sh\ncustody-tool-that-does-not-exist\n')
-            kind, outcome = ap._run_v16_admit(RID, 'basis')
+            kind, outcome, _code = ap._run_v16_admit(RID, 'basis')
         self.assertEqual(kind, 'retry')  # sh: exit 127 "not found" is a retry, no longer a final refusal
         self.assertTrue(outcome.startswith('exit 127'), outcome)
 
@@ -626,6 +629,219 @@ class V16AdmitTests(HookCase):
         with mock.patch.object(ap, '_run_v16_admit', side_effect=RuntimeError('boom')):
             self.assertEqual(self.dispatch(), 'HOLD:official_method_retired_requires_admission')
         self.assertIn('v16 admission step failed: RuntimeError', self.state_md())
+
+
+class ReservationKeyTests(HookCase):
+    """CR-857 (a): the attempt key is "<review sha>:<pin sha>:<sha256 of RESERVATIONS.json, or 'absent'>". An exit-1 refusal is
+    final for ITS key only, so an order refused before a reservation existed is tried again when custody posts one."""
+
+    def setUp(self):
+        super().setUp()
+        self.row['_fam'] = []  # family step out of the way
+
+    def put_reservations(self, text, mode=0o600):
+        """custody's way: tmp file next to it, then an atomic rename."""
+        tmp = self.reservations.with_name('.RESERVATIONS.tmp')
+        tmp.write_text(text)
+        os.chmod(tmp, mode)
+        os.replace(tmp, self.reservations)
+        return hashlib.sha256(text.encode()).hexdigest()
+
+    def attempt(self):
+        return self.state()['v16_admit_attempt']
+
+    def test_the_key_is_review_pin_and_reservations_part(self):
+        path = self.v16_script(exit_code=1)
+        self.pin(path)
+        pin_sha = hashlib.sha256(path.read_bytes()).hexdigest()
+        self.dispatch()
+        self.assertEqual(self.attempt()['key'], f'{REVIEW_SHA}:{pin_sha}:absent')  # no file = its own key value
+        sha = self.put_reservations('{"schema": 1, "draws": {}}\n')
+        self.dispatch()
+        self.assertEqual(self.attempt()['key'], f'{REVIEW_SHA}:{pin_sha}:{sha}')
+
+    def test_exit_one_is_final_per_key_and_a_changed_reservations_sha_starts_a_new_key_at_zero(self):
+        self.pin(self.v16_script(exit_code=1))
+        for _ in range(3):
+            self.assertEqual(self.dispatch(), 'HOLD:official_method_retired_requires_admission')
+        self.assertEqual(len(self.v16_calls()), 1)  # final for (review, pin, absent)
+        self.put_reservations('{"schema": 1, "draws": {}}\n')  # custody posts a reservation: a new key, attempts 0
+        self.assertEqual(self.dispatch(), 'HOLD:official_method_retired_requires_admission')
+        self.assertEqual(self.attempt()['attempts'], 1)
+        self.dispatch()
+        self.dispatch()
+        self.assertEqual(len(self.v16_calls()), 2)  # ... and that one is final too
+        self.put_reservations('{"schema": 1, "draws": {"x": {}}}\n')  # any byte change is a change
+        self.dispatch()
+        self.assertEqual(len(self.v16_calls()), 3)
+        self.put_reservations('{"schema": 1, "draws": {}}\n')  # back to the bytes of the second key: only the LAST key is kept
+        self.dispatch()
+        self.assertEqual(len(self.v16_calls()), 4)
+        self.reservations.unlink()  # file removed: 'absent' again, again a different key than the last one
+        self.dispatch()
+        self.assertEqual(len(self.v16_calls()), 5)
+
+    def test_the_retry_budget_is_per_key_too(self):
+        self.pin(self.v16_script(exit_code=3))
+        for _ in range(4):
+            self.dispatch()
+        self.assertEqual(len(self.v16_calls()), 3)  # three attempts for 'absent', then today's hold
+        self.put_reservations('{"schema": 1, "draws": {}}\n')
+        self.assertEqual(self.dispatch(), 'HOLD:v16_admit_retry')  # a new key: three more
+        self.assertEqual(len(self.v16_calls()), 4)
+        self.assertEqual(self.attempt()['attempts'], 1)
+
+    def test_an_exit_zero_key_still_admits_whatever_the_reservations(self):
+        self.pin(self.v16_script(exit_code=0))
+        self.put_reservations('{"schema": 1, "draws": {}}\n')
+        self.assertEqual(self.dispatch(), 'HOLD:v16_admitted_reroute')
+        self.assertEqual(self.attempt()['kind'], 'admitted')
+
+    def test_the_stdout_token_is_recorded_when_it_is_one_symbolic_token(self):
+        for printed, expected in (('no_reservations\n', 'no_reservations'), ('one_reserved_draw', 'one_reserved_draw'),
+                                  ('draw_uses_left\n\n', 'draw_uses_left'), ('reservation_max_uses_int', 'reservation_max_uses_int'),
+                                  ('x' * 64, 'x' * 64)):
+            with self.subTest(printed):
+                self.pin(self.v16_script(exit_code=1, stdout=printed))
+                self.dispatch()
+                self.assertEqual(self.attempt()['code'], expected)
+                self.assertEqual(self.attempt()['kind'], 'refused')
+
+    def test_the_real_tools_stdout_lines_give_their_token(self):
+        # custody's v16-admit b1dfc787 prints 'v16-admit: refused: <token>' (exit 1) and 'v16-admit: retry: <token>' (exit 3)
+        for printed, expected in (('v16-admit: refused: no_reservations\n', 'no_reservations'),
+                                  ('v16-admit: refused: one_reserved_draw', 'one_reserved_draw'),
+                                  ('v16-admit: refused: gate_pins_draw_measurement\n\n', 'gate_pins_draw_measurement'),
+                                  ('v16-admit: refused: ' + 'x' * 64, 'x' * 64), ('v16-admit: refused: refused', 'refused')):
+            with self.subTest(printed):
+                self.pin(self.v16_script(exit_code=1, stdout=printed))
+                self.dispatch()
+                self.assertEqual((self.attempt()['kind'], self.attempt()['code']), ('refused', expected))
+
+    def test_the_real_tools_retry_line_gives_its_token_too(self):
+        self.pin(self.v16_script(exit_code=3, stdout='v16-admit: retry: lock_busy\n'))
+        self.assertEqual(self.dispatch(), 'HOLD:v16_admit_retry')
+        self.assertEqual((self.attempt()['kind'], self.attempt()['code']), ('retry', 'lock_busy'))
+
+    def test_anything_else_on_stdout_is_unparsed(self):
+        # the validated forms are ^[a-z0-9_]{1,64}$ and 'v16-admit: (refused|retry): <that token>': no prose, no upper case, no
+        # second line, no 65th character, no other prefix, nothing
+        for printed in ('', 'No_Reservations', 'two\ntokens\n', 'x' * 65, 'a-b', 'a b', '\x1b[31mno_reservations', 'uumlaut_\u00e4',
+                        '$(touch x)', 'v16-admit: refused: order id format', 'v16-admit: error, retry', 'v16-admit: ADMITTED on draw-a',
+                        'v16-admit: refused: ' + 'x' * 65, 'v16-admit: refused: No_Reservations', 'v16-admit: refused: two tokens',
+                        'v16-admit: refused: a\nv16-admit: refused: b', 'v16-admit: refused:no_reservations',
+                        'v16-admit:  refused: no_reservations', 'v16-admit: refused:  no_reservations', 'v16-admit: refused: ',
+                        'v16-admit: other: no_reservations', 'x v16-admit: refused: no_reservations',
+                        'v16-admit: refused: no_reservations x', 'V16-ADMIT: refused: no_reservations'):
+            with self.subTest(printed):
+                self.pin(self.v16_script(exit_code=1, stdout=printed))
+                self.dispatch()
+                self.assertEqual(self.attempt()['code'], 'unparsed')
+
+    def test_timeout_and_oserror_record_an_unparsed_code(self):
+        self.pin(self.v16_script(exit_code=0, sleep=5))
+        with mock.patch.object(ap, 'V16_ADMIT_TIMEOUT_S', 0.3):
+            self.dispatch()
+        self.assertEqual((self.attempt()['kind'], self.attempt()['code']), ('retry', 'unparsed'))
+
+    def test_an_unsafe_reservations_file_is_no_attempt_and_leaves_the_hold(self):
+        self.pin(self.v16_script(exit_code=1))
+        for label, prepare in (('group readable', lambda: self.put_reservations('{}', mode=0o640)),
+                               ('world readable', lambda: self.put_reservations('{}', mode=0o644)),
+                               ('group writable', lambda: self.put_reservations('{}', mode=0o660))):
+            with self.subTest(label):
+                prepare()
+                self.assertEqual(self.dispatch(), 'HOLD:official_method_retired_requires_admission')
+                self.assertEqual(self.v16_calls(), [])
+                self.assertNotIn('v16_admit_attempt', self.state())
+        self.assertIn('v16-admit reservations file is not an own, private regular file; hold unchanged', self.state_md())
+
+    def test_a_symlink_a_directory_a_fifo_and_a_huge_file_are_no_attempt(self):
+        self.pin(self.v16_script(exit_code=1))
+        target = self.root / 'elsewhere.json'
+        target.write_text('{}')
+        os.chmod(target, 0o600)
+        cases = {}
+        cases['symlink'] = lambda: self.reservations.symlink_to(target)
+        cases['directory'] = lambda: self.reservations.mkdir()
+        cases['fifo'] = lambda: os.mkfifo(self.reservations)
+        cases['too large'] = lambda: (self.reservations.write_bytes(b' ' * (ap.V16_RESERVATIONS_LIMIT + 1)),
+                                      os.chmod(self.reservations, 0o600))
+        patcher = mock.patch.object(ap, 'V16_RESERVATIONS_LIMIT', 4096)  # the real limit is 64 MiB (next test)
+        patcher.start()
+        self.addCleanup(patcher.stop)
+        for label, make in cases.items():
+            with self.subTest(label):
+                if self.reservations.is_dir() and not self.reservations.is_symlink():
+                    self.reservations.rmdir()
+                else:
+                    self.reservations.unlink(missing_ok=True)
+                make()
+                self.assertEqual(self.dispatch(), 'HOLD:official_method_retired_requires_admission')
+                self.assertEqual(self.v16_calls(), [])
+                self.assertNotIn('v16_admit_attempt', self.state())
+
+    def test_the_reservations_limit_is_custodys_64_mib_not_the_pinned_files_1_mib(self):
+        # v16-admit reads RESERVATIONS.json with LIMIT = 64 MiB: a file between 1 and 64 MiB must reach custody, so it is keyed
+        self.assertEqual(ap.V16_RESERVATIONS_LIMIT, 64 * 1024 * 1024)
+        self.assertEqual(ap.PINNED_FILE_MAX_BYTES, 1024 * 1024)
+        self.pin(self.v16_script(exit_code=1))
+        document = '{"schema": 1, "draws": {}}' + ' ' * (2 * ap.PINNED_FILE_MAX_BYTES)
+        sha = self.put_reservations(document)
+        self.assertEqual(self.dispatch(), 'HOLD:official_method_retired_requires_admission')
+        self.assertEqual(len(self.v16_calls()), 1)
+        self.assertTrue(self.attempt()['key'].endswith(':' + sha))
+        # ... and one byte over custody's own limit is not an attempt
+        with mock.patch.object(ap, 'V16_RESERVATIONS_LIMIT', len(document) - 1):
+            self.put_reservations(document + ' ')
+            self.assertEqual(self.dispatch(), 'HOLD:official_method_retired_requires_admission')
+        self.assertEqual(len(self.v16_calls()), 1)
+        self.assertIn('v16-admit reservations file is larger than the allowed size; hold unchanged', self.state_md())
+
+    def test_the_safe_reader_limit_is_a_parameter_that_defaults_to_the_pinned_file_limit(self):
+        path = self.root / 'g'
+        path.write_bytes(b'x' * 10)
+        os.chmod(path, 0o600)
+        self.assertEqual(ap._read_safe_file(str(path), limit=10), (b'x' * 10, ''))
+        self.assertEqual(ap._read_safe_file(str(path), limit=9), (None, 'file is larger than the allowed size'))
+        path.write_bytes(b'x' * (ap.PINNED_FILE_MAX_BYTES + 1))
+        self.assertEqual(ap._read_safe_file(str(path)), (None, 'file is larger than the allowed size'))
+        self.assertEqual(ap._read_safe_file(str(path), limit=ap.PINNED_FILE_MAX_BYTES + 1)[1], '')
+
+    def test_fixing_the_mode_of_the_same_bytes_is_not_locked_out(self):
+        # the sha does not change with the mode; had the unsafe file counted as an attempt, the order would stay refused for good
+        self.pin(self.v16_script(exit_code=1))
+        self.put_reservations('{"schema": 1, "draws": {}}\n', mode=0o644)
+        self.dispatch()
+        self.assertEqual(self.v16_calls(), [])
+        os.chmod(self.reservations, 0o600)
+        self.dispatch()
+        self.assertEqual(len(self.v16_calls()), 1)
+
+    def test_a_reservations_problem_never_runs_custody_even_after_a_final_refusal(self):
+        self.pin(self.v16_script(exit_code=1))
+        self.dispatch()
+        self.assertEqual(len(self.v16_calls()), 1)
+        self.put_reservations('{}', mode=0o666)
+        self.dispatch()
+        self.assertEqual(len(self.v16_calls()), 1)
+        self.assertIn('absent', self.attempt()['key'])  # the earlier attempt record is untouched
+
+    def test_the_safe_reader_is_what_pinned_files_use_and_adds_missing_ok_and_private(self):
+        path = self.root / 'f'
+        path.write_text('abc')
+        os.chmod(path, 0o644)
+        self.assertEqual(ap._read_safe_file(str(path)), (b'abc', ''))
+        self.assertEqual(ap._read_safe_file(str(path), private=True)[1], 'file is not an own, private regular file')
+        self.assertEqual(ap._read_safe_file(str(self.root / 'nope')), (None, 'file is missing, a symlink or unreadable'))
+        self.assertEqual(ap._read_safe_file(str(self.root / 'nope'), missing_ok=True), (None, ''))
+        self.assertEqual(ap._read_safe_file('relative', missing_ok=True), (None, 'path is not absolute'))
+        os.chmod(path, 0o664)
+        self.assertEqual(ap._read_safe_file(str(path))[1], 'file is not an own, non-writable regular file')
+        # the pin check on top is unchanged
+        os.chmod(path, 0o644)
+        self.assertEqual(ap._pinned_bytes(str(path), hashlib.sha256(b'abc').hexdigest(), executable=False), (b'abc', ''))
+        self.assertEqual(ap._pinned_bytes(str(path), '0' * 64, executable=False), (None, 'sha256 differs from the pin'))
 
 
 class PinInTreeTests(unittest.TestCase):
