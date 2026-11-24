@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import stat
 import os
 import tempfile
 import unittest
@@ -71,6 +72,13 @@ def make_refs(root: Path, name: str, release: str) -> dict:
             for key, path in (('measurement', measurement), ('scoring', scoring), ('freeze', freeze), ('id_map', id_map))}
 
 
+def custody_fields(refs: dict) -> dict:
+    """The draw fields custody's tool demands next to the references: a generation name and the input sha256 that the freeze
+    file, the measurement profile's items pin and the draw itself must agree on."""
+    freeze = Path(refs['freeze']['path'])
+    return {'generation': 'gen-' + freeze.parent.name, 'input_sha256': sha(freeze.with_name('items.jsonl'))}
+
+
 class GateCase(unittest.TestCase):
     def setUp(self):
         holder = tempfile.TemporaryDirectory()
@@ -119,7 +127,7 @@ class GateCase(unittest.TestCase):
 
     def draw(self, which='a', **overrides):
         value = {'status': 'open', 'families': {FAMILY: MODULE}, 'orders': [], 'expires_at': FUTURE, 'max_uses': 1,
-                 'references': self.refs[which]}
+                 'references': self.refs[which], **custody_fields(self.refs[which])}
         value.update(overrides)
         return value
 
@@ -384,9 +392,13 @@ class DrawSelectionTests(GateCase):
         link.symlink_to(self.reservations)
         with mock.patch.object(ap, 'V16_RESERVATIONS_PATH', link):
             self.assertRetired('symlink')
-        self.reservations.write_bytes(b' ' * (ap.PINNED_FILE_MAX_BYTES + 1))
-        os.chmod(self.reservations, 0o600)
-        self.assertRetired('too large')
+        # custody reads RESERVATIONS.json up to 64 MiB: a valid document padded beyond the pinned files' 1 MiB still selects
+        self.reserve()
+        document = self.reservations.read_text() + ' ' * (ap.PINNED_FILE_MAX_BYTES + 1)
+        write_atomic(self.reservations, document)
+        self.assertDrawPins('a')
+        with mock.patch.object(ap, 'V16_RESERVATIONS_LIMIT', len(document) - 1):
+            self.assertRetired('over custody limit')
 
     def test_the_registry_must_hold_exactly_one_entry_for_the_order(self):
         self.reserve()
@@ -449,6 +461,235 @@ class DrawSelectionTests(GateCase):
         state['v16_profile_admission'] = {'verdict': 'ACCEPTED'}
         self.assertIsNone(ap._v16_gate_pins(self.row, state))
         self.assertIsNone(ap._select_v16_gate_draw(self.row, state))
+
+    # --- MUST-1: custody refuses every order that has a native owner record -------------------------------------------
+    def test_an_order_with_a_native_owner_record_is_never_given_a_draw(self):
+        # custody line 359: need('not_native_owner', not st.get('native_owner')): exit 1, owner live or not. A review spent on
+        # a draw custody must refuse anyway is waste; such orders go the owner's manual custody path.
+        self.reserve()
+        self.assertDrawPins('a')
+        for owner in ({'job': 'jevbench-native-owner-x', 'starts': 1, 'start_ok': True}, {'job': 'x'}, 'x', 1, True, ['x']):
+            with self.subTest(owner):
+                self.set_state(native_owner=owner)
+                self.assertRetired()
+                self.assertIsNone(ap._select_v16_gate_draw(self.row, self.state()))
+                self.assertIsNone(ap._v16_gate_pins(self.row, self.state()))
+        self.set_state(native_owner={'job': 'x'})
+        ap.record_v16_gate_draw(self.job, self.row)
+        self.assertNotIn('v16_gate_draw', self.state())
+        self.assertEqual(ap.write_review_prompt(self.row, self.job), self.retired)
+        self.assertNotIn('v16_gate_draw', self.state())
+
+    def test_a_falsy_native_owner_value_does_not_block_exactly_like_custodys_not_st_get(self):
+        self.reserve()
+        for empty in (None, {}, '', 0, []):
+            with self.subTest(empty):
+                self.set_state(native_owner=empty)
+                self.assertDrawPins('a')
+
+    # --- SHOULD-2: the cheap mirrors of custody's own checks -----------------------------------------------------------
+    def test_max_uses_must_be_an_int_of_at_least_one(self):
+        # custody: reservation_max_uses_int = type(mu) is int and mu >= 1
+        for good in (1, 2, 5, 1000):
+            with self.subTest(good):
+                self.reserve({'draw-a': self.draw(max_uses=good)})
+                self.assertDrawPins('a')
+        for bad in (0, -1, True, False, 1.0, 2.5, '2', None, [], {}, [1]):
+            with self.subTest(bad):
+                self.reserve({'draw-a': self.draw(max_uses=bad)})
+                self.assertRetired(f'max_uses {bad!r}')
+        document = {'schema': 1, 'draws': {'draw-a': {k: v for k, v in self.draw().items() if k != 'max_uses'}}}
+        write_atomic(self.reservations, json.dumps(document))
+        self.assertRetired('max_uses missing')
+
+    def test_generation_must_match_custodys_format(self):
+        # custody: GEN_RE = [a-z0-9-]{1,80}, fullmatch on d.get('generation', '')
+        for good in ('a', '0', 'gen-1-b', 'a' * 80, '1-2-3'):
+            with self.subTest(good):
+                self.reserve({'draw-a': self.draw(generation=good)})
+                self.assertDrawPins('a')
+        for bad in ('', 'Gen', 'gen_a', 'gen.a', 'a' * 81, 'gen a', 'gen\n', ' gen', 'gen/', '../x', 'g\u00e4n', None, 5, ['a'], {}, True):
+            with self.subTest(bad):
+                self.reserve({'draw-a': self.draw(generation=bad)})
+                self.assertRetired(f'generation {bad!r}')
+        document = {'schema': 1, 'draws': {'draw-a': {k: v for k, v in self.draw().items() if k != 'generation'}}}
+        write_atomic(self.reservations, json.dumps(document))
+        self.assertRetired('generation missing')
+
+    def test_the_release_key_must_match_custodys_format_and_the_freeze_release(self):
+        # custody: REL_RE = [A-Za-z0-9._-]{1,80}; the freeze file names the same release (freeze_matches_profiles)
+        for index, good in enumerate(('Draw_1.2-x', 'a' * 80, '1')):
+            with self.subTest(good):
+                refs = make_refs(self.root, f'ok{index}', good)
+                self.reserve({good: self.draw(references=refs, **custody_fields(refs))})
+                self.assertEqual(self.pins(), {'official_methods': official_scoring_v16.pins(['jevbench'], refs['scoring']['path']),
+                                               'official_measurement': v16_profiles.measurement_pins(refs['measurement']['path'])})
+        for index, bad in enumerate(('a' * 81, 'draw a', 'draw/a', 'dr\u00e4w', 'draw\n', '')):
+            with self.subTest(bad):
+                refs = make_refs(self.root, f'bad{index}', bad)  # the freeze names the same release: only the format can refuse
+                self.reserve({bad: self.draw(references=refs, **custody_fields(refs))})
+                self.assertRetired(f'release {bad!r}')
+
+    def freeze_variant(self, mutate):
+        """A reservations file whose draw-a carries a freeze file changed by `mutate(freeze dict)` (its pin updated, so only the
+        consistency checks can refuse it). Returns nothing; the caller asserts."""
+        path = Path(self.refs['a']['freeze']['path'])
+        original = path.read_bytes()
+        value = json.loads(original)
+        replaced = mutate(value)
+        path.write_text(json.dumps(value if replaced is None else replaced))
+        try:
+            refs = dict(self.refs['a'], freeze={'path': str(path), 'sha256': sha(path)})
+            self.reserve({'draw-a': self.draw(references=refs)})
+            return self.pins()
+        finally:
+            path.write_bytes(original)
+
+    def test_the_freeze_file_must_agree_with_the_profiles_like_custodys_freeze_matches_profiles(self):
+        self.reserve()
+        self.assertDrawPins('a')
+        self.assertEqual(self.freeze_variant(lambda v: None), self.draw_pins('a'), 'an unchanged freeze (re-pinned) is fine')
+        cases = {
+            'release differs': lambda v: v.update(release='draw-z'),
+            'release missing': lambda v: v.pop('release'),
+            'count below 1500': lambda v: v['counts'].update(selfhosted_input=1499),
+            'count above 1500': lambda v: v['counts'].update(selfhosted_input=1501),
+            'count missing': lambda v: v['counts'].pop('selfhosted_input'),
+            'counts missing': lambda v: v.pop('counts'),
+            'input sha differs from the items pin': lambda v: v['input_sha256'].update(selfhosted='0' * 64),
+            'input sha missing': lambda v: v['input_sha256'].pop('selfhosted'),
+            'input_sha256 missing': lambda v: v.pop('input_sha256'),
+            'gold sha differs': lambda v: v['file_sha256'].update({'frozen/gold.jsonl': '1' * 64}),
+            'gold sha missing': lambda v: v['file_sha256'].pop('frozen/gold.jsonl'),
+            'id-map sha differs': lambda v: v['file_sha256'].update({'frozen/id-map.json': '2' * 64}),
+            'id-map sha missing': lambda v: v['file_sha256'].pop('frozen/id-map.json'),
+            'file_sha256 missing': lambda v: v.pop('file_sha256'),
+            'a list': lambda v: [v],
+            'an empty list': lambda v: [],
+            'a string': lambda v: 'freeze',
+        }
+        for label, mutate in cases.items():
+            with self.subTest(label):
+                self.assertEqual(self.freeze_variant(mutate), self.retired, label)
+        self.reserve()
+        self.assertDrawPins('a')
+
+    def test_the_draws_own_input_sha256_must_equal_the_freezes_and_the_items_pin(self):
+        # custody: freeze['input_sha256']['selfhosted'] == item_pin['sha256'] == d.get('input_sha256')
+        for label, change in (('differs', {'input_sha256': '3' * 64}), ('empty', {'input_sha256': ''}), ('null', {'input_sha256': None}),
+                              ('number', {'input_sha256': 5})):
+            with self.subTest(label):
+                self.reserve({'draw-a': self.draw(**change)})
+                self.assertRetired(label)
+        document = {'schema': 1, 'draws': {'draw-a': {k: v for k, v in self.draw().items() if k != 'input_sha256'}}}
+        write_atomic(self.reservations, json.dumps(document))
+        self.assertRetired('missing')
+        self.reserve()
+        self.assertDrawPins('a')
+
+    def test_the_id_map_reference_must_be_the_one_the_freeze_names(self):
+        self.reserve()
+        id_map = Path(self.refs['a']['id_map']['path'])
+        original = id_map.read_bytes()
+        id_map.write_text('{"x": 1}')  # another id map, honestly pinned: the freeze still names the old one
+        try:
+            refs = dict(self.refs['a'], id_map={'path': str(id_map), 'sha256': sha(id_map)})
+            self.reserve({'draw-a': self.draw(references=refs)})
+            self.assertRetired()
+        finally:
+            id_map.write_bytes(original)
+        self.reserve()
+        self.assertDrawPins('a')
+
+    def test_the_gold_in_the_scoring_profile_must_be_the_one_the_freeze_names(self):
+        self.reserve()
+        scoring = Path(self.refs['a']['scoring']['path'])
+        gold = Path(self.refs['a']['scoring']['path']).with_name('gold.jsonl')
+        original_scoring, original_gold = scoring.read_bytes(), gold.read_bytes()
+        gold.write_text('{"opaque_id": "another"}\n')
+        value = json.loads(original_scoring)
+        value['profiles']['jevbench']['files']['gold.jsonl'] = {'path': str(gold), 'sha256': sha(gold)}
+        scoring.write_text(json.dumps(value))
+        try:
+            refs = dict(self.refs['a'], scoring={'path': str(scoring), 'sha256': sha(scoring)})
+            self.reserve({'draw-a': self.draw(references=refs)})
+            self.assertRetired()
+        finally:
+            scoring.write_bytes(original_scoring)
+            gold.write_bytes(original_gold)
+        self.reserve()
+        self.assertDrawPins('a')
+
+    def test_the_freeze_file_is_read_like_custody_reads_it_group_writable_is_fine_a_symlink_or_huge_one_is_not(self):
+        self.reserve()
+        freeze = Path(self.refs['a']['freeze']['path'])
+        os.chmod(freeze, 0o664)  # written under umask 002: custody's jload is not strict about owner/mode
+        self.assertDrawPins('a')
+        original = freeze.read_bytes()
+        freeze.write_bytes(original + b' ' * 5000)  # still valid JSON, honestly re-pinned, but bigger than the patched limit below
+        refs = dict(self.refs['a'], freeze={'path': str(freeze), 'sha256': sha(freeze)})
+        self.reserve({'draw-a': self.draw(references=refs)})
+        self.assertEqual(self.pins(), self.draw_pins('a'), 'within custody limit')
+        self.assertLess(self.reservations.stat().st_size, 4000)  # so the reservations file itself passes the patched limit
+        with mock.patch.object(ap, 'V16_RESERVATIONS_LIMIT', 4000):
+            self.assertRetired('the freeze file is over custody limit')
+        freeze.write_bytes(original)
+        self.reserve()
+        saved = freeze.with_name('freeze.saved')
+        os.replace(freeze, saved)
+        freeze.symlink_to(saved)
+        self.assertRetired('symlink')
+        freeze.unlink()
+        os.replace(saved, freeze)
+        self.assertDrawPins('a')
+
+    def test_the_freeze_reader_itself_refuses_a_fifo_a_directory_a_symlink_and_changed_bytes(self):
+        # the reader is the last line behind v16_profiles._sha: a file swapped for something else after the hash must not hang it
+        # (O_NONBLOCK) or be believed
+        target = self.root / 'plain.json'
+        target.write_text('{"a": 1}')
+        pin = {'path': str(target), 'sha256': sha(target)}
+        self.assertEqual(ap._v16_reference_json(pin), {'a': 1})
+        with self.assertRaisesRegex(ValueError, 'v16 draw reference changed'):
+            ap._v16_reference_json(dict(pin, sha256='0' * 64))
+        fifo = self.root / 'fifo.json'
+        os.mkfifo(fifo)
+        with self.assertRaisesRegex(ValueError, 'unsafe v16 draw reference'):
+            ap._v16_reference_json({'path': str(fifo), 'sha256': pin['sha256']})
+        directory = self.root / 'dir.json'
+        directory.mkdir()
+        with self.assertRaises(OSError):
+            ap._v16_reference_json({'path': str(directory), 'sha256': pin['sha256']})
+        link = self.root / 'link.json'
+        link.symlink_to(target)
+        with self.assertRaises(OSError):
+            ap._v16_reference_json({'path': str(link), 'sha256': pin['sha256']})
+        with mock.patch.object(ap, 'V16_RESERVATIONS_LIMIT', 4):
+            with self.assertRaisesRegex(ValueError, 'v16 draw reference changed'):
+                ap._v16_reference_json(pin)
+        for bad in (b'\xff\xfe', b'not json'):
+            target.write_bytes(bad)
+            with self.assertRaises(ValueError):
+                ap._v16_reference_json({'path': str(target), 'sha256': sha(target)})
+
+    def test_the_freeze_bytes_that_are_parsed_are_the_bytes_that_hash_to_the_pin(self):
+        # a freeze file swapped after the pickup hashed it must not be believed: the parse uses its own hashed read
+        self.reserve()
+        freeze = Path(self.refs['a']['freeze']['path'])
+        original = freeze.read_bytes()
+        real_sha = v16_profiles._sha
+
+        def swap_after_hashing(path):
+            digest = real_sha(path)
+            if str(path) == str(freeze):  # consistent in every checked field: only the hash of the parsed bytes can refuse it
+                freeze.write_text(json.dumps({**json.loads(original), 'swapped': True}))
+            return digest
+        try:
+            with mock.patch.object(v16_profiles, '_sha', side_effect=swap_after_hashing):
+                self.assertRetired('swapped between the hash and the parse')
+        finally:
+            freeze.write_bytes(original)
+        self.assertDrawPins('a')
 
     def test_source_review_budget_keeps_a_new_draw_selection_from_exhausting_an_order(self):
         self.reserve()
@@ -534,6 +775,15 @@ class RecordedDrawTests(GateCase):
             self.assertDrawPins('a')  # never re-selected
         self.assertEqual(self.state()['v16_gate_draw']['release'], 'draw-a')
 
+    def test_a_native_owner_that_appears_after_the_record_does_not_unpin_a_passed_gate(self):
+        # the guard is on SELECTING a draw; a recorded one stays used, else the passed gate would go stale under the owner
+        self.reserve()
+        ap.write_review_prompt(self.row, self.job)
+        gate = self.pass_review(self.pins())
+        self.set_state(native_owner={'job': 'jevbench-native-owner-x', 'starts': 1, 'start_ok': True})
+        self.assertDrawPins('a')
+        self.assertEqual(ap.validate_review_gate(self.job), gate)
+
     def test_a_second_recording_does_not_move_the_record(self):
         self.reserve()
         ap.record_v16_gate_draw(self.job, self.row)
@@ -551,14 +801,24 @@ class RecordedDrawTests(GateCase):
             original = path.read_bytes()
             path.write_bytes(original + b' ')
             try:
-                with self.assertRaisesRegex(ap.PickupError, 'recorded v1.6 draw is unavailable or changed'):
+                with self.assertRaisesRegex(ap.V16DrawChanged, 'recorded v1.6 draw is unavailable or changed'):
                     self.pins()
             finally:
                 path.write_bytes(original)
             self.assertDrawPins('a')
         path.unlink()
-        with self.assertRaises(ap.PickupError):
+        with self.assertRaises(ap.V16DrawChanged):
             self.pins()
+
+    def test_v16_draw_changed_is_a_pickup_error_so_every_existing_caller_still_sees_one(self):
+        self.assertTrue(issubclass(ap.V16DrawChanged, ap.PickupError))
+        self.reserve()
+        ap.record_v16_gate_draw(self.job, self.row)
+        Path(self.refs['a']['scoring']['path']).unlink()
+        with self.assertRaises(ap.PickupError):
+            ap.validate_review_gate(self.job)
+        with self.assertRaises(ap.PickupError):
+            ap.write_review_prompt(self.row, self.job)
 
     def test_a_malformed_record_is_a_pickup_error_not_a_silent_fallback(self):
         self.reserve()
@@ -569,7 +829,7 @@ class RecordedDrawTests(GateCase):
                               ('empty', {}), ('list', [])):
             with self.subTest(label):
                 self.set_state(v16_gate_draw=record)
-                with self.assertRaises(ap.PickupError):
+                with self.assertRaises(ap.V16DrawChanged):
                     self.pins()
 
     def test_a_recorded_draw_does_not_apply_to_other_orders_or_admitted_ones(self):
@@ -697,9 +957,9 @@ class ReentryTests(GateCase):
         state['operational_hold'] = {'reason': reason or self.HOLD, 'transient': False, 'retries': 0, 'at': 'x', **extra}
         ap.save_state(state)
 
-    def attempt(self, reservations_part):
+    def attempt(self, reservations_part, pin='a' * 64):
         """The last v16_admit_attempt, refused for the key <review>:<pin>:<reservations part>."""
-        key = ('b' * 64) + ':' + ('a' * 64) + ':' + reservations_part
+        key = ('b' * 64) + ':' + pin + ':' + reservations_part
         self.set_state(v16_admit_attempt={'key': key, 'attempts': 1, 'final': True, 'kind': 'refused', 'code': 'no_reservations'})
 
     def reenter(self):
@@ -709,7 +969,7 @@ class ReentryTests(GateCase):
         self.assertTrue(self.reenter())
         state = self.state()
         self.assertNotIn('operational_hold', state)
-        self.assertEqual(state['v16_reentry'], {'reservations': 'absent', 'at': ap.iso(self.now)})
+        self.assertEqual(state['v16_reentry'], {'reservations': 'absent', 'pin': 'a' * 64, 'at': ap.iso(self.now), 'result': 'cleared'})
         self.assertIn('the reservations changed', (self.job / 'STATE.md').read_text())
 
     def test_the_hold_coming_back_for_the_same_reservations_does_not_loop(self):
@@ -764,6 +1024,11 @@ class ReentryTests(GateCase):
                  'no hold': lambda: self.set_state(operational_hold=None),
                  'admitted': lambda: self.set_state(v16_profile_admission={'verdict': 'ACCEPTED'}),
                  'image only': lambda: self.row.update(benchmarks=['imagejevbench']),
+                 'mixed order': lambda: self.row.update(benchmarks=['jevbench', 'imagejevbench']),
+                 'mixed order, other sequence': lambda: self.row.update(benchmarks=['imagejevbench', 'jevbench']),
+                 'two jevbench entries': lambda: self.row.update(benchmarks=['jevbench', 'jevbench']),
+                 'no benchmarks': lambda: self.row.update(benchmarks=None),
+                 'empty benchmarks': lambda: self.row.update(benchmarks=[]),
                  'attempts used up': lambda: self.row.update(evaluation_attempts=ap.MAX_EVALUATION_ATTEMPTS),
                  'attempts not a number': lambda: self.row.update(evaluation_attempts='3'),
                  'attempts a bool': lambda: self.row.update(evaluation_attempts=True)}
@@ -809,6 +1074,156 @@ class ReentryTests(GateCase):
         state = self.state()
         self.assertNotIn('evaluation_exhausted', state)
         self.assertNotIn('stage_attempts', state)  # the re-entry consumes no budget itself
+
+    # --- MUST-1 ------------------------------------------------------------------------------------------------------
+    def test_an_order_with_a_native_owner_record_never_re_enters_even_when_the_owner_is_gone(self):
+        # custody refuses it (not_native_owner) whether the owner is live or not: a re-entry would only repeat the refusal, and
+        # a draw that newly qualifies would cost a source review first
+        self.reserve()  # a qualifying draw and reservations that differ from "no attempt": everything else says "re-enter"
+        for owner in ({'job': 'jevbench-native-owner-x', 'starts': 1, 'start_ok': True}, {'job': 'x'}, 'x', 1, True):
+            with self.subTest(owner):
+                self.set_state(native_owner=owner, v16_reentry=None)
+                self.hold()
+                with mock.patch.object(ap, 'native_owner_live', return_value=False), \
+                        mock.patch.object(ap, 'hold_owner_live', return_value=False):
+                    self.assertFalse(self.reenter())
+                state = self.state()
+                self.assertIn('operational_hold', state)
+                self.assertFalse(state.get('v16_reentry'))
+                self.assertIn('native_owner', state)
+        for empty in (None, {}, '', 0):
+            with self.subTest(f'falsy {empty!r}'):
+                self.set_state(native_owner=empty, v16_reentry=None)
+                self.hold()
+                self.assertTrue(self.reenter())
+
+    # --- SHOULD-1 (a): a recorded draw that custody replaced -----------------------------------------------------------
+    def record_a(self):
+        self.reserve()
+        ap.write_review_prompt(self.row, self.job, None)
+        self.assertEqual(self.state()['v16_gate_draw']['release'], 'draw-a')
+        self.hold()
+
+    def test_a_recorded_draw_that_custody_closed_for_another_is_dropped_and_selected_again(self):
+        self.record_a()
+        self.reserve({'draw-a': self.draw('a', status='closed'), 'draw-b': self.draw('b')})
+        self.assertTrue(self.reenter())
+        state = self.state()
+        self.assertNotIn('v16_gate_draw', state)
+        self.assertNotIn('operational_hold', state)
+        self.assertEqual(state['v16_reentry']['result'], 'cleared')
+        self.assertIn('the recorded draw draw-a is dropped and selected again', (self.job / 'STATE.md').read_text())
+        self.assertDrawPins('b')  # what the restarted evaluation selects (the gate on draw-a's pins is stale now)
+        ap.write_review_prompt(self.row, self.job)  # ... and records at review-prompt time
+        self.assertEqual(self.state()['v16_gate_draw']['release'], 'draw-b')
+
+    def test_a_recorded_draw_whose_files_are_gone_is_replaced_when_another_draw_qualifies(self):
+        self.record_a()
+        for key in ('measurement', 'scoring', 'freeze', 'id_map'):
+            Path(self.refs['a'][key]['path']).unlink()
+        self.reserve({'draw-a': self.draw('a', status='closed'), 'draw-b': self.draw('b')})
+        self.assertTrue(self.reenter())
+        self.assertNotIn('v16_gate_draw', self.state())
+        self.assertDrawPins('b')
+
+    def test_a_draw_rewritten_under_the_same_release_name_is_a_different_draw(self):
+        self.record_a()
+        refs = make_refs(self.root, 'a2', 'draw-a')  # custody re-pins draw-a with other files
+        self.reserve({'draw-a': self.draw('a', references=refs, **custody_fields(refs))})
+        self.assertTrue(self.reenter())
+        self.assertNotIn('v16_gate_draw', self.state())
+        self.assertEqual(ap._select_v16_gate_draw(self.row, self.state())[0]['measurement'], refs['measurement'])
+
+    def test_a_malformed_record_is_replaced_when_a_draw_qualifies(self):
+        self.record_a()
+        for record in ('draw-a', {}, {'release': 'draw-a'}, [], 5):
+            with self.subTest(record):
+                self.set_state(v16_gate_draw=record, v16_reentry=None)
+                self.hold()
+                self.assertTrue(self.reenter())
+                self.assertNotIn('v16_gate_draw', self.state())
+
+    def test_a_still_current_recorded_draw_is_kept_and_custody_is_asked_again(self):
+        self.record_a()
+        before = self.state()['v16_gate_draw']
+        self.reserve({'draw-a': self.draw('a', max_uses=2)})  # custody raised max_uses: same draw, same files
+        self.assertTrue(self.reenter())
+        self.assertEqual(self.state()['v16_gate_draw'], before)
+        self.assertNotIn('operational_hold', self.state())
+        self.assertEqual(self.state()['v16_reentry']['result'], 'cleared')
+
+    def test_without_a_replacement_the_hold_stays_and_is_examined_once_per_reservations_sha(self):
+        self.record_a()
+        before = self.state()['v16_gate_draw']
+        self.reserve({'draw-a': self.draw('a', status='closed')})  # custody closed it and opened nothing
+        self.assertFalse(self.reenter())
+        state = self.state()
+        self.assertIn('operational_hold', state)
+        self.assertEqual(state['v16_gate_draw'], before)
+        self.assertEqual(state['v16_reentry'], {'reservations': sha(self.reservations), 'pin': 'a' * 64, 'at': ap.iso(self.now),
+                                                'result': 'kept'})
+        self.assertIn('hold unchanged', (self.job / 'STATE.md').read_text())
+        with mock.patch.object(ap, '_select_v16_gate_draw', side_effect=AssertionError('examined twice')):
+            self.assertFalse(self.reenter())  # the same reservations are not looked at again
+        self.reserve({'draw-a': self.draw('a', status='closed'), 'draw-b': self.draw('b')})  # a new sha: now there is a draw
+        self.assertTrue(self.reenter())
+        self.assertNotIn('v16_gate_draw', self.state())
+
+    def test_a_replacement_the_review_budget_cannot_pay_for_keeps_the_hold_and_the_record(self):
+        self.record_a()
+        before = self.state()['v16_gate_draw']
+        self.set_state(stage_attempts={'source_review': ap.MAX_SOURCE_REVIEW_ATTEMPTS - 1})  # one attempt left: the gate needs two
+        self.reserve({'draw-a': self.draw('a', status='closed'), 'draw-b': self.draw('b')})
+        self.assertFalse(self.reenter())
+        state = self.state()
+        self.assertIn('operational_hold', state)
+        self.assertEqual(state['v16_gate_draw'], before)
+        self.assertEqual(state['v16_reentry']['result'], 'kept')
+        self.assertNotIn('evaluation_exhausted', state)
+        self.set_state(stage_attempts={'source_review': ap.MAX_SOURCE_REVIEW_ATTEMPTS - 2}, v16_reentry=None)  # two left: enough
+        self.assertTrue(self.reenter())
+        self.assertNotIn('v16_gate_draw', self.state())
+
+    def test_a_still_current_recorded_draw_re_enters_even_when_the_review_budget_is_used_up(self):
+        # no new review is needed for a draw whose gate already passed: only custody is asked again, so the budget is irrelevant
+        self.record_a()
+        before = self.state()['v16_gate_draw']
+        self.set_state(stage_attempts={'source_review': ap.MAX_SOURCE_REVIEW_ATTEMPTS})
+        self.reserve({'draw-a': self.draw('a', max_uses=2)})
+        self.assertTrue(self.reenter())
+        self.assertEqual(self.state()['v16_gate_draw'], before)
+
+    def test_the_staleness_question_is_asked_without_the_budget_but_a_new_selection_is_not(self):
+        self.reserve()
+        self.set_state(stage_attempts={'source_review': ap.MAX_SOURCE_REVIEW_ATTEMPTS})
+        self.assertIsNone(ap._select_v16_gate_draw(self.row, self.state()))
+        self.assertEqual(ap._select_v16_gate_draw(self.row, self.state(), budget=False)[0]['release'], 'draw-a')
+
+    def test_a_recorded_draw_with_no_reservation_change_is_not_examined_at_all(self):
+        self.record_a()
+        self.attempt(sha(self.reservations))
+        with mock.patch.object(ap, '_select_v16_gate_draw', side_effect=AssertionError('examined')):
+            self.assertFalse(self.reenter())
+
+    # --- NIT-3: the pin part of the key ------------------------------------------------------------------------------
+    def test_a_changed_pin_re_enters_even_when_the_reservations_did_not_change(self):
+        self.reserve()
+        current = sha(self.reservations)
+        self.attempt(current, pin='f' * 64)  # refused under an older custody tool; V16_ADMIT_SHA256 is now 'a' * 64
+        self.assertTrue(self.reenter())
+        self.assertEqual(self.state()['v16_reentry']['pin'], 'a' * 64)
+        self.hold()
+        self.assertFalse(self.reenter(), 'the same (pin, reservations) pair is re-entered once')
+        with mock.patch.object(ap, 'V16_ADMIT_SHA256', 'b' * 64):  # custody ships tool v6
+            self.assertTrue(self.reenter())
+            self.assertEqual(self.state()['v16_reentry']['pin'], 'b' * 64)
+            self.hold()
+            self.assertFalse(self.reenter())
+
+    def test_the_same_pin_and_reservations_as_the_last_attempt_do_not_re_enter(self):
+        self.reserve()
+        self.attempt(sha(self.reservations), pin='a' * 64)
+        self.assertFalse(self.reenter())
 
     def test_a_draw_that_cannot_be_reviewed_for_lack_of_budget_is_simply_not_pinned_after_re_entry(self):
         self.set_state(stage_attempts={'source_review': ap.MAX_SOURCE_REVIEW_ATTEMPTS})
