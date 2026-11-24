@@ -2391,7 +2391,7 @@ def ensure_native_owner(row: dict[str, Any], state: dict[str, Any], effects: Eff
     existing = operational.get("owner") if isinstance(operational, dict) else None
     if existing not in (None, name) and owner_job_live(existing, rid, now):
         return quiet  # an owner job started by hand already covers this order; never replace it
-    if isinstance(operational, dict) and existing != name:
+    if isinstance(operational, dict) and existing != name and effects.dry_run is not True:
         operational["owner"] = name
         save_state(state)
     if hold_owner_live(name, rid, now) or native_owner_starting(state, now):
@@ -2400,6 +2400,10 @@ def ensure_native_owner(row: dict[str, Any], state: dict[str, Any], effects: Eff
     starts = int(record.get("starts") or 0)
     if starts >= native_owner.MAX_STARTS:
         return False
+    if effects.dry_run is True:
+        # CR-859: a dry-run cycle must not write the owner or a start_ok record into the real state file;
+        # that record would make the next real pass treat the owner as "starting" and start nothing.
+        return effects.start_unit(native_owner.UNIT.format(rid)) and deadline_for(row) - now > OWNED_HOLD_DEADLINE_MARGIN
     record = {"job": name, "reason": reason, "deadline": iso(deadline_for(row)),
               "requested_at": iso(now), "starts": starts + 1, "start_ok": False}
     state["native_owner"] = record
