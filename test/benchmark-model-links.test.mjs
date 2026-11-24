@@ -35,7 +35,8 @@ test('every internal link on the benchmark pages opens a page or an element that
         if (!checked.has(path)) checked.set(path, (await fetch(`${base}${path}`, { redirect: 'follow' })).status);
         if (checked.get(path) !== 200) broken.push(`${page} → ${href} (${checked.get(path)})`);
       }
-      if (page === '/image-jev-bench') imageSystemDetails = new Set(anchors.filter((href) => /^\/image-jev-bench\/[^/?#]+$/.test(href))).size;
+      // CR-850: /image-jev-bench/v0.4 is a separate-scale board, not a system detail page (the crawl above still requires it to open).
+      if (page === '/image-jev-bench') imageSystemDetails = new Set(anchors.filter((href) => /^\/image-jev-bench\/[^/?#]+$/.test(href) && !/^\/image-jev-bench\/v\d/.test(href))).size;
     }
     assert.deepEqual(broken, [], `broken links:\n${broken.join('\n')}`);
     assert.ok(modelLinks >= 50, `the crawl must see the model links (found ${modelLinks})`);
