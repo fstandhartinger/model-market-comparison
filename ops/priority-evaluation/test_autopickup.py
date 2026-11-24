@@ -5344,7 +5344,8 @@ class AutoAdmitHookSchedulerTests(DatabaseTestCase):
                          ("official_method_retired_requires_admission", False))
         started = len(self.fx.started)
         ap.manage_evaluation(row(self.rid), ap.load_state(self.rid), self.fx, datetime.now(timezone.utc))
-        self.assertEqual(len(self.fx.started), started)  # a non-transient hold escalates; the scheduler restarts nothing
+        # a non-transient hold escalates; the scheduler restarts nothing but (CR-853) starts the native owner job
+        self.assertEqual(self.fx.started[started:], [f"jevbench-native-owner@{self.rid}.service"])
         self.assertIsNotNone(self.hold())
         state = ap.load_state(self.rid)  # a human clears the hold and the order is evaluated again
         state.pop("operational_hold")
@@ -5376,7 +5377,7 @@ class AutoAdmitHookSchedulerTests(DatabaseTestCase):
             self.assertEqual(len(self.custody_calls()), 3)
             started = len(self.fx.started)
             ap.manage_evaluation(row(self.rid), ap.load_state(self.rid), self.fx, now + timedelta(hours=1))
-            self.assertEqual(len(self.fx.started), started)
+            self.assertEqual(self.fx.started[started:], [f"jevbench-native-owner@{self.rid}.service"])  # CR-853: only the native owner job
             state = ap.load_state(self.rid)
             state.pop("operational_hold")
             ap.save_state(state)
@@ -5392,7 +5393,7 @@ class AutoAdmitHookSchedulerTests(DatabaseTestCase):
         self.custody(exit_code=0)  # the pin is set afterwards
         started = len(self.fx.started)
         ap.manage_evaluation(row(self.rid), ap.load_state(self.rid), self.fx, datetime.now(timezone.utc) + timedelta(hours=2))
-        self.assertEqual(len(self.fx.started), started)
+        self.assertEqual(self.fx.started[started:], [f"jevbench-native-owner@{self.rid}.service"])  # CR-853: the native owner job, not the evaluation
         self.assertEqual(self.custody_calls(), [])
         self.assertEqual(self.hold()["reason"], "official_method_retired_requires_admission")
 

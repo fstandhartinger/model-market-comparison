@@ -2282,7 +2282,9 @@ def operational_escalate(row: dict[str, Any], state: dict[str, Any], effects: Ef
         if not step_done(state, "native_owner_handoff"):
             effects.last_board_entry = None
             what = ("the runner generator found no supported runtime" if reason not in native_owner.FAMILY_HOLD_REASONS
-                    else "the order matches a reviewed runtime family but has no host v1.6 profile admission")
+                    else "the order matches a reviewed runtime family but has no host v1.6 profile admission"
+                    if native_owner.single_family(row)
+                    else "the order matches no single reviewed runtime family and has no host v1.6 profile admission")
             if effects.board(f"Fast-lane order {order_ref(rid)}: {what} "
                              f"({reason}). The pickup started native owner job ~/jobs/{record['job']} automatically "
                              f"(INCIDENTS #25). Payment deadline {deadline_for(row).isoformat()} continues; customer "
@@ -2325,10 +2327,10 @@ def native_owner_due(rid: str, reason: str, row: dict[str, Any] | None = None,
             # A live native owner of this order keeps the hold quiet whatever the admission state: the v1.6 admission
             # can be written a cycle or more before the hold is cleared, and the owner is still working the order.
             return True
-        # Starting a NEW owner needs exactly one registry family (the match the hint uses), no v1.6 admission, and no
-        # scoped native top-up (manage_evaluation reaches this hold for such a state before its delivered/status checks).
-        return "v16_profile_admission" not in state and "scoped_native_topup" not in state \
-            and native_owner.single_family(row)
+        # Starting a NEW owner needs no v1.6 admission and no scoped native top-up (manage_evaluation reaches this hold
+        # for such a state before its delivered/status checks). CR-853: any family match, also none or several (order
+        # d57b054a, AirDecision, 24 Nov 2026: no family matched, nobody owned the hold, an urgent card after 15 min).
+        return "v16_profile_admission" not in state and "scoped_native_topup" not in state
     if reason != "unsupported_order_runtime":
         return False
     try:

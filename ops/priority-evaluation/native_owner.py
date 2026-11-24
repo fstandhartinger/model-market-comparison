@@ -38,8 +38,9 @@ OWNER_PREFIX = "fastlane-native-"
 UNIT = "jevbench-native-owner@{}.service"
 # Hold reasons that mean "no automatic runtime exists for this model" rather than a transient fault.
 REASONS = frozenset({"unsupported_measurement_backend"})
-# Hold reasons that start the owner only for an order of exactly one registered family without a host v16 admission
-# (CR-841): the generator hint can now make such an order skip the unsupported route, so this hold is its owner trigger.
+# Hold reasons that start the owner for an order without a host v16 admission (CR-841 for one registered family; CR-853
+# also for no or several families): the generator hint can make an order skip the unsupported route, so this hold is its
+# owner trigger.
 FAMILY_HOLD_REASONS = frozenset({"official_method_retired_requires_admission"})
 START_GRACE_MINUTES = 20
 MAX_STARTS = 2
@@ -416,7 +417,9 @@ def prompt_text(rid: str, order: dict[str, Any], *, reason: str, deadline: str, 
     entry = match_supplement(order)
     why = ("its runner generator found no supported runtime"
            if reason not in FAMILY_HOLD_REASONS else
-           "the order matches a reviewed runtime family but is held without the host's v1.6 profile admission "
+           ("the order matches a reviewed runtime family" if single_family(order) else
+            "the order matches no single reviewed runtime family (build or reuse its runtime as for an unsupported one)")
+           + " but is held without the host's v1.6 profile admission "
            "(the replacement test set is not approved for it; never fall back to the retired v1.5 profile)")
     if entry:
         supplement = (f"- Matching reviewed supplement: `{entry['family']}` "
