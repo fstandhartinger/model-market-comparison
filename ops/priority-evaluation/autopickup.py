@@ -1511,14 +1511,21 @@ def source_review_pins(job_dir: Path) -> dict[str, Any]:
         raise PickupError("source review requires the host order benchmark list")
     try:
         import v16_adoption
-        package = v16_adoption.selected(job_dir, load_state(request_id(job_dir.name)))
+        state = load_state(request_id(job_dir.name))
+        package = v16_adoption.selected(job_dir, state)
         if package is not None:
             if order["benchmarks"] != ["jevbench"]:
                 raise ValueError("v16 admission requires text-only order")
             _, pins["official_measurement"], pins["official_methods"] = package
         else:
-            pins["official_methods"] = official_scoring.pins(order["benchmarks"])
-            pins["official_measurement"] = measurement_dispatch.pins()
+            # CR-857: a reserved draw's v1.6 profiles instead of the retired ones, only when every condition of the draw gate
+            # holds (see _select_v16_gate_draw); None (also: the v16 pin is empty) = exactly today's pins, with no extra I/O.
+            draw_pins = _v16_gate_pins(order, state)
+            if draw_pins is not None:
+                pins["official_methods"], pins["official_measurement"] = draw_pins
+            else:
+                pins["official_methods"] = official_scoring.pins(order["benchmarks"])
+                pins["official_measurement"] = measurement_dispatch.pins()
     except (OSError, ValueError, KeyError) as exc:
         raise PickupError("official scoring profile is unavailable or changed") from exc
     trusted = job_dir / "trusted-runner"
@@ -1553,10 +1560,13 @@ def source_review_pins(job_dir: Path) -> dict[str, Any]:
     return pins
 
 
-def write_review_prompt(row: dict[str, Any], job_dir: Path) -> dict[str, Any]:
+def write_review_prompt(row: dict[str, Any], job_dir: Path, state: dict[str, Any] | None = None) -> dict[str, Any]:
     review_dir = job_dir / "review"
     review_dir.mkdir(mode=0o700, parents=True, exist_ok=True)
     os.chmod(review_dir, 0o700)
+    # CR-857: no-op unless the v16 pin is on and exactly one reserved draw qualifies. The caller's own state dict is passed in
+    # when it has one: evaluate() saves that dict again later, which would erase a record made on a separate copy.
+    record_v16_gate_draw(job_dir, row, state)
     pins = source_review_pins(job_dir)
     values = {"ORDER_REF": order_ref(request_id(row.get("id")),),
               "REVIEW_REQUEST_JSON": review_request_json(row),
@@ -2490,6 +2500,8 @@ def manage_evaluation(row: dict[str, Any], state: dict[str, Any], effects: Effec
                 else:
                     operational_escalate(row, state, effects, now, reason, exhausted=True)
                     return
+            elif not effects.dry_run and v16_reentry(row, state, now):
+                pass  # CR-857: custody's reservations changed since this order's last v16-admit attempt; the hold is cleared
             else:
                 operational_escalate(row, state, effects, now, reason, exhausted=False)
                 return
@@ -2698,7 +2710,10 @@ def _jev_v15_composite(axes: dict[str, Any], option: str) -> float:
 #  * Exit-code contract for custody's v16-admit command (what the pickup runs: `<V16_ADMIT_PATH> <order id> --basis <text>`):
 #        exit 0       = admitted. v16_profile_admission MUST be in the order's state file when the command has exited
 #                       (otherwise the pickup records `refused`: "exit 0 but no admission was recorded").
-#        exit 1       = refused (custody said no and routed the order to #22). FINAL for this (review sha, pin sha).
+#        exit 1       = refused (custody said no and routed the order to #22). FINAL for this attempt key (see below). custody's
+#                       stdout is ONE symbolic token (no_reservations, one_reserved_draw, draw_uses_left,
+#                       draw_not_shared_with_open_order, reservation_expiry_invalid, reservation_schema, ...): when it matches
+#                       ^[a-z0-9_]{1,64}$ it is recorded as state v16_admit_attempt.code, else the code is 'unparsed'.
 #        anything else = could not decide, retried: any other exit code, a negative code (death by signal), 126/127 (not
 #                       executable / command not found), a timeout, an OSError at start. Retried on a later scheduler pass
 #                       (transient hold `v16_admit_retry`), at most V16_ADMIT_MAX_ATTEMPTS attempts in total, then today's hold.
@@ -2709,14 +2724,35 @@ def _jev_v15_composite(axes: dict[str, Any], option: str) -> float:
 #    (SIGKILL), so nothing it started may write the state afterwards; a child that calls setsid() itself escapes that.
 #    (The group id stays reserved while any member lives; once the group is empty the kill finds nothing. Pids are handed
 #    out cyclically, so the number cannot come back within the microseconds between the exit and the kill.)
-#  * Attempts are counted per (review sha, pin sha); a new review sha or a new pin starts again at 0. A pin or file problem
-#    is not an attempt (nothing ran).
+#  * Attempt key (CR-857) = "<review sha>:<V16_ADMIT_SHA256>:<sha256 of custody's RESERVATIONS.json, or 'absent'>". Attempts
+#    are counted per key; a new review sha, a new pin or CHANGED RESERVATIONS start again at 0 (an order refused before any
+#    reservation existed is not locked out for good). The file is read with the same rules as a pinned file (own, regular,
+#    no symlink, at most 1 MiB) and, like custody's tool, must not be group/other-accessible. A pin or file problem (also an
+#    unusable RESERVATIONS.json: foreign owner, symlink, mode, size) is not an attempt (nothing ran): one note, hold unchanged.
+#    custody replaces the file by atomic rename only, so a read sees the old or the new bytes, never a mix.
 #  * Orders in status 'review_passed' (set by `jevbench-review pass`) are NOT admitted by this hook: fastlane-admit's gate
 #    wants status 'paid', and the hook only calls that gate. Conservative on purpose and identical to the human
 #    `fastlane-admit`; such an order keeps today's behaviour.
-#  * Orders that already sit under `official_method_retired_requires_admission` from BEFORE the pins were set are NOT
-#    re-entered automatically: that hold is non-transient and nothing clears it. Setting the pin later does nothing for
-#    them; only a human clearing the hold (or a new source review) sends such an order through dispatch_measurement again.
+#  * Draw-pinning review gate (CR-857). custody's tool refuses unless the review gate already pins the reserved draw's v1.6
+#    profiles (gate_pins_draw_measurement / gate_pins_draw_scoring), which the retired runtime pins never do.
+#    source_review_pins therefore pins the draw's profiles (v16_profiles.measurement_pins and official_scoring_v16.pins on the
+#    draw's own manifests, after each of its four reference files hashed to its pin) in place of the retired ones, ONLY when
+#    all hold: the v16 pin is on; no v16_profile_admission; benchmarks == ["jevbench"]; a live, paid, unrefunded, undelivered
+#    order (what the hook can act on); at least V16_DRAW_MIN_REVIEW_BUDGET unused source-review attempts; exactly one
+#    admission-registry entry for the order; exactly one draw in RESERVATIONS.json that is open, unexpired and lists the order
+#    or maps the entry's family to its module (custody's selection and schema rules). Any doubt = today's retired pins.
+#    The chosen draw is recorded in state v16_gate_draw {release, measurement, scoring, chosen_at} when the review prompt is
+#    written; from then on the RECORDED draw is used (re-verified by sha, never re-selected), so later reservation edits
+#    (uses consumed, expiry) do not invalidate a passed gate; if its files no longer verify that is a PickupError, as for any
+#    changed official profile. A gate that passed on the retired pins while a draw now qualifies sees changed pins:
+#    validate_review_gate fails and evaluate() runs a NEW source review (the existing pin-change path, no new mechanism).
+#  * Re-entry (CR-857). `official_method_retired_requires_admission` is non-transient and nothing cleared it. With the v16 pin
+#    on, manage_evaluation now clears it once when the reservations (sha or 'absent') differ from the reservations part of
+#    the key of the order's last v16_admit_attempt (no attempt = differs), at most once per (order, reservations sha)
+#    (state v16_reentry), never when evaluation_attempts is used up and never while an owner job is live on the order. The
+#    restarted evaluation goes through the review gate above and dispatch_measurement. Nothing is ever marked failed by this:
+#    a refusal brings the same hold back (its card was sent once already) and a draw whose review the source-review budget
+#    cannot afford is simply not pinned, so no review starts.
 #  * A Failed family admission is recorded like a Refused one (state `auto_admit.key`), so it is not retried for the same
 #    review; a new review sha or a human re-runs it (conservative on purpose).
 #  * Pins. FASTLANE_ADMIT_SHA256 and V16_ADMIT_SHA256 empty = off. fastlane-admit is read once from an own, non-symlink,
@@ -2734,12 +2770,22 @@ FASTLANE_ADMIT_SHA256 = "489a2522829a8140ebd893d715bd880551fa3debf18c0eb7ebd390c
 PINNED_FILE_MAX_BYTES = 1 << 20
 # Custody's v16-admit command: an ABSOLUTE path and its sha256. Empty = the step is disabled. Custody's tool is final
 # (#78576: /home/flori/.local/share/jev-custody/v16-admit, sha256 b1dfc787...), but it refuses every order until a custody
-# reservation exists and the review gate pins a reserved draw's v1.6 profiles; a refusal is final per (review sha, pin sha),
-# so the pin is set only together with that change (critic S1, 23 Nov).
+# reservation exists and the review gate pins a reserved draw's v1.6 profiles; a refusal is final per attempt key (review sha,
+# pin sha, reservations sha). CR-857 added the reservations part and the draw-pinning gate; the pin stays EMPTY until custody
+# has posted the reserved draw (not before 27 Nov), and is then set in its own commit (critic S1, 23 Nov).
 V16_ADMIT_PATH = ""
 V16_ADMIT_SHA256 = ""
 V16_ADMIT_TIMEOUT_S = 180  # custody tool: lock waits 20/60/20 s + two derivations (critic S2, 23 Nov)
 V16_ADMIT_MAX_ATTEMPTS = 3
+# Custody's reservation list (CR-857): written by custody only, always by atomic rename. Read by the pickup for the attempt key
+# (its sha256, or 'absent') and by the draw-pinning review gate. The path is the one custody's v16-admit reads.
+V16_RESERVATIONS_PATH = HOME / ".local" / "state" / "jev-custody" / "v16-admit" / "RESERVATIONS.json"
+# A NEW draw selection (review gate or re-entry) needs at least this many unused source-review attempts: one for the review
+# itself and one spare, so that a single crashed review cannot burn the budget and mark an order exhausted (CR-857).
+V16_DRAW_MIN_REVIEW_BUDGET = 2
+V16_CODE_RE = re.compile(r"^[a-z0-9_]{1,64}$")
+V16_RELEASE_RE = re.compile(r"^[A-Za-z0-9._-]{1,80}$")
+V16_DRAW_REFERENCES = ("measurement", "scoring", "freeze", "id_map")  # custody's draw_reference_inventory
 AUTO_ADMIT_ACTOR = "fastlane-autopickup"
 
 
@@ -2750,22 +2796,29 @@ def _hook_note(job_dir: Path, text: str) -> None:
         pass
 
 
-def _pinned_bytes(path_text: str, pin: str, *, executable: bool) -> tuple[bytes | None, str]:
+def _read_safe_file(path_text: str, *, executable: bool = False, private: bool = False,
+                    missing_ok: bool = False) -> tuple[bytes | None, str]:
     """(content, '') when `path_text` is an absolute path to an own, regular, non-symlink file that is not group/other-writable
-    (and owner-executable when asked) and whose bytes hash to `pin`; else (None, reason). The content is read from the very
-    descriptor that was checked."""
+    (`private`: not group/other-accessible at all; `executable`: owner-executable) and at most PINNED_FILE_MAX_BYTES long;
+    else (None, reason). `missing_ok`: a file that does not exist is (None, '') (the caller treats that as 'absent'); a
+    symlink, a directory or any other problem still is a reason. The content is read from the very descriptor that was
+    checked (O_NONBLOCK so a FIFO planted there cannot hang the pickup; it fails the regular-file check instead)."""
     import stat as stat_module
     path = Path(path_text)
     if not path.is_absolute():
         return None, "path is not absolute"
     try:
-        fd = os.open(path, os.O_RDONLY | os.O_NOFOLLOW | os.O_CLOEXEC)
+        fd = os.open(path, os.O_RDONLY | os.O_NOFOLLOW | os.O_CLOEXEC | getattr(os, "O_NONBLOCK", 0))
+    except FileNotFoundError:
+        return (None, "") if missing_ok else (None, "file is missing, a symlink or unreadable")
     except OSError:
         return None, "file is missing, a symlink or unreadable"
     with os.fdopen(fd, "rb") as handle:
         info = os.fstat(handle.fileno())
-        if not stat_module.S_ISREG(info.st_mode) or info.st_uid != os.getuid() or info.st_mode & 0o022 \
-                or (executable and not info.st_mode & 0o100):
+        if not stat_module.S_ISREG(info.st_mode) or info.st_uid != os.getuid() \
+                or info.st_mode & (0o077 if private else 0o022) or (executable and not info.st_mode & 0o100):
+            if private:
+                return None, "file is not an own, private regular file"
             return None, "file is not an own, non-writable regular file" + (" with the owner execute bit" if executable else "")
         try:
             data = handle.read(PINNED_FILE_MAX_BYTES + 1)
@@ -2773,6 +2826,16 @@ def _pinned_bytes(path_text: str, pin: str, *, executable: bool) -> tuple[bytes 
             return None, "file is unreadable"
     if len(data) > PINNED_FILE_MAX_BYTES:
         return None, "file is larger than the allowed size"
+    return data, ""
+
+
+def _pinned_bytes(path_text: str, pin: str, *, executable: bool) -> tuple[bytes | None, str]:
+    """(content, '') when `path_text` is an absolute path to an own, regular, non-symlink file that is not group/other-writable
+    (and owner-executable when asked) and whose bytes hash to `pin`; else (None, reason). The content is read from the very
+    descriptor that was checked."""
+    data, problem = _read_safe_file(path_text, executable=executable)
+    if data is None:
+        return None, problem
     if hashlib.sha256(data).hexdigest() != pin:
         return None, "sha256 differs from the pin"
     return data, ""
@@ -2790,6 +2853,215 @@ def _load_fastlane_admit() -> tuple[Any, str]:
     module.__file__ = str(FASTLANE_ADMIT_PATH)
     exec(compile(data, str(FASTLANE_ADMIT_PATH), "exec"), module.__dict__)  # the verified bytes, not a second read
     return module, ""
+
+
+# --- CR-857: reservation-aware attempt key, draw-pinning review gate, re-entry ----------------------------------------------
+# Custody's v16-admit refuses unless (a) a reservation exists and (b) the review gate already pins that reserved draw's v1.6
+# profiles. Both are read-only mirrors of custody's own selection here; the pickup never decides an admission itself.
+
+def _v16_reservations() -> tuple[bytes | None, str, str]:
+    """(bytes, key part, problem) of custody's RESERVATIONS.json exactly as v16-admit will read it. No file = (None, 'absent', '').
+    An unsafe or unreadable file (foreign owner, symlink, group/other-accessible, too large, ...) = (None, '', reason): neither
+    an attempt key nor a gate decision can be made from it. custody's tool demands mode 0600 too, so a mode that is fixed
+    later (same bytes, same sha) must not have been counted as an attempt: hence `private`."""
+    data, problem = _read_safe_file(str(V16_RESERVATIONS_PATH), private=True, missing_ok=True)
+    if problem:
+        return None, "", problem
+    if data is None:
+        return None, "absent", ""
+    return data, hashlib.sha256(data).hexdigest(), ""
+
+
+def _v16_utc(value: object) -> datetime | None:
+    try:
+        return datetime.strptime(value, "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=timezone.utc)  # type: ignore[arg-type]
+    except (TypeError, ValueError):
+        return None
+
+
+def _v16_pin(value: object) -> dict[str, str]:
+    """{path, sha256} of a reference pin: an absolute path and a lower-case sha256. ValueError otherwise."""
+    if not isinstance(value, dict) or not isinstance(value.get("path"), str) or not Path(value["path"]).is_absolute() \
+            or not isinstance(value.get("sha256"), str) or not SHA64_RE.fullmatch(value["sha256"]):
+        raise ValueError("invalid v16 draw reference pin")
+    return {"path": value["path"], "sha256": value["sha256"]}
+
+
+def _v16_draw_pins(measurement: dict[str, str], scoring: dict[str, str]) -> tuple[dict[str, Any], dict[str, Any]]:
+    """(official_methods, official_measurement) derived by the RUNTIME from a draw's manifests: the same functions and checks
+    v16_profiles.accepted() runs on an admission that names these references, so a gate carrying these pins passes there.
+    Raises (ValueError, OSError, KeyError, TypeError, OperationalHold, ...) on any problem."""
+    import official_scoring_v16
+    import v16_profiles
+    for ref in (measurement, scoring):
+        if v16_profiles._sha(ref["path"]) != ref["sha256"]:
+            raise ValueError("v16 draw reference changed")
+    measured = v16_profiles.measurement_pins(measurement["path"])
+    scored = official_scoring_v16.pins(["jevbench"], scoring["path"])
+    profile = measured["profile"]
+    if profile["code"]["pod_drivers/pod_driver.py"]["sha256"] \
+            != v16_profiles._sha(Path(v16_profiles.__file__).parent / "pod_drivers/pod_driver_v16.py"):
+        raise ValueError("v16 profile requires the installed first-party v16 driver")
+    if profile.get("method") != "jevbench-v16" or profile["inputs"]["jevbench"]["count"] != 1500 \
+            or scored["profiles"]["jevbench"].get("version_prefix") != "v1.6.":
+        raise ValueError("mixed v16 method profiles")
+    return scored, measured
+
+
+def _v16_budget_left(state: dict[str, Any]) -> bool:
+    """True when at least V16_DRAW_MIN_REVIEW_BUDGET source-review attempts are unused (a bad counter = no)."""
+    attempts = state.get("stage_attempts", {})
+    if not isinstance(attempts, dict):
+        return False
+    consumed = attempts.get("source_review", 0)
+    return isinstance(consumed, int) and not isinstance(consumed, bool) and consumed >= 0 \
+        and MAX_SOURCE_REVIEW_ATTEMPTS - consumed >= V16_DRAW_MIN_REVIEW_BUDGET
+
+
+def _select_v16_gate_draw(order: dict[str, Any], state: dict[str, Any]) -> tuple[dict[str, Any], dict[str, Any], dict[str, Any]] | None:
+    """custody's draw selection for ONE order, reproduced read-only: (record, official_methods, official_measurement), or None
+    on ANY doubt (then the gate keeps today's retired pins). Needs ALL of: the v16 pin is on; no admission yet; a text-only
+    JevBench order that is still a live, paid, unrefunded, undelivered one (what the hook can act on); source-review budget
+    left; exactly one entry for the order in the admission registry; and exactly one open, unexpired draw in RESERVATIONS.json
+    that lists the order or whose families map the order's family to its module (custody's selection, same schema rules)
+    and whose four reference files still hash to their pins. The pins are then the runtime's own derivation from that
+    draw. With the pin empty nothing is read."""
+    if not (V16_ADMIT_PATH and V16_ADMIT_SHA256) or "v16_profile_admission" in state or order.get("benchmarks") != ["jevbench"]:
+        return None
+    if order.get("status") != "paid" or order.get("stripe_mode") != "live" or order.get("synthetic_test") is not False \
+            or order.get("paid_at") is None or order.get("result_delivered_at") is not None \
+            or order.get("refund_id") is not None or order.get("refunded_at") is not None or order.get("refund_status") is not None:
+        return None
+    if not _v16_budget_left(state):
+        return None
+    try:
+        rid = str(order.get("id") or "")
+        import order_admission_registry
+        entries = [entry for entry in order_admission_registry.load()["entries"] if entry.get("order_id") == rid]
+        if len(entries) != 1 or not re.fullmatch(r"[a-z0-9_]{1,60}", entries[0]["family"]) \
+                or not re.fullmatch(r"[a-z0-9_]+\.py", entries[0]["module"]):
+            return None
+        family, module = entries[0]["family"], entries[0]["module"]
+        data, _key, _problem = _v16_reservations()
+        if data is None:
+            return None
+        reservations = json.loads(data.decode("utf-8"))
+        if not isinstance(reservations, dict) or type(reservations.get("schema")) is not int or reservations["schema"] != 1 \
+                or not isinstance(reservations.get("draws"), dict):
+            return None
+        now = utcnow()
+        candidates = []
+        for release, draw in sorted(reservations["draws"].items()):
+            if not isinstance(draw, dict) or draw.get("status") != "open":
+                continue
+            families, listed = draw.get("families"), draw.get("orders", [])
+            if not isinstance(families, dict) or not isinstance(listed, list):
+                return None  # custody: reservation_schema
+            if not (rid in listed or families.get(family) == module):
+                continue
+            expires = _v16_utc(draw.get("expires_at"))
+            if expires is None:
+                return None  # custody: reservation_expiry_invalid
+            if expires > now:
+                candidates.append((release, draw))
+        if len(candidates) != 1:
+            return None
+        release, draw = candidates[0]
+        references = draw.get("references")
+        if not V16_RELEASE_RE.fullmatch(str(release)) or not isinstance(references, dict) \
+                or set(references) != set(V16_DRAW_REFERENCES):
+            return None
+        pins = {name: _v16_pin(references[name]) for name in V16_DRAW_REFERENCES}
+        import v16_profiles
+        if any(v16_profiles._sha(pins[name]["path"]) != pins[name]["sha256"] for name in V16_DRAW_REFERENCES):
+            return None
+        scored, measured = _v16_draw_pins(pins["measurement"], pins["scoring"])
+        return {"release": release, "measurement": pins["measurement"], "scoring": pins["scoring"]}, scored, measured
+    except Exception:  # noqa: BLE001 - any doubt keeps today's pins
+        return None
+
+
+def _v16_gate_pins(order: dict[str, Any], state: dict[str, Any]) -> tuple[dict[str, Any], dict[str, Any]] | None:
+    """(official_methods, official_measurement) of the draw-pinning review gate, or None = today's retired pins (the caller
+    derives them). A draw recorded at review-prompt time is used as recorded, re-verified by sha and NEVER re-selected, so later
+    reservation edits (uses consumed, expiry, a second draw) cannot invalidate a passed gate; when the recorded draw's files
+    no longer verify that is a PickupError, like any changed official profile. Pin empty, admission present or a non-text
+    order = None, with no file read."""
+    if not (V16_ADMIT_PATH and V16_ADMIT_SHA256) or "v16_profile_admission" in state or order.get("benchmarks") != ["jevbench"]:
+        return None
+    recorded = state.get("v16_gate_draw")
+    if recorded is not None:
+        try:
+            if not isinstance(recorded, dict) or not V16_RELEASE_RE.fullmatch(str(recorded.get("release", ""))):
+                raise ValueError("invalid recorded v16 draw")
+            return _v16_draw_pins(_v16_pin(recorded.get("measurement")), _v16_pin(recorded.get("scoring")))
+        except (OSError, ValueError, KeyError, TypeError, AttributeError, measurement_dispatch.OperationalHold) as exc:
+            raise PickupError("the recorded v1.6 draw is unavailable or changed") from exc
+    chosen = _select_v16_gate_draw(order, state)
+    return None if chosen is None else (chosen[1], chosen[2])
+
+
+def _attempt_reservations(attempt: object) -> str | None:
+    """The reservations part of an attempt key '<review sha>:<pin sha>:<reservations sha|absent>' (None = no such part)."""
+    parts = str(attempt.get("key", "")).split(":") if isinstance(attempt, dict) else []
+    return parts[2] if len(parts) == 3 and parts[2] else None
+
+
+def v16_reentry(row: dict[str, Any], state: dict[str, Any], now: datetime) -> bool:
+    """manage_evaluation, non-transient hold `official_method_retired_requires_admission` (CR-857): True when the hold was
+    cleared so that the evaluation restarts, through dispatch_measurement, with the reservations as they are now. All of:
+    the v16 pin is on; a text order without an admission; the evaluation budget is not used up; no owner job (automatic
+    native or hand-started) is live on the order; the reservations are readable (absent counts as a value) and DIFFER from
+    the one in the key of the last v16_admit_attempt (no attempt = differs); this reservations sha was not re-entered before
+    (state `v16_reentry`: at most one per order and reservations sha, so a hold that comes back for a reason outside
+    custody's answer, e.g. an unusable pin file, cannot loop). Nothing else is decided here: when a draw now qualifies, the restarted evaluation finds its gate pinning the retired profiles, which
+    is the existing pin-change path (validate_review_gate sees changed pins, evaluate() reviews again; the draw is then
+    recorded, so this happens once per re-entry; _select_v16_gate_draw refuses a NEW draw while the source-review budget
+    is short, so this never exhausts an order); with no qualifying draw the same call just asks custody once more.
+    Never marks anything failed; any other case keeps today's escalation."""
+    hold = state.get("operational_hold")
+    if not (V16_ADMIT_PATH and V16_ADMIT_SHA256) or not isinstance(hold, dict) \
+            or hold.get("reason") != "official_method_retired_requires_admission" \
+            or "jevbench" not in (row.get("benchmarks") or []) or "v16_profile_admission" in state:
+        return False
+    attempts = row.get("evaluation_attempts") or 0
+    if not isinstance(attempts, int) or isinstance(attempts, bool) or attempts >= MAX_EVALUATION_ATTEMPTS:
+        return False
+    rid = request_id(row.get("id"))
+    if native_owner_live(rid, state, now) or hold_owner_live(hold.get("owner"), rid, now):
+        return False  # an owner job is working this order (it may write the admission itself): never restart under it
+    _data, reservations_key, problem = _v16_reservations()
+    if problem or _attempt_reservations(state.get("v16_admit_attempt")) == reservations_key:
+        return False
+    marker = state.get("v16_reentry")
+    if isinstance(marker, dict) and marker.get("reservations") == reservations_key:
+        return False
+    state.pop("operational_hold", None)
+    state["v16_reentry"] = {"reservations": reservations_key, "at": iso(now)}
+    save_state(state)
+    _hook_note(JOB_ROOT / rid,
+               f"the reservations changed (now {reservations_key[:12]}); the held order runs through the review gate "
+               "and v16-admit once more")
+    return True
+
+
+def record_v16_gate_draw(job_dir: Path, order: dict[str, Any], state: dict[str, Any] | None = None) -> None:
+    """At review-prompt time: record the draw the review gate pins, so that every later source_review_pins call (gate check,
+    the reviewer's own pins) uses it. No qualifying draw, or one already recorded = nothing to do (pin empty: not even a read).
+    `state`: the caller's loaded state, updated in place and saved (a caller that saves its own copy later cannot erase the
+    record); None = load and save a copy."""
+    if not (V16_ADMIT_PATH and V16_ADMIT_SHA256):
+        return
+    if state is None:
+        state = load_state(request_id(job_dir.name))
+    if state.get("v16_gate_draw") is not None:
+        return
+    chosen = _select_v16_gate_draw(order, state)
+    if chosen is None:
+        return
+    state["v16_gate_draw"] = {**chosen[0], "chosen_at": iso(utcnow())}
+    save_state(state)
+    _hook_note(job_dir, f"the source review pins the v1.6 profiles of reserved draw {chosen[0]['release']}")
 
 
 def _has_gpu_pod_runtime(job_dir: Path) -> bool:
@@ -2836,37 +3108,41 @@ def _kill_group_and_reap(proc: Any) -> None:
                 pipe.close()
 
 
-def _run_v16_admit(rid: str, basis: str) -> tuple[str, str]:
-    """Run custody's pinned command once. (kind, outcome) per the exit-code contract above the constants: 'admitted' (exit 0),
-    'refused' (exit 1, final) or 'retry' (any other code incl. a negative one, 126/127, a timeout, an OSError). The whole
-    process group is killed after every run (success, failure, timeout, OSError) and the child is always reaped."""
+def _run_v16_admit(rid: str, basis: str) -> tuple[str, str, str]:
+    """Run custody's pinned command once. (kind, outcome, code) per the exit-code contract above the constants: kind 'admitted'
+    (exit 0), 'refused' (exit 1, final for the attempt key) or 'retry' (any other code incl. a negative one, 126/127, a timeout,
+    an OSError); `code` is custody's stdout when it is ONE symbolic token (^[a-z0-9_]{1,64}$, e.g. no_reservations), else
+    'unparsed' (also: nothing ran, a timeout). The whole process group is killed after every run (success, failure, timeout,
+    OSError) and the child is always reaped."""
     try:
         env = {"PATH": f"{HOME}/bin:/usr/local/bin:/usr/bin:/bin", "HOME": str(HOME), "AGENT_BOARD_NAME": AUTO_ADMIT_ACTOR}
         proc = subprocess.Popen([V16_ADMIT_PATH, rid, "--basis", basis], env=env,
                                 stdin=subprocess.DEVNULL, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True,
                                 errors="replace", start_new_session=True)
     except OSError as exc:
-        return "retry", f"could not run: {exc.strerror or exc}"
+        return "retry", f"could not run: {exc.strerror or exc}", "unparsed"
     try:
         stdout, stderr = proc.communicate(timeout=V16_ADMIT_TIMEOUT_S)
     except subprocess.TimeoutExpired:
         _kill_group_and_reap(proc)
-        return "retry", f"timeout after {V16_ADMIT_TIMEOUT_S}s"
+        return "retry", f"timeout after {V16_ADMIT_TIMEOUT_S}s", "unparsed"
     except OSError as exc:
         _kill_group_and_reap(proc)
-        return "retry", f"could not run: {exc.strerror or exc}"
+        return "retry", f"could not run: {exc.strerror or exc}", "unparsed"
     _kill_group_and_reap(proc)  # exited: nothing it started may write the state after the pickup re-reads it
     code = proc.returncode
+    token = (stdout or "").strip()
+    token = token if V16_CODE_RE.fullmatch(token) else "unparsed"
     if code == 0:
-        return "admitted", "exit 0"
+        return "admitted", "exit 0", token
     tail = (stderr or stdout or "").strip()[-160:]
-    return ("refused" if code == 1 else "retry"), f"exit {code}" + (f": {tail}" if tail else "")
+    return ("refused" if code == 1 else "retry"), f"exit {code}" + (f": {tail}" if tail else ""), token
 
 
 def _auto_v16_admit(job_dir: Path, row: dict[str, Any], review: dict[str, Any], cli: Any) -> str | None:
-    """Ask custody's pinned v16-admit (counted attempts per (review sha, pin sha), see the exit-code contract above the
-    constants). Returns a transient hold reason when the command asked for a retry (exit code other than 0/1, timeout,
-    OSError) and the attempt budget allows another pass, else None (the caller continues with today's behaviour)."""
+    """Ask custody's pinned v16-admit (counted attempts per (review sha, pin sha, reservations sha), see the exit-code contract
+    above the constants). Returns a transient hold reason when the command asked for a retry (exit code other than 0/1,
+    timeout, OSError) and the attempt budget allows another pass, else None (the caller continues with today's behaviour)."""
     rid = str(row["id"])
     if "jevbench" not in (row.get("benchmarks") or []) or "v16_profile_admission" in load_state(rid):
         return None
@@ -2875,25 +3151,29 @@ def _auto_v16_admit(job_dir: Path, row: dict[str, Any], review: dict[str, Any], 
     if cli.order_problems(cli.normalize_row(row)):
         return None  # paid-live-unrefunded-undelivered gate shared with fastlane-admit; no custody call for anything else
     state = load_state(rid)
-    key = f"{review['review_sha256']}:{V16_ADMIT_SHA256}"
+    _reservations, reservations_key, reservations_problem = _v16_reservations()
+    if reservations_problem:
+        _hook_note(job_dir, f"v16-admit reservations {reservations_problem}; hold unchanged")  # nothing ran: not an attempt
+        return None
+    key = f"{review['review_sha256']}:{V16_ADMIT_SHA256}:{reservations_key}"
     previous = state.get("v16_admit_attempt") or {}
     attempts = 0
     if previous.get("key") == key:
         attempts = previous.get("attempts") if isinstance(previous.get("attempts"), int) else V16_ADMIT_MAX_ATTEMPTS
         if previous.get("final") or attempts >= V16_ADMIT_MAX_ATTEMPTS:
-            return None  # this (review, pin) pair has had its attempt(s)
+            return None  # this (review, pin, reservations) key has had its attempt(s)
     _content, problem = _pinned_bytes(V16_ADMIT_PATH, V16_ADMIT_SHA256, executable=True)
     if problem:
         _hook_note(job_dir, f"v16-admit {problem}; hold unchanged")  # nothing ran: not an attempt
         return None
-    kind, outcome = _run_v16_admit(rid, f"autopickup review-sha256 {review['review_sha256']}")
+    kind, outcome, code = _run_v16_admit(rid, f"autopickup review-sha256 {review['review_sha256']}")
     attempts += 1
     state = load_state(rid)  # custody's command may have written the state file
     if kind == "admitted" and "v16_profile_admission" not in state:
         kind, outcome = "refused", "exit 0 but no admission was recorded"
     final = kind != "retry" or attempts >= V16_ADMIT_MAX_ATTEMPTS
-    state["v16_admit_attempt"] = {"key": key, "attempts": attempts, "final": final, "kind": kind, "at": iso(utcnow()),
-                                  "outcome": outcome[:200]}
+    state["v16_admit_attempt"] = {"key": key, "attempts": attempts, "final": final, "kind": kind, "code": code,
+                                  "at": iso(utcnow()), "outcome": outcome[:200]}
     save_state(state)
     if kind == "admitted":
         suffix = "; the order is routed to its v1.6 evaluation"
@@ -6293,7 +6573,7 @@ def evaluate(rid: str) -> int:
                     return 1
                 prepare_runner_prompt(row, job_dir)
             else:
-                review_pins = write_review_prompt(row, job_dir)
+                review_pins = write_review_prompt(row, job_dir, state)
         except PickupError as exc:
             update_row(rid, "evaluation_status='failed'", "evaluation_status='running'")
             return 1

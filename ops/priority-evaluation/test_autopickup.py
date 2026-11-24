@@ -5247,8 +5247,9 @@ class AutoAdmitHookSchedulerTests(DatabaseTestCase):
         admit = self.custody_dir / "fastlane-admit"
         shutil.copyfile(HERE / "fastlane-admit", admit)
         os.chmod(admit, 0o755)
+        self.reservations = self.custody_dir / "RESERVATIONS.json"  # never custody's real file; absent until a test writes it
         for target, value in (("FASTLANE_ADMIT_PATH", admit), ("FASTLANE_ADMIT_SHA256", ap.sha256_file(admit)),
-                              ("V16_ADMIT_PATH", ""), ("V16_ADMIT_SHA256", "")):
+                              ("V16_ADMIT_PATH", ""), ("V16_ADMIT_SHA256", ""), ("V16_RESERVATIONS_PATH", self.reservations)):
             patcher = mock.patch.object(ap, target, value)
             patcher.start()
             self.addCleanup(patcher.stop)
@@ -5282,6 +5283,21 @@ class AutoAdmitHookSchedulerTests(DatabaseTestCase):
 
     def custody_calls(self):
         return self.custody_log.read_text().splitlines() if self.custody_log.exists() else []
+
+    def put_reservations(self, text):
+        """custody's way: a private tmp file, then an atomic rename. Returns the sha256 the pickup keys on."""
+        tmp = self.reservations.with_name(".RESERVATIONS.tmp")
+        tmp.write_text(text)
+        os.chmod(tmp, 0o600)
+        os.replace(tmp, self.reservations)
+        return ap.sha256_file(self.reservations)
+
+    def manage(self, hours=2, fx=None):
+        """One scheduler pass for the order, `hours` after now (past any backoff). Returns how many units it started."""
+        fx = fx or self.fx
+        started = len(fx.started)
+        ap.manage_evaluation(row(self.rid), ap.load_state(self.rid), fx, datetime.now(timezone.utc) + timedelta(hours=hours))
+        return len(fx.started) - started
 
     def evaluation_pass(self):
         """What the started evaluation unit does: claim the order for one evaluation, then run it."""
@@ -5386,16 +5402,160 @@ class AutoAdmitHookSchedulerTests(DatabaseTestCase):
         self.assertNotIn("v16_profile_admission", ap.load_state(self.rid))
         self.assertEqual(self.v16_generation, [])
 
-    def test_an_order_held_before_the_pin_was_set_is_not_re_entered(self):
-        # documented limit: official_method_retired_requires_admission is not transient and nothing clears it
+    def test_an_order_held_before_the_pin_was_set_is_re_entered_once_when_the_pin_comes(self):
+        # CR-857 (c): official_method_retired_requires_admission is non-transient; with the v16 pin on and an order that has had
+        # no attempt for the current reservations (here: absent) the scheduler clears it once and the order meets custody
         self.assertEqual(self.evaluation_pass(), 0)
         self.assertEqual(self.hold()["reason"], "official_method_retired_requires_admission")
+        self.assertEqual(self.manage(), 0)  # the pin is still empty: today's behaviour, nothing restarts
+        self.assertIsNotNone(self.hold())
+        self.assertNotIn("v16_reentry", ap.load_state(self.rid))
         self.custody(exit_code=0)  # the pin is set afterwards
-        started = len(self.fx.started)
-        ap.manage_evaluation(row(self.rid), ap.load_state(self.rid), self.fx, datetime.now(timezone.utc) + timedelta(hours=2))
-        self.assertEqual(self.fx.started[started:], [f"jevbench-native-owner@{self.rid}.service"])  # CR-853: the native owner job, not the evaluation
+        self.assertEqual(self.manage(), 1)
+        self.assertEqual(self.fx.started[-1], self.unit)
+        self.assertIsNone(self.hold())
+        self.assertEqual(ap.load_state(self.rid)["v16_reentry"]["reservations"], "absent")
+        self.assertEqual(row(self.rid)["evaluation_status"], "starting")
         self.assertEqual(self.custody_calls(), [])
+        self.assertEqual(self.evaluation_pass(), 0)
+        self.assertEqual(len(self.custody_calls()), 1)  # asked exactly once; admitted: routed to the v1.6 evaluation
+        self.assertEqual(self.hold()["reason"], "v16_admitted_reroute")
+
+    def test_a_refusal_is_retried_once_per_reservations_sha_through_the_scheduler(self):
+        self.custody(exit_code=1)
+        self.assertEqual(self.evaluation_pass(), 0)
         self.assertEqual(self.hold()["reason"], "official_method_retired_requires_admission")
+        self.assertTrue(ap.load_state(self.rid)["v16_admit_attempt"]["key"].endswith(":absent"))
+        self.assertEqual(self.manage(), 0)  # custody refused for the current (absent) reservations: nothing new to ask
+        self.assertEqual(self.manage(), 0)
+        for round_number, text in enumerate(('{"schema": 1, "draws": {}}\n', '{"schema": 1, "draws": {"x": {"status": "closed"}}}\n'), 2):
+            sha = self.put_reservations(text)  # custody changes the reservations
+            self.assertEqual(self.manage(), 1)  # the hold is cleared once ...
+            self.assertEqual(ap.load_state(self.rid)["v16_reentry"]["reservations"], sha)
+            self.assertEqual(self.evaluation_pass(), 0)  # ... the evaluation asks custody again ...
+            self.assertEqual(len(self.custody_calls()), round_number)
+            self.assertEqual(self.hold()["reason"], "official_method_retired_requires_admission")
+            self.assertTrue(ap.load_state(self.rid)["v16_admit_attempt"]["key"].endswith(":" + sha))
+            self.assertEqual(self.manage(), 0)  # ... and the same reservations never again
+            self.assertEqual(self.manage(), 0)
+        self.assertEqual(row(self.rid)["evaluation_status"], "pending")  # nothing was ever marked failed or exhausted
+        self.assertNotIn("evaluation_exhausted", ap.load_state(self.rid))
+
+    def test_a_hold_that_comes_back_without_a_custody_attempt_is_not_looped(self):
+        # the v16 command cannot be run (pin file problem): no attempt is recorded, so the attempt key cannot stop a loop;
+        # the per-reservations-sha marker does
+        self.custody(exit_code=1)
+        Path(ap.V16_ADMIT_PATH).write_text("#!/bin/sh\nexit 1\n")  # not the pinned bytes any more
+        self.assertEqual(self.evaluation_pass(), 0)
+        self.assertEqual(self.hold()["reason"], "official_method_retired_requires_admission")
+        self.assertNotIn("v16_admit_attempt", ap.load_state(self.rid))
+        self.assertEqual(self.manage(), 1)  # no attempt = differs: one re-entry for 'absent' ...
+        self.assertEqual(self.evaluation_pass(), 0)
+        self.assertEqual(self.hold()["reason"], "official_method_retired_requires_admission")
+        for _ in range(3):
+            self.assertEqual(self.manage(), 0)  # ... and the hold that returns is not cleared again
+        self.assertEqual(self.custody_calls(), [])
+
+    def test_dry_run_never_re_enters(self):
+        self.custody(exit_code=1)
+        self.assertEqual(self.evaluation_pass(), 0)
+        self.put_reservations('{"schema": 1, "draws": {}}\n')
+        self.assertEqual(self.manage(fx=FakeEffects(dry_run=True)), 0)
+        self.assertIsNotNone(self.hold())
+        self.assertNotIn("v16_reentry", ap.load_state(self.rid))
+        self.assertEqual(self.manage(), 1)  # the real pass does
+
+    def test_a_live_owner_job_keeps_the_hold(self):
+        self.custody(exit_code=1)
+        self.assertEqual(self.evaluation_pass(), 0)
+        self.put_reservations('{"schema": 1, "draws": {}}\n')
+        with mock.patch.object(ap, "native_owner_live", return_value=True), \
+                mock.patch.object(ap, "ensure_native_owner", return_value=True):  # the live owner covers the hold quietly
+            self.assertEqual(self.manage(), 0)
+        self.assertIsNotNone(self.hold())
+        self.assertNotIn("v16_reentry", ap.load_state(self.rid))
+
+    def test_a_new_reservation_runs_the_order_through_one_new_review_with_the_draw_pins_and_custody_once_more(self):
+        # the whole CR-857 path through the real evaluate() and manage_evaluation(): refused with no reservation, then the
+        # reserved draw appears: re-entry, the gate (reviewed on the retired pins) is stale, ONE new source review with the
+        # draw's pins, custody is asked again (and refuses here), the hold comes back and nothing loops
+        import order_admission_registry
+        import test_v16_draw_gate as drawgate
+        import v16_profiles
+        registry = self.custody_dir / "order-admissions.json"
+        drawgate.write_atomic(registry, json.dumps({"schema": 1, "entries": [drawgate.GateCase.entry(self.rid)]}))
+        patcher = mock.patch.object(order_admission_registry, "REGISTRY", registry)
+        patcher.start()
+        self.addCleanup(patcher.stop)
+        self.custody(exit_code=1)
+        self.assertEqual(self.evaluation_pass(), 0)  # no reservation: custody refuses, today's hold
+        self.assertEqual(len(self.custody_calls()), 1)
+        retired = ap.load_state(self.rid)["source_review_gate"]["source_pins"]
+        refs = drawgate.make_refs(self.custody_dir, "a", "draw-a")
+        draw = {"status": "open", "families": {}, "orders": [self.rid], "expires_at": drawgate.FUTURE, "max_uses": 1,
+                "references": refs}
+        sha = self.put_reservations(json.dumps({"schema": 1, "draws": {"draw-a": draw}}))
+        self.assertEqual(self.manage(), 1)  # re-entry: the hold is cleared
+        reviewed = []
+
+        def review(folder, env, timeout, **kwargs):
+            pins = ap.source_review_pins(self.job)
+            reviewed.append(pins)
+            (folder / "OUTPUT.md").write_text(json.dumps({"schema_version": 1, "verdict": "PASS", "source_pins": pins,
+                                                          "summary": "pins checked", "checks": ["pins"], "findings": []}))
+            return 0
+        with mock.patch.object(ap, "run_agent", side_effect=review):
+            self.assertEqual(self.evaluation_pass(), 0)  # the gate on the retired pins is stale: a new review
+        self.assertEqual(len(reviewed), 1)
+        self.assertEqual(reviewed[0]["official_measurement"], v16_profiles.measurement_pins(refs["measurement"]["path"]))
+        self.assertNotEqual(reviewed[0]["official_measurement"], retired["official_measurement"])
+        state = ap.load_state(self.rid)
+        self.assertEqual(state["v16_gate_draw"]["release"], "draw-a")
+        self.assertEqual(state["source_review_gate"]["source_pins"], reviewed[0])
+        self.assertEqual(state["stage_attempts"]["source_review"], 1)
+        self.assertIsNone(self.hold())
+        self.assertEqual(row(self.rid)["evaluation_status"], "pending")
+        self.assertEqual(len(self.custody_calls()), 1)
+        self.assertEqual(self.evaluation_pass(), 0)  # the next pass: valid gate, dispatch_measurement, custody (new key)
+        self.assertEqual(len(self.custody_calls()), 2)
+        self.assertEqual(self.hold()["reason"], "official_method_retired_requires_admission")
+        self.assertTrue(ap.load_state(self.rid)["v16_admit_attempt"]["key"].endswith(":" + sha))
+        # bounded: neither another re-entry nor another review nor another custody call for these reservations
+        self.assertEqual(self.manage(), 0)
+        state = ap.load_state(self.rid)
+        state.pop("operational_hold")  # even a human clearing the hold does not repeat any of it
+        ap.save_state(state)
+        with mock.patch.object(ap, "run_agent", side_effect=AssertionError("a second review")):
+            self.assertEqual(self.evaluation_pass(), 0)
+        self.assertEqual(len(self.custody_calls()), 2)
+        self.assertEqual(ap.load_state(self.rid)["stage_attempts"]["source_review"], 1)
+        self.assertNotIn("evaluation_exhausted", ap.load_state(self.rid))
+
+    def test_no_review_is_started_for_a_draw_when_the_source_review_budget_is_short(self):
+        import order_admission_registry
+        import test_v16_draw_gate as drawgate
+        registry = self.custody_dir / "order-admissions.json"
+        drawgate.write_atomic(registry, json.dumps({"schema": 1, "entries": [drawgate.GateCase.entry(self.rid)]}))
+        patcher = mock.patch.object(order_admission_registry, "REGISTRY", registry)
+        patcher.start()
+        self.addCleanup(patcher.stop)
+        self.custody(exit_code=1)
+        self.assertEqual(self.evaluation_pass(), 0)
+        state = ap.load_state(self.rid)
+        state["stage_attempts"] = {"source_review": ap.MAX_SOURCE_REVIEW_ATTEMPTS - 1}  # only one attempt left
+        ap.save_state(state)
+        refs = drawgate.make_refs(self.custody_dir, "a", "draw-a")
+        draw = {"status": "open", "families": {}, "orders": [self.rid], "expires_at": drawgate.FUTURE, "max_uses": 1,
+                "references": refs}
+        self.put_reservations(json.dumps({"schema": 1, "draws": {"draw-a": draw}}))
+        self.assertEqual(self.manage(), 1)  # re-entry itself is fine ...
+        with mock.patch.object(ap, "run_agent", side_effect=AssertionError("a review the budget cannot afford")):
+            self.assertEqual(self.evaluation_pass(), 0)  # ... but the gate keeps the retired pins: no review, custody asked
+        self.assertEqual(len(self.custody_calls()), 2)
+        state = ap.load_state(self.rid)
+        self.assertNotIn("v16_gate_draw", state)
+        self.assertNotIn("evaluation_exhausted", state)
+        self.assertEqual(row(self.rid)["evaluation_status"], "pending")
 
 
 class NotifyPromiseGateTests(unittest.TestCase):
