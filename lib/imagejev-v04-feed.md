@@ -12,8 +12,8 @@ for release-owner review, not a public release or a replacement for v0.3.
 
 ## Wiring
 
-- By default the page reads `data/imagejev-v04.json` at request time. That file
-  intentionally does not exist on this branch: there are no measured v0.4 results.
+- By default the page reads `data/imagejev-v04.json` at request time (since CR-850 the measured
+  v0.4-A feed). The page is indexed only while a validated measured feed is served.
 - Set `IMAGEJEV_V04_PREVIEW_FIXTURE=1` on a **local preview server** to read the
   committed fixture instead. No query string can enable fixtures. The loader also
   requires `allowFixture: true`; production's default path rejects fixture data.
@@ -54,9 +54,16 @@ must be finite numbers, not strings. Timestamps are canonical UTC ISO strings
 | `name` | Nonblank plain text, at most 200 characters |
 | `n` | Integer 1–`items`; measured item count for this row |
 | `measured_utc` | Canonical UTC ISO timestamp, no later than `built_utc` |
-| `intelligence`, `calibration`, `composite` | Scores in [0, 100], measured on this v0.4 scale |
-| `latency_p50_s` | Median latency in seconds, finite and nonnegative |
+| `intelligence`, `calibration` | Scores in [0, 100], measured on this v0.4 scale |
+| `composite` | Score in [0, 100] (v0.3 four-axis harmonic mean with gates), or `null` = not measured; never estimated |
+| `latency_p50_s` | Median latency in seconds, finite and nonnegative, or `null` = not measured |
 | `usd_per_1000` | USD per 1,000 decisions, finite and nonnegative |
+| `breakdowns` | Object with exactly `use_case` and `image_type`; each `null` (not shown) or a list of cells |
+
+Breakdown cells have exactly `id` (lowercase slug), `label`, `n`, `correct` (0..n) and `chance` (0 < chance < 1).
+**Release gate (standing order of 12 Nov 2026):** every cell needs `n >= 30` scored items
+(`IMAGEJEV_V04_MIN_CELL_N`), and the cells of one breakdown must add up to the row's `n` exactly. A cell below
+30 hides the whole feed (fail closed); a test checks the committed measured feed.
 
 Fixture row IDs must start `fixture-` and names must start `Fixture `; the UI also
 shows a prominent fictional-fixture warning. Scores use the existing English UI

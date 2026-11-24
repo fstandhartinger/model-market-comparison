@@ -17,7 +17,26 @@
       "calibration": 70,
       "composite": 72,
       "latency_p50_s": 0.25,
-      "usd_per_1000": 0.08
+      "usd_per_1000": 0.08,
+      "breakdowns": {
+        "use_case": [
+          {
+            "id": "fixture-case-a",
+            "label": "Fixture case A",
+            "n": 160,
+            "correct": 80,
+            "chance": 0.25
+          },
+          {
+            "id": "fixture-case-b",
+            "label": "Fixture case B",
+            "n": 140,
+            "correct": 46,
+            "chance": 0.3
+          }
+        ],
+        "image_type": null
+      }
     },
     {
       "id": "fixture-cobalt",
@@ -28,7 +47,26 @@
       "calibration": 60,
       "composite": 65,
       "latency_p50_s": 0.4,
-      "usd_per_1000": 0.04
+      "usd_per_1000": 0.04,
+      "breakdowns": {
+        "use_case": [
+          {
+            "id": "fixture-case-a",
+            "label": "Fixture case A",
+            "n": 130,
+            "correct": 65,
+            "chance": 0.25
+          },
+          {
+            "id": "fixture-case-b",
+            "label": "Fixture case B",
+            "n": 170,
+            "correct": 56,
+            "chance": 0.3
+          }
+        ],
+        "image_type": null
+      }
     }
   ]
 }
