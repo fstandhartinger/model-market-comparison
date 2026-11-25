@@ -7026,6 +7026,71 @@ def fail_api_key_missing(rid: str, job_dir: Path, endpoint: str, status: object)
                           "Send button.\n")
 
 
+PUBLIC_TARIFF_MISSING_FINDING = (
+    "Public price: our results publish a cost figure computed from the token usage your API returns and a public, "
+    "bookable USD price. We could not find a published USD tariff for requests to your endpoint {endpoint}. Please "
+    "publish the USD price per million input and output tokens for these requests (or the USD price per credit plus "
+    "the credits charged per token) on a public page and reply to this email with its link. Your API key and model "
+    "already work; nothing else is needed.")
+
+
+def tariff_missing(rid: str) -> str:
+    """Owner command (paid order b80901aa, deputy ruling #84045): an API order whose only blocker is a missing public
+    bookable tariff takes the customer change-request path (hold, 48-hour clock paused, Florian's Send button).
+
+    MEASUREMENT-CONTRACT forbids a guessed or free tariff, and the frozen runner bundle already records the gap: every
+    ordered runtime is unsupported and the JevBench metadata says price_kind "unavailable" with null prices. Nothing
+    is mailed or refunded here; `resubmit` restarts the order once the customer's price page exists."""
+    rid = request_id(rid)
+    row = load_row(rid)
+    if not row or row.get("stripe_mode") != "live" or row.get("synthetic_test") is not False:
+        raise PickupError("only a real live order can wait for a public tariff")
+    if row.get("access_type") != "api_endpoint":
+        raise PickupError("only an API-endpoint order can wait for a public tariff")
+    if row.get("status") not in ("paid", "review_passed") or active_hold(row) or row.get("refund_id") \
+            or row.get("refund_decision") or row.get("result_delivered_at"):
+        raise PickupError("the order is not open without a customer hold")
+    access = redacted_access(row.get("access_instructions"))
+    endpoint = access.get("endpoint")
+    if not isinstance(endpoint, str) or not re.fullmatch(r"https://[A-Za-z0-9.-]+(?::[0-9]{1,5})?(?:/[A-Za-z0-9._~/-]*)?",
+                                                         endpoint):
+        raise PickupError("the order has no validated HTTPS endpoint")
+    job_dir = job_directory(rid, JOB_ROOT)
+    runner = job_dir / "trusted-runner"
+    runtime = load_json_file(runner / "RUNTIME.json", 64_000)
+    meta = load_json_file(runner / "MEASUREMENT-META.json", 64_000)
+    if not isinstance(runtime, dict) or not runtime \
+            or any(not isinstance(spec, dict) or spec.get("backend") != "unsupported" for spec in runtime.values()):
+        raise PickupError("the frozen runner bundle is not unsupported for every ordered benchmark")
+    system = (meta.get("jevbench") or {}).get("system") if isinstance(meta, dict) else None
+    if "jevbench" not in runtime or not isinstance(system, dict) or system.get("price_kind") != "unavailable" \
+            or system.get("price_in_per_m") is not None or system.get("price_out_per_m") is not None:
+        raise PickupError("the frozen JevBench metadata does not record a missing public tariff")
+    review_dir = job_dir / "review"
+    changes = review_dir / "CHANGES-REQUESTED.json"
+    if changes.exists() or changes.is_symlink():
+        raise PickupError("a change request already exists for this round")
+    summary = ("The API-endpoint order cannot be priced yet: no public, bookable USD tariff exists for the "
+               "endpoint's requests.")
+    review_dir.mkdir(mode=0o700, parents=True, exist_ok=True)
+    atomic_write(changes, json.dumps({
+        "reason": "public_tariff_missing", "summary": summary,
+        "findings": [clean_finding(PUBLIC_TARIFF_MISSING_FINDING.format(endpoint=endpoint))],
+        "runner_bundle": {name: sha256_file(runner / name) for name in ("RUNTIME.json", "MEASUREMENT-META.json")},
+        "requested_at": iso(utcnow())}, indent=2) + "\n")
+    held = update_row(rid, f"customer_hold_started_at=now(), customer_hold_reason={sql_text(CHANGE_HOLD_REASON)}, "
+                           "evaluation_status='pending', change_request_email_status='approval_required'",
+                      "status IN ('paid','review_passed') AND result_delivered_at IS NULL AND refund_id IS NULL "
+                      "AND customer_hold_started_at IS NULL")
+    if not held:
+        changes.unlink()
+        raise PickupError("change request was not recorded: no row matched the guard")
+    append_state(job_dir, f"\n\nPublic tariff missing at {iso(utcnow())}: {summary} No refund: the order waits for "
+                          "the customer's public price page (48-hour clock paused). The change-request email goes out "
+                          "after Florian's Send button.\n")
+    return f"order {order_ref(rid)} waits for the customer's public tariff (change request, clock paused)"
+
+
 def fail_source_review(rid: str, job_dir: Path, reason: str) -> None:
     """A customer-source FAIL keeps the order and payment; the customer is told what to change.
 
@@ -7893,7 +7958,8 @@ def main(argv: list[str] | None = None) -> int:
     record_parser = sub.add_parser("record-install")
     record_parser.add_argument("--source", default="hotfix")
     record_parser.add_argument("--reason", required=True)
-    for name in ("evaluate", "xpost", "adopt", "resume", "access-ok", "gate", "status", "recover-source-access", "native-owner"):
+    for name in ("evaluate", "xpost", "adopt", "resume", "access-ok", "gate", "status", "recover-source-access", "native-owner",
+                 "tariff-missing"):
         sub.add_parser(name).add_argument("request_id")
     resubmit_parser = sub.add_parser("resubmit")
     resubmit_parser.add_argument("request_id")
@@ -7976,6 +8042,8 @@ def main(argv: list[str] | None = None) -> int:
                 print(recover_source_access(args.request_id))
             elif args.command == "resubmit":
                 print(resubmit(args.request_id, args.model_link, args.code_link))
+            elif args.command == "tariff-missing":
+                print(tariff_missing(args.request_id))
 
         return 0
     except PickupError as exc:
